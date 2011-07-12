@@ -14,4 +14,4 @@ console.log(singularize('earthquakes'));
 console.log(singularize("mama cass"));
 
 //date extractor
-console.log(date_extractor('my wife left me on the 9th of april, 2005. now i just programz the computerz.'));
+console.log(date_extractor('my wife left me on the 9th of april, 2005, the worst day.'));

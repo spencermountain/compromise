@@ -1,10 +1,6 @@
-#nlp-node
-Some cool rule-based tools for working with natural language in Nodejs.
-
-
-## Installation
-
- $ npm install nlp-node
+var sentence=require('./lib/sentence').sentenceparser;
+var singularize=require('./lib/singularize').singularize;
+var date_extractor=require('./lib/date_extractor').date_extractor;
 
 
 //sentence parser

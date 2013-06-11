@@ -1,0 +1,225 @@
+<html>
+<head>
+  <script src="./underscore.js"/></script>
+  <script src="./jquery.js"/></script>
+  <script src="./../nlp.js"/></script>
+
+  <script>
+
+
+  var memory={}
+
+  function set_options(options){
+    if(!options){options={};}
+    if(options.verbose){
+      options.gerund=true;
+      options.stick_adjectives=true;
+      options.stick_prepositions=true;
+      options.stick_the=true;
+      options.want_quotations=true;
+      options.subnouns=true;
+      options.match_whole=true;
+      options.case_sensitive=false;
+      options.kill_numbers=false;
+      options.kill_quotes=false;
+    }
+    if(options.big){
+      options.gerund=false;
+      options.stick_adjectives=false;
+      options.stick_prepositions=false;
+      options.stick_the=false;
+      options.subnouns=false;
+      options.want_quotations=true;
+      options.match_whole=false;
+      options.kill_numbers=true;
+      options.kill_quotes=true;
+    }
+    return options;
+  }
+
+
+
+//tag each word with a part-of-speech object
+var pos=function(text, options){
+  options=set_options(options);
+  var sentences=sentenceparser(text);  //split into sentences
+  if(typeof sentences=='string'){sentences=[sentences]}
+  var tags=[];
+  sentences.forEach(function(sentence){
+    var words=tokenizer(sentence, options); //split
+    tags.push(tag(words, options));//tag
+  });
+  return tags
+}
+
+
+//sort out the good candidate topics before search
+function preprocess(results){
+  //trim whitespace
+  for(var i in results){
+    results[i].word=results[i].word.replace(/^\s+|\s+$/g, '');
+  }
+  results=boost_dupes(results, 'word')
+  return results
+}
+
+
+
+  //remove objects with a duplicate field from json, and count them
+  function boost_dupes(a, field) {
+    var r = new Array();
+    o: for (var i = 0, n = a.length; i < n; i++) {
+      a[i].count=1;
+      for (var x = 0, y = r.length; x < y; x++) {
+        if (r[x][field] == a[i][field]) {
+          r[x].count += 1;
+          continue o;
+        }
+      }
+      r[r.length] = a[i];
+    }
+    return r;
+  }
+
+//tag each word then chunk and inflect the nouns
+var spot=function(text, options){
+
+  options=set_options(options);
+
+  if(options.kill_quotes){
+    text=text.replace(/"/g,'')
+  }
+
+   //tokenize and tag
+   var tags = pos(text, options);
+     //chunk together meaningfully
+     var nouns=[];
+     for(var i in tags){
+      var chunks=chunker(tags[i], options);
+         //collect named entities
+         nouns.push(recognizer(chunks, options));
+       }
+   //flatten sentences
+   nouns=_.flatten(nouns);
+    //inflect, clean-up
+    for(var i in nouns){
+      nouns[i].word=nouns[i].word.replace(/("|,|\)|\(|!)/g,'') //punctuation we want to keep
+      nouns[i].word=nouns[i].word.replace(/'s$/,'');
+      nouns[i].word=nouns[i].word.replace(/[\.\?,!:;\/\)]*$/,'');
+      nouns[i].word=nouns[i].word.replace(/^[\(\/]*/g,'');
+                                          nouns[i].word=nouns[i].word.replace(/[\(\/\)\\;:,]/g,' ');
+                                          nouns[i].word=nouns[i].word.replace(/  /g,' ');
+      nouns[i].word=nouns[i].word.replace(/\W*$/,'');//punctuation
+      nouns[i].word=nouns[i].word.replace(/^\W*/,'');
+      if(!nouns[i].word.match(/^the ./)){
+        nouns[i].word=singularize(nouns[i].word);
+      }
+      if(!options.case_sensitive){
+        nouns[i].word=nouns[i].word.toLowerCase();
+      }
+    }
+
+   //pass the blacklist test
+   var results= nouns.filter(function(noun){ return pass(noun.word) } );
+  // console.log(nouns)
+   //console.log('blacklisted: '+_.pluck(_.reject(nouns, function(noun){ return pass(noun.word) }), 'word')  );
+   results=preprocess(results);
+  //rank results
+  results=rank(results)
+  return results;
+}
+
+function rank(results){
+  //rank results
+  for(var i in results){
+    results[i].score=0;
+    results[i].score+=results[i].count*10;
+    if(results[i].rule=="capital"){
+      results[i].score+=10;
+    }
+    if(results[i].rule=="lexicon"){
+      results[i].score+=7;
+    }
+    if(results[i].rule=="group_prep"){
+      results[i].score-=4;
+    }
+  }
+  //results=results.sort(function(a,b){return b.score-a.score;})
+  return results;
+}
+
+
+
+$(function() {
+
+
+ var timeoutID = window.setTimeout(doit, 80);
+
+  $("#option").click(doit)
+
+    //event listener
+    $("#pad").keyup(function() {
+      window.clearTimeout(timeoutID); //for fast typing
+      timeoutID = window.setTimeout(doit,200)
+    })
+
+
+    function doit(){
+      var options={}
+      options[$('input:radio[name=option]:checked').val()]=true;
+      var text=$("#pad").val();
+      var result=pos(text,options)
+      printpos(result);
+      var result=spot(text,options)
+      printnouns(result)
+    }
+
+    function printnouns(result){
+      console.log(result)
+      var html=result.map(function(n){
+      return '<span title="rule: '+n.rule+'">'+n.word+'</span>'
+      }).join('<br/>');
+     $("#nouns").html(html)
+   }
+
+   function printpos(result){
+     var colours={
+       noun: "#1f77b4",
+       glue: "#aec7e8",
+       verb: "#ff7f0e",
+       adjective: "#ffbb78",
+       title: "#2ca02c",
+       other: "#98df8a"
+     }
+     var html=result.map(function(s){
+      return s.map(function(p){return p.word + '  - <span style="background:'+colours[p.pos.parent]+'; color:white;" title="'+p.pos.description+', like \''+p.pos.example+'\'">' + p.pos.tag+'</span>'}).join('</br>')
+    }).join('<p>----</p>')
+     $("#result").html(html)
+   }
+
+
+ });
+
+
+</script>
+</head>
+<body>
+
+  <textarea style="width:80%; height:200px; color:grey; font-size:16px;" id="pad" style="">toronto won the greatest world series in the world.</textarea>
+  <br/>
+<form id="option">
+<input type="radio" name="option" value="big" checked/> strict<br />
+<input type="radio" name="option" value="verbose" /> verbose
+</form>
+  <table style="width:80%;">
+    <tr>
+      <td style="color:steelblue; width:50%;" id="result"></td>
+      <td style="color:steelblue; width:50%; vertical-align:top;" id="nouns"></td>
+    </tr>
+  </table>
+
+</body>
+</html>
+
+
+

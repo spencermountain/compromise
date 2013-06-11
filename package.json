@@ -1,0 +1,21 @@
+{
+  "author": "Spencer Kelly <spencerwater@gmail.com> (http://spencerwaterbed.com)",
+  "name": "nlp-node",
+  "description": "quickie nlp in javascript",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/spencermountain/nlp-node.git"
+  },
+  "main": "nlp.js",
+  "engines": [
+    "node >= 0.3.6"
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-nodeunit": "~0.1.2",
+    "grunt-contrib-concat": "~0.1.3",
+    "grunt-contrib-uglify": "~0.2.2"
+  }
+}

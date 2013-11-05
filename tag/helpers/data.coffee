@@ -1,541 +1,15 @@
-/*! nlp-node 
- by @spencermountain
- 2013-06-11 */
-
-var sentenceparser = (function() {
-
-//by spencer kelly (@spencermountain)
-var sentenceparser=function(text) {
-    var tmp = text.split(/(\S.+?[.])(?=\s+|$)/g);
-    var sentences = [];
-
-    //join acronyms, titles
-    for (var i in tmp) {
-        if (tmp[i]) {
-            tmp[i] = tmp[i].replace(/^\s+|\s+$/g, ''); //trim extra whitespace
-            //join common abbreviations + acronyms
-            if (tmp[i].match(/(^| )(mr|dr|llb|md|bl|phd|ma|ba|mrs|miss|misses|mister|sir|esq|mstr|jr|sr|st|lit|inc|fl|ex|eg|jan|feb|mar|apr|jun|aug|sept?|oct|nov|dec)\. ?$/i) || tmp[i].match(/[ |\.][a-z]\.?$/i)) {
-                tmp[parseInt(i) + 1] = tmp[i] + ' ' + tmp[parseInt(i) + 1];
-            }
-            else {
-                sentences.push(tmp[i]);
-                tmp[i] = '';
-            }
-        }
-    }
-
-    //cleanup afterwards
-    var clean = [];
-    for (var i in sentences) {
-        sentences[i] = sentences[i].replace(/^\s+|\s+$/g, ''); //trim extra whitespace
-        if (sentences[i]) {
-            clean.push(sentences[i]);
-        }
-    }
-
-    return clean;
-}
-
-
-//console.log(exports.sentenceparser('Dr. calm is me. lkj'))
-
-        // export for AMD / RequireJS
-    if (typeof define !== 'undefined' && define.amd) {
-        define([], function() {
-            return sentenceparser;
-        });
-    }
-    // export for Node.js
-    else if (typeof module !== 'undefined' && module.exports) {
-        module.exports = sentenceparser;
-    }
-
-    return sentenceparser;
-
-
-})()
-var singularize = (function() {
-  //Originally by david huynh 2010
-  //http://www.freebase.com/appeditor/#!path=//cubed.dfhuynh.user.dev/index
-  //Algorithm is adopted from
-  //http://www.csse.monash.edu.au/~damian/papers/HTML/Plurals.html
-  //Adapted by spencer kelly @spencermountain
-  var singularize = function(text) {
-
-    if (text.match(' ')) { //multiple words
-      var words = text.split(' ');
-      var last = words[words.length - 1];
-      var firsts = words.slice(0, -1);
-      return firsts.join(" ") + ' ' + singularize(last);
-    }
-
-    var prepositions = {
-      "about": 1,
-      "above": 1,
-      "across": 1,
-      "after": 1,
-      "against": 1,
-      "along": 1,
-      "among": 1,
-      "around": 1,
-      "at": 1,
-      "before": 1,
-      "behind": 1,
-      "below": 1,
-      "beneath": 1,
-      "beside": 1,
-      "between": 1,
-      "beyond": 1,
-      "but": 1,
-      "by": 1,
-      "despite": 1,
-      "down": 1,
-      "during": 1,
-      "except": 1,
-      "for": 1,
-      "from": 1,
-      "in": 1,
-      "inside": 1,
-      "into": 1,
-      "like": 1,
-      "near": 1,
-      "of": 1,
-      "off": 1,
-      "on": 1,
-      "onto": 1,
-      "out": 1,
-      "outside": 1,
-      "over": 1,
-      "past": 1,
-      "since": 1,
-      "through": 1,
-      "throughout": 1,
-      "till": 1,
-      "to": 1,
-      "toward": 1,
-      "under": 1,
-      "underneath": 1,
-      "until": 1,
-      "up": 1,
-      "upon": 1,
-      "with": 1,
-      "within": 1,
-      "without": 1
-    };
-
-
-
-    var userDefinedNouns = [{
-        "p": "people",
-        "s": "person"
-      }, {
-        "p": "tornadoes",
-        "s": "tornado"
-      }, {
-        "p": "churches",
-        "s": "church"
-      }, {
-        "p": "countries",
-        "s": "country"
-      }, {
-        "p": "cities",
-        "s": "city"
-      }, {
-        "p": "companies",
-        "s": "company"
-      }, {
-        "p": "monkies",
-        "s": "monkey"
-      }, {
-        "p": "donkies",
-        "s": "donkey"
-      }, {
-        "p": "mysteries",
-        "s": "mystery"
-      }, {
-        "p": "authors",
-        "s": "author"
-      }
-    ];
-
-    // Table A.1
-    var irregularNouns = {
-      "beef": {
-        anglicized: "beefs",
-        classical: "beeves"
-      },
-      "brother": {
-        anglicized: "brothers",
-        classical: "brethren"
-      },
-      "child": {
-        anglicized: null,
-        classical: "children"
-      },
-      "cow": {
-        anglicized: null,
-        classical: "kine"
-      },
-      "ephemeris": {
-        anglicized: null,
-        classical: "ephemerides"
-      },
-      "genie": {
-        anglicized: null,
-        classical: "genii"
-      },
-      "money": {
-        anglicized: "moneys",
-        classical: "monies"
-      },
-      "mongoose": {
-        anglicized: "mongooses",
-        classical: null
-      },
-      "mythos": {
-        anglicized: null,
-        classical: "mythoi"
-      },
-      "octopus": {
-        anglicized: "octopuses",
-        classical: "octopodes"
-      },
-      "ox": {
-        anglicized: null,
-        classical: "oxen"
-      },
-      "soliloquy": {
-        anglicized: "soliloquies",
-        classical: null
-      },
-      "trilby": {
-        anglicized: "trilbys",
-        classical: null
-      }
-    };
-
-    var uninflectedSuffixes = [
-        "fish", "ois", "sheep", "deer", "pox", "itis"
-    ];
-
-    // Table A.2
-    var uninflectedNouns = {
-      "bison": 1,
-      "flounder": 1,
-      "pliers": 1,
-      "bream": 1,
-      "gallows": 1,
-      "proceedings": 1,
-      "breeches": 1,
-      "graffiti": 1,
-      "rabies": 1,
-      "britches": 1,
-      "headquarters": 1,
-      "salmon": 1,
-      "carp": 1,
-      "herpes": 1,
-      "scissors": 1,
-      "chassis": 1,
-      "high-jinks": 1,
-      "sea-bass": 1,
-      "seabass": 1,
-      "clippers": 1,
-      "homework": 1,
-      "series": 1,
-      "cod": 1,
-      "innings": 1,
-      "shears": 1,
-      "contretemps": 1,
-      "jackanapes": 1,
-      "species": 1,
-      "corps": 1,
-      "mackerel": 1,
-      "swine": 1,
-      "debris": 1,
-      "measles": 1,
-      "trout": 1,
-      "diabetes": 1,
-      "mews": 1,
-      "tuna": 1,
-      "djinn": 1,
-      "mumps": 1,
-      "whiting": 1,
-      "eland": 1,
-      "news": 1,
-      "wildebeest": 1,
-      "elk": 1,
-      "pincers": 1,
-
-      "moose": 1,
-      "shrimp": 1,
-      "hoi polloi": 1,
-      "riffraff": 1,
-      "rabble": 1
-    };
-    var inflectionCategories = [{ // Table A.10
-        from: "a",
-        to: "ae",
-        words: ["alumna", "alga", "vertebra"]
-      }, {
-        // Table A.11
-        from: "a",
-        anglicized: "as",
-        classical: "ae",
-        words: ["abscissa", "amoeba", "antenna", "aurora", "formula", "hydra", "hyperbola", "lacuna", "medusa", "nebula", "nova", "parabola"]
-      }, {
-        // Table A.12
-        from: "a",
-        anglicized: "as",
-        classical: "ata",
-        words: ["anathema", "bema", "carcinoma", "charisma", "diploma", "dogma", "drama", "edema", "enema", "enigma", "gumma", "lemma", "lymphoma", "magma", "melisma", "miasma", "oedema", "sarcoma", "schema", "soma", "stigma", "stoma", "trauma"]
-      }, {
-        // Table A.13
-        from: "en",
-        anglicized: "ens",
-        classical: "ina",
-        words: ["stamen", "foramen", "lumen"]
-      }, {
-        // Table A.14
-        from: "ex",
-        to: "ices",
-        words: ["codex", "murex", "silex"]
-      }, {
-        // Table A.15
-        from: "ex",
-        anglicized: "exes",
-        classical: "ices",
-        words: ["apex", "cortex", "index", "latex", "pontifex", "simplex", "vertex", "vortex"]
-      }, {
-        // Table A.16
-        from: "is",
-        anglicized: "ises",
-        classical: "ides",
-        words: ["iris", "clitoris"]
-      }, {
-        // Table A.17
-        from: "o",
-        to: "os",
-        words: ["albino", "archipelago", "armadillo", "commando", "ditto", "dynamo", "embryo", "fiasco",
-            "generalissimo", "ghetto", "guano", "inferno", "jumbo", "lingo", "lumbago", "magneto",
-            "manifesto", "medico", "octavo", "photo", "pro", "quarto", "rhino", "stylo"
-        ]
-      }, {
-        // Table A.18
-        from: "o",
-        anglicized: "os",
-        classical: "i",
-        words: ["alto", "basso", "canto", "contralto", "crescendo", "solo", "soprano", "tempo"]
-      }, {
-        // Table A.19
-        from: "on",
-        to: "a",
-        words: ["aphelion", "asyndeton", "criterion", "hyperbaton", "noumenon", "organon", "perihelion", "phenomenon", "prolegomenon"]
-      }, {
-        // Table A.20
-        from: "um",
-        to: "a",
-        words: ["agendum", "bacterium", "candelabrum", "datum", "desideratum", "erratum", "extremum", "stratum", "ovum"]
-      }, {
-        // Table A.21
-        from: "um",
-        anglicized: "ums",
-        classical: "a",
-        words: ["aquarium", "compendium", "consortium", "cranium", "curriculum", "dictum", "emporium", "enconium", "gymnasium", "honorarium",
-            "interregnum", "lustrum", "maximum", "medium", "memorandum", "millenium", "minimum", "momentum", "optimum", "phylum",
-            "quantum", "rostrum", "spectrum", "speculum", "stadium", "trapezium", "ultimatum", "vacuum", "velum"
-        ]
-      }, {
-        // Table A.22
-        from: "us",
-        anglicized: "uses",
-        classical: "i",
-        words: ["focus", "fungus", "genius", "incubus", "nimbus", "nucleolus", "radius", "stylus", "succubus", "torus", "umbilicus", "uterus"]
-      }, {
-        // Table A.23
-        from: "us",
-        anglicized: "uses",
-        classical: "us",
-        words: ["apparatus", "cantus", "coitus", "hiatus", "impetus", "nexus", "plexus", "prospectus", "sinus", "status"]
-      }, {
-        // Table A.24
-        from: "",
-        to: "i",
-        words: ["afreet", "afrit", "efreet"]
-      }, {
-        // Table A.25
-        from: "",
-        to: "im",
-        words: ["cherub", "goy", "geraph"]
-      }
-    ];
-
-    function suffix(text, s) {
-      return text.length >= s.length && text.substring(text.length - s.length) == s;
-    }
-
-    function capIfCap(s, s2) {
-      if (typeof s == "string") {
-        var isCap = s2.charAt(0).toLowerCase() != s2.charAt(0);
-        return isCap ? (s.charAt(0).toUpperCase() + s.substr(1)) : s;
-      } else {
-        var a = [];
-        for (var i in s) {
-          var s3 = s[i];
-          a.push(capIfCap(s3, s2));
-        }
-        return a;
-      }
-    }
-
-
-    function inflection(text, from, to) {
-      return text.substring(0, text.length - from.length) + to;
-    }
-
-
-    function isOneOf(c, chars) {
-      return chars.indexOf(c) >= 0;
-    }
-
-    function isVowel(c) {
-      return isOneOf(c, "aeiou");
-    }
-
-
-
-    var text2 = text.toLowerCase();
-
-
-
-    for (var o in userDefinedNouns) {
-      if (userDefinedNouns[o].p == text) {
-        return userDefinedNouns[o].s;
-      }
-    }
-
-    for (var singular in irregularNouns) {
-      var entry = irregularNouns[singular];
-      if (entry.anglicized === text2 || entry.classical === text2) {
-        return capIfCap(singular, text);
-      }
-    }
-
-    for (var s in uninflectedSuffixes) {
-      if (suffix(text2, s)) {
-        return text;
-      }
-    }
-
-    if (uninflectedNouns && uninflectedNouns[text2]) {
-      return text;
-    }
-
-    var checkWords = function(from, to, words) {
-      if (suffix(text, to)) {
-        var prefix = text.substring(text.length - to.length);
-        var text3 = prefix + entry.from;
-        for (var word in words) {
-          if (text3 === word) {
-            return capIfCap(text3, text);
-          }
-        }
-      }
-      return null;
-    };
-
-    for (var e in inflectionCategories) {
-      var entry = inflectionCategories[e];
-      var text3 =
-        ("to" in entry && checkWords(entry.from, entry.to, entry.words)) ||
-        ("anglicized" in entry && checkWords(entry.from, entry.anglicized, entry.words)) ||
-        ("classical" in entry && checkWords(entry.from, entry.classical, entry.words));
-
-      if (text3 != null && typeof text3 == "string") {
-        return text3;
-      }
-    }
-
-    for (var prep in prepositions) {
-      var n = text.indexOf(" " + prep + " ");
-      if (n > 0) {
-        var prefix = text.substring(0, n);
-        var r = singularize(prefix);
-        if (r != null) {
-          return r + " " + prep + " " + text.substr(n + prep.length + 2);
-        } else {
-          return null;
-        }
-      }
-      n = text.indexOf("-" + prep + "-");
-      if (n > 0) {
-        var prefix = text.substring(0, n);
-        var r = singularize(prefix);
-        if (r != null) {
-          return r + "-" + prep + "-" + text.substr(n + prep.length + 2);
-        } else {
-          return null;
-        }
-      }
-    }
-
-    var j = text.lastIndexOf(" ");
-    if (j > 0) {
-      var r = singularize(text.substring(j + 1));
-      if (r != null) {
-        return text.substring(0, j + 1) + r;
-      } else {
-        return null;
-      }
-    }
-
-    if (suffix(text, "xes") || suffix(text, "ses")) {
-      return text.substring(0, text.length - 2);
-    }
-    if (suffix(text, "s") && !suffix(text, "ss")) {
-      return text.substring(0, text.length - 1);
-    }
-
-
-    return text;
-  }
-
-
-  //console.log(exports.singularize("george soros"));
-  //console.log(exports.singularize("mama cass"));
-
-  //var start = new Date().getTime();
-  //console.log(exports.singularize('earthquakes'));
-  //console.log(new Date().getTime() - start);
-
-
-
-  // export for AMD / RequireJS
-  if (typeof define !== 'undefined' && define.amd) {
-    define([], function() {
-      return singularize;
-    });
-  }
-  // export for Node.js
-  else if (typeof module !== 'undefined' && module.exports) {
-    module.exports = singularize;
-  }
-
-  return singularize;
-
-
-})()
-var lexicon={
-  "one": "CD",
+exports.lexicon= {
+  "one": "JJ",
   "two": "CD",
-  "three": "CD",
-  "four": "CD",
+  "three": "JJ",
+  "four": "JJ",
   "five": "CD",
   "six": "CD",
   "seven": "CD",
   "eight": "CD",
   "nine": "CD",
   "ten": "CD",
-  "eleven": "CD",
+  "eleven": "JJ",
   "twelve": "CD",
   "thirteen": "CD",
   "fourteen": "CD",
@@ -555,38 +29,27 @@ var lexicon={
   "hundred": "CD",
   "thousand": "CD",
   "million": "CD",
-  "billion": "CD",
-  "trillion": "CD",
+  "billion": "JJ",
+  "trillion": "JJ",
   "clotted": "JJ",
   "localized": "JJ",
   "spidery": "JJ",
   "western": "JJ",
   "famed": "JJ",
-  "seamier": "JJR",
   "wooded": "JJ",
   "grueling": "JJ",
   "shocked": "JJ",
   "inanimate": "JJ",
-  "designing": "NNP",
   "pawed": "VBN",
-  "affiliates": "NNS",
-  "affiliated": "NNP",
   "confronts": "VBZ",
-  "kids": "NNS",
   "uplifting": "JJ",
   "stern": "JJ",
-  "wiretapping": "NN",
-  "deputy": "NNP",
   "darling": "JJ",
   "nondiscretionary": "JJ",
-  "travel": "NNP",
-  "attention": "NN",
   "exposited": "VBN",
   "assimilated": "VBN",
   "stipulate": "VBP",
-  "sentencing": "NN",
   "sprawling": "JJ",
-  "blackstone": "NNP",
   "gay-ess": "VBP",
   "his": "PP",
   "hit": "VBD",
@@ -595,7 +58,6 @@ var lexicon={
   "him": "PRP",
   "effecte": "VB",
   "plebian": "JJ",
-  "effects": "NNS",
   "specialized": "JJ",
   "wooden": "JJ",
   "combine": "VB",
@@ -604,22 +66,18 @@ var lexicon={
   "adapt": "VB",
   "underfoot": "RB",
   "elsewhere": "RB",
-  "estimate": "NNP",
   "silent": "JJ",
   "signed": "JJ",
   "disturbed": "JJ",
-  "breed": "NN",
   "renovated": "VBN",
   "needed": "JJ",
   "master": "JJ",
   "yield": "VB",
   "mutilated": "JJ",
-  "heftiest": "JJS",
   "brawny": "JJ",
   "recapitalized": "VBN",
   "then": "JJ",
   "them": "PRP",
-  "wholesome": "JJ",
   "thee": "PRP",
   "they": "PRP",
   "diminishing": "JJ",
@@ -636,29 +94,21 @@ var lexicon={
   "affronted": "VBN",
   "nicely": "RB",
   "succumb": "VB",
-  "motional": "JJ",
-  "wage": "NN",
   "extend": "VB",
-  "nature": "NN",
   "brainwashed": "VBN",
-  "orkem": "NNP",
   "unhealed": "JJ",
   "fondled": "VBN",
-  "humming": "NN",
   "fro": "RB",
   "much": "JJ",
   "dehumanised": "JJ",
-  "unleavened": "JJ",
   "fry": "VB",
   "spit": "VB",
-  "doubts": "NNS",
   "spin": "VB",
   "wildcat": "JJ",
   "misconstrued": "VBN",
   "prostrate": "JJ",
   "conditioned": "JJ",
   "hone": "VB",
-  "memorial": "NN",
   "mummified": "VBN",
   "honk": "VBP",
   "tahitian": "JJ",
@@ -667,14 +117,9 @@ var lexicon={
   "torpedoed": "VBN",
   "spotty": "JJ",
   "peremptory": "JJ",
-  "lonelier": "RBR",
   "corporate": "JJ",
   "golden": "JJ",
-  "lasso": "NN",
-  "hay": "NN",
   "has": "VBZ",
-  "crowd": "NN",
-  "crown": "NN",
   "fiduciary": "JJ",
   "perchance": "RB",
   "bottom": "JJ",
@@ -685,29 +130,18 @@ var lexicon={
   "catchy": "JJ",
   "sticle": "VB",
   "concerned": "JJ",
-  "honeymoon": "NN",
   "shoots": "VBZ",
-  "ends": "NNS",
   "despised": "JJ",
   "raped": "VBN",
   "grasping": "JJ",
-  "rapes": "NNS",
   "perfumed": "JJ",
-  "roast": "NN",
   "nineteenth": "CD",
-  "congratulations": "NNS",
   "whom": "WP",
-  "nicest": "JJS",
-  "appeals-court": "NN",
   "soldering": "JJ",
-  "passenger": "NN",
   "young": "JJ",
   "thoroughgoing": "JJ",
   "smelling": "JJ",
-  "chain": "NN",
   "whoever": "WP",
-  "chair": "NN",
-  "ballet": "NN",
   "grapples": "VBZ",
   "freelance": "JJ",
   "balled": "VBN",
@@ -726,17 +160,13 @@ var lexicon={
   "celebrates": "VBZ",
   "me": "PRP",
   "climbs": "VBZ",
-  "mi": "NNP",
   "dwindling": "JJ",
   "my": "PRP",
   "impacted": "VBN",
   "sprouted": "JJ",
-  "boosts": "NNS",
-  "opposes": "VBZ",
   "unjust": "JJ",
   "those": "DT",
   "perishes": "VBZ",
-  "consoles": "NNS",
   "laotian": "JJ",
   "following": "JJ",
   "renew": "VB",
@@ -747,7 +177,6 @@ var lexicon={
   "disconnect": "VB",
   "shacked": "VBN",
   "overpowering": "JJ",
-  "workmanlike": "JJ",
   "henpecked": "JJ",
   "sorted": "JJ",
   "bedevil": "VB",
@@ -755,16 +184,11 @@ var lexicon={
   "yellow": "JJ",
   "growthy": "JJ",
   "presages": "VBZ",
-  "venturesome": "JJ",
-  "michigan": "NNP",
   "calming": "JJ",
-  "precious-metals": "NNS",
   "spoken": "JJ",
   "affords": "VBZ",
   "lingering": "JJ",
   "raised": "JJ",
-  "solid-waste": "NN",
-  "surges": "NNS",
   "snatch": "VB",
   "absorbs": "VBZ",
   "so-so": "RB",
@@ -787,18 +211,12 @@ var lexicon={
   "unlocks": "VBZ",
   "welcomes": "VBZ",
   "menacing": "JJ",
-  "workplace": "NN",
-  "grooming": "NN",
   "fix": "VB",
-  "cribs": "NNS",
-  "west": "NNP",
-  "tightened": "JJ",
   "offshore": "RB",
   "abject": "JJ",
   "adjusted": "JJ",
   "bankrupts": "VBZ",
   "graphed": "VBN",
-  "demolition": "NN",
   "ingrained": "JJ",
   "assigns": "VBZ",
   "anywhere": "RB",
@@ -809,20 +227,14 @@ var lexicon={
   "completed": "JJ",
   "adroit": "JJ",
   "plumed": "JJ",
-  "saddened": "JJ",
   "completes": "VBZ",
   "unerring": "JJ",
   "rejoin": "VB",
   "decomposed": "JJ",
-  "sums": "NNS",
-  "decomposes": "VBZ",
-  "sensational": "JJ",
   "conpired": "VBN",
-  "warming": "NN",
   "obstruct": "JJ",
   "satisfactory": "JJ",
   "expressed": "JJ",
-  "expresses": "VBZ",
   "averse": "JJ",
   "disparaging": "JJ",
   "knows": "VBZ",
@@ -833,37 +245,27 @@ var lexicon={
   "lively": "JJ",
   "pivot": "JJ",
   "bubbly": "JJ",
-  "gleam": "NN",
   "glean": "VB",
   "sealed": "JJ",
-  "bubble": "NN",
   "secreted": "VBN",
   "societal": "JJ",
   "with": "IN",
   "abused": "JJ",
   "rage": "JJ",
   "chomped": "VBN",
-  "watches": "NNS",
-  "creak": "NN",
   "tremble": "VB",
-  "cream": "NN",
   "unparalleled": "JJ",
   "refunded": "VBN",
   "hairsplitting": "JJ",
-  "tricky": "JJ",
   "henh": "UH",
   "accreted": "VBN",
   "caused": "VBN",
   "beware": "VB",
   "about": "IN",
-  "tax-loss": "NN",
-  "causes": "NNS",
   "predawn": "JJ",
-  "front-desk": "NN",
   "overexpose": "VB",
   "wilkes": "VBZ",
   "insufficiently": "RB",
-  "sang": "NNP",
   "sane": "JJ",
   "semifinished": "VBN",
   "sank": "VBD",
@@ -873,7 +275,6 @@ var lexicon={
   "straggle": "VBP",
   "pays": "VBZ",
   "dwells": "VBZ",
-  "hash": "NN",
   "obtrudes": "VBZ",
   "daunted": "JJ",
   "unrewarding": "JJ",
@@ -884,29 +285,22 @@ var lexicon={
   "initiated": "VBN",
   "corrected": "JJ",
   "initiates": "VBZ",
-  "resorcinol": "NN",
   "grope": "VB",
   "scramble": "VBP",
-  "panasonic": "NNP",
   "bogs": "VBZ",
   "meaner": "JJR",
   "called": "VBN",
   "somali": "JJ",
-  "allegro": "NNP",
-  "recapitalize": "VB",
   "bonded": "VBN",
   "huge": "JJ",
   "hugh": "JJ",
   "dismissed": "JJ",
-  "dismisses": "VBZ",
-  "thickened": "JJ",
   "disgraced": "JJ",
   "malevolent": "JJ",
   "resemble": "VB",
   "accuse": "VB",
   "peppy": "JJ",
   "installed": "VBN",
-  "paper": "NN",
   "bummed": "VBN",
   "parental": "JJ",
   "bypass": "VB",
@@ -914,26 +308,18 @@ var lexicon={
   "abandons": "VBZ",
   "shocking": "JJ",
   "scoops": "VBZ",
-  "research": "NN",
-  "report": "NN",
   "precautionary": "JJ",
-  "swipe": "NN",
   "stifle": "VB",
   "de-emphasized": "VBN",
-  "swanky": "JJ",
   "mutilates": "VBZ",
   "blond": "JJ",
-  "founding": "NN",
   "fermented": "VBN",
   "peridontal": "JJ",
-  "singles": "NNS",
   "understands": "VBZ",
-  "seize": "VB",
   "proliferated": "VBN",
   "administrate": "VB",
   "indirect": "JJ",
   "exterminate": "VB",
-  "agonize": "VB",
   "deadly": "JJ",
   "affix": "VB",
   "behold": "VB",
@@ -944,16 +330,13 @@ var lexicon={
   "pleasure": "JJ",
   "cooked": "VBN",
   "remedy": "JJ",
-  "compass": "NN",
   "damnit": "UH",
   "incapacitated": "JJ",
   "tanked": "VBN",
   "improper": "JJ",
   "rumored": "VBN",
   "insane": "JJ",
-  "activists": "NNS",
   "semidrying": "JJ",
-  "analog": "NN",
   "dipole": "JJ",
   "ablated": "JJ",
   "thrive": "VBP",
@@ -961,20 +344,13 @@ var lexicon={
   "retarded": "JJ",
   "nimbler": "JJR",
   "longs": "VBZ",
-  "care": "NN",
   "complements": "VBZ",
   "awake": "JJ",
-  "presses": "NNS",
-  "budget": "NN",
   "pressed": "VBN",
   "binding": "JJ",
   "spencerian": "JJ",
-  "nickname": "NN",
-  "music": "NN",
   "copes": "VBZ",
   "uncouth": "JJ",
-  "salvo": "NN",
-  "salve": "NN",
   "on": "IN",
   "ol": "JJ",
   "oh": "JJ",
@@ -983,8 +359,6 @@ var lexicon={
   "oneyear": "JJ",
   "or": "CC",
   "ok": "JJ",
-  "show": "NN",
-  "crapshoot": "NN",
   "bounce": "VB",
   "bouncy": "JJ",
   "greener": "JJR",
@@ -994,7 +368,6 @@ var lexicon={
   "disjointed": "JJ",
   "scraggly": "JJ",
   "rican": "JJ",
-  "canning": "NN",
   "discoid": "JJ",
   "fragmented": "JJ",
   "principal": "JJ",
@@ -1002,7 +375,6 @@ var lexicon={
   "paired": "JJ",
   "retaliatory": "JJ",
   "purges": "VBZ",
-  "deadliest": "JJS",
   "haunt": "VB",
   "unsaturated": "JJ",
   "intrepid": "JJ",
@@ -1013,14 +385,12 @@ var lexicon={
   "doubt": "RB",
   "unforseen": "JJ",
   "dicker": "VB",
-  "account": "NN",
   "intercity": "JJ",
   "vouchsafes": "VBZ",
   "begins": "VBZ",
   "tempted": "VBN",
   "waning": "JJ",
   "sweaty": "JJ",
-  "credits": "NNS",
   "ould": "JJ",
   "makes": "VBZ",
   "panicked": "JJ",
@@ -1029,17 +399,12 @@ var lexicon={
   "incertain": "JJ",
   "sold": "VBN",
   "neutral": "JJ",
-  "arbitrage``": "``",
-  "eurodollars": "NNS",
   "rich": "JJ",
   "undeclared": "JJ",
   "growing": "JJ",
-  "reserves": "NNS",
   "retell": "VBP",
-  "scatter": "NN",
   "rode": "VBD",
   "bolstered": "VBN",
-  "scrap": "NN",
   "evolutionary": "JJ",
   "altogether": "RB",
   "reconsider": "VB",
@@ -1048,7 +413,6 @@ var lexicon={
   "creedal": "JJ",
   "concave": "JJ",
   "dropping": "JJ",
-  "patch": "NN",
   "witness": "VB",
   "frowns": "VBZ",
   "unwieldy": "JJ",
@@ -1057,7 +421,6 @@ var lexicon={
   "receding": "JJ",
   "imprecates": "VBZ",
   "erstwhile": "RB",
-  "interests": "NNS",
   "existing": "JJ",
   "false": "JJ",
   "shrinks": "VBZ",
@@ -1067,22 +430,17 @@ var lexicon={
   "depict": "VB",
   "cipher": "VB",
   "bred": "VBN",
-  "brew": "NN",
   "unstained": "JJ",
   "replaster": "VB",
   "taps": "VBZ",
   "trying": "JJ",
   "irk": "JJ",
-  "tape": "NN",
   "undivided": "JJ",
   "hooked": "VBN",
   "unbundle": "VB",
   "wring": "VB",
-  "taxes": "NNS",
-  "stuff": "NN",
   "taxed": "VBN",
   "deathward": "RB",
-  "frame": "NN",
   "nuclear": "JJ",
   "roiled": "JJ",
   "stubbed": "VBN",
@@ -1090,28 +448,17 @@ var lexicon={
   "indict": "VB",
   "willing": "JJ",
   "entitle": "VB",
-  "feather": "NN",
-  "commutes": "NNS",
   "commuted": "VBN",
   "banish": "VB",
   "westerly": "JJ",
-  "noces": "NNP",
   "greater": "JJR",
   "regular": "JJ",
   "off": "JJ",
-  "southeastern": "NNP",
   "oft": "RB",
-  "newest": "JJS",
   "resuspended": "VBN",
-  "monetarist": "NN",
   "neoliberal": "JJ",
-  "crack": "NN",
   "falters": "VBZ",
-  "bulge": "NN",
   "become": "VB",
-  "kidder": "NNP",
-  "hissing": "NN",
-  "tubing": "NN",
   "imaginary": "JJ",
   "grayer": "JJR",
   "replace": "VB",
@@ -1124,20 +471,14 @@ var lexicon={
   "bothers": "VBZ",
   "nonfarm": "JJ",
   "splintered": "JJ",
-  "pairing": "NN",
   "faster-growing": "JJR",
   "terminates": "VBZ",
-  "healthcare": "NNP",
   "evident": "JJ",
   "shrunk": "VBN",
-  "wheellike": "JJ",
   "obese": "JJ",
   "nonetheless": "RB",
   "tubular": "JJ",
-  "decisional": "JJ",
-  "details": "NNS",
   "druse": "JJ",
-  "treelike": "JJ",
   "compete": "VB",
   "agile": "JJ",
   "stinks": "JJ",
@@ -1146,16 +487,12 @@ var lexicon={
   "aaawww": "UH",
   "summarized": "VBN",
   "blanche": "JJ",
-  "by-election": "NN",
   "debunked": "VBN",
   "superlunary": "JJ",
   "troubled": "JJ",
-  "food-service": "NN",
   "no-o-o": "UH",
   "equals": "VBZ",
-  "stresses": "NNS",
   "bilevel": "JJ",
-  "catch-up": "NN",
   "stressed": "JJ",
   "absolute": "JJ",
   "shootin": "VBG",
@@ -1165,14 +502,12 @@ var lexicon={
   "exacts": "VBZ",
   "competes": "VBZ",
   "ascribe": "VBP",
-  "regrouping": "NN",
   "overstretch": "VB",
   "divorced": "VBN",
   "cuddly": "JJ",
   "rationed": "VBN",
   "nuts": "JJ",
   "misleads": "VBZ",
-  "pre-1986": "JJ",
   "call": "VB",
   "slimmed": "VBN",
   "undetected": "JJ",
@@ -1188,8 +523,6 @@ var lexicon={
   "unfocused": "JJ",
   "disputed": "JJ",
   "certifies": "VBZ",
-  "disputes": "NNS",
-  "enlightened": "JJ",
   "certified": "JJ",
   "ugh": "UH",
   "affluent": "JJ",
@@ -1197,33 +530,22 @@ var lexicon={
   "re-enact": "VB",
   "hamstring": "VB",
   "another": "DT",
-  "manfred": "NNP",
   "illustrate": "VB",
-  "public-sector": "NN",
-  "dogs": "NNS",
   "rare": "JJ",
   "offhand": "JJ",
   "enmeshed": "JJ",
-  "lincoln": "NNP",
   "impelled": "VBN",
   "convenient": "JJ",
   "confiscated": "VBN",
-  "subjects": "NNS",
-  "quadric": "NN",
   "thundering": "JJ",
   "witnessed": "VBN",
   "enshrined": "VBN",
-  "reserve": "NN",
-  "bellow": "NN",
   "mid-flight": "RB",
   "facaded": "VBN",
   "haitian": "JJ",
   "haunted": "JJ",
   "roundabout": "JJ",
   "runs": "VBZ",
-  "donoghue": "NNP",
-  "small-company": "NN",
-  "gears": "NNS",
   "rung": "VBN",
   "freshwater": "JJR",
   "shoe-horn": "VB",
@@ -1233,10 +555,8 @@ var lexicon={
   "pasted": "VBN",
   "fifteenth": "CD",
   "drawn": "JJ",
-  "encounters": "NNS",
   "succumbs": "VBZ",
   "bring": "VB",
-  "tone": "NN",
   "had": "VBD",
   "engulfs": "VBZ",
   "anticipatory": "JJ",
@@ -1251,55 +571,32 @@ var lexicon={
   "wider-body": "JJR",
   "fuss": "VB",
   "unready": "JJ",
-  "fuse": "NN",
   "rasping": "JJ",
   "wops": "VBZ",
   "doubtless": "RB",
-  "thanks": "NNS",
-  "sabbatical": "NN",
   "nilpotent": "JJ",
   "eighth": "JJ",
   "eroded": "VBN",
-  "rustle": "NN",
   "cool": "JJ",
-  "night": "NN",
-  "commission": "NN",
   "bemused": "JJ",
   "contaminating": "JJ",
-  "glamorize": "VB",
   "architectural": "JJ",
-  "mailing": "NN",
   "gentler": "JJR",
-  "schnabel": "NNP",
   "overblown": "JJ",
-  "sternal": "JJ",
   "garaged": "VBN",
-  "crows": "NNS",
-  "some": "JJ",
-  "test": "NNP",
   "largely": "JJ",
   "faze": "VB",
   "}": ")",
-  "draw-file": "NN",
-  "horseback": "NN",
-  "battle": "NN",
   "headstrong": "JJ",
   "extols": "VBZ",
   "turns": "VBZ",
-  "gun": "NN",
-  "gum": "NN",
   "reaganite": "JJ",
-  "jurisdictional": "JJ",
   "detonated": "VBN",
   "hand-woven": "VBN",
-  "form": "NN",
   "foregoing": "JJ",
-  "shares": "NNS",
   "peels": "VBZ",
-  "fort": "NN",
   "wonduh": "VB",
   "juvenile": "JJ",
-  "burdensome": "JJ",
   "plotted": "VBN",
   "regardless": "RB",
   "extra": "JJ",
@@ -1311,14 +608,9 @@ var lexicon={
   "slough": "VB",
   "require": "VB",
   "prepay": "VB",
-  "defeats": "NNS",
-  "conn.based": "JJ",
-  "chin": "NN",
-  "positional": "JJ",
   "deteriorate": "VB",
   "escalate": "VB",
   "elaborate": "JJ",
-  "push-up": "NN",
   "opts": "VBZ",
   "still": "JJ",
   "placate": "JJ",
@@ -1329,9 +621,6 @@ var lexicon={
   "yeah": "UH",
   "challenges": "NNPS",
   "becalmed": "JJ",
-  "year": "NN",
-  "thru": "NN",
-  "monitors": "NNS",
   "norwegian": "JJ",
   "indochinese": "JJ",
   "tangled": "JJ",
@@ -1340,10 +629,8 @@ var lexicon={
   "flipping": "RB",
   "travels": "VBZ",
   "tomorrow": "RB",
-  "despises": "VBZ",
   "brainy": "JJ",
   "uninformed": "JJ",
-  "interbank": "NNP",
   "transferred": "VBN",
   "diktat": "JJ",
   "overcollateralized": "VBN",
@@ -1352,35 +639,25 @@ var lexicon={
   "outside": "JJ",
   "deep": "JJ",
   "custom-built": "VBN",
-  "refuses": "VBZ",
-  "chemical-weapons": "NNS",
   "chauffeured": "VBN",
-  "premieres": "NNS",
   "wet": "JJ",
   "jeepers": "UH",
-  "industrialize": "VB",
   "embittered": "JJ",
   "paneled": "JJ",
   "humbled": "JJ",
-  "stroll": "NN",
   "bannnnnng": "VB",
   "burst": "VBD",
   "anchored": "VBN",
-  "break-up": "NN",
   "westbound": "JJ",
   "broil": "VB",
   "wins": "VBZ",
   "outcuss": "VBZ",
   "botched": "JJ",
-  "foreboding": "NN",
   "exploit": "VB",
-  "sledding": "NN",
   "amino": "JJ",
   "muzzling": "JJ",
   "paid": "JJ",
-  "goodby": "NNP",
   "involved": "JJ",
-  "financial-service": "NN",
   "offbeat": "JJ",
   "performed": "VBN",
   "moody": "JJ",
@@ -1397,52 +674,33 @@ var lexicon={
   "thatcherian": "JJ",
   "disproportionate": "JJ",
   "propped": "VBN",
-  "tenn.-based": "JJ",
-  "heightened": "JJ",
   "unrequited": "JJ",
   "conducts": "VBZ",
-  "roll": "NNP",
   "unspoiled": "JJ",
-  "output": "NN",
   "verbal": "JJ",
   "exposed": "JJ",
-  "exposes": "VBZ",
   "intend": "JJ",
-  "fractures": "NNS",
   "chilean": "JJ",
   "fractured": "VBN",
-  "d&b": "NNP",
   "backup": "JJ",
   "curtail": "VB",
   "embedded": "JJ",
-  "defect": "NN",
-  "sturdiest": "JJS",
   "balks": "VBZ",
   "finishes": "VBZ",
   "poor": "JJ",
   "titillating": "JJ",
   "overseas": "JJ",
-  "ceases": "VBZ",
   "unknown": "JJ",
   "unblock": "VB",
   "take": "VB",
-  "corps": "NN",
-  "volunteer": "NN",
   "coloured": "JJ",
   "startin": "VBG",
-  "lulls": "NNS",
   "coudn": "MD",
-  "raw-material": "NN",
   "lurch": "JJ",
   "excess": "JJ",
-  "advertising": "NNP",
   "inspires": "VBZ",
   "seventeenth": "CD",
   "climb": "VB",
-  "moet": "NNP",
-  "oil-field": "NN",
-  "struggle": "NN",
-  "banking": "NN",
   "so": "RB",
   "macho": "JJ",
   "bitten": "VBN",
@@ -1453,43 +711,30 @@ var lexicon={
   "stymie": "VB",
   "surpassed": "VBN",
   "reject": "JJ",
-  "surpasses": "VBZ",
   "lower": "JJR",
   "compulsory": "JJ",
-  "criticize": "VB",
   "embark": "VB",
   "anytime": "RB",
   "groundup": "JJ",
-  "networking": "NN",
   "definite": "JJ",
   "sarcolemmal": "JJ",
-  "atlas": "NNP",
-  "property-tax": "NN",
   "miter": "VB",
-  "evening": "NN",
   "slighter": "JJR",
   "slighted": "JJ",
   "liquefied": "JJ",
   "obligates": "VBZ",
-  "bless": "NNP",
   "blest": "VB",
   "fairy": "JJ",
   "obligated": "VBN",
   "heavy": "JJ",
   "transcribe": "VB",
-  "tax": "NN",
   "honest-to-betsy": "RB",
   "jolly": "JJ",
   "shrivel": "VB",
   "earns": "VBZ",
-  "blend": "NN",
   "adds": "VBZ",
-  "visions": "NNS",
-  "fiddle": "NN",
   "trapped": "JJ",
   "imperiled": "VBN",
-  "garrison": "NN",
-  "heaviest": "JJS",
   "deflationary": "JJ",
   "late": "JJ",
   "adorns": "VBZ",
@@ -1498,13 +743,10 @@ var lexicon={
   "lookit": "VB",
   "chief": "JJ",
   "ansuh": "VB",
-  "heavens": "NNS",
   "french": "JJ",
-  "retorts": "NNS",
   "competing": "JJ",
   "boils": "VBZ",
   "unburned": "JJ",
-  "confucian": "NNP",
   "hypo": "JJ",
   "doctrinaire": "JJ",
   "drafted": "VBN",
@@ -1512,56 +754,40 @@ var lexicon={
   "freed": "VBN",
   "hoisted": "VBN",
   "memorized": "VBN",
-  "compaq": "NNP",
   "enroll": "VB",
   "substantiates": "VBZ",
   "embroidered": "VBN",
-  "grant": "NNP",
   "masks": "VBZ",
   "makeshift": "JJ",
   "grand": "JJ",
   "fatty": "JJ",
   "seated": "VBN",
-  "euro-beach": "NN",
   "calibrates": "VBZ",
   "calibrated": "VBN",
   "grenadian": "JJ",
   "reviewed": "VBN",
   "informal": "JJ",
-  "representational": "JJ",
   "questioned": "VBN",
   "reemphasizes": "VBZ",
-  "cruise-ship": "NN",
   "preparatory": "JJ",
-  "sketch": "NN",
-  "towards": "NNP",
   "dilapidated": "JJ",
   "undergone": "VBN",
   "multivalent": "JJ",
   "assists": "VBZ",
   "lyophilized": "VBN",
-  "silence": "NN",
   "unimpaired": "JJ",
-  "presupposes": "VBZ",
   "opposed": "JJ",
   "uncomplaining": "JJ",
-  "withholding": "NN",
   "perpetual": "JJ",
-  "investment-banking": "NN",
   "limpid": "JJ",
   "purloined": "VBN",
-  "chomp": "NN",
   "familar": "JJ",
   "similar": "JJ",
   "ordered": "JJ",
   "dashed": "VBN",
-  "fears": "NNS",
-  "dashes": "NNS",
-  "smiles": "NNS",
   "exterminatin": "VBG",
   "assayed": "VBN",
   "correlated": "JJ",
-  "bribe": "NN",
   "perched": "VBN",
   "compact": "JJ",
   "insistent": "JJ",
@@ -1571,31 +797,23 @@ var lexicon={
   "unabridged": "JJ",
   "yourselves": "PRP",
   "curb": "VB",
-  "yiddish": "NNP",
   "sedentary": "JJ",
   "enforce": "VB",
   "overfunded": "VBN",
-  "jump": "NN",
   "notwithstanding": "RB",
   "upsetting": "JJ",
   "conducted": "VBN",
   "back": "RB",
-  "organizational": "JJ",
   "foresee": "VBP",
   "manage": "VB",
   "loyalist": "JJ",
   "discontinue": "VB",
   "salvages": "VBZ",
   "salvaged": "VBN",
-  "boards": "NNS",
-  "parachute": "NN",
   "laendler": "JJ",
   "meek": "JJ",
-  "computer-products": "NNS",
   "meet": "VB",
-  "averages": "NNS",
   "israeli": "JJ",
-  "links": "NNS",
   "peelback": "JJ",
   "deeper": "JJR",
   "listens": "VBZ",
@@ -1603,20 +821,13 @@ var lexicon={
   "outdid": "VBD",
   "roman": "JJ",
   "allow": "VB",
-  "makin": "NNP",
-  "scoop": "NN",
-  "guard": "NN",
   "desensitized": "VBN",
   "multiple": "JJ",
   "multiply": "VB",
   "loser": "JJ",
-  "loses": "VBZ",
-  "slide": "NN",
   "constitute": "VBP",
   "littered": "VBN",
-  "improvisational": "JJ",
   "delegated": "VBN",
-  "times": "NNS",
   "resumes": "VBZ",
   "timed": "VBN",
   "confuse": "VB",
@@ -1625,18 +836,12 @@ var lexicon={
   "newtonian": "JJ",
   "crackle": "JJ",
   "innovate": "VB",
-  "secco": "NN",
-  "bloodiest": "JJS",
   "enforced": "VBN",
   "flying": "JJ",
   "enforces": "VBZ",
-  "interview": "NN",
-  "rosier": "JJR",
   "thunders": "VBZ",
-  "battles": "NNS",
   "venereal": "JJ",
   "swollen": "JJ",
-  "countin": "NN",
   "exceed": "VB",
   "subtracted": "VBN",
   "repeated": "JJ",
@@ -1652,7 +857,6 @@ var lexicon={
   "inherited": "VBN",
   "embody": "VBP",
   "kinked": "JJ",
-  "alabaster": "NN",
   "maritime": "JJ",
   "scintillating": "JJ",
   "forget": "VB",
@@ -1669,7 +873,6 @@ var lexicon={
   "indiscriminate": "JJ",
   "hooray": "UH",
   "key": "JJ",
-  "limits": "NNS",
   "outrank": "VBP",
   "heavenward": "RB",
   "red-flag": "VB",
@@ -1679,31 +882,22 @@ var lexicon={
   "spook": "VBP",
   "controlled": "JJ",
   "unamusing": "JJ",
-  "debtor": "NN",
   "examines": "VBZ",
   "surface": "JJ",
   "pretty": "JJ",
   "cometh": "VBZ",
-  "northwest": "NNP",
   "arabist": "JJ",
   "proscribe": "VBP",
   "stumped": "VBN",
-  "refashion": "NN",
   "steals": "VBZ",
   "increasingly": "RB",
   "liked": "JJ",
-  "o.k.": "UH",
   "propelled": "VBN",
   "skips": "VBZ",
   "unthaw": "VB",
-  "rote": "NN",
   "revisits": "VBZ",
-  "glare": "NN",
   "avoid": "VB",
-  "moderates": "NNS",
-  "cradle": "NN",
   "moderated": "VBN",
-  "open-door": "NN",
   "demonstrated": "JJ",
   "to-and-fro": "RB",
   "forgit": "VB",
@@ -1714,19 +908,12 @@ var lexicon={
   "unhinged": "VBN",
   "unaided": "JJ",
   "interlobular": "JJ",
-  "additional": "JJ",
   "lagged": "VBN",
   "squirmy": "JJ",
-  "gain": "NN",
   "highest": "RB",
-  "twist": "NN",
-  "kisses": "NNS",
   "beats": "VBZ",
   "leftist": "JJ",
   "stormbound": "JJ",
-  "traditionalist": "NN",
-  "tackiest": "JJS",
-  "foil": "NN",
   "middlebrow": "JJ",
   "backstage": "JJ",
   "endure": "VB",
@@ -1734,20 +921,16 @@ var lexicon={
   "soak": "VB",
   "trodden": "JJ",
   "swam": "VBD",
-  "swap": "NN",
   "recycle": "VB",
   "sorry": "JJ",
   "sway": "VB",
   "collaborate": "VB",
-  "void": "NN",
   "unrelated": "JJ",
   "enhance": "VB",
-  "whirlwind": "NN",
   "hibernate": "VBP",
   "kidnap": "VB",
   "uptempo": "JJ",
   "mee": "PRP",
-  "muzzle": "NN",
   "met": "RB",
   "biconcave": "JJ",
   "systematized": "VBN",
@@ -1757,9 +940,6 @@ var lexicon={
   "overlooked": "VBN",
   "grabbin": "VBG",
   "defecated": "VBN",
-  "slug": "NN",
-  "root": "NN",
-  "troubles": "NNS",
   "elicited": "VBN",
   "disassemble": "VB",
   "defaces": "VBZ",
@@ -1768,26 +948,20 @@ var lexicon={
   "determinate": "JJ",
   "budding": "JJ",
   "deathly": "JJ",
-  "personal": "JJ",
   "drops": "VBZ",
   "rebutted": "VBN",
   "madly": "JJ",
   "driftin": "VBG",
-  "demythologize": "VB",
   "glazed": "JJ",
-  "check": "NN",
   "nonchurchgoing": "JJ",
   "trading": "JJ",
   "forgot": "VBN",
-  "aids": "NNS",
   "unbound": "JJ",
   "join": "VB",
   "abate": "VB",
   "resew": "VB",
   "sudden": "JJ",
-  "uses": "VBZ",
   "enraged": "JJ",
-  "double-a-2": "NN",
   "acquaint": "VB",
   "excellent": "JJ",
   "estimated": "JJ",
@@ -1795,34 +969,25 @@ var lexicon={
   "exhausted": "JJ",
   "conforms": "VBZ",
   "recommence": "VB",
-  "rattle": "NN",
   "prerecorded": "VBN",
   "egyptian": "JJ",
   "yearlong": "JJ",
-  "legal-services": "NNS",
   "unleashed": "VBN",
   "mineralized": "JJ",
   "flouted": "VBN",
-  "poison": "NN",
   "dampening": "JJ",
   "nyet": "UH",
   "yesiree": "UH",
-  "troop": "NN",
-  "star-spangled": "NNP",
-  "testing": "NN",
   "indexed": "VBN",
   "narrated": "VBN",
   "billed": "VBN",
   "otherwise": "RB",
   "precut": "JJ",
-  "putt": "NN",
   "puts": "VBZ",
   "regenerate": "JJ",
   "lovely": "JJ",
   "capitalist": "JJ",
   "recuperate": "VB",
-  "cans": "NNS",
-  "gaze": "NN",
   "evolve": "VB",
   "opulent": "JJ",
   "impelling": "JJ",
@@ -1833,45 +998,30 @@ var lexicon={
   "assigned": "VBN",
   "salivary": "JJ",
   "pecuniary": "JJ",
-  "ago.": "RB",
   "involuntary": "JJ",
-  "rehash": "NN",
   "paramilitary": "JJ",
-  "art": "NN",
   "repossessed": "JJ",
   "are": "CP",
-  "arm": "NN",
   "deaf": "JJ",
   "been": "VBN",
   "dear": "JJ",
-  "buffer": "NN",
   "codifies": "VBZ",
-  "defense-electronics": "NNS",
-  "buffet": "NN",
   "codified": "JJ",
   "blithe": "JJ",
   "second-guessed": "VBN",
   "down": "IN",
   "refined": "JJ",
-  "landing": "NNP",
   "feminine": "JJ",
   "evinced": "VBN",
-  "trendiest": "JJS",
-  "cure-all": "NN",
   "helps": "VBZ",
   "awhile": "RB",
   "marinated": "VBN",
-  "handicap": "NN",
   "brightens": "VBZ",
   "pseudo": "JJ",
-  "substitute": "NN",
   "restored": "VBN",
   "winning": "JJ",
   "redouble": "VB",
   "hijacked": "VBN",
-  "father": "NN",
-  "telegraph": "NN",
-  "cheapest": "JJS",
   "turgid": "JJ",
   "stiffer": "JJR",
   "onrushing": "JJ",
@@ -1881,19 +1031,11 @@ var lexicon={
   "comend": "VB",
   "suspect": "JJ",
   "noconfidence": "JJ",
-  "processing": "NNP",
-  "cushioning": "NN",
-  "box": "NN",
-  "boy": "NN",
-  "diagnoses": "NNS",
-  "bow": "NN",
   "founded": "VBN",
   "diagnosed": "VBN",
-  "bon": "NNP",
   "bog": "VB",
   "teenage": "JJ",
   "passthrough": "JJ",
-  "transplant": "NN",
   "cooperates": "VBZ",
   "cooperated": "VBN",
   "forswears": "VBZ",
@@ -1901,30 +1043,23 @@ var lexicon={
   "romanticized": "VBN",
   "fuck": "VB",
   "irreverent": "JJ",
-  "hazardous-waste": "NN",
   "nondairy": "JJ",
   "reseller": "JJR",
   "nicaraguan": "JJ",
   "solder": "VB",
   "blooded": "VBN",
-  "police": "NN",
   "reinvested": "VBN",
-  "underpinning": "NN",
   "tucked": "VBN",
-  "lunch": "NN",
   "routine": "JJ",
   "disappointing": "JJ",
   "carrion": "JJ",
   "publicsector": "JJ",
   "ajar": "RB",
-  "fight": "NN",
   "contented": "JJ",
   "frequent": "JJ",
   "enthralled": "JJ",
   "black": "JJ",
   "intrastate": "JJ",
-  "noisier": "JJR",
-  "anglo-american": "NNP",
   "speaking": "JJ",
   "inefficient": "JJ",
   "doddering": "JJ",
@@ -1937,9 +1072,7 @@ var lexicon={
   "cosponsors": "VBZ",
   "we": "PRP",
   "detached": "JJ",
-  "wa": "NNP",
   "wo": "MD",
-  "treasure": "NN",
   "travesty": "JJ",
   "pegged": "VBN",
   "seekin": "VBG",
@@ -1947,16 +1080,13 @@ var lexicon={
   "unaltered": "JJ",
   "enjoys": "VBZ",
   "right": "JJ",
-  "anger": "NN",
   "declared": "JJ",
   "provide": "VB",
   "sear": "VB",
-  "seat": "NN",
   "held": "VBN",
   "declares": "VBZ",
   "indicted": "VBN",
   "illiterate": "JJ",
-  "label": "NN",
   "permeated": "VBN",
   "across": "RB",
   "satiate": "VB",
@@ -1968,7 +1098,6 @@ var lexicon={
   "taught": "JJ",
   "tout": "VB",
   "carved": "VBN",
-  "priciest": "JJS",
   "considering": "RB",
   "wobble": "VB",
   "wobbly": "JJ",
@@ -1989,12 +1118,10 @@ var lexicon={
   "englishy": "JJ",
   "liberal": "JJ",
   "acquainted": "VBN",
-  "vending": "NN",
   "moreover": "RB",
   "passionate": "JJ",
   "pronounce": "VB",
   "illustrated": "VBN",
-  "staff-reduction": "NN",
   "glomerular": "JJ",
   "purported": "JJ",
   "fertile": "JJ",
@@ -2002,14 +1129,11 @@ var lexicon={
   "practised": "JJ",
   "spicy": "JJ",
   "wholehearted": "JJ",
-  "spice": "NN",
   "undiminished": "JJ",
   "examine": "VB",
   "spat": "VBD",
   "weeded": "VBN",
   "somewhat": "RB",
-  "victimize": "VBP",
-  "fixed-income": "NN",
   "itches": "VBZ",
   "wanta": "VB",
   "u": "PRP",
@@ -2027,27 +1151,23 @@ var lexicon={
   "straighten": "VB",
   "squeezes": "VBZ",
   "repeals": "VBZ",
-  "fetishize": "VBP",
   "mull": "VB",
   "calculates": "VBZ",
   "witchy": "JJ",
   "wrangle": "VB",
   "collated": "VBN",
-  "specialize": "VB",
   "splashes": "VBZ",
   "pigmented": "VBN",
   "coming": "JJ",
   "engaged": "JJ",
   "recall": "VB",
   "remain": "VB",
-  "halts": "NNS",
   "reaps": "VBZ",
   "stubborn": "JJ",
   "synchronized": "JJ",
   "rejuvenated": "VBN",
   "minimum": "JJ",
   "rejuvenates": "VBZ",
-  "comfort": "NN",
   "stir": "VB",
   "uninfected": "JJ",
   "accorded": "VBN",
@@ -2061,42 +1181,32 @@ var lexicon={
   "polished": "JJ",
   "evade": "VB",
   "micro": "JJ",
-  "politicize": "VB",
   "engaging": "JJ",
   "edged": "JJ",
   "bandaged": "JJ",
-  "cook": "NN",
   "extraordinary": "JJ",
   "deflate": "VB",
   "backed": "JJ",
   "constraining": "JJ",
   "puritan": "JJ",
-  "welcome": "NNP",
   "environmental": "JJ",
-  "paper-products": "NNS",
   "catapult": "VB",
   "differentiate": "VB",
   "unbroken": "JJ",
   "once": "RB",
   "swerve": "VBP",
-  "confessional": "NN",
   "amusing": "JJ",
   "ukrainian": "JJ",
   "lifts": "VBZ",
   "chary": "JJ",
   "serene": "JJ",
-  "chart": "NN",
   "serviced": "VBN",
-  "charm": "NN",
-  "services": "NNS",
   "fresh": "JJ",
   "teems": "VBZ",
   "watch": "VB",
   "seething": "JJ",
-  "rebels": "NNS",
   "swelling": "JJ",
   "confident": "JJ",
-  "sanitize": "VBP",
   "thruways": "RB",
   "u.n.-monitored": "JJ",
   "favorite": "JJ",
@@ -2105,7 +1215,6 @@ var lexicon={
   "spiked": "JJ",
   "female": "JJ",
   "semisecret": "JJ",
-  "overburdened": "JJ",
   "internationalist": "JJ",
   "get": "VB",
   "defunct": "JJ",
@@ -2118,7 +1227,6 @@ var lexicon={
   "surrounded": "VBN",
   "fused": "VBN",
   "appall": "VBP",
-  "screened": "VBN",
   "peppery": "JJ",
   "assorted": "JJ",
   "resisted": "VBN",
@@ -2127,38 +1235,25 @@ var lexicon={
   "confining": "JJ",
   "ahm": "PRP",
   "bristle": "VBP",
-  "copy": "NN",
   "unveil": "VB",
-  "gestures": "NNS",
-  "plans": "NNS",
   "iffy": "JJ",
-  "insitutional": "JJ",
   "criss-cross": "VBP",
   "segregate": "VB",
-  "postal": "NNP",
   "propose": "VB",
   "knock": "JJ",
   "borrows": "VBZ",
   "happens": "VBZ",
-  "lastest": "JJS",
-  "blow": "NN",
   "balmy": "JJ",
-  "sourcing": "NN",
-  "seating": "NN",
-  "increase": "NN",
   "retailed": "VBN",
   "u.s.-style": "JJ",
   "underused": "JJ",
   "underlines": "VBZ",
   "exterminated": "VBN",
-  "beijing": "NNP",
   "curt": "JJ",
   "scarlet": "JJ",
-  "cure": "NN",
   "curl": "VB",
   "commissioned": "JJ",
   "confine": "VB",
-  "advance": "NN",
   "endocrine": "JJ",
   "cater": "VBP",
   "implies": "VBZ",
@@ -2169,124 +1264,80 @@ var lexicon={
   "pleasing": "JJ",
   "uttuh": "VB",
   "entire": "JJ",
-  "busier": "JJR",
-  "howard": "NNP",
   "fast": "JJ",
   "repurchased": "VBN",
-  "par-5": "JJ",
   "fat": "JJ",
   "employerpaid": "JJ",
-  "packing": "NNP",
   "healing": "JJ",
   "safer": "JJR",
   "implement": "VB",
-  "over-50": "JJ",
-  "answer": "NN",
   "hammered": "VBN",
   "year-ago": "RB",
   "prized": "JJ",
-  "prizes": "NNS",
   "silvery": "JJ",
   "closing": "JJ",
   "fetch": "VB",
   "blabs": "VBZ",
-  "hair-care": "NN",
   "varied": "JJ",
-  "drink": "NN",
-  "profile": "NN",
-  "friendlier": "JJR",
   "nonworking": "JJ",
   "trembling": "JJ",
-  "solos": "NNS",
-  "cease-fire": "NN",
   "rutted": "JJ",
   "disarm": "VB",
-  "east-west": "NNP",
   "flattering": "JJ",
   "twirls": "VBZ",
   "twirly": "JJ",
   "accredited": "JJ",
   "disrupts": "VBZ",
   "bolder": "JJR",
-  "tetragonal": "JJ",
   "frayed": "JJ",
   "blindfolded": "VBN",
-  "moroccan": "NNP",
   "theatergoing": "JJ",
   "recoated": "VBN",
-  "print": "NN",
   "sexual": "JJ",
   "trappist": "JJ",
   "fluctuates": "VBZ",
   "picks": "VBZ",
-  "v-8": "JJ",
-  "v-6": "NNP",
-  "handier": "JJR",
   "braced": "JJ",
   "reaches": "VBZ",
   "reached": "VBN",
   "pershare": "JJ",
   "demythologized": "VBN",
-  "then-vice": "NNP",
-  "cartoonlike": "JJ",
   "bulldog": "JJ",
   "unsubtle": "JJ",
   "inapt": "JJ",
-  "long-term``": "``",
   "stirs": "VBZ",
   "have": "VBP",
-  "mimics": "NNS",
   "misrelated": "VBN",
-  "occasion": "NN",
   "squeegee": "VBP",
   "submachine": "JJ",
-  "hijacking": "NN",
-  "teams": "NNS",
   "hypophyseal": "JJ",
   "discreet": "JJ",
   "wean": "VB",
-  "b-week": "NN",
   "dirty": "JJ",
   "weak": "JJ",
-  "effluent": "NN",
   "revoked": "VBN",
   "joke": "JJ",
   "equal": "JJ",
-  "pulp": "NN",
-  "liquidating": "NNP",
-  "machinists": "NNS",
-  "tax-law": "NN",
   "magnetized": "VBN",
-  "thrift-industry": "NN",
   "welcoming": "JJ",
   "general": "JJ",
-  "pricing": "NN",
   "ensuing": "JJ",
   "frustrating": "JJ",
-  "whirl": "NN",
-  "return": "NN",
   "prevents": "VBZ",
   "aims": "VBZ",
   "unfetter": "VB",
   "disoriented": "JJ",
   "multibilliondollar": "JJ",
-  "stores": "NNS",
   "interim": "JJ",
-  "localize": "VB",
   "reformer": "JJ",
   "onward": "RB",
-  "slits": "NNS",
   "reformed": "JJ",
   "resolved": "VBN",
   "thread": "VB",
   "resolves": "VBZ",
-  "release": "NN",
   "inflammatory": "JJ",
-  "like": "RB",
-  "hail": "NN",
   "elephantine": "JJ",
   "indemnify": "VB",
-  "trust": "NNP",
   "unalluring": "JJ",
   "racks": "VBZ",
   "uptight": "JJ",
@@ -2305,18 +1356,13 @@ var lexicon={
   "dressed": "JJ",
   "interdepartmental": "JJ",
   "detain": "VB",
-  "dresses": "NNS",
-  "maturational": "JJ",
   "stirred": "JJ",
   "ramble": "VB",
   "grimmer": "JJR",
-  "wine": "NN",
   "gratified": "VBN",
   "communist": "JJ",
   "inexpert": "JJ",
-  "public-relations": "NNS",
   "glides": "VBZ",
-  "activist": "NN",
   "@": "IN",
   "prowls": "VBZ",
   "shook": "VBD",
@@ -2324,20 +1370,14 @@ var lexicon={
   "annual": "JJ",
   "feathery": "JJ",
   "direct": "JJ",
-  "nail": "NN",
-  "bubblelike": "JJ",
   "revolves": "VBZ",
   "mmm": "JJ",
   "ebbs": "VBZ",
   "overplanted": "VBN",
   "leaves": "VBZ",
-  "midway": "NNP",
-  "prints": "NNS",
-  "narrative": "NN",
   "purifying": "JJ",
   "henceforth": "RB",
   "meaty": "JJ",
-  "fainting": "NN",
   "overstored": "JJ",
   "accrued": "JJ",
   "supplemental": "JJ",
@@ -2351,22 +1391,17 @@ var lexicon={
   "healthy": "JJ",
   "amid": "IN",
   "highpriced": "JJ",
-  "funniest": "JJS",
   "rough": "JJ",
-  "glories": "NNS",
   "resounds": "VBZ",
   "sportin": "VBG",
   "howdy": "UH",
   "sob": "VB",
   "convinced": "JJ",
   "blistered": "VBN",
-  "blots": "NNS",
   "preconceived": "JJ",
-  "whitened": "JJ",
   "diseased": "JJ",
   "exhilarated": "JJ",
   "foolishly": "RB",
-  "associate": "NNP",
   "unwraps": "VBZ",
   "mononuclear": "JJ",
   "x-rayed": "VBN",
@@ -2375,10 +1410,7 @@ var lexicon={
   "embellish": "VB",
   "twice": "RB",
   "overinvested": "VBN",
-  "seminal": "JJ",
-  "bridge": "NN",
   "unpopular": "JJ",
-  "thoroughly": "NNP",
   "thorough": "JJ",
   "dermal": "JJ",
   "impels": "VBZ",
@@ -2391,43 +1423,31 @@ var lexicon={
   "borrowed": "VBN",
   "considerate": "JJ",
   "angers": "VBZ",
-  "mediterranean": "NNP",
   "sharpens": "VBZ",
   "mus": "MD",
   "hopefully": "RB",
   "mum": "JJ",
   "deposed": "VBN",
-  "zimbabwean": "NNP",
   "portrays": "VBZ",
-  "fault": "NN",
   "overcooks": "VBZ",
   "consonantal": "JJ",
-  "spurs": "NNS",
   "interoffice": "JJ",
-  "homefed": "NNP",
   "antisony": "JJ",
   "inactivate": "VB",
   "pre-selected": "VBN",
-  "warehouses": "NNS",
-  "beneficiary": "NN",
   "unchanged": "JJ",
-  "censors": "NNS",
   "persecutory": "JJ",
   "dazzled": "VBN",
   "dazzles": "VBZ",
   "tell": "VB",
   "prior": "JJ",
   "beside": "RB",
-  "remarks": "NNS",
-  "peaks": "NNS",
   "descending": "JJ",
   "unyielding": "JJ",
   "darned": "RB",
   "multistage": "JJ",
   "estonian": "JJ",
   "gave": "VBD",
-  "breaks": "NNS",
-  "overcrowding": "NN",
   "b-includes": "VBZ",
   "renames": "VBZ",
   "unmarried": "JJ",
@@ -2442,9 +1462,7 @@ var lexicon={
   "unsalted": "JJ",
   "ahs": "UH",
   "abed": "RB",
-  "warrant": "NN",
   "stuck": "JJ",
-  "mid-october": "NNP",
   "automate": "VB",
   "pricked": "VBN",
   "overcollected": "JJ",
@@ -2457,9 +1475,7 @@ var lexicon={
   "inborn": "JJ",
   "eerie": "JJ",
   "outgrew": "VBD",
-  "implant": "NN",
   "papery": "JJ",
-  "savviest": "JJS",
   "flushes": "VBZ",
   "flushed": "JJ",
   "agayne": "RB",
@@ -2469,47 +1485,33 @@ var lexicon={
   "tsk": "UH",
   "rob": "VB",
   "gets": "VBZ",
-  "rot": "NN",
-  "row": "NN",
   "inverse": "JJ",
   "emphasizes": "VBZ",
   "creepers": "UH",
   "emphasized": "JJ",
   "irritates": "VBZ",
-  "thickest": "JJS",
   "savory": "JJ",
   "irritated": "JJ",
   "goes": "VBZ",
   "jilted": "VBN",
-  "nov.": "NNP",
-  "slaying": "NN",
   "learn": "VB",
   "boast": "VB",
   "rethink": "VB",
   "visiting": "JJ",
   "wreak": "VB",
-  "prey": "NN",
   "prep": "JJ",
-  "today": "NN",
-  "plug": "NN",
   "cased": "JJ",
-  "fuel": "NN",
   "inveterate": "JJ",
   "dthat": "IN",
-  "address": "NN",
-  "figure": "NN",
   "adherent": "JJ",
   "unloads": "VBZ",
   "fourth": "CD",
-  "demand": "NN",
-  "stanchest": "JJS",
   "cathodoluminescent": "JJ",
   "everywhere": "RB",
   "pervade": "VBP",
   "leggy": "JJ",
   "invents": "VBZ",
   "ordain": "VB",
-  "farewell": "NN",
   "intended": "JJ",
   "concur": "VBP",
   "precooked": "VBN",
@@ -2525,36 +1527,24 @@ var lexicon={
   "stylized": "JJ",
   "grunt": "VB",
   "overfill": "VB",
-  "stiffest": "JJS",
   "commonplace": "JJ",
   "good": "JJ",
-  "annum": "NN",
   "proud": "JJ",
-  "pores": "NNS",
   "antitakeover": "JJR",
   "cheat": "JJ",
   "inshore": "RB",
-  "trot": "NN",
-  "broadest": "JJS",
   "cautionary": "JJ",
   "burlesque": "JJ",
   "gouldoid": "JJ",
-  "jokes": "NNS",
-  "signs": "NNS",
-  "subcompact": "NN",
   "loose": "JJ",
   "saucy": "JJ",
   "harshly": "RB",
   "quiet": "JJ",
   "insist": "JJ",
-  "turkey": "NN",
   "subscribed": "JJ",
   "lower-value": "JJR",
   "subscribes": "VBZ",
   "exasperate": "VB",
-  "roaringest": "JJS",
-  "case": "NN",
-  "cash": "NN",
   "fiercer": "JJR",
   "cast": "VBN",
   "abducted": "VBN",
@@ -2564,8 +1554,6 @@ var lexicon={
   "even-handed": "RB",
   "bodied": "JJ",
   "pure": "JJ",
-  "influence-peddling": "NN",
-  "bodies": "NNS",
   "justify": "VB",
   "pink": "JJ",
   "splices": "VBZ",
@@ -2574,23 +1562,17 @@ var lexicon={
   "feminist": "JJ",
   "co-ordinates": "VBZ",
   "accompanied": "JJ",
-  "u.n.": "NNP",
   "acute": "JJ",
   "coursed": "VBN",
   "old": "JJ",
-  "snatches": "NNS",
-  "arms-reduction": "NN",
   "struggling": "JJ",
   "animalcare": "JJ",
-  "tricks": "NNS",
-  "slaughter": "NN",
   "whence": "WRB",
   "nods": "VBZ",
   "engendered": "VBN",
   "rising": "JJ",
   "cultured": "JJ",
   "permit": "VB",
-  "triple-a": "NNP",
   "competitve": "JJ",
   "incise": "VB",
   "autoimmune": "JJ",
@@ -2598,19 +1580,14 @@ var lexicon={
   "deserve": "VBP",
   "dark": "JJ",
   "darn": "JJ",
-  "panhandle": "NNP",
   "dare": "VB",
   "releasing": "JJ",
   "cuban": "JJ",
-  "directory": "NN",
   "numbing": "JJ",
-  "maple": "NN",
   "crumpled": "JJ",
   "tarry": "VB",
-  "generalize": "VB",
   "subsides": "VBZ",
   "nahce": "JJ",
-  "rest": "NN",
   "occurs": "VBZ",
   "stitched": "VBN",
   "uh-huh": "UH",
@@ -2618,14 +1595,8 @@ var lexicon={
   "easy": "JJ",
   "east": "JJ",
   "sue": "VB",
-  "sub": "NN",
-  "sun": "NN",
-  "sum": "NN",
   "sup": "VB",
   "underhanded": "JJ",
-  "high-school": "NN",
-  "arms-control": "NN",
-  "enlivened": "JJ",
   "theodosian": "JJ",
   "libyan": "JJ",
   "ineffectual": "JJ",
@@ -2636,26 +1607,17 @@ var lexicon={
   "irrigate": "VB",
   "untied": "JJ",
   "antebellum": "JJ",
-  "adventure": "NN",
   "armed": "JJ",
   "same": "JJ",
   "unitary": "JJ",
-  "transfers": "NNS",
   "err": "VBP",
   "u.s.-grown": "JJ",
-  "sequester": "NN",
   "accommodates": "VBZ",
   "ready": "JJ",
   "accommodated": "VBN",
   "oppressed": "JJ",
   "loopy": "JJ",
-  "loops": "NNS",
-  "atonal": "JJ",
-  "oppresses": "VBZ",
   "telltale": "JJ",
-  "hydraulic": "NNP",
-  "bourgeoisie": "NNS",
-  "prejudice": "NN",
   "bland": "JJ",
   "ponder": "JJ",
   "seeming": "JJ",
@@ -2663,9 +1625,7 @@ var lexicon={
   "indian": "JJ",
   "scathing": "JJ",
   "leading": "JJ",
-  "store": "NN",
   "bevel": "VB",
-  "retinal": "JJ",
   "shrunken": "JJ",
   "kind": "JJ",
   "weatherproof": "JJ",
@@ -2673,7 +1633,6 @@ var lexicon={
   "shrewd": "JJ",
   "tongued": "JJ",
   "conforming": "JJ",
-  "humanize": "VB",
   "establshed": "VBN",
   "gild": "VB",
   "rarefied": "JJ",
@@ -2688,20 +1647,16 @@ var lexicon={
   "reprint": "VB",
   "engraved": "VBN",
   "wrote": "VBD",
-  "visualize": "VB",
   "mmmm": "UH",
-  "franchises": "NNS",
   "manual": "JJ",
   "franchised": "VBN",
   "oversee": "VB",
   "shorthanded": "JJ",
   "apollonian": "JJ",
   "nettled": "JJ",
-  "drug-interdiction": "NN",
   "lovie": "UH",
   "institutionalized": "JJ",
   "unswagged": "JJ",
-  "precision": "NN",
   "kick": "JJ",
   "unaccompanied": "JJ",
   "laundered": "VBN",
@@ -2713,17 +1668,13 @@ var lexicon={
   "try": "VB",
   "magnified": "VBN",
   "magnifies": "VBZ",
-  "self": "NN",
   "prorate": "VB",
-  "meanest": "JJS",
   "jostle": "VBP",
   "thou": "PRP",
-  "advocate": "NN",
   "bemoan": "VB",
   "macromolecular": "JJ",
   "confront": "VB",
   "disinclined": "VBN",
-  "stock-manipulation": "NN",
   "perpendicular": "JJ",
   "defrost": "VB",
   "calloused": "JJ",
@@ -2733,18 +1684,13 @@ var lexicon={
   "lone": "JJ",
   "handles": "VBZ",
   "long": "JJ",
-  "impresses": "VBZ",
   "etch": "VB",
   "authored": "VBN",
-  "etc.": "RB",
-  "rally": "NN",
   "nice": "JJ",
   "smitten": "VBN",
   "relaunch": "VB",
   "safekeep": "VB",
-  "based": "JJ",
   "uphold": "VB",
-  "languages": "NNS",
   "repackage": "VB",
   "blended": "JJ",
   "include": "VB",
@@ -2756,7 +1702,6 @@ var lexicon={
   "insubordinate": "JJ",
   "suggests": "VBZ",
   "pale": "JJ",
-  "saltier": "JJR",
   "hardy": "JJ",
   "from": "IN",
   "procrastinate": "JJ",
@@ -2771,16 +1716,12 @@ var lexicon={
   "cliched": "JJ",
   "detests": "VBZ",
   "outdoor": "JJ",
-  "hum": "NN",
   "budge": "VB",
   "sanctioned": "JJ",
   "interpreted": "JJ",
   "strove": "VBD",
-  "late-1988": "JJ",
   "dismaying": "JJ",
   "neighborly": "JJ",
-  "crowds": "NNS",
-  "undoing": "NN",
   "measly": "JJ",
   "edit": "VB",
   "treads": "VBZ",
@@ -2796,17 +1737,13 @@ var lexicon={
   "misunderstood": "JJ",
   "mixtec": "JJ",
   "househld": "JJ",
-  "diego": "NNP",
   "co-written": "VBN",
-  "small-stock": "NN",
   "delineated": "VBN",
   "declasse": "JJ",
-  "trespassing": "NN",
   "why": "JJ",
   "ensues": "VBZ",
   "whose": "WP",
   "balding": "JJ",
-  "pleases": "VBZ",
   "utter": "JJ",
   "pleased": "JJ",
   "he": "PRP",
@@ -2814,25 +1751,16 @@ var lexicon={
   "skimp": "VB",
   "skims": "VBZ",
   "spinning": "JJ",
-  "paternalism": "NN",
-  "editorialize": "VB",
   "multipart": "JJ",
-  "confrontational": "JJ",
   "despoiled": "VBN",
   "credentialized": "JJ",
   "multifaceted": "JJ",
   "limit": "JJ",
   "machiavellian": "JJ",
-  "grounds": "NNS",
   "postwar": "JJ",
   "decent": "JJ",
   "responds": "VBZ",
-  "harshest": "JJS",
-  "talk-show": "NN",
-  "face": "NN",
-  "sept.": "NNP",
   "stunning": "JJ",
-  "medicinal": "JJ",
   "draining": "JJ",
   "lonely": "JJ",
   "lightweight": "JJ",
@@ -2842,20 +1770,12 @@ var lexicon={
   "disagree": "VBP",
   "overcrowded": "JJ",
   "picayune": "JJ",
-  "houston": "NNP",
   "enamored": "JJ",
   "conquer": "VB",
   "re-incorporated": "VBN",
-  "cameo": "NN",
-  "term": "NN",
-  "redesign": "NN",
   "feigned": "JJ",
-  "hosts": "NNS",
   "pasty": "JJ",
-  "paste": "NN",
   "carried": "VBN",
-  "outstripped": "NN",
-  "angelica": "NNP",
   "crave": "VBP",
   "spiral": "JJ",
   "leveraged": "VBN",
@@ -2871,7 +1791,6 @@ var lexicon={
   "surviving": "JJ",
   "impersonalized": "JJ",
   "thriving": "JJ",
-  "shielding": "NN",
   "taints": "VBZ",
   "antianemia": "JJ",
   "tensile": "JJ",
@@ -2884,47 +1803,32 @@ var lexicon={
   "increasing": "JJ",
   "longer": "JJR",
   "foremost": "JJ",
-  "burrow": "NN",
   "besets": "VBZ",
   "spoke": "VBD",
-  "re-emphasize": "VB",
   "overshadow": "VBP",
   "anticipated": "JJ",
-  "corning": "NNP",
   "heralded": "VBN",
   "sassy": "JJ",
-  "segregationist": "NN",
   "mired": "VBN",
   "hurt": "JJ",
   "goddammit": "UH",
   "straddle": "VB",
-  "vow": "NN",
   "unstuffy": "VB",
-  "household": "NN",
   "insulate": "VB",
   "reprove": "VB",
-  "rescue": "NN",
   "complaining": "JJ",
   "atop": "IN",
-  "damage": "NN",
   "killing": "JJ",
-  "swing": "NN",
   "attracts": "VBZ",
-  "wink": "NN",
   "keeps": "VBZ",
-  "wing": "NN",
-  "wind": "NN",
   "handcuff": "VBP",
   "affect": "VB",
-  "narrowest": "JJS",
   "commemorate": "VB",
-  "cards": "NNP",
   "represents": "VBZ",
   "dumps": "VBZ",
   "clothed": "JJ",
   "queued": "JJ",
   "typifies": "VBZ",
-  "bowls": "NNS",
   "precedes": "VBZ",
   "urbane": "JJ",
   "rented": "VBN",
@@ -2938,57 +1842,42 @@ var lexicon={
   "shopped": "VBN",
   "postulate": "VB",
   "persecute": "JJ",
-  "collapse": "NN",
   "snooty": "JJ",
   "named": "VBN",
   "recheck": "VBP",
   "overregulated": "JJ",
   "crotale": "JJ",
-  "bank": "NN",
-  "emboldened": "VBN",
   "looming": "JJ",
-  "antitrust": "NNP",
   "alas": "UH",
   "braying": "JJ",
   "bomb": "VB",
   "undefined": "JJ",
-  "gauge": "NN",
   "buxom": "JJ",
   "mend": "JJ",
-  "telegrams": "NNS",
   "belated": "JJ",
   "requalify": "VB",
   "purified": "JJ",
   "traverse": "VB",
-  "leasing": "NNP",
-  "natural-gas": "NN",
-  "nocturnal": "JJ",
   "stealthy": "JJ",
   "planoconcave": "JJ",
   "conceptual": "JJ",
   "screwball": "JJ",
-  "drew": "NNP",
   "demented": "JJ",
   "adapted": "VBN",
   "polycrystalline": "JJ",
   "breakoff": "JJ",
   "quadripartite": "JJ",
   "incompetent": "JJ",
-  "life": "NN",
   "hospitalized": "VBN",
   "concrete": "JJ",
   "lift": "VB",
-  "chill": "NN",
   "unsold": "JJ",
   "actuated": "JJ",
   "swarthy": "JJ",
   "wholewheat": "JJ",
   "taped": "JJ",
-  "subpoena": "NN",
   "misrepresents": "VBZ",
-  "fittest": "JJS",
   "halfhearted": "JJ",
-  "british-american": "NNP",
   "forsaken": "VBN",
   "forsakes": "VBZ",
   "irradiated": "VBN",
@@ -2997,20 +1886,16 @@ var lexicon={
   "de-listed": "VBN",
   "behind": "RB",
   "warring": "JJ",
-  "aspen": "NN",
   "germinate": "VBP",
   "pinched": "JJ",
   "shifting": "JJ",
   "think": "VBP",
   "rebuffed": "VBN",
-  "despair": "NN",
   "repellent": "JJ",
   "spins": "VBZ",
   "shake": "VB",
-  "occasional": "JJ",
   "happy": "JJ",
   "completing": "JJ",
-  "gripes": "NNS",
   "anticommunist": "JJ",
   "pontificate": "VB",
   "exist": "VB",
@@ -3019,45 +1904,33 @@ var lexicon={
   "dissimiliar": "JJ",
   "invested": "VBN",
   "stirring": "JJ",
-  "deformational": "JJ",
-  "fares": "NNS",
   "plump": "JJ",
   "rousing": "JJ",
   "indolent": "JJ",
   "behave": "VB",
-  "lighting": "NN",
   "prepaid": "JJ",
   "refinance": "VB",
   "mourn": "JJ",
-  "servicing": "NN",
   "experimental": "JJ",
   "solves": "VBZ",
   "northeastern": "JJ",
-  "cantonese": "NNP",
   "officiate": "VB",
   "current": "JJ",
   "drewe": "VBD",
   "studied": "VBN",
   "therein": "RB",
-  "studies": "NNS",
-  "properties.``": "``",
   "monaural": "JJ",
-  "grimmest": "JJS",
   "fresher": "JJR",
   "kafkaesque": "JJ",
   "afford": "VB",
   "apparent": "JJ",
-  "wrenches": "NNS",
   "overloaded": "JJ",
   "believes": "VBZ",
   "intransigent": "JJ",
-  "hides": "NNS",
   "deserves": "VBZ",
   "belongs": "VBZ",
   "snaps": "VBZ",
   "rehabilitate": "JJ",
-  "date": "NN",
-  "data": "NNP",
   "yielding": "JJ",
   "catching": "JJ",
   "ungentlemanly": "JJ",
@@ -3067,32 +1940,24 @@ var lexicon={
   "into": "IN",
   "matches": "VBZ",
   "socialist": "JJ",
-  "records": "NNS",
   "matched": "JJ",
   "revert": "VB",
-  "bowling": "NN",
   "whosoever": "WP",
   "bovine": "JJ",
-  "revises": "VBZ",
   "giddy": "JJ",
   "aye-yah-ah-ah": "UH",
   "toned": "VBN",
   "nested": "VBN",
-  "vote": "NN",
   "intermolecular": "JJ",
-  "padding": "NN",
   "redoubled": "VBN",
   "embarrassed": "JJ",
   "future": "JJ",
   "opens": "VBZ",
-  "cavalier": "JJ",
-  "tastes": "NNS",
   "undercover": "JJ",
   "altered": "JJ",
   "settled": "JJ",
   "portuguese": "JJ",
   "occidental": "JJ",
-  "strip": "NN",
   "hereby": "RB",
   "surplus": "JJ",
   "mince": "VB",
@@ -3104,17 +1969,12 @@ var lexicon={
   "neutralist": "JJ",
   "disparage": "VB",
   "rages": "VBZ",
-  "gastrointestinal": "JJ",
   "demonetized": "VBN",
   "anti": "IN",
-  "ante": "NN",
   "combines": "VBZ",
-  "booms": "NNS",
-  "breath": "NN",
   "combined": "JJ",
   "lowincome": "JJ",
   "distressed": "JJ",
-  "influence": "NN",
   "disbelieve": "VB",
   "jolt": "JJ",
   "brok": "VBD",
@@ -3123,23 +1983,16 @@ var lexicon={
   "unemployed": "JJ",
   "cheere": "VBP",
   "glycerolized": "VBN",
-  "cheers": "NNS",
   "cheery": "JJ",
   "escorts": "VBZ",
   "coste": "VB",
   "slay": "VBP",
-  "bravura": "NN",
-  "trains": "NNS",
-  "discount": "NN",
   "barbecued": "JJ",
   "hereabouts": "RB",
   "lengthens": "VBZ",
   "unquiet": "JJ",
-  "clam": "NN",
   "clad": "JJ",
   "overhyped": "JJ",
-  "yearly": "NNP",
-  "winds": "NNS",
   "endeavor": "VB",
   "riveting": "JJ",
   "oblige": "VB",
@@ -3148,9 +2001,6 @@ var lexicon={
   "confides": "VBZ",
   "joyfully": "JJ",
   "fightin": "VBG",
-  "act": "NN",
-  "curling": "NN",
-  "parties": "NNS",
   "somnolent": "JJ",
   "pakistani": "JJ",
   "recommends": "VBZ",
@@ -3160,7 +2010,6 @@ var lexicon={
   "detailed": "JJ",
   "gone": "JJ",
   "carves": "VBZ",
-  "ag": "NN",
   "ah": "UH",
   "am": "RB",
   "as": "RB",
@@ -3169,31 +2018,20 @@ var lexicon={
   "jell": "VB",
   "unrefrigerated": "JJ",
   "fluorinated": "VBN",
-  "annex": "NN",
-  "slant": "NN",
   "middling": "RB",
   "absorbing": "JJ",
   "overeager": "JJ",
   "revolting": "JJ",
-  "champions": "NNS",
   "piddling": "JJ",
-  "dressing": "NN",
   "compromising": "JJ",
-  "gemlike": "JJ",
   "delayed": "VBN",
-  "antibiotic": "NN",
-  "nation-state": "NN",
   "re-examines": "VBZ",
-  "pidgin": "NN",
   "squashy": "JJ",
   "interconnected": "JJ",
   "unbleached": "JJ",
-  "peak": "NN",
-  "financing": "NN",
   "contrive": "VB",
   "slick": "JJ",
   "evolves": "VBZ",
-  "chisel": "NN",
   "evolved": "JJ",
   "compelled": "VBN",
   "stated": "JJ",
@@ -3203,21 +2041,16 @@ var lexicon={
   "accept": "VB",
   "venezuelan": "JJ",
   "cling": "VBP",
-  "pans": "NNS",
   "alter": "VB",
   "debilitated": "VBN",
-  "deeds": "NNS",
   "consign": "VB",
   "iridescent": "JJ",
-  "bends": "NNS",
   "fewer": "JJR",
   "catalogued": "VBN",
   "disheveled": "JJ",
-  "proxy": "NN",
   "imagine": "VB",
   "redeemded": "VBN",
   "corrugated": "JJ",
-  "vowel": "NN",
   "protectionist": "JJ",
   "thereafter": "RB",
   "small": "JJ",
@@ -3226,13 +2059,10 @@ var lexicon={
   "consult": "VB",
   "inhouse": "JJ",
   "lovelorn": "JJ",
-  "fights": "NNS",
   "adverse": "JJ",
   "more-senior": "JJR",
-  "funnier": "JJR",
   "unequal": "JJ",
   "covet": "VB",
-  "cover": "NNP",
   "aghast": "JJ",
   "undying": "JJ",
   "alloted": "VBN",
@@ -3242,10 +2072,8 @@ var lexicon={
   "sew": "VB",
   "dryin": "VBG",
   "overwhelm": "JJ",
-  "sex": "NN",
   "see": "VB",
   "unsheltered": "JJ",
-  "sea": "NN",
   "umm": "UH",
   "topmost": "JJ",
   "avuncular": "JJ",
@@ -3259,30 +2087,19 @@ var lexicon={
   "underwent": "VBD",
   "hollow": "JJ",
   "underlay": "VBP",
-  "trail": "NN",
   "flounced": "VBN",
-  "then-21": "JJ",
-  "fund": "NN",
   "redounds": "VBZ",
-  "measure": "NN",
   "owed": "VBN",
   "owes": "VBZ",
   "doan": "VBP",
-  "levels": "NNS",
   "expands": "VBZ",
-  "oddest": "JJS",
   "upland": "JJ",
   "hypothesized": "VBN",
   "damp": "JJ",
   "damn": "JJ",
-  "sight": "NN",
   "u.s.-soviet": "JJ",
   "scarify": "VB",
-  "ambush": "NN",
-  "computational": "JJ",
-  "burdens": "NNS",
   "next": "JJ",
-  "bargaining": "NN",
   "textual": "JJ",
   "occupy": "VB",
   "impudent": "JJ",
@@ -3295,11 +2112,7 @@ var lexicon={
   "overshoots": "VBZ",
   "pockmarked": "JJ",
   "unionized": "VBN",
-  "summit": "NN",
-  "exchange-rate": "NN",
-  "results": "NNS",
   "dedicates": "VBZ",
-  "orders": "NNS",
   "send": "VB",
   "sent": "VBN",
   "languished": "VBN",
@@ -3308,37 +2121,25 @@ var lexicon={
   "bemoans": "VBZ",
   "agrarian": "JJ",
   "shivery": "JJ",
-  "firms": "NNS",
   "engage": "VB",
   "alleged": "JJ",
   "distrusted": "VBN",
-  "moonlighting": "NN",
-  "trivialize": "VB",
   "ha": "UH",
   "outright": "JJ",
-  "promotional": "JJ",
   "insists": "VBZ",
   "instinctual": "JJ",
   "subtle": "JJ",
   "wed": "VBN",
   "several": "JJ",
-  "trumpet": "NN",
   "stand": "VB",
-  "blocks": "NNS",
-  "blocky": "JJ",
-  "n.c.-based": "JJ",
   "excretory": "JJ",
-  "hypothesize": "VB",
   "shudder": "VB",
   "merge": "VB",
-  "accounts": "NNS",
   "most-favored": "JJS",
-  "repainting": "NN",
   "wander": "VB",
   "exults": "VBZ",
   "aided": "JJ",
   "shuld": "MD",
-  "congressonal": "JJ",
   "mesmerized": "VBN",
   "owned": "VBN",
   "naturally": "JJ",
@@ -3347,16 +2148,11 @@ var lexicon={
   "applauds": "VBZ",
   "meanwile": "RB",
   "delimits": "VBZ",
-  "steel": "NN",
-  "malpractice": "NN",
   "punctured": "JJ",
   "steep": "JJ",
   "steer": "VB",
   "seaborne": "JJ",
-  "blockbuster": "NN",
   "remember": "VB",
-  "documents": "NNS",
-  "regard": "NN",
   "snuff": "VB",
   "hold": "VB",
   "thirdquarter": "JJ",
@@ -3371,7 +2167,6 @@ var lexicon={
   "matronly": "JJ",
   "maggoty": "JJ",
   "multiyear": "JJ",
-  "quarter-mile": "NN",
   "dishearten": "VB",
   "nise": "JJ",
   "streamlined": "JJ",
@@ -3386,7 +2181,6 @@ var lexicon={
   "allocated": "VBN",
   "equips": "VBZ",
   "dazzling": "JJ",
-  "hottest": "JJS",
   "stalled": "VBN",
   "rigged": "JJ",
   "maul": "VB",
@@ -3398,12 +2192,9 @@ var lexicon={
   "glares": "VBZ",
   "inlaid": "VBN",
   "balk": "VB",
-  "forecasts": "NNS",
   "heaped": "VBN",
-  "glut": "NN",
   "glum": "JJ",
   "fluctuating": "JJ",
-  "taunt": "NN",
   "crisp": "JJ",
   "quit": "VB",
   "snappy": "JJ",
@@ -3411,15 +2202,12 @@ var lexicon={
   "haulage": "JJ",
   "toward": "IN",
   "ingest": "VBP",
-  "idolize": "VBP",
   "seedy": "JJ",
   "strode": "VBD",
   "unbent": "JJ",
-  "housing": "NN",
   "beeped": "VBN",
   "suppose": "VBP",
   "delivers": "VBZ",
-  "beeper": "NN",
   "straightaway": "JJ",
   "harvested": "VBN",
   "unguaranteed": "JJ",
@@ -3429,38 +2217,28 @@ var lexicon={
   "felled": "VBN",
   "unswerving": "JJ",
   "pacify": "JJ",
-  "transports": "NNS",
   "soaring": "JJ",
   "buoy": "VB",
-  "oldest": "JJS",
   "consolidates": "VBZ",
   "metropolitian": "JJ",
-  "physiological": "NNP",
   "hell-for-leather": "RB",
-  "slowest": "JJS",
   "litle": "JJ",
-  "blanket": "NN",
   "distort": "VB",
   "disobedient": "JJ",
   "uninviting": "JJ",
   "surrounding": "JJ",
-  "antagonize": "VB",
   "ambiguan": "JJ",
   "dwindles": "VBZ",
   "established": "JJ",
   "+": "SYM",
   "yeller": "JJ",
   "textured": "JJ",
-  "smoke": "NN",
   "secure": "JJ",
   "modulated": "JJ",
-  "wrack": "NN",
   "fragmentary": "JJ",
   "sunbleached": "VBN",
-  "emeritus": "NN",
   "unfailing": "JJ",
   "grovel": "VB",
-  "glance": "NN",
   "unsatisfying": "JJ",
   "indifferent": "JJ",
   "envenomed": "VBN",
@@ -3472,8 +2250,6 @@ var lexicon={
   "nascent": "JJ",
   "tricked": "VBN",
   "inner": "JJ",
-  "waterworks": "NN",
-  "count": "NNP",
   "soothing": "JJ",
   "classified": "JJ",
   "naysay": "VB",
@@ -3487,12 +2263,9 @@ var lexicon={
   "toconsolidated": "VBN",
   "stalinist": "JJ",
   "protracted": "JJ",
-  "vetoes": "NNS",
   "totted": "VBN",
   "extracurricular": "JJ",
   "encumbered": "JJ",
-  "house-senate": "NNP",
-  "stomach": "NN",
   "correct": "JJ",
   "unsophisticated": "JJ",
   "fussy": "JJ",
@@ -3503,12 +2276,10 @@ var lexicon={
   "custom-fit": "VB",
   "frowning": "JJ",
   "soviet": "JJ",
-  "chastened": "VBN",
   "pull": "VB",
   "seeks": "VBZ",
   "preoccupied": "JJ",
   "leads": "VBZ",
-  "requests": "NNS",
   "beastly": "JJ",
   "jeopardized": "VBN",
   "coherent": "JJ",
@@ -3520,31 +2291,23 @@ var lexicon={
   "thence": "RB",
   "falling": "JJ",
   "rococo": "JJ",
-  "patent": "NN",
   "skyjacked": "VBN",
   "unharmed": "JJ",
-  "raid": "NN",
   "blames": "VBZ",
-  "rain": "NN",
-  "y": "NNP",
   "blamed": "VBN",
   "bodes": "VBZ",
   "proper": "JJ",
   "starboard": "VB",
   "transformed": "JJ",
-  "filipino": "NNP",
   "zambian": "JJ",
   "lapsed": "JJ",
-  "lapses": "NNS",
   "sends": "VBZ",
   "divided": "JJ",
   "seasoned": "JJ",
   "led": "VBN",
-  "phenomenal": "JJ",
   "let": "VB",
   "scribbles": "VBZ",
   "unswaggering": "JJ",
-  "graduates": "NNS",
   "blander": "JJR",
   "swine": "JJ",
   "dines": "VBZ",
@@ -3552,31 +2315,24 @@ var lexicon={
   "cherish": "VB",
   "make": "VB",
   "delighted": "JJ",
-  "balances": "NNS",
   "balanced": "JJ",
   "lewd": "JJ",
   "liquidated": "VBN",
   "unstressed": "JJ",
-  "general-election": "NN",
   "encoded": "VBN",
   "filigreed": "JJ",
-  "reset": "NN",
   "hotter": "JJR",
   "subsist": "VB",
   "blunt": "JJ",
   "jacobean": "JJ",
   "weaned": "VBN",
-  "weakened": "JJ",
   "handmade": "JJ",
   "liberalized": "VBN",
-  "negotiators": "NNS",
-  "limited-partnership": "NN",
   "cheated": "VBN",
   "situated": "VBN",
   "global": "JJ",
   "quite": "JJ",
   "hums": "VBZ",
-  "flash": "NN",
   "dispelled": "VBN",
   "floodlighted": "JJ",
   "fragile": "JJ",
@@ -3585,21 +2341,12 @@ var lexicon={
   "burn": "VB",
   "rubbery": "JJ",
   "appears": "VBZ",
-  "change": "NNP",
-  "pedals": "NNS",
   "detonate": "VB",
-  "trial": "NN",
-  "aviation-services": "NNS",
-  "triad": "NN",
-  "lending": "NN",
   "retires": "VBZ",
-  "discrediting": "NN",
-  "terminal": "JJ",
   "jam": "JJ",
   "re-insure": "VB",
   "concise": "JJ",
   "gathers": "VBZ",
-  "breeds": "NNS",
   "dedicated": "JJ",
   "saith": "VBZ",
   "expanding": "JJ",
@@ -3607,33 +2354,22 @@ var lexicon={
   "truley": "RB",
   "crept": "VBD",
   "tagged": "VBN",
-  "spanish-american": "NNP",
   "cold": "JJ",
   "enny": "JJ",
-  "halt": "NN",
   "wielded": "VBN",
   "appoints": "VBZ",
   "em": "PRP",
-  "en": "NNP",
   "eh": "UH",
   "except": "IN",
   "er": "UH",
-  "opened": "JJ",
-  "space": "NN",
   "showy": "JJ",
-  "castlelike": "JJ",
   "ghanaian": "JJ",
   "eluted": "VBN",
-  "barest": "JJS",
   "bavarian": "JJ",
   "domed": "JJ",
   "even": "JJ",
-  "inca": "NNP",
-  "forwarding": "NN",
   "ever": "RB",
   "sheer": "JJ",
-  "weekdays": "NNS",
-  "naughtier": "JJR",
   "calmer": "JJR",
   "shampooed": "VBN",
   "pelting": "JJ",
@@ -3645,7 +2381,6 @@ var lexicon={
   "calm": "JJ",
   "sterilized": "JJ",
   "hamstrung": "JJ",
-  "sunset": "NN",
   "dispersed": "VBN",
   "higher-caliber": "JJR",
   "fifth": "CD",
@@ -3653,67 +2388,46 @@ var lexicon={
   "unedifying": "JJ",
   "solar": "JJ",
   "underfunded": "JJ",
-  "national": "JJ",
   "prides": "VBZ",
   "remoter": "JJR",
   "seldom": "RB",
-  "berlin": "NNP",
   "herbal": "JJ",
   "transluscent": "JJ",
   "swamped": "VBN",
   "diocesan": "JJ",
-  "self-interest": "NN",
   "unfrosted": "VBN",
   "rebuild": "VB",
-  "whispers": "NNS",
   "rebuilt": "VBN",
-  "me-210": "NNP",
   "embrace": "VB",
   "mediocre": "JJ",
   "finish": "VB",
   "videotaped": "VBN",
   "woulda": "MD",
   "wintered": "VBN",
-  "tablespoonful": "NN",
   "conclude": "VB",
   "real": "JJ",
   "preliterate": "JJ",
-  "read": "NNP",
   "detoxify": "VB",
   "leapfrog": "VB",
   "detract": "VB",
   "reap": "VBP",
   "rear": "JJ",
-  "glass-making": "NN",
   "servile": "JJ",
   "recorded": "JJ",
   "southeast": "RB",
-  "paints": "NNS",
   "heated": "JJ",
   "gungho": "JJ",
   "prepare": "VB",
   "displayed": "VBN",
   "faulted": "VBN",
   "appareled": "VBN",
-  "department-store": "NN",
   "condemnatory": "JJ",
-  "enameling": "NN",
-  "commercial-banking": "NN",
   "subdue": "VB",
-  "sales": "NNS",
   "reassumed": "VBN",
-  "storage": "NN",
   "thither": "RB",
-  "gambling": "NN",
-  "surest": "JJS",
-  "eromonga": "NNP",
-  "flattened": "VBN",
   "adsorbed": "VBN",
-  "splitting": "NN",
   "bequeath": "VB",
-  "dimesize": "JJ",
   "brown": "JJ",
-  "force": "NN",
   "recovering": "JJ",
   "very": "RB",
   "apologizes": "VBZ",
@@ -3728,33 +2442,23 @@ var lexicon={
   "injure": "VB",
   "girds": "VBZ",
   "erode": "VB",
-  "aspirational": "JJ",
-  "sweeps": "NNS",
-  "stampede": "NN",
   "exclude": "VB",
   "cloying": "JJ",
   "pass": "VB",
-  "germinal": "JJ",
   "gasp": "JJ",
   "overnight": "RB",
   "file": "VB",
   "fill": "VB",
   "uncensored": "JJ",
   "dine": "VB",
-  "space-station": "NN",
   "tousled": "VBN",
   "painstaking": "JJ",
-  "fool": "NN",
   "prenatal": "JJ",
-  "foot": "NN",
   "unachieved": "VBN",
-  "inspirational": "JJ",
-  "wacky": "JJ",
   "cemented": "VBN",
   "starve": "VB",
   "since": "RB",
   "temporary": "JJ",
-  "dunk": "NN",
   "flaunt": "VB",
   "ast": "JJ",
   "ask": "VB",
@@ -3762,13 +2466,11 @@ var lexicon={
   "six-fold": "RB",
   "liquefies": "VBZ",
   "hardbound": "JJ",
-  "squeaky": "JJ",
   "inducted": "VBN",
   "prejudged": "VBN",
   "squeaks": "VBZ",
   "saudis": "NNPS",
   "substantiated": "JJ",
-  "conduct": "NN",
   "juicy": "JJ",
   "bridled": "VBN",
   "sensual": "JJ",
@@ -3779,22 +2481,17 @@ var lexicon={
   "thy": "JJ",
   "hothouse": "JJ",
   "the": "DT",
-  "fiercest": "JJS",
   "flounders": "VBZ",
   "begets": "VBZ",
-  "copyright": "NN",
   "spackle": "VB",
   "gloved": "JJ",
   "sacrificed": "VBN",
-  "sacrifices": "NNS",
   "crams": "VBZ",
   "re-rated": "VBN",
-  "outboard": "NNP",
   "yeeeeeech": "UH",
   "horrid": "JJ",
   "unknowing": "JJ",
   "hard": "JJ",
-  "batters": "NNS",
   "likee": "VB",
   "likes": "VBZ",
   "described": "VBN",
@@ -3803,50 +2500,33 @@ var lexicon={
   "budgeted": "VBN",
   "append": "VB",
   "else": "RB",
-  "second-quarter": "NNP",
   "utmost": "JJ",
   "straggling": "JJ",
   "furthermore": "RB",
   "shuttered": "JJ",
   "shag": "JJ",
-  "sham": "NN",
   "overweight": "JJ",
-  "plugs": "NNS",
   "unrolls": "VBZ",
   "wedged": "VBN",
   "grind": "VBP",
   "segmented": "JJ",
   "mislaid": "JJ",
-  "distances": "NNS",
-  "atrophy": "NN",
   "unhedged": "VBN",
   "moist": "JJ",
   "guaranteed": "JJ",
   "finished": "JJ",
   "havin": "VBG",
-  "guarantees": "NNS",
-  "march": "NN",
   "overriding": "JJ",
   "learning": "JJ",
   "shu-tt": "VB",
-  "brakes": "NNS",
-  "trade-union": "NN",
   "verbatim": "RB",
   "slash": "VB",
   "chargin": "VBG",
-  "run": "NNP",
-  "rub": "NN",
   "ochre": "JJ",
   "sourdough": "JJ",
   "nonequivalent": "JJ",
-  "rolls": "NNS",
-  "sizzle": "NN",
   "lowprofile": "JJ",
-  "warlike": "JJ",
   "u.n.-sponsored": "JJ",
-  "wis.-based": "JJ",
-  "re-election": "NN",
-  "visits": "NNS",
   "thought": "VBD",
   "required": "VBN",
   "humiliated": "JJ",
@@ -3859,22 +2539,16 @@ var lexicon={
   "transacted": "VBN",
   "attired": "JJ",
   "defamatory": "JJ",
-  "tonal": "JJ",
-  "cyclosporine": "NN",
   "oddball": "JJ",
-  "briefly": "NN",
   "opaque": "JJ",
   "rotten": "JJ",
   "stanch": "VB",
   "colder": "JJR",
   "repel": "VB",
-  "wonder": "NN",
   "horticultural": "JJ",
   "manipulate": "JJ",
   "strapped": "VBN",
-  "swanlike": "JJ",
   "benchmark": "JJ",
-  "editorial": "NN",
   "nurture": "VB",
   "hesitate": "VB",
   "reoriented": "VBN",
@@ -3882,21 +2556,14 @@ var lexicon={
   "your": "PRP",
   "compiled": "VBN",
   "fostered": "VBN",
-  "entree": "NN",
   "foment": "VB",
   "adjectival": "JJ",
   "unsolved": "JJ",
-  "stock-index-futures": "NNS",
-  "unflaky": "JJ",
-  "coolest": "JJS",
-  "pools": "NNS",
   "denuclearized": "VBN",
   "aggravates": "VBZ",
   "aggravated": "JJ",
-  "seesaw": "NN",
   "sandy": "JJ",
   "lukewarm": "JJ",
-  "repositioning": "NN",
   "fathom": "VB",
   "towering": "JJ",
   "amendatory": "JJ",
@@ -3904,26 +2571,18 @@ var lexicon={
   "fundamental": "JJ",
   "managing": "JJ",
   "fella": "UH",
-  "work": "NN",
   "adjoins": "VBZ",
   "chintz": "VBP",
   "attach": "VB",
-  "attack": "NN",
-  "clanging": "NN",
   "overwhelming": "JJ",
   "choreographed": "VBN",
   "distinguishes": "VBZ",
   "beg": "VBP",
-  "bed": "NN",
   "snazzy": "JJ",
   "distinguished": "JJ",
-  "bet": "NN",
-  "exhibit": "NN",
   "constrained": "JJ",
   "floundered": "JJ",
-  "nuisance": "NN",
   "bloodthirsty": "JJ",
-  "conventional-arms": "NNS",
   "anyway": "RB",
   "farfetched": "JJ",
   "parked": "VBN",
@@ -3933,113 +2592,79 @@ var lexicon={
   "quantified": "VBN",
   "shy": "JJ",
   "she": "PRP",
-  "stroking": "NN",
   "sho": "UH",
-  "accuses": "VBZ",
   "differs": "VBZ",
   "horribly": "JJ",
   "neither": "RB",
   "wipe": "VB",
-  "bellsouth-lin": "NNP",
-  "spares": "NNS",
   "seemed": "CP",
   "spared": "VBN",
   "undetermined": "JJ",
-  "franchise": "NN",
-  "feeblest": "JJS",
   "conjoined": "VBN",
   "pretend": "JJ",
   "owne": "JJ",
   "tired": "JJ",
-  "supervened": "VBN",
   "ripen": "VBP",
   "owns": "VBZ",
   "interrogate": "VB",
   "plundered": "VBN",
-  "disclosures": "NNS",
   "orbital": "JJ",
   "incumbent": "JJ",
   "compared": "VBN",
   "taller": "JJR",
   "spells": "VBZ",
   "fine-tune": "VB",
-  "deposits": "NNS",
   "wooed": "VBN",
-  "sizes": "NNS",
   "worthwile": "VB",
   "hydrolyzed": "VBN",
   "lends": "VBZ",
   "seizes": "VBZ",
   "medieval": "JJ",
-  "expansion": "NN",
   "choked": "JJ",
   "citron": "JJ",
   "agin": "IN",
   "apiece": "RB",
   "gagged": "VBN",
-  "ally": "NN",
   "torrid": "JJ",
-  "deficit-reduction": "NN",
   "depicted": "VBN",
-  "tightest": "JJS",
   "savage": "JJ",
   "intermingle": "VBP",
-  "up.": "RB",
   "onstage": "RB",
-  "nursery": "NN",
   "bimonthly": "JJ",
   "evaluated": "VBN",
   "affected": "JJ",
   "unskilled": "JJ",
   "evolving": "JJ",
   "never": "RB",
-  "cardboard": "NN",
   "piercing": "JJ",
   "astute": "JJ",
-  "hunch": "NN",
   "elaborated": "JJ",
-  "dehumanize": "VB",
   "elaborates": "VBZ",
-  "near-monopoly": "NN",
   "drowned": "VBN",
   "corresponding": "JJ",
   "removed": "VBN",
-  "slam-dunk": "NN",
   "expose": "VB",
   "loony": "JJ",
-  "a.d.": "RB",
   "inhabited": "VBN",
   "endow": "VB",
   "summarizes": "VBZ",
   "give": "VB",
   "crystallized": "JJ",
-  "u.s": "NNP",
   "peopled": "VBN",
   "prickly": "JJ",
-  "summarize": "VB",
   "ambivalent": "JJ",
-  "under-50": "JJ",
   "soaking": "RB",
   "underscore": "VBP",
   "weakens": "VBZ",
-  "quarter-century": "NN",
   "wow": "JJ",
-  "conjectures": "NNS",
   "conjectured": "VBN",
-  "logging": "NN",
   "prodigal": "JJ",
   "perforated": "JJ",
   "loud": "JJ",
-  "hoot": "NN",
-  "hook": "NN",
   "mutate": "VB",
   "nondefense": "JJ",
-  "swells": "NNS",
   "depraved": "JJ",
-  "matter": "NN",
-  "childlike": "JJ",
   "espouse": "VBP",
-  "flood": "NN",
   "replenished": "VBN",
   "repatriate": "VB",
   "government-set": "VBN",
@@ -4048,18 +2673,12 @@ var lexicon={
   "integrate": "VB",
   "somnambulates": "VBZ",
   "stop": "VB",
-  "cracks": "NNS",
-  "coating": "NN",
   "comply": "VB",
   "briefer": "JJR",
-  "thrusts": "NNS",
   "briefed": "VBN",
   "tantamount": "JJ",
   "juxtapose": "VBP",
   "were": "CP",
-  "richest": "JJS",
-  "modeling": "NN",
-  "mucky": "JJ",
   "abnormal": "JJ",
   "devoted": "JJ",
   "unsloped": "JJ",
@@ -4071,21 +2690,17 @@ var lexicon={
   "apocryphal": "JJ",
   "neat": "JJ",
   "despite": "IN",
-  "anchor": "NN",
   "is": "CP",
   "it": "PRP",
   "in": "IN",
   "sanitized": "VBN",
   "overstated": "JJ",
-  "bottles": "NNS",
   "anoint": "VB",
   "bottled": "VBN",
   "overstates": "VBZ",
   "astringent": "JJ",
   "redevelop": "VB",
-  "lonesome": "JJ",
   "practiced": "JJ",
-  "practices": "NNS",
   "minicar": "JJ",
   "sporting": "JJ",
   "identify": "VB",
@@ -4097,40 +2712,26 @@ var lexicon={
   "unexplored": "JJ",
   "daytime": "JJ",
   "unmagnified": "JJ",
-  "bury": "NNP",
   "untenured": "VBN",
   "intellectual": "JJ",
-  "frightened": "JJ",
   "snorts": "VBZ",
-  "catlike": "JJ",
   "lurid": "JJ",
-  "convenience": "NNP",
-  "tryin": "NN",
-  "bellwether": "NN",
   "unvarying": "JJ",
   "separated": "JJ",
-  "sticks": "NNS",
   "sidestep": "VB",
-  "sticky": "JJ",
   "fashioned": "JJ",
   "gowned": "JJ",
   "nonpareil": "JJ",
   "jeffersonian": "JJ",
   "alerts": "VBZ",
-  "dies": "NNP",
-  "diet": "NN",
   "derail": "VB",
   "sobering": "JJ",
   "mobilized": "VBN",
   "skip": "VB",
   "skim": "JJ",
-  "skid": "NNP",
-  "string": "NNP",
   "explicit": "JJ",
   "where": "WRB",
-  "recess": "NN",
   "banished": "VBN",
-  "health-care": "NN",
   "miniaturized": "VBN",
   "banishes": "VBZ",
   "two-timed": "VBN",
@@ -4139,24 +2740,16 @@ var lexicon={
   "leatherbound": "JJ",
   "unrestricted": "JJ",
   "quack": "JJ",
-  "souring": "NN",
   "pollute": "JJ",
-  "brashest": "JJS",
   "satirizes": "VBZ",
   "subsistent": "JJ",
   "antismoking": "JJ",
-  "balk.": "VBP",
   "deceased": "JJ",
   "caring": "JJ",
   "coincident": "JJ",
   "dutch": "JJ",
-  "normalize": "VB",
   "strainin": "VBG",
-  "tilt": "NN",
-  "ping": "NN",
-  "pine": "NN",
   "till": "IN",
-  "pins": "NNS",
   "hubba": "UH",
   "whodunnit": "UH",
   "designed": "JJ",
@@ -4166,19 +2759,15 @@ var lexicon={
   "thorny": "JJ",
   "feared": "JJ",
   "cute": "JJ",
-  "cuts": "NNS",
   "plagiarized": "JJ",
   "serenaded": "VBN",
   "extirpated": "VBN",
   "nouveau": "JJ",
-  "finance": "NN",
   "captivated": "VBN",
   "shatter": "VB",
   "sooner": "RB",
   "killed": "VBN",
-  "ornraier": "RBR",
   "unwashed": "JJ",
-  "peasant": "NN",
   "southwestern": "JJ",
   "aloof": "JJ",
   "socialized": "JJ",
@@ -4193,81 +2782,55 @@ var lexicon={
   "midsized": "JJ",
   "massaged": "VBN",
   "gotta": "VB",
-  "venture": "NN",
   "commends": "VBZ",
-  "plunge": "NN",
-  "backwoods": "NNS",
   "personalized": "JJ",
   "weakwilled": "JJ",
-  "contrasts": "NNS",
-  "beachfront": "NN",
   "fills": "VBZ",
   "wreathed": "VBN",
   "arrayed": "VBN",
   "filed": "VBN",
   "contemporary": "JJ",
-  "graduate": "NN",
   "lieder": "JJ",
   "underage": "JJ",
-  "framing": "NN",
-  "reading": "NNP",
   "ruddy": "JJ",
   "unsecured": "JJ",
   "steadfast": "JJ",
   "forgive": "VB",
-  "checks": "NNS",
   "oversized": "JJ",
   "pillared": "JJ",
   "indelicate": "JJ",
-  "forecasting": "NN",
   "elizabethan": "JJ",
-  "caricature": "NN",
-  "spills": "NNS",
   "disconnected": "JJ",
-  "awakened": "JJ",
   "endowed": "JJ",
   "middle": "JJ",
   "insofar": "RB",
-  "intermediary": "NN",
   "devours": "VBZ",
   "munch": "VB",
   "intermittent": "JJ",
   "imprint": "VB",
-  "adrenal": "JJ",
   "vivify": "VB",
   "liken": "VBP",
   "dimensioning": "JJ",
-  "blankets": "NNS",
   "nosy": "JJ",
-  "nose": "NN",
-  "neuronal": "JJ",
-  "dress": "NN",
   "specifies": "VBZ",
   "specified": "JJ",
   "new": "JJ",
   "net": "JJ",
   "gross": "JJ",
   "buttressed": "VBN",
-  "underwriters": "NNS",
   "broken": "JJ",
-  "buttresses": "NNS",
   "highest-priced": "JJS",
-  "husky": "JJ",
   "tease": "VB",
   "othe": "JJ",
   "arty": "JJ",
   "many": "JJ",
-  "brute": "NN",
   "suffering": "JJ",
   "collosal": "JJ",
   "anemated": "VBN",
-  "commissioning": "NN",
   "undereducated": "JJ",
   "leaked": "VBN",
   "croons": "VBZ",
-  "lifetime": "NN",
   "unaccustomed": "JJ",
-  "obsesses": "VBZ",
   "tackle": "VB",
   "revolve": "VB",
   "remote": "JJ",
@@ -4277,7 +2840,6 @@ var lexicon={
   "suburban": "JJ",
   "b-reflects": "VBZ",
   "transcaucasian": "JJ",
-  "investigational": "JJ",
   "overdone": "JJ",
   "scour": "VBP",
   "benevolent": "JJ",
@@ -4285,7 +2847,6 @@ var lexicon={
   "knitted": "VBN",
   "unreported": "JJ",
   "pupated": "VBN",
-  "k": "NNP",
   "venerated": "VBN",
   "biweekly": "JJ",
   "drubbed": "VBN",
@@ -4293,30 +2854,22 @@ var lexicon={
   "search": "VB",
   "fatten": "VB",
   "bathe": "VB",
-  "transit": "NN",
   "seceded": "VBN",
   "debugged": "VBN",
   "establish": "VB",
-  "hard-surface": "NN",
   "our": "PRP",
   "out": "JJ",
   "both": "RB",
-  "boeing": "NNP",
   "federal": "JJ",
   "brisk": "JJ",
   "dammit": "UH",
   "compare": "VB",
   "buttress": "VB",
   "socal": "JJ",
-  "balkanize": "VB",
-  "charms": "NNS",
   "petite": "JJ",
-  "bloom": "NN",
   "coax": "VB",
-  "coat": "NN",
   "what": "WP",
   "finalized": "VBN",
-  "u.k.": "NNP",
   "wham": "UH",
   "whah": "WRB",
   "ranking": "JJ",
@@ -4327,7 +2880,6 @@ var lexicon={
   "token": "JJ",
   "clamp": "VB",
   "implicated": "VBN",
-  "initiatives": "NNS",
   "avenge": "VB",
   "chin-use": "VB",
   "squeezed": "VBN",
@@ -4349,34 +2901,25 @@ var lexicon={
   "individual": "JJ",
   "tender": "JJ",
   "enveloped": "VBN",
-  "multiparty": "NN",
   "manumitted": "VBN",
-  "halves": "NNS",
   "overvalued": "JJ",
   "trespassed": "VBN",
   "create": "VB",
-  "pre-1933": "JJ",
   "understand": "VB",
   "unify": "VB",
   "enchanted": "JJ",
-  "bill": "NN",
   "bilk": "VB",
   "defending": "JJ",
   "incorrect": "JJ",
   "shoddy": "JJ",
   "cadge": "VBP",
-  "saline": "NN",
-  "copying": "NNP",
   "itch": "JJ",
   "knowed": "VBN",
   "zodiacal": "JJ",
   "excites": "VBZ",
   "bridal": "JJ",
   "co-managed": "VBN",
-  "matters": "NNP",
-  "quarter-point": "NN",
   "per": "IN",
-  "pen": "NN",
   "simplex": "JJ",
   "peg": "VBP",
   "defrayed": "VBN",
@@ -4386,13 +2929,10 @@ var lexicon={
   "forward": "JJ",
   "doctored": "VBN",
   "weaker": "JJR",
-  "interagency": "NN",
   "nodular": "JJ",
   "juxtaposed": "VBN",
-  "juxtaposes": "VBZ",
   "soon": "RB",
   "fogged": "JJ",
-  "swamp": "NN",
   "plugged": "JJ",
   "fiberglas": "JJ",
   "excrete": "VB",
@@ -4406,30 +2946,21 @@ var lexicon={
   "granular": "JJ",
   "inject": "VB",
   "subservient": "JJ",
-  "mobilize": "VB",
   "select": "JJ",
   "tinny": "JJ",
   "bloodshot": "JJ",
-  "weakest": "JJS",
   "nonexistent": "JJ",
-  "intercept": "NN",
-  "unocal": "NNP",
   "resurrect": "VB",
-  "oval": "NNP",
   "ashamed": "JJ",
   "grandmotherly": "JJ",
   "nullified": "VBN",
   "celiac": "JJ",
   "shining": "JJ",
   "whitehaired": "JJ",
-  "spruce": "NN",
   "druther": "VB",
   "fete": "VB",
   "aft": "RB",
-  "market-research": "NN",
   "resist": "VB",
-  "fallback": "NN",
-  "lands": "NNS",
   "sic": "RB",
   "repassed": "VBN",
   "ahdawam": "UH",
@@ -4442,36 +2973,26 @@ var lexicon={
   "retrieved": "VBN",
   "expect": "VB",
   "cured": "JJ",
-  "cures": "NNS",
-  "hurdle": "NN",
   "rusticated": "VBN",
   "afield": "RB",
   "splotched": "JJ",
-  "data-processing": "NN",
   "rippled": "JJ",
   "slack": "JJ",
   "thyroidal": "JJ",
-  "debt-reduction": "NN",
-  "hitching": "NN",
   "flee": "VB",
   "hazel": "JJ",
   "heartening": "JJ",
   "absurd": "JJ",
   "rusted": "JJ",
-  "can..": "MD",
-  "timing": "NN",
   "thrives": "VBZ",
-  "areas": "NNS",
   "excreted": "VBN",
   "pistol-whipping": "IN",
   "oriental": "JJ",
   "dissolves": "VBZ",
   "heightens": "VBZ",
-  "yearning": "NN",
   "boil": "VB",
   "exploited": "JJ",
   "grumble": "VBP",
-  "optional": "JJ",
   "predispose": "VB",
   "conquered": "JJ",
   "passing": "JJ",
@@ -4480,13 +3001,11 @@ var lexicon={
   "weird": "JJ",
   "piecewise": "RB",
   "lithuanian": "JJ",
-  "arises": "VBZ",
   "perplexed": "JJ",
   "arisen": "VBN",
   "prosy": "JJ",
   "portray": "VB",
   "untoward": "JJ",
-  "shuttle": "NN",
   "bullying": "JJ",
   "flew": "VBD",
   "besmirch": "VB",
@@ -4496,28 +3015,16 @@ var lexicon={
   "retiring": "JJ",
   "supercharged": "JJ",
   "oops": "JJ",
-  "publicize": "VB",
   "fixated": "VBN",
-  "seaman": "NNP",
-  "books": "NNS",
   "surpass": "VB",
-  "seats": "NNS",
   "anye": "JJ",
   "raves": "VBZ",
-  "field": "NN",
-  "bench": "NN",
-  "foreign-policy": "NN",
-  "tests": "NNS",
   "testy": "JJ",
   "condescending": "JJ",
-  "works": "NNS",
   "mushroomed": "VBN",
-  "majeure": "NN",
   "legislated": "VBN",
-  "est": "NNP",
   "obsessed": "JJ",
   "lousy": "JJ",
-  "questions": "NNS",
   "rendered": "VBN",
   "varitinted": "JJ",
   "again": "RB",
@@ -4525,77 +3032,54 @@ var lexicon={
   "co-anchored": "VBN",
   "but": "RB",
   "shute": "VB",
-  "dei": "NNP",
-  "embargo": "NN",
   "misty": "JJ",
   "meantime": "RB",
   "virtual": "JJ",
-  "shearing": "NN",
   "annihilate": "VB",
-  "deluxe": "NNP",
   "augmented": "VBN",
   "represent": "VB",
-  "poorest": "JJS",
-  "pride": "NN",
   "placated": "VBN",
   "nonresident": "JJ",
   "every": "DT",
   "upstream": "RB",
-  "estimates": "NNS",
   "crocketed": "JJ",
   "persuade": "JJ",
   "freehand": "RB",
   "sheeted": "JJ",
   "transmits": "VBZ",
   "bulks": "VBZ",
-  "auction": "NN",
   "proportioned": "JJ",
-  "tie-in": "NN",
   "housed": "VBN",
   "quarrel": "JJ",
-  "end": "NN",
   "smart": "JJ",
   "arbitrate": "VB",
-  "scout": "NN",
   "imbued": "VBN",
   "selected": "JJ",
   "fade": "VBP",
   "sturdy": "JJ",
   "roost": "VB",
-  "chuck": "NNP",
   "skeletal": "JJ",
   "woolgather": "VB",
   "lasting": "JJ",
   "co-produce": "VB",
   "got": "VBD",
-  "hand": "NN",
-  "glisten": "NN",
   "periodontal": "JJ",
   "labored": "JJ",
   "working": "JJ",
   "sober": "JJ",
-  "categorize": "VB",
-  "servo": "NN",
   "abates": "VBZ",
   "took": "VBD",
   "abated": "VBN",
   "nonpartisan": "JJ",
   "whereby": "WRB",
   "unsentimental": "JJ",
-  "lifesize": "JJ",
-  "fashion": "NNP",
   "dying": "JJ",
   "doughty": "JJ",
   "absent": "JJ",
-  "rumble": "NN",
-  "prostitute": "NN",
-  "peers": "NNS",
   "romantick": "JJ",
   "epistolatory": "JJ",
-  "reorganize": "VB",
   "blinking": "JJ",
   "baffle": "VB",
-  "intersperses": "VBZ",
   "disabled": "JJ",
   "interspersed": "VBN",
   "discriminating": "JJ",
@@ -4603,20 +3087,15 @@ var lexicon={
   "postride": "JJ",
   "luminescent": "JJ",
   "unificationist": "JJ",
-  "flowering": "NN",
   "improve": "VB",
   "layered": "VBN",
   "unfurled": "VBN",
   "trampled": "VBN",
   "usurped": "VBN",
-  "oil-spill": "NN",
-  "auto-industry": "NN",
   "lessen": "VB",
   "lesser": "JJ",
   "inexplicit": "JJ",
-  "wound": "NN",
   "complex": "JJ",
-  "fla.-based": "JJ",
   "vilifies": "VBZ",
   "interprets": "VBZ",
   "content": "JJ",
@@ -4626,7 +3105,6 @@ var lexicon={
   "clearheaded": "JJ",
   "educate": "VB",
   "reunifed": "VBN",
-  "sanction": "NN",
   "untried": "JJ",
   "embodied": "VBN",
   "rattled": "JJ",
@@ -4643,61 +3121,43 @@ var lexicon={
   "head": "JJ",
   "medium": "JJ",
   "heal": "VB",
-  "heat": "NN",
   "hear": "VB",
-  "counsel": "NN",
-  "compositional": "JJ",
-  "bargain": "NN",
   "adore": "VBP",
   "co-opted": "VBN",
   "southernmost": "JJ",
   "adorn": "VB",
   "withhold": "VB",
   "backward": "JJ",
-  "counseling": "NN",
   "flowered": "JJ",
   "thawed": "JJ",
   "indebted": "JJ",
   "denounces": "VBZ",
   "inland": "JJ",
-  "off-off-broadway": "NNP",
-  "bake": "NNP",
   "allout": "JJ",
   "retroviral": "JJ",
   "dissipates": "VBZ",
-  "jan.": "NNP",
   "dissipated": "JJ",
   "unidentified": "JJ",
   "pearly": "JJ",
   "hungarian": "JJ",
-  "chocolate": "NN",
   "push": "VB",
-  "slightest": "JJS",
   "corrupted": "JJ",
-  "stroke": "NN",
-  "marketing": "NN",
   "considered": "JJ",
   "speaks": "VBZ",
-  "irrational": "JJ",
   "evoke": "VB",
   "reposition": "VB",
   "misbegotten": "JJ",
   "asleep": "JJ",
-  "refund": "NN",
   "undervalued": "JJ",
-  "worship": "NN",
   "blocked": "JJ",
   "coordinated": "JJ",
   "sparing": "JJ",
   "appraised": "VBN",
-  "gourmet": "NN",
   "warranted": "VBN",
   "feathered": "JJ",
-  "belts": "NNS",
   "slumps": "VBZ",
   "lower-paid": "JJR",
   "weighted": "JJ",
-  "nettlesome": "JJ",
   "pillaged": "JJ",
   "blacked": "VBN",
   "reckons": "VBZ",
@@ -4706,9 +3166,7 @@ var lexicon={
   "someplace": "RB",
   "sovereign": "JJ",
   "disinterested": "JJ",
-  "surveys": "NNS",
   "circa": "RB",
-  "hug": "NN",
   "greatcoated": "JJ",
   "huh": "UH",
   "circulates": "VBZ",
@@ -4719,47 +3177,34 @@ var lexicon={
   "stolid": "JJ",
   "overjoyed": "JJ",
   "exploratory": "JJ",
-  "dining": "NNP",
-  "maltese": "NNP",
-  "stock-basket": "NN",
   "vetted": "VBN",
   "woolen": "JJ",
   "crimp": "VB",
   "hooting": "JJ",
   "narrows": "VBZ",
-  "piazza": "NNP",
   "substitutionary": "JJ",
   "tailor": "VB",
   "ancestral": "JJ",
   "violates": "VBZ",
-  "fails": "NNS",
-  "charters": "NNS",
   "best-run": "JJS",
   "darin": "JJ",
   "smiling": "JJ",
-  "sampling": "NN",
   "unleaded": "JJ",
-  "poll": "NN",
   "runaway": "JJ",
-  "bacillus": "NN",
   "gaited": "JJ",
   "was": "CP",
   "paying": "JJ",
   "amend": "VB",
   "straitjacketed": "JJ",
   "someday": "RB",
-  "clutter": "NN",
   "unrolled": "JJ",
-  "shifts": "NNS",
   "silver": "JJ",
   "ninefold": "JJ",
   "idle": "JJ",
   "threaded": "VBN",
   "tigrean": "JJ",
   "guided": "JJ",
-  "guides": "NNS",
   "overlapped": "VBN",
-  "wall": "NN",
   "scheduled": "JJ",
   "loaned": "VBN",
   "tall": "JJ",
@@ -4775,8 +3220,6 @@ var lexicon={
   "nutty": "JJ",
   "communicate": "VB",
   "nudist": "JJ",
-  "venetian": "NNP",
-  "flattest": "JJS",
   "subdues": "VBZ",
   "amber": "JJ",
   "garner": "VB",
@@ -4785,7 +3228,6 @@ var lexicon={
   "racist": "JJ",
   "condone": "VB",
   "equated": "VBN",
-  "soprano": "NN",
   "x-there": "EX",
   "revamps": "VBZ",
   "drawin": "VBG",
@@ -4806,39 +3248,23 @@ var lexicon={
   "unmoved": "JJ",
   "longstrained": "VBN",
   "assuage": "VB",
-  "program": "NN",
   "depending": "JJ",
-  "woman": "NN",
   "equivocal": "JJ",
   "induce": "VB",
   "rebounds": "VBZ",
-  "unlike": "JJ",
   "sanctify": "VB",
-  "grandfather": "NN",
-  "rate": "NN",
-  "barbecue": "NN",
   "interlaced": "VBN",
-  "guns": "NNS",
-  "retraining": "NN",
   "misinterpret": "VB",
   "sculptural": "JJ",
-  "screens": "NNS",
-  "piggyback": "NN",
   "golly": "UH",
   "drips": "VBZ",
   "draughty": "JJ",
-  "debates": "NNS",
   "recast": "VB",
   "debated": "VBN",
-  "baa-2": "JJ",
-  "baa-3": "JJ",
-  "baa-1": "JJ",
   "arise": "VBP",
   "cultivate": "VB",
-  "packaged-goods": "NNS",
   "cleansing": "JJ",
   "emulate": "VB",
-  "capitalize": "VB",
   "rotund": "JJ",
   "unhip": "JJ",
   "interesting": "JJ",
@@ -4846,16 +3272,13 @@ var lexicon={
   "paunchy": "JJ",
   "utilizes": "VBZ",
   "glide": "VB",
-  "environmentalist": "NN",
   "muddied": "JJ",
   "evaded": "VBN",
   "bigger": "JJR",
   "utilized": "VBN",
   "nab": "VB",
-  "display": "NN",
   "modernized": "JJ",
   "third": "CD",
-  "gut": "NN",
   "male": "JJ",
   "turne": "VB",
   "unhealthy": "JJ",
@@ -4863,8 +3286,6 @@ var lexicon={
   "pedal": "VB",
   "overrode": "VBD",
   "moan": "VB",
-  "rails": "NNS",
-  "collar": "NN",
   "prescient": "JJ",
   "newer": "JJR",
   "unchecked": "JJ",
@@ -4872,42 +3293,32 @@ var lexicon={
   "asham": "JJ",
   "outstanding": "JJ",
   "delisted": "VBN",
-  "hexagonal": "JJ",
   "semiliterate": "JJ",
   "interferes": "VBZ",
-  "parsifal": "NNP",
   "reckon": "VB",
   "pillage": "JJ",
-  "measures": "NNS",
   "reunited": "VBN",
   "measured": "JJ",
   "dissolved": "JJ",
   "zey": "PRP",
   "perfect": "JJ",
-  "asphalt": "NN",
   "aggravate": "VBP",
   "nevertheless": "RB",
   "revered": "JJ",
   "epicurean": "JJ",
-  "keenest": "JJS",
   "short": "JJ",
   "nailed": "VBN",
   "succeed": "VB",
-  "license": "NN",
   "bolster": "VB",
   "illumines": "VBZ",
   "corrode": "VBP",
-  "welding": "NN",
   "leans": "VBZ",
   "tradedistorting": "JJ",
   "arrives": "VBZ",
   "wallops": "VBZ",
-  "government-bond": "NN",
   "robust": "JJ",
   "equalled": "VBN",
   "bounces": "VBZ",
-  "rocklike": "JJ",
-  "civilizational": "JJ",
   "unwomanly": "JJ",
   "jots": "VBZ",
   "flabbergasted": "JJ",
@@ -4915,28 +3326,22 @@ var lexicon={
   "guar": "JJ",
   "jumpy": "JJ",
   "beleaguered": "JJ",
-  "jumps": "NNS",
   "procedural": "JJ",
   "decries": "VBZ",
   "mustached": "JJ",
   "introverted": "JJ",
   "deployed": "VBN",
   "higher-profit": "JJR",
-  "more-conventional": "JJR",
-  "sunnier": "JJR",
   "beguiling": "JJ",
   "saturate": "VB",
   "associated": "JJ",
   "underground": "JJ",
-  "associates": "NNS",
   "elected": "JJ",
   "develops": "VBZ",
   "weigh": "VB",
   "andean": "JJ",
-  "weights": "NNS",
   "proximate": "JJ",
   "panamanian": "JJ",
-  "whiskeys``": "``",
   "jovian": "JJ",
   "overlaps": "VBZ",
   "reinterpret": "VB",
@@ -4950,30 +3355,24 @@ var lexicon={
   "rackety": "JJ",
   "intervenes": "VBZ",
   "by-passed": "VBN",
-  "by-passes": "VBZ",
   "taiwanese": "JJ",
   "amethystine": "JJ",
-  "lumber": "NN",
   "purports": "VBZ",
   "befits": "VBZ",
   "unites": "VBZ",
   "shows": "VBZ",
   "cheaper": "JJR",
   "ferret": "VB",
-  "batter": "NN",
   "spreads": "VBZ",
   "saturated": "JJ",
-  "moslem": "NNP",
   "permanent": "JJ",
   "orange": "JJ",
   "eastward": "RB",
   "bumbling": "JJ",
   "impaired": "JJ",
   "unpublicized": "JJ",
-  "transitional": "JJ",
   "profound": "JJ",
   "pro": "JJ",
-  "subject": "NN",
   "mitral": "JJ",
   "mothered": "VBN",
   "which": "WDT",
@@ -4981,13 +3380,11 @@ var lexicon={
   "wilsonian": "JJ",
   "promptly": "JJ",
   "usual": "JJ",
-  "broker-dealer": "NN",
   "manicures": "VBZ",
   "illicit": "JJ",
   "manicured": "VBN",
   "lemme": "VB",
   "steams": "VBZ",
-  "flip-flop": "NN",
   "rousseauan": "JJ",
   "postgraduate": "JJ",
   "shallow": "JJ",
@@ -4997,64 +3394,48 @@ var lexicon={
   "=": "SYM",
   "comest": "VBP",
   "halved": "VBN",
-  "lumpier": "JJR",
   "filmed": "VBN",
   "interclass": "JJ",
   "myriad": "JJ",
-  "overeating": "NN",
   "spent": "JJ",
   "trims": "VBZ",
   "uneven": "JJ",
   "expel": "VB",
   "junks": "VBZ",
   "freckled": "JJ",
-  "commands": "NNS",
-  "budgeting": "NN",
   "confused": "JJ",
   "unlikely": "JJ",
   "illiquid": "JJ",
   "unconvincing": "JJ",
   "narrower": "JJR",
-  "packaging": "NN",
   "misapplied": "VBN",
-  "respect": "NN",
   "narrowed": "JJ",
   "literal": "JJ",
   "sidesteps": "VBZ",
-  "catechize": "VB",
   "floats": "VBZ",
   "sufficient": "JJ",
   "jaded": "JJ",
-  "credit": "NN",
   "acknowledges": "VBZ",
   "trumped": "VBN",
   "dual": "JJ",
   "snuck": "VBD",
   "intelligent": "JJ",
-  "sincerest": "JJS",
   "aftuh": "RB",
-  "demonize": "VB",
   "wealthy": "JJ",
-  "fishing": "NN",
   "reconsidered": "VBN",
-  "supply": "NN",
   "enact": "VB",
   "captivating": "JJ",
   "meager": "JJ",
   "below": "RB",
-  "growth": "NN",
   "throughout": "RB",
   "mined": "VBN",
   "patiently": "JJ",
   "obey": "JJ",
   "analysed": "VBN",
-  "saddle": "NN",
   "sectarian": "JJ",
   "taxpaying": "JJ",
   "own": "JJ",
   "policed": "VBN",
-  "israeli\\/palestinian": "JJ",
-  "tee": "NN",
   "demonstrate": "VB",
   "rickety": "JJ",
   "recork": "VB",
@@ -5063,46 +3444,31 @@ var lexicon={
   "quicker": "JJR",
   "pricey": "JJ",
   "foul": "JJ",
-  "prices": "NNS",
   "until": "IN",
   "quadruple": "JJ",
   "outwit": "JJ",
   "demoted": "VBN",
   "callin": "VBG",
-  "sp1": "JJ",
-  "pierce": "NNP",
   "tantalizing": "JJ",
   "lignite": "JJ",
   "vast": "JJ",
   "disunited": "JJ",
-  "conventional": "JJ",
   "tolerate": "VB",
-  "thunder": "NN",
-  "bonuses": "NNS",
   "grovels": "VBZ",
   "fissured": "VBN",
-  "botulinal": "JJ",
   "unwanted": "JJ",
-  "zoning": "NN",
   "reticulate": "JJ",
   "standardized": "JJ",
   "taffycolored": "VBN",
   "grimed": "VBN",
-  "plunges": "NNS",
   "overextend": "VBP",
   "unmasked": "VBN",
   "despondent": "JJ",
-  "drinks": "NNS",
-  "deutsche": "NNP",
   "renowned": "JJ",
   "monthly": "JJ",
   "recruited": "VBN",
   "wrought": "VBN",
-  "superregional": "JJ",
   "unforeseen": "JJ",
-  "easier": "JJ",
-  "slate": "NN",
-  "constructional": "JJ",
   "lenient": "JJ",
   "code-named": "VBN",
   "unwary": "JJ",
@@ -5114,8 +3480,6 @@ var lexicon={
   "speedy": "JJ",
   "repealed": "VBN",
   "caught": "VBN",
-  "speeds": "NNS",
-  "bowl": "NN",
   "due": "JJ",
   "infused": "VBN",
   "prepurchase": "JJ",
@@ -5123,7 +3487,6 @@ var lexicon={
   "lunges": "VBZ",
   "expunged": "VBN",
   "crawl": "VB",
-  "project": "NN",
   "untrained": "JJ",
   "gripe": "VBP",
   "recommended": "JJ",
@@ -5131,7 +3494,6 @@ var lexicon={
   "reverberated": "VBN",
   "camp": "JJ",
   "rotary": "JJ",
-  "howl": "NN",
   "came": "VBD",
   "reschedule": "VB",
   "participate": "VB",
@@ -5139,27 +3501,20 @@ var lexicon={
   "quaint": "JJ",
   "ballyhooed": "VBN",
   "organizes": "VBZ",
-  "d.c.": "NNP",
   "pre-empt": "VB",
   "denounce": "VBP",
   "encompassing": "JJ",
   "resigned": "JJ",
   "pressured": "JJ",
-  "rings": "NNS",
-  "top-drawer": "NN",
   "oedipal": "JJ",
-  "apples": "NNS",
   "wanted": "JJ",
   "fullscale": "JJ",
   "reconstitute": "VB",
-  "disdain": "NN",
   "blessed": "JJ",
   "planned": "JJ",
   "alternate": "JJ",
   "munches": "VBZ",
-  "trickiest": "JJS",
   "hers": "PRP",
-  "parley": "NN",
   "gloats": "VBZ",
   "doth": "VBZ",
   "gritty": "JJ",
@@ -5169,69 +3524,53 @@ var lexicon={
   "damaged": "JJ",
   "naw": "UH",
   "verify": "VB",
-  "damages": "NNS",
   "haggard": "JJ",
   "simulates": "VBZ",
-  "spalding": "NNP",
   "beset": "VBN",
   "simulated": "JJ",
   "dissects": "VBZ",
   "thank": "VB",
   "that": "WP",
   "subsequent": "JJ",
-  "position": "NN",
   "than": "RB",
   "brought": "VBN",
   "ballooned": "VBN",
   "polluted": "JJ",
-  "birdlike": "JJ",
-  "disheartened": "VBN",
   "shakes": "VBZ",
   "rejects": "VBZ",
   "annualized": "VBN",
   "hulking": "JJ",
-  "use": "NN",
   "few": "JJ",
-  "raises": "VBZ",
   "sow": "VBP",
   "latino": "JJ",
   "authorizes": "VBZ",
   "waits": "VBZ",
-  "support": "NN",
   "inside": "JJ",
   "faster-working": "JJR",
   "buoyed": "VBN",
-  "communize": "VB",
   "centrifuged": "VBN",
-  "death-row": "NN",
   "unused": "JJ",
   "pet": "JJ",
   "conferred": "VBN",
-  "pep": "NN",
   "skate": "VB",
   "obsessively": "JJ",
   "reverting": "JJ",
   "persevere": "JJ",
   "everytime": "RB",
   "amoral": "JJ",
-  "sigh": "NN",
-  "sign": "NN",
   "alaouite": "JJ",
-  "spurts": "NNS",
   "cheek-to-jowl": "RB",
   "morover": "JJR",
   "convenes": "VBZ",
   "fake": "JJ",
   "flagging": "JJ",
   "crammed": "VBN",
-  "voices": "NNS",
   "angry": "JJ",
   "enriched": "JJ",
   "wicked": "JJ",
   "sintered": "VBN",
   "sanctified": "JJ",
   "inflamed": "JJ",
-  "awesome": "JJ",
   "stole": "VBD",
   "savor": "VB",
   "undertook": "VBD",
@@ -5251,22 +3590,17 @@ var lexicon={
   "how": "WRB",
   "torn": "JJ",
   "sylvan": "JJ",
-  "foreign-aid": "NN",
-  "hop": "NN",
   "mideastern": "JJ",
-  "reckoning": "NN",
   "learned": "JJ",
   "suhthuhn": "JJ",
   "squared": "JJ",
   "abide": "VB",
   "bumpy": "JJ",
   "scarred": "JJ",
-  "pritzker": "NNP",
   "open": "JJ",
   "partook": "VBP",
   "hmpf": "UH",
   "hmm": "JJ",
-  "shiver": "NN",
   "deglycerolized": "VBN",
   "convene": "VB",
   "begotten": "VBN",
@@ -5289,10 +3623,8 @@ var lexicon={
   "unplagued": "VBN",
   "rephrase": "VB",
   "freezing": "JJ",
-  "hinges": "NNS",
   "hinged": "VBN",
   "anyways": "UH",
-  "thai": "NNP",
   "securities": "NNPS",
   "concentrate": "VB",
   "mans": "VBZ",
@@ -5302,65 +3634,47 @@ var lexicon={
   "swashbuckling": "JJ",
   "recaptured": "VBN",
   "concede": "VBP",
-  "prototype": "NN",
-  "reflex": "NN",
   "enable": "VB",
   "antiquarian": "JJ",
   "nonqualified": "VBN",
   "diffuse": "JJ",
   "spiritual": "JJ",
   "profane": "JJ",
-  "polls": "NNS",
-  "spotlight": "NN",
   "aerosolized": "VBN",
   "binary": "JJ",
-  "expenditures": "NNS",
   "prevail": "VB",
-  "wiring": "NN",
   "licit": "JJ",
   "barbed": "JJ",
   "escape": "VB",
   "recapture": "VB",
   "customized": "JJ",
   "clobber": "VB",
-  "ex-president": "NNP",
   "starving": "JJ",
   "around": "RB",
   "scurrying": "JJ",
-  "conditional": "JJ",
   "danubian": "JJ",
   "expanded": "VBN",
   "undercuts": "VBZ",
   "cozy": "JJ",
   "away": "JJ",
   "legged": "JJ",
-  "fishes": "NNS",
   "shies": "VBZ",
   "hev": "VB",
   "her": "PP",
   "bristles": "VBZ",
   "hey": "UH",
   "u.s.japan": "JJ",
-  "handsome": "JJ",
   "underdressed": "JJ",
-  "house": "NN",
   "browbeaten": "VBN",
   "invigorating": "JJ",
   "appalling": "JJ",
   "solaced": "VBN",
   "misplace": "VB",
-  "midsize": "JJ",
   "resell": "VB",
-  "mask": "NN",
-  "mash": "NN",
   "mass": "JJ",
-  "sin": "NN",
   "evicted": "VBN",
   "uncounted": "JJ",
   "overpowered": "VBN",
-  "harry": "NN",
-  "discriminates": "NNS",
-  "hormonal": "JJ",
   "misrouted": "VBN",
   "immiserated": "JJ",
   "sentient": "JJ",
@@ -5369,16 +3683,12 @@ var lexicon={
   "transposed": "VBN",
   "reacquired": "VBN",
   "expends": "VBZ",
-  "cardinal": "JJ",
   "beheld": "VBD",
   "pulls": "VBZ",
-  "amassing": "NN",
   "prompt": "JJ",
-  "cross-licensing": "NN",
   "att": "IN",
   "glowing": "JJ",
   "relinquished": "JJ",
-  "half-century": "NN",
   "sq": "JJ",
   "waver": "VBP",
   "decontaminated": "VBN",
@@ -5390,7 +3700,6 @@ var lexicon={
   "lacey": "JJ",
   "transbay": "JJ",
   "speculate": "VB",
-  "homogenize": "VB",
   "hereafter": "RB",
   "unsprayed": "VBN",
   "found": "VBD",
@@ -5398,76 +3707,53 @@ var lexicon={
   "reduce": "VB",
   "embattled": "JJ",
   "launches": "VBZ",
-  "salute": "NN",
   "demure": "JJ",
   "sublimed": "VBN",
   "belies": "VBZ",
   "qualify": "JJ",
-  "conditioning": "NN",
   "housebound": "JJ",
   "longneck": "JJ",
   "rooted": "JJ",
   "belligerent": "JJ",
   "unpleased": "VBN",
-  "guest": "NN",
   "rude": "JJ",
   "omnipresent": "JJ",
-  "crow": "NN",
-  "crop": "NN",
   "polarized": "VBN",
   "teensy": "JJ",
   "beforehand": "JJ",
   "pedestrian": "JJ",
-  "securities-law": "NN",
   "majoritarian": "JJ",
   "herniated": "VBN",
   "honduran": "JJ",
   "dragged": "VBN",
   "drenched": "JJ",
   "lengthwise": "RB",
-  "freight": "NN",
-  "southerner": "NNP",
-  "confederate": "NNP",
   "banned": "VBN",
-  "largesse": "NN",
   "re-edited": "VBN",
-  "startup": "NN",
   "potent": "JJ",
   "backfire": "VB",
   "baritone": "JJ",
-  "screeches": "NNS",
   "weickerian": "JJ",
   "frosty": "JJ",
   "u.s.-mexican": "JJ",
   "champion": "JJ",
-  "races": "NNS",
   "stung": "JJ",
   "selfdamaging": "JJ",
   "limited": "JJ",
   "italicized": "VBN",
   "equilibrated": "VBN",
   "befuddled": "JJ",
-  "stunt": "NN",
   "befuddles": "VBZ",
   "entrenched": "JJ",
   "squandered": "VBN",
-  "methodist": "NNP",
   "continue": "VB",
-  "yields": "NNS",
-  "spring": "NN",
   "aloft": "RB",
   "digitizes": "VBZ",
   "weatherbeaten": "JJ",
   "striven": "VBN",
-  "suit": "NN",
   "strives": "VBZ",
-  "baptist": "NNP",
   "hoo-pig": "UH",
-  "inches": "NNS",
-  "slump": "NN",
-  "refinancing": "NN",
   "uh": "UH",
-  "parses": "VBZ",
   "deviate": "VB",
   "lucid": "JJ",
   "holed": "VBN",
@@ -5475,17 +3761,14 @@ var lexicon={
   "knotted": "JJ",
   "tattered": "JJ",
   "soften": "VB",
-  "del.-based": "JJ",
   "longstanding": "JJ",
   "edgewise": "RB",
   "pestilent": "JJ",
   "stocked": "VBN",
   "creeps": "VBZ",
   "racy": "JJ",
-  "discounting": "NN",
   "licensed": "JJ",
   "imply": "VB",
-  "licenses": "NNS",
   "aboveboard": "JJ",
   "sixth": "CD",
   "resulting": "JJ",
@@ -5493,20 +3776,14 @@ var lexicon={
   "unmasculine": "JJ",
   "causal": "JJ",
   "exciting": "JJ",
-  "drag": "NN",
-  "midday": "NN",
   "unplug": "VB",
   "prompts": "VBZ",
   "nonliterary": "JJ",
   "slid": "VBD",
   "slim": "JJ",
-  "slit": "NN",
   "slip": "VB",
-  "delay": "NN",
   "higher-fat": "JJR",
   "fits": "VBZ",
-  "hawk": "NN",
-  "centers": "NNS",
   "chosen": "JJ",
   "mitigates": "VBZ",
   "wholesale": "RB",
@@ -5514,26 +3791,21 @@ var lexicon={
   "innermost": "JJ",
   "launder": "VB",
   "legendary": "JJ",
-  "outlines": "NNS",
   "regionalism": "JJ",
   "minimalist": "JJ",
   "castigate": "VB",
   "antimissile": "JJ",
   "delineate": "VB",
   "graze": "VBP",
-  "shortest": "JJS",
   "point": "JJ",
   "put": "VB",
   "ultramodern": "JJ",
   "yells": "VBZ",
-  "self-help": "NN",
-  "fouling": "NN",
   "actual": "JJ",
   "difficult": "JJ",
   "disengage": "VB",
   "meanin": "VBG",
   "bother": "VB",
-  "rollercoaster": "NN",
   "trusting": "JJ",
   "reassuring": "JJ",
   "gentle": "JJ",
@@ -5541,23 +3813,17 @@ var lexicon={
   "awed": "JJ",
   "astride": "RB",
   "awes": "VBZ",
-  "pitches": "NNS",
   "midmonth": "RB",
   "tramps": "VBZ",
-  "recoil": "NN",
   "incarcerate": "VB",
   "briny": "JJ",
-  "waste": "NN",
   "pitched": "JJ",
   "burnished": "VBN",
   "meant": "VBD",
-  "means": "NNP",
   "because": "IN",
   "unexecuted": "VBN",
-  "default": "NN",
   "meted": "VBN",
   "packed": "JJ",
-  "butts": "NNS",
   "rejoins": "VBZ",
   "reappears": "VBZ",
   "invited": "VBN",
@@ -5565,7 +3831,6 @@ var lexicon={
   "invites": "VBZ",
   "inspiring": "JJ",
   "distil": "VB",
-  "chastises": "VBZ",
   "concerted": "JJ",
   "whitewashed": "JJ",
   "appalls": "VBZ",
@@ -5576,7 +3841,6 @@ var lexicon={
   "grew": "VBD",
   "pleasantly": "JJ",
   "fascinate": "VB",
-  "need": "NN",
   "renegotiated": "VBN",
   "closer": "JJR",
   "immortalized": "VBN",
@@ -5588,7 +3852,6 @@ var lexicon={
   "redound": "VB",
   "inexperienced": "JJ",
   "treks": "VBZ",
-  "cruelest": "JJS",
   "out-compete": "VB",
   "dependent": "JJ",
   "broader": "JJR",
@@ -5598,60 +3861,43 @@ var lexicon={
   "contrarian": "JJ",
   "larval": "JJ",
   "impeding": "JJ",
-  "pool": "NN",
   "insanely": "JJ",
   "compute": "VB",
-  "multinational": "JJ",
-  "gravitational": "JJ",
   "tertian": "JJ",
   "appraise": "VB",
   "contribute": "VB",
   "unsavory": "JJ",
   "r-revised": "VBN",
-  "yesterday": "NN",
   "scholarly": "JJ",
   "ticketed": "VBN",
   "superefficient": "JJ",
   "defraud": "VB",
   "begrudge": "VB",
-  "used-car": "NN",
   "pique": "JJ",
-  "triumph": "NN",
   "bubbling": "JJ",
-  "revolutionize": "VB",
   "frank": "JJ",
-  "downstairs": "NN",
   "kindred": "JJ",
-  "conglomerate": "NN",
   "unveiled": "JJ",
   "motivate": "JJ",
-  "mightiest": "JJS",
   "hamiltonian": "JJ",
-  "award": "NN",
-  "characterize": "VB",
   "hatted": "VBN",
   "validated": "VBN",
   "welsh": "JJ",
   "witching": "JJ",
   "hasty": "JJ",
-  "retort": "NN",
   "infested": "JJ",
   "decide": "VB",
-  "bombing": "NN",
   "highlights": "VBZ",
   "bespeak": "VBP",
   "versus": "IN",
   "woken": "VBN",
   "affianced": "VBN",
-  "rocky": "JJ",
   "absolve": "VBP",
-  "rocks": "NNS",
   "kneels": "VBZ",
   "confess": "VB",
   "transcends": "VBZ",
   "motorized": "JJ",
   "attested": "VBN",
-  "veto": "NN",
   "mourning": "JJ",
   "lies": "VBZ",
   "buys": "VBZ",
@@ -5664,8 +3910,6 @@ var lexicon={
   "sparse": "JJ",
   "guzzle": "VB",
   "thick": "JJ",
-  "mid-19th": "JJ",
-  "filibuster": "NN",
   "happily": "JJ",
   "minus": "CC",
   "effectuate": "VB",
@@ -5673,10 +3917,8 @@ var lexicon={
   "laden": "JJ",
   "hamper": "VB",
   "transmit": "VB",
-  "writhe": "NN",
   "frozen": "JJ",
   "exercised": "VBN",
-  "exercises": "NNS",
   "went": "VBD",
   "missed": "JJ",
   "doped": "JJ",
@@ -5687,38 +3929,24 @@ var lexicon={
   "gored": "VBN",
   "quick": "JJ",
   "uninhabited": "JJ",
-  "w.": "JJ",
   "indonesian": "JJ",
   "warmed-over": "IN",
   "ocular": "JJ",
-  "terms": "NNS",
   "brag": "VB",
-  "kronor": "NNS",
   "condemned": "VBN",
   "cleaning": "JJ",
-  "co-anchor": "NN",
-  "fest": "NN",
   "deterred": "VBN",
-  "air": "NN",
   "aim": "VB",
-  "aid": "NNP",
   "inspired": "JJ",
   "launched": "VBN",
-  "uplift": "NN",
-  "de-emphasize": "VB",
   "prescribed": "JJ",
-  "contact": "NN",
   "prescribes": "VBZ",
   "kali": "VBP",
   "nondrying": "JJ",
   "bandied": "VBN",
-  "tyrannize": "VB",
   "re-activate": "VB",
-  "board": "NN",
-  "marginal": "JJ",
   "expelled": "VBN",
   "vies": "VBZ",
-  "progresses": "VBZ",
   "augur": "VBP",
   "honored": "VBN",
   "somersaulting": "JJ",
@@ -5731,7 +3959,6 @@ var lexicon={
   "divertimento": "JJ",
   "mutated": "VBN",
   "converse": "VB",
-  "minn.-based": "JJ",
   "true": "JJ",
   "left": "JJ",
   "nationwide": "JJ",
@@ -5741,31 +3968,24 @@ var lexicon={
   "lowering": "JJ",
   "lumped": "VBN",
   "write": "VB",
-  "fast-food": "NN",
   "topped": "JJ",
-  "frolic": "NN",
   "concurrent": "JJ",
   "governed": "JJ",
   "outlive": "VB",
   "collared": "VBN",
   "loyal": "JJ",
-  "rainier": "JJR",
   "erased": "VBN",
   "margined": "VBN",
   "unmixed": "VBN",
   "bowenized": "VBN",
-  "decking": "NN",
   "perceived": "JJ",
   "just": "JJ",
   "perceives": "VBZ",
   "woven": "VBN",
   "unsubsidized": "JJ",
-  "curse": "NN",
   "appear": "VBP",
   "georgian": "JJ",
-  "appeal": "NNP",
   "sells": "VBZ",
-  "pesticides.``": "``",
   "incoming": "JJ",
   "impatiently": "JJ",
   "penalizes": "VBZ",
@@ -5773,12 +3993,10 @@ var lexicon={
   "penalized": "VBN",
   "stingy": "JJ",
   "prove": "JJ",
-  "ca.": "IN",
   "cuter": "JJR",
   "pity": "JJ",
   "hesitates": "VBZ",
   "unsung": "JJ",
-  "cap": "NNP",
   "undiversified": "JJ",
   "hardest": "RB",
   "renders": "VBZ",
@@ -5794,21 +4012,14 @@ var lexicon={
   "deactivated": "VBN",
   "deactivates": "VBZ",
   "compress": "VB",
-  "fall": "NN",
-  "denominational": "JJ",
   "scarcer": "JJR",
-  "chuckles": "NNS",
   "intrigued": "JJ",
   "hurried": "JJ",
   "hurries": "VBZ",
   "happen": "VB",
-  "irons": "NNS",
-  "shadowing": "NN",
   "antiwar": "JJ",
   "worshiped": "VBN",
-  "rational": "JJ",
   "side-by-side": "RB",
-  "punky": "JJ",
   "carp": "VBP",
   "counteracted": "VBN",
   "beautify": "VBP",
@@ -5818,13 +4029,10 @@ var lexicon={
   "untrue": "JJ",
   "drove": "VBD",
   "checked": "VBN",
-  "troublesome": "JJ",
   "locking": "JJ",
   "comfy": "JJ",
   "distorted": "JJ",
-  "trash": "NN",
   "uncousinly": "JJ",
-  "price": "NN",
   "]": ")",
   "forever": "RB",
   "unamended": "JJ",
@@ -5837,7 +4045,6 @@ var lexicon={
   "peritoneal": "JJ",
   "crotchety": "JJ",
   "effectual": "JJ",
-  "quickie": "NN",
   "incite": "VB",
   "blame": "VB",
   "pertain": "VBP",
@@ -5845,68 +4052,47 @@ var lexicon={
   "through": "JJ",
   "newfound": "JJ",
   "evict": "VB",
-  "upper-house": "NN",
   "stick": "VB",
   "prurient": "JJ",
-  "jerky": "JJ",
   "confectionary": "JJ",
-  "rubs": "NNS",
   "pleads": "VBZ",
-  "image-making": "NN",
   "petted": "VBN",
   "bigoted": "JJ",
   "anecdotal": "JJ",
   "smelt": "VBD",
   "enchanting": "JJ",
-  "constitutional": "JJ",
   "comment": "VB",
   "gimmee": "UH",
   "fleeced": "VBN",
   "warms": "VBZ",
   "zany": "JJ",
   "unfold": "VB",
-  "rules": "NNS",
-  "briefest": "JJS",
-  "listening": "NN",
   "unaccounted": "JJ",
   "commend": "VB",
-  "greeting": "NN",
   "bespectacled": "JJ",
-  "u.s.-china": "NNP",
   "fullyear": "JJ",
-  "crunch": "NN",
   "uneasy": "JJ",
-  "supervises": "VBZ",
   "wold": "MD",
-  "law-school": "NN",
   "backbench": "JJ",
-  "sewing": "NN",
-  "highways": "NNS",
   "seek": "VB",
   "snuffed": "VBN",
   "computerized": "JJ",
   "suited": "JJ",
   "fancy": "JJ",
   "untidy": "JJ",
-  "skeleton": "NN",
   "refocus": "VB",
-  "federalize": "VB",
   "equate": "VB",
   "maladjusted": "JJ",
-  "salt": "NN",
   "concurring": "JJ",
   "colossal": "JJ",
   "overturns": "VBZ",
-  "keening": "NN",
   "staged": "JJ",
   "modify": "VB",
   "unproven": "JJ",
   "disassociate": "VB",
-  "aeroflot": "NNP",
   "toys": "NNPS",
   "entails": "VBZ",
   "instrumental": "JJ",
-  "impulse": "NN",
   "mounted": "VBN",
   "offended": "JJ",
   "decapitalized": "JJ",
@@ -5916,7 +4102,6 @@ var lexicon={
   "crafty": "JJ",
   "help": "VB",
   "sooo": "RB",
-  "skirmishing": "NN",
   "teeming": "JJ",
   "acculturated": "VBN",
   "nondollar": "JJ",
@@ -5926,12 +4111,7 @@ var lexicon={
   "ys": "VBZ",
   "stopped": "JJ",
   "positioned": "VBN",
-  "kidnapping": "NN",
   "dominates": "VBZ",
-  "trusts": "NNS",
-  "issue": "NN",
-  "reason": "NN",
-  "launch": "NN",
   "platter": "JJ",
   "blossom": "VB",
   "dominating": "JJ",
@@ -5939,51 +4119,40 @@ var lexicon={
   "transcendent": "JJ",
   "ulcerated": "JJ",
   "uncolored": "JJ",
-  "jeopardize": "VB",
   "ousted": "VBN",
   "parliamentary": "JJ",
   "gon": "VBG",
-  "god": "NNP",
   "sidewise": "RB",
-  "experiences": "NNS",
   "aboveground": "JJ",
   "languid": "JJ",
   "bespeaks": "VBZ",
   "scorched": "JJ",
   "paranoid": "JJ",
-  "hardened": "JJ",
   "outlast": "VB",
   "docile": "JJ",
-  "soft-drink": "NN",
   "molten": "JJ",
-  "insurance-company": "NN",
   "poisoned": "JJ",
   "disapproving": "JJ",
   "changed": "JJ",
-  "pithiest": "JJS",
   "protecting": "JJ",
   "disgruntled": "JJ",
   "bifurcate": "JJ",
   "quips": "VBZ",
   "as-yet": "RB",
-  "lookalike": "JJ",
   "woke": "VBD",
   "weatherstrip": "VB",
   "hewn": "JJ",
   "complies": "VBZ",
   "hews": "VBZ",
   "complied": "VBN",
-  "war": "NN",
   "alexandrine": "JJ",
   "f.o.b": "JJ",
   "overstate": "VB",
   "allied": "JJ",
-  "bidding": "NN",
   "reenact": "VB",
   "loom": "VBZ",
   "soiled": "JJ",
   "look": "JJ",
-  "mainframe": "NN",
   "endanger": "VB",
   "loot": "JJ",
   "clientslose": "JJ",
@@ -6003,13 +4172,8 @@ var lexicon={
   "minimal": "JJ",
   "berated": "VBN",
   "stem": "VB",
-  "step": "NN",
-  "stew": "NN",
   "lasts": "VBZ",
-  "plots": "NNS",
   "toppled": "VBN",
-  "shine": "NN",
-  "messaging": "NN",
   "shiny": "JJ",
   "dietary": "JJ",
   "paltry": "JJ",
@@ -6019,98 +4183,65 @@ var lexicon={
   "unbeknownst": "RB",
   "manufacture": "VB",
   "inept": "JJ",
-  "specialty": "NN",
   "bolsters": "VBZ",
   "fishy": "JJ",
-  "unitarian": "NNP",
   "accustomed": "JJ",
   "chafed": "VBN",
   "chafes": "VBZ",
   "dammed-up": "VBN",
-  "liberalize": "VB",
   "sullen": "JJ",
-  "fuzzier": "JJR",
   "overlong": "JJ",
   "sounder": "JJR",
   "sales-of": "IN",
-  "post-1979": "JJ",
   "aware": "JJ",
   "backflips": "VBZ",
   "shackled": "VBN",
-  "suite": "NN",
-  "quelling": "NN",
   "cellular": "JJ",
   "facilitate": "VB",
-  "hairier": "JJR",
   "compensated": "JJ",
   "among": "IN",
   "compensates": "VBZ",
   "intraocular": "JJ",
-  "decrees": "NNS",
-  "poke": "NN",
   "marketed": "VBN",
-  "heating": "NN",
   "quell": "VB",
-  "chant": "NN",
   "overseen": "VBN",
   "oversees": "VBZ",
   "win": "JJ",
-  "chemical-arms": "NNS",
   "remains": "VBZ",
   "vivid": "JJ",
-  "starter": "NN",
-  "crosses": "VBZ",
   "four-for-one": "RB",
   "ushers": "VBZ",
   "cheapens": "VBZ",
   "ferrets": "VBZ",
-  "skirt": "NN",
   "intraparty": "JJ",
-  "fatigue": "NN",
   "advocated": "VBN",
   "catty": "JJ",
   "feels": "VBZ",
   "emptied": "VBN",
-  "advocates": "NNS",
   "smarts": "VBZ",
   "sing": "VB",
   "placid": "JJ",
   "grumbling": "JJ",
   "divides": "VBZ",
   "benedictine": "JJ",
-  "gartner": "NNP",
   "withering": "JJ",
   "upset": "JJ",
-  "stride": "NN",
-  "shred": "NN",
   "soldered": "VBN",
   "reallocate": "VB",
   "underperforms": "VBZ",
   "breezy": "JJ",
-  "b-based": "VBN",
-  "truck": "NN",
-  "des": "NNP",
   "deploy": "VB",
   "expires": "VBZ",
-  "breeze": "NN",
   "passe": "JJ",
   "must": "MD",
-  "tire": "NN",
   "(": "(",
   "rash": "JJ",
-  "bug": "NN",
-  "bases": "NNS",
   "suckered": "VBN",
-  "bud": "NN",
   "popular": "JJ",
-  "sowing": "NN",
   "course": "RB",
-  "gust": "NN",
-  "watershed": "NN",
   "gush": "VBP",
   "counterprogram": "VB",
   "spotted": "VBN",
-  "question": "NN",
   "freeze": "VB",
   "desperate": "JJ",
   "reattached": "VBN",
@@ -6123,21 +4254,16 @@ var lexicon={
   "diligent": "JJ",
   "christen": "VB",
   "budgetary": "JJ",
-  "los": "NNP",
   "low": "JJ",
   "hoverin": "VBG",
-  "microtonal": "JJ",
   "sizzling": "JJ",
   "hytt": "PRP",
-  "oversize": "JJ",
   "outspread": "VBN",
   "coincidental": "JJ",
   "inhabits": "VBZ",
   "swinging": "JJ",
-  "bucks": "NNS",
   "overrendered": "VBN",
   "strange": "JJ",
-  "unconventional": "JJ",
   "nightly": "JJ",
   "fierce": "JJ",
   "weld": "VB",
@@ -6149,7 +4275,6 @@ var lexicon={
   "accomodate": "VB",
   "executed": "VBN",
   "gephardtian": "JJ",
-  "nonfunctional": "JJ",
   "drizzly": "JJ",
   "seventh": "JJ",
   "injects": "VBZ",
@@ -6163,25 +4288,20 @@ var lexicon={
   "threaten": "VB",
   "storied": "JJ",
   "empty": "JJ",
-  "rumors": "NNS",
   "stumpy": "JJ",
   "heed": "VB",
   "empowers": "VBZ",
   "persistent": "JJ",
   "uneducated": "JJ",
-  "lives": "NNS",
   "sunburnt": "JJ",
   "plenary": "JJ",
   "calculate": "VB",
-  "exceptional": "JJ",
   "syndciated": "VBN",
-  "rosiest": "JJS",
   "embroider": "VBP",
   "hath": "VBZ",
   "horse-blanket": "RB",
   "nepalese": "NNPS",
   "winded": "JJ",
-  "wreck": "NN",
   "hazy": "JJ",
   "liberated": "JJ",
   "rests": "VBZ",
@@ -6190,7 +4310,6 @@ var lexicon={
   "afraid": "JJ",
   "rather": "JJ",
   "includes": "VBZ",
-  "leaky": "JJ",
   "adult": "JJ",
   "protozoan": "JJ",
   "aligned": "JJ",
@@ -6201,17 +4320,14 @@ var lexicon={
   "masterly": "JJ",
   "lure": "JJ",
   "construe": "VB",
-  "minority": "NN",
   "higher-paid": "JJR",
   "overtaken": "VBN",
   "foresaw": "VBD",
-  "encounter": "NN",
   "decaffeinated": "VBN",
   "bony": "JJ",
   "mean": "JJ",
   "improvise": "VB",
   "awry": "RB",
-  "navy": "NN",
   "rebuts": "VBZ",
   "quantify": "VB",
   "bluntest": "RBS",
@@ -6221,22 +4337,17 @@ var lexicon={
   "trichrome": "JJ",
   "bioengineer": "VB",
   "wronged": "JJ",
-  "features": "NNS",
   "thereon": "RB",
   "buddhist": "JJ",
   "comforted": "VBN",
-  "rule": "NN",
   "torpid": "JJ",
   "annotated": "VBN",
   "introduce": "VB",
-  "distance": "NN",
   "consider": "VB",
   "stratified": "JJ",
-  "realestate": "NN",
   "unthinking": "JJ",
   "divulge": "VB",
   "directed": "VBN",
-  "knight": "NNP",
   "caricatured": "VBN",
   "mitigate": "VB",
   "mushy": "JJ",
@@ -6248,15 +4359,12 @@ var lexicon={
   "fret": "VBP",
   "waylaid": "VBN",
   "searching": "JJ",
-  "birth-control": "NN",
   "cower": "VBP",
   "grilled": "JJ",
   "decides": "VBZ",
   "boost": "VB",
-  "voyage": "NN",
   "smacks": "VBZ",
   "overt": "JJ",
-  "unconstitutional": "JJ",
   "staves": "VBZ",
   "disorderly": "JJ",
   "cutglass": "JJ",
@@ -6271,51 +4379,38 @@ var lexicon={
   "prolonged": "JJ",
   "decrepit": "JJ",
   "censored": "JJ",
-  "picketing": "NN",
   "say": "VB",
   "melted": "JJ",
   "mousy": "JJ",
   "defeated": "JJ",
   "faked": "VBN",
   "entitles": "VBZ",
-  "belly": "NN",
   "contaminate": "VB",
-  "kin": "NN",
   "kid": "JJ",
   "unconcerned": "JJ",
   "virile": "JJ",
   "heavenly": "JJ",
-  "quarrelsome": "JJ",
   "erected": "VBN",
   "unnecessary": "JJ",
   "ridicules": "VBZ",
   "broad": "JJ",
-  "intern": "NN",
-  "hiv\\/aids": "JJ",
   "unorganized": "JJ",
   "compleated": "VBN",
-  "outrage": "NN",
   "warrent": "JJ",
-  "marshal": "NN",
-  "tastier": "JJR",
   "frustrated": "JJ",
   "gentrified": "VBN",
   "idealized": "JJ",
   "largest-ever": "RB",
-  "bounds": "NNS",
   "breathe": "VB",
   "frowzy": "JJ",
   "franciscan": "JJ",
   "cushioned": "VBN",
-  "audition": "NN",
   "skirted": "VBN",
-  "shatters": "NNS",
   "prepupal": "JJ",
   "decelerate": "VB",
   "customary": "JJ",
   "downplays": "VBZ",
   "proletarian": "JJ",
-  "phenolic": "NN",
   "fancies": "VBZ",
   "breathy": "JJ",
   "skirting": "JJ",
@@ -6323,7 +4418,6 @@ var lexicon={
   "shoot": "VB",
   "estranging": "JJ",
   "trended": "VBN",
-  "excellence": "NN",
   "zooms": "VBZ",
   "dwelled": "VBN",
   "tangent": "JJ",
@@ -6338,30 +4432,17 @@ var lexicon={
   "diversionary": "JJ",
   "demolish": "VB",
   "unimproved": "JJ",
-  "reviews": "NNS",
-  "score": "NN",
-  "confuses": "VBZ",
-  "map": "NN",
   "mar": "VB",
-  "strokes": "NNS",
-  "healthier": "JJ",
   "mad": "JJ",
   "mai": "MD",
   "mah": "PRP",
-  "cascade": "NN",
-  "deposit": "NN",
   "deceive": "VB",
   "unleash": "VB",
-  "talk": "NN",
-  "shaky": "JJ",
   "recoup": "VB",
-  "pitch": "NN",
   "comes": "VBZ",
-  "fuels": "NNS",
   "less-perfectly": "RBR",
   "bestselling": "JJ",
   "simple": "JJ",
-  "rock": "NN",
   "scolded": "VBN",
   "shorted": "VBN",
   "swears": "VBZ",
@@ -6370,18 +4451,14 @@ var lexicon={
   "fazed": "JJ",
   "hemmed": "VBN",
   "sideways": "JJ",
-  "cough": "NN",
   "infuriating": "JJ",
   "normal": "JJ",
   "thine": "JJ",
-  "crib": "NN",
   "sounds": "VBZ",
   "cheesy": "JJ",
-  "murky": "JJ",
   "tough": "JJ",
   "interred": "JJ",
   "cleanse": "VB",
-  "sailing": "NN",
   "midtown": "JJ",
   "reacquire": "VB",
   "notched": "JJ",
@@ -6390,22 +4467,17 @@ var lexicon={
   "center-punch": "VB",
   "enter": "VB",
   "coveted": "JJ",
-  "shop": "NNP",
-  "rating": "NN",
   "shot": "VBN",
   "elevate": "VB",
-  "corner": "NN",
   "fend": "VB",
   "rubenesquely": "JJ",
   "reproduced": "VBN",
-  "quality-control": "NN",
   "plumb": "RB",
   "worrying": "JJ",
   "limber": "JJ",
   "malted": "VBN",
   "enthralling": "JJ",
   "soars": "VBZ",
-  "northrop": "NNP",
   "continues": "VBZ",
   "cornered": "VBN",
   "slain": "VBN",
@@ -6413,30 +4485,17 @@ var lexicon={
   "here": "RB",
   "intrude": "JJ",
   "umber": "JJ",
-  "hand-holding": "NN",
-  "whips": "NNS",
-  "herr": "NNP",
   "memorialized": "VBN",
-  "post-production": "NN",
   "somehow": "RB",
   "ongoing": "JJ",
   "orginate": "VB",
   "planar": "JJ",
-  "investor-relations": "NNS",
   "malformed": "JJ",
-  "bargain-hunting": "NN",
-  "cauterize": "VB",
-  "amounts": "NNS",
-  "parody": "NN",
   "baptismal": "JJ",
   "worryin": "VBG",
   "to": "TO",
-  "grip": "NN",
   "slanted": "VBN",
-  "grit": "NN",
-  "reddened": "JJ",
   "grim": "JJ",
-  "grin": "NN",
   "thirsted": "VBN",
   "ascend": "VB",
   "amazing": "JJ",
@@ -6444,18 +4503,13 @@ var lexicon={
   "pioneer": "JJ",
   "highbrow": "JJ",
   "dry": "JJ",
-  "goodbye": "NN",
-  "fringe": "NN",
   "annoys": "VBZ",
   "unwarranted": "JJ",
   "totalitarian": "JJ",
-  "strikes": "NNS",
   "sophisticated": "JJ",
   "nonacid": "JJ",
   "beneath": "RB",
   "electrifying": "JJ",
-  "rail-traffic": "NN",
-  "traffic": "NN",
   "grasped": "VBN",
   "carps": "VBZ",
   "stilted": "JJ",
@@ -6473,12 +4527,9 @@ var lexicon={
   "chandelle": "VB",
   "cultural": "JJ",
   "everlasting": "JJ",
-  "steelmaking": "NN",
   "disinflationary": "JJ",
-  "summate": "NN",
   "cleared": "JJ",
   "empties": "VBZ",
-  "emptier": "JJR",
   "eyd": "VBN",
   "dunks": "VBZ",
   "atone": "VB",
@@ -6495,62 +4546,44 @@ var lexicon={
   "u.s.-endorsed": "JJ",
   "rifled": "JJ",
   "predisposed": "JJ",
-  "filters": "NNS",
   "noncommissioned": "JJ",
   "suffer": "VB",
   "thrilling": "JJ",
   "complain": "VBP",
-  "positions": "NNS",
   "exquisite": "JJ",
   "watered": "VBN",
   "ironed": "JJ",
   "beneficient": "JJ",
   "manned": "JJ",
   "dons": "VBZ",
-  "then-52": "JJ",
   "done": "VBN",
   "rerouted": "VBN",
   "revive": "VB",
-  "regulation": "NN",
   "pare": "VB",
   "draped": "JJ",
   "rockin": "JJ",
   "part": "RB",
   "says": "VBZ",
-  "recording": "NN",
   "declare": "VB",
   "idled": "VBN",
   "custom": "JJ",
   "trifled": "VBN",
-  "majority": "NN",
   "easygoing": "JJ",
   "serve": "VBP",
   "cosy": "JJ",
   "defiles": "VBZ",
-  "ruin": "NN",
   "devastate": "VB",
   "common": "JJ",
   "kuwaiti": "JJ",
-  "bank-fraud": "NN",
-  "gravest": "JJS",
   "resolute": "JJ",
   "electoral": "JJ",
-  "fans": "NNS",
   "distraught": "JJ",
   "scuttle": "VB",
-  "half-hour": "NN",
-  "dreamlike": "JJ",
-  "dances": "NNS",
   "caked": "VBN",
-  "advises": "VBZ",
   "ensures": "VBZ",
   "vertebrate": "JJ",
   "kidnapped": "VBN",
-  "stake": "NN",
   "gay": "JJ",
-  "gas": "NN",
-  "gal": "NN",
-  "chatter": "NN",
   "replaces": "VBZ",
   "outperforms": "VBZ",
   "consular": "JJ",
@@ -6558,37 +4591,28 @@ var lexicon={
   "engrossed": "JJ",
   "wherein": "WRB",
   "benign": "JJ",
-  "discourse": "NN",
   "absolved": "JJ",
   "craved": "VBN",
   "redesigned": "VBN",
   "craven": "JJ",
   "craves": "VBZ",
   "toil": "VBP",
-  "discipline": "NN",
   "vague": "JJ",
   "displace": "VB",
-  "harlem": "NNP",
   "coupled": "JJ",
   "fond": "JJ",
   "channelled": "VBN",
-  "gardening": "NN",
   "obliged": "JJ",
-  "mirror": "NN",
   "obliges": "VBZ",
-  "collapses": "VBZ",
   "fivefold": "RB",
   "metamorphosed": "VBN",
   "connecting": "JJ",
   "visionary": "JJ",
   "wayward": "JJ",
-  "optimize": "VB",
-  "bluster": "NN",
   "wilted": "JJ",
   "harassed": "JJ",
   "framed": "JJ",
   "discomfit": "VB",
-  "de": "NNP",
   "perhaps": "JJ",
   "notarized": "VBN",
   "adjudicate": "VB",
@@ -6597,24 +4621,16 @@ var lexicon={
   "beckons": "VBZ",
   "whosever": "WP",
   "integral": "JJ",
-  "factoring": "NN",
   "stupefying": "JJ",
-  "automotive": "NNP",
   "molal": "JJ",
   "cassocked": "JJ",
   "revisionist": "JJ",
-  "iran-contra": "NNP",
-  "boheme": "NNP",
-  "spacing": "NN",
   "demoniac": "JJ",
   "neater": "JJR",
   "tack-solder": "VB",
-  "decrease": "NN",
   "brazilian": "JJ",
   "asteroid": "JJ",
-  "venal": "JJ",
   "silted": "VBN",
-  "train": "NN",
   "normalized": "VBN",
   "encourage": "VB",
   "pedaled": "VBN",
@@ -6627,20 +4643,15 @@ var lexicon={
   "nary": "JJ",
   "picturesque": "JJ",
   "sidelong": "JJ",
-  "charting": "NN",
   "burning": "JJ",
   "stronghold": "JJ",
   "spell": "VB",
   "loves": "VBZ",
-  "stormier": "JJR",
   "virulent": "JJ",
   "fed": "VBN",
   "richterian": "JJ",
-  "burdened": "JJ",
   "plods": "VBZ",
   "repress": "VB",
-  "stub": "NN",
-  "mate": "NN",
   "fouled": "JJ",
   "grieving": "JJ",
   "unspent": "JJ",
@@ -6658,17 +4669,12 @@ var lexicon={
   "fought": "VBD",
   "prays": "VBZ",
   "rubber-stamp": "VB",
-  "trendier": "JJR",
   "afresh": "RB",
   "wherewith": "VB",
   "stranded": "JJ",
   "festooned": "VBN",
   "underappreciated": "JJ",
-  "couponing": "NN",
-  "littlest": "JJS",
   "cycled": "VBN",
-  "cycles": "NNS",
-  "adventuresome": "JJ",
   "emitted": "VBN",
   "deliver": "VB",
   "handpicked": "VBN",
@@ -6678,13 +4684,8 @@ var lexicon={
   "unearthed": "VBN",
   "attends": "VBZ",
   "certain": "JJ",
-  "sticklike": "JJ",
   "phosphorescent": "JJ",
   "protect": "VB",
-  "bulk": "NN",
-  "bull": "NN",
-  "professional": "JJ",
-  "extracts": "NNS",
   "inherits": "VBZ",
   "walks": "VBZ",
   "unretouched": "JJ",
@@ -6695,7 +4696,6 @@ var lexicon={
   "pampered": "JJ",
   "knotty": "JJ",
   "necessitate": "VBP",
-  "nastiest": "JJS",
   "wide": "JJ",
   "offers": "VBZ",
   "shrug": "VB",
@@ -6708,17 +4708,13 @@ var lexicon={
   "ribbed": "JJ",
   "comprised": "VBN",
   "prevailing": "JJ",
-  "rule``": "``",
   "faltering": "JJ",
   "obliterated": "JJ",
   "imbibed": "VBN",
-  "biggest": "JJS",
   "glib": "JJ",
   "snagged": "VBN",
   "proposed": "JJ",
-  "image-processing": "NN",
   "uninhibited": "JJ",
-  "ivy": "NNP",
   "recounts": "VBZ",
   "undiluted": "JJ",
   "antiviral": "JJ",
@@ -6734,10 +4730,8 @@ var lexicon={
   "hampered": "VBN",
   "maximized": "VBN",
   "pooled": "VBN",
-  "phase": "NN",
   "undated": "JJ",
   "redistributed": "VBN",
-  "mutational": "JJ",
   "worsen": "VB",
   "insinuate": "VB",
   "redistributes": "VBZ",
@@ -6749,11 +4743,9 @@ var lexicon={
   "stipulates": "VBZ",
   "disclaims": "VBZ",
   "stipulated": "JJ",
-  "swearing": "NN",
   "sick": "JJ",
   "express": "RB",
   "mediate": "VB",
-  "juiciest": "JJS",
   "interpenetrate": "VBP",
   "eat": "VB",
   "prearranged": "VBN",
@@ -6766,55 +4758,41 @@ var lexicon={
   "aloud": "RB",
   "nouvelle": "JJ",
   "outshine": "JJ",
-  "glances": "NNS",
   "utilitarian": "JJ",
   "supervoting": "JJ",
   "entranced": "VBN",
   "compelling": "JJ",
-  "affiliate": "NN",
-  "correctional": "JJ",
   "onleh": "RB",
   "fraught": "JJ",
   "adjust": "VB",
-  "eternal": "JJ",
   "aspire": "VB",
   "onto": "IN",
-  "tinkering": "NN",
   "grassed": "VBN",
   "rang": "VBD",
-  "appeals": "NNS",
   "rank": "JJ",
-  "hearing": "NNP",
   "bombard": "JJ",
   "lulled": "VBN",
   "geered": "VBN",
   "rewritten": "VBN",
   "indeterminate": "JJ",
-  "wedge": "NN",
   "urban": "JJ",
   "overdraw": "VB",
   "wrapped": "JJ",
-  "benefit": "NN",
   "bloated": "JJ",
   "interrelated": "JJ",
-  "flame": "NN",
   "conceived": "VBN",
-  "clunky": "JJ",
   "yank": "VB",
   "sage": "JJ",
   "pickin": "VBG",
   "delays": "VBZ",
-  "surrender": "NN",
   "criticizes": "VBZ",
   "fluid": "JJ",
   "criticized": "VBN",
   "congruent": "JJ",
   "older-skewing": "JJR",
-  "thrashing": "NN",
   "wrest": "VB",
   "proclaims": "VBZ",
   "corrupt": "JJ",
-  "dodgers": "NNP",
   "modulate": "VBP",
   "wear": "VB",
   "amortized": "VBN",
@@ -6822,21 +4800,16 @@ var lexicon={
   "interacts": "VBZ",
   "uncharged": "JJ",
   "lusty": "JJ",
-  "satellite": "NN",
   "settle": "VB",
   "deflect": "VB",
-  "ashland": "NNP",
   "trendy": "JJ",
   "appease": "VB",
-  "luxury-car": "NN",
   "bugged": "VBN",
   "ought": "MD",
   "dearer": "JJR",
   "vie": "VBP",
-  "overemphasize": "VB",
   "trashed": "VBN",
   "spanned": "VBN",
-  "hunt": "NN",
   "zoom": "VB",
   "overrated": "JJ",
   "hung": "VBD",
@@ -6846,48 +4819,33 @@ var lexicon={
   "hastens": "VBZ",
   "idolized": "JJ",
   "plus": "JJ",
-  "hong": "NNP",
   "over-stress": "VB",
   "credited": "VBN",
-  "sickliest": "JJS",
   "overbid": "VBD",
   "unbalanced": "JJ",
-  "discharge": "NN",
-  "focus": "NN",
-  "ice": "NN",
-  "empathize": "VB",
   "icy": "JJ",
-  "charge": "NNP",
   "quash": "JJ",
   "sours": "VBZ",
-  "hard-disk": "NN",
   "little": "JJ",
   "encroach": "VB",
-  "dries": "NNS",
-  "drier": "JJR",
   "obsolete": "JJ",
   "deluded": "JJ",
   "transcontinental": "JJ",
-  "city\\/regional": "JJ",
   "shove": "VB",
   "ravaging": "JJ",
   "floating": "JJ",
   "emerge": "VB",
   "hoppled": "VBN",
   "brighter": "JJR",
-  "binational": "JJ",
   "reorder": "VB",
   "sheds": "VBZ",
   "eighteenth": "CD",
-  "price-fixing": "NN",
   "begs": "VBZ",
   "leavin": "VBG",
-  "crashes": "NNS",
   "fascist": "JJ",
   "scoff": "VBP",
   "muggy": "JJ",
   "liquid": "JJ",
-  "noncriminal": "JJ",
   "invests": "VBZ",
   "furnished": "JJ",
   "paternalist": "JJ",
@@ -6895,16 +4853,11 @@ var lexicon={
   "white": "JJ",
   "supplemented": "VBN",
   "underneath": "RB",
-  "name": "NN",
   "coaxes": "VBZ",
-  "substitutes": "NNS",
-  "synchronize": "VBP",
   "populated": "VBN",
   "inopportune": "JJ",
   "tuned": "VBN",
   "de-iodinated": "VBN",
-  "antiphonal": "JJ",
-  "record": "NN",
   "overmedicated": "VBN",
   "accelerated": "VBN",
   "unpaid": "JJ",
@@ -6919,66 +4872,45 @@ var lexicon={
   "specify": "VB",
   "schooled": "VBN",
   "rend": "VB",
-  "rent": "NN",
   "unglazed": "VBN",
-  "hunter-killer": "NN",
-  "marathon": "NN",
   "ideal": "JJ",
   "sculpted": "VBN",
-  "tailpipe-emissions": "NNS",
   "adhere": "VB",
   "hustles": "VBZ",
   "unshaven": "JJ",
   "principled": "JJ",
-  "b-2": "NNP",
-  "b-3": "JJ",
-  "b-1": "NNP",
-  "h": "NNP",
   "multimillion": "JJ",
-  "shops": "NNS",
   "reveal": "VB",
-  "bids": "NNS",
   "abler": "JJR",
   "kitschy": "JJ",
   "interfere": "JJ",
-  "monte": "NNP",
   "wanders": "VBZ",
   "recumbent": "JJ",
-  "armchair": "NN",
-  "pot": "NN",
   "pontificates": "VBZ",
   "hunched": "VBN",
-  "pop": "NN",
   "swum": "VBN",
   "bequeathed": "VBN",
-  "blessing": "NN",
   "sniff": "VB",
-  "mount": "NNP",
   "vary": "VBP",
   "premature": "JJ",
   "pre-date": "VB",
   "enriches": "VBZ",
-  "vest": "NN",
-  "persona": "NN",
   "unqualified": "JJ",
   "synthesised": "VBN",
   "shroud": "VBP",
   "halfway": "JJ",
   "rose": "VBD",
   "disrupt": "VB",
-  "saber-rattling": "NN",
   "confined": "JJ",
   "reduces": "VBZ",
   "snort": "VB",
   "substandard": "JJ",
   "reduced": "JJ",
   "resonate": "VB",
-  "equalize": "VB",
   "unfertile": "JJ",
   "infinite": "JJ",
   "amongst": "IN",
   "inscribed": "VBN",
-  "demilitarize": "VB",
   "encompass": "VB",
   "discerned": "VBN",
   "hired": "JJ",
@@ -6996,35 +4928,24 @@ var lexicon={
   "proscribed": "JJ",
   "proscribes": "VBZ",
   "immanent": "JJ",
-  "gleened": "VBN",
   "monodisperse": "JJ",
   "frustrate": "VB",
-  "crush": "NN",
   "condensed": "JJ",
-  "tags": "NNS",
   "exaggerated": "JJ",
-  "unprofessional": "JJ",
-  "under-35": "JJ",
   "top": "JJ",
   "too": "RB",
   "denominated": "VBN",
   "overall": "JJ",
-  "markets": "NNS",
   "minor": "JJ",
   "pinheaded": "JJ",
   "nitpicking": "JJ",
   "particularly": "JJ",
   "influenced": "VBN",
-  "court": "NN",
-  "influences": "NNS",
   "bawdy": "JJ",
   "structural": "JJ",
   "unsurprising": "JJ",
-  "rationalize": "VB",
   "prefers": "VBZ",
   "stash": "VB",
-  "surfeit": "NN",
-  "shade": "NN",
   "outraged": "JJ",
   "reconnect": "VB",
   "pray": "JJ",
@@ -7051,50 +4972,35 @@ var lexicon={
   "recovered": "JJ",
   "korean": "JJ",
   "chousin": "VBG",
-  "risks": "NNS",
   "insulted": "JJ",
-  "risky": "JJ",
   "rife": "JJ",
   "contractual": "JJ",
   "choral": "JJ",
-  "prestige": "NN",
   "finds": "VBZ",
-  "notch": "NN",
   "relive": "VBP",
   "amateur": "JJ",
   "grotesque": "JJ",
-  "wilfred": "NNP",
   "unsuited": "JJ",
   "funded": "VBN",
   "fastest": "RB",
   "compiles": "VBZ",
-  "protests": "NNS",
   "restudy": "VB",
-  "wheeling": "NN",
   "repulsed": "VBN",
-  "declines": "NNS",
   "desegregated": "VBN",
   "outfit": "JJ",
-  "small-denomination": "NN",
-  "cynic": "NN",
   "gussied": "VBN",
   "crispy": "JJ",
   "scented": "JJ",
   "re-explore": "VB",
   "skyward": "RB",
-  "r.i.-based": "JJ",
-  "plants": "NNS",
   "stagewhispers": "VBZ",
-  "barricade": "NN",
   "evaluates": "VBZ",
   "canvassed": "VBN",
   "distrusts": "VBZ",
   "stimulates": "VBZ",
   "assuaged": "VBN",
   "stimulated": "JJ",
-  "holidays": "NNS",
   "resuscitated": "VBN",
-  "cheer": "NNP",
   "throwaway": "JJ",
   "lowers": "VBZ",
   "canted": "JJ",
@@ -7106,9 +5012,7 @@ var lexicon={
   "baited": "VBN",
   "upraised": "VBN",
   "wanna": "VB",
-  "gamma": "NN",
   "gouge": "VB",
-  "ache": "NN",
   "analyze": "VB",
   "contrite": "JJ",
   "tutored": "VBN",
@@ -7117,14 +5021,9 @@ var lexicon={
   "highlight": "VB",
   "sublet": "VB",
   "shallower": "JJR",
-  "mustard": "NN",
-  "proration": "NN",
-  "insect": "NN",
   "garbed": "VBN",
-  "intentional": "JJ",
   "wrestle": "VB",
   "uninspected": "JJ",
-  "hooks": "NNS",
   "veterinary": "JJ",
   "unstapled": "JJ",
   "interpenetrates": "VBZ",
@@ -7134,25 +5033,16 @@ var lexicon={
   "stratify": "VB",
   "datelined": "VBN",
   "brief": "JJ",
-  "communicational": "JJ",
-  "unconditional": "JJ",
-  "operational": "JJ",
   "galloped": "VBN",
-  "devotional": "JJ",
   "garbled": "JJ",
-  "rarest": "JJS",
   "recount": "VB",
   "detects": "VBZ",
   "dusted": "VBN",
   "bittersweet": "JJ",
-  "sir": "NNP",
   "sit": "VB",
   "outclass": "VBP",
-  "privatize": "VB",
-  "maternal": "JJ",
   "immersed": "VBN",
   "rifkinesque": "JJ",
-  "sanest": "JJS",
   "reauthorized": "VBN",
   "pulsed": "VBN",
   "demobilized": "VBN",
@@ -7161,8 +5051,6 @@ var lexicon={
   "hankered": "VBN",
   "frightening": "JJ",
   "liberian": "JJ",
-  "clusters": "NNS",
-  "caa": "NNP",
   "gassed": "VBN",
   "restrict": "VB",
   "beveled": "VBN",
@@ -7172,8 +5060,6 @@ var lexicon={
   "tabulate": "VB",
   "unencumbered": "JJ",
   "supports": "VBZ",
-  "weaves": "NNS",
-  "echo": "NN",
   "engenders": "VBZ",
   "north": "RB",
   "misinformed": "VBN",
@@ -7182,16 +5068,12 @@ var lexicon={
   "overreaches": "VBZ",
   "blue": "JJ",
   "leery": "JJ",
-  "blip": "NN",
-  "angle": "NN",
   "rearranges": "VBZ",
   "barrette": "JJ",
   "alarmed": "JJ",
   "neighboring": "JJ",
   "bulging": "JJ",
   "riiiing": "UH",
-  "darkest": "JJS",
-  "bottling": "NN",
   "squirms": "VBZ",
   "deceives": "VBZ",
   "allocate": "VB",
@@ -7199,49 +5081,34 @@ var lexicon={
   "televised": "VBN",
   "frustrates": "VBZ",
   "underscores": "VBZ",
-  "auctions": "NNS",
   "sequenced": "VBN",
   "walk": "VB",
-  "interface": "NN",
-  "coordinates": "NNS",
-  "i.e.": "RB",
   "subsurface": "JJ",
   "counterculture": "JJ",
-  "nickel": "NN",
   "inbound": "JJ",
   "interrupts": "VBZ",
   "nicked": "VBN",
   "walloping": "JJ",
   "overturn": "VB",
-  "loosest": "JJS",
   "outspend": "VBP",
   "improves": "VBZ",
   "fantasized": "VBN",
-  "sops": "NNS",
   "extramural": "JJ",
   "re-paid": "VBD",
   "gutted": "VBN",
   "dismounts": "VBZ",
   "riveted": "VBN",
   "obtain": "VB",
-  "c-yields": "NNS",
   "stowed": "VBN",
   "rescind": "VB",
-  "masquerade": "NN",
   "incendiary": "JJ",
   "sultry": "JJ",
   "informed": "JJ",
-  "export": "NN",
-  "severance": "NN",
   "debuts": "VBZ",
   "fluorescent": "JJ",
-  "linger": "NNP",
   "dulcet": "JJ",
   "incipient": "JJ",
-  "divisional": "JJ",
   "good-bye": "UH",
-  "squeeze": "NN",
-  "untraditional": "JJ",
   "made": "JJ",
   "whether": "IN",
   "atheist": "JJ",
@@ -7252,13 +5119,9 @@ var lexicon={
   "strident": "JJ",
   "nonbuilding": "JJ",
   "metabolized": "VBN",
-  "income-tax": "NN",
   "twangy": "JJ",
   "extort": "VB",
-  "shaving": "NNP",
   "ole": "JJ",
-  "pulse": "NN",
-  "tires": "NNS",
   "consists": "VBZ",
   "rusty": "JJ",
   "weary": "JJ",
@@ -7268,18 +5131,13 @@ var lexicon={
   "specialist": "JJ",
   "misjudged": "JJ",
   "brocaded": "JJ",
-  "splinter": "NN",
-  "herd": "NN",
   "reported": "VBN",
-  "conversational": "JJ",
   "rise-perhaps": "RB",
   "sweltering": "JJ",
   "holy": "JJ",
   "detracts": "VBZ",
   "menaced": "VBN",
-  "hole": "NN",
   "pardon": "VB",
-  "irksome": "JJ",
   "malign": "JJ",
   "hot": "JJ",
   "classify": "VB",
@@ -7291,9 +5149,7 @@ var lexicon={
   "distinguishing": "JJ",
   "nobler": "JJR",
   "superior": "JJ",
-  "whiz": "NN",
   "c-translated": "VBN",
-  "whip": "NN",
   "borne": "VBN",
   "whoosh": "VBP",
   "piecemeal": "JJ",
@@ -7302,79 +5158,47 @@ var lexicon={
   "fevered": "JJ",
   "broody": "JJ",
   "corny": "JJ",
-  "herdin": "NN",
-  "object": "NN",
   "backpedal": "VB",
   "known": "JJ",
   "consummate": "JJ",
-  "place": "NNP",
   "incomplete": "JJ",
   "marvel": "VB",
   "chirpy": "JJ",
   "heckled": "VBN",
-  "congressional": "JJ",
   "touches": "VBZ",
   "busy": "JJ",
-  "bust": "NN",
-  "californian": "NN",
-  "cushion": "NN",
   "particulate": "JJ",
-  "sharpest": "JJS",
   "olympian": "JJ",
-  "result": "NN",
-  "internationalize": "VB",
-  "hammer": "NN",
-  "rise": "NN",
-  "occupational": "JJ",
-  "parallels": "NNS",
-  "downgrade": "NN",
   "patented": "VBN",
-  "pits": "NNS",
   "mew": "VB",
   "asked": "VBN",
-  "agglomerate": "NN",
   "starstruck": "JJ",
   "levied": "VBN",
   "any": "DT",
   "outsell": "VB",
   "preachy": "JJ",
-  "tune": "NN",
-  "cannibalize": "VB",
-  "echoes": "NNS",
   "spurred": "VBN",
-  "short-covering": "NN",
   "enters": "VBZ",
-  "slices": "NNS",
   "falter": "VB",
   "posed": "VBN",
-  "poses": "VBZ",
   "bushy": "JJ",
-  "bobby": "NN",
-  "without,``": "``",
-  "midyear": "NN",
   "rehearse": "VB",
-  "imposes": "VBZ",
   "terraced": "VBN",
   "manufacturing": "JJ",
   "coexistent": "JJ",
-  "leverage": "NN",
   "disqualified": "JJ",
   "meddle": "VB",
-  "consulting": "NN",
   "fiery": "JJ",
-  "consumer-products": "NNS",
   "precludes": "VBZ",
   "knowing": "JJ",
   "uncluttered": "JJ",
   "underestimated": "VBN",
-  "insurrection": "NN",
   "offer": "VB",
   "squalid": "JJ",
   "unchlorinated": "VBN",
   "highest-grossing": "JJS",
   "differ": "VBP",
   "virgin": "JJ",
-  "smell": "NN",
   "rolling": "JJ",
   "annointed": "VBN",
   "congested": "JJ",
@@ -7382,22 +5206,14 @@ var lexicon={
   "serialized": "VBN",
   "lowdown": "JJ",
   "unquenched": "VBN",
-  "perch": "NN",
   "doted": "VBN",
   "fawned": "VBN",
-  "plainclothes": "NNS",
-  "fullest": "JJS",
   "thermoformed": "VBN",
   "muscat": "JJ",
-  "stock-index": "NN",
-  "rents": "NNS",
   "leering": "JJ",
-  "creepiest": "JJS",
-  "funeral": "NN",
   "undismayed": "JJ",
   "alone": "JJ",
   "along": "RB",
-  "power-generation": "NN",
   "prefer": "VBP",
   "coinciding": "JJ",
   "unabsorbed": "JJ",
@@ -7405,7 +5221,6 @@ var lexicon={
   "homesick": "JJ",
   "filmy": "JJ",
   "unwounded": "JJ",
-  "climax": "NN",
   "retail": "JJ",
   "coexist": "VB",
   "explores": "VBZ",
@@ -7418,10 +5233,7 @@ var lexicon={
   "noteworthy": "JJ",
   "reaffirms": "VBZ",
   "yawning": "JJ",
-  "thumb": "NN",
   "singin": "VBG",
-  "public-works": "NNS",
-  "thump": "NN",
   "retrain": "VB",
   "olivefaced": "JJ",
   "repaid": "VBN",
@@ -7433,9 +5245,7 @@ var lexicon={
   "monogrammed": "JJ",
   "silhouetted": "VBN",
   "undisguised": "JJ",
-  "programming": "NN",
   "routed": "VBN",
-  "routes": "NNS",
   "jumbled": "JJ",
   "teaches": "VBZ",
   "dissipate": "VB",
@@ -7447,37 +5257,25 @@ var lexicon={
   "obliging": "JJ",
   "descends": "VBZ",
   "nott": "RB",
-  "cent": "NN",
-  "note": "NN",
-  "monoclonal": "JJ",
   "twinned": "JJ",
   "slow": "JJ",
-  "slop": "NN",
-  "tears": "NNS",
   "slog": "VB",
-  "godlike": "JJ",
-  "touch": "NN",
   "infringes": "VBZ",
   "borrow": "VB",
   "wheare": "WRB",
   "marred": "VBN",
-  "juniors": "NNS",
-  "purest": "JJS",
   "diddle": "UH",
-  "suppresses": "VBZ",
   "spare": "JJ",
   "spark": "VB",
   "suppressed": "JJ",
   "czechoslovak": "JJ",
   "extinct": "JJ",
-  "stretch": "NNP",
   "whenever": "WRB",
   "play": "VB",
   "chatty": "JJ",
   "unclouded": "JJ",
   "eschews": "VBZ",
   "dressy": "JJ",
-  "prettier": "JJR",
   "airy": "JJ",
   "threatens": "VBZ",
   "underestimate": "VB",
@@ -7488,16 +5286,12 @@ var lexicon={
   "sprayed": "VBN",
   "amalgamate": "VB",
   "slimy": "JJ",
-  "propfan": "NN",
-  "color": "NNP",
   "boycotted": "VBN",
   "expunge": "VB",
   "discarded": "JJ",
   "searing": "JJ",
-  "exit": "NN",
   "forecasted": "VBN",
   "dissociates": "VBZ",
-  "power": "NN",
   "intimate": "JJ",
   "travelin": "VBG",
   "slender": "JJ",
@@ -7506,28 +5300,21 @@ var lexicon={
   "accumulates": "VBZ",
   "acting": "JJ",
   "accumulated": "JJ",
-  "benched": "NNP",
   "mollify": "VB",
   "complete": "JJ",
   "darken": "VBP",
   "darker": "JJR",
   "brotherly": "JJ",
-  "accents": "NNS",
   "barbary": "JJ",
   "abolish": "VB",
   "predestined": "JJ",
   "bullshit": "JJ",
-  "standardize": "VB",
   "bombed": "JJ",
   "disdained": "VBN",
   "mocking": "JJ",
-  "wag": "NN",
   "fraudulent": "JJ",
-  "tours": "NNS",
   "grows": "VBZ",
   "evil": "JJ",
-  "smile": "NN",
-  "wad": "NN",
   "tricolor": "JJ",
   "destitute": "JJ",
   "resume": "VB",
@@ -7539,7 +5326,6 @@ var lexicon={
   "apprised": "VBN",
   "maltreat": "VBP",
   "classificatory": "JJ",
-  "toughened": "JJ",
   "salty": "JJ",
   "condemn": "VB",
   "trebled": "VBN",
@@ -7548,19 +5334,16 @@ var lexicon={
   "functioning": "JJ",
   "snotty": "JJ",
   "manipulated": "VBN",
-  "earnings-growth": "NN",
   "re-enforces": "VBZ",
   "behahn": "RB",
   "fixed": "JJ",
   "laddered": "JJ",
-  "snowball": "NN",
   "reticent": "JJ",
   "reassured": "VBN",
   "shifty": "JJ",
   "cratered": "VBN",
   "marry": "VB",
   "airconditioner": "JJR",
-  "blues": "NNS",
   "terrify": "VB",
   "midcontinent": "JJ",
   "reared": "VBN",
@@ -7569,17 +5352,13 @@ var lexicon={
   "exhibited": "VBN",
   "adduce": "VB",
   "franked": "JJ",
-  "lengthiest": "JJS",
   "franker": "JJR",
   "degassed": "VBN",
-  "defends": "NNS",
   "nowadays": "RB",
   "firsthand": "JJ",
   "clog": "VB",
   "post-tragedy": "RB",
   "younguh": "JJR",
-  "financial-services": "NNS",
-  "beams": "NNS",
   "adheres": "VBZ",
   "adhered": "VBN",
   "untreated": "JJ",
@@ -7588,54 +5367,33 @@ var lexicon={
   "proclaim": "JJ",
   "nibble": "VB",
   "sacred": "JJ",
-  "triple-b-minus": "NNP",
   "futile": "JJ",
-  "buoys": "NNS",
-  "prime-1": "JJ",
-  "prime-3": "JJ",
-  "prime-2": "JJ",
   "offending": "JJ",
   "unmcguanean": "JJ",
   "approve": "VB",
   "churns": "VBZ",
-  "publishing": "NN",
   "nestled": "VBN",
   "convicted": "VBN",
-  "sweetheart": "NN",
   "silenced": "JJ",
   "bitchy": "JJ",
-  "saudi": "NNP",
   "reinstalled": "VBN",
   "folksy": "JJ",
-  "ducks": "NNS",
-  "centennial": "NN",
   "triple": "JJ",
   "shorten": "VB",
   "tells": "VBZ",
   "x-includes": "VBZ",
   "foments": "VBZ",
-  "commune": "NN",
   "unsatisfied": "JJ",
   "imcomplete": "JJ",
-  "stack": "NN",
   "overbroad": "JJ",
-  "surprises": "NNS",
-  "signals": "NNS",
   "surprised": "JJ",
-  "aerospace": "NN",
-  "projects": "NNS",
   "worsening": "JJ",
   "bedridden": "JJ",
-  "fear": "NN",
   "major": "JJ",
   "repair": "JJ",
   "recreate": "VB",
-  "sneaky": "JJ",
-  "spending": "NN",
   "sneaks": "VBZ",
   "submit": "VB",
-  "coldest": "JJS",
-  "slander": "NN",
   "behavioral": "JJ",
   "discolored": "VBN",
   "sunken": "JJ",
@@ -7649,11 +5407,8 @@ var lexicon={
   "furthest": "RB",
   "reasoned": "JJ",
   "scotch": "JJ",
-  "age": "NN",
   "dainty": "JJ",
   "oceanfront": "JJ",
-  "probe": "NN",
-  "torture": "NN",
   "continued": "JJ",
   "timely": "JJ",
   "odd": "JJ",
@@ -7664,24 +5419,19 @@ var lexicon={
   "great": "JJ",
   "receive": "VB",
   "overcommitted": "VBN",
-  "defeat": "NN",
-  "bookkeeping": "NN",
   "excludes": "VBZ",
   "disobey": "VB",
   "terrified": "JJ",
   "extricate": "VB",
-  "counters": "NNS",
   "duplicate": "JJ",
   "subdued": "JJ",
   "gladly": "JJ",
   "this": "RB",
   "thin": "JJ",
-  "feistier": "JJR",
   "overcooled": "JJ",
   "reedy": "JJ",
   "intramural": "JJ",
   "hereinafter": "RB",
-  "interdenominational": "JJ",
   "weaken": "VB",
   "singular": "JJ",
   "buffeted": "JJ",
@@ -7691,8 +5441,6 @@ var lexicon={
   "silken": "JJ",
   "popularized": "VBN",
   "orphaned": "VBN",
-  "san": "NNP",
-  "undertaking": "NN",
   "traced": "VBN",
   "accompanies": "VBZ",
   "sad": "JJ",
@@ -7701,16 +5449,13 @@ var lexicon={
   "overextended": "VBN",
   "exacerbated": "VBN",
   "snippy": "JJ",
-  "hitches": "NNS",
   "traversed": "VBN",
   "alpine": "JJ",
   "tied": "JJ",
   "tempt": "VB",
   "shun": "VBP",
-  "steering": "NN",
   "defining": "JJ",
   "scary": "JJ",
-  "pigs": "NNS",
   "scare": "VB",
   "equates": "VBZ",
   "autographed": "JJ",
@@ -7720,18 +5465,14 @@ var lexicon={
   "suburbanite": "JJ",
   "rearmed": "JJ",
   "fizzes": "VBZ",
-  "handsomest": "JJS",
   "disciplined": "JJ",
   "disband": "VB",
   "aging": "JJ",
-  "poisons": "NNS",
   "viewed": "VBN",
   "big": "JJ",
-  "toughest": "JJS",
   "embroiled": "JJ",
   "noblesse": "JJ",
   "better-known": "JJR",
-  "manuevering": "NN",
   "acquired": "JJ",
   "u.s.-czech": "JJ",
   "wounded": "JJ",
@@ -7742,7 +5483,6 @@ var lexicon={
   "withstand": "VB",
   "exerted": "VBN",
   "unravel": "VB",
-  "legitimize": "VB",
   "harsher": "JJR",
   "republican": "JJ",
   "browbeat": "VB",
@@ -7754,27 +5494,21 @@ var lexicon={
   "powered": "VBN",
   "crisscross": "VBP",
   "freewheeling": "JJ",
-  "memorizing": "NN",
   "conserve": "VB",
   "terrorist": "JJ",
   "dilate": "VB",
   "earthmoving": "JJ",
-  "wisest": "JJS",
   "nonsegregated": "JJ",
   "increased": "JJ",
-  "increases": "NNS",
   "pries": "VBZ",
-  "garage": "NN",
   "sinewy": "JJ",
   "downside": "JJ",
-  "oneself": "NN",
   "jalapeno": "JJ",
   "does": "VBZ",
   "blurry": "JJ",
   "yuh": "PRP",
   "slackjawed": "VBN",
   "asks": "VBZ",
-  "traces": "NNS",
   "courtly": "JJ",
   "encamp": "VB",
   "trigger": "VB",
@@ -7785,25 +5519,16 @@ var lexicon={
   "kowtow": "VB",
   "gasconade": "VB",
   "cosponsored": "VBN",
-  "nosedive": "NN",
   "abhor": "VB",
-  "crunchier": "JJR",
-  "votes": "NNS",
   "iranian": "JJ",
   "gobbles": "VBZ",
   "furrowed": "JJ",
   "scalar": "JJ",
-  "casinos": "NNS",
-  "delegate": "NN",
   "nondescript": "JJ",
   "phoney": "JJ",
-  "phones": "NNS",
   "shut": "VB",
-  "sorriest": "JJS",
   "seven-thirty": "RB",
   "deluged": "VBN",
-  "toll": "NN",
-  "tole": "NN",
   "told": "VBN",
   "unmotivated": "JJ",
   "kindled": "VBN",
@@ -7811,7 +5536,6 @@ var lexicon={
   "struck": "VBD",
   "charred": "JJ",
   "embarrass": "JJ",
-  "painewebber": "NNP",
   "challenging": "JJ",
   "worn": "JJ",
   "resents": "VBZ",
@@ -7831,7 +5555,6 @@ var lexicon={
   "proportionate": "JJ",
   "absorbed": "JJ",
   "monetary": "JJ",
-  "pricier": "JJR",
   "stippled": "JJ",
   "raising": "JJ",
   "bolted": "VBN",
@@ -7840,27 +5563,17 @@ var lexicon={
   "undaunted": "JJ",
   "australasian": "JJ",
   "louse": "VB",
-  "baker-shevardnadze": "NNP",
   "palestinian": "JJ",
   "comin": "VBG",
   "hustle": "VB",
-  "compromise": "NN",
-  "s*/nn&l": "NNP",
   "provisioned": "VBN",
   "rejected": "JJ",
   "dissociated": "VBN",
-  "hike": "NN",
   "wrecks": "VBZ",
   "rewrite": "VB",
-  "maniclike": "JJ",
-  "lull": "NN",
-  "reagan-era": "NN",
   "accompany": "VB",
   "genuine": "JJ",
-  "gnomelike": "JJ",
   "overtook": "VBD",
-  "circles": "NNS",
-  "tally": "NN",
   "corded": "VBN",
   "solidifies": "VBZ",
   "knightly": "JJ",
@@ -7880,88 +5593,60 @@ var lexicon={
   "ill": "JJ",
   "receives": "VBZ",
   "groans": "VBZ",
-  "spear": "NNP",
   "wider": "JJR",
   "speak": "VB",
   "exhume": "VB",
-  "leech": "NN",
-  "catering": "NN",
   "lahk": "IN",
-  "stink": "NN",
-  "sting": "NN",
-  "brake": "NN",
-  "veining": "NN",
   "avoids": "VBZ",
   "insulating": "JJ",
   "impertinent": "JJ",
-  "buy-out": "NN",
   "dignify": "VB",
   "supervisory": "JJ",
   "photographed": "VBN",
   "maye": "MD",
-  "flavoring": "NN",
   "nude": "JJ",
-  "unwholesome": "JJ",
-  "wcrs-eurocom": "NNP",
   "lightheaded": "JJ",
   "mennonite": "JJ",
-  "speedier": "JJR",
-  "croak": "NN",
-  "sp1-plus": "JJ",
   "squander": "VB",
-  "deal": "NN",
   "mechanized": "JJ",
   "dead": "JJ",
   "wellrun": "JJ",
   "czech": "JJ",
   "foreknown": "VB",
   "dovetails": "VBZ",
-  "back-up": "NN",
   "fulfills": "VBZ",
   "stronger": "JJR",
   "spongy": "JJ",
   "orate": "VB",
-  "reasoning": "NN",
   "dance": "JJ",
   "desegregate": "VB",
   "fabricated": "JJ",
-  "sponge": "NN",
   "underworked": "JJ",
   "present": "JJ",
   "upriver": "RB",
   "cochannel": "JJ",
-  "trouble": "NN",
   "introjected": "VBN",
   "governing": "JJ",
   "legalized": "VBN",
   "regret": "JJ",
-  "laverne\\": "JJ",
   "commensurate": "JJ",
   "unescorted": "JJ",
   "peeled": "VBN",
-  "medico-military": "NN",
-  "cantonal": "JJ",
   "lawmaking": "JJ",
   "evenings": "RB",
   "embarrassing": "JJ",
   "sighted": "VBN",
   "wept": "VBD",
-  "slinky": "JJ",
   "unflattering": "JJ",
-  "catastrophic-care": "NN",
-  "instructional": "JJ",
   "bowled": "VBN",
   "vietnamese": "JJ",
   "refine": "JJ",
   "industrywide": "JJ",
   "gaping": "JJ",
   "superintend": "VB",
-  "cranky": "JJ",
   "southern": "JJ",
-  "wiggle": "NN",
   "novelized": "JJ",
   "genteel": "JJ",
-  "tranche": "NN",
   "appearin": "VBG",
   "showered": "VBN",
   "overreacted": "VBN",
@@ -7982,7 +5667,6 @@ var lexicon={
   "eliminated": "VBN",
   "hurl": "VB",
   "accessed": "VBN",
-  "premier": "JJ",
   "invalidated": "VBN",
   "recover": "JJ",
   "online": "JJ",
@@ -7990,23 +5674,18 @@ var lexicon={
   "accustoms": "VBZ",
   "underserved": "JJ",
   "threefold": "JJ",
-  "reauthorize": "VB",
   "recharged": "VBN",
   "pituitary": "JJ",
   "whisked": "VBN",
   "tranquil": "JJ",
   "reputed": "JJ",
   "fascinates": "VBZ",
-  "notice": "NN",
-  "prettiest": "JJS",
   "impromptu": "JJ",
   "onetime": "JJ",
   "cleave": "VB",
   "binuclear": "JJ",
   "skew": "VB",
-  "external": "JJ",
   "handicapped": "JJ",
-  "ramp": "NN",
   "laggard": "JJ",
   "absorbedthe": "VB",
   "northward": "RB",
@@ -8018,10 +5697,8 @@ var lexicon={
   "investigates": "VBZ",
   "belittle": "VBP",
   "ribosomal": "JJ",
-  "christ": "NNP",
   "refurbish": "VB",
   "early": "JJ",
-  "endorses": "VBZ",
   "nubile": "JJ",
   "endorsed": "VBN",
   "abetted": "VBN",
@@ -8038,22 +5715,14 @@ var lexicon={
   "reassume": "VB",
   "happening": "JJ",
   "unrecognized": "JJ",
-  "stapling": "NN",
   "bamboozled": "VBN",
-  "strike": "NN",
   "unwelcome": "JJ",
-  "lao": "NNP",
   "valid": "JJ",
   "lay": "VBD",
-  "yow": "NN",
-  "building": "NNP",
   "disbelieves": "VBZ",
   "spruced": "VBN",
   "relieve": "VB",
-  "balancing": "NN",
-  "seasonal": "JJ",
   "casual": "JJ",
-  "unsharpened": "VBN",
   "said": "VB",
   "partaker": "VB",
   "partakes": "VBZ",
@@ -8062,11 +5731,9 @@ var lexicon={
   "iodinated": "VBN",
   "countercultural": "JJ",
   "transcend": "VBP",
-  "boycott": "NN",
   "unjacketed": "JJ",
   "interstate": "JJ",
   "derived": "JJ",
-  "triumphs": "NNS",
   "tries": "VBZ",
   "derives": "VBZ",
   "sweet": "JJ",
@@ -8076,7 +5743,6 @@ var lexicon={
   "committed": "JJ",
   "crossborder": "JJ",
   "cardiovascular": "JJ",
-  "discloses": "VBZ",
   "overexcited": "JJ",
   "unheated": "JJ",
   "disclosed": "VBN",
@@ -8085,7 +5751,6 @@ var lexicon={
   "pre-empted": "VBN",
   "worried": "JJ",
   "victorian": "JJ",
-  "nothin": "NN",
   "lightens": "VBZ",
   "decimal": "JJ",
   "beyond": "RB",
@@ -8096,7 +5761,6 @@ var lexicon={
   "diffused": "VBN",
   "darwinian": "JJ",
   "undergo": "VB",
-  "sacrifice": "NN",
   "miss": "VB",
   "inure": "VB",
   "interwoven": "JJ",
@@ -8110,39 +5774,26 @@ var lexicon={
   "empowered": "JJ",
   "sordid": "JJ",
   "lit": "JJ",
-  "lip": "NN",
-  "glass-container": "NN",
   "aggravating": "JJ",
-  "baa1": "JJ",
-  "baa2": "JJ",
-  "baa3": "JJ",
   "sponsored": "VBN",
   "clear": "JJ",
-  "broadened": "VBN",
-  "pickiest": "JJS",
   "nondoctrinaire": "JJ",
   "lest": "IN",
   "hyper": "JJ",
-  "loan-loss": "NN",
-  "mid-1948": "JJ",
   "surveyed": "VBN",
-  "circle": "NN",
   "grow": "VB",
   "far-lower": "JJR",
   "filled": "JJ",
   "redefine": "VB",
   "bakes": "VBZ",
-  "photo": "NN",
   "timeworn": "JJ",
   "mega": "JJ",
   "gaunt": "JJ",
   "headed": "JJ",
   "deemed": "VBN",
-  "arrest": "NN",
   "reciprocate": "VB",
   "coarse": "JJ",
   "delights": "VBZ",
-  "compromises": "NNS",
   "compromised": "VBN",
   "wrings": "VBZ",
   "hobnob": "VB",
@@ -8150,19 +5801,12 @@ var lexicon={
   "uncompromising": "JJ",
   "deworm": "VB",
   "tendered": "JJ",
-  "baseline": "NN",
   "declining": "JJ",
   "boo": "VB",
   "stashed": "VBN",
-  "revitalization": "NN",
-  "pre-1950s": "JJ",
-  "haul": "NN",
   "appalled": "JJ",
-  "coup": "NN",
   "conjured": "VBN",
-  "stock-market": "NN",
   "fractionated": "VBN",
-  "harmonize": "VB",
   "translates": "VBZ",
   "translated": "VBN",
   "mauve": "JJ",
@@ -8173,13 +5817,11 @@ var lexicon={
   "subtract": "VB",
   "hinge": "VB",
   "yemeni": "JJ",
-  "block": "NN",
   "decertify": "VB",
   "douse": "VB",
   "governs": "VBZ",
   "skulk": "VB",
   "bewilders": "VBZ",
-  "buglike": "JJ",
   "elitist": "JJ",
   "gushy": "JJ",
   "spousal": "JJ",
@@ -8187,7 +5829,6 @@ var lexicon={
   "kills": "VBZ",
   "nay": "RB",
   "out-smart": "VB",
-  "fewest": "JJS",
   "resign": "VB",
   "rested": "JJ",
   "bleached": "JJ",
@@ -8198,19 +5839,16 @@ var lexicon={
   "salaried": "JJ",
   "fictionalized": "VBN",
   "retold": "VBD",
-  "exits": "NNS",
   "stoned": "VBN",
   "ardent": "JJ",
   "evokes": "VBZ",
   "exacerbate": "VB",
   "evoked": "VBN",
-  "d.c.-based": "JJ",
   "prescribe": "VB",
   "construct": "VB",
   "danged": "VBN",
   "subsidizes": "VBZ",
   "snoop": "VB",
-  "child-care": "NN",
   "subsidized": "JJ",
   "varying": "JJ",
   "pleated": "JJ",
@@ -8219,8 +5857,6 @@ var lexicon={
   "blindsided": "VBN",
   "disrobe": "VB",
   "becomed": "VBN",
-  "sample": "NN",
-  "sanctions": "NNS",
   "vesicular": "JJ",
   "insufficient": "JJ",
   "crazee": "JJ",
@@ -8246,12 +5882,8 @@ var lexicon={
   "animated": "JJ",
   "jump-start": "VB",
   "bears": "VBZ",
-  "final": "JJ",
   "swindled": "VBN",
   "thwarted": "VBN",
-  "sock": "NN",
-  "market-making": "NN",
-  "doublea-2": "JJ",
   "sings": "VBZ",
   "pronouncing": "JJ",
   "unsmiling": "JJ",
@@ -8259,34 +5891,26 @@ var lexicon={
   "forlorn": "JJ",
   "emerging": "JJ",
   "untimely": "JJ",
-  "employes": "NNS",
   "employed": "JJ",
   "dodge": "VBP",
   "up-pp": "RP",
-  "leases": "NNS",
   "italian": "JJ",
   "contain": "VB",
   "orphan": "JJ",
-  "anastomoses": "NNS",
-  "state": "NN",
   "ciliated": "JJ",
   "reallocated": "VBN",
   "pestered": "JJ",
   "roil": "VB",
   "tread": "VB",
   "relax": "VB",
-  "senses": "NNS",
   "adjourns": "VBZ",
   "piqued": "VBN",
   "reapportioned": "VBN",
-  "balloon": "NN",
   "begat": "VBD",
   "coastal": "JJ",
   "reactionary": "JJ",
-  "effect": "NN",
   "trembles": "VBZ",
   "discouraged": "JJ",
-  "universalize": "VBP",
   "steoreotyped": "JJ",
   "draconian": "JJ",
   "marauding": "JJ",
@@ -8296,9 +5920,6 @@ var lexicon={
   "by": "IN",
   "ample": "JJ",
   "devised": "VBN",
-  "burden": "NN",
-  "devises": "VBZ",
-  "b.": "NNP",
   "less-rigorous": "JJR",
   "shed": "VB",
   "redress": "VB",
@@ -8307,33 +5928,23 @@ var lexicon={
   "chancy": "JJ",
   "co-authors": "VBZ",
   "staked": "VBN",
-  "stakes": "NNS",
   "primal": "JJ",
-  "utility": "NN",
   "arrange": "VB",
   "evacuate": "VB",
   "uncurled": "JJ",
   "sicilian": "JJ",
   "cruel": "JJ",
-  "steepest": "JJS",
-  "broader-based": "JJR",
-  "slugfest": "NN",
   "devise": "VB",
-  "ideational": "JJ",
   "scowls": "VBZ",
   "palletized": "VBN",
   "nigh": "JJ",
   "scheming": "JJ",
-  "captain": "NN",
   "minuscule": "JJ",
   "presente": "JJ",
-  "sweetest": "JJS",
   "presents": "VBZ",
-  "nominal": "JJ",
   "saves": "VBZ",
   "connects": "VBZ",
   "warns": "VBZ",
-  "pyramid": "NN",
   "helluva": "JJ",
   "saved": "VBN",
   "untenanted": "JJ",
@@ -8342,7 +5953,6 @@ var lexicon={
   "carmelite": "JJ",
   "expedited": "VBN",
   "ornamental": "JJ",
-  "schooling": "NN",
   "circumvent": "VB",
   "overhear": "VB",
   "overheat": "VB",
@@ -8355,31 +5965,22 @@ var lexicon={
   "honed": "VBN",
   "involve": "VB",
   "waldensian": "JJ",
-  "funky": "JJ",
   "salivate": "VB",
-  "purchase": "NN",
   "civil": "JJ",
   "uninsured": "JJ",
   "unfolds": "VBZ",
-  "deck": "NN",
   "eyewear": "JJ",
   "fortify": "VB",
   ",": ",",
-  "blackened": "VBN",
   "cutting": "JJ",
   "carve": "VB",
-  "sermons\\/from": "JJ",
-  "steps": "NNS",
-  "rhapsodize": "VBP",
   "leaner": "JJR",
-  "mistrust": "NN",
   "extract": "VB",
   "hushed": "JJ",
   "saggy": "JJ",
   "shaggy": "JJ",
   "starts": "VBZ",
   "deems": "VBZ",
-  "borrowing": "NN",
   "curtails": "VBZ",
   "peculiar": "JJ",
   "congratulatory": "JJ",
@@ -8392,13 +5993,9 @@ var lexicon={
   "retire": "VB",
   "upfield": "RB",
   "cripple": "VB",
-  "hoard": "NN",
   "nodding": "JJ",
   "unified": "JJ",
-  "bat": "NN",
-  "bar": "NNP",
   "illegitimate": "JJ",
-  "bag": "NN",
   "bam": "UH",
   "unworthy": "JJ",
   "emergent": "JJ",
@@ -8406,23 +6003,17 @@ var lexicon={
   "mournfully": "JJ",
   "inappropriate": "JJ",
   "disprove": "VB",
-  "stiffening": "NN",
   "bronzed": "JJ",
-  "monopolize": "VB",
   "given": "JJ",
   "exemplary": "JJ",
-  "citicorp": "NNP",
   "threw": "VBD",
   "aggrieved": "VBN",
   "sly": "JJ",
   "originate": "VB",
-  "murders": "NNS",
-  "sushi": "NN",
   "redecorated": "VBN",
   "vindicate": "VB",
   "who": "WP",
   "miswritten": "JJ",
-  "eisenhower": "NNP",
   "smokes": "VBZ",
   "claims": "VBZ",
   "smoked": "JJ",
@@ -8435,15 +6026,12 @@ var lexicon={
   "revel": "VB",
   "readmitted": "VBN",
   "dense": "JJ",
-  "hiring": "NN",
   "outspoken": "JJ",
-  "blackmail": "NN",
   "sift": "VB",
   "impersonates": "VBZ",
   "retired": "JJ",
   "commie": "JJ",
   "abstract": "JJ",
-  "beta": "NNP",
   "impersonated": "VBN",
   "commit": "VB",
   "canny": "JJ",
@@ -8451,20 +6039,15 @@ var lexicon={
   "stay": "VB",
   "effaces": "VBZ",
   "mortgagebacked": "JJ",
-  "offering": "NN",
   "builds": "VBZ",
-  "stages": "NNS",
   "diagnose": "VB",
-  "unenlightened": "JJ",
   "toss": "VB",
   "oppose": "VB",
   "tardy": "JJ",
   "ba-a-a": "UH",
   "stoke": "VB",
-  "luckier": "JJ",
   "themed": "VBN",
   "hidebound": "JJ",
-  "praises": "VBZ",
   "polyunsaturated": "JJ",
   "scribble": "VB",
   "bordered": "JJ",
@@ -8476,19 +6059,14 @@ var lexicon={
   "dig": "VB",
   "dip": "VB",
   "eclipse": "VB",
-  "weyerhaeuser": "NNP",
   "takin": "VBG",
-  "extemporize": "VB",
-  "wail": "NN",
   "monied": "JJ",
   "signalizes": "VBZ",
   "decipher": "VB",
-  "institute": "NN",
   "finer": "JJR",
   "hither": "RB",
   "careworn": "JJ",
   "subverted": "VBN",
-  "farming": "NN",
   "ungainly": "JJ",
   "sharper": "JJR",
   "touched": "JJ",
@@ -8496,39 +6074,28 @@ var lexicon={
   "unconfirmed": "JJ",
   "cited": "VBN",
   "downtown": "RB",
-  "soup": "NN",
   "sour": "JJ",
   "ailing": "JJ",
   "arrive": "VB",
   "predict": "VBP",
   "digital": "JJ",
-  "shorting": "NN",
   "soft": "JJ",
   "flat-out": "RB",
   "gradual": "JJ",
   "argues": "VBZ",
-  "uninominal": "JJ",
-  "coaching": "NN",
-  "mail": "NN",
   "main": "JJ",
-  "truest": "JJS",
-  "views": "NNS",
   "society-measured": "VBN",
   "possess": "VBP",
   "outweigh": "VBP",
-  "proteins": "NNS",
   "redraw": "VB",
   "gird": "VB",
   "giveth": "VBZ",
   "living": "JJ",
   "lak": "IN",
-  "spies": "NNS",
   "fuller": "JJR",
   "desultory": "JJ",
-  "discharges": "NNS",
   "unthreatening": "JJ",
   "discharged": "JJ",
-  "lap": "NN",
   "slept": "VBD",
   "daunt": "VB",
   "blacklist": "VB",
@@ -8538,8 +6105,6 @@ var lexicon={
   "mundane": "JJ",
   "winding": "JJ",
   "unheeding": "JJ",
-  "channel": "NN",
-  "trace": "NN",
   "permeates": "VBZ",
   "succumbed": "VBN",
   "spirited": "JJ",
@@ -8551,42 +6116,26 @@ var lexicon={
   "uninvolved": "JJ",
   "designates": "VBZ",
   "beseech": "VBP",
-  "busiest": "JJS",
   "median": "JJ",
   "crushes": "VBZ",
-  "inventory": "NN",
-  "ky.-based": "JJ",
   "gratifying": "JJ",
-  "forecast": "NN",
-  "sans": "NNP",
   "tacit": "JJ",
   "signaled": "VBN",
-  "ternational": "JJ",
   "remake": "VB",
-  "stretches": "NNS",
   "stretched": "JJ",
-  "refocuses": "VBZ",
   "anyplace": "RB",
   "unusual": "JJ",
-  "mark": "NNP",
   "mars": "VBZ",
-  "shopping": "NNP",
   "second": "JJ",
-  "profiles": "NNS",
   "profiled": "VBN",
-  "bags": "NNS",
   "different": "JJ",
   "harsh": "JJ",
-  "doctor": "NN",
   "skiddy": "JJ",
-  "exhaust": "NN",
   "scorned": "VBN",
-  "lemon": "NN",
   "suffuse": "VB",
   "adulterated": "JJ",
   "tackles": "VBZ",
   "implicate": "VB",
-  "london": "NNP",
   "amortizing": "JJ",
   "spans": "VBZ",
   "moderate": "JJ",
@@ -8594,28 +6143,23 @@ var lexicon={
   "strangles": "VBZ",
   "recraft": "VB",
   "strangled": "VBN",
-  "finicky": "JJ",
   "arrested": "VBN",
   "imitated": "VBN",
   "heady": "JJ",
   "imitates": "VBZ",
   "gravid": "JJ",
   "decode": "VB",
-  "freud": "NNP",
   "chambered": "JJ",
   "shortterm": "JJ",
   "evaporate": "VB",
   "retrained": "VBN",
-  "doctrinal": "JJ",
   "departs": "VBZ",
-  "overtime": "NN",
   "unload": "VB",
   "unsee": "VBN",
   "weighty": "JJ",
   "spectral": "JJ",
   "undisrupted": "JJ",
   "wants": "VBZ",
-  "premium": "NN",
   "straightforward": "JJ",
   "subterranean": "JJ",
   "veined": "JJ",
@@ -8624,27 +6168,20 @@ var lexicon={
   "hym": "PRP",
   "hys": "PRP",
   "nucleated": "VBN",
-  "dial": "NN",
   "ratchet": "VB",
   "promising": "JJ",
-  "ranges": "NNS",
   "whole": "JJ",
   "publishes": "VBZ",
   "unconvinced": "JJ",
-  "scurry": "NN",
   "published": "JJ",
-  "authorize": "VB",
   "bused": "VBN",
-  "core": "NN",
   "congratulated": "VBN",
   "obstinate": "JJ",
   "barbequed": "JJ",
   "deplores": "VBZ",
-  "church-state": "NN",
   "subminimum": "JJ",
   "frilly": "JJ",
   "inflationary": "JJ",
-  "savvier": "JJR",
   "bleak": "JJ",
   "eats": "VBZ",
   "re-enacted": "VBN",
@@ -8654,26 +6191,19 @@ var lexicon={
   "rounder": "JJR",
   "lewdly": "JJ",
   "detected": "JJ",
-  "fireproofing": "NN",
   "scandalizing": "JJ",
   "redistribute": "VB",
   "neophyte": "JJ",
   "grubby": "JJ",
   "sprang": "VBD",
   "bestirred": "VBN",
-  "holiest": "JJS",
   "exiled": "VBN",
   "mental": "JJ",
   "connect": "VB",
-  "ripple": "NN",
   "simplify": "VB",
-  "flower": "NN",
-  "tiresome": "JJ",
   "squished": "VBN",
   "commits": "VBZ",
   "geared": "JJ",
-  "giveaway": "NN",
-  "companion": "NN",
   "killin": "VBG",
   "indulgent": "JJ",
   "smoother": "JJR",
@@ -8681,7 +6211,6 @@ var lexicon={
   "excels": "VBZ",
   "peaked": "JJ",
   "quickwitted": "JJ",
-  "objects": "NNS",
   "treated": "JJ",
   "cometary": "JJ",
   "unafraid": "JJ",
@@ -8694,36 +6223,27 @@ var lexicon={
   "repels": "VBZ",
   "fine": "JJ",
   "find": "VB",
-  "backtracking": "NN",
   "relent": "JJ",
   "dicate": "VBP",
-  "frothier": "RBR",
   "stumbling": "JJ",
   "resolve": "JJ",
-  "co.``": "``",
   "overeat": "VBP",
   "superseded": "VBN",
-  "smallest": "JJS",
   "supersedes": "VBZ",
   "vindicated": "JJ",
   "encapsulate": "VB",
-  "powers": "NNS",
   "upgraded": "JJ",
   "scairt": "VBN",
   "denied": "VBN",
   "raise": "VB",
   "frets": "VBZ",
-  "drill": "NN",
   "solid": "JJ",
   "confirming": "JJ",
   "instead": "RB",
   "seduce": "VB",
-  "textile": "NN",
   "supersede": "VB",
   "dystopian": "JJ",
   "forfeited": "VBN",
-  "flags": "NNS",
-  "pfennig": "NN",
   "alluring": "JJ",
   "nowbankrupt": "JJ",
   "ad": "RB",
@@ -8734,49 +6254,31 @@ var lexicon={
   "ai": "VBP",
   "rheumatoid": "JJ",
   "unilateralist": "JJ",
-  "vicelike": "JJ",
-  "strongest": "JJS",
   "pronounced": "VBN",
-  "contacts": "NNS",
   "affects": "VBZ",
   "pronounces": "VBZ",
   "tripping": "JJ",
-  "piles": "NNS",
   "crass": "JJ",
-  "waltz": "NN",
-  "al": "NNS",
   "invading": "JJ",
   "afflict": "VB",
-  "cloud": "NN",
   "multilevel": "JJ",
-  "hopes": "NNS",
   "panglossian": "JJ",
   "babylonian": "JJ",
-  "audio\\/visual": "JJ",
   "accidental": "JJ",
   "lend": "VB",
-  "lent": "NNP",
   "hansom": "JJ",
-  "desert": "NN",
   "liberating": "JJ",
   "downcast": "JJ",
-  "rotational": "JJ",
-  "slips": "NNS",
   "enjoined": "VBN",
   "fatal": "JJ",
-  "shock": "NN",
   "bleeding": "RB",
-  "bursts": "NNS",
   "bode": "VB",
   "extreme": "JJ",
   "dastardly": "JJ",
-  "crystallize": "VB",
   "former": "JJ",
   "limp": "JJ",
-  "fm": "NNP",
   "harrowing": "JJ",
   "collonaded": "VBN",
-  "subscription": "NN",
   "upheld": "VBD",
   "uh-uh": "UH",
   "impeded": "JJ",
@@ -8786,34 +6288,20 @@ var lexicon={
   "reeking": "JJ",
   "watery": "JJ",
   "forswore": "VBD",
-  "lines": "NNS",
-  "linen": "NN",
-  "stock-trading": "NN",
   "furnish": "VB",
   "unforethought": "JJ",
-  "gestational": "JJ",
   "noncommittal": "JJ",
   "mention": "VB",
-  "capital-gains": "NNS",
   "estranged": "JJ",
   "identified": "VBN",
-  "disregard": "NN",
   "identifies": "VBZ",
   "uninteresting": "JJ",
-  "trickier": "JJR",
-  "lecture": "NN",
   "thereupon": "RB",
-  "capital-to-asset": "NN",
-  "hazard": "NN",
-  "south": "NNP",
   "predominate": "VBP",
   "instill": "VB",
-  "humblest": "JJS",
-  "deafened": "VBN",
   "dehumidified": "VBN",
   "reserved": "JJ",
   "reaffirm": "VB",
-  "prune": "NN",
   "pay": "VB",
   "dictate": "VB",
   "curved": "JJ",
@@ -8826,28 +6314,19 @@ var lexicon={
   "afferent": "JJ",
   "restyled": "VBN",
   "overgrown": "JJ",
-  "beat": "NNP",
-  "bear": "NNP",
-  "bean": "NN",
   "unauthorized": "JJ",
   "bright": "JJ",
   "exists": "VBZ",
   "abstruse": "JJ",
   "hottest-selling": "JJS",
-  "forest-products": "NNS",
   "progress": "JJ",
   "contaminated": "JJ",
-  "study": "NN",
   "upcountry": "JJ",
-  "photographs": "NNS",
-  "vent": "NN",
   "neutralized": "VBN",
   "stentorian": "JJ",
   "copied": "VBN",
   "censor": "VBP",
   "ridden": "VBN",
-  "homer": "NN",
-  "marches": "NNS",
   "homey": "JJ",
   "crooked": "JJ",
   "produce": "VB",
@@ -8870,7 +6349,6 @@ var lexicon={
   "buttoned": "VBN",
   "noisy": "JJ",
   "discard": "VB",
-  "j/nnp.i.": "JJ",
   "perspiring": "JJ",
   "adolescent": "JJ",
   "earsplitting": "JJ",
@@ -8879,8 +6357,6 @@ var lexicon={
   "supreme": "JJ",
   "pin": "VB",
   "pip": "UH",
-  "central-bank": "NN",
-  "pit": "NN",
   "motored": "JJ",
   "that-a-way": "RB",
   "private": "JJ",
@@ -8889,16 +6365,11 @@ var lexicon={
   "patched": "JJ",
   "excused": "JJ",
   "regrets": "VBZ",
-  "merchant": "NN",
-  "risk": "NN",
   "verie": "RB",
   "flashy": "JJ",
   "shockproof": "JJ",
   "louder": "JJR",
   "bronchiolar": "JJ",
-  "ramps": "NNS",
-  "scandinavian": "NNP",
-  "socialize": "VB",
   "outpace": "VB",
   "mistake": "JJ",
   "petty": "JJ",
@@ -8906,11 +6377,8 @@ var lexicon={
   "tend": "VBP",
   "perpetuates": "VBZ",
   "preserved": "JJ",
-  "parisian": "NNP",
   "phony": "JJ",
-  "phone": "NN",
   "daft": "JJ",
-  "guarantee": "NN",
   "pokes": "VBZ",
   "pokey": "JJ",
   "acknowledged": "JJ",
@@ -8919,10 +6387,8 @@ var lexicon={
   "salvadoran": "JJ",
   "sprout": "VBP",
   "over": "JJ",
-  "pound": "NN",
   "sickle": "JJ",
   "sickly": "JJ",
-  "obligational": "JJ",
   "executes": "VBZ",
   "outsized": "JJ",
   "destroyed": "JJ",
@@ -8931,7 +6397,6 @@ var lexicon={
   "however": "RB",
   "antithyroid": "JJ",
   "stinking": "JJ",
-  "talks": "NNS",
   "prohibit": "JJ",
   "independent": "JJ",
   "stern-to": "RB",
@@ -8940,23 +6405,16 @@ var lexicon={
   "ammoniac": "JJ",
   "re-creates": "VBZ",
   "recite": "VB",
-  "nip": "NN",
   "acidified": "VBN",
-  "downsize": "VB",
   "re-acquire": "VB",
   "classed": "VBN",
   "strung": "VBN",
   "ran": "VBD",
   "ram": "VB",
   "raw": "JJ",
-  "rap": "NN",
   "degenerates": "VBZ",
   "glimpsed": "VBN",
-  "biking": "NNP",
-  "parting": "NN",
-  "yearearlier": "JJ",
   "contacted": "VBN",
-  "labels": "NNS",
   "thereby": "RB",
   "whiteface": "JJ",
   "reconstruct": "VB",
@@ -8973,107 +6431,70 @@ var lexicon={
   "aback": "RB",
   "fleeting": "JJ",
   "evidenced": "VBN",
-  "craft": "NN",
-  "benefits": "NNS",
   "unelected": "JJ",
   "thousandth": "JJ",
   "penultimate": "JJ",
   "brewed": "VBN",
   "mentions": "VBZ",
   "uncoached": "JJ",
-  "laptop": "NN",
   "furry": "JJ",
   "explanatory": "JJ",
-  "grouses": "VBZ",
   "rubicund": "JJ",
   "willowy": "JJ",
-  "crudest": "JJS",
   "advertise": "VB",
   "perfected": "VBN",
-  "fingerprinting": "NN",
   "hi": "UH",
   "ho": "UH",
-  "booking": "NN",
   "homewards": "RB",
-  "twitch": "NN",
   "curry": "VB",
   "shaken": "VBN",
   "unresolved": "JJ",
   "abysmal": "JJ",
   "removes": "VBZ",
   "outfox": "VB",
-  "tacky": "JJ",
   "sustained": "JJ",
   "fired": "JJ",
   "muster": "VB",
-  "prowl": "NN",
   "higher-salaried": "JJR",
-  "fires": "NNS",
   "starchy": "JJ",
-  "penal": "JJ",
   "trim": "JJ",
   "boodleoo": "UH",
   "constructed": "JJ",
-  "tip": "NN",
   "tie": "VB",
-  "dullest": "JJS",
-  "hashing": "NN",
   "portends": "VBZ",
   "grisly": "JJ",
   "premeditated": "JJ",
   "unimpeded": "JJ",
-  "loftier": "JJR",
   "standard": "JJ",
-  "furrows": "NNS",
   "headquarter": "JJ",
   "firmwide": "RB",
   "registered": "JJ",
-  "planning": "NN",
   "sucks": "VB",
   "stands": "VBZ",
   "unripe": "JJ",
-  "reply": "NN",
   "alkaline": "JJ",
-  "water": "NN",
   "gauged": "VBN",
   "avenging": "JJ",
-  "sleepwalk": "NN",
   "bygone": "JJ",
   "grounded": "JJ",
-  "restructuring": "NN",
   "mimicked": "VBN",
   "unbidden": "JJ",
-  "justice": "NNP",
   "swallowed": "VBN",
   "unsheathe": "VB",
-  "certiorari": "NNS",
   "smeared": "VBN",
   "smudged": "JJ",
   "mainline": "JJ",
   "drown": "VB",
-  "flagship": "NN",
   "nonunion": "JJ",
-  "streak": "NN",
-  "stream": "NN",
-  "quacks": "NNS",
   "secured": "JJ",
   "unwire": "VB",
   "unappreciated": "JJ",
-  "clone": "NN",
   "floral": "JJ",
-  "gorges": "NNS",
   "amuse": "VB",
   "needy": "JJ",
-  "acts": "NNS",
-  "midnight": "NN",
-  "dinkiest": "JJS",
   "swank": "JJ",
-  "microcomputer": "NN",
-  "decontrol": "NN",
   "moving": "JJ",
   "save": "VB",
-  "factors": "NNS",
-  "factory": "NN",
   "extrapolate": "VB",
   "maneuver": "JJ",
   "hobble": "VB",
@@ -9085,13 +6506,6 @@ var lexicon={
   "fetches": "VBZ",
   "molded": "VBN",
   "haggle": "VB",
-  "lengthier": "JJR",
-  "quirky": "JJ",
-  "public-policy": "NN",
-  "yankee": "NNP",
-  "paraphrase": "NN",
-  "pencils": "NNS",
-  "trafficking": "NN",
   "senior": "JJ",
   "supraventricular": "JJ",
   "diverge": "VB",
@@ -9099,23 +6513,14 @@ var lexicon={
   "continuing": "JJ",
   "dreaded": "JJ",
   "reoffered": "VBN",
-  "dye": "NN",
   "baroque": "JJ",
   "braver": "JJR",
   "fainter": "JJR",
-  "spread": "NN",
-  "parking": "NN",
   "inhibitory": "JJ",
-  "mortgage": "NN",
-  "crystal": "NN",
-  "review": "NN",
   "rebuilds": "VBZ",
   "multiplied": "VBN",
-  "u.s.": "NNP",
   "multiplies": "VBZ",
   "recentralized": "VBN",
-  "gimmicky": "JJ",
-  "government-securities": "NNS",
   "hereunto": "RB",
   "destabilizes": "VBZ",
   "herculean": "JJ",
@@ -9126,44 +6531,31 @@ var lexicon={
   "rhymes": "VBZ",
   "refractory": "JJ",
   "contend": "VBP",
-  "telephone": "NN",
   "dissident": "JJ",
   "amomng": "JJ",
   "supra": "RB",
   "distilled": "VBN",
   "barefoot": "RB",
-  "drives": "NNS",
   "driven": "JJ",
   "disloyal": "JJ",
   "sampled": "VBN",
-  "blot": "NN",
-  "hint": "NN",
   "embezzled": "JJ",
-  "samples": "NNS",
   "replaced": "VBN",
   "divested": "VBN",
   "oddly": "JJ",
-  "civil-rights": "NNS",
   "deduce": "VB",
-  "viselike": "JJ",
-  "table": "NN",
-  "international": "JJ",
   "intact": "JJ",
   "renounce": "JJ",
   "stops": "VBZ",
-  "a-1": "JJ",
   "unfunded": "JJ",
   "severed": "VBN",
   "later": "JJ",
   "convincing": "JJ",
-  "fantasize": "VBP",
   "prevented": "VBN",
-  "spinal": "JJ",
   "feudal": "JJ",
   "thereabouts": "RB",
   "deteriorating": "JJ",
   "caraway": "JJ",
-  "avec": "NNP",
   "sleazy": "JJ",
   "russet": "JJ",
   "frighten": "VB",
@@ -9172,32 +6564,25 @@ var lexicon={
   "redial": "VB",
   "stalwart": "JJ",
   "separate": "JJ",
-  "stocky": "JJ",
-  "stocks": "NNS",
   "refinanced": "VBN",
   "lack": "JJ",
   "lacy": "JJ",
   "defuse": "VB",
-  "fax": "NN",
   "far": "JJ",
   "perseveres": "VBZ",
-  "fan": "NNP",
   "shipboard": "JJ",
   "align": "VB",
   "fabricates": "VBZ",
   "over-emphasized": "VBN",
   "imported": "JJ",
-  "whimper": "NN",
   "scowling": "JJ",
   "whitecollar": "JJ",
   "miniature": "JJ",
-  "supplements": "NNS",
   "spaceborn": "JJ",
   "pervades": "VBZ",
   "branded": "JJ",
   "waxen": "JJ",
   "crested": "JJ",
-  "figaro": "NNP",
   "confronted": "VBN",
   "univalent": "JJ",
   "protects": "VBZ",
@@ -9206,37 +6591,29 @@ var lexicon={
   "shippin": "VB",
   "retrofitted": "VBN",
   "retaliate": "VB",
-  "half-dozen": "NN",
   "microsomal": "JJ",
   "gauges": "VBZ",
   "eludes": "VBZ",
   "dithers": "VBZ",
-  "threatened": "VBN",
   "conformist": "JJ",
-  "dominican": "NNP",
   "accumulate": "VB",
   "subtler": "JJR",
   "refresh": "JJ",
   "succulent": "JJ",
   "used": "JJ",
   "inflict": "VB",
-  "twists": "NNS",
   "lag": "VB",
   "cremated": "VBN",
   "booming": "JJ",
   "brave": "JJ",
-  "lower-quality": "NN",
-  "passes": "VBZ",
   "passed": "VBN",
   "penetrates": "VBZ",
   "treasured": "JJ",
-  "option": "NN",
   "relieved": "JJ",
   "rawboned": "JJ",
   "relieves": "VBZ",
   "fence-sit": "VB",
   "whiskered": "JJ",
-  "brushlike": "JJ",
   "gilt": "JJ",
   "perpetrate": "VB",
   "sandwiched": "VBN",
@@ -9255,10 +6632,8 @@ var lexicon={
   "commiserate": "VB",
   "joint": "JJ",
   "outstrips": "VBZ",
-  "bars": "NNS",
   "yassuhs": "UH",
   "bare": "JJ",
-  "bark": "NN",
   "compacted": "JJ",
   "learns": "VBZ",
   "glistening": "JJ",
@@ -9267,38 +6642,24 @@ var lexicon={
   "japanese": "JJ",
   "became": "VBD",
   "unleveled": "VBN",
-  "ditches": "NNS",
   "whoe": "WP",
-  "buck": "NN",
   "stolen": "JJ",
   "succeeding": "JJ",
-  "sportiest": "JJS",
   "wireline": "JJ",
   "underperformed": "VBN",
   "lodged": "VBN",
-  "anguish": "NN",
   "cite": "VBP",
   "openended": "VBN",
   "predigested": "VBN",
   "twofold": "JJ",
   "itchy": "JJ",
   "negotiate": "VB",
-  "post-1987": "JJ",
-  "new-car": "NN",
   "refute": "JJ",
   "edgy": "JJ",
   "unnourished": "JJ",
-  "edge": "NN",
   "dares": "VBZ",
-  "autumnal": "JJ",
-  "illusions": "NNS",
   "tamer": "JJR",
   "unscheduled": "JJ",
-  "conscript": "NN",
-  "sharpened": "VBN",
-  "backs": "NNS",
-  "litter": "NN",
-  "modernize": "VB",
   "grazin": "VBG",
   "unnoticed": "JJ",
   "intraday": "JJ",
@@ -9316,20 +6677,17 @@ var lexicon={
   "systemwide": "JJ",
   "engineered": "VBN",
   "headlined": "VBN",
-  "deals": "NNS",
   "dealt": "VBN",
   "neanderthal": "JJ",
   "narcotizes": "VBZ",
   "reinsure": "VB",
   "surefire": "JJ",
-  "raw-steel": "NN",
   "noncontract": "JJ",
   "end-tailed": "VBN",
   "scrapped": "VBN",
   "oversold": "VBN",
   "u.s.-korean": "JJ",
   "gossiped": "VBN",
-  "scales": "NNS",
   "forbid": "VB",
   "chipped": "VBN",
   "threatening": "JJ",
@@ -9337,9 +6695,7 @@ var lexicon={
   "scaled": "VBN",
   "adsorbs": "VBZ",
   "shoves": "VBZ",
-  "analyses": "NNS",
   "grassy": "JJ",
-  "pauses": "VBZ",
   "inclined": "JJ",
   "entwined": "VBN",
   "restaged": "VBN",
@@ -9348,14 +6704,10 @@ var lexicon={
   "merged": "VBN",
   "northern": "JJ",
   "rapt": "JJ",
-  "rape": "NN",
-  "patronize": "VB",
   "undersized": "JJ",
   "exemplify": "VBP",
   "interrupted": "JJ",
   "sculptured": "JJ",
-  "heavyweight": "NN",
-  "dearest": "JJS",
   "outsold": "VBD",
   "complicate": "VB",
   "choosy": "JJ",
@@ -9364,32 +6716,24 @@ var lexicon={
   "pending": "JJ",
   "flout": "VB",
   "lionized": "VBN",
-  "service": "NN",
   "mollified": "VBN",
   "decommissioned": "VBN",
   "unavailing": "JJ",
   "u.s.-built": "JJ",
-  "sectional": "JJ",
-  "respects": "NNS",
   "effloresce": "VB",
   "unabated": "JJ",
   "impart": "VB",
-  "dive": "NN",
   "sunbaked": "JJ",
-  "conflicts": "NNS",
   "yore": "PRP",
   "conscripted": "VBN",
   "reweave": "VB",
-  "management-services": "NNS",
   "salient": "JJ",
   "galled": "VBN",
   "tootles": "VBZ",
   "earthshaking": "JJ",
-  "pimplike": "JJ",
   "doomed": "JJ",
   "powdered": "JJ",
   "simulate": "VB",
-  "riches": "NNS",
   "frugal": "JJ",
   "supplanted": "VBN",
   "kiss": "JJ",
@@ -9397,28 +6741,21 @@ var lexicon={
   "delve": "VB",
   "high": "JJ",
   "intragovernment": "JJ",
-  "superimposes": "VBZ",
   "b-as": "IN",
   "superimposed": "JJ",
-  "seal": "NN",
-  "debate": "NN",
   "painted": "JJ",
   "unpublished": "JJ",
   "re-echo": "VB",
-  "uv-b": "NN",
   "sues": "VBZ",
   "gosh": "UH",
   "truer": "JJR",
   "turbulent": "JJ",
-  "merits": "NNS",
   "superb": "JJ",
-  "trifle": "NN",
   "shunted": "VBN",
   "neonatal": "JJ",
   "spoil": "VB",
   "clogged": "JJ",
   "demurs": "VBZ",
-  "dc-9": "JJ",
   "torments": "VBZ",
   "intimidates": "VBZ",
   "uncanny": "JJ",
@@ -9427,9 +6764,6 @@ var lexicon={
   "unaccommodating": "JJ",
   "riche": "JJ",
   "lobular": "JJ",
-  "hope": "NN",
-  "privileges": "NNS",
-  "retailing": "NN",
   "privileged": "JJ",
   "premiere": "JJ",
   "marketwide": "JJ",
@@ -9444,27 +6778,17 @@ var lexicon={
   "darkhaired": "JJ",
   "lead": "JJ",
   "lean": "JJ",
-  "leap": "NN",
   "locate": "VB",
   "all-in-all": "RB",
-  "japanese\\/chinese": "JJ",
   "murdered": "VBN",
   "tempered": "JJ",
-  "surge": "NN",
-  "warrants": "NNS",
-  "brush": "NNP",
-  "funds": "NNS",
   "corneal": "JJ",
-  "gathering": "NN",
   "goddamn": "JJ",
   "insipid": "JJ",
   "recede": "VBP",
   "domesticates": "VBZ",
   "ususal": "JJ",
   "more-or-less": "RB",
-  "book": "NN",
-  "boom": "NN",
-  "boon": "NN",
   "honorary": "JJ",
   "withstood": "VBD",
   "junk": "JJ",
@@ -9472,18 +6796,14 @@ var lexicon={
   "rotting": "JJ",
   "northerly": "JJ",
   "hardboiled": "JJ",
-  "advantage": "NN",
   "scold": "VB",
   "halfways": "RB",
   "citrus": "JJ",
   "broiled": "VBN",
   "sooty": "JJ",
   "tiered": "JJ",
-  "cooking": "NN",
   "hallucinating": "JJ",
-  "shocks": "NNS",
   "nawt": "RB",
-  "non-``": "``",
   "farther": "JJR",
   "lengthen": "VB",
   "forbore": "VBD",
@@ -9493,23 +6813,17 @@ var lexicon={
   "unpack": "VB",
   "unreconstructed": "JJ",
   "lo": "UH",
-  "stingier": "JJR",
   "sickening": "JJ",
   "partnered": "VBN",
   "rewarded": "VBN",
   "secede": "VB",
-  "multidimensional": "JJ",
   "undeveloped": "JJ",
   "glutted": "JJ",
-  "shame": "NN",
   "authenticated": "VBN",
-  "telescope": "NN",
   "outgeneraled": "VBN",
   "allay": "VB",
   "touts": "VBZ",
-  "smirk": "NN",
   "zap": "VB",
-  "resinlike": "JJ",
   "reintroduces": "VBZ",
   "arousal": "JJ",
   "missionary": "JJ",
@@ -9518,8 +6832,6 @@ var lexicon={
   "scream": "VB",
   "zanzibar": "JJ",
   "curly": "JJ",
-  "remotest": "JJS",
-  "craig": "NNP",
   "pioneering": "JJ",
   "housewarming": "JJ",
   "clarified": "VBN",
@@ -9528,7 +6840,6 @@ var lexicon={
   "clarifies": "VBZ",
   "deadpan": "JJ",
   "sinhalese": "JJ",
-  "timber": "NN",
   "croakin": "VBG",
   "advanced": "JJ",
   "unseemly": "JJ",
@@ -9537,36 +6848,24 @@ var lexicon={
   "eradicate": "VB",
   "blonde": "JJ",
   "relearns": "VBZ",
-  "union": "NNP",
-  "tallest": "JJS",
-  "low-water": "NN",
   "participatory": "JJ",
   "ugly": "JJ",
   "employ": "VB",
-  "disk-drive": "NN",
-  "kaneb": "NNP",
   "womanly": "JJ",
   "split": "VBN",
   "boiled": "VBN",
-  "consents": "NNS",
   "outlived": "VBN",
   "portrayed": "VBN",
-  "espouses": "VBZ",
   "beloved": "JJ",
   "otherworldly": "JJ",
   "unprotected": "JJ",
   "clustered": "JJ",
-  "shadow": "NN",
   "retake": "VB",
   "begin": "VB",
   "between": "RB",
-  "goodyear": "NNP",
   "plucked": "JJ",
   "alligatored": "VBN",
-  "fish": "NN",
-  "personal-computer": "NN",
   "disdains": "VBZ",
-  "bicentennial": "NN",
   "browse": "VB",
   "stoked": "VBN",
   "oversaw": "VBD",
@@ -9576,9 +6875,7 @@ var lexicon={
   "tamp": "VB",
   "nonvoting": "JJ",
   "safeguard": "VB",
-  "tooth": "NN",
   "eventual": "JJ",
-  "e": "NN",
   "comely": "JJ",
   "intent": "JJ",
   "rephrased": "VBN",
@@ -9586,14 +6883,9 @@ var lexicon={
   "overturned": "VBN",
   "osf": "IN",
   "timbered": "JJ",
-  "choice": "NN",
   "stays": "VBZ",
   "tap": "VB",
-  "defaults": "NNS",
   "tan": "JJ",
-  "trails": "NNS",
-  "lengthened": "VBN",
-  "costlier": "JJR",
   "accomplishes": "VBZ",
   "dusty": "JJ",
   "accomplished": "JJ",
@@ -9603,22 +6895,18 @@ var lexicon={
   "unraveled": "VBN",
   "admired": "JJ",
   "mirrors": "VBZ",
-  "locks": "NNS",
   "incremental": "JJ",
   "admires": "VBZ",
   "bore": "VBD",
   "slams": "VBZ",
-  "drain": "NN",
   "temperate": "JJ",
   "encouraged": "VBN",
   "yeard": "VBN",
   "civilian": "JJ",
   "secularized": "VBN",
-  "drilling": "NN",
   "u.s.backed": "JJ",
   "materializes": "VBZ",
   "retrieve": "VB",
-  "sponsor": "NN",
   "interned": "VBN",
   "paroxysmal": "JJ",
   "typed": "VBN",
@@ -9633,35 +6921,24 @@ var lexicon={
   "plugugly": "JJ",
   "nonsocialist": "JJ",
   "unfit": "JJ",
-  "tortures": "NNS",
-  "gene-splicing": "NN",
-  "invite": "NNP",
   "brews": "VBZ",
   "intends": "VBZ",
-  "hale": "NNP",
   "half": "JJ",
-  "evened": "VBN",
   "printed": "JJ",
   "redirected": "VBN",
   "fascinated": "JJ",
   "infuriate": "VB",
   "fecal": "JJ",
-  "sales-tax": "NN",
   "betrothal": "JJ",
   "hindmost": "JJ",
   "guarded": "JJ",
-  "college-sports": "NNS",
-  "plaintiffs``": "``",
   "multifiber": "JJR",
   "morose": "JJ",
   "intoxicating": "JJ",
   "alarming": "JJ",
-  "consumer-electronics": "NNS",
   "refreshed": "JJ",
-  "bankruptcy-court": "NN",
   "concentrated": "JJ",
   "concentrates": "VBZ",
-  "loveliest": "JJS",
   "unsettling": "JJ",
   "compels": "VBZ",
   "radicalized": "VBN",
@@ -9677,20 +6954,16 @@ var lexicon={
   "obtuse": "JJ",
   "electrogalvanized": "JJ",
   "eliminate": "JJ",
-  "engages": "NNS",
   "debilitating": "JJ",
   "deft": "JJ",
   "defy": "VB",
   "utl": "JJ",
   "wired": "JJ",
-  "tracking": "NNP",
   "steamed": "JJ",
   "recycles": "VBZ",
   "disconcert": "VB",
   "uncap": "VB",
   "overthrow": "JJ",
-  "world": "NN",
-  "shutter": "NN",
   "militate": "VB",
   "goosey": "JJ",
   "unshielded": "VBN",
@@ -9702,42 +6975,25 @@ var lexicon={
   "no": "JJ",
   "lacquered": "VBN",
   "rumbles": "VBZ",
-  "n.": "NNP",
   "worsted": "JJ",
-  "tandy": "NNP",
-  "rush": "NN",
-  "caution": "NN",
-  "rust": "NN",
-  "conn.-based": "JJ",
   "dyed": "VBN",
   "landlocked": "JJ",
-  "midwest": "NNP",
   "checkin": "VBG",
   "healed": "JJ",
   "past": "JJ",
-  "displays": "NNS",
   "quicken": "JJ",
-  "clock": "NN",
   "corked": "JJ",
   "a-includes": "VBZ",
-  "experience": "NN",
   "literary": "JJ",
   "enliven": "VBP",
-  "door": "NN",
   "tested": "JJ",
   "nonviolent": "JJ",
-  "doom": "NN",
-  "applelike": "JJ",
   "centrifugal": "JJ",
-  "wimp": "NN",
   "enlargd": "VBN",
   "enlarge": "VB",
   "sprinkle": "VB",
-  "lanky": "JJ",
-  "sympathize": "VBP",
   "mended": "VBN",
   "overcooked": "VBN",
-  "resorts": "NNS",
   "replies": "VBZ",
   "revalued": "VBN",
   "focussed": "VBN",
@@ -9750,95 +7006,64 @@ var lexicon={
   "purport": "VBP",
   "hallowed": "JJ",
   "cradled": "VBN",
-  "charges": "NNS",
   "surrealist": "JJ",
   "waft": "VB",
-  "brace": "NN",
   "also": "RB",
   "departmental": "JJ",
-  "lilly": "NNP",
   "balkanized": "JJ",
   "barren": "JJ",
-  "barrel": "NN",
-  "bulletin": "NN",
-  "pa.-based": "JJ",
   "haw": "UH",
-  "access": "NN",
   "bulgarian": "JJ",
   "sunny": "JJ",
-  "trek": "NN",
   "devoured": "VBN",
   "adapts": "VBZ",
   "overboard": "RB",
-  "shower": "NN",
   "unrealized": "JJ",
   "agreed": "JJ",
   "hostile": "JJ",
   "untouched": "JJ",
-  "r-5th": "JJ",
   "door-fronted": "VBN",
   "lash": "VB",
   "aforethought": "JJ",
   "patrolled": "VBN",
   "infect": "VB",
   "caged": "VBN",
-  "presentational": "JJ",
   "cagey": "JJ",
   "waivered": "VBN",
   "disgusted": "JJ",
   "eventshah-leh": "RB",
   "flooded": "VBN",
-  "delisting": "NN",
-  "honor": "NN",
-  "karl": "NNP",
-  "dieting": "NN",
   "unimpressed": "JJ",
   "crackles": "VBZ",
-  "emergency": "NN",
   "abound": "VBP",
-  "bourse": "NNP",
   "obscures": "VBZ",
   "obscured": "VBN",
   "deserved": "JJ",
   "epochal": "JJ",
   "wrinkled": "JJ",
-  "span": "NN",
   "harnessed": "VBN",
   "nonrecourse": "JJ",
-  "fades": "NNS",
   "inhumane": "JJ",
-  "positivism": "NN",
   "unsafe": "JJ",
   "char": "VB",
   "diverse": "JJ",
-  "chat": "NN",
   "hove": "VBD",
   "arthurian": "JJ",
-  "land": "NNP",
   "gawdamighty": "UH",
   "electroplated": "VBN",
   "toted": "VBN",
   "broaden": "VB",
   "amiss": "RB",
-  "youngest": "JJS",
   "quadruples": "VBZ",
-  "petitions": "NNS",
   "quadrupled": "VBN",
-  "harbor": "NN",
   "whooping": "JJ",
   "damning": "JJ",
   "croon": "VB",
-  "survey": "NN",
   "thatt": "IN",
-  "dumbest": "JJS",
   "suspected": "JJ",
-  "baby": "NN",
-  "hauls": "NNS",
-  "process": "NN",
   "lock": "VB",
   "nears": "VBZ",
   "uncompensated": "JJ",
-  "educational": "JJ",
   "procured": "VBN",
   "bilingual": "JJ",
   "pales": "VBZ",
@@ -9852,26 +7077,20 @@ var lexicon={
   "directs": "VBZ",
   "varies": "VBZ",
   "hungry": "JJ",
-  "realize": "VB",
   "blown-up": "VBN",
   "bump": "VB",
   "bicameral": "JJ",
   "unprepared": "JJ",
-  "mainland": "NNP",
-  "jesus": "NNP",
   "chilly": "JJ",
   "manufactured": "JJ",
-  "chills": "NNS",
   "untested": "JJ",
   "starker": "JJR",
   "backdoor": "JJ",
   "burglarized": "VBN",
   "pressurized": "VBN",
-  "gentile": "NN",
   "u.s.-supplied": "JJ",
   "seethes": "VBZ",
   "ponders": "VBZ",
-  "dishes": "NNS",
   "prevayle": "VB",
   "uncalled": "JJ",
   "worldwide": "JJ",
@@ -9880,28 +7099,18 @@ var lexicon={
   "wynne": "VB",
   "lower-middle": "JJR",
   "exude": "VBP",
-  "strengthened": "JJ",
-  "faier": "RB",
-  "consitutional": "JJ",
   "insulting": "JJ",
   "thermonuclear": "JJ",
   "faces": "VBZ",
   "undergraduate": "JJ",
   "rougher": "JJR",
   ">": "SYM",
-  "u.s.-developed": "JJ",
-  "fielding": "NN",
   "bioequivalent": "JJ",
   "agonizes": "VBZ",
   "adequate": "JJ",
-  "merest": "JJS",
-  "audit": "NN",
   "joking": "JJ",
-  "shotgun": "NN",
   "diversify": "VB",
   "audio": "JJ",
-  "clocks": "NNS",
-  "web": "NN",
   "wee": "JJ",
   "undulating": "JJ",
   "nipponese": "JJ",
@@ -9910,25 +7119,17 @@ var lexicon={
   "immortal": "JJ",
   "scatters": "VBZ",
   "contested": "JJ",
-  "b.c.": "RB",
   "recurring": "JJ",
   "e-estimated": "VBN",
   "pressure": "JJ",
   "wields": "VBZ",
   "outshines": "VBZ",
-  "documentary": "NN",
   "indoctrinated": "VBN",
-  "stonelike": "JJ",
   "nation-wide": "RB",
-  "places": "NNS",
   "placed": "VBN",
   "reciprocates": "VBZ",
   "effected": "VBN",
   "compares": "VBZ",
-  "repeat": "NN",
-  "repeal": "NN",
-  "searches": "NNS",
-  "gardens": "NNS",
   "c-excludes": "VB",
   "rekindle": "VB",
   "manhandled": "VBN",
@@ -9936,7 +7137,6 @@ var lexicon={
   "military": "JJ",
   "exaggerate": "VB",
   "harrowed": "VBN",
-  "whoopee": "NN",
   "unfelt": "JJ",
   "personifies": "VBZ",
   "multifamily": "JJ",
@@ -9950,7 +7150,6 @@ var lexicon={
   "bundled": "VBN",
   "wavy": "JJ",
   "separates": "VBZ",
-  "u.s.-german": "JJ",
   "flunk": "VBP",
   "flung": "VBD",
   "impair": "VB",
@@ -9958,31 +7157,23 @@ var lexicon={
   "vehicular": "JJ",
   "recovers": "VBZ",
   "co-wrote": "VBD",
-  "arch": "NNP",
   "complacent": "JJ",
   "alienate": "VB",
   "appreciate": "VB",
   "rogue": "JJ",
   "argentinian": "JJ",
-  "choicest": "JJS",
   "safe": "JJ",
-  "sack": "NN",
   "lifelong": "JJ",
   "dingy": "JJ",
-  "budapest": "NNP",
   "engrave": "VB",
   "ahah": "UH",
   "dashing": "JJ",
   "disembark": "VBP",
-  "hard-currency": "NN",
   "wasted": "JJ",
   "policymaking": "JJ",
   "askance": "RB",
-  "temporize": "VB",
   "off-shore": "RB",
-  "maquiladoras": "NNS",
   "germane": "JJ",
-  "assesses": "VBZ",
   "culminates": "VBZ",
   "assessed": "VBN",
   "grave": "JJ",
@@ -10004,13 +7195,11 @@ var lexicon={
   "disappears": "VBZ",
   "unchangedat": "JJ",
   "katangan": "JJ",
-  "telecommunications": "NNS",
   "innoculated": "VBN",
   "attacked": "VBN",
   "collects": "VBZ",
   "cont": "VBN",
   "synce": "IN",
-  "hang": "NNP",
   "tramples": "VBZ",
   "taxing": "JJ",
   "shout": "VB",
@@ -10018,10 +7207,7 @@ var lexicon={
   "unfounded": "JJ",
   "cooler": "JJR",
   "homing": "JJ",
-  "computer-chip": "NN",
-  "swingin": "NN",
   "flatter": "JJR",
-  "hassle": "NN",
   "flatten": "VB",
   "confusing": "JJ",
   "congratulate": "VBP",
@@ -10032,54 +7218,35 @@ var lexicon={
   "procure": "VB",
   "gram": "JJ",
   "asserts": "VBZ",
-  "peer": "NN",
   "grab": "VB",
   "breaded": "VBN",
   "shared": "JJ",
-  "crouch": "NN",
-  "mailroom": "NN",
   "negroid": "JJ",
   "stumble": "VB",
-  "familiarize": "VB",
   "connote": "VB",
   "romanesque": "JJ",
   "maximum": "JJ",
-  "guesses": "NNS",
   "commences": "VBZ",
   "falls": "VBZ",
   "competent": "JJ",
-  "enthuses": "VBZ",
   "update": "VB",
-  "p.m.": "RB",
   "visualizes": "VBZ",
   "dissatisfied": "JJ",
   "unformed": "JJ",
-  "episcopal": "NNP",
   "evades": "VBZ",
   "agitate": "VBP",
-  "cost": "NN",
   "pretax": "JJ",
-  "ok.": "UH",
   "thicker": "JJR",
   "housebroken": "JJ",
-  "foreign-debt": "NN",
-  "bangs": "NNS",
   "losing": "JJ",
   "most-actives": "JJS",
   "decked": "VBN",
-  "purge": "NN",
   "occur": "VB",
-  "lounge": "NN",
   "ornery": "JJ",
   "affirms": "VBZ",
-  "top-10": "JJ",
-  "delight": "NN",
-  "supernaturalism": "NN",
   "a.k.a": "JJ",
   "factual": "JJ",
-  "nod": "NN",
   "unplanned": "JJ",
-  "concerned``": "``",
   "agricultural": "JJ",
   "unloaded": "JJ",
   "consummated": "JJ",
@@ -10090,11 +7257,9 @@ var lexicon={
   "parceled": "VBN",
   "blind": "JJ",
   "blink": "VB",
-  "ring": "NN",
   "authorized": "JJ",
   "appreciates": "VBZ",
   "repossess": "VB",
-  "vocal\\": "JJ",
   "appreciated": "VBN",
   "underwritten": "VBN",
   "recruit": "VB",
@@ -10108,125 +7273,78 @@ var lexicon={
   "worse": "JJ",
   "staid": "JJ",
   "worst": "JJ",
-  "stain": "NN",
   "shrill": "JJ",
-  "reprints": "NNS",
-  "ba-1": "JJ",
-  "ba-2": "JJ",
   "charcoaled": "VBN",
   "suspects": "VBZ",
   "glaze": "VB",
   "rollicking": "JJ",
-  "renoir": "NNP",
   "overcerebral": "JJ",
-  "import": "NN",
   "orchestrate": "VB",
   "moans": "VBZ",
   "resides": "VBZ",
-  "sulky": "JJ",
   "interested": "JJ",
-  "merriest": "JJS",
   "impugn": "VB",
   "stimulating": "JJ",
-  "lire": "NNS",
-  "sawdust": "NN",
   "aground": "RB",
-  "foam": "NN",
   "alleviate": "VB",
   "uninjured": "JJ",
   "might": "JJ",
   "renewed": "JJ",
   "swim": "VB",
-  "laundering": "NN",
   "stunk": "VBD",
   "onscreen": "RB",
   "gonne": "VBN",
   "gonna": "VBG",
   "ramshackle": "JJ",
   "semiannual": "JJ",
-  "earlier": "JJR",
   "sadder": "JJR",
   "conceals": "VBZ",
   "stare": "VB",
   "shags": "VBZ",
   "stark": "JJ",
-  "stars": "NNS",
-  "two-thirds": "NNS",
-  "machinelike": "JJ",
-  "original": "JJ",
   "evens": "VBZ",
   "appraising": "JJ",
   "trample": "VB",
   "nations": "NNPS",
   "dabble": "VB",
-  "amish": "NNP",
-  "moonlight": "NN",
-  "stockpile": "NN",
   "prying": "JJ",
   "pledged": "JJ",
   "uncollaborated": "JJ",
-  "pledges": "NNS",
   "resounding": "JJ",
-  "information-systems": "NNS",
   "begot": "VBD",
   "antagonised": "VBN",
   "throbbing": "JJ",
   "enjoin": "VB",
   "befriends": "VBZ",
   "envisions": "VBZ",
-  "chuckle": "NN",
-  "ails": "NNS",
-  "craving": "NN",
   "gridlocked": "VBN",
   "tracks": "VBZ",
-  "sealing": "NN",
   "inflected": "JJ",
-  "sp-44002": "LS",
-  "sp-44001": "LS",
-  "sp-44006": "LS",
-  "sp-44005": "LS",
   "implanted": "VBN",
-  "heartened": "VBN",
-  "conformational": "JJ",
-  "fusses": "VBZ",
-  "outpatient": "NN",
-  "grill": "NN",
   "afterwards": "RB",
-  "drearier": "RBR",
-  "martian": "NNP",
   "rejuvenate": "VB",
-  "opening": "NN",
-  "utilize": "VB",
-  "unlucky": "JJ",
   "shrouds": "VBZ",
-  "diffuses": "VBZ",
   "horizontal": "JJ",
   "misnamed": "VBN",
   "thermal": "JJ",
   "tumbles": "VBZ",
   "siberian": "JJ",
-  "watchdog": "NN",
   "predatory": "JJ",
   "exasperated": "JJ",
   "deride": "VBP",
   "nonvirulent": "JJ",
   "splattered": "VBN",
   "testify": "VB",
-  "safety": "NN",
   "counterrevolutionary": "JJ",
   "favored": "JJ",
-  "houses": "NNS",
   "unsightly": "JJ",
   "brightest": "RB",
-  "racial-preference": "NN",
-  "decapitalize": "VBP",
   "incubated": "VBN",
   "warty": "JJ",
   "seafaring": "JJ",
   "gret": "JJ",
   "grey": "JJ",
   "null": "JJ",
-  "cave": "NN",
   "aired": "VBN",
   "hires": "VBZ",
   "multilingual": "JJ",
@@ -10235,41 +7353,24 @@ var lexicon={
   "bedfast": "JJ",
   "unwed": "JJ",
   "naively": "JJ",
-  "one-eighth": "NN",
   "velvety": "JJ",
   "distressing": "JJ",
-  "co-operate": "NN",
   "stored": "VBN",
-  "pictures": "NNS",
   "pictured": "VBN",
-  "spray": "NN",
-  "b.c.-based": "JJ",
-  "commoditize": "VB",
   "forgotten": "JJ",
-  "vault": "NN",
   "wifely": "JJ",
-  "broadcasting": "NN",
   "pick": "VB",
   "intriguing": "JJ",
-  "pace": "NN",
-  "guide": "NN",
   "pack": "VB",
   "costly": "JJ",
-  "wagering": "NN",
-  "mulitiplier": "JJ",
   "superfast": "JJ",
   "multisided": "JJ",
-  "romanticize": "VB",
-  "exploits": "NNS",
   "shivering": "JJ",
   "disseminate": "VB",
   "brushed": "JJ",
   "keynesian": "JJ",
   "equipotent": "JJ",
-  "homeric": "NNP",
-  "turret": "NN",
   "looks": "CP",
-  "looky": "VB",
   "alpha": "JJ",
   "done-and": "CC",
   "woodward": "RB",
@@ -10277,12 +7378,10 @@ var lexicon={
   "goddamit": "UH",
   "crippling": "JJ",
   "amazonian": "JJ",
-  "animal-rights": "NNS",
   "underrated": "JJ",
   "imprecise": "JJ",
   "rekindled": "VBN",
   "friendly": "JJ",
-  "wave": "NN",
   "rattling": "JJ",
   "compassionate": "JJ",
   "magnificent": "JJ",
@@ -10292,23 +7391,18 @@ var lexicon={
   "convert": "VB",
   "comminge": "VBG",
   "soapy": "JJ",
-  "frictional": "JJ",
   "infest": "VB",
   "traditionalized": "VBN",
   "charming": "JJ",
   "appointed": "JJ",
   "wearin": "VBG",
-  "lapse": "NN",
   "postmarked": "VBN",
   "ensconced": "VBN",
   "transmitted": "VBN",
-  "sinhalese.": "JJ",
   "despairs": "VBZ",
   "asinine": "JJ",
   "unseated": "JJ",
   "fare": "VBP",
-  "farm": "NN",
-  "costume": "NN",
   "temporal": "JJ",
   "instrumented": "JJ",
   "stout": "JJ",
@@ -10321,27 +7415,20 @@ var lexicon={
   "vacuolated": "VBN",
   "refight": "VB",
   "maximizes": "VBZ",
-  "loral": "NNP",
-  "cause": "NNP",
-  "contemporize": "VB",
   "re-emphasise": "VB",
   "galling": "JJ",
   "inasmuch": "RB",
-  "lists": "NNS",
   "submitted": "VBN",
   "other": "JJ",
   "imperilled": "VBN",
   "counterbalance": "VB",
   "corrects": "VBZ",
-  "food-processing": "NN",
   "astonishing": "JJ",
   "constrain": "VB",
   "underpins": "VBZ",
   "achieve": "VB",
   "nevermind": "VB",
-  "trucks": "NNS",
   "failed": "JJ",
-  "tunes": "NNS",
   "slimed": "VBN",
   "shrouded": "JJ",
   "operates": "VBZ",
@@ -10349,24 +7436,17 @@ var lexicon={
   "unshaved": "JJ",
   "merry": "JJ",
   "unfired": "VBN",
-  "hits": "NNS",
   "formosan": "JJ",
   "revitalized": "VBN",
   "scabbed": "VBN",
-  "erases": "VBZ",
   "constitutes": "VBZ",
   "impress": "VB",
   "ratiocinating": "JJ",
   "tweezed": "VBN",
-  "wheel": "NN",
-  "aluminum": "NN",
   "abounds": "VBZ",
   "non-god": "UH",
   "drowns": "VBZ",
-  "advertises": "VBZ",
-  "detail": "NN",
   "pin-pointed": "VBN",
-  "balloons": "NNS",
   "necessary": "JJ",
   "lost": "JJ",
   "tipple": "VBP",
@@ -10374,37 +7454,24 @@ var lexicon={
   "mayan": "JJ",
   "home": "JJ",
   "pinpoint": "VB",
-  "overlay": "NN",
-  "overlap": "NN",
   "octogenarian": "JJ",
   "hurls": "VBZ",
   "greening": "JJ",
   "fettered": "VBN",
-  "internal": "JJ",
   "multivalve": "JJ",
   "triangular": "JJ",
-  "sprinkling": "NN",
   "universal": "JJ",
-  "functions": "NNS",
   "began": "VBD",
   "discorporated": "VBN",
-  "star": "NNP",
-  "stag": "NN",
   "forgone": "JJ",
   "whoops": "JJ",
   "knelt": "VBD",
   "perverted": "JJ",
-  "anglican": "NNP",
-  "crops": "NNS",
   "subordinate": "JJ",
   "upward": "JJ",
   "snared": "VBN",
-  "reshuffle": "NN",
-  "bumps": "NNS",
-  "intrigue": "NN",
   "either": "RB",
   "tertiary": "JJ",
-  "hand-screened": "VBN",
   "highfalutin": "JJ",
   "ostracized": "VBN",
   "whereas": "IN",
@@ -10412,7 +7479,6 @@ var lexicon={
   "adventurist": "JJ",
   "colde": "MD",
   "vibratory": "JJ",
-  "schoolchildren": "NN",
   "operate": "VB",
   "wus": "RB",
   "unnamed": "JJ",
@@ -10423,11 +7489,9 @@ var lexicon={
   "downright": "JJ",
   "untrustworthy": "JJ",
   "redressed": "VBN",
-  "rue": "NNP",
   "lurks": "VBZ",
   "punctuated": "VBN",
   "chinked": "VBN",
-  "hawks": "NNS",
   "foreclose": "VB",
   "digs": "VBZ",
   "requisite": "JJ",
@@ -10439,7 +7503,6 @@ var lexicon={
   "breathes": "VBZ",
   "unadjusted": "JJ",
   "annoyed": "JJ",
-  "northeast": "NNP",
   "flatulent": "JJ",
   "jailed": "VBN",
   "leave": "VB",
@@ -10448,23 +7511,18 @@ var lexicon={
   "enchant": "VB",
   "roasted": "VBN",
   "unmurmuring": "JJ",
-  "nontraditional": "JJ",
   "incorporating": "JJ",
   "woozy": "JJ",
-  "toot": "NNP",
   "adjudged": "VBN",
   "wears": "VBZ",
   "insinuates": "VBZ",
   "suggested": "VBN",
   "civilised": "JJ",
-  "mcdonald": "NNP",
   "jotted": "JJ",
   "papal": "JJ",
-  "lanterns": "NNS",
   "tint": "VBP",
   "tiny": "JJ",
   "detrimental": "JJ",
-  "interest": "NN",
   "dismiss": "VB",
   "shattering": "JJ",
   "tolled": "VBN",
@@ -10473,9 +7531,6 @@ var lexicon={
   "affirm": "VB",
   "unshed": "JJ",
   "settles": "VBZ",
-  "track": "NN",
-  "v.": "CC",
-  "stickier": "JJR",
   "maryed": "VBN",
   "bearded": "JJ",
   "valued": "JJ",
@@ -10488,21 +7543,16 @@ var lexicon={
   "translucent": "JJ",
   "sapped": "VBN",
   "coincide": "VB",
-  "shuttles": "NNS",
   "vaulted": "JJ",
   "uncoated": "JJ",
   "offcourse": "JJ",
-  "submarine": "NN",
   "pressing": "JJ",
   "thinner": "JJR",
-  "fumes": "NNS",
   "scalded": "VBN",
   "thinned": "VBN",
   "slipshod": "JJ",
   "vacated": "VBN",
-  "spike": "NN",
   "unpadded": "JJ",
-  "energize": "VB",
   "tollways": "RB",
   "horrifying": "JJ",
   "average": "JJ",
@@ -10510,56 +7560,38 @@ var lexicon={
   "erupts": "VBZ",
   "pimpled": "JJ",
   "tarnished": "JJ",
-  "graft": "NN",
   "bruising": "JJ",
   "fosters": "VBZ",
-  "roomier": "JJR",
-  "drive": "NN",
-  "journey": "NN",
   "cut-and-paste": "VB",
-  "profits": "NNS",
   "vermilion": "JJ",
   "unrelieved": "JJ",
   "advised": "JJ",
   "unworn": "JJ",
   "round": "JJ",
   "unexpected": "JJ",
-  "dwarf": "NN",
   "exemplified": "VBN",
-  "fleetest": "JJS",
   "exemplifies": "VBZ",
-  "slackened": "VBN",
   "insolent": "JJ",
   "statewide": "JJ",
   "spiffing": "JJ",
-  "visit": "NN",
   "disaffiliated": "JJ",
   "unequaled": "JJ",
   "reelected": "VBN",
   "premarital": "JJ",
   "nearest": "RB",
-  "flouting": "NN",
-  "greenest": "JJS",
   "frescoed": "JJ",
   "burgeoning": "JJ",
-  "tristan": "NNP",
   "purify": "JJ",
   "abuzz": "JJ",
   "underpriced": "JJ",
   "equip": "VB",
-  "observational": "JJ",
-  "group": "NN",
   "monitor": "VB",
   "repriced": "VBN",
   "-ing": "JJ",
-  "vocational": "JJ",
-  "mig-2": "JJ",
   "rattles": "VBZ",
   "condemns": "VBZ",
   "brimming": "JJ",
-  "bringing": "NNP",
   "afternoon": "UH",
-  "nutritional": "JJ",
   "lambaste": "VB",
   "a[fj]": "SYM",
   "gaudy": "JJ",
@@ -10572,24 +7604,20 @@ var lexicon={
   "recreated": "VBN",
   "recreates": "VBZ",
   "francophone": "JJ",
-  "assault": "NN",
   "bete": "JJ",
   "hatched": "JJ",
   "spaced": "JJ",
   "scowl": "VBP",
   "reek": "VBP",
   "stormy": "JJ",
-  "reel": "NN",
   "rid": "JJ",
   "large": "JJ",
-  "a.k.a.": "JJ",
   "biosynthesized": "VBN",
   "striking": "JJ",
   "audited": "VBN",
   "vital": "JJ",
   "contains": "VBZ",
   "radiates": "VBZ",
-  "j.m.": "NNP",
   "rescued": "JJ",
   "ascribed": "VBN",
   "pacifies": "VBZ",
@@ -10597,32 +7625,25 @@ var lexicon={
   "tilts": "VBZ",
   "fiftieth": "CD",
   "oust": "VB",
-  "squash": "NN",
   "come": "VB",
   "sound": "JJ",
   "cancelled": "VBN",
   "sleeping": "JJ",
-  "strain": "NN",
-  "releases": "NNS",
   "belie": "VBP",
   "clammy": "JJ",
   "unperceived": "VBN",
   "patrician": "JJ",
   "assist": "VB",
-  "businesslike": "JJ",
   "uncomplicated": "JJ",
   "sputters": "VBZ",
   "thudding": "JJ",
   "git": "VB",
   "gnarled": "JJ",
-  "operations": "NNP",
   "hydrated": "JJ",
   "bewitched": "VBN",
-  "worries": "NNS",
   "imaged": "VBN",
   "princely": "JJ",
   "scared": "JJ",
-  "pockets": "NNS",
   "consolidate": "VB",
   "skilled": "JJ",
   "actuate": "VB",
@@ -10636,9 +7657,7 @@ var lexicon={
   "frail": "JJ",
   "goddam": "JJ",
   "withdraw": "VB",
-  "demobilize": "VB",
   "collegiate": "JJ",
-  "founder": "NN",
   "commute": "VBP",
   "preserves": "VBZ",
   "byzantine": "JJ",
@@ -10649,64 +7668,49 @@ var lexicon={
   "drugged": "VBN",
   "blares": "VBZ",
   "bypassed": "VBN",
-  "tribal": "NNP",
-  "perspective": "NN",
   "swampy": "JJ",
   "leafhopper": "JJR",
   "returning": "JJ",
   "sofar": "RB",
   "uncharted": "JJ",
   "bizarre": "JJ",
-  "shareholder\\": "JJ",
   "plastered": "JJ",
   "subsumed": "VBN",
   "constructs": "VBZ",
   "american": "JJ",
   "specializes": "VBZ",
-  "guards": "NNS",
   "junked": "VBN",
   "ensnarled": "VBN",
-  "numbers": "NNS",
   "questioning": "JJ",
   "tangere": "JJ",
   "aristotelian": "JJ",
   "upholstered": "VBN",
   "afrikaner": "JJR",
   "forced": "JJ",
-  "forces": "NNS",
-  "golfing": "NN",
   "researches": "VBZ",
   "frigid": "JJ",
   "prejudiced": "JJ",
   "hails": "VBZ",
-  "saloons": "NNS",
   "winnow": "VB",
   "uninvited": "JJ",
   "pubescent": "JJ",
   "impeached": "VBN",
   "beginning": "JJ",
   "embraces": "VBZ",
-  "stabs": "NNS",
   "embraced": "VBN",
   "unacquainted": "JJ",
   "bloodied": "JJ",
   "obstructed": "JJ",
   "dippy": "JJ",
-  "favor": "NN",
   "lilting": "JJ",
   "recondite": "JJ",
   "wows": "VBZ",
   "loosens": "VBZ",
   "inarticulate": "JJ",
   "drifts": "VBZ",
-  "commissions": "NNS",
-  "noblest": "JJS",
   "converge": "VB",
-  "hanoverian": "NNP",
   "chimes": "VBZ",
   "merges": "VBZ",
-  "doubles": "NNS",
-  "natural-resources": "NNS",
   "threehour": "JJ",
   "biannual": "JJ",
   "manly": "JJ",
@@ -10720,26 +7724,18 @@ var lexicon={
   "profligate": "JJ",
   "asserted": "JJ",
   "ravaged": "JJ",
-  "civilize": "VB",
   "furthers": "VBZ",
-  "rivals": "NNS",
   "omniscient": "JJ",
   "chiseled": "VBN",
-  "strictest": "JJS",
   "grainy": "JJ",
   "reopens": "VBZ",
   "unearned": "JJ",
   "astound": "VB",
   "disillusioning": "JJ",
   "shortchanged": "VBN",
-  "task": "NN",
-  "purtiest": "JJS",
   "irritably": "JJ",
-  "shape": "NN",
   "kenyan": "JJ",
-  "rundown": "NN",
   "cut": "VB",
-  "cup": "NN",
   "undistinguished": "JJ",
   "christian": "JJ",
   "recycled": "VBN",
@@ -10748,11 +7744,7 @@ var lexicon={
   "proficient": "JJ",
   "delist": "VB",
   "depose": "VB",
-  "vt.-based": "JJ",
-  "wash.-based": "JJ",
   "translate": "VB",
-  "promises": "VBZ",
-  "subsidiary": "NN",
   "planed": "VBN",
   "deprive": "VB",
   "consulted": "VBN",
@@ -10772,32 +7764,25 @@ var lexicon={
   "bottomed": "JJ",
   "unhurt": "JJ",
   "companywide": "JJ",
-  "contra": "NNP",
   "dowdy": "JJ",
   "assisted": "VBN",
   "pleading": "JJ",
   "agrees": "VBZ",
   "composed": "JJ",
   "decentralized": "JJ",
-  "composes": "VBZ",
   "corpuscular": "JJ",
   "belittling": "JJ",
-  "congregational": "JJ",
   "engender": "VB",
   "etruscan": "JJ",
   "gruff": "JJ",
   "syrupy": "JJ",
-  "prostate": "NN",
-  "supranational": "JJ",
   "circumscribed": "JJ",
   "knocks": "VBZ",
   "transborder": "JJ",
   "iguana": "JJ",
   "undressed": "JJ",
-  "itemize": "VB",
   "pugh": "UH",
   "denigrate": "VB",
-  "squabbling": "NN",
   "preschool": "JJ",
   "hisself": "PRP",
   "preclude": "VB",
@@ -10805,9 +7790,7 @@ var lexicon={
   "beady": "JJ",
   "incensed": "JJ",
   "scriptural": "JJ",
-  "flushing": "NN",
   "clarify": "VB",
-  "approaches": "NNS",
   "pokerfaced": "JJ",
   "backwards": "RB",
   "mortal": "JJ",
@@ -10815,25 +7798,19 @@ var lexicon={
   "elegiac": "JJ",
   "rubber": "JJ",
   "nebular": "JJ",
-  "scans": "NNS",
   "acquire": "VB",
   "foamy": "JJ",
   "nearby": "JJ",
   "catapults": "VBZ",
-  "incentive": "NN",
-  "concerns": "NNS",
   "glad": "JJ",
   "thicken": "VB",
   "stumbles": "VBZ",
-  "sparks": "NNP",
-  "prancing": "NN",
   "pave": "VB",
   "overinsistent": "JJ",
   "dispell": "VB",
   "racked": "VBN",
   "groggy": "JJ",
   "reiterate": "VB",
-  "reform": "NN",
   "jewelled": "JJ",
   "reproduces": "VBZ",
   "metered": "VBN",
@@ -10842,9 +7819,7 @@ var lexicon={
   "uninitiated": "JJ",
   "migrate": "VB",
   "drowsy": "JJ",
-  "rump": "NN",
   "iodinate": "VB",
-  "drift-net": "NN",
   "tense": "JJ",
   "commmon": "JJ",
   ")": ")",
@@ -10854,21 +7829,16 @@ var lexicon={
   "neural": "JJ",
   "total": "JJ",
   "reintroduce": "VBP",
-  "excise": "NN",
   "drafty": "JJ",
   "inveigle": "VB",
   "nicknamed": "VBN",
   "elapsed": "VBN",
-  "elapses": "VBZ",
   "displaced": "JJ",
   "displaces": "VBZ",
-  "livelier": "JJR",
   "straightway": "RB",
   "screwed": "JJ",
-  "heaven": "NNP",
   "topiary": "JJ",
   "urbanized": "JJ",
-  "knuckles": "NNS",
   "condense": "VB",
   "hankerin": "VBG",
   "avowed": "JJ",
@@ -10887,29 +7857,20 @@ var lexicon={
   "nasty": "JJ",
   "arboreal": "JJ",
   "dispense": "VB",
-  "richter": "NNP",
   "gluey": "JJ",
-  "school": "NN",
   "conceive": "VB",
   "glued": "VBN",
   "ruffled": "JJ",
   "construed": "VBN",
   "hide": "VB",
   "supplied": "VBN",
-  "blur": "NN",
-  "supplies": "NNS",
-  "non-violence": "NN",
   "democratized": "VBN",
-  "ridicule": "NN",
   "culminate": "VB",
-  "poshest": "JJS",
   "yehhh": "UH",
   "grumbles": "VBZ",
   "excommunicated": "VBN",
   "defile": "VB",
-  "riskiest": "JJS",
   "legislate": "VB",
-  "lump": "NN",
   "splendid": "JJ",
   "howsomever": "RB",
   "signatory": "JJ",
@@ -10922,31 +7883,18 @@ var lexicon={
   "pounce": "VB",
   "laid": "VBN",
   "lain": "VBN",
-  "decision-making": "NN",
   "aforesaid": "JJ",
-  "peaky": "JJ",
   "longterm": "JJ",
-  "filter": "NN",
-  "heck": "NN",
   "primary": "JJ",
   "pre-paid": "VBD",
   "researched": "VBN",
-  "corpus": "NN",
-  "frailest": "JJS",
   "leaking": "JJ",
-  "kindest": "JJS",
   "unsaid": "JJ",
   "pre-tested": "VBN",
-  "hatch": "NN",
-  "feint": "NN",
-  "bait": "NN",
   "alight": "JJ",
-  "colors": "NNS",
   "bail": "VB",
   "graded": "VBN",
-  "spite": "NN",
   "spits": "VBZ",
-  "knuckle": "NN",
   "unhurried": "JJ",
   "anxiously": "RB",
   "disturbing": "JJ",
@@ -10959,30 +7907,21 @@ var lexicon={
   "wretched": "JJ",
   "seein": "VBG",
   "moneymaking": "JJ",
-  "anchors": "NNS",
   "zingggg-o": "UH",
   "javanese": "JJ",
-  "screw": "NN",
   "buyback": "JJ",
   "possessed": "JJ",
-  "possesses": "VBZ",
   "departed": "JJ",
-  "bruise": "NN",
-  "proposes": "VBZ",
   "leagued": "VBN",
   "enlighten": "VB",
   "cherry": "JJ",
   "burne": "VB",
-  "burns": "NNS",
   "burnt": "JJ",
   "peeved": "JJ",
   "contradict": "VB",
   "heard": "VBN",
-  "peeves": "NNS",
   "pursues": "VBZ",
-  "nuclear-weapons": "NNS",
   "clucks": "VBZ",
-  "usher": "NN",
   "kayoed": "VBN",
   "accepted": "JJ",
   "deleted": "VBN",
@@ -10990,31 +7929,20 @@ var lexicon={
   "ensure": "VB",
   "inveigh": "VBP",
   "ownself": "PRP",
-  "dials": "NNS",
   "obscene": "JJ",
-  "bats": "NNS",
   "pampers": "VBZ",
   "amen": "UH",
-  "destabilize": "VB",
-  "timelier": "JJR",
-  "liveliest": "JJS",
-  "von": "NNP",
-  "loitering": "NN",
   "encumber": "VB",
   "swissmade": "JJ",
-  "panicky": "JJ",
   "when": "WRB",
-  "blueprints": "NNS",
   "liquidate": "VB",
   "contrasted": "VBN",
   "forgoes": "VBZ",
-  "trickle": "NN",
   "tripartite": "JJ",
   "sequestered": "VBN",
   "widthwise": "RB",
   "unfamiliar": "JJ",
   "ritzy": "JJ",
-  "clouds": "NNS",
   "level": "JJ",
   "posts": "VBZ",
   "likens": "VBZ",
@@ -11025,7 +7953,6 @@ var lexicon={
   "entertain": "VB",
   "crowded": "JJ",
   "undersea": "JJ",
-  "diurnal": "JJ",
   "druncke": "VBD",
   "co-market": "VB",
   "flattens": "VBZ",
@@ -11040,22 +7967,17 @@ var lexicon={
   "qualifies": "VBZ",
   "refrigerated": "JJ",
   "gushing": "JJ",
-  "stabilize": "VB",
   "donated": "VBN",
-  "busts": "NNS",
   "lambastes": "VBZ",
-  "wheat": "NN",
   "unsolder": "VB",
   "widen": "VB",
   "turn": "VB",
-  "turf": "NN",
   "toughest-ever": "JJS",
   "break": "VB",
   "phoenician": "JJ",
   "reinforce": "VB",
   "branch-by-branch": "RB",
   "tory": "JJ",
-  "surf": "NN",
   "sure": "JJ",
   "beaded": "VBN",
   "prodded": "VBN",
@@ -11069,23 +7991,18 @@ var lexicon={
   "illusionary": "JJ",
   "yff": "IN",
   "himalayan": "JJ",
-  "contract": "NN",
   "widespread": "JJ",
   "opines": "VBZ",
   "escalated": "VBN",
   "fishin": "VBG",
   "downwind": "JJ",
   "repond": "VB",
-  "pilot": "NN",
   "defunded": "VBN",
   "granted": "VBN",
   "eggshell": "JJ",
   "careen": "VB",
-  "silliest": "JJS",
   "studentled": "VBN",
-  "weed": "NN",
   "weep": "VB",
-  "dream": "NN",
   "sinned": "VBN",
   "maltreated": "JJ",
   "without": "RB",
@@ -11094,10 +8011,7 @@ var lexicon={
   "belgian": "JJ",
   "wher": "WRB",
   "lets": "VBZ",
-  "\\*": "SYM",
   "inordinate": "JJ",
-  "run-ins": "NNS",
-  "picture": "NN",
   "located": "VBN",
   "developmental": "JJ",
   "frees": "VBZ",
@@ -11108,35 +8022,25 @@ var lexicon={
   "stereotyped": "JJ",
   "discussed": "VBN",
   "decelerated": "VBN",
-  "discusses": "VBZ",
   "cursed": "JJ",
   "alleges": "VBZ",
-  "staunchest": "JJS",
   "rouse": "VB",
   "creeping": "JJ",
   "accentuated": "VBN",
-  "taste": "NN",
   "cockeyed": "JJ",
   "accentuates": "VBZ",
   "uncovered": "VBN",
   "c-reflects": "VBZ",
   "proliferate": "VBP",
   "platted": "VBN",
-  "hungarian-born": "NNP",
   "scrappy": "JJ",
   "re-rescue": "VB",
-  "titter": "NN",
-  "dairy": "NN",
   "tethered": "VBN",
-  "uptick": "NN",
   "beefore": "IN",
-  "dessier": "VB",
   "abstracted": "JJ",
-  "chalk": "NN",
   "risen": "VBN",
   "nowhere": "RB",
   "unquestioned": "JJ",
-  "compresses": "NNS",
   "ruffle": "VB",
   "mayoral": "JJ",
   "compressed": "JJ",
@@ -11144,7 +8048,6 @@ var lexicon={
   "horrified": "JJ",
   "flat": "JJ",
   "flay": "VB",
-  "flag": "NN",
   "besides": "RB",
   "salted": "JJ",
   "libertarian": "JJ",
@@ -11153,29 +8056,19 @@ var lexicon={
   "guttural": "JJ",
   "okay": "JJ",
   "abdicate": "VBP",
-  "sponsors": "NNS",
   "holored": "VBN",
-  "proclaimed": "JJ",
+  "proclaimed": "VB",
   "democrats": "NNPS",
   "shorn": "VBN",
-  "clashes": "NNS",
-  "bout": "NN",
   "oftentimes": "RB",
   "hunted": "VBN",
   "mastered": "VBN",
-  "weight": "NN",
   "cloudy": "JJ",
   "foolproof": "JJ",
-  "said.``": "``",
-  "guess": "NNP",
-  "jet": "NN",
   "fallen": "JJ",
   "enlarges": "VBZ",
   "enlarged": "JJ",
-  "interviews": "NNS",
-  "trend": "NN",
   "abroad": "RB",
-  "mainstay": "NN",
   "unmentioned": "VBN",
   "elementary": "JJ",
   "amass": "VB",
@@ -11184,25 +8077,18 @@ var lexicon={
   "foamed": "JJ",
   "populate": "VB",
   "diversifed": "VBN",
-  "traditional": "JJ",
   "liberate": "VB",
   "restore": "VB",
   "witty": "JJ",
   "cringe": "VBP",
   "unflagging": "JJ",
-  "threats": "NNS",
   "unincorporated": "JJ",
   "reside": "VBP",
   "regulates": "VBZ",
-  "sweep": "NN",
   "regulated": "VBN",
   "startling": "JJ",
   "flinty": "JJ",
-  "softest": "JJS",
-  "cinch": "NN",
   "dominated": "JJ",
-  "mo.-based": "JJ",
-  "peacemaking": "NN",
   "impede": "VB",
   "bourgeois": "JJ",
   "deflects": "VBZ",
@@ -11213,15 +8099,12 @@ var lexicon={
   "arrowed": "JJ",
   "u.n.-supervised": "JJ",
   "tormented": "JJ",
-  "and\\": "CC",
   "collect": "VB",
   "retry": "VB",
   "inoculate": "VB",
-  "bankruptcy-law": "NN",
   "retro": "JJ",
   "contrasting": "JJ",
   "complimentary": "JJ",
-  "fleets": "NNS",
   "paved": "JJ",
   "raftered": "VBN",
   "landscaped": "JJ",
@@ -11235,29 +8118,18 @@ var lexicon={
   "disappoints": "VBZ",
   "these": "DT",
   "fertilized": "VBN",
-  "happier": "JJR",
   "impatient": "JJ",
-  "gang": "NN",
-  "cases": "NNS",
-  "breach": "NN",
-  "mainstream": "NN",
   "re-animates": "VBZ",
   "thynke": "VBP",
-  "showcase": "NN",
   "gloat": "VB",
   "submerged": "JJ",
   "lighthearted": "JJ",
-  "distresses": "NNS",
   "apt": "JJ",
-  "grandest": "JJS",
   "clever": "JJ",
-  "fraternize": "VB",
   "dissolve": "VB",
   "persuades": "VBZ",
   "hinders": "VBZ",
-  "struggles": "NNS",
   "monthlong": "JJ",
-  "tack": "NN",
   "restructures": "VBZ",
   "latermaturing": "JJ",
   "interstellar": "JJ",
@@ -11274,21 +8146,14 @@ var lexicon={
   "disheartening": "JJ",
   "diminish": "VB",
   "traded": "VBN",
-  "u.s.-u.k.": "JJ",
   "succeeded": "VBN",
-  "clip": "NN",
   "coalesces": "VBZ",
   "ringed": "JJ",
-  "energy-services": "NNS",
-  "whipsawing": "NN",
-  "large-denomination": "NN",
   "weekly": "JJ",
   "nearer": "JJR",
   "postulated": "VBN",
   "studded": "VBN",
   "local": "JJ",
-  "agree.": "VB",
-  "massacre": "NN",
   "misbranded": "JJ",
   "manye": "JJ",
   "leviathan": "JJ",
@@ -11298,40 +8163,29 @@ var lexicon={
   "unclear": "JJ",
   "connotes": "VBZ",
   "unclean": "JJ",
-  "choosier": "JJR",
   "bedded": "JJ",
   "concludes": "VBZ",
   "thum": "PRP",
   "subcontract": "VB",
-  "largest": "JJS",
   "clamors": "VBZ",
   "conceives": "VBZ",
   "undertakes": "VBZ",
-  "stateswest": "NNP",
   "undertaken": "VBN",
   "reincorporated": "VBN",
   "z-not": "RB",
   "more-powerful": "JJR",
   "envisages": "VBZ",
-  "press": "NNP",
   "countervailing": "JJ",
-  "wonders": "NNS",
   "synchotron": "JJ",
-  "staccato": "NN",
   "energized": "VBN",
   "remove": "VB",
-  "portrait": "NN",
   "f-series": "NNPS",
-  "weather": "NN",
   "promise": "JJ",
   "unrifled": "JJ",
   "fawning": "JJ",
   "egalitarian": "JJ",
-  "transfer": "NN",
-  "stoic": "NNP",
   "resists": "VBZ",
   "prominent": "JJ",
-  "chalky": "JJ",
   "hilar": "JJ",
   "assail": "VB",
   "distract": "VB",
@@ -11343,11 +8197,8 @@ var lexicon={
   "swivel": "JJ",
   "test-fired": "VBN",
   "preceeded": "VBN",
-  "seven-eighths": "NNS",
   "uncertain": "JJ",
   "differentiated": "JJ",
-  "prize": "NN",
-  "charter": "NN",
   "stiffens": "VBZ",
   "charted": "VBN",
   "sterile": "JJ",
@@ -11356,7 +8207,6 @@ var lexicon={
   "interdependent": "JJ",
   "strewn": "VBN",
   "divide": "VB",
-  "cheating": "NN",
   "highflying": "JJ",
   "relay": "VB",
   "unaffiliated": "JJ",
@@ -11366,11 +8216,9 @@ var lexicon={
   "cheetal": "JJ",
   "shored": "VBN",
   "destined": "JJ",
-  "snowballs": "NNS",
   "repatriated": "VBN",
   "squint": "VBP",
   "offered": "VBN",
-  "directional": "JJ",
   "bewteen": "IN",
   "matured": "JJ",
   "hidden": "JJ",
@@ -11380,10 +8228,8 @@ var lexicon={
   "alert": "JJ",
   "knit": "VB",
   "enlist": "VB",
-  "his\\/her": "JJR",
   "carolingian": "JJ",
   "bated": "JJ",
-  "wash": "NN",
   "instruct": "VB",
   "listed": "VBN",
   "underlie": "VBP",
@@ -11395,22 +8241,14 @@ var lexicon={
   "doin": "VBG",
   "undamaged": "JJ",
   "infidel": "JJ",
-  "sniping": "NN",
   "blew": "VBD",
   "mandatory": "JJ",
   "fair": "JJ",
   "hunker": "VB",
-  "ooze": "NN",
   "invigorated": "JJ",
-  "stratford": "NNP",
   "up-front": "RB",
-  "federalism": "NN",
   "vain": "JJ",
-  "penalize": "VB",
-  "harangues": "NNS",
   "diverted": "VBN",
-  "harvesting": "NN",
-  "skirts": "NNS",
   "biotech": "JJ",
   "trusted": "JJ",
   "topping": "JJ",
@@ -11421,7 +8259,6 @@ var lexicon={
   "givin": "VBG",
   "disguise": "VB",
   "uncombed": "JJ",
-  "campaign": "NN",
   "gooshey": "JJ",
   "abashed": "JJ",
   "firmer": "JJR",
@@ -11431,29 +8268,22 @@ var lexicon={
   "bonkers": "JJ",
   "macabre": "JJ",
   "equestrian": "JJ",
-  "fog": "NN",
   "foh": "IN",
-  "dollar\\": "JJ",
   "unfixed": "JJ",
   "rebut": "VB",
   "therefrom": "RB",
   "lays": "VBZ",
-  "palm": "NN",
   "looms": "VBZ",
   "proved": "JJ",
-  "fattened": "VBN",
   "proven": "JJ",
   "crumble": "VB",
   "soothe": "VB",
   "proves": "VBZ",
   "maimed": "JJ",
-  "asbestos-removal": "NN",
-  "forage": "NN",
   "cheap": "JJ",
   "trod": "VBN",
   "tear": "VB",
   "unscripted": "JJ",
-  "team": "NN",
   "outdrew": "VBD",
   "prevent": "VB",
   "reminiscent": "JJ",
@@ -11463,45 +8293,31 @@ var lexicon={
   "bunkered": "VBN",
   "vitiates": "VBZ",
   "thereunder": "RB",
-  "love": "NNP",
   "bloody": "JJ",
   "qualified": "JJ",
   "cherishes": "VBZ",
   "cherished": "VBN",
   "visual": "JJ",
   "degrade": "VB",
-  "honey": "NN",
-  "district": "NN",
   "nether": "JJ",
-  "values": "NNS",
   "fatherly": "JJ",
-  "grosses": "VBZ",
   "four-to-one": "RB",
-  "spot": "NN",
   "misshapen": "JJ",
   "filthy": "JJ",
   "inflate": "VB",
-  "solace": "NN",
-  "cleanest": "JJS",
-  "subordinates": "NNS",
   "subordinated": "JJ",
-  "bermuda": "NNP",
   "brags": "VBZ",
   "contained": "JJ",
   "mixed": "JJ",
   "disguised": "JJ",
   "collapsing": "JJ",
-  "disguises": "VBZ",
-  "bothersome": "JJ",
   "misused": "JJ",
   "chubby": "JJ",
   "potted": "JJ",
   "indicate": "VB",
-  "typing": "NN",
   "blazon": "VB",
   "simmered": "VBN",
   "nicer": "JJR",
-  "maneuvering": "NN",
   "indentured": "VBN",
   "microwaved": "VBN",
   "myne": "PRP",
@@ -11515,24 +8331,19 @@ var lexicon={
   "undermine": "VB",
   "twotiered": "JJ",
   "throttled": "VBN",
-  "vacation": "NN",
   "daylong": "JJ",
-  "greatest": "JJS",
   "perpetuate": "VB",
   "decertified": "VBN",
   "askin": "VBG",
   "bulletproof": "JJ",
   "fleisher": "VB",
-  "dancelike": "JJ",
   "retrace": "VB",
   "truculent": "JJ",
   "snarled": "JJ",
-  "proceeding": "NN",
   "underline": "VB",
   "retract": "VB",
   "fringed": "JJ",
   "glitters": "VBZ",
-  "grouping": "NN",
   "thinke": "VBZ",
   "playin": "VBG",
   "thinks": "VBZ",
@@ -11541,13 +8352,11 @@ var lexicon={
   "spotlights": "VBZ",
   "stunned": "JJ",
   "flawed": "JJ",
-  "image": "NN",
   "dour": "JJ",
   "least": "RB",
   "freaked": "VBN",
   "reinvigorated": "JJ",
   "harro": "UH",
-  "mandates": "NNS",
   "antiquated": "JJ",
   "oversoft": "JJ",
   "administers": "VBZ",
@@ -11558,32 +8367,18 @@ var lexicon={
   "undeserved": "JJ",
   "crestfallen": "JJ",
   "candid": "JJ",
-  "facsimile": "NN",
-  "canvass": "NN",
   "caesarean": "JJ",
   "excitatory": "JJ",
-  "microchip": "NN",
-  "contrast": "NN",
-  "hours": "NNS",
-  "smartest": "JJS",
   "yellowed": "VBN",
   "skyrocket": "VB",
-  "undersize": "JJ",
   "smuggle": "VB",
   "indoors": "RB",
-  "balkan": "NNP",
   "implore": "VB",
-  "freest": "JJS",
   "tightfisted": "JJ",
   "nonbanking": "JJ",
-  "casino-hotel": "NN",
   "cunning": "JJ",
   "apportion": "VB",
-  "science": "NN",
-  "gallop": "NN",
-  "sense": "NN",
   "dazzle": "VB",
-  "interconnect": "NN",
   "unattended": "JJ",
   "aplenty": "JJ",
   "swiss": "JJ",
@@ -11591,38 +8386,25 @@ var lexicon={
   "reshape": "VB",
   "crouchin": "JJ",
   "unimposing": "JJ",
-  "grade": "NN",
   "anyhow": "RB",
-  "skipper": "NN",
-  "misuse": "NN",
   "nighted": "JJ",
   "stewed": "JJ",
   "always": "JJ",
-  "status": "NN",
   "m&a": "JJ",
   "throwin": "VBG",
-  "silky": "JJ",
   "tipsy": "JJ",
-  "misses": "VBZ",
-  "race": "NN",
   "reformulated": "VBN",
   "trite": "JJ",
   "premediated": "JJ",
   "well-nigh": "RB",
   "prefab": "JJ",
-  "rack": "NN",
   "w": "IN",
-  "bumper": "NN",
   "delicate": "JJ",
   "emblazoned": "VBN",
-  "number": "NN",
   "twisted": "JJ",
   "ethereal": "JJ",
   "numbed": "VBN",
-  "heads": "NNS",
-  "boating": "NNP",
   "relies": "VBZ",
-  "grace": "NN",
   "determined": "JJ",
   "remembers": "VBZ",
   "projected": "VBN",
@@ -11631,10 +8413,7 @@ var lexicon={
   "commemorates": "VBZ",
   "commemorated": "VBN",
   "relied": "VBN",
-  "yawn": "NN",
-  "plan": "NN",
   "hipper": "JJR",
-  "impact": "NN",
   "rhyme": "VB",
   "fugual": "JJ",
   "rectangular": "JJ",
@@ -11649,60 +8428,41 @@ var lexicon={
   "corresponds": "VBZ",
   "assassinated": "VBN",
   "firm": "JJ",
-  "fire": "NN",
   "vanish": "VBP",
   "funny": "JJ",
   "elevated": "JJ",
   "longer-run": "JJR",
   "elevates": "VBZ",
   "leapt": "VBD",
-  "leaps": "NNS",
   "focal": "JJ",
   "recent": "JJ",
   "canned": "JJ",
   "whaddya": "WP",
   "plagues": "VBZ",
-  "moonlike": "JJ",
   "numb": "JJ",
-  "clutches": "NNS",
-  "demands": "NNS",
   "daily": "JJ",
   "pertinent": "JJ",
   "underway": "RB",
-  "criminal": "JJ",
   "unfazed": "VBN",
   "indigent": "JJ",
   "abandon": "VB",
   "prosecuted": "VBN",
   "tidal": "JJ",
   "discontented": "JJ",
-  "data\\": "JJ",
   "forgave": "VBD",
-  "plainest": "JJS",
   "chide": "VB",
-  "polytonal": "JJ",
   "relaxed": "JJ",
   "buttery": "JJ",
-  "link": "NNP",
-  "line": "NN",
   "relaxes": "VBZ",
   "horned": "JJ",
   "nationalist": "JJ",
   "defined": "VBN",
   "defines": "VBZ",
-  "phantom": "NN",
-  "swirl": "NN",
-  "sails": "NNS",
   "mealy": "JJ",
   "bodily": "JJ",
   "tailored": "JJ",
-  "metabolize": "VB",
-  "code": "NN",
   "guzzles": "VBZ",
-  "sorrier": "JJR",
-  "renown": "NN",
   "cares": "VBZ",
-  "dislike": "NN",
   "moot": "JJ",
   "jist": "RB",
   "disordered": "JJ",
@@ -11710,37 +8470,28 @@ var lexicon={
   "proffer": "VB",
   "unmask": "VB",
   "impressionist": "JJ",
-  "anglo-saxon": "NNP",
   "distributed": "JJ",
   "boxy": "JJ",
-  "sensitize": "VB",
   "standing": "JJ",
   "half-aloud": "RB",
-  "pawn": "NN",
   "confiscate": "VB",
   "queerer": "JJR",
   "deregulate": "VB",
   "reproduce": "VB",
   "bent": "JJ",
   "transpired": "VBN",
-  "bend": "NNP",
   "aspiring": "JJ",
   "await": "VB",
   "acquitted": "VBN",
   "allot": "VB",
-  "co-sponsor": "NN",
-  "designs": "NNS",
   "irks": "VBZ",
   "hoodwinked": "VBN",
   "scants": "VBZ",
   "decays": "VBZ",
-  "banal": "JJ",
   "bad": "JJ",
   "reformist": "JJ",
   "oblong": "JJ",
-  "ban": "NN",
   "dismantled": "JJ",
-  "looting": "NN",
   "latches": "VBZ",
   "dismantles": "VBZ",
   "shucks": "UH",
@@ -11752,87 +8503,59 @@ var lexicon={
   "opalescent": "JJ",
   "subliterary": "JJ",
   "tortured": "JJ",
-  "briefing": "NN",
   "misunderstand": "VB",
   "heeds": "VBZ",
   "adjunct": "JJ",
   "bloodsucking": "JJ",
   "unscramble": "VB",
   "self-reinsure": "VB",
-  "pre-1967": "JJ",
-  "pre-1960": "JJ",
   "under": "JJ",
   "resells": "VBZ",
   "squirreled": "VBN",
   "enamelled": "JJ",
   "softens": "VBZ",
-  "finger": "NN",
   "flinch": "VB",
   "exchanged": "JJ",
   "move": "JJ",
-  "exchanges": "NNS",
-  "committees": "NNS",
   "stomachwise": "RB",
   "rein": "VB",
   "c": "RB",
-  "generational": "JJ",
   "aspires": "VBZ",
   "grasp": "VB",
   "revamp": "VB",
   "crafted": "VBN",
-  "emphaticize": "VB",
   "poured-in-place": "VBN",
-  "sort": "NN",
   "badly": "RB",
   "sore": "JJ",
   "imprisoned": "VBN",
   "elicits": "VBZ",
-  "dust": "NN",
   "discounted": "JJ",
   "disrupted": "VBN",
-  "command": "NN",
-  "monitoring": "NN",
   "rambles": "VBZ",
   "afflicted": "JJ",
-  "sickened": "VBN",
   "u.s.-donated": "JJ",
   "magnify": "VB",
   "accelerating": "JJ",
   "becomin": "VBG",
   "unaudited": "JJ",
-  "transport": "NNP",
   "apprehended": "VBN",
   "gummed": "VBN",
   "gives": "VBZ",
-  "refill": "NN",
-  "stage": "NN",
-  "sister": "NN",
   "disaffected": "JJ",
   "imbibe": "VB",
   "funnel": "VB",
-  "welt": "NNP",
   "smooth": "JJ",
   "coiffed": "JJ",
-  "recognize": "VB",
-  "orbit": "NN",
-  "mushroom": "NN",
-  "woes": "NNS",
   "changing": "JJ",
   "restock": "VB",
-  "dmb&b\\/international": "JJ",
   "bewildered": "JJ",
-  "attic": "NNP",
   "sufi": "JJ",
   "occasioned": "VBN",
   "above": "JJ",
   "sinks": "VBZ",
-  "balance": "NN",
   "hush": "JJ",
   "most-respected": "JJS",
   "cheats": "VBZ",
-  "auditing": "NN",
-  "chooses": "VBZ",
-  "reign": "NN",
   "escapist": "JJ",
   "continual": "JJ",
   "permits": "VBZ",
@@ -11848,8 +8571,6 @@ var lexicon={
   "remonstrate": "VB",
   "twelvefold": "JJ",
   "devote": "VB",
-  "consent": "NN",
-  "judge": "NN",
   "precipitate": "VB",
   "thei": "PRP",
   "clogging": "JJ",
@@ -11857,14 +8578,12 @@ var lexicon={
   "ther": "RB",
   "moneyed": "JJ",
   "relishes": "VBZ",
-  "list": "NNP",
   "eritrean": "JJ",
   "marketwise": "RB",
   "incorporates": "VBZ",
   "unfulfilled": "JJ",
   "aborning": "RB",
   "incorporated": "JJ",
-  "airs": "NNS",
   "warded": "VBN",
   "imposed": "JJ",
   "exhilarating": "JJ",
@@ -11878,23 +8597,14 @@ var lexicon={
   "eminent": "JJ",
   "musta": "MD",
   "intersect": "VB",
-  "di": "NNP",
   "dd": "VBD",
   "side-step": "VBP",
-  "du": "NNP",
   "depends": "VBZ",
   "jocose": "JJ",
   "tainted": "VBN",
-  "accord": "NN",
-  "packages": "NNS",
-  "added:``": "``",
   "coy": "JJ",
-  "con": "NNP",
-  "polynomial": "NN",
   "broadens": "VBZ",
   "naval": "JJ",
-  "vernal": "JJ",
-  "voice": "NN",
   "recurrent": "JJ",
   "plated": "VBN",
   "bifocal": "JJ",
@@ -11903,8 +8613,6 @@ var lexicon={
   "hilly": "JJ",
   "mocked": "VBN",
   "ashore": "RB",
-  "caps": "NNS",
-  "barge": "NN",
   "antique": "JJ",
   "ransacked": "JJ",
   "purple": "JJ",
@@ -11916,33 +8624,25 @@ var lexicon={
   "cuk": "JJ",
   "stacked": "VBN",
   "impose": "VB",
-  "evidence": "NN",
   "presumes": "VBZ",
   "running": "JJ",
   "asteroidal": "JJ",
   "polite": "JJ",
   "mightily": "RB",
-  "drop-off": "NN",
   "atrophied": "VBN",
   "presumed": "JJ",
   "blase": "JJ",
   "federalized": "JJ",
-  "blast": "NN",
   "niggardly": "JJ",
   "generalpurpose": "JJ",
   "satisfy": "VB",
   "collateral": "JJ",
   "eke": "VB",
   "computerrelated": "JJ",
-  "anti-semitism": "NN",
   "senile": "JJ",
-  "shalom": "NNP",
   "conspire": "VBP",
   "labeled": "VBN",
   "underlying": "JJ",
-  "lubricant": "NN",
-  "spy": "NN",
-  "canned-foods": "NNS",
   "baddebt": "JJ",
   "hull-first": "RB",
   "bankrupt": "JJ",
@@ -11950,11 +8650,9 @@ var lexicon={
   "averted": "VBN",
   "brazen": "JJ",
   "forfeit": "VB",
-  "hungrier": "JJR",
   "acknowledge": "VBP",
   "suffocate": "VB",
   "centenary": "JJ",
-  "fling": "NN",
   "natured": "JJ",
   "highyield": "JJ",
   "wont": "JJ",
@@ -11963,27 +8661,17 @@ var lexicon={
   "waxy": "JJ",
   "rated": "VBN",
   "omitted": "JJ",
-  "comprises": "VBZ",
-  "size": "NN",
   "mostly": "RB",
-  "expanse": "NN",
-  "cretaceous": "NNP",
   "lunched": "VBN",
   "fruity": "JJ",
   "intrauterine": "JJ",
-  "moves": "NNS",
   "veteran": "JJ",
-  "shore": "NN",
   "legitimate": "JJ",
   "plainer": "JJR",
   "encased": "JJ",
-  "weldwood": "NNP",
   "foaming": "JJ",
   "a.m": "RB",
-  "octagonal": "JJ",
-  "prepositional": "JJ",
   "sufficent": "JJ",
-  "florentine": "NNP",
   "inaugural": "JJ",
   "nonstandard": "JJ",
   "concern": "JJ",
@@ -11999,35 +8687,22 @@ var lexicon={
   "reprice": "VB",
   "stems": "VBZ",
   "expropriated": "JJ",
-  "u.s.based": "JJ",
-  "soil": "NN",
   "unfluoridated": "JJ",
   "moth-eaten": "VBN",
   "edifying": "JJ",
-  "traps": "NNS",
-  "speed": "NN",
-  "desktop": "NN",
   "hover": "VB",
   "frown": "VBP",
-  "pounds": "NNS",
-  "dirtier": "JJR",
-  "densest": "JJS",
   "perverse": "JJ",
-  "junk-mail": "NN",
   "meets": "VBZ",
   "reexamine": "VB",
   "chop": "VB",
   "deranged": "JJ",
-  "folklike": "JJ",
   "renovate": "JJ",
-  "meeting": "NN",
   "immaculate": "JJ",
   "overpaid": "JJ",
   "hire": "VB",
-  "popularize": "VB",
   "describe": "VB",
   "precrash": "JJ",
-  "citic": "NNP",
   "administered": "VBN",
   "intercontinental": "JJ",
   "polar": "JJ",
@@ -12037,7 +8712,6 @@ var lexicon={
   "resealed": "VBN",
   "dedifferentiated": "JJ",
   "stringy": "JJ",
-  "strings": "NNS",
   "solicit": "VB",
   "clubbed": "JJ",
   "parry": "VB",
@@ -12047,13 +8721,11 @@ var lexicon={
   "mild": "JJ",
   "knead": "VB",
   "latin": "JJ",
-  "fractional": "JJ",
   "flocculated": "VBN",
   "strong": "JJ",
   "ultra": "JJ",
   "itself": "PRP",
   "victimized": "VBN",
-  "chunky": "JJ",
   "schnabelian": "JJ",
   "brooding": "JJ",
   "userfriendly": "JJ",
@@ -12075,38 +8747,26 @@ var lexicon={
   "fy": "VBP",
   "dwarfed": "VBN",
   "co-authored": "VBN",
-  "laminate": "NN",
-  "bugs": "NNS",
   "lesser-rank": "JJR",
   "auburn": "JJ",
-  "neb.-based": "JJ",
   "staunch": "JJ",
   "atrun": "JJ",
   "intranasal": "JJ",
-  "abortion-rights": "NNS",
   "pamper": "VB",
   "thirteenth": "CD",
   "bickering": "JJ",
   "inert": "JJ",
   "dirt": "JJ",
-  "base": "NN",
-  "bash": "NN",
   "uprooted": "VBN",
   "elder": "JJR",
   "airborne": "JJ",
-  "delta": "NN",
-  "ladylike": "JJ",
-  "storm": "NN",
   "flatters": "VBZ",
   "kindly": "JJ",
-  "impersonal": "JJ",
   "kindle": "VB",
-  "post-1997": "JJ",
   "quote": "VB",
   "exempted": "VBN",
   "eaten": "VBN",
   "hallucinatory": "JJ",
-  "remic": "NNP",
   "luckily": "RB",
   "central": "JJ",
   "believeth": "VBZ",
@@ -12115,22 +8775,17 @@ var lexicon={
   "undergoes": "VBZ",
   "plough": "VB",
   "reminisces": "VBZ",
-  "park": "NN",
   "wop": "VB",
   "piss": "VB",
-  "catalogs": "NNS",
   "poorer": "JJR",
   "adores": "VBZ",
   "satisfied": "JJ",
   "adored": "JJ",
-  "buzz": "NN",
   "unrelenting": "JJ",
   "fixedrate": "JJ",
   "melancholy": "JJ",
   "victimizes": "VBZ",
   "wait": "VB",
-  "packs": "NNS",
-  "child-abuse": "NN",
   "overran": "VBD",
   "herein": "RB",
   "anymore": "RB",
@@ -12148,21 +8803,17 @@ var lexicon={
   "co-chaired": "VBN",
   "tinkered": "VBN",
   "moire": "JJ",
-  "signal": "NN",
   "resorted": "VBN",
   "minced": "VBN",
   "outnumber": "VBP",
   "dialyzed": "VBN",
   "outgoing": "JJ",
   "rebated": "VBN",
-  "trucking": "NN",
   "shipshape": "JJ",
   "ensue": "VB",
   "their": "PRP",
   "besieged": "JJ",
-  "caresses": "NNS",
   "severe": "JJ",
-  "circuits": "NNS",
   "chromed": "JJ",
   "seethe": "VB",
   "oxidized": "JJ",
@@ -12175,39 +8826,26 @@ var lexicon={
   "arid": "JJ",
   "relocated": "JJ",
   "fly": "VB",
-  "p&g": "NNP",
   "enslaved": "VBN",
   "multipleuser": "JJ",
   "unexciting": "JJ",
   "dilute": "VB",
-  "howls": "NNS",
-  "teaching": "NN",
   "vilified": "VBN",
   ";": ";",
   "saps": "VBZ",
-  "focuses": "VBZ",
   "greek": "JJ",
-  "bites": "NNS",
   "utopian": "JJ",
   "filde": "VBN",
   "n-no": "UH",
   "reregulate": "VB",
   "imprisons": "VBZ",
   "arched": "JJ",
-  "arches": "NNS",
   "infinitesimal": "JJ",
-  "escapes": "NNS",
   "deplore": "VB",
   "colonnaded": "JJ",
-  "spelling": "NN",
-  "hasher": "NN",
-  "flashier": "JJR",
-  "corral": "NN",
-  "bathing": "NN",
   "brittle": "JJ",
   "e-in": "IN",
   "aaa-ee": "UH",
-  "mode": "NN",
   "engraves": "VBZ",
   "paid-for": "IN",
   "prorated": "VBN",
@@ -12215,24 +8853,18 @@ var lexicon={
   "underpinned": "VBN",
   "influent": "JJ",
   "reacts": "VBZ",
-  "diagonal": "JJ",
-  "route": "NNP",
   "diminished": "JJ",
   "keen": "JJ",
-  "keel": "NN",
   "diminishes": "VBZ",
   "incarnate": "JJ",
   "succeeds": "VBZ",
   "forego": "VB",
   "filigree": "JJ",
-  "slavic": "NNP",
   "prouder": "JJR",
   "circulate": "VB",
   "earmarked": "VBN",
   "herself": "PRP",
-  "photograph": "NN",
   "spurn": "VBP",
-  "spurt": "NN",
   "beefs": "VBZ",
   "thereto": "RB",
   "p.m": "RB",
@@ -12241,20 +8873,15 @@ var lexicon={
   "unadulterated": "JJ",
   "sprinkled": "VBN",
   "gunned": "VBN",
-  "underwriting": "NN",
   "unamused": "VBN",
   "disgorge": "VB",
   "resplendent": "JJ",
   "expects": "VBZ",
-  "blurt": "NN",
   "propels": "VBZ",
-  "profit-taking": "NN",
-  "envy": "NN",
   "hadd": "VBN",
   "re-evaluate": "VB",
   "slows": "VBZ",
   "desecrated": "JJ",
-  "marvels": "NNS",
   "uncontrolled": "JJ",
   "preach": "JJ",
   "driving": "JJ",
@@ -12271,7 +8898,6 @@ var lexicon={
   "alternates": "VBZ",
   "disintegrate": "VB",
   "darkling": "JJ",
-  "sandinista": "NNP",
   "kicks": "VBZ",
   "novel": "JJ",
   "wth": "IN",
@@ -12282,27 +8908,19 @@ var lexicon={
   "modeled": "VBN",
   "energizes": "VBZ",
   "accurate": "JJ",
-  "surfaces": "NNS",
   "extends": "VBZ",
   "cognate": "JJ",
   "liking": "JJ",
-  "monsieur": "NNP",
-  "life-style": "NN",
   "sinister": "JJ",
   "recognized": "VBN",
-  "epitomize": "VB",
   "recognizes": "VBZ",
-  "u.k.-based": "JJ",
   "enacts": "VBZ",
   "squarefoot": "JJ",
   "congregate": "VB",
   "rejoice": "JJ",
-  "mastermind": "NN",
   "canting": "JJ",
-  "notices": "NNS",
   "unexamined": "JJ",
   "mucked": "VBN",
-  "escrow": "NN",
   "offstage": "JJ",
   "twise": "RB",
   "affectionate": "JJ",
@@ -12316,73 +8934,51 @@ var lexicon={
   "nourished": "JJ",
   "lavender": "JJ",
   "neo": "JJ",
-  "harbors": "NNS",
   "unasked": "JJ",
-  "screams": "NNS",
   "filbert": "JJ",
-  "price-cutting": "NN",
   "interpret": "VB",
-  "counts": "NNS",
   "ratty": "JJ",
   "recommend": "VB",
-  "type": "NN",
   "sizzles": "VBZ",
   "skindive": "VB",
   "reconciled": "JJ",
   "reconciles": "VBZ",
   "citrated": "VBN",
   "ensnare": "VB",
-  "one-quarter": "NN",
   "bankroll": "VB",
   "aborted": "JJ",
   "indulge": "VB",
   "faraway": "JJ",
   "escrowed": "VBN",
-  "dawn": "NN",
-  "surprise": "NN",
   "telescoped": "VBN",
   "bestow": "VB",
-  "second-guessing": "NN",
-  "synthesize": "VB",
   "monicker": "JJR",
   "dilated": "VBN",
-  "escort": "NN",
   "dramatized": "VBN",
   "dramatizes": "VBZ",
-  "no.3": "JJ",
   "dilates": "VBZ",
   "soonest": "RB",
-  "legalize": "VB",
   "threadbare": "JJ",
-  "roleplaying": "NN",
   "impotent": "JJ",
   "algerian": "JJ",
   "exonerate": "VB",
   "philippine": "JJ",
   "unmated": "VBN",
   "digress": "VB",
-  "points": "NNS",
   "pointy": "JJ",
-  "judges": "NNS",
   "judged": "VBN",
   "third*": "JJS",
-  "fields": "NNS",
   "attest": "VB",
   "zoned": "VBN",
-  "contract-drilling": "NN",
   "dumber": "JJR",
   "excavate": "VB",
   "mayhap": "RB",
   "vex": "VBP",
   "tightest-fitting": "JJS",
-  "whisper": "NN",
-  "springs": "NNS",
   "brassy": "JJ",
   "formalizes": "VBZ",
   "glamorized": "VBN",
-  "x-ray": "NN",
   "formalized": "JJ",
-  "tank": "NN",
   "homebound": "JJ",
   "chilling": "JJ",
   "metropolitan": "JJ",
@@ -12391,16 +8987,12 @@ var lexicon={
   "cools": "VBZ",
   "sidelined": "VBN",
   "discriminatory": "JJ",
-  "romp": "NN",
-  "unemotional": "JJ",
   "designate": "VB",
   "opt": "VB",
   "unfitting": "JJ",
   "depicts": "VBZ",
   "assimilating": "JJ",
   "swab": "VB",
-  "meekest": "JJS",
-  "sprawl": "NN",
   "tracked": "VBN",
   "undisturbed": "JJ",
   "flounder": "VB",
@@ -12409,21 +9001,15 @@ var lexicon={
   "astir": "JJ",
   "denuded": "JJ",
   "azure": "JJ",
-  "islands": "NNS",
   "gloss": "VB",
   "unseal": "VB",
   "unseat": "VB",
-  "fork": "NN",
   "assume": "VB",
   "fore": "RB",
   "penned": "VBN",
-  "syndicate": "NN",
-  "temper": "NN",
   "delete": "VB",
   "shim": "VB",
   "romanian": "JJ",
-  "revitalize": "VB",
-  "ship": "NN",
   "hangin": "VBG",
   "alleviates": "VBZ",
   "felt": "VBD",
@@ -12432,12 +9018,8 @@ var lexicon={
   "aftertax": "JJ",
   "primed": "VBN",
   "targeted": "VBN",
-  "hitler": "NNP",
   "misread": "VBD",
   "unruffled": "JJ",
-  "marks": "NNS",
-  "ballooning": "NN",
-  "scarcest": "JJS",
   "shave": "VB",
   "growls": "VBZ",
   "detest": "VBP",
@@ -12453,7 +9035,6 @@ var lexicon={
   "crazy": "JJ",
   "wheezing": "JJ",
   "inundated": "JJ",
-  "range": "NN",
   "agonizing": "JJ",
   "swore": "VBD",
   "sworn": "JJ",
@@ -12461,21 +9042,16 @@ var lexicon={
   "misrepresented": "JJ",
   "praiseworthy": "JJ",
   "relinquish": "VB",
-  "outline": "NN",
   "facile": "JJ",
   "ionized": "VBN",
-  "jail": "NN",
   "pointed": "JJ",
-  "encompasses": "VBZ",
   "encompassed": "VBN",
   "mismatched": "JJ",
   "shh": "UH",
-  "preaching": "NN",
   "helmeted": "JJ",
   "intermarket": "JJ",
   "unifying": "JJ",
   "hefty": "JJ",
-  "dwelling": "NN",
   "carry": "VB",
   "oohs": "UH",
   "posh": "JJ",
@@ -12484,40 +9060,29 @@ var lexicon={
   "reaccelerate": "VB",
   "metalized": "VBN",
   "paie": "VB",
-  "pair": "NN",
-  "domina": "NNP",
   "re-create": "VB",
   "communicated": "VBN",
   "blurred": "JJ",
   "whooosh": "JJ",
   "patronized": "VBN",
   "pump": "VB",
-  "scanning": "NN",
   "lopes": "VBZ",
-  "tug": "NN",
-  "dates": "NNS",
   "multicolor": "JJ",
   "dated": "JJ",
   "rehabilitated": "VBN",
   "cancel": "VB",
-  "tiniest": "JJS",
   "certify": "VB",
   "unconsolidated": "JJ",
-  "borders": "NNS",
   "yearling": "JJ",
   "compile": "VB",
-  "margin": "NN",
   "sincere": "JJ",
-  "baths": "NNS",
   "afflicts": "VBZ",
   "plank": "VB",
-  "scimed": "NNP",
   "amazed": "JJ",
   "eviscerate": "VB",
   "dissected": "JJ",
   "faulknerian": "JJ",
   "ups": "VBZ",
-  "terrorize": "VB",
   "dole": "VB",
   "unitized": "VBN",
   "lunar": "JJ",
@@ -12527,23 +9092,12 @@ var lexicon={
   "decimated": "VBN",
   "handcuffed": "VBN",
   "sorrel": "JJ",
-  "drills": "NNS",
-  "organize": "VB",
-  "vale\\": "IN",
   "hybrid": "JJ",
   "privatized": "JJ",
-  "shelter": "NN",
-  "colicky": "JJ",
-  "brandy": "NN",
-  "democratize": "VB",
-  "brands": "NNS",
   "roams": "VBZ",
-  "bravest": "JJS",
-  "talky": "JJ",
   "carefree": "JJ",
   "alien": "JJ",
   "dispel": "VB",
-  "grand-jury": "NN",
   "windy": "JJ",
   "romping": "JJ",
   "only": "JJ",
@@ -12552,15 +9106,12 @@ var lexicon={
   "stoop": "VB",
   "ingratiate": "VB",
   "operating": "JJ",
-  "milky": "JJ",
   "narrow": "JJ",
   "milks": "VBZ",
   "controlling": "JJ",
   "dey": "PRP",
   "der": "JJR",
-  "del": "NNP",
   "def": "JJ",
-  "purchases": "NNS",
   "dandy": "JJ",
   "purchased": "VBN",
   "drained": "JJ",
@@ -12568,34 +9119,22 @@ var lexicon={
   "blacker": "JJR",
   "disquieting": "JJ",
   "foretell": "VB",
-  "four-wheel-drive": "NN",
-  "stains": "NNS",
   "remade": "VBN",
   "handheld": "JJ",
-  "vatican": "NNP",
   "waiting": "JJ",
-  "funding": "NN",
-  "arclike": "JJ",
   "co-operates": "VBZ",
   "waged": "VBN",
   "lithe": "JJ",
   "gripping": "JJ",
-  "wager": "NN",
   "obligatory": "JJ",
-  "paint": "NN",
-  "needle": "NN",
   "defused": "VBN",
-  "gruesome": "JJ",
   "bohemian": "JJ",
   "u.s.-dominated": "JJ",
   "confirms": "VBZ",
-  "trip": "NN",
   "assails": "VBZ",
-  "bottle": "NN",
   "inexact": "JJ",
   "consistent": "JJ",
   "cramped": "JJ",
-  "v-6-equipped": "JJ",
   "founds": "VBZ",
   "worthy": "JJ",
   "sepulchred": "VBN",
@@ -12605,12 +9144,10 @@ var lexicon={
   "improvisatory": "JJ",
   "animized": "VBN",
   "arouse": "VB",
-  "indexing": "NN",
   "rubbin": "VBG",
   "endows": "VBZ",
   "tightens": "VBZ",
   "dwindle": "VB",
-  "recycling": "NN",
   "smother": "VB",
   "newborn": "JJ",
   "dovetail": "VBP",
@@ -12620,8 +9157,6 @@ var lexicon={
   "irised": "VBN",
   "larger": "JJR",
   "encountered": "VBN",
-  "november\\": "JJ",
-  "emphasize": "VB",
   "sapiens": "JJ",
   "exerts": "VBZ",
   "aggregate": "JJ",
@@ -12637,56 +9172,35 @@ var lexicon={
   "impoverished": "JJ",
   "hates": "VBZ",
   "luxury": "JJ",
-  "rebound": "NN",
-  "coarsened": "VBN",
   "bogus": "JJ",
   "invade": "JJ",
-  "mettlesome": "JJ",
-  "bore\\": "VBP",
-  "jockey": "NN",
-  "bores": "NNS",
   "pared": "VBN",
   "bored": "JJ",
-  "psalm": "NNP",
-  "engineering": "NN",
-  "commonest": "JJS",
   "dimmed": "VBN",
   "dimmer": "JJR",
-  "voting": "NNP",
   "golfed": "VBN",
   "graver": "JJR",
-  "peanut": "NN",
-  "lucky": "JJ",
   "graven": "JJ",
   "furloughed": "VBN",
   "reverberate": "VB",
-  "staffs": "NNS",
   "midterm": "JJ",
   "mottled": "VBN",
   "choppy": "JJ",
-  "anne": "NNP",
   "unshelled": "VBN",
-  "good-faith": "NN",
   "remark": "JJ",
-  "stalks": "NNS",
   "birthed": "VBN",
-  "names": "NNS",
   "staple": "JJ",
   "manufactures": "VBZ",
   "themselves": "PRP",
-  "lockheed": "NNP",
   "oily": "JJ",
   "assailed": "VBN",
-  "harvest": "NN",
   "extrapolated": "VBN",
-  "calif.-based": "JJ",
   "crocked": "JJ",
   "unreal": "JJ",
   "praise": "JJ",
   "unread": "JJ",
   "reconstructed": "JJ",
   "daring": "JJ",
-  "says.": "VBZ",
   "bothered": "JJ",
   "nullify": "VB",
   "unmasks": "VBZ",
@@ -12696,32 +9210,22 @@ var lexicon={
   "unfriendly": "JJ",
   "revives": "VBZ",
   "muddle": "JJ",
-  "mandate": "NN",
   "strive": "VB",
-  "l.": "DT",
-  "handiest": "JJS",
   "restructured": "VBN",
   "shriveled": "JJ",
   "attend": "VB",
   "announces": "VBZ",
   "insolvent": "JJ",
   "hedged": "JJ",
-  "iberian": "NNP",
   "bleed": "VB",
   "deprived": "JJ",
   "poorer-quality": "JJR",
   "overweening": "JJ",
   "retain": "VB",
   "deprives": "VBZ",
-  "finest": "JJS",
-  "notes": "NNS",
-  "galvanize": "VB",
-  "wildest": "JJS",
-  "co-production": "NN",
   "wakes": "VBZ",
   "bisexual": "JJ",
   "tidy": "JJ",
-  "tide": "NN",
   "keener": "JJR",
   "regenerates": "VBZ",
   "provokes": "VBZ",
@@ -12736,9 +9240,7 @@ var lexicon={
   "pertains": "VBZ",
   "conform": "VB",
   "hurrah": "UH",
-  "hawaiian": "NNP",
   "literate": "JJ",
-  "discounts": "NNS",
   "overestimates": "VBZ",
   "fulfilled": "VBN",
   "assure": "VB",
@@ -12749,8 +9251,6 @@ var lexicon={
   "muddy": "JJ",
   "unstrung": "JJ",
   "german": "JJ",
-  "airplanes": "NNS",
-  "splits": "NNS",
   "self-destroyed": "VBN",
   "permeate": "VB",
   "uniform": "JJ",
@@ -12761,37 +9261,26 @@ var lexicon={
   "hearest": "VBP",
   "retard": "VB",
   "fetal": "JJ",
-  "nastier": "JJR",
-  "franking": "NN",
-  "petrochemical": "NN",
-  "judiciary": "NN",
   "impugned": "VBN",
   "corroborate": "VB",
   "infiltrated": "VBN",
   "discorporate": "JJ",
   "simpler": "JJR",
-  "schmoozing": "NN",
-  "flaky": "JJ",
-  "unidirectional": "JJ",
   "reincarcerated": "VBN",
   "submits": "VBZ",
   "oughta": "MD",
-  "backstop": "NN",
   "wish": "VB",
   "penetrating": "JJ",
   "enlists": "VBZ",
   "unpicturesque": "JJ",
   "colombian": "JJ",
   "redder": "JJR",
-  "bundle": "NN",
   "shrank": "VBD",
   "inboard": "RB",
-  "senate-house": "NNP",
   "baked": "JJ",
   "continental": "JJ",
   "slogs": "VBZ",
   "hate": "VBP",
-  "thinnest": "JJS",
   "iliac": "JJ",
   "enjoy": "VB",
   "ransack": "VB",
@@ -12803,63 +9292,48 @@ var lexicon={
   "circular": "JJ",
   "spread-eagled": "VBN",
   "sobered": "VBN",
-  "raids": "NNS",
   "outdated": "JJ",
   "clubby": "JJ",
   "entertained": "VBN",
   "warn": "VB",
   "loosen": "VB",
-  "lord": "NNP",
   "looser": "JJR",
   "collude": "VB",
   "mess": "JJ",
   "demanding": "JJ",
-  "mesh": "NN",
   "sparkles": "VBZ",
-  "mortgages": "NNS",
   "gentlemanly": "JJ",
-  "spout": "NN",
   "unglued": "JJ",
-  "exhibits": "NNS",
   "comprehend": "VB",
   "notified": "VBN",
   "unlinked": "JJ",
   "notifies": "VBZ",
-  "winsome": "JJ",
   "damped": "VBN",
   "overcame": "VBD",
   "stringed": "JJ",
   "washed": "JJ",
   "unspectacular": "JJ",
   "underwrite": "VB",
-  "merchandising": "NN",
   "slivered": "VBN",
   "streamline": "VB",
-  "priority": "NN",
   "afghan": "JJ",
   "staphylococcal": "JJ",
   "regulate": "VB",
   "leafy": "JJ",
-  "spade": "NN",
   "unceasing": "JJ",
   "oriented": "VBN",
-  "retinoblastoma": "NN",
   "cleft": "JJ",
   "one-thirty": "RB",
   "interjects": "VBZ",
-  "coin": "NN",
   "unorthodox": "JJ",
   "soupy": "JJ",
   "treats": "VBZ",
-  "flow": "NN",
   "orderly": "JJ",
   "flog": "VB",
   "untapped": "JJ",
   "inspire": "VB",
   "unassisted": "JJ",
   "interrogated": "VBN",
-  "duck": "NN",
-  "caribbean": "NNP",
   "double-glaze": "VB",
   "slotted": "VBN",
   "handwritten": "JJ",
@@ -12868,25 +9342,19 @@ var lexicon={
   "indistinct": "JJ",
   "participating": "JJ",
   "elfin": "JJ",
-  "epidemic": "NN",
   "intimal": "JJ",
   "maudlin": "JJ",
   "coalesced": "VBN",
-  "beef": "NN",
   "fallow": "JJ",
   "unchristian": "JJ",
   "decanted": "VBN",
   "unservile": "JJ",
-  "morning": "NNP",
   "shadowed": "VBN",
-  "arabian": "NNP",
   "higher-margin": "JJR",
   "u.s.-japan": "JJ",
-  "retreat": "NN",
   "turquoise": "JJ",
   "sanitary": "JJ",
   "amok": "JJ",
-  "rustling": "NN",
   "clawed": "JJ",
   "surround": "VBP",
   "misleading": "JJ",
@@ -12904,10 +9372,8 @@ var lexicon={
   "na": "TO",
   "nd": "CC",
   "criminalized": "JJ",
-  "costa": "NNP",
   "impounded": "VBN",
   "dappled": "JJ",
-  "to-day": "NN",
   "unregulated": "JJ",
   "scrawny": "JJ",
   "reassemble": "VB",
@@ -12919,7 +9385,6 @@ var lexicon={
   "decadelong": "JJ",
   "united": "JJ",
   "seen": "VBN",
-  "washes": "NNS",
   "shelled": "JJ",
   "sevenfold": "RB",
   "concoct": "VB",
@@ -12927,7 +9392,6 @@ var lexicon={
   "prefectural": "JJ",
   "inhabit": "VBP",
   "coral": "JJ",
-  "performer": "NN",
   "mccarthyite": "JJ",
   "harmed": "VBN",
   "flavored": "JJ",
@@ -12935,16 +9399,13 @@ var lexicon={
   "over-produce": "VB",
   "varicolored": "JJ",
   "countrywide": "JJ",
-  "producing": "NNP",
   "dabs": "VBZ",
   "worry": "VB",
-  "a-totals": "NNS",
   "easily": "JJ",
   "approximates": "VBZ",
   "begun": "VBN",
   "approximated": "VBN",
   "splashy": "JJ",
-  "costliest": "JJS",
   "infuriated": "JJ",
   "profit": "JJ",
   "dehydrated": "JJ",
@@ -12952,54 +9413,38 @@ var lexicon={
   "marries": "VBZ",
   "unborn": "JJ",
   "simplifies": "VBZ",
-  "buzzes": "NNS",
   "simplified": "JJ",
-  "alike": "RB",
   "anesthetized": "JJ",
-  "wax": "NN",
   "taketh": "VB",
   "and": "CC",
   "mated": "JJ",
   "ani": "JJ",
   "pry": "JJ",
   "goldang": "UH",
-  "clatter": "NN",
   "perpetrated": "VBN",
   "overage": "JJ",
   "outguess": "VB",
   "microchannel": "JJ",
-  "bailly": "NNP",
   "reveals": "VBZ",
   "pummeled": "VBN",
-  "labors": "NNS",
-  "sorest": "JJS",
   "underpaid": "JJ",
   "detect": "VB",
   "flop": "JJ",
   "belittled": "JJ",
   "invokes": "VBZ",
-  "texas": "NNP",
-  "caucus": "NN",
   "grieved": "VBN",
-  "stupidest": "JJS",
   "deported": "VBN",
-  "mezzo": "NN",
   "archrival": "JJ",
   "robbed": "VBN",
   "crusaded": "VBN",
-  "converts": "NNS",
-  "excuse": "NN",
   "agitated": "JJ",
   "applaud": "VBP",
   "retrograde": "JJ",
   "devoid": "JJ",
   "prospered": "VBN",
   "arose": "VBD",
-  "implements": "NNS",
-  "model": "NN",
   "softwood": "JJ",
   "stiffnecked": "JJ",
-  "clot": "NN",
   "engulfed": "VBN",
   "poised": "JJ",
   "predetermined": "JJ",
@@ -13009,11 +9454,8 @@ var lexicon={
   "colloidal": "JJ",
   "provides": "VBZ",
   "terrifies": "VBZ",
-  "weirdest": "JJS",
   "speculates": "VBZ",
-  "saxon": "NNP",
   "unpolished": "JJ",
-  "princeton\\": "NNP",
   "illuminated": "JJ",
   "illuminates": "VBZ",
   "swathed": "VBN",
@@ -13024,42 +9466,31 @@ var lexicon={
   "kerchiefed": "JJ",
   "bounded": "VBN",
   "includee": "VBP",
-  "based.": "VBN",
   "bilateral": "JJ",
   "invest": "VB",
-  "uglier": "JJR",
   "curvy": "JJ",
   "confers": "VBZ",
   "remedied": "VBN",
-  "seals": "NNS",
   "voids": "VBZ",
   "subjected": "VBN",
   "bubbled": "VBN",
-  "hatching": "NN",
   "jacketed": "JJ",
-  "bubbles": "NNS",
   "nonperforming": "JJ",
   "undone": "JJ",
   "offsets": "VBZ",
   "ovarian": "JJ",
   "midrange": "JJ",
   "eventuate": "VBP",
-  "foreshortened": "VBN",
   "absurdist": "JJ",
-  "congolese": "NNP",
   "snug": "JJ",
   "snub": "JJ",
   "thus": "RB",
-  "mideast": "NNP",
-  "smoggiest": "JJS",
   "vaguer": "JJR",
   "coerce": "VB",
   "hourlong": "JJ",
-  "thud": "NN",
   "extinguished": "JJ",
   "pertained": "VBP",
   "preoccupy": "VBP",
-  "interpersonal": "JJ",
   "flounce": "VBP",
   "co-ordinate": "VB",
   "unreasoning": "JJ",
@@ -13067,7 +9498,6 @@ var lexicon={
   "recapitulate": "VB",
   "braided": "JJ",
   "discrete": "JJ",
-  "solvent": "NN",
   "generate": "VB",
   "thrown": "JJ",
   "scratchy": "JJ",
@@ -13078,17 +9508,13 @@ var lexicon={
   "imprinted": "VBN",
   "uncut": "JJ",
   "dispensed": "VBN",
-  "dispenses": "VBZ",
   "strengthen": "VB",
   "febrile": "JJ",
   "beribboned": "JJ",
   "enduring": "JJ",
-  "value": "NN",
   "mineral": "JJ",
   "devalue": "VB",
-  "institutions": "NNS",
   "awakens": "VBZ",
-  "deserts": "NNS",
   "abiding": "JJ",
   "transcendental": "JJ",
   "stiff": "JJ",
@@ -13100,10 +9526,8 @@ var lexicon={
   "breakin": "VBG",
   "ritualized": "VBN",
   "flies": "VBZ",
-  "reasons": "NNS",
   "dug": "VBD",
   "coerced": "VBN",
-  "chauffeur": "NN",
   "aged": "JJ",
   "coerces": "VBZ",
   "reasserts": "VBZ",
@@ -13111,24 +9535,19 @@ var lexicon={
   "earmark": "VB",
   "riffle": "VB",
   "steeled": "VBN",
-  "loading": "NN",
   "front": "JJ",
   "build": "VB",
-  "deadened": "VBN",
   "lovin": "JJ",
-  "safest": "JJS",
   "within": "RB",
   "understood": "JJ",
   "unreimbursed": "VBN",
   "tends": "VBZ",
-  "fragments": "NNS",
   "tinker": "VB",
   "unhusked": "VBN",
   "stricken": "JJ",
   "mingles": "VBZ",
   "malaysian": "JJ",
   "forbidding": "JJ",
-  "twenty-second": "NNP",
   "interventionist": "JJ",
   "fried": "JJ",
   "scrutinized": "VBN",
@@ -13136,18 +9555,13 @@ var lexicon={
   "vaulting": "JJ",
   "sufferd": "VBN",
   "issued": "VBN",
-  "issues": "NNS",
-  "folds": "NNS",
   "flaunts": "VBZ",
   "protrude": "VB",
   "refilled": "VBN",
-  "desires": "NNS",
   "desired": "JJ",
   "bugeyed": "JJ",
   "sexy": "JJ",
-  "ind.-based": "JJ",
   "chaste": "JJ",
-  "lodging": "NN",
   "&": "CC",
   "fer": "JJR",
   "keerist": "UH",
@@ -13155,15 +9569,10 @@ var lexicon={
   "impedes": "VBZ",
   "proprietary": "JJ",
   "dripping": "RB",
-  "memorize": "VB",
   "carries": "VBZ",
   "americans": "NNPS",
-  "grovelike": "JJ",
   "desecrates": "VBZ",
-  "sillier": "JJR",
   "swearinge": "VBG",
-  "dirtiest": "JJS",
-  "ships": "NNS",
   "orthodox": "JJ",
   "aztec": "JJ",
   "negligent": "JJ",
@@ -13182,17 +9591,14 @@ var lexicon={
   "uproot": "VB",
   "phrased": "VBN",
   "salutary": "JJ",
-  "slides": "NNS",
   "regards": "VBZ",
   "beamed": "VBN",
   "grander": "JJR",
   "levelled": "VBN",
   "olfactory": "JJ",
-  "combat": "NN",
   "discourage": "VB",
   "refreshing": "JJ",
   "undimmed": "VBN",
-  "ore.-based": "JJ",
   "brutalized": "VBN",
   "spun": "VBN",
   "prosecute": "JJ",
@@ -13205,26 +9611,19 @@ var lexicon={
   "subscribe": "VB",
   "coddle": "VBP",
   "intimidating": "JJ",
-  "tutor": "NN",
-  "proudest": "JJS",
   "trim-your-own-franks": "VB",
   "kneaded": "VBN",
   "cross": "JJ",
   "brandishes": "VBZ",
-  "fighting": "NNP",
   "moral": "JJ",
   "unbridled": "JJ",
   "replenish": "VB",
-  "cries": "NNS",
   "argentine": "JJ",
   "clock-stopped": "VBN",
-  "hunting": "NN",
   "presume": "JJ",
   "underwrote": "VBD",
   "stodgy": "JJ",
   "bossed": "VBN",
-  "fray": "NN",
-  "perky": "JJ",
   "urges": "VBZ",
   "kinda": "RB",
   "negate": "VB",
@@ -13235,7 +9634,6 @@ var lexicon={
   "thievin": "VBG",
   "humbling": "JJ",
   "downtalking": "JJ",
-  "ventilating": "NN",
   "sloping": "JJ",
   "earthly": "JJ",
   "smaller-stock": "JJR",
@@ -13246,65 +9644,48 @@ var lexicon={
   "immature": "JJ",
   "leisurely": "JJ",
   "disturb": "VB",
-  "rachel": "NNP",
   "loathing": "JJ",
   "enroute": "RB",
   "jocular": "JJ",
   "fossil": "JJ",
   "resilient": "JJ",
   "cull": "VB",
-  "cart": "NN",
   "kee-reist": "UH",
   "smolders": "VBZ",
   "unanswered": "JJ",
   "shelve": "VB",
   "dignifies": "VBZ",
-  "feature": "NN",
   "dignified": "JJ",
   "minimized": "JJ",
   "reassess": "VB",
   "minimizes": "VBZ",
-  "fictional": "JJ",
   "infertile": "JJ",
-  "overhauls": "NNS",
   "stockpiled": "VBN",
-  "stockpiles": "NNS",
-  "fairest": "JJS",
   "heretofore": "RB",
-  "fanciest": "JJS",
   "interrupt": "JJ",
   "shrewder": "JJR",
-  "pre-``": "``",
-  "raw-materials": "NNS",
   "differentiates": "VBZ",
   "crowned": "JJ",
   "eared": "JJ",
   "tempting": "JJ",
-  "gianni": "NNP",
-  "symbolize": "VB",
   "procreate": "JJ",
   "glassy": "JJ",
   "unplowed": "JJ",
   "rectified": "JJ",
   "wod": "MD",
-  "durin": "NN",
   "hop-skipped": "VBN",
   "constricted": "JJ",
   "benighted": "JJ",
-  "gift-giving": "NN",
   "soaked": "VBN",
   "instructs": "VBZ",
   "imprudent": "JJ",
   "thrilled": "JJ",
   "dummy": "JJ",
-  "jerusalem": "NNP",
   "incorporate": "VB",
   "lethal": "JJ",
   "abreast": "RB",
   "crossways": "RB",
   "remarry": "VB",
-  "pocket": "NN",
-  "relish": "NN",
   "hasten": "VB",
   "peripheral": "JJ",
   "flaxen": "JJ",
@@ -13320,8 +9701,6 @@ var lexicon={
   "contemplated": "VBN",
   "contemplates": "VBZ",
   "elicit": "VB",
-  "puerto": "NNP",
-  "smoothest": "JJS",
   "maximizing": "JJ",
   "detracted": "VBN",
   "backhanded": "JJ",
@@ -13330,13 +9709,11 @@ var lexicon={
   "rotates": "VBZ",
   "u.s.-about": "IN",
   "obedient": "JJ",
-  "desire": "NN",
   "withing": "IN",
   "creep": "VB",
   "unfrozen": "JJ",
   "chin-up": "IN",
   "substituted": "VBN",
-  "furnishing": "NN",
   "underdeveloped": "JJ",
   "c.i.f": "JJ",
   "insincere": "JJ",
@@ -13344,17 +9721,12 @@ var lexicon={
   "entrust": "VB",
   "withstands": "VBZ",
   "clattery": "JJ",
-  "fastened": "JJ",
   "confectionery": "JJ",
   "castor": "JJ",
-  "finger-pointing": "NN",
   "incurred": "VBN",
   "activated": "JJ",
-  "theaters": "NNS",
-  "skiing": "NN",
   "retrofit": "VB",
   "believe": "VBP",
-  "federalist": "NNP",
   "engrossing": "JJ",
   "melt": "VB",
   "meld": "VB",
@@ -13366,15 +9738,11 @@ var lexicon={
   "re-establish": "VB",
   "unanticipated": "JJ",
   "optimal": "JJ",
-  "intergenerational": "JJ",
   "convoluted": "JJ",
   "unclaimed": "JJ",
   "improving": "JJ",
   "natural": "JJ",
   "correlate": "VB",
-  "wyoming": "NNP",
-  "overhaul": "NN",
-  "muses": "VBZ",
   "nearsighted": "JJ",
   "roleplayed": "VBN",
   "more-selective": "JJR",
@@ -13389,15 +9757,11 @@ var lexicon={
   "bite": "VB",
   "diehard": "JJ",
   "stuffed": "JJ",
-  "anglo\\": "JJ",
-  "slashes": "NNS",
   "southbound": "JJ",
   "reclaims": "VBZ",
   "slashed": "JJ",
   "depressed": "JJ",
-  "drywall": "NN",
   "damned": "JJ",
-  "depresses": "VBZ",
   "buried": "JJ",
   "peacekeeping": "JJ",
   "inserted": "VBN",
@@ -13407,52 +9771,36 @@ var lexicon={
   "submerge": "VB",
   "uncover": "VB",
   "resiny": "JJ",
-  "arouses": "VBZ",
   "aroused": "JJ",
-  "compounds": "NNS",
-  "screen": "NN",
   "steroid": "JJ",
   "matures": "VBZ",
   "coolheaded": "JJ",
   "puerile": "JJ",
   "considers": "VBZ",
   "fiveyear": "JJ",
-  "needlelike": "JJ",
-  "wherewithal": "NN",
   "endures": "VBZ",
   "mono": "JJ",
   "cartelized": "VBN",
-  "s.c.-based": "JJ",
   "spooked": "VBN",
-  "cost-sharing": "NN",
   "enrich": "VB",
   "sterling": "JJ",
-  "jacksonian": "NNP",
   "rolled": "JJ",
   "ebullient": "JJ",
   "transmuted": "VBN",
   "crusty": "JJ",
-  "dart": "NN",
-  "vacuum": "NN",
   "snare": "VB",
-  "share": "NN",
   "expository": "JJ",
   "sharp": "JJ",
-  "intestinal": "JJ",
   "crabbed": "JJ",
   "pickled": "JJ",
   "supplementary": "JJ",
   "malposed": "JJ",
-  "bully": "NN",
   "refer": "VB",
   "biased": "JJ",
   "industrialized": "JJ",
   "slatted": "JJ",
-  "package": "NN",
   "extramarital": "JJ",
-  "apologize": "VB",
   "betrays": "VBZ",
-  "slopes": "NNS",
   "masquerades": "VBZ",
   "survives": "VBZ",
   "follicular": "JJ",
@@ -13463,27 +9811,17 @@ var lexicon={
   "straightens": "VBZ",
   "catchup": "JJ",
   "sanguine": "JJ",
-  "atlantic": "NNP",
   "partitioned": "VBN",
   "waived": "VBN",
   "waives": "VBZ",
-  "retch": "NN",
   "restated": "VBN",
   "squeal": "VB",
-  "tail": "NN",
   "th": "DT",
-  "cable": "NN",
   "joined": "JJ",
   "drahve": "VB",
-  "reagan": "NNP",
   "assured": "JJ",
-  "frequency,``": "``",
-  "corniest": "JJS",
-  "shiite": "NNP",
-  "quickstep": "NN",
   "whalesized": "JJ",
   "befitting": "JJ",
-  "scan": "NN",
   "unbiased": "JJ",
   "bided": "VBN",
   "imminent": "JJ",
@@ -13491,14 +9829,11 @@ var lexicon={
   "unsound": "JJ",
   "register": "VB",
   "adorned": "VBN",
-  "turbine": "NN",
   "nifty": "JJ",
   "subtitled": "VBN",
   "upstairs": "RB",
   "finned": "VBN",
-  "tensional": "JJ",
   "calumniated": "VBN",
-  "rises": "NNP",
   "sicker": "JJR",
   "gnash": "VB",
   "often": "RB",
@@ -13506,56 +9841,39 @@ var lexicon={
   "spavined": "JJ",
   "bimolecular": "JJ",
   "caress": "VB",
-  "computer-industry": "NN",
   "generalized": "JJ",
   "wedded": "VBN",
   "gold": "JJ",
   "degraded": "JJ",
   "standeth": "VBP",
-  "factor": "NN",
   "ordained": "JJ",
-  "cry": "NN",
-  "bulky": "JJ",
   "unmeshed": "JJ",
-  "pickup": "NN",
   "incident": "JJ",
   "tramp": "JJ",
-  "dimensional": "JJ",
   "dissuade": "VB",
-  "acclaim": "NN",
   "deport": "VB",
   "inclement": "JJ",
   "petrarchan": "JJ",
   "comport": "VB",
   "fetching": "JJ",
-  "tower": "NN",
-  "videotape": "NN",
   "rabid": "JJ",
   "expend": "VB",
   "surrogate": "JJ",
   "eager": "JJ",
   "semimonthly": "JJ",
-  "shading": "NN",
   "formal": "JJ",
   "scape": "VB",
   "beckon": "VBP",
   "mighty": "JJ",
-  "pall": "NN",
   "re-legalization": "VB",
-  "tinkers": "NNS",
-  "unintentional": "JJ",
   "anterior": "JJ",
   "beefed": "VBN",
   "muddleheaded": "JJ",
-  "hometown": "NN",
   "awaited": "JJ",
   "gleans": "VBZ",
   "perplex": "VBP",
-  "swarm": "NN",
   "presides": "VBZ",
-  "realest": "JJS",
   "besiege": "VB",
-  "scratch": "NN",
   "cerebrated": "VBN",
   "nominated": "VBN",
   "northwestern": "JJ",
@@ -13567,8 +9885,6 @@ var lexicon={
   "explains": "VBZ",
   "plain": "JJ",
   "disarming": "JJ",
-  "lowliest": "JJS",
-  "challenge": "NN",
   "governmentset": "VBN",
   "clogs": "VBZ",
   "occipital": "JJ",
@@ -13577,24 +9893,17 @@ var lexicon={
   "redeeming": "JJ",
   "counter": "RB",
   "re-supplied": "VBN",
-  "writ": "NN",
   "classy": "JJ",
   "counted": "VBN",
-  "decay": "NN",
   "dispose": "VB",
   "therefor": "RB",
-  "stop-loss": "NN",
-  "dock": "NN",
   "jagged": "JJ",
-  "tenth": "NNP",
   "borderline": "JJ",
   "mediated": "VBN",
-  "regulators": "NNS",
   "regulatory": "JJ",
   "dubbed": "VBN",
   "hand-carried": "VBN",
   "opportune": "JJ",
-  "vaginal": "JJ",
   "evacuated": "VBN",
   "gummy": "JJ",
   "aerate": "VB",
@@ -13604,55 +9913,39 @@ var lexicon={
   "unblushing": "JJ",
   "accusing": "JJ",
   "unbelieving": "JJ",
-  "freshened": "VBN",
   "correspond": "VB",
   "therewith": "RB",
   "souled": "JJ",
   "lined": "JJ",
   "screechy": "JJ",
   "disbanded": "VBN",
-  "mig-1\\": "JJ",
-  "attributes": "NNS",
   "redirect": "VB",
   "conciliate": "VB",
   "handle": "VB",
-  "scorn": "NN",
-  "smash": "NN",
   "summon": "VB",
   "anglian": "JJ",
-  "strides": "NNS",
   "absentee": "JJ",
   "rockbound": "JJ",
   "hee": "UH",
   "negotiates": "VBZ",
-  "sentimentalize": "VB",
-  "bombproof": "NN",
   "unpaired": "VBN",
-  "vs": "NNP",
   "overleveraged": "JJ",
   "sits": "VBZ",
   "burly": "JJ",
   "fail": "JJ",
-  "flesh": "NN",
   "roomy": "JJ",
   "extempore": "RB",
   "snitched": "VBN",
-  "chairs": "NNS",
   "imprison": "VB",
   "misperceives": "VBZ",
   "bargain-hunt": "VB",
   "anguished": "JJ",
-  "drift": "NN",
-  "adversary": "NN",
   "activate": "VBP",
-  "kooky": "JJ",
   "restricts": "VBZ",
   "disengaged": "VBN",
   "more-detailed": "JJR",
   "interwar": "JJ",
-  "counterattack": "NN",
   "convince": "VB",
-  "in\\": "JJ",
   "agreed-upon": "IN",
   "oviform": "JJ",
   "extrapolates": "VBZ",
@@ -13664,7 +9957,6 @@ var lexicon={
   "pinch": "JJ",
   "reinvent": "VB",
   "chew": "VB",
-  "horn": "NN",
   "preaches": "VBZ",
   "unsurpassed": "JJ",
   "deliberate": "JJ",
@@ -13673,12 +9965,9 @@ var lexicon={
   "thrombosed": "VBN",
   "nourishing": "JJ",
   "underrepresented": "VBN",
-  "items": "NNS",
   "reappraise": "VB",
   "glittering": "JJ",
   "hunkered": "VBN",
-  "plows": "NNS",
-  "plagiarize": "VB",
   "zeroed": "VBN",
   "wellplaced": "JJ",
   "developed": "JJ",
@@ -13686,48 +9975,31 @@ var lexicon={
   "overvaulting": "JJ",
   "antislavery": "JJ",
   "unsubordinated": "JJ",
-  "foulest": "JJS",
-  "gamble": "NN",
   "coined": "VBN",
   "austere": "JJ",
-  "nets": "NNS",
   "befallen": "VBN",
   "discomfited": "JJ",
   "noncash": "JJ",
-  "bans": "NNS",
-  "band": "NN",
-  "bang": "NN",
   "homemaster": "JJ",
   "toot-toot": "UH",
   "profusely": "RB",
-  "logs": "NNS",
   "mangled": "JJ",
-  "ecliptic": "NN",
   "meshed": "JJ",
-  "mergers-and-acquisitions": "NNS",
-  "decentralize": "VB",
-  "diversified": "NNP",
   "unblinking": "JJ",
-  "stalls": "NNS",
   "latter": "JJ",
   "unhook": "VB",
   "insulated": "VBN",
-  "maiden": "NN",
-  "autopsy": "NN",
   "demoralizes": "VBZ",
   "intergroup": "JJ",
   "calculated": "JJ",
   "judgmental": "JJ",
   "demoralized": "VBN",
   "unattached": "JJ",
-  "dec.": "NNP",
-  "foraging": "NN",
   "painfully": "RB",
   "pierced": "VBN",
   "headlong": "JJ",
   "unfilled": "JJ",
   "unmet": "JJ",
-  "reviewed\\/designed": "VBN",
   "afloat": "JJ",
   "contraband": "JJ",
   "uncataloged": "VBN",
@@ -13741,7 +10013,6 @@ var lexicon={
   "unproved": "JJ",
   "grandiose": "JJ",
   "perform": "VB",
-  "trashing": "NN",
   "sheltered": "JJ",
   "burbles": "VBZ",
   "macaque": "JJ",
@@ -13752,26 +10023,18 @@ var lexicon={
   "exalt": "VBP",
   "boxed": "JJ",
   "ginnin": "VBG",
-  "non-catholic": "NNP",
-  "summer\\": "JJ",
-  "individual-investor": "NN",
   "aimed": "VBN",
   "denies": "VBZ",
   "pose": "VB",
   "confer": "VB",
-  "methuselah": "NNP",
-  "sporting-goods": "NNS",
-  "post": "NN",
   "chafe": "VBP",
   "rearrange": "VB",
   "rallying": "JJ",
   "accepts": "VBZ",
   "incur": "VB",
   "float": "VB",
-  "retrenching": "NN",
   "wan": "JJ",
   "truncated": "JJ",
-  "way": "NN",
   "becoming": "JJ",
   "sundry": "JJ",
   "attuned": "VBN",
@@ -13779,12 +10042,8 @@ var lexicon={
   "muscular": "JJ",
   "necessitates": "VBZ",
   "necessitated": "VBN",
-  "precedent": "NN",
   "gotham": "VB",
   "compensate": "VB",
-  "unhappiest": "JJS",
-  "respiratory": "NNP",
-  "leningrad": "NNP",
   "presented": "VBN",
   "self-insure": "VBP",
   "enticing": "JJ",
@@ -13795,7 +10054,6 @@ var lexicon={
   "fundamentalist": "JJ",
   "selects": "VBZ",
   "f": "RB",
-  "heart": "NN",
   "attribute": "VBP",
   "heare": "VBP",
   "unwritten": "JJ",
@@ -13803,72 +10061,48 @@ var lexicon={
   "nonstop": "JJ",
   "post-fray": "RB",
   "accelerates": "VBZ",
-  "beam": "NN",
-  "trumpets": "NNS",
   "worsens": "VBZ",
-  "forms": "NNS",
   "exacerbates": "VBZ",
   "unlovely": "JJ",
-  "explains.": "VBZ",
   "pruned": "VBN",
-  "rake": "NN",
-  "balance-of-payments": "NNS",
   "enacted": "VBN",
   "whitewalled": "JJ",
-  "repurchase": "NN",
   "zig-zag": "VBP",
-  "hungary": "NNP",
   "profess": "JJ",
-  "warning": "NN",
   "deadlocked": "JJ",
   "weds": "VBZ",
   "slaked": "VBN",
-  "avail": "NN",
   "collimated": "VBN",
   "prepared": "JJ",
   "surfeited": "VBN",
   "slap": "VB",
-  "slam": "NN",
-  "slab": "NN",
   "garpian": "JJ",
   "underemployed": "JJ",
-  "renal": "JJ",
-  "polyvinyl": "NN",
   "upgrade": "VB",
   "scatterbrained": "JJ",
   "phased": "VBN",
   "rehear": "VB",
   "loath": "JJ",
   "cannot": "MD",
-  "unfastened": "JJ",
   "celebrate": "VB",
   "preempt": "VB",
   "keyed": "VBN",
   "overworked": "JJ",
   "afoul": "RB",
-  "sport": "NN",
-  "swankier": "JJR",
   "disppointed": "JJ",
-  "queerest": "JJS",
   "burmese": "JJ",
   "re-educate": "VB",
   "reinterpreted": "VBN",
-  "buy-back": "NN",
   "maladroit": "JJ",
   "informer": "JJ",
   "patriarchal": "JJ",
-  "wealthiest": "JJS",
   "accommodating": "JJ",
-  "trick": "NN",
   "crumbly": "JJ",
   "heigh-ho": "UH",
   "canceled": "VBN",
-  "thrills": "NNS",
   "short-sell": "VB",
   "closest": "RB",
-  "racketeering": "NN",
   "avoided": "VBN",
-  "cockier": "JJR",
   "alfresco": "JJ",
   "shouts": "VBZ",
   "mirrored": "VBN",
@@ -13883,23 +10117,17 @@ var lexicon={
   "sabers-along": "IN",
   "escalating": "JJ",
   "lob": "VB",
-  "log": "NN",
   "lop": "JJ",
   "lot": "RB",
-  "drains": "NNS",
   "slovenian": "JJ",
-  "deposits-a": "NNP",
   "ragged": "JJ",
   "stale": "JJ",
   "bellows": "VBZ",
   "williamsesque": "JJ",
-  "statesmanlike": "JJ",
   "trickled": "VBN",
   "corporatewide": "JJ",
   "intense": "JJ",
-  "turnaround\\/takeover": "JJR",
   "assert": "VB",
-  "requisition": "NN",
   "publish": "VB",
   "copyrighted": "VBN",
   "fizzles": "VBZ",
@@ -13915,9 +10143,7 @@ var lexicon={
   "promotes": "VBZ",
   "gether": "VB",
   "dolledup": "JJ",
-  "invitational": "JJ",
   "vegetarian": "JJ",
-  "whine": "NN",
   "threemonth": "JJ",
   "takes": "VBZ",
   "relegated": "VBN",
@@ -13928,18 +10154,13 @@ var lexicon={
   "gauche": "JJ",
   "stinging": "JJ",
   "magenta": "JJ",
-  "polaris": "NNP",
-  "dread": "NN",
-  "banks": "NNS",
   "carpeted": "VBN",
   "undedicated": "VBN",
   "averts": "VBZ",
   "finite": "JJ",
   "rots": "VBZ",
-  "occasions": "NNS",
   "intervene": "VB",
   "nonbinding": "JJ",
-  "sketches": "NNS",
   "historicized": "VBN",
   "sketched": "VBN",
   "unnatural": "JJ",
@@ -13947,29 +10168,22 @@ var lexicon={
   "outrun": "VB",
   "curtailed": "VBN",
   "maht": "MD",
-  "heartiest": "JJS",
-  "blush": "NN",
   "transparent": "JJ",
   "less-ambitious": "JJR",
   "most-livable": "JJS",
   "anticipate": "VB",
   "obfuscate": "VB",
   "towardes": "IN",
-  "cumbersome": "JJ",
   "unfocussed": "VBN",
   "expansionist": "JJ",
-  "camouflage": "NN",
   "plunder": "JJ",
-  "institutional": "JJ",
   "exempts": "VBZ",
   "reground": "JJ",
   "humid": "JJ",
-  "registers": "NNS",
   "renegotiate": "VB",
   "grandiloquent": "JJ",
   "imparted": "VBN",
   "speckled": "JJ",
-  "conflict-of-interest": "NN",
   "noted": "JJ",
   "catches": "VBZ",
   "catchee": "VB",
@@ -13982,27 +10196,21 @@ var lexicon={
   "undigested": "JJ",
   "longerterm": "JJ",
   "persecuted": "JJ",
-  "stamp": "NN",
   "regroup": "VB",
-  "rope": "NN",
   "wherever": "WRB",
   "solarheated": "JJ",
-  "conflict": "NN",
   "jackbooted": "JJ",
   "herewith": "RB",
   "older": "JJ",
   "docked": "VBN",
   "reclaim": "VB",
   "olden": "JJ",
-  "returns": "NNS",
-  "cocky": "JJ",
   "remaining": "JJ",
   "coplandesque": "JJ",
   "reptilian": "JJ",
   "copernican": "JJ",
   "wiser": "JJR",
   "stimulatory": "JJ",
-  "day-care": "NN",
   "skimpy": "JJ",
   "taboo": "JJ",
   "uppon": "IN",
@@ -14011,7 +10219,6 @@ var lexicon={
   "dangle": "VB",
   "smelly": "JJ",
   "smells": "JJ",
-  "deodorant": "NN",
   "rummage": "VB",
   "branchline": "JJ",
   "hairyknuckled": "JJ",
@@ -14023,59 +10230,39 @@ var lexicon={
   "spartan": "JJ",
   "nabbed": "VBN",
   "jesting": "JJ",
-  "gay\\/bisexual": "JJ",
   "hyaline": "JJ",
   "stave": "VB",
   "excluded": "JJ",
   "cluttered": "JJ",
-  "flicker": "NN",
   "jinxed": "JJ",
   "muzzled": "VBN",
-  "hoylake\\": "JJ",
   "brokered": "JJ",
   "redrawn": "JJ",
   "likewise": "JJ",
-  "haunts": "NNS",
-  "cheeky": "JJ",
-  "chill.``": "``",
   "reestablish": "VB",
   "lordly": "JJ",
   "outer": "JJ",
-  "guerrilla": "NN",
-  "downgrading": "NN",
   "enshrouds": "VBZ",
   "dissect": "VB",
-  "hands": "NNS",
   "documented": "VBN",
   "handy": "JJ",
-  "write-down": "NN",
   "uncaring": "JJ",
   "illuminate": "VB",
-  "steadier": "JJR",
   "remiss": "JJ",
   "humiliating": "JJ",
   "unliterary": "JJ",
-  "counterpart": "NN",
   "intoxicated": "JJ",
   "swapped": "VBN",
   "disembodied": "JJ",
   "stultifying": "JJ",
-  "eurodollar": "NN",
   "paves": "VBZ",
   "perfectly": "RB",
   "precursory": "JJ",
-  "lime": "NNP",
   "saintly": "JJ",
   "arrogate": "VB",
   "ephemeral": "JJ",
-  "decorating": "NN",
-  "lectures": "NNS",
-  "wealthier": "JJR",
-  "dramatize": "VB",
-  "infernal": "JJ",
   "circumvents": "VBZ",
   "gray": "JJ",
-  "processes": "NNS",
   "quarantine": "VB",
   "overflowing": "JJ",
   "trilateral": "JJ",
@@ -14087,9 +10274,7 @@ var lexicon={
   "pap-pap-pap-hey": "UH",
   "distinguish": "VB",
   "speakin": "VBG",
-  "quiz": "NN",
   "dwarfs": "VBZ",
-  "pie": "NN",
   "encircles": "VBZ",
   "uncertified": "JJ",
   "intimidate": "JJ",
@@ -14097,50 +10282,36 @@ var lexicon={
   "capture": "VB",
   "suborbital": "JJ",
   "endearing": "JJ",
-  "drone": "NN",
   "mistaken": "JJ",
   "dost": "VBP",
   "clouded": "JJ",
   "livid": "JJ",
-  "sublimate": "NN",
   "district-by-district": "RB",
-  "page": "NN",
   "uttermost": "JJ",
-  "explicit.": "JJ",
   "peter": "VB",
   "hinder": "JJR",
   "coated": "JJ",
   "repaired": "VBN",
   "presupposed": "VBN",
-  "pencil": "NNP",
   "articulate": "JJ",
   "withholds": "VBZ",
   "globalized": "JJ",
-  "california": "NNP",
   "invent": "VB",
   "collected": "JJ",
-  "courts": "NNS",
   "strengthens": "VBZ",
   "flecked": "VBN",
-  "upsets": "NNS",
-  "spirito": "NNP",
   "onwards": "RB",
   "talkin": "VBG",
   "wouldbe": "JJ",
   "astounding": "JJ",
   "dragoon": "VBP",
   "undelivered": "JJ",
-  "yell": "NN",
-  "anacondas": "NNS",
   "theretofore": "RB",
   "powdery": "JJ",
   "smack": "RB",
-  "baking": "NN",
   "panelized": "VBN",
   "implemented": "VBN",
-  "gawky": "JJ",
   "yooee": "UH",
-  "taxis": "NNS",
   "harass": "VB",
   "diagrammed": "VBN",
   "reckoned": "VBN",
@@ -14149,29 +10320,19 @@ var lexicon={
   "multipronged": "VBN",
   "moored": "VBN",
   "lunge": "VB",
-  "ward": "NN",
   "full-length": "RB",
   "ostrich": "JJ",
-  "faults": "NNS",
   "faulty": "JJ",
   "richer": "JJR",
   "predominates": "VBZ",
   "natch": "UH",
-  "attempt": "NN",
   "ancient": "JJ",
   "befall": "VB",
   "underenforces": "VBZ",
-  "frisky": "JJ",
   "unexercised": "JJ",
   "persist": "VB",
-  "duodenal": "JJ",
-  "mounts": "NNS",
   "marital": "JJ",
   "typecast": "VB",
-  "gradient": "NN",
-  "secretary-general": "NN",
-  "cutest": "JJS",
-  "aboriginal": "JJ",
   "unconditioned": "JJ",
   "scrounge": "VBP",
   "naughty": "JJ",
@@ -14187,33 +10348,22 @@ var lexicon={
   "seep": "VB",
   "quench": "JJ",
   "rechristens": "VBZ",
-  "seed": "NN",
   "seem": "CP",
   "rangy": "JJ",
   "floppy": "JJ",
   "re-scheduled": "VBN",
-  "transnational": "JJ",
-  "ark.-based": "JJ",
   "mashed": "VBN",
   "don": "VB",
-  "doo": "NN",
-  "alarm": "NN",
-  "dog": "NN",
-  "dot": "NN",
   "planetary": "JJ",
   "sows": "VBZ",
   "sown": "VBN",
   "hollers": "VBZ",
   "rejoicing": "JJ",
-  "nearly-30": "JJ",
   "tiled": "JJ",
   "internationalized": "VBN",
   "rival": "JJ",
   "inspects": "VBZ",
-  "simplest": "JJS",
   "laze": "VB",
-  "maneuvers": "NNS",
-  "swoops": "NN",
   "syrian": "JJ",
   "though": "RB",
   "paralyze": "VB",
@@ -14232,9 +10382,6 @@ var lexicon={
   "perfunctory": "JJ",
   "dreamy": "JJ",
   "dreamt": "VBD",
-  "dreams": "NNS",
-  "shoulder": "NN",
-  "high-technology": "NN",
   "ungratified": "JJ",
   "conceal": "VB",
   "lathered": "VBN",
@@ -14249,11 +10396,9 @@ var lexicon={
   "offputting": "JJ",
   "clings": "VBZ",
   "matriarchal": "JJ",
-  "refining": "NN",
   "delivered": "VBN",
   "glossy": "JJ",
   "manages": "VBZ",
-  "claret": "NN",
   "depend": "VB",
   "forked": "JJ",
   "jettison": "VB",
@@ -14265,22 +10410,14 @@ var lexicon={
   "promissory": "JJ",
   "unobserved": "JJ",
   "first-ever": "RB",
-  "shift": "NN",
-  "hardier": "JJR",
-  "lessened": "VBN",
   "equipped": "JJ",
-  "montreal": "NNP",
   "reappear": "VBP",
   "concocted": "VBN",
   "battered": "JJ",
   "traipse": "VB",
-  "trojan": "NNP",
-  "neck": "NN",
   "rarified": "JJ",
-  "shield": "NN",
   "antifundamentalist": "JJ",
   "imbedded": "VBN",
-  "clearest": "JJS",
   "sensitized": "VBN",
   "undisclosed": "JJ",
   "unlock": "VB",
@@ -14289,22 +10426,17 @@ var lexicon={
   "bamboo": "JJ",
   "whittle": "VBP",
   "orwellian": "JJ",
-  "likelier": "JJR",
-  "commercialize": "VB",
   "brynge": "VBP",
   "tailor-make": "VB",
   "participates": "VBZ",
   "modernist": "JJ",
-  "broadcast": "NN",
   "ambulatory": "JJ",
-  "butt": "NN",
   "booted": "JJ",
   "overenforced": "VBN",
   "efficient": "JJ",
   "isolate": "JJ",
   "endangered": "JJ",
   "frolicked": "VBN",
-  "gloomier": "JJR",
   "vitiate": "VB",
   "befouled": "JJ",
   "enclosed": "JJ",
@@ -14312,7 +10444,6 @@ var lexicon={
   "untold": "JJ",
   "longest-standing": "JJS",
   "re-emerge": "VB",
-  "single-b-3": "NNP",
   "ruptured": "VBN",
   "bedraggled": "JJ",
   "tuck": "VBP",
@@ -14323,44 +10454,32 @@ var lexicon={
   "jaunty": "JJ",
   "educated": "JJ",
   "angolan": "JJ",
-  "huckster": "NN",
   "incubate": "VB",
   "finagled": "VBN",
   "solve": "VB",
   "proximal": "JJ",
   "outranks": "VBZ",
-  "pile": "NN",
   "fifteenfold": "RB",
-  "heavier": "JJR",
   "twin": "JJ",
   "tooke": "VBD",
   "erase": "VB",
-  "pasture": "NN",
   "matching": "JJ",
   "confirm": "VB",
   "untamed": "JJ",
-  "mixes": "NNS",
-  "provisional": "JJ",
-  "franchising": "NN",
   "u.s.-produced": "JJ",
   "pretends": "VBZ",
   "hated": "JJ",
-  "film": "NN",
   "keynote": "VBP",
-  "personnel": "NNS",
   "repent": "VB",
   "hemorrhaged": "VBN",
-  "human-resources": "NNS",
   "forbidden": "JJ",
   "slung": "VBD",
   "sung": "VBN",
-  "toniest": "JJS",
   "tartar": "JJ",
   "pinioned": "JJ",
   "nonwhite": "JJ",
   "kill": "VB",
   "becometh": "VBZ",
-  "grabs": "NNS",
   "embodies": "VBZ",
   "ruminate": "VB",
   "scanty": "JJ",
@@ -14369,22 +10488,14 @@ var lexicon={
   "lebanese": "JJ",
   "annunciated": "VBN",
   "culinary": "JJ",
-  "paraphrases": "NNS",
-  "minus\\": "JJ",
   "abroade": "RB",
-  "awards": "NNS",
   "brasil": "JJ",
-  "flare": "NN",
   "unnumbered": "JJ",
-  "phase-out": "NN",
   "overhand": "JJ",
   "hessian": "JJ",
-  "muzzles": "NNS",
-  "reliving": "NN",
   "awkward": "JJ",
   "thout": "VBD",
   "intones": "VBZ",
-  "atta": "NN",
   "blunder": "JJ",
   "deserted": "JJ",
   "graunt": "VB",
@@ -14394,27 +10505,17 @@ var lexicon={
   "ashen": "JJ",
   "deteriorated": "VBN",
   "forthright": "JJ",
-  "harm": "NN",
   "hark": "VBP",
-  "fist": "NN",
-  "harp": "NN",
   "discouraging": "JJ",
   "firstround": "JJ",
-  "pension-tax": "NN",
   "trusteth": "VBP",
-  "computer\\": "JJ",
-  "foreign-currency": "NN",
   "crouches": "VBZ",
   "ruined": "JJ",
   "reinforces": "VBZ",
   "reinforced": "VBN",
-  "said:``": "``",
-  "plow": "NN",
   "inhibits": "VBZ",
   "neglects": "VBZ",
   "disown": "VB",
-  "lease": "NN",
-  "supposes": "VBZ",
   "referred": "VBN",
   "ungodly": "JJ",
   "supposed": "JJ",
@@ -14423,15 +10524,10 @@ var lexicon={
   "categorized": "VBN",
   "creased": "VBN",
   "clearer": "JJR",
-  "honors": "NNS",
-  "flares": "NNS",
-  "costs": "NNS",
   "fundamantal": "JJ",
   "corrupts": "VBZ",
   "whetted": "VBN",
   "contorted": "JJ",
-  "perfuses": "VBZ",
-  "networks": "NNS",
   "roughshod": "JJ",
   "override": "VB",
   "distributes": "VBZ",
@@ -14450,65 +10546,47 @@ var lexicon={
   "tapered": "JJ",
   "longsuffering": "JJ",
   "taxfree": "JJ",
-  "healthvest": "NNP",
   "presale": "JJ",
   "misunderstands": "VBZ",
   "rat": "JJ",
   "vulcanized": "VBN",
   "unaffected": "JJ",
-  "dishonor": "NN",
-  "asia-pacific": "NNP",
   "timid": "JJ",
   "covets": "VBZ",
   "distracting": "JJ",
   "openly": "JJ",
   "re-used": "VBN",
   "stirrin": "VBG",
-  "homier": "JJR",
   "squawk": "VB",
   "married": "JJ",
-  "heftier": "JJR",
   "whatever": "JJ",
   "einsteinian": "JJ",
-  "depositary": "NNP",
-  "neatest": "JJS",
-  "ornaments": "NNS",
   "whoa": "UH",
   "aflame": "JJ",
   "patient": "JJ",
-  "praisegod": "NNP",
   "crap": "JJ",
   "constrains": "VBZ",
   "goody": "UH",
-  "glow": "NN",
   "frenzied": "JJ",
   "impure": "JJ",
   "cram": "JJ",
   "mealynosed": "JJ",
   "single": "JJ",
-  "chance": "NN",
-  "excuses": "NNS",
   "assassinate": "VB",
-  "man": "NN",
   "prepares": "VBZ",
   "its": "PP",
   "dispassionate": "JJ",
   "asian": "JJ",
-  "rallies": "NNS",
   "commoner": "JJR",
   "fecund": "JJ",
   "huddled": "JJ",
   "aromatick": "JJ",
   "prototyped": "VBN",
   "restates": "VBZ",
-  "exercise": "NN",
-  "exchange": "NN",
   "pomaded": "VBN",
   "outlying": "JJ",
   "implicit": "JJ",
-  "design": "NN",
   "chinese": "JJ",
-  "weekday": "NN",
   "existent": "JJ",
   "formulated": "JJ",
   "formulates": "VBZ",
@@ -14522,52 +10600,32 @@ var lexicon={
   "misfired": "VBN",
   "exclaims": "VBZ",
   "curving": "JJ",
-  "sketchiest": "JJS",
   "revs": "VBZ",
-  "pre-1917": "JJ",
   "bluff": "JJ",
   "trifling": "JJ",
   "counterbalanced": "VBN",
   "confiscatory": "JJ",
-  "bind": "NN",
   "test-drive": "VB",
   "poaches": "VBZ",
   "re-open": "VB",
   "widowed": "VBN",
-  "death-penalty": "NN",
   "negro": "JJ",
   "outbid": "VB",
-  "thrill": "NN",
-  "unoriginal": "JJ",
-  "roughened": "VBN",
   "scalding": "JJ",
   "sprawled": "VBN",
   "multilayered": "JJ",
   "pedigreed": "VBN",
   "unspecified": "JJ",
-  "coast": "NNP",
-  "flashes": "NNS",
   "abolished": "VBN",
-  "neutralize": "VB",
   "newfangled": "JJ",
   "mid": "JJ",
-  "mix": "NN",
   "propagate": "VB",
   "sally": "VB",
-  "request": "NN",
-  "crediting": "NN",
   "skinny": "JJ",
-  "homeowner": "NN",
-  "new-product": "NN",
   "sidetrack": "VB",
   "interpeople": "JJ",
-  "paternal": "JJ",
-  "staff": "NN",
-  "controls": "NNS",
-  "regional": "JJ",
   "inferior": "JJ",
   "re-assumed": "VBN",
-  "swiftest": "JJS",
   "filleted": "VBN",
   "enhances": "VBZ",
   "embezzle": "VB",
@@ -14576,7 +10634,6 @@ var lexicon={
   "consentual": "JJ",
   "exclaim": "VB",
   "devour": "VB",
-  "highball": "NN",
   "elects": "VBZ",
   "spellbound": "JJ",
   "divvied": "VBN",
@@ -14586,98 +10643,65 @@ var lexicon={
   "deloused": "VBN",
   "aw": "UH",
   "almost": "RB",
-  "dissent": "NN",
   "pluck": "VB",
   "glycerinated": "JJ",
   "infer": "VB",
-  "sunburn": "NN",
   "numbered": "JJ",
   "bluesy": "JJ",
-  "bluest": "JJS",
-  "muscle": "NN",
   "ratify": "VB",
-  "breezier": "JJR",
   "miasmal": "JJ",
   "add": "VB",
-  "forays": "NNS",
   "match": "VB",
-  "molding": "NN",
   "more-than-average": "RB",
   "honeycombed": "JJ",
   "propel": "VB",
-  "horselike": "JJ",
   "masked": "JJ",
   "bustling": "JJ",
-  "pepper": "NN",
   "lessens": "VBZ",
   "stellar": "JJ",
   "fleshy": "JJ",
   "unreleased": "JJ",
   "unwind": "VB",
-  "functional": "JJ",
   "gleaned": "VBN",
   "dizzying": "JJ",
-  "contracts": "NNS",
   "tilled": "JJ",
   "multicolored": "JJ",
   "violent": "JJ",
   "wallow": "VB",
   "goin": "VBG",
   "entreat": "VB",
-  "parole": "NN",
-  "lear": "NNP",
   "heelsthe": "DT",
   "ceartaine": "JJ",
   "violate": "VB",
   "rightist": "JJ",
   "jack": "VB",
-  "faintest": "JJS",
-  "landmark": "NN",
   "solemn": "JJ",
   "parched": "JJ",
   "aural": "JJ",
-  "ventures": "NNS",
   "ciceronian": "JJ",
   "stray": "JJ",
-  "straw": "NN",
   "strap": "VB",
-  "swings": "NNS",
   "swingy": "JJ",
-  "boldest": "JJS",
-  "chainlike": "JJ",
   "undisciplined": "JJ",
   "unwrinkled": "JJ",
-  "puzzles": "NNS",
   "intermeshed": "JJ",
   "optioned": "VBN",
-  "shadier": "JJR",
-  "video": "NN",
-  "condition": "NN",
   "wobbling": "JJ",
   "maintain": "VB",
-  "bitterest": "JJS",
   "shadowy": "JJ",
-  "waffle": "NN",
   "depress": "VB",
   "collaborates": "VBZ",
-  "dusky": "JJ",
-  "calmest": "JJS",
   "pre-fund": "VB",
   "east-to-west": "RB",
-  "polarize": "VB",
   "awoke": "VBD",
-  "tow": "NN",
   "inconvenient": "JJ",
   "leach": "VB",
-  "toe": "NN",
   "murder": "JJ",
   "indiscreet": "JJ",
   "pyramidal": "JJ",
   "separatist": "JJ",
-  "bulletins": "NNS",
   "prone": "JJ",
   "overstrained": "VBN",
-  "snow": "NN",
   "inured": "VBN",
   "mammary": "JJ",
   "preset": "JJ",
@@ -14687,9 +10711,6 @@ var lexicon={
   "prevails": "VBZ",
   "devastating": "JJ",
   "prevaile": "VB",
-  "section": "NN",
-  "radio": "NN",
-  "lodge": "NN",
   "announce": "VB",
   "aaa": "JJ",
   "aah": "UH",
@@ -14697,52 +10718,36 @@ var lexicon={
   "overbearing": "JJ",
   "unlatch": "VB",
   "erupt": "VB",
-  "cozier": "JJR",
-  "approach": "NN",
   "predates": "VBZ",
   "irregular": "JJ",
-  "credit-card": "NN",
-  "shrewdest": "JJS",
   "subnormal": "JJ",
   "exterior": "JJ",
   "upholds": "VBZ",
-  "mother": "NN",
-  "alarms": "NNS",
-  "thumbs": "NNS",
   "pivotal": "JJ",
   "bewhiskered": "JJ",
   "arbitrary": "JJ",
   "reinsured": "VBN",
   "reinsurer": "JJR",
-  "dave": "NNP",
   "buildin": "VBG",
   "enunciate": "VB",
   "permitted": "JJ",
   "trustworthy": "JJ",
   "naturalized": "JJ",
-  "classiest": "JJS",
   "transform": "VB",
   "gim": "VB",
   "steers": "VBZ",
   "underclass": "JJ",
   "attempted": "JJ",
   "illuminating": "JJ",
-  "emotional": "JJ",
   "most-polluted": "JJS",
   "quicksilver": "JJ",
   "decorate": "VBP",
-  "shopping-center": "NN",
-  "sq.": "JJ",
   "acclaimed": "JJ",
   "shines": "VBZ",
-  "petition": "NN",
-  "formalize": "VB",
-  "subsidize": "VB",
   "longrun": "JJ",
   "patterned": "VBN",
   "discern": "VB",
   "outmoded": "JJ",
-  "n.y.-based": "JJ",
   "beseiged": "VBN",
   "couched": "VBN",
   "invades": "VBZ",
@@ -14752,51 +10757,36 @@ var lexicon={
   "overrides": "VBZ",
   "guilty": "JJ",
   "paralyzes": "VBZ",
-  "adios": "NNP",
   "erudite": "JJ",
   "paralyzed": "JJ",
   "sporty": "JJ",
   "noncombat": "JJ",
   "baser": "JJR",
-  "sports": "NNS",
   "tinplated": "VBN",
   "neglected": "JJ",
-  "states": "NNS",
   "moonlit": "JJ",
   "unarmed": "JJ",
   "provoke": "VB",
   "disliked": "JJ",
-  "persian": "NNP",
   "coiled": "JJ",
   "paide": "VBN",
   "paramount": "JJ",
-  "computerize": "VB",
-  "procedures": "NNS",
   "execute": "VB",
   "arteriolar": "JJ",
   "plain-out": "RB",
-  "clutch": "NN",
-  "unburdened": "JJ",
   "depersonalized": "VBN",
   "cancels": "VBZ",
   "kidnaped": "VBN",
-  "mapping": "NN",
   "limps": "VBZ",
   "uniformed": "JJ",
   "broached": "VBN",
-  "win-win": "NN",
   "knoweth": "VBP",
   "petered": "VBN",
-  "engineer": "NN",
   "cooling": "JJ",
   "portend": "VBP",
-  "froth": "NN",
   "straddles": "VBZ",
   "resifted": "VBN",
-  "announced.": "VBN",
   "adopt": "VB",
-  "trespass": "NN",
-  "insider-trading": "NN",
   "rebalanced": "VBN",
   "partake": "VB",
   "hedge": "VB",
@@ -14809,27 +10799,19 @@ var lexicon={
   "co-edits": "VBZ",
   "pronto": "RB",
   "jammed": "JJ",
-  "hellenic": "NNP",
   "together": "RB",
   "myself": "PRP",
   "slippery": "JJ",
   "hunts": "VBZ",
   "pre-try": "VB",
   "hevin": "VBG",
-  "nest": "NN",
   "excavated": "VBN",
   "reward": "VB",
   "burglarproof": "JJ",
-  "ya": "NN",
-  "action\\": "JJ",
-  "widest": "JJS",
   "dulls": "VBZ",
   "impound": "VB",
   "painteresque": "JJ",
   "wainscoted": "JJ",
-  "cranelike": "JJ",
-  "cone": "NN",
-  "steamier": "JJR",
   "overheated": "JJ",
   "ours": "PRP",
   "oftener": "RBR",
@@ -14838,37 +10820,23 @@ var lexicon={
   "attests": "VBZ",
   "disorganized": "JJ",
   "obeys": "VBZ",
-  "computer-maintenance": "NN",
   "overstaffed": "JJ",
   "dislocated": "JJ",
   "forbade": "VBD",
   "lapidary": "JJ",
-  "international\\": "JJ",
   "promote": "VB",
   "heave": "VB",
-  "aces": "NNS",
   "compel": "VB",
   "brash": "JJ",
   "gator": "JJ",
-  "brass": "NN",
-  "post-world": "NNP",
   "variegated": "JJ",
-  "apparel": "NN",
   "eschewed": "VBN",
-  "dish": "NN",
-  "wakened": "VBN",
-  "pickier": "JJR",
-  "ariz.-based": "JJ",
   "unlined": "JJ",
   "becase": "IN",
-  "tolls": "NNS",
-  "ticks": "NNS",
-  "overload": "NN",
   "sparked": "VBN",
   "infringe": "VB",
   "pulmonary": "JJ",
   "elongated": "VBN",
-  "imaging": "NN",
   "proceed": "VB",
   "irritate": "VB",
   "widens": "VBZ",
@@ -14884,48 +10852,35 @@ var lexicon={
   "ever-greater": "JJR",
   "underplayed": "VBN",
   "misspelled": "VBN",
-  "resort": "NN",
   "overused": "VBN",
   "characterizes": "VBZ",
-  "air-freight": "NN",
   "characterized": "VBN",
   "say-because": "IN",
   "organised": "JJ",
-  "perennian": "NNP",
   "monotone": "JJ",
   "seizin": "VBG",
-  "flemish": "NNP",
   "notify": "VB",
   "pleasin": "VBG",
   "conventionalized": "VBN",
   "flimsy": "JJ",
   "inaugurated": "VBN",
   "nagging": "JJ",
-  "cuff": "NN",
   "outdoors": "RB",
   "breakeven": "JJ",
-  "liabilities": "NNS",
   "comforting": "JJ",
   "engulf": "VB",
-  "displacing": "NN",
   "stigmatizes": "VBZ",
   "germans": "NNPS",
   "biggest-ever": "RB",
-  "attacks": "NNS",
   "behynde": "IN",
-  "sikh": "NNP",
-  "you": "NN",
-  "oil-price": "NN",
   "gilded": "JJ",
   "delinquent": "JJ",
   "mosey": "VB",
-  "shepherd": "NN",
   "deader": "JJR",
   "frumpy": "JJ",
   "determines": "VBZ",
   "unaddressed": "JJ",
   "investigate": "VB",
-  "mistakes": "NNS",
   "achieved": "VBN",
   "achieves": "VBZ",
   "degrading": "JJ",
@@ -14934,7 +10889,6 @@ var lexicon={
   "bludgeoned": "VBN",
   "blissfully": "RB",
   "rave": "JJ",
-  "decline": "NN",
   "deprecatory": "JJ",
   "out-trade": "VB",
   "fatiegued": "JJ",
@@ -14944,22 +10898,17 @@ var lexicon={
   "rosy": "JJ",
   "advise": "VB",
   "selle": "VB",
-  "flows": "NNS",
   "flown": "VBN",
   "unrestrained": "JJ",
   "underreported": "VBN",
   "polled": "VBN",
   "bestubbled": "JJ",
-  "bourbon": "NNP",
   "be-that": "VB",
-  "national-security": "NN",
   "tabled": "VBN",
   "amended": "JJ",
   "secondary": "JJ",
   "awaken": "VB",
   "digitalized": "JJ",
-  "shapes": "NNS",
-  "distrust": "NN",
   "entice": "VB",
   "sprightly": "JJ",
   "understanded": "VBN",
@@ -14967,82 +10916,59 @@ var lexicon={
   "divest": "VB",
   "square": "JJ",
   "baggy": "JJ",
-  "files": "NNS",
   "usurp": "VB",
   "junior": "JJ",
   "elide": "VBP",
   "freak": "JJ",
   "allayed": "VBN",
   "rainy": "JJ",
-  "rains": "NNS",
   "mock": "JJ",
-  "profit-sharing": "NN",
   "muddled": "JJ",
   "generates": "VBZ",
   "generated": "VBN",
   "buries": "VBZ",
-  "vice": "NN",
   "onct": "IN",
   "epitomizes": "VBZ",
   "resistance": "JJ",
   "epitomized": "VBN",
   "acclimatized": "VBN",
-  "worrisome": "JJ",
   "breathing": "JJ",
   "seized": "VBN",
-  "spoof": "NN",
-  "polling": "NN",
   "relives": "VBZ",
-  "lightest": "JJS",
   "inaccurate": "JJ",
   "appeased": "VBN",
   "capital": "JJ",
   "incriminating": "JJ",
   "wil": "MD",
-  "posturing": "NN",
   "stabilized": "JJ",
   "undecorated": "JJ",
   "stabilizes": "VBZ",
-  "patrol": "NN",
-  "hammer.``": "``",
   "counterfeit": "JJ",
   "tamper": "VB",
   "blustery": "JJ",
   "demonstrates": "VBZ",
-  "abuse": "NN",
-  "improvises": "VBZ",
   "improvised": "JJ",
   "stamped": "JJ",
-  "self-discipline": "NN",
-  "longitudinal": "JJ",
   "restrain": "VB",
   "underpin": "VB",
   "testifies": "VBZ",
-  "flex": "NN",
   "re-enter": "VB",
-  "feast": "NN",
-  "bills": "NNS",
   "relates": "VBZ",
   "maintains": "VBZ",
   "via": "IN",
   "scattershot": "JJ",
-  "shell": "NN",
   "instituted": "VBN",
   "baptized": "VBN",
-  "reverses": "VBZ",
   "congenital": "JJ",
   "limiting": "JJ",
   "elongate": "VB",
   "after": "RB",
   "outward": "RB",
-  "clash": "NN",
   "vernacular": "JJ",
-  "old-timers": "NNS",
   "politicized": "VBN",
   "enthrones": "VBZ",
   "clothbound": "JJ",
   "queried": "VBN",
-  "queries": "NNS",
   "artsy": "JJ",
   "pitted": "VBN",
   "acquires": "VBZ",
@@ -15050,32 +10976,23 @@ var lexicon={
   "refurnished": "VBN",
   "swift": "JJ",
   "unlamented": "JJ",
-  "bravo": "NNP",
-  "charts": "NNS",
   "bewildering": "JJ",
   "counterchallenge": "VB",
   "abandoned": "JJ",
   "rename": "VB",
   "apprehend": "VB",
   "disapprove": "VBP",
-  "inch": "NN",
   "coached": "VBN",
   "lopsided": "JJ",
-  "lobby": "NN",
   "antsy": "JJ",
   "plowed": "VBN",
   "banded": "JJ",
-  "poetry-and-jazz": "NN",
   "console": "VB",
   "superstrong": "JJ",
-  "back-office": "NN",
   "ablaze": "JJ",
-  "scares": "NNS",
   "u.s.-owned": "JJ",
   "swear": "VB",
-  "sweat": "NN",
   "*": "SYM",
-  "dynamite": "NN",
   "stymied": "VBN",
   "baffling": "JJ",
   "mutter": "VB",
@@ -15084,16 +11001,10 @@ var lexicon={
   "fulllength": "JJ",
   "fortunate": "JJ",
   "myn": "PRP",
-  "editorial-page": "NN",
   "overdeveloped": "JJ",
   "u.s.-south": "JJ",
   "threetranche": "JJ",
-  "clicks": "NNS",
-  "pantomime": "NN",
   "alienated": "JJ",
-  "coach": "NNP",
-  "ranks": "NNS",
-  "securities-industry": "NN",
   "cambodian": "JJ",
   "alienates": "VBZ",
   "sopping": "JJ",
@@ -15101,21 +11012,15 @@ var lexicon={
   "mossberg": "JJ",
   "kennedyesque": "JJ",
   "auctioned": "VBN",
-  "shriek": "NN",
   "precise": "JJ",
   "reactivated": "VBN",
-  "reports": "NNS",
-  "p.r.": "JJ",
   "catalyzed": "VBN",
   "secluded": "JJ",
-  "ground": "NN",
-  "n.j.-based": "JJ",
   "exhort": "VB",
   "occupying": "JJ",
   "untie": "VB",
   "icebound": "JJ",
   "suffocated": "VBN",
-  "tudor": "NNP",
   "downward": "JJ",
   "brings": "VBZ",
   "canonized": "JJ",
@@ -15128,20 +11033,16 @@ var lexicon={
   "retooled": "VBN",
   "outlawed": "JJ",
   "scoffs": "VBZ",
-  "rewards": "NNS",
   "tranquilizing": "JJ",
   "conned": "VBN",
   "undercut": "VB",
   "programed": "VBN",
   "braised": "VBN",
   "clumsy": "JJ",
-  "debut": "NN",
   "addicted": "VBN",
   "obdurate": "JJ",
-  "snakes": "NNS",
   "ate": "VBD",
   "no-o": "UH",
-  "air-conditioning": "NN",
   "earthy": "JJ",
   "playfully": "RB",
   "tangy": "JJ",
@@ -15149,7 +11050,6 @@ var lexicon={
   "readjusted": "VBN",
   "zounds": "UH",
   "unintended": "JJ",
-  "loathsome": "JJ",
   "relaunched": "VBN",
   "kayo": "VB",
   "unperformed": "JJ",
@@ -15157,49 +11057,36 @@ var lexicon={
   "unsuspecting": "JJ",
   "blackmailed": "VBN",
   "shalt": "VB",
-  "trigonal": "JJ",
   "quality": "JJ",
   "comprise": "VBP",
   "prim": "JJ",
   "sexist": "JJ",
   "undue": "JJ",
   "pastoral": "JJ",
-  "niche-itis,``": "``",
-  "thirtysomething": "NN",
   "plagued": "VBN",
   "thees": "DT",
   "pilloried": "VBN",
-  "personalize": "VB",
   "symbolizes": "VBZ",
-  "triggers": "NNS",
-  "closes": "VBZ",
   "closed": "JJ",
   "trucked": "VBN",
-  "billing": "NN",
   "sauterne": "JJ",
   "roofed": "VBN",
   "vows": "VBZ",
-  "short-selling": "NN",
   "morever": "RB",
-  "confesses": "VBZ",
   "shipwrecked": "JJ",
   "disseminated": "VBN",
   "disseminates": "VBZ",
   "distribute": "VB",
   "deters": "VBZ",
-  "prison": "NN",
   "unimpassioned": "JJ",
   "remind": "VB",
   "cavin": "VBG",
-  "tomblike": "JJ",
   "further": "JJR",
   "animate": "JJ",
-  "knifelike": "JJ",
   "whitens": "VBZ",
   "prefund": "VB",
   "ruffles": "VBZ",
   "summoned": "VBN",
-  "stints": "NNS",
   "bowing": "JJ",
   "emits": "VBZ",
   "first": "JJ",
@@ -15208,7 +11095,6 @@ var lexicon={
   "frazzled": "JJ",
   "unfree": "JJ",
   "followthrough": "JJ",
-  "upgrades": "NNS",
   "sighs": "VBZ",
   "bateau": "JJ",
   "momentary": "JJ",
@@ -15217,77 +11103,56 @@ var lexicon={
   "smalltime": "JJ",
   "fatigued": "JJ",
   "most-remarkable": "JJS",
-  "depository": "NN",
   "bulldozed": "VBN",
   "coppery": "JJ",
   "bi": "IN",
-  "shortened": "JJ",
   "contemplate": "VB",
   "fourfold": "JJ",
   "loving": "JJ",
   "refrain": "VB",
   "militated": "VBN",
-  "senate": "NNP",
-  "less-junky": "JJR",
   "jewel-bright": "RB",
   "privy": "JJ",
-  "printing": "NN",
   "unequalled": "JJ",
   "uncomforted": "JJ",
   "immune": "JJ",
   "advancing": "JJ",
   "burgundian": "JJ",
   "cardiac": "JJ",
-  "dove": "NN",
-  "stress": "NN",
   "lighter": "JJR",
   "stampeded": "VBN",
   "derive": "VBP",
   "haughty": "JJ",
   "paraded": "VBN",
-  "decreases": "NNS",
   "decreased": "JJ",
   "bipartisan": "JJ",
-  "parades": "NNS",
   "retails": "VBZ",
-  "ketchup": "NN",
   "withdrew": "VBD",
   "suspends": "VBZ",
   "fluted": "JJ",
   "topnotch": "JJ",
-  "novice": "NN",
   "exploding": "JJ",
   "complimented": "VBN",
   "quits": "VBZ",
   "sin-ned": "VB",
-  "training": "NN",
   "unlicensed": "JJ",
   "punk": "JJ",
   "isolated": "JJ",
   "reopen": "VB",
-  "bellsouth\\": "JJ",
   "structured": "JJ",
-  "draft": "NN",
-  "structures": "NNS",
   "plies": "VBZ",
   "veers": "VBZ",
-  "siding": "NN",
   "sag": "VB",
-  "afternoons": "NNS",
   "sap": "VB",
   "aside": "RB",
   "transcribed": "VBN",
-  "roadside": "NN",
   "destroy": "VB",
   "knew": "VBD",
   "butchered": "VBN",
   "accented": "JJ",
   "homespun": "JJ",
-  "cloak": "NN",
   "foward": "JJ",
   "uppermost": "RB",
-  "blinds": "NNS",
-  "dispute": "NN",
   "dissimilar": "JJ",
   "ghastly": "JJ",
   "plummet": "VB",
@@ -15301,21 +11166,15 @@ var lexicon={
   "originates": "VBZ",
   "rekindles": "VBZ",
   "observe": "VB",
-  "n.m.-based": "JJ",
   "spanking": "JJ",
   "coextrude": "VBP",
   "twisty": "JJ",
   "maximal": "JJ",
-  "canoe": "NN",
-  "creamier": "JJR",
   "redeemin": "VBG",
-  "fame": "NN",
   "thinkin": "VBG",
   "colorblind": "JJ",
-  "neapolitan": "NNP",
   "manifold": "JJ",
   "west-to-east": "RB",
-  "mich.-based": "JJ",
   "disperse": "VB",
   "nymphomaniac": "JJ",
   "ghostly": "JJ",
@@ -15323,128 +11182,83 @@ var lexicon={
   "warped": "JJ",
   "indeed": "RB",
   "stationary": "JJ",
-  "landscaping": "NN",
   "pushy": "JJ",
-  "vienna": "NNP",
   "tote": "VB",
-  "stone": "NN",
   "side": "JJ",
   "jordanian": "JJ",
-  "bond": "NN",
   "stony": "JJ",
   "sneering": "JJ",
   "wade": "VB",
   "mourns": "VBZ",
-  "plucky": "JJ",
   "unveils": "VBZ",
   "flirt": "VBP",
   "laminated": "VBN",
   "noninflationary": "JJ",
   "preppy": "JJ",
-  "rescues": "NNS",
-  "strips": "NNS",
   "overlying": "JJ",
   "bilked": "VBN",
-  "swallows": "NNS",
   "instigate": "VB",
   "ninetieth": "CD",
   "forestall": "VB",
-  "murkier": "JJR",
   "discolors": "VBZ",
   "introductory": "JJ",
   "brutal": "JJ",
   "unsatisfactory": "JJ",
-  "sp-44007": "LS",
   "whammo": "UH",
   "wavering": "JJ",
   "russian": "JJ",
-  "refueling": "NN",
   "teen": "JJ",
   "u.s.-canadian": "JJ",
   "foregone": "JJ",
-  "lang": "NNP",
   "unanalyzed": "JJ",
-  "garden": "NN",
-  "plant": "NN",
-  "d.o.a.": "JJ",
-  "plane": "NN",
   "rowdy": "JJ",
   "denude": "VB",
-  "eversteadier": "JJ",
-  "trade": "NN",
   "licks": "VBZ",
   "pre-signed": "VBN",
   "motley": "JJ",
-  "i.": "NNP",
   "imperil": "VB",
   "thereof": "RB",
   "featured": "JJ",
   "reappointed": "VBN",
   "flyaway": "JJ",
-  "yugoslav": "NNP",
   "dwelt": "VBD",
-  "murmur": "NN",
   "disadvantaged": "JJ",
   "bargen": "VBP",
   "thespian": "JJ",
   "forwards": "RB",
   "sidle": "VB",
   "molecular": "JJ",
-  "sunni": "NNP",
-  "top-20": "JJ",
-  "catskill": "NNP",
   "vocal": "JJ",
-  "minimize": "VB",
   "multipurpose": "JJ",
   "disenchanted": "JJ",
   "ancillary": "JJ",
-  "index": "NN",
   "nasal": "JJ",
-  "fashions": "NNS",
   "despise": "VBP",
   "stepwise": "JJ",
-  "sayin": "NN",
   "scuff": "VB",
   "resent": "VBP",
   "belled": "JJ",
-  "roughest": "JJS",
   "#": "#",
   "diluted": "VBN",
   "dilutes": "VBZ",
   "kneel": "VB",
   "milder": "JJR",
-  "brewing": "NN",
   "disallow": "VB",
-  "adagio": "NN",
   "enables": "VBZ",
   "harpy": "JJ",
-  "load": "NN",
-  "markdown": "NN",
-  "loan": "NN",
   "jowly": "JJ",
-  "unraveling": "NN",
   "modern": "JJ",
-  "upstart": "NN",
   "hind": "JJ",
-  "communal": "JJ",
   "arching": "JJ",
-  "chase": "NN",
   "sounding": "JJ",
-  "severest": "JJS",
   "favorites": "NNPS",
   "displeased": "JJ",
   "unlabeled": "JJ",
   "rammin": "VBG",
-  "displeases": "VBZ",
-  "picky": "JJ",
   "unto": "IN",
-  "stock-option": "NN",
-  "disorder": "NN",
   "expansionary": "JJ",
-  "dictates": "NNS",
   "dictated": "VBN",
   "irked": "JJ",
-  "vocalize": "VB",
   "appropriate": "JJ",
   "deduct": "VB",
   "traduce": "VB",
@@ -15454,33 +11268,22 @@ var lexicon={
   "surpassing": "JJ",
   "nondiscriminatory": "JJ",
   "overconfident": "JJ",
-  "scrape": "NN",
-  "scraps": "NNS",
-  "reimburses": "VBZ",
   "labelled": "JJ",
   "illustrates": "VBZ",
   "unmatched": "JJ",
-  "subcontracting": "NN",
   "manipulates": "VBZ",
   "gather": "VB",
   "jettisoned": "VBN",
   "pledge": "JJ",
   "gettin": "VBG",
-  "encloses": "VBZ",
   "overshadows": "VBZ",
-  "kibbutzim": "NNS",
   "deduces": "VBZ",
-  "internationale": "NNP",
   "subgross": "JJ",
   "deduced": "VBN",
   "involves": "VBZ",
   "counsels": "VBZ",
-  "sugar": "NN",
-  "tools": "NNS",
-  "zip": "NN",
   "illegal": "JJ",
   "afforded": "VBN",
-  "toy": "NN",
   "zim": "UH",
   "indpendent": "JJ",
   "pour": "VB",
@@ -15491,43 +11294,25 @@ var lexicon={
   "puckered": "VBN",
   "overridden": "VBN",
   "hitched": "VBN",
-  "ties": "NNS",
-  "autograph": "NN",
   "crabby": "JJ",
   "derelict": "JJ",
   "archival": "JJ",
-  "animal": "NN",
-  "food-poisoning": "NN",
-  "a.m.": "RB",
-  "thrust": "NN",
   "hindering": "JJ",
   "fascinating": "JJ",
   "behaves": "VBZ",
   "courted": "VBN",
   "fluffy": "JJ",
-  "over-40": "JJ",
   "elite": "JJ",
   "stricter": "JJR",
   "amble": "VB",
   "particular": "JJ",
-  "persistence": "NN",
-  "cabinet": "NN",
   "fervent": "JJ",
-  "amortize": "VB",
   "more-distinctive": "JJR",
-  "leafiest": "JJS",
   "touching": "JJ",
-  "acid-rain": "NN",
-  "pause": "NN",
   "spiffy": "JJ",
   "familiar": "JJ",
-  "hoses": "NNS",
   "lazy": "JJ",
-  "triples": "NNS",
-  "wire": "NN",
-  "quickest": "JJS",
   "tripled": "VBN",
-  "transvaal": "NNP",
   "staved": "VBN",
   "homosexual": "JJ",
   "lumbar": "JJ",
@@ -15547,50 +11332,36 @@ var lexicon={
   "predicts": "VBZ",
   "commandeered": "VBN",
   "mannered": "JJ",
-  "predict\\": "VBP",
   "rectilinear": "JJ",
-  "criminalize": "VB",
   "overdosed": "VBN",
-  "go-between": "NN",
   "persecuting": "JJ",
   "portly": "JJ",
   "shone": "VBD",
   "legato": "RB",
-  "schedule": "NN",
   "briefly-illumed": "VBN",
-  "abdominal": "JJ",
-  "loans": "NNS",
   "afoot": "RB",
   "mere": "JJ",
   "alreadeh": "RB",
-  "spots": "NNS",
   "misguided": "JJ",
-  "suits": "NNS",
   "de-leverage": "VB",
-  "informational": "JJ",
   "bunched": "VBN",
   "grecian": "JJ",
   "mercenary": "JJ",
   "suicidal": "JJ",
   "admixed": "VBN",
   "bludgeon": "VB",
-  "streetspeak": "NNP",
   "closeup": "JJ",
   "viral": "JJ",
   "zairean": "JJ",
-  "paperback": "NN",
   "prolong": "VB",
   "jamaican": "JJ",
-  "spooky": "JJ",
   "sparkling": "JJ",
   "lighted": "JJ",
-  "insult": "NN",
   "flng": "VB",
   "tolerated": "VBN",
   "hereditary": "JJ",
   "tolerates": "VBZ",
   "overrun": "VBN",
-  "spill": "NN",
   "blooming": "JJ",
   "overheard": "VBN",
   "betide": "VB",
@@ -15601,47 +11372,34 @@ var lexicon={
   "egged": "VBN",
   "stimulate": "VB",
   "counseled": "VBN",
-  "baying": "NN",
   "deducted": "VBN",
   "satisfies": "VBZ",
   "dapper": "JJ",
   "insolently": "RB",
   "unacknowledged": "JJ",
-  "shear": "NN",
   "pastdue": "JJ",
-  "pegs": "NNS",
   "entitled": "JJ",
   "overpopulated": "VBN",
   "churchillian": "JJ",
-  "network": "NN",
   "gridded": "JJ",
-  "diesel": "NN",
   "unkempt": "JJ",
   "coldhearted": "JJ",
   "delves": "VBZ",
   "licked": "JJ",
   "delved": "VBN",
   "guatemalan": "JJ",
-  "tangle": "NN",
   "reimbursed": "VBN",
   "vibrate": "VB",
-  "rates": "NNS",
-  "target": "NN",
-  "iron": "NN",
   "tackled": "VBN",
   "overlays": "VBZ",
   "pleural": "JJ",
-  "self-defense": "NN",
   "confabulated": "VBN",
   "swims": "VBZ",
   "fitted": "VBN",
   "respectfully": "RB",
-  "toast": "NN",
   "versed": "VBN",
   "blighted": "JJ",
-  "screening": "NN",
   "herded": "VBN",
-  "happiest": "JJS",
   "obsoleted": "VBN",
   "mexican": "JJ",
   "a-reflects": "VBZ",
@@ -15659,7 +11417,6 @@ var lexicon={
   "pungent": "JJ",
   "entertains": "VBZ",
   "crowning": "JJ",
-  "exile": "NN",
   "outclassed": "JJ",
   "grapple": "VB",
   "unlaundered": "VBN",
@@ -15668,10 +11425,8 @@ var lexicon={
   "outmaneuvered": "VBN",
   "wispy": "JJ",
   "figural": "JJ",
-  "securities-firm": "NN",
   "mingle": "VB",
   "quoted": "VBN",
-  "quotes": "NNS",
   "chides": "VBZ",
   "demolished": "JJ",
   "slouches": "VBZ",
@@ -15679,29 +11434,21 @@ var lexicon={
   "rile": "VBP",
   "unrivaled": "JJ",
   "cede": "VB",
-  "humor": "NN",
   "disillusioned": "JJ",
   "honoured": "VBN",
   "ply": "VBP",
   "tropho": "JJ",
-  "accords": "NNS",
   "emulated": "VBN",
   "snowy": "JJ",
-  "navigational": "JJ",
-  "snows": "NNS",
   "astonished": "JJ",
   "overrules": "VBZ",
-  "detribalize": "VB",
   "conserves": "VBZ",
   "howling": "JJ",
   "conserved": "VBN",
   "wintry": "JJ",
-  "parklike": "JJ",
   "shrink": "VB",
-  "scores": "NNS",
   "bestowed": "VBN",
   "gyrate": "VB",
-  "switches": "NNS",
   "hovers": "VBZ",
   "disapproves": "VBZ",
   "released": "VBN",
@@ -15715,23 +11462,18 @@ var lexicon={
   "tempts": "VBZ",
   "discover": "VB",
   "penetrated": "VBN",
-  "theorize": "VBP",
   "hops": "VBZ",
   "tippling": "JJ",
   "homeward": "RB",
   "marked": "JJ",
   "immunized": "VBN",
-  "market": "NN",
   "uncountered": "JJ",
   "menstrual": "JJ",
   "intrapulmonary": "JJ",
   "nomenclatural": "JJ",
   "infantile": "JJ",
-  "flourishes": "NNS",
   "amputated": "VBN",
-  "fund-raising": "NN",
   "bartered": "VBN",
-  "curls": "NNS",
   "unuttered": "JJ",
   "disparate": "JJ",
   "lumbering": "JJ",
@@ -15739,46 +11481,33 @@ var lexicon={
   "expedite": "VB",
   "commercialized": "VBN",
   "prospers": "VBZ",
-  "oppposes": "VBZ",
   "supplant": "VB",
   "counteract": "VB",
   "accomplish": "VB",
-  "riskier": "JJR",
-  "discount-store": "NN",
   "yourself": "PRP",
   "dawns": "VBZ",
   "thar": "RB",
-  "thaw": "NN",
-  "reconvened": "VBN",
-  "gobble": "NN",
   "reconvenes": "VBZ",
   "lumpy": "JJ",
   "nervy": "JJ",
-  "lumps": "NNS",
   "similiar": "JJ",
   "erred": "VBN",
   "concurs": "VBZ",
-  "leather": "NN",
   "reorganized": "VBN",
   "reorganizes": "VBZ",
   "derogatory": "JJ",
   "examinin": "VBG",
-  "mandarin": "NNP",
-  "feuds": "NNS",
   "analyzes": "VBZ",
   "analyzed": "VBN",
   "segmental": "JJ",
   "pulverized": "VBN",
-  "cycling": "NN",
   "invert": "VB",
   "wolde": "MD",
   "avian": "JJ",
   "homely": "JJ",
   "foggy": "JJ",
   "grevouselye": "RB",
-  "figures": "NNS",
   "outmaneuver": "VB",
-  "patchwork": "NN",
   "coordinate": "VB",
   "defers": "VBZ",
   "nazi": "JJ",
@@ -15787,10 +11516,7 @@ var lexicon={
   "congeal": "VB",
   "seamy": "JJ",
   "allocates": "VBZ",
-  "warehouse": "NN",
-  "grande": "NNP",
   "dumpy": "JJ",
-  "ghostlike": "JJ",
   "hoa-whup": "UH",
   "uncorrected": "JJ",
   "sniffs": "VBZ",
@@ -15804,7 +11530,6 @@ var lexicon={
   "exonerated": "JJ",
   "mellowed": "VBN",
   "reintegrated": "VBN",
-  "j": "NNP",
   "posterior": "JJ",
   "u.s.-backed": "JJ",
   "overpay": "VB",
@@ -15813,36 +11538,23 @@ var lexicon={
   "godamit": "VB",
   "semiarid": "JJ",
   "authoritarian": "JJ",
-  "teeth": "NNS",
   "repay": "VB",
   "renege": "VB",
   "messy": "JJ",
   "revoke": "VB",
-  "mating": "NN",
-  "heaves": "NN",
   "egad": "UH",
-  "belching": "NN",
   "amatory": "JJ",
   "edited": "VBN",
   "modular": "JJ",
-  "b-1b": "NNP",
   "multipartisan": "JJ",
   "creepy": "JJ",
-  "amount": "NN",
-  "fancier": "JJR",
-  "shuffle": "NN",
   "locates": "VBZ",
-  "pulverize": "VB",
   "ripe": "JJ",
   "ejected": "VBN",
-  "moistened": "JJ",
-  "weathering": "NN",
   "woodsy": "JJ",
   "headquartered": "VBN",
   "malnourished": "JJ",
   "contrived": "JJ",
-  "index-arbitrage": "NN",
-  "snazzier": "JJR",
   "unfertilized": "VBN",
   "lateral": "JJ",
   "followeth": "VBZ",
@@ -15851,25 +11563,16 @@ var lexicon={
   "dulled": "JJ",
   "duller": "JJR",
   "tode": "VBN",
-  "bale": "NN",
-  "grimace": "NN",
   "bald": "JJ",
-  "wine-making": "NN",
   "resettle": "VB",
   "earliest": "RB",
   "revolutionary": "JJ",
-  "liaison": "NN",
   "corrupting": "JJ",
   "financed": "VBN",
-  "cetera": "NN",
   "lament": "JJ",
   "sentenced": "VBN",
-  "congresssional": "JJ",
-  "curbside": "NN",
-  "hints": "NNS",
   "impressively": "RB",
   "multilateral": "JJ",
-  "dimension": "NN",
   "grafted": "JJ",
   "flighty": "JJ",
   "albeit": "IN",
@@ -15879,12 +11582,10 @@ var lexicon={
   "hobbles": "VBZ",
   "hobbled": "VBN",
   "cautions": "VBZ",
-  "subnational": "JJ",
   "delimit": "VB",
   "vaster": "JJR",
   "breakneck": "JJ",
   "steely": "JJ",
-  "ruble": "NN",
   "deter": "VB",
   "tactual": "JJ",
   "animates": "VBZ",
@@ -15892,25 +11593,18 @@ var lexicon={
   "flees": "VBZ",
   "gala": "JJ",
   "clobbers": "VBZ",
-  "loosened": "JJ",
   "simian": "JJ",
   "fairer": "JJR",
   "autopsied": "VBN",
-  "subliminal": "JJ",
   "unpromising": "JJ",
   "shoe-horned": "VBN",
   "savvy": "JJ",
   "abstain": "VB",
-  "middle-south": "NNP",
-  "cast-iron": "NN",
   "fabulously": "RB",
   "defies": "VBZ",
   "overthrown": "VBN",
   "ingratiating": "JJ",
   "saddled": "JJ",
-  "centralize": "VB",
-  "parade": "NN",
-  "lifelike": "JJ",
   "stagger": "VB",
   "slapstick": "JJ",
   "dehydrate": "VB",
@@ -15925,43 +11619,27 @@ var lexicon={
   "restarted": "VBN",
   "overweighted": "VBN",
   "deconstructed": "JJ",
-  "preflight": "NN",
   "aa": "JJ",
   "drab": "JJ",
-  "structure": "NN",
-  "tandem": "NN",
   "moribund": "JJ",
   "homicidal": "JJ",
-  "gender": "NN",
-  "button": "NN",
   "ribald": "JJ",
   "pristine": "JJ",
   "ventilates": "VBZ",
   "adulterate": "JJ",
-  "addresses": "NNS",
   "addressed": "VBN",
   "recused": "VBN",
   "whisks": "VBZ",
   "retried": "VBN",
-  "control": "NN",
-  "fearsome": "JJ",
   "stemmed": "JJ",
   "re-use": "VB",
   "immoral": "JJ",
   "hafta": "VB",
   "alaskan": "JJ",
-  "whistle": "NN",
   "hid": "VBD",
   "soggy": "JJ",
-  "cruise": "NN",
-  "hock": "NN",
-  "brood": "NN",
-  "demoralize": "VB",
   "surrounds": "VBZ",
   "refuel": "VB",
-  "guber-peters": "NNP",
-  "muff": "NN",
-  "crest": "NN",
   "depreciating": "JJ",
   "joins": "VBZ",
   "undo": "VB",
@@ -15969,21 +11647,15 @@ var lexicon={
   "strapping": "JJ",
   "overestimate": "VB",
   "unequivocal": "JJ",
-  "fine-tuning": "NN",
   "punish": "VB",
-  "function": "NN",
-  "\\*\\*\\*": "SYM",
   "recessed": "VBN",
   "cosmopolitan": "JJ",
   "pursued": "VBN",
   "aftermarket": "JJ",
   "goddamned": "JJ",
-  "refocusing": "NN",
   "connected": "JJ",
-  "stereo": "NN",
   "scrambled": "JJ",
   "shakespearean": "JJ",
-  "well-being": "NN",
   "creamed": "VBN",
   "cavort": "VBP",
   "outflank": "VB",
@@ -15991,17 +11663,12 @@ var lexicon={
   "improvident": "JJ",
   "trammel": "VB",
   "computed": "VBN",
-  "pension-fund": "NN",
   "realign": "VB",
   "juggle": "VB",
   "castoff": "JJ",
-  "eulogize": "VB",
   "publicized": "VBN",
   "undermined": "VBN",
   "bearing": "JJ",
-  "maximize": "VB",
-  "industrials": "NNS",
-  "listing": "NN",
   "undermines": "VBZ",
   "harder": "JJR",
   "harden": "VB",
@@ -16016,8 +11683,6 @@ var lexicon={
   "pooh-poohed": "VB",
   "crushed": "JJ",
   "tarnish": "VB",
-  "chain-smoking": "NN",
-  "taping": "NN",
   "thatcherite": "JJ",
   "warmer": "JJR",
   "solicits": "VBZ",
@@ -16034,29 +11699,21 @@ var lexicon={
   "converted": "VBN",
   "pumped": "VBN",
   "u.s.-mexico": "JJ",
-  "piece": "NN",
   "leathery": "JJ",
-  "contest": "NN",
   "unroll": "VBP",
   "extenuate": "VB",
   "updated": "JJ",
-  "updates": "NNS",
   "overcomes": "VBZ",
   "accentual": "JJ",
-  "mig-1": "JJ",
-  "lights": "NNS",
   "sunder": "VB",
-  "tips": "NNS",
   "taper": "VB",
   "chaperoned": "JJ",
-  "bargelike": "JJ",
   "tabulated": "VBN",
   "defer": "VB",
   "blistering": "JJ",
   "degenerate": "JJ",
   "cursory": "JJ",
   "prohibits": "VBZ",
-  "toilsome": "JJ",
   "neutered": "VBN",
   "accusatory": "JJ",
   "overcome": "VB",
@@ -16071,19 +11728,14 @@ var lexicon={
   "warmhearted": "JJ",
   "lacerated": "JJ",
   "deplete": "VB",
-  "bleat": "NN",
   "silly": "JJ",
   "deserving": "JJ",
   "spoiled": "JJ",
   "closeted": "JJ",
   "desist": "VB",
   "nighttime": "JJ",
-  "secondbiggest": "JJS",
-  "attempts": "NNS",
   "chartered": "JJ",
   "acquit": "VB",
-  "scrubbing": "NN",
-  "exports": "NNS",
   "establishes": "VBZ",
   "compounded": "JJ",
   "perceive": "VB",
@@ -16098,27 +11750,19 @@ var lexicon={
   "hardworking": "JJ",
   "lowly": "JJ",
   "recut": "JJ",
-  "c.": "RB",
   "recur": "VB",
-  "cd": "NNP",
   "distorts": "VBZ",
-  "employees": "NNS",
   "spawn": "VB",
   "nae": "UH",
   "grown": "JJ",
   "yongst": "JJS",
   "alludes": "VBZ",
-  "background": "NN",
-  "farms": "NNS",
   "downtrodden": "JJ",
   "afire": "RB",
   "uncivil": "JJ",
   "intercollegiate": "JJ",
   "repudiate": "VB",
-  "maitre": "NNP",
   "bold": "JJ",
-  "bolt": "NN",
-  "lieu": "NN",
   "errs": "VBZ",
   "approximate": "JJ",
   "impassioned": "JJ",
@@ -16126,9 +11770,7 @@ var lexicon={
   "multiscreen": "JJ",
   "secondhand": "JJ",
   "overburden": "VB",
-  "southfield": "NNP",
   "attached": "JJ",
-  "boomerang": "NN",
   "hypertrophied": "VBN",
   "covert": "JJ",
   "covers": "VBZ",
@@ -16136,30 +11778,21 @@ var lexicon={
   "unholy": "JJ",
   "worcestershire": "JJ",
   "excel": "JJ",
-  "adjourning": "NN",
   "misinterpreted": "VBN",
   "overdue": "JJ",
   "deputized": "VBN",
   "peruse": "VB",
-  "milk": "NN",
   "agleam": "JJ",
   "disgusting": "JJ",
   "amaze": "VB",
   "overproduce": "VB",
   "encircle": "VB",
-  "record-keeping": "NN",
-  "nationalize": "VB",
-  "materialize": "VB",
-  "economize": "VB",
   "shod": "JJ",
   "overlaid": "VBN",
   "faustian": "JJ",
   "dishonored": "VBN",
-  "changes": "NNS",
-  "massage": "NN",
   "validate": "VB",
   "breathtaking": "JJ",
-  "licensing": "NN",
   "weeklong": "JJ",
   "intensively": "RB",
   "perk": "JJ",
@@ -16174,13 +11807,11 @@ var lexicon={
   "marbleized": "VBN",
   "accessory": "JJ",
   "instills": "VBZ",
-  "switch": "NN",
   "downsized": "VBN",
   "longhand": "JJ",
   "technophiliac": "JJ",
   "frittered": "VBN",
   "sculpts": "VBZ",
-  "spinoff": "NN",
   "irresolute": "JJ",
   "bein": "VBG",
   "unvisited": "VBN",
@@ -16194,54 +11825,29 @@ var lexicon={
   "forbids": "VBZ",
   "standby": "JJ",
   "inflight": "JJ",
-  "mining": "NN",
-  "loneliest": "JJS",
   "exclusionary": "JJ",
   "occupies": "VBZ",
-  "dash": "NN",
   "greet": "VB",
   "occupied": "JJ",
   "clung": "VBD",
-  "stopgap": "NN",
-  "strengtened": "VBN",
-  "theatre": "NN",
-  "blackest": "JJS",
   "astounds": "VBZ",
-  "milling": "NN",
-  "gage": "NN",
   "enumerated": "VBN",
-  "parent": "NN",
   "pained": "JJ",
-  "countenance": "NN",
-  "trades": "NNS",
   "typify": "VBP",
   "dedicate": "VB",
-  "kan.-based": "JJ",
   "arcaded": "JJ",
   "terse": "JJ",
   "maintained": "VBN",
-  "grants": "NNS",
   "disciplinary": "JJ",
-  "unopened": "JJ",
   "undertake": "VB",
   "referrin": "VBG",
   "outspends": "VBZ",
   "sprained": "VBN",
-  "cluster": "NN",
   "underweighted": "VBN",
   "everyday": "JJ",
-  "par": "NN",
   "pat": "JJ",
-  "paw": "NN",
-  "pad": "NN",
-  "pal": "NN",
-  "pan": "NN",
-  "claps": "NNS",
-  "ill.-based": "JJ",
   "mortgaged": "VBN",
   "haint": "VBZ",
-  "gates": "NNS",
-  "pershing": "NNP",
   "doctoral": "JJ",
   "recopied": "VBN",
   "safeguarded": "VBN",
@@ -16251,27 +11857,21 @@ var lexicon={
   "intracompany": "JJ",
   "disappointed": "JJ",
   "gossipy": "JJ",
-  "gossips": "NNS",
   "laughing": "JJ",
   "undifferentiated": "JJ",
   "receave": "VBP",
   "unissued": "JJ",
-  "roar": "NN",
   "classifies": "VBZ",
   "unclassified": "JJ",
   "preoccupies": "VBZ",
   "solidify": "VB",
   "roam": "VB",
-  "amasses": "VBZ",
   "uptown": "RB",
   "amassed": "VBN",
-  "styling": "NN",
   "suject": "JJ",
   "gory": "JJ",
   "gore": "VB",
-  "proceeds": "NNS",
   "grudging": "JJ",
-  "flock": "NN",
   "unturned": "JJ",
   "princesse": "JJ",
   "prudent": "JJ",
@@ -16280,7 +11880,6 @@ var lexicon={
   "forges": "VBZ",
   "goofy": "JJ",
   "forged": "JJ",
-  "parcel": "NN",
   "worded": "VBN",
   "invigorate": "VB",
   "disused": "JJ",
@@ -16289,7 +11888,6 @@ var lexicon={
   "face-to-wall": "RB",
   "faded": "JJ",
   "doting": "JJ",
-  "leveling": "NN",
   "chipper": "JJ",
   "distinct": "JJ",
   "promazine": "JJ",
@@ -16302,25 +11900,18 @@ var lexicon={
   "uninspired": "JJ",
   "bathed": "VBN",
   "chopped": "JJ",
-  "texan": "NNP",
-  "ba2": "JJ",
-  "ba3": "JJ",
   "minincomputer": "JJR",
   "forthwith": "RB",
-  "crawls": "NNS",
   "oks": "VBZ",
   "declamatory": "JJ",
   "conspires": "VBZ",
   "bah": "JJ",
   "obtaine": "VB",
-  "recreational": "JJ",
   "effete": "JJ",
   "byinge": "VBG",
-  "rankest": "JJS",
   "hosted": "VBN",
   "wanting": "JJ",
   "slithers": "VBZ",
-  "divorce": "NN",
   "weave": "VB",
   "gotten": "VBN",
   "cross-pollinated": "VBN",
@@ -16328,8 +11919,6 @@ var lexicon={
   "sole": "JJ",
   "totter": "VB",
   "outta": "IN",
-  "ages": "NNS",
-  "meltdown": "NN",
   "dismember": "VB",
   "appellate": "JJ",
   "fluctuate": "VBP",
@@ -16342,8 +11931,6 @@ var lexicon={
   "relocate": "VB",
   "elapse": "VB",
   "brooken": "VBN",
-  "crude-oil": "NN",
-  "devils": "NNS",
   "glottal": "JJ",
   "noninstitutionalized": "JJ",
   "glorifies": "VBZ",
@@ -16361,15 +11948,9 @@ var lexicon={
   "uhhu": "UH",
   "embarks": "VBZ",
   "inspect": "VB",
-  "sit-in": "NN",
   "unregisterd": "JJ",
-  "definitional": "JJ",
-  "flurry": "NN",
   "plinking": "JJ",
-  "snag": "NN",
   "snap": "VB",
-  "bio": "NN",
-  "bid": "NN",
   "redeem": "JJ",
   "pollinate": "VB",
   "keeeerist": "UH",
@@ -16377,25 +11958,15 @@ var lexicon={
   "accelerate": "VB",
   "ourselves": "PRP",
   "scald": "VB",
-  "scale": "NN",
-  "lounges": "NNS",
   "costumed": "VBN",
-  "belting": "NN",
-  "proportional": "JJ",
   "downhill": "RB",
   "multilayer": "JJ",
   "bong": "UH",
   "overpower": "VB",
-  "garbage-disposal": "NN",
   "quiescent": "JJ",
   "unstimulated": "JJ",
   "calico": "JJ",
-  "sterilize": "VB",
-  "likeliest": "JJS",
-  "rinse": "NN",
-  "angriest": "JJS",
   "intricate": "JJ",
-  "blaze": "NN",
   "mowed": "VBN",
   "annoy": "VB",
   "populist": "JJ",
@@ -16404,7 +11975,6 @@ var lexicon={
   "lower-priced": "JJR",
   "transplanted": "VBN",
   "advertised": "VBN",
-  "casualty-insurance": "NN",
   "sink": "VB",
   "irritating": "JJ",
   "tat": "VB",
@@ -16412,53 +11982,35 @@ var lexicon={
   "clockwise": "RB",
   "matinee": "JJ",
   "airlifted": "VBN",
-  "tunnel": "NN",
-  "e.g.": "RB",
   "higher-technology": "JJR",
-  "sanding": "NN",
   "stock": "JJ",
-  "drape": "NN",
   "subpoenaed": "VBN",
   "envisage": "VB",
-  "bridges": "NNS",
   "negotiated": "VBN",
   "whereof": "RB",
-  "labor": "NN",
   "<": "SYM",
   "infrequent": "JJ",
-  "dam": "NN",
-  "wiggier": "JJR",
-  "rebel": "NN",
   "serpentine": "JJ",
   "slacken": "VB",
   "verifying": "JJ",
   "unstuck": "JJ",
   "labile": "JJ",
   "postpone": "VB",
-  "covenants": "NNS",
-  "laps": "NNS",
   "chased": "VBN",
   "tbond": "JJ",
-  "time": "NN",
   "natty": "JJ",
-  "gear": "NN",
   "retrench": "VBP",
   "unending": "JJ",
   "loved": "JJ",
-  "spookiest": "JJS",
   "halcyon": "JJ",
-  "propagandize": "VB",
   "sublunary": "JJ",
   "builtin": "JJ",
   "replanted": "VBN",
   "rediscovered": "VBN",
   "trundles": "VBZ",
-  "profoundest": "JJS",
   "yeeech": "UH",
-  "capita": "NNS",
   "gulled": "VBN",
   "shrugs": "VBZ",
-  "camping": "NN",
   "circumpolar": "JJ",
   "resubmit": "VB",
   "bogartian": "JJ",
@@ -16466,44 +12018,30 @@ var lexicon={
   "striped": "JJ",
   "cleaned": "VBN",
   "dislodge": "VB",
-  "phases": "NNS",
-  "alveolar": "NN",
   "packaged": "VBN",
   "fester": "VB",
-  "crassest": "JJS",
   "most-indebted": "JJS",
   "upbeat": "JJ",
   "plaid": "JJ",
-  "cow": "NN",
   "deem": "VBP",
   "promoted": "VBN",
   "preconference": "JJ",
   "persianesque": "JJ",
-  "blooms": "NNS",
   "injured": "JJ",
   "tighten": "VB",
   "injures": "VBZ",
   "tighter": "JJR",
-  "sets": "NNS",
   "terrorized": "VBN",
   "inviting": "JJ",
   "stuffy": "JJ",
   "regain": "VB",
-  "hose": "NN",
   "maronite": "JJ",
-  "host": "NN",
   "expire": "VB",
-  "whacky": "JJ",
-  "greedier": "JJR",
   "buckle": "VB",
   "awarded": "JJ",
-  "ivory": "NN",
-  "brand": "NN",
   "reminds": "VBZ",
-  "editing": "NN",
   "annoying": "JJ",
   "backfires": "VBZ",
-  "shooting": "NN",
   "misstated": "VBN",
   "individuate": "VB",
   "surreal": "JJ",
@@ -16514,34 +12052,26 @@ var lexicon={
   "oral": "JJ",
   "assembles": "VBZ",
   "sleek": "JJ",
-  "winningest": "JJS",
   "assembled": "VBN",
   "vile": "JJ",
   "incurs": "VBZ",
   "lurk": "VB",
   "sunk": "VBN",
-  "smoky": "JJ",
   "razed": "JJ",
-  "scrutinize": "VB",
   "frizzled": "JJ",
-  "ebony": "NN",
   "omits": "VBZ",
   "slaughtered": "VBN",
   "ensnared": "VBN",
-  "muse": "NN",
   "brushy": "JJ",
   "adjourn": "VB",
-  "scheduling": "NN",
   "quick-fired": "VBN",
   "thoriated": "VBN",
-  "bunt": "NN",
   "adjacent": "JJ",
   "nonsingular": "JJ",
   "predicated": "VBN",
   "oooo": "UH",
   "transcultural": "JJ",
   "reorient": "VB",
-  "carnal": "JJ",
   "digest": "VB",
   "edits": "VBZ",
   "tantalized": "VBN",
@@ -16550,11 +12080,9 @@ var lexicon={
   "holdin": "VBG",
   "unscrew": "VB",
   "reused": "VBN",
-  "knock-offs": "NNS",
   "rail": "JJ",
   "whereupon": "IN",
   "superimpose": "VB",
-  "inspectors": "NNS",
   "decorticated": "VBN",
   "blunts": "VBZ",
   "withheld": "VBN",
@@ -16566,66 +12094,48 @@ var lexicon={
   "injected": "VBN",
   "kept": "VBD",
   "nominate": "VB",
-  "diuretic": "NN",
-  "taint": "NN",
   "isolates": "VBZ",
-  "rides": "NNS",
   "genital": "JJ",
   "pops": "VBZ",
-  "worthiest": "JJS",
   "queer": "JJ",
   "curricular": "JJ",
   "commence": "VB",
   "enslave": "VBP",
-  "squeaking": "NN",
   "sectionalized": "JJ",
   "startle": "VB",
   "cajun": "JJ",
-  "bargains": "NNS",
   "yearago": "JJ",
   "rightward": "RB",
   "confide": "VB",
-  "governmental-affairs": "NNS",
   "dabbles": "VBZ",
   "affixed": "VBN",
   "catch": "VB",
-  "strangest": "JJS",
   "subjugate": "VB",
   "cracked": "JJ",
   "precede": "VB",
   "outface": "VB",
-  "cycle": "NN",
-  "frankest": "JJS",
   "lockian": "JJ",
   "hearty": "JJ",
   "detained": "VBN",
   "accede": "VB",
-  "advances": "NNS",
   "toadying": "JJ",
   "spawns": "VBZ",
   "gifted": "JJ",
   "tristate": "JJ",
-  "exhausts": "NNS",
-  "convict": "NN",
   "arbitrated": "VBN",
   "jejune": "JJ",
   "reassign": "VB",
   "arbitrates": "VBZ",
   "puzzle": "JJ",
-  "rounds": "NNS",
   "forbad": "VBD",
   "dank": "JJ",
   "plumps": "VBZ",
-  "vivo": "NN",
   "wipes": "VBZ",
-  "latch": "NN",
   "radioed": "JJ",
   "vanishes": "VBZ",
   "scandanavian": "JJ",
   "stinkin": "JJ",
   "obviate": "VB",
-  "comments": "NNS",
-  "prescription-drug": "NN",
   "mistook": "VBD",
   "abhorrent": "JJ",
   "overwrought": "JJ",
@@ -16633,57 +12143,39 @@ var lexicon={
   "svelte": "JJ",
   "f-includes": "VBZ",
   "shulde": "MD",
-  "spin-off": "NN",
-  "multi-valued": "NNS",
   "crippled": "JJ",
   "hoarse": "JJ",
-  "hart-scott-rodino": "NNP",
   "snubbed": "VBN",
-  "mutters": "NNS",
   "rededicate": "VB",
   "chaired": "VBN",
   "graduated": "JJ",
   "confounded": "JJ",
   "bengali": "JJ",
-  "vaguest": "JJS",
   "contradicts": "VBZ",
   "modified": "JJ",
   "resembles": "VBZ",
-  "ferry": "NN",
   "modifies": "VBZ",
-  "trump": "NN",
   "tinted": "VBN",
   "inclosed": "VBN",
   "bleary": "JJ",
-  "levy": "NN",
   "heartbreaking": "JJ",
   "typewritten": "JJ",
   "doggone": "JJ",
   "branched": "JJ",
-  "motions": "NNS",
   "redheaded": "JJ",
   "duplex": "JJ",
   "devastated": "JJ",
-  "wearisome": "JJ",
-  "footing": "NN",
   "flaccid": "JJ",
   "keno": "JJ",
   "electrified": "VBN",
   "delude": "VB",
-  "view": "NN",
   "discontinued": "JJ",
-  "programing": "NN",
   "sonuvabitch": "UH",
-  "poisoning": "NN",
-  "recreational-vehicle": "NN",
-  "balance-sheet": "NN",
-  "fondest": "JJS",
   "dynamited": "VBN",
   "hyperfine": "JJ",
   "boiling": "JJ",
   "moldy": "JJ",
   "readjust": "VB",
-  "hack": "NN",
   "crimped": "JJ",
   "fickle": "JJ",
   "subjugated": "JJ",
@@ -16693,25 +12185,16 @@ var lexicon={
   "impolite": "JJ",
   "ignored": "JJ",
   "encourages": "VBZ",
-  "professes": "VBZ",
   "emote": "VB",
   "ignores": "VBZ",
   "professed": "JJ",
   "visceral": "JJ",
   "addled": "JJ",
   "thunderstruck": "JJ",
-  "fiddling": "NN",
-  "comb": "NN",
-  "dispatch": "NN",
   "deposited": "VBN",
-  "mass.-based": "JJ",
   "allnight": "JJ",
-  "movie-production": "NN",
   "followin": "VBG",
-  "mold": "NN",
-  "bows": "NNS",
   "circulatory": "JJ",
-  "barges": "NNS",
   "muffled": "JJ",
   "barged": "VBN",
   "longing": "JJ",
@@ -16719,28 +12202,21 @@ var lexicon={
   "tweedy": "JJ",
   "desolate": "JJ",
   "captures": "VBZ",
-  "worthier": "JJR",
   "mugged": "VBN",
   "styled": "VBN",
-  "slice": "NN",
   "loudest": "RB",
   "fabled": "JJ",
-  "healthiest": "JJS",
   "baffled": "JJ",
   "inadvertent": "JJ",
   "backwater": "JJR",
-  "hoarding": "NN",
   "disposed": "JJ",
   "ferris": "JJ",
   "expatriate": "JJ",
-  "disposes": "VBZ",
   "vested": "VBN",
   "fabricate": "VB",
   "tiptoe": "JJ",
-  "life-insurance": "NN",
   "surly": "JJ",
   "contributory": "JJ",
-  "trundle": "NN",
   "ingeniously": "RB",
   "spends": "VBZ",
   "whiskery": "JJ",
@@ -16749,60 +12225,47 @@ var lexicon={
   "propagandizes": "VBZ",
   "grinds": "VBZ",
   "ultraviolet": "JJ",
-  "reordering": "NN",
   "corp.-toyota": "JJ",
   "resettled": "VBN",
   "oncoming": "JJ",
-  "disburses": "VBZ",
   "disbursed": "VBN",
   "frightens": "VBZ",
   "somewheres": "RB",
   "allows": "VBZ",
-  "semiconductors": "NNS",
   "vertebral": "JJ",
   "wield": "VB",
   "demeaned": "VBN",
   "re-elected": "VBN",
-  "ten-year-old": "NNP",
   "undreamed": "VBN",
   "shielded": "VBN",
   "infests": "VBZ",
   "cross-react": "VBP",
-  "palest": "JJS",
   "brahmsian": "JJ",
-  "dresden": "NNP",
   "mould": "VB",
   "reflect": "JJ",
   "replete": "JJ",
-  "quarrels": "NNS",
   "forgiving": "JJ",
   "inward": "JJ",
-  "mgm\\/ua": "NNP",
   "pirated": "VBN",
   "mildewy": "JJ",
   "gimbaled": "JJ",
   "unredeemed": "JJ",
   "abrogated": "VBN",
   "interact": "VBP",
-  "finances": "NNS",
   "imperfect": "JJ",
   "dethroned": "VBN",
   "exploded": "JJ",
   "litigated": "VBN",
   "convinces": "VBZ",
   "explodes": "VBZ",
-  "stall": "NN",
   "stalk": "VBP",
   "dang": "JJ",
   "cleaner": "JJR",
   "depletes": "VBZ",
-  "imports": "NNS",
   "decadent": "JJ",
   "needs": "VBZ",
   "oaken": "JJ",
   "depleted": "VBN",
-  "gall": "NN",
-  "gains": "NNS",
   "unperturbed": "JJ",
   "doggie": "JJ",
   "unheralded": "JJ",
@@ -16810,18 +12273,12 @@ var lexicon={
   "reconnoiter": "VBP",
   "better-off": "JJR",
   "citybred": "JJ",
-  "relational": "JJ",
-  "stump": "NN",
   "dump": "VB",
-  "arc": "NN",
   "unsure": "JJ",
-  "book-publishing": "NN",
-  "roundhead": "NN",
   "unpaved": "JJ",
   "drooping": "JJ",
   "enchained": "VBN",
   "unsigned": "JJ",
-  "renationalize": "VB",
   "incandescent": "JJ",
   "untracked": "JJ",
   "pursue": "VB",
@@ -16831,18 +12288,11 @@ var lexicon={
   "misbehaving": "JJ",
   "heighten": "VB",
   "churchly": "JJ",
-  "jaguar-gm": "NNP",
   "rip": "VB",
-  "rim": "NN",
-  "rig": "NN",
   "lengthy": "JJ",
   "minin": "VBG",
-  "u.s.-based": "JJ",
-  "jiffy": "NNP",
-  "farm-state": "NNP",
   "time-&-motion": "JJ",
   "fastens": "VBZ",
-  "kipling": "NNP",
   "castigates": "VBZ",
   "thermostated": "VBN",
   "castigated": "VBN",
@@ -16858,7 +12308,6 @@ var lexicon={
   "subvert": "VB",
   "greets": "VBZ",
   "modal": "JJ",
-  "cutoff": "NN",
   "hoodle": "UH",
   "resigns": "VBZ",
   "unstructured": "JJ",
@@ -16867,13 +12316,8 @@ var lexicon={
   "unadorned": "JJ",
   "perplexing": "JJ",
   "crank": "VB",
-  "crane": "NN",
   "bluechip": "JJ",
-  "ether": "NN",
-  "towers": "NNS",
   "inflame": "VB",
-  "nautilus": "NNP",
-  "piccadilly": "NNP",
   "reproaches": "VBZ",
   "wagnerian": "JJ",
   "fenced": "JJ",
@@ -16897,32 +12341,21 @@ var lexicon={
   "cooperate": "VB",
   "paralleled": "VBN",
   "slaps": "VBZ",
-  "tour": "NN",
-  "proof": "NN",
-  "tad": "NN",
-  "tag": "NN",
   "sweetens": "VBZ",
   "unjustified": "JJ",
   "underwater": "JJ",
-  "crash": "NN",
-  "practice": "NN",
   "commended": "VBN",
   "entrench": "VB",
   "tallied": "VBN",
-  "trap": "NN",
-  "eases": "VBZ",
   "eloquent": "JJ",
   "unenunciated": "JJ",
   "bedazzled": "VBN",
   "segregated": "JJ",
   "substantiate": "VB",
   "cain": "MD",
-  "mcnally": "NNP",
   "hitherto": "RB",
   "droop": "VBP",
-  "accent": "NN",
   "resurrects": "VBZ",
-  "constituent": "NN",
   "italianate": "JJ",
   "woebegone": "JJ",
   "outstrip": "JJ",
@@ -16931,21 +12364,17 @@ var lexicon={
   "divert": "VB",
   "divers": "JJ",
   "standup": "JJ",
-  "repairs": "NNS",
   "offend": "JJ",
   "deny": "VB",
-  "dent": "NN",
   "inane": "JJ",
   "upright": "JJ",
   "wry": "JJ",
   "inaugurates": "VBZ",
   "humanitarian": "JJ",
   "workin": "VBG",
-  "gladius": "NNP",
   "merchandised": "VBN",
   "penetrate": "VB",
   "wordy": "JJ",
-  "ebb": "NN",
   "scoured": "VBN",
   "complementary": "JJ",
   "audiovisual": "JJ",
@@ -16954,28 +12383,20 @@ var lexicon={
   "ricoed": "JJ",
   "zapotec": "JJ",
   "withdrawn": "JJ",
-  "broadcasts": "NNS",
   "validating": "JJ",
-  "butchers": "NNS",
   "merrily": "RB",
   "saner": "JJR",
   "readied": "VBN",
   "irate": "JJ",
   "shylockian": "JJ",
   "vintage": "JJ",
-  "sweetened": "VBN",
   "appropriated": "VBN",
   "appropriates": "VBZ",
   "outgrow": "VB",
   "superconcentrated": "JJ",
-  "boot": "NN",
-  "overspending": "NN",
-  "ski": "NN",
-  "branch": "NN",
   "knoe": "VB",
   "tawny": "JJ",
   "jocund": "JJ",
-  "knot": "NN",
   "starred": "JJ",
   "shabby": "JJ",
   "holler": "VB",
@@ -16984,11 +12405,9 @@ var lexicon={
   "outrageously": "RB",
   "codetermines": "VBZ",
   "leased": "VBN",
-  "throng": "NN",
   "dispossessed": "JJ",
   "contradictory": "JJ",
   "lubricated": "VBN",
-  "dives": "NNS",
   "immobilized": "VBN",
   "roars": "VBZ",
   "shown": "VBN",
@@ -17067,7 +12486,6 @@ var lexicon={
   "in between": "RB",
   "a little bit": "RB",
   "ever so": "RB",
-  "et al.": "RB",
   "bc": "RB",
   "so much as": "RB",
   "and so forth": "RB",
@@ -17082,136 +12500,79 @@ var lexicon={
   "for sure": "RB",
   "upside down": "JJ",
   "all of a sudden": "RB",
-  "7.30pm": "RB",
   "at most": "RB",
   "per se": "RB",
-  "eg.": "RB",
   "as a matter of fact": "RB",
   "per capita": "JJ",
   "up front": "RB",
   "in situ": "RB",
   "in the main": "RB",
   "inwards": "RB",
-  "8pm": "RB",
   "inter alia": "RB",
   "ex parte": "RB",
-  "ie.": "RB",
   "in vitro": "RB",
   "to and fro": "RB",
   "in vivo": "RB",
   "in brief": "RB",
   "ibid": "RB",
-  "10am": "RB",
   "at worst": "RB",
   "northwards": "RB",
   "time and again": "RB",
   "eastwards": "RB",
-  "7pm": "RB",
-  "ibid.": "RB",
-  "2pm": "RB",
   "approx": "RB",
   "southwards": "RB",
   "every so often": "RB",
-  "6pm": "RB",
   "westwards": "RB",
-  "4pm": "RB",
   "prima facie": "RB",
   "'ere": "RB",
-  "5pm": "RB",
   "bst": "RB",
-  "11am": "RB",
   "lots": "RB",
-  "10.30am": "RB",
   "upwards of": "RB",
-  "viz.": "RB",
-  "something like": "RB",
-  "9am": "RB",
   "in case": "RB",
-  "3pm": "RB",
   "en masse": "RB",
   "ultra vires": "RB",
-  "9pm": "RB",
-  "5c": "RB",
   "upside-down": "RB",
-  "10pm": "RB",
   "offline": "RB",
-  "approx.": "RB",
-  "6.30pm": "RB",
   "so-and-so": "RB",
   "forte": "JJ",
-  "8am": "RB",
-  "8.30pm": "RB",
-  "1pm": "RB",
-  "f.": "RB",
   "a priori": "JJ",
   "ad hoc": "RB",
   "viz": "RB",
   "offside": "JJ",
-  "88open": "RB",
-  "4c": "RB",
   "example": "RB",
   "leeward": "JJ",
   "get-together": "RB",
   "astern": "RB",
-  "11pm": "RB",
   "none the": "RB",
-  "2am": "RB",
   "i.e": "RB",
-  "4.30pm": "RB",
   "hereto": "RB",
   "et cetera": "RB",
   "yonder": "RB",
-  "7am": "RB",
   "de facto": "RB",
-  "6am": "RB",
-  "3am": "RB",
-  "5.30pm": "RB",
   "getting on for": "RB",
-  "9.30am": "RB",
-  "5am": "RB",
-  "2c": "RB",
   "lengthways": "RB",
   "henceforward": "RB",
-  "1.30pm": "RB",
   "tv-am": "RB",
-  "2.30pm": "RB",
-  "3c": "RB",
-  "3.30pm": "RB",
-  "1c": "RB",
   "off guard": "RB",
   "in the order of": "RB",
   "spot on": "JJ",
-  "4am": "RB",
   "one-handed": "RB",
-  "12.30pm": "RB",
   "ipso facto": "RB",
   "ceteris paribus": "RB",
   "unbeknown": "RB",
   "ad infinitum": "RB",
   "'ome": "RB",
   "pinafore": "RB",
-  "op. cit.": "RB",
-  "1am": "RB",
   "in absentia": "RB",
-  "19c": "RB",
-  "18c": "RB",
   "skywards": "RB",
   "en bloc": "RB",
   "aright": "RB",
-  "9.30pm": "RB",
   "in camera": "RB",
-  "11.30am": "RB",
   "point blank": "RB",
-  "7.30am": "RB",
   "upfront": "RB",
   "pro-am": "RB",
-  "6c": "RB",
   "a fortiori": "RB",
-  "8.30am": "RB",
-  "14c": "RB",
-  "pm.": "RB",
   "hereof": "RB",
-  "16c": "RB",
   "ex officio": "RB",
   "seawards": "RB",
   "incognito": "RB",
@@ -17220,51 +12581,33 @@ var lexicon={
   "nigh on": "RB",
   "best-ever": "RB",
   "ad nauseam": "RB",
-  "7.45pm": "RB",
   "through thick and thin": "RB",
   "heavenwards": "RB",
-  "12c": "RB",
   "ne'er": "RB",
   "leftwards": "RB",
   "inside out": "RB",
   "&agrave la carte": "RB",
   "sotto voce": "RB",
   "blindfold": "RB",
-  "8.15pm": "RB",
-  "7.15pm": "RB",
-  "10.30pm": "RB",
   "esp": "RB",
   "anon": "RB",
-  "17c": "RB",
   "underhand": "RB",
   "pro rata": "RB",
   "ff": "RB",
-  "15c": "RB",
   "siward": "RB",
   "in memoriam": "RB",
   "in extremis": "RB",
-  "6.00pm": "RB",
   "not withstanding": "RB",
-  "2.00pm": "RB",
-  "10.00am": "RB",
   "to-night": "RB",
   "seaward": "RB",
   "say-so": "RB",
   "in toto": "RB",
   "head-first": "RB",
-  "7.00pm": "RB",
-  "6.30am": "RB",
   "a-side": "RB",
-  "30c": "RB",
-  "1989c": "RB",
-  "13c": "RB",
-  "11.30pm": "RB",
-  "11.00am": "RB",
   "up-river": "RB",
   "rightwards": "RB",
   "instance": "RB",
   "amidships": "RB",
-  "9.00am": "RB",
   "'course": "RB",
   "the most part": "RB",
   "never-never": "RB",
@@ -17273,58 +12616,32 @@ var lexicon={
   "evermore": "RB",
   "al fresco": "RB",
   "ab initio": "RB",
-  "4.00pm": "RB",
   "de jure": "RB",
   "anticlockwise": "RB",
   "a la carte": "RB",
-  "7c": "RB",
-  "10.40pm": "RB",
   "sub judice": "RB",
   "streetwise": "JJ",
   "op. cit": "RB",
   "fit-again": "RB",
-  "9.45am": "RB",
-  "9.15am": "RB",
-  "8f": "RB",
-  "5.00pm": "RB",
   "hereward": "RB",
   "headfirst": "JJ",
-  "8.00am": "RB",
-  "550c": "RB",
-  "5.30am": "RB",
-  "1990c": "RB",
   "thenceforward": "RB",
   "pan-am": "RB",
   "career-best": "RB",
-  "am.": "RB",
-  "8c": "RB",
-  "4.30am": "RB",
-  "2.30am": "RB",
-  "1.30am": "RB",
   "post hoc": "RB",
   "polewards": "RB",
   "in loco parentis": "RB",
   "contrariwise": "RB",
   "all-too": "RB",
-  "6f": "RB",
-  "4f": "RB",
   "short-handed": "RB",
   "shorewards": "RB",
   "off-stage": "RB",
-  "lit.": "RB",
   "en passant": "RB",
-  "3.00pm": "RB",
-  "2f": "RB",
-  "2.15pm": "RB",
   "woodwards": "RB",
   "two-handed": "RB",
   "fain": "RB",
   "den": "RB",
   "addition": "RB",
-  "9.00pm": "RB",
-  "4ad": "RB",
-  "4.45pm": "RB",
-  "12.30am": "RB",
   "'alf": "RB",
   "quite a": "RB",
   "north-westwards": "RB",
@@ -17334,13 +12651,6 @@ var lexicon={
   "here-and-now": "RB",
   "go-as-you-please": "RB",
   "al dente": "RB",
-  "8.45am": "RB",
-  "8.00pm": "RB",
-  "600f": "RB",
-  "6.15pm": "RB",
-  "40c": "RB",
-  "20c": "RB",
-  "1985c": "RB",
   "south-eastwards": "RB",
   "pro tem": "RB",
   "lemarchand": "RB",
@@ -17349,12 +12659,7 @@ var lexicon={
   "basinwards": "RB",
   "bareback": "RB",
   "aslant": "RB",
-  "al.": "RB",
   "ad lib": "RB",
-  "7f": "RB",
-  "6.45pm": "RB",
-  "10c": "RB",
-  "10.20am": "RB",
   "&agrave la mode": "RB",
   "youngest-ever": "RB",
   "worst-ever": "RB",
@@ -17368,14 +12673,6 @@ var lexicon={
   "foreward": "RB",
   "en famille": "RB",
   "a hell of a lot": "RB",
-  "a-d": "RB",
-  "9c": "RB",
-  "8.15am": "RB",
-  "4.15pm": "RB",
-  "3.30am": "RB",
-  "10a.m.": "RB",
-  "10.20pm": "RB",
-  "10.00pm": "RB",
   "'ard": "RB",
   "straight-ahead": "RB",
   "so on": "RB",
@@ -17395,5770 +12692,2779 @@ var lexicon={
   "windward": "RB",
   "well of": "RB",
   "weatherwise": "RB",
-  "viz-&agrave;-viz": "RB",
+  "viz-a-viz": "RB",
   "upward of": "RB",
   "underarm": "RB",
   "same-again": "RB",
-  "p-please": "RB",
   "never-the-less": "RB",
-  "yer": "JJR",
-  "sphincter": "JJR",
-  "retailer": "JJR",
-  "paler": "JJR",
-  "ter": "JJR",
-  "liver": "JJ",
-  "haulier": "JJR",
-  "perimeter": "JJR",
-  "fitter": "JJR",
-  "wilder": "JJR",
-  "diameter": "JJR",
-  "groundwater": "JJR",
-  "header": "JJR",
-  "denser": "JJR",
-  "wetter": "JJR",
-  "whiter": "JJR",
-  "rainwater": "JJR",
-  "cleverer": "JJR",
-  "coarser": "JJR",
-  "purer": "JJR",
-  "sterner": "JJR",
-  "humbler": "JJR",
-  "cruder": "JJR",
-  "angrier": "JJR",
-  "madder": "JJ",
-  "brazier": "JJR",
-  "odder": "JJ",
-  "napier": "JJR",
-  "surer": "JJR",
-  "swifter": "JJR",
-  "damper": "JJR",
-  "greyer": "JJR",
-  "pleasanter": "JJR",
-  "snooker": "JJR",
-  "coldwater": "JJR",
-  "ester": "JJR",
-  "blinder": "JJR",
-  "lovelier": "JJR",
-  "browner": "JJR",
-  "tidier": "JJR",
-  "brasher": "JJR",
-  "plunger": "JJR",
-  "cartier": "JJR",
-  "squatter": "JJR",
-  "sexier": "JJR",
-  "mightier": "JJR",
-  "isomer": "JJR",
-  "stouter": "JJR",
-  "merrier": "JJR",
-  "glazier": "JJR",
-  "forefinger": "JJR",
-  "messier": "JJR",
-  "broadcaster": "JJR",
-  "bridgewater": "JJR",
-  "weirder": "JJR",
-  "weightier": "JJR",
-  "ruder": "JJR",
-  "eider": "JJR",
-  "balder": "JJR",
-  "alder": "JJR",
-  "longer-lasting": "JJR",
-  "cosier": "JJR",
-  "bulkier": "JJR",
-  "blunter": "JJR",
-  "gettier": "JJR",
-  "crazier": "JJR",
-  "banter": "JJR",
-  "seawater": "JJR",
-  "posher": "JJR",
-  "hillier": "JJR",
-  "bluer": "JJR",
-  "pinker": "JJR",
-  "bustier": "JJR",
-  "better-paid": "JJR",
-  "barometer": "JJR",
-  "backer": "JJR",
-  "jenner": "JJR",
-  "holier": "JJR",
-  "higher-pitched": "JJR",
-  "d'yer": "JJR",
-  "canter": "JJR",
-  "slacker": "JJR",
-  "shinier": "JJR",
-  "littler": "JJR",
-  "crisper": "JJR",
-  "trumpeter": "JJR",
-  "squarer": "JJR",
-  "photomultiplier": "JJR",
-  "frobisher": "JJR",
-  "diffuser": "JJR",
-  "cricketer": "JJR",
-  "courtier": "JJR",
-  "sparser": "JJR",
-  "saltwater": "JJR",
-  "outlier": "JJR",
-  "lower-ranking": "JJR",
-  "grosser": "JJR",
-  "goodier": "JJR",
-  "feebler": "JJR",
-  "diviner": "JJR",
-  "didier": "JJR",
-  "classier": "JJR",
-  "catheter": "JJR",
-  "unhappier": "JJR",
-  "sturdier": "JJR",
-  "plumper": "JJR",
-  "meatier": "JJR",
-  "maturer": "JJR",
-  "lusher": "JJR",
-  "gondolier": "JJR",
-  "floodwater": "JJR",
-  "dryer": "JJR",
-  "LOL": "JJ",
-  "MISCELLANEOUS": "JJ",
-  "MISCHIEVOUS": "JJ",
-  "Oh": "JJ",
-  "RIP": "JJ",
-  "a cappella": "JJ",
-  "a couple of": "JJ",
-  "a few": "JJ",
-  "a posteriori": "JJ",
-  "abscessed": "JJ",
-  "absolutely bonkers": "JJ",
-  "absorbefacient": "JJ",
-  "abyssal": "JJ",
-  "acceleratory": "JJ",
-  "accessary": "JJ",
-  "accretionary": "JJ",
-  "accursed": "JJ",
-  "ace": "JJ",
-  "achy": "JJ",
-  "acold": "JJ",
-  "acquiescent": "JJ",
-  "ad hominem": "JJ",
-  "adamantine": "JJ",
-  "adaptational": "JJ",
-  "adequate to": "JJ",
-  "adulatory": "JJ",
-  "adulterating": "JJ",
-  "aeriform": "JJ",
-  "aflutter": "JJ",
-  "aftershafted": "JJ",
-  "ageing": "JJ",
-  "agelong": "JJ",
-  "agnate": "JJ",
-  "agog": "JJ",
-  "agonise": "JJ",
-  "agonised": "JJ",
-  "agonising": "JJ",
-  "airheaded": "JJ",
-  "airtight": "JJ",
-  "airworthy": "JJ",
-  "algid": "JJ",
-  "all over": "JJ",
-  "allantoid": "JJ",
-  "allegretto": "JJ",
-  "allover": "JJ",
-  "alloyed": "JJ",
-  "almighty": "JJ",
-  "alto": "JJ",
-  "ambient": "JJ",
-  "amphistylar": "JJ",
-  "amuck": "JJ",
-  "amyloid": "JJ",
-  "amyloidal": "JJ",
-  "anachronism": "JJ",
-  "anal": "JJ",
-  "anon.": "JJ",
-  "ante meridiem": "JJ",
-  "antecedent": "JJ",
-  "antediluvian": "JJ",
-  "antemeridian": "JJ",
-  "anthropoid": "JJ",
-  "antiaircraft": "JJ",
-  "antiknock": "JJ",
-  "antiknocking": "JJ",
-  "antipersonnel": "JJ",
-  "aperient": "JJ",
-  "apparitional": "JJ",
-  "appetising": "JJ",
-  "apposite": "JJ",
-  "apteral": "JJ",
-  "arabesque": "JJ",
-  "arced": "JJ",
-  "archetypal": "JJ",
-  "arciform": "JJ",
-  "arcuate": "JJ",
-  "armoured": "JJ",
-  "around the bend": "JJ",
-  "arrrggghhh": "JJ",
-  "arsehole": "JJ",
-  "ascendent": "JJ",
-  "asexual": "JJ",
-  "assclown": "JJ",
-  "asshole": "JJ",
-  "assimilatory": "JJ",
-  "assurgent": "JJ",
-  "asterisked": "JJ",
-  "at a loss": "JJ",
-  "at loggerheads": "JJ",
-  "at odds": "JJ",
-  "at peace": "JJ",
-  "at sea": "JJ",
-  "at the ready": "JJ",
-  "at work": "JJ",
-  "attenuated": "JJ",
-  "attitudinal": "JJ",
-  "auld": "JJ",
-  "auricular": "JJ",
-  "authorised": "JJ",
-  "awe inspiring": "JJ",
-  "aweary": "JJ",
-  "aweigh": "JJ",
-  "babelike": "JJ",
-  "bacillar": "JJ",
-  "bacillary": "JJ",
-  "backbiting": "JJ",
-  "backbreaking": "JJ",
-  "backswept": "JJ",
-  "badass": "JJ",
-  "balky": "JJ",
-  "balls": "JJ",
-  "ballsy": "JJ",
-  "bananas": "JJ",
-  "bane of my existence": "JJ",
-  "barbarian": "JJ",
-  "barbate": "JJ",
-  "barefaced": "JJ",
-  "barmy": "JJ",
-  "barreled": "JJ",
-  "barrelled": "JJ",
-  "basal": "JJ",
-  "baseborn": "JJ",
-  "bastard": "JJ",
-  "bastardised": "JJ",
-  "bastardly": "JJ",
-  "bastards": "JJ",
-  "batshit crazy": "JJ",
-  "battlemented": "JJ",
-  "batty": "JJ",
-  "beaked": "JJ",
-  "beamy": "JJ",
-  "beardy": "JJ",
-  "beechen": "JJ",
-  "beery": "JJ",
-  "beetle": "JJ",
-  "beggarly": "JJ",
-  "begrimed": "JJ",
-  "behavioural": "JJ",
-  "bellied": "JJ",
-  "below par": "JJ",
-  "belowground": "JJ",
-  "bended": "JJ",
-  "beneficent": "JJ",
-  "benumbed": "JJ",
-  "bereaved": "JJ",
-  "besotted": "JJ",
-  "bespoke": "JJ",
-  "bespoken": "JJ",
-  "beyond doubt": "JJ",
-  "bias": "JJ",
-  "biaural": "JJ",
-  "billion": "JJ",
-  "bilobate": "JJ",
-  "bilobated": "JJ",
-  "bilobed": "JJ",
-  "bilocular": "JJ",
-  "biloculate": "JJ",
-  "bimotored": "JJ",
-  "bla bla": "JJ",
-  "blah": "JJ",
-  "blah blah": "JJ",
-  "blameworthy": "JJ",
-  "blemished": "JJ",
-  "blind drunk": "JJ",
-  "blistery": "JJ",
-  "blockheaded": "JJ",
-  "bloodcurdling": "JJ",
-  "blotted out": "JJ",
-  "boggy": "JJ",
-  "bollocks": "JJ",
-  "bona fide": "JJ",
-  "boney": "JJ",
-  "bonny": "JJ",
-  "bootlicking": "JJ",
-  "boozy": "JJ",
-  "boreal": "JJ",
-  "bossy": "JJ",
-  "botchy": "JJ",
-  "botonee": "JJ",
-  "botonnee": "JJ",
-  "boughed": "JJ",
-  "boughten": "JJ",
-  "bound up": "JJ",
-  "bounden": "JJ",
-  "bountied": "JJ",
-  "bowfront": "JJ",
-  "boxed in": "JJ",
-  "brain dead": "JJ",
-  "braky": "JJ",
-  "brambly": "JJ",
-  "brat": "JJ",
-  "breakthrough": "JJ",
-  "bricks will be shat": "JJ",
-  "brill": "JJ",
-  "brilliantly disturbing": "JJ",
-  "broadleaf": "JJ",
-  "brusque": "JJ",
-  "brut": "JJ",
-  "buccal": "JJ",
-  "buffoon": "JJ",
-  "buggy": "JJ",
-  "bullshitter": "JJ",
-  "burbling": "JJ",
-  "burbly": "JJ",
-  "butcherly": "JJ",
-  "cadenced": "JJ",
-  "cadent": "JJ",
-  "caller": "JJ",
-  "campy": "JJ",
-  "candescent": "JJ",
-  "candied": "JJ",
-  "canescent": "JJ",
-  "canonised": "JJ",
-  "canty": "JJ",
-  "capillary": "JJ",
-  "capitate": "JJ",
-  "capsulate": "JJ",
-  "capsulated": "JJ",
-  "castled": "JJ",
-  "castrated": "JJ",
-  "cataclysmal": "JJ",
-  "catacorner": "JJ",
-  "catastrophe": "JJ",
-  "catercorner": "JJ",
-  "cauline": "JJ",
-  "caulked": "JJ",
-  "cedarn": "JJ",
-  "celebratory": "JJ",
-  "celibate": "JJ",
-  "centralised": "JJ",
-  "centripetal": "JJ",
-  "certificated": "JJ",
-  "chaffy": "JJ",
-  "chagrined": "JJ",
-  "changed my life": "JJ",
-  "chapfallen": "JJ",
-  "chapleted": "JJ",
-  "cheesed off": "JJ",
-  "cheeseparing": "JJ",
-  "chesty": "JJ",
-  "chewy": "JJ",
-  "chichi": "JJ",
-  "chilblained": "JJ",
-  "chinchy": "JJ",
-  "choosey": "JJ",
-  "chopfallen": "JJ",
-  "christianly": "JJ",
-  "christlike": "JJ",
-  "christly": "JJ",
-  "chuffed": "JJ",
-  "chummy": "JJ",
-  "churrigueresco": "JJ",
-  "churrigueresque": "JJ",
-  "ciliary": "JJ",
-  "ciliate": "JJ",
-  "cissy": "JJ",
-  "citified": "JJ",
-  "clayey": "JJ",
-  "clement": "JJ",
-  "cloaked": "JJ",
-  "cloggy": "JJ",
-  "clownlike": "JJ",
-  "clusterfuck": "JJ",
-  "coagulated": "JJ",
-  "cobwebby": "JJ",
-  "coccoid": "JJ",
-  "cock": "JJ",
-  "cockamamie": "JJ",
-  "cockamamy": "JJ",
-  "cocksucker": "JJ",
-  "cocksure": "JJ",
-  "coequal": "JJ",
-  "cogent": "JJ",
-  "collectivised": "JJ",
-  "collectivized": "JJ",
-  "comatose": "JJ",
-  "comminatory": "JJ",
-  "common or garden": "JJ",
-  "commonsense": "JJ",
-  "comose": "JJ",
-  "companionate": "JJ",
-  "comparable to": "JJ",
-  "comparable with": "JJ",
-  "competitory": "JJ",
-  "complemental": "JJ",
-  "computerised": "JJ",
-  "conceited": "JJ",
-  "concessionary": "JJ",
-  "concupiscent": "JJ",
-  "configured": "JJ",
-  "confirmatory": "JJ",
-  "conjugate": "JJ",
-  "connatural": "JJ",
-  "conniving": "JJ",
-  "consecrate": "JJ",
-  "consecrated": "JJ",
-  "consentient": "JJ",
-  "conservation": "JJ",
-  "contrapuntal": "JJ",
-  "convalescent": "JJ",
-  "convolute": "JJ",
-  "cooccurring": "JJ",
-  "corking": "JJ",
-  "corporal": "JJ",
-  "corpulent": "JJ",
-  "corroboratory": "JJ",
-  "corroded": "JJ",
-  "corticipetal": "JJ",
-  "cosher": "JJ",
-  "counterfactual": "JJ",
-  "countywide": "JJ",
-  "coward": "JJ",
-  "crackbrained": "JJ",
-  "crackers": "JJ",
-  "crappy": "JJ",
-  "crapulent": "JJ",
-  "creaky": "JJ",
-  "credentialled": "JJ",
-  "crikey": "JJ",
-  "criminatory": "JJ",
-  "cringey": "JJ",
-  "crinkled": "JJ",
-  "crinkly": "JJ",
-  "criterional": "JJ",
-  "crossbred": "JJ",
-  "crunchy": "JJ",
-  "crystal clear": "JJ",
-  "crystalised": "JJ",
-  "cuddlesome": "JJ",
-  "cult": "JJ",
-  "cum laude": "JJ",
-  "curdled": "JJ",
-  "curmudgeon": "JJ",
-  "curmudgeonly": "JJ",
-  "curst": "JJ",
-  "curvey": "JJ",
-  "cut out": "JJ",
-  "damascene": "JJ",
-  "damask": "JJ",
-  "damn fine": "JJ",
-  "dankness": "JJ",
-  "daughterly": "JJ",
-  "dawdle": "JJ",
-  "daydreamer": "JJ",
-  "de rigueur": "JJ",
-  "deaf as a post": "JJ",
-  "deathlike": "JJ",
-  "debacle": "JJ",
-  "debased": "JJ",
-  "debauched": "JJ",
-  "debonaire": "JJ",
-  "deboned": "JJ",
-  "debonnaire": "JJ",
-  "decalescent": "JJ",
-  "decentralised": "JJ",
-  "declassified": "JJ",
-  "decompositional": "JJ",
-  "decompound": "JJ",
-  "deconsecrated": "JJ",
-  "deep in thought": "JJ",
-  "defiled": "JJ",
-  "dejected": "JJ",
-  "delusional": "JJ",
-  "delusory": "JJ",
-  "demoniacal": "JJ",
-  "demoralised": "JJ",
-  "demoralising": "JJ",
-  "denary": "JJ",
-  "denudate": "JJ",
-  "denunciatory": "JJ",
-  "deprecating": "JJ",
-  "depreciatory": "JJ",
-  "derisory": "JJ",
-  "descendent": "JJ",
-  "desiccated": "JJ",
-  "deskbound": "JJ",
-  "despot": "JJ",
-  "dextral": "JJ",
-  "dick": "JJ",
-  "dickhead": "JJ",
-  "diggidy": "JJ",
-  "dilettante": "JJ",
-  "dirt cheap": "JJ",
-  "disarrayed": "JJ",
-  "disaster": "JJ",
-  "disciform": "JJ",
-  "discoloured": "JJ",
-  "discombobulated": "JJ",
-  "discombobulating": "JJ",
-  "discomposed": "JJ",
-  "disconcerted": "JJ",
-  "discontent": "JJ",
-  "disenchanting": "JJ",
-  "disentangled": "JJ",
-  "disgrace": "JJ",
-  "dishevelled": "JJ",
-  "dishy": "JJ",
-  "disjoined": "JJ",
-  "disjunct": "JJ",
-  "dismay": "JJ",
-  "disoblige": "JJ",
-  "disobliging": "JJ",
-  "disorganised": "JJ",
-  "disorienting": "JJ",
-  "dispirited": "JJ",
-  "displeasing": "JJ",
-  "disqualifying": "JJ",
-  "dissentient": "JJ",
-  "dissolute": "JJ",
-  "distaff": "JJ",
-  "doddery": "JJ",
-  "dodgy": "JJ",
-  "domesticated": "JJ",
-  "don't get": "JJ",
-  "done for": "JJ",
-  "done with": "JJ",
-  "dopey": "JJ",
-  "dormie": "JJ",
-  "dormy": "JJ",
-  "dorsal": "JJ",
-  "dorsoventral": "JJ",
-  "dotty": "JJ",
-  "douche": "JJ",
-  "douchebag": "JJ",
-  "dowered": "JJ",
-  "downer": "JJ",
-  "downhearted": "JJ",
-  "downy": "JJ",
-  "dozen": "JJ",
-  "dozy": "JJ",
-  "draggled": "JJ",
-  "drippy": "JJ",
-  "drivel": "JJ",
-  "droll": "JJ",
-  "droopy": "JJ",
-  "dropout": "JJ",
-  "drudging": "JJ",
-  "dude": "JJ",
-  "dumbass": "JJ",
-  "dumbfounding": "JJ",
-  "dumbstricken": "JJ",
-  "dumbstruck": "JJ",
-  "dumfounded": "JJ",
-  "dumfounding": "JJ",
-  "duple": "JJ",
-  "dysfunctional": "JJ",
-  "earthborn": "JJ",
-  "eastside": "JJ",
-  "easy to use": "JJ",
-  "echt": "JJ",
-  "eddle": "JJ",
-  "eery": "JJ",
-  "effervescent": "JJ",
-  "elasticised": "JJ",
-  "elasticized": "JJ",
-  "elating": "JJ",
-  "eldritch": "JJ",
-  "eleven": "JJ",
-  "ellipsoid": "JJ",
-  "elysian": "JJ",
-  "emarginate": "JJ",
-  "emphasised": "JJ",
-  "empyreal": "JJ",
-  "empyrean": "JJ",
-  "en garde": "JJ",
-  "enate": "JJ",
-  "enigma": "JJ",
-  "ennobling": "JJ",
-  "epic fail": "JJ",
-  "epic win": "JJ",
-  "epicene": "JJ",
-  "equal to": "JJ",
-  "equilateral": "JJ",
-  "erectile": "JJ",
-  "esurient": "JJ",
-  "evanescent": "JJ",
-  "evidentiary": "JJ",
-  "ew": "JJ",
-  "exhortatory": "JJ",
-  "extraordinaire": "JJ",
-  "extroverted": "JJ",
-  "exulting": "JJ",
-  "fab": "JJ",
-  "fagged": "JJ",
-  "failure": "JJ",
-  "fair enough": "JJ",
-  "falcate": "JJ",
-  "falciform": "JJ",
-  "fandango": "JJ",
-  "far off": "JJ",
-  "farsighted": "JJ",
-  "fated": "JJ",
-  "fatherlike": "JJ",
-  "faultfinding": "JJ",
-  "favoured": "JJ",
-  "favourite": "JJ",
-  "featherbrained": "JJ",
-  "feculent": "JJ",
-  "fed up": "JJ",
-  "fenestral": "JJ",
-  "feral": "JJ",
-  "ferned": "JJ",
-  "ferny": "JJ",
-  "fervid": "JJ",
-  "fey": "JJ",
-  "ffs": "JJ",
-  "fiasco": "JJ",
-  "fictile": "JJ",
-  "fidgety": "JJ",
-  "fimbriate": "JJ",
-  "fin de siecle": "JJ",
-  "finespun": "JJ",
-  "firstborn": "JJ",
-  "fistular": "JJ",
-  "fistulate": "JJ",
-  "fit out": "JJ",
-  "fizzy": "JJ",
-  "flabby": "JJ",
-  "flakey": "JJ",
-  "fledged": "JJ",
-  "flirty": "JJ",
-  "floccose": "JJ",
-  "flowery": "JJ",
-  "flyblown": "JJ",
-  "foliate": "JJ",
-  "foliated": "JJ",
-  "footage": "JJ",
-  "footed": "JJ",
-  "footsore": "JJ",
-  "foreordained": "JJ",
-  "forested": "JJ",
-  "forficate": "JJ",
-  "fortemente": "JJ",
-  "fortissimo": "JJ",
-  "foundational": "JJ",
-  "four": "JJ",
-  "foxy": "JJ",
-  "frack": "JJ",
-  "fraternal": "JJ",
-  "freaky": "JJ",
-  "freeborn": "JJ",
-  "freehearted": "JJ",
-  "frenzy": "JJ",
-  "frigging": "JJ",
-  "frilled": "JJ",
-  "frizzy": "JJ",
-  "frolicky": "JJ",
-  "frolicsome": "JJ",
-  "frontmost": "JJ",
-  "frore": "JJ",
-  "frostbitten": "JJ",
-  "froward": "JJ",
-  "frowsy": "JJ",
-  "fruiting": "JJ",
-  "ftw": "JJ",
-  "fucked": "JJ",
-  "fucker": "JJ",
-  "fuckers": "JJ",
-  "fugly": "JJ",
-  "full bodied": "JJ",
-  "functionally illiterate": "JJ",
-  "furred": "JJ",
-  "future day": "JJ",
-  "galvanised": "JJ",
-  "galvanising": "JJ",
-  "game": "JJ",
-  "gamey": "JJ",
-  "gammy": "JJ",
-  "gamy": "JJ",
-  "gangly": "JJ",
-  "garbage": "JJ",
-  "garlicky": "JJ",
-  "gelded": "JJ",
-  "gendered": "JJ",
-  "generalised": "JJ",
-  "genius": "JJ",
-  "geostationary": "JJ",
-  "gestural": "JJ",
-  "getting better": "JJ",
-  "ghetto": "JJ",
-  "gimcrack": "JJ",
-  "gimpy": "JJ",
-  "ginger": "JJ",
-  "gingery": "JJ",
-  "gladdened": "JJ",
-  "gladsome": "JJ",
-  "globular": "JJ",
-  "glooming": "JJ",
-  "gnar": "JJ",
-  "gobsmacked": "JJ",
-  "godforsaken": "JJ",
-  "godly": "JJ",
-  "good for you": "JJ",
-  "good lass": "JJ",
-  "good value": "JJ",
-  "gossip": "JJ",
-  "grabby": "JJ",
-  "gracile": "JJ",
-  "granulated": "JJ",
-  "granulose": "JJ",
-  "grating": "JJ",
-  "gratulatory": "JJ",
-  "gravelly": "JJ",
-  "great bellied": "JJ",
-  "greathearted": "JJ",
-  "greedy guts": "JJ",
-  "gribbonesque": "JJ",
-  "gristly": "JJ",
-  "grizzly": "JJ",
-  "groovy": "JJ",
-  "grotty": "JJ",
-  "grouchy": "JJ",
-  "groundbreaking": "JJ",
-  "grovelling": "JJ",
-  "grown up": "JJ",
-  "grownup": "JJ",
-  "gruelling": "JJ",
-  "grump": "JJ",
-  "grumpy": "JJ",
-  "grungy": "JJ",
-  "guffaw": "JJ",
-  "gung ho": "JJ",
-  "hah": "JJ",
-  "haha": "JJ",
-  "hahaha": "JJ",
-  "haired": "JJ",
-  "halal": "JJ",
-  "handwoven": "JJ",
-  "hangdog": "JJ",
-  "hard work": "JJ",
-  "hardheaded": "JJ",
-  "hardhearted": "JJ",
-  "harebrained": "JJ",
-  "hatefully": "RB",
-  "hawt": "JJ",
-  "haywire": "JJ",
-  "heart breaking": "JJ",
-  "heartbroken": "JJ",
-  "hearted": "JJ",
-  "heartrending": "JJ",
-  "heartsick": "JJ",
-  "heartwarming": "JJ",
-  "heh": "JJ",
-  "herculaean": "JJ",
-  "hermaphrodite": "JJ",
-  "hero": "JJ",
-  "het up": "JJ",
-  "heterosexual": "JJ",
-  "hexed": "JJ",
-  "hierarchal": "JJ",
-  "highland": "JJ",
-  "hippy": "JJ",
-  "hirstute": "JJ",
-  "hirsute": "JJ",
-  "hispid": "JJ",
-  "hoary": "JJ",
-  "holey": "JJ",
-  "hollywood": "JJ",
-  "holy shit": "JJ",
-  "homelike": "JJ",
-  "homogenised": "JJ",
-  "homy": "JJ",
-  "hon": "JJ",
-  "hoofed": "JJ",
-  "hooved": "JJ",
-  "horny": "JJ",
-  "hortatory": "JJ",
-  "hot and bothered": "JJ",
-  "hotheaded": "JJ",
-  "housewifely": "JJ",
-  "huffy": "JJ",
-  "humanlike": "JJ",
-  "humdrum": "JJ",
-  "humped": "JJ",
-  "humpty": "JJ",
-  "hunky": "JJ",
-  "hurtfully": "RB",
-  "husbandly": "JJ",
-  "hypochondriac": "JJ",
-  "hypochondriacal": "JJ",
-  "hypocrite": "JJ",
-  "hypocritically": "RB",
-  "icky": "JJ",
-  "idealised": "JJ",
-  "idealist": "JJ",
-  "idolised": "JJ",
-  "ill at ease": "JJ",
-  "illiberal": "JJ",
-  "illin": "JJ",
-  "imbalanced": "JJ",
-  "imbecile": "JJ",
-  "immobile": "JJ",
-  "immunised": "JJ",
-  "imparipinnate": "JJ",
-  "impermanent": "JJ",
-  "implicit in": "JJ",
-  "in a bad way": "JJ",
-  "in advance": "JJ",
-  "in agreement": "JJ",
-  "in gear": "JJ",
-  "in line": "JJ",
-  "in operation": "JJ",
-  "in question": "JJ",
-  "in series": "JJ",
-  "in sight": "JJ",
-  "in small stages": "JJ",
-  "in stock": "JJ",
-  "in the lead": "JJ",
-  "in use": "JJ",
-  "in vogue": "JJ",
-  "inbred": "JJ",
-  "inbuilt": "JJ",
-  "inc": "JJ",
-  "incised": "JJ",
-  "incommensurate": "JJ",
-  "inconsiderate": "JJ",
-  "incorrupt": "JJ",
-  "incriminatory": "JJ",
-  "inculpatory": "JJ",
-  "incumbent on": "JJ",
-  "indie": "JJ",
-  "indigo": "JJ",
-  "indiscrete": "JJ",
-  "individualist": "JJ",
-  "indivisible by": "JJ",
-  "industrialised": "JJ",
-  "inebriated": "JJ",
-  "inelaborate": "JJ",
-  "infatuated": "JJ",
-  "inflectional": "JJ",
-  "informatory": "JJ",
-  "ingratiatory": "JJ",
-  "ingrowing": "JJ",
-  "ingrown": "JJ",
-  "inhumed": "JJ",
-  "inmost": "JJ",
-  "innovational": "JJ",
-  "innovatory": "JJ",
-  "inpouring": "JJ",
-  "inquisitory": "JJ",
-  "insanitary": "JJ",
-  "insensate": "JJ",
-  "insentient": "JJ",
-  "insincerely": "RB",
-  "insolence": "JJ",
-  "instinct": "JJ",
-  "institutionalised": "JJ",
-  "insular": "JJ",
-  "insultingly": "RB",
-  "intemperate": "JJ",
-  "interchurch": "JJ",
-  "interference": "JJ",
-  "intersexual": "JJ",
-  "intumescent": "JJ",
-  "inundate": "JJ",
-  "inutile": "JJ",
-  "involute": "JJ",
-  "isochronal": "JJ",
-  "jabber": "JJ",
-  "jaggy": "JJ",
-  "jar": "JJ",
-  "jaundiced": "JJ",
-  "jeering": "JJ",
-  "jepardise": "JJ",
-  "jiggered": "JJ",
-  "jointed": "JJ",
-  "joker": "JJ",
-  "joy": "JJ",
-  "judgemental": "JJ",
-  "jumped the shark": "JJ",
-  "jungly": "JJ",
-  "just sayin'": "JJ",
-  "killer": "JJ",
-  "kinky": "JJ",
-  "knackered": "JJ",
-  "knife": "JJ",
-  "knockabout": "JJ",
-  "knockdown": "JJ",
-  "knocked out": "JJ",
-  "knockout": "JJ",
-  "labiate": "JJ",
-  "labour": "JJ",
-  "laboured": "JJ",
-  "labouring": "JJ",
-  "laboursaving": "JJ",
-  "labyrinthine": "JJ",
-  "lachrymose": "JJ",
-  "lacklustre": "JJ",
-  "laid up": "JJ",
-  "lamellibranch": "JJ",
-  "lamenting": "JJ",
-  "laminal": "JJ",
-  "laminar": "JJ",
-  "lanate": "JJ",
-  "lank": "JJ",
-  "larboard": "JJ",
-  "lee": "JJ",
-  "leechlike": "JJ",
-  "leer": "JJ",
-  "legend": "JJ",
-  "lesbian": "JJ",
-  "letdown": "JJ",
-  "liar": "JJ",
-  "libertine": "JJ",
-  "licenced": "JJ",
-  "lidded": "JJ",
-  "lier": "JJ",
-  "lightsome": "JJ",
-  "limbed": "JJ",
-  "lipped": "JJ",
-  "lissom": "JJ",
-  "lissome": "JJ",
-  "lithesome": "JJ",
-  "little shit": "JJ",
-  "liv": "JJ",
-  "lividly": "JJ",
-  "loaded down": "JJ",
-  "lobate": "JJ",
-  "lobed": "JJ",
-  "loggerheaded": "JJ",
-  "lollygag": "JJ",
-  "loose cannon": "JJ",
-  "looseleaf": "JJ",
-  "loosely knit": "JJ",
-  "losing it": "JJ",
-  "loth": "JJ",
-  "loveliness": "JJ",
-  "lovesick": "JJ",
-  "low quality": "JJ",
-  "lowborn": "JJ",
-  "lowercase": "JJ",
-  "ltd": "JJ",
-  "lubberly": "JJ",
-  "lumpen": "JJ",
-  "lunacy": "JJ",
-  "lust": "JJ",
-  "maculate": "JJ",
-  "madden": "JJ",
-  "madness": "JJ",
-  "magna cum laude": "JJ",
-  "maidenly": "JJ",
-  "majuscule": "JJ",
-  "mangle": "JJ",
-  "mangy": "JJ",
-  "maniac": "JJ",
-  "manky": "JJ",
-  "manlike": "JJ",
-  "manmade": "JJ",
-  "marian": "JJ",
-  "martyr": "JJ",
-  "matt": "JJ",
-  "matt damon": "JJ",
-  "matte": "JJ",
-  "matted": "JJ",
-  "matter of fact": "JJ",
-  "maximise": "JJ",
-  "maximising": "JJ",
-  "meagre": "JJ",
-  "meanspirited": "JJ",
-  "mechanised": "JJ",
-  "mediaeval": "JJ",
-  "medullary": "JJ",
-  "meh": "JJ",
-  "membered": "JJ",
-  "mentally ill": "JJ",
-  "mercantile": "JJ",
-  "mercy": "JJ",
-  "meridian": "JJ",
-  "mesmerising": "JJ",
-  "metacarpal": "JJ",
-  "midget": "JJ",
-  "miff": "JJ",
-  "mildly disturbing": "JJ",
-  "milf": "JJ",
-  "mind blowing": "JJ",
-  "mind boggling": "JJ",
-  "mind numbing": "JJ",
-  "mingy": "JJ",
-  "mini": "JJ",
-  "mint": "JJ",
-  "mirky": "JJ",
-  "miry": "JJ",
-  "misanthrope": "JJ",
-  "misbegot": "JJ",
-  "misbehave": "JJ",
-  "mislead": "JJ",
-  "mismated": "JJ",
-  "mistified": "JJ",
-  "mistreated": "JJ",
-  "modernised": "JJ",
-  "monarchal": "JJ",
-  "mongoloid": "JJ",
-  "monkey": "JJ",
-  "monopteral": "JJ",
-  "monster": "JJ",
-  "moonstruck": "JJ",
-  "mope": "JJ",
-  "moralise": "JJ",
-  "morally bankrupt": "JJ",
-  "mortified": "JJ",
-  "mortifying": "JJ",
-  "mortuary": "JJ",
-  "mossy": "JJ",
-  "motherlike": "JJ",
-  "mothy": "JJ",
-  "motile": "JJ",
-  "motivational": "JJ",
-  "motorised": "JJ",
-  "mouldy": "JJ",
-  "mousey": "JJ",
-  "mouthwatering": "JJ",
-  "mown": "JJ",
-  "multicultural": "JJ",
-  "multidisciplinary": "JJ",
-  "multilane": "JJ",
-  "multiplex": "JJ",
-  "munter": "JJ",
-  "muppet": "JJ",
-  "musky": "JJ",
-  "mussy": "JJ",
-  "must see": "JJ",
-  "musty": "JJ",
-  "mystify": "JJ",
-  "mystifying": "JJ",
-  "myth": "JJ",
-  "naff": "JJ",
-  "nag": "JJ",
-  "naif": "JJ",
-  "narcotising": "JJ",
-  "narcotizing": "JJ",
-  "nastily": "RB",
-  "national treasure": "JJ",
-  "naturally occurring": "JJ",
-  "naturist": "JJ",
-  "nauseating": "JJ",
-  "nebulose": "JJ",
-  "neck and neck": "JJ",
-  "negilent": "JJ",
-  "neighbouring": "JJ",
-  "neighbourly": "JJ",
-  "nescient": "JJ",
-  "nett": "JJ",
-  "nettle": "JJ",
-  "newsy": "JJ",
-  "niffy": "JJ",
-  "niggle": "JJ",
-  "nightmare": "JJ",
-  "nip and tuck": "JJ",
-  "nipping": "JJ",
-  "nippy": "JJ",
-  "nitwitted": "JJ",
-  "non compos mentis": "JJ",
-  "nonaligned": "JJ",
-  "noncivilised": "JJ",
-  "noncivilized": "JJ",
-  "nonconformist": "JJ",
-  "noncrystalline": "JJ",
-  "nonexempt": "JJ",
-  "nonfatal": "JJ",
-  "nonflowering": "JJ",
-  "nonhairy": "JJ",
-  "nonhereditary": "JJ",
-  "nonhuman": "JJ",
-  "noninflammatory": "JJ",
-  "nonkosher": "JJ",
-  "nonliteral": "JJ",
-  "nonmandatory": "JJ",
-  "nonmodern": "JJ",
-  "nonnatural": "JJ",
-  "nonobligatory": "JJ",
-  "nonparallel": "JJ",
-  "nonpersonal": "JJ",
-  "nonplussed": "JJ",
-  "nonprofessional": "JJ",
-  "nonrational": "JJ",
-  "nonreciprocal": "JJ",
-  "nonreflecting": "JJ",
-  "nonsectarian": "JJ",
-  "nonskid": "JJ",
-  "nonslippery": "JJ",
-  "nonunionised": "JJ",
-  "nonuple": "JJ",
-  "nonviscid": "JJ",
-  "nosey": "JJ",
-  "not bad": "JJ",
-  "not good": "JJ",
-  "not guilty": "JJ",
-  "not optimal": "JJ",
-  "nothing better": "JJ",
-  "notional": "JJ",
-  "nuiscance": "JJ",
-  "nutlike": "JJ",
-  "nymphomaniacal": "JJ",
-  "o rly": "JJ",
-  "oblitterfaded": "JJ",
-  "obsess": "JJ",
-  "obsession": "JJ",
-  "obsessional": "JJ",
-  "obstacle": "JJ",
-  "octuple": "JJ",
-  "of import": "JJ",
-  "of unsound mind": "JJ",
-  "off the hook": "JJ",
-  "offence": "JJ",
-  "oh hai": "JJ",
-  "oh my": "JJ",
-  "old fashioned": "JJ",
-  "old school": "JJ",
-  "old skool": "JJ",
-  "olde worlde": "JJ",
-  "omg": "JJ",
-  "omnipotent": "JJ",
-  "on fire": "JJ",
-  "on hand": "JJ",
-  "on tap": "JJ",
-  "on the button": "JJ",
-  "on the fence": "JJ",
-  "on the go": "JJ",
-  "on the job": "JJ",
-  "on the loose": "JJ",
-  "on the nose": "JJ",
-  "one": "JJ",
-  "onshore": "JJ",
-  "ooh la la": "JJ",
-  "ooooh": "JJ",
-  "oooops": "JJ",
-  "oozy": "JJ",
-  "opencast": "JJ",
-  "opencut": "JJ",
-  "openhanded": "JJ",
-  "openhearted": "JJ",
-  "openmouthed": "JJ",
-  "opponent": "JJ",
-  "opportunity": "JJ",
-  "opposition": "JJ",
-  "oppositional": "JJ",
-  "oppress": "JJ",
-  "oppressively": "RB",
-  "optimism": "JJ",
-  "oracular": "JJ",
-  "orbicular": "JJ",
-  "ordinal": "JJ",
-  "organisational": "JJ",
-  "orotund": "JJ",
-  "orthogonal": "JJ",
-  "ostracise": "JJ",
-  "otiose": "JJ",
-  "out of date": "JJ",
-  "out of gear": "JJ",
-  "out of place": "JJ",
-  "out of play": "JJ",
-  "out of practice": "JJ",
-  "out of reach": "JJ",
-  "out of sight": "JJ",
-  "out of the blue": "JJ",
-  "out of the question": "JJ",
-  "outdoorsy": "JJ",
-  "outer space": "JJ",
-  "outrigged": "JJ",
-  "over priced": "JJ",
-  "over the moon": "JJ",
-  "overact": "JJ",
-  "overbalance": "JJ",
-  "overbusy": "JJ",
-  "overemotional": "JJ",
-  "overindulgent": "JJ",
-  "overkill": "JJ",
-  "overnice": "JJ",
-  "overplay": "JJ",
-  "overrefined": "JJ",
-  "oversewn": "JJ",
-  "oversexed": "JJ",
-  "overstretched": "JJ",
-  "overstuffed": "JJ",
-  "ovular": "JJ",
-  "pacifist": "JJ",
-  "page turner": "JJ",
-  "palatal": "JJ",
-  "palmate": "JJ",
-  "palmatifid": "JJ",
-  "palpitating": "JJ",
-  "pandemonium": "JJ",
-  "pappose": "JJ",
-  "par excellence": "JJ",
-  "paraboloidal": "JJ",
-  "paradise": "JJ",
-  "paralysed": "JJ",
-  "parky": "JJ",
-  "parrotlike": "JJ",
-  "passã©": "JJ",
-  "patchy": "JJ",
-  "patrilineal": "JJ",
-  "patrilinear": "JJ",
-  "patronising": "JJ",
-  "payback": "JJ",
-  "peachy": "JJ",
-  "pebbly": "JJ",
-  "pectinate": "JJ",
-  "pedate": "JJ",
-  "pelecypod": "JJ",
-  "pellucid": "JJ",
-  "pent": "JJ",
-  "perfervid": "JJ",
-  "peripteral": "JJ",
-  "periwigged": "JJ",
-  "perlexed": "JJ",
-  "pernickety": "JJ",
-  "personalised": "JJ",
-  "perturb": "JJ",
-  "perturbing": "JJ",
-  "peruked": "JJ",
-  "pesky": "JJ",
-  "pessimal": "JJ",
-  "pessimum": "JJ",
-  "petrify": "JJ",
-  "petrifying": "JJ",
-  "phantasmal": "JJ",
-  "phew": "JJ",
-  "pianissimo assai": "JJ",
-  "piano": "JJ",
-  "picaresque": "JJ",
-  "pigeonholed": "JJ",
-  "piggy": "JJ",
-  "pillock": "JJ",
-  "pineal": "JJ",
-  "piping": "JJ",
-  "pissed": "JJ",
-  "pissed off": "JJ",
-  "pitchy": "JJ",
-  "pixilated": "JJ",
-  "pizzicato": "JJ",
-  "plagiarised": "JJ",
-  "plaguey": "JJ",
-  "plainspoken": "JJ",
-  "plangent": "JJ",
-  "platitudinal": "JJ",
-  "played out": "JJ",
-  "plumaged": "JJ",
-  "plumate": "JJ",
-  "plumose": "JJ",
-  "plumy": "JJ",
-  "plundering": "JJ",
-  "pointlessly": "RB",
-  "poky": "JJ",
-  "polarised": "JJ",
-  "polychrome": "JJ",
-  "poor decision": "JJ",
-  "popeyed": "JJ",
-  "porose": "JJ",
-  "possibility": "JJ",
-  "pourquoi": "JJ",
-  "pout": "JJ",
-  "powerfuly": "RB",
-  "prat": "JJ",
-  "prattle": "JJ",
-  "precautional": "JJ",
-  "precooled": "JJ",
-  "predestinate": "JJ",
-  "predicament": "JJ",
-  "preeminent": "JJ",
-  "preexistent": "JJ",
-  "preexisting": "JJ",
-  "prehensile": "JJ",
-  "prenominal": "JJ",
-  "prestissimo": "JJ",
-  "preternatural": "JJ",
-  "pretty good": "JJ",
-  "prevenient": "JJ",
-  "prickle": "JJ",
-  "prima": "JJ",
-  "primaeval": "JJ",
-  "prisoner": "JJ",
-  "prisonlike": "JJ",
-  "prissy": "JJ",
-  "priveleged": "JJ",
-  "prizewinning": "JJ",
-  "probatory": "JJ",
-  "problem": "JJ",
-  "procrastinating": "JJ",
-  "profaned": "JJ",
-  "prohibitory": "JJ",
-  "proinflammatory": "JJ",
-  "prolate": "JJ",
-  "prolix": "JJ",
-  "pronged": "JJ",
-  "prongy": "JJ",
-  "propaganda": "JJ",
-  "propositional": "JJ",
-  "protector": "JJ",
-  "providentially": "RB",
-  "puberulent": "JJ",
-  "pudgy": "JJ",
-  "pukka": "JJ",
-  "pulpy": "JJ",
-  "pulverise": "JJ",
-  "punctual": "JJ",
-  "punitory": "JJ",
-  "puppet": "JJ",
-  "purblind": "JJ",
-  "purebred": "JJ",
-  "pussycat": "JJ",
-  "put on": "JJ",
-  "putrefacient": "JJ",
-  "putrid": "JJ",
-  "quaternary": "JJ",
-  "quaternate": "JJ",
-  "queasy": "JJ",
-  "queenly": "JJ",
-  "quite nice": "JJ",
-  "quitter": "JJ",
-  "randy": "JJ",
-  "ranting": "JJ",
-  "rascal": "JJ",
-  "rascally": "JJ",
-  "rastafarian": "JJ",
-  "rattlebrained": "JJ",
-  "rattlepated": "JJ",
-  "raunchy": "JJ",
-  "ravening": "JJ",
-  "raving mad": "JJ",
-  "razy": "JJ",
-  "reactionist": "JJ",
-  "realised": "JJ",
-  "realist": "JJ",
-  "reanimated": "JJ",
-  "recluse": "JJ",
-  "recognise": "JJ",
-  "redolent": "JJ",
-  "reefy": "JJ",
-  "refrigerating": "JJ",
-  "refuge": "JJ",
-  "reincarnate": "JJ",
-  "relapse": "JJ",
-  "relief": "JJ",
-  "remorse": "JJ",
-  "renewal": "JJ",
-  "resentment": "JJ",
-  "reservation": "JJ",
-  "residuary": "JJ",
-  "resound": "JJ",
-  "retral": "JJ",
-  "retributory": "JJ",
-  "retroflex": "JJ",
-  "revelation": "JJ",
-  "rheumy": "JJ",
-  "rimose": "JJ",
-  "rip off": "JJ",
-  "ripe for an update": "JJ",
-  "rodent": "JJ",
-  "rofl": "JJ",
-  "rolled into one": "JJ",
-  "rootbound": "JJ",
-  "ropey": "JJ",
-  "ropy": "JJ",
-  "rostrate": "JJ",
-  "rummy": "JJ",
-  "rushy": "JJ",
-  "sacramental": "JJ",
-  "saddening": "JJ",
-  "sanctimonious little shit": "JJ",
-  "sandaled": "JJ",
-  "sandalled": "JJ",
-  "savoury": "JJ",
-  "scabby": "JJ",
-  "scarey": "JJ",
-  "scatty": "JJ",
-  "schadenfreude": "JJ",
-  "schmaltzy": "JJ",
-  "scorching": "JJ",
-  "scorchio": "JJ",
-  "scoundrelly": "JJ",
-  "scraggy": "JJ",
-  "screwy": "JJ",
-  "scrubby": "JJ",
-  "scruffy": "JJ",
-  "scummy": "JJ",
-  "seagirt": "JJ",
-  "seamed": "JJ",
-  "sectioned": "JJ",
-  "selfsame": "JJ",
-  "semiconducting": "JJ",
-  "semidark": "JJ",
-  "sepulchral": "JJ",
-  "sequent": "JJ",
-  "serrate": "JJ",
-  "serrated": "JJ",
-  "sexed": "JJ",
-  "sexy motherfucker": "JJ",
-  "shamefaced": "JJ",
-  "sheathed": "JJ",
-  "shelfy": "JJ",
-  "shelvy": "JJ",
-  "shirty": "JJ",
-  "shitty": "JJ",
-  "shoaly": "JJ",
-  "shodden": "JJ",
-  "shoed": "JJ",
-  "shrivelled": "JJ",
-  "shuddery": "JJ",
-  "shut up": "JJ",
-  "sidesplitting": "JJ",
-  "silvan": "JJ",
-  "silvern": "JJ",
-  "sinistral": "JJ",
-  "sinuate": "JJ",
-  "sissified": "JJ",
-  "sissy": "JJ",
-  "sisterly": "JJ",
-  "sisyphean": "JJ",
-  "situational": "JJ",
-  "slaphappy": "JJ",
-  "slippery slope": "JJ",
-  "slushy": "JJ",
-  "slutty": "JJ",
-  "smokey": "JJ",
-  "smutty": "JJ",
-  "snafu": "JJ",
-  "snarly": "JJ",
-  "snide": "JJ",
-  "sniffly": "JJ",
-  "snobby": "JJ",
-  "snorty": "JJ",
-  "snowbound": "JJ",
-  "snuffling": "JJ",
-  "snuffly": "JJ",
-  "sobersided": "JJ",
-  "socialised": "JJ",
-  "soppy": "JJ",
-  "sorbefacient": "JJ",
-  "sounds good": "JJ",
-  "spacey": "JJ",
-  "spacy": "JJ",
-  "spammy": "JJ",
-  "sparkly": "JJ",
-  "specialised": "JJ",
-  "spending frenzy": "JJ",
-  "spheroidal": "JJ",
-  "spiky": "JJ",
-  "spindly": "JJ",
-  "spiny": "JJ",
-  "splay": "JJ",
-  "splayfoot": "JJ",
-  "splayfooted": "JJ",
-  "spoilt": "JJ",
-  "spongelike": "JJ",
-  "springy": "JJ",
-  "spry": "JJ",
-  "squally": "JJ",
-  "squishy": "JJ",
-  "stabilised": "JJ",
-  "stagey": "JJ",
-  "stagy": "JJ",
-  "stalemated": "JJ",
-  "standardised": "JJ",
-  "standpat": "JJ",
-  "statuesque": "JJ",
-  "statute": "JJ",
-  "steamy": "JJ",
-  "stillborn": "JJ",
-  "stilly": "JJ",
-  "stinky": "JJ",
-  "stinting": "JJ",
-  "stipendiary": "JJ",
-  "stirred up": "JJ",
-  "stopped up": "JJ",
-  "straggly": "JJ",
-  "streaky": "JJ",
-  "stretchy": "JJ",
-  "stuck with": "JJ",
-  "stuff of life": "JJ",
-  "stupefied": "JJ",
-  "submersed": "JJ",
-  "substantiating": "JJ",
-  "subterfuge": "JJ",
-  "sui generis": "JJ",
-  "summa cum laude": "JJ",
-  "summational": "JJ",
-  "summery": "JJ",
-  "sunlit": "JJ",
-  "sunstruck": "JJ",
-  "super tough": "JJ",
-  "supererogatory": "JJ",
-  "superfine": "JJ",
-  "supernumerary": "JJ",
-  "superordinate": "JJ",
-  "supine": "JJ",
-  "sure as shooting": "JJ",
-  "sux": "JJ",
-  "sweptback": "JJ",
-  "swooning": "JJ",
-  "synchronal": "JJ",
-  "synchronised": "JJ",
-  "syncopated": "JJ",
-  "tabular": "JJ",
-  "taciturn": "JJ",
-  "tamed": "JJ",
-  "tantalising": "JJ",
-  "tapering off": "JJ",
-  "taste sensation": "JJ",
-  "tatty": "JJ",
-  "tearaway": "JJ",
-  "teh awesome": "JJ",
-  "tenderised": "JJ",
-  "tenderized": "JJ",
-  "tenured": "JJ",
-  "tessellated": "JJ",
-  "the shit": "JJ",
-  "the way forward": "JJ",
-  "thief": "JJ",
-  "thieves": "JJ",
-  "thought provoking": "JJ",
-  "thready": "JJ",
-  "three": "JJ",
-  "threescore": "JJ",
-  "through with": "JJ",
-  "thrown and twisted": "JJ",
-  "thundery": "JJ",
-  "tool": "JJ",
-  "toothed": "JJ",
-  "toothsome": "JJ",
-  "top banana": "JJ",
-  "top notch": "JJ",
-  "touch and go": "JJ",
-  "touristy": "JJ",
-  "tramontane": "JJ",
-  "transalpine": "JJ",
-  "transformational": "JJ",
-  "transmontane": "JJ",
-  "trashy": "JJ",
-  "tref": "JJ",
-  "tributary": "JJ",
-  "trident": "JJ",
-  "trifid": "JJ",
-  "trillion": "JJ",
-  "tripinnatifid": "JJ",
-  "triplex": "JJ",
-  "trippy": "JJ",
-  "triumphal": "JJ",
-  "true to life": "JJ",
-  "truehearted": "JJ",
-  "trusty": "JJ",
-  "tubby": "JJ",
-  "tufted": "JJ",
-  "tumescent": "JJ",
-  "tumid": "JJ",
-  "tuppeny": "JJ",
-  "turbinate": "JJ",
-  "twat": "JJ",
-  "twee": "JJ",
-  "twiggy": "JJ",
-  "twilight": "JJ",
-  "twilit": "JJ",
-  "uber": "JJ",
-  "uber cool": "JJ",
-  "ulterior": "JJ",
-  "ultramontane": "JJ",
-  "unadapted": "JJ",
-  "unadvised": "JJ",
-  "unaffecting": "JJ",
-  "unagitated": "JJ",
-  "unanimated": "JJ",
-  "unarticulate": "JJ",
-  "unarticulated": "JJ",
-  "unascertained": "JJ",
-  "unashamed": "JJ",
-  "unassured": "JJ",
-  "unauthorised": "JJ",
-  "unavowed": "JJ",
-  "unawed": "JJ",
-  "unbacked": "JJ",
-  "unbaffled": "JJ",
-  "unbeaten": "JJ",
-  "unbecoming": "JJ",
-  "unbending": "JJ",
-  "unblended": "JJ",
-  "unbooked": "JJ",
-  "unbowed": "JJ",
-  "unchained": "JJ",
-  "unchaste": "JJ",
-  "uncivilised": "JJ",
-  "uncivilized": "JJ",
-  "uncleanly": "JJ",
-  "uncomplete": "JJ",
-  "uncompleted": "JJ",
-  "uncomplimentary": "JJ",
-  "uncomprehending": "JJ",
-  "unconfused": "JJ",
-  "unconsidered": "JJ",
-  "unconstrained": "JJ",
-  "uncontaminated": "JJ",
-  "uncoordinated": "JJ",
-  "uncorrelated": "JJ",
-  "uncorroborated": "JJ",
-  "uncorrupted": "JJ",
-  "uncrowded": "JJ",
-  "uncrowned": "JJ",
-  "uncrystallised": "JJ",
-  "uncrystallized": "JJ",
-  "uncultivated": "JJ",
-  "undefiled": "JJ",
-  "undemanding": "JJ",
-  "under the weather": "JJ",
-  "under wraps": "JJ",
-  "underbred": "JJ",
-  "undercoated": "JJ",
-  "underfed": "JJ",
-  "underhung": "JJ",
-  "undernourished": "JJ",
-  "undersealed": "JJ",
-  "underslung": "JJ",
-  "understaffed": "JJ",
-  "underweight": "JJ",
-  "undesired": "JJ",
-  "undignified": "JJ",
-  "undischarged": "JJ",
-  "undiscovered": "JJ",
-  "undiscriminating": "JJ",
-  "undistorted": "JJ",
-  "undocumented": "JJ",
-  "undomesticated": "JJ",
-  "undoubted": "JJ",
-  "undraped": "JJ",
-  "unelaborate": "JJ",
-  "unenclosed": "JJ",
-  "unended": "JJ",
-  "unendowed": "JJ",
-  "unengaged": "JJ",
-  "unentitled": "JJ",
-  "unerect": "JJ",
-  "unexacting": "JJ",
-  "unexceeded": "JJ",
-  "unexcelled": "JJ",
-  "unexploded": "JJ",
-  "unfathomed": "JJ",
-  "unfeathered": "JJ",
-  "unfed": "JJ",
-  "unfeeling": "JJ",
-  "unfeigned": "JJ",
-  "unfeminine": "JJ",
-  "unfledged": "JJ",
-  "unforgiven": "JJ",
-  "unfunctional": "JJ",
-  "ungeared": "JJ",
-  "ungraded": "JJ",
-  "ungratifying": "JJ",
-  "ungrudging": "JJ",
-  "unguarded": "JJ",
-  "unguiculate": "JJ",
-  "unguiculated": "JJ",
-  "ungulate": "JJ",
-  "ungulated": "JJ",
-  "ungummed": "JJ",
-  "unhatched": "JJ",
-  "unhearing": "JJ",
-  "unhesitating": "JJ",
-  "unhomogenised": "JJ",
-  "unhomogenized": "JJ",
-  "unhoped": "JJ",
-  "unhuman": "JJ",
-  "unintelligent": "JJ",
-  "unintimidated": "JJ",
-  "unironed": "JJ",
-  "unisex": "JJ",
-  "unisexual": "JJ",
-  "universally corrupt": "JJ",
-  "unkindled": "JJ",
-  "unladylike": "JJ",
-  "unlearned": "JJ",
-  "unlettered": "JJ",
-  "unlighted": "JJ",
-  "unlit": "JJ",
-  "unloved": "JJ",
-  "unmanlike": "JJ",
-  "unmanly": "JJ",
-  "unmeasured": "JJ",
-  "unmediated": "JJ",
-  "unmelted": "JJ",
-  "unmerited": "JJ",
-  "unmitigated": "JJ",
-  "unmitigated disaster": "JJ",
-  "unmortgaged": "JJ",
-  "unmoving": "JJ",
-  "unnaturalised": "JJ",
-  "unnaturalized": "JJ",
-  "unoiled": "JJ",
-  "unordered": "JJ",
-  "unorganised": "JJ",
-  "unoriented": "JJ",
-  "unpainted": "JJ",
-  "unparented": "JJ",
-  "unpeopled": "JJ",
-  "unperceiving": "JJ",
-  "unperplexed": "JJ",
-  "unpitying": "JJ",
-  "unpleasing": "JJ",
-  "unploughed": "JJ",
-  "unpolluted": "JJ",
-  "unpopulated": "JJ",
-  "unpracticed": "JJ",
-  "unpractised": "JJ",
-  "unpredicted": "JJ",
-  "unprincipled": "JJ",
-  "unprocessed": "JJ",
-  "unprompted": "JJ",
-  "unprovoked": "JJ",
-  "unprovoking": "JJ",
-  "unpunctual": "JJ",
-  "unquestionably depressing": "JJ",
-  "unquestioning": "JJ",
-  "unrealised": "JJ",
-  "unreciprocated": "JJ",
-  "unrecognised": "JJ",
-  "unrecorded": "JJ",
-  "unrefined": "JJ",
-  "unreflected": "JJ",
-  "unreformed": "JJ",
-  "unregenerate": "JJ",
-  "unregenerated": "JJ",
-  "unrepresented": "JJ",
-  "unreserved": "JJ",
-  "unrevised": "JJ",
-  "unrewarded": "JJ",
-  "unrivalled": "JJ",
-  "unsaved": "JJ",
-  "unsavoury": "JJ",
-  "unscholarly": "JJ",
-  "unseamed": "JJ",
-  "unseasoned": "JJ",
-  "unsectarian": "JJ",
-  "unseeing": "JJ",
-  "unsexed": "JJ",
-  "unshared": "JJ",
-  "unshrinking": "JJ",
-  "unsleeping": "JJ",
-  "unsnarled": "JJ",
-  "unsounded": "JJ",
-  "unspaced": "JJ",
-  "unstaged": "JJ",
-  "unstudied": "JJ",
-  "unsweet": "JJ",
-  "unswept": "JJ",
-  "unsynchronised": "JJ",
-  "unsynchronized": "JJ",
-  "untainted": "JJ",
-  "untangled": "JJ",
-  "untaxed": "JJ",
-  "untempered": "JJ",
-  "untempting": "JJ",
-  "untethered": "JJ",
-  "unthought": "JJ",
-  "untilled": "JJ",
-  "untoughened": "JJ",
-  "untroubled": "JJ",
-  "untufted": "JJ",
-  "unvaned": "JJ",
-  "unvarnished": "JJ",
-  "unversed": "JJ",
-  "unvulcanised": "JJ",
-  "unvulcanized": "JJ",
-  "unwearying": "JJ",
-  "unwell": "JJ",
-  "unwilled": "JJ",
-  "unwonted": "JJ",
-  "unwooded": "JJ",
-  "unworldly": "JJ",
-  "up and coming": "JJ",
-  "upcurved": "JJ",
-  "urbanised": "JJ",
-  "utterly bizarre": "JJ",
-  "vacillating": "JJ",
-  "vaguely terrifying": "JJ",
-  "valedictory": "JJ",
-  "validatory": "JJ",
-  "vapid": "JJ",
-  "varicose": "JJ",
-  "varnished": "JJ",
-  "velar": "JJ",
-  "velvet": "JJ",
-  "venomed": "JJ",
-  "ventral": "JJ",
-  "ventricose": "JJ",
-  "verbose": "JJ",
-  "verificatory": "JJ",
-  "vermicular": "JJ",
-  "vermiculate": "JJ",
-  "vermiculated": "JJ",
-  "very nice": "JJ",
-  "victim": "JJ",
-  "vindicatory": "JJ",
-  "vinegary": "JJ",
-  "vitrified": "JJ",
-  "volumed": "JJ",
-  "volute": "JJ",
-  "voluted": "JJ",
-  "wanker": "JJ",
-  "want to be": "JJ",
-  "washy": "JJ",
-  "waterborne": "JJ",
-  "watertight": "JJ",
-  "weathered": "JJ",
-  "weedy": "JJ",
-  "weepy": "JJ",
-  "weighed down": "JJ",
-  "weirdly awesome": "JJ",
-  "well behaved": "JJ",
-  "well off": "JJ",
-  "well thought out": "JJ",
-  "well written": "JJ",
-  "westphalian": "JJ",
-  "what's up": "JJ",
-  "wheezy": "JJ",
-  "whiney": "JJ",
-  "whiny": "JJ",
-  "whippy": "JJ",
-  "wicked awesome": "JJ",
-  "wigged": "JJ",
-  "wiggly": "JJ",
-  "wimpy": "JJ",
-  "windburned": "JJ",
-  "windburnt": "JJ",
-  "winner": "JJ",
-  "wiped out": "JJ",
-  "wizened": "JJ",
-  "woah": "JJ",
-  "wonky": "JJ",
-  "woody": "JJ",
-  "worn out": "JJ",
-  "worshipped": "JJ",
-  "wowzers": "JJ",
-  "wtf": "JJ",
-  "yay": "JJ",
-  "yeah right": "JJ",
-  "yes please": "JJ",
-  "yikes": "JJ",
-  "yippee": "JJ",
-  "yuck": "JJ",
-  "yucky": "JJ",
-  "yuk": "JJ",
-  "zero": "JJ",
-  "zippy": "JJ"
+  "lower-ranking": "JJR"
 }
 
-
-var multiples={  //adverbs
-"of course":true,
-"at least":true,
-"for example":true,
-"in order":true,
-"more than":true,
-"no longer":true,
-"a little":true,
-"for instance":true,
-"in particular":true,
-"a bit":true,
-"sort of":true,
-"all right":true,
-"no doubt":true,
-"and so on":true,
-"at first":true,
-"in addition":true,
-"at last":true,
-"that is":true,
-"at once":true,
-"once again":true,
-"at present":true,
-"less than":true,
-"up to":true,
-"once more":true,
-"by now":true,
-"so as":true,
-"in part":true,
-"all but":true,
-"in short":true,
-"even so":true,
-"just about":true,
-"as yet":true,
-"for long":true,
-"far from":true,
-"for ever":true,
-"on board":true,
-"a lot":true,
-"by far":true,
-"over here":true,
-"per annum":true,
-"as usual":true,
-"at best":true,
-"for once":true,
-"at large":true,
-"any longer":true,
-"for good":true,
-"vice versa":true,
-"for certain":true,
-"kind of":true,
-"anything but":true,
-"in between":true,
-"en route":true,
-"in private":true,
-"in vain":true,
-"at length":true,
-"at random":true,
-"for sure":true,
-"upside down":true,
-"at most":true,
-"per se":true,
-"per capita":true,
-"up front":true,
-"in situ":true,
-"in the main":true,
-"inter alia":true,
-"ex parte":true,
-"in vitro":true,
-"to and fro":true,
-"in vivo":true,
-"in brief":true,
-"at worst":true,
-"prima facie":true,
-"upwards of":true,
-"something like":true,
-"in case":true,
-"en masse":true,
-"ultra vires":true,
-"a priori":true,
-"ad hoc":true,
-"none the":true,
-"et cetera":true,
-"de facto":true,
-"off guard":true,
-"spot on":true,
-"ipso facto":true,
-"ceteris paribus":true,
-"ad infinitum":true,
-"op. cit.":true,
-"in absentia":true,
-"en bloc":true,
-"in camera":true,
-"point blank":true,
-"a fortiori":true,
-"ex officio":true,
-"nigh on":true,
-"ad nauseam":true,
-"inside out":true,
-"sotto voce":true,
-"pro rata":true,
-"in memoriam":true,
-"in extremis":true,
-"not withstanding":true,
-"in toto":true,
-"the most part":true,
-"for keeps":true,
-"al fresco":true,
-"ab initio":true,
-"de jure":true,
-"a la carte":true,
-"sub judice":true,
-"op. cit":true,
-"post hoc":true,
-"so on":true,
-"sine die":true,
-"op cit":true,
-"just in":true,
-"ex gratia":true,
-"au contraire":true,
-"ad hominem":true,
-"a posteriori":true,
-  //adjectives
-"fed up":true,
-"brand new":true,
-"ad hoc":true,
-"so called":true,
-"out of date":true,
-"old fashioned":true,
-"per capita":true,
-"de facto":true,
-"grown up":true,
-"bona fide":true,
-"ex parte":true,
-"well off":true,
-"prima facie":true,
-"far off":true,
-"a priori":true,
-"in between":true,
-"par excellence":true,
-"a la carte":true,
-"ultra vires":true,
-"straight forward":true,
-"hard up":true,
-"de luxe":true,
-"post mortem":true,
-"ex gratia":true,
-"upside down":true,
-"up front":true,
-"au fait":true,
-"sui generis":true,
-"pro rata":true,
-"post hoc":true,
-"ex officio":true,
-"ab initio":true,
-"inside out":true,
-"point blank":true,
-"en suite":true,
-"spot on":true,
-"all right":true,
-"ad hominem":true,
-"de jure":true,
-"tout court":true,
-"avant garde":true,
-"viva voce":true,
-"sub judice":true,
-"al fresco":true,
-"sans serif":true,
-"gung ho":true,
-"compos mentis":true,
-"super duper":true,
-"such like":true,
-"de trop":true,
-
-//mine
-"will be":true
-  }
-
-
-var parts_of_speech={
-  "VB": {
-    "description": "verb, base form",
-    "example": "eat",
-    "parent": "verb",
-    "tag": "VB"
-  },
-  "CP": {
-    "description": "copula",
-    "example": "is, was, were",
-    "parent": "verb",
-    "tag": "CP"
-  },
-  "VBD": {
-    "description": "verb, past tense",
-    "example": "ate",
-    "parent": "verb",
-    "tense": "past",
-    "tag": "VBD"
-  },
-  "VBN": {
-    "description": "verb, past part",
-    "example": "eaten",
-    "parent": "verb",
-    "tense": "past",
-    "tag": "VBN"
-  },
-  "VBP": {
-    "description": "Verb, present",
-    "example": "eat",
-    "parent": "verb",
-    "tense": "present",
-    "tag": "VBP"
-  },
-  "VBZ": {
-    "description": "Verb, present",
-    "example": "eats, swims",
-    "tense": "present",
-    "parent": "verb",
-    "tag": "VBZ"
-  },
-  "MD": {
-    "description": "Modal",
-    "example": "can,should",
-    "parent": "glue",
-    "tag": "MD"
-  },
-  "RB": {
-    "description": "Adverb",
-    "example": "quickly, softly",
-    "parent": "glue",
-    "tag": "RB"
-  },
-  "JJ": {
-    "description": "Adjective",
-    "example": "big, nice",
-    "parent": "adjective",
-    "tag": "JJ"
-  },
-  "JJR": {
-    "description": "Adj., comparative",
-    "example": "bigger, cooler",
-    "parent": "adjective",
-    "tag": "JJR"
-  },
-  "JJS": {
-    "description": "Adj., superlative",
-    "example": "biggest, fattest",
-    "parent": "adjective",
-    "tag": "JJS"
-  },
-  "RBR": {
-    "description": "Adverb, comparative",
-    "example": "faster, cooler",
-    "parent": "adjective",
-    "tag": "RBR"
-  },
-  "RBS": {
-    "description": "Adverb, superlative",
-    "example": "fastest (driving), coolest (looking)",
-    "parent": "adjective",
-    "tag": "RBS"
-  },
-  "NN": {
-    "description": "Noun, sing. or mass",
-    "example": "dog, rain",
-    "parent": "noun",
-    "tag": "NN"
-  },
-  "NNP": {
-    "description": "Proper noun, sing.",
-    "example": "Edinburgh, skateboard",
-    "parent": "noun",
-    "tag": "NNP"
-  },
-  "NNPS": {
-    "description": "Proper noun, plural",
-    "example": "Smiths",
-    "parent": "noun",
-    "tag": "NNPS"
-  },
-  "NNS": {
-    "description": "Noun, plural",
-    "example": "dogs, foxes",
-    "parent": "noun",
-    "tag": "NNS"
-  },
- "NNO": {
-    "description": "Noun, possessive",
-    "example": "spencer's, sam's",
-    "parent": "noun",
-    "tag": "NNO"
-  },
-  "PP": {
-    "description": "Possessive pronoun",
-    "example": "my,one's",
-    "parent": "glue",
-    "tag": "PP"
-  },
-  "FW": {
-    "description": "foreign word",
-    "example": "mon dieu, voila",
-    "parent": "noun",
-    "tag": "FW"
-  },
-  "CD": {
-    "description": "Cardinal number",
-    "example": "one,two",
-    "parent": "glue", //may want to change this
-    "tag": "CD"
-  },
-  "VBG": {
-    "description": "verb, gerund",
-    "example": "eating,winning",
-    "parent": "verb",
-    "tag": "VBG"
-  },
-  "NG": {
-    "description": "noun, gerund",
-    "example": "eating,winning - but used grammatically as a noun",
-    "parent": "noun",
-    "tag": "VBG"
-  },
-  "IN": {
-    "description": "Preposition",
-    "example": "of,in,by",
-    "parent": "glue",
-    "tag": "IN"
-  },
-  "UP": {
-    "description": "dependent preposition",
-    "example": "up, down",
-    "parent": "glue",
-    "tag": "UP"
-  },
-  "CC": {
-    "description": "Coord Conjuncn",
-    "example": "and,but,or",
-    "parent": "glue",
-    "tag": "CC"
-  },
-  "PRP": {
-    "description": "Personal pronoun",
-    "example": "I,you,she",
-    "parent": "glue",
-    "tag": "PRP"
-  },
-  "DT": {
-    "description": "Determiner",
-    "example": "the,some",
-    "parent": "title",
-    "tag": "DT"
-  },
-  "example": {
-    "description": "Existential there",
-    "example": "there",
-    "parent": "glue",
-    "tag": "EX"
-  },
-  "POS": {
-    "description": "Possessive ending",
-    "example": "s",
-    "parent": "glue",
-    "tag": "POS"
-  },
-  "PDT": {
-    "description": "Predeterminer",
-    "example": "all, both",
-    "parent": "glue",
-    "tag": "PDT"
-  },
-  "RP": {
-    "description": "Particle",
-    "example": "up,off",
-    "parent": "glue",
-    "tag": "RP"
-  },
-  "TO": {
-    "description": "to",
-    "example": "to",
-    "parent": "glue",
-    "tag": "TO"
-  },
-  "UH": {
-    "description": "Interjection",
-    "example": "oh, oops",
-    "parent": "glue",
-    "tag": "UH"
-  },
-  "WDT": {
-    "description": "Wh-determiner",
-    "example": "which,that",
-    "parent": "glue",
-    "tag": "WDT"
-  },
-  "WP": {
-    "description": "Wh pronoun",
-    "example": "who,what",
-    "parent": "glue",
-    "tag": "WP"
-  },
-  "WRB": {
-    "description": "Wh-adverb",
-    "example": "how,where",
-    "parent": "glue",
-    "tag": "WRB"
-  },
-  "LS": {
-    "description": "List item marker",
-    "example": "1,One",
-    "parent": "glue",
-    "tag": "LS"
-  },
-  "SYM": {
-    "description": "Symbol",
-    "example": "+,%,&",
-    "parent": "glue",
-    "tag": "SYM"
-  }
-}
-
-
-var silly={
-"a-z":true,
-"able":true,
-"about":true,
-"above":true,
-"abroad":true,
-"accessibility":true,
-"according":true,
-"accordingly":true,
-"across":true,
-"actor":true,
-"actress":true,
-"actually":true,
-"adjustment":true,
-"advertising":true,
-"after":true,
-"afterwards":true,
-"again":true,
-"against":true,
-"ago":true,
-"ah":true,
-"aha":true,
-"ahead":true,
-"ain't":true,
-"album":true,
-"all":true,
-"allow":true,
-"allows":true,
-"almost":true,
-"alone":true,
-"along":true,
-"alongside":true,
-"already":true,
-"also":true,
-"although":true,
-"always":true,
-"am":true,
-"amid":true,
-"amidst":true,
-"among":true,
-"amongst":true,
-"amoungst":true,
-"amount":true,
-"amplitude":true,
-"an":true,
-"and":true,
-"another":true,
-"any":true,
-"anybody":true,
-"anyhow":true,
-"anyone":true,
-"anything":true,
-"anyway":true,
-"anyways":true,
-"anywhere":true,
-"apart":true,
-"appear":true,
-"appreciate":true,
-"appropriate":true,
-"are":true,
-"area":true,
-"aren't":true,
-"around":true,
-"article":true,
-"as":true,
-"as to":true,
-"aside":true,
-"ask":true,
-"asking":true,
-"associated":true,
-"at":true,
-"available":true,
-"away":true,
-"awfully":true,
-"aye":true,
-"back":true,
-"backward":true,
-"backwards":true,
-"be":true,
-"became":true,
-"because":true,
-"become":true,
-"becomes":true,
-"becoming":true,
-"been":true,
-"before":true,
-"beforehand":true,
-"begin":true,
-"behind":true,
-"being":true,
-"believe":true,
-"below":true,
-"beside":true,
-"besides":true,
-"best":true,
-"better":true,
-"between":true,
-"beyond":true,
-"bill":true,
-"both":true,
-"bottom":true,
-"brief":true,
-"brother":true,
-"building":true,
-"but":true,
-"by":true,
-"bye":true,
-"c'mon":true,
-"c's":true,
-"call":true,
-"came":true,
-"can":true,
-"can't":true,
-"cannot":true,
-"cant":true,
-"capacity":true,
-"capital":true,
-"caption":true,
-"cause":true,
-"causes":true,
-"center":true,
-"century":true,
-"certain":true,
-"certainly":true,
-"change":true,
-"changes":true,
-"children":true,
-"citizens":true,
-"clearly":true,
-"co":true,
-"co.":true,
-"color":true,
-"colour":true,
-"com":true,
-"come":true,
-"comes":true,
-"comments":true,
-"complex":true,
-"computer":true,
-"con":true,
-"concerning":true,
-"consequently":true,
-"consider":true,
-"considering":true,
-"contain":true,
-"containing":true,
-"contains":true,
-"contestant":true,
-"corresponding":true,
-"could":true,
-"couldn't":true,
-"couldnt":true,
-"course":true,
-"cover":true,
-"cry":true,
-"currently":true,
-"dare":true,
-"daren't":true,
-"day":true,
-"de":true,
-"dear":true,
-"decade":true,
-"definitely":true,
-"density":true,
-"depth":true,
-"describe":true,
-"described":true,
-"despite":true,
-"detail":true,
-"did":true,
-"didn't":true,
-"different":true,
-"directly":true,
-"distance":true,
-"do":true,
-"does":true,
-"doesn't":true,
-"doing":true,
-"don't":true,
-"done":true,
-"doughter":true,
-"down":true,
-"downwards":true,
-"dr":true,
-"due":true,
-"due to":true,
-"during":true,
-"each":true,
-"edu":true,
-"eg":true,
-"eh":true,
-"eight":true,
-"eighty":true,
-"either":true,
-"eleven":true,
-"else":true,
-"elsewhere":true,
-"empty":true,
-"end":true,
-"ending":true,
-"enough":true,
-"entirely":true,
-"episode":true,
-"especially":true,
-"et":true,
-"etc":true,
-"even":true,
-"ever":true,
-"evermore":true,
-"every":true,
-"everybody":true,
-"everyone":true,
-"everything":true,
-"everywhere":true,
-"ex":true,
-"exactly":true,
-"example":true,
-"except":true,
-"fairly":true,
-"far":true,
-"farther":true,
-"feel":true,
-"few":true,
-"fewer":true,
-"fifteen":true,
-"fifth":true,
-"fify":true,
-"fill":true,
-"find":true,
-"fire":true,
-"first":true,
-"five":true,
-"folk":true,
-"followed":true,
-"follower":true,
-"following":true,
-"follows":true,
-"food":true,
-"for":true,
-"forever":true,
-"former":true,
-"formerly":true,
-"forth":true,
-"forty":true,
-"forward":true,
-"found":true,
-"four":true,
-"from":true,
-"front":true,
-"full":true,
-"further":true,
-"furthermore":true,
-"get":true,
-"gets":true,
-"getting":true,
-"girl":true,
-"give":true,
-"given":true,
-"gives":true,
-"go":true,
-"goes":true,
-"going":true,
-"gone":true,
-"goodbye":true,
-"got":true,
-"gotten":true,
-"greetings":true,
-"guy":true,
-"ha":true,
-"had":true,
-"hadn't":true,
-"half":true,
-"happens":true,
-"hardly":true,
-"has":true,
-"hasn't":true,
-"hasnt":true,
-"have":true,
-"haven't":true,
-"having":true,
-"he":true,
-"he'd":true,
-"he'll":true,
-"he's":true,
-"height":true,
-"hello":true,
-"help":true,
-"hence":true,
-"her":true,
-"here":true,
-"here's":true,
-"hereafter":true,
-"hereby":true,
-"herein":true,
-"hereupon":true,
-"hers":true,
-"herself":true,
-"hey":true,
-"hi":true,
-"high":true,
-"him":true,
-"himself":true,
-"his":true,
-"hither":true,
-"home":true,
-"hopefully":true,
-"house":true,
-"how":true,
-"how's":true,
-"howbeit":true,
-"however":true,
-"hue":true,
-"hundred":true,
-"i":true,
-"i'd":true,
-"i'll":true,
-"i'm":true,
-"i've":true,
-"ie":true,
-"if":true,
-"ignored":true,
-"im":true,
-"immediate":true,
-"in":true,
-"inasmuch":true,
-"inc":true,
-"inc.":true,
-"including":true,
-"indeed":true,
-"indicate":true,
-"indicated":true,
-"indicates":true,
-"inner":true,
-"inside":true,
-"insofar":true,
-"instead":true,
-"interest":true,
-"into":true,
-"inward":true,
-"is":true,
-"isn't":true,
-"it":true,
-"it'd":true,
-"it'll":true,
-"it's":true,
-"its":true,
-"itself":true,
-"jr":true,
-"just":true,
-"k":true,
-"keep":true,
-"keeps":true,
-"kept":true,
-"know":true,
-"known":true,
-"knows":true,
-"la":true,
-"lady":true,
-"last":true,
-"lastnight":true,
-"lastweek":true,
-"lately":true,
-"later":true,
-"latter":true,
-"latterly":true,
-"le":true,
-"league":true,
-"least":true,
-"length":true,
-"les":true,
-"less":true,
-"lest":true,
-"let":true,
-"let's":true,
-"like":true,
-"liked":true,
-"likely":true,
-"likewise":true,
-"little":true,
-"long":true,
-"look":true,
-"looking":true,
-"looks":true,
-"los":true,
-"low":true,
-"lower":true,
-"ltd":true,
-"made":true,
-"magnitude":true,
-"mainly":true,
-"make":true,
-"makes":true,
-"man":true,
-"many":true,
-"may":true,
-"maybe":true,
-"mayn't":true,
-"me":true,
-"mean":true,
-"meantime":true,
-"meanwhile":true,
-"member":true,
-"merely":true,
-"mhm":true,
-"might":true,
-"mightn't":true,
-"mill":true,
-"mine":true,
-"minus":true,
-"miss":true,
-"mm":true,
-"month":true,
-"more":true,
-"moreover":true,
-"most":true,
-"mostly":true,
-"move":true,
-"mr":true,
-"mrs":true,
-"ms":true,
-"much":true,
-"must":true,
-"mustn't":true,
-"my":true,
-"myself":true,
-"name":true,
-"namely":true,
-"nd":true,
-"near":true,
-"nearly":true,
-"necessary":true,
-"need":true,
-"needn't":true,
-"needs":true,
-"neither":true,
-"never":true,
-"neverf":true,
-"neverless":true,
-"nevertheless":true,
-"new":true,
-"next":true,
-"nine":true,
-"ninety":true,
-"no":true,
-"no-one":true,
-"nobody":true,
-"non":true,
-"none":true,
-"nonetheless":true,
-"noone":true,
-"nor":true,
-"normally":true,
-"not":true,
-"nothing":true,
-"notwithstanding":true,
-"novel":true,
-"now":true,
-"nowhere":true,
-"obviously":true,
-"of":true,
-"off":true,
-"often":true,
-"oh":true,
-"ok":true,
-"okay":true,
-"old":true,
-"on":true,
-"on to":true,
-"once":true,
-"one":true,
-"one's":true,
-"ones":true,
-"only":true,
-"onto":true,
-"ooh":true,
-"opposite":true,
-"or":true,
-"other":true,
-"others":true,
-"otherwise":true,
-"ought":true,
-"oughtn't":true,
-"our":true,
-"ours":true,
-"ourselves":true,
-"out":true,
-"out of":true,
-"outside":true,
-"over":true,
-"overall":true,
-"own":true,
-"part":true,
-"particular":true,
-"particularly":true,
-"past":true,
-"people":true,
-"per":true,
-"perhaps":true,
-"person":true,
-"pitch":true,
-"placed":true,
-"play":true,
-"please":true,
-"plus":true,
-"policy":true,
-"possible":true,
-"president":true,
-"presumably":true,
-"printable":true,
-"privacy":true,
-"probably":true,
-"program":true,
-"provided":true,
-"provides":true,
-"put":true,
-"quantity":true,
-"que":true,
-"quite":true,
-"qv":true,
-"rather":true,
-"rd":true,
-"re":true,
-"really":true,
-"reasonably":true,
-"recent":true,
-"recently":true,
-"recommend":true,
-"record":true,
-"regarding":true,
-"regardless":true,
-"regards":true,
-"relatively":true,
-"report":true,
-"respectively":true,
-"review":true,
-"right":true,
-"room":true,
-"round":true,
-"said":true,
-"same":true,
-"san":true,
-"saw":true,
-"say":true,
-"saying":true,
-"says":true,
-"season":true,
-"second":true,
-"secondly":true,
-"see":true,
-"seeing":true,
-"seem":true,
-"seemed":true,
-"seeming":true,
-"seems":true,
-"seen":true,
-"self":true,
-"selves":true,
-"send":true,
-"sensible":true,
-"sent":true,
-"serious":true,
-"seriously":true,
-"service":true,
-"seven":true,
-"several":true,
-"shade":true,
-"shall":true,
-"shan't":true,
-"shape":true,
-"she":true,
-"she'd":true,
-"she'll":true,
-"she's":true,
-"should":true,
-"shouldn't":true,
-"show":true,
-"side":true,
-"since":true,
-"sincere":true,
-"singer":true,
-"six":true,
-"sixty":true,
-"size":true,
-"so":true,
-"some":true,
-"somebody":true,
-"someday":true,
-"somehow":true,
-"someone":true,
-"something":true,
-"sometime":true,
-"sometimes":true,
-"somewhat":true,
-"somewhere":true,
-"son":true,
-"soon":true,
-"sorry":true,
-"specified":true,
-"specify":true,
-"specifying":true,
-"speed":true,
-"sr":true,
-"staff":true,
-"still":true,
-"sub":true,
-"such":true,
-"such as":true,
-"sup":true,
-"sure":true,
-"system":true,
-"take":true,
-"taken":true,
-"taking":true,
-"team":true,
-"tell":true,
-"ten":true,
-"tends":true,
-"terms":true,
-"text":true,
-"texture":true,
-"than":true,
-"thank":true,
-"thanks":true,
-"thanx":true,
-"that":true,
-"that'll":true,
-"that's":true,
-"that've":true,
-"thats":true,
-"the":true,
-"their":true,
-"theirs":true,
-"them":true,
-"themselves":true,
-"then":true,
-"thence":true,
-"there":true,
-"there'd":true,
-"there'll":true,
-"there're":true,
-"there's":true,
-"there've":true,
-"thereafter":true,
-"thereby":true,
-"therefore":true,
-"therein":true,
-"theres":true,
-"thereupon":true,
-"these":true,
-"they":true,
-"they'd":true,
-"they'll":true,
-"they're":true,
-"they've":true,
-"thick":true,
-"thin":true,
-"thing":true,
-"things":true,
-"think":true,
-"third":true,
-"thirty":true,
-"this":true,
-"thorough":true,
-"thoroughly":true,
-"those":true,
-"though":true,
-"three":true,
-"through":true,
-"throughout":true,
-"thru":true,
-"thus":true,
-"till":true,
-"time":true,
-"timing":true,
-"to":true,
-"today":true,
-"together":true,
-"tommorrow":true,
-"too":true,
-"took":true,
-"top":true,
-"toward":true,
-"towards":true,
-"tried":true,
-"tries":true,
-"truly":true,
-"try":true,
-"trying":true,
-"twelve":true,
-"twenty":true,
-"twice":true,
-"two":true,
-"un":true,
-"under":true,
-"underneath":true,
-"undoing":true,
-"unfortunately":true,
-"unit":true,
-"unless":true,
-"unlike":true,
-"unlikely":true,
-"until":true,
-"unto":true,
-"up":true,
-"up to":true,
-"update":true,
-"upon":true,
-"upwards":true,
-"us":true,
-"use":true,
-"used":true,
-"useful":true,
-"uses":true,
-"using":true,
-"usually":true,
-"uucp":true,
-"v":true,
-"value":true,
-"various":true,
-"version":true,
-"versus":true,
-"very":true,
-"via":true,
-"viz":true,
-"volume":true,
-"vs":true,
-"waiter":true,
-"waitress":true,
-"want":true,
-"wants":true,
-"was":true,
-"wasn't":true,
-"way":true,
-"we":true,
-"we'd":true,
-"we'll":true,
-"we're":true,
-"we've":true,
-"week":true,
-"weight":true,
-"welcome":true,
-"well":true,
-"went":true,
-"were":true,
-"weren't":true,
-"what":true,
-"what'll":true,
-"what's":true,
-"what've":true,
-"whatever":true,
-"when":true,
-"when's":true,
-"whence":true,
-"whenever":true,
-"where":true,
-"where's":true,
-"whereafter":true,
-"whereas":true,
-"whereby":true,
-"wherein":true,
-"whereupon":true,
-"wherever":true,
-"whether":true,
-"which":true,
-"whichever":true,
-"while":true,
-"whilst":true,
-"whither":true,
-"who":true,
-"who'd":true,
-"who'll":true,
-"who's":true,
-"whoever":true,
-"whole":true,
-"whom":true,
-"whomever":true,
-"whose":true,
-"why":true,
-"why's":true,
-"width":true,
-"wife":true,
-"will":true,
-"willing":true,
-"wish":true,
-"with":true,
-"within":true,
-"without":true,
-"won't":true,
-"wonder":true,
-"worth":true,
-"would":true,
-"wouldn't":true,
-"yeah":true,
-"year":true,
-"yep":true,
-"yes":true,
-"yesterday":true,
-"yet":true,
-"you":true,
-"you'd":true,
-"you'll":true,
-"you're":true,
-"you've":true,
-"your":true,
-"yours":true,
-"yourself":true,
-"yourselves":true,
-"zero":true,
-"a":true,
-"s":true,
-"n't":true,
-"years":true,
-"er":true,
-"ve":true,
-"good":true,
-"ll":true,
-"m":true,
-"erm":true,
-"world":true,
-"work":true,
-"life":true,
-"number":true,
-"local":true,
-"small":true,
-"case":true,
-"great":true,
-"social":true,
-"group":true,
-"party":true,
-"important":true,
-"place":true,
-"information":true,
-"men":true,
-"per cent":true,
-"school":true,
-"national":true,
-"fact":true,
-"night":true,
-"point":true,
-"company":true,
-"family":true,
-"hand":true,
-"d":true,
-"large":true,
-"business":true,
-"days":true,
-"john":true,
-"development":true,
-"state":true,
-"head":true,
-"ca":true,
-"council":true,
-"power":true,
-"of course":true,
-"thought":true,
-"young":true,
-"political":true,
-"members":true,
-"eyes":true,
-"public":true,
-"problem":true,
-"problems":true,
-"knew":true,
-"a few":true,
-"face":true,
-"at least":true,
-"times":true,
-"office":true,
-"door":true,
-"form":true,
-"services":true,
-"months":true,
-"big":true,
-"million":true,
-"health":true,
-"words":true,
-"period":true,
-"making":true,
-"main":true,
-"for example":true,
-"market":true,
-"began":true,
-"economic":true,
-"areas":true,
-"major":true,
-"gave":true,
-"real":true,
-"position":true,
-"process":true,
-"effect":true,
-"line":true,
-"moment":true,
-"community":true,
-"difficult":true,
-"action":true,
-"special":true,
-"international":true,
-"kind":true,
-"father":true,
-"age":true,
-"management":true,
-"idea":true,
-"so that":true,
-"evidence":true,
-"looked":true,
-"minister":true,
-"view":true,
-"sense":true,
-"level":true,
-"table":true,
-"death":true,
-"industry":true,
-"control":true,
-"sort":true,
-"clear":true,
-"range":true,
-"black":true,
-"general":true,
-"word":true,
-"history":true,
-"free":true,
-"road":true,
-"order":true,
-"wanted":true,
-"centre":true,
-"study":true,
-"programme":true,
-"result":true,
-"air":true,
-"hour":true,
-"committee":true,
-"experience":true,
-"white":true,
-"mind":true,
-"handshome":true,
-"rate":true,
-"section":true,
-"similar":true,
-"trade":true,
-"minutes":true,
-"reason":true,
-"authority":true,
-"cases":true,
-"role":true,
-"data":true,
-"working":true,
-"class":true,
-"felt":true,
-"central":true,
-"because of":true,
-"companies":true,
-"rather than":true,
-"simply":true,
-"early":true,
-"department":true,
-"asked":true,
-"called":true,
-"personal":true,
-"patient":true,
-"paper":true,
-"land":true,
-"systems":true,
-"TRUE":true,
-"told":true,
-"support":true,
-"act":true,
-"type":true,
-"city":true,
-"common":true,
-"friend":true,
-"countries":true,
-"care":true,
-"decision":true,
-"financial":true,
-"single":true,
-"price":true,
-"provide":true,
-"stage":true,
-"matter":true,
-"parent":true,
-"club":true,
-"practice":true,
-"based":true,
-"as well as":true,
-"private":true,
-"cos":true,
-"foreign":true,
-"wo":true,
-"town":true,
-"open":true,
-"situation":true,
-"strong":true,
-"b":true,
-"bed":true,
-"according to":true,
-"david":true,
-"higher":true,
-"as if":true,
-"quality":true,
-"european":true,
-"conditions":true,
-"at all":true,
-"ground":true,
-"weeks":true,
-"tax":true,
-"poor":true,
-"production":true,
-"friends":true,
-"shown":true,
-"na":true,
-"musicanyone":true,
-"game":true,
-"ways":true,
-"schools":true,
-"issue":true,
-"mr.":true,
-"royal":true,
-"workers":true,
-"american":true,
-"student":true,
-"knowledge":true,
-"art":true,
-"basis":true,
-"subject":true,
-"p.":true,
-"series":true,
-"natural":true,
-"coming":true,
-"bad":true,
-"bank":true,
-"feet":true,
-"greater":true,
-"south":true,
-"simple":true,
-"lot":true,
-"pay":true,
-"west":true,
-"rest":true,
-"security":true,
-"manager":true,
-"cost":true,
-"heart":true,
-"structure":true,
-"attention":true,
-"story":true,
-"&amp":true,
-"means":true,
-"letter":true,
-"question":true,
-"chapter":true,
-"field":true,
-"short":true,
-"studies":true,
-"movement":true,
-"union":true,
-"success":true,
-"figure":true,
-"united":true,
-"analysis":true,
-"news":true,
-"chance":true,
-"evening":true,
-"population":true,
-"boy":true,
-"modern":true,
-"theory":true,
-"legal":true,
-"approach":true,
-"final":true,
-"wrong":true,
-"finally":true,
-"performance":true,
-"human":true,
-"authorities":true,
-"rights":true,
-"relationship":true,
-"in order":true,
-"growth":true,
-"agreement":true,
-"parties":true,
-"account":true,
-"nice":true,
-"held":true,
-"space":true,
-"property":true,
-"project":true,
-"normal":true,
-"gon":true,
-"meeting":true,
-"set":true,
-"quickly":true,
-"behaviour":true,
-"left":true,
-"c":true,
-"previous":true,
-"peter":true,
-"giving":true,
-"couple":true,
-"energy":true,
-"sir":true,
-"term":true,
-"director":true,
-"current":true,
-"st":true,
-"east":true,
-"significant":true,
-"income":true,
-"leave":true,
-"as well":true,
-"pressure":true,
-"levels":true,
-"treatment":true,
-"north":true,
-"prime":true,
-"model":true,
-"suddenly":true,
-"pounds":true,
-"choice":true,
-"away from":true,
-"results":true,
-"scheme":true,
-"fine":true,
-"details":true,
-"takes":true,
-"bring":true,
-"design":true,
-"happy":true,
-"list":true,
-"defence":true,
-"parts":true,
-"bit":true,
-"points":true,
-"red":true,
-"loss":true,
-"industrial":true,
-"activities":true,
-"floor":true,
-"generally":true,
-"issues":true,
-"activity":true,
-"paul":true,
-"talking":true,
-"difference":true,
-"labour":true,
-"specific":true,
-"numbers":true,
-"lord":true,
-"relations":true,
-"understand":true,
-"contract":true,
-"turned":true,
-"product":true,
-"ideas":true,
-"george":true,
-"material":true,
-"wall":true,
-"dead":true,
-"arms":true,
-"easy":true,
-"basic":true,
-"reasons":true,
-"aware":true,
-"technology":true,
-"each other":true,
-"effects":true,
-"figures":true,
-"style":true,
-"date":true,
-"popular":true,
-"window":true,
-"forces":true,
-"showed":true,
-"more than":true,
-"resources":true,
-"sea":true,
-"events":true,
-"advice":true,
-"circumstance":true,
-"plan":true,
-"present":true,
-"event":true,
-"hon.":true,
-"thousand":true,
-"training":true,
-"stood":true,
-"picture":true,
-"sales":true,
-"village":true,
-"original":true,
-"investment":true,
-"thinking":true,
-"cup":true,
-"lines":true,
-"james":true,
-"goods":true,
-"blood":true,
-"opportunity":true,
-"prices":true,
-"professional":true,
-"conference":true,
-"extent":true,
-"interests":true,
-"application":true,
-"page":true,
-"operation":true,
-"film":true,
-"richard":true,
-"in terms of":true,
-"response":true,
-"majority":true,
-"rules":true,
-"shop":true,
-"effective":true,
-"press":true,
-"written":true,
-"york":true,
-"hard":true,
-"sat":true,
-"easily":true,
-"degree":true,
-"wrote":true,
-"statement":true,
-"risk":true,
-"force":true,
-"miles":true,
-"traditional":true,
-"site":true,
-"glass":true,
-"ready":true,
-"died":true,
-"street":true,
-"costs":true,
-"earlier":true,
-"playing":true,
-"stop":true,
-"scottish":true,
-"importance":true,
-"remember":true,
-"individual":true,
-"test":true,
-"complete":true,
-"jobs":true,
-"immediately":true,
-"standards":true,
-"talk":true,
-"considerable":true,
-"girls":true,
-"interesting":true,
-"physical":true,
-"species":true,
-"title":true,
-"michael":true,
-"start":true,
-"eye":true,
-"access":true,
-"brought":true,
-"employment":true,
-"buy":true,
-"fell":true,
-"daughter":true,
-"responsible":true,
-"competition":true,
-"plans":true,
-"medical":true,
-"purpose":true,
-"mouth":true,
-"piece":true,
-"wide":true,
-"heavy":true,
-"answer":true,
-"tomorrow":true,
-"leaving":true,
-"task":true,
-"responsibility":true,
-"arm":true,
-"eventually":true,
-"ability":true,
-"highly":true,
-"hotel":true,
-"pattern":true,
-"method":true,
-"source":true,
-"existing":true,
-"lost":true,
-"election":true,
-"ensure":true,
-"charles":true,
-"a lot":true,
-"region":true,
-"suppose":true,
-"total":true,
-"surface":true,
-"required":true,
-"older":true,
-"heard":true,
-"methods":true,
-"future":true,
-"campaign":true,
-"equipment":true,
-"fully":true,
-"disease":true,
-"machine":true,
-"lack":true,
-"independent":true,
-"slightly":true,
-"software":true,
-"hot":true,
-"peace":true,
-"charge":true,
-"types":true,
-"policies":true,
-"houses":true,
-"no longer":true,
-"direct":true,
-"even if":true,
-"windows":true,
-"stay":true,
-"teacher":true,
-"forms":true,
-"provision":true,
-"factors":true,
-"direction":true,
-"trouble":true,
-"ran":true,
-"beautiful":true,
-"leader":true,
-"civil":true,
-"officer":true,
-"status":true,
-"sound":true,
-"ii":true,
-"character":true,
-"variety":true,
-"considered":true,
-"light":true,
-"continue":true,
-"safety":true,
-"completely":true,
-"box":true,
-"fifty":true,
-"sector":true,
-"animal":true,
-"oxford":true,
-"culture":true,
-"a little":true,
-"obvious":true,
-"late":true,
-"increase":true,
-"include":true,
-"context":true,
-"station":true,
-"sale":true,
-"afternoon":true,
-"produce":true,
-"william":true,
-"positive":true,
-"king":true,
-"essential":true,
-"extra":true,
-"live":true,
-"condition":true,
-"families":true,
-"works":true,
-"appeal":true,
-"trees":true,
-"allowed":true,
-"argument":true,
-"demand":true,
-"principle":true,
-"run":true,
-"pupils":true,
-"chairman":true,
-"cash":true,
-"expected":true,
-"states":true,
-"hope":true,
-"sun":true,
-"involved":true,
-"duty":true,
-"countyrule":true,
-"concern":true,
-"environmental":true,
-"presence":true,
-"truth":true,
-"dog":true,
-"french":true,
-"board":true,
-"courses":true,
-"blue":true,
-"media":true,
-"exchange":true,
-"relevant":true,
-"balance":true,
-"robert":true,
-"turn":true,
-"slowly":true,
-"close":true,
-"players":true,
-"discussion":true,
-"huge":true,
-"paid":true,
-"letters":true,
-"budget":true,
-"protection":true,
-"collection":true,
-"speech":true,
-"smith":true,
-"born":true,
-"effort":true,
-"attempt":true,
-"nuclear":true,
-"survey":true,
-"failure":true,
-"people":true,
-"ability":true,
-"absence":true,
-"access":true,
-"accident":true,
-"accommodation":true,
-"account":true,
-"acid":true,
-"act":true,
-"action":true,
-"activity":true,
-"adam":true,
-"address":true,
-"administration":true,
-"advance":true,
-"advantage":true,
-"advice":true,
-"afternoon":true,
-"age":true,
-"agency":true,
-"agent":true,
-"agreement":true,
-"aid":true,
-"aim":true,
-"air":true,
-"aircraft":true,
-"alan":true,
-"amount":true,
-"analysis":true,
-"andrew":true,
-"anne":true,
-"answer":true,
-"appeal":true,
-"appearance":true,
-"application":true,
-"appointment":true,
-"approach":true,
-"approval":true,
-"area":true,
-"argument":true,
-"arm":true,
-"army":true,
-"arrival":true,
-"article":true,
-"artist":true,
-"aspect":true,
-"assembly":true,
-"assessment":true,
-"assistance":true,
-"association":true,
-"association":true,
-"attack":true,
-"attempt":true,
-"attention":true,
-"attitude":true,
-"audience":true,
-"author":true,
-"authority":true,
-"award":true,
-"awareness":true,
-"back":true,
-"background":true,
-"bag":true,
-"balance":true,
-"ball":true,
-"band":true,
-"bar":true,
-"base":true,
-"basis":true,
-"battle":true,
-"beauty":true,
-"beginning":true,
-"behaviour":true,
-"belief":true,
-"benefit":true,
-"bill":true,
-"bill":true,
-"bill":true,
-"birth":true,
-"bit":true,
-"block":true,
-"board":true,
-"board":true,
-"bob":true,
-"body":true,
-"book":true,
-"border":true,
-"bottle":true,
-"bottom":true,
-"box":true,
-"boy":true,
-"branch":true,
-"breath":true,
-"brian":true,
-"bridge":true,
-"brother":true,
-"brown":true,
-"budget":true,
-"building":true,
-"business":true,
-"cabinet":true,
-"call":true,
-"campaign":true,
-"candidate":true,
-"capacity":true,
-"capital":true,
-"car":true,
-"card":true,
-"care":true,
-"career":true,
-"case":true,
-"cash":true,
-"cause":true,
-"centre":true,
-"century":true,
-"chain":true,
-"chair":true,
-"chairman":true,
-"challenge":true,
-"chance":true,
-"change":true,
-"chapter":true,
-"character":true,
-"charge":true,
-"charles":true,
-"chest":true,
-"child":true,
-"choice":true,
-"chris":true,
-"city":true,
-"city":true,
-"claim":true,
-"class":true,
-"client":true,
-"club":true,
-"co-operation":true,
-"coast":true,
-"code":true,
-"collection":true,
-"colour":true,
-"combination":true,
-"commission":true,
-"commitment":true,
-"committee":true,
-"communication":true,
-"community":true,
-"company":true,
-"company":true,
-"competition":true,
-"concept":true,
-"concern":true,
-"conclusion":true,
-"condition":true,
-"conference":true,
-"confidence":true,
-"conflict":true,
-"connection":true,
-"consequence":true,
-"consideration":true,
-"constitution":true,
-"construction":true,
-"consumer":true,
-"contact":true,
-"content":true,
-"context":true,
-"contract":true,
-"contrast":true,
-"contribution":true,
-"control":true,
-"convention":true,
-"conversation":true,
-"copy":true,
-"corner":true,
-"corporation":true,
-"cost":true,
-"council":true,
-"country":true,
-"countryside":true,
-"county":true,
-"couple":true,
-"course":true,
-"court":true,
-"cover":true,
-"creation":true,
-"credit":true,
-"crime":true,
-"crisis":true,
-"criticism":true,
-"crowd":true,
-"culture":true,
-"cup":true,
-"curriculum":true,
-"customer":true,
-"dad":true,
-"damage":true,
-"danger":true,
-"darlington":true,
-"data":true,
-"database":true,
-"date":true,
-"date":true,
-"daughter":true,
-"david":true,
-"day":true,
-"de":true,
-"deal":true,
-"death":true,
-"debate":true,
-"debt":true,
-"decade":true,
-"decision":true,
-"decline":true,
-"defence":true,
-"definition":true,
-"degree":true,
-"delivery":true,
-"demand":true,
-"department":true,
-"deputy":true,
-"description":true,
-"design":true,
-"desire":true,
-"desk":true,
-"detail":true,
-"development":true,
-"diet":true,
-"difference":true,
-"difficulty":true,
-"dinner":true,
-"direction":true,
-"director":true,
-"discussion":true,
-"disease":true,
-"display":true,
-"distance":true,
-"distinction":true,
-"distribution":true,
-"district":true,
-"division":true,
-"doctor":true,
-"document":true,
-"dog":true,
-"door":true,
-"doubt":true,
-"dr":true,
-"dream":true,
-"dress":true,
-"drink":true,
-"drive":true,
-"driver":true,
-"drug":true,
-"duty":true,
-"east":true,
-"east":true,
-"ec":true,
-"edge":true,
-"editor":true,
-"education":true,
-"edward":true,
-"effect":true,
-"efficiency":true,
-"effort":true,
-"election":true,
-"element":true,
-"elizabeth":true,
-"emphasis":true,
-"employment":true,
-"end":true,
-"enemy":true,
-"energy":true,
-"engine":true,
-"engineering":true,
-"enterprise":true,
-"entry":true,
-"environment":true,
-"equipment":true,
-"error":true,
-"establishment":true,
-"estate":true,
-"evening":true,
-"event":true,
-"evidence":true,
-"examination":true,
-"example":true,
-"exchange":true,
-"executive":true,
-"exercise":true,
-"exhibition":true,
-"existence":true,
-"expansion":true,
-"expenditure":true,
-"experience":true,
-"explanation":true,
-"expression":true,
-"extension":true,
-"extent":true,
-"eye":true,
-"face":true,
-"fact":true,
-"factor":true,
-"factory":true,
-"failure":true,
-"fall":true,
-"family":true,
-"farm":true,
-"father":true,
-"fault":true,
-"fear":true,
-"feature":true,
-"feeling":true,
-"field":true,
-"fig.":true,
-"figure":true,
-"file":true,
-"film":true,
-"finance":true,
-"fire":true,
-"firm":true,
-"flight":true,
-"floor":true,
-"flow":true,
-"focus":true,
-"food":true,
-"foot":true,
-"force":true,
-"form":true,
-"formation":true,
-"foundation":true,
-"framework":true,
-"frank":true,
-"friend":true,
-"front":true,
-"fuel":true,
-"function":true,
-"fund":true,
-"future":true,
-"game":true,
-"garden":true,
-"gas":true,
-"general":true,
-"generation":true,
-"gentleman":true,
-"george":true,
-"goal":true,
-"graham":true,
-"ground":true,
-"group":true,
-"growth":true,
-"guide":true,
-"hair":true,
-"half":true,
-"hall":true,
-"hand":true,
-"harry":true,
-"head":true,
-"health":true,
-"heart":true,
-"heat":true,
-"height":true,
-"help":true,
-"henry":true,
-"hill":true,
-"history":true,
-"hole":true,
-"holiday":true,
-"home":true,
-"hope":true,
-"horse":true,
-"hospital":true,
-"hotel":true,
-"hour":true,
-"house":true,
-"household":true,
-"housing":true,
-"husband":true,
-"ian":true,
-"identity":true,
-"image":true,
-"impact":true,
-"importance":true,
-"impression":true,
-"improvement":true,
-"income":true,
-"increase":true,
-"independence":true,
-"index":true,
-"individual":true,
-"industry":true,
-"influence":true,
-"information":true,
-"initiative":true,
-"injury":true,
-"inquiry":true,
-"institute":true,
-"insurance":true,
-"intention":true,
-"interest":true,
-"interpretation":true,
-"interview":true,
-"introduction":true,
-"investigation":true,
-"investment":true,
-"involvement":true,
-"island":true,
-"issue":true,
-"item":true,
-"j.":true,
-"jack":true,
-"james":true,
-"jane":true,
-"jim":true,
-"job":true,
-"joe":true,
-"john":true,
-"jones":true,
-"journey":true,
-"judge":true,
-"kind":true,
-"king":true,
-"kingdom":true,
-"knowledge":true,
-"labour":true,
-"labour":true,
-"lack":true,
-"lady":true,
-"land":true,
-"language":true,
-"law":true,
-"lead":true,
-"leader":true,
-"leadership":true,
-"league":true,
-"lee":true,
-"leeds":true,
-"leg":true,
-"legislation":true,
-"length":true,
-"letter":true,
-"level":true,
-"lewis":true,
-"liability":true,
-"licence":true,
-"life":true,
-"lifespan":true,
-"light":true,
-"line":true,
-"link":true,
-"list":true,
-"literature":true,
-"location":true,
-"look":true,
-"lord":true,
-"loss":true,
-"lot":true,
-"lot":true,
-"luke":true,
-"machine":true,
-"magazine":true,
-"maintenance":true,
-"major":true,
-"majority":true,
-"man":true,
-"management":true,
-"manager":true,
-"manner":true,
-"map":true,
-"margaret":true,
-"mark":true,
-"market":true,
-"market":true,
-"martin":true,
-"mary":true,
-"master":true,
-"match":true,
-"material":true,
-"matter":true,
-"meal":true,
-"meaning":true,
-"means":true,
-"measure":true,
-"meeting":true,
-"meeting":true,
-"member":true,
-"membership":true,
-"memory":true,
-"message":true,
-"method":true,
-"michael":true,
-"middle":true,
-"mike":true,
-"mind":true,
-"minister":true,
-"ministry":true,
-"minority":true,
-"minute":true,
-"miss":true,
-"mistake":true,
-"model":true,
-"moment":true,
-"month":true,
-"mother":true,
-"motion":true,
-"motor":true,
-"mountain":true,
-"mouth":true,
-"move":true,
-"movement":true,
-"mr":true,
-"mr.":true,
-"mrs":true,
-"mum":true,
-"name":true,
-"nation":true,
-"need":true,
-"network":true,
-"new":true,
-"nigel":true,
-"night":true,
-"north":true,
-"north":true,
-"northern":true,
-"note":true,
-"notice":true,
-"notion":true,
-"number":true,
-"object":true,
-"occasion":true,
-"offence":true,
-"offer":true,
-"office":true,
-"officer":true,
-"operation":true,
-"opinion":true,
-"opportunity":true,
-"opposition":true,
-"option":true,
-"order":true,
-"organisation":true,
-"organization":true,
-"outcome":true,
-"output":true,
-"owner":true,
-"package":true,
-"page":true,
-"pair":true,
-"panel":true,
-"paper":true,
-"parent":true,
-"parish":true,
-"park":true,
-"part":true,
-"partner":true,
-"party":true,
-"passage":true,
-"past":true,
-"path":true,
-"patient":true,
-"pattern":true,
-"paul":true,
-"pay":true,
-"payment":true,
-"percent":true,
-"performance":true,
-"period":true,
-"person":true,
-"peter":true,
-"phase":true,
-"philip":true,
-"phone":true,
-"picture":true,
-"piece":true,
-"place":true,
-"plan":true,
-"plane":true,
-"planning":true,
-"planning":true,
-"plant":true,
-"play":true,
-"player":true,
-"pleasure":true,
-"point":true,
-"policy":true,
-"population":true,
-"position":true,
-"possibility":true,
-"post":true,
-"pound":true,
-"power":true,
-"practice":true,
-"presence":true,
-"president":true,
-"president":true,
-"press":true,
-"pressure":true,
-"price":true,
-"principle":true,
-"problem":true,
-"procedure":true,
-"process":true,
-"product":true,
-"production":true,
-"profit":true,
-"program":true,
-"programme":true,
-"progress":true,
-"project":true,
-"property":true,
-"proportion":true,
-"proposal":true,
-"protection":true,
-"provision":true,
-"public":true,
-"publication":true,
-"purpose":true,
-"quality":true,
-"quarter":true,
-"question":true,
-"race":true,
-"rail":true,
-"railway":true,
-"range":true,
-"rate":true,
-"reaction":true,
-"reader":true,
-"reality":true,
-"reason":true,
-"recession":true,
-"recognition":true,
-"record":true,
-"recovery":true,
-"reduction":true,
-"ref":true,
-"reference":true,
-"reform":true,
-"regime":true,
-"region":true,
-"relationship":true,
-"release":true,
-"relief":true,
-"report":true,
-"representation":true,
-"reputation":true,
-"request":true,
-"research":true,
-"resistance":true,
-"resolution":true,
-"respect":true,
-"response":true,
-"responsibility":true,
-"rest":true,
-"restaurant":true,
-"result":true,
-"return":true,
-"revenue":true,
-"review":true,
-"richard":true,
-"right":true,
-"ring":true,
-"rise":true,
-"risk":true,
-"river":true,
-"road":true,
-"signal":true,
-"replay":true,
-"robert":true,
-"rock":true,
-"role":true,
-"roof":true,
-"room":true,
-"route":true,
-"row":true,
-"rule":true,
-"run":true,
-"sale":true,
-"sample":true,
-"sarah":true,
-"scale":true,
-"scene":true,
-"scheme":true,
-"school":true,
-"scope":true,
-"screen":true,
-"sea":true,
-"search":true,
-"season":true,
-"seat":true,
-"second":true,
-"section":true,
-"sector":true,
-"security":true,
-"selection":true,
-"self":true,
-"sense":true,
-"sentence":true,
-"sequence":true,
-"series":true,
-"service":true,
-"session":true,
-"set":true,
-"settlement":true,
-"shape":true,
-"share":true,
-"sheet":true,
-"ship":true,
-"shock":true,
-"shop":true,
-"show":true,
-"side":true,
-"sight":true,
-"sign":true,
-"significance":true,
-"silence":true,
-"simon":true,
-"sir":true,
-"sir":true,
-"site":true,
-"situation":true,
-"size":true,
-"skin":true,
-"sky":true,
-"smile":true,
-"smith":true,
-"solution":true,
-"son":true,
-"song":true,
-"sort":true,
-"sound":true,
-"source":true,
-"south":true,
-"south":true,
-"soviet":true,
-"space":true,
-"spain":true,
-"speaker":true,
-"species":true,
-"speech":true,
-"speed":true,
-"spirit":true,
-"spokesman":true,
-"sport":true,
-"spot":true,
-"spring":true,
-"st":true,
-"staff":true,
-"stage":true,
-"standard":true,
-"star":true,
-"start":true,
-"state":true,
-"statement":true,
-"states":true,
-"station":true,
-"status":true,
-"step":true,
-"stephen":true,
-"steve":true,
-"stock":true,
-"stone":true,
-"store":true,
-"story":true,
-"strategy":true,
-"street":true,
-"street":true,
-"strength":true,
-"structure":true,
-"struggle":true,
-"student":true,
-"studio":true,
-"study":true,
-"stuff":true,
-"style":true,
-"subject":true,
-"success":true,
-"sum":true,
-"summer":true,
-"sun":true,
-"supply":true,
-"support":true,
-"support":true,
-"surface":true,
-"surprise":true,
-"survey":true,
-"system":true,
-"table":true,
-"talk":true,
-"tape":true,
-"target":true,
-"task":true,
-"taste":true,
-"taylor":true,
-"teacher":true,
-"team":true,
-"technique":true,
-"temperature":true,
-"term":true,
-"test":true,
-"text":true,
-"theme":true,
-"theory":true,
-"thing":true,
-"thomas":true,
-"thought":true,
-"threat":true,
-"tim":true,
-"title":true,
-"tom":true,
-"tone":true,
-"tony":true,
-"top":true,
-"total":true,
-"touch":true,
-"tour":true,
-"town":true,
-"track":true,
-"trade":true,
-"tradition":true,
-"traffic":true,
-"train":true,
-"training":true,
-"transfer":true,
-"transport":true,
-"treatment":true,
-"treaty":true,
-"tree":true,
-"trial":true,
-"trip":true,
-"trouble":true,
-"trust":true,
-"truth":true,
-"turn":true,
-"tv":true,
-"type":true,
-"un":true,
-"understanding":true,
-"unemployment":true,
-"union":true,
-"unit":true,
-"united":true,
-"university":true,
-"us":true,
-"use":true,
-"use":true,
-"user":true,
-"value":true,
-"variety":true,
-"vehicle":true,
-"version":true,
-"victim":true,
-"victory":true,
-"video":true,
-"view":true,
-"village":true,
-"violence":true,
-"vision":true,
-"visit":true,
-"voice":true,
-"volume":true,
-"vote":true,
-"wall":true,
-"way":true,
-"wealth":true,
-"weather":true,
-"week":true,
-"weekend":true,
-"weight":true,
-"welfare":true,
-"west":true,
-"west":true,
-"while":true,
-"white":true,
-"whole":true,
-"wife":true,
-"will":true,
-"william":true,
-"wilson":true,
-"wind":true,
-"window":true,
-"wood":true,
-"word":true,
-"work":true,
-"worker":true,
-"works":true,
-"world":true,
-"writer":true,
-"writing":true,
-"year":true,
-"youth":true,
-
-"monday":true,
-"tuesday":true,
-"wednesday":true,
-"thursday":true,
-"friday":true,
-"saturday":true,
-"sunday":true,
-"jan":true,
-"feb":true,
-"mar":true,
-"apr":true,
-"may":true,
-"june":true,
-"july":true,
-"aug":true,
-"sept":true,
-"oct":true,
-"nov":true,
-"dec":true,
-"january":true,
-"february":true,
-"march":true,
-"april":true,
-"august":true,
-"september":true,
-"october":true,
-"novermber":true,
-"december":true
-}
-
-
-var notends={
-"the" : true,
-"los" : true,
-"les" : true,
-"san" : true,
-"dr" : true,
-"they" : true,
-"he" : true,
-"she" : true,
-"a" : true,
-"his" : true,
-"an" : true,
-"their" : true,
-"its" : true,
-"it's" : true,
-"my" : true,
-"your" : true,
-"or":true,
-"if" : true,
-"therefor":true,
-"therefore":true,
-};
-
-var dateword=[
-"july",
-"august",
-"september",
-"october",
-"november",
-"december",
-"january",
-"february",
-"march",
-"april",
-"may",
-"june",
-"monday",
-"tuesday",
-"wednesday",
-"thursday",
-"friday",
-"saturday",
-"sunday"
-]
-
-function endsWith(word, string){
-    if (!string || !word || string.length > word.length)
-        return false;
-    return word.indexOf(string) == word.length - string.length;
-}
-
-
-  //various sanitychecks
-var pass=function(gram){
-  if(!gram){return false;}
-
-  //length constraints
-  if(gram.length<3){return false;}
-  if(gram.length>50){return false;}
-
-  //appropriate word-sizes
-  var word=gram.match(/[a-z|_]*/i)[0]
-  if(!word || word.length>25){return false;}
-  if(!gram.match(/[a-z]{3}/i)){return false}
-
-
-  //stopwords
-  gram=gram.toLowerCase();
- if(silly[gram]){
-    return false
-  }
-  //silly endings
-  for(var i in notends){
-    i=' '+i;
-    if(endsWith(gram, i)){
-      return false
-    }
-  }
-  //ban dates
-  for(var i in dateword){
-    if(gram.match(dateword[i])){
-       var reg=new RegExp('^[0-9]{1,4},? '+dateword[i]);
-       var reg1=new RegExp(dateword[i]+',? [0-9]{1,4}$');
-       if(gram.match(reg) || gram.match(reg1)){
-         return false;
-        }
-    }
-  }
-  //ban numerical words
-  if(gram.match(/^[0-9]{1,4}(th|st|rd)$/)){return false}
-  //punctuation
-  if(gram.match(/(\[|\]|\{|\}|\||_|;|\)|\(|\\|\>|\<|\+|\=|\")/)){return false}
-  //no vowel
-  if(!gram.match(/(a|e|i|o|u)/)){return false}
-
-  return true;
-}
-
-console.log('strawberry'+pass('strawberry'))
-
-
-var recognizer = (function() {
-
-  //takes a pos tagged object and grabs the nouns for named-entity spotting
-  var recognizer = function(tags, options) {
-
-    if (!options) {
-      options = {};
-    }
-    if (options.verbose) {
-      options.gerund = true;
-      options.stick_adjectives = true;
-      options.stick_prepositions = true;
-      options.stick_the = true;
-      options.subnouns = true;
-      options.match_whole = true;
-    }
-
-    //collect noun chunks
-    var nouns = _.filter(tags, function(tag) {
-      return tag.pos.parent == "noun";
-    });
-
-    // optionally treat 'ing' verbs as nouns
-    if (options.gerund) {
-      for (var i in tags) {
-        if (tags[i].pos.tag == "VBG") {
-          //    nouns.push({word:tags[i].word, pos:parts_of_speech["NN"], rule:"gerund"});
-        }
-      }
-    }
-
-    //'obama health care' break noun-phrase into chunks
-    if (options.subnouns) {
-      for (var i in nouns) {
-        if (nouns[i].word.match(' ')) {
-          var ngrams = ngram(nouns[i].word.replace(/^(the|an?|dr\.|mrs?\.|sir) /i, '').split(' '), 1, 4);
-          for (var n in ngrams) {
-            nouns.push({
-              word: ngrams[n],
-              pos: parts_of_speech["NN"],
-              rule: "subnoun"
-            });
-          }
-        }
-      }
-    }
-
-    // optionally treat 'the' as part of a noun
-    if (options.stick_the) {
-      for (var i in tags) {
-        i = parseInt(i);
-        if (tags[i].word == "the" && tags[i + 1] && tags[i + 1].pos.parent == "noun" && isplural(tags[i + 1].word)) {
-          nouns.push({
-            word: tags[i].word + ' ' + tags[i + 1].word,
-            pos: parts_of_speech["NN"],
-            rule: "sticky_the"
-          });
-        }
-      }
-    }
-
-    //add sticky adjectives to results - black swan
-    if (options.stick_adjectives) {
-      //adjective - noun
-      for (var i in tags) {
-        i = parseInt(i);
-        if (!tags[i].word) {
-          continue;
-        }
-        if (tags[i + 1] && tags[i].pos.parent == "adjective" && tags[i + 1].pos.parent == "noun") {
-          var word = tags[i].word + ' ' + tags[i + 1].word;
-          nouns.push({
-            word: word,
-            pos: parts_of_speech["NN"],
-            rule: "sticky_adj"
-          });
-        }
-      }
-      //noun - adjective
-      for (var i in tags) {
-        i = parseInt(i);
-        if (!tags[i].word) {
-          continue;
-        }
-        if (tags[i + 1] && tags[i].pos.parent == "noun" && tags[i + 1].pos.parent == "adjective") {
-          var word = tags[i].word + ' ' + tags[i + 1].word;
-          nouns.push({
-            word: word,
-            pos: parts_of_speech["NN"],
-            rule: "sticky_after_adj"
-          });
-        }
-      }
-    }
-
-    //add [noun phrase] and [noun phrase] - marks and spencers
-    if (options.stick_prepositions) {
-      var words = _.pluck(tags, "word")
-      for (var i in tags) {
-        i = parseInt(i);
-        if (!tags[i].word) {
-          continue;
-        }
-        if (tags[i - 1] && tags[i + 1] && (tags[i].pos.tag == "CC" || tags[i].pos.tag == "IN")) { //&& tags[i-1].pos.parent=="noun"
-          for (var o = i; o < tags.length; o++) {
-            if (tags[o].pos.parent == "verb" || tags[o].word.match(/\W/)) {
-              break
-            }
-            if (tags[o].pos.parent == "noun") {
-              var word = words.slice(i - 1, parseInt(o) + 1).join(" ");
-              nouns.push({
-                word: word,
-                pos: parts_of_speech["NN"],
-                rule: "group_prep"
-              });
-            }
-          }
-        }
-      }
-    }
-
-    //search the whole string
-    if (options.match_whole) {
-      var text = _.pluck(tags, 'word').join(' ');
-      nouns.push({
-        word: text,
-        pos: parts_of_speech["NN"],
-        rule: "whole"
-      });
-    }
-
-    //remove number tokes
-    if (options.kill_numbers) {
-      nouns = _.filter(nouns, function(noun) {
-        return !noun.word.match(/([0-9]| \- )/)
-      })
-    }
-
-    return nouns;
-  }
-
-    function isplural(word) {
-      if (word.match(/.{3}(s|ice|eece)$/)) {
-        return true;
-      } //hack but its ok
-      return false;
-    }
-
-
-    //list all inline combinations for array element joins
-
-    function ngram(arr, minwords, maxwords) {
-      var keys = [, ];
-      var results = [];
-      maxwords++; //for human logic, we start counting at 1 instead of 0
-      for (var i = 1; i <= maxwords; i++) {
-        keys.push({});
-      }
-      for (var i = 0, arrlen = arr.length, s; i < arrlen; i++) {
-        s = arr[i];
-        keys[1][s] = (keys[1][s] || 0) + 1;
-        for (var j = 2; j <= maxwords; j++) {
-          if (i + j <= arrlen) {
-            s += " " + arr[i + j - 1];
-            keys[j][s] = (keys[j][s] || 0) + 1;
-          } else break;
-        }
-      }
-      //collect results
-      for (var k = 0; k < maxwords; k++) {
-        var key = keys[k];
-        for (var i in key) {
-          if (key[i] >= minwords) results.push(i);
-        }
-      }
-      return results
-    }
-
-
-    // export for AMD / RequireJS
-  if (typeof define !== 'undefined' && define.amd) {
-    define([], function() {
-      return recognizer;
-    });
-  }
-  // export for Node.js
-  else if (typeof module !== 'undefined' && module.exports) {
-    module.exports = recognizer;
-  }
-
-  return recognizer;
-
-
-})()
-var tokenizer = (function() {
-  var tokenizer = function(text, options) {
-    if (!options) {
-      options = {};
-    }
-    //undo contractions
-    if (text.match(/(he's|she's|it's)/)) {
-      text = text.replace(/([^ ])['’]s /ig, '$1 is ');
-    }
-    text = text.replace(/([^ ])['’]ve /ig, '$1 have ');
-    text = text.replace(/([^ ])['’]re /ig, '$1 are ');
-    text = text.replace(/([^ ])['’]d /ig, '$1 would ');
-    text = text.replace(/([^ ])['’]ll /ig, '$1 will ');
-    text = text.replace(/([^ ])n['’]t /ig, '$1 not ');
-    text = text.replace(/\bi'm /ig, 'I am ');
-
-    //remove bracketed parts
-    if (!options.keep_brackets) {
-      text = text.replace(/ ?\(.{0,200}?\)/g, '');
-    }
-
-    var words = text.split(' ');
-
-    if (options.want_quotations) {
-      if (text.match('"')) {
-        words = rejoin(words);
-      }
-    }
-
-    words = spot_multiples(words);
-    //words=words.map(function(word){ return word.replace(/("|,|\)|\(|!)/g,'')})
-
-    return words;
-  }
-
-
-  //connect common multiple-word-phrases into one token
-
-    function spot_multiples(words) {
-      for (var i in words) {
-        i = parseInt(i);
-        if (!words[i + 1]) {
-          continue;
-        }
-        var two = words[i] + ' ' + words[i + 1];
-        two = two.replace(/[\.,!:;]*$/, '')
-        if (multiples[two]) {
-          words[i] = words[i] + ' ' + words[i + 1];
-          words[i + 1] = null;
-        }
-      }
-      //remove empty words
-      return _.compact(words);
-    }
-
-
-    //rejoin quotations to one token
-
-    function rejoin(words) {
-      var quotes = [];
-      for (var i in words) {
-        if (words[i].match('"')) {
-          quotes.push(parseInt(i))
-        }
-      }
-      if (quotes.length == 2) {
-        var quote = words.slice(quotes[0], quotes[1] + 1).join(' ');
-        quote = quote.replace(/"/g, '')
-        words.push(quote)
-      }
-      return words;
-    }
-    // export for AMD / RequireJS
-  if (typeof define !== 'undefined' && define.amd) {
-    define([], function() {
-      return tokenizer;
-    });
-  }
-  // export for Node.js
-  else if (typeof module !== 'undefined' && module.exports) {
-    module.exports = tokenizer;
-  }
-
-  return tokenizer;
-
-
-})()
-
-//console.log(exports.tokenizer('toronto and chicago! seem as usual, "well-disguised as hell" yeah', {want_quotations:true}));
-var chunker = (function() {
-
-  //merge word-tokens based on their grammar. forms a more maturely tokenized pos tag object.
-  var chunker = function(data, options) {
-    //some grammatical chunking..
-    for (var i in data) {
-      i = parseInt(i);
-      //add an implicit preposition to possessive nouns
-      if (data[i].pos.tag == "NNO") {
-        data = build(data.slice(0, i + 1), {
-          word: "",
-          pos: parts_of_speech["IN"]
-        }, data.slice(i + 1, data.length));
-      }
-      //sticky prepositions on gerunds  - waking up in..
-      if (data[i].pos.tag == "VBG" && data[i + 2]) {
-        if (data[i + 1].pos.tag == "IN" && data[i + 2].pos.parent == "glue") {
-          data[i].word += ' ' + data[i + 1].word;
-          data[i + 1].word = null;
-          continue
-        }
-      }
-      //sticky prepositions on gerunds at end of phrase
-      if (data[i].pos.tag == "VBG") {
-        if (data[i + 1] && data[i + 2] == null && data[i + 1].pos.tag == "IN") {
-          data[i].word += ' ' + data[i + 1].word;
-          data[i + 1].word = null;
-        }
-      }
-    }
-
-    //make gerunds into a 'noun-gerund'
-    if (options.gerund) {
-      for (var i in data) {
-        if (data[i].pos.tag == "VBG") {
-          data[i].pos = parts_of_speech["NG"];
-        }
-      }
-    }
-
-    //chunk same consecutive parents
-    var chunked = [data[0]];
-    for (var i = 1; i <= data.length - 1; i++) {
-      if (chunked[chunked.length - 1].pos.parent == data[i].pos.parent) {
-        if (chunked[chunked.length - 1].word && !chunked[chunked.length - 1].word.match(/(,|")/)) { //dont chunk nouns with comma
-          chunked[chunked.length - 1].word += ' ' + data[i].word;
-          continue;
-        }
-      }
-      //implicit else
-      chunked.push(data[i]);
-    }
-
-    return chunked;
-  }
-
-
-  //make a json
-
-    function build(before, obj, after) {
-      var all = before;
-      all.push(obj);
-      for (var i in after) {
-        all.push(after[i])
-      }
-      return all;
-    }
-
-
-    // export for AMD / RequireJS
-  if (typeof define !== 'undefined' && define.amd) {
-    define([], function() {
-      return chunker;
-    });
-  }
-  // export for Node.js
-  else if (typeof module !== 'undefined' && module.exports) {
-    module.exports = chunker;
-  }
-
-  return chunker;
-
-
-})()
-var date_extractor = (function() {
-
-  var date_extractor = function(text) {
-    var results = finddate(text);
-    return {
-      "text": results[0],
-      "from": formatdate(results[1]),
-      "to": formatdate(results[2])
-    }
-  }
-
-
-
-  //this function returns an array.
-  //foundarray[0] is the text that contains the date bit (to highlight),
-  //foundarray[1] is the start date
-  //foundarray[2] is the end date
-
-    function finddate(text) {
-      if (text == null) {
-        return '';
-      }
-      var foundarray = new Array();
-      text = text.replace(/ Feb\.? /g, 'February');
-      text = text.replace(/ Mar\.? /g, 'March');
-      text = text.replace(/ Apr\.? /g, 'April');
-      text = text.replace(/ Jun\.? /g, 'June');
-      text = text.replace(/ Jul\.? /g, 'july');
-      text = text.replace(/ Aug\.? /g, 'august');
-      text = text.replace(/ Sep\.? /g, 'september');
-      text = text.replace(/ Oct\.? /g, 'october');
-      text = text.replace(/ Nov\.? /g, 'november');
-      text = text.replace(/ Dec\.? /g, 'december');
-      text = text.replace(/\(/g, '( ');
-      text = text.replace(/\)/g, ' )');
-      //text=text.replace(/./g,'');
-      var sentences = text.split(/\. /); //one sentence at a time
-
-
-
-      for (var i in sentences) {
-        var found;
-        sentences[i] = ' ' + sentences[i] + '';
-        sentences[i] = sentences[i].replace(/\Bfirst\B/, '1st');
-        sentences[i] = sentences[i].replace(/second of /, '2nd of');
-
-        sentences[i] = sentences[i].replace(/second of /, '2nd of');
-        sentences[i] = sentences[i].replace(/second of /, '2nd of');
-        sentences[i] = sentences[i].replace(/second of /, '2nd of');
-        sentences[i] = sentences[i].replace(/second of /, '2nd of');
-
-
-        //eg March 7th-11th 1987
-        var best = /(july|august|september|october|november|december|january|february|march|april|may|june),? (the )?[0-9]{1,2}(th|rd|st)? ?(\-| to | until | till ) ?[0-9]{1,2}(th|rd|st)?,? [0-9]{4}/i.exec(sentences[i]);
-        if (best != null) {
-          found = best[0];
-          var remove = / ?(-| to | until ) ?[0-9]{1,2}(th|rd|st)?,?/i.exec(found); //remove until date
-          foundarray[0] = found;
-          foundarray[1] = found.replace(remove[0], '');
-          var remove = /[0-9]{1,2}(th|rd|st)?,? ?(-| to | until )/i.exec(found); //remove to date
-          foundarray[2] = found.replace(remove[0], '');
-          return foundarray;
-        }
-
-        //eg '28th of September to 5th of October 2008'
-        var best = /[0-9]{1,2}(th|rd|st)? (of )?(july|august|september|october|november|december|january|february|march|april|may|june),? ?(-| to | until | till ) ?[0-9]{1,2}(th|rd|st)? (of )?(july|august|september|october|november|december|january|february|march|april|may|june),? [0-9]{4}/i.exec(sentences[i]);
-        if (best != null) {
-          var found = best[0];
-          foundarray[0] = found;
-          var remove = /(-| to | until | till ) ?[0-9]{1,2}(th|rd|st)? (of )?(july|august|september|october|november|december|january|february|march|april|may|june),?/i.exec(found); //remove until date
-          var tfound = found.replace(remove[0], '');
-          tfound = tfound.replace(/( of | to | until | till |-)/, ' ');
-          foundarray[1] = tfound.replace(remove[0], '');
-          //to date
-          var remove = /[0-9]{1,2}(th|rd|st)? (of )?(july|august|september|october|november|december|january|february|march|april|may|june),? ?(-| to | until | till )/i.exec(found); //remove from date
-          var tfound = found.replace(remove[0], '');
-          tfound = tfound.replace(/( of | to | until | till |-)/, ' ');
-          foundarray[2] = tfound.replace(remove[0], '');
-          return foundarray;
-        }
-
-
-        //eg March 7th to june 11th 1987
-        var best = /(july|august|september|october|november|december|january|february|march|april|may|june),? (the )?[0-9]{1,2}(th|rd|st)? ?(-| to | until | till ) ?(july|august|september|october|november|december|january|february|march|april|may|june),? (the )?[0-9]{1,2}(th|rd|st)?( |, )[0-9]{4}/i.exec(sentences[i]);
-        // var best = /(july|august|september|october|november|december|january|february|march|april|may|june) [0-9]{1,2} to (july|august|september|october|november|december|january|february|march|april|may|june) [0-9]{1,2} [0-9]{4}/i.exec(text);
-        if (best != null) {
-          found = best[0];
-          var remove = / ?(-| to | until | till ) ?(july|august|september|october|november|december|january|february|march|april|may|june),? (the )?[0-9]{1,2}(th|rd|st)?,?/i.exec(found); //remove until date
-          foundarray[0] = found;
-          foundarray[1] = found.replace(remove[0], '');
-          var end = found.replace(/(july|august|september|october|november|december|january|february|march|april|may|june),? (the )?[0-9]{1,2}(th|rd|st)? ?(-| to | until | till ) ?/i, '');
-          foundarray[2] = end;
-          return foundarray;
-        }
-
-        //eg between 13 February and 15 February 1945
-        var best = /(through|throughout|during|within|between) [0-9]{1,2}(th|rd|st)? (july|august|september|october|november|december|january|february|march|april|may|june),? ?(-| to | until | till | and ) ?[0-9]{1,2}(th|rd|st)? (july|august|september|october|november|december|january|february|march|april|may|june),? [0-9]{4}/i.exec(sentences[i]);
-        // var best = /(july|august|september|october|november|december|january|february|march|april|may|june) [0-9]{1,2} to (july|august|september|october|november|december|january|february|march|april|may|june) [0-9]{1,2} [0-9]{4}/i.exec(text);
-        if (best != null) {
-          found = best[0];
-          // console.log("*"+best);
-          var end = /[0-9]{1,2}(th|rd|st)? (july|august|september|october|november|december|january|february|march|april|may|june),? [0-9]{4}/i.exec(found); //grab end date
-          var start = found.replace(/(through|throughout|during|within|between) /i, '');
-          start = start.replace(/,? ?(-| to | until | till | and ) ?[0-9]{1,2}(th|rd|st)? (july|august|september|october|november|december|january|february|march|april|may|june),?/i, '');
-
-          foundarray[0] = found;
-          foundarray[1] = start;
-          foundarray[2] = end[0];
-          //console.log(foundarray[1]);
-          return foundarray;
-        }
-
-        //eg between March 7th and june 11th 1987
-        var best = /between (july|august|september|october|november|december|january|february|march|april|may|june),? (the )?[0-9]{1,2}(th|rd|st)? ?(-| and ) ?(july|august|september|october|november|december|january|february|march|april|may|june),? (the )?[0-9]{1,2}(th|rd|st)?( |, )[0-9]{4}/i.exec(sentences[i]);
-        // var best = /(july|august|september|october|november|december|january|february|march|april|may|june) [0-9]{1,2} to (july|august|september|october|november|december|january|february|march|april|may|june) [0-9]{1,2} [0-9]{4}/i.exec(text);
-        if (best != null) {
-          found = best[0];
-          foundarray[0] = found;
-          var remove = / ?(-| and ) ?(july|august|september|october|november|december|january|february|march|april|may|june),? (the )?[0-9]{1,2}(th|rd|st)?,?/i.exec(found); //remove until date
-          foundarray[1] = found.replace(remove[0], '');
-          foundarray[1] = foundarray[1].replace('between', '');
-          //to date
-          var remove = /between (july|august|september|october|november|december|january|february|march|april|may|june),? (the )?[0-9]{1,2}(th|rd|st)? ?(-| and ) ?/i.exec(found); //remove from date
-          foundarray[2] = found.replace(remove[0], '');
-          foundarray[2] = foundarray[2].replace('between', '');
-          return foundarray;
-        }
-
-
-        //eg March 1st 1987
-        var best = /(july|august|september|october|november|december|january|february|march|april|may|june),? (the )?[0-9]{1,2}(th|rd|st)?( |, |,)[0-9]{4}/i.exec(sentences[i]);
-        if (best != null) {
-          found = best[0];
-          foundarray[0] = found;
-          foundarray[1] = found
-          return foundarray;
-        }
-
-        //eg 3rd - 5th of March 1969
-        if (found == null) {
-          var second = /[0-9]{1,2}(th|rd|st)? ?( to |-| until |\/) ?[0-9]{1,2}(th|rd|st)? (of )?(july|august|september|october|november|december|january|february|march|april|may|june)( |, |,)[0-9]{4}/i.exec(sentences[i]);
-          if (second != null) {
-            found = second[0];
-            foundarray[0] = found;
-            var start = found.replace(/(th|rd|st)? ?( to |-| until |\/) ?[0-9]{1,2}(th|rd|st)?( of)?/i, '');
-            var end = found.replace(/[0-9]{1,2}(th|rd|st)? ?( to |-| until |\/) ?/i, '');
-            start = start.replace('of', '');
-            end = end.replace('of', '');
-            foundarray[1] = start;
-            foundarray[2] = end;
-            return foundarray;
-          }
-        }
-        //eg 3rd of March 1969
-        if (found == null) {
-          var second = /[0-9]{1,2}(th|rd|st)? ?(of )?(july|august|september|october|november|december|january|february|march|april|may|june)( |, |,)[0-9]{4}/i.exec(sentences[i]);
-          if (second != null) {
-            found = second[0];
-            foundarray[0] = found;
-            foundarray[1] = found
-            return foundarray;
-          }
-        }
-        //eg September 1939 to April 1945
-        if (found == null) {
-          var third = /(july|august|september|october|november|december|january|february|march|april|may|june)( |, |,)(of )?[0-9]{4,4} ?( to |-| until ) ?(july|august|september|october|november|december|january|february|march|april|may|june)( |, |,)(of )?[0-9]{4,4}/i.exec(sentences[i]); //
-          if (third != null) {
-            var start = third[0].replace(/ (to|-|until) (july|august|september|october|november|december|january|february|march|april|may|june)( |, |,)(of )?[0-9]{4,4}/i, '');
-            var end = third[0].replace(/(july|august|september|october|november|december|january|february|march|april|may|june)( |, |,)(of )?[0-9]{4,4} (to|-|until) /i, '');
-            found = third[0];
-            foundarray[0] = found;
-            foundarray[1] = start;
-            foundarray[2] = end;
-            return foundarray;
-          }
-        }
-
-        //eg March 1969
-        if (found == null) {
-          var third = /(july|august|september|october|november|december|january|february|march|april|may|june)( |, |,)(of )?[0-9]{4,4}/i.exec(sentences[i]); //
-          if (third != null) {
-            found = third[0];
-            foundarray[0] = found;
-            foundarray[1] = found
-            return foundarray;
-          }
-        }
-
-        //eg 400 - 600 BC
-        if (found == null) {
-          var year = / ([0-9]{3,4} ?- ?[0-9]{2,4} ?(BC.|B.C.|BC ))/i.exec(sentences[i]);
-          if (year != null) {
-            found = year[1];
-            found = found.replace(/ ?- ?[0-9]{2,4}/, '');
-            foundarray[0] = found;
-            foundarray[1] = found.replace(/(BC.|B.C.|BC |BCE.|B.C.E.|BCE )/, 'B.C.')
-            return foundarray;
-          }
-        }
-
-        //eg 1997-1998
-        if (found == null) {
-          var year = / [0-9]{4,4} ?(-|–| to | until ) ?'?[0-9]{4,4}/i.exec(sentences[i]);
-          if (year != null) {
-            found = year[0];
-            foundarray[0] = found;
-            var tfound = found.replace(/ ?- ?'?[0-9]{4,4}/, '');
-            if (tfound != null && tfound < 2020) {
-              foundarray[1] = tfound
-
-              var remove = /[0-9]{4} ?- ?/i.exec(found); //remove from date
-              foundarray[2] = found.replace(remove[0], '');
-
-              return foundarray;
-            }
-          }
-        }
-        //eg 1997-98
-        if (found == null) {
-          var year = / [0-9]{4,4} ?(-|–| to | until ) ?'?[0-9]{2,2}/i.exec(sentences[i]);
-          if (year != null) {
-            found = year[0];
-            foundarray[0] = found;
-            var tfound = found.replace(/ ?- ?'?[0-9]{2,2}/, '');
-            if (tfound != null && tfound < 2020) {
-              foundarray[1] = tfound
-
-              var remove = /[0-9]{2} ?- ?/i.exec(found); //remove from date
-              foundarray[2] = found.replace(remove[0], '');
-
-              return foundarray;
-            }
-          }
-        }
-
-
-
-        //eg 400 BC
-        if (found == null) {
-          var year = / ([0-9]{3,4} (BC.|B.C.|BC ))/i.exec(sentences[i]);
-          if (year != null) {
-            found = year[1];
-            foundarray[0] = found;
-            foundarray[1] = found.replace(/(BC.|B.C.|BC |BCE.|B.C.E.|BCE )/, 'B.C.')
-            return foundarray;
-          }
-        }
-
-
-        //matches year
-        if (found == null) {
-          var year = / [0-9]{4,4}/i.exec(sentences[i]);
-          if (year != null && year < 2020) {
-            found = year[0];
-            foundarray[0] = found;
-            foundarray[1] = found
-            return foundarray;
-          }
-        }
-
-        if (found != null) {
-          break;
-        }
-
-      } //for senetences
-
-      return foundarray;
-
-    }
-
-
-    //begin processing date to be mql-friendly
-
-    //var str=formatdate('July 2, 1934'); acre.write(str);
-
-    function formatdate(found) {
-      if (!found) {
-        return {};
-      }
-      found = found.replace('of ', '');
-      found = found.replace('the ', '');
-      found = found.replace('th ', ' ');
-      found = found.replace('rd ', ' ');
-      found = found.replace('1st ', '01');
-
-      var month = /july|august|september|october|november|december|january|february|march|april|may|june/i.exec(found);
-      month = '' + month;
-      month = month.toLowerCase();
-      var monthnum = 0;
-
-      if (month == 'january') {
-        monthnum = '01';
-      }
-      if (month == 'february') {
-        monthnum = '02';
-      }
-      if (month == 'march') {
-        monthnum = '03';
-      }
-      if (month == 'april') {
-        monthnum = '04';
-      }
-      if (month == 'may') {
-        monthnum = '05';
-      }
-      if (month == 'june') {
-        monthnum = '06';
-      }
-      if (month == 'july') {
-        monthnum = '07';
-      }
-      if (month == 'august') {
-        monthnum = '08';
-      }
-      if (month == 'september') {
-        monthnum = '09';
-      }
-      if (month == 'october') {
-        monthnum = '10';
-      }
-      if (month == 'november') {
-        monthnum = '11';
-      }
-      if (month == 'december') {
-        monthnum = '12';
-      }
-
-      if (found.match('B.C.')) {
-        var year = /[0-9]{3,4}/i.exec(found);
-        year = year + '';
-        if (year.length == 3) {
-          year = '0' + year;
-        }
-        if (year.length == 2) {
-          year = '00' + year;
-        }
-        year = '-' + year;
-        return year;
-      } //something bc
-      else {
-        var year = /[0-9]{4}/i.exec(found);
-      } //normal years
-      year = '' + year;
-      found = found.replace(year, '');
-      var date = /[0-9]{1,2}/i.exec(found);
-
-      if (date != null) {
-        if (date < 10) {
-          date = '0' + date;
-        } //turn 1 into 01
-      }
-
-      return {
-        "year": year,
-        "month": monthnum,
-        "day": date
-      };
-    }
-
-
-
-    //console.log(exports.date_extractor('my wife left me on the 9th of april, 2005. now i just programz the computerz.'));
-
-    // export for AMD / RequireJS
-  if (typeof define !== 'undefined' && define.amd) {
-    define([], function() {
-      return date_extractor;
-    });
-  }
-  // export for Node.js
-  else if (typeof module !== 'undefined' && module.exports) {
-    module.exports = date_extractor;
-  }
-
-  return date_extractor;
-
-
-})()
-/*!
- *by spencer kelly
- *
- * based on jsPOS by Percy Wegmann
- * Licensed under the LGPLv3 license
- * http://www.opensource.org/licenses/lgpl-3.0.html
- */
-
-var tag = (function() {
-
-var tag = function(words, options){
-  	var results = [];
-  	//lookup words
-    for (var i in words) {
-  	    var word=words[i];
-        results[i]={word:word, pos:null, clues:[]}
-            //first, regex-based guesses
-          var patterns = [
-            {reg: /[a-z]\-[a-z]/ , pos: 'JJ'},
-            {reg: /^de\-[a-z]../ , pos: 'VB'},
-            {reg: /^un\-[a-z]../ , pos: 'VB'},
-            {reg: /^re\-[a-z]../ , pos: 'VB'},
-            {reg: /.*ould$/ , pos: 'MD'},
-            {reg: /..*ing$/ , pos: 'VBG'},
-            {reg: /..*'n$/ , pos: 'VBG'},
-            {reg: /...*ed$/ , pos: 'VBD'},
-            {reg: /.*ness$/ , pos: 'NN'},
-            {reg: /.*ment$/ , pos: 'NN'},
-            {reg: /.*full?$/ , pos: 'JJ'},
-            {reg: /.*ous$/ , pos: 'JJ'},
-            {reg: /.*ble$/ , pos: 'JJ'},
-            {reg: /.*ic$/ , pos: 'JJ'},
-            {reg: /..*ive$/ , pos: 'JJ'},
-            {reg: /..*ic$/ , pos: 'JJ'},
-            {reg: /..*est$/ , pos: 'JJ'},
-            {reg: /.*ical$/ , pos: 'JJ'},
-            {reg: /.*ial$/ , pos: 'JJ'},
-            {reg: /...*ish$/ , pos: 'JJ'},
-            {reg: /.*less$/ , pos: 'JJ'},
-            {reg: /..*ant$/ , pos: 'JJ'},
-            {reg: /..*ly$/ , pos: 'RB'},
-            {reg: /\./ , pos: 'NN'},
-            {reg: /^((?![aeiouy]).)*$/, pos: 'NN'},
-            {reg: /^-?[0-9]+(.[0-9]+)?$/ , pos: 'CD'},
-            {reg: /'s$/ , pos: 'NNO'}
-          ]
-          for(var o in patterns){
-            if(word.match(patterns[o].reg)){
-              results[i].pos=parts_of_speech[patterns[o].pos];
-              results[i].rule="regex"
-            }
-          }
-            //next, use the pos suggestions from the lexicon
-            word=word.replace(/[\.,!:;]*$/,'')
-            var lex=lexicon[word.toLowerCase()];
-            if(lex){
-              results[i].pos=parts_of_speech[lex];
-              results[i].rule="lexicon";
-              }
-            //noun if a capital appears in the not-first word
-            if(i!=0 && word.match(/[A-Z]/)){
-              results[i].pos=parts_of_speech["NN"];
-              results[i].rule="capital";
-              }
-            //noun if we can convert into a number
-            if (parseFloat(word)){
-                results[i].pos=parts_of_speech["NN"];
-                results[i].rule="number";
-               }
-            //fallback to noun
-            if(!results[i].pos){
-                results[i].pos=parts_of_speech["NN"];
-                results[i].rule="unknown";
-                }
-    }
-
-  	//sentence-level context rules
-    for(var i in results){
-        i=parseInt(i);
-        if(!results[i+1]){continue;}
-
-         //if no adjectives or verbs at all, kill the adverbs
-       /* if(results[i].pos.tag=="RB" ){
-          if(!_.detect(results, function(r){return r.pos.parent=="verb" || r.pos.parent=="adjective"} )){
-           results[i].pos=parts_of_speech["NN"];
-           results[i].rule="dangling adverb";
-           }
-        } */
-         //suggest verb or adjective after adverb
-        if(results[i].pos.tag=="RB" && ( !results[i-1] || results[i-1].pos.parent!="verb")   ){
-          results=suggest_adverb_phrase(i, "from_adverb", results, {strong:false});
-        }
-         //suggest noun phrase after posessive pronouns (her|my|its)
-        if(results[i].pos.tag=="PP" ){
-          results=suggest_noun_phrase(i, "from_posessive", results, {strong:true});
-        }
-          //suggest noun phrase after determiners (the|a)
-        if(results[i].pos.tag=="VBZ" && results[i+1].pos.parent!="verb"  ){
-          results=suggest_adjective_phrase(i, "vbz-adjective", results, {strong:false});
-        }
-         //suggest noun phrase after determiners (the|a)
-        if(results[i].pos.tag=="DT" ){
-          results=suggest_noun_phrase(i, "from_determiner", results, {strong:false});
-        }
-          // suggest verb phrase after would|could|should
-        if(results[i].pos.tag=="MD" ){
-          results=suggest_verb_phrase(i, "from_would", results, {strong:false});
-        }
-         // suggest adjective phrase after copula and no determiner/verb
-      //  if(results[i].pos.tag=="CP" && results[i+1].pos.tag!="DT" && results[i+1].pos.parent!="verb"){
-         // results=suggest_adjective_phrase(i, "from_copula", results, {strong:false});
-       // }
-     }
-
-
-
-
-     	//more specific context rules
-    for(var i in results){
-       i=parseInt(i);
-       if(!results[i+1]){continue;}
-       //noun adjective noun
-       if(results[i].pos.parent=="noun" && results[i+2] && results[i+1].pos.tag=="JJ" && results[i+2].pos.parent=="noun"){
-          if(!options.big){
-           results[i+1].pos=parts_of_speech["NN"];   //fails on 'truck bombing outside kabul'
-           results[i+1].rule="noun_adjective_noun";
-           }
-       }
-        //adjective - verb to adverb - verb
-       if(results[i].pos.tag=="JJ" && results[i+1].pos.parent=="verb"){
-           results[i].pos=parts_of_speech["RB"];
-           results[i].rule="adjective_verb";
-       }
-        //two consecutive adjectives, no comma
-       if(results[i].pos.tag=="JJ" && results[i+1].pos.tag=="JJ"){
-         if(!results[i].word.match(',')){
-           results[i].pos=parts_of_speech["RB"];
-           results[i].rule="twoadjectives";
-         }
-       }
-               //verb before persponal pronoun (scared his..)
-       if(results[i].pos.tag=="PRP" ){
-           if(results[i-1] && results[i-1].pos.parent=="adjective"){
-           results[i-1].pos=parts_of_speech["VB"];
-           results[i-1].rule="verb_myself";
-           }
-           else if( !results[i-1] || !results[i-1].pos.parent=="verb"){
-             results=suggest_verb_phrase(i, "from_pronoun", results, {strong:false});
-           }
-       }
-        //interpret prepositions as verbs is in, are from
-       if(results[i].pos.tag=="CP" && results[i+1].pos.tag=="IN"){
-           results[i+1].pos=parts_of_speech["VB"];
-           results[i+1].rule="preposition_verb";
-       }
-        //hook conjunction grammars together  cute and [noun]
-       if(results[i].pos.parent=="adjective" && results[i+1].pos.tag=="CC" && results[i+2] && results[i+2].pos.parent=="noun" ){
-           results[i+2].pos=parts_of_speech["JJ"];
-           results[i+2].rule="and_adjective";
-       }
-
-     }
-
-
-     //context based on end of phrase
-     var last=results.length-1;
-       if(results[last-1]){
-          // 'is [noun]' then end, becomes 'is [adjective]'
-         if(results[last-1].pos.tag=="CP" && results[last].pos.parent=="noun"){
-           results[last].pos=parts_of_speech["JJ"];
-           results[last].rule="end_copula"
-         }
-          // '[noun] [verb]' then end, becomes '[noun] [noun]'
-         if(results[last-1].pos.parent=="noun" && (results[last].pos.parent=="adjective" || results[last].pos.tag=="RB")  ){
-           results[last].pos=parts_of_speech["NN"];
-           results[last].rule="ending_noun"
-         }
-
-       }
-
-
-    return results;
-}
-
-
-        function suggest_noun_phrase(o, rule, results, options){
-            var top=results.length;
-            for(var i=o+1; i<top; i++){   // console.log(results[i].word)
-                if(results[i].pos.parent=='noun'){
-                  return results;
-                }
-                if(  results[i].pos.parent=='verb'  && results[i].pos.tag!="RB" ){
-                  results[i].pos=parts_of_speech["NN"];
-                  results[i].rule=rule;
-                  return results;
-                }
-                if(results[i+1]){
-                  if(results[i].pos.parent=='adj' || results[i].pos.tag=="RB"){
-                    results[i].pos.parent='adjective';
-                    results[i].rule=rule;
-                    }
-                 }
-                 else{//last word and still no noun
-                    results[i].pos=parts_of_speech["NN"];
-                    results[i].rule=rule;
-                 }
-              }
-            return results;
-         }
-
-
-        function suggest_verb_phrase(o, rule, results, options){
-            var top=results.length;
-            for(var i=o+1; i<top; i++){
-                if(results[i].pos.parent=='verb'){
-                  return results;
-                }
-                if(results[i].pos.parent=='noun' ){
-                  results[i].pos=parts_of_speech["VB"];
-                  results[i].rule=rule;
-                  return results;
-                }
-                if(results[i+1]){
-                  if(results[i].pos.parent=='adj' || results[i].pos.tag=="RB"){
-                    results[i].pos.parent='verb';
-                    results[i].rule=rule;
-                    }
-                 }
-                 else{//last word and still no verb
-                    results[i].pos=parts_of_speech["VB"];
-                    results[i].rule=rule;
-                 }
-              }
-             return results;
-         }
-
-        function suggest_adjective_phrase(o, rule, results, options){
-            var top=results.length;
-            for(var i=o+1; i<top; i++){
-                if(results[i].pos.parent=='adjective'){
-                  return results;
-                }
-                if(results[i].pos.tag=="DT" || results[i].pos.tag=="CP"){
-                  return results;
-                }
-                if(results[i].pos.parent=='noun' || results[i].pos.parent=='verb' ){
-                  results[i].pos=parts_of_speech["JJ"];
-                  results[i].rule=rule;
-                  return results;
-                }
-                if(results[i+1]){
-                  if(results[i].pos.tag=="RB"){
-                    results[i].pos.parent='adjective';
-                    results[i].rule=rule;
-                    }
-                 }
-                 else{//last word and still no verb
-                    if(options.strong){
-                       results[i].pos=parts_of_speech["JJ"];
-                       results[i].rule=rule;
-                    }
-                 }
-              }
-             return results;
-         }
-
-         //suggest a verb or adjective is coming
-        function suggest_adverb_phrase(o, rule, results, options){
-            var top=results.length;
-            for(var i=o+1; i<top; i++){
-                if(results[i].pos.parent=='adjective' || results[i].pos.parent=='verb'){
-                  return results;
-                }
-                if(results[i].pos.parent=='noun' ){
-                  results[i].pos=parts_of_speech["JJ"];
-                  results[i].rule=rule;
-                  return results;
-                }
-                if(results[i+1]){
-                  if(results[i].pos.tag=="RB"){
-                    results[i].pos.parent='adjective';
-                    results[i].rule=rule;
-                    }
-                 }
-                 else{//last word and still no verb
-                  if(options.strong){
-                    results[i].pos=parts_of_speech["JJ"];
-                    results[i].rule=rule;
-                    }
-                 }
-              }
-             return results;
-         }
-
-    // export for AMD / RequireJS
-  if (typeof define !== 'undefined' && define.amd) {
-    define([], function() {
-      return tag;
-    });
-  }
-  // export for Node.js
-  else if (typeof module !== 'undefined' && module.exports) {
-    module.exports = tag;
-  }
-
-  return tag;
-
-
-})()
+exports.multiples = #adverbs
+  "of course": true
+  "at least": true
+  "for example": true
+  "in order": true
+  "more than": true
+  "no longer": true
+  "a little": true
+  "for instance": true
+  "in particular": true
+  "a bit": true
+  "sort of": true
+  "all right": true
+  "no doubt": true
+  "and so on": true
+  "at first": true
+  "in addition": true
+  "at last": true
+  "that is": true
+  "at once": true
+  "once again": true
+  "at present": true
+  "less than": true
+  "up to": true
+  "once more": true
+  "by now": true
+  "so as": true
+  "in part": true
+  "all but": true
+  "in short": true
+  "even so": true
+  "just about": true
+  "as yet": true
+  "for long": true
+  "far from": true
+  "for ever": true
+  "on board": true
+  "a lot": true
+  "by far": true
+  "over here": true
+  "per annum": true
+  "as usual": true
+  "at best": true
+  "for once": true
+  "at large": true
+  "any longer": true
+  "for good": true
+  "vice versa": true
+  "for certain": true
+  "kind of": true
+  "anything but": true
+  "in between": true
+  "en route": true
+  "in private": true
+  "in vain": true
+  "at length": true
+  "at random": true
+  "for sure": true
+  "upside down": true
+  "at most": true
+  "per se": true
+  "per capita": true
+  "up front": true
+  "in situ": true
+  "in the main": true
+  "inter alia": true
+  "ex parte": true
+  "in vitro": true
+  "to and fro": true
+  "in vivo": true
+  "in brief": true
+  "at worst": true
+  "prima facie": true
+  "upwards of": true
+  "something like": true
+  "in case": true
+  "en masse": true
+  "ultra vires": true
+  "a priori": true
+  "ad hoc": true
+  "none the": true
+  "et cetera": true
+  "de facto": true
+  "off guard": true
+  "spot on": true
+  "ipso facto": true
+  "ceteris paribus": true
+  "ad infinitum": true
+  "op. cit.": true
+  "in absentia": true
+  "en bloc": true
+  "in camera": true
+  "point blank": true
+  "a fortiori": true
+  "ex officio": true
+  "nigh on": true
+  "ad nauseam": true
+  "inside out": true
+  "sotto voce": true
+  "pro rata": true
+  "in memoriam": true
+  "in extremis": true
+  "not withstanding": true
+  "in toto": true
+  "the most part": true
+  "for keeps": true
+  "al fresco": true
+  "ab initio": true
+  "de jure": true
+  "a la carte": true
+  "sub judice": true
+  "op. cit": true
+  "post hoc": true
+  "so on": true
+  "sine die": true
+  "op cit": true
+  "just in": true
+  "ex gratia": true
+  "au contraire": true
+  "ad hominem": true
+  "a posteriori": true
+
+  #adjectives
+  "fed up": true
+  "brand new": true
+  "ad hoc": true
+  "so called": true
+  "out of date": true
+  "old fashioned": true
+  "per capita": true
+  "de facto": true
+  "grown up": true
+  "bona fide": true
+  "ex parte": true
+  "well off": true
+  "prima facie": true
+  "far off": true
+  "a priori": true
+  "in between": true
+  "par excellence": true
+  "a la carte": true
+  "ultra vires": true
+  "straight forward": true
+  "hard up": true
+  "de luxe": true
+  "post mortem": true
+  "ex gratia": true
+  "upside down": true
+  "up front": true
+  "au fait": true
+  "sui generis": true
+  "pro rata": true
+  "post hoc": true
+  "ex officio": true
+  "ab initio": true
+  "inside out": true
+  "point blank": true
+  "en suite": true
+  "spot on": true
+  "all right": true
+  "ad hominem": true
+  "de jure": true
+  "tout court": true
+  "avant garde": true
+  "viva voce": true
+  "sub judice": true
+  "al fresco": true
+  "sans serif": true
+  "gung ho": true
+  "compos mentis": true
+  "super duper": true
+  "such like": true
+  "de trop": true
+
+  #mine
+  "will be": true
+
+exports.parts_of_speech =
+  VB:
+    description: "verb, base form"
+    example: "eat"
+    parent: "verb"
+    tag: "VB"
+
+  CP:
+    description: "copula"
+    example: "is, was, were"
+    parent: "verb"
+    tag: "CP"
+
+  VBD:
+    description: "verb, past tense"
+    example: "ate"
+    parent: "verb"
+    tense: "past"
+    tag: "VBD"
+
+  VBN:
+    description: "verb, past part"
+    example: "eaten"
+    parent: "verb"
+    tense: "past"
+    tag: "VBN"
+
+  VBP:
+    description: "Verb, present"
+    example: "eat"
+    parent: "verb"
+    tense: "present"
+    tag: "VBP"
+
+  VBZ:
+    description: "Verb, present"
+    example: "eats, swims"
+    tense: "present"
+    parent: "verb"
+    tag: "VBZ"
+
+  MD:
+    description: "Modal"
+    example: "can,should"
+    parent: "glue"
+    tag: "MD"
+
+  RB:
+    description: "Adverb"
+    example: "quickly, softly"
+    parent: "glue"
+    tag: "RB"
+
+  JJ:
+    description: "Adjective"
+    example: "big, nice"
+    parent: "adjective"
+    tag: "JJ"
+
+  JJR:
+    description: "Adj., comparative"
+    example: "bigger, cooler"
+    parent: "adjective"
+    tag: "JJR"
+
+  JJS:
+    description: "Adj., superlative"
+    example: "biggest, fattest"
+    parent: "adjective"
+    tag: "JJS"
+
+  RBR:
+    description: "Adverb, comparative"
+    example: "faster, cooler"
+    parent: "adjective"
+    tag: "RBR"
+
+  RBS:
+    description: "Adverb, superlative"
+    example: "fastest (driving), coolest (looking)"
+    parent: "adjective"
+    tag: "RBS"
+
+  NN:
+    description: "Noun, sing. or mass"
+    example: "dog, rain"
+    parent: "noun"
+    tag: "NN"
+
+  NNP:
+    description: "Proper noun, sing."
+    example: "Edinburgh, skateboard"
+    parent: "noun"
+    tag: "NNP"
+
+  NNPS:
+    description: "Proper noun, plural"
+    example: "Smiths"
+    parent: "noun"
+    tag: "NNPS"
+
+  NNS:
+    description: "Noun, plural"
+    example: "dogs, foxes"
+    parent: "noun"
+    tag: "NNS"
+
+  NNO:
+    description: "Noun, possessive"
+    example: "spencer's, sam's"
+    parent: "noun"
+    tag: "NNO"
+
+  PP:
+    description: "Possessive pronoun"
+    example: "my,one's"
+    parent: "glue"
+    tag: "PP"
+
+  FW:
+    description: "foreign word"
+    example: "mon dieu, voila"
+    parent: "noun"
+    tag: "FW"
+
+  CD:
+    description: "Cardinal number"
+    example: "one,two"
+    parent: "glue" #may want to change this
+    tag: "CD"
+
+  VBG:
+    description: "verb, gerund"
+    example: "eating,winning"
+    parent: "verb"
+    tag: "VBG"
+
+  NG:
+    description: "noun, gerund"
+    example: "eating,winning - but used grammatically as a noun"
+    parent: "noun"
+    tag: "VBG"
+
+  IN:
+    description: "Preposition"
+    example: "of,in,by"
+    parent: "glue"
+    tag: "IN"
+
+  UP:
+    description: "dependent preposition"
+    example: "up, down"
+    parent: "glue"
+    tag: "UP"
+
+  CC:
+    description: "Coord Conjuncn"
+    example: "and,but,or"
+    parent: "glue"
+    tag: "CC"
+
+  PRP:
+    description: "Personal pronoun"
+    example: "I,you,she"
+    parent: "glue"
+    tag: "PRP"
+
+  DT:
+    description: "Determiner"
+    example: "the,some"
+    parent: "title"
+    tag: "DT"
+
+  example:
+    description: "Existential there"
+    example: "there"
+    parent: "glue"
+    tag: "EX"
+
+  POS:
+    description: "Possessive ending"
+    example: "s"
+    parent: "glue"
+    tag: "POS"
+
+  PDT:
+    description: "Predeterminer"
+    example: "all, both"
+    parent: "glue"
+    tag: "PDT"
+
+  RP:
+    description: "Particle"
+    example: "up,off"
+    parent: "glue"
+    tag: "RP"
+
+  TO:
+    description: "to"
+    example: "to"
+    parent: "glue"
+    tag: "TO"
+
+  UH:
+    description: "Interjection"
+    example: "oh, oops"
+    parent: "glue"
+    tag: "UH"
+
+  WDT:
+    description: "Wh-determiner"
+    example: "which,that"
+    parent: "glue"
+    tag: "WDT"
+
+  WP:
+    description: "Wh pronoun"
+    example: "who,what"
+    parent: "glue"
+    tag: "WP"
+
+  WRB:
+    description: "Wh-adverb"
+    example: "how,where"
+    parent: "glue"
+    tag: "WRB"
+
+  LS:
+    description: "List item marker"
+    example: "1,One"
+    parent: "glue"
+    tag: "LS"
+
+  SYM:
+    description: "Symbol"
+    example: "+,%,&"
+    parent: "glue"
+    tag: "SYM"
+
+exports.silly =
+  "a-z": true
+  able: true
+  about: true
+  above: true
+  abroad: true
+  accessibility: true
+  according: true
+  accordingly: true
+  across: true
+  actor: true
+  actress: true
+  actually: true
+  adjustment: true
+  advertising: true
+  after: true
+  afterwards: true
+  again: true
+  against: true
+  ago: true
+  ah: true
+  aha: true
+  ahead: true
+  "ain't": true
+  album: true
+  all: true
+  allow: true
+  allows: true
+  almost: true
+  alone: true
+  along: true
+  alongside: true
+  already: true
+  also: true
+  although: true
+  always: true
+  am: true
+  amid: true
+  amidst: true
+  among: true
+  amongst: true
+  amoungst: true
+  amount: true
+  amplitude: true
+  an: true
+  and: true
+  another: true
+  any: true
+  anybody: true
+  anyhow: true
+  anyone: true
+  anything: true
+  anyway: true
+  anyways: true
+  anywhere: true
+  apart: true
+  appear: true
+  appreciate: true
+  appropriate: true
+  are: true
+  area: true
+  "aren't": true
+  around: true
+  article: true
+  as: true
+  "as to": true
+  aside: true
+  ask: true
+  asking: true
+  associated: true
+  at: true
+  available: true
+  away: true
+  awfully: true
+  aye: true
+  back: true
+  backward: true
+  backwards: true
+  be: true
+  became: true
+  because: true
+  become: true
+  becomes: true
+  becoming: true
+  been: true
+  before: true
+  beforehand: true
+  begin: true
+  behind: true
+  being: true
+  believe: true
+  below: true
+  beside: true
+  besides: true
+  best: true
+  better: true
+  between: true
+  beyond: true
+  bill: true
+  both: true
+  bottom: true
+  brief: true
+  brother: true
+  building: true
+  but: true
+  by: true
+  bye: true
+  "c'mon": true
+  "c's": true
+  call: true
+  came: true
+  can: true
+  "can't": true
+  cannot: true
+  cant: true
+  capacity: true
+  capital: true
+  caption: true
+  cause: true
+  causes: true
+  center: true
+  century: true
+  certain: true
+  certainly: true
+  change: true
+  changes: true
+  children: true
+  citizens: true
+  clearly: true
+  co: true
+  "co.": true
+  color: true
+  colour: true
+  com: true
+  come: true
+  comes: true
+  comments: true
+  complex: true
+  computer: true
+  con: true
+  concerning: true
+  consequently: true
+  consider: true
+  considering: true
+  contain: true
+  containing: true
+  contains: true
+  contestant: true
+  corresponding: true
+  could: true
+  "couldn't": true
+  couldnt: true
+  course: true
+  cover: true
+  cry: true
+  currently: true
+  dare: true
+  "daren't": true
+  day: true
+  de: true
+  dear: true
+  decade: true
+  definitely: true
+  density: true
+  depth: true
+  describe: true
+  described: true
+  despite: true
+  detail: true
+  did: true
+  "didn't": true
+  different: true
+  directly: true
+  distance: true
+  do: true
+  does: true
+  "doesn't": true
+  doing: true
+  "don't": true
+  done: true
+  doughter: true
+  down: true
+  downwards: true
+  dr: true
+  due: true
+  "due to": true
+  during: true
+  each: true
+  edu: true
+  eg: true
+  eh: true
+  eight: true
+  eighty: true
+  either: true
+  eleven: true
+  else: true
+  elsewhere: true
+  empty: true
+  end: true
+  ending: true
+  enough: true
+  entirely: true
+  episode: true
+  especially: true
+  et: true
+  etc: true
+  even: true
+  ever: true
+  evermore: true
+  every: true
+  everybody: true
+  everyone: true
+  everything: true
+  everywhere: true
+  ex: true
+  exactly: true
+  example: true
+  except: true
+  fairly: true
+  far: true
+  farther: true
+  feel: true
+  few: true
+  fewer: true
+  fifteen: true
+  fifth: true
+  fify: true
+  fill: true
+  find: true
+  fire: true
+  first: true
+  five: true
+  folk: true
+  followed: true
+  follower: true
+  following: true
+  follows: true
+  food: true
+  for: true
+  forever: true
+  former: true
+  formerly: true
+  forth: true
+  forty: true
+  forward: true
+  found: true
+  four: true
+  from: true
+  front: true
+  full: true
+  further: true
+  furthermore: true
+  get: true
+  gets: true
+  getting: true
+  girl: true
+  give: true
+  given: true
+  gives: true
+  go: true
+  goes: true
+  going: true
+  gone: true
+  goodbye: true
+  got: true
+  gotten: true
+  greetings: true
+  guy: true
+  ha: true
+  had: true
+  "hadn't": true
+  half: true
+  happens: true
+  hardly: true
+  has: true
+  "hasn't": true
+  hasnt: true
+  have: true
+  "haven't": true
+  having: true
+  he: true
+  "he'd": true
+  "he'll": true
+  "he's": true
+  height: true
+  hello: true
+  help: true
+  hence: true
+  her: true
+  here: true
+  "here's": true
+  hereafter: true
+  hereby: true
+  herein: true
+  hereupon: true
+  hers: true
+  herself: true
+  hey: true
+  hi: true
+  high: true
+  him: true
+  himself: true
+  his: true
+  hither: true
+  home: true
+  hopefully: true
+  house: true
+  how: true
+  "how's": true
+  howbeit: true
+  however: true
+  hue: true
+  hundred: true
+  i: true
+  "i'd": true
+  "i'll": true
+  "i'm": true
+  "i've": true
+  ie: true
+  if: true
+  ignored: true
+  im: true
+  immediate: true
+  in: true
+  inasmuch: true
+  inc: true
+  "inc.": true
+  including: true
+  indeed: true
+  indicate: true
+  indicated: true
+  indicates: true
+  inner: true
+  inside: true
+  insofar: true
+  instead: true
+  interest: true
+  into: true
+  inward: true
+  is: true
+  "isn't": true
+  it: true
+  "it'd": true
+  "it'll": true
+  "it's": true
+  its: true
+  itself: true
+  jr: true
+  just: true
+  k: true
+  keep: true
+  keeps: true
+  kept: true
+  know: true
+  known: true
+  knows: true
+  la: true
+  lady: true
+  last: true
+  lastnight: true
+  lastweek: true
+  lately: true
+  later: true
+  latter: true
+  latterly: true
+  le: true
+  league: true
+  least: true
+  length: true
+  les: true
+  less: true
+  lest: true
+  let: true
+  "let's": true
+  like: true
+  liked: true
+  likely: true
+  likewise: true
+  little: true
+  long: true
+  look: true
+  looking: true
+  looks: true
+  los: true
+  low: true
+  lower: true
+  ltd: true
+  made: true
+  magnitude: true
+  mainly: true
+  make: true
+  makes: true
+  man: true
+  many: true
+  may: true
+  maybe: true
+  "mayn't": true
+  me: true
+  mean: true
+  meantime: true
+  meanwhile: true
+  member: true
+  merely: true
+  mhm: true
+  might: true
+  "mightn't": true
+  mill: true
+  mine: true
+  minus: true
+  miss: true
+  mm: true
+  month: true
+  more: true
+  moreover: true
+  most: true
+  mostly: true
+  move: true
+  mr: true
+  mrs: true
+  ms: true
+  much: true
+  must: true
+  "mustn't": true
+  my: true
+  myself: true
+  name: true
+  namely: true
+  nd: true
+  near: true
+  nearly: true
+  necessary: true
+  need: true
+  "needn't": true
+  needs: true
+  neither: true
+  never: true
+  neverf: true
+  neverless: true
+  nevertheless: true
+  new: true
+  next: true
+  nine: true
+  ninety: true
+  no: true
+  "no-one": true
+  nobody: true
+  non: true
+  none: true
+  nonetheless: true
+  noone: true
+  nor: true
+  normally: true
+  not: true
+  nothing: true
+  notwithstanding: true
+  novel: true
+  now: true
+  nowhere: true
+  obviously: true
+  of: true
+  off: true
+  often: true
+  oh: true
+  ok: true
+  okay: true
+  old: true
+  on: true
+  "on to": true
+  once: true
+  one: true
+  "one's": true
+  ones: true
+  only: true
+  onto: true
+  ooh: true
+  opposite: true
+  or: true
+  other: true
+  others: true
+  otherwise: true
+  ought: true
+  "oughtn't": true
+  our: true
+  ours: true
+  ourselves: true
+  out: true
+  "out of": true
+  outside: true
+  over: true
+  overall: true
+  own: true
+  part: true
+  particular: true
+  particularly: true
+  past: true
+  people: true
+  per: true
+  perhaps: true
+  person: true
+  pitch: true
+  placed: true
+  play: true
+  please: true
+  plus: true
+  policy: true
+  possible: true
+  president: true
+  presumably: true
+  printable: true
+  privacy: true
+  probably: true
+  program: true
+  provided: true
+  provides: true
+  put: true
+  quantity: true
+  que: true
+  quite: true
+  qv: true
+  rather: true
+  rd: true
+  re: true
+  really: true
+  reasonably: true
+  recent: true
+  recently: true
+  recommend: true
+  record: true
+  regarding: true
+  regardless: true
+  regards: true
+  relatively: true
+  report: true
+  respectively: true
+  review: true
+  right: true
+  room: true
+  round: true
+  said: true
+  same: true
+  san: true
+  saw: true
+  say: true
+  saying: true
+  says: true
+  season: true
+  second: true
+  secondly: true
+  see: true
+  seeing: true
+  seem: true
+  seemed: true
+  seeming: true
+  seems: true
+  seen: true
+  self: true
+  selves: true
+  send: true
+  sensible: true
+  sent: true
+  serious: true
+  seriously: true
+  service: true
+  seven: true
+  several: true
+  shade: true
+  shall: true
+  "shan't": true
+  shape: true
+  she: true
+  "she'd": true
+  "she'll": true
+  "she's": true
+  should: true
+  "shouldn't": true
+  show: true
+  side: true
+  since: true
+  sincere: true
+  singer: true
+  six: true
+  sixty: true
+  size: true
+  so: true
+  some: true
+  somebody: true
+  someday: true
+  somehow: true
+  someone: true
+  something: true
+  sometime: true
+  sometimes: true
+  somewhat: true
+  somewhere: true
+  son: true
+  soon: true
+  sorry: true
+  specified: true
+  specify: true
+  specifying: true
+  speed: true
+  sr: true
+  staff: true
+  still: true
+  sub: true
+  such: true
+  "such as": true
+  sup: true
+  sure: true
+  system: true
+  take: true
+  taken: true
+  taking: true
+  team: true
+  tell: true
+  ten: true
+  tends: true
+  terms: true
+  text: true
+  texture: true
+  than: true
+  thank: true
+  thanks: true
+  thanx: true
+  that: true
+  "that'll": true
+  "that's": true
+  "that've": true
+  thats: true
+  the: true
+  their: true
+  theirs: true
+  them: true
+  themselves: true
+  then: true
+  thence: true
+  there: true
+  "there'd": true
+  "there'll": true
+  "there're": true
+  "there's": true
+  "there've": true
+  thereafter: true
+  thereby: true
+  therefore: true
+  therein: true
+  theres: true
+  thereupon: true
+  these: true
+  they: true
+  "they'd": true
+  "they'll": true
+  "they're": true
+  "they've": true
+  thick: true
+  thin: true
+  thing: true
+  things: true
+  think: true
+  third: true
+  thirty: true
+  this: true
+  thorough: true
+  thoroughly: true
+  those: true
+  though: true
+  three: true
+  through: true
+  throughout: true
+  thru: true
+  thus: true
+  till: true
+  time: true
+  timing: true
+  to: true
+  today: true
+  together: true
+  tommorrow: true
+  too: true
+  took: true
+  top: true
+  toward: true
+  towards: true
+  tried: true
+  tries: true
+  truly: true
+  try: true
+  trying: true
+  twelve: true
+  twenty: true
+  twice: true
+  two: true
+  un: true
+  under: true
+  underneath: true
+  undoing: true
+  unfortunately: true
+  unit: true
+  unless: true
+  unlike: true
+  unlikely: true
+  until: true
+  unto: true
+  up: true
+  "up to": true
+  update: true
+  upon: true
+  upwards: true
+  us: true
+  use: true
+  used: true
+  useful: true
+  uses: true
+  using: true
+  usually: true
+  uucp: true
+  v: true
+  value: true
+  various: true
+  version: true
+  versus: true
+  very: true
+  via: true
+  viz: true
+  volume: true
+  vs: true
+  waiter: true
+  waitress: true
+  want: true
+  wants: true
+  was: true
+  "wasn't": true
+  way: true
+  we: true
+  "we'd": true
+  "we'll": true
+  "we're": true
+  "we've": true
+  week: true
+  weight: true
+  welcome: true
+  well: true
+  went: true
+  were: true
+  "weren't": true
+  what: true
+  "what'll": true
+  "what's": true
+  "what've": true
+  whatever: true
+  when: true
+  "when's": true
+  whence: true
+  whenever: true
+  where: true
+  "where's": true
+  whereafter: true
+  whereas: true
+  whereby: true
+  wherein: true
+  whereupon: true
+  wherever: true
+  whether: true
+  which: true
+  whichever: true
+  while: true
+  whilst: true
+  whither: true
+  who: true
+  "who'd": true
+  "who'll": true
+  "who's": true
+  whoever: true
+  whole: true
+  whom: true
+  whomever: true
+  whose: true
+  why: true
+  "why's": true
+  width: true
+  wife: true
+  will: true
+  willing: true
+  wish: true
+  with: true
+  within: true
+  without: true
+  "won't": true
+  wonder: true
+  worth: true
+  would: true
+  "wouldn't": true
+  yeah: true
+  year: true
+  yep: true
+  yes: true
+  yesterday: true
+  yet: true
+  you: true
+  "you'd": true
+  "you'll": true
+  "you're": true
+  "you've": true
+  your: true
+  yours: true
+  yourself: true
+  yourselves: true
+  zero: true
+  a: true
+  s: true
+  "n't": true
+  years: true
+  er: true
+  ve: true
+  good: true
+  ll: true
+  m: true
+  erm: true
+  world: true
+  work: true
+  life: true
+  number: true
+  local: true
+  small: true
+  case: true
+  great: true
+  social: true
+  group: true
+  party: true
+  important: true
+  place: true
+  information: true
+  men: true
+  "per cent": true
+  school: true
+  national: true
+  fact: true
+  night: true
+  point: true
+  company: true
+  family: true
+  hand: true
+  d: true
+  large: true
+  business: true
+  days: true
+  john: true
+  development: true
+  state: true
+  head: true
+  ca: true
+  council: true
+  power: true
+  "of course": true
+  thought: true
+  young: true
+  political: true
+  members: true
+  eyes: true
+  public: true
+  problem: true
+  problems: true
+  knew: true
+  "a few": true
+  face: true
+  "at least": true
+  times: true
+  office: true
+  door: true
+  form: true
+  services: true
+  months: true
+  big: true
+  million: true
+  health: true
+  words: true
+  period: true
+  making: true
+  main: true
+  "for example": true
+  market: true
+  began: true
+  economic: true
+  areas: true
+  major: true
+  gave: true
+  real: true
+  position: true
+  process: true
+  effect: true
+  line: true
+  moment: true
+  community: true
+  difficult: true
+  action: true
+  special: true
+  international: true
+  kind: true
+  father: true
+  age: true
+  management: true
+  idea: true
+  "so that": true
+  evidence: true
+  looked: true
+  minister: true
+  view: true
+  sense: true
+  level: true
+  table: true
+  death: true
+  industry: true
+  control: true
+  sort: true
+  clear: true
+  range: true
+  black: true
+  general: true
+  word: true
+  history: true
+  free: true
+  road: true
+  order: true
+  wanted: true
+  centre: true
+  study: true
+  programme: true
+  result: true
+  air: true
+  hour: true
+  committee: true
+  experience: true
+  white: true
+  mind: true
+  handshome: true
+  rate: true
+  section: true
+  similar: true
+  trade: true
+  minutes: true
+  reason: true
+  authority: true
+  cases: true
+  role: true
+  data: true
+  working: true
+  class: true
+  felt: true
+  central: true
+  "because of": true
+  companies: true
+  "rather than": true
+  simply: true
+  early: true
+  department: true
+  asked: true
+  called: true
+  personal: true
+  patient: true
+  paper: true
+  land: true
+  systems: true
+  TRUE: true
+  told: true
+  support: true
+  act: true
+  type: true
+  city: true
+  common: true
+  friend: true
+  countries: true
+  care: true
+  decision: true
+  financial: true
+  single: true
+  price: true
+  provide: true
+  stage: true
+  matter: true
+  parent: true
+  club: true
+  practice: true
+  based: true
+  "as well as": true
+  private: true
+  cos: true
+  foreign: true
+  wo: true
+  town: true
+  open: true
+  situation: true
+  strong: true
+  b: true
+  bed: true
+  "according to": true
+  david: true
+  higher: true
+  "as if": true
+  quality: true
+  european: true
+  conditions: true
+  "at all": true
+  ground: true
+  weeks: true
+  tax: true
+  poor: true
+  production: true
+  friends: true
+  shown: true
+  na: true
+  musicanyone: true
+  game: true
+  ways: true
+  schools: true
+  issue: true
+  "mr.": true
+  royal: true
+  workers: true
+  american: true
+  student: true
+  knowledge: true
+  art: true
+  basis: true
+  subject: true
+  "p.": true
+  series: true
+  natural: true
+  coming: true
+  bad: true
+  bank: true
+  feet: true
+  greater: true
+  south: true
+  simple: true
+  lot: true
+  pay: true
+  west: true
+  rest: true
+  security: true
+  manager: true
+  cost: true
+  heart: true
+  structure: true
+  attention: true
+  story: true
+  "&amp": true
+  means: true
+  letter: true
+  question: true
+  chapter: true
+  field: true
+  short: true
+  studies: true
+  movement: true
+  union: true
+  success: true
+  figure: true
+  united: true
+  analysis: true
+  news: true
+  chance: true
+  evening: true
+  population: true
+  boy: true
+  modern: true
+  theory: true
+  legal: true
+  approach: true
+  final: true
+  wrong: true
+  finally: true
+  performance: true
+  human: true
+  authorities: true
+  rights: true
+  relationship: true
+  "in order": true
+  growth: true
+  agreement: true
+  parties: true
+  account: true
+  nice: true
+  held: true
+  space: true
+  property: true
+  project: true
+  normal: true
+  gon: true
+  meeting: true
+  set: true
+  quickly: true
+  behaviour: true
+  left: true
+  c: true
+  previous: true
+  peter: true
+  giving: true
+  couple: true
+  energy: true
+  sir: true
+  term: true
+  director: true
+  current: true
+  st: true
+  east: true
+  significant: true
+  income: true
+  leave: true
+  "as well": true
+  pressure: true
+  levels: true
+  treatment: true
+  north: true
+  prime: true
+  model: true
+  suddenly: true
+  pounds: true
+  choice: true
+  "away from": true
+  results: true
+  scheme: true
+  fine: true
+  details: true
+  takes: true
+  bring: true
+  design: true
+  happy: true
+  list: true
+  defence: true
+  parts: true
+  bit: true
+  points: true
+  red: true
+  loss: true
+  industrial: true
+  activities: true
+  floor: true
+  generally: true
+  issues: true
+  activity: true
+  paul: true
+  talking: true
+  difference: true
+  labour: true
+  specific: true
+  numbers: true
+  lord: true
+  relations: true
+  understand: true
+  contract: true
+  turned: true
+  product: true
+  ideas: true
+  george: true
+  material: true
+  wall: true
+  dead: true
+  arms: true
+  easy: true
+  basic: true
+  reasons: true
+  aware: true
+  technology: true
+  "each other": true
+  effects: true
+  figures: true
+  style: true
+  date: true
+  popular: true
+  window: true
+  forces: true
+  showed: true
+  "more than": true
+  resources: true
+  sea: true
+  events: true
+  advice: true
+  circumstance: true
+  plan: true
+  present: true
+  event: true
+  "hon.": true
+  thousand: true
+  training: true
+  stood: true
+  picture: true
+  sales: true
+  village: true
+  original: true
+  investment: true
+  thinking: true
+  cup: true
+  lines: true
+  james: true
+  goods: true
+  blood: true
+  opportunity: true
+  prices: true
+  professional: true
+  conference: true
+  extent: true
+  interests: true
+  application: true
+  page: true
+  operation: true
+  film: true
+  richard: true
+  "in terms of": true
+  response: true
+  majority: true
+  rules: true
+  shop: true
+  effective: true
+  press: true
+  written: true
+  york: true
+  hard: true
+  sat: true
+  easily: true
+  degree: true
+  wrote: true
+  statement: true
+  risk: true
+  force: true
+  miles: true
+  traditional: true
+  site: true
+  glass: true
+  ready: true
+  died: true
+  street: true
+  costs: true
+  earlier: true
+  playing: true
+  stop: true
+  scottish: true
+  importance: true
+  remember: true
+  individual: true
+  test: true
+  complete: true
+  jobs: true
+  immediately: true
+  standards: true
+  talk: true
+  considerable: true
+  girls: true
+  interesting: true
+  physical: true
+  species: true
+  title: true
+  michael: true
+  start: true
+  eye: true
+  access: true
+  brought: true
+  employment: true
+  buy: true
+  fell: true
+  daughter: true
+  responsible: true
+  competition: true
+  plans: true
+  medical: true
+  purpose: true
+  mouth: true
+  piece: true
+  wide: true
+  heavy: true
+  answer: true
+  tomorrow: true
+  leaving: true
+  task: true
+  responsibility: true
+  arm: true
+  eventually: true
+  ability: true
+  highly: true
+  hotel: true
+  pattern: true
+  method: true
+  source: true
+  existing: true
+  lost: true
+  election: true
+  ensure: true
+  charles: true
+  "a lot": true
+  region: true
+  suppose: true
+  total: true
+  surface: true
+  required: true
+  older: true
+  heard: true
+  methods: true
+  future: true
+  campaign: true
+  equipment: true
+  fully: true
+  disease: true
+  machine: true
+  lack: true
+  independent: true
+  slightly: true
+  software: true
+  hot: true
+  peace: true
+  charge: true
+  types: true
+  policies: true
+  houses: true
+  "no longer": true
+  direct: true
+  "even if": true
+  windows: true
+  stay: true
+  teacher: true
+  forms: true
+  provision: true
+  factors: true
+  direction: true
+  trouble: true
+  ran: true
+  beautiful: true
+  leader: true
+  civil: true
+  officer: true
+  status: true
+  sound: true
+  ii: true
+  character: true
+  variety: true
+  considered: true
+  light: true
+  continue: true
+  safety: true
+  completely: true
+  box: true
+  fifty: true
+  sector: true
+  animal: true
+  oxford: true
+  culture: true
+  "a little": true
+  obvious: true
+  late: true
+  increase: true
+  include: true
+  context: true
+  station: true
+  sale: true
+  afternoon: true
+  produce: true
+  william: true
+  positive: true
+  king: true
+  essential: true
+  extra: true
+  live: true
+  condition: true
+  families: true
+  works: true
+  appeal: true
+  trees: true
+  allowed: true
+  argument: true
+  demand: true
+  principle: true
+  run: true
+  pupils: true
+  chairman: true
+  cash: true
+  expected: true
+  states: true
+  hope: true
+  sun: true
+  involved: true
+  duty: true
+  countyrule: true
+  concern: true
+  environmental: true
+  presence: true
+  truth: true
+  dog: true
+  french: true
+  board: true
+  courses: true
+  blue: true
+  media: true
+  exchange: true
+  relevant: true
+  balance: true
+  robert: true
+  turn: true
+  slowly: true
+  close: true
+  players: true
+  discussion: true
+  huge: true
+  paid: true
+  letters: true
+  budget: true
+  protection: true
+  collection: true
+  speech: true
+  smith: true
+  born: true
+  effort: true
+  attempt: true
+  nuclear: true
+  survey: true
+  failure: true
+  people: true
+  ability: true
+  absence: true
+  access: true
+  accident: true
+  accommodation: true
+  account: true
+  acid: true
+  act: true
+  action: true
+  activity: true
+  adam: true
+  address: true
+  administration: true
+  advance: true
+  advantage: true
+  advice: true
+  afternoon: true
+  age: true
+  agency: true
+  agent: true
+  agreement: true
+  aid: true
+  aim: true
+  air: true
+  aircraft: true
+  alan: true
+  amount: true
+  analysis: true
+  andrew: true
+  anne: true
+  answer: true
+  appeal: true
+  appearance: true
+  application: true
+  appointment: true
+  approach: true
+  approval: true
+  area: true
+  argument: true
+  arm: true
+  army: true
+  arrival: true
+  article: true
+  artist: true
+  aspect: true
+  assembly: true
+  assessment: true
+  assistance: true
+  association: true
+  association: true
+  attack: true
+  attempt: true
+  attention: true
+  attitude: true
+  audience: true
+  author: true
+  authority: true
+  award: true
+  awareness: true
+  back: true
+  background: true
+  bag: true
+  balance: true
+  ball: true
+  band: true
+  bar: true
+  base: true
+  basis: true
+  battle: true
+  beauty: true
+  beginning: true
+  behaviour: true
+  belief: true
+  benefit: true
+  bill: true
+  bill: true
+  bill: true
+  birth: true
+  bit: true
+  block: true
+  board: true
+  board: true
+  bob: true
+  body: true
+  book: true
+  border: true
+  bottle: true
+  bottom: true
+  box: true
+  boy: true
+  branch: true
+  breath: true
+  brian: true
+  bridge: true
+  brother: true
+  brown: true
+  budget: true
+  building: true
+  business: true
+  cabinet: true
+  call: true
+  campaign: true
+  candidate: true
+  capacity: true
+  capital: true
+  car: true
+  card: true
+  care: true
+  career: true
+  case: true
+  cash: true
+  cause: true
+  centre: true
+  century: true
+  chain: true
+  chair: true
+  chairman: true
+  challenge: true
+  chance: true
+  change: true
+  chapter: true
+  character: true
+  charge: true
+  charles: true
+  chest: true
+  child: true
+  choice: true
+  chris: true
+  city: true
+  city: true
+  claim: true
+  class: true
+  client: true
+  club: true
+  "co-operation": true
+  coast: true
+  code: true
+  collection: true
+  colour: true
+  combination: true
+  commission: true
+  commitment: true
+  committee: true
+  communication: true
+  community: true
+  company: true
+  company: true
+  competition: true
+  concept: true
+  concern: true
+  conclusion: true
+  condition: true
+  conference: true
+  confidence: true
+  conflict: true
+  connection: true
+  consequence: true
+  consideration: true
+  constitution: true
+  construction: true
+  consumer: true
+  contact: true
+  content: true
+  context: true
+  contract: true
+  contrast: true
+  contribution: true
+  control: true
+  convention: true
+  conversation: true
+  copy: true
+  corner: true
+  corporation: true
+  cost: true
+  council: true
+  country: true
+  countryside: true
+  county: true
+  couple: true
+  course: true
+  court: true
+  cover: true
+  creation: true
+  credit: true
+  crime: true
+  crisis: true
+  criticism: true
+  crowd: true
+  culture: true
+  cup: true
+  curriculum: true
+  customer: true
+  dad: true
+  damage: true
+  danger: true
+  darlington: true
+  data: true
+  database: true
+  date: true
+  date: true
+  daughter: true
+  david: true
+  day: true
+  de: true
+  deal: true
+  death: true
+  debate: true
+  debt: true
+  decade: true
+  decision: true
+  decline: true
+  defence: true
+  definition: true
+  degree: true
+  delivery: true
+  demand: true
+  department: true
+  deputy: true
+  description: true
+  design: true
+  desire: true
+  desk: true
+  detail: true
+  development: true
+  diet: true
+  difference: true
+  difficulty: true
+  dinner: true
+  direction: true
+  director: true
+  discussion: true
+  disease: true
+  display: true
+  distance: true
+  distinction: true
+  distribution: true
+  district: true
+  division: true
+  doctor: true
+  document: true
+  dog: true
+  door: true
+  doubt: true
+  dr: true
+  dream: true
+  dress: true
+  drink: true
+  drive: true
+  driver: true
+  drug: true
+  duty: true
+  east: true
+  east: true
+  ec: true
+  edge: true
+  editor: true
+  education: true
+  edward: true
+  effect: true
+  efficiency: true
+  effort: true
+  election: true
+  element: true
+  elizabeth: true
+  emphasis: true
+  employment: true
+  end: true
+  enemy: true
+  energy: true
+  engine: true
+  engineering: true
+  enterprise: true
+  entry: true
+  environment: true
+  equipment: true
+  error: true
+  establishment: true
+  estate: true
+  evening: true
+  event: true
+  evidence: true
+  examination: true
+  example: true
+  exchange: true
+  executive: true
+  exercise: true
+  exhibition: true
+  existence: true
+  expansion: true
+  expenditure: true
+  experience: true
+  explanation: true
+  expression: true
+  extension: true
+  extent: true
+  eye: true
+  face: true
+  fact: true
+  factor: true
+  factory: true
+  failure: true
+  fall: true
+  family: true
+  farm: true
+  father: true
+  fault: true
+  fear: true
+  feature: true
+  feeling: true
+  field: true
+  "fig.": true
+  figure: true
+  file: true
+  film: true
+  finance: true
+  fire: true
+  firm: true
+  flight: true
+  floor: true
+  flow: true
+  focus: true
+  food: true
+  foot: true
+  force: true
+  form: true
+  formation: true
+  foundation: true
+  framework: true
+  frank: true
+  friend: true
+  front: true
+  fuel: true
+  function: true
+  fund: true
+  future: true
+  game: true
+  garden: true
+  gas: true
+  general: true
+  generation: true
+  gentleman: true
+  george: true
+  goal: true
+  graham: true
+  ground: true
+  group: true
+  growth: true
+  guide: true
+  hair: true
+  half: true
+  hall: true
+  hand: true
+  harry: true
+  head: true
+  health: true
+  heart: true
+  heat: true
+  height: true
+  help: true
+  henry: true
+  hill: true
+  history: true
+  hole: true
+  holiday: true
+  home: true
+  hope: true
+  horse: true
+  hospital: true
+  hotel: true
+  hour: true
+  house: true
+  household: true
+  housing: true
+  husband: true
+  ian: true
+  identity: true
+  image: true
+  impact: true
+  importance: true
+  impression: true
+  improvement: true
+  income: true
+  increase: true
+  independence: true
+  index: true
+  individual: true
+  industry: true
+  influence: true
+  information: true
+  initiative: true
+  injury: true
+  inquiry: true
+  institute: true
+  insurance: true
+  intention: true
+  interest: true
+  interpretation: true
+  interview: true
+  introduction: true
+  investigation: true
+  investment: true
+  involvement: true
+  island: true
+  issue: true
+  item: true
+  "j.": true
+  jack: true
+  james: true
+  jane: true
+  jim: true
+  job: true
+  joe: true
+  john: true
+  jones: true
+  journey: true
+  judge: true
+  kind: true
+  king: true
+  kingdom: true
+  knowledge: true
+  labour: true
+  labour: true
+  lack: true
+  lady: true
+  land: true
+  language: true
+  law: true
+  lead: true
+  leader: true
+  leadership: true
+  league: true
+  lee: true
+  leeds: true
+  leg: true
+  legislation: true
+  length: true
+  letter: true
+  level: true
+  lewis: true
+  liability: true
+  licence: true
+  life: true
+  lifespan: true
+  light: true
+  line: true
+  link: true
+  list: true
+  literature: true
+  location: true
+  look: true
+  lord: true
+  loss: true
+  lot: true
+  lot: true
+  luke: true
+  machine: true
+  magazine: true
+  maintenance: true
+  major: true
+  majority: true
+  man: true
+  management: true
+  manager: true
+  manner: true
+  map: true
+  margaret: true
+  mark: true
+  market: true
+  market: true
+  martin: true
+  mary: true
+  master: true
+  match: true
+  material: true
+  matter: true
+  meal: true
+  meaning: true
+  means: true
+  measure: true
+  meeting: true
+  meeting: true
+  member: true
+  membership: true
+  memory: true
+  message: true
+  method: true
+  michael: true
+  middle: true
+  mike: true
+  mind: true
+  minister: true
+  ministry: true
+  minority: true
+  minute: true
+  miss: true
+  mistake: true
+  model: true
+  moment: true
+  month: true
+  mother: true
+  motion: true
+  motor: true
+  mountain: true
+  mouth: true
+  move: true
+  movement: true
+  mr: true
+  "mr.": true
+  mrs: true
+  mum: true
+  name: true
+  nation: true
+  need: true
+  network: true
+  new: true
+  nigel: true
+  night: true
+  north: true
+  north: true
+  northern: true
+  note: true
+  notice: true
+  notion: true
+  number: true
+  object: true
+  occasion: true
+  offence: true
+  offer: true
+  office: true
+  officer: true
+  operation: true
+  opinion: true
+  opportunity: true
+  opposition: true
+  option: true
+  order: true
+  organisation: true
+  organization: true
+  outcome: true
+  output: true
+  owner: true
+  package: true
+  page: true
+  pair: true
+  panel: true
+  paper: true
+  parent: true
+  parish: true
+  park: true
+  part: true
+  partner: true
+  party: true
+  passage: true
+  past: true
+  path: true
+  patient: true
+  pattern: true
+  paul: true
+  pay: true
+  payment: true
+  percent: true
+  performance: true
+  period: true
+  person: true
+  peter: true
+  phase: true
+  philip: true
+  phone: true
+  picture: true
+  piece: true
+  place: true
+  plan: true
+  plane: true
+  planning: true
+  planning: true
+  plant: true
+  play: true
+  player: true
+  pleasure: true
+  point: true
+  policy: true
+  population: true
+  position: true
+  possibility: true
+  post: true
+  pound: true
+  power: true
+  practice: true
+  presence: true
+  president: true
+  president: true
+  press: true
+  pressure: true
+  price: true
+  principle: true
+  problem: true
+  procedure: true
+  process: true
+  product: true
+  production: true
+  profit: true
+  program: true
+  programme: true
+  progress: true
+  project: true
+  property: true
+  proportion: true
+  proposal: true
+  protection: true
+  provision: true
+  public: true
+  publication: true
+  purpose: true
+  quality: true
+  quarter: true
+  question: true
+  race: true
+  rail: true
+  railway: true
+  range: true
+  rate: true
+  reaction: true
+  reader: true
+  reality: true
+  reason: true
+  recession: true
+  recognition: true
+  record: true
+  recovery: true
+  reduction: true
+  ref: true
+  reference: true
+  reform: true
+  regime: true
+  region: true
+  relationship: true
+  release: true
+  relief: true
+  report: true
+  representation: true
+  reputation: true
+  request: true
+  research: true
+  resistance: true
+  resolution: true
+  respect: true
+  response: true
+  responsibility: true
+  rest: true
+  restaurant: true
+  result: true
+  return: true
+  revenue: true
+  review: true
+  richard: true
+  right: true
+  ring: true
+  rise: true
+  risk: true
+  river: true
+  road: true
+  signal: true
+  replay: true
+  robert: true
+  rock: true
+  role: true
+  roof: true
+  room: true
+  route: true
+  row: true
+  rule: true
+  run: true
+  sale: true
+  sample: true
+  sarah: true
+  scale: true
+  scene: true
+  scheme: true
+  school: true
+  scope: true
+  screen: true
+  sea: true
+  search: true
+  season: true
+  seat: true
+  second: true
+  section: true
+  sector: true
+  security: true
+  selection: true
+  self: true
+  sense: true
+  sentence: true
+  sequence: true
+  series: true
+  service: true
+  session: true
+  set: true
+  settlement: true
+  shape: true
+  share: true
+  sheet: true
+  ship: true
+  shock: true
+  shop: true
+  show: true
+  side: true
+  sight: true
+  sign: true
+  significance: true
+  silence: true
+  simon: true
+  sir: true
+  sir: true
+  site: true
+  situation: true
+  size: true
+  skin: true
+  sky: true
+  smile: true
+  smith: true
+  solution: true
+  son: true
+  song: true
+  sort: true
+  sound: true
+  source: true
+  south: true
+  south: true
+  soviet: true
+  space: true
+  spain: true
+  speaker: true
+  species: true
+  speech: true
+  speed: true
+  spirit: true
+  spokesman: true
+  sport: true
+  spot: true
+  spring: true
+  st: true
+  staff: true
+  stage: true
+  standard: true
+  star: true
+  start: true
+  state: true
+  statement: true
+  states: true
+  station: true
+  status: true
+  step: true
+  stephen: true
+  steve: true
+  stock: true
+  stone: true
+  store: true
+  story: true
+  strategy: true
+  street: true
+  street: true
+  strength: true
+  structure: true
+  struggle: true
+  student: true
+  studio: true
+  study: true
+  stuff: true
+  style: true
+  subject: true
+  success: true
+  sum: true
+  summer: true
+  sun: true
+  supply: true
+  support: true
+  support: true
+  surface: true
+  surprise: true
+  survey: true
+  system: true
+  table: true
+  talk: true
+  tape: true
+  target: true
+  task: true
+  taste: true
+  taylor: true
+  teacher: true
+  team: true
+  technique: true
+  temperature: true
+  term: true
+  test: true
+  text: true
+  theme: true
+  theory: true
+  thing: true
+  thomas: true
+  thought: true
+  threat: true
+  tim: true
+  title: true
+  tom: true
+  tone: true
+  tony: true
+  top: true
+  total: true
+  touch: true
+  tour: true
+  town: true
+  track: true
+  trade: true
+  tradition: true
+  traffic: true
+  train: true
+  training: true
+  transfer: true
+  transport: true
+  treatment: true
+  treaty: true
+  tree: true
+  trial: true
+  trip: true
+  trouble: true
+  trust: true
+  truth: true
+  turn: true
+  tv: true
+  type: true
+  un: true
+  understanding: true
+  unemployment: true
+  union: true
+  unit: true
+  united: true
+  university: true
+  us: true
+  use: true
+  use: true
+  user: true
+  value: true
+  variety: true
+  vehicle: true
+  version: true
+  victim: true
+  victory: true
+  video: true
+  view: true
+  village: true
+  violence: true
+  vision: true
+  visit: true
+  voice: true
+  volume: true
+  vote: true
+  wall: true
+  way: true
+  wealth: true
+  weather: true
+  week: true
+  weekend: true
+  weight: true
+  welfare: true
+  west: true
+  west: true
+  while: true
+  white: true
+  whole: true
+  wife: true
+  will: true
+  william: true
+  wilson: true
+  wind: true
+  window: true
+  wood: true
+  word: true
+  work: true
+  worker: true
+  works: true
+  world: true
+  writer: true
+  writing: true
+  year: true
+  youth: true
+  monday: true
+  tuesday: true
+  wednesday: true
+  thursday: true
+  friday: true
+  saturday: true
+  sunday: true
+  jan: true
+  feb: true
+  mar: true
+  apr: true
+  may: true
+  june: true
+  july: true
+  aug: true
+  sept: true
+  oct: true
+  nov: true
+  dec: true
+  january: true
+  february: true
+  march: true
+  april: true
+  august: true
+  september: true
+  october: true
+  novermber: true
+  december: true
+
+exports.notends =
+  the: true
+  los: true
+  les: true
+  san: true
+  dr: true
+  they: true
+  he: true
+  she: true
+  a: true
+  his: true
+  an: true
+  their: true
+  its: true
+  "it's": true
+  my: true
+  your: true
+  or: true
+  if: true
+  therefor: true
+  therefore: true
+
+exports.dateword = ["july", "august", "september", "october", "november", "december", "january", "february", "march", "april", "may", "june", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]

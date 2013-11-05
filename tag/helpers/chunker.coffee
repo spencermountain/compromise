@@ -30,13 +30,12 @@ chunker = (->
     chunked = [data[0]]
     i = 1
 
-    while i <= data.length - 1
+    for v,i in data
       if chunked[chunked.length - 1].pos.parent is data[i].pos.parent
         if chunked[chunked.length - 1].word and not chunked[chunked.length - 1].word.match(/(,|")/)
           chunked[chunked.length - 1].word += " " + data[i].word
           continue
       chunked.push data[i]
-      i++
     chunked
 
 
@@ -44,8 +43,6 @@ chunker = (->
   if typeof define isnt "undefined" and define.amd
     define [], ->
       chunker
-
-
   # export for Node.js
   else module.exports = chunker  if typeof module isnt "undefined" and module.exports
   chunker

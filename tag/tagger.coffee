@@ -1,5 +1,5 @@
-
 data= require("./helpers/data")
+tokenizer= require("./helpers/tokenizer")
 
 tagger = (->
 
@@ -86,7 +86,11 @@ tagger = (->
           results[i].rule = rule
       i++
     results
-  tagger = (words, options) ->
+
+
+  tagger = (words=[], options={}) ->
+    if typeof words=="string"
+      words= tokenizer(words, options)
     results = []
     for i of words
       word = words[i]
@@ -298,3 +302,8 @@ tagger = (->
   else module.exports = tagger  if typeof module isnt "undefined" and module.exports
   tagger
 )()
+
+
+# words= tagger("sally walked to the store");
+# tags= tagger(words)
+# console.log words

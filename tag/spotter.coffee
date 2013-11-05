@@ -1,12 +1,13 @@
 tagger= require("./tagger")
 recognizer= require("./helpers/recognizer")
 chunker= require("./helpers/chunker")
-tokenizer= require("./helpers/tokenizer")
+blacklist= require("./helpers/blacklist")
 
-spot = (->
+spotter=(->
 
-  set_options = (options={big:true}) ->
-    if options.verbose
+  set_options = (style="") ->
+    options= {}
+    if style== "verbose"
       options.gerund = true
       options.stick_adjectives = true
       options.stick_prepositions = true
@@ -17,19 +18,19 @@ spot = (->
       options.case_sensitive = false
       options.kill_numbers = false
       options.kill_quotes = false
-    if options.big
+    if style=="selective"
       options.gerund = false
       options.stick_adjectives = false
       options.stick_prepositions = false
       options.stick_the = false
       options.subnouns = false
-      options.want_quotations = true
+      options.want_quotations = false
       options.match_whole = false
       options.kill_numbers = true
       options.kill_quotes = true
     options
 
-  cleanup= (nouns)->
+  cleanup= (nouns, options)->
     for i of nouns
       nouns[i].word = nouns[i].word.replace(/("|,|\)|\(|!)/g, "") #punctuation we want to keep
       nouns[i].word = nouns[i].word.replace(/'s$/, "")
@@ -39,7 +40,7 @@ spot = (->
       nouns[i].word = nouns[i].word.replace(RegExp("  ", "g"), " ")
       nouns[i].word = nouns[i].word.replace(/\W*$/, "") #punctuation
       nouns[i].word = nouns[i].word.replace(/^\W*/, "")
-      nouns[i].word = singularize(nouns[i].word)  unless nouns[i].word.match(/^the ./)
+      # nouns[i].word = singularize(nouns[i].word)  unless nouns[i].word.match(/^the ./)
       nouns[i].word = nouns[i].word.toLowerCase()  unless options.case_sensitive
     nouns
 
@@ -57,26 +58,25 @@ spot = (->
 
 
 ###########
-  spot= (str="", options={big:true})->
-    options= set_options(options);
-    words= tokenizer(str, options);
-    tags= tagger(words)
+  spotter= (str="", style="selective")->
+    options= set_options("selective");
+    tags= tagger(str, options)
     chunks= chunker(tags, options)
     nouns= recognizer(chunks, options)
-    nouns= cleanup(nouns)
+    nouns= cleanup(nouns, options)
     nouns= rank(nouns)
-    results= nouns.filter((noun)-> pass(noun.word) )
-    return results
+    # nouns= nouns.filter((noun)-> pass(noun.word) )
+    return nouns
 
 
 ########
   # export for AMD / RequireJS
   if typeof define isnt "undefined" and define.amd
     define [], ->
-      spot
+      spotter
   # export for Node.js
-  else module.exports = spot  if typeof module isnt "undefined" and module.exports
-  spot
+  else module.exports = spotter  if typeof module isnt "undefined" and module.exports
+  spotter
 )()
 
-spot("sally is a great diver")
+# console.log spotter("sally walked to the store")

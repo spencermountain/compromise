@@ -1,9 +1,6 @@
 
+spotter= require("./tag/spotter")
+tagger= require("./tag/tagger")
 
-str= "Sally is a huge fool"
-options= set_options(options);
-words= tokenizer(str, options);
-tags= tag(words)
-chunks= chunker(tags, options)
-nouns= recognizer(chunks, options)
-console.log nouns
+# console.log tagger("sally walked to the store")
+console.log spotter("sally walked to the store")

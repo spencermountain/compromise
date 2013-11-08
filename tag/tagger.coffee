@@ -213,6 +213,202 @@ tagger = (->
       ,
         reg: /'s$/
         pos: "NNO"
+      ,
+        reg: /.*ized$/
+        pos: "JJ"
+      ,
+        reg: /.*ates$/
+        pos: "VBZ"
+      ,
+        reg: /.*ting$/
+        pos: "JJ"
+      ,
+        reg: /.*rate$/
+        pos: "VB"
+      ,
+        reg: /.*ling$/
+        pos: "JJ"
+      ,
+        reg: /.*ring$/
+        pos: "JJ"
+      ,
+        reg: /.*fied$/
+        pos: "JJ"
+      ,
+        reg: /.*shed$/
+        pos: "JJ"
+      ,
+        reg: /.*ched$/
+        pos: "JJ"
+      ,
+        reg: /.*tory$/
+        pos: "JJ"
+      ,
+        reg: /.*ding$/
+        pos: "JJ"
+      ,
+        reg: /.*ning$/
+        pos: "JJ"
+      ,
+        reg: /.*ular$/
+        pos: "JJ"
+      ,
+        reg: /.*late$/
+        pos: "VB"
+      ,
+        reg: /.*tted$/
+        pos: "VBN"
+      ,
+        reg: /.*ying$/
+        pos: "JJ"
+      ,
+        reg: /.*king$/
+        pos: "JJ"
+      ,
+        reg: /.*izes$/
+        pos: "VBZ"
+      ,
+        reg: /.*sing$/
+        pos: "JJ"
+      ,
+        reg: /.*nary$/
+        pos: "JJ"
+      ,
+        reg: /.*ntal$/
+        pos: "JJ"
+      ,
+        reg: /.*rian$/
+        pos: "JJ"
+      ,
+        reg: /.*ound$/
+        pos: "JJ"
+      ,
+        reg: /.*iate$/
+        pos: "VB"
+      ,
+        reg: /.*cate$/
+        pos: "VB"
+      ,
+        reg: /.*hing$/
+        pos: "JJ"
+      ,
+        reg: /.*ming$/
+        pos: "JJ"
+      ,
+        reg: /.*ient$/
+        pos: "JJ"
+      ,
+        reg: /.*fies$/
+        pos: "VBZ"
+      ,
+        reg: /.*tary$/
+        pos: "JJ"
+      ,
+        reg: /.*ards$/
+        pos: "RB"
+      ,
+        reg: /.*ural$/
+        pos: "JJ"
+      ,
+        reg: /.*ight$/
+        pos: "JJ"
+      ,
+        reg: /.*lent$/
+        pos: "JJ"
+      ,
+        reg: /.*ging$/
+        pos: "JJ"
+      ,
+        reg: /.*cent$/
+        pos: "JJ"
+      ,
+        reg: /.*shes$/
+        pos: "VBZ"
+      ,
+        reg: /.*nian$/
+        pos: "JJ"
+      ,
+        reg: /.*ects$/
+        pos: "VBZ"
+      ,
+        reg: /.*ving$/
+        pos: "JJ"
+      ,
+        reg: /.*dent$/
+        pos: "JJ"
+      ,
+        reg: /.*ends$/
+        pos: "VBZ"
+      ,
+        reg: /.*tent$/
+        pos: "JJ"
+      ,
+        reg: /.*tual$/
+        pos: "JJ"
+      ,
+        reg: /.*rent$/
+        pos: "JJ"
+      ,
+        reg: /.*eral$/
+        pos: "JJ"
+      ,
+        reg: /.*uate$/
+        pos: "VB"
+      ,
+        reg: /.*sian$/
+        pos: "JJ"
+      ,
+        reg: /.*ives$/
+        pos: "VBZ"
+      ,
+        reg: /.*gent$/
+        pos: "JJ"
+      ,
+        reg: /.*bles$/
+        pos: "VBZ"
+      ,
+        reg: /.*tens$/
+        pos: "VBZ"
+      ,
+        reg: /.*lian$/
+        pos: "JJ"
+      ,
+        reg: /.*tian$/
+        pos: "JJ"
+      ,
+        reg: /.*ains$/
+        pos: "VBZ"
+      ,
+        reg: /.*nist$/
+        pos: "JJ"
+      ,
+        reg: /.*oral$/
+        pos: "JJ"
+      ,
+        reg: /.*ines$/
+        pos: "VBZ"
+      ,
+        reg: /.*erly$/
+        pos: "JJ"
+      ,
+        reg: /.*duce$/
+        pos: "VB"
+      ,
+        reg: /.*ures$/
+        pos: "VBZ"
+      ,
+        reg: /.*wide$/
+        pos: "JJ"
+      ,
+        reg: /.*udes$/
+        pos: "VBZ"
+      ,
+        reg: /.*ters$/
+        pos: "VBZ"
+      ,
+        reg: /.*ents$/
+        pos: "VBZ"
+
       ]
       for o of patterns
         if word.match(patterns[o].reg)
@@ -304,6 +500,6 @@ tagger = (->
 )()
 
 
-# words= tagger("sally walked to the store");
-# tags= tagger(words)
-# console.log words
+words= tagger("sally walked to the store");
+tags= tagger(words)
+console.log words

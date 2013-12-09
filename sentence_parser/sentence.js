@@ -1,4 +1,3 @@
-
 var sentenceparser = (function() {
 
 //by spencer kelly (@spencermountain)
@@ -151,7 +150,7 @@ var sentenceparser=function(text) {
     ]
 
 
-    var abbrev=new RegExp("(^| )("+abbrevs.join("|")+")\. ?$","i");
+    var abbrev=new RegExp("(^| )("+abbrevs.join("|")+")[.] ?$","i");
     //join acronyms, titles
     for (var i in tmp) {
         if (tmp[i]) {

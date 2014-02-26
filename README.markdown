@@ -12,37 +12,38 @@ nlp-node trades the 'last 15%' accuracy for speed, slightness, and ease-of-use. 
 
 
 ## Showing off
-* sentence parser
+### sentence parser
 
 arr = nlp.sentences("Hi there Dr. Joe, the price is 4.59 for the N.A.S.A. Ph.Ds. I hope that's fine, etc. and you can attend Feb. 8th.")
 arr.length
 >//2
 
 
-* Named-entity-recognition
+### Named-entity-recognition
 
 nlp.tag("Tony Hawk said he was very happy")
 >// ["Tony Hawk"]
 
-* Part-of-speech Tagging
+### Part-of-speech Tagging
 
 nlp.tag("the obviously good swim")
 >//["DT", "RB", "JJ", "NN"]
+
 nlp.tag("Tony Hawk walked quickly to the store.")
 >// ["NN","NN","VBD","RB","TO","DT","NN"]
 
-* Singularize
+### Singularize
 
 nlp.singularize("earthquakes")
 >//earthquake
 
-* Adjective->Noun conjugation
+### Adjective->Noun conjugation
 
 nlp.adj_to_noun("clean")
 >// cleanliness
 
 
-* Date extractor
+### Date extractor
 
 nlp.dates('my wife left me on the 9th of april, 2005.')
 >{

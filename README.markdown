@@ -1,23 +1,29 @@
-#nlp-node
+#nlp-comprimise
 It's not always about being right.
 
+NlP-comprimise is a rule-based natural-language-processing library in javascript that is small-and-fast-enough to be used in the browser.
 
-NlPjs is a rule-based natural-language-processing library in javascript that is small-and-fast-enough to be used in the browser. It's not a fancy statistical nlp-suite, like the others.
+nlp-node trades the 'last 15%' accuracy for speed, slightness, and ease-of-use. You can roll it into anything, without thinking, and get competitive results. No training, no configuring, under 50k.
 
-nlp-node trades the 'last 15%' accuracy for speed, slightness, and ease-of-use. You can roll it into anything, without thinking, and get quite reasonable results.
 
 ## Installation
 
- $ npm install nlp-node
+ $ npm install nlp_comprimise
 
 
 ## Showing off
-### sentence parser
 
+### sentence parser
+1.7k
 arr = nlp.sentences("Hi there Dr. Joe, the price is 4.59 for the N.A.S.A. Ph.Ds. I hope that's fine, etc. and you can attend Feb. 8th.")
 arr.length
 >//2
 
+### Syllable hyphenization
+
+70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)  0.5k
+>nlp.syllables("hamburger")
+>//[ 'ham', 'bur', 'ger' ]
 
 ### Named-entity-recognition
 

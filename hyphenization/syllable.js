@@ -1,28 +1,64 @@
-var syllables = (function() {
-	var syllables = function(str) {
-		arr = str.split(/([^aeiouy]*[aeiouy-\s]*[^aeiouy]?)/i).filter(function(s) {
-			return s
-		})
-		arr = postprocess(arr)
+var syllables = (function(str) {
 
-		function postprocess(arr) {
-			if (!arr || !arr.length) {
-				return []
+
+
+
+
+
+
+
+	var main = function(str) {
+		var all = []
+
+
+		var doer = function(str) {
+			var vow = /[aeiouy]$/
+			if (!str) {
+				return
 			}
-			if (arr[arr.length - 1].length == 1 && arr[arr.length - 1].match(/[^aeiouy]/i)) {
-				var l = arr.pop()
-				arr[arr.length - 1] += l
+			var chars = str.split('')
+			var before = "";
+			var after = "";
+			var current = "";
+			for (var i = 0; i < chars.length; i++) {
+				before = chars.slice(0, i).join('')
+				current = chars[i]
+				after = chars.slice(i + 1, chars.length).join('')
+				var candidate = before + chars[i]
+				// console.log(before + "(" + current + ")" + after)
+
+				//it's a consonant that comes after a vowel
+				if (before.match(vow) && !current.match(vow)) {
+					all.push(candidate)
+					return doer(after)
+				}
+				//unblended vowels
+				if (candidate.match(/(eo|eu|ia|oa|ua|ui)$/i)) { //'io' is noisy, not in 'ion'
+					all.push(before)
+					all.push(current)
+					return doer(after)
+				}
+
 			}
-			return arr
+			if (str.match(/[aiouy]/)) { //allow silent trailing e
+				all.push(str)
+			} else {
+				all[all.length - 1] = (all[all.length - 1] || '') + str
+			}
 		}
-		return arr
-	}
 
+
+		doer(str)
+		return all
+	}
 
 	if (typeof module !== "undefined" && module.exports) {
-		module.exports = syllables;
+		module.exports = main;
 	}
-	return syllables;
+	return main
 })()
 
-console.log(syllables('hamburger'))
+// var arr = syllables("suddenly")
+// var arr = syllables("constipation")
+// var arr = syllables("diabolic")
+// console.log(JSON.stringify(arr, null, 2));

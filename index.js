@@ -1,6 +1,7 @@
 exports.sentences = require('./tokenization/sentence').sentences;
 exports.pluralize = require('./inflection/inflect').pluralize;
 exports.singularize = require('./inflection/inflect').singularize;
+exports.syllables = require('./hyphenization/syllable').syllables;
 exports.adj_to_noun = require('./conjugation/adj_to_noun').adj_to_noun;
 exports.tag = require('./tagging/tagger');
 exports.dates = require('./spotting/date_parser');

@@ -1,20 +1,21 @@
 var syllables = require("./syllable")
-// tests = [
-// 	["hillcrest", 2],
-// 	["constipation", 4],
-// 	["suddenly", 3],
-// 	["hipster", 2],
-// 	["donkey", 2],
-// 	["wallowing", 3],
-// 	["dutch", 1],
-// 	["dutch", 1],
-// ]
-// tests.forEach(function(t) {
-// 	var arr = syllables(t[0])
-// 	console.log(arr.length == t[1])
-// })
+tests = [
+	["hillcrest", 2],
+	["constipation", 4],
+	["suddenly", 3],
+	["hipster", 2],
+	["donkey", 2],
+	["wallowing", 3],
+	["dutch", 1],
+	["dutch", 1],
+	["diabolic", 4],
+]
+tests.forEach(function(t) {
+	var arr = syllables(t[0])
+	console.log(arr.length == t[1])
+})
 
-//68
+//75%
 
 var right = 0,
 	wrong = 0

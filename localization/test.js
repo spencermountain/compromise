@@ -1,0 +1,5191 @@
+testset = [{
+  "us": "accessorise",
+  "uk": "accessorize"
+}, {
+  "us": "accessorised",
+  "uk": "accessorized"
+}, {
+  "us": "accessorises",
+  "uk": "accessorizes"
+}, {
+  "us": "accessorising",
+  "uk": "accessorizing"
+}, {
+  "us": "acclimatisation",
+  "uk": "acclimatization"
+}, {
+  "us": "acclimatise",
+  "uk": "acclimatize"
+}, {
+  "us": "acclimatised",
+  "uk": "acclimatized"
+}, {
+  "us": "acclimatises",
+  "uk": "acclimatizes"
+}, {
+  "us": "acclimatising",
+  "uk": "acclimatizing"
+}, {
+  "us": "accoutrements",
+  "uk": "accouterments"
+}, {
+  "us": "aeon",
+  "uk": "eon"
+}, {
+  "us": "aeons",
+  "uk": "eons"
+}, {
+  "us": "aerogramme",
+  "uk": "aerogram"
+}, {
+  "us": "aerogrammes",
+  "uk": "aerograms"
+}, {
+  "us": "aeroplane",
+  "uk": "airplane"
+}, {
+  "us": "aeroplanes",
+  "uk": "airplanes"
+}, {
+  "us": "aesthete",
+  "uk": "esthete"
+}, {
+  "us": "aesthetes",
+  "uk": "esthetes"
+}, {
+  "us": "aesthetic",
+  "uk": "esthetic"
+}, {
+  "us": "aesthetically",
+  "uk": "esthetically"
+}, {
+  "us": "aesthetics",
+  "uk": "esthetics"
+}, {
+  "us": "aetiology",
+  "uk": "etiology"
+}, {
+  "us": "ageing",
+  "uk": "aging"
+}, {
+  "us": "aggrandisement",
+  "uk": "aggrandizement"
+}, {
+  "us": "agonise",
+  "uk": "agonize"
+}, {
+  "us": "agonised",
+  "uk": "agonized"
+}, {
+  "us": "agonises",
+  "uk": "agonizes"
+}, {
+  "us": "agonising",
+  "uk": "agonizing"
+}, {
+  "us": "agonisingly",
+  "uk": "agonizingly"
+}, {
+  "us": "almanack",
+  "uk": "almanac"
+}, {
+  "us": "almanacks",
+  "uk": "almanacs"
+}, {
+  "us": "aluminium",
+  "uk": "aluminum"
+}, {
+  "us": "amortisable",
+  "uk": "amortizable"
+}, {
+  "us": "amortisation",
+  "uk": "amortization"
+}, {
+  "us": "amortisations",
+  "uk": "amortizations"
+}, {
+  "us": "amortise",
+  "uk": "amortize"
+}, {
+  "us": "amortised",
+  "uk": "amortized"
+}, {
+  "us": "amortises",
+  "uk": "amortizes"
+}, {
+  "us": "amortising",
+  "uk": "amortizing"
+}, {
+  "us": "amphitheatre",
+  "uk": "amphitheater"
+}, {
+  "us": "amphitheatres",
+  "uk": "amphitheaters"
+}, {
+  "us": "anaemia",
+  "uk": "anemia"
+}, {
+  "us": "anaemic",
+  "uk": "anemic"
+}, {
+  "us": "anaesthesia",
+  "uk": "anesthesia"
+}, {
+  "us": "anaesthetic",
+  "uk": "anesthetic"
+}, {
+  "us": "anaesthetics",
+  "uk": "anesthetics"
+}, {
+  "us": "anaesthetise",
+  "uk": "anesthetize"
+}, {
+  "us": "anaesthetised",
+  "uk": "anesthetized"
+}, {
+  "us": "anaesthetises",
+  "uk": "anesthetizes"
+}, {
+  "us": "anaesthetising",
+  "uk": "anesthetizing"
+}, {
+  "us": "anaesthetist",
+  "uk": "anesthetist"
+}, {
+  "us": "anaesthetists",
+  "uk": "anesthetists"
+}, {
+  "us": "anaesthetize",
+  "uk": "anesthetize"
+}, {
+  "us": "anaesthetized",
+  "uk": "anesthetized"
+}, {
+  "us": "anaesthetizes",
+  "uk": "anesthetizes"
+}, {
+  "us": "anaesthetizing",
+  "uk": "anesthetizing"
+}, {
+  "us": "analogue",
+  "uk": "analog"
+}, {
+  "us": "analogues",
+  "uk": "analogs"
+}, {
+  "us": "analyse",
+  "uk": "analyze"
+}, {
+  "us": "analysed",
+  "uk": "analyzed"
+}, {
+  "us": "analyses",
+  "uk": "analyzes"
+}, {
+  "us": "analysing",
+  "uk": "analyzing"
+}, {
+  "us": "anglicise",
+  "uk": "anglicize"
+}, {
+  "us": "anglicised",
+  "uk": "anglicized"
+}, {
+  "us": "anglicises",
+  "uk": "anglicizes"
+}, {
+  "us": "anglicising",
+  "uk": "anglicizing"
+}, {
+  "us": "annualised",
+  "uk": "annualized"
+}, {
+  "us": "antagonise",
+  "uk": "antagonize"
+}, {
+  "us": "antagonised",
+  "uk": "antagonized"
+}, {
+  "us": "antagonises",
+  "uk": "antagonizes"
+}, {
+  "us": "antagonising",
+  "uk": "antagonizing"
+}, {
+  "us": "apologise",
+  "uk": "apologize"
+}, {
+  "us": "apologised",
+  "uk": "apologized"
+}, {
+  "us": "apologises",
+  "uk": "apologizes"
+}, {
+  "us": "apologising",
+  "uk": "apologizing"
+}, {
+  "us": "appal",
+  "uk": "appall"
+}, {
+  "us": "appals",
+  "uk": "appalls"
+}, {
+  "us": "appetiser",
+  "uk": "appetizer"
+}, {
+  "us": "appetisers",
+  "uk": "appetizers"
+}, {
+  "us": "appetising",
+  "uk": "appetizing"
+}, {
+  "us": "appetisingly",
+  "uk": "appetizingly"
+}, {
+  "us": "arbour",
+  "uk": "arbor"
+}, {
+  "us": "arbours",
+  "uk": "arbors"
+}, {
+  "us": "archaeological",
+  "uk": "archeological"
+}, {
+  "us": "archaeologically",
+  "uk": "archeologically"
+}, {
+  "us": "archaeologist",
+  "uk": "archeologist"
+}, {
+  "us": "archaeologists",
+  "uk": "archeologists"
+}, {
+  "us": "archaeology",
+  "uk": "archeology"
+}, {
+  "us": "ardour",
+  "uk": "ardor"
+}, {
+  "us": "armour",
+  "uk": "armor"
+}, {
+  "us": "armoured",
+  "uk": "armored"
+}, {
+  "us": "armourer",
+  "uk": "armorer"
+}, {
+  "us": "armourers",
+  "uk": "armorers"
+}, {
+  "us": "armouries",
+  "uk": "armories"
+}, {
+  "us": "armoury",
+  "uk": "armory"
+}, {
+  "us": "artefact",
+  "uk": "artifact"
+}, {
+  "us": "artefacts",
+  "uk": "artifacts"
+}, {
+  "us": "authorise",
+  "uk": "authorize"
+}, {
+  "us": "authorised",
+  "uk": "authorized"
+}, {
+  "us": "authorises",
+  "uk": "authorizes"
+}, {
+  "us": "authorising",
+  "uk": "authorizing"
+}, {
+  "us": "axe",
+  "uk": "ax"
+}, {
+  "us": "backpedalled",
+  "uk": "backpedaled"
+}, {
+  "us": "backpedalling",
+  "uk": "backpedaling"
+}, {
+  "us": "bannister",
+  "uk": "banister"
+}, {
+  "us": "bannisters",
+  "uk": "banisters"
+}, {
+  "us": "baptise",
+  "uk": "baptize"
+}, {
+  "us": "baptised",
+  "uk": "baptized"
+}, {
+  "us": "baptises",
+  "uk": "baptizes"
+}, {
+  "us": "baptising",
+  "uk": "baptizing"
+}, {
+  "us": "bastardise",
+  "uk": "bastardize"
+}, {
+  "us": "bastardised",
+  "uk": "bastardized"
+}, {
+  "us": "bastardises",
+  "uk": "bastardizes"
+}, {
+  "us": "bastardising",
+  "uk": "bastardizing"
+}, {
+  "us": "battleaxe",
+  "uk": "battleax"
+}, {
+  "us": "baulk",
+  "uk": "balk"
+}, {
+  "us": "baulked",
+  "uk": "balked"
+}, {
+  "us": "baulking",
+  "uk": "balking"
+}, {
+  "us": "baulks",
+  "uk": "balks"
+}, {
+  "us": "bedevilled",
+  "uk": "bedeviled"
+}, {
+  "us": "bedevilling",
+  "uk": "bedeviling"
+}, {
+  "us": "behaviour",
+  "uk": "behavior"
+}, {
+  "us": "behavioural",
+  "uk": "behavioral"
+}, {
+  "us": "behaviourism",
+  "uk": "behaviorism"
+}, {
+  "us": "behaviourist",
+  "uk": "behaviorist"
+}, {
+  "us": "behaviourists",
+  "uk": "behaviorists"
+}, {
+  "us": "behaviours",
+  "uk": "behaviors"
+}, {
+  "us": "behove",
+  "uk": "behoove"
+}, {
+  "us": "behoved",
+  "uk": "behooved"
+}, {
+  "us": "behoves",
+  "uk": "behooves"
+}, {
+  "us": "bejewelled",
+  "uk": "bejeweled"
+}, {
+  "us": "belabour",
+  "uk": "belabor"
+}, {
+  "us": "belaboured",
+  "uk": "belabored"
+}, {
+  "us": "belabouring",
+  "uk": "belaboring"
+}, {
+  "us": "belabours",
+  "uk": "belabors"
+}, {
+  "us": "bevelled",
+  "uk": "beveled"
+}, {
+  "us": "bevvies",
+  "uk": "bevies"
+}, {
+  "us": "bevvy",
+  "uk": "bevy"
+}, {
+  "us": "biassed",
+  "uk": "biased"
+}, {
+  "us": "biassing",
+  "uk": "biasing"
+}, {
+  "us": "bingeing",
+  "uk": "binging"
+}, {
+  "us": "bougainvillaea",
+  "uk": "bougainvillea"
+}, {
+  "us": "bougainvillaeas",
+  "uk": "bougainvilleas"
+}, {
+  "us": "bowdlerise",
+  "uk": "bowdlerize"
+}, {
+  "us": "bowdlerised",
+  "uk": "bowdlerized"
+}, {
+  "us": "bowdlerises",
+  "uk": "bowdlerizes"
+}, {
+  "us": "bowdlerising",
+  "uk": "bowdlerizing"
+}, {
+  "us": "breathalyse",
+  "uk": "breathalyze"
+}, {
+  "us": "breathalysed",
+  "uk": "breathalyzed"
+}, {
+  "us": "breathalyser",
+  "uk": "breathalyzer"
+}, {
+  "us": "breathalysers",
+  "uk": "breathalyzers"
+}, {
+  "us": "breathalyses",
+  "uk": "breathalyzes"
+}, {
+  "us": "breathalysing",
+  "uk": "breathalyzing"
+}, {
+  "us": "brutalise",
+  "uk": "brutalize"
+}, {
+  "us": "brutalised",
+  "uk": "brutalized"
+}, {
+  "us": "brutalises",
+  "uk": "brutalizes"
+}, {
+  "us": "brutalising",
+  "uk": "brutalizing"
+}, {
+  "us": "buses",
+  "uk": "busses"
+}, {
+  "us": "busing",
+  "uk": "bussing"
+}, {
+  "us": "caesarean",
+  "uk": "cesarean"
+}, {
+  "us": "caesareans",
+  "uk": "cesareans"
+}, {
+  "us": "calibre",
+  "uk": "caliber"
+}, {
+  "us": "calibres",
+  "uk": "calibers"
+}, {
+  "us": "calliper",
+  "uk": "caliper"
+}, {
+  "us": "callipers",
+  "uk": "calipers"
+}, {
+  "us": "callisthenics",
+  "uk": "calisthenics"
+}, {
+  "us": "canalise",
+  "uk": "canalize"
+}, {
+  "us": "canalised",
+  "uk": "canalized"
+}, {
+  "us": "canalises",
+  "uk": "canalizes"
+}, {
+  "us": "canalising",
+  "uk": "canalizing"
+}, {
+  "us": "cancellation",
+  "uk": "cancelation"
+}, {
+  "us": "cancellations",
+  "uk": "cancelations"
+}, {
+  "us": "cancelled",
+  "uk": "canceled"
+}, {
+  "us": "cancelling",
+  "uk": "canceling"
+}, {
+  "us": "candour",
+  "uk": "candor"
+}, {
+  "us": "cannibalise",
+  "uk": "cannibalize"
+}, {
+  "us": "cannibalised",
+  "uk": "cannibalized"
+}, {
+  "us": "cannibalises",
+  "uk": "cannibalizes"
+}, {
+  "us": "cannibalising",
+  "uk": "cannibalizing"
+}, {
+  "us": "canonise",
+  "uk": "canonize"
+}, {
+  "us": "canonised",
+  "uk": "canonized"
+}, {
+  "us": "canonises",
+  "uk": "canonizes"
+}, {
+  "us": "canonising",
+  "uk": "canonizing"
+}, {
+  "us": "capitalise",
+  "uk": "capitalize"
+}, {
+  "us": "capitalised",
+  "uk": "capitalized"
+}, {
+  "us": "capitalises",
+  "uk": "capitalizes"
+}, {
+  "us": "capitalising",
+  "uk": "capitalizing"
+}, {
+  "us": "caramelise",
+  "uk": "caramelize"
+}, {
+  "us": "caramelised",
+  "uk": "caramelized"
+}, {
+  "us": "caramelises",
+  "uk": "caramelizes"
+}, {
+  "us": "caramelising",
+  "uk": "caramelizing"
+}, {
+  "us": "carbonise",
+  "uk": "carbonize"
+}, {
+  "us": "carbonised",
+  "uk": "carbonized"
+}, {
+  "us": "carbonises",
+  "uk": "carbonizes"
+}, {
+  "us": "carbonising",
+  "uk": "carbonizing"
+}, {
+  "us": "carolled",
+  "uk": "caroled"
+}, {
+  "us": "carolling",
+  "uk": "caroling"
+}, {
+  "us": "catalogue",
+  "uk": "catalog"
+}, {
+  "us": "catalogued",
+  "uk": "cataloged"
+}, {
+  "us": "catalogues",
+  "uk": "catalogs"
+}, {
+  "us": "cataloguing",
+  "uk": "cataloging"
+}, {
+  "us": "catalyse",
+  "uk": "catalyze"
+}, {
+  "us": "catalysed",
+  "uk": "catalyzed"
+}, {
+  "us": "catalyses",
+  "uk": "catalyzes"
+}, {
+  "us": "catalysing",
+  "uk": "catalyzing"
+}, {
+  "us": "categorise",
+  "uk": "categorize"
+}, {
+  "us": "categorised",
+  "uk": "categorized"
+}, {
+  "us": "categorises",
+  "uk": "categorizes"
+}, {
+  "us": "categorising",
+  "uk": "categorizing"
+}, {
+  "us": "cauterise",
+  "uk": "cauterize"
+}, {
+  "us": "cauterised",
+  "uk": "cauterized"
+}, {
+  "us": "cauterises",
+  "uk": "cauterizes"
+}, {
+  "us": "cauterising",
+  "uk": "cauterizing"
+}, {
+  "us": "cavilled",
+  "uk": "caviled"
+}, {
+  "us": "cavilling",
+  "uk": "caviling"
+}, {
+  "us": "centigramme",
+  "uk": "centigram"
+}, {
+  "us": "centigrammes",
+  "uk": "centigrams"
+}, {
+  "us": "centilitre",
+  "uk": "centiliter"
+}, {
+  "us": "centilitres",
+  "uk": "centiliters"
+}, {
+  "us": "centimetre",
+  "uk": "centimeter"
+}, {
+  "us": "centimetres",
+  "uk": "centimeters"
+}, {
+  "us": "centralise",
+  "uk": "centralize"
+}, {
+  "us": "centralised",
+  "uk": "centralized"
+}, {
+  "us": "centralises",
+  "uk": "centralizes"
+}, {
+  "us": "centralising",
+  "uk": "centralizing"
+}, {
+  "us": "centre",
+  "uk": "center"
+}, {
+  "us": "centred",
+  "uk": "centered"
+}, {
+  "us": "centrefold",
+  "uk": "centerfold"
+}, {
+  "us": "centrefolds",
+  "uk": "centerfolds"
+}, {
+  "us": "centrepiece",
+  "uk": "centerpiece"
+}, {
+  "us": "centrepieces",
+  "uk": "centerpieces"
+}, {
+  "us": "centres",
+  "uk": "centers"
+}, {
+  "us": "channelled",
+  "uk": "channeled"
+}, {
+  "us": "channelling",
+  "uk": "channeling"
+}, {
+  "us": "characterise",
+  "uk": "characterize"
+}, {
+  "us": "characterised",
+  "uk": "characterized"
+}, {
+  "us": "characterises",
+  "uk": "characterizes"
+}, {
+  "us": "characterising",
+  "uk": "characterizing"
+}, {
+  "us": "cheque",
+  "uk": "check"
+}, {
+  "us": "chequebook",
+  "uk": "checkbook"
+}, {
+  "us": "chequebooks",
+  "uk": "checkbooks"
+}, {
+  "us": "chequered",
+  "uk": "checkered"
+}, {
+  "us": "cheques",
+  "uk": "checks"
+}, {
+  "us": "chilli",
+  "uk": "chili"
+}, {
+  "us": "chimaera",
+  "uk": "chimera"
+}, {
+  "us": "chimaeras",
+  "uk": "chimeras"
+}, {
+  "us": "chiselled",
+  "uk": "chiseled"
+}, {
+  "us": "chiselling",
+  "uk": "chiseling"
+}, {
+  "us": "circularise",
+  "uk": "circularize"
+}, {
+  "us": "circularised",
+  "uk": "circularized"
+}, {
+  "us": "circularises",
+  "uk": "circularizes"
+}, {
+  "us": "circularising",
+  "uk": "circularizing"
+}, {
+  "us": "civilise",
+  "uk": "civilize"
+}, {
+  "us": "civilised",
+  "uk": "civilized"
+}, {
+  "us": "civilises",
+  "uk": "civilizes"
+}, {
+  "us": "civilising",
+  "uk": "civilizing"
+}, {
+  "us": "clamour",
+  "uk": "clamor"
+}, {
+  "us": "clamoured",
+  "uk": "clamored"
+}, {
+  "us": "clamouring",
+  "uk": "clamoring"
+}, {
+  "us": "clamours",
+  "uk": "clamors"
+}, {
+  "us": "clangour",
+  "uk": "clangor"
+}, {
+  "us": "clarinettist",
+  "uk": "clarinetist"
+}, {
+  "us": "clarinettists",
+  "uk": "clarinetists"
+}, {
+  "us": "collectivise",
+  "uk": "collectivize"
+}, {
+  "us": "collectivised",
+  "uk": "collectivized"
+}, {
+  "us": "collectivises",
+  "uk": "collectivizes"
+}, {
+  "us": "collectivising",
+  "uk": "collectivizing"
+}, {
+  "us": "colonisation",
+  "uk": "colonization"
+}, {
+  "us": "colonise",
+  "uk": "colonize"
+}, {
+  "us": "colonised",
+  "uk": "colonized"
+}, {
+  "us": "coloniser",
+  "uk": "colonizer"
+}, {
+  "us": "colonisers",
+  "uk": "colonizers"
+}, {
+  "us": "colonises",
+  "uk": "colonizes"
+}, {
+  "us": "colonising",
+  "uk": "colonizing"
+}, {
+  "us": "colour",
+  "uk": "color"
+}, {
+  "us": "colourant",
+  "uk": "colorant"
+}, {
+  "us": "colourants",
+  "uk": "colorants"
+}, {
+  "us": "coloured",
+  "uk": "colored"
+}, {
+  "us": "coloureds",
+  "uk": "coloreds"
+}, {
+  "us": "colourful",
+  "uk": "colorful"
+}, {
+  "us": "colourfully",
+  "uk": "colorfully"
+}, {
+  "us": "colouring",
+  "uk": "coloring"
+}, {
+  "us": "colourize",
+  "uk": "colorize"
+}, {
+  "us": "colourized",
+  "uk": "colorized"
+}, {
+  "us": "colourizes",
+  "uk": "colorizes"
+}, {
+  "us": "colourizing",
+  "uk": "colorizing"
+}, {
+  "us": "colourless",
+  "uk": "colorless"
+}, {
+  "us": "colours",
+  "uk": "colors"
+}, {
+  "us": "commercialise",
+  "uk": "commercialize"
+}, {
+  "us": "commercialised",
+  "uk": "commercialized"
+}, {
+  "us": "commercialises",
+  "uk": "commercializes"
+}, {
+  "us": "commercialising",
+  "uk": "commercializing"
+}, {
+  "us": "compartmentalise",
+  "uk": "compartmentalize"
+}, {
+  "us": "compartmentalised",
+  "uk": "compartmentalized"
+}, {
+  "us": "compartmentalises",
+  "uk": "compartmentalizes"
+}, {
+  "us": "compartmentalising",
+  "uk": "compartmentalizing"
+}, {
+  "us": "computerise",
+  "uk": "computerize"
+}, {
+  "us": "computerised",
+  "uk": "computerized"
+}, {
+  "us": "computerises",
+  "uk": "computerizes"
+}, {
+  "us": "computerising",
+  "uk": "computerizing"
+}, {
+  "us": "conceptualise",
+  "uk": "conceptualize"
+}, {
+  "us": "conceptualised",
+  "uk": "conceptualized"
+}, {
+  "us": "conceptualises",
+  "uk": "conceptualizes"
+}, {
+  "us": "conceptualising",
+  "uk": "conceptualizing"
+}, {
+  "us": "connexion",
+  "uk": "connection"
+}, {
+  "us": "connexions",
+  "uk": "connections"
+}, {
+  "us": "contextualise",
+  "uk": "contextualize"
+}, {
+  "us": "contextualised",
+  "uk": "contextualized"
+}, {
+  "us": "contextualises",
+  "uk": "contextualizes"
+}, {
+  "us": "contextualising",
+  "uk": "contextualizing"
+}, {
+  "us": "cosier",
+  "uk": "cozier"
+}, {
+  "us": "cosies",
+  "uk": "cozies"
+}, {
+  "us": "cosiest",
+  "uk": "coziest"
+}, {
+  "us": "cosily",
+  "uk": "cozily"
+}, {
+  "us": "cosiness",
+  "uk": "coziness"
+}, {
+  "us": "cosy",
+  "uk": "cozy"
+}, {
+  "us": "councillor",
+  "uk": "councilor"
+}, {
+  "us": "councillors",
+  "uk": "councilors"
+}, {
+  "us": "counselled",
+  "uk": "counseled"
+}, {
+  "us": "counselling",
+  "uk": "counseling"
+}, {
+  "us": "counsellor",
+  "uk": "counselor"
+}, {
+  "us": "counsellors",
+  "uk": "counselors"
+}, {
+  "us": "crenellated",
+  "uk": "crenelated"
+}, {
+  "us": "criminalise",
+  "uk": "criminalize"
+}, {
+  "us": "criminalised",
+  "uk": "criminalized"
+}, {
+  "us": "criminalises",
+  "uk": "criminalizes"
+}, {
+  "us": "criminalising",
+  "uk": "criminalizing"
+}, {
+  "us": "criticise",
+  "uk": "criticize"
+}, {
+  "us": "criticised",
+  "uk": "criticized"
+}, {
+  "us": "criticises",
+  "uk": "criticizes"
+}, {
+  "us": "criticising",
+  "uk": "criticizing"
+}, {
+  "us": "crueller",
+  "uk": "crueler"
+}, {
+  "us": "cruellest",
+  "uk": "cruelest"
+}, {
+  "us": "crystallisation",
+  "uk": "crystallization"
+}, {
+  "us": "crystallise",
+  "uk": "crystallize"
+}, {
+  "us": "crystallised",
+  "uk": "crystallized"
+}, {
+  "us": "crystallises",
+  "uk": "crystallizes"
+}, {
+  "us": "crystallising",
+  "uk": "crystallizing"
+}, {
+  "us": "cudgelled",
+  "uk": "cudgeled"
+}, {
+  "us": "cudgelling",
+  "uk": "cudgeling"
+}, {
+  "us": "customise",
+  "uk": "customize"
+}, {
+  "us": "customised",
+  "uk": "customized"
+}, {
+  "us": "customises",
+  "uk": "customizes"
+}, {
+  "us": "customising",
+  "uk": "customizing"
+}, {
+  "us": "cypher",
+  "uk": "cipher"
+}, {
+  "us": "cyphers",
+  "uk": "ciphers"
+}, {
+  "us": "decentralisation",
+  "uk": "decentralization"
+}, {
+  "us": "decentralise",
+  "uk": "decentralize"
+}, {
+  "us": "decentralised",
+  "uk": "decentralized"
+}, {
+  "us": "decentralises",
+  "uk": "decentralizes"
+}, {
+  "us": "decentralising",
+  "uk": "decentralizing"
+}, {
+  "us": "decriminalisation",
+  "uk": "decriminalization"
+}, {
+  "us": "decriminalise",
+  "uk": "decriminalize"
+}, {
+  "us": "decriminalised",
+  "uk": "decriminalized"
+}, {
+  "us": "decriminalises",
+  "uk": "decriminalizes"
+}, {
+  "us": "decriminalising",
+  "uk": "decriminalizing"
+}, {
+  "us": "defence",
+  "uk": "defense"
+}, {
+  "us": "defenceless",
+  "uk": "defenseless"
+}, {
+  "us": "defences",
+  "uk": "defenses"
+}, {
+  "us": "dehumanisation",
+  "uk": "dehumanization"
+}, {
+  "us": "dehumanise",
+  "uk": "dehumanize"
+}, {
+  "us": "dehumanised",
+  "uk": "dehumanized"
+}, {
+  "us": "dehumanises",
+  "uk": "dehumanizes"
+}, {
+  "us": "dehumanising",
+  "uk": "dehumanizing"
+}, {
+  "us": "demeanour",
+  "uk": "demeanor"
+}, {
+  "us": "demilitarisation",
+  "uk": "demilitarization"
+}, {
+  "us": "demilitarise",
+  "uk": "demilitarize"
+}, {
+  "us": "demilitarised",
+  "uk": "demilitarized"
+}, {
+  "us": "demilitarises",
+  "uk": "demilitarizes"
+}, {
+  "us": "demilitarising",
+  "uk": "demilitarizing"
+}, {
+  "us": "demobilisation",
+  "uk": "demobilization"
+}, {
+  "us": "demobilise",
+  "uk": "demobilize"
+}, {
+  "us": "demobilised",
+  "uk": "demobilized"
+}, {
+  "us": "demobilises",
+  "uk": "demobilizes"
+}, {
+  "us": "demobilising",
+  "uk": "demobilizing"
+}, {
+  "us": "democratisation",
+  "uk": "democratization"
+}, {
+  "us": "democratise",
+  "uk": "democratize"
+}, {
+  "us": "democratised",
+  "uk": "democratized"
+}, {
+  "us": "democratises",
+  "uk": "democratizes"
+}, {
+  "us": "democratising",
+  "uk": "democratizing"
+}, {
+  "us": "demonise",
+  "uk": "demonize"
+}, {
+  "us": "demonised",
+  "uk": "demonized"
+}, {
+  "us": "demonises",
+  "uk": "demonizes"
+}, {
+  "us": "demonising",
+  "uk": "demonizing"
+}, {
+  "us": "demoralisation",
+  "uk": "demoralization"
+}, {
+  "us": "demoralise",
+  "uk": "demoralize"
+}, {
+  "us": "demoralised",
+  "uk": "demoralized"
+}, {
+  "us": "demoralises",
+  "uk": "demoralizes"
+}, {
+  "us": "demoralising",
+  "uk": "demoralizing"
+}, {
+  "us": "denationalisation",
+  "uk": "denationalization"
+}, {
+  "us": "denationalise",
+  "uk": "denationalize"
+}, {
+  "us": "denationalised",
+  "uk": "denationalized"
+}, {
+  "us": "denationalises",
+  "uk": "denationalizes"
+}, {
+  "us": "denationalising",
+  "uk": "denationalizing"
+}, {
+  "us": "deodorise",
+  "uk": "deodorize"
+}, {
+  "us": "deodorised",
+  "uk": "deodorized"
+}, {
+  "us": "deodorises",
+  "uk": "deodorizes"
+}, {
+  "us": "deodorising",
+  "uk": "deodorizing"
+}, {
+  "us": "depersonalise",
+  "uk": "depersonalize"
+}, {
+  "us": "depersonalised",
+  "uk": "depersonalized"
+}, {
+  "us": "depersonalises",
+  "uk": "depersonalizes"
+}, {
+  "us": "depersonalising",
+  "uk": "depersonalizing"
+}, {
+  "us": "deputise",
+  "uk": "deputize"
+}, {
+  "us": "deputised",
+  "uk": "deputized"
+}, {
+  "us": "deputises",
+  "uk": "deputizes"
+}, {
+  "us": "deputising",
+  "uk": "deputizing"
+}, {
+  "us": "desensitisation",
+  "uk": "desensitization"
+}, {
+  "us": "desensitise",
+  "uk": "desensitize"
+}, {
+  "us": "desensitised",
+  "uk": "desensitized"
+}, {
+  "us": "desensitises",
+  "uk": "desensitizes"
+}, {
+  "us": "desensitising",
+  "uk": "desensitizing"
+}, {
+  "us": "destabilisation",
+  "uk": "destabilization"
+}, {
+  "us": "destabilise",
+  "uk": "destabilize"
+}, {
+  "us": "destabilised",
+  "uk": "destabilized"
+}, {
+  "us": "destabilises",
+  "uk": "destabilizes"
+}, {
+  "us": "destabilising",
+  "uk": "destabilizing"
+}, {
+  "us": "dialled",
+  "uk": "dialed"
+}, {
+  "us": "dialling",
+  "uk": "dialing"
+}, {
+  "us": "dialogue",
+  "uk": "dialog"
+}, {
+  "us": "dialogues",
+  "uk": "dialogs"
+}, {
+  "us": "diarrhoea",
+  "uk": "diarrhea"
+}, {
+  "us": "digitise",
+  "uk": "digitize"
+}, {
+  "us": "digitised",
+  "uk": "digitized"
+}, {
+  "us": "digitises",
+  "uk": "digitizes"
+}, {
+  "us": "digitising",
+  "uk": "digitizing"
+}, {
+  "us": "disc",
+  "uk": "disk"
+}, {
+  "us": "discolour",
+  "uk": "discolor"
+}, {
+  "us": "discoloured",
+  "uk": "discolored"
+}, {
+  "us": "discolouring",
+  "uk": "discoloring"
+}, {
+  "us": "discolours",
+  "uk": "discolors"
+}, {
+  "us": "discs",
+  "uk": "disks"
+}, {
+  "us": "disembowelled",
+  "uk": "disemboweled"
+}, {
+  "us": "disembowelling",
+  "uk": "disemboweling"
+}, {
+  "us": "disfavour",
+  "uk": "disfavor"
+}, {
+  "us": "dishevelled",
+  "uk": "disheveled"
+}, {
+  "us": "dishonour",
+  "uk": "dishonor"
+}, {
+  "us": "dishonourable",
+  "uk": "dishonorable"
+}, {
+  "us": "dishonourably",
+  "uk": "dishonorably"
+}, {
+  "us": "dishonoured",
+  "uk": "dishonored"
+}, {
+  "us": "dishonouring",
+  "uk": "dishonoring"
+}, {
+  "us": "dishonours",
+  "uk": "dishonors"
+}, {
+  "us": "disorganisation",
+  "uk": "disorganization"
+}, {
+  "us": "disorganised",
+  "uk": "disorganized"
+}, {
+  "us": "distill",
+  "uk": "distil"
+}, {
+  "us": "distills",
+  "uk": "distils"
+}, {
+  "us": "dramatisation",
+  "uk": "dramatization"
+}, {
+  "us": "dramatisations",
+  "uk": "dramatizations"
+}, {
+  "us": "dramatise",
+  "uk": "dramatize"
+}, {
+  "us": "dramatised",
+  "uk": "dramatized"
+}, {
+  "us": "dramatises",
+  "uk": "dramatizes"
+}, {
+  "us": "dramatising",
+  "uk": "dramatizing"
+}, {
+  "us": "draught",
+  "uk": "draft"
+}, {
+  "us": "draughtboard",
+  "uk": "draftboard"
+}, {
+  "us": "draughtboards",
+  "uk": "draftboards"
+}, {
+  "us": "draughtier",
+  "uk": "draftier"
+}, {
+  "us": "draughtiest",
+  "uk": "draftiest"
+}, {
+  "us": "draughts",
+  "uk": "drafts"
+}, {
+  "us": "draughtsman",
+  "uk": "draftsman"
+}, {
+  "us": "draughtsmanship",
+  "uk": "draftsmanship"
+}, {
+  "us": "draughtsmen",
+  "uk": "draftsmen"
+}, {
+  "us": "draughtswoman",
+  "uk": "draftswoman"
+}, {
+  "us": "draughtswomen",
+  "uk": "draftswomen"
+}, {
+  "us": "draughty",
+  "uk": "drafty"
+}, {
+  "us": "drivelled",
+  "uk": "driveled"
+}, {
+  "us": "drivelling",
+  "uk": "driveling"
+}, {
+  "us": "duelled",
+  "uk": "dueled"
+}, {
+  "us": "duelling",
+  "uk": "dueling"
+}, {
+  "us": "economise",
+  "uk": "economize"
+}, {
+  "us": "economised",
+  "uk": "economized"
+}, {
+  "us": "economises",
+  "uk": "economizes"
+}, {
+  "us": "economising",
+  "uk": "economizing"
+}, {
+  "us": "edoema",
+  "uk": "edema"
+}, {
+  "us": "editorialise",
+  "uk": "editorialize"
+}, {
+  "us": "editorialised",
+  "uk": "editorialized"
+}, {
+  "us": "editorialises",
+  "uk": "editorializes"
+}, {
+  "us": "editorialising",
+  "uk": "editorializing"
+}, {
+  "us": "empathise",
+  "uk": "empathize"
+}, {
+  "us": "empathised",
+  "uk": "empathized"
+}, {
+  "us": "empathises",
+  "uk": "empathizes"
+}, {
+  "us": "empathising",
+  "uk": "empathizing"
+}, {
+  "us": "emphasise",
+  "uk": "emphasize"
+}, {
+  "us": "emphasised",
+  "uk": "emphasized"
+}, {
+  "us": "emphasises",
+  "uk": "emphasizes"
+}, {
+  "us": "emphasising",
+  "uk": "emphasizing"
+}, {
+  "us": "enamelled",
+  "uk": "enameled"
+}, {
+  "us": "enamelling",
+  "uk": "enameling"
+}, {
+  "us": "enamoured",
+  "uk": "enamored"
+}, {
+  "us": "encyclopaedia",
+  "uk": "encyclopedia"
+}, {
+  "us": "encyclopaedias",
+  "uk": "encyclopedias"
+}, {
+  "us": "encyclopaedic",
+  "uk": "encyclopedic"
+}, {
+  "us": "endeavour",
+  "uk": "endeavor"
+}, {
+  "us": "endeavoured",
+  "uk": "endeavored"
+}, {
+  "us": "endeavouring",
+  "uk": "endeavoring"
+}, {
+  "us": "endeavours",
+  "uk": "endeavors"
+}, {
+  "us": "energise",
+  "uk": "energize"
+}, {
+  "us": "energised",
+  "uk": "energized"
+}, {
+  "us": "energises",
+  "uk": "energizes"
+}, {
+  "us": "energising",
+  "uk": "energizing"
+}, {
+  "us": "enrol",
+  "uk": "enroll"
+}, {
+  "us": "enrols",
+  "uk": "enrolls"
+}, {
+  "us": "enthral",
+  "uk": "enthrall"
+}, {
+  "us": "enthrals",
+  "uk": "enthralls"
+}, {
+  "us": "epaulette",
+  "uk": "epaulet"
+}, {
+  "us": "epaulettes",
+  "uk": "epaulets"
+}, {
+  "us": "epicentre",
+  "uk": "epicenter"
+}, {
+  "us": "epicentres",
+  "uk": "epicenters"
+}, {
+  "us": "epilogue",
+  "uk": "epilog"
+}, {
+  "us": "epilogues",
+  "uk": "epilogs"
+}, {
+  "us": "epitomise",
+  "uk": "epitomize"
+}, {
+  "us": "epitomised",
+  "uk": "epitomized"
+}, {
+  "us": "epitomises",
+  "uk": "epitomizes"
+}, {
+  "us": "epitomising",
+  "uk": "epitomizing"
+}, {
+  "us": "equalisation",
+  "uk": "equalization"
+}, {
+  "us": "equalise",
+  "uk": "equalize"
+}, {
+  "us": "equalised",
+  "uk": "equalized"
+}, {
+  "us": "equaliser",
+  "uk": "equalizer"
+}, {
+  "us": "equalisers",
+  "uk": "equalizers"
+}, {
+  "us": "equalises",
+  "uk": "equalizes"
+}, {
+  "us": "equalising",
+  "uk": "equalizing"
+}, {
+  "us": "eulogise",
+  "uk": "eulogize"
+}, {
+  "us": "eulogised",
+  "uk": "eulogized"
+}, {
+  "us": "eulogises",
+  "uk": "eulogizes"
+}, {
+  "us": "eulogising",
+  "uk": "eulogizing"
+}, {
+  "us": "evangelise",
+  "uk": "evangelize"
+}, {
+  "us": "evangelised",
+  "uk": "evangelized"
+}, {
+  "us": "evangelises",
+  "uk": "evangelizes"
+}, {
+  "us": "evangelising",
+  "uk": "evangelizing"
+}, {
+  "us": "exorcise",
+  "uk": "exorcize"
+}, {
+  "us": "exorcised",
+  "uk": "exorcized"
+}, {
+  "us": "exorcises",
+  "uk": "exorcizes"
+}, {
+  "us": "exorcising",
+  "uk": "exorcizing"
+}, {
+  "us": "extemporisation",
+  "uk": "extemporization"
+}, {
+  "us": "extemporise",
+  "uk": "extemporize"
+}, {
+  "us": "extemporised",
+  "uk": "extemporized"
+}, {
+  "us": "extemporises",
+  "uk": "extemporizes"
+}, {
+  "us": "extemporising",
+  "uk": "extemporizing"
+}, {
+  "us": "externalisation",
+  "uk": "externalization"
+}, {
+  "us": "externalisations",
+  "uk": "externalizations"
+}, {
+  "us": "externalise",
+  "uk": "externalize"
+}, {
+  "us": "externalised",
+  "uk": "externalized"
+}, {
+  "us": "externalises",
+  "uk": "externalizes"
+}, {
+  "us": "externalising",
+  "uk": "externalizing"
+}, {
+  "us": "factorise",
+  "uk": "factorize"
+}, {
+  "us": "factorised",
+  "uk": "factorized"
+}, {
+  "us": "factorises",
+  "uk": "factorizes"
+}, {
+  "us": "factorising",
+  "uk": "factorizing"
+}, {
+  "us": "faecal",
+  "uk": "fecal"
+}, {
+  "us": "faeces",
+  "uk": "feces"
+}, {
+  "us": "familiarisation",
+  "uk": "familiarization"
+}, {
+  "us": "familiarise",
+  "uk": "familiarize"
+}, {
+  "us": "familiarised",
+  "uk": "familiarized"
+}, {
+  "us": "familiarises",
+  "uk": "familiarizes"
+}, {
+  "us": "familiarising",
+  "uk": "familiarizing"
+}, {
+  "us": "fantasise",
+  "uk": "fantasize"
+}, {
+  "us": "fantasised",
+  "uk": "fantasized"
+}, {
+  "us": "fantasises",
+  "uk": "fantasizes"
+}, {
+  "us": "fantasising",
+  "uk": "fantasizing"
+}, {
+  "us": "favour",
+  "uk": "favor"
+}, {
+  "us": "favourable",
+  "uk": "favorable"
+}, {
+  "us": "favourably",
+  "uk": "favorably"
+}, {
+  "us": "favoured",
+  "uk": "favored"
+}, {
+  "us": "favouring",
+  "uk": "favoring"
+}, {
+  "us": "favourite",
+  "uk": "favorite"
+}, {
+  "us": "favourites",
+  "uk": "favorites"
+}, {
+  "us": "favouritism",
+  "uk": "favoritism"
+}, {
+  "us": "favours",
+  "uk": "favors"
+}, {
+  "us": "feminise",
+  "uk": "feminize"
+}, {
+  "us": "feminised",
+  "uk": "feminized"
+}, {
+  "us": "feminises",
+  "uk": "feminizes"
+}, {
+  "us": "feminising",
+  "uk": "feminizing"
+}, {
+  "us": "fertilisation",
+  "uk": "fertilization"
+}, {
+  "us": "fertilise",
+  "uk": "fertilize"
+}, {
+  "us": "fertilised",
+  "uk": "fertilized"
+}, {
+  "us": "fertiliser",
+  "uk": "fertilizer"
+}, {
+  "us": "fertilisers",
+  "uk": "fertilizers"
+}, {
+  "us": "fertilises",
+  "uk": "fertilizes"
+}, {
+  "us": "fertilising",
+  "uk": "fertilizing"
+}, {
+  "us": "fervour",
+  "uk": "fervor"
+}, {
+  "us": "fibre",
+  "uk": "fiber"
+}, {
+  "us": "fibreglass",
+  "uk": "fiberglass"
+}, {
+  "us": "fibres",
+  "uk": "fibers"
+}, {
+  "us": "fictionalisation",
+  "uk": "fictionalization"
+}, {
+  "us": "fictionalisations",
+  "uk": "fictionalizations"
+}, {
+  "us": "fictionalise",
+  "uk": "fictionalize"
+}, {
+  "us": "fictionalised",
+  "uk": "fictionalized"
+}, {
+  "us": "fictionalises",
+  "uk": "fictionalizes"
+}, {
+  "us": "fictionalising",
+  "uk": "fictionalizing"
+}, {
+  "us": "fillet",
+  "uk": "filet"
+}, {
+  "us": "filleted",
+  "uk": "fileted"
+}, {
+  "us": "filleting",
+  "uk": "fileting"
+}, {
+  "us": "fillets",
+  "uk": "filets"
+}, {
+  "us": "finalisation",
+  "uk": "finalization"
+}, {
+  "us": "finalise",
+  "uk": "finalize"
+}, {
+  "us": "finalised",
+  "uk": "finalized"
+}, {
+  "us": "finalises",
+  "uk": "finalizes"
+}, {
+  "us": "finalising",
+  "uk": "finalizing"
+}, {
+  "us": "flautist",
+  "uk": "flutist"
+}, {
+  "us": "flautists",
+  "uk": "flutists"
+}, {
+  "us": "flavour",
+  "uk": "flavor"
+}, {
+  "us": "flavoured",
+  "uk": "flavored"
+}, {
+  "us": "flavouring",
+  "uk": "flavoring"
+}, {
+  "us": "flavourings",
+  "uk": "flavorings"
+}, {
+  "us": "flavourless",
+  "uk": "flavorless"
+}, {
+  "us": "flavours",
+  "uk": "flavors"
+}, {
+  "us": "flavoursome",
+  "uk": "flavorsome"
+}, {
+  "us": "flyer / flier",
+  "uk": "flier / flyer"
+}, {
+  "us": "foetal",
+  "uk": "fetal"
+}, {
+  "us": "foetid",
+  "uk": "fetid"
+}, {
+  "us": "foetus",
+  "uk": "fetus"
+}, {
+  "us": "foetuses",
+  "uk": "fetuses"
+}, {
+  "us": "formalisation",
+  "uk": "formalization"
+}, {
+  "us": "formalise",
+  "uk": "formalize"
+}, {
+  "us": "formalised",
+  "uk": "formalized"
+}, {
+  "us": "formalises",
+  "uk": "formalizes"
+}, {
+  "us": "formalising",
+  "uk": "formalizing"
+}, {
+  "us": "fossilisation",
+  "uk": "fossilization"
+}, {
+  "us": "fossilise",
+  "uk": "fossilize"
+}, {
+  "us": "fossilised",
+  "uk": "fossilized"
+}, {
+  "us": "fossilises",
+  "uk": "fossilizes"
+}, {
+  "us": "fossilising",
+  "uk": "fossilizing"
+}, {
+  "us": "fraternisation",
+  "uk": "fraternization"
+}, {
+  "us": "fraternise",
+  "uk": "fraternize"
+}, {
+  "us": "fraternised",
+  "uk": "fraternized"
+}, {
+  "us": "fraternises",
+  "uk": "fraternizes"
+}, {
+  "us": "fraternising",
+  "uk": "fraternizing"
+}, {
+  "us": "fulfil",
+  "uk": "fulfill"
+}, {
+  "us": "fulfilment",
+  "uk": "fulfillment"
+}, {
+  "us": "fulfils",
+  "uk": "fulfills"
+}, {
+  "us": "funnelled",
+  "uk": "funneled"
+}, {
+  "us": "funnelling",
+  "uk": "funneling"
+}, {
+  "us": "galvanise",
+  "uk": "galvanize"
+}, {
+  "us": "galvanised",
+  "uk": "galvanized"
+}, {
+  "us": "galvanises",
+  "uk": "galvanizes"
+}, {
+  "us": "galvanising",
+  "uk": "galvanizing"
+}, {
+  "us": "gambolled",
+  "uk": "gamboled"
+}, {
+  "us": "gambolling",
+  "uk": "gamboling"
+}, {
+  "us": "gaol",
+  "uk": "jail"
+}, {
+  "us": "gaolbird",
+  "uk": "jailbird"
+}, {
+  "us": "gaolbirds",
+  "uk": "jailbirds"
+}, {
+  "us": "gaolbreak",
+  "uk": "jailbreak"
+}, {
+  "us": "gaolbreaks",
+  "uk": "jailbreaks"
+}, {
+  "us": "gaoled",
+  "uk": "jailed"
+}, {
+  "us": "gaoler",
+  "uk": "jailer"
+}, {
+  "us": "gaolers",
+  "uk": "jailers"
+}, {
+  "us": "gaoling",
+  "uk": "jailing"
+}, {
+  "us": "gaols",
+  "uk": "jails"
+}, {
+  "us": "gases",
+  "uk": "gasses"
+}, {
+  "us": "gauge",
+  "uk": "gage"
+}, {
+  "us": "gauged",
+  "uk": "gaged"
+}, {
+  "us": "gauges",
+  "uk": "gages"
+}, {
+  "us": "gauging",
+  "uk": "gaging"
+}, {
+  "us": "generalisation",
+  "uk": "generalization"
+}, {
+  "us": "generalisations",
+  "uk": "generalizations"
+}, {
+  "us": "generalise",
+  "uk": "generalize"
+}, {
+  "us": "generalised",
+  "uk": "generalized"
+}, {
+  "us": "generalises",
+  "uk": "generalizes"
+}, {
+  "us": "generalising",
+  "uk": "generalizing"
+}, {
+  "us": "ghettoise",
+  "uk": "ghettoize"
+}, {
+  "us": "ghettoised",
+  "uk": "ghettoized"
+}, {
+  "us": "ghettoises",
+  "uk": "ghettoizes"
+}, {
+  "us": "ghettoising",
+  "uk": "ghettoizing"
+}, {
+  "us": "gipsies",
+  "uk": "gypsies"
+}, {
+  "us": "glamorise",
+  "uk": "glamorize"
+}, {
+  "us": "glamorised",
+  "uk": "glamorized"
+}, {
+  "us": "glamorises",
+  "uk": "glamorizes"
+}, {
+  "us": "glamorising",
+  "uk": "glamorizing"
+}, {
+  "us": "glamour",
+  "uk": "glamor"
+}, {
+  "us": "globalisation",
+  "uk": "globalization"
+}, {
+  "us": "globalise",
+  "uk": "globalize"
+}, {
+  "us": "globalised",
+  "uk": "globalized"
+}, {
+  "us": "globalises",
+  "uk": "globalizes"
+}, {
+  "us": "globalising",
+  "uk": "globalizing"
+}, {
+  "us": "glueing",
+  "uk": "gluing"
+}, {
+  "us": "goitre",
+  "uk": "goiter"
+}, {
+  "us": "goitres",
+  "uk": "goiters"
+}, {
+  "us": "gonorrhoea",
+  "uk": "gonorrhea"
+}, {
+  "us": "gramme",
+  "uk": "gram"
+}, {
+  "us": "grammes",
+  "uk": "grams"
+}, {
+  "us": "gravelled",
+  "uk": "graveled"
+}, {
+  "us": "grey",
+  "uk": "gray"
+}, {
+  "us": "greyed",
+  "uk": "grayed"
+}, {
+  "us": "greying",
+  "uk": "graying"
+}, {
+  "us": "greyish",
+  "uk": "grayish"
+}, {
+  "us": "greyness",
+  "uk": "grayness"
+}, {
+  "us": "greys",
+  "uk": "grays"
+}, {
+  "us": "grovelled",
+  "uk": "groveled"
+}, {
+  "us": "grovelling",
+  "uk": "groveling"
+}, {
+  "us": "groyne",
+  "uk": "groin"
+}, {
+  "us": "groynes",
+  "uk": "groins"
+}, {
+  "us": "gruelling",
+  "uk": "grueling"
+}, {
+  "us": "gruellingly",
+  "uk": "gruelingly"
+}, {
+  "us": "gryphon",
+  "uk": "griffin"
+}, {
+  "us": "gryphons",
+  "uk": "griffins"
+}, {
+  "us": "gynaecological",
+  "uk": "gynecological"
+}, {
+  "us": "gynaecologist",
+  "uk": "gynecologist"
+}, {
+  "us": "gynaecologists",
+  "uk": "gynecologists"
+}, {
+  "us": "gynaecology",
+  "uk": "gynecology"
+}, {
+  "us": "haematological",
+  "uk": "hematological"
+}, {
+  "us": "haematologist",
+  "uk": "hematologist"
+}, {
+  "us": "haematologists",
+  "uk": "hematologists"
+}, {
+  "us": "haematology",
+  "uk": "hematology"
+}, {
+  "us": "haemoglobin",
+  "uk": "hemoglobin"
+}, {
+  "us": "haemophilia",
+  "uk": "hemophilia"
+}, {
+  "us": "haemophiliac",
+  "uk": "hemophiliac"
+}, {
+  "us": "haemophiliacs",
+  "uk": "hemophiliacs"
+}, {
+  "us": "haemorrhage",
+  "uk": "hemorrhage"
+}, {
+  "us": "haemorrhaged",
+  "uk": "hemorrhaged"
+}, {
+  "us": "haemorrhages",
+  "uk": "hemorrhages"
+}, {
+  "us": "haemorrhaging",
+  "uk": "hemorrhaging"
+}, {
+  "us": "haemorrhoids",
+  "uk": "hemorrhoids"
+}, {
+  "us": "harbour",
+  "uk": "harbor"
+}, {
+  "us": "harboured",
+  "uk": "harbored"
+}, {
+  "us": "harbouring",
+  "uk": "harboring"
+}, {
+  "us": "harbours",
+  "uk": "harbors"
+}, {
+  "us": "harmonisation",
+  "uk": "harmonization"
+}, {
+  "us": "harmonise",
+  "uk": "harmonize"
+}, {
+  "us": "harmonised",
+  "uk": "harmonized"
+}, {
+  "us": "harmonises",
+  "uk": "harmonizes"
+}, {
+  "us": "harmonising",
+  "uk": "harmonizing"
+}, {
+  "us": "homoeopath",
+  "uk": "homeopath"
+}, {
+  "us": "homoeopathic",
+  "uk": "homeopathic"
+}, {
+  "us": "homoeopaths",
+  "uk": "homeopaths"
+}, {
+  "us": "homoeopathy",
+  "uk": "homeopathy"
+}, {
+  "us": "homogenise",
+  "uk": "homogenize"
+}, {
+  "us": "homogenised",
+  "uk": "homogenized"
+}, {
+  "us": "homogenises",
+  "uk": "homogenizes"
+}, {
+  "us": "homogenising",
+  "uk": "homogenizing"
+}, {
+  "us": "honour",
+  "uk": "honor"
+}, {
+  "us": "honourable",
+  "uk": "honorable"
+}, {
+  "us": "honourably",
+  "uk": "honorably"
+}, {
+  "us": "honoured",
+  "uk": "honored"
+}, {
+  "us": "honouring",
+  "uk": "honoring"
+}, {
+  "us": "honours",
+  "uk": "honors"
+}, {
+  "us": "hospitalisation",
+  "uk": "hospitalization"
+}, {
+  "us": "hospitalise",
+  "uk": "hospitalize"
+}, {
+  "us": "hospitalised",
+  "uk": "hospitalized"
+}, {
+  "us": "hospitalises",
+  "uk": "hospitalizes"
+}, {
+  "us": "hospitalising",
+  "uk": "hospitalizing"
+}, {
+  "us": "humanise",
+  "uk": "humanize"
+}, {
+  "us": "humanised",
+  "uk": "humanized"
+}, {
+  "us": "humanises",
+  "uk": "humanizes"
+}, {
+  "us": "humanising",
+  "uk": "humanizing"
+}, {
+  "us": "humour",
+  "uk": "humor"
+}, {
+  "us": "humoured",
+  "uk": "humored"
+}, {
+  "us": "humouring",
+  "uk": "humoring"
+}, {
+  "us": "humourless",
+  "uk": "humorless"
+}, {
+  "us": "humours",
+  "uk": "humors"
+}, {
+  "us": "hybridise",
+  "uk": "hybridize"
+}, {
+  "us": "hybridised",
+  "uk": "hybridized"
+}, {
+  "us": "hybridises",
+  "uk": "hybridizes"
+}, {
+  "us": "hybridising",
+  "uk": "hybridizing"
+}, {
+  "us": "hypnotise",
+  "uk": "hypnotize"
+}, {
+  "us": "hypnotised",
+  "uk": "hypnotized"
+}, {
+  "us": "hypnotises",
+  "uk": "hypnotizes"
+}, {
+  "us": "hypnotising",
+  "uk": "hypnotizing"
+}, {
+  "us": "hypothesise",
+  "uk": "hypothesize"
+}, {
+  "us": "hypothesised",
+  "uk": "hypothesized"
+}, {
+  "us": "hypothesises",
+  "uk": "hypothesizes"
+}, {
+  "us": "hypothesising",
+  "uk": "hypothesizing"
+}, {
+  "us": "idealisation",
+  "uk": "idealization"
+}, {
+  "us": "idealise",
+  "uk": "idealize"
+}, {
+  "us": "idealised",
+  "uk": "idealized"
+}, {
+  "us": "idealises",
+  "uk": "idealizes"
+}, {
+  "us": "idealising",
+  "uk": "idealizing"
+}, {
+  "us": "idolise",
+  "uk": "idolize"
+}, {
+  "us": "idolised",
+  "uk": "idolized"
+}, {
+  "us": "idolises",
+  "uk": "idolizes"
+}, {
+  "us": "idolising",
+  "uk": "idolizing"
+}, {
+  "us": "immobilisation",
+  "uk": "immobilization"
+}, {
+  "us": "immobilise",
+  "uk": "immobilize"
+}, {
+  "us": "immobilised",
+  "uk": "immobilized"
+}, {
+  "us": "immobiliser",
+  "uk": "immobilizer"
+}, {
+  "us": "immobilisers",
+  "uk": "immobilizers"
+}, {
+  "us": "immobilises",
+  "uk": "immobilizes"
+}, {
+  "us": "immobilising",
+  "uk": "immobilizing"
+}, {
+  "us": "immortalise",
+  "uk": "immortalize"
+}, {
+  "us": "immortalised",
+  "uk": "immortalized"
+}, {
+  "us": "immortalises",
+  "uk": "immortalizes"
+}, {
+  "us": "immortalising",
+  "uk": "immortalizing"
+}, {
+  "us": "immunisation",
+  "uk": "immunization"
+}, {
+  "us": "immunise",
+  "uk": "immunize"
+}, {
+  "us": "immunised",
+  "uk": "immunized"
+}, {
+  "us": "immunises",
+  "uk": "immunizes"
+}, {
+  "us": "immunising",
+  "uk": "immunizing"
+}, {
+  "us": "impanelled",
+  "uk": "impaneled"
+}, {
+  "us": "impanelling",
+  "uk": "impaneling"
+}, {
+  "us": "imperilled",
+  "uk": "imperiled"
+}, {
+  "us": "imperilling",
+  "uk": "imperiling"
+}, {
+  "us": "individualise",
+  "uk": "individualize"
+}, {
+  "us": "individualised",
+  "uk": "individualized"
+}, {
+  "us": "individualises",
+  "uk": "individualizes"
+}, {
+  "us": "individualising",
+  "uk": "individualizing"
+}, {
+  "us": "industrialise",
+  "uk": "industrialize"
+}, {
+  "us": "industrialised",
+  "uk": "industrialized"
+}, {
+  "us": "industrialises",
+  "uk": "industrializes"
+}, {
+  "us": "industrialising",
+  "uk": "industrializing"
+}, {
+  "us": "inflexion",
+  "uk": "inflection"
+}, {
+  "us": "inflexions",
+  "uk": "inflections"
+}, {
+  "us": "initialled",
+  "uk": "initialed"
+}, {
+  "us": "initialling",
+  "uk": "initialing"
+}, {
+  "us": "instal",
+  "uk": "install"
+}, {
+  "us": "instalment",
+  "uk": "installment"
+}, {
+  "us": "instalments",
+  "uk": "installments"
+}, {
+  "us": "instals",
+  "uk": "installs"
+}, {
+  "us": "instil",
+  "uk": "instill"
+}, {
+  "us": "instils",
+  "uk": "instills"
+}, {
+  "us": "institutionalisation",
+  "uk": "institutionalization"
+}, {
+  "us": "institutionalise",
+  "uk": "institutionalize"
+}, {
+  "us": "institutionalised",
+  "uk": "institutionalized"
+}, {
+  "us": "institutionalises",
+  "uk": "institutionalizes"
+}, {
+  "us": "institutionalising",
+  "uk": "institutionalizing"
+}, {
+  "us": "intellectualise",
+  "uk": "intellectualize"
+}, {
+  "us": "intellectualised",
+  "uk": "intellectualized"
+}, {
+  "us": "intellectualises",
+  "uk": "intellectualizes"
+}, {
+  "us": "intellectualising",
+  "uk": "intellectualizing"
+}, {
+  "us": "internalisation",
+  "uk": "internalization"
+}, {
+  "us": "internalise",
+  "uk": "internalize"
+}, {
+  "us": "internalised",
+  "uk": "internalized"
+}, {
+  "us": "internalises",
+  "uk": "internalizes"
+}, {
+  "us": "internalising",
+  "uk": "internalizing"
+}, {
+  "us": "internationalisation",
+  "uk": "internationalization"
+}, {
+  "us": "internationalise",
+  "uk": "internationalize"
+}, {
+  "us": "internationalised",
+  "uk": "internationalized"
+}, {
+  "us": "internationalises",
+  "uk": "internationalizes"
+}, {
+  "us": "internationalising",
+  "uk": "internationalizing"
+}, {
+  "us": "ionisation",
+  "uk": "ionization"
+}, {
+  "us": "ionise",
+  "uk": "ionize"
+}, {
+  "us": "ionised",
+  "uk": "ionized"
+}, {
+  "us": "ioniser",
+  "uk": "ionizer"
+}, {
+  "us": "ionisers",
+  "uk": "ionizers"
+}, {
+  "us": "ionises",
+  "uk": "ionizes"
+}, {
+  "us": "ionising",
+  "uk": "ionizing"
+}, {
+  "us": "italicise",
+  "uk": "italicize"
+}, {
+  "us": "italicised",
+  "uk": "italicized"
+}, {
+  "us": "italicises",
+  "uk": "italicizes"
+}, {
+  "us": "italicising",
+  "uk": "italicizing"
+}, {
+  "us": "itemise",
+  "uk": "itemize"
+}, {
+  "us": "itemised",
+  "uk": "itemized"
+}, {
+  "us": "itemises",
+  "uk": "itemizes"
+}, {
+  "us": "itemising",
+  "uk": "itemizing"
+}, {
+  "us": "jeopardise",
+  "uk": "jeopardize"
+}, {
+  "us": "jeopardised",
+  "uk": "jeopardized"
+}, {
+  "us": "jeopardises",
+  "uk": "jeopardizes"
+}, {
+  "us": "jeopardising",
+  "uk": "jeopardizing"
+}, {
+  "us": "jewelled",
+  "uk": "jeweled"
+}, {
+  "us": "jeweller",
+  "uk": "jeweler"
+}, {
+  "us": "jewellers",
+  "uk": "jewelers"
+}, {
+  "us": "jewellery",
+  "uk": "jewelry"
+}, {
+  "us": "judgement",
+  "uk": "judgment"
+}, {
+  "us": "kilogramme",
+  "uk": "kilogram"
+}, {
+  "us": "kilogrammes",
+  "uk": "kilograms"
+}, {
+  "us": "kilometre",
+  "uk": "kilometer"
+}, {
+  "us": "kilometres",
+  "uk": "kilometers"
+}, {
+  "us": "labelled",
+  "uk": "labeled"
+}, {
+  "us": "labelling",
+  "uk": "labeling"
+}, {
+  "us": "labour",
+  "uk": "labor"
+}, {
+  "us": "laboured",
+  "uk": "labored"
+}, {
+  "us": "labourer",
+  "uk": "laborer"
+}, {
+  "us": "labourers",
+  "uk": "laborers"
+}, {
+  "us": "labouring",
+  "uk": "laboring"
+}, {
+  "us": "labours",
+  "uk": "labors"
+}, {
+  "us": "lacklustre",
+  "uk": "lackluster"
+}, {
+  "us": "legalisation",
+  "uk": "legalization"
+}, {
+  "us": "legalise",
+  "uk": "legalize"
+}, {
+  "us": "legalised",
+  "uk": "legalized"
+}, {
+  "us": "legalises",
+  "uk": "legalizes"
+}, {
+  "us": "legalising",
+  "uk": "legalizing"
+}, {
+  "us": "legitimise",
+  "uk": "legitimize"
+}, {
+  "us": "legitimised",
+  "uk": "legitimized"
+}, {
+  "us": "legitimises",
+  "uk": "legitimizes"
+}, {
+  "us": "legitimising",
+  "uk": "legitimizing"
+}, {
+  "us": "leukaemia",
+  "uk": "leukemia"
+}, {
+  "us": "levelled",
+  "uk": "leveled"
+}, {
+  "us": "leveller",
+  "uk": "leveler"
+}, {
+  "us": "levellers",
+  "uk": "levelers"
+}, {
+  "us": "levelling",
+  "uk": "leveling"
+}, {
+  "us": "libelled",
+  "uk": "libeled"
+}, {
+  "us": "libelling",
+  "uk": "libeling"
+}, {
+  "us": "libellous",
+  "uk": "libelous"
+}, {
+  "us": "liberalisation",
+  "uk": "liberalization"
+}, {
+  "us": "liberalise",
+  "uk": "liberalize"
+}, {
+  "us": "liberalised",
+  "uk": "liberalized"
+}, {
+  "us": "liberalises",
+  "uk": "liberalizes"
+}, {
+  "us": "liberalising",
+  "uk": "liberalizing"
+}, {
+  "us": "licence",
+  "uk": "license"
+}, {
+  "us": "licenced",
+  "uk": "licensed"
+}, {
+  "us": "licences",
+  "uk": "licenses"
+}, {
+  "us": "licencing",
+  "uk": "licensing"
+}, {
+  "us": "likeable",
+  "uk": "likable"
+}, {
+  "us": "lionisation",
+  "uk": "lionization"
+}, {
+  "us": "lionise",
+  "uk": "lionize"
+}, {
+  "us": "lionised",
+  "uk": "lionized"
+}, {
+  "us": "lionises",
+  "uk": "lionizes"
+}, {
+  "us": "lionising",
+  "uk": "lionizing"
+}, {
+  "us": "liquidise",
+  "uk": "liquidize"
+}, {
+  "us": "liquidised",
+  "uk": "liquidized"
+}, {
+  "us": "liquidiser",
+  "uk": "liquidizer"
+}, {
+  "us": "liquidisers",
+  "uk": "liquidizers"
+}, {
+  "us": "liquidises",
+  "uk": "liquidizes"
+}, {
+  "us": "liquidising",
+  "uk": "liquidizing"
+}, {
+  "us": "litre",
+  "uk": "liter"
+}, {
+  "us": "litres",
+  "uk": "liters"
+}, {
+  "us": "localise",
+  "uk": "localize"
+}, {
+  "us": "localised",
+  "uk": "localized"
+}, {
+  "us": "localises",
+  "uk": "localizes"
+}, {
+  "us": "localising",
+  "uk": "localizing"
+}, {
+  "us": "louvre",
+  "uk": "louver"
+}, {
+  "us": "louvred",
+  "uk": "louvered"
+}, {
+  "us": "louvres",
+  "uk": "louvers"
+}, {
+  "us": "lustre",
+  "uk": "luster"
+}, {
+  "us": "magnetise",
+  "uk": "magnetize"
+}, {
+  "us": "magnetised",
+  "uk": "magnetized"
+}, {
+  "us": "magnetises",
+  "uk": "magnetizes"
+}, {
+  "us": "magnetising",
+  "uk": "magnetizing"
+}, {
+  "us": "manoeuvrability",
+  "uk": "maneuverability"
+}, {
+  "us": "manoeuvrable",
+  "uk": "maneuverable"
+}, {
+  "us": "manoeuvre",
+  "uk": "maneuver"
+}, {
+  "us": "manoeuvred",
+  "uk": "maneuvered"
+}, {
+  "us": "manoeuvres",
+  "uk": "maneuvers"
+}, {
+  "us": "manoeuvring",
+  "uk": "maneuvering"
+}, {
+  "us": "manoeuvrings",
+  "uk": "maneuverings"
+}, {
+  "us": "marginalisation",
+  "uk": "marginalization"
+}, {
+  "us": "marginalise",
+  "uk": "marginalize"
+}, {
+  "us": "marginalised",
+  "uk": "marginalized"
+}, {
+  "us": "marginalises",
+  "uk": "marginalizes"
+}, {
+  "us": "marginalising",
+  "uk": "marginalizing"
+}, {
+  "us": "marshalled",
+  "uk": "marshaled"
+}, {
+  "us": "marshalling",
+  "uk": "marshaling"
+}, {
+  "us": "marvelled",
+  "uk": "marveled"
+}, {
+  "us": "marvelling",
+  "uk": "marveling"
+}, {
+  "us": "marvellous",
+  "uk": "marvelous"
+}, {
+  "us": "marvellously",
+  "uk": "marvelously"
+}, {
+  "us": "materialisation",
+  "uk": "materialization"
+}, {
+  "us": "materialise",
+  "uk": "materialize"
+}, {
+  "us": "materialised",
+  "uk": "materialized"
+}, {
+  "us": "materialises",
+  "uk": "materializes"
+}, {
+  "us": "materialising",
+  "uk": "materializing"
+}, {
+  "us": "maximisation",
+  "uk": "maximization"
+}, {
+  "us": "maximise",
+  "uk": "maximize"
+}, {
+  "us": "maximised",
+  "uk": "maximized"
+}, {
+  "us": "maximises",
+  "uk": "maximizes"
+}, {
+  "us": "maximising",
+  "uk": "maximizing"
+}, {
+  "us": "meagre",
+  "uk": "meager"
+}, {
+  "us": "mechanisation",
+  "uk": "mechanization"
+}, {
+  "us": "mechanise",
+  "uk": "mechanize"
+}, {
+  "us": "mechanised",
+  "uk": "mechanized"
+}, {
+  "us": "mechanises",
+  "uk": "mechanizes"
+}, {
+  "us": "mechanising",
+  "uk": "mechanizing"
+}, {
+  "us": "mediaeval",
+  "uk": "medieval"
+}, {
+  "us": "memorialise",
+  "uk": "memorialize"
+}, {
+  "us": "memorialised",
+  "uk": "memorialized"
+}, {
+  "us": "memorialises",
+  "uk": "memorializes"
+}, {
+  "us": "memorialising",
+  "uk": "memorializing"
+}, {
+  "us": "memorise",
+  "uk": "memorize"
+}, {
+  "us": "memorised",
+  "uk": "memorized"
+}, {
+  "us": "memorises",
+  "uk": "memorizes"
+}, {
+  "us": "memorising",
+  "uk": "memorizing"
+}, {
+  "us": "mesmerise",
+  "uk": "mesmerize"
+}, {
+  "us": "mesmerised",
+  "uk": "mesmerized"
+}, {
+  "us": "mesmerises",
+  "uk": "mesmerizes"
+}, {
+  "us": "mesmerising",
+  "uk": "mesmerizing"
+}, {
+  "us": "metabolise",
+  "uk": "metabolize"
+}, {
+  "us": "metabolised",
+  "uk": "metabolized"
+}, {
+  "us": "metabolises",
+  "uk": "metabolizes"
+}, {
+  "us": "metabolising",
+  "uk": "metabolizing"
+}, {
+  "us": "metre",
+  "uk": "meter"
+}, {
+  "us": "metres",
+  "uk": "meters"
+}, {
+  "us": "micrometre",
+  "uk": "micrometer"
+}, {
+  "us": "micrometres",
+  "uk": "micrometers"
+}, {
+  "us": "militarise",
+  "uk": "militarize"
+}, {
+  "us": "militarised",
+  "uk": "militarized"
+}, {
+  "us": "militarises",
+  "uk": "militarizes"
+}, {
+  "us": "militarising",
+  "uk": "militarizing"
+}, {
+  "us": "milligramme",
+  "uk": "milligram"
+}, {
+  "us": "milligrammes",
+  "uk": "milligrams"
+}, {
+  "us": "millilitre",
+  "uk": "milliliter"
+}, {
+  "us": "millilitres",
+  "uk": "milliliters"
+}, {
+  "us": "millimetre",
+  "uk": "millimeter"
+}, {
+  "us": "millimetres",
+  "uk": "millimeters"
+}, {
+  "us": "miniaturisation",
+  "uk": "miniaturization"
+}, {
+  "us": "miniaturise",
+  "uk": "miniaturize"
+}, {
+  "us": "miniaturised",
+  "uk": "miniaturized"
+}, {
+  "us": "miniaturises",
+  "uk": "miniaturizes"
+}, {
+  "us": "miniaturising",
+  "uk": "miniaturizing"
+}, {
+  "us": "minibuses",
+  "uk": "minibusses"
+}, {
+  "us": "minimise",
+  "uk": "minimize"
+}, {
+  "us": "minimised",
+  "uk": "minimized"
+}, {
+  "us": "minimises",
+  "uk": "minimizes"
+}, {
+  "us": "minimising",
+  "uk": "minimizing"
+}, {
+  "us": "misbehaviour",
+  "uk": "misbehavior"
+}, {
+  "us": "misdemeanour",
+  "uk": "misdemeanor"
+}, {
+  "us": "misdemeanours",
+  "uk": "misdemeanors"
+}, {
+  "us": "misspelt",
+  "uk": "misspelled"
+}, {
+  "us": "mitre",
+  "uk": "miter"
+}, {
+  "us": "mitres",
+  "uk": "miters"
+}, {
+  "us": "mobilisation",
+  "uk": "mobilization"
+}, {
+  "us": "mobilise",
+  "uk": "mobilize"
+}, {
+  "us": "mobilised",
+  "uk": "mobilized"
+}, {
+  "us": "mobilises",
+  "uk": "mobilizes"
+}, {
+  "us": "mobilising",
+  "uk": "mobilizing"
+}, {
+  "us": "modelled",
+  "uk": "modeled"
+}, {
+  "us": "modeller",
+  "uk": "modeler"
+}, {
+  "us": "modellers",
+  "uk": "modelers"
+}, {
+  "us": "modelling",
+  "uk": "modeling"
+}, {
+  "us": "modernise",
+  "uk": "modernize"
+}, {
+  "us": "modernised",
+  "uk": "modernized"
+}, {
+  "us": "modernises",
+  "uk": "modernizes"
+}, {
+  "us": "modernising",
+  "uk": "modernizing"
+}, {
+  "us": "moisturise",
+  "uk": "moisturize"
+}, {
+  "us": "moisturised",
+  "uk": "moisturized"
+}, {
+  "us": "moisturiser",
+  "uk": "moisturizer"
+}, {
+  "us": "moisturisers",
+  "uk": "moisturizers"
+}, {
+  "us": "moisturises",
+  "uk": "moisturizes"
+}, {
+  "us": "moisturising",
+  "uk": "moisturizing"
+}, {
+  "us": "monologue",
+  "uk": "monolog"
+}, {
+  "us": "monologues",
+  "uk": "monologs"
+}, {
+  "us": "monopolisation",
+  "uk": "monopolization"
+}, {
+  "us": "monopolise",
+  "uk": "monopolize"
+}, {
+  "us": "monopolised",
+  "uk": "monopolized"
+}, {
+  "us": "monopolises",
+  "uk": "monopolizes"
+}, {
+  "us": "monopolising",
+  "uk": "monopolizing"
+}, {
+  "us": "moralise",
+  "uk": "moralize"
+}, {
+  "us": "moralised",
+  "uk": "moralized"
+}, {
+  "us": "moralises",
+  "uk": "moralizes"
+}, {
+  "us": "moralising",
+  "uk": "moralizing"
+}, {
+  "us": "motorised",
+  "uk": "motorized"
+}, {
+  "us": "mould",
+  "uk": "mold"
+}, {
+  "us": "moulded",
+  "uk": "molded"
+}, {
+  "us": "moulder",
+  "uk": "molder"
+}, {
+  "us": "mouldered",
+  "uk": "moldered"
+}, {
+  "us": "mouldering",
+  "uk": "moldering"
+}, {
+  "us": "moulders",
+  "uk": "molders"
+}, {
+  "us": "mouldier",
+  "uk": "moldier"
+}, {
+  "us": "mouldiest",
+  "uk": "moldiest"
+}, {
+  "us": "moulding",
+  "uk": "molding"
+}, {
+  "us": "mouldings",
+  "uk": "moldings"
+}, {
+  "us": "moulds",
+  "uk": "molds"
+}, {
+  "us": "mouldy",
+  "uk": "moldy"
+}, {
+  "us": "moult",
+  "uk": "molt"
+}, {
+  "us": "moulted",
+  "uk": "molted"
+}, {
+  "us": "moulting",
+  "uk": "molting"
+}, {
+  "us": "moults",
+  "uk": "molts"
+}, {
+  "us": "moustache",
+  "uk": "mustache"
+}, {
+  "us": "moustached",
+  "uk": "mustached"
+}, {
+  "us": "moustaches",
+  "uk": "mustaches"
+}, {
+  "us": "moustachioed",
+  "uk": "mustachioed"
+}, {
+  "us": "multicoloured",
+  "uk": "multicolored"
+}, {
+  "us": "nationalisation",
+  "uk": "nationalization"
+}, {
+  "us": "nationalisations",
+  "uk": "nationalizations"
+}, {
+  "us": "nationalise",
+  "uk": "nationalize"
+}, {
+  "us": "nationalised",
+  "uk": "nationalized"
+}, {
+  "us": "nationalises",
+  "uk": "nationalizes"
+}, {
+  "us": "nationalising",
+  "uk": "nationalizing"
+}, {
+  "us": "naturalisation",
+  "uk": "naturalization"
+}, {
+  "us": "naturalise",
+  "uk": "naturalize"
+}, {
+  "us": "naturalised",
+  "uk": "naturalized"
+}, {
+  "us": "naturalises",
+  "uk": "naturalizes"
+}, {
+  "us": "naturalising",
+  "uk": "naturalizing"
+}, {
+  "us": "neighbour",
+  "uk": "neighbor"
+}, {
+  "us": "neighbourhood",
+  "uk": "neighborhood"
+}, {
+  "us": "neighbourhoods",
+  "uk": "neighborhoods"
+}, {
+  "us": "neighbouring",
+  "uk": "neighboring"
+}, {
+  "us": "neighbourliness",
+  "uk": "neighborliness"
+}, {
+  "us": "neighbourly",
+  "uk": "neighborly"
+}, {
+  "us": "neighbours",
+  "uk": "neighbors"
+}, {
+  "us": "neutralisation",
+  "uk": "neutralization"
+}, {
+  "us": "neutralise",
+  "uk": "neutralize"
+}, {
+  "us": "neutralised",
+  "uk": "neutralized"
+}, {
+  "us": "neutralises",
+  "uk": "neutralizes"
+}, {
+  "us": "neutralising",
+  "uk": "neutralizing"
+}, {
+  "us": "normalisation",
+  "uk": "normalization"
+}, {
+  "us": "normalise",
+  "uk": "normalize"
+}, {
+  "us": "normalised",
+  "uk": "normalized"
+}, {
+  "us": "normalises",
+  "uk": "normalizes"
+}, {
+  "us": "normalising",
+  "uk": "normalizing"
+}, {
+  "us": "odour",
+  "uk": "odor"
+}, {
+  "us": "odourless",
+  "uk": "odorless"
+}, {
+  "us": "odours",
+  "uk": "odors"
+}, {
+  "us": "oesophagus",
+  "uk": "esophagus"
+}, {
+  "us": "oesophaguses",
+  "uk": "esophaguses"
+}, {
+  "us": "oestrogen",
+  "uk": "estrogen"
+}, {
+  "us": "offence",
+  "uk": "offense"
+}, {
+  "us": "offences",
+  "uk": "offenses"
+}, {
+  "us": "omelette",
+  "uk": "omelet"
+}, {
+  "us": "omelettes",
+  "uk": "omelets"
+}, {
+  "us": "optimise",
+  "uk": "optimize"
+}, {
+  "us": "optimised",
+  "uk": "optimized"
+}, {
+  "us": "optimises",
+  "uk": "optimizes"
+}, {
+  "us": "optimising",
+  "uk": "optimizing"
+}, {
+  "us": "organisation",
+  "uk": "organization"
+}, {
+  "us": "organisational",
+  "uk": "organizational"
+}, {
+  "us": "organisations",
+  "uk": "organizations"
+}, {
+  "us": "organise",
+  "uk": "organize"
+}, {
+  "us": "organised",
+  "uk": "organized"
+}, {
+  "us": "organiser",
+  "uk": "organizer"
+}, {
+  "us": "organisers",
+  "uk": "organizers"
+}, {
+  "us": "organises",
+  "uk": "organizes"
+}, {
+  "us": "organising",
+  "uk": "organizing"
+}, {
+  "us": "orthopaedic",
+  "uk": "orthopedic"
+}, {
+  "us": "orthopaedics",
+  "uk": "orthopedics"
+}, {
+  "us": "ostracise",
+  "uk": "ostracize"
+}, {
+  "us": "ostracised",
+  "uk": "ostracized"
+}, {
+  "us": "ostracises",
+  "uk": "ostracizes"
+}, {
+  "us": "ostracising",
+  "uk": "ostracizing"
+}, {
+  "us": "outmanoeuvre",
+  "uk": "outmaneuver"
+}, {
+  "us": "outmanoeuvred",
+  "uk": "outmaneuvered"
+}, {
+  "us": "outmanoeuvres",
+  "uk": "outmaneuvers"
+}, {
+  "us": "outmanoeuvring",
+  "uk": "outmaneuvering"
+}, {
+  "us": "overemphasise",
+  "uk": "overemphasize"
+}, {
+  "us": "overemphasised",
+  "uk": "overemphasized"
+}, {
+  "us": "overemphasises",
+  "uk": "overemphasizes"
+}, {
+  "us": "overemphasising",
+  "uk": "overemphasizing"
+}, {
+  "us": "oxidisation",
+  "uk": "oxidization"
+}, {
+  "us": "oxidise",
+  "uk": "oxidize"
+}, {
+  "us": "oxidised",
+  "uk": "oxidized"
+}, {
+  "us": "oxidises",
+  "uk": "oxidizes"
+}, {
+  "us": "oxidising",
+  "uk": "oxidizing"
+}, {
+  "us": "paederast",
+  "uk": "pederast"
+}, {
+  "us": "paederasts",
+  "uk": "pederasts"
+}, {
+  "us": "paediatric",
+  "uk": "pediatric"
+}, {
+  "us": "paediatrician",
+  "uk": "pediatrician"
+}, {
+  "us": "paediatricians",
+  "uk": "pediatricians"
+}, {
+  "us": "paediatrics",
+  "uk": "pediatrics"
+}, {
+  "us": "paedophile",
+  "uk": "pedophile"
+}, {
+  "us": "paedophiles",
+  "uk": "pedophiles"
+}, {
+  "us": "paedophilia",
+  "uk": "pedophilia"
+}, {
+  "us": "palaeolithic",
+  "uk": "paleolithic"
+}, {
+  "us": "palaeontologist",
+  "uk": "paleontologist"
+}, {
+  "us": "palaeontologists",
+  "uk": "paleontologists"
+}, {
+  "us": "palaeontology",
+  "uk": "paleontology"
+}, {
+  "us": "panelled",
+  "uk": "paneled"
+}, {
+  "us": "panelling",
+  "uk": "paneling"
+}, {
+  "us": "panellist",
+  "uk": "panelist"
+}, {
+  "us": "panellists",
+  "uk": "panelists"
+}, {
+  "us": "paralyse",
+  "uk": "paralyze"
+}, {
+  "us": "paralysed",
+  "uk": "paralyzed"
+}, {
+  "us": "paralyses",
+  "uk": "paralyzes"
+}, {
+  "us": "paralysing",
+  "uk": "paralyzing"
+}, {
+  "us": "parcelled",
+  "uk": "parceled"
+}, {
+  "us": "parcelling",
+  "uk": "parceling"
+}, {
+  "us": "parlour",
+  "uk": "parlor"
+}, {
+  "us": "parlours",
+  "uk": "parlors"
+}, {
+  "us": "particularise",
+  "uk": "particularize"
+}, {
+  "us": "particularised",
+  "uk": "particularized"
+}, {
+  "us": "particularises",
+  "uk": "particularizes"
+}, {
+  "us": "particularising",
+  "uk": "particularizing"
+}, {
+  "us": "passivisation",
+  "uk": "passivization"
+}, {
+  "us": "passivise",
+  "uk": "passivize"
+}, {
+  "us": "passivised",
+  "uk": "passivized"
+}, {
+  "us": "passivises",
+  "uk": "passivizes"
+}, {
+  "us": "passivising",
+  "uk": "passivizing"
+}, {
+  "us": "pasteurisation",
+  "uk": "pasteurization"
+}, {
+  "us": "pasteurise",
+  "uk": "pasteurize"
+}, {
+  "us": "pasteurised",
+  "uk": "pasteurized"
+}, {
+  "us": "pasteurises",
+  "uk": "pasteurizes"
+}, {
+  "us": "pasteurising",
+  "uk": "pasteurizing"
+}, {
+  "us": "patronise",
+  "uk": "patronize"
+}, {
+  "us": "patronised",
+  "uk": "patronized"
+}, {
+  "us": "patronises",
+  "uk": "patronizes"
+}, {
+  "us": "patronising",
+  "uk": "patronizing"
+}, {
+  "us": "patronisingly",
+  "uk": "patronizingly"
+}, {
+  "us": "pedalled",
+  "uk": "pedaled"
+}, {
+  "us": "pedalling",
+  "uk": "pedaling"
+}, {
+  "us": "pedestrianisation",
+  "uk": "pedestrianization"
+}, {
+  "us": "pedestrianise",
+  "uk": "pedestrianize"
+}, {
+  "us": "pedestrianised",
+  "uk": "pedestrianized"
+}, {
+  "us": "pedestrianises",
+  "uk": "pedestrianizes"
+}, {
+  "us": "pedestrianising",
+  "uk": "pedestrianizing"
+}, {
+  "us": "penalise",
+  "uk": "penalize"
+}, {
+  "us": "penalised",
+  "uk": "penalized"
+}, {
+  "us": "penalises",
+  "uk": "penalizes"
+}, {
+  "us": "penalising",
+  "uk": "penalizing"
+}, {
+  "us": "pencilled",
+  "uk": "penciled"
+}, {
+  "us": "pencilling",
+  "uk": "penciling"
+}, {
+  "us": "personalise",
+  "uk": "personalize"
+}, {
+  "us": "personalised",
+  "uk": "personalized"
+}, {
+  "us": "personalises",
+  "uk": "personalizes"
+}, {
+  "us": "personalising",
+  "uk": "personalizing"
+}, {
+  "us": "pharmacopoeia",
+  "uk": "pharmacopeia"
+}, {
+  "us": "pharmacopoeias",
+  "uk": "pharmacopeias"
+}, {
+  "us": "philosophise",
+  "uk": "philosophize"
+}, {
+  "us": "philosophised",
+  "uk": "philosophized"
+}, {
+  "us": "philosophises",
+  "uk": "philosophizes"
+}, {
+  "us": "philosophising",
+  "uk": "philosophizing"
+}, {
+  "us": "philtre",
+  "uk": "filter"
+}, {
+  "us": "philtres",
+  "uk": "filters"
+}, {
+  "us": "phoney",
+  "uk": "phony"
+}, {
+  "us": "plagiarise",
+  "uk": "plagiarize"
+}, {
+  "us": "plagiarised",
+  "uk": "plagiarized"
+}, {
+  "us": "plagiarises",
+  "uk": "plagiarizes"
+}, {
+  "us": "plagiarising",
+  "uk": "plagiarizing"
+}, {
+  "us": "plough",
+  "uk": "plow"
+}, {
+  "us": "ploughed",
+  "uk": "plowed"
+}, {
+  "us": "ploughing",
+  "uk": "plowing"
+}, {
+  "us": "ploughman",
+  "uk": "plowman"
+}, {
+  "us": "ploughmen",
+  "uk": "plowmen"
+}, {
+  "us": "ploughs",
+  "uk": "plows"
+}, {
+  "us": "ploughshare",
+  "uk": "plowshare"
+}, {
+  "us": "ploughshares",
+  "uk": "plowshares"
+}, {
+  "us": "polarisation",
+  "uk": "polarization"
+}, {
+  "us": "polarise",
+  "uk": "polarize"
+}, {
+  "us": "polarised",
+  "uk": "polarized"
+}, {
+  "us": "polarises",
+  "uk": "polarizes"
+}, {
+  "us": "polarising",
+  "uk": "polarizing"
+}, {
+  "us": "politicisation",
+  "uk": "politicization"
+}, {
+  "us": "politicise",
+  "uk": "politicize"
+}, {
+  "us": "politicised",
+  "uk": "politicized"
+}, {
+  "us": "politicises",
+  "uk": "politicizes"
+}, {
+  "us": "politicising",
+  "uk": "politicizing"
+}, {
+  "us": "popularisation",
+  "uk": "popularization"
+}, {
+  "us": "popularise",
+  "uk": "popularize"
+}, {
+  "us": "popularised",
+  "uk": "popularized"
+}, {
+  "us": "popularises",
+  "uk": "popularizes"
+}, {
+  "us": "popularising",
+  "uk": "popularizing"
+}, {
+  "us": "pouffe",
+  "uk": "pouf"
+}, {
+  "us": "pouffes",
+  "uk": "poufs"
+}, {
+  "us": "practise",
+  "uk": "practice"
+}, {
+  "us": "practised",
+  "uk": "practiced"
+}, {
+  "us": "practises",
+  "uk": "practices"
+}, {
+  "us": "practising",
+  "uk": "practicing"
+}, {
+  "us": "praesidium",
+  "uk": "presidium"
+}, {
+  "us": "praesidiums",
+  "uk": "presidiums"
+}, {
+  "us": "pressurisation",
+  "uk": "pressurization"
+}, {
+  "us": "pressurise",
+  "uk": "pressurize"
+}, {
+  "us": "pressurised",
+  "uk": "pressurized"
+}, {
+  "us": "pressurises",
+  "uk": "pressurizes"
+}, {
+  "us": "pressurising",
+  "uk": "pressurizing"
+}, {
+  "us": "pretence",
+  "uk": "pretense"
+}, {
+  "us": "pretences",
+  "uk": "pretenses"
+}, {
+  "us": "primaeval",
+  "uk": "primeval"
+}, {
+  "us": "prioritisation",
+  "uk": "prioritization"
+}, {
+  "us": "prioritise",
+  "uk": "prioritize"
+}, {
+  "us": "prioritised",
+  "uk": "prioritized"
+}, {
+  "us": "prioritises",
+  "uk": "prioritizes"
+}, {
+  "us": "prioritising",
+  "uk": "prioritizing"
+}, {
+  "us": "privatisation",
+  "uk": "privatization"
+}, {
+  "us": "privatisations",
+  "uk": "privatizations"
+}, {
+  "us": "privatise",
+  "uk": "privatize"
+}, {
+  "us": "privatised",
+  "uk": "privatized"
+}, {
+  "us": "privatises",
+  "uk": "privatizes"
+}, {
+  "us": "privatising",
+  "uk": "privatizing"
+}, {
+  "us": "professionalisation",
+  "uk": "professionalization"
+}, {
+  "us": "professionalise",
+  "uk": "professionalize"
+}, {
+  "us": "professionalised",
+  "uk": "professionalized"
+}, {
+  "us": "professionalises",
+  "uk": "professionalizes"
+}, {
+  "us": "professionalising",
+  "uk": "professionalizing"
+}, {
+  "us": "programme",
+  "uk": "program"
+}, {
+  "us": "programmes",
+  "uk": "programs"
+}, {
+  "us": "prologue",
+  "uk": "prolog"
+}, {
+  "us": "prologues",
+  "uk": "prologs"
+}, {
+  "us": "propagandise",
+  "uk": "propagandize"
+}, {
+  "us": "propagandised",
+  "uk": "propagandized"
+}, {
+  "us": "propagandises",
+  "uk": "propagandizes"
+}, {
+  "us": "propagandising",
+  "uk": "propagandizing"
+}, {
+  "us": "proselytise",
+  "uk": "proselytize"
+}, {
+  "us": "proselytised",
+  "uk": "proselytized"
+}, {
+  "us": "proselytiser",
+  "uk": "proselytizer"
+}, {
+  "us": "proselytisers",
+  "uk": "proselytizers"
+}, {
+  "us": "proselytises",
+  "uk": "proselytizes"
+}, {
+  "us": "proselytising",
+  "uk": "proselytizing"
+}, {
+  "us": "psychoanalyse",
+  "uk": "psychoanalyze"
+}, {
+  "us": "psychoanalysed",
+  "uk": "psychoanalyzed"
+}, {
+  "us": "psychoanalyses",
+  "uk": "psychoanalyzes"
+}, {
+  "us": "psychoanalysing",
+  "uk": "psychoanalyzing"
+}, {
+  "us": "publicise",
+  "uk": "publicize"
+}, {
+  "us": "publicised",
+  "uk": "publicized"
+}, {
+  "us": "publicises",
+  "uk": "publicizes"
+}, {
+  "us": "publicising",
+  "uk": "publicizing"
+}, {
+  "us": "pulverisation",
+  "uk": "pulverization"
+}, {
+  "us": "pulverise",
+  "uk": "pulverize"
+}, {
+  "us": "pulverised",
+  "uk": "pulverized"
+}, {
+  "us": "pulverises",
+  "uk": "pulverizes"
+}, {
+  "us": "pulverising",
+  "uk": "pulverizing"
+}, {
+  "us": "pummelled",
+  "uk": "pummel"
+}, {
+  "us": "pummelling",
+  "uk": "pummeled"
+}, {
+  "us": "pyjama",
+  "uk": "pajama"
+}, {
+  "us": "pyjamas",
+  "uk": "pajamas"
+}, {
+  "us": "pzazz",
+  "uk": "pizzazz"
+}, {
+  "us": "quarrelled",
+  "uk": "quarreled"
+}, {
+  "us": "quarrelling",
+  "uk": "quarreling"
+}, {
+  "us": "radicalise",
+  "uk": "radicalize"
+}, {
+  "us": "radicalised",
+  "uk": "radicalized"
+}, {
+  "us": "radicalises",
+  "uk": "radicalizes"
+}, {
+  "us": "radicalising",
+  "uk": "radicalizing"
+}, {
+  "us": "rancour",
+  "uk": "rancor"
+}, {
+  "us": "randomise",
+  "uk": "randomize"
+}, {
+  "us": "randomised",
+  "uk": "randomized"
+}, {
+  "us": "randomises",
+  "uk": "randomizes"
+}, {
+  "us": "randomising",
+  "uk": "randomizing"
+}, {
+  "us": "rationalisation",
+  "uk": "rationalization"
+}, {
+  "us": "rationalisations",
+  "uk": "rationalizations"
+}, {
+  "us": "rationalise",
+  "uk": "rationalize"
+}, {
+  "us": "rationalised",
+  "uk": "rationalized"
+}, {
+  "us": "rationalises",
+  "uk": "rationalizes"
+}, {
+  "us": "rationalising",
+  "uk": "rationalizing"
+}, {
+  "us": "ravelled",
+  "uk": "raveled"
+}, {
+  "us": "ravelling",
+  "uk": "raveling"
+}, {
+  "us": "realisable",
+  "uk": "realizable"
+}, {
+  "us": "realisation",
+  "uk": "realization"
+}, {
+  "us": "realisations",
+  "uk": "realizations"
+}, {
+  "us": "realise",
+  "uk": "realize"
+}, {
+  "us": "realised",
+  "uk": "realized"
+}, {
+  "us": "realises",
+  "uk": "realizes"
+}, {
+  "us": "realising",
+  "uk": "realizing"
+}, {
+  "us": "recognisable",
+  "uk": "recognizable"
+}, {
+  "us": "recognisably",
+  "uk": "recognizably"
+}, {
+  "us": "recognisance",
+  "uk": "recognizance"
+}, {
+  "us": "recognise",
+  "uk": "recognize"
+}, {
+  "us": "recognised",
+  "uk": "recognized"
+}, {
+  "us": "recognises",
+  "uk": "recognizes"
+}, {
+  "us": "recognising",
+  "uk": "recognizing"
+}, {
+  "us": "reconnoitre",
+  "uk": "reconnoiter"
+}, {
+  "us": "reconnoitred",
+  "uk": "reconnoitered"
+}, {
+  "us": "reconnoitres",
+  "uk": "reconnoiters"
+}, {
+  "us": "reconnoitring",
+  "uk": "reconnoitering"
+}, {
+  "us": "refuelled",
+  "uk": "refueled"
+}, {
+  "us": "refuelling",
+  "uk": "refueling"
+}, {
+  "us": "regularisation",
+  "uk": "regularization"
+}, {
+  "us": "regularise",
+  "uk": "regularize"
+}, {
+  "us": "regularised",
+  "uk": "regularized"
+}, {
+  "us": "regularises",
+  "uk": "regularizes"
+}, {
+  "us": "regularising",
+  "uk": "regularizing"
+}, {
+  "us": "remodelled",
+  "uk": "remodeled"
+}, {
+  "us": "remodelling",
+  "uk": "remodeling"
+}, {
+  "us": "remould",
+  "uk": "remold"
+}, {
+  "us": "remoulded",
+  "uk": "remolded"
+}, {
+  "us": "remoulding",
+  "uk": "remolding"
+}, {
+  "us": "remoulds",
+  "uk": "remolds"
+}, {
+  "us": "reorganisation",
+  "uk": "reorganization"
+}, {
+  "us": "reorganisations",
+  "uk": "reorganizations"
+}, {
+  "us": "reorganise",
+  "uk": "reorganize"
+}, {
+  "us": "reorganised",
+  "uk": "reorganized"
+}, {
+  "us": "reorganises",
+  "uk": "reorganizes"
+}, {
+  "us": "reorganising",
+  "uk": "reorganizing"
+}, {
+  "us": "revelled",
+  "uk": "reveled"
+}, {
+  "us": "reveller",
+  "uk": "reveler"
+}, {
+  "us": "revellers",
+  "uk": "revelers"
+}, {
+  "us": "revelling",
+  "uk": "reveling"
+}, {
+  "us": "revitalise",
+  "uk": "revitalize"
+}, {
+  "us": "revitalised",
+  "uk": "revitalized"
+}, {
+  "us": "revitalises",
+  "uk": "revitalizes"
+}, {
+  "us": "revitalising",
+  "uk": "revitalizing"
+}, {
+  "us": "revolutionise",
+  "uk": "revolutionize"
+}, {
+  "us": "revolutionised",
+  "uk": "revolutionized"
+}, {
+  "us": "revolutionises",
+  "uk": "revolutionizes"
+}, {
+  "us": "revolutionising",
+  "uk": "revolutionizing"
+}, {
+  "us": "rhapsodise",
+  "uk": "rhapsodize"
+}, {
+  "us": "rhapsodised",
+  "uk": "rhapsodized"
+}, {
+  "us": "rhapsodises",
+  "uk": "rhapsodizes"
+}, {
+  "us": "rhapsodising",
+  "uk": "rhapsodizing"
+}, {
+  "us": "rigour",
+  "uk": "rigor"
+}, {
+  "us": "rigours",
+  "uk": "rigors"
+}, {
+  "us": "ritualised",
+  "uk": "ritualized"
+}, {
+  "us": "rivalled",
+  "uk": "rivaled"
+}, {
+  "us": "rivalling",
+  "uk": "rivaling"
+}, {
+  "us": "romanticise",
+  "uk": "romanticize"
+}, {
+  "us": "romanticised",
+  "uk": "romanticized"
+}, {
+  "us": "romanticises",
+  "uk": "romanticizes"
+}, {
+  "us": "romanticising",
+  "uk": "romanticizing"
+}, {
+  "us": "rumour",
+  "uk": "rumor"
+}, {
+  "us": "rumoured",
+  "uk": "rumored"
+}, {
+  "us": "rumours",
+  "uk": "rumors"
+}, {
+  "us": "sabre",
+  "uk": "saber"
+}, {
+  "us": "sabres",
+  "uk": "sabers"
+}, {
+  "us": "saltpetre",
+  "uk": "saltpeter"
+}, {
+  "us": "sanitise",
+  "uk": "sanitize"
+}, {
+  "us": "sanitised",
+  "uk": "sanitized"
+}, {
+  "us": "sanitises",
+  "uk": "sanitizes"
+}, {
+  "us": "sanitising",
+  "uk": "sanitizing"
+}, {
+  "us": "satirise",
+  "uk": "satirize"
+}, {
+  "us": "satirised",
+  "uk": "satirized"
+}, {
+  "us": "satirises",
+  "uk": "satirizes"
+}, {
+  "us": "satirising",
+  "uk": "satirizing"
+}, {
+  "us": "saviour",
+  "uk": "savior"
+}, {
+  "us": "saviours",
+  "uk": "saviors"
+}, {
+  "us": "savour",
+  "uk": "savor"
+}, {
+  "us": "savoured",
+  "uk": "savored"
+}, {
+  "us": "savouries",
+  "uk": "savories"
+}, {
+  "us": "savouring",
+  "uk": "savoring"
+}, {
+  "us": "savours",
+  "uk": "savors"
+}, {
+  "us": "savoury",
+  "uk": "savory"
+}, {
+  "us": "scandalise",
+  "uk": "scandalize"
+}, {
+  "us": "scandalised",
+  "uk": "scandalized"
+}, {
+  "us": "scandalises",
+  "uk": "scandalizes"
+}, {
+  "us": "scandalising",
+  "uk": "scandalizing"
+}, {
+  "us": "sceptic",
+  "uk": "skeptic"
+}, {
+  "us": "sceptical",
+  "uk": "skeptical"
+}, {
+  "us": "sceptically",
+  "uk": "skeptically"
+}, {
+  "us": "scepticism",
+  "uk": "skepticism"
+}, {
+  "us": "sceptics",
+  "uk": "skeptics"
+}, {
+  "us": "sceptre",
+  "uk": "scepter"
+}, {
+  "us": "sceptres",
+  "uk": "scepters"
+}, {
+  "us": "scrutinise",
+  "uk": "scrutinize"
+}, {
+  "us": "scrutinised",
+  "uk": "scrutinized"
+}, {
+  "us": "scrutinises",
+  "uk": "scrutinizes"
+}, {
+  "us": "scrutinising",
+  "uk": "scrutinizing"
+}, {
+  "us": "secularisation",
+  "uk": "secularization"
+}, {
+  "us": "secularise",
+  "uk": "secularize"
+}, {
+  "us": "secularised",
+  "uk": "secularized"
+}, {
+  "us": "secularises",
+  "uk": "secularizes"
+}, {
+  "us": "secularising",
+  "uk": "secularizing"
+}, {
+  "us": "sensationalise",
+  "uk": "sensationalize"
+}, {
+  "us": "sensationalised",
+  "uk": "sensationalized"
+}, {
+  "us": "sensationalises",
+  "uk": "sensationalizes"
+}, {
+  "us": "sensationalising",
+  "uk": "sensationalizing"
+}, {
+  "us": "sensitise",
+  "uk": "sensitize"
+}, {
+  "us": "sensitised",
+  "uk": "sensitized"
+}, {
+  "us": "sensitises",
+  "uk": "sensitizes"
+}, {
+  "us": "sensitising",
+  "uk": "sensitizing"
+}, {
+  "us": "sentimentalise",
+  "uk": "sentimentalize"
+}, {
+  "us": "sentimentalised",
+  "uk": "sentimentalized"
+}, {
+  "us": "sentimentalises",
+  "uk": "sentimentalizes"
+}, {
+  "us": "sentimentalising",
+  "uk": "sentimentalizing"
+}, {
+  "us": "sepulchre",
+  "uk": "sepulcher"
+}, {
+  "us": "sepulchres",
+  "uk": "sepulchers"
+}, {
+  "us": "serialisation",
+  "uk": "serialization"
+}, {
+  "us": "serialisations",
+  "uk": "serializations"
+}, {
+  "us": "serialise",
+  "uk": "serialize"
+}, {
+  "us": "serialised",
+  "uk": "serialized"
+}, {
+  "us": "serialises",
+  "uk": "serializes"
+}, {
+  "us": "serialising",
+  "uk": "serializing"
+}, {
+  "us": "sermonise",
+  "uk": "sermonize"
+}, {
+  "us": "sermonised",
+  "uk": "sermonized"
+}, {
+  "us": "sermonises",
+  "uk": "sermonizes"
+}, {
+  "us": "sermonising",
+  "uk": "sermonizing"
+}, {
+  "us": "sheikh",
+  "uk": "sheik"
+}, {
+  "us": "shovelled",
+  "uk": "shoveled"
+}, {
+  "us": "shovelling",
+  "uk": "shoveling"
+}, {
+  "us": "shrivelled",
+  "uk": "shriveled"
+}, {
+  "us": "shrivelling",
+  "uk": "shriveling"
+}, {
+  "us": "signalise",
+  "uk": "signalize"
+}, {
+  "us": "signalised",
+  "uk": "signalized"
+}, {
+  "us": "signalises",
+  "uk": "signalizes"
+}, {
+  "us": "signalising",
+  "uk": "signalizing"
+}, {
+  "us": "signalled",
+  "uk": "signaled"
+}, {
+  "us": "signalling",
+  "uk": "signaling"
+}, {
+  "us": "smoulder",
+  "uk": "smolder"
+}, {
+  "us": "smouldered",
+  "uk": "smoldered"
+}, {
+  "us": "smouldering",
+  "uk": "smoldering"
+}, {
+  "us": "smoulders",
+  "uk": "smolders"
+}, {
+  "us": "snivelled",
+  "uk": "sniveled"
+}, {
+  "us": "snivelling",
+  "uk": "sniveling"
+}, {
+  "us": "snorkelled",
+  "uk": "snorkeled"
+}, {
+  "us": "snorkelling",
+  "uk": "snorkeling"
+}, {
+  "us": "snowplough",
+  "uk": "snowplow"
+}, {
+  "us": "snowploughs",
+  "uk": "snowplow"
+}, {
+  "us": "socialisation",
+  "uk": "socialization"
+}, {
+  "us": "socialise",
+  "uk": "socialize"
+}, {
+  "us": "socialised",
+  "uk": "socialized"
+}, {
+  "us": "socialises",
+  "uk": "socializes"
+}, {
+  "us": "socialising",
+  "uk": "socializing"
+}, {
+  "us": "sodomise",
+  "uk": "sodomize"
+}, {
+  "us": "sodomised",
+  "uk": "sodomized"
+}, {
+  "us": "sodomises",
+  "uk": "sodomizes"
+}, {
+  "us": "sodomising",
+  "uk": "sodomizing"
+}, {
+  "us": "solemnise",
+  "uk": "solemnize"
+}, {
+  "us": "solemnised",
+  "uk": "solemnized"
+}, {
+  "us": "solemnises",
+  "uk": "solemnizes"
+}, {
+  "us": "solemnising",
+  "uk": "solemnizing"
+}, {
+  "us": "sombre",
+  "uk": "somber"
+}, {
+  "us": "specialisation",
+  "uk": "specialization"
+}, {
+  "us": "specialisations",
+  "uk": "specializations"
+}, {
+  "us": "specialise",
+  "uk": "specialize"
+}, {
+  "us": "specialised",
+  "uk": "specialized"
+}, {
+  "us": "specialises",
+  "uk": "specializes"
+}, {
+  "us": "specialising",
+  "uk": "specializing"
+}, {
+  "us": "spectre",
+  "uk": "specter"
+}, {
+  "us": "spectres",
+  "uk": "specters"
+}, {
+  "us": "spiralled",
+  "uk": "spiraled"
+}, {
+  "us": "spiralling",
+  "uk": "spiraling"
+}, {
+  "us": "splendour",
+  "uk": "splendor"
+}, {
+  "us": "splendours",
+  "uk": "splendors"
+}, {
+  "us": "squirrelled",
+  "uk": "squirreled"
+}, {
+  "us": "squirrelling",
+  "uk": "squirreling"
+}, {
+  "us": "stabilisation",
+  "uk": "stabilization"
+}, {
+  "us": "stabilise",
+  "uk": "stabilize"
+}, {
+  "us": "stabilised",
+  "uk": "stabilized"
+}, {
+  "us": "stabiliser",
+  "uk": "stabilizer"
+}, {
+  "us": "stabilisers",
+  "uk": "stabilizers"
+}, {
+  "us": "stabilises",
+  "uk": "stabilizes"
+}, {
+  "us": "stabilising",
+  "uk": "stabilizing"
+}, {
+  "us": "standardisation",
+  "uk": "standardization"
+}, {
+  "us": "standardise",
+  "uk": "standardize"
+}, {
+  "us": "standardised",
+  "uk": "standardized"
+}, {
+  "us": "standardises",
+  "uk": "standardizes"
+}, {
+  "us": "standardising",
+  "uk": "standardizing"
+}, {
+  "us": "stencilled",
+  "uk": "stenciled"
+}, {
+  "us": "stencilling",
+  "uk": "stenciling"
+}, {
+  "us": "sterilisation",
+  "uk": "sterilization"
+}, {
+  "us": "sterilisations",
+  "uk": "sterilizations"
+}, {
+  "us": "sterilise",
+  "uk": "sterilize"
+}, {
+  "us": "sterilised",
+  "uk": "sterilized"
+}, {
+  "us": "steriliser",
+  "uk": "sterilizer"
+}, {
+  "us": "sterilisers",
+  "uk": "sterilizers"
+}, {
+  "us": "sterilises",
+  "uk": "sterilizes"
+}, {
+  "us": "sterilising",
+  "uk": "sterilizing"
+}, {
+  "us": "stigmatisation",
+  "uk": "stigmatization"
+}, {
+  "us": "stigmatise",
+  "uk": "stigmatize"
+}, {
+  "us": "stigmatised",
+  "uk": "stigmatized"
+}, {
+  "us": "stigmatises",
+  "uk": "stigmatizes"
+}, {
+  "us": "stigmatising",
+  "uk": "stigmatizing"
+}, {
+  "us": "storey",
+  "uk": "story"
+}, {
+  "us": "storeys",
+  "uk": "stories"
+}, {
+  "us": "subsidisation",
+  "uk": "subsidization"
+}, {
+  "us": "subsidise",
+  "uk": "subsidize"
+}, {
+  "us": "subsidised",
+  "uk": "subsidized"
+}, {
+  "us": "subsidiser",
+  "uk": "subsidizer"
+}, {
+  "us": "subsidisers",
+  "uk": "subsidizers"
+}, {
+  "us": "subsidises",
+  "uk": "subsidizes"
+}, {
+  "us": "subsidising",
+  "uk": "subsidizing"
+}, {
+  "us": "succour",
+  "uk": "succor"
+}, {
+  "us": "succoured",
+  "uk": "succored"
+}, {
+  "us": "succouring",
+  "uk": "succoring"
+}, {
+  "us": "succours",
+  "uk": "succors"
+}, {
+  "us": "sulphate",
+  "uk": "sulfate"
+}, {
+  "us": "sulphates",
+  "uk": "sulfates"
+}, {
+  "us": "sulphide",
+  "uk": "sulfide"
+}, {
+  "us": "sulphides",
+  "uk": "sulfides"
+}, {
+  "us": "sulphur",
+  "uk": "sulfur"
+}, {
+  "us": "sulphurous",
+  "uk": "sulfurous"
+}, {
+  "us": "summarise",
+  "uk": "summarize"
+}, {
+  "us": "summarised",
+  "uk": "summarized"
+}, {
+  "us": "summarises",
+  "uk": "summarizes"
+}, {
+  "us": "summarising",
+  "uk": "summarizing"
+}, {
+  "us": "swivelled",
+  "uk": "swiveled"
+}, {
+  "us": "swivelling",
+  "uk": "swiveling"
+}, {
+  "us": "symbolise",
+  "uk": "symbolize"
+}, {
+  "us": "symbolised",
+  "uk": "symbolized"
+}, {
+  "us": "symbolises",
+  "uk": "symbolizes"
+}, {
+  "us": "symbolising",
+  "uk": "symbolizing"
+}, {
+  "us": "sympathise",
+  "uk": "sympathize"
+}, {
+  "us": "sympathised",
+  "uk": "sympathized"
+}, {
+  "us": "sympathiser",
+  "uk": "sympathizer"
+}, {
+  "us": "sympathisers",
+  "uk": "sympathizers"
+}, {
+  "us": "sympathises",
+  "uk": "sympathizes"
+}, {
+  "us": "sympathising",
+  "uk": "sympathizing"
+}, {
+  "us": "synchronisation",
+  "uk": "synchronization"
+}, {
+  "us": "synchronise",
+  "uk": "synchronize"
+}, {
+  "us": "synchronised",
+  "uk": "synchronized"
+}, {
+  "us": "synchronises",
+  "uk": "synchronizes"
+}, {
+  "us": "synchronising",
+  "uk": "synchronizing"
+}, {
+  "us": "synthesise",
+  "uk": "synthesize"
+}, {
+  "us": "synthesised",
+  "uk": "synthesized"
+}, {
+  "us": "synthesiser",
+  "uk": "synthesizer"
+}, {
+  "us": "synthesisers",
+  "uk": "synthesizers"
+}, {
+  "us": "synthesises",
+  "uk": "synthesizes"
+}, {
+  "us": "synthesising",
+  "uk": "synthesizing"
+}, {
+  "us": "syphon",
+  "uk": "siphon"
+}, {
+  "us": "syphoned",
+  "uk": "siphoned"
+}, {
+  "us": "syphoning",
+  "uk": "siphoning"
+}, {
+  "us": "syphons",
+  "uk": "siphons"
+}, {
+  "us": "systematisation",
+  "uk": "systematization"
+}, {
+  "us": "systematise",
+  "uk": "systematize"
+}, {
+  "us": "systematised",
+  "uk": "systematized"
+}, {
+  "us": "systematises",
+  "uk": "systematizes"
+}, {
+  "us": "systematising",
+  "uk": "systematizing"
+}, {
+  "us": "tantalise",
+  "uk": "tantalize"
+}, {
+  "us": "tantalised",
+  "uk": "tantalized"
+}, {
+  "us": "tantalises",
+  "uk": "tantalizes"
+}, {
+  "us": "tantalising",
+  "uk": "tantalizing"
+}, {
+  "us": "tantalisingly",
+  "uk": "tantalizingly"
+}, {
+  "us": "tasselled",
+  "uk": "tasseled"
+}, {
+  "us": "technicolour",
+  "uk": "technicolor"
+}, {
+  "us": "temporise",
+  "uk": "temporize"
+}, {
+  "us": "temporised",
+  "uk": "temporized"
+}, {
+  "us": "temporises",
+  "uk": "temporizes"
+}, {
+  "us": "temporising",
+  "uk": "temporizing"
+}, {
+  "us": "tenderise",
+  "uk": "tenderize"
+}, {
+  "us": "tenderised",
+  "uk": "tenderized"
+}, {
+  "us": "tenderises",
+  "uk": "tenderizes"
+}, {
+  "us": "tenderising",
+  "uk": "tenderizing"
+}, {
+  "us": "terrorise",
+  "uk": "terrorize"
+}, {
+  "us": "terrorised",
+  "uk": "terrorized"
+}, {
+  "us": "terrorises",
+  "uk": "terrorizes"
+}, {
+  "us": "terrorising",
+  "uk": "terrorizing"
+}, {
+  "us": "theatre",
+  "uk": "theater"
+}, {
+  "us": "theatregoer",
+  "uk": "theatergoer"
+}, {
+  "us": "theatregoers",
+  "uk": "theatergoers"
+}, {
+  "us": "theatres",
+  "uk": "theaters"
+}, {
+  "us": "theorise",
+  "uk": "theorize"
+}, {
+  "us": "theorised",
+  "uk": "theorized"
+}, {
+  "us": "theorises",
+  "uk": "theorizes"
+}, {
+  "us": "theorising",
+  "uk": "theorizing"
+}, {
+  "us": "tonne",
+  "uk": "ton"
+}, {
+  "us": "tonnes",
+  "uk": "tons"
+}, {
+  "us": "towelled",
+  "uk": "toweled"
+}, {
+  "us": "towelling",
+  "uk": "toweling"
+}, {
+  "us": "toxaemia",
+  "uk": "toxemia"
+}, {
+  "us": "tranquillise",
+  "uk": "tranquilize"
+}, {
+  "us": "tranquillised",
+  "uk": "tranquilized"
+}, {
+  "us": "tranquilliser",
+  "uk": "tranquilizer"
+}, {
+  "us": "tranquillisers",
+  "uk": "tranquilizers"
+}, {
+  "us": "tranquillises",
+  "uk": "tranquilizes"
+}, {
+  "us": "tranquillising",
+  "uk": "tranquilizing"
+}, {
+  "us": "tranquillity",
+  "uk": "tranquility"
+}, {
+  "us": "tranquillize",
+  "uk": "tranquilize"
+}, {
+  "us": "tranquillized",
+  "uk": "tranquilized"
+}, {
+  "us": "tranquillizer",
+  "uk": "tranquilizer"
+}, {
+  "us": "tranquillizers",
+  "uk": "tranquilizers"
+}, {
+  "us": "tranquillizes",
+  "uk": "tranquilizes"
+}, {
+  "us": "tranquillizing",
+  "uk": "tranquilizing"
+}, {
+  "us": "tranquilly",
+  "uk": "tranquility"
+}, {
+  "us": "transistorised",
+  "uk": "transistorized"
+}, {
+  "us": "traumatise",
+  "uk": "traumatize"
+}, {
+  "us": "traumatised",
+  "uk": "traumatized"
+}, {
+  "us": "traumatises",
+  "uk": "traumatizes"
+}, {
+  "us": "traumatising",
+  "uk": "traumatizing"
+}, {
+  "us": "travelled",
+  "uk": "traveled"
+}, {
+  "us": "traveller",
+  "uk": "traveler"
+}, {
+  "us": "travellers",
+  "uk": "travelers"
+}, {
+  "us": "travelling",
+  "uk": "traveling"
+}, {
+  "us": "travelogue",
+  "uk": "travelog"
+}, {
+  "us": "travelogues",
+  "uk": "travelogs"
+}, {
+  "us": "trialled",
+  "uk": "trialed"
+}, {
+  "us": "trialling",
+  "uk": "trialing"
+}, {
+  "us": "tricolour",
+  "uk": "tricolor"
+}, {
+  "us": "tricolours",
+  "uk": "tricolors"
+}, {
+  "us": "trivialise",
+  "uk": "trivialize"
+}, {
+  "us": "trivialised",
+  "uk": "trivialized"
+}, {
+  "us": "trivialises",
+  "uk": "trivializes"
+}, {
+  "us": "trivialising",
+  "uk": "trivializing"
+}, {
+  "us": "tumour",
+  "uk": "tumor"
+}, {
+  "us": "tumours",
+  "uk": "tumors"
+}, {
+  "us": "tunnelled",
+  "uk": "tunneled"
+}, {
+  "us": "tunnelling",
+  "uk": "tunneling"
+}, {
+  "us": "tyrannise",
+  "uk": "tyrannize"
+}, {
+  "us": "tyrannised",
+  "uk": "tyrannized"
+}, {
+  "us": "tyrannises",
+  "uk": "tyrannizes"
+}, {
+  "us": "tyrannising",
+  "uk": "tyrannizing"
+}, {
+  "us": "tyre",
+  "uk": "tire"
+}, {
+  "us": "tyres",
+  "uk": "tires"
+}, {
+  "us": "unauthorised",
+  "uk": "unauthorized"
+}, {
+  "us": "uncivilised",
+  "uk": "uncivilized"
+}, {
+  "us": "underutilised",
+  "uk": "underutilized"
+}, {
+  "us": "unequalled",
+  "uk": "unequaled"
+}, {
+  "us": "unfavourable",
+  "uk": "unfavorable"
+}, {
+  "us": "unfavourably",
+  "uk": "unfavorably"
+}, {
+  "us": "unionisation",
+  "uk": "unionization"
+}, {
+  "us": "unionise",
+  "uk": "unionize"
+}, {
+  "us": "unionised",
+  "uk": "unionized"
+}, {
+  "us": "unionises",
+  "uk": "unionizes"
+}, {
+  "us": "unionising",
+  "uk": "unionizing"
+}, {
+  "us": "unorganised",
+  "uk": "unorganized"
+}, {
+  "us": "unravelled",
+  "uk": "unraveled"
+}, {
+  "us": "unravelling",
+  "uk": "unraveling"
+}, {
+  "us": "unrecognisable",
+  "uk": "unrecognizable"
+}, {
+  "us": "unrecognised",
+  "uk": "unrecognized"
+}, {
+  "us": "unrivalled",
+  "uk": "unrivaled"
+}, {
+  "us": "unsavoury",
+  "uk": "unsavory"
+}, {
+  "us": "untrammelled",
+  "uk": "untrammeled"
+}, {
+  "us": "urbanisation",
+  "uk": "urbanization"
+}, {
+  "us": "urbanise",
+  "uk": "urbanize"
+}, {
+  "us": "urbanised",
+  "uk": "urbanized"
+}, {
+  "us": "urbanises",
+  "uk": "urbanizes"
+}, {
+  "us": "urbanising",
+  "uk": "urbanizing"
+}, {
+  "us": "utilisable",
+  "uk": "utilizable"
+}, {
+  "us": "utilisation",
+  "uk": "utilization"
+}, {
+  "us": "utilise",
+  "uk": "utilize"
+}, {
+  "us": "utilised",
+  "uk": "utilized"
+}, {
+  "us": "utilises",
+  "uk": "utilizes"
+}, {
+  "us": "utilising",
+  "uk": "utilizing"
+}, {
+  "us": "valour",
+  "uk": "valor"
+}, {
+  "us": "vandalise",
+  "uk": "vandalize"
+}, {
+  "us": "vandalised",
+  "uk": "vandalized"
+}, {
+  "us": "vandalises",
+  "uk": "vandalizes"
+}, {
+  "us": "vandalising",
+  "uk": "vandalizing"
+}, {
+  "us": "vaporisation",
+  "uk": "vaporization"
+}, {
+  "us": "vaporise",
+  "uk": "vaporize"
+}, {
+  "us": "vaporised",
+  "uk": "vaporized"
+}, {
+  "us": "vaporises",
+  "uk": "vaporizes"
+}, {
+  "us": "vaporising",
+  "uk": "vaporizing"
+}, {
+  "us": "vapour",
+  "uk": "vapor"
+}, {
+  "us": "vapours",
+  "uk": "vapors"
+}, {
+  "us": "verbalise",
+  "uk": "verbalize"
+}, {
+  "us": "verbalised",
+  "uk": "verbalized"
+}, {
+  "us": "verbalises",
+  "uk": "verbalizes"
+}, {
+  "us": "verbalising",
+  "uk": "verbalizing"
+}, {
+  "us": "victimisation",
+  "uk": "victimization"
+}, {
+  "us": "victimise",
+  "uk": "victimize"
+}, {
+  "us": "victimised",
+  "uk": "victimized"
+}, {
+  "us": "victimises",
+  "uk": "victimizes"
+}, {
+  "us": "victimising",
+  "uk": "victimizing"
+}, {
+  "us": "videodisc",
+  "uk": "videodisk"
+}, {
+  "us": "videodiscs",
+  "uk": "videodisks"
+}, {
+  "us": "vigour",
+  "uk": "vigor"
+}, {
+  "us": "visualisation",
+  "uk": "visualization"
+}, {
+  "us": "visualisations",
+  "uk": "visualizations"
+}, {
+  "us": "visualise",
+  "uk": "visualize"
+}, {
+  "us": "visualised",
+  "uk": "visualized"
+}, {
+  "us": "visualises",
+  "uk": "visualizes"
+}, {
+  "us": "visualising",
+  "uk": "visualizing"
+}, {
+  "us": "vocalisation",
+  "uk": "vocalization"
+}, {
+  "us": "vocalisations",
+  "uk": "vocalizations"
+}, {
+  "us": "vocalise",
+  "uk": "vocalize"
+}, {
+  "us": "vocalised",
+  "uk": "vocalized"
+}, {
+  "us": "vocalises",
+  "uk": "vocalizes"
+}, {
+  "us": "vocalising",
+  "uk": "vocalizing"
+}, {
+  "us": "vulcanised",
+  "uk": "vulcanized"
+}, {
+  "us": "vulgarisation",
+  "uk": "vulgarization"
+}, {
+  "us": "vulgarise",
+  "uk": "vulgarize"
+}, {
+  "us": "vulgarised",
+  "uk": "vulgarized"
+}, {
+  "us": "vulgarises",
+  "uk": "vulgarizes"
+}, {
+  "us": "vulgarising",
+  "uk": "vulgarizing"
+}, {
+  "us": "waggon",
+  "uk": "wagon"
+}, {
+  "us": "waggons",
+  "uk": "wagons"
+}, {
+  "us": "watercolour",
+  "uk": "watercolor"
+}, {
+  "us": "watercolours",
+  "uk": "watercolors"
+}, {
+  "us": "weaselled",
+  "uk": "weaseled"
+}, {
+  "us": "weaselling",
+  "uk": "weaseling"
+}, {
+  "us": "westernisation",
+  "uk": "westernization"
+}, {
+  "us": "westernise",
+  "uk": "westernize"
+}, {
+  "us": "westernised",
+  "uk": "westernized"
+}, {
+  "us": "westernises",
+  "uk": "westernizes"
+}, {
+  "us": "westernising",
+  "uk": "westernizing"
+}, {
+  "us": "womanise",
+  "uk": "womanize"
+}, {
+  "us": "womanised",
+  "uk": "womanized"
+}, {
+  "us": "womaniser",
+  "uk": "womanizer"
+}, {
+  "us": "womanisers",
+  "uk": "womanizers"
+}, {
+  "us": "womanises",
+  "uk": "womanizes"
+}, {
+  "us": "womanising",
+  "uk": "womanizing"
+}, {
+  "us": "woollen",
+  "uk": "woolen"
+}, {
+  "us": "woollens",
+  "uk": "woolens"
+}, {
+  "us": "woollies",
+  "uk": "woolies"
+}, {
+  "us": "woolly",
+  "uk": "wooly"
+}, {
+  "us": "yodelled",
+  "uk": "yodeled"
+}, {
+  "us": "yodelling",
+  "uk": "yodeling"
+}, {
+  "us": "yoghourt",
+  "uk": "yogurt"
+}, {
+  "us": "yoghourts",
+  "uk": "yogurts"
+}, {
+  "us": "yoghurt",
+  "uk": "yogurt"
+}, {
+  "us": "yoghurts",
+  "uk": "yogurts"
+}]

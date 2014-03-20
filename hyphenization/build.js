@@ -6,16 +6,20 @@ var grams = []
 
 fs.readFile('moby_testset.tsv', 'ascii', function(err, data) {
 	data = data.split(/\n/).forEach(function(v) {
+		v = v.toLowerCase()
 		v = v.replace(/\r/, '')
-		var arr = v.split(/[,-]/)
+		var arr = v.split(/[,-\s]/)
 		arr = arr.filter(function(a) {
-			return a != ""
+			return a != "" && a.split(/[aeiouy]/).length > 2
 		})
 		arr.forEach(function(a) {
-			grams.push(a.substr(2))
+			var t = a.replace(/[aiouy]/g, '_')
+			grams.push(a) //.match(/[^aeiouy][^aeiouy]/)[0]
 		})
 	})
 
-	// grams = grams.slice(0, 100).topk()
+	grams = grams.topk().slice(0, 200).map(function(t) {
+		return t.value
+	})
 	console.log(JSON.stringify(grams, null, 2));
 });

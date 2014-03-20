@@ -11,6 +11,93 @@
 // illful -> ilful
 
 
+
+
+var britishize = (function() {
+
+	var main = function(str) {
+
+		var patterns = [
+			// ise -> ize
+			{
+				reg: /([^aeiou][iy])z(e|ed|es|ing)?$/,
+				repl: '$1s$2',
+				exceptions: []
+			},
+			// our -> or
+			// {
+			// 	reg: /(..)our(ly|y|ite)?$/,
+			// 	repl: '$1or$2',
+			// 	exceptions: []
+			// },
+			// re -> er
+			// {
+			// 	reg: /([^cdnv])re(s)?$/,
+			// 	repl: '$1er$2',
+			// 	exceptions: []
+			// },
+			// xion -> tion
+			// {
+			// 	reg: /([aeiou])xion([ed])?$/,
+			// 	repl: '$1tion$2',
+			// 	exceptions: []
+			// },
+			//logue -> log
+			// {
+			// 	reg: /logue$/,
+			// 	repl: 'log',
+			// 	exceptions: []
+			// },
+			// ae -> e
+			// {
+			// 	reg: /([o|a])e/,
+			// 	repl: 'e',
+			// 	exceptions: []
+			// },
+			//eing -> ing
+			// {
+			// 	reg: /e(ing|able)$/,
+			// 	repl: '$1',
+			// 	exceptions: []
+			// },
+			// illful -> ilful
+			{
+				reg: /([aeiou]+[^aeiou]+[aeiou]+)l(ful|ment|est|ing|or|er|ed)$/, //must be second-syllable
+				repl: '$1ll$2',
+				exceptions: []
+			},
+		]
+
+		for (var i = 0; i < patterns.length; i++) {
+			if (str.match(patterns[i].reg)) {
+				//check for exceptions
+				for (var o in patterns[i].exceptions) {
+					if (str.match(patterns[i].exceptions[o])) {
+						return str
+					}
+				}
+				return str.replace(patterns[i].reg, patterns[i].repl)
+			}
+		}
+
+
+		return str
+	}
+
+	if (typeof module !== "undefined" && module.exports) {
+		exports.britishize = main;
+	}
+	return main
+})()
+
+
+
+
+
+
+/////////////////
+//////////
+//////////////
 var americanize = (function() {
 
 	var main = function(str) {
@@ -18,7 +105,7 @@ var americanize = (function() {
 		var patterns = [
 			// ise -> ize
 			{
-				reg: /[^aeiou]([iy])s(e|ed|es|ing)?$/,
+				reg: /([^aeiou][iy])s(e|ed|es|ing)?$/,
 				repl: '$1z$2',
 				exceptions: []
 			},
@@ -89,58 +176,64 @@ var americanize = (function() {
 })()
 
 
+arr = [
+	"synthesized"
+]
+// arr.forEach(function(w) {
+// 	console.log(britishize(w))
+// })
 
 arr = [
-	"synthesise",
-	"synthesised",
-	"synthesises",
-	"synthesising",
-	"analyse",
-	"analysed",
-	"analysing",
+	// "synthesise",
+	// "synthesised",
+	// "synthesises",
+	// "synthesising",
+	// "analyse",
+	// "analysed",
+	// "analysing",
 
-	"poise",
-	"poised",
-	"colour",
-	"honour",
-	"neighbour",
-	"neighbourly",
-	"savour",
-	"savourly",
-	"favour",
-	"favourite",
-	"theatre",
-	"theatres",
+	// "poise",
+	// "poised",
+	// "colour",
+	// "honour",
+	// "neighbour",
+	// "neighbourly",
+	// "savour",
+	// "savourly",
+	// "favour",
+	// "favourite",
+	// "theatre",
+	// "theatres",
 
-	"entendre",
-	"genre",
-	"mediocre",
-	"acre",
-	"acres",
-	"analogue",
-	"homologue",
-	"anaemia",
-	"oestrogen",
-	"ageing",
-	"useable",
-	"programme",
-	"tonne",
-	"counsellor",
-	"traveller",
+	// "entendre",
+	// "genre",
+	// "mediocre",
+	// "acre",
+	// "acres",
+	// "analogue",
+	// "homologue",
+	// "anaemia",
+	// "oestrogen",
+	// "ageing",
+	// "useable",
+	// "programme",
+	// "tonne",
+	// "counsellor",
+	// "traveller",
 
-	"labelled",
-	"cancelled",
-	"quarrelled",
+	// "labelled",
+	// "cancelled",
+	// "quarrelled",
 
-	"signalling",
-	"modelling",
-	"travelling",
+	// "signalling",
+	// "modelling",
+	// "travelling",
 
-	"willful",
-	"filling",
+	// "willful",
+	// "filling",
 
 
 ]
 // arr.forEach(function(w) {
-// 	console.log(americanize(w))
+// console.log(americanize(w))
 // })

@@ -44,13 +44,22 @@ nlp.tag("the obviously good swim")
 nlp.singularize("earthquakes")
 //earthquake
 
+### US-UK Localization
+```javascript
+nlp.americanize("favourite")
+//favorite
+nlp.britishize("synthesized")
+//synthesised
+
 ### N-gram
 ```javascript
 nlp.ngram("She sells seashells by the seashore. The shells she sells are surely seashells.", {min_count:1, max_size:5})
 // [{ word: 'she sells', count: 2, size: 2 }, ...
+options={
+  min_count : 1 // throws away seldom-repeated grams. defaults to 1
+  max_gram : 5 // prevents the result from becoming gigantic. defaults to 5
+}
 ```
-'min_count' throws away seldom-repeated grams. defaults to 1
-'max_gram' prevents the result from becoming gigantic. defaults to 5
 
 ### Adjective->Noun conjugation
 ```javascript

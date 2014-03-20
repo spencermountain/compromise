@@ -30,6 +30,11 @@ var tests = (function() {
 
         print_header("americanization")
         console.log(nlp.americanize("favourite") == "favorite")
+        console.log(nlp.americanize("synthesised") == "synthesized")
+
+        print_header("britishization")
+        // console.log(nlp.britishize("favorite") == "favourite")
+        console.log(nlp.britishize("synthesized") == "synthesised")
     }
 
 

@@ -1,4 +1,4 @@
-var lexicon={
+exports.lexicon = {
   "one": "CD",
   "two": "CD",
   "three": "CD",

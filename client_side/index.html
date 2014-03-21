@@ -1,40 +1,178 @@
 <html>
 <head>
-  <script src="./underscore.js"/></script>
   <script src="./jquery.js"/></script>
   <script src="./nlp.js"/></script>
-
+  <style>
+  body{
+    font-family:"Helvetica","Univers","Helvetica Neue",arial,helvetica,sans-serif;
+    font-size:22px;
+    color:#808080;
+  }
+  a{color:steelblue;
+  }
+  input {
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    width:800px;
+    height:50px;
+    font-size:15px;
+    color:grey;
+    position:relative;
+    left:25px;
+  }
+  hr{
+    position:relative;
+    left:25px;
+  }
+  h2 {
+    color:grey;
+    position:relative;
+    left:15px;
+  }
+  h3 {
+    color:lightsteelblue;
+    position:relative;
+    left:75px;
+    font-size:17px;
+  }
+  .result{
+    color:steelblue;
+    font-size:25px;
+    position:relative;
+    left:50px;
+    max-width:750px;
+  }
+  </style>
   <script>
-
-
-
 $(function() {
 
+  $("#ngram").find("input").keyup(function(){
+    var txt=$(this).val() || ''
+    var data= nlp.ngram(txt)
+    $(this).siblings(".result").html(JSON.stringify(data))
+  })
+
+  $("#sentences").find("input").keyup(function(){
+    var txt=$(this).val() || ''
+    var data= nlp.sentences(txt)
+    $(this).siblings(".result").html(JSON.stringify(data))
+  })
+
+  $("#britishize").find("input").keyup(function(){
+    var txt=$(this).val() || ''
+    var data= nlp.britishize(txt)
+    $(this).siblings(".result").html(data)
+  })
+
+  $("#americanize").find("input").keyup(function(){
+    var txt=$(this).val() || ''
+    var data= nlp.americanize(txt)
+    $(this).siblings(".result").html(data)
+  })
+
+  $("#pluralize").find("input").keyup(function(){
+    var txt=$(this).val() || ''
+    var data= nlp.pluralize(txt)
+    $(this).siblings(".result").html(data)
+  })
+
+  $("#singularize").find("input").keyup(function(){
+    var txt=$(this).val() || ''
+    var data= nlp.singularize(txt)
+    $(this).siblings(".result").html(data)
+  })
+
+  $("#syllables").find("input").keyup(function(){
+    var txt=$(this).val() || ''
+    var data= nlp.syllables(txt)
+    $(this).siblings(".result").html(JSON.stringify(data))
+  })
+
+  $("#dates").find("input").keyup(function(){
+    var txt=$(this).val() || ''
+    var data= nlp.dates(txt)
+    $(this).siblings(".result").html(JSON.stringify(data))
+  })
 
 
+
+  $("input").trigger('keyup')
 
  });
-
-
 </script>
 </head>
 <body>
 
-  <textarea style="width:80%; height:200px; color:grey; font-size:16px;" id="pad" style="">toronto won the greatest world series in the world.</textarea>
-  <br/>
-<form id="option">
-<input type="radio" name="option" value="big" checked/> strict<br />
-<input type="radio" name="option" value="verbose" /> verbose
-</form>
-  <table style="width:80%;">
-    <tr>
-      <td style="color:steelblue; width:50%;" id="result"></td>
-      <td style="color:steelblue; width:50%; vertical-align:top;" id="nouns"></td>
-    </tr>
-  </table>
+<h1>OH NO YOU DI'INT</H1>
+<h3>demo of <a href="https://github.com/spencermountain/nlp_comprimise">nlp_comprimise</a> methods in the browser</h3>
+
+<div id="ngram">
+  <hr/>
+  <h2>N-gram!</h2>
+  <h3>nlp.ngram(text, {})</h3>
+  <input type="text" value="She sells seashells by the seashore. The shells she sells are surely seashells."/>
+  <div class="result" style="font-size:10px;"></div>
+</div>
+
+<div id="sentences">
+  <hr/>
+  <h2>Sentences!</h2>
+  <h3>nlp.sentences(text)</h3>
+  <input type="text" value="She sells seashells by the seashore. The shells she sells are surely seashells."/>
+  <div class="result" style="font-size:14px;"></div>
+</div>
+
+<div id="britishize">
+  <hr/>
+  <h2>britishize!</h2>
+  <h3>nlp.britishize(text)</h3>
+  <input type="text" value="synthesized" style="width:250px;"/>
+  <div class="result" style="font-size:24px;"></div>
+</div>
+
+<div id="americanize">
+  <hr/>
+  <h2>americanize!</h2>
+  <h3>nlp.americanize(text)</h3>
+  <input type="text" value="favourite" style="width:250px;"/>
+  <div class="result" style="font-size:24px;"></div>
+</div>
+
+<div id="pluralize">
+  <hr/>
+  <h2>pluralize!</h2>
+  <h3>nlp.pluralize(text)</h3>
+  <input type="text" value="phantom of the opera" style="width:250px;"/>
+  <div class="result" style="font-size:24px;"></div>
+</div>
+
+<div id="singularize">
+  <hr/>
+  <h2>singularize!</h2>
+  <h3>nlp.singularize(text)</h3>
+  <input type="text" value="maple leaves" style="width:250px;"/>
+  <div class="result" style="font-size:24px;"></div>
+</div>
+
+<div id="syllables">
+  <hr/>
+  <h2>syllables!</h2>
+  <h3>nlp.syllables(text)</h3>
+  <input type="text" value="toronto maple leafs" style="width:250px;"/>
+  <div class="result" style="font-size:24px;"></div>
+</div>
+
+<div id="dates">
+  <hr/>
+  <h2>dates!</h2>
+  <h3>nlp.dates(text)</h3>
+  <input type="text" value="I got married on June 4th 1993, in Miami" style="width:450px;"/>
+  <div class="result" style="font-size:14px;"></div>
+</div>
 
 </body>
 </html>
+
 
 
 

@@ -12,7 +12,11 @@ module.exports = function(grunt) {
         src: ['./build/header.js',
           './lib/tokenization/sentence.js',
           './lib/tokenization/ngram.js',
-          // './lib/localization/britishize.js',
+          './lib/localization/britishize.js',
+          './lib/inflection/inflect.js',
+          './lib/hyphenization/syllable.js',
+          './lib/conjugation/adj_to_noun.js',
+          './lib/spotting/date_parser.js',
           './build/footer.js'
         ],
         dest: './client_side/nlp.js'

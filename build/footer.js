@@ -12,8 +12,8 @@ var main = {
 	adj_to_noun: adj_to_noun,
 	dates: date_extractor,
 	tag: pos,
-	// spot: spot,
-	// tests: tests,
+	spot: spot,
+	tests: tests,
 }
 
 if (typeof module !== "undefined" && module.exports) {

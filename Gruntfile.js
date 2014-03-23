@@ -18,7 +18,8 @@ module.exports = function(grunt) {
           './lib/conjugation/adj_to_noun.js',
           './lib/spotting/date_parser.js',
           './lib/tagging/tagger.js',
-          // './lib/spotting/spotter.js',
+          './lib/spotting/spotter.js',
+          './test.js',
           './build/footer.js'
         ],
         dest: './client_side/nlp.js'

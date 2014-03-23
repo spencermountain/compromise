@@ -5,10 +5,22 @@ nlp_comprimise trades the 'last 15%' accuracy for speed, slightness, and ease-of
 
 It's basically just a zillion regexes, but very sensitive and thoughtful ones ;)
 
-## Server-side Installation
+
+[demo](https://s3.amazonaws.com/spencermounta.in/nlp_comprimise/index.html)
+
+## Server-side
 
  $ npm install nlp_comprimise
+```javascript
+x=nlp.syllables("hamburger")
+```
+## Client-side
 
+<script src"https://s3.amazonaws.com/spencermounta.in/nlp_comprimise/nlp.min.js"</script>
+<script>
+  x= nlp.pluralize("dinosaur")
+  alert(x)
+</script>
 
 ## Showing off
 

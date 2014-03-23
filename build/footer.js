@@ -11,7 +11,7 @@ var main = {
 	syllables: syllables,
 	adj_to_noun: adj_to_noun,
 	dates: date_extractor,
-	// tag: tag,
+	tag: pos,
 	// spot: spot,
 	// tests: tests,
 }

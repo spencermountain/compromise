@@ -177,7 +177,7 @@ var tests = (function() {
         if (arraysEqual(the, arr)) {
             console.log('true');
         } else {
-            console.log('fail  =>' + str + '        ' + JSON.stringify(the) + " vs. " + JSON.stringify(obj))
+            console.log('fail  =>' + str + '        ' + JSON.stringify(the) + " vs. " + JSON.stringify(arr))
         }
     }
 
@@ -206,4 +206,4 @@ var tests = (function() {
     }
     return main
 })()
-// tests()
+tests()

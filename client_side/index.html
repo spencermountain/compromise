@@ -46,6 +46,17 @@
   <script>
 $(function() {
 
+
+  $("#pos").find("input").keyup(function(){
+    var txt=$(this).val() || ''
+    var data= nlp.tag(txt)
+    console.log(data)
+    var html= data.map(function(p){
+      return "<div class='word'>"+p.word+"("+p.pos.tag+") </div>"
+    }).join(" ")
+    $(this).siblings(".result").html(html)
+  })
+
   $("#ngram").find("input").keyup(function(){
     var txt=$(this).val() || ''
     var data= nlp.ngram(txt)
@@ -105,6 +116,14 @@ $(function() {
 
 <h1>OH NO YOU DI'INT</H1>
 <h3>demo of <a href="https://github.com/spencermountain/nlp_comprimise">nlp_comprimise</a> methods in the browser</h3>
+
+<div id="pos">
+  <hr/>
+  <h2>PART-OF-SPEECH TAGGING!</h2>
+  <h3>nlp.tag(text, {})</h3>
+  <input type="text" value="She sells seashells by the seashore. The shells she sells are surely seashells."/>
+  <div class="result" style="font-size:10px;"></div>
+</div>
 
 <div id="ngram">
   <hr/>

@@ -50,19 +50,6 @@ $(function() {
   $("#pos").find("input").keyup(function(){
     var txt=$(this).val() || ''
     var data= nlp.tag(txt)
-    console.log(data)
-    var colours = [
-      "#1f77b4", "#aec7e8",
-      "#ff7f0e", "#ffbb78",
-      "#2ca02c", "#98df8a",
-      "#d62728", "#ff9896",
-      "#9467bd", "#c5b0d5",
-      "#8c564b", "#c49c94",
-      "#e377c2", "#f7b6d2",
-      "#7f7f7f", "#c7c7c7",
-      "#bcbd22", "#dbdb8d",
-      "#17becf", "#9edae5"
-    ];
     var glues={
       "adjective":"lightsteelblue",
       "noun":"coral",
@@ -79,26 +66,30 @@ $(function() {
     $(this).siblings(".result").html(html)
   })
 
-  // $("#spot").find("input").keyup(function(){
-  //   var txt=$(this).val() || ''
-  //   var data= nlp.spot(txt)
-  //   console.log(data)
-  //   var html= data.map(function(p){
-  //     return "<div class='word'>"+p.word+"("+p.pos.tag+") </div>"
-  //   }).join(" ")
-  //   $(this).siblings(".result").html(html)
-  // })
+  $("#spot").find("input").keyup(function(){
+    var txt=$(this).val() || ''
+    var data= nlp.spot(txt)
+    var html= data.map(function(p){
+      return "<div style='background:lightsteelblue; font-size:30px; display:inline-block; color:white; margin:5px; padding:8px;'>"+p.word+"</div>"
+    }).join(" ")
+    $(this).siblings(".result").html(html)
+  })
 
   $("#ngram").find("input").keyup(function(){
     var txt=$(this).val() || ''
     var data= nlp.ngram(txt)
-    $(this).siblings(".result").html(JSON.stringify(data))
+    var html= "";
+    for(var i in data){
+      html+="<div> <b style='font-size:20px;'>"+data[i][0].word+"</b>  - used "+data[i][0].count+" times</div>"
+    }
+    $(this).siblings(".result").html(html)
   })
 
   $("#sentences").find("input").keyup(function(){
     var txt=$(this).val() || ''
     var data= nlp.sentences(txt)
-    $(this).siblings(".result").html(JSON.stringify(data))
+    var html= data.map(function(s){return "<div style='font-size:20px; border:1px solid grey; margin:5px; display:inline-block;'>"+s+"</div>"}).join("")
+    $(this).siblings(".result").html(html)
   })
 
   $("#britishize").find("input").keyup(function(){
@@ -153,7 +144,7 @@ $(function() {
   <hr/>
   <h2>PART-OF-SPEECH TAGGING!</h2>
   <h3>nlp.tag(text, {})</h3>
-  <input type="text" value="She sells seashells by the seashore. The shells she sells are surely seashells."/>
+  <input type="text" value="She sells seashells by the seashore. the shells she sells are sure seashells."/>
   <div class="result" style="font-size:10px;"></div>
 </div>
 
@@ -161,7 +152,7 @@ $(function() {
   <hr/>
   <h2>NAMED-ENTITY-RECOGNITION!</h2>
   <h3>nlp.spot(text, {})</h3>
-  <input type="text" value="She sells seashells by the seashore. The shells she sells are surely seashells."/>
+  <input type="text" value="joe carter went to the toronto international film festival to go see inception."/>
   <div class="result" style="font-size:10px;"></div>
 </div>
 
@@ -169,7 +160,7 @@ $(function() {
   <hr/>
   <h2>N-gram!</h2>
   <h3>nlp.ngram(text, {})</h3>
-  <input type="text" value="She sells seashells by the seashore. The shells she sells are surely seashells."/>
+  <input type="text" value="She sells seashells by the seashore. the shells she sells are sure seashells."/>
   <div class="result" style="font-size:10px;"></div>
 </div>
 
@@ -177,7 +168,7 @@ $(function() {
   <hr/>
   <h2>Sentences!</h2>
   <h3>nlp.sentences(text)</h3>
-  <input type="text" value="She sells seashells by the seashore. The shells she sells are surely seashells."/>
+  <input type="text" value="She sells seashells by the seashore. the shells she sells are sure seashells."/>
   <div class="result" style="font-size:14px;"></div>
 </div>
 

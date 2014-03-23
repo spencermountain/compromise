@@ -12,7 +12,10 @@ var main = {
 	adj_to_noun: adj_to_noun,
 	dates: date_extractor,
 	tag: pos,
-	spot: spot,
+	spot: function(text, options) {
+		var tags = pos(text, options)
+		return spot(tags, options)
+	},
 	tests: tests,
 }
 

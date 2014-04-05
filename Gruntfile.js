@@ -19,6 +19,7 @@ module.exports = function(grunt) {
           './lib/spotting/date_parser.js',
           './lib/tagging/tagger.js',
           './lib/spotting/spotter.js',
+          './lib/transliteration/unicode_normalisation.js',
           './test.js',
           './build/footer.js'
         ],

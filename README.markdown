@@ -14,13 +14,15 @@ It's basically just a zillion regexes, but very sensitive and thoughtful ones ;)
 ```javascript
 x=nlp.syllables("hamburger")
 ```
-## Client-side
 
-<script src"https://s3.amazonaws.com/spencermounta.in/nlp_comprimise/nlp.min.js"</script>
-<script>
-  x= nlp.pluralize("dinosaur")
-  alert(x)
-</script>
+## Client-side
+```javascript
+	<script src"https://s3.amazonaws.com/spencermounta.in/nlp_comprimise/nlp.min.js"</script>
+	<script>
+	  x= nlp.pluralize("dinosaur")
+	  alert(x)
+	</script>
+```
 
 ## Showing off
 
@@ -55,14 +57,14 @@ nlp.tag("the obviously good swim")
 ```javascript
 nlp.singularize("earthquakes")
 //earthquake
-
+```
 ### US-UK Localization
 ```javascript
 nlp.americanize("favourite")
 //favorite
 nlp.britishize("synthesized")
 //synthesised
-
+```
 ### N-gram
 ```javascript
 nlp.ngram("She sells seashells by the seashore. The shells she sells are surely seashells.", {min_count:1, max_size:5})
@@ -88,6 +90,18 @@ nlp.dates('my wife left me on the 9th of april, 2005.')
 //  to: {}
 //}
 ```
+### Unicode Normalisation
+a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
+
+```javascript
+nlp.normalise("Björk")
+//Bjork
+
+nlp.denormalise("The quick brown fox jumps over the lazy dog", {percentage:50})
+// The ɋӈїck brown fox juӎÞs over tӊe laζy dog
+```
+
+
 
 ## Licence
 [go-fer-it.](http://www.wtfpl.net/txt/copying/)

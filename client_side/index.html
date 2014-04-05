@@ -2,6 +2,7 @@
 <head>
   <script src="./jquery.js"/></script>
   <script src="./nlp.js"/></script>
+  <meta charset="utf-8">
   <style>
   body{
     font-family:"Helvetica","Univers","Helvetica Neue",arial,helvetica,sans-serif;
@@ -128,6 +129,12 @@ $(function() {
     $(this).siblings(".result").html(JSON.stringify(data))
   })
 
+  $("#unicode").find("input").keyup(function(){
+    var txt=$(this).val() || ''
+    var data= nlp.normalize(txt)
+    $(this).siblings(".result").html(data)
+  })
+
 
 
   $("input").trigger('keyup')
@@ -168,7 +175,7 @@ $(function() {
   <hr/>
   <h2>Sentences!</h2>
   <h3>nlp.sentences(text)</h3>
-  <input type="text" value="She sells seashells by the seashore. the shells she sells are sure seashells."/>
+  <input type="text" value="Hi Dr. J. the price is 4.59 for the N.A.S.A. Ph.Ds. I hope that's fine, etc. and you can attend Feb. 8th. woohoo"/>
   <div class="result" style="font-size:14px;"></div>
 </div>
 
@@ -216,8 +223,16 @@ $(function() {
   <hr/>
   <h2>dates!</h2>
   <h3>nlp.dates(text)</h3>
-  <input type="text" value="I got married on June 4th 1993, in Miami" style="width:450px;"/>
+  <input type="text" value="I got married to April on June 4th 1993, in Miami" style="width:450px;"/>
   <div class="result" style="font-size:14px;"></div>
+</div>
+
+<div id="unicode">
+  <hr/>
+  <h2>unicode normalisation!</h2>
+  <h3>nlp.normalize(text)</h3>
+  <input type="text" value="Björk" style="width:250px;"/>
+  <div class="result" style="font-size:24px;"></div>
 </div>
 
 </body>

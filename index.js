@@ -4,17 +4,23 @@ exports.sentences = require('./lib/tokenization/sentence').sentences;
 
 exports.ngram = require('./lib/tokenization/ngram');
 
-exports.americanize = require('./lib/localization/britishize').americanize;
-exports.britishize = require('./lib/localization/britishize').britishize;
+var l = require('./lib/localization/britishize')
+exports.americanize = l.americanize;
+exports.britishize = l.britishize;
 
-exports.pluralize = require('./lib/inflection/inflect').pluralize;
-exports.singularize = require('./lib/inflection/inflect').singularize;
+var l = require('./lib/inflection/inflect')
+exports.pluralize = l.pluralize;
+exports.singularize = l.singularize;
 
 exports.syllables = require('./lib/hyphenization/syllable').syllables;
 
 exports.adj_to_noun = require('./lib/conjugation/adj_to_noun').adj_to_noun;
 
 exports.dates = require('./lib/spotting/date_parser');
+
+var l = require('./lib/transliteration/unicode_normalisation')
+exports.normalize = l.normalize
+exports.denormalize = l.denormalize
 
 exports.tag = require('./lib/tagging/tagger');
 var spot_function = require('./lib/spotting/spotter');

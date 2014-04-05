@@ -12,6 +12,8 @@ var main = {
 	adj_to_noun: adj_to_noun,
 	dates: date_extractor,
 	tag: pos,
+	normalize: normalize.normalize,
+	denormalize: normalize.denormalize,
 	spot: function(text, options) {
 		var tags = pos(text, options)
 		return spot(tags, options)

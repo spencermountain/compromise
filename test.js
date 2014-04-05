@@ -35,6 +35,14 @@ var tests = (function() {
         print_header("britishization")
         // console.log(nlp.britishize("favorite") == "favourite")
         console.log(nlp.britishize("synthesized") == "synthesised")
+
+        print_header("unicode")
+        console.log(nlp.normalize("The ɋӈїck brown fox juӎÞs over tӊe laζy dog", {
+            percentage: 100
+        }) == "The quick brown fox jumps over the lazy dog")
+        console.log(nlp.normalize("Björk", {
+            percentage: 100
+        }) == "Bjork")
     }
 
 

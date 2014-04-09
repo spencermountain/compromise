@@ -5,6 +5,8 @@ nlp_comprimise trades the 'last 15%' accuracy for speed, slightness, and ease-of
 
 It's basically just a zillion regexes, but very sensitive and thoughtful ones ;)
 
+get curated data, find the patterns, list the exceptions.
+bada-bing, bada-BOOM.
 
 [demo](https://s3.amazonaws.com/spencermounta.in/nlp_comprimise/index.html)
 

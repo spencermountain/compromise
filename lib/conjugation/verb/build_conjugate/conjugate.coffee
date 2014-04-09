@@ -11,6 +11,12 @@ w= "convoluted"
 w= "overthrew"
 w= "overthrowing"
 # w= "overcompensating"
+w= "convolutes"
+w= "relays"
+w= "relays"
+w= "present"
+w= "angulate"
+w= "regularize"
 
 for r in rules
   if w.match(r.reg)

@@ -16,6 +16,8 @@ exports.syllables = require('./lib/hyphenization/syllable').syllables;
 
 exports.adj_to_noun = require('./lib/conjugation/adj_to_noun').adj_to_noun;
 
+exports.conjugate_verb = require('./lib/conjugation/verb/conjugate').conjugate;
+
 exports.dates = require('./lib/spotting/date_parser');
 
 var l = require('./lib/transliteration/unicode_normalisation')

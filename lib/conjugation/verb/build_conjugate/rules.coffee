@@ -1,7 +1,8 @@
 exports.rules= [
 
+    #infinitives
     {
-        reg: /([a[tg]|i[zn]])e$/i,
+        reg: /([a[tg]|i[zn]]|ur|nc|gl|is)e$/i,
         repl:{
             present:"$1es",
             gerund:"$1ing",
@@ -14,23 +15,13 @@ exports.rules= [
         ],
         power: 804,
         tense: 'infinitive'
-    }, {
-        reg: /(i[zn])e$/i,
+    },
+    {
+        reg: /(if)y$/i,
         repl:{
-            present:"$1es",
-            gerund:"$1ing",
-            past:"$1ed",
-        },
-        examples: 'regularize, prize, deodorize',
-        exceptions: [],
-        power: 535,
-        tense: 'infinitive'
-    }, {
-        reg: /ify$/i,
-        repl:{
-            present:"ifies",
-            gerund:"ifying",
-            past:"ified",
+            present:"$1ies",
+            gerund:"$1ying",
+            past:"$1ied",
         },
         examples: 'unify, classify, glorify',
         exceptions: [],
@@ -47,18 +38,7 @@ exports.rules= [
         exceptions: [],
         power: 123,
         tense: 'infinitive'
-    }, {
-        reg: /(ur)e$/i,
-        repl:{
-            present:"$1s",
-            gerund:"$1ing",
-            past:"$1ed",
-        },
-        examples: 'conjure, rupture, endure',
-        exceptions: [],
-        power: 78,
-        tense: 'infinitive'
-    }, {
+    },  {
         reg: /([bd])le$/i,
         repl:{
             present:"$1es",
@@ -70,7 +50,7 @@ exports.rules= [
         power: 69,
         tense: 'infinitive'
     }, {
-        reg: /(ish)$/i,
+        reg: /(ish|tch|ess)$/i,
         repl:{
             present:"$1es",
             gerund:"$1ing",
@@ -80,91 +60,15 @@ exports.rules= [
         exceptions: [],
         power: 62,
         tense: 'infinitive'
-    }, {
-        reg: /(nc)e$/i,
-        repl:{
-            present:"$1es",
-            gerund:"$1ing",
-            past:"$1ed",
-        },
-        examples: 'denounce, discountenance, freelance',
-        exceptions: [],
-        power: 61,
-        tense: 'infinitive'
-    }, {
-        reg: /(tch)$/i,
-        repl:{
-            present:"$1es",
-            gerund:"$1ing",
-            past:"$1ed",
-        },
-        examples: 'patch, splotch, snatch',
-        exceptions: [],
-        power: 61,
-        tense: 'infinitive'
-    }, {
-        reg: /(gl)e$/i,
-        repl:{
-            present:"$1es",
-            gerund:"$1ing",
-            past:"$1ed",
-        },
-        examples: 'tingle, intermingle, ogle',
-        exceptions: [],
-        power: 59,
-        tense: 'infinitive'
-    }, {
-        reg: /(end)$/i,
-        repl:{
-            present:"$1s",
-            gerund:"$1ing",
-            past:"$1ed",
-        },
-        examples: 'upend, mend, extend',
-        exceptions: [],
-        power: 58,
-        tense: 'infinitive'
-    }, {
-        reg: /(ess)$/i,
-        repl:{
-            present:"$1es",
-            gerund:"$1ing",
-            past:"$1ed",
-        },
-        examples: 'address, dispossess, stress',
-        exceptions: [],
-        power: 56,
-        tense: 'infinitive'
-    }, {
-        reg: /(ise)$/i,
-        repl:{
-            present:"$1es",
-            gerund:"$1ing",
-            past:"$1ed",
-        },
-        examples: 'mortise, disguise, circumcise',
-        exceptions: [],
-        power: 56,
-        tense: 'infinitive'
-    }, {
-        reg: /(ion)$/i,
+    },
+    {
+        reg: /(ion|end|e[nc]t)$/i,
         repl:{
             present:"$1s",
             gerund:"$1ing",
             past:"$1ed",
         },
         examples: 'caution, aircondition, cushion',
-        exceptions: [],
-        power: 55,
-        tense: 'infinitive'
-    }, {
-        reg: /(e[nc]t)$/i,
-        repl:{
-            present:"$1s",
-            gerund:"$1ing",
-            past:"$1ed",
-        },
-        examples: 'garment, re-present, regiment',
         exceptions: [
             "sent",
             "bent",
@@ -182,7 +86,7 @@ exports.rules= [
             "unbent",
             "shent"
         ],
-        power: 51,
+        power: 55,
         tense: 'infinitive'
     },
 
@@ -190,11 +94,7 @@ exports.rules= [
 
 
 
-
-
-
-
-
+    #present tense
     {
         reg: /([tzlshicgrvdnkmu])es$/i,
         repl:{
@@ -207,7 +107,7 @@ exports.rules= [
         power: 923,
         tense: 'present'
     }, {
-        reg: /(n[dtk])s$/i,
+        reg: /(n[dtk]|c[kt]|[eo]n|i[nl]|er|a[ytrl])s$/i,
         repl:{
             infinitive:"$1",
             gerund:"$1ing",
@@ -217,29 +117,33 @@ exports.rules= [
         exceptions: [],
         power: 153,
         tense: 'present'
-    }, {
-        reg: /(c[kt])s$/i,
+    },
+    {
+        reg: /(ow)s$/i,
         repl:{
             infinitive:"$1",
             gerund:"$1ing",
-            past:"$1ed",
+            past:"ew",
         },
-        examples: 'rucks, understocks, hoicks',
+        examples: 'wants, squints, garments',
         exceptions: [],
-        power: 138,
+        power: 153,
         tense: 'present'
-    }, {
-        reg: /([eo])ns$/i,
+    },
+    {
+        reg: /(op)s$/i,
         repl:{
-            infinitive:"$1n",
-            gerund:"$1ning",
-            past:"$1ned",
+            infinitive:"$1",
+            gerund:"$1ping",
+            past:"$1ped",
         },
-        examples: 'disburdens, lengthens, sweetens',
+        examples: 'wants, squints, garments',
         exceptions: [],
-        power: 123,
+        power: 153,
         tense: 'present'
-    }, {
+    },
+      #(handle doubling consonants)
+    {
         reg: /([eirs])ts$/i,
         repl:{
             infinitive:"$1t",
@@ -250,7 +154,8 @@ exports.rules= [
         exceptions: [],
         power: 105,
         tense: 'present'
-    }, {
+    },
+    {
         reg: /(ll)s$/i,
         repl:{
             infinitive:"$1",
@@ -262,28 +167,6 @@ exports.rules= [
         power: 92,
         tense: 'present'
     }, {
-        reg: /(i[nl])s$/i,
-        repl:{
-            infinitive:"$1",
-            gerund:"$1ing",
-            past:"$1ed",
-        },
-        examples: 'fins, replevins, disdains',
-        exceptions: [],
-        power: 90,
-        tense: 'present'
-    }, {
-        reg: /(er)s$/i,
-        repl:{
-            infinitive:"$1",
-            gerund:"$1ing",
-            past:"$1ed",
-        },
-        examples: 'shutters, inters, powers',
-        exceptions: [],
-        power: 88,
-        tense: 'present'
-    },  {
         reg: /(el)s$/i,
         repl:{
             infinitive:"$1",
@@ -294,47 +177,33 @@ exports.rules= [
         exceptions: [],
         power: 88,
         tense: 'present'
-    }, {
-        reg: /(o[wp])s$/i,
-        repl:{
-            infinitive:"$1",
-            gerund:"$1ing",
-            past:"$1ed",
-        },
-        examples: 'yellows, vows, wheelbarrows',
-        exceptions: [],
-        power: 79,
-        tense: 'present'
-    }, {
-        reg: /(a[ytrl])s$/i,
-        repl:{
-            infinitive:"$1",
-            gerund:"$1ing",
-            past:"$1ed",
-        },
-        examples: 'relays, allays, outlays',
-        exceptions: [],
-        power: 72,
-        tense: 'present'
     },
 
 
 
 
-
-
-
-
-
-
+    #gerunds 'ing' with sometimes a placed 'e'
     {
-        reg: /([aeiou].*?)ing$/i,
+        reg: /([aeiou][^aeiouwyrlm])ing$/i,
+        repl:{
+            infinitive:"$1e",
+            present:"$1es",
+            past:"$1ed",
+        }
+        examples: 'convoluting, compensating, fouling',
+        exceptions: [],
+        power: 8475,
+        tense: 'gerund'
+    },
+    # bcdfghjklmnpqrstvwxyz
+    {
+        reg: /([^aeiou])ing$/i,
         repl:{
             infinitive:"$1",
             present:"$1s",
-            past:"$1e",
+            past:"$1ed",
         }
-        examples: 'convoluting, fawning, fouling',
+        examples: 'walking, fawning, farming',
         exceptions: [],
         power: 8475,
         tense: 'gerund'
@@ -343,11 +212,7 @@ exports.rules= [
 
 
 
-
-
-
-
-
+    #past tense
     {
         reg: /(.[pigmcvwbyfkt])ed$/i,
         repl:{
@@ -376,3 +241,5 @@ exports.rules= [
         tense: "past"
     }
 ]
+
+#(i rule)

@@ -88,6 +88,17 @@ exports.rules= [
         ],
         power: 55,
         tense: 'infinitive'
+    },{
+        reg: /(om)e$/i,
+        repl:{
+            present:"$1es",
+            gerund:"$1ing",
+            past:"ame",
+        },
+        examples: 'become',
+        exceptions: [],
+        power: 1,
+        tense: 'infinitive'
     },
 
 

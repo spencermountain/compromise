@@ -3,8 +3,6 @@ NLP_comprimise is a quick and light natural-language-processing library in javas
 
 nlp_comprimise trades the 'last 15%' accuracy for speed, slightness, and ease-of-use. You can roll it into anything, without thinking, and get competitive results. No training, no configuring, no python. under 50k.
 
-It's basically just a zillion regexes, but very sensitive and thoughtful ones ;)
-
 get curated data, find the patterns, list the exceptions.
 bada-bing, bada-BOOM.
 

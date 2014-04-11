@@ -38,11 +38,11 @@ x=nlp.syllables("hamburger")
 
 ## Client-side
 ```javascript
-	<script src"https://s3.amazonaws.com/spencermounta.in/nlp_comprimise/nlp.min.js"</script>
-	<script>
-	  x= nlp.pluralize("dinosaur")
-	  alert(x)
-	</script>
+<script src"https://s3.amazonaws.com/spencermounta.in/nlp_comprimise/nlp.min.js"</script>
+<script>
+  x= nlp.pluralize("dinosaur")
+  //dinosaurs
+</script>
 ```
 
 # API
@@ -62,7 +62,7 @@ arr.length
 ```
 
 ## Part-of-speech
-80% on the Penn-treebank corpus
+80% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 ```javascript
 nlp.tag("Tony Hawk walked quickly to the store.")
 // ["NN","NN","VBD","RB","TO","DT","NN"]
@@ -90,6 +90,8 @@ nlp.syllables("hamburger")
 ```javascript
 nlp.noun.singularize("earthquakes")
 //earthquake
+nlp.noun.pluralize("earthquake")
+//earthquakes
 ```
 
 ### Adjective->Noun conjugation
@@ -118,10 +120,10 @@ nlp.britishize("synthesized")
 nlp.ngram("She sells seashells by the seashore. The shells she sells are surely seashells.", {min_count:1, max_size:5})
 // [{ word: 'she sells', count: 2, size: 2 }, ...
 ```
-options={
-  min_count : 1 // throws away seldom-repeated grams. defaults to 1
-  max_gram : 5 // prevents the result from becoming gigantic. defaults to 5
-}
+>options={
+>  min_count : 1 // throws away seldom-repeated grams. defaults to 1
+>  max_gram : 5 // prevents the result from becoming gigantic. defaults to 5
+>}
 
 
 

@@ -1,18 +1,39 @@
-#nlp_comprimise
-NLP_comprimise is a quick and light natural-language-processing library in javascript that is small-and-fast-enough to be used in the browser and run on keypress.
+**nlp_comprimise** is a quick and light Natural-Language-Processing library in javascript that is small enough to be used in the browser, and quick enough and run on keypress.
 
-nlp_comprimise trades the 'last 15%' accuracy for speed, slightness, and ease-of-use. You can roll it into anything, without thinking, and get competitive results. No training, no configuring, no python. under 50k.
+It trades the 'last 15%' accuracy for speed, slightness, and ease-of-use. It's a single javascript file that's smaller than jQuery, with results in the mid-80% range.
 
-get curated data, find the patterns, list the exceptions.
-bada-bing, bada-BOOM.
+You can roll it into anything, without thinking, and get competitive results.
+No training, no configuring, no python. under 50k.
 
 [demo](https://s3.amazonaws.com/spencermounta.in/nlp_comprimise/index.html)
 
-## Server-side
+#Justification
+A working NLP library can be satisfactory with a breathtaking lightness.
+By [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):
+>The [top 10 words](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10) account for 25% of our language.
 
- $ npm install nlp_comprimise
+>The top 100 words account for 50% of our language.
+
+>The top 50,000 words account for 95% of our language.
+
+The trade-offs for processing english are way more profound than the [80/20 rule](http://en.wikipedia.org/wiki/80/20_rule).
+On the [Penn treebank](http://www.cis.upenn.edu/~treebank/), for example, the following is possible:
+
+* choosing all nouns: **33% correct**
+* using a 1 thousand word lexicon: **45% correct**
+* using a 1 thousand word lexicon, and falling back to nouns: **70% correct**
+* using a 1 thousand word lexicon, common suffix regexes, and falling back to nouns: **74% correct**
+
+The process is to get curated data, find the patterns, list the exceptions.
+bada-bing, bada-BOOM.
+
+#Usage
+## Server-side
+>npm install nlp_comprimise
+
 ```javascript
 x=nlp.syllables("hamburger")
+//[ 'ham', 'bur', 'ger' ]
 ```
 
 ## Client-side
@@ -24,28 +45,24 @@ x=nlp.syllables("hamburger")
 	</script>
 ```
 
-## Showing off
+# API
 
-### sentence segmenting
+## Sentence segmentation
 1.7k
 ```javascript
 arr = nlp.sentences("Hi there Dr. Joe, the price is 4.59 for the N.A.S.A. Ph.Ds. I hope that's fine, etc. and you can attend Feb. 8th.")
 arr.length
 //2
 ```
-### Syllable hyphenization
+##Word tokenization
+```javascript
+arr = nlp.tokenize("she sells sea-shells")
+arr.length
+//3
 
-70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)  0.5k
-```javascript
-nlp.syllables("hamburger")
-//[ 'ham', 'bur', 'ger' ]
-```
-### Named-Entity Recognizing
-```javascript
-nlp.spot("Tony Hawk said he was very happy")
-// ["Tony Hawk"]
-```
-### Part-of-speech Tagging
+
+## Part-of-speech
+80% on the Penn-treebank corpus
 ```javascript
 nlp.tag("Tony Hawk walked quickly to the store.")
 // ["NN","NN","VBD","RB","TO","DT","NN"]
@@ -53,19 +70,50 @@ nlp.tag("Tony Hawk walked quickly to the store.")
 nlp.tag("the obviously good swim")
 //["DT", "RB", "JJ", "NN"]
 ```
-### Singularization
+
+<!-- ### Named-Entity Recognizing
 ```javascript
-nlp.singularize("earthquakes")
+nlp.spot("Tony Hawk said he was very happy")
+// ["Tony Hawk"] -->
+```
+
+## Syllable hyphenization
+70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)  0.5k
+```javascript
+nlp.syllables("hamburger")
+//[ 'ham', 'bur', 'ger' ]
+```
+
+##Conjugation
+
+### Inflection
+```javascript
+nlp.noun.singularize("earthquakes")
 //earthquake
 ```
-### US-UK Localization
+
+### Adjective->Noun conjugation
+```javascript
+nlp.adjective.to_noun("clean")
+// cleanliness
+```
+### Verb conjugation
+```javascript
+nlp.verb.to_noun("walked")
+{ infinitive: 'walk',
+  present: 'walks',
+  past: 'walked',
+  gerund: 'walking' }
+```
+
+## US-UK Localization
 ```javascript
 nlp.americanize("favourite")
 //favorite
 nlp.britishize("synthesized")
 //synthesised
 ```
-### N-gram
+## N-gram
 ```javascript
 nlp.ngram("She sells seashells by the seashore. The shells she sells are surely seashells.", {min_count:1, max_size:5})
 // [{ word: 'she sells', count: 2, size: 2 }, ...
@@ -75,11 +123,7 @@ options={
 }
 ```
 
-### Adjective->Noun conjugation
-```javascript
-nlp.adj_to_noun("clean")
-// cleanliness
-```
+
 
 ### Date extraction
 ```javascript

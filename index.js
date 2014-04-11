@@ -23,7 +23,7 @@ exports.adjective = {
 	to_noun: require('./lib/conjugation/adjective/to_noun').adj_to_noun
 }
 exports.verb = {
-	to_noun: require('./lib/conjugation/verb/conjugate').conjugate
+	conjugate: require('./lib/conjugation/verb/conjugate').conjugate
 }
 
 //mining

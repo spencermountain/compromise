@@ -11,7 +11,7 @@ var tests = (function() {
         console.log(arr.length == 3)
 
         print_header("singularize")
-        console.log(nlp.singularize("earthquakes") == "earthquake")
+        console.log(nlp.noun.singularize("earthquakes") == "earthquake")
 
         print_header("ngram")
         s = nlp.ngram("i really think that we all really think it's all good")
@@ -21,8 +21,8 @@ var tests = (function() {
         console.log(s[0][0].word == 'she' && s[0][0].count == 2)
 
         print_header("adj_to_noun")
-        console.log(nlp.adj_to_noun("ferocious") == "ferociousness")
-        console.log(nlp.adj_to_noun("fancy") == "fanciness")
+        console.log(nlp.adjective.to_noun("ferocious") == "ferociousness")
+        console.log(nlp.adjective.to_noun("fancy") == "fanciness")
 
         print_header("dates")
         dates = nlp.dates("I got divorced on June 4th 1993, in Miami")
@@ -176,11 +176,11 @@ var tests = (function() {
     }
 
     function assert_pos(str, arr) {
-        var the = nlp.tag(str, {})
+        var the = nlp.pos(str, {})
         the = the.map(function(a) {
             return a.pos
         }).map(function(a) {
-            return a.tag
+            return a.pos
         })
         if (arraysEqual(the, arr)) {
             console.log('true');
@@ -204,8 +204,8 @@ var tests = (function() {
     }
 
     var main = function() {
-        test_spot()
-        test_pos()
+        // test_spot()
+        // test_pos()
         test_others()
     }
 

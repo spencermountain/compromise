@@ -74,8 +74,9 @@ nlp.tag("the obviously good swim")
 <!-- ### Named-Entity Recognizing
 ```javascript
 nlp.spot("Tony Hawk said he was very happy")
-// ["Tony Hawk"] -->
+// ["Tony Hawk"]
 ```
+-->
 
 ## Syllable hyphenization
 70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)  0.5k
@@ -120,10 +121,11 @@ nlp.britishize("synthesized")
 nlp.ngram("She sells seashells by the seashore. The shells she sells are surely seashells.", {min_count:1, max_size:5})
 // [{ word: 'she sells', count: 2, size: 2 }, ...
 ```
->options={
->  min_count : 1 // throws away seldom-repeated grams. defaults to 1
->  max_gram : 5 // prevents the result from becoming gigantic. defaults to 5
->}
+
+		options={
+		  min_count : 1 // throws away seldom-repeated grams. defaults to 1
+		  max_gram : 5 // prevents the result from becoming gigantic. defaults to 5
+		}
 
 
 

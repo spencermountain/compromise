@@ -59,7 +59,7 @@ arr.length
 arr = nlp.tokenize("she sells sea-shells")
 arr.length
 //3
-
+```
 
 ## Part-of-speech
 80% on the Penn-treebank corpus
@@ -100,10 +100,10 @@ nlp.adjective.to_noun("clean")
 ### Verb conjugation
 ```javascript
 nlp.verb.to_noun("walked")
-{ infinitive: 'walk',
-  present: 'walks',
-  past: 'walked',
-  gerund: 'walking' }
+//{ infinitive: 'walk',
+//  present: 'walks',
+//  past: 'walked',
+//  gerund: 'walking' }
 ```
 
 ## US-UK Localization
@@ -117,26 +117,23 @@ nlp.britishize("synthesized")
 ```javascript
 nlp.ngram("She sells seashells by the seashore. The shells she sells are surely seashells.", {min_count:1, max_size:5})
 // [{ word: 'she sells', count: 2, size: 2 }, ...
+```
 options={
   min_count : 1 // throws away seldom-repeated grams. defaults to 1
   max_gram : 5 // prevents the result from becoming gigantic. defaults to 5
 }
-```
 
 
 
 ### Date extraction
 ```javascript
-nlp.dates('my wife left me on the 9th of april, 2005.')
-//{
-//  text: '9th of april, 2005',
-//  from: { year: '2005', month: '04', day: '09' },
-//  to: {}
-//}
+exports.dates("I married April for the 2nd time on June 5th 1998 ")
+// { text: 'June 5th 1998',
+//   from: { year: '1998', month: '06', day: '05' },
+//   to: {} }
 ```
 ### Unicode Normalisation
 a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
-
 ```javascript
 nlp.normalise("Björk")
 //Bjork

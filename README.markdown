@@ -35,8 +35,8 @@ bada-bing, bada-BOOM.
 npm install nlp_comprimise
 ```
 ```javascript
-nlp= require("nlp_comprimise")
-x=nlp.syllables("hamburger")
+nlp = require("nlp_comprimise")
+nlp.syllables("hamburger")
 //[ 'ham', 'bur', 'ger' ]
 ```
 
@@ -44,7 +44,7 @@ x=nlp.syllables("hamburger")
 ```javascript
 <script src="https://rawgit.com/spencermountain/nlp_comprimise/master/client_side/nlp.js"></script>
 <script>
-  x= nlp.pluralize("dinosaur")
+  nlp.pluralize("dinosaur")
   //dinosaurs
 </script>
 ```
@@ -54,8 +54,8 @@ x=nlp.syllables("hamburger")
 ## Sentence segmentation
 1.7k
 ```javascript
-nlp.sentences("Hi there Dr. Joe, the price is 4.59 for the N.A.S.A. Ph.Ds. I hope that's fine, etc. and you can attend Feb. 8th.").length
-//2
+nlp.sentences("Hi Dr. Joe et al. the price is 4.59 for the N.A.S.A. Ph.Ds and astronauts.").length
+//1
 ```
 ##Word tokenization
 ```javascript
@@ -72,6 +72,8 @@ nlp.tag("Tony Hawk walked quickly to the store.")
 nlp.tag("the obviously good swim")
 //["DT", "RB", "JJ", "NN"]
 ```
+
+the [industry-standard parts-of-speech](https://github.com/spencermountain/nlp_comprimise/blob/master/lib/pos/data/parts_of_speech.js)
 
 <!-- ### Named-Entity Recognizing
 ```javascript
@@ -122,10 +124,9 @@ nlp.britishize("synthesized")
 ```javascript
 nlp.ngram("She sells seashells by the seashore. The shells she sells are surely seashells.", {min_count:1, max_size:5})
 // [{ word: 'she sells', count: 2, size: 2 }, ...
+options.min_count // throws away seldom-repeated grams. defaults to 1
+options.max_gram // prevents the result from becoming gigantic. defaults to 5
 ```
-options.min_count : 1 // throws away seldom-repeated grams. defaults to 1
-options.max_gram : 5 // prevents the result from becoming gigantic. defaults to 5
-
 
 ### Date extraction
 ```javascript

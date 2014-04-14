@@ -1,11 +1,12 @@
 **nlp_comprimise** is a quick and light Natural-Language-Processing library in javascript that is small enough to be used in the browser, and quick enough and run on keypress.
 
-It trades the 'last 15%' accuracy for speed, slightness, and ease-of-use. It's a single javascript file that's smaller than jQuery, with results in the mid-80% range.
+It uniquely trades the 'last 15%' accuracy for speed, slightness, and ease-of-use. You can roll it into anything, without thinking, and get competitive results. No training, no configuring, no prolog.
 
-You can roll it into anything, without thinking, and get competitive results.
-No training, no configuring, no python. under 50k.
+Instead, it's a single javascript file that's smaller than jQuery, with results in the mid-80% range.
 
 [demo](https://s3.amazonaws.com/spencermounta.in/nlp_comprimise/index.html)
+
+this library is under active development (April-May 2014)
 
 #Justification
 A working NLP library can be satisfactory with a breathtaking lightness.
@@ -16,7 +17,8 @@ By [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-word
 
 >The top 50,000 words account for 95% of our language.
 
-The trade-offs for processing english are way more profound than the [80/20 rule](http://en.wikipedia.org/wiki/80/20_rule).
+The trade-offs for processing english are quite aggressive.
+
 On the [Penn treebank](http://www.cis.upenn.edu/~treebank/), for example, the following is possible:
 
 * choosing all nouns: **33% correct**
@@ -24,21 +26,23 @@ On the [Penn treebank](http://www.cis.upenn.edu/~treebank/), for example, the fo
 * using a 1 thousand word lexicon, and falling back to nouns: **70% correct**
 * using a 1 thousand word lexicon, common suffix regexes, and falling back to nouns: **74% correct**
 
-The process is to get curated data, find the patterns, list the exceptions.
+The process has been to get the curated data, find the patterns, list the exceptions.
 bada-bing, bada-BOOM.
 
 #Usage
 ## Server-side
->npm install nlp_comprimise
-
+```bash
+npm install nlp_comprimise
+```
 ```javascript
+nlp= require("nlp_comprimise")
 x=nlp.syllables("hamburger")
 //[ 'ham', 'bur', 'ger' ]
 ```
 
 ## Client-side
 ```javascript
-<script src"https://s3.amazonaws.com/spencermounta.in/nlp_comprimise/nlp.min.js"</script>
+<script src="https://rawgit.com/spencermountain/nlp_comprimise/master/client_side/nlp.js"></script>
 <script>
   x= nlp.pluralize("dinosaur")
   //dinosaurs
@@ -50,14 +54,12 @@ x=nlp.syllables("hamburger")
 ## Sentence segmentation
 1.7k
 ```javascript
-arr = nlp.sentences("Hi there Dr. Joe, the price is 4.59 for the N.A.S.A. Ph.Ds. I hope that's fine, etc. and you can attend Feb. 8th.")
-arr.length
+nlp.sentences("Hi there Dr. Joe, the price is 4.59 for the N.A.S.A. Ph.Ds. I hope that's fine, etc. and you can attend Feb. 8th.").length
 //2
 ```
 ##Word tokenization
 ```javascript
-arr = nlp.tokenize("she sells sea-shells")
-arr.length
+nlp.tokenize("she sells sea-shells").length
 //3
 ```
 
@@ -121,12 +123,8 @@ nlp.britishize("synthesized")
 nlp.ngram("She sells seashells by the seashore. The shells she sells are surely seashells.", {min_count:1, max_size:5})
 // [{ word: 'she sells', count: 2, size: 2 }, ...
 ```
-
-		options={
-		  min_count : 1 // throws away seldom-repeated grams. defaults to 1
-		  max_gram : 5 // prevents the result from becoming gigantic. defaults to 5
-		}
-
+options.min_count : 1 // throws away seldom-repeated grams. defaults to 1
+options.max_gram : 5 // prevents the result from becoming gigantic. defaults to 5
 
 
 ### Date extraction

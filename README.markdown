@@ -2,11 +2,11 @@
 
 It uniquely trades the 'last 15%' accuracy for speed, slightness, and ease-of-use. You can roll it into anything, without thinking, and get competitive results. No training, no configuring, no prolog.
 
-Instead, it's a single javascript file that's smaller than jQuery, with results in the mid-80% range.
+Instead, it's a single javascript file that's smaller than jQuery, with results in the mid-80% range. You win.
 
 [demo](https://s3.amazonaws.com/spencermounta.in/nlp_comprimise/index.html)
 
-this library is under active development (April-May 2014)
+this library is under active and reckless development, use a tag for sure. (April-May 2014)
 
 #Justification
 A working NLP library can be satisfactory with a breathtaking lightness.

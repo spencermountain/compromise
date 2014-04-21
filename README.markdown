@@ -1,4 +1,4 @@
-**nlp_comprimise** is a quick and light Natural-Language-Processing library in javascript that is small enough to be used in the browser, and quick enough and run on keypress.
+**nlp_compromise** is a quick and light Natural-Language-Processing library in javascript that is small enough to be used in the browser, and quick enough and run on keypress.
 
 It uniquely trades the 'last 15%' accuracy for speed, slightness, and ease-of-use. You can roll it into anything, without thinking, and get competitive results. No training, no configuring, no prolog.
 
@@ -32,7 +32,7 @@ bada-bing, bada-BOOM.
 #Usage
 ## Server-side
 ```bash
-npm install nlp_comprimise
+npm install nlp_compromise
 ```
 ```javascript
 nlp = require("nlp_comprimise")

@@ -1,6 +1,6 @@
 {
     "author": "Spencer Kelly <spencerwater@gmail.com> (http://spencerwaterbed.com)",
-    "name": "nlp_comprimise",
+    "name": "nlp_compromise",
     "description": "natural language processing in javascript, in the browser",
     "version": "0.0.6",
     "repository": {

@@ -66,10 +66,10 @@ nlp.tokenize("she sells sea-shells").length
 ## Part-of-speech
 80% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 ```javascript
-nlp.tag("Tony Hawk walked quickly to the store.")
+nlp.pos("Tony Hawk walked quickly to the store.")
 // ["NN","NN","VBD","RB","TO","DT","NN"]
 
-nlp.tag("the obviously good swim")
+nlp.pos("the obviously good swim")
 //["DT", "RB", "JJ", "NN"]
 ```
 

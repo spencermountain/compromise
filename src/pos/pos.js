@@ -2,7 +2,7 @@ var pos = (function() {
 
 
 	if (typeof module !== "undefined" && module.exports) {
-		var tokenizer = require("../tokenization/tokenize").tokenize;
+		var tokenizer = require("./tokenization/tokenize").tokenize;
 		var parts_of_speech = require("./data/parts_of_speech")
 		var word_rules = require("./data/word_rules").rules
 		var lexicon = require("./data/lexicon")

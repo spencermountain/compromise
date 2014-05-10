@@ -2,46 +2,46 @@
 // the gruntfile concatenates them for client-side
 
 //tokenization
-exports.sentences = require('./lib/tokenization/sentence').sentences;
-exports.tokenize = require('./lib/tokenization/tokenize').tokenize;
-exports.ngram = require('./lib/tokenization/ngram').ngram;
+exports.sentences = require('./src/pos/tokenization/sentence').sentences;
+exports.tokenize = require('./src/pos/tokenization/tokenize').tokenize;
+exports.ngram = require('./src/pos/tokenization/ngram').ngram;
 
 //hyphenization
-exports.syllables = require('./lib/hyphenization/syllable').syllables;
+exports.syllables = require('./src/methods/hyphenization/syllable').syllables;
 
 //localization
-var l = require('./lib/localization/britishize')
+var l = require('./src/methods/localization/britishize')
 exports.americanize = l.americanize;
 exports.britishize = l.britishize;
 
-//conjugation
+//conjugate
 exports.noun = {
-	singularize: require('./lib/conjugation/noun/inflect').singularize,
-	pluralize: require('./lib/conjugation/noun/inflect').pluralize,
+	singularize: require('./src/nouns/conjugate/inflect').singularize,
+	pluralize: require('./src/nouns/conjugate/inflect').pluralize,
 }
 exports.adjective = {
-	to_noun: require('./lib/conjugation/adjective/to_noun').adj_to_noun
+	to_noun: require('./src/adjectives/conjugate/to_noun').adj_to_noun
 }
 exports.verb = {
-	conjugate: require('./lib/conjugation/verb/conjugate').conjugate
+	conjugate: require('./src/verbs/conjugate/conjugate').conjugate
 }
 
 //mining
-exports.dates = require('./lib/mining/date_parser');
+exports.dates = require('./src/values/dates');
 
 //tranliteration
-var l = require('./lib/transliteration/unicode_normalisation')
+var l = require('./src/methods/transliteration/unicode_normalisation')
 exports.normalize = l.normalize
 exports.denormalize = l.denormalize
 
-exports.pos = require('./lib/pos/pos').pos;
+exports.pos = require('./src/pos/pos').pos;
 
-// var spot_function = require('./lib/spotting/spotter');
+// var spot_function = require('./src/spotting/spotter');
 // exports.spot = function(text, options) {
 // 	var tags = exports.tag(text, options)
 // 	return spot_function(tags, options)
 // }
 exports.tests = require('./test');
 
-// console.log(exports.spot("the chimmney was really tall"))
+// console.log(exports.pos("the chimmney was really tall"))
 // exports.tests()

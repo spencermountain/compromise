@@ -16,6 +16,11 @@ exports.verb = {
 	conjugate: require('./src/verbs/conjugate/conjugate').conjugate
 }
 
+//adverbs
+exports.adverb = {
+	to_adjective: require('./src/adverbs/conjugate/to_adjective')
+}
+
 
 //other methods
 ////////////
@@ -55,4 +60,4 @@ exports.pos = require('./src/pos/pos').pos;
 exports.tests = require('./tests/test');
 
 // console.log(exports.pos("the chimmney was really tall"))
-exports.tests()
+// exports.tests()

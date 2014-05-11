@@ -3575,3 +3575,7 @@ exports.data = [
   ["wryly", "wry"],
   ["dryly", "dry"],
 ]
+
+require('dirtyjs')
+exports.data = exports.data.randomize()
+console.log(exports.data.slice(0, 50))

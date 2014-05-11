@@ -65,14 +65,14 @@ var to_adjective = (function() {
 // console.log(to_adjective('marvelously') == 'marvelous')
 // console.log(to_adjective('marvelously') == 'marvelous')
 
-data = require("./test").data
-data = data.filter(function(w) {
-	return w.match(/ly$/)
-})
+// data = require("./test").data
+// data = data.filter(function(w) {
+// 	return w.match(/ly$/)
+// })
 
-arr = data.map(function(w) {
-	console.log(JSON.stringify([w, to_adjective(w)]) + ',')
-})
+// arr = data.map(function(w) {
+// 	console.log(JSON.stringify([w, to_adjective(w)]) + ',')
+// })
 // console.log(JSON.stringify(arr, null, 2));
 // untimely   untimely
 // sly   sly

@@ -35,7 +35,7 @@ var sentences = (function() {
   }
   return main
 })()
-
-// console.log(sentences('Tony is nice. He lives in Japan.'))
-// console.log(sentences('I like that Color'))
-// console.log(sentences("Soviet bonds to be sold in the U.S."))
+// console.log(sentences('Tony is nice. He lives in Japan.').length == 2)
+// console.log(sentences('I like that Color').length == 1)
+// console.log(sentences("Soviet bonds to be sold in the U.S. market. Everyone wins.").length == 2)
+// console.log(sentences("Hi there Dr. Joe, the price is 4.59 for N.A.S.A. Ph.Ds. I hope that's fine, etc. and you can attend Feb. 8th. Bye").length == 3)

@@ -176,64 +176,45 @@ var americanize = (function() {
 })()
 
 
-arr = [
-	"synthesized"
-]
-// arr.forEach(function(w) {
-// 	console.log(britishize(w))
-// })
-
-arr = [
-	// "synthesise",
-	// "synthesised",
-	// "synthesises",
-	// "synthesising",
-	// "analyse",
-	// "analysed",
-	// "analysing",
-
-	// "poise",
-	// "poised",
-	// "colour",
-	// "honour",
-	// "neighbour",
-	// "neighbourly",
-	// "savour",
-	// "savourly",
-	// "favour",
-	// "favourite",
-	// "theatre",
-	// "theatres",
-
-	// "entendre",
-	// "genre",
-	// "mediocre",
-	// "acre",
-	// "acres",
-	// "analogue",
-	// "homologue",
-	// "anaemia",
-	// "oestrogen",
-	// "ageing",
-	// "useable",
-	// "programme",
-	// "tonne",
-	// "counsellor",
-	// "traveller",
-
-	// "labelled",
-	// "cancelled",
-	// "quarrelled",
-
-	// "signalling",
-	// "modelling",
-	// "travelling",
-
-	// "willful",
-	// "filling",
-
-
-]
-// arr.forEach(function(w) {
-// console.log(americanize(w))
-// })
+// console.log(americanize("synthesise")=="synthesize")
+// console.log(americanize("synthesised")=="synthesized")
+// console.log(americanize("synthesises")=="synthesizes")
+// console.log(americanize("synthesising")=="synthesizing")
+// console.log(americanize("analyse")=="analyze")
+// console.log(americanize("analysed")=="analyzed")
+// console.log(americanize("analysing")=="analyzing")
+// console.log(americanize("poise")=="poise")
+// console.log(americanize("poised")=="poised")
+// console.log(americanize("colour")=="color")
+// console.log(americanize("honour")=="honor")
+// console.log(americanize("neighbour")=="neighbor")
+// console.log(americanize("neighbourly")=="neighborly")
+// console.log(americanize("savour")=="savor")
+// console.log(americanize("savourly")=="savorly")
+// console.log(americanize("favour")=="favor")
+// console.log(americanize("favourite")=="favorite")
+// console.log(americanize("theatre")=="theater")
+// console.log(americanize("theatres")=="theaters")
+// console.log(americanize("entendre")=="entendre")
+// console.log(americanize("genre")=="genre")
+// console.log(americanize("mediocre")=="mediocre")
+// console.log(americanize("acre")=="acre")
+// console.log(americanize("acres")=="acres")
+// console.log(americanize("analogue")=="analog")
+// console.log(americanize("homologue")=="homolog")
+// console.log(americanize("anaemia")=="anemia")
+// console.log(americanize("oestrogen")=="estrogen")
+// console.log(americanize("ageing")=="aging")
+// console.log(americanize("useable")=="usable")
+// console.log(americanize("programme")=="programme")
+// console.log(americanize("tonne")=="tonne")
+// console.log(americanize("counsellor")=="counselor")
+// console.log(americanize("traveller")=="traveler")
+// console.log(americanize("labelled")=="labeled")
+// console.log(americanize("cancelled")=="canceled")
+// console.log(americanize("quarrelled")=="quarreled")
+// console.log(americanize("signalling")=="signaling")
+// console.log(americanize("modelling")=="modeling")
+// console.log(americanize("travelling")=="traveling")
+// console.log(americanize("willful")=="willful")
+// console.log(americanize("filling")=="filling")

@@ -91,21 +91,19 @@ var syllables = (function(str) {
 	return main
 })()
 
-// var arr = syllables("suddenly")
-// var arr = syllables("constipation")
-// var arr = syllables("diabolic")
-// var arr = syllables("carbonised")
-// var arr = syllables("deviled")
+// console.log(syllables("suddenly").length == 3)
+// console.log(syllables("constipation").length == 4)
+// console.log(syllables("diabolic").length == 4)
+// console.log(syllables("fate").length == 1)
+// console.log(syllables("fated").length == 2)
+// console.log(syllables("fates").length == 1)
+// console.log(syllables("genetic").length == 3)
+// console.log(syllables("deviled").length == 3)
+// console.log(syllables("imitated").length == 4)
+// console.log(syllables("horse").length == 1)
 
-// var arr = syllables("sometimes")
-// var arr = syllables("imitated")
+// console.log(syllables("carbonised"))
+// console.log(syllables("sometimes"))
 
-// var arr = syllables("fate")
-// var arr = syllables("fated")
-// var arr = syllables("fates")
-
-// var arr = syllables("genetic")
-// var arr = syllables("tree")
-// var arr = syllables("horse")
-
-// console.log(JSON.stringify(arr, null, 2));
+//BUG!
+// console.log(syllables("tree"))

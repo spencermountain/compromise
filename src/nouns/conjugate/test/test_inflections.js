@@ -1,4 +1,4 @@
-var inflect = require("./inflect")
+var inflect = require("../inflect")
 
 var test = [
   ["snake", "snakes"],
@@ -108,6 +108,8 @@ var test = [
 
 ]
 test.forEach(function(t) {
+  var str = "console.log(nlp.noun.singularize('" + t[1] + "')=='" + t[0] + "')"
+  // console.log(str)
   var p = inflect.pluralize(t[0])
   if (!(p == t[1])) {
     console.log(t)
@@ -121,3 +123,8 @@ test.forEach(function(t) {
 })
 // console.log(singularize("poppies"))
 // console.log(singularize("geniuses"))
+
+//NOT WORKING singularize-direction
+// [ 'half', 'halves' ]
+// [ 'scarf', 'scarves' ]
+// [ 'neurosis', 'neuroses' ]

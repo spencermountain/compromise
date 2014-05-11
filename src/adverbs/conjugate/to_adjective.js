@@ -14,14 +14,12 @@ var to_adjective = (function() {
 			"practically": "practical",
 			"theoretically": "theoretical",
 			"critically": "critical",
-			"fantastically": " fantastic",
-			"mystically": " mystical",
-			"pornographically": " pornographic",
-			"fully": " fully",
-			"jolly": " jolly",
-			"wholly": " wholly",
-			"dully": " dully",
-			"willy-nilly": " willy-nilly"
+			"fantastically": "fantastic",
+			"mystically": "mystical",
+			"pornographically": "pornographic",
+			"fully": "full",
+			"jolly": "jolly",
+			"wholly": "whole",
 		}
 		var transforms = [{
 			reg: /bly$/i,
@@ -67,18 +65,9 @@ var to_adjective = (function() {
 
 // data = require("./test").data
 // data = data.filter(function(w) {
-// 	return w.match(/ly$/)
+// 	return to_adjective(w[0]) != w[1]
 // })
 
 // arr = data.map(function(w) {
-// 	console.log(JSON.stringify([w, to_adjective(w)]) + ',')
+// 	console.log(w[0] + " -  " + to_adjective(w[0]))
 // })
-// console.log(JSON.stringify(arr, null, 2));
-// untimely   untimely
-// sly   sly
-// subtly   subt
-// gently   gent
-// unduly   undu
-// duly   duly
-// yearly   yearly
-// daily   daily

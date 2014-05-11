@@ -44,7 +44,7 @@ nlp.syllables("hamburger")
 ```javascript
 <script src="https://rawgit.com/spencermountain/nlp_comprimise/master/client_side/nlp.js"></script>
 <script>
-  nlp.pluralize("dinosaur")
+  nlp.noun.pluralize("dinosaur")
   //dinosaurs
 </script>
 ```
@@ -99,10 +99,12 @@ nlp.noun.pluralize("earthquake")
 //earthquakes
 ```
 
-### Adjective->Noun conjugation
+### Adjective conjugation
 ```javascript
-nlp.adjective.to_noun("clean")
-// cleanliness
+nlp.adjective.to_noun("quick")
+// quickness
+nlp.adjective.to_adverb("quick")
+// quickly
 ```
 ### Verb conjugation
 ```javascript
@@ -128,12 +130,19 @@ options.min_count // throws away seldom-repeated grams. defaults to 1
 options.max_gram // prevents the result from becoming gigantic. defaults to 5
 ```
 
-### Date extraction
+### Date parsing
 ```javascript
-exports.dates("I married April for the 2nd time on June 5th 1998 ")
+nlp.dates("I married April for the 2nd time on June 5th 1998 ")
 // { text: 'June 5th 1998',
 //   from: { year: '1998', month: '06', day: '05' },
 //   to: {} }
+```
+### Number parsing
+```javascript
+nlp.to_number("two thousand five hundred and sixty")
+//2560
+nlp.to_number("ten and a half million")
+//15000000
 ```
 ### Unicode Normalisation
 a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.

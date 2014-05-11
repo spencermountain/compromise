@@ -9,7 +9,8 @@ exports.noun = {
 }
 //adjectives
 exports.adjective = {
-	to_noun: require('./src/adjectives/conjugate/to_noun').adj_to_noun
+	to_noun: require('./src/adjectives/conjugate/to_noun').adj_to_noun,
+	to_adverb: require('./src/adjectives/conjugate/to_adverb'),
 }
 //verbs
 exports.verb = {

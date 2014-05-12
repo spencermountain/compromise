@@ -148,7 +148,7 @@ var parts_of_speech = (function() {
         "CD": {
             "description": "Cardinal number",
             "example": "one,two",
-            "parent": "glue", //may want to change this
+            "parent": "value",
             "tag": "CD"
         },
 
@@ -173,7 +173,7 @@ var parts_of_speech = (function() {
         "PRP": {
             "description": "Personal pronoun",
             "example": "I,you,she",
-            "parent": "glue",
+            "parent": "noun",
             "tag": "PRP"
         },
         "DT": {

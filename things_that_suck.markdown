@@ -1,0 +1,1 @@
+better '.ly$' classification for adverbs

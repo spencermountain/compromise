@@ -87,7 +87,7 @@ console.log("     ")
 console.log("     ")
 console.log(percentages.average())
 
-console.log((bad_tokenization / data.length) * 100 + " bad tokenization")
+// console.log((bad_tokenization / data.length) * 100 + " bad tokenization")
 // console.log(bad_tokens.topk())
 
 //nothing = 0%

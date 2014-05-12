@@ -25,6 +25,7 @@ var pos = (function() {
 	}
 
 
+
 	var main = function(text, options) {
 
 		var sentences = tokenizer(text);
@@ -64,17 +65,66 @@ var pos = (function() {
 					token.pos_reason = "capitalised"
 					return token
 				}
+				//see if it's a number
+				if (parseFloat(token.normalised)) {
+					token.pos = parts_of_speech['CD']
+					token.pos_reason = "parsefloat"
+					return token
+				}
 
 				return token
 			})
 
-
-			//second pass
+			//second pass, suggest verb or noun phrase after their signals
+			var need = null
+			var reason = ''
 			sentence.tokens = sentence.tokens.map(function(token) {
-				if (!token.pos) {
+				//suggest verb after personal pronouns (he|she|they), modal verbs (would|could|should)
+				if (token.pos && (token.pos.tag == "PRP" || token.pos.tag == "MD")) {
+					need = 'VB'
+					reason = token.pos.tag
+				}
+				//suggest noun after determiners (a|the), posessive pronouns (her|my|its)
+				if (token.pos && (token.pos.tag == "DT" || token.pos.tag == "PP")) {
+					need = 'NN'
+					reason = token.pos.tag
+				}
+				if (need && !token.pos) {
+					token.pos = parts_of_speech[need]
+					token.pos_reason = "second_pass signal from " + reason
+				}
+				if (need == 'VB' && token.pos.parent == 'verb') {
+					need = null
+				}
+				if (need == 'NN' && token.pos.parent == 'noun') {
+					need = null
+				}
+				return token
+			})
 
+			//third pass, identify missing clauses, fallback to noun
+			var has = {}
+			sentence.tokens.forEach(function(token) {
+				if (token.pos) {
+					has[token.pos.parent] = true
+				}
+			})
+			sentence.tokens = sentence.tokens.map(function(token, i) {
+				if (!token.pos) {
+					//if there no verb in the sentence, there needs to be.
+					if (!has['verb']) {
+						token.pos = parts_of_speech['VB']
+						token.pos_reason = "need one verb"
+						return token
+					}
+					//if it's after an adverb, it's not a noun
+					var last = sentence.tokens[i - 1]
+					if (last && last.pos && last.pos.tag == "RB") {
+						token.pos = parts_of_speech['VB']
+						token.pos_reason = "after an adverb"
+						return token
+					}
 					//fallback to a noun
-					// token.pos = {}
 					token.pos = parts_of_speech['NN']
 					token.pos_reason = "noun fallback"
 				}
@@ -97,10 +147,37 @@ var pos = (function() {
 	return main
 })()
 
-// x = pos("Geroge Clooney walked, quietly into a bank. It was cold.")
-// x = pos("If the debts are repaid, it could clear the way for Soviet bonds to be sold in the U.S.")
-// render(x)
-// console.log(JSON.stringify(x, null, 2));
+
+
+
+
+var merge_tokens = function(a, b) {
+	a.text += " " + b.text
+	a.normalised += " " + b.normalised
+	a.pos_reason += "|" + b.pos_reason
+	a.start = a.start || b.start
+	a.capitalised = a.capitalised || b.capitalised
+	a.end = a.end || b.end
+	return a
+}
+
+//combine adjacent neighbours
+var combine = function(sentence) {
+	var arr = sentence.tokens
+	var better = []
+	for (var i = 0; i <= arr.length; i++) {
+		var next = arr[i + 1]
+		if (arr[i] && next && arr[i].pos.tag == next.pos.tag) {
+			arr[i] = merge_tokens(arr[i], arr[i + 1])
+			arr[i + 1] = null
+		}
+		better.push(arr[i])
+	}
+	sentence.tokens = better.filter(function(r) {
+		return r
+	})
+	return sentence
+}
 
 
 
@@ -111,3 +188,20 @@ var pos = (function() {
 			})
 		})
 	}
+
+	// fun = pos("Geroge Clooney walked, quietly into a bank. It was cold.")
+	// fun = pos("Geroge Clooney is cool.")
+	// fun = pos("atleast i'm better than geroge clooney")
+	// fun = pos("i paid five fifty")//combine numbers
+	// fun = pos("he was a gorky asdf")//second pass signal
+	// fun = pos("Joe quiitly alks the asdf") //"need one verb"
+	// fun = pos("Joe would alks the asdf") //"second pass modal"
+	// fun = pos("he alks the asdf") //"second_pass signal from PRP"
+	// fun = pos("joe is fun and quickly alks") //after adverb
+	// fun = pos("joe is 9") //number
+	// fun = pos("joe is real, nice") //number
+	// x = pos("If the debts are repaid, it could clear the way for Soviet bonds to be sold in the U.S.")
+	// render(x)
+	// sentence = fun[0]
+	// sentence = combine(sentence)
+	// console.log(JSON.stringify(sentence, null, 2));

@@ -316,7 +316,7 @@ var pos = (function() {
 	// fun = pos("i'm the best") //contraction
 	// fun = pos("i'd have said he'd go") //double contractions
 	// fun = pos("also is trying to combine their latest") //
-	// fun = pos("The AT&T team also is trying to combine their latest superconductor process with melt-textured growth, a process discovered earlier at Bell Laboratories.") //
+	// fun = pos("i agree with tom hanks and nancy kerrigan") //
 
 	// render(fun)
 	// console.log(JSON.stringify(fun[0].tokens.map(function(s) {

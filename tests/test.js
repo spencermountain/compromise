@@ -6,6 +6,19 @@ var tests = (function() {
 
     function test_others() {
 
+        print_header("adjective.to_comparative")
+        console.log(nlp.adjective.to_comparative("quick") == "quicker")
+        console.log(nlp.adjective.to_comparative("friendly") == "friendlier")
+        console.log(nlp.adjective.to_comparative("stinky") == "stinkier")
+        console.log(nlp.adjective.to_comparative("clever") == "more clever")
+        console.log(nlp.adjective.to_comparative("caring") == "more caring")
+
+        print_header("adjective.to_superlative")
+        console.log(nlp.adjective.to_superlative("quick") == "quickest")
+        // console.log(nlp.adjective.to_superlative("slippery") == "more slippery")
+        console.log(nlp.adjective.to_superlative("friendly") == "friendliest")
+        console.log(nlp.adjective.to_superlative("caring") == "most caring")
+
         print_header("adjective.to_adverb")
         console.log(nlp.adjective.to_adverb('obligatory') == 'obligatorily')
         console.log(nlp.adjective.to_adverb('extensive') == 'extensively')
@@ -395,66 +408,18 @@ var tests = (function() {
 
 
         //sticky nouns
-        assert_spot("the strobelight at plastic people", {}, ["strobelight"]);
-        assert_spot("the strobelight at plastic people", {
-            stick_adjectives: true
-        }, ["strobelight", "plastic people"]);
-        assert_spot("natalie portman in black swan", {}, ["natalie portman", "swan"]);
-        assert_spot("natalie portman in black swan", {
-            stick_adjectives: true
-        }, ["natalie portman", "swan", "black swan"]);
-        assert_spot("i enjoyed watching children of men", {}, []);
-        assert_spot("i enjoyed watching children of men", {
-            stick_prepositions: true
-        }, ["children of men"]);
+        assert_spot("tony hawk walked to toronto", {}, ["tony hawk", "toronto"]);
+        assert_spot("natalie portman in black swan was really great", {}, ["natalie portman", "swan"]);
 
-        assert_spot("really lame", {}, []);
-        assert_spot("really lame", {
-            match_whole: true
-        }, ["really lame"]);
-        //ngram
-        assert_spot("toronto international film festival", {}, ["toronto international film festival"])
-        assert_spot("toronto film festival", {
-            subnouns: true
-        }, ["toronto film festival", "toronto", "festival", "toronto film", "film festival"]);
-        assert_spot("nancy reagan when she spoke about hiv in denver", {}, ["nancy reagan", "hiv", "denver"])
-        assert_spot("nancy reagan when she spoke about hiv in denver", {
-            subnouns: true
-        }, ["nancy reagan", "hiv", "denver", "nancy", "reagan"])
-        assert_spot("Dr. Conrad Murray guilty verdict", {}, ["dr. conrad murray guilty verdict"])
-        assert_spot("Dr. Conrad Murray guilty verdict", {
-            subnouns: true
-        }, ["dr. conrad murray guilty verdict", "conrad", "murray", "guilty", "verdict", "conrad murray", "murray guilty", "guilty verdict", "conrad murray guilty", "murray guilty verdict", "conrad murray guilty verdict"])
-        assert_spot("tom cruise and nancy kerrigan", {}, ["tom cruise", "nancy kerrigan"])
-
-        assert_spot("strolling in berlin", {}, ["berlin"]);
-        assert_spot("strolling in berlin", {
-            gerund: true
-        }, ["strolling", "berlin"]);
-
-        assert_spot("smoking all morning in the bathtub", {
-            gerund: false
-        }, ["morning", "bathtub"]);
-        assert_spot("smoking all morning in the bathtub", {
-            gerund: true
-        }, ["smoking", "morning", "bathtub"]);
-
-        assert_spot("waking up and being exhausted at bob marley's house", {
-            gerund: true
-        }, ["waking up", "bob marley"]);
-
-        assert_spot("the simpsons", {}, ["simpsons"]);
-        assert_spot("the simpsons", {
-            stick_the: true
-        }, ["simpsons", "the simpsons"]);
-
-        assert_spot("singing in the phantom of the opera", {
-            stick_prepositions: false
-        }, ["phantom", "opera"]);
-        assert_spot("singing in the phantom of the opera", {
-            stick_prepositions: false,
-            gerund: true
-        }, ["singing", "phantom", "opera"]);
+        assert_spot("nancy reagan was great when she spoke about hiv in denver", {}, ["nancy reagan", "hiv", "denver"])
+        // assert_spot("Dr. Conrad Murray recieved a guilty verdict", {}, ["dr. conrad murray"])
+        assert_spot("i agree with tom hanks and nancy kerrigan", {}, ["tom hanks", "nancy kerrigan"])
+        assert_spot("i went strolling in berlin", {
+            ignore_gerund: true
+        }, ["berlin"]);
+        assert_spot("smoking all day in the bathtub", {}, ["day", "bathtub"]);
+        assert_spot("john recently watched the simpsons", {}, ["john", "simpsons"]);
+        assert_spot("I especially loved the singing in the phantom of the opera", {}, ["singing", "phantom", "opera"]);
 
     }
 
@@ -493,7 +458,7 @@ var tests = (function() {
     function assert_spot(str, obj, arr) {
         var the = nlp.spot(str, obj)
         the = the.map(function(a) {
-            return a.word.toLowerCase()
+            return a.normalised
         })
         if (arraysEqual(the, arr)) {
             console.log('true');
@@ -505,7 +470,7 @@ var tests = (function() {
     }
 
     var main = function() {
-        // test_spot()
+        test_spot()
         // test_pos()
         test_others()
     }

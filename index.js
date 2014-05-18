@@ -11,6 +11,8 @@ exports.noun = {
 exports.adjective = {
 	to_noun: require('./src/adjectives/conjugate/to_noun').adj_to_noun,
 	to_adverb: require('./src/adjectives/conjugate/to_adverb'),
+	to_comparative: require('./src/adjectives/conjugate/to_comparative'),
+	to_superlative: require('./src/adjectives/conjugate/to_superlative'),
 }
 //verbs
 exports.verb = {
@@ -52,13 +54,11 @@ exports.britishize = l.britishize;
 //part of speech tagging
 exports.pos = require('./src/pos/pos').pos;
 
+//named_entity_recognition
+exports.spot = require('./src/pos/spot');
 
-// var spot_function = require('./src/spotting/spotter');
-// exports.spot = function(text, options) {
-// 	var tags = exports.tag(text, options)
-// 	return spot_function(tags, options)
-// }
 exports.tests = require('./tests/test');
 
 // console.log(exports.pos("the chimmney was really tall"))
+// console.log(exports.spot("the chimmney was really tall"))
 // exports.tests()

@@ -78,6 +78,11 @@ nlp.pos("the obviously good swim")
 #### Tags
 the [industry-standard parts-of-speech](https://github.com/spencermountain/nlp_comprimise/blob/master/lib/pos/data/parts_of_speech.js)
 
+####Lexicon
+The conjugate methods are quick and accurate enough that we can actually begin with a very small lexicon, and build it out.
+
+For example, it lists the 300 top verbs, then blasts-out all of their 1200+ derived forms.
+
 ####Contractions
 when it's grammatically necessary, the parser puts a 'silent token' into the phrase. Otherwise it would get misrepresented.
 ```javascript
@@ -139,6 +144,10 @@ nlp.adjective.to_noun("quick")
 // quickness
 nlp.adjective.to_adverb("quick")
 // quickly
+nlp.adjective.to_comparative("quick")
+// quicker
+nlp.adjective.to_superlative("quick")
+// quickest
 ```
 ### Verb conjugation
 ```javascript

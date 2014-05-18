@@ -14,10 +14,6 @@ var bad_tokens = []
 
 var compare = function(mine, theirs) {
   if (mine.length == 0 || mine.length != theirs.length) {
-    // console.log("tokenization difference")
-    console.log(JSON.stringify(mine.map('word')))
-    console.log(JSON.stringify(theirs.map('word')))
-    console.log("   ")
     bad_tokenization++
     return
   }

@@ -25,13 +25,105 @@ var pos = (function() {
 	}
 
 
+	var fourth_pass = function(token, i, sentence) {
+		var last = sentence.tokens[i - 1]
+		var next = sentence.tokens[i + 1]
+		//if it's before a modal verb, it's a noun -> lkjsdf would
+		if (next && token.pos.parent != "noun" && next.pos.tag == "MD") {
+			token.pos = parts_of_speech['NN']
+			token.pos_reason = "before a modal"
+		}
+		//if it's after an adverb, it's not a noun -> quickly acked
+		//support form 'atleast he is..'
+		if (last && token.pos.parent == "noun" && last.pos.tag == "RB" && !last.start) {
+			token.pos = parts_of_speech['VB']
+			token.pos_reason = "after an adverb"
+		}
+		//no consecutive, unpunctuated adjectives -> real good
+		if (next && token.pos.parent == "adjective" && next.pos.parent == "adjective" && !token.punctuated) {
+			token.pos = parts_of_speech['RB']
+			token.pos_reason = "consecutive_adjectives"
+		}
+		//if it's after a determiner, it's not a verb -> the walk
+		if (last && token.pos.parent == "verb" && last.pos.tag == "DT") {
+			token.pos = parts_of_speech['NN']
+			token.pos_reason = "determiner-verb"
+		}
+		//copulas are followed by a determiner ("are a .."), or an adjective ("are good")
+		//(we would have gotten the adverb already)
+		if (last && last.pos.tag == "CP" && token.pos.tag != "DT" && token.pos.tag != "RB" && token.pos.parent != "adjective" && token.pos.parent != "value") {
+			token.pos = parts_of_speech['JJ']
+			token.pos_reason = "copula-adjective"
+		}
+		//copula, adverb, verb -> copula adverb adjective -> is very lkjsdf
+		if (last && next && last.pos.tag == "CP" && token.pos.tag == "RB" && next.pos.parent == "verb") {
+			sentence.tokens[i + 1].pos = parts_of_speech['JJ']
+			sentence.tokens[i + 1].pos_reason = "copula-adverb-adjective"
+		}
+
+		return token
+	}
+
+	//add a 'quiet' token for contractions so we can represent their grammar
+	var handle_contractions = function(arr) {
+		var contractions = {
+			"i'd": ["i", "would"],
+			"she'd": ["she", "would"],
+			"he'd": ["he", "would"],
+			"they'd": ["they", "would"],
+			"we'd": ["we", "would"],
+
+			"i'll": ["i", "will"],
+			"she'll": ["she", "will"],
+			"he'll": ["he", "will"],
+			"they'll": ["they", "will"],
+			"we'll": ["we", "will"],
+
+			"i've": ["i", "have"],
+			"they've": ["they", "have"],
+			"we've": ["we", "have"],
+			"should've": ["should", "have"],
+			"would've": ["would", "have"],
+			"would've": ["would", "have"],
+			"must've": ["must", "have"],
+
+			"i'm": ["i", "am"],
+			"he's": ["he", "is"],
+			"she's": ["she", "is"],
+			"we're": ["we", "are"],
+			"they're": ["they", "are"],
+		}
+		for (var i = 0; i < arr.length; i++) {
+			if (contractions[arr[i].normalised]) {
+				var before = arr.slice(0, i)
+				var after = arr.slice(i + 1, arr.length)
+				var fix = [{
+					text: "",
+					normalised: contractions[arr[i].normalised][0],
+					start: arr[i].start
+				}, {
+					text: arr[i].text,
+					normalised: contractions[arr[i].normalised][1],
+					start: undefined
+				}]
+				arr = before.concat(fix)
+				arr = arr.concat(after)
+				return arr
+			}
+		}
+		return arr
+	}
+
 
 	var main = function(text, options) {
 
 		var sentences = tokenizer(text);
 		sentences.forEach(function(sentence) {
 
-			//first pass
+			//smart handling of contractions
+			sentence.tokens = handle_contractions(sentence.tokens)
+
+			//first pass, word-level clues
 			sentence.tokens = sentence.tokens.map(function(token) {
 				//known words list
 				var lex = lexicon_pass(token.normalised)
@@ -75,23 +167,28 @@ var pos = (function() {
 				return token
 			})
 
-			//second pass, suggest verb or noun phrase after their signals
+			//second pass, set verb or noun phrases after their signals
 			var need = null
 			var reason = ''
-			sentence.tokens = sentence.tokens.map(function(token) {
-				//suggest verb after personal pronouns (he|she|they), modal verbs (would|could|should)
-				if (token.pos && (token.pos.tag == "PRP" || token.pos.tag == "MD")) {
-					need = 'VB'
-					reason = token.pos.tag
-				}
-				//suggest noun after determiners (a|the), posessive pronouns (her|my|its)
-				if (token.pos && (token.pos.tag == "DT" || token.pos.tag == "PP")) {
-					need = 'NN'
-					reason = token.pos.tag
+			sentence.tokens = sentence.tokens.map(function(token, i) {
+				var next = sentence.tokens[i + 1]
+				var prev = sentence.tokens[i - 1]
+				if (token.pos) {
+					//suggest verb after personal pronouns (he|she|they), modal verbs (would|could|should)
+					if (token.pos.tag == "PRP" || token.pos.tag == "MD") {
+						need = 'VB'
+						reason = token.pos.name
+					}
+					//suggest noun after determiners (a|the), posessive pronouns (her|my|its)
+					if (token.pos.tag == "DT" || token.pos.tag == "PP") {
+						need = 'NN'
+						reason = token.pos.name
+					}
+
 				}
 				if (need && !token.pos) {
 					token.pos = parts_of_speech[need]
-					token.pos_reason = "second_pass signal from " + reason
+					token.pos_reason = "signal from " + reason
 				}
 				if (need == 'VB' && token.pos.parent == 'verb') {
 					need = null
@@ -117,25 +214,32 @@ var pos = (function() {
 						token.pos_reason = "need one verb"
 						return token
 					}
-					//if it's after an adverb, it's not a noun
-					var last = sentence.tokens[i - 1]
-					if (last && last.pos && last.pos.tag == "RB") {
-						token.pos = parts_of_speech['VB']
-						token.pos_reason = "after an adverb"
-						return token
-					}
+
 					//fallback to a noun
 					token.pos = parts_of_speech['NN']
 					token.pos_reason = "noun fallback"
 				}
-
 				return token
 			})
 
 
 
+			//fourth pass, error correction
+			sentence.tokens = sentence.tokens.map(function(token, i) {
+				return fourth_pass(token, i, sentence)
+			})
+			//run the fourth-pass again!
+			sentence.tokens = sentence.tokens.map(function(token, i) {
+				return fourth_pass(token, i, sentence)
+			})
 
 		})
+
+		//combine neighbours
+		sentences = sentences.map(function(s) {
+			return combine(s)
+		})
+
 		return sentences
 
 	}
@@ -167,7 +271,7 @@ var combine = function(sentence) {
 	var better = []
 	for (var i = 0; i <= arr.length; i++) {
 		var next = arr[i + 1]
-		if (arr[i] && next && arr[i].pos.tag == next.pos.tag) {
+		if (arr[i] && next && arr[i].pos.tag == next.pos.tag && arr[i].punctuated != true) {
 			arr[i] = merge_tokens(arr[i], arr[i + 1])
 			arr[i + 1] = null
 		}
@@ -184,24 +288,33 @@ var combine = function(sentence) {
 	function render(arr) {
 		arr.forEach(function(sentence) {
 			sentence.tokens.forEach(function(token) {
-				console.log(token.text + "   " + (token.pos || {}).tag + '   (' + token.pos_reason + ')')
+				console.log(token.normalised + "   " + (token.pos || {}).tag + '   (' + token.pos_reason + ')')
 			})
 		})
 	}
 
 	// fun = pos("Geroge Clooney walked, quietly into a bank. It was cold.")
 	// fun = pos("Geroge Clooney is cool.")
-	// fun = pos("atleast i'm better than geroge clooney")
-	// fun = pos("i paid five fifty")//combine numbers
-	// fun = pos("he was a gorky asdf")//second pass signal
+	// fun = pos("i paid five fifty") //combine numbers
+	// fun = pos("he was a gorky asdf") //second pass signal
 	// fun = pos("Joe quiitly alks the asdf") //"need one verb"
 	// fun = pos("Joe would alks the asdf") //"second pass modal"
-	// fun = pos("he alks the asdf") //"second_pass signal from PRP"
-	// fun = pos("joe is fun and quickly alks") //after adverb
+	// fun = pos("he blalks the asdf") //"second_pass signal from PRP"
+	// fun = pos("joe is fun and quickly blalks") //after adverb
+	// fun = pos("he went on the walk") //determiner-verb
+	// fun = pos("he is very walk") //copula-adverb-adjective
+	// fun = pos("he is very lkajsdf") //two error-corrections (copula-adverb-adjective)
 	// fun = pos("joe is 9") //number
-	// fun = pos("joe is real, nice") //number
-	// x = pos("If the debts are repaid, it could clear the way for Soviet bonds to be sold in the U.S.")
-	// render(x)
-	// sentence = fun[0]
-	// sentence = combine(sentence)
-	// console.log(JSON.stringify(sentence, null, 2));
+	// fun = pos("joe is real pretty") //consecutive adjectives to adverb
+	// fun = pos("joe is real, pretty") //don't combine over a comma
+	// fun = pos("walk should walk") //before a modal
+
+	//contractions
+	// fun = pos("atleast i'm better than geroge clooney")//i'm
+	// fun = pos("i bet they'd blalk") //contraction
+	// fun = pos("i'm the best") //contraction
+
+	// render(fun)
+	// console.log(JSON.stringify(fun[0].tokens.map(function(s) {
+	// 	return s
+	// }), null, 2));

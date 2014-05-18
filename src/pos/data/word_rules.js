@@ -426,25 +426,45 @@ var rules = (function() {
             strength: 3,
             errors: 0,
             accuracy: '0.00'
-        }, {
-            reg: /[a-z]'s$/i,
-            pos: 'NN',
-            strength: 1,
-            errors: 0,
-            accuracy: '0.00'
-        }, {
-            reg: /.'n$/i,
-            pos: 'VB',
-            strength: 1,
-            errors: 0,
-            accuracy: '0.00'
-        }, {
+        },
+
+        {
             reg: /^-?[0-9]+(.[0-9]+)?$/,
             pos: 'CD',
             strength: 1,
             errors: 1,
             accuracy: '0.00'
-        }
+        },
+
+        //ugly handling of contractions
+
+        {
+            reg: /[a-z]'s$/i, //spencer's
+            pos: 'NN',
+            strength: 1,
+            errors: 0,
+            accuracy: '0.00'
+        }, {
+            reg: /.'n$/i, //walk'n
+            pos: 'VB',
+            strength: 1,
+            errors: 0,
+            accuracy: '0.00'
+        }, {
+            reg: /.'re$/i, //they're
+            pos: 'CP',
+            strength: 1,
+            errors: 0,
+            accuracy: '0.00'
+        }, {
+            reg: /.'ll$/i, //they'll
+            pos: 'MD',
+            strength: 1,
+            errors: 0,
+            accuracy: '0.00'
+        },
+
+
     ]
 
     if (typeof module !== "undefined" && module.exports) {

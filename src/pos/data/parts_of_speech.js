@@ -4,47 +4,47 @@ var parts_of_speech = (function() {
 
         //verbs
         "VB": {
-            "description": "verb, base form",
+            "name": "verb",
             "example": "eat",
             "parent": "verb",
             "tag": "VB"
         },
         "VBD": {
-            "description": "verb, past tense",
+            "name": "past-tense verb",
             "example": "ate",
             "parent": "verb",
             "tense": "past",
             "tag": "VBD"
         },
         "VBN": {
-            "description": "verb, past participle",
+            "name": "past-participle verb",
             "example": "eaten",
             "parent": "verb",
             "tense": "past",
             "tag": "VBN"
         },
         "VBP": {
-            "description": "Verb, infinitive",
+            "name": "infinitive verb",
             "example": "eat",
             "parent": "verb",
             "tense": "present",
             "tag": "VBP"
         },
         "VBZ": {
-            "description": "Verb, present",
+            "name": "present-tense verb",
             "example": "eats, swims",
             "tense": "present",
             "parent": "verb",
             "tag": "VBZ"
         },
         "CP": {
-            "description": "copula",
+            "name": "copula",
             "example": "is, was, were",
             "parent": "verb",
             "tag": "CP"
         },
         "VBG": {
-            "description": "verb, gerund",
+            "name": "gerund verb",
             "example": "eating,winning",
             "parent": "verb",
             "tag": "VBG"
@@ -53,19 +53,19 @@ var parts_of_speech = (function() {
 
         //adjectives
         "JJ": {
-            "description": "Adjective",
+            "name": "adjective",
             "example": "big, nice",
             "parent": "adjective",
             "tag": "JJ"
         },
         "JJR": {
-            "description": "Adj., comparative",
+            "name": "comparative adjective",
             "example": "bigger, cooler",
             "parent": "adjective",
             "tag": "JJR"
         },
         "JJS": {
-            "description": "Adj., superlative",
+            "name": "superlative adjective",
             "example": "biggest, fattest",
             "parent": "adjective",
             "tag": "JJS"
@@ -74,19 +74,19 @@ var parts_of_speech = (function() {
 
         //adverbs
         "RB": {
-            "description": "Adverb",
+            "name": "adverb",
             "example": "quickly, softly",
             "parent": "adverb",
             "tag": "RB"
         },
         "RBR": {
-            "description": "Adverb, comparative",
+            "name": "comparative adverb",
             "example": "faster, cooler",
             "parent": "adverb",
             "tag": "RBR"
         },
         "RBS": {
-            "description": "Adverb, superlative",
+            "name": "superlative adverb",
             "example": "fastest (driving), coolest (looking)",
             "parent": "adverb",
             "tag": "RBS"
@@ -95,37 +95,37 @@ var parts_of_speech = (function() {
 
         //nouns
         "NN": {
-            "description": "Noun, sing. or mass",
+            "name": "noun",
             "example": "dog, rain",
             "parent": "noun",
             "tag": "NN"
         },
         "NNP": {
-            "description": "Proper noun, sing.",
+            "name": "singular proper noun",
             "example": "Edinburgh, skateboard",
             "parent": "noun",
             "tag": "NNP"
         },
         "NNPS": {
-            "description": "Proper noun, plural",
+            "name": "plural proper noun",
             "example": "Smiths",
             "parent": "noun",
             "tag": "NNPS"
         },
         "NNS": {
-            "description": "Noun, plural",
+            "name": "plural noun",
             "example": "dogs, foxes",
             "parent": "noun",
             "tag": "NNS"
         },
         "NNO": {
-            "description": "Noun, possessive",
+            "name": "possessive noun",
             "example": "spencer's, sam's",
             "parent": "noun",
             "tag": "NNO"
         },
         "NG": {
-            "description": "noun, gerund",
+            "name": "gerund noun",
             "example": "eating,winning - but used grammatically as a noun",
             "parent": "noun",
             "tag": "VBG"
@@ -134,62 +134,62 @@ var parts_of_speech = (function() {
 
         //glue
         "PP": {
-            "description": "Possessive pronoun",
+            "name": "possessive pronoun",
             "example": "my,one's",
             "parent": "glue",
             "tag": "PP"
         },
         "FW": {
-            "description": "foreign word",
+            "name": "foreign word",
             "example": "mon dieu, voila",
             "parent": "glue",
             "tag": "FW"
         },
         "CD": {
-            "description": "Cardinal number",
+            "name": "cardinal number",
             "example": "one,two",
             "parent": "value",
             "tag": "CD"
         },
 
         "IN": {
-            "description": "Preposition",
+            "name": "preposition",
             "example": "of,in,by",
             "parent": "glue",
             "tag": "IN"
         },
         "MD": {
-            "description": "Modal",
+            "name": "modal verb",
             "example": "can,should",
-            "parent": "glue",
+            "parent": "glue", //dunno
             "tag": "MD"
         },
         "CC": {
-            "description": "Coord Conjuncn",
+            "name": "co-ordating conjunction",
             "example": "and,but,or",
             "parent": "glue",
             "tag": "CC"
         },
         "PRP": {
-            "description": "Personal pronoun",
+            "name": "personal pronoun",
             "example": "I,you,she",
             "parent": "noun",
             "tag": "PRP"
         },
         "DT": {
-            "description": "Determiner",
+            "name": "determiner",
             "example": "the,some",
             "parent": "glue",
             "tag": "DT"
         },
         "UH": {
-            "description": "Interjection",
+            "name": "interjection",
             "example": "oh, oops",
             "parent": "glue",
             "tag": "UH"
         },
         "EX": {
-            "description": "Existential 'there'",
+            "name": "existential there",
             "example": "there",
             "parent": "glue",
             "tag": "EX"

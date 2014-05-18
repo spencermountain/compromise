@@ -134,7 +134,7 @@ var lexicon = (function() {
 		"up": "IN",
 
 		//adjectives
-		"hit": "JJ",
+		"nice": "JJ",
 		"different": "JJ",
 		"similar": "JJ",
 		"final": "JJ",
@@ -233,6 +233,9 @@ var lexicon = (function() {
 		"personal": "JJ",
 		"central": "JJ",
 		"necessary": "JJ",
+
+
+		//modal verbs
 		"can": "MD",
 		"may": "MD",
 		"could": "MD",
@@ -383,13 +386,12 @@ var lexicon = (function() {
 		"hair": "NN",
 		"rate": "NN",
 		"strength": "NN",
-		"back": "NN",
 		"length": "NN",
 		"life": "NN",
 		"step": "NN",
 		"position": "NN",
 		"record": "NN",
-		"God": "NN",
+		"god": "NN",
 		"window": "NN",
 		"character": "NN",
 		"horse": "NN",
@@ -447,7 +449,7 @@ var lexicon = (function() {
 		"operation": "NN",
 		"experiment": "NN",
 		"future": "NN",
-		"Congress": "NN",
+		"congress": "NN",
 		"range": "NN",
 		"population": "NN",
 		"organization": "NN",
@@ -492,7 +494,7 @@ var lexicon = (function() {
 		"faith": "NN",
 		"committee": "NN",
 		"boat": "NN",
-		"England": "NN",
+		"england": "NN",
 		"foot": "NN",
 		"worker": "NN",
 		"meaning": "NN",
@@ -1033,6 +1035,29 @@ var lexicon = (function() {
 		"go": "VBP",
 		"too": "RB",
 		"long": "JJ",
+
+		//contractions that don't need splitting-open, grammatically
+		"don't": "VB",
+		"isn't": "CP",
+		"ain't": "CP",
+		"aren't": "CP",
+		"won't": "VB",
+		"shouldn't": "MD",
+		"wouldn't": "MD",
+		"couldn't": "MD",
+		"mustn't": "MD",
+		"shan't": "MD",
+		"shant": "MD",
+		"lets": "MD", //arguable
+		"let's": "MD",
+		"what's": "VB", //somewhat ambiguous (what does|what are)
+		"where'd": "VBD",
+		"when'd": "VBD",
+		"how'd": "VBD",
+		"what'd": "VBD",
+		"who'd": "MD",
+		"'o": "IN",
+		"'em": "PRP",
 
 	}
 

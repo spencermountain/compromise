@@ -1,5 +1,10 @@
 data = require("./data").data
-conjugate = require("../conjugate")
+// o = {}
+// tmp = data.forEach(function(t) {
+//   o[t.infinitive] = "VB"
+// })
+// console.log(o)
+conjugate = require("../conjugate").conjugate
 
 types = [
   "infinitive",
@@ -23,13 +28,13 @@ function test_tense(type) {
     var o1 = conjugate(o[type]);
     all++
     if (!isequal(o, o1)) {
-      // console.log(o[type])
+      // console.log(o[type] + "   " + o1[type])
     } else {
       goods++
     }
   })
   console.log(goods + "  right")
-  console.log((goods / (all)).toFixed(2) + "%")
+  console.log(((goods / (all)) * 100).toFixed(0) + "%")
 }
 for (var i in types) {
   test_tense(types[i])

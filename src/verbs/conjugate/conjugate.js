@@ -1,29 +1,13 @@
 var conjugate = (function() {
 
   if (typeof module !== "undefined" && module.exports) {
-    rules = require("./rules").rules;
+    var rules = require("./rules").rules;
+    var irregulars = require("./irregulars").data;
   }
-
-  var irregulars = [{
-    "infinitive": "go",
-    "present": "goes",
-    "gerund": "going",
-    "past": "went"
-  }, {
-    "infinitive": "be",
-    "present": "is",
-    "gerund": "being",
-    "past": "were"
-  }, {
-    "infinitive": "be",
-    "present": "am",
-    "gerund": "is",
-    "past": "was"
-  }, ]
-
 
   //fallback to this transformation if it has an unknown prefix
   var fallback = function(w) {
+    // console.log('fallback')
     var infinitive = w;
     var present, past, gerund;
     if (w.match(/[^aeiou]$/)) {
@@ -84,4 +68,9 @@ var conjugate = (function() {
   return main
 })()
 
-// console.log(conjugate("walk"))
+// console.log(conjugate("swing"))
+// console.log(conjugate("walking"))
+// console.log(conjugate("win"))
+// console.log(conjugate("write"))
+// console.log(conjugate("stop"))
+// console.log(conjugate("carry"))

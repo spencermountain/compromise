@@ -1,6 +1,6 @@
 exports.rules = [
 
-  //infinitive
+  // //infinitive
   {
     reg: /([a[tg]|i[zn]]|ur|nc|gl|is)e$/i,
     repl: {
@@ -13,7 +13,7 @@ exports.rules = [
     power: 804,
     tense: 'infinitive'
   }, {
-    reg: /(if)y$/i,
+    reg: /([i|f|rr])y$/i,
     repl: {
       present: "$1ies",
       gerund: "$1ying",
@@ -24,7 +24,7 @@ exports.rules = [
     power: 128,
     tense: 'infinitive'
   }, {
-    reg: /([td])er$/i,
+    reg: /([td]er)$/i,
     repl: {
       present: "$1s",
       gerund: "$1ing",
@@ -78,7 +78,55 @@ exports.rules = [
     exceptions: [],
     power: 1,
     tense: 'infinitive'
+  }, {
+    reg: /([aeiou])([ptn])$/i,
+    repl: {
+      present: "$1$2s",
+      gerund: "$1$2$2ing",
+      past: "$1$2",
+    },
+    examples: 'win',
+    exceptions: [],
+    power: 1,
+    tense: 'infinitive'
   },
+
+  {
+    reg: /(er)$/i,
+    repl: {
+      present: "$1s",
+      gerund: "$1ing",
+      past: "$1ed",
+    },
+    examples: 'win',
+    exceptions: [],
+    power: 1,
+    tense: 'infinitive'
+  },
+
+  // {
+  //   reg: /(ed)$/i,
+  //   repl: {
+  //     present: "$1s",
+  //     gerund: "ing",
+  //     past: "",
+  //   },
+  //   examples: 'telecasted',
+  //   exceptions: [],
+  //   power: 1,
+  //   tense: 'infinitive'
+  // }, {
+  //   reg: /(es)$/i,
+  //   repl: {
+  //     present: "$1",
+  //     gerund: "ing",
+  //     past: "ed",
+  //   },
+  //   examples: 'telecasted',
+  //   exceptions: [],
+  //   power: 1,
+  //   tense: 'infinitive'
+  // },
 
 
 
@@ -179,18 +227,17 @@ exports.rules = [
     power: 8475,
     tense: 'gerund'
   }, {
-    reg: /([^aeiou])ing$/i,
+    reg: /([aeiou][^aeiou]*)ing$/i,
     repl: {
       infinitive: "$1",
       present: "$1s",
       past: "$1ed"
     },
-    examples: 'walking, fawning, farming',
+    examples: 'walking, fawning, farming, swing',
     exceptions: [],
     power: 8475,
     tense: 'gerund'
   },
-
 
 
   //past

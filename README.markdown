@@ -49,6 +49,8 @@ nlp.syllables("hamburger")
 </script>
 ```
 
+
+
 # API
 
 ## Sentence segmentation
@@ -66,15 +68,47 @@ nlp.tokenize("she sells sea-shells").length
 ## Part-of-speech
 80% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 ```javascript
-nlp.pos("Tony Hawk walked quickly to the store.")
-// ["NN","NN","VBD","RB","TO","DT","NN"]
+nlp.pos("Tony walked quickly to the store.")
+// ["NN","VBD","RB","TO","DT","NN"]
 
 nlp.pos("the obviously good swim")
 //["DT", "RB", "JJ", "NN"]
 ```
-
+### Details
+#### Tags
 the [industry-standard parts-of-speech](https://github.com/spencermountain/nlp_comprimise/blob/master/lib/pos/data/parts_of_speech.js)
 
+####Contractions
+when it's grammatically necessary, the parser puts a 'silent token' into the phrase. Otherwise it would get misrepresented.
+```javascript
+nlp.pos("i'm good.")
+// [{
+// 	text:"i'm",
+// 	normalised:"i",
+// 	pos:"PRP"
+// },
+// {
+// 	text:"",
+// 	normalised:"am",
+// 	pos:"CP"
+// },
+// {
+// 	text:"good.",
+// 	normalised:"good",
+// 	pos:"JJ"
+// }]
+```
+####Tokenization
+in post-processing, neighbours with the same part of speech are merged together (It skips this if there is punctuation involved). To turn this off, set options= {dont_combine:true}
+```javascript
+nlp.pos("tony hawk won")
+//tony hawk   NN
+//won   VB
+nlp.pos("tony hawk won", {dont_combine:true})
+//tony   NN
+//hawk   NN
+//won   VB
+```
 <!-- ### Named-Entity Recognizing
 ```javascript
 nlp.spot("Tony Hawk said he was very happy")

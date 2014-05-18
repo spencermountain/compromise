@@ -11,6 +11,36 @@ var pos = (function() {
 	}
 
 
+
+	var merge_tokens = function(a, b) {
+		a.text += " " + b.text
+		a.normalised += " " + b.normalised
+		a.pos_reason += "|" + b.pos_reason
+		a.start = a.start || b.start
+		a.capitalised = a.capitalised || b.capitalised
+		a.end = a.end || b.end
+		return a
+	}
+
+	//combine adjacent neighbours
+	var combine_tags = function(sentence) {
+		var arr = sentence.tokens
+		var better = []
+		for (var i = 0; i <= arr.length; i++) {
+			var next = arr[i + 1]
+			if (arr[i] && next && arr[i].pos.tag == next.pos.tag && arr[i].punctuated != true) {
+				arr[i] = merge_tokens(arr[i], arr[i + 1])
+				arr[i + 1] = null
+			}
+			better.push(arr[i])
+		}
+		sentence.tokens = better.filter(function(r) {
+			return r
+		})
+		return sentence
+	}
+
+
 	var lexicon_pass = function(w) {
 		if (lexicon[w]) {
 			return parts_of_speech[lexicon[w]]
@@ -72,21 +102,18 @@ var pos = (function() {
 			"he'd": ["he", "would"],
 			"they'd": ["they", "would"],
 			"we'd": ["we", "would"],
-
 			"i'll": ["i", "will"],
 			"she'll": ["she", "will"],
 			"he'll": ["he", "will"],
 			"they'll": ["they", "will"],
 			"we'll": ["we", "will"],
-
 			"i've": ["i", "have"],
 			"they've": ["they", "have"],
 			"we've": ["we", "have"],
 			"should've": ["should", "have"],
 			"would've": ["would", "have"],
-			"would've": ["would", "have"],
+			"could've": ["could", "have"],
 			"must've": ["must", "have"],
-
 			"i'm": ["i", "am"],
 			"he's": ["he", "is"],
 			"she's": ["she", "is"],
@@ -94,7 +121,7 @@ var pos = (function() {
 			"they're": ["they", "are"],
 		}
 		for (var i = 0; i < arr.length; i++) {
-			if (contractions[arr[i].normalised]) {
+			if (contractions[arr[i].normalised || null]) {
 				var before = arr.slice(0, i)
 				var after = arr.slice(i + 1, arr.length)
 				var fix = [{
@@ -108,14 +135,17 @@ var pos = (function() {
 				}]
 				arr = before.concat(fix)
 				arr = arr.concat(after)
-				return arr
+				return handle_contractions(arr)
 			}
 		}
 		return arr
 	}
 
 
+	////////////
+	//////////
 	var main = function(text, options) {
+		options = options || {}
 
 		var sentences = tokenizer(text);
 		sentences.forEach(function(sentence) {
@@ -212,6 +242,7 @@ var pos = (function() {
 					if (!has['verb']) {
 						token.pos = parts_of_speech['VB']
 						token.pos_reason = "need one verb"
+						has['verb'] = true
 						return token
 					}
 
@@ -221,8 +252,6 @@ var pos = (function() {
 				}
 				return token
 			})
-
-
 
 			//fourth pass, error correction
 			sentence.tokens = sentence.tokens.map(function(token, i) {
@@ -236,13 +265,15 @@ var pos = (function() {
 		})
 
 		//combine neighbours
-		sentences = sentences.map(function(s) {
-			return combine(s)
-		})
+		if (!options.dont_combine) {
+			sentences = sentences.map(function(s) {
+				return combine_tags(s)
+			})
+		}
 
 		return sentences
-
 	}
+
 
 	if (typeof module !== "undefined" && module.exports) {
 		exports.pos = main;
@@ -252,36 +283,6 @@ var pos = (function() {
 })()
 
 
-
-
-
-var merge_tokens = function(a, b) {
-	a.text += " " + b.text
-	a.normalised += " " + b.normalised
-	a.pos_reason += "|" + b.pos_reason
-	a.start = a.start || b.start
-	a.capitalised = a.capitalised || b.capitalised
-	a.end = a.end || b.end
-	return a
-}
-
-//combine adjacent neighbours
-var combine = function(sentence) {
-	var arr = sentence.tokens
-	var better = []
-	for (var i = 0; i <= arr.length; i++) {
-		var next = arr[i + 1]
-		if (arr[i] && next && arr[i].pos.tag == next.pos.tag && arr[i].punctuated != true) {
-			arr[i] = merge_tokens(arr[i], arr[i + 1])
-			arr[i + 1] = null
-		}
-		better.push(arr[i])
-	}
-	sentence.tokens = better.filter(function(r) {
-		return r
-	})
-	return sentence
-}
 
 
 
@@ -313,6 +314,9 @@ var combine = function(sentence) {
 	// fun = pos("atleast i'm better than geroge clooney")//i'm
 	// fun = pos("i bet they'd blalk") //contraction
 	// fun = pos("i'm the best") //contraction
+	// fun = pos("i'd have said he'd go") //double contractions
+	// fun = pos("also is trying to combine their latest") //
+	// fun = pos("The AT&T team also is trying to combine their latest superconductor process with melt-textured growth, a process discovered earlier at Bell Laboratories.") //
 
 	// render(fun)
 	// console.log(JSON.stringify(fun[0].tokens.map(function(s) {

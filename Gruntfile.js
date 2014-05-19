@@ -47,6 +47,7 @@ module.exports = function(grunt) {
 
           './src/parents/parents.js',
           './src/data/lexicon.js',
+          './src/sentence.js',
           './src/pos.js',
           './src/spot.js',
 

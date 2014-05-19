@@ -7,7 +7,7 @@ var pos = (function() {
 		word_rules = require("./data/word_rules")
 		lexicon = require("./data/lexicon")
 		wordnet_suffixes = require("./data/unambiguous_suffixes")
-
+		Sentence = require("./sentence")
 		parents = require("./parents/parents")
 	}
 
@@ -27,9 +27,17 @@ var pos = (function() {
 		var better = []
 		for (var i = 0; i <= arr.length; i++) {
 			var next = arr[i + 1]
-			if (arr[i] && next && arr[i].pos.tag == next.pos.tag && arr[i].punctuated != true) {
-				arr[i] = merge_tokens(arr[i], arr[i + 1])
-				arr[i + 1] = null
+			if (arr[i] && next) {
+				//'joe smith' are both NN
+				if (arr[i].pos.tag == next.pos.tag && arr[i].punctuated != true) {
+					arr[i] = merge_tokens(arr[i], arr[i + 1])
+					arr[i + 1] = null
+				}
+				//'will walk' -> future-tense verb
+				else if (arr[i].normalised == "will" && next.pos.parent == "verb") {
+					arr[i] = merge_tokens(arr[i], arr[i + 1])
+					arr[i + 1] = null
+				}
 			}
 			better.push(arr[i])
 		}
@@ -279,15 +287,16 @@ var pos = (function() {
 			return s
 		})
 
+		//make them Sentence objects
+		return sentences.map(function(s) {
+			return new Sentence(s.tokens)
+		})
 
-
-		return sentences
 	}
 
 
 	if (typeof module !== "undefined" && module.exports) {
-		exports.pos = main;
-		exports.parts_of_speech = parts_of_speech
+		module.exports = main;
 	}
 	return main
 })()
@@ -336,10 +345,9 @@ var pos = (function() {
 	// fun = pos("also is trying to combine their latest") //
 	// fun = pos("i agree with tom hanks and nancy kerrigan") //
 	// fun = pos("joe walks quickly to the park") //
+	// fun = pos("joe will walk to the park") //
 
 	// render(fun)
 	// analysis(fun)
-	// console.log(fun[0].tokens)
-	// console.log(JSON.stringify(fun[0].tokens.map(function(s) {
-	// 	return s
-	// }), null, 2));
+	// console.log(JSON.stringify(fun[0].tokens, null, 2));
+	// console.log(fun)

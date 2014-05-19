@@ -3595,15 +3595,23 @@ var date_extractor = (function() {
 
 
 // console.log(date_extractor("it was Feb. 14 1969"))
+// "CD  - cardinal value, generic (one, two, june 5th)",
+// "DA  - date (june 5th, 1998)",
+// "NU  - number (89, half-million)"
+
 var Value = function(str) {
 	var the = this
-	the.word = str;
+	the.word = str || '';
 
 	if (typeof module !== "undefined" && module.exports) {
 		to_number = require("./to_number")
 		dates = require("./dates")
+		parts_of_speech = require("../../data/parts_of_speech")
 	}
 
+	the.which = (function() {
+		return parts_of_speech['CD']
+	})()
 
 	the.number = to_number(the.word)
 
@@ -3613,8 +3621,7 @@ if (typeof module !== "undefined" && module.exports) {
 	module.exports = Value;
 }
 
-// s = new Value("fifty five")
-// console.log(s)
+// console.log(new Value("fifty five"))
 //chooses an indefinite aricle 'a/an' for a word
 var indefinite_article = (function() {
 	var main = function(str) {
@@ -4456,7 +4463,7 @@ var verb_to_doer = (function() {
 
 
 
-console.log(verb_to_doer('set'))
+// console.log(verb_to_doer('set'))
 // console.log(verb_to_doer('sweep'))
 // console.log(verb_to_doer('aid'))
 // console.log(verb_to_doer('apply'))
@@ -5527,7 +5534,7 @@ verb_conjugate = (function() {
       present: present,
       past: past,
       gerund: gerund,
-      noun: doer,
+      doer: doer,
     }
   }
 
@@ -5610,11 +5617,43 @@ var Verb = function(str) {
 		present: "VBZ",
 		gerund: "VBG"
 	}
-	// console.log(verb_conjugate)
 
 	the.conjugate = function() {
 		return verb_conjugate(the.word)
 	}
+
+	the.to_past = function() {
+		return verb_conjugate(the.word).past
+	}
+	the.to_present = function() {
+		return verb_conjugate(the.word).present
+	}
+	the.to_future = function() {
+		return "will " + verb_conjugate(the.word).infinitive
+	}
+
+	the.form = (function() {
+		var forms = verb_conjugate(the.word)
+		for (var i in forms) {
+			if (forms[i] == the.word) {
+				return i
+			}
+		}
+	})()
+
+	the.tense = (function() {
+		if (the.word.match(/^will ./)) {
+			return "future"
+		}
+		var form = the.form
+		if (form == "present") {
+			return "present"
+		}
+		if (form == "past") {
+			return "past"
+		}
+		return "present"
+	})()
 
 	the.which = (function() {
 		if (copulas[the.word]) {
@@ -5623,12 +5662,8 @@ var Verb = function(str) {
 		if (the.word.match(/([aeiou][^aeiouwyrlm])ing$/)) {
 			return parts_of_speech['VBG']
 		}
-		var forms = verb_conjugate(the.word)
-		for (var i in forms) {
-			if (forms[i] == the.word) {
-				return parts_of_speech[tenses[i]]
-			}
-		}
+		var form = the.form
+		return parts_of_speech[tenses[form]]
 	})()
 
 
@@ -5640,9 +5675,10 @@ if (typeof module !== "undefined" && module.exports) {
 }
 
 // console.log(new Verb("walked"))
-// console.log(new Verb("stalking"))
+// console.log(new Verb("stalking").tense)
+// console.log(new Verb("will walk").tense)
 // console.log(new Verb("stalks"))
-// console.log(new Verb("stalked"))
+// console.log(new Verb("eat").to_future())
 //convert cute to cuteness
 var adj_to_noun = (function() {
 
@@ -7235,6 +7271,69 @@ lexicon = (function() {
 })()
 // console.log(Object.keys(lexicon).length)
 // console.log(lexicon['supplier'])
+// accepts parsed tokens
+var Sentence = function(tokens) {
+	var the = this
+	the.tokens = tokens || [];
+
+	the.tense = function() {
+		var verbs = the.tokens.filter(function(token) {
+			return token.pos.parent == "verb"
+		})
+		return verbs.map(function(v) {
+			return v.analysis.tense
+		})
+	}
+
+	the.to_past = function() {
+		return the.tokens.map(function(token) {
+			if (token.pos.parent == "verb") {
+				token.text = token.analysis.to_past()
+				token.normalised = token.text
+			}
+			return token
+		})
+	}
+	the.to_present = function() {
+		return the.tokens.map(function(token) {
+			if (token.pos.parent == "verb") {
+				token.text = token.analysis.to_present()
+				token.normalised = token.text
+			}
+			return token
+		})
+	}
+	the.to_future = function() {
+		return the.tokens.map(function(token) {
+			if (token.pos.parent == "verb") {
+				token.text = token.analysis.to_future()
+				token.normalised = token.text
+			}
+			return token
+		})
+	}
+
+	the.text = function() {
+		return the.tokens.map(function(s) {
+			return s.text
+		}).join(' ')
+	}
+
+	return the
+}
+if (typeof module !== "undefined" && module.exports) {
+	module.exports = Sentence;
+}
+// pos = require("./pos")
+// tokens = pos('joe swims to the bank')[0].tokens
+// // console.log(new Sentence(tokens).tense())
+// s = new Sentence(tokens)
+// s.to_past()
+// console.log(s.text())
+// s.to_present()
+// console.log(s.text())
+// s.to_future()
+// console.log(s.text())
 var pos = (function() {
 
 
@@ -7244,7 +7343,7 @@ var pos = (function() {
 		word_rules = require("./data/word_rules")
 		lexicon = require("./data/lexicon")
 		wordnet_suffixes = require("./data/unambiguous_suffixes")
-
+		Sentence = require("./sentence")
 		parents = require("./parents/parents")
 	}
 
@@ -7264,9 +7363,17 @@ var pos = (function() {
 		var better = []
 		for (var i = 0; i <= arr.length; i++) {
 			var next = arr[i + 1]
-			if (arr[i] && next && arr[i].pos.tag == next.pos.tag && arr[i].punctuated != true) {
-				arr[i] = merge_tokens(arr[i], arr[i + 1])
-				arr[i + 1] = null
+			if (arr[i] && next) {
+				//'joe smith' are both NN
+				if (arr[i].pos.tag == next.pos.tag && arr[i].punctuated != true) {
+					arr[i] = merge_tokens(arr[i], arr[i + 1])
+					arr[i + 1] = null
+				}
+				//'will walk' -> future-tense verb
+				else if (arr[i].normalised == "will" && next.pos.parent == "verb") {
+					arr[i] = merge_tokens(arr[i], arr[i + 1])
+					arr[i + 1] = null
+				}
 			}
 			better.push(arr[i])
 		}
@@ -7516,15 +7623,16 @@ var pos = (function() {
 			return s
 		})
 
+		//make them Sentence objects
+		return sentences.map(function(s) {
+			return new Sentence(s.tokens)
+		})
 
-
-		return sentences
 	}
 
 
 	if (typeof module !== "undefined" && module.exports) {
-		exports.pos = main;
-		exports.parts_of_speech = parts_of_speech
+		module.exports = main;
 	}
 	return main
 })()
@@ -7573,13 +7681,12 @@ var pos = (function() {
 	// fun = pos("also is trying to combine their latest") //
 	// fun = pos("i agree with tom hanks and nancy kerrigan") //
 	// fun = pos("joe walks quickly to the park") //
+	// fun = pos("joe will walk to the park") //
 
 	// render(fun)
 	// analysis(fun)
-	// console.log(fun[0].tokens)
-	// console.log(JSON.stringify(fun[0].tokens.map(function(s) {
-	// 	return s
-	// }), null, 2));
+	// console.log(JSON.stringify(fun[0].tokens, null, 2));
+	// console.log(fun)
 var spot = (function() {
 
 	if (typeof module !== "undefined" && module.exports) {

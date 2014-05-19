@@ -11,7 +11,7 @@
   }
   a{color:steelblue;
   }
-  input {
+  .input {
     -moz-border-radius: 5px;
     border-radius: 5px;
     width:800px;
@@ -43,10 +43,46 @@
     left:50px;
     max-width:750px;
   }
+  hr{
+    position:relative;
+    display:block;
+    margin:100px 0px 0px 0px;
+  }
   </style>
   <script>
 $(function() {
 
+  var tense="past"
+  $(".tense_button").click(function(){
+    tense=$(this).val()
+    $("#tense").find("input").trigger('keyup')
+  })
+
+  $("#tense").find("input").keyup(function(){
+    var txt=$(this).val() || ''
+    console.log(txt)
+    console.log($("#tense_do").val())
+    var data= nlp.pos(txt).map(function(s){
+      if(tense=="past"){
+        return s.to_past()
+      }
+       if(tense=="present"){
+        return s.to_present()
+      }
+       if(tense=="future"){
+        return s.to_future()
+      }
+    })
+    var glues={
+      "verb":"darkseagreen",
+    }
+    var html= data[0].map(function(p){
+      return "<span style='font-size:28px; margin:2px; display:inline-block; padding:8px; background-color:"+(glues[p.pos.parent]||'white')+"; color:steelblue;'>"+
+      p.text+
+      " </span>"
+    }).join(" ")
+    $(this).siblings(".result").html(html)
+  })
 
   $("#pos").find("input").keyup(function(){
     var txt=$(this).val() || ''
@@ -58,7 +94,6 @@ $(function() {
       "glue":"lightgrey",
       "title":"lightgrey",
     }
-    console.log(data)
     var html= data[0].tokens.map(function(p){
       return "<span style='font-size:28px; margin:2px; display:inline-block; padding:8px; background-color:"+glues[p.pos.parent]+"; color:white;'>"+
       p.text+
@@ -146,13 +181,26 @@ $(function() {
 <body>
 
 <h1>OH NO YOU DI'INT</H1>
-<h3>demo of <a href="https://github.com/spencermountain/nlp_comprimise">nlp_comprimise</a> methods in the browser</h3>
+<h3>yes, <a href="https://github.com/spencermountain/nlp_comprimise">nlp_comprimise</a> does natural-language processing in the browser.</h3>
+
+<div id="tense">
+  <hr/>
+  <h2 style="display:block;">SENTENCE-TENSE CONVERSION!</h2>
+  <h3 style="position:relative; display:inline-block; width:350px; z-index:-3;">nlp.pos(text, {})[0].to_past()</h3>
+  <span style="position:relative; display:inline-block; z-index:3; width:200px;">
+    <input type="button" class="tense_button" value="past"/>
+    <input type="button" class="tense_button" value="present"/>
+    <input type="button" class="tense_button" value="future"/>
+  </span>
+  <input type="text" class="input" value="She sells seashells by the seashore."/>
+  <div class="result" style="font-size:10px;"></div>
+</div>
 
 <div id="pos">
   <hr/>
   <h2>PART-OF-SPEECH TAGGING!</h2>
   <h3>nlp.pos(text, {})</h3>
-  <input type="text" value="She sells seashells by the seashore. the shells she sells are sure seashells."/>
+  <input type="text"  class="input" value="She sells seashells by the seashore. the shells she sells are sure seashells."/>
   <div class="result" style="font-size:10px;"></div>
 </div>
 
@@ -160,7 +208,7 @@ $(function() {
   <hr/>
   <h2>NAMED-ENTITY-RECOGNITION!</h2>
   <h3>nlp.spot(text, {})</h3>
-  <input type="text" value="joe carter went to the toronto international film festival to go see inception."/>
+  <input type="text" class="input" value="joe carter went to the toronto international film festival to go see inception."/>
   <div class="result" style="font-size:10px;"></div>
 </div>
 
@@ -168,7 +216,7 @@ $(function() {
   <hr/>
   <h2>N-gram!</h2>
   <h3>nlp.ngram(text, {})</h3>
-  <input type="text" value="She sells seashells by the seashore. the shells she sells are sure seashells."/>
+  <input type="text" class="input" value="She sells seashells by the seashore. the shells she sells are sure seashells."/>
   <div class="result" style="font-size:10px;"></div>
 </div>
 
@@ -176,7 +224,7 @@ $(function() {
   <hr/>
   <h2>Sentences!</h2>
   <h3>nlp.sentences(text)</h3>
-  <input type="text" value="Hi Dr. J. the price is 4.59 for the N.A.S.A. Ph.Ds. I hope that's fine, etc. and you can attend Feb. 8th. woohoo"/>
+  <input type="text"  class="input" value="Hi Dr. J. the price is 4.59 for the N.A.S.A. Ph.Ds. I hope that's fine, etc. and you can attend Feb. 8th. woohoo"/>
   <div class="result" style="font-size:14px;"></div>
 </div>
 
@@ -184,7 +232,7 @@ $(function() {
   <hr/>
   <h2>britishize!</h2>
   <h3>nlp.britishize(text)</h3>
-  <input type="text" value="synthesized" style="width:250px;"/>
+  <input type="text" class="input" value="synthesized" style="width:250px;"/>
   <div class="result" style="font-size:24px;"></div>
 </div>
 
@@ -192,7 +240,7 @@ $(function() {
   <hr/>
   <h2>americanize!</h2>
   <h3>nlp.americanize(text)</h3>
-  <input type="text" value="favourite" style="width:250px;"/>
+  <input type="text" class="input" value="favourite" style="width:250px;"/>
   <div class="result" style="font-size:24px;"></div>
 </div>
 
@@ -200,7 +248,7 @@ $(function() {
   <hr/>
   <h2>pluralize!</h2>
   <h3>nlp.pluralize(text)</h3>
-  <input type="text" value="phantom of the opera" style="width:250px;"/>
+  <input type="text" class="input" value="phantom of the opera" style="width:250px;"/>
   <div class="result" style="font-size:24px;"></div>
 </div>
 
@@ -208,7 +256,7 @@ $(function() {
   <hr/>
   <h2>singularize!</h2>
   <h3>nlp.singularize(text)</h3>
-  <input type="text" value="maple leaves" style="width:250px;"/>
+  <input type="text" class="input" value="maple leaves" style="width:250px;"/>
   <div class="result" style="font-size:24px;"></div>
 </div>
 
@@ -216,7 +264,7 @@ $(function() {
   <hr/>
   <h2>syllables!</h2>
   <h3>nlp.syllables(text)</h3>
-  <input type="text" value="toronto maple leafs" style="width:250px;"/>
+  <input type="text" class="input" value="toronto maple leafs" style="width:250px;"/>
   <div class="result" style="font-size:24px;"></div>
 </div>
 
@@ -224,7 +272,7 @@ $(function() {
   <hr/>
   <h2>dates!</h2>
   <h3>nlp.dates(text)</h3>
-  <input type="text" value="I got married to April on June 4th 1993, in Miami" style="width:450px;"/>
+  <input type="text" class="input" value="I got married to April on June 4th 1993, in Miami" style="width:450px;"/>
   <div class="result" style="font-size:14px;"></div>
 </div>
 
@@ -232,7 +280,7 @@ $(function() {
   <hr/>
   <h2>unicode normalisation!</h2>
   <h3>nlp.normalize(text)</h3>
-  <input type="text" value="Björk" style="width:250px;"/>
+  <input type="text" class="input" value="Björk" style="width:250px;"/>
   <div class="result" style="font-size:24px;"></div>
 </div>
 

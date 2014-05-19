@@ -30,7 +30,7 @@ nlp.americanize = l.americanize;
 nlp.britishize = l.britishize;
 
 //part of speech tagging
-nlp.pos = require('./src/pos').pos;
+nlp.pos = require('./src/pos');
 
 //named_entity_recognition
 nlp.spot = require('./src/spot');

@@ -261,16 +261,9 @@ verb_conjugate = (function() {
     "infinitive": "be",
     "present": "is",
     "gerund": "being",
-    "past": "were",
+    "past": "was",
     "participle": "been",
     "noun": "ber"
-  }, {
-    "infinitive": "be",
-    "present": "is",
-    "gerund": "being",
-    "past": "were",
-    "participle": "been",
-    "noun": null
   }, {
     "infinitive": "beat",
     "present": "beats",

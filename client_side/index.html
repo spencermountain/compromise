@@ -60,8 +60,6 @@ $(function() {
 
   $("#tense").find("input").keyup(function(){
     var txt=$(this).val() || ''
-    console.log(txt)
-    console.log($("#tense_do").val())
     var data= nlp.pos(txt).map(function(s){
       if(tense=="past"){
         return s.to_past()
@@ -144,13 +142,13 @@ $(function() {
   $("#pluralize").find("input").keyup(function(){
     var txt=$(this).val() || ''
     n=new nlp.noun(txt)
-    $(this).siblings(".result").html(n.conjugate.plural)
+    $(this).siblings(".result").html(n.conjugate().plural)
   })
 
   $("#singularize").find("input").keyup(function(){
     var txt=$(this).val() || ''
     n=new nlp.noun(txt)
-    $(this).siblings(".result").html(n.conjugate.singular)
+    $(this).siblings(".result").html(n.conjugate().singular)
   })
 
   $("#syllables").find("input").keyup(function(){
@@ -168,6 +166,7 @@ $(function() {
   $("#unicode").find("input").keyup(function(){
     var txt=$(this).val() || ''
     var data= nlp.normalize(txt)
+    console.log(data)
     $(this).siblings(".result").html(data)
   })
 
@@ -181,7 +180,7 @@ $(function() {
 <body>
 
 <h1>OH NO YOU DI'INT</H1>
-<h3>yes, <a href="https://github.com/spencermountain/nlp_comprimise">nlp_comprimise</a> does natural-language processing in the browser.</h3>
+<h3>yes, <a href="https://github.com/spencermountain/nlp_comprimise">nlp_comprimise</a> does NLP in the browser.</h3>
 
 <div id="tense">
   <hr/>
@@ -237,7 +236,6 @@ $(function() {
 </div>
 
 <div id="americanize">
-  <hr/>
   <h2>americanize!</h2>
   <h3>nlp.americanize(text)</h3>
   <input type="text" class="input" value="favourite" style="width:250px;"/>
@@ -248,15 +246,14 @@ $(function() {
   <hr/>
   <h2>pluralize!</h2>
   <h3>nlp.pluralize(text)</h3>
-  <input type="text" class="input" value="phantom of the opera" style="width:250px;"/>
+  <input type="text" class="input" value="water-tower" style="width:250px;"/>
   <div class="result" style="font-size:24px;"></div>
 </div>
 
 <div id="singularize">
-  <hr/>
   <h2>singularize!</h2>
   <h3>nlp.singularize(text)</h3>
-  <input type="text" class="input" value="maple leaves" style="width:250px;"/>
+  <input type="text" class="input" value="hurricanes" style="width:250px;"/>
   <div class="result" style="font-size:24px;"></div>
 </div>
 
@@ -268,13 +265,13 @@ $(function() {
   <div class="result" style="font-size:24px;"></div>
 </div>
 
-<div id="dates">
+<!-- <div id="dates">
   <hr/>
   <h2>dates!</h2>
   <h3>nlp.dates(text)</h3>
   <input type="text" class="input" value="I got married to April on June 4th 1993, in Miami" style="width:450px;"/>
   <div class="result" style="font-size:14px;"></div>
-</div>
+</div> -->
 
 <div id="unicode">
   <hr/>

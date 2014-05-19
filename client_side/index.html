@@ -50,7 +50,7 @@ $(function() {
 
   $("#pos").find("input").keyup(function(){
     var txt=$(this).val() || ''
-    var data= nlp.tag(txt)
+    var data= nlp.pos(txt)
     var glues={
       "adjective":"lightsteelblue",
       "noun":"coral",
@@ -58,9 +58,10 @@ $(function() {
       "glue":"lightgrey",
       "title":"lightgrey",
     }
-    var html= data.map(function(p){
+    console.log(data)
+    var html= data[0].tokens.map(function(p){
       return "<span style='font-size:28px; margin:2px; display:inline-block; padding:8px; background-color:"+glues[p.pos.parent]+"; color:white;'>"+
-      p.word+
+      p.text+
       " <span style='font-size:14px; color:steelblue;'>("+p.pos.tag+")</span>"+
       " </span>"
     }).join(" ")
@@ -71,7 +72,7 @@ $(function() {
     var txt=$(this).val() || ''
     var data= nlp.spot(txt)
     var html= data.map(function(p){
-      return "<div style='background:lightsteelblue; font-size:30px; display:inline-block; color:white; margin:5px; padding:8px;'>"+p.word+"</div>"
+      return "<div style='background:lightsteelblue; font-size:30px; display:inline-block; color:white; margin:5px; padding:8px;'>"+p.normalised+"</div>"
     }).join(" ")
     $(this).siblings(".result").html(html)
   })
@@ -107,14 +108,14 @@ $(function() {
 
   $("#pluralize").find("input").keyup(function(){
     var txt=$(this).val() || ''
-    var data= nlp.pluralize(txt)
-    $(this).siblings(".result").html(data)
+    n=new nlp.noun(txt)
+    $(this).siblings(".result").html(n.conjugate.plural)
   })
 
   $("#singularize").find("input").keyup(function(){
     var txt=$(this).val() || ''
-    var data= nlp.singularize(txt)
-    $(this).siblings(".result").html(data)
+    n=new nlp.noun(txt)
+    $(this).siblings(".result").html(n.conjugate.singular)
   })
 
   $("#syllables").find("input").keyup(function(){
@@ -125,8 +126,8 @@ $(function() {
 
   $("#dates").find("input").keyup(function(){
     var txt=$(this).val() || ''
-    var data= nlp.dates(txt)
-    $(this).siblings(".result").html(JSON.stringify(data))
+    // var data= nlp.dates(txt)
+    // $(this).siblings(".result").html(JSON.stringify(data))
   })
 
   $("#unicode").find("input").keyup(function(){
@@ -150,7 +151,7 @@ $(function() {
 <div id="pos">
   <hr/>
   <h2>PART-OF-SPEECH TAGGING!</h2>
-  <h3>nlp.tag(text, {})</h3>
+  <h3>nlp.pos(text, {})</h3>
   <input type="text" value="She sells seashells by the seashore. the shells she sells are sure seashells."/>
   <div class="result" style="font-size:10px;"></div>
 </div>

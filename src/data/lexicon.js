@@ -1,10 +1,9 @@
-var lexicon = (function() {
+lexicon = (function() {
 	if (typeof module !== "undefined" && module.exports) {
-		var verb_conjugate = require("../../verbs/conjugate/conjugate").conjugate;
-		var adj_to_adv = require("../../adjectives/conjugate/to_adverb");
+		verb_conjugate = require("../parents/verb/conjugate/conjugate")
+		adj_to_adv = require("../parents/adjective/conjugate/to_adverb");
 		// var superlative = require("../../adjectives/conjugate/to_superlative");
 	}
-
 	var main = {
 		//conjunctions
 		"yet": "CC",
@@ -1139,3 +1138,4 @@ var lexicon = (function() {
 
 	return main
 })()
+// console.log(Object.keys(lexicon).length)

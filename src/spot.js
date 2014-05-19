@@ -1,11 +1,15 @@
 var spot = (function() {
 
 	if (typeof module !== "undefined" && module.exports) {
-		var pos = require("./pos").pos;
+		pos = require("./pos").pos;
 	}
 	var blacklist = {
 		"i": 1,
 		"me": 1,
+		"he": 1,
+		"she": 1,
+		"we": 1,
+		"they": 1,
 	}
 
 	var main = function(text, options) {
@@ -36,4 +40,4 @@ var spot = (function() {
 
 // var spots = spot("tony hawk walked to toronto")
 // var spots = spot("mike myers and nancy kerrigan")
-// console.log(spots)
+// console.log(spots[1].analysis)

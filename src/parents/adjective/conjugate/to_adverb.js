@@ -1,5 +1,5 @@
 //turn 'quick' into 'quickly'
-var to_adverb = (function() {
+adj_to_adv = (function() {
 	var main = function(str) {
 
 

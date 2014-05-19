@@ -1,42 +1,20 @@
 // ties the files together for server-side use
 // the gruntfile concatenates them for client-side
 
-//nouns
-exports.noun = {
-	singularize: require('./src/nouns/conjugate/inflect').singularize,
-	pluralize: require('./src/nouns/conjugate/inflect').pluralize,
-	article: require('./src/nouns/indefinite_article/indefinite_article')
-}
-//adjectives
-exports.adjective = {
-	to_noun: require('./src/adjectives/conjugate/to_noun').adj_to_noun,
-	to_adverb: require('./src/adjectives/conjugate/to_adverb'),
-	to_comparative: require('./src/adjectives/conjugate/to_comparative'),
-	to_superlative: require('./src/adjectives/conjugate/to_superlative'),
-}
-//verbs
-exports.verb = {
-	conjugate: require('./src/verbs/conjugate/conjugate').conjugate
-}
-
-//adverbs
-exports.adverb = {
-	to_adjective: require('./src/adverbs/conjugate/to_adjective')
-}
+exports.noun = require('./src/parents/noun/index')
+exports.adjective = require('./src/parents/adjective/index')
+exports.verb = require('./src/parents/verb/index')
+exports.adverb = require('./src/parents/adverb/index')
+exports.value = require('./src/parents/value/index')
 
 
 //other methods
 ////////////
 
-
 //tokenization
-exports.sentences = require('./src/pos/tokenization/sentence').sentences;
-exports.tokenize = require('./src/pos/tokenization/tokenize').tokenize;
-exports.ngram = require('./src/pos/tokenization/ngram').ngram;
-
-//mining of specific types of values
-exports.dates = require('./src/values/dates');
-exports.to_number = require('./src/values/to_number');
+exports.sentences = require('./src/methods/tokenization/sentence').sentences;
+exports.tokenize = require('./src/methods/tokenization/tokenize').tokenize;
+exports.ngram = require('./src/methods/tokenization/ngram').ngram;
 
 //tranliteration
 var l = require('./src/methods/transliteration/unicode_normalisation')
@@ -52,13 +30,14 @@ exports.americanize = l.americanize;
 exports.britishize = l.britishize;
 
 //part of speech tagging
-exports.pos = require('./src/pos/pos').pos;
+exports.pos = require('./src/pos').pos;
 
 //named_entity_recognition
-exports.spot = require('./src/pos/spot');
+exports.spot = require('./src/spot');
 
-exports.tests = require('./tests/test');
+// exports.tests = require('./tests/test');
 
 // console.log(exports.pos("the chimmney was really tall"))
 // console.log(exports.spot("the chimmney was really tall"))
 // exports.tests()
+// console.log(exports.noun('hose'))

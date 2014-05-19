@@ -2,15 +2,14 @@ var pos = (function() {
 
 
 	if (typeof module !== "undefined" && module.exports) {
-		var tokenizer = require("./tokenization/tokenize").tokenize;
-		var parts_of_speech = require("./data/parts_of_speech")
-		var word_rules = require("./data/word_rules").rules
-		var lexicon = require("./data/lexicon")
-		var sentence_rules = require("./data/sentence_rules")
-		var wordnet_suffixes = require("./data/unambiguous_suffixes").data
+		tokenize = require("./methods/tokenization/tokenize").tokenize;
+		parts_of_speech = require("./data/parts_of_speech")
+		word_rules = require("./data/word_rules")
+		lexicon = require("./data/lexicon")
+		wordnet_suffixes = require("./data/unambiguous_suffixes")
+
+		parents = require("./parents/parents")
 	}
-
-
 
 	var merge_tokens = function(a, b) {
 		a.text += " " + b.text
@@ -147,7 +146,7 @@ var pos = (function() {
 	var main = function(text, options) {
 		options = options || {}
 
-		var sentences = tokenizer(text);
+		var sentences = tokenize(text);
 		sentences.forEach(function(sentence) {
 
 			//smart handling of contractions
@@ -271,6 +270,17 @@ var pos = (function() {
 			})
 		}
 
+		//add analysis on each token
+		sentences = sentences.map(function(s) {
+			s.tokens = s.tokens.map(function(token) {
+				token.analysis = new parents[token.pos.parent](token.normalised)
+				return token
+			})
+			return s
+		})
+
+
+
 		return sentences
 	}
 
@@ -290,6 +300,14 @@ var pos = (function() {
 		arr.forEach(function(sentence) {
 			sentence.tokens.forEach(function(token) {
 				console.log(token.normalised + "   " + (token.pos || {}).tag + '   (' + token.pos_reason + ')')
+			})
+		})
+	}
+
+	function analysis(arr) {
+		arr.forEach(function(sentence) {
+			sentence.tokens.forEach(function(token) {
+				console.log(token.normalised + "   " + token.pos.tag + "  " + JSON.stringify(token.analysis))
 			})
 		})
 	}
@@ -317,8 +335,11 @@ var pos = (function() {
 	// fun = pos("i'd have said he'd go") //double contractions
 	// fun = pos("also is trying to combine their latest") //
 	// fun = pos("i agree with tom hanks and nancy kerrigan") //
+	// fun = pos("joe walks quickly to the park") //
 
 	// render(fun)
+	// analysis(fun)
+	// console.log(fun[0].tokens)
 	// console.log(JSON.stringify(fun[0].tokens.map(function(s) {
 	// 	return s
 	// }), null, 2));

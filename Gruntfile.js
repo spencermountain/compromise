@@ -9,19 +9,48 @@ module.exports = function(grunt) {
         footer: ""
       },
       dist: {
-        src: ['./build/header.js',
+        src: [
+          './build/header.js',
+          './src/methods/tokenization/data/multiples.js',
           './src/methods/tokenization/sentence.js',
           './src/methods/tokenization/ngram.js',
-          './src/methods/localization/britishize.js',
-          './src/methods/hyphenization/syllable.js',
+          './src/methods/tokenization/tokenize.js',
           './src/methods/transliteration/unicode_normalisation.js',
+          './src/methods/syllables/syllable.js',
+          './src/methods/localization/britishize.js',
 
-          './src/inflection/inflect.js',
-          './src/conjugation/adj_to_noun.js',
-          './src/values/date_parser.js',
-          './src/pos/pos.js',
-          // './src/spotting/spotter.js',
-          './test.js',
+          './src/data/word_rules.js',
+          './src/data/unambiguous_suffixes.js',
+          './src/data/parts_of_speech.js',
+
+          //values
+          './src/parents/value/to_number.js',
+          './src/parents/value/dates.js',
+          './src/parents/value/index.js',
+          //nouns
+          './src/parents/noun/indefinite_article/indefinite_article.js',
+          './src/parents/noun/conjugate/inflect.js',
+          './src/parents/noun/index.js',
+          //adverbs
+          './src/parents/adverb/conjugate/to_adjective.js',
+          './src/parents/adverb/index.js',
+          //verbs
+          './src/parents/verb/conjugate/conjugate.js',
+          './src/parents/verb/index.js',
+          //adjectives
+          './src/parents/adjective/conjugate/to_noun.js',
+          './src/parents/adjective/conjugate/to_comparative.js',
+          './src/parents/adjective/conjugate/to_superlative.js',
+          './src/parents/adjective/conjugate/to_adverb.js',
+          './src/parents/adjective/index.js',
+
+          './src/parents/parents.js',
+          './src/data/lexicon.js',
+          './src/pos.js',
+          './src/spot.js',
+
+          // './tests/test.js',
+
           './build/footer.js'
         ],
         dest: './client_side/nlp.js'

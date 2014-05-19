@@ -2,6 +2,7 @@ var tests = (function() {
     //load in methods if using node, otherwise assume
     if (typeof module !== "undefined" && module.exports) {
         nlp = require("../index")
+        console.log(nlp)
     }
 
     function test_others() {

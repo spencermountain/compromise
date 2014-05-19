@@ -2,8 +2,8 @@ var tokenize = (function() {
 
 
 	if (typeof module !== "undefined" && module.exports) {
-		var sentence_parser = require("./sentence").sentences
-		var multiples = require("./data/multiples").multiples
+		sentence_parser = require("./sentence").sentences
+		multiples = require("./data/multiples").multiples
 	}
 
 	var normalise = function(str) {

@@ -5,13 +5,21 @@ if (typeof module !== "undefined" && module.exports) {
 	Verb = require("./verb/index");
 	Value = require("./value/index");
 }
-parents = {
+var parents = {
 	adjective: Adjective,
-	noun: Noun,
-	adverb: Adverb,
-	verb: Verb,
-	value: Value,
-	glue: function() {}
+	noun: function(str) {
+		return new Noun(str)
+	},
+	adverb: function(str) {
+		return new Adverb(str)
+	},
+	verb: function(str) {
+		return new Verb(str)
+	},
+	value: function(str) {
+		return new Value(str)
+	},
+	glue: function(str) {}
 }
 if (typeof module !== "undefined" && module.exports) {
 	module.exports = parents;

@@ -2,6 +2,7 @@ lexicon = (function() {
 	if (typeof module !== "undefined" && module.exports) {
 		verb_conjugate = require("../parents/verb/conjugate/conjugate")
 		adj_to_adv = require("../parents/adjective/conjugate/to_adverb");
+		verb_to_doer = require("../parents/verb/conjugate/to_doer");
 		// var superlative = require("../../adjectives/conjugate/to_superlative");
 	}
 	var main = {
@@ -173,7 +174,7 @@ lexicon = (function() {
 		"itself": "PP",
 		"who": "PP",
 
-		//personal pronouns
+		//personal pronouns (nouns)
 		"it": "PRP",
 		"they": "PRP",
 		"i": "PRP",
@@ -569,12 +570,10 @@ lexicon = (function() {
 		"become",
 		"make",
 		"compare",
-		"bear",
 		"develop",
 		"apply",
 		"direct",
 		"discuss",
-		"consider",
 		"know",
 		"sit",
 		"see",
@@ -610,8 +609,6 @@ lexicon = (function() {
 		"cover",
 		"set",
 		"maintain",
-		"mean",
-		"including",
 		"start",
 		"stay",
 		"move",
@@ -645,7 +642,6 @@ lexicon = (function() {
 		"attend",
 		"buy",
 		"unite",
-		"leach",
 		"feel",
 		"explain",
 		"publish",
@@ -683,9 +679,8 @@ lexicon = (function() {
 		"eat",
 		"disagree",
 		"produce",
-		"won",
+		"win",
 		"went",
-		"walked",
 		"attack",
 		"attempt",
 		"bite",
@@ -707,7 +702,6 @@ lexicon = (function() {
 		"claw",
 		"clip",
 		"combine",
-		"crop",
 		"damage",
 		"desire",
 		"doubt",
@@ -723,12 +717,10 @@ lexicon = (function() {
 		"divorce",
 		"dream",
 		"exchange",
-		"engineer",
 		"envy",
 		"exercise",
 		"export",
 		"fold",
-		"fork",
 		"flood",
 		"focus",
 		"forecast",
@@ -775,14 +767,11 @@ lexicon = (function() {
 		"progress",
 		"promise",
 		"purchase",
-		"rain",
 		"regret",
 		"request",
 		"reward",
 		"roll",
 		"rub",
-		"remark",
-		"remedy",
 		"rent",
 		"repair",
 		"sail",
@@ -799,7 +788,6 @@ lexicon = (function() {
 		"sneeze",
 		"snow",
 		"stick",
-		"store",
 		"surprise",
 		"swim",
 		"scratch",
@@ -807,10 +795,8 @@ lexicon = (function() {
 		"share",
 		"shave",
 		"slide",
-		"soil",
 		"spit",
 		"splash",
-		"spot",
 		"stain",
 		"stress",
 		"swing",
@@ -820,7 +806,6 @@ lexicon = (function() {
 		"trade",
 		"trick",
 		"twist",
-		"tap",
 		"tie",
 		"trap",
 		"travel",
@@ -832,7 +817,6 @@ lexicon = (function() {
 		"wash",
 		"wave",
 		"whistle",
-		"wind",
 		"wreck",
 		"yawn",
 	]
@@ -843,7 +827,10 @@ lexicon = (function() {
 		main[c.past] = "VBD"
 		main[c.gerund] = "VBG"
 		main[c.present] = "VBZ"
-		// main[c.participle] = "VBN"
+		var doer = verb_to_doer(v)
+		if (doer) {
+			main[doer] = "NNA"
+		}
 	})
 
 
@@ -1139,3 +1126,4 @@ lexicon = (function() {
 	return main
 })()
 // console.log(Object.keys(lexicon).length)
+// console.log(lexicon['supplier'])

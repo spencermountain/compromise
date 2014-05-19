@@ -77,6 +77,51 @@ nlp.pos("the obviously good swim")
 ### Details
 #### Tags
 the [industry-standard parts-of-speech](https://github.com/spencermountain/nlp_comprimise/blob/master/lib/pos/data/parts_of_speech.js)
+```javascript
+  "verb": [
+    "VB  - verb, generic (eat)",
+    "VBD  - past-tense verb (ate)",
+    "VBN  - past-participle verb (eaten)",
+    "VBP  - infinitive verb (eat)",
+    "VBZ  - present-tense verb (eats, swims)",
+    "CP  - copula (is, was, were)",
+    "VBG  - gerund verb (eating,winning)"
+  ],
+  "adjective": [
+    "JJ  - adjective, generic (big, nice)",
+    "JJR  - comparative adjective (bigger, cooler)",
+    "JJS  - superlative adjective (biggest, fattest)"
+  ],
+  "adverb": [
+    "RB  - adverb (quickly, softly)",
+    "RBR  - comparative adverb (faster, cooler)",
+    "RBS  - superlative adverb (fastest (driving), coolest (looking))"
+  ],
+  "noun": [
+    "NN  - noun, singular (dog, rain)",
+    "NNP  - singular proper noun (Edinburgh, skateboard)",
+    "NNPS  - plural proper noun (Smiths)",
+    "NNS  - plural noun (dogs, foxes)",
+    "NNO  - possessive noun (spencer's, sam's)",
+    "NG  - gerund noun (eating,winning - but used grammatically as a noun)",
+    "PRP  - personal pronoun (I,you,she)"
+  ],
+  "glue": [
+    "PP  - possessive pronoun (my,one's)",
+    "FW  - foreign word (mon dieu, voila)",
+    "IN  - preposition (of,in,by)",
+    "MD  - modal verb (can,should)",
+    "CC  - co-ordating conjunction (and,but,or)",
+    "DT  - determiner (the,some)",
+    "UH  - interjection (oh, oops)",
+    "EX  - existential there (there)"
+  ],
+  "value": [
+    "CD  - cardinal value, generic (one, two, june 5th)",
+    "DA  - date (june 5th, 1998)",
+    "NU  - number (89, half-million)"
+  ]
+```
 
 ####Lexicon
 The conjugate methods are quick and accurate enough that we can actually begin with a very small lexicon, and build it out.

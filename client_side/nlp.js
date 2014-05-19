@@ -2872,7 +2872,7 @@ var parts_of_speech = (function() {
 
         //verbs
         "VB": {
-            "name": "verb",
+            "name": "verb, generic",
             "example": "eat",
             "parent": "verb",
             "tag": "VB"
@@ -2921,7 +2921,7 @@ var parts_of_speech = (function() {
 
         //adjectives
         "JJ": {
-            "name": "adjective",
+            "name": "adjective, generic",
             "example": "big, nice",
             "parent": "adjective",
             "tag": "JJ"
@@ -2963,7 +2963,7 @@ var parts_of_speech = (function() {
 
         //nouns
         "NN": {
-            "name": "noun",
+            "name": "noun, generic",
             "example": "dog, rain",
             "parent": "noun",
             "tag": "NN"
@@ -2973,6 +2973,18 @@ var parts_of_speech = (function() {
             "example": "Edinburgh, skateboard",
             "parent": "noun",
             "tag": "NNP"
+        },
+        "NNA": {
+            "name": "noun, active",
+            "example": "supplier, singer",
+            "parent": "noun",
+            "tag": "NNA"
+        },
+        "NNPA": {
+            "name": "noun, acronym",
+            "example": "FBI, N.A.S.A.",
+            "parent": "noun",
+            "tag": "NNPA"
         },
         "NNPS": {
             "name": "plural proper noun",
@@ -2992,7 +3004,7 @@ var parts_of_speech = (function() {
             "parent": "noun",
             "tag": "NNO"
         },
-        "NG": {
+        "NNG": {
             "name": "gerund noun",
             "example": "eating,winning - but used grammatically as a noun",
             "parent": "noun",
@@ -3014,10 +3026,22 @@ var parts_of_speech = (function() {
             "tag": "FW"
         },
         "CD": {
-            "name": "cardinal number",
-            "example": "one,two",
+            "name": "cardinal value, generic",
+            "example": "one, two, june 5th",
             "parent": "value",
             "tag": "CD"
+        },
+        "DA": {
+            "name": "date",
+            "example": "june 5th, 1998",
+            "parent": "value",
+            "tag": "DA"
+        },
+        "NU": {
+            "name": "number",
+            "example": "89, half-million",
+            "parent": "value",
+            "tag": "NU"
         },
 
         "IN": {
@@ -3070,6 +3094,16 @@ var parts_of_speech = (function() {
 
     return main
 })()
+var print_pos = function() {
+    parents = {}
+    Object.keys(parts_of_speech).forEach(function(k) {
+        var parent = parts_of_speech[k].parent
+        parents[parent] = parents[parent] || []
+        parents[parent].push(k + '  - ' + parts_of_speech[k].name + ' (' + parts_of_speech[k].example + ')')
+    })
+    console.log(JSON.stringify(parents, null, 2));
+}
+// print_pos()
 var to_number = (function() {
 
     var numbers = {
@@ -4128,25 +4162,102 @@ inflect = (function() {
     }
     return methods;
 })();
+// "NN  - noun, generic (dog, rain)",
+// "NNS  - plural noun (dogs, foxes)",
+
+// "NNP  - singular proper noun (Edinburgh, skateboard)",
+// "NNPS  - plural proper noun (Smiths)",
+
+// "NG  - gerund noun (eating,winning - but used grammatically as a noun)",
+
+// "PRP  - personal pronoun (I,you,she)"
+// "NNO  - possessive noun (spencer's, sam's)",
+
+
 var Noun = function(str) {
 	var the = this
-	the.word = str;
+	the.word = str || '';
 
 	if (typeof module !== "undefined" && module.exports) {
+		parts_of_speech = require("../../data/parts_of_speech")
 		inflect = require("./conjugate/inflect")
+		indefinite_article = require("./indefinite_article/indefinite_article")
+	}
+	//personal pronouns
+	var prps = {
+		"it": "PRP",
+		"they": "PRP",
+		"i": "PRP",
+		"them": "PRP",
+		"you": "PRP",
+		"she": "PRP",
+		"me": "PRP",
+		"he": "PRP",
+		"him": "PRP",
+		"her": "PRP",
+		"us": "PRP",
+		"we": "PRP",
+		"thou": "PRP",
 	}
 
-
-	the.conjugate = (function() {
-		return inflect.inflect(the.word)
-	})(),
-
-	the.inflection = (function() {
-		if (inflect.is_plural(the.word)) {
-			return "plural"
-		} else {
-			return "singular"
+	the.is_acronym = (function() {
+		var s = the.word
+		//no periods
+		if (s.length <= 5 && s.match(/^[A-Z]*$/)) {
+			return true
 		}
+		//with periods
+		if (s.length >= 4 && s.match(/^([A-Z]\.)*$/)) {
+			return true
+		}
+		return false
+	})()
+
+
+
+	the.conjugate = function() {
+		return inflect.inflect(the.word)
+	},
+
+	the.is_plural = (function() {
+		return inflect.is_plural(the.word)
+	})()
+
+	the.article = function() {
+		return indefinite_article(the.word)
+	}
+
+	//specifically which pos it is
+	the.which = (function() {
+		//posessive
+		if (the.word.match(/'s$/)) {
+			return parts_of_speech['NNO']
+		}
+		//noun-gerund
+		if (the.word.match(/..ing$/)) {
+			return parts_of_speech['NNG']
+		}
+		//personal pronoun
+		if (prps[the.word]) {
+			return parts_of_speech['PRP']
+		}
+		//proper nouns
+		var first = the.word.substr(0, 1)
+		if (first.toLowerCase() != first) {
+			if (the.is_acronym) {
+				return parts_of_speech['NNPA']
+			}
+			if (the.is_plural) {
+				return parts_of_speech['NNPS']
+			}
+			return parts_of_speech['NNP']
+		}
+		//plural
+		if (the.is_plural) {
+			return parts_of_speech['NNS']
+		}
+		//generic
+		return parts_of_speech['NN']
 	})()
 
 
@@ -4158,8 +4269,12 @@ if (typeof module !== "undefined" && module.exports) {
 
 
 // console.log(nouns.conjugate('farmhouse'))
-// var n = new Noun('kitchen')
-// console.log(n)
+// console.log(new Noun("FBI").is_acronym)
+// console.log(new Noun("FBI").which)
+// console.log(new Noun("kitchen's").which)
+// console.log(new Noun("he").which)
+// console.log(new Noun("Flanders").which)
+// console.log(new Noun("walking").which)
 //turns 'quickly' into 'quick'
 var to_adjective = (function() {
 	var main = function(str) {
@@ -4233,34 +4348,122 @@ var to_adjective = (function() {
 // arr = data.map(function(w) {
 // 	console.log(w[0] + " -  " + to_adjective(w[0]))
 // })
+// "RB  - adverb (quickly, softly)",
+// "RBR  - comparative adverb (faster, cooler)",
+// "RBS  - superlative adverb (fastest (driving), coolest (looking))"
 var Adverb = function(str) {
 	var the = this
-	the.word = str;
+	the.word = str || '';
 
 	if (typeof module !== "undefined" && module.exports) {
 		to_adjective = require("./conjugate/to_adjective")
+		parts_of_speech = require("../../data/parts_of_speech")
 	}
 
-	var main = {
 
-		conjugate: (function() {
-			return {
-				adjective: to_adjective(the.word)
-			}
-		})(),
-
+	the.conjugate = function() {
+		return {
+			adjective: to_adjective(the.word)
+		}
 	}
-	return main;
+	the.which = (function() {
+		if (the.word.match(/..est$/)) {
+			return parts_of_speech['RBS']
+		}
+		if (the.word.match(/..er$/)) {
+			return parts_of_speech['RBR']
+		}
+		return parts_of_speech['RB']
+	})()
+
+	return the;
 }
 
 if (typeof module !== "undefined" && module.exports) {
 	module.exports = Adverb;
 }
 
-// a = new Adverb("suddenly")
+// console.log(new Adverb("suddenly").conjugate())
 // console.log(a)
 // console.log(adverbs.conjugate('powerfully'))
+//somone who does this present-tense verb
+//turn 'walk' into 'walker'
+var verb_to_doer = (function() {
+	var main = function(str) {
+		str = str || ''
+
+		var irregulars = {
+			"tie": "tier",
+			"dream": "dreamer",
+			"sail": "sailer",
+			"run": "runner",
+			rub: "rubber",
+			begin: "beginner",
+			win: "winner",
+			claim: "claimant",
+			deal: "dealer",
+			spin: "spinner",
+		}
+		var dont = {
+			"aid": 1,
+			"fail": 1,
+			"appear": 1,
+			"happen": 1,
+			"seem": 1,
+			"try": 1,
+			"say": 1,
+			"marry": 1,
+			"be": 1,
+			"forbid": 1,
+			"understand": 1,
+		}
+		var transforms = [{
+			reg: /e$/i,
+			repl: 'er',
+		}, {
+			reg: /([aeiou])([mlgp])$/i,
+			repl: '$1$2$2er',
+		}, {
+			reg: /([rl])y$/i,
+			repl: '$1ier',
+		}, {
+			reg: /^(.?.[aeiou])t$/i,
+			repl: '$1tter',
+		}, ]
+
+		if (dont[str]) {
+			return null
+		}
+
+		if (irregulars[str]) {
+			return irregulars[str]
+		}
+
+		for (var i = 0; i < transforms.length; i++) {
+			if (str.match(transforms[i].reg)) {
+				return str.replace(transforms[i].reg, transforms[i].repl)
+			}
+		}
+
+		return str + "er"
+	}
+
+	if (typeof module !== "undefined" && module.exports) {
+		module.exports = main;
+	}
+	return main;
+})();
+
+
+
+console.log(verb_to_doer('set'))
+// console.log(verb_to_doer('sweep'))
+// console.log(verb_to_doer('aid'))
+// console.log(verb_to_doer('apply'))
 verb_conjugate = (function() {
+  if (typeof module !== "undefined" && module.exports) {
+    verb_to_doer = require("./to_doer")
+  }
 
   var verb_rules = [
 
@@ -4503,693 +4706,803 @@ verb_conjugate = (function() {
   ];
 
   var verb_irregulars = [{
-      "present": "arises",
-      "gerund": "arising",
-      "past": "arose",
-      "infinitive": "arise",
-      "participle": "arisen"
-    }, {
-      "infinitive": "babysit",
-      "present": "babysits",
-      "past": "babysat",
-      "gerund": "babysitting",
-      "participle": "babysat"
-    }, {
-      "infinitive": "be",
-      "present": "is",
-      "gerund": "being",
-      "past": "were",
-      "participle": "been"
-    }, {
-      "infinitive": "be",
-      "present": "is",
-      "gerund": "being",
-      "past": "were",
-      "participle": "been"
-    }, {
-      "infinitive": "beat",
-      "present": "beats",
-      "past": "beat",
-      "gerund": "beating",
-      "participle": "beaten"
-    }, {
-      "present": "becomes",
-      "gerund": "becoming",
-      "past": "became",
-      "infinitive": "become",
-      "participle": "become"
-    }, {
-      "present": "bends",
-      "gerund": "bending",
-      "past": "bent",
-      "infinitive": "bend",
-      "participle": "bent"
-    }, {
-      "infinitive": "begin",
-      "present": "begins",
-      "past": "began",
-      "gerund": "begining",
-      "participle": "begun"
-    }, {
-      "infinitive": "bet",
-      "present": "bets",
-      "past": "bet",
-      "gerund": "betting",
-      "participle": "bet"
-    }, {
-      "infinitive": "bind",
-      "present": "binds",
-      "past": "bound",
-      "gerund": "binding",
-      "participle": "bound"
-    }, {
-      "present": "bites",
-      "gerund": "biting",
-      "past": "bit",
-      "infinitive": "bite",
-      "participle": "bitten"
-    }, {
-      "infinitive": "bleed",
-      "present": "bleeds",
-      "past": "bled",
-      "gerund": "bleeding",
-      "participle": "bled"
-    }, {
-      "infinitive": "blow",
-      "present": "blows",
-      "past": "blew",
-      "gerund": "blowing",
-      "participle": "blown"
-    }, {
-      "infinitive": "break",
-      "present": "breaks",
-      "past": "broke",
-      "gerund": "breaking",
-      "participle": "broken"
-    }, {
-      "infinitive": "breed",
-      "present": "breeds",
-      "past": "bred",
-      "gerund": "breeding",
-      "participle": "bred"
-    }, {
-      "infinitive": "bring",
-      "present": "brings",
-      "past": "brought",
-      "gerund": "bringing",
-      "participle": "brought"
-    }, {
-      "infinitive": "broadcast",
-      "present": "broadcasts",
-      "past": "broadcast",
-      "gerund": "broadcasting",
-      "participle": "broadcast"
-    }, {
-      "infinitive": "build",
-      "present": "builds",
-      "past": "built",
-      "gerund": "building",
-      "participle": "built"
-    }, {
-      "infinitive": "buy",
-      "present": "buys",
-      "past": "bought",
-      "gerund": "buying",
-      "participle": "bought"
-    }, {
-      "present": "catches",
-      "gerund": "catching",
-      "past": "caught",
-      "infinitive": "catch",
-      "participle": "caught"
-    }, {
-      "infinitive": "choose",
-      "present": "chooses",
-      "past": "chose",
-      "gerund": "choosing",
-      "participle": "chosen"
-    }, {
-      "present": "comes",
-      "gerund": "coming",
-      "past": "came",
-      "infinitive": "come",
-      "participle": "come"
-    }, {
-      "infinitive": "cost",
-      "present": "costs",
-      "past": "cost",
-      "gerund": "costing",
-      "participle": "cost"
-    }, {
-      "infinitive": "cut",
-      "present": "cuts",
-      "past": "cut",
-      "gerund": "cutting",
-      "participle": "cut"
-    }, {
-      "infinitive": "deal",
-      "present": "deals",
-      "past": "dealt",
-      "gerund": "dealing",
-      "participle": "dealt"
-    }, {
-      "infinitive": "dig",
-      "present": "digs",
-      "past": "dug",
-      "gerund": "digging",
-      "participle": "dug"
-    }, {
-      "infinitive": "do",
-      "present": "does",
-      "past": "did",
-      "gerund": "doing",
-      "participle": "done"
-    }, {
-      "infinitive": "draw",
-      "present": "draws",
-      "past": "drew",
-      "gerund": "drawing",
-      "participle": "drawn"
-    }, {
-      "infinitive": "drink",
-      "present": "drinks",
-      "past": "drank",
-      "gerund": "drinking",
-      "participle": "drunk"
-    }, {
-      "infinitive": "drive",
-      "present": "drives",
-      "past": "drove",
-      "gerund": "driving",
-      "participle": "driven"
-    }, {
-      "infinitive": "eat",
-      "present": "eats",
-      "past": "ate",
-      "gerund": "eating",
-      "participle": "eaten"
-    }, {
-      "infinitive": "fall",
-      "present": "falls",
-      "past": "fell",
-      "gerund": "falling",
-      "participle": "fallen"
-    }, {
-      "infinitive": "feed",
-      "present": "feeds",
-      "past": "fed",
-      "gerund": "feeding",
-      "participle": "fed"
-    }, {
-      "infinitive": "feel",
-      "present": "feels",
-      "past": "felt",
-      "gerund": "feeling",
-      "participle": "felt"
-    }, {
-      "infinitive": "fight",
-      "present": "fights",
-      "past": "fought",
-      "gerund": "fighting",
-      "participle": "fought"
-    }, {
-      "infinitive": "find",
-      "present": "finds",
-      "past": "found",
-      "gerund": "finding",
-      "participle": "found"
-    }, {
-      "infinitive": "fly",
-      "present": "flys",
-      "past": "flew",
-      "gerund": "flying",
-      "participle": "flown"
-    }, {
-      "infinitive": "forbid",
-      "present": "forbids",
-      "past": "forbade",
-      "gerund": "forbiding",
-      "participle": "forbidden"
-    }, {
-      "infinitive": "forget",
-      "present": "forgets",
-      "past": "forgot",
-      "gerund": "forgeting",
-      "participle": "forgotten"
-    }, {
-      "infinitive": "forgive",
-      "present": "forgives",
-      "past": "forgave",
-      "gerund": "forgiving",
-      "participle": "forgiven"
-    }, {
-      "infinitive": "freeze",
-      "present": "freezes",
-      "past": "froze",
-      "gerund": "freezing",
-      "participle": "frozen"
-    }, {
-      "infinitive": "get",
-      "present": "gets",
-      "past": "got",
-      "gerund": "getting",
-      "participle": "gotten"
-    }, {
-      "infinitive": "give",
-      "present": "gives",
-      "past": "gave",
-      "gerund": "giving",
-      "participle": "given"
-    }, {
-      "infinitive": "go",
-      "present": "goes",
-      "gerund": "going",
-      "past": "went",
-      "participle": "gone"
-    }, {
-      "infinitive": "grow",
-      "present": "grows",
-      "past": "grew",
-      "gerund": "growing",
-      "participle": "grown"
-    }, {
-      "infinitive": "hang",
-      "present": "hangs",
-      "past": "hung",
-      "gerund": "hanging",
-      "participle": "hung"
-    }, {
-      "infinitive": "have",
-      "present": "haves",
-      "past": "had",
-      "gerund": "having",
-      "participle": "had"
-    }, {
-      "infinitive": "hear",
-      "present": "hears",
-      "past": "heard",
-      "gerund": "hearing",
-      "participle": "heard"
-    }, {
-      "infinitive": "hide",
-      "present": "hides",
-      "past": "hid",
-      "gerund": "hiding",
-      "participle": "hidden"
-    }, {
-      "infinitive": "hit",
-      "present": "hits",
-      "past": "hit",
-      "gerund": "hitting",
-      "participle": "hit"
-    }, {
-      "infinitive": "hold",
-      "present": "holds",
-      "past": "held",
-      "gerund": "holding",
-      "participle": "held"
-    }, {
-      "infinitive": "hurt",
-      "present": "hurts",
-      "past": "hurt",
-      "gerund": "hurting",
-      "participle": "hurt"
-    }, {
-      "present": "keeps",
-      "gerund": "keeping",
-      "past": "kept",
-      "infinitive": "keep",
-      "participle": "kept"
-    }, {
-      "infinitive": "know",
-      "present": "knows",
-      "past": "knew",
-      "gerund": "knowing",
-      "participle": "known"
-    }, {
-      "infinitive": "lay",
-      "present": "lays",
-      "past": "laid",
-      "gerund": "laying",
-      "participle": "laid"
-    }, {
-      "infinitive": "lead",
-      "present": "leads",
-      "past": "led",
-      "gerund": "leading",
-      "participle": "led"
-    }, {
-      "infinitive": "leave",
-      "present": "leaves",
-      "past": "left",
-      "gerund": "leaving",
-      "participle": "left"
-    }, {
-      "present": "lends",
-      "gerund": "lending",
-      "past": "lent",
-      "infinitive": "lend",
-      "participle": "lent"
-    }, {
-      "infinitive": "let",
-      "present": "lets",
-      "past": "let",
-      "gerund": "letting",
-      "participle": "let"
-    }, {
-      "infinitive": "lie",
-      "present": "lies",
-      "past": "lay",
-      "gerund": "lying",
-      "participle": "lied"
-    }, {
-      "infinitive": "light",
-      "present": "lights",
-      "past": "lit",
-      "gerund": "lighting",
-      "participle": "lit"
-    }, {
-      "infinitive": "lose",
-      "present": "loses",
-      "past": "lost",
-      "gerund": "losing",
-      "participle": "lost"
-    }, {
-      "infinitive": "make",
-      "present": "makes",
-      "past": "made",
-      "gerund": "making",
-      "participle": "made"
-    }, {
-      "infinitive": "mean",
-      "present": "means",
-      "past": "meant",
-      "gerund": "meaning",
-      "participle": "meant"
-    }, {
-      "infinitive": "meet",
-      "present": "meets",
-      "past": "met",
-      "gerund": "meeting",
-      "participle": "met"
-    }, {
-      "infinitive": "pay",
-      "present": "pays",
-      "past": "paid",
-      "gerund": "paying",
-      "participle": "paid"
-    }, {
-      "infinitive": "put",
-      "present": "puts",
-      "past": "put",
-      "gerund": "putting",
-      "participle": "put"
-    }, {
-      "infinitive": "quit",
-      "present": "quits",
-      "past": "quit",
-      "gerund": "quitting",
-      "participle": "quit"
-    }, {
-      "infinitive": "read",
-      "present": "reads",
-      "past": "read",
-      "gerund": "reading",
-      "participle": "read"
-    }, {
-      "infinitive": "ride",
-      "present": "rides",
-      "past": "rode",
-      "gerund": "riding",
-      "participle": "ridden"
-    }, {
-      "infinitive": "ring",
-      "present": "rings",
-      "past": "rang",
-      "gerund": "ringing",
-      "participle": "rung"
-    }, {
-      "present": "rises",
-      "gerund": "rising",
-      "past": "rose",
-      "infinitive": "rise",
-      "participle": "risen"
-    }, {
-      "infinitive": "run",
-      "present": "runs",
-      "past": "ran",
-      "gerund": "runing",
-      "participle": "run"
-    }, {
-      "infinitive": "say",
-      "present": "says",
-      "past": "said",
-      "gerund": "saying",
-      "participle": "said"
-    }, {
-      "infinitive": "see",
-      "present": "sees",
-      "past": "saw",
-      "gerund": "seing",
-      "participle": "seen"
-    }, {
-      "infinitive": "sell",
-      "present": "sells",
-      "past": "sold",
-      "gerund": "selling",
-      "participle": "sold"
-    }, {
-      "present": "sends",
-      "gerund": "sending",
-      "past": "sent",
-      "infinitive": "send",
-      "participle": "sent"
-    }, {
-      "infinitive": "set",
-      "present": "sets",
-      "past": "set",
-      "gerund": "setting",
-      "participle": "set"
-    }, {
-      "infinitive": "shake",
-      "present": "shakes",
-      "past": "shook",
-      "gerund": "shaking",
-      "participle": "shaken"
-    }, {
-      "infinitive": "shine",
-      "present": "shines",
-      "past": "shone",
-      "gerund": "shining",
-      "participle": "shone"
-    }, {
-      "infinitive": "shoot",
-      "present": "shoots",
-      "past": "shot",
-      "gerund": "shooting",
-      "participle": "shot"
-    }, {
-      "infinitive": "show",
-      "present": "shows",
-      "past": "showed",
-      "gerund": "showing",
-      "participle": "shown"
-    }, {
-      "infinitive": "shut",
-      "present": "shuts",
-      "past": "shut",
-      "gerund": "shutting",
-      "participle": "shut"
-    }, {
-      "infinitive": "sing",
-      "present": "sings",
-      "past": "sang",
-      "gerund": "singing",
-      "participle": "sung"
-    }, {
-      "infinitive": "sink",
-      "present": "sinks",
-      "past": "sank",
-      "gerund": "sinking",
-      "participle": "sunk"
-    }, {
-      "infinitive": "sit",
-      "present": "sits",
-      "past": "sat",
-      "gerund": "sitting",
-      "participle": "sat"
-    }, {
-      "present": "sleeps",
-      "gerund": "sleepping",
-      "past": "slept",
-      "infinitive": "sleep",
-      "participle": "slept"
-    }, {
-      "infinitive": "slide",
-      "present": "slides",
-      "past": "slid",
-      "gerund": "sliding",
-      "participle": "slid"
-    }, {
-      "infinitive": "speak",
-      "present": "speaks",
-      "past": "spoke",
-      "gerund": "speaking",
-      "participle": "spoken"
-    }, {
-      "present": "spends",
-      "gerund": "spending",
-      "past": "spent",
-      "infinitive": "spend",
-      "participle": "spent"
-    }, {
-      "infinitive": "spin",
-      "present": "spins",
-      "past": "spun",
-      "gerund": "spinning",
-      "participle": "spun"
-    }, {
-      "infinitive": "spread",
-      "present": "spreads",
-      "past": "spread",
-      "gerund": "spreading",
-      "participle": "spread"
-    }, {
-      "infinitive": "stand",
-      "present": "stands",
-      "past": "stood",
-      "gerund": "standing",
-      "participle": "stood"
-    }, {
-      "infinitive": "steal",
-      "present": "steals",
-      "past": "stole",
-      "gerund": "stealing",
-      "participle": "stolen"
-    }, {
-      "infinitive": "stick",
-      "present": "sticks",
-      "past": "stuck",
-      "gerund": "sticking",
-      "participle": "stuck"
-    }, {
-      "infinitive": "sting",
-      "present": "stings",
-      "past": "stung",
-      "gerund": "stinging",
-      "participle": "stung"
-    }, {
-      "infinitive": "strike",
-      "present": "strikes",
-      "past": "struck",
-      "gerund": "striking",
-      "participle": "struck"
-    }, {
-      "infinitive": "swear",
-      "present": "swears",
-      "past": "swore",
-      "gerund": "swearing",
-      "participle": "sworn"
-    }, {
-      "present": "sweeps",
-      "gerund": "sweeping",
-      "past": "swept",
-      "infinitive": "sweep",
-      "participle": "swept"
-    }, {
-      "infinitive": "swim",
-      "present": "swims",
-      "past": "swam",
-      "gerund": "swiming",
-      "participle": "swum"
-    }, {
-      "infinitive": "swing",
-      "present": "swings",
-      "past": "swung",
-      "gerund": "swinging",
-      "participle": "swung"
-    }, {
-      "infinitive": "take",
-      "present": "takes",
-      "past": "took",
-      "gerund": "taking",
-      "participle": "taken"
-    }, {
-      "infinitive": "teach",
-      "present": "teachs",
-      "past": "taught",
-      "gerund": "teaching",
-      "participle": "taught"
-    }, {
-      "infinitive": "tear",
-      "present": "tears",
-      "past": "tore",
-      "gerund": "tearing",
-      "participle": "torn"
-    }, {
-      "infinitive": "tell",
-      "present": "tells",
-      "past": "told",
-      "gerund": "telling",
-      "participle": "told"
-    }, {
-      "infinitive": "think",
-      "present": "thinks",
-      "past": "thought",
-      "gerund": "thinking",
-      "participle": "thought"
-    }, {
-      "infinitive": "throw",
-      "present": "throws",
-      "past": "threw",
-      "gerund": "throwing",
-      "participle": "thrown"
-    }, {
-      "infinitive": "understand",
-      "present": "understands",
-      "past": "understood",
-      "gerund": "understanding",
-      "participle": "understood"
-    }, {
-      "infinitive": "wake",
-      "present": "wakes",
-      "past": "woke",
-      "gerund": "waking",
-      "participle": "woken"
-    }, {
-      "infinitive": "wear",
-      "present": "wears",
-      "past": "wore",
-      "gerund": "wearing",
-      "participle": "worn"
-    }, {
-      "present": "wins",
-      "gerund": "winning",
-      "past": "won",
-      "infinitive": "win",
-      "participle": "won"
-    }, {
-      "infinitive": "withdraw",
-      "present": "withdraws",
-      "past": "withdrew",
-      "gerund": "withdrawing",
-      "participle": "withdrawn"
-    }, {
-      "present": "writes",
-      "gerund": "writing",
-      "past": "wrote",
-      "infinitive": "write",
-      "participle": "written"
-    }, {
-      "infinitive": 'tie',
-      "present": 'ties',
-      "past": 'tied',
-      "gerund": 'tying'
-    }
-
-  ]
-
-
+    "present": "arises",
+    "gerund": "arising",
+    "past": "arose",
+    "infinitive": "arise",
+    "participle": "arisen",
+    "noun": "ariser"
+  }, {
+    "infinitive": "babysit",
+    "present": "babysits",
+    "past": "babysat",
+    "gerund": "babysitting",
+    "participle": "babysat",
+    "noun": "babysitter"
+  }, {
+    "infinitive": "be",
+    "present": "is",
+    "gerund": "being",
+    "past": "were",
+    "participle": "been",
+    "noun": "ber"
+  }, {
+    "infinitive": "be",
+    "present": "is",
+    "gerund": "being",
+    "past": "were",
+    "participle": "been",
+    "noun": null
+  }, {
+    "infinitive": "beat",
+    "present": "beats",
+    "past": "beat",
+    "gerund": "beating",
+    "participle": "beaten",
+    "noun": "beater"
+  }, {
+    "present": "becomes",
+    "gerund": "becoming",
+    "past": "became",
+    "infinitive": "become",
+    "participle": "become",
+    "noun": "becomer"
+  }, {
+    "present": "bends",
+    "gerund": "bending",
+    "past": "bent",
+    "infinitive": "bend",
+    "participle": "bent",
+    "noun": "bender"
+  }, {
+    "infinitive": "begin",
+    "present": "begins",
+    "past": "began",
+    "gerund": "begining",
+    "participle": "begun",
+    "noun": "beginner"
+  }, {
+    "infinitive": "bet",
+    "present": "bets",
+    "past": "bet",
+    "gerund": "betting",
+    "participle": "bet",
+    "noun": "better"
+  }, {
+    "infinitive": "bind",
+    "present": "binds",
+    "past": "bound",
+    "gerund": "binding",
+    "participle": "bound",
+    "noun": "binder"
+  }, {
+    "present": "bites",
+    "gerund": "biting",
+    "past": "bit",
+    "infinitive": "bite",
+    "participle": "bitten",
+    "noun": "biter"
+  }, {
+    "infinitive": "bleed",
+    "present": "bleeds",
+    "past": "bled",
+    "gerund": "bleeding",
+    "participle": "bled",
+    "noun": "bleeder"
+  }, {
+    "infinitive": "blow",
+    "present": "blows",
+    "past": "blew",
+    "gerund": "blowing",
+    "participle": "blown",
+    "noun": "blower"
+  }, {
+    "infinitive": "break",
+    "present": "breaks",
+    "past": "broke",
+    "gerund": "breaking",
+    "participle": "broken",
+    "noun": "breaker"
+  }, {
+    "infinitive": "breed",
+    "present": "breeds",
+    "past": "bred",
+    "gerund": "breeding",
+    "participle": "bred",
+    "noun": "breeder"
+  }, {
+    "infinitive": "bring",
+    "present": "brings",
+    "past": "brought",
+    "gerund": "bringing",
+    "participle": "brought",
+    "noun": "bringer"
+  }, {
+    "infinitive": "broadcast",
+    "present": "broadcasts",
+    "past": "broadcast",
+    "gerund": "broadcasting",
+    "participle": "broadcast",
+    "noun": "broadcaster"
+  }, {
+    "infinitive": "build",
+    "present": "builds",
+    "past": "built",
+    "gerund": "building",
+    "participle": "built",
+    "noun": "builder"
+  }, {
+    "infinitive": "buy",
+    "present": "buys",
+    "past": "bought",
+    "gerund": "buying",
+    "participle": "bought",
+    "noun": "buyer"
+  }, {
+    "present": "catches",
+    "gerund": "catching",
+    "past": "caught",
+    "infinitive": "catch",
+    "participle": "caught",
+    "noun": "catcher"
+  }, {
+    "infinitive": "choose",
+    "present": "chooses",
+    "past": "chose",
+    "gerund": "choosing",
+    "participle": "chosen",
+    "noun": "chooser"
+  }, {
+    "present": "comes",
+    "gerund": "coming",
+    "past": "came",
+    "infinitive": "come",
+    "participle": "come",
+    "noun": "comer"
+  }, {
+    "infinitive": "cost",
+    "present": "costs",
+    "past": "cost",
+    "gerund": "costing",
+    "participle": "cost",
+    "noun": "coster"
+  }, {
+    "infinitive": "cut",
+    "present": "cuts",
+    "past": "cut",
+    "gerund": "cutting",
+    "participle": "cut",
+    "noun": "cutter"
+  }, {
+    "infinitive": "deal",
+    "present": "deals",
+    "past": "dealt",
+    "gerund": "dealing",
+    "participle": "dealt",
+    "noun": "dealer"
+  }, {
+    "infinitive": "dig",
+    "present": "digs",
+    "past": "dug",
+    "gerund": "digging",
+    "participle": "dug",
+    "noun": "digger"
+  }, {
+    "infinitive": "do",
+    "present": "does",
+    "past": "did",
+    "gerund": "doing",
+    "participle": "done",
+    "noun": "doer"
+  }, {
+    "infinitive": "draw",
+    "present": "draws",
+    "past": "drew",
+    "gerund": "drawing",
+    "participle": "drawn",
+    "noun": "drawer"
+  }, {
+    "infinitive": "drink",
+    "present": "drinks",
+    "past": "drank",
+    "gerund": "drinking",
+    "participle": "drunk",
+    "noun": "drinker"
+  }, {
+    "infinitive": "drive",
+    "present": "drives",
+    "past": "drove",
+    "gerund": "driving",
+    "participle": "driven",
+    "noun": "driver"
+  }, {
+    "infinitive": "eat",
+    "present": "eats",
+    "past": "ate",
+    "gerund": "eating",
+    "participle": "eaten",
+    "noun": "eater"
+  }, {
+    "infinitive": "fall",
+    "present": "falls",
+    "past": "fell",
+    "gerund": "falling",
+    "participle": "fallen",
+    "noun": "faller"
+  }, {
+    "infinitive": "feed",
+    "present": "feeds",
+    "past": "fed",
+    "gerund": "feeding",
+    "participle": "fed",
+    "noun": "feeder"
+  }, {
+    "infinitive": "feel",
+    "present": "feels",
+    "past": "felt",
+    "gerund": "feeling",
+    "participle": "felt",
+    "noun": "feeller"
+  }, {
+    "infinitive": "fight",
+    "present": "fights",
+    "past": "fought",
+    "gerund": "fighting",
+    "participle": "fought",
+    "noun": "fighter"
+  }, {
+    "infinitive": "find",
+    "present": "finds",
+    "past": "found",
+    "gerund": "finding",
+    "participle": "found",
+    "noun": "finder"
+  }, {
+    "infinitive": "fly",
+    "present": "flys",
+    "past": "flew",
+    "gerund": "flying",
+    "participle": "flown",
+    "noun": "flier"
+  }, {
+    "infinitive": "forbid",
+    "present": "forbids",
+    "past": "forbade",
+    "gerund": "forbiding",
+    "participle": "forbidden",
+    "noun": null
+  }, {
+    "infinitive": "forget",
+    "present": "forgets",
+    "past": "forgot",
+    "gerund": "forgeting",
+    "participle": "forgotten",
+    "noun": "forgeter"
+  }, {
+    "infinitive": "forgive",
+    "present": "forgives",
+    "past": "forgave",
+    "gerund": "forgiving",
+    "participle": "forgiven",
+    "noun": "forgiver"
+  }, {
+    "infinitive": "freeze",
+    "present": "freezes",
+    "past": "froze",
+    "gerund": "freezing",
+    "participle": "frozen",
+    "noun": "freezer"
+  }, {
+    "infinitive": "get",
+    "present": "gets",
+    "past": "got",
+    "gerund": "getting",
+    "participle": "gotten",
+    "noun": "getter"
+  }, {
+    "infinitive": "give",
+    "present": "gives",
+    "past": "gave",
+    "gerund": "giving",
+    "participle": "given",
+    "noun": "giver"
+  }, {
+    "infinitive": "go",
+    "present": "goes",
+    "gerund": "going",
+    "past": "went",
+    "participle": "gone",
+    "noun": "goer"
+  }, {
+    "infinitive": "grow",
+    "present": "grows",
+    "past": "grew",
+    "gerund": "growing",
+    "participle": "grown",
+    "noun": "grower"
+  }, {
+    "infinitive": "hang",
+    "present": "hangs",
+    "past": "hung",
+    "gerund": "hanging",
+    "participle": "hung",
+    "noun": "hanger"
+  }, {
+    "infinitive": "have",
+    "present": "haves",
+    "past": "had",
+    "gerund": "having",
+    "participle": "had",
+    "noun": "haver"
+  }, {
+    "infinitive": "hear",
+    "present": "hears",
+    "past": "heard",
+    "gerund": "hearing",
+    "participle": "heard",
+    "noun": "hearer"
+  }, {
+    "infinitive": "hide",
+    "present": "hides",
+    "past": "hid",
+    "gerund": "hiding",
+    "participle": "hidden",
+    "noun": "hider"
+  }, {
+    "infinitive": "hit",
+    "present": "hits",
+    "past": "hit",
+    "gerund": "hitting",
+    "participle": "hit",
+    "noun": "hitter"
+  }, {
+    "infinitive": "hold",
+    "present": "holds",
+    "past": "held",
+    "gerund": "holding",
+    "participle": "held",
+    "noun": "holder"
+  }, {
+    "infinitive": "hurt",
+    "present": "hurts",
+    "past": "hurt",
+    "gerund": "hurting",
+    "participle": "hurt",
+    "noun": "hurter"
+  }, {
+    "present": "keeps",
+    "gerund": "keeping",
+    "past": "kept",
+    "infinitive": "keep",
+    "participle": "kept",
+    "noun": "keepper"
+  }, {
+    "infinitive": "know",
+    "present": "knows",
+    "past": "knew",
+    "gerund": "knowing",
+    "participle": "known",
+    "noun": "knower"
+  }, {
+    "infinitive": "lay",
+    "present": "lays",
+    "past": "laid",
+    "gerund": "laying",
+    "participle": "laid",
+    "noun": "layer"
+  }, {
+    "infinitive": "lead",
+    "present": "leads",
+    "past": "led",
+    "gerund": "leading",
+    "participle": "led",
+    "noun": "leader"
+  }, {
+    "infinitive": "leave",
+    "present": "leaves",
+    "past": "left",
+    "gerund": "leaving",
+    "participle": "left",
+    "noun": "leaver"
+  }, {
+    "present": "lends",
+    "gerund": "lending",
+    "past": "lent",
+    "infinitive": "lend",
+    "participle": "lent",
+    "noun": "lender"
+  }, {
+    "infinitive": "let",
+    "present": "lets",
+    "past": "let",
+    "gerund": "letting",
+    "participle": "let",
+    "noun": "letter"
+  }, {
+    "infinitive": "lie",
+    "present": "lies",
+    "past": "lay",
+    "gerund": "lying",
+    "participle": "lied",
+    "noun": "lier"
+  }, {
+    "infinitive": "light",
+    "present": "lights",
+    "past": "lit",
+    "gerund": "lighting",
+    "participle": "lit",
+    "noun": "lighter"
+  }, {
+    "infinitive": "lose",
+    "present": "loses",
+    "past": "lost",
+    "gerund": "losing",
+    "participle": "lost",
+    "noun": "loser"
+  }, {
+    "infinitive": "make",
+    "present": "makes",
+    "past": "made",
+    "gerund": "making",
+    "participle": "made",
+    "noun": "maker"
+  }, {
+    "infinitive": "mean",
+    "present": "means",
+    "past": "meant",
+    "gerund": "meaning",
+    "participle": "meant",
+    "noun": "meaner"
+  }, {
+    "infinitive": "meet",
+    "present": "meets",
+    "past": "met",
+    "gerund": "meeting",
+    "participle": "met",
+    "noun": "meeter"
+  }, {
+    "infinitive": "pay",
+    "present": "pays",
+    "past": "paid",
+    "gerund": "paying",
+    "participle": "paid",
+    "noun": "payer"
+  }, {
+    "infinitive": "put",
+    "present": "puts",
+    "past": "put",
+    "gerund": "putting",
+    "participle": "put",
+    "noun": "putter"
+  }, {
+    "infinitive": "quit",
+    "present": "quits",
+    "past": "quit",
+    "gerund": "quitting",
+    "participle": "quit",
+    "noun": "quitter"
+  }, {
+    "infinitive": "read",
+    "present": "reads",
+    "past": "read",
+    "gerund": "reading",
+    "participle": "read",
+    "noun": "reader"
+  }, {
+    "infinitive": "ride",
+    "present": "rides",
+    "past": "rode",
+    "gerund": "riding",
+    "participle": "ridden",
+    "noun": "rider"
+  }, {
+    "infinitive": "ring",
+    "present": "rings",
+    "past": "rang",
+    "gerund": "ringing",
+    "participle": "rung",
+    "noun": "ringer"
+  }, {
+    "present": "rises",
+    "gerund": "rising",
+    "past": "rose",
+    "infinitive": "rise",
+    "participle": "risen",
+    "noun": "riser"
+  }, {
+    "infinitive": "run",
+    "present": "runs",
+    "past": "ran",
+    "gerund": "runing",
+    "participle": "run",
+    "noun": "runner"
+  }, {
+    "infinitive": "say",
+    "present": "says",
+    "past": "said",
+    "gerund": "saying",
+    "participle": "said",
+    "noun": null
+  }, {
+    "infinitive": "see",
+    "present": "sees",
+    "past": "saw",
+    "gerund": "seing",
+    "participle": "seen",
+    "noun": "seer"
+  }, {
+    "infinitive": "sell",
+    "present": "sells",
+    "past": "sold",
+    "gerund": "selling",
+    "participle": "sold",
+    "noun": "seller"
+  }, {
+    "present": "sends",
+    "gerund": "sending",
+    "past": "sent",
+    "infinitive": "send",
+    "participle": "sent",
+    "noun": "sender"
+  }, {
+    "infinitive": "set",
+    "present": "sets",
+    "past": "set",
+    "gerund": "setting",
+    "participle": "set",
+    "noun": "setter"
+  }, {
+    "infinitive": "shake",
+    "present": "shakes",
+    "past": "shook",
+    "gerund": "shaking",
+    "participle": "shaken",
+    "noun": "shaker"
+  }, {
+    "infinitive": "shine",
+    "present": "shines",
+    "past": "shone",
+    "gerund": "shining",
+    "participle": "shone",
+    "noun": "shiner"
+  }, {
+    "infinitive": "shoot",
+    "present": "shoots",
+    "past": "shot",
+    "gerund": "shooting",
+    "participle": "shot",
+    "noun": "shooter"
+  }, {
+    "infinitive": "show",
+    "present": "shows",
+    "past": "showed",
+    "gerund": "showing",
+    "participle": "shown",
+    "noun": "shower"
+  }, {
+    "infinitive": "shut",
+    "present": "shuts",
+    "past": "shut",
+    "gerund": "shutting",
+    "participle": "shut",
+    "noun": "shutter"
+  }, {
+    "infinitive": "sing",
+    "present": "sings",
+    "past": "sang",
+    "gerund": "singing",
+    "participle": "sung",
+    "noun": "singer"
+  }, {
+    "infinitive": "sink",
+    "present": "sinks",
+    "past": "sank",
+    "gerund": "sinking",
+    "participle": "sunk",
+    "noun": "sinker"
+  }, {
+    "infinitive": "sit",
+    "present": "sits",
+    "past": "sat",
+    "gerund": "sitting",
+    "participle": "sat",
+    "noun": "sitter"
+  }, {
+    "present": "sleeps",
+    "gerund": "sleepping",
+    "past": "slept",
+    "infinitive": "sleep",
+    "participle": "slept",
+    "noun": "sleepper"
+  }, {
+    "infinitive": "slide",
+    "present": "slides",
+    "past": "slid",
+    "gerund": "sliding",
+    "participle": "slid",
+    "noun": "slider"
+  }, {
+    "infinitive": "speak",
+    "present": "speaks",
+    "past": "spoke",
+    "gerund": "speaking",
+    "participle": "spoken",
+    "noun": "speaker"
+  }, {
+    "present": "spends",
+    "gerund": "spending",
+    "past": "spent",
+    "infinitive": "spend",
+    "participle": "spent",
+    "noun": "spender"
+  }, {
+    "infinitive": "spin",
+    "present": "spins",
+    "past": "spun",
+    "gerund": "spinning",
+    "participle": "spun",
+    "noun": "spinner"
+  }, {
+    "infinitive": "spread",
+    "present": "spreads",
+    "past": "spread",
+    "gerund": "spreading",
+    "participle": "spread",
+    "noun": "spreader"
+  }, {
+    "infinitive": "stand",
+    "present": "stands",
+    "past": "stood",
+    "gerund": "standing",
+    "participle": "stood",
+    "noun": "stander"
+  }, {
+    "infinitive": "steal",
+    "present": "steals",
+    "past": "stole",
+    "gerund": "stealing",
+    "participle": "stolen",
+    "noun": "stealer"
+  }, {
+    "infinitive": "stick",
+    "present": "sticks",
+    "past": "stuck",
+    "gerund": "sticking",
+    "participle": "stuck",
+    "noun": "sticker"
+  }, {
+    "infinitive": "sting",
+    "present": "stings",
+    "past": "stung",
+    "gerund": "stinging",
+    "participle": "stung",
+    "noun": "stinger"
+  }, {
+    "infinitive": "strike",
+    "present": "strikes",
+    "past": "struck",
+    "gerund": "striking",
+    "participle": "struck",
+    "noun": "striker"
+  }, {
+    "infinitive": "swear",
+    "present": "swears",
+    "past": "swore",
+    "gerund": "swearing",
+    "participle": "sworn",
+    "noun": "swearer"
+  }, {
+    "present": "sweeps",
+    "gerund": "sweeping",
+    "past": "swept",
+    "infinitive": "sweep",
+    "participle": "swept",
+    "noun": "sweepper"
+  }, {
+    "infinitive": "swim",
+    "present": "swims",
+    "past": "swam",
+    "gerund": "swiming",
+    "participle": "swum",
+    "noun": "swimmer"
+  }, {
+    "infinitive": "swing",
+    "present": "swings",
+    "past": "swung",
+    "gerund": "swinging",
+    "participle": "swung",
+    "noun": "swinger"
+  }, {
+    "infinitive": "take",
+    "present": "takes",
+    "past": "took",
+    "gerund": "taking",
+    "participle": "taken",
+    "noun": "taker"
+  }, {
+    "infinitive": "teach",
+    "present": "teachs",
+    "past": "taught",
+    "gerund": "teaching",
+    "participle": "taught",
+    "noun": "teacher"
+  }, {
+    "infinitive": "tear",
+    "present": "tears",
+    "past": "tore",
+    "gerund": "tearing",
+    "participle": "torn",
+    "noun": "tearer"
+  }, {
+    "infinitive": "tell",
+    "present": "tells",
+    "past": "told",
+    "gerund": "telling",
+    "participle": "told",
+    "noun": "teller"
+  }, {
+    "infinitive": "think",
+    "present": "thinks",
+    "past": "thought",
+    "gerund": "thinking",
+    "participle": "thought",
+    "noun": "thinker"
+  }, {
+    "infinitive": "throw",
+    "present": "throws",
+    "past": "threw",
+    "gerund": "throwing",
+    "participle": "thrown",
+    "noun": "thrower"
+  }, {
+    "infinitive": "understand",
+    "present": "understands",
+    "past": "understood",
+    "gerund": "understanding",
+    "participle": "understood",
+    "noun": null
+  }, {
+    "infinitive": "wake",
+    "present": "wakes",
+    "past": "woke",
+    "gerund": "waking",
+    "participle": "woken",
+    "noun": "waker"
+  }, {
+    "infinitive": "wear",
+    "present": "wears",
+    "past": "wore",
+    "gerund": "wearing",
+    "participle": "worn",
+    "noun": "wearer"
+  }, {
+    "present": "wins",
+    "gerund": "winning",
+    "past": "won",
+    "infinitive": "win",
+    "participle": "won",
+    "noun": "winner"
+  }, {
+    "infinitive": "withdraw",
+    "present": "withdraws",
+    "past": "withdrew",
+    "gerund": "withdrawing",
+    "participle": "withdrawn",
+    "noun": "withdrawer"
+  }, {
+    "present": "writes",
+    "gerund": "writing",
+    "past": "wrote",
+    "infinitive": "write",
+    "participle": "written",
+    "noun": "writer"
+  }, {
+    "infinitive": "tie",
+    "present": "ties",
+    "past": "tied",
+    "gerund": "tying",
+    "noun": "tier"
+  }]
 
   // console.log(verb_irregulars)
   // console.log(verb_rules)
@@ -5202,16 +5515,19 @@ verb_conjugate = (function() {
       gerund = w + "ing"
       past = w + "ed"
       present = w + "s"
+      doer = verb_to_doer(infinitive)
     } else {
       gerund = w.replace(/[aeiou]$/, 'ing')
       past = w.replace(/[aeiou]$/, 'ed')
       present = w.replace(/[aeiou]$/, 'es')
+      doer = verb_to_doer(infinitive)
     }
     return {
       infinitive: infinitive,
       present: present,
       past: past,
-      gerund: gerund
+      gerund: gerund,
+      noun: doer,
     }
   }
 
@@ -5262,25 +5578,55 @@ verb_conjugate = (function() {
 // console.log(verb_conjugate("write"))
 // console.log(verb_conjugate("stop"))
 // console.log(verb_conjugate("carry"))
+// "VB  - verb, generic (eat)",
+// "VBD  - past-tense verb (ate)",
+// "VBN  - past-participle verb (eaten)",
+// "VBP  - infinitive verb (eat)",
+// "VBZ  - present-tense verb (eats, swims)",
+
+// "VBG  - gerund verb (eating,winning)"
+// "CP  - copula (is, was, were)",
+
 var Verb = function(str) {
 	var the = this
-	the.word = str;
+	the.word = str || '';
 
 	if (typeof module !== "undefined" && module.exports) {
 		verb_conjugate = require("./conjugate/conjugate")
+		parts_of_speech = require("../../data/parts_of_speech")
 	}
 
+	var copulas = {
+		"is": "CP",
+		"will be": "CP",
+		"are": "CP",
+		"was": "CP",
+		"were": "CP",
+	}
+	var tenses = {
+		past: "VBD",
+		participle: "VBN",
+		infinitive: "VBP",
+		present: "VBZ",
+		gerund: "VBG"
+	}
 	// console.log(verb_conjugate)
 
-	the.conjugate = (function() {
+	the.conjugate = function() {
 		return verb_conjugate(the.word)
-	})(),
+	}
 
-	the.tense = (function(str) {
+	the.which = (function() {
+		if (copulas[the.word]) {
+			return parts_of_speech['CP']
+		}
+		if (the.word.match(/([aeiou][^aeiouwyrlm])ing$/)) {
+			return parts_of_speech['VBG']
+		}
 		var forms = verb_conjugate(the.word)
 		for (var i in forms) {
 			if (forms[i] == the.word) {
-				return i
+				return parts_of_speech[tenses[i]]
 			}
 		}
 	})()
@@ -5293,8 +5639,10 @@ if (typeof module !== "undefined" && module.exports) {
 	module.exports = Verb;
 }
 
-// s = new Verb("walk")
-// console.log(s)
+// console.log(new Verb("walked"))
+// console.log(new Verb("stalking"))
+// console.log(new Verb("stalks"))
+// console.log(new Verb("stalked"))
 //convert cute to cuteness
 var adj_to_noun = (function() {
 
@@ -5686,24 +6034,38 @@ adj_to_adv = (function() {
 // 	console.log(w[1] + "  -  " + to_adverb(w[1]))
 // })
 // console.log(to_adverb('normal'))
+// "JJ  - adjective, generic (big, nice)",
+// "JJR  - comparative adjective (bigger, cooler)",
+// "JJS  - superlative adjective (biggest, fattest)"
 var Adjective = function(str) {
 	var the = this
-	the.word = str;
+	the.word = str || '';
 
 	if (typeof module !== "undefined" && module.exports) {
 		to_comparative = require("./conjugate/to_comparative")
 		to_superlative = require("./conjugate/to_superlative")
 		adj_to_adv = require("./conjugate/to_adverb")
 		adj_to_noun = require("./conjugate/to_noun")
+		parts_of_speech = require("../../data/parts_of_speech")
 	}
 
-	the.conjugate = (function() {
+	the.conjugate = function() {
 		return {
 			comparative: to_comparative(the.word),
 			superlative: to_superlative(the.word),
 			adverb: adj_to_adv(the.word),
 			noun: adj_to_noun(the.word),
 		}
+	}
+
+	the.which = (function() {
+		if (the.word.match(/..est$/)) {
+			return parts_of_speech['JJS']
+		}
+		if (the.word.match(/..er$/)) {
+			return parts_of_speech['JJR']
+		}
+		return parts_of_speech['JJ']
 	})()
 
 	return the;
@@ -5712,8 +6074,10 @@ if (typeof module !== "undefined" && module.exports) {
 	module.exports = Adjective;
 }
 
-// s = new Adjective("crazy")
-// console.log(s)
+// console.log(new Adjective("crazy").conjugate())
+// console.log(new Adjective("crazy"))
+// console.log(new Adjective("craziest"))
+// console.log(new Adjective("crazier"))
 if (typeof module !== "undefined" && module.exports) {
 	Adjective = require("./adjective/index");
 	Noun = require("./noun/index");
@@ -5721,13 +6085,21 @@ if (typeof module !== "undefined" && module.exports) {
 	Verb = require("./verb/index");
 	Value = require("./value/index");
 }
-parents = {
+var parents = {
 	adjective: Adjective,
-	noun: Noun,
-	adverb: Adverb,
-	verb: Verb,
-	value: Value,
-	glue: function() {}
+	noun: function(str) {
+		return new Noun(str)
+	},
+	adverb: function(str) {
+		return new Adverb(str)
+	},
+	verb: function(str) {
+		return new Verb(str)
+	},
+	value: function(str) {
+		return new Value(str)
+	},
+	glue: function(str) {}
 }
 if (typeof module !== "undefined" && module.exports) {
 	module.exports = parents;
@@ -5738,6 +6110,7 @@ lexicon = (function() {
 	if (typeof module !== "undefined" && module.exports) {
 		verb_conjugate = require("../parents/verb/conjugate/conjugate")
 		adj_to_adv = require("../parents/adjective/conjugate/to_adverb");
+		verb_to_doer = require("../parents/verb/conjugate/to_doer");
 		// var superlative = require("../../adjectives/conjugate/to_superlative");
 	}
 	var main = {
@@ -5909,7 +6282,7 @@ lexicon = (function() {
 		"itself": "PP",
 		"who": "PP",
 
-		//personal pronouns
+		//personal pronouns (nouns)
 		"it": "PRP",
 		"they": "PRP",
 		"i": "PRP",
@@ -6305,12 +6678,10 @@ lexicon = (function() {
 		"become",
 		"make",
 		"compare",
-		"bear",
 		"develop",
 		"apply",
 		"direct",
 		"discuss",
-		"consider",
 		"know",
 		"sit",
 		"see",
@@ -6346,8 +6717,6 @@ lexicon = (function() {
 		"cover",
 		"set",
 		"maintain",
-		"mean",
-		"including",
 		"start",
 		"stay",
 		"move",
@@ -6381,7 +6750,6 @@ lexicon = (function() {
 		"attend",
 		"buy",
 		"unite",
-		"leach",
 		"feel",
 		"explain",
 		"publish",
@@ -6419,9 +6787,8 @@ lexicon = (function() {
 		"eat",
 		"disagree",
 		"produce",
-		"won",
+		"win",
 		"went",
-		"walked",
 		"attack",
 		"attempt",
 		"bite",
@@ -6443,7 +6810,6 @@ lexicon = (function() {
 		"claw",
 		"clip",
 		"combine",
-		"crop",
 		"damage",
 		"desire",
 		"doubt",
@@ -6459,12 +6825,10 @@ lexicon = (function() {
 		"divorce",
 		"dream",
 		"exchange",
-		"engineer",
 		"envy",
 		"exercise",
 		"export",
 		"fold",
-		"fork",
 		"flood",
 		"focus",
 		"forecast",
@@ -6511,14 +6875,11 @@ lexicon = (function() {
 		"progress",
 		"promise",
 		"purchase",
-		"rain",
 		"regret",
 		"request",
 		"reward",
 		"roll",
 		"rub",
-		"remark",
-		"remedy",
 		"rent",
 		"repair",
 		"sail",
@@ -6535,7 +6896,6 @@ lexicon = (function() {
 		"sneeze",
 		"snow",
 		"stick",
-		"store",
 		"surprise",
 		"swim",
 		"scratch",
@@ -6543,10 +6903,8 @@ lexicon = (function() {
 		"share",
 		"shave",
 		"slide",
-		"soil",
 		"spit",
 		"splash",
-		"spot",
 		"stain",
 		"stress",
 		"swing",
@@ -6556,7 +6914,6 @@ lexicon = (function() {
 		"trade",
 		"trick",
 		"twist",
-		"tap",
 		"tie",
 		"trap",
 		"travel",
@@ -6568,7 +6925,6 @@ lexicon = (function() {
 		"wash",
 		"wave",
 		"whistle",
-		"wind",
 		"wreck",
 		"yawn",
 	]
@@ -6579,7 +6935,10 @@ lexicon = (function() {
 		main[c.past] = "VBD"
 		main[c.gerund] = "VBG"
 		main[c.present] = "VBZ"
-		// main[c.participle] = "VBN"
+		var doer = verb_to_doer(v)
+		if (doer) {
+			main[doer] = "NNA"
+		}
 	})
 
 
@@ -6875,6 +7234,7 @@ lexicon = (function() {
 	return main
 })()
 // console.log(Object.keys(lexicon).length)
+// console.log(lexicon['supplier'])
 var pos = (function() {
 
 
@@ -7228,6 +7588,10 @@ var spot = (function() {
 	var blacklist = {
 		"i": 1,
 		"me": 1,
+		"he": 1,
+		"she": 1,
+		"we": 1,
+		"they": 1,
 	}
 
 	var main = function(text, options) {

@@ -1,27 +1,38 @@
+// "RB  - adverb (quickly, softly)",
+// "RBR  - comparative adverb (faster, cooler)",
+// "RBS  - superlative adverb (fastest (driving), coolest (looking))"
 var Adverb = function(str) {
 	var the = this
-	the.word = str;
+	the.word = str || '';
 
 	if (typeof module !== "undefined" && module.exports) {
 		to_adjective = require("./conjugate/to_adjective")
+		parts_of_speech = require("../../data/parts_of_speech")
 	}
 
-	var main = {
 
-		conjugate: (function() {
-			return {
-				adjective: to_adjective(the.word)
-			}
-		})(),
-
+	the.conjugate = function() {
+		return {
+			adjective: to_adjective(the.word)
+		}
 	}
-	return main;
+	the.which = (function() {
+		if (the.word.match(/..est$/)) {
+			return parts_of_speech['RBS']
+		}
+		if (the.word.match(/..er$/)) {
+			return parts_of_speech['RBR']
+		}
+		return parts_of_speech['RB']
+	})()
+
+	return the;
 }
 
 if (typeof module !== "undefined" && module.exports) {
 	module.exports = Adverb;
 }
 
-// a = new Adverb("suddenly")
+// console.log(new Adverb("suddenly").conjugate())
 // console.log(a)
 // console.log(adverbs.conjugate('powerfully'))

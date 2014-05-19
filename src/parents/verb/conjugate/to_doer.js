@@ -1,0 +1,74 @@
+//somone who does this present-tense verb
+//turn 'walk' into 'walker'
+var verb_to_doer = (function() {
+	var main = function(str) {
+		str = str || ''
+
+		var irregulars = {
+			"tie": "tier",
+			"dream": "dreamer",
+			"sail": "sailer",
+			"run": "runner",
+			rub: "rubber",
+			begin: "beginner",
+			win: "winner",
+			claim: "claimant",
+			deal: "dealer",
+			spin: "spinner",
+		}
+		var dont = {
+			"aid": 1,
+			"fail": 1,
+			"appear": 1,
+			"happen": 1,
+			"seem": 1,
+			"try": 1,
+			"say": 1,
+			"marry": 1,
+			"be": 1,
+			"forbid": 1,
+			"understand": 1,
+		}
+		var transforms = [{
+			reg: /e$/i,
+			repl: 'er',
+		}, {
+			reg: /([aeiou])([mlgp])$/i,
+			repl: '$1$2$2er',
+		}, {
+			reg: /([rl])y$/i,
+			repl: '$1ier',
+		}, {
+			reg: /^(.?.[aeiou])t$/i,
+			repl: '$1tter',
+		}, ]
+
+		if (dont[str]) {
+			return null
+		}
+
+		if (irregulars[str]) {
+			return irregulars[str]
+		}
+
+		for (var i = 0; i < transforms.length; i++) {
+			if (str.match(transforms[i].reg)) {
+				return str.replace(transforms[i].reg, transforms[i].repl)
+			}
+		}
+
+		return str + "er"
+	}
+
+	if (typeof module !== "undefined" && module.exports) {
+		module.exports = main;
+	}
+	return main;
+})();
+
+
+
+// console.log(verb_to_doer('set'))
+// console.log(verb_to_doer('sweep'))
+// console.log(verb_to_doer('aid'))
+// console.log(verb_to_doer('apply'))

@@ -4,7 +4,7 @@ var parts_of_speech = (function() {
 
         //verbs
         "VB": {
-            "name": "verb",
+            "name": "verb, generic",
             "example": "eat",
             "parent": "verb",
             "tag": "VB"
@@ -53,7 +53,7 @@ var parts_of_speech = (function() {
 
         //adjectives
         "JJ": {
-            "name": "adjective",
+            "name": "adjective, generic",
             "example": "big, nice",
             "parent": "adjective",
             "tag": "JJ"
@@ -95,7 +95,7 @@ var parts_of_speech = (function() {
 
         //nouns
         "NN": {
-            "name": "noun",
+            "name": "noun, generic",
             "example": "dog, rain",
             "parent": "noun",
             "tag": "NN"
@@ -105,6 +105,18 @@ var parts_of_speech = (function() {
             "example": "Edinburgh, skateboard",
             "parent": "noun",
             "tag": "NNP"
+        },
+        "NNA": {
+            "name": "noun, active",
+            "example": "supplier, singer",
+            "parent": "noun",
+            "tag": "NNA"
+        },
+        "NNPA": {
+            "name": "noun, acronym",
+            "example": "FBI, N.A.S.A.",
+            "parent": "noun",
+            "tag": "NNPA"
         },
         "NNPS": {
             "name": "plural proper noun",
@@ -124,7 +136,7 @@ var parts_of_speech = (function() {
             "parent": "noun",
             "tag": "NNO"
         },
-        "NG": {
+        "NNG": {
             "name": "gerund noun",
             "example": "eating,winning - but used grammatically as a noun",
             "parent": "noun",
@@ -146,10 +158,22 @@ var parts_of_speech = (function() {
             "tag": "FW"
         },
         "CD": {
-            "name": "cardinal number",
-            "example": "one,two",
+            "name": "cardinal value, generic",
+            "example": "one, two, june 5th",
             "parent": "value",
             "tag": "CD"
+        },
+        "DA": {
+            "name": "date",
+            "example": "june 5th, 1998",
+            "parent": "value",
+            "tag": "DA"
+        },
+        "NU": {
+            "name": "number",
+            "example": "89, half-million",
+            "parent": "value",
+            "tag": "NU"
         },
 
         "IN": {
@@ -202,3 +226,13 @@ var parts_of_speech = (function() {
 
     return main
 })()
+var print_pos = function() {
+    parents = {}
+    Object.keys(parts_of_speech).forEach(function(k) {
+        var parent = parts_of_speech[k].parent
+        parents[parent] = parents[parent] || []
+        parents[parent].push(k + '  - ' + parts_of_speech[k].name + ' (' + parts_of_speech[k].example + ')')
+    })
+    console.log(JSON.stringify(parents, null, 2));
+}
+// print_pos()

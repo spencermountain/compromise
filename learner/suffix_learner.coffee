@@ -22,9 +22,10 @@ learn= (size=3, min_count=min_count, min_percentage=min_percentage)->
   obj= {}
   data.forEach (a)->
     suf= make_suffix(a[0],size)
-    if !obj[suf]
-      obj[suf]=[]
-    obj[suf].push(a[1])
+    if suf.length==size
+      if !obj[suf]
+        obj[suf]=[]
+      obj[suf].push(a[1])
 
   values= []
   Object.keys(obj).forEach (k)->
@@ -59,18 +60,26 @@ learn= (size=3, min_count=min_count, min_percentage=min_percentage)->
   # console.log(data.length + " remain")
   return values
 
-
-
+#first, hard round
+#============
+min_count= parseInt(began_with * 0.01)
 console.log(min_count)
+learn(3, min_count, 90)
+learn(2, min_count, 90)
+
+#second, soft round
+#============
+min_count= 10
 learn(4, min_count, min_percentage)
 learn(3, min_count, min_percentage)
 learn(2, min_count, min_percentage)
+learn(1, min_count, min_percentage)
 
-min_count= min_count-3
-console.log(min_count)
-learn(4, min_count, min_percentage)
-learn(3, min_count, min_percentage)
-learn(2, min_count, min_percentage)
+# min_count= min_count-3
+# console.log(min_count)
+# learn(4, min_count, min_percentage)
+# learn(3, min_count, min_percentage)
+# learn(2, min_count, min_percentage)
 
 
 test_accuracy=->
@@ -99,3 +108,4 @@ nice= {}
 rules.forEach (r)->
   nice[r.key]=r.value
 console.log(JSON.stringify(nice, null, 2));
+

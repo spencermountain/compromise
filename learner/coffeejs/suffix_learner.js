@@ -41,10 +41,12 @@ learn = function(size, min_count, min_percentage) {
   data.forEach(function(a) {
     var suf;
     suf = make_suffix(a[0], size);
-    if (!obj[suf]) {
-      obj[suf] = [];
+    if (suf.length === size) {
+      if (!obj[suf]) {
+        obj[suf] = [];
+      }
+      return obj[suf].push(a[1]);
     }
-    return obj[suf].push(a[1]);
   });
   values = [];
   Object.keys(obj).forEach(function(k) {
@@ -80,7 +82,15 @@ learn = function(size, min_count, min_percentage) {
   return values;
 };
 
+min_count = parseInt(began_with * 0.01);
+
 console.log(min_count);
+
+learn(3, min_count, 90);
+
+learn(2, min_count, 90);
+
+min_count = 10;
 
 learn(4, min_count, min_percentage);
 
@@ -88,15 +98,7 @@ learn(3, min_count, min_percentage);
 
 learn(2, min_count, min_percentage);
 
-min_count = min_count - 3;
-
-console.log(min_count);
-
-learn(4, min_count, min_percentage);
-
-learn(3, min_count, min_percentage);
-
-learn(2, min_count, min_percentage);
+learn(1, min_count, min_percentage);
 
 test_accuracy = function() {
   var arr, caught, r, right, wrong, _i, _j, _len, _len1;

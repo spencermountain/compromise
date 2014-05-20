@@ -7,9 +7,90 @@ verb_conjugate = (function() {
   }
 
   var predict = function(w) {
-    if (w.match(/[aeiou].*ing/)) {
-      return "gerund"
+    //generated from test data
+    var suffix_rules = {
+      "ing": "gerund",
+      "tes": "present",
+      "ate": "infinitive",
+      "zes": "present",
+      "ize": "infinitive",
+      "ers": "present",
+      "les": "present",
+      "es": "present",
+      "ts": "present",
+      "ns": "present",
+      "er": "infinitive",
+      "le": "infinitive",
+      "acks": "present",
+      "ends": "present",
+      "ands": "present",
+      "ocks": "present",
+      "tion": "infinitive",
+      "lays": "present",
+      "rify": "infinitive",
+      "eads": "present",
+      "ress": "infinitive",
+      "lls": "present",
+      "els": "present",
+      "ify": "infinitive",
+      "age": "infinitive",
+      "ils": "present",
+      "ows": "present",
+      "nce": "infinitive",
+      "ect": "infinitive",
+      "nds": "present",
+      "ise": "infinitive",
+      "ine": "infinitive",
+      "nks": "present",
+      "ish": "infinitive",
+      "ace": "infinitive",
+      "cks": "present",
+      "ash": "infinitive",
+      "ure": "infinitive",
+      "tch": "infinitive",
+      "ngs": "present",
+      "end": "infinitive",
+      "ack": "infinitive",
+      "mps": "present",
+      "ays": "present",
+      "and": "infinitive",
+      "ute": "infinitive",
+      "ade": "infinitive",
+      "ock": "infinitive",
+      "ite": "infinitive",
+      "rks": "present",
+      "ase": "infinitive",
+      "ose": "infinitive",
+      "use": "infinitive",
+      "ams": "present",
+      "ars": "present",
+      "ops": "present",
+      "ffs": "present",
+      "als": "present",
+      "ive": "infinitive",
+      "int": "infinitive",
+      "nge": "infinitive",
+      "urs": "present",
+      "lds": "present",
+      "ews": "present",
+      "ips": "present",
+      "lay": "infinitive",
+      "est": "infinitive",
+      "ain": "infinitive",
+      "ant": "infinitive",
+      "s": "present",
     }
+
+    var endsWith = function(str, suffix) {
+      return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+    var arr = Object.keys(suffix_rules);
+    for (var i = 0; i < arr.length; i++) {
+      if (endsWith(w, arr[i])) {
+        return suffix_rules[arr[i]]
+      }
+    }
+    return "infinitive"
   }
 
 
@@ -44,6 +125,7 @@ verb_conjugate = (function() {
     if (!w) {
       return {}
     }
+    // console.log(predict(w))
 
     //check irregulars
     for (var i = 0; i < verb_irregulars.length; i++) {
@@ -84,7 +166,7 @@ verb_conjugate = (function() {
 // console.log(verb_conjugate("win"))
 // console.log(verb_conjugate("write"))
 // console.log(verb_conjugate("stop"))
-// console.log(verb_conjugate("carry"))
+// console.log(verb_conjugate("walked"))
 // console.log(verb_conjugate("having"))
 // console.log(verb_conjugate("attend"))
 // console.log(verb_conjugate("forecasts"))

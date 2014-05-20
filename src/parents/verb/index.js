@@ -36,6 +36,9 @@ var Verb = function(str) {
 	}
 
 	the.to_past = function() {
+		if (the.form == "gerund") {
+			return the.word
+		}
 		return verb_conjugate(the.word).past
 	}
 	the.to_present = function() {
@@ -92,3 +95,4 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log(new Verb("will walk").tense)
 // console.log(new Verb("stalks"))
 // console.log(new Verb("eat").to_future())
+// console.log(new Verb("having").to_past())

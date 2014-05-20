@@ -173,6 +173,7 @@ lexicon = (function() {
 		"myself": "PP",
 		"itself": "PP",
 		"who": "PP",
+		"her": "PP", //this one is pretty ambiguous
 
 		//personal pronouns (nouns)
 		"it": "PRP",
@@ -184,7 +185,6 @@ lexicon = (function() {
 		"me": "PRP",
 		"he": "PRP",
 		"him": "PRP",
-		"her": "PRP",
 		"us": "PRP",
 		"we": "PRP",
 		"thou": "PRP",

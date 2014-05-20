@@ -35,6 +35,8 @@ module.exports = function(grunt) {
           './src/parents/adverb/conjugate/to_adjective.js',
           './src/parents/adverb/index.js',
           //verbs
+          './src/parents/verb/conjugate/verb_rules.js',
+          './src/parents/verb/conjugate/verb_irregulars.js',
           './src/parents/verb/conjugate/to_doer.js',
           './src/parents/verb/conjugate/conjugate.js',
           './src/parents/verb/index.js',

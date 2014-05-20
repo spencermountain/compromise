@@ -346,8 +346,10 @@ var pos = (function() {
 	// fun = pos("i agree with tom hanks and nancy kerrigan") //
 	// fun = pos("joe walks quickly to the park") //
 	// fun = pos("joe will walk to the park") //
+	// fun = pos("He has also produced a documentary") //
+	// fun = pos("She subsequently married her fourth husband, Jack Bond, a hairdresser; the marriage ended in 1994.") //
 
 	// render(fun)
 	// analysis(fun)
 	// console.log(JSON.stringify(fun[0].tokens, null, 2));
-	// console.log(fun)
+	// console.log(fun[0].to_past().text())

@@ -13,31 +13,34 @@ var Sentence = function(tokens) {
 	}
 
 	the.to_past = function() {
-		return the.tokens.map(function(token) {
+		the.tokens = the.tokens.map(function(token) {
 			if (token.pos.parent == "verb") {
 				token.text = token.analysis.to_past()
 				token.normalised = token.text
 			}
 			return token
 		})
+		return the
 	}
 	the.to_present = function() {
-		return the.tokens.map(function(token) {
+		the.tokens = the.tokens.map(function(token) {
 			if (token.pos.parent == "verb") {
 				token.text = token.analysis.to_present()
 				token.normalised = token.text
 			}
 			return token
 		})
+		return the
 	}
 	the.to_future = function() {
-		return the.tokens.map(function(token) {
+		the.tokens = the.tokens.map(function(token) {
 			if (token.pos.parent == "verb") {
 				token.text = token.analysis.to_future()
 				token.normalised = token.text
 			}
 			return token
 		})
+		return the
 	}
 
 	the.text = function() {

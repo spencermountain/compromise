@@ -63,6 +63,13 @@ var Noun = function(str) {
 		return indefinite_article(the.word)
 	}
 
+	the.pluralize = function() {
+		return (inflect.inflect(the.word) || {}).plural
+	}
+	the.singularize = function() {
+		return (inflect.inflect(the.word) || {}).singular
+	}
+
 	//specifically which pos it is
 	the.which = (function() {
 		//posessive

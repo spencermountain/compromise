@@ -4,7 +4,7 @@ var nlp = {}
 
 var parents = require("./src/parents/parents")
 Object.keys(parents).forEach(function(k) {
-	nlp[k] = parents[k]
+  nlp[k] = parents[k]
 })
 
 
@@ -42,5 +42,8 @@ nlp.spot = require('./src/spot');
 // nlp.tests()
 // console.log(nlp.noun('hose'))
 module.exports = nlp
-// console.log(nlp.noun('chair'))
+// console.log(nlp.noun('chair').pluralize())
+// console.log(nlp.adjective("quick").conjugate())
+// console.log(nlp.adverb("quickly").conjugate())
+
 // console.log(nlp.verb('walk').conjugate())

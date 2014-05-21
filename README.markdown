@@ -44,7 +44,7 @@ nlp.syllables("hamburger")
 ```javascript
 <script src="https://rawgit.com/spencermountain/nlp_comprimise/master/client_side/nlp.js"></script>
 <script>
-  nlp.noun.pluralize("dinosaur")
+  nlp.noun("dinosaur").pluralize()
   //dinosaurs
 </script>
 ```
@@ -177,30 +177,32 @@ nlp.syllables("hamburger")
 
 ### Inflection
 ```javascript
-nlp.noun.singularize("earthquakes")
+nlp.noun("earthquakes").singularize()
 //earthquake
-nlp.noun.pluralize("earthquake")
+nlp.noun("earthquake").pluralize()
 //earthquakes
 ```
 
 ### Adjective conjugation
 ```javascript
-nlp.adjective.to_noun("quick")
-// quickness
-nlp.adjective.to_adverb("quick")
-// quickly
-nlp.adjective.to_comparative("quick")
-// quicker
-nlp.adjective.to_superlative("quick")
-// quickest
+nlp.adjective("quick").conjugate()
+//{ comparative: 'quicker',
+//  superlative: 'quickest',
+//  adverb: 'quickly',
+//  noun: 'quickness' }
 ```
 ### Verb conjugation
 ```javascript
-nlp.verb.to_noun("walked")
+nlp.verb("walked").conjugate()
 //{ infinitive: 'walk',
 //  present: 'walks',
 //  past: 'walked',
 //  gerund: 'walking' }
+```
+### Adverb to adjective
+```javascript
+nlp.adverb("quickly").conjugate()
+// { adjective: 'quick' }
 ```
 
 ## US-UK Localization

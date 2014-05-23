@@ -1,15 +1,13 @@
-#No training, no stack, no big O, no prolog
-**nlp_compromise** is a javascript Natural-Language-Processing library that's small-enough for the browser, quick-enough to run on keypress, and damn-accurate.
+#No training, no big O, no prolog
+**nlp_compromise** is a Natural-Language-Processing library in javascript that's small-enough for the browser, and quick-enough to run on keypress.
 
-it does tons of fancy things.
+it does [tons of fancy things](https://rawgit.com/spencermountain/nlp_compromise/master/client_side/index.html)
 
 it's smaller than jquery.
 
-[demo](https://rawgit.com/spencermountain/nlp_compromise/master/client_side/index.html)
-
 this library is under active and reckless development, May 2014.
 
-#Justification
+##Justification
 If the 80-20 rule usually applies, a ''96-4'' rule applies when working with language - by [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):
 >The **[top 10 words](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10)** account for 25% of used language.
 
@@ -26,7 +24,15 @@ A satisfactory NLP library can be built with breathtaking lightness. On the [Pen
 
 The process has been to get curated data, find the patterns, list the exceptions.
 
-#Usage
+## Client-side
+```javascript
+<script src="https://rawgit.com/spencermountain/nlp_comprimise/master/client_side/nlp.js"></script>
+<script>
+  nlp.noun("dinosaur").pluralize()
+  //dinosaurs
+</script>
+```
+
 ## Server-side
 ```bash
 npm install nlp_compromise
@@ -37,19 +43,29 @@ nlp.syllables("hamburger")
 //[ 'ham', 'bur', 'ger' ]
 ```
 
-## Client-side
-```javascript
-<script src="https://rawgit.com/spencermountain/nlp_comprimise/master/client_side/nlp.js"></script>
-<script>
-  nlp.noun("dinosaur").pluralize()
-  //dinosaurs
-</script>
-```
-
-
 
 # API
+```javascript
+nlp.noun('veggie burger')
+{ word: 'veggie burger',
+  is_acronym: false,
+  conjugate: [Function],
+  is_plural: undefined,
+  article: [Function],
+  pluralize: [Function],
+  singularize: [Function],
+}
 
+nlp.verb('swims')
+{ word: 'swims',
+  conjugate: [Function],
+  to_past: [Function],
+  to_present: [Function],
+  to_future: [Function],
+  form: 'present',
+  tense: 'present',
+}
+```
 ## Sentence segmentation
 1.7k
 ```javascript

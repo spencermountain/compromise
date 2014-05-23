@@ -1,30 +1,29 @@
 #No training, no big O, no prolog
 **nlp_compromise** is a Natural-Language-Processing library *in javascript* that's small-enough for the browser, and quick-enough to run on keypress :two_men_holding_hands:
 
-it does [tons of fancy things](https://rawgit.com/spencermountain/nlp_compromise/master/client_side/index.html)
-
-it's smaller than jquery, and scores 82% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
+it does [tons of fancy things](https://rawgit.com/spencermountain/nlp_compromise/master/client_side/index.html). it's smaller than jquery, and scores 82% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
 
 ##Justification
-If the 80-20 rule usually applies, a ''96-4'' rule applies when working with language - by [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):
+If the 80-20 rule applies generically, a ''96-4'' rule applies when working with language - by [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):
 >The **[top 10 words](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10)** account for 25% of used language.
 
 >The **top 100 words** account for 50% of used language.
 
 >The **top 50,000 words** account for 95% of used language.
 
-A satisfactory NLP library can be built with breathtaking lightness. On the [Penn treebank](http://www.cis.upenn.edu/~treebank/), for example, this is possible:
+On the [Penn treebank](http://www.cis.upenn.edu/~treebank/), for example, this is possible:
 
 * a 1 thousand word lexicon: **45% accuracy**
 * ... and falling back to nouns: **70% accuracy**
 * ... and some suffix regexes: **74% accuracy**
 * ... and some basic sentence-level postprocessing: **81% accuracy**
 
-The process has been to get curated data, find the patterns, list the exceptions.
+The process is to get curated data, find the patterns, list the exceptions. Bada bing, bada boom.
+In this way a satisfactory NLP library can be built with breathtaking lightness.
 
 ## Client-side
 ```javascript
-<script src="https://rawgit.com/spencermountain/nlp_comprimise/master/client_side/nlp.js"></script>
+<script src="https://rawgit.com/spencermountain/nlp_compromise/master/client_side/nlp.min.js"> </script>
 <script>
   nlp.noun("dinosaur").pluralize()
   //dinosaurs
@@ -45,25 +44,66 @@ nlp.syllables("hamburger")
 # API
 ```javascript
 nlp.noun('veggie burger')
-{ word: 'veggie burger',
-  is_acronym: false,
-  conjugate: [Function],
-  is_plural: undefined,
-  article: [Function],
-  pluralize: [Function],
-  singularize: [Function],
-}
-
-nlp.verb('swims')
-{ word: 'swims',
-  conjugate: [Function],
-  to_past: [Function],
-  to_present: [Function],
-  to_future: [Function],
-  form: 'present',
-  tense: 'present',
-}
+  { word: 'veggie burger',
+    is_acronym: false,
+    conjugate: [Function],
+    is_plural: undefined,
+    article: [Function],
+    pluralize: [Function],
+    singularize: [Function],
+  }
+nlp.noun("earthquakes").singularize()
+//earthquake
+nlp.noun("earthquake").pluralize()
+//earthquakes
 ```
+```javascript
+nlp.verb('swims')
+  { word: 'swims',
+    conjugate: [Function],
+    to_past: [Function],
+    to_present: [Function],
+    to_future: [Function],
+    form: 'present',
+    tense: 'present',
+  }
+```
+```javascript
+nlp.verb("walked").conjugate()
+  { infinitive: 'walk',
+    present: 'walks',
+    past: 'walked',
+    gerund: 'walking'
+  }
+```
+```javascript
+nlp.adjective("quick").conjugate()
+  { comparative: 'quicker',
+    superlative: 'quickest',
+    adverb: 'quickly',
+    noun: 'quickness'
+  }
+```
+```javascript
+nlp.adverb("quickly").conjugate()
+  { adjective: 'quick' }
+```
+
+## Part-of-speech
+82% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
+```javascript
+nlp.pos("Tony walked quickly to the store.")
+// ["NN","VBD","RB","TO","DT","NN"]
+
+nlp.pos("the obviously good swim")
+//["DT", "RB", "JJ", "NN"]
+
+## Named-Entity recognition
+```javascript
+nlp.spot("Tony walked quickly to the store.")
+// ["Tony Hawk", "store"]
+
+
 ## Sentence segmentation
 1.7k
 ```javascript
@@ -76,14 +116,6 @@ nlp.tokenize("she sells sea-shells").length
 //3
 ```
 
-## Part-of-speech
-80% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
-```javascript
-nlp.pos("Tony walked quickly to the store.")
-// ["NN","VBD","RB","TO","DT","NN"]
-
-nlp.pos("the obviously good swim")
-//["DT", "RB", "JJ", "NN"]
 ```
 ### Details
 #### Tags
@@ -182,38 +214,6 @@ nlp.spot("Tony Hawk said he was very happy")
 ```javascript
 nlp.syllables("hamburger")
 //[ 'ham', 'bur', 'ger' ]
-```
-
-##Conjugation
-
-### Inflection
-```javascript
-nlp.noun("earthquakes").singularize()
-//earthquake
-nlp.noun("earthquake").pluralize()
-//earthquakes
-```
-
-### Adjective conjugation
-```javascript
-nlp.adjective("quick").conjugate()
-//{ comparative: 'quicker',
-//  superlative: 'quickest',
-//  adverb: 'quickly',
-//  noun: 'quickness' }
-```
-### Verb conjugation
-```javascript
-nlp.verb("walked").conjugate()
-//{ infinitive: 'walk',
-//  present: 'walks',
-//  past: 'walked',
-//  gerund: 'walking' }
-```
-### Adverb to adjective
-```javascript
-nlp.adverb("quickly").conjugate()
-// { adjective: 'quick' }
 ```
 
 ## US-UK Localization

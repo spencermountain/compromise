@@ -1,10 +1,10 @@
-#No training, no big O, no prolog
-**nlp_compromise** is a Natural-Language-Processing library *in javascript* small-enough for the browser, and quick-enough to run on keypress :two_men_holding_hands:
+#No training, no prolog.
+a Natural-Language-Processing library *in javascript*, small-enough for the browser, and quick-enough to run on keypress :two_men_holding_hands:
 
-it does [tons of fancy things](https://rawgit.com/spencermountain/nlp_compromise/master/client_side/index.html). it's smaller than jquery, and scores 82% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
+it does [tons of clever things](https://rawgit.com/spencermountain/nlp_compromise/master/client_side/index.html). it's smaller than jquery, and scores 82% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
 
 ##Justification
-If the 80-20 rule applies generically, a ''94-6'' rule applies when working with language - by [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):
+If the 80-20 rule applies generically, the ''94-6 rule'' applies when working with language - by [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):
 >The **[top 10 words](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10)** account for 25% of used language.
 
 >The **top 100 words** account for 50% of used language.
@@ -31,44 +31,29 @@ In this way a satisfactory NLP library can be built with breathtaking lightness.
 ```
 
 ## Server-side
-```bash
 npm install nlp_compromise
-```
 ```javascript
 nlp = require("nlp_comprimise")
 nlp.syllables("hamburger")
 //[ 'ham', 'bur', 'ger' ]
 ```
 
-
 ## API
+noun methods:
 ```javascript
-//nouns
-nlp.noun('veggie burger')
-  { word: 'veggie burger',
-    is_acronym: false,
-    conjugate: [Function],
-    is_plural: undefined,
-    article: [Function],
-    pluralize: [Function],
-    singularize: [Function],
-  }
 nlp.noun("earthquakes").singularize()
 //earthquake
 nlp.noun("earthquake").pluralize()
 //earthquakes
+nlp.noun('veggie burger').is_plural
+//false
+nlp.noun('hour').article()
+//an
 ```
+verbs methods:
 ```javascript
-//verbs
-nlp.verb('swims')
-  { word: 'swims',
-    conjugate: [Function],
-    to_past: [Function],
-    to_present: [Function],
-    to_future: [Function],
-    form: 'present',
-    tense: 'present',
-  }
+nlp.verb('swims').to_past()
+//swam
 nlp.verb("walked").conjugate()
   { infinitive: 'walk',
     present: 'walks',
@@ -76,8 +61,8 @@ nlp.verb("walked").conjugate()
     gerund: 'walking'
   }
 ```
+adjective methods:
 ```javascript
-//adjectives
 nlp.adjective("quick").conjugate()
   { comparative: 'quicker',
     superlative: 'quickest',
@@ -85,14 +70,14 @@ nlp.adjective("quick").conjugate()
     noun: 'quickness'
   }
 ```
+adverb methods
 ```javascript
-//adverbs
 nlp.adverb("quickly").conjugate()
   { adjective: 'quick'
   }
 ```
 
-## Part-of-speech
+## Part-of-speech tagging
 82% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 ```javascript
 nlp.pos("Tony walked quickly to the store.")
@@ -113,9 +98,7 @@ nlp.spot("Tony walked quickly to the store.")
 ```javascript
 nlp.sentences("Hi Dr. Miller the price is 4.59 for the U.C.L.A. Ph.Ds.").length
 //1
-```
-##Word tokenization
-```javascript
+
 nlp.tokenize("she sells sea-shells").length
 //3
 ```
@@ -124,7 +107,7 @@ nlp.tokenize("she sells sea-shells").length
 #### Tags
 the [industry-standard parts-of-speech](https://github.com/spencermountain/nlp_comprimise/blob/master/lib/pos/data/parts_of_speech.js)
 ```javascript
-  "verb": [
+  "verb":
     "VB  - verb, generic (eat)",
     "VBD  - past-tense verb (ate)",
     "VBN  - past-participle verb (eaten)",
@@ -132,18 +115,15 @@ the [industry-standard parts-of-speech](https://github.com/spencermountain/nlp_c
     "VBZ  - present-tense verb (eats, swims)",
     "CP  - copula (is, was, were)",
     "VBG  - gerund verb (eating,winning)"
-  ],
-  "adjective": [
+  "adjective":
     "JJ  - adjective, generic (big, nice)",
     "JJR  - comparative adjective (bigger, cooler)",
     "JJS  - superlative adjective (biggest, fattest)"
-  ],
-  "adverb": [
+  "adverb":
     "RB  - adverb (quickly, softly)",
     "RBR  - comparative adverb (faster, cooler)",
     "RBS  - superlative adverb (fastest (driving), coolest (looking))"
-  ],
-  "noun": [
+  "noun":
     "NN  - noun, singular (dog, rain)",
     "NNP  - singular proper noun (Edinburgh, skateboard)",
     "NNPS  - plural proper noun (Smiths)",
@@ -151,8 +131,7 @@ the [industry-standard parts-of-speech](https://github.com/spencermountain/nlp_c
     "NNO  - possessive noun (spencer's, sam's)",
     "NG  - gerund noun (eating,winning - but used grammatically as a noun)",
     "PRP  - personal pronoun (I,you,she)"
-  ],
-  "glue": [
+  "glue":
     "PP  - possessive pronoun (my,one's)",
     "FW  - foreign word (mon dieu, voila)",
     "IN  - preposition (of,in,by)",
@@ -161,21 +140,18 @@ the [industry-standard parts-of-speech](https://github.com/spencermountain/nlp_c
     "DT  - determiner (the,some)",
     "UH  - interjection (oh, oops)",
     "EX  - existential there (there)"
-  ],
-  "value": [
+  "value":
     "CD  - cardinal value, generic (one, two, june 5th)",
     "DA  - date (june 5th, 1998)",
     "NU  - number (89, half-million)"
-  ]
 ```
 
 ####Lexicon
-The conjugate methods are quick and accurate enough that we can actually begin with a very small lexicon, and build it out.
-
+The lexicon is built using the conjugate methods.
 For example, it lists the 300 top verbs, then blasts-out all of their 1200+ derived forms.
 
 ####Contractions
-when it's grammatically necessary, the parser puts a 'silent token' into the phrase. Otherwise it would get misrepresented.
+the library puts a 'silent token' into the phrase for contractions. Otherwise it would get misrepresented.
 ```javascript
 nlp.pos("i'm good.")
    [{
@@ -195,7 +171,7 @@ nlp.pos("i'm good.")
    }]
 ```
 ####Tokenization
-in post-processing, neighbours with the same part of speech are merged together (It skips this if there is punctuation involved). To turn this off, set options= {dont_combine:true}
+neighbours with the same part of speech are merged together (It skips this if there is punctuation involved). To turn this off, set options= {dont_combine:true}
 ```javascript
 nlp.pos("tony hawk won")
 //tony hawk   NN
@@ -247,7 +223,9 @@ a hugely-ignorant, and widely subjective transliteration of latin, cryllic, gree
 ```javascript
 nlp.normalise("Björk")
 //Bjork
-
+```
+and for fun,
+```javascript
 nlp.denormalise("The quick brown fox jumps over the lazy dog", {percentage:50})
 // The ɋӈїck brown fox juӎÞs over tӊe laζy dog
 ```

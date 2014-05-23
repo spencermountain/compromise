@@ -1,7 +1,8 @@
-var verb_rules = (function() {
-	var main = [
+var verb_rules = {
 
-		// //infinitive
+	infinitive: [
+
+
 		{
 			reg: /([a[tg]|i[zn]]|ur|nc|gl|is)e$/i,
 			repl: {
@@ -104,8 +105,10 @@ var verb_rules = (function() {
 			power: 1,
 			tense: 'infinitive'
 		},
+	],
 
-		//present
+	present: [
+
 		{
 			reg: /([tzlshicgrvdnkmu])es$/i,
 			repl: {
@@ -183,14 +186,37 @@ var verb_rules = (function() {
 			exceptions: [],
 			power: 88,
 			tense: 'present'
+		}, {
+			reg: /s$/i, //generic one
+			repl: {
+				infinitive: "",
+				gerund: "ing",
+				past: "ed"
+			},
+			examples: 'swivels, rebels, travels',
+			exceptions: [],
+			power: 88,
+			tense: 'present'
 		},
+	],
 
+	gerund: [
 
-
-
-		//gerund
+		//suffixes that need a trailing e
+		//
 		{
-			reg: /([aeiou][^aeiouwyrlm])ing$/i,
+			reg: /(i.)ing$/i,
+			repl: {
+				infinitive: "$1e",
+				present: "$1es",
+				past: "$1ed"
+			},
+			examples: 'driving',
+			exceptions: [],
+			power: 8475,
+			tense: 'gerund'
+		}, { //more that need a trailing e
+			reg: /(u[rtcb]|[bdtpkg]l|n[cg]|a[gdkvtc]|[ua]s|[dr]g|yz|o[rlsp]|cre)ing$/i,
 			repl: {
 				infinitive: "$1e",
 				present: "$1es",
@@ -200,8 +226,10 @@ var verb_rules = (function() {
 			exceptions: [],
 			power: 8475,
 			tense: 'gerund'
-		}, {
-			reg: /([aeiou][^aeiou]*)ing$/i,
+		},
+
+		{
+			reg: /(..)ing$/i,
 			repl: {
 				infinitive: "$1",
 				present: "$1s",
@@ -211,20 +239,46 @@ var verb_rules = (function() {
 			exceptions: [],
 			power: 8475,
 			tense: 'gerund'
-		},
+		}
+	],
 
+	past: [
 
-		//past
 		{
-			reg: /(.[pigmcvwbyfkt])ed$/i,
+			reg: /(.[^aeiou])ed$/i,
 			repl: {
 				infinitive: "$1e",
 				present: "$1es",
+				doer: "$1er",
 				gerund: "$1ing"
 			},
 			examples: 'convoluted, outwitted, angulated',
 			exceptions: [],
 			power: 1854,
+			tense: 'past'
+		}, {
+			reg: /(.o)ed$/i,
+			repl: {
+				infinitive: "$1o",
+				present: "$1os",
+				doer: "$1oer",
+				gerund: "$1oing"
+			},
+			examples: 'ballyhooed,',
+			exceptions: [],
+			power: 0,
+			tense: 'past'
+		}, {
+			reg: /(.i)ed$/i,
+			repl: {
+				infinitive: "$1",
+				present: "$1s",
+				doer: "$1er",
+				gerund: "$1ing"
+			},
+			examples: 'ballyhooed,',
+			exceptions: [],
+			power: 0,
 			tense: 'past'
 		}, {
 			reg: /([rl])ew$/i,
@@ -234,14 +288,22 @@ var verb_rules = (function() {
 				gerund: "$1owing"
 			},
 			example: "overthrew",
-			exceptions: ["brew", "crew", "screw", "unscrew"],
+			exceptions: ["brew", "drew", "withdrew", "crew", "screw", "unscrew"],
 			tense: "past"
-		}
-	];
+		}, {
+			reg: /([pnl])t$/i,
+			repl: {
+				infinitive: "$1",
+				present: "$1s",
+				gerund: "$1ing"
+			},
+			example: "lept, leant",
+			exceptions: [],
+			tense: "past"
+		},
+	]
+}
 
-
-	if (typeof module !== "undefined" && module.exports) {
-		module.exports = main;
-	}
-	return main;
-})();
+if (typeof module !== "undefined" && module.exports) {
+	module.exports = verb_rules;
+}

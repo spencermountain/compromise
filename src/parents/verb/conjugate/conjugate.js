@@ -79,6 +79,12 @@ verb_conjugate = (function() {
       "ain": "infinitive",
       "ant": "infinitive",
       "s": "present",
+      "ed": "past",
+      "lt": "past",
+      "nt": "past",
+      "pt": "past",
+      "ew": "past",
+      "ld": "past",
     }
 
     var endsWith = function(str, suffix) {
@@ -97,7 +103,7 @@ verb_conjugate = (function() {
   //fallback to this transformation if it has an unknown prefix
   var fallback = function(w) {
     // console.log('fallback')
-    var infinitive = w;
+    var infinitive = w.replace(/ed$/, '');
     var present, past, gerund;
     if (w.match(/[^aeiou]$/)) {
       gerund = w + "ing"
@@ -119,35 +125,60 @@ verb_conjugate = (function() {
     }
   }
 
+  //make sure object has all forms
+  var fufill = function(obj) {
+    if (!obj.infinitive) {
+      return obj
+    }
+    if (!obj.gerund) {
+      obj.gerund = obj.infinitive + 'ing'
+    }
+    if (!obj.doer) {
+      obj.doer = verb_to_doer(obj.infinitive)
+    }
+    if (!obj.present) {
+      obj.present = obj.infinitive + 's'
+    }
+    if (!obj.past) {
+      obj.past = obj.infinitive + 'ed'
+    }
+    return obj
+  }
 
 
   var main = function(w) {
     if (!w) {
       return {}
     }
-    // console.log(predict(w))
-
+    var done = {}
     //check irregulars
     for (var i = 0; i < verb_irregulars.length; i++) {
       var x = verb_irregulars[i];
       if (w == x.present || w == x.gerund || w == x.past || w == x.infinitive) {
-        return verb_irregulars[i]
+        return fufill(verb_irregulars[i])
       }
     }
+    // console.log(predict(w))
+    var predicted = predict(w) || 'infinitive'
 
     //check against suffix rules
-    var obj, r, _i, _len;
-    for (_i = 0, _len = verb_rules.length; _i < _len; _i++) {
-      r = verb_rules[_i];
+    for (var i = 0; i < verb_rules[predicted].length; i++) {
+      var r = verb_rules[predicted][i];
       if (w.match(r.reg)) {
-        obj = Object.keys(r.repl).reduce(function(h, k) {
-          h[k] = w.replace(r.reg, r.repl[k]);
+        var obj = Object.keys(r.repl).reduce(function(h, k) {
+          if (k == predicted) {
+            h[k] = w
+          } else {
+            h[k] = w.replace(r.reg, r.repl[k]);
+          }
+          // console.log(r.reg)
           return h;
         }, {});
         obj[r.tense] = w;
-        return obj;
+        return fufill(obj);
       }
     }
+    //if still found nothing, try all suffix rules
 
     //produce a generic transformation
     return fallback(w)
@@ -171,3 +202,13 @@ verb_conjugate = (function() {
 // console.log(verb_conjugate("attend"))
 // console.log(verb_conjugate("forecasts"))
 // console.log(verb_conjugate("increased"))
+// console.log(verb_conjugate("spoilt"))
+// console.log(verb_conjugate("oversold"))
+// console.log(verb_conjugate("lynching"))
+// console.log(verb_conjugate("marooning"))
+// console.log(verb_conjugate("immoblizing"))
+// console.log(verb_conjugate("immobilize"))
+// console.log(verb_conjugate("rushing"))
+// console.log(verb_conjugate("timing"))
+// console.log(verb_conjugate("produces"))
+// console.log(verb_conjugate("boiling"))

@@ -6,6 +6,7 @@ min_percentage= 70
 
 require "dirtyjs"
 data= require("./data").data#.slice(0,800)
+data=data.filter (d)->d[1]=="past"
 original= JSON.parse(JSON.stringify(data))
 began_with= data.length
 

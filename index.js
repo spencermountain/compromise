@@ -42,6 +42,8 @@ nlp.spot = require('./src/spot');
 // nlp.tests()
 // console.log(nlp.noun('hose'))
 module.exports = nlp
+// n = nlp.noun('fun').conjugate()
+// console.log(n)
 // console.log(nlp.noun('chair').pluralize())
 // console.log(nlp.adjective("quick").conjugate())
 // console.log(nlp.adverb("quickly").conjugate())

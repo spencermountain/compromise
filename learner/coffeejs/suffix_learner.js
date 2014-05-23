@@ -9,6 +9,10 @@ require("dirtyjs");
 
 data = require("./data").data;
 
+data = data.filter(function(d) {
+  return d[1] === "past";
+});
+
 original = JSON.parse(JSON.stringify(data));
 
 began_with = data.length;

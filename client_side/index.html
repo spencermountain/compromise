@@ -70,11 +70,12 @@ $(function() {
        if(tense=="future"){
         return s.to_future()
       }
+      return s
     })
     var glues={
       "verb":"darkseagreen",
     }
-    var html= data[0].map(function(p){
+    var html= data[0].tokens.map(function(p){
       return "<span style='font-size:28px; margin:2px; display:inline-block; padding:8px; background-color:"+(glues[p.pos.parent]||'white')+"; color:steelblue;'>"+
       p.text+
       " </span>"

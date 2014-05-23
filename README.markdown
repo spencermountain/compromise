@@ -1,11 +1,9 @@
 #No training, no big O, no prolog
-**nlp_compromise** is a Natural-Language-Processing library in javascript that's small-enough for the browser, and quick-enough to run on keypress.
+**nlp_compromise** is a Natural-Language-Processing library *in javascript* that's small-enough for the browser, and quick-enough to run on keypress :two_men_holding_hands:
 
 it does [tons of fancy things](https://rawgit.com/spencermountain/nlp_compromise/master/client_side/index.html)
 
-it's smaller than jquery.
-
-this library is under active and reckless development, May 2014.
+it's smaller than jquery, and scores 82% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
 
 ##Justification
 If the 80-20 rule usually applies, a ''96-4'' rule applies when working with language - by [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):

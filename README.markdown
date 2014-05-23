@@ -1,5 +1,5 @@
 #No training, no big O, no prolog
-**nlp_compromise** is a Natural-Language-Processing library *in javascript* that's small-enough for the browser, and quick-enough to run on keypress :two_men_holding_hands:
+**nlp_compromise** is a Natural-Language-Processing library *in javascript* small-enough for the browser, and quick-enough to run on keypress :two_men_holding_hands:
 
 it does [tons of fancy things](https://rawgit.com/spencermountain/nlp_compromise/master/client_side/index.html). it's smaller than jquery, and scores 82% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
 
@@ -41,8 +41,9 @@ nlp.syllables("hamburger")
 ```
 
 
-# API
+## API
 ```javascript
+//nouns
 nlp.noun('veggie burger')
   { word: 'veggie burger',
     is_acronym: false,
@@ -58,6 +59,7 @@ nlp.noun("earthquake").pluralize()
 //earthquakes
 ```
 ```javascript
+//verbs
 nlp.verb('swims')
   { word: 'swims',
     conjugate: [Function],
@@ -67,8 +69,6 @@ nlp.verb('swims')
     form: 'present',
     tense: 'present',
   }
-```
-```javascript
 nlp.verb("walked").conjugate()
   { infinitive: 'walk',
     present: 'walks',
@@ -77,6 +77,7 @@ nlp.verb("walked").conjugate()
   }
 ```
 ```javascript
+//adjectives
 nlp.adjective("quick").conjugate()
   { comparative: 'quicker',
     superlative: 'quickest',
@@ -85,6 +86,7 @@ nlp.adjective("quick").conjugate()
   }
 ```
 ```javascript
+//adverbs
 nlp.adverb("quickly").conjugate()
   { adjective: 'quick' }
 ```
@@ -97,12 +99,13 @@ nlp.pos("Tony walked quickly to the store.")
 
 nlp.pos("the obviously good swim")
 //["DT", "RB", "JJ", "NN"]
+```
 
 ## Named-Entity recognition
 ```javascript
 nlp.spot("Tony walked quickly to the store.")
 // ["Tony Hawk", "store"]
-
+```
 
 ## Sentence segmentation
 1.7k

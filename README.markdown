@@ -3,7 +3,7 @@ a Natural-Language-Processing library *in javascript*, small-enough for the brow
 
 it does [tons of clever things](https://rawgit.com/spencermountain/nlp_compromise/master/client_side/index.html). it's smaller than jquery, and scores 82% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
 ```javascript
-nlp.pos('she sells seashells by the seashore').to_past()
+nlp.pos('she sells seashells by the seashore')[0].to_past()
 //she sold seashells by the seashore
 ```
 
@@ -68,7 +68,7 @@ adjective methods:
 ```javascript
 nlp.adjective("quick").conjugate()
 //  { comparative: 'quicker',
-//   superlative: 'quickest',
+//    superlative: 'quickest',
 //    adverb: 'quickly',
 //    noun: 'quickness'}
 ```
@@ -92,6 +92,8 @@ nlp.pos("the obviously good swim")
 ```javascript
 nlp.spot("Tony walked quickly to the store.")
 // ["Tony Hawk", "store"]
+nlp.spot("joe carter loves toronto")
+// ["joe carter", "toronto"]
 ```
 
 ## Sentence segmentation
@@ -106,50 +108,49 @@ nlp.tokenize("she sells sea-shells").length
 
 ### Details
 #### Tags
-the [industry-standard parts-of-speech](https://github.com/spencermountain/nlp_comprimise/blob/master/lib/pos/data/parts_of_speech.js)
 ```javascript
   "verb":
-    "VB  - verb, generic (eat)",
-    "VBD  - past-tense verb (ate)",
-    "VBN  - past-participle verb (eaten)",
-    "VBP  - infinitive verb (eat)",
-    "VBZ  - present-tense verb (eats, swims)",
-    "CP  - copula (is, was, were)",
-    "VBG  - gerund verb (eating,winning)"
+    "VB" : "verb, generic (eat)"
+    "VBD" : "past-tense verb (ate)"
+    "VBN" : "past-participle verb (eaten)"
+    "VBP" : "infinitive verb (eat)"
+    "VBZ" : "present-tense verb (eats, swims)"
+    "CP" : "copula (is, was, were)"
+    "VBG" : "gerund verb (eating,winning)"
   "adjective":
-    "JJ  - adjective, generic (big, nice)",
-    "JJR  - comparative adjective (bigger, cooler)",
-    "JJS  - superlative adjective (biggest, fattest)"
+    "JJ" : "adjective, generic (big, nice)"
+    "JJR" : "comparative adjective (bigger, cooler)"
+    "JJS" : "superlative adjective (biggest, fattest)"
   "adverb":
-    "RB  - adverb (quickly, softly)",
-    "RBR  - comparative adverb (faster, cooler)",
-    "RBS  - superlative adverb (fastest (driving), coolest (looking))"
+    "RB" : "adverb (quickly, softly)"
+    "RBR" : "comparative adverb (faster, cooler)"
+    "RBS" : "superlative adverb (fastest (driving), coolest (looking))"
   "noun":
-    "NN  - noun, singular (dog, rain)",
-    "NNP  - singular proper noun (Edinburgh, skateboard)",
-    "NNPS  - plural proper noun (Smiths)",
-    "NNS  - plural noun (dogs, foxes)",
-    "NNO  - possessive noun (spencer's, sam's)",
-    "NG  - gerund noun (eating,winning - but used grammatically as a noun)",
-    "PRP  - personal pronoun (I,you,she)"
+    "NN" : "noun, singular (dog, rain)"
+    "NNP" : "singular proper noun (Edinburgh, skateboard)"
+    "NNPS" : "plural proper noun (Smiths)"
+    "NNS" : "plural noun (dogs, foxes)"
+    "NNO" : "possessive noun (spencer's, sam's)"
+    "NG" : "gerund noun (eating,winning" : "but used grammatically as a noun)"
+    "PRP" : "personal pronoun (I,you,she)"
   "glue":
-    "PP  - possessive pronoun (my,one's)",
-    "FW  - foreign word (mon dieu, voila)",
-    "IN  - preposition (of,in,by)",
-    "MD  - modal verb (can,should)",
-    "CC  - co-ordating conjunction (and,but,or)",
-    "DT  - determiner (the,some)",
-    "UH  - interjection (oh, oops)",
-    "EX  - existential there (there)"
+    "PP" : "possessive pronoun (my,one's)"
+    "FW" : "foreign word (mon dieu, voila)"
+    "IN" : "preposition (of,in,by)"
+    "MD" : "modal verb (can,should)"
+    "CC" : "co-ordating conjunction (and,but,or)"
+    "DT" : "determiner (the,some)"
+    "UH" : "interjection (oh, oops)"
+    "EX" : "existential there (there)"
   "value":
-    "CD  - cardinal value, generic (one, two, june 5th)",
-    "DA  - date (june 5th, 1998)",
-    "NU  - number (89, half-million)"
+    "CD" : "cardinal value, generic (one, two, june 5th)"
+    "DA" : "date (june 5th, 1998)"
+    "NU" : "number (89, half-million)"
 ```
 
 ####Lexicon
-The lexicon is built using the conjugate methods.
-For example, it lists the 300 top verbs, then blasts-out all of their 1200+ derived forms.
+The lexicon is generated using the conjugate methods.
+For example, it lists the 300 top verbs, then blasts-out their 1200+ derived forms.
 
 ####Contractions
 the library puts a 'silent token' into the phrase for contractions. Otherwise it would get misrepresented.

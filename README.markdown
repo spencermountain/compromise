@@ -2,6 +2,10 @@
 a Natural-Language-Processing library *in javascript*, small-enough for the browser, and quick-enough to run on keypress :two_men_holding_hands:
 
 it does [tons of clever things](https://rawgit.com/spencermountain/nlp_compromise/master/client_side/index.html). it's smaller than jquery, and scores 82% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
+```javascript
+nlp.pos('she sells seashells by the seashore').to_past()
+//she sold seashells by the seashore
+```
 
 ##Justification
 If the 80-20 rule applies generically, the ''94-6 rule'' applies when working with language - by [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):
@@ -52,29 +56,26 @@ nlp.noun('hour').article()
 ```
 verbs methods:
 ```javascript
-nlp.verb('swims').to_past()
-//swam
 nlp.verb("walked").conjugate()
-  { infinitive: 'walk',
-    present: 'walks',
-    past: 'walked',
-    gerund: 'walking'
-  }
+//{ infinitive: 'walk',
+//  present: 'walks',
+//  past: 'walked',
+//  gerund: 'walking'}
+nlp.verb('swimming').to_past()
+//swam
 ```
 adjective methods:
 ```javascript
 nlp.adjective("quick").conjugate()
-  { comparative: 'quicker',
-    superlative: 'quickest',
-    adverb: 'quickly',
-    noun: 'quickness'
-  }
+//  { comparative: 'quicker',
+//   superlative: 'quickest',
+//    adverb: 'quickly',
+//    noun: 'quickness'}
 ```
 adverb methods
 ```javascript
 nlp.adverb("quickly").conjugate()
-  { adjective: 'quick'
-  }
+//  { adjective: 'quick'}
 ```
 
 ## Part-of-speech tagging

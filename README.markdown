@@ -1,29 +1,30 @@
-**nlp_compromise** is a quick and light Natural-Language-Processing library in javascript that is small enough to be used in the browser, and quick enough and run on keypress.
+#No training, no stack, no big O, no prolog
+**nlp_compromise** is a javascript Natural-Language-Processing library that's small-enough for the browser, quick-enough to run on keypress, and damn-accurate.
 
-It uniquely trades the 'last 15%' accuracy for speed, slightness, and ease-of-use. No training, no configuring, no prolog. You can roll it into anything, without thinking, and get competitive results.
+it does tons of fancy things.
 
-it's a single javascript file that's smaller than jQuery, with results in the mid-80% range. You win.
+it's smaller than jquery.
 
 [demo](https://rawgit.com/spencermountain/nlp_compromise/master/client_side/index.html)
 
 this library is under active and reckless development, May 2014.
 
 #Justification
-If the 80-20 rule normally applies, a '96-4' rule applies working with language - by [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):
->The [top 10 words](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10) account for 25% of our language.
+If the 80-20 rule usually applies, a ''96-4'' rule applies when working with language - by [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):
+>The **[top 10 words](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10)** account for 25% of used language.
 
->The top 100 words account for 50% of our language.
+>The **top 100 words** account for 50% of used language.
 
->The top 50,000 words account for 95% of our language.
+>The **top 50,000 words** account for 95% of used language.
 
-A satisfactory NLP library can be built with breathtaking lightness. On the [Penn treebank](http://www.cis.upenn.edu/~treebank/), for example, the following is possible:
+A satisfactory NLP library can be built with breathtaking lightness. On the [Penn treebank](http://www.cis.upenn.edu/~treebank/), for example, this is possible:
 
 * a 1 thousand word lexicon: **45% accuracy**
 * ... and falling back to nouns: **70% accuracy**
 * ... and some suffix regexes: **74% accuracy**
 * ... and some basic sentence-level postprocessing: **81% accuracy**
 
-The process has been to get the curated data, find the patterns, list the exceptions. No frameworks, no dependencies, no big O. bada-bing, bada-BOOM. Package this stuff into a javascript file, and it's tinier than jquery.
+The process has been to get curated data, find the patterns, list the exceptions.
 
 #Usage
 ## Server-side

@@ -4,7 +4,7 @@
 it does [tons of fancy things](https://rawgit.com/spencermountain/nlp_compromise/master/client_side/index.html). it's smaller than jquery, and scores 82% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
 
 ##Justification
-If the 80-20 rule applies generically, a ''96-4'' rule applies when working with language - by [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):
+If the 80-20 rule applies generically, a ''94-6'' rule applies when working with language - by [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):
 >The **[top 10 words](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10)** account for 25% of used language.
 
 >The **top 100 words** account for 50% of used language.
@@ -88,7 +88,8 @@ nlp.adjective("quick").conjugate()
 ```javascript
 //adverbs
 nlp.adverb("quickly").conjugate()
-  { adjective: 'quick' }
+  { adjective: 'quick'
+  }
 ```
 
 ## Part-of-speech
@@ -110,7 +111,7 @@ nlp.spot("Tony walked quickly to the store.")
 ## Sentence segmentation
 1.7k
 ```javascript
-nlp.sentences("Hi Dr. Joe et al. the price is 4.59 for the N.A.S.A. Ph.Ds and astronauts.").length
+nlp.sentences("Hi Dr. Miller the price is 4.59 for the U.C.L.A. Ph.Ds.").length
 //1
 ```
 ##Word tokenization
@@ -119,7 +120,6 @@ nlp.tokenize("she sells sea-shells").length
 //3
 ```
 
-```
 ### Details
 #### Tags
 the [industry-standard parts-of-speech](https://github.com/spencermountain/nlp_comprimise/blob/master/lib/pos/data/parts_of_speech.js)
@@ -178,21 +178,21 @@ For example, it lists the 300 top verbs, then blasts-out all of their 1200+ deri
 when it's grammatically necessary, the parser puts a 'silent token' into the phrase. Otherwise it would get misrepresented.
 ```javascript
 nlp.pos("i'm good.")
-// [{
-// 	text:"i'm",
-// 	normalised:"i",
-// 	pos:"PRP"
-// },
-// {
-// 	text:"",
-// 	normalised:"am",
-// 	pos:"CP"
-// },
-// {
-// 	text:"good.",
-// 	normalised:"good",
-// 	pos:"JJ"
-// }]
+   [{
+   	text:"i'm",
+   	normalised:"i",
+   	pos:"PRP"
+   },
+   {
+   	text:"",
+   	normalised:"am",
+   	pos:"CP"
+   },
+   {
+   	text:"good.",
+   	normalised:"good",
+   	pos:"JJ"
+   }]
 ```
 ####Tokenization
 in post-processing, neighbours with the same part of speech are merged together (It skips this if there is punctuation involved). To turn this off, set options= {dont_combine:true}
@@ -205,12 +205,6 @@ nlp.pos("tony hawk won", {dont_combine:true})
 //hawk   NN
 //won   VB
 ```
-<!-- ### Named-Entity Recognizing
-```javascript
-nlp.spot("Tony Hawk said he was very happy")
-// ["Tony Hawk"]
-```
--->
 
 ## Syllable hyphenization
 70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)  0.5k
@@ -233,7 +227,7 @@ nlp.ngram("She sells seashells by the seashore. The shells she sells are surely 
 options.min_count // throws away seldom-repeated grams. defaults to 1
 options.max_gram // prevents the result from becoming gigantic. defaults to 5
 ```
-
+<!--
 ### Date parsing
 ```javascript
 nlp.dates("I married April for the 2nd time on June 5th 1998 ")
@@ -247,7 +241,7 @@ nlp.to_number("two thousand five hundred and sixty")
 //2560
 nlp.to_number("ten and a half million")
 //15000000
-```
+``` -->
 ### Unicode Normalisation
 a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
 ```javascript

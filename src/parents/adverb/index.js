@@ -1,9 +1,11 @@
 // "RB  - adverb (quickly, softly)",
 // "RBR  - comparative adverb (faster, cooler)",
 // "RBS  - superlative adverb (fastest (driving), coolest (looking))"
-var Adverb = function(str) {
+var Adverb = function(str, next, last) {
 	var the = this
 	the.word = str || '';
+	the.next = next
+	the.last = last
 
 	if (typeof module !== "undefined" && module.exports) {
 		to_adjective = require("./conjugate/to_adjective")

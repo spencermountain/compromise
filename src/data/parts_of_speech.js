@@ -185,7 +185,7 @@ var parts_of_speech = (function() {
         "MD": {
             "name": "modal verb",
             "example": "can,should",
-            "parent": "glue", //dunno
+            "parent": "verb", //dunno
             "tag": "MD"
         },
         "CC": {

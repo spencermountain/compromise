@@ -1,18 +1,8 @@
-// "NN  - noun, generic (dog, rain)",
-// "NNS  - plural noun (dogs, foxes)",
-
-// "NNP  - singular proper noun (Edinburgh, skateboard)",
-// "NNPS  - plural proper noun (Smiths)",
-
-// "NG  - gerund noun (eating,winning - but used grammatically as a noun)",
-
-// "PRP  - personal pronoun (I,you,she)"
-// "NNO  - possessive noun (spencer's, sam's)",
-
-
-var Noun = function(str) {
+var Noun = function(str, next, last) {
 	var the = this
 	the.word = str || '';
+	the.next = next
+	the.last = last
 
 	if (typeof module !== "undefined" && module.exports) {
 		parts_of_speech = require("../../data/parts_of_speech")

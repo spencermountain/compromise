@@ -280,8 +280,14 @@ var pos = (function() {
 
 		//add analysis on each token
 		sentences = sentences.map(function(s) {
-			s.tokens = s.tokens.map(function(token) {
-				token.analysis = new parents[token.pos.parent](token.normalised)
+			s.tokens = s.tokens.map(function(token, i) {
+				var last_token = s.tokens[i - 1] || null
+				var next_token = s.tokens[i + 1] || null
+				token.analysis = parents[token.pos.parent](token.normalised, next_token, last_token)
+				//change to the more accurate version of the pos
+				if (token.analysis.which) {
+					token.pos = token.analysis.which
+				}
 				return token
 			})
 			return s
@@ -348,8 +354,11 @@ var pos = (function() {
 	// fun = pos("joe will walk to the park") //
 	// fun = pos("He has also produced a documentary") //
 	// fun = pos("She subsequently married her fourth husband, Jack Bond, a hairdresser; the marriage ended in 1994.") //
-
+	// fun = pos("joe will not walk")[0].tokens //
+	// fun = pos("joe won't walk")[0].tokens //
+	// fun = pos("joe is not swimming to the bank")[0].tokens //
+	// console.log(fun[1])
 	// render(fun)
 	// analysis(fun)
-	// console.log(JSON.stringify(fun[0].tokens, null, 2));
+	// console.log(JSON.stringify(fun[0], null, 2));
 	// console.log(fun[0].to_past().text())

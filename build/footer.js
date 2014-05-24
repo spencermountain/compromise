@@ -3,11 +3,11 @@
 //
 var main = {
 
-	noun: Noun,
-	adjective: Adjective,
-	verb: Verb,
-	adverb: Adverb,
-	value: Value,
+	noun: parents.noun,
+	adjective: parents.adjective,
+	verb: parents.verb,
+	adverb: parents.adverb,
+	value: parents.value,
 
 	sentences: sentence_parser,
 	ngram: ngram,

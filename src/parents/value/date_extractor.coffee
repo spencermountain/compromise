@@ -1,3 +1,6 @@
+#generates properly-formatted dates from free-text date forms
+#by spencer kelly 2014
+#it's just nicer to do this in coffeescript, sorry for the inconvenence
 date_extractor = ( ()->
   months = "(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|aug|sept|oct|nov|dec),?"
   days = "([0-9]{1,2}),?"
@@ -167,6 +170,32 @@ date_extractor = ( ()->
         h
       ,{})
   },
+  {
+    reg: "#{months} #{days}",
+    example: "March 18th",
+    process:(arr)->
+      places= {
+        month:1,
+        day:2,
+      }
+      return Object.keys(places).reduce((h, k)->
+        h[k]=arr[places[k]]
+        h
+      ,{})
+  },
+  {
+    reg: "#{days} of #{months}",
+    example: "18th of March",
+    process:(arr)->
+      places= {
+        month:2,
+        day:1,
+      }
+      return Object.keys(places).reduce((h, k)->
+        h[k]=arr[places[k]]
+        h
+      ,{})
+  },
 
   # {
   #   reg: "",
@@ -239,14 +268,54 @@ date_extractor = ( ()->
     str= str.replace(/([0-9])(th|rd|st)/g,'$1')
     return str
 
-  postprocess= (obj)->
+  postprocess= (obj, options)->
+    d= new Date()
+    options= options || {}
     obj.year= parseInt(obj.year)||null
     obj.day= parseInt(obj.day)||null
     obj.to_day= parseInt(obj.to_day)||null
     obj.to_year= parseInt(obj.to_year)||null
     obj.month= months_obj[obj.month]||null
     obj.to_month= months_obj[obj.to_month]||null
-    return obj
+    #transfer properties from 'to' object, if we have them
+    if obj.to_year && !obj.year
+      obj.year= obj.to_year
+    if obj.to_month && !obj.month
+      obj.month= obj.to_month
+    #and vice-versa
+    if !obj.to_month && obj.month
+      obj.to_month= obj.month
+    #and vice-versa
+    if !obj.to_year && obj.year
+      obj.to_year= obj.year
+    #assume 'march 23rd' means in current year
+    if options.assume_year && !obj.year
+      obj.year= d.getFullYear()
+    #make sure things are valid
+    if obj.to_month && obj.to_month < obj.month
+      obj.month= null
+      obj.to_month= null
+    if obj.to_year && obj.to_year < obj.year
+      obj.year= null
+      obj.to_year= null
+    if obj.year >2090 || obj.year<1200 #opinionated
+      obj.year= null
+      obj.to_year= null
+    #we can build a proper Date object
+    if obj.year && obj.day && obj.month
+      obj.date_object= new Date()
+      obj.date_object.setYear(obj.year)
+      obj.date_object.setMonth(obj.month)
+      obj.date_object.setDate(obj.day)
+    #..and a proper 'to' Date object
+    if obj.to_year && obj.to_day && obj.to_month
+      obj.to_date_object= new Date()
+      obj.to_date_object.setYear(obj.to_year)
+      obj.to_date_object.setMonth(obj.to_month)
+      obj.to_date_object.setDate(obj.to_day)
+    if obj.year || obj.month
+      return obj
+    return null
 
   test=->
     regexes.forEach (obj)->
@@ -256,16 +325,20 @@ date_extractor = ( ()->
       good= obj.process(arr)
       good= postprocess(good)
       console.log good
+  # test()
 
-  main=(str)->
+  main=(str, options)->
+    options= options||{}
     str= preprocess(str)
     for obj in regexes
       if str.match(obj.reg)
         arr= obj.reg.exec(str)
         good= obj.process(arr)
-        good= postprocess(good)
+        good= postprocess(good, options)
         return good
     return {}
+  if typeof module != "undefined" && module.exports
+    module.exports = main;
 
   return main
 

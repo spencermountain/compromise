@@ -111,6 +111,16 @@ $(function() {
     $(this).siblings(".result").html(html)
   })
 
+  $("#negate").find("input").keyup(function(){
+    var txt=$(this).val() || ''
+    var data= nlp.pos(txt)[0]
+    data.negate()
+    var html= data.tokens.map(function(p){
+      return "<div style='font-size:30px; display:inline-block; color:steelblue;'>"+(p.normalised||'')+"</div>"
+    }).join(" ")
+    $(this).siblings(".result").html(html)
+  })
+
   $("#ngram").find("input").keyup(function(){
     var txt=$(this).val() || ''
     var data= nlp.ngram(txt)
@@ -124,7 +134,7 @@ $(function() {
   $("#sentences").find("input").keyup(function(){
     var txt=$(this).val() || ''
     var data= nlp.sentences(txt)
-    var html= data.map(function(s){return "<div style='font-size:20px; border:1px solid grey; margin:5px; display:inline-block;'>"+s+"</div>"}).join("")
+    var html= data.map(function(s){return "<div style='font-size:20px; border:1px solid grey; border-radius:3px; margin:5px; display:inline-block;'>"+s+"</div>"}).join("<br/>")
     $(this).siblings(".result").html(html)
   })
 
@@ -160,8 +170,16 @@ $(function() {
 
   $("#dates").find("input").keyup(function(){
     var txt=$(this).val() || ''
-    // var data= nlp.dates(txt)
-    // $(this).siblings(".result").html(JSON.stringify(data))
+    var data= nlp.value(txt).date()
+    var str='<div>month:'+data.month+'<br/> day:'+data.day+'<br/> year:'+data.year+'</div>'
+    str+='<p></p><div>to month:'+data.to_month+'<br/> to day:'+data.to_day+'<br/> to year:'+data.to_year+'</div>'
+    $(this).siblings(".result").html(str)
+  })
+
+  $("#numbers").find("input").keyup(function(){
+    var txt=$(this).val() || ''
+    var data= nlp.value(txt).number()
+    $(this).siblings(".result").html(JSON.stringify(data))
   })
 
   $("#unicode").find("input").keyup(function(){
@@ -212,6 +230,21 @@ $(function() {
   <div class="result" style="font-size:10px;"></div>
 </div>
 
+<div id="numbers">
+  <hr/>
+  <h2>number-parsing</h2>
+  <h3>nlp.value(text).number()</h3>
+  <input type="text" class="input" value="two hundred and fifty five" style="width:450px;"/>
+  <div class="result" style="font-size:24px;"></div>
+</div>
+
+<div id="negate">
+  <hr/>
+  <h2>sentence-negation</h2>
+  <h3>nlp.pos(text, {})[0].negate()</h3>
+  <input type="text" class="input" value="joe swam in the pool"/>
+  <div class="result" style="font-size:10px;"></div>
+</div>
 <div id="ngram">
   <hr/>
   <h2>N-gram!</h2>
@@ -224,20 +257,20 @@ $(function() {
   <hr/>
   <h2>Sentences!</h2>
   <h3>nlp.sentences(text)</h3>
-  <input type="text"  class="input" value="Hi Dr. J. the price is 4.59 for the N.A.S.A. Ph.Ds. I hope that's fine, etc. and you can attend Feb. 8th. woohoo"/>
+  <input type="text"  class="input" value="Hi Dr. J. the price is 4.59 for the N.A.S.A. Ph.Ds. I hope that's fine, etc. and you can come Feb. 8th. you tha man."/>
   <div class="result" style="font-size:14px;"></div>
 </div>
 
 <div id="britishize">
   <hr/>
-  <h2>britishize!</h2>
+  <h2>britishize</h2>
   <h3>nlp.britishize(text)</h3>
   <input type="text" class="input" value="synthesized" style="width:250px;"/>
   <div class="result" style="font-size:24px;"></div>
 </div>
 
 <div id="americanize">
-  <h2>americanize!</h2>
+  <h2>americanize</h2>
   <h3>nlp.americanize(text)</h3>
   <input type="text" class="input" value="favourite" style="width:250px;"/>
   <div class="result" style="font-size:24px;"></div>
@@ -266,14 +299,6 @@ $(function() {
   <div class="result" style="font-size:24px;"></div>
 </div>
 
-<!-- <div id="dates">
-  <hr/>
-  <h2>dates!</h2>
-  <h3>nlp.dates(text)</h3>
-  <input type="text" class="input" value="I got married to April on June 4th 1993, in Miami" style="width:450px;"/>
-  <div class="result" style="font-size:14px;"></div>
-</div> -->
-
 <div id="unicode">
   <hr/>
   <h2>unicode normalisation!</h2>
@@ -281,6 +306,15 @@ $(function() {
   <input type="text" class="input" value="Björk" style="width:250px;"/>
   <div class="result" style="font-size:24px;"></div>
 </div>
+
+<div id="dates">
+  <hr/>
+  <h2>date parsing</h2>
+  <h3>nlp.value(text).date()</h3>
+  <input type="text" class="input" value="I got married to April on June 4th 1993, in Miami" style="width:450px;"/>
+  <div class="result" style="font-size:14px;"></div>
+</div>
+
 
 </body>
 </html>

@@ -6,20 +6,24 @@ if (typeof module !== "undefined" && module.exports) {
 	Value = require("./value/index");
 }
 var parents = {
-	adjective: Adjective,
-	noun: function(str) {
-		return new Noun(str)
+	adjective: function(str, next, last) {
+		return new Adjective(str, next, last)
 	},
-	adverb: function(str) {
-		return new Adverb(str)
+	noun: function(str, next, last) {
+		return new Noun(str, next, last)
 	},
-	verb: function(str) {
-		return new Verb(str)
+	adverb: function(str, next, last) {
+		return new Adverb(str, next, last)
 	},
-	value: function(str) {
-		return new Value(str)
+	verb: function(str, next, last) {
+		return new Verb(str, next, last)
 	},
-	glue: function(str) {}
+	value: function(str, next, last) {
+		return new Value(str, next, last)
+	},
+	glue: function(str, next, last) {
+		return {}
+	}
 }
 if (typeof module !== "undefined" && module.exports) {
 	module.exports = parents;

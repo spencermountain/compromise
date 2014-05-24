@@ -171,6 +171,34 @@ date_extractor = (function() {
         }, {});
       }
     }, {
+      reg: "" + months + " " + days,
+      example: "March 18th",
+      process: function(arr) {
+        var places;
+        places = {
+          month: 1,
+          day: 2
+        };
+        return Object.keys(places).reduce(function(h, k) {
+          h[k] = arr[places[k]];
+          return h;
+        }, {});
+      }
+    }, {
+      reg: "" + days + " of " + months,
+      example: "18th of March",
+      process: function(arr) {
+        var places;
+        places = {
+          month: 2,
+          day: 1
+        };
+        return Object.keys(places).reduce(function(h, k) {
+          h[k] = arr[places[k]];
+          return h;
+        }, {});
+      }
+    }, {
       reg: "" + years + " ?- ?" + years,
       example: "1997-1998",
       process: function(arr) {
@@ -230,14 +258,59 @@ date_extractor = (function() {
     str = str.replace(/([0-9])(th|rd|st)/g, '$1');
     return str;
   };
-  postprocess = function(obj) {
+  postprocess = function(obj, options) {
+    var d;
+    d = new Date();
+    options = options || {};
     obj.year = parseInt(obj.year) || null;
     obj.day = parseInt(obj.day) || null;
     obj.to_day = parseInt(obj.to_day) || null;
     obj.to_year = parseInt(obj.to_year) || null;
     obj.month = months_obj[obj.month] || null;
     obj.to_month = months_obj[obj.to_month] || null;
-    return obj;
+    if (obj.to_year && !obj.year) {
+      obj.year = obj.to_year;
+    }
+    if (obj.to_month && !obj.month) {
+      obj.month = obj.to_month;
+    }
+    if (!obj.to_month && obj.month) {
+      obj.to_month = obj.month;
+    }
+    if (!obj.to_year && obj.year) {
+      obj.to_year = obj.year;
+    }
+    if (options.assume_year && !obj.year) {
+      obj.year = d.getFullYear();
+    }
+    if (obj.to_month && obj.to_month < obj.month) {
+      obj.month = null;
+      obj.to_month = null;
+    }
+    if (obj.to_year && obj.to_year < obj.year) {
+      obj.year = null;
+      obj.to_year = null;
+    }
+    if (obj.year > 2090 || obj.year < 1200) {
+      obj.year = null;
+      obj.to_year = null;
+    }
+    if (obj.year && obj.day && obj.month) {
+      obj.date_object = new Date();
+      obj.date_object.setYear(obj.year);
+      obj.date_object.setMonth(obj.month);
+      obj.date_object.setDate(obj.day);
+    }
+    if (obj.to_year && obj.to_day && obj.to_month) {
+      obj.to_date_object = new Date();
+      obj.to_date_object.setYear(obj.to_year);
+      obj.to_date_object.setMonth(obj.to_month);
+      obj.to_date_object.setDate(obj.to_day);
+    }
+    if (obj.year || obj.month) {
+      return obj;
+    }
+    return null;
   };
   test = function() {
     return regexes.forEach(function(obj) {
@@ -250,19 +323,23 @@ date_extractor = (function() {
       return console.log(good);
     });
   };
-  main = function(str) {
+  main = function(str, options) {
     var arr, good, obj, _i, _len;
+    options = options || {};
     str = preprocess(str);
     for (_i = 0, _len = regexes.length; _i < _len; _i++) {
       obj = regexes[_i];
       if (str.match(obj.reg)) {
         arr = obj.reg.exec(str);
         good = obj.process(arr);
-        good = postprocess(good);
+        good = postprocess(good, options);
         return good;
       }
     }
     return {};
   };
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
   return main;
 })();

@@ -1,7 +1,7 @@
 var spot = (function() {
 
 	if (typeof module !== "undefined" && module.exports) {
-		pos = require("./pos").pos;
+		pos = require("./pos");
 	}
 	var blacklist = {
 		"i": 1,

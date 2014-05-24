@@ -1,15 +1,8 @@
-// "VB  - verb, generic (eat)",
-// "VBD  - past-tense verb (ate)",
-// "VBN  - past-participle verb (eaten)",
-// "VBP  - infinitive verb (eat)",
-// "VBZ  - present-tense verb (eats, swims)",
-
-// "VBG  - gerund verb (eating,winning)"
-// "CP  - copula (is, was, were)",
-
-var Verb = function(str) {
+var Verb = function(str, next, last) {
 	var the = this
 	the.word = str || '';
+	the.next = next
+	the.last = last
 
 	if (typeof module !== "undefined" && module.exports) {
 		verb_conjugate = require("./conjugate/conjugate")
@@ -19,9 +12,22 @@ var Verb = function(str) {
 	var copulas = {
 		"is": "CP",
 		"will be": "CP",
+		"will": "CP",
 		"are": "CP",
 		"was": "CP",
 		"were": "CP",
+	}
+	var modals = {
+		"can": "MD",
+		"may": "MD",
+		"could": "MD",
+		"might": "MD",
+		"will": "MD",
+		"ought to": "MD",
+		"would": "MD",
+		"must": "MD",
+		"shall": "MD",
+		"should": "MD",
 	}
 	var tenses = {
 		past: "VBD",
@@ -48,6 +54,7 @@ var Verb = function(str) {
 		return "will " + verb_conjugate(the.word).infinitive
 	}
 
+	//which conjugation
 	the.form = (function() {
 		var forms = verb_conjugate(the.word)
 		for (var i in forms) {
@@ -57,6 +64,7 @@ var Verb = function(str) {
 		}
 	})()
 
+	//past/present/future
 	the.tense = (function() {
 		if (the.word.match(/^will ./)) {
 			return "future"
@@ -71,6 +79,7 @@ var Verb = function(str) {
 		return "present"
 	})()
 
+	//the most accurate part_of_speech
 	the.which = (function() {
 		if (copulas[the.word]) {
 			return parts_of_speech['CP']
@@ -82,13 +91,24 @@ var Verb = function(str) {
 		return parts_of_speech[tenses[form]]
 	})()
 
+	//is this verb negative already?
+	the.negative = (function() {
+		if (the.word.match(/n't$/)) {
+			return true
+		}
+		if ((modals[the.word] || copulas[the.word]) && the.next && the.next.normalised == "not") {
+			return true
+		}
+		return false
+	})()
+
 
 	return the;
 }
-
 if (typeof module !== "undefined" && module.exports) {
 	module.exports = Verb;
 }
+
 
 // console.log(new Verb("walked"))
 // console.log(new Verb("stalking").tense)

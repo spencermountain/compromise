@@ -106,6 +106,54 @@ nlp.tokenize("she sells sea-shells").length
 //3
 ```
 
+## Syllable hyphenization
+70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)  0.5k
+```javascript
+nlp.syllables("hamburger")
+//[ 'ham', 'bur', 'ger' ]
+```
+
+## US-UK Localization
+```javascript
+nlp.americanize("favourite")
+//favorite
+nlp.britishize("synthesized")
+//synthesised
+```
+## N-gram
+```javascript
+nlp.ngram("She sells seashells by the seashore. The shells she sells are surely seashells.", {min_count:1, max_size:5})
+// [{ word: 'she sells', count: 2, size: 2 }, ...
+options.min_count // throws away seldom-repeated grams. defaults to 1
+options.max_gram // prevents the result from becoming gigantic. defaults to 5
+```
+<!--
+### Date parsing
+```javascript
+nlp.dates("I married April for the 2nd time on June 5th 1998 ")
+// { text: 'June 5th 1998',
+//   from: { year: '1998', month: '06', day: '05' },
+//   to: {} }
+```
+### Number parsing
+```javascript
+nlp.to_number("two thousand five hundred and sixty")
+//2560
+nlp.to_number("ten and a half million")
+//15000000
+``` -->
+### Unicode Normalisation
+a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
+```javascript
+nlp.normalise("Björk")
+//Bjork
+```
+and for fun,
+```javascript
+nlp.denormalise("The quick brown fox jumps over the lazy dog", {percentage:50})
+// The ɋӈїck brown fox juӎÞs over tӊe laζy dog
+```
+
 ### Details
 #### Tags
 ```javascript
@@ -182,54 +230,6 @@ nlp.pos("tony hawk won", {dont_combine:true})
 //tony   NN
 //hawk   NN
 //won   VB
-```
-
-## Syllable hyphenization
-70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)  0.5k
-```javascript
-nlp.syllables("hamburger")
-//[ 'ham', 'bur', 'ger' ]
-```
-
-## US-UK Localization
-```javascript
-nlp.americanize("favourite")
-//favorite
-nlp.britishize("synthesized")
-//synthesised
-```
-## N-gram
-```javascript
-nlp.ngram("She sells seashells by the seashore. The shells she sells are surely seashells.", {min_count:1, max_size:5})
-// [{ word: 'she sells', count: 2, size: 2 }, ...
-options.min_count // throws away seldom-repeated grams. defaults to 1
-options.max_gram // prevents the result from becoming gigantic. defaults to 5
-```
-<!--
-### Date parsing
-```javascript
-nlp.dates("I married April for the 2nd time on June 5th 1998 ")
-// { text: 'June 5th 1998',
-//   from: { year: '1998', month: '06', day: '05' },
-//   to: {} }
-```
-### Number parsing
-```javascript
-nlp.to_number("two thousand five hundred and sixty")
-//2560
-nlp.to_number("ten and a half million")
-//15000000
-``` -->
-### Unicode Normalisation
-a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
-```javascript
-nlp.normalise("Björk")
-//Bjork
-```
-and for fun,
-```javascript
-nlp.denormalise("The quick brown fox jumps over the lazy dog", {percentage:50})
-// The ɋӈїck brown fox juӎÞs over tӊe laζy dog
 ```
 
 

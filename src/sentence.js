@@ -87,6 +87,7 @@ var Sentence = function(tokens) {
 				//set it as present tense
 				if (tense != 'gerund') {
 					the.tokens[i].text = the.tokens[i].analysis.conjugate().infinitive
+					the.tokens[i].normalised = the.tokens[i].text
 				}
 				var token = {
 					text: verb_negations[tense],
@@ -109,7 +110,7 @@ var Sentence = function(tokens) {
 if (typeof module !== "undefined" && module.exports) {
 	module.exports = Sentence;
 }
-// pos = require("./pos")
+pos = require("./pos")
 
 //gerund negation
 // tokens = pos('joe is so cool, he is going')[0].tokens
@@ -119,8 +120,9 @@ if (typeof module !== "undefined" && module.exports) {
 // tokens = pos('joe swam to the bank')[0].tokens
 // tokens = pos('joe is swimming to the bank')[0].tokens
 // tokens = pos('joe is not swimming to the bank')[0].tokens //already negative
+// tokens = pos('the chimney was so yellow')[0].tokens
 
-// s = new Sentence(tokens).negate().text()
+// s = new Sentence(tokens).negate().tokens[2].analysis.conjugate()
 // console.log(s)
 // console.log(s)
 // s = new Sentence(tokens)

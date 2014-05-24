@@ -50,7 +50,7 @@ if (typeof module !== "undefined" && module.exports) {
 	module.exports = Value;
 }
 
-console.log(new Value("fifty five").number())
+// console.log(new Value("fifty five").number())
 // console.log(new Value("sunday March 18th").date({
 // 	assume_year: true
 // }))

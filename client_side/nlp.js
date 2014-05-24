@@ -3611,7 +3611,7 @@ if (typeof module !== "undefined" && module.exports) {
 	module.exports = Value;
 }
 
-console.log(new Value("fifty five").number())
+// console.log(new Value("fifty five").number())
 // console.log(new Value("sunday March 18th").date({
 // 	assume_year: true
 // }))
@@ -7831,6 +7831,7 @@ var Sentence = function(tokens) {
 				//set it as present tense
 				if (tense != 'gerund') {
 					the.tokens[i].text = the.tokens[i].analysis.conjugate().infinitive
+					the.tokens[i].normalised = the.tokens[i].text
 				}
 				var token = {
 					text: verb_negations[tense],
@@ -8287,10 +8288,10 @@ var spot = (function() {
 //
 var main = {
 
-	noun: Noun,
-	adjective: Adjective,
-	verb: Verb,
-	adverb: Adverb,
+	noun: parents.noun,
+	adjective: parents.adjective,
+	verb: parents.verb,
+	adverb: parents.adverb,
 	value: parents.value,
 
 	sentences: sentence_parser,

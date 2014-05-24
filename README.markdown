@@ -37,7 +37,7 @@ In this way a satisfactory NLP library can be built with breathtaking lightness.
 ## Server-side
 npm install nlp_compromise
 ```javascript
-nlp = require("nlp_comprimise")
+nlp = require("nlp_compromise")
 nlp.syllables("hamburger")
 //[ 'ham', 'bur', 'ger' ]
 ```

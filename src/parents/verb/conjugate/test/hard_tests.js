@@ -1,3 +1,4 @@
+require('dirtyjs')
 data = require("./data").data //.slice(0, 10)
 // o = {}
 // tmp = data.forEach(function(t) {
@@ -7,13 +8,15 @@ data = require("./data").data //.slice(0, 10)
 conjugate = require("../conjugate")
 
 types = [
-  "infinitive",
-  "present",
+  // "infinitive",
+  // "present",
   "gerund",
-  "past",
+  // "past",
 ]
+missed = []
+errors = []
 
-function isequal(o1, o2, tense) {
+function isequal(o1, o2, tense) { // gerund -> present, gerund -> infinitive
   list = [
     "infinitive",
     "present",
@@ -23,9 +26,10 @@ function isequal(o1, o2, tense) {
   // console.log(o2)
   found = false
   list.forEach(function(t) {
-    if (t) {
+    if (t == 'present') {
       if (o1[t] != o2[t]) {
-        // console.log("  ( " + tense + "-> " + t + ")  " + o1[t] + "  != " + o2[t])
+        console.log("  ( " + tense + "-> " + t + ")  " + o1[t] + "  != " + o2[t])
+        missed.push(t)
         found = true
       } else {
         // console.log("========  ( " + tense + "-> " + t + ")  " + o1[t] + "  == " + o2[t])
@@ -45,24 +49,35 @@ function test_tense(type) {
     all++
     if (isequal(o, o1, type)) {
       goods++
+    } else {
+      errors.push(o[type])
     }
+  })
+  errors = errors.map(function(str) {
+    return str.substr(str.length - 5, str.length)
   })
   console.log(goods + "  right of " + all)
   console.log(((goods / (all)) * 100).toFixed(0) + "%")
+  // console.log(missed.topk().slice(0, 40))
+  console.log(errors.topk().slice(0, 40))
+  missed = []
 }
 for (var i in types) {
   test_tense(types[i])
 }
-// require('dirtyjs')
+
+
+
 // tmp = data.filter(function(s) {
+//   // return s
 //   return s.infinitive.match(/[^e]$/)
 //   // return s.infinitive.match(/e$/)
 // })
 // tmp = tmp.map(function(s) {
-//   return s.gerund.substr(s.gerund.length - 5, s.gerund.length).replace(/ing$/, '')
-// }).topk().slice(0, 10)
+//   var str = s.past //.replace(/ed$/, '')
+//   return str.substr(str.length - 5, str.length)
+// }).topk().slice(0, 70)
 // console.log(JSON.stringify(tmp, null, 2));
-
 
 /*
 May 23rd
@@ -79,5 +94,17 @@ May 23rd
 3376  right of 8493
 40%
 
-
+May 23rd 8:00
+======infinitive======
+6071  right of 8493
+71%
+======present======
+6239  right of 8493
+73%
+======gerund======
+5478  right of 8493
+65%
+======past======
+6230  right of 8493
+73%
 */

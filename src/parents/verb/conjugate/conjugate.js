@@ -165,20 +165,19 @@ verb_conjugate = (function() {
     for (var i = 0; i < verb_rules[predicted].length; i++) {
       var r = verb_rules[predicted][i];
       if (w.match(r.reg)) {
+        // console.log(r)
         var obj = Object.keys(r.repl).reduce(function(h, k) {
           if (k == predicted) {
             h[k] = w
           } else {
             h[k] = w.replace(r.reg, r.repl[k]);
           }
-          // console.log(r.reg)
           return h;
         }, {});
         obj[r.tense] = w;
         return fufill(obj);
       }
     }
-    //if still found nothing, try all suffix rules
 
     //produce a generic transformation
     return fallback(w)
@@ -212,3 +211,25 @@ verb_conjugate = (function() {
 // console.log(verb_conjugate("timing"))
 // console.log(verb_conjugate("produces"))
 // console.log(verb_conjugate("boiling"))
+// console.log(verb_conjugate("mortified"))
+// console.log(verb_conjugate("located"))
+// console.log(verb_conjugate("timed"))
+// console.log(verb_conjugate("flipped"))
+// console.log(verb_conjugate("fitted"))
+// console.log(verb_conjugate("passed"))
+// console.log(verb_conjugate("wrangled"))
+// console.log(verb_conjugate("twisted"))
+// console.log(verb_conjugate("walled"))
+// console.log(verb_conjugate("finished"))
+// console.log(verb_conjugate("wiggled"))
+// console.log(verb_conjugate("confessed"))
+// console.log(verb_conjugate("called"))
+// console.log(verb_conjugate("whipped"))
+// console.log(verb_conjugate("batted"))
+// console.log(verb_conjugate("chugged"))
+// console.log(verb_conjugate("flopped"))
+
+// console.log(verb_conjugate("clipping"))
+// console.log(verb_conjugate("searching"))
+// console.log(verb_conjugate("confessing"))
+// console.log(verb_conjugate("satisfying"))

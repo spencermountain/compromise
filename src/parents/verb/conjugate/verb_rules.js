@@ -202,6 +202,74 @@ var verb_rules = {
 
 	gerund: [
 
+		//doubles  l|p|t|g|s
+		{
+			reg: /pping$/i,
+			repl: {
+				infinitive: "p",
+				present: "ps",
+				past: "pped"
+			},
+			examples: 'clipping',
+			exceptions: [],
+			tense: 'gerund'
+		}, {
+			reg: /lling$/i,
+			repl: {
+				infinitive: "ll",
+				present: "lls",
+				past: "lled"
+			},
+			examples: 'yelling',
+			exceptions: [],
+			tense: 'gerund'
+		}, {
+			reg: /tting$/i,
+			repl: {
+				infinitive: "t",
+				present: "ts",
+				past: "t"
+			},
+			examples: 'quitting',
+			exceptions: [],
+			tense: 'gerund'
+		}, {
+			reg: /ssing$/i,
+			repl: {
+				infinitive: "ss",
+				present: "sses",
+				past: "ssed"
+			},
+			examples: 'confessing',
+			exceptions: [],
+			tense: 'gerund'
+		}, {
+			reg: /gging$/i,
+			repl: {
+				infinitive: "g",
+				present: "gs",
+				past: "gged"
+			},
+			examples: 'jogging',
+			exceptions: [],
+			tense: 'gerund'
+		},
+
+		//lying
+		{
+			reg: /([^aeiou])ying$/i,
+			repl: {
+				infinitive: "$1y",
+				present: "$1ies",
+				past: "$1ied",
+				doer: "$1ier"
+			},
+			examples: 'confessing',
+			exceptions: [],
+			tense: 'gerund'
+		},
+
+
 		//suffixes that need a trailing e
 		//
 		{
@@ -213,9 +281,10 @@ var verb_rules = {
 			},
 			examples: 'driving',
 			exceptions: [],
-			power: 8475,
 			tense: 'gerund'
-		}, { //more that need a trailing e
+		},
+
+		{ //more that need a trailing e
 			reg: /(u[rtcb]|[bdtpkg]l|n[cg]|a[gdkvtc]|[ua]s|[dr]g|yz|o[rlsp]|cre)ing$/i,
 			repl: {
 				infinitive: "$1e",
@@ -224,7 +293,18 @@ var verb_rules = {
 			},
 			examples: 'convoluting, compensating, fouling',
 			exceptions: [],
-			power: 8475,
+			tense: 'gerund'
+		},
+
+		{ //trailing e on present only
+			reg: /(ch|sh)ing$/i,
+			repl: {
+				infinitive: "$1",
+				present: "$1es",
+				past: "$1ed"
+			},
+			examples: 'searching',
+			exceptions: [],
 			tense: 'gerund'
 		},
 
@@ -237,13 +317,111 @@ var verb_rules = {
 			},
 			examples: 'walking, fawning, farming, swing',
 			exceptions: [],
-			power: 8475,
 			tense: 'gerund'
 		}
 	],
 
 	past: [
 
+
+
+		//needs an e just for present
+		{
+			reg: /(sh|ch)ed$/i,
+			repl: {
+				infinitive: "$1",
+				present: "$1es",
+				doer: "$1er",
+				gerund: "$1ing"
+			},
+			examples: 'finished',
+			exceptions: [],
+			power: 1854,
+			tense: 'past'
+		},
+
+		//needs an e for both
+		{
+			reg: /(tl|gl)ed$/i,
+			repl: {
+				infinitive: "$1e",
+				present: "$1es",
+				doer: "$1er",
+				gerund: "$1ing"
+			},
+			examples: 'felled, flipped',
+			exceptions: [],
+			power: 1854,
+			tense: 'past'
+		},
+
+		// double consonants
+		{
+			reg: /(ss)ed$/i, //l|p|t|g|s
+			repl: {
+				infinitive: "$1",
+				present: "$1es",
+				doer: "$1er",
+				gerund: "$1ing"
+			},
+			examples: 'passed',
+			exceptions: [],
+			power: 0,
+			tense: 'past'
+		}, {
+			reg: /pped$/i, //l|p|t|g|s
+			repl: {
+				infinitive: "p",
+				present: "ps",
+				doer: "pper",
+				gerund: "pping"
+			},
+			examples: 'flipped',
+			exceptions: [],
+			power: 0,
+			tense: 'past'
+		}, {
+			reg: /tted$/i, //l|p|t|g|s
+			repl: {
+				infinitive: "t",
+				present: "ts",
+				doer: "tter",
+				gerund: "tting"
+			},
+			examples: 'batted',
+			exceptions: [],
+			power: 0,
+			tense: 'past'
+		}, {
+			reg: /gged$/i, //l|p|t|g|s
+			repl: {
+				infinitive: "g",
+				present: "gs",
+				doer: "gger",
+				gerund: "gging"
+			},
+			examples: 'batted',
+			exceptions: [],
+			power: 0,
+			tense: 'past'
+		},
+
+		//doesnt need an e, ever
+		{
+			reg: /(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ail|en|oo.|er|k|p|w|our|rt|ght)ed$/i,
+			repl: {
+				infinitive: "$1",
+				present: "$1s",
+				doer: "$1er",
+				gerund: "$1ing"
+			},
+			examples: 'outwitted',
+			exceptions: [],
+			power: 1854,
+			tense: 'past'
+		},
+
+		//needs an e
 		{
 			reg: /(.[^aeiou])ed$/i,
 			repl: {
@@ -252,9 +430,24 @@ var verb_rules = {
 				doer: "$1er",
 				gerund: "$1ing"
 			},
-			examples: 'convoluted, outwitted, angulated',
+			examples: 'convoluted, angulated',
 			exceptions: [],
 			power: 1854,
+			tense: 'past'
+		},
+
+
+		{
+			reg: /ied$/i,
+			repl: {
+				infinitive: "y",
+				present: "ies",
+				doer: "ier",
+				gerund: "ying"
+			},
+			examples: 'ballyhooed,',
+			exceptions: [],
+			power: 0,
 			tense: 'past'
 		}, {
 			reg: /(.o)ed$/i,
@@ -268,7 +461,9 @@ var verb_rules = {
 			exceptions: [],
 			power: 0,
 			tense: 'past'
-		}, {
+		},
+
+		{
 			reg: /(.i)ed$/i,
 			repl: {
 				infinitive: "$1",

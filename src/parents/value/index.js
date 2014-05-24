@@ -8,7 +8,7 @@ var Value = function(str) {
 
 	if (typeof module !== "undefined" && module.exports) {
 		to_number = require("./to_number")
-		dates = require("./dates")
+		date_extractor = require("./dates")
 		parts_of_speech = require("../../data/parts_of_speech")
 	}
 
@@ -17,6 +17,7 @@ var Value = function(str) {
 	})()
 
 	the.number = to_number(the.word)
+	console.log(the.date_extractor("june 5th 1989"))
 
 	return the;
 };
@@ -24,4 +25,4 @@ if (typeof module !== "undefined" && module.exports) {
 	module.exports = Value;
 }
 
-// console.log(new Value("fifty five"))
+console.log(new Value("fifty five"))

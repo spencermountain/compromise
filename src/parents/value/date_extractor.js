@@ -1,6 +1,6 @@
 var date_extractor = (function() {
 
-  var date_extractor = function(text) {
+  var main = function(text) {
     var results = finddate(text);
     return {
       "text": results[0],
@@ -288,43 +288,21 @@ var date_extractor = (function() {
       month = '' + month;
       month = month.toLowerCase();
       var monthnum = 0;
-
-      if (month == 'january') {
-        monthnum = '01';
+      var months = {
+        january: 1,
+        february: 2,
+        march: 3,
+        april: 4,
+        may: 5,
+        june: 6,
+        july: 7,
+        august: 8,
+        september: 9,
+        october: 10,
+        november: 11,
+        december: 12,
       }
-      if (month == 'february') {
-        monthnum = '02';
-      }
-      if (month == 'march') {
-        monthnum = '03';
-      }
-      if (month == 'april') {
-        monthnum = '04';
-      }
-      if (month == 'may') {
-        monthnum = '05';
-      }
-      if (month == 'june') {
-        monthnum = '06';
-      }
-      if (month == 'july') {
-        monthnum = '07';
-      }
-      if (month == 'august') {
-        monthnum = '08';
-      }
-      if (month == 'september') {
-        monthnum = '09';
-      }
-      if (month == 'october') {
-        monthnum = '10';
-      }
-      if (month == 'november') {
-        monthnum = '11';
-      }
-      if (month == 'december') {
-        monthnum = '12';
-      }
+      monthnum = months[month]
 
       if (found.match('B.C.')) {
         var year = /[0-9]{3,4}/i.exec(found);
@@ -341,15 +319,8 @@ var date_extractor = (function() {
       else {
         var year = /[0-9]{4}/i.exec(found);
       } //normal years
-      year = '' + year;
       found = found.replace(year, '');
       var date = /[0-9]{1,2}/i.exec(found);
-
-      if (date != null) {
-        if (date < 10) {
-          date = '0' + date;
-        } //turn 1 into 01
-      }
 
       return {
         "year": year,
@@ -360,23 +331,14 @@ var date_extractor = (function() {
 
 
 
-    //console.log(exports.date_extractor('my wife left me on the 9th of april, 2005. now i just programz the computerz.'));
-
-    // export for AMD / RequireJS
-  if (typeof define !== 'undefined' && define.amd) {
-    define([], function() {
-      return date_extractor;
-    });
-  }
-  // export for Node.js
-  else if (typeof module !== 'undefined' && module.exports) {
+  if (typeof module !== 'undefined' && module.exports) {
     module.exports = date_extractor;
   }
 
-  return date_extractor;
+  return main;
 
 
 })()
 
 
-// console.log(date_extractor("it was Feb. 14 1969"))
+console.log(date_extractor("Feb. 14 1969"))

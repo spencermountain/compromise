@@ -6,6 +6,7 @@ inflect = (function() {
         ['child', 'children'],
         ['person', 'people'],
         ['man', 'men'],
+        ['leaf', 'leaves'],
         ['database', 'databases'],
         ['quiz', 'quizzes'],
         ['child', 'children'],
@@ -310,6 +311,14 @@ inflect = (function() {
                 return found[0][1].charAt(0).toUpperCase() + string.slice(1)
             }
         }
+        //inflect first word of preposition-phrase
+        if (str.match(/([a-z]*) (of|in|by|for) [a-z]/)) {
+            var first = str.match(/^([a-z]*) (of|in|by|for) [a-z]/)[1]
+            if (first) {
+                var better_first = pluralize(first)
+                return better_first + str.replace(first, '')
+            }
+        }
         //regular
         for (var i in pluralize_rules) {
             if (str.match(pluralize_rules[i].reg)) {
@@ -406,12 +415,21 @@ inflect = (function() {
                 return found[0][0].charAt(0).toUpperCase() + string.slice(1)
             }
         }
+        //inflect first word of preposition-phrase
+        if (str.match(/([a-z]*) (of|in|by|for) [a-z]/)) {
+            var first = str.match(/^([a-z]*) (of|in|by|for) [a-z]/)[1]
+            if (first) {
+                var better_first = singularize(first)
+                return better_first + str.replace(first, '')
+            }
+        }
         //regular
         for (var i in singularize_rules) {
             if (str.match(singularize_rules[i].reg)) {
                 return str.replace(singularize_rules[i].reg, singularize_rules[i].repl)
             }
         }
+        return str
     }
 
 
@@ -454,3 +472,11 @@ inflect = (function() {
     }
     return methods;
 })();
+
+// console.log(inflect.pluralize('twin'))
+// console.log(inflect.pluralize('phantom of the opera'))
+// console.log(inflect.pluralize('mayor of chicago'))
+// console.log(inflect.pluralize('boy in the mall'))
+// console.log(inflect.pluralize('maple leaf'))
+// console.log(inflect.singularize('leaves'))
+// console.log(inflect.singularize('mayors of toronto'))

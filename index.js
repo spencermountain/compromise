@@ -49,3 +49,11 @@ module.exports = nlp
 // console.log(nlp.adverb("quickly").conjugate())
 
 // console.log(nlp.verb('walk').conjugate())
+// console.log(nlp.noun("wolf").article() == "a")
+
+// console.log(nlp.adjective("ferocious").conjugate().noun)
+// console.log(nlp.noun('children').singularize() == 'child')
+
+// console.log(nlp.adverb('truly').conjugate().adjective)
+// console.log(nlp.adverb.to_adjective('gently') == 'gent')
+// console.log(nlp.adjective('naive').conjugate().adverb == 'naively')

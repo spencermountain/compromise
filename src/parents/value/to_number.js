@@ -30,9 +30,8 @@ var to_number = (function() {
         'seventy': 70,
         'eighty': 80,
         'ninety': 90
-    };
-
-    var magnitudes = {
+    }
+    var hundreds = {
         'hundred': 100,
         'grand': 1000,
         'thousand': 1000,
@@ -50,6 +49,11 @@ var to_number = (function() {
 
 
     var main = function(s) {
+        s = s.replace(/, ?/g, '')
+        //dont do phone numbers or times
+        if (s.match(/[0-9][-:][0-9]/)) {
+            return null
+        }
         var multiplier = 1
         var total = 0;
         var g = 0;
@@ -71,19 +75,45 @@ var to_number = (function() {
             }
         }
         var a = s.toString().split(/[\s-]+/);
+        var status;
+        var die = false //die on things like 'ten four'
         a.forEach(function(w) {
             if (w == "and") {
                 return
             }
             if (parseFloat(w)) { //it's already a number, like '4'
-                g += parseFloat(w)
+                var x = parseFloat(w)
+                if (x < 20 && x > 0) {
+                    if (status == "tens") {
+                        die = true
+                    }
+                    g += x
+                    status = "tens"
+                } else {
+                    status = null
+                    g += x
+                }
             } else if (numbers[w]) { //it's a known value, like 'three'
-                g += numbers[w];
-            } else if (magnitudes[w]) { //it's a magnitude, like 'hundred'
-                total += (magnitudes[w] * (g || 1)) //dont ever multiply it by 0
+                var x = numbers[w];
+                if (x < 20 && x > 0) {
+                    if (status == "tens") {
+                        die = true
+                    }
+                    g += x
+                    status = "tens"
+                } else {
+                    status = null
+                    g += x
+                }
+            } else if (hundreds[w]) { //it's a magnitude, like 'hundred'
+                total += (hundreds[w] * (g || 1)) //dont ever multiply it by 0
                 g = 0;
+                status = null
             }
         });
+        if (die) {
+            return null
+        }
         return (total + g) * multiplier
     }
     if (typeof module !== "undefined" && module.exports) {
@@ -107,3 +137,8 @@ var to_number = (function() {
 // console.log(to_number("ten and a half million") == 15000000)
 // console.log(to_number("104") == 104)
 // console.log(to_number("13 thousand") == 13000)
+// console.log(to_number("17,983") == 17983)
+// console.log(to_number("12:32") == null)
+// console.log(to_number("123-1231") == null)
+// console.log(to_number("seven eleven") == null)
+// console.log(to_number("ten-four") == null)

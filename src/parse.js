@@ -25,7 +25,7 @@ var parsed = (function() {
 			}),
 			numbers: get_tag(sentences, "NU"),
 			dates: get_tag(sentences, "DA"),
-			hi: 2
+
 		}
 
 	}
@@ -36,6 +36,4 @@ var parsed = (function() {
 	return main
 })()
 
-// var spots = spot("tony hawk walked to toronto")
 // console.log(parsed("mike myers and nancy kerrigan are nice. They've lived at twenty two baltimore since July 8 1992"))
-// console.log(spots[1].analysis)

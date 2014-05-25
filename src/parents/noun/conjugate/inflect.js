@@ -480,3 +480,13 @@ inflect = (function() {
 // console.log(inflect.pluralize('maple leaf'))
 // console.log(inflect.singularize('leaves'))
 // console.log(inflect.singularize('mayors of toronto'))
+
+
+/*
+
+bus
+kiss
+        console.log(nlp.noun('crisis').pluralize() == 'crises')
+        console.log(nlp.noun('analysis').pluralize() == 'analyses')
+        console.log(nlp.noun('neurosis').pluralize() == 'neuroses')
+*/

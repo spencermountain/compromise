@@ -21,7 +21,7 @@ var pos = (function() {
 		return a
 	}
 
-	//combine adjacent neighbours
+	//combine adjacent neighbours, and special cases
 	var combine_tags = function(sentence) {
 		var arr = sentence.tokens
 		var better = []
@@ -30,13 +30,23 @@ var pos = (function() {
 			if (arr[i] && next) {
 				//'joe smith' are both NN
 				if (arr[i].pos.tag == next.pos.tag && arr[i].punctuated != true) {
-					arr[i] = merge_tokens(arr[i], arr[i + 1])
-					arr[i + 1] = null
+					arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
+					arr[i] = null
 				}
 				//'will walk' -> future-tense verb
 				else if (arr[i].normalised == "will" && next.pos.parent == "verb") {
-					arr[i] = merge_tokens(arr[i], arr[i + 1])
-					arr[i + 1] = null
+					arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
+					arr[i] = null
+				}
+				//'hundred and fifty'
+				else if (arr[i].pos.tag == "CD" && next.normalised == "and" && arr[i + 2] && arr[i + 2].pos.tag == "CD") {
+					arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
+					arr[i] = null
+				}
+				//'toronto fun festival'
+				else if (arr[i].pos.tag == "NN" && next.pos.tag == "JJ" && arr[i + 2] && arr[i + 2].pos.tag == "NN") {
+					arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
+					arr[i] = null
 				}
 			}
 			better.push(arr[i])
@@ -246,12 +256,12 @@ var pos = (function() {
 			sentence.tokens = sentence.tokens.map(function(token, i) {
 				if (!token.pos) {
 					//if there no verb in the sentence, there needs to be.
-					if (!has['verb']) {
-						token.pos = parts_of_speech['VB']
-						token.pos_reason = "need one verb"
-						has['verb'] = true
-						return token
-					}
+					// if (!has['verb']) {
+					// 	token.pos = parts_of_speech['VB']
+					// 	token.pos_reason = "need one verb"
+					// 	has['verb'] = true
+					// 	return token
+					// }
 
 					//fallback to a noun
 					token.pos = parts_of_speech['NN']
@@ -357,6 +367,8 @@ var pos = (function() {
 	// fun = pos("joe will not walk")[0].tokens //
 	// fun = pos("joe won't walk")[0].tokens //
 	// fun = pos("joe is not swimming to the bank")[0].tokens //
+	// fun = pos("it was one hundred and fifty five thousand people") //combine over and
+	// fun = pos("the toronto international festival") //combine over and
 	// console.log(fun[1])
 	// render(fun)
 	// analysis(fun)

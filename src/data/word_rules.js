@@ -23,7 +23,7 @@ word_rules = [{
         errors: 3,
         accuracy: '0.97'
     }, {
-        reg: /.fies$/i,
+    reg: /.fies$/i,
         pos: 'VB',
         strength: 30,
         errors: 1,
@@ -237,19 +237,13 @@ word_rules = [{
         errors: 4,
         accuracy: '0.81'
     }, {
-        reg: /.-ever$/i,
-        pos: 'RB',
-        strength: 10,
-        errors: 2,
-        accuracy: '0.80'
-    }, {
         reg: /.ects$/i,
         pos: 'VB',
         strength: 30,
         errors: 6,
         accuracy: '0.80'
     }, {
-        reg: /.ieth$/i,
+        reg: /.tieth$/i,
         pos: 'CD',
         strength: 5,
         errors: 1,
@@ -304,12 +298,6 @@ word_rules = [{
         accuracy: '0.75'
     }, {
         reg: /.fore$/i,
-        pos: 'RB',
-        strength: 8,
-        errors: 2,
-        accuracy: '0.75'
-    }, {
-        reg: /. of$/i,
         pos: 'RB',
         strength: 8,
         errors: 2,
@@ -464,5 +452,5 @@ word_rules = [{
 ]
 
 if (typeof module !== "undefined" && module.exports) {
-    exports.rules = word_rules;
+    module.exports = word_rules;
 }

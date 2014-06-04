@@ -57,3 +57,5 @@ module.exports = nlp
 // console.log(nlp.adverb('truly').conjugate().adjective)
 // console.log(nlp.adverb.to_adjective('gently') == 'gent')
 // console.log(nlp.adjective('naive').conjugate().adverb == 'naively')
+
+// console.log(nlp.spot('Tony Hawk said he was very happy')[0].text)

@@ -214,21 +214,33 @@ var pos = (function() {
 				return token
 			})
 
-			//second pass, set verb or noun phrases after their signals
+			//second pass, wrangle results a bit
+			sentence.tokens = sentence.tokens.map(function(token, i) {
+				var next = sentence.tokens[i + 1]
+				var prev = sentence.tokens[i - 1]
+				//set ambiguous 'ed' endings as either verb/adjective
+				if (token.normalised.match(/.ed$/)) {
+					token.pos = parts_of_speech['VB']
+					token.pos_reason = "ed"
+				}
+				return token
+			})
+
+			//third pass, seek verb or noun phrases after their signals
 			var need = null
 			var reason = ''
 			sentence.tokens = sentence.tokens.map(function(token, i) {
 				var next = sentence.tokens[i + 1]
 				var prev = sentence.tokens[i - 1]
 				if (token.pos) {
-					//suggest verb after personal pronouns (he|she|they), modal verbs (would|could|should)
-					if (token.pos.tag == "PRP" || token.pos.tag == "MD") {
-						need = 'VB'
-						reason = token.pos.name
-					}
 					//suggest noun after determiners (a|the), posessive pronouns (her|my|its)
 					if (token.pos.tag == "DT" || token.pos.tag == "PP") {
 						need = 'NN'
+						reason = token.pos.name
+					}
+					//suggest verb after personal pronouns (he|she|they), modal verbs (would|could|should)
+					if (token.pos.tag == "PRP" || token.pos.tag == "MD") {
+						need = 'VB'
 						reason = token.pos.name
 					}
 
@@ -369,7 +381,10 @@ var pos = (function() {
 	// fun = pos("joe is not swimming to the bank")[0].tokens //
 	// fun = pos("it was one hundred and fifty five thousand people") //combine over and
 	// fun = pos("the toronto international festival") //combine over and
-	// console.log(fun[1])
+
+	// fun = pos("they were even weaker he said") //better adjectives
+	// fun = pos("new") //better adjectives
+	// console.log(fun[0].tokens[0])
 	// render(fun)
 	// analysis(fun)
 	// console.log(JSON.stringify(fun[0], null, 2));

@@ -1,7 +1,7 @@
 require("dirtyjs")
 data = require("./pen_treebank").data
-pos = require("../pos").pos
-parts_of_speech = require("../pos").parts_of_speech
+pos = require("../pos")
+parts_of_speech = require("../data/parts_of_speech")
 
 var percentages = []
 var bad_reasons = []
@@ -11,6 +11,7 @@ var bad_tokens = []
 
 //2909 in total
 //1500 tokenization differences
+hardwords = []
 
 var compare = function(mine, theirs) {
   if (mine.length == 0 || mine.length != theirs.length) {
@@ -28,12 +29,25 @@ var compare = function(mine, theirs) {
   for (var i = 0; i < mine.length; i++) {
     if (mine[i].parent != theirs[i].parent) {
       errors += 1
-      bad_reasons.push(mine[i].reason + '_' + theirs[i].parent)
+      reason = mine[i].reason + '_' + theirs[i].parent
+      bad_reasons.push(reason)
       hard_words.push(mine[i].word)
+      mine[i].word += "*"
+      mine[i].error = true
+      // if (reason == "regex suffix_noun") {
+      hardwords.push(mine[i].word)
+      // console.log(mine[i].word + "  -  " + mine[i].parent + "  -> " + theirs[i].parent)
+      // }
       // console.log(mine[i].word + "    --  mine:" + mine[i].pos + ",  theirs:" + theirs[i].pos)
     } else {
       // console.log(theirs[i])
     }
+  }
+  if (errors > 0) {
+    // console.log(mine.map(function(t) {
+    //   return t.word
+    // }).join(' '))
+    // console.log(theirs)
   }
   var percent = parseInt(((mine.length - errors) / mine.length) * 100)
   percentages.push(percent)
@@ -79,7 +93,7 @@ for (var i in data) {
 
 
 // console.log(bad_reasons.topk())
-// console.log(hard_words.topk().slice(0, 100))
+// console.log(hardwords.topk())
 console.log("     ")
 console.log("     ")
 console.log("     ")
@@ -106,3 +120,4 @@ console.log((bad_tokenization / data.length) * 100 + " bad tokenization")
 //april 9th, filling lexicon holes (cheekily) -  78%
 //april 9th, fixing pen's punctuation thing -  80%
 //may 18th, conjugate the lexicon -  81%
+//june 4rth, missing regex bug, better adjective lexicon - 84%

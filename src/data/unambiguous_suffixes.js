@@ -531,7 +531,6 @@ var wordnet_suffixes = (function() {
         "enal": "JJ",
         "rced": "JJ",
         "kian": "JJ",
-        "gned": "JJ",
         "abic": "JJ",
         "lear": "JJ",
         "sick": "JJ",

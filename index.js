@@ -40,7 +40,7 @@ nlp.spot = require('./src/spot');
 // console.log(nlp.pos("the chimmney was really tall"))
 // console.log(nlp.spot("the chimmney was really tall"))
 // nlp.tests()
-// console.log(nlp.noun('hose'))
+// console.log(nlp.noun('hose').article())
 module.exports = nlp
 // n = nlp.noun('fun').conjugate()
 // console.log(n)

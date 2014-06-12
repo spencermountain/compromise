@@ -126,7 +126,13 @@ var multiples = [
     "super duper",
     "such like",
     "de trop",
-    // "will be"
+    "new york",
+    "new england",
+    "new hampshire",
+    "new delhi",
+    "new jersey",
+    "new mexico",
+
 ].map(function(m) {
     return m.split(' ')
 })

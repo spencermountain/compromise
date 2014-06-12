@@ -69,6 +69,7 @@ var tokenize = (function() {
 
 // a = tokenize("Geroge Clooney walked, quietly into a bank of course. It was cold.")
 // a = tokenize("If the debts are repaid, it could clear the way for Soviet bonds to be sold in the U.S.")
+// a = tokenize("i live in new york")
 // console.log(JSON.stringify(a, null, 2));
 
 

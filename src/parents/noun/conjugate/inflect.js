@@ -217,6 +217,10 @@ inflect = (function() {
         "series": 1,
         "sheep": 1,
         "species": 1,
+        "fahrenheit": 1,
+        "celcius": 1,
+        "kelvin": 1,
+        "hertz": 1,
     }
 
     var pluralize_rules = [{

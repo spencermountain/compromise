@@ -4,7 +4,7 @@ var nlp = {}
 
 var parents = require("./src/parents/parents")
 Object.keys(parents).forEach(function(k) {
-  nlp[k] = parents[k]
+    nlp[k] = parents[k]
 })
 
 

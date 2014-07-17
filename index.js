@@ -59,3 +59,4 @@ module.exports = nlp
 // console.log(nlp.adjective('naive').conjugate().adverb == 'naively')
 
 // console.log(nlp.spot('Tony Hawk said he was very happy')[0].text)
+// console.log(nlp.pos("it was sturdy")[0].tokens)

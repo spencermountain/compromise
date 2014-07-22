@@ -58,5 +58,8 @@ module.exports = nlp
 // console.log(nlp.adverb.to_adjective('gently') == 'gent')
 // console.log(nlp.adjective('naive').conjugate().adverb == 'naively')
 
-// console.log(nlp.spot('Tony Hawk said he was very happy')[0].text)
+// tags= nlp.pos('Tony Hawk said he was very happy')[0].tokens
+// console.log(tags)
+// console.log(tags.filter(function(t){return t.pos.parent=="noun" && t.analysis.is_entity}))
 // console.log(nlp.pos("it was sturdy")[0].tokens)
+// console.log(new Adjective("sacred").conjugate())

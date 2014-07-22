@@ -449,6 +449,7 @@ inflect = (function() {
         if (str.match(/s$/)) {
             return true
         }
+        return false
     }
 
     var inflect = function(str) {

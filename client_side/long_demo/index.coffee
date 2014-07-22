@@ -3,7 +3,7 @@ arr= [
   "./libs/sugar.js",
   "./libs/oj.js",
   "./libs/dirty.js",
-  "./libs/nlp.min.js",
+  "./libs/nlp.js",
   "./libs/bluebrowns.js",
   "./coffeejs/texts.js"
 ]
@@ -25,6 +25,7 @@ head ->
               click:->
                 highlight('plural') if s=="plural"
                 highlight('acronym') if s=="acronyms"
+                highlight('entity') if s=="named entities"
             },->
               s
 
@@ -103,6 +104,7 @@ head ->
         if word.pos.parent=="noun"
           classes.push("acronym") if word.is_acronym
           classes.push("plural") if word.is_plural
+          classes.push("entity") if word.analysis.is_entity
 
         """<span data-token="#{word.normalised}" class="#{classes.join(' ')}">#{word.text}</span>"""
       ).join(' ')

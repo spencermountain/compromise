@@ -29,7 +29,7 @@ var pos = (function() {
 			var next = arr[i + 1]
 			if (arr[i] && next) {
 				//'joe smith' are both NN
-				if (arr[i].pos.tag == next.pos.tag && arr[i].punctuated != true) {
+				if (arr[i].pos.tag == next.pos.tag && arr[i].punctuated != true && arr[i].capitalised==next.capitalised) {
 					arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
 					arr[i] = null
 				}
@@ -92,7 +92,7 @@ var pos = (function() {
 			token.pos_reason = "consecutive_adjectives"
 		}
 		//if it's after a determiner, it's not a verb -> the walk
-		if (last && token.pos.parent == "verb" && last.pos.tag == "DT") {
+		if (last && token.pos.parent == "verb" && last.pos.tag == "DT" && token.pos.tag!="CP") {
 			token.pos = parts_of_speech['NN']
 			token.pos_reason = "determiner-verb"
 		}
@@ -172,6 +172,15 @@ var pos = (function() {
 
 			//first pass, word-level clues
 			sentence.tokens = sentence.tokens.map(function(token) {
+
+
+				//it has a capital and isn't first word
+				if (!token.start && token.capitalised) {
+					token.pos = parts_of_speech['NN']
+					token.pos_reason = "capitalised"
+					return token
+				}
+
 				//known words list
 				var lex = lexicon_pass(token.normalised)
 				if (lex) {
@@ -179,6 +188,13 @@ var pos = (function() {
 					token.pos_reason = "lexicon"
 					return token
 				}
+				//handle punctuation like ' -- '
+				if(!token.normalised){
+					token.pos= parts_of_speech['UH']
+					token.pos_reason= "wordless_string"
+					return token
+				}
+
 				// suffix pos signals from wordnet
 				var len = token.normalised.length
 				if (len > 4) {
@@ -198,12 +214,6 @@ var pos = (function() {
 					return token
 				}
 
-				//it has a capital and isn't first word
-				if (!token.start && token.capitalised) {
-					token.pos = parts_of_speech['NN']
-					token.pos_reason = "capitalised"
-					return token
-				}
 				//see if it's a number
 				if (parseFloat(token.normalised)) {
 					token.pos = parts_of_speech['CD']
@@ -305,7 +315,7 @@ var pos = (function() {
 			s.tokens = s.tokens.map(function(token, i) {
 				var last_token = s.tokens[i - 1] || null
 				var next_token = s.tokens[i + 1] || null
-				token.analysis = parents[token.pos.parent](token.normalised, next_token, last_token)
+				token.analysis = parents[token.pos.parent](token.normalised, next_token, last_token, token)
 				//change to the more accurate version of the pos
 				if (token.analysis.which) {
 					token.pos = token.analysis.which
@@ -389,3 +399,18 @@ var pos = (function() {
 	// analysis(fun)
 	// console.log(JSON.stringify(fun[0], null, 2));
 	// console.log(fun[0].to_past().text())
+
+	// fun = pos("That malignant desire is in the very heart of those who share (this order's) benefits.", {}) //punctuation bug
+	// fun = pos("He’s like his character Oishi.", {}) //dont combine non-capitals with capitals
+	// fun = pos("one which is justly measured", {}) //dont' overwrite existing lexicon words in conjugation
+	// fun = pos("to that which - it is", {}) //handle wordless strings
+	// fun = pos("Robert Tucker for one has rightly emphasized", {}) //combine capitals at start
+	// fun = pos(" the libertarian thought of The Enlightenment.", {}) //precedence to capital signal
+	// fun = pos("he said YOU ARE VERY NICE then left", {}) //handle all-caps
+	// fun = pos("he presents an anarchist vision that is appropriate", {}) //
+	// console.log(fun[0])
+	// render(fun)
+
+
+
+	//  __ above[IN] -> noun?

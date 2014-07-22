@@ -1,7 +1,7 @@
 // "RB  - adverb (quickly, softly)",
 // "RBR  - comparative adverb (faster, cooler)",
 // "RBS  - superlative adverb (fastest (driving), coolest (looking))"
-var Adverb = function(str, next, last) {
+var Adverb = function(str, next, last, token) {
 	var the = this
 	the.word = str || '';
 	the.next = next

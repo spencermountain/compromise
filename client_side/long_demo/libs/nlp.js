@@ -9080,7 +9080,7 @@ var spot = (function() {
 		var spots = []
 		sentences.forEach(function(sentence) {
 			sentence.tokens.forEach(function(token) {
-				if (token.pos.parent == "noun" && token.analysis.is_entity) {
+				if (token.pos.parent == "noun" && token.analysis.is_entity()) {
 					spots.push(token)
 				}
 			})

@@ -110,7 +110,7 @@ var Sentence = function(tokens) {
 if (typeof module !== "undefined" && module.exports) {
 	module.exports = Sentence;
 }
-pos = require("./pos")
+// pos = require("./pos")
 
 //gerund negation
 // tokens = pos('joe is so cool, he is going')[0].tokens

@@ -9,6 +9,9 @@ var tokenize = (function() {
 	var normalise = function(str) {
 		str = str.toLowerCase()
 		str = str.replace(/[,\.!:;\?]/, '')
+		if(!str.match(/[a-z]/i)){
+			return ''
+		}
 		return str
 	}
 
@@ -47,8 +50,8 @@ var tokenize = (function() {
 				return {
 					text: w,
 					normalised: normalise(w),
-					capitalised: (i > 0 && w.match(/^[A-Z][a-z]/) != null) || undefined,
-					punctuated: (w.match(/[,;:]$/) != null) || undefined,
+					capitalised: (w.match(/^[A-Z][a-z]/) != null) || undefined,
+					punctuated: (w.match(/[,;:\(\)"]/) != null) || undefined,
 					end: (i == (arr.length - 1)) || undefined,
 					start: (i == 0) || undefined
 				}
@@ -70,6 +73,7 @@ var tokenize = (function() {
 // a = tokenize("Geroge Clooney walked, quietly into a bank of course. It was cold.")
 // a = tokenize("If the debts are repaid, it could clear the way for Soviet bonds to be sold in the U.S.")
 // a = tokenize("i live in new york")
+// a = tokenize("How do you wear your swords? He’s like his character [Kuranosuke] Oishi.")
 // console.log(JSON.stringify(a, null, 2));
 
 

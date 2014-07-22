@@ -3,8 +3,8 @@ lexicon = (function() {
 		verb_conjugate = require("../parents/verb/conjugate/conjugate")
 		adj_to_adv = require("../parents/adjective/conjugate/to_adverb");
 		verb_to_doer = require("../parents/verb/conjugate/to_doer");
-		var superlative = require("../parents/adjective/conjugate/to_superlative");
-		var comparative = require("../parents/adjective/conjugate/to_comparative");
+		to_superlative = require("../parents/adjective/conjugate/to_superlative");
+		to_comparative = require("../parents/adjective/conjugate/to_comparative");
 	}
 	var main = {
 		//conjunctions
@@ -86,7 +86,6 @@ lexicon = (function() {
 		"all": "DT",
 		"these": "DT",
 		"another": "DT",
-		"little": "DT",
 		"plenty": "DT",
 		"whichever": "DT",
 		"neither": "DT",
@@ -108,6 +107,14 @@ lexicon = (function() {
 		"some": "DT",
 		"else": "DT",
 		"several": "DT",
+		//some other languages (what could go wrong?)
+		"la": "DT",
+		"le": "DT",
+		"les": "DT",
+		"des": "DT",
+		"de": "DT",
+		"du": "DT",
+		"el": "DT",
 
 		//prepositions
 		"until": "IN",
@@ -200,6 +207,8 @@ lexicon = (function() {
 		"us": "PRP",
 		"we": "PRP",
 		"thou": "PRP",
+		"il": "PRP",
+		"elle": "PRP",
 
 		//some manual adverbs (the rest are generated)
 		"now": "RB",
@@ -352,7 +361,6 @@ lexicon = (function() {
 		"many": "JJ",
 		"most": "RBS",
 		"last": "JJ",
-		"little": "JJ",
 		"expected": "JJ",
 		"long": "JJ",
 		"far": "JJ",
@@ -384,6 +392,7 @@ lexicon = (function() {
 		"purpose": "NN",
 		"friends": "NNS",
 		"less": "JJ",
+		"event":"NN"
 
 	}
 
@@ -730,14 +739,15 @@ lexicon = (function() {
 		"whistle",
 		"wreck",
 		"yawn",
+		"betray",
 	]
 	//conjugate all of these verbs. takes ~8ms. triples the lexicon size.
 	verbs.forEach(function(v) {
 		var c = verb_conjugate(v)
-		main[c.infinitive] = "VBP"
-		main[c.past] = "VBD"
-		main[c.gerund] = "VBG"
-		main[c.present] = "VBZ"
+		main[c.infinitive]= main[c.infinitive] || "VBP"
+		main[c.past] = main[c.past] || "VBD"
+		main[c.gerund] = main[c.gerund] || "VBG"
+		main[c.present] = main[c.present] || "VBZ"
 		var doer = verb_to_doer(v)
 		if (doer) {
 			main[doer] = "NNA"
@@ -1325,6 +1335,7 @@ lexicon = (function() {
 		'yellow',
 		'young',
 		'zany',
+		'sacred',
 		//words that have good comparative/superlative forms
 		'aggressive',
 		'awesome',
@@ -1367,17 +1378,17 @@ lexicon = (function() {
 		var adv = adj_to_adv(j)
 		if (adv && adv != j && !main[adv]) {
 			// console.log(adv)
-			main[adv] = "RB"
+			main[adv] = main[adv] || "RB"
 		}
-		var comp = comparative(j)
+		var comp = to_comparative(j)
 		if (comp && !comp.match(/^more ./) && comp != j && !main[comp]) {
 			// console.log(comp)
-			main[comp] = "JJR"
+			main[comp] = main[comp] || "JJR"
 		}
-		var sup = superlative(j)
+		var sup = to_superlative(j)
 		if (sup && !sup.match(/^most ./) && sup != j && !main[sup]) {
 			// console.log(sup)
-			main[sup] = "JJS"
+			main[sup] = main[sup] || "JJS"
 		}
 	})
 

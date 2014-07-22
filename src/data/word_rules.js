@@ -424,7 +424,7 @@ word_rules = [{
 
     {
         reg: /[a-z]'s$/i, //spencer's
-        pos: 'NN',
+        pos: 'NNO',
         strength: 1,
         errors: 0,
         accuracy: '0.00'

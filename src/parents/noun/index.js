@@ -1,4 +1,4 @@
-var Noun = function(str, next, last) {
+var Noun = function(str, next, last, token) {
 	var the = this
 	the.word = str || '';
 	the.next = next
@@ -8,6 +8,7 @@ var Noun = function(str, next, last) {
 		parts_of_speech = require("../../data/parts_of_speech")
 		inflect = require("./conjugate/inflect")
 		indefinite_article = require("./indefinite_article/indefinite_article")
+		// is_entity = require("./ner/is_entity")
 	}
 	//personal pronouns
 	var prps = {
@@ -40,6 +41,33 @@ var Noun = function(str, next, last) {
 	})()
 
 
+	the.is_entity= (function(){
+		var blacklist = {
+	    "i": 1,
+	    "me": 1,
+	    "he": 1,
+	    "she": 1,
+	    "we": 1,
+	    "they": 1,
+	    "it": 1,
+	    "you": 1,
+	    "him": 1,
+	    "her": 1,
+	    "itself": 1,
+	    "west": 1,
+	    "east": 1,
+	    "north": 1,
+	    "south": 1,
+	    "one": 1,
+	    "your": 1,
+	    "my": 1,
+	  }
+		if(token && token.capitalised && !blacklist[token.normalised]){
+			return true
+		}
+		return false
+
+	})()
 
 	the.conjugate = function() {
 		return inflect.inflect(the.word)
@@ -101,7 +129,7 @@ if (typeof module !== "undefined" && module.exports) {
 }
 
 
-// console.log(nouns.conjugate('farmhouse'))
+// console.log(new Noun('farmhouse').is_entity())
 // console.log(new Noun("FBI").is_acronym)
 // console.log(new Noun("FBI").which)
 // console.log(new Noun("kitchen's").which)

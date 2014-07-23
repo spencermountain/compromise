@@ -5,7 +5,6 @@ inflect = (function() {
     var irregulars = [
         ['child', 'children'],
         ['person', 'people'],
-        ['man', 'men'],
         ['leaf', 'leaves'],
         ['database', 'databases'],
         ['quiz', 'quizzes'],
@@ -25,7 +24,6 @@ inflect = (function() {
         ['i', 'we'],
         ['person', 'people'],
         ['man', 'men'],
-        ['child', 'children'],
         ['move', 'moves'],
         ['she', 'they'],
         ['he', 'they'],
@@ -396,6 +394,9 @@ inflect = (function() {
     }, {
         reg: /(alias|status)es$/i,
         repl: '$1'
+    },{
+        reg: /(ss)$/i,
+        repl: '$1'
     }, {
         reg: /s$/i,
         repl: ''
@@ -446,7 +447,7 @@ inflect = (function() {
                 return false
             }
         }
-        if (str.match(/s$/)) {
+        if (str.match(/s$/) && singularize(str)!=str) {
             return true
         }
         return false
@@ -478,6 +479,7 @@ inflect = (function() {
     return methods;
 })();
 
+// console.log(inflect.pluralize('kiss'))
 // console.log(inflect.pluralize('twin'))
 // console.log(inflect.pluralize('phantom of the opera'))
 // console.log(inflect.pluralize('mayor of chicago'))
@@ -485,6 +487,7 @@ inflect = (function() {
 // console.log(inflect.pluralize('maple leaf'))
 // console.log(inflect.singularize('leaves'))
 // console.log(inflect.singularize('mayors of toronto'))
+// console.log(inflect.inflect('women'))
 
 
 /*

@@ -25,6 +25,7 @@ adj_to_adv = (function() {
 			"well": "well",
 			"best": "best",
 			"latter": "latter",
+			"bad": "badly",
 		}
 		var dont = {
 			"foreign": 1,

@@ -136,3 +136,4 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log(new Noun("he").which)
 // console.log(new Noun("Flanders").which)
 // console.log(new Noun("walking").which)
+// console.log(new Noun("women").singularize())

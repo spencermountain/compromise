@@ -247,17 +247,34 @@ var pos = (function() {
 					if (token.pos.tag == "DT" || token.pos.tag == "PP") {
 						need = 'NN'
 						reason = token.pos.name
+						return token //proceed
 					}
 					//suggest verb after personal pronouns (he|she|they), modal verbs (would|could|should)
 					if (token.pos.tag == "PRP" || token.pos.tag == "MD") {
 						need = 'VB'
 						reason = token.pos.name
+						return token //proceed
 					}
 
 				}
-				if (need && !token.pos) {
+				//satisfy need on a conflict, and fix a likely error
+				if(token.pos){
+					if(need=="VB" && token.pos.parent=="noun"){
+						token.pos = parts_of_speech[need]
+						token.pos_reason = "signal from " + reason
+						need=null
+					}
+					if(need=="NN" && token.pos.parent=="verb"){
+						token.pos = parts_of_speech[need]
+						token.pos_reason = "signal from " + reason
+						need=null
+					}
+				}
+				//satisfy need with an unknown pos
+				if (need && !token.pos ) {
 					token.pos = parts_of_speech[need]
 					token.pos_reason = "signal from " + reason
+					need= null
 				}
 				if (need == 'VB' && token.pos.parent == 'verb') {
 					need = null
@@ -318,7 +335,7 @@ var pos = (function() {
 				token.analysis = parents[token.pos.parent](token.normalised, next_token, last_token, token)
 				//change to the more accurate version of the pos
 				if (token.analysis.which) {
-					token.pos = token.analysis.which
+					// token.pos = token.analysis.which
 				}
 				return token
 			})
@@ -408,6 +425,7 @@ var pos = (function() {
 	// fun = pos(" the libertarian thought of The Enlightenment.", {}) //precedence to capital signal
 	// fun = pos("he said YOU ARE VERY NICE then left", {}) //handle all-caps
 	// fun = pos("he presents an anarchist vision that is appropriate", {}) //
+	// fun = pos("The latter can face any visible antagonism.", {}) //
 	// console.log(fun[0])
 	// render(fun)
 

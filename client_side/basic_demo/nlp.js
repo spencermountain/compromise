@@ -1,6 +1,6 @@
 /*! nlp_compromise 
  by @spencermountain
- 2014-07-22 */
+ 2014-07-23 */
 //
 // NLP_comprimise - @spencermountain - gplv3
 // https://github.com/spencermountain/nlp_comprimise
@@ -3734,7 +3734,6 @@ inflect = (function() {
     var irregulars = [
         ['child', 'children'],
         ['person', 'people'],
-        ['man', 'men'],
         ['leaf', 'leaves'],
         ['database', 'databases'],
         ['quiz', 'quizzes'],
@@ -3754,7 +3753,6 @@ inflect = (function() {
         ['i', 'we'],
         ['person', 'people'],
         ['man', 'men'],
-        ['child', 'children'],
         ['move', 'moves'],
         ['she', 'they'],
         ['he', 'they'],
@@ -4125,6 +4123,9 @@ inflect = (function() {
     }, {
         reg: /(alias|status)es$/i,
         repl: '$1'
+    },{
+        reg: /(ss)$/i,
+        repl: '$1'
     }, {
         reg: /s$/i,
         repl: ''
@@ -4175,7 +4176,7 @@ inflect = (function() {
                 return false
             }
         }
-        if (str.match(/s$/)) {
+        if (str.match(/s$/) && singularize(str)!=str) {
             return true
         }
         return false
@@ -4207,6 +4208,7 @@ inflect = (function() {
     return methods;
 })();
 
+// console.log(inflect.pluralize('kiss'))
 // console.log(inflect.pluralize('twin'))
 // console.log(inflect.pluralize('phantom of the opera'))
 // console.log(inflect.pluralize('mayor of chicago'))
@@ -4214,6 +4216,7 @@ inflect = (function() {
 // console.log(inflect.pluralize('maple leaf'))
 // console.log(inflect.singularize('leaves'))
 // console.log(inflect.singularize('mayors of toronto'))
+// console.log(inflect.inflect('women'))
 
 
 /*
@@ -4362,6 +4365,7 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log(new Noun("he").which)
 // console.log(new Noun("Flanders").which)
 // console.log(new Noun("walking").which)
+// console.log(new Noun("women").singularize())
 //turns 'quickly' into 'quick'
 var to_adjective = (function() {
 	var main = function(str) {
@@ -6317,6 +6321,7 @@ var to_comparative = (function() {
 			"red": "redder",
 			"good": "better",
 			"well": "better",
+			"bad": "worse",
 		}
 		var dos = {
 			"absurd": 1,
@@ -6324,7 +6329,6 @@ var to_comparative = (function() {
 			"alert": 1,
 			"alive": 1,
 			"awesome": 1,
-			"bad": 1,
 			"beautiful": 1,
 			"big": 1,
 			"bitter": 1,
@@ -6623,7 +6627,6 @@ var to_superlative = (function() {
 			"alert": 1,
 			"alive": 1,
 			"awesome": 1,
-			"bad": 1,
 			"beautiful": 1,
 			"big": 1,
 			"bitter": 1,
@@ -6918,6 +6921,7 @@ adj_to_adv = (function() {
 			"well": "well",
 			"best": "best",
 			"latter": "latter",
+			"bad": "badly",
 		}
 		var dont = {
 			"foreign": 1,
@@ -7459,6 +7463,104 @@ lexicon = (function() {
 		"'o": "IN",
 		"'em": "PRP",
 
+		//demonyms
+		"afghan":"JJ",
+		"albanian":"JJ",
+		"algerian":"JJ",
+		"argentine":"JJ",
+		"armenian":"JJ",
+		"australian":"JJ",
+		"aussie":"JJ",
+		"austrian":"JJ",
+		"bangladeshi":"JJ",
+		"belgian":"JJ",
+		"bolivian":"JJ",
+		"bosnian":"JJ",
+		"brazilian":"JJ",
+		"bulgarian":"JJ",
+		"cambodian":"JJ",
+		"canadian":"JJ",
+		"chilean":"JJ",
+		"chinese":"JJ",
+		"colombian":"JJ",
+		"croat":"JJ",
+		"cuban":"JJ",
+		"czech":"JJ",
+		"dominican":"JJ",
+		"egyptian":"JJ",
+		"british":"JJ",
+		"estonian":"JJ",
+		"ethiopian":"JJ",
+		"finnish":"JJ",
+		"french":"JJ",
+		"gambian":"JJ",
+		"georgian":"JJ",
+		"german":"JJ",
+		"greek":"JJ",
+		"haitian":"JJ",
+		"hungarian":"JJ",
+		"indian":"JJ",
+		"indonesian":"JJ",
+		"iranian":"JJ",
+		"iraqi":"JJ",
+		"irish":"JJ",
+		"israeli":"JJ",
+		"italian":"JJ",
+		"jamaican":"JJ",
+		"japanese":"JJ",
+		"jordanian":"JJ",
+		"kenyan":"JJ",
+		"korean":"JJ",
+		"kuwaiti":"JJ",
+		"latvian":"JJ",
+		"lebanese":"JJ",
+		"liberian":"JJ",
+		"libyan":"JJ",
+		"lithuanian":"JJ",
+		"macedonian":"JJ",
+		"malaysian":"JJ",
+		"mexican":"JJ",
+		"mongolian":"JJ",
+		"moroccan":"JJ",
+		"dutch":"JJ",
+		"nicaraguan":"JJ",
+		"nigerian":"JJ",
+		"norwegian":"JJ",
+		"omani":"JJ",
+		"pakistani":"JJ",
+		"palestinian":"JJ",
+		"filipino":"JJ",
+		"polish":"JJ",
+		"portuguese":"JJ",
+		"qatari":"JJ",
+		"romanian":"JJ",
+		"russian":"JJ",
+		"rwandan":"JJ",
+		"samoan":"JJ",
+		"saudi":"JJ",
+		"scottish":"JJ",
+		"senegalese":"JJ",
+		"serbian":"JJ",
+		"singaporean":"JJ",
+		"slovak":"JJ",
+		"somali":"JJ",
+		"sudanese":"JJ",
+		"swedish":"JJ",
+		"swiss":"JJ",
+		"syrian":"JJ",
+		"taiwanese":"JJ",
+		"thai":"JJ",
+		"tunisian":"JJ",
+		"ugandan":"JJ",
+		"ukrainian":"JJ",
+		"american":"JJ",
+		"venezuelan":"JJ",
+		"vietnamese":"JJ",
+		"welsh":"JJ",
+		"african":"JJ",
+		"european":"JJ",
+		"asian":"JJ",
+		"californian":"JJ",
 
 		//mine
 		"said": "VBD",
@@ -8516,7 +8618,7 @@ lexicon = (function() {
 })()
 // console.log(Object.keys(lexicon).length)
 // console.log(lexicon['weaker'])
-// console.log(lexicon['weakest'])
+// console.log(lexicon['can'])
 // accepts parsed tokens
 var Sentence = function(tokens) {
 	var the = this
@@ -8901,17 +9003,34 @@ var pos = (function() {
 					if (token.pos.tag == "DT" || token.pos.tag == "PP") {
 						need = 'NN'
 						reason = token.pos.name
+						return token //proceed
 					}
 					//suggest verb after personal pronouns (he|she|they), modal verbs (would|could|should)
 					if (token.pos.tag == "PRP" || token.pos.tag == "MD") {
 						need = 'VB'
 						reason = token.pos.name
+						return token //proceed
 					}
 
 				}
-				if (need && !token.pos) {
+				//satisfy need on a conflict, and fix a likely error
+				if(token.pos){
+					if(need=="VB" && token.pos.parent=="noun"){
+						token.pos = parts_of_speech[need]
+						token.pos_reason = "signal from " + reason
+						need=null
+					}
+					if(need=="NN" && token.pos.parent=="verb"){
+						token.pos = parts_of_speech[need]
+						token.pos_reason = "signal from " + reason
+						need=null
+					}
+				}
+				//satisfy need with an unknown pos
+				if (need && !token.pos ) {
 					token.pos = parts_of_speech[need]
 					token.pos_reason = "signal from " + reason
+					need= null
 				}
 				if (need == 'VB' && token.pos.parent == 'verb') {
 					need = null
@@ -8972,7 +9091,7 @@ var pos = (function() {
 				token.analysis = parents[token.pos.parent](token.normalised, next_token, last_token, token)
 				//change to the more accurate version of the pos
 				if (token.analysis.which) {
-					token.pos = token.analysis.which
+					// token.pos = token.analysis.which
 				}
 				return token
 			})
@@ -9062,6 +9181,7 @@ var pos = (function() {
 	// fun = pos(" the libertarian thought of The Enlightenment.", {}) //precedence to capital signal
 	// fun = pos("he said YOU ARE VERY NICE then left", {}) //handle all-caps
 	// fun = pos("he presents an anarchist vision that is appropriate", {}) //
+	// fun = pos("The latter can face any visible antagonism.", {}) //
 	// console.log(fun[0])
 	// render(fun)
 

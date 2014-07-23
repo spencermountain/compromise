@@ -121,3 +121,4 @@ console.log((bad_tokenization / data.length) * 100 + " bad tokenization")
 //april 9th, fixing pen's punctuation thing -  80%
 //may 18th, conjugate the lexicon -  81%
 //june 4rth, missing regex bug, better adjective lexicon - 84%
+//july 23rd, bugfixes, demonyms - 86%

@@ -74,6 +74,7 @@ var tokenize = (function() {
 // a = tokenize("If the debts are repaid, it could clear the way for Soviet bonds to be sold in the U.S.")
 // a = tokenize("i live in new york")
 // a = tokenize("How do you wear your swords? He’s like his character [Kuranosuke] Oishi.")
+// a = tokenize("I speak optimistically of course.")
 // console.log(JSON.stringify(a, null, 2));
 
 

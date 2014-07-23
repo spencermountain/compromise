@@ -426,6 +426,9 @@ var pos = (function() {
 	// fun = pos("he said YOU ARE VERY NICE then left", {}) //handle all-caps
 	// fun = pos("he presents an anarchist vision that is appropriate", {}) //
 	// fun = pos("The latter can face any visible antagonism.", {}) //
+
+	// fun = pos("He does not perform it with truly human energies", {}) //issue with needs model
+	// fun = pos("he was by far the worst", {}) //support pos for multiples
 	// console.log(fun[0])
 	// render(fun)
 

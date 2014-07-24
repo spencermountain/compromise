@@ -141,4 +141,4 @@ adj_to_adv = (function() {
 // arr = data.map(function(w) {
 // 	console.log(w[1] + "  -  " + to_adverb(w[1]))
 // })
-// console.log(to_adverb('normal'))
+// console.log(adj_to_adv('direct'))

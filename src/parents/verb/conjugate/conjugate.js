@@ -237,6 +237,11 @@ verb_conjugate = (function() {
 // console.log(verb_conjugate("see"))
 // console.log(verb_conjugate("consider"))
 
+// console.log(verb_conjugate("suck")) ///*****bug
+
+
+// console.log(verb_conjugate("imply")) ///*****bug
+// console.log(verb_conjugate("count")) ///*****bug
 // console.log(verb_conjugate("contain")) ///*****bug
 // console.log(verb_conjugate("result")) //****bug
 // console.log(verb_conjugate("develop")) //****bug

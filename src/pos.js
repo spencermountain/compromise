@@ -464,7 +464,7 @@ var pos = (function() {
 	// fun = pos("the Phantom of the Opera", {}) //two combines
 	// fun = pos("They’re taking risks", {}) //normalise punctuation
 	// fun = pos("the school asdf him", {}) //before him|her"it
-	// fun = pos("the school asdf him", {}) //before him|her"it
+	// fun = pos("the disgruntled worker", {}) //
 	// console.log(fun[0])
 	// render(fun)
 

@@ -67,4 +67,4 @@ module.exports = nlp
 // console.log(tags.filter(function(t){return t.pos.parent=="noun" && t.analysis.is_entity}))
 // console.log(nlp.pos("it was sturdy")[0].tokens)
 // console.log(new Adjective("sacred").conjugate())
-// console.log(nlp.word('history'))
+// console.log(nlp.word('went').pos)

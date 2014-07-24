@@ -12,6 +12,7 @@ var to_comparative = (function() {
 			"good": "better",
 			"well": "better",
 			"bad": "worse",
+			"sad": "sadder",
 		}
 		var dos = {
 			"absurd": 1,
@@ -295,3 +296,4 @@ var to_comparative = (function() {
 // console.log(to_comparative('narrow'))
 // console.log(to_comparative('dull'))
 // console.log(to_comparative('weak'))
+// console.log(to_comparative('sad'))

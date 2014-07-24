@@ -35,6 +35,10 @@ nlp.pos = require('./src/pos');
 //named_entity_recognition
 nlp.spot = require('./src/spot');
 
+nlp.word= function(str, options){
+  return nlp.pos(str, options)[0].tokens[0]
+}
+
 // nlp.tests = require('./tests/test');
 
 // console.log(nlp.pos("the chimmney was really tall"))
@@ -63,3 +67,4 @@ module.exports = nlp
 // console.log(tags.filter(function(t){return t.pos.parent=="noun" && t.analysis.is_entity}))
 // console.log(nlp.pos("it was sturdy")[0].tokens)
 // console.log(new Adjective("sacred").conjugate())
+// console.log(nlp.word('history'))

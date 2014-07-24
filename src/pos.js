@@ -44,9 +44,23 @@ var pos = (function() {
 					arr[i] = null
 				}
 				//'toronto fun festival'
-				else if (arr[i].pos.tag == "NN" && next.pos.tag == "JJ" && arr[i + 2] && arr[i + 2].pos.tag == "NN") {
+				// else if (arr[i].pos.tag == "NN" && next.pos.tag == "JJ" && arr[i + 2] && arr[i + 2].pos.tag == "NN") {
+					// arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
+					// arr[i] = null
+				// }
+				//capitals surrounding a preposition  'United States of America'
+				else if (i>0 && arr[i].capitalised && next.normalised=="of" && arr[i+2] && arr[i+2].capitalised) {
 					arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
 					arr[i] = null
+					arr[i + 2] = merge_tokens(arr[i+1], arr[i + 2])
+					arr[i + 1] = null
+				}
+				//capitals surrounding two prepositions  'Phantom of the Opera'
+				else if (arr[i].capitalised && next.normalised=="of" && arr[i+2] && arr[i+2].pos.tag=="DT" && arr[i+3] && arr[i+3].capitalised) {
+					arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
+					arr[i] = null
+					arr[i + 2] = merge_tokens(arr[i+1], arr[i + 2])
+					arr[i + 1] = null
 				}
 			}
 			better.push(arr[i])
@@ -62,7 +76,13 @@ var pos = (function() {
 		if (lexicon[w]) {
 			return parts_of_speech[lexicon[w]]
 		}
+		//try to match it without a prefix - eg. outworked -> worked
+		if(w.match(/^(over|under|out|-|un|re|en).{4}/)){
+			var attempt=w.replace(/^(over|under|out|.*?-|un|re|en)/, '')
+			return parts_of_speech[lexicon[attempt]]
+		}
 	}
+
 	var rules_pass = function(w) {
 		for (var i = 0; i < word_rules.length; i++) {
 			if (w.match(word_rules[i].reg)) {
@@ -75,6 +95,11 @@ var pos = (function() {
 	var fourth_pass = function(token, i, sentence) {
 		var last = sentence.tokens[i - 1]
 		var next = sentence.tokens[i + 1]
+		var strong_determiners= {
+			"the":1,
+			"a":1,
+			"an":1,
+		}
 		//if it's before a modal verb, it's a noun -> lkjsdf would
 		if (next && token.pos.parent != "noun" && next.pos.tag == "MD") {
 			token.pos = parts_of_speech['NN']
@@ -92,7 +117,7 @@ var pos = (function() {
 			token.pos_reason = "consecutive_adjectives"
 		}
 		//if it's after a determiner, it's not a verb -> the walk
-		if (last && token.pos.parent == "verb" && last.pos.tag == "DT" && token.pos.tag!="CP") {
+		if (last && token.pos.parent == "verb" && strong_determiners[last.pos.normalised] && token.pos.tag!="CP") {
 			token.pos = parts_of_speech['NN']
 			token.pos_reason = "determiner-verb"
 		}
@@ -106,6 +131,11 @@ var pos = (function() {
 		if (last && next && last.pos.tag == "CP" && token.pos.tag == "RB" && next.pos.parent == "verb") {
 			sentence.tokens[i + 1].pos = parts_of_speech['JJ']
 			sentence.tokens[i + 1].pos_reason = "copula-adverb-adjective"
+		}
+		// the city [verb] him.
+		if(next && next.pos.tag=="PRP" && token.pos.parent=="noun" && !token.punctuated){
+			token.pos=parts_of_speech['VB']
+			token.pos_reason = "before a [him|her|it]"
 		}
 
 		return token
@@ -136,6 +166,7 @@ var pos = (function() {
 			"she's": ["she", "is"],
 			"we're": ["we", "are"],
 			"they're": ["they", "are"],
+			"cannot": ["can", "not"],
 		}
 		for (var i = 0; i < arr.length; i++) {
 			if (contractions[arr[i].normalised || null]) {
@@ -243,8 +274,8 @@ var pos = (function() {
 				var next = sentence.tokens[i + 1]
 				var prev = sentence.tokens[i - 1]
 				if (token.pos) {
-					//suggest noun after determiners (a|the), posessive pronouns (her|my|its)
-					if (token.pos.tag == "DT" || token.pos.tag == "PP") {
+					//suggest noun after some determiners (a|the), posessive pronouns (her|my|its)
+					if (token.normalised=="the" || token.normalised=="a" || token.normalised=="an" || token.pos.tag == "PP") {
 						need = 'NN'
 						reason = token.pos.name
 						return token //proceed
@@ -429,6 +460,11 @@ var pos = (function() {
 
 	// fun = pos("He does not perform it with truly human energies", {}) //issue with needs model
 	// fun = pos("he was by far the worst", {}) //support pos for multiples
+	// fun = pos("in the United States of America", {}) //combine captial of capital
+	// fun = pos("the Phantom of the Opera", {}) //two combines
+	// fun = pos("They’re taking risks", {}) //normalise punctuation
+	// fun = pos("the school asdf him", {}) //before him|her"it
+	// fun = pos("the school asdf him", {}) //before him|her"it
 	// console.log(fun[0])
 	// render(fun)
 

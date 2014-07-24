@@ -8,7 +8,8 @@ var tokenize = (function() {
 
 	var normalise = function(str) {
 		str = str.toLowerCase()
-		str = str.replace(/[,\.!:;\?]/, '')
+		str = str.replace(/[,\.!:;\?\(\)]/, '')
+		str = str.replace(/’/g, "'")
 		if(!str.match(/[a-z]/i)){
 			return ''
 		}

@@ -25,6 +25,7 @@ adj_to_adv = (function() {
 			"well": "well",
 			"best": "best",
 			"latter": "latter",
+			"bad": "badly",
 		}
 		var dont = {
 			"foreign": 1,
@@ -140,4 +141,4 @@ adj_to_adv = (function() {
 // arr = data.map(function(w) {
 // 	console.log(w[1] + "  -  " + to_adverb(w[1]))
 // })
-// console.log(to_adverb('normal'))
+// console.log(adj_to_adv('direct'))

@@ -1,4 +1,4 @@
-var Value = function(str) {
+var Value = function(str, next, last, token) {
 	var the = this
 	the.word = str || '';
 

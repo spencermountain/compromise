@@ -1,4 +1,4 @@
-var Verb = function(str, next, last) {
+var Verb = function(str, next, last, token) {
 	var the = this
 	the.word = str || '';
 	the.next = next

@@ -20,7 +20,6 @@ var to_superlative = (function() {
 			"alert": 1,
 			"alive": 1,
 			"awesome": 1,
-			"bad": 1,
 			"beautiful": 1,
 			"big": 1,
 			"bitter": 1,

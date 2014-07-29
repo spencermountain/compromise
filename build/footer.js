@@ -19,6 +19,11 @@ var main = {
 	denormalize: normalize.denormalize,
 	pos: pos,
 	spot: spot,
+
+	word: function(str, options){
+	  return nlp.pos(str, options)[0].tokens[0]
+	}
+
 	// tests: tests,
 }
 

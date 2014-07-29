@@ -1,6 +1,6 @@
 /*! nlp_compromise 
  by @spencermountain
- 2014-07-24 */
+ 2014-07-22 */
 //
 // NLP_comprimise - @spencermountain - gplv3
 // https://github.com/spencermountain/nlp_comprimise
@@ -14,35 +14,73 @@ var nlp = (function() {
 var multiples = [
     "of course",
     "at least",
+    "for example",
+    // "in order",
     "no longer",
+    "for instance",
+    // "in particular",
     "sort of",
     "at first",
+    // "in addition",
+    "at last",
+    "that is",
+    "at once",
     "once again",
+    "at present",
     "up to",
     "once more",
     "by now",
+    "so as",
+    // "in part",
     "all but",
+    // "in short",
+    "even so",
     "just about",
     "as yet",
+    "for long",
+    "far from",
+    "for ever",
     "on board",
     "a lot",
     "by far",
+    "over here",
+    "per annum",
+    "as usual",
     "at best",
+    "for once",
     "at large",
+    "any longer",
     "for good",
     "vice versa",
+    "for certain",
+    // "kind of",
+    "anything but",
+    // "in between",
     "en route",
+    // "in private",
+    // "in vain",
+    "at length",
+    "at random",
     "for sure",
     "upside down",
     "at most",
     "per se",
+    "per capita",
     "up front",
     "in situ",
+    // "in the main",
+    "inter alia",
+    "ex parte",
     "in vitro",
+    "in vivo",
+    // "in brief",
     "at worst",
     "prima facie",
     "upwards of",
+    "something like",
+    // "in case",
     "en masse",
+    "ultra vires",
     "a priori",
     "ad hoc",
     "et cetera",
@@ -51,32 +89,55 @@ var multiples = [
     "spot on",
     "ipso facto",
     "ad infinitum",
+    "en bloc",
     "point blank",
+    "a fortiori",
     "ad nauseam",
     "inside out",
+    "sotto voce",
+    "pro rata",
+    "in memoriam",
+    "in extremis",
     "not withstanding",
+    "most part",
     "for keeps",
+    "al fresco",
+    "ab initio",
     "de jure",
     "a la",
     "sub judice",
     "post hoc",
+    "so on",
+    "sine die",
+    "op cit",
+    "just in",
+    "ex gratia",
+    "au contraire",
     "ad hominem",
     "a posteriori",
     "fed up",
     "brand new",
+    "so called",
     "old fashioned",
+    "grown up",
     "bona fide",
     "well off",
     "far off",
     "par excellence",
     "straight forward",
     "hard up",
+    "de luxe",
+    "post mortem",
     "sui generis",
+    "ex officio",
     "en suite",
+    "all right",
     "avant garde",
+    "viva voce",
     "sans serif",
     "gung ho",
     "super duper",
+    "such like",
     "de trop",
     "new york",
     "new england",
@@ -201,8 +262,7 @@ var tokenize = (function() {
 
 	var normalise = function(str) {
 		str = str.toLowerCase()
-		str = str.replace(/[,\.!:;\?\(\)]/, '')
-		str = str.replace(/’/g, "'")
+		str = str.replace(/[,\.!:;\?]/, '')
 		if(!str.match(/[a-z]/i)){
 			return ''
 		}
@@ -268,7 +328,6 @@ var tokenize = (function() {
 // a = tokenize("If the debts are repaid, it could clear the way for Soviet bonds to be sold in the U.S.")
 // a = tokenize("i live in new york")
 // a = tokenize("How do you wear your swords? He’s like his character [Kuranosuke] Oishi.")
-// a = tokenize("I speak optimistically of course.")
 // console.log(JSON.stringify(a, null, 2));
 
 
@@ -2086,6 +2145,7 @@ var wordnet_suffixes = (function() {
         "iate": "VB",
         "atic": "JJ",
         "onic": "JJ",
+        "ards": "RB",
         "otic": "JJ",
         "ular": "JJ",
         "rise": "VB",
@@ -3674,6 +3734,7 @@ inflect = (function() {
     var irregulars = [
         ['child', 'children'],
         ['person', 'people'],
+        ['man', 'men'],
         ['leaf', 'leaves'],
         ['database', 'databases'],
         ['quiz', 'quizzes'],
@@ -3693,6 +3754,7 @@ inflect = (function() {
         ['i', 'we'],
         ['person', 'people'],
         ['man', 'men'],
+        ['child', 'children'],
         ['move', 'moves'],
         ['she', 'they'],
         ['he', 'they'],
@@ -4063,9 +4125,6 @@ inflect = (function() {
     }, {
         reg: /(alias|status)es$/i,
         repl: '$1'
-    },{
-        reg: /(ss)$/i,
-        repl: '$1'
     }, {
         reg: /s$/i,
         repl: ''
@@ -4116,7 +4175,7 @@ inflect = (function() {
                 return false
             }
         }
-        if (str.match(/s$/) && singularize(str)!=str) {
+        if (str.match(/s$/)) {
             return true
         }
         return false
@@ -4148,7 +4207,6 @@ inflect = (function() {
     return methods;
 })();
 
-// console.log(inflect.pluralize('kiss'))
 // console.log(inflect.pluralize('twin'))
 // console.log(inflect.pluralize('phantom of the opera'))
 // console.log(inflect.pluralize('mayor of chicago'))
@@ -4156,7 +4214,6 @@ inflect = (function() {
 // console.log(inflect.pluralize('maple leaf'))
 // console.log(inflect.singularize('leaves'))
 // console.log(inflect.singularize('mayors of toronto'))
-// console.log(inflect.inflect('women'))
 
 
 /*
@@ -4305,7 +4362,6 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log(new Noun("he").which)
 // console.log(new Noun("Flanders").which)
 // console.log(new Noun("walking").which)
-// console.log(new Noun("women").singularize())
 //turns 'quickly' into 'quick'
 var to_adjective = (function() {
 	var main = function(str) {
@@ -4970,7 +5026,7 @@ var verb_irregulars = (function() {
 			"infinitive": "begin",
 			"present": "begins",
 			"past": "began",
-			"gerund": "beginning",
+			"gerund": "begining",
 			"participle": "begun",
 			"doer": "beginner"
 		}, {
@@ -5154,7 +5210,7 @@ var verb_irregulars = (function() {
 			"past": "felt",
 			"gerund": "feeling",
 			"participle": "felt",
-			"doer": "feeler"
+			"doer": "feeller"
 		}, {
 			"infinitive": "fight",
 			"present": "fights",
@@ -5425,7 +5481,7 @@ var verb_irregulars = (function() {
 			"infinitive": "run",
 			"present": "runs",
 			"past": "ran",
-			"gerund": "running",
+			"gerund": "runing",
 			"participle": "run",
 			"doer": "runner"
 		}, {
@@ -5439,7 +5495,7 @@ var verb_irregulars = (function() {
 			"infinitive": "see",
 			"present": "sees",
 			"past": "saw",
-			"gerund": "seeing",
+			"gerund": "seing",
 			"participle": "seen",
 			"doer": "seer"
 		}, {
@@ -5739,25 +5795,7 @@ var verb_irregulars = (function() {
 			"gerund": "feeding",
 			"doer": "feeder"
 		},
-    {
-			"infinitive": "miss",
-			"present": "miss",
-			"past": "missed",
-			"gerund": "missing",
-			"doer": "misser"
-		},
-    {
-			"infinitive": "act",
-			"present": "act",
-			"past": "acted",
-			"gerund": "acting",
-			"doer": "actor"
-		},
-		{ present: 'competes',
-		  gerund: 'competing',
-		  past: 'competed',
-		  infinitive: 'compete',
-		  doer: 'competitor' }
+
 
 	]
 
@@ -6076,18 +6114,6 @@ verb_conjugate = (function() {
 // console.log(verb_conjugate("searching"))
 // console.log(verb_conjugate("confessing"))
 // console.log(verb_conjugate("satisfying"))
-// console.log(verb_conjugate("write"))
-// console.log(verb_conjugate("see"))
-// console.log(verb_conjugate("consider"))
-
-// console.log(verb_conjugate("contain")) ///*****bug
-// console.log(verb_conjugate("result")) //****bug
-// console.log(verb_conjugate("develop")) //****bug
-// console.log(verb_conjugate("wait"))//****bug
-// console.log(verb_conjugate("represent"))//****bug
-// console.log(verb_conjugate("stain"))//****bug
-// console.log(verb_conjugate("pass"))//****bug
-// console.log(verb_conjugate("answer"))//****bug
 var Verb = function(str, next, last, token) {
 	var the = this
 	the.word = str || '';
@@ -6291,7 +6317,6 @@ var to_comparative = (function() {
 			"red": "redder",
 			"good": "better",
 			"well": "better",
-			"bad": "worse",
 		}
 		var dos = {
 			"absurd": 1,
@@ -6299,6 +6324,7 @@ var to_comparative = (function() {
 			"alert": 1,
 			"alive": 1,
 			"awesome": 1,
+			"bad": 1,
 			"beautiful": 1,
 			"big": 1,
 			"bitter": 1,
@@ -6597,6 +6623,7 @@ var to_superlative = (function() {
 			"alert": 1,
 			"alive": 1,
 			"awesome": 1,
+			"bad": 1,
 			"beautiful": 1,
 			"big": 1,
 			"bitter": 1,
@@ -6891,7 +6918,6 @@ adj_to_adv = (function() {
 			"well": "well",
 			"best": "best",
 			"latter": "latter",
-			"bad": "badly",
 		}
 		var dont = {
 			"foreign": 1,
@@ -7172,6 +7198,7 @@ lexicon = (function() {
 		"whatever": "DT",
 		"every": "DT",
 		"which": "DT",
+		"all": "DT",
 		"these": "DT",
 		"another": "DT",
 		"plenty": "DT",
@@ -7207,9 +7234,9 @@ lexicon = (function() {
 		//prepositions
 		"until": "IN",
 		"onto": "IN",
+		"near": "IN",
 		"of": "IN",
 		"into": "IN",
-		"out": "IN",
 		"except": "IN",
 		"across": "IN",
 		"by": "IN",
@@ -7227,14 +7254,18 @@ lexicon = (function() {
 		"along": "IN",
 		"since": "IN",
 		"about": "IN",
-		"off": "IN",
+		"behind": "IN",
+		"above": "IN",
 		"on": "IN",
 		"within": "IN",
 		"in": "IN",
+		"under": "IN",
 		"during": "IN",
 		"per": "IN",
 		"without": "IN",
+		"beyond": "IN",
 		"throughout": "IN",
+		"against": "IN",
 		"through": "IN",
 		"than": "IN",
 		"via": "IN",
@@ -7265,11 +7296,8 @@ lexicon = (function() {
 		"himself": "PP",
 		"ours": "PP",
 		"his": "PP",
-		"my": "PP",
 		"their": "PP",
 		"yours": "PP",
-		"your": "PP",
-		"our": "PP",
 		"its": "PP",
 		"nothing": "PP",
 		"herself": "PP",
@@ -7327,6 +7355,7 @@ lexicon = (function() {
 		"very": "RB",
 		"actually": "RB",
 		"often": "RB",
+		"not": "RB",
 		"once": "RB",
 		"never": "RB",
 		"why": "RB",
@@ -7430,109 +7459,8 @@ lexicon = (function() {
 		"'o": "IN",
 		"'em": "PRP",
 
-		//demonyms
-		"afghan":"JJ",
-		"albanian":"JJ",
-		"algerian":"JJ",
-		"argentine":"JJ",
-		"armenian":"JJ",
-		"australian":"JJ",
-		"aussie":"JJ",
-		"austrian":"JJ",
-		"bangladeshi":"JJ",
-		"belgian":"JJ",
-		"bolivian":"JJ",
-		"bosnian":"JJ",
-		"brazilian":"JJ",
-		"bulgarian":"JJ",
-		"cambodian":"JJ",
-		"canadian":"JJ",
-		"chilean":"JJ",
-		"chinese":"JJ",
-		"colombian":"JJ",
-		"croat":"JJ",
-		"cuban":"JJ",
-		"czech":"JJ",
-		"dominican":"JJ",
-		"egyptian":"JJ",
-		"british":"JJ",
-		"estonian":"JJ",
-		"ethiopian":"JJ",
-		"finnish":"JJ",
-		"french":"JJ",
-		"gambian":"JJ",
-		"georgian":"JJ",
-		"german":"JJ",
-		"greek":"JJ",
-		"haitian":"JJ",
-		"hungarian":"JJ",
-		"indian":"JJ",
-		"indonesian":"JJ",
-		"iranian":"JJ",
-		"iraqi":"JJ",
-		"irish":"JJ",
-		"israeli":"JJ",
-		"italian":"JJ",
-		"jamaican":"JJ",
-		"japanese":"JJ",
-		"jordanian":"JJ",
-		"kenyan":"JJ",
-		"korean":"JJ",
-		"kuwaiti":"JJ",
-		"latvian":"JJ",
-		"lebanese":"JJ",
-		"liberian":"JJ",
-		"libyan":"JJ",
-		"lithuanian":"JJ",
-		"macedonian":"JJ",
-		"malaysian":"JJ",
-		"mexican":"JJ",
-		"mongolian":"JJ",
-		"moroccan":"JJ",
-		"dutch":"JJ",
-		"nicaraguan":"JJ",
-		"nigerian":"JJ",
-		"norwegian":"JJ",
-		"omani":"JJ",
-		"pakistani":"JJ",
-		"palestinian":"JJ",
-		"filipino":"JJ",
-		"polish":"JJ",
-		"portuguese":"JJ",
-		"qatari":"JJ",
-		"romanian":"JJ",
-		"russian":"JJ",
-		"rwandan":"JJ",
-		"samoan":"JJ",
-		"saudi":"JJ",
-		"scottish":"JJ",
-		"senegalese":"JJ",
-		"serbian":"JJ",
-		"singaporean":"JJ",
-		"slovak":"JJ",
-		"somali":"JJ",
-		"sudanese":"JJ",
-		"swedish":"JJ",
-		"swiss":"JJ",
-		"syrian":"JJ",
-		"taiwanese":"JJ",
-		"thai":"JJ",
-		"tunisian":"JJ",
-		"ugandan":"JJ",
-		"ukrainian":"JJ",
-		"american":"JJ",
-		"hindi":"JJ",
-		"spanish":"JJ",
-		"venezuelan":"JJ",
-		"vietnamese":"JJ",
-		"welsh":"JJ",
-		"african":"JJ",
-		"european":"JJ",
-		"asian":"JJ",
-		"californian":"JJ",
 
 		//mine
-		"am": "VBP",
 		"said": "VBD",
 		"says": "VBZ",
 		"has": "VB",
@@ -7546,7 +7474,7 @@ lexicon = (function() {
 		"there": "EX",
 		"after": "IN",
 		"many": "JJ",
-		"most": "JJ",
+		"most": "RBS",
 		"last": "JJ",
 		"expected": "JJ",
 		"long": "JJ",
@@ -7579,194 +7507,15 @@ lexicon = (function() {
 		"purpose": "NN",
 		"friends": "NNS",
 		"less": "JJ",
-		"event":"NN",
-		"divine": "JJ",
-		"all": "JJ",
-		"define": "VB",
-
-		//missing words from amc
-		"given": "VBN",
-	  "known": "VBN",
-	  "rather": "RB",
-	  "shown": "VBN",
-	  "seen": "VBN",
-	  "according": "VBG",
-	  "almost": "RB",
-	  "together": "JJ",
-	  "means": "VBZ",
-	  "meant": "VBD",
-	  "despite": "IN",
-	  "only": "JJ",
-	  "outside": "JJ",
-	  "below": "IN",
-	  "multiple": "JJ",
-	  "anyway": "RB",
-	  "appropriate": "JJ",
-	  "unless": "IN",
-	  "whom": "WP",
-	  "evil": "JJ",
-	  "earlier": "JJR",
-	  "etc": "FW",
-	  "twice": "RB",
-	  "avoid": "VB",
-	  "favorite": "JJ",
-	  "whereas": "IN",
-	  "born": "VBN",
-	  "hit": "VB",
-	  "resulting": "VBG",
-	  "limited": "JJ",
-	  "developing": "VBG",
-	  "plus": "CC",
-	  "biggest": "JJS",
-	  "random": "JJ",
-	  "republican": "JJ",
-	  "okay": "JJ",
-	  "essential": "JJ",
-	  "somewhat": "RB",
-	  "unlike": "IN",
-	  "secondary": "JJ",
-	  "somehow": "RB",
-	  "yourself": "PRP",
-	  "gay": "JJ",
-	  "meanwhile": "RB",
-	  "hence": "RB",
-	  "affect": "VBP",
-	  "furthermore": "RB",
-	  "easier": "JJR",
-	  "staining": "VBG",
-	  "towards": "IN",
-	  "aside": "RB",
-	  "moreover": "RB",
-	  "file": "VB",
-	  "south": "JJ",
-	  "pro": "JJ",
-	  "meant": "VBD",
-	  "versus": "CC",
-	  "besides": "IN",
-	  "northern": "JJ",
-	  "anymore": "RB",
-	  "urban": "JJ",
-	  "acute": "JJ",
-	  "prime": "JJ",
-	  "arab": "JJ",
-	  "overnight": "JJ",
-	  "newly": "RB",
-	  "ought": "MD",
-	  "mixed": "JJ",
-	  "crucial": "JJ",
-	  "damn": "RB",
-
-
-    //formerly IN
-		"behind": "JJ",
-		"above": "JJ",
-		"beyond": "JJ",
-		"against": "JJ",
-		"under": "JJ",
-
-		"not":"CC",//?
-
-		//from multiples
-		"of course":"RB",
-    "at least":"RB",
-    "no longer":"RB",
-    "sort of":"RB",
-    "at first":"RB",
-    "once again":"RB",
-    "once more":"RB",
-    "up to":"RB",
-    "by now":"RB",
-    "all but":"RB",
-    "just about":"RB",
-    "on board":"JJ",
-    "a lot":"RB",
-    "by far":"RB",
-    "at best":"RB",
-    "at large":"RB",
-    "for good":"RB",
-    "vice versa":"JJ",
-    "en route":"JJ",
-    "for sure":"RB",
-    "upside down":"JJ",
-    "at most":"RB",
-    "per se":"RB",
-    "at worst":"RB",
-    "upwards of":"RB",
-    "en masse":"RB",
-    "point blank":"RB",
-    "up front":"JJ",
-    "in situ":"JJ",
-    "in vitro":"JJ",
-    "ad hoc":"JJ",
-    "de facto":"JJ",
-    "ad infinitum":"JJ",
-    "ad nauseam":"RB",
-    "for keeps":"JJ",
-    "a priori":"FW",
-    "et cetera":"FW",
-    "off guard":"JJ",
-    "spot on":"JJ",
-    "ipso facto":"JJ",
-    "not withstanding":"RB",
-    "de jure":"RB",
-    "a la":"IN",
-    "ad hominem":"NN",
-    "par excellence":"RB",
-    "de trop":"RB",
-    "a posteriori":"RB",
-    "fed up":"JJ",
-    "brand new":"JJ",
-    "old fashioned":"JJ",
-    "bona fide":"JJ",
-    "well off":"JJ",
-    "far off":"JJ",
-    "straight forward":"JJ",
-    "hard up":"JJ",
-    "sui generis":"JJ",
-    "en suite":"JJ",
-    "avant garde":"JJ",
-    "sans serif":"JJ",
-    "gung ho":"JJ",
-    "super duper":"JJ",
+		"event":"NN"
 
 	}
 
 
 	//verbs
 	verbs = [
-		"answer",
-		"argue",
-		"tend",
-		"examine",
-		"depend",
-		"form",
-		"figure",
-		"compete",
-		"mind",
-		"surround",
-		"suspect",
-		"reflect",
-		"wonder",
-		"act",
-		"hope",
-		"choose",
-		"affect",
-		"end",
-		"thank",
-		"file",
-		"regard",
-		"report",
-		"imagine",
-		"consider",
-		"miss",
-		"ensure",
-		"cause",
-		"work",
 		"enter",
 		"stop",
-		"defeat",
-		"surge",
-		"launch",
 		"turn",
 		"give",
 		"win",
@@ -8106,275 +7855,6 @@ lexicon = (function() {
 		"wreck",
 		"yawn",
 		"betray",
-		"restrict",
-		"perform",
-	  "worry",
-	  "point",
-	  "activate",
-	  "fear",
-	  "plan",
-	  "note",
-	  "face",
-	  "predict",
-	  "differ",
-	  "deserve",
-	  "torture",
-	  "recall",
-	  "count",
-	  "swear",
-	  "admit",
-	  "insist",
-	  "lack",
-	  "pass",
-	  "belong",
-	  "complain",
-	  "constitute",
-	  "beat",
-	  "rely",
-	  "refuse",
-	  "range",
-	  "cite",
-	  "flash",
-	  "arrive",
-	  "reveal",
-	  "consist",
-	  "observe",
-	  "notice",
-	  "trust",
-	  "imply",
-	  "display",
-	  "view",
-	  "stare",
-	  "acknowledge",
-	  "owe",
-	  "gaze",
-	  "treat",
-	  "account",
-	  "gather",
-	  "address",
-	  "confirm",
-	  "estimate",
-	  "manage",
-	  "participate",
-	  "sneak",
-	  "drop",
-	  "mirror",
-	  "experience",
-	  "strive",
-	  "teach",
-	  "cost",
-	  "arch",
-	  "dislike",
-	  "favor",
-	  "earn",
-	  "emphasize",
-	  "fly",
-	  "match",
-	  "question",
-	  "emerge",
-	  "encourage",
-	  "matter",
-	  "name",
-	  "head",
-	  "line",
-	  "slam",
-	  "list",
-	  "sing",
-	  "warn",
-	  "ignore",
-	  "resemble",
-	  "spread",
-	  "feature",
-	  "place",
-	  "reverse",
-	  "accuse",
-	  "spoil",
-	  "retain",
-	  "survive",
-	  "praise",
-	  "function",
-	  "please",
-	  "date",
-	  "remind",
-	  "deliver",
-	  "echo",
-	  "engage",
-	  "deny",
-	  "obey",
-	  "yield",
-	  "center",
-	  "gain",
-	  "anticipate",
-	  "reason",
-	  "side",
-	  "thrive",
-	  "defy",
-	  "dodge",
-	  "enable",
-	  "applaud",
-	  "bear",
-	  "persist",
-	  "pose",
-	  "reject",
-	  "attract",
-	  "await",
-	  "inhibit",
-	  "declare",
-	  "process",
-	  "risk",
-	  "urge",
-	  "value",
-	  "block",
-	  "confront",
-	  "credit",
-	  "cross",
-	  "wake",
-	  "amuse",
-	  "dare",
-	  "resent",
-	  "smile",
-	  "gloss",
-	  "threaten",
-	  "collect",
-	  "depict",
-	  "dismiss",
-	  "submit",
-	  "benefit",
-	  "step",
-	  "deem",
-	  "limit",
-	  "sense",
-	  "issue",
-	  "embody",
-	  "force",
-	  "govern",
-	  "replace",
-	  "aim",
-	  "bother",
-	  "cater",
-	  "adopt",
-	  "empower",
-	  "outweigh",
-	  "alter",
-	  "enrich",
-	  "influence",
-	  "prohibit",
-	  "pursue",
-	  "warrant",
-	  "convey",
-	  "approve",
-	  "reserve",
-	  "rest",
-	  "strain",
-	  "wander",
-	  "adjust",
-	  "dress",
-	  "market",
-	  "mingle",
-	  "disapprove",
-	  "evaluate",
-	  "flow",
-	  "inhabit",
-	  "pop",
-	  "rule",
-	  "depart",
-	  "roam",
-	  "assert",
-	  "disappear",
-	  "envision",
-	  "pause",
-	  "afford",
-	  "challenge",
-	  "grab",
-	  "grumble",
-	  "house",
-	  "portray",
-	  "revel",
-	  "base",
-	  "conduct",
-	  "review",
-	  "stem",
-	  "crave",
-	  "mark",
-	  "store",
-	  "target",
-	  "unlock",
-	  "weigh",
-	  "resist",
-	  "steal",
-	  "drag",
-	  "pour",
-	  "reckon",
-	  "assign",
-	  "cling",
-	  "rank",
-	  "attach",
-	  "decline",
-	  "destroy",
-	  "interfere",
-	  "paint",
-	  "skip",
-	  "sprinkle",
-	  "wither",
-	  "allege",
-	  "retire",
-	  "score",
-	  "monitor",
-	  "expand",
-	  "honor",
-	  "lend",
-	  "pack",
-	  "assist",
-	  "float",
-	  "appeal",
-	  "sink",
-	  "stretch",
-	  "undermine",
-	  "assemble",
-	  "boast",
-	  "bounce",
-	  "grasp",
-	  "install",
-	  "borrow",
-	  "crack",
-	  "elect",
-	  "shine",
-	  "shout",
-	  "contrast",
-	  "overcome",
-	  "relax",
-	  "relent",
-	  "strengthen",
-	  "conform",
-	  "dump",
-	  "pile",
-	  "scare",
-	  "relive",
-	  "resort",
-	  "rush",
-	  "boost",
-	  "cease",
-	  "command",
-	  "excel",
-	  "plug",
-	  "plunge",
-	  "proclaim",
-	  "discourage",
-	  "endure",
-	  "ruin",
-	  "stumble",
-	  "abandon",
-	  "cheat",
-	  "convince",
-	  "merge",
-	  "convert",
-	  "harm",
-	  "multiply",
-	  "overwhelm",
-	  "chew",
-	  "invent",
-	  "bury",
-	  "wipe",
 	]
 	//conjugate all of these verbs. takes ~8ms. triples the lexicon size.
 	verbs.forEach(function(v) {
@@ -8383,9 +7863,6 @@ lexicon = (function() {
 		main[c.past] = main[c.past] || "VBD"
 		main[c.gerund] = main[c.gerund] || "VBG"
 		main[c.present] = main[c.present] || "VBZ"
-		if(c.participle && !main[c.participle]){
-			main[c.participle]="VBN"
-		}
 		var doer = verb_to_doer(v)
 		if (doer) {
 			main[doer] = "NNA"
@@ -8395,11 +7872,9 @@ lexicon = (function() {
 
 
 	//adjectives that either aren't covered by rules, or have superlative/comparative forms
-	adjectives = [
-	  'aberrant',
+	adjectives = ['aberrant',
 		'ablaze',
 		'able',
-		'absolute',
 		'aboard',
 		'abrupt',
 		'absent',
@@ -9010,172 +8485,7 @@ lexicon = (function() {
 		'formal',
 		'tired',
 		'solid',
-		'angry',
-
-	  "unknown",
-	  "detailed",
-	  "ongoing",
-	  "prominent",
-	  "permanent",
-	  "diverse",
-	  "partial",
-	  "moderate",
-	  "contemporary",
-	  "intense",
-	  "widespread",
-	  "ultimate",
-	  "ideal",
-	  "adequate",
-	  "sophisticated",
-	  "naked",
-	  "dominant",
-	  "precise",
-	  "intact",
-	  "adverse",
-	  "genuine",
-	  "subtle",
-	  "universal",
-	  "resistant",
-	  "routine",
-	  "distant",
-	  "unexpected",
-	  "soviet",
-	  "blind",
-	  "artificial",
-	  "mild",
-	  "legitimate",
-	  "unpublished",
-	  "superior",
-	  "intermediate",
-	  "everyday",
-	  "dumb",
-	  "excess",
-	  "sexy",
-	  "fake",
-	  "monthly",
-	  "premature",
-	  "sheer",
-	  "generic",
-	  "insane",
-	  "contrary",
-	  "twin",
-	  "upcoming",
-	  "bottom",
-	  "costly",
-	  "indirect",
-	  "sole",
-	  "unrelated",
-	  "hispanic",
-	  "improper",
-	  "underground",
-	  "legendary",
-	  "reluctant",
-	  "beloved",
-	  "inappropriate",
-	  "corrupt",
-	  "irrelevant",
-	  "justified",
-	  "obscure",
-	  "profound",
-	  "hostile",
-	  "influential",
-	  "inadequate",
-	  "abstract",
-	  "timely",
-	  "authentic",
-	  "bold",
-	  "intimate",
-	  "straightforward",
-	  "rival",
-	  "right-wing",
-	  "racist",
-	  "symbolic",
-	  "unprecedented",
-	  "loyal",
-	  "talented",
-	  "troubled",
-	  "noble",
-	  "instant",
-	  "incorrect",
-	  "dense",
-	  "blond",
-	  "deliberate",
-	  "blank",
-	  "rear",
-	  "feminine",
-	  "apt",
-	  "stark",
-	  "alcoholic",
-	  "teenage",
-	  "vibrant",
-	  "humble",
-	  "vain",
-	  "covert",
-	  "bland",
-	  "trendy",
-	  "foul",
-	  "populist",
-	  "alarming",
-	  "hooked",
-	  "wicked",
-	  "deaf",
-	  "left-wing",
-	  "lousy",
-	  "malignant",
-	  "stylish",
-	  "upscale",
-	  "hourly",
-	  "refreshing",
-	  "cozy",
-	  "slick",
-	  "dire",
-	  "yearly",
-	  "inbred",
-	  "part-time",
-	  "finite",
-	  "backwards",
-	  "nightly",
-	  "unauthorized",
-	  "cheesy",
-	  "indoor",
-	  "surreal",
-	  "bald",
-	  "masculine",
-	  "shady",
-	  "spirited",
-	  "eerie",
-	  "horrific",
-	  "smug",
-	  "stern",
-	  "hefty",
-	  "savvy",
-	  "bogus",
-	  "elaborate",
-	  "gloomy",
-	  "pristine",
-	  "extravagant",
-	  "serene",
-	  "advanced",
-	  "perverse",
-	  "devout",
-	  "crisp",
-	  "rosy",
-	  "slender",
-	  "melancholy",
-	  "faux",
-	  "phony",
-	  "danish",
-	  "lofty",
-	  "nuanced",
-	  "lax",
-	  "adept",
-	  "barren",
-	  "shameful",
-	  "sleek",
-	  "solemn",
-	  "vacant",
-	  "dishonest",
-
+		'angry'
 	]
 	//conjugate all of these adjectives to their adverbs. (13ms)
 	adjectives.forEach(function(j) {
@@ -9206,7 +8516,7 @@ lexicon = (function() {
 })()
 // console.log(Object.keys(lexicon).length)
 // console.log(lexicon['weaker'])
-// console.log(lexicon['restricted'])
+// console.log(lexicon['weakest'])
 // accepts parsed tokens
 var Sentence = function(tokens) {
 	var the = this
@@ -9388,23 +8698,9 @@ var pos = (function() {
 					arr[i] = null
 				}
 				//'toronto fun festival'
-				// else if (arr[i].pos.tag == "NN" && next.pos.tag == "JJ" && arr[i + 2] && arr[i + 2].pos.tag == "NN") {
-					// arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
-					// arr[i] = null
-				// }
-				//capitals surrounding a preposition  'United States of America'
-				else if (i>0 && arr[i].capitalised && next.normalised=="of" && arr[i+2] && arr[i+2].capitalised) {
+				else if (arr[i].pos.tag == "NN" && next.pos.tag == "JJ" && arr[i + 2] && arr[i + 2].pos.tag == "NN") {
 					arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
 					arr[i] = null
-					arr[i + 2] = merge_tokens(arr[i+1], arr[i + 2])
-					arr[i + 1] = null
-				}
-				//capitals surrounding two prepositions  'Phantom of the Opera'
-				else if (arr[i].capitalised && next.normalised=="of" && arr[i+2] && arr[i+2].pos.tag=="DT" && arr[i+3] && arr[i+3].capitalised) {
-					arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
-					arr[i] = null
-					arr[i + 2] = merge_tokens(arr[i+1], arr[i + 2])
-					arr[i + 1] = null
 				}
 			}
 			better.push(arr[i])
@@ -9420,13 +8716,7 @@ var pos = (function() {
 		if (lexicon[w]) {
 			return parts_of_speech[lexicon[w]]
 		}
-		//try to match it without a prefix - eg. outworked -> worked
-		if(w.match(/^(over|under|out|-|un|re|en).{4}/)){
-			var attempt=w.replace(/^(over|under|out|.*?-|un|re|en)/, '')
-			return parts_of_speech[lexicon[attempt]]
-		}
 	}
-
 	var rules_pass = function(w) {
 		for (var i = 0; i < word_rules.length; i++) {
 			if (w.match(word_rules[i].reg)) {
@@ -9439,11 +8729,6 @@ var pos = (function() {
 	var fourth_pass = function(token, i, sentence) {
 		var last = sentence.tokens[i - 1]
 		var next = sentence.tokens[i + 1]
-		var strong_determiners= {
-			"the":1,
-			"a":1,
-			"an":1,
-		}
 		//if it's before a modal verb, it's a noun -> lkjsdf would
 		if (next && token.pos.parent != "noun" && next.pos.tag == "MD") {
 			token.pos = parts_of_speech['NN']
@@ -9461,7 +8746,7 @@ var pos = (function() {
 			token.pos_reason = "consecutive_adjectives"
 		}
 		//if it's after a determiner, it's not a verb -> the walk
-		if (last && token.pos.parent == "verb" && strong_determiners[last.pos.normalised] && token.pos.tag!="CP") {
+		if (last && token.pos.parent == "verb" && last.pos.tag == "DT" && token.pos.tag!="CP") {
 			token.pos = parts_of_speech['NN']
 			token.pos_reason = "determiner-verb"
 		}
@@ -9475,11 +8760,6 @@ var pos = (function() {
 		if (last && next && last.pos.tag == "CP" && token.pos.tag == "RB" && next.pos.parent == "verb") {
 			sentence.tokens[i + 1].pos = parts_of_speech['JJ']
 			sentence.tokens[i + 1].pos_reason = "copula-adverb-adjective"
-		}
-		// the city [verb] him.
-		if(next && next.pos.tag=="PRP" && token.pos.parent=="noun" && !token.punctuated){
-			token.pos=parts_of_speech['VB']
-			token.pos_reason = "before a [him|her|it]"
 		}
 
 		return token
@@ -9510,7 +8790,6 @@ var pos = (function() {
 			"she's": ["she", "is"],
 			"we're": ["we", "are"],
 			"they're": ["they", "are"],
-			"cannot": ["can", "not"],
 		}
 		for (var i = 0; i < arr.length; i++) {
 			if (contractions[arr[i].normalised || null]) {
@@ -9618,38 +8897,21 @@ var pos = (function() {
 				var next = sentence.tokens[i + 1]
 				var prev = sentence.tokens[i - 1]
 				if (token.pos) {
-					//suggest noun after some determiners (a|the), posessive pronouns (her|my|its)
-					if (token.normalised=="the" || token.normalised=="a" || token.normalised=="an" || token.pos.tag == "PP") {
+					//suggest noun after determiners (a|the), posessive pronouns (her|my|its)
+					if (token.pos.tag == "DT" || token.pos.tag == "PP") {
 						need = 'NN'
 						reason = token.pos.name
-						return token //proceed
 					}
 					//suggest verb after personal pronouns (he|she|they), modal verbs (would|could|should)
 					if (token.pos.tag == "PRP" || token.pos.tag == "MD") {
 						need = 'VB'
 						reason = token.pos.name
-						return token //proceed
 					}
 
 				}
-				//satisfy need on a conflict, and fix a likely error
-				if(token.pos){
-					if(need=="VB" && token.pos.parent=="noun"){
-						token.pos = parts_of_speech[need]
-						token.pos_reason = "signal from " + reason
-						need=null
-					}
-					if(need=="NN" && token.pos.parent=="verb"){
-						token.pos = parts_of_speech[need]
-						token.pos_reason = "signal from " + reason
-						need=null
-					}
-				}
-				//satisfy need with an unknown pos
-				if (need && !token.pos ) {
+				if (need && !token.pos) {
 					token.pos = parts_of_speech[need]
 					token.pos_reason = "signal from " + reason
-					need= null
 				}
 				if (need == 'VB' && token.pos.parent == 'verb') {
 					need = null
@@ -9710,7 +8972,7 @@ var pos = (function() {
 				token.analysis = parents[token.pos.parent](token.normalised, next_token, last_token, token)
 				//change to the more accurate version of the pos
 				if (token.analysis.which) {
-					// token.pos = token.analysis.which
+					token.pos = token.analysis.which
 				}
 				return token
 			})
@@ -9800,15 +9062,6 @@ var pos = (function() {
 	// fun = pos(" the libertarian thought of The Enlightenment.", {}) //precedence to capital signal
 	// fun = pos("he said YOU ARE VERY NICE then left", {}) //handle all-caps
 	// fun = pos("he presents an anarchist vision that is appropriate", {}) //
-	// fun = pos("The latter can face any visible antagonism.", {}) //
-
-	// fun = pos("He does not perform it with truly human energies", {}) //issue with needs model
-	// fun = pos("he was by far the worst", {}) //support pos for multiples
-	// fun = pos("in the United States of America", {}) //combine captial of capital
-	// fun = pos("the Phantom of the Opera", {}) //two combines
-	// fun = pos("They’re taking risks", {}) //normalise punctuation
-	// fun = pos("the school asdf him", {}) //before him|her"it
-	// fun = pos("the school asdf him", {}) //before him|her"it
 	// console.log(fun[0])
 	// render(fun)
 
@@ -9827,7 +9080,7 @@ var spot = (function() {
 		var spots = []
 		sentences.forEach(function(sentence) {
 			sentence.tokens.forEach(function(token) {
-				if (token.pos.parent == "noun" && token.analysis.is_entity) {
+				if (token.pos.parent == "noun" && token.analysis.is_entity()) {
 					spots.push(token)
 				}
 			})
@@ -9871,11 +9124,6 @@ var main = {
 	denormalize: normalize.denormalize,
 	pos: pos,
 	spot: spot,
-
-	word: function(str, options){
-	  return nlp.pos(str, options)[0].tokens[0]
-	}
-
 	// tests: tests,
 }
 

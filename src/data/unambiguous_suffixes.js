@@ -229,7 +229,6 @@ var wordnet_suffixes = (function() {
         "iate": "VB",
         "atic": "JJ",
         "onic": "JJ",
-        "ards": "RB",
         "otic": "JJ",
         "ular": "JJ",
         "rise": "VB",

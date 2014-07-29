@@ -11,6 +11,8 @@ var to_comparative = (function() {
 			"red": "redder",
 			"good": "better",
 			"well": "better",
+			"bad": "worse",
+			"sad": "sadder",
 		}
 		var dos = {
 			"absurd": 1,
@@ -18,7 +20,6 @@ var to_comparative = (function() {
 			"alert": 1,
 			"alive": 1,
 			"awesome": 1,
-			"bad": 1,
 			"beautiful": 1,
 			"big": 1,
 			"bitter": 1,
@@ -295,3 +296,4 @@ var to_comparative = (function() {
 // console.log(to_comparative('narrow'))
 // console.log(to_comparative('dull'))
 // console.log(to_comparative('weak'))
+// console.log(to_comparative('sad'))

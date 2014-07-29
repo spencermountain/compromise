@@ -1,7 +1,7 @@
 // "JJ  - adjective, generic (big, nice)",
 // "JJR  - comparative adjective (bigger, cooler)",
 // "JJS  - superlative adjective (biggest, fattest)"
-var Adjective = function(str, next, last) {
+var Adjective = function(str, next, last, token) {
 	var the = this
 	the.word = str || '';
 	the.next = next

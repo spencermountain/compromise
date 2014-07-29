@@ -45,7 +45,7 @@ var verb_irregulars = (function() {
 			"infinitive": "begin",
 			"present": "begins",
 			"past": "began",
-			"gerund": "begining",
+			"gerund": "beginning",
 			"participle": "begun",
 			"doer": "beginner"
 		}, {
@@ -229,7 +229,7 @@ var verb_irregulars = (function() {
 			"past": "felt",
 			"gerund": "feeling",
 			"participle": "felt",
-			"doer": "feeller"
+			"doer": "feeler"
 		}, {
 			"infinitive": "fight",
 			"present": "fights",
@@ -500,7 +500,7 @@ var verb_irregulars = (function() {
 			"infinitive": "run",
 			"present": "runs",
 			"past": "ran",
-			"gerund": "runing",
+			"gerund": "running",
 			"participle": "run",
 			"doer": "runner"
 		}, {
@@ -514,7 +514,7 @@ var verb_irregulars = (function() {
 			"infinitive": "see",
 			"present": "sees",
 			"past": "saw",
-			"gerund": "seing",
+			"gerund": "seeing",
 			"participle": "seen",
 			"doer": "seer"
 		}, {
@@ -814,7 +814,25 @@ var verb_irregulars = (function() {
 			"gerund": "feeding",
 			"doer": "feeder"
 		},
-
+    {
+			"infinitive": "miss",
+			"present": "miss",
+			"past": "missed",
+			"gerund": "missing",
+			"doer": "misser"
+		},
+    {
+			"infinitive": "act",
+			"present": "act",
+			"past": "acted",
+			"gerund": "acting",
+			"doer": "actor"
+		},
+		{ present: 'competes',
+		  gerund: 'competing',
+		  past: 'competed',
+		  infinitive: 'compete',
+		  doer: 'competitor' }
 
 	]
 

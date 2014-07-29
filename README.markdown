@@ -1,14 +1,16 @@
 #No training, no prolog.
 a Natural-Language-Processing library *in javascript*, small-enough for the browser, and quick-enough to run on keypress :two_men_holding_hands:
 
-it does [tons of clever things](https://rawgit.com/spencermountain/nlp_compromise/master/client_side/index.html). it's smaller than jquery, and scores 82% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
+it does [tons of clever things](https://rawgit.com/spencermountain/nlp_compromise/master/client_side/basic_demo/index.html). it's smaller than jquery, and scores 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
 ```javascript
 nlp.pos('she sells seashells by the seashore')[0].to_past()
 //she sold seashells by the seashore
 ```
 
+###[Demo](https://rawgit.com/spencermountain/nlp_compromise/master/client_side/long_demo/index.html)
+
 ##Justification
-If the 80-20 rule applies generically, the ''94-6 rule'' applies when working with language - by [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):
+If the 80-20 rule works for most things, the ''94-6 rule'' applies when working with language - by [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):
 >The **[top 10 words](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10)** account for 25% of used language.
 
 >The **top 100 words** account for 50% of used language.
@@ -17,13 +19,15 @@ If the 80-20 rule applies generically, the ''94-6 rule'' applies when working wi
 
 On the [Penn treebank](http://www.cis.upenn.edu/~treebank/), for example, this is possible:
 
-* a 1 thousand word lexicon: **45% accuracy**
-* ... and falling back to nouns: **70% accuracy**
-* ... and some suffix regexes: **74% accuracy**
-* ... and some basic sentence-level postprocessing: **81% accuracy**
+* using a 1 thousand word lexicon: **45% accuracy**
+* ... then falling back to nouns: **70% accuracy**
+* ... then some suffix regexes: **74% accuracy**
+* ... then some sentence-level postprocessing: **81% accuracy**
 
-The process is to get curated data, find the patterns, list the exceptions. Bada bing, bada boom.
+The process is to get some curated data, find the patterns, list the exceptions. Bada bing, bada boom.
 In this way a satisfactory NLP library can be built with breathtaking lightness.
+
+Namely, it can be run right on the user's computer instead of a server.
 
 ## Client-side
 ```javascript
@@ -35,8 +39,9 @@ In this way a satisfactory NLP library can be built with breathtaking lightness.
 ```
 
 ## Server-side
-npm install nlp_compromise
 ```javascript
+$ npm install nlp_compromise
+
 nlp = require("nlp_compromise")
 nlp.syllables("hamburger")
 //[ 'ham', 'bur', 'ger' ]
@@ -47,10 +52,13 @@ noun methods:
 ```javascript
 nlp.noun("earthquakes").singularize()
 //earthquake
+
 nlp.noun("earthquake").pluralize()
 //earthquakes
+
 nlp.noun('veggie burger').is_plural
 //false
+
 nlp.noun('hour').article()
 //an
 ```
@@ -79,7 +87,7 @@ nlp.adverb("quickly").conjugate()
 ```
 
 ## Part-of-speech tagging
-82% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
+86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 ```javascript
 nlp.pos("Tony walked quickly to the store.")
 // ["NN","VBD","RB","TO","DT","NN"]
@@ -122,8 +130,10 @@ nlp.britishize("synthesized")
 ```
 ## N-gram
 ```javascript
-nlp.ngram("She sells seashells by the seashore. The shells she sells are surely seashells.", {min_count:1, max_size:5})
-// [{ word: 'she sells', count: 2, size: 2 }, ...
+str= "She sells seashells by the seashore. The shells she sells are surely seashells."
+nlp.ngram(str, {min_count:1, max_size:5})
+// [{ word: 'she sells', count: 2, size: 2 },
+// ...
 options.min_count // throws away seldom-repeated grams. defaults to 1
 options.max_gram // prevents the result from becoming gigantic. defaults to 5
 ```
@@ -197,11 +207,11 @@ nlp.denormalise("The quick brown fox jumps over the lazy dog", {percentage:50})
 ```
 
 ####Lexicon
-The lexicon is generated using the conjugate methods.
-For example, it lists the 300 top verbs, then blasts-out their 1200+ derived forms.
+Because the library can conjugate all sorts of forms, it only needs to store one grammatical form.
+The lexicon was built using the [American National Corpus](http://www.americannationalcorpus.org/), then intersected with the regex rule-list. For example, it lists only 300 verbs, then blasts-out their 1200+ derived forms.
 
 ####Contractions
-the library puts a 'silent token' into the phrase for contractions. Otherwise it would get misrepresented.
+Unlike other nlp toolkits, this library puts a 'silent token' into the phrase for contractions. Otherwise something would be neglected.
 ```javascript
 nlp.pos("i'm good.")
    [{
@@ -221,11 +231,14 @@ nlp.pos("i'm good.")
    }]
 ```
 ####Tokenization
-neighbours with the same part of speech are merged together (It skips this if there is punctuation involved). To turn this off, set options= {dont_combine:true}
+neighbouring words with the same part of speech are merged together, unless there is punctuation, different capitalisation, or special cases.
 ```javascript
 nlp.pos("tony hawk won")
 //tony hawk   NN
 //won   VB
+```
+To turn this off:
+```javascript
 nlp.pos("tony hawk won", {dont_combine:true})
 //tony   NN
 //hawk   NN

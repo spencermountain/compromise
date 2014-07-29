@@ -1,8 +1,8 @@
 {
-    "author": "Spencer Kelly <spencerwater@gmail.com> (http://spencerwaterbed.com)",
+    "author": "Spencer Kelly <spencerkelly86@gmail.com> (http://spencermounta.in)",
     "name": "nlp_compromise",
     "description": "natural language processing in the browser",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "repository": {
         "type": "git",
         "url": "git://github.com/spencermountain/nlp-node.git"

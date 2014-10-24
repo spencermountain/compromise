@@ -18,16 +18,22 @@ head(function() {
   };
   key = "AIzaSyD5GmnQC7oW9GJIWPGsJUojspMMuPusAxI";
   show_topic = function(obj) {
+    if (obj == null) {
+      obj = {};
+    }
+    if (!obj.id) {
+      return;
+    }
     return span({
-      style: "display:inline-block;"
+      style: "display:inline-block; margin:15px;"
     }, function() {
-      var done, text;
+      var done, text, tmp;
       img({
-        border: "1px solid steelblue",
-        "border-radius": 5,
+        style: "border:1px solid steelblue; border-radius:5px",
         src: "https://usercontent.googleapis.com/freebase/v1/image" + obj.id + "?key=" + key + "&maxwidth=200"
       });
-      done = nlp.pos(obj.output.description['/common/topic/description'][0]);
+      tmp = obj.output.description['/common/topic/description'] || [];
+      done = nlp.pos(tmp[0]);
       text = done[0].text();
       return div({
         style: "width:400px;"
@@ -50,7 +56,9 @@ head(function() {
               return $(this).find(".hide").toggle();
             }
           }, function() {
-            span(function() {
+            span({
+              style: ""
+            }, function() {
               return " " + t.text + " ";
             });
             span({
@@ -58,7 +66,7 @@ head(function() {
             });
             return span({
               "class": "hide",
-              style: "display:none; padding:5px; position:absolute; font-size:18px; bottom:-35px; left:70%; border-radius:3px; background-color:" + colours[t.pos.parent] + "; color:white; cursor:pointer; opacity:0.8;",
+              style: " display:none; padding:2px 5px 2px 5px; position:absolute; font-size:18px; bottom:-35px; left:70%; border-radius:3px; background-color:" + colours[t.pos.parent] + "; color:white; cursor:pointer; opacity:0.8;",
               click: function() {
                 return freebase.search(t.text, {
                   output: "(description)",
@@ -75,18 +83,69 @@ head(function() {
                 });
               }
             }, function() {
-              return "learn";
+              return "about";
             });
           });
         } else if (t.pos.parent === "verb") {
-          return span({
+          span({
             style: "position:relative; color:" + colours[t.pos.parent] + ";"
+          }, function() {});
+          return span({
+            style: "position:relative; color:" + colours[t.pos.parent] + "; cursor:hand;",
+            click: function() {
+              return $(this).find(".hide").toggle();
+            }
           }, function() {
             span(function() {
               return " " + t.text + " ";
             });
-            return span({
+            span({
               style: "position:absolute; bottom:5px; left:5%; width:80%; border-radius:3px; height:3px; background-color:" + colours[t.pos.parent] + ";"
+            });
+            span({
+              "class": "hide",
+              style: "display:none; padding:2px 5px 2px 5px; position:absolute; font-size:18px; top:-35px; left:-20px; border-radius:3px; background-color:" + colours[t.pos.parent] + "; color:white; cursor:pointer; opacity:0.8;",
+              click: function() {
+                var done, fixed;
+                el = $("#text");
+                el.find('.hide').remove();
+                done = nlp.pos(el.text());
+                fixed = done[0].to_past().text();
+                el.text(fixed);
+                return el.keyup();
+              }
+            }, function() {
+              return "past";
+            });
+            span({
+              "class": "hide",
+              style: "display:none; padding:2px 5px 2px 5px; position:absolute; font-size:18px; top:-35px; left:40px; border-radius:3px; background-color:" + colours[t.pos.parent] + "; color:white; cursor:pointer; opacity:0.8;",
+              click: function() {
+                var done, fixed;
+                el = $("#text");
+                el.find('.hide').remove();
+                done = nlp.pos(el.text());
+                fixed = done[0].to_future().text();
+                el.text(fixed);
+                return el.keyup();
+              }
+            }, function() {
+              return "future";
+            });
+            return span({
+              "class": "hide",
+              style: "display:none; padding:2px 5px 2px 5px; position:absolute; font-size:18px; bottom:-35px; left:70%; border-radius:3px; background-color:" + colours[t.pos.parent] + "; color:white; cursor:pointer; opacity:0.8;",
+              click: function() {
+                var done, fixed;
+                el = $("#text");
+                el.find('.hide').remove();
+                done = nlp.pos(el.text());
+                fixed = done[0].negate().text();
+                el.text(fixed);
+                return el.keyup();
+              }
+            }, function() {
+              return "negate";
             });
           });
         } else if (t.pos.parent === "adverb") {
@@ -121,15 +180,17 @@ head(function() {
     return ul(function() {
       div({
         id: "text",
-        style: "position:relative; padding:10px; left:25px; height:45px; border:1px solid lightsteelblue; color:steelblue; overflow-x: visible; font-size:30px; width:500px;",
+        style: "position:relative; padding:10px; left:25px; height:45px; border:1px solid lightsteelblue; color:steelblue; overflow-x: visible; font-size:30px; width:600px;",
         contentEditable: "true",
         keyup: (function() {
           var done, el, tokens, txt;
-          el = $(this);
+          el = $("#text");
+          el.find('.hide').remove();
           txt = el.text();
           done = nlp.pos(txt);
           tokens = done[0].tokens;
           console.log(done[0]);
+          el.html('');
           return set_text(tokens, el);
         }).debounce(500)
       }, function() {

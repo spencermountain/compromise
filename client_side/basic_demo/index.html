@@ -105,6 +105,7 @@ $(function() {
   $("#spot").find("input").keyup(function(){
     var txt=$(this).val() || ''
     var data= nlp.spot(txt)
+    console.log(data)
     var html= data.map(function(p){
       return "<div style='background:lightsteelblue; font-size:30px; display:inline-block; color:white; margin:5px; padding:8px;'>"+p.normalised+"</div>"
     }).join(" ")
@@ -171,6 +172,15 @@ $(function() {
   $("#dates").find("input").keyup(function(){
     var txt=$(this).val() || ''
     var data= nlp.value(txt).date()
+    // var now=new Date()
+    // var d= nlp.value(txt).date()
+    // if(d && d.date_object){
+    //   var date= d.date_object
+    //   var years= now.getFullYear() - date.getFullYear()
+    //   $(this).siblings(".result").html(years + " years ago")
+    // }else{
+    //   $(this).siblings(".result").html(" ")
+    // }
     var str='<div>month:'+data.month+'<br/> day:'+data.day+'<br/> year:'+data.year+'</div>'
     str+='<p></p><div>to month:'+data.to_month+'<br/> to day:'+data.to_day+'<br/> to year:'+data.to_year+'</div>'
     $(this).siblings(".result").html(str)
@@ -227,7 +237,7 @@ $(function() {
   <hr/>
   <h2>NAMED-ENTITY-RECOGNITION!</h2>
   <h3>nlp.spot(text, {})</h3>
-  <input type="text" class="input" value="joe carter went to the toronto international film festival to go see inception."/>
+  <input type="text" class="input" value="Joe Carter went to the Toronto International Film Festival to go see Inception."/>
   <div class="result" style="font-size:10px;"></div>
 </div>
 
@@ -308,12 +318,12 @@ $(function() {
   <div class="result" style="font-size:24px;"></div>
 </div>
 
-<div id="dates">
+<div id="dates" style="">
   <hr/>
   <h2>date parsing</h2>
-  <h3>nlp.value(text).date()</h3>
+  <h3 style="">nlp.value(text).date()</h3>
   <input type="text" class="input" value="I got married to April on June 4th 1993, in Miami" style="width:450px;"/>
-  <div class="result" style="font-size:14px;"></div>
+  <div class="result" style="font-size:24px;"></div>
 </div>
 
 

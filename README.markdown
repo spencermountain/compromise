@@ -6,9 +6,9 @@ it does [tons of clever things](http://rawgit.com/spencermountain/nlp_compromise
 nlp.pos('she sells seashells by the seashore')[0].to_past()
 //she sold seashells by the seashore
 ```
-##Demos
+##Check it out
 
-* [Long Text](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/long_demo/index.html)
+* [Long Text Demo](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/long_demo/index.html)
 * [Specific Methods](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/basic_demo/index.html)
 * [Realtime Demo](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/cute_demo/index.html)
 

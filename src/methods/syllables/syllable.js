@@ -1,22 +1,24 @@
 var syllables = (function(str) {
 
 
-
-
 	var main = function(str) {
 		var all = []
 
-
 		//suffix fixes
 			function postprocess(arr) {
-				if (!arr.length <= 2) {
+				//trim whitespace
+				arr= arr.map(function(w){
+					w= w.replace(/^ */,'')
+					w= w.replace(/ *$/,'')
+					return w
+				})
+				if (!arr.length <= 2) { //?
 					return arr
 				}
 				var twos = [
 					/[^aeiou]ying$/,
-					/yer$/
+					/yer$/,
 				]
-
 				var ones = [
 					/^[^aeiou]?ion/,
 					/^[^aeiou]?ised/,
@@ -66,9 +68,15 @@ var syllables = (function(str) {
 					all.push(current)
 					return doer(after)
 				}
-
+				//if it has 4 consonants in a row, it's starting to be a mouthful for one syllable- like 'birchtree'
+				// if(candidate.match(/[^aeiou]{4}$/)){
+				// 	all.push(candidate.replace(/[^aeiou]{2}$/,''))
+				// 	l= candidate.length - 1
+				// 	candidate=candidate.slice(l-2, l)
+				// }
 			}
-			if (str.match(/[aiouy]/)) { //allow silent trailing e
+			//if still running, end last syllable
+			if (str.match(/[aiouy]/) || str.match(/ee$/)) { //allow silent trailing e
 				all.push(str)
 			} else {
 				all[all.length - 1] = (all[all.length - 1] || '') + str; //append it to the last one
@@ -79,11 +87,14 @@ var syllables = (function(str) {
 			doer(s)
 		})
 		all = postprocess(all)
+
+		//for words like 'tree' and 'free'
+		if(all.length==0){
+			all=[str]
+		}
+
 		return all
 	}
-
-
-
 
 	if (typeof module !== "undefined" && module.exports) {
 		module.exports = main;
@@ -104,6 +115,8 @@ var syllables = (function(str) {
 
 // console.log(syllables("carbonised"))
 // console.log(syllables("sometimes"))
-
-//BUG!
+// console.log(syllables("calgary flames"))
 // console.log(syllables("tree"))
+
+//broken
+// console.log(syllables("birchtree"))

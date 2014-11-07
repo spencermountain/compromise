@@ -1307,6 +1307,7 @@ lexicon = (function() {
 
 	//adjectives that either aren't covered by rules, or have superlative/comparative forms
 	adjectives = [
+	  'moody',
 	  'literal',
 	  'actual',
 	  'probable',

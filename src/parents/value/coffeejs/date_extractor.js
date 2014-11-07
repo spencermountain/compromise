@@ -12,6 +12,9 @@ date_extractor = (function() {
       example: "March 7th-11th 1987",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 1,
           day: 2,
@@ -28,6 +31,9 @@ date_extractor = (function() {
       example: "28th of September to 5th of October 2008",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           day: 1,
           month: 2,
@@ -45,6 +51,9 @@ date_extractor = (function() {
       example: "March 7th to june 11th 1987",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 1,
           day: 2,
@@ -63,6 +72,9 @@ date_extractor = (function() {
       example: "between 13 February and 15 February 1945",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           day: 1,
           month: 2,
@@ -81,6 +93,9 @@ date_extractor = (function() {
       example: "between March 7th and june 11th 1987",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 1,
           day: 2,
@@ -99,6 +114,9 @@ date_extractor = (function() {
       example: "March 1st 1987",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 1,
           day: 2,
@@ -114,6 +132,9 @@ date_extractor = (function() {
       example: "3rd - 5th of March 1969",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           day: 1,
           to_day: 2,
@@ -130,6 +151,9 @@ date_extractor = (function() {
       example: "3rd of March 1969",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           day: 1,
           month: 2,
@@ -145,6 +169,9 @@ date_extractor = (function() {
       example: "September 1939 to April 1945",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 1,
           year: 2,
@@ -161,6 +188,9 @@ date_extractor = (function() {
       example: "March 1969",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 1,
           year: 2
@@ -175,6 +205,9 @@ date_extractor = (function() {
       example: "March 18th",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 1,
           day: 2
@@ -189,6 +222,9 @@ date_extractor = (function() {
       example: "18th of March",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 2,
           day: 1
@@ -203,6 +239,9 @@ date_extractor = (function() {
       example: "1997-1998",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           year: 1,
           to_year: 2
@@ -217,6 +256,9 @@ date_extractor = (function() {
       example: "1998",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           year: 1
         };
@@ -343,3 +385,9 @@ date_extractor = (function() {
   }
   return main;
 })();
+
+// console.log(date_extractor('june 5th 1998'));
+
+/*
+//@ sourceMappingURL=date_extractor.map
+*/

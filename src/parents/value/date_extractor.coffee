@@ -10,7 +10,7 @@ date_extractor = ( ()->
   regexes = [{
     reg: "#{months} #{days}-#{days} #{years}",
     example: "March 7th-11th 1987",
-    process:(arr)->
+    process:(arr=[])->
       places= {
         month:1,
         day:2,
@@ -26,7 +26,7 @@ date_extractor = ( ()->
   {
     reg: "#{days} of #{months} to #{days} of #{months},? #{years}",
     example: "28th of September to 5th of October 2008",
-    process:(arr)->
+    process:(arr=[])->
       places= {
         day:1,
         month:2,
@@ -43,7 +43,7 @@ date_extractor = ( ()->
   {
     reg: "#{months} #{days} to #{months} #{days} #{years}",
     example: "March 7th to june 11th 1987",
-    process:(arr)->
+    process:(arr=[])->
       places= {
         month:1,
         day:2,
@@ -61,7 +61,7 @@ date_extractor = ( ()->
   {
     reg: "between #{days} #{months} and #{days} #{months} #{years}",
     example: "between 13 February and 15 February 1945",
-    process:(arr)->
+    process:(arr=[])->
       places= {
         day:1,
         month:2,
@@ -79,7 +79,7 @@ date_extractor = ( ()->
   {
     reg: "between #{months} #{days} and #{months} #{days} #{years}",
     example: "between March 7th and june 11th 1987",
-    process:(arr)->
+    process:(arr=[])->
       places= {
         month:1,
         day:2,
@@ -97,7 +97,7 @@ date_extractor = ( ()->
   {
     reg: "#{months} #{days} #{years}",
     example: "March 1st 1987",
-    process:(arr)->
+    process:(arr=[])->
       places= {
         month:1,
         day:2,
@@ -112,7 +112,7 @@ date_extractor = ( ()->
   {
     reg: "#{days} - #{days} of #{months},? #{years}",
     example: "3rd - 5th of March 1969",
-    process:(arr)->
+    process:(arr=[])->
       places= {
         day:1,
         to_day:2,
@@ -129,7 +129,7 @@ date_extractor = ( ()->
   {
     reg: "#{days} of #{months},? #{years}",
     example: "3rd of March 1969",
-    process:(arr)->
+    process:(arr=[])->
       places= {
         day:1,
         month:2,
@@ -144,7 +144,7 @@ date_extractor = ( ()->
   {
     reg: "#{months} #{years},? to #{months} #{years}",
     example: "September 1939 to April 1945",
-    process:(arr)->
+    process:(arr=[])->
       places= {
         month:1,
         year:2,
@@ -160,7 +160,7 @@ date_extractor = ( ()->
   {
     reg: "#{months} #{years}",
     example: "March 1969",
-    process:(arr)->
+    process:(arr=[])->
       places= {
         month:1,
         year:2,
@@ -173,7 +173,7 @@ date_extractor = ( ()->
   {
     reg: "#{months} #{days}",
     example: "March 18th",
-    process:(arr)->
+    process:(arr=[])->
       places= {
         month:1,
         day:2,
@@ -186,7 +186,7 @@ date_extractor = ( ()->
   {
     reg: "#{days} of #{months}",
     example: "18th of March",
-    process:(arr)->
+    process:(arr=[])->
       places= {
         month:2,
         day:1,
@@ -205,7 +205,7 @@ date_extractor = ( ()->
   {
     reg: "#{years} ?- ?#{years}",
     example: "1997-1998",
-    process:(arr)->
+    process:(arr=[])->
       places= {
         year:1,
         to_year:2,
@@ -227,7 +227,7 @@ date_extractor = ( ()->
   {
     reg: "#{years}",
     example: "1998",
-    process:(arr)->
+    process:(arr=[])->
       places= {
         year:1,
       }
@@ -344,4 +344,4 @@ date_extractor = ( ()->
 
 )()
 
-# console.log date_extractor('june 5th 1998')
+console.log date_extractor('june 5th 1998')

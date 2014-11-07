@@ -3,7 +3,7 @@ arr= [
   "./libs/sugar.js",
   "./libs/oj.js",
   "./libs/dirty.js",
-  "./libs/nlp.js",
+  "../nlp.js",
   "./libs/freebase.min.js",
 ]
 head.js.apply(this, arr);

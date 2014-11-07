@@ -7,10 +7,13 @@ var tokenize = (function() {
 	}
 
 	var normalise = function(str) {
+		if(!str){
+			return ""
+		}
 		str = str.toLowerCase()
 		str = str.replace(/[,\.!:;\?\(\)]/, '')
 		str = str.replace(/’/g, "'")
-		if(!str.match(/[a-z]/i)){
+		if(!str.match(/[a-z0-9]/i)){
 			return ''
 		}
 		return str
@@ -28,7 +31,7 @@ var tokenize = (function() {
 		var better = []
 		for (var i = 0; i < arr.length; i++) {
 			for (var o = 0; o < multiples.length; o++) {
-				if (arr[i + 1] && arr[i] == multiples[o][0] && normalise(arr[i + 1]) == multiples[o][1]) { //
+				if (arr[i + 1] && normalise(arr[i]) == multiples[o][0] && normalise(arr[i + 1]) == multiples[o][1]) { //
 					//we have a match
 					arr[i] = arr[i] + ' ' + arr[i + 1]
 					arr[i + 1] = null
@@ -76,6 +79,8 @@ var tokenize = (function() {
 // a = tokenize("i live in new york")
 // a = tokenize("How do you wear your swords? He’s like his character [Kuranosuke] Oishi.")
 // a = tokenize("I speak optimistically of course.")
+// a = tokenize("in the United States of America")
+// a = tokenize("Joe is 9")
 // console.log(JSON.stringify(a, null, 2));
 
 

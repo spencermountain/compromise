@@ -138,6 +138,13 @@ var pos = (function() {
 			token.pos_reason = "before a [him|her|it]"
 		}
 
+		//the misled worker -> misled is an adjective, not vb
+		if (last && next && last.pos.tag == "DT" && next.pos.parent == "noun" && token.pos.parent == "verb" ) {
+			token.pos = parts_of_speech['JJ']
+			token.pos_reason = "determiner-adjective-noun"
+		}
+
+
 		return token
 	}
 
@@ -276,13 +283,13 @@ var pos = (function() {
 				if (token.pos) {
 					//suggest noun after some determiners (a|the), posessive pronouns (her|my|its)
 					if (token.normalised=="the" || token.normalised=="a" || token.normalised=="an" || token.pos.tag == "PP") {
-						need = 'NN'
+						need = 'noun'
 						reason = token.pos.name
 						return token //proceed
 					}
 					//suggest verb after personal pronouns (he|she|they), modal verbs (would|could|should)
 					if (token.pos.tag == "PRP" || token.pos.tag == "MD") {
-						need = 'VB'
+						need = 'verb'
 						reason = token.pos.name
 						return token //proceed
 					}
@@ -290,22 +297,28 @@ var pos = (function() {
 				}
 				//satisfy need on a conflict, and fix a likely error
 				if(token.pos){
-					if(need=="VB" && token.pos.parent=="noun"){
-						token.pos = parts_of_speech[need]
-						token.pos_reason = "signal from " + reason
-						need=null
+					if(need=="verb" && token.pos.parent=="noun"){
+						if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
+							token.pos = parts_of_speech['VB']
+							token.pos_reason = "signal from " + reason
+							need=null
+						}
 					}
-					if(need=="NN" && token.pos.parent=="verb"){
-						token.pos = parts_of_speech[need]
-						token.pos_reason = "signal from " + reason
-						need=null
+					if(need=="noun" && token.pos.parent=="verb"){
+						if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
+						  token.pos = parts_of_speech["NN"]
+						  token.pos_reason = "signal from " + reason
+						  need=null
+					  }
 					}
 				}
 				//satisfy need with an unknown pos
 				if (need && !token.pos ) {
-					token.pos = parts_of_speech[need]
-					token.pos_reason = "signal from " + reason
-					need= null
+					if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
+			    	token.pos = parts_of_speech[need]
+			    	token.pos_reason = "signal from " + reason
+				    need= null
+				  }
 				}
 				if (need == 'VB' && token.pos.parent == 'verb') {
 					need = null
@@ -407,21 +420,20 @@ var pos = (function() {
 		})
 	}
 
+//fixed////
 	// fun = pos("Geroge Clooney walked, quietly into a bank. It was cold.")
 	// fun = pos("Geroge Clooney is cool.")
 	// fun = pos("i paid five fifty") //combine numbers
 	// fun = pos("he was a gorky asdf") //second pass signal
 	// fun = pos("Joe quiitly alks the asdf") //"need one verb"
-	// fun = pos("Joe would alks the asdf") //"second pass modal"
-	// fun = pos("he blalks the asdf") //"second_pass signal from PRP"
 	// fun = pos("joe is fun and quickly blalks") //after adverb
 	// fun = pos("he went on the walk") //determiner-verb
 	// fun = pos("he is very walk") //copula-adverb-adjective
 	// fun = pos("he is very lkajsdf") //two error-corrections (copula-adverb-adjective)
-	// fun = pos("joe is 9") //number
 	// fun = pos("joe is real pretty") //consecutive adjectives to adverb
 	// fun = pos("joe is real, pretty") //don't combine over a comma
 	// fun = pos("walk should walk") //before a modal
+	// fun = pos("joe is 9") //number
 
 	//contractions
 	// fun = pos("atleast i'm better than geroge clooney")//i'm
@@ -439,15 +451,8 @@ var pos = (function() {
 	// fun = pos("joe is not swimming to the bank")[0].tokens //
 	// fun = pos("it was one hundred and fifty five thousand people") //combine over and
 	// fun = pos("the toronto international festival") //combine over and
-
 	// fun = pos("they were even weaker he said") //better adjectives
 	// fun = pos("new") //better adjectives
-	// console.log(fun[0].tokens[0])
-	// render(fun)
-	// analysis(fun)
-	// console.log(JSON.stringify(fun[0], null, 2));
-	// console.log(fun[0].to_past().text())
-
 	// fun = pos("That malignant desire is in the very heart of those who share (this order's) benefits.", {}) //punctuation bug
 	// fun = pos("He’s like his character Oishi.", {}) //dont combine non-capitals with capitals
 	// fun = pos("one which is justly measured", {}) //dont' overwrite existing lexicon words in conjugation
@@ -457,14 +462,23 @@ var pos = (function() {
 	// fun = pos("he said YOU ARE VERY NICE then left", {}) //handle all-caps
 	// fun = pos("he presents an anarchist vision that is appropriate", {}) //
 	// fun = pos("The latter can face any visible antagonism.", {}) //
-
-	// fun = pos("He does not perform it with truly human energies", {}) //issue with needs model
 	// fun = pos("he was by far the worst", {}) //support pos for multiples
 	// fun = pos("in the United States of America", {}) //combine captial of capital
 	// fun = pos("the Phantom of the Opera", {}) //two combines
-	// fun = pos("They’re taking risks", {}) //normalise punctuation
 	// fun = pos("the school asdf him", {}) //before him|her"it
 	// fun = pos("the disgruntled worker", {}) //
+	// fun = pos("joe carter doesn't play", {}) //
+	// fun = pos("now president of germany", {}) //
+
+
+//not fixed:
+	// fun = pos("Joe would alks the asdf") //"second pass modal"
+	// fun = pos("he blalks the asdf") //"second_pass signal from PRP"
+	// fun = pos("He does not perform it with truly human energies", {}) //issue with needs model
+	// fun = pos("They’re taking risks", {}) //issue with needs model
+
+	// fun = pos("", {}) //
+
 	// console.log(fun[0])
 	// render(fun)
 

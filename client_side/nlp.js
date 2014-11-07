@@ -1,6 +1,6 @@
 /*! nlp_compromise 
  by @spencermountain
- 2014-07-24 */
+ 2014-11-07 */
 //
 // NLP_comprimise - @spencermountain - gplv3
 // https://github.com/spencermountain/nlp_comprimise
@@ -84,6 +84,9 @@ var multiples = [
     "new delhi",
     "new jersey",
     "new mexico",
+    "united states",
+    "united kingdom",
+    "great britain",
 
 ].map(function(m) {
     return m.split(' ')
@@ -97,7 +100,7 @@ sentence_parser = function(text) {
   var abbrev, abbrevs, clean, i, sentences, tmp;
   tmp = text.split(/(\S.+?[.\?])(?=\s+|$)/g);
   sentences = [];
-  abbrevs = ["jr", "mr", "mrs", "ms", "dr", "prof", "sr", "sen", "rep", "gov", "atty", "supt", "det", "rev", "col", "gen", "lt", "cmdr", "adm", "capt", "sgt", "cpl", "maj", "dept", "univ", "assn", "bros", "inc", "ltd", "co", "corp", "arc", "al", "ave", "blvd", "cl", "ct", "cres", "exp", "rd", "st", "dist", "mt", "ft", "fy", "hwy", "la", "pd", "pl", "plz", "tce", "Ala", "Ariz", "Ark", "Cal", "Calif", "Col", "Colo", "Conn", "Del", "Fed", "Fla", "Ga", "Ida", "Id", "Ill", "Ind", "Ia", "Kan", "Kans", "Ken", "Ky", "La", "Me", "Md", "Mass", "Mich", "Minn", "Miss", "Mo", "Mont", "Neb", "Nebr", "Nev", "Mex", "Okla", "Ok", "Ore", "Penna", "Penn", "Pa", "Dak", "Tenn", "Tex", "Ut", "Vt", "Va", "Wash", "Wis", "Wisc", "Wy", "Wyo", "USAFA", "Alta", "Ont", "QuÔøΩ", "Sask", "Yuk", "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept", "vs", "etc", "esp", "llb", "md", "bl", "phd", "ma", "ba", "miss", "misses", "mister", "sir", "esq", "mstr", "lit", "fl", "ex", "eg", "sep", "sept"];
+  abbrevs = ["jr", "mr", "mrs", "ms", "dr", "prof", "sr", "sen", "corp", "calif", "rep", "gov", "atty", "supt", "det", "rev", "col", "gen", "lt", "cmdr", "adm", "capt", "sgt", "cpl", "maj", "dept", "univ", "assn", "bros", "inc", "ltd", "co", "corp", "arc", "al", "ave", "blvd", "cl", "ct", "cres", "exp", "rd", "st", "dist", "mt", "ft", "fy", "hwy", "la", "pd", "pl", "plz", "tce", "Ala", "Ariz", "Ark", "Cal", "Calif", "Col", "Colo", "Conn", "Del", "Fed", "Fla", "Ga", "Ida", "Id", "Ill", "Ind", "Ia", "Kan", "Kans", "Ken", "Ky", "La", "Me", "Md", "Mass", "Mich", "Minn", "Miss", "Mo", "Mont", "Neb", "Nebr", "Nev", "Mex", "Okla", "Ok", "Ore", "Penna", "Penn", "Pa", "Dak", "Tenn", "Tex", "Ut", "Vt", "Va", "Wash", "Wis", "Wisc", "Wy", "Wyo", "USAFA", "Alta", "Ont", "QuÔøΩ", "Sask", "Yuk", "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept", "vs", "etc", "esp", "llb", "md", "bl", "phd", "ma", "ba", "miss", "misses", "mister", "sir", "esq", "mstr", "lit", "fl", "ex", "eg", "sep", "sept"];
   abbrev = new RegExp("(^| )(" + abbrevs.join("|") + ")[.] ?$", "i");
   for (i in tmp) {
     if (tmp[i]) {
@@ -200,10 +203,13 @@ var tokenize = (function() {
 	}
 
 	var normalise = function(str) {
+		if(!str){
+			return ""
+		}
 		str = str.toLowerCase()
 		str = str.replace(/[,\.!:;\?\(\)]/, '')
 		str = str.replace(/’/g, "'")
-		if(!str.match(/[a-z]/i)){
+		if(!str.match(/[a-z0-9]/i)){
 			return ''
 		}
 		return str
@@ -221,7 +227,7 @@ var tokenize = (function() {
 		var better = []
 		for (var i = 0; i < arr.length; i++) {
 			for (var o = 0; o < multiples.length; o++) {
-				if (arr[i + 1] && arr[i] == multiples[o][0] && normalise(arr[i + 1]) == multiples[o][1]) { //
+				if (arr[i + 1] && normalise(arr[i]) == multiples[o][0] && normalise(arr[i + 1]) == multiples[o][1]) { //
 					//we have a match
 					arr[i] = arr[i] + ' ' + arr[i + 1]
 					arr[i + 1] = null
@@ -269,6 +275,8 @@ var tokenize = (function() {
 // a = tokenize("i live in new york")
 // a = tokenize("How do you wear your swords? He’s like his character [Kuranosuke] Oishi.")
 // a = tokenize("I speak optimistically of course.")
+// a = tokenize("in the United States of America")
+// a = tokenize("Joe is 9")
 // console.log(JSON.stringify(a, null, 2));
 
 
@@ -1788,11 +1796,17 @@ word_rules = [{
         errors: 4,
         accuracy: '0.64'
     }, {
-        reg: /.gled$/i,
+        reg: /.[gt]led$/i,
         pos: 'JJ',
         strength: 16,
         errors: 7,
         accuracy: '0.56'
+    }, {
+        reg: /[aeiou].*ist$/i, //not sure about.. (eg anarchist)
+        pos: 'JJ',
+        strength: 0,
+        errors: 0,
+        accuracy: '0'
     }, {
         reg: /.lked$/i,
         pos: 'VB',
@@ -1844,6 +1858,12 @@ word_rules = [{
     }, {
         reg: /.'ll$/i, //they'll
         pos: 'MD',
+        strength: 1,
+        errors: 0,
+        accuracy: '0.00'
+    },{
+        reg: /.'t$/i, //doesn't
+        pos: 'VB',
         strength: 1,
         errors: 0,
         accuracy: '0.00'
@@ -3187,6 +3207,9 @@ date_extractor = (function() {
       example: "March 7th-11th 1987",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 1,
           day: 2,
@@ -3203,6 +3226,9 @@ date_extractor = (function() {
       example: "28th of September to 5th of October 2008",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           day: 1,
           month: 2,
@@ -3220,6 +3246,9 @@ date_extractor = (function() {
       example: "March 7th to june 11th 1987",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 1,
           day: 2,
@@ -3238,6 +3267,9 @@ date_extractor = (function() {
       example: "between 13 February and 15 February 1945",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           day: 1,
           month: 2,
@@ -3256,6 +3288,9 @@ date_extractor = (function() {
       example: "between March 7th and june 11th 1987",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 1,
           day: 2,
@@ -3274,6 +3309,9 @@ date_extractor = (function() {
       example: "March 1st 1987",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 1,
           day: 2,
@@ -3289,6 +3327,9 @@ date_extractor = (function() {
       example: "3rd - 5th of March 1969",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           day: 1,
           to_day: 2,
@@ -3305,6 +3346,9 @@ date_extractor = (function() {
       example: "3rd of March 1969",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           day: 1,
           month: 2,
@@ -3320,6 +3364,9 @@ date_extractor = (function() {
       example: "September 1939 to April 1945",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 1,
           year: 2,
@@ -3336,6 +3383,9 @@ date_extractor = (function() {
       example: "March 1969",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 1,
           year: 2
@@ -3350,6 +3400,9 @@ date_extractor = (function() {
       example: "March 18th",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 1,
           day: 2
@@ -3364,6 +3417,9 @@ date_extractor = (function() {
       example: "18th of March",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           month: 2,
           day: 1
@@ -3378,6 +3434,9 @@ date_extractor = (function() {
       example: "1997-1998",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           year: 1,
           to_year: 2
@@ -3392,6 +3451,9 @@ date_extractor = (function() {
       example: "1998",
       process: function(arr) {
         var places;
+        if (arr == null) {
+          arr = [];
+        }
         places = {
           year: 1
         };
@@ -3518,6 +3580,12 @@ date_extractor = (function() {
   }
   return main;
 })();
+
+// console.log(date_extractor('june 5th 1998'));
+
+/*
+//@ sourceMappingURL=date_extractor.map
+*/
 
 var Value = function(str, next, last, token) {
 	var the = this
@@ -6080,6 +6148,11 @@ verb_conjugate = (function() {
 // console.log(verb_conjugate("see"))
 // console.log(verb_conjugate("consider"))
 
+// console.log(verb_conjugate("suck")) ///*****bug
+
+
+// console.log(verb_conjugate("imply")) ///*****bug
+// console.log(verb_conjugate("count")) ///*****bug
 // console.log(verb_conjugate("contain")) ///*****bug
 // console.log(verb_conjugate("result")) //****bug
 // console.log(verb_conjugate("develop")) //****bug
@@ -6292,6 +6365,7 @@ var to_comparative = (function() {
 			"good": "better",
 			"well": "better",
 			"bad": "worse",
+			"sad": "sadder",
 		}
 		var dos = {
 			"absurd": 1,
@@ -6575,6 +6649,8 @@ var to_comparative = (function() {
 // console.log(to_comparative('narrow'))
 // console.log(to_comparative('dull'))
 // console.log(to_comparative('weak'))
+// console.log(to_comparative('sad'))
+
 //turn 'quick' into 'quickest'
 var to_superlative = (function() {
 	var main = function(str) {
@@ -7007,7 +7083,7 @@ adj_to_adv = (function() {
 // arr = data.map(function(w) {
 // 	console.log(w[1] + "  -  " + to_adverb(w[1]))
 // })
-// console.log(to_adverb('normal'))
+// console.log(adj_to_adv('direct'))
 // "JJ  - adjective, generic (big, nice)",
 // "JJR  - comparative adjective (bigger, cooler)",
 // "JJS  - superlative adjective (biggest, fattest)"
@@ -7291,6 +7367,7 @@ lexicon = (function() {
 		"me": "PRP",
 		"he": "PRP",
 		"him": "PRP",
+    "ourselves": "PRP",
 		"us": "PRP",
 		"we": "PRP",
 		"thou": "PRP",
@@ -7304,33 +7381,25 @@ lexicon = (function() {
 		"soon": "RB",
 		"directly": "RB",
 		"toward": "RB",
+		"forever": "RB",
 		"apart": "RB",
-		"suddenly": "RB",
 		"instead": "RB",
 		"yes": "RB",
 		"alone": "RB",
 		"ago": "RB",
 		"indeed": "RB",
-		"probably": "RB",
-		"usually": "RB",
 		"ever": "RB",
 		"quite": "RB",
 		"perhaps": "RB",
-		"slowly": "RB",
-		"apparently": "RB",
 		"where": "RB",
 		"then": "RB",
 		"here": "RB",
 		"thus": "RB",
-		"immediately": "RB",
-		"nearly": "RB",
 		"very": "RB",
-		"actually": "RB",
 		"often": "RB",
 		"once": "RB",
 		"never": "RB",
 		"why": "RB",
-		"merely": "RB",
 		"when": "RB",
 		"away": "RB",
 		"always": "RB",
@@ -7531,7 +7600,8 @@ lexicon = (function() {
 		"asian":"JJ",
 		"californian":"JJ",
 
-		//mine
+		//misc mine
+		"nope": "UH",
 		"am": "VBP",
 		"said": "VBD",
 		"says": "VBZ",
@@ -7541,6 +7611,7 @@ lexicon = (function() {
 		"more": "RBR",
 		"had": "VBD",
 		"been": "VBD",
+    "going": "VBG",
 		"other": "JJ",
 		"no": "DT",
 		"there": "EX",
@@ -7583,6 +7654,16 @@ lexicon = (function() {
 		"divine": "JJ",
 		"all": "JJ",
 		"define": "VB",
+    "went": "VBD",
+    "goes": "VBZ",
+    "sounds": "VBZ",
+  "measure": "VB",
+  "enhance": "VB",
+  "distinguish": "VB",
+    "randomly": "RB",
+  "abroad": "RB",
+
+
 
 		//missing words from amc
 		"given": "VBN",
@@ -7604,6 +7685,7 @@ lexicon = (function() {
 	  "appropriate": "JJ",
 	  "unless": "IN",
 	  "whom": "WP",
+	  "whose": "WP",
 	  "evil": "JJ",
 	  "earlier": "JJR",
 	  "etc": "FW",
@@ -7630,14 +7712,13 @@ lexicon = (function() {
 	  "gay": "JJ",
 	  "meanwhile": "RB",
 	  "hence": "RB",
-	  "affect": "VBP",
+	  "further": "RB",
 	  "furthermore": "RB",
 	  "easier": "JJR",
 	  "staining": "VBG",
 	  "towards": "IN",
 	  "aside": "RB",
 	  "moreover": "RB",
-	  "file": "VB",
 	  "south": "JJ",
 	  "pro": "JJ",
 	  "meant": "VBD",
@@ -7731,9 +7812,10 @@ lexicon = (function() {
 
 	}
 
-
 	//verbs
 	verbs = [
+		"hide",
+		"suck",
 		"answer",
 		"argue",
 		"tend",
@@ -7749,8 +7831,6 @@ lexicon = (function() {
 		"wonder",
 		"act",
 		"hope",
-		"choose",
-		"affect",
 		"end",
 		"thank",
 		"file",
@@ -7798,9 +7878,7 @@ lexicon = (function() {
 		"lose",
 		"lie",
 		"build",
-		"thought",
 		"aid",
-		"lay",
 		"visit",
 		"test",
 		"strike",
@@ -7889,6 +7967,7 @@ lexicon = (function() {
 		"live",
 		"help",
 		"represent",
+		"edit",
 		"serve",
 		"ride",
 		"appear",
@@ -7954,7 +8033,6 @@ lexicon = (function() {
 		"spend",
 		"begin",
 		"get",
-		"march",
 		"wish",
 		"hang",
 		"write",
@@ -7965,8 +8043,6 @@ lexicon = (function() {
 		"eat",
 		"disagree",
 		"produce",
-		"win",
-		"went",
 		"attack",
 		"attempt",
 		"bite",
@@ -8061,7 +8137,6 @@ lexicon = (function() {
 		"rent",
 		"repair",
 		"sail",
-		"saw",
 		"scale",
 		"screw",
 		"shake",
@@ -8376,6 +8451,7 @@ lexicon = (function() {
 	  "bury",
 	  "wipe",
 	]
+
 	//conjugate all of these verbs. takes ~8ms. triples the lexicon size.
 	verbs.forEach(function(v) {
 		var c = verb_conjugate(v)
@@ -8396,6 +8472,12 @@ lexicon = (function() {
 
 	//adjectives that either aren't covered by rules, or have superlative/comparative forms
 	adjectives = [
+	  'moody',
+	  'literal',
+	  'actual',
+	  'probable',
+	  'apparent',
+	  'usual',
 	  'aberrant',
 		'ablaze',
 		'able',
@@ -8477,7 +8559,6 @@ lexicon = (function() {
 		'correct',
 		'cowardly',
 		'craven',
-		'crowded',
 		'cruel',
 		'cuddly',
 		'curly',
@@ -8601,7 +8682,6 @@ lexicon = (function() {
 		'gross',
 		'guarded',
 		'half',
-		'handsomely',
 		'handy',
 		'hanging',
 		'hard',
@@ -9176,7 +9256,67 @@ lexicon = (function() {
 	  "vacant",
 	  "dishonest",
 
+	  "brisk",
+	  "fluent",
+	  "insecure",
+	  "humid",
+	  "menacing",
+	  "moot",
+
+	  "soothing",
+	  "self-loathing",
+	  "far-reaching",
+	  "harrowing",
+	  "scathing",
+	  "perplexing",
+	  "calming",
+	  "unconvincing",
+	  "unsuspecting",
+
+	  "unassuming",
+	  "surprising",
+	  "unappealing",
+	  "vexing",
+	  "unending",
+	  "easygoing",
+	  "appetizing",
+	  "disgruntled",
+	  "retarded",
+	  "undecided",
+	  "unregulated",
+	  "unsupervised",
+	  "unrecognized",
+	  "crazed",
+	  "distressed",
+	  "jagged",
+	  "paralleled",
+	  "cramped",
+	  "warped",
+	  "antiquated",
+	  "fabled",
+	  "deranged",
+	  "diseased",
+	  "ragged",
+	  "intoxicated",
+	  "hallowed",
+		"crowded",
+
+	  "ghastly",
+	  "disorderly",
+	  "saintly",
+	  "wily",
+	  "sly",
+	  "sprightly",
+	  "ghostly",
+	  "oily",
+	  "hilly",
+	  "grisly",
+	  "earthly",
+	  "friendly",
+	  "unwieldy",
+
 	]
+
 	//conjugate all of these adjectives to their adverbs. (13ms)
 	adjectives.forEach(function(j) {
 		main[j] = "JJ"
@@ -9482,6 +9622,13 @@ var pos = (function() {
 			token.pos_reason = "before a [him|her|it]"
 		}
 
+		//the misled worker -> misled is an adjective, not vb
+		if (last && next && last.pos.tag == "DT" && next.pos.parent == "noun" && token.pos.parent == "verb" ) {
+			token.pos = parts_of_speech['JJ']
+			token.pos_reason = "determiner-adjective-noun"
+		}
+
+
 		return token
 	}
 
@@ -9620,13 +9767,13 @@ var pos = (function() {
 				if (token.pos) {
 					//suggest noun after some determiners (a|the), posessive pronouns (her|my|its)
 					if (token.normalised=="the" || token.normalised=="a" || token.normalised=="an" || token.pos.tag == "PP") {
-						need = 'NN'
+						need = 'noun'
 						reason = token.pos.name
 						return token //proceed
 					}
 					//suggest verb after personal pronouns (he|she|they), modal verbs (would|could|should)
 					if (token.pos.tag == "PRP" || token.pos.tag == "MD") {
-						need = 'VB'
+						need = 'verb'
 						reason = token.pos.name
 						return token //proceed
 					}
@@ -9634,22 +9781,28 @@ var pos = (function() {
 				}
 				//satisfy need on a conflict, and fix a likely error
 				if(token.pos){
-					if(need=="VB" && token.pos.parent=="noun"){
-						token.pos = parts_of_speech[need]
-						token.pos_reason = "signal from " + reason
-						need=null
+					if(need=="verb" && token.pos.parent=="noun"){
+						if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
+							token.pos = parts_of_speech['VB']
+							token.pos_reason = "signal from " + reason
+							need=null
+						}
 					}
-					if(need=="NN" && token.pos.parent=="verb"){
-						token.pos = parts_of_speech[need]
-						token.pos_reason = "signal from " + reason
-						need=null
+					if(need=="noun" && token.pos.parent=="verb"){
+						if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
+						  token.pos = parts_of_speech["NN"]
+						  token.pos_reason = "signal from " + reason
+						  need=null
+					  }
 					}
 				}
 				//satisfy need with an unknown pos
 				if (need && !token.pos ) {
-					token.pos = parts_of_speech[need]
-					token.pos_reason = "signal from " + reason
-					need= null
+					if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
+			    	token.pos = parts_of_speech[need]
+			    	token.pos_reason = "signal from " + reason
+				    need= null
+				  }
 				}
 				if (need == 'VB' && token.pos.parent == 'verb') {
 					need = null
@@ -9751,21 +9904,20 @@ var pos = (function() {
 		})
 	}
 
+//fixed////
 	// fun = pos("Geroge Clooney walked, quietly into a bank. It was cold.")
 	// fun = pos("Geroge Clooney is cool.")
 	// fun = pos("i paid five fifty") //combine numbers
 	// fun = pos("he was a gorky asdf") //second pass signal
 	// fun = pos("Joe quiitly alks the asdf") //"need one verb"
-	// fun = pos("Joe would alks the asdf") //"second pass modal"
-	// fun = pos("he blalks the asdf") //"second_pass signal from PRP"
 	// fun = pos("joe is fun and quickly blalks") //after adverb
 	// fun = pos("he went on the walk") //determiner-verb
 	// fun = pos("he is very walk") //copula-adverb-adjective
 	// fun = pos("he is very lkajsdf") //two error-corrections (copula-adverb-adjective)
-	// fun = pos("joe is 9") //number
 	// fun = pos("joe is real pretty") //consecutive adjectives to adverb
 	// fun = pos("joe is real, pretty") //don't combine over a comma
 	// fun = pos("walk should walk") //before a modal
+	// fun = pos("joe is 9") //number
 
 	//contractions
 	// fun = pos("atleast i'm better than geroge clooney")//i'm
@@ -9783,15 +9935,8 @@ var pos = (function() {
 	// fun = pos("joe is not swimming to the bank")[0].tokens //
 	// fun = pos("it was one hundred and fifty five thousand people") //combine over and
 	// fun = pos("the toronto international festival") //combine over and
-
 	// fun = pos("they were even weaker he said") //better adjectives
 	// fun = pos("new") //better adjectives
-	// console.log(fun[0].tokens[0])
-	// render(fun)
-	// analysis(fun)
-	// console.log(JSON.stringify(fun[0], null, 2));
-	// console.log(fun[0].to_past().text())
-
 	// fun = pos("That malignant desire is in the very heart of those who share (this order's) benefits.", {}) //punctuation bug
 	// fun = pos("He’s like his character Oishi.", {}) //dont combine non-capitals with capitals
 	// fun = pos("one which is justly measured", {}) //dont' overwrite existing lexicon words in conjugation
@@ -9801,20 +9946,30 @@ var pos = (function() {
 	// fun = pos("he said YOU ARE VERY NICE then left", {}) //handle all-caps
 	// fun = pos("he presents an anarchist vision that is appropriate", {}) //
 	// fun = pos("The latter can face any visible antagonism.", {}) //
-
-	// fun = pos("He does not perform it with truly human energies", {}) //issue with needs model
 	// fun = pos("he was by far the worst", {}) //support pos for multiples
 	// fun = pos("in the United States of America", {}) //combine captial of capital
 	// fun = pos("the Phantom of the Opera", {}) //two combines
-	// fun = pos("They’re taking risks", {}) //normalise punctuation
 	// fun = pos("the school asdf him", {}) //before him|her"it
-	// fun = pos("the school asdf him", {}) //before him|her"it
+	// fun = pos("the disgruntled worker", {}) //
+	// fun = pos("joe carter doesn't play", {}) //
+	// fun = pos("now president of germany", {}) //
+
+
+//not fixed:
+	// fun = pos("Joe would alks the asdf") //"second pass modal"
+	// fun = pos("he blalks the asdf") //"second_pass signal from PRP"
+	// fun = pos("He does not perform it with truly human energies", {}) //issue with needs model
+	// fun = pos("They’re taking risks", {}) //issue with needs model
+
+	// fun = pos("", {}) //
+
 	// console.log(fun[0])
 	// render(fun)
 
 
 
 	//  __ above[IN] -> noun?
+
 var spot = (function() {
 
 	if (typeof module !== "undefined" && module.exports) {

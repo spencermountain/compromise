@@ -3,7 +3,7 @@ arr= [
   "./libs/sugar.js",
   "./libs/oj.js",
   "./libs/dirty.js",
-  "./libs/nlp.js",
+  "../nlp.js",
   "./libs/bluebrowns.js",
   "./coffeejs/texts.js"
 ]

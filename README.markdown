@@ -6,8 +6,13 @@ it does [tons of clever things](http://rawgit.com/spencermountain/nlp_compromise
 nlp.pos('she sells seashells by the seashore')[0].to_past()
 //she sold seashells by the seashore
 ```
+##Demos
 
-###[Demo](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/long_demo/index.html)
+* [Long Text](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/long_demo/index.html)
+* [Specific Methods](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/basic_demo/index.html)
+* [Realtime Demo](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/cute_demo/index.html)
+
+[![Video](http://i.vimeocdn.com/video/493948602_640.jpg)](https://vimeo.com/109880250)
 
 ##Justification
 If the 80-20 rule applies for most things, the ''94-6 rule'' applies when working with language - by [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):
@@ -89,7 +94,7 @@ nlp.adverb("quickly").conjugate()
 ## Part-of-speech tagging
 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 ```javascript
-nlp.pos("Tony walked quickly to the store.")
+nlp.pos("Tony Hawk walked quickly to the store.")
 // ["NN","VBD","RB","TO","DT","NN"]
 
 nlp.pos("the obviously good swim")
@@ -98,7 +103,7 @@ nlp.pos("the obviously good swim")
 
 ## Named-Entity recognition
 ```javascript
-nlp.spot("Tony walked quickly to the store.")
+nlp.spot("Tony Hawk walked quickly to the store.")
 // ["Tony Hawk", "store"]
 nlp.spot("joe carter loves toronto")
 // ["joe carter", "toronto"]

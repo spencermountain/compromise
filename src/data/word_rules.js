@@ -387,11 +387,17 @@ word_rules = [{
         errors: 4,
         accuracy: '0.64'
     }, {
-        reg: /.gled$/i,
+        reg: /.[gt]led$/i,
         pos: 'JJ',
         strength: 16,
         errors: 7,
         accuracy: '0.56'
+    }, {
+        reg: /[aeiou].*ist$/i, //not sure about.. (eg anarchist)
+        pos: 'JJ',
+        strength: 0,
+        errors: 0,
+        accuracy: '0'
     }, {
         reg: /.lked$/i,
         pos: 'VB',
@@ -443,6 +449,12 @@ word_rules = [{
     }, {
         reg: /.'ll$/i, //they'll
         pos: 'MD',
+        strength: 1,
+        errors: 0,
+        accuracy: '0.00'
+    },{
+        reg: /.'t$/i, //doesn't
+        pos: 'VB',
         strength: 1,
         errors: 0,
         accuracy: '0.00'

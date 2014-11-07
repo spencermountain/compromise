@@ -71,6 +71,9 @@ var multiples = [
     "new delhi",
     "new jersey",
     "new mexico",
+    "united states",
+    "united kingdom",
+    "great britain",
 
 ].map(function(m) {
     return m.split(' ')

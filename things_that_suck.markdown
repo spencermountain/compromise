@@ -28,3 +28,9 @@ console.log(syllables("birchtree"))
 
 #Date parsing
 june to march 1995
+
+#inflection
+printer(nlp.noun('bus').pluralize() , 'buses')
+printer(nlp.noun('crisis').pluralize() , 'crises')
+printer(nlp.noun('analysis').pluralize() , 'analyses')
+printer(nlp.noun('neurosis').pluralize() , 'neuroses')

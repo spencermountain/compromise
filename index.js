@@ -68,3 +68,5 @@ module.exports = nlp
 // console.log(nlp.pos("it was sturdy")[0].tokens)
 // console.log(new Adjective("sacred").conjugate())
 // console.log(nlp.word('went').pos)
+// console.log(nlp.pos("they are friends")[0].tags())
+// console.log(nlp.verb('are').to_past())

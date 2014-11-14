@@ -1,3 +1,4 @@
+//converts nouns from plural and singular, and viceversases
 //some regex borrowed from pksunkara/inflect
 //https://github.com/pksunkara/inflect/blob/master/lib/defaults.js
 
@@ -51,7 +52,7 @@ inflect = (function() {
         ['tuxedo', 'tuxedos'],
         ['sombrero', 'sombreros'],
     ]
-
+    //words that shouldn't ever inflect, for metaphysical reasons
     var uncountables = {
         "aircraft": 1,
         "bass": 1,
@@ -98,6 +99,7 @@ inflect = (function() {
         "physics": 1,
         "civics": 1,
         "ethics": 1,
+        "gymnastics": 1,
         "mumps": 1,
         "measles": 1,
         "news": 1,
@@ -290,10 +292,14 @@ inflect = (function() {
     }, {
         reg: /^(?!talis|.*hu)(.*)man$/i,
         repl: '$1men'
-    }, {
+    },
+      //fallback, add an s
+    {
         reg: /(.*)/i,
         repl: '$1s'
-    }]
+    }
+
+    ]
 
 
     var pluralize = function(str) {
@@ -328,7 +334,6 @@ inflect = (function() {
             }
         }
     }
-
 
 
     var singularize_rules = [{
@@ -398,9 +403,15 @@ inflect = (function() {
         reg: /(ss)$/i,
         repl: '$1'
     }, {
+        reg: /(ics)$/i,
+        repl: "$1"
+    },
+    //fallback, remove last s
+    {
         reg: /s$/i,
         repl: ''
-    }]
+    }
+    ]
 
 
     var singularize = function(str) {
@@ -439,6 +450,7 @@ inflect = (function() {
 
 
     var is_plural = function(str) {
+        //if it's a known verb
         for (var i = 0; i < irregulars.length; i++) {
             if (irregulars[i][1] == str) {
                 return true
@@ -447,13 +459,24 @@ inflect = (function() {
                 return false
             }
         }
-        if (str.match(/s$/) && singularize(str)!=str) {
+        //if it changes when singularized
+        if (singularize(str)!=str) {
             return true
+        }
+        //'looks pretty plural' rules
+        if(str.match(/s$/) && !str.match(/ss$/) && str.length>3){//needs some lovin'
+          return true
         }
         return false
     }
 
     var inflect = function(str) {
+        if(uncountables[str]){//uncountables shouldn't ever inflect
+            return {
+                plural:str,
+                singular:str
+            }
+        }
         if (is_plural(str)) {
             return {
                 plural: str,
@@ -486,8 +509,17 @@ inflect = (function() {
 // console.log(inflect.pluralize('boy in the mall'))
 // console.log(inflect.pluralize('maple leaf'))
 // console.log(inflect.singularize('leaves'))
-// console.log(inflect.singularize('mayors of toronto'))
+// console.log(inflect.inflect('mayor of toronto'))
+// console.log(inflect.inflect('mayors of kansas'))
+// console.log(inflect.inflect('mayors of niagra falls'))
+// console.log(inflect.pluralize('woman'))
+// console.log(inflect.singularize('women'))
 // console.log(inflect.inflect('women'))
+// console.log(inflect.inflect('kiss'))
+// console.log(inflect.inflect('news'))
+
+// console.log(inflect.inflect('bus'))
+// console.log(inflect.inflect('statistics'))
 
 
 /*

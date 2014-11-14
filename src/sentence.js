@@ -105,13 +105,46 @@ var Sentence = function(tokens) {
 		}).join(' ')
 	}
 
+
+	//sugar 'grab' methods
+	the.verbs = function() {
+		return the.tokens.filter(function(t) {
+			return t.pos.parent=="verb"
+		})
+	}
+	the.adverbs = function() {
+		return the.tokens.filter(function(t) {
+			return t.pos.parent=="adverb"
+		})
+	}
+	the.nouns = function() {
+		return the.tokens.filter(function(t) {
+			return t.pos.parent=="noun"
+		})
+	}
+	the.adjectives = function() {
+		return the.tokens.filter(function(t) {
+			return t.pos.parent=="adjective"
+		})
+	}
+	the.values = function() {
+		return the.tokens.filter(function(t) {
+			return t.pos.parent=="value"
+		})
+	}
+	the.tags = function() {
+		return the.tokens.map(function(t) {
+			return t.pos.tag
+		})
+	}
+
 	return the
 }
 if (typeof module !== "undefined" && module.exports) {
 	module.exports = Sentence;
 }
-// pos = require("./pos")
 
+// pos = require("./pos")
 //gerund negation
 // tokens = pos('joe is so cool, he is going')[0].tokens
 //non-gerund verb negations
@@ -133,3 +166,6 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log(s.text())
 // s.to_future()
 // console.log(s.text())
+
+// s=pos('the chimneys are so yellow')[0]
+// console.log(s.to_past().text())

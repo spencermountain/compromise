@@ -832,7 +832,13 @@ var verb_irregulars = (function() {
 		  gerund: 'competing',
 		  past: 'competed',
 		  infinitive: 'compete',
-		  doer: 'competitor' }
+		  doer: 'competitor' },
+
+		{ present: 'are',
+		  gerund: 'are',
+		  past: 'were',
+		  infinitive: 'being',
+		  doer: '' }
 
 	]
 

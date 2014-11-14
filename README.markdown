@@ -53,7 +53,34 @@ nlp.syllables("hamburger")
 ```
 
 ## API
-noun methods:
+
+###Sentence methods
+```javascript
+  var s= nlp.pos("they are lovers")[0]
+  s.tense()
+  //present
+  s.text()
+  //"they are lovers"
+
+  s.to_past().text()
+  //they were lovers
+  s.to_present().text()
+  //the are lovers
+  s.to_future().text()
+  //they will be lovers
+  s.negate().text()
+  //they are not lovers
+  s.tags()
+  //[ 'PRP', 'CP', 'JJ' ]
+
+  s.nouns()
+  s.adjectives()
+  s.adverbs()
+  s.verbs()
+  s.values()
+````
+
+###noun methods:
 ```javascript
 nlp.noun("earthquakes").singularize()
 //earthquake
@@ -66,8 +93,13 @@ nlp.noun('veggie burger').is_plural
 
 nlp.noun('hour').article()
 //an
+
+nlp.inflect('mayors of toronto'))
+//{ plural: 'mayors of toronto', singular: 'mayor of toronto' }
 ```
-verbs methods:
+
+
+###verb methods:
 ```javascript
 nlp.verb("walked").conjugate()
 //{ infinitive: 'walk',
@@ -77,7 +109,7 @@ nlp.verb("walked").conjugate()
 nlp.verb('swimming').to_past()
 //swam
 ```
-adjective methods:
+###adjective methods:
 ```javascript
 nlp.adjective("quick").conjugate()
 //  { comparative: 'quicker',
@@ -85,11 +117,13 @@ nlp.adjective("quick").conjugate()
 //    adverb: 'quickly',
 //    noun: 'quickness'}
 ```
-adverb methods
+###adverb methods
 ```javascript
 nlp.adverb("quickly").conjugate()
 //  { adjective: 'quick'}
 ```
+
+
 
 ## Part-of-speech tagging
 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)

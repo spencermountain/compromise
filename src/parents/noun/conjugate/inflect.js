@@ -433,10 +433,10 @@ inflect = (function() {
         }
         //inflect first word of preposition-phrase
         if (str.match(/([a-z]*) (of|in|by|for) [a-z]/)) {
-            var first = str.match(/^([a-z]*) (of|in|by|for) [a-z]/)[1]
-            if (first) {
-                var better_first = singularize(first)
-                return better_first + str.replace(first, '')
+            var first = str.match(/^([a-z]*) (of|in|by|for) [a-z]/)
+            if (first && first[1]) {
+                var better_first = singularize(first[1])
+                return better_first + str.replace(first[1], '')
             }
         }
         //regular

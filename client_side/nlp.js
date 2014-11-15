@@ -1,6 +1,6 @@
 /*! nlp_compromise 
  by @spencermountain
- 2014-11-07 */
+ 2014-11-14 */
 //
 // NLP_comprimise - @spencermountain - gplv3
 // https://github.com/spencermountain/nlp_comprimise
@@ -1081,22 +1081,24 @@ var normalize = (function() {
 var syllables = (function(str) {
 
 
-
-
 	var main = function(str) {
 		var all = []
 
-
 		//suffix fixes
 			function postprocess(arr) {
-				if (!arr.length <= 2) {
+				//trim whitespace
+				arr= arr.map(function(w){
+					w= w.replace(/^ */,'')
+					w= w.replace(/ *$/,'')
+					return w
+				})
+				if (!arr.length <= 2) { //?
 					return arr
 				}
 				var twos = [
 					/[^aeiou]ying$/,
-					/yer$/
+					/yer$/,
 				]
-
 				var ones = [
 					/^[^aeiou]?ion/,
 					/^[^aeiou]?ised/,
@@ -1146,9 +1148,15 @@ var syllables = (function(str) {
 					all.push(current)
 					return doer(after)
 				}
-
+				//if it has 4 consonants in a row, it's starting to be a mouthful for one syllable- like 'birchtree'
+				// if(candidate.match(/[^aeiou]{4}$/)){
+				// 	all.push(candidate.replace(/[^aeiou]{2}$/,''))
+				// 	l= candidate.length - 1
+				// 	candidate=candidate.slice(l-2, l)
+				// }
 			}
-			if (str.match(/[aiouy]/)) { //allow silent trailing e
+			//if still running, end last syllable
+			if (str.match(/[aiouy]/) || str.match(/ee$/)) { //allow silent trailing e
 				all.push(str)
 			} else {
 				all[all.length - 1] = (all[all.length - 1] || '') + str; //append it to the last one
@@ -1159,11 +1167,14 @@ var syllables = (function(str) {
 			doer(s)
 		})
 		all = postprocess(all)
+
+		//for words like 'tree' and 'free'
+		if(all.length==0){
+			all=[str]
+		}
+
 		return all
 	}
-
-
-
 
 	if (typeof module !== "undefined" && module.exports) {
 		module.exports = main;
@@ -1184,9 +1195,12 @@ var syllables = (function(str) {
 
 // console.log(syllables("carbonised"))
 // console.log(syllables("sometimes"))
-
-//BUG!
+// console.log(syllables("calgary flames"))
 // console.log(syllables("tree"))
+
+//broken
+// console.log(syllables("birchtree"))
+
 //built with patterns+exceptions from https://en.wikipedia.org/wiki/British_spelling
 // mainly,
 // ise <-> ize
@@ -3735,6 +3749,7 @@ var indefinite_article = (function() {
 // console.log(indefinite_article('S.S.L.') == "an")
 // console.log(indefinite_article('FBI') == "an")
 // console.log(indefinite_article('GHQ') == "a")
+//converts nouns from plural and singular, and viceversases
 //some regex borrowed from pksunkara/inflect
 //https://github.com/pksunkara/inflect/blob/master/lib/defaults.js
 
@@ -3788,7 +3803,7 @@ inflect = (function() {
         ['tuxedo', 'tuxedos'],
         ['sombrero', 'sombreros'],
     ]
-
+    //words that shouldn't ever inflect, for metaphysical reasons
     var uncountables = {
         "aircraft": 1,
         "bass": 1,
@@ -3835,6 +3850,7 @@ inflect = (function() {
         "physics": 1,
         "civics": 1,
         "ethics": 1,
+        "gymnastics": 1,
         "mumps": 1,
         "measles": 1,
         "news": 1,
@@ -4027,10 +4043,14 @@ inflect = (function() {
     }, {
         reg: /^(?!talis|.*hu)(.*)man$/i,
         repl: '$1men'
-    }, {
+    },
+      //fallback, add an s
+    {
         reg: /(.*)/i,
         repl: '$1s'
-    }]
+    }
+
+    ]
 
 
     var pluralize = function(str) {
@@ -4065,7 +4085,6 @@ inflect = (function() {
             }
         }
     }
-
 
 
     var singularize_rules = [{
@@ -4135,9 +4154,15 @@ inflect = (function() {
         reg: /(ss)$/i,
         repl: '$1'
     }, {
+        reg: /(ics)$/i,
+        repl: "$1"
+    },
+    //fallback, remove last s
+    {
         reg: /s$/i,
         repl: ''
-    }]
+    }
+    ]
 
 
     var singularize = function(str) {
@@ -4159,10 +4184,10 @@ inflect = (function() {
         }
         //inflect first word of preposition-phrase
         if (str.match(/([a-z]*) (of|in|by|for) [a-z]/)) {
-            var first = str.match(/^([a-z]*) (of|in|by|for) [a-z]/)[1]
-            if (first) {
-                var better_first = singularize(first)
-                return better_first + str.replace(first, '')
+            var first = str.match(/^([a-z]*) (of|in|by|for) [a-z]/)
+            if (first && first[1]) {
+                var better_first = singularize(first[1])
+                return better_first + str.replace(first[1], '')
             }
         }
         //regular
@@ -4176,6 +4201,7 @@ inflect = (function() {
 
 
     var is_plural = function(str) {
+        //if it's a known verb
         for (var i = 0; i < irregulars.length; i++) {
             if (irregulars[i][1] == str) {
                 return true
@@ -4184,13 +4210,24 @@ inflect = (function() {
                 return false
             }
         }
-        if (str.match(/s$/) && singularize(str)!=str) {
+        //if it changes when singularized
+        if (singularize(str)!=str) {
             return true
+        }
+        //'looks pretty plural' rules
+        if(str.match(/s$/) && !str.match(/ss$/) && str.length>3){//needs some lovin'
+          return true
         }
         return false
     }
 
     var inflect = function(str) {
+        if(uncountables[str]){//uncountables shouldn't ever inflect
+            return {
+                plural:str,
+                singular:str
+            }
+        }
         if (is_plural(str)) {
             return {
                 plural: str,
@@ -4223,8 +4260,17 @@ inflect = (function() {
 // console.log(inflect.pluralize('boy in the mall'))
 // console.log(inflect.pluralize('maple leaf'))
 // console.log(inflect.singularize('leaves'))
-// console.log(inflect.singularize('mayors of toronto'))
+// console.log(inflect.inflect('mayor of toronto'))
+// console.log(inflect.inflect('mayors of kansas'))
+// console.log(inflect.inflect('mayors of niagra falls'))
+// console.log(inflect.pluralize('woman'))
+// console.log(inflect.singularize('women'))
 // console.log(inflect.inflect('women'))
+// console.log(inflect.inflect('kiss'))
+// console.log(inflect.inflect('news'))
+
+// console.log(inflect.inflect('bus'))
+// console.log(inflect.inflect('statistics'))
 
 
 /*
@@ -5825,7 +5871,13 @@ var verb_irregulars = (function() {
 		  gerund: 'competing',
 		  past: 'competed',
 		  infinitive: 'compete',
-		  doer: 'competitor' }
+		  doer: 'competitor' },
+
+		{ present: 'are',
+		  gerund: 'are',
+		  past: 'were',
+		  infinitive: 'being',
+		  doer: '' }
 
 	]
 
@@ -9454,13 +9506,46 @@ var Sentence = function(tokens) {
 		}).join(' ')
 	}
 
+
+	//sugar 'grab' methods
+	the.verbs = function() {
+		return the.tokens.filter(function(t) {
+			return t.pos.parent=="verb"
+		})
+	}
+	the.adverbs = function() {
+		return the.tokens.filter(function(t) {
+			return t.pos.parent=="adverb"
+		})
+	}
+	the.nouns = function() {
+		return the.tokens.filter(function(t) {
+			return t.pos.parent=="noun"
+		})
+	}
+	the.adjectives = function() {
+		return the.tokens.filter(function(t) {
+			return t.pos.parent=="adjective"
+		})
+	}
+	the.values = function() {
+		return the.tokens.filter(function(t) {
+			return t.pos.parent=="value"
+		})
+	}
+	the.tags = function() {
+		return the.tokens.map(function(t) {
+			return t.pos.tag
+		})
+	}
+
 	return the
 }
 if (typeof module !== "undefined" && module.exports) {
 	module.exports = Sentence;
 }
-// pos = require("./pos")
 
+// pos = require("./pos")
 //gerund negation
 // tokens = pos('joe is so cool, he is going')[0].tokens
 //non-gerund verb negations
@@ -9482,6 +9567,9 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log(s.text())
 // s.to_future()
 // console.log(s.text())
+
+// s=pos('the chimneys are so yellow')[0]
+// console.log(s.to_past().text())
 var pos = (function() {
 
 

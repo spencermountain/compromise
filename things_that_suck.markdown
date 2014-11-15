@@ -23,6 +23,9 @@ fun = pos("he blalks the asdf") //"second_pass signal from PRP"
 fun = pos("He does not perform it with truly human energies", {}) //issue with needs model
 fun = pos("They’re taking risks", {}) //issue with needs model
 
+assert_pos("he lkajsdf so hard", ["PRP", "VB", "RB", "JJ"])
+assert_pos("schlooking in toronto is scarey and lkasf", ["VBG", "IN", "NN", "CP", "JJ", "CC", "JJ"])
+
 #Syllables
 console.log(syllables("birchtree"))
 

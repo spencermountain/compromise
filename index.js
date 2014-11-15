@@ -70,3 +70,4 @@ module.exports = nlp
 // console.log(nlp.word('went').pos)
 // console.log(nlp.pos("they are friends")[0].tags())
 // console.log(nlp.verb('are').to_past())
+// console.log(nlp.spot("he went to Toronto"))

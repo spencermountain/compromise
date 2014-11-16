@@ -53,6 +53,9 @@ module.exports = function(grunt) {
           './src/pos.js',
           './src/spot.js',
 
+          //pull it all together..
+          './index.js',
+
           // './tests/test.js',
 
           './build/footer.js'

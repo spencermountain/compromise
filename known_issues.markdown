@@ -6,6 +6,7 @@
 
 #Negation
 "the chimney was so yellow".negate
+"the name might come from latin"
 
 #Conjugation
 console.log(verb_conjugate("contain")) ///*****bug

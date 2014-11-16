@@ -54,7 +54,7 @@ var tokenize = (function() {
 				return {
 					text: w,
 					normalised: normalise(w),
-					capitalised: (w.match(/^[A-Z][a-z]/) != null) || undefined,
+					capitalised: (w.match(/^[A-Z][a-z|A-Z]/) != null) && i!=0, //only for non-first word capitals
 					punctuated: (w.match(/[,;:\(\)"]/) != null) || undefined,
 					end: (i == (arr.length - 1)) || undefined,
 					start: (i == 0) || undefined
@@ -81,6 +81,7 @@ var tokenize = (function() {
 // a = tokenize("I speak optimistically of course.")
 // a = tokenize("in the United States of America")
 // a = tokenize("Joe is 9")
+// a = tokenize("he is in the band AFI")
 // console.log(JSON.stringify(a, null, 2));
 
 

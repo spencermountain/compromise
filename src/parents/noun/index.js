@@ -42,17 +42,10 @@ var Noun = function(str, next, last, token) {
 
 
 	the.is_entity= (function(){
+		if(!token){
+			return false
+		}
 		var blacklist = {
-	    "i": 1,
-	    "me": 1,
-	    "he": 1,
-	    "she": 1,
-	    "we": 1,
-	    "they": 1,
-	    "it": 1,
-	    "you": 1,
-	    "him": 1,
-	    "her": 1,
 	    "itself": 1,
 	    "west": 1,
 	    "east": 1,
@@ -62,11 +55,43 @@ var Noun = function(str, next, last, token) {
 	    "your": 1,
 	    "my": 1,
 	  }
-		if(token && token.capitalised && !blacklist[token.normalised]){
+	  //prepositions
+	  if(prps[token.normalised]){
+	  	return false
+	  }
+	  //blacklist
+	  if(blacklist[token.normalised]){
+	  	return false
+	  }
+	  //discredit specific nouns forms
+	  if(token.pos){
+	   if(token.pos.tag=="NNA"){//eg. 'singer'
+	  		return false
+			}
+	   if(token.pos.tag=="NNO"){//eg. "spencer's"
+	  		return false
+			}
+	   if(token.pos.tag=="NNG"){//eg. 'walking'
+	  		return false
+			}
+	   if(token.pos.tag=="NNP"){//yes! eg. 'Edinburough'
+	  		return true
+			}
+	  }
+	  //distinct capital is very good signal
+		if(token.capitalised){
 			return true
 		}
+	  //multiple-word nouns are very good signal
+		if(token.normalised.match(' ')){
+			return true
+		}
+	  //acronyms are a-ok
+		if(the.is_acronym){
+			return true
+		}
+		//else, be conservative
 		return false
-
 	})()
 
 	the.conjugate = function() {
@@ -129,7 +154,7 @@ if (typeof module !== "undefined" && module.exports) {
 }
 
 
-// console.log(new Noun('farmhouse').is_entity())
+// console.log(new Noun('farmhouse').is_entity)
 // console.log(new Noun("FBI").is_acronym)
 // console.log(new Noun("FBI").which)
 // console.log(new Noun("kitchen's").which)

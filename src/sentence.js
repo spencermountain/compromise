@@ -100,6 +100,25 @@ var Sentence = function(tokens) {
 		return the
 	}
 
+
+  the.entities=function(options){
+    var spots=[]
+  	options=options||{}
+		the.tokens.forEach(function(token) {
+			if (token.pos.parent == "noun" && token.analysis.is_entity) {
+				spots.push(token)
+			}
+		})
+		if (options.ignore_gerund) {
+			spots = spots.filter(function(t) {
+				return t.pos.tag != "VBG"
+			})
+		}
+		return spots
+  }
+
+
+
 	the.text = function() {
 		return the.tokens.map(function(s) {
 			return s.text

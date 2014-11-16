@@ -389,7 +389,9 @@ var pos = (function() {
 
 		//make them Sentence objects
 		sentences= sentences.map(function(s) {
-			return new Sentence(s.tokens)
+			var sentence=new Sentence(s.tokens)
+			sentence.type=s.type
+			return sentence
 		})
 		//return a Section object, with its methods
 		return new Section(sentences)
@@ -470,7 +472,7 @@ var pos = (function() {
 	// fun = pos("the Phantom of the Opera", {}) //two combines
 	// fun = pos("the school asdf him", {}) //before him|her"it
 	// fun = pos("the disgruntled worker", {}) //
-	// fun = pos("joe carter doesn't play", {}) //
+	// fun = pos("joe carter doesn't play?", {}) //
 	// fun = pos("now president of germany", {}) //
 
 
@@ -482,7 +484,7 @@ var pos = (function() {
 
 	// fun = pos("", {}) //
 
-	// console.log(fun.adjectives())
+	// console.log(fun)
 	// render(fun)
 
 

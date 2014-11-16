@@ -250,7 +250,7 @@ var tokenize = (function() {
 				return {
 					text: w,
 					normalised: normalise(w),
-					capitalised: (w.match(/^[A-Z][a-z]/) != null) || undefined,
+					capitalised: (w.match(/^[A-Z][a-z|A-Z]/) != null) || undefined,
 					punctuated: (w.match(/[,;:\(\)"]/) != null) || undefined,
 					end: (i == (arr.length - 1)) || undefined,
 					start: (i == 0) || undefined
@@ -277,6 +277,7 @@ var tokenize = (function() {
 // a = tokenize("I speak optimistically of course.")
 // a = tokenize("in the United States of America")
 // a = tokenize("Joe is 9")
+// a = tokenize("he is in the band AFI")
 // console.log(JSON.stringify(a, null, 2));
 
 
@@ -4325,17 +4326,10 @@ var Noun = function(str, next, last, token) {
 
 
 	the.is_entity= (function(){
+		if(!token){
+			return false
+		}
 		var blacklist = {
-	    "i": 1,
-	    "me": 1,
-	    "he": 1,
-	    "she": 1,
-	    "we": 1,
-	    "they": 1,
-	    "it": 1,
-	    "you": 1,
-	    "him": 1,
-	    "her": 1,
 	    "itself": 1,
 	    "west": 1,
 	    "east": 1,
@@ -4345,11 +4339,43 @@ var Noun = function(str, next, last, token) {
 	    "your": 1,
 	    "my": 1,
 	  }
-		if(token && token.capitalised && !blacklist[token.normalised]){
+	  //prepositions
+	  if(prps[token.normalised]){
+	  	return false
+	  }
+	  //blacklist
+	  if(blacklist[token.normalised]){
+	  	return false
+	  }
+	  //discredit specific nouns forms
+	  if(token.pos){
+	   if(token.pos.tag=="NNA"){//eg. 'singer'
+	  		return false
+			}
+	   if(token.pos.tag=="NNO"){//eg. "spencer's"
+	  		return false
+			}
+	   if(token.pos.tag=="NNG"){//eg. 'walking'
+	  		return false
+			}
+	   if(token.pos.tag=="NNP"){//yes! eg. 'Edinburough'
+	  		return true
+			}
+	  }
+	  //distinct capital is very good signal
+		if(token.capitalised){
 			return true
 		}
+	  //multiple-word nouns are very good signal
+		if(token.normalised.match(' ')){
+			return true
+		}
+	  //acronyms are a-ok
+		if(the.is_acronym){
+			return true
+		}
+		//else, be conservative
 		return false
-
 	})()
 
 	the.conjugate = function() {
@@ -4412,7 +4438,7 @@ if (typeof module !== "undefined" && module.exports) {
 }
 
 
-// console.log(new Noun('farmhouse').is_entity())
+// console.log(new Noun('farmhouse').is_entity)
 // console.log(new Noun("FBI").is_acronym)
 // console.log(new Noun("FBI").which)
 // console.log(new Noun("kitchen's").which)
@@ -7183,6 +7209,7 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log(new Adjective("crazy"))
 // console.log(new Adjective("craziest"))
 // console.log(new Adjective("crazier"))
+//load if server-side, otherwise assume these are prepended already
 if (typeof module !== "undefined" && module.exports) {
 	Adjective = require("./adjective/index");
 	Noun = require("./noun/index");
@@ -9501,6 +9528,25 @@ var Sentence = function(tokens) {
 		return the
 	}
 
+
+  the.entities=function(options){
+    var spots=[]
+  	options=options||{}
+		the.tokens.forEach(function(token) {
+			if (token.pos.parent == "noun" && token.analysis.is_entity) {
+				spots.push(token)
+			}
+		})
+		if (options.ignore_gerund) {
+			spots = spots.filter(function(t) {
+				return t.pos.tag != "VBG"
+			})
+		}
+		return spots
+  }
+
+
+
 	the.text = function() {
 		return the.tokens.map(function(s) {
 			return s.text
@@ -9584,6 +9630,11 @@ var Section = function(sentences) {
   the.nouns= function(){
     return the.sentences.map(function(s){
       return s.nouns()
+    }).reduce(function(arr, a){return arr.concat(a)},[])
+  }
+  the.entities= function(options){
+    return the.sentences.map(function(s){
+      return s.entities(options)
     }).reduce(function(arr, a){return arr.concat(a)},[])
   }
   the.adjectives= function(){
@@ -10002,7 +10053,9 @@ var pos = (function() {
 
 		//make them Sentence objects
 		sentences= sentences.map(function(s) {
-			return new Sentence(s.tokens)
+			var sentence=new Sentence(s.tokens)
+			sentence.type=s.type
+			return sentence
 		})
 		//return a Section object, with its methods
 		return new Section(sentences)
@@ -10083,7 +10136,7 @@ var pos = (function() {
 	// fun = pos("the Phantom of the Opera", {}) //two combines
 	// fun = pos("the school asdf him", {}) //before him|her"it
 	// fun = pos("the disgruntled worker", {}) //
-	// fun = pos("joe carter doesn't play", {}) //
+	// fun = pos("joe carter doesn't play?", {}) //
 	// fun = pos("now president of germany", {}) //
 
 
@@ -10095,7 +10148,7 @@ var pos = (function() {
 
 	// fun = pos("", {}) //
 
-	// console.log(fun.adjectives())
+	// console.log(fun)
 	// render(fun)
 
 
@@ -10111,21 +10164,9 @@ var spot = (function() {
 	var main = function(text, options) {
 		options = options || {}
 		var sentences = pos(text, options).sentences
-		var spots = []
-		sentences.forEach(function(sentence) {
-			sentence.tokens.forEach(function(token) {
-				if (token.pos.parent == "noun" && token.analysis.is_entity) {
-					spots.push(token)
-				}
-			})
-		})
-
-		if (options.ignore_gerund) {
-			spots = spots.filter(function(t) {
-				return t.pos.tag != "VBG"
-			})
-		}
-		return spots
+		return sentences.reduce(function(arr,s){
+			return arr.concat(s.entities(options))
+		},[])
 	}
 
 	if (typeof module !== "undefined" && module.exports) {
@@ -10134,9 +10175,11 @@ var spot = (function() {
 	return main
 })()
 
-// var spots = spot("tony hawk walked to toronto")
+// pos = require("./pos");
+// var spots = pos("Tony Hawk walked to Toronto. Germany is in Europe.").entities()
+// var spots = spot("tony hawk walked to toronto. He is a singer in the band AFI.")
 // var spots = spot("mike myers and nancy kerrigan")
-// console.log(spots)
+// console.log(spots.map(function(s){return s.normalised}))
 
 
 // if we're server-side, grab files, otherwise assume they're prepended already
@@ -10189,6 +10232,7 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = nlp
 }
 
+// console.log(nlp.pos("hidee-ho neighbourino").sentences[0])
 	///
 	//footer
 	//

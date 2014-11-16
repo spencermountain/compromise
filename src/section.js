@@ -13,6 +13,11 @@ var Section = function(sentences) {
       return s.nouns()
     }).reduce(function(arr, a){return arr.concat(a)},[])
   }
+  the.entities= function(options){
+    return the.sentences.map(function(s){
+      return s.entities(options)
+    }).reduce(function(arr, a){return arr.concat(a)},[])
+  }
   the.adjectives= function(){
     return the.sentences.map(function(s){
       return s.adjectives()

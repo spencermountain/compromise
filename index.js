@@ -49,3 +49,5 @@ var nlp = {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = nlp
 }
+
+// console.log(nlp.pos("hidee-ho neighbourino").sentences[0])

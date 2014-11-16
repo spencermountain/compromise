@@ -1,3 +1,5 @@
+//just a wrapper for text -> entities
+//most of this logic is in ./parents/noun
 var spot = (function() {
 
 	if (typeof module !== "undefined" && module.exports) {
@@ -7,21 +9,9 @@ var spot = (function() {
 	var main = function(text, options) {
 		options = options || {}
 		var sentences = pos(text, options).sentences
-		var spots = []
-		sentences.forEach(function(sentence) {
-			sentence.tokens.forEach(function(token) {
-				if (token.pos.parent == "noun" && token.analysis.is_entity) {
-					spots.push(token)
-				}
-			})
-		})
-
-		if (options.ignore_gerund) {
-			spots = spots.filter(function(t) {
-				return t.pos.tag != "VBG"
-			})
-		}
-		return spots
+		return sentences.reduce(function(arr,s){
+			return arr.concat(s.entities(options))
+		},[])
 	}
 
 	if (typeof module !== "undefined" && module.exports) {
@@ -30,6 +20,8 @@ var spot = (function() {
 	return main
 })()
 
-// var spots = spot("tony hawk walked to toronto")
+// pos = require("./pos");
+// var spots = pos("Tony Hawk walked to Toronto. Germany is in Europe.").entities()
+// var spots = spot("tony hawk walked to toronto. He is a singer in the band AFI.")
 // var spots = spot("mike myers and nancy kerrigan")
-// console.log(spots)
+// console.log(spots.map(function(s){return s.normalised}))

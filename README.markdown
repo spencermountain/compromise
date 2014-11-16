@@ -3,7 +3,7 @@ a Natural-Language-Processing library *in javascript*, small-enough for the brow
 
 it does [tons of clever things](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/basic_demo/index.html). it's smaller than jquery, and scores 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
 ```javascript
-nlp.pos('she sells seashells by the seashore')[0].to_past()
+nlp.pos('she sells seashells by the seashore').sentences[0].to_past()
 //she sold seashells by the seashore
 ```
 ##Check it out
@@ -56,7 +56,7 @@ nlp.syllables("hamburger")
 
 ###Sentence methods
 ```javascript
-  var s= nlp.pos("they are lovers")[0]
+  var s= nlp.pos("they are lovers").sentences[0]
   s.tense()
   //present
   s.text()

@@ -11,7 +11,6 @@ head(function() {
   articles = Object.keys(texts);
   second_choices = function(k) {
     var choices, style;
-    console.log("hi " + k);
     style = "color:white; font-size:17px; cursor:pointer;";
     choices = {
       nouns: function() {
@@ -130,7 +129,7 @@ head(function() {
     });
     return make_list(arr);
   };
-  tags_to_html = function(pos, parent) {
+  tags_to_html = function(pos) {
     var colour;
     colour = blues(0.4);
     return pos.map(function(sentence) {
@@ -166,7 +165,7 @@ head(function() {
   };
   set_text = function(txt) {
     var html, tags;
-    tags = nlp.pos(txt);
+    tags = nlp.pos(txt).sentences;
     html = tags_to_html(tags);
     $("#text").html(html);
     $("#second").html('');

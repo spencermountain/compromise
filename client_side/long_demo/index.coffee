@@ -14,7 +14,6 @@ head ->
   articles= Object.keys(texts)
 
   second_choices= (k)->
-    console.log "hi #{k}"
     style= "color:white; font-size:17px; cursor:pointer;"
     choices= {
       nouns: ->
@@ -87,7 +86,7 @@ head ->
       arr.push $(this).attr('data-token')
     make_list(arr)
 
-  tags_to_html= (pos, parent)->
+  tags_to_html= (pos)->
     colour= blues(0.4)
     return pos.map((sentence)->
       return sentence.tokens.map((word)->
@@ -117,7 +116,7 @@ head ->
 
 
   set_text=(txt)->
-    tags= nlp.pos(txt)
+    tags= nlp.pos(txt).sentences
     html= tags_to_html(tags)
     $("#text").html(html)
     $("#second").html('')

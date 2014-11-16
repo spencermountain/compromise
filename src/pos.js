@@ -8,6 +8,7 @@ var pos = (function() {
 		lexicon = require("./data/lexicon")
 		wordnet_suffixes = require("./data/unambiguous_suffixes")
 		Sentence = require("./sentence")
+		Section = require("./section")
 		parents = require("./parents/parents")
 	}
 
@@ -387,9 +388,11 @@ var pos = (function() {
 		})
 
 		//make them Sentence objects
-		return sentences.map(function(s) {
+		sentences= sentences.map(function(s) {
 			return new Sentence(s.tokens)
 		})
+		//return a Section object, with its methods
+		return new Section(sentences)
 
 	}
 
@@ -479,7 +482,7 @@ var pos = (function() {
 
 	// fun = pos("", {}) //
 
-	// console.log(fun[0])
+	// console.log(fun.adjectives())
 	// render(fun)
 
 

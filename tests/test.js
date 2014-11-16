@@ -460,7 +460,7 @@ var tests = (function() {
     }
 
     function assert_pos(str, arr) {
-        var tags = nlp.pos(str, {})[0].tags()
+        var tags = nlp.pos(str, {}).sentences[0].tags()
         if (arraysEqual(tags, arr)) {
             console.log('true');
         } else {

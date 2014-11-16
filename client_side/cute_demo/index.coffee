@@ -31,7 +31,7 @@ head ->
       }
       #nlp to get the first sentence of description
       tmp= obj.output.description['/common/topic/description']||[]
-      done= nlp.pos(tmp[0])
+      done= nlp.pos(tmp[0]).sentences
       text= done[0].text()
       div {style:"width:400px;"},-> text
 
@@ -74,7 +74,7 @@ head ->
               click:->
                 el= $("#text")
                 el.find('.hide').remove() #so the helper buttons don't show up
-                done= nlp.pos(el.text())
+                done= nlp.pos(el.text()).sentences
                 fixed= done[0].to_past().text()
                 el.text(fixed)
                 el.keyup()
@@ -87,7 +87,7 @@ head ->
               click:->
                 el= $("#text")
                 el.find('.hide').remove() #so the helper buttons don't show up
-                done= nlp.pos(el.text())
+                done= nlp.pos(el.text()).sentences
                 fixed= done[0].to_future().text()
                 el.text(fixed)
                 el.keyup()
@@ -100,7 +100,7 @@ head ->
               click:->
                 el= $("#text")
                 el.find('.hide').remove() #so the helper buttons don't show up
-                done= nlp.pos(el.text())
+                done= nlp.pos(el.text()).sentences
                 fixed= done[0].negate().text()
                 el.text(fixed)
                 el.keyup()
@@ -131,9 +131,8 @@ head ->
             el= $("#text")
             el.find('.hide').remove() #so the helper buttons don't show up
             txt= el.text()
-            done= nlp.pos(txt)
+            done= nlp.pos(txt).sentences
             tokens= done[0].tokens
-            console.log(done[0])
             el.html('')
             set_text(tokens, el)
             ).debounce(500);

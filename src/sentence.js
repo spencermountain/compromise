@@ -1,3 +1,4 @@
+// methods that hang on a parsed set of words
 // accepts parsed tokens
 var Sentence = function(tokens) {
 	var the = this

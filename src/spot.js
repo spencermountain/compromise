@@ -6,7 +6,7 @@ var spot = (function() {
 
 	var main = function(text, options) {
 		options = options || {}
-		var sentences = pos(text, options)
+		var sentences = pos(text, options).sentences
 		var spots = []
 		sentences.forEach(function(sentence) {
 			sentence.tokens.forEach(function(token) {

@@ -19,7 +19,6 @@ if (typeof module !== "undefined" && module.exports) {
   var pos = require('./src/pos');
   //named_entity_recognition
   var spot = require('./src/spot');
-  // var tests = require('./tests/test');
 }
 
 ///

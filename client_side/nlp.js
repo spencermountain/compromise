@@ -9399,6 +9399,7 @@ lexicon = (function() {
 // console.log(Object.keys(lexicon).length)
 // console.log(lexicon['weaker'])
 // console.log(lexicon['restricted'])
+// methods that hang on a parsed set of words
 // accepts parsed tokens
 var Sentence = function(tokens) {
 	var the = this
@@ -9570,6 +9571,46 @@ if (typeof module !== "undefined" && module.exports) {
 
 // s=pos('the chimneys are so yellow')[0]
 // console.log(s.to_past().text())
+//a block of text, with an arbitrary number of sentences
+var Section = function(sentences) {
+  var the = this
+  the.sentences = sentences || [];
+
+  the.text= function(){
+    return the.sentences.map(function(s){
+      return s.text()
+    }).join(' ')
+  }
+  the.nouns= function(){
+    return the.sentences.map(function(s){
+      return s.nouns()
+    }).reduce(function(arr, a){return arr.concat(a)},[])
+  }
+  the.adjectives= function(){
+    return the.sentences.map(function(s){
+      return s.adjectives()
+    }).reduce(function(arr, a){return arr.concat(a)},[])
+  }
+  the.verbs= function(){
+    return the.sentences.map(function(s){
+      return s.verbs()
+    }).reduce(function(arr, a){return arr.concat(a)},[])
+  }
+  the.adverbs= function(){
+    return the.sentences.map(function(s){
+      return s.adverbs()
+    }).reduce(function(arr, a){return arr.concat(a)},[])
+  }
+  the.values= function(){
+    return the.sentences.map(function(s){
+      return s.values()
+    }).reduce(function(arr, a){return arr.concat(a)},[])
+  }
+
+}
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = Section;
+}
 var pos = (function() {
 
 
@@ -9580,6 +9621,7 @@ var pos = (function() {
 		lexicon = require("./data/lexicon")
 		wordnet_suffixes = require("./data/unambiguous_suffixes")
 		Sentence = require("./sentence")
+		Section = require("./section")
 		parents = require("./parents/parents")
 	}
 
@@ -9959,9 +10001,11 @@ var pos = (function() {
 		})
 
 		//make them Sentence objects
-		return sentences.map(function(s) {
+		sentences= sentences.map(function(s) {
 			return new Sentence(s.tokens)
 		})
+		//return a Section object, with its methods
+		return new Section(sentences)
 
 	}
 
@@ -10051,7 +10095,7 @@ var pos = (function() {
 
 	// fun = pos("", {}) //
 
-	// console.log(fun[0])
+	// console.log(fun.adjectives())
 	// render(fun)
 
 
@@ -10066,7 +10110,7 @@ var spot = (function() {
 
 	var main = function(text, options) {
 		options = options || {}
-		var sentences = pos(text, options)
+		var sentences = pos(text, options).sentences
 		var spots = []
 		sentences.forEach(function(sentence) {
 			sentence.tokens.forEach(function(token) {
@@ -10114,7 +10158,6 @@ if (typeof module !== "undefined" && module.exports) {
   var pos = require('./src/pos');
   //named_entity_recognition
   var spot = require('./src/spot');
-  // var tests = require('./tests/test');
 }
 
 ///

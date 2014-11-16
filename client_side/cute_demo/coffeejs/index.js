@@ -33,7 +33,7 @@ head(function() {
         src: "https://usercontent.googleapis.com/freebase/v1/image" + obj.id + "?key=" + key + "&maxwidth=200"
       });
       tmp = obj.output.description['/common/topic/description'] || [];
-      done = nlp.pos(tmp[0]);
+      done = nlp.pos(tmp[0]).sentences;
       text = done[0].text();
       return div({
         style: "width:400px;"
@@ -109,7 +109,7 @@ head(function() {
                 var done, fixed;
                 el = $("#text");
                 el.find('.hide').remove();
-                done = nlp.pos(el.text());
+                done = nlp.pos(el.text()).sentences;
                 fixed = done[0].to_past().text();
                 el.text(fixed);
                 return el.keyup();
@@ -124,7 +124,7 @@ head(function() {
                 var done, fixed;
                 el = $("#text");
                 el.find('.hide').remove();
-                done = nlp.pos(el.text());
+                done = nlp.pos(el.text()).sentences;
                 fixed = done[0].to_future().text();
                 el.text(fixed);
                 return el.keyup();
@@ -139,7 +139,7 @@ head(function() {
                 var done, fixed;
                 el = $("#text");
                 el.find('.hide').remove();
-                done = nlp.pos(el.text());
+                done = nlp.pos(el.text()).sentences;
                 fixed = done[0].negate().text();
                 el.text(fixed);
                 return el.keyup();
@@ -187,9 +187,8 @@ head(function() {
           el = $("#text");
           el.find('.hide').remove();
           txt = el.text();
-          done = nlp.pos(txt);
+          done = nlp.pos(txt).sentences;
           tokens = done[0].tokens;
-          console.log(done[0]);
           el.html('');
           return set_text(tokens, el);
         }).debounce(500)

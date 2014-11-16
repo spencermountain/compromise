@@ -60,7 +60,7 @@ $(function() {
 
   $("#tense").find("input").keyup(function(){
     var txt=$(this).val() || ''
-    var data= nlp.pos(txt).map(function(s){
+    var data= nlp.pos(txt).sentences.map(function(s){
       if(tense=="past"){
         return s.to_past()
       }
@@ -85,7 +85,7 @@ $(function() {
 
   $("#pos").find("input").keyup(function(){
     var txt=$(this).val() || ''
-    var data= nlp.pos(txt)
+    var data= nlp.pos(txt).sentences
     var glues={
       "adjective":"lightsteelblue",
       "noun":"coral",
@@ -114,7 +114,7 @@ $(function() {
 
   $("#negate").find("input").keyup(function(){
     var txt=$(this).val() || ''
-    var data= nlp.pos(txt)[0]
+    var data= nlp.pos(txt).sentences[0]
     data.negate()
     var html= data.tokens.map(function(p){
       return "<div style='font-size:30px; display:inline-block; color:steelblue;'> "+(p.normalised||'')+"</div>"
@@ -223,7 +223,7 @@ $(function() {
 <div id="tense">
   <hr/>
   <h2 style="display:block;">SENTENCE-TENSE CONVERSION!</h2>
-  <h3 style="position:relative; display:inline-block; width:350px; z-index:-3;">nlp.pos(text)[0].to_past()</h3>
+  <h3 style="position:relative; display:inline-block; width:350px; z-index:-3;">nlp.pos(text).sentences[0].to_past()</h3>
   <span style="position:relative; display:inline-block; z-index:3; width:200px;">
     <input type="button" class="tense_button" value="past"/>
     <input type="button" class="tense_button" value="present"/>
@@ -252,7 +252,7 @@ $(function() {
 <div id="negate">
   <hr/>
   <h2>sentence-negation</h2>
-  <h3>nlp.pos(text)[0].negate()</h3>
+  <h3>nlp.pos(text).sentences[0].negate()</h3>
   <input type="text" class="input" value="joe swam in the pool"/>
   <div class="result" style="font-size:10px;"></div>
 </div>

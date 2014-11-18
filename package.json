@@ -11,6 +11,9 @@
     "engines": [
         "node >= 0.3.6"
     ],
+    "bin": {
+      "nlp": "./bin/nlp.js"
+    },
     "devDependencies": {
         "grunt": "~0.4.1",
         "grunt-contrib-jshint": "~0.1.1",

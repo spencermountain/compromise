@@ -78,8 +78,9 @@ verb_conjugate = (function() {
       "est": "infinitive",
       "ain": "infinitive",
       "ant": "infinitive",
-      "s": "present",
+      "eed": "infinitive",
       "ed": "past",
+      "s": "present",
       "lt": "past",
       "nt": "past",
       "pt": "past",
@@ -236,17 +237,21 @@ verb_conjugate = (function() {
 // console.log(verb_conjugate("write"))
 // console.log(verb_conjugate("see"))
 // console.log(verb_conjugate("consider"))
+// console.log(verb_conjugate("weep"))
+// console.log(verb_conjugate("imply"))
+// console.log(verb_conjugate("count"))
+// console.log(verb_conjugate("seed"))//
+// console.log(verb_conjugate("plead"))
 
-// console.log(verb_conjugate("suck")) ///*****bug
 
-
-// console.log(verb_conjugate("imply")) ///*****bug
-// console.log(verb_conjugate("count")) ///*****bug
 // console.log(verb_conjugate("contain")) ///*****bug
+// console.log(verb_conjugate("stain"))//****bug
+// console.log(verb_conjugate("glean"))//****bug
+
+
 // console.log(verb_conjugate("result")) //****bug
 // console.log(verb_conjugate("develop")) //****bug
 // console.log(verb_conjugate("wait"))//****bug
-// console.log(verb_conjugate("represent"))//****bug
-// console.log(verb_conjugate("stain"))//****bug
 // console.log(verb_conjugate("pass"))//****bug
 // console.log(verb_conjugate("answer"))//****bug
+

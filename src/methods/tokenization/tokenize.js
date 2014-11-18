@@ -13,6 +13,7 @@ var tokenize = (function() {
 		str = str.toLowerCase()
 		str = str.replace(/[,\.!:;\?\(\)]/, '')
 		str = str.replace(/’/g, "'")
+		str = str.replace(/"/g, "")
 		if(!str.match(/[a-z0-9]/i)){
 			return ''
 		}
@@ -54,7 +55,7 @@ var tokenize = (function() {
 				return {
 					text: w,
 					normalised: normalise(w),
-					capitalised: (w.match(/^[A-Z][a-z|A-Z]/) != null) && i!=0, //only for non-first word capitals
+					capitalised: (w.match(/^[A-Z][a-z|A-Z]/) != null),
 					punctuated: (w.match(/[,;:\(\)"]/) != null) || undefined,
 					end: (i == (arr.length - 1)) || undefined,
 					start: (i == 0) || undefined

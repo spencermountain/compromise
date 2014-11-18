@@ -357,13 +357,6 @@ var verb_irregulars = (function() {
 			"participle": "hurt",
 			"doer": "hurter"
 		}, {
-			"present": "keeps",
-			"gerund": "keeping",
-			"past": "kept",
-			"infinitive": "keep",
-			"participle": "kept",
-			"doer": "keepper"
-		}, {
 			"infinitive": "know",
 			"present": "knows",
 			"past": "knew",
@@ -595,13 +588,6 @@ var verb_irregulars = (function() {
 			"participle": "sat",
 			"doer": "sitter"
 		}, {
-			"present": "sleeps",
-			"gerund": "sleepping",
-			"past": "slept",
-			"infinitive": "sleep",
-			"participle": "slept",
-			"doer": "sleepper"
-		}, {
 			"infinitive": "slide",
 			"present": "slides",
 			"past": "slid",
@@ -678,13 +664,6 @@ var verb_irregulars = (function() {
 			"gerund": "swearing",
 			"participle": "sworn",
 			"doer": "swearer"
-		}, {
-			"present": "sweeps",
-			"gerund": "sweeping",
-			"past": "swept",
-			"infinitive": "sweep",
-			"participle": "swept",
-			"doer": "sweepper"
 		}, {
 			"infinitive": "swim",
 			"present": "swims",
@@ -823,7 +802,7 @@ var verb_irregulars = (function() {
 		},
     {
 			"infinitive": "act",
-			"present": "act",
+			"present": "acts",
 			"past": "acted",
 			"gerund": "acting",
 			"doer": "actor"
@@ -838,7 +817,13 @@ var verb_irregulars = (function() {
 		  gerund: 'are',
 		  past: 'were',
 		  infinitive: 'being',
-		  doer: '' }
+		  doer: '' },
+
+	  { infinitive: 'imply',
+		  present: 'implies',
+		  past: 'implied',
+		  gerund: 'implying',
+		  doer: 'implier' },
 
 	]
 

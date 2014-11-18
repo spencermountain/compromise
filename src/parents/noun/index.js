@@ -48,12 +48,21 @@ var Noun = function(str, next, last, token) {
 		var blacklist = {
 	    "itself": 1,
 	    "west": 1,
+	    "western": 1,
 	    "east": 1,
+	    "eastern": 1,
 	    "north": 1,
+	    "northern": 1,
 	    "south": 1,
+	    "southern": 1,
 	    "one": 1,
 	    "your": 1,
 	    "my": 1,
+	    "today": 1,
+	    "yesterday": 1,
+	    "tomorrow": 1,
+	    "era": 1,
+	    "century": 1,
 	  }
 	  //prepositions
 	  if(prps[token.normalised]){
@@ -84,6 +93,10 @@ var Noun = function(str, next, last, token) {
 		}
 	  //multiple-word nouns are very good signal
 		if(token.normalised.match(' ')){
+			return true
+		}
+	  //if it has an abbreviation, like 'business ltd.'
+		if(token.normalised.match('.')){
 			return true
 		}
 	  //acronyms are a-ok

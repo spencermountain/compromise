@@ -74,6 +74,7 @@ var multiples = [
     "united states",
     "united kingdom",
     "great britain",
+    "zero sum",
 
 ].map(function(m) {
     return m.split(' ')

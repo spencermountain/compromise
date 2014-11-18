@@ -4,6 +4,32 @@ var verb_rules = {
 
 
 		{
+			reg: /(eed)$/i,
+			repl: {
+				present: "$1s",
+				gerund: "$1ing",
+				past: "$1ed",
+				doer: "$1er",
+			},
+			examples: 'sleep',
+			exceptions: [],
+			power: 1,
+			tense: 'infinitive'
+		},
+		{
+			reg: /(e)(ep)$/i,
+			repl: {
+				present: "$1$2s",
+				gerund: "$1$2ing",
+				past: "$1pt",
+				doer: "$1$2er",
+			},
+			examples: 'sleep',
+			exceptions: [],
+			power: 1,
+			tense: 'infinitive'
+		},
+		{
 			reg: /([a[tg]|i[zn]]|ur|nc|gl|is)e$/i,
 			repl: {
 				present: "$1es",
@@ -81,7 +107,7 @@ var verb_rules = {
 			power: 1,
 			tense: 'infinitive'
 		}, {
-			reg: /([aeiou])([ptn])$/i,
+			reg: /([aeiou])([ptn])$/i,//has a bug
 			repl: {
 				present: "$1$2s",
 				gerund: "$1$2$2ing",
@@ -104,7 +130,7 @@ var verb_rules = {
 			exceptions: [],
 			power: 1,
 			tense: 'infinitive'
-		},
+		}
 	],
 
 	present: [
@@ -324,7 +350,6 @@ var verb_rules = {
 	past: [
 
 
-
 		//needs an e just for present
 		{
 			reg: /(sh|ch)ed$/i,
@@ -423,7 +448,7 @@ var verb_rules = {
 
 		//needs an e
 		{
-			reg: /(.[^aeiou])ed$/i,
+			reg: /(..[^aeiou])ed$/i,
 			repl: {
 				infinitive: "$1e",
 				present: "$1es",
@@ -486,7 +511,7 @@ var verb_rules = {
 			exceptions: ["brew", "drew", "withdrew", "crew", "screw", "unscrew"],
 			tense: "past"
 		}, {
-			reg: /([pnl])t$/i,
+			reg: /([pl])t$/i,
 			repl: {
 				infinitive: "$1",
 				present: "$1s",

@@ -30,7 +30,7 @@ var pos = (function() {
 			var next = arr[i + 1]
 			if (arr[i] && next) {
 				//'joe smith' are both NN
-				if (arr[i].pos.tag == next.pos.tag && arr[i].punctuated != true && arr[i].capitalised==next.capitalised) {
+				if (arr[i].pos.tag == next.pos.tag && arr[i].punctuated != true && next.punctuated != true && arr[i].capitalised==next.capitalised) {
 					arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
 					arr[i] = null
 				}
@@ -102,7 +102,7 @@ var pos = (function() {
 			"an":1,
 		}
 		//if it's before a modal verb, it's a noun -> lkjsdf would
-		if (next && token.pos.parent != "noun" && next.pos.tag == "MD") {
+		if (next && token.pos.parent != "noun" && token.pos.parent != "glue" && next.pos.tag == "MD") {
 			token.pos = parts_of_speech['NN']
 			token.pos_reason = "before a modal"
 		}
@@ -204,7 +204,17 @@ var pos = (function() {
 		options = options || {}
 
 		var sentences = tokenize(text);
+
+
 		sentences.forEach(function(sentence) {
+
+		  //first, lets handle the first-word capitalisation issue..
+		  //be sure we don't over-classify it as a noun
+		  var first=sentence.tokens[0]
+		  var l=first.normalised.length
+		  if(first && first.capitalised && (lexicon_pass[first.normalised] || wordnet_suffixes[first.normalised.slice(l-4, l)]) ){
+		  	sentence.tokens[0].capitalised=false
+		  }
 
 			//smart handling of contractions
 			sentence.tokens = handle_contractions(sentence.tokens)
@@ -214,7 +224,7 @@ var pos = (function() {
 
 
 				//it has a capital and isn't first word
-				if (!token.start && token.capitalised) {
+				if (token.capitalised) {
 					token.pos = parts_of_speech['NN']
 					token.pos_reason = "capitalised"
 					return token
@@ -298,14 +308,14 @@ var pos = (function() {
 				}
 				//satisfy need on a conflict, and fix a likely error
 				if(token.pos){
-					if(need=="verb" && token.pos.parent=="noun"){
+					if(need=="verb" && token.pos.parent=="noun" && (!next || (next.pos && next.pos.parent!="noun")) ){
 						if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
 							token.pos = parts_of_speech['VB']
 							token.pos_reason = "signal from " + reason
 							need=null
 						}
 					}
-					if(need=="noun" && token.pos.parent=="verb"){
+					if(need=="noun" && token.pos.parent=="verb" && (!next || (next.pos && next.pos.parent!="verb")) ){
 						if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
 						  token.pos = parts_of_speech["NN"]
 						  token.pos_reason = "signal from " + reason
@@ -321,10 +331,10 @@ var pos = (function() {
 				    need= null
 				  }
 				}
-				if (need == 'VB' && token.pos.parent == 'verb') {
+				if (need == 'verb' && token.pos && token.pos.parent == 'verb') {
 					need = null
 				}
-				if (need == 'NN' && token.pos.parent == 'noun') {
+				if (need == 'noun' && token.pos && token.pos.parent == 'noun') {
 					need = null
 				}
 				return token
@@ -339,13 +349,13 @@ var pos = (function() {
 			})
 			sentence.tokens = sentence.tokens.map(function(token, i) {
 				if (!token.pos) {
-					//if there no verb in the sentence, there needs to be.
-					// if (!has['verb']) {
-					// 	token.pos = parts_of_speech['VB']
-					// 	token.pos_reason = "need one verb"
-					// 	has['verb'] = true
-					// 	return token
-					// }
+					//if there is no verb in the sentence, and there needs to be.
+					if (has['adjective'] && has['noun'] && !has['verb']) {
+						token.pos = parts_of_speech['VB']
+						token.pos_reason = "need one verb"
+						has['verb'] = true
+						return token
+					}
 
 					//fallback to a noun
 					token.pos = parts_of_speech['NN']
@@ -379,7 +389,7 @@ var pos = (function() {
 				var next_token = s.tokens[i + 1] || null
 				token.analysis = parents[token.pos.parent](token.normalised, next_token, last_token, token)
 				//change to the more accurate version of the pos
-				if (token.analysis.which) {
+				if (token.analysis.which && (token.pos.parent=="noun"||token.pos.parent=="adjective")) {
 					// token.pos = token.analysis.which
 				}
 				return token
@@ -475,18 +485,25 @@ var pos = (function() {
 	// fun = pos("joe carter doesn't play?", {}) //
 	// fun = pos("now president of germany", {}) //
 
-
 //not fixed:
 	// fun = pos("Joe would alks the asdf") //"second pass modal"
 	// fun = pos("he blalks the asdf") //"second_pass signal from PRP"
 	// fun = pos("He does not perform it with truly human energies", {}) //issue with needs model
 	// fun = pos("They’re taking risks", {}) //issue with needs model
 
-	// fun = pos("", {}) //
 
-	// console.log(fun)
-	// render(fun)
+// s="this position is in Wilhelm Von Humboldt's"
+// s='the understanding through spontaneous action, in the following way: '
+// s='a well trained parrot'
+// s="How do you wear your swords?"
+// s='the shadow of war ("nuage de la guerre"'
+// s=" a more-than-real death"
+	// s="all that violence brewing around the world"
+	// s="Sleeping in their suburbs, reading"
+// fun = pos(s, {}) //
 
+	// console.log(fun.sentences[0].tokens)
+	// render(fun.sentences)
 
 
 	//  __ above[IN] -> noun?

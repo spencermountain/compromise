@@ -1,6 +1,6 @@
 /*! nlp_compromise 
  by @spencermountain
- 2014-11-16 */
+ 2014-11-18 */
 //
 // NLP_comprimise - @spencermountain - gplv3
 // https://github.com/spencermountain/nlp_comprimise
@@ -87,6 +87,7 @@ var multiples = [
     "united states",
     "united kingdom",
     "great britain",
+    "zero sum",
 
 ].map(function(m) {
     return m.split(' ')
@@ -98,7 +99,7 @@ if (typeof module !== "undefined" && module.exports) {
 }
 sentence_parser = function(text) {
   var abbrev, abbrevs, clean, i, sentences, tmp;
-  tmp = text.split(/(\S.+?[.\?])(?=\s+|$)/g);
+  tmp = text.split(/(\S.+?[.\?])(?=\s+|$|")/g);
   sentences = [];
   abbrevs = ["jr", "mr", "mrs", "ms", "dr", "prof", "sr", "sen", "corp", "calif", "rep", "gov", "atty", "supt", "det", "rev", "col", "gen", "lt", "cmdr", "adm", "capt", "sgt", "cpl", "maj", "dept", "univ", "assn", "bros", "inc", "ltd", "co", "corp", "arc", "al", "ave", "blvd", "cl", "ct", "cres", "exp", "rd", "st", "dist", "mt", "ft", "fy", "hwy", "la", "pd", "pl", "plz", "tce", "Ala", "Ariz", "Ark", "Cal", "Calif", "Col", "Colo", "Conn", "Del", "Fed", "Fla", "Ga", "Ida", "Id", "Ill", "Ind", "Ia", "Kan", "Kans", "Ken", "Ky", "La", "Me", "Md", "Mass", "Mich", "Minn", "Miss", "Mo", "Mont", "Neb", "Nebr", "Nev", "Mex", "Okla", "Ok", "Ore", "Penna", "Penn", "Pa", "Dak", "Tenn", "Tex", "Ut", "Vt", "Va", "Wash", "Wis", "Wisc", "Wy", "Wyo", "USAFA", "Alta", "Ont", "QuÔøΩ", "Sask", "Yuk", "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept", "vs", "etc", "esp", "llb", "md", "bl", "phd", "ma", "ba", "miss", "misses", "mister", "sir", "esq", "mstr", "lit", "fl", "ex", "eg", "sep", "sept"];
   abbrev = new RegExp("(^| )(" + abbrevs.join("|") + ")[.] ?$", "i");
@@ -209,6 +210,7 @@ var tokenize = (function() {
 		str = str.toLowerCase()
 		str = str.replace(/[,\.!:;\?\(\)]/, '')
 		str = str.replace(/’/g, "'")
+		str = str.replace(/"/g, "")
 		if(!str.match(/[a-z0-9]/i)){
 			return ''
 		}
@@ -250,7 +252,7 @@ var tokenize = (function() {
 				return {
 					text: w,
 					normalised: normalise(w),
-					capitalised: (w.match(/^[A-Z][a-z|A-Z]/) != null) || undefined,
+					capitalised: (w.match(/^[A-Z][a-z|A-Z]/) != null),
 					punctuated: (w.match(/[,;:\(\)"]/) != null) || undefined,
 					end: (i == (arr.length - 1)) || undefined,
 					start: (i == 0) || undefined
@@ -1540,6 +1542,13 @@ word_rules = [{
         strength: 121,
         errors: 10,
         accuracy: '0.92'
+    },
+    {
+        reg: /.[lnt]ial$/i,
+        pos: 'JJ',
+        strength: 0,
+        errors: 0,
+        accuracy: '0'
     }, {
         reg: /.[vrl]id$/i,
         pos: 'JJ',
@@ -1847,6 +1856,14 @@ word_rules = [{
         pos: 'CD',
         strength: 1,
         errors: 1,
+        accuracy: '0.00'
+    },
+
+    {
+        reg: /[a-z]*\-[a-z]*\-/, //'more-than-real'
+        pos: 'JJ',
+        strength: 0,
+        errors: 0,
         accuracy: '0.00'
     },
 
@@ -4332,12 +4349,21 @@ var Noun = function(str, next, last, token) {
 		var blacklist = {
 	    "itself": 1,
 	    "west": 1,
+	    "western": 1,
 	    "east": 1,
+	    "eastern": 1,
 	    "north": 1,
+	    "northern": 1,
 	    "south": 1,
+	    "southern": 1,
 	    "one": 1,
 	    "your": 1,
 	    "my": 1,
+	    "today": 1,
+	    "yesterday": 1,
+	    "tomorrow": 1,
+	    "era": 1,
+	    "century": 1,
 	  }
 	  //prepositions
 	  if(prps[token.normalised]){
@@ -4368,6 +4394,10 @@ var Noun = function(str, next, last, token) {
 		}
 	  //multiple-word nouns are very good signal
 		if(token.normalised.match(' ')){
+			return true
+		}
+	  //if it has an abbreviation, like 'business ltd.'
+		if(token.normalised.match('.')){
 			return true
 		}
 	  //acronyms are a-ok
@@ -4565,6 +4595,32 @@ var verb_rules = {
 
 
 		{
+			reg: /(eed)$/i,
+			repl: {
+				present: "$1s",
+				gerund: "$1ing",
+				past: "$1ed",
+				doer: "$1er",
+			},
+			examples: 'sleep',
+			exceptions: [],
+			power: 1,
+			tense: 'infinitive'
+		},
+		{
+			reg: /(e)(ep)$/i,
+			repl: {
+				present: "$1$2s",
+				gerund: "$1$2ing",
+				past: "$1pt",
+				doer: "$1$2er",
+			},
+			examples: 'sleep',
+			exceptions: [],
+			power: 1,
+			tense: 'infinitive'
+		},
+		{
 			reg: /([a[tg]|i[zn]]|ur|nc|gl|is)e$/i,
 			repl: {
 				present: "$1es",
@@ -4642,7 +4698,7 @@ var verb_rules = {
 			power: 1,
 			tense: 'infinitive'
 		}, {
-			reg: /([aeiou])([ptn])$/i,
+			reg: /([aeiou])([ptn])$/i,//has a bug
 			repl: {
 				present: "$1$2s",
 				gerund: "$1$2$2ing",
@@ -4665,7 +4721,7 @@ var verb_rules = {
 			exceptions: [],
 			power: 1,
 			tense: 'infinitive'
-		},
+		}
 	],
 
 	present: [
@@ -4885,7 +4941,6 @@ var verb_rules = {
 	past: [
 
 
-
 		//needs an e just for present
 		{
 			reg: /(sh|ch)ed$/i,
@@ -4984,7 +5039,7 @@ var verb_rules = {
 
 		//needs an e
 		{
-			reg: /(.[^aeiou])ed$/i,
+			reg: /(..[^aeiou])ed$/i,
 			repl: {
 				infinitive: "$1e",
 				present: "$1es",
@@ -5047,7 +5102,7 @@ var verb_rules = {
 			exceptions: ["brew", "drew", "withdrew", "crew", "screw", "unscrew"],
 			tense: "past"
 		}, {
-			reg: /([pnl])t$/i,
+			reg: /([pl])t$/i,
 			repl: {
 				infinitive: "$1",
 				present: "$1s",
@@ -5422,13 +5477,6 @@ var verb_irregulars = (function() {
 			"participle": "hurt",
 			"doer": "hurter"
 		}, {
-			"present": "keeps",
-			"gerund": "keeping",
-			"past": "kept",
-			"infinitive": "keep",
-			"participle": "kept",
-			"doer": "keepper"
-		}, {
 			"infinitive": "know",
 			"present": "knows",
 			"past": "knew",
@@ -5660,13 +5708,6 @@ var verb_irregulars = (function() {
 			"participle": "sat",
 			"doer": "sitter"
 		}, {
-			"present": "sleeps",
-			"gerund": "sleepping",
-			"past": "slept",
-			"infinitive": "sleep",
-			"participle": "slept",
-			"doer": "sleepper"
-		}, {
 			"infinitive": "slide",
 			"present": "slides",
 			"past": "slid",
@@ -5743,13 +5784,6 @@ var verb_irregulars = (function() {
 			"gerund": "swearing",
 			"participle": "sworn",
 			"doer": "swearer"
-		}, {
-			"present": "sweeps",
-			"gerund": "sweeping",
-			"past": "swept",
-			"infinitive": "sweep",
-			"participle": "swept",
-			"doer": "sweepper"
 		}, {
 			"infinitive": "swim",
 			"present": "swims",
@@ -5888,7 +5922,7 @@ var verb_irregulars = (function() {
 		},
     {
 			"infinitive": "act",
-			"present": "act",
+			"present": "acts",
 			"past": "acted",
 			"gerund": "acting",
 			"doer": "actor"
@@ -5903,7 +5937,13 @@ var verb_irregulars = (function() {
 		  gerund: 'are',
 		  past: 'were',
 		  infinitive: 'being',
-		  doer: '' }
+		  doer: '' },
+
+	  { infinitive: 'imply',
+		  present: 'implies',
+		  past: 'implied',
+		  gerund: 'implying',
+		  doer: 'implier' },
 
 	]
 
@@ -6067,8 +6107,9 @@ verb_conjugate = (function() {
       "est": "infinitive",
       "ain": "infinitive",
       "ant": "infinitive",
-      "s": "present",
+      "eed": "infinitive",
       "ed": "past",
+      "s": "present",
       "lt": "past",
       "nt": "past",
       "pt": "past",
@@ -6225,20 +6266,25 @@ verb_conjugate = (function() {
 // console.log(verb_conjugate("write"))
 // console.log(verb_conjugate("see"))
 // console.log(verb_conjugate("consider"))
+// console.log(verb_conjugate("weep"))
+// console.log(verb_conjugate("imply"))
+// console.log(verb_conjugate("count"))
+// console.log(verb_conjugate("seed"))//
+// console.log(verb_conjugate("plead"))
 
-// console.log(verb_conjugate("suck")) ///*****bug
 
-
-// console.log(verb_conjugate("imply")) ///*****bug
-// console.log(verb_conjugate("count")) ///*****bug
 // console.log(verb_conjugate("contain")) ///*****bug
+// console.log(verb_conjugate("stain"))//****bug
+// console.log(verb_conjugate("glean"))//****bug
+
+
 // console.log(verb_conjugate("result")) //****bug
 // console.log(verb_conjugate("develop")) //****bug
 // console.log(verb_conjugate("wait"))//****bug
-// console.log(verb_conjugate("represent"))//****bug
-// console.log(verb_conjugate("stain"))//****bug
 // console.log(verb_conjugate("pass"))//****bug
 // console.log(verb_conjugate("answer"))//****bug
+
+
 var Verb = function(str, next, last, token) {
 	var the = this
 	the.word = str || '';
@@ -7267,9 +7313,11 @@ lexicon = (function() {
 		"however": "CC",
 		"before": "CC",
 		"although": "CC",
+		"how": "CC",
 
 		//numbers
 		'zero': "CD",
+		'one': "CD",
 		'two': "CD",
 		'three': "CD",
 		'four': "CD",
@@ -7487,6 +7535,7 @@ lexicon = (function() {
 		"maybe": "RB",
 		"so": "RB",
 		"just": "RB",
+		"well": "RB",
 
 		//interjections
 		"uhh": "UH",
@@ -7763,8 +7812,8 @@ lexicon = (function() {
 	  "anyway": "RB",
 	  "appropriate": "JJ",
 	  "unless": "IN",
-	  "whom": "WP",
-	  "whose": "WP",
+	  "whom": "PP",
+	  "whose": "PP",
 	  "evil": "JJ",
 	  "earlier": "JJR",
 	  "etc": "FW",
@@ -7893,6 +7942,9 @@ lexicon = (function() {
 
 	//verbs
 	verbs = [
+		"collapse",
+		"stake",
+		"forsee",
 		"hide",
 		"suck",
 		"answer",
@@ -8159,6 +8211,7 @@ lexicon = (function() {
 		"dream",
 		"exchange",
 		"envy",
+		"exert",
 		"exercise",
 		"export",
 		"fold",
@@ -8551,6 +8604,7 @@ lexicon = (function() {
 
 	//adjectives that either aren't covered by rules, or have superlative/comparative forms
 	adjectives = [
+	  'colonial',
 	  'moody',
 	  'literal',
 	  'actual',
@@ -9113,7 +9167,6 @@ lexicon = (function() {
 		'weekly',
 		'weird',
 		'welcome',
-		'well',
 		'western',
 		'wet',
 		'white',
@@ -9426,6 +9479,8 @@ lexicon = (function() {
 // console.log(Object.keys(lexicon).length)
 // console.log(lexicon['weaker'])
 // console.log(lexicon['restricted'])
+// console.log(lexicon['whose'])
+// console.log(lexicon['sleeping'])
 // methods that hang on a parsed set of words
 // accepts parsed tokens
 var Sentence = function(tokens) {
@@ -9694,7 +9749,7 @@ var pos = (function() {
 			var next = arr[i + 1]
 			if (arr[i] && next) {
 				//'joe smith' are both NN
-				if (arr[i].pos.tag == next.pos.tag && arr[i].punctuated != true && arr[i].capitalised==next.capitalised) {
+				if (arr[i].pos.tag == next.pos.tag && arr[i].punctuated != true && next.punctuated != true && arr[i].capitalised==next.capitalised) {
 					arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
 					arr[i] = null
 				}
@@ -9766,7 +9821,7 @@ var pos = (function() {
 			"an":1,
 		}
 		//if it's before a modal verb, it's a noun -> lkjsdf would
-		if (next && token.pos.parent != "noun" && next.pos.tag == "MD") {
+		if (next && token.pos.parent != "noun" && token.pos.parent != "glue" && next.pos.tag == "MD") {
 			token.pos = parts_of_speech['NN']
 			token.pos_reason = "before a modal"
 		}
@@ -9868,7 +9923,17 @@ var pos = (function() {
 		options = options || {}
 
 		var sentences = tokenize(text);
+
+
 		sentences.forEach(function(sentence) {
+
+		  //first, lets handle the first-word capitalisation issue..
+		  //be sure we don't over-classify it as a noun
+		  var first=sentence.tokens[0]
+		  var l=first.normalised.length
+		  if(first && first.capitalised && (lexicon_pass[first.normalised] || wordnet_suffixes[first.normalised.slice(l-4, l)]) ){
+		  	sentence.tokens[0].capitalised=false
+		  }
 
 			//smart handling of contractions
 			sentence.tokens = handle_contractions(sentence.tokens)
@@ -9878,7 +9943,7 @@ var pos = (function() {
 
 
 				//it has a capital and isn't first word
-				if (!token.start && token.capitalised) {
+				if (token.capitalised) {
 					token.pos = parts_of_speech['NN']
 					token.pos_reason = "capitalised"
 					return token
@@ -9962,14 +10027,14 @@ var pos = (function() {
 				}
 				//satisfy need on a conflict, and fix a likely error
 				if(token.pos){
-					if(need=="verb" && token.pos.parent=="noun"){
+					if(need=="verb" && token.pos.parent=="noun" && (!next || (next.pos && next.pos.parent!="noun")) ){
 						if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
 							token.pos = parts_of_speech['VB']
 							token.pos_reason = "signal from " + reason
 							need=null
 						}
 					}
-					if(need=="noun" && token.pos.parent=="verb"){
+					if(need=="noun" && token.pos.parent=="verb" && (!next || (next.pos && next.pos.parent!="verb")) ){
 						if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
 						  token.pos = parts_of_speech["NN"]
 						  token.pos_reason = "signal from " + reason
@@ -9985,10 +10050,10 @@ var pos = (function() {
 				    need= null
 				  }
 				}
-				if (need == 'VB' && token.pos.parent == 'verb') {
+				if (need == 'verb' && token.pos && token.pos.parent == 'verb') {
 					need = null
 				}
-				if (need == 'NN' && token.pos.parent == 'noun') {
+				if (need == 'noun' && token.pos && token.pos.parent == 'noun') {
 					need = null
 				}
 				return token
@@ -10003,13 +10068,13 @@ var pos = (function() {
 			})
 			sentence.tokens = sentence.tokens.map(function(token, i) {
 				if (!token.pos) {
-					//if there no verb in the sentence, there needs to be.
-					// if (!has['verb']) {
-					// 	token.pos = parts_of_speech['VB']
-					// 	token.pos_reason = "need one verb"
-					// 	has['verb'] = true
-					// 	return token
-					// }
+					//if there is no verb in the sentence, and there needs to be.
+					if (has['adjective'] && has['noun'] && !has['verb']) {
+						token.pos = parts_of_speech['VB']
+						token.pos_reason = "need one verb"
+						has['verb'] = true
+						return token
+					}
 
 					//fallback to a noun
 					token.pos = parts_of_speech['NN']
@@ -10043,7 +10108,7 @@ var pos = (function() {
 				var next_token = s.tokens[i + 1] || null
 				token.analysis = parents[token.pos.parent](token.normalised, next_token, last_token, token)
 				//change to the more accurate version of the pos
-				if (token.analysis.which) {
+				if (token.analysis.which && (token.pos.parent=="noun"||token.pos.parent=="adjective")) {
 					// token.pos = token.analysis.which
 				}
 				return token
@@ -10139,22 +10204,31 @@ var pos = (function() {
 	// fun = pos("joe carter doesn't play?", {}) //
 	// fun = pos("now president of germany", {}) //
 
-
 //not fixed:
 	// fun = pos("Joe would alks the asdf") //"second pass modal"
 	// fun = pos("he blalks the asdf") //"second_pass signal from PRP"
 	// fun = pos("He does not perform it with truly human energies", {}) //issue with needs model
 	// fun = pos("They’re taking risks", {}) //issue with needs model
 
-	// fun = pos("", {}) //
 
-	// console.log(fun)
-	// render(fun)
+// s="this position is in Wilhelm Von Humboldt's"
+// s='the understanding through spontaneous action, in the following way: '
+// s='a well trained parrot'
+// s="How do you wear your swords?"
+// s='the shadow of war ("nuage de la guerre"'
+// s=" a more-than-real death"
+	// s="all that violence brewing around the world"
+	// s="Sleeping in their suburbs, reading"
+// fun = pos(s, {}) //
 
+	// console.log(fun.sentences[0].tokens)
+	// render(fun.sentences)
 
 
 	//  __ above[IN] -> noun?
 
+//just a wrapper for text -> entities
+//most of this logic is in ./parents/noun
 var spot = (function() {
 
 	if (typeof module !== "undefined" && module.exports) {
@@ -10232,7 +10306,6 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = nlp
 }
 
-// console.log(nlp.pos("hidee-ho neighbourino").sentences[0])
 	///
 	//footer
 	//

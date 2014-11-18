@@ -23,9 +23,11 @@ lexicon = (function() {
 		"however": "CC",
 		"before": "CC",
 		"although": "CC",
+		"how": "CC",
 
 		//numbers
 		'zero': "CD",
+		'one': "CD",
 		'two': "CD",
 		'three': "CD",
 		'four': "CD",
@@ -243,6 +245,7 @@ lexicon = (function() {
 		"maybe": "RB",
 		"so": "RB",
 		"just": "RB",
+		"well": "RB",
 
 		//interjections
 		"uhh": "UH",
@@ -519,8 +522,8 @@ lexicon = (function() {
 	  "anyway": "RB",
 	  "appropriate": "JJ",
 	  "unless": "IN",
-	  "whom": "WP",
-	  "whose": "WP",
+	  "whom": "PP",
+	  "whose": "PP",
 	  "evil": "JJ",
 	  "earlier": "JJR",
 	  "etc": "FW",
@@ -649,6 +652,9 @@ lexicon = (function() {
 
 	//verbs
 	verbs = [
+		"collapse",
+		"stake",
+		"forsee",
 		"hide",
 		"suck",
 		"answer",
@@ -915,6 +921,7 @@ lexicon = (function() {
 		"dream",
 		"exchange",
 		"envy",
+		"exert",
 		"exercise",
 		"export",
 		"fold",
@@ -1307,6 +1314,7 @@ lexicon = (function() {
 
 	//adjectives that either aren't covered by rules, or have superlative/comparative forms
 	adjectives = [
+	  'colonial',
 	  'moody',
 	  'literal',
 	  'actual',
@@ -1869,7 +1877,6 @@ lexicon = (function() {
 		'weekly',
 		'weird',
 		'welcome',
-		'well',
 		'western',
 		'wet',
 		'white',
@@ -2182,3 +2189,5 @@ lexicon = (function() {
 // console.log(Object.keys(lexicon).length)
 // console.log(lexicon['weaker'])
 // console.log(lexicon['restricted'])
+// console.log(lexicon['whose'])
+// console.log(lexicon['sleeping'])

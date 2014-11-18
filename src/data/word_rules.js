@@ -116,6 +116,13 @@ word_rules = [{
         strength: 121,
         errors: 10,
         accuracy: '0.92'
+    },
+    {
+        reg: /.[lnt]ial$/i,
+        pos: 'JJ',
+        strength: 0,
+        errors: 0,
+        accuracy: '0'
     }, {
         reg: /.[vrl]id$/i,
         pos: 'JJ',
@@ -423,6 +430,14 @@ word_rules = [{
         pos: 'CD',
         strength: 1,
         errors: 1,
+        accuracy: '0.00'
+    },
+
+    {
+        reg: /[a-z]*\-[a-z]*\-/, //'more-than-real'
+        pos: 'JJ',
+        strength: 0,
+        errors: 0,
         accuracy: '0.00'
     },
 

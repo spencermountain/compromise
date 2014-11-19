@@ -1,4 +1,4 @@
-verb_conjugate = (function() {
+var verb_conjugate = (function() {
 
   if (typeof module !== "undefined" && module.exports) {
     verb_to_doer = require("./to_doer")
@@ -105,7 +105,7 @@ verb_conjugate = (function() {
   var fallback = function(w) {
     // console.log('fallback')
     var infinitive = w.replace(/ed$/, '');
-    var present, past, gerund;
+    var present, past, gerund, doer;
     if (w.match(/[^aeiou]$/)) {
       gerund = w + "ing"
       past = w + "ed"

@@ -1,10 +1,11 @@
 //
-// NLP_comprimise - @spencermountain - gplv3
-// https://github.com/spencermountain/nlp_comprimise
+// nlp_compromise - @spencermountain - gplv3
+// https://github.com/spencermountain/nlp_compromise
 //
 //
 var nlp = (function() {
+  "use strict";
 
-		///
-		// header
-		//
+  ///
+  // header
+  //

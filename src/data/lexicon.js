@@ -1,4 +1,6 @@
-lexicon = (function() {
+var lexicon = (function() {
+
+	// var verb_conjugate, adj_to_adv, verb_to_doer, to_superlative, to_comparative;
 	if (typeof module !== "undefined" && module.exports) {
 		verb_conjugate = require("../parents/verb/conjugate/conjugate")
 		adj_to_adv = require("../parents/adjective/conjugate/to_adverb");
@@ -100,14 +102,11 @@ lexicon = (function() {
 		"the": "DT",
 		"that": "DT",
 		"various": "DT",
-		"many": "DT",
 		"what": "DT",
 		"either": "DT",
-		"last": "DT",
 		"much": "DT",
 		"some": "DT",
 		"else": "DT",
-		"several": "DT",
 		//some other languages (what could go wrong?)
 		"la": "DT",
 		"le": "DT",
@@ -303,7 +302,7 @@ lexicon = (function() {
 		"february": "CD",
 		"march": "CD",
 		"april": "CD",
-		"may": "CD",
+		// "may": "CD",
 		"june": "CD",
 		"monday": "CD",
 		"tuesday": "CD",
@@ -444,8 +443,6 @@ lexicon = (function() {
 		"said": "VBD",
 		"says": "VBZ",
 		"has": "VB",
-		"million": "CD",
-		"billion": "CD",
 		"more": "RBR",
 		"had": "VBD",
 		"been": "VBD",
@@ -461,7 +458,6 @@ lexicon = (function() {
 		"long": "JJ",
 		"far": "JJ",
 		"due": "JJ",
-		"more": "JJ",
 		"higher": "JJR",
 		"larger": "JJR",
 		"better": "JJR",
@@ -513,7 +509,6 @@ lexicon = (function() {
 	  "almost": "RB",
 	  "together": "JJ",
 	  "means": "VBZ",
-	  "meant": "VBD",
 	  "despite": "IN",
 	  "only": "JJ",
 	  "outside": "JJ",
@@ -651,7 +646,7 @@ lexicon = (function() {
 	}
 
 	//verbs
-	verbs = [
+	var verbs = [
 		"collapse",
 		"stake",
 		"forsee",
@@ -1313,7 +1308,7 @@ lexicon = (function() {
 
 
 	//adjectives that either aren't covered by rules, or have superlative/comparative forms
-	adjectives = [
+	var adjectives = [
 	  'colonial',
 	  'moody',
 	  'literal',

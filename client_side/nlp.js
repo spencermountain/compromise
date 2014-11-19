@@ -2,15 +2,16 @@
  by @spencermountain
  2014-11-18 */
 //
-// NLP_comprimise - @spencermountain - gplv3
-// https://github.com/spencermountain/nlp_comprimise
+// nlp_compromise - @spencermountain - gplv3
+// https://github.com/spencermountain/nlp_compromise
 //
 //
 var nlp = (function() {
+  "use strict";
 
-		///
-		// header
-		//
+  ///
+  // header
+  //
 var multiples = [
     "of course",
     "at least",
@@ -1424,7 +1425,7 @@ var americanize = (function() {
 // console.log(americanize("travelling")=="traveling")
 // console.log(americanize("willful")=="willful")
 // console.log(americanize("filling")=="filling")
-word_rules = [{
+var word_rules = [{
         reg: /.[cts]hy$/i,
         pos: 'JJ',
         strength: 64,
@@ -3771,7 +3772,7 @@ var indefinite_article = (function() {
 //some regex borrowed from pksunkara/inflect
 //https://github.com/pksunkara/inflect/blob/master/lib/defaults.js
 
-inflect = (function() {
+var inflect = (function() {
     var irregulars = [
         ['child', 'children'],
         ['person', 'people'],
@@ -6027,7 +6028,7 @@ var verb_to_doer = (function() {
 // console.log(verb_to_doer('sweep'))
 // console.log(verb_to_doer('aid'))
 // console.log(verb_to_doer('apply'))
-verb_conjugate = (function() {
+var verb_conjugate = (function() {
 
   if (typeof module !== "undefined" && module.exports) {
     verb_to_doer = require("./to_doer")
@@ -6134,7 +6135,7 @@ verb_conjugate = (function() {
   var fallback = function(w) {
     // console.log('fallback')
     var infinitive = w.replace(/ed$/, '');
-    var present, past, gerund;
+    var present, past, gerund, doer;
     if (w.match(/[^aeiou]$/)) {
       gerund = w + "ing"
       past = w + "ed"
@@ -7065,7 +7066,7 @@ var to_superlative = (function() {
 // console.log(to_superlative('dry'))
 // console.log(to_superlative('rich'))
 //turn 'quick' into 'quickly'
-adj_to_adv = (function() {
+var adj_to_adv = (function() {
 	var main = function(str) {
 
 
@@ -7081,7 +7082,6 @@ adj_to_adv = (function() {
 			"simple": "simply",
 			"whole": "wholly",
 			"special": "especially",
-			"fast": "fast",
 			"straight": "straight",
 			"wrong": "wrong",
 			"fast": "fast",
@@ -7097,7 +7097,6 @@ adj_to_adv = (function() {
 			"foreign": 1,
 			"black": 1,
 			"modern": 1,
-			"able": 1,
 			"next": 1,
 			"difficult": 1,
 			"degenerate": 1,
@@ -7288,7 +7287,9 @@ if (typeof module !== "undefined" && module.exports) {
 }
 
 // console.log(parents)
-lexicon = (function() {
+var lexicon = (function() {
+
+	// var verb_conjugate, adj_to_adv, verb_to_doer, to_superlative, to_comparative;
 	if (typeof module !== "undefined" && module.exports) {
 		verb_conjugate = require("../parents/verb/conjugate/conjugate")
 		adj_to_adv = require("../parents/adjective/conjugate/to_adverb");
@@ -7390,14 +7391,11 @@ lexicon = (function() {
 		"the": "DT",
 		"that": "DT",
 		"various": "DT",
-		"many": "DT",
 		"what": "DT",
 		"either": "DT",
-		"last": "DT",
 		"much": "DT",
 		"some": "DT",
 		"else": "DT",
-		"several": "DT",
 		//some other languages (what could go wrong?)
 		"la": "DT",
 		"le": "DT",
@@ -7593,7 +7591,7 @@ lexicon = (function() {
 		"february": "CD",
 		"march": "CD",
 		"april": "CD",
-		"may": "CD",
+		// "may": "CD",
 		"june": "CD",
 		"monday": "CD",
 		"tuesday": "CD",
@@ -7734,8 +7732,6 @@ lexicon = (function() {
 		"said": "VBD",
 		"says": "VBZ",
 		"has": "VB",
-		"million": "CD",
-		"billion": "CD",
 		"more": "RBR",
 		"had": "VBD",
 		"been": "VBD",
@@ -7751,7 +7747,6 @@ lexicon = (function() {
 		"long": "JJ",
 		"far": "JJ",
 		"due": "JJ",
-		"more": "JJ",
 		"higher": "JJR",
 		"larger": "JJR",
 		"better": "JJR",
@@ -7803,7 +7798,6 @@ lexicon = (function() {
 	  "almost": "RB",
 	  "together": "JJ",
 	  "means": "VBZ",
-	  "meant": "VBD",
 	  "despite": "IN",
 	  "only": "JJ",
 	  "outside": "JJ",
@@ -7941,7 +7935,7 @@ lexicon = (function() {
 	}
 
 	//verbs
-	verbs = [
+	var verbs = [
 		"collapse",
 		"stake",
 		"forsee",
@@ -8603,7 +8597,7 @@ lexicon = (function() {
 
 
 	//adjectives that either aren't covered by rules, or have superlative/comparative forms
-	adjectives = [
+	var adjectives = [
 	  'colonial',
 	  'moody',
 	  'literal',
@@ -9718,7 +9712,7 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = Section;
 }
 var pos = (function() {
-
+	// "use strict";
 
 	if (typeof module !== "undefined" && module.exports) {
 		tokenize = require("./methods/tokenization/tokenize").tokenize;
@@ -10218,8 +10212,8 @@ var pos = (function() {
 // s='the shadow of war ("nuage de la guerre"'
 // s=" a more-than-real death"
 	// s="all that violence brewing around the world"
-	// s="Sleeping in their suburbs, reading"
-// fun = pos(s, {}) //
+// var s="Sleeping in their suburbs, reading"
+// var fun = pos(s, {}) //
 
 	// console.log(fun.sentences[0].tokens)
 	// render(fun.sentences)

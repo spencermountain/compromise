@@ -1,5 +1,5 @@
 //turn 'quick' into 'quickly'
-adj_to_adv = (function() {
+var adj_to_adv = (function() {
 	var main = function(str) {
 
 
@@ -15,7 +15,6 @@ adj_to_adv = (function() {
 			"simple": "simply",
 			"whole": "wholly",
 			"special": "especially",
-			"fast": "fast",
 			"straight": "straight",
 			"wrong": "wrong",
 			"fast": "fast",
@@ -31,7 +30,6 @@ adj_to_adv = (function() {
 			"foreign": 1,
 			"black": 1,
 			"modern": 1,
-			"able": 1,
 			"next": 1,
 			"difficult": 1,
 			"degenerate": 1,

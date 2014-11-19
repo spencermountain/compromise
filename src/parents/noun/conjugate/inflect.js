@@ -2,7 +2,7 @@
 //some regex borrowed from pksunkara/inflect
 //https://github.com/pksunkara/inflect/blob/master/lib/defaults.js
 
-inflect = (function() {
+var inflect = (function() {
     var irregulars = [
         ['child', 'children'],
         ['person', 'people'],

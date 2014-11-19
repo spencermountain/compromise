@@ -1,5 +1,5 @@
 var pos = (function() {
-
+	// "use strict";
 
 	if (typeof module !== "undefined" && module.exports) {
 		tokenize = require("./methods/tokenization/tokenize").tokenize;
@@ -499,8 +499,8 @@ var pos = (function() {
 // s='the shadow of war ("nuage de la guerre"'
 // s=" a more-than-real death"
 	// s="all that violence brewing around the world"
-	// s="Sleeping in their suburbs, reading"
-// fun = pos(s, {}) //
+// var s="Sleeping in their suburbs, reading"
+// var fun = pos(s, {}) //
 
 	// console.log(fun.sentences[0].tokens)
 	// render(fun.sentences)

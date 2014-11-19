@@ -1,4 +1,4 @@
-word_rules = [{
+var word_rules = [{
         reg: /.[cts]hy$/i,
         pos: 'JJ',
         strength: 64,

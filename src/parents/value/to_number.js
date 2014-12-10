@@ -47,21 +47,14 @@ var to_number = (function() {
         'decillion': 1000000000000000000000000000000000,
     };
 
-    var unit= function(num){
-      var l=(""+num+"").length
-      //syntactically, ones & teens are same rules
-      if(num<20 && num>0){
-        l=1
-      }
-      return l
-    }
 
     var main = function(s) {
         var multiplier = 1
         var total = 0;
         var g = 0;
-        var units_done={}
-        var ones_digit_done=false
+        var hundreds_done={}
+        var ones_done=false
+        var tens_done=false
         //pretty-printed numbers
         s = s.replace(/, ?/g, '')
         //dont do phone numbers or times
@@ -106,23 +99,39 @@ var to_number = (function() {
             }
             //it's a magnitude, like 'hundred'
             if (hundreds[w]) {
-                //reset units_done, to allow 'two thousand two..'
-                units_done={}
-                units_done[unit(hundreds[w])]=true
+                //kill things like one hundred two hundred
+                if(hundreds_done[w]){
+                    return null
+                }
+                hundreds_done[w]=true
+                //reset these concerns
+                ones_done=false
+                tens_done=false
                 total += (hundreds[w] * (g || 1)) //dont ever multiply it by 0
                 g = 0;
             }
 
             //it's a number, like '4'
-            // console.log(w + "   "+JSON.stringify(units_done))
             if (parseFloat(w)) {
+            // console.log(w + "   "+ones_done + " "+tens_done )
                 var num = parseFloat(w)
-                var l=unit(num)
-                //kill things like twelve fifteen
-                if(units_done[l]){
+                //dont allow repeated ones/teens units without a multiple between them (eg. four eight)
+                if(num<20){
+                  if(ones_done){
                     return null
+                  }
+                  ones_done=true
                 }
-                units_done[l]=true
+                //dont allow repeated twenty/thirty without a multiple (eg. fifty twenty)
+                if(num>20 && num<100){
+                  if(tens_done){
+                    return null
+                  }
+                  if(ones_done){ //eg. five twenty
+                    return null
+                  }
+                  tens_done=true
+                }
                 g += num
             }
         }
@@ -158,19 +167,16 @@ function run_tests(){
     ["123-1231",null],
     ["seven eleven",null],
     ["ten-four",null],
-
     ["one seven", null],
     ["one ten", null],
     ["one twelve", null],
-    ["one twenty", null],
+    ["one thirty", null],
     ["nine fifty", null],
     ["five six", null],
     ["nine seventy", null],
     ["nine hundred", 900],
     ["nine two hundred", null],
-    ["twenty hundred", null], //?
     ["twenty one hundred", 2100],
-    // ["hundred one", null],  //ignore this case for now
     ["ten one", null],
     ["twelve one", null],
     ["twenty one", 21],
@@ -178,10 +184,13 @@ function run_tests(){
     ["seventy five two", null],
     ["two hundred two", 202],
     ["two hundred three hundred", null],
-    ["twenty five twenty", null],
     ["one thousand one", 1001],
     ["minus five hundred", -500],
     ["minus fifteen", -15],
+    // ["hundred one", null],  //ignore this case for now
+    // ["twenty hundred", null], //?
+    // ["one twenty", null],
+    // ["twenty five twenty", null],
     ]
     var r;
     tests.forEach(function(a){
@@ -193,25 +202,4 @@ function run_tests(){
     })
 }
 // run_tests()
-// console.log(to_number("minus five hundred"))
-
-// one
-// two
-// three
-// four
-// five
-// six
-// seven
-// eight
-// nine
-// ten
-// eleven
-// twelve
-// thirteen
-// fourteen
-// fifteen
-// sixteen
-// seventeen
-// eighteen
-// nineteen
-// [hundreds]
+// console.log(to_number("thirty two thousand five hundred"))

@@ -47,18 +47,32 @@ var to_number = (function() {
         'decillion': 1000000000000000000000000000000000,
     };
 
+    var unit= function(num){
+      var l=(""+num+"").length
+      //syntactically, ones & teens are same rules
+      if(num<20 && num>0){
+        l=1
+      }
+      return l
+    }
 
     var main = function(s) {
+        var multiplier = 1
+        var total = 0;
+        var g = 0;
+        var units_done={}
+        var ones_digit_done=false
+        //pretty-printed numbers
         s = s.replace(/, ?/g, '')
         //dont do phone numbers or times
         if (s.match(/[0-9][-:][0-9]/)) {
             return null
         }
-        var multiplier = 1
-        var total = 0;
-        var g = 0;
-        //things like 'half-million'
+        //support things like 'half-million' by doing 'million' then multiply by 0.5
         var mults = [{
+            reg: /^minus[\s-]/i,
+            mult: -1
+        },{
             reg: /^(a\s)?half[\s-]/i,
             mult: 0.5
         }, {
@@ -74,71 +88,130 @@ var to_number = (function() {
                 s = s.replace(mults[i].reg, ' ')
             }
         }
-        var a = s.toString().split(/[\s-]+/);
-        var status;
-        var die = false //die on things like 'ten four'
-        a.forEach(function(w) {
+        s=s.replace(/^ ?/g,'')
+        s=s.replace(/ $/g,'')
+        //do each word in turn..
+        var words = s.toString().split(/[\s-]+/);
+        var w;
+        var num;
+        for(var i =0; i<=words.length; i++){
+            w=words[i]
+            //skip over 'and'
             if (w == "and") {
-                return
+                continue
             }
-            if (parseFloat(w)) { //it's already a number, like '4'
-                var x = parseFloat(w)
-                if (x < 20 && x > 0) {
-                    if (status == "tens") {
-                        die = true
-                    }
-                    g += x
-                    status = "tens"
-                } else {
-                    status = null
-                    g += x
-                }
-            } else if (numbers[w]) { //it's a known value, like 'three'
-                var x = numbers[w];
-                if (x < 20 && x > 0) {
-                    if (status == "tens") {
-                        die = true
-                    }
-                    g += x
-                    status = "tens"
-                } else {
-                    status = null
-                    g += x
-                }
-            } else if (hundreds[w]) { //it's a magnitude, like 'hundred'
+            //it's a known number word, like 'three'
+            if (numbers[w]!=null) {
+                w = numbers[w];
+            }
+            //it's a magnitude, like 'hundred'
+            if (hundreds[w]) {
+                //reset units_done, to allow 'two thousand two..'
+                units_done={}
+                units_done[unit(hundreds[w])]=true
                 total += (hundreds[w] * (g || 1)) //dont ever multiply it by 0
                 g = 0;
-                status = null
             }
-        });
-        if (die) {
-            return null
+
+            //it's a number, like '4'
+            // console.log(w + "   "+JSON.stringify(units_done))
+            if (parseFloat(w)) {
+                var num = parseFloat(w)
+                var l=unit(num)
+                //kill things like twelve fifteen
+                if(units_done[l]){
+                    return null
+                }
+                units_done[l]=true
+                g += num
+            }
         }
         return (total + g) * multiplier
     }
+
+
     if (typeof module !== "undefined" && module.exports) {
         module.exports = main;
     }
     return main;
 })();
 
-// console.log(to_number("twenty two thousand five hundred") == 22500)
-// console.log(to_number("two thousand five hundred and sixty") == 2560)
-// console.log(to_number("a hundred and two") == 102)
-// console.log(to_number("a hundred") == 100)
-// console.log(to_number("seven") == 7)
-// console.log(to_number("seven grand") == 7000)
-// console.log(to_number("half a million") == 500000)
-// console.log(to_number("half-million") == 500000)
-// console.log(to_number("quarter-million") == 250000)
-// console.log(to_number("a quarter million") == 250000)
-// console.log(to_number("a quarter-grand") == 250)
-// console.log(to_number("four and a half") == 6)
-// console.log(to_number("ten and a half million") == 15000000)
-// console.log(to_number("104") == 104)
-// console.log(to_number("13 thousand") == 13000)
-// console.log(to_number("17,983") == 17983)
-// console.log(to_number("12:32") == null)
-// console.log(to_number("123-1231") == null)
-// console.log(to_number("seven eleven") == null)
-// console.log(to_number("ten-four") == null)
+function run_tests(){
+  tests=[
+    ["twenty two thousand five hundred",22500],
+    ["two thousand five hundred and sixty",2560],
+    ["a hundred and two",102],
+    ["a hundred",100],
+    ["seven",7],
+    ["seven grand",7000],
+    ["half a million",500000],
+    ["half-million",500000],
+    ["quarter-million",250000],
+    ["a quarter million",250000],
+    ["a quarter-grand",250],
+    ["four and a half",6],
+    ["ten and a half million",15000000],
+    ["104",104],
+    ["13 thousand",13000],
+    ["17,983",17983],
+    ["12:32",null],
+    ["123-1231",null],
+    ["seven eleven",null],
+    ["ten-four",null],
+
+    ["one seven", null],
+    ["one ten", null],
+    ["one twelve", null],
+    ["one twenty", null],
+    ["nine fifty", null],
+    ["five six", null],
+    ["nine seventy", null],
+    ["nine hundred", 900],
+    ["nine two hundred", null],
+    ["twenty hundred", null], //?
+    ["twenty one hundred", 2100],
+    // ["hundred one", null],  //ignore this case for now
+    ["ten one", null],
+    ["twelve one", null],
+    ["twenty one", 21],
+    ["seventy two", 72],
+    ["seventy five two", null],
+    ["two hundred two", 202],
+    ["two hundred three hundred", null],
+    ["twenty five twenty", null],
+    ["one thousand one", 1001],
+    ["minus five hundred", -500],
+    ["minus fifteen", -15],
+    ]
+    var r;
+    tests.forEach(function(a){
+        r=to_number(a[0])==a[1]
+        if(!r){
+            console.log('--'+a[0]+'--' + to_number(a[0]))
+        }
+        console.log(r)
+    })
+}
+// run_tests()
+// console.log(to_number("minus five hundred"))
+
+// one
+// two
+// three
+// four
+// five
+// six
+// seven
+// eight
+// nine
+// ten
+// eleven
+// twelve
+// thirteen
+// fourteen
+// fifteen
+// sixteen
+// seventeen
+// eighteen
+// nineteen
+// [hundreds]

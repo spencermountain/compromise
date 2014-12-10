@@ -191,6 +191,8 @@ function run_tests(){
     // ["twenty hundred", null], //?
     // ["one twenty", null],
     // ["twenty five twenty", null],
+    // ["", null],
+    // ["minus zero", 0],
     ]
     var r;
     tests.forEach(function(a){

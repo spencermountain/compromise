@@ -1,4 +1,4 @@
-sentence_parser = function(text) {
+var sentence_parser = function(text) {
   var abbrev, abbrevs, clean, i, sentences, tmp;
   tmp = text.split(/(\S.+?[.\?])(?=\s+|$|")/g);
   sentences = [];

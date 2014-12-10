@@ -63,7 +63,7 @@ var to_number = (function() {
         }
         //support things like 'half-million' by doing 'million' then multiply by 0.5
         var mults = [{
-            reg: /^minus[\s-]/i,
+            reg: /^(minus|negative)[\s-]/i,
             mult: -1
         },{
             reg: /^(a\s)?half[\s-]/i,
@@ -202,4 +202,4 @@ function run_tests(){
     })
 }
 // run_tests()
-// console.log(to_number("thirty two thousand five hundred"))
+// console.log(to_number("minus zero"))

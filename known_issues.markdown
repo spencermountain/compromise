@@ -33,6 +33,20 @@ console.log(syllables("birchtree"))
 #Date parsing
 june to march 1995
 
+#Number parsing
+ambiguity for 'tenth, hundredth, thousandth...'
+   "two thousandth" => 0.002 or 2000th ?
+
+this is tricky to do, but possible:
+   "four and a half" => 4.5
+   two and a half thousand", 2,500
+
+shitbags javascipt float multiplication issue
+   "four point seven seven" -> 4.7700000000000005,
+
+there's an idiomatic rule against saying this, though technically fine.
+   "twenty hundred" -> 2000
+
 #inflection
 printer(nlp.noun('bus').pluralize() , 'buses')
 printer(nlp.noun('crisis').pluralize() , 'crises')

@@ -56,6 +56,7 @@ var tokenize = (function() {
 					text: w,
 					normalised: normalise(w),
 					capitalised: (w.match(/^[A-Z][a-z|A-Z]/) != null),
+					special_capitalised: (w.match(/^[A-Z][a-z|A-Z]/) != null) && i>0,
 					punctuated: (w.match(/[,;:\(\)"]/) != null) || undefined,
 					end: (i == (arr.length - 1)) || undefined,
 					start: (i == 0) || undefined

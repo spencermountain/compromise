@@ -55,6 +55,7 @@ var Noun = function(str, next, last, token) {
 	    "northern": 1,
 	    "south": 1,
 	    "southern": 1,
+	    "the": 1,
 	    "one": 1,
 	    "your": 1,
 	    "my": 1,
@@ -85,19 +86,19 @@ var Noun = function(str, next, last, token) {
 	  		return false
 			}
 	   if(token.pos.tag=="NNP"){//yes! eg. 'Edinburough'
-	  		return true
+	  		// return true
 			}
 	  }
 	  //distinct capital is very good signal
-		if(token.capitalised){
+		if(token.special_capitalised){
 			return true
 		}
 	  //multiple-word nouns are very good signal
-		if(token.normalised.match(' ')){
+		if(token.normalised.match(/ /)){
 			return true
 		}
 	  //if it has an abbreviation, like 'business ltd.'
-		if(token.normalised.match('.')){
+		if(token.normalised.match(/\./)){
 			return true
 		}
 	  //acronyms are a-ok

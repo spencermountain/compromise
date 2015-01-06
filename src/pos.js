@@ -212,9 +212,9 @@ var pos = (function() {
 		  //be sure we don't over-classify it as a noun
 		  var first=sentence.tokens[0]
 		  var l=first.normalised.length
-		  if(first && first.capitalised && (lexicon_pass[first.normalised] || wordnet_suffixes[first.normalised.slice(l-4, l)]) ){
-		  	sentence.tokens[0].capitalised=false
-		  }
+		  // if(first && first.special_capitalised && !(lexicon_pass[first.normalised] || wordnet_suffixes[first.normalised.slice(l-4, l)]) ){
+		  // 	sentence.tokens[0].special_capitalised=false
+		  // }
 
 			//smart handling of contractions
 			sentence.tokens = handle_contractions(sentence.tokens)
@@ -224,7 +224,7 @@ var pos = (function() {
 
 
 				//it has a capital and isn't first word
-				if (token.capitalised) {
+				if (token.special_capitalised) {
 					token.pos = parts_of_speech['NN']
 					token.pos_reason = "capitalised"
 					return token

@@ -63,6 +63,7 @@ var Noun = function(str, next, last, token) {
 	    "tomorrow": 1,
 	    "era": 1,
 	    "century": 1,
+	    "it":1
 	  }
 	  //prepositions
 	  if(prps[token.normalised]){

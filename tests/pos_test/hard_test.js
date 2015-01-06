@@ -61,7 +61,7 @@ var compare = function(mine, theirs) {
 for (var i in data) {
   var mine = pos(data[i].text, {
     dont_combine: true
-  })
+  }).sentences
   var theirs = data[i].pos
 
   //turn it into the parent pos

@@ -224,7 +224,7 @@ var pos = (function() {
 
 
 				//it has a capital and isn't first word
-				if (token.special_capitalised) {
+				if (token.special_capitalised && !lexicon_pass[first.normalised]) {
 					token.pos = parts_of_speech['NN']
 					token.pos_reason = "capitalised"
 					return token

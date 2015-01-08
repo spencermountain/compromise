@@ -263,16 +263,56 @@ var tests = (function() {
         printer(nlp.adjective("fancy").conjugate().noun , "fanciness")
 
         print_header("dates")
-        dates = nlp.value("I got divorced on June 4th 1993, in Miami").date()
-        printer(dates.year , 1993)
-        printer(dates.month , 5)
-        printer(dates.day , 4)
-        dates = nlp.value("sunday March 18th").date()
-        printer(dates.month , 2)
-        printer(dates.day , 18)
-        dates = nlp.value("june 5th 1998").date()
-        printer(dates.month , 5)
-        printer(dates.day , 5 )
+
+
+        var date_tests= [
+          ["I got divorced on June 4th 1993, in Miami",  {"month":5,"day":4,"year":1993}],
+          ["March 7th-11th 1987",  {"month":2,"day":7,"year":1987}],
+          ["June 1st-11th 1999",  {"month":5,"day":1,"year":1999}],
+          ["28th of September to 5th of October 2008",  {"month":8,"day":28,"year":2008}],
+          ["2nd of January to 5th of October 2008",  {"month":9,"day":5,"year":2008}],
+          ["March 7th to june 11th 1987",  {"month":2,"day":7,"year":1987}],
+          ["April 17th to september 11th 1981",  {"month":3,"day":17,"year":1981}],
+          ["June 1st to June 11th 2014",  {"month":5,"day":1,"year":2014}],
+          ["between 13 February and 15 February 1945",  {"month":1,"day":13,"year":1945}],
+          ["between March 7th and june 11th 1987",  {"month":2,"day":7,"year":1987}],
+          ["March 1st 1987",  {"month":2,"day":1,"year":1987}],
+          ["June 22nd 2014",  {"month":5,"day":22,"year":undefined}],
+          ["June 22nd 1997",  {"month":5,"day":22,"year":undefined}],
+          ["3rd - 5th of March 1969",  {"month":2,"day":3,"year":1969}],
+          ["3rd of March 1969",  {"month":2,"day":3,"year":1969}],
+          ["2nd of April 1929",  {"month":3,"day":undefined,"year":1929}],
+          // ["September 1939 to April 1945",  {"month":undefined,"day":undefined,"year":1939}],
+          // ["June 1969 to April 1975",  {"month":undefined,"day":undefined,"year":1969}],
+          ["March 1969",  {"month":2,"day":undefined,"year":1969}],
+          ["March 18th",  {"month":2,"day":18,"year":undefined}],
+          ["August 28th",  {"month":7,"day":28,"year":undefined}],
+          ["18th of March",  {"month":2,"day":18,"year":undefined}],
+          ["27th of March",  {"month":2,"day":27,"year":undefined}],
+          ["2012-2014",  {"month":undefined,"day":undefined,"year":2012}],
+          ["1997-1998",  {"month":undefined,"day":undefined,"year":1997}],
+          ["1998",  {"month":undefined,"day":undefined,"year":1998}],
+          ["1672",  {"month":undefined,"day":undefined,"year":1672}],
+          ["2015",  {"month":undefined,"day":undefined,"year":2015}],
+          ["january 5th 1998",  {"month":0,"day":5,"year":1998}],
+
+          //edge cases
+          ["2014-1998",  {"month":undefined,"day":undefined,"year":undefined}],
+          ["february 10th",  {"month":1,"day":10,"year":undefined}],
+          ["february 30th",  {"month":1,"day":undefined,"year":undefined}],
+          ["2103",  {"month":undefined,"day":undefined,"year":undefined}],
+          ["1111",  {"month":undefined,"day":undefined,"year":undefined}],
+          ["jan 1921",  {"month":0,"day":undefined,"year":1921}],
+          ["",  {"month":undefined,"day":undefined,"year":undefined}],
+        ]
+        date_tests.forEach(function(arr) {
+          var o = nlp.value(arr[0]).date();
+          return Object.keys(arr[1]).forEach(function(k) {
+            printer(arr[1][k], o[k])
+          });
+        });
+
+
 
         print_header("americanization")
         printer(nlp.americanize("synthesise") , "synthesize")

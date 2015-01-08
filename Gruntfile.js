@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 
           //values
           './src/parents/value/to_number.js',
-          './src/parents/value/coffeejs/date_extractor.js',
+          './src/parents/value/date_extractor.js',
           './src/parents/value/index.js',
           //nouns
           './src/parents/noun/indefinite_article/indefinite_article.js',

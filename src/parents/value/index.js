@@ -4,17 +4,13 @@ var Value = function(str, next, last, token) {
 
 	if (typeof module !== "undefined" && module.exports) {
 		to_number = require("./to_number")
-		date_extractor = require("./coffeejs/date_extractor")
+		date_extractor = require("./date_extractor")
 		parts_of_speech = require("../../data/parts_of_speech")
 	}
 
 	the.date = function(options) {
 		options = options || {}
-		var d = date_extractor(the.word, options)
-		if (!d || Object.keys(d).length == 0) {
-			return null
-		}
-		return d
+		return date_extractor(the.word, options)
 	}
 
 	the.is_date = function() {

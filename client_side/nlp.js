@@ -1,6 +1,6 @@
 /*! nlp_compromise 
  by @spencermountain
- 2015-01-08 */
+ 2015-01-14 */
 //
 // nlp_compromise - @spencermountain - gplv3
 // https://github.com/spencermountain/nlp_compromise
@@ -3936,6 +3936,12 @@ var indefinite_article = (function() {
 //https://github.com/pksunkara/inflect/blob/master/lib/defaults.js
 
 var inflect = (function() {
+
+    var titlecase=function(str){
+        if(str==null){return ''}
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
+
     var irregulars = [
         ['child', 'children'],
         ['person', 'people'],
@@ -4234,7 +4240,6 @@ var inflect = (function() {
 
     ]
 
-
     var pluralize = function(str) {
         var low = str.toLowerCase()
         //uncountable
@@ -4246,15 +4251,15 @@ var inflect = (function() {
             return r[0] == low
         })
         if (found[0]) {
-            if (low == str) {
-                return found[0][1]
+            if (titlecase(low) == str) { //handle capitalisation properly
+                return titlecase(found[0][1])
             } else {
-                return found[0][1].charAt(0).toUpperCase() + string.slice(1)
+                return found[0][1]
             }
         }
         //inflect first word of preposition-phrase
         if (str.match(/([a-z]*) (of|in|by|for) [a-z]/)) {
-            var first = str.match(/^([a-z]*) (of|in|by|for) [a-z]/)[1]
+            var first = (str.match(/^([a-z]*) (of|in|by|for) [a-z]/)||[])[1]
             if (first) {
                 var better_first = pluralize(first)
                 return better_first + str.replace(first, '')
@@ -4358,10 +4363,10 @@ var inflect = (function() {
             return r[1] == low
         })
         if (found[0]) {
-            if (low == str) {
-                return found[0][0]
+            if (titlecase(low) == str) { //handle capitalisation properly
+                return titlecase(found[0][0])
             } else {
-                return found[0][0].charAt(0).toUpperCase() + string.slice(1)
+                return found[0][0]
             }
         }
         //inflect first word of preposition-phrase
@@ -4454,15 +4459,21 @@ var inflect = (function() {
 // console.log(inflect.inflect('bus'))
 // console.log(inflect.inflect('statistics'))
 
+// bus
+// kiss
+// console.log(nlp.noun('crisis').pluralize() == 'crises')
+// console.log(nlp.noun('analysis').pluralize() == 'analyses')
+// console.log(nlp.noun('neurosis').pluralize() == 'neuroses')
 
-/*
+// console.log(inflect.singularize('Indices')=='Index')
+// console.log(inflect.singularize('indices')=='index')
+// console.log(inflect.pluralize('index')=='indices')
+// console.log(inflect.pluralize('Index')=='Indices')
+// console.log(inflect.inflect('Indices').singular=='Index')
+// console.log(inflect.inflect('indices').singular=='index')
+// console.log(inflect.inflect('index').plural=='indices')
+// console.log(inflect.inflect('Index').plural=='Indices')
 
-bus
-kiss
-        console.log(nlp.noun('crisis').pluralize() == 'crises')
-        console.log(nlp.noun('analysis').pluralize() == 'analyses')
-        console.log(nlp.noun('neurosis').pluralize() == 'neuroses')
-*/
 var Noun = function(str, next, last, token) {
 	var the = this
 	the.word = str || '';

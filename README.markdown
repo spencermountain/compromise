@@ -6,11 +6,13 @@ it does [tons of clever things](http://rawgit.com/spencermountain/nlp_compromise
 nlp.pos('she sells seashells by the seashore').sentences[0].to_past()
 //she sold seashells by the seashore
 ```
+[![npm version](https://badge.fury.io/js/nlp_compromise.svg)](http://badge.fury.io/js/nlp_compromise)
 ##Check it out
 
 * [Long Text Demo](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/long_demo/index.html)
 * [Specific Methods](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/basic_demo/index.html)
 * [Realtime Demo](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/cute_demo/index.html)
+* [Angular Demo](http://rawgit.com/kroid/angular-nlp-compromise/master/example/index.html)
 
 [![Video](http://i.vimeocdn.com/video/493948602_640.jpg)](https://vimeo.com/109880250)
 
@@ -42,6 +44,7 @@ Namely, it can be run right on the user's computer instead of a server.
   //dinosaurs
 </script>
 ```
+or, use the [angular module](https://github.com/Kroid/angular-nlp-compromise)
 
 ## Server-side
 ```javascript

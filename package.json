@@ -5,7 +5,7 @@
     "version": "0.3.1",
     "repository": {
         "type": "git",
-        "url": "git://github.com/spencermountain/nlp-node.git"
+        "url": "git://github.com/spencermountain/nlp_compromise.git"
     },
     "main": "index.js",
     "engines": [

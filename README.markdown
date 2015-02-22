@@ -1,7 +1,7 @@
 #No training, no prolog.
-a Natural-Language-Processing library *in javascript*, small-enough for the browser, and quick-enough to run on keypress :two_men_holding_hands:
+A Natural-Language-Processing library *in Javascript*, small-enough for the browser, and quick-enough to run on keypress :two_men_holding_hands:
 
-it does [tons of clever things](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/basic_demo/index.html). it's smaller than jquery, and scores 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
+It does [tons of clever things](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/basic_demo/index.html). It's smaller than jquery, and scores 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
 ```javascript
 nlp.pos('she sells seashells by the seashore').sentences[0].to_past()
 //she sold seashells by the seashore
@@ -31,7 +31,7 @@ On the [Penn treebank](http://www.cis.upenn.edu/~treebank/), for example, this i
 * ... then some suffix regexes: **74% accuracy**
 * ... then some sentence-level postprocessing: **81% accuracy**
 
-The process is to get some curated data, find the patterns, list the exceptions. Bada bing, bada boom.
+The process is to get some curated data, find the patterns, and list the exceptions. Bada bing, bada boom.
 In this way a satisfactory NLP library can be built with breathtaking lightness.
 
 Namely, it can be run right on the user's computer instead of a server.
@@ -83,7 +83,7 @@ nlp.syllables("hamburger")
   s.values()
 ````
 
-###noun methods:
+###Noun methods:
 ```javascript
 nlp.noun("earthquakes").singularize()
 //earthquake
@@ -102,7 +102,7 @@ nlp.inflect('mayors of toronto'))
 ```
 
 
-###verb methods:
+###Verb methods:
 ```javascript
 nlp.verb("walked").conjugate()
 //{ infinitive: 'walk',
@@ -112,7 +112,7 @@ nlp.verb("walked").conjugate()
 nlp.verb('swimming').to_past()
 //swam
 ```
-###adjective methods:
+###Adjective methods:
 ```javascript
 nlp.adjective("quick").conjugate()
 //  { comparative: 'quicker',
@@ -120,7 +120,7 @@ nlp.adjective("quick").conjugate()
 //    adverb: 'quickly',
 //    noun: 'quickness'}
 ```
-###adverb methods
+###Adverb methods
 ```javascript
 nlp.adverb("quickly").conjugate()
 //  { adjective: 'quick'}
@@ -273,7 +273,7 @@ nlp.pos("i'm good.")
    }]
 ```
 ####Tokenization
-neighbouring words with the same part of speech are merged together, unless there is punctuation, different capitalisation, or special cases.
+Neighbouring words with the same part of speech are merged together, unless there is punctuation, different capitalisation, or special cases.
 ```javascript
 nlp.pos("tony hawk won")
 //tony hawk   NN

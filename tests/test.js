@@ -133,6 +133,8 @@ var tests = (function() {
         printer(nlp.sentences('I like that Color').length , 1)
         printer(nlp.sentences("Hi there Dr. Joe, the price is 4.59 for N.A.S.A. Ph.Ds. I hope that's fine, etc. and you can attend Feb. 8th. Bye").length , 3)
         printer(nlp.sentences("Soviet bonds to be sold in the U.S. market. Everyone wins.").length , 2)
+        printer(nlp.sentences("Hi there! Everyone wins!").length , 2)
+        printer(nlp.sentences("Hi there!!! Everyone wins.").length , 2)
 
         print_header("pluralize")
         printer(nlp.noun('snake').pluralize() , 'snakes')

@@ -134,6 +134,7 @@ exports["nlp.sentences"] = function(test){
     test.ok(nlp.sentences("Soviet bonds to be sold in the U.S. market. Everyone wins.").length , 2)
     test.ok(nlp.sentences("Hi there! Everyone wins!").length , 2)
     test.ok(nlp.sentences("Hi there!!! Everyone wins.").length , 2)
+    test.ok(nlp.sentences("he bought Yahoo! the company.").length , 1)
     test.done();
 };
 

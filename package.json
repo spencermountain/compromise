@@ -2,10 +2,13 @@
     "author": "Spencer Kelly <spencerkelly86@gmail.com> (http://spencermounta.in)",
     "name": "nlp_compromise",
     "description": "natural language processing in the browser",
-    "version": "0.3.2",
+    "version": "0.3.4",
     "repository": {
         "type": "git",
         "url": "git://github.com/spencermountain/nlp_compromise.git"
+    },
+    "scripts": {
+        "test": "nodeunit ./tests/unit_test.js "
     },
     "main": "index.js",
     "engines": [
@@ -15,6 +18,7 @@
       "nlp": "./bin/nlp.js"
     },
     "devDependencies": {
+        "nodeunit":"0.9.*",
         "grunt": "~0.4.1",
         "grunt-contrib-jshint": "~0.1.1",
         "grunt-contrib-concat": "~0.1.3",

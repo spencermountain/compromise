@@ -197,12 +197,12 @@ nlp.to_number("ten and a half million")
 ### Unicode Normalisation
 a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
 ```javascript
-nlp.normalise("Björk")
+nlp.normalize("Björk")
 //Bjork
 ```
 and for fun,
 ```javascript
-nlp.denormalise("The quick brown fox jumps over the lazy dog", {percentage:50})
+nlp.denormalize("The quick brown fox jumps over the lazy dog", {percentage:50})
 // The ɋӈїck brown fox juӎÞs over tӊe laζy dog
 ```
 
@@ -257,19 +257,19 @@ Unlike other nlp toolkits, this library puts a 'silent token' into the phrase fo
 ```javascript
 nlp.pos("i'm good.")
    [{
-   	text:"i'm",
-   	normalised:"i",
-   	pos:"PRP"
+     text:"i'm",
+     normalised:"i",
+     pos:"PRP"
    },
    {
-   	text:"",
-   	normalised:"am",
-   	pos:"CP"
+     text:"",
+     normalised:"am",
+     pos:"CP"
    },
    {
-   	text:"good.",
-   	normalised:"good",
-   	pos:"JJ"
+     text:"good.",
+     normalised:"good",
+     pos:"JJ"
    }]
 ```
 ####Tokenization

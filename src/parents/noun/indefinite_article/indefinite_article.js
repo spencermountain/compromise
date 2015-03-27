@@ -12,9 +12,9 @@ var indefinite_article = (function() {
 			"honour": "an",
 			"honor": "an",
 			"uber": "an", //german u
-		}
+		},
 
-		var is_acronym = function(s) {
+		is_acronym = function(s) {
 			//no periods
 			if (s.length <= 5 && s.match(/^[A-Z]*$/)) {
 				return true
@@ -24,7 +24,7 @@ var indefinite_article = (function() {
 				return true
 			}
 			return false
-		}
+		},
 
 		//pronounced letters of acronyms that get a 'an'
 		an_acronyms = {
@@ -40,14 +40,14 @@ var indefinite_article = (function() {
 			R: true,
 			S: true,
 			X: true,
-		}
+		},
 
 		//'a' regexes
 		a_regexs = [
 			/^onc?e/i, //'wu' sound of 'o'
 			/^u[bcfhjkqrstn][aeiou]/i, // 'yu' sound for hard 'u'
 			/^eul/i
-		]
+		];
 
 		//begin business time
 		////////////////////

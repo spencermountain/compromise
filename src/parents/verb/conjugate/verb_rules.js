@@ -136,6 +136,18 @@ var verb_rules = {
 	present: [
 
 		{
+			reg: /(.*tch)es$/i,
+			repl: {
+				infinitive: "$1",
+				gerund: "$1ing",
+				past: "$1ed"
+			},
+			examples: 'watches, clutches',
+			exceptions: [],
+			power: 1,
+			tense: 'present'
+		},
+		{
 			reg: /([tzlshicgrvdnkmu])es$/i,
 			repl: {
 				infinitive: "$1e",
@@ -212,7 +224,8 @@ var verb_rules = {
 			exceptions: [],
 			power: 88,
 			tense: 'present'
-		}, {
+		},
+		{
 			reg: /s$/i, //generic one
 			repl: {
 				infinitive: "",

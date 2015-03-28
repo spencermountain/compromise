@@ -66,7 +66,7 @@ var Verb = function(str, next, last, token) {
 
 	//past/present/future
 	the.tense = (function() {
-		if (the.word.match(/^will ./)) {
+		if (the.word.match(/\bwill\b/)) {
 			return "future"
 		}
 		var form = the.form
@@ -93,7 +93,7 @@ var Verb = function(str, next, last, token) {
 
 	//is this verb negative already?
 	the.negative = (function() {
-		if (the.word.match(/n't$/)) {
+		if (the.word.match(/n't$/)){
 			return true
 		}
 		if ((modals[the.word] || copulas[the.word]) && the.next && the.next.normalised == "not") {

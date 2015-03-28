@@ -8,38 +8,55 @@ exports["negation"] = function(test){
     s=nlp.pos(s).sentences[0].negate().text()
     return s
   }
-  test.equal(negate("she sells seashells by the seashore"), "she doesn't sell seashells by the seashore")
+  // hacks for logic-words
+  test.equal(negate("everyone will still be there"), "no one will still be there")
+  test.equal(negate("everybody listens to the cbc"), "nobody listens to the cbc")
+  // test.equal(negate("he always will be a fool"), "he never will be a fool")
+  // test.equal(negate("somebody said it was great"), "somebody said it was great")
+
+  // [infinitive verb] - walk -> don't walk
+  test.equal(negate("i say"), "i don't say")
+  // test.equal(negate("i think everything will be ok"), "i think everything won't be ok")
+
+  // [future-tense verb] - will->wont
+  test.equal(negate("he will go to the store"), "he won't go to the store")
+  test.equal(negate("she will watch the movie"), "she won't watch the movie")
+  test.equal(negate("he will always be a fool"), "he won't always be a fool")
+  test.equal(negate("the groom will"), "the groom won't")
 
   //[present-tense verb] - add 'didn't', conjugate verb
-  // test.equal(negate("he goes to the store"), "he didn't go to the store")
-  // test.equal(negate("she watches the movie"), "she didn't watch the movie")
-  // [future-tense verb] - will->wont
-  // test.equal(negate("he will go to the store"), "he won't go to the store")
-  // test.equal(negate("she will watch the movie"), "she won't watch the movie")
+  test.equal(negate("she walks"), "she doesn't walk")
+  test.equal(negate("he goes to the store"), "he doesn't go to the store")
+  test.equal(negate("she watches the movie"), "she doesn't watch the movie")
+  test.equal(negate("she clutches the wheel"), "she doesn't clutch the wheel")
+  test.equal(negate("she sells seashells by the seashore"), "she doesn't sell seashells by the seashore")
+  test.equal(negate("she still drives to work"), "she still doesn't drive to work")
+
   //[past-tense verb] - add didn't and conjugate verb
   test.equal(negate("he went to the store"), "he didn't go to the store")
   test.equal(negate("she watched the movie"), "she didn't watch the movie")
+
+  //[gerund verb] - 'walking' -> 'not walking'
+  test.equal(negate("walking to toronto"), "not walking to toronto")
+  // test.equal(negate("smoking in the elevator"), "not smoking in the elevator")
+  // test.equal(negate("smoking in the elevator is not allowed"), "smoking in the elevator is not allowed") // this is interesting..
   // [copula] - not
-  test.equal(negate("he is an animal"), "he is not an animal")
-  test.equal(negate("tom was a goofball"), "tom was not a goofball")
-  // test.equal(negate("he will be a lion"), "he won't be a lion")
-  // already negative (dont touch)
-  test.equal(negate("he didn't go to the store"), "he didn't go to the store")
-  test.equal(negate("she didn't watch the movie"), "she didn't watch the movie")
-  test.equal(negate("he won't go to the store"), "he won't go to the store")
-  test.equal(negate("she won't watch the movie"), "she won't watch the movie")
-  test.equal(negate("he didn't go to the store"), "he didn't go to the store")
-  test.equal(negate("she didn't watch the movie"), "she didn't watch the movie")
-  // test.equal(negate("he will not be a lion"), "he will not be a lion")
+  test.equal(negate("he is an animal"), "he isn't an animal")
+  test.equal(negate("tom was a goofball"), "tom wasn't a goofball")
+  test.equal(negate("he will be a lion"), "he won't be a lion")
+  // already negative
+  test.equal(negate("he didn't go to the store"), "he did go to the store")
+  test.equal(negate("she didn't watch the movie"), "she did watch the movie")
+  test.equal(negate("he will not be a lion"), "he will be a lion")
+  // test.equal(negate("he will surely not be a lion"), "he will be a lion") //this is interesting..
   // other stuff
-  // test.equal(negate("he will be the best"), "he won't be the best")
-  // test.equal(negate("he is the best"), "he isn't the best")
-  // test.equal(negate("he is walking to toronto"), "he isn't walking to toronto")
-  // test.equal(negate("walking to toronto"), "not walking to toronto")
+  test.equal(negate("he will be the best"), "he won't be the best")
+  test.equal(negate("he is the best"), "he isn't the best")
+  test.equal(negate("he is walking to toronto"), "he isn't walking to toronto")
   // coumpound sentences
-  // test.equal(negate("he will be a lion and will be on stage"), "he will not be a lion and be on stage")
-  // test.equal(negate("he was a lion and will be on stage"), "he was not a lion and will be on stage")
-  // test.equal(negate("They are based on different physical effects used to guarantee a stable grasping between a gripper and the object to be grasped."), "They are not based on different physical effects use to guarantee a stable grasping between a gripper and the object to be grasped.")
+  test.equal(negate("he will be a lion and will be on stage"), "he won't be a lion and will be on stage")
+  test.equal(negate("he was a lion and will be on stage"), "he wasn't a lion and will be on stage")
+  test.equal(negate("the walk was good and swimming was nice"), "the walk wasn't good and swimming was nice")
 
   test.done()
 }

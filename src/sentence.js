@@ -54,13 +54,89 @@ var Sentence = function(tokens) {
 		}
 	}
 
+	//negate makes the sentence mean the opposite thing.
 	the.negate = function() {
+		//these are cheap ways to negate the meaning
+	  // ('none' is ambiguous because it could mean (all or some) )
+		var logic_negate={
+			//some logical ones work
+			everyone:"no one",
+			everybody:"nobody",
+			someone:"no one",
+			somebody:"nobody",
+				// everything:"nothing",
+				// always:"never"
+			//copulas
+			is:"isn't",
+			are:"aren't",
+			was:"wasn't",
+			will:"won't",
+			//modals
+			"didn't":"did",
+			"wouldn't":"would",
+			"couldn't":"could",
+			"shouldn't":"should",
+			"can't":"can",
+			"won't":"will",
+			"mustn't":"must",
+			"shan't":"shall",
+			"shant":"shall",
+
+			"did":"didn't",
+			"would":"wouldn't",
+			"could":"couldn't",
+			"should":"shouldn't",
+			"can":"can't",
+			"must":"mustn't"
+
+		}
+		//loop through each term..
 		for (var i = 0; i < the.tokens.length; i++) {
 			var tok= the.tokens[i]
+
+			//turn 'is' into 'isn't', etc - make sure 'is' isnt followed by a 'not', too
+			if(logic_negate[tok.normalised] && (!the.tokens[i+1] || the.tokens[i+1].normalised!="not")){
+				tok.text= logic_negate[tok.normalised]
+				tok.normalised= logic_negate[tok.normalised]
+				if(tok.capitalised){ tok.text= capitalise(tok.text) }
+				return the
+			}
+
 			// find the first verb..
 			if(tok.pos.parent=="verb"){
-			  // if verb is already negative, don't do anything at all
+			  // if verb is already negative, make it not negative
 				if (tok.analysis.negative) {
+					if (the.tokens[i+1] && the.tokens[i+1].normalised=="not") {
+						the.tokens.splice(i+1, 1)
+					}
+					return the
+				}
+				// - INFINITIVE-
+				// 'i walk' -> "i don't walk"
+				if(tok.analysis.form=="infinitive"){
+					tok.text= "don't " + (tok.analysis.conjugate().infinitive || tok.text)
+					tok.normalised= tok.text.toLowerCase()
+					return the
+				}
+				// - GERUND-
+				// if verb is gerund, 'walking' -> "not walking"
+				if(tok.analysis.form=="gerund"){
+					tok.text= "not " + tok.text
+					tok.normalised= tok.text.toLowerCase()
+					return the
+				}
+				// - PAST-
+				// if verb is past-tense, 'he walked' -> "he did't walk"
+				if(tok.analysis.tense=="past"){
+					tok.text= "didn't " + (tok.analysis.conjugate().infinitive || tok.text)
+					tok.normalised= tok.text.toLowerCase()
+					return the
+				}
+				// - PRESENT-
+				// if verb is present-tense, 'he walks' -> "he doesn't walk"
+				if(tok.analysis.tense=="present"){
+					tok.text= "doesn't " + (tok.analysis.conjugate().infinitive || tok.text)
+					tok.normalised= tok.text.toLowerCase()
 					return the
 				}
 				// - FUTURE-
@@ -73,21 +149,11 @@ var Sentence = function(tokens) {
 					  tok.text=tok.text.replace(/^will /i, "won't ")
 					  tok.normalised=tok.normalised.replace(/^will /i, "won't ")
 					}
-					if(tok.capitalised){
-						tok.text=capitalise(tok.text);
-					}
-					return the
-				}
-				// - PRESENT-
-				// if verb is present-tense, 'he walks' -> "he doesn't walk"
-				if(tok.analysis.tense=="present"){
-					tok.text= "doesn't " + (tok.analysis.conjugate().infinitive || tok.text)
-					tok.normalised= tok.text.toLowerCase()
+					if(tok.capitalised){ tok.text=capitalise(tok.text); }
 					return the
 				}
 
-
-
+			return the
 			}
 		}
 

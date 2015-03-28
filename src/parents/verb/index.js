@@ -56,9 +56,16 @@ var Verb = function(str, next, last, token) {
 
 	//which conjugation
 	the.form = (function() {
+		//don't choose infinitive if infinitive==present
+		var order=[
+  		"present",
+  		"past",
+  		"gerund",
+  		"infinitive"
+  	]
 		var forms = verb_conjugate(the.word)
-		for (var i in forms) {
-			if (forms[i] == the.word) {
+		for (var i=0; i<order.length; i++) {
+			if (forms[order[i]] == the.word) {
 				return i
 			}
 		}
@@ -110,7 +117,7 @@ if (typeof module !== "undefined" && module.exports) {
 }
 
 
-// console.log(new Verb("walked"))
+// console.log(new Verb("walking"))
 // console.log(new Verb("stalking").tense)
 // console.log(new Verb("will walk").tense)
 // console.log(new Verb("stalks"))

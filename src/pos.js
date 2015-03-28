@@ -202,9 +202,10 @@ var pos = (function() {
 	//////////
 	var main = function(text, options) {
 		options = options || {}
-
+		if(!text){
+			return new Section()
+		}
 		var sentences = tokenize(text);
-
 
 		sentences.forEach(function(sentence) {
 

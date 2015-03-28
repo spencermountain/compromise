@@ -473,6 +473,12 @@ var word_rules = [{
         strength: 1,
         errors: 0,
         accuracy: '0.00'
+    },{
+        reg: /.tches$/i, //watches
+        pos: 'VB',
+        strength: 1,
+        errors: 0,
+        accuracy: '0.00'
     },
 
 

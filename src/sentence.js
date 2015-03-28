@@ -4,6 +4,10 @@ var Sentence = function(tokens) {
 	var the = this
 	the.tokens = tokens || [];
 
+	var capitalise=function(s){
+		return s.charAt(0).toUpperCase() + s.slice(1);
+	}
+
 	the.tense = function() {
 		var verbs = the.tokens.filter(function(token) {
 			return token.pos.parent == "verb"
@@ -51,6 +55,47 @@ var Sentence = function(tokens) {
 	}
 
 	the.negate = function() {
+		for (var i = 0; i < the.tokens.length; i++) {
+			var tok= the.tokens[i]
+			// find the first verb..
+			if(tok.pos.parent=="verb"){
+			  // if verb is already negative, don't do anything at all
+				if (tok.analysis.negative) {
+					return the
+				}
+				// - FUTURE-
+				// if verb is future-tense, 'will go' -> won't go. easy-peasy
+				if(tok.analysis.tense=="future"){
+					if(tok.normalised=="will"){
+						tok.normalised="won't"
+						tok.text="won't"
+					}else{
+					  tok.text=tok.text.replace(/^will /i, "won't ")
+					  tok.normalised=tok.normalised.replace(/^will /i, "won't ")
+					}
+					if(tok.capitalised){
+						tok.text=capitalise(tok.text);
+					}
+					return the
+				}
+				// - PRESENT-
+				// if verb is present-tense, 'he walks' -> "he doesn't walk"
+				if(tok.analysis.tense=="present"){
+					tok.text= "doesn't " + (tok.analysis.conjugate().infinitive || tok.text)
+					tok.normalised= tok.text.toLowerCase()
+					return the
+				}
+
+
+
+			}
+		}
+
+
+		return the
+	}
+
+	the.old_negate = function() {
 		//if it's already negative, don't touch it
 		for (var i = 0; i < the.tokens.length; i++) {
 			if (the.tokens[i].analysis.negative) {

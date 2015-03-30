@@ -49,3 +49,11 @@ var nlp = {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = nlp
 }
+
+// console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
+// console.log( nlp.pos('They are based on different physical things built to guarantee a stable grasping between a gripper and the object to be grasped.').sentences[0].negate().text() )
+
+// console.log( nlp.pos('he will be on stage').sentences[0].negate().text() )
+// console.log( nlp.pos('walking to toronto').sentences[0].negate().text() )
+// console.log( nlp.pos('he will be the best').sentences[0].negate().text() )
+// console.log( nlp.pos("he will go to the store").sentences[0].tokens)

@@ -65,7 +65,7 @@ var Sentence = function(tokens) {
 			someone:"no one",
 			somebody:"nobody",
 				// everything:"nothing",
-				// always:"never"
+			always:"never",
 			//copulas
 			is:"isn't",
 			are:"aren't",
@@ -110,6 +110,13 @@ var Sentence = function(tokens) {
 						the.tokens.splice(i+1, 1)
 					}
 					return the
+				}
+				//turn future-tense 'will go' into "won't go"
+				if(tok.normalised.match(/^will /i)){
+					tok.text=tok.text.replace(/^will /i, "won't ")
+					tok.normalised= tok.text
+				  if(tok.capitalised){ tok.text= capitalise(tok.text) }
+				  return the
 				}
 				// - INFINITIVE-
 				// 'i walk' -> "i don't walk"
@@ -156,7 +163,6 @@ var Sentence = function(tokens) {
 			return the
 			}
 		}
-
 
 		return the
 	}

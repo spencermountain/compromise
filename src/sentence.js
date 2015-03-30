@@ -113,7 +113,7 @@ var Sentence = function(tokens) {
 				}
 				// - INFINITIVE-
 				// 'i walk' -> "i don't walk"
-				if(tok.analysis.form=="infinitive"){
+				if(tok.analysis.form=="infinitive" && tok.analysis.form!="future"){
 					tok.text= "don't " + (tok.analysis.conjugate().infinitive || tok.text)
 					tok.normalised= tok.text.toLowerCase()
 					return the

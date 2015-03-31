@@ -1,6 +1,6 @@
 /*! nlp_compromise 
  by @spencermountain
- 2015-03-27 */
+ 2015-03-30 */
 //
 // nlp_compromise - @spencermountain - gplv3
 // https://github.com/spencermountain/nlp_compromise
@@ -1909,6 +1909,12 @@ var word_rules = [{
         accuracy: '0.00'
     },{
         reg: /.'t$/i, //doesn't
+        pos: 'VB',
+        strength: 1,
+        errors: 0,
+        accuracy: '0.00'
+    },{
+        reg: /.tches$/i, //watches
         pos: 'VB',
         strength: 1,
         errors: 0,
@@ -4916,6 +4922,18 @@ var verb_rules = {
 	present: [
 
 		{
+			reg: /(.*tch)es$/i,
+			repl: {
+				infinitive: "$1",
+				gerund: "$1ing",
+				past: "$1ed"
+			},
+			examples: 'watches, clutches',
+			exceptions: [],
+			power: 1,
+			tense: 'present'
+		},
+		{
 			reg: /([tzlshicgrvdnkmu])es$/i,
 			repl: {
 				infinitive: "$1e",
@@ -4992,7 +5010,8 @@ var verb_rules = {
 			exceptions: [],
 			power: 88,
 			tense: 'present'
-		}, {
+		},
+		{
 			reg: /s$/i, //generic one
 			repl: {
 				infinitive: "",
@@ -6532,17 +6551,24 @@ var Verb = function(str, next, last, token) {
 
 	//which conjugation
 	the.form = (function() {
+		//don't choose infinitive if infinitive==present
+		var order=[
+  		"past",
+  		"present",
+  		"gerund",
+  		"infinitive"
+  	]
 		var forms = verb_conjugate(the.word)
-		for (var i in forms) {
-			if (forms[i] == the.word) {
-				return i
+		for (var i=0; i<order.length; i++) {
+			if (forms[order[i]] == the.word) {
+				return order[i]
 			}
 		}
 	})()
 
 	//past/present/future
 	the.tense = (function() {
-		if (the.word.match(/^will ./)) {
+		if (the.word.match(/\bwill\b/)) {
 			return "future"
 		}
 		var form = the.form
@@ -6569,7 +6595,7 @@ var Verb = function(str, next, last, token) {
 
 	//is this verb negative already?
 	the.negative = (function() {
-		if (the.word.match(/n't$/)) {
+		if (the.word.match(/n't$/)){
 			return true
 		}
 		if ((modals[the.word] || copulas[the.word]) && the.next && the.next.normalised == "not") {
@@ -6586,7 +6612,7 @@ if (typeof module !== "undefined" && module.exports) {
 }
 
 
-// console.log(new Verb("walked"))
+// console.log(new Verb("will"))
 // console.log(new Verb("stalking").tense)
 // console.log(new Verb("will walk").tense)
 // console.log(new Verb("stalks"))
@@ -9670,6 +9696,10 @@ var Sentence = function(tokens) {
 	var the = this
 	the.tokens = tokens || [];
 
+	var capitalise=function(s){
+		return s.charAt(0).toUpperCase() + s.slice(1);
+	}
+
 	the.tense = function() {
 		var verbs = the.tokens.filter(function(token) {
 			return token.pos.parent == "verb"
@@ -9716,7 +9746,120 @@ var Sentence = function(tokens) {
 		}
 	}
 
+	//negate makes the sentence mean the opposite thing.
 	the.negate = function() {
+		//these are cheap ways to negate the meaning
+	  // ('none' is ambiguous because it could mean (all or some) )
+		var logic_negate={
+			//some logical ones work
+			everyone:"no one",
+			everybody:"nobody",
+			someone:"no one",
+			somebody:"nobody",
+				// everything:"nothing",
+			always:"never",
+			//copulas
+			is:"isn't",
+			are:"aren't",
+			was:"wasn't",
+			will:"won't",
+			//modals
+			"didn't":"did",
+			"wouldn't":"would",
+			"couldn't":"could",
+			"shouldn't":"should",
+			"can't":"can",
+			"won't":"will",
+			"mustn't":"must",
+			"shan't":"shall",
+			"shant":"shall",
+
+			"did":"didn't",
+			"would":"wouldn't",
+			"could":"couldn't",
+			"should":"shouldn't",
+			"can":"can't",
+			"must":"mustn't"
+
+		}
+		//loop through each term..
+		for (var i = 0; i < the.tokens.length; i++) {
+			var tok= the.tokens[i]
+
+			//turn 'is' into 'isn't', etc - make sure 'is' isnt followed by a 'not', too
+			if(logic_negate[tok.normalised] && (!the.tokens[i+1] || the.tokens[i+1].normalised!="not")){
+				tok.text= logic_negate[tok.normalised]
+				tok.normalised= logic_negate[tok.normalised]
+				if(tok.capitalised){ tok.text= capitalise(tok.text) }
+				return the
+			}
+
+			// find the first verb..
+			if(tok.pos.parent=="verb"){
+			  // if verb is already negative, make it not negative
+				if (tok.analysis.negative) {
+					if (the.tokens[i+1] && the.tokens[i+1].normalised=="not") {
+						the.tokens.splice(i+1, 1)
+					}
+					return the
+				}
+				//turn future-tense 'will go' into "won't go"
+				if(tok.normalised.match(/^will /i)){
+					tok.text=tok.text.replace(/^will /i, "won't ")
+					tok.normalised= tok.text
+				  if(tok.capitalised){ tok.text= capitalise(tok.text) }
+				  return the
+				}
+				// - INFINITIVE-
+				// 'i walk' -> "i don't walk"
+				if(tok.analysis.form=="infinitive" && tok.analysis.form!="future"){
+					tok.text= "don't " + (tok.analysis.conjugate().infinitive || tok.text)
+					tok.normalised= tok.text.toLowerCase()
+					return the
+				}
+				// - GERUND-
+				// if verb is gerund, 'walking' -> "not walking"
+				if(tok.analysis.form=="gerund"){
+					tok.text= "not " + tok.text
+					tok.normalised= tok.text.toLowerCase()
+					return the
+				}
+				// - PAST-
+				// if verb is past-tense, 'he walked' -> "he did't walk"
+				if(tok.analysis.tense=="past"){
+					tok.text= "didn't " + (tok.analysis.conjugate().infinitive || tok.text)
+					tok.normalised= tok.text.toLowerCase()
+					return the
+				}
+				// - PRESENT-
+				// if verb is present-tense, 'he walks' -> "he doesn't walk"
+				if(tok.analysis.tense=="present"){
+					tok.text= "doesn't " + (tok.analysis.conjugate().infinitive || tok.text)
+					tok.normalised= tok.text.toLowerCase()
+					return the
+				}
+				// - FUTURE-
+				// if verb is future-tense, 'will go' -> won't go. easy-peasy
+				if(tok.analysis.tense=="future"){
+					if(tok.normalised=="will"){
+						tok.normalised="won't"
+						tok.text="won't"
+					}else{
+					  tok.text=tok.text.replace(/^will /i, "won't ")
+					  tok.normalised=tok.normalised.replace(/^will /i, "won't ")
+					}
+					if(tok.capitalised){ tok.text=capitalise(tok.text); }
+					return the
+				}
+
+			return the
+			}
+		}
+
+		return the
+	}
+
+	the.old_negate = function() {
 		//if it's already negative, don't touch it
 		for (var i = 0; i < the.tokens.length; i++) {
 			if (the.tokens[i].analysis.negative) {
@@ -10104,9 +10247,10 @@ var pos = (function() {
 	//////////
 	var main = function(text, options) {
 		options = options || {}
-
+		if(!text){
+			return new Section()
+		}
 		var sentences = tokenize(text);
-
 
 		sentences.forEach(function(sentence) {
 
@@ -10490,6 +10634,16 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = nlp
 }
 
+// console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
+// console.log( nlp.pos('They are based on different physical things built to guarantee a stable grasping between a gripper and the object to be grasped.').sentences[0].negate().text() )
+
+// console.log( nlp.pos('he will be on stage').sentences[0].negate().text() )
+// console.log( nlp.pos('walking to toronto').sentences[0].negate().text() )
+// console.log( nlp.pos('he will be the best').sentences[0].negate().text() )
+// console.log( nlp.pos("he will go to the store").sentences[0].tokens)
+
+// git tag -a v0.3.5 -m "Release version 0.3.5"
+// git push origin master --tags
 	///
 	//footer
 	//

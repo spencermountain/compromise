@@ -75,7 +75,14 @@ $(function() {
     var glues={
       "verb":"darkseagreen",
     }
-    var html= data[0].tokens.map(function(p){
+    //flatten
+    var tokens=[]
+    data.forEach(function(s){
+      s.tokens.forEach(function(t){
+        tokens.push(t)
+      })
+    })
+    var html= tokens.map(function(p){
       return "<span style='font-size:28px; margin:2px; display:inline-block; padding:8px; background-color:"+(glues[p.pos.parent]||'white')+"; color:steelblue;'>"+
       p.text+
       " </span>"
@@ -85,7 +92,7 @@ $(function() {
 
   $("#pos").find("input").keyup(function(){
     var txt=$(this).val() || ''
-    var data= nlp.pos(txt).sentences
+    var sentences= nlp.pos(txt).sentences
     var glues={
       "adjective":"lightsteelblue",
       "noun":"coral",
@@ -93,7 +100,14 @@ $(function() {
       "glue":"lightgrey",
       "title":"lightgrey",
     }
-    var html= data[0].tokens.map(function(p){
+    //flatten
+    var tokens = [];
+    sentences.forEach(function(s){
+      s.tokens.forEach(function(t){
+        tokens.push(t)
+      })
+    })
+    var html= tokens.map(function(p){
       return "<span style='font-size:28px; margin:2px; display:inline-block; padding:8px; background-color:"+glues[p.pos.parent]+"; color:white;'>"+
       p.text+
       " <span style='font-size:14px; color:steelblue;'>("+p.pos.tag+")</span>"+
@@ -182,7 +196,7 @@ $(function() {
     //   $(this).siblings(".result").html(" ")
     // }
     var str='<div>month:'+data.month+'<br/> day:'+data.day+'<br/> year:'+data.year+'</div>'
-    str+='<p></p><div>to month:'+data.to_month+'<br/> to day:'+data.to_day+'<br/> to year:'+data.to_year+'</div>'
+    // str+='<p></p><div>to month:'+data.to_month+'<br/> to day:'+data.to_day+'<br/> to year:'+data.to_year+'</div>'
     $(this).siblings(".result").html(str)
   })
 
@@ -283,7 +297,7 @@ $(function() {
 <div id="americanize">
   <h2>americanize</h2>
   <h3>nlp.americanize(text)</h3>
-  <input type="text" class="input" value="favourite" style="width:250px;"/>
+  <input type="text" class="input" value="synthesised" style="width:250px;"/>
   <div class="result" style="font-size:24px;"></div>
 </div>
 
@@ -291,7 +305,7 @@ $(function() {
   <hr/>
   <h2>pluralize!</h2>
   <h3>nlp.pluralize(text)</h3>
-  <input type="text" class="input" value="water-tower" style="width:250px;"/>
+  <input type="text" class="input" value="water tower" style="width:250px;"/>
   <div class="result" style="font-size:24px;"></div>
 </div>
 

@@ -57,3 +57,6 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log( nlp.pos('walking to toronto').sentences[0].negate().text() )
 // console.log( nlp.pos('he will be the best').sentences[0].negate().text() )
 // console.log( nlp.pos("he will go to the store").sentences[0].tokens)
+
+// git tag -a v0.3.5 -m "Release version 0.3.5"
+// git push origin master --tags

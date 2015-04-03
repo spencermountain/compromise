@@ -3,6 +3,19 @@ if (typeof module !== "undefined" && module.exports) {
   var nlp = require("../index")
 }
 
+exports["conjugate"] = function(test){
+  var convert=function(s){
+    s=nlp.pos(s).to_future().text()
+    return s
+  }
+  test.equal(convert("he went to the store"), "he will go to the store")
+  test.equal(convert("she walked backwards"), "she will walk backwards")
+  test.equal(convert("everyone said he was cool"), "everyone will say he was cool")
+  test.done()
+
+
+}
+
 exports["negation"] = function(test){
   var negate=function(s){
     s=nlp.pos(s).sentences[0].negate().text()
@@ -56,7 +69,8 @@ exports["negation"] = function(test){
   test.equal(negate("he was a lion and will be on stage"), "he wasn't a lion and will be on stage")
   test.equal(negate("the walk was good and swimming was nice"), "the walk wasn't good and swimming was nice")
   //hard ones
-  // test.equal(negate("he will surely not be a lion"), "he will surely be a lion") //this is interesting..
+  // test.equal(negate("he will really not be a king"), "he will totally be a king") //this is interesting..
+  // test.equal(negate("he will not really be a king"), "he will totally be a king") //this is interesting..
   // test.equal(negate("smoking in the elevator is allowed"), "smoking in the elevator is not allowed") // this is interesting..
 
   test.done()

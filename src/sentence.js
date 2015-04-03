@@ -167,56 +167,6 @@ var Sentence = function(tokens) {
 		return the
 	}
 
-	the.old_negate = function() {
-		//if it's already negative, don't touch it
-		for (var i = 0; i < the.tokens.length; i++) {
-			if (the.tokens[i].analysis.negative) {
-				return the
-			}
-		}
-		//first at 'not' before copulas
-		var _l = the.tokens.length
-		for (var i = 0; i < _l; i++) { //this modifies array while looping
-			if (the.tokens[i].pos && the.tokens[i].pos.tag == "CP" && !the.tokens[i].analysis.negative) {
-				var token = {
-					text: "not"
-				}
-				//set surrounding verbs as negative
-				the.tokens[i].analysis.negative = true
-				if (the.tokens[i + 1] && the.tokens[i + 1].analysis) {
-					the.tokens[i + 1].analysis.negative = true
-				}
-				the.insert(token, i + 1)
-			}
-		}
-		//then, address other verbs
-		var verb_negations = {
-			past: "didn't",
-			present: "doesn't",
-			future: "won't",
-			gerund: "isn't",
-		}
-		var _l = the.tokens.length
-		for (var i = 0; i < _l; i++) {
-			if (the.tokens[i].pos && the.tokens[i].pos.parent == "verb" && !the.tokens[i].analysis.negative) {
-				var tense = the.tokens[i].analysis.tense || 'present'
-				//set it as negative
-				the.tokens[i].analysis.negative = true
-				//set it as present tense
-				if (tense != 'gerund') {
-					the.tokens[i].text = the.tokens[i].analysis.conjugate().infinitive
-					the.tokens[i].normalised = the.tokens[i].text
-				}
-				var token = {
-					text: verb_negations[tense],
-					normalised: verb_negations[tense],
-				}
-				the.insert(token, i)
-			}
-		}
-		return the
-	}
-
 
   the.entities=function(options){
     var spots=[]

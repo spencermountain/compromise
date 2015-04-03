@@ -8,6 +8,7 @@ var Section = function(sentences) {
       return s.text()
     }).join(' ')
   }
+  //pluck out wanted data from sentences
   the.nouns= function(){
     return the.sentences.map(function(s){
       return s.nouns()
@@ -37,6 +38,31 @@ var Section = function(sentences) {
     return the.sentences.map(function(s){
       return s.values()
     }).reduce(function(arr, a){return arr.concat(a)},[])
+  }
+  //transform the sentences
+  the.negate= function(){
+    the.sentences= the.sentences.map(function(s){
+      return s.negate()
+    })
+    return the
+  }
+  the.to_past= function(){
+    the.sentences= the.sentences.map(function(s){
+      return s.to_past()
+    })
+    return the
+  }
+  the.to_present= function(){
+    the.sentences= the.sentences.map(function(s){
+      return s.to_present()
+    })
+    return the
+  }
+  the.to_future= function(){
+    the.sentences= the.sentences.map(function(s){
+      return s.to_future()
+    })
+    return the
   }
 
 }

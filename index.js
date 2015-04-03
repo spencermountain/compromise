@@ -51,7 +51,7 @@ if (typeof module !== "undefined" && module.exports) {
 }
 
 // console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
-// console.log( nlp.verb("farm").conjugate())
+// console.log( nlp.verb("farm").conjugate()) //
 
 // bump bower
 // git tag -a v0.3.5 -m "tag bower release"

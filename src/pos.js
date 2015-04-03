@@ -106,6 +106,11 @@ var pos = (function() {
 			token.pos = parts_of_speech['NN']
 			token.pos_reason = "before a modal"
 		}
+		//if it's after the word 'will' its probably a verb/adverb
+		if(last && last.normalised=="will" && !last.punctuated && token.pos.parent=="noun"){
+			token.pos = parts_of_speech['VB']
+			token.pos_reason = "after the word 'will'"
+		}
 		//if it's after an adverb, it's not a noun -> quickly acked
 		//support form 'atleast he is..'
 		if (last && token.pos.parent == "noun" && last.pos.tag == "RB" && !last.start) {

@@ -11,39 +11,39 @@ exports["conjugate_future"] = function(test){
   test.equal(convert("he went to the store"), "he will go to the store")
   test.equal(convert("she walked backwards"), "she will walk backwards")
   // test.equal(convert("everyone said he was cool"), "everyone will say he is cool") //hard
-  // test.equal(convert("he crawls to the back door"), "he will crawl to the back door")
+  test.equal(convert("he crawls to the back door"), "he will crawl to the back door")
   // test.equal(convert("i am slouching forward"), "i will slouch forward")
-  // test.equal(convert("i will slouch forward"), "i will slouch forward")//future-future
+  // test.equal(convert("i will slouch forward"), "i will slouch forward")//future-future //FIX
   test.done()
 }
 
-// exports["conjugate_present"] = function(test){
-//   var convert=function(s){
-//     s=nlp.pos(s).to_present().text()
-//     return s
-//   }
-//   test.equal(convert("he went to the store"), "he goes to the store")
-//   test.equal(convert("she walked backwards"), "she walks backwards")
-//   test.equal(convert("everyone said he was cool"), "everyone says he was cool")
-//   test.equal(convert("he will crawl to the back door"), "he crawls to the back door")
-//   // test.equal(convert("i am slouching forward"), "i slouch forward")  //interesting
-//   test.equal(convert("he crawls to the backdoor"), "he crawls to the back door")//present-present
-//   test.done()
-// }
+exports["conjugate_present"] = function(test){
+  var convert=function(s){
+    s=nlp.pos(s).to_present().text()
+    return s
+  }
+  test.equal(convert("he went to the store"), "he goes to the store")
+  test.equal(convert("she walked backwards"), "she walks backwards")
+  // test.equal(convert("everyone said he was cool"), "everyone says he was cool")
+  test.equal(convert("he will crawl to the back door"), "he crawls to the back door")
+  // test.equal(convert("i am slouching forward"), "i slouch forward")  //interesting
+  test.equal(convert("he crawls to the back door"), "he crawls to the back door")//present-present
+  test.done()
+}
 
-// exports["conjugate_past"] = function(test){
-//   var convert=function(s){
-//     s=nlp.pos(s).to_past().text()
-//     return s
-//   }
-//   test.equal(convert("he goes to the store"), "he went to the store")
-//   test.equal(convert("she will walk backwards"), "she walked backwards")
-//   test.equal(convert("everyone says he is cool"), "everyone said he was cool")
-//   test.equal(convert("he will crawl to the back door"), "he crawled to the back door")
-//   test.equal(convert("i am slouching forward"), "i slouched forward")
-//   test.equal(convert("he went to the store"), "he went to the store") //past-past
-//   test.done()
-// }
+exports["conjugate_past"] = function(test){
+  var convert=function(s){
+    s=nlp.pos(s).to_past().text()
+    return s
+  }
+  test.equal(convert("he goes to the store"), "he went to the store")
+  test.equal(convert("she will walk backwards"), "she walked backwards")
+  test.equal(convert("everyone says he is cool"), "everyone said he was cool")
+  test.equal(convert("he will crawl to the back door"), "he crawled to the back door")
+  // test.equal(convert("i am slouching forward"), "i slouched forward")
+  test.equal(convert("he went to the store"), "he went to the store") //past-past
+  test.done()
+}
 
 exports["verb_conjugate"] = function(test){
   var tenses = [

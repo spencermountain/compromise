@@ -230,29 +230,3 @@ var Sentence = function(tokens) {
 if (typeof module !== "undefined" && module.exports) {
 	module.exports = Sentence;
 }
-
-// pos = require("./pos")
-//gerund negation
-// tokens = pos('joe is so cool, he is going')[0].tokens
-//non-gerund verb negations
-// tokens = pos('joe swims to the bank')[0].tokens
-// tokens = pos('joe swam to the bank')[0].tokens
-// tokens = pos('joe swam to the bank')[0].tokens
-// tokens = pos('joe is swimming to the bank')[0].tokens
-// tokens = pos('joe is not swimming to the bank')[0].tokens //already negative
-// tokens = pos('the chimney was so yellow')[0].tokens
-
-// s = new Sentence(tokens).negate().tokens[2].analysis.conjugate()
-// console.log(s)
-// console.log(s)
-// s = new Sentence(tokens)
-// s.to_past()
-// console.log(s)
-// console.log(s.text())
-// s.to_present()
-// console.log(s.text())
-// s.to_future()
-// console.log(s.text())
-
-// s=pos('the chimneys are so yellow')[0]
-// console.log(s.to_past().text())

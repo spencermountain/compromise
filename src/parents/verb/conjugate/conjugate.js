@@ -1,5 +1,7 @@
 var verb_conjugate = (function() {
 
+  var debug=false //find the particular transformation
+
   if (typeof module !== "undefined" && module.exports) {
     verb_to_doer = require("./to_doer")
     verb_irregulars = require("./verb_irregulars")
@@ -104,12 +106,20 @@ var verb_conjugate = (function() {
   //fallback to this transformation if it has an unknown prefix
   var fallback = function(w) {
     // console.log('fallback')
-    var infinitive = w.replace(/ed$/, '');
+    if(w.length>4){
+      var infinitive = w.replace(/ed$/, '');
+    }else{
+      var infinitive = w.replace(/d$/, '');
+    }
     var present, past, gerund, doer;
     if (w.match(/[^aeiou]$/)) {
       gerund = w + "ing"
       past = w + "ed"
-      present = w + "s"
+      if(w.match(/ss$/)){
+        present = w + "es" //'passes'
+      }else{
+        present = w + "s"
+      }
       doer = verb_to_doer(infinitive)
     } else {
       gerund = w.replace(/[aeiou]$/, 'ing')
@@ -123,11 +133,12 @@ var verb_conjugate = (function() {
       past: past,
       gerund: gerund,
       doer: doer,
+      future: "will "+infinitive,
     }
   }
 
   //make sure object has all forms
-  var fufill = function(obj) {
+  var fufill = function(obj, prefix) {
     if (!obj.infinitive) {
       return obj
     }
@@ -143,6 +154,16 @@ var verb_conjugate = (function() {
     if (!obj.past) {
       obj.past = obj.infinitive + 'ed'
     }
+    //add the prefix to all forms, if it exists
+    if(prefix){
+      Object.keys(obj).forEach(function(k){
+        obj[k]= prefix+obj[k]
+      })
+    }
+    //future is 'will'+infinitive
+    if(!obj.future){
+      obj.future= "will "+obj.infinitive
+    }
     return obj
   }
 
@@ -152,21 +173,28 @@ var verb_conjugate = (function() {
       return {}
     }
     var done = {}
+    //chop it if it's future-tense
+    w=w.replace(/^will /i,'')
+    //un-prefix the verb, and add it in later
+    var prefix= (w.match(/^(over|under|re|anti|full)\-?/i)||[])[0]
+    var verb=w.replace(/^(over|under|re|anti|full)\-?/i, '')
     //check irregulars
     for (var i = 0; i < verb_irregulars.length; i++) {
-      var x = verb_irregulars[i];
-      if (w == x.present || w == x.gerund || w == x.past || w == x.infinitive) {
-        return fufill(verb_irregulars[i])
+      var x = verb_irregulars[i]
+      if (verb == x.present || verb == x.gerund || verb == x.past || verb == x.infinitive) {
+        var x = JSON.parse(JSON.stringify(verb_irregulars[i])); // object 'clone' hack, to avoid mem leak
+        return fufill(x, prefix)
       }
     }
-    // console.log(predict(w))
+    //guess the tense, so we know which transormation to make
     var predicted = predict(w) || 'infinitive'
+    if(debug){console.log("==predicted= " + predicted)}
 
     //check against suffix rules
     for (var i = 0; i < verb_rules[predicted].length; i++) {
       var r = verb_rules[predicted][i];
       if (w.match(r.reg)) {
-        // console.log(r)
+        if(debug){ console.log(r) }
         var obj = Object.keys(r.repl).reduce(function(h, k) {
           if (k == predicted) {
             h[k] = w
@@ -180,6 +208,7 @@ var verb_conjugate = (function() {
       }
     }
 
+    if(debug){console.log("--fallback--")}
     //produce a generic transformation
     return fallback(w)
   };
@@ -242,16 +271,24 @@ var verb_conjugate = (function() {
 // console.log(verb_conjugate("count"))
 // console.log(verb_conjugate("seed"))//
 // console.log(verb_conjugate("plead"))
-
-
-// console.log(verb_conjugate("contain")) ///*****bug
-// console.log(verb_conjugate("stain"))//****bug
-// console.log(verb_conjugate("glean"))//****bug
-
-
-// console.log(verb_conjugate("result")) //****bug
-// console.log(verb_conjugate("develop")) //****bug
-// console.log(verb_conjugate("wait"))//****bug
-// console.log(verb_conjugate("pass"))//****bug
-// console.log(verb_conjugate("answer"))//****bug
+// console.log(verb_conjugate("sliced"))
+// console.log(verb_conjugate("underthrow"))
+// console.log(verb_conjugate("will walk"))
+// console.log(verb_conjugate("overthrow"))
+// console.log(verb_conjugate("fasten"))
+// console.log(verb_conjugate("will go"))
+// console.log(verb_conjugate("farmed"))
+// console.log(verb_conjugate("fouled"))
+// console.log(verb_conjugate("contain"))
+// console.log(verb_conjugate("stain"))
+// console.log(verb_conjugate("glean"))
+// console.log(verb_conjugate("result"))
+// console.log(verb_conjugate("develop"))
+// console.log(verb_conjugate("worship"))
+// console.log(verb_conjugate("wait"))
+// console.log(verb_conjugate("pass"))
+// console.log(verb_conjugate("doesn't walk"))
+// console.log(verb_conjugate("answer"))
+// console.log(verb_conjugate("walks"))
+// console.log(verb_conjugate("will go"))
 

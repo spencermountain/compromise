@@ -8,6 +8,11 @@ var Section = function(sentences) {
       return s.text()
     }).join(' ')
   }
+  the.tense= function(){
+    return the.sentences.map(function(s){
+      return s.tense()
+    })
+  }
   //pluck out wanted data from sentences
   the.nouns= function(){
     return the.sentences.map(function(s){

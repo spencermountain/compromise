@@ -489,7 +489,7 @@ var lexicon = (function() {
 		"all": "JJ",
 		"define": "VB",
     "went": "VBD",
-    "goes": "VBZ",
+    "goes": "VB",
     "sounds": "VBZ",
   "measure": "VB",
   "enhance": "VB",

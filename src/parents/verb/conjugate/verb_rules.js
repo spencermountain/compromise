@@ -63,7 +63,7 @@ var verb_rules = {
 			power: 123,
 			tense: 'infinitive'
 		}, {
-			reg: /([bd])le$/i,
+			reg: /([bd]l)e$/i,
 			repl: {
 				present: "$1es",
 				gerund: "$1ing",
@@ -107,7 +107,7 @@ var verb_rules = {
 			power: 1,
 			tense: 'infinitive'
 		}, {
-			reg: /([aeiou])([ptn])$/i,//has a bug
+			reg: /([aeiu])([pt])$/i,
 			repl: {
 				present: "$1$2s",
 				gerund: "$1$2$2ing",
@@ -130,19 +130,55 @@ var verb_rules = {
 			exceptions: [],
 			power: 1,
 			tense: 'infinitive'
+		},
+		{
+			reg: /(en)$/i,
+			repl: {
+				present: "$1s",
+				gerund: "$1ing",
+				past: "$1ed",
+			},
+			examples: 'tighten',
+			exceptions: [],
+			power: 1,
+			tense: 'infinitive'
 		}
 	],
 
 	present: [
 
 		{
-			reg: /(.*tch)es$/i,
+			reg: /(ies)$/i,
+			repl: {
+				infinitive: "y",
+				gerund: "ying",
+				past: "ied"
+			},
+			examples: 'unifies',
+			exceptions: [],
+			power: 1,
+			tense: 'present'
+		},
+		{
+			reg: /(tch|sh)es$/i,
 			repl: {
 				infinitive: "$1",
 				gerund: "$1ing",
 				past: "$1ed"
 			},
 			examples: 'watches, clutches',
+			exceptions: [],
+			power: 1,
+			tense: 'present'
+		},
+		{
+			reg: /(ss)es$/i,
+			repl: {
+				infinitive: "$1",
+				gerund: "$1ing",
+				past: "$1ed"
+			},
+			examples: 'passes',
 			exceptions: [],
 			power: 1,
 			tense: 'present'
@@ -224,6 +260,29 @@ var verb_rules = {
 			exceptions: [],
 			power: 88,
 			tense: 'present'
+		}, {
+			reg: /(ip)es$/i,
+			repl: {
+				infinitive: "$1e",
+				gerund: "$1ing",
+				past: "$1ed"
+			},
+			examples: 'pipes',
+			exceptions: [],
+			power: 1,
+			tense: 'present'
+		},
+		{
+			reg: /ss$/i,
+			repl: {
+				infinitive: "ss",
+				gerund: "ssing",
+				past: "ssed"
+			},
+			examples: 'pass',
+			exceptions: [],
+			power: 88,
+			tense: 'present'
 		},
 		{
 			reg: /s$/i, //generic one
@@ -232,7 +291,7 @@ var verb_rules = {
 				gerund: "ing",
 				past: "ed"
 			},
-			examples: 'swivels, rebels, travels',
+			examples: 'walks',
 			exceptions: [],
 			power: 88,
 			tense: 'present'
@@ -446,7 +505,7 @@ var verb_rules = {
 
 		//doesnt need an e, ever
 		{
-			reg: /(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ail|en|oo.|er|k|p|w|our|rt|ght)ed$/i,
+			reg: /(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ail|en|oo.|er|k|pp|w|ou.|rt|ght|rm)ed$/i,
 			repl: {
 				infinitive: "$1",
 				present: "$1s",
@@ -526,9 +585,9 @@ var verb_rules = {
 		}, {
 			reg: /([pl])t$/i,
 			repl: {
-				infinitive: "$1",
-				present: "$1s",
-				gerund: "$1ing"
+				infinitive: "$1t",
+				present: "$1ts",
+				gerund: "$1ting"
 			},
 			example: "lept, leant",
 			exceptions: [],

@@ -8,10 +8,10 @@ exports["conjugate_future"] = function(test){
     s=nlp.pos(s).to_future().text()
     return s
   }
-  // test.equal(convert("he went to the store"), "he will go to the store")
+  test.equal(convert("he went to the store"), "he will go to the store")
   test.equal(convert("she walked backwards"), "she will walk backwards")
-  // test.equal(convert("everyone said he was cool"), "everyone will say he is cool")
-  // test.equal(convert("he crawls to the backdoor"), "he will crawl to the back door")
+  // test.equal(convert("everyone said he was cool"), "everyone will say he is cool") //hard
+  // test.equal(convert("he crawls to the back door"), "he will crawl to the back door")
   // test.equal(convert("i am slouching forward"), "i will slouch forward")
   // test.equal(convert("i will slouch forward"), "i will slouch forward")//future-future
   test.done()
@@ -25,7 +25,7 @@ exports["conjugate_future"] = function(test){
 //   test.equal(convert("he went to the store"), "he goes to the store")
 //   test.equal(convert("she walked backwards"), "she walks backwards")
 //   test.equal(convert("everyone said he was cool"), "everyone says he was cool")
-//   test.equal(convert("he will crawl to the backdoor"), "he crawls to the back door")
+//   test.equal(convert("he will crawl to the back door"), "he crawls to the back door")
 //   // test.equal(convert("i am slouching forward"), "i slouch forward")  //interesting
 //   test.equal(convert("he crawls to the backdoor"), "he crawls to the back door")//present-present
 //   test.done()
@@ -39,7 +39,7 @@ exports["conjugate_future"] = function(test){
 //   test.equal(convert("he goes to the store"), "he went to the store")
 //   test.equal(convert("she will walk backwards"), "she walked backwards")
 //   test.equal(convert("everyone says he is cool"), "everyone said he was cool")
-//   test.equal(convert("he will crawl to the backdoor"), "he crawled to the back door")
+//   test.equal(convert("he will crawl to the back door"), "he crawled to the back door")
 //   test.equal(convert("i am slouching forward"), "i slouched forward")
 //   test.equal(convert("he went to the store"), "he went to the store") //past-past
 //   test.done()
@@ -80,20 +80,17 @@ exports["verb_conjugate"] = function(test){
     {  "infinitive": "flower", "present": "flowers", "past": "flowered", "gerund": "flowering"},
     {  "infinitive": "rage", "present": "rages", "past": "raged", "gerund": "raging"},
     {  "infinitive": "drive", "present": "drives", "past": "drove", "gerund": "driving"},
-    // {  "infinitive": "foul", "present": "fouls", "past": "fouled", "gerund": "fouling"},
-    // {  "infinitive": "overthrow", "present": "overthrows", "gerund": "overthrowing", "past": "overthrew"},
-    // {  "infinitive": "aim",   "present": "aims",   "past": "aimed",   "gerund": "aiming"},
-    // {  "infinitive": "grape",   "present": "grapes",   "past": "graped",   "gerund": "graping"},
-    // {  "present": "unifies",   "gerund": "unifying",   "past": "unified",   "infinitive": "unify"},
-    // {  "present": "addresses",   "gerund": "addressing",   "past": "addressed",   "infinitive": "address"},
-    // {  "infinitive": "gallop",   "gerund": "gallopping",   "past": "gallopped",   "present": "gallops"},
-    // {  "infinitive": "bumble",   "present": "bumbles",   "past": "bumbeled",   "gerund": "bumbeling"},
-    // {  "infinitive": "snipe",   "present": "snipes",   "past": "sniped",   "gerund": "sniping"},
-    // {  "infinitive": "yellow",   "gerund": "yellowing",   "past": "yellowed",   "present": "yellows"},
-    // {  "present": "relishes",   "gerund": "relishing",   "past": "relished",   "infinitive": "relish"},
-    // {  "infinitive": "lengthen",   "gerund": "lengthening",   "past": "lengthened",   "present": "lengthens"},
-    // {  "infinitive": "relay",   "gerund": "relaying",   "past": "relayed",   "present": "relays"},
-    // {  "infinitive": "farm",   "present": "farms",   "past": "farmed",   "gerund": "farming"}
+    {  "infinitive": "foul", "present": "fouls", "past": "fouled", "gerund": "fouling"},
+    {  "infinitive": "overthrow", "present": "overthrows", "gerund": "overthrowing", "past": "overthrew"},
+    {  "infinitive": "aim",   "present": "aims",   "past": "aimed",   "gerund": "aiming"},
+    {  "present": "unifies",   "gerund": "unifying",   "past": "unified",   "infinitive": "unify"},
+    {  "present": "addresses",   "gerund": "addressing",   "past": "addressed",   "infinitive": "address"},
+    {  "infinitive": "bumble",   "present": "bumbles",   "past": "bumbled",   "gerund": "bumbling"},
+    {  "infinitive": "snipe",   "present": "snipes",   "past": "sniped",   "gerund": "sniping"},
+    {  "present": "relishes",   "gerund": "relishing",   "past": "relished",   "infinitive": "relish"},
+    {  "infinitive": "lengthen",   "gerund": "lengthening",   "past": "lengthened",   "present": "lengthens"},
+    {  "infinitive": "farm",   "present": "farms",   "past": "farmed",   "gerund": "farming"}
+    // {  "infinitive": "relay",   "gerund": "relaying",   "past": "relayed",   "present": "relays"},//tricky
   ]
   //add future tense
   verbs=verbs.map(function(o){
@@ -135,13 +132,13 @@ exports["negation"] = function(test){
   test.equal(negate("she will watch the movie"), "she won't watch the movie")
   //[present-tense verb] - add 'didn't', conjugate verb
   test.equal(negate("she walks"), "she doesn't walk")
-  // test.equal(negate("he goes to the store"), "he doesn't go to the store")
+  test.equal(negate("he goes to the store"), "he doesn't go to the store")
   test.equal(negate("she watches the movie"), "she doesn't watch the movie")
   test.equal(negate("she clutches the wheel"), "she doesn't clutch the wheel")
   test.equal(negate("she sells seashells by the seashore"), "she doesn't sell seashells by the seashore")
   test.equal(negate("she still drives to work"), "she still doesn't drive to work")
   //[past-tense verb] - add didn't and conjugate verb
-  // test.equal(negate("he went to the store"), "he didn't go to the store")
+  test.equal(negate("he went to the store"), "he didn't go to the store")
   test.equal(negate("she watched the movie"), "she didn't watch the movie")
   //[gerund verb] - 'walking' -> 'not walking'
   test.equal(negate("walking to toronto"), "not walking to toronto")

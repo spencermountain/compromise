@@ -12,9 +12,9 @@ if (typeof module !== "undefined" && module.exports) {
   var normalize = require('./src/methods/transliteration/unicode_normalisation')
   var syllables = require('./src/methods/syllables/syllable');
   //localization
-  var l = require('./src/methods/localization/britishize')
-  var americanize = l.americanize;
-  var britishize = l.britishize;
+  var local = require('./src/methods/localization/britishize')
+  var americanize = local.americanize;
+  var britishize = local.britishize;
   //part of speech tagging
   var pos = require('./src/pos');
   //named_entity_recognition
@@ -51,12 +51,8 @@ if (typeof module !== "undefined" && module.exports) {
 }
 
 // console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
-// console.log( nlp.pos('They are based on different physical things built to guarantee a stable grasping between a gripper and the object to be grasped.').sentences[0].negate().text() )
+// console.log( nlp.verb("farm").conjugate())
 
-// console.log( nlp.pos('he will be on stage').sentences[0].negate().text() )
-// console.log( nlp.pos('walking to toronto').sentences[0].negate().text() )
-// console.log( nlp.pos('he will be the best').sentences[0].negate().text() )
-// console.log( nlp.pos("he will go to the store").sentences[0].tokens)
-
-// git tag -a v0.3.5 -m "Release version 0.3.5"
+// bump bower
+// git tag -a v0.3.5 -m "tag bower release"
 // git push origin master --tags

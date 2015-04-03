@@ -364,6 +364,13 @@ var verb_irregulars = (function() {
 			"participle": "known",
 			"doer": "knower"
 		}, {
+			"infinitive": "relay",
+			"present": "relays",
+			"past": "relayed",
+			"gerund": "relaying",
+			"participle": "relayed",
+			"doer": "relayer"
+		}, {
 			"infinitive": "lay",
 			"present": "lays",
 			"past": "laid",
@@ -824,6 +831,41 @@ var verb_irregulars = (function() {
 		  past: 'implied',
 		  gerund: 'implying',
 		  doer: 'implier' },
+
+	  { infinitive: 'ice',
+		  present: 'ices',
+		  past: 'iced',
+		  gerund: 'icing',
+		  doer: 'icer' },
+
+	  { infinitive: 'throw',
+		  present: 'throws',
+		  past: 'threw',
+		  gerund: 'throwing',
+		  doer: 'thrower' },
+
+		{ present: 'develops',
+		  gerund: 'developing',
+		  past: 'develop',
+		  infinitive: 'develop',
+		  doer: 'developer',
+		  future: 'will develop'
+		},
+
+		{ present: 'waits',
+		  gerund: 'waiting',
+		  past: 'waited',
+		  infinitive: 'wait',
+		  doer: 'waiter',
+		  future: 'will wait'
+		},
+		{ present: 'aims',
+		  gerund: 'aiming',
+		  past: 'aimed',
+		  infinitive: 'aim',
+		  doer: 'aimer',
+		  future: 'will aim'
+		},
 
 	]
 

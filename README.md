@@ -3,7 +3,7 @@ a Natural-Language-Processing library *in javascript*, small-enough for the brow
 
 it does [tons of clever things](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/basic_demo/index.html). it's smaller than jquery, and scores 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
 ```javascript
-nlp.pos('she sells seashells by the seashore').sentences[0].to_past()
+nlp.pos('she sells seashells by the seashore').to_past().text()
 //she sold seashells by the seashore
 ```
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](http://badge.fury.io/js/nlp_compromise)

@@ -1,4 +1,4 @@
-conjugate = require("../conjugate").conjugate
+conjugate = require("../conjugate")
 
 verbs = {
   //verbs

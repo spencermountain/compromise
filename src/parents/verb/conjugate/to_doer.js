@@ -36,7 +36,7 @@ var verb_to_doer = (function() {
 			reg: /([aeiou])([mlgp])$/i,
 			repl: '$1$2$2er',
 		}, {
-			reg: /([rl])y$/i,
+			reg: /([rlf])y$/i,
 			repl: '$1ier',
 		}, {
 			reg: /^(.?.[aeiou])t$/i,

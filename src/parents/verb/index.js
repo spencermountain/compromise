@@ -42,7 +42,7 @@ var Verb = function(str, next, last, token) {
   }
 
   the.to_past = function() {
-    if (the.form == "gerund") {
+    if (the.form === "gerund") {
       return the.word
     }
     return verb_conjugate(the.word).past
@@ -67,7 +67,7 @@ var Verb = function(str, next, last, token) {
     ]
     var forms = verb_conjugate(the.word)
     for (var i=0; i<order.length; i++) {
-      if (forms[order[i]] == the.word) {
+      if (forms[order[i]] === the.word) {
         return order[i]
       }
     }
@@ -79,10 +79,10 @@ var Verb = function(str, next, last, token) {
       return "future"
     }
     var form = the.form
-    if (form == "present") {
+    if (form === "present") {
       return "present"
     }
-    if (form == "past") {
+    if (form === "past") {
       return "past"
     }
     return "present"
@@ -105,7 +105,7 @@ var Verb = function(str, next, last, token) {
     if (the.word.match(/n't$/)){
       return true
     }
-    if ((modals[the.word] || copulas[the.word]) && the.next && the.next.normalised == "not") {
+    if ((modals[the.word] || copulas[the.word]) && the.next && the.next.normalised === "not") {
       return true
     }
     return false

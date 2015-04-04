@@ -30,22 +30,22 @@ var pos = (function() {
       var next = arr[i + 1]
       if (arr[i] && next) {
         //'joe smith' are both NN
-        if (arr[i].pos.tag == next.pos.tag && arr[i].punctuated !== true && next.punctuated !== true && arr[i].capitalised==next.capitalised) {
+        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && next.punctuated !== true && arr[i].capitalised==next.capitalised) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
         //'will walk' -> future-tense verb
-        else if (arr[i].normalised == "will" && next.pos.parent == "verb") {
+        else if (arr[i].normalised === "will" && next.pos.parent === "verb") {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
         //'hundred and fifty'
-        else if (arr[i].pos.tag == "CD" && next.normalised == "and" && arr[i + 2] && arr[i + 2].pos.tag == "CD") {
+        else if (arr[i].pos.tag === "CD" && next.normalised === "and" && arr[i + 2] && arr[i + 2].pos.tag === "CD") {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
         //'toronto fun festival'
-        // else if (arr[i].pos.tag == "NN" && next.pos.tag == "JJ" && arr[i + 2] && arr[i + 2].pos.tag == "NN") {
+        // else if (arr[i].pos.tag === "NN" && next.pos.tag === "JJ" && arr[i + 2] && arr[i + 2].pos.tag === "NN") {
           // arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           // arr[i] = null
         // }
@@ -100,7 +100,7 @@ var pos = (function() {
       "an":1,
     }
     //if it's before a modal verb, it's a noun -> lkjsdf would
-    if (next && token.pos.parent != "noun" && token.pos.parent != "glue" && next.pos.tag == "MD") {
+    if (next && token.pos.parent !== "noun" && token.pos.parent !== "glue" && next.pos.tag === "MD") {
       token.pos = parts_of_speech['NN']
       token.pos_reason = "before a modal"
     }
@@ -116,27 +116,27 @@ var pos = (function() {
     }
     //if it's after an adverb, it's not a noun -> quickly acked
     //support form 'atleast he is..'
-    if (last && token.pos.parent == "noun" && last.pos.tag == "RB" && !last.start) {
+    if (last && token.pos.parent === "noun" && last.pos.tag === "RB" && !last.start) {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "after an adverb"
     }
     //no consecutive, unpunctuated adjectives -> real good
-    if (next && token.pos.parent == "adjective" && next.pos.parent == "adjective" && !token.punctuated) {
+    if (next && token.pos.parent === "adjective" && next.pos.parent === "adjective" && !token.punctuated) {
       token.pos = parts_of_speech['RB']
       token.pos_reason = "consecutive_adjectives"
     }
     //if it's after a determiner, it's not a verb -> the walk
-    if (last && token.pos.parent == "verb" && strong_determiners[last.pos.normalised] && token.pos.tag!="CP") {
+    if (last && token.pos.parent === "verb" && strong_determiners[last.pos.normalised] && token.pos.tag!="CP") {
       token.pos = parts_of_speech['NN']
       token.pos_reason = "determiner-verb"
     }
     //copulas are followed by a determiner ("are a .."), or an adjective ("are good")
-    if (last && last.pos.tag == "CP" && token.pos.tag != "DT" && token.pos.tag != "RB" && token.pos.parent != "adjective" && token.pos.parent != "value") {
+    if (last && last.pos.tag === "CP" && token.pos.tag !== "DT" && token.pos.tag !== "RB" && token.pos.parent !== "adjective" && token.pos.parent !== "value") {
       token.pos = parts_of_speech['JJ']
       token.pos_reason = "copula-adjective"
     }
     //copula, adverb, verb -> copula adverb adjective -> is very lkjsdf
-    if (last && next && last.pos.tag == "CP" && token.pos.tag == "RB" && next.pos.parent == "verb") {
+    if (last && next && last.pos.tag === "CP" && token.pos.tag === "RB" && next.pos.parent === "verb") {
       sentence.tokens[i + 1].pos = parts_of_speech['JJ']
       sentence.tokens[i + 1].pos_reason = "copula-adverb-adjective"
     }
@@ -151,7 +151,7 @@ var pos = (function() {
       token.pos_reason = "before a [him|her|it]"
     }
     //the misled worker -> misled is an adjective, not vb
-    if (last && next && last.pos.tag == "DT" && next.pos.parent == "noun" && token.pos.parent == "verb" ) {
+    if (last && next && last.pos.tag === "DT" && next.pos.parent === "noun" && token.pos.parent === "verb" ) {
       token.pos = parts_of_speech['JJ']
       token.pos_reason = "determiner-adjective-noun"
     }
@@ -300,13 +300,13 @@ var pos = (function() {
         var prev = sentence.tokens[i - 1]
         if (token.pos) {
           //suggest noun after some determiners (a|the), posessive pronouns (her|my|its)
-          if (token.normalised=="the" || token.normalised=="a" || token.normalised=="an" || token.pos.tag == "PP") {
+          if (token.normalised=="the" || token.normalised=="a" || token.normalised=="an" || token.pos.tag === "PP") {
             need = 'noun'
             reason = token.pos.name
             return token //proceed
           }
           //suggest verb after personal pronouns (he|she|they), modal verbs (would|could|should)
-          if (token.pos.tag == "PRP" || token.pos.tag == "MD") {
+          if (token.pos.tag === "PRP" || token.pos.tag === "MD") {
             need = 'verb'
             reason = token.pos.name
             return token //proceed
@@ -339,11 +339,11 @@ var pos = (function() {
           }
         }
 
-        if (need == 'verb' && token.pos && token.pos.parent == 'verb') {
+        if (need === 'verb' && token.pos && token.pos.parent === 'verb') {
           need = null
         }
 
-        if (need == 'noun' && token.pos && token.pos.parent == 'noun') {
+        if (need === 'noun' && token.pos && token.pos.parent === 'noun') {
           need = null
         }
         return token

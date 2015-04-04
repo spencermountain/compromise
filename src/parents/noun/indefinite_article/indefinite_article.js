@@ -78,4 +78,4 @@ var indefinite_article = (function() {
 	return main;
 })();
 
-// console.log(indefinite_article("wolf") == "a")
+// console.log(indefinite_article("wolf") === "a")

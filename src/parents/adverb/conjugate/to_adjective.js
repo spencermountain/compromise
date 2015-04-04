@@ -59,5 +59,5 @@ var to_adjective = (function() {
 	return main;
 })();
 
-// console.log(to_adjective('quickly') == 'quick')
-// console.log(to_adjective('marvelously') == 'marvelous')
+// console.log(to_adjective('quickly') === 'quick')
+// console.log(to_adjective('marvelously') === 'marvelous')

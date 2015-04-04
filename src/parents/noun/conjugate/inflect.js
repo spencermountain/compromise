@@ -314,10 +314,10 @@ var inflect = (function() {
         }
         //irregular
         var found = irregulars.filter(function(r) {
-            return r[0] == low
+            return r[0] === low
         })
         if (found[0]) {
-            if (titlecase(low) == str) { //handle capitalisation properly
+            if (titlecase(low) === str) { //handle capitalisation properly
                 return titlecase(found[0][1])
             } else {
                 return found[0][1]
@@ -425,10 +425,10 @@ var inflect = (function() {
         }
         //irregular
         var found = irregulars.filter(function(r) {
-            return r[1] == low
+            return r[1] === low
         })
         if (found[0]) {
-            if (titlecase(low) == str) { //handle capitalisation properly
+            if (titlecase(low) === str) { //handle capitalisation properly
                 return titlecase(found[0][0])
             } else {
                 return found[0][0]
@@ -455,10 +455,10 @@ var inflect = (function() {
     var is_plural = function(str) {
         //if it's a known verb
         for (var i = 0; i < irregulars.length; i++) {
-            if (irregulars[i][1] == str) {
+            if (irregulars[i][1] === str) {
                 return true
             }
-            if (irregulars[i][0] == str) {
+            if (irregulars[i][0] === str) {
                 return false
             }
         }

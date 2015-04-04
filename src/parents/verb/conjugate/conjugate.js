@@ -183,7 +183,7 @@ var verb_conjugate = (function() {
     var x, i;
     for (i = 0; i < verb_irregulars.length; i++) {
       x = verb_irregulars[i]
-      if (verb == x.present || verb == x.gerund || verb == x.past || verb == x.infinitive) {
+      if (verb === x.present || verb === x.gerund || verb === x.past || verb === x.infinitive) {
         x = JSON.parse(JSON.stringify(verb_irregulars[i])); // object 'clone' hack, to avoid mem leak
         return fufill(x, prefix)
       }
@@ -198,7 +198,7 @@ var verb_conjugate = (function() {
       if (w.match(r.reg)) {
         if(debug){ console.log(r) }
         var obj = Object.keys(r.repl).reduce(function(h, k) {
-          if (k == predicted) {
+          if (k === predicted) {
             h[k] = w
           } else {
             h[k] = w.replace(r.reg, r.repl[k]);

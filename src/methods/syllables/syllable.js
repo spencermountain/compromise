@@ -95,7 +95,7 @@ var syllables = (function(str) {
 	return main
 })()
 
-// console.log(syllables("suddenly").length == 3)
+// console.log(syllables("suddenly").length === 3)
 // console.log(syllables("tree"))
 
 //broken

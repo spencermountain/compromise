@@ -2139,17 +2139,17 @@ var lexicon = (function() {
   adjectives.forEach(function(j) {
     main[j] = "JJ"
     var adv = adj_to_adv(j)
-    if (adv && adv != j && !main[adv]) {
+    if (adv && adv !== j && !main[adv]) {
       // console.log(adv)
       main[adv] = main[adv] || "RB"
     }
     var comp = to_comparative(j)
-    if (comp && !comp.match(/^more ./) && comp != j && !main[comp]) {
+    if (comp && !comp.match(/^more ./) && comp !== j && !main[comp]) {
       // console.log(comp)
       main[comp] = main[comp] || "JJR"
     }
     var sup = to_superlative(j)
-    if (sup && !sup.match(/^most ./) && sup != j && !main[sup]) {
+    if (sup && !sup.match(/^most ./) && sup !== j && !main[sup]) {
       // console.log(sup)
       main[sup] = main[sup] || "JJS"
     }

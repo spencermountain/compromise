@@ -10,7 +10,7 @@ var Sentence = function(tokens) {
 
   the.tense = function() {
     var verbs = the.tokens.filter(function(token) {
-      return token.pos.parent == "verb"
+      return token.pos.parent === "verb"
     })
     return verbs.map(function(v) {
       return v.analysis.tense
@@ -19,7 +19,7 @@ var Sentence = function(tokens) {
 
   the.to_past = function() {
     the.tokens = the.tokens.map(function(token) {
-      if (token.pos.parent == "verb") {
+      if (token.pos.parent === "verb") {
         token.text = token.analysis.to_past()
         token.normalised = token.text
       }
@@ -30,7 +30,7 @@ var Sentence = function(tokens) {
 
   the.to_present = function() {
     the.tokens = the.tokens.map(function(token) {
-      if (token.pos.parent == "verb") {
+      if (token.pos.parent === "verb") {
         token.text = token.analysis.to_present()
         token.normalised = token.text
       }
@@ -41,7 +41,7 @@ var Sentence = function(tokens) {
 
   the.to_future = function() {
     the.tokens = the.tokens.map(function(token) {
-      if (token.pos.parent == "verb") {
+      if (token.pos.parent === "verb") {
         token.text = token.analysis.to_future()
         token.normalised = token.text
       }
@@ -173,13 +173,13 @@ var Sentence = function(tokens) {
     var spots=[]
     options=options||{}
     the.tokens.forEach(function(token) {
-      if (token.pos.parent == "noun" && token.analysis.is_entity) {
+      if (token.pos.parent === "noun" && token.analysis.is_entity) {
         spots.push(token)
       }
     })
     if (options.ignore_gerund) {
       spots = spots.filter(function(t) {
-        return t.pos.tag != "VBG"
+        return t.pos.tag !== "VBG"
       })
     }
     return spots

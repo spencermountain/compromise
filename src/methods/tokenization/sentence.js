@@ -47,5 +47,5 @@ if (typeof module !== "undefined" && module.exports) {
   exports.sentences = sentence_parser;
 }
 
-// console.log(sentence_parser('Tony is nice. He lives in Japan.').length == 2)
-// console.log(sentence_parser('I like that Color').length == 1)
+// console.log(sentence_parser('Tony is nice. He lives in Japan.').length === 2)
+// console.log(sentence_parser('I like that Color').length === 1)

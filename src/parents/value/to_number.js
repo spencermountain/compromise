@@ -174,7 +174,7 @@ var to_number = (function() {
   }
 
   //kick it into module
-  if (typeof module != "undefined" && module.exports) {
+  if (typeof module !== "undefined" && module.exports) {
      module.exports = main;
   }
   return main;

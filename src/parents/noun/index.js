@@ -143,7 +143,7 @@ var Noun = function(str, next, last, token) {
     }
     //proper nouns
     var first = the.word.substr(0, 1)
-    if (first.toLowerCase() != first) {
+    if (first.toLowerCase() !== first) {
       if (the.is_acronym) {
         return parts_of_speech['NNPA']
       }

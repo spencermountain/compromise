@@ -32,7 +32,7 @@ var tokenize = (function() {
 		var better = []
 		for (var i = 0; i < arr.length; i++) {
 			for (var o = 0; o < multiples.length; o++) {
-				if (arr[i + 1] && normalise(arr[i]) == multiples[o][0] && normalise(arr[i + 1]) == multiples[o][1]) { //
+				if (arr[i + 1] && normalise(arr[i]) === multiples[o][0] && normalise(arr[i + 1]) === multiples[o][1]) { //
 					//we have a match
 					arr[i] = arr[i] + ' ' + arr[i + 1]
 					arr[i + 1] = null

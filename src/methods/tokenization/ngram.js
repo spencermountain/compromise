@@ -1,3 +1,4 @@
+//split a string into all possible parts
 var ngram = (function() {
 
   var main = function(text, options) {
@@ -28,10 +29,11 @@ var ngram = (function() {
       }
     }
     // map to array
-    for (var k = 1; k <= max_size; k++) {
+    i=undefined;
+    for (k = 1; k <= max_size; k++) {
       results[k] = [];
       var key = keys[k];
-      for (var i in key) {
+      for (i in key) {
         if (key[i] >= min_count) results[k].push({
           "word": i,
           "count": key[i],
@@ -40,7 +42,7 @@ var ngram = (function() {
       }
     }
     results = results.filter(function(s) {
-      return s != null
+      return s !== null
     })
     results = results.map(function(r) {
       r = r.sort(function(a, b) {

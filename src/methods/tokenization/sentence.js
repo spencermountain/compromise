@@ -1,5 +1,4 @@
-
-
+//chop text into respective sentences. Ignore periods used in acronyms/abbreviations/numbers, etc.
 var sentence_parser = function(text) {
   var abbrev, abbrevs, clean, i, sentences, tmp;
   tmp = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
@@ -16,18 +15,20 @@ var sentence_parser = function(text) {
   abbrevs= abbrevs.concat(["dept", "univ", "assn", "bros", "inc", "ltd", "co", "corp"])
   //proper nouns with exclamation marks
   abbrevs= abbrevs.concat(["yahoo", "joomla", "jeopardy"])
-  abbrev = new RegExp("(^| )(" + abbrevs.join("|") + ")[\.!\?] ?$", "i");
+  abbrev = new RegExp("(^| )(" + abbrevs.join("|") + ")[.!?] ?$", "i");
+
   for (i in tmp) {
     if (tmp[i]) {
       tmp[i] = tmp[i].replace(/^\s+|\s+$/g, "");
       if (tmp[i].match(abbrev) || tmp[i].match(/[ |\.][A-Z]\.?$/)) {
-        tmp[parseInt(i) + 1] = tmp[i] + " " + tmp[parseInt(i) + 1];
+        tmp[parseInt(i,10) + 1] = tmp[i] + " " + tmp[parseInt(i,10) + 1];
       } else {
         sentences.push(tmp[i]);
         tmp[i] = "";
       }
     }
   }
+
   clean = [];
   for (i in sentences) {
     sentences[i] = sentences[i].replace(/^\s+|\s+$/g, "");
@@ -35,17 +36,16 @@ var sentence_parser = function(text) {
       clean.push(sentences[i]);
     }
   }
-  if (clean.length == 0) {
+
+  if (clean.length === 0) {
     return [text]
   }
+
   return clean;
 }
 if (typeof module !== "undefined" && module.exports) {
   exports.sentences = sentence_parser;
 }
+
 // console.log(sentence_parser('Tony is nice. He lives in Japan.').length == 2)
 // console.log(sentence_parser('I like that Color').length == 1)
-// console.log(sentence_parser("Soviet bonds to be sold in the U.S. market. Everyone wins.").length == 2)
-// console.log(sentence_parser("Hi there Dr. Joe, the price is 4.59 for N.A.S.A. Ph.Ds. I hope that's fine, etc. and you can attend Feb. 8th. Bye").length == 3)
-// console.log(exports.sentences('How are you! That is great.').length==2)
-// console.log(exports.sentences('he bought Yahoo! the company.').length==1)

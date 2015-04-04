@@ -3,18 +3,17 @@
 var verb_to_doer = (function() {
 	var main = function(str) {
 		str = str || ''
-
 		var irregulars = {
 			"tie": "tier",
 			"dream": "dreamer",
 			"sail": "sailer",
 			"run": "runner",
-			rub: "rubber",
-			begin: "beginner",
-			win: "winner",
-			claim: "claimant",
-			deal: "dealer",
-			spin: "spinner",
+			"rub": "rubber",
+			"begin": "beginner",
+			"win": "winner",
+			"claim": "claimant",
+			"deal": "dealer",
+			"spin": "spinner"
 		}
 		var dont = {
 			"aid": 1,
@@ -27,36 +26,33 @@ var verb_to_doer = (function() {
 			"marry": 1,
 			"be": 1,
 			"forbid": 1,
-			"understand": 1,
+			"understand": 1
 		}
 		var transforms = [{
 			reg: /e$/i,
-			repl: 'er',
+			repl: 'er'
 		}, {
 			reg: /([aeiou])([mlgp])$/i,
-			repl: '$1$2$2er',
+			repl: '$1$2$2er'
 		}, {
 			reg: /([rlf])y$/i,
-			repl: '$1ier',
+			repl: '$1ier'
 		}, {
 			reg: /^(.?.[aeiou])t$/i,
-			repl: '$1tter',
-		}, ]
+			repl: '$1tter'
+		}]
 
 		if (dont[str]) {
 			return null
 		}
-
 		if (irregulars[str]) {
 			return irregulars[str]
 		}
-
 		for (var i = 0; i < transforms.length; i++) {
 			if (str.match(transforms[i].reg)) {
 				return str.replace(transforms[i].reg, transforms[i].repl)
 			}
 		}
-
 		return str + "er"
 	}
 
@@ -66,9 +62,5 @@ var verb_to_doer = (function() {
 	return main;
 })();
 
-
-
 // console.log(verb_to_doer('set'))
 // console.log(verb_to_doer('sweep'))
-// console.log(verb_to_doer('aid'))
-// console.log(verb_to_doer('apply'))

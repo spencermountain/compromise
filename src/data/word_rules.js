@@ -1,3 +1,4 @@
+//regex patterns and parts of speech
 var word_rules = [{
         reg: /.[cts]hy$/i,
         pos: 'JJ',
@@ -23,7 +24,7 @@ var word_rules = [{
         errors: 3,
         accuracy: '0.97'
     }, {
-    reg: /.fies$/i,
+        reg: /.fies$/i,
         pos: 'VB',
         strength: 30,
         errors: 1,
@@ -100,24 +101,19 @@ var word_rules = [{
         strength: 150,
         errors: 10,
         accuracy: '0.93'
-    },
-
-    {
+    }, {
         reg: /.[rdntk]ly$/i, ///****
         pos: 'RB',
         strength: 108,
         errors: 9,
         accuracy: '0.92'
-    },
-
-    {
+    }, {
         reg: /.[lsrnpb]ian$/i,
         pos: 'JJ',
         strength: 121,
         errors: 10,
         accuracy: '0.92'
-    },
-    {
+    }, {
         reg: /.[lnt]ial$/i,
         pos: 'JJ',
         strength: 0,
@@ -423,27 +419,19 @@ var word_rules = [{
         strength: 3,
         errors: 0,
         accuracy: '0.00'
-    },
-
-    {
+    }, {
         reg: /^-?[0-9]+(.[0-9]+)?$/,
         pos: 'CD',
         strength: 1,
         errors: 1,
         accuracy: '0.00'
-    },
-
-    {
+    }, {
         reg: /[a-z]*\-[a-z]*\-/, //'more-than-real'
         pos: 'JJ',
         strength: 0,
         errors: 0,
         accuracy: '0.00'
-    },
-
-    //ugly handling of contractions
-
-    {
+    }, {  //ugly handling of contractions, shouldn't ever be hit, but just in case
         reg: /[a-z]'s$/i, //spencer's
         pos: 'NNO',
         strength: 1,
@@ -467,21 +455,19 @@ var word_rules = [{
         strength: 1,
         errors: 0,
         accuracy: '0.00'
-    },{
+    }, {
         reg: /.'t$/i, //doesn't
         pos: 'VB',
         strength: 1,
         errors: 0,
         accuracy: '0.00'
-    },{
+    }, {
         reg: /.tches$/i, //watches
         pos: 'VB',
         strength: 1,
         errors: 0,
         accuracy: '0.00'
-    },
-
-
+    }
 ]
 
 if (typeof module !== "undefined" && module.exports) {

@@ -1,7 +1,7 @@
+//the parts of speech used by this library. mostly standard, but some changes.
 var parts_of_speech = (function() {
 
     var main = {
-
         //verbs
         "VB": {
             "name": "verb, generic",
@@ -50,7 +50,6 @@ var parts_of_speech = (function() {
             "tag": "VBG"
         },
 
-
         //adjectives
         "JJ": {
             "name": "adjective, generic",
@@ -71,7 +70,6 @@ var parts_of_speech = (function() {
             "tag": "JJS"
         },
 
-
         //adverbs
         "RB": {
             "name": "adverb",
@@ -91,7 +89,6 @@ var parts_of_speech = (function() {
             "parent": "adverb",
             "tag": "RBS"
         },
-
 
         //nouns
         "NN": {
@@ -143,7 +140,6 @@ var parts_of_speech = (function() {
             "tag": "VBG"
         },
 
-
         //glue
         "PP": {
             "name": "possessive pronoun",
@@ -175,7 +171,6 @@ var parts_of_speech = (function() {
             "parent": "value",
             "tag": "NU"
         },
-
         "IN": {
             "name": "preposition",
             "example": "of,in,by",
@@ -226,13 +221,3 @@ var parts_of_speech = (function() {
 
     return main
 })()
-var print_pos = function() {
-    parents = {}
-    Object.keys(parts_of_speech).forEach(function(k) {
-        var parent = parts_of_speech[k].parent
-        parents[parent] = parents[parent] || []
-        parents[parent].push(k + '  - ' + parts_of_speech[k].name + ' (' + parts_of_speech[k].example + ')')
-    })
-    console.log(JSON.stringify(parents, null, 2));
-}
-// print_pos()

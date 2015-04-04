@@ -1,8 +1,7 @@
 //turn 'quick' into 'quickly'
 var adj_to_adv = (function() {
+
 	var main = function(str) {
-
-
 		var irregulars = {
 			"idle": "idly",
 			"public": "publicly",
@@ -24,8 +23,9 @@ var adj_to_adv = (function() {
 			"well": "well",
 			"best": "best",
 			"latter": "latter",
-			"bad": "badly",
+			"bad": "badly"
 		}
+
 		var dont = {
 			"foreign": 1,
 			"black": 1,
@@ -68,39 +68,40 @@ var adj_to_adv = (function() {
 			"able": 1,
 			"unable": 1,
 			"same": 1,
-			"adult": 1,
+			"adult": 1
 		}
+
 		var transforms = [{
 			reg: /al$/i,
-			repl: 'ally',
+			repl: 'ally'
 		}, {
 			reg: /ly$/i,
-			repl: 'ly',
+			repl: 'ly'
 		}, {
 			reg: /(.{3})y$/i,
-			repl: '$1ily',
+			repl: '$1ily'
 		}, {
 			reg: /que$/i,
-			repl: 'quely',
+			repl: 'quely'
 		}, {
 			reg: /ue$/i,
-			repl: 'uly',
+			repl: 'uly'
 		}, {
 			reg: /ic$/i,
-			repl: 'ically',
+			repl: 'ically'
 		}, {
 			reg: /ble$/i,
-			repl: 'bly',
+			repl: 'bly'
 		}, {
 			reg: /l$/i,
-			repl: 'ly',
-		}, ]
+			repl: 'ly'
+		}]
 
 		var not_matches = [
 			/airs$/,
 			/ll$/,
 			/ee.$/,
-			/ile$/,
+			/ile$/
 		]
 
 		if (dont[str]) {
@@ -112,31 +113,24 @@ var adj_to_adv = (function() {
 		if (str.length <= 3) {
 			return null
 		}
-		for (var i = 0; i < not_matches.length; i++) {
+		var i;
+		for (i = 0; i < not_matches.length; i++) {
 			if (str.match(not_matches[i])) {
 				return null
 			}
 		}
-		for (var i = 0; i < transforms.length; i++) {
+		for (i = 0; i < transforms.length; i++) {
 			if (str.match(transforms[i].reg)) {
 				return str.replace(transforms[i].reg, transforms[i].repl)
 			}
 		}
 		return str + 'ly'
 	}
+
 	if (typeof module !== "undefined" && module.exports) {
 		module.exports = main;
 	}
 	return main;
 })();
 
-
-
-// data = require("./test").data
-// data = data.filter(function(w) {
-// 	return to_adverb(w[1]) != w[0]
-// })
-// arr = data.map(function(w) {
-// 	console.log(w[1] + "  -  " + to_adverb(w[1]))
-// })
 // console.log(adj_to_adv('direct'))

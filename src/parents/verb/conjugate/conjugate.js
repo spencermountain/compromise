@@ -1,3 +1,4 @@
+//turn a verb into its other grammatical forms.
 var verb_conjugate = (function() {
 
   var debug=false //find the particular transformation
@@ -87,7 +88,7 @@ var verb_conjugate = (function() {
       "nt": "past",
       "pt": "past",
       "ew": "past",
-      "ld": "past",
+      "ld": "past"
     }
 
     var endsWith = function(str, suffix) {
@@ -105,11 +106,11 @@ var verb_conjugate = (function() {
 
   //fallback to this transformation if it has an unknown prefix
   var fallback = function(w) {
-    // console.log('fallback')
+    var infinitive;
     if(w.length>4){
-      var infinitive = w.replace(/ed$/, '');
+      infinitive = w.replace(/ed$/, '');
     }else{
-      var infinitive = w.replace(/d$/, '');
+      infinitive = w.replace(/d$/, '');
     }
     var present, past, gerund, doer;
     if (w.match(/[^aeiou]$/)) {
@@ -133,7 +134,7 @@ var verb_conjugate = (function() {
       past: past,
       gerund: gerund,
       doer: doer,
-      future: "will "+infinitive,
+      future: "will "+infinitive
     }
   }
 
@@ -179,10 +180,11 @@ var verb_conjugate = (function() {
     var prefix= (w.match(/^(over|under|re|anti|full)\-?/i)||[])[0]
     var verb=w.replace(/^(over|under|re|anti|full)\-?/i, '')
     //check irregulars
-    for (var i = 0; i < verb_irregulars.length; i++) {
-      var x = verb_irregulars[i]
+    var x, i;
+    for (i = 0; i < verb_irregulars.length; i++) {
+      x = verb_irregulars[i]
       if (verb == x.present || verb == x.gerund || verb == x.past || verb == x.infinitive) {
-        var x = JSON.parse(JSON.stringify(verb_irregulars[i])); // object 'clone' hack, to avoid mem leak
+        x = JSON.parse(JSON.stringify(verb_irregulars[i])); // object 'clone' hack, to avoid mem leak
         return fufill(x, prefix)
       }
     }
@@ -191,7 +193,7 @@ var verb_conjugate = (function() {
     if(debug){console.log("==predicted= " + predicted)}
 
     //check against suffix rules
-    for (var i = 0; i < verb_rules[predicted].length; i++) {
+    for (i = 0; i < verb_rules[predicted].length; i++) {
       var r = verb_rules[predicted][i];
       if (w.match(r.reg)) {
         if(debug){ console.log(r) }
@@ -212,8 +214,6 @@ var verb_conjugate = (function() {
     //produce a generic transformation
     return fallback(w)
   };
-
-
 
   if (typeof module !== "undefined" && module.exports) {
     module.exports = main;

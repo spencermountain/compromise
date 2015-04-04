@@ -7,7 +7,6 @@ var Adjective = function(str, next, last, token) {
 	the.next = next
 	the.last = last
 
-
 	if (typeof module !== "undefined" && module.exports) {
 		to_comparative = require("./conjugate/to_comparative")
 		to_superlative = require("./conjugate/to_superlative")
@@ -41,7 +40,4 @@ if (typeof module !== "undefined" && module.exports) {
 	module.exports = Adjective;
 }
 
-// console.log(new Adjective("crazy").conjugate())
 // console.log(new Adjective("crazy"))
-// console.log(new Adjective("craziest"))
-// console.log(new Adjective("crazier"))

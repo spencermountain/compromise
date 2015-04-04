@@ -1,8 +1,7 @@
 //turn 'quick' into 'quickest'
 var to_superlative = (function() {
+
 	var main = function(str) {
-
-
 		var irregulars = {
 			"nice": "nicest",
 			"late": "latest",
@@ -12,8 +11,9 @@ var to_superlative = (function() {
 			"far": "furthest",
 			"worse": "worst",
 			"bad": "worst",
-			"good": "best",
+			"good": "best"
 		}
+
 		var dos = {
 			"absurd": 1,
 			"aggressive": 1,
@@ -211,21 +211,24 @@ var to_superlative = (function() {
 
 		var dont = {
 			"overweight": 1,
-			"ready": 1,
+			"ready": 1
 		}
+
 		var transforms = [{
 			reg: /y$/i,
-			repl: 'iest',
+			repl: 'iest'
 		}, {
 			reg: /([aeiou])t$/i,
-			repl: '$1ttest',
+			repl: '$1ttest'
 		}, {
 			reg: /([aeou])de$/i,
-			repl: '$1dest',
+			repl: '$1dest'
 		}, {
 			reg: /nge$/i,
-			repl: 'ngest',
-		}, ]
+			repl: 'ngest'
+		}
+		]
+
 		var matches = [
 			/ght$/,
 			/nge$/,
@@ -235,8 +238,9 @@ var to_superlative = (function() {
 			/[au]ll$/,
 			/ow$/,
 			/oud$/,
-			/...p$/,
+			/...p$/
 		]
+
 		var not_matches = [
 			/ary$/
 		]
@@ -252,38 +256,40 @@ var to_superlative = (function() {
 		if (dos[str]) {
 			return generic_transformation(str)
 		}
+
 		if (dont[str]) {
 			return "most " + str
 		}
+
 		if (irregulars[str]) {
 			return irregulars[str]
 		}
-
-		for (var i = 0; i < not_matches.length; i++) {
+		var i;
+		for (i = 0; i < not_matches.length; i++) {
 			if (str.match(not_matches[i])) {
 				return "most " + str
 			}
 		}
 
-		for (var i = 0; i < transforms.length; i++) {
+		for (i = 0; i < transforms.length; i++) {
 			if (str.match(transforms[i].reg)) {
 				return str.replace(transforms[i].reg, transforms[i].repl)
 			}
 		}
-		for (var i = 0; i < matches.length; i++) {
+
+		for (i = 0; i < matches.length; i++) {
 			if (str.match(matches[i])) {
 				return generic_transformation(str)
 			}
 		}
 		return "most " + str
 	}
+
 	if (typeof module !== "undefined" && module.exports) {
 		module.exports = main;
 	}
 	return main;
 })();
-
-
 
 // console.log(to_superlative('dry'))
 // console.log(to_superlative('rich'))

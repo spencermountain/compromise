@@ -1,5 +1,5 @@
+//split a string into 'words', as intended to be helpful for this library.
 var tokenize = (function() {
-
 
 	if (typeof module !== "undefined" && module.exports) {
 		sentence_parser = require("./sentence").sentences
@@ -55,11 +55,11 @@ var tokenize = (function() {
 				return {
 					text: w,
 					normalised: normalise(w),
-					capitalised: (w.match(/^[A-Z][a-z|A-Z]/) != null),
-					special_capitalised: (w.match(/^[A-Z][a-z|A-Z]/) != null) && i>0,
-					punctuated: (w.match(/[,;:\(\)"]/) != null) || undefined,
-					end: (i == (arr.length - 1)) || undefined,
-					start: (i == 0) || undefined
+					capitalised: (w.match(/^[A-Z][a-z|A-Z]/) !== null),
+					special_capitalised: (w.match(/^[A-Z][a-z|A-Z]/) !== null) && i>0,
+					punctuated: (w.match(/[,;:\(\)"]/) !== null) || undefined,
+					end: (i === (arr.length - 1)) || undefined,
+					start: (i === 0) || undefined
 				}
 			})
 			return {
@@ -76,30 +76,6 @@ var tokenize = (function() {
 	return main
 })()
 
-// a = tokenize("Geroge Clooney walked, quietly into a bank of course. It was cold.")
-// a = tokenize("If the debts are repaid, it could clear the way for Soviet bonds to be sold in the U.S.")
-// a = tokenize("i live in new york")
-// a = tokenize("How do you wear your swords? He’s like his character [Kuranosuke] Oishi.")
-// a = tokenize("I speak optimistically of course.")
-// a = tokenize("in the United States of America")
-// a = tokenize("Joe is 9")
-// a = tokenize("he is in the band AFI")
-// console.log(JSON.stringify(a, null, 2));
-
-
-
-// var contractions = function(text) {
-// 	//undo contractions
-// 	if (text.match(/\b(he's|she's|it's)\b/)) {
-// 		text = text.replace(/([^ ])['’]s /ig, '$1 is ');
-// 	}
-// 	text = text.replace(/([^ ])['’]ve /ig, '$1 have ');
-// 	text = text.replace(/([^ ])['’]re /ig, '$1 are ');
-// 	text = text.replace(/([^ ])['’]d /ig, '$1 would ');
-// 	text = text.replace(/([^ ])['’]ll /ig, '$1 will ');
-// 	text = text.replace(/([^ ])n['’]t /ig, '$1 not ');
-// 	text = text.replace(/\bi'm /ig, 'I am ');
-// 	return text
-// }
-
-// console.log(contractions("i think he's better"))
+// console.log(tokenize("i live in new york"))
+// console.log(tokenize("I speak optimistically of course."))
+// console.log(tokenize("Joe is 9"))

@@ -1,5 +1,5 @@
+//chop a string into pronounced syllables
 var syllables = (function(str) {
-
 
 	var main = function(str) {
 		var all = []
@@ -12,17 +12,17 @@ var syllables = (function(str) {
 					w= w.replace(/ *$/,'')
 					return w
 				})
-				if (!arr.length <= 2) { //?
+				if (arr.length > 2) { //
 					return arr
 				}
 				var twos = [
 					/[^aeiou]ying$/,
-					/yer$/,
+					/yer$/
 				]
 				var ones = [
 					/^[^aeiou]?ion/,
 					/^[^aeiou]?ised/,
-					/^[^aeiou]?iled/,
+					/^[^aeiou]?iled/
 				]
 				var l = arr.length
 				var suffix = arr[l - 2] + arr[l - 1];
@@ -49,8 +49,7 @@ var syllables = (function(str) {
 				current = chars[i]
 				after = chars.slice(i + 1, chars.length).join('')
 				var candidate = before + chars[i]
-				// console.log(before + "(" + current + ")" + after)
-				//
+
 				//rules for syllables-
 
 				//it's a consonant that comes after a vowel
@@ -68,12 +67,6 @@ var syllables = (function(str) {
 					all.push(current)
 					return doer(after)
 				}
-				//if it has 4 consonants in a row, it's starting to be a mouthful for one syllable- like 'birchtree'
-				// if(candidate.match(/[^aeiou]{4}$/)){
-				// 	all.push(candidate.replace(/[^aeiou]{2}$/,''))
-				// 	l= candidate.length - 1
-				// 	candidate=candidate.slice(l-2, l)
-				// }
 			}
 			//if still running, end last syllable
 			if (str.match(/[aiouy]/) || str.match(/ee$/)) { //allow silent trailing e
@@ -83,13 +76,13 @@ var syllables = (function(str) {
 			}
 		}
 
-		str.split(/\s-/).forEach(function(s) {
+		str.split(/\s\-/).forEach(function(s) {
 			doer(s)
 		})
 		all = postprocess(all)
 
 		//for words like 'tree' and 'free'
-		if(all.length==0){
+		if(all.length===0){
 			all=[str]
 		}
 
@@ -103,19 +96,6 @@ var syllables = (function(str) {
 })()
 
 // console.log(syllables("suddenly").length == 3)
-// console.log(syllables("constipation").length == 4)
-// console.log(syllables("diabolic").length == 4)
-// console.log(syllables("fate").length == 1)
-// console.log(syllables("fated").length == 2)
-// console.log(syllables("fates").length == 1)
-// console.log(syllables("genetic").length == 3)
-// console.log(syllables("deviled").length == 3)
-// console.log(syllables("imitated").length == 4)
-// console.log(syllables("horse").length == 1)
-
-// console.log(syllables("carbonised"))
-// console.log(syllables("sometimes"))
-// console.log(syllables("calgary flames"))
 // console.log(syllables("tree"))
 
 //broken

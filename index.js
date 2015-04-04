@@ -1,4 +1,6 @@
-
+// nlp_comprimise by @spencermountain  in 2014
+// most files are self-contained modules that optionally export for nodejs
+// this file loads them all together
 
 // if we're server-side, grab files, otherwise assume they're prepended already
 if (typeof module !== "undefined" && module.exports) {
@@ -22,10 +24,8 @@ if (typeof module !== "undefined" && module.exports) {
 }
 
 ///
-//footer
-//
+// api
 var nlp = {
-
   noun: parents.noun,
   adjective: parents.adjective,
   verb: parents.verb,
@@ -50,9 +50,9 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = nlp
 }
 
-// console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
-// console.log( nlp.verb("farm").conjugate()) //
-
 // bump bower
 // git tag -a v0.3.5 -m "tag bower release"
 // git push origin master --tags
+
+// console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
+// console.log( nlp.pos('i will slouch').to_past().text() )

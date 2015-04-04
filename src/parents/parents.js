@@ -1,4 +1,4 @@
-//load if server-side, otherwise assume these are prepended already
+//load files if server-side, otherwise assume these are prepended already
 if (typeof module !== "undefined" && module.exports) {
 	Adjective = require("./adjective/index");
 	Noun = require("./noun/index");
@@ -29,5 +29,3 @@ var parents = {
 if (typeof module !== "undefined" && module.exports) {
 	module.exports = parents;
 }
-
-// console.log(parents)

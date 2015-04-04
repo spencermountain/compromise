@@ -12,12 +12,12 @@ var Adverb = function(str, next, last, token) {
 		parts_of_speech = require("../../data/parts_of_speech")
 	}
 
-
 	the.conjugate = function() {
 		return {
 			adjective: to_adjective(the.word)
 		}
 	}
+
 	the.which = (function() {
 		if (the.word.match(/..est$/)) {
 			return parts_of_speech['RBS']
@@ -36,5 +36,4 @@ if (typeof module !== "undefined" && module.exports) {
 }
 
 // console.log(new Adverb("suddenly").conjugate())
-// console.log(a)
 // console.log(adverbs.conjugate('powerfully'))

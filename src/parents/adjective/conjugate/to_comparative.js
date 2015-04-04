@@ -1,8 +1,7 @@
 //turn 'quick' into 'quickly'
 var to_comparative = (function() {
+
 	var main = function(str) {
-
-
 		var irregulars = {
 			"grey": "greyer",
 			"gray": "grayer",
@@ -12,8 +11,9 @@ var to_comparative = (function() {
 			"good": "better",
 			"well": "better",
 			"bad": "worse",
-			"sad": "sadder",
+			"sad": "sadder"
 		}
+
 		var dos = {
 			"absurd": 1,
 			"aggressive": 1,
@@ -216,21 +216,24 @@ var to_comparative = (function() {
 			"asleep": 1,
 			"weekly": 1,
 			"secret": 1,
-			"certain": 1,
+			"certain": 1
 		}
+
 		var transforms = [{
 			reg: /y$/i,
-			repl: 'ier',
+			repl: 'ier'
 		}, {
 			reg: /([aeiou])t$/i,
-			repl: '$1tter',
+			repl: '$1tter'
 		}, {
 			reg: /([aeou])de$/i,
-			repl: '$1der',
+			repl: '$1der'
 		}, {
 			reg: /nge$/i,
-			repl: 'nger',
-		}, ]
+			repl: 'nger'
+		}
+		]
+
 		var matches = [
 			/ght$/,
 			/nge$/,
@@ -241,8 +244,9 @@ var to_comparative = (function() {
 			/ow$/,
 			/old$/,
 			/oud$/,
-			/e[ae]p$/,
+			/e[ae]p$/
 		]
+
 		var not_matches = [
 			/ary$/,
 			/ous$/,
@@ -251,6 +255,7 @@ var to_comparative = (function() {
 		if (dont[str]) {
 			return null
 		}
+
 		if (dos[str]) {
 			if (str.match(/e$/)) {
 				return str + "r"
@@ -258,42 +263,37 @@ var to_comparative = (function() {
 				return str + "er"
 			}
 		}
+
 		if (irregulars[str]) {
 			return irregulars[str]
 		}
 
-		for (var i = 0; i < not_matches.length; i++) {
+		var i;
+		for (i = 0; i < not_matches.length; i++) {
 			if (str.match(not_matches[i])) {
 				return "more " + str
 			}
 		}
 
-		for (var i = 0; i < transforms.length; i++) {
+		for (i = 0; i < transforms.length; i++) {
 			if (str.match(transforms[i].reg)) {
 				return str.replace(transforms[i].reg, transforms[i].repl)
 			}
 		}
-		for (var i = 0; i < matches.length; i++) {
+
+		for (i = 0; i < matches.length; i++) {
 			if (str.match(matches[i])) {
 				return str + "er"
 			}
 		}
 		return "more " + str
 	}
+
 	if (typeof module !== "undefined" && module.exports) {
 		module.exports = main;
 	}
 	return main;
 })();
 
-
-
 // console.log(to_comparative('dry'))
 // console.log(to_comparative('cruel'))
-// console.log(to_comparative('hot'))
-// console.log(to_comparative('wide'))
-// console.log(to_comparative('strange'))
-// console.log(to_comparative('narrow'))
-// console.log(to_comparative('dull'))
-// console.log(to_comparative('weak'))
-// console.log(to_comparative('sad'))

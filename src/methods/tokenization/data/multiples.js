@@ -1,3 +1,4 @@
+//these expressions ought to be one token, not two, because they are a distinct POS together
 var multiples = [
     "of course",
     "at least",
@@ -74,12 +75,10 @@ var multiples = [
     "united states",
     "united kingdom",
     "great britain",
-    "zero sum",
-
+    "zero sum"
 ].map(function(m) {
     return m.split(' ')
 })
-
 
 if (typeof module !== "undefined" && module.exports) {
     exports.multiples = multiples;

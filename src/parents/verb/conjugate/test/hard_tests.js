@@ -8,10 +8,10 @@ data = require("./data").data //.slice(0, 10)
 conjugate = require("../conjugate")
 
 types = [
-  // "infinitive",
-  // "present",
+  "infinitive",
+  "present",
   "gerund",
-  // "past",
+  "past",
 ]
 missed = []
 errors = []
@@ -26,7 +26,7 @@ function isequal(o1, o2, tense) { // gerund -> present, gerund -> infinitive
   // console.log(o2)
   found = false
   list.forEach(function(t) {
-    if (t == 'present') {
+    // if (t == 'present') {
       if (o1[t] != o2[t]) {
         console.log("  ( " + tense + "-> " + t + ")  " + o1[t] + "  != " + o2[t])
         missed.push(t)
@@ -34,7 +34,7 @@ function isequal(o1, o2, tense) { // gerund -> present, gerund -> infinitive
       } else {
         // console.log("========  ( " + tense + "-> " + t + ")  " + o1[t] + "  == " + o2[t])
       }
-    }
+    // }
   })
   return found == false
 }

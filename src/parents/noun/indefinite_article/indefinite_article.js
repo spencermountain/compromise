@@ -78,14 +78,4 @@ var indefinite_article = (function() {
 	return main;
 })();
 
-
 // console.log(indefinite_article("wolf") == "a")
-// console.log(indefinite_article("eulogy") == "a")
-// console.log(indefinite_article("eater") == "an")
-// console.log(indefinite_article("african") == "an")
-// console.log(indefinite_article("houri") == "a")
-// console.log(indefinite_article("awful") == "an")
-// console.log(indefinite_article("utter") == "an")
-// console.log(indefinite_article('S.S.L.') == "an")
-// console.log(indefinite_article('FBI') == "an")
-// console.log(indefinite_article('GHQ') == "a")

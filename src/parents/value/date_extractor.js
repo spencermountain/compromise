@@ -2,7 +2,6 @@
 // #by spencer kelly 2014
 
 var date_extractor = (function() {
-  "use strict";
   var months = "(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|aug|sept|oct|nov|dec),?";
   var days = "([0-9]{1,2}),?";
   var years = "([12][0-9]{3})";
@@ -20,7 +19,7 @@ var date_extractor = (function() {
       example: "March 7th-11th 1987",
       process: function(arr) {
         var places;
-        if (arr == null) {
+        if (!arr) {
           arr = [];
         }
         places = {
@@ -36,7 +35,7 @@ var date_extractor = (function() {
       example: "28th of September to 5th of October 2008",
       process: function(arr) {
         var places;
-        if (arr == null) {
+        if (!arr) {
           arr = [];
         }
         places = {
@@ -53,7 +52,7 @@ var date_extractor = (function() {
       example: "March 7th to june 11th 1987",
       process: function(arr) {
         var places;
-        if (arr == null) {
+        if (!arr) {
           arr = [];
         }
         places = {
@@ -71,7 +70,7 @@ var date_extractor = (function() {
       example: "between 13 February and 15 February 1945",
       process: function(arr) {
         var places;
-        if (arr == null) {
+        if (!arr) {
           arr = [];
         }
         places = {
@@ -89,7 +88,7 @@ var date_extractor = (function() {
       example: "between March 7th and june 11th 1987",
       process: function(arr) {
         var places;
-        if (arr == null) {
+        if (!arr) {
           arr = [];
         }
         places = {
@@ -107,7 +106,7 @@ var date_extractor = (function() {
       example: "March 1st 1987",
       process: function(arr) {
         var places;
-        if (arr == null) {
+        if (!arr) {
           arr = [];
         }
         places = {
@@ -122,7 +121,7 @@ var date_extractor = (function() {
       example: "3rd - 5th of March 1969",
       process: function(arr) {
         var places;
-        if (arr == null) {
+        if (!arr) {
           arr = [];
         }
         places = {
@@ -138,7 +137,7 @@ var date_extractor = (function() {
       example: "3rd of March 1969",
       process: function(arr) {
         var places;
-        if (arr == null) {
+        if (!arr) {
           arr = [];
         }
         places = {
@@ -153,7 +152,7 @@ var date_extractor = (function() {
       example: "September 1939 to April 1945",
       process: function(arr) {
         var places;
-        if (arr == null) {
+        if (!arr) {
           arr = [];
         }
         places = {
@@ -169,7 +168,7 @@ var date_extractor = (function() {
       example: "March 1969",
       process: function(arr) {
         var places;
-        if (arr == null) {
+        if (!arr) {
           arr = [];
         }
         places = {
@@ -183,7 +182,7 @@ var date_extractor = (function() {
       example: "March 18th",
       process: function(arr) {
         var places;
-        if (arr == null) {
+        if (!arr) {
           arr = [];
         }
         places = {
@@ -197,7 +196,7 @@ var date_extractor = (function() {
       example: "18th of March",
       process: function(arr) {
         var places;
-        if (arr == null) {
+        if (!arr) {
           arr = [];
         }
         places = {
@@ -211,7 +210,7 @@ var date_extractor = (function() {
       example: "1997-1998",
       process: function(arr) {
         var places;
-        if (arr == null) {
+        if (!arr) {
           arr = [];
         }
         places = {
@@ -225,7 +224,7 @@ var date_extractor = (function() {
       example: "1998",
       process: function(arr) {
         var places;
-        if (arr == null) {
+        if (!arr) {
           arr = [];
         }
         places = {
@@ -277,10 +276,10 @@ var date_extractor = (function() {
     var d;
     d = new Date();
     options = options || {};
-    obj.year = parseInt(obj.year) || undefined;
-    obj.day = parseInt(obj.day) || undefined;
-    obj.to_day = parseInt(obj.to_day) || undefined;
-    obj.to_year = parseInt(obj.to_year) || undefined;
+    obj.year = parseInt(obj.year,10) || undefined;
+    obj.day = parseInt(obj.day,10) || undefined;
+    obj.to_day = parseInt(obj.to_day,10) || undefined;
+    obj.to_year = parseInt(obj.to_year,10) || undefined;
     obj.month = months_obj[obj.month];
     obj.to_month = months_obj[obj.to_month];
     //swap to_month and month
@@ -294,7 +293,7 @@ var date_extractor = (function() {
     if (obj.to_year && !obj.year) {
       obj.year = obj.to_year;
     }
-    if (!obj.to_year && obj.year && obj.to_month!=undefined) {
+    if (!obj.to_year && obj.year && obj.to_month!==undefined) {
       obj.to_year = obj.year;
     }
     if (options.assume_year && !obj.year) {
@@ -374,56 +373,5 @@ var date_extractor = (function() {
   return main;
 
 })();
-
-
-// var date_tests= [
-//   ["March 7th-11th 1987",  {"month":2,"day":7,"year":1987}],
-//   ["June 1st-11th 1999",  {"month":5,"day":1,"year":1999}],
-//   ["28th of September to 5th of October 2008",  {"month":8,"day":28,"year":2008}],
-//   ["2nd of January to 5th of October 2008",  {"month":9,"day":5,"year":2008}],
-//   ["March 7th to june 11th 1987",  {"month":2,"day":7,"year":1987}],
-//   ["April 17th to september 11th 1981",  {"month":3,"day":17,"year":1981}],
-//   ["June 1st to June 11th 2014",  {"month":5,"day":1,"year":2014}],
-//   ["between 13 February and 15 February 1945",  {"month":1,"day":13,"year":1945}],
-//   ["between March 7th and june 11th 1987",  {"month":2,"day":7,"year":1987}],
-//   ["March 1st 1987",  {"month":2,"day":1,"year":1987}],
-//   ["June 22nd 2014",  {"month":5,"day":22,"year":undefined}],
-//   ["June 22nd 1997",  {"month":5,"day":22,"year":undefined}],
-//   ["3rd - 5th of March 1969",  {"month":2,"day":3,"year":1969}],
-//   ["3rd of March 1969",  {"month":2,"day":3,"year":1969}],
-//   ["2nd of April 1929",  {"month":3,"day":undefined,"year":1929}],
-//   // ["September 1939 to April 1945",  {"month":undefined,"day":undefined,"year":1939}],
-//   // ["June 1969 to April 1975",  {"month":undefined,"day":undefined,"year":1969}],
-//   ["March 1969",  {"month":2,"day":undefined,"year":1969}],
-//   ["March 18th",  {"month":2,"day":18,"year":undefined}],
-//   ["August 28th",  {"month":7,"day":28,"year":undefined}],
-//   ["18th of March",  {"month":2,"day":18,"year":undefined}],
-//   ["27th of March",  {"month":2,"day":27,"year":undefined}],
-//   ["2012-2014",  {"month":undefined,"day":undefined,"year":2012}],
-//   ["1997-1998",  {"month":undefined,"day":undefined,"year":1997}],
-//   ["1998",  {"month":undefined,"day":undefined,"year":1998}],
-//   ["1672",  {"month":undefined,"day":undefined,"year":1672}],
-//   ["2015",  {"month":undefined,"day":undefined,"year":2015}],
-//   ["january 5th 1998",  {"month":0,"day":5,"year":1998}],
-
-//   //edge cases
-//   ["2014-1998",  {"month":undefined,"day":undefined,"year":undefined}],
-//   ["february 10th",  {"month":1,"day":10,"year":undefined}],
-//   ["february 30th",  {"month":1,"day":undefined,"year":undefined}],
-//   ["2103",  {"month":undefined,"day":undefined,"year":undefined}],
-//   ["1111",  {"month":undefined,"day":undefined,"year":undefined}],
-//   ["jan 1921",  {"month":0,"day":undefined,"year":1921}],
-//   ["",  {"month":undefined,"day":undefined,"year":undefined}],
-
-// ]
-
-// date_tests.forEach(function(arr) {
-//   var o = date_extractor(arr[0]);
-//   return Object.keys(arr[1]).forEach(function(k) {
-//     if (arr[1][k] !== o[k]) {
-//       return console.log(arr[1][k] + "  " + o[k]);
-//     }
-//   });
-// });
 
 // console.log(date_extractor("january 6th 1998"))

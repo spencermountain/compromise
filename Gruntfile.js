@@ -1,3 +1,4 @@
+//build script for the client-side file
 module.exports = function(grunt) {
 
   // Project configuration.
@@ -5,7 +6,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('./package.json'),
     concat: {
       options: {
-        banner: '/*! <%= pkg.name %> \n by @spencermountain\n <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+        banner: '/*! <%= pkg.name %>  <%= pkg.version %>  by @spencermountain <%= grunt.template.today("yyyy-mm-dd") %> */\n',
         footer: ""
       },
       dist: {
@@ -18,11 +19,10 @@ module.exports = function(grunt) {
           './src/methods/transliteration/unicode_normalisation.js',
           './src/methods/syllables/syllable.js',
           './src/methods/localization/britishize.js',
-
+          //data
           './src/data/word_rules.js',
           './src/data/unambiguous_suffixes.js',
           './src/data/parts_of_speech.js',
-
           //values
           './src/parents/value/to_number.js',
           './src/parents/value/date_extractor.js',
@@ -46,37 +46,46 @@ module.exports = function(grunt) {
           './src/parents/adjective/conjugate/to_superlative.js',
           './src/parents/adjective/conjugate/to_adverb.js',
           './src/parents/adjective/index.js',
-
           './src/parents/parents.js',
           './src/data/lexicon.js',
           './src/sentence.js',
           './src/section.js',
           './src/pos.js',
           './src/spot.js',
-
           //pull it all together..
           './index.js',
-
           // './tests/test.js',
-
           './build/footer.js'
         ],
         dest: './client_side/nlp.js'
       }
     },
+
     uglify: {
       do :{
         src: ['./client_side/nlp.js'],
         dest: './client_side/nlp.min.js'
       }
+    },
+
+    jshint: {
+      options: {
+        globals: {
+          module:true,
+          require:true,
+          exports:true
+        },
+        asi:true, //semicolons
+        sub:true, //dot notation
+        devel: true //console.log
+      },
+      afterconcat: ['./client_side/nlp.js']
     }
 
   });
-
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
-
-  grunt.registerTask('default', ['concat', 'uglify']);
-
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.registerTask('default', ['concat', /*'jshint',*/ 'uglify']);
 };

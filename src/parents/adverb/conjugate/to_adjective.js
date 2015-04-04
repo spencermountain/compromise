@@ -19,29 +19,29 @@ var to_adjective = (function() {
 			"pornographically": "pornographic",
 			"fully": "full",
 			"jolly": "jolly",
-			"wholly": "whole",
+			"wholly": "whole"
 		}
 		var transforms = [{
 			reg: /bly$/i,
-			repl: 'ble',
+			repl: 'ble'
 		}, {
 			reg: /gically$/i,
-			repl: 'gical',
+			repl: 'gical'
 		}, {
 			reg: /([rsdh])ically$/i,
-			repl: '$1ical',
+			repl: '$1ical'
 		}, {
 			reg: /ically$/i,
-			repl: 'ic',
+			repl: 'ic'
 		}, {
 			reg: /uly$/i,
-			repl: 'ue',
+			repl: 'ue'
 		}, {
 			reg: /ily$/i,
-			repl: 'y',
+			repl: 'y'
 		}, {
 			reg: /(.{3})ly$/i,
-			repl: '$1',
+			repl: '$1'
 		}, ]
 		if (irregulars[str]) {
 			return irregulars[str]
@@ -61,13 +61,3 @@ var to_adjective = (function() {
 
 // console.log(to_adjective('quickly') == 'quick')
 // console.log(to_adjective('marvelously') == 'marvelous')
-// console.log(to_adjective('marvelously') == 'marvelous')
-
-// data = require("./test").data
-// data = data.filter(function(w) {
-// 	return to_adjective(w[0]) != w[1]
-// })
-
-// arr = data.map(function(w) {
-// 	console.log(w[0] + " -  " + to_adjective(w[0]))
-// })

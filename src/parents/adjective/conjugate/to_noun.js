@@ -2,9 +2,7 @@
 var adj_to_noun = (function() {
 
     var main = function(w) {
-
-        var irregulars;
-        irregulars = {
+        var irregulars = {
             "clean": "cleanliness",
             "naivety": "naivety"
         };
@@ -61,8 +59,6 @@ var adj_to_noun = (function() {
         }
         return w + "ness";
     };
-
-
     if (typeof module !== "undefined" && module.exports) {
         module.exports = main;
     }

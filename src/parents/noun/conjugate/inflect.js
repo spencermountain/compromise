@@ -5,10 +5,9 @@
 var inflect = (function() {
 
     var titlecase=function(str){
-        if(str==null){return ''}
+        if(!str){return ''}
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
-
     var irregulars = [
         ['child', 'children'],
         ['person', 'people'],
@@ -56,7 +55,7 @@ var inflect = (function() {
         ['halo', 'halos'],
         ['tornado', 'tornados'],
         ['tuxedo', 'tuxedos'],
-        ['sombrero', 'sombreros'],
+        ['sombrero', 'sombreros']
     ]
     //words that shouldn't ever inflect, for metaphysical reasons
     var uncountables = {
@@ -226,7 +225,7 @@ var inflect = (function() {
         "fahrenheit": 1,
         "celcius": 1,
         "kelvin": 1,
-        "hertz": 1,
+        "hertz": 1
     }
 
     var pluralize_rules = [{
@@ -339,7 +338,6 @@ var inflect = (function() {
             }
         }
     }
-
 
     var singularize_rules = [{
         reg: /([^v])ies$/i,
@@ -508,35 +506,5 @@ var inflect = (function() {
 })();
 
 // console.log(inflect.pluralize('kiss'))
-// console.log(inflect.pluralize('twin'))
-// console.log(inflect.pluralize('phantom of the opera'))
 // console.log(inflect.pluralize('mayor of chicago'))
-// console.log(inflect.pluralize('boy in the mall'))
-// console.log(inflect.pluralize('maple leaf'))
-// console.log(inflect.singularize('leaves'))
-// console.log(inflect.inflect('mayor of toronto'))
-// console.log(inflect.inflect('mayors of kansas'))
-// console.log(inflect.inflect('mayors of niagra falls'))
-// console.log(inflect.pluralize('woman'))
-// console.log(inflect.singularize('women'))
-// console.log(inflect.inflect('women'))
-// console.log(inflect.inflect('kiss'))
-// console.log(inflect.inflect('news'))
-
-// console.log(inflect.inflect('bus'))
-// console.log(inflect.inflect('statistics'))
-
-// bus
-// kiss
-// console.log(nlp.noun('crisis').pluralize() == 'crises')
-// console.log(nlp.noun('analysis').pluralize() == 'analyses')
-// console.log(nlp.noun('neurosis').pluralize() == 'neuroses')
-
-// console.log(inflect.singularize('Indices')=='Index')
-// console.log(inflect.singularize('indices')=='index')
-// console.log(inflect.pluralize('index')=='indices')
-// console.log(inflect.pluralize('Index')=='Indices')
-// console.log(inflect.inflect('Indices').singular=='Index')
-// console.log(inflect.inflect('indices').singular=='index')
-// console.log(inflect.inflect('index').plural=='indices')
 // console.log(inflect.inflect('Index').plural=='Indices')

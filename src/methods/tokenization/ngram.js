@@ -6,7 +6,7 @@ var ngram = (function() {
     var min_count = options.min_count || 1; // minimum hit-count
     var max_size = options.max_size || 5; // maximum gram count
     var REallowedChars = /[^a-zA-Z'\-]+/g; //Invalid characters are replaced with a whitespace
-    var i, j, k, textlen, len, s;
+    var i, j, k, textlen, s;
     var keys = [null];
     var results = [];
     max_size++;

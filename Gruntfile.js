@@ -65,6 +65,18 @@ module.exports = function(grunt) {
       do :{
         src: ['./client_side/nlp.js'],
         dest: './client_side/nlp.min.js'
+      },
+      options:{
+        preserveComments:false,
+        mangle:true,
+        banner:" /*nlp_comprimise by @spencermountain in 2015*/\n",
+        compress: {
+          drop_console: true,
+          dead_code:true,
+          properties:true,
+          unused:true,
+          warnings:true
+        }
       }
     },
 

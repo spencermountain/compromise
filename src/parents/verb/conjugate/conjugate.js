@@ -1,8 +1,6 @@
 //turn a verb into its other grammatical forms.
 var verb_conjugate = (function() {
 
-  var debug=false //find the particular transformation
-
   if (typeof module !== "undefined" && module.exports) {
     verb_to_doer = require("./to_doer")
     verb_irregulars = require("./verb_irregulars")
@@ -173,7 +171,6 @@ var verb_conjugate = (function() {
     if (!w) {
       return {}
     }
-    var done = {}
     //chop it if it's future-tense
     w=w.replace(/^will /i,'')
     //un-prefix the verb, and add it in later
@@ -190,13 +187,11 @@ var verb_conjugate = (function() {
     }
     //guess the tense, so we know which transormation to make
     var predicted = predict(w) || 'infinitive'
-    if(debug){console.log("==predicted= " + predicted)}
 
     //check against suffix rules
     for (i = 0; i < verb_rules[predicted].length; i++) {
       var r = verb_rules[predicted][i];
       if (w.match(r.reg)) {
-        if(debug){ console.log(r) }
         var obj = Object.keys(r.repl).reduce(function(h, k) {
           if (k === predicted) {
             h[k] = w
@@ -210,7 +205,6 @@ var verb_conjugate = (function() {
       }
     }
 
-    if(debug){console.log("--fallback--")}
     //produce a generic transformation
     return fallback(w)
   };

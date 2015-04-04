@@ -221,7 +221,6 @@ var pos = (function() {
       //first, lets handle the first-word capitalisation issue..
       //be sure we don't over-classify it as a noun
       var first=sentence.tokens[0]
-      var l=first.normalised.length
 
       //smart handling of contractions
       sentence.tokens = handle_contractions(sentence.tokens)
@@ -282,8 +281,6 @@ var pos = (function() {
 
       //second pass, wrangle results a bit
       sentence.tokens = sentence.tokens.map(function(token, i) {
-        var next = sentence.tokens[i + 1]
-        var prev = sentence.tokens[i - 1]
         //set ambiguous 'ed' endings as either verb/adjective
         if (token.normalised.match(/.ed$/)) {
           token.pos = parts_of_speech['VB']
@@ -297,7 +294,6 @@ var pos = (function() {
       var reason = ''
       sentence.tokens = sentence.tokens.map(function(token, i) {
         var next = sentence.tokens[i + 1]
-        var prev = sentence.tokens[i - 1]
         if (token.pos) {
           //suggest noun after some determiners (a|the), posessive pronouns (her|my|its)
           if (token.normalised=="the" || token.normalised=="a" || token.normalised=="an" || token.pos.tag === "PP") {
@@ -421,32 +417,4 @@ var pos = (function() {
   return main
 })()
 
-
-
-  function render(arr) {
-    arr.forEach(function(sentence) {
-      sentence.tokens.forEach(function(token) {
-        console.log(token.normalised + "   " + (token.pos || {}).tag + '   (' + token.pos_reason + ')')
-      })
-    })
-  }
-
-  function analysis(arr) {
-    arr.forEach(function(sentence) {
-      sentence.tokens.forEach(function(token) {
-        console.log(token.normalised + "   " + token.pos.tag + "  " + JSON.stringify(token.analysis))
-      })
-    })
-  }
-
-//fixed////
-  // fun = pos("Geroge Clooney walked, quietly into a bank. It was cold.")
-
-//not fixed:
-  // fun = pos("Joe would alks the asdf") //"second pass modal"
-  // fun = pos("he blalks the asdf") //"second_pass signal from PRP"
-  // fun = pos("He does not perform it with truly human energies", {}) //issue with needs model
-  // fun = pos("They’re taking risks", {}) //issue with needs model
-// var fun = pos(s, {}) //
-// console.log(fun.sentences[0].tokens)
-// render(fun.sentences)
+// console.log( pos("Geroge Clooney walked, quietly into a bank. It was cold.") )

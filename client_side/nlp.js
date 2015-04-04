@@ -145,8 +145,8 @@ if (typeof module !== "undefined" && module.exports) {
   exports.sentences = sentence_parser;
 }
 
-// console.log(sentence_parser('Tony is nice. He lives in Japan.').length == 2)
-// console.log(sentence_parser('I like that Color').length == 1)
+// console.log(sentence_parser('Tony is nice. He lives in Japan.').length === 2)
+// console.log(sentence_parser('I like that Color').length === 1)
 
 //split a string into all possible parts
 var ngram = (function() {
@@ -156,7 +156,7 @@ var ngram = (function() {
     var min_count = options.min_count || 1; // minimum hit-count
     var max_size = options.max_size || 5; // maximum gram count
     var REallowedChars = /[^a-zA-Z'\-]+/g; //Invalid characters are replaced with a whitespace
-    var i, j, k, textlen, len, s;
+    var i, j, k, textlen, s;
     var keys = [null];
     var results = [];
     max_size++;
@@ -246,7 +246,7 @@ var tokenize = (function() {
 		var better = []
 		for (var i = 0; i < arr.length; i++) {
 			for (var o = 0; o < multiples.length; o++) {
-				if (arr[i + 1] && normalise(arr[i]) == multiples[o][0] && normalise(arr[i + 1]) == multiples[o][1]) { //
+				if (arr[i + 1] && normalise(arr[i]) === multiples[o][0] && normalise(arr[i + 1]) === multiples[o][1]) { //
 					//we have a match
 					arr[i] = arr[i] + ' ' + arr[i + 1]
 					arr[i + 1] = null
@@ -1061,101 +1061,97 @@ var normalize = (function() {
 //chop a string into pronounced syllables
 var syllables = (function(str) {
 
-	var main = function(str) {
-		var all = []
+  var main = function(str) {
+    var all = []
 
-		//suffix fixes
-			function postprocess(arr) {
-				//trim whitespace
-				arr= arr.map(function(w){
-					w= w.replace(/^ */,'')
-					w= w.replace(/ *$/,'')
-					return w
-				})
-				if (arr.length > 2) { //
-					return arr
-				}
-				var twos = [
-					/[^aeiou]ying$/,
-					/yer$/
-				]
-				var ones = [
-					/^[^aeiou]?ion/,
-					/^[^aeiou]?ised/,
-					/^[^aeiou]?iled/
-				]
-				var l = arr.length
-				var suffix = arr[l - 2] + arr[l - 1];
-				for (var i = 0; i < ones.length; i++) {
-					if (suffix.match(ones[i])) {
-						arr[l - 2] = arr[l - 2] + arr[l - 1]
-						arr.pop()
-					}
-				}
-				return arr
-			}
+    //suffix fixes
+      function postprocess(arr) {
+        //trim whitespace
+        arr= arr.map(function(w){
+          w= w.replace(/^ */,'')
+          w= w.replace(/ *$/,'')
+          return w
+        })
+        if (arr.length > 2) { //
+          return arr
+        }
+        var ones = [
+          /^[^aeiou]?ion/,
+          /^[^aeiou]?ised/,
+          /^[^aeiou]?iled/
+        ]
+        var l = arr.length
+        var suffix = arr[l - 2] + arr[l - 1];
+        for (var i = 0; i < ones.length; i++) {
+          if (suffix.match(ones[i])) {
+            arr[l - 2] = arr[l - 2] + arr[l - 1]
+            arr.pop()
+          }
+        }
+        return arr
+      }
 
-		var doer = function(str) {
-			var vow = /[aeiouy]$/
-			if (!str) {
-				return
-			}
-			var chars = str.split('')
-			var before = "";
-			var after = "";
-			var current = "";
-			for (var i = 0; i < chars.length; i++) {
-				before = chars.slice(0, i).join('')
-				current = chars[i]
-				after = chars.slice(i + 1, chars.length).join('')
-				var candidate = before + chars[i]
+    var doer = function(str) {
+      var vow = /[aeiouy]$/
+      if (!str) {
+        return
+      }
+      var chars = str.split('')
+      var before = "";
+      var after = "";
+      var current = "";
+      for (var i = 0; i < chars.length; i++) {
+        before = chars.slice(0, i).join('')
+        current = chars[i]
+        after = chars.slice(i + 1, chars.length).join('')
+        var candidate = before + chars[i]
 
-				//rules for syllables-
+        //rules for syllables-
 
-				//it's a consonant that comes after a vowel
-				if (before.match(vow) && !current.match(vow)) {
-					if (after.match(/^e[sm]/)) {
-						candidate += "e"
-						after = after.replace(/^e/, '')
-					}
-					all.push(candidate)
-					return doer(after)
-				}
-				//unblended vowels ('noisy' vowel combinations)
-				if (candidate.match(/(eo|eu|ia|oa|ua|ui)$/i)) { //'io' is noisy, not in 'ion'
-					all.push(before)
-					all.push(current)
-					return doer(after)
-				}
-			}
-			//if still running, end last syllable
-			if (str.match(/[aiouy]/) || str.match(/ee$/)) { //allow silent trailing e
-				all.push(str)
-			} else {
-				all[all.length - 1] = (all[all.length - 1] || '') + str; //append it to the last one
-			}
-		}
+        //it's a consonant that comes after a vowel
+        if (before.match(vow) && !current.match(vow)) {
+          if (after.match(/^e[sm]/)) {
+            candidate += "e"
+            after = after.replace(/^e/, '')
+          }
+          all.push(candidate)
+          return doer(after)
+        }
+        //unblended vowels ('noisy' vowel combinations)
+        if (candidate.match(/(eo|eu|ia|oa|ua|ui)$/i)) { //'io' is noisy, not in 'ion'
+          all.push(before)
+          all.push(current)
+          return doer(after)
+        }
+      }
+      //if still running, end last syllable
+      if (str.match(/[aiouy]/) || str.match(/ee$/)) { //allow silent trailing e
+        all.push(str)
+      } else {
+        all[all.length - 1] = (all[all.length - 1] || '') + str; //append it to the last one
+      }
+    }
 
-		str.split(/\s\-/).forEach(function(s) {
-			doer(s)
-		})
-		all = postprocess(all)
+    str.split(/\s\-/).forEach(function(s) {
+      doer(s)
+    })
+    all = postprocess(all)
 
-		//for words like 'tree' and 'free'
-		if(all.length===0){
-			all=[str]
-		}
+    //for words like 'tree' and 'free'
+    if(all.length===0){
+      all=[str]
+    }
 
-		return all
-	}
+    return all
+  }
 
-	if (typeof module !== "undefined" && module.exports) {
-		module.exports = main;
-	}
-	return main
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+  return main
 })()
 
-// console.log(syllables("suddenly").length == 3)
+// console.log(syllables("suddenly").length === 3)
 // console.log(syllables("tree"))
 
 //broken
@@ -3129,7 +3125,7 @@ var to_number = (function() {
   }
 
   //kick it into module
-  if (typeof module != "undefined" && module.exports) {
+  if (typeof module !== "undefined" && module.exports) {
      module.exports = main;
   }
   return main;
@@ -3648,7 +3644,7 @@ var indefinite_article = (function() {
 	return main;
 })();
 
-// console.log(indefinite_article("wolf") == "a")
+// console.log(indefinite_article("wolf") === "a")
 
 //converts nouns from plural and singular, and viceversases
 //some regex borrowed from pksunkara/inflect
@@ -3966,10 +3962,10 @@ var inflect = (function() {
         }
         //irregular
         var found = irregulars.filter(function(r) {
-            return r[0] == low
+            return r[0] === low
         })
         if (found[0]) {
-            if (titlecase(low) == str) { //handle capitalisation properly
+            if (titlecase(low) === str) { //handle capitalisation properly
                 return titlecase(found[0][1])
             } else {
                 return found[0][1]
@@ -4077,10 +4073,10 @@ var inflect = (function() {
         }
         //irregular
         var found = irregulars.filter(function(r) {
-            return r[1] == low
+            return r[1] === low
         })
         if (found[0]) {
-            if (titlecase(low) == str) { //handle capitalisation properly
+            if (titlecase(low) === str) { //handle capitalisation properly
                 return titlecase(found[0][0])
             } else {
                 return found[0][0]
@@ -4107,10 +4103,10 @@ var inflect = (function() {
     var is_plural = function(str) {
         //if it's a known verb
         for (var i = 0; i < irregulars.length; i++) {
-            if (irregulars[i][1] == str) {
+            if (irregulars[i][1] === str) {
                 return true
             }
-            if (irregulars[i][0] == str) {
+            if (irregulars[i][0] === str) {
                 return false
             }
         }
@@ -4306,7 +4302,7 @@ var Noun = function(str, next, last, token) {
     }
     //proper nouns
     var first = the.word.substr(0, 1)
-    if (first.toLowerCase() != first) {
+    if (first.toLowerCase() !== first) {
       if (the.is_acronym) {
         return parts_of_speech['NNPA']
       }
@@ -4394,8 +4390,8 @@ var to_adjective = (function() {
 	return main;
 })();
 
-// console.log(to_adjective('quickly') == 'quick')
-// console.log(to_adjective('marvelously') == 'marvelous')
+// console.log(to_adjective('quickly') === 'quick')
+// console.log(to_adjective('marvelously') === 'marvelous')
 
 // "RB  - adverb (quickly, softly)",
 // "RBR  - comparative adverb (faster, cooler)",
@@ -5985,8 +5981,6 @@ var verb_to_doer = (function() {
 //turn a verb into its other grammatical forms.
 var verb_conjugate = (function() {
 
-  var debug=false //find the particular transformation
-
   if (typeof module !== "undefined" && module.exports) {
     verb_to_doer = require("./to_doer")
     verb_irregulars = require("./verb_irregulars")
@@ -6157,7 +6151,6 @@ var verb_conjugate = (function() {
     if (!w) {
       return {}
     }
-    var done = {}
     //chop it if it's future-tense
     w=w.replace(/^will /i,'')
     //un-prefix the verb, and add it in later
@@ -6167,22 +6160,20 @@ var verb_conjugate = (function() {
     var x, i;
     for (i = 0; i < verb_irregulars.length; i++) {
       x = verb_irregulars[i]
-      if (verb == x.present || verb == x.gerund || verb == x.past || verb == x.infinitive) {
+      if (verb === x.present || verb === x.gerund || verb === x.past || verb === x.infinitive) {
         x = JSON.parse(JSON.stringify(verb_irregulars[i])); // object 'clone' hack, to avoid mem leak
         return fufill(x, prefix)
       }
     }
     //guess the tense, so we know which transormation to make
     var predicted = predict(w) || 'infinitive'
-    if(debug){console.log("==predicted= " + predicted)}
 
     //check against suffix rules
     for (i = 0; i < verb_rules[predicted].length; i++) {
       var r = verb_rules[predicted][i];
       if (w.match(r.reg)) {
-        if(debug){ console.log(r) }
         var obj = Object.keys(r.repl).reduce(function(h, k) {
-          if (k == predicted) {
+          if (k === predicted) {
             h[k] = w
           } else {
             h[k] = w.replace(r.reg, r.repl[k]);
@@ -6194,7 +6185,6 @@ var verb_conjugate = (function() {
       }
     }
 
-    if(debug){console.log("--fallback--")}
     //produce a generic transformation
     return fallback(w)
   };
@@ -6252,7 +6242,7 @@ var Verb = function(str, next, last, token) {
   }
 
   the.to_past = function() {
-    if (the.form == "gerund") {
+    if (the.form === "gerund") {
       return the.word
     }
     return verb_conjugate(the.word).past
@@ -6277,7 +6267,7 @@ var Verb = function(str, next, last, token) {
     ]
     var forms = verb_conjugate(the.word)
     for (var i=0; i<order.length; i++) {
-      if (forms[order[i]] == the.word) {
+      if (forms[order[i]] === the.word) {
         return order[i]
       }
     }
@@ -6289,10 +6279,10 @@ var Verb = function(str, next, last, token) {
       return "future"
     }
     var form = the.form
-    if (form == "present") {
+    if (form === "present") {
       return "present"
     }
-    if (form == "past") {
+    if (form === "past") {
       return "past"
     }
     return "present"
@@ -6315,7 +6305,7 @@ var Verb = function(str, next, last, token) {
     if (the.word.match(/n't$/)){
       return true
     }
-    if ((modals[the.word] || copulas[the.word]) && the.next && the.next.normalised == "not") {
+    if ((modals[the.word] || copulas[the.word]) && the.next && the.next.normalised === "not") {
       return true
     }
     return false
@@ -9349,17 +9339,17 @@ var lexicon = (function() {
   adjectives.forEach(function(j) {
     main[j] = "JJ"
     var adv = adj_to_adv(j)
-    if (adv && adv != j && !main[adv]) {
+    if (adv && adv !== j && !main[adv]) {
       // console.log(adv)
       main[adv] = main[adv] || "RB"
     }
     var comp = to_comparative(j)
-    if (comp && !comp.match(/^more ./) && comp != j && !main[comp]) {
+    if (comp && !comp.match(/^more ./) && comp !== j && !main[comp]) {
       // console.log(comp)
       main[comp] = main[comp] || "JJR"
     }
     var sup = to_superlative(j)
-    if (sup && !sup.match(/^most ./) && sup != j && !main[sup]) {
+    if (sup && !sup.match(/^most ./) && sup !== j && !main[sup]) {
       // console.log(sup)
       main[sup] = main[sup] || "JJS"
     }
@@ -9386,7 +9376,7 @@ var Sentence = function(tokens) {
 
   the.tense = function() {
     var verbs = the.tokens.filter(function(token) {
-      return token.pos.parent == "verb"
+      return token.pos.parent === "verb"
     })
     return verbs.map(function(v) {
       return v.analysis.tense
@@ -9395,7 +9385,7 @@ var Sentence = function(tokens) {
 
   the.to_past = function() {
     the.tokens = the.tokens.map(function(token) {
-      if (token.pos.parent == "verb") {
+      if (token.pos.parent === "verb") {
         token.text = token.analysis.to_past()
         token.normalised = token.text
       }
@@ -9406,7 +9396,7 @@ var Sentence = function(tokens) {
 
   the.to_present = function() {
     the.tokens = the.tokens.map(function(token) {
-      if (token.pos.parent == "verb") {
+      if (token.pos.parent === "verb") {
         token.text = token.analysis.to_present()
         token.normalised = token.text
       }
@@ -9417,7 +9407,7 @@ var Sentence = function(tokens) {
 
   the.to_future = function() {
     the.tokens = the.tokens.map(function(token) {
-      if (token.pos.parent == "verb") {
+      if (token.pos.parent === "verb") {
         token.text = token.analysis.to_future()
         token.normalised = token.text
       }
@@ -9549,13 +9539,13 @@ var Sentence = function(tokens) {
     var spots=[]
     options=options||{}
     the.tokens.forEach(function(token) {
-      if (token.pos.parent == "noun" && token.analysis.is_entity) {
+      if (token.pos.parent === "noun" && token.analysis.is_entity) {
         spots.push(token)
       }
     })
     if (options.ignore_gerund) {
       spots = spots.filter(function(t) {
-        return t.pos.tag != "VBG"
+        return t.pos.tag !== "VBG"
       })
     }
     return spots
@@ -9719,22 +9709,22 @@ var pos = (function() {
       var next = arr[i + 1]
       if (arr[i] && next) {
         //'joe smith' are both NN
-        if (arr[i].pos.tag == next.pos.tag && arr[i].punctuated !== true && next.punctuated !== true && arr[i].capitalised==next.capitalised) {
+        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && next.punctuated !== true && arr[i].capitalised==next.capitalised) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
         //'will walk' -> future-tense verb
-        else if (arr[i].normalised == "will" && next.pos.parent == "verb") {
+        else if (arr[i].normalised === "will" && next.pos.parent === "verb") {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
         //'hundred and fifty'
-        else if (arr[i].pos.tag == "CD" && next.normalised == "and" && arr[i + 2] && arr[i + 2].pos.tag == "CD") {
+        else if (arr[i].pos.tag === "CD" && next.normalised === "and" && arr[i + 2] && arr[i + 2].pos.tag === "CD") {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
         //'toronto fun festival'
-        // else if (arr[i].pos.tag == "NN" && next.pos.tag == "JJ" && arr[i + 2] && arr[i + 2].pos.tag == "NN") {
+        // else if (arr[i].pos.tag === "NN" && next.pos.tag === "JJ" && arr[i + 2] && arr[i + 2].pos.tag === "NN") {
           // arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           // arr[i] = null
         // }
@@ -9789,7 +9779,7 @@ var pos = (function() {
       "an":1,
     }
     //if it's before a modal verb, it's a noun -> lkjsdf would
-    if (next && token.pos.parent != "noun" && token.pos.parent != "glue" && next.pos.tag == "MD") {
+    if (next && token.pos.parent !== "noun" && token.pos.parent !== "glue" && next.pos.tag === "MD") {
       token.pos = parts_of_speech['NN']
       token.pos_reason = "before a modal"
     }
@@ -9805,27 +9795,27 @@ var pos = (function() {
     }
     //if it's after an adverb, it's not a noun -> quickly acked
     //support form 'atleast he is..'
-    if (last && token.pos.parent == "noun" && last.pos.tag == "RB" && !last.start) {
+    if (last && token.pos.parent === "noun" && last.pos.tag === "RB" && !last.start) {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "after an adverb"
     }
     //no consecutive, unpunctuated adjectives -> real good
-    if (next && token.pos.parent == "adjective" && next.pos.parent == "adjective" && !token.punctuated) {
+    if (next && token.pos.parent === "adjective" && next.pos.parent === "adjective" && !token.punctuated) {
       token.pos = parts_of_speech['RB']
       token.pos_reason = "consecutive_adjectives"
     }
     //if it's after a determiner, it's not a verb -> the walk
-    if (last && token.pos.parent == "verb" && strong_determiners[last.pos.normalised] && token.pos.tag!="CP") {
+    if (last && token.pos.parent === "verb" && strong_determiners[last.pos.normalised] && token.pos.tag!="CP") {
       token.pos = parts_of_speech['NN']
       token.pos_reason = "determiner-verb"
     }
     //copulas are followed by a determiner ("are a .."), or an adjective ("are good")
-    if (last && last.pos.tag == "CP" && token.pos.tag != "DT" && token.pos.tag != "RB" && token.pos.parent != "adjective" && token.pos.parent != "value") {
+    if (last && last.pos.tag === "CP" && token.pos.tag !== "DT" && token.pos.tag !== "RB" && token.pos.parent !== "adjective" && token.pos.parent !== "value") {
       token.pos = parts_of_speech['JJ']
       token.pos_reason = "copula-adjective"
     }
     //copula, adverb, verb -> copula adverb adjective -> is very lkjsdf
-    if (last && next && last.pos.tag == "CP" && token.pos.tag == "RB" && next.pos.parent == "verb") {
+    if (last && next && last.pos.tag === "CP" && token.pos.tag === "RB" && next.pos.parent === "verb") {
       sentence.tokens[i + 1].pos = parts_of_speech['JJ']
       sentence.tokens[i + 1].pos_reason = "copula-adverb-adjective"
     }
@@ -9840,7 +9830,7 @@ var pos = (function() {
       token.pos_reason = "before a [him|her|it]"
     }
     //the misled worker -> misled is an adjective, not vb
-    if (last && next && last.pos.tag == "DT" && next.pos.parent == "noun" && token.pos.parent == "verb" ) {
+    if (last && next && last.pos.tag === "DT" && next.pos.parent === "noun" && token.pos.parent === "verb" ) {
       token.pos = parts_of_speech['JJ']
       token.pos_reason = "determiner-adjective-noun"
     }
@@ -9910,7 +9900,6 @@ var pos = (function() {
       //first, lets handle the first-word capitalisation issue..
       //be sure we don't over-classify it as a noun
       var first=sentence.tokens[0]
-      var l=first.normalised.length
 
       //smart handling of contractions
       sentence.tokens = handle_contractions(sentence.tokens)
@@ -9971,8 +9960,6 @@ var pos = (function() {
 
       //second pass, wrangle results a bit
       sentence.tokens = sentence.tokens.map(function(token, i) {
-        var next = sentence.tokens[i + 1]
-        var prev = sentence.tokens[i - 1]
         //set ambiguous 'ed' endings as either verb/adjective
         if (token.normalised.match(/.ed$/)) {
           token.pos = parts_of_speech['VB']
@@ -9986,16 +9973,15 @@ var pos = (function() {
       var reason = ''
       sentence.tokens = sentence.tokens.map(function(token, i) {
         var next = sentence.tokens[i + 1]
-        var prev = sentence.tokens[i - 1]
         if (token.pos) {
           //suggest noun after some determiners (a|the), posessive pronouns (her|my|its)
-          if (token.normalised=="the" || token.normalised=="a" || token.normalised=="an" || token.pos.tag == "PP") {
+          if (token.normalised=="the" || token.normalised=="a" || token.normalised=="an" || token.pos.tag === "PP") {
             need = 'noun'
             reason = token.pos.name
             return token //proceed
           }
           //suggest verb after personal pronouns (he|she|they), modal verbs (would|could|should)
-          if (token.pos.tag == "PRP" || token.pos.tag == "MD") {
+          if (token.pos.tag === "PRP" || token.pos.tag === "MD") {
             need = 'verb'
             reason = token.pos.name
             return token //proceed
@@ -10028,11 +10014,11 @@ var pos = (function() {
           }
         }
 
-        if (need == 'verb' && token.pos && token.pos.parent == 'verb') {
+        if (need === 'verb' && token.pos && token.pos.parent === 'verb') {
           need = null
         }
 
-        if (need == 'noun' && token.pos && token.pos.parent == 'noun') {
+        if (need === 'noun' && token.pos && token.pos.parent === 'noun') {
           need = null
         }
         return token
@@ -10110,35 +10096,7 @@ var pos = (function() {
   return main
 })()
 
-
-
-  function render(arr) {
-    arr.forEach(function(sentence) {
-      sentence.tokens.forEach(function(token) {
-        console.log(token.normalised + "   " + (token.pos || {}).tag + '   (' + token.pos_reason + ')')
-      })
-    })
-  }
-
-  function analysis(arr) {
-    arr.forEach(function(sentence) {
-      sentence.tokens.forEach(function(token) {
-        console.log(token.normalised + "   " + token.pos.tag + "  " + JSON.stringify(token.analysis))
-      })
-    })
-  }
-
-//fixed////
-  // fun = pos("Geroge Clooney walked, quietly into a bank. It was cold.")
-
-//not fixed:
-  // fun = pos("Joe would alks the asdf") //"second pass modal"
-  // fun = pos("he blalks the asdf") //"second_pass signal from PRP"
-  // fun = pos("He does not perform it with truly human energies", {}) //issue with needs model
-  // fun = pos("They’re taking risks", {}) //issue with needs model
-// var fun = pos(s, {}) //
-// console.log(fun.sentences[0].tokens)
-// render(fun.sentences)
+// console.log( pos("Geroge Clooney walked, quietly into a bank. It was cold.") )
 
 //just a wrapper for text -> entities
 //most of this logic is in ./parents/noun

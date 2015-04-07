@@ -62,7 +62,7 @@ function test_tense(type) {
   console.log(errors.topk().slice(0, 40))
   missed = []
 }
-for (var i in types) {
+for (var i = 0; i < types.length; i++) {
   test_tense(types[i])
 }
 

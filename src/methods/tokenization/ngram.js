@@ -34,7 +34,7 @@ var ngram = (function() {
       results[k] = [];
       var key = keys[k];
       for (i in key) {
-        if (key[i] >= min_count) results[k].push({
+        if (key.hasOwnProperty(i) && key[i] >= min_count) results[k].push({
           "word": i,
           "count": key[i],
           "size": k

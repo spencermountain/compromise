@@ -58,7 +58,7 @@ var britishize = (function() {
     for (var i = 0; i < patterns.length; i++) {
       if (str.match(patterns[i].reg)) {
         //check for exceptions
-        for (var o in patterns[i].exceptions) {
+        for (var o = 0; o < patterns[i].exceptions.length; o++) {
           if (str.match(patterns[i].exceptions[o])) {
             return str
           }
@@ -133,7 +133,7 @@ var americanize = (function() {
     for (var i = 0; i < patterns.length; i++) {
       if (str.match(patterns[i].reg)) {
         //check for exceptions
-        for (var o in patterns[i].exceptions) {
+        for (var o = 0; o < patterns[i].exceptions.length; o++) {
           if (str.match(patterns[i].exceptions[o])) {
             return str
           }

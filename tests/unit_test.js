@@ -3,6 +3,10 @@ if (typeof module !== "undefined" && module.exports) {
   var nlp = require("../index")
 }
 
+// Dummy method for testing under prototype pollution
+Object.prototype.dummy = function(){
+};
+
 exports["indefinite_article"] = function(test){
   test.deepEqual(nlp.noun("wolf").article(), "a")
   test.deepEqual(nlp.noun("eulogy").article(), "a")

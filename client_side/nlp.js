@@ -1,4 +1,4 @@
-/*! nlp_compromise  0.3.6  by @spencermountain 2015-04-04 */
+/*! nlp_compromise  0.3.6  by @spencermountain 2015-04-06 */
 //
 // nlp_compromise - @spencermountain - gplv3
 // https://github.com/spencermountain/nlp_compromise
@@ -115,11 +115,12 @@ var sentence_parser = function(text) {
   abbrevs= abbrevs.concat(["yahoo", "joomla", "jeopardy"])
   abbrev = new RegExp("(^| )(" + abbrevs.join("|") + ")[.!?] ?$", "i");
 
-  for (i in tmp) {
+  var tmp_length = tmp.length;
+  for (i = 0; i < tmp_length; i++) {
     if (tmp[i]) {
       tmp[i] = tmp[i].replace(/^\s+|\s+$/g, "");
       if (tmp[i].match(abbrev) || tmp[i].match(/[ |\.][A-Z]\.?$/)) {
-        tmp[parseInt(i,10) + 1] = tmp[i] + " " + tmp[parseInt(i,10) + 1];
+        tmp[i + 1] = tmp[i] + " " + tmp[i + 1];
       } else {
         sentences.push(tmp[i]);
         tmp[i] = "";
@@ -128,7 +129,7 @@ var sentence_parser = function(text) {
   }
 
   clean = [];
-  for (i in sentences) {
+  for (i = 0; i < sentences.length; i++) {
     sentences[i] = sentences[i].replace(/^\s+|\s+$/g, "");
     if (sentences[i]) {
       clean.push(sentences[i]);
@@ -184,7 +185,7 @@ var ngram = (function() {
       results[k] = [];
       var key = keys[k];
       for (i in key) {
-        if (key[i] >= min_count) results[k].push({
+        if (key.hasOwnProperty(i) && key[i] >= min_count) results[k].push({
           "word": i,
           "count": key[i],
           "size": k
@@ -1217,7 +1218,7 @@ var britishize = (function() {
     for (var i = 0; i < patterns.length; i++) {
       if (str.match(patterns[i].reg)) {
         //check for exceptions
-        for (var o in patterns[i].exceptions) {
+        for (var o = 0; o < patterns[i].exceptions.length; o++) {
           if (str.match(patterns[i].exceptions[o])) {
             return str
           }
@@ -1292,7 +1293,7 @@ var americanize = (function() {
     for (var i = 0; i < patterns.length; i++) {
       if (str.match(patterns[i].reg)) {
         //check for exceptions
-        for (var o in patterns[i].exceptions) {
+        for (var o = 0; o < patterns[i].exceptions.length; o++) {
           if (str.match(patterns[i].exceptions[o])) {
             return str
           }
@@ -3980,7 +3981,7 @@ var inflect = (function() {
             }
         }
         //regular
-        for (var i in pluralize_rules) {
+        for (var i = 0; i < pluralize_rules.length; i++) {
             if (str.match(pluralize_rules[i].reg)) {
                 return str.replace(pluralize_rules[i].reg, pluralize_rules[i].repl)
             }
@@ -4091,7 +4092,7 @@ var inflect = (function() {
             }
         }
         //regular
-        for (var i in singularize_rules) {
+        for (var i = 0; i < singularize_rules.length; i++) {
             if (str.match(singularize_rules[i].reg)) {
                 return str.replace(singularize_rules[i].reg, singularize_rules[i].repl)
             }

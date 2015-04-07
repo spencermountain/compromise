@@ -17,11 +17,12 @@ var sentence_parser = function(text) {
   abbrevs= abbrevs.concat(["yahoo", "joomla", "jeopardy"])
   abbrev = new RegExp("(^| )(" + abbrevs.join("|") + ")[.!?] ?$", "i");
 
-  for (i in tmp) {
+  var tmp_length = tmp.length;
+  for (i = 0; i < tmp_length; i++) {
     if (tmp[i]) {
       tmp[i] = tmp[i].replace(/^\s+|\s+$/g, "");
       if (tmp[i].match(abbrev) || tmp[i].match(/[ |\.][A-Z]\.?$/)) {
-        tmp[parseInt(i,10) + 1] = tmp[i] + " " + tmp[parseInt(i,10) + 1];
+        tmp[i + 1] = tmp[i] + " " + tmp[i + 1];
       } else {
         sentences.push(tmp[i]);
         tmp[i] = "";
@@ -30,7 +31,7 @@ var sentence_parser = function(text) {
   }
 
   clean = [];
-  for (i in sentences) {
+  for (i = 0; i < sentences.length; i++) {
     sentences[i] = sentences[i].replace(/^\s+|\s+$/g, "");
     if (sentences[i]) {
       clean.push(sentences[i]);

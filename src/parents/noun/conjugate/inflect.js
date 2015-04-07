@@ -332,7 +332,7 @@ var inflect = (function() {
             }
         }
         //regular
-        for (var i in pluralize_rules) {
+        for (var i = 0; i < pluralize_rules.length; i++) {
             if (str.match(pluralize_rules[i].reg)) {
                 return str.replace(pluralize_rules[i].reg, pluralize_rules[i].repl)
             }
@@ -443,7 +443,7 @@ var inflect = (function() {
             }
         }
         //regular
-        for (var i in singularize_rules) {
+        for (var i = 0; i < singularize_rules.length; i++) {
             if (str.match(singularize_rules[i].reg)) {
                 return str.replace(singularize_rules[i].reg, singularize_rules[i].repl)
             }

@@ -44,6 +44,11 @@ var Section = function(sentences) {
       return s.values()
     }).reduce(function(arr, a){return arr.concat(a)},[])
   }
+  the.tags= function(){
+    return the.sentences.map(function(s){
+      return s.tags()
+    })
+  }
   //transform the sentences
   the.negate= function(){
     the.sentences= the.sentences.map(function(s){

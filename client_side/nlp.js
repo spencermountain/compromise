@@ -1,4 +1,4 @@
-/*! nlp_compromise  0.3.6  by @spencermountain 2015-04-06 */
+/*! nlp_compromise  0.3.7  by @spencermountain 2015-04-12 */
 //
 // nlp_compromise - @spencermountain - gplv3
 // https://github.com/spencermountain/nlp_compromise
@@ -9647,6 +9647,11 @@ var Section = function(sentences) {
     return the.sentences.map(function(s){
       return s.values()
     }).reduce(function(arr, a){return arr.concat(a)},[])
+  }
+  the.tags= function(){
+    return the.sentences.map(function(s){
+      return s.tags()
+    })
   }
   //transform the sentences
   the.negate= function(){

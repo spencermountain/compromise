@@ -1,17 +1,8 @@
 //build script for the client-side file
 module.exports = function(grunt) {
 
-  // Project configuration.
-  grunt.initConfig({
-    pkg: grunt.file.readJSON('./package.json'),
-    concat: {
-      options: {
-        banner: '/*! <%= pkg.name %>  <%= pkg.version %>  by @spencermountain <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-        footer: ""
-      },
-      dist: {
-        src: [
-          './build/header.js',
+  var files=[
+          // './build/header.txt',
           './src/methods/tokenization/data/multiples.js',
           './src/methods/tokenization/sentence.js',
           './src/methods/tokenization/ngram.js',
@@ -55,8 +46,19 @@ module.exports = function(grunt) {
           //pull it all together..
           './index.js',
           // './tests/test.js',
-          './build/footer.js'
-        ],
+          // './build/footer.txt'
+        ]
+
+  // Project configuration.
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('./package.json'),
+    concat: {
+      options: {
+        banner: '/*! <%= pkg.name %>  <%= pkg.version %>  by @spencermountain <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+        footer: ""
+      },
+      dist: {
+        src: ["./build/footer.txt"].concat(files, ["./build/footer.txt"]),
         dest: './client_side/nlp.js'
       }
     },
@@ -79,7 +81,14 @@ module.exports = function(grunt) {
         }
       }
     },
-
+    jscs: {
+        // src: "./client_side/nlp.js",
+        all:files,
+        options: {
+            // config: ".jscsrc",
+            requireCurlyBraces: [ "if" ]
+        }
+    },
     jshint: {
       options: {
         globals: {
@@ -99,5 +108,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.registerTask('default', ['concat', /*'jshint',*/ 'uglify']);
+  grunt.loadNpmTasks("grunt-jscs");
+  grunt.registerTask('default', ['concat', 'jscs', /*'jshint',*/ 'uglify']);
 };

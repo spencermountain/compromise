@@ -1,36 +1,37 @@
 {
-    "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
-    "name": "nlp_compromise",
-    "description": "natural language processing in the browser",
-    "version": "0.3.7",
-    "repository": {
-      "type": "git",
-      "url": "git://github.com/spencermountain/nlp_compromise.git"
-    },
-    "scripts": {
-      "test": "nodeunit ./tests/unit_test.js "
-    },
-    "main": "index.js",
-    "engines": [
-      "node >= 0.3.6"
-    ],
-    "bin": {
-      "nlp": "./cmd.js"
-    },
-    "keywords": [
-      "nlp",
-      "natural",
-      "language",
-      "processing",
-      "ner",
-      "pos",
-      "grammar"
-    ],
-    "devDependencies": {
-      "nodeunit":"0.9.*",
-      "grunt": "~0.4.*",
-      "grunt-contrib-jshint": "~0.1.*",
-      "grunt-contrib-concat": "~0.1.*",
-      "grunt-contrib-uglify": "~0.2.*"
-    }
+  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "name": "nlp_compromise",
+  "description": "natural language processing in the browser",
+  "version": "0.3.7",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/spencermountain/nlp_compromise.git"
+  },
+  "scripts": {
+    "test": "nodeunit ./tests/unit_test.js "
+  },
+  "main": "index.js",
+  "engines": [
+    "node >= 0.3.6"
+  ],
+  "bin": {
+    "nlp": "./cmd.js"
+  },
+  "keywords": [
+    "nlp",
+    "natural",
+    "language",
+    "processing",
+    "ner",
+    "pos",
+    "grammar"
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.*",
+    "grunt-contrib-concat": "~0.1.*",
+    "grunt-contrib-jshint": "~0.1.*",
+    "grunt-contrib-uglify": "~0.2.*",
+    "grunt-jscs": "~1.6.*",
+    "nodeunit": "0.9.*"
+  }
 }

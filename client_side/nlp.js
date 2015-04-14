@@ -1,4 +1,4 @@
-/*! nlp_compromise  0.3.7  by @spencermountain 2015-04-12 */
+/*! nlp_compromise  0.3.7  by @spencermountain 2015-04-14 */
 //
 // nlp_compromise - @spencermountain - gplv3
 // https://github.com/spencermountain/nlp_compromise
@@ -185,11 +185,13 @@ var ngram = (function() {
       results[k] = [];
       var key = keys[k];
       for (i in key) {
-        if (key.hasOwnProperty(i) && key[i] >= min_count) results[k].push({
-          "word": i,
-          "count": key[i],
-          "size": k
-        });
+        if(key.hasOwnProperty(i) && key[i] >= min_count){
+          results[k].push({
+            "word": i,
+            "count": key[i],
+            "size": k
+          })
+        }
       }
     }
     results = results.filter(function(s) {

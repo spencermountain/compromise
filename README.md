@@ -149,7 +149,6 @@ nlp.spot("joe carter loves toronto")
 ```
 
 ## Sentence segmentation
-1.7k
 ```javascript
 nlp.sentences("Hi Dr. Miller the price is 4.59 for the U.C.L.A. Ph.Ds.").length
 //1
@@ -290,4 +289,4 @@ nlp.pos("tony hawk won", {dont_combine:true})
 ```
 
 ## Licence
-[go-fer-it.](http://www.wtfpl.net/txt/copying/)
+MIT

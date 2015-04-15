@@ -1,5 +1,5 @@
 //run pos test against penn treebank
-var data = require("./pen_treebank").data
+var data = require("./penn_treebank").data
 var pos = require("../../index").pos
 var parts_of_speech = require("../../src/data/parts_of_speech")
 

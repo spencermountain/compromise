@@ -1,3 +1,4 @@
+//wrapper for noun's methods
 var Noun = function(str, next, last, token) {
   var the = this
   the.word = str || '';
@@ -29,7 +30,7 @@ var Noun = function(str, next, last, token) {
 
   the.is_acronym = (function() {
     var s = the.word
-    //no periods
+      //no periods
     if (s.length <= 5 && s.match(/^[A-Z]*$/)) {
       return true
     }
@@ -40,68 +41,68 @@ var Noun = function(str, next, last, token) {
     return false
   })()
 
-  the.is_entity= (function(){
-    if(!token){
+  the.is_entity = (function() {
+    if (!token) {
       return false
     }
     var blacklist = {
-      "itself": 1,
-      "west": 1,
-      "western": 1,
-      "east": 1,
-      "eastern": 1,
-      "north": 1,
-      "northern": 1,
-      "south": 1,
-      "southern": 1,
-      "the": 1,
-      "one": 1,
-      "your": 1,
-      "my": 1,
-      "today": 1,
-      "yesterday": 1,
-      "tomorrow": 1,
-      "era": 1,
-      "century": 1,
-      "it":1
-    }
-    //prepositions
-    if(prps[token.normalised]){
+        "itself": 1,
+        "west": 1,
+        "western": 1,
+        "east": 1,
+        "eastern": 1,
+        "north": 1,
+        "northern": 1,
+        "south": 1,
+        "southern": 1,
+        "the": 1,
+        "one": 1,
+        "your": 1,
+        "my": 1,
+        "today": 1,
+        "yesterday": 1,
+        "tomorrow": 1,
+        "era": 1,
+        "century": 1,
+        "it": 1
+      }
+      //prepositions
+    if (prps[token.normalised]) {
       return false
     }
     //blacklist
-    if(blacklist[token.normalised]){
+    if (blacklist[token.normalised]) {
       return false
     }
     //discredit specific nouns forms
-    if(token.pos){
-     if(token.pos.tag=="NNA"){//eg. 'singer'
+    if (token.pos) {
+      if (token.pos.tag == "NNA") { //eg. 'singer'
         return false
       }
-     if(token.pos.tag=="NNO"){//eg. "spencer's"
+      if (token.pos.tag == "NNO") { //eg. "spencer's"
         return false
       }
-     if(token.pos.tag=="NNG"){//eg. 'walking'
+      if (token.pos.tag == "NNG") { //eg. 'walking'
         return false
       }
-     // if(token.pos.tag=="NNP"){//yes! eg. 'Edinburough'
-     //    return true
-     //  }
+      // if(token.pos.tag=="NNP"){//yes! eg. 'Edinburough'
+      //    return true
+      //  }
     }
     //distinct capital is very good signal
-    if(token.special_capitalised){
+    if (token.special_capitalised) {
       return true
     }
     //multiple-word nouns are very good signal
-    if(token.normalised.match(/ /)){
+    if (token.normalised.match(/ /)) {
       return true
     }
     //if it has an abbreviation, like 'business ltd.'
-    if(token.normalised.match(/\./)){
+    if (token.normalised.match(/\./)) {
       return true
     }
     //acronyms are a-ok
-    if(the.is_acronym){
+    if (the.is_acronym) {
       return true
     }
     //else, be conservative
@@ -159,7 +160,6 @@ var Noun = function(str, next, last, token) {
     //generic
     return parts_of_speech['NN']
   })()
-
 
   return the;
 }

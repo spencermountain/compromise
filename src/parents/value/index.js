@@ -1,3 +1,4 @@
+//wrapper for value's methods
 var Value = function(str, next, last, token) {
   var the = this
   the.word = str || '';

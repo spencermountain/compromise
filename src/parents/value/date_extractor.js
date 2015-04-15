@@ -11,229 +11,227 @@ var date_extractor = (function() {
       h[k] = arr[places[k]];
       return h;
     }, {});
-  };
+  }
 
-  var regexes = [
-    {
-      reg: String(months) + " " + String(days) + "-" + String(days) + " " + String(years),
-      example: "March 7th-11th 1987",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 1,
-          day: 2,
-          to_day: 3,
-          year: 4
-        };
-        return to_obj(arr, places);
+  var regexes = [{
+    reg: String(months) + " " + String(days) + "-" + String(days) + " " + String(years),
+    example: "March 7th-11th 1987",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
       }
-    }, {
-      reg: String(days) + " of " + String(months) + " to " + String(days) + " of " + String(months) + ",? " + String(years),
-      example: "28th of September to 5th of October 2008",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          day: 1,
-          month: 2,
-          to_day: 3,
-          to_month: 4,
-          to_year: 5
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(months) + " " + String(days) + " to " + String(months) + " " + String(days) + " " + String(years),
-      example: "March 7th to june 11th 1987",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 1,
-          day: 2,
-          to_month: 3,
-          to_day: 4,
-          year: 5,
-          to_year: 5
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: "between " + String(days) + " " + String(months) + " and " + String(days) + " " + String(months) + " " + String(years),
-      example: "between 13 February and 15 February 1945",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          day: 1,
-          month: 2,
-          to_day: 3,
-          to_month: 4,
-          year: 5,
-          to_year: 5
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: "between " + String(months) + " " + String(days) + " and " + String(months) + " " + String(days) + " " + String(years),
-      example: "between March 7th and june 11th 1987",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 1,
-          day: 2,
-          to_month: 3,
-          to_day: 4,
-          year: 5,
-          to_year: 5
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(months) + " " + String(days) + " " + String(years),
-      example: "March 1st 1987",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 1,
-          day: 2,
-          year: 3
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(days) + " - " + String(days) + " of " + String(months) + ",? " + String(years),
-      example: "3rd - 5th of March 1969",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          day: 1,
-          to_day: 2,
-          month: 3,
-          year: 4
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(days) + " of " + String(months) + ",? " + String(years),
-      example: "3rd of March 1969",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          day: 1,
-          month: 2,
-          year: 3
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(months) + " " + years + ",? to " + String(months) + " " + String(years),
-      example: "September 1939 to April 1945",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 1,
-          year: 2,
-          to_month: 3,
-          to_year: 4
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(months) + " " + String(years),
-      example: "March 1969",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 1,
-          year: 2
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(months) + " " + days,
-      example: "March 18th",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 1,
-          day: 2
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(days) + " of " + months,
-      example: "18th of March",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 2,
-          day: 1
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: years + " ?- ?" + String(years),
-      example: "1997-1998",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          year: 1,
-          to_year: 2
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: years,
-      example: "1998",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          year: 1
-        };
-        return to_obj(arr, places);
-      }
+      places = {
+        month: 1,
+        day: 2,
+        to_day: 3,
+        year: 4
+      };
+      return to_obj(arr, places);
     }
-  ].map(function(o) {
+  }, {
+    reg: String(days) + " of " + String(months) + " to " + String(days) + " of " + String(months) + ",? " + String(years),
+    example: "28th of September to 5th of October 2008",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        day: 1,
+        month: 2,
+        to_day: 3,
+        to_month: 4,
+        to_year: 5
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(months) + " " + String(days) + " to " + String(months) + " " + String(days) + " " + String(years),
+    example: "March 7th to june 11th 1987",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        month: 1,
+        day: 2,
+        to_month: 3,
+        to_day: 4,
+        year: 5,
+        to_year: 5
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: "between " + String(days) + " " + String(months) + " and " + String(days) + " " + String(months) + " " + String(years),
+    example: "between 13 February and 15 February 1945",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        day: 1,
+        month: 2,
+        to_day: 3,
+        to_month: 4,
+        year: 5,
+        to_year: 5
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: "between " + String(months) + " " + String(days) + " and " + String(months) + " " + String(days) + " " + String(years),
+    example: "between March 7th and june 11th 1987",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        month: 1,
+        day: 2,
+        to_month: 3,
+        to_day: 4,
+        year: 5,
+        to_year: 5
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(months) + " " + String(days) + " " + String(years),
+    example: "March 1st 1987",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        month: 1,
+        day: 2,
+        year: 3
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(days) + " - " + String(days) + " of " + String(months) + ",? " + String(years),
+    example: "3rd - 5th of March 1969",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        day: 1,
+        to_day: 2,
+        month: 3,
+        year: 4
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(days) + " of " + String(months) + ",? " + String(years),
+    example: "3rd of March 1969",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        day: 1,
+        month: 2,
+        year: 3
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(months) + " " + years + ",? to " + String(months) + " " + String(years),
+    example: "September 1939 to April 1945",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        month: 1,
+        year: 2,
+        to_month: 3,
+        to_year: 4
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(months) + " " + String(years),
+    example: "March 1969",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        month: 1,
+        year: 2
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(months) + " " + days,
+    example: "March 18th",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        month: 1,
+        day: 2
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(days) + " of " + months,
+    example: "18th of March",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        month: 2,
+        day: 1
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: years + " ?- ?" + String(years),
+    example: "1997-1998",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        year: 1,
+        to_year: 2
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: years,
+    example: "1998",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        year: 1
+      };
+      return to_obj(arr, places);
+    }
+  }].map(function(o) {
     o.reg = new RegExp(o.reg, "g");
     return o;
   });
@@ -276,10 +274,10 @@ var date_extractor = (function() {
     var d;
     d = new Date();
     options = options || {};
-    obj.year = parseInt(obj.year,10) || undefined;
-    obj.day = parseInt(obj.day,10) || undefined;
-    obj.to_day = parseInt(obj.to_day,10) || undefined;
-    obj.to_year = parseInt(obj.to_year,10) || undefined;
+    obj.year = parseInt(obj.year, 10) || undefined;
+    obj.day = parseInt(obj.day, 10) || undefined;
+    obj.to_day = parseInt(obj.to_day, 10) || undefined;
+    obj.to_year = parseInt(obj.to_year, 10) || undefined;
     obj.month = months_obj[obj.month];
     obj.to_month = months_obj[obj.to_month];
     //swap to_month and month
@@ -293,7 +291,7 @@ var date_extractor = (function() {
     if (obj.to_year && !obj.year) {
       obj.year = obj.to_year;
     }
-    if (!obj.to_year && obj.year && obj.to_month!==undefined) {
+    if (!obj.to_year && obj.year && obj.to_month !== undefined) {
       obj.to_year = obj.year;
     }
     if (options.assume_year && !obj.year) {

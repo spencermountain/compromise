@@ -1,3 +1,4 @@
+//wrapper for verb's methods
 var Verb = function(str, next, last, token) {
   var the = this
   the.word = str || '';
@@ -59,14 +60,14 @@ var Verb = function(str, next, last, token) {
   //which conjugation
   the.form = (function() {
     //don't choose infinitive if infinitive==present
-    var order=[
+    var order = [
       "past",
       "present",
       "gerund",
       "infinitive"
     ]
     var forms = verb_conjugate(the.word)
-    for (var i=0; i<order.length; i++) {
+    for (var i = 0; i < order.length; i++) {
       if (forms[order[i]] === the.word) {
         return order[i]
       }
@@ -102,7 +103,7 @@ var Verb = function(str, next, last, token) {
 
   //is this verb negative already?
   the.negative = (function() {
-    if (the.word.match(/n't$/)){
+    if (the.word.match(/n't$/)) {
       return true
     }
     if ((modals[the.word] || copulas[the.word]) && the.next && the.next.normalised === "not") {

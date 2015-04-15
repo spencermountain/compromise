@@ -2,22 +2,22 @@
 //most of this logic is in ./parents/noun
 var spot = (function() {
 
-	if (typeof module !== "undefined" && module.exports) {
-		pos = require("./pos");
-	}
+  if (typeof module !== "undefined" && module.exports) {
+    pos = require("./pos");
+  }
 
-	var main = function(text, options) {
-		options = options || {}
-		var sentences = pos(text, options).sentences
-		return sentences.reduce(function(arr,s){
-			return arr.concat(s.entities(options))
-		},[])
-	}
+  var main = function(text, options) {
+    options = options || {}
+    var sentences = pos(text, options).sentences
+    return sentences.reduce(function(arr, s) {
+      return arr.concat(s.entities(options))
+    }, [])
+  }
 
-	if (typeof module !== "undefined" && module.exports) {
-		module.exports = main;
-	}
-	return main
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+  return main
 })()
 
 // pos = require("./pos");

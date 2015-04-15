@@ -1,101 +1,5 @@
-/*! nlp_compromise  0.3.7  by @spencermountain 2015-04-14 */
-//
-// nlp_compromise - @spencermountain - gplv3
-// https://github.com/spencermountain/nlp_compromise
-//
-//
+/*! nlp_compromise  0.3.8  by @spencermountain 2015-04-14  MIT */
 var nlp = (function() {
-  "use strict";
-
-  ///
-  // header
-  //
-//these expressions ought to be one token, not two, because they are a distinct POS together
-var multiples = [
-    "of course",
-    "at least",
-    "no longer",
-    "sort of",
-    "at first",
-    "once again",
-    "up to",
-    "once more",
-    "by now",
-    "all but",
-    "just about",
-    "as yet",
-    "on board",
-    "a lot",
-    "by far",
-    "at best",
-    "at large",
-    "for good",
-    "vice versa",
-    "en route",
-    "for sure",
-    "upside down",
-    "at most",
-    "per se",
-    "up front",
-    "in situ",
-    "in vitro",
-    "at worst",
-    "prima facie",
-    "upwards of",
-    "en masse",
-    "a priori",
-    "ad hoc",
-    "et cetera",
-    "de facto",
-    "off guard",
-    "spot on",
-    "ipso facto",
-    "ad infinitum",
-    "point blank",
-    "ad nauseam",
-    "inside out",
-    "not withstanding",
-    "for keeps",
-    "de jure",
-    "a la",
-    "sub judice",
-    "post hoc",
-    "ad hominem",
-    "a posteriori",
-    "fed up",
-    "brand new",
-    "old fashioned",
-    "bona fide",
-    "well off",
-    "far off",
-    "par excellence",
-    "straight forward",
-    "hard up",
-    "sui generis",
-    "en suite",
-    "avant garde",
-    "sans serif",
-    "gung ho",
-    "super duper",
-    "de trop",
-    "new york",
-    "new england",
-    "new hampshire",
-    "new delhi",
-    "new jersey",
-    "new mexico",
-    "united states",
-    "united kingdom",
-    "great britain",
-    "zero sum"
-].map(function(m) {
-    return m.split(' ')
-})
-
-if (typeof module !== "undefined" && module.exports) {
-    exports.multiples = multiples;
-}
-
 //chop text into respective sentences. Ignore periods used in acronyms/abbreviations/numbers, etc.
 var sentence_parser = function(text) {
   var abbrev, abbrevs, clean, i, sentences, tmp;
@@ -220,79 +124,160 @@ var ngram = (function() {
 //split a string into 'words', as intended to be helpful for this library.
 var tokenize = (function() {
 
-	if (typeof module !== "undefined" && module.exports) {
-		sentence_parser = require("./sentence").sentences
-		multiples = require("./data/multiples").multiples
-	}
+  if (typeof module !== "undefined" && module.exports) {
+    sentence_parser = require("./sentence").sentences
+  }
 
-	var normalise = function(str) {
-		if(!str){
-			return ""
-		}
-		str = str.toLowerCase()
-		str = str.replace(/[,\.!:;\?\(\)]/, '')
-		str = str.replace(/’/g, "'")
-		str = str.replace(/"/g, "")
-		if(!str.match(/[a-z0-9]/i)){
-			return ''
-		}
-		return str
-	}
+  //these expressions ought to be one token, not two, because they are a distinct POS together
+  var multiples = [
+    "of course",
+    "at least",
+    "no longer",
+    "sort of",
+    "at first",
+    "once again",
+    "up to",
+    "once more",
+    "by now",
+    "all but",
+    "just about",
+    "as yet",
+    "on board",
+    "a lot",
+    "by far",
+    "at best",
+    "at large",
+    "for good",
+    "vice versa",
+    "en route",
+    "for sure",
+    "upside down",
+    "at most",
+    "per se",
+    "up front",
+    "in situ",
+    "in vitro",
+    "at worst",
+    "prima facie",
+    "upwards of",
+    "en masse",
+    "a priori",
+    "ad hoc",
+    "et cetera",
+    "de facto",
+    "off guard",
+    "spot on",
+    "ipso facto",
+    "ad infinitum",
+    "point blank",
+    "ad nauseam",
+    "inside out",
+    "not withstanding",
+    "for keeps",
+    "de jure",
+    "a la",
+    "sub judice",
+    "post hoc",
+    "ad hominem",
+    "a posteriori",
+    "fed up",
+    "brand new",
+    "old fashioned",
+    "bona fide",
+    "well off",
+    "far off",
+    "par excellence",
+    "straight forward",
+    "hard up",
+    "sui generis",
+    "en suite",
+    "avant garde",
+    "sans serif",
+    "gung ho",
+    "super duper",
+    "de trop",
+    "new york",
+    "new england",
+    "new hampshire",
+    "new delhi",
+    "new jersey",
+    "new mexico",
+    "united states",
+    "united kingdom",
+    "great britain",
+    "zero sum"
+  ].map(function(m) {
+    return m.split(' ')
+  })
 
-	var sentence_type = function(sentence) {
-		if (sentence.match(/\?$/)) {
-			return "question"
-		} else {
-			return "statement"
-		}
-	}
+  var normalise = function(str) {
+    if (!str) {
+      return ""
+    }
+    str = str.toLowerCase()
+    str = str.replace(/[,\.!:;\?\(\)]/, '')
+    str = str.replace(/’/g, "'")
+    str = str.replace(/"/g, "")
+    if (!str.match(/[a-z0-9]/i)) {
+      return ''
+    }
+    return str
+  }
 
-	var combine_multiples = function(arr) {
-		var better = []
-		for (var i = 0; i < arr.length; i++) {
-			for (var o = 0; o < multiples.length; o++) {
-				if (arr[i + 1] && normalise(arr[i]) === multiples[o][0] && normalise(arr[i + 1]) === multiples[o][1]) { //
-					//we have a match
-					arr[i] = arr[i] + ' ' + arr[i + 1]
-					arr[i + 1] = null
-					break
-				}
-			}
-			better.push(arr[i])
-		}
-		return better.filter(function(w) {
-			return w
-		})
-	}
+  var sentence_type = function(sentence) {
+    if (sentence.match(/\?$/)) {
+      return "question"
+    } else {
+      return "statement"
+    }
+  }
 
-	var main = function(str) {
-		var sentences = sentence_parser(str)
-		return sentences.map(function(sentence) {
-			var arr = sentence.split(' ');
-			arr = combine_multiples(arr)
-			var tokens = arr.map(function(w, i) {
-				return {
-					text: w,
-					normalised: normalise(w),
-					capitalised: (w.match(/^[A-Z][a-z|A-Z]/) !== null),
-					special_capitalised: (w.match(/^[A-Z][a-z|A-Z]/) !== null) && i>0,
-					punctuated: (w.match(/[,;:\(\)"]/) !== null) || undefined,
-					end: (i === (arr.length - 1)) || undefined,
-					start: (i === 0) || undefined
-				}
-			})
-			return {
-				sentence: sentence,
-				tokens: tokens,
-				type: sentence_type(sentence)
-			}
-		})
-	}
+  var combine_multiples = function(arr) {
+    var better = []
+    for (var i = 0; i < arr.length; i++) {
+      for (var o = 0; o < multiples.length; o++) {
+        if (arr[i + 1] && normalise(arr[i]) === multiples[o][0] && normalise(arr[i + 1]) === multiples[o][1]) { //
+          //we have a match
+          arr[i] = arr[i] + ' ' + arr[i + 1]
+          arr[i + 1] = null
+          break
+        }
+      }
+      better.push(arr[i])
+    }
+    return better.filter(function(w) {
+      return w
+    })
+  }
 
-	if (typeof module !== "undefined" && module.exports) {
-		exports.tokenize = main;
-	}
-	return main
+  var main = function(str) {
+    var sentences = sentence_parser(str)
+    return sentences.map(function(sentence) {
+      var arr = sentence.split(' ');
+      arr = combine_multiples(arr)
+      var tokens = arr.map(function(w, i) {
+        return {
+          text: w,
+          normalised: normalise(w),
+          capitalised: (w.match(/^[A-Z][a-z|A-Z]/) !== null),
+          special_capitalised: (w.match(/^[A-Z][a-z|A-Z]/) !== null) && i > 0,
+          punctuated: (w.match(/[,;:\(\)"]/) !== null) || undefined,
+          end: (i === (arr.length - 1)) || undefined,
+          start: (i === 0) || undefined
+        }
+      })
+      return {
+        sentence: sentence,
+        tokens: tokens,
+        type: sentence_type(sentence)
+      }
+    })
+  }
+
+  if (typeof module !== "undefined" && module.exports) {
+    exports.tokenize = main;
+  }
+  return main
 })()
 
 // console.log(tokenize("i live in new york"))
@@ -1063,6 +1048,7 @@ var normalize = (function() {
 // console.log(normalize.denormalize(s, {
 //   percentage: 20
 // }))
+
 //chop a string into pronounced syllables
 var syllables = (function(str) {
 
@@ -1320,479 +1306,479 @@ var americanize = (function() {
 
 //regex patterns and parts of speech
 var word_rules = [{
-        reg: /.[cts]hy$/i,
-        pos: 'JJ',
-        strength: 64,
-        errors: 1,
-        accuracy: '0.98'
-    }, {
-        reg: /.[st]ty$/i,
-        pos: 'JJ',
-        strength: 44,
-        errors: 1,
-        accuracy: '0.98'
-    }, {
-        reg: /.[lnr]ize$/i,
-        pos: 'VB',
-        strength: 91,
-        errors: 2,
-        accuracy: '0.98'
-    }, {
-        reg: /.[gk]y$/i,
-        pos: 'JJ',
-        strength: 113,
-        errors: 3,
-        accuracy: '0.97'
-    }, {
-        reg: /.fies$/i,
-        pos: 'VB',
-        strength: 30,
-        errors: 1,
-        accuracy: '0.97'
-    }, {
-        reg: /.some$/i,
-        pos: 'JJ',
-        strength: 34,
-        errors: 1,
-        accuracy: '0.97'
-    }, {
-        reg: /.[nrtumcd]al$/i,
-        pos: 'JJ',
-        strength: 513,
-        errors: 16,
-        accuracy: '0.97'
-    }, {
-        reg: /.que$/i,
-        pos: 'JJ',
-        strength: 26,
-        errors: 1,
-        accuracy: '0.96'
-    }, {
-        reg: /.[tnl]ary$/i,
-        pos: 'JJ',
-        strength: 87,
-        errors: 4,
-        accuracy: '0.95'
-    }, {
-        reg: /.[di]est$/i,
-        pos: 'JJS',
-        strength: 74,
-        errors: 4,
-        accuracy: '0.95'
-    }, {
-        reg: /^(un|de|re)\-[a-z]../i,
-        pos: 'VB',
-        strength: 44,
-        errors: 2,
-        accuracy: '0.95'
-    }, {
-        reg: /.lar$/i,
-        pos: 'JJ',
-        strength: 83,
-        errors: 5,
-        accuracy: '0.94'
-    }, {
-        reg: /[bszmp]{2}y/,
-        pos: 'JJ',
-        strength: 95,
-        errors: 6,
-        accuracy: '0.94'
-    }, {
-        reg: /.zes$/i,
-        pos: 'VB',
-        strength: 54,
-        errors: 4,
-        accuracy: '0.93'
-    }, {
-        reg: /.[icldtgrv]ent$/i,
-        pos: 'JJ',
-        strength: 214,
-        errors: 14,
-        accuracy: '0.93'
-    }, {
-        reg: /.[rln]ates$/i,
-        pos: 'VBZ',
-        strength: 74,
-        errors: 5,
-        accuracy: '0.93'
-    }, {
-        reg: /.[oe]ry$/i,
-        pos: 'JJ',
-        strength: 150,
-        errors: 10,
-        accuracy: '0.93'
-    }, {
-        reg: /.[rdntk]ly$/i, ///****
-        pos: 'RB',
-        strength: 108,
-        errors: 9,
-        accuracy: '0.92'
-    }, {
-        reg: /.[lsrnpb]ian$/i,
-        pos: 'JJ',
-        strength: 121,
-        errors: 10,
-        accuracy: '0.92'
-    }, {
-        reg: /.[lnt]ial$/i,
-        pos: 'JJ',
-        strength: 0,
-        errors: 0,
-        accuracy: '0'
-    }, {
-        reg: /.[vrl]id$/i,
-        pos: 'JJ',
-        strength: 23,
-        errors: 2,
-        accuracy: '0.91'
-    }, {
-        reg: /.[ilk]er$/i,
-        pos: 'JJR',
-        strength: 167,
-        errors: 17,
-        accuracy: '0.90'
-    }, {
-        reg: /.ike$/i,
-        pos: 'JJ',
-        strength: 71,
-        errors: 8,
-        accuracy: '0.89'
-    }, {
-        reg: /.ends$/i,
-        pos: 'VB',
-        strength: 24,
-        errors: 3,
-        accuracy: '0.88'
-    }, {
-        reg: /.wards$/i,
-        pos: 'RB',
-        strength: 31,
-        errors: 4,
-        accuracy: '0.87'
-    }, {
-        reg: /.rmy$/i,
-        pos: 'JJ',
-        strength: 7,
-        errors: 1,
-        accuracy: '0.86'
-    }, {
-        reg: /.rol$/i,
-        pos: 'NN',
-        strength: 7,
-        errors: 1,
-        accuracy: '0.86'
-    }, {
-        reg: /.tors$/i,
-        pos: 'NN',
-        strength: 7,
-        errors: 1,
-        accuracy: '0.86'
-    }, {
-        reg: /.azy$/i,
-        pos: 'JJ',
-        strength: 7,
-        errors: 1,
-        accuracy: '0.86'
-    }, {
-        reg: /.where$/i,
-        pos: 'RB',
-        strength: 7,
-        errors: 1,
-        accuracy: '0.86'
-    }, {
-        reg: /.ify$/i,
-        pos: 'VB',
-        strength: 49,
-        errors: 7,
-        accuracy: '0.86'
-    }, {
-        reg: /.bound$/i,
-        pos: 'JJ',
-        strength: 22,
-        errors: 3,
-        accuracy: '0.86'
-    }, {
-        reg: /.ens$/i,
-        pos: 'VB',
-        strength: 42,
-        errors: 6,
-        accuracy: '0.86'
-    }, {
-        reg: /.oid$/i,
-        pos: 'JJ',
-        strength: 20,
-        errors: 3,
-        accuracy: '0.85'
-    }, {
-        reg: /.vice$/i,
-        pos: 'NN',
-        strength: 6,
-        errors: 1,
-        accuracy: '0.83'
-    }, {
-        reg: /.rough$/i,
-        pos: 'JJ',
-        strength: 6,
-        errors: 1,
-        accuracy: '0.83'
-    }, {
-        reg: /.mum$/i,
-        pos: 'JJ',
-        strength: 6,
-        errors: 1,
-        accuracy: '0.83'
-    }, {
-        reg: /.teen(th)?$/i,
-        pos: 'CD',
-        strength: 17,
-        errors: 3,
-        accuracy: '0.82'
-    }, {
-        reg: /.oses$/i,
-        pos: 'VB',
-        strength: 22,
-        errors: 4,
-        accuracy: '0.82'
-    }, {
-        reg: /.ishes$/i,
-        pos: 'VB',
-        strength: 21,
-        errors: 4,
-        accuracy: '0.81'
-    }, {
-        reg: /.ects$/i,
-        pos: 'VB',
-        strength: 30,
-        errors: 6,
-        accuracy: '0.80'
-    }, {
-        reg: /.tieth$/i,
-        pos: 'CD',
-        strength: 5,
-        errors: 1,
-        accuracy: '0.80'
-    }, {
-        reg: /.ices$/i,
-        pos: 'NN',
-        strength: 15,
-        errors: 3,
-        accuracy: '0.80'
-    }, {
-        reg: /.bles$/i,
-        pos: 'VB',
-        strength: 20,
-        errors: 4,
-        accuracy: '0.80'
-    }, {
-        reg: /.pose$/i,
-        pos: 'VB',
-        strength: 19,
-        errors: 4,
-        accuracy: '0.79'
-    }, {
-        reg: /.ions$/i,
-        pos: 'NN',
-        strength: 9,
-        errors: 2,
-        accuracy: '0.78'
-    }, {
-        reg: /.ean$/i,
-        pos: 'JJ',
-        strength: 32,
-        errors: 7,
-        accuracy: '0.78'
-    }, {
-        reg: /.[ia]sed$/i,
-        pos: 'JJ',
-        strength: 151,
-        errors: 35,
-        accuracy: '0.77'
-    }, {
-        reg: /.tized$/i,
-        pos: 'VB',
-        strength: 21,
-        errors: 5,
-        accuracy: '0.76'
-    }, {
-        reg: /.llen$/i,
-        pos: 'JJ',
-        strength: 8,
-        errors: 2,
-        accuracy: '0.75'
-    }, {
-        reg: /.fore$/i,
-        pos: 'RB',
-        strength: 8,
-        errors: 2,
-        accuracy: '0.75'
-    }, {
-        reg: /.ances$/i,
-        pos: 'NN',
-        strength: 8,
-        errors: 2,
-        accuracy: '0.75'
-    }, {
-        reg: /.gate$/i,
-        pos: 'VB',
-        strength: 23,
-        errors: 6,
-        accuracy: '0.74'
-    }, {
-        reg: /.nes$/i,
-        pos: 'VB',
-        strength: 27,
-        errors: 7,
-        accuracy: '0.74'
-    }, {
-        reg: /.less$/i,
-        pos: 'RB',
-        strength: 11,
-        errors: 3,
-        accuracy: '0.73'
-    }, {
-        reg: /.ried$/i,
-        pos: 'JJ',
-        strength: 22,
-        errors: 6,
-        accuracy: '0.73'
-    }, {
-        reg: /.gone$/i,
-        pos: 'JJ',
-        strength: 7,
-        errors: 2,
-        accuracy: '0.71'
-    }, {
-        reg: /.made$/i,
-        pos: 'JJ',
-        strength: 7,
-        errors: 2,
-        accuracy: '0.71'
-    }, {
-        reg: /.[pdltrkvyns]ing$/i,
-        pos: 'JJ',
-        strength: 942,
-        errors: 280,
-        accuracy: '0.70'
-    }, {
-        reg: /.tions$/i,
-        pos: 'NN',
-        strength: 71,
-        errors: 21,
-        accuracy: '0.70'
-    }, {
-        reg: /.tures$/i,
-        pos: 'NN',
-        strength: 16,
-        errors: 5,
-        accuracy: '0.69'
-    }, {
-        reg: /.ous$/i,
-        pos: 'JJ',
-        strength: 6,
-        errors: 2,
-        accuracy: '0.67'
-    }, {
-        reg: /.ports$/i,
-        pos: 'NN',
-        strength: 9,
-        errors: 3,
-        accuracy: '0.67'
-    }, {
-        reg: /. so$/i,
-        pos: 'RB',
-        strength: 3,
-        errors: 1,
-        accuracy: '0.67'
-    }, {
-        reg: /.ints$/i,
-        pos: 'NN',
-        strength: 11,
-        errors: 4,
-        accuracy: '0.64'
-    }, {
-        reg: /.[gt]led$/i,
-        pos: 'JJ',
-        strength: 16,
-        errors: 7,
-        accuracy: '0.56'
-    }, {
-        reg: /[aeiou].*ist$/i, //not sure about.. (eg anarchist)
-        pos: 'JJ',
-        strength: 0,
-        errors: 0,
-        accuracy: '0'
-    }, {
-        reg: /.lked$/i,
-        pos: 'VB',
-        strength: 16,
-        errors: 7,
-        accuracy: '0.56'
-    }, {
-        reg: /.fully$/i,
-        pos: 'RB',
-        strength: 13,
-        errors: 6,
-        accuracy: '0.54'
-    }, {
-        reg: /.*ould$/,
-        pos: 'MD',
-        strength: 3,
-        errors: 0,
-        accuracy: '0.00'
-    }, {
-        reg: /^-?[0-9]+(.[0-9]+)?$/,
-        pos: 'CD',
-        strength: 1,
-        errors: 1,
-        accuracy: '0.00'
-    }, {
-        reg: /[a-z]*\-[a-z]*\-/, //'more-than-real'
-        pos: 'JJ',
-        strength: 0,
-        errors: 0,
-        accuracy: '0.00'
-    }, {  //ugly handling of contractions, shouldn't ever be hit, but just in case
-        reg: /[a-z]'s$/i, //spencer's
-        pos: 'NNO',
-        strength: 1,
-        errors: 0,
-        accuracy: '0.00'
-    }, {
-        reg: /.'n$/i, //walk'n
-        pos: 'VB',
-        strength: 1,
-        errors: 0,
-        accuracy: '0.00'
-    }, {
-        reg: /.'re$/i, //they're
-        pos: 'CP',
-        strength: 1,
-        errors: 0,
-        accuracy: '0.00'
-    }, {
-        reg: /.'ll$/i, //they'll
-        pos: 'MD',
-        strength: 1,
-        errors: 0,
-        accuracy: '0.00'
-    }, {
-        reg: /.'t$/i, //doesn't
-        pos: 'VB',
-        strength: 1,
-        errors: 0,
-        accuracy: '0.00'
-    }, {
-        reg: /.tches$/i, //watches
-        pos: 'VB',
-        strength: 1,
-        errors: 0,
-        accuracy: '0.00'
-    }
-]
+  reg: /.[cts]hy$/i,
+  pos: 'JJ',
+  strength: 64,
+  errors: 1,
+  accuracy: '0.98'
+}, {
+  reg: /.[st]ty$/i,
+  pos: 'JJ',
+  strength: 44,
+  errors: 1,
+  accuracy: '0.98'
+}, {
+  reg: /.[lnr]ize$/i,
+  pos: 'VB',
+  strength: 91,
+  errors: 2,
+  accuracy: '0.98'
+}, {
+  reg: /.[gk]y$/i,
+  pos: 'JJ',
+  strength: 113,
+  errors: 3,
+  accuracy: '0.97'
+}, {
+  reg: /.fies$/i,
+  pos: 'VB',
+  strength: 30,
+  errors: 1,
+  accuracy: '0.97'
+}, {
+  reg: /.some$/i,
+  pos: 'JJ',
+  strength: 34,
+  errors: 1,
+  accuracy: '0.97'
+}, {
+  reg: /.[nrtumcd]al$/i,
+  pos: 'JJ',
+  strength: 513,
+  errors: 16,
+  accuracy: '0.97'
+}, {
+  reg: /.que$/i,
+  pos: 'JJ',
+  strength: 26,
+  errors: 1,
+  accuracy: '0.96'
+}, {
+  reg: /.[tnl]ary$/i,
+  pos: 'JJ',
+  strength: 87,
+  errors: 4,
+  accuracy: '0.95'
+}, {
+  reg: /.[di]est$/i,
+  pos: 'JJS',
+  strength: 74,
+  errors: 4,
+  accuracy: '0.95'
+}, {
+  reg: /^(un|de|re)\-[a-z]../i,
+  pos: 'VB',
+  strength: 44,
+  errors: 2,
+  accuracy: '0.95'
+}, {
+  reg: /.lar$/i,
+  pos: 'JJ',
+  strength: 83,
+  errors: 5,
+  accuracy: '0.94'
+}, {
+  reg: /[bszmp]{2}y/,
+  pos: 'JJ',
+  strength: 95,
+  errors: 6,
+  accuracy: '0.94'
+}, {
+  reg: /.zes$/i,
+  pos: 'VB',
+  strength: 54,
+  errors: 4,
+  accuracy: '0.93'
+}, {
+  reg: /.[icldtgrv]ent$/i,
+  pos: 'JJ',
+  strength: 214,
+  errors: 14,
+  accuracy: '0.93'
+}, {
+  reg: /.[rln]ates$/i,
+  pos: 'VBZ',
+  strength: 74,
+  errors: 5,
+  accuracy: '0.93'
+}, {
+  reg: /.[oe]ry$/i,
+  pos: 'JJ',
+  strength: 150,
+  errors: 10,
+  accuracy: '0.93'
+}, {
+  reg: /.[rdntk]ly$/i, ///****
+  pos: 'RB',
+  strength: 108,
+  errors: 9,
+  accuracy: '0.92'
+}, {
+  reg: /.[lsrnpb]ian$/i,
+  pos: 'JJ',
+  strength: 121,
+  errors: 10,
+  accuracy: '0.92'
+}, {
+  reg: /.[lnt]ial$/i,
+  pos: 'JJ',
+  strength: 0,
+  errors: 0,
+  accuracy: '0'
+}, {
+  reg: /.[vrl]id$/i,
+  pos: 'JJ',
+  strength: 23,
+  errors: 2,
+  accuracy: '0.91'
+}, {
+  reg: /.[ilk]er$/i,
+  pos: 'JJR',
+  strength: 167,
+  errors: 17,
+  accuracy: '0.90'
+}, {
+  reg: /.ike$/i,
+  pos: 'JJ',
+  strength: 71,
+  errors: 8,
+  accuracy: '0.89'
+}, {
+  reg: /.ends$/i,
+  pos: 'VB',
+  strength: 24,
+  errors: 3,
+  accuracy: '0.88'
+}, {
+  reg: /.wards$/i,
+  pos: 'RB',
+  strength: 31,
+  errors: 4,
+  accuracy: '0.87'
+}, {
+  reg: /.rmy$/i,
+  pos: 'JJ',
+  strength: 7,
+  errors: 1,
+  accuracy: '0.86'
+}, {
+  reg: /.rol$/i,
+  pos: 'NN',
+  strength: 7,
+  errors: 1,
+  accuracy: '0.86'
+}, {
+  reg: /.tors$/i,
+  pos: 'NN',
+  strength: 7,
+  errors: 1,
+  accuracy: '0.86'
+}, {
+  reg: /.azy$/i,
+  pos: 'JJ',
+  strength: 7,
+  errors: 1,
+  accuracy: '0.86'
+}, {
+  reg: /.where$/i,
+  pos: 'RB',
+  strength: 7,
+  errors: 1,
+  accuracy: '0.86'
+}, {
+  reg: /.ify$/i,
+  pos: 'VB',
+  strength: 49,
+  errors: 7,
+  accuracy: '0.86'
+}, {
+  reg: /.bound$/i,
+  pos: 'JJ',
+  strength: 22,
+  errors: 3,
+  accuracy: '0.86'
+}, {
+  reg: /.ens$/i,
+  pos: 'VB',
+  strength: 42,
+  errors: 6,
+  accuracy: '0.86'
+}, {
+  reg: /.oid$/i,
+  pos: 'JJ',
+  strength: 20,
+  errors: 3,
+  accuracy: '0.85'
+}, {
+  reg: /.vice$/i,
+  pos: 'NN',
+  strength: 6,
+  errors: 1,
+  accuracy: '0.83'
+}, {
+  reg: /.rough$/i,
+  pos: 'JJ',
+  strength: 6,
+  errors: 1,
+  accuracy: '0.83'
+}, {
+  reg: /.mum$/i,
+  pos: 'JJ',
+  strength: 6,
+  errors: 1,
+  accuracy: '0.83'
+}, {
+  reg: /.teen(th)?$/i,
+  pos: 'CD',
+  strength: 17,
+  errors: 3,
+  accuracy: '0.82'
+}, {
+  reg: /.oses$/i,
+  pos: 'VB',
+  strength: 22,
+  errors: 4,
+  accuracy: '0.82'
+}, {
+  reg: /.ishes$/i,
+  pos: 'VB',
+  strength: 21,
+  errors: 4,
+  accuracy: '0.81'
+}, {
+  reg: /.ects$/i,
+  pos: 'VB',
+  strength: 30,
+  errors: 6,
+  accuracy: '0.80'
+}, {
+  reg: /.tieth$/i,
+  pos: 'CD',
+  strength: 5,
+  errors: 1,
+  accuracy: '0.80'
+}, {
+  reg: /.ices$/i,
+  pos: 'NN',
+  strength: 15,
+  errors: 3,
+  accuracy: '0.80'
+}, {
+  reg: /.bles$/i,
+  pos: 'VB',
+  strength: 20,
+  errors: 4,
+  accuracy: '0.80'
+}, {
+  reg: /.pose$/i,
+  pos: 'VB',
+  strength: 19,
+  errors: 4,
+  accuracy: '0.79'
+}, {
+  reg: /.ions$/i,
+  pos: 'NN',
+  strength: 9,
+  errors: 2,
+  accuracy: '0.78'
+}, {
+  reg: /.ean$/i,
+  pos: 'JJ',
+  strength: 32,
+  errors: 7,
+  accuracy: '0.78'
+}, {
+  reg: /.[ia]sed$/i,
+  pos: 'JJ',
+  strength: 151,
+  errors: 35,
+  accuracy: '0.77'
+}, {
+  reg: /.tized$/i,
+  pos: 'VB',
+  strength: 21,
+  errors: 5,
+  accuracy: '0.76'
+}, {
+  reg: /.llen$/i,
+  pos: 'JJ',
+  strength: 8,
+  errors: 2,
+  accuracy: '0.75'
+}, {
+  reg: /.fore$/i,
+  pos: 'RB',
+  strength: 8,
+  errors: 2,
+  accuracy: '0.75'
+}, {
+  reg: /.ances$/i,
+  pos: 'NN',
+  strength: 8,
+  errors: 2,
+  accuracy: '0.75'
+}, {
+  reg: /.gate$/i,
+  pos: 'VB',
+  strength: 23,
+  errors: 6,
+  accuracy: '0.74'
+}, {
+  reg: /.nes$/i,
+  pos: 'VB',
+  strength: 27,
+  errors: 7,
+  accuracy: '0.74'
+}, {
+  reg: /.less$/i,
+  pos: 'RB',
+  strength: 11,
+  errors: 3,
+  accuracy: '0.73'
+}, {
+  reg: /.ried$/i,
+  pos: 'JJ',
+  strength: 22,
+  errors: 6,
+  accuracy: '0.73'
+}, {
+  reg: /.gone$/i,
+  pos: 'JJ',
+  strength: 7,
+  errors: 2,
+  accuracy: '0.71'
+}, {
+  reg: /.made$/i,
+  pos: 'JJ',
+  strength: 7,
+  errors: 2,
+  accuracy: '0.71'
+}, {
+  reg: /.[pdltrkvyns]ing$/i,
+  pos: 'JJ',
+  strength: 942,
+  errors: 280,
+  accuracy: '0.70'
+}, {
+  reg: /.tions$/i,
+  pos: 'NN',
+  strength: 71,
+  errors: 21,
+  accuracy: '0.70'
+}, {
+  reg: /.tures$/i,
+  pos: 'NN',
+  strength: 16,
+  errors: 5,
+  accuracy: '0.69'
+}, {
+  reg: /.ous$/i,
+  pos: 'JJ',
+  strength: 6,
+  errors: 2,
+  accuracy: '0.67'
+}, {
+  reg: /.ports$/i,
+  pos: 'NN',
+  strength: 9,
+  errors: 3,
+  accuracy: '0.67'
+}, {
+  reg: /. so$/i,
+  pos: 'RB',
+  strength: 3,
+  errors: 1,
+  accuracy: '0.67'
+}, {
+  reg: /.ints$/i,
+  pos: 'NN',
+  strength: 11,
+  errors: 4,
+  accuracy: '0.64'
+}, {
+  reg: /.[gt]led$/i,
+  pos: 'JJ',
+  strength: 16,
+  errors: 7,
+  accuracy: '0.56'
+}, {
+  reg: /[aeiou].*ist$/i, //not sure about.. (eg anarchist)
+  pos: 'JJ',
+  strength: 0,
+  errors: 0,
+  accuracy: '0'
+}, {
+  reg: /.lked$/i,
+  pos: 'VB',
+  strength: 16,
+  errors: 7,
+  accuracy: '0.56'
+}, {
+  reg: /.fully$/i,
+  pos: 'RB',
+  strength: 13,
+  errors: 6,
+  accuracy: '0.54'
+}, {
+  reg: /.*ould$/,
+  pos: 'MD',
+  strength: 3,
+  errors: 0,
+  accuracy: '0.00'
+}, {
+  reg: /^-?[0-9]+(.[0-9]+)?$/,
+  pos: 'CD',
+  strength: 1,
+  errors: 1,
+  accuracy: '0.00'
+}, {
+  reg: /[a-z]*\-[a-z]*\-/, //'more-than-real'
+  pos: 'JJ',
+  strength: 0,
+  errors: 0,
+  accuracy: '0.00'
+}, { //ugly handling of contractions, shouldn't ever be hit, but just in case
+  reg: /[a-z]'s$/i, //spencer's
+  pos: 'NNO',
+  strength: 1,
+  errors: 0,
+  accuracy: '0.00'
+}, {
+  reg: /.'n$/i, //walk'n
+  pos: 'VB',
+  strength: 1,
+  errors: 0,
+  accuracy: '0.00'
+}, {
+  reg: /.'re$/i, //they're
+  pos: 'CP',
+  strength: 1,
+  errors: 0,
+  accuracy: '0.00'
+}, {
+  reg: /.'ll$/i, //they'll
+  pos: 'MD',
+  strength: 1,
+  errors: 0,
+  accuracy: '0.00'
+}, {
+  reg: /.'t$/i, //doesn't
+  pos: 'VB',
+  strength: 1,
+  errors: 0,
+  accuracy: '0.00'
+}, {
+  reg: /.tches$/i, //watches
+  pos: 'VB',
+  strength: 1,
+  errors: 0,
+  accuracy: '0.00'
+}]
 
 if (typeof module !== "undefined" && module.exports) {
-    module.exports = word_rules;
+  module.exports = word_rules;
 }
+
 // word suffixes with a high pos signal, generated with wordnet
 //by spencer kelly spencermountain@gmail.com  2014
 var wordnet_suffixes = (function() {
@@ -2733,225 +2719,225 @@ var wordnet_suffixes = (function() {
 //the parts of speech used by this library. mostly standard, but some changes.
 var parts_of_speech = (function() {
 
-    var main = {
-        //verbs
-        "VB": {
-            "name": "verb, generic",
-            "example": "eat",
-            "parent": "verb",
-            "tag": "VB"
-        },
-        "VBD": {
-            "name": "past-tense verb",
-            "example": "ate",
-            "parent": "verb",
-            "tense": "past",
-            "tag": "VBD"
-        },
-        "VBN": {
-            "name": "past-participle verb",
-            "example": "eaten",
-            "parent": "verb",
-            "tense": "past",
-            "tag": "VBN"
-        },
-        "VBP": {
-            "name": "infinitive verb",
-            "example": "eat",
-            "parent": "verb",
-            "tense": "present",
-            "tag": "VBP"
-        },
-        "VBZ": {
-            "name": "present-tense verb",
-            "example": "eats, swims",
-            "tense": "present",
-            "parent": "verb",
-            "tag": "VBZ"
-        },
-        "CP": {
-            "name": "copula",
-            "example": "is, was, were",
-            "parent": "verb",
-            "tag": "CP"
-        },
-        "VBG": {
-            "name": "gerund verb",
-            "example": "eating,winning",
-            "parent": "verb",
-            "tag": "VBG"
-        },
+  var main = {
+    //verbs
+    "VB": {
+      "name": "verb, generic",
+      "example": "eat",
+      "parent": "verb",
+      "tag": "VB"
+    },
+    "VBD": {
+      "name": "past-tense verb",
+      "example": "ate",
+      "parent": "verb",
+      "tense": "past",
+      "tag": "VBD"
+    },
+    "VBN": {
+      "name": "past-participle verb",
+      "example": "eaten",
+      "parent": "verb",
+      "tense": "past",
+      "tag": "VBN"
+    },
+    "VBP": {
+      "name": "infinitive verb",
+      "example": "eat",
+      "parent": "verb",
+      "tense": "present",
+      "tag": "VBP"
+    },
+    "VBZ": {
+      "name": "present-tense verb",
+      "example": "eats, swims",
+      "tense": "present",
+      "parent": "verb",
+      "tag": "VBZ"
+    },
+    "CP": {
+      "name": "copula",
+      "example": "is, was, were",
+      "parent": "verb",
+      "tag": "CP"
+    },
+    "VBG": {
+      "name": "gerund verb",
+      "example": "eating,winning",
+      "parent": "verb",
+      "tag": "VBG"
+    },
 
-        //adjectives
-        "JJ": {
-            "name": "adjective, generic",
-            "example": "big, nice",
-            "parent": "adjective",
-            "tag": "JJ"
-        },
-        "JJR": {
-            "name": "comparative adjective",
-            "example": "bigger, cooler",
-            "parent": "adjective",
-            "tag": "JJR"
-        },
-        "JJS": {
-            "name": "superlative adjective",
-            "example": "biggest, fattest",
-            "parent": "adjective",
-            "tag": "JJS"
-        },
+    //adjectives
+    "JJ": {
+      "name": "adjective, generic",
+      "example": "big, nice",
+      "parent": "adjective",
+      "tag": "JJ"
+    },
+    "JJR": {
+      "name": "comparative adjective",
+      "example": "bigger, cooler",
+      "parent": "adjective",
+      "tag": "JJR"
+    },
+    "JJS": {
+      "name": "superlative adjective",
+      "example": "biggest, fattest",
+      "parent": "adjective",
+      "tag": "JJS"
+    },
 
-        //adverbs
-        "RB": {
-            "name": "adverb",
-            "example": "quickly, softly",
-            "parent": "adverb",
-            "tag": "RB"
-        },
-        "RBR": {
-            "name": "comparative adverb",
-            "example": "faster, cooler",
-            "parent": "adverb",
-            "tag": "RBR"
-        },
-        "RBS": {
-            "name": "superlative adverb",
-            "example": "fastest (driving), coolest (looking)",
-            "parent": "adverb",
-            "tag": "RBS"
-        },
+    //adverbs
+    "RB": {
+      "name": "adverb",
+      "example": "quickly, softly",
+      "parent": "adverb",
+      "tag": "RB"
+    },
+    "RBR": {
+      "name": "comparative adverb",
+      "example": "faster, cooler",
+      "parent": "adverb",
+      "tag": "RBR"
+    },
+    "RBS": {
+      "name": "superlative adverb",
+      "example": "fastest (driving), coolest (looking)",
+      "parent": "adverb",
+      "tag": "RBS"
+    },
 
-        //nouns
-        "NN": {
-            "name": "noun, generic",
-            "example": "dog, rain",
-            "parent": "noun",
-            "tag": "NN"
-        },
-        "NNP": {
-            "name": "singular proper noun",
-            "example": "Edinburgh, skateboard",
-            "parent": "noun",
-            "tag": "NNP"
-        },
-        "NNA": {
-            "name": "noun, active",
-            "example": "supplier, singer",
-            "parent": "noun",
-            "tag": "NNA"
-        },
-        "NNPA": {
-            "name": "noun, acronym",
-            "example": "FBI, N.A.S.A.",
-            "parent": "noun",
-            "tag": "NNPA"
-        },
-        "NNPS": {
-            "name": "plural proper noun",
-            "example": "Smiths",
-            "parent": "noun",
-            "tag": "NNPS"
-        },
-        "NNS": {
-            "name": "plural noun",
-            "example": "dogs, foxes",
-            "parent": "noun",
-            "tag": "NNS"
-        },
-        "NNO": {
-            "name": "possessive noun",
-            "example": "spencer's, sam's",
-            "parent": "noun",
-            "tag": "NNO"
-        },
-        "NNG": {
-            "name": "gerund noun",
-            "example": "eating,winning - but used grammatically as a noun",
-            "parent": "noun",
-            "tag": "VBG"
-        },
+    //nouns
+    "NN": {
+      "name": "noun, generic",
+      "example": "dog, rain",
+      "parent": "noun",
+      "tag": "NN"
+    },
+    "NNP": {
+      "name": "singular proper noun",
+      "example": "Edinburgh, skateboard",
+      "parent": "noun",
+      "tag": "NNP"
+    },
+    "NNA": {
+      "name": "noun, active",
+      "example": "supplier, singer",
+      "parent": "noun",
+      "tag": "NNA"
+    },
+    "NNPA": {
+      "name": "noun, acronym",
+      "example": "FBI, N.A.S.A.",
+      "parent": "noun",
+      "tag": "NNPA"
+    },
+    "NNPS": {
+      "name": "plural proper noun",
+      "example": "Smiths",
+      "parent": "noun",
+      "tag": "NNPS"
+    },
+    "NNS": {
+      "name": "plural noun",
+      "example": "dogs, foxes",
+      "parent": "noun",
+      "tag": "NNS"
+    },
+    "NNO": {
+      "name": "possessive noun",
+      "example": "spencer's, sam's",
+      "parent": "noun",
+      "tag": "NNO"
+    },
+    "NNG": {
+      "name": "gerund noun",
+      "example": "eating,winning - but used grammatically as a noun",
+      "parent": "noun",
+      "tag": "VBG"
+    },
 
-        //glue
-        "PP": {
-            "name": "possessive pronoun",
-            "example": "my,one's",
-            "parent": "glue",
-            "tag": "PP"
-        },
-        "FW": {
-            "name": "foreign word",
-            "example": "mon dieu, voila",
-            "parent": "glue",
-            "tag": "FW"
-        },
-        "CD": {
-            "name": "cardinal value, generic",
-            "example": "one, two, june 5th",
-            "parent": "value",
-            "tag": "CD"
-        },
-        "DA": {
-            "name": "date",
-            "example": "june 5th, 1998",
-            "parent": "value",
-            "tag": "DA"
-        },
-        "NU": {
-            "name": "number",
-            "example": "89, half-million",
-            "parent": "value",
-            "tag": "NU"
-        },
-        "IN": {
-            "name": "preposition",
-            "example": "of,in,by",
-            "parent": "glue",
-            "tag": "IN"
-        },
-        "MD": {
-            "name": "modal verb",
-            "example": "can,should",
-            "parent": "verb", //dunno
-            "tag": "MD"
-        },
-        "CC": {
-            "name": "co-ordating conjunction",
-            "example": "and,but,or",
-            "parent": "glue",
-            "tag": "CC"
-        },
-        "PRP": {
-            "name": "personal pronoun",
-            "example": "I,you,she",
-            "parent": "noun",
-            "tag": "PRP"
-        },
-        "DT": {
-            "name": "determiner",
-            "example": "the,some",
-            "parent": "glue",
-            "tag": "DT"
-        },
-        "UH": {
-            "name": "interjection",
-            "example": "oh, oops",
-            "parent": "glue",
-            "tag": "UH"
-        },
-        "EX": {
-            "name": "existential there",
-            "example": "there",
-            "parent": "glue",
-            "tag": "EX"
-        }
+    //glue
+    "PP": {
+      "name": "possessive pronoun",
+      "example": "my,one's",
+      "parent": "glue",
+      "tag": "PP"
+    },
+    "FW": {
+      "name": "foreign word",
+      "example": "mon dieu, voila",
+      "parent": "glue",
+      "tag": "FW"
+    },
+    "CD": {
+      "name": "cardinal value, generic",
+      "example": "one, two, june 5th",
+      "parent": "value",
+      "tag": "CD"
+    },
+    "DA": {
+      "name": "date",
+      "example": "june 5th, 1998",
+      "parent": "value",
+      "tag": "DA"
+    },
+    "NU": {
+      "name": "number",
+      "example": "89, half-million",
+      "parent": "value",
+      "tag": "NU"
+    },
+    "IN": {
+      "name": "preposition",
+      "example": "of,in,by",
+      "parent": "glue",
+      "tag": "IN"
+    },
+    "MD": {
+      "name": "modal verb",
+      "example": "can,should",
+      "parent": "verb", //dunno
+      "tag": "MD"
+    },
+    "CC": {
+      "name": "co-ordating conjunction",
+      "example": "and,but,or",
+      "parent": "glue",
+      "tag": "CC"
+    },
+    "PRP": {
+      "name": "personal pronoun",
+      "example": "I,you,she",
+      "parent": "noun",
+      "tag": "PRP"
+    },
+    "DT": {
+      "name": "determiner",
+      "example": "the,some",
+      "parent": "glue",
+      "tag": "DT"
+    },
+    "UH": {
+      "name": "interjection",
+      "example": "oh, oops",
+      "parent": "glue",
+      "tag": "UH"
+    },
+    "EX": {
+      "name": "existential there",
+      "example": "there",
+      "parent": "glue",
+      "tag": "EX"
     }
+  }
 
-    if (typeof module !== "undefined" && module.exports) {
-        module.exports = main;
-    }
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
 
-    return main
+  return main
 })()
 
 // converts spoken numbers into integers  "fifty seven point eight" -> 57.8
@@ -2966,172 +2952,272 @@ var to_number = (function() {
   "use strict";
   //these sets of numbers each have different rules
   //[tenth, hundreth, thousandth..] are ambiguous because they could be ordinal like fifth, or decimal like one-one-hundredth, so are ignored
-  var ones = { 'a': 1, 'zero': 0, 'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, "first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5, "sixth": 6, "seventh": 7, "eighth": 8, "ninth": 9}
-  var teens={  'ten': 10, 'eleven': 11, 'twelve': 12, 'thirteen': 13, 'fourteen': 14, 'fifteen': 15, 'sixteen': 16, 'seventeen': 17, 'eighteen': 18, 'nineteen': 19, "eleventh": 11, "twelfth": 12, "thirteenth": 13, "fourteenth": 14, "fifteenth": 15, "sixteenth": 16, "seventeenth": 17, "eighteenth": 18, "nineteenth": 19 }
-  var tens={ 'twenty': 20, 'thirty': 30, 'forty': 40, 'fifty': 50, 'sixty': 60, 'seventy': 70, 'eighty': 80, 'ninety': 90, "twentieth": 20, "thirtieth": 30, "fourtieth": 40, "fiftieth": 50, "sixtieth": 60, "seventieth": 70, "eightieth": 80, "ninetieth":90 }
-  var multiples = { 'hundred': 100, 'grand': 1000, 'thousand': 1000, 'million': 1000000, 'billion': 1000000000, 'trillion': 1000000000000, 'quadrillion': 1000000000000000, 'quintillion': 1000000000000000000, 'sextillion': 1000000000000000000000, 'septillion': 1000000000000000000000000, 'octillion': 1000000000000000000000000000, 'nonillion': 1000000000000000000000000000000, 'decillion': 1000000000000000000000000000000000}
-  // var decimal_multiples={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
+  var ones = {
+    'a': 1,
+    'zero': 0,
+    'one': 1,
+    'two': 2,
+    'three': 3,
+    'four': 4,
+    'five': 5,
+    'six': 6,
+    'seven': 7,
+    'eight': 8,
+    'nine': 9,
+    "first": 1,
+    "second": 2,
+    "third": 3,
+    "fourth": 4,
+    "fifth": 5,
+    "sixth": 6,
+    "seventh": 7,
+    "eighth": 8,
+    "ninth": 9
+  }
+  var teens = {
+    'ten': 10,
+    'eleven': 11,
+    'twelve': 12,
+    'thirteen': 13,
+    'fourteen': 14,
+    'fifteen': 15,
+    'sixteen': 16,
+    'seventeen': 17,
+    'eighteen': 18,
+    'nineteen': 19,
+    "eleventh": 11,
+    "twelfth": 12,
+    "thirteenth": 13,
+    "fourteenth": 14,
+    "fifteenth": 15,
+    "sixteenth": 16,
+    "seventeenth": 17,
+    "eighteenth": 18,
+    "nineteenth": 19
+  }
+  var tens = {
+    'twenty': 20,
+    'thirty': 30,
+    'forty': 40,
+    'fifty': 50,
+    'sixty': 60,
+    'seventy': 70,
+    'eighty': 80,
+    'ninety': 90,
+    "twentieth": 20,
+    "thirtieth": 30,
+    "fourtieth": 40,
+    "fiftieth": 50,
+    "sixtieth": 60,
+    "seventieth": 70,
+    "eightieth": 80,
+    "ninetieth": 90
+  }
+  var multiples = {
+      'hundred': 100,
+      'grand': 1000,
+      'thousand': 1000,
+      'million': 1000000,
+      'billion': 1000000000,
+      'trillion': 1000000000000,
+      'quadrillion': 1000000000000000,
+      'quintillion': 1000000000000000000,
+      'sextillion': 1000000000000000000000,
+      'septillion': 1000000000000000000000000,
+      'octillion': 1000000000000000000000000000,
+      'nonillion': 1000000000000000000000000000000,
+      'decillion': 1000000000000000000000000000000000
+    }
+    // var decimal_multiples={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
 
   var main = function(s) {
     //remember these concerns for possible errors
-    var ones_done=false
-    var teens_done=false
-    var tens_done=false
-    var multiples_done={}
-    var total=0
-    var global_multiplier=1
-    //pretty-printed numbers
+    var ones_done = false
+    var teens_done = false
+    var tens_done = false
+    var multiples_done = {}
+    var total = 0
+    var global_multiplier = 1
+      //pretty-printed numbers
     s = s.replace(/, ?/g, '')
     //parse-out currency
-    s=s.replace(/[$£€]/,'')
+    s = s.replace(/[$£€]/, '')
     //try to finish-fast
-    if(s.match(/[0-9]\.[0-9]/) && parseFloat(s)==s){
+    if (s.match(/[0-9]\.[0-9]/) && parseFloat(s) == s) {
       return parseFloat(s)
     }
-    if(parseInt(s,10)==s){
-      return parseInt(s,10)
+    if (parseInt(s, 10) == s) {
+      return parseInt(s, 10)
     }
     //try to die fast. (phone numbers or times)
     if (s.match(/[0-9][\-:][0-9]/)) {
-        return null
+      return null
     }
-
     //support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
     var mults = [{
-        reg: /^(minus|negative)[\s\-]/i,
-        mult: -1
-    },{
-        reg: /^(a\s)?half[\s\-](of\s)?/i,
-        mult: 0.5
+      reg: /^(minus|negative)[\s\-]/i,
+      mult: -1
     }, {
-        reg: /^(a\s)?quarter[\s\-]/i,
-        mult: 0.25
+      reg: /^(a\s)?half[\s\-](of\s)?/i,
+      mult: 0.5
+    }, {
+      reg: /^(a\s)?quarter[\s\-]/i,
+      mult: 0.25
     }]
-    for(i=0; i<mults.length; i++){
-      if(s.match(mults[i].reg)){
-        global_multiplier=mults[i].mult
-        s=s.replace(mults[i].reg,'')
+    for (i = 0; i < mults.length; i++) {
+      if (s.match(mults[i].reg)) {
+        global_multiplier = mults[i].mult
+        s = s.replace(mults[i].reg, '')
         break;
       }
     }
 
-     //do each word in turn..
+    //do each word in turn..
     var words = s.toString().split(/[\s\-]+/);
     var w, x;
-    var current_sum=0;
-    var local_multiplier=1
-    var decimal_mode=false
-    for(var i =0; i<words.length; i++){
-      w=words[i]
+    var current_sum = 0;
+    var local_multiplier = 1
+    var decimal_mode = false
+    for (var i = 0; i < words.length; i++) {
+      w = words[i]
 
       //skip 'and' eg. five hundred and twelve
-      if(w=="and"){continue;}
+      if (w == "and") {
+        continue;
+      }
 
       //..we're doing decimals now
-      if(w=="point" || w=="decimal"){
-        if(decimal_mode){return null}//two point one point six
-        decimal_mode=true
-        total+=current_sum
-        current_sum=0
-        ones_done=false
-        local_multiplier=0.1
+      if (w == "point" || w == "decimal") {
+        if (decimal_mode) {
+          return null
+        } //two point one point six
+        decimal_mode = true
+        total += current_sum
+        current_sum = 0
+        ones_done = false
+        local_multiplier = 0.1
         continue;
       }
 
       //handle special rules following a decimal
-      if(decimal_mode){
-        x=null
+      if (decimal_mode) {
+        x = null
         //allow consecutive ones in decimals eg. 'two point zero five nine'
-        if(ones[w]!==undefined){ x=ones[w]}
-        if(teens[w]!==undefined){ x=teens[w]}
-        if(parseInt(w,10)==w){ x=parseInt(w,10)}
-        if(!x){return null}
-        if(x<10){
-          total+= x * local_multiplier
-          local_multiplier=local_multiplier * 0.1 // next number is next decimal place
-          current_sum=0
+        if (ones[w] !== undefined) {
+          x = ones[w]
+        }
+        if (teens[w] !== undefined) {
+          x = teens[w]
+        }
+        if (parseInt(w, 10) == w) {
+          x = parseInt(w, 10)
+        }
+        if (!x) {
+          return null
+        }
+        if (x < 10) {
+          total += x * local_multiplier
+          local_multiplier = local_multiplier * 0.1 // next number is next decimal place
+          current_sum = 0
           continue;
         }
         //two-digit decimals eg. 'two point sixteen'
-        if(x<100){
-          total+= x * (local_multiplier*0.1)
-          local_multiplier=local_multiplier * 0.01 // next number is next decimal place
-          current_sum=0
+        if (x < 100) {
+          total += x * (local_multiplier * 0.1)
+          local_multiplier = local_multiplier * 0.01 // next number is next decimal place
+          current_sum = 0
           continue;
         }
       }
 
       //if it's already an actual number
-      if(w.match(/^[0-9]\.[0-9]$/)){
-        current_sum+=parseFloat(w)
+      if (w.match(/^[0-9]\.[0-9]$/)) {
+        current_sum += parseFloat(w)
         continue;
       }
-      if(parseInt(w,10)==w){
-        current_sum+=parseInt(w,10)
+      if (parseInt(w, 10) == w) {
+        current_sum += parseInt(w, 10)
         continue;
       }
 
       //ones rules
-      if(ones[w]!==undefined){
-        if(ones_done){return null}// eg. five seven
-        if(teens_done){return null}// eg. five seventeen
-        ones_done=true
-        current_sum+=ones[w]
+      if (ones[w] !== undefined) {
+        if (ones_done) {
+          return null
+        } // eg. five seven
+        if (teens_done) {
+          return null
+        } // eg. five seventeen
+        ones_done = true
+        current_sum += ones[w]
         continue;
       }
       //teens rules
-      if(teens[w]){
-        if(ones_done){return null}// eg. five seventeen
-        if(teens_done){return null}// eg. fifteen seventeen
-        if(tens_done){return null}// eg. sixty fifteen
-        teens_done=true
-        current_sum+=teens[w]
+      if (teens[w]) {
+        if (ones_done) {
+          return null
+        } // eg. five seventeen
+        if (teens_done) {
+          return null
+        } // eg. fifteen seventeen
+        if (tens_done) {
+          return null
+        } // eg. sixty fifteen
+        teens_done = true
+        current_sum += teens[w]
         continue;
       }
       //tens rules
-      if(tens[w]){
-        if(ones_done){return null}// eg. five seventy
-        if(teens_done){return null}// eg. fiveteen seventy
-        if(tens_done){return null}// eg. twenty seventy
-        tens_done=true
-        current_sum+=tens[w]
+      if (tens[w]) {
+        if (ones_done) {
+          return null
+        } // eg. five seventy
+        if (teens_done) {
+          return null
+        } // eg. fiveteen seventy
+        if (tens_done) {
+          return null
+        } // eg. twenty seventy
+        tens_done = true
+        current_sum += tens[w]
         continue;
       }
       //multiples rules
-      if(multiples[w]){
-        if(multiples_done[w]){return null}// eg. five hundred six hundred
-        multiples_done[w]=true
+      if (multiples[w]) {
+        if (multiples_done[w]) {
+          return null
+        } // eg. five hundred six hundred
+        multiples_done[w] = true
         //reset our concerns. allow 'five hundred five'
-        ones_done=false
-        teens_done=false
-        tens_done=false
+        ones_done = false
+        teens_done = false
+        tens_done = false
         //case of 'hundred million', (2 consecutive multipliers)
-        if(current_sum===0){
-          total= total || 1 //dont ever multiply by 0
-          total*=multiples[w]
+        if (current_sum === 0) {
+          total = total || 1 //dont ever multiply by 0
+          total *= multiples[w]
+        } else {
+          current_sum *= multiples[w]
+          total += current_sum
         }
-        else{
-          current_sum*= multiples[w]
-          total+=current_sum
-        }
-        current_sum=0
+        current_sum = 0
         continue;
       }
       //if word is not a known thing now, die
       return null
     }
-    if(current_sum){
-        total+= (current_sum||1) * local_multiplier
+    if (current_sum) {
+      total += (current_sum || 1) * local_multiplier
     }
     //combine with global multiplier, like 'minus' or 'half'
-    total= total * global_multiplier
+    total = total * global_multiplier
 
     return total
   }
 
   //kick it into module
   if (typeof module !== "undefined" && module.exports) {
-     module.exports = main;
+    module.exports = main;
   }
   return main;
 })()
@@ -9375,7 +9461,7 @@ var Sentence = function(tokens) {
   var the = this
   the.tokens = tokens || [];
 
-  var capitalise=function(s){
+  var capitalise = function(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
 
@@ -9431,118 +9517,124 @@ var Sentence = function(tokens) {
   the.negate = function() {
     //these are cheap ways to negate the meaning
     // ('none' is ambiguous because it could mean (all or some) )
-    var logic_negate={
-      //some logical ones work
-      "everyone":"no one",
-      "everybody":"nobody",
-      "someone":"no one",
-      "somebody":"nobody",
+    var logic_negate = {
+        //some logical ones work
+        "everyone": "no one",
+        "everybody": "nobody",
+        "someone": "no one",
+        "somebody": "nobody",
         // everything:"nothing",
-      "always":"never",
-      //copulas
-      "is":"isn't",
-      "are":"aren't",
-      "was":"wasn't",
-      "will":"won't",
-      //modals
-      "didn't":"did",
-      "wouldn't":"would",
-      "couldn't":"could",
-      "shouldn't":"should",
-      "can't":"can",
-      "won't":"will",
-      "mustn't":"must",
-      "shan't":"shall",
-      "shant":"shall",
+        "always": "never",
+        //copulas
+        "is": "isn't",
+        "are": "aren't",
+        "was": "wasn't",
+        "will": "won't",
+        //modals
+        "didn't": "did",
+        "wouldn't": "would",
+        "couldn't": "could",
+        "shouldn't": "should",
+        "can't": "can",
+        "won't": "will",
+        "mustn't": "must",
+        "shan't": "shall",
+        "shant": "shall",
 
-      "did":"didn't",
-      "would":"wouldn't",
-      "could":"couldn't",
-      "should":"shouldn't",
-      "can":"can't",
-      "must":"mustn't"
+        "did": "didn't",
+        "would": "wouldn't",
+        "could": "couldn't",
+        "should": "shouldn't",
+        "can": "can't",
+        "must": "mustn't"
 
-    }
-    //loop through each term..
+      }
+      //loop through each term..
     for (var i = 0; i < the.tokens.length; i++) {
-      var tok= the.tokens[i]
+      var tok = the.tokens[i]
 
       //turn 'is' into 'isn't', etc - make sure 'is' isnt followed by a 'not', too
-      if(logic_negate[tok.normalised] && (!the.tokens[i+1] || the.tokens[i+1].normalised!="not")){
-        tok.text= logic_negate[tok.normalised]
-        tok.normalised= logic_negate[tok.normalised]
-        if(tok.capitalised){ tok.text= capitalise(tok.text) }
+      if (logic_negate[tok.normalised] && (!the.tokens[i + 1] || the.tokens[i + 1].normalised != "not")) {
+        tok.text = logic_negate[tok.normalised]
+        tok.normalised = logic_negate[tok.normalised]
+        if (tok.capitalised) {
+          tok.text = capitalise(tok.text)
+        }
         return the
       }
 
       // find the first verb..
-      if(tok.pos.parent=="verb"){
+      if (tok.pos.parent == "verb") {
         // if verb is already negative, make it not negative
         if (tok.analysis.negative) {
-          if (the.tokens[i+1] && the.tokens[i+1].normalised=="not") {
-            the.tokens.splice(i+1, 1)
+          if (the.tokens[i + 1] && the.tokens[i + 1].normalised == "not") {
+            the.tokens.splice(i + 1, 1)
           }
           return the
         }
         //turn future-tense 'will go' into "won't go"
-        if(tok.normalised.match(/^will /i)){
-          tok.text=tok.text.replace(/^will /i, "won't ")
-          tok.normalised= tok.text
-          if(tok.capitalised){ tok.text= capitalise(tok.text) }
+        if (tok.normalised.match(/^will /i)) {
+          tok.text = tok.text.replace(/^will /i, "won't ")
+          tok.normalised = tok.text
+          if (tok.capitalised) {
+            tok.text = capitalise(tok.text)
+          }
           return the
         }
         // - INFINITIVE-
         // 'i walk' -> "i don't walk"
-        if(tok.analysis.form=="infinitive" && tok.analysis.form!="future"){
-          tok.text= "don't " + (tok.analysis.conjugate().infinitive || tok.text)
-          tok.normalised= tok.text.toLowerCase()
+        if (tok.analysis.form == "infinitive" && tok.analysis.form != "future") {
+          tok.text = "don't " + (tok.analysis.conjugate().infinitive || tok.text)
+          tok.normalised = tok.text.toLowerCase()
           return the
         }
         // - GERUND-
         // if verb is gerund, 'walking' -> "not walking"
-        if(tok.analysis.form=="gerund"){
-          tok.text= "not " + tok.text
-          tok.normalised= tok.text.toLowerCase()
+        if (tok.analysis.form == "gerund") {
+          tok.text = "not " + tok.text
+          tok.normalised = tok.text.toLowerCase()
           return the
         }
         // - PAST-
         // if verb is past-tense, 'he walked' -> "he did't walk"
-        if(tok.analysis.tense=="past"){
-          tok.text= "didn't " + (tok.analysis.conjugate().infinitive || tok.text)
-          tok.normalised= tok.text.toLowerCase()
+        if (tok.analysis.tense == "past") {
+          tok.text = "didn't " + (tok.analysis.conjugate().infinitive || tok.text)
+          tok.normalised = tok.text.toLowerCase()
           return the
         }
         // - PRESENT-
         // if verb is present-tense, 'he walks' -> "he doesn't walk"
-        if(tok.analysis.tense=="present"){
-          tok.text= "doesn't " + (tok.analysis.conjugate().infinitive || tok.text)
-          tok.normalised= tok.text.toLowerCase()
+        if (tok.analysis.tense == "present") {
+          tok.text = "doesn't " + (tok.analysis.conjugate().infinitive || tok.text)
+          tok.normalised = tok.text.toLowerCase()
           return the
         }
         // - FUTURE-
         // if verb is future-tense, 'will go' -> won't go. easy-peasy
-        if(tok.analysis.tense=="future"){
-          if(tok.normalised=="will"){
-            tok.normalised="won't"
-            tok.text="won't"
-          }else{
-            tok.text=tok.text.replace(/^will /i, "won't ")
-            tok.normalised=tok.normalised.replace(/^will /i, "won't ")
+        if (tok.analysis.tense == "future") {
+          if (tok.normalised == "will") {
+            tok.normalised = "won't"
+            tok.text = "won't"
+          } else {
+            tok.text = tok.text.replace(/^will /i, "won't ")
+            tok.normalised = tok.normalised.replace(/^will /i, "won't ")
           }
-          if(tok.capitalised){ tok.text=capitalise(tok.text); }
+          if (tok.capitalised) {
+            tok.text = capitalise(tok.text);
+          }
           return the
         }
 
-      return the
+        return the
       }
     }
 
     return the
   }
 
-  the.entities=function(options){
-    var spots=[]
-    options=options||{}
+  the.entities = function(options) {
+    var spots = []
+    options = options || {}
     the.tokens.forEach(function(token) {
       if (token.pos.parent === "noun" && token.analysis.is_entity) {
         spots.push(token)
@@ -9565,31 +9657,31 @@ var Sentence = function(tokens) {
   //sugar 'grab' methods
   the.verbs = function() {
     return the.tokens.filter(function(t) {
-      return t.pos.parent=="verb"
+      return t.pos.parent == "verb"
     })
   }
 
   the.adverbs = function() {
     return the.tokens.filter(function(t) {
-      return t.pos.parent=="adverb"
+      return t.pos.parent == "adverb"
     })
   }
 
   the.nouns = function() {
     return the.tokens.filter(function(t) {
-      return t.pos.parent=="noun"
+      return t.pos.parent == "noun"
     })
   }
 
   the.adjectives = function() {
     return the.tokens.filter(function(t) {
-      return t.pos.parent=="adjective"
+      return t.pos.parent == "adjective"
     })
   }
 
   the.values = function() {
     return the.tokens.filter(function(t) {
-      return t.pos.parent=="value"
+      return t.pos.parent == "value"
     })
   }
 
@@ -9611,73 +9703,85 @@ var Section = function(sentences) {
   var the = this
   the.sentences = sentences || [];
 
-  the.text= function(){
-    return the.sentences.map(function(s){
+  the.text = function() {
+    return the.sentences.map(function(s) {
       return s.text()
     }).join(' ')
   }
-  the.tense= function(){
-    return the.sentences.map(function(s){
+  the.tense = function() {
+    return the.sentences.map(function(s) {
       return s.tense()
     })
   }
   //pluck out wanted data from sentences
-  the.nouns= function(){
-    return the.sentences.map(function(s){
+  the.nouns = function() {
+    return the.sentences.map(function(s) {
       return s.nouns()
-    }).reduce(function(arr, a){return arr.concat(a)},[])
+    }).reduce(function(arr, a) {
+      return arr.concat(a)
+    }, [])
   }
-  the.entities= function(options){
-    return the.sentences.map(function(s){
+  the.entities = function(options) {
+    return the.sentences.map(function(s) {
       return s.entities(options)
-    }).reduce(function(arr, a){return arr.concat(a)},[])
+    }).reduce(function(arr, a) {
+      return arr.concat(a)
+    }, [])
   }
-  the.adjectives= function(){
-    return the.sentences.map(function(s){
+  the.adjectives = function() {
+    return the.sentences.map(function(s) {
       return s.adjectives()
-    }).reduce(function(arr, a){return arr.concat(a)},[])
+    }).reduce(function(arr, a) {
+      return arr.concat(a)
+    }, [])
   }
-  the.verbs= function(){
-    return the.sentences.map(function(s){
+  the.verbs = function() {
+    return the.sentences.map(function(s) {
       return s.verbs()
-    }).reduce(function(arr, a){return arr.concat(a)},[])
+    }).reduce(function(arr, a) {
+      return arr.concat(a)
+    }, [])
   }
-  the.adverbs= function(){
-    return the.sentences.map(function(s){
+  the.adverbs = function() {
+    return the.sentences.map(function(s) {
       return s.adverbs()
-    }).reduce(function(arr, a){return arr.concat(a)},[])
+    }).reduce(function(arr, a) {
+      return arr.concat(a)
+    }, [])
   }
-  the.values= function(){
-    return the.sentences.map(function(s){
+  the.values = function() {
+    return the.sentences.map(function(s) {
       return s.values()
-    }).reduce(function(arr, a){return arr.concat(a)},[])
+    }).reduce(function(arr, a) {
+      return arr.concat(a)
+    }, [])
   }
-  the.tags= function(){
-    return the.sentences.map(function(s){
+  the.tags = function() {
+    return the.sentences.map(function(s) {
       return s.tags()
     })
   }
   //transform the sentences
-  the.negate= function(){
-    the.sentences= the.sentences.map(function(s){
+  the.negate = function() {
+    the.sentences = the.sentences.map(function(s) {
       return s.negate()
     })
     return the
   }
-  the.to_past= function(){
-    the.sentences= the.sentences.map(function(s){
+  the.to_past = function() {
+    the.sentences = the.sentences.map(function(s) {
       return s.to_past()
     })
     return the
   }
-  the.to_present= function(){
-    the.sentences= the.sentences.map(function(s){
+  the.to_present = function() {
+    the.sentences = the.sentences.map(function(s) {
       return s.to_present()
     })
     return the
   }
-  the.to_future= function(){
-    the.sentences= the.sentences.map(function(s){
+  the.to_future = function() {
+    the.sentences = the.sentences.map(function(s) {
       return s.to_future()
     })
     return the
@@ -9687,6 +9791,7 @@ var Section = function(sentences) {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = Section;
 }
+
 var pos = (function() {
   // "use strict";
 
@@ -9719,7 +9824,7 @@ var pos = (function() {
       var next = arr[i + 1]
       if (arr[i] && next) {
         //'joe smith' are both NN
-        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && next.punctuated !== true && arr[i].capitalised==next.capitalised) {
+        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && next.punctuated !== true && arr[i].capitalised == next.capitalised) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
@@ -9735,21 +9840,21 @@ var pos = (function() {
         }
         //'toronto fun festival'
         // else if (arr[i].pos.tag === "NN" && next.pos.tag === "JJ" && arr[i + 2] && arr[i + 2].pos.tag === "NN") {
-          // arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
-          // arr[i] = null
+        // arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
+        // arr[i] = null
         // }
         //capitals surrounding a preposition  'United States of America'
-        else if (i>0 && arr[i].capitalised && next.normalised=="of" && arr[i+2] && arr[i+2].capitalised) {
+        else if (i > 0 && arr[i].capitalised && next.normalised == "of" && arr[i + 2] && arr[i + 2].capitalised) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
-          arr[i + 2] = merge_tokens(arr[i+1], arr[i + 2])
+          arr[i + 2] = merge_tokens(arr[i + 1], arr[i + 2])
           arr[i + 1] = null
         }
         //capitals surrounding two prepositions  'Phantom of the Opera'
-        else if (arr[i].capitalised && next.normalised=="of" && arr[i+2] && arr[i+2].pos.tag=="DT" && arr[i+3] && arr[i+3].capitalised) {
+        else if (arr[i].capitalised && next.normalised == "of" && arr[i + 2] && arr[i + 2].pos.tag == "DT" && arr[i + 3] && arr[i + 3].capitalised) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
-          arr[i + 2] = merge_tokens(arr[i+1], arr[i + 2])
+          arr[i + 2] = merge_tokens(arr[i + 1], arr[i + 2])
           arr[i + 1] = null
         }
       }
@@ -9766,8 +9871,8 @@ var pos = (function() {
       return parts_of_speech[lexicon[w]]
     }
     //try to match it without a prefix - eg. outworked -> worked
-    if(w.match(/^(over|under|out|-|un|re|en).{4}/)){
-      var attempt=w.replace(/^(over|under|out|.*?-|un|re|en)/, '')
+    if (w.match(/^(over|under|out|-|un|re|en).{4}/)) {
+      var attempt = w.replace(/^(over|under|out|.*?-|un|re|en)/, '')
       return parts_of_speech[lexicon[attempt]]
     }
   }
@@ -9783,23 +9888,23 @@ var pos = (function() {
   var fourth_pass = function(token, i, sentence) {
     var last = sentence.tokens[i - 1]
     var next = sentence.tokens[i + 1]
-    var strong_determiners= {
-      "the":1,
-      "a":1,
-      "an":1
-    }
-    //if it's before a modal verb, it's a noun -> lkjsdf would
+    var strong_determiners = {
+        "the": 1,
+        "a": 1,
+        "an": 1
+      }
+      //if it's before a modal verb, it's a noun -> lkjsdf would
     if (next && token.pos.parent !== "noun" && token.pos.parent !== "glue" && next.pos.tag === "MD") {
       token.pos = parts_of_speech['NN']
       token.pos_reason = "before a modal"
     }
     //if it's after the word 'will' its probably a verb/adverb
-    if(last && last.normalised=="will" && !last.punctuated && token.pos.parent=="noun"){
+    if (last && last.normalised == "will" && !last.punctuated && token.pos.parent == "noun") {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "after the word 'will'"
     }
     //if it's after the word 'i' its probably a verb/adverb
-    if(last && last.normalised=="i" && !last.punctuated && token.pos.parent=="noun"){
+    if (last && last.normalised == "i" && !last.punctuated && token.pos.parent == "noun") {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "after the word 'i'"
     }
@@ -9815,7 +9920,7 @@ var pos = (function() {
       token.pos_reason = "consecutive_adjectives"
     }
     //if it's after a determiner, it's not a verb -> the walk
-    if (last && token.pos.parent === "verb" && strong_determiners[last.pos.normalised] && token.pos.tag!="CP") {
+    if (last && token.pos.parent === "verb" && strong_determiners[last.pos.normalised] && token.pos.tag != "CP") {
       token.pos = parts_of_speech['NN']
       token.pos_reason = "determiner-verb"
     }
@@ -9835,12 +9940,12 @@ var pos = (function() {
     //   token.pos_reason = "after the word 'am'"
     // }
     // the city [verb] him.
-    if(next && next.pos.tag=="PRP" && token.pos.parent=="noun" && !token.punctuated){
-      token.pos=parts_of_speech['VB']
+    if (next && next.pos.tag == "PRP" && token.pos.parent == "noun" && !token.punctuated) {
+      token.pos = parts_of_speech['VB']
       token.pos_reason = "before a [him|her|it]"
     }
     //the misled worker -> misled is an adjective, not vb
-    if (last && next && last.pos.tag === "DT" && next.pos.parent === "noun" && token.pos.parent === "verb" ) {
+    if (last && next && last.pos.tag === "DT" && next.pos.parent === "noun" && token.pos.parent === "verb") {
       token.pos = parts_of_speech['JJ']
       token.pos_reason = "determiner-adjective-noun"
     }
@@ -9900,7 +10005,7 @@ var pos = (function() {
   ///party-time//
   var main = function(text, options) {
     options = options || {}
-    if(!text){
+    if (!text) {
       return new Section()
     }
     var sentences = tokenize(text);
@@ -9909,7 +10014,7 @@ var pos = (function() {
 
       //first, lets handle the first-word capitalisation issue..
       //be sure we don't over-classify it as a noun
-      var first=sentence.tokens[0]
+      var first = sentence.tokens[0]
 
       //smart handling of contractions
       sentence.tokens = handle_contractions(sentence.tokens)
@@ -9933,9 +10038,9 @@ var pos = (function() {
         }
 
         //handle punctuation like ' -- '
-        if(!token.normalised){
-          token.pos= parts_of_speech['UH']
-          token.pos_reason= "wordless_string"
+        if (!token.normalised) {
+          token.pos = parts_of_speech['UH']
+          token.pos_reason = "wordless_string"
           return token
         }
 
@@ -9985,7 +10090,7 @@ var pos = (function() {
         var next = sentence.tokens[i + 1]
         if (token.pos) {
           //suggest noun after some determiners (a|the), posessive pronouns (her|my|its)
-          if (token.normalised=="the" || token.normalised=="a" || token.normalised=="an" || token.pos.tag === "PP") {
+          if (token.normalised == "the" || token.normalised == "a" || token.normalised == "an" || token.pos.tag === "PP") {
             need = 'noun'
             reason = token.pos.name
             return token //proceed
@@ -9999,35 +10104,34 @@ var pos = (function() {
 
         }
         //satisfy need on a conflict, and fix a likely error
-        if(token.pos){
-          if(need=="verb" && token.pos.parent=="noun" && (!next || (next.pos && next.pos.parent!="noun")) ){
-            if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
+        if (token.pos) {
+          if (need == "verb" && token.pos.parent == "noun" && (!next || (next.pos && next.pos.parent != "noun"))) {
+            if (!next || !next.pos || next.pos.parent != need) { //ensure need not satisfied on the next one
               token.pos = parts_of_speech['VB']
               token.pos_reason = "signal from " + reason
-              need=null
+              need = null
             }
           }
-          if(need=="noun" && token.pos.parent=="verb" && (!next || (next.pos && next.pos.parent!="verb")) ){
-            if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
+          if (need == "noun" && token.pos.parent == "verb" && (!next || (next.pos && next.pos.parent != "verb"))) {
+            if (!next || !next.pos || next.pos.parent != need) { //ensure need not satisfied on the next one
               token.pos = parts_of_speech["NN"]
               token.pos_reason = "signal from " + reason
-              need=null
+              need = null
             }
           }
         }
         //satisfy need with an unknown pos
-        if (need && !token.pos ) {
-          if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
+        if (need && !token.pos) {
+          if (!next || !next.pos || next.pos.parent != need) { //ensure need not satisfied on the next one
             token.pos = parts_of_speech[need]
             token.pos_reason = "signal from " + reason
-            need= null
+            need = null
           }
         }
-
+        //set them back as satisfied..
         if (need === 'verb' && token.pos && token.pos.parent === 'verb') {
           need = null
         }
-
         if (need === 'noun' && token.pos && token.pos.parent === 'noun') {
           need = null
         }
@@ -10087,9 +10191,9 @@ var pos = (function() {
     })
 
     //make them Sentence objects
-    sentences= sentences.map(function(s) {
-      var sentence=new Sentence(s.tokens)
-      sentence.type=s.type
+    sentences = sentences.map(function(s) {
+      var sentence = new Sentence(s.tokens)
+      sentence.type = s.type
       return sentence
     })
     //return a Section object, with its methods
@@ -10108,22 +10212,22 @@ var pos = (function() {
 //most of this logic is in ./parents/noun
 var spot = (function() {
 
-	if (typeof module !== "undefined" && module.exports) {
-		pos = require("./pos");
-	}
+  if (typeof module !== "undefined" && module.exports) {
+    pos = require("./pos");
+  }
 
-	var main = function(text, options) {
-		options = options || {}
-		var sentences = pos(text, options).sentences
-		return sentences.reduce(function(arr,s){
-			return arr.concat(s.entities(options))
-		},[])
-	}
+  var main = function(text, options) {
+    options = options || {}
+    var sentences = pos(text, options).sentences
+    return sentences.reduce(function(arr, s) {
+      return arr.concat(s.entities(options))
+    }, [])
+  }
 
-	if (typeof module !== "undefined" && module.exports) {
-		module.exports = main;
-	}
-	return main
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+  return main
 })()
 
 // pos = require("./pos");
@@ -10132,6 +10236,7 @@ var spot = (function() {
 // var spots = spot("The third, which did happen, as a dissuasive Cold War, ended communism.")
 // var spots = spot("mike myers and nancy kerrigan")
 // console.log(spots.map(function(s){return s.normalised}))
+
 // nlp_comprimise by @spencermountain  in 2014
 // most files are self-contained modules that optionally export for nodejs
 // this file loads them all together
@@ -10191,8 +10296,5 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
 // console.log( nlp.pos('i will slouch').to_past().text() )
 
-	///
-	//footer
-	//
-  return nlp
+return nlp;
 })()

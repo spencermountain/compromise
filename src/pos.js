@@ -30,7 +30,7 @@ var pos = (function() {
       var next = arr[i + 1]
       if (arr[i] && next) {
         //'joe smith' are both NN
-        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && next.punctuated !== true && arr[i].capitalised==next.capitalised) {
+        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && next.punctuated !== true && arr[i].capitalised == next.capitalised) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
@@ -46,21 +46,21 @@ var pos = (function() {
         }
         //'toronto fun festival'
         // else if (arr[i].pos.tag === "NN" && next.pos.tag === "JJ" && arr[i + 2] && arr[i + 2].pos.tag === "NN") {
-          // arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
-          // arr[i] = null
+        // arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
+        // arr[i] = null
         // }
         //capitals surrounding a preposition  'United States of America'
-        else if (i>0 && arr[i].capitalised && next.normalised=="of" && arr[i+2] && arr[i+2].capitalised) {
+        else if (i > 0 && arr[i].capitalised && next.normalised == "of" && arr[i + 2] && arr[i + 2].capitalised) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
-          arr[i + 2] = merge_tokens(arr[i+1], arr[i + 2])
+          arr[i + 2] = merge_tokens(arr[i + 1], arr[i + 2])
           arr[i + 1] = null
         }
         //capitals surrounding two prepositions  'Phantom of the Opera'
-        else if (arr[i].capitalised && next.normalised=="of" && arr[i+2] && arr[i+2].pos.tag=="DT" && arr[i+3] && arr[i+3].capitalised) {
+        else if (arr[i].capitalised && next.normalised == "of" && arr[i + 2] && arr[i + 2].pos.tag == "DT" && arr[i + 3] && arr[i + 3].capitalised) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
-          arr[i + 2] = merge_tokens(arr[i+1], arr[i + 2])
+          arr[i + 2] = merge_tokens(arr[i + 1], arr[i + 2])
           arr[i + 1] = null
         }
       }
@@ -77,8 +77,8 @@ var pos = (function() {
       return parts_of_speech[lexicon[w]]
     }
     //try to match it without a prefix - eg. outworked -> worked
-    if(w.match(/^(over|under|out|-|un|re|en).{4}/)){
-      var attempt=w.replace(/^(over|under|out|.*?-|un|re|en)/, '')
+    if (w.match(/^(over|under|out|-|un|re|en).{4}/)) {
+      var attempt = w.replace(/^(over|under|out|.*?-|un|re|en)/, '')
       return parts_of_speech[lexicon[attempt]]
     }
   }
@@ -94,23 +94,23 @@ var pos = (function() {
   var fourth_pass = function(token, i, sentence) {
     var last = sentence.tokens[i - 1]
     var next = sentence.tokens[i + 1]
-    var strong_determiners= {
-      "the":1,
-      "a":1,
-      "an":1
-    }
-    //if it's before a modal verb, it's a noun -> lkjsdf would
+    var strong_determiners = {
+        "the": 1,
+        "a": 1,
+        "an": 1
+      }
+      //if it's before a modal verb, it's a noun -> lkjsdf would
     if (next && token.pos.parent !== "noun" && token.pos.parent !== "glue" && next.pos.tag === "MD") {
       token.pos = parts_of_speech['NN']
       token.pos_reason = "before a modal"
     }
     //if it's after the word 'will' its probably a verb/adverb
-    if(last && last.normalised=="will" && !last.punctuated && token.pos.parent=="noun"){
+    if (last && last.normalised == "will" && !last.punctuated && token.pos.parent == "noun") {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "after the word 'will'"
     }
     //if it's after the word 'i' its probably a verb/adverb
-    if(last && last.normalised=="i" && !last.punctuated && token.pos.parent=="noun"){
+    if (last && last.normalised == "i" && !last.punctuated && token.pos.parent == "noun") {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "after the word 'i'"
     }
@@ -126,7 +126,7 @@ var pos = (function() {
       token.pos_reason = "consecutive_adjectives"
     }
     //if it's after a determiner, it's not a verb -> the walk
-    if (last && token.pos.parent === "verb" && strong_determiners[last.pos.normalised] && token.pos.tag!="CP") {
+    if (last && token.pos.parent === "verb" && strong_determiners[last.pos.normalised] && token.pos.tag != "CP") {
       token.pos = parts_of_speech['NN']
       token.pos_reason = "determiner-verb"
     }
@@ -146,12 +146,12 @@ var pos = (function() {
     //   token.pos_reason = "after the word 'am'"
     // }
     // the city [verb] him.
-    if(next && next.pos.tag=="PRP" && token.pos.parent=="noun" && !token.punctuated){
-      token.pos=parts_of_speech['VB']
+    if (next && next.pos.tag == "PRP" && token.pos.parent == "noun" && !token.punctuated) {
+      token.pos = parts_of_speech['VB']
       token.pos_reason = "before a [him|her|it]"
     }
     //the misled worker -> misled is an adjective, not vb
-    if (last && next && last.pos.tag === "DT" && next.pos.parent === "noun" && token.pos.parent === "verb" ) {
+    if (last && next && last.pos.tag === "DT" && next.pos.parent === "noun" && token.pos.parent === "verb") {
       token.pos = parts_of_speech['JJ']
       token.pos_reason = "determiner-adjective-noun"
     }
@@ -211,7 +211,7 @@ var pos = (function() {
   ///party-time//
   var main = function(text, options) {
     options = options || {}
-    if(!text){
+    if (!text) {
       return new Section()
     }
     var sentences = tokenize(text);
@@ -220,7 +220,7 @@ var pos = (function() {
 
       //first, lets handle the first-word capitalisation issue..
       //be sure we don't over-classify it as a noun
-      var first=sentence.tokens[0]
+      var first = sentence.tokens[0]
 
       //smart handling of contractions
       sentence.tokens = handle_contractions(sentence.tokens)
@@ -244,9 +244,9 @@ var pos = (function() {
         }
 
         //handle punctuation like ' -- '
-        if(!token.normalised){
-          token.pos= parts_of_speech['UH']
-          token.pos_reason= "wordless_string"
+        if (!token.normalised) {
+          token.pos = parts_of_speech['UH']
+          token.pos_reason = "wordless_string"
           return token
         }
 
@@ -296,7 +296,7 @@ var pos = (function() {
         var next = sentence.tokens[i + 1]
         if (token.pos) {
           //suggest noun after some determiners (a|the), posessive pronouns (her|my|its)
-          if (token.normalised=="the" || token.normalised=="a" || token.normalised=="an" || token.pos.tag === "PP") {
+          if (token.normalised == "the" || token.normalised == "a" || token.normalised == "an" || token.pos.tag === "PP") {
             need = 'noun'
             reason = token.pos.name
             return token //proceed
@@ -310,35 +310,34 @@ var pos = (function() {
 
         }
         //satisfy need on a conflict, and fix a likely error
-        if(token.pos){
-          if(need=="verb" && token.pos.parent=="noun" && (!next || (next.pos && next.pos.parent!="noun")) ){
-            if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
+        if (token.pos) {
+          if (need == "verb" && token.pos.parent == "noun" && (!next || (next.pos && next.pos.parent != "noun"))) {
+            if (!next || !next.pos || next.pos.parent != need) { //ensure need not satisfied on the next one
               token.pos = parts_of_speech['VB']
               token.pos_reason = "signal from " + reason
-              need=null
+              need = null
             }
           }
-          if(need=="noun" && token.pos.parent=="verb" && (!next || (next.pos && next.pos.parent!="verb")) ){
-            if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
+          if (need == "noun" && token.pos.parent == "verb" && (!next || (next.pos && next.pos.parent != "verb"))) {
+            if (!next || !next.pos || next.pos.parent != need) { //ensure need not satisfied on the next one
               token.pos = parts_of_speech["NN"]
               token.pos_reason = "signal from " + reason
-              need=null
+              need = null
             }
           }
         }
         //satisfy need with an unknown pos
-        if (need && !token.pos ) {
-          if(!next || !next.pos || next.pos.parent!=need){//ensure need not satisfied on the next one
+        if (need && !token.pos) {
+          if (!next || !next.pos || next.pos.parent != need) { //ensure need not satisfied on the next one
             token.pos = parts_of_speech[need]
             token.pos_reason = "signal from " + reason
-            need= null
+            need = null
           }
         }
-
+        //set them back as satisfied..
         if (need === 'verb' && token.pos && token.pos.parent === 'verb') {
           need = null
         }
-
         if (need === 'noun' && token.pos && token.pos.parent === 'noun') {
           need = null
         }
@@ -398,9 +397,9 @@ var pos = (function() {
     })
 
     //make them Sentence objects
-    sentences= sentences.map(function(s) {
-      var sentence=new Sentence(s.tokens)
-      sentence.type=s.type
+    sentences = sentences.map(function(s) {
+      var sentence = new Sentence(s.tokens)
+      sentence.type = s.type
       return sentence
     })
     //return a Section object, with its methods

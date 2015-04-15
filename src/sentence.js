@@ -4,7 +4,7 @@ var Sentence = function(tokens) {
   var the = this
   the.tokens = tokens || [];
 
-  var capitalise=function(s){
+  var capitalise = function(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
 
@@ -60,118 +60,124 @@ var Sentence = function(tokens) {
   the.negate = function() {
     //these are cheap ways to negate the meaning
     // ('none' is ambiguous because it could mean (all or some) )
-    var logic_negate={
-      //some logical ones work
-      "everyone":"no one",
-      "everybody":"nobody",
-      "someone":"no one",
-      "somebody":"nobody",
+    var logic_negate = {
+        //some logical ones work
+        "everyone": "no one",
+        "everybody": "nobody",
+        "someone": "no one",
+        "somebody": "nobody",
         // everything:"nothing",
-      "always":"never",
-      //copulas
-      "is":"isn't",
-      "are":"aren't",
-      "was":"wasn't",
-      "will":"won't",
-      //modals
-      "didn't":"did",
-      "wouldn't":"would",
-      "couldn't":"could",
-      "shouldn't":"should",
-      "can't":"can",
-      "won't":"will",
-      "mustn't":"must",
-      "shan't":"shall",
-      "shant":"shall",
+        "always": "never",
+        //copulas
+        "is": "isn't",
+        "are": "aren't",
+        "was": "wasn't",
+        "will": "won't",
+        //modals
+        "didn't": "did",
+        "wouldn't": "would",
+        "couldn't": "could",
+        "shouldn't": "should",
+        "can't": "can",
+        "won't": "will",
+        "mustn't": "must",
+        "shan't": "shall",
+        "shant": "shall",
 
-      "did":"didn't",
-      "would":"wouldn't",
-      "could":"couldn't",
-      "should":"shouldn't",
-      "can":"can't",
-      "must":"mustn't"
+        "did": "didn't",
+        "would": "wouldn't",
+        "could": "couldn't",
+        "should": "shouldn't",
+        "can": "can't",
+        "must": "mustn't"
 
-    }
-    //loop through each term..
+      }
+      //loop through each term..
     for (var i = 0; i < the.tokens.length; i++) {
-      var tok= the.tokens[i]
+      var tok = the.tokens[i]
 
       //turn 'is' into 'isn't', etc - make sure 'is' isnt followed by a 'not', too
-      if(logic_negate[tok.normalised] && (!the.tokens[i+1] || the.tokens[i+1].normalised!="not")){
-        tok.text= logic_negate[tok.normalised]
-        tok.normalised= logic_negate[tok.normalised]
-        if(tok.capitalised){ tok.text= capitalise(tok.text) }
+      if (logic_negate[tok.normalised] && (!the.tokens[i + 1] || the.tokens[i + 1].normalised != "not")) {
+        tok.text = logic_negate[tok.normalised]
+        tok.normalised = logic_negate[tok.normalised]
+        if (tok.capitalised) {
+          tok.text = capitalise(tok.text)
+        }
         return the
       }
 
       // find the first verb..
-      if(tok.pos.parent=="verb"){
+      if (tok.pos.parent == "verb") {
         // if verb is already negative, make it not negative
         if (tok.analysis.negative) {
-          if (the.tokens[i+1] && the.tokens[i+1].normalised=="not") {
-            the.tokens.splice(i+1, 1)
+          if (the.tokens[i + 1] && the.tokens[i + 1].normalised == "not") {
+            the.tokens.splice(i + 1, 1)
           }
           return the
         }
         //turn future-tense 'will go' into "won't go"
-        if(tok.normalised.match(/^will /i)){
-          tok.text=tok.text.replace(/^will /i, "won't ")
-          tok.normalised= tok.text
-          if(tok.capitalised){ tok.text= capitalise(tok.text) }
+        if (tok.normalised.match(/^will /i)) {
+          tok.text = tok.text.replace(/^will /i, "won't ")
+          tok.normalised = tok.text
+          if (tok.capitalised) {
+            tok.text = capitalise(tok.text)
+          }
           return the
         }
         // - INFINITIVE-
         // 'i walk' -> "i don't walk"
-        if(tok.analysis.form=="infinitive" && tok.analysis.form!="future"){
-          tok.text= "don't " + (tok.analysis.conjugate().infinitive || tok.text)
-          tok.normalised= tok.text.toLowerCase()
+        if (tok.analysis.form == "infinitive" && tok.analysis.form != "future") {
+          tok.text = "don't " + (tok.analysis.conjugate().infinitive || tok.text)
+          tok.normalised = tok.text.toLowerCase()
           return the
         }
         // - GERUND-
         // if verb is gerund, 'walking' -> "not walking"
-        if(tok.analysis.form=="gerund"){
-          tok.text= "not " + tok.text
-          tok.normalised= tok.text.toLowerCase()
+        if (tok.analysis.form == "gerund") {
+          tok.text = "not " + tok.text
+          tok.normalised = tok.text.toLowerCase()
           return the
         }
         // - PAST-
         // if verb is past-tense, 'he walked' -> "he did't walk"
-        if(tok.analysis.tense=="past"){
-          tok.text= "didn't " + (tok.analysis.conjugate().infinitive || tok.text)
-          tok.normalised= tok.text.toLowerCase()
+        if (tok.analysis.tense == "past") {
+          tok.text = "didn't " + (tok.analysis.conjugate().infinitive || tok.text)
+          tok.normalised = tok.text.toLowerCase()
           return the
         }
         // - PRESENT-
         // if verb is present-tense, 'he walks' -> "he doesn't walk"
-        if(tok.analysis.tense=="present"){
-          tok.text= "doesn't " + (tok.analysis.conjugate().infinitive || tok.text)
-          tok.normalised= tok.text.toLowerCase()
+        if (tok.analysis.tense == "present") {
+          tok.text = "doesn't " + (tok.analysis.conjugate().infinitive || tok.text)
+          tok.normalised = tok.text.toLowerCase()
           return the
         }
         // - FUTURE-
         // if verb is future-tense, 'will go' -> won't go. easy-peasy
-        if(tok.analysis.tense=="future"){
-          if(tok.normalised=="will"){
-            tok.normalised="won't"
-            tok.text="won't"
-          }else{
-            tok.text=tok.text.replace(/^will /i, "won't ")
-            tok.normalised=tok.normalised.replace(/^will /i, "won't ")
+        if (tok.analysis.tense == "future") {
+          if (tok.normalised == "will") {
+            tok.normalised = "won't"
+            tok.text = "won't"
+          } else {
+            tok.text = tok.text.replace(/^will /i, "won't ")
+            tok.normalised = tok.normalised.replace(/^will /i, "won't ")
           }
-          if(tok.capitalised){ tok.text=capitalise(tok.text); }
+          if (tok.capitalised) {
+            tok.text = capitalise(tok.text);
+          }
           return the
         }
 
-      return the
+        return the
       }
     }
 
     return the
   }
 
-  the.entities=function(options){
-    var spots=[]
-    options=options||{}
+  the.entities = function(options) {
+    var spots = []
+    options = options || {}
     the.tokens.forEach(function(token) {
       if (token.pos.parent === "noun" && token.analysis.is_entity) {
         spots.push(token)
@@ -194,31 +200,31 @@ var Sentence = function(tokens) {
   //sugar 'grab' methods
   the.verbs = function() {
     return the.tokens.filter(function(t) {
-      return t.pos.parent=="verb"
+      return t.pos.parent == "verb"
     })
   }
 
   the.adverbs = function() {
     return the.tokens.filter(function(t) {
-      return t.pos.parent=="adverb"
+      return t.pos.parent == "adverb"
     })
   }
 
   the.nouns = function() {
     return the.tokens.filter(function(t) {
-      return t.pos.parent=="noun"
+      return t.pos.parent == "noun"
     })
   }
 
   the.adjectives = function() {
     return the.tokens.filter(function(t) {
-      return t.pos.parent=="adjective"
+      return t.pos.parent == "adjective"
     })
   }
 
   the.values = function() {
     return the.tokens.filter(function(t) {
-      return t.pos.parent=="value"
+      return t.pos.parent == "value"
     })
   }
 

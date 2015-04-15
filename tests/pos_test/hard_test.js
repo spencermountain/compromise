@@ -1,7 +1,7 @@
-require("dirtyjs")
-data = require("./pen_treebank").data
-pos = require("../pos")
-parts_of_speech = require("../data/parts_of_speech")
+//run pos test against penn treebank
+var data = require("./pen_treebank").data
+var pos = require("../../index").pos
+var parts_of_speech = require("../../src/data/parts_of_speech")
 
 var percentages = []
 var bad_reasons = []
@@ -9,9 +9,43 @@ var hard_words = []
 var bad_tokenization = 0
 var bad_tokens = []
 
+//sort by freq
+var topk = function(the) {
+  var length = the.length || 1;
+  var freq = {};
+  var i = the.length - 1;
+  while (i > -1) {
+    if (freq[the[i]] == null) {
+      freq[the[i]] = 1;
+    } else {
+      freq[the[i]]++;
+    }
+    i--;
+  }
+  var top = Object.keys(freq).sort(function(a, b) {
+    return freq[b] - freq[a];
+  });
+  return top.map(function(v) {
+    return {
+      value: v,
+      count: freq[v]
+    };
+  });
+}
+
+var sum = function(arr) {
+  return arr.reduce((function(a, b) {
+    return a + b;
+  }), 0);
+}
+
+var average = function(arr) {
+  return sum(arr) / arr.length
+}
+
 //2909 in total
 //1500 tokenization differences
-hardwords = []
+var hardwords = []
 
 var compare = function(mine, theirs) {
   if (mine.length == 0 || mine.length != theirs.length) {
@@ -54,7 +88,6 @@ var compare = function(mine, theirs) {
   // console.log("==== " + (mine.length - errors) + " correct, " + errors + " wrong   " + percent + "% correct ===")
 }
 
-
 //
 //run it
 //
@@ -86,36 +119,18 @@ for (var i in data) {
     return a
   }, [])
 
-
   compare(mine, theirs)
 
 }
 
-
-// console.log(bad_reasons.topk())
-// console.log(hardwords.topk())
-console.log("     ")
-console.log("     ")
-console.log("     ")
-console.log(percentages.average())
-
+// console.log(topk(bad_reasons))
+// console.log(topk(hardwords))
+console.log("\n\n")
+console.log(average(percentages))
 console.log((bad_tokenization / data.length) * 100 + " bad tokenization")
-// console.log(bad_tokens.topk())
+// console.log(topk(bad_tokens))
 
-//nothing = 0%
-//choosing all nouns= 33%
-//using only a lexicon=45%
-//using only wordnet suffixes=7%
-//using only regexes=6%
-//using only caplitalisation=8%
-
-//using a lexicon, and falling back to nouns=70%
-//using a lexicon, wordnet, noun fallback=71%
-//using a lexicon, regexes, noun fallback=72%
-//using a lexicon, wordnet, regexes, noun fallback=74%
-
-
-
+//changelog-
 //april 9th, wordnet suffixes -  74%
 //april 9th, filling lexicon holes (cheekily) -  78%
 //april 9th, fixing pen's punctuation thing -  80%

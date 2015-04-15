@@ -25,7 +25,9 @@ var ngram = (function() {
         if (i + j <= textlen) {
           s += " " + text[i + j - 1];
           keys[j][s] = (keys[j][s] || 0) + 1;
-        } else break;
+        } else {
+          break
+        }
       }
     }
     // map to array
@@ -34,11 +36,13 @@ var ngram = (function() {
       results[k] = [];
       var key = keys[k];
       for (i in key) {
-        if (key.hasOwnProperty(i) && key[i] >= min_count) results[k].push({
-          "word": i,
-          "count": key[i],
-          "size": k
-        });
+        if(key.hasOwnProperty(i) && key[i] >= min_count){
+          results[k].push({
+            "word": i,
+            "count": key[i],
+            "size": k
+          })
+        }
       }
     }
     results = results.filter(function(s) {

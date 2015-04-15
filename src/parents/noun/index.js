@@ -24,7 +24,7 @@ var Noun = function(str, next, last, token) {
     "her": "PRP",
     "us": "PRP",
     "we": "PRP",
-    "thou": "PRP",
+    "thou": "PRP"
   }
 
   the.is_acronym = (function() {
@@ -84,9 +84,9 @@ var Noun = function(str, next, last, token) {
      if(token.pos.tag=="NNG"){//eg. 'walking'
         return false
       }
-     if(token.pos.tag=="NNP"){//yes! eg. 'Edinburough'
-        // return true
-      }
+     // if(token.pos.tag=="NNP"){//yes! eg. 'Edinburough'
+     //    return true
+     //  }
     }
     //distinct capital is very good signal
     if(token.special_capitalised){

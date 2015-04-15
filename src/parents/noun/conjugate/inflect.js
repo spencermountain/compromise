@@ -483,7 +483,7 @@ var inflect = (function() {
         if (is_plural(str)) {
             return {
                 plural: str,
-                singular: singularize(str),
+                singular: singularize(str)
             }
         } else {
             return {

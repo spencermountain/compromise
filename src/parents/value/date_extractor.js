@@ -15,7 +15,7 @@ var date_extractor = (function() {
 
   var regexes = [
     {
-      reg: "" + months + " " + days + "-" + days + " " + years,
+      reg: String(months) + " " + String(days) + "-" + String(days) + " " + String(years),
       example: "March 7th-11th 1987",
       process: function(arr) {
         var places;
@@ -31,7 +31,7 @@ var date_extractor = (function() {
         return to_obj(arr, places);
       }
     }, {
-      reg: "" + days + " of " + months + " to " + days + " of " + months + ",? " + years,
+      reg: String(days) + " of " + String(months) + " to " + String(days) + " of " + String(months) + ",? " + String(years),
       example: "28th of September to 5th of October 2008",
       process: function(arr) {
         var places;
@@ -48,7 +48,7 @@ var date_extractor = (function() {
         return to_obj(arr, places);
       }
     }, {
-      reg: "" + months + " " + days + " to " + months + " " + days + " " + years,
+      reg: String(months) + " " + String(days) + " to " + String(months) + " " + String(days) + " " + String(years),
       example: "March 7th to june 11th 1987",
       process: function(arr) {
         var places;
@@ -66,7 +66,7 @@ var date_extractor = (function() {
         return to_obj(arr, places);
       }
     }, {
-      reg: "between " + days + " " + months + " and " + days + " " + months + " " + years,
+      reg: "between " + String(days) + " " + String(months) + " and " + String(days) + " " + String(months) + " " + String(years),
       example: "between 13 February and 15 February 1945",
       process: function(arr) {
         var places;
@@ -84,7 +84,7 @@ var date_extractor = (function() {
         return to_obj(arr, places);
       }
     }, {
-      reg: "between " + months + " " + days + " and " + months + " " + days + " " + years,
+      reg: "between " + String(months) + " " + String(days) + " and " + String(months) + " " + String(days) + " " + String(years),
       example: "between March 7th and june 11th 1987",
       process: function(arr) {
         var places;
@@ -102,7 +102,7 @@ var date_extractor = (function() {
         return to_obj(arr, places);
       }
     }, {
-      reg: "" + months + " " + days + " " + years,
+      reg: String(months) + " " + String(days) + " " + String(years),
       example: "March 1st 1987",
       process: function(arr) {
         var places;
@@ -117,7 +117,7 @@ var date_extractor = (function() {
         return to_obj(arr, places);
       }
     }, {
-      reg: "" + days + " - " + days + " of " + months + ",? " + years,
+      reg: String(days) + " - " + String(days) + " of " + String(months) + ",? " + String(years),
       example: "3rd - 5th of March 1969",
       process: function(arr) {
         var places;
@@ -133,7 +133,7 @@ var date_extractor = (function() {
         return to_obj(arr, places);
       }
     }, {
-      reg: "" + days + " of " + months + ",? " + years,
+      reg: String(days) + " of " + String(months) + ",? " + String(years),
       example: "3rd of March 1969",
       process: function(arr) {
         var places;
@@ -148,7 +148,7 @@ var date_extractor = (function() {
         return to_obj(arr, places);
       }
     }, {
-      reg: "" + months + " " + years + ",? to " + months + " " + years,
+      reg: String(months) + " " + years + ",? to " + String(months) + " " + String(years),
       example: "September 1939 to April 1945",
       process: function(arr) {
         var places;
@@ -164,7 +164,7 @@ var date_extractor = (function() {
         return to_obj(arr, places);
       }
     }, {
-      reg: "" + months + " " + years,
+      reg: String(months) + " " + String(years),
       example: "March 1969",
       process: function(arr) {
         var places;
@@ -178,7 +178,7 @@ var date_extractor = (function() {
         return to_obj(arr, places);
       }
     }, {
-      reg: "" + months + " " + days,
+      reg: String(months) + " " + days,
       example: "March 18th",
       process: function(arr) {
         var places;
@@ -192,7 +192,7 @@ var date_extractor = (function() {
         return to_obj(arr, places);
       }
     }, {
-      reg: "" + days + " of " + months,
+      reg: String(days) + " of " + months,
       example: "18th of March",
       process: function(arr) {
         var places;
@@ -206,7 +206,7 @@ var date_extractor = (function() {
         return to_obj(arr, places);
       }
     }, {
-      reg: "" + years + " ?- ?" + years,
+      reg: years + " ?- ?" + String(years),
       example: "1997-1998",
       process: function(arr) {
         var places;
@@ -220,7 +220,7 @@ var date_extractor = (function() {
         return to_obj(arr, places);
       }
     }, {
-      reg: "" + years,
+      reg: years,
       example: "1998",
       process: function(arr) {
         var places;

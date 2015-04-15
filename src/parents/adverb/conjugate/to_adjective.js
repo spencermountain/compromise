@@ -42,7 +42,7 @@ var to_adjective = (function() {
 		}, {
 			reg: /(.{3})ly$/i,
 			repl: '$1'
-		}, ]
+		}]
 		if (irregulars[str]) {
 			return irregulars[str]
 		}

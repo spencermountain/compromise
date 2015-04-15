@@ -97,7 +97,7 @@ var pos = (function() {
     var strong_determiners= {
       "the":1,
       "a":1,
-      "an":1,
+      "an":1
     }
     //if it's before a modal verb, it's a noun -> lkjsdf would
     if (next && token.pos.parent !== "noun" && token.pos.parent !== "glue" && next.pos.tag === "MD") {
@@ -184,7 +184,7 @@ var pos = (function() {
       "she's": ["she", "is"],
       "we're": ["we", "are"],
       "they're": ["they", "are"],
-      "cannot": ["can", "not"],
+      "cannot": ["can", "not"]
     }
     for (var i = 0; i < arr.length; i++) {
       if (contractions[arr[i].normalised || null]) {
@@ -392,10 +392,6 @@ var pos = (function() {
         var last_token = s.tokens[i - 1] || null
         var next_token = s.tokens[i + 1] || null
         token.analysis = parents[token.pos.parent](token.normalised, next_token, last_token, token)
-        //change to the more accurate version of the pos
-        if (token.analysis.which && (token.pos.parent=="noun"||token.pos.parent=="adjective")) {
-          // token.pos = token.analysis.which
-        }
         return token
       })
       return s

@@ -11,10 +11,10 @@ var indefinite_article = (function() {
 			"honest": "an",
 			"honour": "an",
 			"honor": "an",
-			"uber": "an", //german u
-		},
+			"uber": "an" //german u
+		}
 
-		is_acronym = function(s) {
+		var is_acronym = function(s) {
 			//no periods
 			if (s.length <= 5 && s.match(/^[A-Z]*$/)) {
 				return true
@@ -24,10 +24,10 @@ var indefinite_article = (function() {
 				return true
 			}
 			return false
-		},
+		}
 
 		//pronounced letters of acronyms that get a 'an'
-		an_acronyms = {
+		var an_acronyms = {
 			A: true,
 			E: true,
 			F: true,
@@ -39,11 +39,11 @@ var indefinite_article = (function() {
 			O: true,
 			R: true,
 			S: true,
-			X: true,
-		},
+			X: true
+		}
 
 		//'a' regexes
-		a_regexs = [
+		var a_regexs = [
 			/^onc?e/i, //'wu' sound of 'o'
 			/^u[bcfhjkqrstn][aeiou]/i, // 'yu' sound for hard 'u'
 			/^eul/i

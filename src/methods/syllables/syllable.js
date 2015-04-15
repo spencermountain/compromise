@@ -5,7 +5,7 @@ var syllables = (function(str) {
     var all = []
 
     //suffix fixes
-      function postprocess(arr) {
+      var postprocess= function(arr) {
         //trim whitespace
         arr= arr.map(function(w){
           w= w.replace(/^ */,'')

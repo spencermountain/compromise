@@ -41,7 +41,7 @@ var nlp = {
   normalize: normalize.normalize,
   denormalize: normalize.denormalize,
   pos: pos,
-  spot: spot,
+  spot: spot
   // tests: tests,
 }
 

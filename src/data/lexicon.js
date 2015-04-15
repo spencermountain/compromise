@@ -631,7 +631,7 @@ var lexicon = (function() {
     "avant garde":"JJ",
     "sans serif":"JJ",
     "gung ho":"JJ",
-    "super duper":"JJ",
+    "super duper":"JJ"
   }
 
   //verbs

@@ -249,7 +249,7 @@ var to_comparative = (function() {
 
 		var not_matches = [
 			/ary$/,
-			/ous$/,
+			/ous$/
 		]
 
 		if (dont[str]) {

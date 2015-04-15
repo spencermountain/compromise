@@ -20,7 +20,7 @@ var Adjective = function(str, next, last, token) {
 			comparative: to_comparative(the.word),
 			superlative: to_superlative(the.word),
 			adverb: adj_to_adv(the.word),
-			noun: adj_to_noun(the.word),
+			noun: adj_to_noun(the.word)
 		}
 	}
 

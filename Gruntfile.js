@@ -82,19 +82,17 @@ module.exports = function(grunt) {
             }
         },
         jscs: {
-            // src: "./client_side/nlp.js",
             all: files,
             options: {
-                // config: ".jscsrc",
-                "requireCurlyBraces": ["if"],
+                "requireCurlyBraces": true,
                 "disallowMixedSpacesAndTabs": true,
                 "disallowTrailingWhitespace": true,
-                "validateJSDoc": {
-                    "checkParamNames": true,
-                    "requireParamTypes": false
-                },
-                "disallowEmptyBlocks": true
-                // "requireSpaceBetweenArguments": true,
+                "disallowEmptyBlocks": true,
+                "disallowFunctionDeclarations":true,
+                "disallowImplicitTypeConversion": ["numeric", "boolean", "binary", "string"],
+                "requireAnonymousFunctions": true,
+                "requireOperatorBeforeLineBreak":true
+                // disallowTrailingComma:true
             }
         },
         jshint: {

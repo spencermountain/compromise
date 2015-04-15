@@ -19,7 +19,7 @@ var verb_rules = {
       present: "$1$2s",
       gerund: "$1$2ing",
       past: "$1pt",
-      doer: "$1$2er",
+      doer: "$1$2er"
     },
     examples: 'sleep',
     exceptions: [],
@@ -411,7 +411,7 @@ var verb_rules = {
         present: "$1lls",
         gerund: "$1lling",
         past: "$1lled",
-        doer: "$1ller",
+        doer: "$1ller"
       },
       examples: 'filled',
       exceptions: [],

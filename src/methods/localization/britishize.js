@@ -52,7 +52,7 @@ var britishize = (function() {
         reg: /([aeiou]+[^aeiou]+[aeiou]+)l(ful|ment|est|ing|or|er|ed)$/, //must be second-syllable
         repl: '$1ll$2',
         exceptions: []
-      },
+      }
     ]
 
     for (var i = 0; i < patterns.length; i++) {

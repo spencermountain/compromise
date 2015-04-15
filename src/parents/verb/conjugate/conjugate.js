@@ -101,22 +101,21 @@ var verb_conjugate = (function() {
     return "infinitive"
   }
 
-
   //fallback to this transformation if it has an unknown prefix
   var fallback = function(w) {
     var infinitive;
-    if(w.length>4){
+    if (w.length > 4) {
       infinitive = w.replace(/ed$/, '');
-    }else{
+    } else {
       infinitive = w.replace(/d$/, '');
     }
     var present, past, gerund, doer;
     if (w.match(/[^aeiou]$/)) {
       gerund = w + "ing"
       past = w + "ed"
-      if(w.match(/ss$/)){
+      if (w.match(/ss$/)) {
         present = w + "es" //'passes'
-      }else{
+      } else {
         present = w + "s"
       }
       doer = verb_to_doer(infinitive)
@@ -132,7 +131,7 @@ var verb_conjugate = (function() {
       past: past,
       gerund: gerund,
       doer: doer,
-      future: "will "+infinitive
+      future: "will " + infinitive
     }
   }
 
@@ -154,29 +153,28 @@ var verb_conjugate = (function() {
       obj.past = obj.infinitive + 'ed'
     }
     //add the prefix to all forms, if it exists
-    if(prefix){
-      Object.keys(obj).forEach(function(k){
-        obj[k]= prefix+obj[k]
+    if (prefix) {
+      Object.keys(obj).forEach(function(k) {
+        obj[k] = prefix + obj[k]
       })
     }
     //future is 'will'+infinitive
-    if(!obj.future){
-      obj.future= "will "+obj.infinitive
+    if (!obj.future) {
+      obj.future = "will " + obj.infinitive
     }
     return obj
   }
-
 
   var main = function(w) {
     if (!w) {
       return {}
     }
     //chop it if it's future-tense
-    w=w.replace(/^will /i,'')
+    w = w.replace(/^will /i, '')
     //un-prefix the verb, and add it in later
-    var prefix= (w.match(/^(over|under|re|anti|full)\-?/i)||[])[0]
-    var verb=w.replace(/^(over|under|re|anti|full)\-?/i, '')
-    //check irregulars
+    var prefix = (w.match(/^(over|under|re|anti|full)\-?/i) || [])[0]
+    var verb = w.replace(/^(over|under|re|anti|full)\-?/i, '')
+      //check irregulars
     var x, i;
     for (i = 0; i < verb_irregulars.length; i++) {
       x = verb_irregulars[i]

@@ -1,4 +1,4 @@
-/*! nlp_compromise  0.3.8  by @spencermountain 2015-04-14  MIT */
+/*! nlp_compromise  0.3.9  by @spencermountain 2015-04-14  MIT */
 var nlp = (function() {
 //chop text into respective sentences. Ignore periods used in acronyms/abbreviations/numbers, etc.
 var sentence_parser = function(text) {
@@ -3656,82 +3656,82 @@ if (typeof module !== "undefined" && module.exports) {
 
 //chooses an indefinite aricle 'a/an' for a word
 var indefinite_article = (function() {
-	var main = function(str) {
-		if (!str) {
-			return null
-		}
-		var irregulars = {
-			"hour": "an",
-			"heir": "an",
-			"heirloom": "an",
-			"honest": "an",
-			"honour": "an",
-			"honor": "an",
-			"uber": "an" //german u
-		}
+  var main = function(str) {
+    if (!str) {
+      return null
+    }
+    var irregulars = {
+      "hour": "an",
+      "heir": "an",
+      "heirloom": "an",
+      "honest": "an",
+      "honour": "an",
+      "honor": "an",
+      "uber": "an" //german u
+    }
 
-		var is_acronym = function(s) {
-			//no periods
-			if (s.length <= 5 && s.match(/^[A-Z]*$/)) {
-				return true
-			}
-			//with periods
-			if (s.length >= 4 && s.match(/^([A-Z]\.)*$/)) {
-				return true
-			}
-			return false
-		}
+    var is_acronym = function(s) {
+      //no periods
+      if (s.length <= 5 && s.match(/^[A-Z]*$/)) {
+        return true
+      }
+      //with periods
+      if (s.length >= 4 && s.match(/^([A-Z]\.)*$/)) {
+        return true
+      }
+      return false
+    }
 
-		//pronounced letters of acronyms that get a 'an'
-		var an_acronyms = {
-			A: true,
-			E: true,
-			F: true,
-			H: true,
-			I: true,
-			L: true,
-			M: true,
-			N: true,
-			O: true,
-			R: true,
-			S: true,
-			X: true
-		}
+    //pronounced letters of acronyms that get a 'an'
+    var an_acronyms = {
+      A: true,
+      E: true,
+      F: true,
+      H: true,
+      I: true,
+      L: true,
+      M: true,
+      N: true,
+      O: true,
+      R: true,
+      S: true,
+      X: true
+    }
 
-		//'a' regexes
-		var a_regexs = [
-			/^onc?e/i, //'wu' sound of 'o'
-			/^u[bcfhjkqrstn][aeiou]/i, // 'yu' sound for hard 'u'
-			/^eul/i
-		];
+    //'a' regexes
+    var a_regexs = [
+      /^onc?e/i, //'wu' sound of 'o'
+      /^u[bcfhjkqrstn][aeiou]/i, // 'yu' sound for hard 'u'
+      /^eul/i
+    ];
 
-		//begin business time
-		////////////////////
-		//explicit irregular forms
-		if (irregulars[str]) {
-			return irregulars[str]
-		}
-		//spelled-out acronyms
-		if (is_acronym(str) && an_acronyms[str.substr(0, 1)]) {
-			return "an"
-		}
-		//'a' regexes
-		for (var i = 0; i < a_regexs.length; i++) {
-			if (str.match(a_regexs[i])) {
-				return "a"
-			}
-		}
-		//basic vowel-startings
-		if (str.match(/^[aeiou]/i)) {
-			return "an"
-		}
-		return "a"
-	}
+    //begin business time
+    ////////////////////
+    //explicit irregular forms
+    if (irregulars[str]) {
+      return irregulars[str]
+    }
+    //spelled-out acronyms
+    if (is_acronym(str) && an_acronyms[str.substr(0, 1)]) {
+      return "an"
+    }
+    //'a' regexes
+    for (var i = 0; i < a_regexs.length; i++) {
+      if (str.match(a_regexs[i])) {
+        return "a"
+      }
+    }
+    //basic vowel-startings
+    if (str.match(/^[aeiou]/i)) {
+      return "an"
+    }
+    return "a"
+  }
 
-	if (typeof module !== "undefined" && module.exports) {
-		module.exports = main;
-	}
-	return main;
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+  return main;
 })();
 
 // console.log(indefinite_article("wolf") === "a")
@@ -3742,505 +3742,505 @@ var indefinite_article = (function() {
 
 var inflect = (function() {
 
-    var titlecase=function(str){
-        if(!str){return ''}
-        return str.charAt(0).toUpperCase() + str.slice(1)
+  var titlecase = function(str) {
+    if (!str) {
+      return ''
     }
-    var irregulars = [
-        ['child', 'children'],
-        ['person', 'people'],
-        ['leaf', 'leaves'],
-        ['database', 'databases'],
-        ['quiz', 'quizzes'],
-        ['child', 'children'],
-        ['stomach', 'stomachs'],
-        ['sex', 'sexes'],
-        ['move', 'moves'],
-        ['shoe', 'shoes'],
-        ["goose", "geese"],
-        ["phenomenon", "phenomena"],
-        ['barracks', 'barracks'],
-        ['deer', 'deer'],
-        ['syllabus', 'syllabi'],
-        ['index', 'indices'],
-        ['appendix', 'appendices'],
-        ['criterion', 'criteria'],
-        ['i', 'we'],
-        ['person', 'people'],
-        ['man', 'men'],
-        ['move', 'moves'],
-        ['she', 'they'],
-        ['he', 'they'],
-        ['myself', 'ourselves'],
-        ['yourself', 'yourselves'],
-        ['himself', 'themselves'],
-        ['herself', 'themselves'],
-        ['themself', 'themselves'],
-        ['mine', 'ours'],
-        ['hers', 'theirs'],
-        ['his', 'theirs'],
-        ['its', 'theirs'],
-        ['theirs', 'theirs'],
-        ['sex', 'sexes'],
-        ['photo', 'photos'],
-        ['video', 'videos'],
-        ['narrative', 'narratives'],
-        ['rodeo', 'rodeos'],
-        ['gas', 'gases'],
-        ['epoch', 'epochs'],
-        ['zero', 'zeros'],
-        ['avocado', 'avocados'],
-        ['halo', 'halos'],
-        ['tornado', 'tornados'],
-        ['tuxedo', 'tuxedos'],
-        ['sombrero', 'sombreros']
+    return str.charAt(0).toUpperCase() + str.slice(1)
+  }
+  var irregulars = [
+      ['child', 'children'],
+      ['person', 'people'],
+      ['leaf', 'leaves'],
+      ['database', 'databases'],
+      ['quiz', 'quizzes'],
+      ['child', 'children'],
+      ['stomach', 'stomachs'],
+      ['sex', 'sexes'],
+      ['move', 'moves'],
+      ['shoe', 'shoes'],
+      ["goose", "geese"],
+      ["phenomenon", "phenomena"],
+      ['barracks', 'barracks'],
+      ['deer', 'deer'],
+      ['syllabus', 'syllabi'],
+      ['index', 'indices'],
+      ['appendix', 'appendices'],
+      ['criterion', 'criteria'],
+      ['i', 'we'],
+      ['person', 'people'],
+      ['man', 'men'],
+      ['move', 'moves'],
+      ['she', 'they'],
+      ['he', 'they'],
+      ['myself', 'ourselves'],
+      ['yourself', 'yourselves'],
+      ['himself', 'themselves'],
+      ['herself', 'themselves'],
+      ['themself', 'themselves'],
+      ['mine', 'ours'],
+      ['hers', 'theirs'],
+      ['his', 'theirs'],
+      ['its', 'theirs'],
+      ['theirs', 'theirs'],
+      ['sex', 'sexes'],
+      ['photo', 'photos'],
+      ['video', 'videos'],
+      ['narrative', 'narratives'],
+      ['rodeo', 'rodeos'],
+      ['gas', 'gases'],
+      ['epoch', 'epochs'],
+      ['zero', 'zeros'],
+      ['avocado', 'avocados'],
+      ['halo', 'halos'],
+      ['tornado', 'tornados'],
+      ['tuxedo', 'tuxedos'],
+      ['sombrero', 'sombreros']
     ]
     //words that shouldn't ever inflect, for metaphysical reasons
-    var uncountables = {
-        "aircraft": 1,
-        "bass": 1,
-        "bison": 1,
-        "fowl": 1,
-        "halibut": 1,
-        "moose": 1,
-        "salmon": 1,
-        "spacecraft": 1,
-        "tuna": 1,
-        "trout": 1,
-        "advice": 1,
-        "help": 1,
-        "information": 1,
-        "knowledge": 1,
-        "trouble": 1,
-        "work": 1,
-        "enjoyment": 1,
-        "fun": 1,
-        "recreation": 1,
-        "relaxation": 1,
-        "meat": 1,
-        "rice": 1,
-        "bread": 1,
-        "cake": 1,
-        "coffee": 1,
-        "ice": 1,
-        "water": 1,
-        "oil": 1,
-        "grass": 1,
-        "hair": 1,
-        "fruit": 1,
-        "wildlife": 1,
-        "equipment": 1,
-        "machinery": 1,
-        "furniture": 1,
-        "mail": 1,
-        "luggage": 1,
-        "jewelry": 1,
-        "clothing": 1,
-        "money": 1,
-        "mathematics": 1,
-        "economics": 1,
-        "physics": 1,
-        "civics": 1,
-        "ethics": 1,
-        "gymnastics": 1,
-        "mumps": 1,
-        "measles": 1,
-        "news": 1,
-        "tennis": 1,
-        "baggage": 1,
-        "currency": 1,
-        "travel": 1,
-        "soap": 1,
-        "toothpaste": 1,
-        "food": 1,
-        "sugar": 1,
-        "butter": 1,
-        "flour": 1,
-        "progress": 1,
-        "research": 1,
-        "leather": 1,
-        "wool": 1,
-        "wood": 1,
-        "coal": 1,
-        "weather": 1,
-        "homework": 1,
-        "cotton": 1,
-        "silk": 1,
-        "patience": 1,
-        "impatience": 1,
-        "talent": 1,
-        "energy": 1,
-        "experience": 1,
-        "vinegar": 1,
-        "polish": 1,
-        "air": 1,
-        "alcohol": 1,
-        "anger": 1,
-        "art": 1,
-        "beef": 1,
-        "blood": 1,
-        "cash": 1,
-        "chaos": 1,
-        "cheese": 1,
-        "chewing": 1,
-        "conduct": 1,
-        "confusion": 1,
-        "courage": 1,
-        "damage": 1,
-        "education": 1,
-        "electricity": 1,
-        "entertainment": 1,
-        "fiction": 1,
-        "forgiveness": 1,
-        "gold": 1,
-        "gossip": 1,
-        "ground": 1,
-        "happiness": 1,
-        "history": 1,
-        "honey": 1,
-        "hope": 1,
-        "hospitality": 1,
-        "importance": 1,
-        "jam": 1,
-        "justice": 1,
-        "laughter": 1,
-        "leisure": 1,
-        "lightning": 1,
-        "literature": 1,
-        "love": 1,
-        "luck": 1,
-        "melancholy": 1,
-        "milk": 1,
-        "mist": 1,
-        "music": 1,
-        "noise": 1,
-        "oxygen": 1,
-        "paper": 1,
-        "pay": 1,
-        "peace": 1,
-        "peanut": 1,
-        "pepper": 1,
-        "petrol": 1,
-        "plastic": 1,
-        "pork": 1,
-        "power": 1,
-        "pressure": 1,
-        "rain": 1,
-        "recognition": 1,
-        "sadness": 1,
-        "safety": 1,
-        "salt": 1,
-        "sand": 1,
-        "scenery": 1,
-        "shopping": 1,
-        "silver": 1,
-        "snow": 1,
-        "softness": 1,
-        "space": 1,
-        "speed": 1,
-        "steam": 1,
-        "sunshine": 1,
-        "tea": 1,
-        "thunder": 1,
-        "time": 1,
-        "traffic": 1,
-        "trousers": 1,
-        "violence": 1,
-        "warmth": 1,
-        "washing": 1,
-        "wind": 1,
-        "wine": 1,
-        "steel": 1,
-        "soccer": 1,
-        "hockey": 1,
-        "golf": 1,
-        "fish": 1,
-        "gum": 1,
-        "liquid": 1,
-        "series": 1,
-        "sheep": 1,
-        "species": 1,
-        "fahrenheit": 1,
-        "celcius": 1,
-        "kelvin": 1,
-        "hertz": 1
-    }
+  var uncountables = {
+    "aircraft": 1,
+    "bass": 1,
+    "bison": 1,
+    "fowl": 1,
+    "halibut": 1,
+    "moose": 1,
+    "salmon": 1,
+    "spacecraft": 1,
+    "tuna": 1,
+    "trout": 1,
+    "advice": 1,
+    "help": 1,
+    "information": 1,
+    "knowledge": 1,
+    "trouble": 1,
+    "work": 1,
+    "enjoyment": 1,
+    "fun": 1,
+    "recreation": 1,
+    "relaxation": 1,
+    "meat": 1,
+    "rice": 1,
+    "bread": 1,
+    "cake": 1,
+    "coffee": 1,
+    "ice": 1,
+    "water": 1,
+    "oil": 1,
+    "grass": 1,
+    "hair": 1,
+    "fruit": 1,
+    "wildlife": 1,
+    "equipment": 1,
+    "machinery": 1,
+    "furniture": 1,
+    "mail": 1,
+    "luggage": 1,
+    "jewelry": 1,
+    "clothing": 1,
+    "money": 1,
+    "mathematics": 1,
+    "economics": 1,
+    "physics": 1,
+    "civics": 1,
+    "ethics": 1,
+    "gymnastics": 1,
+    "mumps": 1,
+    "measles": 1,
+    "news": 1,
+    "tennis": 1,
+    "baggage": 1,
+    "currency": 1,
+    "travel": 1,
+    "soap": 1,
+    "toothpaste": 1,
+    "food": 1,
+    "sugar": 1,
+    "butter": 1,
+    "flour": 1,
+    "progress": 1,
+    "research": 1,
+    "leather": 1,
+    "wool": 1,
+    "wood": 1,
+    "coal": 1,
+    "weather": 1,
+    "homework": 1,
+    "cotton": 1,
+    "silk": 1,
+    "patience": 1,
+    "impatience": 1,
+    "talent": 1,
+    "energy": 1,
+    "experience": 1,
+    "vinegar": 1,
+    "polish": 1,
+    "air": 1,
+    "alcohol": 1,
+    "anger": 1,
+    "art": 1,
+    "beef": 1,
+    "blood": 1,
+    "cash": 1,
+    "chaos": 1,
+    "cheese": 1,
+    "chewing": 1,
+    "conduct": 1,
+    "confusion": 1,
+    "courage": 1,
+    "damage": 1,
+    "education": 1,
+    "electricity": 1,
+    "entertainment": 1,
+    "fiction": 1,
+    "forgiveness": 1,
+    "gold": 1,
+    "gossip": 1,
+    "ground": 1,
+    "happiness": 1,
+    "history": 1,
+    "honey": 1,
+    "hope": 1,
+    "hospitality": 1,
+    "importance": 1,
+    "jam": 1,
+    "justice": 1,
+    "laughter": 1,
+    "leisure": 1,
+    "lightning": 1,
+    "literature": 1,
+    "love": 1,
+    "luck": 1,
+    "melancholy": 1,
+    "milk": 1,
+    "mist": 1,
+    "music": 1,
+    "noise": 1,
+    "oxygen": 1,
+    "paper": 1,
+    "pay": 1,
+    "peace": 1,
+    "peanut": 1,
+    "pepper": 1,
+    "petrol": 1,
+    "plastic": 1,
+    "pork": 1,
+    "power": 1,
+    "pressure": 1,
+    "rain": 1,
+    "recognition": 1,
+    "sadness": 1,
+    "safety": 1,
+    "salt": 1,
+    "sand": 1,
+    "scenery": 1,
+    "shopping": 1,
+    "silver": 1,
+    "snow": 1,
+    "softness": 1,
+    "space": 1,
+    "speed": 1,
+    "steam": 1,
+    "sunshine": 1,
+    "tea": 1,
+    "thunder": 1,
+    "time": 1,
+    "traffic": 1,
+    "trousers": 1,
+    "violence": 1,
+    "warmth": 1,
+    "washing": 1,
+    "wind": 1,
+    "wine": 1,
+    "steel": 1,
+    "soccer": 1,
+    "hockey": 1,
+    "golf": 1,
+    "fish": 1,
+    "gum": 1,
+    "liquid": 1,
+    "series": 1,
+    "sheep": 1,
+    "species": 1,
+    "fahrenheit": 1,
+    "celcius": 1,
+    "kelvin": 1,
+    "hertz": 1
+  }
 
-    var pluralize_rules = [{
-        reg: /(ax|test)is$/i,
-        repl: '$1es'
+  var pluralize_rules = [{
+      reg: /(ax|test)is$/i,
+      repl: '$1es'
     }, {
-        reg: /(octop|vir|radi|nucle|fung|cact|stimul)us$/i,
-        repl: '$1i'
+      reg: /(octop|vir|radi|nucle|fung|cact|stimul)us$/i,
+      repl: '$1i'
     }, {
-        reg: /(octop|vir)i$/i,
-        repl: '$1i'
+      reg: /(octop|vir)i$/i,
+      repl: '$1i'
     }, {
-        reg: /([rl])f$/i,
-        repl: '$1ves'
+      reg: /([rl])f$/i,
+      repl: '$1ves'
     }, {
-        reg: /(alias|status)$/i,
-        repl: '$1es'
+      reg: /(alias|status)$/i,
+      repl: '$1es'
     }, {
-        reg: /(bu)s$/i,
-        repl: '$1ses'
+      reg: /(bu)s$/i,
+      repl: '$1ses'
     }, {
-        reg: /(al|ad|at|er|et|ed|ad)o$/i,
-        repl: '$1oes'
+      reg: /(al|ad|at|er|et|ed|ad)o$/i,
+      repl: '$1oes'
     }, {
-        reg: /([ti])um$/i,
-        repl: '$1a'
+      reg: /([ti])um$/i,
+      repl: '$1a'
     }, {
-        reg: /([ti])a$/i,
-        repl: '$1a'
+      reg: /([ti])a$/i,
+      repl: '$1a'
     }, {
-        reg: /sis$/i,
-        repl: 'ses'
+      reg: /sis$/i,
+      repl: 'ses'
     }, {
-        reg: /(?:([^f])fe|([lr])f)$/i,
-        repl: '$1ves'
+      reg: /(?:([^f])fe|([lr])f)$/i,
+      repl: '$1ves'
     }, {
-        reg: /(hive)$/i,
-        repl: '$1s'
+      reg: /(hive)$/i,
+      repl: '$1s'
     }, {
-        reg: /([^aeiouy]|qu)y$/i,
-        repl: '$1ies'
+      reg: /([^aeiouy]|qu)y$/i,
+      repl: '$1ies'
     }, {
-        reg: /(x|ch|ss|sh|s|z)$/i,
-        repl: '$1es'
+      reg: /(x|ch|ss|sh|s|z)$/i,
+      repl: '$1es'
     }, {
-        reg: /(matr|vert|ind|cort)(ix|ex)$/i,
-        repl: '$1ices'
+      reg: /(matr|vert|ind|cort)(ix|ex)$/i,
+      repl: '$1ices'
     }, {
-        reg: /([m|l])ouse$/i,
-        repl: '$1ice'
+      reg: /([m|l])ouse$/i,
+      repl: '$1ice'
     }, {
-        reg: /([m|l])ice$/i,
-        repl: '$1ice'
+      reg: /([m|l])ice$/i,
+      repl: '$1ice'
     }, {
-        reg: /^(ox)$/i,
-        repl: '$1en'
+      reg: /^(ox)$/i,
+      repl: '$1en'
     }, {
-        reg: /^(oxen)$/i,
-        repl: '$1'
+      reg: /^(oxen)$/i,
+      repl: '$1'
     }, {
-        reg: /(quiz)$/i,
-        repl: '$1zes'
+      reg: /(quiz)$/i,
+      repl: '$1zes'
     }, {
-        reg: /(antenn|formul|nebul|vertebr|vit)a$/i,
-        repl: '$1ae'
+      reg: /(antenn|formul|nebul|vertebr|vit)a$/i,
+      repl: '$1ae'
     }, {
-        reg: /(sis)$/i,
-        repl: 'ses'
+      reg: /(sis)$/i,
+      repl: 'ses'
     }, {
-        reg: /^(?!talis|.*hu)(.*)man$/i,
-        repl: '$1men'
+      reg: /^(?!talis|.*hu)(.*)man$/i,
+      repl: '$1men'
     },
-      //fallback, add an s
+    //fallback, add an s
     {
-        reg: /(.*)/i,
-        repl: '$1s'
+      reg: /(.*)/i,
+      repl: '$1s'
     }
 
-    ]
+  ]
 
-    var pluralize = function(str) {
-        var low = str.toLowerCase()
-        //uncountable
-        if (uncountables[low]) {
-            return str
-        }
-        //irregular
-        var found = irregulars.filter(function(r) {
-            return r[0] === low
-        })
-        if (found[0]) {
-            if (titlecase(low) === str) { //handle capitalisation properly
-                return titlecase(found[0][1])
-            } else {
-                return found[0][1]
-            }
-        }
-        //inflect first word of preposition-phrase
-        if (str.match(/([a-z]*) (of|in|by|for) [a-z]/)) {
-            var first = (str.match(/^([a-z]*) (of|in|by|for) [a-z]/)||[])[1]
-            if (first) {
-                var better_first = pluralize(first)
-                return better_first + str.replace(first, '')
-            }
-        }
-        //regular
-        for (var i = 0; i < pluralize_rules.length; i++) {
-            if (str.match(pluralize_rules[i].reg)) {
-                return str.replace(pluralize_rules[i].reg, pluralize_rules[i].repl)
-            }
-        }
+  var pluralize = function(str) {
+    var low = str.toLowerCase()
+      //uncountable
+    if (uncountables[low]) {
+      return str
     }
+    //irregular
+    var found = irregulars.filter(function(r) {
+      return r[0] === low
+    })
+    if (found[0]) {
+      if (titlecase(low) === str) { //handle capitalisation properly
+        return titlecase(found[0][1])
+      } else {
+        return found[0][1]
+      }
+    }
+    //inflect first word of preposition-phrase
+    if (str.match(/([a-z]*) (of|in|by|for) [a-z]/)) {
+      var first = (str.match(/^([a-z]*) (of|in|by|for) [a-z]/) || [])[1]
+      if (first) {
+        var better_first = pluralize(first)
+        return better_first + str.replace(first, '')
+      }
+    }
+    //regular
+    for (var i = 0; i < pluralize_rules.length; i++) {
+      if (str.match(pluralize_rules[i].reg)) {
+        return str.replace(pluralize_rules[i].reg, pluralize_rules[i].repl)
+      }
+    }
+  }
 
-    var singularize_rules = [{
-        reg: /([^v])ies$/i,
-        repl: '$1y'
+  var singularize_rules = [{
+      reg: /([^v])ies$/i,
+      repl: '$1y'
     }, {
-        reg: /ises$/i,
-        repl: 'isis'
+      reg: /ises$/i,
+      repl: 'isis'
     }, {
-        reg: /ives$/i,
-        repl: 'ife'
+      reg: /ives$/i,
+      repl: 'ife'
     }, {
-        reg: /(antenn|formul|nebul|vertebr|vit)ae$/i,
-        repl: '$1a'
+      reg: /(antenn|formul|nebul|vertebr|vit)ae$/i,
+      repl: '$1a'
     }, {
-        reg: /(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i,
-        repl: '$1us'
+      reg: /(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i,
+      repl: '$1us'
     }, {
-        reg: /(buffal|tomat|tornad)(oes)$/i,
-        repl: '$1o'
+      reg: /(buffal|tomat|tornad)(oes)$/i,
+      repl: '$1o'
     }, {
-        reg: /((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i,
-        repl: '$1sis'
+      reg: /((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i,
+      repl: '$1sis'
     }, {
-        reg: /(vert|ind|cort)(ices)$/i,
-        repl: '$1ex'
+      reg: /(vert|ind|cort)(ices)$/i,
+      repl: '$1ex'
     }, {
-        reg: /(matr|append)(ices)$/i,
-        repl: '$1ix'
+      reg: /(matr|append)(ices)$/i,
+      repl: '$1ix'
     }, {
-        reg: /(x|ch|ss|sh|s|z|o)es$/i,
-        repl: '$1'
+      reg: /(x|ch|ss|sh|s|z|o)es$/i,
+      repl: '$1'
     }, {
-        reg: /men$/i,
-        repl: 'man'
+      reg: /men$/i,
+      repl: 'man'
     }, {
-        reg: /(n)ews$/i,
-        repl: '$1ews'
+      reg: /(n)ews$/i,
+      repl: '$1ews'
     }, {
-        reg: /([ti])a$/i,
-        repl: '$1um'
+      reg: /([ti])a$/i,
+      repl: '$1um'
     }, {
-        reg: /([^f])ves$/i,
-        repl: '$1fe'
+      reg: /([^f])ves$/i,
+      repl: '$1fe'
     }, {
-        reg: /([lr])ves$/i,
-        repl: '$1f'
+      reg: /([lr])ves$/i,
+      repl: '$1f'
     }, {
-        reg: /([^aeiouy]|qu)ies$/i,
-        repl: '$1y'
+      reg: /([^aeiouy]|qu)ies$/i,
+      repl: '$1y'
     }, {
-        reg: /(s)eries$/i,
-        repl: '$1eries'
+      reg: /(s)eries$/i,
+      repl: '$1eries'
     }, {
-        reg: /(m)ovies$/i,
-        repl: '$1ovie'
+      reg: /(m)ovies$/i,
+      repl: '$1ovie'
     }, {
-        reg: /([m|l])ice$/i,
-        repl: '$1ouse'
+      reg: /([m|l])ice$/i,
+      repl: '$1ouse'
     }, {
-        reg: /(cris|ax|test)es$/i,
-        repl: '$1is'
+      reg: /(cris|ax|test)es$/i,
+      repl: '$1is'
     }, {
-        reg: /(alias|status)es$/i,
-        repl: '$1'
-    },{
-        reg: /(ss)$/i,
-        repl: '$1'
+      reg: /(alias|status)es$/i,
+      repl: '$1'
     }, {
-        reg: /(ics)$/i,
-        repl: "$1"
+      reg: /(ss)$/i,
+      repl: '$1'
+    }, {
+      reg: /(ics)$/i,
+      repl: "$1"
     },
     //fallback, remove last s
     {
-        reg: /s$/i,
-        repl: ''
+      reg: /s$/i,
+      repl: ''
     }
-    ]
+  ]
 
-
-    var singularize = function(str) {
-        var low = str.toLowerCase()
-        //uncountable
-        if (uncountables[low]) {
-            return str
-        }
-        //irregular
-        var found = irregulars.filter(function(r) {
-            return r[1] === low
-        })
-        if (found[0]) {
-            if (titlecase(low) === str) { //handle capitalisation properly
-                return titlecase(found[0][0])
-            } else {
-                return found[0][0]
-            }
-        }
-        //inflect first word of preposition-phrase
-        if (str.match(/([a-z]*) (of|in|by|for) [a-z]/)) {
-            var first = str.match(/^([a-z]*) (of|in|by|for) [a-z]/)
-            if (first && first[1]) {
-                var better_first = singularize(first[1])
-                return better_first + str.replace(first[1], '')
-            }
-        }
-        //regular
-        for (var i = 0; i < singularize_rules.length; i++) {
-            if (str.match(singularize_rules[i].reg)) {
-                return str.replace(singularize_rules[i].reg, singularize_rules[i].repl)
-            }
-        }
-        return str
+  var singularize = function(str) {
+    var low = str.toLowerCase()
+      //uncountable
+    if (uncountables[low]) {
+      return str
     }
+    //irregular
+    var found = irregulars.filter(function(r) {
+      return r[1] === low
+    })
+    if (found[0]) {
+      if (titlecase(low) === str) { //handle capitalisation properly
+        return titlecase(found[0][0])
+      } else {
+        return found[0][0]
+      }
+    }
+    //inflect first word of preposition-phrase
+    if (str.match(/([a-z]*) (of|in|by|for) [a-z]/)) {
+      var first = str.match(/^([a-z]*) (of|in|by|for) [a-z]/)
+      if (first && first[1]) {
+        var better_first = singularize(first[1])
+        return better_first + str.replace(first[1], '')
+      }
+    }
+    //regular
+    for (var i = 0; i < singularize_rules.length; i++) {
+      if (str.match(singularize_rules[i].reg)) {
+        return str.replace(singularize_rules[i].reg, singularize_rules[i].repl)
+      }
+    }
+    return str
+  }
 
-
-    var is_plural = function(str) {
-        //if it's a known verb
-        for (var i = 0; i < irregulars.length; i++) {
-            if (irregulars[i][1] === str) {
-                return true
-            }
-            if (irregulars[i][0] === str) {
-                return false
-            }
-        }
-        //if it changes when singularized
-        if (singularize(str)!=str) {
-            return true
-        }
-        //'looks pretty plural' rules
-        if(str.match(/s$/) && !str.match(/ss$/) && str.length>3){//needs some lovin'
-          return true
-        }
+  var is_plural = function(str) {
+    //if it's a known verb
+    for (var i = 0; i < irregulars.length; i++) {
+      if (irregulars[i][1] === str) {
+        return true
+      }
+      if (irregulars[i][0] === str) {
         return false
+      }
     }
+    //if it changes when singularized
+    if (singularize(str) != str) {
+      return true
+    }
+    //'looks pretty plural' rules
+    if (str.match(/s$/) && !str.match(/ss$/) && str.length > 3) { //needs some lovin'
+      return true
+    }
+    return false
+  }
 
-    var inflect = function(str) {
-        if(uncountables[str]){//uncountables shouldn't ever inflect
-            return {
-                plural:str,
-                singular:str
-            }
-        }
-        if (is_plural(str)) {
-            return {
-                plural: str,
-                singular: singularize(str)
-            }
-        } else {
-            return {
-                singular: str,
-                plural: pluralize(str)
-            }
-        }
+  var inflect = function(str) {
+    if (uncountables[str]) { //uncountables shouldn't ever inflect
+      return {
+        plural: str,
+        singular: str
+      }
     }
+    if (is_plural(str)) {
+      return {
+        plural: str,
+        singular: singularize(str)
+      }
+    } else {
+      return {
+        singular: str,
+        plural: pluralize(str)
+      }
+    }
+  }
 
-    var methods = {
-        inflect: inflect,
-        is_plural: is_plural,
-        singularize: singularize,
-        pluralize: pluralize
-    }
-    if (typeof module !== "undefined" && module.exports) {
-        module.exports = methods;
-    }
-    return methods;
+  var methods = {
+    inflect: inflect,
+    is_plural: is_plural,
+    singularize: singularize,
+    pluralize: pluralize
+  }
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = methods;
+  }
+  return methods;
 })();
 
 // console.log(inflect.pluralize('kiss'))
@@ -4257,7 +4257,7 @@ var Noun = function(str, next, last, token) {
   if (typeof module !== "undefined" && module.exports) {
     parts_of_speech = require("../../data/parts_of_speech")
     inflect = require("./conjugate/inflect")
-    indefinite_article = require("./indefinite_article/indefinite_article")
+    indefinite_article = require("./indefinite_article")
     // is_entity = require("./ner/is_entity")
   }
   //personal pronouns
@@ -4421,63 +4421,63 @@ if (typeof module !== "undefined" && module.exports) {
 
 //turns 'quickly' into 'quick'
 var to_adjective = (function() {
-	var main = function(str) {
-		var irregulars = {
-			"idly": "idle",
-			"sporadically": "sporadic",
-			"basically": "basic",
-			"grammatically": "grammatical",
-			"alphabetically": "alphabetical",
-			"economically": "economical",
-			"conically": "conical",
-			"politically": "political",
-			"vertically": "vertical",
-			"practically": "practical",
-			"theoretically": "theoretical",
-			"critically": "critical",
-			"fantastically": "fantastic",
-			"mystically": "mystical",
-			"pornographically": "pornographic",
-			"fully": "full",
-			"jolly": "jolly",
-			"wholly": "whole"
-		}
-		var transforms = [{
-			reg: /bly$/i,
-			repl: 'ble'
-		}, {
-			reg: /gically$/i,
-			repl: 'gical'
-		}, {
-			reg: /([rsdh])ically$/i,
-			repl: '$1ical'
-		}, {
-			reg: /ically$/i,
-			repl: 'ic'
-		}, {
-			reg: /uly$/i,
-			repl: 'ue'
-		}, {
-			reg: /ily$/i,
-			repl: 'y'
-		}, {
-			reg: /(.{3})ly$/i,
-			repl: '$1'
-		}]
-		if (irregulars[str]) {
-			return irregulars[str]
-		}
-		for (var i = 0; i < transforms.length; i++) {
-			if (str.match(transforms[i].reg)) {
-				return str.replace(transforms[i].reg, transforms[i].repl)
-			}
-		}
-		return str
-	}
-	if (typeof module !== "undefined" && module.exports) {
-		module.exports = main;
-	}
-	return main;
+  var main = function(str) {
+    var irregulars = {
+      "idly": "idle",
+      "sporadically": "sporadic",
+      "basically": "basic",
+      "grammatically": "grammatical",
+      "alphabetically": "alphabetical",
+      "economically": "economical",
+      "conically": "conical",
+      "politically": "political",
+      "vertically": "vertical",
+      "practically": "practical",
+      "theoretically": "theoretical",
+      "critically": "critical",
+      "fantastically": "fantastic",
+      "mystically": "mystical",
+      "pornographically": "pornographic",
+      "fully": "full",
+      "jolly": "jolly",
+      "wholly": "whole"
+    }
+    var transforms = [{
+      reg: /bly$/i,
+      repl: 'ble'
+    }, {
+      reg: /gically$/i,
+      repl: 'gical'
+    }, {
+      reg: /([rsdh])ically$/i,
+      repl: '$1ical'
+    }, {
+      reg: /ically$/i,
+      repl: 'ic'
+    }, {
+      reg: /uly$/i,
+      repl: 'ue'
+    }, {
+      reg: /ily$/i,
+      repl: 'y'
+    }, {
+      reg: /(.{3})ly$/i,
+      repl: '$1'
+    }]
+    if (irregulars[str]) {
+      return irregulars[str]
+    }
+    for (var i = 0; i < transforms.length; i++) {
+      if (str.match(transforms[i].reg)) {
+        return str.replace(transforms[i].reg, transforms[i].repl)
+      }
+    }
+    return str
+  }
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+  return main;
 })();
 
 // console.log(to_adjective('quickly') === 'quick')
@@ -5109,6 +5109,7 @@ var verb_rules = {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = verb_rules;
 }
+
 var verb_irregulars = (function() {
   var main = [{
       "present": "arises",
@@ -5910,52 +5911,60 @@ var verb_irregulars = (function() {
       "past": "fed",
       "gerund": "feeding",
       "doer": "feeder"
-    },
-    {
+    }, {
       "infinitive": "miss",
       "present": "miss",
       "past": "missed",
       "gerund": "missing",
       "doer": "misser"
-    },
-    {
+    }, {
       "infinitive": "act",
       "present": "acts",
       "past": "acted",
       "gerund": "acting",
       "doer": "actor"
-    },
-    { present: 'competes',
+    }, {
+      present: 'competes',
       gerund: 'competing',
       past: 'competed',
       infinitive: 'compete',
-      doer: 'competitor' },
+      doer: 'competitor'
+    },
 
-    { present: 'are',
+    {
+      present: 'are',
       gerund: 'are',
       past: 'were',
       infinitive: 'being',
-      doer: '' },
+      doer: ''
+    },
 
-    { infinitive: 'imply',
+    {
+      infinitive: 'imply',
       present: 'implies',
       past: 'implied',
       gerund: 'implying',
-      doer: 'implier' },
+      doer: 'implier'
+    },
 
-    { infinitive: 'ice',
+    {
+      infinitive: 'ice',
       present: 'ices',
       past: 'iced',
       gerund: 'icing',
-      doer: 'icer' },
+      doer: 'icer'
+    },
 
-    { infinitive: 'throw',
+    {
+      infinitive: 'throw',
       present: 'throws',
       past: 'threw',
       gerund: 'throwing',
-      doer: 'thrower' },
+      doer: 'thrower'
+    },
 
-    { present: 'develops',
+    {
+      present: 'develops',
       gerund: 'developing',
       past: 'develop',
       infinitive: 'develop',
@@ -5963,28 +5972,29 @@ var verb_irregulars = (function() {
       future: 'will develop'
     },
 
-    { present: 'waits',
+    {
+      present: 'waits',
       gerund: 'waiting',
       past: 'waited',
       infinitive: 'wait',
       doer: 'waiter',
       future: 'will wait'
-    },
-    { present: 'aims',
+    }, {
+      present: 'aims',
       gerund: 'aiming',
       past: 'aimed',
       infinitive: 'aim',
       doer: 'aimer',
       future: 'will aim'
-    },
-    { present: 'spills',
+    }, {
+      present: 'spills',
       gerund: 'spilling',
       past: 'spilt',
       infinitive: 'spill',
       doer: 'spiller',
       future: 'will spill'
-    },
-    { present: 'am',
+    }, {
+      present: 'am',
       gerund: 'am',
       past: 'was',
       infinitive: 'be',
@@ -6002,65 +6012,65 @@ var verb_irregulars = (function() {
 //somone who does this present-tense verb
 //turn 'walk' into 'walker'
 var verb_to_doer = (function() {
-	var main = function(str) {
-		str = str || ''
-		var irregulars = {
-			"tie": "tier",
-			"dream": "dreamer",
-			"sail": "sailer",
-			"run": "runner",
-			"rub": "rubber",
-			"begin": "beginner",
-			"win": "winner",
-			"claim": "claimant",
-			"deal": "dealer",
-			"spin": "spinner"
-		}
-		var dont = {
-			"aid": 1,
-			"fail": 1,
-			"appear": 1,
-			"happen": 1,
-			"seem": 1,
-			"try": 1,
-			"say": 1,
-			"marry": 1,
-			"be": 1,
-			"forbid": 1,
-			"understand": 1
-		}
-		var transforms = [{
-			reg: /e$/i,
-			repl: 'er'
-		}, {
-			reg: /([aeiou])([mlgp])$/i,
-			repl: '$1$2$2er'
-		}, {
-			reg: /([rlf])y$/i,
-			repl: '$1ier'
-		}, {
-			reg: /^(.?.[aeiou])t$/i,
-			repl: '$1tter'
-		}]
+  var main = function(str) {
+    str = str || ''
+    var irregulars = {
+      "tie": "tier",
+      "dream": "dreamer",
+      "sail": "sailer",
+      "run": "runner",
+      "rub": "rubber",
+      "begin": "beginner",
+      "win": "winner",
+      "claim": "claimant",
+      "deal": "dealer",
+      "spin": "spinner"
+    }
+    var dont = {
+      "aid": 1,
+      "fail": 1,
+      "appear": 1,
+      "happen": 1,
+      "seem": 1,
+      "try": 1,
+      "say": 1,
+      "marry": 1,
+      "be": 1,
+      "forbid": 1,
+      "understand": 1
+    }
+    var transforms = [{
+      reg: /e$/i,
+      repl: 'er'
+    }, {
+      reg: /([aeiou])([mlgp])$/i,
+      repl: '$1$2$2er'
+    }, {
+      reg: /([rlf])y$/i,
+      repl: '$1ier'
+    }, {
+      reg: /^(.?.[aeiou])t$/i,
+      repl: '$1tter'
+    }]
 
-		if (dont[str]) {
-			return null
-		}
-		if (irregulars[str]) {
-			return irregulars[str]
-		}
-		for (var i = 0; i < transforms.length; i++) {
-			if (str.match(transforms[i].reg)) {
-				return str.replace(transforms[i].reg, transforms[i].repl)
-			}
-		}
-		return str + "er"
-	}
+    if (dont[str]) {
+      return null
+    }
+    if (irregulars[str]) {
+      return irregulars[str]
+    }
+    for (var i = 0; i < transforms.length; i++) {
+      if (str.match(transforms[i].reg)) {
+        return str.replace(transforms[i].reg, transforms[i].repl)
+      }
+    }
+    return str + "er"
+  }
 
-	if (typeof module !== "undefined" && module.exports) {
-		module.exports = main;
-	}
-	return main;
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+  return main;
 })();
 
 // console.log(verb_to_doer('set'))
@@ -6169,22 +6179,21 @@ var verb_conjugate = (function() {
     return "infinitive"
   }
 
-
   //fallback to this transformation if it has an unknown prefix
   var fallback = function(w) {
     var infinitive;
-    if(w.length>4){
+    if (w.length > 4) {
       infinitive = w.replace(/ed$/, '');
-    }else{
+    } else {
       infinitive = w.replace(/d$/, '');
     }
     var present, past, gerund, doer;
     if (w.match(/[^aeiou]$/)) {
       gerund = w + "ing"
       past = w + "ed"
-      if(w.match(/ss$/)){
+      if (w.match(/ss$/)) {
         present = w + "es" //'passes'
-      }else{
+      } else {
         present = w + "s"
       }
       doer = verb_to_doer(infinitive)
@@ -6200,7 +6209,7 @@ var verb_conjugate = (function() {
       past: past,
       gerund: gerund,
       doer: doer,
-      future: "will "+infinitive
+      future: "will " + infinitive
     }
   }
 
@@ -6222,29 +6231,28 @@ var verb_conjugate = (function() {
       obj.past = obj.infinitive + 'ed'
     }
     //add the prefix to all forms, if it exists
-    if(prefix){
-      Object.keys(obj).forEach(function(k){
-        obj[k]= prefix+obj[k]
+    if (prefix) {
+      Object.keys(obj).forEach(function(k) {
+        obj[k] = prefix + obj[k]
       })
     }
     //future is 'will'+infinitive
-    if(!obj.future){
-      obj.future= "will "+obj.infinitive
+    if (!obj.future) {
+      obj.future = "will " + obj.infinitive
     }
     return obj
   }
-
 
   var main = function(w) {
     if (!w) {
       return {}
     }
     //chop it if it's future-tense
-    w=w.replace(/^will /i,'')
+    w = w.replace(/^will /i, '')
     //un-prefix the verb, and add it in later
-    var prefix= (w.match(/^(over|under|re|anti|full)\-?/i)||[])[0]
-    var verb=w.replace(/^(over|under|re|anti|full)\-?/i, '')
-    //check irregulars
+    var prefix = (w.match(/^(over|under|re|anti|full)\-?/i) || [])[0]
+    var verb = w.replace(/^(over|under|re|anti|full)\-?/i, '')
+      //check irregulars
     var x, i;
     for (i = 0; i < verb_irregulars.length; i++) {
       x = verb_irregulars[i]
@@ -6412,68 +6420,68 @@ if (typeof module !== "undefined" && module.exports) {
 //convert cute to cuteness
 var adj_to_noun = (function() {
 
-    var main = function(w) {
-        var irregulars = {
-            "clean": "cleanliness",
-            "naivety": "naivety"
-        };
-        if (!w) {
-            return "";
-        }
-        if (irregulars[w]) {
-            return irregulars[w];
-        }
-        if (w.match(" ")) {
-            return w;
-        }
-        if (w.match(/w$/)) {
-            return w;
-        }
-        if (w.match(/y$/)) {
-            return w.replace(/y$/, 'iness');
-        }
-        if (w.match(/le$/)) {
-            return w.replace(/le$/, 'ility');
-        }
-        if (w.match(/ial$/)) {
-            return w.replace(/ial$/, 'y');
-        }
-        if (w.match(/al$/)) {
-            return w.replace(/al$/, 'ality');
-        }
-        if (w.match(/ting$/)) {
-            return w.replace(/ting$/, 'ting');
-        }
-        if (w.match(/ring$/)) {
-            return w.replace(/ring$/, 'ring');
-        }
-        if (w.match(/bing$/)) {
-            return w.replace(/bing$/, 'bingness');
-        }
-        if (w.match(/ning$/)) {
-            return w.replace(/ning$/, 'ningness');
-        }
-        if (w.match(/sing$/)) {
-            return w.replace(/sing$/, 'se');
-        }
-        if (w.match(/ing$/)) {
-            return w.replace(/ing$/, 'ment');
-        }
-        if (w.match(/ess$/)) {
-            return w.replace(/ess$/, 'essness');
-        }
-        if (w.match(/ous$/)) {
-            return w.replace(/ous$/, 'ousness');
-        }
-        if (w.match(/s$/)) {
-            return w;
-        }
-        return w + "ness";
+  var main = function(w) {
+    var irregulars = {
+      "clean": "cleanliness",
+      "naivety": "naivety"
     };
-    if (typeof module !== "undefined" && module.exports) {
-        module.exports = main;
+    if (!w) {
+      return "";
     }
-    return main
+    if (irregulars[w]) {
+      return irregulars[w];
+    }
+    if (w.match(" ")) {
+      return w;
+    }
+    if (w.match(/w$/)) {
+      return w;
+    }
+    if (w.match(/y$/)) {
+      return w.replace(/y$/, 'iness');
+    }
+    if (w.match(/le$/)) {
+      return w.replace(/le$/, 'ility');
+    }
+    if (w.match(/ial$/)) {
+      return w.replace(/ial$/, 'y');
+    }
+    if (w.match(/al$/)) {
+      return w.replace(/al$/, 'ality');
+    }
+    if (w.match(/ting$/)) {
+      return w.replace(/ting$/, 'ting');
+    }
+    if (w.match(/ring$/)) {
+      return w.replace(/ring$/, 'ring');
+    }
+    if (w.match(/bing$/)) {
+      return w.replace(/bing$/, 'bingness');
+    }
+    if (w.match(/ning$/)) {
+      return w.replace(/ning$/, 'ningness');
+    }
+    if (w.match(/sing$/)) {
+      return w.replace(/sing$/, 'se');
+    }
+    if (w.match(/ing$/)) {
+      return w.replace(/ing$/, 'ment');
+    }
+    if (w.match(/ess$/)) {
+      return w.replace(/ess$/, 'essness');
+    }
+    if (w.match(/ous$/)) {
+      return w.replace(/ous$/, 'ousness');
+    }
+    if (w.match(/s$/)) {
+      return w;
+    }
+    return w + "ness";
+  };
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+  return main
 })()
 
 // console.log(exports.adj_to_noun('mysterious'));
@@ -6481,298 +6489,297 @@ var adj_to_noun = (function() {
 //turn 'quick' into 'quickly'
 var to_comparative = (function() {
 
-	var main = function(str) {
-		var irregulars = {
-			"grey": "greyer",
-			"gray": "grayer",
-			"green": "greener",
-			"yellow": "yellower",
-			"red": "redder",
-			"good": "better",
-			"well": "better",
-			"bad": "worse",
-			"sad": "sadder"
-		}
+  var main = function(str) {
+    var irregulars = {
+      "grey": "greyer",
+      "gray": "grayer",
+      "green": "greener",
+      "yellow": "yellower",
+      "red": "redder",
+      "good": "better",
+      "well": "better",
+      "bad": "worse",
+      "sad": "sadder"
+    }
 
-		var dos = {
-			"absurd": 1,
-			"aggressive": 1,
-			"alert": 1,
-			"alive": 1,
-			"awesome": 1,
-			"beautiful": 1,
-			"big": 1,
-			"bitter": 1,
-			"black": 1,
-			"blue": 1,
-			"bored": 1,
-			"boring": 1,
-			"brash": 1,
-			"brave": 1,
-			"brief": 1,
-			"bright": 1,
-			"broad": 1,
-			"brown": 1,
-			"calm": 1,
-			"charming": 1,
-			"cheap": 1,
-			"clean": 1,
-			"cold": 1,
-			"cool": 1,
-			"cruel": 1,
-			"cute": 1,
-			"damp": 1,
-			"deep": 1,
-			"dear": 1,
-			"dead": 1,
-			"dark": 1,
-			"dirty": 1,
-			"drunk": 1,
-			"dull": 1,
-			"eager": 1,
-			"efficient": 1,
-			"even": 1,
-			"faint": 1,
-			"fair": 1,
-			"fanc": 1,
-			"fast": 1,
-			"fat": 1,
-			"feeble": 1,
-			"few": 1,
-			"fierce ": 1,
-			"fine": 1,
-			"flat": 1,
-			"forgetful": 1,
-			"frail": 1,
-			"full": 1,
-			"gentle": 1,
-			"glib": 1,
-			"great": 1,
-			"green": 1,
-			"gruesome": 1,
-			"handsome": 1,
-			"hard": 1,
-			"harsh": 1,
-			"high": 1,
-			"hollow": 1,
-			"hot": 1,
-			"impolite": 1,
-			"innocent": 1,
-			"keen": 1,
-			"kind": 1,
-			"lame": 1,
-			"lean": 1,
-			"light": 1,
-			"little": 1,
-			"loose": 1,
-			"long": 1,
-			"loud": 1,
-			"low": 1,
-			"lush": 1,
-			"macho": 1,
-			"mean": 1,
-			"meek": 1,
-			"mellow": 1,
-			"mundane": 1,
-			"near": 1,
-			"neat": 1,
-			"new": 1,
-			"nice": 1,
-			"normal": 1,
-			"odd": 1,
-			"old": 1,
-			"pale": 1,
-			"pink": 1,
-			"plain": 1,
-			"poor": 1,
-			"proud": 1,
-			"purple": 1,
-			"quick": 1,
-			"rare": 1,
-			"rapid": 1,
-			"red": 1,
-			"rich": 1,
-			"ripe": 1,
-			"rotten": 1,
-			"round": 1,
-			"rude": 1,
-			"sad": 1,
-			"safe": 1,
-			"scarce": 1,
-			"scared": 1,
-			"shallow": 1,
-			"sharp": 1,
-			"short": 1,
-			"shrill": 1,
-			"simple": 1,
-			"slim": 1,
-			"slow": 1,
-			"small": 1,
-			"smart": 1,
-			"smooth": 1,
-			"soft": 1,
-			"sore": 1,
-			"sour": 1,
-			"square": 1,
-			"stale": 1,
-			"steep": 1,
-			"stiff": 1,
-			"straight": 1,
-			"strange": 1,
-			"strong": 1,
-			"sweet": 1,
-			"swift": 1,
-			"tall": 1,
-			"tame": 1,
-			"tart": 1,
-			"tender": 1,
-			"tense": 1,
-			"thick": 1,
-			"thin": 1,
-			"tight": 1,
-			"tough": 1,
-			"vague": 1,
-			"vast": 1,
-			"vulgar": 1,
-			"warm": 1,
-			"weak": 1,
-			"wet": 1,
-			"white": 1,
-			"wide": 1,
-			"wild": 1,
-			"wise": 1,
-			"young": 1,
-			"yellow": 1,
-			"easy": 1,
-			"narrow": 1,
-			"late": 1,
-			"early": 1,
-			"soon": 1,
-			"close": 1,
-			"empty": 1,
-			"dry": 1,
-			"windy": 1,
-			"noisy": 1,
-			"thirsty": 1,
-			"hungry": 1,
-			"fresh": 1,
-			"quiet": 1,
-			"clear": 1,
-			"heavy": 1,
-			"happy": 1,
-			"funny": 1,
-			"lucky": 1,
-			"pretty": 1,
-			"important": 1,
-			"interesting": 1,
-			"attractive": 1,
-			"dangerous": 1,
-			"intellegent": 1,
-			"pure": 1,
-			"orange": 1,
-			"large": 1,
-			"firm": 1,
-			"grand": 1,
-			"formal": 1,
-			"raw": 1,
-			"weird": 1,
-			"glad": 1,
-			"mad": 1,
-			"strict": 1,
-			"tired": 1,
-			"solid": 1,
-			"extreme": 1,
-			"mature": 1,
-			"true": 1,
-			"free": 1,
-			"curly": 1,
-			"angry": 1
-		}
+    var dos = {
+      "absurd": 1,
+      "aggressive": 1,
+      "alert": 1,
+      "alive": 1,
+      "awesome": 1,
+      "beautiful": 1,
+      "big": 1,
+      "bitter": 1,
+      "black": 1,
+      "blue": 1,
+      "bored": 1,
+      "boring": 1,
+      "brash": 1,
+      "brave": 1,
+      "brief": 1,
+      "bright": 1,
+      "broad": 1,
+      "brown": 1,
+      "calm": 1,
+      "charming": 1,
+      "cheap": 1,
+      "clean": 1,
+      "cold": 1,
+      "cool": 1,
+      "cruel": 1,
+      "cute": 1,
+      "damp": 1,
+      "deep": 1,
+      "dear": 1,
+      "dead": 1,
+      "dark": 1,
+      "dirty": 1,
+      "drunk": 1,
+      "dull": 1,
+      "eager": 1,
+      "efficient": 1,
+      "even": 1,
+      "faint": 1,
+      "fair": 1,
+      "fanc": 1,
+      "fast": 1,
+      "fat": 1,
+      "feeble": 1,
+      "few": 1,
+      "fierce ": 1,
+      "fine": 1,
+      "flat": 1,
+      "forgetful": 1,
+      "frail": 1,
+      "full": 1,
+      "gentle": 1,
+      "glib": 1,
+      "great": 1,
+      "green": 1,
+      "gruesome": 1,
+      "handsome": 1,
+      "hard": 1,
+      "harsh": 1,
+      "high": 1,
+      "hollow": 1,
+      "hot": 1,
+      "impolite": 1,
+      "innocent": 1,
+      "keen": 1,
+      "kind": 1,
+      "lame": 1,
+      "lean": 1,
+      "light": 1,
+      "little": 1,
+      "loose": 1,
+      "long": 1,
+      "loud": 1,
+      "low": 1,
+      "lush": 1,
+      "macho": 1,
+      "mean": 1,
+      "meek": 1,
+      "mellow": 1,
+      "mundane": 1,
+      "near": 1,
+      "neat": 1,
+      "new": 1,
+      "nice": 1,
+      "normal": 1,
+      "odd": 1,
+      "old": 1,
+      "pale": 1,
+      "pink": 1,
+      "plain": 1,
+      "poor": 1,
+      "proud": 1,
+      "purple": 1,
+      "quick": 1,
+      "rare": 1,
+      "rapid": 1,
+      "red": 1,
+      "rich": 1,
+      "ripe": 1,
+      "rotten": 1,
+      "round": 1,
+      "rude": 1,
+      "sad": 1,
+      "safe": 1,
+      "scarce": 1,
+      "scared": 1,
+      "shallow": 1,
+      "sharp": 1,
+      "short": 1,
+      "shrill": 1,
+      "simple": 1,
+      "slim": 1,
+      "slow": 1,
+      "small": 1,
+      "smart": 1,
+      "smooth": 1,
+      "soft": 1,
+      "sore": 1,
+      "sour": 1,
+      "square": 1,
+      "stale": 1,
+      "steep": 1,
+      "stiff": 1,
+      "straight": 1,
+      "strange": 1,
+      "strong": 1,
+      "sweet": 1,
+      "swift": 1,
+      "tall": 1,
+      "tame": 1,
+      "tart": 1,
+      "tender": 1,
+      "tense": 1,
+      "thick": 1,
+      "thin": 1,
+      "tight": 1,
+      "tough": 1,
+      "vague": 1,
+      "vast": 1,
+      "vulgar": 1,
+      "warm": 1,
+      "weak": 1,
+      "wet": 1,
+      "white": 1,
+      "wide": 1,
+      "wild": 1,
+      "wise": 1,
+      "young": 1,
+      "yellow": 1,
+      "easy": 1,
+      "narrow": 1,
+      "late": 1,
+      "early": 1,
+      "soon": 1,
+      "close": 1,
+      "empty": 1,
+      "dry": 1,
+      "windy": 1,
+      "noisy": 1,
+      "thirsty": 1,
+      "hungry": 1,
+      "fresh": 1,
+      "quiet": 1,
+      "clear": 1,
+      "heavy": 1,
+      "happy": 1,
+      "funny": 1,
+      "lucky": 1,
+      "pretty": 1,
+      "important": 1,
+      "interesting": 1,
+      "attractive": 1,
+      "dangerous": 1,
+      "intellegent": 1,
+      "pure": 1,
+      "orange": 1,
+      "large": 1,
+      "firm": 1,
+      "grand": 1,
+      "formal": 1,
+      "raw": 1,
+      "weird": 1,
+      "glad": 1,
+      "mad": 1,
+      "strict": 1,
+      "tired": 1,
+      "solid": 1,
+      "extreme": 1,
+      "mature": 1,
+      "true": 1,
+      "free": 1,
+      "curly": 1,
+      "angry": 1
+    }
 
-		var dont = {
-			"overweight": 1,
-			"main": 1,
-			"nearby": 1,
-			"asleep": 1,
-			"weekly": 1,
-			"secret": 1,
-			"certain": 1
-		}
+    var dont = {
+      "overweight": 1,
+      "main": 1,
+      "nearby": 1,
+      "asleep": 1,
+      "weekly": 1,
+      "secret": 1,
+      "certain": 1
+    }
 
-		var transforms = [{
-			reg: /y$/i,
-			repl: 'ier'
-		}, {
-			reg: /([aeiou])t$/i,
-			repl: '$1tter'
-		}, {
-			reg: /([aeou])de$/i,
-			repl: '$1der'
-		}, {
-			reg: /nge$/i,
-			repl: 'nger'
-		}
-		]
+    var transforms = [{
+      reg: /y$/i,
+      repl: 'ier'
+    }, {
+      reg: /([aeiou])t$/i,
+      repl: '$1tter'
+    }, {
+      reg: /([aeou])de$/i,
+      repl: '$1der'
+    }, {
+      reg: /nge$/i,
+      repl: 'nger'
+    }]
 
-		var matches = [
-			/ght$/,
-			/nge$/,
-			/ough$/,
-			/ain$/,
-			/uel$/,
-			/[au]ll$/,
-			/ow$/,
-			/old$/,
-			/oud$/,
-			/e[ae]p$/
-		]
+    var matches = [
+      /ght$/,
+      /nge$/,
+      /ough$/,
+      /ain$/,
+      /uel$/,
+      /[au]ll$/,
+      /ow$/,
+      /old$/,
+      /oud$/,
+      /e[ae]p$/
+    ]
 
-		var not_matches = [
-			/ary$/,
-			/ous$/
-		]
+    var not_matches = [
+      /ary$/,
+      /ous$/
+    ]
 
-		if (dont[str]) {
-			return null
-		}
+    if (dont[str]) {
+      return null
+    }
 
-		if (dos[str]) {
-			if (str.match(/e$/)) {
-				return str + "r"
-			} else {
-				return str + "er"
-			}
-		}
+    if (dos[str]) {
+      if (str.match(/e$/)) {
+        return str + "r"
+      } else {
+        return str + "er"
+      }
+    }
 
-		if (irregulars[str]) {
-			return irregulars[str]
-		}
+    if (irregulars[str]) {
+      return irregulars[str]
+    }
 
-		var i;
-		for (i = 0; i < not_matches.length; i++) {
-			if (str.match(not_matches[i])) {
-				return "more " + str
-			}
-		}
+    var i;
+    for (i = 0; i < not_matches.length; i++) {
+      if (str.match(not_matches[i])) {
+        return "more " + str
+      }
+    }
 
-		for (i = 0; i < transforms.length; i++) {
-			if (str.match(transforms[i].reg)) {
-				return str.replace(transforms[i].reg, transforms[i].repl)
-			}
-		}
+    for (i = 0; i < transforms.length; i++) {
+      if (str.match(transforms[i].reg)) {
+        return str.replace(transforms[i].reg, transforms[i].repl)
+      }
+    }
 
-		for (i = 0; i < matches.length; i++) {
-			if (str.match(matches[i])) {
-				return str + "er"
-			}
-		}
-		return "more " + str
-	}
+    for (i = 0; i < matches.length; i++) {
+      if (str.match(matches[i])) {
+        return str + "er"
+      }
+    }
+    return "more " + str
+  }
 
-	if (typeof module !== "undefined" && module.exports) {
-		module.exports = main;
-	}
-	return main;
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+  return main;
 })();
 
 // console.log(to_comparative('dry'))
@@ -6781,294 +6788,293 @@ var to_comparative = (function() {
 //turn 'quick' into 'quickest'
 var to_superlative = (function() {
 
-	var main = function(str) {
-		var irregulars = {
-			"nice": "nicest",
-			"late": "latest",
-			"hard": "hardest",
-			"inner": "innermost",
-			"outer": "outermost",
-			"far": "furthest",
-			"worse": "worst",
-			"bad": "worst",
-			"good": "best"
-		}
+  var main = function(str) {
+    var irregulars = {
+      "nice": "nicest",
+      "late": "latest",
+      "hard": "hardest",
+      "inner": "innermost",
+      "outer": "outermost",
+      "far": "furthest",
+      "worse": "worst",
+      "bad": "worst",
+      "good": "best"
+    }
 
-		var dos = {
-			"absurd": 1,
-			"aggressive": 1,
-			"alert": 1,
-			"alive": 1,
-			"awesome": 1,
-			"beautiful": 1,
-			"big": 1,
-			"bitter": 1,
-			"black": 1,
-			"blue": 1,
-			"bored": 1,
-			"boring": 1,
-			"brash": 1,
-			"brave": 1,
-			"brief": 1,
-			"bright": 1,
-			"broad": 1,
-			"brown": 1,
-			"calm": 1,
-			"charming": 1,
-			"cheap": 1,
-			"clean": 1,
-			"cold": 1,
-			"cool": 1,
-			"cruel": 1,
-			"cute": 1,
-			"damp": 1,
-			"deep": 1,
-			"dear": 1,
-			"dead": 1,
-			"dark": 1,
-			"dirty": 1,
-			"drunk": 1,
-			"dull": 1,
-			"eager": 1,
-			"efficient": 1,
-			"even": 1,
-			"faint": 1,
-			"fair": 1,
-			"fanc": 1,
-			"fast": 1,
-			"fat": 1,
-			"feeble": 1,
-			"few": 1,
-			"fierce ": 1,
-			"fine": 1,
-			"flat": 1,
-			"forgetful": 1,
-			"frail": 1,
-			"full": 1,
-			"gentle": 1,
-			"glib": 1,
-			"great": 1,
-			"green": 1,
-			"gruesome": 1,
-			"handsome": 1,
-			"hard": 1,
-			"harsh": 1,
-			"high": 1,
-			"hollow": 1,
-			"hot": 1,
-			"impolite": 1,
-			"innocent": 1,
-			"keen": 1,
-			"kind": 1,
-			"lame": 1,
-			"lean": 1,
-			"light": 1,
-			"little": 1,
-			"loose": 1,
-			"long": 1,
-			"loud": 1,
-			"low": 1,
-			"lush": 1,
-			"macho": 1,
-			"mean": 1,
-			"meek": 1,
-			"mellow": 1,
-			"mundane": 1,
-			"near": 1,
-			"neat": 1,
-			"new": 1,
-			"nice": 1,
-			"normal": 1,
-			"odd": 1,
-			"old": 1,
-			"pale": 1,
-			"pink": 1,
-			"plain": 1,
-			"poor": 1,
-			"proud": 1,
-			"purple": 1,
-			"quick": 1,
-			"rare": 1,
-			"rapid": 1,
-			"red": 1,
-			"rich": 1,
-			"ripe": 1,
-			"rotten": 1,
-			"round": 1,
-			"rude": 1,
-			"sad": 1,
-			"safe": 1,
-			"scarce": 1,
-			"scared": 1,
-			"shallow": 1,
-			"sharp": 1,
-			"short": 1,
-			"shrill": 1,
-			"simple": 1,
-			"slim": 1,
-			"slow": 1,
-			"small": 1,
-			"smart": 1,
-			"smooth": 1,
-			"soft": 1,
-			"sore": 1,
-			"sour": 1,
-			"square": 1,
-			"stale": 1,
-			"steep": 1,
-			"stiff": 1,
-			"straight": 1,
-			"strange": 1,
-			"strong": 1,
-			"sweet": 1,
-			"swift": 1,
-			"tall": 1,
-			"tame": 1,
-			"tart": 1,
-			"tender": 1,
-			"tense": 1,
-			"thick": 1,
-			"thin": 1,
-			"tight": 1,
-			"tough": 1,
-			"vague": 1,
-			"vast": 1,
-			"vulgar": 1,
-			"warm": 1,
-			"weak": 1,
-			"wet": 1,
-			"white": 1,
-			"wide": 1,
-			"wild": 1,
-			"wise": 1,
-			"young": 1,
-			"yellow": 1,
-			"easy": 1,
-			"narrow": 1,
-			"late": 1,
-			"early": 1,
-			"soon": 1,
-			"close": 1,
-			"empty": 1,
-			"dry": 1,
-			"windy": 1,
-			"noisy": 1,
-			"thirsty": 1,
-			"hungry": 1,
-			"fresh": 1,
-			"quiet": 1,
-			"clear": 1,
-			"heavy": 1,
-			"happy": 1,
-			"funny": 1,
-			"lucky": 1,
-			"pretty": 1,
-			"important": 1,
-			"interesting": 1,
-			"attractive": 1,
-			"dangerous": 1,
-			"intellegent": 1,
-			"pure": 1,
-			"orange": 1,
-			"large": 1,
-			"firm": 1,
-			"grand": 1,
-			"formal": 1,
-			"raw": 1,
-			"weird": 1,
-			"glad": 1,
-			"mad": 1,
-			"strict": 1,
-			"tired": 1,
-			"solid": 1,
-			"extreme": 1,
-			"mature": 1,
-			"true": 1,
-			"free": 1,
-			"curly": 1,
-			"angry": 1
-		}
+    var dos = {
+      "absurd": 1,
+      "aggressive": 1,
+      "alert": 1,
+      "alive": 1,
+      "awesome": 1,
+      "beautiful": 1,
+      "big": 1,
+      "bitter": 1,
+      "black": 1,
+      "blue": 1,
+      "bored": 1,
+      "boring": 1,
+      "brash": 1,
+      "brave": 1,
+      "brief": 1,
+      "bright": 1,
+      "broad": 1,
+      "brown": 1,
+      "calm": 1,
+      "charming": 1,
+      "cheap": 1,
+      "clean": 1,
+      "cold": 1,
+      "cool": 1,
+      "cruel": 1,
+      "cute": 1,
+      "damp": 1,
+      "deep": 1,
+      "dear": 1,
+      "dead": 1,
+      "dark": 1,
+      "dirty": 1,
+      "drunk": 1,
+      "dull": 1,
+      "eager": 1,
+      "efficient": 1,
+      "even": 1,
+      "faint": 1,
+      "fair": 1,
+      "fanc": 1,
+      "fast": 1,
+      "fat": 1,
+      "feeble": 1,
+      "few": 1,
+      "fierce ": 1,
+      "fine": 1,
+      "flat": 1,
+      "forgetful": 1,
+      "frail": 1,
+      "full": 1,
+      "gentle": 1,
+      "glib": 1,
+      "great": 1,
+      "green": 1,
+      "gruesome": 1,
+      "handsome": 1,
+      "hard": 1,
+      "harsh": 1,
+      "high": 1,
+      "hollow": 1,
+      "hot": 1,
+      "impolite": 1,
+      "innocent": 1,
+      "keen": 1,
+      "kind": 1,
+      "lame": 1,
+      "lean": 1,
+      "light": 1,
+      "little": 1,
+      "loose": 1,
+      "long": 1,
+      "loud": 1,
+      "low": 1,
+      "lush": 1,
+      "macho": 1,
+      "mean": 1,
+      "meek": 1,
+      "mellow": 1,
+      "mundane": 1,
+      "near": 1,
+      "neat": 1,
+      "new": 1,
+      "nice": 1,
+      "normal": 1,
+      "odd": 1,
+      "old": 1,
+      "pale": 1,
+      "pink": 1,
+      "plain": 1,
+      "poor": 1,
+      "proud": 1,
+      "purple": 1,
+      "quick": 1,
+      "rare": 1,
+      "rapid": 1,
+      "red": 1,
+      "rich": 1,
+      "ripe": 1,
+      "rotten": 1,
+      "round": 1,
+      "rude": 1,
+      "sad": 1,
+      "safe": 1,
+      "scarce": 1,
+      "scared": 1,
+      "shallow": 1,
+      "sharp": 1,
+      "short": 1,
+      "shrill": 1,
+      "simple": 1,
+      "slim": 1,
+      "slow": 1,
+      "small": 1,
+      "smart": 1,
+      "smooth": 1,
+      "soft": 1,
+      "sore": 1,
+      "sour": 1,
+      "square": 1,
+      "stale": 1,
+      "steep": 1,
+      "stiff": 1,
+      "straight": 1,
+      "strange": 1,
+      "strong": 1,
+      "sweet": 1,
+      "swift": 1,
+      "tall": 1,
+      "tame": 1,
+      "tart": 1,
+      "tender": 1,
+      "tense": 1,
+      "thick": 1,
+      "thin": 1,
+      "tight": 1,
+      "tough": 1,
+      "vague": 1,
+      "vast": 1,
+      "vulgar": 1,
+      "warm": 1,
+      "weak": 1,
+      "wet": 1,
+      "white": 1,
+      "wide": 1,
+      "wild": 1,
+      "wise": 1,
+      "young": 1,
+      "yellow": 1,
+      "easy": 1,
+      "narrow": 1,
+      "late": 1,
+      "early": 1,
+      "soon": 1,
+      "close": 1,
+      "empty": 1,
+      "dry": 1,
+      "windy": 1,
+      "noisy": 1,
+      "thirsty": 1,
+      "hungry": 1,
+      "fresh": 1,
+      "quiet": 1,
+      "clear": 1,
+      "heavy": 1,
+      "happy": 1,
+      "funny": 1,
+      "lucky": 1,
+      "pretty": 1,
+      "important": 1,
+      "interesting": 1,
+      "attractive": 1,
+      "dangerous": 1,
+      "intellegent": 1,
+      "pure": 1,
+      "orange": 1,
+      "large": 1,
+      "firm": 1,
+      "grand": 1,
+      "formal": 1,
+      "raw": 1,
+      "weird": 1,
+      "glad": 1,
+      "mad": 1,
+      "strict": 1,
+      "tired": 1,
+      "solid": 1,
+      "extreme": 1,
+      "mature": 1,
+      "true": 1,
+      "free": 1,
+      "curly": 1,
+      "angry": 1
+    }
 
-		var dont = {
-			"overweight": 1,
-			"ready": 1
-		}
+    var dont = {
+      "overweight": 1,
+      "ready": 1
+    }
 
-		var transforms = [{
-			reg: /y$/i,
-			repl: 'iest'
-		}, {
-			reg: /([aeiou])t$/i,
-			repl: '$1ttest'
-		}, {
-			reg: /([aeou])de$/i,
-			repl: '$1dest'
-		}, {
-			reg: /nge$/i,
-			repl: 'ngest'
-		}
-		]
+    var transforms = [{
+      reg: /y$/i,
+      repl: 'iest'
+    }, {
+      reg: /([aeiou])t$/i,
+      repl: '$1ttest'
+    }, {
+      reg: /([aeou])de$/i,
+      repl: '$1dest'
+    }, {
+      reg: /nge$/i,
+      repl: 'ngest'
+    }]
 
-		var matches = [
-			/ght$/,
-			/nge$/,
-			/ough$/,
-			/ain$/,
-			/uel$/,
-			/[au]ll$/,
-			/ow$/,
-			/oud$/,
-			/...p$/
-		]
+    var matches = [
+      /ght$/,
+      /nge$/,
+      /ough$/,
+      /ain$/,
+      /uel$/,
+      /[au]ll$/,
+      /ow$/,
+      /oud$/,
+      /...p$/
+    ]
 
-		var not_matches = [
-			/ary$/
-		]
+    var not_matches = [
+      /ary$/
+    ]
 
-		var generic_transformation = function(str) {
-			if (str.match(/e$/)) {
-				return str + "st"
-			} else {
-				return str + "est"
-			}
-		}
+    var generic_transformation = function(str) {
+      if (str.match(/e$/)) {
+        return str + "st"
+      } else {
+        return str + "est"
+      }
+    }
 
-		if (dos[str]) {
-			return generic_transformation(str)
-		}
+    if (dos[str]) {
+      return generic_transformation(str)
+    }
 
-		if (dont[str]) {
-			return "most " + str
-		}
+    if (dont[str]) {
+      return "most " + str
+    }
 
-		if (irregulars[str]) {
-			return irregulars[str]
-		}
-		var i;
-		for (i = 0; i < not_matches.length; i++) {
-			if (str.match(not_matches[i])) {
-				return "most " + str
-			}
-		}
+    if (irregulars[str]) {
+      return irregulars[str]
+    }
+    var i;
+    for (i = 0; i < not_matches.length; i++) {
+      if (str.match(not_matches[i])) {
+        return "most " + str
+      }
+    }
 
-		for (i = 0; i < transforms.length; i++) {
-			if (str.match(transforms[i].reg)) {
-				return str.replace(transforms[i].reg, transforms[i].repl)
-			}
-		}
+    for (i = 0; i < transforms.length; i++) {
+      if (str.match(transforms[i].reg)) {
+        return str.replace(transforms[i].reg, transforms[i].repl)
+      }
+    }
 
-		for (i = 0; i < matches.length; i++) {
-			if (str.match(matches[i])) {
-				return generic_transformation(str)
-			}
-		}
-		return "most " + str
-	}
+    for (i = 0; i < matches.length; i++) {
+      if (str.match(matches[i])) {
+        return generic_transformation(str)
+      }
+    }
+    return "most " + str
+  }
 
-	if (typeof module !== "undefined" && module.exports) {
-		module.exports = main;
-	}
-	return main;
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+  return main;
 })();
 
 // console.log(to_superlative('dry'))
@@ -7077,136 +7083,136 @@ var to_superlative = (function() {
 //turn 'quick' into 'quickly'
 var adj_to_adv = (function() {
 
-	var main = function(str) {
-		var irregulars = {
-			"idle": "idly",
-			"public": "publicly",
-			"vague": "vaguely",
-			"day": "daily",
-			"icy": "icily",
-			"single": "singly",
-			"female": "womanly",
-			"male": "manly",
-			"simple": "simply",
-			"whole": "wholly",
-			"special": "especially",
-			"straight": "straight",
-			"wrong": "wrong",
-			"fast": "fast",
-			"hard": "hard",
-			"late": "late",
-			"early": "early",
-			"well": "well",
-			"best": "best",
-			"latter": "latter",
-			"bad": "badly"
-		}
+  var main = function(str) {
+    var irregulars = {
+      "idle": "idly",
+      "public": "publicly",
+      "vague": "vaguely",
+      "day": "daily",
+      "icy": "icily",
+      "single": "singly",
+      "female": "womanly",
+      "male": "manly",
+      "simple": "simply",
+      "whole": "wholly",
+      "special": "especially",
+      "straight": "straight",
+      "wrong": "wrong",
+      "fast": "fast",
+      "hard": "hard",
+      "late": "late",
+      "early": "early",
+      "well": "well",
+      "best": "best",
+      "latter": "latter",
+      "bad": "badly"
+    }
 
-		var dont = {
-			"foreign": 1,
-			"black": 1,
-			"modern": 1,
-			"next": 1,
-			"difficult": 1,
-			"degenerate": 1,
-			"young": 1,
-			"awake": 1,
-			"back": 1,
-			"blue": 1,
-			"brown": 1,
-			"orange": 1,
-			"complex": 1,
-			"cool": 1,
-			"dirty": 1,
-			"done": 1,
-			"empty": 1,
-			"fat": 1,
-			"fertile": 1,
-			"frozen": 1,
-			"gold": 1,
-			"grey": 1,
-			"gray": 1,
-			"green": 1,
-			"medium": 1,
-			"parallel": 1,
-			"outdoor": 1,
-			"unknown": 1,
-			"undersized": 1,
-			"used": 1,
-			"welcome": 1,
-			"yellow": 1,
-			"white": 1,
-			"fixed": 1,
-			"mixed": 1,
-			"super": 1,
-			"guilty": 1,
-			"tiny": 1,
-			"able": 1,
-			"unable": 1,
-			"same": 1,
-			"adult": 1
-		}
+    var dont = {
+      "foreign": 1,
+      "black": 1,
+      "modern": 1,
+      "next": 1,
+      "difficult": 1,
+      "degenerate": 1,
+      "young": 1,
+      "awake": 1,
+      "back": 1,
+      "blue": 1,
+      "brown": 1,
+      "orange": 1,
+      "complex": 1,
+      "cool": 1,
+      "dirty": 1,
+      "done": 1,
+      "empty": 1,
+      "fat": 1,
+      "fertile": 1,
+      "frozen": 1,
+      "gold": 1,
+      "grey": 1,
+      "gray": 1,
+      "green": 1,
+      "medium": 1,
+      "parallel": 1,
+      "outdoor": 1,
+      "unknown": 1,
+      "undersized": 1,
+      "used": 1,
+      "welcome": 1,
+      "yellow": 1,
+      "white": 1,
+      "fixed": 1,
+      "mixed": 1,
+      "super": 1,
+      "guilty": 1,
+      "tiny": 1,
+      "able": 1,
+      "unable": 1,
+      "same": 1,
+      "adult": 1
+    }
 
-		var transforms = [{
-			reg: /al$/i,
-			repl: 'ally'
-		}, {
-			reg: /ly$/i,
-			repl: 'ly'
-		}, {
-			reg: /(.{3})y$/i,
-			repl: '$1ily'
-		}, {
-			reg: /que$/i,
-			repl: 'quely'
-		}, {
-			reg: /ue$/i,
-			repl: 'uly'
-		}, {
-			reg: /ic$/i,
-			repl: 'ically'
-		}, {
-			reg: /ble$/i,
-			repl: 'bly'
-		}, {
-			reg: /l$/i,
-			repl: 'ly'
-		}]
+    var transforms = [{
+      reg: /al$/i,
+      repl: 'ally'
+    }, {
+      reg: /ly$/i,
+      repl: 'ly'
+    }, {
+      reg: /(.{3})y$/i,
+      repl: '$1ily'
+    }, {
+      reg: /que$/i,
+      repl: 'quely'
+    }, {
+      reg: /ue$/i,
+      repl: 'uly'
+    }, {
+      reg: /ic$/i,
+      repl: 'ically'
+    }, {
+      reg: /ble$/i,
+      repl: 'bly'
+    }, {
+      reg: /l$/i,
+      repl: 'ly'
+    }]
 
-		var not_matches = [
-			/airs$/,
-			/ll$/,
-			/ee.$/,
-			/ile$/
-		]
+    var not_matches = [
+      /airs$/,
+      /ll$/,
+      /ee.$/,
+      /ile$/
+    ]
 
-		if (dont[str]) {
-			return null
-		}
-		if (irregulars[str]) {
-			return irregulars[str]
-		}
-		if (str.length <= 3) {
-			return null
-		}
-		var i;
-		for (i = 0; i < not_matches.length; i++) {
-			if (str.match(not_matches[i])) {
-				return null
-			}
-		}
-		for (i = 0; i < transforms.length; i++) {
-			if (str.match(transforms[i].reg)) {
-				return str.replace(transforms[i].reg, transforms[i].repl)
-			}
-		}
-		return str + 'ly'
-	}
+    if (dont[str]) {
+      return null
+    }
+    if (irregulars[str]) {
+      return irregulars[str]
+    }
+    if (str.length <= 3) {
+      return null
+    }
+    var i;
+    for (i = 0; i < not_matches.length; i++) {
+      if (str.match(not_matches[i])) {
+        return null
+      }
+    }
+    for (i = 0; i < transforms.length; i++) {
+      if (str.match(transforms[i].reg)) {
+        return str.replace(transforms[i].reg, transforms[i].repl)
+      }
+    }
+    return str + 'ly'
+  }
 
-	if (typeof module !== "undefined" && module.exports) {
-		module.exports = main;
-	}
-	return main;
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+  return main;
 })();
 
 // console.log(adj_to_adv('direct'))
@@ -7289,2168 +7295,2168 @@ if (typeof module !== "undefined" && module.exports) {
 //this list is the seed, from which various forms are conjugated
 var lexicon = (function() {
 
-  // var verb_conjugate, adj_to_adv, verb_to_doer, to_superlative, to_comparative;
-  if (typeof module !== "undefined" && module.exports) {
-    verb_conjugate = require("../parents/verb/conjugate/conjugate")
-    adj_to_adv = require("../parents/adjective/conjugate/to_adverb");
-    verb_to_doer = require("../parents/verb/conjugate/to_doer");
-    to_superlative = require("../parents/adjective/conjugate/to_superlative");
-    to_comparative = require("../parents/adjective/conjugate/to_comparative");
-  }
-  var main = {
-    //conjunctions
-    "yet": "CC",
-    "therefore": "CC",
-    "or": "CC",
-    "while": "CC",
-    "nor": "CC",
-    "whether": "CC",
-    "though": "CC",
-    "because": "CC",
-    "but": "CC",
-    "for": "CC",
-    "and": "CC",
-    "if": "CC",
-    "however": "CC",
-    "before": "CC",
-    "although": "CC",
-    "how": "CC",
-
-    //numbers
-    'zero': "CD",
-    'one': "CD",
-    'two': "CD",
-    'three': "CD",
-    'four': "CD",
-    'five': "CD",
-    'six': "CD",
-    'seven': "CD",
-    'eight': "CD",
-    'nine': "CD",
-    'ten': "CD",
-    'eleven': "CD",
-    'twelve': "CD",
-    'thirteen': "CD",
-    'fourteen': "CD",
-    'fifteen': "CD",
-    'sixteen': "CD",
-    'seventeen': "CD",
-    'eighteen': "CD",
-    'nineteen': "CD",
-    'twenty': "CD",
-    'thirty': "CD",
-    'forty': "CD",
-    'fifty': "CD",
-    'sixty': "CD",
-    'seventy': "CD",
-    'eighty': "CD",
-    'ninety': "CD",
-    'hundred': "CD",
-    'thousand': "CD",
-    'million': "CD",
-    'billion': "CD",
-    'trillion': "CD",
-    'quadrillion': "CD",
-    'quintillion': "CD",
-    'sextillion': "CD",
-    'septillion': "CD",
-    'octillion': "CD",
-    'nonillion': "CD",
-    'decillion': "CD",
-
-    //copula
-    "is": "CP",
-    "will be": "CP",
-    "are": "CP",
-    "was": "CP",
-    "were": "CP",
-    "am": "CP",
-
-    //determiners
-    "this": "DT",
-    "any": "DT",
-    "enough": "DT",
-    "each": "DT",
-    "whatever": "DT",
-    "every": "DT",
-    "which": "DT",
-    "these": "DT",
-    "another": "DT",
-    "plenty": "DT",
-    "whichever": "DT",
-    "neither": "DT",
-    "an": "DT",
-    "a": "DT",
-    "least": "DT",
-    "own": "DT",
-    "few": "DT",
-    "both": "DT",
-    "those": "DT",
-    "the": "DT",
-    "that": "DT",
-    "various": "DT",
-    "what": "DT",
-    "either": "DT",
-    "much": "DT",
-    "some": "DT",
-    "else": "DT",
-    //some other languages (what could go wrong?)
-    "la": "DT",
-    "le": "DT",
-    "les": "DT",
-    "des": "DT",
-    "de": "DT",
-    "du": "DT",
-    "el": "DT",
-
-    //prepositions
-    "until": "IN",
-    "onto": "IN",
-    "of": "IN",
-    "into": "IN",
-    "out": "IN",
-    "except": "IN",
-    "across": "IN",
-    "by": "IN",
-    "between": "IN",
-    "at": "IN",
-    "down": "IN",
-    "as": "IN",
-    "from": "IN",
-    "around": "IN",
-    "with": "IN",
-    "among": "IN",
-    "upon": "IN",
-    "amid": "IN",
-    "to": "IN",
-    "along": "IN",
-    "since": "IN",
-    "about": "IN",
-    "off": "IN",
-    "on": "IN",
-    "within": "IN",
-    "in": "IN",
-    "during": "IN",
-    "per": "IN",
-    "without": "IN",
-    "throughout": "IN",
-    "through": "IN",
-    "than": "IN",
-    "via": "IN",
-    "up": "IN",
-
-    //modal verbs
-    "can": "MD",
-    "may": "MD",
-    "could": "MD",
-    "might": "MD",
-    "will": "MD",
-    "ought to": "MD",
-    "would": "MD",
-    "must": "MD",
-    "shall": "MD",
-    "should": "MD",
-
-    //posessive pronouns
-    "mine": "PP",
-    "something": "PP",
-    "none": "PP",
-    "anything": "PP",
-    "anyone": "PP",
-    "lot": "PP",
-    "theirs": "PP",
-    "himself": "PP",
-    "ours": "PP",
-    "his": "PP",
-    "my": "PP",
-    "their": "PP",
-    "yours": "PP",
-    "your": "PP",
-    "our": "PP",
-    "its": "PP",
-    "nothing": "PP",
-    "herself": "PP",
-    "hers": "PP",
-    "themselves": "PP",
-    "everything": "PP",
-    "myself": "PP",
-    "itself": "PP",
-    "who": "PP",
-    "her": "PP", //this one is pretty ambiguous
-
-    //personal pronouns (nouns)
-    "it": "PRP",
-    "they": "PRP",
-    "i": "PRP",
-    "them": "PRP",
-    "you": "PRP",
-    "she": "PRP",
-    "me": "PRP",
-    "he": "PRP",
-    "him": "PRP",
-    "ourselves": "PRP",
-    "us": "PRP",
-    "we": "PRP",
-    "thou": "PRP",
-    "il": "PRP",
-    "elle": "PRP",
-
-    //some manual adverbs (the rest are generated)
-    "now": "RB",
-    "again": "RB",
-    "already": "RB",
-    "soon": "RB",
-    "directly": "RB",
-    "toward": "RB",
-    "forever": "RB",
-    "apart": "RB",
-    "instead": "RB",
-    "yes": "RB",
-    "alone": "RB",
-    "ago": "RB",
-    "indeed": "RB",
-    "ever": "RB",
-    "quite": "RB",
-    "perhaps": "RB",
-    "where": "RB",
-    "then": "RB",
-    "here": "RB",
-    "thus": "RB",
-    "very": "RB",
-    "often": "RB",
-    "once": "RB",
-    "never": "RB",
-    "why": "RB",
-    "when": "RB",
-    "away": "RB",
-    "always": "RB",
-    "sometimes": "RB",
-    "also": "RB",
-    "maybe": "RB",
-    "so": "RB",
-    "just": "RB",
-    "well": "RB",
-
-    //interjections
-    "uhh": "UH",
-    "uh-oh": "UH",
-    "ugh": "UH",
-    "sheesh": "UH",
-    "eww": "UH",
-    "pff": "UH",
-    "voila": "UH",
-    "oy": "UH",
-    "eep": "UH",
-    "hurrah": "UH",
-    "yuck": "UH",
-    "ow": "UH",
-    "duh": "UH",
-    "oh": "UH",
-    "hmm": "UH",
-    "yeah": "UH",
-    "whoa": "UH",
-    "ooh": "UH",
-    "whee": "UH",
-    "ah": "UH",
-    "bah": "UH",
-    "gah": "UH",
-    "yaa": "UH",
-    "phew": "UH",
-    "gee": "UH",
-    "ahem": "UH",
-    "eek": "UH",
-    "meh": "UH",
-    "yahoo": "UH",
-    "oops": "UH",
-    "d'oh": "UH",
-    "psst": "UH",
-    "argh": "UH",
-    "grr": "UH",
-    "nah": "UH",
-    "shhh": "UH",
-    "whew": "UH",
-    "mmm": "UH",
-    "yay": "UH",
-    "uh-huh": "UH",
-    "boo": "UH",
-    "wow": "UH",
-
-    //dates
-    "july": "CD",
-    "august": "CD",
-    "september": "CD",
-    "october": "CD",
-    "november": "CD",
-    "december": "CD",
-    "january": "CD",
-    "february": "CD",
-    "march": "CD",
-    "april": "CD",
-    // "may": "CD",
-    "june": "CD",
-    "monday": "CD",
-    "tuesday": "CD",
-    "wednesday": "CD",
-    "thursday": "CD",
-    "friday": "CD",
-    "saturday": "CD",
-    "sunday": "CD",
-
-    //contractions that don't need splitting-open, grammatically
-    "don't": "VB",
-    "isn't": "CP",
-    "ain't": "CP",
-    "aren't": "CP",
-    "won't": "VB",
-    "shouldn't": "MD",
-    "wouldn't": "MD",
-    "couldn't": "MD",
-    "mustn't": "MD",
-    "shan't": "MD",
-    "shant": "MD",
-    "lets": "MD", //arguable
-    "let's": "MD",
-    "what's": "VB", //somewhat ambiguous (what does|what are)
-    "where'd": "VBD",
-    "when'd": "VBD",
-    "how'd": "VBD",
-    "what'd": "VBD",
-    "who'd": "MD",
-    "'o": "IN",
-    "'em": "PRP",
-
-    //demonyms
-    "afghan":"JJ",
-    "albanian":"JJ",
-    "algerian":"JJ",
-    "argentine":"JJ",
-    "armenian":"JJ",
-    "australian":"JJ",
-    "aussie":"JJ",
-    "austrian":"JJ",
-    "bangladeshi":"JJ",
-    "belgian":"JJ",
-    "bolivian":"JJ",
-    "bosnian":"JJ",
-    "brazilian":"JJ",
-    "bulgarian":"JJ",
-    "cambodian":"JJ",
-    "canadian":"JJ",
-    "chilean":"JJ",
-    "chinese":"JJ",
-    "colombian":"JJ",
-    "croat":"JJ",
-    "cuban":"JJ",
-    "czech":"JJ",
-    "dominican":"JJ",
-    "egyptian":"JJ",
-    "british":"JJ",
-    "estonian":"JJ",
-    "ethiopian":"JJ",
-    "finnish":"JJ",
-    "french":"JJ",
-    "gambian":"JJ",
-    "georgian":"JJ",
-    "german":"JJ",
-    "greek":"JJ",
-    "haitian":"JJ",
-    "hungarian":"JJ",
-    "indian":"JJ",
-    "indonesian":"JJ",
-    "iranian":"JJ",
-    "iraqi":"JJ",
-    "irish":"JJ",
-    "israeli":"JJ",
-    "italian":"JJ",
-    "jamaican":"JJ",
-    "japanese":"JJ",
-    "jordanian":"JJ",
-    "kenyan":"JJ",
-    "korean":"JJ",
-    "kuwaiti":"JJ",
-    "latvian":"JJ",
-    "lebanese":"JJ",
-    "liberian":"JJ",
-    "libyan":"JJ",
-    "lithuanian":"JJ",
-    "macedonian":"JJ",
-    "malaysian":"JJ",
-    "mexican":"JJ",
-    "mongolian":"JJ",
-    "moroccan":"JJ",
-    "dutch":"JJ",
-    "nicaraguan":"JJ",
-    "nigerian":"JJ",
-    "norwegian":"JJ",
-    "omani":"JJ",
-    "pakistani":"JJ",
-    "palestinian":"JJ",
-    "filipino":"JJ",
-    "polish":"JJ",
-    "portuguese":"JJ",
-    "qatari":"JJ",
-    "romanian":"JJ",
-    "russian":"JJ",
-    "rwandan":"JJ",
-    "samoan":"JJ",
-    "saudi":"JJ",
-    "scottish":"JJ",
-    "senegalese":"JJ",
-    "serbian":"JJ",
-    "singaporean":"JJ",
-    "slovak":"JJ",
-    "somali":"JJ",
-    "sudanese":"JJ",
-    "swedish":"JJ",
-    "swiss":"JJ",
-    "syrian":"JJ",
-    "taiwanese":"JJ",
-    "thai":"JJ",
-    "tunisian":"JJ",
-    "ugandan":"JJ",
-    "ukrainian":"JJ",
-    "american":"JJ",
-    "hindi":"JJ",
-    "spanish":"JJ",
-    "venezuelan":"JJ",
-    "vietnamese":"JJ",
-    "welsh":"JJ",
-    "african":"JJ",
-    "european":"JJ",
-    "asian":"JJ",
-    "californian":"JJ",
-
-    //misc mine
-    "nope": "UH",
-    "said": "VBD",
-    "says": "VBZ",
-    "has": "VB",
-    "more": "RBR",
-    "had": "VBD",
-    "been": "VBD",
-    "going": "VBG",
-    "other": "JJ",
-    "no": "DT",
-    "there": "EX",
-    "after": "IN",
-    "many": "JJ",
-    "most": "JJ",
-    "last": "JJ",
-    "expected": "JJ",
-    "long": "JJ",
-    "far": "JJ",
-    "due": "JJ",
-    "higher": "JJR",
-    "larger": "JJR",
-    "better": "JJR",
-    "added": "VB",
-    "several": "RB",
-    "such": "RB",
-    "took": "VB",
-    "being": "VBG",
-    "began": "VBD",
-    "came": "VBD",
-    "did": "VBD",
-    "go": "VBP",
-    "too": "RB",
-    "president": "NN",
-    "dollar": "NN",
-    "student": "NN",
-    "patent": "NN",
-    "funding": "NN",
-    "morning": "NN",
-    "banking": "NN",
-    "ceiling": "NN",
-    "energy": "NN",
-    "secretary": "NN",
-    "purpose": "NN",
-    "friends": "NNS",
-    "less": "JJ",
-    "event":"NN",
-    "divine": "JJ",
-    "all": "JJ",
-    "define": "VB",
-    "went": "VBD",
-    "goes": "VB",
-    "sounds": "VBZ",
-    "measure": "VB",
-    "enhance": "VB",
-    "distinguish": "VB",
-    "randomly": "RB",
-    "abroad": "RB",
-
-    //missing words from amc
-    "given": "VBN",
-    "known": "VBN",
-    "rather": "RB",
-    "shown": "VBN",
-    "seen": "VBN",
-    "according": "VBG",
-    "almost": "RB",
-    "together": "JJ",
-    "means": "VBZ",
-    "despite": "IN",
-    "only": "JJ",
-    "outside": "JJ",
-    "below": "IN",
-    "multiple": "JJ",
-    "anyway": "RB",
-    "appropriate": "JJ",
-    "unless": "IN",
-    "whom": "PP",
-    "whose": "PP",
-    "evil": "JJ",
-    "earlier": "JJR",
-    "etc": "FW",
-    "twice": "RB",
-    "avoid": "VB",
-    "favorite": "JJ",
-    "whereas": "IN",
-    "born": "VBN",
-    "hit": "VB",
-    "resulting": "VBG",
-    "limited": "JJ",
-    "developing": "VBG",
-    "plus": "CC",
-    "biggest": "JJS",
-    "random": "JJ",
-    "republican": "JJ",
-    "okay": "JJ",
-    "essential": "JJ",
-    "somewhat": "RB",
-    "unlike": "IN",
-    "secondary": "JJ",
-    "somehow": "RB",
-    "yourself": "PRP",
-    "gay": "JJ",
-    "meanwhile": "RB",
-    "hence": "RB",
-    "further": "RB",
-    "furthermore": "RB",
-    "easier": "JJR",
-    "staining": "VBG",
-    "towards": "IN",
-    "aside": "RB",
-    "moreover": "RB",
-    "south": "JJ",
-    "pro": "JJ",
-    "meant": "VBD",
-    "versus": "CC",
-    "besides": "IN",
-    "northern": "JJ",
-    "anymore": "RB",
-    "urban": "JJ",
-    "acute": "JJ",
-    "prime": "JJ",
-    "arab": "JJ",
-    "overnight": "JJ",
-    "newly": "RB",
-    "ought": "MD",
-    "mixed": "JJ",
-    "crucial": "JJ",
-    "damn": "RB",
-
-    //formerly IN
-    "behind": "JJ",
-    "above": "JJ",
-    "beyond": "JJ",
-    "against": "JJ",
-    "under": "JJ",
-    "not":"CC",//?
-
-    //from multiples
-    "of course":"RB",
-    "at least":"RB",
-    "no longer":"RB",
-    "sort of":"RB",
-    "at first":"RB",
-    "once again":"RB",
-    "once more":"RB",
-    "up to":"RB",
-    "by now":"RB",
-    "all but":"RB",
-    "just about":"RB",
-    "on board":"JJ",
-    "a lot":"RB",
-    "by far":"RB",
-    "at best":"RB",
-    "at large":"RB",
-    "for good":"RB",
-    "vice versa":"JJ",
-    "en route":"JJ",
-    "for sure":"RB",
-    "upside down":"JJ",
-    "at most":"RB",
-    "per se":"RB",
-    "at worst":"RB",
-    "upwards of":"RB",
-    "en masse":"RB",
-    "point blank":"RB",
-    "up front":"JJ",
-    "in situ":"JJ",
-    "in vitro":"JJ",
-    "ad hoc":"JJ",
-    "de facto":"JJ",
-    "ad infinitum":"JJ",
-    "ad nauseam":"RB",
-    "for keeps":"JJ",
-    "a priori":"FW",
-    "et cetera":"FW",
-    "off guard":"JJ",
-    "spot on":"JJ",
-    "ipso facto":"JJ",
-    "not withstanding":"RB",
-    "de jure":"RB",
-    "a la":"IN",
-    "ad hominem":"NN",
-    "par excellence":"RB",
-    "de trop":"RB",
-    "a posteriori":"RB",
-    "fed up":"JJ",
-    "brand new":"JJ",
-    "old fashioned":"JJ",
-    "bona fide":"JJ",
-    "well off":"JJ",
-    "far off":"JJ",
-    "straight forward":"JJ",
-    "hard up":"JJ",
-    "sui generis":"JJ",
-    "en suite":"JJ",
-    "avant garde":"JJ",
-    "sans serif":"JJ",
-    "gung ho":"JJ",
-    "super duper":"JJ"
-  }
-
-  //verbs
-  var verbs = [
-    "collapse",
-    "stake",
-    "forsee",
-    "hide",
-    "suck",
-    "answer",
-    "argue",
-    "tend",
-    "examine",
-    "depend",
-    "form",
-    "figure",
-    "compete",
-    "mind",
-    "surround",
-    "suspect",
-    "reflect",
-    "wonder",
-    "act",
-    "hope",
-    "end",
-    "thank",
-    "file",
-    "regard",
-    "report",
-    "imagine",
-    "consider",
-    "miss",
-    "ensure",
-    "cause",
-    "work",
-    "enter",
-    "stop",
-    "defeat",
-    "surge",
-    "launch",
-    "turn",
-    "give",
-    "win",
-    "like",
-    "control",
-    "relate",
-    "remember",
-    "join",
-    "listen",
-    "train",
-    "break",
-    "spring",
-    "enjoy",
-    "fail",
-    "understand",
-    "recognize",
-    "draw",
-    "obtain",
-    "learn",
-    "fill",
-    "announce",
-    "prevent",
-    "fall",
-    "achieve",
-    "find",
-    "realize",
-    "involve",
-    "remove",
-    "lose",
-    "lie",
-    "build",
-    "aid",
-    "visit",
-    "test",
-    "strike",
-    "prepare",
-    "wait",
-    "ask",
-    "carry",
-    "suppose",
-    "determine",
-    "raise",
-    "send",
-    "love",
-    "use",
-    "pull",
-    "improve",
-    "contain",
-    "think",
-    "offer",
-    "speak",
-    "rise",
-    "talk",
-    "pick",
-    "care",
-    "express",
-    "remain",
-    "operate",
-    "deal",
-    "close",
-    "add",
-    "mention",
-    "read",
-    "support",
-    "grow",
-    "decide",
-    "walk",
-    "vary",
-    "demand",
-    "describe",
-    "sell",
-    "agree",
-    "happen",
-    "allow",
-    "suffer",
-    "have",
-    "study",
-    "be",
-    "press",
-    "watch",
-    "seem",
-    "occur",
-    "contribute",
-    "claim",
-    "become",
-    "make",
-    "compare",
-    "develop",
-    "apply",
-    "direct",
-    "discuss",
-    "know",
-    "sit",
-    "see",
-    "lead",
-    "indicate",
-    "require",
-    "change",
-    "fix",
-    "come",
-    "reach",
-    "prove",
-    "expect",
-    "exist",
-    "play",
-    "permit",
-    "meet",
-    "kill",
-    "pay",
-    "charge",
-    "increase",
-    "fight",
-    "tell",
-    "catch",
-    "believe",
-    "create",
-    "continue",
-    "live",
-    "help",
-    "represent",
-    "edit",
-    "serve",
-    "ride",
-    "appear",
-    "cover",
-    "set",
-    "maintain",
-    "start",
-    "stay",
-    "move",
-    "extend",
-    "leave",
-    "wear",
-    "run",
-    "design",
-    "supply",
-    "suggest",
-    "want",
-    "say",
-    "hear",
-    "drive",
-    "approach",
-    "cut",
-    "call",
-    "include",
-    "try",
-    "receive",
-    "save",
-    "discover",
-    "marry",
-    "throw",
-    "show",
-    "choose",
-    "need",
-    "establish",
-    "keep",
-    "assume",
-    "attend",
-    "buy",
-    "unite",
-    "feel",
-    "explain",
-    "publish",
-    "accept",
-    "settle",
-    "reduce",
-    "bring",
-    "do",
-    "let",
-    "shoot",
-    "look",
-    "take",
-    "interact",
-    "concern",
-    "put",
-    "labor",
-    "hold",
-    "return",
-    "select",
-    "die",
-    "provide",
-    "seek",
-    "stand",
-    "spend",
-    "begin",
-    "get",
-    "wish",
-    "hang",
-    "write",
-    "finish",
-    "follow",
-    "forget",
-    "feed",
-    "eat",
-    "disagree",
-    "produce",
-    "attack",
-    "attempt",
-    "bite",
-    "blow",
-    "brake",
-    "brush",
-    "burn",
-    "bang",
-    "bomb",
-    "bet",
-    "budget",
-    "comfort",
-    "cook",
-    "copy",
-    "cough",
-    "crush",
-    "cry",
-    "check",
-    "claw",
-    "clip",
-    "combine",
-    "damage",
-    "desire",
-    "doubt",
-    "drain",
-    "drink",
-    "dance",
-    "decrease",
-    "defect",
-    "deposit",
-    "drift",
-    "dip",
-    "dive",
-    "divorce",
-    "dream",
-    "exchange",
-    "envy",
-    "exert",
-    "exercise",
-    "export",
-    "fold",
-    "flood",
-    "focus",
-    "forecast",
-    "fracture",
-    "grip",
-    "guide",
-    "guard",
-    "guarantee",
-    "guess",
-    "hate",
-    "heat",
-    "handle",
-    "hire",
-    "host",
-    "hunt",
-    "hurry",
-    "import",
-    "judge",
-    "jump",
-    "jam",
-    "kick",
-    "kiss",
-    "knock",
-    "laugh",
-    "lift",
-    "lock",
-    "lecture",
-    "link",
-    "load",
-    "loan",
-    "lump",
-    "melt",
-    "message",
-    "murder",
-    "neglect",
-    "overlap",
-    "overtake",
-    "overuse",
-    "print",
-    "protest",
-    "pump",
-    "push",
-    "post",
-    "progress",
-    "promise",
-    "purchase",
-    "regret",
-    "request",
-    "reward",
-    "roll",
-    "rub",
-    "rent",
-    "repair",
-    "sail",
-    "scale",
-    "screw",
-    "shake",
-    "shock",
-    "sleep",
-    "slip",
-    "smash",
-    "smell",
-    "smoke",
-    "sneeze",
-    "snow",
-    "stick",
-    "surprise",
-    "swim",
-    "scratch",
-    "search",
-    "share",
-    "shave",
-    "slide",
-    "spit",
-    "splash",
-    "stain",
-    "stress",
-    "swing",
-    "switch",
-    "taste",
-    "touch",
-    "trade",
-    "trick",
-    "twist",
-    "tie",
-    "trap",
-    "travel",
-    "tune",
-    "undergo",
-    "undo",
-    "uplift",
-    "vote",
-    "wash",
-    "wave",
-    "whistle",
-    "wreck",
-    "yawn",
-    "betray",
-    "restrict",
-    "perform",
-    "worry",
-    "point",
-    "activate",
-    "fear",
-    "plan",
-    "note",
-    "face",
-    "predict",
-    "differ",
-    "deserve",
-    "torture",
-    "recall",
-    "count",
-    "swear",
-    "admit",
-    "insist",
-    "lack",
-    "pass",
-    "belong",
-    "complain",
-    "constitute",
-    "beat",
-    "rely",
-    "refuse",
-    "range",
-    "cite",
-    "flash",
-    "arrive",
-    "reveal",
-    "consist",
-    "observe",
-    "notice",
-    "trust",
-    "imply",
-    "display",
-    "view",
-    "stare",
-    "acknowledge",
-    "owe",
-    "gaze",
-    "treat",
-    "account",
-    "gather",
-    "address",
-    "confirm",
-    "estimate",
-    "manage",
-    "participate",
-    "sneak",
-    "drop",
-    "mirror",
-    "experience",
-    "strive",
-    "teach",
-    "cost",
-    "arch",
-    "dislike",
-    "favor",
-    "earn",
-    "emphasize",
-    "fly",
-    "match",
-    "question",
-    "emerge",
-    "encourage",
-    "matter",
-    "name",
-    "head",
-    "line",
-    "slam",
-    "list",
-    "sing",
-    "warn",
-    "ignore",
-    "resemble",
-    "spread",
-    "feature",
-    "place",
-    "reverse",
-    "accuse",
-    "spoil",
-    "retain",
-    "survive",
-    "praise",
-    "function",
-    "please",
-    "date",
-    "remind",
-    "deliver",
-    "echo",
-    "engage",
-    "deny",
-    "obey",
-    "yield",
-    "center",
-    "gain",
-    "anticipate",
-    "reason",
-    "side",
-    "thrive",
-    "defy",
-    "dodge",
-    "enable",
-    "applaud",
-    "bear",
-    "persist",
-    "pose",
-    "reject",
-    "attract",
-    "await",
-    "inhibit",
-    "declare",
-    "process",
-    "risk",
-    "urge",
-    "value",
-    "block",
-    "confront",
-    "credit",
-    "cross",
-    "wake",
-    "amuse",
-    "dare",
-    "resent",
-    "smile",
-    "gloss",
-    "threaten",
-    "collect",
-    "depict",
-    "dismiss",
-    "submit",
-    "benefit",
-    "step",
-    "deem",
-    "limit",
-    "sense",
-    "issue",
-    "embody",
-    "force",
-    "govern",
-    "replace",
-    "aim",
-    "bother",
-    "cater",
-    "adopt",
-    "empower",
-    "outweigh",
-    "alter",
-    "enrich",
-    "influence",
-    "prohibit",
-    "pursue",
-    "warrant",
-    "convey",
-    "approve",
-    "reserve",
-    "rest",
-    "strain",
-    "wander",
-    "adjust",
-    "dress",
-    "market",
-    "mingle",
-    "disapprove",
-    "evaluate",
-    "flow",
-    "inhabit",
-    "pop",
-    "rule",
-    "depart",
-    "roam",
-    "assert",
-    "disappear",
-    "envision",
-    "pause",
-    "afford",
-    "challenge",
-    "grab",
-    "grumble",
-    "house",
-    "portray",
-    "revel",
-    "base",
-    "conduct",
-    "review",
-    "stem",
-    "crave",
-    "mark",
-    "store",
-    "target",
-    "unlock",
-    "weigh",
-    "resist",
-    "steal",
-    "drag",
-    "pour",
-    "reckon",
-    "assign",
-    "cling",
-    "rank",
-    "attach",
-    "decline",
-    "destroy",
-    "interfere",
-    "paint",
-    "skip",
-    "sprinkle",
-    "wither",
-    "allege",
-    "retire",
-    "score",
-    "monitor",
-    "expand",
-    "honor",
-    "lend",
-    "pack",
-    "assist",
-    "float",
-    "appeal",
-    "sink",
-    "stretch",
-    "undermine",
-    "assemble",
-    "boast",
-    "bounce",
-    "grasp",
-    "install",
-    "borrow",
-    "crack",
-    "elect",
-    "shine",
-    "shout",
-    "contrast",
-    "overcome",
-    "relax",
-    "relent",
-    "strengthen",
-    "conform",
-    "dump",
-    "pile",
-    "scare",
-    "relive",
-    "resort",
-    "rush",
-    "boost",
-    "cease",
-    "command",
-    "excel",
-    "plug",
-    "plunge",
-    "proclaim",
-    "discourage",
-    "endure",
-    "ruin",
-    "stumble",
-    "abandon",
-    "cheat",
-    "convince",
-    "merge",
-    "convert",
-    "harm",
-    "multiply",
-    "overwhelm",
-    "chew",
-    "invent",
-    "bury",
-    "wipe"
-  ]
-
-  //conjugate all of these verbs. takes ~8ms. triples the lexicon size.
-  verbs.forEach(function(v) {
-    var c = verb_conjugate(v)
-    main[c.infinitive]= main[c.infinitive] || "VBP"
-    main[c.past] = main[c.past] || "VBD"
-    main[c.gerund] = main[c.gerund] || "VBG"
-    main[c.present] = main[c.present] || "VBZ"
-    if(c.participle && !main[c.participle]){
-      main[c.participle]="VBN"
+    // var verb_conjugate, adj_to_adv, verb_to_doer, to_superlative, to_comparative;
+    if (typeof module !== "undefined" && module.exports) {
+      verb_conjugate = require("../parents/verb/conjugate/conjugate")
+      adj_to_adv = require("../parents/adjective/conjugate/to_adverb");
+      verb_to_doer = require("../parents/verb/conjugate/to_doer");
+      to_superlative = require("../parents/adjective/conjugate/to_superlative");
+      to_comparative = require("../parents/adjective/conjugate/to_comparative");
     }
-    var doer = verb_to_doer(v)
-    if (doer) {
-      main[doer] = "NNA"
-    }
-  })
+    var main = {
+      //conjunctions
+      "yet": "CC",
+      "therefore": "CC",
+      "or": "CC",
+      "while": "CC",
+      "nor": "CC",
+      "whether": "CC",
+      "though": "CC",
+      "because": "CC",
+      "but": "CC",
+      "for": "CC",
+      "and": "CC",
+      "if": "CC",
+      "however": "CC",
+      "before": "CC",
+      "although": "CC",
+      "how": "CC",
 
-  //adjectives that either aren't covered by rules, or have superlative/comparative forms
-  var adjectives = [
-    'colonial',
-    'moody',
-    'literal',
-    'actual',
-    'probable',
-    'apparent',
-    'usual',
-    'aberrant',
-    'ablaze',
-    'able',
-    'absolute',
-    'aboard',
-    'abrupt',
-    'absent',
-    'absorbing',
-    'absurd',
-    'abundant',
-    'accurate',
-    'adult',
-    'afraid',
-    'agonizing',
-    'ahead',
-    'alert',
-    'alive',
-    'aloof',
-    'amazing',
-    'arbitrary',
-    'arrogant',
-    'asleep',
-    'astonishing',
-    'average',
-    'awake',
-    'aware',
-    'awkward',
-    'back',
-    'bad',
-    'bankrupt',
-    'bawdy',
-    'beneficial',
-    'bent',
-    'best',
-    'better',
-    'big',
-    'bitter',
-    'bizarre',
-    'black',
-    'bloody',
-    'blue',
-    'bouncy',
-    'brash',
-    'brave',
-    'brief',
-    'bright',
-    'brilliant',
-    'broad',
-    'broken',
-    'brown',
-    'burly',
-    'busy',
-    'cagey',
-    'calm',
-    'careful',
-    'caring',
-    'certain',
-    'charming',
-    'cheap',
-    'chief',
-    'chilly',
-    'civil',
-    'clever',
-    'close',
-    'closed',
-    'cloudy',
-    'cold',
-    'colossal',
-    'commercial',
-    'common',
-    'complete',
-    'complex',
-    'concerned',
-    'concrete',
-    'congruent',
-    'constant',
-    'cooing',
-    'cool',
-    'correct',
-    'cowardly',
-    'craven',
-    'cruel',
-    'cuddly',
-    'curly',
-    'cute',
-    'daily',
-    'damaged',
-    'damaging',
-    'damp',
-    'dapper',
-    'dark',
-    'dashing',
-    'dead',
-    'deadpan',
-    'dear',
-    'deep',
-    'deeply',
-    'defiant',
-    'degenerate',
-    'delicate',
-    'delightful',
-    'desperate',
-    'determined',
-    'didactic',
-    'difficult',
-    'discreet',
-    'done',
-    'double',
-    'doubtful',
-    'downtown',
-    'dreary',
-    'drunk',
-    'dry',
-    'dull',
-    'eager',
-    'early',
-    'east',
-    'eastern',
-    'easy',
-    'elderly',
-    'elegant',
-    'elfin',
-    'elite',
-    'eminent',
-    'empty',
-    'encouraging',
-    'entire',
-    'erect',
-    'ethereal',
-    'even',
-    'exact',
-    'expert',
-    'extra',
-    'extreme',
-    'exuberant',
-    'exultant',
-    'faint',
-    'fair',
-    'false',
-    'fanc',
-    'fancy',
-    'fast',
-    'fat',
-    'faulty',
-    'feeble',
-    'female',
-    'fertile',
-    'few',
-    'fierce',
-    'fierce ',
-    'financial',
-    'fine',
-    'firm',
-    'first',
-    'fit',
-    'fixed',
-    'flagrant',
-    'flat',
-    'foamy',
-    'foolish',
-    'foregoing',
-    'foreign',
-    'forgetful',
-    'former',
-    'fortunate',
-    'frail',
-    'frantic',
-    'free',
-    'freezing',
-    'frequent',
-    'fresh',
-    'fretful',
-    'friendly',
-    'full',
-    'fun',
-    'funny',
-    'furry',
-    'future',
-    'gainful',
-    'gaudy',
-    'gentle',
-    'giant',
-    'giddy',
-    'gigantic',
-    'glad',
-    'gleaming',
-    'glib',
-    'global',
-    'gold',
-    'gone',
-    'good',
-    'goofy',
-    'graceful',
-    'grand',
-    'grateful',
-    'gratis',
-    'gray',
-    'great',
-    'green',
-    'grey',
-    'groovy',
-    'gross',
-    'guarded',
-    'half',
-    'handy',
-    'hanging',
-    'hard',
-    'harsh',
-    'hateful',
-    'heady',
-    'heavenly',
-    'heavy',
-    'hellish',
-    'helpful',
-    'hesitant',
-    'high',
-    'highfalutin',
-    'hollow',
-    'homely',
-    'honest',
-    'hot',
-    'huge',
-    'humdrum',
-    'hurried',
-    'hurt',
-    'icy',
-    'ignorant',
-    'ill',
-    'illegal',
-    'immediate',
-    'immense',
-    'imminent',
-    'impartial',
-    'imperfect',
-    'impolite',
-    'important',
-    'imported',
-    'initial',
-    'innate',
-    'inner',
-    'inside',
-    'irate',
-    'jolly',
-    'juicy',
-    'junior',
-    'juvenile',
-    'kaput',
-    'keen',
-    'kind',
-    'kindly',
-    'knowing',
-    'labored',
-    'lame',
-    'languid',
-    'large',
-    'late',
-    'latter',
-    'learned',
-    'left',
-    'legal',
-    'lethal',
-    'level',
-    'lewd',
-    'light',
-    'likely',
-    'literate',
-    'lively',
-    'living',
-    'lonely',
-    'longing',
-    'loose',
-    'loud',
-    'loutish',
-    'lovely',
-    'loving',
-    'low',
-    'lowly',
-    'lush',
-    'luxuriant',
-    'lying',
-    'macabre',
-    'macho',
-    'mad',
-    'madly',
-    'magenta',
-    'main',
-    'major',
-    'makeshift',
-    'male',
-    'mammoth',
-    'married',
-    'mature',
-    'measly',
-    'meaty',
-    'medium',
-    'meek',
-    'mellow',
-    'mere',
-    'middle',
-    'miniature',
-    'minor',
-    'miscreant',
-    'mobile',
-    'moldy',
-    'mundane',
-    'mute',
-    'naive',
-    'narrow',
-    'near',
-    'nearby',
-    'neat',
-    'necessary',
-    'neighborly',
-    'new',
-    'next',
-    'nice',
-    'nimble',
-    'noisy',
-    'nonchalant',
-    'nondescript',
-    'nonstop',
-    'north',
-    'nosy',
-    'obeisant',
-    'obese',
-    'obscene',
-    'observant',
-    'obsolete',
-    'odd',
-    'offbeat',
-    'official',
-    'ok',
-    'old',
-    'open',
-    'opposite',
-    'orange',
-    'organic',
-    'outdoor',
-    'outer',
-    'outgoing',
-    'oval',
-    'over',
-    'overall',
-    'overt',
-    'overweight',
-    'overwrought',
-    'painful',
-    'pale',
-    'past',
-    'peaceful',
-    'perfect',
-    'petite',
-    'picayune',
-    'pink',
-    'placid',
-    'plain',
-    'plant',
-    'pleasant',
-    'polite',
-    'poor',
-    'potential',
-    'pregnant',
-    'premium',
-    'present',
-    'pricey',
-    'prickly',
-    'primary',
-    'prior',
-    'private',
-    'profuse',
-    'proper',
-    'public',
-    'pumped',
-    'puny',
-    'pure',
-    'purple',
-    'quack',
-    'quaint',
-    'quick',
-    'quickest',
-    'quiet',
-    'rabid',
-    'racial',
-    'rare',
-    'raw',
-    'ready',
-    'real',
-    'rebel',
-    'recondite',
-    'red',
-    'redundant',
-    'relevant',
-    'remote',
-    'resolute',
-    'resonant',
-    'rich',
-    'right',
-    'rightful',
-    'ripe',
-    'ritzy',
-    'robust',
-    'romantic',
-    'roomy',
-    'rotten',
-    'rough',
-    'round',
-    'royal',
-    'rude',
-    'sad',
-    'safe',
-    'salty',
-    'same',
-    'scarce',
-    'scary',
-    'scientific',
-    'screeching',
-    'second',
-    'secret',
-    'secure',
-    'sedate',
-    'seemly',
-    'selfish',
-    'senior',
-    'separate',
-    'severe',
-    'shallow',
-    'sharp',
-    'shiny',
-    'shocking',
-    'short',
-    'shrill',
-    'shut',
-    'shy',
-    'sick',
-    'significant',
-    'silly',
-    'simple',
-    'sincere',
-    'single',
-    'skinny',
-    'slight',
-    'slim',
-    'slimy',
-    'slow',
-    'small',
-    'smelly',
-    'smooth',
-    'snobbish',
-    'social',
-    'soft',
-    'somber',
-    'soon',
-    'sordid',
-    'sore',
-    'sorry',
-    'sour',
-    'southern',
-    'spare',
-    'special',
-    'specific',
-    'spicy',
-    'splendid',
-    'square',
-    'squeamish',
-    'stale',
-    'standard',
-    'standing',
-    'steadfast',
-    'steady',
-    'steep',
-    'stereotyped',
-    'stiff',
-    'still',
-    'straight',
-    'strange',
-    'strict',
-    'striped',
-    'strong',
-    'stupid',
-    'sturdy',
-    'subdued',
-    'subsequent',
-    'substantial',
-    'sudden',
-    'super',
-    'superb',
-    'superficial',
-    'supreme',
-    'sure',
-    'sweet',
-    'swift',
-    'taboo',
-    'tall',
-    'tame',
-    'tan',
-    'tart',
-    'tasteful',
-    'tawdry',
-    'telling',
-    'temporary',
-    'tender',
-    'tense',
-    'terrific',
-    'tested',
-    'thick',
-    'thin',
-    'thoughtful',
-    'tidy',
-    'tight',
-    'tiny',
-    'top',
-    'torpid',
-    'tough',
-    'tranquil',
-    'trite',
-    'true',
-    'ugly',
-    'ultra',
-    'unbecoming',
-    'understood',
-    'uneven',
-    'unfair',
-    'unlikely',
-    'unruly',
-    'unsightly',
-    'untidy',
-    'unwritten',
-    'upbeat',
-    'upper',
-    'uppity',
-    'upset',
-    'upstairs',
-    'uptight',
-    'used',
-    'useful',
-    'utter',
-    'uttermost',
-    'vagabond',
-    'vague',
-    'vanilla',
-    'various',
-    'vast',
-    'vengeful',
-    'verdant',
-    'violet',
-    'volatile',
-    'vulgar',
-    'wanting',
-    'warm',
-    'wary',
-    'wasteful',
-    'weak',
-    'weary',
-    'weekly',
-    'weird',
-    'welcome',
-    'western',
-    'wet',
-    'white',
-    'whole',
-    'wholesale',
-    'wide',
-    'wild',
-    'windy',
-    'wiry',
-    'wise',
-    'wistful',
-    'womanly',
-    'wooden',
-    'woozy',
-    'wound',
-    'wrong',
-    'wry',
-    'yellow',
-    'young',
-    'zany',
-    'sacred',
-    //words that have good comparative/superlative forms
-    'aggressive',
-    'awesome',
-    'beautiful',
-    'bored',
-    'boring',
-    'clean',
-    'dirty',
-    'efficient',
-    'gruesome',
-    'handsome',
-    'innocent',
-    'lean',
-    'little',
-    'long',
-    'mean',
-    'normal',
-    'proud',
-    'rapid',
-    'scared',
-    'smart',
-    'thirsty',
-    'hungry',
-    'clear',
-    'happy',
-    'lucky',
-    'pretty',
-    'interesting',
-    'attractive',
-    'dangerous',
-    'intellegent',
-    'formal',
-    'tired',
-    'solid',
-    'angry',
-    "unknown",
-    "detailed",
-    "ongoing",
-    "prominent",
-    "permanent",
-    "diverse",
-    "partial",
-    "moderate",
-    "contemporary",
-    "intense",
-    "widespread",
-    "ultimate",
-    "ideal",
-    "adequate",
-    "sophisticated",
-    "naked",
-    "dominant",
-    "precise",
-    "intact",
-    "adverse",
-    "genuine",
-    "subtle",
-    "universal",
-    "resistant",
-    "routine",
-    "distant",
-    "unexpected",
-    "soviet",
-    "blind",
-    "artificial",
-    "mild",
-    "legitimate",
-    "unpublished",
-    "superior",
-    "intermediate",
-    "everyday",
-    "dumb",
-    "excess",
-    "sexy",
-    "fake",
-    "monthly",
-    "premature",
-    "sheer",
-    "generic",
-    "insane",
-    "contrary",
-    "twin",
-    "upcoming",
-    "bottom",
-    "costly",
-    "indirect",
-    "sole",
-    "unrelated",
-    "hispanic",
-    "improper",
-    "underground",
-    "legendary",
-    "reluctant",
-    "beloved",
-    "inappropriate",
-    "corrupt",
-    "irrelevant",
-    "justified",
-    "obscure",
-    "profound",
-    "hostile",
-    "influential",
-    "inadequate",
-    "abstract",
-    "timely",
-    "authentic",
-    "bold",
-    "intimate",
-    "straightforward",
-    "rival",
-    "right-wing",
-    "racist",
-    "symbolic",
-    "unprecedented",
-    "loyal",
-    "talented",
-    "troubled",
-    "noble",
-    "instant",
-    "incorrect",
-    "dense",
-    "blond",
-    "deliberate",
-    "blank",
-    "rear",
-    "feminine",
-    "apt",
-    "stark",
-    "alcoholic",
-    "teenage",
-    "vibrant",
-    "humble",
-    "vain",
-    "covert",
-    "bland",
-    "trendy",
-    "foul",
-    "populist",
-    "alarming",
-    "hooked",
-    "wicked",
-    "deaf",
-    "left-wing",
-    "lousy",
-    "malignant",
-    "stylish",
-    "upscale",
-    "hourly",
-    "refreshing",
-    "cozy",
-    "slick",
-    "dire",
-    "yearly",
-    "inbred",
-    "part-time",
-    "finite",
-    "backwards",
-    "nightly",
-    "unauthorized",
-    "cheesy",
-    "indoor",
-    "surreal",
-    "bald",
-    "masculine",
-    "shady",
-    "spirited",
-    "eerie",
-    "horrific",
-    "smug",
-    "stern",
-    "hefty",
-    "savvy",
-    "bogus",
-    "elaborate",
-    "gloomy",
-    "pristine",
-    "extravagant",
-    "serene",
-    "advanced",
-    "perverse",
-    "devout",
-    "crisp",
-    "rosy",
-    "slender",
-    "melancholy",
-    "faux",
-    "phony",
-    "danish",
-    "lofty",
-    "nuanced",
-    "lax",
-    "adept",
-    "barren",
-    "shameful",
-    "sleek",
-    "solemn",
-    "vacant",
-    "dishonest",
-    "brisk",
-    "fluent",
-    "insecure",
-    "humid",
-    "menacing",
-    "moot",
-    "soothing",
-    "self-loathing",
-    "far-reaching",
-    "harrowing",
-    "scathing",
-    "perplexing",
-    "calming",
-    "unconvincing",
-    "unsuspecting",
-    "unassuming",
-    "surprising",
-    "unappealing",
-    "vexing",
-    "unending",
-    "easygoing",
-    "appetizing",
-    "disgruntled",
-    "retarded",
-    "undecided",
-    "unregulated",
-    "unsupervised",
-    "unrecognized",
-    "crazed",
-    "distressed",
-    "jagged",
-    "paralleled",
-    "cramped",
-    "warped",
-    "antiquated",
-    "fabled",
-    "deranged",
-    "diseased",
-    "ragged",
-    "intoxicated",
-    "hallowed",
-    "crowded",
-    "ghastly",
-    "disorderly",
-    "saintly",
-    "wily",
-    "sly",
-    "sprightly",
-    "ghostly",
-    "oily",
-    "hilly",
-    "grisly",
-    "earthly",
-    "friendly",
-    "unwieldy"
-  ]
+      //numbers
+      'zero': "CD",
+      'one': "CD",
+      'two': "CD",
+      'three': "CD",
+      'four': "CD",
+      'five': "CD",
+      'six': "CD",
+      'seven': "CD",
+      'eight': "CD",
+      'nine': "CD",
+      'ten': "CD",
+      'eleven': "CD",
+      'twelve': "CD",
+      'thirteen': "CD",
+      'fourteen': "CD",
+      'fifteen': "CD",
+      'sixteen': "CD",
+      'seventeen': "CD",
+      'eighteen': "CD",
+      'nineteen': "CD",
+      'twenty': "CD",
+      'thirty': "CD",
+      'forty': "CD",
+      'fifty': "CD",
+      'sixty': "CD",
+      'seventy': "CD",
+      'eighty': "CD",
+      'ninety': "CD",
+      'hundred': "CD",
+      'thousand': "CD",
+      'million': "CD",
+      'billion': "CD",
+      'trillion': "CD",
+      'quadrillion': "CD",
+      'quintillion': "CD",
+      'sextillion': "CD",
+      'septillion': "CD",
+      'octillion': "CD",
+      'nonillion': "CD",
+      'decillion': "CD",
 
-  //conjugate all of these adjectives to their adverbs. (13ms)
-  adjectives.forEach(function(j) {
-    main[j] = "JJ"
-    var adv = adj_to_adv(j)
-    if (adv && adv !== j && !main[adv]) {
-      // console.log(adv)
-      main[adv] = main[adv] || "RB"
-    }
-    var comp = to_comparative(j)
-    if (comp && !comp.match(/^more ./) && comp !== j && !main[comp]) {
-      // console.log(comp)
-      main[comp] = main[comp] || "JJR"
-    }
-    var sup = to_superlative(j)
-    if (sup && !sup.match(/^most ./) && sup !== j && !main[sup]) {
-      // console.log(sup)
-      main[sup] = main[sup] || "JJS"
-    }
-  })
+      //copula
+      "is": "CP",
+      "will be": "CP",
+      "are": "CP",
+      "was": "CP",
+      "were": "CP",
+      "am": "CP",
 
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = main;
-  }
+      //determiners
+      "this": "DT",
+      "any": "DT",
+      "enough": "DT",
+      "each": "DT",
+      "whatever": "DT",
+      "every": "DT",
+      "which": "DT",
+      "these": "DT",
+      "another": "DT",
+      "plenty": "DT",
+      "whichever": "DT",
+      "neither": "DT",
+      "an": "DT",
+      "a": "DT",
+      "least": "DT",
+      "own": "DT",
+      "few": "DT",
+      "both": "DT",
+      "those": "DT",
+      "the": "DT",
+      "that": "DT",
+      "various": "DT",
+      "what": "DT",
+      "either": "DT",
+      "much": "DT",
+      "some": "DT",
+      "else": "DT",
+      //some other languages (what could go wrong?)
+      "la": "DT",
+      "le": "DT",
+      "les": "DT",
+      "des": "DT",
+      "de": "DT",
+      "du": "DT",
+      "el": "DT",
 
-  return main
-})()
-// console.log(lexicon['restricted'])
-// console.log(lexicon['sleeping'])
+      //prepositions
+      "until": "IN",
+      "onto": "IN",
+      "of": "IN",
+      "into": "IN",
+      "out": "IN",
+      "except": "IN",
+      "across": "IN",
+      "by": "IN",
+      "between": "IN",
+      "at": "IN",
+      "down": "IN",
+      "as": "IN",
+      "from": "IN",
+      "around": "IN",
+      "with": "IN",
+      "among": "IN",
+      "upon": "IN",
+      "amid": "IN",
+      "to": "IN",
+      "along": "IN",
+      "since": "IN",
+      "about": "IN",
+      "off": "IN",
+      "on": "IN",
+      "within": "IN",
+      "in": "IN",
+      "during": "IN",
+      "per": "IN",
+      "without": "IN",
+      "throughout": "IN",
+      "through": "IN",
+      "than": "IN",
+      "via": "IN",
+      "up": "IN",
+
+      //modal verbs
+      "can": "MD",
+      "may": "MD",
+      "could": "MD",
+      "might": "MD",
+      "will": "MD",
+      "ought to": "MD",
+      "would": "MD",
+      "must": "MD",
+      "shall": "MD",
+      "should": "MD",
+
+      //posessive pronouns
+      "mine": "PP",
+      "something": "PP",
+      "none": "PP",
+      "anything": "PP",
+      "anyone": "PP",
+      "lot": "PP",
+      "theirs": "PP",
+      "himself": "PP",
+      "ours": "PP",
+      "his": "PP",
+      "my": "PP",
+      "their": "PP",
+      "yours": "PP",
+      "your": "PP",
+      "our": "PP",
+      "its": "PP",
+      "nothing": "PP",
+      "herself": "PP",
+      "hers": "PP",
+      "themselves": "PP",
+      "everything": "PP",
+      "myself": "PP",
+      "itself": "PP",
+      "who": "PP",
+      "her": "PP", //this one is pretty ambiguous
+
+      //personal pronouns (nouns)
+      "it": "PRP",
+      "they": "PRP",
+      "i": "PRP",
+      "them": "PRP",
+      "you": "PRP",
+      "she": "PRP",
+      "me": "PRP",
+      "he": "PRP",
+      "him": "PRP",
+      "ourselves": "PRP",
+      "us": "PRP",
+      "we": "PRP",
+      "thou": "PRP",
+      "il": "PRP",
+      "elle": "PRP",
+
+      //some manual adverbs (the rest are generated)
+      "now": "RB",
+      "again": "RB",
+      "already": "RB",
+      "soon": "RB",
+      "directly": "RB",
+      "toward": "RB",
+      "forever": "RB",
+      "apart": "RB",
+      "instead": "RB",
+      "yes": "RB",
+      "alone": "RB",
+      "ago": "RB",
+      "indeed": "RB",
+      "ever": "RB",
+      "quite": "RB",
+      "perhaps": "RB",
+      "where": "RB",
+      "then": "RB",
+      "here": "RB",
+      "thus": "RB",
+      "very": "RB",
+      "often": "RB",
+      "once": "RB",
+      "never": "RB",
+      "why": "RB",
+      "when": "RB",
+      "away": "RB",
+      "always": "RB",
+      "sometimes": "RB",
+      "also": "RB",
+      "maybe": "RB",
+      "so": "RB",
+      "just": "RB",
+      "well": "RB",
+
+      //interjections
+      "uhh": "UH",
+      "uh-oh": "UH",
+      "ugh": "UH",
+      "sheesh": "UH",
+      "eww": "UH",
+      "pff": "UH",
+      "voila": "UH",
+      "oy": "UH",
+      "eep": "UH",
+      "hurrah": "UH",
+      "yuck": "UH",
+      "ow": "UH",
+      "duh": "UH",
+      "oh": "UH",
+      "hmm": "UH",
+      "yeah": "UH",
+      "whoa": "UH",
+      "ooh": "UH",
+      "whee": "UH",
+      "ah": "UH",
+      "bah": "UH",
+      "gah": "UH",
+      "yaa": "UH",
+      "phew": "UH",
+      "gee": "UH",
+      "ahem": "UH",
+      "eek": "UH",
+      "meh": "UH",
+      "yahoo": "UH",
+      "oops": "UH",
+      "d'oh": "UH",
+      "psst": "UH",
+      "argh": "UH",
+      "grr": "UH",
+      "nah": "UH",
+      "shhh": "UH",
+      "whew": "UH",
+      "mmm": "UH",
+      "yay": "UH",
+      "uh-huh": "UH",
+      "boo": "UH",
+      "wow": "UH",
+
+      //dates
+      "july": "CD",
+      "august": "CD",
+      "september": "CD",
+      "october": "CD",
+      "november": "CD",
+      "december": "CD",
+      "january": "CD",
+      "february": "CD",
+      "march": "CD",
+      "april": "CD",
+      // "may": "CD",
+      "june": "CD",
+      "monday": "CD",
+      "tuesday": "CD",
+      "wednesday": "CD",
+      "thursday": "CD",
+      "friday": "CD",
+      "saturday": "CD",
+      "sunday": "CD",
+
+      //contractions that don't need splitting-open, grammatically
+      "don't": "VB",
+      "isn't": "CP",
+      "ain't": "CP",
+      "aren't": "CP",
+      "won't": "VB",
+      "shouldn't": "MD",
+      "wouldn't": "MD",
+      "couldn't": "MD",
+      "mustn't": "MD",
+      "shan't": "MD",
+      "shant": "MD",
+      "lets": "MD", //arguable
+      "let's": "MD",
+      "what's": "VB", //somewhat ambiguous (what does|what are)
+      "where'd": "VBD",
+      "when'd": "VBD",
+      "how'd": "VBD",
+      "what'd": "VBD",
+      "who'd": "MD",
+      "'o": "IN",
+      "'em": "PRP",
+
+      //demonyms
+      "afghan": "JJ",
+      "albanian": "JJ",
+      "algerian": "JJ",
+      "argentine": "JJ",
+      "armenian": "JJ",
+      "australian": "JJ",
+      "aussie": "JJ",
+      "austrian": "JJ",
+      "bangladeshi": "JJ",
+      "belgian": "JJ",
+      "bolivian": "JJ",
+      "bosnian": "JJ",
+      "brazilian": "JJ",
+      "bulgarian": "JJ",
+      "cambodian": "JJ",
+      "canadian": "JJ",
+      "chilean": "JJ",
+      "chinese": "JJ",
+      "colombian": "JJ",
+      "croat": "JJ",
+      "cuban": "JJ",
+      "czech": "JJ",
+      "dominican": "JJ",
+      "egyptian": "JJ",
+      "british": "JJ",
+      "estonian": "JJ",
+      "ethiopian": "JJ",
+      "finnish": "JJ",
+      "french": "JJ",
+      "gambian": "JJ",
+      "georgian": "JJ",
+      "german": "JJ",
+      "greek": "JJ",
+      "haitian": "JJ",
+      "hungarian": "JJ",
+      "indian": "JJ",
+      "indonesian": "JJ",
+      "iranian": "JJ",
+      "iraqi": "JJ",
+      "irish": "JJ",
+      "israeli": "JJ",
+      "italian": "JJ",
+      "jamaican": "JJ",
+      "japanese": "JJ",
+      "jordanian": "JJ",
+      "kenyan": "JJ",
+      "korean": "JJ",
+      "kuwaiti": "JJ",
+      "latvian": "JJ",
+      "lebanese": "JJ",
+      "liberian": "JJ",
+      "libyan": "JJ",
+      "lithuanian": "JJ",
+      "macedonian": "JJ",
+      "malaysian": "JJ",
+      "mexican": "JJ",
+      "mongolian": "JJ",
+      "moroccan": "JJ",
+      "dutch": "JJ",
+      "nicaraguan": "JJ",
+      "nigerian": "JJ",
+      "norwegian": "JJ",
+      "omani": "JJ",
+      "pakistani": "JJ",
+      "palestinian": "JJ",
+      "filipino": "JJ",
+      "polish": "JJ",
+      "portuguese": "JJ",
+      "qatari": "JJ",
+      "romanian": "JJ",
+      "russian": "JJ",
+      "rwandan": "JJ",
+      "samoan": "JJ",
+      "saudi": "JJ",
+      "scottish": "JJ",
+      "senegalese": "JJ",
+      "serbian": "JJ",
+      "singaporean": "JJ",
+      "slovak": "JJ",
+      "somali": "JJ",
+      "sudanese": "JJ",
+      "swedish": "JJ",
+      "swiss": "JJ",
+      "syrian": "JJ",
+      "taiwanese": "JJ",
+      "thai": "JJ",
+      "tunisian": "JJ",
+      "ugandan": "JJ",
+      "ukrainian": "JJ",
+      "american": "JJ",
+      "hindi": "JJ",
+      "spanish": "JJ",
+      "venezuelan": "JJ",
+      "vietnamese": "JJ",
+      "welsh": "JJ",
+      "african": "JJ",
+      "european": "JJ",
+      "asian": "JJ",
+      "californian": "JJ",
+
+      //misc mine
+      "nope": "UH",
+      "said": "VBD",
+      "says": "VBZ",
+      "has": "VB",
+      "more": "RBR",
+      "had": "VBD",
+      "been": "VBD",
+      "going": "VBG",
+      "other": "JJ",
+      "no": "DT",
+      "there": "EX",
+      "after": "IN",
+      "many": "JJ",
+      "most": "JJ",
+      "last": "JJ",
+      "expected": "JJ",
+      "long": "JJ",
+      "far": "JJ",
+      "due": "JJ",
+      "higher": "JJR",
+      "larger": "JJR",
+      "better": "JJR",
+      "added": "VB",
+      "several": "RB",
+      "such": "RB",
+      "took": "VB",
+      "being": "VBG",
+      "began": "VBD",
+      "came": "VBD",
+      "did": "VBD",
+      "go": "VBP",
+      "too": "RB",
+      "president": "NN",
+      "dollar": "NN",
+      "student": "NN",
+      "patent": "NN",
+      "funding": "NN",
+      "morning": "NN",
+      "banking": "NN",
+      "ceiling": "NN",
+      "energy": "NN",
+      "secretary": "NN",
+      "purpose": "NN",
+      "friends": "NNS",
+      "less": "JJ",
+      "event": "NN",
+      "divine": "JJ",
+      "all": "JJ",
+      "define": "VB",
+      "went": "VBD",
+      "goes": "VB",
+      "sounds": "VBZ",
+      "measure": "VB",
+      "enhance": "VB",
+      "distinguish": "VB",
+      "randomly": "RB",
+      "abroad": "RB",
+
+      //missing words from amc
+      "given": "VBN",
+      "known": "VBN",
+      "rather": "RB",
+      "shown": "VBN",
+      "seen": "VBN",
+      "according": "VBG",
+      "almost": "RB",
+      "together": "JJ",
+      "means": "VBZ",
+      "despite": "IN",
+      "only": "JJ",
+      "outside": "JJ",
+      "below": "IN",
+      "multiple": "JJ",
+      "anyway": "RB",
+      "appropriate": "JJ",
+      "unless": "IN",
+      "whom": "PP",
+      "whose": "PP",
+      "evil": "JJ",
+      "earlier": "JJR",
+      "etc": "FW",
+      "twice": "RB",
+      "avoid": "VB",
+      "favorite": "JJ",
+      "whereas": "IN",
+      "born": "VBN",
+      "hit": "VB",
+      "resulting": "VBG",
+      "limited": "JJ",
+      "developing": "VBG",
+      "plus": "CC",
+      "biggest": "JJS",
+      "random": "JJ",
+      "republican": "JJ",
+      "okay": "JJ",
+      "essential": "JJ",
+      "somewhat": "RB",
+      "unlike": "IN",
+      "secondary": "JJ",
+      "somehow": "RB",
+      "yourself": "PRP",
+      "gay": "JJ",
+      "meanwhile": "RB",
+      "hence": "RB",
+      "further": "RB",
+      "furthermore": "RB",
+      "easier": "JJR",
+      "staining": "VBG",
+      "towards": "IN",
+      "aside": "RB",
+      "moreover": "RB",
+      "south": "JJ",
+      "pro": "JJ",
+      "meant": "VBD",
+      "versus": "CC",
+      "besides": "IN",
+      "northern": "JJ",
+      "anymore": "RB",
+      "urban": "JJ",
+      "acute": "JJ",
+      "prime": "JJ",
+      "arab": "JJ",
+      "overnight": "JJ",
+      "newly": "RB",
+      "ought": "MD",
+      "mixed": "JJ",
+      "crucial": "JJ",
+      "damn": "RB",
+
+      //formerly IN
+      "behind": "JJ",
+      "above": "JJ",
+      "beyond": "JJ",
+      "against": "JJ",
+      "under": "JJ",
+      "not": "CC", //?
+
+      //from multiples
+      "of course": "RB",
+      "at least": "RB",
+      "no longer": "RB",
+      "sort of": "RB",
+      "at first": "RB",
+      "once again": "RB",
+      "once more": "RB",
+      "up to": "RB",
+      "by now": "RB",
+      "all but": "RB",
+      "just about": "RB",
+      "on board": "JJ",
+      "a lot": "RB",
+      "by far": "RB",
+      "at best": "RB",
+      "at large": "RB",
+      "for good": "RB",
+      "vice versa": "JJ",
+      "en route": "JJ",
+      "for sure": "RB",
+      "upside down": "JJ",
+      "at most": "RB",
+      "per se": "RB",
+      "at worst": "RB",
+      "upwards of": "RB",
+      "en masse": "RB",
+      "point blank": "RB",
+      "up front": "JJ",
+      "in situ": "JJ",
+      "in vitro": "JJ",
+      "ad hoc": "JJ",
+      "de facto": "JJ",
+      "ad infinitum": "JJ",
+      "ad nauseam": "RB",
+      "for keeps": "JJ",
+      "a priori": "FW",
+      "et cetera": "FW",
+      "off guard": "JJ",
+      "spot on": "JJ",
+      "ipso facto": "JJ",
+      "not withstanding": "RB",
+      "de jure": "RB",
+      "a la": "IN",
+      "ad hominem": "NN",
+      "par excellence": "RB",
+      "de trop": "RB",
+      "a posteriori": "RB",
+      "fed up": "JJ",
+      "brand new": "JJ",
+      "old fashioned": "JJ",
+      "bona fide": "JJ",
+      "well off": "JJ",
+      "far off": "JJ",
+      "straight forward": "JJ",
+      "hard up": "JJ",
+      "sui generis": "JJ",
+      "en suite": "JJ",
+      "avant garde": "JJ",
+      "sans serif": "JJ",
+      "gung ho": "JJ",
+      "super duper": "JJ"
+    }
+
+    //verbs
+    var verbs = [
+      "collapse",
+      "stake",
+      "forsee",
+      "hide",
+      "suck",
+      "answer",
+      "argue",
+      "tend",
+      "examine",
+      "depend",
+      "form",
+      "figure",
+      "compete",
+      "mind",
+      "surround",
+      "suspect",
+      "reflect",
+      "wonder",
+      "act",
+      "hope",
+      "end",
+      "thank",
+      "file",
+      "regard",
+      "report",
+      "imagine",
+      "consider",
+      "miss",
+      "ensure",
+      "cause",
+      "work",
+      "enter",
+      "stop",
+      "defeat",
+      "surge",
+      "launch",
+      "turn",
+      "give",
+      "win",
+      "like",
+      "control",
+      "relate",
+      "remember",
+      "join",
+      "listen",
+      "train",
+      "break",
+      "spring",
+      "enjoy",
+      "fail",
+      "understand",
+      "recognize",
+      "draw",
+      "obtain",
+      "learn",
+      "fill",
+      "announce",
+      "prevent",
+      "fall",
+      "achieve",
+      "find",
+      "realize",
+      "involve",
+      "remove",
+      "lose",
+      "lie",
+      "build",
+      "aid",
+      "visit",
+      "test",
+      "strike",
+      "prepare",
+      "wait",
+      "ask",
+      "carry",
+      "suppose",
+      "determine",
+      "raise",
+      "send",
+      "love",
+      "use",
+      "pull",
+      "improve",
+      "contain",
+      "think",
+      "offer",
+      "speak",
+      "rise",
+      "talk",
+      "pick",
+      "care",
+      "express",
+      "remain",
+      "operate",
+      "deal",
+      "close",
+      "add",
+      "mention",
+      "read",
+      "support",
+      "grow",
+      "decide",
+      "walk",
+      "vary",
+      "demand",
+      "describe",
+      "sell",
+      "agree",
+      "happen",
+      "allow",
+      "suffer",
+      "have",
+      "study",
+      "be",
+      "press",
+      "watch",
+      "seem",
+      "occur",
+      "contribute",
+      "claim",
+      "become",
+      "make",
+      "compare",
+      "develop",
+      "apply",
+      "direct",
+      "discuss",
+      "know",
+      "sit",
+      "see",
+      "lead",
+      "indicate",
+      "require",
+      "change",
+      "fix",
+      "come",
+      "reach",
+      "prove",
+      "expect",
+      "exist",
+      "play",
+      "permit",
+      "meet",
+      "kill",
+      "pay",
+      "charge",
+      "increase",
+      "fight",
+      "tell",
+      "catch",
+      "believe",
+      "create",
+      "continue",
+      "live",
+      "help",
+      "represent",
+      "edit",
+      "serve",
+      "ride",
+      "appear",
+      "cover",
+      "set",
+      "maintain",
+      "start",
+      "stay",
+      "move",
+      "extend",
+      "leave",
+      "wear",
+      "run",
+      "design",
+      "supply",
+      "suggest",
+      "want",
+      "say",
+      "hear",
+      "drive",
+      "approach",
+      "cut",
+      "call",
+      "include",
+      "try",
+      "receive",
+      "save",
+      "discover",
+      "marry",
+      "throw",
+      "show",
+      "choose",
+      "need",
+      "establish",
+      "keep",
+      "assume",
+      "attend",
+      "buy",
+      "unite",
+      "feel",
+      "explain",
+      "publish",
+      "accept",
+      "settle",
+      "reduce",
+      "bring",
+      "do",
+      "let",
+      "shoot",
+      "look",
+      "take",
+      "interact",
+      "concern",
+      "put",
+      "labor",
+      "hold",
+      "return",
+      "select",
+      "die",
+      "provide",
+      "seek",
+      "stand",
+      "spend",
+      "begin",
+      "get",
+      "wish",
+      "hang",
+      "write",
+      "finish",
+      "follow",
+      "forget",
+      "feed",
+      "eat",
+      "disagree",
+      "produce",
+      "attack",
+      "attempt",
+      "bite",
+      "blow",
+      "brake",
+      "brush",
+      "burn",
+      "bang",
+      "bomb",
+      "bet",
+      "budget",
+      "comfort",
+      "cook",
+      "copy",
+      "cough",
+      "crush",
+      "cry",
+      "check",
+      "claw",
+      "clip",
+      "combine",
+      "damage",
+      "desire",
+      "doubt",
+      "drain",
+      "drink",
+      "dance",
+      "decrease",
+      "defect",
+      "deposit",
+      "drift",
+      "dip",
+      "dive",
+      "divorce",
+      "dream",
+      "exchange",
+      "envy",
+      "exert",
+      "exercise",
+      "export",
+      "fold",
+      "flood",
+      "focus",
+      "forecast",
+      "fracture",
+      "grip",
+      "guide",
+      "guard",
+      "guarantee",
+      "guess",
+      "hate",
+      "heat",
+      "handle",
+      "hire",
+      "host",
+      "hunt",
+      "hurry",
+      "import",
+      "judge",
+      "jump",
+      "jam",
+      "kick",
+      "kiss",
+      "knock",
+      "laugh",
+      "lift",
+      "lock",
+      "lecture",
+      "link",
+      "load",
+      "loan",
+      "lump",
+      "melt",
+      "message",
+      "murder",
+      "neglect",
+      "overlap",
+      "overtake",
+      "overuse",
+      "print",
+      "protest",
+      "pump",
+      "push",
+      "post",
+      "progress",
+      "promise",
+      "purchase",
+      "regret",
+      "request",
+      "reward",
+      "roll",
+      "rub",
+      "rent",
+      "repair",
+      "sail",
+      "scale",
+      "screw",
+      "shake",
+      "shock",
+      "sleep",
+      "slip",
+      "smash",
+      "smell",
+      "smoke",
+      "sneeze",
+      "snow",
+      "stick",
+      "surprise",
+      "swim",
+      "scratch",
+      "search",
+      "share",
+      "shave",
+      "slide",
+      "spit",
+      "splash",
+      "stain",
+      "stress",
+      "swing",
+      "switch",
+      "taste",
+      "touch",
+      "trade",
+      "trick",
+      "twist",
+      "tie",
+      "trap",
+      "travel",
+      "tune",
+      "undergo",
+      "undo",
+      "uplift",
+      "vote",
+      "wash",
+      "wave",
+      "whistle",
+      "wreck",
+      "yawn",
+      "betray",
+      "restrict",
+      "perform",
+      "worry",
+      "point",
+      "activate",
+      "fear",
+      "plan",
+      "note",
+      "face",
+      "predict",
+      "differ",
+      "deserve",
+      "torture",
+      "recall",
+      "count",
+      "swear",
+      "admit",
+      "insist",
+      "lack",
+      "pass",
+      "belong",
+      "complain",
+      "constitute",
+      "beat",
+      "rely",
+      "refuse",
+      "range",
+      "cite",
+      "flash",
+      "arrive",
+      "reveal",
+      "consist",
+      "observe",
+      "notice",
+      "trust",
+      "imply",
+      "display",
+      "view",
+      "stare",
+      "acknowledge",
+      "owe",
+      "gaze",
+      "treat",
+      "account",
+      "gather",
+      "address",
+      "confirm",
+      "estimate",
+      "manage",
+      "participate",
+      "sneak",
+      "drop",
+      "mirror",
+      "experience",
+      "strive",
+      "teach",
+      "cost",
+      "arch",
+      "dislike",
+      "favor",
+      "earn",
+      "emphasize",
+      "fly",
+      "match",
+      "question",
+      "emerge",
+      "encourage",
+      "matter",
+      "name",
+      "head",
+      "line",
+      "slam",
+      "list",
+      "sing",
+      "warn",
+      "ignore",
+      "resemble",
+      "spread",
+      "feature",
+      "place",
+      "reverse",
+      "accuse",
+      "spoil",
+      "retain",
+      "survive",
+      "praise",
+      "function",
+      "please",
+      "date",
+      "remind",
+      "deliver",
+      "echo",
+      "engage",
+      "deny",
+      "obey",
+      "yield",
+      "center",
+      "gain",
+      "anticipate",
+      "reason",
+      "side",
+      "thrive",
+      "defy",
+      "dodge",
+      "enable",
+      "applaud",
+      "bear",
+      "persist",
+      "pose",
+      "reject",
+      "attract",
+      "await",
+      "inhibit",
+      "declare",
+      "process",
+      "risk",
+      "urge",
+      "value",
+      "block",
+      "confront",
+      "credit",
+      "cross",
+      "wake",
+      "amuse",
+      "dare",
+      "resent",
+      "smile",
+      "gloss",
+      "threaten",
+      "collect",
+      "depict",
+      "dismiss",
+      "submit",
+      "benefit",
+      "step",
+      "deem",
+      "limit",
+      "sense",
+      "issue",
+      "embody",
+      "force",
+      "govern",
+      "replace",
+      "aim",
+      "bother",
+      "cater",
+      "adopt",
+      "empower",
+      "outweigh",
+      "alter",
+      "enrich",
+      "influence",
+      "prohibit",
+      "pursue",
+      "warrant",
+      "convey",
+      "approve",
+      "reserve",
+      "rest",
+      "strain",
+      "wander",
+      "adjust",
+      "dress",
+      "market",
+      "mingle",
+      "disapprove",
+      "evaluate",
+      "flow",
+      "inhabit",
+      "pop",
+      "rule",
+      "depart",
+      "roam",
+      "assert",
+      "disappear",
+      "envision",
+      "pause",
+      "afford",
+      "challenge",
+      "grab",
+      "grumble",
+      "house",
+      "portray",
+      "revel",
+      "base",
+      "conduct",
+      "review",
+      "stem",
+      "crave",
+      "mark",
+      "store",
+      "target",
+      "unlock",
+      "weigh",
+      "resist",
+      "steal",
+      "drag",
+      "pour",
+      "reckon",
+      "assign",
+      "cling",
+      "rank",
+      "attach",
+      "decline",
+      "destroy",
+      "interfere",
+      "paint",
+      "skip",
+      "sprinkle",
+      "wither",
+      "allege",
+      "retire",
+      "score",
+      "monitor",
+      "expand",
+      "honor",
+      "lend",
+      "pack",
+      "assist",
+      "float",
+      "appeal",
+      "sink",
+      "stretch",
+      "undermine",
+      "assemble",
+      "boast",
+      "bounce",
+      "grasp",
+      "install",
+      "borrow",
+      "crack",
+      "elect",
+      "shine",
+      "shout",
+      "contrast",
+      "overcome",
+      "relax",
+      "relent",
+      "strengthen",
+      "conform",
+      "dump",
+      "pile",
+      "scare",
+      "relive",
+      "resort",
+      "rush",
+      "boost",
+      "cease",
+      "command",
+      "excel",
+      "plug",
+      "plunge",
+      "proclaim",
+      "discourage",
+      "endure",
+      "ruin",
+      "stumble",
+      "abandon",
+      "cheat",
+      "convince",
+      "merge",
+      "convert",
+      "harm",
+      "multiply",
+      "overwhelm",
+      "chew",
+      "invent",
+      "bury",
+      "wipe"
+    ]
+
+    //conjugate all of these verbs. takes ~8ms. triples the lexicon size.
+    verbs.forEach(function(v) {
+      var c = verb_conjugate(v)
+      main[c.infinitive] = main[c.infinitive] || "VBP"
+      main[c.past] = main[c.past] || "VBD"
+      main[c.gerund] = main[c.gerund] || "VBG"
+      main[c.present] = main[c.present] || "VBZ"
+      if (c.participle && !main[c.participle]) {
+        main[c.participle] = "VBN"
+      }
+      var doer = verb_to_doer(v)
+      if (doer) {
+        main[doer] = "NNA"
+      }
+    })
+
+    //adjectives that either aren't covered by rules, or have superlative/comparative forms
+    var adjectives = [
+      'colonial',
+      'moody',
+      'literal',
+      'actual',
+      'probable',
+      'apparent',
+      'usual',
+      'aberrant',
+      'ablaze',
+      'able',
+      'absolute',
+      'aboard',
+      'abrupt',
+      'absent',
+      'absorbing',
+      'absurd',
+      'abundant',
+      'accurate',
+      'adult',
+      'afraid',
+      'agonizing',
+      'ahead',
+      'alert',
+      'alive',
+      'aloof',
+      'amazing',
+      'arbitrary',
+      'arrogant',
+      'asleep',
+      'astonishing',
+      'average',
+      'awake',
+      'aware',
+      'awkward',
+      'back',
+      'bad',
+      'bankrupt',
+      'bawdy',
+      'beneficial',
+      'bent',
+      'best',
+      'better',
+      'big',
+      'bitter',
+      'bizarre',
+      'black',
+      'bloody',
+      'blue',
+      'bouncy',
+      'brash',
+      'brave',
+      'brief',
+      'bright',
+      'brilliant',
+      'broad',
+      'broken',
+      'brown',
+      'burly',
+      'busy',
+      'cagey',
+      'calm',
+      'careful',
+      'caring',
+      'certain',
+      'charming',
+      'cheap',
+      'chief',
+      'chilly',
+      'civil',
+      'clever',
+      'close',
+      'closed',
+      'cloudy',
+      'cold',
+      'colossal',
+      'commercial',
+      'common',
+      'complete',
+      'complex',
+      'concerned',
+      'concrete',
+      'congruent',
+      'constant',
+      'cooing',
+      'cool',
+      'correct',
+      'cowardly',
+      'craven',
+      'cruel',
+      'cuddly',
+      'curly',
+      'cute',
+      'daily',
+      'damaged',
+      'damaging',
+      'damp',
+      'dapper',
+      'dark',
+      'dashing',
+      'dead',
+      'deadpan',
+      'dear',
+      'deep',
+      'deeply',
+      'defiant',
+      'degenerate',
+      'delicate',
+      'delightful',
+      'desperate',
+      'determined',
+      'didactic',
+      'difficult',
+      'discreet',
+      'done',
+      'double',
+      'doubtful',
+      'downtown',
+      'dreary',
+      'drunk',
+      'dry',
+      'dull',
+      'eager',
+      'early',
+      'east',
+      'eastern',
+      'easy',
+      'elderly',
+      'elegant',
+      'elfin',
+      'elite',
+      'eminent',
+      'empty',
+      'encouraging',
+      'entire',
+      'erect',
+      'ethereal',
+      'even',
+      'exact',
+      'expert',
+      'extra',
+      'extreme',
+      'exuberant',
+      'exultant',
+      'faint',
+      'fair',
+      'false',
+      'fanc',
+      'fancy',
+      'fast',
+      'fat',
+      'faulty',
+      'feeble',
+      'female',
+      'fertile',
+      'few',
+      'fierce',
+      'fierce ',
+      'financial',
+      'fine',
+      'firm',
+      'first',
+      'fit',
+      'fixed',
+      'flagrant',
+      'flat',
+      'foamy',
+      'foolish',
+      'foregoing',
+      'foreign',
+      'forgetful',
+      'former',
+      'fortunate',
+      'frail',
+      'frantic',
+      'free',
+      'freezing',
+      'frequent',
+      'fresh',
+      'fretful',
+      'friendly',
+      'full',
+      'fun',
+      'funny',
+      'furry',
+      'future',
+      'gainful',
+      'gaudy',
+      'gentle',
+      'giant',
+      'giddy',
+      'gigantic',
+      'glad',
+      'gleaming',
+      'glib',
+      'global',
+      'gold',
+      'gone',
+      'good',
+      'goofy',
+      'graceful',
+      'grand',
+      'grateful',
+      'gratis',
+      'gray',
+      'great',
+      'green',
+      'grey',
+      'groovy',
+      'gross',
+      'guarded',
+      'half',
+      'handy',
+      'hanging',
+      'hard',
+      'harsh',
+      'hateful',
+      'heady',
+      'heavenly',
+      'heavy',
+      'hellish',
+      'helpful',
+      'hesitant',
+      'high',
+      'highfalutin',
+      'hollow',
+      'homely',
+      'honest',
+      'hot',
+      'huge',
+      'humdrum',
+      'hurried',
+      'hurt',
+      'icy',
+      'ignorant',
+      'ill',
+      'illegal',
+      'immediate',
+      'immense',
+      'imminent',
+      'impartial',
+      'imperfect',
+      'impolite',
+      'important',
+      'imported',
+      'initial',
+      'innate',
+      'inner',
+      'inside',
+      'irate',
+      'jolly',
+      'juicy',
+      'junior',
+      'juvenile',
+      'kaput',
+      'keen',
+      'kind',
+      'kindly',
+      'knowing',
+      'labored',
+      'lame',
+      'languid',
+      'large',
+      'late',
+      'latter',
+      'learned',
+      'left',
+      'legal',
+      'lethal',
+      'level',
+      'lewd',
+      'light',
+      'likely',
+      'literate',
+      'lively',
+      'living',
+      'lonely',
+      'longing',
+      'loose',
+      'loud',
+      'loutish',
+      'lovely',
+      'loving',
+      'low',
+      'lowly',
+      'lush',
+      'luxuriant',
+      'lying',
+      'macabre',
+      'macho',
+      'mad',
+      'madly',
+      'magenta',
+      'main',
+      'major',
+      'makeshift',
+      'male',
+      'mammoth',
+      'married',
+      'mature',
+      'measly',
+      'meaty',
+      'medium',
+      'meek',
+      'mellow',
+      'mere',
+      'middle',
+      'miniature',
+      'minor',
+      'miscreant',
+      'mobile',
+      'moldy',
+      'mundane',
+      'mute',
+      'naive',
+      'narrow',
+      'near',
+      'nearby',
+      'neat',
+      'necessary',
+      'neighborly',
+      'new',
+      'next',
+      'nice',
+      'nimble',
+      'noisy',
+      'nonchalant',
+      'nondescript',
+      'nonstop',
+      'north',
+      'nosy',
+      'obeisant',
+      'obese',
+      'obscene',
+      'observant',
+      'obsolete',
+      'odd',
+      'offbeat',
+      'official',
+      'ok',
+      'old',
+      'open',
+      'opposite',
+      'orange',
+      'organic',
+      'outdoor',
+      'outer',
+      'outgoing',
+      'oval',
+      'over',
+      'overall',
+      'overt',
+      'overweight',
+      'overwrought',
+      'painful',
+      'pale',
+      'past',
+      'peaceful',
+      'perfect',
+      'petite',
+      'picayune',
+      'pink',
+      'placid',
+      'plain',
+      'plant',
+      'pleasant',
+      'polite',
+      'poor',
+      'potential',
+      'pregnant',
+      'premium',
+      'present',
+      'pricey',
+      'prickly',
+      'primary',
+      'prior',
+      'private',
+      'profuse',
+      'proper',
+      'public',
+      'pumped',
+      'puny',
+      'pure',
+      'purple',
+      'quack',
+      'quaint',
+      'quick',
+      'quickest',
+      'quiet',
+      'rabid',
+      'racial',
+      'rare',
+      'raw',
+      'ready',
+      'real',
+      'rebel',
+      'recondite',
+      'red',
+      'redundant',
+      'relevant',
+      'remote',
+      'resolute',
+      'resonant',
+      'rich',
+      'right',
+      'rightful',
+      'ripe',
+      'ritzy',
+      'robust',
+      'romantic',
+      'roomy',
+      'rotten',
+      'rough',
+      'round',
+      'royal',
+      'rude',
+      'sad',
+      'safe',
+      'salty',
+      'same',
+      'scarce',
+      'scary',
+      'scientific',
+      'screeching',
+      'second',
+      'secret',
+      'secure',
+      'sedate',
+      'seemly',
+      'selfish',
+      'senior',
+      'separate',
+      'severe',
+      'shallow',
+      'sharp',
+      'shiny',
+      'shocking',
+      'short',
+      'shrill',
+      'shut',
+      'shy',
+      'sick',
+      'significant',
+      'silly',
+      'simple',
+      'sincere',
+      'single',
+      'skinny',
+      'slight',
+      'slim',
+      'slimy',
+      'slow',
+      'small',
+      'smelly',
+      'smooth',
+      'snobbish',
+      'social',
+      'soft',
+      'somber',
+      'soon',
+      'sordid',
+      'sore',
+      'sorry',
+      'sour',
+      'southern',
+      'spare',
+      'special',
+      'specific',
+      'spicy',
+      'splendid',
+      'square',
+      'squeamish',
+      'stale',
+      'standard',
+      'standing',
+      'steadfast',
+      'steady',
+      'steep',
+      'stereotyped',
+      'stiff',
+      'still',
+      'straight',
+      'strange',
+      'strict',
+      'striped',
+      'strong',
+      'stupid',
+      'sturdy',
+      'subdued',
+      'subsequent',
+      'substantial',
+      'sudden',
+      'super',
+      'superb',
+      'superficial',
+      'supreme',
+      'sure',
+      'sweet',
+      'swift',
+      'taboo',
+      'tall',
+      'tame',
+      'tan',
+      'tart',
+      'tasteful',
+      'tawdry',
+      'telling',
+      'temporary',
+      'tender',
+      'tense',
+      'terrific',
+      'tested',
+      'thick',
+      'thin',
+      'thoughtful',
+      'tidy',
+      'tight',
+      'tiny',
+      'top',
+      'torpid',
+      'tough',
+      'tranquil',
+      'trite',
+      'true',
+      'ugly',
+      'ultra',
+      'unbecoming',
+      'understood',
+      'uneven',
+      'unfair',
+      'unlikely',
+      'unruly',
+      'unsightly',
+      'untidy',
+      'unwritten',
+      'upbeat',
+      'upper',
+      'uppity',
+      'upset',
+      'upstairs',
+      'uptight',
+      'used',
+      'useful',
+      'utter',
+      'uttermost',
+      'vagabond',
+      'vague',
+      'vanilla',
+      'various',
+      'vast',
+      'vengeful',
+      'verdant',
+      'violet',
+      'volatile',
+      'vulgar',
+      'wanting',
+      'warm',
+      'wary',
+      'wasteful',
+      'weak',
+      'weary',
+      'weekly',
+      'weird',
+      'welcome',
+      'western',
+      'wet',
+      'white',
+      'whole',
+      'wholesale',
+      'wide',
+      'wild',
+      'windy',
+      'wiry',
+      'wise',
+      'wistful',
+      'womanly',
+      'wooden',
+      'woozy',
+      'wound',
+      'wrong',
+      'wry',
+      'yellow',
+      'young',
+      'zany',
+      'sacred',
+      //words that have good comparative/superlative forms
+      'aggressive',
+      'awesome',
+      'beautiful',
+      'bored',
+      'boring',
+      'clean',
+      'dirty',
+      'efficient',
+      'gruesome',
+      'handsome',
+      'innocent',
+      'lean',
+      'little',
+      'long',
+      'mean',
+      'normal',
+      'proud',
+      'rapid',
+      'scared',
+      'smart',
+      'thirsty',
+      'hungry',
+      'clear',
+      'happy',
+      'lucky',
+      'pretty',
+      'interesting',
+      'attractive',
+      'dangerous',
+      'intellegent',
+      'formal',
+      'tired',
+      'solid',
+      'angry',
+      "unknown",
+      "detailed",
+      "ongoing",
+      "prominent",
+      "permanent",
+      "diverse",
+      "partial",
+      "moderate",
+      "contemporary",
+      "intense",
+      "widespread",
+      "ultimate",
+      "ideal",
+      "adequate",
+      "sophisticated",
+      "naked",
+      "dominant",
+      "precise",
+      "intact",
+      "adverse",
+      "genuine",
+      "subtle",
+      "universal",
+      "resistant",
+      "routine",
+      "distant",
+      "unexpected",
+      "soviet",
+      "blind",
+      "artificial",
+      "mild",
+      "legitimate",
+      "unpublished",
+      "superior",
+      "intermediate",
+      "everyday",
+      "dumb",
+      "excess",
+      "sexy",
+      "fake",
+      "monthly",
+      "premature",
+      "sheer",
+      "generic",
+      "insane",
+      "contrary",
+      "twin",
+      "upcoming",
+      "bottom",
+      "costly",
+      "indirect",
+      "sole",
+      "unrelated",
+      "hispanic",
+      "improper",
+      "underground",
+      "legendary",
+      "reluctant",
+      "beloved",
+      "inappropriate",
+      "corrupt",
+      "irrelevant",
+      "justified",
+      "obscure",
+      "profound",
+      "hostile",
+      "influential",
+      "inadequate",
+      "abstract",
+      "timely",
+      "authentic",
+      "bold",
+      "intimate",
+      "straightforward",
+      "rival",
+      "right-wing",
+      "racist",
+      "symbolic",
+      "unprecedented",
+      "loyal",
+      "talented",
+      "troubled",
+      "noble",
+      "instant",
+      "incorrect",
+      "dense",
+      "blond",
+      "deliberate",
+      "blank",
+      "rear",
+      "feminine",
+      "apt",
+      "stark",
+      "alcoholic",
+      "teenage",
+      "vibrant",
+      "humble",
+      "vain",
+      "covert",
+      "bland",
+      "trendy",
+      "foul",
+      "populist",
+      "alarming",
+      "hooked",
+      "wicked",
+      "deaf",
+      "left-wing",
+      "lousy",
+      "malignant",
+      "stylish",
+      "upscale",
+      "hourly",
+      "refreshing",
+      "cozy",
+      "slick",
+      "dire",
+      "yearly",
+      "inbred",
+      "part-time",
+      "finite",
+      "backwards",
+      "nightly",
+      "unauthorized",
+      "cheesy",
+      "indoor",
+      "surreal",
+      "bald",
+      "masculine",
+      "shady",
+      "spirited",
+      "eerie",
+      "horrific",
+      "smug",
+      "stern",
+      "hefty",
+      "savvy",
+      "bogus",
+      "elaborate",
+      "gloomy",
+      "pristine",
+      "extravagant",
+      "serene",
+      "advanced",
+      "perverse",
+      "devout",
+      "crisp",
+      "rosy",
+      "slender",
+      "melancholy",
+      "faux",
+      "phony",
+      "danish",
+      "lofty",
+      "nuanced",
+      "lax",
+      "adept",
+      "barren",
+      "shameful",
+      "sleek",
+      "solemn",
+      "vacant",
+      "dishonest",
+      "brisk",
+      "fluent",
+      "insecure",
+      "humid",
+      "menacing",
+      "moot",
+      "soothing",
+      "self-loathing",
+      "far-reaching",
+      "harrowing",
+      "scathing",
+      "perplexing",
+      "calming",
+      "unconvincing",
+      "unsuspecting",
+      "unassuming",
+      "surprising",
+      "unappealing",
+      "vexing",
+      "unending",
+      "easygoing",
+      "appetizing",
+      "disgruntled",
+      "retarded",
+      "undecided",
+      "unregulated",
+      "unsupervised",
+      "unrecognized",
+      "crazed",
+      "distressed",
+      "jagged",
+      "paralleled",
+      "cramped",
+      "warped",
+      "antiquated",
+      "fabled",
+      "deranged",
+      "diseased",
+      "ragged",
+      "intoxicated",
+      "hallowed",
+      "crowded",
+      "ghastly",
+      "disorderly",
+      "saintly",
+      "wily",
+      "sly",
+      "sprightly",
+      "ghostly",
+      "oily",
+      "hilly",
+      "grisly",
+      "earthly",
+      "friendly",
+      "unwieldy"
+    ]
+
+    //conjugate all of these adjectives to their adverbs. (13ms)
+    adjectives.forEach(function(j) {
+      main[j] = "JJ"
+      var adv = adj_to_adv(j)
+      if (adv && adv !== j && !main[adv]) {
+        // console.log(adv)
+        main[adv] = main[adv] || "RB"
+      }
+      var comp = to_comparative(j)
+      if (comp && !comp.match(/^more ./) && comp !== j && !main[comp]) {
+        // console.log(comp)
+        main[comp] = main[comp] || "JJR"
+      }
+      var sup = to_superlative(j)
+      if (sup && !sup.match(/^most ./) && sup !== j && !main[sup]) {
+        // console.log(sup)
+        main[sup] = main[sup] || "JJS"
+      }
+    })
+
+    if (typeof module !== "undefined" && module.exports) {
+      module.exports = main;
+    }
+
+    return main
+  })()
+  // console.log(lexicon['restricted'])
+  // console.log(lexicon['sleeping'])
 
 // methods that hang on a parsed set of words
 // accepts parsed tokens

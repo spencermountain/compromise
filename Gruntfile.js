@@ -18,7 +18,7 @@ module.exports = function(grunt) {
     './src/parents/value/date_extractor.js',
     './src/parents/value/index.js',
     //nouns
-    './src/parents/noun/indefinite_article/indefinite_article.js',
+    './src/parents/noun/indefinite_article.js',
     './src/parents/noun/conjugate/inflect.js',
     './src/parents/noun/index.js',
     //adverbs

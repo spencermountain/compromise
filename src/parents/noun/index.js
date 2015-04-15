@@ -8,7 +8,7 @@ var Noun = function(str, next, last, token) {
   if (typeof module !== "undefined" && module.exports) {
     parts_of_speech = require("../../data/parts_of_speech")
     inflect = require("./conjugate/inflect")
-    indefinite_article = require("./indefinite_article/indefinite_article")
+    indefinite_article = require("./indefinite_article")
     // is_entity = require("./ner/is_entity")
   }
   //personal pronouns

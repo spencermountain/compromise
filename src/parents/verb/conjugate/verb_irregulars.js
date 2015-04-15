@@ -799,52 +799,60 @@ var verb_irregulars = (function() {
       "past": "fed",
       "gerund": "feeding",
       "doer": "feeder"
-    },
-    {
+    }, {
       "infinitive": "miss",
       "present": "miss",
       "past": "missed",
       "gerund": "missing",
       "doer": "misser"
-    },
-    {
+    }, {
       "infinitive": "act",
       "present": "acts",
       "past": "acted",
       "gerund": "acting",
       "doer": "actor"
-    },
-    { present: 'competes',
+    }, {
+      present: 'competes',
       gerund: 'competing',
       past: 'competed',
       infinitive: 'compete',
-      doer: 'competitor' },
+      doer: 'competitor'
+    },
 
-    { present: 'are',
+    {
+      present: 'are',
       gerund: 'are',
       past: 'were',
       infinitive: 'being',
-      doer: '' },
+      doer: ''
+    },
 
-    { infinitive: 'imply',
+    {
+      infinitive: 'imply',
       present: 'implies',
       past: 'implied',
       gerund: 'implying',
-      doer: 'implier' },
+      doer: 'implier'
+    },
 
-    { infinitive: 'ice',
+    {
+      infinitive: 'ice',
       present: 'ices',
       past: 'iced',
       gerund: 'icing',
-      doer: 'icer' },
+      doer: 'icer'
+    },
 
-    { infinitive: 'throw',
+    {
+      infinitive: 'throw',
       present: 'throws',
       past: 'threw',
       gerund: 'throwing',
-      doer: 'thrower' },
+      doer: 'thrower'
+    },
 
-    { present: 'develops',
+    {
+      present: 'develops',
       gerund: 'developing',
       past: 'develop',
       infinitive: 'develop',
@@ -852,28 +860,29 @@ var verb_irregulars = (function() {
       future: 'will develop'
     },
 
-    { present: 'waits',
+    {
+      present: 'waits',
       gerund: 'waiting',
       past: 'waited',
       infinitive: 'wait',
       doer: 'waiter',
       future: 'will wait'
-    },
-    { present: 'aims',
+    }, {
+      present: 'aims',
       gerund: 'aiming',
       past: 'aimed',
       infinitive: 'aim',
       doer: 'aimer',
       future: 'will aim'
-    },
-    { present: 'spills',
+    }, {
+      present: 'spills',
       gerund: 'spilling',
       past: 'spilt',
       infinitive: 'spill',
       doer: 'spiller',
       future: 'will spill'
-    },
-    { present: 'am',
+    }, {
+      present: 'am',
       gerund: 'am',
       past: 'was',
       infinitive: 'be',

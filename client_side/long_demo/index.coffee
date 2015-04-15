@@ -2,10 +2,9 @@ arr= [
   "./libs/jquery.js",
   "./libs/sugar.js",
   "./libs/oj.js",
-  "./libs/dirty.js",
   "../nlp.js",
   "./libs/bluebrowns.js",
-  "./coffeejs/texts.js"
+  "./texts.js"
 ]
 head.js.apply(this, arr);
 
@@ -179,15 +178,6 @@ head ->
       }
 
     )
-
-  set_text(texts[articles.random()])
-
-
-
-
-
-
-
-
-
+  article= articles[parseInt(Math.random() * (articles.length-1))]
+  set_text(texts[article])
 

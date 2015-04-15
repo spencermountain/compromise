@@ -1,12 +1,25 @@
 arr= [
   "./libs/jquery.js",
-  "./libs/sugar.js",
   "./libs/oj.js",
-  "./libs/dirty.js",
   "../nlp.js",
   "./libs/freebase.min.js",
 ]
 head.js.apply(this, arr);
+
+#slow down typing lookups
+debounce = (fn, debounceDuration) ->
+  debounceDuration = debounceDuration or 100
+  ->
+    if !fn.debouncing
+      args = Array::slice.apply(arguments)
+      fn.lastReturnVal = fn.apply(window, args)
+      fn.debouncing = true
+    clearTimeout fn.debounceTimeout
+    fn.debounceTimeout = setTimeout((->
+      fn.debouncing = false
+      return
+    ), debounceDuration)
+    fn.lastReturnVal
 
 head ->
   oj.useGlobally();
@@ -127,7 +140,7 @@ head ->
           id: "text"
           style:"position:relative; padding:10px; left:25px; height:45px; border:1px solid lightsteelblue; color:steelblue; overflow-x: visible; font-size:30px; width:600px;"
           contentEditable:"true"
-          keyup:(()->
+          keyup: debounce(()->
             el= $("#text")
             el.find('.hide').remove() #so the helper buttons don't show up
             txt= el.text()
@@ -135,7 +148,7 @@ head ->
             tokens= done[0].tokens
             el.html('')
             set_text(tokens, el)
-            ).debounce(500);
+          , 500);
         },->
           "joe carter plays patiently in toronto"
         div {
@@ -144,13 +157,4 @@ head ->
 
   )
   $("#text").keyup()
-
-
-
-
-
-
-
-
-
 

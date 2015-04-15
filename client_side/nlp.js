@@ -2,37 +2,37 @@
 var nlp = (function() {
 //chop text into respective sentences. Ignore periods used in acronyms/abbreviations/numbers, etc.
 var sentence_parser = function(text) {
-  var abbrev, abbrevs, clean, i, sentences, tmp;
-  tmp = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
-  sentences = [];
+  var sentences = [];
+  //first do a greedy-split..
+  var chunks = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
   //honourifics
-  abbrevs = ["jr", "mr", "mrs", "ms", "dr", "prof", "sr", "sen", "corp", "rep", "gov", "atty", "supt", "det", "rev", "col", "gen", "lt", "cmdr", "adm", "capt", "sgt", "cpl", "maj", "miss", "misses", "mister", "sir", "esq", "mstr", "phd", "adj", "adv", "asst", "bldg", "brig", "comdr", "hon", "messrs", "mlle", "mme", "op", "ord", "pvt", "reps", "res", "sens", "sfc", "surg"]
+  var abbrevs = ["jr", "mr", "mrs", "ms", "dr", "prof", "sr", "sen", "corp", "rep", "gov", "atty", "supt", "det", "rev", "col", "gen", "lt", "cmdr", "adm", "capt", "sgt", "cpl", "maj", "miss", "misses", "mister", "sir", "esq", "mstr", "phd", "adj", "adv", "asst", "bldg", "brig", "comdr", "hon", "messrs", "mlle", "mme", "op", "ord", "pvt", "reps", "res", "sens", "sfc", "surg"]
   //common abbreviations
-  abbrevs= abbrevs.concat(["arc", "al", "ave", "blvd", "cl", "ct", "cres", "exp", "rd", "st", "dist", "mt", "ft", "fy", "hwy", "la", "pd", "pl", "plz", "tce", "vs", "etc", "esp", "llb", "md", "bl", "ma", "ba", "lit", "fl", "ex", "eg"])
+  abbrevs = abbrevs.concat(["arc", "al", "ave", "blvd", "cl", "ct", "cres", "exp", "rd", "st", "dist", "mt", "ft", "fy", "hwy", "la", "pd", "pl", "plz", "tce", "vs", "etc", "esp", "llb", "md", "bl", "ma", "ba", "lit", "fl", "ex", "eg"])
   //place abbrevs
-  abbrevs= abbrevs.concat(["ala", "ariz", "ark", "cal", "calif", "col", "colo", "conn", "del", "fed", "fla", "ga", "ida", "id", "ill", "ind", "ia", "kan", "kans", "ken", "ky", "la", "me", "md", "mass", "mich", "minn", "miss", "mo", "mont", "neb", "nebr", "nev", "mex", "okla", "ok", "ore", "penna", "penn", "pa", "dak", "tenn", "tex", "ut", "vt", "va", "wash", "wis", "wisc", "wy", "wyo", "usafa", "alta", "ont", "que", "sask", "yuk"])
+  abbrevs = abbrevs.concat(["ala", "ariz", "ark", "cal", "calif", "col", "colo", "conn", "del", "fed", "fla", "ga", "ida", "id", "ill", "ind", "ia", "kan", "kans", "ken", "ky", "la", "me", "md", "mass", "mich", "minn", "miss", "mo", "mont", "neb", "nebr", "nev", "mex", "okla", "ok", "ore", "penna", "penn", "pa", "dak", "tenn", "tex", "ut", "vt", "va", "wash", "wis", "wisc", "wy", "wyo", "usafa", "alta", "ont", "que", "sask", "yuk"])
   //date abbrevs
-  abbrevs= abbrevs.concat(["jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept", "sep"])
+  abbrevs = abbrevs.concat(["jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept", "sep"])
   //org abbrevs
-  abbrevs= abbrevs.concat(["dept", "univ", "assn", "bros", "inc", "ltd", "co", "corp"])
+  abbrevs = abbrevs.concat(["dept", "univ", "assn", "bros", "inc", "ltd", "co", "corp"])
   //proper nouns with exclamation marks
-  abbrevs= abbrevs.concat(["yahoo", "joomla", "jeopardy"])
-  abbrev = new RegExp("(^| )(" + abbrevs.join("|") + ")[.!?] ?$", "i");
+  abbrevs = abbrevs.concat(["yahoo", "joomla", "jeopardy"])
+  var reg = new RegExp("(^| )(" + abbrevs.join("|") + ")[.!?] ?$", "i");
 
-  var tmp_length = tmp.length;
-  for (i = 0; i < tmp_length; i++) {
-    if (tmp[i]) {
-      tmp[i] = tmp[i].replace(/^\s+|\s+$/g, "");
-      if (tmp[i].match(abbrev) || tmp[i].match(/[ |\.][A-Z]\.?$/)) {
-        tmp[i + 1] = tmp[i] + " " + tmp[i + 1];
+  var chunks_length = chunks.length;
+  for (i = 0; i < chunks_length; i++) {
+    if (chunks[i]) {
+      chunks[i] = chunks[i].replace(/^\s+|\s+$/g, "");
+      if (chunks[i].match(reg) || chunks[i].match(/[ |\.][A-Z]\.?$/)) {
+        chunks[i + 1] = chunks[i] + " " + chunks[i + 1];
       } else {
-        sentences.push(tmp[i]);
-        tmp[i] = "";
+        sentences.push(chunks[i]);
+        chunks[i] = "";
       }
     }
   }
 
-  clean = [];
+  var clean = [];
   for (i = 0; i < sentences.length; i++) {
     sentences[i] = sentences[i].replace(/^\s+|\s+$/g, "");
     if (sentences[i]) {
@@ -3239,229 +3239,227 @@ var date_extractor = (function() {
       h[k] = arr[places[k]];
       return h;
     }, {});
-  };
+  }
 
-  var regexes = [
-    {
-      reg: String(months) + " " + String(days) + "-" + String(days) + " " + String(years),
-      example: "March 7th-11th 1987",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 1,
-          day: 2,
-          to_day: 3,
-          year: 4
-        };
-        return to_obj(arr, places);
+  var regexes = [{
+    reg: String(months) + " " + String(days) + "-" + String(days) + " " + String(years),
+    example: "March 7th-11th 1987",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
       }
-    }, {
-      reg: String(days) + " of " + String(months) + " to " + String(days) + " of " + String(months) + ",? " + String(years),
-      example: "28th of September to 5th of October 2008",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          day: 1,
-          month: 2,
-          to_day: 3,
-          to_month: 4,
-          to_year: 5
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(months) + " " + String(days) + " to " + String(months) + " " + String(days) + " " + String(years),
-      example: "March 7th to june 11th 1987",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 1,
-          day: 2,
-          to_month: 3,
-          to_day: 4,
-          year: 5,
-          to_year: 5
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: "between " + String(days) + " " + String(months) + " and " + String(days) + " " + String(months) + " " + String(years),
-      example: "between 13 February and 15 February 1945",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          day: 1,
-          month: 2,
-          to_day: 3,
-          to_month: 4,
-          year: 5,
-          to_year: 5
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: "between " + String(months) + " " + String(days) + " and " + String(months) + " " + String(days) + " " + String(years),
-      example: "between March 7th and june 11th 1987",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 1,
-          day: 2,
-          to_month: 3,
-          to_day: 4,
-          year: 5,
-          to_year: 5
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(months) + " " + String(days) + " " + String(years),
-      example: "March 1st 1987",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 1,
-          day: 2,
-          year: 3
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(days) + " - " + String(days) + " of " + String(months) + ",? " + String(years),
-      example: "3rd - 5th of March 1969",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          day: 1,
-          to_day: 2,
-          month: 3,
-          year: 4
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(days) + " of " + String(months) + ",? " + String(years),
-      example: "3rd of March 1969",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          day: 1,
-          month: 2,
-          year: 3
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(months) + " " + years + ",? to " + String(months) + " " + String(years),
-      example: "September 1939 to April 1945",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 1,
-          year: 2,
-          to_month: 3,
-          to_year: 4
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(months) + " " + String(years),
-      example: "March 1969",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 1,
-          year: 2
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(months) + " " + days,
-      example: "March 18th",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 1,
-          day: 2
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: String(days) + " of " + months,
-      example: "18th of March",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          month: 2,
-          day: 1
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: years + " ?- ?" + String(years),
-      example: "1997-1998",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          year: 1,
-          to_year: 2
-        };
-        return to_obj(arr, places);
-      }
-    }, {
-      reg: years,
-      example: "1998",
-      process: function(arr) {
-        var places;
-        if (!arr) {
-          arr = [];
-        }
-        places = {
-          year: 1
-        };
-        return to_obj(arr, places);
-      }
+      places = {
+        month: 1,
+        day: 2,
+        to_day: 3,
+        year: 4
+      };
+      return to_obj(arr, places);
     }
-  ].map(function(o) {
+  }, {
+    reg: String(days) + " of " + String(months) + " to " + String(days) + " of " + String(months) + ",? " + String(years),
+    example: "28th of September to 5th of October 2008",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        day: 1,
+        month: 2,
+        to_day: 3,
+        to_month: 4,
+        to_year: 5
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(months) + " " + String(days) + " to " + String(months) + " " + String(days) + " " + String(years),
+    example: "March 7th to june 11th 1987",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        month: 1,
+        day: 2,
+        to_month: 3,
+        to_day: 4,
+        year: 5,
+        to_year: 5
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: "between " + String(days) + " " + String(months) + " and " + String(days) + " " + String(months) + " " + String(years),
+    example: "between 13 February and 15 February 1945",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        day: 1,
+        month: 2,
+        to_day: 3,
+        to_month: 4,
+        year: 5,
+        to_year: 5
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: "between " + String(months) + " " + String(days) + " and " + String(months) + " " + String(days) + " " + String(years),
+    example: "between March 7th and june 11th 1987",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        month: 1,
+        day: 2,
+        to_month: 3,
+        to_day: 4,
+        year: 5,
+        to_year: 5
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(months) + " " + String(days) + " " + String(years),
+    example: "March 1st 1987",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        month: 1,
+        day: 2,
+        year: 3
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(days) + " - " + String(days) + " of " + String(months) + ",? " + String(years),
+    example: "3rd - 5th of March 1969",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        day: 1,
+        to_day: 2,
+        month: 3,
+        year: 4
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(days) + " of " + String(months) + ",? " + String(years),
+    example: "3rd of March 1969",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        day: 1,
+        month: 2,
+        year: 3
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(months) + " " + years + ",? to " + String(months) + " " + String(years),
+    example: "September 1939 to April 1945",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        month: 1,
+        year: 2,
+        to_month: 3,
+        to_year: 4
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(months) + " " + String(years),
+    example: "March 1969",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        month: 1,
+        year: 2
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(months) + " " + days,
+    example: "March 18th",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        month: 1,
+        day: 2
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: String(days) + " of " + months,
+    example: "18th of March",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        month: 2,
+        day: 1
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: years + " ?- ?" + String(years),
+    example: "1997-1998",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        year: 1,
+        to_year: 2
+      };
+      return to_obj(arr, places);
+    }
+  }, {
+    reg: years,
+    example: "1998",
+    process: function(arr) {
+      var places;
+      if (!arr) {
+        arr = [];
+      }
+      places = {
+        year: 1
+      };
+      return to_obj(arr, places);
+    }
+  }].map(function(o) {
     o.reg = new RegExp(o.reg, "g");
     return o;
   });
@@ -3504,10 +3502,10 @@ var date_extractor = (function() {
     var d;
     d = new Date();
     options = options || {};
-    obj.year = parseInt(obj.year,10) || undefined;
-    obj.day = parseInt(obj.day,10) || undefined;
-    obj.to_day = parseInt(obj.to_day,10) || undefined;
-    obj.to_year = parseInt(obj.to_year,10) || undefined;
+    obj.year = parseInt(obj.year, 10) || undefined;
+    obj.day = parseInt(obj.day, 10) || undefined;
+    obj.to_day = parseInt(obj.to_day, 10) || undefined;
+    obj.to_year = parseInt(obj.to_year, 10) || undefined;
     obj.month = months_obj[obj.month];
     obj.to_month = months_obj[obj.to_month];
     //swap to_month and month
@@ -3521,7 +3519,7 @@ var date_extractor = (function() {
     if (obj.to_year && !obj.year) {
       obj.year = obj.to_year;
     }
-    if (!obj.to_year && obj.year && obj.to_month!==undefined) {
+    if (!obj.to_year && obj.year && obj.to_month !== undefined) {
       obj.to_year = obj.year;
     }
     if (options.assume_year && !obj.year) {
@@ -3604,6 +3602,7 @@ var date_extractor = (function() {
 
 // console.log(date_extractor("january 6th 1998"))
 
+//wrapper for value's methods
 var Value = function(str, next, last, token) {
   var the = this
   the.word = str || '';
@@ -4248,6 +4247,7 @@ var inflect = (function() {
 // console.log(inflect.pluralize('mayor of chicago'))
 // console.log(inflect.inflect('Index').plural=='Indices')
 
+//wrapper for noun's methods
 var Noun = function(str, next, last, token) {
   var the = this
   the.word = str || '';
@@ -4279,7 +4279,7 @@ var Noun = function(str, next, last, token) {
 
   the.is_acronym = (function() {
     var s = the.word
-    //no periods
+      //no periods
     if (s.length <= 5 && s.match(/^[A-Z]*$/)) {
       return true
     }
@@ -4290,68 +4290,68 @@ var Noun = function(str, next, last, token) {
     return false
   })()
 
-  the.is_entity= (function(){
-    if(!token){
+  the.is_entity = (function() {
+    if (!token) {
       return false
     }
     var blacklist = {
-      "itself": 1,
-      "west": 1,
-      "western": 1,
-      "east": 1,
-      "eastern": 1,
-      "north": 1,
-      "northern": 1,
-      "south": 1,
-      "southern": 1,
-      "the": 1,
-      "one": 1,
-      "your": 1,
-      "my": 1,
-      "today": 1,
-      "yesterday": 1,
-      "tomorrow": 1,
-      "era": 1,
-      "century": 1,
-      "it":1
-    }
-    //prepositions
-    if(prps[token.normalised]){
+        "itself": 1,
+        "west": 1,
+        "western": 1,
+        "east": 1,
+        "eastern": 1,
+        "north": 1,
+        "northern": 1,
+        "south": 1,
+        "southern": 1,
+        "the": 1,
+        "one": 1,
+        "your": 1,
+        "my": 1,
+        "today": 1,
+        "yesterday": 1,
+        "tomorrow": 1,
+        "era": 1,
+        "century": 1,
+        "it": 1
+      }
+      //prepositions
+    if (prps[token.normalised]) {
       return false
     }
     //blacklist
-    if(blacklist[token.normalised]){
+    if (blacklist[token.normalised]) {
       return false
     }
     //discredit specific nouns forms
-    if(token.pos){
-     if(token.pos.tag=="NNA"){//eg. 'singer'
+    if (token.pos) {
+      if (token.pos.tag == "NNA") { //eg. 'singer'
         return false
       }
-     if(token.pos.tag=="NNO"){//eg. "spencer's"
+      if (token.pos.tag == "NNO") { //eg. "spencer's"
         return false
       }
-     if(token.pos.tag=="NNG"){//eg. 'walking'
+      if (token.pos.tag == "NNG") { //eg. 'walking'
         return false
       }
-     // if(token.pos.tag=="NNP"){//yes! eg. 'Edinburough'
-     //    return true
-     //  }
+      // if(token.pos.tag=="NNP"){//yes! eg. 'Edinburough'
+      //    return true
+      //  }
     }
     //distinct capital is very good signal
-    if(token.special_capitalised){
+    if (token.special_capitalised) {
       return true
     }
     //multiple-word nouns are very good signal
-    if(token.normalised.match(/ /)){
+    if (token.normalised.match(/ /)) {
       return true
     }
     //if it has an abbreviation, like 'business ltd.'
-    if(token.normalised.match(/\./)){
+    if (token.normalised.match(/\./)) {
       return true
     }
     //acronyms are a-ok
-    if(the.is_acronym){
+    if (the.is_acronym) {
       return true
     }
     //else, be conservative
@@ -4409,7 +4409,6 @@ var Noun = function(str, next, last, token) {
     //generic
     return parts_of_speech['NN']
   })()
-
 
   return the;
 }
@@ -4484,41 +4483,39 @@ var to_adjective = (function() {
 // console.log(to_adjective('quickly') === 'quick')
 // console.log(to_adjective('marvelously') === 'marvelous')
 
-// "RB  - adverb (quickly, softly)",
-// "RBR  - comparative adverb (faster, cooler)",
-// "RBS  - superlative adverb (fastest (driving), coolest (looking))"
+//wrapper for Adverb's methods
 var Adverb = function(str, next, last, token) {
-	var the = this
-	the.word = str || '';
-	the.next = next
-	the.last = last
+  var the = this
+  the.word = str || '';
+  the.next = next
+  the.last = last
 
-	if (typeof module !== "undefined" && module.exports) {
-		to_adjective = require("./conjugate/to_adjective")
-		parts_of_speech = require("../../data/parts_of_speech")
-	}
+  if (typeof module !== "undefined" && module.exports) {
+    to_adjective = require("./conjugate/to_adjective")
+    parts_of_speech = require("../../data/parts_of_speech")
+  }
 
-	the.conjugate = function() {
-		return {
-			adjective: to_adjective(the.word)
-		}
-	}
+  the.conjugate = function() {
+    return {
+      adjective: to_adjective(the.word)
+    }
+  }
 
-	the.which = (function() {
-		if (the.word.match(/..est$/)) {
-			return parts_of_speech['RBS']
-		}
-		if (the.word.match(/..er$/)) {
-			return parts_of_speech['RBR']
-		}
-		return parts_of_speech['RB']
-	})()
+  the.which = (function() {
+    if (the.word.match(/..est$/)) {
+      return parts_of_speech['RBS']
+    }
+    if (the.word.match(/..er$/)) {
+      return parts_of_speech['RBR']
+    }
+    return parts_of_speech['RB']
+  })()
 
-	return the;
+  return the;
 }
 
 if (typeof module !== "undefined" && module.exports) {
-	module.exports = Adverb;
+  module.exports = Adverb;
 }
 
 // console.log(new Adverb("suddenly").conjugate())
@@ -6289,6 +6286,7 @@ var verb_conjugate = (function() {
 // console.log(verb_conjugate("swing"))
 // console.log(verb_conjugate("walking"))
 
+//wrapper for verb's methods
 var Verb = function(str, next, last, token) {
   var the = this
   the.word = str || '';
@@ -6350,14 +6348,14 @@ var Verb = function(str, next, last, token) {
   //which conjugation
   the.form = (function() {
     //don't choose infinitive if infinitive==present
-    var order=[
+    var order = [
       "past",
       "present",
       "gerund",
       "infinitive"
     ]
     var forms = verb_conjugate(the.word)
-    for (var i=0; i<order.length; i++) {
+    for (var i = 0; i < order.length; i++) {
       if (forms[order[i]] === the.word) {
         return order[i]
       }
@@ -6393,7 +6391,7 @@ var Verb = function(str, next, last, token) {
 
   //is this verb negative already?
   the.negative = (function() {
-    if (the.word.match(/n't$/)){
+    if (the.word.match(/n't$/)) {
       return true
     }
     if ((modals[the.word] || copulas[the.word]) && the.next && the.next.normalised === "not") {
@@ -7213,80 +7211,79 @@ var adj_to_adv = (function() {
 
 // console.log(adj_to_adv('direct'))
 
-// "JJ  - adjective, generic (big, nice)",
-// "JJR  - comparative adjective (bigger, cooler)",
-// "JJS  - superlative adjective (biggest, fattest)"
+//wrapper for Adjective's methods
 var Adjective = function(str, next, last, token) {
-	var the = this
-	the.word = str || '';
-	the.next = next
-	the.last = last
+  var the = this
+  the.word = str || '';
+  the.next = next
+  the.last = last
 
-	if (typeof module !== "undefined" && module.exports) {
-		to_comparative = require("./conjugate/to_comparative")
-		to_superlative = require("./conjugate/to_superlative")
-		adj_to_adv = require("./conjugate/to_adverb")
-		adj_to_noun = require("./conjugate/to_noun")
-		parts_of_speech = require("../../data/parts_of_speech")
-	}
+  if (typeof module !== "undefined" && module.exports) {
+    to_comparative = require("./conjugate/to_comparative")
+    to_superlative = require("./conjugate/to_superlative")
+    adj_to_adv = require("./conjugate/to_adverb")
+    adj_to_noun = require("./conjugate/to_noun")
+    parts_of_speech = require("../../data/parts_of_speech")
+  }
 
-	the.conjugate = function() {
-		return {
-			comparative: to_comparative(the.word),
-			superlative: to_superlative(the.word),
-			adverb: adj_to_adv(the.word),
-			noun: adj_to_noun(the.word)
-		}
-	}
+  the.conjugate = function() {
+    return {
+      comparative: to_comparative(the.word),
+      superlative: to_superlative(the.word),
+      adverb: adj_to_adv(the.word),
+      noun: adj_to_noun(the.word)
+    }
+  }
 
-	the.which = (function() {
-		if (the.word.match(/..est$/)) {
-			return parts_of_speech['JJS']
-		}
-		if (the.word.match(/..er$/)) {
-			return parts_of_speech['JJR']
-		}
-		return parts_of_speech['JJ']
-	})()
+  the.which = (function() {
+    if (the.word.match(/..est$/)) {
+      return parts_of_speech['JJS']
+    }
+    if (the.word.match(/..er$/)) {
+      return parts_of_speech['JJR']
+    }
+    return parts_of_speech['JJ']
+  })()
 
-	return the;
+  return the;
 };
 if (typeof module !== "undefined" && module.exports) {
-	module.exports = Adjective;
+  module.exports = Adjective;
 }
 
 // console.log(new Adjective("crazy"))
 
+//Parents are classes for each main part of speech, with appropriate methods
 //load files if server-side, otherwise assume these are prepended already
 if (typeof module !== "undefined" && module.exports) {
-	Adjective = require("./adjective/index");
-	Noun = require("./noun/index");
-	Adverb = require("./adverb/index");
-	Verb = require("./verb/index");
-	Value = require("./value/index");
+  Adjective = require("./adjective/index");
+  Noun = require("./noun/index");
+  Adverb = require("./adverb/index");
+  Verb = require("./verb/index");
+  Value = require("./value/index");
 }
 var parents = {
-	adjective: function(str, next, last, token) {
-		return new Adjective(str, next, last, token)
-	},
-	noun: function(str, next, last, token) {
-		return new Noun(str, next, last, token)
-	},
-	adverb: function(str, next, last, token) {
-		return new Adverb(str, next, last, token)
-	},
-	verb: function(str, next, last, token) {
-		return new Verb(str, next, last, token)
-	},
-	value: function(str, next, last, token) {
-		return new Value(str, next, last, token)
-	},
-	glue: function(str, next, last, token) {
-		return {}
-	}
+  adjective: function(str, next, last, token) {
+    return new Adjective(str, next, last, token)
+  },
+  noun: function(str, next, last, token) {
+    return new Noun(str, next, last, token)
+  },
+  adverb: function(str, next, last, token) {
+    return new Adverb(str, next, last, token)
+  },
+  verb: function(str, next, last, token) {
+    return new Verb(str, next, last, token)
+  },
+  value: function(str, next, last, token) {
+    return new Value(str, next, last, token)
+  },
+  glue: function(str, next, last, token) {
+    return {}
+  }
 }
 if (typeof module !== "undefined" && module.exports) {
-	module.exports = parents;
+  module.exports = parents;
 }
 
 //this list is the seed, from which various forms are conjugated

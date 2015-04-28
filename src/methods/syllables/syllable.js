@@ -21,11 +21,13 @@ var syllables = (function(str) {
           /^[^aeiou]?iled/
         ]
         var l = arr.length
-        var suffix = arr[l - 2] + arr[l - 1];
-        for (var i = 0; i < ones.length; i++) {
-          if (suffix.match(ones[i])) {
-            arr[l - 2] = arr[l - 2] + arr[l - 1]
-            arr.pop()
+        if (l > 1) {
+          var suffix = arr[l - 2] + arr[l - 1];
+          for (var i = 0; i < ones.length; i++) {
+            if (suffix.match(ones[i])) {
+              arr[l - 2] = arr[l - 2] + arr[l - 1]
+              arr.pop()
+            }
           }
         }
         return arr

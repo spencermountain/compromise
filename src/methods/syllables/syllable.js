@@ -25,8 +25,8 @@ var syllables = (function(str) {
           var suffix = arr[l - 2] + arr[l - 1];
           for (var i = 0; i < ones.length; i++) {
             if (suffix.match(ones[i])) {
-              arr[l - 2] = arr[l - 2] + arr[l - 1]
-              arr.pop()
+              arr[l - 2] = arr[l - 2] + arr[l - 1];
+              arr.pop();
             }
           }
         }

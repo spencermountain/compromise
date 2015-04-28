@@ -103,9 +103,11 @@ var tokenize = (function() {
 
   var sentence_type = function(sentence) {
     if (sentence.match(/\?$/)) {
-      return "question"
+      return "interrogative";
+    } else if (sentence.match(/\!$/)) {
+      return "exclamative";
     } else {
-      return "statement"
+      return "declarative";
     }
   }
 

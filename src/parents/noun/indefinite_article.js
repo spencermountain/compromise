@@ -52,11 +52,11 @@ var indefinite_article = (function() {
     //begin business time
     ////////////////////
     //explicit irregular forms
-    if (irregulars[str]) {
+    if (irregulars.hasOwnProperty(str)) {
       return irregulars[str]
     }
     //spelled-out acronyms
-    if (is_acronym(str) && an_acronyms[str.substr(0, 1)]) {
+    if (is_acronym(str) && an_acronyms.hasOwnProperty(str.substr(0, 1)) ) {
       return "an"
     }
     //'a' regexes

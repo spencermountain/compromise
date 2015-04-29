@@ -9,7 +9,7 @@ var adj_to_noun = (function() {
     if (!w) {
       return "";
     }
-    if (irregulars[w]) {
+    if (irregulars.hasOwnProperty(w)) {
       return irregulars[w];
     }
     if (w.match(" ")) {
@@ -18,42 +18,26 @@ var adj_to_noun = (function() {
     if (w.match(/w$/)) {
       return w;
     }
-    if (w.match(/y$/)) {
-      return w.replace(/y$/, 'iness');
+    var transforms=[
+      {reg:/y$/, repl:'iness'},
+      {reg:/le$/, repl:'ility'},
+      {reg:/ial$/, repl:'y'},
+      {reg:/al$/, repl:'ality'},
+      {reg:/ting$/, repl:'ting'},
+      {reg:/ring$/, repl:'ring'},
+      {reg:/bing$/, repl:'bingness'},
+      {reg:/sing$/, repl:'se'},
+      {reg:/ing$/, repl:'ment'},
+      {reg:/ess$/, repl:'essness'},
+      {reg:/ous$/, repl:'ousness'},
+    ]
+
+    for(var i=0; i<transforms.length; i++){
+      if(w.match(transforms[i].reg)){
+        return w.replace(transforms[i].reg, transforms[i].repl);
+      }
     }
-    if (w.match(/le$/)) {
-      return w.replace(/le$/, 'ility');
-    }
-    if (w.match(/ial$/)) {
-      return w.replace(/ial$/, 'y');
-    }
-    if (w.match(/al$/)) {
-      return w.replace(/al$/, 'ality');
-    }
-    if (w.match(/ting$/)) {
-      return w.replace(/ting$/, 'ting');
-    }
-    if (w.match(/ring$/)) {
-      return w.replace(/ring$/, 'ring');
-    }
-    if (w.match(/bing$/)) {
-      return w.replace(/bing$/, 'bingness');
-    }
-    if (w.match(/ning$/)) {
-      return w.replace(/ning$/, 'ningness');
-    }
-    if (w.match(/sing$/)) {
-      return w.replace(/sing$/, 'se');
-    }
-    if (w.match(/ing$/)) {
-      return w.replace(/ing$/, 'ment');
-    }
-    if (w.match(/ess$/)) {
-      return w.replace(/ess$/, 'essness');
-    }
-    if (w.match(/ous$/)) {
-      return w.replace(/ous$/, 'ousness');
-    }
+
     if (w.match(/s$/)) {
       return w;
     }
@@ -65,4 +49,4 @@ var adj_to_noun = (function() {
   return main
 })()
 
-// console.log(exports.adj_to_noun('mysterious'));
+// console.log(adj_to_noun('mysterious'));

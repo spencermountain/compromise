@@ -186,11 +186,12 @@ var pos = (function() {
       "they're": ["they", "are"],
       "cannot": ["can", "not"]
     }
+    var before, after, fix;
     for (var i = 0; i < arr.length; i++) {
-      if (contractions[arr[i].normalised || null]) {
-        var before = arr.slice(0, i)
-        var after = arr.slice(i + 1, arr.length)
-        var fix = [{
+      if (contractions.hasOwnProperty(arr[i].normalised)) {
+        before = arr.slice(0, i)
+        after = arr.slice(i + 1, arr.length)
+        fix = [{
           text: "",
           normalised: contractions[arr[i].normalised][0],
           start: arr[i].start
@@ -227,14 +228,12 @@ var pos = (function() {
 
       //first pass, word-level clues
       sentence.tokens = sentence.tokens.map(function(token) {
-
         //it has a capital and isn't first word
-        if (token.special_capitalised && !lexicon_pass[first.normalised]) {
+        if (token.special_capitalised && !lexicon_pass(first.normalised)) {
           token.pos = parts_of_speech['NN']
           token.pos_reason = "capitalised"
           return token
         }
-
         //known words list
         var lex = lexicon_pass(token.normalised)
         if (lex) {

@@ -252,15 +252,15 @@ var to_superlative = (function() {
       }
     }
 
-    if (dos[str]) {
+    if (dos.hasOwnProperty(str)) {
       return generic_transformation(str)
     }
 
-    if (dont[str]) {
+    if (dont.hasOwnProperty(str)) {
       return "most " + str
     }
 
-    if (irregulars[str]) {
+    if (irregulars.hasOwnProperty(str)) {
       return irregulars[str]
     }
     var i;

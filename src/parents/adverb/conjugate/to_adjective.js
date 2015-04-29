@@ -43,7 +43,7 @@ var to_adjective = (function() {
       reg: /(.{3})ly$/i,
       repl: '$1'
     }]
-    if (irregulars[str]) {
+    if (irregulars.hasOwnProperty(str)) {
       return irregulars[str]
     }
     for (var i = 0; i < transforms.length; i++) {

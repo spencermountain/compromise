@@ -251,11 +251,11 @@ var to_comparative = (function() {
       /ous$/
     ]
 
-    if (dont[str]) {
+    if (dont.hasOwnProperty(str)) {
       return null
     }
 
-    if (dos[str]) {
+    if (dos.hasOwnProperty(str)) {
       if (str.match(/e$/)) {
         return str + "r"
       } else {
@@ -263,7 +263,7 @@ var to_comparative = (function() {
       }
     }
 
-    if (irregulars[str]) {
+    if (irregulars.hasOwnProperty(str)) {
       return irregulars[str]
     }
 

@@ -1,4 +1,4 @@
-/*! nlp_compromise  0.3.9  by @spencermountain 2015-04-14  MIT */
+/*! nlp_compromise  0.3.9  by @spencermountain 2015-04-28  MIT */
 var nlp = (function() {
 //chop text into respective sentences. Ignore periods used in acronyms/abbreviations/numbers, etc.
 var sentence_parser = function(text) {
@@ -6,17 +6,17 @@ var sentence_parser = function(text) {
   //first do a greedy-split..
   var chunks = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
   //honourifics
-  var abbrevs = ["jr", "mr", "mrs", "ms", "dr", "prof", "sr", "sen", "corp", "rep", "gov", "atty", "supt", "det", "rev", "col", "gen", "lt", "cmdr", "adm", "capt", "sgt", "cpl", "maj", "miss", "misses", "mister", "sir", "esq", "mstr", "phd", "adj", "adv", "asst", "bldg", "brig", "comdr", "hon", "messrs", "mlle", "mme", "op", "ord", "pvt", "reps", "res", "sens", "sfc", "surg"]
+  var abbrevs = ["jr", "mr", "mrs", "ms", "dr", "prof", "sr", "sen", "corp", "rep", "gov", "atty", "supt", "det", "rev", "col", "gen", "lt", "cmdr", "adm", "capt", "sgt", "cpl", "maj", "miss", "misses", "mister", "sir", "esq", "mstr", "phd", "adj", "adv", "asst", "bldg", "brig", "comdr", "hon", "messrs", "mlle", "mme", "op", "ord", "pvt", "reps", "res", "sens", "sfc", "surg"];
   //common abbreviations
-  abbrevs = abbrevs.concat(["arc", "al", "ave", "blvd", "cl", "ct", "cres", "exp", "rd", "st", "dist", "mt", "ft", "fy", "hwy", "la", "pd", "pl", "plz", "tce", "vs", "etc", "esp", "llb", "md", "bl", "ma", "ba", "lit", "fl", "ex", "eg"])
+  abbrevs = abbrevs.concat(["arc", "al", "ave", "blvd", "cl", "ct", "cres", "exp", "rd", "st", "dist", "mt", "ft", "fy", "hwy", "la", "pd", "pl", "plz", "tce", "vs", "etc", "esp", "llb", "md", "bl", "ma", "ba", "lit", "fl", "ex", "eg", "i.e", "e.g"]);
   //place abbrevs
-  abbrevs = abbrevs.concat(["ala", "ariz", "ark", "cal", "calif", "col", "colo", "conn", "del", "fed", "fla", "ga", "ida", "id", "ill", "ind", "ia", "kan", "kans", "ken", "ky", "la", "me", "md", "mass", "mich", "minn", "miss", "mo", "mont", "neb", "nebr", "nev", "mex", "okla", "ok", "ore", "penna", "penn", "pa", "dak", "tenn", "tex", "ut", "vt", "va", "wash", "wis", "wisc", "wy", "wyo", "usafa", "alta", "ont", "que", "sask", "yuk"])
+  abbrevs = abbrevs.concat(["ala", "ariz", "ark", "cal", "calif", "col", "colo", "conn", "del", "fed", "fla", "ga", "ida", "id", "ill", "ind", "ia", "kan", "kans", "ken", "ky", "la", "me", "md", "mass", "mich", "minn", "miss", "mo", "mont", "neb", "nebr", "nev", "mex", "okla", "ok", "ore", "penna", "penn", "pa", "dak", "tenn", "tex", "ut", "vt", "va", "wash", "wis", "wisc", "wy", "wyo", "usafa", "alta", "ont", "que", "sask", "yuk"]);
   //date abbrevs
-  abbrevs = abbrevs.concat(["jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept", "sep"])
+  abbrevs = abbrevs.concat(["jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept", "sep"]);
   //org abbrevs
-  abbrevs = abbrevs.concat(["dept", "univ", "assn", "bros", "inc", "ltd", "co", "corp"])
+  abbrevs = abbrevs.concat(["dept", "univ", "assn", "bros", "inc", "ltd", "co", "corp"]);
   //proper nouns with exclamation marks
-  abbrevs = abbrevs.concat(["yahoo", "joomla", "jeopardy"])
+  abbrevs = abbrevs.concat(["yahoo", "joomla", "jeopardy"]);
   var reg = new RegExp("(^| )(" + abbrevs.join("|") + ")[.!?] ?$", "i");
 
   var chunks_length = chunks.length;
@@ -226,9 +226,11 @@ var tokenize = (function() {
 
   var sentence_type = function(sentence) {
     if (sentence.match(/\?$/)) {
-      return "question"
+      return "interrogative";
+    } else if (sentence.match(/\!$/)) {
+      return "exclamative";
     } else {
-      return "statement"
+      return "declarative";
     }
   }
 
@@ -1072,11 +1074,13 @@ var syllables = (function(str) {
           /^[^aeiou]?iled/
         ]
         var l = arr.length
-        var suffix = arr[l - 2] + arr[l - 1];
-        for (var i = 0; i < ones.length; i++) {
-          if (suffix.match(ones[i])) {
-            arr[l - 2] = arr[l - 2] + arr[l - 1]
-            arr.pop()
+        if (l > 1) {
+          var suffix = arr[l - 2] + arr[l - 1];
+          for (var i = 0; i < ones.length; i++) {
+            if (suffix.match(ones[i])) {
+              arr[l - 2] = arr[l - 2] + arr[l - 1];
+              arr.pop();
+            }
           }
         }
         return arr
@@ -3708,11 +3712,11 @@ var indefinite_article = (function() {
     //begin business time
     ////////////////////
     //explicit irregular forms
-    if (irregulars[str]) {
+    if (irregulars.hasOwnProperty(str)) {
       return irregulars[str]
     }
     //spelled-out acronyms
-    if (is_acronym(str) && an_acronyms[str.substr(0, 1)]) {
+    if (is_acronym(str) && an_acronyms.hasOwnProperty(str.substr(0, 1)) ) {
       return "an"
     }
     //'a' regexes
@@ -4464,7 +4468,7 @@ var to_adjective = (function() {
       reg: /(.{3})ly$/i,
       repl: '$1'
     }]
-    if (irregulars[str]) {
+    if (irregulars.hasOwnProperty(str)) {
       return irregulars[str]
     }
     for (var i = 0; i < transforms.length; i++) {
@@ -6053,10 +6057,10 @@ var verb_to_doer = (function() {
       repl: '$1tter'
     }]
 
-    if (dont[str]) {
+    if (dont.hasOwnProperty(str)) {
       return null
     }
-    if (irregulars[str]) {
+    if (irregulars.hasOwnProperty(str)) {
       return irregulars[str]
     }
     for (var i = 0; i < transforms.length; i++) {
@@ -6428,7 +6432,7 @@ var adj_to_noun = (function() {
     if (!w) {
       return "";
     }
-    if (irregulars[w]) {
+    if (irregulars.hasOwnProperty(w)) {
       return irregulars[w];
     }
     if (w.match(" ")) {
@@ -6437,42 +6441,26 @@ var adj_to_noun = (function() {
     if (w.match(/w$/)) {
       return w;
     }
-    if (w.match(/y$/)) {
-      return w.replace(/y$/, 'iness');
+    var transforms=[
+      {reg:/y$/, repl:'iness'},
+      {reg:/le$/, repl:'ility'},
+      {reg:/ial$/, repl:'y'},
+      {reg:/al$/, repl:'ality'},
+      {reg:/ting$/, repl:'ting'},
+      {reg:/ring$/, repl:'ring'},
+      {reg:/bing$/, repl:'bingness'},
+      {reg:/sing$/, repl:'se'},
+      {reg:/ing$/, repl:'ment'},
+      {reg:/ess$/, repl:'essness'},
+      {reg:/ous$/, repl:'ousness'},
+    ]
+
+    for(var i=0; i<transforms.length; i++){
+      if(w.match(transforms[i].reg)){
+        return w.replace(transforms[i].reg, transforms[i].repl);
+      }
     }
-    if (w.match(/le$/)) {
-      return w.replace(/le$/, 'ility');
-    }
-    if (w.match(/ial$/)) {
-      return w.replace(/ial$/, 'y');
-    }
-    if (w.match(/al$/)) {
-      return w.replace(/al$/, 'ality');
-    }
-    if (w.match(/ting$/)) {
-      return w.replace(/ting$/, 'ting');
-    }
-    if (w.match(/ring$/)) {
-      return w.replace(/ring$/, 'ring');
-    }
-    if (w.match(/bing$/)) {
-      return w.replace(/bing$/, 'bingness');
-    }
-    if (w.match(/ning$/)) {
-      return w.replace(/ning$/, 'ningness');
-    }
-    if (w.match(/sing$/)) {
-      return w.replace(/sing$/, 'se');
-    }
-    if (w.match(/ing$/)) {
-      return w.replace(/ing$/, 'ment');
-    }
-    if (w.match(/ess$/)) {
-      return w.replace(/ess$/, 'essness');
-    }
-    if (w.match(/ous$/)) {
-      return w.replace(/ous$/, 'ousness');
-    }
+
     if (w.match(/s$/)) {
       return w;
     }
@@ -6484,7 +6472,7 @@ var adj_to_noun = (function() {
   return main
 })()
 
-// console.log(exports.adj_to_noun('mysterious'));
+// console.log(adj_to_noun('mysterious'));
 
 //turn 'quick' into 'quickly'
 var to_comparative = (function() {
@@ -6739,11 +6727,11 @@ var to_comparative = (function() {
       /ous$/
     ]
 
-    if (dont[str]) {
+    if (dont.hasOwnProperty(str)) {
       return null
     }
 
-    if (dos[str]) {
+    if (dos.hasOwnProperty(str)) {
       if (str.match(/e$/)) {
         return str + "r"
       } else {
@@ -6751,7 +6739,7 @@ var to_comparative = (function() {
       }
     }
 
-    if (irregulars[str]) {
+    if (irregulars.hasOwnProperty(str)) {
       return irregulars[str]
     }
 
@@ -7039,15 +7027,15 @@ var to_superlative = (function() {
       }
     }
 
-    if (dos[str]) {
+    if (dos.hasOwnProperty(str)) {
       return generic_transformation(str)
     }
 
-    if (dont[str]) {
+    if (dont.hasOwnProperty(str)) {
       return "most " + str
     }
 
-    if (irregulars[str]) {
+    if (irregulars.hasOwnProperty(str)) {
       return irregulars[str]
     }
     var i;
@@ -7303,6 +7291,7 @@ var lexicon = (function() {
       to_superlative = require("../parents/adjective/conjugate/to_superlative");
       to_comparative = require("../parents/adjective/conjugate/to_comparative");
     }
+
     var main = {
       //conjunctions
       "yet": "CC",
@@ -8573,8 +8562,9 @@ var lexicon = (function() {
     ]
 
     //conjugate all of these verbs. takes ~8ms. triples the lexicon size.
+    var c, doer;
     verbs.forEach(function(v) {
-      var c = verb_conjugate(v)
+      c = verb_conjugate(v)
       main[c.infinitive] = main[c.infinitive] || "VBP"
       main[c.past] = main[c.past] || "VBD"
       main[c.gerund] = main[c.gerund] || "VBG"
@@ -8582,7 +8572,7 @@ var lexicon = (function() {
       if (c.participle && !main[c.participle]) {
         main[c.participle] = "VBN"
       }
-      var doer = verb_to_doer(v)
+      doer = verb_to_doer(v)
       if (doer) {
         main[doer] = "NNA"
       }
@@ -9430,21 +9420,19 @@ var lexicon = (function() {
     ]
 
     //conjugate all of these adjectives to their adverbs. (13ms)
+    var adv, comp, sup;
     adjectives.forEach(function(j) {
       main[j] = "JJ"
-      var adv = adj_to_adv(j)
+      adv = adj_to_adv(j)
       if (adv && adv !== j && !main[adv]) {
-        // console.log(adv)
         main[adv] = main[adv] || "RB"
       }
-      var comp = to_comparative(j)
+      comp = to_comparative(j)
       if (comp && !comp.match(/^more ./) && comp !== j && !main[comp]) {
-        // console.log(comp)
         main[comp] = main[comp] || "JJR"
       }
-      var sup = to_superlative(j)
+      sup = to_superlative(j)
       if (sup && !sup.match(/^most ./) && sup !== j && !main[sup]) {
-        // console.log(sup)
         main[sup] = main[sup] || "JJS"
       }
     })
@@ -9983,11 +9971,12 @@ var pos = (function() {
       "they're": ["they", "are"],
       "cannot": ["can", "not"]
     }
+    var before, after, fix;
     for (var i = 0; i < arr.length; i++) {
-      if (contractions[arr[i].normalised || null]) {
-        var before = arr.slice(0, i)
-        var after = arr.slice(i + 1, arr.length)
-        var fix = [{
+      if (contractions.hasOwnProperty(arr[i].normalised)) {
+        before = arr.slice(0, i)
+        after = arr.slice(i + 1, arr.length)
+        fix = [{
           text: "",
           normalised: contractions[arr[i].normalised][0],
           start: arr[i].start
@@ -10024,14 +10013,12 @@ var pos = (function() {
 
       //first pass, word-level clues
       sentence.tokens = sentence.tokens.map(function(token) {
-
         //it has a capital and isn't first word
-        if (token.special_capitalised && !lexicon_pass[first.normalised]) {
+        if (token.special_capitalised && !lexicon_pass(first.normalised)) {
           token.pos = parts_of_speech['NN']
           token.pos_reason = "capitalised"
           return token
         }
-
         //known words list
         var lex = lexicon_pass(token.normalised)
         if (lex) {

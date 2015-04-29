@@ -42,10 +42,10 @@ var verb_to_doer = (function() {
       repl: '$1tter'
     }]
 
-    if (dont[str]) {
+    if (dont.hasOwnProperty(str)) {
       return null
     }
-    if (irregulars[str]) {
+    if (irregulars.hasOwnProperty(str)) {
       return irregulars[str]
     }
     for (var i = 0; i < transforms.length; i++) {

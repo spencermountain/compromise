@@ -9,6 +9,7 @@ var lexicon = (function() {
       to_superlative = require("../parents/adjective/conjugate/to_superlative");
       to_comparative = require("../parents/adjective/conjugate/to_comparative");
     }
+
     var main = {
       //conjunctions
       "yet": "CC",
@@ -1279,8 +1280,9 @@ var lexicon = (function() {
     ]
 
     //conjugate all of these verbs. takes ~8ms. triples the lexicon size.
+    var c, doer;
     verbs.forEach(function(v) {
-      var c = verb_conjugate(v)
+      c = verb_conjugate(v)
       main[c.infinitive] = main[c.infinitive] || "VBP"
       main[c.past] = main[c.past] || "VBD"
       main[c.gerund] = main[c.gerund] || "VBG"
@@ -1288,7 +1290,7 @@ var lexicon = (function() {
       if (c.participle && !main[c.participle]) {
         main[c.participle] = "VBN"
       }
-      var doer = verb_to_doer(v)
+      doer = verb_to_doer(v)
       if (doer) {
         main[doer] = "NNA"
       }
@@ -2136,21 +2138,19 @@ var lexicon = (function() {
     ]
 
     //conjugate all of these adjectives to their adverbs. (13ms)
+    var adv, comp, sup;
     adjectives.forEach(function(j) {
       main[j] = "JJ"
-      var adv = adj_to_adv(j)
+      adv = adj_to_adv(j)
       if (adv && adv !== j && !main[adv]) {
-        // console.log(adv)
         main[adv] = main[adv] || "RB"
       }
-      var comp = to_comparative(j)
+      comp = to_comparative(j)
       if (comp && !comp.match(/^more ./) && comp !== j && !main[comp]) {
-        // console.log(comp)
         main[comp] = main[comp] || "JJR"
       }
-      var sup = to_superlative(j)
+      sup = to_superlative(j)
       if (sup && !sup.match(/^most ./) && sup !== j && !main[sup]) {
-        // console.log(sup)
         main[sup] = main[sup] || "JJS"
       }
     })

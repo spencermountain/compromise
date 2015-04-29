@@ -148,8 +148,8 @@ var americanize = (function() {
   if (typeof module !== "undefined" && module.exports) {
     exports.americanize = main;
   }
-  return main
-})()
+  return main;
+})();
 
 // console.log(americanize("synthesise")=="synthesize")
 // console.log(americanize("synthesised")=="synthesized")

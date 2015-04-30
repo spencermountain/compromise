@@ -32,6 +32,7 @@ module.exports = function(grunt) {
     './src/parents/verb/index.js',
     //adjectives
     './src/parents/adjective/conjugate/to_noun.js',
+    './src/parents/adjective/conjugate/convertables.js',
     './src/parents/adjective/conjugate/to_comparative.js',
     './src/parents/adjective/conjugate/to_superlative.js',
     './src/parents/adjective/conjugate/to_adverb.js',

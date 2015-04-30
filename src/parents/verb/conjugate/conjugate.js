@@ -193,17 +193,14 @@ var verb_conjugate = (function() {
     for (i = 0; i < l; i++) {
       var r = verb_rules[predicted][i];
       if (w.match(r.reg)) {
+        obj[predicted] = w;
         Object.keys(r.repl).forEach(function(k) {
-          if (obj[k]) {
-            return
-          } //from irregular
           if (k === predicted) {
             obj[k] = w
           } else {
-            obj[k] = w.replace(r.reg, r.repl[k]);
+            obj[k] = w.replace(r.reg, r.repl[k])
           }
         });
-        obj[r.tense] = w;
         return fufill(obj);
       }
     }

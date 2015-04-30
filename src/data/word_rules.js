@@ -311,6 +311,14 @@ var word_rules = [
   {
     "reg": /.tches$/i,
     "pos": "VB"
+  },
+  {
+    "reg": /^https?:\/\//i,
+    "pos": "CD"
+  },
+  {
+    "reg": /^www\.[a-z0-9]/i,
+    "pos": "CD"
   }
 ]
 

@@ -425,6 +425,17 @@ exports["nlp.sentences"] = function(test) {
   test.deepEqual(nlp.sentences("Hi there! Everyone wins!").length, 2)
   test.deepEqual(nlp.sentences("Hi there!!! Everyone wins.").length, 2)
   test.deepEqual(nlp.sentences("he bought Yahoo! the company.").length, 1)
+  test.deepEqual(nlp.sentences("he is ill").length, 1)
+  test.deepEqual(nlp.sentences("he is ill.").length, 1)
+  test.deepEqual(nlp.sentences("she is dead. he is ill.").length, 2)
+  test.deepEqual(nlp.sentences("she is dead. he is ill").length, 2)
+  test.deepEqual(nlp.sentences("lkajsdflkjeicclksdfjefifh").length, 1)
+  test.deepEqual(nlp.sentences("i think it is good ie. fantastic.").length, 1)
+  test.deepEqual(nlp.sentences("i think it is good i.e. fantastic.").length, 1)
+  test.deepEqual(nlp.sentences("i think it is good ... or else.").length, 1)
+  test.deepEqual(nlp.sentences("i think it is good ... ").length, 1)
+  test.deepEqual(nlp.sentences("What's my age again? What's my age again?").length, 2)
+  test.deepEqual(nlp.sentences("the problem, eg. the javascript").length, 1)
   test.done();
 };
 
@@ -909,6 +920,11 @@ exports["nlp.tag"] = function(test) {
     ["he is real cool", ["PRP", "CP", "RB", "JJ"]],
     ["a pretty, good and nice swim", ["DT", "JJ", "JJ", "CC", "JJ", "NN"]],
     ["a pretty good and nice swim", ["DT", "RB", "JJ", "CC", "JJ", "NN"]],
+
+    ["the chicago zoo is fun", ["DT","NN","CP","JJ"]],//combine tags
+    ["the chicago, zoo is fun", ["DT","NN","NN","CP","JJ"]],//don't combine tags
+
+
   ].forEach(function(arr) {
     test.deepEqual(nlp.pos(arr[0], {}).sentences[0].tags(), arr[1])
   })

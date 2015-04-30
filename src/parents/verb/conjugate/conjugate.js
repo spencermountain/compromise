@@ -174,30 +174,35 @@ var verb_conjugate = (function() {
     //un-prefix the verb, and add it in later
     var prefix = (w.match(/^(over|under|re|anti|full)\-?/i) || [])[0]
     var verb = w.replace(/^(over|under|re|anti|full)\-?/i, '')
-      //check irregulars
-    var x, i;
-    for (i = 0; i < verb_irregulars.length; i++) {
+    //check irregulars
+    var obj = {};
+    var i, l;
+    l = verb_irregulars.length
+    for (i = 0; i < l; i++) {
       x = verb_irregulars[i]
       if (verb === x.present || verb === x.gerund || verb === x.past || verb === x.infinitive) {
-        x = JSON.parse(JSON.stringify(verb_irregulars[i])); // object 'clone' hack, to avoid mem leak
-        return fufill(x, prefix)
+        obj = JSON.parse(JSON.stringify(verb_irregulars[i])); // object 'clone' hack, to avoid mem leak
+        return fufill(obj, prefix)
       }
     }
     //guess the tense, so we know which transormation to make
     var predicted = predict(w) || 'infinitive'
 
     //check against suffix rules
-    for (i = 0; i < verb_rules[predicted].length; i++) {
+    l = verb_rules[predicted].length
+    for (i = 0; i < l; i++) {
       var r = verb_rules[predicted][i];
       if (w.match(r.reg)) {
-        var obj = Object.keys(r.repl).reduce(function(h, k) {
+        Object.keys(r.repl).forEach(function(k) {
+          if (obj[k]) {
+            return
+          } //from irregular
           if (k === predicted) {
-            h[k] = w
+            obj[k] = w
           } else {
-            h[k] = w.replace(r.reg, r.repl[k]);
+            obj[k] = w.replace(r.reg, r.repl[k]);
           }
-          return h;
-        }, {});
+        });
         obj[r.tense] = w;
         return fufill(obj);
       }

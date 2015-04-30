@@ -69,7 +69,7 @@ var word_rules = [
     "pos": "JJ"
   },
   {
-    "reg": /.[rdntk]ly$/i,
+    "reg": /[rdntkidhs]ly$/i,
     "pos": "RB"
   },
   {

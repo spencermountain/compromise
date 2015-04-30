@@ -49,10 +49,5 @@ var nlp = {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = nlp;
 }
-
-// bump bower
-// git tag -a v0.3.5 -m "tag bower release"
-// git push origin master --tags
-
 // console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
 // console.log( nlp.pos('i will slouch').to_past().text() );

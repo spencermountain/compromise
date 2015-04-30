@@ -31,17 +31,4 @@ function compare_to_latest() {
   console.log("")
 }
 
-function print_new_results() {
-  var all = {}
-  Object.keys(texts).forEach(function(k) {
-    var done = nlp.pos(texts[k]);
-    var results = done.sentences.map(function(s) {
-      return s.tags()
-    })
-    all[k] = results
-  })
-  console.log(JSON.stringify(all, null, 1))
-}
-
 compare_to_latest()
-// print_new_results()

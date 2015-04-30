@@ -11,10 +11,13 @@ NLP is a solvable problem in scale, and all forms of input are gracious and love
 
 check out ```./known_issues.md``` or the unit tests that have been ... commented out.
 
-# release:
+# release build script:
 casual versioning/publishing with semvar:
 
 ```bash
+npm test #ensure unit tests pass
+node ./tests/pos_test/pos_test.js  #make sure changes to pos results are sane
+
 grunt  #build client-side scripts
 node ./tests/pos_test/bump_latest.js  #set current pos results as reference data
 npm publish #push npm version
@@ -23,5 +26,9 @@ git tag -a v0.3.5 -m "tag bower release"
 git push origin master --tags
 ```
 
+#file size
+of minimized clientside build:
+* April 2015 - 109kb
+* May 2015 - 103kb
 
 have a nice day

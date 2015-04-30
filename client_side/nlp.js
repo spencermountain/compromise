@@ -1,6 +1,8 @@
-/*! nlp_compromise  0.3.9  by @spencermountain 2015-04-28  MIT */
+/*! nlp_compromise  0.3.10  by @spencermountain 2015-04-30  MIT */
 var nlp = (function() {
-//chop text into respective sentences. Ignore periods used in acronyms/abbreviations/numbers, etc.
+//(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
+// Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
+// @spencermountain 2015 MIT
 var sentence_parser = function(text) {
   var sentences = [];
   //first do a greedy-split..
@@ -8,7 +10,7 @@ var sentence_parser = function(text) {
   //honourifics
   var abbrevs = ["jr", "mr", "mrs", "ms", "dr", "prof", "sr", "sen", "corp", "rep", "gov", "atty", "supt", "det", "rev", "col", "gen", "lt", "cmdr", "adm", "capt", "sgt", "cpl", "maj", "miss", "misses", "mister", "sir", "esq", "mstr", "phd", "adj", "adv", "asst", "bldg", "brig", "comdr", "hon", "messrs", "mlle", "mme", "op", "ord", "pvt", "reps", "res", "sens", "sfc", "surg"];
   //common abbreviations
-  abbrevs = abbrevs.concat(["arc", "al", "ave", "blvd", "cl", "ct", "cres", "exp", "rd", "st", "dist", "mt", "ft", "fy", "hwy", "la", "pd", "pl", "plz", "tce", "vs", "etc", "esp", "llb", "md", "bl", "ma", "ba", "lit", "fl", "ex", "eg", "i.e", "e.g"]);
+  abbrevs = abbrevs.concat(["arc", "al", "ave", "blvd", "cl", "ct", "cres", "exp", "rd", "st", "dist", "mt", "ft", "fy", "hwy", "la", "pd", "pl", "plz", "tce", "vs", "etc", "esp", "llb", "md", "bl", "ma", "ba", "lit", "fl", "ex", "eg", "ie"]);
   //place abbrevs
   abbrevs = abbrevs.concat(["ala", "ariz", "ark", "cal", "calif", "col", "colo", "conn", "del", "fed", "fla", "ga", "ida", "id", "ill", "ind", "ia", "kan", "kans", "ken", "ky", "la", "me", "md", "mass", "mich", "minn", "miss", "mo", "mont", "neb", "nebr", "nev", "mex", "okla", "ok", "ore", "penna", "penn", "pa", "dak", "tenn", "tex", "ut", "vt", "va", "wash", "wis", "wisc", "wy", "wyo", "usafa", "alta", "ont", "que", "sask", "yuk"]);
   //date abbrevs
@@ -17,34 +19,33 @@ var sentence_parser = function(text) {
   abbrevs = abbrevs.concat(["dept", "univ", "assn", "bros", "inc", "ltd", "co", "corp"]);
   //proper nouns with exclamation marks
   abbrevs = abbrevs.concat(["yahoo", "joomla", "jeopardy"]);
-  var reg = new RegExp("(^| )(" + abbrevs.join("|") + ")[.!?] ?$", "i");
 
+  //detection of non-sentence chunks
+  var abbrev_reg = new RegExp("(^| )(" + abbrevs.join("|") + ")[.!?] ?$", "i");
+  var acronym_reg= new RegExp("[ |\.][A-Z]\.?$", "i")
+  var elipses_reg= new RegExp("\\.\\.\\.*$")
+
+  //loop through these chunks, and join the non-sentence chunks back together..
   var chunks_length = chunks.length;
   for (i = 0; i < chunks_length; i++) {
     if (chunks[i]) {
+      //trim whitespace
       chunks[i] = chunks[i].replace(/^\s+|\s+$/g, "");
-      if (chunks[i].match(reg) || chunks[i].match(/[ |\.][A-Z]\.?$/)) {
-        chunks[i + 1] = chunks[i] + " " + chunks[i + 1];
-      } else {
-        sentences.push(chunks[i]);
-        chunks[i] = "";
+      //should this chunk be combined with the next one?
+      if (chunks[i+1] && chunks[i].match(abbrev_reg) || chunks[i].match(acronym_reg) || chunks[i].match(elipses_reg) ) {
+          chunks[i + 1] = ((chunks[i]||'') + " " + (chunks[i + 1]||'')).replace(/ +/g, " ");
+      } else if(chunks[i] && chunks[i].length>0){ //this chunk is a proper sentence..
+          sentences.push(chunks[i]);
+          chunks[i] = "";
       }
     }
   }
-
-  var clean = [];
-  for (i = 0; i < sentences.length; i++) {
-    sentences[i] = sentences[i].replace(/^\s+|\s+$/g, "");
-    if (sentences[i]) {
-      clean.push(sentences[i]);
-    }
-  }
-
-  if (clean.length === 0) {
+  //if we never got a sentence, return the given text
+  if (sentences.length === 0) {
     return [text]
   }
 
-  return clean;
+  return sentences;
 }
 if (typeof module !== "undefined" && module.exports) {
   exports.sentences = sentence_parser;
@@ -52,6 +53,8 @@ if (typeof module !== "undefined" && module.exports) {
 
 // console.log(sentence_parser('Tony is nice. He lives in Japan.').length === 2)
 // console.log(sentence_parser('I like that Color').length === 1)
+// console.log(sentence_parser("She was dead. He was ill.").length === 2)
+// console.log(sentence_parser("i think it is good ... or else.").length == 1)
 
 //split a string into all possible parts
 var ngram = (function() {
@@ -290,710 +293,51 @@ var tokenize = (function() {
 //http://en.wikipedia.org/wiki/List_of_Unicode_characters
 //https://docs.google.com/spreadsheet/ccc?key=0Ah46z755j7cVdFRDM1A2YVpwa1ZYWlpJM2pQZ003M0E
 var normalize = (function() {
+  //approximate visual (not semantic) relationship between unicode and ascii characters
+  var compact={
+      "2": "²ƻ",
+      "3": "³ƷƸƹƺǮǯЗҘҙӞӟӠӡȜȝ",
+      "5": "Ƽƽ",
+      "8": "Ȣȣ",
+      "!": "¡",
+      "?": "¿Ɂɂ",
+      "a": "ªÀÁÂÃÄÅàáâãäåĀāĂăĄąǍǎǞǟǠǡǺǻȀȁȂȃȦȧȺΆΑΔΛάαλАДадѦѧӐӑӒӓƛɅ",
+      "b": "ßþƀƁƂƃƄƅɃΒβϐϦБВЪЬбвъьѢѣҌҍҔҕƥƾ",
+      "c": "¢©ÇçĆćĈĉĊċČčƆƇƈȻȼͻͼͽϲϹϽϾϿЄСсєҀҁҪҫ",
+      "d": "ÐĎďĐđƉƊȡƋƌǷ",
+      "e": "ÈÉÊËèéêëĒēĔĕĖėĘęĚěƎƏƐǝȄȅȆȇȨȩɆɇΈΕΞΣέεξϱϵ϶ЀЁЕЭеѐёҼҽҾҿӖӗӘәӚӛӬӭ",
+      "f": "ƑƒϜϝӺӻ",
+      "g": "ĜĝĞğĠġĢģƓǤǥǦǧǴǵ",
+      "h": "ĤĥĦħƕǶȞȟΉΗЂЊЋНнђћҢңҤҥҺһӉӊ",
+      "I": "ÌÍÎÏ",
+      "i": "ìíîïĨĩĪīĬĭĮįİıƖƗȈȉȊȋΊΐΪίιϊІЇії",
+      "j": "ĴĵǰȷɈɉϳЈј",
+      "k": "ĶķĸƘƙǨǩΚκЌЖКжкќҚқҜҝҞҟҠҡ",
+      "l": "ĹĺĻļĽľĿŀŁłƚƪǀǏǐȴȽΙӀӏ",
+      "m": "ΜϺϻМмӍӎ",
+      "n": "ÑñŃńŅņŇňŉŊŋƝƞǸǹȠȵΝΠήηϞЍИЙЛПийлпѝҊҋӅӆӢӣӤӥπ",
+      "o": "ÒÓÔÕÖØðòóôõöøŌōŎŏŐőƟƠơǑǒǪǫǬǭǾǿȌȍȎȏȪȫȬȭȮȯȰȱΌΘΟΦΩδθοσόϕϘϙϬϭϴОФоѲѳѺѻѼѽӦӧӨөӪӫ¤ƍΏ",
+      "p": "ƤƿΡρϷϸϼРрҎҏÞ",
+      "q": "Ɋɋ",
+      "r": "ŔŕŖŗŘřƦȐȑȒȓɌɍЃГЯгяѓҐґҒғӶӷſ",
+      "s": "ŚśŜŝŞşŠšƧƨȘșȿςϚϛϟϨϩЅѕ",
+      "t": "ŢţŤťŦŧƫƬƭƮȚțȶȾΓΤτϮϯТт҂Ҭҭ",
+      "u": "µÙÚÛÜùúûüŨũŪūŬŭŮůŰűŲųƯưƱƲǓǔǕǖǗǘǙǚǛǜȔȕȖȗɄΰμυϋύϑЏЦЧцџҴҵҶҷҸҹӋӌӇӈ",
+      "v": "ƔνѴѵѶѷ",
+      "w": "ŴŵƜωώϖϢϣШЩшщѡѿ",
+      "x": "×ΧχϗϰХхҲҳӼӽӾӿ",
+      "y": "¥ÝýÿŶŷŸƳƴȲȳɎɏΎΥΨΫγψϒϓϔЎУучўѰѱҮүҰұӮӯӰӱӲӳ",
+      "z": "ŹźŻżŽžƩƵƶȤȥɀΖζ"
+    }
+  //decompress data into an array
+  var data = []
+  Object.keys(compact).forEach(function(k){
+    compact[k].split('').forEach(function(s){
+        data.push([s,k])
+    })
+  })
 
-  var data = [
-    ["²", "2"],
-    ["ƻ", "2"],
-    ["³", "3"],
-    ["Ʒ", "3"],
-    ["Ƹ", "3"],
-    ["ƹ", "3"],
-    ["ƺ", "3"],
-    ["Ǯ", "3"],
-    ["ǯ", "3"],
-    ["З", "3"],
-    ["Ҙ", "3"],
-    ["ҙ", "3"],
-    ["Ӟ", "3"],
-    ["ӟ", "3"],
-    ["Ӡ", "3"],
-    ["ӡ", "3"],
-    ["Ȝ", "3"],
-    ["ȝ", "3"],
-    ["Ƽ", "5"],
-    ["ƽ", "5"],
-    ["Ȣ", "8"],
-    ["ȣ", "8"],
-    ["¡", "!"],
-    ["¿", "?"],
-    ["Ɂ", "?"],
-    ["ɂ", "?"],
-    ["ª", "a"],
-    ["À", "a"],
-    ["Á", "a"],
-    ["Â", "a"],
-    ["Ã", "a"],
-    ["Ä", "a"],
-    ["Å", "a"],
-    ["à", "a"],
-    ["á", "a"],
-    ["â", "a"],
-    ["ã", "a"],
-    ["ä", "a"],
-    ["å", "a"],
-    ["Ā", "a"],
-    ["ā", "a"],
-    ["Ă", "a"],
-    ["ă", "a"],
-    ["Ą", "a"],
-    ["ą", "a"],
-    ["Ǎ", "a"],
-    ["ǎ", "a"],
-    ["Ǟ", "a"],
-    ["ǟ", "a"],
-    ["Ǡ", "a"],
-    ["ǡ", "a"],
-    ["Ǻ", "a"],
-    ["ǻ", "a"],
-    ["Ȁ", "a"],
-    ["ȁ", "a"],
-    ["Ȃ", "a"],
-    ["ȃ", "a"],
-    ["Ȧ", "a"],
-    ["ȧ", "a"],
-    ["Ⱥ", "a"],
-    ["Ά", "a"],
-    ["Α", "a"],
-    ["Δ", "a"],
-    ["Λ", "a"],
-    ["ά", "a"],
-    ["α", "a"],
-    ["λ", "a"],
-    ["А", "a"],
-    ["Д", "a"],
-    ["а", "a"],
-    ["д", "a"],
-    ["Ѧ", "a"],
-    ["ѧ", "a"],
-    ["Ӑ", "a"],
-    ["ӑ", "a"],
-    ["Ӓ", "a"],
-    ["ӓ", "a"],
-    ["ƛ", "a"],
-    ["Ʌ", "a"],
-    ["ß", "b"],
-    ["þ", "b"],
-    ["ƀ", "b"],
-    ["Ɓ", "b"],
-    ["Ƃ", "b"],
-    ["ƃ", "b"],
-    ["Ƅ", "b"],
-    ["ƅ", "b"],
-    ["Ƀ", "b"],
-    ["Β", "b"],
-    ["β", "b"],
-    ["ϐ", "b"],
-    ["Ϧ", "b"],
-    ["Б", "b"],
-    ["В", "b"],
-    ["Ъ", "b"],
-    ["Ь", "b"],
-    ["б", "b"],
-    ["в", "b"],
-    ["ъ", "b"],
-    ["ь", "b"],
-    ["Ѣ", "b"],
-    ["ѣ", "b"],
-    ["Ҍ", "b"],
-    ["ҍ", "b"],
-    ["Ҕ", "b"],
-    ["ҕ", "b"],
-    ["ƥ", "b"],
-    ["ƾ", "b"],
-    ["¢", "c"],
-    ["©", "c"],
-    ["Ç", "c"],
-    ["ç", "c"],
-    ["Ć", "c"],
-    ["ć", "c"],
-    ["Ĉ", "c"],
-    ["ĉ", "c"],
-    ["Ċ", "c"],
-    ["ċ", "c"],
-    ["Č", "c"],
-    ["č", "c"],
-    ["Ɔ", "c"],
-    ["Ƈ", "c"],
-    ["ƈ", "c"],
-    ["Ȼ", "c"],
-    ["ȼ", "c"],
-    ["ͻ", "c"],
-    ["ͼ", "c"],
-    ["ͽ", "c"],
-    ["ϲ", "c"],
-    ["Ϲ", "c"],
-    ["Ͻ", "c"],
-    ["Ͼ", "c"],
-    ["Ͽ", "c"],
-    ["Є", "c"],
-    ["С", "c"],
-    ["с", "c"],
-    ["є", "c"],
-    ["Ҁ", "c"],
-    ["ҁ", "c"],
-    ["Ҫ", "c"],
-    ["ҫ", "c"],
-    ["Ð", "d"],
-    ["Ď", "d"],
-    ["ď", "d"],
-    ["Đ", "d"],
-    ["đ", "d"],
-    ["Ɖ", "d"],
-    ["Ɗ", "d"],
-    ["ȡ", "d"],
-    ["Ƌ", "d"],
-    ["ƌ", "d"],
-    ["Ƿ", "d"],
-    ["È", "e"],
-    ["É", "e"],
-    ["Ê", "e"],
-    ["Ë", "e"],
-    ["è", "e"],
-    ["é", "e"],
-    ["ê", "e"],
-    ["ë", "e"],
-    ["Ē", "e"],
-    ["ē", "e"],
-    ["Ĕ", "e"],
-    ["ĕ", "e"],
-    ["Ė", "e"],
-    ["ė", "e"],
-    ["Ę", "e"],
-    ["ę", "e"],
-    ["Ě", "e"],
-    ["ě", "e"],
-    ["Ǝ", "e"],
-    ["Ə", "e"],
-    ["Ɛ", "e"],
-    ["ǝ", "e"],
-    ["Ȅ", "e"],
-    ["ȅ", "e"],
-    ["Ȇ", "e"],
-    ["ȇ", "e"],
-    ["Ȩ", "e"],
-    ["ȩ", "e"],
-    ["Ɇ", "e"],
-    ["ɇ", "e"],
-    ["Έ", "e"],
-    ["Ε", "e"],
-    ["Ξ", "e"],
-    ["Σ", "e"],
-    ["έ", "e"],
-    ["ε", "e"],
-    ["ξ", "e"],
-    ["ϱ", "e"],
-    ["ϵ", "e"],
-    ["϶", "e"],
-    ["Ѐ", "e"],
-    ["Ё", "e"],
-    ["Е", "e"],
-    ["Э", "e"],
-    ["е", "e"],
-    ["ѐ", "e"],
-    ["ё", "e"],
-    ["Ҽ", "e"],
-    ["ҽ", "e"],
-    ["Ҿ", "e"],
-    ["ҿ", "e"],
-    ["Ӗ", "e"],
-    ["ӗ", "e"],
-    ["Ә", "e"],
-    ["ә", "e"],
-    ["Ӛ", "e"],
-    ["ӛ", "e"],
-    ["Ӭ", "e"],
-    ["ӭ", "e"],
-    ["Ƒ", "f"],
-    ["ƒ", "f"],
-    ["Ϝ", "f"],
-    ["ϝ", "f"],
-    ["Ӻ", "f"],
-    ["ӻ", "f"],
-    ["Ĝ", "g"],
-    ["ĝ", "g"],
-    ["Ğ", "g"],
-    ["ğ", "g"],
-    ["Ġ", "g"],
-    ["ġ", "g"],
-    ["Ģ", "g"],
-    ["ģ", "g"],
-    ["Ɠ", "g"],
-    ["Ǥ", "g"],
-    ["ǥ", "g"],
-    ["Ǧ", "g"],
-    ["ǧ", "g"],
-    ["Ǵ", "g"],
-    ["ǵ", "g"],
-    ["Ĥ", "h"],
-    ["ĥ", "h"],
-    ["Ħ", "h"],
-    ["ħ", "h"],
-    ["ƕ", "h"],
-    ["Ƕ", "h"],
-    ["Ȟ", "h"],
-    ["ȟ", "h"],
-    ["Ή", "h"],
-    ["Η", "h"],
-    ["Ђ", "h"],
-    ["Њ", "h"],
-    ["Ћ", "h"],
-    ["Н", "h"],
-    ["н", "h"],
-    ["ђ", "h"],
-    ["ћ", "h"],
-    ["Ң", "h"],
-    ["ң", "h"],
-    ["Ҥ", "h"],
-    ["ҥ", "h"],
-    ["Һ", "h"],
-    ["һ", "h"],
-    ["Ӊ", "h"],
-    ["ӊ", "h"],
-    ["Ì", "I"],
-    ["Í", "I"],
-    ["Î", "I"],
-    ["Ï", "I"],
-    ["ì", "i"],
-    ["í", "i"],
-    ["î", "i"],
-    ["ï", "i"],
-    ["Ĩ", "i"],
-    ["ĩ", "i"],
-    ["Ī", "i"],
-    ["ī", "i"],
-    ["Ĭ", "i"],
-    ["ĭ", "i"],
-    ["Į", "i"],
-    ["į", "i"],
-    ["İ", "i"],
-    ["ı", "i"],
-    ["Ɩ", "i"],
-    ["Ɨ", "i"],
-    ["Ȉ", "i"],
-    ["ȉ", "i"],
-    ["Ȋ", "i"],
-    ["ȋ", "i"],
-    ["Ί", "i"],
-    ["ΐ", "i"],
-    ["Ϊ", "i"],
-    ["ί", "i"],
-    ["ι", "i"],
-    ["ϊ", "i"],
-    ["І", "i"],
-    ["Ї", "i"],
-    ["і", "i"],
-    ["ї", "i"],
-    ["Ĵ", "j"],
-    ["ĵ", "j"],
-    ["ǰ", "j"],
-    ["ȷ", "j"],
-    ["Ɉ", "j"],
-    ["ɉ", "j"],
-    ["ϳ", "j"],
-    ["Ј", "j"],
-    ["ј", "j"],
-    ["Ķ", "k"],
-    ["ķ", "k"],
-    ["ĸ", "k"],
-    ["Ƙ", "k"],
-    ["ƙ", "k"],
-    ["Ǩ", "k"],
-    ["ǩ", "k"],
-    ["Κ", "k"],
-    ["κ", "k"],
-    ["Ќ", "k"],
-    ["Ж", "k"],
-    ["К", "k"],
-    ["ж", "k"],
-    ["к", "k"],
-    ["ќ", "k"],
-    ["Қ", "k"],
-    ["қ", "k"],
-    ["Ҝ", "k"],
-    ["ҝ", "k"],
-    ["Ҟ", "k"],
-    ["ҟ", "k"],
-    ["Ҡ", "k"],
-    ["ҡ", "k"],
-    ["Ĺ", "l"],
-    ["ĺ", "l"],
-    ["Ļ", "l"],
-    ["ļ", "l"],
-    ["Ľ", "l"],
-    ["ľ", "l"],
-    ["Ŀ", "l"],
-    ["ŀ", "l"],
-    ["Ł", "l"],
-    ["ł", "l"],
-    ["ƚ", "l"],
-    ["ƪ", "l"],
-    ["ǀ", "l"],
-    ["Ǐ", "l"],
-    ["ǐ", "l"],
-    ["ȴ", "l"],
-    ["Ƚ", "l"],
-    ["Ι", "l"],
-    ["Ӏ", "l"],
-    ["ӏ", "l"],
-    ["Μ", "m"],
-    ["Ϻ", "m"],
-    ["ϻ", "m"],
-    ["М", "m"],
-    ["м", "m"],
-    ["Ӎ", "m"],
-    ["ӎ", "m"],
-    ["Ñ", "n"],
-    ["ñ", "n"],
-    ["Ń", "n"],
-    ["ń", "n"],
-    ["Ņ", "n"],
-    ["ņ", "n"],
-    ["Ň", "n"],
-    ["ň", "n"],
-    ["ŉ", "n"],
-    ["Ŋ", "n"],
-    ["ŋ", "n"],
-    ["Ɲ", "n"],
-    ["ƞ", "n"],
-    ["Ǹ", "n"],
-    ["ǹ", "n"],
-    ["Ƞ", "n"],
-    ["ȵ", "n"],
-    ["Ν", "n"],
-    ["Π", "n"],
-    ["ή", "n"],
-    ["η", "n"],
-    ["Ϟ", "n"],
-    ["Ѝ", "n"],
-    ["И", "n"],
-    ["Й", "n"],
-    ["Л", "n"],
-    ["П", "n"],
-    ["и", "n"],
-    ["й", "n"],
-    ["л", "n"],
-    ["п", "n"],
-    ["ѝ", "n"],
-    ["Ҋ", "n"],
-    ["ҋ", "n"],
-    ["Ӆ", "n"],
-    ["ӆ", "n"],
-    ["Ӣ", "n"],
-    ["ӣ", "n"],
-    ["Ӥ", "n"],
-    ["ӥ", "n"],
-    ["π", "n"],
-    ["Ò", "o"],
-    ["Ó", "o"],
-    ["Ô", "o"],
-    ["Õ", "o"],
-    ["Ö", "o"],
-    ["Ø", "o"],
-    ["ð", "o"],
-    ["ò", "o"],
-    ["ó", "o"],
-    ["ô", "o"],
-    ["õ", "o"],
-    ["ö", "o"],
-    ["ø", "o"],
-    ["Ō", "o"],
-    ["ō", "o"],
-    ["Ŏ", "o"],
-    ["ŏ", "o"],
-    ["Ő", "o"],
-    ["ő", "o"],
-    ["Ɵ", "o"],
-    ["Ơ", "o"],
-    ["ơ", "o"],
-    ["Ǒ", "o"],
-    ["ǒ", "o"],
-    ["Ǫ", "o"],
-    ["ǫ", "o"],
-    ["Ǭ", "o"],
-    ["ǭ", "o"],
-    ["Ǿ", "o"],
-    ["ǿ", "o"],
-    ["Ȍ", "o"],
-    ["ȍ", "o"],
-    ["Ȏ", "o"],
-    ["ȏ", "o"],
-    ["Ȫ", "o"],
-    ["ȫ", "o"],
-    ["Ȭ", "o"],
-    ["ȭ", "o"],
-    ["Ȯ", "o"],
-    ["ȯ", "o"],
-    ["Ȱ", "o"],
-    ["ȱ", "o"],
-    ["Ό", "o"],
-    ["Θ", "o"],
-    ["Ο", "o"],
-    ["Φ", "o"],
-    ["Ω", "o"],
-    ["δ", "o"],
-    ["θ", "o"],
-    ["ο", "o"],
-    ["σ", "o"],
-    ["ό", "o"],
-    ["ϕ", "o"],
-    ["Ϙ", "o"],
-    ["ϙ", "o"],
-    ["Ϭ", "o"],
-    ["ϭ", "o"],
-    ["ϴ", "o"],
-    ["О", "o"],
-    ["Ф", "o"],
-    ["о", "o"],
-    ["Ѳ", "o"],
-    ["ѳ", "o"],
-    ["Ѻ", "o"],
-    ["ѻ", "o"],
-    ["Ѽ", "o"],
-    ["ѽ", "o"],
-    ["Ӧ", "o"],
-    ["ӧ", "o"],
-    ["Ө", "o"],
-    ["ө", "o"],
-    ["Ӫ", "o"],
-    ["ӫ", "o"],
-    ["¤", "o"],
-    ["ƍ", "o"],
-    ["Ώ", "o"],
-    ["Ƥ", "p"],
-    ["ƿ", "p"],
-    ["Ρ", "p"],
-    ["ρ", "p"],
-    ["Ϸ", "p"],
-    ["ϸ", "p"],
-    ["ϼ", "p"],
-    ["Р", "p"],
-    ["р", "p"],
-    ["Ҏ", "p"],
-    ["ҏ", "p"],
-    ["Þ", "p"],
-    ["Ɋ", "q"],
-    ["ɋ", "q"],
-    ["Ŕ", "r"],
-    ["ŕ", "r"],
-    ["Ŗ", "r"],
-    ["ŗ", "r"],
-    ["Ř", "r"],
-    ["ř", "r"],
-    ["Ʀ", "r"],
-    ["Ȑ", "r"],
-    ["ȑ", "r"],
-    ["Ȓ", "r"],
-    ["ȓ", "r"],
-    ["Ɍ", "r"],
-    ["ɍ", "r"],
-    ["Ѓ", "r"],
-    ["Г", "r"],
-    ["Я", "r"],
-    ["г", "r"],
-    ["я", "r"],
-    ["ѓ", "r"],
-    ["Ґ", "r"],
-    ["ґ", "r"],
-    ["Ғ", "r"],
-    ["ғ", "r"],
-    ["Ӷ", "r"],
-    ["ӷ", "r"],
-    ["ſ", "r"],
-    ["Ś", "s"],
-    ["ś", "s"],
-    ["Ŝ", "s"],
-    ["ŝ", "s"],
-    ["Ş", "s"],
-    ["ş", "s"],
-    ["Š", "s"],
-    ["š", "s"],
-    ["Ƨ", "s"],
-    ["ƨ", "s"],
-    ["Ș", "s"],
-    ["ș", "s"],
-    ["ȿ", "s"],
-    ["ς", "s"],
-    ["Ϛ", "s"],
-    ["ϛ", "s"],
-    ["ϟ", "s"],
-    ["Ϩ", "s"],
-    ["ϩ", "s"],
-    ["Ѕ", "s"],
-    ["ѕ", "s"],
-    ["Ţ", "t"],
-    ["ţ", "t"],
-    ["Ť", "t"],
-    ["ť", "t"],
-    ["Ŧ", "t"],
-    ["ŧ", "t"],
-    ["ƫ", "t"],
-    ["Ƭ", "t"],
-    ["ƭ", "t"],
-    ["Ʈ", "t"],
-    ["Ț", "t"],
-    ["ț", "t"],
-    ["ȶ", "t"],
-    ["Ⱦ", "t"],
-    ["Γ", "t"],
-    ["Τ", "t"],
-    ["τ", "t"],
-    ["Ϯ", "t"],
-    ["ϯ", "t"],
-    ["Т", "t"],
-    ["т", "t"],
-    ["҂", "t"],
-    ["Ҭ", "t"],
-    ["ҭ", "t"],
-    ["µ", "u"],
-    ["Ù", "u"],
-    ["Ú", "u"],
-    ["Û", "u"],
-    ["Ü", "u"],
-    ["ù", "u"],
-    ["ú", "u"],
-    ["û", "u"],
-    ["ü", "u"],
-    ["Ũ", "u"],
-    ["ũ", "u"],
-    ["Ū", "u"],
-    ["ū", "u"],
-    ["Ŭ", "u"],
-    ["ŭ", "u"],
-    ["Ů", "u"],
-    ["ů", "u"],
-    ["Ű", "u"],
-    ["ű", "u"],
-    ["Ų", "u"],
-    ["ų", "u"],
-    ["Ư", "u"],
-    ["ư", "u"],
-    ["Ʊ", "u"],
-    ["Ʋ", "u"],
-    ["Ǔ", "u"],
-    ["ǔ", "u"],
-    ["Ǖ", "u"],
-    ["ǖ", "u"],
-    ["Ǘ", "u"],
-    ["ǘ", "u"],
-    ["Ǚ", "u"],
-    ["ǚ", "u"],
-    ["Ǜ", "u"],
-    ["ǜ", "u"],
-    ["Ȕ", "u"],
-    ["ȕ", "u"],
-    ["Ȗ", "u"],
-    ["ȗ", "u"],
-    ["Ʉ", "u"],
-    ["ΰ", "u"],
-    ["μ", "u"],
-    ["υ", "u"],
-    ["ϋ", "u"],
-    ["ύ", "u"],
-    ["ϑ", "u"],
-    ["Џ", "u"],
-    ["Ц", "u"],
-    ["Ч", "u"],
-    ["ц", "u"],
-    ["џ", "u"],
-    ["Ҵ", "u"],
-    ["ҵ", "u"],
-    ["Ҷ", "u"],
-    ["ҷ", "u"],
-    ["Ҹ", "u"],
-    ["ҹ", "u"],
-    ["Ӌ", "u"],
-    ["ӌ", "u"],
-    ["Ӈ", "u"],
-    ["ӈ", "u"],
-    ["Ɣ", "v"],
-    ["ν", "v"],
-    ["Ѵ", "v"],
-    ["ѵ", "v"],
-    ["Ѷ", "v"],
-    ["ѷ", "v"],
-    ["Ŵ", "w"],
-    ["ŵ", "w"],
-    ["Ɯ", "w"],
-    ["ω", "w"],
-    ["ώ", "w"],
-    ["ϖ", "w"],
-    ["Ϣ", "w"],
-    ["ϣ", "w"],
-    ["Ш", "w"],
-    ["Щ", "w"],
-    ["ш", "w"],
-    ["щ", "w"],
-    ["ѡ", "w"],
-    ["ѿ", "w"],
-    ["×", "x"],
-    ["Χ", "x"],
-    ["χ", "x"],
-    ["ϗ", "x"],
-    ["ϰ", "x"],
-    ["Х", "x"],
-    ["х", "x"],
-    ["Ҳ", "x"],
-    ["ҳ", "x"],
-    ["Ӽ", "x"],
-    ["ӽ", "x"],
-    ["Ӿ", "x"],
-    ["ӿ", "x"],
-    ["¥", "y"],
-    ["Ý", "y"],
-    ["ý", "y"],
-    ["ÿ", "y"],
-    ["Ŷ", "y"],
-    ["ŷ", "y"],
-    ["Ÿ", "y"],
-    ["Ƴ", "y"],
-    ["ƴ", "y"],
-    ["Ȳ", "y"],
-    ["ȳ", "y"],
-    ["Ɏ", "y"],
-    ["ɏ", "y"],
-    ["Ύ", "y"],
-    ["Υ", "y"],
-    ["Ψ", "y"],
-    ["Ϋ", "y"],
-    ["γ", "y"],
-    ["ψ", "y"],
-    ["ϒ", "y"],
-    ["ϓ", "y"],
-    ["ϔ", "y"],
-    ["Ў", "y"],
-    ["У", "y"],
-    ["у", "y"],
-    ["ч", "y"],
-    ["ў", "y"],
-    ["Ѱ", "y"],
-    ["ѱ", "y"],
-    ["Ү", "y"],
-    ["ү", "y"],
-    ["Ұ", "y"],
-    ["ұ", "y"],
-    ["Ӯ", "y"],
-    ["ӯ", "y"],
-    ["Ӱ", "y"],
-    ["ӱ", "y"],
-    ["Ӳ", "y"],
-    ["ӳ", "y"],
-    ["Ź", "z"],
-    ["ź", "z"],
-    ["Ż", "z"],
-    ["ż", "z"],
-    ["Ž", "z"],
-    ["ž", "z"],
-    ["Ʃ", "z"],
-    ["Ƶ", "z"],
-    ["ƶ", "z"],
-    ["Ȥ", "z"],
-    ["ȥ", "z"],
-    ["ɀ", "z"],
-    ["Ζ", "z"],
-    ["ζ", "z"]
-  ]
-
-  //convert to two hashes
+  //convert array to two hashes
   var normaler = {}
   var greek = {}
   data.forEach(function(arr) {
@@ -1043,12 +387,12 @@ var normalize = (function() {
 // s = "ӳžŽżźŹźӳžŽżźŹźӳžŽżźŹźӳžŽżźŹźӳžŽżźŹź"
 // s = "Björk"
 // console.log(normalize.normalize(s, {
-//   percentage: 50
+//   percentage: 100
 // }))
 
 // s = "The quick brown fox jumps over the lazy dog"
 // console.log(normalize.denormalize(s, {
-//   percentage: 20
+//   percentage: 100
 // }))
 
 //chop a string into pronounced syllables
@@ -1302,8 +646,8 @@ var americanize = (function() {
   if (typeof module !== "undefined" && module.exports) {
     exports.americanize = main;
   }
-  return main
-})()
+  return main;
+})();
 
 // console.log(americanize("synthesise")=="synthesize")
 // console.log(americanize("synthesised")=="synthesized")
@@ -1316,468 +660,468 @@ var word_rules = [{
   errors: 1,
   accuracy: '0.98'
 }, {
-  reg: /.[st]ty$/i,
-  pos: 'JJ',
-  strength: 44,
-  errors: 1,
-  accuracy: '0.98'
-}, {
-  reg: /.[lnr]ize$/i,
-  pos: 'VB',
-  strength: 91,
-  errors: 2,
-  accuracy: '0.98'
-}, {
-  reg: /.[gk]y$/i,
-  pos: 'JJ',
-  strength: 113,
-  errors: 3,
-  accuracy: '0.97'
-}, {
-  reg: /.fies$/i,
-  pos: 'VB',
-  strength: 30,
-  errors: 1,
-  accuracy: '0.97'
-}, {
-  reg: /.some$/i,
-  pos: 'JJ',
-  strength: 34,
-  errors: 1,
-  accuracy: '0.97'
-}, {
-  reg: /.[nrtumcd]al$/i,
-  pos: 'JJ',
-  strength: 513,
-  errors: 16,
-  accuracy: '0.97'
-}, {
-  reg: /.que$/i,
-  pos: 'JJ',
-  strength: 26,
-  errors: 1,
-  accuracy: '0.96'
-}, {
-  reg: /.[tnl]ary$/i,
-  pos: 'JJ',
-  strength: 87,
-  errors: 4,
-  accuracy: '0.95'
-}, {
-  reg: /.[di]est$/i,
-  pos: 'JJS',
-  strength: 74,
-  errors: 4,
-  accuracy: '0.95'
-}, {
-  reg: /^(un|de|re)\-[a-z]../i,
-  pos: 'VB',
-  strength: 44,
-  errors: 2,
-  accuracy: '0.95'
-}, {
-  reg: /.lar$/i,
-  pos: 'JJ',
-  strength: 83,
-  errors: 5,
-  accuracy: '0.94'
-}, {
-  reg: /[bszmp]{2}y/,
-  pos: 'JJ',
-  strength: 95,
-  errors: 6,
-  accuracy: '0.94'
-}, {
-  reg: /.zes$/i,
-  pos: 'VB',
-  strength: 54,
-  errors: 4,
-  accuracy: '0.93'
-}, {
-  reg: /.[icldtgrv]ent$/i,
-  pos: 'JJ',
-  strength: 214,
-  errors: 14,
-  accuracy: '0.93'
-}, {
-  reg: /.[rln]ates$/i,
-  pos: 'VBZ',
-  strength: 74,
-  errors: 5,
-  accuracy: '0.93'
-}, {
-  reg: /.[oe]ry$/i,
-  pos: 'JJ',
-  strength: 150,
-  errors: 10,
-  accuracy: '0.93'
-}, {
-  reg: /.[rdntk]ly$/i, ///****
-  pos: 'RB',
-  strength: 108,
-  errors: 9,
-  accuracy: '0.92'
-}, {
-  reg: /.[lsrnpb]ian$/i,
-  pos: 'JJ',
-  strength: 121,
-  errors: 10,
-  accuracy: '0.92'
-}, {
-  reg: /.[lnt]ial$/i,
-  pos: 'JJ',
-  strength: 0,
-  errors: 0,
-  accuracy: '0'
-}, {
-  reg: /.[vrl]id$/i,
-  pos: 'JJ',
-  strength: 23,
-  errors: 2,
-  accuracy: '0.91'
-}, {
-  reg: /.[ilk]er$/i,
-  pos: 'JJR',
-  strength: 167,
-  errors: 17,
-  accuracy: '0.90'
-}, {
-  reg: /.ike$/i,
-  pos: 'JJ',
-  strength: 71,
-  errors: 8,
-  accuracy: '0.89'
-}, {
-  reg: /.ends$/i,
-  pos: 'VB',
-  strength: 24,
-  errors: 3,
-  accuracy: '0.88'
-}, {
-  reg: /.wards$/i,
-  pos: 'RB',
-  strength: 31,
-  errors: 4,
-  accuracy: '0.87'
-}, {
-  reg: /.rmy$/i,
-  pos: 'JJ',
-  strength: 7,
-  errors: 1,
-  accuracy: '0.86'
-}, {
-  reg: /.rol$/i,
-  pos: 'NN',
-  strength: 7,
-  errors: 1,
-  accuracy: '0.86'
-}, {
-  reg: /.tors$/i,
-  pos: 'NN',
-  strength: 7,
-  errors: 1,
-  accuracy: '0.86'
-}, {
-  reg: /.azy$/i,
-  pos: 'JJ',
-  strength: 7,
-  errors: 1,
-  accuracy: '0.86'
-}, {
-  reg: /.where$/i,
-  pos: 'RB',
-  strength: 7,
-  errors: 1,
-  accuracy: '0.86'
-}, {
-  reg: /.ify$/i,
-  pos: 'VB',
-  strength: 49,
-  errors: 7,
-  accuracy: '0.86'
-}, {
-  reg: /.bound$/i,
-  pos: 'JJ',
-  strength: 22,
-  errors: 3,
-  accuracy: '0.86'
-}, {
-  reg: /.ens$/i,
-  pos: 'VB',
-  strength: 42,
-  errors: 6,
-  accuracy: '0.86'
-}, {
-  reg: /.oid$/i,
-  pos: 'JJ',
-  strength: 20,
-  errors: 3,
-  accuracy: '0.85'
-}, {
-  reg: /.vice$/i,
-  pos: 'NN',
-  strength: 6,
-  errors: 1,
-  accuracy: '0.83'
-}, {
-  reg: /.rough$/i,
-  pos: 'JJ',
-  strength: 6,
-  errors: 1,
-  accuracy: '0.83'
-}, {
-  reg: /.mum$/i,
-  pos: 'JJ',
-  strength: 6,
-  errors: 1,
-  accuracy: '0.83'
-}, {
-  reg: /.teen(th)?$/i,
-  pos: 'CD',
-  strength: 17,
-  errors: 3,
-  accuracy: '0.82'
-}, {
-  reg: /.oses$/i,
-  pos: 'VB',
-  strength: 22,
-  errors: 4,
-  accuracy: '0.82'
-}, {
-  reg: /.ishes$/i,
-  pos: 'VB',
-  strength: 21,
-  errors: 4,
-  accuracy: '0.81'
-}, {
-  reg: /.ects$/i,
-  pos: 'VB',
-  strength: 30,
-  errors: 6,
-  accuracy: '0.80'
-}, {
-  reg: /.tieth$/i,
-  pos: 'CD',
-  strength: 5,
-  errors: 1,
-  accuracy: '0.80'
-}, {
-  reg: /.ices$/i,
-  pos: 'NN',
-  strength: 15,
-  errors: 3,
-  accuracy: '0.80'
-}, {
-  reg: /.bles$/i,
-  pos: 'VB',
-  strength: 20,
-  errors: 4,
-  accuracy: '0.80'
-}, {
-  reg: /.pose$/i,
-  pos: 'VB',
-  strength: 19,
-  errors: 4,
-  accuracy: '0.79'
-}, {
-  reg: /.ions$/i,
-  pos: 'NN',
-  strength: 9,
-  errors: 2,
-  accuracy: '0.78'
-}, {
-  reg: /.ean$/i,
-  pos: 'JJ',
-  strength: 32,
-  errors: 7,
-  accuracy: '0.78'
-}, {
-  reg: /.[ia]sed$/i,
-  pos: 'JJ',
-  strength: 151,
-  errors: 35,
-  accuracy: '0.77'
-}, {
-  reg: /.tized$/i,
-  pos: 'VB',
-  strength: 21,
-  errors: 5,
-  accuracy: '0.76'
-}, {
-  reg: /.llen$/i,
-  pos: 'JJ',
-  strength: 8,
-  errors: 2,
-  accuracy: '0.75'
-}, {
-  reg: /.fore$/i,
-  pos: 'RB',
-  strength: 8,
-  errors: 2,
-  accuracy: '0.75'
-}, {
-  reg: /.ances$/i,
-  pos: 'NN',
-  strength: 8,
-  errors: 2,
-  accuracy: '0.75'
-}, {
-  reg: /.gate$/i,
-  pos: 'VB',
-  strength: 23,
-  errors: 6,
-  accuracy: '0.74'
-}, {
-  reg: /.nes$/i,
-  pos: 'VB',
-  strength: 27,
-  errors: 7,
-  accuracy: '0.74'
-}, {
-  reg: /.less$/i,
-  pos: 'RB',
-  strength: 11,
-  errors: 3,
-  accuracy: '0.73'
-}, {
-  reg: /.ried$/i,
-  pos: 'JJ',
-  strength: 22,
-  errors: 6,
-  accuracy: '0.73'
-}, {
-  reg: /.gone$/i,
-  pos: 'JJ',
-  strength: 7,
-  errors: 2,
-  accuracy: '0.71'
-}, {
-  reg: /.made$/i,
-  pos: 'JJ',
-  strength: 7,
-  errors: 2,
-  accuracy: '0.71'
-}, {
-  reg: /.[pdltrkvyns]ing$/i,
-  pos: 'JJ',
-  strength: 942,
-  errors: 280,
-  accuracy: '0.70'
-}, {
-  reg: /.tions$/i,
-  pos: 'NN',
-  strength: 71,
-  errors: 21,
-  accuracy: '0.70'
-}, {
-  reg: /.tures$/i,
-  pos: 'NN',
-  strength: 16,
-  errors: 5,
-  accuracy: '0.69'
-}, {
-  reg: /.ous$/i,
-  pos: 'JJ',
-  strength: 6,
-  errors: 2,
-  accuracy: '0.67'
-}, {
-  reg: /.ports$/i,
-  pos: 'NN',
-  strength: 9,
-  errors: 3,
-  accuracy: '0.67'
-}, {
-  reg: /. so$/i,
-  pos: 'RB',
-  strength: 3,
-  errors: 1,
-  accuracy: '0.67'
-}, {
-  reg: /.ints$/i,
-  pos: 'NN',
-  strength: 11,
-  errors: 4,
-  accuracy: '0.64'
-}, {
-  reg: /.[gt]led$/i,
-  pos: 'JJ',
-  strength: 16,
-  errors: 7,
-  accuracy: '0.56'
-}, {
-  reg: /[aeiou].*ist$/i, //not sure about.. (eg anarchist)
-  pos: 'JJ',
-  strength: 0,
-  errors: 0,
-  accuracy: '0'
-}, {
-  reg: /.lked$/i,
-  pos: 'VB',
-  strength: 16,
-  errors: 7,
-  accuracy: '0.56'
-}, {
-  reg: /.fully$/i,
-  pos: 'RB',
-  strength: 13,
-  errors: 6,
-  accuracy: '0.54'
-}, {
-  reg: /.*ould$/,
-  pos: 'MD',
-  strength: 3,
-  errors: 0,
-  accuracy: '0.00'
-}, {
-  reg: /^-?[0-9]+(.[0-9]+)?$/,
-  pos: 'CD',
-  strength: 1,
-  errors: 1,
-  accuracy: '0.00'
-}, {
-  reg: /[a-z]*\-[a-z]*\-/, //'more-than-real'
-  pos: 'JJ',
-  strength: 0,
-  errors: 0,
-  accuracy: '0.00'
-}, { //ugly handling of contractions, shouldn't ever be hit, but just in case
-  reg: /[a-z]'s$/i, //spencer's
-  pos: 'NNO',
-  strength: 1,
-  errors: 0,
-  accuracy: '0.00'
-}, {
-  reg: /.'n$/i, //walk'n
-  pos: 'VB',
-  strength: 1,
-  errors: 0,
-  accuracy: '0.00'
-}, {
-  reg: /.'re$/i, //they're
-  pos: 'CP',
-  strength: 1,
-  errors: 0,
-  accuracy: '0.00'
-}, {
-  reg: /.'ll$/i, //they'll
-  pos: 'MD',
-  strength: 1,
-  errors: 0,
-  accuracy: '0.00'
-}, {
-  reg: /.'t$/i, //doesn't
-  pos: 'VB',
-  strength: 1,
-  errors: 0,
-  accuracy: '0.00'
-}, {
-  reg: /.tches$/i, //watches
-  pos: 'VB',
-  strength: 1,
-  errors: 0,
-  accuracy: '0.00'
-}]
+    reg: /.[st]ty$/i,
+    pos: 'JJ',
+    strength: 44,
+    errors: 1,
+    accuracy: '0.98'
+  }, {
+    reg: /.[lnr]ize$/i,
+    pos: 'VB',
+    strength: 91,
+    errors: 2,
+    accuracy: '0.98'
+  }, {
+    reg: /.[gk]y$/i,
+    pos: 'JJ',
+    strength: 113,
+    errors: 3,
+    accuracy: '0.97'
+  }, {
+    reg: /.fies$/i,
+    pos: 'VB',
+    strength: 30,
+    errors: 1,
+    accuracy: '0.97'
+  }, {
+    reg: /.some$/i,
+    pos: 'JJ',
+    strength: 34,
+    errors: 1,
+    accuracy: '0.97'
+  }, {
+    reg: /.[nrtumcd]al$/i,
+    pos: 'JJ',
+    strength: 513,
+    errors: 16,
+    accuracy: '0.97'
+  }, {
+    reg: /.que$/i,
+    pos: 'JJ',
+    strength: 26,
+    errors: 1,
+    accuracy: '0.96'
+  }, {
+    reg: /.[tnl]ary$/i,
+    pos: 'JJ',
+    strength: 87,
+    errors: 4,
+    accuracy: '0.95'
+  }, {
+    reg: /.[di]est$/i,
+    pos: 'JJS',
+    strength: 74,
+    errors: 4,
+    accuracy: '0.95'
+  }, {
+    reg: /^(un|de|re)\-[a-z]../i,
+    pos: 'VB',
+    strength: 44,
+    errors: 2,
+    accuracy: '0.95'
+  }, {
+    reg: /.lar$/i,
+    pos: 'JJ',
+    strength: 83,
+    errors: 5,
+    accuracy: '0.94'
+  }, {
+    reg: /[bszmp]{2}y/,
+    pos: 'JJ',
+    strength: 95,
+    errors: 6,
+    accuracy: '0.94'
+  }, {
+    reg: /.zes$/i,
+    pos: 'VB',
+    strength: 54,
+    errors: 4,
+    accuracy: '0.93'
+  }, {
+    reg: /.[icldtgrv]ent$/i,
+    pos: 'JJ',
+    strength: 214,
+    errors: 14,
+    accuracy: '0.93'
+  }, {
+    reg: /.[rln]ates$/i,
+    pos: 'VBZ',
+    strength: 74,
+    errors: 5,
+    accuracy: '0.93'
+  }, {
+    reg: /.[oe]ry$/i,
+    pos: 'JJ',
+    strength: 150,
+    errors: 10,
+    accuracy: '0.93'
+  }, {
+    reg: /.[rdntk]ly$/i, ///****
+    pos: 'RB',
+    strength: 108,
+    errors: 9,
+    accuracy: '0.92'
+  }, {
+    reg: /.[lsrnpb]ian$/i,
+    pos: 'JJ',
+    strength: 121,
+    errors: 10,
+    accuracy: '0.92'
+  }, {
+    reg: /.[lnt]ial$/i,
+    pos: 'JJ',
+    strength: 0,
+    errors: 0,
+    accuracy: '0'
+  }, {
+    reg: /.[vrl]id$/i,
+    pos: 'JJ',
+    strength: 23,
+    errors: 2,
+    accuracy: '0.91'
+  }, {
+    reg: /.[ilk]er$/i,
+    pos: 'JJR',
+    strength: 167,
+    errors: 17,
+    accuracy: '0.90'
+  }, {
+    reg: /.ike$/i,
+    pos: 'JJ',
+    strength: 71,
+    errors: 8,
+    accuracy: '0.89'
+  }, {
+    reg: /.ends$/i,
+    pos: 'VB',
+    strength: 24,
+    errors: 3,
+    accuracy: '0.88'
+  }, {
+    reg: /.wards$/i,
+    pos: 'RB',
+    strength: 31,
+    errors: 4,
+    accuracy: '0.87'
+  }, {
+    reg: /.rmy$/i,
+    pos: 'JJ',
+    strength: 7,
+    errors: 1,
+    accuracy: '0.86'
+  }, {
+    reg: /.rol$/i,
+    pos: 'NN',
+    strength: 7,
+    errors: 1,
+    accuracy: '0.86'
+  }, {
+    reg: /.tors$/i,
+    pos: 'NN',
+    strength: 7,
+    errors: 1,
+    accuracy: '0.86'
+  }, {
+    reg: /.azy$/i,
+    pos: 'JJ',
+    strength: 7,
+    errors: 1,
+    accuracy: '0.86'
+  }, {
+    reg: /.where$/i,
+    pos: 'RB',
+    strength: 7,
+    errors: 1,
+    accuracy: '0.86'
+  }, {
+    reg: /.ify$/i,
+    pos: 'VB',
+    strength: 49,
+    errors: 7,
+    accuracy: '0.86'
+  }, {
+    reg: /.bound$/i,
+    pos: 'JJ',
+    strength: 22,
+    errors: 3,
+    accuracy: '0.86'
+  }, {
+    reg: /.ens$/i,
+    pos: 'VB',
+    strength: 42,
+    errors: 6,
+    accuracy: '0.86'
+  }, {
+    reg: /.oid$/i,
+    pos: 'JJ',
+    strength: 20,
+    errors: 3,
+    accuracy: '0.85'
+  }, {
+    reg: /.vice$/i,
+    pos: 'NN',
+    strength: 6,
+    errors: 1,
+    accuracy: '0.83'
+  }, {
+    reg: /.rough$/i,
+    pos: 'JJ',
+    strength: 6,
+    errors: 1,
+    accuracy: '0.83'
+  }, {
+    reg: /.mum$/i,
+    pos: 'JJ',
+    strength: 6,
+    errors: 1,
+    accuracy: '0.83'
+  }, {
+    reg: /.teen(th)?$/i,
+    pos: 'CD',
+    strength: 17,
+    errors: 3,
+    accuracy: '0.82'
+  }, {
+    reg: /.oses$/i,
+    pos: 'VB',
+    strength: 22,
+    errors: 4,
+    accuracy: '0.82'
+  }, {
+    reg: /.ishes$/i,
+    pos: 'VB',
+    strength: 21,
+    errors: 4,
+    accuracy: '0.81'
+  }, {
+    reg: /.ects$/i,
+    pos: 'VB',
+    strength: 30,
+    errors: 6,
+    accuracy: '0.80'
+  }, {
+    reg: /.tieth$/i,
+    pos: 'CD',
+    strength: 5,
+    errors: 1,
+    accuracy: '0.80'
+  }, {
+    reg: /.ices$/i,
+    pos: 'NN',
+    strength: 15,
+    errors: 3,
+    accuracy: '0.80'
+  }, {
+    reg: /.bles$/i,
+    pos: 'VB',
+    strength: 20,
+    errors: 4,
+    accuracy: '0.80'
+  }, {
+    reg: /.pose$/i,
+    pos: 'VB',
+    strength: 19,
+    errors: 4,
+    accuracy: '0.79'
+  }, {
+    reg: /.ions$/i,
+    pos: 'NN',
+    strength: 9,
+    errors: 2,
+    accuracy: '0.78'
+  }, {
+    reg: /.ean$/i,
+    pos: 'JJ',
+    strength: 32,
+    errors: 7,
+    accuracy: '0.78'
+  }, {
+    reg: /.[ia]sed$/i,
+    pos: 'JJ',
+    strength: 151,
+    errors: 35,
+    accuracy: '0.77'
+  }, {
+    reg: /.tized$/i,
+    pos: 'VB',
+    strength: 21,
+    errors: 5,
+    accuracy: '0.76'
+  }, {
+    reg: /.llen$/i,
+    pos: 'JJ',
+    strength: 8,
+    errors: 2,
+    accuracy: '0.75'
+  }, {
+    reg: /.fore$/i,
+    pos: 'RB',
+    strength: 8,
+    errors: 2,
+    accuracy: '0.75'
+  }, {
+    reg: /.ances$/i,
+    pos: 'NN',
+    strength: 8,
+    errors: 2,
+    accuracy: '0.75'
+  }, {
+    reg: /.gate$/i,
+    pos: 'VB',
+    strength: 23,
+    errors: 6,
+    accuracy: '0.74'
+  }, {
+    reg: /.nes$/i,
+    pos: 'VB',
+    strength: 27,
+    errors: 7,
+    accuracy: '0.74'
+  }, {
+    reg: /.less$/i,
+    pos: 'RB',
+    strength: 11,
+    errors: 3,
+    accuracy: '0.73'
+  }, {
+    reg: /.ried$/i,
+    pos: 'JJ',
+    strength: 22,
+    errors: 6,
+    accuracy: '0.73'
+  }, {
+    reg: /.gone$/i,
+    pos: 'JJ',
+    strength: 7,
+    errors: 2,
+    accuracy: '0.71'
+  }, {
+    reg: /.made$/i,
+    pos: 'JJ',
+    strength: 7,
+    errors: 2,
+    accuracy: '0.71'
+  }, {
+    reg: /.[pdltrkvyns]ing$/i,
+    pos: 'JJ',
+    strength: 942,
+    errors: 280,
+    accuracy: '0.70'
+  }, {
+    reg: /.tions$/i,
+    pos: 'NN',
+    strength: 71,
+    errors: 21,
+    accuracy: '0.70'
+  }, {
+    reg: /.tures$/i,
+    pos: 'NN',
+    strength: 16,
+    errors: 5,
+    accuracy: '0.69'
+  }, {
+    reg: /.ous$/i,
+    pos: 'JJ',
+    strength: 6,
+    errors: 2,
+    accuracy: '0.67'
+  }, {
+    reg: /.ports$/i,
+    pos: 'NN',
+    strength: 9,
+    errors: 3,
+    accuracy: '0.67'
+  }, {
+    reg: /. so$/i,
+    pos: 'RB',
+    strength: 3,
+    errors: 1,
+    accuracy: '0.67'
+  }, {
+    reg: /.ints$/i,
+    pos: 'NN',
+    strength: 11,
+    errors: 4,
+    accuracy: '0.64'
+  }, {
+    reg: /.[gt]led$/i,
+    pos: 'JJ',
+    strength: 16,
+    errors: 7,
+    accuracy: '0.56'
+  }, {
+    reg: /[aeiou].*ist$/i, //not sure about.. (eg anarchist)
+    pos: 'JJ',
+    strength: 0,
+    errors: 0,
+    accuracy: '0'
+  }, {
+    reg: /.lked$/i,
+    pos: 'VB',
+    strength: 16,
+    errors: 7,
+    accuracy: '0.56'
+  }, {
+    reg: /.fully$/i,
+    pos: 'RB',
+    strength: 13,
+    errors: 6,
+    accuracy: '0.54'
+  }, {
+    reg: /.*ould$/,
+    pos: 'MD',
+    strength: 3,
+    errors: 0,
+    accuracy: '0.00'
+  }, {
+    reg: /^-?[0-9]+(.[0-9]+)?$/,
+    pos: 'CD',
+    strength: 1,
+    errors: 1,
+    accuracy: '0.00'
+  }, {
+    reg: /[a-z]*\-[a-z]*\-/, //'more-than-real'
+    pos: 'JJ',
+    strength: 0,
+    errors: 0,
+    accuracy: '0.00'
+  }, { //ugly handling of contractions, shouldn't ever be hit, but just in case
+    reg: /[a-z]'s$/i, //spencer's
+    pos: 'NNO',
+    strength: 1,
+    errors: 0,
+    accuracy: '0.00'
+  }, {
+    reg: /.'n$/i, //walk'n
+    pos: 'VB',
+    strength: 1,
+    errors: 0,
+    accuracy: '0.00'
+  }, {
+    reg: /.'re$/i, //they're
+    pos: 'CP',
+    strength: 1,
+    errors: 0,
+    accuracy: '0.00'
+  }, {
+    reg: /.'ll$/i, //they'll
+    pos: 'MD',
+    strength: 1,
+    errors: 0,
+    accuracy: '0.00'
+  }, {
+    reg: /.'t$/i, //doesn't
+    pos: 'VB',
+    strength: 1,
+    errors: 0,
+    accuracy: '0.00'
+  }, {
+    reg: /.tches$/i, //watches
+    pos: 'VB',
+    strength: 1,
+    errors: 0,
+    accuracy: '0.00'
+  }]
 
 if (typeof module !== "undefined" && module.exports) {
   module.exports = word_rules;
@@ -2727,47 +2071,40 @@ var parts_of_speech = (function() {
     //verbs
     "VB": {
       "name": "verb, generic",
-      "example": "eat",
       "parent": "verb",
       "tag": "VB"
     },
     "VBD": {
       "name": "past-tense verb",
-      "example": "ate",
       "parent": "verb",
       "tense": "past",
       "tag": "VBD"
     },
     "VBN": {
       "name": "past-participle verb",
-      "example": "eaten",
       "parent": "verb",
       "tense": "past",
       "tag": "VBN"
     },
     "VBP": {
       "name": "infinitive verb",
-      "example": "eat",
       "parent": "verb",
       "tense": "present",
       "tag": "VBP"
     },
     "VBZ": {
       "name": "present-tense verb",
-      "example": "eats, swims",
       "tense": "present",
       "parent": "verb",
       "tag": "VBZ"
     },
     "CP": {
       "name": "copula",
-      "example": "is, was, were",
       "parent": "verb",
       "tag": "CP"
     },
     "VBG": {
       "name": "gerund verb",
-      "example": "eating,winning",
       "parent": "verb",
       "tag": "VBG"
     },
@@ -2775,19 +2112,16 @@ var parts_of_speech = (function() {
     //adjectives
     "JJ": {
       "name": "adjective, generic",
-      "example": "big, nice",
       "parent": "adjective",
       "tag": "JJ"
     },
     "JJR": {
       "name": "comparative adjective",
-      "example": "bigger, cooler",
       "parent": "adjective",
       "tag": "JJR"
     },
     "JJS": {
       "name": "superlative adjective",
-      "example": "biggest, fattest",
       "parent": "adjective",
       "tag": "JJS"
     },
@@ -2795,19 +2129,16 @@ var parts_of_speech = (function() {
     //adverbs
     "RB": {
       "name": "adverb",
-      "example": "quickly, softly",
       "parent": "adverb",
       "tag": "RB"
     },
     "RBR": {
       "name": "comparative adverb",
-      "example": "faster, cooler",
       "parent": "adverb",
       "tag": "RBR"
     },
     "RBS": {
       "name": "superlative adverb",
-      "example": "fastest (driving), coolest (looking)",
       "parent": "adverb",
       "tag": "RBS"
     },
@@ -2815,49 +2146,41 @@ var parts_of_speech = (function() {
     //nouns
     "NN": {
       "name": "noun, generic",
-      "example": "dog, rain",
       "parent": "noun",
       "tag": "NN"
     },
     "NNP": {
       "name": "singular proper noun",
-      "example": "Edinburgh, skateboard",
       "parent": "noun",
       "tag": "NNP"
     },
     "NNA": {
       "name": "noun, active",
-      "example": "supplier, singer",
       "parent": "noun",
       "tag": "NNA"
     },
     "NNPA": {
       "name": "noun, acronym",
-      "example": "FBI, N.A.S.A.",
       "parent": "noun",
       "tag": "NNPA"
     },
     "NNPS": {
       "name": "plural proper noun",
-      "example": "Smiths",
       "parent": "noun",
       "tag": "NNPS"
     },
     "NNS": {
       "name": "plural noun",
-      "example": "dogs, foxes",
       "parent": "noun",
       "tag": "NNS"
     },
     "NNO": {
       "name": "possessive noun",
-      "example": "spencer's, sam's",
       "parent": "noun",
       "tag": "NNO"
     },
     "NNG": {
       "name": "gerund noun",
-      "example": "eating,winning - but used grammatically as a noun",
       "parent": "noun",
       "tag": "VBG"
     },
@@ -2865,73 +2188,61 @@ var parts_of_speech = (function() {
     //glue
     "PP": {
       "name": "possessive pronoun",
-      "example": "my,one's",
       "parent": "glue",
       "tag": "PP"
     },
     "FW": {
       "name": "foreign word",
-      "example": "mon dieu, voila",
       "parent": "glue",
       "tag": "FW"
     },
     "CD": {
       "name": "cardinal value, generic",
-      "example": "one, two, june 5th",
       "parent": "value",
       "tag": "CD"
     },
     "DA": {
       "name": "date",
-      "example": "june 5th, 1998",
       "parent": "value",
       "tag": "DA"
     },
     "NU": {
       "name": "number",
-      "example": "89, half-million",
       "parent": "value",
       "tag": "NU"
     },
     "IN": {
       "name": "preposition",
-      "example": "of,in,by",
       "parent": "glue",
       "tag": "IN"
     },
     "MD": {
       "name": "modal verb",
-      "example": "can,should",
       "parent": "verb", //dunno
       "tag": "MD"
     },
     "CC": {
       "name": "co-ordating conjunction",
-      "example": "and,but,or",
       "parent": "glue",
       "tag": "CC"
     },
     "PRP": {
       "name": "personal pronoun",
-      "example": "I,you,she",
       "parent": "noun",
       "tag": "PRP"
     },
     "DT": {
       "name": "determiner",
-      "example": "the,some",
       "parent": "glue",
       "tag": "DT"
     },
     "UH": {
       "name": "interjection",
-      "example": "oh, oops",
       "parent": "glue",
       "tag": "UH"
     },
     "EX": {
       "name": "existential there",
-      "example": "there",
       "parent": "glue",
       "tag": "EX"
     }
@@ -9997,8 +9308,8 @@ var pos = (function() {
   ///party-time//
   var main = function(text, options) {
     options = options || {}
-    if (!text) {
-      return new Section()
+    if (!text || !text.match(/[a-z0-9]/i)) {
+      return new Section([])
     }
     var sentences = tokenize(text);
 
@@ -10038,7 +9349,7 @@ var pos = (function() {
         var len = token.normalised.length
         if (len > 4) {
           var suffix = token.normalised.substr(len - 4, len - 1)
-          if (wordnet_suffixes[suffix]) {
+          if (wordnet_suffixes.hasOwnProperty(suffix)) {
             token.pos = parts_of_speech[wordnet_suffixes[suffix]]
             token.pos_reason = "wordnet suffix"
             return token
@@ -10197,6 +9508,8 @@ var pos = (function() {
 })()
 
 // console.log( pos("Geroge Clooney walked, quietly into a bank. It was cold.") )
+// console.log( pos("it is a three-hundred and one").tags() )
+// console.log( pos("funny funny funny funny").sentences[0].tokens )
 
 //just a wrapper for text -> entities
 //most of this logic is in ./parents/noun
@@ -10276,15 +9589,10 @@ var nlp = {
 
 //export it for server-side
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = nlp
+  module.exports = nlp;
 }
-
-// bump bower
-// git tag -a v0.3.5 -m "tag bower release"
-// git push origin master --tags
-
 // console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
-// console.log( nlp.pos('i will slouch').to_past().text() )
+// console.log( nlp.pos('i will slouch').to_past().text() );
 
 return nlp;
 })()

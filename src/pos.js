@@ -212,8 +212,8 @@ var pos = (function() {
   ///party-time//
   var main = function(text, options) {
     options = options || {}
-    if (!text) {
-      return new Section()
+    if (!text || !text.match(/[a-z0-9]/i)) {
+      return new Section([])
     }
     var sentences = tokenize(text);
 
@@ -413,4 +413,4 @@ var pos = (function() {
 
 // console.log( pos("Geroge Clooney walked, quietly into a bank. It was cold.") )
 // console.log( pos("it is a three-hundred and one").tags() )
-// console.log( pos("it is a three-hundred and one").tags() )
+// console.log( pos("funny funny funny funny").sentences[0].tokens )

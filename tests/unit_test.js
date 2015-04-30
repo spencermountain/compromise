@@ -901,7 +901,7 @@ exports["nlp.tag"] = function(test) {
     ["Tony Hawk walked quickly to the store.", ["NN", "VB", "RB", "IN", "DT", "NN"]],
     ["swim", ["VBP"]],
     ["the swim", ["DT", "NN"]],
-    // ["my swim was great", ["PP", "NN"]]
+    // ["my swim was great", ["PP", "NN", "CP","JJ"]],
     ["the obviously good swim", ["DT", "RB", "JJ", "NN"]],
     ["spencer kelly", ["NN"]], //looks like an adverb but aint
     //coerce a verb
@@ -913,7 +913,7 @@ exports["nlp.tag"] = function(test) {
     ["lkjasdf always walks so very nicely", ["NN", "RB", "VBZ", "RB"]],
     ["lkjasdf always walks in every cafesefirehty", ["NN", "RB", "VBZ", "IN", "DT", "NN"]],
     //coerce a verb
-    // ["scared", ["JJ"]]
+    ["is scared", ["CP","JJ"]],
     ["scared him hard", ["VB", "PRP", "JJ"]],
     //coerce an adverb
     ["he is real", ["PRP", "CP", "JJ"]],
@@ -950,12 +950,55 @@ exports["nlp.tag"] = function(test) {
     // ["the walk was good", ["DT","NN","CP","JJ"]],
     //after copula
     ["they are lkjfes", ["PRP","CP","JJ"]],
-    // ["", ["",""]],
-    // ["", ["",""]],
+    ["they are the lkjfes", ["PRP","CP","DT","NN"]],
+    //after copula-adverb
+    ["he is very shoe", ["PRP","CP","RB","JJ"]],
+    ["she is so camp", ["PRP","CP","RB","JJ"]],
+    //before a pronoun
+    ["Spencer lkajf him", ["NN","VB","PRP"]],
+    ["Toronto lkajf them", ["NN","VB","PRP"]],
+    //contractions
+    ["he's amazing", ["PRP","CP","JJ"]],
+    ["we're excited", ["PRP","CP","JJ"]],
+    ["I'd go", ["PRP","MD", "VBP"]],
+    //numbers
+    ["the 10 women", ["DT","CD","NN"]],
+    ["the 10.4 women", ["DT","CD","NN"]],
+    ["the ten women", ["DT","CD","NN"]],
+    // ["the ten-thousand women", ["DT","CD","NN"]],
+    //after possessives
+    ["watch her lkjefj", ["VBP","PP","NN"]],
+    ["study my lkjfeh!", ["VBP","PP","NN"]],
+    ["serve his kfjfekefjh.", ["VBP","PP","NN"]],
+    // ["relinquish my lkjfeh!", ["VBP","PP","NN"]],//this could be a rule
+    // ["he would afefese", ["PRP","MD","VB"]],
+    //word rules
+    // ["lkjefifize the marbles", ["VB","DT","NN"]],
+    //ensure reserved words are safe..
+    ["prototype", ["NN"]],
+    ["constructor", ["NN"]],
+    ["this", ["DT"]],
+    ["new", ["JJ"]],
+    ["new", ["JJ"]],
+    ["class", ["NN"]],
+    //unicode
+    ["Björk Guðmundsdóttir lives in Reykjavík", ["NN","VBZ","IN","NN"]],
+    ["Bjork Guomundsdottir lives in Reykjavik", ["NN","VBZ","IN","NN"]]
 
   ].forEach(function(arr) {
-    test.deepEqual(nlp.pos(arr[0], {}).sentences[0].tags(), arr[1])
+    test.deepEqual(nlp.pos(arr[0], {}).tags(), [arr[1]])
   })
+  //dont_combine option
+  test.deepEqual(nlp.pos("tony hawk walks", {dont_combine:false}).tags(), [["NN","VBZ"]])
+  test.deepEqual(nlp.pos("tony hawk walks", {dont_combine:true}).tags(), [["NN","NN","VBZ"]])
+  //test memory-leaks
+  test.deepEqual(nlp.pos("tony hawk walks. tony hawk walks. tony hawk walks.", {}).tags(), [["NN","VBZ"],["NN","VBZ"],["NN","VBZ"]])
+  test.deepEqual(nlp.pos("tony hawk is lkjej. tony hawk will lkjej. tony is very lkjej.", {}).tags(), [["NN","CP","JJ"],["NN","MD"],["NN","CP","RB","JJ"]])
+
+  //edge cases..
+  test.deepEqual(nlp.pos("", {}).tags(), [])
+  test.deepEqual(nlp.pos("   ", {}).tags(), [])
+  test.deepEqual(nlp.pos(null, {}).tags(), [])
   test.done();
 };
 

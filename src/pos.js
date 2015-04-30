@@ -253,7 +253,7 @@ var pos = (function() {
         var len = token.normalised.length
         if (len > 4) {
           var suffix = token.normalised.substr(len - 4, len - 1)
-          if (wordnet_suffixes[suffix]) {
+          if (wordnet_suffixes.hasOwnProperty(suffix)) {
             token.pos = parts_of_speech[wordnet_suffixes[suffix]]
             token.pos_reason = "wordnet suffix"
             return token
@@ -412,3 +412,5 @@ var pos = (function() {
 })()
 
 // console.log( pos("Geroge Clooney walked, quietly into a bank. It was cold.") )
+// console.log( pos("it is a three-hundred and one").tags() )
+// console.log( pos("it is a three-hundred and one").tags() )

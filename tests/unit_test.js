@@ -923,7 +923,35 @@ exports["nlp.tag"] = function(test) {
 
     ["the chicago zoo is fun", ["DT","NN","CP","JJ"]],//combine tags
     ["the chicago, zoo is fun", ["DT","NN","NN","CP","JJ"]],//don't combine tags
-
+    ["the chicago Zoo is fun", ["DT","NN","NN","CP","JJ"]],//don't combine tags
+    // ["it is a hundred and fifty", ["",""]],
+    ["the United States of America is sunny", ["DT","NN", "CP","JJ"]],//combine over 'of'
+    ["the Phantom of the Opera is lovely", ["DT","NN", "CP","JJ"]],//combine over 'of the'
+    ["he will walk", ["PRP","MD"]],
+    //re-under-over...
+    ["he walked", ["PRP","VB"]],
+    ["he overwalked", ["PRP","VB"]],
+    ["he over-walked", ["PRP","VB"]],
+    ["they under-walked", ["PRP","VB"]],
+    //before a modal
+    ["lkajsdfj would say", ["NN","MD","VBP"]],
+    ["the walk would say", ["DT","NN","MD","VBP"]],
+    //after a modal
+    ["they will lkjfesj", ["PRP","MD"]],
+    ["I will slightly garoomph", ["PRP","MD", "RB", "VB"]],
+    //after word 'I'
+    ["i lkjaf", ["PRP","VB"]],
+    //after adverb
+    ["spencer quickly acked", ["NN","RB","VB"]],
+    //no two adjectives
+    ["he was real", ["PRP","CP", "JJ"]],
+    ["he was real good", ["PRP","CP", "RB", "JJ"]],
+    //after 'the'
+    // ["the walk was good", ["DT","NN","CP","JJ"]],
+    //after copula
+    ["they are lkjfes", ["PRP","CP","JJ"]],
+    // ["", ["",""]],
+    // ["", ["",""]],
 
   ].forEach(function(arr) {
     test.deepEqual(nlp.pos(arr[0], {}).sentences[0].tags(), arr[1])

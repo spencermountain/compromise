@@ -1,451 +1,124 @@
-//regex patterns and parts of speech
+//regex patterns and parts of speech],
 var word_rules = [
-  {
-    "reg": /.[cts]hy$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[st]ty$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[lnr]ize$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.[gk]y$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.fies$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.some$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[nrtumcd]al$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.que$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[tnl]ary$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[di]est$/i,
-    "pos": "JJS"
-  },
-  {
-    "reg": /^(un|de|re)\\-[a-z]../i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.lar$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /[bszmp]{2}y/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.zes$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.[icldtgrv]ent$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[rln]ates$/i,
-    "pos": "VBZ"
-  },
-  {
-    "reg": /.[oe]ry$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /[rdntkdhs]ly$/i,
-    "pos": "RB"
-  },
-  {
-    "reg": /.[lsrnpb]ian$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[^aeiou]ial$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[^aeiou]eal$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[vrl]id$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[ilk]er$/i,
-    "pos": "JJR"
-  },
-  {
-    "reg": /.ike$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.ends$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.wards$/i,
-    "pos": "RB"
-  },
-  {
-    "reg": /.rmy$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.rol$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.tors$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.azy$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.where$/i,
-    "pos": "RB"
-  },
-  {
-    "reg": /.ify$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.bound$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.ens$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.oid$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.vice$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.rough$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.mum$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.teen(th)?$/i,
-    "pos": "CD"
-  },
-  {
-    "reg": /.oses$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.ishes$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.ects$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.tieth$/i,
-    "pos": "CD"
-  },
-  {
-    "reg": /.ices$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.bles$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.pose$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.ions$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.ean$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[ia]sed$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.tized$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.llen$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.fore$/i,
-    "pos": "RB"
-  },
-  {
-    "reg": /.ances$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.gate$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.nes$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.less$/i,
-    "pos": "RB"
-  },
-  {
-    "reg": /.ried$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.gone$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.made$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[pdltrkvyns]ing$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.tions$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.tures$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.ous$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.ports$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /. so$/i,
-    "pos": "RB"
-  },
-  {
-    "reg": /.ints$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.[gt]led$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /[aeiou].*ist$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.lked$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.fully$/i,
-    "pos": "RB"
-  },
-  {
-    "reg": /.*ould$/i,
-    "pos": "MD"
-  },
-  {
-    "reg": /^-?[0-9]+(.[0-9]+)?$/,
-    "pos": "CD"
-  },
-  {
-    "reg": /[a-z]*\\-[a-z]*\\-/,
-    "pos": "JJ"
-  },
-  {
-    "reg": /[a-z]'s$/i,
-    "pos": "NNO"
-  },
-  {
-    "reg": /.'n$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.'re$/i,
-    "pos": "CP"
-  },
-  {
-    "reg": /.'ll$/i,
-    "pos": "MD"
-  },
-  {
-    "reg": /.'t$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.tches$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /^https?:\/\//i,
-    "pos": "CD"
-  },
-  {
-    "reg": /^www\.[a-z0-9]/i,
-    "pos": "CD"
-  },
-  {
-    "reg": /.ize$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.[^aeiou]ise$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.[aeiou]te$/i,
-    "pos": "VB"
-  },
-  {
-    "reg": /.ea$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /[aeiou][pns]er$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.ia$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.sis$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.[aeiou]na$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.[^aeiou]ity$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.[^aeiou]ium$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.[^aeiou][ei]al$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.ffy$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[^aeiou]ic$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.(gg|bb|zz)ly$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[aeiou]my$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[aeiou]ble$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[^aeiou]ful$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[^aeiou]ish$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[^aeiou]ica$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /[aeiou][^aeiou]is$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /[^aeiou]ard$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /[^aeiou]ism$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.[^aeiou]ity$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.[^aeiou]ium$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /.[lstrn]us$/i,
-    "pos": "NN"
-  },
-  {
-    "reg": /..ic$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /[aeiou][^aeiou]id$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[^aeiou]ish$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /.[^aeiou]ive$/i,
-    "pos": "JJ"
-  },
-  {
-    "reg": /[ea]{2}zy$/i,
-    "pos": "JJ"
+  [".[cts]hy$", "JJ"],
+  [".[st]ty$", "JJ"],
+  [".[lnr]ize$", "VB"],
+  [".[gk]y$", "JJ"],
+  [".fies$", "VB"],
+  [".some$", "JJ"],
+  [".[nrtumcd]al$", "JJ"],
+  [".que$", "JJ"],
+  [".[tnl]ary$", "JJ"],
+  [".[di]est$", "JJS"],
+  ["^(un|de|re)\\-[a-z]..", "VB"],
+  [".lar$", "JJ"],
+  ["[bszmp]{2}y", "JJ"],
+  [".zes$", "VB"],
+  [".[icldtgrv]ent$", "JJ"],
+  [".[rln]ates$", "VBZ"],
+  [".[oe]ry$", "JJ"],
+  ["[rdntkdhs]ly$", "RB"],
+  [".[lsrnpb]ian$", "JJ"],
+  [".[^aeiou]ial$", "JJ"],
+  [".[^aeiou]eal$", "JJ"],
+  [".[vrl]id$", "JJ"],
+  [".[ilk]er$", "JJR"],
+  [".ike$", "JJ"],
+  [".ends$", "VB"],
+  [".wards$", "RB"],
+  [".rmy$", "JJ"],
+  [".rol$", "NN"],
+  [".tors$", "NN"],
+  [".azy$", "JJ"],
+  [".where$", "RB"],
+  [".ify$", "VB"],
+  [".bound$", "JJ"],
+  [".ens$", "VB"],
+  [".oid$", "JJ"],
+  [".vice$", "NN"],
+  [".rough$", "JJ"],
+  [".mum$", "JJ"],
+  [".teen(th)?$", "CD"],
+  [".oses$", "VB"],
+  [".ishes$", "VB"],
+  [".ects$", "VB"],
+  [".tieth$", "CD"],
+  [".ices$", "NN"],
+  [".bles$", "VB"],
+  [".pose$", "VB"],
+  [".ions$", "NN"],
+  [".ean$", "JJ"],
+  [".[ia]sed$", "JJ"],
+  [".tized$", "VB"],
+  [".llen$", "JJ"],
+  [".fore$", "RB"],
+  [".ances$", "NN"],
+  [".gate$", "VB"],
+  [".nes$", "VB"],
+  [".less$", "RB"],
+  [".ried$", "JJ"],
+  [".gone$", "JJ"],
+  [".made$", "JJ"],
+  [".[pdltrkvyns]ing$", "JJ"],
+  [".tions$", "NN"],
+  [".tures$", "NN"],
+  [".ous$", "JJ"],
+  [".ports$", "NN"],
+  [". so$", "RB"],
+  [".ints$", "NN"],
+  [".[gt]led$", "JJ"],
+  ["[aeiou].*ist$", "JJ"],
+  [".lked$", "VB"],
+  [".fully$", "RB"],
+  [".*ould$", "MD"],
+  ["^-?[0-9]+(.[0-9]+)?$", "CD"],
+  ["[a-z]*\\-[a-z]*\\-", "JJ"],
+  ["[a-z]'s$", "NNO"],
+  [".'n$", "VB"],
+  [".'re$", "CP"],
+  [".'ll$", "MD"],
+  [".'t$", "VB"],
+  [".tches$", "VB"],
+  ["^https?\:?\/\/[a-z0-9]", "CD"],//the colon is removed in normalisation
+  ["^www\.[a-z0-9]", "CD"],
+  [".ize$", "VB"],
+  [".[^aeiou]ise$", "VB"],
+  [".[aeiou]te$", "VB"],
+  [".ea$", "NN"],
+  ["[aeiou][pns]er$", "NN"],
+  [".ia$", "NN"],
+  [".sis$", "NN"],
+  [".[aeiou]na$", "NN"],
+  [".[^aeiou]ity$", "NN"],
+  [".[^aeiou]ium$", "NN"],
+  [".[^aeiou][ei]al$", "JJ"],
+  [".ffy$", "JJ"],
+  [".[^aeiou]ic$", "JJ"],
+  [".(gg|bb|zz)ly$", "JJ"],
+  [".[aeiou]my$", "JJ"],
+  [".[aeiou]ble$", "JJ"],
+  [".[^aeiou]ful$", "JJ"],
+  [".[^aeiou]ish$", "JJ"],
+  [".[^aeiou]ica$", "NN"],
+  ["[aeiou][^aeiou]is$", "NN"],
+  ["[^aeiou]ard$", "NN"],
+  ["[^aeiou]ism$", "NN"],
+  [".[^aeiou]ity$", "NN"],
+  [".[^aeiou]ium$", "NN"],
+  [".[lstrn]us$", "NN"],
+  ["..ic$", "JJ"],
+  ["[aeiou][^aeiou]id$", "JJ"],
+  [".[^aeiou]ish$", "JJ"],
+  [".[^aeiou]ive$", "JJ"],
+  ["[ea]{2}zy$", "JJ"],
+].map(function(a) {
+  return {
+    reg: new RegExp(a[0], "i"),
+    pos: a[1]
   }
-]
+})
 
 if (typeof module !== "undefined" && module.exports) {
   module.exports = word_rules;
 }
+// console.log(word_rules)

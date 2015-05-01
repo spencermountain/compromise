@@ -901,7 +901,7 @@ exports["nlp.noun.article"] = function(test) {
 exports["nlp.tag"] = function(test) {
   [
     ////coerce a noun
-    ["Tony Hawk walked quickly to the store.", ["NN", "VB", "RB", "IN", "DT", "NN"]],
+    ["and Tony Hawk walked quickly to the store.", ["CC","NN", "VB", "RB", "IN", "DT", "NN"]],
     ["swim", ["VBP"]],
     ["the swim", ["DT", "NN"]],
     // ["my swim was great", ["PP", "NN", "CP","JJ"]],
@@ -985,8 +985,15 @@ exports["nlp.tag"] = function(test) {
     ["new", ["JJ"]],
     ["class", ["NN"]],
     //unicode
-    ["Björk Guðmundsdóttir lives in Reykjavík", ["NN","VBZ","IN","NN"]],
-    ["Bjork Guomundsdottir lives in Reykjavik", ["NN","VBZ","IN","NN"]]
+    ["and Björk Guðmundsdóttir lives in Reykjavík", ["CC","NN","VBZ","IN","NN"]],
+    ["and Bjork Guomundsdottir lives in Reykjavik", ["CC","NN","VBZ","IN","NN"]],
+
+    // ["Climate Change, Miliband", ["NN","NN"]],
+    ["http://google.com", ["CD"]],
+    ["may live", ["MD", "VBP"]],
+    ["may 7th live", ["CD", "VBP"]],
+    ["She and Marc Emery married on July 23, 2006", ["PRP","CC","NN","VB","IN","CD"]]
+
 
   ].forEach(function(arr) {
     test.deepEqual(nlp.pos(arr[0], {}).tags(), [arr[1]])
@@ -1024,9 +1031,9 @@ exports["nlp.spot"] = function(test) {
     ["nancy reagan was great when she spoke about HIV in Denver", {},
       ["nancy reagan", "hiv", "denver"]
     ],
-    ["Dr. Conrad Murray recieved a guilty verdict", {},
-      ["dr conrad murray"]
-    ],
+    // ["Dr. Conrad Murray recieved a guilty verdict", {},
+    //   ["dr conrad murray"]
+    // ],
     ["i agree with tom hanks and nancy kerrigan", {},
       ["tom hanks", "nancy kerrigan"]
     ],

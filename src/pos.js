@@ -31,9 +31,15 @@ var pos = (function() {
     var better = []
     for (var i = 0; i <= arr.length; i++) {
       var next = arr[i + 1]
+
       if (arr[i] && next) {
         //'joe smith' are both NN
-        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && arr[i].capitalised == next.capitalised) {
+        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && arr[i].capitalised == next.capitalised && arr[i].special_capitalised == next.special_capitalised) {
+          arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
+          arr[i] = null
+        }
+        //merge dates manually, which often have punctuation
+        else if (arr[i].pos.tag === "CD" && next.pos.tag ==="CD") {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
@@ -48,7 +54,7 @@ var pos = (function() {
           arr[i] = null
         }
         //capitals surrounding a preposition  'United States of America'
-        else if (arr[i].capitalised && (next.normalised == "of" || next.normalised == "and") && arr[i + 2] && arr[i + 2].capitalised) {
+        else if (arr[i].pos.tag=="NN" && arr[i].capitalised && (next.normalised == "of" || next.normalised == "and") && arr[i + 2] && arr[i + 2].capitalised) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
           arr[i + 2] = merge_tokens(arr[i + 1], arr[i + 2])
@@ -97,6 +103,11 @@ var pos = (function() {
         "a": 1,
         "an": 1
       }
+    //resolve ambiguous 'march','april','may' with dates
+    if((token.normalised=="march"||token.normalised=="april"||token.normalised=="may") && ( (next && next.pos.tag=="CD") || (last && last.pos.tag=="CD") ) ){
+      token.pos = parts_of_speech['CD']
+      token.pos_reason = "may is a date"
+    }
       //if it's before a modal verb, it's a noun -> lkjsdf would
     if (next && token.pos.parent !== "noun" && token.pos.parent !== "glue" && next.pos.tag === "MD") {
       token.pos = parts_of_speech['NN']
@@ -406,3 +417,8 @@ var pos = (function() {
 // pos("In March 2009, while Secretary of State for Energy and Climate Change, Miliband attended the UK premiere of climate-change film The Age of Stupid, where he was ambushed").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("the Energy and Climate Change, Miliband").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // console.log(pos("Energy and Climate Change, Miliband").sentences[0].tokens)
+// console.log(pos("http://google.com").sentences[0].tokens)
+// console.log(pos("may live").tags())
+// console.log(pos("may 7th live").tags())
+// console.log(pos("She and Marc Emery married on July 23, 2006.").tags())
+// pos("Dr. Conrad Murray recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})

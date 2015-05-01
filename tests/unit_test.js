@@ -1,7 +1,10 @@
 //load in methods if using node, otherwise assume
 if (typeof module !== "undefined" && module.exports) {
   var nlp = require("../index")
+}else{
+  exports = {}//for clientside
 }
+
 
 // Dummy method for testing under prototype pollution
 Object.prototype.dummy = function() {};

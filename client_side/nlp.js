@@ -4513,7 +4513,10 @@ var values = (function() {
     "friday",
     "saturday",
     "sunday",
-  ]
+  ].reduce(function(h,s){
+    h[s]="CD"
+    return h
+  },{})
 
   if (typeof module !== "undefined" && module.exports) {
     module.exports = main;
@@ -7675,14 +7678,13 @@ var lexicon = (function() {
       verbs = require("./lexicon/verbs")
       verb_conjugate = require("../parents/verb/conjugate/conjugate")
       verb_to_doer = require("../parents/verb/conjugate/to_doer")
-      irregulars = require("../parents/verb/conjugate/verb_irregulars")
+      verb_irregulars = require("../parents/verb/conjugate/verb_irregulars")
 
       adjectives = require("./lexicon/adjectives")
       adj_to_adv = require("../parents/adjective/conjugate/to_adverb")
       to_superlative = require("../parents/adjective/conjugate/to_superlative")
       to_comparative = require("../parents/adjective/conjugate/to_comparative")
     }
-
     var main = {
       //contractions that don't need splitting-open, grammatically
       "don't": "VB",
@@ -8067,9 +8069,10 @@ var lexicon = (function() {
     }
 
     //add values
-    l = values.length
+    keys=Object.keys(values)
+    l = keys.length
     for (i = 0; i < l; i++) {
-      main[values[i]] = "CD"
+      main[keys[i]] = "CD"
     }
 
     //add demonyms
@@ -8102,9 +8105,9 @@ var lexicon = (function() {
       }
     }
     //add irregular verbs
-    l = irregulars.length;
+    l = verb_irregulars.length;
     for (i = 0; i < l; i++) {
-      c=irregulars[i]
+      c=verb_irregulars[i]
       main[c.infinitive]=main[c.infinitive]||"VBP"
       main[c.gerund]=main[c.gerund]||"VBG"
       main[c.past]=main[c.past]||"VBD"
@@ -8154,10 +8157,11 @@ var lexicon = (function() {
   // console.log(lexicon['completely']=="RB")
   // console.log(lexicon['pretty']=="JJ")
   // console.log(lexicon['canadian']=="JJ")
+  // console.log(lexicon['july']=="CD")
+  // console.log(lexicon[null]===undefined)
   // console.log(lexicon['prettier']=="JJR")
   // console.log(lexicon['prettiest']=="JJS")
-  // console.log(lexicon[null]===undefined)
-  // console.log(Object.keys(lexicon).length)
+  console.log(Object.keys(lexicon).length)
 
 // methods that hang on a parsed set of words
 // accepts parsed tokens
@@ -8502,7 +8506,6 @@ var pos = (function() {
   if (typeof module !== "undefined" && module.exports) {
     lexicon = require("./data/lexicon")
     values = require("./data/lexicon/values")
-    demonyms = require("./data/lexicon/demonyms")
 
     tokenize = require("./methods/tokenization/tokenize").tokenize;
     parts_of_speech = require("./data/parts_of_speech")
@@ -8717,7 +8720,7 @@ var pos = (function() {
       //first pass, word-level clues
       sentence.tokens = sentence.tokens.map(function(token) {
         //it has a capital and isn't first word
-        if (token.special_capitalised ) {
+        if (token.special_capitalised && !values[token.normalised]) {
           token.pos = parts_of_speech['NN']
           token.pos_reason = "capitalised"
           return token
@@ -8905,7 +8908,6 @@ var pos = (function() {
 // pos("In March 2009, while Secretary of State for Energy and Climate Change, Miliband attended the UK premiere of climate-change film The Age of Stupid, where he was ambushed").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("the Energy and Climate Change, Miliband").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // console.log(pos("Energy and Climate Change, Miliband").sentences[0].tokens)
-console.log(pos("it is crazy").sentences[0].tokens)
 
 //just a wrapper for text -> entities
 //most of this logic is in ./parents/noun

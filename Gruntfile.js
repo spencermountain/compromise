@@ -14,6 +14,7 @@ module.exports = function(grunt) {
     './src/data/parts_of_speech.js',
     //lexicon data
     './src/parents/verb/conjugate/verb_irregulars.js',
+    './src/parents/adjective/conjugate/convertables.js',
     './src/data/lexicon/adjectives.js',
     './src/data/lexicon/verbs.js',
     './src/data/lexicon/multiples.js',
@@ -37,7 +38,6 @@ module.exports = function(grunt) {
     './src/parents/verb/index.js',
     //adjectives
     './src/parents/adjective/conjugate/to_noun.js',
-    './src/parents/adjective/conjugate/convertables.js',
     './src/parents/adjective/conjugate/to_comparative.js',
     './src/parents/adjective/conjugate/to_superlative.js',
     './src/parents/adjective/conjugate/to_adverb.js',

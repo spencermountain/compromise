@@ -4,7 +4,6 @@ var pos = (function() {
   if (typeof module !== "undefined" && module.exports) {
     lexicon = require("./data/lexicon")
     values = require("./data/lexicon/values")
-    demonyms = require("./data/lexicon/demonyms")
 
     tokenize = require("./methods/tokenization/tokenize").tokenize;
     parts_of_speech = require("./data/parts_of_speech")
@@ -219,7 +218,7 @@ var pos = (function() {
       //first pass, word-level clues
       sentence.tokens = sentence.tokens.map(function(token) {
         //it has a capital and isn't first word
-        if (token.special_capitalised ) {
+        if (token.special_capitalised && !values[token.normalised]) {
           token.pos = parts_of_speech['NN']
           token.pos_reason = "capitalised"
           return token

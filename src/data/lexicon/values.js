@@ -64,7 +64,10 @@ var values = (function() {
     "friday",
     "saturday",
     "sunday",
-  ]
+  ].reduce(function(h,s){
+    h[s]="CD"
+    return h
+  },{})
 
   if (typeof module !== "undefined" && module.exports) {
     module.exports = main;

@@ -3,7 +3,6 @@
 // to save space, most of the list is derived from conjugation methods,
 // and other forms are stored in a compact way
 var lexicon = (function() {
-
     if (typeof module !== "undefined" && module.exports) {
       multiples = require("./lexicon/multiples")
       values = require("./lexicon/values")
@@ -13,14 +12,14 @@ var lexicon = (function() {
       verbs = require("./lexicon/verbs")
       verb_conjugate = require("../parents/verb/conjugate/conjugate")
       verb_to_doer = require("../parents/verb/conjugate/to_doer")
-      irregulars = require("../parents/verb/conjugate/verb_irregulars")
+      verb_irregulars = require("../parents/verb/conjugate/verb_irregulars")
 
       adjectives = require("./lexicon/adjectives")
       adj_to_adv = require("../parents/adjective/conjugate/to_adverb")
       to_superlative = require("../parents/adjective/conjugate/to_superlative")
       to_comparative = require("../parents/adjective/conjugate/to_comparative")
+      convertables = require("../parents/adjective/conjugate/convertables")
     }
-
     var main = {
       //contractions that don't need splitting-open, grammatically
       "don't": "VB",
@@ -405,9 +404,10 @@ var lexicon = (function() {
     }
 
     //add values
-    l = values.length
+    keys=Object.keys(values)
+    l = keys.length
     for (i = 0; i < l; i++) {
-      main[values[i]] = "CD"
+      main[keys[i]] = "CD"
     }
 
     //add demonyms
@@ -440,9 +440,9 @@ var lexicon = (function() {
       }
     }
     //add irregular verbs
-    l = irregulars.length;
+    l = verb_irregulars.length;
     for (i = 0; i < l; i++) {
-      c=irregulars[i]
+      c=verb_irregulars[i]
       main[c.infinitive]=main[c.infinitive]||"VBP"
       main[c.gerund]=main[c.gerund]||"VBG"
       main[c.past]=main[c.past]||"VBD"
@@ -460,7 +460,12 @@ var lexicon = (function() {
     var tmp, j;
     l = adjectives.length;
     for (i = 0; i < l; i++) {
-      j = adjectives[i]
+      main[adjectives[i]] = "JJ"
+    }
+    keys=Object.keys(convertables)
+    l = keys.length;
+    for (i = 0; i < l; i++) {
+      j = keys[i]
       main[j] = "JJ"
       //add adverb form
       tmp = adj_to_adv(j)
@@ -489,10 +494,11 @@ var lexicon = (function() {
   // console.log(lexicon['sleep']=="VBP")
   // console.log(lexicon['slept']=="VBD")
   // console.log(lexicon['sleeping']=="VBG")
-  // console.log(lexicon['completely']=="RB")
+  // console.log(lexicon['completely'])
   // console.log(lexicon['pretty']=="JJ")
   // console.log(lexicon['canadian']=="JJ")
+  // console.log(lexicon['july']=="CD")
+  // console.log(lexicon[null]===undefined)
   // console.log(lexicon['prettier']=="JJR")
   // console.log(lexicon['prettiest']=="JJS")
-  // console.log(lexicon[null]===undefined)
   // console.log(Object.keys(lexicon).length)

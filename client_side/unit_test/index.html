@@ -56,6 +56,9 @@
     nodeunit.run({
       exports:exports
     })
+    console.time("pos_sentence")
+    nlp.pos("tony hawk is a very good boy.")
+    console.timeEnd("pos_sentence")
    });
 </script>
 </head>

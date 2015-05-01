@@ -20,6 +20,7 @@ module.exports = function(grunt) {
     './src/data/lexicon/multiples.js',
     './src/data/lexicon/demonyms.js',
     './src/data/lexicon/values.js',
+    './src/data/lexicon/abbreviations.js',
     //values
     './src/parents/value/to_number.js',
     './src/parents/value/date_extractor.js',

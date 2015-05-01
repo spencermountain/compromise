@@ -1031,9 +1031,9 @@ exports["nlp.spot"] = function(test) {
     ["nancy reagan was great when she spoke about HIV in Denver", {},
       ["nancy reagan", "hiv", "denver"]
     ],
-    // ["Dr. Conrad Murray recieved a guilty verdict", {},
-    //   ["dr conrad murray"]
-    // ],
+    ["Dr. Conrad Murray recieved a guilty verdict", {},
+      ["dr conrad murray"]
+    ],
     ["i agree with tom hanks and nancy kerrigan", {},
       ["tom hanks", "nancy kerrigan"]
     ],

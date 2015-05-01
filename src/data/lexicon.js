@@ -7,6 +7,7 @@ var lexicon = (function() {
       multiples = require("./lexicon/multiples")
       values = require("./lexicon/values")
       demonyms = require("./lexicon/demonyms")
+      abbreviations = require("./lexicon/abbreviations")
 
       //verbs
       verbs = require("./lexicon/verbs")
@@ -416,6 +417,12 @@ var lexicon = (function() {
       main[demonyms[i]] = "JJ"
     }
 
+    //add abbreviations
+    l = abbreviations.length
+    for (i = 0; i < l; i++) {
+      main[abbreviations[i]] = "NNAB"
+    }
+
     //add multiple-word terms
     l = Object.keys(multiples).forEach(function(k) {
       main[k] = multiples[k]
@@ -494,11 +501,14 @@ var lexicon = (function() {
   // console.log(lexicon['sleep']=="VBP")
   // console.log(lexicon['slept']=="VBD")
   // console.log(lexicon['sleeping']=="VBG")
-  // console.log(lexicon['completely'])
+  // // console.log(lexicon['completely'])
   // console.log(lexicon['pretty']=="JJ")
   // console.log(lexicon['canadian']=="JJ")
   // console.log(lexicon['july']=="CD")
   // console.log(lexicon[null]===undefined)
+  // console.log(lexicon["dr"]==="NNAB")
+
+
+  // console.log(Object.keys(lexicon).length)
   // console.log(lexicon['prettier']=="JJR")
   // console.log(lexicon['prettiest']=="JJS")
-  // console.log(Object.keys(lexicon).length)

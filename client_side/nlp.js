@@ -4,24 +4,21 @@ var nlp = (function() {
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
 var sentence_parser = function(text) {
+
+  if (typeof module !== "undefined" && module.exports) {
+    abbreviations = require("../../data/lexicon/abbreviations")
+  }
+
   var sentences = [];
   //first do a greedy-split..
   var chunks = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
-  //honourifics
-  var abbrevs = ["jr", "mr", "mrs", "ms", "dr", "prof", "sr", "sen", "corp", "rep", "gov", "atty", "supt", "det", "rev", "col", "gen", "lt", "cmdr", "adm", "capt", "sgt", "cpl", "maj", "miss", "misses", "mister", "sir", "esq", "mstr", "phd", "adj", "adv", "asst", "bldg", "brig", "comdr", "hon", "messrs", "mlle", "mme", "op", "ord", "pvt", "reps", "res", "sens", "sfc", "surg"];
-  //common abbreviations
-  abbrevs = abbrevs.concat(["arc", "al", "ave", "blvd", "cl", "ct", "cres", "exp", "rd", "st", "dist", "mt", "ft", "fy", "hwy", "la", "pd", "pl", "plz", "tce", "vs", "etc", "esp", "llb", "md", "bl", "ma", "ba", "lit", "fl", "ex", "eg", "ie"]);
-  //place abbrevs
-  abbrevs = abbrevs.concat(["ala", "ariz", "ark", "cal", "calif", "col", "colo", "conn", "del", "fed", "fla", "ga", "ida", "id", "ill", "ind", "ia", "kan", "kans", "ken", "ky", "la", "me", "md", "mass", "mich", "minn", "miss", "mo", "mont", "neb", "nebr", "nev", "mex", "okla", "ok", "ore", "penna", "penn", "pa", "dak", "tenn", "tex", "ut", "vt", "va", "wash", "wis", "wisc", "wy", "wyo", "usafa", "alta", "ont", "que", "sask", "yuk"]);
-  //date abbrevs
-  abbrevs = abbrevs.concat(["jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept", "sep"]);
-  //org abbrevs
-  abbrevs = abbrevs.concat(["dept", "univ", "assn", "bros", "inc", "ltd", "co", "corp"]);
-  //proper nouns with exclamation marks
-  abbrevs = abbrevs.concat(["yahoo", "joomla", "jeopardy"]);
+
+  //date abbrevs.
+  //these are added seperately because they are not nouns
+  abbreviations = abbreviations.concat(["jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept", "sep"]);
 
   //detection of non-sentence chunks
-  var abbrev_reg = new RegExp("(^| )(" + abbrevs.join("|") + ")[.!?] ?$", "i");
+  var abbrev_reg = new RegExp("(^| )(" + abbreviations.join("|") + ")[.!?] ?$", "i");
   var acronym_reg= new RegExp("[ |\.][A-Z]\.?$", "i")
   var elipses_reg= new RegExp("\\.\\.\\.*$")
 
@@ -1485,6 +1482,11 @@ var parts_of_speech = (function() {
       "name": "plural proper noun",
       "parent": "noun",
       "tag": "NNPS"
+    },
+    "NNAB": {
+      "name": "noun, abbreviation",
+      "parent": "noun",
+      "tag": "NNAB"
     },
     "NNS": {
       "name": "plural noun",
@@ -4177,30 +4179,57 @@ var values = (function() {
     'nonillion',
     'decillion',
 
-    //dates
-    "july",
-    "august",
-    "september",
-    "october",
-    "november",
-    "december",
+    //months
     "january",
     "february",
     // "march",
     "april",
     // "may",
     "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december",
+    "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept", "sep",
+
+    //days
     "monday",
     "tuesday",
     "wednesday",
     "thursday",
     "friday",
     "saturday",
-    "sunday",
-  ].reduce(function(h,s){
-    h[s]="CD"
+    "sunday"
+  ].reduce(function(h, s) {
+    h[s] = "CD"
     return h
-  },{})
+  }, {})
+
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+
+  return main
+})()
+
+//these are common word shortenings used in the lexicon and sentence segmentation methods
+//there are all nouns, or at the least, belong beside one.
+var abbreviations = (function() {
+
+  var main = [
+    //honourifics
+    "jr", "mr", "mrs", "ms", "dr", "prof", "sr", "sen", "corp", "rep", "gov", "atty", "supt", "det", "rev", "col", "gen", "lt", "cmdr", "adm", "capt", "sgt", "cpl", "maj", "miss", "misses", "mister", "sir", "esq", "mstr", "phd", "adj", "adv", "asst", "bldg", "brig", "comdr", "hon", "messrs", "mlle", "mme", "op", "ord", "pvt", "reps", "res", "sens", "sfc", "surg",
+    //common abbreviations
+    "arc", "al", "ave", "blvd", "cl", "ct", "cres", "exp", "rd", "st", "dist", "mt", "ft", "fy", "hwy", "la", "pd", "pl", "plz", "tce", "vs", "etc", "esp", "llb", "md", "bl", "ma", "ba", "lit", "fl", "ex", "eg", "ie",
+    //place main
+    "ala", "ariz", "ark", "cal", "calif", "col", "colo", "conn", "del", "fed", "fla", "ga", "ida", "ind", "ia", "kan", "kans", "ken", "ky", "la", "md", "mich", "minn", "mont", "neb", "nebr", "nev", "okla", "penna", "penn", "pa", "dak", "tenn", "tex", "ut", "vt", "va", "wash", "wis", "wisc", "wy", "wyo", "usafa", "alta", "ont", "que", "sask", "yuk", "bc",
+    //org main
+    "dept", "univ", "assn", "bros", "inc", "ltd", "co", "corp",
+    //proper nouns with exclamation marks
+    "yahoo", "joomla", "jeopardy"
+  ]
 
   if (typeof module !== "undefined" && module.exports) {
     module.exports = main;
@@ -7151,6 +7180,7 @@ var lexicon = (function() {
       multiples = require("./lexicon/multiples")
       values = require("./lexicon/values")
       demonyms = require("./lexicon/demonyms")
+      abbreviations = require("./lexicon/abbreviations")
 
       //verbs
       verbs = require("./lexicon/verbs")
@@ -7560,6 +7590,12 @@ var lexicon = (function() {
       main[demonyms[i]] = "JJ"
     }
 
+    //add abbreviations
+    l = abbreviations.length
+    for (i = 0; i < l; i++) {
+      main[abbreviations[i]] = "NNAB"
+    }
+
     //add multiple-word terms
     l = Object.keys(multiples).forEach(function(k) {
       main[k] = multiples[k]
@@ -7638,14 +7674,17 @@ var lexicon = (function() {
   // console.log(lexicon['sleep']=="VBP")
   // console.log(lexicon['slept']=="VBD")
   // console.log(lexicon['sleeping']=="VBG")
-  // console.log(lexicon['completely'])
+  // // console.log(lexicon['completely'])
   // console.log(lexicon['pretty']=="JJ")
   // console.log(lexicon['canadian']=="JJ")
   // console.log(lexicon['july']=="CD")
   // console.log(lexicon[null]===undefined)
+  // console.log(lexicon["dr"]==="NNAB")
+
+
+  // console.log(Object.keys(lexicon).length)
   // console.log(lexicon['prettier']=="JJR")
   // console.log(lexicon['prettiest']=="JJS")
-  // console.log(Object.keys(lexicon).length)
 
 // methods that hang on a parsed set of words
 // accepts parsed tokens
@@ -8029,6 +8068,11 @@ var pos = (function() {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
+        //merge abbreviations with nouns manually, eg. "Joe jr."
+        else if ( (arr[i].pos.tag === "NNAB" && next.pos.parent ==="noun") || (arr[i].pos.parent==="noun" && next.pos.tag==="NNAB")) {
+          arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
+          arr[i] = null
+        }
         //'will walk' -> future-tense verb
         else if (arr[i].normalised === "will" && next.pos.parent === "verb") {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
@@ -8225,6 +8269,10 @@ var pos = (function() {
         if (lex) {
           token.pos = lex;
           token.pos_reason = "lexicon"
+          //if it's an abbreviation, forgive the punctuation (eg. 'dr.')
+          // if(token.pos.tag==="NNAB"){
+            // token.punctuated=false
+          // }
           return token
         }
 
@@ -8408,6 +8456,7 @@ var pos = (function() {
 // console.log(pos("may 7th live").tags())
 // console.log(pos("She and Marc Emery married on July 23, 2006.").tags())
 // pos("Dr. Conrad Murray recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
+pos("and Conrad Murray jr. recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 
 //just a wrapper for text -> entities
 //most of this logic is in ./parents/noun

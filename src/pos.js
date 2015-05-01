@@ -43,6 +43,11 @@ var pos = (function() {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
+        //merge abbreviations with nouns manually, eg. "Joe jr."
+        else if ( (arr[i].pos.tag === "NNAB" && next.pos.parent ==="noun") || (arr[i].pos.parent==="noun" && next.pos.tag==="NNAB")) {
+          arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
+          arr[i] = null
+        }
         //'will walk' -> future-tense verb
         else if (arr[i].normalised === "will" && next.pos.parent === "verb") {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
@@ -239,6 +244,10 @@ var pos = (function() {
         if (lex) {
           token.pos = lex;
           token.pos_reason = "lexicon"
+          //if it's an abbreviation, forgive the punctuation (eg. 'dr.')
+          // if(token.pos.tag==="NNAB"){
+            // token.punctuated=false
+          // }
           return token
         }
 
@@ -422,3 +431,4 @@ var pos = (function() {
 // console.log(pos("may 7th live").tags())
 // console.log(pos("She and Marc Emery married on July 23, 2006.").tags())
 // pos("Dr. Conrad Murray recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
+pos("and Conrad Murray jr. recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})

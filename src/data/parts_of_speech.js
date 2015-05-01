@@ -103,6 +103,11 @@ var parts_of_speech = (function() {
       "parent": "noun",
       "tag": "NNPS"
     },
+    "NNAB": {
+      "name": "noun, abbreviation",
+      "parent": "noun",
+      "tag": "NNAB"
+    },
     "NNS": {
       "name": "plural noun",
       "parent": "noun",

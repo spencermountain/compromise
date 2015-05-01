@@ -44,30 +44,33 @@ var values = (function() {
     'nonillion',
     'decillion',
 
-    //dates
-    "july",
-    "august",
-    "september",
-    "october",
-    "november",
-    "december",
+    //months
     "january",
     "february",
     // "march",
     "april",
     // "may",
     "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december",
+    "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept", "sep",
+
+    //days
     "monday",
     "tuesday",
     "wednesday",
     "thursday",
     "friday",
     "saturday",
-    "sunday",
-  ].reduce(function(h,s){
-    h[s]="CD"
+    "sunday"
+  ].reduce(function(h, s) {
+    h[s] = "CD"
     return h
-  },{})
+  }, {})
 
   if (typeof module !== "undefined" && module.exports) {
     module.exports = main;

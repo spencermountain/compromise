@@ -9,9 +9,11 @@ var lexicon = (function() {
       values = require("./lexicon/values")
       demonyms = require("./lexicon/demonyms")
 
+      //verbs
       verbs = require("./lexicon/verbs")
       verb_conjugate = require("../parents/verb/conjugate/conjugate")
       verb_to_doer = require("../parents/verb/conjugate/to_doer")
+      irregulars = require("../parents/verb/conjugate/verb_irregulars")
 
       adjectives = require("./lexicon/adjectives")
       adj_to_adv = require("../parents/adjective/conjugate/to_adverb")
@@ -437,6 +439,21 @@ var lexicon = (function() {
         main[c.participle] = main[c.participle] || "VBN"
       }
     }
+    //add irregular verbs
+    l = irregulars.length;
+    for (i = 0; i < l; i++) {
+      c=irregulars[i]
+      main[c.infinitive]=main[c.infinitive]||"VBP"
+      main[c.gerund]=main[c.gerund]||"VBG"
+      main[c.past]=main[c.past]||"VBD"
+      main[c.present]=main[c.present]||"VBZ"
+      if (c.doer) {
+        main[c.doer]=main[c.doer]||"NNA"
+      }
+      if (c.participle) {
+        main[c.future]=main[c.future]||"VB"
+      }
+    }
 
     //add adjectives
     //conjugate all of these adjectives to their adverbs. (13ms)
@@ -477,4 +494,5 @@ var lexicon = (function() {
   // console.log(lexicon['canadian']=="JJ")
   // console.log(lexicon['prettier']=="JJR")
   // console.log(lexicon['prettiest']=="JJS")
+  // console.log(lexicon[null]===undefined)
   // console.log(Object.keys(lexicon).length)

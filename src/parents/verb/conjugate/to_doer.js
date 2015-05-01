@@ -26,7 +26,8 @@ var verb_to_doer = (function() {
       "marry": 1,
       "be": 1,
       "forbid": 1,
-      "understand": 1
+      "understand": 1,
+      "bet": 1
     }
     var transforms = [{
       reg: /e$/i,

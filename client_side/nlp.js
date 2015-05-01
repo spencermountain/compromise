@@ -1899,6 +1899,910 @@ var parts_of_speech = (function() {
   return main
 })()
 
+var verb_irregulars = (function() {
+  var types = [
+    'infinitive',
+    'gerund',
+    'past',
+    'present',
+    'doer',
+    'future'
+  ]
+
+  //list of verb irregular verb forms, compacted to save space. ('_' -> infinitive )
+  var compact = [
+    [
+      "arise",
+      "arising",
+      "arose",
+      "_s",
+      "_r"
+    ],
+    [
+      "babysit",
+      "_ting",
+      "babysat",
+      "_s",
+      "_ter"
+    ],
+    [
+      "be",
+      "_ing",
+      "was",
+      "is",
+      ""
+    ],
+    [
+      "beat",
+      "_ing",
+      "_",
+      "_s",
+      "_er"
+    ],
+    [
+      "become",
+      "becoming",
+      "became",
+      "_s",
+      "_r"
+    ],
+    [
+      "bend",
+      "_ing",
+      "bent",
+      "_s",
+      "_er"
+    ],
+    [
+      "begin",
+      "_ning",
+      "began",
+      "_s",
+      "_ner"
+    ],
+    [
+      "bet",
+      "_ting",
+      "_",
+      "_s",
+      "_ter"
+    ],
+    [
+      "bind",
+      "_ing",
+      "bound",
+      "_s",
+      "_er"
+    ],
+    [
+      "bite",
+      "biting",
+      "bit",
+      "_s",
+      "_r"
+    ],
+    [
+      "bleed",
+      "_ing",
+      "bled",
+      "_s",
+      "_er"
+    ],
+    [
+      "blow",
+      "_ing",
+      "blew",
+      "_s",
+      "_er"
+    ],
+    [
+      "break",
+      "_ing",
+      "broke",
+      "_s",
+      "_er"
+    ],
+    [
+      "breed",
+      "_ing",
+      "bred",
+      "_s",
+      "_er"
+    ],
+    [
+      "bring",
+      "_ing",
+      "brought",
+      "_s",
+      "_er"
+    ],
+    [
+      "broadcast",
+      "_ing",
+      "_",
+      "_s",
+      "_er"
+    ],
+    [
+      "build",
+      "_ing",
+      "built",
+      "_s",
+      "_er"
+    ],
+    [
+      "buy",
+      "_ing",
+      "bought",
+      "_s",
+      "_er"
+    ],
+    [
+      "catch",
+      "_ing",
+      "caught",
+      "_es",
+      "_er"
+    ],
+    [
+      "choose",
+      "choosing",
+      "chose",
+      "_s",
+      "_r"
+    ],
+    [
+      "come",
+      "coming",
+      "came",
+      "_s",
+      "_r"
+    ],
+    [
+      "cost",
+      "_ing",
+      "_",
+      "_s",
+      "_er"
+    ],
+    [
+      "cut",
+      "_ting",
+      "_",
+      "_s",
+      "_ter"
+    ],
+    [
+      "deal",
+      "_ing",
+      "_t",
+      "_s",
+      "_er"
+    ],
+    [
+      "dig",
+      "_ging",
+      "dug",
+      "_s",
+      "_ger"
+    ],
+    [
+      "do",
+      "_ing",
+      "did",
+      "_es",
+      "_er"
+    ],
+    [
+      "draw",
+      "_ing",
+      "drew",
+      "_s",
+      "_er"
+    ],
+    [
+      "drink",
+      "_ing",
+      "drank",
+      "_s",
+      "_er"
+    ],
+    [
+      "drive",
+      "driving",
+      "drove",
+      "_s",
+      "_r"
+    ],
+    [
+      "eat",
+      "_ing",
+      "ate",
+      "_s",
+      "_er"
+    ],
+    [
+      "fall",
+      "_ing",
+      "fell",
+      "_s",
+      "_er"
+    ],
+    [
+      "feed",
+      "_ing",
+      "fed",
+      "_s",
+      "_er"
+    ],
+    [
+      "feel",
+      "_ing",
+      "felt",
+      "_s",
+      "_er"
+    ],
+    [
+      "fight",
+      "_ing",
+      "fought",
+      "_s",
+      "_er"
+    ],
+    [
+      "find",
+      "_ing",
+      "found",
+      "_s",
+      "_er"
+    ],
+    [
+      "fly",
+      "_ing",
+      "flew",
+      "_s",
+      "flier"
+    ],
+    [
+      "forbid",
+      "_ing",
+      "forbade",
+      "_s",
+
+    ],
+    [
+      "forget",
+      "_ing",
+      "forgot",
+      "_s",
+      "_er"
+    ],
+    [
+      "forgive",
+      "forgiving",
+      "forgave",
+      "_s",
+      "_r"
+    ],
+    [
+      "freeze",
+      "freezing",
+      "froze",
+      "_s",
+      "_r"
+    ],
+    [
+      "get",
+      "_ting",
+      "got",
+      "_s",
+      "_ter"
+    ],
+    [
+      "give",
+      "giving",
+      "gave",
+      "_s",
+      "_r"
+    ],
+    [
+      "go",
+      "_ing",
+      "went",
+      "_es",
+      "_er"
+    ],
+    [
+      "grow",
+      "_ing",
+      "grew",
+      "_s",
+      "_er"
+    ],
+    [
+      "hang",
+      "_ing",
+      "hung",
+      "_s",
+      "_er"
+    ],
+    [
+      "have",
+      "having",
+      "had",
+      "has",
+
+    ],
+    [
+      "hear",
+      "_ing",
+      "_d",
+      "_s",
+      "_er"
+    ],
+    [
+      "hide",
+      "hiding",
+      "hid",
+      "_s",
+      "_r"
+    ],
+    [
+      "hit",
+      "_ting",
+      "_",
+      "_s",
+      "_ter"
+    ],
+    [
+      "hold",
+      "_ing",
+      "held",
+      "_s",
+      "_er"
+    ],
+    [
+      "hurt",
+      "_ing",
+      "_",
+      "_s",
+      "_er"
+    ],
+    [
+      "know",
+      "_ing",
+      "knew",
+      "_s",
+      "_er"
+    ],
+    [
+      "relay",
+      "_ing",
+      "_ed",
+      "_s",
+      "_er"
+    ],
+    [
+      "lay",
+      "_ing",
+      "laid",
+      "_s",
+      "_er"
+    ],
+    [
+      "lead",
+      "_ing",
+      "led",
+      "_s",
+      "_er"
+    ],
+    [
+      "leave",
+      "leaving",
+      "left",
+      "_s",
+      "_r"
+    ],
+    [
+      "lend",
+      "_ing",
+      "lent",
+      "_s",
+      "_er"
+    ],
+    [
+      "let",
+      "_ting",
+      "_",
+      "_s",
+      "_ter"
+    ],
+    [
+      "lie",
+      "lying",
+      "lay",
+      "_s",
+      "_r"
+    ],
+    [
+      "light",
+      "_ing",
+      "lit",
+      "_s",
+      "_er"
+    ],
+    [
+      "lose",
+      "losing",
+      "lost",
+      "_s",
+      "_r"
+    ],
+    [
+      "make",
+      "making",
+      "made",
+      "_s",
+      "_r"
+    ],
+    [
+      "mean",
+      "_ing",
+      "_t",
+      "_s",
+      "_er"
+    ],
+    [
+      "meet",
+      "_ing",
+      "met",
+      "_s",
+      "_er"
+    ],
+    [
+      "pay",
+      "_ing",
+      "paid",
+      "_s",
+      "_er"
+    ],
+    [
+      "put",
+      "_ting",
+      "_",
+      "_s",
+      "_ter"
+    ],
+    [
+      "quit",
+      "_ting",
+      "_",
+      "_s",
+      "_ter"
+    ],
+    [
+      "read",
+      "_ing",
+      "_",
+      "_s",
+      "_er"
+    ],
+    [
+      "ride",
+      "riding",
+      "rode",
+      "_s",
+      "_r"
+    ],
+    [
+      "ring",
+      "_ing",
+      "rang",
+      "_s",
+      "_er"
+    ],
+    [
+      "rise",
+      "rising",
+      "rose",
+      "_s",
+      "_r"
+    ],
+    [
+      "run",
+      "_ning",
+      "ran",
+      "_s",
+      "_ner"
+    ],
+    [
+      "say",
+      "_ing",
+      "said",
+      "_s",
+
+    ],
+    [
+      "see",
+      "_ing",
+      "saw",
+      "_s",
+      "_r"
+    ],
+    [
+      "sell",
+      "_ing",
+      "sold",
+      "_s",
+      "_er"
+    ],
+    [
+      "send",
+      "_ing",
+      "sent",
+      "_s",
+      "_er"
+    ],
+    [
+      "set",
+      "_ting",
+      "_",
+      "_s",
+      "_ter"
+    ],
+    [
+      "shake",
+      "shaking",
+      "shook",
+      "_s",
+      "_r"
+    ],
+    [
+      "shine",
+      "shining",
+      "shone",
+      "_s",
+      "_r"
+    ],
+    [
+      "shoot",
+      "_ing",
+      "shot",
+      "_s",
+      "_er"
+    ],
+    [
+      "show",
+      "_ing",
+      "_ed",
+      "_s",
+      "_er"
+    ],
+    [
+      "shut",
+      "_ting",
+      "_",
+      "_s",
+      "_ter"
+    ],
+    [
+      "sing",
+      "_ing",
+      "sang",
+      "_s",
+      "_er"
+    ],
+    [
+      "sink",
+      "_ing",
+      "sank",
+      "_s",
+      "_er"
+    ],
+    [
+      "sit",
+      "_ting",
+      "sat",
+      "_s",
+      "_ter"
+    ],
+    [
+      "slide",
+      "sliding",
+      "slid",
+      "_s",
+      "_r"
+    ],
+    [
+      "speak",
+      "_ing",
+      "spoke",
+      "_s",
+      "_er"
+    ],
+    [
+      "spend",
+      "_ing",
+      "spent",
+      "_s",
+      "_er"
+    ],
+    [
+      "spin",
+      "_ning",
+      "spun",
+      "_s",
+      "_ner"
+    ],
+    [
+      "spread",
+      "_ing",
+      "_",
+      "_s",
+      "_er"
+    ],
+    [
+      "stand",
+      "_ing",
+      "stood",
+      "_s",
+      "_er"
+    ],
+    [
+      "steal",
+      "_ing",
+      "stole",
+      "_s",
+      "_er"
+    ],
+    [
+      "stick",
+      "_ing",
+      "stuck",
+      "_s",
+      "_er"
+    ],
+    [
+      "sting",
+      "_ing",
+      "stung",
+      "_s",
+      "_er"
+    ],
+    [
+      "strike",
+      "striking",
+      "struck",
+      "_s",
+      "_r"
+    ],
+    [
+      "swear",
+      "_ing",
+      "swore",
+      "_s",
+      "_er"
+    ],
+    [
+      "swim",
+      "_ing",
+      "swam",
+      "_s",
+      "_mer"
+    ],
+    [
+      "swing",
+      "_ing",
+      "swung",
+      "_s",
+      "_er"
+    ],
+    [
+      "take",
+      "taking",
+      "took",
+      "_s",
+      "_r"
+    ],
+    [
+      "teach",
+      "_ing",
+      "taught",
+      "_s",
+      "_er"
+    ],
+    [
+      "tear",
+      "_ing",
+      "tore",
+      "_s",
+      "_er"
+    ],
+    [
+      "tell",
+      "_ing",
+      "told",
+      "_s",
+      "_er"
+    ],
+    [
+      "think",
+      "_ing",
+      "thought",
+      "_s",
+      "_er"
+    ],
+    [
+      "throw",
+      "_ing",
+      "threw",
+      "_s",
+      "_er"
+    ],
+    [
+      "understand",
+      "_ing",
+      "understood",
+      "_s",
+
+    ],
+    [
+      "wake",
+      "waking",
+      "woke",
+      "_s",
+      "_r"
+    ],
+    [
+      "wear",
+      "_ing",
+      "wore",
+      "_s",
+      "_er"
+    ],
+    [
+      "win",
+      "_ning",
+      "won",
+      "_s",
+      "_ner"
+    ],
+    [
+      "withdraw",
+      "_ing",
+      "withdrew",
+      "_s",
+      "_er"
+    ],
+    [
+      "write",
+      "writing",
+      "wrote",
+      "_s",
+      "_r"
+    ],
+    [
+      "tie",
+      "tying",
+      "_d",
+      "_s",
+      "_r"
+    ],
+    [
+      "obey",
+      "_ing",
+      "_ed",
+      "_s",
+      "_er"
+    ],
+    [
+      "ski",
+      "_ing",
+      "_ied",
+      "_s",
+      "_er"
+    ],
+    [
+      "boil",
+      "_ing",
+      "_ed",
+      "_s",
+      "_er"
+    ],
+    [
+      "miss",
+      "_ing",
+      "_ed",
+      "_",
+      "_er"
+    ],
+    [
+      "act",
+      "_ing",
+      "_ed",
+      "_s",
+      "_or"
+    ],
+    [
+      "compete",
+      "competing",
+      "_d",
+      "_s",
+      "competitor"
+    ],
+    [
+      "being",
+      "are",
+      "were",
+      "are",
+
+    ],
+    [
+      "imply",
+      "_ing",
+      "implied",
+      "implies",
+      "implier"
+    ],
+    [
+      "ice",
+      "icing",
+      "_d",
+      "_s",
+      "_r"
+    ],
+    [
+      "develop",
+      "_ing",
+      "_",
+      "_s",
+      "_er"
+    ],
+    [
+      "wait",
+      "_ing",
+      "_ed",
+      "_s",
+      "_er"
+    ],
+    [
+      "aim",
+      "_ing",
+      "_ed",
+      "_s",
+      "_er"
+    ],
+    [
+      "spill",
+      "_ing",
+      "spilt",
+      "_s",
+      "_er"
+    ],
+    [
+      "be",
+      "am",
+      "was",
+      "am",
+      ""
+    ]
+  ]
+  //expand compact version out
+  var main=compact.map(function(arr){
+    var obj={}
+    for(var i=0; i<arr.length; i++){
+      obj[types[i]]=arr[i].replace(/_/, arr[0])
+    }
+    return obj
+  })
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+  return main;
+})();
+
+// console.log(JSON.stringify(verb_irregulars, null, 2));
+
 //adjectives that either aren't covered by rules, or have superlative/comparative forms
 //this list is the seed, from which various forms are conjugated
 var adjectives = (function() {
@@ -2790,6 +3694,7 @@ var adjectives = (function() {
   return main
 })()
 
+//most-frequent non-irregular verbs, to be conjugated for the lexicon
 //this list is the seed, from which various forms are conjugated
 var verbs = (function() {
     //verbs
@@ -2797,7 +3702,6 @@ var verbs = (function() {
       "collapse",
       "stake",
       "forsee",
-      "hide",
       "suck",
       "answer",
       "argue",
@@ -2806,13 +3710,11 @@ var verbs = (function() {
       "depend",
       "form",
       "figure",
-      "compete",
       "mind",
       "surround",
       "suspect",
       "reflect",
       "wonder",
-      "act",
       "hope",
       "end",
       "thank",
@@ -2821,7 +3723,6 @@ var verbs = (function() {
       "report",
       "imagine",
       "consider",
-      "miss",
       "ensure",
       "cause",
       "work",
@@ -2831,8 +3732,6 @@ var verbs = (function() {
       "surge",
       "launch",
       "turn",
-      "give",
-      "win",
       "like",
       "control",
       "relate",
@@ -2840,110 +3739,77 @@ var verbs = (function() {
       "join",
       "listen",
       "train",
-      "break",
       "spring",
       "enjoy",
       "fail",
-      "understand",
       "recognize",
-      "draw",
       "obtain",
       "learn",
       "fill",
       "announce",
       "prevent",
-      "fall",
       "achieve",
-      "find",
       "realize",
       "involve",
       "remove",
-      "lose",
-      "lie",
-      "build",
       "aid",
       "visit",
       "test",
-      "strike",
       "prepare",
-      "wait",
       "ask",
       "carry",
       "suppose",
       "determine",
       "raise",
-      "send",
       "love",
       "use",
       "pull",
       "improve",
       "contain",
-      "think",
       "offer",
-      "speak",
-      "rise",
       "talk",
       "pick",
       "care",
       "express",
       "remain",
       "operate",
-      "deal",
       "close",
       "add",
       "mention",
-      "read",
       "support",
-      "grow",
       "decide",
       "walk",
       "vary",
       "demand",
       "describe",
-      "sell",
       "agree",
       "happen",
       "allow",
       "suffer",
-      "have",
       "study",
-      "be",
       "press",
       "watch",
       "seem",
       "occur",
       "contribute",
       "claim",
-      "become",
-      "make",
       "compare",
-      "develop",
       "apply",
       "direct",
       "discuss",
-      "know",
-      "sit",
-      "see",
-      "lead",
       "indicate",
       "require",
       "change",
       "fix",
-      "come",
       "reach",
       "prove",
       "expect",
       "exist",
       "play",
       "permit",
-      "meet",
       "kill",
-      "pay",
       "charge",
       "increase",
-      "fight",
-      "tell",
-      "catch",
       "believe",
       "create",
       "continue",
@@ -2952,27 +3818,18 @@ var verbs = (function() {
       "represent",
       "edit",
       "serve",
-      "ride",
       "appear",
       "cover",
-      "set",
       "maintain",
       "start",
       "stay",
       "move",
       "extend",
-      "leave",
-      "wear",
-      "run",
       "design",
       "supply",
       "suggest",
       "want",
-      "say",
-      "hear",
-      "drive",
       "approach",
-      "cut",
       "call",
       "include",
       "try",
@@ -2980,62 +3837,39 @@ var verbs = (function() {
       "save",
       "discover",
       "marry",
-      "throw",
-      "show",
-      "choose",
       "need",
       "establish",
       "keep",
       "assume",
       "attend",
-      "buy",
       "unite",
-      "feel",
       "explain",
       "publish",
       "accept",
       "settle",
       "reduce",
-      "bring",
       "do",
-      "let",
-      "shoot",
       "look",
-      "take",
       "interact",
       "concern",
-      "put",
       "labor",
-      "hold",
       "return",
       "select",
       "die",
       "provide",
       "seek",
-      "stand",
-      "spend",
-      "begin",
-      "get",
       "wish",
-      "hang",
-      "write",
       "finish",
       "follow",
-      "forget",
-      "feed",
-      "eat",
       "disagree",
       "produce",
       "attack",
       "attempt",
-      "bite",
-      "blow",
       "brake",
       "brush",
       "burn",
       "bang",
       "bomb",
-      "bet",
       "budget",
       "comfort",
       "cook",
@@ -3051,7 +3885,6 @@ var verbs = (function() {
       "desire",
       "doubt",
       "drain",
-      "drink",
       "dance",
       "decrease",
       "defect",
@@ -3123,7 +3956,6 @@ var verbs = (function() {
       "sail",
       "scale",
       "screw",
-      "shake",
       "shock",
       "sleep",
       "slip",
@@ -3132,26 +3964,21 @@ var verbs = (function() {
       "smoke",
       "sneeze",
       "snow",
-      "stick",
       "surprise",
-      "swim",
       "scratch",
       "search",
       "share",
       "shave",
-      "slide",
       "spit",
       "splash",
       "stain",
       "stress",
-      "swing",
       "switch",
       "taste",
       "touch",
       "trade",
       "trick",
       "twist",
-      "tie",
       "trap",
       "travel",
       "tune",
@@ -3180,7 +4007,6 @@ var verbs = (function() {
       "torture",
       "recall",
       "count",
-      "swear",
       "admit",
       "insist",
       "lack",
@@ -3188,7 +4014,6 @@ var verbs = (function() {
       "belong",
       "complain",
       "constitute",
-      "beat",
       "rely",
       "refuse",
       "range",
@@ -3200,7 +4025,6 @@ var verbs = (function() {
       "observe",
       "notice",
       "trust",
-      "imply",
       "display",
       "view",
       "stare",
@@ -3220,14 +4044,11 @@ var verbs = (function() {
       "mirror",
       "experience",
       "strive",
-      "teach",
-      "cost",
       "arch",
       "dislike",
       "favor",
       "earn",
       "emphasize",
-      "fly",
       "match",
       "question",
       "emerge",
@@ -3238,11 +4059,9 @@ var verbs = (function() {
       "line",
       "slam",
       "list",
-      "sing",
       "warn",
       "ignore",
       "resemble",
-      "spread",
       "feature",
       "place",
       "reverse",
@@ -3259,7 +4078,6 @@ var verbs = (function() {
       "echo",
       "engage",
       "deny",
-      "obey",
       "yield",
       "center",
       "gain",
@@ -3287,7 +4105,6 @@ var verbs = (function() {
       "confront",
       "credit",
       "cross",
-      "wake",
       "amuse",
       "dare",
       "resent",
@@ -3308,7 +4125,6 @@ var verbs = (function() {
       "force",
       "govern",
       "replace",
-      "aim",
       "bother",
       "cater",
       "adopt",
@@ -3360,7 +4176,6 @@ var verbs = (function() {
       "unlock",
       "weigh",
       "resist",
-      "steal",
       "drag",
       "pour",
       "reckon",
@@ -3381,12 +4196,10 @@ var verbs = (function() {
       "monitor",
       "expand",
       "honor",
-      "lend",
       "pack",
       "assist",
       "float",
       "appeal",
-      "sink",
       "stretch",
       "undermine",
       "assemble",
@@ -3397,7 +4210,6 @@ var verbs = (function() {
       "borrow",
       "crack",
       "elect",
-      "shine",
       "shout",
       "contrast",
       "overcome",
@@ -3441,7 +4253,6 @@ var verbs = (function() {
       "measure",
       "enhance",
       "distinguish",
-      "hit",
       "avoid"
     ]
 
@@ -5757,910 +6568,6 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = verb_rules;
 }
 
-var verb_irregulars = (function() {
-  var types = [
-    'infinitive',
-    'gerund',
-    'past',
-    'present',
-    'doer',
-    'future'
-  ]
-
-  //list of verb irregular verb forms, compacted to save space. ('_' -> infinitive )
-  var compact = [
-    [
-      "arise",
-      "arising",
-      "arose",
-      "_s",
-      "_r"
-    ],
-    [
-      "babysit",
-      "_ting",
-      "babysat",
-      "_s",
-      "_ter"
-    ],
-    [
-      "be",
-      "_ing",
-      "was",
-      "is",
-      "_r"
-    ],
-    [
-      "beat",
-      "_ing",
-      "_",
-      "_s",
-      "_er"
-    ],
-    [
-      "become",
-      "becoming",
-      "became",
-      "_s",
-      "_r"
-    ],
-    [
-      "bend",
-      "_ing",
-      "bent",
-      "_s",
-      "_er"
-    ],
-    [
-      "begin",
-      "_ning",
-      "began",
-      "_s",
-      "_ner"
-    ],
-    [
-      "bet",
-      "_ting",
-      "_",
-      "_s",
-      "_ter"
-    ],
-    [
-      "bind",
-      "_ing",
-      "bound",
-      "_s",
-      "_er"
-    ],
-    [
-      "bite",
-      "biting",
-      "bit",
-      "_s",
-      "_r"
-    ],
-    [
-      "bleed",
-      "_ing",
-      "bled",
-      "_s",
-      "_er"
-    ],
-    [
-      "blow",
-      "_ing",
-      "blew",
-      "_s",
-      "_er"
-    ],
-    [
-      "break",
-      "_ing",
-      "broke",
-      "_s",
-      "_er"
-    ],
-    [
-      "breed",
-      "_ing",
-      "bred",
-      "_s",
-      "_er"
-    ],
-    [
-      "bring",
-      "_ing",
-      "brought",
-      "_s",
-      "_er"
-    ],
-    [
-      "broadcast",
-      "_ing",
-      "_",
-      "_s",
-      "_er"
-    ],
-    [
-      "build",
-      "_ing",
-      "built",
-      "_s",
-      "_er"
-    ],
-    [
-      "buy",
-      "_ing",
-      "bought",
-      "_s",
-      "_er"
-    ],
-    [
-      "catch",
-      "_ing",
-      "caught",
-      "_es",
-      "_er"
-    ],
-    [
-      "choose",
-      "choosing",
-      "chose",
-      "_s",
-      "_r"
-    ],
-    [
-      "come",
-      "coming",
-      "came",
-      "_s",
-      "_r"
-    ],
-    [
-      "cost",
-      "_ing",
-      "_",
-      "_s",
-      "_er"
-    ],
-    [
-      "cut",
-      "_ting",
-      "_",
-      "_s",
-      "_ter"
-    ],
-    [
-      "deal",
-      "_ing",
-      "_t",
-      "_s",
-      "_er"
-    ],
-    [
-      "dig",
-      "_ging",
-      "dug",
-      "_s",
-      "_ger"
-    ],
-    [
-      "do",
-      "_ing",
-      "did",
-      "_es",
-      "_er"
-    ],
-    [
-      "draw",
-      "_ing",
-      "drew",
-      "_s",
-      "_er"
-    ],
-    [
-      "drink",
-      "_ing",
-      "drank",
-      "_s",
-      "_er"
-    ],
-    [
-      "drive",
-      "driving",
-      "drove",
-      "_s",
-      "_r"
-    ],
-    [
-      "eat",
-      "_ing",
-      "ate",
-      "_s",
-      "_er"
-    ],
-    [
-      "fall",
-      "_ing",
-      "fell",
-      "_s",
-      "_er"
-    ],
-    [
-      "feed",
-      "_ing",
-      "fed",
-      "_s",
-      "_er"
-    ],
-    [
-      "feel",
-      "_ing",
-      "felt",
-      "_s",
-      "_er"
-    ],
-    [
-      "fight",
-      "_ing",
-      "fought",
-      "_s",
-      "_er"
-    ],
-    [
-      "find",
-      "_ing",
-      "found",
-      "_s",
-      "_er"
-    ],
-    [
-      "fly",
-      "_ing",
-      "flew",
-      "_s",
-      "flier"
-    ],
-    [
-      "forbid",
-      "_ing",
-      "forbade",
-      "_s",
-
-    ],
-    [
-      "forget",
-      "_ing",
-      "forgot",
-      "_s",
-      "_er"
-    ],
-    [
-      "forgive",
-      "forgiving",
-      "forgave",
-      "_s",
-      "_r"
-    ],
-    [
-      "freeze",
-      "freezing",
-      "froze",
-      "_s",
-      "_r"
-    ],
-    [
-      "get",
-      "_ting",
-      "got",
-      "_s",
-      "_ter"
-    ],
-    [
-      "give",
-      "giving",
-      "gave",
-      "_s",
-      "_r"
-    ],
-    [
-      "go",
-      "_ing",
-      "went",
-      "_es",
-      "_er"
-    ],
-    [
-      "grow",
-      "_ing",
-      "grew",
-      "_s",
-      "_er"
-    ],
-    [
-      "hang",
-      "_ing",
-      "hung",
-      "_s",
-      "_er"
-    ],
-    [
-      "have",
-      "having",
-      "had",
-      "has",
-
-    ],
-    [
-      "hear",
-      "_ing",
-      "_d",
-      "_s",
-      "_er"
-    ],
-    [
-      "hide",
-      "hiding",
-      "hid",
-      "_s",
-      "_r"
-    ],
-    [
-      "hit",
-      "_ting",
-      "_",
-      "_s",
-      "_ter"
-    ],
-    [
-      "hold",
-      "_ing",
-      "held",
-      "_s",
-      "_er"
-    ],
-    [
-      "hurt",
-      "_ing",
-      "_",
-      "_s",
-      "_er"
-    ],
-    [
-      "know",
-      "_ing",
-      "knew",
-      "_s",
-      "_er"
-    ],
-    [
-      "relay",
-      "_ing",
-      "_ed",
-      "_s",
-      "_er"
-    ],
-    [
-      "lay",
-      "_ing",
-      "laid",
-      "_s",
-      "_er"
-    ],
-    [
-      "lead",
-      "_ing",
-      "led",
-      "_s",
-      "_er"
-    ],
-    [
-      "leave",
-      "leaving",
-      "left",
-      "_s",
-      "_r"
-    ],
-    [
-      "lend",
-      "_ing",
-      "lent",
-      "_s",
-      "_er"
-    ],
-    [
-      "let",
-      "_ting",
-      "_",
-      "_s",
-      "_ter"
-    ],
-    [
-      "lie",
-      "lying",
-      "lay",
-      "_s",
-      "_r"
-    ],
-    [
-      "light",
-      "_ing",
-      "lit",
-      "_s",
-      "_er"
-    ],
-    [
-      "lose",
-      "losing",
-      "lost",
-      "_s",
-      "_r"
-    ],
-    [
-      "make",
-      "making",
-      "made",
-      "_s",
-      "_r"
-    ],
-    [
-      "mean",
-      "_ing",
-      "_t",
-      "_s",
-      "_er"
-    ],
-    [
-      "meet",
-      "_ing",
-      "met",
-      "_s",
-      "_er"
-    ],
-    [
-      "pay",
-      "_ing",
-      "paid",
-      "_s",
-      "_er"
-    ],
-    [
-      "put",
-      "_ting",
-      "_",
-      "_s",
-      "_ter"
-    ],
-    [
-      "quit",
-      "_ting",
-      "_",
-      "_s",
-      "_ter"
-    ],
-    [
-      "read",
-      "_ing",
-      "_",
-      "_s",
-      "_er"
-    ],
-    [
-      "ride",
-      "riding",
-      "rode",
-      "_s",
-      "_r"
-    ],
-    [
-      "ring",
-      "_ing",
-      "rang",
-      "_s",
-      "_er"
-    ],
-    [
-      "rise",
-      "rising",
-      "rose",
-      "_s",
-      "_r"
-    ],
-    [
-      "run",
-      "_ning",
-      "ran",
-      "_s",
-      "_ner"
-    ],
-    [
-      "say",
-      "_ing",
-      "said",
-      "_s",
-
-    ],
-    [
-      "see",
-      "_ing",
-      "saw",
-      "_s",
-      "_r"
-    ],
-    [
-      "sell",
-      "_ing",
-      "sold",
-      "_s",
-      "_er"
-    ],
-    [
-      "send",
-      "_ing",
-      "sent",
-      "_s",
-      "_er"
-    ],
-    [
-      "set",
-      "_ting",
-      "_",
-      "_s",
-      "_ter"
-    ],
-    [
-      "shake",
-      "shaking",
-      "shook",
-      "_s",
-      "_r"
-    ],
-    [
-      "shine",
-      "shining",
-      "shone",
-      "_s",
-      "_r"
-    ],
-    [
-      "shoot",
-      "_ing",
-      "shot",
-      "_s",
-      "_er"
-    ],
-    [
-      "show",
-      "_ing",
-      "_ed",
-      "_s",
-      "_er"
-    ],
-    [
-      "shut",
-      "_ting",
-      "_",
-      "_s",
-      "_ter"
-    ],
-    [
-      "sing",
-      "_ing",
-      "sang",
-      "_s",
-      "_er"
-    ],
-    [
-      "sink",
-      "_ing",
-      "sank",
-      "_s",
-      "_er"
-    ],
-    [
-      "sit",
-      "_ting",
-      "sat",
-      "_s",
-      "_ter"
-    ],
-    [
-      "slide",
-      "sliding",
-      "slid",
-      "_s",
-      "_r"
-    ],
-    [
-      "speak",
-      "_ing",
-      "spoke",
-      "_s",
-      "_er"
-    ],
-    [
-      "spend",
-      "_ing",
-      "spent",
-      "_s",
-      "_er"
-    ],
-    [
-      "spin",
-      "_ning",
-      "spun",
-      "_s",
-      "_ner"
-    ],
-    [
-      "spread",
-      "_ing",
-      "_",
-      "_s",
-      "_er"
-    ],
-    [
-      "stand",
-      "_ing",
-      "stood",
-      "_s",
-      "_er"
-    ],
-    [
-      "steal",
-      "_ing",
-      "stole",
-      "_s",
-      "_er"
-    ],
-    [
-      "stick",
-      "_ing",
-      "stuck",
-      "_s",
-      "_er"
-    ],
-    [
-      "sting",
-      "_ing",
-      "stung",
-      "_s",
-      "_er"
-    ],
-    [
-      "strike",
-      "striking",
-      "struck",
-      "_s",
-      "_r"
-    ],
-    [
-      "swear",
-      "_ing",
-      "swore",
-      "_s",
-      "_er"
-    ],
-    [
-      "swim",
-      "_ing",
-      "swam",
-      "_s",
-      "_mer"
-    ],
-    [
-      "swing",
-      "_ing",
-      "swung",
-      "_s",
-      "_er"
-    ],
-    [
-      "take",
-      "taking",
-      "took",
-      "_s",
-      "_r"
-    ],
-    [
-      "teach",
-      "_ing",
-      "taught",
-      "_s",
-      "_er"
-    ],
-    [
-      "tear",
-      "_ing",
-      "tore",
-      "_s",
-      "_er"
-    ],
-    [
-      "tell",
-      "_ing",
-      "told",
-      "_s",
-      "_er"
-    ],
-    [
-      "think",
-      "_ing",
-      "thought",
-      "_s",
-      "_er"
-    ],
-    [
-      "throw",
-      "_ing",
-      "threw",
-      "_s",
-      "_er"
-    ],
-    [
-      "understand",
-      "_ing",
-      "understood",
-      "_s",
-
-    ],
-    [
-      "wake",
-      "waking",
-      "woke",
-      "_s",
-      "_r"
-    ],
-    [
-      "wear",
-      "_ing",
-      "wore",
-      "_s",
-      "_er"
-    ],
-    [
-      "win",
-      "_ning",
-      "won",
-      "_s",
-      "_ner"
-    ],
-    [
-      "withdraw",
-      "_ing",
-      "withdrew",
-      "_s",
-      "_er"
-    ],
-    [
-      "write",
-      "writing",
-      "wrote",
-      "_s",
-      "_r"
-    ],
-    [
-      "tie",
-      "tying",
-      "_d",
-      "_s",
-      "_r"
-    ],
-    [
-      "obey",
-      "_ing",
-      "_ed",
-      "_s",
-      "_er"
-    ],
-    [
-      "ski",
-      "_ing",
-      "_ied",
-      "_s",
-      "_er"
-    ],
-    [
-      "boil",
-      "_ing",
-      "_ed",
-      "_s",
-      "_er"
-    ],
-    [
-      "miss",
-      "_ing",
-      "_ed",
-      "_",
-      "_er"
-    ],
-    [
-      "act",
-      "_ing",
-      "_ed",
-      "_s",
-      "_or"
-    ],
-    [
-      "compete",
-      "competing",
-      "_d",
-      "_s",
-      "competitor"
-    ],
-    [
-      "being",
-      "are",
-      "were",
-      "are",
-
-    ],
-    [
-      "imply",
-      "_ing",
-      "implied",
-      "implies",
-      "implier"
-    ],
-    [
-      "ice",
-      "icing",
-      "_d",
-      "_s",
-      "_r"
-    ],
-    [
-      "develop",
-      "_ing",
-      "_",
-      "_s",
-      "_er"
-    ],
-    [
-      "wait",
-      "_ing",
-      "_ed",
-      "_s",
-      "_er"
-    ],
-    [
-      "aim",
-      "_ing",
-      "_ed",
-      "_s",
-      "_er"
-    ],
-    [
-      "spill",
-      "_ing",
-      "spilt",
-      "_s",
-      "_er"
-    ],
-    [
-      "be",
-      "am",
-      "was",
-      "am",
-      ""
-    ]
-  ]
-  //expand compact version out
-  var main=compact.map(function(arr){
-    var obj={}
-    for(var i=0; i<arr.length; i++){
-      obj[types[i]]=arr[i].replace(/_/, arr[0])
-    }
-    return obj
-  })
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = main;
-  }
-  return main;
-})();
-
-// console.log(JSON.stringify(verb_irregulars, null, 2));
-
 //somone who does this present-tense verb
 //turn 'walk' into 'walker'
 var verb_to_doer = (function() {
@@ -6689,7 +6596,8 @@ var verb_to_doer = (function() {
       "marry": 1,
       "be": 1,
       "forbid": 1,
-      "understand": 1
+      "understand": 1,
+      "bet": 1
     }
     var transforms = [{
       reg: /e$/i,
@@ -7763,9 +7671,11 @@ var lexicon = (function() {
       values = require("./lexicon/values")
       demonyms = require("./lexicon/demonyms")
 
+      //verbs
       verbs = require("./lexicon/verbs")
       verb_conjugate = require("../parents/verb/conjugate/conjugate")
       verb_to_doer = require("../parents/verb/conjugate/to_doer")
+      irregulars = require("../parents/verb/conjugate/verb_irregulars")
 
       adjectives = require("./lexicon/adjectives")
       adj_to_adv = require("../parents/adjective/conjugate/to_adverb")
@@ -8191,6 +8101,21 @@ var lexicon = (function() {
         main[c.participle] = main[c.participle] || "VBN"
       }
     }
+    //add irregular verbs
+    l = irregulars.length;
+    for (i = 0; i < l; i++) {
+      c=irregulars[i]
+      main[c.infinitive]=main[c.infinitive]||"VBP"
+      main[c.gerund]=main[c.gerund]||"VBG"
+      main[c.past]=main[c.past]||"VBD"
+      main[c.present]=main[c.present]||"VBZ"
+      if (c.doer) {
+        main[c.doer]=main[c.doer]||"NNA"
+      }
+      if (c.participle) {
+        main[c.future]=main[c.future]||"VB"
+      }
+    }
 
     //add adjectives
     //conjugate all of these adjectives to their adverbs. (13ms)
@@ -8231,6 +8156,7 @@ var lexicon = (function() {
   // console.log(lexicon['canadian']=="JJ")
   // console.log(lexicon['prettier']=="JJR")
   // console.log(lexicon['prettiest']=="JJS")
+  // console.log(lexicon[null]===undefined)
   // console.log(Object.keys(lexicon).length)
 
 // methods that hang on a parsed set of words
@@ -8574,10 +8500,13 @@ var pos = (function() {
   // "use strict";
 
   if (typeof module !== "undefined" && module.exports) {
+    lexicon = require("./data/lexicon")
+    values = require("./data/lexicon/values")
+    demonyms = require("./data/lexicon/demonyms")
+
     tokenize = require("./methods/tokenization/tokenize").tokenize;
     parts_of_speech = require("./data/parts_of_speech")
     word_rules = require("./data/word_rules")
-    lexicon = require("./data/lexicon")
     wordnet_suffixes = require("./data/unambiguous_suffixes")
     Sentence = require("./sentence")
     Section = require("./section")
@@ -8708,11 +8637,6 @@ var pos = (function() {
       sentence.tokens[i + 1].pos = parts_of_speech['JJ']
       sentence.tokens[i + 1].pos_reason = "copula-adverb-adjective"
     }
-    // //if it's after the word 'am' its probably a gerund verb
-    // if(last && last.normalised=="am" && !last.punctuated && (token.pos.parent=="noun" || token.pos.parent=="adjective")){
-    //   token.pos = parts_of_speech['VBG']
-    //   token.pos_reason = "after the word 'am'"
-    // }
     // the city [verb] him.
     if (next && next.pos.tag == "PRP" && token.pos.parent == "noun" && !token.punctuated) {
       token.pos = parts_of_speech['VB']
@@ -8981,6 +8905,7 @@ var pos = (function() {
 // pos("In March 2009, while Secretary of State for Energy and Climate Change, Miliband attended the UK premiere of climate-change film The Age of Stupid, where he was ambushed").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("the Energy and Climate Change, Miliband").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // console.log(pos("Energy and Climate Change, Miliband").sentences[0].tokens)
+console.log(pos("it is crazy").sentences[0].tokens)
 
 //just a wrapper for text -> entities
 //most of this logic is in ./parents/noun

@@ -29,7 +29,7 @@ var verb_irregulars = (function() {
       "_ing",
       "was",
       "is",
-      "_r"
+      ""
     ],
     [
       "beat",

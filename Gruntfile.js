@@ -13,6 +13,7 @@ module.exports = function(grunt) {
     './src/data/unambiguous_suffixes.js',
     './src/data/parts_of_speech.js',
     //lexicon data
+    './src/parents/verb/conjugate/verb_irregulars.js',
     './src/data/lexicon/adjectives.js',
     './src/data/lexicon/verbs.js',
     './src/data/lexicon/multiples.js',
@@ -31,7 +32,6 @@ module.exports = function(grunt) {
     './src/parents/adverb/index.js',
     //verbs
     './src/parents/verb/conjugate/verb_rules.js',
-    './src/parents/verb/conjugate/verb_irregulars.js',
     './src/parents/verb/conjugate/to_doer.js',
     './src/parents/verb/conjugate/conjugate.js',
     './src/parents/verb/index.js',

@@ -2,10 +2,13 @@ var pos = (function() {
   // "use strict";
 
   if (typeof module !== "undefined" && module.exports) {
+    lexicon = require("./data/lexicon")
+    values = require("./data/lexicon/values")
+    demonyms = require("./data/lexicon/demonyms")
+
     tokenize = require("./methods/tokenization/tokenize").tokenize;
     parts_of_speech = require("./data/parts_of_speech")
     word_rules = require("./data/word_rules")
-    lexicon = require("./data/lexicon")
     wordnet_suffixes = require("./data/unambiguous_suffixes")
     Sentence = require("./sentence")
     Section = require("./section")
@@ -136,11 +139,6 @@ var pos = (function() {
       sentence.tokens[i + 1].pos = parts_of_speech['JJ']
       sentence.tokens[i + 1].pos_reason = "copula-adverb-adjective"
     }
-    // //if it's after the word 'am' its probably a gerund verb
-    // if(last && last.normalised=="am" && !last.punctuated && (token.pos.parent=="noun" || token.pos.parent=="adjective")){
-    //   token.pos = parts_of_speech['VBG']
-    //   token.pos_reason = "after the word 'am'"
-    // }
     // the city [verb] him.
     if (next && next.pos.tag == "PRP" && token.pos.parent == "noun" && !token.punctuated) {
       token.pos = parts_of_speech['VB']

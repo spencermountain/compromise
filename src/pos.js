@@ -431,4 +431,4 @@ var pos = (function() {
 // console.log(pos("may 7th live").tags())
 // console.log(pos("She and Marc Emery married on July 23, 2006.").tags())
 // pos("Dr. Conrad Murray recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
-pos("and Conrad Murray jr. recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
+// pos("and Conrad Murray jr. recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})

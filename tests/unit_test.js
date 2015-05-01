@@ -1036,10 +1036,10 @@ exports["nlp.spot"] = function(test) {
       []
     ],
     ["I recently watched The Simpsons", {},
-      ["simpsons"]
+      ["the simpsons"]
     ],
     ["I especially loved the singing in The Phantom of the Opera", {},
-      ["phantom of the opera"]
+      ["the phantom of the opera"]
     ],
   ]
   terms.forEach(function(arr) {

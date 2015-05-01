@@ -18,6 +18,7 @@ var pos = (function() {
     a.pos_reason += "|" + b.pos_reason
     a.start = a.start || b.start
     a.capitalised = a.capitalised || b.capitalised
+    a.punctuated = a.punctuated || b.punctuated
     a.end = a.end || b.end
     return a
   }
@@ -30,7 +31,7 @@ var pos = (function() {
       var next = arr[i + 1]
       if (arr[i] && next) {
         //'joe smith' are both NN
-        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && next.punctuated !== true && arr[i].capitalised == next.capitalised) {
+        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && arr[i].capitalised == next.capitalised) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
@@ -39,18 +40,13 @@ var pos = (function() {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
-        //'hundred and fifty'
-        else if (arr[i].pos.tag === "CD" && next.normalised === "and" && arr[i + 2] && arr[i + 2].pos.tag === "CD") {
+        //'hundred and fifty', 'march the 5th'
+        else if (arr[i].pos.tag === "CD" && (next.normalised === "and" || next.normalised === "the") && arr[i + 2] && arr[i + 2].pos.tag === "CD") {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
-        //'toronto fun festival'
-        // else if (arr[i].pos.tag === "NN" && next.pos.tag === "JJ" && arr[i + 2] && arr[i + 2].pos.tag === "NN") {
-        // arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
-        // arr[i] = null
-        // }
         //capitals surrounding a preposition  'United States of America'
-        else if (i > 0 && arr[i].capitalised && next.normalised == "of" && arr[i + 2] && arr[i + 2].capitalised) {
+        else if (arr[i].capitalised && (next.normalised == "of" || next.normalised == "and") && arr[i + 2] && arr[i + 2].capitalised) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
           arr[i + 2] = merge_tokens(arr[i + 1], arr[i + 2])
@@ -229,7 +225,7 @@ var pos = (function() {
       //first pass, word-level clues
       sentence.tokens = sentence.tokens.map(function(token) {
         //it has a capital and isn't first word
-        if (token.special_capitalised && !lexicon_pass(token.normalised)) {
+        if (token.special_capitalised ) {
           token.pos = parts_of_speech['NN']
           token.pos_reason = "capitalised"
           return token
@@ -415,3 +411,5 @@ var pos = (function() {
 // console.log( pos("it is a three-hundred and one").tags() )
 // console.log( pos("funny funny funny funny").sentences[0].tokens )
 // pos("In March 2009, while Secretary of State for Energy and Climate Change, Miliband attended the UK premiere of climate-change film The Age of Stupid, where he was ambushed").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
+// pos("the Energy and Climate Change, Miliband").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
+// console.log(pos("Energy and Climate Change, Miliband").sentences[0].tokens)

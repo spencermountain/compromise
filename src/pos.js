@@ -215,10 +215,6 @@ var pos = (function() {
 
     sentences.forEach(function(sentence) {
 
-      //first, lets handle the first-word capitalisation issue..
-      //be sure we don't over-classify it as a noun
-      var first = sentence.tokens[0]
-
       //smart handling of contractions
       sentence.tokens = handle_contractions(sentence.tokens)
 

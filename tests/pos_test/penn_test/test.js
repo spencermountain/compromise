@@ -1,7 +1,7 @@
 //run pos test against penn treebank
 var data = require("./penn_treebank").data
-var pos = require("../../index").pos
-var parts_of_speech = require("../../src/data/parts_of_speech")
+var pos = require("../../../index").pos
+var parts_of_speech = require("../../../src/data/parts_of_speech")
 
 var percentages = []
 var bad_reasons = []

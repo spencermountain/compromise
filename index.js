@@ -51,3 +51,8 @@ if (typeof module !== "undefined" && module.exports) {
 }
 // console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
 // console.log( nlp.pos('i will slouch').to_past().text() );
+
+//TODAY
+// console.log(verb_conjugate("overtake"))
+// adjective conjugate("pretty")
+// upper-case months and demonyms

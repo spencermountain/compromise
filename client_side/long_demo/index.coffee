@@ -1,6 +1,6 @@
 arr= [
   "./libs/jquery.js",
-  "./libs/sugar.js",
+  "./libs/dirty.js",
   "./libs/oj.js",
   "../nlp.js",
   "./libs/bluebrowns.js",
@@ -11,6 +11,7 @@ head.js.apply(this, arr);
 head ->
   oj.useGlobally();
   articles= Object.keys(texts)
+
 
   second_choices= (k)->
     style= "color:white; font-size:17px; cursor:pointer;"

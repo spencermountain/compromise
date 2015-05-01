@@ -69,7 +69,7 @@ var word_rules = [
     "pos": "JJ"
   },
   {
-    "reg": /[rdntkidhs]ly$/i,
+    "reg": /[rdntkdhs]ly$/i,
     "pos": "RB"
   },
   {
@@ -77,7 +77,11 @@ var word_rules = [
     "pos": "JJ"
   },
   {
-    "reg": /.[lnt]ial$/i,
+    "reg": /.[^aeiou]ial$/i,
+    "pos": "JJ"
+  },
+  {
+    "reg": /.[^aeiou]eal$/i,
     "pos": "JJ"
   },
   {
@@ -319,6 +323,126 @@ var word_rules = [
   {
     "reg": /^www\.[a-z0-9]/i,
     "pos": "CD"
+  },
+  {
+    "reg": /.ize$/i,
+    "pos": "VB"
+  },
+  {
+    "reg": /.[^aeiou]ise$/i,
+    "pos": "VB"
+  },
+  {
+    "reg": /.[aeiou]te$/i,
+    "pos": "VB"
+  },
+  {
+    "reg": /.ea$/i,
+    "pos": "NN"
+  },
+  {
+    "reg": /[aeiou][pns]er$/i,
+    "pos": "NN"
+  },
+  {
+    "reg": /.ia$/i,
+    "pos": "NN"
+  },
+  {
+    "reg": /.sis$/i,
+    "pos": "NN"
+  },
+  {
+    "reg": /.[aeiou]na$/i,
+    "pos": "NN"
+  },
+  {
+    "reg": /.[^aeiou]ity$/i,
+    "pos": "NN"
+  },
+  {
+    "reg": /.[^aeiou]ium$/i,
+    "pos": "NN"
+  },
+  {
+    "reg": /.[^aeiou][ei]al$/i,
+    "pos": "JJ"
+  },
+  {
+    "reg": /.ffy$/i,
+    "pos": "JJ"
+  },
+  {
+    "reg": /.[^aeiou]ic$/i,
+    "pos": "JJ"
+  },
+  {
+    "reg": /.(gg|bb|zz)ly$/i,
+    "pos": "JJ"
+  },
+  {
+    "reg": /.[aeiou]my$/i,
+    "pos": "JJ"
+  },
+  {
+    "reg": /.[aeiou]ble$/i,
+    "pos": "JJ"
+  },
+  {
+    "reg": /.[^aeiou]ful$/i,
+    "pos": "JJ"
+  },
+  {
+    "reg": /.[^aeiou]ish$/i,
+    "pos": "JJ"
+  },
+  {
+    "reg": /.[^aeiou]ica$/i,
+    "pos": "NN"
+  },
+  {
+    "reg": /[aeiou][^aeiou]is$/i,
+    "pos": "NN"
+  },
+  {
+    "reg": /[^aeiou]ard$/i,
+    "pos": "NN"
+  },
+  {
+    "reg": /[^aeiou]ism$/i,
+    "pos": "NN"
+  },
+  {
+    "reg": /.[^aeiou]ity$/i,
+    "pos": "NN"
+  },
+  {
+    "reg": /.[^aeiou]ium$/i,
+    "pos": "NN"
+  },
+  {
+    "reg": /.[lstrn]us$/i,
+    "pos": "NN"
+  },
+  {
+    "reg": /..ic$/i,
+    "pos": "JJ"
+  },
+  {
+    "reg": /[aeiou][^aeiou]id$/i,
+    "pos": "JJ"
+  },
+  {
+    "reg": /.[^aeiou]ish$/i,
+    "pos": "JJ"
+  },
+  {
+    "reg": /.[^aeiou]ive$/i,
+    "pos": "JJ"
+  },
+  {
+    "reg": /[ea]{2}zy$/i,
+    "pos": "JJ"
   }
 ]
 

@@ -12,7 +12,7 @@ function compare_to_latest() {
     var results = nlp.pos(texts[k]).sentences.map(function(s) {
       return [s.tags(), s.tokens.map(function(t) {
         return t.text
-      })]
+      }), s.text()]
     })
     latest[k].forEach(function(l, i) {
       //make sure their tokens line-up
@@ -23,7 +23,7 @@ function compare_to_latest() {
       l.forEach(function(pos, i2) {
         if (pos != results[i][0][i2]) {
           //we found a discrepency
-          console.log("    "+i+")    " + results[i][0][i2] + " -> " + pos + '  - "' + results[i][1][i2] + '"')
+          console.log("    "+i+")    " + pos + " -> " + results[i][0][i2] + '  - "' + results[i][1][i2] + '"    -  '+results[i][2])
         }
       })
     })

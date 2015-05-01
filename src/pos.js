@@ -73,7 +73,7 @@ var pos = (function() {
   }
 
   var lexicon_pass = function(w) {
-    if (lexicon[w]) {
+    if (lexicon.hasOwnProperty(w)) {
       return parts_of_speech[lexicon[w]]
     }
     //try to match it without a prefix - eg. outworked -> worked
@@ -85,7 +85,7 @@ var pos = (function() {
 
   var rules_pass = function(w) {
     for (var i = 0; i < word_rules.length; i++) {
-      if (w.match(word_rules[i].reg)) {
+      if (w.length> 4 && w.match(word_rules[i].reg)) {
         return parts_of_speech[word_rules[i].pos]
       }
     }
@@ -229,7 +229,7 @@ var pos = (function() {
       //first pass, word-level clues
       sentence.tokens = sentence.tokens.map(function(token) {
         //it has a capital and isn't first word
-        if (token.special_capitalised && !lexicon_pass(first.normalised)) {
+        if (token.special_capitalised && !lexicon_pass(token.normalised)) {
           token.pos = parts_of_speech['NN']
           token.pos_reason = "capitalised"
           return token
@@ -414,3 +414,4 @@ var pos = (function() {
 // console.log( pos("Geroge Clooney walked, quietly into a bank. It was cold.") )
 // console.log( pos("it is a three-hundred and one").tags() )
 // console.log( pos("funny funny funny funny").sentences[0].tokens )
+// pos("In March 2009, while Secretary of State for Energy and Climate Change, Miliband attended the UK premiere of climate-change film The Age of Stupid, where he was ambushed").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})

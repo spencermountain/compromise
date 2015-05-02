@@ -231,3 +231,4 @@ var verb_conjugate = (function() {
 
 // console.log(verb_conjugate("swing"))
 // console.log(verb_conjugate("walking"))
+// console.log(verb_conjugate("overtook"))

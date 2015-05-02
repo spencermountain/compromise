@@ -63,6 +63,12 @@ var to_comparative = (function() {
       return null
     }
 
+    for (i = 0; i < transforms.length; i++) {
+      if (str.match(transforms[i].reg)) {
+        return str.replace(transforms[i].reg, transforms[i].repl)
+      }
+    }
+
     if (convertables.hasOwnProperty(str)) {
       if (str.match(/e$/)) {
         return str + "r"
@@ -70,6 +76,7 @@ var to_comparative = (function() {
         return str + "er"
       }
     }
+
 
     if (irregulars.hasOwnProperty(str)) {
       return irregulars[str]
@@ -82,11 +89,6 @@ var to_comparative = (function() {
       }
     }
 
-    for (i = 0; i < transforms.length; i++) {
-      if (str.match(transforms[i].reg)) {
-        return str.replace(transforms[i].reg, transforms[i].repl)
-      }
-    }
 
     for (i = 0; i < matches.length; i++) {
       if (str.match(matches[i])) {

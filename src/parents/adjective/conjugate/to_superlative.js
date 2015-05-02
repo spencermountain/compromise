@@ -61,6 +61,12 @@ var to_superlative = (function() {
       }
     }
 
+    for (i = 0; i < transforms.length; i++) {
+      if (str.match(transforms[i].reg)) {
+        return str.replace(transforms[i].reg, transforms[i].repl)
+      }
+    }
+
     if (convertables.hasOwnProperty(str)) {
       return generic_transformation(str)
     }
@@ -76,12 +82,6 @@ var to_superlative = (function() {
     for (i = 0; i < not_matches.length; i++) {
       if (str.match(not_matches[i])) {
         return "most " + str
-      }
-    }
-
-    for (i = 0; i < transforms.length; i++) {
-      if (str.match(transforms[i].reg)) {
-        return str.replace(transforms[i].reg, transforms[i].repl)
       }
     }
 

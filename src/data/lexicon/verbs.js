@@ -557,7 +557,12 @@ var verbs = (function() {
       "measure",
       "enhance",
       "distinguish",
-      "avoid"
+      "avoid",
+      //contractions
+      "don't",
+      "won't",
+      "what's" //somewhat ambiguous (what does|what are)
+
     ]
 
   if (typeof module !== "undefined" && module.exports) {

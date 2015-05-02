@@ -2,460 +2,448 @@
 // used in combination with the generic 'fallback' method
 var verb_rules = {
   "infinitive": [
-    {
-      "reg": /(eed)$/i,
-      "repl": {
-        "present": "$1s",
-        "gerund": "$1ing",
-        "past": "$1ed",
-        "doer": "$1er"
+    [
+      "(eed)$",
+      {
+        "pr": "$1s",
+        "g": "$1ing",
+        "pa": "$1ed",
+        "do": "$1er"
       }
-    },
-    {
-      "reg": /(e)(ep)$/i,
-      "repl": {
-        "present": "$1$2s",
-        "gerund": "$1$2ing",
-        "past": "$1pt",
-        "doer": "$1$2er"
+    ],
+    [
+      "(e)(ep)$",
+      {
+        "pr": "$1$2s",
+        "g": "$1$2ing",
+        "pa": "$1pt",
+        "do": "$1$2er"
       }
-    },
-    {
-      "reg": /(a[tg]|i[zn]|ur|nc|gl|is)e$/i,
-      "repl": {
-        "present": "$1es",
-        "gerund": "$1ing",
-        "past": "$1ed"
-      },
-      "exceptions": [
-        "ate",
-        "overate"
-      ]
-    },
-    {
-      "reg": /([i|f|rr])y$/i,
-      "repl": {
-        "present": "$1ies",
-        "gerund": "$1ying",
-        "past": "$1ied"
+    ],
+    [
+      "(a[tg]|i[zn]|ur|nc|gl|is)e$",
+      {
+        "pr": "$1es",
+        "g": "$1ing",
+        "pa": "$1ed"
       }
-    },
-    {
-      "reg": /([td]er)$/i,
-      "repl": {
-        "present": "$1s",
-        "gerund": "$1ing",
-        "past": "$1ed"
+    ],
+    [
+      "([i|f|rr])y$",
+      {
+        "pr": "$1ies",
+        "g": "$1ying",
+        "pa": "$1ied"
       }
-    },
-    {
-      "reg": /([bd]l)e$/i,
-      "repl": {
-        "present": "$1es",
-        "gerund": "$1ing",
-        "past": "$1ed"
+    ],
+    [
+      "([td]er)$",
+      {
+        "pr": "$1s",
+        "g": "$1ing",
+        "pa": "$1ed"
       }
-    },
-    {
-      "reg": /(ish|tch|ess)$/i,
-      "repl": {
-        "present": "$1es",
-        "gerund": "$1ing",
-        "past": "$1ed"
+    ],
+    [
+      "([bd]l)e$",
+      {
+        "pr": "$1es",
+        "g": "$1ing",
+        "pa": "$1ed"
       }
-    },
-    {
-      "reg": /(ion|end|e[nc]t)$/i,
-      "repl": {
-        "present": "$1s",
-        "gerund": "$1ing",
-        "past": "$1ed"
-      },
-      "exceptions": [
-        "sent",
-        "bent",
-        "overspent",
-        "misspent",
-        "went",
-        "kent",
-        "outwent",
-        "forwent",
-        "spent",
-        "pent",
-        "lent",
-        "underwent",
-        "rent",
-        "unbent",
-        "shent"
-      ]
-    },
-    {
-      "reg": /(om)e$/i,
-      "repl": {
-        "present": "$1es",
-        "gerund": "$1ing",
-        "past": "ame"
+    ],
+    [
+      "(ish|tch|ess)$",
+      {
+        "pr": "$1es",
+        "g": "$1ing",
+        "pa": "$1ed"
       }
-    },
-    {
-      "reg": /([aeiu])([pt])$/i,
-      "repl": {
-        "present": "$1$2s",
-        "gerund": "$1$2$2ing",
-        "past": "$1$2"
+    ],
+    [
+      "(ion|end|e[nc]t)$",
+      {
+        "pr": "$1s",
+        "g": "$1ing",
+        "pa": "$1ed"
       }
-    },
-    {
-      "reg": /(er)$/i,
-      "repl": {
-        "present": "$1s",
-        "gerund": "$1ing",
-        "past": "$1ed"
+    ],
+    [
+      "(om)e$",
+      {
+        "pr": "$1es",
+        "g": "$1ing",
+        "pa": "ame"
       }
-    },
-    {
-      "reg": /(en)$/i,
-      "repl": {
-        "present": "$1s",
-        "gerund": "$1ing",
-        "past": "$1ed"
+    ],
+    [
+      "([aeiu])([pt])$",
+      {
+        "pr": "$1$2s",
+        "g": "$1$2$2ing",
+        "pa": "$1$2"
       }
-    }
+    ],
+    [
+      "(er)$",
+      {
+        "pr": "$1s",
+        "g": "$1ing",
+        "pa": "$1ed"
+      }
+    ],
+    [
+      "(en)$",
+      {
+        "pr": "$1s",
+        "g": "$1ing",
+        "pa": "$1ed"
+      }
+    ]
   ],
   "present": [
-    {
-      "reg": /(ies)$/i,
-      "repl": {
-        "infinitive": "y",
-        "gerund": "ying",
-        "past": "ied"
+    [
+      "(ies)$",
+      {
+        "in": "y",
+        "g": "ying",
+        "pa": "ied"
       }
-    },
-    {
-      "reg": /(tch|sh)es$/i,
-      "repl": {
-        "infinitive": "$1",
-        "gerund": "$1ing",
-        "past": "$1ed"
+    ],
+    [
+      "(tch|sh)es$",
+      {
+        "in": "$1",
+        "g": "$1ing",
+        "pa": "$1ed"
       }
-    },
-    {
-      "reg": /(ss)es$/i,
-      "repl": {
-        "infinitive": "$1",
-        "gerund": "$1ing",
-        "past": "$1ed"
+    ],
+    [
+      "(ss)es$",
+      {
+        "in": "$1",
+        "g": "$1ing",
+        "pa": "$1ed"
       }
-    },
-    {
-      "reg": /([tzlshicgrvdnkmu])es$/i,
-      "repl": {
-        "infinitive": "$1e",
-        "gerund": "$1ing",
-        "past": "$1ed"
+    ],
+    [
+      "([tzlshicgrvdnkmu])es$",
+      {
+        "in": "$1e",
+        "g": "$1ing",
+        "pa": "$1ed"
       }
-    },
-    {
-      "reg": /(n[dtk]|c[kt]|[eo]n|i[nl]|er|a[ytrl])s$/i,
-      "repl": {
-        "infinitive": "$1",
-        "gerund": "$1ing",
-        "past": "$1ed"
+    ],
+    [
+      "(n[dtk]|c[kt]|[eo]n|i[nl]|er|a[ytrl])s$",
+      {
+        "in": "$1",
+        "g": "$1ing",
+        "pa": "$1ed"
       }
-    },
-    {
-      "reg": /(ow)s$/i,
-      "repl": {
-        "infinitive": "$1",
-        "gerund": "$1ing",
-        "past": "ew"
+    ],
+    [
+      "(ow)s$",
+      {
+        "in": "$1",
+        "g": "$1ing",
+        "pa": "ew"
       }
-    },
-    {
-      "reg": /(op)s$/i,
-      "repl": {
-        "infinitive": "$1",
-        "gerund": "$1ping",
-        "past": "$1ped"
+    ],
+    [
+      "(op)s$",
+      {
+        "in": "$1",
+        "g": "$1ping",
+        "pa": "$1ped"
       }
-    },
-    {
-      "reg": /([eirs])ts$/i,
-      "repl": {
-        "infinitive": "$1t",
-        "gerund": "$1tting",
-        "past": "$1tted"
+    ],
+    [
+      "([eirs])ts$",
+      {
+        "in": "$1t",
+        "g": "$1tting",
+        "pa": "$1tted"
       }
-    },
-    {
-      "reg": /(ll)s$/i,
-      "repl": {
-        "infinitive": "$1",
-        "gerund": "$1ing",
-        "past": "$1ed"
+    ],
+    [
+      "(ll)s$",
+      {
+        "in": "$1",
+        "g": "$1ing",
+        "pa": "$1ed"
       }
-    },
-    {
-      "reg": /(el)s$/i,
-      "repl": {
-        "infinitive": "$1",
-        "gerund": "$1ling",
-        "past": "$1led"
+    ],
+    [
+      "(el)s$",
+      {
+        "in": "$1",
+        "g": "$1ling",
+        "pa": "$1led"
       }
-    },
-    {
-      "reg": /(ip)es$/i,
-      "repl": {
-        "infinitive": "$1e",
-        "gerund": "$1ing",
-        "past": "$1ed"
+    ],
+    [
+      "(ip)es$",
+      {
+        "in": "$1e",
+        "g": "$1ing",
+        "pa": "$1ed"
       }
-    },
-    {
-      "reg": /ss$/i,
-      "repl": {
-        "infinitive": "ss",
-        "gerund": "ssing",
-        "past": "ssed"
+    ],
+    [
+      "ss$",
+      {
+        "in": "ss",
+        "g": "ssing",
+        "pa": "ssed"
       }
-    },
-    {
-      "reg": /s$/i,
-      "repl": {
-        "infinitive": "",
-        "gerund": "ing",
-        "past": "ed"
+    ],
+    [
+      "s$",
+      {
+        "in": "",
+        "g": "ing",
+        "pa": "ed"
       }
-    }
+    ]
   ],
   "gerund": [
-    {
-      "reg": /pping$/i,
-      "repl": {
-        "infinitive": "p",
-        "present": "ps",
-        "past": "pped"
+    [
+      "pping$",
+      {
+        "in": "p",
+        "pr": "ps",
+        "pa": "pped"
       }
-    },
-    {
-      "reg": /lling$/i,
-      "repl": {
-        "infinitive": "ll",
-        "present": "lls",
-        "past": "lled"
+    ],
+    [
+      "lling$",
+      {
+        "in": "ll",
+        "pr": "lls",
+        "pa": "lled"
       }
-    },
-    {
-      "reg": /tting$/i,
-      "repl": {
-        "infinitive": "t",
-        "present": "ts",
-        "past": "t"
+    ],
+    [
+      "tting$",
+      {
+        "in": "t",
+        "pr": "ts",
+        "pa": "t"
       }
-    },
-    {
-      "reg": /ssing$/i,
-      "repl": {
-        "infinitive": "ss",
-        "present": "sses",
-        "past": "ssed"
+    ],
+    [
+      "ssing$",
+      {
+        "in": "ss",
+        "pr": "sses",
+        "pa": "ssed"
       }
-    },
-    {
-      "reg": /gging$/i,
-      "repl": {
-        "infinitive": "g",
-        "present": "gs",
-        "past": "gged"
+    ],
+    [
+      "gging$",
+      {
+        "in": "g",
+        "pr": "gs",
+        "pa": "gged"
       }
-    },
-    {
-      "reg": /([^aeiou])ying$/i,
-      "repl": {
-        "infinitive": "$1y",
-        "present": "$1ies",
-        "past": "$1ied",
-        "doer": "$1ier"
+    ],
+    [
+      "([^aeiou])ying$",
+      {
+        "in": "$1y",
+        "pr": "$1ies",
+        "pa": "$1ied",
+        "do": "$1ier"
       }
-    },
-    {
-      "reg": /(i.)ing$/i,
-      "repl": {
-        "infinitive": "$1e",
-        "present": "$1es",
-        "past": "$1ed"
+    ],
+    [
+      "(i.)ing$",
+      {
+        "in": "$1e",
+        "pr": "$1es",
+        "pa": "$1ed"
       }
-    },
-    {
-      "reg": /(u[rtcb]|[bdtpkg]l|n[cg]|a[gdkvtc]|[ua]s|[dr]g|yz|o[rlsp]|cre)ing$/i,
-      "repl": {
-        "infinitive": "$1e",
-        "present": "$1es",
-        "past": "$1ed"
+    ],
+    [
+      "(u[rtcb]|[bdtpkg]l|n[cg]|a[gdkvtc]|[ua]s|[dr]g|yz|o[rlsp]|cre)ing$",
+      {
+        "in": "$1e",
+        "pr": "$1es",
+        "pa": "$1ed"
       }
-    },
-    {
-      "reg": /(ch|sh)ing$/i,
-      "repl": {
-        "infinitive": "$1",
-        "present": "$1es",
-        "past": "$1ed"
+    ],
+    [
+      "(ch|sh)ing$",
+      {
+        "in": "$1",
+        "pr": "$1es",
+        "pa": "$1ed"
       }
-    },
-    {
-      "reg": /(..)ing$/i,
-      "repl": {
-        "infinitive": "$1",
-        "present": "$1s",
-        "past": "$1ed"
+    ],
+    [
+      "(..)ing$",
+      {
+        "in": "$1",
+        "pr": "$1s",
+        "pa": "$1ed"
       }
-    }
+    ]
   ],
   "past": [
-    {
-      "reg": /(ued)$/i,
-      "repl": {
-        "present": "ues",
-        "gerund": "uing",
-        "past": "ued",
-        "doer": "uer"
+    [
+      "(ued)$",
+      {
+        "pr": "ues",
+        "g": "uing",
+        "pa": "ued",
+        "do": "uer"
       }
-    },
-    {
-      "reg": /(e|i)lled$/i,
-      "repl": {
-        "present": "$1lls",
-        "gerund": "$1lling",
-        "past": "$1lled",
-        "doer": "$1ller"
+    ],
+    [
+      "(e|i)lled$",
+      {
+        "pr": "$1lls",
+        "g": "$1lling",
+        "pa": "$1lled",
+        "do": "$1ller"
       }
-    },
-    {
-      "reg": /(sh|ch)ed$/i,
-      "repl": {
-        "infinitive": "$1",
-        "present": "$1es",
-        "doer": "$1er",
-        "gerund": "$1ing"
+    ],
+    [
+      "(sh|ch)ed$",
+      {
+        "in": "$1",
+        "pr": "$1es",
+        "g": "$1ing",
+        "do": "$1er"
       }
-    },
-    {
-      "reg": /(tl|gl)ed$/i,
-      "repl": {
-        "infinitive": "$1e",
-        "present": "$1es",
-        "doer": "$1er",
-        "gerund": "$1ing"
+    ],
+    [
+      "(tl|gl)ed$",
+      {
+        "in": "$1e",
+        "pr": "$1es",
+        "g": "$1ing",
+        "do": "$1er"
       }
-    },
-    {
-      "reg": /(ss)ed$/i,
-      "repl": {
-        "infinitive": "$1",
-        "present": "$1es",
-        "doer": "$1er",
-        "gerund": "$1ing"
+    ],
+    [
+      "(ss)ed$",
+      {
+        "in": "$1",
+        "pr": "$1es",
+        "g": "$1ing",
+        "do": "$1er"
       }
-    },
-    {
-      "reg": /pped$/i,
-      "repl": {
-        "infinitive": "p",
-        "present": "ps",
-        "doer": "pper",
-        "gerund": "pping"
+    ],
+    [
+      "pped$",
+      {
+        "in": "p",
+        "pr": "ps",
+        "g": "pping",
+        "do": "pper"
       }
-    },
-    {
-      "reg": /tted$/i,
-      "repl": {
-        "infinitive": "t",
-        "present": "ts",
-        "doer": "tter",
-        "gerund": "tting"
+    ],
+    [
+      "tted$",
+      {
+        "in": "t",
+        "pr": "ts",
+        "g": "tting",
+        "do": "tter"
       }
-    },
-    {
-      "reg": /gged$/i,
-      "repl": {
-        "infinitive": "g",
-        "present": "gs",
-        "doer": "gger",
-        "gerund": "gging"
+    ],
+    [
+      "gged$",
+      {
+        "in": "g",
+        "pr": "gs",
+        "g": "gging",
+        "do": "gger"
       }
-    },
-    {
-      "reg": /(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ail|ld|en|oo.|er|k|pp|w|ou.|rt|ght|rm)ed$/i,
-      "repl": {
-        "infinitive": "$1",
-        "present": "$1s",
-        "doer": "$1er",
-        "gerund": "$1ing"
+    ],
+    [
+      "(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ail|ld|en|oo.|er|k|pp|w|ou.|rt|ght|rm)ed$",
+      {
+        "in": "$1",
+        "pr": "$1s",
+        "g": "$1ing",
+        "do": "$1er"
       }
-    },
-    {
-      "reg": /(..[^aeiou])ed$/i,
-      "repl": {
-        "infinitive": "$1e",
-        "present": "$1es",
-        "doer": "$1er",
-        "gerund": "$1ing"
+    ],
+    [
+      "(..[^aeiou])ed$",
+      {
+        "in": "$1e",
+        "pr": "$1es",
+        "g": "$1ing",
+        "do": "$1er"
       }
-    },
-    {
-      "reg": /ied$/i,
-      "repl": {
-        "infinitive": "y",
-        "present": "ies",
-        "doer": "ier",
-        "gerund": "ying"
+    ],
+    [
+      "ied$",
+      {
+        "in": "y",
+        "pr": "ies",
+        "g": "ying",
+        "do": "ier"
       }
-    },
-    {
-      "reg": /(.o)ed$/i,
-      "repl": {
-        "infinitive": "$1o",
-        "present": "$1os",
-        "doer": "$1oer",
-        "gerund": "$1oing"
+    ],
+    [
+      "(.o)ed$",
+      {
+        "in": "$1o",
+        "pr": "$1os",
+        "g": "$1oing",
+        "do": "$1oer"
       }
-    },
-    {
-      "reg": /(.i)ed$/i,
-      "repl": {
-        "infinitive": "$1",
-        "present": "$1s",
-        "doer": "$1er",
-        "gerund": "$1ing"
+    ],
+    [
+      "(.i)ed$",
+      {
+        "in": "$1",
+        "pr": "$1s",
+        "g": "$1ing",
+        "do": "$1er"
       }
-    },
-    {
-      "reg": /([rl])ew$/i,
-      "repl": {
-        "infinitive": "$1ow",
-        "present": "$1ows",
-        "gerund": "$1owing"
-      },
-      "exceptions": [
-        "brew",
-        "drew",
-        "withdrew",
-        "crew",
-        "screw",
-        "unscrew"
-      ]
-    },
-    {
-      "reg": /([pl])t$/i,
-      "repl": {
-        "infinitive": "$1t",
-        "present": "$1ts",
-        "gerund": "$1ting"
+    ],
+    [
+      "([rl])ew$",
+      {
+        "in": "$1ow",
+        "pr": "$1ows",
+        "g": "$1owing"
       }
-    }
+    ],
+    [
+      "([pl])t$",
+      {
+        "in": "$1t",
+        "pr": "$1ts",
+        "g": "$1ting"
+      }
+    ]
   ]
 }
+//unpack compressed form
+verb_rules=Object.keys(verb_rules).reduce(function(h,k){
+  h[k]=verb_rules[k].map(function(a){
+    return{
+      reg:new RegExp(a[0],"i"),
+      repl:{
+        infinitive:a[1]["in"],
+        present:a[1]["pr"],
+        past:a[1]["pa"],
+        doer:a[1]["do"],
+        gerund:a[1]["g"],
+      }
+    }
+  })
+  return h
+},{})
 
 if (typeof module !== "undefined" && module.exports) {
   module.exports = verb_rules;
 }
+// console.log(JSON.stringify(verb_rules, null, 2));

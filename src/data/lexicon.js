@@ -23,54 +23,19 @@ var lexicon = (function() {
       convertables = require("../parents/adjective/conjugate/convertables")
     }
     var main = {
-      //contractions that don't need splitting-open, grammatically
-      "don't": "VB",
-      "won't": "VB",
-      "what's": "VB", //somewhat ambiguous (what does|what are)
-      "where'd": "VBD",
-      "when'd": "VBD",
-      "how'd": "VBD",
-      "what'd": "VBD",
 
-      //foreign words
-      "etc": "FW",
+      "etc": "FW", //foreign words
       "ie": "FW",
 
       "there": "EX",
 
-      "higher": "JJR",
-      "larger": "JJR",
       "better": "JJR",
       "earlier": "JJR",
-      "biggest": "JJS",
-      "easier": "JJR",
 
-      //important verbs
-      "said": "VBD",
-      "says": "VBZ",
       "has": "VB",
       "more": "RBR",
-      "had": "VBD",
-      "been": "VBD",
-      "going": "VBG",
-      "being": "VBG",
-      "began": "VBD",
-      "came": "VBD",
-      "did": "VBD",
-      "sounds": "VBZ",
-      "went": "VBD",
-      "given": "VBN",
-      "known": "VBN",
-      "shown": "VBN",
-      "seen": "VBN",
-      "according": "VBG",
-      "means": "VBZ",
-      "born": "VBN",
-      "resulting": "VBG",
-      "developing": "VBG",
-      "yourself": "PRP",
-      "staining": "VBG",
-      "meant": "VBD"
+
+      "sounds": "VBZ"
     }
 
     var compact = {
@@ -95,6 +60,38 @@ var lexicon = (function() {
           "plus",
           "versus",
           "not"
+        ],
+
+        "VBD": [
+          "where'd",
+          "when'd",
+          "how'd",
+          "what'd",
+          "said",
+          "had",
+          "been",
+          "began",
+          "came",
+          "did",
+          "meant",
+          "went"
+        ],
+
+        "VBN": [
+          "given",
+          "known",
+          "shown",
+          "seen",
+          "born",
+        ],
+
+        "VBG": [
+          "going",
+          "being",
+          "according",
+          "resulting",
+          "developing",
+          "staining"
         ],
 
         //copula
@@ -269,6 +266,7 @@ var lexicon = (function() {
           "thou",
           "il",
           "elle",
+          "yourself",
           "'em"
         ],
 
@@ -406,7 +404,7 @@ var lexicon = (function() {
     }
 
     //add values
-    keys=Object.keys(values)
+    keys = Object.keys(values)
     l = keys.length
     for (i = 0; i < l; i++) {
       main[keys[i]] = "CD"
@@ -456,16 +454,16 @@ var lexicon = (function() {
     //add irregular verbs
     l = verb_irregulars.length;
     for (i = 0; i < l; i++) {
-      c=verb_irregulars[i]
-      main[c.infinitive]=main[c.infinitive]||"VBP"
-      main[c.gerund]=main[c.gerund]||"VBG"
-      main[c.past]=main[c.past]||"VBD"
-      main[c.present]=main[c.present]||"VBZ"
+      c = verb_irregulars[i]
+      main[c.infinitive] = main[c.infinitive] || "VBP"
+      main[c.gerund] = main[c.gerund] || "VBG"
+      main[c.past] = main[c.past] || "VBD"
+      main[c.present] = main[c.present] || "VBZ"
       if (c.doer) {
-        main[c.doer]=main[c.doer]||"NNA"
+        main[c.doer] = main[c.doer] || "NNA"
       }
       if (c.participle) {
-        main[c.future]=main[c.future]||"VB"
+        main[c.future] = main[c.future] || "VB"
       }
     }
 
@@ -476,7 +474,7 @@ var lexicon = (function() {
     for (i = 0; i < l; i++) {
       main[adjectives[i]] = "JJ"
     }
-    keys=Object.keys(convertables)
+    keys = Object.keys(convertables)
     l = keys.length;
     for (i = 0; i < l; i++) {
       j = keys[i]
@@ -515,7 +513,13 @@ var lexicon = (function() {
   // console.log(lexicon[null]===undefined)
   // console.log(lexicon["dr"]==="NNAB")
   // console.log(lexicon["hope"]==="NN")
+  // console.log(lexicon["higher"]==="JJR")
+  // console.log(lexicon["earlier"]==="JJR")
+  // console.log(lexicon["larger"]==="JJR")
+  // console.log(lexicon["says"]==="VBZ")
+  // console.log(lexicon["sounds"]==="VBZ")
+  // console.log(lexicon["means"]==="VBZ")
 
-  // console.log(Object.keys(lexicon).length)
-  // console.log(lexicon['prettier']=="JJR")
-  // console.log(lexicon['prettiest']=="JJS")
+// console.log(Object.keys(lexicon).length)
+// console.log(lexicon['prettier']=="JJR")
+// console.log(lexicon['prettiest']=="JJS")

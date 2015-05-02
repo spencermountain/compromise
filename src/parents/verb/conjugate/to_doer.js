@@ -30,17 +30,17 @@ var verb_to_doer = (function() {
       "bet": 1
     }
     var transforms = [{
-      reg: /e$/i,
-      repl: 'er'
+      "reg": /e$/i,
+      "repl": 'er'
     }, {
-      reg: /([aeiou])([mlgp])$/i,
-      repl: '$1$2$2er'
+      "reg": /([aeiou])([mlgp])$/i,
+      "repl": '$1$2$2er'
     }, {
-      reg: /([rlf])y$/i,
-      repl: '$1ier'
+      "reg": /([rlf])y$/i,
+      "repl": '$1ier'
     }, {
-      reg: /^(.?.[aeiou])t$/i,
-      repl: '$1tter'
+      "reg": /^(.?.[aeiou])t$/i,
+      "repl": '$1tter'
     }]
 
     if (dont.hasOwnProperty(str)) {

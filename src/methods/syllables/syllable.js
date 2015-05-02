@@ -3,35 +3,34 @@ var syllables = (function(str) {
 
   var main = function(str) {
     var all = []
-
     //suffix fixes
-      var postprocess= function(arr) {
-        //trim whitespace
-        arr= arr.map(function(w){
-          w= w.replace(/^ */,'')
-          w= w.replace(/ *$/,'')
-          return w
-        })
-        if (arr.length > 2) { //
-          return arr
-        }
-        var ones = [
-          /^[^aeiou]?ion/,
-          /^[^aeiou]?ised/,
-          /^[^aeiou]?iled/
-        ]
-        var l = arr.length
-        if (l > 1) {
-          var suffix = arr[l - 2] + arr[l - 1];
-          for (var i = 0; i < ones.length; i++) {
-            if (suffix.match(ones[i])) {
-              arr[l - 2] = arr[l - 2] + arr[l - 1];
-              arr.pop();
-            }
-          }
-        }
+    var postprocess = function(arr) {
+      //trim whitespace
+      arr = arr.map(function(w) {
+        w = w.replace(/^ */, '')
+        w = w.replace(/ *$/, '')
+        return w
+      })
+      if (arr.length > 2) {
         return arr
       }
+      var ones = [
+        /^[^aeiou]?ion/,
+        /^[^aeiou]?ised/,
+        /^[^aeiou]?iled/
+      ]
+      var l = arr.length
+      if (l > 1) {
+        var suffix = arr[l - 2] + arr[l - 1];
+        for (var i = 0; i < ones.length; i++) {
+          if (suffix.match(ones[i])) {
+            arr[l - 2] = arr[l - 2] + arr[l - 1];
+            arr.pop();
+          }
+        }
+      }
+      return arr
+    }
 
     var doer = function(str) {
       var vow = /[aeiouy]$/
@@ -80,8 +79,8 @@ var syllables = (function(str) {
     all = postprocess(all)
 
     //for words like 'tree' and 'free'
-    if(all.length===0){
-      all=[str]
+    if (all.length === 0) {
+      all = [str]
     }
 
     return all

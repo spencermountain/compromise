@@ -90,7 +90,6 @@ var Sentence = function(tokens) {
         "should": "shouldn't",
         "can": "can't",
         "must": "mustn't"
-
       }
       //loop through each term..
     for (var i = 0; i < the.tokens.length; i++) {

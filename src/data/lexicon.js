@@ -8,6 +8,7 @@ var lexicon = (function() {
       values = require("./lexicon/values")
       demonyms = require("./lexicon/demonyms")
       abbreviations = require("./lexicon/abbreviations")
+      uncountables = require("./lexicon/uncountables")
 
       //verbs
       verbs = require("./lexicon/verbs")
@@ -423,6 +424,12 @@ var lexicon = (function() {
       main[abbreviations[i]] = "NNAB"
     }
 
+    //add uncountable nouns
+    l = uncountables.length
+    for (i = 0; i < l; i++) {
+      main[uncountables[i]] = "NN"
+    }
+
     //add multiple-word terms
     l = Object.keys(multiples).forEach(function(k) {
       main[k] = multiples[k]
@@ -507,7 +514,7 @@ var lexicon = (function() {
   // console.log(lexicon['july']=="CD")
   // console.log(lexicon[null]===undefined)
   // console.log(lexicon["dr"]==="NNAB")
-
+  // console.log(lexicon["hope"]==="NN")
 
   // console.log(Object.keys(lexicon).length)
   // console.log(lexicon['prettier']=="JJR")

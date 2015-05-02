@@ -8,8 +8,7 @@ var britishize = (function() {
       // ise -> ize
       {
         reg: /([^aeiou][iy])z(e|ed|es|ing)?$/,
-        repl: '$1s$2',
-        exceptions: []
+        repl: '$1s$2'
       },
       // our -> or
       // {
@@ -57,12 +56,6 @@ var britishize = (function() {
 
     for (var i = 0; i < patterns.length; i++) {
       if (str.match(patterns[i].reg)) {
-        //check for exceptions
-        for (var o = 0; o < patterns[i].exceptions.length; o++) {
-          if (str.match(patterns[i].exceptions[o])) {
-            return str
-          }
-        }
         return str.replace(patterns[i].reg, patterns[i].repl)
       }
     }
@@ -83,61 +76,47 @@ var americanize = (function() {
       // ise -> ize
       {
         reg: /([^aeiou][iy])s(e|ed|es|ing)?$/,
-        repl: '$1z$2',
-        exceptions: []
+        repl: '$1z$2'
       },
       // our -> or
       {
         reg: /(..)our(ly|y|ite)?$/,
-        repl: '$1or$2',
-        exceptions: []
+        repl: '$1or$2'
       },
       // re -> er
       {
         reg: /([^cdnv])re(s)?$/,
-        repl: '$1er$2',
-        exceptions: []
+        repl: '$1er$2'
       },
       // xion -> tion
       {
         reg: /([aeiou])xion([ed])?$/,
-        repl: '$1tion$2',
-        exceptions: []
+        repl: '$1tion$2'
       },
       //logue -> log
       {
         reg: /logue$/,
-        repl: 'log',
-        exceptions: []
+        repl: 'log'
       },
       // ae -> e
       {
         reg: /([o|a])e/,
-        repl: 'e',
-        exceptions: []
+        repl: 'e'
       },
       //eing -> ing
       {
         reg: /e(ing|able)$/,
-        repl: '$1',
-        exceptions: []
+        repl: '$1'
       },
       // illful -> ilful
       {
         reg: /([aeiou]+[^aeiou]+[aeiou]+)ll(ful|ment|est|ing|or|er|ed)$/, //must be second-syllable
-        repl: '$1l$2',
-        exceptions: []
+        repl: '$1l$2'
       }
     ]
 
     for (var i = 0; i < patterns.length; i++) {
       if (str.match(patterns[i].reg)) {
-        //check for exceptions
-        for (var o = 0; o < patterns[i].exceptions.length; o++) {
-          if (str.match(patterns[i].exceptions[o])) {
-            return str
-          }
-        }
         return str.replace(patterns[i].reg, patterns[i].repl)
       }
     }

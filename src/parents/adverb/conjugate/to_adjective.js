@@ -22,26 +22,26 @@ var to_adjective = (function() {
       "wholly": "whole"
     }
     var transforms = [{
-      reg: /bly$/i,
-      repl: 'ble'
+      "reg": /bly$/i,
+      "repl": 'ble'
     }, {
-      reg: /gically$/i,
-      repl: 'gical'
+      "reg": /gically$/i,
+      "repl": 'gical'
     }, {
-      reg: /([rsdh])ically$/i,
-      repl: '$1ical'
+      "reg": /([rsdh])ically$/i,
+      "repl": '$1ical'
     }, {
-      reg: /ically$/i,
-      repl: 'ic'
+      "reg": /ically$/i,
+      "repl": 'ic'
     }, {
-      reg: /uly$/i,
-      repl: 'ue'
+      "reg": /uly$/i,
+      "repl": 'ue'
     }, {
-      reg: /ily$/i,
-      repl: 'y'
+      "reg": /ily$/i,
+      "repl": 'y'
     }, {
-      reg: /(.{3})ly$/i,
-      repl: '$1'
+      "reg": /(.{3})ly$/i,
+      "repl": '$1'
     }]
     if (irregulars.hasOwnProperty(str)) {
       return irregulars[str]

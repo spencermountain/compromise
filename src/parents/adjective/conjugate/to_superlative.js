@@ -24,17 +24,17 @@ var to_superlative = (function() {
     }
 
     var transforms = [{
-      reg: /y$/i,
-      repl: 'iest'
+      "reg": /y$/i,
+      "repl": 'iest'
     }, {
-      reg: /([aeiou])t$/i,
-      repl: '$1ttest'
+      "reg": /([aeiou])t$/i,
+      "repl": '$1ttest'
     }, {
-      reg: /([aeou])de$/i,
-      repl: '$1dest'
+      "reg": /([aeou])de$/i,
+      "repl": '$1dest'
     }, {
-      reg: /nge$/i,
-      repl: 'ngest'
+      "reg": /nge$/i,
+      "repl": 'ngest'
     }]
 
     var matches = [

@@ -19,17 +19,17 @@ var adj_to_noun = (function() {
       return w;
     }
     var transforms=[
-      {reg:/y$/, repl:'iness'},
-      {reg:/le$/, repl:'ility'},
-      {reg:/ial$/, repl:'y'},
-      {reg:/al$/, repl:'ality'},
-      {reg:/ting$/, repl:'ting'},
-      {reg:/ring$/, repl:'ring'},
-      {reg:/bing$/, repl:'bingness'},
-      {reg:/sing$/, repl:'se'},
-      {reg:/ing$/, repl:'ment'},
-      {reg:/ess$/, repl:'essness'},
-      {reg:/ous$/, repl:'ousness'},
+      {"reg":/y$/, "repl":'iness'},
+      {"reg":/le$/, "repl":'ility'},
+      {"reg":/ial$/, "repl":'y'},
+      {"reg":/al$/, "repl":'ality'},
+      {"reg":/ting$/, "repl":'ting'},
+      {"reg":/ring$/, "repl":'ring'},
+      {"reg":/bing$/, "repl":'bingness'},
+      {"reg":/sing$/, "repl":'se'},
+      {"reg":/ing$/, "repl":'ment'},
+      {"reg":/ess$/, "repl":'essness'},
+      {"reg":/ous$/, "repl":'ousness'},
     ]
 
     for(var i=0; i<transforms.length; i++){

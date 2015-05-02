@@ -2,6 +2,17 @@
 module.exports = function(grunt) {
 
   var files = [
+    //lexicon data
+    './src/parents/verb/conjugate/verb_irregulars.js',
+    './src/parents/adjective/conjugate/convertables.js',
+    './src/data/lexicon/adjectives.js',
+    './src/data/lexicon/multiples.js',
+    './src/data/lexicon/verbs.js',
+    './src/data/lexicon/uncountables.js',
+    './src/data/lexicon/demonyms.js',
+    './src/data/lexicon/values.js',
+    './src/data/lexicon/abbreviations.js',
+    //methods
     './src/methods/tokenization/sentence.js',
     './src/methods/tokenization/ngram.js',
     './src/methods/tokenization/tokenize.js',
@@ -12,15 +23,6 @@ module.exports = function(grunt) {
     './src/data/word_rules.js',
     './src/data/unambiguous_suffixes.js',
     './src/data/parts_of_speech.js',
-    //lexicon data
-    './src/parents/verb/conjugate/verb_irregulars.js',
-    './src/parents/adjective/conjugate/convertables.js',
-    './src/data/lexicon/adjectives.js',
-    './src/data/lexicon/verbs.js',
-    './src/data/lexicon/multiples.js',
-    './src/data/lexicon/demonyms.js',
-    './src/data/lexicon/values.js',
-    './src/data/lexicon/abbreviations.js',
     //values
     './src/parents/value/to_number.js',
     './src/parents/value/date_extractor.js',

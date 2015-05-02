@@ -1,1506 +1,5 @@
 /*! nlp_compromise  0.3.10  by @spencermountain 2015-05-01  MIT */
 var nlp = (function() {
-//(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
-// Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
-// @spencermountain 2015 MIT
-var sentence_parser = function(text) {
-
-  if (typeof module !== "undefined" && module.exports) {
-    abbreviations = require("../../data/lexicon/abbreviations")
-  }
-
-  var sentences = [];
-  //first do a greedy-split..
-  var chunks = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
-
-  //date abbrevs.
-  //these are added seperately because they are not nouns
-  abbreviations = abbreviations.concat(["jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept", "sep"]);
-
-  //detection of non-sentence chunks
-  var abbrev_reg = new RegExp("(^| )(" + abbreviations.join("|") + ")[.!?] ?$", "i");
-  var acronym_reg= new RegExp("[ |\.][A-Z]\.?$", "i")
-  var elipses_reg= new RegExp("\\.\\.\\.*$")
-
-  //loop through these chunks, and join the non-sentence chunks back together..
-  var chunks_length = chunks.length;
-  for (i = 0; i < chunks_length; i++) {
-    if (chunks[i]) {
-      //trim whitespace
-      chunks[i] = chunks[i].replace(/^\s+|\s+$/g, "");
-      //should this chunk be combined with the next one?
-      if (chunks[i+1] && chunks[i].match(abbrev_reg) || chunks[i].match(acronym_reg) || chunks[i].match(elipses_reg) ) {
-          chunks[i + 1] = ((chunks[i]||'') + " " + (chunks[i + 1]||'')).replace(/ +/g, " ");
-      } else if(chunks[i] && chunks[i].length>0){ //this chunk is a proper sentence..
-          sentences.push(chunks[i]);
-          chunks[i] = "";
-      }
-    }
-  }
-  //if we never got a sentence, return the given text
-  if (sentences.length === 0) {
-    return [text]
-  }
-
-  return sentences;
-}
-if (typeof module !== "undefined" && module.exports) {
-  exports.sentences = sentence_parser;
-}
-
-// console.log(sentence_parser('Tony is nice. He lives in Japan.').length === 2)
-// console.log(sentence_parser('I like that Color').length === 1)
-// console.log(sentence_parser("She was dead. He was ill.").length === 2)
-// console.log(sentence_parser("i think it is good ... or else.").length == 1)
-
-//split a string into all possible parts
-var ngram = (function() {
-
-  var main = function(text, options) {
-    options = options || {}
-    var min_count = options.min_count || 1; // minimum hit-count
-    var max_size = options.max_size || 5; // maximum gram count
-    var REallowedChars = /[^a-zA-Z'\-]+/g; //Invalid characters are replaced with a whitespace
-    var i, j, k, textlen, s;
-    var keys = [null];
-    var results = [];
-    max_size++;
-    for (i = 1; i <= max_size; i++) {
-      keys.push({});
-    }
-    // clean the text
-    text = text.replace(REallowedChars, " ").replace(/^\s+/, "").replace(/\s+$/, "");
-    text = text.toLowerCase()
-    // Create a hash
-    text = text.split(/\s+/);
-    for (i = 0, textlen = text.length; i < textlen; i++) {
-      s = text[i];
-      keys[1][s] = (keys[1][s] || 0) + 1;
-      for (j = 2; j <= max_size; j++) {
-        if (i + j <= textlen) {
-          s += " " + text[i + j - 1];
-          keys[j][s] = (keys[j][s] || 0) + 1;
-        } else {
-          break
-        }
-      }
-    }
-    // map to array
-    i=undefined;
-    for (k = 1; k <= max_size; k++) {
-      results[k] = [];
-      var key = keys[k];
-      for (i in key) {
-        if(key.hasOwnProperty(i) && key[i] >= min_count){
-          results[k].push({
-            "word": i,
-            "count": key[i],
-            "size": k
-          })
-        }
-      }
-    }
-    results = results.filter(function(s) {
-      return s !== null
-    })
-    results = results.map(function(r) {
-      r = r.sort(function(a, b) {
-        return b.count - a.count
-      })
-      return r;
-    });
-    return results
-  }
-
-  if (typeof module !== "undefined" && module.exports) {
-    exports.ngram = main;
-  }
-  return main
-})()
-
-// s = ngram("i really think that we all really think it's all good")
-// console.log(s)
-
-//split a string into 'words' - as intended to be most helpful for this library.
-//
-var tokenize = (function() {
-
-  if (typeof module !== "undefined" && module.exports) {
-    sentence_parser = require("./sentence").sentences
-    multiples= require("../../data/lexicon/multiples")
-  }
-  //these expressions ought to be one token, not two, because they are a distinct POS together
-  var multi_words=Object.keys(multiples).map(function(m) {
-    return m.split(' ')
-  })
-
-
-  var normalise = function(str) {
-    if (!str) {
-      return ""
-    }
-    str = str.toLowerCase()
-    str = str.replace(/[,\.!:;\?\(\)]/, '')
-    str = str.replace(/’/g, "'")
-    str = str.replace(/"/g, "")
-    if (!str.match(/[a-z0-9]/i)) {
-      return ''
-    }
-    return str
-  }
-
-  var sentence_type = function(sentence) {
-    if (sentence.match(/\?$/)) {
-      return "interrogative";
-    } else if (sentence.match(/\!$/)) {
-      return "exclamative";
-    } else {
-      return "declarative";
-    }
-  }
-
-  var combine_multiples = function(arr) {
-    var better = []
-    for (var i = 0; i < arr.length; i++) {
-      for (var o = 0; o < multi_words.length; o++) {
-        if (arr[i + 1] && normalise(arr[i]) === multi_words[o][0] && normalise(arr[i + 1]) === multi_words[o][1]) { //
-          //we have a match
-          arr[i] = arr[i] + ' ' + arr[i + 1]
-          arr[i + 1] = null
-          break
-        }
-      }
-      better.push(arr[i])
-    }
-    return better.filter(function(w) {
-      return w
-    })
-  }
-
-  var main = function(str) {
-    var sentences = sentence_parser(str)
-    return sentences.map(function(sentence) {
-      var arr = sentence.split(' ');
-      arr = combine_multiples(arr)
-      var tokens = arr.map(function(w, i) {
-        return {
-          text: w,
-          normalised: normalise(w),
-          title_case: (w.match(/^[A-Z][a-z]/) !== null), //use for merge-tokens
-          noun_capital: i > 0 && (w.match(/^[A-Z][a-z]/) !== null), //use for noun signal
-          punctuated: (w.match(/[,;:\(\)"]/) !== null) || undefined,
-          end: (i === (arr.length - 1)) || undefined,
-          start: (i === 0) || undefined
-        }
-      })
-      return {
-        sentence: sentence,
-        tokens: tokens,
-        type: sentence_type(sentence)
-      }
-    })
-  }
-
-  if (typeof module !== "undefined" && module.exports) {
-    exports.tokenize = main;
-  }
-  return main
-})()
-
-// console.log(tokenize("i live in new york")[0].tokens.length==4)
-// console.log(tokenize("I speak optimistically of course.")[0].tokens.length==4)
-// console.log(tokenize("Joe is 9")[0].tokens.length==3)
-// console.log(tokenize("Joe in Toronto")[0].tokens.length==3)
-// console.log(tokenize("I am mega-rich")[0].tokens.length==3)
-
-// a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
-//http://en.wikipedia.org/wiki/List_of_Unicode_characters
-//https://docs.google.com/spreadsheet/ccc?key=0Ah46z755j7cVdFRDM1A2YVpwa1ZYWlpJM2pQZ003M0E
-var normalize = (function() {
-  //approximate visual (not semantic) relationship between unicode and ascii characters
-  var compact={
-      "2": "²ƻ",
-      "3": "³ƷƸƹƺǮǯЗҘҙӞӟӠӡȜȝ",
-      "5": "Ƽƽ",
-      "8": "Ȣȣ",
-      "!": "¡",
-      "?": "¿Ɂɂ",
-      "a": "ªÀÁÂÃÄÅàáâãäåĀāĂăĄąǍǎǞǟǠǡǺǻȀȁȂȃȦȧȺΆΑΔΛάαλАДадѦѧӐӑӒӓƛɅ",
-      "b": "ßþƀƁƂƃƄƅɃΒβϐϦБВЪЬбвъьѢѣҌҍҔҕƥƾ",
-      "c": "¢©ÇçĆćĈĉĊċČčƆƇƈȻȼͻͼͽϲϹϽϾϿЄСсєҀҁҪҫ",
-      "d": "ÐĎďĐđƉƊȡƋƌǷ",
-      "e": "ÈÉÊËèéêëĒēĔĕĖėĘęĚěƎƏƐǝȄȅȆȇȨȩɆɇΈΕΞΣέεξϱϵ϶ЀЁЕЭеѐёҼҽҾҿӖӗӘәӚӛӬӭ",
-      "f": "ƑƒϜϝӺӻ",
-      "g": "ĜĝĞğĠġĢģƓǤǥǦǧǴǵ",
-      "h": "ĤĥĦħƕǶȞȟΉΗЂЊЋНнђћҢңҤҥҺһӉӊ",
-      "I": "ÌÍÎÏ",
-      "i": "ìíîïĨĩĪīĬĭĮįİıƖƗȈȉȊȋΊΐΪίιϊІЇії",
-      "j": "ĴĵǰȷɈɉϳЈј",
-      "k": "ĶķĸƘƙǨǩΚκЌЖКжкќҚқҜҝҞҟҠҡ",
-      "l": "ĹĺĻļĽľĿŀŁłƚƪǀǏǐȴȽΙӀӏ",
-      "m": "ΜϺϻМмӍӎ",
-      "n": "ÑñŃńŅņŇňŉŊŋƝƞǸǹȠȵΝΠήηϞЍИЙЛПийлпѝҊҋӅӆӢӣӤӥπ",
-      "o": "ÒÓÔÕÖØðòóôõöøŌōŎŏŐőƟƠơǑǒǪǫǬǭǾǿȌȍȎȏȪȫȬȭȮȯȰȱΌΘΟΦΩδθοσόϕϘϙϬϭϴОФоѲѳѺѻѼѽӦӧӨөӪӫ¤ƍΏ",
-      "p": "ƤƿΡρϷϸϼРрҎҏÞ",
-      "q": "Ɋɋ",
-      "r": "ŔŕŖŗŘřƦȐȑȒȓɌɍЃГЯгяѓҐґҒғӶӷſ",
-      "s": "ŚśŜŝŞşŠšƧƨȘșȿςϚϛϟϨϩЅѕ",
-      "t": "ŢţŤťŦŧƫƬƭƮȚțȶȾΓΤτϮϯТт҂Ҭҭ",
-      "u": "µÙÚÛÜùúûüŨũŪūŬŭŮůŰűŲųƯưƱƲǓǔǕǖǗǘǙǚǛǜȔȕȖȗɄΰμυϋύϑЏЦЧцџҴҵҶҷҸҹӋӌӇӈ",
-      "v": "ƔνѴѵѶѷ",
-      "w": "ŴŵƜωώϖϢϣШЩшщѡѿ",
-      "x": "×ΧχϗϰХхҲҳӼӽӾӿ",
-      "y": "¥ÝýÿŶŷŸƳƴȲȳɎɏΎΥΨΫγψϒϓϔЎУучўѰѱҮүҰұӮӯӰӱӲӳ",
-      "z": "ŹźŻżŽžƩƵƶȤȥɀΖζ"
-    }
-  //decompress data into an array
-  var data = []
-  Object.keys(compact).forEach(function(k){
-    compact[k].split('').forEach(function(s){
-        data.push([s,k])
-    })
-  })
-
-  //convert array to two hashes
-  var normaler = {}
-  var greek = {}
-  data.forEach(function(arr) {
-    normaler[arr[0]] = arr[1]
-    greek[arr[1]] = arr[0]
-  })
-
-  var normalize = function(str, options) {
-    options = options || {}
-    options.percentage = options.percentage || 50
-    var arr = str.split('').map(function(s) {
-      var r = Math.random() * 100
-      if (normaler[s] && r < options.percentage) {
-        return normaler[s] || s
-      } else {
-        return s
-      }
-    })
-    return arr.join('')
-  }
-
-  var denormalize = function(str, options) {
-    options = options || {}
-    options.percentage = options.percentage || 50
-    var arr = str.split('').map(function(s) {
-      var r = Math.random() * 100
-      if (greek[s] && r < options.percentage) {
-        return greek[s] || s
-      } else {
-        return s
-      }
-    })
-    return arr.join('')
-  }
-
-  var obj = {
-    normalize: normalize,
-    denormalize: denormalize
-  }
-
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = obj;
-  }
-  return obj
-})()
-
-// s = "ӳžŽżźŹźӳžŽżźŹźӳžŽżźŹźӳžŽżźŹźӳžŽżźŹź"
-// s = "Björk"
-// console.log(normalize.normalize(s, {
-//   percentage: 100
-// }))
-
-// s = "The quick brown fox jumps over the lazy dog"
-// console.log(normalize.denormalize(s, {
-//   percentage: 100
-// }))
-
-//chop a string into pronounced syllables
-var syllables = (function(str) {
-
-  var main = function(str) {
-    var all = []
-
-    //suffix fixes
-      var postprocess= function(arr) {
-        //trim whitespace
-        arr= arr.map(function(w){
-          w= w.replace(/^ */,'')
-          w= w.replace(/ *$/,'')
-          return w
-        })
-        if (arr.length > 2) { //
-          return arr
-        }
-        var ones = [
-          /^[^aeiou]?ion/,
-          /^[^aeiou]?ised/,
-          /^[^aeiou]?iled/
-        ]
-        var l = arr.length
-        if (l > 1) {
-          var suffix = arr[l - 2] + arr[l - 1];
-          for (var i = 0; i < ones.length; i++) {
-            if (suffix.match(ones[i])) {
-              arr[l - 2] = arr[l - 2] + arr[l - 1];
-              arr.pop();
-            }
-          }
-        }
-        return arr
-      }
-
-    var doer = function(str) {
-      var vow = /[aeiouy]$/
-      if (!str) {
-        return
-      }
-      var chars = str.split('')
-      var before = "";
-      var after = "";
-      var current = "";
-      for (var i = 0; i < chars.length; i++) {
-        before = chars.slice(0, i).join('')
-        current = chars[i]
-        after = chars.slice(i + 1, chars.length).join('')
-        var candidate = before + chars[i]
-
-        //rules for syllables-
-
-        //it's a consonant that comes after a vowel
-        if (before.match(vow) && !current.match(vow)) {
-          if (after.match(/^e[sm]/)) {
-            candidate += "e"
-            after = after.replace(/^e/, '')
-          }
-          all.push(candidate)
-          return doer(after)
-        }
-        //unblended vowels ('noisy' vowel combinations)
-        if (candidate.match(/(eo|eu|ia|oa|ua|ui)$/i)) { //'io' is noisy, not in 'ion'
-          all.push(before)
-          all.push(current)
-          return doer(after)
-        }
-      }
-      //if still running, end last syllable
-      if (str.match(/[aiouy]/) || str.match(/ee$/)) { //allow silent trailing e
-        all.push(str)
-      } else {
-        all[all.length - 1] = (all[all.length - 1] || '') + str; //append it to the last one
-      }
-    }
-
-    str.split(/\s\-/).forEach(function(s) {
-      doer(s)
-    })
-    all = postprocess(all)
-
-    //for words like 'tree' and 'free'
-    if(all.length===0){
-      all=[str]
-    }
-
-    return all
-  }
-
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = main;
-  }
-  return main
-})()
-
-// console.log(syllables("suddenly").length === 3)
-// console.log(syllables("tree"))
-
-//broken
-// console.log(syllables("birchtree"))
-
-//built with patterns+exceptions from https://en.wikipedia.org/wiki/British_spelling
-// some patterns are only safe to do in one direction
-
-var britishize = (function() {
-
-  var main = function(str) {
-    var patterns = [
-      // ise -> ize
-      {
-        reg: /([^aeiou][iy])z(e|ed|es|ing)?$/,
-        repl: '$1s$2',
-        exceptions: []
-      },
-      // our -> or
-      // {
-      //   reg: /(..)our(ly|y|ite)?$/,
-      //   repl: '$1or$2',
-      //   exceptions: []
-      // },
-      // re -> er
-      // {
-      //   reg: /([^cdnv])re(s)?$/,
-      //   repl: '$1er$2',
-      //   exceptions: []
-      // },
-      // xion -> tion
-      // {
-      //   reg: /([aeiou])xion([ed])?$/,
-      //   repl: '$1tion$2',
-      //   exceptions: []
-      // },
-      //logue -> log
-      // {
-      //   reg: /logue$/,
-      //   repl: 'log',
-      //   exceptions: []
-      // },
-      // ae -> e
-      // {
-      //   reg: /([o|a])e/,
-      //   repl: 'e',
-      //   exceptions: []
-      // },
-      //eing -> ing
-      // {
-      //   reg: /e(ing|able)$/,
-      //   repl: '$1',
-      //   exceptions: []
-      // },
-      // illful -> ilful
-      {
-        reg: /([aeiou]+[^aeiou]+[aeiou]+)l(ful|ment|est|ing|or|er|ed)$/, //must be second-syllable
-        repl: '$1ll$2',
-        exceptions: []
-      }
-    ]
-
-    for (var i = 0; i < patterns.length; i++) {
-      if (str.match(patterns[i].reg)) {
-        //check for exceptions
-        for (var o = 0; o < patterns[i].exceptions.length; o++) {
-          if (str.match(patterns[i].exceptions[o])) {
-            return str
-          }
-        }
-        return str.replace(patterns[i].reg, patterns[i].repl)
-      }
-    }
-    return str
-  }
-
-  if (typeof module !== "undefined" && module.exports) {
-    exports.britishize = main;
-  }
-  return main
-})()
-
-//////////////
-var americanize = (function() {
-
-  var main = function(str) {
-    var patterns = [
-      // ise -> ize
-      {
-        reg: /([^aeiou][iy])s(e|ed|es|ing)?$/,
-        repl: '$1z$2',
-        exceptions: []
-      },
-      // our -> or
-      {
-        reg: /(..)our(ly|y|ite)?$/,
-        repl: '$1or$2',
-        exceptions: []
-      },
-      // re -> er
-      {
-        reg: /([^cdnv])re(s)?$/,
-        repl: '$1er$2',
-        exceptions: []
-      },
-      // xion -> tion
-      {
-        reg: /([aeiou])xion([ed])?$/,
-        repl: '$1tion$2',
-        exceptions: []
-      },
-      //logue -> log
-      {
-        reg: /logue$/,
-        repl: 'log',
-        exceptions: []
-      },
-      // ae -> e
-      {
-        reg: /([o|a])e/,
-        repl: 'e',
-        exceptions: []
-      },
-      //eing -> ing
-      {
-        reg: /e(ing|able)$/,
-        repl: '$1',
-        exceptions: []
-      },
-      // illful -> ilful
-      {
-        reg: /([aeiou]+[^aeiou]+[aeiou]+)ll(ful|ment|est|ing|or|er|ed)$/, //must be second-syllable
-        repl: '$1l$2',
-        exceptions: []
-      }
-    ]
-
-    for (var i = 0; i < patterns.length; i++) {
-      if (str.match(patterns[i].reg)) {
-        //check for exceptions
-        for (var o = 0; o < patterns[i].exceptions.length; o++) {
-          if (str.match(patterns[i].exceptions[o])) {
-            return str
-          }
-        }
-        return str.replace(patterns[i].reg, patterns[i].repl)
-      }
-    }
-
-    return str
-  }
-
-  if (typeof module !== "undefined" && module.exports) {
-    exports.americanize = main;
-  }
-  return main;
-})();
-
-// console.log(americanize("synthesise")=="synthesize")
-// console.log(americanize("synthesised")=="synthesized")
-
-//regex patterns and parts of speech],
-var word_rules = [
-  [".[cts]hy$", "JJ"],
-  [".[st]ty$", "JJ"],
-  [".[lnr]ize$", "VB"],
-  [".[gk]y$", "JJ"],
-  [".fies$", "VB"],
-  [".some$", "JJ"],
-  [".[nrtumcd]al$", "JJ"],
-  [".que$", "JJ"],
-  [".[tnl]ary$", "JJ"],
-  [".[di]est$", "JJS"],
-  ["^(un|de|re)\\-[a-z]..", "VB"],
-  [".lar$", "JJ"],
-  ["[bszmp]{2}y", "JJ"],
-  [".zes$", "VB"],
-  [".[icldtgrv]ent$", "JJ"],
-  [".[rln]ates$", "VBZ"],
-  [".[oe]ry$", "JJ"],
-  ["[rdntkdhs]ly$", "RB"],
-  [".[lsrnpb]ian$", "JJ"],
-  [".[^aeiou]ial$", "JJ"],
-  [".[^aeiou]eal$", "JJ"],
-  [".[vrl]id$", "JJ"],
-  [".[ilk]er$", "JJR"],
-  [".ike$", "JJ"],
-  [".ends$", "VB"],
-  [".wards$", "RB"],
-  [".rmy$", "JJ"],
-  [".rol$", "NN"],
-  [".tors$", "NN"],
-  [".azy$", "JJ"],
-  [".where$", "RB"],
-  [".ify$", "VB"],
-  [".bound$", "JJ"],
-  [".ens$", "VB"],
-  [".oid$", "JJ"],
-  [".vice$", "NN"],
-  [".rough$", "JJ"],
-  [".mum$", "JJ"],
-  [".teen(th)?$", "CD"],
-  [".oses$", "VB"],
-  [".ishes$", "VB"],
-  [".ects$", "VB"],
-  [".tieth$", "CD"],
-  [".ices$", "NN"],
-  [".bles$", "VB"],
-  [".pose$", "VB"],
-  [".ions$", "NN"],
-  [".ean$", "JJ"],
-  [".[ia]sed$", "JJ"],
-  [".tized$", "VB"],
-  [".llen$", "JJ"],
-  [".fore$", "RB"],
-  [".ances$", "NN"],
-  [".gate$", "VB"],
-  [".nes$", "VB"],
-  [".less$", "RB"],
-  [".ried$", "JJ"],
-  [".gone$", "JJ"],
-  [".made$", "JJ"],
-  [".[pdltrkvyns]ing$", "JJ"],
-  [".tions$", "NN"],
-  [".tures$", "NN"],
-  [".ous$", "JJ"],
-  [".ports$", "NN"],
-  [". so$", "RB"],
-  [".ints$", "NN"],
-  [".[gt]led$", "JJ"],
-  ["[aeiou].*ist$", "JJ"],
-  [".lked$", "VB"],
-  [".fully$", "RB"],
-  [".*ould$", "MD"],
-  ["^-?[0-9]+(.[0-9]+)?$", "CD"],
-  ["[a-z]*\\-[a-z]*\\-", "JJ"],
-  ["[a-z]'s$", "NNO"],
-  [".'n$", "VB"],
-  [".'re$", "CP"],
-  [".'ll$", "MD"],
-  [".'t$", "VB"],
-  [".tches$", "VB"],
-  ["^https?\:?\/\/[a-z0-9]", "CD"],//the colon is removed in normalisation
-  ["^www\.[a-z0-9]", "CD"],
-  [".ize$", "VB"],
-  [".[^aeiou]ise$", "VB"],
-  [".[aeiou]te$", "VB"],
-  [".ea$", "NN"],
-  ["[aeiou][pns]er$", "NN"],
-  [".ia$", "NN"],
-  [".sis$", "NN"],
-  [".[aeiou]na$", "NN"],
-  [".[^aeiou]ity$", "NN"],
-  [".[^aeiou]ium$", "NN"],
-  [".[^aeiou][ei]al$", "JJ"],
-  [".ffy$", "JJ"],
-  [".[^aeiou]ic$", "JJ"],
-  [".(gg|bb|zz)ly$", "JJ"],
-  [".[aeiou]my$", "JJ"],
-  [".[aeiou]ble$", "JJ"],
-  [".[^aeiou]ful$", "JJ"],
-  [".[^aeiou]ish$", "JJ"],
-  [".[^aeiou]ica$", "NN"],
-  ["[aeiou][^aeiou]is$", "NN"],
-  ["[^aeiou]ard$", "NN"],
-  ["[^aeiou]ism$", "NN"],
-  [".[^aeiou]ity$", "NN"],
-  [".[^aeiou]ium$", "NN"],
-  [".[lstrn]us$", "NN"],
-  ["..ic$", "JJ"],
-  ["[aeiou][^aeiou]id$", "JJ"],
-  [".[^aeiou]ish$", "JJ"],
-  [".[^aeiou]ive$", "JJ"],
-  ["[ea]{2}zy$", "JJ"],
-].map(function(a) {
-  return {
-    reg: new RegExp(a[0], "i"),
-    pos: a[1]
-  }
-})
-
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = word_rules;
-}
-// console.log(word_rules)
-
-// word suffixes with a high pos signal, generated with wordnet
-//by spencer kelly spencermountain@gmail.com  2014
-var wordnet_suffixes = (function() {
-
-  var data = {
-  "NN": [
-    "ceae",
-    "inae",
-    "idae",
-    "leaf",
-    "rgan",
-    "eman",
-    "sman",
-    "star",
-    "boat",
-    "tube",
-    "rica",
-    "tica",
-    "nica",
-    "auce",
-    "tics",
-    "ency",
-    "ancy",
-    "poda",
-    "tude",
-    "xide",
-    "body",
-    "weed",
-    "tree",
-    "rrel",
-    "stem",
-    "cher",
-    "icer",
-    "erer",
-    "ader",
-    "ncer",
-    "izer",
-    "ayer",
-    "nner",
-    "ates",
-    "ales",
-    "ides",
-    "rmes",
-    "etes",
-    "llet",
-    "uage",
-    "ings",
-    "aphy",
-    "chid",
-    "tein",
-    "vein",
-    "hair",
-    "tris",
-    "unit",
-    "cake",
-    "nake",
-    "illa",
-    "ella",
-    "icle",
-    "ille",
-    "etle",
-    "scle",
-    "cell",
-    "bell",
-    "bill",
-    "palm",
-    "toma",
-    "game",
-    "lamp",
-    "bone",
-    "mann",
-    "ment",
-    "wood",
-    "book",
-    "nson",
-    "agon",
-    "odon",
-    "dron",
-    "iron",
-    "tion",
-    "itor",
-    "ator",
-    "root",
-    "cope",
-    "tera",
-    "hora",
-    "lora",
-    "bird",
-    "worm",
-    "fern",
-    "horn",
-    "wort",
-    "ourt",
-    "stry",
-    "etry",
-    "bush",
-    "ness",
-    "gist",
-    "rata",
-    "lata",
-    "tata",
-    "moth",
-    "lity",
-    "nity",
-    "sity",
-    "rity",
-    "city",
-    "dity",
-    "vity",
-    "drug",
-    "dium",
-    "llum",
-    "trum",
-    "inum",
-    "lium",
-    "tium",
-    "atum",
-    "rium",
-    "icum",
-    "anum",
-    "nium",
-    "orum",
-    "icus",
-    "opus",
-    "chus",
-    "ngus",
-    "thus",
-    "rius",
-    "rpus"
-  ],
-  "JJ": [
-    "liac",
-    "siac",
-    "clad",
-    "deaf",
-    "xial",
-    "hial",
-    "chal",
-    "rpal",
-    "asal",
-    "rial",
-    "teal",
-    "oeal",
-    "vial",
-    "phal",
-    "sial",
-    "heal",
-    "rbal",
-    "neal",
-    "geal",
-    "dial",
-    "eval",
-    "bial",
-    "ugal",
-    "kian",
-    "izan",
-    "rtan",
-    "odan",
-    "llan",
-    "zian",
-    "eian",
-    "eyan",
-    "ndan",
-    "eban",
-    "near",
-    "unar",
-    "lear",
-    "liar",
-    "-day",
-    "-way",
-    "tech",
-    "sick",
-    "tuck",
-    "inct",
-    "unct",
-    "wide",
-    "endo",
-    "uddy",
-    "eedy",
-    "uted",
-    "aled",
-    "rred",
-    "oned",
-    "rted",
-    "obed",
-    "oped",
-    "ched",
-    "dded",
-    "cted",
-    "tied",
-    "eked",
-    "ayed",
-    "rked",
-    "teed",
-    "mmed",
-    "tred",
-    "awed",
-    "rbed",
-    "bbed",
-    "axed",
-    "bred",
-    "pied",
-    "cked",
-    "rced",
-    "ened",
-    "fied",
-    "lved",
-    "mned",
-    "kled",
-    "hted",
-    "lied",
-    "eted",
-    "rded",
-    "lued",
-    "rved",
-    "azed",
-    "oked",
-    "ghed",
-    "sked",
-    "emed",
-    "aded",
-    "ived",
-    "mbed",
-    "pted",
-    "zled",
-    "ored",
-    "pled",
-    "wned",
-    "afed",
-    "nied",
-    "aked",
-    "gued",
-    "oded",
-    "oved",
-    "oled",
-    "ymed",
-    "lled",
-    "bled",
-    "cled",
-    "eded",
-    "toed",
-    "ited",
-    "oyed",
-    "eyed",
-    "ured",
-    "omed",
-    "ixed",
-    "pped",
-    "ined",
-    "lted",
-    "iced",
-    "exed",
-    "nded",
-    "amed",
-    "owed",
-    "dged",
-    "nted",
-    "eged",
-    "nned",
-    "used",
-    "ibed",
-    "nced",
-    "umed",
-    "dled",
-    "died",
-    "rged",
-    "aped",
-    "oted",
-    "uled",
-    "ided",
-    "nked",
-    "aved",
-    "rled",
-    "rned",
-    "aned",
-    "rmed",
-    "lmed",
-    "aged",
-    "ized",
-    "eved",
-    "ofed",
-    "thed",
-    "ered",
-    "ared",
-    "ated",
-    "eled",
-    "sted",
-    "ewed",
-    "nsed",
-    "nged",
-    "lded",
-    "gged",
-    "osed",
-    "fled",
-    "shed",
-    "aced",
-    "ffed",
-    "tted",
-    "uced",
-    "iled",
-    "uded",
-    "ired",
-    "yzed",
-    "-fed",
-    "mped",
-    "iked",
-    "fted",
-    "imed",
-    "hree",
-    "llel",
-    "aten",
-    "lden",
-    "nken",
-    "apen",
-    "ozen",
-    "ober",
-    "-set",
-    "nvex",
-    "osey",
-    "laid",
-    "paid",
-    "xvii",
-    "xxii",
-    "-air",
-    "tair",
-    "icit",
-    "knit",
-    "nlit",
-    "xxiv",
-    "-six",
-    "-old",
-    "held",
-    "cile",
-    "ible",
-    "able",
-    "gile",
-    "full",
-    "-ply",
-    "bbly",
-    "ggly",
-    "zzly",
-    "-one",
-    "mane",
-    "mune",
-    "rung",
-    "uing",
-    "mant",
-    "yant",
-    "uant",
-    "pant",
-    "urnt",
-    "awny",
-    "eeny",
-    "ainy",
-    "orny",
-    "siny",
-    "tood",
-    "shod",
-    "-toe",
-    "d-on",
-    "-top",
-    "-for",
-    "odox",
-    "wept",
-    "eepy",
-    "oopy",
-    "hird",
-    "dern",
-    "worn",
-    "mart",
-    "ltry",
-    "oury",
-    "ngry",
-    "arse",
-    "bose",
-    "cose",
-    "mose",
-    "iose",
-    "gish",
-    "kish",
-    "pish",
-    "wish",
-    "vish",
-    "yish",
-    "owsy",
-    "ensy",
-    "easy",
-    "ifth",
-    "edth",
-    "urth",
-    "ixth",
-    "00th",
-    "ghth",
-    "ilty",
-    "orty",
-    "ifty",
-    "inty",
-    "ghty",
-    "kety",
-    "afty",
-    "irty",
-    "roud",
-    "true",
-    "wful",
-    "dful",
-    "rful",
-    "mful",
-    "gful",
-    "lful",
-    "hful",
-    "kful",
-    "iful",
-    "yful",
-    "sful",
-    "tive",
-    "cave",
-    "sive",
-    "five",
-    "cive",
-    "xxvi",
-    "urvy",
-    "nown",
-    "hewn",
-    "lown",
-    "-two",
-    "lowy",
-    "ctyl"
-  ],
-  "VB": [
-    "wrap",
-    "hear",
-    "draw",
-    "rlay",
-    "away",
-    "elay",
-    "duce",
-    "esce",
-    "elch",
-    "ooch",
-    "pick",
-    "huck",
-    "back",
-    "hack",
-    "ruct",
-    "lict",
-    "nect",
-    "vict",
-    "eact",
-    "tect",
-    "vade",
-    "lude",
-    "vide",
-    "rude",
-    "cede",
-    "ceed",
-    "ivel",
-    "hten",
-    "rken",
-    "shen",
-    "open",
-    "quer",
-    "over",
-    "efer",
-    "eset",
-    "uiet",
-    "pret",
-    "ulge",
-    "lign",
-    "pugn",
-    "othe",
-    "rbid",
-    "raid",
-    "veil",
-    "vail",
-    "roil",
-    "join",
-    "dain",
-    "feit",
-    "mmit",
-    "erit",
-    "voke",
-    "make",
-    "weld",
-    "uild",
-    "idle",
-    "rgle",
-    "otle",
-    "rble",
-    "self",
-    "fill",
-    "till",
-    "eels",
-    "sult",
-    "pply",
-    "sume",
-    "dime",
-    "lame",
-    "lump",
-    "rump",
-    "vene",
-    "cook",
-    "look",
-    "from",
-    "elop",
-    "grow",
-    "adow",
-    "ploy",
-    "sorb",
-    "pare",
-    "uire",
-    "jure",
-    "lore",
-    "surf",
-    "narl",
-    "earn",
-    "ourn",
-    "hirr",
-    "tort",
-    "-fry",
-    "uise",
-    "lyse",
-    "sise",
-    "hise",
-    "tise",
-    "nise",
-    "lise",
-    "rise",
-    "anse",
-    "gise",
-    "owse",
-    "oosh",
-    "resh",
-    "cuss",
-    "uess",
-    "sess",
-    "vest",
-    "inst",
-    "gest",
-    "fest",
-    "xist",
-    "into",
-    "ccur",
-    "ieve",
-    "eive",
-    "olve",
-    "down",
-    "-dye",
-    "laze",
-    "lyze",
-    "raze",
-    "ooze"
-  ],
-  "RB": [
-    "that",
-    "oubt",
-    "much",
-    "diem",
-    "high",
-    "atim",
-    "sely",
-    "nely",
-    "ibly",
-    "lely",
-    "dely",
-    "ally",
-    "gely",
-    "imly",
-    "tely",
-    "ully",
-    "ably",
-    "owly",
-    "vely",
-    "cely",
-    "mely",
-    "mply",
-    "ngly",
-    "exly",
-    "ffly",
-    "rmly",
-    "rely",
-    "uely",
-    "time",
-    "iori",
-    "oors",
-    "wise",
-    "orst",
-    "east",
-    "ways"
-  ]
-}
-    //convert it to an easier format
-  var data = Object.keys(data).reduce(function(h, k) {
-    data[k].forEach(function(w) {
-      h[w] = k
-    })
-    return h
-  }, {})
-
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = data;
-  }
-  return data;
-})();
-
-//the parts of speech used by this library. mostly standard, but some changes.
-var parts_of_speech = (function() {
-
-  var main = {
-    //verbs
-    "VB": {
-      "name": "verb, generic",
-      "parent": "verb",
-      "tag": "VB"
-    },
-    "VBD": {
-      "name": "past-tense verb",
-      "parent": "verb",
-      "tense": "past",
-      "tag": "VBD"
-    },
-    "VBN": {
-      "name": "past-participle verb",
-      "parent": "verb",
-      "tense": "past",
-      "tag": "VBN"
-    },
-    "VBP": {
-      "name": "infinitive verb",
-      "parent": "verb",
-      "tense": "present",
-      "tag": "VBP"
-    },
-    "VBZ": {
-      "name": "present-tense verb",
-      "tense": "present",
-      "parent": "verb",
-      "tag": "VBZ"
-    },
-    "CP": {
-      "name": "copula",
-      "parent": "verb",
-      "tag": "CP"
-    },
-    "VBG": {
-      "name": "gerund verb",
-      "parent": "verb",
-      "tag": "VBG"
-    },
-
-    //adjectives
-    "JJ": {
-      "name": "adjective, generic",
-      "parent": "adjective",
-      "tag": "JJ"
-    },
-    "JJR": {
-      "name": "comparative adjective",
-      "parent": "adjective",
-      "tag": "JJR"
-    },
-    "JJS": {
-      "name": "superlative adjective",
-      "parent": "adjective",
-      "tag": "JJS"
-    },
-
-    //adverbs
-    "RB": {
-      "name": "adverb",
-      "parent": "adverb",
-      "tag": "RB"
-    },
-    "RBR": {
-      "name": "comparative adverb",
-      "parent": "adverb",
-      "tag": "RBR"
-    },
-    "RBS": {
-      "name": "superlative adverb",
-      "parent": "adverb",
-      "tag": "RBS"
-    },
-
-    //nouns
-    "NN": {
-      "name": "noun, generic",
-      "parent": "noun",
-      "tag": "NN"
-    },
-    "NNP": {
-      "name": "singular proper noun",
-      "parent": "noun",
-      "tag": "NNP"
-    },
-    "NNA": {
-      "name": "noun, active",
-      "parent": "noun",
-      "tag": "NNA"
-    },
-    "NNPA": {
-      "name": "noun, acronym",
-      "parent": "noun",
-      "tag": "NNPA"
-    },
-    "NNPS": {
-      "name": "plural proper noun",
-      "parent": "noun",
-      "tag": "NNPS"
-    },
-    "NNAB": {
-      "name": "noun, abbreviation",
-      "parent": "noun",
-      "tag": "NNAB"
-    },
-    "NNS": {
-      "name": "plural noun",
-      "parent": "noun",
-      "tag": "NNS"
-    },
-    "NNO": {
-      "name": "possessive noun",
-      "parent": "noun",
-      "tag": "NNO"
-    },
-    "NNG": {
-      "name": "gerund noun",
-      "parent": "noun",
-      "tag": "VBG"
-    },
-
-    //glue
-    "PP": {
-      "name": "possessive pronoun",
-      "parent": "glue",
-      "tag": "PP"
-    },
-    "FW": {
-      "name": "foreign word",
-      "parent": "glue",
-      "tag": "FW"
-    },
-    "CD": {
-      "name": "cardinal value, generic",
-      "parent": "value",
-      "tag": "CD"
-    },
-    "DA": {
-      "name": "date",
-      "parent": "value",
-      "tag": "DA"
-    },
-    "NU": {
-      "name": "number",
-      "parent": "value",
-      "tag": "NU"
-    },
-    "IN": {
-      "name": "preposition",
-      "parent": "glue",
-      "tag": "IN"
-    },
-    "MD": {
-      "name": "modal verb",
-      "parent": "verb", //dunno
-      "tag": "MD"
-    },
-    "CC": {
-      "name": "co-ordating conjunction",
-      "parent": "glue",
-      "tag": "CC"
-    },
-    "PRP": {
-      "name": "personal pronoun",
-      "parent": "noun",
-      "tag": "PRP"
-    },
-    "DT": {
-      "name": "determiner",
-      "parent": "glue",
-      "tag": "DT"
-    },
-    "UH": {
-      "name": "interjection",
-      "parent": "glue",
-      "tag": "UH"
-    },
-    "EX": {
-      "name": "existential there",
-      "parent": "glue",
-      "tag": "EX"
-    }
-  }
-
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = main;
-  }
-
-  return main
-})()
-
 var verb_irregulars = (function() {
   var types = [
     'infinitive',
@@ -3307,6 +1806,88 @@ var adjectives = (function() {
   return main
 })()
 
+//common terms that are multi-word, but one part-of-speech
+var multiples = (function() {
+
+  var main = {
+    "of course": "RB",
+    "at least": "RB",
+    "no longer": "RB",
+    "sort of": "RB",
+    "at first": "RB",
+    "once again": "RB",
+    "once more": "RB",
+    "up to": "RB",
+    "by now": "RB",
+    "all but": "RB",
+    "just about": "RB",
+    "on board": "JJ",
+    "a lot": "RB",
+    "by far": "RB",
+    "at best": "RB",
+    "at large": "RB",
+    "for good": "RB",
+    "vice versa": "JJ",
+    "en route": "JJ",
+    "for sure": "RB",
+    "upside down": "JJ",
+    "at most": "RB",
+    "per se": "RB",
+    "at worst": "RB",
+    "upwards of": "RB",
+    "en masse": "RB",
+    "point blank": "RB",
+    "up front": "JJ",
+    "in situ": "JJ",
+    "in vitro": "JJ",
+    "ad hoc": "JJ",
+    "de facto": "JJ",
+    "ad infinitum": "JJ",
+    "ad nauseam": "RB",
+    "for keeps": "JJ",
+    "a priori": "FW",
+    "et cetera": "FW",
+    "off guard": "JJ",
+    "spot on": "JJ",
+    "ipso facto": "JJ",
+    "not withstanding": "RB",
+    "de jure": "RB",
+    "a la": "IN",
+    "ad hominem": "NN",
+    "par excellence": "RB",
+    "de trop": "RB",
+    "a posteriori": "RB",
+    "fed up": "JJ",
+    "brand new": "JJ",
+    "old fashioned": "JJ",
+    "bona fide": "JJ",
+    "well off": "JJ",
+    "far off": "JJ",
+    "straight forward": "JJ",
+    "hard up": "JJ",
+    "sui generis": "JJ",
+    "en suite": "JJ",
+    "avant garde": "JJ",
+    "sans serif": "JJ",
+    "gung ho": "JJ",
+    "super duper": "JJ",
+    "new york":"NN",
+    "new england":"NN",
+    "new hampshire":"NN",
+    "new delhi":"NN",
+    "new jersey":"NN",
+    "new mexico":"NN",
+    "united states":"NN",
+    "united kingdom":"NN",
+    "great britain":"NN"
+  }
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+
+  return main
+})()
+
 //most-frequent non-irregular verbs, to be conjugated for the lexicon
 //this list is the seed, from which various forms are conjugated
 var verbs = (function() {
@@ -3876,81 +2457,178 @@ var verbs = (function() {
   return main
 })()
 
-//common terms that are multi-word, but one part-of-speech
-var multiples = (function() {
+//common nouns that have no plural form. These are suprisingly rare
+//used in noun.inflect(), and added as nouns in lexicon
+var uncountables = (function() {
 
-  var main = {
-    "of course": "RB",
-    "at least": "RB",
-    "no longer": "RB",
-    "sort of": "RB",
-    "at first": "RB",
-    "once again": "RB",
-    "once more": "RB",
-    "up to": "RB",
-    "by now": "RB",
-    "all but": "RB",
-    "just about": "RB",
-    "on board": "JJ",
-    "a lot": "RB",
-    "by far": "RB",
-    "at best": "RB",
-    "at large": "RB",
-    "for good": "RB",
-    "vice versa": "JJ",
-    "en route": "JJ",
-    "for sure": "RB",
-    "upside down": "JJ",
-    "at most": "RB",
-    "per se": "RB",
-    "at worst": "RB",
-    "upwards of": "RB",
-    "en masse": "RB",
-    "point blank": "RB",
-    "up front": "JJ",
-    "in situ": "JJ",
-    "in vitro": "JJ",
-    "ad hoc": "JJ",
-    "de facto": "JJ",
-    "ad infinitum": "JJ",
-    "ad nauseam": "RB",
-    "for keeps": "JJ",
-    "a priori": "FW",
-    "et cetera": "FW",
-    "off guard": "JJ",
-    "spot on": "JJ",
-    "ipso facto": "JJ",
-    "not withstanding": "RB",
-    "de jure": "RB",
-    "a la": "IN",
-    "ad hominem": "NN",
-    "par excellence": "RB",
-    "de trop": "RB",
-    "a posteriori": "RB",
-    "fed up": "JJ",
-    "brand new": "JJ",
-    "old fashioned": "JJ",
-    "bona fide": "JJ",
-    "well off": "JJ",
-    "far off": "JJ",
-    "straight forward": "JJ",
-    "hard up": "JJ",
-    "sui generis": "JJ",
-    "en suite": "JJ",
-    "avant garde": "JJ",
-    "sans serif": "JJ",
-    "gung ho": "JJ",
-    "super duper": "JJ",
-    "new york":"NN",
-    "new england":"NN",
-    "new hampshire":"NN",
-    "new delhi":"NN",
-    "new jersey":"NN",
-    "new mexico":"NN",
-    "united states":"NN",
-    "united kingdom":"NN",
-    "great britain":"NN"
-  }
+  var main = [
+    "aircraft",
+    "bass",
+    "bison",
+    "fowl",
+    "halibut",
+    "moose",
+    "salmon",
+    "spacecraft",
+    "tuna",
+    "trout",
+    "advice",
+    "help",
+    "information",
+    "knowledge",
+    "trouble",
+    "work",
+    "enjoyment",
+    "fun",
+    "recreation",
+    "relaxation",
+    "meat",
+    "rice",
+    "bread",
+    "cake",
+    "coffee",
+    "ice",
+    "water",
+    "oil",
+    "grass",
+    "hair",
+    "fruit",
+    "wildlife",
+    "equipment",
+    "machinery",
+    "furniture",
+    "mail",
+    "luggage",
+    "jewelry",
+    "clothing",
+    "money",
+    "mathematics",
+    "economics",
+    "physics",
+    "civics",
+    "ethics",
+    "gymnastics",
+    "mumps",
+    "measles",
+    "news",
+    "tennis",
+    "baggage",
+    "currency",
+    "travel",
+    "soap",
+    "toothpaste",
+    "food",
+    "sugar",
+    "butter",
+    "flour",
+    "progress",
+    "research",
+    "leather",
+    "wool",
+    "wood",
+    "coal",
+    "weather",
+    "homework",
+    "cotton",
+    "silk",
+    "patience",
+    "impatience",
+    "talent",
+    "energy",
+    "experience",
+    "vinegar",
+    "polish",
+    "air",
+    "alcohol",
+    "anger",
+    "art",
+    "beef",
+    "blood",
+    "cash",
+    "chaos",
+    "cheese",
+    "chewing",
+    "conduct",
+    "confusion",
+    "courage",
+    "damage",
+    "education",
+    "electricity",
+    "entertainment",
+    "fiction",
+    "forgiveness",
+    "gold",
+    "gossip",
+    "ground",
+    "happiness",
+    "history",
+    "honey",
+    "hope",
+    "hospitality",
+    "importance",
+    "jam",
+    "justice",
+    "laughter",
+    "leisure",
+    "lightning",
+    "literature",
+    "love",
+    "luck",
+    "melancholy",
+    "milk",
+    "mist",
+    "music",
+    "noise",
+    "oxygen",
+    "paper",
+    "pay",
+    "peace",
+    "peanut",
+    "pepper",
+    "petrol",
+    "plastic",
+    "pork",
+    "power",
+    "pressure",
+    "rain",
+    "recognition",
+    "sadness",
+    "safety",
+    "salt",
+    "sand",
+    "scenery",
+    "shopping",
+    "silver",
+    "snow",
+    "softness",
+    "space",
+    "speed",
+    "steam",
+    "sunshine",
+    "tea",
+    "thunder",
+    "time",
+    "traffic",
+    "trousers",
+    "violence",
+    "warmth",
+    "washing",
+    "wine",
+    "steel",
+    "soccer",
+    "hockey",
+    "golf",
+    "fish",
+    "gum",
+    "liquid",
+    "series",
+    "sheep",
+    "species",
+    "fahrenheit",
+    "celcius",
+    "kelvin",
+    "hertz"
+  ]
   if (typeof module !== "undefined" && module.exports) {
     module.exports = main;
   }
@@ -4166,6 +2844,1485 @@ var abbreviations = (function() {
     //proper nouns with exclamation marks
     "yahoo", "joomla", "jeopardy"
   ]
+
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+
+  return main
+})()
+
+//(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
+// Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
+// @spencermountain 2015 MIT
+var sentence_parser = function(text) {
+
+  if (typeof module !== "undefined" && module.exports) {
+    abbreviations = require("../../data/lexicon/abbreviations")
+  }
+
+  var sentences = [];
+  //first do a greedy-split..
+  var chunks = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
+
+  //date abbrevs.
+  //these are added seperately because they are not nouns
+  abbreviations = abbreviations.concat(["jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept", "sep"]);
+
+  //detection of non-sentence chunks
+  var abbrev_reg = new RegExp("(^| )(" + abbreviations.join("|") + ")[.!?] ?$", "i");
+  var acronym_reg= new RegExp("[ |\.][A-Z]\.?$", "i")
+  var elipses_reg= new RegExp("\\.\\.\\.*$")
+
+  //loop through these chunks, and join the non-sentence chunks back together..
+  var chunks_length = chunks.length;
+  for (i = 0; i < chunks_length; i++) {
+    if (chunks[i]) {
+      //trim whitespace
+      chunks[i] = chunks[i].replace(/^\s+|\s+$/g, "");
+      //should this chunk be combined with the next one?
+      if (chunks[i+1] && chunks[i].match(abbrev_reg) || chunks[i].match(acronym_reg) || chunks[i].match(elipses_reg) ) {
+          chunks[i + 1] = ((chunks[i]||'') + " " + (chunks[i + 1]||'')).replace(/ +/g, " ");
+      } else if(chunks[i] && chunks[i].length>0){ //this chunk is a proper sentence..
+          sentences.push(chunks[i]);
+          chunks[i] = "";
+      }
+    }
+  }
+  //if we never got a sentence, return the given text
+  if (sentences.length === 0) {
+    return [text]
+  }
+
+  return sentences;
+}
+if (typeof module !== "undefined" && module.exports) {
+  exports.sentences = sentence_parser;
+}
+
+// console.log(sentence_parser('Tony is nice. He lives in Japan.').length === 2)
+// console.log(sentence_parser('I like that Color').length === 1)
+// console.log(sentence_parser("She was dead. He was ill.").length === 2)
+// console.log(sentence_parser("i think it is good ... or else.").length == 1)
+
+//split a string into all possible parts
+var ngram = (function() {
+
+  var main = function(text, options) {
+    options = options || {}
+    var min_count = options.min_count || 1; // minimum hit-count
+    var max_size = options.max_size || 5; // maximum gram count
+    var REallowedChars = /[^a-zA-Z'\-]+/g; //Invalid characters are replaced with a whitespace
+    var i, j, k, textlen, s;
+    var keys = [null];
+    var results = [];
+    max_size++;
+    for (i = 1; i <= max_size; i++) {
+      keys.push({});
+    }
+    // clean the text
+    text = text.replace(REallowedChars, " ").replace(/^\s+/, "").replace(/\s+$/, "");
+    text = text.toLowerCase()
+    // Create a hash
+    text = text.split(/\s+/);
+    for (i = 0, textlen = text.length; i < textlen; i++) {
+      s = text[i];
+      keys[1][s] = (keys[1][s] || 0) + 1;
+      for (j = 2; j <= max_size; j++) {
+        if (i + j <= textlen) {
+          s += " " + text[i + j - 1];
+          keys[j][s] = (keys[j][s] || 0) + 1;
+        } else {
+          break
+        }
+      }
+    }
+    // map to array
+    i=undefined;
+    for (k = 1; k <= max_size; k++) {
+      results[k] = [];
+      var key = keys[k];
+      for (i in key) {
+        if(key.hasOwnProperty(i) && key[i] >= min_count){
+          results[k].push({
+            "word": i,
+            "count": key[i],
+            "size": k
+          })
+        }
+      }
+    }
+    results = results.filter(function(s) {
+      return s !== null
+    })
+    results = results.map(function(r) {
+      r = r.sort(function(a, b) {
+        return b.count - a.count
+      })
+      return r;
+    });
+    return results
+  }
+
+  if (typeof module !== "undefined" && module.exports) {
+    exports.ngram = main;
+  }
+  return main
+})()
+
+// s = ngram("i really think that we all really think it's all good")
+// console.log(s)
+
+//split a string into 'words' - as intended to be most helpful for this library.
+//
+var tokenize = (function() {
+
+  if (typeof module !== "undefined" && module.exports) {
+    sentence_parser = require("./sentence").sentences
+    multiples= require("../../data/lexicon/multiples")
+  }
+  //these expressions ought to be one token, not two, because they are a distinct POS together
+  var multi_words=Object.keys(multiples).map(function(m) {
+    return m.split(' ')
+  })
+
+
+  var normalise = function(str) {
+    if (!str) {
+      return ""
+    }
+    str = str.toLowerCase()
+    str = str.replace(/[,\.!:;\?\(\)]/, '')
+    str = str.replace(/’/g, "'")
+    str = str.replace(/"/g, "")
+    if (!str.match(/[a-z0-9]/i)) {
+      return ''
+    }
+    return str
+  }
+
+  var sentence_type = function(sentence) {
+    if (sentence.match(/\?$/)) {
+      return "interrogative";
+    } else if (sentence.match(/\!$/)) {
+      return "exclamative";
+    } else {
+      return "declarative";
+    }
+  }
+
+  var combine_multiples = function(arr) {
+    var better = []
+    for (var i = 0; i < arr.length; i++) {
+      for (var o = 0; o < multi_words.length; o++) {
+        if (arr[i + 1] && normalise(arr[i]) === multi_words[o][0] && normalise(arr[i + 1]) === multi_words[o][1]) { //
+          //we have a match
+          arr[i] = arr[i] + ' ' + arr[i + 1]
+          arr[i + 1] = null
+          break
+        }
+      }
+      better.push(arr[i])
+    }
+    return better.filter(function(w) {
+      return w
+    })
+  }
+
+  var main = function(str) {
+    var sentences = sentence_parser(str)
+    return sentences.map(function(sentence) {
+      var arr = sentence.split(' ');
+      arr = combine_multiples(arr)
+      var tokens = arr.map(function(w, i) {
+        return {
+          text: w,
+          normalised: normalise(w),
+          title_case: (w.match(/^[A-Z][a-z]/) !== null), //use for merge-tokens
+          noun_capital: i > 0 && (w.match(/^[A-Z][a-z]/) !== null), //use for noun signal
+          punctuated: (w.match(/[,;:\(\)"]/) !== null) || undefined,
+          end: (i === (arr.length - 1)) || undefined,
+          start: (i === 0) || undefined
+        }
+      })
+      return {
+        sentence: sentence,
+        tokens: tokens,
+        type: sentence_type(sentence)
+      }
+    })
+  }
+
+  if (typeof module !== "undefined" && module.exports) {
+    exports.tokenize = main;
+  }
+  return main
+})()
+
+// console.log(tokenize("i live in new york")[0].tokens.length==4)
+// console.log(tokenize("I speak optimistically of course.")[0].tokens.length==4)
+// console.log(tokenize("Joe is 9")[0].tokens.length==3)
+// console.log(tokenize("Joe in Toronto")[0].tokens.length==3)
+// console.log(tokenize("I am mega-rich")[0].tokens.length==3)
+
+// a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
+//http://en.wikipedia.org/wiki/List_of_Unicode_characters
+//https://docs.google.com/spreadsheet/ccc?key=0Ah46z755j7cVdFRDM1A2YVpwa1ZYWlpJM2pQZ003M0E
+var normalize = (function() {
+  //approximate visual (not semantic) relationship between unicode and ascii characters
+  var compact={
+      "2": "²ƻ",
+      "3": "³ƷƸƹƺǮǯЗҘҙӞӟӠӡȜȝ",
+      "5": "Ƽƽ",
+      "8": "Ȣȣ",
+      "!": "¡",
+      "?": "¿Ɂɂ",
+      "a": "ªÀÁÂÃÄÅàáâãäåĀāĂăĄąǍǎǞǟǠǡǺǻȀȁȂȃȦȧȺΆΑΔΛάαλАДадѦѧӐӑӒӓƛɅ",
+      "b": "ßþƀƁƂƃƄƅɃΒβϐϦБВЪЬбвъьѢѣҌҍҔҕƥƾ",
+      "c": "¢©ÇçĆćĈĉĊċČčƆƇƈȻȼͻͼͽϲϹϽϾϿЄСсєҀҁҪҫ",
+      "d": "ÐĎďĐđƉƊȡƋƌǷ",
+      "e": "ÈÉÊËèéêëĒēĔĕĖėĘęĚěƎƏƐǝȄȅȆȇȨȩɆɇΈΕΞΣέεξϱϵ϶ЀЁЕЭеѐёҼҽҾҿӖӗӘәӚӛӬӭ",
+      "f": "ƑƒϜϝӺӻ",
+      "g": "ĜĝĞğĠġĢģƓǤǥǦǧǴǵ",
+      "h": "ĤĥĦħƕǶȞȟΉΗЂЊЋНнђћҢңҤҥҺһӉӊ",
+      "I": "ÌÍÎÏ",
+      "i": "ìíîïĨĩĪīĬĭĮįİıƖƗȈȉȊȋΊΐΪίιϊІЇії",
+      "j": "ĴĵǰȷɈɉϳЈј",
+      "k": "ĶķĸƘƙǨǩΚκЌЖКжкќҚқҜҝҞҟҠҡ",
+      "l": "ĹĺĻļĽľĿŀŁłƚƪǀǏǐȴȽΙӀӏ",
+      "m": "ΜϺϻМмӍӎ",
+      "n": "ÑñŃńŅņŇňŉŊŋƝƞǸǹȠȵΝΠήηϞЍИЙЛПийлпѝҊҋӅӆӢӣӤӥπ",
+      "o": "ÒÓÔÕÖØðòóôõöøŌōŎŏŐőƟƠơǑǒǪǫǬǭǾǿȌȍȎȏȪȫȬȭȮȯȰȱΌΘΟΦΩδθοσόϕϘϙϬϭϴОФоѲѳѺѻѼѽӦӧӨөӪӫ¤ƍΏ",
+      "p": "ƤƿΡρϷϸϼРрҎҏÞ",
+      "q": "Ɋɋ",
+      "r": "ŔŕŖŗŘřƦȐȑȒȓɌɍЃГЯгяѓҐґҒғӶӷſ",
+      "s": "ŚśŜŝŞşŠšƧƨȘșȿςϚϛϟϨϩЅѕ",
+      "t": "ŢţŤťŦŧƫƬƭƮȚțȶȾΓΤτϮϯТт҂Ҭҭ",
+      "u": "µÙÚÛÜùúûüŨũŪūŬŭŮůŰűŲųƯưƱƲǓǔǕǖǗǘǙǚǛǜȔȕȖȗɄΰμυϋύϑЏЦЧцџҴҵҶҷҸҹӋӌӇӈ",
+      "v": "ƔνѴѵѶѷ",
+      "w": "ŴŵƜωώϖϢϣШЩшщѡѿ",
+      "x": "×ΧχϗϰХхҲҳӼӽӾӿ",
+      "y": "¥ÝýÿŶŷŸƳƴȲȳɎɏΎΥΨΫγψϒϓϔЎУучўѰѱҮүҰұӮӯӰӱӲӳ",
+      "z": "ŹźŻżŽžƩƵƶȤȥɀΖζ"
+    }
+  //decompress data into an array
+  var data = []
+  Object.keys(compact).forEach(function(k){
+    compact[k].split('').forEach(function(s){
+        data.push([s,k])
+    })
+  })
+
+  //convert array to two hashes
+  var normaler = {}
+  var greek = {}
+  data.forEach(function(arr) {
+    normaler[arr[0]] = arr[1]
+    greek[arr[1]] = arr[0]
+  })
+
+  var normalize = function(str, options) {
+    options = options || {}
+    options.percentage = options.percentage || 50
+    var arr = str.split('').map(function(s) {
+      var r = Math.random() * 100
+      if (normaler[s] && r < options.percentage) {
+        return normaler[s] || s
+      } else {
+        return s
+      }
+    })
+    return arr.join('')
+  }
+
+  var denormalize = function(str, options) {
+    options = options || {}
+    options.percentage = options.percentage || 50
+    var arr = str.split('').map(function(s) {
+      var r = Math.random() * 100
+      if (greek[s] && r < options.percentage) {
+        return greek[s] || s
+      } else {
+        return s
+      }
+    })
+    return arr.join('')
+  }
+
+  var obj = {
+    normalize: normalize,
+    denormalize: denormalize
+  }
+
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = obj;
+  }
+  return obj
+})()
+
+// s = "ӳžŽżźŹźӳžŽżźŹźӳžŽżźŹźӳžŽżźŹźӳžŽżźŹź"
+// s = "Björk"
+// console.log(normalize.normalize(s, {
+//   percentage: 100
+// }))
+
+// s = "The quick brown fox jumps over the lazy dog"
+// console.log(normalize.denormalize(s, {
+//   percentage: 100
+// }))
+
+//chop a string into pronounced syllables
+var syllables = (function(str) {
+
+  var main = function(str) {
+    var all = []
+    //suffix fixes
+    var postprocess = function(arr) {
+      //trim whitespace
+      arr = arr.map(function(w) {
+        w = w.replace(/^ */, '')
+        w = w.replace(/ *$/, '')
+        return w
+      })
+      if (arr.length > 2) {
+        return arr
+      }
+      var ones = [
+        /^[^aeiou]?ion/,
+        /^[^aeiou]?ised/,
+        /^[^aeiou]?iled/
+      ]
+      var l = arr.length
+      if (l > 1) {
+        var suffix = arr[l - 2] + arr[l - 1];
+        for (var i = 0; i < ones.length; i++) {
+          if (suffix.match(ones[i])) {
+            arr[l - 2] = arr[l - 2] + arr[l - 1];
+            arr.pop();
+          }
+        }
+      }
+      return arr
+    }
+
+    var doer = function(str) {
+      var vow = /[aeiouy]$/
+      if (!str) {
+        return
+      }
+      var chars = str.split('')
+      var before = "";
+      var after = "";
+      var current = "";
+      for (var i = 0; i < chars.length; i++) {
+        before = chars.slice(0, i).join('')
+        current = chars[i]
+        after = chars.slice(i + 1, chars.length).join('')
+        var candidate = before + chars[i]
+
+        //rules for syllables-
+
+        //it's a consonant that comes after a vowel
+        if (before.match(vow) && !current.match(vow)) {
+          if (after.match(/^e[sm]/)) {
+            candidate += "e"
+            after = after.replace(/^e/, '')
+          }
+          all.push(candidate)
+          return doer(after)
+        }
+        //unblended vowels ('noisy' vowel combinations)
+        if (candidate.match(/(eo|eu|ia|oa|ua|ui)$/i)) { //'io' is noisy, not in 'ion'
+          all.push(before)
+          all.push(current)
+          return doer(after)
+        }
+      }
+      //if still running, end last syllable
+      if (str.match(/[aiouy]/) || str.match(/ee$/)) { //allow silent trailing e
+        all.push(str)
+      } else {
+        all[all.length - 1] = (all[all.length - 1] || '') + str; //append it to the last one
+      }
+    }
+
+    str.split(/\s\-/).forEach(function(s) {
+      doer(s)
+    })
+    all = postprocess(all)
+
+    //for words like 'tree' and 'free'
+    if (all.length === 0) {
+      all = [str]
+    }
+
+    return all
+  }
+
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+  return main
+})()
+
+// console.log(syllables("suddenly").length === 3)
+// console.log(syllables("tree"))
+
+//broken
+// console.log(syllables("birchtree"))
+
+//built with patterns+exceptions from https://en.wikipedia.org/wiki/British_spelling
+// some patterns are only safe to do in one direction
+
+var britishize = (function() {
+
+  var main = function(str) {
+    var patterns = [
+      // ise -> ize
+      {
+        reg: /([^aeiou][iy])z(e|ed|es|ing)?$/,
+        repl: '$1s$2'
+      },
+      // our -> or
+      // {
+      //   reg: /(..)our(ly|y|ite)?$/,
+      //   repl: '$1or$2',
+      //   exceptions: []
+      // },
+      // re -> er
+      // {
+      //   reg: /([^cdnv])re(s)?$/,
+      //   repl: '$1er$2',
+      //   exceptions: []
+      // },
+      // xion -> tion
+      // {
+      //   reg: /([aeiou])xion([ed])?$/,
+      //   repl: '$1tion$2',
+      //   exceptions: []
+      // },
+      //logue -> log
+      // {
+      //   reg: /logue$/,
+      //   repl: 'log',
+      //   exceptions: []
+      // },
+      // ae -> e
+      // {
+      //   reg: /([o|a])e/,
+      //   repl: 'e',
+      //   exceptions: []
+      // },
+      //eing -> ing
+      // {
+      //   reg: /e(ing|able)$/,
+      //   repl: '$1',
+      //   exceptions: []
+      // },
+      // illful -> ilful
+      {
+        reg: /([aeiou]+[^aeiou]+[aeiou]+)l(ful|ment|est|ing|or|er|ed)$/, //must be second-syllable
+        repl: '$1ll$2',
+        exceptions: []
+      }
+    ]
+
+    for (var i = 0; i < patterns.length; i++) {
+      if (str.match(patterns[i].reg)) {
+        return str.replace(patterns[i].reg, patterns[i].repl)
+      }
+    }
+    return str
+  }
+
+  if (typeof module !== "undefined" && module.exports) {
+    exports.britishize = main;
+  }
+  return main
+})()
+
+//////////////
+var americanize = (function() {
+
+  var main = function(str) {
+    var patterns = [
+      // ise -> ize
+      {
+        reg: /([^aeiou][iy])s(e|ed|es|ing)?$/,
+        repl: '$1z$2'
+      },
+      // our -> or
+      {
+        reg: /(..)our(ly|y|ite)?$/,
+        repl: '$1or$2'
+      },
+      // re -> er
+      {
+        reg: /([^cdnv])re(s)?$/,
+        repl: '$1er$2'
+      },
+      // xion -> tion
+      {
+        reg: /([aeiou])xion([ed])?$/,
+        repl: '$1tion$2'
+      },
+      //logue -> log
+      {
+        reg: /logue$/,
+        repl: 'log'
+      },
+      // ae -> e
+      {
+        reg: /([o|a])e/,
+        repl: 'e'
+      },
+      //eing -> ing
+      {
+        reg: /e(ing|able)$/,
+        repl: '$1'
+      },
+      // illful -> ilful
+      {
+        reg: /([aeiou]+[^aeiou]+[aeiou]+)ll(ful|ment|est|ing|or|er|ed)$/, //must be second-syllable
+        repl: '$1l$2'
+      }
+    ]
+
+    for (var i = 0; i < patterns.length; i++) {
+      if (str.match(patterns[i].reg)) {
+        return str.replace(patterns[i].reg, patterns[i].repl)
+      }
+    }
+
+    return str
+  }
+
+  if (typeof module !== "undefined" && module.exports) {
+    exports.americanize = main;
+  }
+  return main;
+})();
+
+// console.log(americanize("synthesise")=="synthesize")
+// console.log(americanize("synthesised")=="synthesized")
+
+//regex patterns and parts of speech],
+var word_rules = [
+  [".[cts]hy$", "JJ"],
+  [".[st]ty$", "JJ"],
+  [".[lnr]ize$", "VB"],
+  [".[gk]y$", "JJ"],
+  [".fies$", "VB"],
+  [".some$", "JJ"],
+  [".[nrtumcd]al$", "JJ"],
+  [".que$", "JJ"],
+  [".[tnl]ary$", "JJ"],
+  [".[di]est$", "JJS"],
+  ["^(un|de|re)\\-[a-z]..", "VB"],
+  [".lar$", "JJ"],
+  ["[bszmp]{2}y", "JJ"],
+  [".zes$", "VB"],
+  [".[icldtgrv]ent$", "JJ"],
+  [".[rln]ates$", "VBZ"],
+  [".[oe]ry$", "JJ"],
+  ["[rdntkdhs]ly$", "RB"],
+  [".[lsrnpb]ian$", "JJ"],
+  [".[^aeiou]ial$", "JJ"],
+  [".[^aeiou]eal$", "JJ"],
+  [".[vrl]id$", "JJ"],
+  [".[ilk]er$", "JJR"],
+  [".ike$", "JJ"],
+  [".ends$", "VB"],
+  [".wards$", "RB"],
+  [".rmy$", "JJ"],
+  [".rol$", "NN"],
+  [".tors$", "NN"],
+  [".azy$", "JJ"],
+  [".where$", "RB"],
+  [".ify$", "VB"],
+  [".bound$", "JJ"],
+  [".ens$", "VB"],
+  [".oid$", "JJ"],
+  [".vice$", "NN"],
+  [".rough$", "JJ"],
+  [".mum$", "JJ"],
+  [".teen(th)?$", "CD"],
+  [".oses$", "VB"],
+  [".ishes$", "VB"],
+  [".ects$", "VB"],
+  [".tieth$", "CD"],
+  [".ices$", "NN"],
+  [".bles$", "VB"],
+  [".pose$", "VB"],
+  [".ions$", "NN"],
+  [".ean$", "JJ"],
+  [".[ia]sed$", "JJ"],
+  [".tized$", "VB"],
+  [".llen$", "JJ"],
+  [".fore$", "RB"],
+  [".ances$", "NN"],
+  [".gate$", "VB"],
+  [".nes$", "VB"],
+  [".less$", "RB"],
+  [".ried$", "JJ"],
+  [".gone$", "JJ"],
+  [".made$", "JJ"],
+  [".[pdltrkvyns]ing$", "JJ"],
+  [".tions$", "NN"],
+  [".tures$", "NN"],
+  [".ous$", "JJ"],
+  [".ports$", "NN"],
+  [". so$", "RB"],
+  [".ints$", "NN"],
+  [".[gt]led$", "JJ"],
+  ["[aeiou].*ist$", "JJ"],
+  [".lked$", "VB"],
+  [".fully$", "RB"],
+  [".*ould$", "MD"],
+  ["^-?[0-9]+(.[0-9]+)?$", "CD"],
+  ["[a-z]*\\-[a-z]*\\-", "JJ"],
+  ["[a-z]'s$", "NNO"],
+  [".'n$", "VB"],
+  [".'re$", "CP"],
+  [".'ll$", "MD"],
+  [".'t$", "VB"],
+  [".tches$", "VB"],
+  ["^https?\:?\/\/[a-z0-9]", "CD"],//the colon is removed in normalisation
+  ["^www\.[a-z0-9]", "CD"],
+  [".ize$", "VB"],
+  [".[^aeiou]ise$", "VB"],
+  [".[aeiou]te$", "VB"],
+  [".ea$", "NN"],
+  ["[aeiou][pns]er$", "NN"],
+  [".ia$", "NN"],
+  [".sis$", "NN"],
+  [".[aeiou]na$", "NN"],
+  [".[^aeiou]ity$", "NN"],
+  [".[^aeiou]ium$", "NN"],
+  [".[^aeiou][ei]al$", "JJ"],
+  [".ffy$", "JJ"],
+  [".[^aeiou]ic$", "JJ"],
+  [".(gg|bb|zz)ly$", "JJ"],
+  [".[aeiou]my$", "JJ"],
+  [".[aeiou]ble$", "JJ"],
+  [".[^aeiou]ful$", "JJ"],
+  [".[^aeiou]ish$", "JJ"],
+  [".[^aeiou]ica$", "NN"],
+  ["[aeiou][^aeiou]is$", "NN"],
+  ["[^aeiou]ard$", "NN"],
+  ["[^aeiou]ism$", "NN"],
+  [".[^aeiou]ity$", "NN"],
+  [".[^aeiou]ium$", "NN"],
+  [".[lstrn]us$", "NN"],
+  ["..ic$", "JJ"],
+  ["[aeiou][^aeiou]id$", "JJ"],
+  [".[^aeiou]ish$", "JJ"],
+  [".[^aeiou]ive$", "JJ"],
+  ["[ea]{2}zy$", "JJ"],
+].map(function(a) {
+  return {
+    reg: new RegExp(a[0], "i"),
+    pos: a[1]
+  }
+})
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = word_rules;
+}
+// console.log(word_rules)
+
+// word suffixes with a high pos signal, generated with wordnet
+//by spencer kelly spencermountain@gmail.com  2014
+var wordnet_suffixes = (function() {
+
+  var data = {
+  "NN": [
+    "ceae",
+    "inae",
+    "idae",
+    "leaf",
+    "rgan",
+    "eman",
+    "sman",
+    "star",
+    "boat",
+    "tube",
+    "rica",
+    "tica",
+    "nica",
+    "auce",
+    "tics",
+    "ency",
+    "ancy",
+    "poda",
+    "tude",
+    "xide",
+    "body",
+    "weed",
+    "tree",
+    "rrel",
+    "stem",
+    "cher",
+    "icer",
+    "erer",
+    "ader",
+    "ncer",
+    "izer",
+    "ayer",
+    "nner",
+    "ates",
+    "ales",
+    "ides",
+    "rmes",
+    "etes",
+    "llet",
+    "uage",
+    "ings",
+    "aphy",
+    "chid",
+    "tein",
+    "vein",
+    "hair",
+    "tris",
+    "unit",
+    "cake",
+    "nake",
+    "illa",
+    "ella",
+    "icle",
+    "ille",
+    "etle",
+    "scle",
+    "cell",
+    "bell",
+    "bill",
+    "palm",
+    "toma",
+    "game",
+    "lamp",
+    "bone",
+    "mann",
+    "ment",
+    "wood",
+    "book",
+    "nson",
+    "agon",
+    "odon",
+    "dron",
+    "iron",
+    "tion",
+    "itor",
+    "ator",
+    "root",
+    "cope",
+    "tera",
+    "hora",
+    "lora",
+    "bird",
+    "worm",
+    "fern",
+    "horn",
+    "wort",
+    "ourt",
+    "stry",
+    "etry",
+    "bush",
+    "ness",
+    "gist",
+    "rata",
+    "lata",
+    "tata",
+    "moth",
+    "lity",
+    "nity",
+    "sity",
+    "rity",
+    "city",
+    "dity",
+    "vity",
+    "drug",
+    "dium",
+    "llum",
+    "trum",
+    "inum",
+    "lium",
+    "tium",
+    "atum",
+    "rium",
+    "icum",
+    "anum",
+    "nium",
+    "orum",
+    "icus",
+    "opus",
+    "chus",
+    "ngus",
+    "thus",
+    "rius",
+    "rpus"
+  ],
+  "JJ": [
+    "liac",
+    "siac",
+    "clad",
+    "deaf",
+    "xial",
+    "hial",
+    "chal",
+    "rpal",
+    "asal",
+    "rial",
+    "teal",
+    "oeal",
+    "vial",
+    "phal",
+    "sial",
+    "heal",
+    "rbal",
+    "neal",
+    "geal",
+    "dial",
+    "eval",
+    "bial",
+    "ugal",
+    "kian",
+    "izan",
+    "rtan",
+    "odan",
+    "llan",
+    "zian",
+    "eian",
+    "eyan",
+    "ndan",
+    "eban",
+    "near",
+    "unar",
+    "lear",
+    "liar",
+    "-day",
+    "-way",
+    "tech",
+    "sick",
+    "tuck",
+    "inct",
+    "unct",
+    "wide",
+    "endo",
+    "uddy",
+    "eedy",
+    "uted",
+    "aled",
+    "rred",
+    "oned",
+    "rted",
+    "obed",
+    "oped",
+    "ched",
+    "dded",
+    "cted",
+    "tied",
+    "eked",
+    "ayed",
+    "rked",
+    "teed",
+    "mmed",
+    "tred",
+    "awed",
+    "rbed",
+    "bbed",
+    "axed",
+    "bred",
+    "pied",
+    "cked",
+    "rced",
+    "ened",
+    "fied",
+    "lved",
+    "mned",
+    "kled",
+    "hted",
+    "lied",
+    "eted",
+    "rded",
+    "lued",
+    "rved",
+    "azed",
+    "oked",
+    "ghed",
+    "sked",
+    "emed",
+    "aded",
+    "ived",
+    "mbed",
+    "pted",
+    "zled",
+    "ored",
+    "pled",
+    "wned",
+    "afed",
+    "nied",
+    "aked",
+    "gued",
+    "oded",
+    "oved",
+    "oled",
+    "ymed",
+    "lled",
+    "bled",
+    "cled",
+    "eded",
+    "toed",
+    "ited",
+    "oyed",
+    "eyed",
+    "ured",
+    "omed",
+    "ixed",
+    "pped",
+    "ined",
+    "lted",
+    "iced",
+    "exed",
+    "nded",
+    "amed",
+    "owed",
+    "dged",
+    "nted",
+    "eged",
+    "nned",
+    "used",
+    "ibed",
+    "nced",
+    "umed",
+    "dled",
+    "died",
+    "rged",
+    "aped",
+    "oted",
+    "uled",
+    "ided",
+    "nked",
+    "aved",
+    "rled",
+    "rned",
+    "aned",
+    "rmed",
+    "lmed",
+    "aged",
+    "ized",
+    "eved",
+    "ofed",
+    "thed",
+    "ered",
+    "ared",
+    "ated",
+    "eled",
+    "sted",
+    "ewed",
+    "nsed",
+    "nged",
+    "lded",
+    "gged",
+    "osed",
+    "fled",
+    "shed",
+    "aced",
+    "ffed",
+    "tted",
+    "uced",
+    "iled",
+    "uded",
+    "ired",
+    "yzed",
+    "-fed",
+    "mped",
+    "iked",
+    "fted",
+    "imed",
+    "hree",
+    "llel",
+    "aten",
+    "lden",
+    "nken",
+    "apen",
+    "ozen",
+    "ober",
+    "-set",
+    "nvex",
+    "osey",
+    "laid",
+    "paid",
+    "xvii",
+    "xxii",
+    "-air",
+    "tair",
+    "icit",
+    "knit",
+    "nlit",
+    "xxiv",
+    "-six",
+    "-old",
+    "held",
+    "cile",
+    "ible",
+    "able",
+    "gile",
+    "full",
+    "-ply",
+    "bbly",
+    "ggly",
+    "zzly",
+    "-one",
+    "mane",
+    "mune",
+    "rung",
+    "uing",
+    "mant",
+    "yant",
+    "uant",
+    "pant",
+    "urnt",
+    "awny",
+    "eeny",
+    "ainy",
+    "orny",
+    "siny",
+    "tood",
+    "shod",
+    "-toe",
+    "d-on",
+    "-top",
+    "-for",
+    "odox",
+    "wept",
+    "eepy",
+    "oopy",
+    "hird",
+    "dern",
+    "worn",
+    "mart",
+    "ltry",
+    "oury",
+    "ngry",
+    "arse",
+    "bose",
+    "cose",
+    "mose",
+    "iose",
+    "gish",
+    "kish",
+    "pish",
+    "wish",
+    "vish",
+    "yish",
+    "owsy",
+    "ensy",
+    "easy",
+    "ifth",
+    "edth",
+    "urth",
+    "ixth",
+    "00th",
+    "ghth",
+    "ilty",
+    "orty",
+    "ifty",
+    "inty",
+    "ghty",
+    "kety",
+    "afty",
+    "irty",
+    "roud",
+    "true",
+    "wful",
+    "dful",
+    "rful",
+    "mful",
+    "gful",
+    "lful",
+    "hful",
+    "kful",
+    "iful",
+    "yful",
+    "sful",
+    "tive",
+    "cave",
+    "sive",
+    "five",
+    "cive",
+    "xxvi",
+    "urvy",
+    "nown",
+    "hewn",
+    "lown",
+    "-two",
+    "lowy",
+    "ctyl"
+  ],
+  "VB": [
+    "wrap",
+    "hear",
+    "draw",
+    "rlay",
+    "away",
+    "elay",
+    "duce",
+    "esce",
+    "elch",
+    "ooch",
+    "pick",
+    "huck",
+    "back",
+    "hack",
+    "ruct",
+    "lict",
+    "nect",
+    "vict",
+    "eact",
+    "tect",
+    "vade",
+    "lude",
+    "vide",
+    "rude",
+    "cede",
+    "ceed",
+    "ivel",
+    "hten",
+    "rken",
+    "shen",
+    "open",
+    "quer",
+    "over",
+    "efer",
+    "eset",
+    "uiet",
+    "pret",
+    "ulge",
+    "lign",
+    "pugn",
+    "othe",
+    "rbid",
+    "raid",
+    "veil",
+    "vail",
+    "roil",
+    "join",
+    "dain",
+    "feit",
+    "mmit",
+    "erit",
+    "voke",
+    "make",
+    "weld",
+    "uild",
+    "idle",
+    "rgle",
+    "otle",
+    "rble",
+    "self",
+    "fill",
+    "till",
+    "eels",
+    "sult",
+    "pply",
+    "sume",
+    "dime",
+    "lame",
+    "lump",
+    "rump",
+    "vene",
+    "cook",
+    "look",
+    "from",
+    "elop",
+    "grow",
+    "adow",
+    "ploy",
+    "sorb",
+    "pare",
+    "uire",
+    "jure",
+    "lore",
+    "surf",
+    "narl",
+    "earn",
+    "ourn",
+    "hirr",
+    "tort",
+    "-fry",
+    "uise",
+    "lyse",
+    "sise",
+    "hise",
+    "tise",
+    "nise",
+    "lise",
+    "rise",
+    "anse",
+    "gise",
+    "owse",
+    "oosh",
+    "resh",
+    "cuss",
+    "uess",
+    "sess",
+    "vest",
+    "inst",
+    "gest",
+    "fest",
+    "xist",
+    "into",
+    "ccur",
+    "ieve",
+    "eive",
+    "olve",
+    "down",
+    "-dye",
+    "laze",
+    "lyze",
+    "raze",
+    "ooze"
+  ],
+  "RB": [
+    "that",
+    "oubt",
+    "much",
+    "diem",
+    "high",
+    "atim",
+    "sely",
+    "nely",
+    "ibly",
+    "lely",
+    "dely",
+    "ally",
+    "gely",
+    "imly",
+    "tely",
+    "ully",
+    "ably",
+    "owly",
+    "vely",
+    "cely",
+    "mely",
+    "mply",
+    "ngly",
+    "exly",
+    "ffly",
+    "rmly",
+    "rely",
+    "uely",
+    "time",
+    "iori",
+    "oors",
+    "wise",
+    "orst",
+    "east",
+    "ways"
+  ]
+}
+    //convert it to an easier format
+  var data = Object.keys(data).reduce(function(h, k) {
+    data[k].forEach(function(w) {
+      h[w] = k
+    })
+    return h
+  }, {})
+
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = data;
+  }
+  return data;
+})();
+
+//the parts of speech used by this library. mostly standard, but some changes.
+var parts_of_speech = (function() {
+
+  var main = {
+    //verbs
+    "VB": {
+      "name": "verb, generic",
+      "parent": "verb",
+      "tag": "VB"
+    },
+    "VBD": {
+      "name": "past-tense verb",
+      "parent": "verb",
+      "tense": "past",
+      "tag": "VBD"
+    },
+    "VBN": {
+      "name": "past-participle verb",
+      "parent": "verb",
+      "tense": "past",
+      "tag": "VBN"
+    },
+    "VBP": {
+      "name": "infinitive verb",
+      "parent": "verb",
+      "tense": "present",
+      "tag": "VBP"
+    },
+    "VBZ": {
+      "name": "present-tense verb",
+      "tense": "present",
+      "parent": "verb",
+      "tag": "VBZ"
+    },
+    "CP": {
+      "name": "copula",
+      "parent": "verb",
+      "tag": "CP"
+    },
+    "VBG": {
+      "name": "gerund verb",
+      "parent": "verb",
+      "tag": "VBG"
+    },
+
+    //adjectives
+    "JJ": {
+      "name": "adjective, generic",
+      "parent": "adjective",
+      "tag": "JJ"
+    },
+    "JJR": {
+      "name": "comparative adjective",
+      "parent": "adjective",
+      "tag": "JJR"
+    },
+    "JJS": {
+      "name": "superlative adjective",
+      "parent": "adjective",
+      "tag": "JJS"
+    },
+
+    //adverbs
+    "RB": {
+      "name": "adverb",
+      "parent": "adverb",
+      "tag": "RB"
+    },
+    "RBR": {
+      "name": "comparative adverb",
+      "parent": "adverb",
+      "tag": "RBR"
+    },
+    "RBS": {
+      "name": "superlative adverb",
+      "parent": "adverb",
+      "tag": "RBS"
+    },
+
+    //nouns
+    "NN": {
+      "name": "noun, generic",
+      "parent": "noun",
+      "tag": "NN"
+    },
+    "NNP": {
+      "name": "singular proper noun",
+      "parent": "noun",
+      "tag": "NNP"
+    },
+    "NNA": {
+      "name": "noun, active",
+      "parent": "noun",
+      "tag": "NNA"
+    },
+    "NNPA": {
+      "name": "noun, acronym",
+      "parent": "noun",
+      "tag": "NNPA"
+    },
+    "NNPS": {
+      "name": "plural proper noun",
+      "parent": "noun",
+      "tag": "NNPS"
+    },
+    "NNAB": {
+      "name": "noun, abbreviation",
+      "parent": "noun",
+      "tag": "NNAB"
+    },
+    "NNS": {
+      "name": "plural noun",
+      "parent": "noun",
+      "tag": "NNS"
+    },
+    "NNO": {
+      "name": "possessive noun",
+      "parent": "noun",
+      "tag": "NNO"
+    },
+    "NNG": {
+      "name": "gerund noun",
+      "parent": "noun",
+      "tag": "VBG"
+    },
+
+    //glue
+    "PP": {
+      "name": "possessive pronoun",
+      "parent": "glue",
+      "tag": "PP"
+    },
+    "FW": {
+      "name": "foreign word",
+      "parent": "glue",
+      "tag": "FW"
+    },
+    "CD": {
+      "name": "cardinal value, generic",
+      "parent": "value",
+      "tag": "CD"
+    },
+    "DA": {
+      "name": "date",
+      "parent": "value",
+      "tag": "DA"
+    },
+    "NU": {
+      "name": "number",
+      "parent": "value",
+      "tag": "NU"
+    },
+    "IN": {
+      "name": "preposition",
+      "parent": "glue",
+      "tag": "IN"
+    },
+    "MD": {
+      "name": "modal verb",
+      "parent": "verb", //dunno
+      "tag": "MD"
+    },
+    "CC": {
+      "name": "co-ordating conjunction",
+      "parent": "glue",
+      "tag": "CC"
+    },
+    "PRP": {
+      "name": "personal pronoun",
+      "parent": "noun",
+      "tag": "PRP"
+    },
+    "DT": {
+      "name": "determiner",
+      "parent": "glue",
+      "tag": "DT"
+    },
+    "UH": {
+      "name": "interjection",
+      "parent": "glue",
+      "tag": "UH"
+    },
+    "EX": {
+      "name": "existential there",
+      "parent": "glue",
+      "tag": "EX"
+    }
+  }
 
   if (typeof module !== "undefined" && module.exports) {
     module.exports = main;
@@ -4976,6 +5133,15 @@ var indefinite_article = (function() {
 
 var inflect = (function() {
 
+  if (typeof module !== "undefined" && module.exports) {
+    uncountables = require("../../../data/lexicon/uncountables")
+  }
+  //words that shouldn't ever inflect, for metaphysical reasons
+  uncountable_nouns = uncountables.reduce(function(h, a) {
+    h[a] = true
+    return h
+  }, {})
+
   var titlecase = function(str) {
     if (!str) {
       return ''
@@ -4983,310 +5149,91 @@ var inflect = (function() {
     return str.charAt(0).toUpperCase() + str.slice(1)
   }
   var irregulars = [
-      ['child', 'children'],
-      ['person', 'people'],
-      ['leaf', 'leaves'],
-      ['database', 'databases'],
-      ['quiz', 'quizzes'],
-      ['child', 'children'],
-      ['stomach', 'stomachs'],
-      ['sex', 'sexes'],
-      ['move', 'moves'],
-      ['shoe', 'shoes'],
-      ["goose", "geese"],
-      ["phenomenon", "phenomena"],
-      ['barracks', 'barracks'],
-      ['deer', 'deer'],
-      ['syllabus', 'syllabi'],
-      ['index', 'indices'],
-      ['appendix', 'appendices'],
-      ['criterion', 'criteria'],
-      ['i', 'we'],
-      ['person', 'people'],
-      ['man', 'men'],
-      ['move', 'moves'],
-      ['she', 'they'],
-      ['he', 'they'],
-      ['myself', 'ourselves'],
-      ['yourself', 'yourselves'],
-      ['himself', 'themselves'],
-      ['herself', 'themselves'],
-      ['themself', 'themselves'],
-      ['mine', 'ours'],
-      ['hers', 'theirs'],
-      ['his', 'theirs'],
-      ['its', 'theirs'],
-      ['theirs', 'theirs'],
-      ['sex', 'sexes'],
-      ['photo', 'photos'],
-      ['video', 'videos'],
-      ['narrative', 'narratives'],
-      ['rodeo', 'rodeos'],
-      ['gas', 'gases'],
-      ['epoch', 'epochs'],
-      ['zero', 'zeros'],
-      ['avocado', 'avocados'],
-      ['halo', 'halos'],
-      ['tornado', 'tornados'],
-      ['tuxedo', 'tuxedos'],
-      ['sombrero', 'sombreros']
-    ]
-    //words that shouldn't ever inflect, for metaphysical reasons
-  var uncountables = [
-    "aircraft",
-    "bass",
-    "bison",
-    "fowl",
-    "halibut",
-    "moose",
-    "salmon",
-    "spacecraft",
-    "tuna",
-    "trout",
-    "advice",
-    "help",
-    "information",
-    "knowledge",
-    "trouble",
-    "work",
-    "enjoyment",
-    "fun",
-    "recreation",
-    "relaxation",
-    "meat",
-    "rice",
-    "bread",
-    "cake",
-    "coffee",
-    "ice",
-    "water",
-    "oil",
-    "grass",
-    "hair",
-    "fruit",
-    "wildlife",
-    "equipment",
-    "machinery",
-    "furniture",
-    "mail",
-    "luggage",
-    "jewelry",
-    "clothing",
-    "money",
-    "mathematics",
-    "economics",
-    "physics",
-    "civics",
-    "ethics",
-    "gymnastics",
-    "mumps",
-    "measles",
-    "news",
-    "tennis",
-    "baggage",
-    "currency",
-    "travel",
-    "soap",
-    "toothpaste",
-    "food",
-    "sugar",
-    "butter",
-    "flour",
-    "progress",
-    "research",
-    "leather",
-    "wool",
-    "wood",
-    "coal",
-    "weather",
-    "homework",
-    "cotton",
-    "silk",
-    "patience",
-    "impatience",
-    "talent",
-    "energy",
-    "experience",
-    "vinegar",
-    "polish",
-    "air",
-    "alcohol",
-    "anger",
-    "art",
-    "beef",
-    "blood",
-    "cash",
-    "chaos",
-    "cheese",
-    "chewing",
-    "conduct",
-    "confusion",
-    "courage",
-    "damage",
-    "education",
-    "electricity",
-    "entertainment",
-    "fiction",
-    "forgiveness",
-    "gold",
-    "gossip",
-    "ground",
-    "happiness",
-    "history",
-    "honey",
-    "hope",
-    "hospitality",
-    "importance",
-    "jam",
-    "justice",
-    "laughter",
-    "leisure",
-    "lightning",
-    "literature",
-    "love",
-    "luck",
-    "melancholy",
-    "milk",
-    "mist",
-    "music",
-    "noise",
-    "oxygen",
-    "paper",
-    "pay",
-    "peace",
-    "peanut",
-    "pepper",
-    "petrol",
-    "plastic",
-    "pork",
-    "power",
-    "pressure",
-    "rain",
-    "recognition",
-    "sadness",
-    "safety",
-    "salt",
-    "sand",
-    "scenery",
-    "shopping",
-    "silver",
-    "snow",
-    "softness",
-    "space",
-    "speed",
-    "steam",
-    "sunshine",
-    "tea",
-    "thunder",
-    "time",
-    "traffic",
-    "trousers",
-    "violence",
-    "warmth",
-    "washing",
-    "wind",
-    "wine",
-    "steel",
-    "soccer",
-    "hockey",
-    "golf",
-    "fish",
-    "gum",
-    "liquid",
-    "series",
-    "sheep",
-    "species",
-    "fahrenheit",
-    "celcius",
-    "kelvin",
-    "hertz"
-  ].reduce(function(h,a){
-    h[a]=true
-    return h
-  },{})
-
-  var pluralize_rules = [{
-      reg: /(ax|test)is$/i,
-      repl: '$1es'
-    }, {
-      reg: /(octop|vir|radi|nucle|fung|cact|stimul)us$/i,
-      repl: '$1i'
-    }, {
-      reg: /(octop|vir)i$/i,
-      repl: '$1i'
-    }, {
-      reg: /([rl])f$/i,
-      repl: '$1ves'
-    }, {
-      reg: /(alias|status)$/i,
-      repl: '$1es'
-    }, {
-      reg: /(bu)s$/i,
-      repl: '$1ses'
-    }, {
-      reg: /(al|ad|at|er|et|ed|ad)o$/i,
-      repl: '$1oes'
-    }, {
-      reg: /([ti])um$/i,
-      repl: '$1a'
-    }, {
-      reg: /([ti])a$/i,
-      repl: '$1a'
-    }, {
-      reg: /sis$/i,
-      repl: 'ses'
-    }, {
-      reg: /(?:([^f])fe|([lr])f)$/i,
-      repl: '$1ves'
-    }, {
-      reg: /(hive)$/i,
-      repl: '$1s'
-    }, {
-      reg: /([^aeiouy]|qu)y$/i,
-      repl: '$1ies'
-    }, {
-      reg: /(x|ch|ss|sh|s|z)$/i,
-      repl: '$1es'
-    }, {
-      reg: /(matr|vert|ind|cort)(ix|ex)$/i,
-      repl: '$1ices'
-    }, {
-      reg: /([m|l])ouse$/i,
-      repl: '$1ice'
-    }, {
-      reg: /([m|l])ice$/i,
-      repl: '$1ice'
-    }, {
-      reg: /^(ox)$/i,
-      repl: '$1en'
-    }, {
-      reg: /^(oxen)$/i,
-      repl: '$1'
-    }, {
-      reg: /(quiz)$/i,
-      repl: '$1zes'
-    }, {
-      reg: /(antenn|formul|nebul|vertebr|vit)a$/i,
-      repl: '$1ae'
-    }, {
-      reg: /(sis)$/i,
-      repl: 'ses'
-    }, {
-      reg: /^(?!talis|.*hu)(.*)man$/i,
-      repl: '$1men'
-    },
-    //fallback, add an s
-    {
-      reg: /(.*)/i,
-      repl: '$1s'
-    }
-
+    ['child', 'children'],
+    ['person', 'people'],
+    ['leaf', 'leaves'],
+    ['database', 'databases'],
+    ['quiz', 'quizzes'],
+    ['child', 'children'],
+    ['stomach', 'stomachs'],
+    ['sex', 'sexes'],
+    ['move', 'moves'],
+    ['shoe', 'shoes'],
+    ["goose", "geese"],
+    ["phenomenon", "phenomena"],
+    ['barracks', 'barracks'],
+    ['deer', 'deer'],
+    ['syllabus', 'syllabi'],
+    ['index', 'indices'],
+    ['appendix', 'appendices'],
+    ['criterion', 'criteria'],
+    ['i', 'we'],
+    ['person', 'people'],
+    ['man', 'men'],
+    ['move', 'moves'],
+    ['she', 'they'],
+    ['he', 'they'],
+    ['myself', 'ourselves'],
+    ['yourself', 'yourselves'],
+    ['himself', 'themselves'],
+    ['herself', 'themselves'],
+    ['themself', 'themselves'],
+    ['mine', 'ours'],
+    ['hers', 'theirs'],
+    ['his', 'theirs'],
+    ['its', 'theirs'],
+    ['theirs', 'theirs'],
+    ['sex', 'sexes'],
+    ['photo', 'photos'],
+    ['video', 'videos'],
+    ['narrative', 'narratives'],
+    ['rodeo', 'rodeos'],
+    ['gas', 'gases'],
+    ['epoch', 'epochs'],
+    ['zero', 'zeros'],
+    ['avocado', 'avocados'],
+    ['halo', 'halos'],
+    ['tornado', 'tornados'],
+    ['tuxedo', 'tuxedos'],
+    ['sombrero', 'sombreros']
   ]
+
+  var pluralize_rules = [
+    [/(ax|test)is$/i, '$1es'],
+    [/(octop|vir|radi|nucle|fung|cact|stimul)us$/i, '$1i'],
+    [/(octop|vir)i$/i, '$1i'],
+    [/([rl])f$/i, '$1ves'],
+    [/(alias|status)$/i, '$1es'],
+    [/(bu)s$/i, '$1ses'],
+    [/(al|ad|at|er|et|ed|ad)o$/i, '$1oes'],
+    [/([ti])um$/i, '$1a'],
+    [/([ti])a$/i, '$1a'],
+    [/sis$/i, 'ses'],
+    [/(?:([^f])fe|([lr])f)$/i, '$1ves'],
+    [/(hive)$/i, '$1s'],
+    [/([^aeiouy]|qu)y$/i, '$1ies'],
+    [/(x|ch|ss|sh|s|z)$/i, '$1es'],
+    [/(matr|vert|ind|cort)(ix|ex)$/i, '$1ices'],
+    [/([m|l])ouse$/i, '$1ice'],
+    [/([m|l])ice$/i, '$1ice'],
+    [/^(ox)$/i, '$1en'],
+    [/^(oxen)$/i, '$1'],
+    [/(quiz)$/i, '$1zes'],
+    [/(antenn|formul|nebul|vertebr|vit)a$/i, '$1ae'],
+    [/(sis)$/i, 'ses'],
+    [/^(?!talis|.*hu)(.*)man$/i, '$1men'],
+    [/(.*)/i, '$1s']
+  ].map(function(a) {
+    return {
+      reg: a[0],
+      repl: a[1]
+    }
+  })
 
   var pluralize = function(str) {
     var low = str.toLowerCase()
       //uncountable
-    if (uncountables[low]) {
+    if (uncountable_nouns[low]) {
       return str
     }
     //irregular
@@ -5316,87 +5263,42 @@ var inflect = (function() {
     }
   }
 
-  var singularize_rules = [{
-      reg: /([^v])ies$/i,
-      repl: '$1y'
-    }, {
-      reg: /ises$/i,
-      repl: 'isis'
-    }, {
-      reg: /ives$/i,
-      repl: 'ife'
-    }, {
-      reg: /(antenn|formul|nebul|vertebr|vit)ae$/i,
-      repl: '$1a'
-    }, {
-      reg: /(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i,
-      repl: '$1us'
-    }, {
-      reg: /(buffal|tomat|tornad)(oes)$/i,
-      repl: '$1o'
-    }, {
-      reg: /((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i,
-      repl: '$1sis'
-    }, {
-      reg: /(vert|ind|cort)(ices)$/i,
-      repl: '$1ex'
-    }, {
-      reg: /(matr|append)(ices)$/i,
-      repl: '$1ix'
-    }, {
-      reg: /(x|ch|ss|sh|s|z|o)es$/i,
-      repl: '$1'
-    }, {
-      reg: /men$/i,
-      repl: 'man'
-    }, {
-      reg: /(n)ews$/i,
-      repl: '$1ews'
-    }, {
-      reg: /([ti])a$/i,
-      repl: '$1um'
-    }, {
-      reg: /([^f])ves$/i,
-      repl: '$1fe'
-    }, {
-      reg: /([lr])ves$/i,
-      repl: '$1f'
-    }, {
-      reg: /([^aeiouy]|qu)ies$/i,
-      repl: '$1y'
-    }, {
-      reg: /(s)eries$/i,
-      repl: '$1eries'
-    }, {
-      reg: /(m)ovies$/i,
-      repl: '$1ovie'
-    }, {
-      reg: /([m|l])ice$/i,
-      repl: '$1ouse'
-    }, {
-      reg: /(cris|ax|test)es$/i,
-      repl: '$1is'
-    }, {
-      reg: /(alias|status)es$/i,
-      repl: '$1'
-    }, {
-      reg: /(ss)$/i,
-      repl: '$1'
-    }, {
-      reg: /(ics)$/i,
-      repl: "$1"
-    },
-    //fallback, remove last s
-    {
-      reg: /s$/i,
-      repl: ''
+  var singularize_rules = [
+    [/([^v])ies$/i, '$1y'],
+    [/ises$/i, 'isis'],
+    [/ives$/i, 'ife'],
+    [/(antenn|formul|nebul|vertebr|vit)ae$/i, '$1a'],
+    [/(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i, '$1us'],
+    [/(buffal|tomat|tornad)(oes)$/i, '$1o'],
+    [/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i, '$1sis'],
+    [/(vert|ind|cort)(ices)$/i, '$1ex'],
+    [/(matr|append)(ices)$/i, '$1ix'],
+    [/(x|ch|ss|sh|s|z|o)es$/i, '$1'],
+    [/men$/i, 'man'],
+    [/(n)ews$/i, '$1ews'],
+    [/([ti])a$/i, '$1um'],
+    [/([^f])ves$/i, '$1fe'],
+    [/([lr])ves$/i, '$1f'],
+    [/([^aeiouy]|qu)ies$/i, '$1y'],
+    [/(s)eries$/i, '$1eries'],
+    [/(m)ovies$/i, '$1ovie'],
+    [/([m|l])ice$/i, '$1ouse'],
+    [/(cris|ax|test)es$/i, '$1is'],
+    [/(alias|status)es$/i, '$1'],
+    [/(ss)$/i, '$1'],
+    [/(ics)$/i, "$1"],
+    [/s$/i, '']
+  ].map(function(a) {
+    return {
+      reg: a[0],
+      repl: a[1]
     }
-  ]
+  })
 
   var singularize = function(str) {
     var low = str.toLowerCase()
       //uncountable
-    if (uncountables[low]) {
+    if (uncountable_nouns[low]) {
       return str
     }
     //irregular
@@ -5449,7 +5351,7 @@ var inflect = (function() {
   }
 
   var inflect = function(str) {
-    if (uncountables[str]) { //uncountables shouldn't ever inflect
+    if (uncountable_nouns[str]) { //uncountables shouldn't ever inflect
       return {
         plural: str,
         singular: str
@@ -5480,8 +5382,10 @@ var inflect = (function() {
   return methods;
 })();
 
-// console.log(inflect.pluralize('kiss'))
-// console.log(inflect.pluralize('mayor of chicago'))
+// console.log(inflect.singularize('kisses')=="kiss")
+// console.log(inflect.singularize('mayors of chicago')=="mayor of chicago")
+// console.log(inflect.pluralize('kiss')=="kisses")
+// console.log(inflect.pluralize('mayor of chicago')=="mayors of chicago")
 // console.log(inflect.inflect('Index').plural=='Indices')
 
 //wrapper for noun's methods
@@ -5683,26 +5587,26 @@ var to_adjective = (function() {
       "wholly": "whole"
     }
     var transforms = [{
-      reg: /bly$/i,
-      repl: 'ble'
+      "reg": /bly$/i,
+      "repl": 'ble'
     }, {
-      reg: /gically$/i,
-      repl: 'gical'
+      "reg": /gically$/i,
+      "repl": 'gical'
     }, {
-      reg: /([rsdh])ically$/i,
-      repl: '$1ical'
+      "reg": /([rsdh])ically$/i,
+      "repl": '$1ical'
     }, {
-      reg: /ically$/i,
-      repl: 'ic'
+      "reg": /ically$/i,
+      "repl": 'ic'
     }, {
-      reg: /uly$/i,
-      repl: 'ue'
+      "reg": /uly$/i,
+      "repl": 'ue'
     }, {
-      reg: /ily$/i,
-      repl: 'y'
+      "reg": /ily$/i,
+      "repl": 'y'
     }, {
-      reg: /(.{3})ly$/i,
-      repl: '$1'
+      "reg": /(.{3})ly$/i,
+      "repl": '$1'
     }]
     if (irregulars.hasOwnProperty(str)) {
       return irregulars[str]
@@ -6655,17 +6559,17 @@ var adj_to_noun = (function() {
       return w;
     }
     var transforms=[
-      {reg:/y$/, repl:'iness'},
-      {reg:/le$/, repl:'ility'},
-      {reg:/ial$/, repl:'y'},
-      {reg:/al$/, repl:'ality'},
-      {reg:/ting$/, repl:'ting'},
-      {reg:/ring$/, repl:'ring'},
-      {reg:/bing$/, repl:'bingness'},
-      {reg:/sing$/, repl:'se'},
-      {reg:/ing$/, repl:'ment'},
-      {reg:/ess$/, repl:'essness'},
-      {reg:/ous$/, repl:'ousness'},
+      {"reg":/y$/, "repl":'iness'},
+      {"reg":/le$/, "repl":'ility'},
+      {"reg":/ial$/, "repl":'y'},
+      {"reg":/al$/, "repl":'ality'},
+      {"reg":/ting$/, "repl":'ting'},
+      {"reg":/ring$/, "repl":'ring'},
+      {"reg":/bing$/, "repl":'bingness'},
+      {"reg":/sing$/, "repl":'se'},
+      {"reg":/ing$/, "repl":'ment'},
+      {"reg":/ess$/, "repl":'essness'},
+      {"reg":/ous$/, "repl":'ousness'},
     ]
 
     for(var i=0; i<transforms.length; i++){
@@ -6820,17 +6724,17 @@ var to_superlative = (function() {
     }
 
     var transforms = [{
-      reg: /y$/i,
-      repl: 'iest'
+      "reg": /y$/i,
+      "repl": 'iest'
     }, {
-      reg: /([aeiou])t$/i,
-      repl: '$1ttest'
+      "reg": /([aeiou])t$/i,
+      "repl": '$1ttest'
     }, {
-      reg: /([aeou])de$/i,
-      repl: '$1dest'
+      "reg": /([aeou])de$/i,
+      "repl": '$1dest'
     }, {
-      reg: /nge$/i,
-      repl: 'ngest'
+      "reg": /nge$/i,
+      "repl": 'ngest'
     }]
 
     var matches = [
@@ -7074,7 +6978,6 @@ var Adjective = function(str, next, last, token) {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = Adjective;
 }
-
 // console.log(new Adjective("crazy"))
 
 //Parents are classes for each main part of speech, with appropriate methods
@@ -7120,6 +7023,7 @@ var lexicon = (function() {
       values = require("./lexicon/values")
       demonyms = require("./lexicon/demonyms")
       abbreviations = require("./lexicon/abbreviations")
+      uncountables = require("./lexicon/uncountables")
 
       //verbs
       verbs = require("./lexicon/verbs")
@@ -7535,6 +7439,12 @@ var lexicon = (function() {
       main[abbreviations[i]] = "NNAB"
     }
 
+    //add uncountable nouns
+    l = uncountables.length
+    for (i = 0; i < l; i++) {
+      main[uncountables[i]] = "NN"
+    }
+
     //add multiple-word terms
     l = Object.keys(multiples).forEach(function(k) {
       main[k] = multiples[k]
@@ -7619,7 +7529,7 @@ var lexicon = (function() {
   // console.log(lexicon['july']=="CD")
   // console.log(lexicon[null]===undefined)
   // console.log(lexicon["dr"]==="NNAB")
-
+  // console.log(lexicon["hope"]==="NN")
 
   // console.log(Object.keys(lexicon).length)
   // console.log(lexicon['prettier']=="JJR")
@@ -7717,7 +7627,6 @@ var Sentence = function(tokens) {
         "should": "shouldn't",
         "can": "can't",
         "must": "mustn't"
-
       }
       //loop through each term..
     for (var i = 0; i < the.tokens.length; i++) {

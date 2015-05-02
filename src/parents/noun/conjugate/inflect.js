@@ -4,6 +4,15 @@
 
 var inflect = (function() {
 
+  if (typeof module !== "undefined" && module.exports) {
+    uncountables = require("../../../data/lexicon/uncountables")
+  }
+  //words that shouldn't ever inflect, for metaphysical reasons
+  uncountable_nouns = uncountables.reduce(function(h, a) {
+    h[a] = true
+    return h
+  }, {})
+
   var titlecase = function(str) {
     if (!str) {
       return ''
@@ -11,310 +20,91 @@ var inflect = (function() {
     return str.charAt(0).toUpperCase() + str.slice(1)
   }
   var irregulars = [
-      ['child', 'children'],
-      ['person', 'people'],
-      ['leaf', 'leaves'],
-      ['database', 'databases'],
-      ['quiz', 'quizzes'],
-      ['child', 'children'],
-      ['stomach', 'stomachs'],
-      ['sex', 'sexes'],
-      ['move', 'moves'],
-      ['shoe', 'shoes'],
-      ["goose", "geese"],
-      ["phenomenon", "phenomena"],
-      ['barracks', 'barracks'],
-      ['deer', 'deer'],
-      ['syllabus', 'syllabi'],
-      ['index', 'indices'],
-      ['appendix', 'appendices'],
-      ['criterion', 'criteria'],
-      ['i', 'we'],
-      ['person', 'people'],
-      ['man', 'men'],
-      ['move', 'moves'],
-      ['she', 'they'],
-      ['he', 'they'],
-      ['myself', 'ourselves'],
-      ['yourself', 'yourselves'],
-      ['himself', 'themselves'],
-      ['herself', 'themselves'],
-      ['themself', 'themselves'],
-      ['mine', 'ours'],
-      ['hers', 'theirs'],
-      ['his', 'theirs'],
-      ['its', 'theirs'],
-      ['theirs', 'theirs'],
-      ['sex', 'sexes'],
-      ['photo', 'photos'],
-      ['video', 'videos'],
-      ['narrative', 'narratives'],
-      ['rodeo', 'rodeos'],
-      ['gas', 'gases'],
-      ['epoch', 'epochs'],
-      ['zero', 'zeros'],
-      ['avocado', 'avocados'],
-      ['halo', 'halos'],
-      ['tornado', 'tornados'],
-      ['tuxedo', 'tuxedos'],
-      ['sombrero', 'sombreros']
-    ]
-    //words that shouldn't ever inflect, for metaphysical reasons
-  var uncountables = [
-    "aircraft",
-    "bass",
-    "bison",
-    "fowl",
-    "halibut",
-    "moose",
-    "salmon",
-    "spacecraft",
-    "tuna",
-    "trout",
-    "advice",
-    "help",
-    "information",
-    "knowledge",
-    "trouble",
-    "work",
-    "enjoyment",
-    "fun",
-    "recreation",
-    "relaxation",
-    "meat",
-    "rice",
-    "bread",
-    "cake",
-    "coffee",
-    "ice",
-    "water",
-    "oil",
-    "grass",
-    "hair",
-    "fruit",
-    "wildlife",
-    "equipment",
-    "machinery",
-    "furniture",
-    "mail",
-    "luggage",
-    "jewelry",
-    "clothing",
-    "money",
-    "mathematics",
-    "economics",
-    "physics",
-    "civics",
-    "ethics",
-    "gymnastics",
-    "mumps",
-    "measles",
-    "news",
-    "tennis",
-    "baggage",
-    "currency",
-    "travel",
-    "soap",
-    "toothpaste",
-    "food",
-    "sugar",
-    "butter",
-    "flour",
-    "progress",
-    "research",
-    "leather",
-    "wool",
-    "wood",
-    "coal",
-    "weather",
-    "homework",
-    "cotton",
-    "silk",
-    "patience",
-    "impatience",
-    "talent",
-    "energy",
-    "experience",
-    "vinegar",
-    "polish",
-    "air",
-    "alcohol",
-    "anger",
-    "art",
-    "beef",
-    "blood",
-    "cash",
-    "chaos",
-    "cheese",
-    "chewing",
-    "conduct",
-    "confusion",
-    "courage",
-    "damage",
-    "education",
-    "electricity",
-    "entertainment",
-    "fiction",
-    "forgiveness",
-    "gold",
-    "gossip",
-    "ground",
-    "happiness",
-    "history",
-    "honey",
-    "hope",
-    "hospitality",
-    "importance",
-    "jam",
-    "justice",
-    "laughter",
-    "leisure",
-    "lightning",
-    "literature",
-    "love",
-    "luck",
-    "melancholy",
-    "milk",
-    "mist",
-    "music",
-    "noise",
-    "oxygen",
-    "paper",
-    "pay",
-    "peace",
-    "peanut",
-    "pepper",
-    "petrol",
-    "plastic",
-    "pork",
-    "power",
-    "pressure",
-    "rain",
-    "recognition",
-    "sadness",
-    "safety",
-    "salt",
-    "sand",
-    "scenery",
-    "shopping",
-    "silver",
-    "snow",
-    "softness",
-    "space",
-    "speed",
-    "steam",
-    "sunshine",
-    "tea",
-    "thunder",
-    "time",
-    "traffic",
-    "trousers",
-    "violence",
-    "warmth",
-    "washing",
-    "wind",
-    "wine",
-    "steel",
-    "soccer",
-    "hockey",
-    "golf",
-    "fish",
-    "gum",
-    "liquid",
-    "series",
-    "sheep",
-    "species",
-    "fahrenheit",
-    "celcius",
-    "kelvin",
-    "hertz"
-  ].reduce(function(h,a){
-    h[a]=true
-    return h
-  },{})
-
-  var pluralize_rules = [{
-      reg: /(ax|test)is$/i,
-      repl: '$1es'
-    }, {
-      reg: /(octop|vir|radi|nucle|fung|cact|stimul)us$/i,
-      repl: '$1i'
-    }, {
-      reg: /(octop|vir)i$/i,
-      repl: '$1i'
-    }, {
-      reg: /([rl])f$/i,
-      repl: '$1ves'
-    }, {
-      reg: /(alias|status)$/i,
-      repl: '$1es'
-    }, {
-      reg: /(bu)s$/i,
-      repl: '$1ses'
-    }, {
-      reg: /(al|ad|at|er|et|ed|ad)o$/i,
-      repl: '$1oes'
-    }, {
-      reg: /([ti])um$/i,
-      repl: '$1a'
-    }, {
-      reg: /([ti])a$/i,
-      repl: '$1a'
-    }, {
-      reg: /sis$/i,
-      repl: 'ses'
-    }, {
-      reg: /(?:([^f])fe|([lr])f)$/i,
-      repl: '$1ves'
-    }, {
-      reg: /(hive)$/i,
-      repl: '$1s'
-    }, {
-      reg: /([^aeiouy]|qu)y$/i,
-      repl: '$1ies'
-    }, {
-      reg: /(x|ch|ss|sh|s|z)$/i,
-      repl: '$1es'
-    }, {
-      reg: /(matr|vert|ind|cort)(ix|ex)$/i,
-      repl: '$1ices'
-    }, {
-      reg: /([m|l])ouse$/i,
-      repl: '$1ice'
-    }, {
-      reg: /([m|l])ice$/i,
-      repl: '$1ice'
-    }, {
-      reg: /^(ox)$/i,
-      repl: '$1en'
-    }, {
-      reg: /^(oxen)$/i,
-      repl: '$1'
-    }, {
-      reg: /(quiz)$/i,
-      repl: '$1zes'
-    }, {
-      reg: /(antenn|formul|nebul|vertebr|vit)a$/i,
-      repl: '$1ae'
-    }, {
-      reg: /(sis)$/i,
-      repl: 'ses'
-    }, {
-      reg: /^(?!talis|.*hu)(.*)man$/i,
-      repl: '$1men'
-    },
-    //fallback, add an s
-    {
-      reg: /(.*)/i,
-      repl: '$1s'
-    }
-
+    ['child', 'children'],
+    ['person', 'people'],
+    ['leaf', 'leaves'],
+    ['database', 'databases'],
+    ['quiz', 'quizzes'],
+    ['child', 'children'],
+    ['stomach', 'stomachs'],
+    ['sex', 'sexes'],
+    ['move', 'moves'],
+    ['shoe', 'shoes'],
+    ["goose", "geese"],
+    ["phenomenon", "phenomena"],
+    ['barracks', 'barracks'],
+    ['deer', 'deer'],
+    ['syllabus', 'syllabi'],
+    ['index', 'indices'],
+    ['appendix', 'appendices'],
+    ['criterion', 'criteria'],
+    ['i', 'we'],
+    ['person', 'people'],
+    ['man', 'men'],
+    ['move', 'moves'],
+    ['she', 'they'],
+    ['he', 'they'],
+    ['myself', 'ourselves'],
+    ['yourself', 'yourselves'],
+    ['himself', 'themselves'],
+    ['herself', 'themselves'],
+    ['themself', 'themselves'],
+    ['mine', 'ours'],
+    ['hers', 'theirs'],
+    ['his', 'theirs'],
+    ['its', 'theirs'],
+    ['theirs', 'theirs'],
+    ['sex', 'sexes'],
+    ['photo', 'photos'],
+    ['video', 'videos'],
+    ['narrative', 'narratives'],
+    ['rodeo', 'rodeos'],
+    ['gas', 'gases'],
+    ['epoch', 'epochs'],
+    ['zero', 'zeros'],
+    ['avocado', 'avocados'],
+    ['halo', 'halos'],
+    ['tornado', 'tornados'],
+    ['tuxedo', 'tuxedos'],
+    ['sombrero', 'sombreros']
   ]
+
+  var pluralize_rules = [
+    [/(ax|test)is$/i, '$1es'],
+    [/(octop|vir|radi|nucle|fung|cact|stimul)us$/i, '$1i'],
+    [/(octop|vir)i$/i, '$1i'],
+    [/([rl])f$/i, '$1ves'],
+    [/(alias|status)$/i, '$1es'],
+    [/(bu)s$/i, '$1ses'],
+    [/(al|ad|at|er|et|ed|ad)o$/i, '$1oes'],
+    [/([ti])um$/i, '$1a'],
+    [/([ti])a$/i, '$1a'],
+    [/sis$/i, 'ses'],
+    [/(?:([^f])fe|([lr])f)$/i, '$1ves'],
+    [/(hive)$/i, '$1s'],
+    [/([^aeiouy]|qu)y$/i, '$1ies'],
+    [/(x|ch|ss|sh|s|z)$/i, '$1es'],
+    [/(matr|vert|ind|cort)(ix|ex)$/i, '$1ices'],
+    [/([m|l])ouse$/i, '$1ice'],
+    [/([m|l])ice$/i, '$1ice'],
+    [/^(ox)$/i, '$1en'],
+    [/^(oxen)$/i, '$1'],
+    [/(quiz)$/i, '$1zes'],
+    [/(antenn|formul|nebul|vertebr|vit)a$/i, '$1ae'],
+    [/(sis)$/i, 'ses'],
+    [/^(?!talis|.*hu)(.*)man$/i, '$1men'],
+    [/(.*)/i, '$1s']
+  ].map(function(a) {
+    return {
+      reg: a[0],
+      repl: a[1]
+    }
+  })
 
   var pluralize = function(str) {
     var low = str.toLowerCase()
       //uncountable
-    if (uncountables[low]) {
+    if (uncountable_nouns[low]) {
       return str
     }
     //irregular
@@ -344,87 +134,42 @@ var inflect = (function() {
     }
   }
 
-  var singularize_rules = [{
-      reg: /([^v])ies$/i,
-      repl: '$1y'
-    }, {
-      reg: /ises$/i,
-      repl: 'isis'
-    }, {
-      reg: /ives$/i,
-      repl: 'ife'
-    }, {
-      reg: /(antenn|formul|nebul|vertebr|vit)ae$/i,
-      repl: '$1a'
-    }, {
-      reg: /(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i,
-      repl: '$1us'
-    }, {
-      reg: /(buffal|tomat|tornad)(oes)$/i,
-      repl: '$1o'
-    }, {
-      reg: /((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i,
-      repl: '$1sis'
-    }, {
-      reg: /(vert|ind|cort)(ices)$/i,
-      repl: '$1ex'
-    }, {
-      reg: /(matr|append)(ices)$/i,
-      repl: '$1ix'
-    }, {
-      reg: /(x|ch|ss|sh|s|z|o)es$/i,
-      repl: '$1'
-    }, {
-      reg: /men$/i,
-      repl: 'man'
-    }, {
-      reg: /(n)ews$/i,
-      repl: '$1ews'
-    }, {
-      reg: /([ti])a$/i,
-      repl: '$1um'
-    }, {
-      reg: /([^f])ves$/i,
-      repl: '$1fe'
-    }, {
-      reg: /([lr])ves$/i,
-      repl: '$1f'
-    }, {
-      reg: /([^aeiouy]|qu)ies$/i,
-      repl: '$1y'
-    }, {
-      reg: /(s)eries$/i,
-      repl: '$1eries'
-    }, {
-      reg: /(m)ovies$/i,
-      repl: '$1ovie'
-    }, {
-      reg: /([m|l])ice$/i,
-      repl: '$1ouse'
-    }, {
-      reg: /(cris|ax|test)es$/i,
-      repl: '$1is'
-    }, {
-      reg: /(alias|status)es$/i,
-      repl: '$1'
-    }, {
-      reg: /(ss)$/i,
-      repl: '$1'
-    }, {
-      reg: /(ics)$/i,
-      repl: "$1"
-    },
-    //fallback, remove last s
-    {
-      reg: /s$/i,
-      repl: ''
+  var singularize_rules = [
+    [/([^v])ies$/i, '$1y'],
+    [/ises$/i, 'isis'],
+    [/ives$/i, 'ife'],
+    [/(antenn|formul|nebul|vertebr|vit)ae$/i, '$1a'],
+    [/(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i, '$1us'],
+    [/(buffal|tomat|tornad)(oes)$/i, '$1o'],
+    [/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i, '$1sis'],
+    [/(vert|ind|cort)(ices)$/i, '$1ex'],
+    [/(matr|append)(ices)$/i, '$1ix'],
+    [/(x|ch|ss|sh|s|z|o)es$/i, '$1'],
+    [/men$/i, 'man'],
+    [/(n)ews$/i, '$1ews'],
+    [/([ti])a$/i, '$1um'],
+    [/([^f])ves$/i, '$1fe'],
+    [/([lr])ves$/i, '$1f'],
+    [/([^aeiouy]|qu)ies$/i, '$1y'],
+    [/(s)eries$/i, '$1eries'],
+    [/(m)ovies$/i, '$1ovie'],
+    [/([m|l])ice$/i, '$1ouse'],
+    [/(cris|ax|test)es$/i, '$1is'],
+    [/(alias|status)es$/i, '$1'],
+    [/(ss)$/i, '$1'],
+    [/(ics)$/i, "$1"],
+    [/s$/i, '']
+  ].map(function(a) {
+    return {
+      reg: a[0],
+      repl: a[1]
     }
-  ]
+  })
 
   var singularize = function(str) {
     var low = str.toLowerCase()
       //uncountable
-    if (uncountables[low]) {
+    if (uncountable_nouns[low]) {
       return str
     }
     //irregular
@@ -477,7 +222,7 @@ var inflect = (function() {
   }
 
   var inflect = function(str) {
-    if (uncountables[str]) { //uncountables shouldn't ever inflect
+    if (uncountable_nouns[str]) { //uncountables shouldn't ever inflect
       return {
         plural: str,
         singular: str
@@ -508,6 +253,8 @@ var inflect = (function() {
   return methods;
 })();
 
-// console.log(inflect.pluralize('kiss'))
-// console.log(inflect.pluralize('mayor of chicago'))
+// console.log(inflect.singularize('kisses')=="kiss")
+// console.log(inflect.singularize('mayors of chicago')=="mayor of chicago")
+// console.log(inflect.pluralize('kiss')=="kisses")
+// console.log(inflect.pluralize('mayor of chicago')=="mayors of chicago")
 // console.log(inflect.inflect('Index').plural=='Indices')

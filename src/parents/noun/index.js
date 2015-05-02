@@ -9,7 +9,6 @@ var Noun = function(str, next, last, token) {
     parts_of_speech = require("../../data/parts_of_speech")
     inflect = require("./conjugate/inflect")
     indefinite_article = require("./indefinite_article")
-    // is_entity = require("./ner/is_entity")
   }
   //personal pronouns
   var prps = {
@@ -90,15 +89,19 @@ var Noun = function(str, next, last, token) {
       //  }
     }
     //distinct capital is very good signal
-    if (token.special_capitalised) {
+    if (token.noun_capital) {
       return true
     }
     //multiple-word nouns are very good signal
     if (token.normalised.match(/ /)) {
       return true
     }
-    //if it has an abbreviation, like 'business ltd.'
+    //if it has an acronym/abbreviation, like 'business ltd.'
     if (token.normalised.match(/\./)) {
+      return true
+    }
+    //appears to be a non-capital acronym, and not just caps-lock
+    if (token.normalised.length<5 && token.text.match(/^[A-Z]*$/)) {
       return true
     }
     //acronyms are a-ok

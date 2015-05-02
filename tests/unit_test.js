@@ -9,6 +9,16 @@ if (typeof module !== "undefined" && module.exports) {
 // Dummy method for testing under prototype pollution
 Object.prototype.dummy = function() {};
 
+exports["tokenization"] = function(test) {
+  test.deepEqual(nlp.tokenize("i live in new york")[0].tokens.length, 4)
+  test.deepEqual(nlp.tokenize("I speak optimistically of course.")[0].tokens.length, 4)
+  test.deepEqual(nlp.tokenize("Joe is 9")[0].tokens.length, 3)
+  test.deepEqual(nlp.tokenize("Joe in Toronto")[0].tokens.length, 3)
+  test.deepEqual(nlp.tokenize("I am mega-rich")[0].tokens.length, 3)
+  test.deepEqual(nlp.tokenize("he is Dr. Jones")[0].tokens.length, 4)
+  test.done()
+}
+
 exports["indefinite_article"] = function(test) {
   test.deepEqual(nlp.noun("wolf").article(), "a")
   test.deepEqual(nlp.noun("eulogy").article(), "a")

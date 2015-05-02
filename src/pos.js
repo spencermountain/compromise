@@ -19,7 +19,7 @@ var pos = (function() {
     a.normalised += " " + b.normalised
     a.pos_reason += "|" + b.pos_reason
     a.start = a.start || b.start
-    a.capitalised = a.capitalised || b.capitalised
+    a.noun_capital = (a.noun_capital && b.noun_capital)
     a.punctuated = a.punctuated || b.punctuated
     a.end = a.end || b.end
     return a
@@ -34,7 +34,7 @@ var pos = (function() {
 
       if (arr[i] && next) {
         //'joe smith' are both NN
-        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && arr[i].capitalised == next.capitalised && arr[i].special_capitalised == next.special_capitalised) {
+        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && arr[i].noun_capital == next.noun_capital ) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
@@ -59,18 +59,20 @@ var pos = (function() {
           arr[i] = null
         }
         //capitals surrounding a preposition  'United States of America'
-        else if (arr[i].pos.tag=="NN" && arr[i].capitalised && (next.normalised == "of" || next.normalised == "and") && arr[i + 2] && arr[i + 2].capitalised) {
+        else if (arr[i].pos.tag=="NN" && arr[i].noun_capital && (next.normalised == "of" || next.normalised == "and") && arr[i + 2] && arr[i + 2].noun_capital) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
           arr[i + 2] = merge_tokens(arr[i + 1], arr[i + 2])
           arr[i + 1] = null
         }
         //capitals surrounding two prepositions  'Phantom of the Opera'
-        else if (arr[i].capitalised && next.normalised == "of" && arr[i + 2] && arr[i + 2].pos.tag == "DT" && arr[i + 3] && arr[i + 3].capitalised) {
+        else if (arr[i].noun_capital && next.normalised == "of" && arr[i + 2] && arr[i + 2].pos.tag == "DT" && arr[i + 3] && arr[i + 3].noun_capital) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
           arr[i + 2] = merge_tokens(arr[i + 1], arr[i + 2])
           arr[i + 1] = null
+          arr[i + 3] = merge_tokens(arr[i + 2], arr[i + 3])
+          arr[i + 2] = null
         }
       }
       better.push(arr[i])
@@ -111,28 +113,28 @@ var pos = (function() {
     //resolve ambiguous 'march','april','may' with dates
     if((token.normalised=="march"||token.normalised=="april"||token.normalised=="may") && ( (next && next.pos.tag=="CD") || (last && last.pos.tag=="CD") ) ){
       token.pos = parts_of_speech['CD']
-      token.pos_reason = "may is a date"
+      token.pos_reason = "may_is_date"
     }
       //if it's before a modal verb, it's a noun -> lkjsdf would
     if (next && token.pos.parent !== "noun" && token.pos.parent !== "glue" && next.pos.tag === "MD") {
       token.pos = parts_of_speech['NN']
-      token.pos_reason = "before a modal"
+      token.pos_reason = "before_modal"
     }
     //if it's after the word 'will' its probably a verb/adverb
     if (last && last.normalised == "will" && !last.punctuated && token.pos.parent == "noun") {
       token.pos = parts_of_speech['VB']
-      token.pos_reason = "after the word 'will'"
+      token.pos_reason = "after_will"
     }
     //if it's after the word 'i' its probably a verb/adverb
     if (last && last.normalised == "i" && !last.punctuated && token.pos.parent == "noun") {
       token.pos = parts_of_speech['VB']
-      token.pos_reason = "after the word 'i'"
+      token.pos_reason = "after_i"
     }
     //if it's after an adverb, it's not a noun -> quickly acked
     //support form 'atleast he is..'
     if (last && token.pos.parent === "noun" && last.pos.tag === "RB" && !last.start) {
       token.pos = parts_of_speech['VB']
-      token.pos_reason = "after an adverb"
+      token.pos_reason = "after_adverb"
     }
     //no consecutive, unpunctuated adjectives -> real good
     if (next && token.pos.parent === "adjective" && next.pos.parent === "adjective" && !token.punctuated) {
@@ -157,7 +159,7 @@ var pos = (function() {
     // the city [verb] him.
     if (next && next.pos.tag == "PRP" && token.pos.parent == "noun" && !token.punctuated) {
       token.pos = parts_of_speech['VB']
-      token.pos_reason = "before a [him|her|it]"
+      token.pos_reason = "before_[him|her|it]"
     }
     //the misled worker -> misled is an adjective, not vb
     if (last && next && last.pos.tag === "DT" && next.pos.parent === "noun" && token.pos.parent === "verb") {
@@ -226,17 +228,24 @@ var pos = (function() {
     }
     var sentences = tokenize(text);
 
+
+
     sentences.forEach(function(sentence) {
 
+      //first, let's handle the capitalisation-of-the-first-word issue
+      // var first=sentence.tokens[0]
+      // if(first ){
+
+      // }
       //smart handling of contractions
       sentence.tokens = handle_contractions(sentence.tokens)
 
       //first pass, word-level clues
       sentence.tokens = sentence.tokens.map(function(token) {
-        //it has a capital and isn't first word
-        if (token.special_capitalised && !values[token.normalised]) {
+        //it has a capital and isn't a month, etc.
+        if (token.noun_capital && !values[token.normalised]) {
           token.pos = parts_of_speech['NN']
-          token.pos_reason = "capitalised"
+          token.pos_reason = "noun_capitalised"
           return token
         }
         //known words list
@@ -431,4 +440,4 @@ var pos = (function() {
 // console.log(pos("may 7th live").tags())
 // console.log(pos("She and Marc Emery married on July 23, 2006.").tags())
 // pos("Dr. Conrad Murray recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
-// pos("and Conrad Murray jr. recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
+// pos("the Phantom of the Opera").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})

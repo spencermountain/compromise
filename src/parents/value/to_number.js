@@ -4,7 +4,7 @@
 // [sixty five] (thousand) [sixty five] (hundred) [sixty five]
 // aka: [one/teen/ten] (multiple) [one/teen/ten] (multiple) ...
 // combile the [one/teen/ten]s as 'current_sum', then multiply it by its following multiple
-// multiples not repeat
+// multiple not repeat
 
 var to_number = (function() {
   "use strict";
@@ -71,7 +71,7 @@ var to_number = (function() {
     "eightieth": 80,
     "ninetieth": 90
   }
-  var multiples = {
+  var multiple = {
       'hundred': 100,
       'grand': 1000,
       'thousand': 1000,
@@ -86,14 +86,14 @@ var to_number = (function() {
       'nonillion': 1000000000000000000000000000000,
       'decillion': 1000000000000000000000000000000000
     }
-    // var decimal_multiples={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
+    // var decimal_multiple={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
 
   var main = function(s) {
     //remember these concerns for possible errors
     var ones_done = false
     var teens_done = false
     var tens_done = false
-    var multiples_done = {}
+    var multiple_done = {}
     var total = 0
     var global_multiplier = 1
       //pretty-printed numbers
@@ -240,12 +240,12 @@ var to_number = (function() {
         current_sum += tens[w]
         continue;
       }
-      //multiples rules
-      if (multiples[w]) {
-        if (multiples_done[w]) {
+      //multiple rules
+      if (multiple[w]) {
+        if (multiple_done[w]) {
           return null
         } // eg. five hundred six hundred
-        multiples_done[w] = true
+        multiple_done[w] = true
         //reset our concerns. allow 'five hundred five'
         ones_done = false
         teens_done = false
@@ -253,9 +253,9 @@ var to_number = (function() {
         //case of 'hundred million', (2 consecutive multipliers)
         if (current_sum === 0) {
           total = total || 1 //dont ever multiply by 0
-          total *= multiples[w]
+          total *= multiple[w]
         } else {
-          current_sum *= multiples[w]
+          current_sum *= multiple[w]
           total += current_sum
         }
         current_sum = 0

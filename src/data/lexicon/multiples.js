@@ -62,7 +62,16 @@ var multiples = (function() {
     "avant garde": "JJ",
     "sans serif": "JJ",
     "gung ho": "JJ",
-    "super duper": "JJ"
+    "super duper": "JJ",
+    "new york":"NN",
+    "new england":"NN",
+    "new hampshire":"NN",
+    "new delhi":"NN",
+    "new jersey":"NN",
+    "new mexico":"NN",
+    "united states":"NN",
+    "united kingdom":"NN",
+    "great britain":"NN"
   }
   if (typeof module !== "undefined" && module.exports) {
     module.exports = main;

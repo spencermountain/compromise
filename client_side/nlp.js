@@ -121,94 +121,19 @@ var ngram = (function() {
 // s = ngram("i really think that we all really think it's all good")
 // console.log(s)
 
-//split a string into 'words', as intended to be helpful for this library.
+//split a string into 'words' - as intended to be most helpful for this library.
+//
 var tokenize = (function() {
 
   if (typeof module !== "undefined" && module.exports) {
     sentence_parser = require("./sentence").sentences
+    multiples= require("../../data/lexicon/multiples")
   }
-
   //these expressions ought to be one token, not two, because they are a distinct POS together
-  var multiples = [
-    "of course",
-    "at least",
-    "no longer",
-    "sort of",
-    "at first",
-    "once again",
-    "up to",
-    "once more",
-    "by now",
-    "all but",
-    "just about",
-    "as yet",
-    "on board",
-    "a lot",
-    "by far",
-    "at best",
-    "at large",
-    "for good",
-    "vice versa",
-    "en route",
-    "for sure",
-    "upside down",
-    "at most",
-    "per se",
-    "up front",
-    "in situ",
-    "in vitro",
-    "at worst",
-    "prima facie",
-    "upwards of",
-    "en masse",
-    "a priori",
-    "ad hoc",
-    "et cetera",
-    "de facto",
-    "off guard",
-    "spot on",
-    "ipso facto",
-    "ad infinitum",
-    "point blank",
-    "ad nauseam",
-    "inside out",
-    "not withstanding",
-    "for keeps",
-    "de jure",
-    "a la",
-    "sub judice",
-    "post hoc",
-    "ad hominem",
-    "a posteriori",
-    "fed up",
-    "brand new",
-    "old fashioned",
-    "bona fide",
-    "well off",
-    "far off",
-    "par excellence",
-    "straight forward",
-    "hard up",
-    "sui generis",
-    "en suite",
-    "avant garde",
-    "sans serif",
-    "gung ho",
-    "super duper",
-    "de trop",
-    "new york",
-    "new england",
-    "new hampshire",
-    "new delhi",
-    "new jersey",
-    "new mexico",
-    "united states",
-    "united kingdom",
-    "great britain",
-    "zero sum"
-  ].map(function(m) {
+  var multi_words=Object.keys(multiples).map(function(m) {
     return m.split(' ')
   })
+
 
   var normalise = function(str) {
     if (!str) {
@@ -237,8 +162,8 @@ var tokenize = (function() {
   var combine_multiples = function(arr) {
     var better = []
     for (var i = 0; i < arr.length; i++) {
-      for (var o = 0; o < multiples.length; o++) {
-        if (arr[i + 1] && normalise(arr[i]) === multiples[o][0] && normalise(arr[i + 1]) === multiples[o][1]) { //
+      for (var o = 0; o < multi_words.length; o++) {
+        if (arr[i + 1] && normalise(arr[i]) === multi_words[o][0] && normalise(arr[i + 1]) === multi_words[o][1]) { //
           //we have a match
           arr[i] = arr[i] + ' ' + arr[i + 1]
           arr[i + 1] = null
@@ -261,8 +186,8 @@ var tokenize = (function() {
         return {
           text: w,
           normalised: normalise(w),
-          capitalised: (w.match(/^[A-Z][a-z|A-Z]/) !== null),
-          special_capitalised: (w.match(/^[A-Z][a-z|A-Z]/) !== null) && i > 0,
+          title_case: (w.match(/^[A-Z][a-z]/) !== null), //use for merge-tokens
+          noun_capital: i > 0 && (w.match(/^[A-Z][a-z]/) !== null), //use for noun signal
           punctuated: (w.match(/[,;:\(\)"]/) !== null) || undefined,
           end: (i === (arr.length - 1)) || undefined,
           start: (i === 0) || undefined
@@ -282,9 +207,11 @@ var tokenize = (function() {
   return main
 })()
 
-// console.log(tokenize("i live in new york"))
-// console.log(tokenize("I speak optimistically of course."))
-// console.log(tokenize("Joe is 9"))
+// console.log(tokenize("i live in new york")[0].tokens.length==4)
+// console.log(tokenize("I speak optimistically of course.")[0].tokens.length==4)
+// console.log(tokenize("Joe is 9")[0].tokens.length==3)
+// console.log(tokenize("Joe in Toronto")[0].tokens.length==3)
+// console.log(tokenize("I am mega-rich")[0].tokens.length==3)
 
 // a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
 //http://en.wikipedia.org/wiki/List_of_Unicode_characters
@@ -4013,7 +3940,16 @@ var multiples = (function() {
     "avant garde": "JJ",
     "sans serif": "JJ",
     "gung ho": "JJ",
-    "super duper": "JJ"
+    "super duper": "JJ",
+    "new york":"NN",
+    "new england":"NN",
+    "new hampshire":"NN",
+    "new delhi":"NN",
+    "new jersey":"NN",
+    "new mexico":"NN",
+    "united states":"NN",
+    "united kingdom":"NN",
+    "great britain":"NN"
   }
   if (typeof module !== "undefined" && module.exports) {
     module.exports = main;
@@ -4244,7 +4180,7 @@ var abbreviations = (function() {
 // [sixty five] (thousand) [sixty five] (hundred) [sixty five]
 // aka: [one/teen/ten] (multiple) [one/teen/ten] (multiple) ...
 // combile the [one/teen/ten]s as 'current_sum', then multiply it by its following multiple
-// multiples not repeat
+// multiple not repeat
 
 var to_number = (function() {
   "use strict";
@@ -4311,7 +4247,7 @@ var to_number = (function() {
     "eightieth": 80,
     "ninetieth": 90
   }
-  var multiples = {
+  var multiple = {
       'hundred': 100,
       'grand': 1000,
       'thousand': 1000,
@@ -4326,14 +4262,14 @@ var to_number = (function() {
       'nonillion': 1000000000000000000000000000000,
       'decillion': 1000000000000000000000000000000000
     }
-    // var decimal_multiples={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
+    // var decimal_multiple={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
 
   var main = function(s) {
     //remember these concerns for possible errors
     var ones_done = false
     var teens_done = false
     var tens_done = false
-    var multiples_done = {}
+    var multiple_done = {}
     var total = 0
     var global_multiplier = 1
       //pretty-printed numbers
@@ -4480,12 +4416,12 @@ var to_number = (function() {
         current_sum += tens[w]
         continue;
       }
-      //multiples rules
-      if (multiples[w]) {
-        if (multiples_done[w]) {
+      //multiple rules
+      if (multiple[w]) {
+        if (multiple_done[w]) {
           return null
         } // eg. five hundred six hundred
-        multiples_done[w] = true
+        multiple_done[w] = true
         //reset our concerns. allow 'five hundred five'
         ones_done = false
         teens_done = false
@@ -4493,9 +4429,9 @@ var to_number = (function() {
         //case of 'hundred million', (2 consecutive multipliers)
         if (current_sum === 0) {
           total = total || 1 //dont ever multiply by 0
-          total *= multiples[w]
+          total *= multiple[w]
         } else {
-          current_sum *= multiples[w]
+          current_sum *= multiple[w]
           total += current_sum
         }
         current_sum = 0
@@ -5559,7 +5495,6 @@ var Noun = function(str, next, last, token) {
     parts_of_speech = require("../../data/parts_of_speech")
     inflect = require("./conjugate/inflect")
     indefinite_article = require("./indefinite_article")
-    // is_entity = require("./ner/is_entity")
   }
   //personal pronouns
   var prps = {
@@ -5640,15 +5575,19 @@ var Noun = function(str, next, last, token) {
       //  }
     }
     //distinct capital is very good signal
-    if (token.special_capitalised) {
+    if (token.noun_capital) {
       return true
     }
     //multiple-word nouns are very good signal
     if (token.normalised.match(/ /)) {
       return true
     }
-    //if it has an abbreviation, like 'business ltd.'
+    //if it has an acronym/abbreviation, like 'business ltd.'
     if (token.normalised.match(/\./)) {
+      return true
+    }
+    //appears to be a non-capital acronym, and not just caps-lock
+    if (token.normalised.length<5 && token.text.match(/^[A-Z]*$/)) {
       return true
     }
     //acronyms are a-ok
@@ -8044,7 +7983,7 @@ var pos = (function() {
     a.normalised += " " + b.normalised
     a.pos_reason += "|" + b.pos_reason
     a.start = a.start || b.start
-    a.capitalised = a.capitalised || b.capitalised
+    a.noun_capital = (a.noun_capital && b.noun_capital)
     a.punctuated = a.punctuated || b.punctuated
     a.end = a.end || b.end
     return a
@@ -8059,7 +7998,7 @@ var pos = (function() {
 
       if (arr[i] && next) {
         //'joe smith' are both NN
-        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && arr[i].capitalised == next.capitalised && arr[i].special_capitalised == next.special_capitalised) {
+        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && arr[i].noun_capital == next.noun_capital ) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
@@ -8084,18 +8023,20 @@ var pos = (function() {
           arr[i] = null
         }
         //capitals surrounding a preposition  'United States of America'
-        else if (arr[i].pos.tag=="NN" && arr[i].capitalised && (next.normalised == "of" || next.normalised == "and") && arr[i + 2] && arr[i + 2].capitalised) {
+        else if (arr[i].pos.tag=="NN" && arr[i].noun_capital && (next.normalised == "of" || next.normalised == "and") && arr[i + 2] && arr[i + 2].noun_capital) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
           arr[i + 2] = merge_tokens(arr[i + 1], arr[i + 2])
           arr[i + 1] = null
         }
         //capitals surrounding two prepositions  'Phantom of the Opera'
-        else if (arr[i].capitalised && next.normalised == "of" && arr[i + 2] && arr[i + 2].pos.tag == "DT" && arr[i + 3] && arr[i + 3].capitalised) {
+        else if (arr[i].noun_capital && next.normalised == "of" && arr[i + 2] && arr[i + 2].pos.tag == "DT" && arr[i + 3] && arr[i + 3].noun_capital) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
           arr[i + 2] = merge_tokens(arr[i + 1], arr[i + 2])
           arr[i + 1] = null
+          arr[i + 3] = merge_tokens(arr[i + 2], arr[i + 3])
+          arr[i + 2] = null
         }
       }
       better.push(arr[i])
@@ -8136,28 +8077,28 @@ var pos = (function() {
     //resolve ambiguous 'march','april','may' with dates
     if((token.normalised=="march"||token.normalised=="april"||token.normalised=="may") && ( (next && next.pos.tag=="CD") || (last && last.pos.tag=="CD") ) ){
       token.pos = parts_of_speech['CD']
-      token.pos_reason = "may is a date"
+      token.pos_reason = "may_is_date"
     }
       //if it's before a modal verb, it's a noun -> lkjsdf would
     if (next && token.pos.parent !== "noun" && token.pos.parent !== "glue" && next.pos.tag === "MD") {
       token.pos = parts_of_speech['NN']
-      token.pos_reason = "before a modal"
+      token.pos_reason = "before_modal"
     }
     //if it's after the word 'will' its probably a verb/adverb
     if (last && last.normalised == "will" && !last.punctuated && token.pos.parent == "noun") {
       token.pos = parts_of_speech['VB']
-      token.pos_reason = "after the word 'will'"
+      token.pos_reason = "after_will"
     }
     //if it's after the word 'i' its probably a verb/adverb
     if (last && last.normalised == "i" && !last.punctuated && token.pos.parent == "noun") {
       token.pos = parts_of_speech['VB']
-      token.pos_reason = "after the word 'i'"
+      token.pos_reason = "after_i"
     }
     //if it's after an adverb, it's not a noun -> quickly acked
     //support form 'atleast he is..'
     if (last && token.pos.parent === "noun" && last.pos.tag === "RB" && !last.start) {
       token.pos = parts_of_speech['VB']
-      token.pos_reason = "after an adverb"
+      token.pos_reason = "after_adverb"
     }
     //no consecutive, unpunctuated adjectives -> real good
     if (next && token.pos.parent === "adjective" && next.pos.parent === "adjective" && !token.punctuated) {
@@ -8182,7 +8123,7 @@ var pos = (function() {
     // the city [verb] him.
     if (next && next.pos.tag == "PRP" && token.pos.parent == "noun" && !token.punctuated) {
       token.pos = parts_of_speech['VB']
-      token.pos_reason = "before a [him|her|it]"
+      token.pos_reason = "before_[him|her|it]"
     }
     //the misled worker -> misled is an adjective, not vb
     if (last && next && last.pos.tag === "DT" && next.pos.parent === "noun" && token.pos.parent === "verb") {
@@ -8251,17 +8192,24 @@ var pos = (function() {
     }
     var sentences = tokenize(text);
 
+
+
     sentences.forEach(function(sentence) {
 
+      //first, let's handle the capitalisation-of-the-first-word issue
+      // var first=sentence.tokens[0]
+      // if(first ){
+
+      // }
       //smart handling of contractions
       sentence.tokens = handle_contractions(sentence.tokens)
 
       //first pass, word-level clues
       sentence.tokens = sentence.tokens.map(function(token) {
-        //it has a capital and isn't first word
-        if (token.special_capitalised && !values[token.normalised]) {
+        //it has a capital and isn't a month, etc.
+        if (token.noun_capital && !values[token.normalised]) {
           token.pos = parts_of_speech['NN']
-          token.pos_reason = "capitalised"
+          token.pos_reason = "noun_capitalised"
           return token
         }
         //known words list
@@ -8456,7 +8404,7 @@ var pos = (function() {
 // console.log(pos("may 7th live").tags())
 // console.log(pos("She and Marc Emery married on July 23, 2006.").tags())
 // pos("Dr. Conrad Murray recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
-pos("and Conrad Murray jr. recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
+// pos("the Phantom of the Opera").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 
 //just a wrapper for text -> entities
 //most of this logic is in ./parents/noun

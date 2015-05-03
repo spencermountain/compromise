@@ -1,4 +1,4 @@
-/*! nlp_compromise  0.3.10  by @spencermountain 2015-05-02  MIT */
+/*! nlp_compromise  0.4.0  by @spencermountain 2015-05-02  MIT */
 var nlp = (function() {
 var verb_irregulars = (function() {
   var types = [
@@ -6404,6 +6404,7 @@ var verb_conjugate = (function() {
 
 // console.log(verb_conjugate("swing"))
 // console.log(verb_conjugate("walking"))
+// console.log(verb_conjugate("overtook"))
 
 //wrapper for verb's methods
 var Verb = function(str, next, last, token) {
@@ -6646,6 +6647,12 @@ var to_comparative = (function() {
       return null
     }
 
+    for (i = 0; i < transforms.length; i++) {
+      if (str.match(transforms[i].reg)) {
+        return str.replace(transforms[i].reg, transforms[i].repl)
+      }
+    }
+
     if (convertables.hasOwnProperty(str)) {
       if (str.match(/e$/)) {
         return str + "r"
@@ -6653,6 +6660,7 @@ var to_comparative = (function() {
         return str + "er"
       }
     }
+
 
     if (irregulars.hasOwnProperty(str)) {
       return irregulars[str]
@@ -6665,11 +6673,6 @@ var to_comparative = (function() {
       }
     }
 
-    for (i = 0; i < transforms.length; i++) {
-      if (str.match(transforms[i].reg)) {
-        return str.replace(transforms[i].reg, transforms[i].repl)
-      }
-    }
 
     for (i = 0; i < matches.length; i++) {
       if (str.match(matches[i])) {
@@ -6751,6 +6754,12 @@ var to_superlative = (function() {
       }
     }
 
+    for (i = 0; i < transforms.length; i++) {
+      if (str.match(transforms[i].reg)) {
+        return str.replace(transforms[i].reg, transforms[i].repl)
+      }
+    }
+
     if (convertables.hasOwnProperty(str)) {
       return generic_transformation(str)
     }
@@ -6766,12 +6775,6 @@ var to_superlative = (function() {
     for (i = 0; i < not_matches.length; i++) {
       if (str.match(not_matches[i])) {
         return "most " + str
-      }
-    }
-
-    for (i = 0; i < transforms.length; i++) {
-      if (str.match(transforms[i].reg)) {
-        return str.replace(transforms[i].reg, transforms[i].repl)
       }
     }
 
@@ -8391,11 +8394,6 @@ if (typeof module !== "undefined" && module.exports) {
 }
 // console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
 // console.log( nlp.pos('i will slouch').to_past().text() );
-
-//TODAY
-// console.log(verb_conjugate("overtake"))
-// adjective conjugate("pretty")
-// upper-case months and demonyms
 
 return nlp;
 })()

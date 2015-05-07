@@ -1061,6 +1061,13 @@ exports["nlp.spot"] = function(test) {
     ["I especially loved the singing in The Phantom of the Opera", {},
       ["the phantom of the opera"]
     ],
+    //capitalisation of first word..
+    ["Tony Hawk is cool", {},
+      ["tony hawk"]
+    ],
+    ["My Hawk is cool", {},
+      ["hawk"]
+    ],
   ]
   terms.forEach(function(arr) {
     var spots = nlp.spot(arr[0], options).map(function(a) {

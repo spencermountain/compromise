@@ -233,10 +233,13 @@ var pos = (function() {
     sentences.forEach(function(sentence) {
 
       //first, let's handle the capitalisation-of-the-first-word issue
-      // var first=sentence.tokens[0]
-      // if(first ){
-
-      // }
+      var first=sentence.tokens[0]
+      if(first ){
+        //if second word is a noun-capital, give more sympathy to this capital
+        if(sentence.tokens[1] && sentence.tokens[1].noun_capital && !lexicon_pass(first.normalised)){
+          sentence.tokens[0].noun_capital=true;
+        }
+      }
       //smart handling of contractions
       sentence.tokens = handle_contractions(sentence.tokens)
 

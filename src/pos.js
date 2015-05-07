@@ -4,6 +4,7 @@ var pos = (function() {
   if (typeof module !== "undefined" && module.exports) {
     lexicon = require("./data/lexicon")
     values = require("./data/lexicon/values")
+    firstnames = require("./data/lexicon/firstnames")
 
     tokenize = require("./methods/tokenization/tokenize").tokenize;
     parts_of_speech = require("./data/parts_of_speech")
@@ -228,15 +229,17 @@ var pos = (function() {
     }
     var sentences = tokenize(text);
 
-
-
     sentences.forEach(function(sentence) {
 
       //first, let's handle the capitalisation-of-the-first-word issue
       var first=sentence.tokens[0]
-      if(first ){
+      if(first){
         //if second word is a noun-capital, give more sympathy to this capital
         if(sentence.tokens[1] && sentence.tokens[1].noun_capital && !lexicon_pass(first.normalised)){
+          sentence.tokens[0].noun_capital=true;
+        }
+        //if it's a first name, like 'John'
+        if(first.title_case==true && firstnames[first.normalised]==true){
           sentence.tokens[0].noun_capital=true;
         }
       }
@@ -444,3 +447,5 @@ var pos = (function() {
 // console.log(pos("She and Marc Emery married on July 23, 2006.").tags())
 // pos("Dr. Conrad Murray recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("the Phantom of the Opera").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
+// pos("Tony Hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
+// pos("tony hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})

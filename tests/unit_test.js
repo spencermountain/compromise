@@ -1035,7 +1035,13 @@ exports["nlp.spot"] = function(test) {
     ["tony hawk walked to Toronto", {},
       ["tony hawk", "toronto"]
     ],
+    ["Tony Hawk walked to Toronto", {},
+      ["tony hawk", "toronto"]
+    ],
     ["natalie portman in black swan was really great", {},
+      ["natalie portman"]
+    ],
+    ["Natalie Portman in black swan was really great", {},
       ["natalie portman"]
     ],
     ["nancy reagan was great when she spoke about HIV in Denver", {},

@@ -7,6 +7,8 @@ var Noun = function(str, next, last, token) {
 
   if (typeof module !== "undefined" && module.exports) {
     parts_of_speech = require("../../data/parts_of_speech")
+    firstnames = require("../../data/lexicon/firstnames")
+    honourifics = require("../../data/lexicon/honourifics")
     inflect = require("./conjugate/inflect")
     indefinite_article = require("./indefinite_article")
   }
@@ -131,6 +133,27 @@ var Noun = function(str, next, last, token) {
     return inflect.singularize(the.word)
   }
 
+  //uses common first-name list + honourifics to guess if this noun is the name of a person
+  the.is_person = function() {
+    var i;
+    //see if noun has an honourific, like 'jr.'
+    var l=honourifics.length;
+    for(i=0; i<l; i++){
+      if(the.word.match(new RegExp("\\b"+honourifics[i]+"\\.?\\b",'i'))){
+        return true
+      }
+    }
+    //see if noun has a first-name
+    var names=Object.keys(firstnames)
+    var l=names.length
+    for(i=0; i<l; i++){
+      if(the.word.match(new RegExp("^"+names[i]+"\\b",'i'))){
+        return true
+      }
+    }
+    return false
+  }
+
   //specifically which pos it is
   the.which = (function() {
     //posessive
@@ -172,3 +195,4 @@ if (typeof module !== "undefined" && module.exports) {
 
 // console.log(new Noun('farmhouse').is_entity)
 // console.log(new Noun("FBI").is_acronym)
+// console.log(new Noun("Tony Danza").is_person())

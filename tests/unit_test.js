@@ -19,6 +19,26 @@ exports["tokenization"] = function(test) {
   test.done()
 }
 
+exports["is_person"] = function(test) {
+  //honourifics
+  test.deepEqual(nlp.noun("wolf").is_person(), false)
+  test.deepEqual(nlp.noun("tiger wolf sr.").is_person(), true)
+  test.deepEqual(nlp.noun("tiger wolf sr").is_person(), true)
+  test.deepEqual(nlp.noun("tiger wolfsr").is_person(), false)
+  test.deepEqual(nlp.noun("wolfsr").is_person(), false)
+  test.deepEqual(nlp.noun("dr quack").is_person(), true)
+  test.deepEqual(nlp.noun("dr. quack").is_person(), true)
+  test.deepEqual(nlp.noun("dr. quack jr.").is_person(), true)
+  //first names
+  test.deepEqual(nlp.noun("James Quaker").is_person(), true)
+  test.deepEqual(nlp.noun("lkjsdf James").is_person(), false)
+  test.deepEqual(nlp.noun("tony danza").is_person(), true)
+  test.deepEqual(nlp.noun("tony danza jr.").is_person(), true)
+  test.deepEqual(nlp.noun("tony").is_person(), true)
+  test.deepEqual(nlp.noun("danza").is_person(), false)
+  test.done()
+}
+
 exports["indefinite_article"] = function(test) {
   test.deepEqual(nlp.noun("wolf").article(), "a")
   test.deepEqual(nlp.noun("eulogy").article(), "a")

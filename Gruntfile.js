@@ -8,6 +8,7 @@ module.exports = function(grunt) {
     './src/data/lexicon/adjectives.js',
     './src/data/lexicon/multiples.js',
     './src/data/lexicon/verbs.js',
+    './src/data/lexicon/honourifics.js',
     './src/data/lexicon/uncountables.js',
     './src/data/lexicon/demonyms.js',
     './src/data/lexicon/values.js',

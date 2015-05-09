@@ -239,7 +239,7 @@ var pos = (function() {
           sentence.tokens[0].noun_capital=true;
         }
         //if it's a first name, like 'John'
-        if(first.title_case==true && firstnames[first.normalised]==true){
+        if(first.title_case === true && firstnames[first.normalised] === true){
           sentence.tokens[0].noun_capital=true;
         }
       }

@@ -2,9 +2,11 @@
 //there are all nouns, or at the least, belong beside one.
 var abbreviations = (function() {
 
+  if (typeof module !== "undefined" && module.exports) {
+    honourifics=require("./honourifics") //stored seperately, for 'noun.is_person()'
+  }
+
   var main = [
-    //honourifics
-    "jr", "mr", "mrs", "ms", "dr", "prof", "sr", "sen", "corp", "rep", "gov", "atty", "supt", "det", "rev", "col", "gen", "lt", "cmdr", "adm", "capt", "sgt", "cpl", "maj", "miss", "misses", "mister", "sir", "esq", "mstr", "phd", "adj", "adv", "asst", "bldg", "brig", "comdr", "hon", "messrs", "mlle", "mme", "op", "ord", "pvt", "reps", "res", "sens", "sfc", "surg",
     //common abbreviations
     "arc", "al", "ave", "blvd", "cl", "ct", "cres", "exp", "rd", "st", "dist", "mt", "ft", "fy", "hwy", "la", "pd", "pl", "plz", "tce", "vs", "etc", "esp", "llb", "md", "bl", "ma", "ba", "lit", "fl", "ex", "eg", "ie",
     //place main
@@ -14,6 +16,8 @@ var abbreviations = (function() {
     //proper nouns with exclamation marks
     "yahoo", "joomla", "jeopardy"
   ]
+  //person titles like 'jr', (stored seperately)
+  main=main.concat(honourifics)
 
   if (typeof module !== "undefined" && module.exports) {
     module.exports = main;

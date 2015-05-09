@@ -177,7 +177,7 @@ var inflect = (function() {
       return str
     }
     //is it already singular?
-    if(is_plural(low)==false){
+    if(is_plural(low) === false){
       return str
     }
     //irregular

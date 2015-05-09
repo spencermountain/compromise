@@ -1,4 +1,4 @@
-/*! nlp_compromise  0.4.0  by @spencermountain 2015-05-07  MIT */
+/*! nlp_compromise  0.4.0  by @spencermountain 2015-05-09  MIT */
 var nlp = (function() {
 var verb_irregulars = (function() {
   var types = [
@@ -2462,6 +2462,70 @@ var verbs = (function() {
   return main
 })()
 
+//these are common person titles used in the lexicon and sentence segmentation methods
+//they are also used to identify that a noun is a person
+var honourifics = (function() {
+
+  var main = [
+    //honourifics
+    "jr",
+    "mr",
+    "mrs",
+    "ms",
+    "dr",
+    "prof",
+    "sr",
+    "sen",
+    "corp",
+    "rep",
+    "gov",
+    "atty",
+    "supt",
+    "det",
+    "rev",
+    "col",
+    "gen",
+    "lt",
+    "cmdr",
+    "adm",
+    "capt",
+    "sgt",
+    "cpl",
+    "maj",
+    "miss",
+    "misses",
+    "mister",
+    "sir",
+    "esq",
+    "mstr",
+    "phd",
+    "adj",
+    "adv",
+    "asst",
+    "bldg",
+    "brig",
+    "comdr",
+    "hon",
+    "messrs",
+    "mlle",
+    "mme",
+    "op",
+    "ord",
+    "pvt",
+    "reps",
+    "res",
+    "sens",
+    "sfc",
+    "surg",
+  ]
+
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+
+  return main
+})()
+
 //common nouns that have no plural form. These are suprisingly rare
 //used in noun.inflect(), and added as nouns in lexicon
 var uncountables = (function() {
@@ -2820,9 +2884,11 @@ var values = (function() {
 //there are all nouns, or at the least, belong beside one.
 var abbreviations = (function() {
 
+  if (typeof module !== "undefined" && module.exports) {
+    honourifics=require("./honourifics") //stored seperately, for 'noun.is_person()'
+  }
+
   var main = [
-    //honourifics
-    "jr", "mr", "mrs", "ms", "dr", "prof", "sr", "sen", "corp", "rep", "gov", "atty", "supt", "det", "rev", "col", "gen", "lt", "cmdr", "adm", "capt", "sgt", "cpl", "maj", "miss", "misses", "mister", "sir", "esq", "mstr", "phd", "adj", "adv", "asst", "bldg", "brig", "comdr", "hon", "messrs", "mlle", "mme", "op", "ord", "pvt", "reps", "res", "sens", "sfc", "surg",
     //common abbreviations
     "arc", "al", "ave", "blvd", "cl", "ct", "cres", "exp", "rd", "st", "dist", "mt", "ft", "fy", "hwy", "la", "pd", "pl", "plz", "tce", "vs", "etc", "esp", "llb", "md", "bl", "ma", "ba", "lit", "fl", "ex", "eg", "ie",
     //place main
@@ -2832,6 +2898,8 @@ var abbreviations = (function() {
     //proper nouns with exclamation marks
     "yahoo", "joomla", "jeopardy"
   ]
+  //person titles like 'jr', (stored seperately)
+  main=main.concat(honourifics)
 
   if (typeof module !== "undefined" && module.exports) {
     module.exports = main;
@@ -5396,6 +5464,10 @@ var inflect = (function() {
     if (uncountable_nouns[low]) {
       return str
     }
+    //is it already plural?
+    if(is_plural(low)===true){
+      return str
+    }
     //irregular
     var found = irregulars.filter(function(r) {
       return r[0] === low
@@ -5461,6 +5533,10 @@ var inflect = (function() {
     if (uncountable_nouns[low]) {
       return str
     }
+    //is it already singular?
+    if(is_plural(low) === false){
+      return str
+    }
     //irregular
     var found = irregulars.filter(function(r) {
       return r[1] === low
@@ -5490,7 +5566,8 @@ var inflect = (function() {
   }
 
   var is_plural = function(str) {
-    //if it's a known verb
+    str=(str||'').toLowerCase()
+    // if it's a known irregular case
     for (var i = 0; i < irregulars.length; i++) {
       if (irregulars[i][1] === str) {
         return true
@@ -5499,11 +5576,63 @@ var inflect = (function() {
         return false
       }
     }
-    //if it changes when singularized
-    if (singularize(str) != str) {
-      return true
+    //similar to plural/singularize rules, but not the same
+    var plural_indicators=[
+      /(^v)ies$/i,
+      /ises$/i,
+      /ives$/i,
+      /(antenn|formul|nebul|vertebr|vit)ae$/i,
+      /(octop|vir|radi|nucle|fung|cact|stimul)i$/i,
+      /(buffal|tomat|tornad)oes$/i,
+      /(analy|ba|diagno|parenthe|progno|synop|the)ses$/i,
+      /(vert|ind|cort)ices$/i,
+      /(matr|append)ices$/i,
+      /(x|ch|ss|sh|s|z|o)es$/i,
+      /men$/i,
+      /news$/i,
+      /.tia$/i,
+      /(^f)ves$/i,
+      /(lr)ves$/i,
+      /(^aeiouy|qu)ies$/i,
+      /(m|l)ice$/i,
+      /(cris|ax|test)es$/i,
+      /(alias|status)es$/i,
+      /ics$/i
+    ]
+    for (var i = 0; i < plural_indicators.length; i++) {
+      if (str.match(plural_indicators[i])) {
+        return true
+      }
     }
-    //'looks pretty plural' rules
+    //similar to plural/singularize rules, but not the same
+    var singular_indicators=[
+      /(ax|test)is$/i,
+      /(octop|vir|radi|nucle|fung|cact|stimul)us$/i,
+      /(octop|vir)i$/i,
+      /(rl)f$/i,
+      /(alias|status)$/i,
+      /(bu)s$/i,
+      /(al|ad|at|er|et|ed|ad)o$/i,
+      /(ti)um$/i,
+      /(ti)a$/i,
+      /sis$/i,
+      /(?:(^f)fe|(lr)f)$/i,
+      /hive$/i,
+      /(^aeiouy|qu)y$/i,
+      /(x|ch|ss|sh|z)$/i,
+      /(matr|vert|ind|cort)(ix|ex)$/i,
+      /(m|l)ouse$/i,
+      /(m|l)ice$/i,
+      /(antenn|formul|nebul|vertebr|vit)a$/i,
+      /.sis$/i,
+      /^(?!talis|.*hu)(.*)man$/i
+    ]
+    for (var i = 0; i < singular_indicators.length; i++) {
+      if (str.match(singular_indicators[i])) {
+        return false
+      }
+    }
+    // 'looks pretty plural' rules
     if (str.match(/s$/) && !str.match(/ss$/) && str.length > 3) { //needs some lovin'
       return true
     }
@@ -5543,10 +5672,20 @@ var inflect = (function() {
 })();
 
 // console.log(inflect.singularize('kisses')=="kiss")
+// console.log(inflect.singularize('kiss')=="kiss")
+// console.log(inflect.singularize('children')=="child")
+// console.log(inflect.singularize('child')=="child")
 // console.log(inflect.singularize('mayors of chicago')=="mayor of chicago")
 // console.log(inflect.pluralize('kiss')=="kisses")
+// console.log(inflect.pluralize('towns')=="towns")
 // console.log(inflect.pluralize('mayor of chicago')=="mayors of chicago")
 // console.log(inflect.inflect('Index').plural=='Indices')
+// console.log(inflect.is_plural('octopus')==false)
+// console.log(inflect.is_plural('octopi')==true)
+// console.log(inflect.is_plural('eyebrow')==false)
+// console.log(inflect.is_plural('eyebrows')==true)
+// console.log(inflect.is_plural('child')==false)
+// console.log(inflect.is_plural('children')==true)
 
 //wrapper for noun's methods
 var Noun = function(str, next, last, token) {
@@ -5557,6 +5696,8 @@ var Noun = function(str, next, last, token) {
 
   if (typeof module !== "undefined" && module.exports) {
     parts_of_speech = require("../../data/parts_of_speech")
+    firstnames = require("../../data/lexicon/firstnames")
+    honourifics = require("../../data/lexicon/honourifics")
     inflect = require("./conjugate/inflect")
     indefinite_article = require("./indefinite_article")
   }
@@ -5675,10 +5816,31 @@ var Noun = function(str, next, last, token) {
   }
 
   the.pluralize = function() {
-    return (inflect.inflect(the.word) || {}).plural
+    return inflect.pluralize(the.word)
   }
   the.singularize = function() {
-    return (inflect.inflect(the.word) || {}).singular
+    return inflect.singularize(the.word)
+  }
+
+  //uses common first-name list + honourifics to guess if this noun is the name of a person
+  the.is_person = function() {
+    var i;
+    //see if noun has an honourific, like 'jr.'
+    var l=honourifics.length;
+    for(i=0; i<l; i++){
+      if(the.word.match(new RegExp("\\b"+honourifics[i]+"\\.?\\b",'i'))){
+        return true
+      }
+    }
+    //see if noun has a first-name
+    var names=Object.keys(firstnames)
+    var l=names.length
+    for(i=0; i<l; i++){
+      if(the.word.match(new RegExp("^"+names[i]+"\\b",'i'))){
+        return true
+      }
+    }
+    return false
   }
 
   //specifically which pos it is
@@ -5722,6 +5884,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 // console.log(new Noun('farmhouse').is_entity)
 // console.log(new Noun("FBI").is_acronym)
+// console.log(new Noun("Tony Danza").is_person())
 
 //turns 'quickly' into 'quick'
 var to_adjective = (function() {
@@ -8281,7 +8444,7 @@ var pos = (function() {
           sentence.tokens[0].noun_capital=true;
         }
         //if it's a first name, like 'John'
-        if(first.title_case==true && firstnames[first.normalised]==true){
+        if(first.title_case === true && firstnames[first.normalised] === true){
           sentence.tokens[0].noun_capital=true;
         }
       }
@@ -8503,9 +8666,10 @@ var spot = (function() {
   var main = function(text, options) {
     options = options || {}
     var sentences = pos(text, options).sentences
-    return sentences.reduce(function(arr, s) {
+    var arr=sentences.reduce(function(arr, s) {
       return arr.concat(s.entities(options))
     }, [])
+    return arr
   }
 
   if (typeof module !== "undefined" && module.exports) {
@@ -8514,7 +8678,7 @@ var spot = (function() {
   return main
 })()
 
-// console.log(spot("Tony Hawk is cool").map(function(s){return s.normalised}))
+// console.log(spot("Tony Hawk is cool").map(function(s){return s}))
 // console.log(spot("My Hawk is cool").map(function(s){return s.normalised}))
 
 // nlp_comprimise by @spencermountain  in 2014

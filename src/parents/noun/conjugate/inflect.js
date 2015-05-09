@@ -107,6 +107,10 @@ var inflect = (function() {
     if (uncountable_nouns[low]) {
       return str
     }
+    //is it already plural?
+    if(is_plural(low)===true){
+      return str
+    }
     //irregular
     var found = irregulars.filter(function(r) {
       return r[0] === low
@@ -172,6 +176,10 @@ var inflect = (function() {
     if (uncountable_nouns[low]) {
       return str
     }
+    //is it already singular?
+    if(is_plural(low)==false){
+      return str
+    }
     //irregular
     var found = irregulars.filter(function(r) {
       return r[1] === low
@@ -201,6 +209,7 @@ var inflect = (function() {
   }
 
   var is_plural = function(str) {
+    str=(str||'').toLowerCase()
     // if it's a known irregular case
     for (var i = 0; i < irregulars.length; i++) {
       if (irregulars[i][1] === str) {
@@ -231,7 +240,6 @@ var inflect = (function() {
       /(m|l)ice$/i,
       /(cris|ax|test)es$/i,
       /(alias|status)es$/i,
-      /ss$/i,
       /ics$/i
     ]
     for (var i = 0; i < plural_indicators.length; i++) {
@@ -266,10 +274,6 @@ var inflect = (function() {
       if (str.match(singular_indicators[i])) {
         return false
       }
-    }
-    // if it changes when singularized
-    if (singularize(str) != str) {
-      return true
     }
     // 'looks pretty plural' rules
     if (str.match(/s$/) && !str.match(/ss$/) && str.length > 3) { //needs some lovin'
@@ -316,6 +320,7 @@ var inflect = (function() {
 // console.log(inflect.singularize('child')=="child")
 // console.log(inflect.singularize('mayors of chicago')=="mayor of chicago")
 // console.log(inflect.pluralize('kiss')=="kisses")
+// console.log(inflect.pluralize('towns')=="towns")
 // console.log(inflect.pluralize('mayor of chicago')=="mayors of chicago")
 // console.log(inflect.inflect('Index').plural=='Indices')
 // console.log(inflect.is_plural('octopus')==false)

@@ -201,7 +201,7 @@ var inflect = (function() {
   }
 
   var is_plural = function(str) {
-    //if it's a known verb
+    // if it's a known verb
     for (var i = 0; i < irregulars.length; i++) {
       if (irregulars[i][1] === str) {
         return true
@@ -210,11 +210,17 @@ var inflect = (function() {
         return false
       }
     }
-    //if it changes when singularized
+    //if it's a known irregular singular
+    for (var i = 0; i < pluralize_rules.length; i++) {
+      if (str.match(pluralize_rules[i].reg)) {
+        return false
+      }
+    }
+    // if it changes when singularized
     if (singularize(str) != str) {
       return true
     }
-    //'looks pretty plural' rules
+    // 'looks pretty plural' rules
     if (str.match(/s$/) && !str.match(/ss$/) && str.length > 3) { //needs some lovin'
       return true
     }

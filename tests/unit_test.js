@@ -971,7 +971,7 @@ exports["nlp.noun.article"] = function(test) {
 exports["nlp.tag"] = function(test) {
   [
     ////coerce a noun
-    ["and Tony Hawk walked quickly to the store.", ["CC","NN", "VB", "RB", "IN", "DT", "NN"]],
+    ["Tony Hawk walked quickly to the store.", ["NN", "VBD", "RB", "IN", "DT", "NN"]],
     ["swim", ["VBP"]],
     ["the swim", ["DT", "NN"]],
     // ["my swim was great", ["PP", "NN", "CP","JJ"]],
@@ -987,7 +987,6 @@ exports["nlp.tag"] = function(test) {
     ["lkjasdf always walks in every cafesefirehty", ["NN", "RB", "VBZ", "IN", "DT", "NN"]],
     //coerce a verb
     ["is scared", ["CP","JJ"]],
-    ["scared him hard", ["VB", "PRP", "JJ"]],
     //coerce an adverb
     ["he is real", ["PRP", "CP", "JJ"]],
     ["he is real cool", ["PRP", "CP", "RB", "JJ"]],
@@ -997,13 +996,13 @@ exports["nlp.tag"] = function(test) {
     ["the chicago zoo is fun", ["DT","NN","CP","JJ"]],//combine tags
     ["the chicago, zoo is fun", ["DT","NN","NN","CP","JJ"]],//don't combine tags
     ["the chicago Zoo is fun", ["DT","NN","NN","CP","JJ"]],//don't combine tags
-    // ["it is a hundred and fifty", ["",""]],
+    ["it is a hundred and fifty", [ 'PRP', 'CP', 'DT', 'CD' ]],
     ["the United States of America is sunny", ["DT","NN", "CP","JJ"]],//combine over 'of'
     ["the Phantom of the Opera is lovely", ["DT","NN", "CP","JJ"]],//combine over 'of the'
     ["he will walk", ["PRP","MD"]],
     //re-under-over...
-    ["he walked", ["PRP","VB"]],
-    ["he overwalked", ["PRP","VB"]],
+    ["he walked", ["PRP","VBD"]],
+    ["he overwalked", ["PRP","VBD"]],
     ["he over-walked", ["PRP","VB"]],
     ["they under-walked", ["PRP","VB"]],
     //before a modal
@@ -1062,11 +1061,11 @@ exports["nlp.tag"] = function(test) {
     ["http://google.com", ["CD"]],
     ["may live", ["MD", "VBP"]],
     ["may 7th live", ["CD", "VBP"]],
-    ["She and Marc Emery married on July 23, 2006", ["PRP","CC","NN","VB","IN","CD"]]
+    ["She and Marc Emery married on July 23, 2006", ["PRP","CC","NN","VBD","IN","CD"]]
 
 
   ].forEach(function(arr) {
-    test.deepEqual(nlp.pos(arr[0], {}).tags(), [arr[1]])
+    test.deepEqual(nlp.pos(arr[0], {}).tags(), [arr[1]], arr[0])
   })
   //dont_combine option
   test.deepEqual(nlp.pos("tony hawk walks", {dont_combine:false}).tags(), [["NN","VBZ"]])

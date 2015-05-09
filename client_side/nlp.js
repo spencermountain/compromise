@@ -1332,7 +1332,6 @@ var adjectives = (function() {
     "makeshift",
     "male",
     "mammoth",
-    "married",
     "measly",
     "meaty",
     "medium",
@@ -5396,7 +5395,6 @@ var inflect = (function() {
     ['appendix', 'appendices'],
     ['criterion', 'criteria'],
     ['i', 'we'],
-    ['person', 'people'],
     ['man', 'men'],
     ['move', 'moves'],
     ['she', 'they'],
@@ -5412,18 +5410,46 @@ var inflect = (function() {
     ['its', 'theirs'],
     ['theirs', 'theirs'],
     ['sex', 'sexes'],
-    ['photo', 'photos'],
-    ['video', 'videos'],
-    ['narrative', 'narratives'],
     ['rodeo', 'rodeos'],
-    ['gas', 'gases'],
     ['epoch', 'epochs'],
     ['zero', 'zeros'],
     ['avocado', 'avocados'],
     ['halo', 'halos'],
     ['tornado', 'tornados'],
     ['tuxedo', 'tuxedos'],
-    ['sombrero', 'sombreros']
+    ['sombrero', 'sombreros'],
+    ['addendum', 'addenda'],
+    ['alga', 'algae'],
+    ['alumna', 'alumnae'],
+    ['alumnus', 'alumni'],
+    ['bacillus', 'bacilli'],
+    ['cactus', 'cacti'],
+    ['beau', 'beaux'],
+    ['château', 'châteaux'],
+    ['chateau', 'chateaux'],
+    ['tableau', 'tableaux'],
+    ['corpus', 'corpora'],
+    ['curriculum', 'curricula'],
+    ['echo', 'echoes'],
+    ['embargo', 'embargoes'],
+    ['foot', 'feet'],
+    ['genus', 'genera'],
+    ['hippopotamus', 'hippopotami'],
+    ['larva', 'larvae'],
+    ['libretto', 'libretti'],
+    ['loaf', 'loaves'],
+    ['matrix', 'matrices'],
+    ['memorandum', 'memoranda'],
+    ['mosquito', 'mosquitoes'],
+    ['opus', 'opera'],
+    ['ovum', 'ova'],
+    ['ox', 'oxen'],
+    ['radius', 'radii'],
+    ['referendum', 'referenda'],
+    ['thief', 'thieves'],
+    ['that', 'those'],
+    ['this', 'these'],
+    ['tooth', 'teeth'],
   ]
 
   var pluralize_rules = [
@@ -5567,6 +5593,11 @@ var inflect = (function() {
 
   var is_plural = function(str) {
     str=(str||'').toLowerCase()
+    //handle 'mayors of chicago'
+    var preposition= str.match(/([a-z]*) (of|in|by|for) [a-z]/)
+    if (preposition && preposition[1]) {
+      str = preposition[1]
+    }
     // if it's a known irregular case
     for (var i = 0; i < irregulars.length; i++) {
       if (irregulars[i][1] === str) {
@@ -5675,7 +5706,13 @@ var inflect = (function() {
 // console.log(inflect.singularize('kiss')=="kiss")
 // console.log(inflect.singularize('children')=="child")
 // console.log(inflect.singularize('child')=="child")
-// console.log(inflect.singularize('mayors of chicago')=="mayor of chicago")
+// console.log(inflect.pluralize('gas')=="gases")
+// console.log(inflect.pluralize('narrative')=="narratives")
+// console.log(inflect.singularize('gases')=="gas")
+// console.log(inflect.pluralize('video')=="videos")
+// console.log(inflect.pluralize('photo')=="photos")
+// console.log(inflect.pluralize('stomach')=="stomachs")
+// console.log(inflect.pluralize('database')=="databases")
 // console.log(inflect.pluralize('kiss')=="kisses")
 // console.log(inflect.pluralize('towns')=="towns")
 // console.log(inflect.pluralize('mayor of chicago')=="mayors of chicago")
@@ -5686,6 +5723,7 @@ var inflect = (function() {
 // console.log(inflect.is_plural('eyebrows')==true)
 // console.log(inflect.is_plural('child')==false)
 // console.log(inflect.is_plural('children')==true)
+// console.log(inflect.singularize('mayors of chicago')=="mayor of chicago")
 
 //wrapper for noun's methods
 var Noun = function(str, next, last, token) {
@@ -8511,7 +8549,7 @@ var pos = (function() {
       //second pass, wrangle results a bit
       sentence.tokens = sentence.tokens.map(function(token, i) {
         //set ambiguous 'ed' endings as either verb/adjective
-        if (token.normalised.match(/.ed$/)) {
+        if ( token.pos_reason!=="lexicon" && token.normalised.match(/.ed$/)) {
           token.pos = parts_of_speech['VB']
           token.pos_reason = "ed"
         }
@@ -8651,6 +8689,9 @@ var pos = (function() {
 // console.log(pos("may live").tags())
 // console.log(pos("may 7th live").tags())
 // console.log(pos("She and Marc Emery married on July 23, 2006.").tags())
+// console.log(pos("spencer quickly acked").sentences[0].tokens)
+// console.log(pos("a hundred").sentences[0].tokens)
+// console.log(pos("She and Marc Emery married on July 23, 2006").sentences[0].tokens)
 // pos("Dr. Conrad Murray recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("the Phantom of the Opera").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("Tony Hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
@@ -8696,6 +8737,7 @@ var spot = (function() {
 })()
 
 // console.log(spot("Tony Hawk is cool. Tony eats all day.").map(function(s){return s}))
+// console.log(spot("Tony eats all day. Tony Hawk is cool.").map(function(s){return s}))
 // console.log(spot("My Hawk is cool").map(function(s){return s.normalised}))
 
 // nlp_comprimise by @spencermountain  in 2014

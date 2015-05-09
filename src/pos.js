@@ -305,7 +305,7 @@ var pos = (function() {
       //second pass, wrangle results a bit
       sentence.tokens = sentence.tokens.map(function(token, i) {
         //set ambiguous 'ed' endings as either verb/adjective
-        if (token.normalised.match(/.ed$/)) {
+        if ( token.pos_reason!=="lexicon" && token.normalised.match(/.ed$/)) {
           token.pos = parts_of_speech['VB']
           token.pos_reason = "ed"
         }
@@ -445,6 +445,9 @@ var pos = (function() {
 // console.log(pos("may live").tags())
 // console.log(pos("may 7th live").tags())
 // console.log(pos("She and Marc Emery married on July 23, 2006.").tags())
+// console.log(pos("spencer quickly acked").sentences[0].tokens)
+// console.log(pos("a hundred").sentences[0].tokens)
+// console.log(pos("She and Marc Emery married on July 23, 2006").sentences[0].tokens)
 // pos("Dr. Conrad Murray recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("the Phantom of the Opera").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("Tony Hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})

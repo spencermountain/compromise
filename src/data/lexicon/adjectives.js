@@ -221,7 +221,6 @@ var adjectives = (function() {
     "makeshift",
     "male",
     "mammoth",
-    "married",
     "measly",
     "meaty",
     "medium",

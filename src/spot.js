@@ -9,9 +9,10 @@ var spot = (function() {
   var main = function(text, options) {
     options = options || {}
     var sentences = pos(text, options).sentences
-    return sentences.reduce(function(arr, s) {
+    var arr=sentences.reduce(function(arr, s) {
       return arr.concat(s.entities(options))
     }, [])
+    return arr
   }
 
   if (typeof module !== "undefined" && module.exports) {
@@ -20,5 +21,5 @@ var spot = (function() {
   return main
 })()
 
-// console.log(spot("Tony Hawk is cool").map(function(s){return s.normalised}))
+// console.log(spot("Tony Hawk is cool").map(function(s){return s}))
 // console.log(spot("My Hawk is cool").map(function(s){return s.normalised}))

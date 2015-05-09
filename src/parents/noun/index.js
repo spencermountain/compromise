@@ -125,10 +125,10 @@ var Noun = function(str, next, last, token) {
   }
 
   the.pluralize = function() {
-    return (inflect.inflect(the.word) || {}).plural
+    return inflect.pluralize(the.word)
   }
   the.singularize = function() {
-    return (inflect.inflect(the.word) || {}).singular
+    return inflect.singularize(the.word)
   }
 
   //specifically which pos it is

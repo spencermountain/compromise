@@ -201,7 +201,7 @@ var inflect = (function() {
   }
 
   var is_plural = function(str) {
-    // if it's a known verb
+    // if it's a known irregular case
     for (var i = 0; i < irregulars.length; i++) {
       if (irregulars[i][1] === str) {
         return true
@@ -210,9 +210,60 @@ var inflect = (function() {
         return false
       }
     }
-    // if it's a known irregular singular
-    for (var i = 0; i < pluralize_rules.length; i++) {
-      if (str.match(pluralize_rules[i].reg)) {
+    //similar to plural/singularize rules, but not the same
+    var plural_indicators=[
+      /(^v)ies$/i,
+      /ises$/i,
+      /ives$/i,
+      /(antenn|formul|nebul|vertebr|vit)ae$/i,
+      /(octop|vir|radi|nucle|fung|cact|stimul)i$/i,
+      /(buffal|tomat|tornad)oes$/i,
+      /(analy|ba|diagno|parenthe|progno|synop|the)ses$/i,
+      /(vert|ind|cort)ices$/i,
+      /(matr|append)ices$/i,
+      /(x|ch|ss|sh|s|z|o)es$/i,
+      /men$/i,
+      /news$/i,
+      /.tia$/i,
+      /(^f)ves$/i,
+      /(lr)ves$/i,
+      /(^aeiouy|qu)ies$/i,
+      /(m|l)ice$/i,
+      /(cris|ax|test)es$/i,
+      /(alias|status)es$/i,
+      /ss$/i,
+      /ics$/i
+    ]
+    for (var i = 0; i < plural_indicators.length; i++) {
+      if (str.match(plural_indicators[i])) {
+        return true
+      }
+    }
+    //similar to plural/singularize rules, but not the same
+    var singular_indicators=[
+      /(ax|test)is$/i,
+      /(octop|vir|radi|nucle|fung|cact|stimul)us$/i,
+      /(octop|vir)i$/i,
+      /(rl)f$/i,
+      /(alias|status)$/i,
+      /(bu)s$/i,
+      /(al|ad|at|er|et|ed|ad)o$/i,
+      /(ti)um$/i,
+      /(ti)a$/i,
+      /sis$/i,
+      /(?:(^f)fe|(lr)f)$/i,
+      /hive$/i,
+      /(^aeiouy|qu)y$/i,
+      /(x|ch|ss|sh|z)$/i,
+      /(matr|vert|ind|cort)(ix|ex)$/i,
+      /(m|l)ouse$/i,
+      /(m|l)ice$/i,
+      /(antenn|formul|nebul|vertebr|vit)a$/i,
+      /.sis$/i,
+      /^(?!talis|.*hu)(.*)man$/i
+    ]
+    for (var i = 0; i < singular_indicators.length; i++) {
+      if (str.match(singular_indicators[i])) {
         return false
       }
     }
@@ -260,7 +311,16 @@ var inflect = (function() {
 })();
 
 // console.log(inflect.singularize('kisses')=="kiss")
+// console.log(inflect.singularize('kiss')=="kiss")
+// console.log(inflect.singularize('children')=="child")
+// console.log(inflect.singularize('child')=="child")
 // console.log(inflect.singularize('mayors of chicago')=="mayor of chicago")
 // console.log(inflect.pluralize('kiss')=="kisses")
 // console.log(inflect.pluralize('mayor of chicago')=="mayors of chicago")
 // console.log(inflect.inflect('Index').plural=='Indices')
+// console.log(inflect.is_plural('octopus')==false)
+// console.log(inflect.is_plural('octopi')==true)
+// console.log(inflect.is_plural('eyebrow')==false)
+// console.log(inflect.is_plural('eyebrows')==true)
+// console.log(inflect.is_plural('child')==false)
+// console.log(inflect.is_plural('children')==true)

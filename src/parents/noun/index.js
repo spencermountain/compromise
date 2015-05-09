@@ -129,23 +129,24 @@ var Noun = function(str, next, last, token) {
   the.pluralize = function() {
     return inflect.pluralize(the.word)
   }
+
   the.singularize = function() {
     return inflect.singularize(the.word)
   }
 
   //uses common first-name list + honourifics to guess if this noun is the name of a person
   the.is_person = function() {
-    var i;
+    var i,l;
+    var names=Object.keys(firstnames)
     //see if noun has an honourific, like 'jr.'
-    var l=honourifics.length;
+    l=honourifics.length;
     for(i=0; i<l; i++){
       if(the.word.match(new RegExp("\\b"+honourifics[i]+"\\.?\\b",'i'))){
         return true
       }
     }
     //see if noun has a first-name
-    var names=Object.keys(firstnames)
-    var l=names.length
+    l=names.length
     for(i=0; i<l; i++){
       if(the.word.match(new RegExp("^"+names[i]+"\\b",'i'))){
         return true

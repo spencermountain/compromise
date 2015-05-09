@@ -1134,6 +1134,19 @@ exports["nlp.spot"] = function(test) {
     ["My Hawk is cool", {},
       ["hawk"]
     ],
+    //remove redundant people terms
+    ["Tony Hawk is cool. Tony eats all day.", {},
+      ["tony hawk"]
+    ],
+    ["Tony Danza eats chocolate. Nobody eats it like Danza.", {},
+      ["tony danza"]
+    ],
+    ["Tony Danza eats chocolate. Tony Hawk is legitimate.", {},
+      ["tony danza", "tony hawk"]
+    ],
+    // ["Tony eats all day. Tony Hawk is cool.", {},
+    //   ["tony", "tony hawk"]
+    // ],
   ]
   terms.forEach(function(arr) {
     var spots = nlp.spot(arr[0], options).map(function(a) {

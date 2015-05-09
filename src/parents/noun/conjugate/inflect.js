@@ -210,7 +210,7 @@ var inflect = (function() {
         return false
       }
     }
-    //if it's a known irregular singular
+    // if it's a known irregular singular
     for (var i = 0; i < pluralize_rules.length; i++) {
       if (str.match(pluralize_rules[i].reg)) {
         return false

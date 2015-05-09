@@ -250,7 +250,6 @@ exports["verb_conjugate"] = function(test) {
       "past": "farmed",
       "gerund": "farming"
     }
-    // {  "infinitive": "relay",   "gerund": "relaying",   "past": "relayed",   "present": "relays"},//tricky
   ]
   //add future tense
   verbs = verbs.map(function(o) {
@@ -1045,7 +1044,7 @@ exports["nlp.tag"] = function(test) {
     // ["relinquish my lkjfeh!", ["VBP","PP","NN"]],//this could be a rule
     // ["he would afefese", ["PRP","MD","VB"]],
     //word rules
-    // ["lkjefifize the marbles", ["VB","DT","NN"]],
+    ["lkjefifize the marbles", ["VB","DT","NN"]],
     //ensure reserved words are safe..
     ["prototype", ["NN"]],
     ["constructor", ["NN"]],
@@ -1057,7 +1056,7 @@ exports["nlp.tag"] = function(test) {
     ["and Björk Guðmundsdóttir lives in Reykjavík", ["CC","NN","VBZ","IN","NN"]],
     ["and Bjork Guomundsdottir lives in Reykjavik", ["CC","NN","VBZ","IN","NN"]],
 
-    // ["Climate Change, Miliband", ["NN","NN"]],
+    ["Climate Change, Miliband", ["NN","NN"]],
     ["http://google.com", ["CD"]],
     ["may live", ["MD", "VBP"]],
     ["may 7th live", ["CD", "VBP"]],
@@ -1082,14 +1081,7 @@ exports["nlp.tag"] = function(test) {
 };
 
 exports["nlp.spot"] = function(test) {
-  var options = {
-    gerund: true,
-    stick_adjectives: true,
-    stick_prepositions: true,
-    stick_the: false,
-    subnouns: false,
-    match_whole: false
-  }
+  var options = {}
   var terms = [
     ["tony hawk walked to Toronto", {},
       ["tony hawk", "toronto"]

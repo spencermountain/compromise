@@ -38,4 +38,5 @@ var spot = (function() {
 })()
 
 // console.log(spot("Tony Hawk is cool. Tony eats all day.").map(function(s){return s}))
+// console.log(spot("Tony eats all day. Tony Hawk is cool.").map(function(s){return s}))
 // console.log(spot("My Hawk is cool").map(function(s){return s.normalised}))

@@ -28,7 +28,27 @@ var Noun = function(str, next, last, token) {
     "we": "PRP",
     "thou": "PRP"
   }
-
+  var blacklist = {
+    "itself": 1,
+    "west": 1,
+    "western": 1,
+    "east": 1,
+    "eastern": 1,
+    "north": 1,
+    "northern": 1,
+    "south": 1,
+    "southern": 1,
+    "the": 1,
+    "one": 1,
+    "your": 1,
+    "my": 1,
+    "today": 1,
+    "yesterday": 1,
+    "tomorrow": 1,
+    "era": 1,
+    "century": 1,
+    "it": 1
+  }
   the.is_acronym = (function() {
     var s = the.word
       //no periods
@@ -46,28 +66,10 @@ var Noun = function(str, next, last, token) {
     if (!token) {
       return false
     }
-    var blacklist = {
-        "itself": 1,
-        "west": 1,
-        "western": 1,
-        "east": 1,
-        "eastern": 1,
-        "north": 1,
-        "northern": 1,
-        "south": 1,
-        "southern": 1,
-        "the": 1,
-        "one": 1,
-        "your": 1,
-        "my": 1,
-        "today": 1,
-        "yesterday": 1,
-        "tomorrow": 1,
-        "era": 1,
-        "century": 1,
-        "it": 1
-      }
-      //prepositions
+    if (token.normalised.length < 3 || !token.normalised.match(/[a-z]/i)) {
+      return false
+    }
+    //prepositions
     if (prps[token.normalised]) {
       return false
     }
@@ -103,7 +105,7 @@ var Noun = function(str, next, last, token) {
       return true
     }
     //appears to be a non-capital acronym, and not just caps-lock
-    if (token.normalised.length<5 && token.text.match(/^[A-Z]*$/)) {
+    if (token.normalised.length < 5 && token.text.match(/^[A-Z]*$/)) {
       return true
     }
     //acronyms are a-ok
@@ -136,19 +138,19 @@ var Noun = function(str, next, last, token) {
 
   //uses common first-name list + honourifics to guess if this noun is the name of a person
   the.is_person = function() {
-    var i,l;
-    var names=Object.keys(firstnames)
-    //see if noun has an honourific, like 'jr.'
-    l=honourifics.length;
-    for(i=0; i<l; i++){
-      if(the.word.match(new RegExp("\\b"+honourifics[i]+"\\.?\\b",'i'))){
+    var i, l;
+    var names = Object.keys(firstnames)
+      //see if noun has an honourific, like 'jr.'
+    l = honourifics.length;
+    for (i = 0; i < l; i++) {
+      if (the.word.match(new RegExp("\\b" + honourifics[i] + "\\.?\\b", 'i'))) {
         return true
       }
     }
     //see if noun has a first-name
-    l=names.length
-    for(i=0; i<l; i++){
-      if(the.word.match(new RegExp("^"+names[i]+"\\b",'i'))){
+    l = names.length
+    for (i = 0; i < l; i++) {
+      if (the.word.match(new RegExp("^" + names[i] + "\\b", 'i'))) {
         return true
       }
     }

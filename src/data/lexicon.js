@@ -8,6 +8,7 @@ var lexicon = (function() {
       values = require("./lexicon/values")
       demonyms = require("./lexicon/demonyms")
       abbreviations = require("./lexicon/abbreviations")
+      honourifics = require("./lexicon/honourifics")
       uncountables = require("./lexicon/uncountables")
 
       //verbs
@@ -420,6 +421,12 @@ var lexicon = (function() {
     l = abbreviations.length
     for (i = 0; i < l; i++) {
       main[abbreviations[i]] = "NNAB"
+    }
+
+    //add honourifics
+    l = honourifics.length
+    for (i = 0; i < l; i++) {
+      main[honourifics[i]] = "NNAB"
     }
 
     //add uncountable nouns

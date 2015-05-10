@@ -190,6 +190,13 @@ var Sentence = function(tokens) {
     return spots
   }
 
+  //noun-entities that look like person names..
+  the.people = function(){
+    return the.entities({}).filter(function(o){
+      return o.analysis.is_person()
+    })
+  }
+
   the.text = function() {
     return the.tokens.map(function(s) {
       return s.text

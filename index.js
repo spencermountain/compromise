@@ -51,3 +51,4 @@ if (typeof module !== "undefined" && module.exports) {
 }
 // console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
 // console.log( nlp.pos('i will slouch').to_past().text() );
+// console.log( nlp.pos('Sally Davidson sells seashells by the seashore. Joe Biden said so.').people() )

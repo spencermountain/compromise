@@ -9,6 +9,40 @@ if (typeof module !== "undefined" && module.exports) {
 // Dummy method for testing under prototype pollution
 Object.prototype.dummy = function() {};
 
+exports[".people"] = function(test) {
+  [
+    [
+      "Sally Daniels went to the park with Donna Douglas",
+      ["Sally Daniels","Donna Douglas"]
+    ],
+    [
+      "Then Sally went to the park with all her friends.",
+      ["Sally"]
+    ],
+    [
+      "Oh say can you see? By the dawn's early rise.",
+      []
+    ],
+    [
+      "Freddy Prince Jr. is cute. He and Madonna should get married.",
+      ["Freddy Prince Jr."]
+    ],
+    // [
+    //   "Ken Ripkin and Steven Samkos are friends, but Steven is taller.",
+    //   ["Ken Ripkin", "Steven Samkos"]
+    // ],
+    // [
+    //   "Ken Ripkin and Steven Samkos are friends, but one is taller.",
+    //   ["Ken Ripkin", "Steven Samkos"]
+    // ],
+  ].forEach(function(arr) {
+    var people= nlp.pos(arr[0], {}).people().map(function(o){return o.text})
+    test.deepEqual(people, arr[1], arr[0])
+  })
+  test.done()
+}
+
+
 exports["tokenization"] = function(test) {
   test.deepEqual(nlp.tokenize("i live in new york")[0].tokens.length, 4)
   test.deepEqual(nlp.tokenize("I speak optimistically of course.")[0].tokens.length, 4)

@@ -17,11 +17,11 @@ NLP is a solvable problem in scale, and all forms of input are gracious and love
 * caching by sentence, so unchanged-sentences aren't re-parsed on keystroke
 * somehow integrate the bigger tests with the unit tests, to better catch regressions
 * more advanced negation, sentence.is_negative() - or sentence.make_positive() .. or sentence.is_contrary(s2)?
-* speedup work, some kind of speed-profile (where are the slowest parts?)
+* speedup work, some kind of speed-profile (where are the slowest parts?) Throw a novel or two in and see what bottlenecks. Some knowledge of parse speed of library in browser.
 * ```sentence.pluralize() sentence.singularize() sentence.is_plural()``` ?
 * ```sentence.britishize() sentence.americanize() sentence.is_british()``` ?
 * some kind of thorough memory-leak test. Setting values to JSON objects is pass-by-reference. With lexicon, various verb lists, there is bound to be some pointers being set, which would appear with concurrency-testing.
-* some kind of more specific auto-documentation for each public method. Something better than a readme.
+* some kind of more specific auto-documentation for each public method. Something better than a readme. Basic human-explanations of ideas + assumptions.
 * some smaller and more specific subset builds from grunt.
 * better nlp.value() parsing, and identification. that 5kg-> 5 kilograms. some knowledgable representation of times, speeds, lengths, etc.
 

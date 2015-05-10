@@ -1,4 +1,4 @@
-/*! nlp_compromise  0.4.0  by @spencermountain 2015-05-09  MIT */
+/*! nlp_compromise  0.5.1  by @spencermountain 2015-05-10  MIT */
 var nlp = (function() {
 var verb_irregulars = (function() {
   var types = [
@@ -3008,7 +3008,7 @@ var firstnames = (function() {
     "lou": ",ella,is,isa,ise,rdes",
     "lu": "ann,cia,cile,cille,cinda,cy,ella,is,isa,la,pe,z",
     "ly": "dia,nda,nette,nn,nne",
-    "ma": "bel,ble,deleine,deline,delyn,dge,e,gdalena,ggie,i,linda,llory,mie,ndy,nuel,nuela,thew,tilda,tthew,ttie,ude,ura,ureen,urice,vis,x,xine,y,yra",
+    "ma": "bel,ble,deleine,deline,delyn,dge,e,gdalena,ggie,i,linda,llory,mie,ndy,nuel,nuela,thew,tilda,tthew,ttie,ude,ura,ureen,urice,vis,x,xine,yra",
     "mar": "a,jorie,k,la,lene,quita,sha,shall,ta,tha,tin,tina,va,vin,y,yann,yanne,yellen,ylou",
     "marc": ",ella,i,ia,ie,us,y",
     "marg": "aret,arita,ery,ie,o,ret,uerite",
@@ -5755,7 +5755,27 @@ var Noun = function(str, next, last, token) {
     "we": "PRP",
     "thou": "PRP"
   }
-
+  var blacklist = {
+    "itself": 1,
+    "west": 1,
+    "western": 1,
+    "east": 1,
+    "eastern": 1,
+    "north": 1,
+    "northern": 1,
+    "south": 1,
+    "southern": 1,
+    "the": 1,
+    "one": 1,
+    "your": 1,
+    "my": 1,
+    "today": 1,
+    "yesterday": 1,
+    "tomorrow": 1,
+    "era": 1,
+    "century": 1,
+    "it": 1
+  }
   the.is_acronym = (function() {
     var s = the.word
       //no periods
@@ -5773,28 +5793,10 @@ var Noun = function(str, next, last, token) {
     if (!token) {
       return false
     }
-    var blacklist = {
-        "itself": 1,
-        "west": 1,
-        "western": 1,
-        "east": 1,
-        "eastern": 1,
-        "north": 1,
-        "northern": 1,
-        "south": 1,
-        "southern": 1,
-        "the": 1,
-        "one": 1,
-        "your": 1,
-        "my": 1,
-        "today": 1,
-        "yesterday": 1,
-        "tomorrow": 1,
-        "era": 1,
-        "century": 1,
-        "it": 1
-      }
-      //prepositions
+    if (token.normalised.length < 3 || !token.normalised.match(/[a-z]/i)) {
+      return false
+    }
+    //prepositions
     if (prps[token.normalised]) {
       return false
     }
@@ -5813,9 +5815,9 @@ var Noun = function(str, next, last, token) {
       if (token.pos.tag == "NNG") { //eg. 'walking'
         return false
       }
-      // if(token.pos.tag=="NNP"){//yes! eg. 'Edinburough'
-      //    return true
-      //  }
+      if(token.pos.tag=="NNP"){//yes! eg. 'Edinburough'
+         return true
+       }
     }
     //distinct capital is very good signal
     if (token.noun_capital) {
@@ -5830,7 +5832,7 @@ var Noun = function(str, next, last, token) {
       return true
     }
     //appears to be a non-capital acronym, and not just caps-lock
-    if (token.normalised.length<5 && token.text.match(/^[A-Z]*$/)) {
+    if (token.normalised.length < 5 && token.text.match(/^[A-Z]*$/)) {
       return true
     }
     //acronyms are a-ok
@@ -5863,21 +5865,50 @@ var Noun = function(str, next, last, token) {
 
   //uses common first-name list + honourifics to guess if this noun is the name of a person
   the.is_person = function() {
-    var i,l;
-    var names=Object.keys(firstnames)
-    //see if noun has an honourific, like 'jr.'
-    l=honourifics.length;
-    for(i=0; i<l; i++){
-      if(the.word.match(new RegExp("\\b"+honourifics[i]+"\\.?\\b",'i'))){
+    var i, l;
+    //remove things that are often named after people
+    var blacklist=[
+      "center",
+      "centre",
+      "memorial",
+      "school",
+      "bridge",
+      "university",
+      "house",
+      "college",
+      "square",
+      "park",
+      "foundation",
+      "institute",
+      "ss",
+      "of",
+      "the",
+      "for"
+    ]
+    l= blacklist.length
+    for (i = 0; i < l; i++) {
+      if(the.word.match(new RegExp("\\b" + blacklist[i] + "\\b","i"))){
+        return false
+      }
+    }
+      //see if noun has an honourific, like 'jr.'
+    l = honourifics.length;
+    for (i = 0; i < l; i++) {
+      if (the.word.match(new RegExp("\\b" + honourifics[i] + "\\.?\\b", 'i'))) {
         return true
       }
     }
     //see if noun has a first-name
-    l=names.length
-    for(i=0; i<l; i++){
-      if(the.word.match(new RegExp("^"+names[i]+"\\b",'i'))){
+    var names = Object.keys(firstnames)
+    l = names.length
+    for (i = 0; i < l; i++) {
+      if (the.word.match(new RegExp("^" + names[i] + "\\b", 'i'))) {
         return true
       }
+    }
+    //if it has an initial between two words
+    if(the.word.match(/[a-z]{3,20} [a-z]\.? [a-z]{3,20}/i)){
+      return true
     }
     return false
   }
@@ -5924,6 +5955,7 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log(new Noun('farmhouse').is_entity)
 // console.log(new Noun("FBI").is_acronym)
 // console.log(new Noun("Tony Danza").is_person())
+// console.log(new Noun("Tonys h. Danza").is_person())
 
 //turns 'quickly' into 'quick'
 var to_adjective = (function() {
@@ -7390,7 +7422,9 @@ var lexicon = (function() {
       values = require("./lexicon/values")
       demonyms = require("./lexicon/demonyms")
       abbreviations = require("./lexicon/abbreviations")
+      honourifics = require("./lexicon/honourifics")
       uncountables = require("./lexicon/uncountables")
+      firstnames = require("./lexicon/firstnames")
 
       //verbs
       verbs = require("./lexicon/verbs")
@@ -7804,14 +7838,25 @@ var lexicon = (function() {
       main[abbreviations[i]] = "NNAB"
     }
 
+    //add honourifics
+    l = honourifics.length
+    for (i = 0; i < l; i++) {
+      main[honourifics[i]] = "NNAB"
+    }
+
     //add uncountable nouns
     l = uncountables.length
     for (i = 0; i < l; i++) {
       main[uncountables[i]] = "NN"
     }
 
+    //add firstnames
+    Object.keys(firstnames).forEach(function(k) {
+      main[k] = "NNP"
+    })
+
     //add multiple-word terms
-    l = Object.keys(multiples).forEach(function(k) {
+    Object.keys(multiples).forEach(function(k) {
       main[k] = multiples[k]
     })
 
@@ -7905,6 +7950,7 @@ var lexicon = (function() {
 // console.log(Object.keys(lexicon).length)
 // console.log(lexicon['prettier']=="JJR")
 // console.log(lexicon['prettiest']=="JJS")
+// console.log(lexicon['tony']=="NNP")
 
 // methods that hang on a parsed set of words
 // accepts parsed tokens
@@ -8098,6 +8144,13 @@ var Sentence = function(tokens) {
     return spots
   }
 
+  //noun-entities that look like person names..
+  the.people = function(){
+    return the.entities({}).filter(function(o){
+      return o.analysis.is_person()
+    })
+  }
+
   the.text = function() {
     return the.tokens.map(function(s) {
       return s.text
@@ -8148,7 +8201,8 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = Sentence;
 }
 
-//a block of text, with an arbitrary number of sentences
+//a section is a block of text, with an arbitrary number of sentences
+//these methods are just wrappers around the ones in sentence.js
 var Section = function(sentences) {
   var the = this
   the.sentences = sentences || [];
@@ -8158,11 +8212,13 @@ var Section = function(sentences) {
       return s.text()
     }).join(' ')
   }
+
   the.tense = function() {
     return the.sentences.map(function(s) {
       return s.tense()
     })
   }
+
   //pluck out wanted data from sentences
   the.nouns = function() {
     return the.sentences.map(function(s) {
@@ -8171,6 +8227,7 @@ var Section = function(sentences) {
       return arr.concat(a)
     }, [])
   }
+
   the.entities = function(options) {
     return the.sentences.map(function(s) {
       return s.entities(options)
@@ -8178,6 +8235,15 @@ var Section = function(sentences) {
       return arr.concat(a)
     }, [])
   }
+
+  the.people = function() {
+    return the.sentences.map(function(s) {
+      return s.people()
+    }).reduce(function(arr, a) {
+      return arr.concat(a)
+    }, [])
+  }
+
   the.adjectives = function() {
     return the.sentences.map(function(s) {
       return s.adjectives()
@@ -8185,6 +8251,7 @@ var Section = function(sentences) {
       return arr.concat(a)
     }, [])
   }
+
   the.verbs = function() {
     return the.sentences.map(function(s) {
       return s.verbs()
@@ -8192,6 +8259,7 @@ var Section = function(sentences) {
       return arr.concat(a)
     }, [])
   }
+
   the.adverbs = function() {
     return the.sentences.map(function(s) {
       return s.adverbs()
@@ -8199,6 +8267,7 @@ var Section = function(sentences) {
       return arr.concat(a)
     }, [])
   }
+
   the.values = function() {
     return the.sentences.map(function(s) {
       return s.values()
@@ -8206,11 +8275,13 @@ var Section = function(sentences) {
       return arr.concat(a)
     }, [])
   }
+
   the.tags = function() {
     return the.sentences.map(function(s) {
       return s.tags()
     })
   }
+
   //transform the sentences
   the.negate = function() {
     the.sentences = the.sentences.map(function(s) {
@@ -8278,18 +8349,25 @@ var pos = (function() {
       var next = arr[i + 1]
 
       if (arr[i] && next) {
-        //'joe smith' are both NN
-        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && arr[i].noun_capital == next.noun_capital ) {
+        var tag=arr[i].pos.tag
+        //'joe smith' are both NN, for example
+        if (tag === next.pos.tag && arr[i].punctuated !== true && arr[i].noun_capital == next.noun_capital ) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
+        //merge NNP and NN, like firstname, lastname
+        else if ((tag === "NNP" && next.pos.tag ==="NN") || (tag==="NN" && next.pos.tag==="NNP")) {
+          arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
+          arr[i] = null
+          arr[i + 1].pos= parts_of_speech['NNP']
+        }
         //merge dates manually, which often have punctuation
-        else if (arr[i].pos.tag === "CD" && next.pos.tag ==="CD") {
+        else if (tag === "CD" && next.pos.tag ==="CD") {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
         //merge abbreviations with nouns manually, eg. "Joe jr."
-        else if ( (arr[i].pos.tag === "NNAB" && next.pos.parent ==="noun") || (arr[i].pos.parent==="noun" && next.pos.tag==="NNAB")) {
+        else if ( (tag === "NNAB" && next.pos.parent ==="noun") || (arr[i].pos.parent==="noun" && next.pos.tag==="NNAB")) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
@@ -8299,12 +8377,12 @@ var pos = (function() {
           arr[i] = null
         }
         //'hundred and fifty', 'march the 5th'
-        else if (arr[i].pos.tag === "CD" && (next.normalised === "and" || next.normalised === "the") && arr[i + 2] && arr[i + 2].pos.tag === "CD") {
+        else if (tag === "CD" && (next.normalised === "and" || next.normalised === "the") && arr[i + 2] && arr[i + 2].pos.tag === "CD") {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
         //capitals surrounding a preposition  'United States of America'
-        else if (arr[i].pos.tag=="NN" && arr[i].noun_capital && (next.normalised == "of" || next.normalised == "and") && arr[i + 2] && arr[i + 2].noun_capital) {
+        else if (tag=="NN" && arr[i].noun_capital && (next.normalised == "of" || next.normalised == "and") && arr[i + 2] && arr[i + 2].noun_capital) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
           arr[i + 2] = merge_tokens(arr[i + 1], arr[i + 2])
@@ -8482,10 +8560,6 @@ var pos = (function() {
         if(sentence.tokens[1] && sentence.tokens[1].noun_capital && !lexicon_pass(first.normalised)){
           sentence.tokens[0].noun_capital=true;
         }
-        //if it's a first name, like 'John'
-        if(first.title_case === true && firstnames[first.normalised] === true){
-          sentence.tokens[0].noun_capital=true;
-        }
       }
       //smart handling of contractions
       sentence.tokens = handle_contractions(sentence.tokens)
@@ -8504,9 +8578,9 @@ var pos = (function() {
           token.pos = lex;
           token.pos_reason = "lexicon"
           //if it's an abbreviation, forgive the punctuation (eg. 'dr.')
-          // if(token.pos.tag==="NNAB"){
-            // token.punctuated=false
-          // }
+          if(token.pos.tag==="NNAB"){
+            token.punctuated=false
+          }
           return token
         }
 
@@ -8691,7 +8765,10 @@ var pos = (function() {
 // console.log(pos("She and Marc Emery married on July 23, 2006.").tags())
 // console.log(pos("spencer quickly acked").sentences[0].tokens)
 // console.log(pos("a hundred").sentences[0].tokens)
+// console.log(pos("Tony Reagan skates").sentences[0].tokens)
 // console.log(pos("She and Marc Emery married on July 23, 2006").sentences[0].tokens)
+// console.log(pos("Tony Hawk walked quickly to the store.").sentences[0].tokens)
+// console.log(pos("jahn j. jacobheimer").sentences[0].tokens[0].analysis.is_person())
 // pos("Dr. Conrad Murray recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("the Phantom of the Opera").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("Tony Hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
@@ -8792,7 +8869,8 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = nlp;
 }
 // console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
-// console.log( nlp.pos('i will slouch').to_past().text() );
+// console.log( nlp.pos('i will slouch'));
+// console.log( nlp.pos('Sally Davidson sells seashells by the seashore. Joe Biden said so.').people() )
 
 return nlp;
 })()

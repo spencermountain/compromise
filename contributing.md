@@ -10,25 +10,25 @@ NLP is a solvable problem in scale, and all forms of input are gracious and love
 * 'grunt' command joins all various scripts into a client-side js file
 
 #stuff to achieve
-* co-reference resolution (he/she/its). pronoun.reference(), noun.references()
+* co-reference resolution (he/she/its). ```pronoun.reference(), noun.references()```
 * auxillary verb combination ('looked down'== VBD)
-* api cleanup, implicit pos-parsing with special parameters (nlp.pos().method -> nlp().method)
+* api cleanup, implicit pos-parsing with optimized parameters (nlp.pos().method -> nlp().method)
 * better americanization, with tests, like britishization
-* caching by sentence, so unchanged-sentences aren't re-parsed on keystroke, for example
+* caching by sentence, so unchanged-sentences aren't re-parsed on keystroke
 * somehow integrate the bigger tests with the unit tests, to better catch regressions
 * more advanced negation, sentence.is_negative() - or sentence.make_positive() .. or sentence.is_contrary(s2)?
-* speedup work, some kind of speed-profile (where are the slow parts?)
-* sentence.pluralize() sentence.singularize() sentence.is_plural()
-* sentence.britishize() sentence.americanize() sentence.is_british() ?
-* some kind of thorough memory-leak test.
-* some kind of more specific auto-documentation for each public method
-* more specific builds from grunt.
-* better 'value' parsing, identification. that 5kg-> 5 kilograms. some knowledgable representation of times, speeds, lengths, etc.
+* speedup work, some kind of speed-profile (where are the slowest parts?)
+* ```sentence.pluralize() sentence.singularize() sentence.is_plural()``` ?
+* ```sentence.britishize() sentence.americanize() sentence.is_british()``` ?
+* some kind of thorough memory-leak test. Setting values to JSON objects is pass-by-reference. With lexicon, various verb lists, there is bound to be some pointers being set, which would appear with concurrency-testing.
+* some kind of more specific auto-documentation for each public method. Something better than a readme.
+* some smaller and more specific subset builds from grunt.
+* better nlp.value() parsing, and identification. that 5kg-> 5 kilograms. some knowledgable representation of times, speeds, lengths, etc.
 
 proposed api change:
 ```javascript
 nlp= new NLP();
-nlp.parse('some text');
+nlp.add('some text');
 nlp.pluralize().text() // "some texts"
 ```
 check out ```./known_issues.md``` or the unit tests that have been  commented out.

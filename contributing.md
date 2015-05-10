@@ -9,7 +9,29 @@ NLP is a solvable problem in scale, and all forms of input are gracious and love
 * unit tests are in ```/tests/unit_test.js``` and can be run with 'npm test'
 * 'grunt' command joins all various scripts into a client-side js file
 
-check out ```./known_issues.md``` or the unit tests that have been ... commented out.
+#stuff to achieve
+* co-reference resolution (he/she/its). pronoun.reference(), noun.references()
+* auxillary verb combination ('looked down'== VBD)
+* api cleanup, implicit pos-parsing with special parameters (nlp.pos().method -> nlp().method)
+* better americanization, with tests, like britishization
+* caching by sentence, so unchanged-sentences aren't re-parsed on keystroke, for example
+* somehow integrate the bigger tests with the unit tests, to better catch regressions
+* more advanced negation, sentence.is_negative() - or sentence.make_positive() .. or sentence.is_contrary(s2)?
+* speedup work, some kind of speed-profile (where are the slow parts?)
+* sentence.pluralize() sentence.singularize() sentence.is_plural()
+* sentence.britishize() sentence.americanize() sentence.is_british() ?
+* some kind of thorough memory-leak test.
+* some kind of more specific auto-documentation for each public method
+* more specific builds from grunt.
+* better 'value' parsing, identification. that 5kg-> 5 kilograms. some knowledgable representation of times, speeds, lengths, etc.
+
+proposed api change:
+```javascript
+nlp= new NLP();
+nlp.parse('some text');
+nlp.pluralize().text() // "some texts"
+```
+check out ```./known_issues.md``` or the unit tests that have been  commented out.
 
 # release build script:
 casual versioning/publishing with semvar:
@@ -29,6 +51,8 @@ git push origin master --tags
 #file size
 of minimized clientside build:
 * April 2015 - 109kb
-* May 2015 - 103kb
+* May 1st - 103kb
+* May 8th - 79kb
+* May 10th - 88kb
 
 have a nice day

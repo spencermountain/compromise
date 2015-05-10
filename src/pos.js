@@ -34,7 +34,7 @@ var pos = (function() {
       var next = arr[i + 1]
 
       if (arr[i] && next) {
-        //'joe smith' are both NN
+        //'joe smith' are both NN, for example
         if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && arr[i].noun_capital == next.noun_capital ) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
@@ -447,6 +447,7 @@ var pos = (function() {
 // console.log(pos("She and Marc Emery married on July 23, 2006.").tags())
 // console.log(pos("spencer quickly acked").sentences[0].tokens)
 // console.log(pos("a hundred").sentences[0].tokens)
+// console.log(pos("Tony Reagan skates").sentences[0].tokens)
 // console.log(pos("She and Marc Emery married on July 23, 2006").sentences[0].tokens)
 // pos("Dr. Conrad Murray recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("the Phantom of the Opera").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})

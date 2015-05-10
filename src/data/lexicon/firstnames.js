@@ -99,7 +99,7 @@ var firstnames = (function() {
     "lou": ",ella,is,isa,ise,rdes",
     "lu": "ann,cia,cile,cille,cinda,cy,ella,is,isa,la,pe,z",
     "ly": "dia,nda,nette,nn,nne",
-    "ma": "bel,ble,deleine,deline,delyn,dge,e,gdalena,ggie,i,linda,llory,mie,ndy,nuel,nuela,thew,tilda,tthew,ttie,ude,ura,ureen,urice,vis,x,xine,y,yra",
+    "ma": "bel,ble,deleine,deline,delyn,dge,e,gdalena,ggie,i,linda,llory,mie,ndy,nuel,nuela,thew,tilda,tthew,ttie,ude,ura,ureen,urice,vis,x,xine,yra",
     "mar": "a,jorie,k,la,lene,quita,sha,shall,ta,tha,tin,tina,va,vin,y,yann,yanne,yellen,ylou",
     "marc": ",ella,i,ia,ie,us,y",
     "marg": "aret,arita,ery,ie,o,ret,uerite",

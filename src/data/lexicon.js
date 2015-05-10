@@ -10,6 +10,7 @@ var lexicon = (function() {
       abbreviations = require("./lexicon/abbreviations")
       honourifics = require("./lexicon/honourifics")
       uncountables = require("./lexicon/uncountables")
+      firstnames = require("./lexicon/firstnames")
 
       //verbs
       verbs = require("./lexicon/verbs")
@@ -435,8 +436,13 @@ var lexicon = (function() {
       main[uncountables[i]] = "NN"
     }
 
+    //add firstnames
+    Object.keys(firstnames).forEach(function(k) {
+      main[k] = "NN"
+    })
+
     //add multiple-word terms
-    l = Object.keys(multiples).forEach(function(k) {
+    Object.keys(multiples).forEach(function(k) {
       main[k] = multiples[k]
     })
 
@@ -530,3 +536,4 @@ var lexicon = (function() {
 // console.log(Object.keys(lexicon).length)
 // console.log(lexicon['prettier']=="JJR")
 // console.log(lexicon['prettiest']=="JJS")
+// console.log(lexicon['tony']=="NNP")

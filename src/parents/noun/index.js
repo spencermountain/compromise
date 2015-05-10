@@ -88,9 +88,9 @@ var Noun = function(str, next, last, token) {
       if (token.pos.tag == "NNG") { //eg. 'walking'
         return false
       }
-      // if(token.pos.tag=="NNP"){//yes! eg. 'Edinburough'
-      //    return true
-      //  }
+      if(token.pos.tag=="NNP"){//yes! eg. 'Edinburough'
+         return true
+       }
     }
     //distinct capital is very good signal
     if (token.noun_capital) {

@@ -1004,12 +1004,12 @@ exports["nlp.noun.article"] = function(test) {
 exports["nlp.tag"] = function(test) {
   [
     ////coerce a noun
-    ["Tony Hawk walked quickly to the store.", ["NN", "VBD", "RB", "IN", "DT", "NN"]],
+    ["Tony Hawk walked quickly to the store.", ["NNP", "VBD", "RB", "IN", "DT", "NN"]],
     ["swim", ["VBP"]],
     ["the swim", ["DT", "NN"]],
     // ["my swim was great", ["PP", "NN", "CP","JJ"]],
     ["the obviously good swim", ["DT", "RB", "JJ", "NN"]],
-    ["spencer kelly", ["NN"]], //looks like an adverb but aint
+    ["spencer kelly", ["NNP"]], //looks like an adverb but aint
     //coerce a verb
     ["the big swing", ["DT", "JJ", "NN"]],
     ["would normally swing", ["MD", "RB", "VBP"]],
@@ -1101,11 +1101,11 @@ exports["nlp.tag"] = function(test) {
     test.deepEqual(nlp.pos(arr[0], {}).tags(), [arr[1]], arr[0])
   })
   //dont_combine option
-  test.deepEqual(nlp.pos("tony hawk walks", {dont_combine:false}).tags(), [["NN","VBZ"]])
-  test.deepEqual(nlp.pos("tony hawk walks", {dont_combine:true}).tags(), [["NN","NN","VBZ"]])
+  test.deepEqual(nlp.pos("tony hawk walks", {dont_combine:false}).tags(), [["NNP","VBZ"]])
+  test.deepEqual(nlp.pos("tony hawk walks", {dont_combine:true}).tags(), [["NNP","NN","VBZ"]])
   //test memory-leaks
-  test.deepEqual(nlp.pos("tony hawk walks. tony hawk walks. tony hawk walks.", {}).tags(), [["NN","VBZ"],["NN","VBZ"],["NN","VBZ"]])
-  test.deepEqual(nlp.pos("tony hawk is lkjej. tony hawk will lkjej. tony is very lkjej.", {}).tags(), [["NN","CP","JJ"],["NN","MD"],["NN","CP","RB","JJ"]])
+  test.deepEqual(nlp.pos("tony hawk walks. tony hawk walks. tony hawk walks.", {}).tags(), [["NNP","VBZ"],["NNP","VBZ"],["NNP","VBZ"]])
+  test.deepEqual(nlp.pos("tony hawk is lkjej. tony hawk will lkjej. tony is very lkjej.", {}).tags(), [["NNP","CP","JJ"],["NNP","MD"],["NNP","CP","RB","JJ"]])
 
   //edge cases..
   test.deepEqual(nlp.pos("", {}).tags(), [])

@@ -34,18 +34,25 @@ var pos = (function() {
       var next = arr[i + 1]
 
       if (arr[i] && next) {
+        var tag=arr[i].pos.tag
         //'joe smith' are both NN, for example
-        if (arr[i].pos.tag === next.pos.tag && arr[i].punctuated !== true && arr[i].noun_capital == next.noun_capital ) {
+        if (tag === next.pos.tag && arr[i].punctuated !== true && arr[i].noun_capital == next.noun_capital ) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
+        //merge NNP and NN, like firstname, lastname
+        else if ((tag === "NNP" && next.pos.tag ==="NN") || (tag==="NN" && next.pos.tag==="NNP")) {
+          arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
+          arr[i] = null
+          arr[i + 1].pos= parts_of_speech['NNP']
+        }
         //merge dates manually, which often have punctuation
-        else if (arr[i].pos.tag === "CD" && next.pos.tag ==="CD") {
+        else if (tag === "CD" && next.pos.tag ==="CD") {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
         //merge abbreviations with nouns manually, eg. "Joe jr."
-        else if ( (arr[i].pos.tag === "NNAB" && next.pos.parent ==="noun") || (arr[i].pos.parent==="noun" && next.pos.tag==="NNAB")) {
+        else if ( (tag === "NNAB" && next.pos.parent ==="noun") || (arr[i].pos.parent==="noun" && next.pos.tag==="NNAB")) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
@@ -55,12 +62,12 @@ var pos = (function() {
           arr[i] = null
         }
         //'hundred and fifty', 'march the 5th'
-        else if (arr[i].pos.tag === "CD" && (next.normalised === "and" || next.normalised === "the") && arr[i + 2] && arr[i + 2].pos.tag === "CD") {
+        else if (tag === "CD" && (next.normalised === "and" || next.normalised === "the") && arr[i + 2] && arr[i + 2].pos.tag === "CD") {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
         }
         //capitals surrounding a preposition  'United States of America'
-        else if (arr[i].pos.tag=="NN" && arr[i].noun_capital && (next.normalised == "of" || next.normalised == "and") && arr[i + 2] && arr[i + 2].noun_capital) {
+        else if (tag=="NN" && arr[i].noun_capital && (next.normalised == "of" || next.normalised == "and") && arr[i + 2] && arr[i + 2].noun_capital) {
           arr[i + 1] = merge_tokens(arr[i], arr[i + 1])
           arr[i] = null
           arr[i + 2] = merge_tokens(arr[i + 1], arr[i + 2])
@@ -240,7 +247,7 @@ var pos = (function() {
         }
         //if it's a first name, like 'John'
         if(first.title_case === true && firstnames[first.normalised] === true){
-          sentence.tokens[0].noun_capital=true;
+          // sentence.tokens[0].noun_capital=true;
         }
       }
       //smart handling of contractions
@@ -260,9 +267,9 @@ var pos = (function() {
           token.pos = lex;
           token.pos_reason = "lexicon"
           //if it's an abbreviation, forgive the punctuation (eg. 'dr.')
-          // if(token.pos.tag==="NNAB"){
-            // token.punctuated=false
-          // }
+          if(token.pos.tag==="NNAB"){
+            token.punctuated=false
+          }
           return token
         }
 
@@ -449,6 +456,7 @@ var pos = (function() {
 // console.log(pos("a hundred").sentences[0].tokens)
 // console.log(pos("Tony Reagan skates").sentences[0].tokens)
 // console.log(pos("She and Marc Emery married on July 23, 2006").sentences[0].tokens)
+// console.log(pos("Tony Hawk walked quickly to the store.").sentences[0].tokens)
 // pos("Dr. Conrad Murray recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("the Phantom of the Opera").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("Tony Hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})

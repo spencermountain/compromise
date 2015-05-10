@@ -438,7 +438,7 @@ var lexicon = (function() {
 
     //add firstnames
     Object.keys(firstnames).forEach(function(k) {
-      main[k] = "NN"
+      main[k] = "NNP"
     })
 
     //add multiple-word terms

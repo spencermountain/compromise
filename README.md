@@ -101,6 +101,13 @@ nlp.noun("earthquake").pluralize()
 nlp.noun('veggie burger').is_plural
 //false
 
+nlp.noun('tony danza').is_person
+//true
+nlp.noun('Tony J. Danza elementary school').is_person
+//false
+nlp.noun('SS Tony danza').is_person
+//false
+
 nlp.noun('hour').article()
 //an
 
@@ -149,10 +156,8 @@ nlp.pos("the obviously good swim").tags()
 
 ## Named-Entity recognition
 ```javascript
-nlp.spot("Tony Hawk walked quickly to the store.")
-// ["Tony Hawk", "store"]
 nlp.spot("joe carter loves toronto")
-// ["joe carter", "toronto"]
+// [{text:"joe carter"...}, {text:"toronto"...}]
 ```
 
 ## Sentence segmentation

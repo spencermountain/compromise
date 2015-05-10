@@ -245,10 +245,6 @@ var pos = (function() {
         if(sentence.tokens[1] && sentence.tokens[1].noun_capital && !lexicon_pass(first.normalised)){
           sentence.tokens[0].noun_capital=true;
         }
-        //if it's a first name, like 'John'
-        if(first.title_case === true && firstnames[first.normalised] === true){
-          // sentence.tokens[0].noun_capital=true;
-        }
       }
       //smart handling of contractions
       sentence.tokens = handle_contractions(sentence.tokens)
@@ -457,6 +453,7 @@ var pos = (function() {
 // console.log(pos("Tony Reagan skates").sentences[0].tokens)
 // console.log(pos("She and Marc Emery married on July 23, 2006").sentences[0].tokens)
 // console.log(pos("Tony Hawk walked quickly to the store.").sentences[0].tokens)
+// console.log(pos("jahn j. jacobheimer").sentences[0].tokens[0].analysis.is_person())
 // pos("Dr. Conrad Murray recieved a guilty verdict").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("the Phantom of the Opera").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("Tony Hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})

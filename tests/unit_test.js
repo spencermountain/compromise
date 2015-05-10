@@ -70,6 +70,14 @@ exports["is_person"] = function(test) {
   test.deepEqual(nlp.noun("tony danza jr.").is_person(), true)
   test.deepEqual(nlp.noun("tony").is_person(), true)
   test.deepEqual(nlp.noun("danza").is_person(), false)
+  //middle initial
+  test.deepEqual(nlp.noun("tony h. danza").is_person(), true, 'initial')
+  test.deepEqual(nlp.noun("Tongapan H. Danza").is_person(), true, 'initial2')
+  test.deepEqual(nlp.noun("tongapan h. danza").is_person(), true, 'initial3')
+  //eponyms
+  test.deepEqual(nlp.noun("tony h. danza memorial center").is_person(), false, 'eponym1')
+  test.deepEqual(nlp.noun("tony college").is_person(), false, 'eponym2')
+  test.deepEqual(nlp.noun("ss tony danza").is_person(), false, 'eponym3')
   test.done()
 }
 

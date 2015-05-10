@@ -139,7 +139,31 @@ var Noun = function(str, next, last, token) {
   //uses common first-name list + honourifics to guess if this noun is the name of a person
   the.is_person = function() {
     var i, l;
-    var names = Object.keys(firstnames)
+    //remove things that are often named after people
+    var blacklist=[
+      "center",
+      "centre",
+      "memorial",
+      "school",
+      "bridge",
+      "university",
+      "house",
+      "college",
+      "square",
+      "park",
+      "foundation",
+      "institute",
+      "ss",
+      "of",
+      "the",
+      "for"
+    ]
+    l= blacklist.length
+    for (i = 0; i < l; i++) {
+      if(the.word.match(new RegExp("\\b" + blacklist[i] + "\\b","i"))){
+        return false
+      }
+    }
       //see if noun has an honourific, like 'jr.'
     l = honourifics.length;
     for (i = 0; i < l; i++) {
@@ -148,11 +172,16 @@ var Noun = function(str, next, last, token) {
       }
     }
     //see if noun has a first-name
+    var names = Object.keys(firstnames)
     l = names.length
     for (i = 0; i < l; i++) {
       if (the.word.match(new RegExp("^" + names[i] + "\\b", 'i'))) {
         return true
       }
+    }
+    //if it has an initial between two words
+    if(the.word.match(/[a-z]{3,20} [a-z]\.? [a-z]{3,20}/i)){
+      return true
     }
     return false
   }
@@ -199,3 +228,4 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log(new Noun('farmhouse').is_entity)
 // console.log(new Noun("FBI").is_acronym)
 // console.log(new Noun("Tony Danza").is_person())
+// console.log(new Noun("Tonys h. Danza").is_person())

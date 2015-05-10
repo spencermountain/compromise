@@ -59,28 +59,35 @@ nlp.syllables("hamburger")
 
 ###Sentence methods
 ```javascript
-  var s= nlp.pos("they are lovers").sentences[0]
+  var s= nlp.pos("Tony Danza is dancing").sentences[0]
   s.tense()
   //present
   s.text()
-  //"they are lovers"
-
+  //"Tony Danza is dancing"
   s.to_past().text()
-  //they were lovers
+  //Tony Danza was dancing
   s.to_present().text()
-  //the are lovers
+  //Tony Danza is dancing
   s.to_future().text()
-  //they will be lovers
+  //Tony Danza will be dancing
   s.negate().text()
-  //they are not lovers
+  //Tony Danza is not dancing
   s.tags()
-  //[ 'PRP', 'CP', 'JJ' ]
-
+  //[ 'NNP', 'CP', 'VB' ]
+  s.entities()
+  //[{text:"Tony Danza"...}]
+  s.people()
+  //[{text:"Tony Danza"...}]
   s.nouns()
+  //[{text:"Tony Danza"...}]
   s.adjectives()
+  //[]
   s.adverbs()
+  //[]
   s.verbs()
+  //[{text:"dancing"}]
   s.values()
+  //[]
 ````
 
 ###Noun methods:

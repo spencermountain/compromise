@@ -60,32 +60,46 @@ nlp.syllables("hamburger")
 ###Sentence methods
 ```javascript
   var s= nlp.pos("Tony Danza is dancing").sentences[0]
+
   s.tense()
   //present
+
   s.text()
   //"Tony Danza is dancing"
+
   s.to_past().text()
   //Tony Danza was dancing
+
   s.to_present().text()
   //Tony Danza is dancing
+
   s.to_future().text()
   //Tony Danza will be dancing
+
   s.negate().text()
   //Tony Danza is not dancing
+
   s.tags()
   //[ 'NNP', 'CP', 'VB' ]
+
   s.entities()
   //[{text:"Tony Danza"...}]
+
   s.people()
   //[{text:"Tony Danza"...}]
+
   s.nouns()
   //[{text:"Tony Danza"...}]
+
   s.adjectives()
   //[]
+
   s.adverbs()
   //[]
+
   s.verbs()
   //[{text:"dancing"}]
+
   s.values()
   //[]
 ````
@@ -115,7 +129,6 @@ nlp.inflect('mayors of toronto'))
 //{ plural: 'mayors of toronto', singular: 'mayor of toronto' }
 ```
 
-
 ###Verb methods:
 ```javascript
 nlp.verb("walked").conjugate()
@@ -125,6 +138,10 @@ nlp.verb("walked").conjugate()
 //  gerund: 'walking'}
 nlp.verb('swimming').to_past()
 //swam
+nlp.verb('swimming').to_present()
+//swims
+nlp.verb('swimming').to_future()
+//will swim
 ```
 ###Adjective methods:
 ```javascript
@@ -146,7 +163,7 @@ nlp.adverb("quickly").conjugate()
 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 ```javascript
 nlp.pos("Tony Hawk walked quickly to the store.").tags()
-// [ [ 'NN', 'VB', 'RB', 'IN', 'DT', 'NN' ] ]
+// [ [ 'NNP', 'VBD', 'RB', 'IN', 'DT', 'NN' ] ]
 
 nlp.pos("they would swim").tags()
 // [ [ 'PRP', 'MD', 'VBP' ] ]
@@ -192,21 +209,20 @@ nlp.ngram(str, {min_count:1, max_size:5})
 options.min_count // throws away seldom-repeated grams. defaults to 1
 options.max_gram // prevents the result from becoming gigantic. defaults to 5
 ```
-<!--
 ### Date parsing
 ```javascript
-nlp.dates("I married April for the 2nd time on June 5th 1998 ")
+nlp.value("I married April for the 2nd time on June 5th 1998 ").date()
 // { text: 'June 5th 1998',
 //   from: { year: '1998', month: '06', day: '05' },
 //   to: {} }
 ```
 ### Number parsing
 ```javascript
-nlp.to_number("two thousand five hundred and sixty")
+nlp.value("two thousand five hundred and sixty").number()
 //2560
-nlp.to_number("ten and a half million")
+nlp.value("ten and a half million").number()
 //15000000
-``` -->
+```
 ### Unicode Normalisation
 a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
 ```javascript
@@ -241,6 +257,8 @@ nlp.denormalize("The quick brown fox jumps over the lazy dog", {percentage:50})
   "noun":
     "NN" : "noun, singular (dog, rain)"
     "NNP" : "singular proper noun (Edinburgh, skateboard)"
+    "NNPA" : "noun, acronym (FBI)"
+    "NNAB" : "noun, abbreviation (jr.)"
     "NNPS" : "plural proper noun (Smiths)"
     "NNS" : "plural noun (dogs, foxes)"
     "NNO" : "possessive noun (spencer's, sam's)"
@@ -269,32 +287,32 @@ The lexicon was built using the [American National Corpus](http://www.americanna
 Unlike other nlp toolkits, this library puts a 'silent token' into the phrase for contractions. Otherwise something would be neglected.
 ```javascript
 nlp.pos("i'm good.")
-   [{
-     text:"i'm",
-     normalised:"i",
-     pos:"PRP"
-   },
-   {
-     text:"",
-     normalised:"am",
-     pos:"CP"
-   },
-   {
-     text:"good.",
-     normalised:"good",
-     pos:"JJ"
-   }]
+ [{
+   text:"i'm",
+   normalised:"i",
+   pos:"PRP"
+ },
+ {
+   text:"",
+   normalised:"am",
+   pos:"CP"
+ },
+ {
+   text:"good.",
+   normalised:"good",
+   pos:"JJ"
+ }]
 ```
 ####Tokenization
 Neighbouring words with the same part of speech are merged together, unless there is punctuation, different capitalisation, or special cases.
 ```javascript
-nlp.pos("tony hawk won")
+nlp.pos("tony hawk won").tags()
 //tony hawk   NN
 //won   VB
 ```
 To turn this off:
 ```javascript
-nlp.pos("tony hawk won", {dont_combine:true})
+nlp.pos("tony hawk won", {dont_combine:true}).tags()
 //tony   NN
 //hawk   NN
 //won   VB

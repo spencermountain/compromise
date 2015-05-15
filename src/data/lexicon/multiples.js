@@ -1,4 +1,5 @@
 //common terms that are multi-word, but one part-of-speech
+//these should not include phrasal verbs, like 'looked out'. These are handled elsewhere.
 var multiples = (function() {
 
   var main = {

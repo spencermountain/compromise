@@ -57,10 +57,10 @@ var phrasal_verbs = (function () {
     "about": "bring,fool,gad,go,root",
     "after": "go,look,take",
     "ahead": "get,go,press",
-    "along": "bring,get,move",
+    "along": "bring,move",
     "apart": "fall,take",
     "around": "ask,boss,bring,call,come,fool,get,horse,joke,lie,mess,play",
-    "away": "back,carry,file,frighten,hide,run,wash",
+    "away": "back,carry,file,frighten,hide,wash",
     "back": "fall,fight,hit,hold,look,pay,stand,think",
     "by": "drop,get,go,stop,swear,swing,tick,zip",
     "down": "bog,calm,fall,hand,hunker,jot,knock,lie,narrow,note,pat,pour,run,tone,trickle,wear",
@@ -70,15 +70,15 @@ var phrasal_verbs = (function () {
     "in": "cave,chip,hone,jump,key,pencil,plug,rein,shade,sleep,stop,suck,tie,trade,tuck,usher,weigh,zero",
     "into": "look,run",
     "it": "go,have",
-    "off": "auction,be,beat,blast,block,brush,burn,buzz,cast,cool,drop,end,face,fall,fend,frighten,goof,jack,kick,knock,laugh,lay,level,live,make,mouth,nod,pair,pay,peel,read,reel,ring,rip,round,sail,shave,shoot,show,sleep,slice,split,square,stave,stop,storm,strike,tear,tee,tick,tip,top,walk,work,write",
-    "on": "bank,bargain,carry,catch,egg,frown,go,hit,latch,pile,prattle,press,spring,spur,tack,urge,wait,yammer",
-    "out": "act,ask,back,bail,bear,black,blank,bleed,blow,blurt,branch,buy,cancel,edge,farm,figure,find,fish,fizzle,flake,flame,flare,flesh,flip,geek,get,help,hide,hold,iron,knock,lash,level,listen,lose,luck,max,miss,nerd,pan,pick,pig,point,print,psych,rat,read,rent,root,rule,run,scout,see,sell,shout,single,smoke,sort,spell,splash,stamp,start,storm,straighten,suss,time,tire,top,trip,trot,try,wash,watch,wear,weird,whip,wimp,wipe,work,zone,zonk",
+    "off": "auction,be,beat,blast,block,brush,burn,buzz,cast,cool,drop,end,face,fall,fend,frighten,goof,jack,kick,knock,laugh,level,live,make,mouth,nod,pair,pay,peel,read,reel,ring,rip,round,sail,shave,shoot,sleep,slice,split,square,stave,stop,storm,strike,tear,tee,tick,tip,top,walk,work,write",
+    "on": "bank,bargain,egg,frown,hit,latch,pile,prattle,press,spring,spur,tack,urge,yammer",
+    "out": "act,ask,back,bail,bear,black,blank,bleed,blow,blurt,branch,buy,cancel,edge,farm,figure,find,fish,fizzle,flake,flame,flare,flesh,flip,geek,get,help,hide,hold,iron,knock,lash,level,listen,lose,luck,max,miss,nerd,pan,pick,pig,point,print,psych,rat,read,rent,root,rule,run,scout,see,sell,shout,single,smoke,sort,spell,splash,stamp,start,storm,straighten,suss,time,tire,top,trip,trot,wash,watch,weird,whip,wimp,wipe,zone,zonk",
     "out,": "eat,fill,find,make,pass,pick,point",
     "over": "bend,bubble,do,fall,get,gloss,hold,keel,mull,pore,sleep,spill,think,tide,tip",
     "round": "get,go",
     "through": "go,run",
     "to": "come,keep,see",
-    "up": "act,beef,board,bone,boot,brighten,build,buy,catch,cheer,cook,end,eye,face,fatten,feel,fess,finish,fire,firm,flame,flare,free,freeze,freshen,fry,fuel,gang,gear,give,goof,grow,hack,ham,heat,hit,hold,hole,hush,jazz,juice,lap,light,lighten,line,link,listen,live,look,loosen,make,mash,measure,mess,mix,mock,mop,muddle,open,own,pair,patch,pick,prop,psych,read,rough,rustle,save,shack,sign,size,slice,slip,snap,sober,spark,split,spruce,stack,start,stay,stir,stitch,straighten,string,suck,suit,sum,team,tee,think,tidy,tighten,toss,trade,trip,type,use,vacuum,wait,wake,warm,weigh,whip,wire,wise,word,write,zip",
+    "up": "act,beef,board,bone,boot,brighten,build,buy,catch,cheer,cook,end,eye,face,fatten,feel,fess,finish,fire,firm,flame,flare,free,freeze,freshen,fry,fuel,gang,gear,goof,hack,ham,heat,hit,hole,hush,jazz,juice,lap,light,lighten,line,link,listen,live,loosen,make,mash,measure,mess,mix,mock,mop,muddle,open,own,pair,patch,pick,prop,psych,read,rough,rustle,save,shack,sign,size,slice,slip,snap,sober,spark,split,spruce,stack,start,stay,stir,stitch,straighten,string,suck,suit,sum,team,tee,think,tidy,tighten,toss,trade,trip,type,vacuum,wait,wake,warm,weigh,whip,wire,wise,word,write,zip",
   }
   Object.keys(asymmetric).forEach(function (k) {
     asymmetric[k].split(',').forEach(function (s) {
@@ -92,4 +92,4 @@ var phrasal_verbs = (function () {
 
   return main
 })()
-console.log(JSON.stringify(phrasal_verbs.length, null, 2))
+// console.log(JSON.stringify(phrasal_verbs, null, 2))

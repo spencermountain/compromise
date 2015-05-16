@@ -11,7 +11,6 @@ NLP is a solvable problem in scale, and all forms of input are gracious and love
 
 #stuff to achieve
 * co-reference resolution (he/she/its). ```pronoun.reference(), noun.references()```
-* auxillary verb combination ('looked down'== VBD)
 * api cleanup, implicit pos-parsing with optimized parameters (nlp.pos().method -> nlp().method)
 * better americanization, with tests, like britishization
 * caching by sentence, so unchanged-sentences aren't re-parsed on keystroke
@@ -24,6 +23,8 @@ NLP is a solvable problem in scale, and all forms of input are gracious and love
 * some kind of more specific auto-documentation for each public method. Something better than a readme. Basic human-explanations of ideas + assumptions.
 * some smaller and more specific subset builds from grunt.
 * better nlp.value() parsing, and identification. that 5kg-> 5 kilograms. some knowledgable representation of times, speeds, lengths, etc.
+*perfect 'have walked' & pluperfect 'had walked' & future perfect 'will have walked' support
+* habitual aspect support 'used to walk'
 
 proposed api change:
 ```javascript

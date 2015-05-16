@@ -1,4 +1,4 @@
-/*! nlp_compromise  0.5.2  by @spencermountain 2015-05-15  MIT */
+/*! nlp_compromise  0.5.2  by @spencermountain 2015-05-16  MIT */
 var nlp = (function() {
 var verb_irregulars = (function() {
   var types = [
@@ -1935,7 +1935,8 @@ var multiples = (function() {
     "new mexico":"NN",
     "united states":"NN",
     "united kingdom":"NN",
-    "great britain":"NN"
+    "great britain":"NN",
+    "head start":"NN"
   }
   if (typeof module !== "undefined" && module.exports) {
     module.exports = main;
@@ -6910,6 +6911,7 @@ var verb_conjugate = (function() {
 // console.log(verb_conjugate("branch"))
 // console.log(verb_conjugate("spred"))
 // console.log(verb_conjugate("bog"))
+// console.log(verb_conjugate("nod"))
 
 //wrapper for verb's methods
 var Verb = function(str, next, last, token) {
@@ -7553,7 +7555,7 @@ var phrasal_verbs = (function () {
   //forms that have in/out symmetry
   var symmetric = {
     "away": "blow,bounce,bring,call,come,cut,drop,fire,get,give,go,keep,pass,put,run,send,shoot,switch,take,tie,throw",
-    "in": "bang,barge,bash,beat,block,book,box,break,bring,burn,butt,carve,cash,check,come,cross,cut,drop,fall,fence,fill,give,grow,hand,hang,head,jack,keep,leave,let,lock,log,move,opt,pack,peel,pull,put,rain,reach,ring,rub,send,set,settle,shut,sign,sing,sit,smash,snow,stand,strike,take,try,turn,type,warm,wave,wean,wear,wheel,work",
+    "in": "bang,barge,bash,beat,block,book,box,break,bring,burn,butt,carve,cash,check,come,cross,drop,fall,fence,fill,give,grow,hand,hang,head,jack,keep,leave,let,lock,log,move,opt,pack,peel,pull,put,rain,reach,ring,rub,send,set,settle,shut,sign,smash,snow,strike,take,try,turn,type,warm,wave,wean,wear,wheel",
     "on": "add,call,carry,catch,count,feed,get,give,go,grind,head,hold,keep,lay,log,pass,pop,power,put,send,show,snap,switch,take,tell,try,turn,wait",
     "over": "come,go,look,read,run,talk",
     "together": "come,pull,put",
@@ -7588,11 +7590,11 @@ var phrasal_verbs = (function () {
     "it": "go,have",
     "off": "auction,be,beat,blast,block,brush,burn,buzz,cast,cool,drop,end,face,fall,fend,frighten,goof,jack,kick,knock,laugh,level,live,make,mouth,nod,pair,pay,peel,read,reel,ring,rip,round,sail,shave,shoot,sleep,slice,split,square,stave,stop,storm,strike,tear,tee,tick,tip,top,walk,work,write",
     "on": "bank,bargain,egg,frown,hit,latch,pile,prattle,press,spring,spur,tack,urge,yammer",
-    "out": "act,ask,back,bail,bear,black,blank,bleed,blow,blurt,branch,buy,cancel,eat,edge,farm,figure,find,fill,find,fish,fizzle,flake,flame,flare,flesh,flip,geek,get,help,hide,hold,iron,knock,lash,level,listen,lose,luck,make,max,miss,nerd,pan,pass,pick,pig,point,print,psych,rat,read,rent,root,rule,run,scout,see,sell,shout,single,smoke,sort,spell,splash,stamp,start,storm,straighten,suss,time,tire,top,trip,trot,wash,watch,weird,whip,wimp,wipe,zone,zonk",
+    "out": "act,ask,back,bail,bear,black,blank,bleed,blow,blurt,branch,buy,cancel,cut,eat,edge,farm,figure,find,fill,find,fish,fizzle,flake,flame,flare,flesh,flip,geek,get,help,hide,hold,iron,knock,lash,level,listen,lose,luck,make,max,miss,nerd,pan,pass,pick,pig,point,print,psych,rat,read,rent,root,rule,run,scout,see,sell,shout,single,sit,smoke,sort,spell,splash,stamp,start,storm,straighten,suss,time,tire,top,trip,trot,wash,watch,weird,whip,wimp,wipe,work,zone,zonk",
     "over": "bend,bubble,do,fall,get,gloss,hold,keel,mull,pore,sleep,spill,think,tide,tip",
     "round": "get,go",
     "through": "go,run",
-    "to": "come,keep,see",
+    "to": "keep,see",
     "up": "act,beef,board,bone,boot,brighten,build,buy,catch,cheer,cook,end,eye,face,fatten,feel,fess,finish,fire,firm,flame,flare,free,freeze,freshen,fry,fuel,gang,gear,goof,hack,ham,heat,hit,hole,hush,jazz,juice,lap,light,lighten,line,link,listen,live,loosen,make,mash,measure,mess,mix,mock,mop,muddle,open,own,pair,patch,pick,prop,psych,read,rough,rustle,save,shack,sign,size,slice,slip,snap,sober,spark,split,spruce,stack,start,stay,stir,stitch,straighten,string,suck,suit,sum,team,tee,think,tidy,tighten,toss,trade,trip,type,vacuum,wait,wake,warm,weigh,whip,wire,wise,word,write,zip",
   }
   Object.keys(asymmetric).forEach(function (k) {
@@ -7657,6 +7659,7 @@ var lexicon = (function() {
       verb_conjugate = require("../parents/verb/conjugate/conjugate")
       verb_to_doer = require("../parents/verb/conjugate/to_doer")
       verb_irregulars = require("../parents/verb/conjugate/verb_irregulars")
+      phrasal_verbs = require("./lexicon/phrasal_verbs")
 
       adjectives = require("./lexicon/adjectives")
       adj_to_adv = require("../parents/adjective/conjugate/to_adverb")
@@ -8086,9 +8089,14 @@ var lexicon = (function() {
       main[k] = multiples[k]
     })
 
+    //add phrasal verbs
+    Object.keys(phrasal_verbs).forEach(function(k) {
+      main[k] = phrasal_verbs[k]
+    })
+
     //add verbs
     //conjugate all verbs. takes ~8ms. triples the lexicon size.
-    var c, i;
+    var c;
     l = verbs.length;
     for (i = 0; i < l; i++) {
       //add conjugations
@@ -8172,6 +8180,7 @@ var lexicon = (function() {
   // console.log(lexicon["says"]==="VBZ")
   // console.log(lexicon["sounds"]==="VBZ")
   // console.log(lexicon["means"]==="VBZ")
+  // console.log(lexicon["look after"]==="VBP")
 
 // console.log(Object.keys(lexicon).length)
 // console.log(lexicon['prettier']=="JJR")
@@ -8556,6 +8565,13 @@ var pos = (function() {
     parents = require("./parents/parents")
   }
 
+  //possible 2nd part in a phrasal verb
+  var particles=["in", "out", "on", "off", "behind", "way", "with", "of", "do", "away", "across", "ahead", "back", "over", "under", "together", "apart", "up", "upon", "aback", "down", "about", "before", "after", "around", "to", "forth", "round", "through", "along", "onto"]
+  particles=particles.reduce(function(h,s){
+    h[s]=true
+    return h
+  }, {})
+
   var merge_tokens = function(a, b) {
     a.text += " " + b.text
     a.normalised += " " + b.normalised
@@ -8635,45 +8651,15 @@ var pos = (function() {
   //they should be combined with the verb, sometimes.
   //does not handle seperated phrasal verbs ('take the coat off' -> 'take off')
   var combine_phrasal_verbs = function(sentence) {
-    var phrasals = {
-      "after": true,
-      "back": true,
-      "down": true,
-      "for": true,
-      "in": true,
-      "out": true,
-      "over": true,
-      "up": true
-    }
-    var blacklist = {
-      "lives in": true,
-      "": true,
-      "": true,
-      "": true,
-    }
     var arr = sentence.tokens || []
-    for (var i = 0; i <= arr.length; i++) {
-      var last = arr[i - 1]
-      var next = arr[i + 1]
-      if (arr[i] && phrasals[arr[i].normalised] && last && last.pos.parent == "verb") {
-        //make sure you dont combine false ones
-        if (next) {
-          //blacklist
-          if(blacklist[last.normalised + " " + arr[i].normalised]){
-            continue
-          }
-          //teaching in 1992
-          if (next.pos.tag == "CD") {
-            continue
-          }
-          //walking in the dust
-          // if (next && next.normalised == "the") {
-          //   continue
-          // }
+    for (var i = 1; i < arr.length; i++) {
+      if(particles[arr[i].normalised]){
+        //it matches a known phrasal-verb
+        if(lexicon[arr[i-1].normalised + " " + arr[i].normalised]){
+          // console.log(arr[i-1].normalised + " " + arr[i].normalised)
+          arr[i] = merge_tokens(arr[i-1], arr[i])
+          arr[i-1] = null
         }
-        //ok, merge them.
-        arr[i - 1] = merge_tokens(arr[i - 1], arr[i])
-        arr[i] = null
       }
     }
     sentence.tokens = arr.filter(function(r) {
@@ -8721,7 +8707,7 @@ var pos = (function() {
       token.pos_reason = "before_modal"
     }
     //if it's after the word 'will' its probably a verb/adverb
-    if (last && last.normalised == "will" && !last.punctuated && token.pos.parent == "noun") {
+    if (last && last.normalised == "will" && !last.punctuated && token.pos.parent == "noun" && token.pos.tag !== "PRP") {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "after_will"
     }
@@ -8732,7 +8718,7 @@ var pos = (function() {
     }
     //if it's after an adverb, it's not a noun -> quickly acked
     //support form 'atleast he is..'
-    if (last && token.pos.parent === "noun" && last.pos.tag === "RB" && !last.start) {
+    if (last && token.pos.parent === "noun" && token.pos.tag !== "PRP" && last.pos.tag === "RB" && !last.start) {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "after_adverb"
     }
@@ -9054,6 +9040,9 @@ var pos = (function() {
 // pos("Tony Hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("tony hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // console.log(pos("look after a kid").sentences[0].tags())
+// pos("Sather tried to stop the deal, but when he found out that Gretzky").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
+
+
 
 //just a wrapper for text -> entities
 //most of this logic is in ./parents/noun

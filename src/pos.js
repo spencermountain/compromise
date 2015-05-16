@@ -157,7 +157,7 @@ var pos = (function() {
       token.pos_reason = "before_modal"
     }
     //if it's after the word 'will' its probably a verb/adverb
-    if (last && last.normalised == "will" && !last.punctuated && token.pos.parent == "noun") {
+    if (last && last.normalised == "will" && !last.punctuated && token.pos.parent == "noun" && token.pos.tag !== "PRP") {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "after_will"
     }
@@ -168,7 +168,7 @@ var pos = (function() {
     }
     //if it's after an adverb, it's not a noun -> quickly acked
     //support form 'atleast he is..'
-    if (last && token.pos.parent === "noun" && last.pos.tag === "RB" && !last.start) {
+    if (last && token.pos.parent === "noun" && token.pos.tag !== "PRP" && last.pos.tag === "RB" && !last.start) {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "after_adverb"
     }
@@ -490,3 +490,6 @@ var pos = (function() {
 // pos("Tony Hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("tony hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // console.log(pos("look after a kid").sentences[0].tags())
+// pos("Sather tried to stop the deal, but when he found out that Gretzky").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
+
+

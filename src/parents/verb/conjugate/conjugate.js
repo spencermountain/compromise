@@ -7,6 +7,7 @@ var verb_conjugate = (function() {
     verb_rules = require("./verb_rules")
   }
 
+  //this method is the slowest in the whole library, basically TODO:whaaa
   var predict = function(w) {
     //generated from test data
     var compact = {
@@ -96,12 +97,16 @@ var verb_conjugate = (function() {
         "s"
         ]
     }
-    var suffix_rules= {}
-    Object.keys(compact).forEach(function(k){
-      compact[k].forEach(function(s){
-        suffix_rules[s]=k
-      })
-    })
+    var suffix_rules = {}
+    var keys = Object.keys(compact)
+    var l = keys.length;
+    var l2;
+    for (var i = 0; i < l; i++) {
+      l2 = compact[keys[i]].length
+      for (var o = 0; o < l2; o++) {
+        suffix_rules[compact[keys[i]][o]] = keys[i]
+      }
+    }
 
     var endsWith = function(str, suffix) {
       return str.indexOf(suffix, str.length - suffix.length) !== -1;
@@ -180,12 +185,13 @@ var verb_conjugate = (function() {
   }
 
   var main = function(w) {
-    if (!w) {
+    if (w===undefined) {
       return {}
     }
+
     //for phrasal verbs ('look out'), conjugate look, then append 'out'
     var phrasal_reg=new RegExp("^(.*?) (in|out|on|off|behind|way|with|of|do|away|across|ahead|back|over|under|together|apart|up|upon|aback|down|about|before|after|around|to|forth|round|through|along|onto)$",'i')
-    if(w.match(phrasal_reg)){
+    if(w.match(' ') && w.match(phrasal_reg)){
       var split=w.match(phrasal_reg,'')
       var verb=split[1]
       var particle=split[2]
@@ -205,8 +211,8 @@ var verb_conjugate = (function() {
     var verb = w.replace(/^(over|under|re|anti|full)\-?/i, '')
     //check irregulars
     var obj = {};
-    var i, l;
-    l = verb_irregulars.length
+    var l = verb_irregulars.length
+    var x, i;
     for (i = 0; i < l; i++) {
       x = verb_irregulars[i]
       if (verb === x.present || verb === x.gerund || verb === x.past || verb === x.infinitive) {
@@ -219,8 +225,9 @@ var verb_conjugate = (function() {
 
     //check against suffix rules
     l = verb_rules[predicted].length
+    var r;
     for (i = 0; i < l; i++) {
-      var r = verb_rules[predicted][i];
+      r = verb_rules[predicted][i];
       if (w.match(r.reg)) {
         obj[predicted] = w;
         Object.keys(r.repl).forEach(function(k) {
@@ -244,7 +251,6 @@ var verb_conjugate = (function() {
   return main
 })()
 
-// console.log(verb_conjugate("swing"))
 // console.log(verb_conjugate("walking"))
 // console.log(verb_conjugate("overtook"))
 // console.log(verb_conjugate("watch out"))

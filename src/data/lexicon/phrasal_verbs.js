@@ -2,7 +2,6 @@
 //'beef up' is one verb, and not some direction of beefing.
 //by @spencermountain, 2015 mit
 //many credits to http://www.allmyphrasalverbs.com/
-console.time('hi')
 var phrasal_verbs = (function () {
 
   if (typeof module !== "undefined" && module.exports) {

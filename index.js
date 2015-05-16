@@ -1,7 +1,6 @@
 // nlp_comprimise by @spencermountain  in 2014
 // most files are self-contained modules that optionally export for nodejs
 // this file loads them all together
-
 // if we're server-side, grab files, otherwise assume they're prepended already
 if (typeof module !== "undefined" && module.exports) {
 

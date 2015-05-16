@@ -56,4 +56,8 @@ of minimized clientside build:
 * May 8th - 79kb
 * May 10th - 88kb
 
+#speed
+benchmarked on backend
+* May 2015 - 60ms boot
+
 have a nice day

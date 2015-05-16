@@ -100,8 +100,8 @@ var verb_conjugate = (function() {
     var suffix_rules = {}
     var keys = Object.keys(compact)
     var l = keys.length;
-    var l2;
-    for (var i = 0; i < l; i++) {
+    var l2, i;
+    for (i = 0; i < l; i++) {
       l2 = compact[keys[i]].length
       for (var o = 0; o < l2; o++) {
         suffix_rules[compact[keys[i]][o]] = keys[i]
@@ -112,7 +112,7 @@ var verb_conjugate = (function() {
       return str.indexOf(suffix, str.length - suffix.length) !== -1;
     }
     var arr = Object.keys(suffix_rules);
-    for (var i = 0; i < arr.length; i++) {
+    for (i = 0; i < arr.length; i++) {
       if (endsWith(w, arr[i])) {
         return suffix_rules[arr[i]]
       }
@@ -181,6 +181,18 @@ var verb_conjugate = (function() {
     if (!obj.future) {
       obj.future = "will " + obj.infinitive
     }
+    //perfect is 'have'+past-tense
+    if (!obj.perfect) {
+      obj.perfect = "have " + obj.past
+    }
+    //pluperfect is 'had'+past-tense
+    if (!obj.pluperfect) {
+      obj.pluperfect = "had " + obj.past
+    }
+    //future perfect is 'will have'+past-tense
+    if (!obj.future_perfect) {
+      obj.future_perfect = "will have " + obj.past
+    }
     return obj
   }
 
@@ -193,9 +205,9 @@ var verb_conjugate = (function() {
     var phrasal_reg=new RegExp("^(.*?) (in|out|on|off|behind|way|with|of|do|away|across|ahead|back|over|under|together|apart|up|upon|aback|down|about|before|after|around|to|forth|round|through|along|onto)$",'i')
     if(w.match(' ') && w.match(phrasal_reg)){
       var split=w.match(phrasal_reg,'')
-      var verb=split[1]
+      var phrasal_verb=split[1]
       var particle=split[2]
-      var result=main(verb)//recursive
+      var result=main(phrasal_verb)//recursive
       delete result["doer"]
       Object.keys(result).forEach(function(k){
         if(result[k]){
@@ -204,6 +216,21 @@ var verb_conjugate = (function() {
       })
       return result
     }
+
+    //for pluperfect ('had tried') remove 'had' and call it past-tense
+    if(w.match(/^had [a-z]/i)){
+      w=w.replace(/^had /i,'')
+    }
+    //for perfect ('have tried') remove 'have' and call it past-tense
+    if(w.match(/^have [a-z]/i)){
+      w=w.replace(/^have /i,'')
+    }
+
+    //for future perfect ('will have tried') remove 'will have' and call it past-tense
+    if(w.match(/^will have [a-z]/i)){
+      w=w.replace(/^will have /i,'')
+    }
+
     //chop it if it's future-tense
     w = w.replace(/^will /i, '')
     //un-prefix the verb, and add it in later
@@ -265,3 +292,5 @@ var verb_conjugate = (function() {
 // console.log(verb_conjugate("spred"))
 // console.log(verb_conjugate("bog"))
 // console.log(verb_conjugate("nod"))
+// console.log(verb_conjugate("had tried"))
+// console.log(verb_conjugate("have tried"))

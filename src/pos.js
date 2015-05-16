@@ -491,5 +491,6 @@ var pos = (function() {
 // pos("tony hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // console.log(pos("look after a kid").sentences[0].tags())
 // pos("Sather tried to stop the deal, but when he found out that Gretzky").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
+// pos("Gretzky had tried skating").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
 
 

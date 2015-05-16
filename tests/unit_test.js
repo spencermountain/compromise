@@ -546,19 +546,19 @@ exports["nlp.sentences"] = function(test) {
 };
 
 exports["is_plural"] = function(test) {
-  test.deepEqual(nlp.noun('octopus').is_plural, false)
-  test.deepEqual(nlp.noun('tree').is_plural, false)
-  test.deepEqual(nlp.noun('trees').is_plural, true)
-  test.deepEqual(nlp.noun('i').is_plural, false)
-  test.deepEqual(nlp.noun('we').is_plural, true)
-  test.deepEqual(nlp.noun('mayor of chicago').is_plural, false)
-  test.deepEqual(nlp.noun('mayors of chicago').is_plural, true)
-  test.deepEqual(nlp.noun('octopus').is_plural, false)
-  test.deepEqual(nlp.noun('octopi').is_plural, true)
-  test.deepEqual(nlp.noun('eyebrow').is_plural, false)
-  test.deepEqual(nlp.noun('eyebrows').is_plural, true)
-  test.deepEqual(nlp.noun('child').is_plural, false)
-  test.deepEqual(nlp.noun('children').is_plural, true)
+  test.deepEqual(nlp.noun('octopus').is_plural(), false)
+  test.deepEqual(nlp.noun('tree').is_plural(), false)
+  test.deepEqual(nlp.noun('trees').is_plural(), true)
+  test.deepEqual(nlp.noun('i').is_plural(), false)
+  test.deepEqual(nlp.noun('we').is_plural(), true)
+  test.deepEqual(nlp.noun('mayor of chicago').is_plural(), false)
+  test.deepEqual(nlp.noun('mayors of chicago').is_plural(), true)
+  test.deepEqual(nlp.noun('octopus').is_plural(), false)
+  test.deepEqual(nlp.noun('octopi').is_plural(), true)
+  test.deepEqual(nlp.noun('eyebrow').is_plural(), false)
+  test.deepEqual(nlp.noun('eyebrows').is_plural(), true)
+  test.deepEqual(nlp.noun('child').is_plural(), false)
+  test.deepEqual(nlp.noun('children').is_plural(), true)
   test.done();
 };
 

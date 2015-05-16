@@ -49,7 +49,7 @@ var Noun = function(str, next, last, token) {
     "century": 1,
     "it": 1
   }
-  the.is_acronym = (function() {
+  the.is_acronym = function() {
     var s = the.word
       //no periods
     if (s.length <= 5 && s.match(/^[A-Z]*$/)) {
@@ -60,9 +60,9 @@ var Noun = function(str, next, last, token) {
       return true
     }
     return false
-  })()
+  }
 
-  the.is_entity = (function() {
+  the.is_entity = function() {
     if (!token) {
       return false
     }
@@ -109,20 +109,20 @@ var Noun = function(str, next, last, token) {
       return true
     }
     //acronyms are a-ok
-    if (the.is_acronym) {
+    if (the.is_acronym()) {
       return true
     }
     //else, be conservative
     return false
-  })()
+  }
 
   the.conjugate = function() {
     return inflect.inflect(the.word)
   },
 
-  the.is_plural = (function() {
+  the.is_plural = function() {
     return inflect.is_plural(the.word)
-  })()
+  }
 
   the.article = function() {
     return indefinite_article(the.word)
@@ -193,29 +193,10 @@ var Noun = function(str, next, last, token) {
     if (the.word.match(/'s$/)) {
       return parts_of_speech['NNO']
     }
-    //noun-gerund
-    if (the.word.match(/..ing$/)) {
-      return parts_of_speech['NNG']
-    }
-    //personal pronoun
-    if (prps[the.word]) {
-      return parts_of_speech['PRP']
-    }
-    //proper nouns
-    var first = the.word.substr(0, 1)
-    if (first.toLowerCase() !== first) {
-      if (the.is_acronym) {
-        return parts_of_speech['NNPA']
-      }
-      if (the.is_plural) {
-        return parts_of_speech['NNPS']
-      }
-      return parts_of_speech['NNP']
-    }
     //plural
-    if (the.is_plural) {
-      return parts_of_speech['NNS']
-    }
+    // if (the.is_plural) {
+    //   return parts_of_speech['NNS']
+    // }
     //generic
     return parts_of_speech['NN']
   })()
@@ -226,8 +207,8 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = Noun;
 }
 
-// console.log(new Noun('farmhouse').is_entity)
-// console.log(new Noun("FBI").is_acronym)
+// console.log(new Noun('farmhouse').is_entity())
+// console.log(new Noun("FBI").is_acronym())
 // console.log(new Noun("Tony Danza").is_person())
 // console.time('h')
 // console.log(new Noun("Tonys h. Danza").is_person())

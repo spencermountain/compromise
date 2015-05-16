@@ -178,7 +178,7 @@ var Sentence = function(tokens) {
     var spots = []
     options = options || {}
     the.tokens.forEach(function(token) {
-      if (token.pos.parent === "noun" && token.analysis.is_entity) {
+      if (token.pos.parent === "noun" && token.analysis.is_entity()) {
         spots.push(token)
       }
     })

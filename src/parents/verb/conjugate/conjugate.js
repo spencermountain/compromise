@@ -250,3 +250,11 @@ var verb_conjugate = (function() {
 // console.log(verb_conjugate("watch out"))
 // console.log(verb_conjugate("watch"))
 // console.log(verb_conjugate("smash"))
+// console.log(verb_conjugate("word"))
+//broken
+// console.log(verb_conjugate("read"))
+// console.log(verb_conjugate("free"))
+// console.log(verb_conjugate("flesh"))
+// console.log(verb_conjugate("branch"))
+// console.log(verb_conjugate("spred"))
+// console.log(verb_conjugate("bog"))

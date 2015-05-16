@@ -2,6 +2,7 @@
 //'beef up' is one verb, and not some direction of beefing.
 //by @spencermountain, 2015 mit
 //many credits to http://www.allmyphrasalverbs.com/
+console.time('hi')
 var phrasal_verbs = (function () {
 
   if (typeof module !== "undefined" && module.exports) {
@@ -94,7 +95,7 @@ var phrasal_verbs = (function () {
     return h
   },{})
 
-  //conjugate every phrasal verb.
+  //conjugate every phrasal verb. takes ~30ms
   var tags={
     present:"VB",
     past:"VBD",
@@ -102,10 +103,18 @@ var phrasal_verbs = (function () {
     gerund:"VBG",
     infinitive:"VBP",
   }
+  var cache={}//cache individual verbs to speed it up
+  var split, verb, particle, phrasal;
   Object.keys(main).forEach(function(s){
-    var result=verb_conjugate(s)
-    Object.keys(result).forEach(function(k){
-      main[result[k]]=tags[k]
+    split=s.split(' ')
+    verb=split[0]
+    particle=split[1]
+    if(cache[verb]===undefined){
+      cache[verb]=verb_conjugate(verb)
+    }
+    Object.keys(cache[verb]).forEach(function(k){
+      phrasal=cache[verb][k]+" "+particle
+      main[phrasal]=tags[k]
     })
   })
 

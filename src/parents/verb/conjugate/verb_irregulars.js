@@ -921,6 +921,20 @@ var verb_irregulars = (function() {
       "_er"
     ],
     [
+      "word",
+      "_ing",
+      "_ed",
+      "_s",
+      "_er"
+    ],
+    [
+      "suit",
+      "_ing",
+      "_ed",
+      "_s",
+      "_er"
+    ],
+    [
       "be",
       "am",
       "was",

@@ -72,7 +72,8 @@ var multiples = (function() {
     "new mexico":"NN",
     "united states":"NN",
     "united kingdom":"NN",
-    "great britain":"NN"
+    "great britain":"NN",
+    "head start":"NN"
   }
   if (typeof module !== "undefined" && module.exports) {
     module.exports = main;

@@ -15,6 +15,13 @@ var pos = (function() {
     parents = require("./parents/parents")
   }
 
+  //possible 2nd part in a phrasal verb
+  var particles=["in", "out", "on", "off", "behind", "way", "with", "of", "do", "away", "across", "ahead", "back", "over", "under", "together", "apart", "up", "upon", "aback", "down", "about", "before", "after", "around", "to", "forth", "round", "through", "along", "onto"]
+  particles=particles.reduce(function(h,s){
+    h[s]=true
+    return h
+  }, {})
+
   var merge_tokens = function(a, b) {
     a.text += " " + b.text
     a.normalised += " " + b.normalised
@@ -94,45 +101,15 @@ var pos = (function() {
   //they should be combined with the verb, sometimes.
   //does not handle seperated phrasal verbs ('take the coat off' -> 'take off')
   var combine_phrasal_verbs = function(sentence) {
-    var phrasals = {
-      "after": true,
-      "back": true,
-      "down": true,
-      "for": true,
-      "in": true,
-      "out": true,
-      "over": true,
-      "up": true
-    }
-    var blacklist = {
-      "lives in": true,
-      "": true,
-      "": true,
-      "": true,
-    }
     var arr = sentence.tokens || []
-    for (var i = 0; i <= arr.length; i++) {
-      var last = arr[i - 1]
-      var next = arr[i + 1]
-      if (arr[i] && phrasals[arr[i].normalised] && last && last.pos.parent == "verb") {
-        //make sure you dont combine false ones
-        if (next) {
-          //blacklist
-          if(blacklist[last.normalised + " " + arr[i].normalised]){
-            continue
-          }
-          //teaching in 1992
-          if (next.pos.tag == "CD") {
-            continue
-          }
-          //walking in the dust
-          // if (next && next.normalised == "the") {
-          //   continue
-          // }
+    for (var i = 1; i < arr.length; i++) {
+      if(particles[arr[i].normalised]){
+        //it matches a known phrasal-verb
+        if(lexicon[arr[i-1].normalised + " " + arr[i].normalised]){
+          // console.log(arr[i-1].normalised + " " + arr[i].normalised)
+          arr[i] = merge_tokens(arr[i-1], arr[i])
+          arr[i-1] = null
         }
-        //ok, merge them.
-        arr[i - 1] = merge_tokens(arr[i - 1], arr[i])
-        arr[i] = null
       }
     }
     sentence.tokens = arr.filter(function(r) {

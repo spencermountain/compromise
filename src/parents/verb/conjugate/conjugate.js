@@ -264,3 +264,4 @@ var verb_conjugate = (function() {
 // console.log(verb_conjugate("branch"))
 // console.log(verb_conjugate("spred"))
 // console.log(verb_conjugate("bog"))
+// console.log(verb_conjugate("nod"))

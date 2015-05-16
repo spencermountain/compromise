@@ -45,30 +45,31 @@ exports["people()"] = function(test) {
 
 exports["phrasal verbs"] = function(test) {
   test.deepEqual(nlp.pos("look after a kid").tags(), [["VBP", "DT", "NN"]])
+  //he comes to
+  //he comes to the game
 
-// test.deepEqual(pos("He looked for a while").tags(), [["",]])
-// test.deepEqual(pos("He looked for hours").tags(), [["",]])
-// test.deepEqual(pos("He looked in the pale").tags(), [["",]])
+  //shooting off the gun
+  //shooting off the boards
 
+  //singing in the new year
+  //singing in the choir
 
-  // test.deepEqual(pos("He looked for a kite").tags(), [["PRP","VBP","DT","NN"]])
+  //looks after the kid
+  //looks after the game
 
-// test.deepEqual(pos("The bomb blew up").tags(), [["DT","NN", "VBP"]]) //issue
+  //he blew up the bomb
+  //he blew up the balloon
 
-test.deepEqual(nlp.pos("The pen blew up").tags(), [["DT","NN", "VBD"]])
-// test.deepEqual(pos("The clown blew up the balloon").tags(), [["",]])
+  // test.deepEqual(pos("The bomb blew up").tags(), [["DT","NN", "VBP"]]) //issue
+  test.deepEqual(nlp.pos("The pen blew up").tags(), [["DT","NN", "VBD"]])
+  // test.deepEqual(pos("The clown blew up the balloon").tags(), [["DT","NN","VBP","DT","NN"]])
+  test.deepEqual(pos("he turns on the tv").tags(), [["PRP","VBZ","DT","NN"]])
+  test.deepEqual(pos("they take off the spandex").tags(), [["PRP","VBP","DT","NN"]])
+  test.deepEqual(pos("he would look after it").tags(), [["PRP","MD","VBP","PRP"]])
+  test.deepEqual(pos("he looks after it").tags(), [["PRP","VBZ","PRP"]])
+  test.deepEqual(pos("he looked after it").tags(), [["PRP","VBD","PRP"]])
+  test.deepEqual(pos("john puts down the book").tags(), [["NNP","VBZ","DT","NN"]])
 
-test.deepEqual(nlp.pos("can fly in from Alberta").tags(), [["MD","VBP", "IN", "NN"]])
-test.deepEqual(nlp.pos("can fly in 1998").tags(), [["MD","VBP", "IN", "CD"]])
-// test.deepEqual(pos("smoking in the elevator").tags(), [["",]])
-
-// test.deepEqual(pos("turn on the tv").tags(), [["VBP","DT","NN"]])
-// test.deepEqual(pos("take off the spandex").tags(), [["",]])
-// test.deepEqual(pos("watch for the homerun").tags(), [["",]])
-// test.deepEqual(pos("he would look after it)".tags(), [["",]])
-// test.deepEqual(pos("he looks after it").tags(), [["",]])
-// test.deepEqual(pos("he looked after it").tags(), [["",]])
-// test.deepEqual(pos("john puts down the book").tags(), [["",]])
 
   test.done()
 }

@@ -16,7 +16,7 @@ var sentence_parser = function(text) {
   abbreviations = abbreviations.concat(["jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept", "sep"]);
 
   //detection of non-sentence chunks
-  var abbrev_reg = new RegExp("(^| )(" + abbreviations.join("|") + ")[.!?] ?$", "i");
+  var abbrev_reg = new RegExp("\\b(" + abbreviations.join("|") + ")[.!?] ?$", "i");
   var acronym_reg= new RegExp("[ |\.][A-Z]\.?$", "i")
   var elipses_reg= new RegExp("\\.\\.\\.*$")
 
@@ -45,7 +45,6 @@ var sentence_parser = function(text) {
 if (typeof module !== "undefined" && module.exports) {
   exports.sentences = sentence_parser;
 }
-
 // console.log(sentence_parser('Tony is nice. He lives in Japan.').length === 2)
 // console.log(sentence_parser('I like that Color').length === 1)
 // console.log(sentence_parser("She was dead. He was ill.").length === 2)

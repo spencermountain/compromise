@@ -36,11 +36,13 @@ var tokenize = (function() {
     }
   }
 
+  //some multi-word tokens should be combined here
   var combine_multiples = function(arr) {
     var better = []
+    var normalised=arr.map(function(a){return normalise(a)})//cached results
     for (var i = 0; i < arr.length; i++) {
       for (var o = 0; o < multi_words.length; o++) {
-        if (arr[i + 1] && normalise(arr[i]) === multi_words[o][0] && normalise(arr[i + 1]) === multi_words[o][1]) { //
+        if (arr[i + 1] && normalised[i] === multi_words[o][0] && normalised[i+1] === multi_words[o][1]) { //
           //we have a match
           arr[i] = arr[i] + ' ' + arr[i + 1]
           arr[i + 1] = null
@@ -83,7 +85,6 @@ var tokenize = (function() {
   }
   return main
 })()
-
 // console.log(tokenize("i live in new york")[0].tokens.length==4)
 // console.log(tokenize("I speak optimistically of course.")[0].tokens.length==4)
 // console.log(tokenize("Joe is 9")[0].tokens.length==3)

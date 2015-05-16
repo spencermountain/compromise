@@ -879,6 +879,48 @@ var verb_irregulars = (function() {
       "_er"
     ],
     [
+      "drop",
+      "_ping",
+      "_ped",
+      "_s",
+      "_per"
+    ],
+    [
+      "head",
+      "_ing",
+      "_ed",
+      "_s",
+      "_er"
+    ],
+    [
+      "log",
+      "_ging",
+      "_ged",
+      "_s",
+      "_ger"
+    ],
+    [
+      "rub",
+      "_bing",
+      "_bed",
+      "_s",
+      "_ber"
+    ],
+    [
+      "smash",
+      "_ing",
+      "_ed",
+      "_es",
+      "_er"
+    ],
+    [
+      "add",
+      "_ing",
+      "_ed",
+      "_s",
+      "_er"
+    ],
+    [
       "be",
       "am",
       "was",

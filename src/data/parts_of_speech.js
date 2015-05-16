@@ -26,6 +26,12 @@ var parts_of_speech = (function() {
       "tense": "present",
       "tag": "VBP"
     },
+    "VBF": {
+      "name": "future-tense verb",
+      "parent": "verb",
+      "tense": "future",
+      "tag": "VBF"
+    },
     "VBZ": {
       "name": "present-tense verb",
       "tense": "present",

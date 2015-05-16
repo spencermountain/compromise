@@ -183,6 +183,21 @@ var verb_conjugate = (function() {
     if (!w) {
       return {}
     }
+    //for phrasal verbs ('look out'), conjugate look, then append 'out'
+    var phrasal_reg=new RegExp("^(.*?) (in|out|on|off|behind|way|with|of|do|away|across|ahead|back|over|under|together|apart|up|upon|aback|down|about|before|after|around|to|forth|round|through|along|onto)$",'i')
+    if(w.match(phrasal_reg)){
+      var split=w.match(phrasal_reg,'')
+      var verb=split[1]
+      var particle=split[2]
+      var result=main(verb)//recursive
+      delete result["doer"]
+      Object.keys(result).forEach(function(k){
+        if(result[k]){
+          result[k]+=" "+particle
+        }
+      })
+      return result
+    }
     //chop it if it's future-tense
     w = w.replace(/^will /i, '')
     //un-prefix the verb, and add it in later
@@ -232,3 +247,6 @@ var verb_conjugate = (function() {
 // console.log(verb_conjugate("swing"))
 // console.log(verb_conjugate("walking"))
 // console.log(verb_conjugate("overtook"))
+// console.log(verb_conjugate("watch out"))
+// console.log(verb_conjugate("watch"))
+// console.log(verb_conjugate("smash"))

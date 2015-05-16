@@ -1,4 +1,4 @@
-/*! nlp_compromise  0.5.1  by @spencermountain 2015-05-10  MIT */
+/*! nlp_compromise  0.5.2  by @spencermountain 2015-05-15  MIT */
 var nlp = (function() {
 var verb_irregulars = (function() {
   var types = [
@@ -877,6 +877,48 @@ var verb_irregulars = (function() {
       "spill",
       "_ing",
       "spilt",
+      "_s",
+      "_er"
+    ],
+    [
+      "drop",
+      "_ping",
+      "_ped",
+      "_s",
+      "_per"
+    ],
+    [
+      "head",
+      "_ing",
+      "_ed",
+      "_s",
+      "_er"
+    ],
+    [
+      "log",
+      "_ging",
+      "_ged",
+      "_s",
+      "_ger"
+    ],
+    [
+      "rub",
+      "_bing",
+      "_bed",
+      "_s",
+      "_ber"
+    ],
+    [
+      "smash",
+      "_ing",
+      "_ed",
+      "_es",
+      "_er"
+    ],
+    [
+      "add",
+      "_ing",
+      "_ed",
       "_s",
       "_er"
     ],
@@ -1806,6 +1848,7 @@ var adjectives = (function() {
 })()
 
 //common terms that are multi-word, but one part-of-speech
+//these should not include phrasal verbs, like 'looked out'. These are handled elsewhere.
 var multiples = (function() {
 
   var main = {
@@ -4390,6 +4433,12 @@ var parts_of_speech = (function() {
       "tense": "present",
       "tag": "VBP"
     },
+    "VBF": {
+      "name": "future-tense verb",
+      "parent": "verb",
+      "tense": "future",
+      "tag": "VBF"
+    },
     "VBZ": {
       "name": "present-tense verb",
       "tense": "present",
@@ -6490,16 +6539,19 @@ var verb_rules = {
 //unpack compressed form
 verb_rules=Object.keys(verb_rules).reduce(function(h,k){
   h[k]=verb_rules[k].map(function(a){
-    return{
+    var obj={
       reg:new RegExp(a[0],"i"),
       repl:{
         infinitive:a[1]["in"],
         present:a[1]["pr"],
         past:a[1]["pa"],
-        doer:a[1]["do"],
-        gerund:a[1]["g"],
+        gerund:a[1]["g"]
       }
     }
+    if(a[1]["do"]){
+      obj.repl.doer=a[1]["do"]
+    }
+    return obj
   })
   return h
 },{})
@@ -6576,6 +6628,7 @@ var verb_to_doer = (function() {
 
 // console.log(verb_to_doer('set'))
 // console.log(verb_to_doer('sweep'))
+// console.log(verb_to_doer('watch'))
 
 //turn a verb into its other grammatical forms.
 var verb_conjugate = (function() {
@@ -6762,6 +6815,21 @@ var verb_conjugate = (function() {
     if (!w) {
       return {}
     }
+    //for phrasal verbs ('look out'), conjugate look, then append 'out'
+    var phrasal_reg=new RegExp("^(.*?) (in|out|on|off|behind|way|with|of|do|away|across|ahead|back|over|under|together|apart|up|upon|aback|down|about|before|after|around|to|forth|round|through|along|onto)$",'i')
+    if(w.match(phrasal_reg)){
+      var split=w.match(phrasal_reg,'')
+      var verb=split[1]
+      var particle=split[2]
+      var result=main(verb)//recursive
+      delete result["doer"]
+      Object.keys(result).forEach(function(k){
+        if(result[k]){
+          result[k]+=" "+particle
+        }
+      })
+      return result
+    }
     //chop it if it's future-tense
     w = w.replace(/^will /i, '')
     //un-prefix the verb, and add it in later
@@ -6811,6 +6879,9 @@ var verb_conjugate = (function() {
 // console.log(verb_conjugate("swing"))
 // console.log(verb_conjugate("walking"))
 // console.log(verb_conjugate("overtook"))
+// console.log(verb_conjugate("watch out"))
+// console.log(verb_conjugate("watch"))
+// console.log(verb_conjugate("smash"))
 
 //wrapper for verb's methods
 var Verb = function(str, next, last, token) {
@@ -7411,6 +7482,125 @@ var parents = {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = parents;
 }
+
+//phrasal verbs are two words that really mean one verb.
+//'beef up' is one verb, and not some direction of beefing.
+//by @spencermountain, 2015 mit
+//many credits to http://www.allmyphrasalverbs.com/
+var phrasal_verbs = (function () {
+
+  if (typeof module !== "undefined" && module.exports) {
+    verb_conjugate = require("../../parents/verb/conjugate/conjugate")
+  }
+  //start the list with some randoms
+  var main = [
+    "be onto",
+    "fall behind",
+    "fall through",
+    "fool with",
+    "get across",
+    "get along",
+    "get at",
+    "give way",
+    "hear from",
+    "hear of",
+    "lash into",
+    "make do",
+    "run across",
+    "set upon",
+    "take aback",
+    "keep from"
+  ]
+
+  //if there's a phrasal verb "keep on", there's often a "keep off"
+  var opposites = {
+    "away": "back",
+    "in": "out",
+    "on": "off",
+    "over": "under",
+    "together": "apart",
+    "up": "down"
+  }
+
+  //forms that have in/out symmetry
+  var symmetric = {
+    "away": "blow,bounce,bring,call,come,cut,drop,fire,get,give,go,keep,pass,put,run,send,shoot,switch,take,tie,throw",
+    "in": "bang,barge,bash,beat,block,book,box,break,bring,burn,butt,carve,cash,check,come,cross,cut,drop,fall,fence,fill,give,grow,hand,hang,head,jack,keep,leave,let,lock,log,move,opt,pack,peel,pull,put,rain,reach,ring,rub,send,set,settle,shut,sign,sing,sit,smash,snow,stand,strike,take,try,turn,type,warm,wave,wean,wear,wheel,work",
+    "on": "add,call,carry,catch,count,feed,get,give,go,grind,head,hold,keep,lay,log,pass,pop,power,put,send,show,snap,switch,take,tell,try,turn,wait",
+    "over": "come,go,look,read,run,talk",
+    "together": "come,pull,put",
+    "up": "add,back,beat,bend,blow,boil,bottle,break,bring,buckle,bundle,call,carve,clean,cut,dress,fill,flag,fold,get,give,grind,grow,hang,hold,keep,let,load,lock,look,man,mark,melt,move,pack,pin,pipe,plump,pop,power,pull,put,rub,scale,scrape,send,set,settle,shake,show,sit,slow,smash,square,stand,strike,take,tear,tie,turn,use,wash,wind",
+  }
+  Object.keys(symmetric).forEach(function (k) {
+    symmetric[k].split(',').forEach(function (s) {
+      //add the given form
+      main.push(s + " " + k)
+      //add its opposite form
+      main.push(s + " " + opposites[k])
+    })
+  })
+
+  //forms that don't have in/out symmetry
+  var asymmetric = {
+    "about": "bring,fool,gad,go,root",
+    "after": "go,look,take",
+    "ahead": "get,go,press",
+    "along": "bring,move",
+    "apart": "fall,take",
+    "around": "ask,boss,bring,call,come,fool,get,horse,joke,lie,mess,play",
+    "away": "back,carry,file,frighten,hide,wash",
+    "back": "fall,fight,hit,hold,look,pay,stand,think",
+    "by": "drop,get,go,stop,swear,swing,tick,zip",
+    "down": "bog,calm,fall,hand,hunker,jot,knock,lie,narrow,note,pat,pour,run,tone,trickle,wear",
+    "for": "fend,file,gun,hanker,root,shoot",
+    "forth": "bring,come",
+    "forward": "come,look",
+    "in": "cave,chip,hone,jump,key,pencil,plug,rein,shade,sleep,stop,suck,tie,trade,tuck,usher,weigh,zero",
+    "into": "look,run",
+    "it": "go,have",
+    "off": "auction,be,beat,blast,block,brush,burn,buzz,cast,cool,drop,end,face,fall,fend,frighten,goof,jack,kick,knock,laugh,level,live,make,mouth,nod,pair,pay,peel,read,reel,ring,rip,round,sail,shave,shoot,sleep,slice,split,square,stave,stop,storm,strike,tear,tee,tick,tip,top,walk,work,write",
+    "on": "bank,bargain,egg,frown,hit,latch,pile,prattle,press,spring,spur,tack,urge,yammer",
+    "out": "act,ask,back,bail,bear,black,blank,bleed,blow,blurt,branch,buy,cancel,eat,edge,farm,figure,find,fill,find,fish,fizzle,flake,flame,flare,flesh,flip,geek,get,help,hide,hold,iron,knock,lash,level,listen,lose,luck,make,max,miss,nerd,pan,pass,pick,pig,point,print,psych,rat,read,rent,root,rule,run,scout,see,sell,shout,single,smoke,sort,spell,splash,stamp,start,storm,straighten,suss,time,tire,top,trip,trot,wash,watch,weird,whip,wimp,wipe,zone,zonk",
+    "over": "bend,bubble,do,fall,get,gloss,hold,keel,mull,pore,sleep,spill,think,tide,tip",
+    "round": "get,go",
+    "through": "go,run",
+    "to": "come,keep,see",
+    "up": "act,beef,board,bone,boot,brighten,build,buy,catch,cheer,cook,end,eye,face,fatten,feel,fess,finish,fire,firm,flame,flare,free,freeze,freshen,fry,fuel,gang,gear,goof,hack,ham,heat,hit,hole,hush,jazz,juice,lap,light,lighten,line,link,listen,live,loosen,make,mash,measure,mess,mix,mock,mop,muddle,open,own,pair,patch,pick,prop,psych,read,rough,rustle,save,shack,sign,size,slice,slip,snap,sober,spark,split,spruce,stack,start,stay,stir,stitch,straighten,string,suck,suit,sum,team,tee,think,tidy,tighten,toss,trade,trip,type,vacuum,wait,wake,warm,weigh,whip,wire,wise,word,write,zip",
+  }
+  Object.keys(asymmetric).forEach(function (k) {
+    asymmetric[k].split(',').forEach(function (s) {
+      main.push(s + " " + k)
+    })
+  })
+
+  //at his point all verbs are infinitive. lets make this explicit.
+  main=main.reduce(function(h,s){
+    h[s]="VBP"
+    return h
+  },{})
+
+  //conjugate every phrasal verb.
+  var tags={
+    present:"VB",
+    past:"VBD",
+    future:"VBF",
+    gerund:"VBG",
+    infinitive:"VBP",
+  }
+  Object.keys(main).forEach(function(s){
+    var result=verb_conjugate(s)
+    Object.keys(result).forEach(function(k){
+      main[result[k]]=tags[k]
+    })
+  })
+
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+
+  return main
+})()
+// console.log(JSON.stringify(phrasal_verbs, null, 2))
 
 //the lexicon is a large hash of words and their predicted part-of-speech.
 // it plays a bootstrap-role in pos tagging in this library.
@@ -8343,8 +8533,7 @@ var pos = (function() {
 
   //combine adjacent neighbours, and special cases
   var combine_tags = function(sentence) {
-    var arr = sentence.tokens
-    var better = []
+    var arr = sentence.tokens || []
     for (var i = 0; i <= arr.length; i++) {
       var next = arr[i + 1]
 
@@ -8398,13 +8587,65 @@ var pos = (function() {
           arr[i + 2] = null
         }
       }
-      better.push(arr[i])
     }
-    sentence.tokens = better.filter(function(r) {
+    sentence.tokens = arr.filter(function(r) {
       return r
     })
     return sentence
   }
+
+
+  //some prepositions are clumped onto the back of a verb "looked for", "looks at"
+  //they should be combined with the verb, sometimes.
+  //does not handle seperated phrasal verbs ('take the coat off' -> 'take off')
+  var combine_phrasal_verbs = function(sentence) {
+    var phrasals = {
+      "after": true,
+      "back": true,
+      "down": true,
+      "for": true,
+      "in": true,
+      "out": true,
+      "over": true,
+      "up": true
+    }
+    var blacklist = {
+      "lives in": true,
+      "": true,
+      "": true,
+      "": true,
+    }
+    var arr = sentence.tokens || []
+    for (var i = 0; i <= arr.length; i++) {
+      var last = arr[i - 1]
+      var next = arr[i + 1]
+      if (arr[i] && phrasals[arr[i].normalised] && last && last.pos.parent == "verb") {
+        //make sure you dont combine false ones
+        if (next) {
+          //blacklist
+          if(blacklist[last.normalised + " " + arr[i].normalised]){
+            continue
+          }
+          //teaching in 1992
+          if (next.pos.tag == "CD") {
+            continue
+          }
+          //walking in the dust
+          // if (next && next.normalised == "the") {
+          //   continue
+          // }
+        }
+        //ok, merge them.
+        arr[i - 1] = merge_tokens(arr[i - 1], arr[i])
+        arr[i] = null
+      }
+    }
+    sentence.tokens = arr.filter(function(r) {
+      return r
+    })
+    return sentence
+  }
+
 
   var lexicon_pass = function(w) {
     if (lexicon.hasOwnProperty(w)) {
@@ -8724,6 +8965,9 @@ var pos = (function() {
       sentences = sentences.map(function(s) {
         return combine_tags(s)
       })
+      sentences= sentences.map(function(s){
+        return combine_phrasal_verbs(s)
+      })
     }
 
     //add analysis on each token
@@ -8773,6 +9017,7 @@ var pos = (function() {
 // pos("the Phantom of the Opera").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("Tony Hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("tony hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
+// console.log(pos("look after a kid").sentences[0].tags())
 
 //just a wrapper for text -> entities
 //most of this logic is in ./parents/noun

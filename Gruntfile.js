@@ -48,6 +48,7 @@ module.exports = function(grunt) {
     './src/parents/adjective/conjugate/to_adverb.js',
     './src/parents/adjective/index.js',
     './src/parents/parents.js',
+    './src/data/lexicon/phrasal_verbs.js',
     './src/data/lexicon.js',
     './src/sentence.js',
     './src/section.js',

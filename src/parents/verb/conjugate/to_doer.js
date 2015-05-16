@@ -65,3 +65,4 @@ var verb_to_doer = (function() {
 
 // console.log(verb_to_doer('set'))
 // console.log(verb_to_doer('sweep'))
+// console.log(verb_to_doer('watch'))

@@ -28,8 +28,7 @@ var pos = (function() {
 
   //combine adjacent neighbours, and special cases
   var combine_tags = function(sentence) {
-    var arr = sentence.tokens
-    var better = []
+    var arr = sentence.tokens || []
     for (var i = 0; i <= arr.length; i++) {
       var next = arr[i + 1]
 
@@ -83,13 +82,65 @@ var pos = (function() {
           arr[i + 2] = null
         }
       }
-      better.push(arr[i])
     }
-    sentence.tokens = better.filter(function(r) {
+    sentence.tokens = arr.filter(function(r) {
       return r
     })
     return sentence
   }
+
+
+  //some prepositions are clumped onto the back of a verb "looked for", "looks at"
+  //they should be combined with the verb, sometimes.
+  //does not handle seperated phrasal verbs ('take the coat off' -> 'take off')
+  var combine_phrasal_verbs = function(sentence) {
+    var phrasals = {
+      "after": true,
+      "back": true,
+      "down": true,
+      "for": true,
+      "in": true,
+      "out": true,
+      "over": true,
+      "up": true
+    }
+    var blacklist = {
+      "lives in": true,
+      "": true,
+      "": true,
+      "": true,
+    }
+    var arr = sentence.tokens || []
+    for (var i = 0; i <= arr.length; i++) {
+      var last = arr[i - 1]
+      var next = arr[i + 1]
+      if (arr[i] && phrasals[arr[i].normalised] && last && last.pos.parent == "verb") {
+        //make sure you dont combine false ones
+        if (next) {
+          //blacklist
+          if(blacklist[last.normalised + " " + arr[i].normalised]){
+            continue
+          }
+          //teaching in 1992
+          if (next.pos.tag == "CD") {
+            continue
+          }
+          //walking in the dust
+          // if (next && next.normalised == "the") {
+          //   continue
+          // }
+        }
+        //ok, merge them.
+        arr[i - 1] = merge_tokens(arr[i - 1], arr[i])
+        arr[i] = null
+      }
+    }
+    sentence.tokens = arr.filter(function(r) {
+      return r
+    })
+    return sentence
+  }
+
 
   var lexicon_pass = function(w) {
     if (lexicon.hasOwnProperty(w)) {
@@ -409,6 +460,9 @@ var pos = (function() {
       sentences = sentences.map(function(s) {
         return combine_tags(s)
       })
+      sentences= sentences.map(function(s){
+        return combine_phrasal_verbs(s)
+      })
     }
 
     //add analysis on each token
@@ -458,3 +512,4 @@ var pos = (function() {
 // pos("the Phantom of the Opera").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("Tony Hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // pos("tony hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
+// console.log(pos("look after a kid").sentences[0].tags())

@@ -1,9 +1,12 @@
 //phrasal verbs are two words that really mean one verb.
-//'beef up' is one verb, not some ungodly direction of beefing.
+//'beef up' is one verb, and not some direction of beefing.
 //by @spencermountain, 2015 mit
 //many credits to http://www.allmyphrasalverbs.com/
 var phrasal_verbs = (function () {
 
+  if (typeof module !== "undefined" && module.exports) {
+    verb_conjugate = require("../../parents/verb/conjugate/conjugate")
+  }
   //start the list with some randoms
   var main = [
     "be onto",
@@ -20,7 +23,7 @@ var phrasal_verbs = (function () {
     "make do",
     "run across",
     "set upon",
-    "taken aback",
+    "take aback",
     "keep from"
   ]
 
@@ -72,8 +75,7 @@ var phrasal_verbs = (function () {
     "it": "go,have",
     "off": "auction,be,beat,blast,block,brush,burn,buzz,cast,cool,drop,end,face,fall,fend,frighten,goof,jack,kick,knock,laugh,level,live,make,mouth,nod,pair,pay,peel,read,reel,ring,rip,round,sail,shave,shoot,sleep,slice,split,square,stave,stop,storm,strike,tear,tee,tick,tip,top,walk,work,write",
     "on": "bank,bargain,egg,frown,hit,latch,pile,prattle,press,spring,spur,tack,urge,yammer",
-    "out": "act,ask,back,bail,bear,black,blank,bleed,blow,blurt,branch,buy,cancel,edge,farm,figure,find,fish,fizzle,flake,flame,flare,flesh,flip,geek,get,help,hide,hold,iron,knock,lash,level,listen,lose,luck,max,miss,nerd,pan,pick,pig,point,print,psych,rat,read,rent,root,rule,run,scout,see,sell,shout,single,smoke,sort,spell,splash,stamp,start,storm,straighten,suss,time,tire,top,trip,trot,wash,watch,weird,whip,wimp,wipe,zone,zonk",
-    "out,": "eat,fill,find,make,pass,pick,point",
+    "out": "act,ask,back,bail,bear,black,blank,bleed,blow,blurt,branch,buy,cancel,eat,edge,farm,figure,find,fill,find,fish,fizzle,flake,flame,flare,flesh,flip,geek,get,help,hide,hold,iron,knock,lash,level,listen,lose,luck,make,max,miss,nerd,pan,pass,pick,pig,point,print,psych,rat,read,rent,root,rule,run,scout,see,sell,shout,single,smoke,sort,spell,splash,stamp,start,storm,straighten,suss,time,tire,top,trip,trot,wash,watch,weird,whip,wimp,wipe,zone,zonk",
     "over": "bend,bubble,do,fall,get,gloss,hold,keel,mull,pore,sleep,spill,think,tide,tip",
     "round": "get,go",
     "through": "go,run",
@@ -83,6 +85,27 @@ var phrasal_verbs = (function () {
   Object.keys(asymmetric).forEach(function (k) {
     asymmetric[k].split(',').forEach(function (s) {
       main.push(s + " " + k)
+    })
+  })
+
+  //at his point all verbs are infinitive. lets make this explicit.
+  main=main.reduce(function(h,s){
+    h[s]="VBP"
+    return h
+  },{})
+
+  //conjugate every phrasal verb.
+  var tags={
+    present:"VB",
+    past:"VBD",
+    future:"VBF",
+    gerund:"VBG",
+    infinitive:"VBP",
+  }
+  Object.keys(main).forEach(function(s){
+    var result=verb_conjugate(s)
+    Object.keys(result).forEach(function(k){
+      main[result[k]]=tags[k]
     })
   })
 

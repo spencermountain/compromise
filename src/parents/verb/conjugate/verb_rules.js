@@ -429,16 +429,19 @@ var verb_rules = {
 //unpack compressed form
 verb_rules=Object.keys(verb_rules).reduce(function(h,k){
   h[k]=verb_rules[k].map(function(a){
-    return{
+    var obj={
       reg:new RegExp(a[0],"i"),
       repl:{
         infinitive:a[1]["in"],
         present:a[1]["pr"],
         past:a[1]["pa"],
-        doer:a[1]["do"],
-        gerund:a[1]["g"],
+        gerund:a[1]["g"]
       }
     }
+    if(a[1]["do"]){
+      obj.repl.doer=a[1]["do"]
+    }
+    return obj
   })
   return h
 },{})

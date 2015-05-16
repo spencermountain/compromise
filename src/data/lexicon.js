@@ -17,6 +17,7 @@ var lexicon = (function() {
       verb_conjugate = require("../parents/verb/conjugate/conjugate")
       verb_to_doer = require("../parents/verb/conjugate/to_doer")
       verb_irregulars = require("../parents/verb/conjugate/verb_irregulars")
+      phrasal_verbs = require("./lexicon/phrasal_verbs")
 
       adjectives = require("./lexicon/adjectives")
       adj_to_adv = require("../parents/adjective/conjugate/to_adverb")
@@ -446,9 +447,14 @@ var lexicon = (function() {
       main[k] = multiples[k]
     })
 
+    //add phrasal verbs
+    Object.keys(phrasal_verbs).forEach(function(k) {
+      main[k] = phrasal_verbs[k]
+    })
+
     //add verbs
     //conjugate all verbs. takes ~8ms. triples the lexicon size.
-    var c, i;
+    var c;
     l = verbs.length;
     for (i = 0; i < l; i++) {
       //add conjugations
@@ -532,6 +538,7 @@ var lexicon = (function() {
   // console.log(lexicon["says"]==="VBZ")
   // console.log(lexicon["sounds"]==="VBZ")
   // console.log(lexicon["means"]==="VBZ")
+  // console.log(lexicon["look after"]==="VBP")
 
 // console.log(Object.keys(lexicon).length)
 // console.log(lexicon['prettier']=="JJR")

@@ -63,12 +63,12 @@ exports["phrasal verbs"] = function(test) {
   // test.deepEqual(pos("The bomb blew up").tags(), [["DT","NN", "VBP"]]) //issue
   test.deepEqual(nlp.pos("The pen blew up").tags(), [["DT","NN", "VBD"]])
   // test.deepEqual(pos("The clown blew up the balloon").tags(), [["DT","NN","VBP","DT","NN"]])
-  test.deepEqual(pos("he turns on the tv").tags(), [["PRP","VBZ","DT","NN"]])
-  test.deepEqual(pos("they take off the spandex").tags(), [["PRP","VBP","DT","NN"]])
-  test.deepEqual(pos("he would look after it").tags(), [["PRP","MD","VBP","PRP"]])
-  test.deepEqual(pos("he looks after it").tags(), [["PRP","VBZ","PRP"]])
-  test.deepEqual(pos("he looked after it").tags(), [["PRP","VBD","PRP"]])
-  test.deepEqual(pos("john puts down the book").tags(), [["NNP","VBZ","DT","NN"]])
+  test.deepEqual(nlp.pos("he turns on the tv").tags(), [["PRP","VBZ","DT","NN"]])
+  test.deepEqual(nlp.pos("they take off the spandex").tags(), [["PRP","VBP","DT","NN"]])
+  test.deepEqual(nlp.pos("he would look after it").tags(), [["PRP","MD","VBP","PRP"]])
+  test.deepEqual(nlp.pos("he looks after it").tags(), [["PRP","VBZ","PRP"]])
+  test.deepEqual(nlp.pos("he looked after it").tags(), [["PRP","VBD","PRP"]])
+  test.deepEqual(nlp.pos("john puts down the book").tags(), [["NNP","VBZ","DT","NN"]])
 
 
   test.done()

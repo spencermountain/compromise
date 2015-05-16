@@ -2,6 +2,7 @@
 // most files are self-contained modules that optionally export for nodejs
 // this file loads them all together
 // if we're server-side, grab files, otherwise assume they're prepended already
+// console.time('nlp_boot')
 if (typeof module !== "undefined" && module.exports) {
 
   var parents = require("./src/parents/parents")
@@ -41,13 +42,13 @@ var nlp = {
   denormalize: normalize.denormalize,
   pos: pos,
   spot: spot
-  // tests: tests,
 }
 
 //export it for server-side
 if (typeof module !== "undefined" && module.exports) {
   module.exports = nlp;
 }
+// console.timeEnd('nlp_boot')
 // console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
 // console.log( nlp.pos('i will slouch'));
 // console.log( nlp.pos('Sally Davidson sells seashells by the seashore. Joe Biden said so.').people() )

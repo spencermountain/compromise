@@ -174,8 +174,9 @@ var Noun = function(str, next, last, token) {
     //see if noun has a first-name
     var names = Object.keys(firstnames)
     l = names.length
+    var firstname=the.word.split(' ')[0].toLowerCase()
     for (i = 0; i < l; i++) {
-      if (the.word.match(new RegExp("^" + names[i] + "\\b", 'i'))) {
+      if (names[i]===firstname) {
         return true
       }
     }
@@ -228,4 +229,6 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log(new Noun('farmhouse').is_entity)
 // console.log(new Noun("FBI").is_acronym)
 // console.log(new Noun("Tony Danza").is_person())
+// console.time('h')
 // console.log(new Noun("Tonys h. Danza").is_person())
+// console.timeEnd('h')

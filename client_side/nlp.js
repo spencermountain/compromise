@@ -5965,8 +5965,9 @@ var Noun = function(str, next, last, token) {
     //see if noun has a first-name
     var names = Object.keys(firstnames)
     l = names.length
+    var firstname=the.word.split(' ')[0].toLowerCase()
     for (i = 0; i < l; i++) {
-      if (the.word.match(new RegExp("^" + names[i] + "\\b", 'i'))) {
+      if (names[i]===firstname) {
         return true
       }
     }
@@ -6019,7 +6020,9 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log(new Noun('farmhouse').is_entity)
 // console.log(new Noun("FBI").is_acronym)
 // console.log(new Noun("Tony Danza").is_person())
+// console.time('h')
 // console.log(new Noun("Tonys h. Danza").is_person())
+// console.timeEnd('h')
 
 //turns 'quickly' into 'quick'
 var to_adjective = (function() {
@@ -6122,6 +6125,112 @@ if (typeof module !== "undefined" && module.exports) {
 
 // console.log(new Adverb("suddenly").conjugate())
 // console.log(adverbs.conjugate('powerfully'))
+
+    //generated from test data
+ var suffix_rules = (function() {
+
+    var compact = {
+      "gerund":[
+        "ing"
+      ],
+      "infinitive":[
+        "ate",
+        "ize",
+        "tion",
+        "rify",
+        "ress",
+        "ify",
+        "age",
+        "nce",
+        "ect",
+        "ise",
+        "ine",
+        "ish",
+        "ace",
+        "ash",
+        "ure",
+        "tch",
+        "end",
+        "ack",
+        "and",
+        "ute",
+        "ade",
+        "ock",
+        "ite",
+        "ase",
+        "ose",
+        "use",
+        "ive",
+        "int",
+        "nge",
+        "lay",
+        "est",
+        "ain",
+        "ant",
+        "eed",
+        "er",
+        "le"
+      ],
+      "past":[
+        "ed",
+        "lt",
+        "nt",
+        "pt",
+        "ew",
+        "ld"
+      ],
+      "present":[
+        "rks",
+        "cks",
+        "nks",
+        "ngs",
+        "mps",
+        "tes",
+        "zes",
+        "ers",
+        "les",
+        "acks",
+        "ends",
+        "ands",
+        "ocks",
+        "lays",
+        "eads",
+        "lls",
+        "els",
+        "ils",
+        "ows",
+        "nds",
+        "ays",
+        "ams",
+        "ars",
+        "ops",
+        "ffs",
+        "als",
+        "urs",
+        "lds",
+        "ews",
+        "ips",
+        "es",
+        "ts",
+        "ns",
+        "s"
+        ]
+    }
+    var suffix_rules = {}
+    var keys = Object.keys(compact)
+    var l = keys.length;
+    var l2, i;
+    for (i = 0; i < l; i++) {
+      l2 = compact[keys[i]].length
+      for (var o = 0; o < l2; o++) {
+        suffix_rules[compact[keys[i]][o]] = keys[i]
+      }
+    }
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = suffix_rules;
+  }
+  return suffix_rules;
+})();
 
 // regex rules for each part of speech that convert it to all other parts of speech.
 // used in combination with the generic 'fallback' method
@@ -6652,114 +6761,16 @@ var verb_conjugate = (function() {
     verb_to_doer = require("./to_doer")
     verb_irregulars = require("./verb_irregulars")
     verb_rules = require("./verb_rules")
+    suffix_rules = require("./suffix_rules")
   }
 
   //this method is the slowest in the whole library, basically TODO:whaaa
   var predict = function(w) {
-    //generated from test data
-    var compact = {
-      "gerund":[
-        "ing"
-      ],
-      "infinitive":[
-        "ate",
-        "ize",
-        "tion",
-        "rify",
-        "ress",
-        "ify",
-        "age",
-        "nce",
-        "ect",
-        "ise",
-        "ine",
-        "ish",
-        "ace",
-        "ash",
-        "ure",
-        "tch",
-        "end",
-        "ack",
-        "and",
-        "ute",
-        "ade",
-        "ock",
-        "ite",
-        "ase",
-        "ose",
-        "use",
-        "ive",
-        "int",
-        "nge",
-        "lay",
-        "est",
-        "ain",
-        "ant",
-        "eed",
-        "er",
-        "le"
-      ],
-      "past":[
-        "ed",
-        "lt",
-        "nt",
-        "pt",
-        "ew",
-        "ld"
-      ],
-      "present":[
-        "rks",
-        "cks",
-        "nks",
-        "ngs",
-        "mps",
-        "tes",
-        "zes",
-        "ers",
-        "les",
-        "acks",
-        "ends",
-        "ands",
-        "ocks",
-        "lays",
-        "eads",
-        "lls",
-        "els",
-        "ils",
-        "ows",
-        "nds",
-        "ays",
-        "ams",
-        "ars",
-        "ops",
-        "ffs",
-        "als",
-        "urs",
-        "lds",
-        "ews",
-        "ips",
-        "es",
-        "ts",
-        "ns",
-        "s"
-        ]
-    }
-    var suffix_rules = {}
-    var keys = Object.keys(compact)
-    var l = keys.length;
-    var l2;
-    for (var i = 0; i < l; i++) {
-      l2 = compact[keys[i]].length
-      for (var o = 0; o < l2; o++) {
-        suffix_rules[compact[keys[i]][o]] = keys[i]
-      }
-    }
-
     var endsWith = function(str, suffix) {
       return str.indexOf(suffix, str.length - suffix.length) !== -1;
     }
     var arr = Object.keys(suffix_rules);
-    for (var i = 0; i < arr.length; i++) {
+    for (i = 0; i < arr.length; i++) {
       if (endsWith(w, arr[i])) {
         return suffix_rules[arr[i]]
       }
@@ -6828,6 +6839,18 @@ var verb_conjugate = (function() {
     if (!obj.future) {
       obj.future = "will " + obj.infinitive
     }
+    //perfect is 'have'+past-tense
+    if (!obj.perfect) {
+      obj.perfect = "have " + obj.past
+    }
+    //pluperfect is 'had'+past-tense
+    if (!obj.pluperfect) {
+      obj.pluperfect = "had " + obj.past
+    }
+    //future perfect is 'will have'+past-tense
+    if (!obj.future_perfect) {
+      obj.future_perfect = "will have " + obj.past
+    }
     return obj
   }
 
@@ -6840,9 +6863,9 @@ var verb_conjugate = (function() {
     var phrasal_reg=new RegExp("^(.*?) (in|out|on|off|behind|way|with|of|do|away|across|ahead|back|over|under|together|apart|up|upon|aback|down|about|before|after|around|to|forth|round|through|along|onto)$",'i')
     if(w.match(' ') && w.match(phrasal_reg)){
       var split=w.match(phrasal_reg,'')
-      var verb=split[1]
+      var phrasal_verb=split[1]
       var particle=split[2]
-      var result=main(verb)//recursive
+      var result=main(phrasal_verb)//recursive
       delete result["doer"]
       Object.keys(result).forEach(function(k){
         if(result[k]){
@@ -6851,6 +6874,21 @@ var verb_conjugate = (function() {
       })
       return result
     }
+
+    //for pluperfect ('had tried') remove 'had' and call it past-tense
+    if(w.match(/^had [a-z]/i)){
+      w=w.replace(/^had /i,'')
+    }
+    //for perfect ('have tried') remove 'have' and call it past-tense
+    if(w.match(/^have [a-z]/i)){
+      w=w.replace(/^have /i,'')
+    }
+
+    //for future perfect ('will have tried') remove 'will have' and call it past-tense
+    if(w.match(/^will have [a-z]/i)){
+      w=w.replace(/^will have /i,'')
+    }
+
     //chop it if it's future-tense
     w = w.replace(/^will /i, '')
     //un-prefix the verb, and add it in later
@@ -6912,6 +6950,8 @@ var verb_conjugate = (function() {
 // console.log(verb_conjugate("spred"))
 // console.log(verb_conjugate("bog"))
 // console.log(verb_conjugate("nod"))
+// console.log(verb_conjugate("had tried"))
+// console.log(verb_conjugate("have tried"))
 
 //wrapper for verb's methods
 var Verb = function(str, next, last, token) {
@@ -9041,7 +9081,7 @@ var pos = (function() {
 // pos("tony hawk is nice").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text)})
 // console.log(pos("look after a kid").sentences[0].tags())
 // pos("Sather tried to stop the deal, but when he found out that Gretzky").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
-
+// pos("Gretzky had tried skating").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
 
 
 //just a wrapper for text -> entities
@@ -9091,6 +9131,7 @@ var spot = (function() {
 // most files are self-contained modules that optionally export for nodejs
 // this file loads them all together
 // if we're server-side, grab files, otherwise assume they're prepended already
+// console.time('nlp_boot')
 if (typeof module !== "undefined" && module.exports) {
 
   var parents = require("./src/parents/parents")
@@ -9130,13 +9171,13 @@ var nlp = {
   denormalize: normalize.denormalize,
   pos: pos,
   spot: spot
-  // tests: tests,
 }
 
 //export it for server-side
 if (typeof module !== "undefined" && module.exports) {
   module.exports = nlp;
 }
+// console.timeEnd('nlp_boot')
 // console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
 // console.log( nlp.pos('i will slouch'));
 // console.log( nlp.pos('Sally Davidson sells seashells by the seashore. Joe Biden said so.').people() )

@@ -1,5 +1,7 @@
-//1200 common first-names.
+// common first-names in compressed form.
+//from http://www.ssa.gov/oact/babynames/limits.html
 //not sure what regional/cultural/demographic bias this has. Probably a lot.
+// 73% of people are represented in the top 1000 names
 //used to reduce redundant named-entities in longer text. (don't spot the same person twice.)
 var firstnames = (function() {
 
@@ -163,9 +165,49 @@ var firstnames = (function() {
     })
   }
 
+  var ambiguous_gender={
+    casey: true,
+    jamie: true,
+    lee: true,
+    jaime: true,
+    jessie: true,
+    morgan: true,
+    rene: true,
+    robin: true,
+    devon: true,
+    kerry: true,
+    alexis: true,
+    guadalupe: true,
+    blair: true,
+    kasey: true,
+    jean: true,
+    marion: true,
+    aubrey: true,
+    shelby: true,
+    jan: true,
+    shea: true,
+    jade: true,
+    kenyatta: true,
+    kelsey: true,
+    shay: true,
+    lashawn: true,
+    trinity: true,
+    regan: true,
+    jammie: true,
+    cassidy: true,
+    cheyenne: true,
+    reagan: true,
+    shiloh: true,
+    marlo: true,
+    andra: true,
+    devan: true,
+    rosario: true
+  }
+
+
   if (typeof module !== "undefined" && module.exports) {
     module.exports = main;
   }
   return main
 })()
-// console.log(JSON.stringify(firstnames, null, 2));
+// console.log(JSON.stringify(Object.keys(firstnames).length, null, 2));

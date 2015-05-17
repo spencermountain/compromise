@@ -74,16 +74,15 @@ var Verb = function(str, next, last, token) {
     }
   })()
 
-  //past/present/future
+  //past/present/future   //wahh?!
   the.tense = (function() {
     if (the.word.match(/\bwill\b/)) {
       return "future"
     }
-    var form = the.form
-    if (form === "present") {
+    if (the.form === "present") {
       return "present"
     }
-    if (form === "past") {
+    if (the.form === "past") {
       return "past"
     }
     return "present"
@@ -102,7 +101,7 @@ var Verb = function(str, next, last, token) {
   })()
 
   //is this verb negative already?
-  the.negative = (function() {
+  the.negative = function() {
     if (the.word.match(/n't$/)) {
       return true
     }
@@ -110,7 +109,7 @@ var Verb = function(str, next, last, token) {
       return true
     }
     return false
-  })()
+  }
 
   return the;
 }

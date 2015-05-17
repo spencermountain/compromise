@@ -108,7 +108,7 @@ var Sentence = function(tokens) {
       // find the first verb..
       if (tok.pos.parent == "verb") {
         // if verb is already negative, make it not negative
-        if (tok.analysis.negative) {
+        if (tok.analysis.negative()) {
           if (the.tokens[i + 1] && the.tokens[i + 1].normalised == "not") {
             the.tokens.splice(i + 1, 1)
           }

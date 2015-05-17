@@ -17,11 +17,10 @@ var date_extractor = (function() {
     reg: String(months) + " " + String(days) + "-" + String(days) + " " + String(years),
     example: "March 7th-11th 1987",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 1,
         day: 2,
         to_day: 3,
@@ -30,14 +29,13 @@ var date_extractor = (function() {
       return to_obj(arr, places);
     }
   }, {
-    reg: String(days) + " of " + String(months) + " to " + String(days) + " of " + String(months) + ",? " + String(years),
+    reg: String(days) + " of " + String(months) + " to " + String(days) + " of " + String(months) + " " + String(years),
     example: "28th of September to 5th of October 2008",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         day: 1,
         month: 2,
         to_day: 3,
@@ -50,11 +48,10 @@ var date_extractor = (function() {
     reg: String(months) + " " + String(days) + " to " + String(months) + " " + String(days) + " " + String(years),
     example: "March 7th to june 11th 1987",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 1,
         day: 2,
         to_month: 3,
@@ -68,11 +65,10 @@ var date_extractor = (function() {
     reg: "between " + String(days) + " " + String(months) + " and " + String(days) + " " + String(months) + " " + String(years),
     example: "between 13 February and 15 February 1945",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         day: 1,
         month: 2,
         to_day: 3,
@@ -86,11 +82,10 @@ var date_extractor = (function() {
     reg: "between " + String(months) + " " + String(days) + " and " + String(months) + " " + String(days) + " " + String(years),
     example: "between March 7th and june 11th 1987",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 1,
         day: 2,
         to_month: 3,
@@ -104,11 +99,10 @@ var date_extractor = (function() {
     reg: String(months) + " " + String(days) + " " + String(years),
     example: "March 1st 1987",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 1,
         day: 2,
         year: 3
@@ -116,14 +110,13 @@ var date_extractor = (function() {
       return to_obj(arr, places);
     }
   }, {
-    reg: String(days) + " - " + String(days) + " of " + String(months) + ",? " + String(years),
+    reg: String(days) + " - " + String(days) + " of " + String(months) + " " + String(years),
     example: "3rd - 5th of March 1969",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         day: 1,
         to_day: 2,
         month: 3,
@@ -132,14 +125,13 @@ var date_extractor = (function() {
       return to_obj(arr, places);
     }
   }, {
-    reg: String(days) + " of " + String(months) + ",? " + String(years),
+    reg: String(days) + " of " + String(months) + " " + String(years),
     example: "3rd of March 1969",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         day: 1,
         month: 2,
         year: 3
@@ -150,11 +142,10 @@ var date_extractor = (function() {
     reg: String(months) + " " + years + ",? to " + String(months) + " " + String(years),
     example: "September 1939 to April 1945",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 1,
         year: 2,
         to_month: 3,
@@ -166,11 +157,10 @@ var date_extractor = (function() {
     reg: String(months) + " " + String(years),
     example: "March 1969",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 1,
         year: 2
       };
@@ -180,11 +170,10 @@ var date_extractor = (function() {
     reg: String(months) + " " + days,
     example: "March 18th",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 1,
         day: 2
       };
@@ -194,11 +183,10 @@ var date_extractor = (function() {
     reg: String(days) + " of " + months,
     example: "18th of March",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 2,
         day: 1
       };
@@ -208,11 +196,10 @@ var date_extractor = (function() {
     reg: years + " ?- ?" + String(years),
     example: "1997-1998",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         year: 1,
         to_year: 2
       };
@@ -222,11 +209,10 @@ var date_extractor = (function() {
     reg: years,
     example: "1998",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         year: 1
       };
       return to_obj(arr, places);
@@ -352,16 +338,19 @@ var date_extractor = (function() {
     var arr, good, obj, _i, _len;
     options = options || {};
     str = preprocess(str);
-    for (_i = 0, _len = regexes.length; _i < _len; _i++) {
-      obj = regexes[_i];
-      if (str.match(obj.reg)) {
-        arr = obj.reg.exec(str);
-        good = obj.process(arr);
-        good = postprocess(good, options);
-        return good;
+    var done;
+    regexes.forEach(function (obj) {
+      if (!done) {
+        if (str.match(obj.reg)) {
+          var clone_reg=new RegExp(obj.reg.source,"i");//this avoids a memory-leak
+          arr = clone_reg.exec(str);
+          good = obj.process(arr);
+          good = postprocess(good, options);
+          done= good;
+        }
       }
-    }
-    return {};
+    })
+    return done;
   };
 
   //export modules
@@ -372,4 +361,5 @@ var date_extractor = (function() {
 
 })();
 
-// console.log(date_extractor("january 6th 1998"))
+// console.log(date_extractor("1998"))
+// console.log(date_extractor("1999"))

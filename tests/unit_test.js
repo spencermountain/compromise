@@ -1087,7 +1087,7 @@ exports["nlp.tag"] = function(test) {
     //after word 'I'
     ["i lkjaf", ["PRP","VB"]],
     //after adverb
-    ["spencer quickly acked", ["NN","RB","VB"]],
+    ["spencer quickly acked", ["NNP","RB","VB"]],
     //no two adjectives
     ["he was real", ["PRP","CP", "JJ"]],
     ["he was real good", ["PRP","CP", "RB", "JJ"]],
@@ -1100,7 +1100,7 @@ exports["nlp.tag"] = function(test) {
     ["he is very shoe", ["PRP","CP","RB","JJ"]],
     ["she is so camp", ["PRP","CP","RB","JJ"]],
     //before a pronoun
-    ["Spencer lkajf him", ["NN","VB","PRP"]],
+    ["Spencer lkajf him", ["NNP","VB","PRP"]],
     ["Toronto lkajf them", ["NN","VB","PRP"]],
     //contractions
     ["he's amazing", ["PRP","CP","JJ"]],

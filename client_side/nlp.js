@@ -1,4 +1,4 @@
-/*! nlp_compromise  0.5.2  by @spencermountain 2015-05-16  MIT */
+/*! nlp_compromise  0.5.2  by @spencermountain 2015-05-18  MIT */
 var nlp = (function() {
 var verb_irregulars = (function() {
   var types = [
@@ -2965,177 +2965,332 @@ var abbreviations = (function() {
   return main
 })()
 
-//1200 common first-names.
+// common first-names in compressed form.
+//from http://www.ssa.gov/oact/babynames/limits.html  and http://www.servicealberta.gov.ab.ca/pdf/vs/2001_Boys.pdf
 //not sure what regional/cultural/demographic bias this has. Probably a lot.
+// 73% of people are represented in the top 1000 names
 //used to reduce redundant named-entities in longer text. (don't spot the same person twice.)
-var firstnames = (function() {
+//used to identify gender for coreference resolution
+var firstnames = (function () {
 
-  var main=["aaron","abby","abigail","agnes","aida","aileen","aimee","aisha","april","ashlee","ashley","ava","avis","barbara","barbra","barry","bianca","bill","billie","billy","blanca","blanche","byron","cindy","craig","cristina","crystal","curtis","cynthia","dina","dionne","dixie","duane","dustin","dwayne","dwight","earl","earlene","earline","earnestine","ebony","effie","eileen","emilia","emily","emma","enid","enrique","erma","erna","ernest","ernestine","ethel","etta","eugene","eugenia","eula","eunice","fannie","fanny","fay","faye","gena","gene","geneva","genevieve","george","georgette","georgina","gerald","geraldine","gertrude","gilbert","gilda","gina","ginger","goldie","gordon","guadalupe","guy","gwen","gwendolyn","hilary","hilda","hillary","hollie","holly","hope","howard","hugh","ian","ida","ila","ilene","imelda","imogene","ines","inez","ingrid","irene","iris","irma","isaac","isabel","isabella","isabelle","iva","ivan","ivy","krystal","kurt","kyle","lloyd","muriel","myra","myrna","myrtle","odessa","ofelia","opal","ophelia","ora","oscar","philip","phillip","phoebe","phyllis","polly","priscilla","queen","rhea","rhoda","rhonda","ryan","scott","sidney","silvia","simone","sue","summer","suzanne","suzette","sybil","sylvia","ted","tessa","twila","tyler","tyrone","ursula","valarie","valeria","valerie","vanessa","vonda","wendi","wendy","wesley","whitney","winifred","winnie","yesenia","yolanda","yvette","yvonne","zachary","zelma","shirley","susie","angie","muhammed","mahammed","mahamed","urich","lars"]
-  main=main.reduce(function(h,st){
-    h[st]=true
-    return h
-  },{})
+    var main = []
 
-  //an ad-hoc prefix encoding for names. 2ms decompression of names
-  var compact = {
-    "ad": "a,am,die,ela,ele,eline,rian,riana,rienne",
-    "al": "an,ana,ba,bert,berta,berto,fred,fredo,ma,ta,thea,vin,yce,yson,yssa",
-    "ale": "jandra,x,xis",
-    "alexa": "nder,ndra,ndria",
-    "ali": ",ce,cia,ne,sa,sha,son,ssa",
-    "all": "an,en,ie,ison,yson",
-    "am": "alia,anda,ber,elia,ie,paro,y",
-    "an": "a,astasia,dre,drea,drew,dy,ita,thony,toinette,tonia,tonio",
-    "angel": "a,ia,ica,ina,ine,ique,ita",
-    "ann": ",a,abelle,e,ette,ie,marie",
-    "ar": "aceli,lene,line,mando,nold,thur",
-    "au": "dra,drey,gusta,relia,rora,tumn",
-    "be": "atrice,atriz,cky,linda,n,nita,njamin,ssie,ulah,verley,verly",
-    "ber": "nadette,nadine,nard,nice,ta,tha,tie,yl",
-    "bet": "h,hany,sy,te,tie,ty,tye",
-    "bo": "b,bbi,bbie,bby,nita,nnie",
-    "bra": "d,dley",
-    "brand": "i,ie,on,y",
-    "br": "enda,ent,ett,ooke,uce,yan",
-    "bri": "an,ana,anna,dget,dgett,dgette,gitte,tney,ttany,ttney",
-    "ca": "itlin,llie,lvin,mille,ndace,ndice,ndy,sandra,sey,ssandra,ssie,talina,therine,thleen,thryn,thy",
-    "car": "a,ey,issa,l,la,lene,los,ly,mela,mella,men,rie",
-    "carol": ",e,ina,ine,yn",
-    "ce": "celia,cil,cile,cilia,leste,lia,lina",
-    "cha": "d,ndra,sity",
-    "char": "ity,maine",
-    "charl": "ene,es,ie,otte",
-    "che": "lsea,ri,rie,rry,ryl,ster",
-    "chris": ",ta,ti,tian,tie,tina,tine,topher,ty",
-    "chr": "ystal",
-    "cla": "ire,yton",
-    "clar": "a,e,ence,ice,issa",
-    "claud": "e,ette,ia,ine",
-    "cl": "eo,ifford,ifton,inton,yde",
-    "co": "dy,leen,lette,lleen,ncepcion,ncetta,nnie,nstance,nsuelo,urtney",
-    "cor": "a,ey,ine,inne,nelia,rine,y",
-    "da": "isy,le,n,na,niel,nielle,nny,phne,ve,vid,wn",
-    "dar": "cy,la,lene,rell,ren,ryl,yl",
-    "dean": ",a,n,na,ne",
-    "de": "bbie,bora,borah,bra,e,ena,idre,irdre,lia,lla,lores,loris,na,nise,nnis,rek,rrick,siree",
-    "dian": "a,e,n,na,ne",
-    "do": "llie,lly,lores,minique,n,na,nald,nna,uglas",
-    "dor": "a,een,is,othea,othy,thy",
-    "ed": "die,gar,ith,na,uardo,ward,win,wina",
-    "el": "aine,ba,eanor,ena,la,len,ma,mer,nora,oise,sa,sie,va,via,vira",
-    "eli": "nor,sa,sabeth,se,za,zabeth",
-    "eri": "c,ca,cka,k,ka,n",
-    "es": "meralda,peranza,sie,tela,tella,telle,ter,ther",
-    "ev": "a,angelina,angeline,e,elyn,erett",
-    "fe": "lecia,licia,lix,rn,rnando",
-    "fl": "ora,orence,orine,ossie,oyd",
-    "fran": ",k,kie,klin",
-    "franc": "es,esca,ine,is,isca,isco",
-    "fr": "ed,eda,eddie,ederick,eida,ieda",
-    "ga": "briel,briela,brielle,il,le,ry,yle",
-    "gl": "adys,en,enda,enn,enna,oria",
-    "gr": "ace,acie,aciela,eg,egory,eta,etchen",
-    "ha": "ley,llie,nnah,rold,rriet,rriett,rry,rvey,ttie,zel",
-    "he": "ather,ctor,idi,len,lena,lene,lga,nrietta,nry,rbert,rman,rminia,ster",
-    "jac": "k,kie,klyn,lyn,ob,queline,quelyn",
-    "ja": "ime,mes,mi,mie,red,smine,son,vier,y,yne",
-    "jan": ",a,e,ell,elle,et,ette,ice,ie,ine,is,na,nie",
-    "jean": ",ette,ie,ine",
-    "jeann": "e,ette,ie,ine",
-    "je": "ff,ffery,ffrey,nifer,nna,nnie,nnifer,nny,remy,ri,rome,rri,rry,sse,ssica,ssie,wel,well",
-    "ji": "ll,llian,m,mmie,mmy",
-    "jo": ",an,ann,anna,anne,celyn,di,die,dy,e,el,hanna,hn,hnnie,hnny,lene,n,nathan,ni,rdan,rge,yce",
-    "jos": "e,efa,efina,eph,ephine,hua,ie",
-    "ju": "an,ana,anita,dith,dy,ne,stin,stine",
-    "julia": ",n,na,nne",
-    "juli": "e,et,ette,o",
-    "ka": "itlin,sey,y,ye,yla",
-    "kar": "a,en,i,in,ina,l,la,yn",
-    "kat": "e,elyn,ie,ina,rina,y",
-    "kath": "arine,erine,eryn,ie,leen,rine,ryn,y",
-    "ke": "isha,ith,lley,lli,llie,lly,lsey,n,ndra,nneth,nya,ri,rri,rry,vin",
-    "ki": "m,mberley,mberly,rk,rsten,tty",
-    "krist": "a,en,i,ie,in,ina,ine,y",
-    "la": "cey,cy,donna,keisha,kisha,na,nce,ra,rry,tasha,tisha,tonya,toya,ura,urel,uren,uri,urie,verne,vonne,wanda,wrence",
-    "le": "a,ah,ann,anna,anne,e,igh,ila,la,lia,na,nora,nore,o,ola,on,ona,onard,roy,ta,tha,ticia,titia,wis",
-    "les": "a,ley,lie,sie,ter",
-    "li": "dia,na,nda,ndsay,ndsey,sa,z,za,zzie",
-    "lil": "a,ia,ian,iana,lian,lie,ly,y",
-    "lo": "is,la,lita,nnie,ttie",
-    "lor": "a,aine,ena,ene,etta,i,ie,na,raine,rie",
-    "lou": ",ella,is,isa,ise,rdes",
-    "lu": "ann,cia,cile,cille,cinda,cy,ella,is,isa,la,pe,z",
-    "ly": "dia,nda,nette,nn,nne",
-    "ma": "bel,ble,deleine,deline,delyn,dge,e,gdalena,ggie,i,linda,llory,mie,ndy,nuel,nuela,thew,tilda,tthew,ttie,ude,ura,ureen,urice,vis,x,xine,yra",
-    "mar": "a,jorie,k,la,lene,quita,sha,shall,ta,tha,tin,tina,va,vin,y,yann,yanne,yellen,ylou",
-    "marc": ",ella,i,ia,ie,us,y",
-    "marg": "aret,arita,ery,ie,o,ret,uerite",
-    "mari": ",bel,cela,e,etta,lyn,na,o,on,sa,sol,ssa,tza",
-    "maria": ",n,na,nne",
-    "me": "agan,gan,ghan,rcedes,redith,rle",
-    "mel": "anie,ba,inda,isa,issa,ody,va,vin",
-    "mi": "a,chael,cheal,chele,chelle,guel,ke,ndy,nerva,nnie,randa,riam,sty,tchell,tzi",
-    "mil": "agros,dred,licent,lie,ton",
-    "mo": "llie,lly,na,nica,nique,rgan,rris",
-    "na": "dia,dine,ncy,nette,nnie,omi",
-    "nat": "alia,alie,asha,han,haniel",
-    "ne": "il,lda,ll,llie,lson,ttie,va",
-    "ni": "cholas,chole,cole,kki,na,ta",
-    "no": "elle,emi,la,na,ra,reen,rma,rman",
-    "ol": "a,ga,ive,ivia,lie",
-    "pa": "ige,m,mela,nsy,ul,ula,ulette,uline",
-    "pat": ",sy,ti,ty",
-    "patri": "ca,ce,cia,ck",
-    "pe": "arl,arlie,dro,ggy,nelope,nny,rry,ter,tra",
-    "ra": "chael,chel,chelle,e,fael,lph,mon,mona,ndall,ndi,ndy,quel,ul,y,ymond",
-    "re": "ba,becca,bekah,gina,ginald,na,ne,nee,va,yna",
-    "ri": "cardo,chard,ck,cky,ta",
-    "rob": "bie,ert,erta,erto,in,yn",
-    "ro": "chelle,dney,ger,land,n,nald,nda,nnie,wena,xanne,xie,y",
-    "rosa": ",nna,nne,rio",
-    "rosal": "ie,ind,inda,yn",
-    "ros": "e,eann,emarie,emary,etta,ie,lyn,s",
-    "ru": "ben,by,ssell,th,thie",
-    "sa": "brina,die,llie,lly,lvador,m,mantha,muel,ndra,ndy,ra,rah,sha,undra,vannah",
-    "se": "an,lena,lma,rena,rgio,th",
-    "sha": "na,ne,nna,nnon,ri,rlene,ron,rron,una,wn,wna",
-    "she": "ena,ila,lby,lia,lley,lly",
-    "sher": "ee,i,ri,rie,ry,yl",
-    "so": "fia,ndra,nia,nja,nya,phia,phie",
-    "sta": "cey,ci,cie,cy,nley",
-    "ste": "fanie,lla,phanie,phen,ve,ven",
-    "susan": ",a,na,ne",
-    "ta": "batha,bitha,nia,nisha,nya,ra,sha,ylor",
-    "tam": "ara,eka,era,i,ika,mi,mie,my,ra",
-    "ter": "esa,i",
-    "terr": "a,ance,ence,i,ie,y",
-    "th": "elma,eodore,eresa,erese,omas",
-    "ti": "a,ffany,m,mothy,na,sha",
-    "to": "dd,m,mmie,mmy,ni,nia,ny,nya",
-    "tra": "cey,ci,cie,cy,vis",
-    "tr": "icia,ina,isha,oy,udy",
-    "ve": "lma,ra,rna,rnon,ronica",
-    "vic": "ki,kie,ky,tor,toria",
-    "vi": "ncent,ola,olet,rgie,rgil,rginia,vian",
-    "wa": "de,llace,lter,nda,rren,yne",
-    "wil": "da,la,lard,liam,lie,ma"
-  }
+    //an ad-hoc prefix encoding for names. 2ms decompression of names
+    var male_names = {
+      "will": "iam,ie,ard,is,iams",
+      "fred": ",erick,die,rick,dy",
+      "marc": "us,,o,os,el",
+      "darr": "ell,yl,en,el,in",
+      "fran": "k,cis,cisco,klin,kie",
+      "terr": "y,ance,ence,ell",
+      "rand": "y,all,olph,al",
+      "brad": "ley,,ford,y",
+      "jeff": "rey,,ery,ry",
+      "john": ",ny,nie,athan",
+      "greg": "ory,,g,orio",
+      "mar": "k,tin,vin,io,shall,ty,lon,lin",
+      "car": "l,los,lton,roll,y,ey",
+      "ken": "neth,,t,ny,dall,drick",
+      "har": "old,ry,vey,ley,lan,rison",
+      "ste": "ven,phen,ve,wart,phan,rling",
+      "jer": "ry,emy,ome,emiah,maine,ald",
+      "mic": "hael,heal,ah,key,hel",
+      "dar": "yl,in,nell,win,ius",
+      "dan": "iel,ny,,e",
+      "wil": "bur,son,bert,fred,fredo",
+      "ric": "hard,ky,ardo,k,key",
+      "cli": "fford,nton,fton,nt,ff",
+      "cla": "rence,ude,yton,rk,y",
+      "ben": "jamin,,nie,ny,ito",
+      "rod": "ney,erick,olfo,ger,",
+      "rob": "ert,erto,bie,",
+      "gar": "y,ry,rett,land",
+      "sam": "uel,,my,mie",
+      "and": "rew,re,y,res",
+      "jos": "eph,e,hua,h",
+      "joe": ",l,y,sph",
+      "leo": "nard,n,,nardo",
+      "tom": ",my,as,mie",
+      "bry": "an,ant,ce,on",
+      "ant": "hony,onio,oine,on",
+      "jac": "k,ob,kson",
+      "cha": "rles,d,rlie,se",
+      "sha": "wn,ne,un",
+      "bre": "nt,tt,ndan,t",
+      "jes": "se,us,s",
+      "al": "bert,an,len,fred,exander,ex,vin,lan,fredo,berto,ejandro,fonso,ton,,onzo,i,varo",
+      "ro": "nald,ger,y,nnie,land,n,ss,osevelt,gelio,lando,man,cky,yce,scoe,ry",
+      "de": "nnis,rek,an,rrick,lbert,vin,wey,xter,wayne,metrius,nis,smond",
+      "ja": "mes,son,y,red,vier,ke,sper,mal,rrod",
+      "el": "mer,lis,bert,ias,ijah,don,i,ton,liot,liott,vin,wood",
+      "ma": "tthew,nuel,urice,thew,x,tt,lcolm,ck,son",
+      "do": "nald,uglas,n,nnie,ug,minic,yle,mingo,minick",
+      "er": "ic,nest,ik,nesto,ick,vin,nie,win",
+      "ra": "ymond,lph,y,mon,fael,ul,miro,phael",
+      "ed": "ward,win,die,gar,uardo,,mund,mond",
+      "co": "rey,ry,dy,lin,nrad,rnelius",
+      "le": "roy,wis,ster,land,vi",
+      "lo": "uis,nnie,renzo,ren,well,uie,u,gan",
+      "da": "vid,le,ve,mon,llas,mian,mien",
+      "jo": "nathan,n,rge,rdan,nathon,aquin",
+      "ru": "ssell,ben,dolph,dy,fus,ssel,sty",
+      "ke": "vin,ith,lvin,rmit",
+      "ar": "thur,nold,mando,turo,chie,mand",
+      "re": "ginald,x,ynaldo,uben,ggie",
+      "ge": "orge,rald,ne,rard,offrey,rardo",
+      "la": "rry,wrence,nce,urence,mar,mont",
+      "mo": "rris,ses,nte,ises,nty",
+      "ju": "an,stin,lio,lian,lius,nior",
+      "pe": "ter,dro,rry,te,rcy",
+      "tr": "avis,oy,evor,ent",
+      "he": "nry,rbert,rman,ctor,ath",
+      "no": "rman,el,ah,lan,rbert",
+      "em": "anuel,il,ilio,mett,manuel",
+      "wa": "lter,yne,rren,llace,de",
+      "mi": "ke,guel,lton,tchell,les",
+      "sa": "lvador,lvatore,ntiago,ul,ntos",
+      "ch": "ristopher,ris,ester,ristian,uck",
+      "pa": "ul,trick,blo,t",
+      "st": "anley,uart,an",
+      "hu": "gh,bert,go,mberto",
+      "br": "ian,uce,andon,ain",
+      "vi": "ctor,ncent,rgil,cente",
+      "ca": "lvin,meron,leb",
+      "gu": "y,illermo,stavo",
+      "lu": "is,ther,ke,cas",
+      "gr": "ant,ady,over,aham",
+      "ne": "il,lson,al,d",
+      "t": "homas,imothy,odd,ony,heodore,im,yler,ed,yrone,aylor,erence,immy,oby,eddy,yson",
+      "s": "cott,ean,idney,ergio,eth,pencer,herman,ylvester,imon,heldon,cotty,olomon",
+      "r": "yan",
+      "n": "icholas,athan,athaniel,ick,icolas",
+      "a": "dam,aron,drian,ustin,ngelo,braham,mos,bel,gustin,ugust,dolfo",
+      "b": "illy,obby,arry,ernard,ill,ob,yron,lake,ert,oyd,illie,laine,art,uddy,urton",
+      "e": "ugene,arl,verett,nrique,van,arnest,frain,than,steban",
+      "h": "oward,omer,orace,ans,al",
+      "p": "hillip,hilip,reston,hil,ierre",
+      "c": "raig,urtis,lyde,ecil,esar,edric,leveland,urt",
+      "j": "immy,im,immie",
+      "g": "lenn,ordon,len,ilbert,abriel,ilberto",
+      "m": "elvin,yron,erle,urray",
+      "k": "yle,arl,urt,irk,ristopher",
+      "o": "scar,tis,liver,rlando,mar,wen,rville,tto",
+      "l": "loyd,yle,ionel",
+      "f": "loyd,ernando,elix,elipe,orrest,abian,idel",
+      "w": "esley,endell,m,oodrow,inston",
+      "d": "ustin,uane,wayne,wight,rew,ylan",
+      "z": "achary",
+      "v": "ernon,an,ance",
+      "i": "an,van,saac,ra,rving,smael,gnacio,rvin",
+      "q": "uentin,uinton",
+      "x": "avier"
+    }
+    var female_names = {
+      "mari": "a,e,lyn,an,anne,na,ssa,bel,sa,sol,tza",
+      "kris": "ten,tin,tina,ti,tine,ty,ta,tie",
+      "jean": "ette,ne,nette,nie,ine,nine",
+      "chri": "stine,stina,sty,stie,sta,sti",
+      "marg": "aret,ie,arita,uerite,ret,o",
+      "ange": "la,lica,lina,lia,line",
+      "fran": "ces,cine,cisca",
+      "kath": "leen,erine,y,ryn,arine",
+      "sher": "ry,ri,yl,i,rie",
+      "caro": "l,lyn,line,le,lina",
+      "dian": "e,a,ne,na",
+      "jenn": "ifer,ie,y,a",
+      "luci": "lle,a,nda,le",
+      "kell": "y,i,ey,ie",
+      "rosa": ",lie,lind",
+      "jani": "ce,e,s,ne",
+      "stac": "y,ey,ie,i",
+      "shel": "ly,ley,ia",
+      "laur": "a,en,ie,el",
+      "trac": "y,ey,i,ie",
+      "jane": "t,,lle,tte",
+      "bett": "y,ie,e,ye",
+      "rose": "mary,marie,tta",
+      "joan": ",ne,n,na",
+      "mar": "y,tha,jorie,cia,lene,sha,yann,cella,ta,la,cy,tina",
+      "lor": "i,raine,etta,a,ena,ene,na,ie",
+      "sha": "ron,nnon,ri,wna,nna,na,una",
+      "dor": "othy,is,a,een,thy,othea",
+      "cla": "ra,udia,ire,rice,udette",
+      "eli": "zabeth,sa,sabeth,se,za",
+      "kar": "en,la,a,i,in",
+      "tam": "my,ara,i,mie,ika",
+      "ann": "a,,e,ie,ette",
+      "car": "men,rie,la,a,mela",
+      "mel": "issa,anie,inda",
+      "ali": "ce,cia,son,sha,sa",
+      "bri": "ttany,dget,ttney,dgette",
+      "lyn": "n,da,ne,ette",
+      "del": "ores,la,ia,oris",
+      "ter": "esa,ri,i",
+      "son": "ia,ya,ja,dra",
+      "deb": "orah,ra,bie,ora",
+      "jac": "queline,kie,quelyn,lyn",
+      "lat": "oya,asha,onya,isha",
+      "che": "ryl,lsea,ri,rie",
+      "vic": "toria,ki,kie,ky",
+      "sus": "an,ie,anne,ana",
+      "rob": "erta,yn",
+      "est": "her,elle,ella,er",
+      "lea": "h,,nne,nn",
+      "lil": "lian,lie,a,y",
+      "ma": "ureen,ttie,xine,bel,e,deline,ggie,mie,ble,ndy,ude,yra,nuela,vis,gdalena,tilda",
+      "jo": "yce,sephine,,di,dy,hanna,sefina,sie,celyn,lene,ni,die",
+      "be": "verly,rtha,atrice,rnice,th,ssie,cky,linda,ulah,rnadette,thany,tsy,atriz",
+      "ca": "therine,thy,ssandra,ndace,ndice,mille,itlin,ssie,thleen,llie",
+      "le": "slie,na,ona,ticia,igh,la,nora,ola,sley,ila",
+      "el": "aine,len,eanor,sie,la,ena,oise,vira,sa,va,ma",
+      "sa": "ndra,rah,ra,lly,mantha,brina,ndy,die,llie",
+      "mi": "chelle,ldred,chele,nnie,riam,sty,ndy,randa,llie",
+      "co": "nnie,lleen,nstance,urtney,ra,rinne,nsuelo,rnelia",
+      "ju": "lie,dith,dy,lia,anita,ana,stine",
+      "da": "wn,nielle,rlene,na,isy,rla,phne",
+      "re": "becca,nee,na,bekah,ba",
+      "al": "ma,lison,berta,exandra,yssa,ta",
+      "ra": "chel,mona,chael,quel,chelle",
+      "an": "drea,ita,a,gie,toinette,tonia",
+      "ge": "raldine,rtrude,orgia,nevieve,orgina",
+      "de": "nise,anna,siree,na,ana,e",
+      "ja": "smine,na,yne",
+      "lu": "cy,z,la,pe,ella,isa",
+      "je": "ssica,nifer,well,ri",
+      "ad": "a,rienne,die,ele,riana,eline",
+      "pa": "tricia,mela,ula,uline,tsy,m,tty,ulette,tti,trice,trica,ige",
+      "ke": "ndra,rri,isha,ri",
+      "mo": "nica,lly,nique,na,llie",
+      "lo": "uise,is,la",
+      "he": "len,ather,idi,nrietta,lene,lena",
+      "me": "gan,rcedes,redith,ghan,agan",
+      "wi": "lma,lla,nnie",
+      "ga": "il,yle,briela,brielle,le",
+      "er": "in,ica,ika,ma,nestine",
+      "ce": "cilia,lia,celia,leste,cile",
+      "ka": "tie,y,trina,yla,te",
+      "ol": "ga,ivia,lie,a",
+      "li": "nda,sa,ndsay,ndsey,zzie",
+      "na": "ncy,talie,omi,tasha,dine",
+      "la": "verne,na,donna,ra",
+      "vi": "rginia,vian,ola",
+      "ha": "rriet,nnah",
+      "pe": "ggy,arl,nny,tra",
+      "br": "enda,andi,ooke",
+      "ki": "mberly,m,mberley,rsten",
+      "au": "drey,tumn,dra",
+      "bo": "nnie,bbie,nita,bbi",
+      "do": "nna,lores,lly,minique",
+      "gl": "oria,adys,enda,enna",
+      "tr": "icia,ina,isha,udy",
+      "ta": "ra,nya,sha,bitha",
+      "ro": "sie,xanne,chelle,nda",
+      "am": "y,anda,ber,elia",
+      "fa": "ye,nnie,y",
+      "ni": "cole,na,chole,kki",
+      "ve": "ronica,ra,lma,rna",
+      "gr": "ace,etchen,aciela,acie",
+      "b": "arbara,lanca,arbra,ianca",
+      "r": "uth,ita,honda",
+      "s": "hirley,tephanie,ylvia,heila,uzanne,ue,tella,ophia,ilvia,ophie,tefanie,heena,ummer,elma,ocorro,ybil,imone",
+      "c": "ynthia,rystal,indy,harlene,ristina,leo",
+      "e": "velyn,mily,dna,dith,thel,mma,va,ileen,unice,ula,ssie,ffie,tta,ugenia",
+      "a": "shley,pril,gnes,rlene,imee,bigail,ida,bby,ileen",
+      "t": "heresa,ina,iffany,helma,onya,oni,herese,onia",
+      "i": "rene,da,rma,sabel,nez,ngrid,va,mogene,sabelle",
+      "w": "anda,endy,hitney",
+      "p": "hyllis,riscilla,olly",
+      "n": "orma,ellie,ora,ettie,ell",
+      "f": "lorence,elicia,lora,reda,ern,rieda",
+      "v": "alerie,anessa",
+      "j": "ill,illian",
+      "y": "vonne,olanda,vette",
+      "g": "ina,wendolyn,wen,oldie",
+      "l": "ydia",
+      "m": "yrtle,yra,uriel,yrna",
+      "h": "ilda",
+      "o": "pal,ra,felia",
+      "k": "rystal",
+      "d": "ixie,ina",
+      "u": "rsula"
+    }
+    var ambiguous = [
+      "casey",
+      "jamie",
+      "lee",
+      "jaime",
+      "jessie",
+      "morgan",
+      "rene",
+      "robin",
+      "devon",
+      "kerry",
+      "alexis",
+      "guadalupe",
+      "blair",
+      "kasey",
+      "jean",
+      "marion",
+      "aubrey",
+      "shelby",
+      "jan",
+      "shea",
+      "jade",
+      "kenyatta",
+      "kelsey",
+      "shay",
+      "lashawn",
+      "trinity",
+      "regan",
+      "jammie",
+      "cassidy",
+      "cheyenne",
+      "reagan",
+      "shiloh",
+      "marlo",
+      "andra",
+      "devan",
+      "rosario",
+      "lee"
+    ]
 
-  var keys=Object.keys(compact)
-  var l=keys.length
-  var i;
-  for(i=0; i<l; i++){
-    compact[keys[i]].split(',').forEach(function(s){
-      main[keys[i]+s]=true
-    })
-  }
+    var i, arr, i2, l, keys;
+    //add data into the main obj
+    //males
+    keys = Object.keys(male_names)
+    l = keys.length
+    for (i = 0; i < l; i++) {
+      arr = male_names[keys[i]].split(',')
+      for (i2 = 0; i2 < arr.length; i2++) {
+        main[keys[i] + arr[i2]] = "m"
+      }
+    }
 
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = main;
-  }
-  return main
-})()
-// console.log(JSON.stringify(firstnames, null, 2));
+    //females
+    keys = Object.keys(female_names)
+    l = keys.length
+    for (i = 0; i < l; i++) {
+      arr = female_names[keys[i]].split(',')
+      for (i2 = 0; i2 < arr.length; i2++) {
+        main[keys[i] + arr[i2]] = "f"
+      }
+    }
+    //unisex names
+    l = ambiguous.length
+    for (i = 0; i < l; i += 1) {
+      main[ambiguous[i]] = "a"
+    }
+
+    if (typeof module !== "undefined" && module.exports) {
+      module.exports = main;
+    }
+    return main
+  })()
+  // console.log(firstnames['spencer'])
+  // console.log(firstnames['jill'])
+  // console.log(firstnames['sue'])
+  // console.log(firstnames['jan'])
+  // console.log(JSON.stringify(Object.keys(firstnames).length, null, 2));
 
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
@@ -4927,11 +5082,10 @@ var date_extractor = (function() {
     reg: String(months) + " " + String(days) + "-" + String(days) + " " + String(years),
     example: "March 7th-11th 1987",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 1,
         day: 2,
         to_day: 3,
@@ -4940,14 +5094,13 @@ var date_extractor = (function() {
       return to_obj(arr, places);
     }
   }, {
-    reg: String(days) + " of " + String(months) + " to " + String(days) + " of " + String(months) + ",? " + String(years),
+    reg: String(days) + " of " + String(months) + " to " + String(days) + " of " + String(months) + " " + String(years),
     example: "28th of September to 5th of October 2008",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         day: 1,
         month: 2,
         to_day: 3,
@@ -4960,11 +5113,10 @@ var date_extractor = (function() {
     reg: String(months) + " " + String(days) + " to " + String(months) + " " + String(days) + " " + String(years),
     example: "March 7th to june 11th 1987",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 1,
         day: 2,
         to_month: 3,
@@ -4978,11 +5130,10 @@ var date_extractor = (function() {
     reg: "between " + String(days) + " " + String(months) + " and " + String(days) + " " + String(months) + " " + String(years),
     example: "between 13 February and 15 February 1945",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         day: 1,
         month: 2,
         to_day: 3,
@@ -4996,11 +5147,10 @@ var date_extractor = (function() {
     reg: "between " + String(months) + " " + String(days) + " and " + String(months) + " " + String(days) + " " + String(years),
     example: "between March 7th and june 11th 1987",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 1,
         day: 2,
         to_month: 3,
@@ -5014,11 +5164,10 @@ var date_extractor = (function() {
     reg: String(months) + " " + String(days) + " " + String(years),
     example: "March 1st 1987",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 1,
         day: 2,
         year: 3
@@ -5026,14 +5175,13 @@ var date_extractor = (function() {
       return to_obj(arr, places);
     }
   }, {
-    reg: String(days) + " - " + String(days) + " of " + String(months) + ",? " + String(years),
+    reg: String(days) + " - " + String(days) + " of " + String(months) + " " + String(years),
     example: "3rd - 5th of March 1969",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         day: 1,
         to_day: 2,
         month: 3,
@@ -5042,14 +5190,13 @@ var date_extractor = (function() {
       return to_obj(arr, places);
     }
   }, {
-    reg: String(days) + " of " + String(months) + ",? " + String(years),
+    reg: String(days) + " of " + String(months) + " " + String(years),
     example: "3rd of March 1969",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         day: 1,
         month: 2,
         year: 3
@@ -5060,11 +5207,10 @@ var date_extractor = (function() {
     reg: String(months) + " " + years + ",? to " + String(months) + " " + String(years),
     example: "September 1939 to April 1945",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 1,
         year: 2,
         to_month: 3,
@@ -5076,11 +5222,10 @@ var date_extractor = (function() {
     reg: String(months) + " " + String(years),
     example: "March 1969",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 1,
         year: 2
       };
@@ -5090,11 +5235,10 @@ var date_extractor = (function() {
     reg: String(months) + " " + days,
     example: "March 18th",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 1,
         day: 2
       };
@@ -5104,11 +5248,10 @@ var date_extractor = (function() {
     reg: String(days) + " of " + months,
     example: "18th of March",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         month: 2,
         day: 1
       };
@@ -5118,11 +5261,10 @@ var date_extractor = (function() {
     reg: years + " ?- ?" + String(years),
     example: "1997-1998",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         year: 1,
         to_year: 2
       };
@@ -5132,11 +5274,10 @@ var date_extractor = (function() {
     reg: years,
     example: "1998",
     process: function(arr) {
-      var places;
       if (!arr) {
         arr = [];
       }
-      places = {
+      var places = {
         year: 1
       };
       return to_obj(arr, places);
@@ -5259,19 +5400,19 @@ var date_extractor = (function() {
 
   //pass through sequence of regexes until tempate is matched..
   var main = function(str, options) {
-    var arr, good, obj, _i, _len;
     options = options || {};
-    str = preprocess(str);
-    for (_i = 0, _len = regexes.length; _i < _len; _i++) {
-      obj = regexes[_i];
+    str = preprocess(str)
+    var arr, good, clone_reg, obj;
+    var l=regexes.length;
+    for(var i=0; i<l; i+=1){
+      obj=regexes[i]
       if (str.match(obj.reg)) {
-        arr = obj.reg.exec(str);
+        clone_reg=new RegExp(obj.reg.source,"i");//this avoids a memory-leak
+        arr = clone_reg.exec(str);
         good = obj.process(arr);
-        good = postprocess(good, options);
-        return good;
+        return postprocess(good, options);
       }
     }
-    return {};
   };
 
   //export modules
@@ -5282,7 +5423,8 @@ var date_extractor = (function() {
 
 })();
 
-// console.log(date_extractor("january 6th 1998"))
+// console.log(date_extractor("1998"))
+// console.log(date_extractor("1999"))
 
 //wrapper for value's methods
 var Value = function(str, next, last, token) {
@@ -5840,7 +5982,7 @@ var Noun = function(str, next, last, token) {
     "century": 1,
     "it": 1
   }
-  the.is_acronym = (function() {
+  the.is_acronym = function() {
     var s = the.word
       //no periods
     if (s.length <= 5 && s.match(/^[A-Z]*$/)) {
@@ -5851,9 +5993,9 @@ var Noun = function(str, next, last, token) {
       return true
     }
     return false
-  })()
+  }
 
-  the.is_entity = (function() {
+  the.is_entity = function() {
     if (!token) {
       return false
     }
@@ -5900,20 +6042,20 @@ var Noun = function(str, next, last, token) {
       return true
     }
     //acronyms are a-ok
-    if (the.is_acronym) {
+    if (the.is_acronym()) {
       return true
     }
     //else, be conservative
     return false
-  })()
+  }
 
   the.conjugate = function() {
     return inflect.inflect(the.word)
   },
 
-  the.is_plural = (function() {
+  the.is_plural = function() {
     return inflect.is_plural(the.word)
-  })()
+  }
 
   the.article = function() {
     return indefinite_article(the.word)
@@ -5984,29 +6126,10 @@ var Noun = function(str, next, last, token) {
     if (the.word.match(/'s$/)) {
       return parts_of_speech['NNO']
     }
-    //noun-gerund
-    if (the.word.match(/..ing$/)) {
-      return parts_of_speech['NNG']
-    }
-    //personal pronoun
-    if (prps[the.word]) {
-      return parts_of_speech['PRP']
-    }
-    //proper nouns
-    var first = the.word.substr(0, 1)
-    if (first.toLowerCase() !== first) {
-      if (the.is_acronym) {
-        return parts_of_speech['NNPA']
-      }
-      if (the.is_plural) {
-        return parts_of_speech['NNPS']
-      }
-      return parts_of_speech['NNP']
-    }
     //plural
-    if (the.is_plural) {
-      return parts_of_speech['NNS']
-    }
+    // if (the.is_plural) {
+    //   return parts_of_speech['NNS']
+    // }
     //generic
     return parts_of_speech['NN']
   })()
@@ -6017,8 +6140,8 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = Noun;
 }
 
-// console.log(new Noun('farmhouse').is_entity)
-// console.log(new Noun("FBI").is_acronym)
+// console.log(new Noun('farmhouse').is_entity())
+// console.log(new Noun("FBI").is_acronym())
 // console.log(new Noun("Tony Danza").is_person())
 // console.time('h')
 // console.log(new Noun("Tonys h. Danza").is_person())
@@ -7029,16 +7152,15 @@ var Verb = function(str, next, last, token) {
     }
   })()
 
-  //past/present/future
+  //past/present/future   //wahh?!
   the.tense = (function() {
     if (the.word.match(/\bwill\b/)) {
       return "future"
     }
-    var form = the.form
-    if (form === "present") {
+    if (the.form === "present") {
       return "present"
     }
-    if (form === "past") {
+    if (the.form === "past") {
       return "past"
     }
     return "present"
@@ -7057,7 +7179,7 @@ var Verb = function(str, next, last, token) {
   })()
 
   //is this verb negative already?
-  the.negative = (function() {
+  the.negative = function() {
     if (the.word.match(/n't$/)) {
       return true
     }
@@ -7065,7 +7187,7 @@ var Verb = function(str, next, last, token) {
       return true
     }
     return false
-  })()
+  }
 
   return the;
 }
@@ -8337,7 +8459,7 @@ var Sentence = function(tokens) {
       // find the first verb..
       if (tok.pos.parent == "verb") {
         // if verb is already negative, make it not negative
-        if (tok.analysis.negative) {
+        if (tok.analysis.negative()) {
           if (the.tokens[i + 1] && the.tokens[i + 1].normalised == "not") {
             the.tokens.splice(i + 1, 1)
           }
@@ -8407,7 +8529,7 @@ var Sentence = function(tokens) {
     var spots = []
     options = options || {}
     the.tokens.forEach(function(token) {
-      if (token.pos.parent === "noun" && token.analysis.is_entity) {
+      if (token.pos.parent === "noun" && token.analysis.is_entity()) {
         spots.push(token)
       }
     })

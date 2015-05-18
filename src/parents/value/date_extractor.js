@@ -335,22 +335,19 @@ var date_extractor = (function() {
 
   //pass through sequence of regexes until tempate is matched..
   var main = function(str, options) {
-    var arr, good, obj, _i, _len;
     options = options || {};
-    str = preprocess(str);
-    var done;
-    regexes.forEach(function (obj) {
-      if (!done) {
-        if (str.match(obj.reg)) {
-          var clone_reg=new RegExp(obj.reg.source,"i");//this avoids a memory-leak
-          arr = clone_reg.exec(str);
-          good = obj.process(arr);
-          good = postprocess(good, options);
-          done= good;
-        }
+    str = preprocess(str)
+    var arr, good, clone_reg, obj;
+    var l=regexes.length;
+    for(var i=0; i<l; i+=1){
+      obj=regexes[i]
+      if (str.match(obj.reg)) {
+        clone_reg=new RegExp(obj.reg.source,"i");//this avoids a memory-leak
+        arr = clone_reg.exec(str);
+        good = obj.process(arr);
+        return postprocess(good, options);
       }
-    })
-    return done;
+    }
   };
 
   //export modules

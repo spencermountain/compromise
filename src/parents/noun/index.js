@@ -171,20 +171,66 @@ var Noun = function(str, next, last, token) {
         return true
       }
     }
-    //see if noun has a first-name
-    var names = Object.keys(firstnames)
-    l = names.length
-    var firstname=the.word.split(' ')[0].toLowerCase()
-    for (i = 0; i < l; i++) {
-      if (names[i]===firstname) {
-        return true
-      }
+    //see if noun has a known first-name
+    var names=the.word.split(' ').map(function(a){
+      return a.toLowerCase()
+    })
+    if(firstnames[names[0]]){
+      return true
     }
+    //(test middle name too, if there's one)
+    if(names.length> 2 && firstnames[names[1]]){
+      return true
+    }
+
     //if it has an initial between two words
     if(the.word.match(/[a-z]{3,20} [a-z]\.? [a-z]{3,20}/i)){
       return true
     }
     return false
+  }
+
+  //decides if it deserves a he, she, they, or it
+  the.pronoun=function(){
+
+    //if it's a person try to classify male/female
+    if(the.is_person()){
+      var names=the.word.split(' ').map(function(a){
+        return a.toLowerCase()
+      })
+      if(firstnames[names[0]]==="m" || firstnames[names[1]]=="m"){
+        return "he"
+      }
+      if(firstnames[names[0]]==="f" || firstnames[names[1]]=="f" ){
+        return "she"
+      }
+      //test some honourifics
+      if(the.word.match(/^(mrs|miss|ms|misses|mme|mlle)\.? /,'i')){
+        return "she"
+      }
+      if(the.word.match(/\b(mr|mister|sr|jr)\b/,'i')){
+        return "he"
+      }
+      //if we think it's a person, but still don't know the gender, do a little guessing
+      if(names[0].match(/[aeiy]$/)){//if it ends in a 'ee or ah', female
+        return "she"
+      }
+      if(names[0].match(/[ou]$/)){//if it ends in a 'oh or uh', male
+        return "he"
+      }
+      if(names[0].match(/(nn|ll|tt)/)){//if it has double-consonants, female
+        return "she"
+      }
+      //fallback to 'singular-they'
+      return "they"
+    }
+
+    //not a person
+    if(the.is_plural()){
+      return "they"
+    }
+
+    return "it"
   }
 
   //specifically which pos it is
@@ -210,6 +256,8 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log(new Noun('farmhouse').is_entity())
 // console.log(new Noun("FBI").is_acronym())
 // console.log(new Noun("Tony Danza").is_person())
-// console.time('h')
-// console.log(new Noun("Tonys h. Danza").is_person())
-// console.timeEnd('h')
+// console.log(new Noun("Tony Danza").pronoun()=="he")
+// console.log(new Noun("Tanya Danza").pronoun()=="she")
+// console.log(new Noun("mrs. Taya Danza").pronoun()=="she")
+// console.log(new Noun("Gool Tanya Danza").pronoun()=="she")
+// console.log(new Noun("illi G. Danza").pronoun()=="she")

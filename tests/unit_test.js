@@ -9,6 +9,15 @@ if (typeof module !== "undefined" && module.exports) {
 // Dummy method for testing under prototype pollution
 Object.prototype.dummy = function() {};
 
+exports["noun.pronoun"] = function(test) {
+  test.deepEqual(nlp.noun("Tony Danza").pronoun(),"he")
+  test.deepEqual(nlp.noun("Tanya Danza").pronoun(),"she")
+  test.deepEqual(nlp.noun("mrs. Taya Danza").pronoun(),"she")
+  test.deepEqual(nlp.noun("Gool Tanya Danza").pronoun(),"she")
+  test.deepEqual(nlp.noun("Illi G. Danza").pronoun(),"she")
+  test.done()
+}
+
 exports["people()"] = function(test) {
   [
     [

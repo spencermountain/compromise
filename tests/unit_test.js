@@ -10,11 +10,18 @@ if (typeof module !== "undefined" && module.exports) {
 Object.prototype.dummy = function() {};
 
 exports["noun.pronoun"] = function(test) {
+  test.deepEqual(nlp.noun("Toronto").pronoun(),"it")
+  test.deepEqual(nlp.noun("studying").pronoun(),"it")
+  test.deepEqual(nlp.noun("horses").pronoun(),"they")
+  test.deepEqual(nlp.noun("road bike").pronoun(),"it")
+  test.deepEqual(nlp.noun("road bikes").pronoun(),"they")
+  test.deepEqual(nlp.noun("OHL goaltenders").pronoun(),"they")
   test.deepEqual(nlp.noun("Tony Danza").pronoun(),"he")
   test.deepEqual(nlp.noun("Tanya Danza").pronoun(),"she")
   test.deepEqual(nlp.noun("mrs. Taya Danza").pronoun(),"she")
   test.deepEqual(nlp.noun("Gool Tanya Danza").pronoun(),"she")
   test.deepEqual(nlp.noun("Illi G. Danza").pronoun(),"she")
+  test.deepEqual(nlp.noun("Jill").pronoun(),"she")
   test.done()
 }
 

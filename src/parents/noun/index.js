@@ -261,3 +261,4 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log(new Noun("mrs. Taya Danza").pronoun()=="she")
 // console.log(new Noun("Gool Tanya Danza").pronoun()=="she")
 // console.log(new Noun("illi G. Danza").pronoun()=="she")
+// console.log(new Noun("horses").pronoun()=="they")

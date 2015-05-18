@@ -244,6 +244,53 @@ var Noun = function(str, sentence, word_i) {
     return "it"
   }
 
+  //tokens that refer to the same thing. "[obama] is cool, [he] is nice."
+  the.referenced_by = function() {
+    //if it's named-noun, look forward for the pronouns pointing to it -> '... he'
+    if(token && token.pos.tag!=="PRP"){
+      var prp=the.pronoun()
+      //look at rest of sentence
+      var interested=sentence.tokens.slice(word_i+1, sentence.tokens.length)
+      //add next sentence too, could go further..
+      if(sentence.next){
+        interested=interested.concat(sentence.next.tokens)
+      }
+      //find the matching pronouns, and break if another noun overwrites it
+      var matches=[]
+      for(var i=0; i<interested.length; i++){
+        if(interested[i].pos.tag==="PRP" && interested[i].normalised===prp){
+          matches.push(interested[i])
+        }else if(interested[i].pos.parent==="noun" && interested[i].analysis.pronoun()===prp){
+          break
+        }
+      }
+      return matches
+    }
+    return []
+  }
+
+  // a pronoun that points at a noun mentioned previously '[he] is nice'
+  the.reference_to = function() {
+    //if it's a pronoun, look backwards for the first mention '[obama]... <-.. [he]'
+    if(token && token.pos.tag==="PRP"){
+      var prp=token.normalised
+      //look at starting of this sentence
+      var interested=sentence.tokens.slice(0, word_i)
+      //add previous sentence, if applicable
+      if(sentence.last){
+        interested=sentence.last.tokens.concat(interested)
+      }
+      //reverse the terms to loop through backward..
+      interested=interested.reverse()
+      for(var i=0; i<interested.length; i++){
+        //it's a match
+        if(interested[i].pos.parent==="noun" && interested[i].pos.tag!=="PRP" && interested[i].analysis.pronoun()===prp){
+          return interested[i]
+        }
+      }
+    }
+  }
+
   //specifically which pos it is
   the.which = (function() {
     //posessive

@@ -442,6 +442,12 @@ var pos = (function() {
       })
     }
 
+    //make them Sentence objects
+    sentences = sentences.map(function(s) {
+      var sentence = new Sentence(s.tokens)
+      sentence.type = s.type
+      return sentence
+    })
     //add analysis on each token
     sentences = sentences.map(function(s) {
       s.tokens = s.tokens.map(function(token, i) {
@@ -451,10 +457,10 @@ var pos = (function() {
       return s
     })
 
-    //make them Sentence objects
-    sentences = sentences.map(function(s) {
-      var sentence = new Sentence(s.tokens)
-      sentence.type = s.type
+    //add next-last references
+    sentences = sentences.map(function(sentence,i) {
+      sentence.last=sentences[i-1]
+      sentence.next=sentences[i+1]
       return sentence
     })
     //return a Section object, with its methods
@@ -477,7 +483,7 @@ var pos = (function() {
 // console.log(pos("may live").tags())
 // console.log(pos("may 7th live").tags())
 // console.log(pos("She and Marc Emery married on July 23, 2006.").tags())
-// console.log(pos("spencer quickly acked").sentences[0].tokens)
+// console.log(pos("Toronto is fun. Spencer and heather quickly walked. it was cool").sentences[0].referables())
 // console.log(pos("a hundred").sentences[0].tokens)
 // console.log(pos("Tony Reagan skates").sentences[0].tokens)
 // console.log(pos("She and Marc Emery married on July 23, 2006").sentences[0].tokens)
@@ -491,3 +497,5 @@ var pos = (function() {
 // pos("Sather tried to stop the deal, but when he found out that Gretzky").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
 // pos("Gretzky had tried skating").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
 
+// console.log(pos("i think Tony Danza is cool. He rocks and he is golden.").sentences[0].tokens[2].analysis.referenced_by())
+// console.log(pos("i think Tony Danza is cool and he is golden.").sentences[0].tokens[6].analysis.reference_to())

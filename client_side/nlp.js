@@ -5427,7 +5427,7 @@ var date_extractor = (function() {
 // console.log(date_extractor("1999"))
 
 //wrapper for value's methods
-var Value = function(str, next, last, token) {
+var Value = function(str, sentence, word_i) {
   var the = this
   the.word = str || '';
 
@@ -5932,11 +5932,14 @@ var inflect = (function() {
 // console.log(inflect.singularize('mayors of chicago')=="mayor of chicago")
 
 //wrapper for noun's methods
-var Noun = function(str, next, last, token) {
+var Noun = function(str, sentence, word_i) {
   var the = this
+  var token, next;
+  if(sentence!==undefined && word_i!==undefined){
+    token=sentence.tokens[word_i]
+    next=sentence.tokens[word_i+i]
+  }
   the.word = str || '';
-  the.next = next
-  the.last = last
 
   if (typeof module !== "undefined" && module.exports) {
     parts_of_speech = require("../../data/parts_of_speech")
@@ -6089,7 +6092,11 @@ var Noun = function(str, next, last, token) {
       "ss",
       "of",
       "the",
-      "for"
+      "for",
+      "and",
+      "&",
+      "co",
+      "sons"
     ]
     l= blacklist.length
     for (i = 0; i < l; i++) {
@@ -6104,20 +6111,117 @@ var Noun = function(str, next, last, token) {
         return true
       }
     }
-    //see if noun has a first-name
-    var names = Object.keys(firstnames)
-    l = names.length
-    var firstname=the.word.split(' ')[0].toLowerCase()
-    for (i = 0; i < l; i++) {
-      if (names[i]===firstname) {
-        return true
-      }
+    //see if noun has a known first-name
+    var names=the.word.split(' ').map(function(a){
+      return a.toLowerCase()
+    })
+    if(firstnames[names[0]]){
+      return true
     }
+    //(test middle name too, if there's one)
+    if(names.length> 2 && firstnames[names[1]]){
+      return true
+    }
+
     //if it has an initial between two words
     if(the.word.match(/[a-z]{3,20} [a-z]\.? [a-z]{3,20}/i)){
       return true
     }
     return false
+  }
+
+  //decides if it deserves a he, she, they, or it
+  the.pronoun=function(){
+
+    //if it's a person try to classify male/female
+    if(the.is_person()){
+      var names=the.word.split(' ').map(function(a){
+        return a.toLowerCase()
+      })
+      if(firstnames[names[0]]==="m" || firstnames[names[1]]=="m"){
+        return "he"
+      }
+      if(firstnames[names[0]]==="f" || firstnames[names[1]]=="f" ){
+        return "she"
+      }
+      //test some honourifics
+      if(the.word.match(/^(mrs|miss|ms|misses|mme|mlle)\.? /,'i')){
+        return "she"
+      }
+      if(the.word.match(/\b(mr|mister|sr|jr)\b/,'i')){
+        return "he"
+      }
+      //if it's a known unisex name, don't try guess it. be safe.
+      if(firstnames[names[0]]==="a" || firstnames[names[1]]=="a" ){
+        return "they"
+      }
+      //if we think it's a person, but still don't know the gender, do a little guessing
+      if(names[0].match(/[aeiy]$/)){//if it ends in a 'ee or ah', female
+        return "she"
+      }
+      if(names[0].match(/[ou]$/)){//if it ends in a 'oh or uh', male
+        return "he"
+      }
+      if(names[0].match(/(nn|ll|tt)/)){//if it has double-consonants, female
+        return "she"
+      }
+      //fallback to 'singular-they'
+      return "they"
+    }
+
+    //not a person
+    if(the.is_plural()){
+      return "they"
+    }
+
+    return "it"
+  }
+
+  //tokens that refer to the same thing. "[obama] is cool, [he] is nice."
+  the.referenced_by = function() {
+    //if it's named-noun, look forward for the pronouns pointing to it -> '... he'
+    if(token && token.pos.tag!=="PRP"){
+      var prp=the.pronoun()
+      //look at rest of sentence
+      var interested=sentence.tokens.slice(word_i+1, sentence.tokens.length)
+      //add next sentence too, could go further..
+      if(sentence.next){
+        interested=interested.concat(sentence.next.tokens)
+      }
+      //find the matching pronouns, and break if another noun overwrites it
+      var matches=[]
+      for(var i=0; i<interested.length; i++){
+        if(interested[i].pos.tag==="PRP" && interested[i].normalised===prp){
+          matches.push(interested[i])
+        }else if(interested[i].pos.parent==="noun" && interested[i].analysis.pronoun()===prp){
+          break
+        }
+      }
+      return matches
+    }
+    return []
+  }
+
+  // a pronoun that points at a noun mentioned previously '[he] is nice'
+  the.reference_to = function() {
+    //if it's a pronoun, look backwards for the first mention '[obama]... <-.. [he]'
+    if(token && token.pos.tag==="PRP"){
+      var prp=token.normalised
+      //look at starting of this sentence
+      var interested=sentence.tokens.slice(0, word_i)
+      //add previous sentence, if applicable
+      if(sentence.last){
+        interested=sentence.last.tokens.concat(interested)
+      }
+      //reverse the terms to loop through backward..
+      interested=interested.reverse()
+      for(var i=0; i<interested.length; i++){
+        //it's a match
+        if(interested[i].pos.parent==="noun" && interested[i].pos.tag!=="PRP" && interested[i].analysis.pronoun()===prp){
+          return interested[i]
+        }
+      }
+    }
   }
 
   //specifically which pos it is
@@ -6143,9 +6247,12 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log(new Noun('farmhouse').is_entity())
 // console.log(new Noun("FBI").is_acronym())
 // console.log(new Noun("Tony Danza").is_person())
-// console.time('h')
-// console.log(new Noun("Tonys h. Danza").is_person())
-// console.timeEnd('h')
+// console.log(new Noun("Tony Danza").pronoun()=="he")
+// console.log(new Noun("Tanya Danza").pronoun()=="she")
+// console.log(new Noun("mrs. Taya Danza").pronoun()=="she")
+// console.log(new Noun("Gool Tanya Danza").pronoun()=="she")
+// console.log(new Noun("illi G. Danza").pronoun()=="she")
+// console.log(new Noun("horses").pronoun()=="they")
 
 //turns 'quickly' into 'quick'
 var to_adjective = (function() {
@@ -6212,11 +6319,9 @@ var to_adjective = (function() {
 // console.log(to_adjective('marvelously') === 'marvelous')
 
 //wrapper for Adverb's methods
-var Adverb = function(str, next, last, token) {
+var Adverb = function(str, sentence, word_i) {
   var the = this
   the.word = str || '';
-  the.next = next
-  the.last = last
 
   if (typeof module !== "undefined" && module.exports) {
     to_adjective = require("./conjugate/to_adjective")
@@ -7077,11 +7182,14 @@ var verb_conjugate = (function() {
 // console.log(verb_conjugate("have tried"))
 
 //wrapper for verb's methods
-var Verb = function(str, next, last, token) {
+var Verb = function(str, sentence, word_i) {
   var the = this
+  var token, next;
+  if(sentence!==undefined && word_i!==undefined){
+    token=sentence.tokens[word_i]
+    next=sentence.tokens[word_i+i]
+  }
   the.word = str || '';
-  the.next = next
-  the.last = last
 
   if (typeof module !== "undefined" && module.exports) {
     verb_conjugate = require("./conjugate/conjugate")
@@ -7183,7 +7291,7 @@ var Verb = function(str, next, last, token) {
     if (the.word.match(/n't$/)) {
       return true
     }
-    if ((modals[the.word] || copulas[the.word]) && the.next && the.next.normalised === "not") {
+    if ((modals[the.word] || copulas[the.word]) && next && next.normalised === "not") {
       return true
     }
     return false
@@ -7602,11 +7710,9 @@ var adj_to_adv = (function() {
 // console.log(adj_to_adv('direct'))
 
 //wrapper for Adjective's methods
-var Adjective = function(str, next, last, token) {
+var Adjective = function(str, sentence, word_i) {
   var the = this
   the.word = str || '';
-  the.next = next
-  the.last = last
 
   if (typeof module !== "undefined" && module.exports) {
     to_comparative = require("./conjugate/to_comparative")
@@ -8591,6 +8697,23 @@ var Sentence = function(tokens) {
     })
   }
 
+  //find the 'it', 'he', 'she', and 'they' of this sentence
+  //these are the words that get 'exported' to be used in other sentences
+  the.referables=function(){
+    var pronouns={
+      he:undefined,
+      she:undefined,
+      they:undefined,
+      it:undefined
+    }
+    the.tokens.forEach(function(t){
+      if(t.pos.parent=="noun" && t.pos.tag!="PRP"){
+        pronouns[t.analysis.pronoun()]=t
+      }
+    })
+    return pronouns
+  }
+
   return the
 }
 
@@ -9154,21 +9277,25 @@ var pos = (function() {
       })
     }
 
+    //make them Sentence objects
+    sentences = sentences.map(function(s) {
+      var sentence = new Sentence(s.tokens)
+      sentence.type = s.type
+      return sentence
+    })
     //add analysis on each token
     sentences = sentences.map(function(s) {
       s.tokens = s.tokens.map(function(token, i) {
-        var last_token = s.tokens[i - 1] || null
-        var next_token = s.tokens[i + 1] || null
-        token.analysis = parents[token.pos.parent](token.normalised, next_token, last_token, token)
+        token.analysis = parents[token.pos.parent](token.normalised, s, i)
         return token
       })
       return s
     })
 
-    //make them Sentence objects
-    sentences = sentences.map(function(s) {
-      var sentence = new Sentence(s.tokens)
-      sentence.type = s.type
+    //add next-last references
+    sentences = sentences.map(function(sentence,i) {
+      sentence.last=sentences[i-1]
+      sentence.next=sentences[i+1]
       return sentence
     })
     //return a Section object, with its methods
@@ -9191,7 +9318,7 @@ var pos = (function() {
 // console.log(pos("may live").tags())
 // console.log(pos("may 7th live").tags())
 // console.log(pos("She and Marc Emery married on July 23, 2006.").tags())
-// console.log(pos("spencer quickly acked").sentences[0].tokens)
+// console.log(pos("Toronto is fun. Spencer and heather quickly walked. it was cool").sentences[0].referables())
 // console.log(pos("a hundred").sentences[0].tokens)
 // console.log(pos("Tony Reagan skates").sentences[0].tokens)
 // console.log(pos("She and Marc Emery married on July 23, 2006").sentences[0].tokens)
@@ -9205,6 +9332,8 @@ var pos = (function() {
 // pos("Sather tried to stop the deal, but when he found out that Gretzky").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
 // pos("Gretzky had tried skating").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
 
+// console.log(pos("i think Tony Danza is cool. He rocks and he is golden.").sentences[0].tokens[2].analysis.referenced_by())
+// console.log(pos("i think Tony Danza is cool and he is golden.").sentences[0].tokens[6].analysis.reference_to())
 
 //just a wrapper for text -> entities
 //most of this logic is in ./parents/noun

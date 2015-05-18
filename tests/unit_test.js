@@ -9,6 +9,58 @@ if (typeof module !== "undefined" && module.exports) {
 // Dummy method for testing under prototype pollution
 Object.prototype.dummy = function() {};
 
+exports["noun.referenced_by"] = function(test) {
+  var refs=nlp.pos("i think Tony Danza is cool, he rocks it.").sentences[0].tokens[2].analysis.referenced_by()
+  test.deepEqual(refs.length, 1)
+  test.deepEqual(refs[0].text, "he")
+  refs=nlp.pos("i think Tony Danza is cool. He rocks it and he is golden.").sentences[0].tokens[2].analysis.referenced_by()
+  test.deepEqual(refs.length, 2)
+  test.deepEqual(refs[0].normalised, "he")
+  test.deepEqual(refs[1].normalised, "he")
+  refs=nlp.pos("Jamaica is nice because it never snows").sentences[0].tokens[0].analysis.referenced_by()
+  test.deepEqual(refs.length, 1)
+  test.deepEqual(refs[0].normalised, "it")
+  refs=nlp.pos("Flowers are stupid. All they ever do is smell.").sentences[0].tokens[0].analysis.referenced_by()
+  test.deepEqual(refs.length, 1)
+  test.deepEqual(refs[0].normalised, "they")
+  test.done()
+}
+exports["noun.reference_to"] = function(test) {
+  var ref=nlp.pos("i think Tony Danza is cool and he is golden.").sentences[0].tokens[6].analysis.reference_to()
+  test.deepEqual(ref.text, "Tony Danza")
+  ref=nlp.pos("i think Sally is cool and he is golden.").sentences[0].tokens[6].analysis.reference_to()
+  test.deepEqual(ref, undefined)
+  ref=nlp.pos("Joe walked away. I think he is a nightmare.").sentences[1].tokens[2].analysis.reference_to()
+  test.deepEqual(ref.text, "Joe")
+  ref=nlp.pos("Tennis balls are fun because they are chewy").sentences[0].tokens[4].analysis.reference_to()
+  test.deepEqual(ref.text, "Tennis balls")
+  ref=nlp.pos("Tanya G thinks dogs suck and she quit her job").sentences[0].tokens[5].analysis.reference_to()
+  test.deepEqual(ref.text, "Tanya G")
+  ref=nlp.pos("Tara says they suck and she quit her job").sentences[0].tokens[5].analysis.reference_to()
+  test.deepEqual(ref.text, "Tara")
+  test.done()
+}
+
+exports["sentence.referables"] = function(test) {
+  var obj=nlp.pos("Toronto is the center of Ontario").sentences[0].referables()
+  test.deepEqual(obj.it.text, "Ontario")
+  test.deepEqual(obj.he, undefined)
+  test.deepEqual(obj.she, undefined)
+  test.deepEqual(obj.they, undefined)
+  obj=nlp.pos("Heather Lauren and Spencer Kelly went to Canada").sentences[0].referables()
+  test.deepEqual(obj.it.text, "Canada")
+  test.deepEqual(obj.he.text, "Spencer Kelly")
+  test.deepEqual(obj.she.text, "Heather Lauren")
+  test.deepEqual(obj.they, undefined)
+  obj=nlp.pos("the books are dusty").sentences[0].referables()
+  test.deepEqual(obj.it, undefined)
+  test.deepEqual(obj.he, undefined)
+  test.deepEqual(obj.she, undefined)
+  test.deepEqual(obj.they.text, "books")
+  test.done()
+}
+
+
 exports["noun.pronoun"] = function(test) {
   test.deepEqual(nlp.noun("Toronto").pronoun(),"it")
   test.deepEqual(nlp.noun("studying").pronoun(),"it")

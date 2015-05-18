@@ -1,9 +1,12 @@
 //wrapper for verb's methods
-var Verb = function(str, next, last, token) {
+var Verb = function(str, sentence, word_i) {
   var the = this
+  var token, next;
+  if(sentence!==undefined && word_i!==undefined){
+    token=sentence.tokens[word_i]
+    next=sentence.tokens[word_i+i]
+  }
   the.word = str || '';
-  the.next = next
-  the.last = last
 
   if (typeof module !== "undefined" && module.exports) {
     verb_conjugate = require("./conjugate/conjugate")
@@ -105,7 +108,7 @@ var Verb = function(str, next, last, token) {
     if (the.word.match(/n't$/)) {
       return true
     }
-    if ((modals[the.word] || copulas[the.word]) && the.next && the.next.normalised === "not") {
+    if ((modals[the.word] || copulas[the.word]) && next && next.normalised === "not") {
       return true
     }
     return false

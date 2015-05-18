@@ -445,9 +445,7 @@ var pos = (function() {
     //add analysis on each token
     sentences = sentences.map(function(s) {
       s.tokens = s.tokens.map(function(token, i) {
-        var last_token = s.tokens[i - 1] || null
-        var next_token = s.tokens[i + 1] || null
-        token.analysis = parents[token.pos.parent](token.normalised, next_token, last_token, token)
+        token.analysis = parents[token.pos.parent](token.normalised, s, i)
         return token
       })
       return s

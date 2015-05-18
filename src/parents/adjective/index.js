@@ -1,9 +1,7 @@
 //wrapper for Adjective's methods
-var Adjective = function(str, next, last, token) {
+var Adjective = function(str, sentence, word_i) {
   var the = this
   the.word = str || '';
-  the.next = next
-  the.last = last
 
   if (typeof module !== "undefined" && module.exports) {
     to_comparative = require("./conjugate/to_comparative")

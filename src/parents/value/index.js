@@ -1,5 +1,5 @@
 //wrapper for value's methods
-var Value = function(str, next, last, token) {
+var Value = function(str, sentence, word_i) {
   var the = this
   the.word = str || '';
 

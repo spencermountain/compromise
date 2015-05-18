@@ -22,6 +22,8 @@ exports["noun.pronoun"] = function(test) {
   test.deepEqual(nlp.noun("Gool Tanya Danza").pronoun(),"she")
   test.deepEqual(nlp.noun("Illi G. Danza").pronoun(),"she")
   test.deepEqual(nlp.noun("Jill").pronoun(),"she")
+  // test.deepEqual(nlp.noun("John Fisher & sons").pronoun(),"it")
+  test.deepEqual(nlp.noun("John G. Fishermore Institute").pronoun(),"it")
   test.done()
 }
 

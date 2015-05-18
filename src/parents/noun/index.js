@@ -1,9 +1,12 @@
 //wrapper for noun's methods
-var Noun = function(str, next, last, token) {
+var Noun = function(str, sentence, word_i) {
   var the = this
+  var token, next;
+  if(sentence!==undefined && word_i!==undefined){
+    token=sentence.tokens[word_i]
+    next=sentence.tokens[word_i+i]
+  }
   the.word = str || '';
-  the.next = next
-  the.last = last
 
   if (typeof module !== "undefined" && module.exports) {
     parts_of_speech = require("../../data/parts_of_speech")
@@ -156,7 +159,11 @@ var Noun = function(str, next, last, token) {
       "ss",
       "of",
       "the",
-      "for"
+      "for",
+      "and",
+      "&",
+      "co",
+      "sons"
     ]
     l= blacklist.length
     for (i = 0; i < l; i++) {
@@ -210,6 +217,10 @@ var Noun = function(str, next, last, token) {
       }
       if(the.word.match(/\b(mr|mister|sr|jr)\b/,'i')){
         return "he"
+      }
+      //if it's a known unisex name, don't try guess it. be safe.
+      if(firstnames[names[0]]==="a" || firstnames[names[1]]=="a" ){
+        return "they"
       }
       //if we think it's a person, but still don't know the gender, do a little guessing
       if(names[0].match(/[aeiy]$/)){//if it ends in a 'ee or ah', female

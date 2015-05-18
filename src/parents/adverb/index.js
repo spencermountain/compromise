@@ -1,9 +1,7 @@
 //wrapper for Adverb's methods
-var Adverb = function(str, next, last, token) {
+var Adverb = function(str, sentence, word_i) {
   var the = this
   the.word = str || '';
-  the.next = next
-  the.last = last
 
   if (typeof module !== "undefined" && module.exports) {
     to_adjective = require("./conjugate/to_adjective")

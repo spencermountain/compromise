@@ -23,6 +23,23 @@ exports["noun.referenced_by"] = function(test) {
   refs=nlp.pos("Flowers are stupid. All they ever do is smell.").sentences[0].tokens[0].analysis.referenced_by()
   test.deepEqual(refs.length, 1)
   test.deepEqual(refs[0].normalised, "they")
+  refs=nlp.pos("the tomatoes are good because they ripened.").sentences[0].tokens[1].analysis.referenced_by()
+  test.deepEqual(refs.length, 1)
+  test.deepEqual(refs[0].normalised, "they")
+
+  refs=nlp.pos("Henry sold his kids.").sentences[0].tokens[0].analysis.referenced_by()
+  test.deepEqual(refs.length, 1)
+  test.deepEqual(refs[0].normalised, "his")
+  refs=nlp.pos("Tina grabbed her shoes. She is lovely.").sentences[0].tokens[0].analysis.referenced_by()
+  test.deepEqual(refs.length, 2)
+  test.deepEqual(refs[0].normalised, "her")
+  test.deepEqual(refs[1].normalised, "she")
+  refs=nlp.pos("The books are dusty. They need to be cleaned.").sentences[0].tokens[1].analysis.referenced_by()
+  test.deepEqual(refs.length, 1)
+  test.deepEqual(refs[0].normalised, "they")
+  refs=nlp.pos("The books are dusty. I need to clean them.").sentences[0].tokens[1].analysis.referenced_by()
+  test.deepEqual(refs.length, 1)
+  test.deepEqual(refs[0].normalised, "them")
   test.done()
 }
 exports["noun.reference_to"] = function(test) {

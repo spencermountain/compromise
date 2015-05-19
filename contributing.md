@@ -45,7 +45,7 @@ grunt  #build client-side scripts
 node ./tests/pos_test/bump_latest.js  #set current pos results as reference data
 npm publish #push npm version
 #bump bower
-git tag -a v0.4.0 -m "tag bower release"
+git tag -a v1.0.0 -m "tag bower release"
 git push origin master --tags
 ```
 

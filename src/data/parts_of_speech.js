@@ -129,13 +129,13 @@ var parts_of_speech = (function() {
       "parent": "noun",
       "tag": "VBG"
     },
-
-    //glue
     "PP": {
       "name": "possessive pronoun",
-      "parent": "glue",
+      "parent": "noun",
       "tag": "PP"
     },
+
+    //glue
     "FW": {
       "name": "foreign word",
       "parent": "glue",

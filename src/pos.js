@@ -157,7 +157,7 @@ var pos = (function() {
       token.pos_reason = "before_modal"
     }
     //if it's after the word 'will' its probably a verb/adverb
-    if (last && last.normalised == "will" && !last.punctuated && token.pos.parent == "noun" && token.pos.tag !== "PRP") {
+    if (last && last.normalised == "will" && !last.punctuated && token.pos.parent == "noun" && token.pos.tag !== "PRP" && token.pos.tag !== "PP") {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "after_will"
     }
@@ -168,7 +168,7 @@ var pos = (function() {
     }
     //if it's after an adverb, it's not a noun -> quickly acked
     //support form 'atleast he is..'
-    if (last && token.pos.parent === "noun" && token.pos.tag !== "PRP" && last.pos.tag === "RB" && !last.start) {
+    if (last && token.pos.parent === "noun" && token.pos.tag !== "PRP" && token.pos.tag !== "PP" && last.pos.tag === "RB" && !last.start) {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "after_adverb"
     }
@@ -193,7 +193,7 @@ var pos = (function() {
       sentence.tokens[i + 1].pos_reason = "copula-adverb-adjective"
     }
     // the city [verb] him.
-    if (next && next.pos.tag == "PRP" && token.pos.parent == "noun" && !token.punctuated) {
+    if (next && next.pos.tag == "PRP" && token.pos.tag !== "PP" && token.pos.parent == "noun" && !token.punctuated) {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "before_[him|her|it]"
     }
@@ -356,7 +356,7 @@ var pos = (function() {
             return token //proceed
           }
           //suggest verb after personal pronouns (he|she|they), modal verbs (would|could|should)
-          if (token.pos.tag === "PRP" || token.pos.tag === "MD") {
+          if (token.pos.tag === "PRP" && token.pos.tag !== "PP" || token.pos.tag === "MD") {
             need = 'verb'
             reason = token.pos.name
             return token //proceed
@@ -499,3 +499,5 @@ var pos = (function() {
 
 // console.log(pos("i think Tony Danza is cool. He rocks and he is golden.").sentences[0].tokens[2].analysis.referenced_by())
 // console.log(pos("i think Tony Danza is cool and he is golden.").sentences[0].tokens[6].analysis.reference_to())
+// console.log(pos("Tina grabbed her shoes. She is lovely.").sentences[0].tokens[0].analysis.referenced_by())
+// console.log(pos("Tina grabbed her shoes. She is lovely.").sentences[0].tokens[0].analysis.referenced_by())

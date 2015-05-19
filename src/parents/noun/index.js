@@ -52,6 +52,16 @@ var Noun = function(str, sentence, word_i) {
     "century": 1,
     "it": 1
   }
+  //for resolution of obama -> he -> his
+  var posessives= {
+    "his":"he",
+    "her":"she",
+    "hers":"she",
+    "their":"they",
+    "them":"they",
+    "its":"it"
+  }
+
   the.is_acronym = function() {
     var s = the.word
       //no periods
@@ -244,10 +254,10 @@ var Noun = function(str, sentence, word_i) {
     return "it"
   }
 
-  //tokens that refer to the same thing. "[obama] is cool, [he] is nice."
+  //list of pronouns that refer to this named noun. "[obama] is cool, [he] is nice."
   the.referenced_by = function() {
     //if it's named-noun, look forward for the pronouns pointing to it -> '... he'
-    if(token && token.pos.tag!=="PRP"){
+    if(token && token.pos.tag!=="PRP" && token.pos.tag!=="PP"){
       var prp=the.pronoun()
       //look at rest of sentence
       var interested=sentence.tokens.slice(word_i+1, sentence.tokens.length)
@@ -258,9 +268,14 @@ var Noun = function(str, sentence, word_i) {
       //find the matching pronouns, and break if another noun overwrites it
       var matches=[]
       for(var i=0; i<interested.length; i++){
-        if(interested[i].pos.tag==="PRP" && interested[i].normalised===prp){
+        if(interested[i].pos.tag==="PRP" && (interested[i].normalised===prp || posessives[interested[i].normalised]===prp)){
+          //this pronoun points at our noun
+          matches.push(interested[i])
+        }else if(interested[i].pos.tag==="PP" && posessives[interested[i].normalised]===prp){
+          //this posessive pronoun ('his/her') points at our noun
           matches.push(interested[i])
         }else if(interested[i].pos.parent==="noun" && interested[i].analysis.pronoun()===prp){
+          //this noun stops our further pursuit
           break
         }
       }

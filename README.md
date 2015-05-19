@@ -283,8 +283,8 @@ nlp.denormalize("The quick brown fox jumps over the lazy dog", {percentage:50})
     "NNO" : "possessive noun (spencer's, sam's)"
     "NG" : "gerund noun (eating,winning" : "but used grammatically as a noun)"
     "PRP" : "personal pronoun (I,you,she)"
-  "glue":
     "PP" : "possessive pronoun (my,one's)"
+  "glue":
     "FW" : "foreign word (mon dieu, voila)"
     "IN" : "preposition (of,in,by)"
     "MD" : "modal verb (can,should)"

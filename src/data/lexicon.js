@@ -228,7 +228,6 @@ var lexicon = (function() {
           "none",
           "anything",
           "anyone",
-          "lot",
           "theirs",
           "himself",
           "ours",
@@ -246,8 +245,8 @@ var lexicon = (function() {
           "everything",
           "myself",
           "itself",
-          "who",
           "her", //this one is pretty ambiguous
+          "who",
           "whom",
           "whose"
         ],

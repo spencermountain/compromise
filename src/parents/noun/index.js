@@ -138,7 +138,11 @@ var Noun = function(str, sentence, word_i) {
   }
 
   the.article = function() {
-    return indefinite_article(the.word)
+    if(the.is_plural()){
+      return "the"
+    }else{
+      return indefinite_article(the.word)
+    }
   }
 
   the.pluralize = function() {

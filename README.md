@@ -103,6 +103,11 @@ nlp.syllables("hamburger")
   s.values()
   //[]
 ````
+as sugar, these methods can be called on multiple sentences from the nlp.pos() object too, like:
+```javascript
+nlp.pos("Tony is cool. Jen is happy.").people()
+//[{text:"Tony"}, {text:"Jen"}]
+```
 
 ###Noun methods:
 ```javascript
@@ -112,21 +117,34 @@ nlp.noun("earthquakes").singularize()
 nlp.noun("earthquake").pluralize()
 //earthquakes
 
-nlp.noun('veggie burger').is_plural
+nlp.noun('veggie burger').is_plural()
 //false
 
-nlp.noun('tony danza').is_person
+nlp.noun('tony danza').is_person()
 //true
-nlp.noun('Tony J. Danza elementary school').is_person
+nlp.noun('Tony J. Danza elementary school').is_person()
 //false
-nlp.noun('SS Tony danza').is_person
+nlp.noun('SS Tony danza').is_person()
 //false
 
 nlp.noun('hour').article()
 //an
 
-nlp.inflect('mayors of toronto'))
+nlp.noun('mayors of toronto').conjugate()
 //{ plural: 'mayors of toronto', singular: 'mayor of toronto' }
+
+nlp.noun("tooth").pronoun()
+//it
+nlp.noun("teeth").pronoun()
+//they
+nlp.noun("Tony Hawk").pronoun()
+//"he"
+nlp.noun("Nancy Hawk").pronoun()
+//"she"
+
+var he = nlp.pos("Tony Danza is great. He lives in L.A.").sentences[1].tokens[0]
+he.analysis.reference_to()
+//{text:"Tony Danza"...}
 ```
 
 ###Verb methods:
@@ -244,6 +262,7 @@ nlp.denormalize("The quick brown fox jumps over the lazy dog", {percentage:50})
     "VBN" : "past-participle verb (eaten)"
     "VBP" : "infinitive verb (eat)"
     "VBZ" : "present-tense verb (eats, swims)"
+    "VBF" : "future-tense verb (will eat)"
     "CP" : "copula (is, was, were)"
     "VBG" : "gerund verb (eating,winning)"
   "adjective":
@@ -284,7 +303,7 @@ Because the library can conjugate all sorts of forms, it only needs to store one
 The lexicon was built using the [American National Corpus](http://www.americannationalcorpus.org/), then intersected with the regex rule-list. For example, it lists only 300 verbs, then blasts-out their 1200+ derived forms.
 
 ####Contractions
-Unlike other nlp toolkits, this library puts a 'silent token' into the phrase for contractions. Otherwise something would be neglected.
+It puts a 'silent token' into the phrase for contractions. Otherwise a meaningful part-of-speech could be neglected.
 ```javascript
 nlp.pos("i'm good.")
  [{
@@ -304,7 +323,7 @@ nlp.pos("i'm good.")
  }]
 ```
 ####Tokenization
-Neighbouring words with the same part of speech are merged together, unless there is punctuation, different capitalisation, or special cases.
+Neighbouring words with the same part of speech are merged together, unless there is punctuation, different capitalisation, or some special cases.
 ```javascript
 nlp.pos("tony hawk won").tags()
 //tony hawk   NN
@@ -317,6 +336,8 @@ nlp.pos("tony hawk won", {dont_combine:true}).tags()
 //hawk   NN
 //won   VB
 ```
+####Phrasal Verbs
+'beef up' is one verb, and not some direction of beefing.
 
 ## Licence
 MIT

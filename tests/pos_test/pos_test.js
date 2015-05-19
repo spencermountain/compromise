@@ -16,12 +16,12 @@ function compare_to_latest() {
     })
     latest[k].forEach(function(l, i) {
       //make sure their tokens line-up
-      if (l.length != results[i][0].length) {
+      if ( results[i] && l.length != results[i][0].length) {
         console.log("    "+i+")   --tokenization change-- \"" + results[i][1].slice(0, 10).join(' ') + "\"..")
         return
       }
       l.forEach(function(pos, i2) {
-        if (pos != results[i][0][i2]) {
+        if ( results[i] && pos != results[i][0][i2]) {
           //we found a discrepency
           console.log("    "+i+")    " + pos + " -> " + results[i][0][i2] + '  - "' + results[i][1][i2] + '"    -  '+results[i][2])
         }

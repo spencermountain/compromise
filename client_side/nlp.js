@@ -1,4 +1,4 @@
-/*! nlp_compromise  0.5.2  by @spencermountain 2015-05-18  MIT */
+/*! nlp_compromise  1.0.0  by @spencermountain 2015-05-18  MIT */
 var nlp = (function() {
 var verb_irregulars = (function() {
   var types = [
@@ -9432,6 +9432,7 @@ if (typeof module !== "undefined" && module.exports) {
 // console.log( nlp.pos('she sells seashells by the seashore').sentences[0].negate().text() )
 // console.log( nlp.pos('i will slouch'));
 // console.log( nlp.pos('Sally Davidson sells seashells by the seashore. Joe Biden said so.').people() )
+// console.log(nlp.pos("Tony Danza is great. He works in the bank.").sentences[1].tokens[0].analysis.reference_to())
 
 return nlp;
 })()

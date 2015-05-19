@@ -665,12 +665,8 @@ module.exports={
    "NN",
    "IN",
    "DT",
-   "NN"
-  ],
-  [
-   "NNP"
-  ],
-  [
+   "NN",
+   "NN",
    "NN"
   ],
   [
@@ -1753,7 +1749,6 @@ module.exports={
    "NN",
    "VB",
    "IN",
-   "NNP",
    "CD",
    "CC",
    "DT",
@@ -1858,7 +1853,6 @@ module.exports={
    "VBP",
    "NN",
    "IN",
-   "NNP",
    "CD",
    "CC",
    "MD",
@@ -2058,9 +2052,7 @@ module.exports={
    "NN",
    "NN",
    "CC",
-   "NN"
-  ],
-  [
+   "NN",
    "NN",
    "JJ",
    "IN",
@@ -3139,12 +3131,8 @@ module.exports={
    "IN",
    "NN",
    "NN",
-   "NN"
-  ],
-  [
-   "NNP"
-  ],
-  [
+   "NN",
+   "NN",
    "NN",
    "NN",
    "CC",
@@ -4439,7 +4427,7 @@ module.exports={
    "NN",
    "IN",
    "JJ",
-   "CD",
+   "NNP",
    "IN",
    "DT",
    "NNP"
@@ -4521,7 +4509,7 @@ module.exports={
    "VBP",
    "IN",
    "JJ",
-   "NNP",
+   "CD",
    "CC",
    "CP",
    "CD",
@@ -4754,12 +4742,8 @@ module.exports={
    "NN",
    "CC",
    "DT",
-   "NN"
-  ],
-  [
-   "NNP"
-  ],
-  [
+   "NN",
+   "NN",
    "NN",
    "NN"
   ],
@@ -4955,9 +4939,7 @@ module.exports={
    "DT",
    "NN",
    "CC",
-   "NN"
-  ],
-  [
+   "NN",
    "NN",
    "VB",
    "NN",
@@ -5295,7 +5277,9 @@ module.exports={
    "DT",
    "NN",
    "IN",
-   "CD"
+   "CD",
+   "CC",
+   "NNP"
   ],
   [
    "IN",
@@ -5436,6 +5420,7 @@ module.exports={
    "NN",
    "CC",
    "IN",
+   "NNP",
    "CD",
    "PRP",
    "CP",
@@ -5477,6 +5462,7 @@ module.exports={
    "CD",
    "NN",
    "IN",
+   "NNP",
    "CD"
   ],
   [
@@ -6955,10 +6941,6 @@ module.exports={
    "IN",
    "DT",
    "NN",
-   "NN"
-  ],
-  [
-   "DT",
    "NN",
    "DT",
    "VBZ",
@@ -7098,20 +7080,14 @@ module.exports={
    "CC",
    "NN",
    "NN",
-   "NN"
-  ],
-  [
-   "NN",
-   "NN"
-  ],
-  [
    "NN",
    "NN",
    "NN",
    "NN",
-   "NN"
-  ],
-  [
+   "NN",
+   "NN",
+   "NN",
+   "NN",
    "NN",
    "NN",
    "NN",
@@ -8511,6 +8487,7 @@ module.exports={
    "RB",
    "JJ",
    "IN",
+   "NNP",
    "CD"
   ],
   [
@@ -11565,7 +11542,7 @@ module.exports={
    "NN",
    "VBP",
    "DT",
-   "NNP",
+   "NN",
    "VBG",
    "CC",
    "IN",
@@ -11703,7 +11680,7 @@ module.exports={
    "NN"
   ],
   [
-   "NNP",
+   "NN",
    "CP",
    "JJ",
    "RB",
@@ -12025,7 +12002,6 @@ module.exports={
    "NN",
    "NN",
    "VBD",
-   "NNP",
    "CD",
    "IN",
    "NN",
@@ -12472,6 +12448,7 @@ module.exports={
    "DT",
    "NN",
    "IN",
+   "NNP",
    "CD",
    "VBD",
    "DT",
@@ -13550,9 +13527,8 @@ module.exports={
    "NN",
    "PP",
    "IN",
-   "NNP",
    "CD",
-   "VB",
+   "NN",
    "JJ",
    "NN",
    "IN",
@@ -13627,7 +13603,7 @@ module.exports={
    "NN",
    "MD",
    "CC",
-   "VB",
+   "VBP",
    "IN",
    "VBP",
    "VBD",
@@ -14742,7 +14718,6 @@ module.exports={
    "DT",
    "NN",
    "IN",
-   "NNP",
    "CD",
    "CC",
    "JJ",
@@ -14950,7 +14925,6 @@ module.exports={
   ],
   [
    "IN",
-   "NNP",
    "CD",
    "IN",
    "NN",
@@ -15287,6 +15261,7 @@ module.exports={
   ],
   [
    "IN",
+   "NNP",
    "CD",
    "IN",
    "DT",
@@ -15334,8 +15309,7 @@ module.exports={
    "NNP",
    "CC",
    "CD",
-   "NN",
-   "NN"
+   "NNP"
   ],
   [
    "DT",
@@ -15522,7 +15496,7 @@ module.exports={
   ],
   [
    "PRP",
-   "VB",
+   "VBP",
    "NN",
    "VBP",
    "DT"
@@ -19844,7 +19818,7 @@ module.exports={
    "VBD",
    "IN",
    "PP",
-   "NN",
+   "NNP",
    "IN",
    "JJ",
    "CC",
@@ -20099,7 +20073,6 @@ module.exports={
    "VB",
    "PP",
    "IN",
-   "NNP",
    "CD",
    "RB",
    "VB",
@@ -20113,7 +20086,7 @@ module.exports={
    "NN"
   ],
   [
-   "NN",
+   "NNP",
    "VB",
    "IN",
    "DT",
@@ -20949,6 +20922,7 @@ module.exports={
    "VBP",
    "NN",
    "IN",
+   "NNP",
    "CD"
   ],
   [
@@ -22074,6 +22048,7 @@ module.exports={
    "PP",
    "NN",
    "IN",
+   "NNP",
    "CD"
   ],
   [
@@ -22092,7 +22067,7 @@ module.exports={
    "NN"
   ],
   [
-   "NN",
+   "NNP",
    "VB",
    "DT",
    "NNA",
@@ -22151,7 +22126,7 @@ module.exports={
   ],
   [
    "IN",
-   "NNP",
+   "CD",
    "PRP",
    "CP",
    "JJ",
@@ -23089,6 +23064,7 @@ module.exports={
    "DT",
    "NN",
    "IN",
+   "NNP",
    "CD",
    "IN",
    "CD"
@@ -23125,6 +23101,7 @@ module.exports={
   ],
   [
    "IN",
+   "NNP",
    "CD",
    "PRP",
    "CP",
@@ -24401,12 +24378,10 @@ module.exports={
    "CC",
    "JJ",
    "CC",
-   "NNP"
+   "NN"
   ],
   [
    "IN",
-   "CD",
-   "NNP",
    "CD",
    "DT",
    "NN",
@@ -24937,7 +24912,6 @@ module.exports={
   [
    "IN",
    "CD",
-   "NNP",
    "DT",
    "NN",
    "CC",
@@ -24992,7 +24966,7 @@ module.exports={
    "NN"
   ],
   [
-   "NN",
+   "NNP",
    "RB",
    "VBD",
    "DT",
@@ -25206,7 +25180,6 @@ module.exports={
   ],
   [
    "DT",
-   "NNP",
    "CD",
    "NN",
    "VB",
@@ -25383,7 +25356,7 @@ module.exports={
    "NN"
   ],
   [
-   "NN",
+   "NNP",
    "JJR",
    "VBD",
    "DT",
@@ -25428,6 +25401,7 @@ module.exports={
    "IN",
    "NN",
    "IN",
+   "NNP",
    "CD",
    "NN",
    "VBD",
@@ -25641,7 +25615,7 @@ module.exports={
    "NN"
   ],
   [
-   "NN",
+   "NNP",
    "VBD",
    "VBG",
    "PRP",
@@ -25671,7 +25645,7 @@ module.exports={
    "PRP"
   ],
   [
-   "NNP",
+   "NN",
    "VBD",
    "DT",
    "PRP",
@@ -25879,6 +25853,7 @@ module.exports={
   ],
   [
    "IN",
+   "NNP",
    "CD",
    "VBG",
    "DT",
@@ -26156,8 +26131,6 @@ module.exports={
   ],
   [
    "IN",
-   "CD",
-   "NNP",
    "CD",
    "PRP",
    "CP",
@@ -27483,7 +27456,7 @@ module.exports={
   ],
   [
    "NN",
-   "NNP",
+   "NN",
    "CD",
    "NN",
    "VBD",
@@ -27511,7 +27484,6 @@ module.exports={
   ],
   [
    "IN",
-   "NNP",
    "CD",
    "CC",
    "VBG",
@@ -28248,9 +28220,7 @@ module.exports={
    "CC",
    "VB",
    "IN",
-   "NN"
-  ],
-  [
+   "NN",
    "NN",
    "IN",
    "NN",
@@ -28335,7 +28305,6 @@ module.exports={
    "NN",
    "NN",
    "IN",
-   "NNP",
    "CD",
    "DT",
    "NN",

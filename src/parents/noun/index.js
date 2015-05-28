@@ -272,6 +272,7 @@ var Noun = function(str, sentence, word_i) {
       //find the matching pronouns, and break if another noun overwrites it
       var matches=[]
       for(var i=0; i<interested.length; i++){
+        console.log(interested[i].normalised)
         if(interested[i].pos.tag==="PRP" && (interested[i].normalised===prp || posessives[interested[i].normalised]===prp)){
           //this pronoun points at our noun
           matches.push(interested[i])

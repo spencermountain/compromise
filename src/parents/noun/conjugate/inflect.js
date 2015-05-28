@@ -6,6 +6,7 @@ var inflect = (function() {
 
   if (typeof module !== "undefined" && module.exports) {
     uncountables = require("../../../data/lexicon/uncountables")
+    irregular_nouns = require("../../../data/lexicon/irregular_nouns")
   }
   //words that shouldn't ever inflect, for metaphysical reasons
   uncountable_nouns = uncountables.reduce(function(h, a) {
@@ -19,82 +20,27 @@ var inflect = (function() {
     }
     return str.charAt(0).toUpperCase() + str.slice(1)
   }
-  var irregulars = [
-    ['child', 'children'],
-    ['person', 'people'],
-    ['leaf', 'leaves'],
-    ['database', 'databases'],
-    ['quiz', 'quizzes'],
-    ['child', 'children'],
-    ['stomach', 'stomachs'],
-    ['sex', 'sexes'],
-    ['move', 'moves'],
-    ['shoe', 'shoes'],
-    ["goose", "geese"],
-    ["phenomenon", "phenomena"],
-    ['barracks', 'barracks'],
-    ['deer', 'deer'],
-    ['syllabus', 'syllabi'],
-    ['index', 'indices'],
-    ['appendix', 'appendices'],
-    ['criterion', 'criteria'],
-    ['i', 'we'],
-    ['man', 'men'],
-    ['move', 'moves'],
-    ['she', 'they'],
-    ['he', 'they'],
-    ['myself', 'ourselves'],
-    ['yourself', 'yourselves'],
-    ['himself', 'themselves'],
-    ['herself', 'themselves'],
-    ['themself', 'themselves'],
-    ['mine', 'ours'],
-    ['hers', 'theirs'],
-    ['his', 'theirs'],
-    ['its', 'theirs'],
-    ['theirs', 'theirs'],
-    ['sex', 'sexes'],
-    ['rodeo', 'rodeos'],
-    ['epoch', 'epochs'],
-    ['zero', 'zeros'],
-    ['avocado', 'avocados'],
-    ['halo', 'halos'],
-    ['tornado', 'tornados'],
-    ['tuxedo', 'tuxedos'],
-    ['sombrero', 'sombreros'],
-    ['addendum', 'addenda'],
-    ['alga', 'algae'],
-    ['alumna', 'alumnae'],
-    ['alumnus', 'alumni'],
-    ['bacillus', 'bacilli'],
-    ['cactus', 'cacti'],
-    ['beau', 'beaux'],
-    ['château', 'châteaux'],
-    ['chateau', 'chateaux'],
-    ['tableau', 'tableaux'],
-    ['corpus', 'corpora'],
-    ['curriculum', 'curricula'],
-    ['echo', 'echoes'],
-    ['embargo', 'embargoes'],
-    ['foot', 'feet'],
-    ['genus', 'genera'],
-    ['hippopotamus', 'hippopotami'],
-    ['larva', 'larvae'],
-    ['libretto', 'libretti'],
-    ['loaf', 'loaves'],
-    ['matrix', 'matrices'],
-    ['memorandum', 'memoranda'],
-    ['mosquito', 'mosquitoes'],
-    ['opus', 'opera'],
-    ['ovum', 'ova'],
-    ['ox', 'oxen'],
-    ['radius', 'radii'],
-    ['referendum', 'referenda'],
-    ['thief', 'thieves'],
-    ['that', 'those'],
-    ['this', 'these'],
-    ['tooth', 'teeth'],
+
+  //these aren't nouns, but let's inflect them anyways
+  var nonnoun_irregulars = [
+    ["he", "they"],
+    ["she", "they"],
+    ["this", "these"],
+    ["that", "these"],
+    ["mine", "ours"],
+    ["hers", "theirs"],
+    ["his", "theirs"],
+    ["i", "we"],
+    ["move", "_s"],
+    ["myself", "ourselves"],
+    ["yourself", "yourselves"],
+    ["himself", "themselves"],
+    ["herself", "themselves"],
+    ["themself", "themselves"],
+    ["its", "theirs"],
+    ["theirs", "_"]
   ]
+  irregular_nouns= irregular_nouns.concat(nonnoun_irregulars)
 
   var pluralize_rules = [
     [/(ax|test)is$/i, '$1es'],
@@ -139,7 +85,7 @@ var inflect = (function() {
       return str
     }
     //irregular
-    var found = irregulars.filter(function(r) {
+    var found = irregular_nouns.filter(function(r) {
       return r[0] === low
     })
     if (found[0]) {
@@ -208,7 +154,7 @@ var inflect = (function() {
       return str
     }
     //irregular
-    var found = irregulars.filter(function(r) {
+    var found = irregular_nouns.filter(function(r) {
       return r[1] === low
     })
     if (found[0]) {
@@ -243,11 +189,11 @@ var inflect = (function() {
       str = preposition[1]
     }
     // if it's a known irregular case
-    for (var i = 0; i < irregulars.length; i++) {
-      if (irregulars[i][1] === str) {
+    for (var i = 0; i < irregular_nouns.length; i++) {
+      if (irregular_nouns[i][1] === str) {
         return true
       }
-      if (irregulars[i][0] === str) {
+      if (irregular_nouns[i][0] === str) {
         return false
       }
     }

@@ -14,6 +14,7 @@ module.exports = function(grunt) {
     './src/data/lexicon/values.js',
     './src/data/lexicon/abbreviations.js',
     './src/data/lexicon/firstnames.js',
+    './src/data/lexicon/irregular_nouns.js',
     //methods
     './src/methods/tokenization/sentence.js',
     './src/methods/tokenization/ngram.js',

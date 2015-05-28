@@ -11,6 +11,7 @@ var lexicon = (function() {
       honourifics = require("./lexicon/honourifics")
       uncountables = require("./lexicon/uncountables")
       firstnames = require("./lexicon/firstnames")
+      irregular_nouns = require("./lexicon/irregular_nouns")
 
       //verbs
       verbs = require("./lexicon/verbs")
@@ -25,6 +26,7 @@ var lexicon = (function() {
       to_comparative = require("../parents/adjective/conjugate/to_comparative")
       convertables = require("../parents/adjective/conjugate/convertables")
     }
+
     var main = {
 
       "etc": "FW", //foreign words
@@ -456,6 +458,13 @@ var lexicon = (function() {
       main[uncountables[i]] = "NN"
     }
 
+    //add irregular nouns
+    l = irregular_nouns.length
+    for (i = 0; i < l; i++) {
+      main[irregular_nouns[i][0]] = "NN"
+      main[irregular_nouns[i][1]] = "NNS"
+    }
+
     //add firstnames
     Object.keys(firstnames).forEach(function(k) {
       main[k] = "NNP"
@@ -563,3 +572,5 @@ var lexicon = (function() {
 // console.log(lexicon['prettier']=="JJR")
 // console.log(lexicon['prettiest']=="JJS")
 // console.log(lexicon['tony']=="NNP")
+// console.log(lexicon['loaf']=="NN")
+// console.log(lexicon['loaves']=="NNS")

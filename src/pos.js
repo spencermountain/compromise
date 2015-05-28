@@ -496,8 +496,9 @@ var pos = (function() {
 // console.log(pos("look after a kid").sentences[0].tags())
 // pos("Sather tried to stop the deal, but when he found out that Gretzky").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
 // pos("Gretzky had tried skating").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
+// pos("Sally and Tom fight a lot. She thinks he is her friend.").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
 
 // console.log(pos("i think Tony Danza is cool. He rocks and he is golden.").sentences[0].tokens[2].analysis.referenced_by())
 // console.log(pos("i think Tony Danza is cool and he is golden.").sentences[0].tokens[6].analysis.reference_to())
 // console.log(pos("Tina grabbed her shoes. She is lovely.").sentences[0].tokens[0].analysis.referenced_by())
-// console.log(pos("Tina grabbed her shoes. She is lovely.").sentences[0].tokens[0].analysis.referenced_by())
+// console.log(pos("Sally and Tom fight a lot. She thinks he is her friend.").sentences[0].tokens[0].analysis.referenced_by())

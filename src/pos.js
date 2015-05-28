@@ -270,7 +270,7 @@ var pos = (function() {
       "where's":"where",
       "when's":"when",
       "why's":"why",
-      "how's":"how",
+      "how's":"how"
     }
     var before, after, fix;
     for (var i = 0; i < arr.length; i++) {
@@ -562,14 +562,4 @@ var pos = (function() {
 // console.log(pos("it's gotten the best features").sentences[0].tokens[1].normalised=="has") //bug
 
 // console.log(pos("he's fun").sentences[0].tokens[1].normalised=="is")
-// console.log(pos("she's walking").sentences[0].tokens[1].normalised=="is")
-// console.log(pos("he's walked").sentences[0].tokens[1].normalised=="has")
-// console.log(pos("it's got the best features").sentences[0].tokens[1].normalised=="has")
-// console.log(pos("it's achieved each goal").sentences[0].tokens[1].normalised=="has")
-// console.log(pos("where's waldo").sentences[0].tokens[1].normalised=="is")
-
-// console.log(pos("where's he going?").sentences[0].tokens[1].normalised=="is")
-// console.log(pos("where's the pencil?").sentences[0].tokens[1].normalised=="is")
-// console.log(pos("where's he disappeared to?").sentences[0].tokens[1].normalised=="has")
-// console.log(pos("where's the pencil disappeared to?").sentences[0].tokens[1].normalised=="has")
 

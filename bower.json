@@ -1,7 +1,7 @@
 {
   "name": "nlp_compromise",
   "main": "./client_side/nlp.js",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://github.com/spencermountain/nlp_compromise",
   "authors": [
     "Spencer Kelly <spencermountain@gmail.com>"

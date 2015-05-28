@@ -10,7 +10,6 @@ if (typeof module !== "undefined" && module.exports) {
 Object.prototype.dummy = function() {};
 
 exports["ambiguous contractions"] = function(test) {
-
     test.deepEqual(nlp.pos("he's fun").sentences[0].tokens[1].normalised,"is")
     test.deepEqual(nlp.pos("she's walking").sentences[0].tokens[1].normalised,"is")
     test.deepEqual(nlp.pos("he's walked").sentences[0].tokens[1].normalised,"has")

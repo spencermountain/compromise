@@ -574,3 +574,4 @@ var lexicon = (function() {
 // console.log(lexicon['tony']=="NNP")
 // console.log(lexicon['loaf']=="NN")
 // console.log(lexicon['loaves']=="NNS")
+// console.log(lexicon['he']=="PRP")

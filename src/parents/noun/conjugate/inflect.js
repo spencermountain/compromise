@@ -22,7 +22,7 @@ var inflect = (function() {
   }
 
   //these aren't nouns, but let's inflect them anyways
-  var nonnoun_irregulars = [
+  var irregulars = [
     ["he", "they"],
     ["she", "they"],
     ["this", "these"],
@@ -40,7 +40,7 @@ var inflect = (function() {
     ["its", "theirs"],
     ["theirs", "_"]
   ]
-  irregular_nouns= irregular_nouns.concat(nonnoun_irregulars)
+  irregulars= irregulars.concat(irregular_nouns)
 
   var pluralize_rules = [
     [/(ax|test)is$/i, '$1es'],
@@ -85,7 +85,7 @@ var inflect = (function() {
       return str
     }
     //irregular
-    var found = irregular_nouns.filter(function(r) {
+    var found = irregulars.filter(function(r) {
       return r[0] === low
     })
     if (found[0]) {
@@ -154,7 +154,7 @@ var inflect = (function() {
       return str
     }
     //irregular
-    var found = irregular_nouns.filter(function(r) {
+    var found = irregulars.filter(function(r) {
       return r[1] === low
     })
     if (found[0]) {
@@ -189,11 +189,11 @@ var inflect = (function() {
       str = preposition[1]
     }
     // if it's a known irregular case
-    for (var i = 0; i < irregular_nouns.length; i++) {
-      if (irregular_nouns[i][1] === str) {
+    for (var i = 0; i < irregulars.length; i++) {
+      if (irregulars[i][1] === str) {
         return true
       }
-      if (irregular_nouns[i][0] === str) {
+      if (irregulars[i][0] === str) {
         return false
       }
     }

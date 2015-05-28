@@ -1,4 +1,4 @@
-/*! nlp_compromise  1.0.0  by @spencermountain 2015-05-18  MIT */
+/*! nlp_compromise  1.0.0  by @spencermountain 2015-05-28  MIT */
 var nlp = (function() {
 var verb_irregulars = (function() {
   var types = [
@@ -3292,6 +3292,84 @@ var firstnames = (function () {
   // console.log(firstnames['jan'])
   // console.log(JSON.stringify(Object.keys(firstnames).length, null, 2));
 
+//nouns with irregular plural/singular forms
+//used in noun.inflect, and also in the lexicon.
+//compressed with '_' to reduce some redundancy.
+var irregular_nouns = (function () {
+  var main = [
+    ["child", "_ren"],
+    ["person", "people"],
+    ["leaf", "leaves"],
+    ["database", "_s"],
+    ["quiz", "_zes"],
+    ["child", "_ren"],
+    ["stomach", "_s"],
+    ["sex", "_es"],
+    ["move", "_s"],
+    ["shoe", "_s"],
+    ["goose", "geese"],
+    ["phenomenon", "phenomena"],
+    ["barracks", "_"],
+    ["deer", "_"],
+    ["syllabus", "syllabi"],
+    ["index", "indices"],
+    ["appendix", "appendices"],
+    ["criterion", "criteria"],
+    ["man", "men"],
+    ["sex", "_es"],
+    ["rodeo", "_s"],
+    ["epoch", "_s"],
+    ["zero", "_s"],
+    ["avocado", "_s"],
+    ["halo", "_s"],
+    ["tornado", "_s"],
+    ["tuxedo", "_s"],
+    ["sombrero", "_s"],
+    ["addendum", "addenda"],
+    ["alga", "_e"],
+    ["alumna", "_e"],
+    ["alumnus", "alumni"],
+    ["bacillus", "bacilli"],
+    ["cactus", "cacti"],
+    ["beau", "_x"],
+    ["château", "_x"],
+    ["chateau", "_x"],
+    ["tableau", "_x"],
+    ["corpus", "corpora"],
+    ["curriculum", "curricula"],
+    ["echo", "_es"],
+    ["embargo", "_es"],
+    ["foot", "feet"],
+    ["genus", "genera"],
+    ["hippopotamus", "hippopotami"],
+    ["larva", "_e"],
+    ["libretto", "libretti"],
+    ["loaf", "loaves"],
+    ["matrix", "matrices"],
+    ["memorandum", "memoranda"],
+    ["mosquito", "_es"],
+    ["opus", "opera"],
+    ["ovum", "ova"],
+    ["ox", "_en"],
+    ["radius", "radii"],
+    ["referendum", "referenda"],
+    ["thief", "thieves"],
+    ["tooth", "teeth"]
+  ]
+
+  main = main.map(function (a) {
+    a[1] = a[1].replace('_', a[0])
+    return a
+  })
+
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = main;
+  }
+  return main
+
+})()
+// console.log(JSON.stringify(irregular_nouns, null, 2))
+
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
@@ -4706,13 +4784,13 @@ var parts_of_speech = (function() {
       "parent": "noun",
       "tag": "VBG"
     },
-
-    //glue
     "PP": {
       "name": "possessive pronoun",
-      "parent": "glue",
+      "parent": "noun",
       "tag": "PP"
     },
+
+    //glue
     "FW": {
       "name": "foreign word",
       "parent": "glue",
@@ -5568,6 +5646,7 @@ var inflect = (function() {
 
   if (typeof module !== "undefined" && module.exports) {
     uncountables = require("../../../data/lexicon/uncountables")
+    irregular_nouns = require("../../../data/lexicon/irregular_nouns")
   }
   //words that shouldn't ever inflect, for metaphysical reasons
   uncountable_nouns = uncountables.reduce(function(h, a) {
@@ -5581,82 +5660,27 @@ var inflect = (function() {
     }
     return str.charAt(0).toUpperCase() + str.slice(1)
   }
+
+  //these aren't nouns, but let's inflect them anyways
   var irregulars = [
-    ['child', 'children'],
-    ['person', 'people'],
-    ['leaf', 'leaves'],
-    ['database', 'databases'],
-    ['quiz', 'quizzes'],
-    ['child', 'children'],
-    ['stomach', 'stomachs'],
-    ['sex', 'sexes'],
-    ['move', 'moves'],
-    ['shoe', 'shoes'],
-    ["goose", "geese"],
-    ["phenomenon", "phenomena"],
-    ['barracks', 'barracks'],
-    ['deer', 'deer'],
-    ['syllabus', 'syllabi'],
-    ['index', 'indices'],
-    ['appendix', 'appendices'],
-    ['criterion', 'criteria'],
-    ['i', 'we'],
-    ['man', 'men'],
-    ['move', 'moves'],
-    ['she', 'they'],
-    ['he', 'they'],
-    ['myself', 'ourselves'],
-    ['yourself', 'yourselves'],
-    ['himself', 'themselves'],
-    ['herself', 'themselves'],
-    ['themself', 'themselves'],
-    ['mine', 'ours'],
-    ['hers', 'theirs'],
-    ['his', 'theirs'],
-    ['its', 'theirs'],
-    ['theirs', 'theirs'],
-    ['sex', 'sexes'],
-    ['rodeo', 'rodeos'],
-    ['epoch', 'epochs'],
-    ['zero', 'zeros'],
-    ['avocado', 'avocados'],
-    ['halo', 'halos'],
-    ['tornado', 'tornados'],
-    ['tuxedo', 'tuxedos'],
-    ['sombrero', 'sombreros'],
-    ['addendum', 'addenda'],
-    ['alga', 'algae'],
-    ['alumna', 'alumnae'],
-    ['alumnus', 'alumni'],
-    ['bacillus', 'bacilli'],
-    ['cactus', 'cacti'],
-    ['beau', 'beaux'],
-    ['château', 'châteaux'],
-    ['chateau', 'chateaux'],
-    ['tableau', 'tableaux'],
-    ['corpus', 'corpora'],
-    ['curriculum', 'curricula'],
-    ['echo', 'echoes'],
-    ['embargo', 'embargoes'],
-    ['foot', 'feet'],
-    ['genus', 'genera'],
-    ['hippopotamus', 'hippopotami'],
-    ['larva', 'larvae'],
-    ['libretto', 'libretti'],
-    ['loaf', 'loaves'],
-    ['matrix', 'matrices'],
-    ['memorandum', 'memoranda'],
-    ['mosquito', 'mosquitoes'],
-    ['opus', 'opera'],
-    ['ovum', 'ova'],
-    ['ox', 'oxen'],
-    ['radius', 'radii'],
-    ['referendum', 'referenda'],
-    ['thief', 'thieves'],
-    ['that', 'those'],
-    ['this', 'these'],
-    ['tooth', 'teeth'],
+    ["he", "they"],
+    ["she", "they"],
+    ["this", "these"],
+    ["that", "these"],
+    ["mine", "ours"],
+    ["hers", "theirs"],
+    ["his", "theirs"],
+    ["i", "we"],
+    ["move", "_s"],
+    ["myself", "ourselves"],
+    ["yourself", "yourselves"],
+    ["himself", "themselves"],
+    ["herself", "themselves"],
+    ["themself", "themselves"],
+    ["its", "theirs"],
+    ["theirs", "_"]
   ]
+  irregulars= irregulars.concat(irregular_nouns)
 
   var pluralize_rules = [
     [/(ax|test)is$/i, '$1es'],
@@ -5985,6 +6009,16 @@ var Noun = function(str, sentence, word_i) {
     "century": 1,
     "it": 1
   }
+  //for resolution of obama -> he -> his
+  var posessives= {
+    "his":"he",
+    "her":"she",
+    "hers":"she",
+    "their":"they",
+    "them":"they",
+    "its":"it"
+  }
+
   the.is_acronym = function() {
     var s = the.word
       //no periods
@@ -6061,7 +6095,11 @@ var Noun = function(str, sentence, word_i) {
   }
 
   the.article = function() {
-    return indefinite_article(the.word)
+    if(the.is_plural()){
+      return "the"
+    }else{
+      return indefinite_article(the.word)
+    }
   }
 
   the.pluralize = function() {
@@ -6089,6 +6127,10 @@ var Noun = function(str, sentence, word_i) {
       "park",
       "foundation",
       "institute",
+      "club",
+      "museum",
+      "arena",
+      "stadium",
       "ss",
       "of",
       "the",
@@ -6177,10 +6219,10 @@ var Noun = function(str, sentence, word_i) {
     return "it"
   }
 
-  //tokens that refer to the same thing. "[obama] is cool, [he] is nice."
+  //list of pronouns that refer to this named noun. "[obama] is cool, [he] is nice."
   the.referenced_by = function() {
     //if it's named-noun, look forward for the pronouns pointing to it -> '... he'
-    if(token && token.pos.tag!=="PRP"){
+    if(token && token.pos.tag!=="PRP" && token.pos.tag!=="PP"){
       var prp=the.pronoun()
       //look at rest of sentence
       var interested=sentence.tokens.slice(word_i+1, sentence.tokens.length)
@@ -6191,9 +6233,14 @@ var Noun = function(str, sentence, word_i) {
       //find the matching pronouns, and break if another noun overwrites it
       var matches=[]
       for(var i=0; i<interested.length; i++){
-        if(interested[i].pos.tag==="PRP" && interested[i].normalised===prp){
+        if(interested[i].pos.tag==="PRP" && (interested[i].normalised===prp || posessives[interested[i].normalised]===prp)){
+          //this pronoun points at our noun
+          matches.push(interested[i])
+        }else if(interested[i].pos.tag==="PP" && posessives[interested[i].normalised]===prp){
+          //this posessive pronoun ('his/her') points at our noun
           matches.push(interested[i])
         }else if(interested[i].pos.parent==="noun" && interested[i].analysis.pronoun()===prp){
+          //this noun stops our further pursuit
           break
         }
       }
@@ -7921,6 +7968,7 @@ var lexicon = (function() {
       honourifics = require("./lexicon/honourifics")
       uncountables = require("./lexicon/uncountables")
       firstnames = require("./lexicon/firstnames")
+      irregular_nouns = require("./lexicon/irregular_nouns")
 
       //verbs
       verbs = require("./lexicon/verbs")
@@ -7935,6 +7983,7 @@ var lexicon = (function() {
       to_comparative = require("../parents/adjective/conjugate/to_comparative")
       convertables = require("../parents/adjective/conjugate/convertables")
     }
+
     var main = {
 
       "etc": "FW", //foreign words
@@ -8104,7 +8153,27 @@ var lexicon = (function() {
           "besides",
           "after",
           "whereas",
-          "'o"
+          "'o",
+          "amidst",
+          "amongst",
+          "apropos",
+          "atop",
+          "barring",
+          "chez",
+          "circa",
+          "mid",
+          "midst",
+          "notwithstanding",
+          "qua",
+          "sans",
+          "vis-a-vis",
+          "thru",
+          "till",
+          "versus",
+          "without",
+          "w/o",
+          "o'",
+          "a'",
         ],
 
         //modal verbs
@@ -8138,7 +8207,6 @@ var lexicon = (function() {
           "none",
           "anything",
           "anyone",
-          "lot",
           "theirs",
           "himself",
           "ours",
@@ -8156,8 +8224,8 @@ var lexicon = (function() {
           "everything",
           "myself",
           "itself",
-          "who",
           "her", //this one is pretty ambiguous
+          "who",
           "whom",
           "whose"
         ],
@@ -8347,6 +8415,13 @@ var lexicon = (function() {
       main[uncountables[i]] = "NN"
     }
 
+    //add irregular nouns
+    l = irregular_nouns.length
+    for (i = 0; i < l; i++) {
+      main[irregular_nouns[i][0]] = "NN"
+      main[irregular_nouns[i][1]] = "NNS"
+    }
+
     //add firstnames
     Object.keys(firstnames).forEach(function(k) {
       main[k] = "NNP"
@@ -8454,6 +8529,8 @@ var lexicon = (function() {
 // console.log(lexicon['prettier']=="JJR")
 // console.log(lexicon['prettiest']=="JJS")
 // console.log(lexicon['tony']=="NNP")
+// console.log(lexicon['loaf']=="NN")
+// console.log(lexicon['loaves']=="NNS")
 
 // methods that hang on a parsed set of words
 // accepts parsed tokens
@@ -8992,7 +9069,7 @@ var pos = (function() {
       token.pos_reason = "before_modal"
     }
     //if it's after the word 'will' its probably a verb/adverb
-    if (last && last.normalised == "will" && !last.punctuated && token.pos.parent == "noun" && token.pos.tag !== "PRP") {
+    if (last && last.normalised == "will" && !last.punctuated && token.pos.parent == "noun" && token.pos.tag !== "PRP" && token.pos.tag !== "PP") {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "after_will"
     }
@@ -9003,7 +9080,7 @@ var pos = (function() {
     }
     //if it's after an adverb, it's not a noun -> quickly acked
     //support form 'atleast he is..'
-    if (last && token.pos.parent === "noun" && token.pos.tag !== "PRP" && last.pos.tag === "RB" && !last.start) {
+    if (last && token.pos.parent === "noun" && token.pos.tag !== "PRP" && token.pos.tag !== "PP" && last.pos.tag === "RB" && !last.start) {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "after_adverb"
     }
@@ -9028,7 +9105,7 @@ var pos = (function() {
       sentence.tokens[i + 1].pos_reason = "copula-adverb-adjective"
     }
     // the city [verb] him.
-    if (next && next.pos.tag == "PRP" && token.pos.parent == "noun" && !token.punctuated) {
+    if (next && next.pos.tag == "PRP" && token.pos.tag !== "PP" && token.pos.parent == "noun" && !token.punctuated) {
       token.pos = parts_of_speech['VB']
       token.pos_reason = "before_[him|her|it]"
     }
@@ -9191,7 +9268,7 @@ var pos = (function() {
             return token //proceed
           }
           //suggest verb after personal pronouns (he|she|they), modal verbs (would|could|should)
-          if (token.pos.tag === "PRP" || token.pos.tag === "MD") {
+          if (token.pos.tag === "PRP" && token.pos.tag !== "PP" || token.pos.tag === "MD") {
             need = 'verb'
             reason = token.pos.name
             return token //proceed
@@ -9331,9 +9408,12 @@ var pos = (function() {
 // console.log(pos("look after a kid").sentences[0].tags())
 // pos("Sather tried to stop the deal, but when he found out that Gretzky").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
 // pos("Gretzky had tried skating").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
+// pos("Sally and Tom fight a lot. She thinks he is her friend.").sentences[0].tokens.map(function(t){console.log(t.pos.tag + "  "+t.text+"  "+t.pos_reason)})
 
 // console.log(pos("i think Tony Danza is cool. He rocks and he is golden.").sentences[0].tokens[2].analysis.referenced_by())
 // console.log(pos("i think Tony Danza is cool and he is golden.").sentences[0].tokens[6].analysis.reference_to())
+// console.log(pos("Tina grabbed her shoes. She is lovely.").sentences[0].tokens[0].analysis.referenced_by())
+// console.log(pos("Sally and Tom fight a lot. She thinks he is her friend.").sentences[0].tokens[0].analysis.referenced_by())
 
 //just a wrapper for text -> entities
 //most of this logic is in ./parents/noun

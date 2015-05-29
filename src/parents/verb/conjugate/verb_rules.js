@@ -446,7 +446,5 @@ verb_rules=Object.keys(verb_rules).reduce(function(h,k){
   return h
 },{})
 
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = verb_rules;
-}
+module.exports = verb_rules;
 // console.log(JSON.stringify(verb_rules, null, 2));

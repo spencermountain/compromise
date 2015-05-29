@@ -1,8 +1,7 @@
 //nouns with irregular plural/singular forms
 //used in noun.inflect, and also in the lexicon.
 //compressed with '_' to reduce some redundancy.
-var irregular_nouns = (function () {
-  var main = [
+var main=[
     ["child", "_ren"],
     ["person", "people"],
     ["leaf", "leaves"],
@@ -68,10 +67,4 @@ var irregular_nouns = (function () {
     return a
   })
 
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = main;
-  }
-  return main
-
-})()
-// console.log(JSON.stringify(irregular_nouns, null, 2))
+module.exports = main;

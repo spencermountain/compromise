@@ -1,7 +1,5 @@
 //these are common person titles used in the lexicon and sentence segmentation methods
 //they are also used to identify that a noun is a person
-var honourifics = (function() {
-
   var main = [
     //honourifics
     "jr",
@@ -55,9 +53,4 @@ var honourifics = (function() {
     "surg",
   ]
 
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = main;
-  }
-
-  return main
-})()
+module.exports = main;

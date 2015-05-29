@@ -1,17 +1,15 @@
 //wrapper for verb's methods
-var Verb = function(str, sentence, word_i) {
+var Verb = function (str, sentence, word_i) {
   var the = this
   var token, next;
-  if(sentence!==undefined && word_i!==undefined){
-    token=sentence.tokens[word_i]
-    next=sentence.tokens[word_i+i]
+  if (sentence !== undefined && word_i !== undefined) {
+    token = sentence.tokens[word_i]
+    next = sentence.tokens[word_i + i]
   }
   the.word = str || '';
 
-  if (typeof module !== "undefined" && module.exports) {
-    verb_conjugate = require("./conjugate/conjugate")
-    parts_of_speech = require("../../data/parts_of_speech")
-  }
+  var verb_conjugate = require("./conjugate/conjugate")
+  var parts_of_speech = require("../../data/parts_of_speech")
 
   var copulas = {
     "is": "CP",
@@ -41,27 +39,27 @@ var Verb = function(str, sentence, word_i) {
     gerund: "VBG"
   }
 
-  the.conjugate = function() {
+  the.conjugate = function () {
     return verb_conjugate(the.word)
   }
 
-  the.to_past = function() {
+  the.to_past = function () {
     if (the.form === "gerund") {
       return the.word
     }
     return verb_conjugate(the.word).past
   }
 
-  the.to_present = function() {
+  the.to_present = function () {
     return verb_conjugate(the.word).present
   }
 
-  the.to_future = function() {
+  the.to_future = function () {
     return "will " + verb_conjugate(the.word).infinitive
   }
 
   //which conjugation
-  the.form = (function() {
+  the.form = (function () {
     //don't choose infinitive if infinitive==present
     var order = [
       "past",
@@ -78,7 +76,7 @@ var Verb = function(str, sentence, word_i) {
   })()
 
   //past/present/future   //wahh?!
-  the.tense = (function() {
+  the.tense = (function () {
     if (the.word.match(/\bwill\b/)) {
       return "future"
     }
@@ -92,7 +90,7 @@ var Verb = function(str, sentence, word_i) {
   })()
 
   //the most accurate part_of_speech
-  the.which = (function() {
+  the.which = (function () {
     if (copulas[the.word]) {
       return parts_of_speech['CP']
     }
@@ -104,7 +102,7 @@ var Verb = function(str, sentence, word_i) {
   })()
 
   //is this verb negative already?
-  the.negative = function() {
+  the.negative = function () {
     if (the.word.match(/n't$/)) {
       return true
     }
@@ -116,9 +114,7 @@ var Verb = function(str, sentence, word_i) {
 
   return the;
 }
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = Verb;
-}
+module.exports = Verb;
 
 // console.log(new Verb("will"))
 // console.log(new Verb("stalking").tense)

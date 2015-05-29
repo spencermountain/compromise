@@ -1,8 +1,6 @@
 //adjectives that either aren't covered by rules, or have superlative/comparative forms
 //this list is the seed, from which various forms are conjugated
-var adjectives = (function() {
-
-  var main = [
+module.exports= [
     "colonial",
     "moody",
     "literal",
@@ -686,10 +684,3 @@ var adjectives = (function() {
     "other",
     "less"
   ]
-
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = main;
-  }
-
-  return main
-})()

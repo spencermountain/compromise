@@ -1,8 +1,6 @@
 //common nouns that have no plural form. These are suprisingly rare
 //used in noun.inflect(), and added as nouns in lexicon
-var uncountables = (function() {
-
-  var main = [
+module.exports=[
     "aircraft",
     "bass",
     "bison",
@@ -153,9 +151,3 @@ var uncountables = (function() {
     "kelvin",
     "hertz"
   ]
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = main;
-  }
-
-  return main
-})()

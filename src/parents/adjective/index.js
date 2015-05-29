@@ -1,17 +1,15 @@
 //wrapper for Adjective's methods
-var Adjective = function(str, sentence, word_i) {
+var Adjective = function (str, sentence, word_i) {
   var the = this
   the.word = str || '';
 
-  if (typeof module !== "undefined" && module.exports) {
-    to_comparative = require("./conjugate/to_comparative")
-    to_superlative = require("./conjugate/to_superlative")
-    adj_to_adv = require("./conjugate/to_adverb")
-    adj_to_noun = require("./conjugate/to_noun")
-    parts_of_speech = require("../../data/parts_of_speech")
-  }
+  var to_comparative = require("./conjugate/to_comparative")
+  var to_superlative = require("./conjugate/to_superlative")
+  var adj_to_adv = require("./conjugate/to_adverb")
+  var adj_to_noun = require("./conjugate/to_noun")
+  var parts_of_speech = require("../../data/parts_of_speech")
 
-  the.conjugate = function() {
+  the.conjugate = function () {
     return {
       comparative: to_comparative(the.word),
       superlative: to_superlative(the.word),
@@ -20,7 +18,7 @@ var Adjective = function(str, sentence, word_i) {
     }
   }
 
-  the.which = (function() {
+  the.which = (function () {
     if (the.word.match(/..est$/)) {
       return parts_of_speech['JJS']
     }
@@ -32,7 +30,5 @@ var Adjective = function(str, sentence, word_i) {
 
   return the;
 };
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = Adjective;
-}
+module.exports = Adjective;
 // console.log(new Adjective("crazy"))

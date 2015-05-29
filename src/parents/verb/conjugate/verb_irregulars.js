@@ -1,15 +1,14 @@
-var verb_irregulars = (function() {
-  var types = [
-    'infinitive',
-    'gerund',
-    'past',
-    'present',
-    'doer',
-    'future'
-  ]
+var types = [
+  'infinitive',
+  'gerund',
+  'past',
+  'present',
+  'doer',
+  'future'
+]
 
-  //list of verb irregular verb forms, compacted to save space. ('_' -> infinitive )
-  var compact = [
+//list of verb irregular verb forms, compacted to save space. ('_' -> infinitive )
+var compact = [
     [
       "arise",
       "arising",
@@ -943,17 +942,12 @@ var verb_irregulars = (function() {
     ]
   ]
   //expand compact version out
-  var main=compact.map(function(arr){
-    var obj={}
-    for(var i=0; i<arr.length; i++){
-      obj[types[i]]=arr[i].replace(/_/, arr[0])
-    }
-    return obj
-  })
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = main;
+module.exports = compact.map(function (arr) {
+  var obj = {}
+  for (var i = 0; i < arr.length; i++) {
+    obj[types[i]] = arr[i].replace(/_/, arr[0])
   }
-  return main;
-})();
+  return obj
+})
 
 // console.log(JSON.stringify(verb_irregulars, null, 2));

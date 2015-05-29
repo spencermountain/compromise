@@ -1,6 +1,5 @@
 //adjectival forms of place names, as adjectives.
-var demonyms = (function() {
-  var main = [
+module.exports= [
     "afghan",
     "albanian",
     "algerian",
@@ -101,10 +100,3 @@ var demonyms = (function() {
     "asian",
     "californian",
   ]
-
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = main;
-  }
-  return main
-
-})()

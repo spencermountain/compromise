@@ -1,5 +1,5 @@
 //regex patterns and parts of speech],
-var word_rules = [
+module.exports= [
   [".[cts]hy$", "JJ"],
   [".[st]ty$", "JJ"],
   [".[lnr]ize$", "VB"],
@@ -118,7 +118,3 @@ var word_rules = [
   }
 })
 
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = word_rules;
-}
-// console.log(word_rules)

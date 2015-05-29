@@ -1,20 +1,19 @@
 //wrapper for noun's methods
-var Noun = function(str, sentence, word_i) {
+var Noun = function (str, sentence, word_i) {
   var the = this
   var token, next;
-  if(sentence!==undefined && word_i!==undefined){
-    token=sentence.tokens[word_i]
-    next=sentence.tokens[word_i+i]
+  if (sentence !== undefined && word_i !== undefined) {
+    token = sentence.tokens[word_i]
+    next = sentence.tokens[word_i + i]
   }
   the.word = str || '';
 
-  if (typeof module !== "undefined" && module.exports) {
-    parts_of_speech = require("../../data/parts_of_speech")
-    firstnames = require("../../data/lexicon/firstnames")
-    honourifics = require("../../data/lexicon/honourifics")
-    inflect = require("./conjugate/inflect")
-    indefinite_article = require("./indefinite_article")
-  }
+  var parts_of_speech = require("../../data/parts_of_speech")
+  var firstnames = require("../../data/lexicon/firstnames")
+  var honourifics = require("../../data/lexicon/honourifics")
+  var inflect = require("./conjugate/inflect")
+  var indefinite_article = require("./indefinite_article")
+
   //personal pronouns
   var prps = {
     "it": "PRP",
@@ -32,37 +31,37 @@ var Noun = function(str, sentence, word_i) {
     "thou": "PRP"
   }
   var blacklist = {
-    "itself": 1,
-    "west": 1,
-    "western": 1,
-    "east": 1,
-    "eastern": 1,
-    "north": 1,
-    "northern": 1,
-    "south": 1,
-    "southern": 1,
-    "the": 1,
-    "one": 1,
-    "your": 1,
-    "my": 1,
-    "today": 1,
-    "yesterday": 1,
-    "tomorrow": 1,
-    "era": 1,
-    "century": 1,
-    "it": 1
-  }
-  //for resolution of obama -> he -> his
-  var posessives= {
-    "his":"he",
-    "her":"she",
-    "hers":"she",
-    "their":"they",
-    "them":"they",
-    "its":"it"
+      "itself": 1,
+      "west": 1,
+      "western": 1,
+      "east": 1,
+      "eastern": 1,
+      "north": 1,
+      "northern": 1,
+      "south": 1,
+      "southern": 1,
+      "the": 1,
+      "one": 1,
+      "your": 1,
+      "my": 1,
+      "today": 1,
+      "yesterday": 1,
+      "tomorrow": 1,
+      "era": 1,
+      "century": 1,
+      "it": 1
+    }
+    //for resolution of obama -> he -> his
+  var posessives = {
+    "his": "he",
+    "her": "she",
+    "hers": "she",
+    "their": "they",
+    "them": "they",
+    "its": "it"
   }
 
-  the.is_acronym = function() {
+  the.is_acronym = function () {
     var s = the.word
       //no periods
     if (s.length <= 5 && s.match(/^[A-Z]*$/)) {
@@ -75,7 +74,7 @@ var Noun = function(str, sentence, word_i) {
     return false
   }
 
-  the.is_entity = function() {
+  the.is_entity = function () {
     if (!token) {
       return false
     }
@@ -101,9 +100,9 @@ var Noun = function(str, sentence, word_i) {
       if (token.pos.tag == "NNG") { //eg. 'walking'
         return false
       }
-      if(token.pos.tag=="NNP"){//yes! eg. 'Edinburough'
-         return true
-       }
+      if (token.pos.tag == "NNP") { //yes! eg. 'Edinburough'
+        return true
+      }
     }
     //distinct capital is very good signal
     if (token.noun_capital) {
@@ -129,35 +128,35 @@ var Noun = function(str, sentence, word_i) {
     return false
   }
 
-  the.conjugate = function() {
+  the.conjugate = function () {
     return inflect.inflect(the.word)
   },
 
-  the.is_plural = function() {
+  the.is_plural = function () {
     return inflect.is_plural(the.word)
   }
 
-  the.article = function() {
-    if(the.is_plural()){
+  the.article = function () {
+    if (the.is_plural()) {
       return "the"
-    }else{
+    } else {
       return indefinite_article(the.word)
     }
   }
 
-  the.pluralize = function() {
+  the.pluralize = function () {
     return inflect.pluralize(the.word)
   }
 
-  the.singularize = function() {
+  the.singularize = function () {
     return inflect.singularize(the.word)
   }
 
   //uses common first-name list + honourifics to guess if this noun is the name of a person
-  the.is_person = function() {
+  the.is_person = function () {
     var i, l;
     //remove things that are often named after people
-    var blacklist=[
+    var blacklist = [
       "center",
       "centre",
       "memorial",
@@ -183,13 +182,13 @@ var Noun = function(str, sentence, word_i) {
       "co",
       "sons"
     ]
-    l= blacklist.length
+    l = blacklist.length
     for (i = 0; i < l; i++) {
-      if(the.word.match(new RegExp("\\b" + blacklist[i] + "\\b","i"))){
+      if (the.word.match(new RegExp("\\b" + blacklist[i] + "\\b", "i"))) {
         return false
       }
     }
-      //see if noun has an honourific, like 'jr.'
+    //see if noun has an honourific, like 'jr.'
     l = honourifics.length;
     for (i = 0; i < l; i++) {
       if (the.word.match(new RegExp("\\b" + honourifics[i] + "\\.?\\b", 'i'))) {
@@ -197,57 +196,57 @@ var Noun = function(str, sentence, word_i) {
       }
     }
     //see if noun has a known first-name
-    var names=the.word.split(' ').map(function(a){
+    var names = the.word.split(' ').map(function (a) {
       return a.toLowerCase()
     })
-    if(firstnames[names[0]]){
+    if (firstnames[names[0]]) {
       return true
     }
     //(test middle name too, if there's one)
-    if(names.length> 2 && firstnames[names[1]]){
+    if (names.length > 2 && firstnames[names[1]]) {
       return true
     }
 
     //if it has an initial between two words
-    if(the.word.match(/[a-z]{3,20} [a-z]\.? [a-z]{3,20}/i)){
+    if (the.word.match(/[a-z]{3,20} [a-z]\.? [a-z]{3,20}/i)) {
       return true
     }
     return false
   }
 
   //decides if it deserves a he, she, they, or it
-  the.pronoun=function(){
+  the.pronoun = function () {
 
     //if it's a person try to classify male/female
-    if(the.is_person()){
-      var names=the.word.split(' ').map(function(a){
+    if (the.is_person()) {
+      var names = the.word.split(' ').map(function (a) {
         return a.toLowerCase()
       })
-      if(firstnames[names[0]]==="m" || firstnames[names[1]]=="m"){
+      if (firstnames[names[0]] === "m" || firstnames[names[1]] == "m") {
         return "he"
       }
-      if(firstnames[names[0]]==="f" || firstnames[names[1]]=="f" ){
+      if (firstnames[names[0]] === "f" || firstnames[names[1]] == "f") {
         return "she"
       }
       //test some honourifics
-      if(the.word.match(/^(mrs|miss|ms|misses|mme|mlle)\.? /,'i')){
+      if (the.word.match(/^(mrs|miss|ms|misses|mme|mlle)\.? /, 'i')) {
         return "she"
       }
-      if(the.word.match(/\b(mr|mister|sr|jr)\b/,'i')){
+      if (the.word.match(/\b(mr|mister|sr|jr)\b/, 'i')) {
         return "he"
       }
       //if it's a known unisex name, don't try guess it. be safe.
-      if(firstnames[names[0]]==="a" || firstnames[names[1]]=="a" ){
+      if (firstnames[names[0]] === "a" || firstnames[names[1]] == "a") {
         return "they"
       }
       //if we think it's a person, but still don't know the gender, do a little guessing
-      if(names[0].match(/[aeiy]$/)){//if it ends in a 'ee or ah', female
+      if (names[0].match(/[aeiy]$/)) { //if it ends in a 'ee or ah', female
         return "she"
       }
-      if(names[0].match(/[ou]$/)){//if it ends in a 'oh or uh', male
+      if (names[0].match(/[ou]$/)) { //if it ends in a 'oh or uh', male
         return "he"
       }
-      if(names[0].match(/(nn|ll|tt)/)){//if it has double-consonants, female
+      if (names[0].match(/(nn|ll|tt)/)) { //if it has double-consonants, female
         return "she"
       }
       //fallback to 'singular-they'
@@ -255,7 +254,7 @@ var Noun = function(str, sentence, word_i) {
     }
 
     //not a person
-    if(the.is_plural()){
+    if (the.is_plural()) {
       return "they"
     }
 
@@ -263,26 +262,26 @@ var Noun = function(str, sentence, word_i) {
   }
 
   //list of pronouns that refer to this named noun. "[obama] is cool, [he] is nice."
-  the.referenced_by = function() {
+  the.referenced_by = function () {
     //if it's named-noun, look forward for the pronouns pointing to it -> '... he'
-    if(token && token.pos.tag!=="PRP" && token.pos.tag!=="PP"){
-      var prp=the.pronoun()
-      //look at rest of sentence
-      var interested=sentence.tokens.slice(word_i+1, sentence.tokens.length)
-      //add next sentence too, could go further..
-      if(sentence.next){
-        interested=interested.concat(sentence.next.tokens)
+    if (token && token.pos.tag !== "PRP" && token.pos.tag !== "PP") {
+      var prp = the.pronoun()
+        //look at rest of sentence
+      var interested = sentence.tokens.slice(word_i + 1, sentence.tokens.length)
+        //add next sentence too, could go further..
+      if (sentence.next) {
+        interested = interested.concat(sentence.next.tokens)
       }
       //find the matching pronouns, and break if another noun overwrites it
-      var matches=[]
-      for(var i=0; i<interested.length; i++){
-        if(interested[i].pos.tag==="PRP" && (interested[i].normalised===prp || posessives[interested[i].normalised]===prp)){
+      var matches = []
+      for (var i = 0; i < interested.length; i++) {
+        if (interested[i].pos.tag === "PRP" && (interested[i].normalised === prp || posessives[interested[i].normalised] === prp)) {
           //this pronoun points at our noun
           matches.push(interested[i])
-        }else if(interested[i].pos.tag==="PP" && posessives[interested[i].normalised]===prp){
+        } else if (interested[i].pos.tag === "PP" && posessives[interested[i].normalised] === prp) {
           //this posessive pronoun ('his/her') points at our noun
           matches.push(interested[i])
-        }else if(interested[i].pos.parent==="noun" && interested[i].analysis.pronoun()===prp){
+        } else if (interested[i].pos.parent === "noun" && interested[i].analysis.pronoun() === prp) {
           //this noun stops our further pursuit
           break
         }
@@ -293,21 +292,21 @@ var Noun = function(str, sentence, word_i) {
   }
 
   // a pronoun that points at a noun mentioned previously '[he] is nice'
-  the.reference_to = function() {
+  the.reference_to = function () {
     //if it's a pronoun, look backwards for the first mention '[obama]... <-.. [he]'
-    if(token && token.pos.tag==="PRP"){
-      var prp=token.normalised
-      //look at starting of this sentence
-      var interested=sentence.tokens.slice(0, word_i)
-      //add previous sentence, if applicable
-      if(sentence.last){
-        interested=sentence.last.tokens.concat(interested)
+    if (token && token.pos.tag === "PRP") {
+      var prp = token.normalised
+        //look at starting of this sentence
+      var interested = sentence.tokens.slice(0, word_i)
+        //add previous sentence, if applicable
+      if (sentence.last) {
+        interested = sentence.last.tokens.concat(interested)
       }
       //reverse the terms to loop through backward..
-      interested=interested.reverse()
-      for(var i=0; i<interested.length; i++){
+      interested = interested.reverse()
+      for (var i = 0; i < interested.length; i++) {
         //it's a match
-        if(interested[i].pos.parent==="noun" && interested[i].pos.tag!=="PRP" && interested[i].analysis.pronoun()===prp){
+        if (interested[i].pos.parent === "noun" && interested[i].pos.tag !== "PRP" && interested[i].analysis.pronoun() === prp) {
           return interested[i]
         }
       }
@@ -315,7 +314,7 @@ var Noun = function(str, sentence, word_i) {
   }
 
   //specifically which pos it is
-  the.which = (function() {
+  the.which = (function () {
     //posessive
     if (the.word.match(/'s$/)) {
       return parts_of_speech['NNO']
@@ -330,9 +329,7 @@ var Noun = function(str, sentence, word_i) {
 
   return the;
 }
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = Noun;
-}
+module.exports = Noun;
 
 // console.log(new Noun('farmhouse').is_entity())
 // console.log(new Noun("FBI").is_acronym())

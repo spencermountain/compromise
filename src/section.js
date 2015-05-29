@@ -106,6 +106,4 @@ var Section = function(sentences) {
   }
 
 }
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = Section;
-}
+module.exports = Section;

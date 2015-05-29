@@ -1,11 +1,9 @@
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
-var sentence_parser = function(text) {
+module.exports = function(text) {
 
-  if (typeof module !== "undefined" && module.exports) {
-    abbreviations = require("../../data/lexicon/abbreviations")
-  }
+  var abbreviations = require("../../data/lexicon/abbreviations")
 
   var sentences = [];
   //first do a greedy-split..
@@ -42,9 +40,7 @@ var sentence_parser = function(text) {
 
   return sentences;
 }
-if (typeof module !== "undefined" && module.exports) {
-  exports.sentences = sentence_parser;
-}
+
 // console.log(sentence_parser('Tony is nice. He lives in Japan.').length === 2)
 // console.log(sentence_parser('I like that Color').length === 1)
 // console.log(sentence_parser("She was dead. He was ill.").length === 2)

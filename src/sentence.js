@@ -260,6 +260,4 @@ var Sentence = function(tokens) {
   return the
 }
 
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = Sentence;
-}
+module.exports = Sentence;

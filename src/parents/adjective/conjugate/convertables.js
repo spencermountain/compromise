@@ -1,7 +1,7 @@
 //these are adjectives that can become comparative + superlative with out "most/more"
 //its a whitelist for conjugation
 //this data is shared between comparative/superlative methods
-var convertables= [
+module.exports= [
   "absurd",
   "aggressive",
   "alert",
@@ -198,7 +198,3 @@ var convertables= [
   h[s]=true
   return h
 },{})
-
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = convertables;
-}

@@ -1,8 +1,6 @@
 //common terms that are multi-word, but one part-of-speech
 //these should not include phrasal verbs, like 'looked out'. These are handled elsewhere.
-var multiples = (function() {
-
-  var main = {
+module.exports = {
     "of course": "RB",
     "at least": "RB",
     "no longer": "RB",
@@ -75,9 +73,3 @@ var multiples = (function() {
     "great britain":"NN",
     "head start":"NN"
   }
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = main;
-  }
-
-  return main
-})()

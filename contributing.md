@@ -58,7 +58,7 @@ of minimized clientside build:
 * May 18th - 99kb
 
 #speed
-benchmarked unit tests on backend-frontent.
-* May 2015 - 60ms boot
+benchmarked unit tests on backend + frontend
+* May 2015  520ms front, 315ms back
 
 have a nice day

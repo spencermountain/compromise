@@ -3674,14 +3674,12 @@ var data = {
     ]
   }
   //convert it to an easier format
-var data = Object.keys(data).reduce(function (h, k) {
+module.exports = Object.keys(data).reduce(function (h, k) {
   data[k].forEach(function (w) {
     h[w] = k
   })
   return h
 }, {})
-
-module.exports = data;
 
 },{}],16:[function(require,module,exports){
 //regex patterns and parts of speech],
@@ -5051,6 +5049,8 @@ module.exports = Adverb;
 var uncountables = require("../../../data/lexicon/uncountables")
 var irregular_nouns = require("../../../data/lexicon/irregular_nouns")
 
+var i;
+
 //words that shouldn't ever inflect, for metaphysical reasons
 uncountable_nouns = uncountables.reduce(function (h, a) {
   h[a] = true
@@ -5147,7 +5147,7 @@ var pluralize = function (str) {
     }
   }
   //regular
-  for (var i = 0; i < pluralize_rules.length; i++) {
+  for (i = 0; i < pluralize_rules.length; i++) {
     if (str.match(pluralize_rules[i].reg)) {
       return str.replace(pluralize_rules[i].reg, pluralize_rules[i].repl)
     }
@@ -5216,7 +5216,7 @@ var singularize = function (str) {
     }
   }
   //regular
-  for (var i = 0; i < singularize_rules.length; i++) {
+  for (i = 0; i < singularize_rules.length; i++) {
     if (str.match(singularize_rules[i].reg)) {
       return str.replace(singularize_rules[i].reg, singularize_rules[i].repl)
     }
@@ -5232,7 +5232,7 @@ var is_plural = function (str) {
     str = preposition[1]
   }
   // if it's a known irregular case
-  for (var i = 0; i < irregulars.length; i++) {
+  for (i = 0; i < irregulars.length; i++) {
     if (irregulars[i][1] === str) {
       return true
     }
@@ -5263,7 +5263,7 @@ var is_plural = function (str) {
     /(alias|status)es$/i,
     /ics$/i
   ]
-  for (var i = 0; i < plural_indicators.length; i++) {
+  for (i = 0; i < plural_indicators.length; i++) {
     if (str.match(plural_indicators[i])) {
       return true
     }
@@ -5291,7 +5291,7 @@ var is_plural = function (str) {
     /.sis$/i,
     /^(?!talis|.*hu)(.*)man$/i
   ]
-  for (var i = 0; i < singular_indicators.length; i++) {
+  for (i = 0; i < singular_indicators.length; i++) {
     if (str.match(singular_indicators[i])) {
       return false
     }
@@ -5562,7 +5562,7 @@ var Noun = function (str, sentence, word_i) {
 
   the.conjugate = function () {
     return inflect.inflect(the.word)
-  },
+  }
 
   the.is_plural = function () {
     return inflect.is_plural(the.word)
@@ -6644,18 +6644,19 @@ var main = function (w) {
 
   //check against suffix rules
   l = verb_rules[predicted].length
-  var r;
+  var r, keys;
   for (i = 0; i < l; i++) {
     r = verb_rules[predicted][i];
     if (w.match(r.reg)) {
       obj[predicted] = w;
-      Object.keys(r.repl).forEach(function (k) {
-        if (k === predicted) {
-          obj[k] = w
+      keys= Object.keys(r.repl)
+      for(var o=0; o<keys.length; o++){
+        if (keys[o] === predicted) {
+          obj[keys[o]] = w
         } else {
-          obj[k] = w.replace(r.reg, r.repl[k])
+          obj[keys[o]] = w.replace(r.reg, r.repl[keys[o]])
         }
-      });
+      }
       return fufill(obj);
     }
   }
@@ -6665,22 +6666,22 @@ var main = function (w) {
 };
 module.exports = main;
 
-// console.log(verb_conjugate("walking"))
-// console.log(verb_conjugate("overtook"))
-// console.log(verb_conjugate("watch out"))
-// console.log(verb_conjugate("watch"))
-// console.log(verb_conjugate("smash"))
-// console.log(verb_conjugate("word"))
-//broken
-// console.log(verb_conjugate("read"))
-// console.log(verb_conjugate("free"))
-// console.log(verb_conjugate("flesh"))
-// console.log(verb_conjugate("branch"))
-// console.log(verb_conjugate("spred"))
-// console.log(verb_conjugate("bog"))
-// console.log(verb_conjugate("nod"))
-// console.log(verb_conjugate("had tried"))
-// console.log(verb_conjugate("have tried"))
+// console.log(module.exports("walking"))
+// console.log(module.exports("overtook"))
+// console.log(module.exports("watch out"))
+// console.log(module.exports("watch"))
+// console.log(module.exports("smash"))
+// console.log(module.exports("word"))
+// // broken
+// console.log(module.exports("read"))
+// console.log(module.exports("free"))
+// console.log(module.exports("flesh"))
+// console.log(module.exports("branch"))
+// console.log(module.exports("spred"))
+// console.log(module.exports("bog"))
+// console.log(module.exports("nod"))
+// console.log(module.exports("had tried"))
+// console.log(module.exports("have tried"))
 
 },{"./suffix_rules":40,"./to_doer":41,"./verb_irregulars":42,"./verb_rules":43}],40:[function(require,module,exports){
 //generated from test data

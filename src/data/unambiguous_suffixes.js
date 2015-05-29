@@ -587,11 +587,9 @@ var data = {
     ]
   }
   //convert it to an easier format
-var data = Object.keys(data).reduce(function (h, k) {
+module.exports = Object.keys(data).reduce(function (h, k) {
   data[k].forEach(function (w) {
     h[w] = k
   })
   return h
 }, {})
-
-module.exports = data;

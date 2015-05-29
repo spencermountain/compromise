@@ -130,7 +130,7 @@ var Noun = function (str, sentence, word_i) {
 
   the.conjugate = function () {
     return inflect.inflect(the.word)
-  },
+  }
 
   the.is_plural = function () {
     return inflect.is_plural(the.word)

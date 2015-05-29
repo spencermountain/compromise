@@ -150,18 +150,19 @@ var main = function (w) {
 
   //check against suffix rules
   l = verb_rules[predicted].length
-  var r;
+  var r, keys;
   for (i = 0; i < l; i++) {
     r = verb_rules[predicted][i];
     if (w.match(r.reg)) {
       obj[predicted] = w;
-      Object.keys(r.repl).forEach(function (k) {
-        if (k === predicted) {
-          obj[k] = w
+      keys= Object.keys(r.repl)
+      for(var o=0; o<keys.length; o++){
+        if (keys[o] === predicted) {
+          obj[keys[o]] = w
         } else {
-          obj[k] = w.replace(r.reg, r.repl[k])
+          obj[keys[o]] = w.replace(r.reg, r.repl[keys[o]])
         }
-      });
+      }
       return fufill(obj);
     }
   }
@@ -171,19 +172,19 @@ var main = function (w) {
 };
 module.exports = main;
 
-// console.log(verb_conjugate("walking"))
-// console.log(verb_conjugate("overtook"))
-// console.log(verb_conjugate("watch out"))
-// console.log(verb_conjugate("watch"))
-// console.log(verb_conjugate("smash"))
-// console.log(verb_conjugate("word"))
-//broken
-// console.log(verb_conjugate("read"))
-// console.log(verb_conjugate("free"))
-// console.log(verb_conjugate("flesh"))
-// console.log(verb_conjugate("branch"))
-// console.log(verb_conjugate("spred"))
-// console.log(verb_conjugate("bog"))
-// console.log(verb_conjugate("nod"))
-// console.log(verb_conjugate("had tried"))
-// console.log(verb_conjugate("have tried"))
+// console.log(module.exports("walking"))
+// console.log(module.exports("overtook"))
+// console.log(module.exports("watch out"))
+// console.log(module.exports("watch"))
+// console.log(module.exports("smash"))
+// console.log(module.exports("word"))
+// // broken
+// console.log(module.exports("read"))
+// console.log(module.exports("free"))
+// console.log(module.exports("flesh"))
+// console.log(module.exports("branch"))
+// console.log(module.exports("spred"))
+// console.log(module.exports("bog"))
+// console.log(module.exports("nod"))
+// console.log(module.exports("had tried"))
+// console.log(module.exports("have tried"))

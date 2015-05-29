@@ -5,6 +5,8 @@
 var uncountables = require("../../../data/lexicon/uncountables")
 var irregular_nouns = require("../../../data/lexicon/irregular_nouns")
 
+var i;
+
 //words that shouldn't ever inflect, for metaphysical reasons
 uncountable_nouns = uncountables.reduce(function (h, a) {
   h[a] = true
@@ -101,7 +103,7 @@ var pluralize = function (str) {
     }
   }
   //regular
-  for (var i = 0; i < pluralize_rules.length; i++) {
+  for (i = 0; i < pluralize_rules.length; i++) {
     if (str.match(pluralize_rules[i].reg)) {
       return str.replace(pluralize_rules[i].reg, pluralize_rules[i].repl)
     }
@@ -170,7 +172,7 @@ var singularize = function (str) {
     }
   }
   //regular
-  for (var i = 0; i < singularize_rules.length; i++) {
+  for (i = 0; i < singularize_rules.length; i++) {
     if (str.match(singularize_rules[i].reg)) {
       return str.replace(singularize_rules[i].reg, singularize_rules[i].repl)
     }
@@ -186,7 +188,7 @@ var is_plural = function (str) {
     str = preposition[1]
   }
   // if it's a known irregular case
-  for (var i = 0; i < irregulars.length; i++) {
+  for (i = 0; i < irregulars.length; i++) {
     if (irregulars[i][1] === str) {
       return true
     }
@@ -217,7 +219,7 @@ var is_plural = function (str) {
     /(alias|status)es$/i,
     /ics$/i
   ]
-  for (var i = 0; i < plural_indicators.length; i++) {
+  for (i = 0; i < plural_indicators.length; i++) {
     if (str.match(plural_indicators[i])) {
       return true
     }
@@ -245,7 +247,7 @@ var is_plural = function (str) {
     /.sis$/i,
     /^(?!talis|.*hu)(.*)man$/i
   ]
-  for (var i = 0; i < singular_indicators.length; i++) {
+  for (i = 0; i < singular_indicators.length; i++) {
     if (str.match(singular_indicators[i])) {
       return false
     }

@@ -58,3 +58,4 @@ module.exports = nlp;
 // console.log( nlp.pos('i will slouch'));
 // console.log( nlp.pos('Sally Davidson sells seashells by the seashore. Joe Biden said so.').people() )
 // console.log(nlp.pos("Tony Danza is great. He works in the bank.").sentences[1].tokens[0].analysis.reference_to())
+// console.log(nlp.pos("the FBI was hacked. He took their drugs.").sentences[1].tokens[2].analysis.reference_to())

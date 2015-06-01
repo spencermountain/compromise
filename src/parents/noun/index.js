@@ -294,8 +294,16 @@ var Noun = function (str, sentence, word_i) {
   // a pronoun that points at a noun mentioned previously '[he] is nice'
   the.reference_to = function () {
     //if it's a pronoun, look backwards for the first mention '[obama]... <-.. [he]'
-    if (token && token.pos.tag === "PRP") {
+    if (token && (token.pos.tag === "PRP" || token.pos.tag === "PP")) {
       var prp = token.normalised
+      var possessives={
+        "his":"he",
+        "her":"she",
+        "their":"they"
+      }
+      if(possessives[prp]!==undefined){//support possessives
+        prp=possessives[prp]
+      }
         //look at starting of this sentence
       var interested = sentence.tokens.slice(0, word_i)
         //add previous sentence, if applicable

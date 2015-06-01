@@ -87,6 +87,11 @@ exports[t] = function (test) {
   test.strictEqual(ref.text, "Tanya G")
   ref = nlp.pos("Tara says they suck and she quit her job").sentences[0].tokens[5].analysis.reference_to()
   test.strictEqual(ref.text, "Tara")
+
+  ref = nlp.pos("Tony Danza is great. His bank is on the ball.").sentences[1].tokens[0].analysis.reference_to()
+  test.strictEqual(ref.text, "Tony Danza")
+  ref = nlp.pos("the banks were hacked. He took their money.").sentences[1].tokens[2].analysis.reference_to()
+  test.strictEqual(ref.text, "banks")
   if(TIME){console.timeEnd(t)}
   test.done()
 }

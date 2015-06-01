@@ -59,6 +59,7 @@ module.exports = nlp;
 // console.log( nlp.pos('i will slouch'));
 // console.log( nlp.pos('Sally Davidson sells seashells by the seashore. Joe Biden said so.').people() )
 // console.log(nlp.pos("Tony Danza is great. He works in the bank.").sentences[1].tokens[0].analysis.reference_to())
+// console.log(nlp.pos("the FBI was hacked. He took their drugs.").sentences[1].tokens[2].analysis.reference_to())
 
 },{"./src/methods/localization/americanize":17,"./src/methods/localization/britishize":18,"./src/methods/syllables/syllable":19,"./src/methods/tokenization/ngram":20,"./src/methods/tokenization/sentence":21,"./src/methods/tokenization/tokenize":22,"./src/methods/transliteration/unicode_normalisation":23,"./src/parents/parents":35,"./src/pos":45,"./src/spot":48}],2:[function(require,module,exports){
 //the lexicon is a large hash of words and their predicted part-of-speech.
@@ -5726,8 +5727,16 @@ var Noun = function (str, sentence, word_i) {
   // a pronoun that points at a noun mentioned previously '[he] is nice'
   the.reference_to = function () {
     //if it's a pronoun, look backwards for the first mention '[obama]... <-.. [he]'
-    if (token && token.pos.tag === "PRP") {
+    if (token && (token.pos.tag === "PRP" || token.pos.tag === "PP")) {
       var prp = token.normalised
+      var possessives={
+        "his":"he",
+        "her":"she",
+        "their":"they"
+      }
+      if(possessives[prp]!==undefined){//support possessives
+        prp=possessives[prp]
+      }
         //look at starting of this sentence
       var interested = sentence.tokens.slice(0, word_i)
         //add previous sentence, if applicable

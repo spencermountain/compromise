@@ -52,7 +52,7 @@ var Noun = function (str, sentence, word_i) {
       "it": 1
     }
     //for resolution of obama -> he -> his
-  var posessives = {
+  var possessives = {
     "his": "he",
     "her": "she",
     "hers": "she",
@@ -275,10 +275,10 @@ var Noun = function (str, sentence, word_i) {
       //find the matching pronouns, and break if another noun overwrites it
       var matches = []
       for (var i = 0; i < interested.length; i++) {
-        if (interested[i].pos.tag === "PRP" && (interested[i].normalised === prp || posessives[interested[i].normalised] === prp)) {
+        if (interested[i].pos.tag === "PRP" && (interested[i].normalised === prp || possessives[interested[i].normalised] === prp)) {
           //this pronoun points at our noun
           matches.push(interested[i])
-        } else if (interested[i].pos.tag === "PP" && posessives[interested[i].normalised] === prp) {
+        } else if (interested[i].pos.tag === "PP" && possessives[interested[i].normalised] === prp) {
           //this posessive pronoun ('his/her') points at our noun
           matches.push(interested[i])
         } else if (interested[i].pos.parent === "noun" && interested[i].analysis.pronoun() === prp) {
@@ -296,11 +296,7 @@ var Noun = function (str, sentence, word_i) {
     //if it's a pronoun, look backwards for the first mention '[obama]... <-.. [he]'
     if (token && (token.pos.tag === "PRP" || token.pos.tag === "PP")) {
       var prp = token.normalised
-      var possessives={
-        "his":"he",
-        "her":"she",
-        "their":"they"
-      }
+
       if(possessives[prp]!==undefined){//support possessives
         prp=possessives[prp]
       }

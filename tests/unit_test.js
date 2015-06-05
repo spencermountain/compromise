@@ -235,6 +235,7 @@ exports[t] = function (test) {
   test.strictEqual(nlp.tokenize("Joe in Toronto")[0].tokens.length, 3)
   test.strictEqual(nlp.tokenize("I am mega-rich")[0].tokens.length, 3)
   test.strictEqual(nlp.tokenize("he is Dr. Jones")[0].tokens.length, 4)
+  test.strictEqual(nlp.tokenize("That’s a ‘magic’ sock.")[0].tokens[2].normalised, "'magic'")
   if(TIME){console.timeEnd(t)}
   test.done()
 }

@@ -64,6 +64,11 @@ exports[t] = function (test) {
   refs = nlp.pos("Carrots are gross. Their skin makes make cry.").sentences[0].tokens[0].analysis.referenced_by()
   test.strictEqual(refs.length, 1)
   test.strictEqual(refs[0].normalised, "their")
+  // refs = nlp.pos("I am fun. The world is mine.").sentences[0].tokens[0].analysis.referenced_by()
+  // test.strictEqual(refs.length, 1)
+  // test.strictEqual(refs[0].normalised, "i")
+
+
   // refs=nlp.pos("Sally and Tom fight a lot. She thinks he is her friend.").sentences[0].tokens[0].analysis.referenced_by()
   // test.strictEqual(refs.length, 2)
   // test.strictEqual(refs[0].normalised, "she")
@@ -92,6 +97,8 @@ exports[t] = function (test) {
   test.strictEqual(ref.text, "Tony Danza")
   ref = nlp.pos("the banks were hacked. He took their money.").sentences[1].tokens[2].analysis.reference_to()
   test.strictEqual(ref.text, "banks")
+  // ref = nlp.pos("We are cool. The banks are completely ours.").sentences[1].tokens[4].analysis.reference_to()
+  // test.strictEqual(ref.text, "We")
   if(TIME){console.timeEnd(t)}
   test.done()
 }

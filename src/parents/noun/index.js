@@ -57,9 +57,15 @@ var Noun = function (str, sentence, word_i) {
     "her": "she",
     "hers": "she",
     "their": "they",
+    "theirs": "they",
     "them": "they",
-    "its": "it"
+    "its": "it",
+    "mine": "i",
+    "yours": "you",
+    "our": 'we',
+    "ours": 'we'
   }
+
 
   the.is_acronym = function () {
     var s = the.word
@@ -310,7 +316,7 @@ var Noun = function (str, sentence, word_i) {
       interested = interested.reverse()
       for (var i = 0; i < interested.length; i++) {
         //it's a match
-        if (interested[i].pos.parent === "noun" && interested[i].pos.tag !== "PRP" && interested[i].analysis.pronoun() === prp) {
+        if (interested[i].pos.parent === "noun" && interested[i].pos.tag !== "PRP" && interested[i].analysis.pronoun() === prp ) {
           return interested[i]
         }
       }

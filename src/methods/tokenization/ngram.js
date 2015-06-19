@@ -31,7 +31,7 @@ module.exports = function (text, options) {
   }
   // map to array
   i = undefined;
-  for (k = 1; k <= max_size; k++) {
+  for (k = 1; k < max_size; k++) {
     results[k] = [];
     var key = keys[k];
     for (i in key) {
@@ -56,5 +56,5 @@ module.exports = function (text, options) {
   return results
 }
 
-// s = ngram("i really think that we all really think it's all good")
-// console.log(s)
+//console.log(module.exports("i really think that we all really think it's all good"))
+// console.log(module.exports("i said i rule", {max_size:1})) // word-count

@@ -94,7 +94,9 @@ var Sentence = function(tokens) {
       //loop through each term..
     for (var i = 0; i < the.tokens.length; i++) {
       var tok = the.tokens[i]
-
+      // handle ambiguous contractions
+      if (tok.pos_reason === 'ambiguous_contraction') { tok.text = tok.normalised; }
+      
       //turn 'is' into 'isn't', etc - make sure 'is' isnt followed by a 'not', too
       if (logic_negate[tok.normalised] && (!the.tokens[i + 1] || the.tokens[i + 1].normalised != "not")) {
         tok.text = logic_negate[tok.normalised]

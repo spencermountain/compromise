@@ -191,8 +191,8 @@ nlp.pos("the obviously good swim").tags()
 
 ## Named-Entity recognition
 ```javascript
-nlp.spot("joe carter loves toronto")
-// [{text:"joe carter"...}, {text:"toronto"...}]
+nlp.spot("Joe Carter loves Toronto")
+// [{text:"Joe Carter"...}, {text:"Toronto"...}]
 ```
 
 ## Sentence segmentation

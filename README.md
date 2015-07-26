@@ -238,8 +238,10 @@ nlp.value("I married April for the 2nd time on June 5th 1998 ").date()
 ```javascript
 nlp.value("two thousand five hundred and sixty").number()
 //2560
-nlp.value("ten and a half million").number()
-//15000000
+nlp.value("twenty one hundred").number()
+//2100
+nlp.value("nine two hundred").number()
+//null
 ```
 ### Unicode Normalisation
 a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.

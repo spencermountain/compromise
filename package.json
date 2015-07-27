@@ -29,9 +29,10 @@
   "devDependencies": {
     "grunt": "~0.4.*",
     "grunt-browserify": "~3.8.*",
-    "grunt-contrib-jshint": "~0.11.*",
-    "grunt-jscs": "~1.6.*",
-    "nodeunit": "0.9.*"
+    "grunt-contrib-watch": "*",
+    "grunt-run": "*",
+    "nodeunit": "0.9.*",
+    "typescript":"1.5.*"
   },
   "license": "MIT"
 }

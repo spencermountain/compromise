@@ -191,8 +191,8 @@ nlp.pos("the obviously good swim").tags()
 
 ## Named-Entity recognition
 ```javascript
-nlp.spot("Joe Carter loves Toronto")
-// [{text:"Joe Carter"...}, {text:"Toronto"...}]
+nlp.spot("joe carter loves toronto")
+// [{text:"joe carter"...}, {text:"toronto"...}]
 ```
 
 ## Sentence segmentation
@@ -225,7 +225,7 @@ nlp.ngram(str, {min_count:1, max_size:5})
 // [{ word: 'she sells', count: 2, size: 2 },
 // ...
 options.min_count // throws away seldom-repeated grams. defaults to 1
-options.max_gram // prevents the result from becoming gigantic. defaults to 5
+options.max_size // maximum gram count. prevents the result from becoming gigantic. defaults to 5
 ```
 ### Date parsing
 ```javascript
@@ -238,10 +238,8 @@ nlp.value("I married April for the 2nd time on June 5th 1998 ").date()
 ```javascript
 nlp.value("two thousand five hundred and sixty").number()
 //2560
-nlp.value("twenty one hundred").number()
-//2100
-nlp.value("nine two hundred").number()
-//null
+nlp.value("ten and a half million").number()
+//15000000
 ```
 ### Unicode Normalisation
 a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.

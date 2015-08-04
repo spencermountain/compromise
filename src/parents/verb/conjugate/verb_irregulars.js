@@ -939,6 +939,13 @@ var compact = [
       "was",
       "am",
       ""
+    ],
+    [
+      "load",
+      "_ing",
+      "_ed",
+      "_s",
+      "_er"
     ]
   ]
   //expand compact version out

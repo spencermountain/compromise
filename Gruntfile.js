@@ -3,13 +3,16 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     watch: {
-      files: ['./src/*.ts'],
+      files: ['./src/**'],
       tasks: ['run:build', 'run:run'],
     },
 
     run: {
+      lint: {
+        exec: "tslint ./src"
+      },
       build: {
-        exec: " tsc ./src/index.ts --module commonjs --outDir ./build"
+        exec: "tsc ./src/index.ts --module commonjs --target es5 --outDir ./build"
       },
       run: {
         exec: 'node ./build/index.js',

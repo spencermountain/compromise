@@ -1,12 +1,10 @@
-import Verb=require("./models/verb")
-import Term=require("./models/term")
-import Sentence=require("./models/sentence")
+import Verb = require("./verb/verb");
+import Term = require("./term/term")
+import Sentence = require("./sentence/sentence");
 
+var s = new Sentence("hello version two");
+// let v = new Verb("walks");
 
-let he = new Term("he");
-let talk = new Verb("walks");
-talk.conjugate();
-var s=new Sentence("he walks")
 s.tag()
 console.log(s.syllables())
-console.log(Verb)
+

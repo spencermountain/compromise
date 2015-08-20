@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>nlp test</title>
+</head>
+<body>
+    <h1 id="greeting">.Hello </h1>
+
+    <!-- load Dojo or another AMD loader, e.g. one-line requirejs -->
+    <script type="javascript">
+    console.log(location.pathname.replace(/\/[^/]+$/, '') + '/../build/client');
+
+
+    dojoConfig = {
+        has: {
+            "dojo-firebug": true,
+            "dojo-debug-messages": true
+        },
+        parseOnLoad: false,
+        baseUrl: location.pathname.replace(/\/[^/]+$/, '') + '/../build/client',
+        tlmSiblingOfDojo: false,
+        packages: [ { name: "nlp", location: "nlp" } ],
+        // Timeout after 10 seconds
+        waitSeconds: 10
+    };
+    </script>
+    
+</body>
+</html>

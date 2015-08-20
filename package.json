@@ -31,8 +31,10 @@
     "grunt-browserify": "~3.8.*",
     "grunt-contrib-watch": "*",
     "grunt-run": "*",
+    "grunt-tslint": "^2.4.0",
     "nodeunit": "0.9.*",
-    "typescript":"1.5.*"
+    "tslint": "^2.4.2",
+    "typescript": "1.5.*"
   },
   "license": "MIT"
 }

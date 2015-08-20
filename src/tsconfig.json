@@ -1,12 +1,12 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "target":"es5",
-        "noImplicitAny": false,
-        "removeComments": false,
-        "preserveConstEnums": true,
-        "outDir": "./build",
-        "sourceMap": true
-    },
-    "compileOnSave" : true
-  }
+  "compilerOptions": {
+    "module": "commonjs",
+    "target":"es5",
+    "noImplicitAny": false,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "outDir": "./build",
+    "sourceMap": true
+  },
+  "compileOnSave" : true
+}

@@ -8,10 +8,10 @@
     <h1 id="greeting">.Hello </h1>
 
     <!-- load Dojo or another AMD loader, e.g. one-line requirejs -->
-    <script data-dojo-config="async: 1, dojoBlankHtmlUrl: '/blank.html',
+    <script data-dojo-config="async: 1,
         packages: [ {
             name: 'nlp',
-            location: location.pathname.replace(/\/[^/]+$/, '') + '/../../build/client'
+            location: location.pathname.replace(/\/[^/]+$/, '').replace('_dev','build') + 'client'
         } ]" src="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/dojo.js"></script>
     <script>
     // test nlp module client side

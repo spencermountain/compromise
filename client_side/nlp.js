@@ -641,9 +641,9 @@ var honourifics = require("./honourifics") //stored seperately, for 'noun.is_per
 
 var main = [
     //common abbreviations
-    "arc", "al", "ave", "blvd", "cl", "ct", "cres", "exp", "rd", "st", "dist", "mt", "ft", "fy", "hwy", "la", "pd", "pl", "plz", "tce", "vs", "etc", "esp", "llb", "md", "bl", "ma", "ba", "lit", "fl", "ex", "eg", "ie",
+    "arc", "al", "ave", "blvd", "cl", "ct", "cres", "exp", "rd", "st", "dist", "mt", "fy", "hwy", "pd", "pl", "plz", "tce", "llb", "md", "bl", "ma", "ba", "lit",
     //place main
-    "ala", "ariz", "ark", "cal", "calif", "col", "colo", "conn", "del", "fed", "fla", "ga", "ida", "ind", "ia", "kan", "kans", "ken", "ky", "la", "md", "mich", "minn", "mont", "neb", "nebr", "nev", "okla", "penna", "penn", "pa", "dak", "tenn", "tex", "ut", "vt", "va", "wash", "wis", "wisc", "wy", "wyo", "usafa", "alta", "ont", "que", "sask", "yuk", "bc",
+    "ala", "ariz", "ark", "cal", "calif", "col", "colo", "conn", "del", "fed", "fla", "fl", "ga", "ida", "ind", "ia", "la", "kan", "kans", "ken", "ky", "la", "md", "mich", "minn", "mont", "neb", "nebr", "nev", "okla", "penna", "penn", "pa", "dak", "tenn", "tex", "ut", "vt", "va", "wash", "wis", "wisc", "wy", "wyo", "usafa", "alta", "ont", "que", "sask", "yuk",
     //org main
     "dept", "univ", "assn", "bros", "inc", "ltd", "co", "corp",
     //proper nouns with exclamation marks
@@ -4056,7 +4056,7 @@ module.exports = function (text, options) {
   }
   // map to array
   i = undefined;
-  for (k = 1; k <= max_size; k++) {
+  for (k = 1; k < max_size; k++) {
     results[k] = [];
     var key = keys[k];
     for (i in key) {
@@ -4081,8 +4081,8 @@ module.exports = function (text, options) {
   return results
 }
 
-// s = ngram("i really think that we all really think it's all good")
-// console.log(s)
+//console.log(module.exports("i really think that we all really think it's all good"))
+// console.log(module.exports("i said i rule", {max_size:1})) // word-count
 
 },{}],21:[function(require,module,exports){
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
@@ -4099,6 +4099,8 @@ module.exports = function(text) {
   //date abbrevs.
   //these are added seperately because they are not nouns
   abbreviations = abbreviations.concat(["jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept", "sep"]);
+  //misc non-noun abbreviations
+  abbreviations = abbreviations.concat(["ex", "eg", "ie","circa","ca","cca", "vs", "etc", "esp", "ft", "bc","ad"])
 
   //detection of non-sentence chunks
   var abbrev_reg = new RegExp("\\b(" + abbreviations.join("|") + ")[.!?] ?$", "i");
@@ -4152,6 +4154,10 @@ var normalise = function (str) {
   str = str.replace(/[,\.!:;\?\(\)]/, '')
   str = str.replace(/’/g, "'")
   str = str.replace(/"/g, "")
+  // single curly quotes
+  str = str.replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]+/g, "'");
+  // double curly quotes
+  str = str.replace(/[\u201C\u201D\u201E\u201F\u2033\u2036]+/g, '"');
   if (!str.match(/[a-z0-9]/i)) {
     return ''
   }
@@ -5485,14 +5491,20 @@ var Noun = function (str, sentence, word_i) {
       "it": 1
     }
     //for resolution of obama -> he -> his
-  var posessives = {
+  var possessives = {
     "his": "he",
     "her": "she",
     "hers": "she",
     "their": "they",
+    "theirs": "they",
     "them": "they",
-    "its": "it"
+    "its": "it",
+    "mine": "i",
+    "yours": "you",
+    "our": 'we',
+    "ours": 'we'
   }
+
 
   the.is_acronym = function () {
     var s = the.word
@@ -5708,10 +5720,10 @@ var Noun = function (str, sentence, word_i) {
       //find the matching pronouns, and break if another noun overwrites it
       var matches = []
       for (var i = 0; i < interested.length; i++) {
-        if (interested[i].pos.tag === "PRP" && (interested[i].normalised === prp || posessives[interested[i].normalised] === prp)) {
+        if (interested[i].pos.tag === "PRP" && (interested[i].normalised === prp || possessives[interested[i].normalised] === prp)) {
           //this pronoun points at our noun
           matches.push(interested[i])
-        } else if (interested[i].pos.tag === "PP" && posessives[interested[i].normalised] === prp) {
+        } else if (interested[i].pos.tag === "PP" && possessives[interested[i].normalised] === prp) {
           //this posessive pronoun ('his/her') points at our noun
           matches.push(interested[i])
         } else if (interested[i].pos.parent === "noun" && interested[i].analysis.pronoun() === prp) {
@@ -5729,11 +5741,7 @@ var Noun = function (str, sentence, word_i) {
     //if it's a pronoun, look backwards for the first mention '[obama]... <-.. [he]'
     if (token && (token.pos.tag === "PRP" || token.pos.tag === "PP")) {
       var prp = token.normalised
-      var possessives={
-        "his":"he",
-        "her":"she",
-        "their":"they"
-      }
+
       if(possessives[prp]!==undefined){//support possessives
         prp=possessives[prp]
       }
@@ -5747,7 +5755,7 @@ var Noun = function (str, sentence, word_i) {
       interested = interested.reverse()
       for (var i = 0; i < interested.length; i++) {
         //it's a match
-        if (interested[i].pos.parent === "noun" && interested[i].pos.tag !== "PRP" && interested[i].analysis.pronoun() === prp) {
+        if (interested[i].pos.parent === "noun" && interested[i].pos.tag !== "PRP" && interested[i].analysis.pronoun() === prp ) {
           return interested[i]
         }
       }
@@ -7798,6 +7806,13 @@ var compact = [
       "was",
       "am",
       ""
+    ],
+    [
+      "load",
+      "_ing",
+      "_ed",
+      "_s",
+      "_er"
     ]
   ]
   //expand compact version out
@@ -9146,7 +9161,9 @@ var Sentence = function(tokens) {
       //loop through each term..
     for (var i = 0; i < the.tokens.length; i++) {
       var tok = the.tokens[i]
-
+      // handle ambiguous contractions
+      if (tok.pos_reason === 'ambiguous_contraction') { tok.text = tok.normalised; }
+      
       //turn 'is' into 'isn't', etc - make sure 'is' isnt followed by a 'not', too
       if (logic_negate[tok.normalised] && (!the.tokens[i + 1] || the.tokens[i + 1].normalised != "not")) {
         tok.text = logic_negate[tok.normalised]

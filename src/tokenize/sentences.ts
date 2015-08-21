@@ -14,7 +14,7 @@ let Sentences = function(text: string) {
   //these are added seperately because they are not nouns
   abbreviations = abbreviations.concat(["jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept"]);
   //misc non-noun abbreviations
-  abbreviations = abbreviations.concat(["ex", "eg", "ie", "circa", "ca", "cca", "vs", "etc", "esp", "ft", "bc", "ad"])
+  abbreviations = abbreviations.concat(["ex", "eg", "ie", "circa", "ca", "cca", "vs", "etc", "esp", "ft", "bc", "ad"]);
 
   //detection of non-sentence chunks
   let abbrev_reg = new RegExp("\\b(" + abbreviations.join("|") + ")[.!?] ?$", "i");

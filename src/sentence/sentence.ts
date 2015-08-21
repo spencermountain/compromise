@@ -1,12 +1,13 @@
-import Verb = require("../verb/verb")
-import Term = require("../term/term")
-
+import Verb = require("../verb/verb");
+import Term = require("../term/term");
+import SentenceToken = require("../tokenize/sentences");
 
 class Sentence {
   text: string;
   terms: Term[];
   constructor(text: string) {
-    this.text = text
+    this.text = text;
+    // SentenceToken("Hello version two");
     this.terms = text.split(" ").map(function(t) {
       return new Term(t)
     })
@@ -25,5 +26,3 @@ class Sentence {
 }
 
 export = Sentence
-
-

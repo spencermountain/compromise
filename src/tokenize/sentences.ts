@@ -2,7 +2,7 @@
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
 
-import abbreviations = require("./abbreviations")
+import abbr = require("./abbreviations")
 
 let Sentences = function(text: string) {
 
@@ -12,18 +12,18 @@ let Sentences = function(text: string) {
 
   //date abbrevs.
   //these are added seperately because they are not nouns
-  abbreviations = abbreviations.concat(["jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept"]);
-  //misc non-noun abbreviations
-  abbreviations = abbreviations.concat(["ex", "eg", "ie", "circa", "ca", "cca", "vs", "etc", "esp", "ft", "bc", "ad"]);
 
+  //misc non-noun abbreviations
+  let abbr2 = abbr.concat(["jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec", "sept"]);
+  let abbr3 = abbr2.concat(["ex", "eg", "ie", "circa", "ca", "cca", "vs", "etc", "esp", "ft", "bc", "ad"]);
   //detection of non-sentence chunks
-  let abbrev_reg = new RegExp("\\b(" + abbreviations.join("|") + ")[.!?] ?$", "i");
+  let abbrev_reg = new RegExp("\\b(" + abbr3.join("|") + ")[.!?] ?$", "i");
   let acronym_reg = new RegExp("[ |\.][A-Z]\.?$", "i")
   let elipses_reg = new RegExp("\\.\\.\\.*$")
 
   //loop through these chunks, and join the non-sentence chunks back together..
   let chunks_length = chunks.length;
-  for (i = 0; i < chunks_length; i++) {
+  for (let i = 0; i < chunks_length; i++) {
     if (chunks[i]) {
       //trim whitespace
       chunks[i] = chunks[i].replace(/^\s+|\s+$/g, "");
@@ -45,7 +45,7 @@ let Sentences = function(text: string) {
 }
 
 export = Sentences
-// console.log(sentence_parser('Tony is nice. He lives in Japan.').length === 2)
-// console.log(sentence_parser('I like that Color').length === 1)
-// console.log(sentence_parser("She was dead. He was ill.").length === 2)
-// console.log(sentence_parser("i think it is good ... or else.").length == 1)
+// console.log(Sentences('Tony is nice. He lives in Japan.').length === 2)
+// console.log(Sentences('I like that Color').length === 1)
+// console.log(Sentences("She was dead. He was ill.").length === 2)
+// console.log(Sentences("i think it is good ... or else.").length == 1)

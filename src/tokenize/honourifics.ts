@@ -1,6 +1,6 @@
 //these are common person titles used in the lexicon and sentence segmentation methods
 //they are also used to identify that a noun is a person
-var honourifics: string[] = [
+const honourifics: string[] = [
 //honourifics
   "jr",
   "mr",
@@ -53,7 +53,7 @@ var honourifics: string[] = [
   "res",
   "sens",
   "sfc",
-  "surg",
-]
+  "surg"
+];
 
-exports = honourifics
+export = honourifics;

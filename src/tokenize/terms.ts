@@ -1,7 +1,7 @@
 //split a string into 'words' - as intended to be most helpful for this library.
 
 import sentence_parser = require("./sentences");
-import multiples = require("../../data/en/lexicon/multiples");
+import multiples = require("../data/en/lexicon/multiples");
 
 //these expressions ought to be one token, not two, because they are a distinct POS together
 let multi_words = Object.keys(multiples).map(function (m) {
@@ -12,10 +12,10 @@ let normalise = function (str) {
   if (!str) {
     return ""
   }
-  str = str.toLowerCase()
-  str = str.replace(/[,\.!:;\?\(\)]/, "")
-  str = str.replace(/’/g, "'")
-  str = str.replace(/"/g, "")
+  str = str.toLowerCase();
+  str = str.replace(/[,\.!:;\?\(\)]/, "");
+  str = str.replace(/’/g, "'");
+  str = str.replace(/"/g, "");
   // single curly quotes
   str = str.replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]+/g, "'");
   // double curly quotes
@@ -26,6 +26,7 @@ let normalise = function (str) {
   return str;
 }
 
+// https://en.wikipedia.org/wiki/Sentence_(linguistics)#By_purpose
 let sentence_type = function (sentence) {
   if (sentence.match(/\?$/)) {
     return "interrogative";
@@ -40,7 +41,7 @@ let sentence_type = function (sentence) {
 let combine_multiples = function (arr) {
   let better = []
   let normalised = arr.map(function (a) {
-      return normalise(a)
+      return normalise(a);
     }) //cached results
   for (let i = 0; i < arr.length; i++) {
     for (let o = 0; o < multi_words.length; o++) {
@@ -61,8 +62,8 @@ let combine_multiples = function (arr) {
 let tokenize = function (str) {
   let sentences = sentence_parser(str)
   return sentences.map(function (sentence) {
-    let arr = sentence.split(' ');
-    arr = combine_multiples(arr)
+    let arr = sentence.split(" ");
+    arr = combine_multiples(arr);
     let tokens = arr.map(function (w, i) {
       return {
         text: w,
@@ -76,16 +77,10 @@ let tokenize = function (str) {
     })
     return {
       sentence: sentence,
-      tokens: tokens,
+      tokens: combine_multiples(arr),
       type: sentence_type(sentence)
     }
   })
 }
 
 export = tokenize;
-
-// console.log(tokenize("i live in new york")[0].tokens.length==4)
-// console.log(tokenize("I speak optimistically of course.")[0].tokens.length==4)
-// console.log(tokenize("Joe is 9")[0].tokens.length==3)
-// console.log(tokenize("Joe in Toronto")[0].tokens.length==3)
-// console.log(tokenize("I am mega-rich")[0].tokens.length==3)

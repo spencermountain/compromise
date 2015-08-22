@@ -6,4 +6,4 @@ var s = new Sentence("hello version two");
 // let v = new Verb("walks");
 
 s.tag();
-console.log(s.syllables());
+console.log(s);

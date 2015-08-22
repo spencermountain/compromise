@@ -1,4 +1,4 @@
-import Term = require("../term/term")
+import Term = require("../term/term");
 
 class Verb extends Term {
   constructor(text: string) {
@@ -10,4 +10,4 @@ class Verb extends Term {
     console.log(this.pos);
   }
 }
-export = Verb
+export = Verb;

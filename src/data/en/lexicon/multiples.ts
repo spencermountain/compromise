@@ -10,7 +10,8 @@
  */
 
 
-let multiples: { property: string; } = { 
+// let multiples: { property: string; } = { 
+let multiples = { 
   'will be': 'CP',
   'won\'t be': 'CP',
   'ought to': 'MD',

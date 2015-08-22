@@ -1,14 +1,14 @@
 import Verb = require("../verb/verb");
 import Term = require("../term/term");
-import SentenceToken = require("../tokenize/sentences");
+import sentence_parser = require("../tokenize/sentences");
+// import term_parser = require("../tokenize/terms");
 
 class Sentence {
   text: string;
   terms: Term[];
   constructor(text: string) {
     this.text = text;
-    SentenceToken("Hello version two");
-    this.terms = text.split(" ").map(function(t) {
+    this.terms = sentence_parser(text).map(function(t) {
       return new Term(t)
     })
   }

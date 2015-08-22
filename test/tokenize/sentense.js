@@ -8,7 +8,7 @@ describe("tokenize sentense tests", function () {
     Sentences("I like that Color").should.have.length(1);
     Sentences("She was dead. He was ill.").should.have.length(2);
     Sentences("i think it is good... or else.").should.have.length(1);
-    Sentences("Dr. Tony is nice. He lives in at Elm St. Vancouver BC. Canada.").should.have.length(2);
+    Sentences("Dr. Tony is nice. He lives on Elm St. in Vancouver BC. Canada.").should.have.length(2);
     done();
   });
 });

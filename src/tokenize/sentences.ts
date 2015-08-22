@@ -45,7 +45,3 @@ let Sentences = function(text: string) {
 }
 
 export = Sentences
-// console.log(Sentences('Tony is nice. He lives in Japan.').length === 2)
-// console.log(Sentences('I like that Color').length === 1)
-// console.log(Sentences("She was dead. He was ill.").length === 2)
-// console.log(Sentences("i think it is good ... or else.").length == 1)

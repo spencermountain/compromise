@@ -42,7 +42,7 @@
     ],
     "quotemark": [false],
     "radix": true,
-    "semicolon": false,
+    "semicolon": true,
     "sort-object-literal-keys": true,
     "triple-equals": [true, "allow-null-check"],
     "variable-name": false,

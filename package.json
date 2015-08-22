@@ -8,7 +8,7 @@
     "url": "git://github.com/spencermountain/nlp_compromise.git"
   },
   "scripts": {
-    "test": "nodeunit ./tests/unit_test.js "
+    "test": "mocha ./test/*"
   },
   "main": "index.js",
   "engines": [
@@ -32,7 +32,9 @@
     "grunt-contrib-watch": "*",
     "grunt-run": "*",
     "grunt-tslint": "^2.4.0",
+    "mocha": "^2.2.5",
     "nodeunit": "0.9.*",
+    "should": "^7.0.4",
     "tslint": "^2.4.2",
     "typescript": "1.5.*"
   },

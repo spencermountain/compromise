@@ -7,7 +7,7 @@ class Sentence {
   terms: Term[];
   constructor(text: string) {
     this.text = text;
-    // SentenceToken("Hello version two");
+    SentenceToken("Hello version two");
     this.terms = text.split(" ").map(function(t) {
       return new Term(t)
     })

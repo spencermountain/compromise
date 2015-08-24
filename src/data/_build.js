@@ -306,7 +306,7 @@ function generateLanguage(lang) {
 			},
 			// expand
 			unzip: function () {
-				var res = {negate:{}};
+				var res = {negate:{}, CP:{}, MD:{}};
 				['CP', 'MD'].forEach(function(type) {
 					res[type] = {};
 					zip[type].forEach(function(a) {
@@ -1533,8 +1533,8 @@ function generateLanguage(lang) {
 		// now require this index module and other needed modules in the LEXICON
 		var reqs = [
 			C.l, C._,
-			"import data = require('../');", C._,
-			"import parents = require('../../../parents');", C._,
+			"import data = require('../index');", C._,
+			"import parents = require('../../../parents'); // TODO - does not exist yet in 2.0", C._, //TODO
 			C.main
 		];
 
@@ -1646,8 +1646,7 @@ function generateLanguage(lang) {
 				});
 
 				return main;
-			}
-			if (cat in did) { return did[cat] }
+			} else if (cat in did) { return did[cat] }
 			return [];
 		}
 		// end of lexicon
@@ -1687,7 +1686,7 @@ function generateLanguage(lang) {
 
 
 		var lexiconStr = util.inspect(((isZip) ? _lZip : _lMain), {depth: null});
-		var genStr = lexicon.toString().replace(/\bVBN:\s*__VBN\s*,\s*\n*/g,''); // TODO FIXME
+		var genStr = lexicon.toString().replace(/\bVBN:\s*__VBN\s*,\s*\n*/g,'').replace('(cat)', '(cat?)'); // TODO ugly, FIXME
 		reqs.push(C._exp, lexiconStr, C.un1, genStr, C.un2);
 		lexiconStr = reqs.join('');
 		_names.push('lexicon.ts');

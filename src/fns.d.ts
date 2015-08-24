@@ -10,10 +10,10 @@ declare module fns {
 	export function toReadable(str:string): string;
 	export function toNames(str:string): string;
 	export function hash(str:string): string;
-	export function r(a:number, j:number, f:string): any; // returns RegExp
+	export function r(a:any[], j:number, f:string): any; // returns RegExp
 	export function w_options(sOo): Object; // string or object
 	export function setPos(token:Object, p:any, pr:string): any;
-	export function tokenFn(rules, type, noFallback, countStart): () => any; // TODO returned takes interfae
+	export function tokenFn(rules, type, noFallback?, countStart?): () => any; // TODO returned takes interfae
 	export function getObjKey(parts:string[], o:Object, create:boolean): any;
 	export function getObject(name:string, o:Object, create:boolean): any;
 	export function setObjKey(parts:string[], value:any, o:Object): any;
@@ -22,7 +22,7 @@ declare module fns {
 	export function mixin(dest:Object, sources:Object): Object;
 	export function mapFn(key:string): () => any; // TODO returned takes interfae
 	export function toObj(o:Object, s): Object;
-	export function toObjValues(zip, o:Object): Object;
+	export function toObjValues(zip, o?:Object): Object;
 	export function toObjDeep(arr:any[], keys:string[]): Object;
 	export function has(k:any, ao:any): boolean;
 	export function hasL(a:any, l:number): number;

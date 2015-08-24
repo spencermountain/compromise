@@ -72,38 +72,6 @@ var data = {
 	firstnames: {},
 	dates: {}
 }, honorifics, zip;
-/*
-data.verbs_special.CP
-data.verbs_special.MD
-data.verbs_conjugate.irregulars
-data.verbs_conjugate.irregularDoers
-
-data.nouns.PP
-data.nouns.PRP
-data.nouns_inflect.NN
-data.nouns_inflect.uncountables
-
-data.abbreviations.nouns
-
-data.adjectives_decline.adverb.to
-data.adjectives_decline.adverb.no
-data.adjectives_decline.comparative.to
-data.adjectives_decline.superlative.to
-data.adjectives_demonym
-
-data.adverbs_decline
-
-data.firstnames
-
-data.dates...
-
-data.numbers.ones
-data.numbers.teens
-data.numbers.tens
-data.numbers.multiple
-*/
-
-
 
 function generateLanguage(lang) {
 	if (possibleLanguages.indexOf(lang) < 0) { console.log( 'Language not found:', '"'+lang+'"' ); return false; }

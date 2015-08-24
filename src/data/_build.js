@@ -955,7 +955,7 @@ function generateLanguage(lang) {
 				return __.did(res, isZip);
 			},
 			// expand
-			unzip: function(a) {
+			unzip: function() {
 				var res = { normaler: {}, greek: {}	};
 				for (var normCh in zip) {
 						zip[normCh].split('').forEach(function(grCh){
@@ -1150,7 +1150,7 @@ function generateLanguage(lang) {
 				var m = 'matches', r = 'replacer', rt = 'returns';
 				[['plural', 'to', [m, r]], ['plural', 'indicators', [m]],
 				 ['singular','to', [m, r]], ['singular','indicators', [m]],
-				 ['gender','to', [m, rt]], ['gender','names', [m, rt]], ['which', [m, rt]]].forEach(function(a){
+				 ['gender','to', [m, rt]], ['gender','names', [m, rt]], ['which', [m, rt]]].forEach(function(a_typeof_any){
 					var objKeys = a.pop();
 					if (a[1]) { zip[a[0]][a[1]] = _.toObjDeep(zip[a[0]][a[1]], objKeys); }
 					_.setObjKey(a, _.tokenFn(zip, a, 1), zip);
@@ -1203,7 +1203,7 @@ function generateLanguage(lang) {
 				 ['comparative','to',[m, r]], ['comparative','no',[m]], ['comparative','regular',[m]],
 				 ['superlative','to',[m, r]], ['superlative','no',[m]],  ['superlative','regular',[m]],
 				 ['noun','to',[m, r]], ['noun','no',[m]],
-				 ['which', [m, rt]]].forEach(function(a){
+				 ['which', [m, rt]]].forEach(function(a_typeof_any){
 					var objKeys = a.pop();
 					if (a[1]) { zip[a[0]][a[1]] = _.toObjDeep(zip[a[0]][a[1]], objKeys); }
 					_.setObjKey(a, _.tokenFn(zip, a, 1), zip);
@@ -1226,7 +1226,7 @@ function generateLanguage(lang) {
 			},
 			unzip: function() {
 				var m = 'matches';
-				[['adjective', 'to', [m, 'replacer']], ['which', [m, 'returns']]].forEach(function(a){
+				[['adjective', 'to', [m, 'replacer']], ['which', [m, 'returns']]].forEach(function(a_typeof_any){
 					var objKeys = a.pop();
 					if (a[1]) { zip[a[0]][a[1]] = _.toObjDeep(zip[a[0]][a[1]], objKeys); }
 					_.setObjKey(a, _.tokenFn(zip, a, 1), zip);
@@ -1234,22 +1234,7 @@ function generateLanguage(lang) {
 				return zip;
 			}
 		},
-		/*
-	split: {
-			multiple: {en: ['and', 'or']},
-			eventStart: {en: ['between', 'from']},
-			eventEnd: {en: ['and', 'to']}
-	},
-	day: {
-		suffix: {en: '(?:st|nd|rd|th)?(?:,\\s|\\sof\\s|$|\\s)'}
-	},
-	year:{
-		suffix: { // TODO? - could be arrays - but check if it would be to unflexible for i18n
-			bc: {en: ' before| vor| v.'},
-			ad: {en: ' anno| nach| n.'}
-		}
-	}
-		*/
+
 		{ // 27
 			id: 'number',
 			folder: 'rules',
@@ -1391,8 +1376,8 @@ function generateLanguage(lang) {
 				var s0 = '(?:\\-)', s1='\\s?(?:\\-|\\/)+\\s?', s2='\\s?(?:\\.|\\/)+\\s?', s3='(?: ?\\- ?)';
 				var eM = rd.split.multiple.join('(?= ) |'), eS = rd.split.eventStart.join('|');
 				var eE = rd.split.eventEnd.filter(function(w){ if (rd.split.multiple.indexOf(w) < 0) return true; }).join('|');
-				var m_s_y = {matches:r([m.w,' ',y.nr],0,'i'), parameters: {pattern:[_m,_y]}};
-				var yOnly = {matches:r([st,y.nr],0,'i'), parameters: {pattern:[_y]}};
+				var m_s_y = {matches:_.r([m.w,' ',y.nr],0,'i'), parameters: {pattern:[_m,_y]}};
+				var yOnly = {matches:_.r([st,y.nr],0,'i'), parameters: {pattern:[_y]}};
 				//: 									4 HH    5 mm       6 ss        7 msec        8 Z 9 ±    	10 tzHH    11 tzmm
 				var isoTime = '(?:T(\\d{2}):(\\d{2})(?::(\\d{2})(?:\\.(\\d{3}))?)?(?:(Z)|([+\\-])(\\d{2})(?::(\\d{2}))?)?)?';	// TODO time
 				var greg = ['(',values(rd.gregorian).join(')|('),')'].join('');
@@ -1403,9 +1388,9 @@ function generateLanguage(lang) {
 				var pn = ['(?:',st,pnPrefix,sRel,'(?:',greg,')\\s*)'].join('');
 				var rel = ['(?:',st,rels,')?'].join('');
 				return {
-					range: r([st2,S,eS,')(.*)(?:\\s',eM,'\\s)(.*)|',st2,S,eS,')?(.*)(?:(?:\\s',eE,'\\s)|',s3,')(.+)'],0,'i'),
-					multi: r([st,S,eM,'(?= ) )|(?: ?\\& ?)|(?: ?, ?)(?=\\d)'],0,'i'),
-					iso: r([S,'(\\d{4}|[+\\-]\\d{6})',s0,m.nr,s0,d.nr,E,isoTime]),
+					range: _.r([st2,S,eS,')(.*)(?:\\s',eM,'\\s)(.*)|',st2,S,eS,')?(.*)(?:(?:\\s',eE,'\\s)|',s3,')(.+)'],0,'i'),
+					multi: _.r([st,S,eM,'(?= ) )|(?: ?\\& ?)|(?: ?, ?)(?=\\d)'],0,'i'),
+					iso: _.r([S,'(\\d{4}|[+\\-]\\d{6})',s0,m.nr,s0,d.nr,E,isoTime]),
 					day: {
 						suffix: __.val(rule.dates.day.suffix, {}),
 						nr: new RegExp(d.nrs, 'i')
@@ -1415,12 +1400,12 @@ function generateLanguage(lang) {
 					},
 					year: {
 						nr: y.nr,
-						neg: r([y.n,'\\s',y.nr,'|',y.nr,y.n,'|',__.val(rule.dates.year.suffix.bc, {})],0,'i'),
-						pos: r([y.p,'\\s',y.nr,'|',y.nr,y.p,'|',__.val(rule.dates.year.suffix.ad, {})], 0,'i')
+						neg: _.r([y.n,'\\s',y.nr,'|',y.nr,y.n,'|',__.val(rule.dates.year.suffix.bc, {})],0,'i'),
+						pos: _.r([y.p,'\\s',y.nr,'|',y.nr,y.p,'|',__.val(rule.dates.year.suffix.ad, {})], 0,'i')
 					},
 					short: [ // 6/25 etc.
-						{matches: r([S,m.nr,s1,d.nr,s1,y.nr,E]), parameters: _mdy},
-						{matches: r([S,d.nr,s2,m.nr,s2,y.nr,E]), parameters: _dmy}
+						{matches: _.r([S,m.nr,s1,d.nr,s1,y.nr,E]), parameters: _mdy},
+						{matches: _.r([S,d.nr,s2,m.nr,s2,y.nr,E]), parameters: _dmy}
 					],
 					dayFirst: [ // 25th of June etc.
 						{matches: [S,st,S,S,d.nrs,')?)','{m.w}?(?:$| )',toY,y.nr,E], parameters:_dmy},
@@ -1440,10 +1425,10 @@ function generateLanguage(lang) {
 			unzip: function() {
 				var _d = 'day', _m = 'month', _y = 'year';
 				var w = {day: Object.keys(data.days).join('|'), month: ['(?:(',Object.keys(data.months).join('|'),'),?)'].join('')};
-				var m_y = {matches:r([w.month,' ',zip.year.nr],0,'i'), parameters: {pattern:[_m,_y]}};
+				var m_y = {matches:_.r([w.month,' ',zip.year.nr],0,'i'), parameters: {pattern:[_m,_y]}};
 				zip.year.nr = new RegExp(zip.year.nr);
-				zip.day.weekday = r(['(?:(',w.day,',?))'],0,'i'),
-				zip.month.w = r([w.month],0,'i');
+				zip.day.weekday = _.r(['(?:(',w.day,',?))'],0,'i'),
+				zip.month.w = _.r([w.month],0,'i');
 				for (var k in w) {
 					var a = zip[k+'First'][0].matches.map(function(s){ return s.replace('{m.w}',w.month) });
 					zip[k+'First'][0].matches = _.r(a,0,'i');
@@ -1796,8 +1781,7 @@ function generateLanguage(lang) {
 				unzStr = g.unzip.fn.toString();
 				unzips = [C._, g.unzip.array, C.eq, g.unzip.array, C.map1, unzStr, C.map2, C.mod];
 			} else {
-				// it should be a function
-				unzStr = g.unzip.toString();
+				unzStr = g.unzip.toString().replace(/_typeof_/g,':');
 				unzips = [C._, C.mod1, unzStr, C.mod2];
 			}
 			addUnzip(unzips);

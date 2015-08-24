@@ -338,8 +338,7 @@ function generateLanguage(lang) {
 			},
 			// expand
 			unzip: function () {
-				var res = {};
-				res.negate = {};
+				var res = {negate:{}};
 				['CP', 'MD'].forEach(function(type) {
 					res[type] = {};
 					zip[type].forEach(function(a) {
@@ -544,33 +543,33 @@ function generateLanguage(lang) {
 			},
 			// node.js
 			make: function() {
-				data.adjectives_decline = { convertables: [], adverb: {to: {}, no:[]}, comparative: {to: {}}, superlative: {to: {}}, noun: {to: {}} };
+				var o = { convertables: [], adverb: {to: {}, no:[]}, comparative: {to: {}}, superlative: {to: {}}, noun: {to: {}} };
 
 				zip.forEach(function(_a) {
 					if (typeof _a === 'string') {
-						data.adjectives_decline.convertables.push(_a);
+						o.convertables.push(_a);
 					} else {
 						var a = _a.map(function(w){ return w; });
 						if (a.length > 1) {
-							if (a[1] === 0) { data.adjectives_decline.adverb.no.push(a[0]); }
-							if (typeof a[1] === 'string') { data.adjectives_decline.adverb.to[a[0]] = a[1]; }
+							if (a[1] === 0) { o.adverb.no.push(a[0]); }
+							if (typeof a[1] === 'string') { o.adverb.to[a[0]] = a[1]; }
 						}
 						if (a[2] && a[2] === 1) {
-							data.adjectives_decline.convertables.push(a[0]);
+							o.convertables.push(a[0]);
 						} else if (a.length>2) {
-							data.adjectives_decline.comparative.to[a[0]] = a[2];
+							o.comparative.to[a[0]] = a[2];
 						}
 						if (a.length>3 && a[3]!=1) {
-							data.adjectives_decline.superlative.to[a[0]] = a[3];
+							o.superlative.to[a[0]] = a[3];
 						}
 						if (a.length>4 && a[4]!=1) {
-							data.adjectives_decline.noun.to[a[0]] = a[4];
+							o.noun.to[a[0]] = a[4];
 						}
 					}
 				});
-				data.adjectives_decline.convertables = data.adjectives_decline.convertables.reduce(_.toObj, {});
-				data.adjectives_decline.adverb.no = data.adjectives_decline.adverb.no.reduce(_.toObj, {});
-				return data.adjectives_decline;
+				o.convertables = o.convertables.reduce(_.toObj, {});
+				o.adverb.no = o.adverb.no.reduce(_.toObj, {});
+				return o;
 			},
 			// browser - expand
 			unzip: function() {
@@ -665,18 +664,19 @@ function generateLanguage(lang) {
 				return irregulars;
 			},
 			make: function() {
+				var o = {};
 				zip.forEach(function(a) {
-					data.adverbs_decline[a[0]] = a[1];
+					o[a[0]] = a[1];
 				});
-				return data.adverbs_decline;
+				return o;
 			},
 			// expand
 			unzip: function() {
-				var res = {};
+				var o = {};
 				zip.forEach(function(a) {
-					res[a[0].replace('=', a[1])] = a[1];
+					o[a[0].replace('=', a[1])] = a[1];
 				});
-				return res;
+				return o;
 			}
 		},
 
@@ -910,7 +910,7 @@ function generateLanguage(lang) {
 										'{{.asymmetric}} behaviour (references)'].join('\n'),
 			prefix: ["import schema = require('../schema');",
 							"import opposite = require('./negate');",
-							"import verbs = require('../verbs');",
+							"import verbs = require('../verbs/index');",
 							"import conjugated = require('../verbs/conjugate');"].join('\n'),
 			// build
 			zip: function(lang, isZip) {
@@ -942,7 +942,7 @@ function generateLanguage(lang) {
 				return res;
 			},
 			unzip: function () {
-				var res = {};
+				var res = {particleRegex:''};
 				var allVerbs = conjugated.irregulars.map(function(o){
 					return o.infinitive;
 				}).concat( verbs, zip.verbs.split(',') );
@@ -1683,7 +1683,6 @@ function generateLanguage(lang) {
 			return [];
 		}
 		// end of lexicon
-console.log('data:', data);
 		var _did = lexicon(1);
 		['EX', 'NN', 'NNS', 'CC', 'VBD', 'VBN', 'VBG', 'DT', 'IN', 'PP', 'UH', 'FW', 'RB', 'RBR', 'RBS'].forEach(function(cat) {
 			_lMain[cat] = [];
@@ -1813,7 +1812,8 @@ console.log('data:', data);
 		hasMake = g.hasOwnProperty('make');
 		if (hasMake && g.make) {
 			zip = generatedMain;
-			g.make();
+			var key = [((g.folder && g.folder != 'lexicon') ? g.folder+'_' : ''), g.id].join('').replace('_index','');
+			data[key] = g.make();
 			gens.main.push(C.mod1, g.make.toString(), C.mod2);
 		} else if (hasMake) {
 			gens.main.push(C.mod);
@@ -1855,7 +1855,12 @@ console.log('data:', data);
 		i++;
 		var colors = ['',''];
 
+		meta = (g.folder) ? [folder, g.id].join('') : g.id;
+		var nr = (i<10) ? '0'+i : i.toString();
+		console.log( 'wrote module file for language', '"'+lang+'" :', [colors[0],nr,' of ',generators.length,colors[1]].join(''), ['(', meta, ')'].join('') );
+
 		if (i === generators.length) {
+			console.log( ' ' );
 			colors = ['\u001b[32m', '\u001b[39m'];
 			var lexiMain = [clean(buildLexi(lang))];
 			var lexiZip = [clean(buildLexi(lang, true))];
@@ -1864,11 +1869,6 @@ console.log('data:', data);
 			fs.writeFileSync(	path.join(PATH, lang, '/lexicon/index.min.ts'), lexiZip.concat(lexiStd).join(''));
 			console.log( 'wrote', colors[0], 'lexicon file', colors[1], 'for language', '"'+lang+'"');
 		}
-
-		meta = (g.folder) ? [folder, g.id].join('') : g.id;
-		var nr = (i<10) ? '0'+i : i.toString();
-		console.log( 'wrote module file for language', '"'+lang+'" :', [colors[0],nr,' of ',generators.length,colors[1]].join(''), ['(', meta, ')'].join('') );
-		if (i === generators.length) { console.log( ' ' ); }
 	}
 
 
@@ -1925,7 +1925,9 @@ exports.main = function (langOrLangs) {
 		return stack;
 	}
 	stack().forEach(setMyPath);
+	console.log( ' ' );
 	console.log( ':) \033[4mWriting data files\033[0m' );
+	console.log( ' ' );
 
 	if (!langOrLangs) {
 		// all languages in the dictionary ...

@@ -4,7 +4,7 @@ let fns = require("./fns.js")
 
 class Sentence {
   constructor(str) {
-    this.text = str || "";
+    this.str = str || "";
     let terms = str.split(" ")
     this.terms = terms.map(function(s, i) {
       let info = {
@@ -21,13 +21,13 @@ class Sentence {
       "!": true,
       "?": true
     }
-    let char = this.text.slice(-1) || "";
+    let char = this.str.slice(-1) || "";
     if (allowed[char]) {
       return char
     }
     return "."
   }
-  //
+  //is it a question/statement
   sentence_type() {
     let char = this.terminator()
     let types = {
@@ -39,9 +39,6 @@ class Sentence {
   }
 
   //map over term methods
-  text() {
-    return this.str
-  }
   normalized() {
     return fns.pluck(this.terms, 'normal').join(" ")
   }
@@ -50,7 +47,7 @@ class Sentence {
   }
 }
 
-var s = new Sentence("Hii Dr. Nick!")
-console.log(s)
+// var s = new Sentence("Hii Dr. Nick!")
+// console.log(s.text())
 
 module.exports = Sentence

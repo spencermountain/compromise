@@ -13,7 +13,10 @@ class Nlp {
 
   //map over sentence methods
   text() {
-    return this.str
+    let arr = this.sentences.map(function(s) {
+      return s.text()
+    })
+    return fns.flatten(arr).join(" ")
   }
   terms() {
     let arr = this.sentences.map(function(s) {
@@ -31,4 +34,4 @@ class Nlp {
 }
 
 var n = new Nlp("Hii Dr. Nick! Hiii!")
-console.log(n.normalised())
+console.log(n.text())

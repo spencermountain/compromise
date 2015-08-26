@@ -4,6 +4,7 @@ let fns = require("../fns.js")
 
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {
+
   constructor(str) {
     this.str = str || "";
     let terms = str.split(" ")
@@ -15,7 +16,9 @@ class Sentence {
     })
   }
 
-  //the ending-punctuation used
+  //Sentence methods:
+
+  //the ending punctuation
   terminator() {
     let allowed = {
       ".": true,
@@ -39,7 +42,7 @@ class Sentence {
     return types[char] || "declarative";
   }
 
-  //map over term methods
+  //map over Term methods
   normalized() {
     return fns.pluck(this.terms, 'normal').join(" ")
   }

@@ -1,7 +1,8 @@
 'use strict'
-let Term = require("./term.js")
-let fns = require("./fns.js")
+let Term = require("../term/term.js")
+let fns = require("../fns.js")
 
+//a sentence is an array of Term objects, along with their various methods
 class Sentence {
   constructor(str) {
     this.str = str || "";

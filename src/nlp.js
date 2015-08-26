@@ -1,19 +1,34 @@
 'use strict'
-let Term = require("./term.js")
+let Sentence = require("./sentence.js")
 let fns = require("./fns.js")
+let sentence_parser = require("./tokenize/sentence.js")
 
 class Nlp {
   constructor(str) {
-    this.str = str;
-    let words = this.str.split(" ")
-    this.terms = words.map(function(s) {
-      return new Term(s)
+    this.str = str || "";
+    this.sentences = sentence_parser(str).map(function(s) {
+      return new Sentence(s)
     })
   }
+
+  //map over sentence methods
   text() {
-    return fns.pluck(this.terms, 'text').join(" ")
+    return this.str
   }
+  terms() {
+    let arr = this.sentences.map(function(s) {
+      return s.terms
+    })
+    return fns.flatten(arr)
+  }
+  normalised() {
+    let arr = this.sentences.map(function(s) {
+      return s.normalized()
+    })
+    return fns.flatten(arr).join(" ")
+  }
+
 }
 
-var n = new Nlp("Hii Dr. Nick!")
-console.log(n.text())
+var n = new Nlp("Hii Dr. Nick! Hiii!")
+console.log(n.normalised())

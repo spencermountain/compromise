@@ -44,7 +44,7 @@ class Text {
 
 }
 
-var n = new Text("Hii Dr. Nick! Hii")
-console.log(n.ngram())
+// var n = new Text("Hii Dr. Nick! Hii")
+// console.log(n.ngram())
 
 module.exports = Text

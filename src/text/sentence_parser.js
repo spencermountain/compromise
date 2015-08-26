@@ -42,10 +42,10 @@ var sentence_parser = function(text) {
 
   return sentences;
 }
-
-module.exports = sentence_parser
-
 // console.log(sentence_parser('Tony is nice. He lives in Japan.').length === 2)
 // console.log(sentence_parser('I like that Color').length === 1)
 // console.log(sentence_parser("She was dead. He was ill.").length === 2)
 // console.log(sentence_parser("i think it is good ... or else.").length === 1)
+
+module.exports = sentence_parser
+

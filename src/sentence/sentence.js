@@ -59,7 +59,7 @@ class Sentence {
   }
 }
 
-var s = new Sentence("john is cool")
-console.log(s.tag())
+// var s = new Sentence("john is cool")
+// console.log(s.tag())
 
 module.exports = Sentence

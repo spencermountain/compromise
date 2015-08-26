@@ -12,3 +12,12 @@ exports.flatten = function(arr) {
   })
   return all
 }
+
+exports.compact = function(arr) {
+  return arr.filter(function(a) {
+    if (a === undefined || a === null) {
+      return false
+    }
+    return true
+  })
+}

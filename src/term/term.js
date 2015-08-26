@@ -1,4 +1,5 @@
 'use strict'
+let syllables = require("./syllables")
 
 class Term {
   constructor(str) {
@@ -20,9 +21,12 @@ class Term {
     }
     return str
   }
+  syllables() {
+    return syllables(this.normal)
+  }
 }
 
-// var text = new Term("Hii Dr. Nick!")
-// console.log(text)
+// var t = new Term("hyphen")
+// console.log(t.syllables())
 
 module.exports = Term

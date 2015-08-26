@@ -1,11 +1,15 @@
 'use strict'
 let syllables = require("./syllables")
+let americanize = require("./americanize")
+let britishize = require("./britishize")
 
 class Term {
   constructor(str) {
     this.text = str;
     this.normal = this.normalize();
   }
+
+  //Term methods..
   normalize() {
     let str = this.text || ""
     str = str.toLowerCase()
@@ -21,12 +25,18 @@ class Term {
     }
     return str
   }
+  americanize() {
+    return americanize(this.normal)
+  }
+  britishize() {
+    return britishize(this.normal)
+  }
   syllables() {
     return syllables(this.normal)
   }
 }
 
-// var t = new Term("hyphen")
-// console.log(t.syllables())
+// var t = new Term("synthesise")
+// console.log(t.americanize())
 
 module.exports = Term

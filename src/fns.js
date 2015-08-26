@@ -22,7 +22,14 @@ exports.compact = function(arr) {
   })
 }
 
-//string utility
+//string utilities
 exports.endsWith = function(str, suffix) {
   return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+exports.titlecase = function(str) {
+  if (!str) {
+    return ''
+  }
+  return str.charAt(0).toUpperCase() + str.slice(1)
 }

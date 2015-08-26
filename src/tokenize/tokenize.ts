@@ -1,1 +1,0 @@
-import Term = require("./terms")

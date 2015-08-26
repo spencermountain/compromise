@@ -1,6 +1,7 @@
 'use strict'
 let Term = require("../term/term.js")
 let fns = require("../fns.js")
+let tagger = require("./tagger.js")
 
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {
@@ -31,6 +32,13 @@ class Sentence {
     }
     return "."
   }
+
+  //part-of-speech assign each term
+  tag() {
+    this.terms = tagger(this)
+    return this.terms
+  }
+
   //is it a question/statement
   sentence_type() {
     let char = this.terminator()
@@ -51,7 +59,7 @@ class Sentence {
   }
 }
 
-// var s = new Sentence("Hii Dr. Nick!")
-// console.log(s.text())
+var s = new Sentence("john is cool")
+console.log(s.tag())
 
 module.exports = Sentence

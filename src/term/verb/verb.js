@@ -62,3 +62,5 @@ class Verb extends Term {
 
 // let v = new Verb("walk", "asdf")
 // console.log(v.form())
+
+module.exports = Verb

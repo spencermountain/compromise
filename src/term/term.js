@@ -7,6 +7,7 @@ class Term {
   constructor(str) {
     this.text = str;
     this.normal = this.normalize();
+    this.reason = ""
   }
 
   //Term methods..

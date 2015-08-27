@@ -2,6 +2,7 @@
 //it's built by conjugating and inflecting a small seed of terms
 "use strict";
 let fns = require("./fns.js")
+let verb_conjugate = require("./term/verb/conjugate/conjugate.js")
 
 let lexicon = {}
 
@@ -20,13 +21,28 @@ let addArr = function(arr, tag) {
   }
 }
 
+//conjugate all verbs.
+let verbs = require("./data/verbs.js")
+for (let i = 0; i < verbs.length; i++) {
+  let c = verb_conjugate(verbs[i])
+  lexicon[c.infinitive] = "VBP"
+  lexicon[c.past] = "VBD"
+  lexicon[c.gerund] = "VBG"
+  lexicon[c.present] = "VBZ"
+  if (c.doer) {
+    lexicon[c.doer] = "NNA"
+  }
+  if (c.participle) {
+    lexicon[c.participle] = "VBN"
+  }
+}
+
 addArr(require("./data/abbreviations.js"), "NNAB")
 addArr(require("./data/adjectives.js"), "JJ")
 addArr(require("./data/demonyms.js"), "JJ")
 addArr(require("./data/honourifics.js"), "NNAB")
 addArr(require("./data/uncountables.js"), "NN")
 addArr(require("./data/values.js"), "CD")
-addArr(require("./data/verbs.js"), "VB")
 //a little fancy
 addArr(Object.keys(require("./data/firstnames.js")), "NN")
 //add irregular nouns
@@ -40,5 +56,21 @@ addObj(require("./data/phrasal_verbs.js"))
 
 // console.log(Object.keys(lexicon).length)
 // console.log(lexicon)
+
+// console.log(lexicon['once again'] === "RB")
+// console.log(lexicon['seven'] === "CD")
+// console.log(lexicon['sleep'] === "VBP")
+// console.log(lexicon['slept'] === "VBD")
+// console.log(lexicon['sleeping'] === "VBG")
+// console.log(lexicon['canadian'] === "JJ")
+// console.log(lexicon['july'] === "CD")
+// console.log(lexicon[null] === undefined)
+// console.log(lexicon["dr"] === "NNAB")
+// console.log(lexicon["sounds"] === "VBZ")
+// console.log(lexicon["look after"] === "VBP")
+// console.log(lexicon['tony'] === "NN")
+// console.log(lexicon['loaf'] === "NN")
+// console.log(lexicon['loaves'] === "NNS")
+// console.log(lexicon['he'] === "PRP")
 
 module.exports = lexicon

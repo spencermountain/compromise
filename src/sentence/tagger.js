@@ -1,12 +1,19 @@
 //part-of-speech tagging
 'use strict'
 let Verb = require("../term/verb/verb.js")
+let Noun = require("../term/noun/noun.js")
+let Value = require("../term/value/value.js")
+let Adverb = require("../term/adverb/adverb.js")
+let Adjective = require("../term/adjective/adjective.js")
 
 //swap the Term object with a proper Pos class
 let assign = function(t, pos, reason) {
   let mapping = {
     "verb": Verb,
-    "infinitive": Verb,
+    "noun": Noun,
+    "value": Value,
+    "adverb": Adverb,
+    "adjective": Adjective
   }
   if (mapping[pos] !== undefined) {
     t = new mapping[pos](t.text)

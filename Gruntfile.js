@@ -3,34 +3,67 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     watch: {
-      files: ['./src/**'],
-      tasks: ['run:build', 'run:run'],
+      files: ['./nlp/**'],
+      tasks: ['run'],
     },
 
-    tslint: {
-      options: {
-        configuration: grunt.file.readJSON("tslint.json")
-      },
-      src: [
-        "src/*.ts",
-      ]
-    },
     run: {
-      build: {
-        exec: 'tsc ./src/index.ts --module commonjs --target es5 --outDir ./build'
-      },
       run: {
-        exec: 'node ./build/index.js',
+        exec: "iojs ./src/index.js",
+      },
+      test: {
+        exec: "mocha ./test/*",
+      }
+    },
+
+    "browserify": {
+      client: {
+        src: "./src/index.js",
+        dest: "./builds/nlp_compromise.es6.js",
+        options: {
+          "standalone": true
+        }
+      }
+    },
+
+    "babel": {
+      options: {
+        sourceMap: true
+      },
+      dist: {
+        files: {
+          "./builds/nlp_compromise.es5.js": "./builds/nlp_compromise.es6.js"
+        }
+      }
+    },
+
+    uglify: {
+      "do": {
+        src: ["./builds/nlp_compromise.es5.js"],
+        dest: "./builds/nlp_compromise.es5.min.js"
+      },
+      "options": {
+        preserveComments: false,
+        mangle: true,
+        banner: " /*nlp_comprimise by @spencermountain in 2015*/\n",
+        compress: {
+          drop_console: true,
+          dead_code: true,
+          properties: true,
+          unused: true,
+          warnings: true
+        }
       }
     }
 
   });
 
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-run');
-  grunt.loadNpmTasks('grunt-tslint');
-  grunt.registerTask('default', ['run:build', 'run:run', 'watch']);
-  grunt.registerTask('lint', ['tslint:src']);
-
-
+  grunt.loadNpmTasks("grunt-contrib-watch");
+  grunt.loadNpmTasks("grunt-babel");
+  grunt.loadNpmTasks("grunt-browserify");
+  grunt.loadNpmTasks("grunt-contrib-uglify");
+  grunt.loadNpmTasks("grunt-run");
+  grunt.registerTask("default", ["run"]);
+  grunt.registerTask("watch", ["watch"]);
+  grunt.registerTask("build", ["browserify", "babel", "uglify"]);
 };

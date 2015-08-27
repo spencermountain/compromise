@@ -5,12 +5,26 @@ let britishize = require("./britishize")
 
 class Term {
   constructor(str) {
-    this.text = str;
+    str = str || '';
+    this.text = str.trim();
     this.normal = this.normalize();
     this.reason = ""
   }
 
   //Term methods..
+  is_capital() {
+    if (this.text.match(/[A-Z][a-z]/)) { //tranditional capital
+      return true
+    }
+    return false
+  }
+  is_acronym() {
+    if (this.text.match(/([A-Z]\.)+[A-Z]?$/)) {
+      return true
+    }
+    return false
+  }
+
   normalize() {
     let str = this.text || ""
     str = str.toLowerCase()

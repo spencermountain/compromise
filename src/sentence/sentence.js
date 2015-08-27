@@ -62,9 +62,8 @@ class Sentence {
   }
 }
 
-// var s = new Sentence("he'll re-smoke")
-// s.tag()
-// console.log(s.parents())
-// console.log(s)
+var s = new Sentence("studying")
+s.tag()
+console.log(s)
 
 module.exports = Sentence

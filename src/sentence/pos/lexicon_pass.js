@@ -1,6 +1,6 @@
 "use strict"
 
-let assign = require("./assign")
+let assign = require("./assign");
 let lexicon = require("../../lexicon.js");
 
 

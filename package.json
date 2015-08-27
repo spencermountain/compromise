@@ -9,7 +9,9 @@
   },
   "scripts": {
     "test": "mocha ./test/*",
-    "watch": "grunt"
+    "watch": "grunt watch",
+    "run": "grunt",
+    "build": "grunt build"
   },
   "devDependencies": {
     "grunt": "~0.4.*",

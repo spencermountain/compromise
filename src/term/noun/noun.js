@@ -9,6 +9,7 @@ var is_uncountable = require("./is_uncountable.js")
 class Noun extends Term {
   constructor(str) {
     super(str)
+    this.parent = "noun"
   }
   //noun methods
   article() {

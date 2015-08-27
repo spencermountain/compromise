@@ -1,11 +1,12 @@
-'use strict'
-let Term = require("../term.js")
-let date_extractor = require("./date_extractor.js")
-let to_number = require("./to_number.js")
+'use strict';
+let Term = require("../term.js");
+let date_extractor = require("./date_extractor.js");
+let to_number = require("./to_number.js");
 
 class Value extends Term {
   constructor(str) {
     super(str)
+    this.parent = "value"
   }
 
   is_date() {

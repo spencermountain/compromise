@@ -111,7 +111,9 @@ Object.keys(main).forEach(function(s) {
   }
   Object.keys(cache[verb]).forEach(function(k) {
     phrasal = cache[verb][k] + " " + particle
-    main[phrasal] = tags[k]
+    if (tags[k]) {
+      main[phrasal] = tags[k]
+    }
   })
 })
 

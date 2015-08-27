@@ -76,7 +76,4 @@ module.exports = [
   "friday",
   "saturday",
   "sunday"
-].reduce(function(h, s) {
-  h[s] = "CD"
-  return h
-}, {})
+]

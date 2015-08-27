@@ -42,7 +42,8 @@ addArr(require("./data/adjectives.js"), "JJ")
 addArr(require("./data/demonyms.js"), "JJ")
 addArr(require("./data/honourifics.js"), "NNAB")
 addArr(require("./data/uncountables.js"), "NN")
-addArr(require("./data/values.js"), "CD")
+addArr(require("./data/dates.js"), "CD")
+addArr(require("./data/numbers.js"), "CD")
 //a little fancy
 addArr(Object.keys(require("./data/firstnames.js")), "NN")
 //add irregular nouns

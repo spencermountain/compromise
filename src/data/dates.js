@@ -1,0 +1,37 @@
+//terms that are "CD", a 'value' term
+module.exports = [
+  //months
+  "january",
+  "february",
+  // "march",
+  "april",
+  // "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
+  "jan",
+  "feb",
+  "mar",
+  "apr",
+  "jun",
+  "jul",
+  "aug",
+  "sep",
+  "oct",
+  "nov",
+  "dec",
+  "sept",
+  "sep",
+  //days
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday"
+]

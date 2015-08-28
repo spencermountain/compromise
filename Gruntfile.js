@@ -3,16 +3,13 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     watch: {
-      files: ["./nlp/**"],
-      tasks: ["run"],
+      files: ["./src/**"],
+      tasks: ["run:run"],
     },
 
     run: {
       run: {
         exec: "iojs ./src/index.js",
-      },
-      test: {
-        exec: "mocha ./test/*",
       }
     },
 
@@ -30,7 +27,7 @@ module.exports = function(grunt) {
       options: {
         sourceMap: true,
         compact: true,
-      // optional: ["minification.deadCodeElimination"]
+        optional: ["runtime", "validation.undeclaredVariableCheck"]
       },
       dist: {
         files: {
@@ -79,6 +76,18 @@ module.exports = function(grunt) {
       }
     },
 
+    mochaTest: {
+      test: {
+        options: {
+          reporter: "spec",
+          clearRequireCache: true,
+          colors: true,
+          growl: false
+        },
+        src: ["test/**/*.js"]
+      }
+    }
+
   });
 
   grunt.loadNpmTasks("grunt-contrib-watch");
@@ -87,9 +96,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-browserify");
   grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-run");
+  grunt.loadNpmTasks("grunt-mocha-test");
   grunt.loadNpmTasks("grunt-filesize");
 
-  grunt.registerTask("default", ["run"]);
+  grunt.registerTask("default", ["watch"]);
+  grunt.registerTask("test", ["mochaTest"]);
   grunt.registerTask("lint", ["eslint"]);
   grunt.registerTask("build", ["eslint", "browserify", "babel", "uglify", "filesize"]);
 };

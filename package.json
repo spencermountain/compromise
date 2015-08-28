@@ -8,7 +8,7 @@
     "url": "git://github.com/spencermountain/nlp_compromise.git"
   },
   "scripts": {
-    "test": "mocha --compilers js:babel/register ./test/*",
+    "test": "mocha test",
     "lint": "grunt lint",
     "watch": "grunt watch",
     "run": "grunt",

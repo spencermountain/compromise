@@ -54,16 +54,26 @@ module.exports = function(grunt) {
           warnings: true
         }
       }
+    },
+
+    eslint: {
+      options: {
+        configFile: './eslint.json',
+        useEslintrc: false
+      },
+      target: ['./src']
     }
 
   });
 
   grunt.loadNpmTasks("grunt-contrib-watch");
+  grunt.loadNpmTasks("grunt-eslint");
   grunt.loadNpmTasks("grunt-babel");
   grunt.loadNpmTasks("grunt-browserify");
   grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-run");
   grunt.registerTask("default", ["run"]);
   grunt.registerTask("watch", ["watch"]);
+  grunt.registerTask("lint", ["eslint"]);
   grunt.registerTask("build", ["browserify", "babel", "uglify"]);
 };

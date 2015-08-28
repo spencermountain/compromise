@@ -1,7 +1,7 @@
 //these are adjectives that can become comparative + superlative with out "most/more"
 //its a whitelist for conjugation
 //this data is shared between comparative/superlative methods
-module.exports= [
+module.exports = [
   "absurd",
   "aggressive",
   "alert",
@@ -194,7 +194,7 @@ module.exports= [
   "free",
   "curly",
   "angry"
-].reduce(function(h,s){
-  h[s]=true
+].reduce(function(h, s) {
+  h[s] = true
   return h
-},{})
+}, {})

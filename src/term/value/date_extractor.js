@@ -282,7 +282,7 @@ let postprocess = function(obj, options) {
     obj.year = d.getFullYear();
   }
   //make sure date is in that month..
-  if (obj.day !== undefined && (obj.day > 31 || (obj.month !== undefined && obj.day > last_dates[obj.month]))) {
+  if (obj.day !== undefined && obj.day > 31 || obj.month !== undefined && obj.day > last_dates[obj.month]) {
     obj.day = undefined;
   }
   //make sure to date is after from date. fail everything if so...

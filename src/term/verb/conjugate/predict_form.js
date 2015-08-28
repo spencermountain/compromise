@@ -1,7 +1,7 @@
+"use strict";
 //this method is used to predict which current conjugation a verb is
 
 //this method is the slowest in the whole library, basically TODO:whaaa
-
 let suffix_rules = require("./suffix_rules");
 let fns = require("../../../fns.js");
 

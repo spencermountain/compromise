@@ -1,6 +1,7 @@
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
+"use strict";
 let abbreviations = require("../data/abbreviations");
 
 let sentence_parser = function(text) {

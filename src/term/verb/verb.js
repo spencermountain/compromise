@@ -1,3 +1,4 @@
+"use strict";
 let Term = require("../term.js");
 let conjugate = require("./conjugate/conjugate.js");
 let predict_form = require("./conjugate/predict_form.js");

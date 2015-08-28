@@ -1,3 +1,4 @@
+"use strict";
 let sentence_parser = require("./sentence_parser.js");
 let Sentence = require("../sentence/sentence.js");
 let ngram = require("./ngram.js");

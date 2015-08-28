@@ -5233,7 +5233,7 @@ module.exports = Value;
 
 },{"../term.js":40,"./date_extractor.js":41,"./to_number.js":42}],44:[function(require,module,exports){
 //turn a verb into its other grammatical forms.
-
+"use strict";
 let verb_to_doer = require("./to_doer");
 let verb_irregulars = require("./verb_irregulars");
 let verb_rules = require("./verb_rules");
@@ -5409,10 +5409,10 @@ module.exports = conjugate;
 // console.log(conjugate("have tried"))
 
 },{"./predict_form.js":45,"./to_doer":47,"./verb_irregulars":48,"./verb_rules":49}],45:[function(require,module,exports){
+"use strict";
 //this method is used to predict which current conjugation a verb is
 
 //this method is the slowest in the whole library, basically TODO:whaaa
-
 let suffix_rules = require("./suffix_rules");
 let fns = require("../../../fns.js");
 
@@ -5430,6 +5430,7 @@ let predict = function(w) {
 module.exports = predict;
 
 },{"../../../fns.js":14,"./suffix_rules":46}],46:[function(require,module,exports){
+"use strict";
 //generated from test data
 let compact = {
   "gerund": [
@@ -7012,6 +7013,7 @@ module.exports = verb_rules;
 // console.log(JSON.stringify(verb_rules, null, 2));
 
 },{}],50:[function(require,module,exports){
+"use strict";
 let Term = require("../term.js");
 let conjugate = require("./conjugate/conjugate.js");
 let predict_form = require("./conjugate/predict_form.js");
@@ -7080,6 +7082,7 @@ class Verb extends Term {
 module.exports = Verb;
 
 },{"../term.js":40,"./conjugate/conjugate.js":44,"./conjugate/predict_form.js":45}],51:[function(require,module,exports){
+"use strict";
 //split a string into all possible parts
 let fns = require("../fns.js");
 
@@ -7143,6 +7146,7 @@ module.exports = ngram;
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
+"use strict";
 let abbreviations = require("../data/abbreviations");
 
 let sentence_parser = function(text) {
@@ -7187,6 +7191,7 @@ let sentence_parser = function(text) {
 module.exports = sentence_parser;
 
 },{"../data/abbreviations":1}],53:[function(require,module,exports){
+"use strict";
 let sentence_parser = require("./sentence_parser.js");
 let Sentence = require("../sentence/sentence.js");
 let ngram = require("./ngram.js");

@@ -1,3 +1,4 @@
+"use strict";
 //split a string into all possible parts
 let fns = require("../fns.js");
 

@@ -1,5 +1,5 @@
 //turn a verb into its other grammatical forms.
-
+"use strict";
 let verb_to_doer = require("./to_doer");
 let verb_irregulars = require("./verb_irregulars");
 let verb_rules = require("./verb_rules");

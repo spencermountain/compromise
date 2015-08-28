@@ -29,7 +29,8 @@ module.exports = function(grunt) {
     "babel": {
       options: {
         sourceMap: true,
-        compact: true
+        compact: true,
+      // optional: ["minification.deadCodeElimination"]
       },
       dist: {
         files: {

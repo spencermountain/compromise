@@ -1,3 +1,4 @@
+"use strict";
 //generated from test data
 let compact = {
   "gerund": [

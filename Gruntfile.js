@@ -28,7 +28,8 @@ module.exports = function(grunt) {
 
     "babel": {
       options: {
-        sourceMap: true
+        sourceMap: true,
+        compact: true
       },
       dist: {
         files: {
@@ -62,7 +63,20 @@ module.exports = function(grunt) {
         useEslintrc: false
       },
       target: ["./src"]
-    }
+    },
+
+    filesize: {
+      base: {
+        files: [{
+          src: ["./builds/nlp_compromise.es5.min.js"]
+        }],
+        options: {
+          ouput: [{
+            stdout: true
+          }]
+        }
+      }
+    },
 
   });
 
@@ -72,9 +86,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-browserify");
   grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-run");
+  grunt.loadNpmTasks("grunt-filesize");
 
   grunt.registerTask("default", ["run"]);
-  grunt.registerTask("watch", ["watch"]);
   grunt.registerTask("lint", ["eslint"]);
-  grunt.registerTask("build", ["eslint", "browserify", "babel", "uglify"]);
+  grunt.registerTask("build", ["eslint", "browserify", "babel", "uglify", "filesize"]);
 };

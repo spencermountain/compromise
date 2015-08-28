@@ -23,6 +23,8 @@
     "grunt-contrib-uglify": "^0.9.2",
     "grunt-contrib-watch": "*",
     "grunt-eslint": "^17.1.0",
+    "grunt-filesize": "0.0.7",
+    "grunt-mocha-test": "^0.12.7",
     "grunt-run": "^0.4.0",
     "mocha": "^2.2.5",
     "should": "^7.0.4"

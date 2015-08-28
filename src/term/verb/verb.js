@@ -1,7 +1,6 @@
-'use strict'
-var Term = require("../term.js")
-var conjugate = require("./conjugate/conjugate.js")
-var predict_form = require("./conjugate/predict_form.js")
+let Term = require("../term.js");
+let conjugate = require("./conjugate/conjugate.js");
+let predict_form = require("./conjugate/predict_form.js");
 
 let allowed_forms = {
   infinitive: 1,
@@ -10,17 +9,17 @@ let allowed_forms = {
   gerund: 1,
   doer: 1,
   future: 1
-}
+};
 
 class Verb extends Term {
   constructor(str, form) {
-    super(str)
-    this.parent = "verb"
-    this.conjugations = {} //cached conjugations
+    super(str);
+    this.parent = "verb";
+    this.conjugations = {}; //cached conjugations
     //if we've been told which
     if (form && allowed_forms[form]) {
-      this._form = form
-      this.conjugations[form] = this.normal
+      this._form = form;
+      this.conjugations[form] = this.normal;
     }
   }
 
@@ -28,40 +27,40 @@ class Verb extends Term {
   form() {
     //if we haven't been told
     if (!this._form) {
-      this._form = predict_form(this.normal)
+      this._form = predict_form(this.normal);
     }
     //else, predict it
-    return this._form
+    return this._form;
   }
 
   //retrieve a specific form
   conjugation(type) {
-    type = type || "infinitive"
+    type = type || "infinitive";
     //check cached conjugations
     if (this.conjugations[type] === undefined) {
-      this.conjugate()
+      this.conjugate();
     }
   }
 
   //is this verb negative already?
   isNegative() {
-    let str = this.normal
+    let str = this.normal;
     if (str.match(/n't$/)) {
-      return true
+      return true;
     }
     if (str.match(/ not$/)) {
-      return true
+      return true;
     }
-    return false
+    return false;
   }
 
   conjugate() {
-    this.conjugations = conjugate(this.normal)
-    return this.conjugations
+    this.conjugations = conjugate(this.normal);
+    return this.conjugations;
   }
 }
 
 // let v = new Verb("walk", "asdf")
 // console.log(v.form())
 
-module.exports = Verb
+module.exports = Verb;

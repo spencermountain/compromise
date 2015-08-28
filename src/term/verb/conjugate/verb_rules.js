@@ -438,14 +438,14 @@ verb_rules = Object.keys(verb_rules).reduce(function(h, k) {
         past: a[1]["pa"],
         gerund: a[1]["g"]
       }
-    }
+    };
     if (a[1]["do"]) {
-      obj.repl.doer = a[1]["do"]
+      obj.repl.doer = a[1]["do"];
     }
-    return obj
-  })
-  return h
-}, {})
+    return obj;
+  });
+  return h;
+}, {});
 
 module.exports = verb_rules;
 // console.log(JSON.stringify(verb_rules, null, 2));

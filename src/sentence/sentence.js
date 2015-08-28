@@ -1,20 +1,20 @@
-'use strict'
-let Term = require("../term/term.js")
-let fns = require("../fns.js")
-let tagger = require("./pos/tagger.js")
+"use strict";
+let Term = require("../term/term.js");
+let fns = require("../fns.js");
+let tagger = require("./pos/tagger.js");
 
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {
 
   constructor(str) {
     this.str = str || "";
-    let terms = str.split(" ")
+    let terms = str.split(" ");
     this.terms = terms.map(function(s, i) {
       let info = {
         index: i
       }
-      return new Term(s, info)
-    })
+      return new Term(s, info);
+    });
   }
 
   //Sentence methods:
@@ -30,13 +30,13 @@ class Sentence {
     if (allowed[char]) {
       return char
     }
-    return "."
+    return ".";
   }
 
   //part-of-speech assign each term
   tag() {
-    this.terms = tagger(this)
-    return this.terms
+    this.terms = tagger(this);
+    return this.terms;
   }
 
   //is it a question/statement
@@ -52,14 +52,14 @@ class Sentence {
 
   //map over Term methods
   normalized() {
-    return fns.pluck(this.terms, 'normal').join(" ")
+    return fns.pluck(this.terms, 'normal').join(" ");
   }
   text() {
-    return fns.pluck(this.terms, 'text').join(" ")
+    return fns.pluck(this.terms, 'text').join(" ");
   }
   parents() {
-    return fns.pluck(this.terms, 'parent')
+    return fns.pluck(this.terms, 'parent');
   }
 }
 
-module.exports = Sentence
+module.exports = Sentence;

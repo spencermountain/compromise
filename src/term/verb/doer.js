@@ -1,10 +1,9 @@
 //somone who does this present-tense verb
 //turn 'walk' into 'walker'
-'use strict'
 
 let doer = function(str) {
-  str = str || ''
-  var irregulars = {
+  str = str || "";
+  let irregulars = {
     "tie": "tier",
     "dream": "dreamer",
     "sail": "sailer",
@@ -15,8 +14,9 @@ let doer = function(str) {
     "claim": "claimant",
     "deal": "dealer",
     "spin": "spinner"
-  }
-  var dont = {
+  };
+
+  let dont = {
     "aid": 1,
     "fail": 1,
     "appear": 1,
@@ -29,35 +29,36 @@ let doer = function(str) {
     "forbid": 1,
     "understand": 1,
     "bet": 1
-  }
-  var transforms = [{
+  };
+
+  let transforms = [{
     "reg": /e$/i,
-    "repl": 'er'
+    "repl": "er"
   }, {
     "reg": /([aeiou])([mlgp])$/i,
-    "repl": '$1$2$2er'
+    "repl": "$1$2$2er"
   }, {
     "reg": /([rlf])y$/i,
-    "repl": '$1ier'
+    "repl": "$1ier"
   }, {
     "reg": /^(.?.[aeiou])t$/i,
-    "repl": '$1tter'
-  }]
+    "repl": "$1tter"
+  }];
 
   if (dont.hasOwnProperty(str)) {
-    return null
+    return null;
   }
   if (irregulars.hasOwnProperty(str)) {
-    return irregulars[str]
+    return irregulars[str];
   }
-  for (var i = 0; i < transforms.length; i++) {
+  for (let i = 0; i < transforms.length; i++) {
     if (str.match(transforms[i].reg)) {
-      return str.replace(transforms[i].reg, transforms[i].repl)
+      return str.replace(transforms[i].reg, transforms[i].repl);
     }
   }
-  return str + "er"
-}
+  return str + "er";
+};
 
 // console.log(doer('watch'))
 
-module.exports = doer
+module.exports = doer;

@@ -7,5 +7,3 @@ let nlp = function(str) {
 }
 
 module.exports = nlp
-
-console.log(nlp("Hiii Dr. Nick! hi there man"))

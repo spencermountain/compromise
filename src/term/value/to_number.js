@@ -10,17 +10,17 @@
 //these sets of numbers each have different rules
 //[tenth, hundreth, thousandth..] are ambiguous because they could be ordinal like fifth, or decimal like one-one-hundredth, so are ignored
 let ones = {
-  'a': 1,
-  'zero': 0,
-  'one': 1,
-  'two': 2,
-  'three': 3,
-  'four': 4,
-  'five': 5,
-  'six': 6,
-  'seven': 7,
-  'eight': 8,
-  'nine': 9,
+  "a": 1,
+  "zero": 0,
+  "one": 1,
+  "two": 2,
+  "three": 3,
+  "four": 4,
+  "five": 5,
+  "six": 6,
+  "seven": 7,
+  "eight": 8,
+  "nine": 9,
   "first": 1,
   "second": 2,
   "third": 3,
@@ -30,18 +30,18 @@ let ones = {
   "seventh": 7,
   "eighth": 8,
   "ninth": 9
-}
+};
 let teens = {
-  'ten': 10,
-  'eleven': 11,
-  'twelve': 12,
-  'thirteen': 13,
-  'fourteen': 14,
-  'fifteen': 15,
-  'sixteen': 16,
-  'seventeen': 17,
-  'eighteen': 18,
-  'nineteen': 19,
+  "ten": 10,
+  "eleven": 11,
+  "twelve": 12,
+  "thirteen": 13,
+  "fourteen": 14,
+  "fifteen": 15,
+  "sixteen": 16,
+  "seventeen": 17,
+  "eighteen": 18,
+  "nineteen": 19,
   "eleventh": 11,
   "twelfth": 12,
   "thirteenth": 13,
@@ -51,16 +51,16 @@ let teens = {
   "seventeenth": 17,
   "eighteenth": 18,
   "nineteenth": 19
-}
+};
 let tens = {
-  'twenty': 20,
-  'thirty': 30,
-  'forty': 40,
-  'fifty': 50,
-  'sixty': 60,
-  'seventy': 70,
-  'eighty': 80,
-  'ninety': 90,
+  "twenty": 20,
+  "thirty": 30,
+  "forty": 40,
+  "fifty": 50,
+  "sixty": 60,
+  "seventy": 70,
+  "eighty": 80,
+  "ninety": 90,
   "twentieth": 20,
   "thirtieth": 30,
   "fourtieth": 40,
@@ -69,46 +69,46 @@ let tens = {
   "seventieth": 70,
   "eightieth": 80,
   "ninetieth": 90
-}
+};
 let multiple = {
-  'hundred': 100,
-  'grand': 1000,
-  'thousand': 1000,
-  'million': 1000000,
-  'billion': 1000000000,
-  'trillion': 1000000000000,
-  'quadrillion': 1000000000000000,
-  'quintillion': 1000000000000000000,
-  'sextillion': 1000000000000000000000,
-  'septillion': 1000000000000000000000000,
-  'octillion': 1000000000000000000000000000,
-  'nonillion': 1000000000000000000000000000000,
-  'decillion': 1000000000000000000000000000000000
-}
+  "hundred": 100,
+  "grand": 1000,
+  "thousand": 1000,
+  "million": 1000000,
+  "billion": 1000000000,
+  "trillion": 1000000000000,
+  "quadrillion": 1000000000000000,
+  "quintillion": 1000000000000000000,
+  "sextillion": 1000000000000000000000,
+  "septillion": 1000000000000000000000000,
+  "octillion": 1000000000000000000000000000,
+  "nonillion": 1000000000000000000000000000000,
+  "decillion": 1000000000000000000000000000000000
+};
 // let decimal_multiple={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
 
 let to_number = function(s) {
   //remember these concerns for possible errors
-  let ones_done = false
-  let teens_done = false
-  let tens_done = false
-  let multiple_done = {}
-  let total = 0
-  let global_multiplier = 1
+  let ones_done = false;
+  let teens_done = false;
+  let tens_done = false;
+  let multiple_done = {};
+  let total = 0;
+  let global_multiplier = 1;
   //pretty-printed numbers
-  s = s.replace(/, ?/g, '')
+  s = s.replace(/, ?/g, "");
   //parse-out currency
-  s = s.replace(/[$£€]/, '')
+  s = s.replace(/[$£€]/, "");
   //try to finish-fast
   if (s.match(/[0-9]\.[0-9]/) && parseFloat(s) === s) {
-    return parseFloat(s)
+    return parseFloat(s);
   }
   if (parseInt(s, 10) === s) {
-    return parseInt(s, 10)
+    return parseInt(s, 10);
   }
   //try to die fast. (phone numbers or times)
   if (s.match(/[0-9][\-:][0-9]/)) {
-    return null
+    return null;
   }
   //support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
   let mults = [{
@@ -120,11 +120,11 @@ let to_number = function(s) {
   }, {
     reg: /^(a\s)?quarter[\s\-]/i,
     mult: 0.25
-  }]
+  }];
   for (let i = 0; i < mults.length; i++) {
     if (s.match(mults[i].reg)) {
-      global_multiplier = mults[i].mult
-      s = s.replace(mults[i].reg, '')
+      global_multiplier = mults[i].mult;
+      s = s.replace(mults[i].reg, "");
       break;
     }
   }
@@ -133,10 +133,10 @@ let to_number = function(s) {
   let words = s.toString().split(/[\s\-]+/);
   let w, x;
   let current_sum = 0;
-  let local_multiplier = 1
-  let decimal_mode = false
+  let local_multiplier = 1;
+  let decimal_mode = false;
   for (let i = 0; i < words.length; i++) {
-    w = words[i]
+    w = words[i];
 
     //skip 'and' eg. five hundred and twelve
     if (w === "and") {
@@ -146,131 +146,131 @@ let to_number = function(s) {
     //..we're doing decimals now
     if (w === "point" || w === "decimal") {
       if (decimal_mode) {
-        return null
+        return null;
       } //two point one point six
-      decimal_mode = true
-      total += current_sum
-      current_sum = 0
-      ones_done = false
-      local_multiplier = 0.1
+      decimal_mode = true;
+      total += current_sum;
+      current_sum = 0;
+      ones_done = false;
+      local_multiplier = 0.1;
       continue;
     }
 
     //handle special rules following a decimal
     if (decimal_mode) {
-      x = null
+      x = null;
       //allow consecutive ones in decimals eg. 'two point zero five nine'
       if (ones[w] !== undefined) {
-        x = ones[w]
+        x = ones[w];
       }
       if (teens[w] !== undefined) {
-        x = teens[w]
+        x = teens[w];
       }
       if (parseInt(w, 10) === w) {
-        x = parseInt(w, 10)
+        x = parseInt(w, 10);
       }
       if (!x) {
-        return null
+        return null;
       }
       if (x < 10) {
-        total += x * local_multiplier
-        local_multiplier = local_multiplier * 0.1 // next number is next decimal place
-        current_sum = 0
+        total += x * local_multiplier;
+        local_multiplier = local_multiplier * 0.1; // next number is next decimal place
+        current_sum = 0;
         continue;
       }
       //two-digit decimals eg. 'two point sixteen'
       if (x < 100) {
-        total += x * (local_multiplier * 0.1)
-        local_multiplier = local_multiplier * 0.01 // next number is next decimal place
-        current_sum = 0
+        total += x * (local_multiplier * 0.1);
+        local_multiplier = local_multiplier * 0.01; // next number is next decimal place
+        current_sum = 0;
         continue;
       }
     }
 
     //if it's already an actual number
     if (w.match(/^[0-9]\.[0-9]$/)) {
-      current_sum += parseFloat(w)
+      current_sum += parseFloat(w);
       continue;
     }
     if (parseInt(w, 10) === w) {
-      current_sum += parseInt(w, 10)
+      current_sum += parseInt(w, 10);
       continue;
     }
 
     //ones rules
     if (ones[w] !== undefined) {
       if (ones_done) {
-        return null
+        return null;
       } // eg. five seven
       if (teens_done) {
-        return null
+        return null;
       } // eg. five seventeen
-      ones_done = true
-      current_sum += ones[w]
+      ones_done = true;
+      current_sum += ones[w];
       continue;
     }
     //teens rules
     if (teens[w]) {
       if (ones_done) {
-        return null
+        return null;
       } // eg. five seventeen
       if (teens_done) {
-        return null
+        return null;
       } // eg. fifteen seventeen
       if (tens_done) {
-        return null
+        return null;
       } // eg. sixty fifteen
-      teens_done = true
-      current_sum += teens[w]
+      teens_done = true;
+      current_sum += teens[w];
       continue;
     }
     //tens rules
     if (tens[w]) {
       if (ones_done) {
-        return null
+        return null;
       } // eg. five seventy
       if (teens_done) {
-        return null
+        return null;
       } // eg. fiveteen seventy
       if (tens_done) {
-        return null
+        return null;
       } // eg. twenty seventy
-      tens_done = true
-      current_sum += tens[w]
+      tens_done = true;
+      current_sum += tens[w];
       continue;
     }
     //multiple rules
     if (multiple[w]) {
       if (multiple_done[w]) {
-        return null
+        return null;
       } // eg. five hundred six hundred
-      multiple_done[w] = true
+      multiple_done[w] = true;
       //reset our concerns. allow 'five hundred five'
-      ones_done = false
-      teens_done = false
-      tens_done = false
+      ones_done = false;
+      teens_done = false;
+      tens_done = false;
       //case of 'hundred million', (2 consecutive multipliers)
       if (current_sum === 0) {
-        total = total || 1 //dont ever multiply by 0
-        total *= multiple[w]
+        total = total || 1; //dont ever multiply by 0
+        total *= multiple[w];
       } else {
-        current_sum *= multiple[w]
-        total += current_sum
+        current_sum *= multiple[w];
+        total += current_sum;
       }
-      current_sum = 0
+      current_sum = 0;
       continue;
     }
     //if word is not a known thing now, die
-    return null
+    return null;
   }
   if (current_sum) {
-    total += (current_sum || 1) * local_multiplier
+    total += (current_sum || 1) * local_multiplier;
   }
   //combine with global multiplier, like 'minus' or 'half'
-  total = total * global_multiplier
+  total = total * global_multiplier;
 
-  return total
-}
+  return total;
+};
 
 // console.log(to_number("sixteen hundred"))
 // console.log(to_number("a hundred"))

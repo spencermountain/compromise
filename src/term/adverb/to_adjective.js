@@ -1,5 +1,5 @@
 //turns 'quickly' into 'quick'
-'use strict'
+"use strict";
 let to_adjective = function(str) {
   let irregulars = {
     "idly": "idle",
@@ -20,40 +20,40 @@ let to_adjective = function(str) {
     "fully": "full",
     "jolly": "jolly",
     "wholly": "whole"
-  }
+  };
   let transforms = [{
     "reg": /bly$/i,
-    "repl": 'ble'
+    "repl": "ble"
   }, {
     "reg": /gically$/i,
-    "repl": 'gical'
+    "repl": "gical"
   }, {
     "reg": /([rsdh])ically$/i,
-    "repl": '$1ical'
+    "repl": "$1ical"
   }, {
     "reg": /ically$/i,
-    "repl": 'ic'
+    "repl": "ic"
   }, {
     "reg": /uly$/i,
-    "repl": 'ue'
+    "repl": "ue"
   }, {
     "reg": /ily$/i,
-    "repl": 'y'
+    "repl": "y"
   }, {
     "reg": /(.{3})ly$/i,
-    "repl": '$1'
-  }]
+    "repl": "$1"
+  }];
   if (irregulars.hasOwnProperty(str)) {
-    return irregulars[str]
+    return irregulars[str];
   }
   for (let i = 0; i < transforms.length; i++) {
     if (str.match(transforms[i].reg)) {
-      return str.replace(transforms[i].reg, transforms[i].repl)
+      return str.replace(transforms[i].reg, transforms[i].repl);
     }
   }
-  return str
-}
+  return str;
+};
 
 // console.log(to_adjective('quickly') === 'quick')
 // console.log(to_adjective('marvelously') === 'marvelous')
-module.exports = to_adjective
+module.exports = to_adjective;

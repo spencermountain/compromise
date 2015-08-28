@@ -24,23 +24,23 @@ let contractions = {
   "we're": ["we", "are"],
   "they're": ["they", "are"],
   "cannot": ["can", "not"]
-}
+};
 
 let handle_contractions = function(terms) {
   for (let i = 0; i < terms.length; i++) {
-    let t = terms[i]
+    let t = terms[i];
     if (contractions[t.normal] !== undefined) {
-      let split = contractions[t.normal]
+      let split = contractions[t.normal];
       let fixup = [].concat(
         terms.slice(0, i),
         [new Term(split[0])],
         [new Term(split[1])],
         terms.slice(i + 1, terms.length)
-      )
-      return handle_contractions(fixup) //recursive
+      );
+      return handle_contractions(fixup); //recursive
     }
   }
-  return terms
-}
+  return terms;
+};
 
-module.exports = handle_contractions
+module.exports = handle_contractions;

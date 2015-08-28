@@ -1,5 +1,5 @@
 //convert cute to cuteness
-'use strict'
+"use strict";
 let to_noun = function(w) {
   let irregulars = {
     "clean": "cleanliness",
@@ -19,38 +19,38 @@ let to_noun = function(w) {
   }
   let transforms = [{
     "reg": /y$/,
-    "repl": 'iness'
+    "repl": "iness"
   }, {
     "reg": /le$/,
-    "repl": 'ility'
+    "repl": "ility"
   }, {
     "reg": /ial$/,
-    "repl": 'y'
+    "repl": "y"
   }, {
     "reg": /al$/,
-    "repl": 'ality'
+    "repl": "ality"
   }, {
     "reg": /ting$/,
-    "repl": 'ting'
+    "repl": "ting"
   }, {
     "reg": /ring$/,
-    "repl": 'ring'
+    "repl": "ring"
   }, {
     "reg": /bing$/,
-    "repl": 'bingness'
+    "repl": "bingness"
   }, {
     "reg": /sing$/,
-    "repl": 'se'
+    "repl": "se"
   }, {
     "reg": /ing$/,
-    "repl": 'ment'
+    "repl": "ment"
   }, {
     "reg": /ess$/,
-    "repl": 'essness'
+    "repl": "essness"
   }, {
     "reg": /ous$/,
-    "repl": 'ousness'
-  }]
+    "repl": "ousness"
+  }];
 
   for (let i = 0; i < transforms.length; i++) {
     if (w.match(transforms[i].reg)) {
@@ -66,4 +66,4 @@ let to_noun = function(w) {
 
 // console.log(to_noun("great"))
 
-module.exports = to_noun
+module.exports = to_noun;

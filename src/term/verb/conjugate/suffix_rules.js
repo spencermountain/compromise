@@ -85,15 +85,15 @@ let compact = {
     "ns",
     "s"
   ]
-}
-let suffix_rules = {}
-let keys = Object.keys(compact)
+};
+let suffix_rules = {};
+let keys = Object.keys(compact);
 let l = keys.length;
 let l2, i;
 for (i = 0; i < l; i++) {
-  l2 = compact[keys[i]].length
+  l2 = compact[keys[i]].length;
   for (let o = 0; o < l2; o++) {
-    suffix_rules[compact[keys[i]][o]] = keys[i]
+    suffix_rules[compact[keys[i]][o]] = keys[i];
   }
 }
 module.exports = suffix_rules;

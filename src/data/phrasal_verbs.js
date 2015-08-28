@@ -2,8 +2,8 @@
 //'beef up' is one verb, and not some direction of beefing.
 //by @spencermountain, 2015 mit
 //many credits to http://www.allmyphrasalverbs.com/
-"use strict"
-let verb_conjugate = require("../term/verb/conjugate/conjugate.js")
+"use strict";
+let verb_conjugate = require("../term/verb/conjugate/conjugate.js");
 
 //start the list with some randoms
 let main = [
@@ -23,7 +23,7 @@ let main = [
   "set upon",
   "take aback",
   "keep from"
-]
+];
 
 //if there's a phrasal verb "keep on", there's often a "keep off"
 let opposites = {
@@ -33,7 +33,7 @@ let opposites = {
   "over": "under",
   "together": "apart",
   "up": "down"
-}
+};
 
 //forms that have in/out symmetry
 let symmetric = {
@@ -43,15 +43,15 @@ let symmetric = {
   "over": "come,go,look,read,run,talk",
   "together": "come,pull,put",
   "up": "add,back,beat,bend,blow,boil,bottle,break,bring,buckle,bundle,call,carve,clean,cut,dress,fill,flag,fold,get,give,grind,grow,hang,hold,keep,let,load,lock,look,man,mark,melt,move,pack,pin,pipe,plump,pop,power,pull,put,rub,scale,scrape,send,set,settle,shake,show,sit,slow,smash,square,stand,strike,take,tear,tie,turn,use,wash,wind",
-}
+};
 Object.keys(symmetric).forEach(function(k) {
-  symmetric[k].split(',').forEach(function(s) {
+  symmetric[k].split(",").forEach(function(s) {
     //add the given form
-    main.push(s + " " + k)
+    main.push(s + " " + k);
     //add its opposite form
-    main.push(s + " " + opposites[k])
-  })
-})
+    main.push(s + " " + opposites[k]);
+  });
+});
 
 //forms that don't have in/out symmetry
 let asymmetric = {
@@ -79,18 +79,18 @@ let asymmetric = {
   "through": "go,run",
   "to": "keep,see",
   "up": "act,beef,board,bone,boot,brighten,build,buy,catch,cheer,cook,end,eye,face,fatten,feel,fess,finish,fire,firm,flame,flare,free,freeze,freshen,fry,fuel,gang,gear,goof,hack,ham,heat,hit,hole,hush,jazz,juice,lap,light,lighten,line,link,listen,live,loosen,make,mash,measure,mess,mix,mock,mop,muddle,open,own,pair,patch,pick,prop,psych,read,rough,rustle,save,shack,sign,size,slice,slip,snap,sober,spark,split,spruce,stack,start,stay,stir,stitch,straighten,string,suck,suit,sum,team,tee,think,tidy,tighten,toss,trade,trip,type,vacuum,wait,wake,warm,weigh,whip,wire,wise,word,write,zip",
-}
+};
 Object.keys(asymmetric).forEach(function(k) {
-  asymmetric[k].split(',').forEach(function(s) {
-    main.push(s + " " + k)
-  })
-})
+  asymmetric[k].split(",").forEach(function(s) {
+    main.push(s + " " + k);
+  });
+});
 
 //at his point all verbs are infinitive. lets make this explicit.
 main = main.reduce(function(h, s) {
-  h[s] = "VBP"
-  return h
-}, {})
+  h[s] = "VBP";
+  return h;
+}, {});
 
 //conjugate every phrasal verb. takes ~30ms
 let tags = {
@@ -99,23 +99,23 @@ let tags = {
   future: "VBF",
   gerund: "VBG",
   infinitive: "VBP",
-}
-let cache = {} //cache individual verbs to speed it up
+};
+let cache = {}; //cache individual verbs to speed it up
 let split, verb, particle, phrasal;
 Object.keys(main).forEach(function(s) {
-  split = s.split(' ')
-  verb = split[0]
-  particle = split[1]
+  split = s.split(" ");
+  verb = split[0];
+  particle = split[1];
   if (cache[verb] === undefined) {
-    cache[verb] = verb_conjugate(verb)
+    cache[verb] = verb_conjugate(verb);
   }
   Object.keys(cache[verb]).forEach(function(k) {
-    phrasal = cache[verb][k] + " " + particle
+    phrasal = cache[verb][k] + " " + particle;
     if (tags[k]) {
-      main[phrasal] = tags[k]
+      main[phrasal] = tags[k];
     }
-  })
-})
+  });
+});
 
 // console.log(main["wiring up"] === "VBG")
 module.exports = main;

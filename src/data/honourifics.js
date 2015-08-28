@@ -51,4 +51,4 @@ module.exports = [
   "sens",
   "sfc",
   "surg",
-]
+];

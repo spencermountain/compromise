@@ -1,5 +1,5 @@
 //turn 'quick' into 'quickly'
-'use strict'
+"use strict";
 let adj_to_adv = function(str) {
   let irregulars = {
     "idle": "idly",
@@ -23,7 +23,7 @@ let adj_to_adv = function(str) {
     "best": "best",
     "latter": "latter",
     "bad": "badly"
-  }
+  };
 
   let dont = {
     "foreign": 1,
@@ -68,63 +68,62 @@ let adj_to_adv = function(str) {
     "unable": 1,
     "same": 1,
     "adult": 1
-  }
+  };
 
   let transforms = [{
     reg: /al$/i,
-    repl: 'ally'
+    repl: "ally"
   }, {
     reg: /ly$/i,
-    repl: 'ly'
+    repl: "ly"
   }, {
     reg: /(.{3})y$/i,
-    repl: '$1ily'
+    repl: "$1ily"
   }, {
     reg: /que$/i,
-    repl: 'quely'
+    repl: "quely"
   }, {
     reg: /ue$/i,
-    repl: 'uly'
+    repl: "uly"
   }, {
     reg: /ic$/i,
-    repl: 'ically'
+    repl: "ically"
   }, {
     reg: /ble$/i,
-    repl: 'bly'
+    repl: "bly"
   }, {
     reg: /l$/i,
-    repl: 'ly'
-  }]
+    repl: "ly"
+  }];
 
   let not_matches = [
     /airs$/,
     /ll$/,
     /ee.$/,
     /ile$/
-  ]
+  ];
 
   if (dont[str]) {
-    return null
+    return null;
   }
   if (irregulars[str]) {
-    return irregulars[str]
+    return irregulars[str];
   }
   if (str.length <= 3) {
-    return null
+    return null;
   }
   for (let i = 0; i < not_matches.length; i++) {
     if (str.match(not_matches[i])) {
-      return null
+      return null;
     }
   }
   for (let i = 0; i < transforms.length; i++) {
     if (str.match(transforms[i].reg)) {
-      return str.replace(transforms[i].reg, transforms[i].repl)
+      return str.replace(transforms[i].reg, transforms[i].repl);
     }
   }
-  return str + 'ly'
-}
+  return str + "ly";
+};
 // console.log(adj_to_adv('direct'))
 
 module.exports = adj_to_adv;
-

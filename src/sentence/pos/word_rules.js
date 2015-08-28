@@ -1,5 +1,5 @@
 //regex patterns and parts of speech],
-module.exports= [
+module.exports = [
   [".[cts]hy$", "JJ"],
   [".[st]ty$", "JJ"],
   [".[lnr]ize$", "VB"],
@@ -79,7 +79,7 @@ module.exports= [
   [".'ll$", "MD"],
   [".'t$", "VB"],
   [".tches$", "VB"],
-  ["^https?\:?\/\/[a-z0-9]", "CD"],//the colon is removed in normalisation
+  ["^https?\:?\/\/[a-z0-9]", "CD"], //the colon is removed in normalisation
   ["^www\.[a-z0-9]", "CD"],
   [".ize$", "VB"],
   [".[^aeiou]ise$", "VB"],
@@ -115,6 +115,5 @@ module.exports= [
   return {
     reg: new RegExp(a[0], "i"),
     pos: a[1]
-  }
-})
-
+  };
+});

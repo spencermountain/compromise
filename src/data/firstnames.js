@@ -5,7 +5,7 @@
 //used to reduce redundant named-entities in longer text. (don't spot the same person twice.)
 //used to identify gender for coreference resolution
 "use strict";
-let main = []
+let main = [];
 
 //an ad-hoc prefix encoding for names. 2ms decompression of names
 let male_names = {
@@ -116,7 +116,7 @@ let male_names = {
   "i": "an,van,saac,ra,rving,smael,gnacio,rvin",
   "q": "uentin,uinton",
   "x": "avier"
-}
+};
 let female_names = {
   "mari": "a,e,lyn,an,anne,na,ssa,bel,sa,sol,tza",
   "kris": "ten,tin,tina,ti,tine,ty,ta,tie",
@@ -245,7 +245,7 @@ let female_names = {
   "k": "rystal",
   "d": "ixie,ina",
   "u": "rsula"
-}
+};
 let ambiguous = [
   "casey",
   "jamie",
@@ -284,32 +284,32 @@ let ambiguous = [
   "devan",
   "rosario",
   "lee"
-]
+];
 
 //add data into the main obj
 //males
-let keys = Object.keys(male_names)
-let l = keys.length
+let keys = Object.keys(male_names);
+let l = keys.length;
 for (let i = 0; i < l; i++) {
-  let arr = male_names[keys[i]].split(',')
+  let arr = male_names[keys[i]].split(",");
   for (let i2 = 0; i2 < arr.length; i2++) {
-    main[keys[i] + arr[i2]] = "m"
+    main[keys[i] + arr[i2]] = "m";
   }
 }
 
 //females
-keys = Object.keys(female_names)
-l = keys.length
+keys = Object.keys(female_names);
+l = keys.length;
 for (let i = 0; i < l; i++) {
-  let arr = female_names[keys[i]].split(',')
+  let arr = female_names[keys[i]].split(",");
   for (let i2 = 0; i2 < arr.length; i2++) {
-    main[keys[i] + arr[i2]] = "f"
+    main[keys[i] + arr[i2]] = "f";
   }
 }
 //unisex names
-l = ambiguous.length
+l = ambiguous.length;
 for (let i = 0; i < l; i += 1) {
-  main[ambiguous[i]] = "a"
+  main[ambiguous[i]] = "a";
 }
 // console.log(firstnames['spencer'])
 // console.log(firstnames['jill'])

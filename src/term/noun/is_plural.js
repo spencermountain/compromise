@@ -1,5 +1,5 @@
 "use strict";
-let irregulars = require("../../data/irregular_nouns")
+let irregulars = require("../../data/irregular_nouns");
 
 //similar to plural/singularize rules, but not the same
 let plural_indicators = [
@@ -23,7 +23,7 @@ let plural_indicators = [
   /(cris|ax|test)es$/i,
   /(alias|status)es$/i,
   /ics$/i
-]
+];
 
 //similar to plural/singularize rules, but not the same
 let singular_indicators = [
@@ -47,40 +47,40 @@ let singular_indicators = [
   /(antenn|formul|nebul|vertebr|vit)a$/i,
   /.sis$/i,
   /^(?!talis|.*hu)(.*)man$/i
-]
+];
 
 let is_plural = function(str) {
-  str = (str || '').toLowerCase()
+  str = (str || "").toLowerCase();
   //handle 'mayors of chicago'
-  let preposition = str.match(/([a-z]*) (of|in|by|for) [a-z]/)
+  let preposition = str.match(/([a-z]*) (of|in|by|for) [a-z]/);
   if (preposition && preposition[1]) {
-    str = preposition[1]
+    str = preposition[1];
   }
   // if it's a known irregular case
   for (let i = 0; i < irregulars.length; i++) {
     if (irregulars[i][1] === str) {
-      return true
+      return true;
     }
     if (irregulars[i][0] === str) {
-      return false
+      return false;
     }
   }
   for (let i = 0; i < plural_indicators.length; i++) {
     if (str.match(plural_indicators[i])) {
-      return true
+      return true;
     }
   }
   for (let i = 0; i < singular_indicators.length; i++) {
     if (str.match(singular_indicators[i])) {
-      return false
+      return false;
     }
   }
   // some 'looks pretty plural' rules
   if (str.match(/s$/) && !str.match(/ss$/) && str.length > 3) { //needs some lovin'
-    return true
+    return true;
   }
-  return false
-}
+  return false;
+};
 
 // console.log(is_plural('octopus') === false)
 // console.log(is_plural('octopi') === true)
@@ -89,4 +89,4 @@ let is_plural = function(str) {
 // console.log(is_plural('child') === false)
 // console.log(is_plural('children') === true)
 
-module.exports = is_plural
+module.exports = is_plural;

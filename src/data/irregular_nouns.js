@@ -61,11 +61,11 @@ let main = [
   ["referendum", "referenda"],
   ["thief", "thieves"],
   ["tooth", "teeth"]
-]
+];
 
 main = main.map(function(a) {
-  a[1] = a[1].replace('_', a[0])
-  return a
-})
+  a[1] = a[1].replace("_", a[0]);
+  return a;
+});
 
 module.exports = main;

@@ -150,4 +150,4 @@ module.exports = [
   "celcius",
   "kelvin",
   "hertz"
-]
+];

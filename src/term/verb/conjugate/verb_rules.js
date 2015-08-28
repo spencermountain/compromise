@@ -1,6 +1,6 @@
 // regex rules for each part of speech that convert it to all other parts of speech.
 // used in combination with the generic 'fallback' method
-'use strict'
+"use strict";
 let verb_rules = {
   "infinitive": [
     [
@@ -426,7 +426,7 @@ let verb_rules = {
       }
     ]
   ]
-}
+};
 //unpack compressed form
 verb_rules = Object.keys(verb_rules).reduce(function(h, k) {
   h[k] = verb_rules[k].map(function(a) {

@@ -683,4 +683,4 @@ module.exports = [
   "under",
   "other",
   "less"
-]
+];

@@ -3,7 +3,7 @@
 // @spencermountain 2015 MIT
 let abbreviations = require("../data/abbreviations");
 
-let sentence_parser = function (text) {
+let sentence_parser = function(text) {
   let sentences = [];
   //first do a greedy-split..
   let chunks = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);

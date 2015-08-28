@@ -38,15 +38,15 @@ let mapping = {
 // "DT":   "Determiner",
 // "IN":   "Preposition",
 // "CC":   "Conjunction",
-}
+};
 
 //swap the Term object with a proper Pos class
 let assign = function(t, pos, reason) {
   if (mapping[pos] !== undefined) {
-    t = new mapping[pos](t.text)
-    t.reason = reason
+    t = new mapping[pos](t.text);
+    t.reason = reason;
   }
-  return t
-}
+  return t;
+};
 
-module.exports = assign
+module.exports = assign;

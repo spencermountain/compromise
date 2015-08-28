@@ -560,4 +560,4 @@ module.exports = [
   "don't",
   "won't",
   "what's" //somewhat ambiguous (what does|what are)
-]
+];

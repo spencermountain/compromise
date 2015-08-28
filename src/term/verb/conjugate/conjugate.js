@@ -6,7 +6,7 @@ let verb_rules = require("./verb_rules");
 let predict = require("./predict_form.js");
 
 //fallback to this transformation if it has an unknown prefix
-let fallback = function (w) {
+let fallback = function(w) {
   let infinitive;
   if (w.length > 4) {
     infinitive = w.replace(/ed$/, "");
@@ -58,7 +58,7 @@ let fufill = function(obj, prefix) {
   }
   //add the prefix to all forms, if it exists
   if (prefix) {
-    Object.keys(obj).forEach(function (k) {
+    Object.keys(obj).forEach(function(k) {
       obj[k] = prefix + obj[k];
     });
   }
@@ -79,22 +79,22 @@ let fufill = function(obj, prefix) {
     obj.future_perfect = "will have " + obj.past;
   }
   return obj;
-}
+};
 
-let conjugate = function (w) {
+let conjugate = function(w) {
   if (w === undefined) {
     return {};
   }
 
   //for phrasal verbs ('look out'), conjugate look, then append 'out'
-  let phrasal_reg = new RegExp("^(.*?) (in|out|on|off|behind|way|with|of|do|away|across|ahead|back|over|under|together|apart|up|upon|aback|down|about|before|after|around|to|forth|round|through|along|onto)$", 'i');
-  if (w.match(' ') && w.match(phrasal_reg)) {
+  let phrasal_reg = new RegExp("^(.*?) (in|out|on|off|behind|way|with|of|do|away|across|ahead|back|over|under|together|apart|up|upon|aback|down|about|before|after|around|to|forth|round|through|along|onto)$", "i");
+  if (w.match(" ") && w.match(phrasal_reg)) {
     let split = w.match(phrasal_reg, "");
     let phrasal_verb = split[1];
     let particle = split[2];
     let result = conjugate(phrasal_verb); //recursive
     delete result["doer"];
-    Object.keys(result).forEach(function (k) {
+    Object.keys(result).forEach(function(k) {
       if (result[k]) {
         result[k] += " " + particle;
       }

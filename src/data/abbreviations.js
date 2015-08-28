@@ -1,7 +1,7 @@
 //these are common word shortenings used in the lexicon and sentence segmentation methods
 //there are all nouns, or at the least, belong beside one.
 "use strict";
-let honourifics = require("./honourifics") //stored seperately, for 'noun.is_person()'
+let honourifics = require("./honourifics"); //stored seperately, for 'noun.is_person()'
 
 let main = [
   //common abbreviations
@@ -12,8 +12,8 @@ let main = [
   "dept", "univ", "assn", "bros", "inc", "ltd", "co", "corp",
   //proper nouns with exclamation marks
   "yahoo", "joomla", "jeopardy"
-]
+];
 //person titles like 'jr', (stored seperately)
-main = main.concat(honourifics)
+main = main.concat(honourifics);
 
 module.exports = main;

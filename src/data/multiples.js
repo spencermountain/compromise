@@ -72,4 +72,4 @@ module.exports = {
   "united kingdom": "NN",
   "great britain": "NN",
   "head start": "NN"
-}
+};

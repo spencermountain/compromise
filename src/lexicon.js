@@ -1,59 +1,59 @@
 //the lexicon is a big hash of words to pos tags
 //it's built by conjugating and inflecting a small seed of terms
 "use strict";
-let fns = require("./fns.js")
-let verb_conjugate = require("./term/verb/conjugate/conjugate.js")
+let fns = require("./fns.js");
+let verb_conjugate = require("./term/verb/conjugate/conjugate.js");
 
-let lexicon = {}
+let lexicon = {};
 
 let addObj = function(obj) {
-  let keys = Object.keys(obj)
-  let l = keys.length
+  let keys = Object.keys(obj);
+  let l = keys.length;
   for (let i = 0; i < l; i++) {
-    lexicon[keys[i]] = obj[keys[i]]
+    lexicon[keys[i]] = obj[keys[i]];
   }
-}
+};
 
 let addArr = function(arr, tag) {
-  let l = arr.length
+  let l = arr.length;
   for (let i = 0; i < l; i++) {
-    lexicon[arr[i]] = tag
+    lexicon[arr[i]] = tag;
   }
-}
+};
 
 //conjugate all verbs.
-let verbs = require("./data/verbs.js")
+let verbs = require("./data/verbs.js");
 for (let i = 0; i < verbs.length; i++) {
-  let c = verb_conjugate(verbs[i])
-  lexicon[c.infinitive] = "VBP"
-  lexicon[c.past] = "VBD"
-  lexicon[c.gerund] = "VBG"
-  lexicon[c.present] = "VBZ"
+  let c = verb_conjugate(verbs[i]);
+  lexicon[c.infinitive] = "VBP";
+  lexicon[c.past] = "VBD";
+  lexicon[c.gerund] = "VBG";
+  lexicon[c.present] = "VBZ";
   if (c.doer) {
-    lexicon[c.doer] = "NNA"
+    lexicon[c.doer] = "NNA";
   }
   if (c.participle) {
-    lexicon[c.participle] = "VBN"
+    lexicon[c.participle] = "VBN";
   }
 }
 
-addArr(require("./data/abbreviations.js"), "NNAB")
-addArr(require("./data/adjectives.js"), "JJ")
-addArr(require("./data/demonyms.js"), "JJ")
-addArr(require("./data/honourifics.js"), "NNAB")
-addArr(require("./data/uncountables.js"), "NN")
-addArr(require("./data/dates.js"), "CD")
-addArr(require("./data/numbers.js"), "CD")
+addArr(require("./data/abbreviations.js"), "NNAB");
+addArr(require("./data/adjectives.js"), "JJ");
+addArr(require("./data/demonyms.js"), "JJ");
+addArr(require("./data/honourifics.js"), "NNAB");
+addArr(require("./data/uncountables.js"), "NN");
+addArr(require("./data/dates.js"), "CD");
+addArr(require("./data/numbers.js"), "CD");
 //a little fancy
-addArr(Object.keys(require("./data/firstnames.js")), "NN")
+addArr(Object.keys(require("./data/firstnames.js")), "NN");
 //add irregular nouns
-let irregNouns = require("./data/irregular_nouns.js")
-addArr(fns.pluck(irregNouns, 0), "NN")
-addArr(fns.pluck(irregNouns, 1), "NNS")
+let irregNouns = require("./data/irregular_nouns.js");
+addArr(fns.pluck(irregNouns, 0), "NN");
+addArr(fns.pluck(irregNouns, 1), "NNS");
 
-addObj(require("./data/misc.js"))
-addObj(require("./data/multiples.js"))
-addObj(require("./data/phrasal_verbs.js"))
+addObj(require("./data/misc.js"));
+addObj(require("./data/multiples.js"));
+addObj(require("./data/phrasal_verbs.js"));
 
 // console.log(Object.keys(lexicon).length)
 // console.log(lexicon)
@@ -74,4 +74,4 @@ addObj(require("./data/phrasal_verbs.js"))
 // console.log(lexicon['loaves'] === "NNS")
 // console.log(lexicon['he'] === "PRP")
 
-module.exports = lexicon
+module.exports = lexicon;

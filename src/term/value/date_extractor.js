@@ -10,7 +10,7 @@ let to_obj = function(arr, places) {
     h[k] = arr[places[k]];
     return h;
   }, {});
-}
+};
 
 let regexes = [{
   reg: String(months) + " " + String(days) + "-" + String(days) + " " + String(years),
@@ -251,7 +251,7 @@ let last_dates = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 let preprocess = function(str) {
   str = str.toLowerCase();
-  str = str.replace(/([0-9])(th|rd|st)/g, '$1');
+  str = str.replace(/([0-9])(th|rd|st)/g, "$1");
   return str;
 };
 
@@ -288,7 +288,7 @@ let postprocess = function(obj, options) {
   //make sure to date is after from date. fail everything if so...
   //todo: do this smarter
   if (obj.to_month !== undefined && obj.to_month < obj.month) {
-    return {}
+    return {};
   }
   if (obj.to_year && obj.to_year < obj.year) {
     obj.year = undefined;
@@ -334,10 +334,10 @@ let postprocess = function(obj, options) {
 //pass through sequence of regexes until tempate is matched..
 let date_extractor = function(str, options) {
   options = options || {};
-  str = preprocess(str)
+  str = preprocess(str);
   let l = regexes.length;
   for (let i = 0; i < l; i += 1) {
-    let obj = regexes[i]
+    let obj = regexes[i];
     if (str.match(obj.reg)) {
       let clone_reg = new RegExp(obj.reg.source, "i"); //this avoids a memory-leak
       let arr = clone_reg.exec(str);
@@ -350,4 +350,4 @@ let date_extractor = function(str, options) {
 // console.log(date_extractor("1998"))
 // console.log(date_extractor("1999"))
 
-module.exports = date_extractor
+module.exports = date_extractor;

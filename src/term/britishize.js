@@ -7,7 +7,7 @@ let patterns = [
   // ise -> ize
   {
     reg: /([^aeiou][iy])z(e|ed|es|ing)?$/,
-    repl: '$1s$2'
+    repl: "$1s$2"
   },
   // our -> or
   // {
@@ -48,21 +48,21 @@ let patterns = [
   // illful -> ilful
   {
     reg: /([aeiou]+[^aeiou]+[aeiou]+)l(ful|ment|est|ing|or|er|ed)$/, //must be second-syllable
-    repl: '$1ll$2',
+    repl: "$1ll$2",
     exceptions: []
   }
-]
+];
 
 let britishize = function(str) {
   for (let i = 0; i < patterns.length; i++) {
     if (str.match(patterns[i].reg)) {
-      return str.replace(patterns[i].reg, patterns[i].repl)
+      return str.replace(patterns[i].reg, patterns[i].repl);
     }
   }
-  return str
-}
+  return str;
+};
 
 // console.log(britishize("synthesize") === "synthesise")
 // console.log(britishize("synthesized") === "synthesised")
 
-module.exports = britishize
+module.exports = britishize;

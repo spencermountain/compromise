@@ -9,25 +9,25 @@ let irregulars = {
   "honour": "an",
   "honor": "an",
   "uber": "an" //german u
-}
+};
 
 
 let is_acronym = function(s) {
   //no periods
   if (s.length <= 5 && s.match(/^[A-Z]*$/)) {
-    return true
+    return true;
   }
   //with periods
   if (s.length >= 4 && s.match(/^([A-Z]\.)*$/)) {
-    return true
+    return true;
   }
-  return false
-}
+  return false;
+};
 
 
 let indefinite_article = function(str) {
   if (!str) {
-    return null
+    return null;
   }
   //pronounced letters of acronyms that get a 'an'
   let an_acronyms = {
@@ -43,7 +43,7 @@ let indefinite_article = function(str) {
     R: true,
     S: true,
     X: true
-  }
+  };
   //'a' regexes
   let a_regexs = [
     /^onc?e/i, //'wu' sound of 'o'
@@ -55,24 +55,24 @@ let indefinite_article = function(str) {
   ////////////////////
   //explicit irregular forms
   if (irregulars.hasOwnProperty(str)) {
-    return irregulars[str]
+    return irregulars[str];
   }
   //spelled-out acronyms
   if (is_acronym(str) && an_acronyms.hasOwnProperty(str.substr(0, 1))) {
-    return "an"
+    return "an";
   }
   //'a' regexes
   for (let i = 0; i < a_regexs.length; i++) {
     if (str.match(a_regexs[i])) {
-      return "a"
+      return "a";
     }
   }
   //basic vowel-startings
   if (str.match(/^[aeiou]/i)) {
-    return "an"
+    return "an";
   }
-  return "a"
-}
+  return "a";
+};
 
 // console.log(indefinite_article("wolf") === "a")
-module.exports = indefinite_article
+module.exports = indefinite_article;

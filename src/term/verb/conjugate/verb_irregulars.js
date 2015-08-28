@@ -1,12 +1,12 @@
-'use strict'
+"use strict";
 let types = [
-  'infinitive',
-  'gerund',
-  'past',
-  'present',
-  'doer',
-  'future'
-]
+  "infinitive",
+  "gerund",
+  "past",
+  "present",
+  "doer",
+  "future"
+];
 
 //list of verb irregular verb forms, compacted to save space. ('_' -> infinitive )
 let compact = [
@@ -948,14 +948,14 @@ let compact = [
     "_s",
     "_er"
   ]
-]
+];
 //expand compact version out
 module.exports = compact.map(function(arr) {
-  let obj = {}
+  let obj = {};
   for (let i = 0; i < arr.length; i++) {
-    obj[types[i]] = arr[i].replace(/_/, arr[0])
+    obj[types[i]] = arr[i].replace(/_/, arr[0]);
   }
-  return obj
-})
+  return obj;
+});
 
 // console.log(JSON.stringify(verb_irregulars, null, 2));

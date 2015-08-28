@@ -30,7 +30,7 @@ let ngram = function(terms, options) {
   for (let k = 1; k < max_size; k++) {
     results[k] = [];
     let key = keys[k];
-    let words = Object.keys(keys[k])
+    let words = Object.keys(keys[k]);
     for (let i = 0; i < words.length; i++) {
       let word = words[i];
       if (key[word] >= min_count) {
@@ -44,8 +44,8 @@ let ngram = function(terms, options) {
   }
   //post-process + sort
   results = fns.compact(results);
-  results = results.map(function (r) {
-    r = r.sort(function (a, b) {
+  results = results.map(function(r) {
+    r = r.sort(function(a, b) {
       return b.count - a.count;
     });
     return r;

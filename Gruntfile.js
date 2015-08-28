@@ -3,8 +3,8 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     watch: {
-      files: ['./nlp/**'],
-      tasks: ['run'],
+      files: ["./nlp/**"],
+      tasks: ["run"],
     },
 
     run: {
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          "./builds/nlp_compromise.es5.js": "./builds/nlp_compromise.es6.js"
+          "./builds/nlp_compromise.es5.js": "./builds/nlp_compromise.es6.js",
         }
       }
     },
@@ -58,10 +58,10 @@ module.exports = function(grunt) {
 
     eslint: {
       options: {
-        configFile: './eslint.json',
+        configFile: "./eslint.json",
         useEslintrc: false
       },
-      target: ['./src']
+      target: ["./src"]
     }
 
   });
@@ -72,8 +72,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-browserify");
   grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-run");
+
   grunt.registerTask("default", ["run"]);
   grunt.registerTask("watch", ["watch"]);
   grunt.registerTask("lint", ["eslint"]);
-  grunt.registerTask("build", ["browserify", "babel", "uglify"]);
+  grunt.registerTask("build", ["eslint", "browserify", "babel", "uglify"]);
 };

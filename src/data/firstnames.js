@@ -117,7 +117,7 @@ let male_names = {
   "q": "uentin,uinton",
   "x": "avier"
 }
-var female_names = {
+let female_names = {
   "mari": "a,e,lyn,an,anne,na,ssa,bel,sa,sol,tza",
   "kris": "ten,tin,tina,ti,tine,ty,ta,tie",
   "jean": "ette,ne,nette,nie,ine,nine",
@@ -246,7 +246,7 @@ var female_names = {
   "d": "ixie,ina",
   "u": "rsula"
 }
-var ambiguous = [
+let ambiguous = [
   "casey",
   "jamie",
   "lee",

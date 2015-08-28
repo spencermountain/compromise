@@ -1,10 +1,10 @@
 'use strict'
-var Term = require("../term.js")
-var article = require("./article.js")
-var is_plural = require("./is_plural.js")
-var singularize = require("./singularize.js")
-var pluralize = require("./pluralize.js")
-var is_uncountable = require("./is_uncountable.js")
+let Term = require("../term.js")
+let article = require("./article.js")
+let is_plural = require("./is_plural.js")
+let singularize = require("./singularize.js")
+let pluralize = require("./pluralize.js")
+let is_uncountable = require("./is_uncountable.js")
 
 class Noun extends Term {
   constructor(str) {

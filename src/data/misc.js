@@ -390,7 +390,7 @@ let compact = {
   ]
 }
 //unpack the compact terms into the misc lexicon..
-var keys = Object.keys(compact)
+let keys = Object.keys(compact)
 for (let i = 0; i < keys.length; i++) {
   let arr = compact[keys[i]]
   for (let i2 = 0; i2 < arr.length; i2++) {

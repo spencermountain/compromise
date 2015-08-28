@@ -54,7 +54,7 @@ let patterns = [
 ]
 
 let britishize = function(str) {
-  for (var i = 0; i < patterns.length; i++) {
+  for (let i = 0; i < patterns.length; i++) {
     if (str.match(patterns[i].reg)) {
       return str.replace(patterns[i].reg, patterns[i].repl)
     }

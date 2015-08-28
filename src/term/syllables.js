@@ -10,15 +10,15 @@ function postprocess(arr) {
   if (arr.length > 2) {
     return arr
   }
-  var ones = [
+  let ones = [
     /^[^aeiou]?ion/,
     /^[^aeiou]?ised/,
     /^[^aeiou]?iled/
   ]
-  var l = arr.length
+  let l = arr.length
   if (l > 1) {
-    var suffix = arr[l - 2] + arr[l - 1];
-    for (var i = 0; i < ones.length; i++) {
+    let suffix = arr[l - 2] + arr[l - 1];
+    for (let i = 0; i < ones.length; i++) {
       if (suffix.match(ones[i])) {
         arr[l - 2] = arr[l - 2] + arr[l - 1];
         arr.pop();
@@ -29,20 +29,20 @@ function postprocess(arr) {
 }
 
 let syllables = function(str) {
-  var all = []
+  let all = []
 
   //method is nested because it's called recursively
-  var doer = function(w) {
-    var vow = /[aeiouy]$/
-    var chars = w.split('')
-    var before = "";
-    var after = "";
-    var current = "";
-    for (var i = 0; i < chars.length; i++) {
+  let doer = function(w) {
+    let vow = /[aeiouy]$/
+    let chars = w.split('')
+    let before = "";
+    let after = "";
+    let current = "";
+    for (let i = 0; i < chars.length; i++) {
       before = chars.slice(0, i).join('')
       current = chars[i]
       after = chars.slice(i + 1, chars.length).join('')
-      var candidate = before + chars[i]
+      let candidate = before + chars[i]
 
       //it's a consonant that comes after a vowel
       if (before.match(vow) && !current.match(vow)) {

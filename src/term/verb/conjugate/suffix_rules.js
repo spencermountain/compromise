@@ -1,5 +1,5 @@
 //generated from test data
-var compact = {
+let compact = {
   "gerund": [
     "ing"
   ],
@@ -86,13 +86,13 @@ var compact = {
     "s"
   ]
 }
-var suffix_rules = {}
-var keys = Object.keys(compact)
-var l = keys.length;
-var l2, i;
+let suffix_rules = {}
+let keys = Object.keys(compact)
+let l = keys.length;
+let l2, i;
 for (i = 0; i < l; i++) {
   l2 = compact[keys[i]].length
-  for (var o = 0; o < l2; o++) {
+  for (let o = 0; o < l2; o++) {
     suffix_rules[compact[keys[i]][o]] = keys[i]
   }
 }

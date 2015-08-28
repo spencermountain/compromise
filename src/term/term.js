@@ -51,7 +51,7 @@ class Term {
   }
 }
 
-// var t = new Term("synthesise")
+// let t = new Term("synthesise")
 // console.log(t.americanize())
 
 module.exports = Term

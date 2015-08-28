@@ -13,7 +13,7 @@ let lexicon_pass = function(terms) {
     }
     //try to match it without a prefix - eg. outworked -> worked
     if (t.normal.match(/^(over|under|out|-|un|re|en).{4}/)) {
-      var attempt = t.normal.replace(/^(over|under|out|.*?-|un|re|en)/, '')
+      let attempt = t.normal.replace(/^(over|under|out|.*?-|un|re|en)/, '')
       return assign(t, lexicon[attempt], "lexicon_prefix")
     }
     return t

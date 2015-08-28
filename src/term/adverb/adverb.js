@@ -1,6 +1,6 @@
 'use strict'
-var Term = require("../term.js")
-var to_adjective = require("./to_adjective.js")
+let Term = require("../term.js")
+let to_adjective = require("./to_adjective.js")
 
 class Adverb extends Term {
   constructor(str) {

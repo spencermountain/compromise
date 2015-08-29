@@ -2,7 +2,6 @@
 let mocha = require("mocha");
 let should = require("should");
 let sentences = require("../../src");
-let sentencesClass = require("../../src/sentence/sentence");
 
 describe("tokenize sentence tests", function() {
   it("tokenize basic sentence", function(done) {
@@ -34,19 +33,4 @@ describe("tokenize sentence tests", function() {
     done();
   });
 
-  it("Termination", function(done) {
-
-    let tests = [
-      ["Tony is nice.", "."],
-      ["Tony is nice!", "!"],
-      ["Is Tony is nice?", "?"],
-      ["Tony is okay", "."]
-    ];
-
-    tests.forEach(function(a) {
-      var s = new sentencesClass(a[0]);
-      s.terminator().should.eql(a[1]);
-    });
-    done();
-  });
 });

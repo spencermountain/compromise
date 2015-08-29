@@ -24,7 +24,8 @@ describe("tokenize sentence tests", function() {
       ["i think it is good ... ", 1],
       ["What's my age again? What's my age again?", 2],
       ["the problem, eg. the javascript", 1],
-      ["Dr. Tony is nice. He lives on Elm St. in Vancouver BC. Canada", 2]
+      ["Dr. Tony is nice. He lives on Elm St. in Vancouver BC. Canada", 2],
+      ["I made $5.60 today in 1 hour of work.  The E.M.T.'s were on time, but only barely.", 2]
     ];
     tests.forEach(function(a) {
       Sentences(a[0]).sentences.should.have.length(a[1]);

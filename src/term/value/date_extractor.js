@@ -347,7 +347,4 @@ const date_extractor = function(str, options) {
   }
 };
 
-// console.log(date_extractor("1998"))
-// console.log(date_extractor("1999"))
-
 module.exports = date_extractor;

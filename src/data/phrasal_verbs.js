@@ -6,7 +6,7 @@
 const verb_conjugate = require("../term/verb/conjugate/conjugate.js");
 
 //start the list with some randoms
-const main = [
+let main = [
   "be onto",
   "fall behind",
   "fall through",

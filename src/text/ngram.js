@@ -8,7 +8,7 @@ const ngram = function(terms, options) {
   const min_count = options.min_count || 1; // minimum hit-count
   const max_size = options.max_size || 5; // maximum gram count
   const keys = [null];
-  const results = [];
+  let results = [];
   //prepare the keys object
   for (let i = 1; i <= max_size; i++) {
     keys.push({});

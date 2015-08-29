@@ -52,7 +52,7 @@ const to_noun = function(w) {
     "repl": "ousness"
   }];
 
-  for (const i = 0; i < transforms.length; i++) {
+  for (let i = 0; i < transforms.length; i++) {
     if (w.match(transforms[i].reg)) {
       return w.replace(transforms[i].reg, transforms[i].repl);
     }

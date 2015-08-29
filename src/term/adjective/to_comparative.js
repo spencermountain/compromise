@@ -1,9 +1,9 @@
 //turn 'quick' into 'quickly'
 "use strict";
-let convertables = require("./convertables");
+const convertables = require("./convertables");
 
-let to_comparative = function(str) {
-  let irregulars = {
+const to_comparative = function(str) {
+  const irregulars = {
     "grey": "greyer",
     "gray": "grayer",
     "green": "greener",
@@ -15,7 +15,7 @@ let to_comparative = function(str) {
     "sad": "sadder"
   };
 
-  let dont = {
+  const dont = {
     "overweight": 1,
     "main": 1,
     "nearby": 1,
@@ -25,7 +25,7 @@ let to_comparative = function(str) {
     "certain": 1
   };
 
-  let transforms = [{
+  const transforms = [{
     reg: /y$/i,
     repl: "ier"
   }, {
@@ -39,7 +39,7 @@ let to_comparative = function(str) {
     repl: "nger"
   }];
 
-  let matches = [
+  const matches = [
     /ght$/,
     /nge$/,
     /ough$/,
@@ -52,7 +52,7 @@ let to_comparative = function(str) {
     /e[ae]p$/
   ];
 
-  let not_matches = [
+  const not_matches = [
     /ary$/,
     /ous$/
   ];

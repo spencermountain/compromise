@@ -1,6 +1,6 @@
 "use strict";
 //generated from test data
-let compact = {
+const compact = {
   "gerund": [
     "ing"
   ],
@@ -87,11 +87,12 @@ let compact = {
     "s"
   ]
 };
-let suffix_rules = {};
-let keys = Object.keys(compact);
-let l = keys.length;
-let l2, i;
-for (i = 0; i < l; i++) {
+const suffix_rules = {};
+const keys = Object.keys(compact);
+const l = keys.length;
+let l2;
+
+for (let i = 0; i < l; i++) {
   l2 = compact[keys[i]].length;
   for (let o = 0; o < l2; o++) {
     suffix_rules[compact[keys[i]][o]] = keys[i];

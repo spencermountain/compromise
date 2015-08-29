@@ -1,10 +1,10 @@
 "use strict";
-let is_uncountable = require("./is_uncountable.js");
-let irregulars = require("../../data/irregular_nouns.js");
-let is_plural = require("./is_plural.js");
-let fns = require("../../fns.js");
+const is_uncountable = require("./is_uncountable.js");
+const irregulars = require("../../data/irregular_nouns.js");
+const is_plural = require("./is_plural.js");
+const fns = require("../../fns.js");
 
-let pluralize_rules = [
+const pluralize_rules = [
   [/(ax|test)is$/i, "$1es"],
   [/(octop|vir|radi|nucle|fung|cact|stimul)us$/i, "$1i"],
   [/(octop|vir)i$/i, "$1i"],
@@ -37,8 +37,8 @@ let pluralize_rules = [
 });
 
 
-let pluralize = function(str) {
-  let low = str.toLowerCase();
+const pluralize = function(str) {
+  const low = str.toLowerCase();
   //uncountable
   if (is_uncountable(low)) { //uncountables shouldn't ever inflect
     return str;
@@ -48,7 +48,7 @@ let pluralize = function(str) {
     return str;
   }
   //irregular
-  let found = irregulars.filter(function(r) {
+  const found = irregulars.filter(function(r) {
     return r[0] === low;
   });
   if (found[0]) {
@@ -60,9 +60,9 @@ let pluralize = function(str) {
   }
   //inflect first word of preposition-phrase
   if (str.match(/([a-z]*) (of|in|by|for) [a-z]/)) {
-    let first = (str.match(/^([a-z]*) (of|in|by|for) [a-z]/) || [])[1];
+    const first = (str.match(/^([a-z]*) (of|in|by|for) [a-z]/) || [])[1];
     if (first) {
-      let better_first = pluralize(first);
+      const better_first = pluralize(first);
       return better_first + str.replace(first, "");
     }
   }

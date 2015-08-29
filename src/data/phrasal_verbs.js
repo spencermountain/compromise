@@ -3,10 +3,10 @@
 //by @spencermountain, 2015 mit
 //many credits to http://www.allmyphrasalverbs.com/
 "use strict";
-let verb_conjugate = require("../term/verb/conjugate/conjugate.js");
+const verb_conjugate = require("../term/verb/conjugate/conjugate.js");
 
 //start the list with some randoms
-let main = [
+const main = [
   "be onto",
   "fall behind",
   "fall through",
@@ -26,7 +26,7 @@ let main = [
 ];
 
 //if there's a phrasal verb "keep on", there's often a "keep off"
-let opposites = {
+const opposites = {
   "away": "back",
   "in": "out",
   "on": "off",
@@ -36,7 +36,7 @@ let opposites = {
 };
 
 //forms that have in/out symmetry
-let symmetric = {
+const symmetric = {
   "away": "blow,bounce,bring,call,come,cut,drop,fire,get,give,go,keep,pass,put,run,send,shoot,switch,take,tie,throw",
   "in": "bang,barge,bash,beat,block,book,box,break,bring,burn,butt,carve,cash,check,come,cross,drop,fall,fence,fill,give,grow,hand,hang,head,jack,keep,leave,let,lock,log,move,opt,pack,peel,pull,put,rain,reach,ring,rub,send,set,settle,shut,sign,smash,snow,strike,take,try,turn,type,warm,wave,wean,wear,wheel",
   "on": "add,call,carry,catch,count,feed,get,give,go,grind,head,hold,keep,lay,log,pass,pop,power,put,send,show,snap,switch,take,tell,try,turn,wait",
@@ -54,7 +54,7 @@ Object.keys(symmetric).forEach(function(k) {
 });
 
 //forms that don't have in/out symmetry
-let asymmetric = {
+const asymmetric = {
   "about": "bring,fool,gad,go,root",
   "after": "go,look,take",
   "ahead": "get,go,press",
@@ -93,14 +93,14 @@ main = main.reduce(function(h, s) {
 }, {});
 
 //conjugate every phrasal verb. takes ~30ms
-let tags = {
+const tags = {
   present: "VB",
   past: "VBD",
   future: "VBF",
   gerund: "VBG",
   infinitive: "VBP",
 };
-let cache = {}; //cache individual verbs to speed it up
+const cache = {}; //cache individual verbs to speed it up
 let split, verb, particle, phrasal;
 Object.keys(main).forEach(function(s) {
   split = s.split(" ");

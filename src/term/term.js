@@ -1,7 +1,7 @@
 "use strict";
-let syllables = require("./syllables");
-let americanize = require("./americanize");
-let britishize = require("./britishize");
+const syllables = require("./syllables");
+const americanize = require("./americanize");
+const britishize = require("./britishize");
 
 class Term {
   constructor(str) {

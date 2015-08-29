@@ -1,10 +1,10 @@
 "use strict";
-let Term = require("../term.js");
+const Term = require("../term.js");
 
-let to_comparative = require("./to_comparative");
-let to_superlative = require("./to_superlative");
-let adj_to_adv = require("./to_adverb");
-let adj_to_noun = require("./to_noun");
+const to_comparative = require("./to_comparative");
+const to_superlative = require("./to_superlative");
+const adj_to_adv = require("./to_adverb");
+const adj_to_noun = require("./to_noun");
 
 class Adjective extends Term {
   constructor(str) {

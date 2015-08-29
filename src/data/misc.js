@@ -1,6 +1,6 @@
 "use strict";
 
-let misc = {
+const misc = {
 
   "etc": "FW", //foreign words
   "ie": "FW",
@@ -16,7 +16,7 @@ let misc = {
   "sounds": "VBZ"
 };
 
-let compact = {
+const compact = {
   //conjunctions
   "CC": [
     "yet",
@@ -390,9 +390,9 @@ let compact = {
   ]
 };
 //unpack the compact terms into the misc lexicon..
-let keys = Object.keys(compact);
+const keys = Object.keys(compact);
 for (let i = 0; i < keys.length; i++) {
-  let arr = compact[keys[i]];
+  const arr = compact[keys[i]];
   for (let i2 = 0; i2 < arr.length; i2++) {
     misc[arr[i2]] = keys[i];
   }

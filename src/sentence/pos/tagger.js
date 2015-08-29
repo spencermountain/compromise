@@ -1,12 +1,12 @@
 //part-of-speech tagging
 "use strict";
-let lexicon_pass = require("./lexicon_pass");
-let contractions = require("./contractions");
-let assign = require("./assign");
-let word_rules = require("./word_rules");
+const lexicon_pass = require("./lexicon_pass");
+const contractions = require("./contractions");
+const assign = require("./assign");
+const word_rules = require("./word_rules");
 
 //set POS for capitalised words
-let capital_signals = function(terms) {
+const capital_signals = function(terms) {
   //first words need careful rules
   if (terms[0].is_acronym()) {
     terms[0] = assign(terms[0], "NN", "acronym");
@@ -21,7 +21,7 @@ let capital_signals = function(terms) {
 };
 
 //regex-rules for words/suffixes
-let rules_pass = function(terms) {
+const rules_pass = function(terms) {
   for (let i = 0; i < terms.length; i++) {
     for (let o = 0; o < word_rules.length; o++) {
       if (terms[i].normal.length > 4 && terms[i].normal.match(word_rules[o].reg)) {
@@ -32,7 +32,7 @@ let rules_pass = function(terms) {
   return terms;
 };
 
-let tagger = function(s) {
+const tagger = function(s) {
   s.terms = capital_signals(s.terms);
   s.terms = contractions(s.terms);
   s.terms = lexicon_pass(s.terms);

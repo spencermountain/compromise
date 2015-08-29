@@ -10,14 +10,14 @@ function postprocess(arr) {
   if (arr.length > 2) {
     return arr;
   }
-  let ones = [
+  const ones = [
     /^[^aeiou]?ion/,
     /^[^aeiou]?ised/,
     /^[^aeiou]?iled/
   ];
-  let l = arr.length;
+  const l = arr.length;
   if (l > 1) {
-    let suffix = arr[l - 2] + arr[l - 1];
+    const suffix = arr[l - 2] + arr[l - 1];
     for (let i = 0; i < ones.length; i++) {
       if (suffix.match(ones[i])) {
         arr[l - 2] = arr[l - 2] + arr[l - 1];
@@ -28,13 +28,13 @@ function postprocess(arr) {
   return arr;
 }
 
-let syllables = function(str) {
+const syllables = function(str) {
   let all = [];
 
   //method is nested because it's called recursively
-  let doer = function(w) {
-    let vow = /[aeiouy]$/;
-    let chars = w.split("");
+  const doer = function(w) {
+    const vow = /[aeiouy]$/;
+    const chars = w.split("");
     let before = "";
     let after = "";
     let current = "";

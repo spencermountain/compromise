@@ -2,7 +2,7 @@
 // built with patterns+exceptions from https://en.wikipedia.org/wiki/British_spelling
 "use strict";
 
-let patterns = [
+const patterns = [
   // ise -> ize
   {
     reg: /([^aeiou][iy])s(e|ed|es|ing)?$/,
@@ -45,7 +45,7 @@ let patterns = [
   }
 ];
 
-let americanize = function(str) {
+const americanize = function(str) {
   for (let i = 0; i < patterns.length; i++) {
     if (str.match(patterns[i].reg)) {
       return str.replace(patterns[i].reg, patterns[i].repl);

@@ -1,7 +1,7 @@
 //turn 'quick' into 'quickly'
 "use strict";
-let adj_to_adv = function(str) {
-  let irregulars = {
+const adj_to_adv = function(str) {
+  const irregulars = {
     "idle": "idly",
     "public": "publicly",
     "vague": "vaguely",
@@ -25,7 +25,7 @@ let adj_to_adv = function(str) {
     "bad": "badly"
   };
 
-  let dont = {
+  const dont = {
     "foreign": 1,
     "black": 1,
     "modern": 1,
@@ -70,7 +70,7 @@ let adj_to_adv = function(str) {
     "adult": 1
   };
 
-  let transforms = [{
+  const transforms = [{
     reg: /al$/i,
     repl: "ally"
   }, {
@@ -96,7 +96,7 @@ let adj_to_adv = function(str) {
     repl: "ly"
   }];
 
-  let not_matches = [
+  const not_matches = [
     /airs$/,
     /ll$/,
     /ee.$/,

@@ -1,20 +1,20 @@
 "use strict";
 //split a string into all possible parts
-let fns = require("../fns.js");
+const fns = require("../fns.js");
 
 //n-gram takes a list of pre-cleaned terms, and makes no assumptions
-let ngram = function(terms, options) {
+const ngram = function(terms, options) {
   options = options || {};
-  let min_count = options.min_count || 1; // minimum hit-count
-  let max_size = options.max_size || 5; // maximum gram count
-  let keys = [null];
-  let results = [];
+  const min_count = options.min_count || 1; // minimum hit-count
+  const max_size = options.max_size || 5; // maximum gram count
+  const keys = [null];
+  const results = [];
   //prepare the keys object
   for (let i = 1; i <= max_size; i++) {
     keys.push({});
   }
   // Create a hash for counting..
-  let textlen = terms.length;
+  const textlen = terms.length;
   for (let i = 0; i < textlen; i++) {
     let s = terms[i];
     keys[1][s] = (keys[1][s] || 0) + 1;
@@ -30,10 +30,10 @@ let ngram = function(terms, options) {
   // map the hash to an array for sorting
   for (let k = 1; k < max_size; k++) {
     results[k] = [];
-    let key = keys[k];
-    let words = Object.keys(keys[k]);
+    const key = keys[k];
+    const words = Object.keys(keys[k]);
     for (let i = 0; i < words.length; i++) {
-      let word = words[i];
+      const word = words[i];
       if (key[word] >= min_count) {
         results[k].push({
           "word": word,

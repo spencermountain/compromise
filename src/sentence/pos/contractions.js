@@ -1,8 +1,8 @@
 //add a 'quiet' token for contractions so we can represent their grammar
 "use strict";
-let Term = require("../../term/term.js");
+const Term = require("../../term/term.js");
 
-let contractions = {
+const contractions = {
   "i'd": ["i", "would"],
   "she'd": ["she", "would"],
   "he'd": ["he", "would"],
@@ -26,12 +26,12 @@ let contractions = {
   "cannot": ["can", "not"]
 };
 
-let handle_contractions = function(terms) {
+const handle_contractions = function(terms) {
   for (let i = 0; i < terms.length; i++) {
-    let t = terms[i];
+    const t = terms[i];
     if (contractions[t.normal] !== undefined) {
-      let split = contractions[t.normal];
-      let fixup = [].concat(
+      const split = contractions[t.normal];
+      const fixup = [].concat(
         terms.slice(0, i),
         [new Term(split[0])],
         [new Term(split[1])],

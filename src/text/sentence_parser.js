@@ -4,10 +4,10 @@
 "use strict";
 let abbreviations = require("../data/abbreviations");
 
-let sentence_parser = function(text) {
-  let sentences = [];
+const sentence_parser = function(text) {
+  const sentences = [];
   //first do a greedy-split..
-  let chunks = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
+  const chunks = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
 
   //date abbrevs.
   //these are added seperately because they are not nouns
@@ -16,12 +16,12 @@ let sentence_parser = function(text) {
   abbreviations = abbreviations.concat(["ex", "eg", "ie", "circa", "ca", "cca", "vs", "etc", "esp", "ft", "bc", "ad"]);
 
   //detection of non-sentence chunks
-  let abbrev_reg = new RegExp("\\b(" + abbreviations.join("|") + ")[.!?] ?$", "i");
-  let acronym_reg = new RegExp("[ |\.][A-Z]\.?$", "i");
-  let elipses_reg = new RegExp("\\.\\.\\.*$");
+  const abbrev_reg = new RegExp("\\b(" + abbreviations.join("|") + ")[.!?] ?$", "i");
+  const acronym_reg = new RegExp("[ |\.][A-Z]\.?$", "i");
+  const elipses_reg = new RegExp("\\.\\.\\.*$");
 
   //loop through these chunks, and join the non-sentence chunks back together..
-  let chunks_length = chunks.length;
+  const chunks_length = chunks.length;
   for (let i = 0; i < chunks_length; i++) {
     if (chunks[i]) {
       //trim whitespace

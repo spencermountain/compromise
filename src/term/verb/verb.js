@@ -1,9 +1,9 @@
 "use strict";
-let Term = require("../term.js");
-let conjugate = require("./conjugate/conjugate.js");
-let predict_form = require("./conjugate/predict_form.js");
+const Term = require("../term.js");
+const conjugate = require("./conjugate/conjugate.js");
+const predict_form = require("./conjugate/predict_form.js");
 
-let allowed_forms = {
+const allowed_forms = {
   infinitive: 1,
   present: 1,
   past: 1,
@@ -45,7 +45,7 @@ class Verb extends Term {
 
   //is this verb negative already?
   isNegative() {
-    let str = this.normal;
+    const str = this.normal;
     if (str.match(/n't$/)) {
       return true;
     }

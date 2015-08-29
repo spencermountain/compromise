@@ -9,7 +9,7 @@
 "use strict";
 //these sets of numbers each have different rules
 //[tenth, hundreth, thousandth..] are ambiguous because they could be ordinal like fifth, or decimal like one-one-hundredth, so are ignored
-let ones = {
+const ones = {
   "a": 1,
   "zero": 0,
   "one": 1,
@@ -31,7 +31,7 @@ let ones = {
   "eighth": 8,
   "ninth": 9
 };
-let teens = {
+const teens = {
   "ten": 10,
   "eleven": 11,
   "twelve": 12,
@@ -52,7 +52,7 @@ let teens = {
   "eighteenth": 18,
   "nineteenth": 19
 };
-let tens = {
+const tens = {
   "twenty": 20,
   "thirty": 30,
   "forty": 40,
@@ -70,7 +70,7 @@ let tens = {
   "eightieth": 80,
   "ninetieth": 90
 };
-let multiple = {
+const multiple = {
   "hundred": 100,
   "grand": 1000,
   "thousand": 1000,
@@ -87,12 +87,12 @@ let multiple = {
 };
 // let decimal_multiple={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
 
-let to_number = function(s) {
+const to_number = function(s) {
   //remember these concerns for possible errors
   let ones_done = false;
   let teens_done = false;
   let tens_done = false;
-  let multiple_done = {};
+  const multiple_done = {};
   let total = 0;
   let global_multiplier = 1;
   //pretty-printed numbers
@@ -111,7 +111,7 @@ let to_number = function(s) {
     return null;
   }
   //support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
-  let mults = [{
+  const mults = [{
     reg: /^(minus|negative)[\s\-]/i,
     mult: -1
   }, {
@@ -130,7 +130,7 @@ let to_number = function(s) {
   }
 
   //do each word in turn..
-  let words = s.toString().split(/[\s\-]+/);
+  const words = s.toString().split(/[\s\-]+/);
   let w, x;
   let current_sum = 0;
   let local_multiplier = 1;

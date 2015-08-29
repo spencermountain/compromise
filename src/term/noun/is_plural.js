@@ -1,8 +1,8 @@
 "use strict";
-let irregulars = require("../../data/irregular_nouns");
+const irregulars = require("../../data/irregular_nouns");
 
 //similar to plural/singularize rules, but not the same
-let plural_indicators = [
+const plural_indicators = [
   /(^v)ies$/i,
   /ises$/i,
   /ives$/i,
@@ -26,7 +26,7 @@ let plural_indicators = [
 ];
 
 //similar to plural/singularize rules, but not the same
-let singular_indicators = [
+const singular_indicators = [
   /(ax|test)is$/i,
   /(octop|vir|radi|nucle|fung|cact|stimul)us$/i,
   /(octop|vir)i$/i,
@@ -49,10 +49,10 @@ let singular_indicators = [
   /^(?!talis|.*hu)(.*)man$/i
 ];
 
-let is_plural = function(str) {
+const is_plural = function(str) {
   str = (str || "").toLowerCase();
   //handle 'mayors of chicago'
-  let preposition = str.match(/([a-z]*) (of|in|by|for) [a-z]/);
+  const preposition = str.match(/([a-z]*) (of|in|by|for) [a-z]/);
   if (preposition && preposition[1]) {
     str = preposition[1];
   }

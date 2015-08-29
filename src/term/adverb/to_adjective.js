@@ -1,7 +1,7 @@
 //turns 'quickly' into 'quick'
 "use strict";
-let to_adjective = function(str) {
-  let irregulars = {
+const to_adjective = function(str) {
+  const irregulars = {
     "idly": "idle",
     "sporadically": "sporadic",
     "basically": "basic",
@@ -21,7 +21,7 @@ let to_adjective = function(str) {
     "jolly": "jolly",
     "wholly": "whole"
   };
-  let transforms = [{
+  const transforms = [{
     "reg": /bly$/i,
     "repl": "ble"
   }, {

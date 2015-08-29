@@ -1,12 +1,12 @@
 //turn a verb into its other grammatical forms.
 "use strict";
-let verb_to_doer = require("./to_doer");
-let verb_irregulars = require("./verb_irregulars");
-let verb_rules = require("./verb_rules");
-let predict = require("./predict_form.js");
+const verb_to_doer = require("./to_doer");
+const verb_irregulars = require("./verb_irregulars");
+const verb_rules = require("./verb_rules");
+const predict = require("./predict_form.js");
 
 //fallback to this transformation if it has an unknown prefix
-let fallback = function(w) {
+const fallback = function(w) {
   let infinitive;
   if (w.length > 4) {
     infinitive = w.replace(/ed$/, "");
@@ -40,7 +40,7 @@ let fallback = function(w) {
 };
 
 //make sure object has all forms
-let fufill = function(obj, prefix) {
+const fufill = function(obj, prefix) {
   if (!obj.infinitive) {
     return obj;
   }
@@ -81,18 +81,18 @@ let fufill = function(obj, prefix) {
   return obj;
 };
 
-let conjugate = function(w) {
+const conjugate = function(w) {
   if (w === undefined) {
     return {};
   }
 
   //for phrasal verbs ('look out'), conjugate look, then append 'out'
-  let phrasal_reg = new RegExp("^(.*?) (in|out|on|off|behind|way|with|of|do|away|across|ahead|back|over|under|together|apart|up|upon|aback|down|about|before|after|around|to|forth|round|through|along|onto)$", "i");
+  const phrasal_reg = new RegExp("^(.*?) (in|out|on|off|behind|way|with|of|do|away|across|ahead|back|over|under|together|apart|up|upon|aback|down|about|before|after|around|to|forth|round|through|along|onto)$", "i");
   if (w.match(" ") && w.match(phrasal_reg)) {
-    let split = w.match(phrasal_reg, "");
-    let phrasal_verb = split[1];
-    let particle = split[2];
-    let result = conjugate(phrasal_verb); //recursive
+    const split = w.match(phrasal_reg, "");
+    const phrasal_verb = split[1];
+    const particle = split[2];
+    const result = conjugate(phrasal_verb); //recursive
     delete result["doer"];
     Object.keys(result).forEach(function(k) {
       if (result[k]) {
@@ -119,28 +119,28 @@ let conjugate = function(w) {
   //chop it if it's future-tense
   w = w.replace(/^will /i, "");
   //un-prefix the verb, and add it in later
-  let prefix = (w.match(/^(over|under|re|anti|full)\-?/i) || [])[0];
-  let verb = w.replace(/^(over|under|re|anti|full)\-?/i, "");
+  const prefix = (w.match(/^(over|under|re|anti|full)\-?/i) || [])[0];
+  const verb = w.replace(/^(over|under|re|anti|full)\-?/i, "");
   //check irregulars
   let obj = {};
   let l = verb_irregulars.length;
   for (let i = 0; i < l; i++) {
-    let x = verb_irregulars[i];
+    const x = verb_irregulars[i];
     if (verb === x.present || verb === x.gerund || verb === x.past || verb === x.infinitive) {
       obj = JSON.parse(JSON.stringify(verb_irregulars[i])); // object 'clone' hack, to avoid mem leak
       return fufill(obj, prefix);
     }
   }
   //guess the tense, so we know which transormation to make
-  let predicted = predict(w) || "infinitive";
+  const predicted = predict(w) || "infinitive";
 
   //check against suffix rules
   l = verb_rules[predicted].length;
   for (let i = 0; i < l; i++) {
-    let r = verb_rules[predicted][i];
+    const r = verb_rules[predicted][i];
     if (w.match(r.reg)) {
       obj[predicted] = w;
-      let keys = Object.keys(r.repl);
+      const keys = Object.keys(r.repl);
       for (let o = 0; o < keys.length; o++) {
         if (keys[o] === predicted) {
           obj[keys[o]] = w;

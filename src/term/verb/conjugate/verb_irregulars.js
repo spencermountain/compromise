@@ -1,5 +1,5 @@
 "use strict";
-let types = [
+const types = [
   "infinitive",
   "gerund",
   "past",
@@ -9,7 +9,7 @@ let types = [
 ];
 
 //list of verb irregular verb forms, compacted to save space. ('_' -> infinitive )
-let compact = [
+const compact = [
   [
     "arise",
     "arising",
@@ -951,7 +951,7 @@ let compact = [
 ];
 //expand compact version out
 module.exports = compact.map(function(arr) {
-  let obj = {};
+  const obj = {};
   for (let i = 0; i < arr.length; i++) {
     obj[types[i]] = arr[i].replace(/_/, arr[0]);
   }

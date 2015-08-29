@@ -1,30 +1,30 @@
 //the lexicon is a big hash of words to pos tags
 //it's built by conjugating and inflecting a small seed of terms
 "use strict";
-let fns = require("./fns.js");
-let verb_conjugate = require("./term/verb/conjugate/conjugate.js");
+const fns = require("./fns.js");
+const verb_conjugate = require("./term/verb/conjugate/conjugate.js");
 
-let lexicon = {};
+const lexicon = {};
 
-let addObj = function(obj) {
-  let keys = Object.keys(obj);
-  let l = keys.length;
+const addObj = function(obj) {
+  const keys = Object.keys(obj);
+  const l = keys.length;
   for (let i = 0; i < l; i++) {
     lexicon[keys[i]] = obj[keys[i]];
   }
 };
 
-let addArr = function(arr, tag) {
-  let l = arr.length;
+const addArr = function(arr, tag) {
+  const l = arr.length;
   for (let i = 0; i < l; i++) {
     lexicon[arr[i]] = tag;
   }
 };
 
 //conjugate all verbs.
-let verbs = require("./data/verbs.js");
+const verbs = require("./data/verbs.js");
 for (let i = 0; i < verbs.length; i++) {
-  let c = verb_conjugate(verbs[i]);
+  const c = verb_conjugate(verbs[i]);
   lexicon[c.infinitive] = "VBP";
   lexicon[c.past] = "VBD";
   lexicon[c.gerund] = "VBG";
@@ -47,7 +47,7 @@ addArr(require("./data/numbers.js"), "CD");
 //a little fancy
 addArr(Object.keys(require("./data/firstnames.js")), "NN");
 //add irregular nouns
-let irregNouns = require("./data/irregular_nouns.js");
+const irregNouns = require("./data/irregular_nouns.js");
 addArr(fns.pluck(irregNouns, 0), "NN");
 addArr(fns.pluck(irregNouns, 1), "NNS");
 

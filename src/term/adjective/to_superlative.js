@@ -1,9 +1,9 @@
 //turn 'quick' into 'quickest'
 "use strict";
-let convertables = require("./convertables");
+const convertables = require("./convertables");
 
-let to_superlative = function(str) {
-  let irregulars = {
+const to_superlative = function(str) {
+  const irregulars = {
     "nice": "nicest",
     "late": "latest",
     "hard": "hardest",
@@ -15,12 +15,12 @@ let to_superlative = function(str) {
     "good": "best"
   };
 
-  let dont = {
+  const dont = {
     "overweight": 1,
     "ready": 1
   };
 
-  let transforms = [{
+  const transforms = [{
     "reg": /y$/i,
     "repl": "iest"
   }, {
@@ -34,7 +34,7 @@ let to_superlative = function(str) {
     "repl": "ngest"
   }];
 
-  let matches = [
+  const matches = [
     /ght$/,
     /nge$/,
     /ough$/,
@@ -46,11 +46,11 @@ let to_superlative = function(str) {
     /...p$/
   ];
 
-  let not_matches = [
+  const not_matches = [
     /ary$/
   ];
 
-  let generic_transformation = function(s) {
+  const generic_transformation = function(s) {
     if (s.match(/e$/)) {
       return s + "st";
     }

@@ -28,8 +28,8 @@
 
     "strict": [0, "never"],
 
-    "no-var": 1,
-    "prefer-const": 0,
+    "no-var": 0,
+    "prefer-const": 1,
 
     "no-shadow": 2,
     "no-shadow-restricted-names": 2,
@@ -54,7 +54,7 @@
     "no-func-assign": 2,
     "no-inner-declarations": 2,
     "no-invalid-regexp": 2,
-    "no-irregular-whitespace": 2,
+    "no-irregular-whitespace": 1,
     "no-obj-calls": 2,
     "quote-props": 0,
     "no-sparse-arrays": 2,

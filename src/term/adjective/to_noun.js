@@ -1,7 +1,7 @@
 //convert cute to cuteness
 "use strict";
-let to_noun = function(w) {
-  let irregulars = {
+const to_noun = function(w) {
+  const irregulars = {
     "clean": "cleanliness",
     "naivety": "naivety"
   };
@@ -17,7 +17,7 @@ let to_noun = function(w) {
   if (w.match(/w$/)) {
     return w;
   }
-  let transforms = [{
+  const transforms = [{
     "reg": /y$/,
     "repl": "iness"
   }, {
@@ -52,7 +52,7 @@ let to_noun = function(w) {
     "repl": "ousness"
   }];
 
-  for (let i = 0; i < transforms.length; i++) {
+  for (const i = 0; i < transforms.length; i++) {
     if (w.match(transforms[i].reg)) {
       return w.replace(transforms[i].reg, transforms[i].repl);
     }

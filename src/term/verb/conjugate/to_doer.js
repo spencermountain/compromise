@@ -1,9 +1,9 @@
 //somone who does this present-tense verb
 //turn 'walk' into 'walker'
 "use strict";
-let doer = function(str) {
+const doer = function(str) {
   str = str || "";
-  let irregulars = {
+  const irregulars = {
     "tie": "tier",
     "dream": "dreamer",
     "sail": "sailer",
@@ -15,7 +15,7 @@ let doer = function(str) {
     "deal": "dealer",
     "spin": "spinner"
   };
-  let dont = {
+  const dont = {
     "aid": 1,
     "fail": 1,
     "appear": 1,
@@ -29,7 +29,7 @@ let doer = function(str) {
     "understand": 1,
     "bet": 1
   };
-  let transforms = [{
+  const transforms = [{
     "reg": /e$/i,
     "repl": "er"
   }, {

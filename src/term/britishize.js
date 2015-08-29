@@ -3,7 +3,7 @@
 // (some patterns are only safe to do in one direction)
 "use strict";
 
-let patterns = [
+const patterns = [
   // ise -> ize
   {
     reg: /([^aeiou][iy])z(e|ed|es|ing)?$/,
@@ -53,7 +53,7 @@ let patterns = [
   }
 ];
 
-let britishize = function(str) {
+const britishize = function(str) {
   for (let i = 0; i < patterns.length; i++) {
     if (str.match(patterns[i].reg)) {
       return str.replace(patterns[i].reg, patterns[i].repl);

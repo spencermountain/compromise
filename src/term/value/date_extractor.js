@@ -1,25 +1,25 @@
 // #generates properly-formatted dates from free-text date forms
 // #by spencer kelly 2014
 "use strict";
-let months = "(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|aug|sept|oct|nov|dec),?";
-let days = "([0-9]{1,2}),?";
-let years = "([12][0-9]{3})";
+const months = "(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|aug|sept|oct|nov|dec),?";
+const days = "([0-9]{1,2}),?";
+const years = "([12][0-9]{3})";
 
-let to_obj = function(arr, places) {
+const to_obj = function(arr, places) {
   return Object.keys(places).reduce(function(h, k) {
     h[k] = arr[places[k]];
     return h;
   }, {});
 };
 
-let regexes = [{
+const regexes = [{
   reg: String(months) + " " + String(days) + "-" + String(days) + " " + String(years),
   example: "March 7th-11th 1987",
   process: function(arr) {
     if (!arr) {
       arr = [];
     }
-    let places = {
+    const places = {
       month: 1,
       day: 2,
       to_day: 3,
@@ -34,7 +34,7 @@ let regexes = [{
     if (!arr) {
       arr = [];
     }
-    let places = {
+    const places = {
       day: 1,
       month: 2,
       to_day: 3,
@@ -50,7 +50,7 @@ let regexes = [{
     if (!arr) {
       arr = [];
     }
-    let places = {
+    const places = {
       month: 1,
       day: 2,
       to_month: 3,
@@ -67,7 +67,7 @@ let regexes = [{
     if (!arr) {
       arr = [];
     }
-    let places = {
+    const places = {
       day: 1,
       month: 2,
       to_day: 3,
@@ -84,7 +84,7 @@ let regexes = [{
     if (!arr) {
       arr = [];
     }
-    let places = {
+    const places = {
       month: 1,
       day: 2,
       to_month: 3,
@@ -101,7 +101,7 @@ let regexes = [{
     if (!arr) {
       arr = [];
     }
-    let places = {
+    const places = {
       month: 1,
       day: 2,
       year: 3
@@ -115,7 +115,7 @@ let regexes = [{
     if (!arr) {
       arr = [];
     }
-    let places = {
+    const places = {
       day: 1,
       to_day: 2,
       month: 3,
@@ -130,7 +130,7 @@ let regexes = [{
     if (!arr) {
       arr = [];
     }
-    let places = {
+    const places = {
       day: 1,
       month: 2,
       year: 3
@@ -144,7 +144,7 @@ let regexes = [{
     if (!arr) {
       arr = [];
     }
-    let places = {
+    const places = {
       month: 1,
       year: 2,
       to_month: 3,
@@ -159,7 +159,7 @@ let regexes = [{
     if (!arr) {
       arr = [];
     }
-    let places = {
+    const places = {
       month: 1,
       year: 2
     };
@@ -172,7 +172,7 @@ let regexes = [{
     if (!arr) {
       arr = [];
     }
-    let places = {
+    const places = {
       month: 1,
       day: 2
     };
@@ -185,7 +185,7 @@ let regexes = [{
     if (!arr) {
       arr = [];
     }
-    let places = {
+    const places = {
       month: 2,
       day: 1
     };
@@ -198,7 +198,7 @@ let regexes = [{
     if (!arr) {
       arr = [];
     }
-    let places = {
+    const places = {
       year: 1,
       to_year: 2
     };
@@ -211,7 +211,7 @@ let regexes = [{
     if (!arr) {
       arr = [];
     }
-    let places = {
+    const places = {
       year: 1
     };
     return to_obj(arr, places);
@@ -222,7 +222,7 @@ let regexes = [{
 });
 
 //0 based months, 1 based days...
-let months_obj = {
+const months_obj = {
   january: 0,
   february: 1,
   march: 2,
@@ -247,16 +247,16 @@ let months_obj = {
 };
 
 //thirty days hath september...
-let last_dates = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const last_dates = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-let preprocess = function(str) {
+const preprocess = function(str) {
   str = str.toLowerCase();
   str = str.replace(/([0-9])(th|rd|st)/g, "$1");
   return str;
 };
 
-let postprocess = function(obj, options) {
-  let d = new Date();
+const postprocess = function(obj, options) {
+  const d = new Date();
   options = options || {};
   obj.year = parseInt(obj.year, 10) || undefined;
   obj.day = parseInt(obj.day, 10) || undefined;
@@ -332,16 +332,16 @@ let postprocess = function(obj, options) {
 };
 
 //pass through sequence of regexes until tempate is matched..
-let date_extractor = function(str, options) {
+const date_extractor = function(str, options) {
   options = options || {};
   str = preprocess(str);
-  let l = regexes.length;
+  const l = regexes.length;
   for (let i = 0; i < l; i += 1) {
-    let obj = regexes[i];
+    const obj = regexes[i];
     if (str.match(obj.reg)) {
-      let clone_reg = new RegExp(obj.reg.source, "i"); //this avoids a memory-leak
-      let arr = clone_reg.exec(str);
-      let good = obj.process(arr);
+      const clone_reg = new RegExp(obj.reg.source, "i"); //this avoids a memory-leak
+      const arr = clone_reg.exec(str);
+      const good = obj.process(arr);
       return postprocess(good, options);
     }
   }

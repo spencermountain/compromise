@@ -1,11 +1,11 @@
 "use strict";
-let Verb = require("../../term/verb/verb.js");
-let Noun = require("../../term/noun/noun.js");
-let Value = require("../../term/value/value.js");
-let Adverb = require("../../term/adverb/adverb.js");
-let Adjective = require("../../term/adjective/adjective.js");
+const Verb = require("../../term/verb/verb.js");
+const Noun = require("../../term/noun/noun.js");
+const Value = require("../../term/value/value.js");
+const Adverb = require("../../term/adverb/adverb.js");
+const Adjective = require("../../term/adjective/adjective.js");
 
-let mapping = {
+const mapping = {
   "NN": Noun,
   "NNA": Noun,
   "NNP": Noun,
@@ -41,7 +41,7 @@ let mapping = {
 };
 
 //swap the Term object with a proper Pos class
-let assign = function(t, pos, reason) {
+const assign = function(t, pos, reason) {
   if (mapping[pos] !== undefined) {
     t = new mapping[pos](t.text);
     t.reason = reason;

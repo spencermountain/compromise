@@ -5,10 +5,10 @@
 //used to reduce redundant named-entities in longer text. (don't spot the same person twice.)
 //used to identify gender for coreference resolution
 "use strict";
-let main = [];
+const main = [];
 
 //an ad-hoc prefix encoding for names. 2ms decompression of names
-let male_names = {
+const male_names = {
   "will": "iam,ie,ard,is,iams",
   "fred": ",erick,die,rick,dy",
   "marc": "us,,o,os,el",
@@ -117,7 +117,7 @@ let male_names = {
   "q": "uentin,uinton",
   "x": "avier"
 };
-let female_names = {
+const female_names = {
   "mari": "a,e,lyn,an,anne,na,ssa,bel,sa,sol,tza",
   "kris": "ten,tin,tina,ti,tine,ty,ta,tie",
   "jean": "ette,ne,nette,nie,ine,nine",
@@ -246,7 +246,7 @@ let female_names = {
   "d": "ixie,ina",
   "u": "rsula"
 };
-let ambiguous = [
+const ambiguous = [
   "casey",
   "jamie",
   "lee",
@@ -291,7 +291,7 @@ let ambiguous = [
 let keys = Object.keys(male_names);
 let l = keys.length;
 for (let i = 0; i < l; i++) {
-  let arr = male_names[keys[i]].split(",");
+  const arr = male_names[keys[i]].split(",");
   for (let i2 = 0; i2 < arr.length; i2++) {
     main[keys[i] + arr[i2]] = "m";
   }
@@ -301,7 +301,7 @@ for (let i = 0; i < l; i++) {
 keys = Object.keys(female_names);
 l = keys.length;
 for (let i = 0; i < l; i++) {
-  let arr = female_names[keys[i]].split(",");
+  const arr = female_names[keys[i]].split(",");
   for (let i2 = 0; i2 < arr.length; i2++) {
     main[keys[i] + arr[i2]] = "f";
   }

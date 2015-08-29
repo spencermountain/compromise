@@ -1,7 +1,7 @@
 //these are common word shortenings used in the lexicon and sentence segmentation methods
 //there are all nouns, or at the least, belong beside one.
 "use strict";
-let honourifics = require("./honourifics"); //stored seperately, for 'noun.is_person()'
+const honourifics = require("./honourifics"); //stored seperately, for 'noun.is_person()'
 
 let main = [
   //common abbreviations

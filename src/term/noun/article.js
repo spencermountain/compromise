@@ -1,7 +1,7 @@
 "use strict";
 
 //chooses an indefinite aricle 'a/an' for a word
-let irregulars = {
+const irregulars = {
   "hour": "an",
   "heir": "an",
   "heirloom": "an",
@@ -12,7 +12,7 @@ let irregulars = {
 };
 
 
-let is_acronym = function(s) {
+const is_acronym = function(s) {
   //no periods
   if (s.length <= 5 && s.match(/^[A-Z]*$/)) {
     return true;
@@ -25,12 +25,12 @@ let is_acronym = function(s) {
 };
 
 
-let indefinite_article = function(str) {
+const indefinite_article = function(str) {
   if (!str) {
     return null;
   }
   //pronounced letters of acronyms that get a 'an'
-  let an_acronyms = {
+  const an_acronyms = {
     A: true,
     E: true,
     F: true,
@@ -45,7 +45,7 @@ let indefinite_article = function(str) {
     X: true
   };
   //'a' regexes
-  let a_regexs = [
+  const a_regexs = [
     /^onc?e/i, //'wu' sound of 'o'
     /^u[bcfhjkqrstn][aeiou]/i, // 'yu' sound for hard 'u'
     /^eul/i

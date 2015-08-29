@@ -1,10 +1,10 @@
 "use script";
-let fns = require("../fns.js");
+const fns = require("../fns.js");
 //negate makes s sentence mean s opposite thing.
-let negate = function(s) {
+const negate = function(s) {
   //these are cheap ways to negate s meaning
   // ('none' is ambiguous because it could mean (all or some) )
-  let logic_negate = {
+  const logic_negate = {
     //some logical ones work
     "everyone": "no one",
     "everybody": "nobody",
@@ -37,7 +37,7 @@ let negate = function(s) {
   };
   //loop through each term..
   for (let i = 0; i < s.tokens.length; i++) {
-    let tok = s.tokens[i];
+    const tok = s.tokens[i];
     // handle ambiguous contractions
     if (tok.pos_reason === "ambiguous_contraction") {
       tok.text = tok.normalised;

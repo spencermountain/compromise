@@ -21,14 +21,10 @@ class Sentence {
 
   //the ending punctuation
   terminator() {
-    let allowed = {
-      ".": true,
-      "!": true,
-      "?": true
-    };
-    let char = this.str.slice(-1) || "";
-    if (allowed[char]) {
-      return char;
+    const allowed = [".", "?", "!"];
+    let punct = this.str.slice(-1) || "";
+    if (allowed.indexOf(punct) !== -1) {
+      return punct;
     }
     return ".";
   }

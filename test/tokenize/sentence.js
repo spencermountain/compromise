@@ -1,7 +1,8 @@
 "use strict";
 let mocha = require("mocha");
 let should = require("should");
-let Sentences = require("../../src");
+let sentences = require("../../src");
+let sentencesClass = require("../../src/sentence/sentence");
 
 describe("tokenize sentence tests", function() {
   it("tokenize basic sentence", function(done) {
@@ -28,7 +29,23 @@ describe("tokenize sentence tests", function() {
       ["I made $5.60 today in 1 hour of work.  The E.M.T.'s were on time, but only barely.", 2]
     ];
     tests.forEach(function(a) {
-      Sentences(a[0]).sentences.should.have.length(a[1]);
+      sentences(a[0]).sentences.should.have.length(a[1]);
+    });
+    done();
+  });
+
+  it("Termination", function(done) {
+
+    let tests = [
+      ["Tony is nice.", "."],
+      ["Tony is nice!", "!"],
+      ["Is Tony is nice?", "?"],
+      ["Tony is okay", "."]
+    ];
+
+    tests.forEach(function(a) {
+      var s = new sentencesClass(a[0]);
+      s.terminator().should.eql(a[1]);
     });
     done();
   });

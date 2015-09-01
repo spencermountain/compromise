@@ -24,12 +24,8 @@ class Value extends Term {
   }
 
   date_extractor() {
-    return date_extractor(this.normal);
+    return ""; //date_extractor(this.normal);
   }
-
 }
-
-// let t = new Value("january 5th 1998")
-// console.log(t.date_extractor())
 
 module.exports = Value;

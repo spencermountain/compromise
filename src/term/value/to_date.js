@@ -227,7 +227,7 @@ function parseDate(w, i, a) {
         if (o.text) { 
           w = w.replace(o.text, '');
         }
-        known();
+        known.bind(this)();
       }
     }.bind(this));
   }
@@ -422,7 +422,7 @@ var extractDates = function(w) {
 }
 
 // console.log("---", new extractDates("Saturday March 1st"));
-var x = new extractDates("I going to the party next weekend.");
+var x = new extractDates("June 1st, 2008 12:04");
 console.log("---", x);
 
-module.exports = parseDates;
+module.exports = extractDates;

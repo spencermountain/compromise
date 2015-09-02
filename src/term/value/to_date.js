@@ -134,7 +134,6 @@ function index(a, st){
 }
 
 function knows(matches) {
-  console.log("Matches", matches);
   if (matches.fn) { // usually *relative* dates
     var _o = mixin({text: matches.shift().trim()||matches.input}, blank(this.options.now,1));
     var isNeg = !!(matches[0]); // TODO suffixes
@@ -164,11 +163,17 @@ function knows(matches) {
 }
 
 function postprocess(o, i) {
-  if (!o.text || o.text.length < 3) { this.results[i] = false; return false; }
+
+  if (!o.text || o.text.length < 3) { 
+    this.results[i] = false;
+    return false; 
+  }
+
   // make sure date is in that month...
   if (o[_d] !== false && (o[_d] > 31 || (o[_m] !== false && o[_d] > lastDay(o)))) {
-    return null;  
+    return null;
   }
+
   o.Date = set.call(this, o);
   // toISOString has crossbrowser issues and automatically 'fills', 
   // see https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString#Polyfill - TODO ???
@@ -184,13 +189,23 @@ function postprocess(o, i) {
       o.localized = new Intl.DateTimeFormat(this.options.locale|| "en", this.options.localized).format(o.to.Date); 
     }
   }
+
   if (o.Date && hasToD) { 
     // make sure to-date > date
     var toTooSmall = ((isFinite(o.Date.valueOf()) && isFinite(o.to.Date.valueOf())?(o.Date>o.to.Date)-(o.Date<o.to.Date):NaN) > -1);
-    if (toTooSmall) { return blank(); }
+    if (toTooSmall) { 
+      return blank();
+    }
   }
-  if (o.Date && o[_d] && o[_m] && o[_y] && !o[_wd]) { o[_wd] = get(o.Date,_wd,1); }
-  if (hasToD && o.to[_d] && o.to[_m] && o.to[_y] && !o.to[_wd]) { o.to[_wd] = get(o.to.Date,_wd,1); }
+
+  if (o.Date && o[_d] && o[_m] && o[_y] && !o[_wd]) {
+    o[_wd] = get(o.Date, _wd, 1);
+  }
+
+  if (hasToD && o.to[_d] && o.to[_m] && o.to[_y] && !o.to[_wd]) {
+    o.to[_wd] = get(o.to.Date, _wd, 1);
+  }
+
   return o;
 }
 
@@ -204,8 +219,6 @@ function parseDate(w, i, a) {
           month: w.search(rules[_m].w),
           day: w.search(rules[_d].nr)
         };
-        console.log("NO FN", w, rules[_m].w, rules[_d].nr);
-
         fn = (mdO[_d] > -1 && mdO[_m] > -1 && mdO[_m] < mdO[_d]) ? 'monthFirstFn' : 'dayFirstFn';
       }
       var hasMatches = rules[fn](w);
@@ -219,7 +232,6 @@ function parseDate(w, i, a) {
     }.bind(this));
   }
   known.bind(this)();
-  console.log("In parseDates", this);
   return this.parts;
 }
 
@@ -235,8 +247,6 @@ function toDate(w, input, options){
   if (!this.options.now) { 
     this.options.now = this.now;
   }
-  
-  console.log("Range Rules", rules.range);
 
   var ranges = this.text.split(rules.range).filter(str);
   var rL = hasL(ranges);
@@ -259,7 +269,6 @@ function toDate(w, input, options){
         multis = multis.concat(ranges.slice(2));
       }
 
-
       ranges.map(parseDate, this);
 
       if (this.parts[0].to || this.parts[1].to) {
@@ -270,12 +279,10 @@ function toDate(w, input, options){
     }
     if (hasL(multis)) { 
       this.parts = [];
-      multis.map(parseDate, this);  
+      multis.map(parseDate, this);
       this.results = this.results.concat(this.parts);  
     }    
   }
-
-  console.log(this);
   return this.results.map(postprocess, this).filter(obj);
 }
 
@@ -384,7 +391,7 @@ function setToken(t, i, tokens, id, r, countStart) {
   }
 }
 
-var to_date = function(w) {
+var extractDates = function(w) {
   var wo = w_options.bind(this)(w);
   
   if (hasL(this.dates) && !wo.options.now) {
@@ -399,20 +406,23 @@ var to_date = function(w) {
 
   var res = new toDate(w, wo.w, wo.options).filter(obj);
 
-  this.dates = (this.dates || []).concat(res);
-  this.dates.__proto__ = Object.create(Array.prototype);
+  this.dates = (this.dates || []).concat(res);  
   var text = wo.w;
   this.dates.forEach(function(o){
     text = text.replace(o.text, o.localized);
   });
-  
+
   this.dates.__proto__._text = text;
   this.dates.__proto__.text = function() { 
     return this._text;
   };
 
-  return wo;
+  this.text = wo.w;
+  return this;
 }
 
-// console.log("---", to_date("Saturday March 1st"));
-module.exports = to_date;
+// console.log("---", new extractDates("Saturday March 1st"));
+var x = new extractDates("I going to the party next weekend.");
+console.log("---", x);
+
+module.exports = parseDates;

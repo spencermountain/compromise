@@ -244,7 +244,7 @@ function toDate(w, input, options){
   this.input = input;
   this.text = hyphenatedDates(w);
 
-  if (!this.options.now) { 
+  if (!this.options.now) {
     this.options.now = this.now;
   }
 
@@ -277,11 +277,11 @@ function toDate(w, input, options){
         this.results = this.results.concat(range(this.parts));
       }
     }
-    if (hasL(multis)) { 
+    if (hasL(multis)) {
       this.parts = [];
       multis.map(parseDate, this);
-      this.results = this.results.concat(this.parts);  
-    }    
+      this.results = this.results.concat(this.parts);
+    }
   }
   return this.results.map(postprocess, this).filter(obj);
 }
@@ -293,20 +293,20 @@ function w_options (wOo) {
   } : {
     w: this.word || this.input || '',
     options: (obj(wOo)) ? wOo : {}
-  }
+  };
 }
 
 // Has Length
 function hasL(a, l) {
   if (!l) l = 0;
-  return (a && a instanceof Array && a.length > l) ? a.length : 0; 
+  return (a && a instanceof Array && a.length > l) ? a.length : 0;
 }
 
 function str(w) {
-  return (typeof w === 'string' && w.trim() != '');
+  return (typeof w === 'string' && w.trim() !== "");
 }
 
-function obj(o) { 
+function obj(o) {
   return (o && typeof o === 'object' && !(o instanceof Array));
 }
 
@@ -330,7 +330,7 @@ function _mix(dest, source, copyFunc) {
     if(!(name in dest)){
       dest[name] = copyFunc ? copyFunc(s) : s;
     }
-  }        
+  }
   return dest; // Object
 }
 
@@ -357,7 +357,7 @@ function tokenFn(rules, type, noFallback, countStart) {
       }
     }
     return (noFallback) ? false : t;
-  }
+  };
 }
 
 function _index(a, st){
@@ -372,8 +372,8 @@ function setToken(t, i, tokens, id, r, countStart) {
   } else if (r.matches) {
     var matches = t.match(r.matches);
     if (matches) {
-      if (hasL(matches) && typeof countStart === 'number') {
-        matches.i = _index(matches, countStart); 
+      if (hasL(matches) && typeof countStart === "number") {
+        matches.i = _index(matches, countStart);
         return matches;
       }
       if (r.tag) { return schema[r.tag]; }
@@ -386,8 +386,8 @@ function setToken(t, i, tokens, id, r, countStart) {
       return true;
     }
     return false;
-  } else if (r.hasOwnProperty('replacer')) { 
-    return t.replace(r.replaces, r.replacer); 
+  } else if (r.hasOwnProperty('replacer')) {
+    return t.replace(r.replaces, r.replacer);
   }
 }
 
@@ -406,23 +406,22 @@ var extractDates = function(w) {
 
   var res = new toDate(w, wo.w, wo.options).filter(obj);
 
-  this.dates = (this.dates || []).concat(res);  
+  this.dates = (this.dates || []).concat(res);
   var text = wo.w;
   this.dates.forEach(function(o){
     text = text.replace(o.text, o.localized);
   });
 
   this.dates.__proto__._text = text;
-  this.dates.__proto__.text = function() { 
+  this.dates.__proto__.text = function() {
     return this._text;
   };
 
   this.text = wo.w;
   return this;
-}
+};
 
-// console.log("---", new extractDates("Saturday March 1st"));
-var x = new extractDates("June 1st, 2008 12:04");
-console.log("---", x);
+// console.log(new extractDates("Saturday March 1st"));
+// console.log(new extractDates("June 1st, 2008 12:04"));
 
 module.exports = extractDates;

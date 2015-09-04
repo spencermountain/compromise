@@ -7,3 +7,5 @@ const nlp = function(str) {
 };
 
 module.exports = nlp;
+
+// console.log(nlp('John is pretty').parents())

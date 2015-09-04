@@ -1,5 +1,6 @@
 "use strict";
 exports.pluck = function(arr, str) {
+  arr = arr || []
   return arr.map(function(o) {
     return o[str];
   });

@@ -2,6 +2,7 @@
 const syllables = require("./syllables");
 const americanize = require("./americanize");
 const britishize = require("./britishize");
+// const Verb = require("./verb/verb.js");
 
 class Term {
   constructor(str) {
@@ -9,6 +10,7 @@ class Term {
     this.text = str.trim();
     this.normal = this.normalize();
     this.reason = "";
+    this.parent = "?";
   }
 
   //Term methods..
@@ -52,6 +54,6 @@ class Term {
 }
 
 // let t = new Term("synthesise")
-// console.log(t.americanize())
+// console.log(t.isVerb())
 
 module.exports = Term;

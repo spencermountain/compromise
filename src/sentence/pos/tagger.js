@@ -25,7 +25,8 @@ const rules_pass = function(terms) {
   for (let i = 0; i < terms.length; i++) {
     for (let o = 0; o < word_rules.length; o++) {
       if (terms[i].normal.length > 4 && terms[i].normal.match(word_rules[o].reg)) {
-        return assign(terms[i], word_rules[o].pos, "rules_pass");
+        terms[i]= assign(terms[i], word_rules[o].pos, "rules_pass");
+        break
       }
     }
   }

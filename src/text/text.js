@@ -41,6 +41,11 @@ class Text {
     });
     return fns.flatten(arr).join(" ");
   }
+  parents(){
+    return this.sentences.map(function(s) {
+      return s.parents();
+    })
+  }
 }
 
 module.exports = Text;

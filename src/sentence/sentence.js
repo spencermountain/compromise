@@ -15,6 +15,7 @@ class Sentence {
       };
       return new Term(s, info);
     });
+    this.terms = tagger(this);
   }
 
   //Sentence methods:

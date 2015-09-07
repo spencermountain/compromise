@@ -37,11 +37,11 @@ let testCreateDate = function(date_string) {
 
 describe("Date Parser", function() {
 
-  it('Create | Date and Time', function(done) {
+  it.only('Create | Date and Time', function(done) {
     dateEqual(testCreateDate('08/25/1978 12:04'), [{month: 8, day: 25, year: 1978}]);
     dateEqual(testCreateDate('08-25-1978 12:04'), [{month: 8, day: 25, year: 1978}]);
-    // dateEqual(testCreateDate('1978/08/25 12:04'), [{month: 8, day: 25, year: 1978}]);
-    // dateEqual(testCreateDate('June 1st, 2008 12:04'), [{month: 6, day: 1, year: 2008}]);
+    dateEqual(testCreateDate('1978/08/25 12:04'), [{month: 8, day: 25, year: 1978}]);
+    dateEqual(testCreateDate('June 1st, 2008 12:04'), [{month: 6, day: 1, year: 2008}]);
 
     // dateEqual(testCreateDate('08-25-1978 12pm'), new Date(1978, 7, 25, 12));
     // dateEqual(testCreateDate('08-25-1978 12:42pm'), new Date(1978, 7, 25, 12, 42), 'with minutes and am/pm');

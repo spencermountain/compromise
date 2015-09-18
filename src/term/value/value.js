@@ -1,6 +1,6 @@
 "use strict";
 const Term = require("../term.js");
-const date_extractor = require("./date_extractor.js");
+// const date_extractor = require("./date_extractor.js");
 const to_number = require("./to_number.js");
 
 class Value extends Term {
@@ -24,7 +24,7 @@ class Value extends Term {
   }
 
   date_extractor() {
-    return ""; //date_extractor(this.normal);
+    return ""; 
   }
 }
 

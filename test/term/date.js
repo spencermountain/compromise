@@ -2,138 +2,160 @@
 import {mocha} from "mocha";
 import {should} from "should";
 import to_date from "../../src/term/value/to_date";
+import helpers from "../dateHelpers";
 
-let baseDateObj =  {
-  dates: [
-    {
-      month: 1,
-      day: 1,
-      year: 1
-    }
-  ]
-};
+let dateEqual = function(a, b, message, debug) {
 
-let dateEqual = function(a, b, message) {
-  for (var x in baseDateObj) {
-    for (var i = 0; i < baseDateObj[x].length; i++) {
-      if (typeof baseDateObj[x][i] == "object") {
-        for (var dateInner in baseDateObj[x][i]) {
-          for (var outter in b[i]) {
-            if (outter === dateInner) {
-              baseDateObj[x][i][dateInner] = b[i][outter];
-            }
-          }
-        }
+  const buffer = 50;
+
+  it(message, function(done) {
+    if (a && a.length === 1 && a[0] && a[0].Date) {
+      var date0 = a[0].Date.getTime();
+      var date1 = b[0].date.getTime();
+      var offset = Math.abs(date0 - date1);
+      
+      if (debug)
+        console.log("--- DEBUG ---\n", a,"\n", b);
+
+      (offset < buffer).should.be.true();
+
+      // For ranges we have a second date
+      if (b[0].to) {
+        var date0To = a[0].to.Date.getTime();
+        var date1To = b[0].to.getTime();
+        var offset1 = Math.abs(date0To - date1To);
+        (offset1 < buffer).should.be.true();
       }
+    } else if (a && a.length > 1 && a.length == b.length) {
+
+      // TODO - Sort out arrays of multi matches.
+      for (var i = 0; i < a.length; i++) {
+
+        var date0 = a[i].Date.getTime();
+        var date1 = b[i].date.getTime();
+
+        var offset = Math.abs(date0 - date1);
+        (offset < buffer).should.be.true();
+      }
+    } else {
+      a.should.eql(b);
     }
-  }
-  console.log("--", a, baseDateObj);
-  a.should.containDeep(baseDateObj);
+    done();
+  });
 };
 
-let testCreateDate = function(date_string) {
-  return new to_date(date_string);
-};
+var dateAssert = function(assert, result, debug) {
+  dateEqual(helpers.testCreateDate(assert), result, assert, debug);
+}
 
-describe("Date Parser", function() {
+let now = new Date();
 
-  it.only('Create | Date and Time', function(done) {
-    dateEqual(testCreateDate('08/25/1978 12:04'), [{month: 8, day: 25, year: 1978}]);
-    dateEqual(testCreateDate('08-25-1978 12:04'), [{month: 8, day: 25, year: 1978}]);
-    dateEqual(testCreateDate('1978/08/25 12:04'), [{month: 8, day: 25, year: 1978}]);
-    dateEqual(testCreateDate('June 1st, 2008 12:04'), [{month: 6, day: 1, year: 2008}]);
+describe.only("Date Parser", function() {
+  
+  describe("Not a Date at all.", function() {
+    dateAssert("Hello world", []);
+    dateAssert("I like music", []);
+    dateAssert("I went to the show last night", []);
+  });
 
-    // dateEqual(testCreateDate('08-25-1978 12pm'), new Date(1978, 7, 25, 12));
-    // dateEqual(testCreateDate('08-25-1978 12:42pm'), new Date(1978, 7, 25, 12, 42), 'with minutes and am/pm');
-    // dateEqual(testCreateDate('08-25-1978 12:42:32pm'), new Date(1978, 7, 25, 12, 42, 32), 'with seconds and am/pm');
-    // dateEqual(testCreateDate('08-25-1978 12:42:32.488pm'), new Date(1978, 7, 25, 12, 42, 32, 488), 'with seconds and am/pm');
+  describe("Simple Single Dates", function() {
 
-    // dateEqual(testCreateDate('08-25-1978 00:00am'), new Date(1978, 7, 25, 0, 0, 0, 0), 'with zero am');
-    // dateEqual(testCreateDate('08-25-1978 00:00:00am'), new Date(1978, 7, 25, 0, 0, 0, 0), 'with seconds and zero am');
-    // dateEqual(testCreateDate('08-25-1978 00:00:00.000am'), new Date(1978, 7, 25, 0, 0, 0, 0), 'with milliseconds and zero am');
+    dateAssert("08/25/1978 12:04", [{date: new Date(1978, 7, 25, 12, 4)}]);
+    dateAssert("08-25-1978 12:04", [{date: new Date(1978, 7, 25, 12, 4)}]);
+    dateAssert("1978/08/25 12:04", [{date: new Date(1978, 7, 25, 12, 4)}]);
+    dateAssert("June 1st, 2008 12:04", [{date: new Date(2008, 5, 1, 12, 4)}]);
 
-    // dateEqual(testCreateDate('08-25-1978 1pm'), new Date(1978, 7, 25, 13), '1pm am/pm');
-    // dateEqual(testCreateDate('08-25-1978 1:42pm'), new Date(1978, 7, 25, 13, 42), '1pm minutes and am/pm');
-    // dateEqual(testCreateDate('08-25-1978 1:42:32pm'), new Date(1978, 7, 25, 13, 42, 32), '1pm seconds and am/pm');
-    // dateEqual(testCreateDate('08-25-1978 1:42:32.488pm'), new Date(1978, 7, 25, 13, 42, 32, 488), '1pm seconds and am/pm');
+    dateAssert('08-25-1978 12pm', [{date: new Date(1978, 7, 25, 12)}]);
+    dateAssert('08-25-1978 12:42pm',[{date: new Date(1978, 7, 25, 12, 42)}]);
+    dateAssert('08-25-1978 12:42:32pm', [{date: new Date(1978, 7, 25, 12, 42, 32)}]);
 
-    // dateEqual(testCreateDate('08-25-1978 1am'), new Date(1978, 7, 25, 1), '1am am/pm');
-    // dateEqual(testCreateDate('08-25-1978 1:42am'), new Date(1978, 7, 25, 1, 42), '1am minutes and am/pm');
-    // dateEqual(testCreateDate('08-25-1978 1:42:32am'), new Date(1978, 7, 25, 1, 42, 32), '1am seconds and am/pm');
-    // dateEqual(testCreateDate('08-25-1978 1:42:32.488am'), new Date(1978, 7, 25, 1, 42, 32, 488), '1am seconds and am/pm');
+    dateAssert('08-25-1978 00:00am', [{date: new Date(1978, 7, 25)}]);
+    dateAssert('08-25-1978 00:00:00am', [{date: new Date(1978, 7, 25)}]);
+    dateAssert('08-25-1978 00:00:00.000am', [{date: new Date(1978, 7, 25)}]);
 
-    // dateEqual(testCreateDate('08-25-1978 11pm'), new Date(1978, 7, 25, 23), '11pm am/pm');
-    // dateEqual(testCreateDate('08-25-1978 11:42pm'), new Date(1978, 7, 25, 23, 42), '11pm minutes and am/pm');
-    // dateEqual(testCreateDate('08-25-1978 11:42:32pm'), new Date(1978, 7, 25, 23, 42, 32), '11pm seconds and am/pm');
-    // dateEqual(testCreateDate('08-25-1978 11:42:32.488pm'), new Date(1978, 7, 25, 23, 42, 32, 488), '11pm seconds and am/pm');
+    dateAssert('08-25-1978 1pm', [{date: new Date(1978, 7, 25, 13)}]);
+    dateAssert('08-25-1978 1:42pm', [{date: new Date(1978, 7, 25, 13, 42)}]);
+    dateAssert('08-25-1978 1:42:32pm', [{date: new Date(1978, 7, 25, 13, 42, 32)}]);
 
-    // dateEqual(testCreateDate('08-25-1978 11am'), new Date(1978, 7, 25, 11), '11am am/pm');
-    // dateEqual(testCreateDate('08-25-1978 11:42am'), new Date(1978, 7, 25, 11, 42), '11am minutes and am/pm');
-    // dateEqual(testCreateDate('08-25-1978 11:42:32am'), new Date(1978, 7, 25, 11, 42, 32), '11am seconds and am/pm');
-    // dateEqual(testCreateDate('08-25-1978 11:42:32.488am'), new Date(1978, 7, 25, 11, 42, 32, 488), '11am seconds and am/pm');
+    dateAssert('08-25-1978 1am', [{date: new Date(1978, 7, 25, 1)}]);
+    dateAssert('08-25-1978 1:42am', [{date: new Date(1978, 7, 25, 1, 42)}]);
+    dateAssert('08-25-1978 1:42:32am', [{date: new Date(1978, 7, 25, 1, 42, 32)}]);
 
-    // Fuzzy Dates
-    // dateEqual(testCreateDate('now'), new Date(), 'now');
-    // dateEqual(testCreateDate('Now'), new Date(), 'Now');
-    // dateEqual(testCreateDate('Just now'), new Date(), 'Just Now');
-    // dateEqual(testCreateDate('today'), new Date(now.getFullYear(), now.getMonth(), now.getDate()), 'today');
-    // dateEqual(testCreateDate('Today'), new Date(now.getFullYear(), now.getMonth(), now.getDate()), 'Today');
-    // dateEqual(testCreateDate('yesterday'), new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1), 'yesterday');
-    // dateEqual(testCreateDate('Yesterday'), new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1), 'Yesterday');
-    // dateEqual(testCreateDate('tomorrow'), new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1), 'tomorrow');
-    // dateEqual(testCreateDate('Tomorrow'), new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1), 'Tomorrow');
-    // dateEqual(testCreateDate('4pm'), new Date(now.getFullYear(), now.getMonth(), now.getDate(), 16), '4pm');
-    // dateEqual(testCreateDate('today at 4pm'), new Date(now.getFullYear(), now.getMonth(), now.getDate(), 16), 'Today at 4pm');
-    // dateEqual(testCreateDate('today at 4 pm'), new Date(now.getFullYear(), now.getMonth(), now.getDate(), 16), 'Today at 4 pm');
-    // dateEqual(testCreateDate('4pm today'), new Date(now.getFullYear(), now.getMonth(), now.getDate(), 16), '4pm today');
+    dateAssert('08-25-1978 11pm', [{date: new Date(1978, 7, 25, 23)}]);
+    dateAssert('08-25-1978 11:42pm', [{date: new Date(1978, 7, 25, 23, 42)}]);
+    dateAssert('08-25-1978 11:42:32pm', [{date: new Date(1978, 7, 25, 23, 42, 32)}]);
 
-    // dateEqual(testCreateDate('The day after tomorrow'), new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2), 'The day after tomorrow');
-    // dateEqual(testCreateDate('The day before yesterday'), new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2), 'The day before yesterday');
-    // dateEqual(testCreateDate('One day after tomorrow'), new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2), 'One day after tomorrow');
-    // dateEqual(testCreateDate('One day before yesterday'), new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2), 'One day before yesterday');
-    // dateEqual(testCreateDate('Two days after tomorrow'), new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3), 'Two days after tomorrow');
-    // dateEqual(testCreateDate('Two days before yesterday'), new Date(now.getFullYear(), now.getMonth(), now.getDate() - 3), 'Two days before yesterday');
-    // dateEqual(testCreateDate('Two days after today'), new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2), 'Two days after today');
-    // dateEqual(testCreateDate('Two days before today'), new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2), 'Two days before today');
-    // dateEqual(testCreateDate('Two days from today'), new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2), 'Two days from today');
+    dateAssert('08-25-1978 11am', [{date: new Date(1978, 7, 25, 11)}]);
+    dateAssert('08-25-1978 11:42am', [{date: new Date(1978, 7, 25, 11, 42)}]);
+    dateAssert('08-25-1978 11:42:32am', [{date: new Date(1978, 7, 25, 11, 42, 32)}]);
 
-    // dateEqual(testCreateDate('tWo dAyS after toMoRRoW'), new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3), 'tWo dAyS after toMoRRoW');
-    // dateEqual(testCreateDate('2 days after tomorrow'), new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3), '2 days after tomorrow');
-    // dateEqual(testCreateDate('2 day after tomorrow'), new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3), '2 day after tomorrow');
-    // dateEqual(testCreateDate('18 days after tomorrow'), new Date(now.getFullYear(), now.getMonth(), now.getDate() + 19), '18 days after tomorrow');
-    // dateEqual(testCreateDate('18 day after tomorrow'), new Date(now.getFullYear(), now.getMonth(), now.getDate() + 19), '18 day after tomorrow');
+  });
 
-    // dateEqual(testCreateDate('2 years ago'), getRelativeDate(-2), '2 years ago');
-    // dateEqual(testCreateDate('2 months ago'), getRelativeDate(null, -2), '2 months ago');
-    // dateEqual(testCreateDate('2 weeks ago'), getRelativeDate(null, null, -14), '2 weeks ago');
-    // dateEqual(testCreateDate('2 days ago'), getRelativeDate(null, null, -2), '2 days ago');
-    // dateEqual(testCreateDate('2 hours ago'), getRelativeDate(null, null, null, -2), '2 hours ago');
-    // dateEqual(testCreateDate('2 minutes ago'), getRelativeDate(null, null, null, null, -2), '2 minutes ago');
-    // dateEqual(testCreateDate('2 seconds ago'), getRelativeDate(null, null, null, null, null, -2), '2 seconds ago');
-    // dateEqual(testCreateDate('2 milliseconds ago'), getRelativeDate(null, null, null, null, null, null, -2), '2 milliseconds ago');
-    // dateEqual(testCreateDate('a second ago'), getRelativeDate(null, null, null, null, null, -1), 'a second ago');
+  describe("Fuzzy Single Dates", function() {
+  
+    dateAssert('now', [{date: new Date()}]);
+    dateAssert('Now', [{date: new Date()}]);
+    dateAssert('Just now', [{date: new Date()}]);
+    dateAssert('4pm', [{date: helpers.getAbsoluteDate(null, null, now.getDate() + 1, 16)}]);
+    dateAssert('today at 4pm', [{date: helpers.getAbsoluteDate(null, null, null, 16)}]);
+    dateAssert('today at 4 pm', [{date: helpers.getAbsoluteDate(null, null, null, 16)}]);
+    dateAssert('4pm today', [{date: helpers.getAbsoluteDate(null, null, null, 16)}]);
 
-    // dateEqual(testCreateDate('2 years from now'), getRelativeDate(2), '2 years from now');
-    // dateEqual(testCreateDate('2 months from now'), getRelativeDate(null, 2), '2 months from now');
-    // dateEqual(testCreateDate('2 weeks from now'), getRelativeDate(null, null, 14), '2 weeks from now');
-    // dateEqual(testCreateDate('2 days from now'), getRelativeDate(null, null, 2), '2 days from now');
-    // dateEqual(testCreateDate('2 hours from now'), getRelativeDate(null, null, null, 2), '2 hours from now');
-    // dateEqual(testCreateDate('2 minutes from now'), getRelativeDate(null, null, null, null, 2), '2 minutes from now');
-    // dateEqual(testCreateDate('2 seconds from now'), getRelativeDate(null, null, null, null, null, 2), '2 seconds from now');
-    // dateEqual(testCreateDate('2 milliseconds from now'), getRelativeDate(null, null, null, null, null, null, 2), '2 milliseconds from now');
+    // TODO - Give these a range value
+    dateAssert('today', [{date: helpers.getRelativeDate()}]);
+    dateAssert('Today', [{date: helpers.getRelativeDate()}]);
+    dateAssert('yesterday', [{date: helpers.getRelativeDate(null, null, -1)}]);
+    dateAssert('Yesterday', [{date: helpers.getRelativeDate(null, null, -1)}]);
+    dateAssert('tomorrow', [{date: helpers.getRelativeDate(null, null, 1)}]);
+    dateAssert('Tomorrow', [{date: helpers.getRelativeDate(null, null, 1)}]);
 
-    // dateEqual(testCreateDate('2 years later'), getRelativeDate(2), '2 years later');
-    // dateEqual(testCreateDate('2 months later'), getRelativeDate(null, 2), '2 months later');
-    // dateEqual(testCreateDate('2 weeks later'), getRelativeDate(null, null, 14), '2 weeks later');
-    // dateEqual(testCreateDate('2 days later'), getRelativeDate(null, null, 2), '2 days later');
-    // dateEqual(testCreateDate('2 hours later'), getRelativeDate(null, null, null, 2), '2 hours later');
-    // dateEqual(testCreateDate('2 minutes later'), getRelativeDate(null, null, null, null, 2), '2 minutes later');
-    // dateEqual(testCreateDate('2 seconds later'), getRelativeDate(null, null, null, null, null, 2), '2 seconds later');
-    // dateEqual(testCreateDate('2 milliseconds later'), getRelativeDate(null, null, null, null, null, null, 2), '2 milliseconds later');
+    dateAssert('The day after tomorrow', [{date: helpers.getRelativeDate(null, null, 2)}]);
+    dateAssert('The day before yesterday', [{date: helpers.getRelativeDate(null, null, -2)}]);
+    dateAssert('One day after tomorrow', [{date: helpers.getRelativeDate(null, null, 2)}]);
+    dateAssert('One day before yesterday', [{date: helpers.getRelativeDate(null, null, -2)}]);
+    dateAssert('Two days after tomorrow', [{date: helpers.getRelativeDate(null, null, 3)}]);
+    dateAssert('Two days before yesterday', [{date:helpers.getRelativeDate(null, null, -3)}]);
+    dateAssert('Two days after today', [{date: helpers.getRelativeDate(null, null, 2)}]);
+    dateAssert('Two days before today', [{date: helpers.getRelativeDate(null, null, -2)}]);
+    dateAssert('Two days from today', [{date: helpers.getRelativeDate(null, null, 2)}]);
 
-    // // Article trouble
-    // dateEqual(testCreateDate('an hour ago'), getRelativeDate(null, null, null, -1), 'an hours ago');
-    // dateEqual(testCreateDate('an hour from now'), getRelativeDate(null, null, null, 1), 'an hour from now');
+    dateAssert('tWo dAyS after toMoRRoW', [{date: helpers.getRelativeDate(null, null, 3)}]);
+    dateAssert('2 days after tomorrow', [{date: helpers.getRelativeDate(null, null, 3)}]);
+    dateAssert('2 day after tomorrow', [{date: helpers.getRelativeDate(null, null, 3)}]);
+    dateAssert('18 days after tomorrow', [{date: helpers.getRelativeDate(null, null, 19)}]);
+    dateAssert('18 day after tomorrow', [{date: helpers.getRelativeDate(null, null, 19)}]);
+
+    dateAssert('2 years ago', [{date: helpers.getRelativeDate(-2, null, null, 0, 0, 0, 0)}]);
+    dateAssert('2 months ago', [{date: helpers.getRelativeDate(null, -2, null, 0, 0, 0, 0)}]);
+    dateAssert('2 weeks ago', [{date: helpers.getRelativeDate(null, null, -14, 0, 0, 0, 0)}]);
+    dateAssert('2 days ago', [{date: helpers.getRelativeDate(null, null, -2, 0, 0, 0, 0)}]);
+    dateAssert('2 hours ago', [{date: helpers.getRelativeDate(null, null, null, -2, 0, 0, 0)}]);
+    dateAssert('2 minutes ago', [{date: helpers.getRelativeDate(null, null, null, null, -2, 0, 0)}]);
+    dateAssert('2 seconds ago', [{date: helpers.getRelativeDate(null, null, null, null, null, -2, 0)}]);
+    dateAssert('2 milliseconds ago', [{date: helpers.getRelativeDate(null, null, null, null, null, null, -2, 0)}]);
+    dateAssert('a second ago', [{date: helpers.getRelativeDate(null, null, null, null, null, -1, 0)}]);
+
+    dateAssert('2 years from now', [{date: helpers.getRelativeDate(2, null, null, null, 0, 0, 0, 0)}]);
+    dateAssert('2 months from now', [{date: helpers.getRelativeDate(null, 2, null, null, 0, 0, 0, 0)}]);
+    dateAssert('2 weeks from now', [{date: helpers.getRelativeDate(null, null, 14, 0, 0, 0, 0)}]);
+    dateAssert('2 days from now', [{date: helpers.getRelativeDate(null, null, 2, 0, 0, 0, 0)}]);
+    dateAssert('2 hours from now', [{date: helpers.getRelativeDate(null, null, null, 2, 0, 0, 0)}]);
+    dateAssert('2 minutes from now', [{date: helpers.getRelativeDate(null, null, null, null, 2, 0, 0)}]);
+    dateAssert('2 seconds from now', [{date: helpers.getRelativeDate(null, null, null, null, null, 2, 0)}]);
+    dateAssert('2 milliseconds from now', [{date: helpers.getRelativeDate(null, null, null, null, null, null, 2)}]);
+
+    dateAssert('2 years later', [{date: helpers.getRelativeDate(2, null, null, 0, 0, 0, 0)}]);
+    dateAssert('2 months later', [{date: helpers.getRelativeDate(null, 2, null, 0, 0, 0, 0)}]);
+    dateAssert('2 weeks later', [{date: helpers.getRelativeDate(null, null, 14, 0, 0, 0, 0)}]);
+    dateAssert('2 days later', [{date: helpers.getRelativeDate(null, null, 2, 0, 0, 0, 0)}]);
+    dateAssert('2 hours later', [{date: helpers.getRelativeDate(null, null, null, 2, 0, 0, 0)}]);
+    dateAssert('2 minutes later', [{date: helpers.getRelativeDate(null, null, null, null, 2, 0, 0)}]);
+    dateAssert('2 seconds later', [{date: helpers.getRelativeDate(null, null, null, null, null, 2, 0)}]);
+    dateAssert('2 milliseconds later', [{date: helpers.getRelativeDate(null, null, null, null, null, null, 2)}]);
+
+    // Article trouble
+    dateAssert('an hour ago', [{date: helpers.getRelativeDate(null, null, null, -1, 0, 0, 0)}]);
+    dateAssert('an hour from now', [{date: helpers.getRelativeDate(null, null, null, 1, 0, 0, 0)}]);
 
     // dateEqual(testCreateDate('Monday'), getDateWithWeekdayAndOffset(1), 'Monday');
     // dateEqual(testCreateDate('The day after Monday'), getDateWithWeekdayAndOffset(2), 'The day after Monday');
@@ -171,11 +193,11 @@ describe("Date Parser", function() {
     // dateEqual(testCreateDate('Tue of last week'), getDateWithWeekdayAndOffset(2, -7), 'Tue of last week');
     // dateEqual(testCreateDate('Tue. of last week'), getDateWithWeekdayAndOffset(2, -7), 'Tue. of last week');
 
-    // dateEqual(testCreateDate('Next week'), getRelativeDate(null, null, 7), 'Next week');
-    // dateEqual(testCreateDate('Last week'), getRelativeDate(null, null, -7), 'Last week');
-    // dateEqual(testCreateDate('Next month'), getRelativeDate(null, 1), 'Next month');
-    // dateEqual(testCreateDate('Next year'), getRelativeDate(1), 'Next year');
-    // dateEqual(testCreateDate('this year'), getRelativeDate(0), 'this year');
+    // dateEqual(helpers.testCreateDate('Next week'), helpers.getRelativeDate(null, null, 7), 'Next week');
+    // dateEqual(helpers.testCreateDate('Last week'), helpers.getRelativeDate(null, null, -7), 'Last week');
+    // dateEqual(helpers.testCreateDate('Next month'), helpers.getRelativeDate(null, 1), 'Next month');
+    // dateEqual(helpers.testCreateDate('Next year'), helpers.getRelativeDate(1), 'Next year');
+    // dateEqual(helpers.testCreateDate('this year'), helpers.getRelativeDate(0), 'this year');
 
     // dateEqual(testCreateDate('beginning of the week'), getDateWithWeekdayAndOffset(0), 'beginning of the week');
     // dateEqual(testCreateDate('beginning of this week'), getDateWithWeekdayAndOffset(0), 'beginning of this week');
@@ -221,12 +243,8 @@ describe("Date Parser", function() {
     // dateEqual(testCreateDate('Last day of november'), new Date(now.getFullYear(), 10, 30), 'Last day of november');
 
     // dateEqual(testCreateDate('the first day of next January'), new Date(now.getFullYear() + 1, 0, 1), 'the first day of next january');
-
     // dateEqual(testCreateDate('Next week'), getRelativeDate(null, null, 7), 'Next week');
-
     // dateEqual(testCreateDate('Thursday of next week, 3:30pm'), getDateWithWeekdayAndOffset(4, 7, 15, 30), 'thursday of next week, 3:30pm');
-
-
     // dateEqual(testCreateDate('the 2nd Tuesday of June, 2012'), new Date(2012, 5, 12), 'the 2nd tuesday of June, 2012');
 
     // dateEqual(testCreateDate('the 1st Tuesday of November, 2012'), new Date(2012, 10, 6), 'the 1st tuesday of November');
@@ -243,8 +261,32 @@ describe("Date Parser", function() {
     // dateEqual(testCreateDate('the 5th Friday of February, 2012'), new Date(2012, 2, 2), 'the 5th Friday of February');
     // dateEqual(testCreateDate('the 6th Friday of February, 2012'), new Date(2012, 2, 9), 'the 6th Friday of February');
     
+  });
+  
+  describe("Range Dates", function() {
 
-    done();
+    // TODO - Add more Ranges
+    dateAssert('from june 3rd to july 4th', [{date: new Date(2015, 5, 3), to: new Date(2015, 6, 4)}]);
+    dateAssert('from jan to dec', [{date: new Date(2015, 0, 1), to: new Date(2015, 11, 1)}]);
+
   });
 
+  describe("Parse dates in english", function() {
+    dateAssert('my birthday is on oct 14th', [{date: new Date(2015, 9, 14)}]);
+    dateAssert('lets meet in the lobby at 3pm', [{date: new Date(now.getFullYear() , now.getMonth(), now.getDate(), 15)}]);
+    // This assertion is hard coded :(
+    dateAssert('lets meet on sunday at 3pm', [{date: new Date(now.getFullYear() , now.getMonth(), 20, 15)}]);
+    
+    dateAssert("I'm free Saturday at 3pm or sunday at 12:00", [{date: helpers.getDateWithWeekdayAndOffset(6, null, 15) }, {date: helpers.getDateWithWeekdayAndOffset(7, null, 12) }]);
+  
+    // NOTE: Sugar bug
+    // Saturday at 3
+  });
+
+
+  describe("Multiple Dates", function() {
+    // TODO -  Multiple dates
+    // dateEqual(testCreateDate('January, February, March and April 15'), [{date: new Date(2015, 0, 1)}, {date: new Date(2015, 2, 1)}, {date: new Date(2015, 3, 1)}, {date: new Date(2015, 4, 15)}, {date: new Date(2015, 0, 1)}], "January, February, March and April 15");
+    // dateEqual(testCreateDate('jan 1 2015 or jan 1 2016'), [{date: new Date(2015, 0, 1)}, {date: new Date(2016, 0, 1)}], "jan 1 2015 or jan 1 2016");    
+  });
 });

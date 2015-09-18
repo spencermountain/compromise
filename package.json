@@ -29,5 +29,8 @@
     "mocha": "^2.2.5",
     "should": "^7.0.4"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "sugar-date": "^1.5.1"
+  }
 }

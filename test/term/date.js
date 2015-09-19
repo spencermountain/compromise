@@ -157,47 +157,50 @@ describe.only("Date Parser", function() {
     dateAssert('an hour ago', [{date: helpers.getRelativeDate(null, null, null, -1, 0, 0, 0)}]);
     dateAssert('an hour from now', [{date: helpers.getRelativeDate(null, null, null, 1, 0, 0, 0)}]);
 
-    // dateEqual(testCreateDate('Monday'), getDateWithWeekdayAndOffset(1), 'Monday');
-    // dateEqual(testCreateDate('The day after Monday'), getDateWithWeekdayAndOffset(2), 'The day after Monday');
-    // dateEqual(testCreateDate('The day before Monday'), getDateWithWeekdayAndOffset(0), 'The day before Monday');
-    // dateEqual(testCreateDate('2 days after monday'), getDateWithWeekdayAndOffset(3), '2 days after monday');
-    // dateEqual(testCreateDate('2 days before monday'), getDateWithWeekdayAndOffset(6, -7), '2 days before monday');
-    // dateEqual(testCreateDate('2 weeks after monday'), getDateWithWeekdayAndOffset(1, 14), '2 weeks after monday');
+    dateAssert('Saturday', [{date: helpers.getDateWithWeekdayAndOffset(6)}]);
+    dateAssert('Monday', [{date: helpers.getDateWithWeekdayAndOffset(1)}]);
 
-    // dateEqual(testCreateDate('Next Monday'), getDateWithWeekdayAndOffset(1, 7), 'Next Monday');
-    // dateEqual(testCreateDate('next week monday'), getDateWithWeekdayAndOffset(1, 7), 'next week monday');
-    // dateEqual(testCreateDate('Next friDay'), getDateWithWeekdayAndOffset(5, 7), 'Next friDay');
-    // dateEqual(testCreateDate('next week thursday'), getDateWithWeekdayAndOffset(4, 7), 'next week thursday');
+    // These are one week behind and should be the NEXT week since we are using future.
+    dateAssert('The day after Monday', [{date: helpers.getDateWithWeekdayAndOffset(2)}]);
+    dateAssert('The day before Monday', [{date: helpers.getDateWithWeekdayAndOffset(0)}]);
+    dateAssert('2 days after monday', [{date: helpers.getDateWithWeekdayAndOffset(3)}]);
+    dateAssert('2 days before monday', [{date: helpers.getDateWithWeekdayAndOffset(6, -7)}]);
+    dateAssert('2 weeks after monday', [{date: helpers.getDateWithWeekdayAndOffset(1, 14)}]);
 
-    // dateEqual(testCreateDate('last Monday'), getDateWithWeekdayAndOffset(1, -7), 'last Monday');
-    // dateEqual(testCreateDate('last week monday'), getDateWithWeekdayAndOffset(1, -7), 'last week monday');
-    // dateEqual(testCreateDate('last friDay'), getDateWithWeekdayAndOffset(5, -7), 'last friDay');
-    // dateEqual(testCreateDate('last week thursday'), getDateWithWeekdayAndOffset(4, -7), 'last week thursday');
-    // dateEqual(testCreateDate('last Monday at 4pm'), getDateWithWeekdayAndOffset(1, -7, 16), 'last Monday at 4pm');
+    dateAssert('Next Monday', [{date: helpers.getDateWithWeekdayAndOffset(1, 7)}]);
+    dateAssert('next week monday', [{date: helpers.getDateWithWeekdayAndOffset(1, 7)}]);
+    dateAssert('Next friDay', [{date: helpers.getDateWithWeekdayAndOffset(5, 7)}]);
+    dateAssert('next week thursday', [{date: helpers.getDateWithWeekdayAndOffset(4, 7)}]);
 
-    // dateEqual(testCreateDate('this Monday'), getDateWithWeekdayAndOffset(1, 0), 'this Monday');
-    // dateEqual(testCreateDate('this week monday'), getDateWithWeekdayAndOffset(1, 0), 'this week monday');
-    // dateEqual(testCreateDate('this friDay'), getDateWithWeekdayAndOffset(5, 0), 'this friDay');
-    // dateEqual(testCreateDate('this week thursday'), getDateWithWeekdayAndOffset(4, 0), 'this week thursday');
+    dateAssert('last Monday', [{date: helpers.getDateWithWeekdayAndOffset(1, -7)}]);
+    dateAssert('last week monday', [{date: helpers.getDateWithWeekdayAndOffset(1, -7)}]);
+    dateAssert('last friDay', [{date: helpers.getDateWithWeekdayAndOffset(5, -7)}]);
+    dateAssert('last week thursday', [{date: helpers.getDateWithWeekdayAndOffset(4, -7)}]);
+    dateAssert('last Monday at 4pm', [{date: helpers.getDateWithWeekdayAndOffset(1, -7, 16)}]);
 
-    // dateEqual(testCreateDate('Monday of last week'), getDateWithWeekdayAndOffset(1, -7), 'Monday of last week');
-    // dateEqual(testCreateDate('saturday of next week'), getDateWithWeekdayAndOffset(6, 7), 'saturday of next week');
-    // dateEqual(testCreateDate('Monday last week'), getDateWithWeekdayAndOffset(1, -7), 'Monday last week');
-    // dateEqual(testCreateDate('saturday next week'), getDateWithWeekdayAndOffset(6, 7), 'saturday next week');
+    dateAssert('this Monday', [{date: helpers.getDateWithWeekdayAndOffset(1, 0)}]);
+    dateAssert('this week monday', [{date: helpers.getDateWithWeekdayAndOffset(1, 0)}]);
+    dateAssert('this friDay', [{date: helpers.getDateWithWeekdayAndOffset(5, 0)}]);
+    dateAssert('this week thursday', [{date: helpers.getDateWithWeekdayAndOffset(4, 0)}]);
 
-    // dateEqual(testCreateDate('Monday of this week'), getDateWithWeekdayAndOffset(1, 0), 'Monday of this week');
-    // dateEqual(testCreateDate('saturday of this week'), getDateWithWeekdayAndOffset(6, 0), 'saturday of this week');
-    // dateEqual(testCreateDate('Monday this week'), getDateWithWeekdayAndOffset(1, 0), 'Monday this week');
-    // dateEqual(testCreateDate('saturday this week'), getDateWithWeekdayAndOffset(6, 0), 'saturday this week');
+    dateAssert('Monday of last week', [{date: helpers.getDateWithWeekdayAndOffset(1, -7)}]);
+    dateAssert('saturday of next week', [{date: helpers.getDateWithWeekdayAndOffset(6, 7)}]);
+    dateAssert('Monday last week', [{date: helpers.getDateWithWeekdayAndOffset(1, -7)}]);
+    dateAssert('saturday next week', [{date: helpers.getDateWithWeekdayAndOffset(6, 7)}]);
 
-    // dateEqual(testCreateDate('Tue of last week'), getDateWithWeekdayAndOffset(2, -7), 'Tue of last week');
-    // dateEqual(testCreateDate('Tue. of last week'), getDateWithWeekdayAndOffset(2, -7), 'Tue. of last week');
+    dateAssert('Monday of this week', [{date: helpers.getDateWithWeekdayAndOffset(1, 0)}]);
+    dateAssert('saturday of this week', [{date: helpers.getDateWithWeekdayAndOffset(6, 0)}]);
+    dateAssert('Monday this week', [{date: helpers.getDateWithWeekdayAndOffset(1, 0)}]);
+    dateAssert('saturday this week', [{date: helpers.getDateWithWeekdayAndOffset(6, 0)}]);
 
-    // dateEqual(helpers.testCreateDate('Next week'), helpers.getRelativeDate(null, null, 7), 'Next week');
-    // dateEqual(helpers.testCreateDate('Last week'), helpers.getRelativeDate(null, null, -7), 'Last week');
-    // dateEqual(helpers.testCreateDate('Next month'), helpers.getRelativeDate(null, 1), 'Next month');
-    // dateEqual(helpers.testCreateDate('Next year'), helpers.getRelativeDate(1), 'Next year');
-    // dateEqual(helpers.testCreateDate('this year'), helpers.getRelativeDate(0), 'this year');
+    dateAssert('Tue of last week', [{date: helpers.getDateWithWeekdayAndOffset(2, -14)}]);
+    dateAssert('Tue. of last week', [{date: helpers.getDateWithWeekdayAndOffset(2, -14)}]);
+
+    dateAssert('Next week', [{date: helpers.getRelativeDate(null, null, 7)}]);
+    dateAssert('Last week', [{date: helpers.getRelativeDate(null, null, -7)}]);
+    dateAssert('Next month', [{date: helpers.getRelativeDate(null, 1)}]);
+    dateAssert('Next year', [{date: helpers.getRelativeDate(1)}]);
+    dateAssert('this year', [{date: helpers.getRelativeDate(0)}]);
 
     // dateEqual(testCreateDate('beginning of the week'), getDateWithWeekdayAndOffset(0), 'beginning of the week');
     // dateEqual(testCreateDate('beginning of this week'), getDateWithWeekdayAndOffset(0), 'beginning of this week');

@@ -5,7 +5,7 @@ require('sugar-date');
 
 var rules = {
   // http://rubular.com/r/VUd4LJzIG4
-  range: /(?:\b|^)(?:between|from)(.*)(?:\sand(?= ) |or\s)(.*)|(?:\b|^)(?:between|from)?(.*)(?:(?:\sto\s)|(?: ?\- ?))(.+)/i,
+  range: /(?:\b|^)(?:between|from)(.*)(?:\sand(?= ) |or\s)(.*)|(?:\b|^)(?:between|from)?(.*)(?:(?:\sto\s)|(?:\-\s))(.+)/i,
   multi: /(?: |^)(?:and(?= ) |or(?= ) )|(?: ?\& ?)|(?: ?, ?)(?=\d)/i,
   multiburst: {
     at: /(.+)\sat\s(.+)/, // {location} at {time}
@@ -103,6 +103,7 @@ var parseInput = function(input) {
   var ranges = input.split(rules.range).filter(stringCheck);
   var dates = [];
 
+
   if (ranges.length === 1) {
     // One big chunk with a date
     var part = ranges[0];
@@ -141,8 +142,17 @@ var parseInput = function(input) {
       if (td.isValid()) {
         return blank(Date.future(item), item);
       } else {
-        
-        // console.log("Invalid date found", item);
+
+        // Last attempt, lets peel it back one token at a time.
+        var tok = item.split(" ");
+        for (var i = 0; i < tok.length; i++) {
+          var na = tok.slice(i);
+          var revisedInput = na.join(" ");
+          var td = Date.create(revisedInput);
+          if (td.isValid()) {
+            return blank(Date.future(revisedInput), revisedInput);
+          }
+        }
       }
     });
 
@@ -179,6 +189,6 @@ var cleanArray = function (actual){
   return newArray;
 };
 
-// console.log(extractDates("I'm free Saturday at 3pm or sunday at 12:00"));
+// console.log(extractDates("i will get the tagger in tip-top shape this week"));
 
 module.exports = extractDates;

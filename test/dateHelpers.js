@@ -64,7 +64,11 @@ exports.getRelativeDate = function(year, month, day, hours, minutes, seconds, mi
 exports.getDateWithWeekdayAndOffset = function(weekday, offset, hours, minutes, seconds, milliseconds) {
   var d = new Date();
   if(offset) d.setDate(d.getDate() + offset);
-  d.setDate(d.getDate() + (weekday - d.getDay()));
+  var base = d.getDate() + (weekday - d.getDay());
+  // We want to set the date for the next weekday, not the current or past one
+  var day = (base - d.getDate() >= 0) ? base : base + 7;
+
+  d.setDate(day);
   d.setHours(hours || 0);
   d.setMinutes(minutes || 0);
   d.setSeconds(seconds || 0);

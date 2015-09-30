@@ -2,28 +2,23 @@
 let mocha = require("mocha");
 let should = require("should");
 let Term = require("../../src/term/term.js");
+let tests = require("./british_terms.js");
 
 describe("localize", function() {
-  let tests = [
-    ["accessorising", "accessorizing"],
-  ];
 
-  it("americanize", function(done) {
-    tests.forEach(function(a) {
-      let t = new Term(a[0]);
+  tests.forEach(function(a) {
+    //britishize it
+    let t = new Term(a[0]);
+    it(a[0], function(done) {
       t.americanize().should.equal(a[1]);
+      done();
     });
-    done();
-  });
-
-  it("britishize", function(done) {
-    tests.forEach(function(a) {
-      let t = new Term(a[1]);
-      t.britishize().should.equal(a[0]);
+    //americanize it
+    let t2 = new Term(a[1]);
+    it(a[0], function(done) {
+      t2.britishize().should.equal(a[0]);
+      done();
     });
-    done();
   });
-
-
 
 });

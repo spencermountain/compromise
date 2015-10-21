@@ -41,9 +41,9 @@ class Text {
     });
     return fns.flatten(arr).join(' ');
   }
-  parents() {
+  tags() {
     return this.sentences.map(function(s) {
-      return s.parents();
+      return s.tags();
     });
   }
   to_past() {

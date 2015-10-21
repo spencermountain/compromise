@@ -4,6 +4,7 @@ const lexicon_pass = require('./lexicon_pass');
 const contractions = require('./contractions');
 const assign = require('./assign');
 const word_rules = require('./word_rules');
+const grammar_rules = require('./grammar_rules');
 
 //set POS for capitalised words
 const capital_signals = function(terms) {
@@ -33,11 +34,34 @@ const word_rules_pass = function(terms) {
   return terms;
 };
 
+const chunk_neighbours = function(terms) {
+  let new_terms = [];
+  let last = null;
+  for(var i = 0; i < terms.length; i++) {
+    let t = terms[i];
+    if (last !== null && t.parent === last) {
+      new_terms[new_terms.length - 1].text += ' ' + t.text;
+      new_terms[new_terms.length - 1].normalize();
+    } else {
+      new_terms.push(t);
+    }
+    last = t.parent;
+  }
+  return new_terms;
+};
+
+const grammar_rules_pass = function(terms) {
+  return terms;
+};
+
+
 const tagger = function(s) {
   s.terms = capital_signals(s.terms);
   s.terms = contractions(s.terms);
   s.terms = lexicon_pass(s.terms);
   s.terms = word_rules_pass(s.terms);
+  s.terms = grammar_rules_pass(s.terms);
+  s.terms = chunk_neighbours(s.terms);
   return s.terms;
 };
 

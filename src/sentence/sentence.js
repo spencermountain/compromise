@@ -76,7 +76,7 @@ class Sentence {
   text() {
     return fns.pluck(this.terms, 'text').join(' ');
   }
-  parents() {
+  tags() {
     return fns.pluck(this.terms, 'parent');
   }
 }

@@ -1,16 +1,16 @@
-"use strict";
-const syllables = require("./syllables");
-const americanize = require("./americanize");
-const britishize = require("./britishize");
+'use strict';
+const syllables = require('./syllables');
+const americanize = require('./americanize');
+const britishize = require('./britishize');
 // const Verb = require("./verb/verb.js");
 
 class Term {
   constructor(str) {
-    str = str || "";
+    str = str || '';
     this.text = str.trim();
     this.normal = this.normalize();
-    this.reason = "";
-    this.parent = "?";
+    this.reason = '';
+    this.parent = '?';
   }
 
   //Term methods..
@@ -28,17 +28,17 @@ class Term {
   }
 
   normalize() {
-    let str = this.text || "";
+    let str = this.text || '';
     str = str.toLowerCase();
-    str = str.replace(/[,\.!:;\?\(\)]/, "");
-    str = str.replace(/’/g, "'");
-    str = str.replace(/"/g, "");
+    str = str.replace(/[,\.!:;\?\(\)]/, '');
+    str = str.replace(/’/g, '\'');
+    str = str.replace(/"/g, '');
     // coerce single curly quotes
-    str = str.replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]+/g, "'");
+    str = str.replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]+/g, '\'');
     // coerce double curly quotes
-    str = str.replace(/[\u201C\u201D\u201E\u201F\u2033\u2036]+/g, "\"");
+    str = str.replace(/[\u201C\u201D\u201E\u201F\u2033\u2036]+/g, '"');
     if (!str.match(/[a-z0-9]/i)) {
-      return "";
+      return '';
     }
     return str;
   }

@@ -1,8 +1,8 @@
 //the lexicon is a big hash of words to pos tags
 //it's built by conjugating and inflecting a small seed of terms
-"use strict";
-const fns = require("./fns.js");
-const verb_conjugate = require("./term/verb/conjugate/conjugate.js");
+'use strict';
+const fns = require('./fns.js');
+const verb_conjugate = require('./term/verb/conjugate/conjugate.js');
 
 const lexicon = {};
 
@@ -22,38 +22,38 @@ const addArr = function(arr, tag) {
 };
 
 //conjugate all verbs.
-const verbs = require("./data/verbs.js");
+const verbs = require('./data/verbs.js');
 for (let i = 0; i < verbs.length; i++) {
   const c = verb_conjugate(verbs[i]);
-  lexicon[c.infinitive] = "VBP";
-  lexicon[c.past] = "VBD";
-  lexicon[c.gerund] = "VBG";
-  lexicon[c.present] = "VBZ";
+  lexicon[c.infinitive] = 'VBP';
+  lexicon[c.past] = 'VBD';
+  lexicon[c.gerund] = 'VBG';
+  lexicon[c.present] = 'VBZ';
   if (c.doer) {
-    lexicon[c.doer] = "NNA";
+    lexicon[c.doer] = 'NNA';
   }
   if (c.participle) {
-    lexicon[c.participle] = "VBN";
+    lexicon[c.participle] = 'VBN';
   }
 }
 
-addArr(require("./data/abbreviations.js"), "NNAB");
-addArr(require("./data/adjectives.js"), "JJ");
-addArr(require("./data/demonyms.js"), "JJ");
-addArr(require("./data/honourifics.js"), "NNAB");
-addArr(require("./data/uncountables.js"), "NN");
-addArr(require("./data/dates.js"), "CD");
-addArr(require("./data/numbers.js"), "CD");
+addArr(require('./data/abbreviations.js'), 'NNAB');
+addArr(require('./data/adjectives.js'), 'JJ');
+addArr(require('./data/demonyms.js'), 'JJ');
+addArr(require('./data/honourifics.js'), 'NNAB');
+addArr(require('./data/uncountables.js'), 'NN');
+addArr(require('./data/dates.js'), 'CD');
+addArr(require('./data/numbers.js'), 'CD');
 //a little fancy
-addArr(Object.keys(require("./data/firstnames.js")), "NN");
+addArr(Object.keys(require('./data/firstnames.js')), 'NN');
 //add irregular nouns
-const irregNouns = require("./data/irregular_nouns.js");
-addArr(fns.pluck(irregNouns, 0), "NN");
-addArr(fns.pluck(irregNouns, 1), "NNS");
+const irregNouns = require('./data/irregular_nouns.js');
+addArr(fns.pluck(irregNouns, 0), 'NN');
+addArr(fns.pluck(irregNouns, 1), 'NNS');
 
-addObj(require("./data/misc.js"));
-addObj(require("./data/multiples.js"));
-addObj(require("./data/phrasal_verbs.js"));
+addObj(require('./data/misc.js'));
+addObj(require('./data/multiples.js'));
+addObj(require('./data/phrasal_verbs.js'));
 
 // console.log(Object.keys(lexicon).length)
 // console.log(lexicon)

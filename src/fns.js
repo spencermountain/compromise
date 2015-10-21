@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 exports.pluck = function(arr, str) {
-  arr = arr || []
+  arr = arr || [];
   return arr.map(function(o) {
     return o[str];
   });
@@ -30,7 +30,7 @@ exports.endsWith = function(str, suffix) {
 
 exports.titlecase = function(str) {
   if (!str) {
-    return "";
+    return '';
   }
   return str.charAt(0).toUpperCase() + str.slice(1);
 };

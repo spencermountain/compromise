@@ -1,47 +1,47 @@
 // convert british spellings into american ones
 // built with patterns+exceptions from https://en.wikipedia.org/wiki/British_spelling
-"use strict";
+'use strict';
 
 const patterns = [
   // ise -> ize
   {
     reg: /([^aeiou][iy])s(e|ed|es|ing)?$/,
-    repl: "$1z$2"
+    repl: '$1z$2'
   },
   // our -> or
   {
     reg: /(..)our(ly|y|ite)?$/,
-    repl: "$1or$2"
+    repl: '$1or$2'
   },
   // re -> er
   {
     reg: /([^cdnv])re(s)?$/,
-    repl: "$1er$2"
+    repl: '$1er$2'
   },
   // xion -> tion
   {
     reg: /([aeiou])xion([ed])?$/,
-    repl: "$1tion$2"
+    repl: '$1tion$2'
   },
   //logue -> log
   {
     reg: /logue$/,
-    repl: "log"
+    repl: 'log'
   },
   // ae -> e
   {
     reg: /([o|a])e/,
-    repl: "e"
+    repl: 'e'
   },
   //eing -> ing
   {
     reg: /e(ing|able)$/,
-    repl: "$1"
+    repl: '$1'
   },
   // illful -> ilful
   {
     reg: /([aeiou]+[^aeiou]+[aeiou]+)ll(ful|ment|est|ing|or|er|ed)$/, //must be second-syllable
-    repl: "$1l$2"
+    repl: '$1l$2'
   }
 ];
 

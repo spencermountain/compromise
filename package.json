@@ -84,16 +84,16 @@
       "before": {
         "ParameterList": -1,
         "ParameterComma": -1,
-        "FunctionDeclarationOpeningBrace": 1,
-        "FunctionDeclarationClosingBrace": 1,
-        "ForStatementExpressionOpening": 1
+        "FunctionDeclarationOpeningBrace": -1,
+        "FunctionDeclarationClosingBrace": -1,
+        "ForStatementExpressionOpening": -1
       },
       "after": {
-        "FunctionName": 1,
+        "FunctionName": -1,
         "ParameterComma": 1,
-        "FunctionReservedWord": 1,
+        "FunctionReservedWord": -1,
         "ParameterList": -1,
-        "FunctionDeclarationOpeningBrace": 1,
+        "FunctionDeclarationOpeningBrace": -1,
         "PropertyName": -1
       }
     },

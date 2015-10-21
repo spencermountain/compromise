@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 //split a string into all possible parts
-const fns = require("../fns.js");
+const fns = require('../fns.js');
 
 //n-gram takes a list of pre-cleaned terms, and makes no assumptions
 const ngram = function(terms, options) {
@@ -20,7 +20,7 @@ const ngram = function(terms, options) {
     keys[1][s] = (keys[1][s] || 0) + 1;
     for (let j = 2; j <= max_size; j++) {
       if (i + j <= textlen) {
-        s += " " + terms[i + j - 1];
+        s += ' ' + terms[i + j - 1];
         keys[j][s] = (keys[j][s] || 0) + 1;
       } else {
         break;
@@ -36,9 +36,9 @@ const ngram = function(terms, options) {
       const word = words[i];
       if (key[word] >= min_count) {
         results[k].push({
-          "word": word,
-          "count": key[word],
-          "size": k
+          'word': word,
+          'count': key[word],
+          'size': k
         });
       }
     }

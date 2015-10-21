@@ -1,13 +1,13 @@
-"use strict";
-const sentence_parser = require("./sentence_parser.js");
-const Sentence = require("../sentence/sentence.js");
-const ngram = require("./ngram.js");
-const fns = require("../fns.js");
+'use strict';
+const sentence_parser = require('./sentence_parser.js');
+const Sentence = require('../sentence/sentence.js');
+const ngram = require('./ngram.js');
+const fns = require('../fns.js');
 
 //a text object is a series of sentences, along with the generic methods for transforming them
 class Text {
   constructor(str) {
-    this.str = str || "";
+    this.str = str || '';
     this.sentences = sentence_parser(str).map(function(s) {
       return new Sentence(s);
     });
@@ -27,7 +27,7 @@ class Text {
     const arr = this.sentences.map(function(s) {
       return s.text();
     });
-    return fns.flatten(arr).join(" ");
+    return fns.flatten(arr).join(' ');
   }
   terms() {
     const arr = this.sentences.map(function(s) {
@@ -39,12 +39,12 @@ class Text {
     const arr = this.sentences.map(function(s) {
       return s.normalized();
     });
-    return fns.flatten(arr).join(" ");
+    return fns.flatten(arr).join(' ');
   }
-  parents(){
+  parents() {
     return this.sentences.map(function(s) {
       return s.parents();
-    })
+    });
   }
 }
 

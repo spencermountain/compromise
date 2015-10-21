@@ -1,5 +1,5 @@
 //chop a string into pronounced syllables
-"use strict";
+'use strict';
 
 //suffix fixes
 function postprocess(arr) {
@@ -34,21 +34,21 @@ const syllables = function(str) {
   //method is nested because it's called recursively
   const doer = function(w) {
     const vow = /[aeiouy]$/;
-    const chars = w.split("");
-    let before = "";
-    let after = "";
-    let current = "";
+    const chars = w.split('');
+    let before = '';
+    let after = '';
+    let current = '';
     for (let i = 0; i < chars.length; i++) {
-      before = chars.slice(0, i).join("");
+      before = chars.slice(0, i).join('');
       current = chars[i];
-      after = chars.slice(i + 1, chars.length).join("");
+      after = chars.slice(i + 1, chars.length).join('');
       let candidate = before + chars[i];
 
       //it's a consonant that comes after a vowel
       if (before.match(vow) && !current.match(vow)) {
         if (after.match(/^e[sm]/)) {
-          candidate += "e";
-          after = after.replace(/^e/, "");
+          candidate += 'e';
+          after = after.replace(/^e/, '');
         }
         all.push(candidate);
         return doer(after);
@@ -64,7 +64,7 @@ const syllables = function(str) {
     if (str.match(/[aiouy]/) || str.match(/ee$/)) { //allow silent trailing e
       all.push(w);
     } else {
-      all[all.length - 1] = (all[all.length - 1] || "") + str; //append it to the last one
+      all[all.length - 1] = (all[all.length - 1] || '') + str; //append it to the last one
     }
   };
 
@@ -79,7 +79,7 @@ const syllables = function(str) {
   }
   //filter blanks
   all = all.filter(function(s) {
-    return s !== "" && s !== null && s !== undefined;
+    return s !== '' && s !== null && s !== undefined;
   });
 
   return all;

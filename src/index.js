@@ -33,7 +33,7 @@ module.exports = Nlp;
 
 
 //return a Text object..
-let nlp = new Nlp('John Bonjovi walks quickly');
+let nlp = new Nlp('i think the lkjfen is good');
 console.log(nlp.terms());
 
 //return a Term/Value object

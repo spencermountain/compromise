@@ -5,6 +5,7 @@ const contractions = require('./contractions');
 const assign = require('./assign');
 const word_rules = require('./word_rules');
 const grammar_rules = require('./grammar_rules');
+const fns = require('../../fns');
 
 //set POS for capitalised words
 const capital_signals = function(terms) {
@@ -21,7 +22,7 @@ const capital_signals = function(terms) {
   return terms;
 };
 
-//regex-rules for words/suffixes
+//regex hints for words/suffixes
 const word_rules_pass = function(terms) {
   for (let i = 0; i < terms.length; i++) {
     for (let o = 0; o < word_rules.length; o++) {
@@ -34,10 +35,11 @@ const word_rules_pass = function(terms) {
   return terms;
 };
 
+//turn [noun, noun..] into [noun..]
 const chunk_neighbours = function(terms) {
   let new_terms = [];
   let last = null;
-  for(var i = 0; i < terms.length; i++) {
+  for(let i = 0; i < terms.length; i++) {
     let t = terms[i];
     if (last !== null && t.parent === last) {
       new_terms[new_terms.length - 1].text += ' ' + t.text;
@@ -50,8 +52,23 @@ const chunk_neighbours = function(terms) {
   return new_terms;
 };
 
-const grammar_rules_pass = function(terms) {
-  return terms;
+//hints from the sentence grammar
+const grammar_rules_pass = function(s) {
+  let tags = s.tags();
+  for(let i = 0; i < s.terms.length; i++) {
+    let t = s.terms[i];
+    for(let o = 0; o < grammar_rules.length; o++) {
+      let rule = grammar_rules[o];
+      //does this rule match
+      if (fns.sameArr(rule.before, tags.slice(i, i + rule.before.length))) {
+        //change before/after for each term
+        for(let c = 0; c < rule.before.length; c++) {
+          s.terms[i + c] = assign(s.terms[i + c], rule.after[c], 'grammar_rule ' + c);
+        }
+      }
+    }
+  }
+  return s.terms;
 };
 
 
@@ -60,7 +77,8 @@ const tagger = function(s) {
   s.terms = contractions(s.terms);
   s.terms = lexicon_pass(s.terms);
   s.terms = word_rules_pass(s.terms);
-  s.terms = grammar_rules_pass(s.terms);
+  //repeat these two
+  s.terms = grammar_rules_pass(s);
   s.terms = chunk_neighbours(s.terms);
   return s.terms;
 };

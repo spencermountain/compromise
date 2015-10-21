@@ -73,5 +73,6 @@ addObj(require('./data/phrasal_verbs.js'));
 // console.log(lexicon['loaf'] === "NN")
 // console.log(lexicon['loaves'] === "NNS")
 // console.log(lexicon['he'] === "PRP")
+// console.log(lexicon['the']);
 
 module.exports = lexicon;

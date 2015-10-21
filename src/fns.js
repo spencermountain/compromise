@@ -14,6 +14,18 @@ exports.flatten = function(arr) {
   return all;
 };
 
+exports.sameArr = function(arr, arrB) {
+  if (typeof arr !== typeof arrB || arr.length !== arrB.length) {
+    return null;
+  }
+  for(let i = 0; i < arr.length; i++) {
+    if (arr[i] !== arrB[i]) {
+      return false;
+    }
+  }
+  return true;
+};
+
 exports.compact = function(arr) {
   return arr.filter(function(a) {
     if (a === undefined || a === null) {

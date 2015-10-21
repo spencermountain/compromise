@@ -5,10 +5,15 @@ const britishize = require('./britishize');
 // const Verb = require("./verb/verb.js");
 
 class Term {
-  constructor(str) {
+  constructor(str, tag) {
     this.changeTo(str);
     this.reason = '';
-    this.parent = '?';
+    let types = {
+      DT: 'Determiner',
+      CC: 'Conjunction',
+      IN: 'Preposition',
+    };
+    this.parent = types[tag] || '?';
   }
 
   changeTo(str) {

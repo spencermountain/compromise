@@ -1,4 +1,5 @@
 'use strict';
+const Term = require('../../term/term.js');
 const Verb = require('../../term/verb/verb.js');
 const Noun = require('../../term/noun/noun.js');
 const Value = require('../../term/value/value.js');
@@ -35,15 +36,22 @@ const mapping = {
   'NU': Value,
   'DA': Value,
   'MD': Verb,
-// "DT":   "Determiner",
-// "IN":   "Preposition",
-// "CC":   "Conjunction",
+  'DT': Term,
+  'IN': Term,
+  'CC': Term,
+
+  'Term': Term,
+  'Noun': Noun,
+  'Adjective': Adjective,
+  'Verb': Verb,
+  'Adverb': Adverb,
+  'Value': Value,
 };
 
 //swap the Term object with a proper Pos class
 const assign = function(t, pos, reason) {
   if (mapping[pos] !== undefined) {
-    t = new mapping[pos](t.text);
+    t = new mapping[pos](t.text, pos);
     t.reason = reason;
   }
   return t;

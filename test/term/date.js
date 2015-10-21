@@ -1,8 +1,11 @@
 'use strict';
-import { mocha } from 'mocha';
-import { should } from 'should';
-import to_date from '../../src/term/value/to_date';
-import helpers from '../dateHelpers';
+let mocha = require('mocha');
+let should = require('should');
+let Term = require('../../src/term/term.js');
+let tests = require('./british_terms.js');
+
+let to_date = require('../../src/term/value/to_date');
+let helpers = require('../dateHelpers');
 
 let dateEqual = function (a, b, message, debug) {
 
@@ -10,9 +13,9 @@ let dateEqual = function (a, b, message, debug) {
 
   it(message, function (done) {
     if (a && a.length === 1 && a[0] && a[0].Date) {
-      var date0 = a[0].Date.getTime();
-      var date1 = b[0].date.getTime();
-      var offset = Math.abs(date0 - date1);
+      let date0 = a[0].Date.getTime();
+      let date1 = b[0].date.getTime();
+      let offset = Math.abs(date0 - date1);
 
       if (debug) {
         console.log('--- DEBUG ---\n', a, '\n', b);
@@ -22,20 +25,20 @@ let dateEqual = function (a, b, message, debug) {
 
       // For ranges we have a second date
       if (b[0].to) {
-        var date0To = a[0].to.Date.getTime();
-        var date1To = b[0].to.getTime();
-        var offset1 = Math.abs(date0To - date1To);
+        let date0To = a[0].to.Date.getTime();
+        let date1To = b[0].to.getTime();
+        let offset1 = Math.abs(date0To - date1To);
         (offset1 < buffer).should.be.true();
       }
     } else if (a && a.length > 1 && a.length == b.length) {
 
       // TODO - Sort out arrays of multi matches.
-      for (var i = 0; i < a.length; i++) {
+      for (let i = 0; i < a.length; i++) {
 
-        var date0 = a[i].Date.getTime();
-        var date1 = b[i].date.getTime();
+        let date0 = a[i].Date.getTime();
+        let date1 = b[i].date.getTime();
 
-        var offset = Math.abs(date0 - date1);
+        let offset = Math.abs(date0 - date1);
         (offset < buffer).should.be.true();
       }
     } else {
@@ -45,13 +48,13 @@ let dateEqual = function (a, b, message, debug) {
   });
 };
 
-var dateAssert = function (assert, result, debug) {
+let dateAssert = function (assert, result, debug) {
   dateEqual(helpers.testCreateDate(assert), result, assert, debug);
 };
 
 let now = new Date();
 
-describe.only('Date Parser', function () {
+describe('Date Parser', function () {
 
   describe('Not a Date at all.', function () {
     dateAssert('Hello world', []);

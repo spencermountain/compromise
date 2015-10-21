@@ -84,7 +84,7 @@ module.exports = function (grunt) {
           colors: true,
           growl: false
         },
-        src: ['test/**/*.js']
+        src: ['test/*/*.js']
       }
     }
 

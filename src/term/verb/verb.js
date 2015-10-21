@@ -2,6 +2,7 @@
 const Term = require('../term.js');
 const conjugate = require('./conjugate/conjugate.js');
 const predict_form = require('./conjugate/predict_form.js');
+const negate = require('./negate.js');
 
 const allowed_forms = {
   infinitive: 1,
@@ -45,18 +46,6 @@ class Verb extends Term {
     }
   }
 
-  //is this verb negative already?
-  isNegative() {
-    const str = this.normal;
-    if (str.match(/n't$/)) {
-      return true;
-    }
-    if (str.match(/ not$/)) {
-      return true;
-    }
-    return false;
-  }
-
   conjugate() {
     this.conjugations = conjugate(this.normal);
     return this.conjugations;
@@ -67,8 +56,7 @@ class Verb extends Term {
       this.conjugate(this.normal);
     }
     this._form = tense;
-    this.text = this.conjugations[tense];
-    this.normalize();
+    this.changeTo(this.conjugations[tense]);
     return this.conjugations[tense];
   }
   to_present() {
@@ -77,8 +65,7 @@ class Verb extends Term {
       this.conjugate(this.normal);
     }
     this._form = tense;
-    this.text = this.conjugations[tense];
-    this.normalize();
+    this.changeTo(this.conjugations[tense]);
     return this.conjugations[tense];
   }
   to_future() {
@@ -87,9 +74,27 @@ class Verb extends Term {
       this.conjugate(this.normal);
     }
     this._form = tense;
-    this.text = this.conjugations[tense];
-    this.normalize();
+    this.changeTo(this.conjugations[tense]);
     return this.conjugations[tense];
+  }
+
+
+  //is this verb negative already?
+  isNegative() {
+    const str = this.normal;
+    if (str.match(/(n't|\bnot\b)/)) {
+      return true;
+    }
+    return false;
+  }
+
+  negate() {
+    if (this.isNegative()) {
+      return this.text;
+    }
+    this.changeTo(negate(this));
+    return this.text;
+
   }
 
 }

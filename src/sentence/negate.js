@@ -62,6 +62,7 @@ const negate = function(s) {
         }
         return s;
       }
+
       //turn future-tense 'will go' into "won't go"
       if (tok.normalised.match(/^will /i)) {
         tok.text = tok.text.replace(/^will /i, 'won\'t ');

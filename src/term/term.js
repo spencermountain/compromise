@@ -6,12 +6,16 @@ const britishize = require('./britishize');
 
 class Term {
   constructor(str) {
+    this.changeTo(str);
+    this.reason = '';
+    this.parent = '?';
+  }
+
+  changeTo(str) {
     str = str || '';
     this.text = str.trim();
     this.normal = '';
     this.normalize();
-    this.reason = '';
-    this.parent = '?';
   }
 
   //Term methods..

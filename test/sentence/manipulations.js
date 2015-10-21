@@ -7,12 +7,12 @@ describe('Sentence Manipulation Methods', function() {
 
   it('Change tense', function(done) {
     let tests = [
-      ['john walks quickfly', 'john walked quickly', 'john will walk quickly'],
+      ['john walks quickly', 'john walked quickly', 'john will walk quickly'],
       ['he is quick', 'he was quick', 'he will be quick'],
     ];
 
     tests.forEach(function(a) {
-      let s = nlp(a[0]);
+      let s = new nlp(a[0]);
       s.to_past();
       s.text().should.equal(a[1]);
       s.to_future();

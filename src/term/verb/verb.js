@@ -21,6 +21,8 @@ class Verb extends Term {
     if (form && allowed_forms[form]) {
       this._form = form;
       this.conjugations[form] = this.normal;
+    } else {
+      this.form();
     }
   }
 
@@ -58,6 +60,25 @@ class Verb extends Term {
   conjugate() {
     this.conjugations = conjugate(this.normal);
     return this.conjugations;
+  }
+  to_past() {
+    if (!this.conjugations['past']) {
+      this.conjugate(this.normal);
+    }
+    this._form = 'past';
+    this.text = this.conjugations['past'];
+    this.normalize();
+    return this.conjugations['past'];
+  }
+  to_present() {
+    if (this.conjugations['present']) {
+      return this.conjugations['present'];
+    }
+    this.conjugations = conjugate(this.normal);
+  }
+  to_future() {
+    this.conjugations = conjugate(this.normal);
+    return this.conjugations['future'];
   }
 }
 

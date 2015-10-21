@@ -8,7 +8,8 @@ class Term {
   constructor(str) {
     str = str || '';
     this.text = str.trim();
-    this.normal = this.normalize();
+    this.normal = '';
+    this.normalize();
     this.reason = '';
     this.parent = '?';
   }
@@ -40,7 +41,8 @@ class Term {
     if (!str.match(/[a-z0-9]/i)) {
       return '';
     }
-    return str;
+    this.normal = str;
+    return this.normal;
   }
   americanize() {
     return americanize(this.normal);

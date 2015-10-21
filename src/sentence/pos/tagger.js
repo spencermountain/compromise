@@ -21,7 +21,7 @@ const capital_signals = function(terms) {
 };
 
 //regex-rules for words/suffixes
-const rules_pass = function(terms) {
+const word_rules_pass = function(terms) {
   for (let i = 0; i < terms.length; i++) {
     for (let o = 0; o < word_rules.length; o++) {
       if (terms[i].normal.length > 4 && terms[i].normal.match(word_rules[o].reg)) {
@@ -37,7 +37,7 @@ const tagger = function(s) {
   s.terms = capital_signals(s.terms);
   s.terms = contractions(s.terms);
   s.terms = lexicon_pass(s.terms);
-  s.terms = rules_pass(s.terms);
+  s.terms = word_rules_pass(s.terms);
   return s.terms;
 };
 

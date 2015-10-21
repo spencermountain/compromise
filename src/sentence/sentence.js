@@ -47,6 +47,14 @@ class Sentence {
     return types[char] || 'declarative';
   }
 
+  to_past() {
+    this.terms.forEach(function(t) {
+      if (t.parent == 'verb') {
+
+      }
+    });
+  }
+
   //map over Term methods
   normalized() {
     return fns.pluck(this.terms, 'normal').join(' ');

@@ -8,7 +8,7 @@ const Adjective = require('./term/adjective/adjective.js');
 const Adverb = require('./term/adverb/adverb.js');
 
 //function returns a text object if there's a param, otherwise
-const Api = function(str) {
+const Nlp = function(str) {
   this.Term = function(s) {
     return new Term(s);
   };
@@ -29,13 +29,19 @@ const Api = function(str) {
   }
 };
 
-module.exports = Api;
+module.exports = Nlp;
+
 
 //return a Text object..
-// let nlp1=new Api("john is cool")
-// console.log(nlp1.text())
+// let nlp = new Nlp('john is cool');
+// console.log(nlp.terms());
 
 //return a Term/Value object
-let nlp2 = new Api();
+let nlp2 = new Nlp();
 // console.log(nlp2.Term("john"));
-console.log(nlp2.Verb('walk').conjugate());
+let w = nlp2.Verb('walk');
+console.log(w);
+console.log(w.to_past());
+console.log(w);
+// console.log(nlp('Books are good'));
+// console.log(nlp.Verb('walk'));

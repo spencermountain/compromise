@@ -71,6 +71,14 @@ const grammar_rules_pass = function(s) {
   return s.terms;
 };
 
+const noun_fallback = function(terms) {
+  for(let i = 0; i < terms.length; i++) {
+    if (terms[i].parent === '?') {
+      terms[i] = assign(terms[i], 'NN', 'fallback');
+    }
+  }
+  return terms;
+};
 
 const tagger = function(s) {
   s.terms = capital_signals(s.terms);
@@ -80,6 +88,7 @@ const tagger = function(s) {
   //repeat these two
   s.terms = grammar_rules_pass(s);
   s.terms = chunk_neighbours(s.terms);
+  s.terms = noun_fallback(s.terms);
   return s.terms;
 };
 

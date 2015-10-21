@@ -46,6 +46,21 @@ class Text {
       return s.parents();
     });
   }
+  to_past() {
+    return this.sentences.map(function(s) {
+      return s.to_past();
+    });
+  }
+  to_present() {
+    return this.sentences.map(function(s) {
+      return s.to_present();
+    });
+  }
+  to_future() {
+    return this.sentences.map(function(s) {
+      return s.to_future();
+    });
+  }
 }
 
 module.exports = Text;

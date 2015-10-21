@@ -49,8 +49,22 @@ class Sentence {
 
   to_past() {
     this.terms.forEach(function(t) {
-      if (t.parent == 'verb') {
-
+      if (t.parent === 'verb') {
+        t.to_past();
+      }
+    });
+  }
+  to_present() {
+    this.terms.forEach(function(t) {
+      if (t.parent === 'verb') {
+        t.to_present();
+      }
+    });
+  }
+  to_future() {
+    this.terms.forEach(function(t) {
+      if (t.parent === 'verb') {
+        t.to_future();
       }
     });
   }

@@ -62,24 +62,36 @@ class Verb extends Term {
     return this.conjugations;
   }
   to_past() {
-    if (!this.conjugations['past']) {
+    let tense = 'past';
+    if (!this.conjugations[tense]) {
       this.conjugate(this.normal);
     }
-    this._form = 'past';
-    this.text = this.conjugations['past'];
+    this._form = tense;
+    this.text = this.conjugations[tense];
     this.normalize();
-    return this.conjugations['past'];
+    return this.conjugations[tense];
   }
   to_present() {
-    if (this.conjugations['present']) {
-      return this.conjugations['present'];
+    let tense = 'present';
+    if (!this.conjugations[tense]) {
+      this.conjugate(this.normal);
     }
-    this.conjugations = conjugate(this.normal);
+    this._form = tense;
+    this.text = this.conjugations[tense];
+    this.normalize();
+    return this.conjugations[tense];
   }
   to_future() {
-    this.conjugations = conjugate(this.normal);
-    return this.conjugations['future'];
+    let tense = 'future';
+    if (!this.conjugations[tense]) {
+      this.conjugate(this.normal);
+    }
+    this._form = tense;
+    this.text = this.conjugations[tense];
+    this.normalize();
+    return this.conjugations[tense];
   }
+
 }
 
 // let v = new Verb("walk", "asdf")

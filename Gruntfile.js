@@ -26,8 +26,7 @@ module.exports = function (grunt) {
     'babel': {
       options: {
         sourceMap: true,
-        compact: true,
-      //optional: ["runtime", "validation.undeclaredVariableCheck"]
+        compact: true
       },
       dist: {
         files: {

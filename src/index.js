@@ -9,22 +9,22 @@ const Adverb = require("./term/adverb/adverb.js");
 
 //function returns a text object if there's a param, otherwise
 const Api = function(str) {
-  this.Term=function(s){
+  this.Term = function(s) {
     return new Term(s);
-  }
-  this.Verb=function(s){
+  };
+  this.Verb = function(s) {
     return new Verb(s);
-  }
-  this.Adverb=function(s){
+  };
+  this.Adverb = function(s) {
     return new Adverb(s);
-  }
-  this.Noun=function(s){
+  };
+  this.Noun = function(s) {
     return new Noun(s);
-  }
-  this.Adjective=function(s){
+  };
+  this.Adjective = function(s) {
     return new Adjective(s);
-  }
-  if(str){
+  };
+  if (str) {
     return new Text(str);
   }
 };
@@ -36,7 +36,6 @@ module.exports = Api;
 // console.log(nlp1.text())
 
 //return a Term/Value object
-// let nlp2 = new Api()
-// console.log(nlp2.Term("john"))
-// console.log(nlp2.Verb("walk").conjugate())
-
+let nlp2 = new Api();
+// console.log(nlp2.Term("john"));
+console.log(nlp2.Verb("walk").conjugate());

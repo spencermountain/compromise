@@ -1,50 +1,50 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   grunt.initConfig({
 
     watch: {
-      files: ["./src/**"],
-      tasks: ["run:run"],
+      files: ['./src/**'],
+      tasks: ['run:run'],
     },
 
     run: {
       run: {
-        exec: "iojs ./src/index.js",
+        exec: 'iojs ./src/index.js',
       }
     },
 
-    "browserify": {
+    'browserify': {
       client: {
-        src: "./src/index.js",
-        dest: "./builds/nlp_compromise.es6.js",
+        src: './src/index.js',
+        dest: './builds/nlp_compromise.es6.js',
         options: {
-          "standalone": true
+          'standalone': true
         }
       }
     },
 
-    "babel": {
+    'babel': {
       options: {
         sourceMap: true,
         compact: true,
-        optional: ["runtime", "validation.undeclaredVariableCheck"]
+      //optional: ["runtime", "validation.undeclaredVariableCheck"]
       },
       dist: {
         files: {
-          "./builds/nlp_compromise.es5.js": "./builds/nlp_compromise.es6.js",
+          './builds/nlp_compromise.es5.js': './builds/nlp_compromise.es6.js',
         }
       }
     },
 
     uglify: {
-      "do": {
-        src: ["./builds/nlp_compromise.es5.js"],
-        dest: "./builds/nlp_compromise.es5.min.js"
+      'do': {
+        src: ['./builds/nlp_compromise.es5.js'],
+        dest: './builds/nlp_compromise.es5.min.js'
       },
-      "options": {
+      'options': {
         preserveComments: false,
         mangle: true,
-        banner: " /*nlp_comprimise by @spencermountain in 2015*/\n",
+        banner: ' /*nlp_comprimise,  MIT 2015*/\n',
         compress: {
           drop_console: true,
           dead_code: true,
@@ -54,19 +54,19 @@ module.exports = function(grunt) {
         }
       }
     },
-
-    eslint: {
-      options: {
-        configFile: "./eslint.json",
-        useEslintrc: false
-      },
-      target: ["./src"]
-    },
+    //
+    // eslint: {
+    //   options: {
+    //     configFile: "./eslint.json",
+    //     useEslintrc: false
+    //   },
+    //   target: ["./src"]
+    // },
 
     filesize: {
       base: {
         files: [{
-          src: ["./builds/nlp_compromise.es5.min.js"]
+          src: ['./builds/nlp_compromise.es5.min.js']
         }],
         options: {
           ouput: [{
@@ -79,29 +79,29 @@ module.exports = function(grunt) {
     mochaTest: {
       test: {
         options: {
-          require: "babel/register",
-          reporter: "spec",
+          require: 'babel/register',
+          reporter: 'spec',
           clearRequireCache: true,
           colors: true,
           growl: false
         },
-        src: ["test/**/*.js"]
+        src: ['test/**/*.js']
       }
     }
 
   });
 
-  grunt.loadNpmTasks("grunt-contrib-watch");
-  grunt.loadNpmTasks("grunt-eslint");
-  grunt.loadNpmTasks("grunt-babel");
-  grunt.loadNpmTasks("grunt-browserify");
-  grunt.loadNpmTasks("grunt-contrib-uglify");
-  grunt.loadNpmTasks("grunt-run");
-  grunt.loadNpmTasks("grunt-mocha-test");
-  grunt.loadNpmTasks("grunt-filesize");
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-eslint');
+  grunt.loadNpmTasks('grunt-babel');
+  grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-run');
+  grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-filesize');
 
-  grunt.registerTask("default", ["watch"]);
-  grunt.registerTask("test", ["mochaTest"]);
-  grunt.registerTask("lint", ["eslint"]);
-  grunt.registerTask("build", ["eslint", "browserify", "babel", "uglify", "filesize"]);
+  grunt.registerTask('default', ['watch']);
+  grunt.registerTask('test', ['mochaTest']);
+  grunt.registerTask('lint', ['eslint']);
+  grunt.registerTask('build', ['browserify', 'babel', 'uglify', 'filesize']);
 };

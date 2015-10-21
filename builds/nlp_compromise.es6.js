@@ -2,7 +2,7 @@
 //these are common word shortenings used in the lexicon and sentence segmentation methods
 //there are all nouns, or at the least, belong beside one.
 "use strict";
-let honourifics = require("./honourifics"); //stored seperately, for 'noun.is_person()'
+const honourifics = require("./honourifics"); //stored seperately, for 'noun.is_person()'
 
 let main = [
   //common abbreviations
@@ -858,10 +858,10 @@ module.exports = [
 //used to reduce redundant named-entities in longer text. (don't spot the same person twice.)
 //used to identify gender for coreference resolution
 "use strict";
-let main = [];
+const main = [];
 
 //an ad-hoc prefix encoding for names. 2ms decompression of names
-let male_names = {
+const male_names = {
   "will": "iam,ie,ard,is,iams",
   "fred": ",erick,die,rick,dy",
   "marc": "us,,o,os,el",
@@ -970,7 +970,7 @@ let male_names = {
   "q": "uentin,uinton",
   "x": "avier"
 };
-let female_names = {
+const female_names = {
   "mari": "a,e,lyn,an,anne,na,ssa,bel,sa,sol,tza",
   "kris": "ten,tin,tina,ti,tine,ty,ta,tie",
   "jean": "ette,ne,nette,nie,ine,nine",
@@ -1099,7 +1099,7 @@ let female_names = {
   "d": "ixie,ina",
   "u": "rsula"
 };
-let ambiguous = [
+const ambiguous = [
   "casey",
   "jamie",
   "lee",
@@ -1144,7 +1144,7 @@ let ambiguous = [
 let keys = Object.keys(male_names);
 let l = keys.length;
 for (let i = 0; i < l; i++) {
-  let arr = male_names[keys[i]].split(",");
+  const arr = male_names[keys[i]].split(",");
   for (let i2 = 0; i2 < arr.length; i2++) {
     main[keys[i] + arr[i2]] = "m";
   }
@@ -1154,7 +1154,7 @@ for (let i = 0; i < l; i++) {
 keys = Object.keys(female_names);
 l = keys.length;
 for (let i = 0; i < l; i++) {
-  let arr = female_names[keys[i]].split(",");
+  const arr = female_names[keys[i]].split(",");
   for (let i2 = 0; i2 < arr.length; i2++) {
     main[keys[i] + arr[i2]] = "f";
   }
@@ -1304,7 +1304,7 @@ module.exports = main;
 },{}],8:[function(require,module,exports){
 "use strict";
 
-let misc = {
+const misc = {
 
   "etc": "FW", //foreign words
   "ie": "FW",
@@ -1320,7 +1320,7 @@ let misc = {
   "sounds": "VBZ"
 };
 
-let compact = {
+const compact = {
   //conjunctions
   "CC": [
     "yet",
@@ -1694,9 +1694,9 @@ let compact = {
   ]
 };
 //unpack the compact terms into the misc lexicon..
-let keys = Object.keys(compact);
+const keys = Object.keys(compact);
 for (let i = 0; i < keys.length; i++) {
-  let arr = compact[keys[i]];
+  const arr = compact[keys[i]];
   for (let i2 = 0; i2 < arr.length; i2++) {
     misc[arr[i2]] = keys[i];
   }
@@ -1833,7 +1833,7 @@ module.exports = [
 //by @spencermountain, 2015 mit
 //many credits to http://www.allmyphrasalverbs.com/
 "use strict";
-let verb_conjugate = require("../term/verb/conjugate/conjugate.js");
+const verb_conjugate = require("../term/verb/conjugate/conjugate.js");
 
 //start the list with some randoms
 let main = [
@@ -1856,7 +1856,7 @@ let main = [
 ];
 
 //if there's a phrasal verb "keep on", there's often a "keep off"
-let opposites = {
+const opposites = {
   "away": "back",
   "in": "out",
   "on": "off",
@@ -1866,7 +1866,7 @@ let opposites = {
 };
 
 //forms that have in/out symmetry
-let symmetric = {
+const symmetric = {
   "away": "blow,bounce,bring,call,come,cut,drop,fire,get,give,go,keep,pass,put,run,send,shoot,switch,take,tie,throw",
   "in": "bang,barge,bash,beat,block,book,box,break,bring,burn,butt,carve,cash,check,come,cross,drop,fall,fence,fill,give,grow,hand,hang,head,jack,keep,leave,let,lock,log,move,opt,pack,peel,pull,put,rain,reach,ring,rub,send,set,settle,shut,sign,smash,snow,strike,take,try,turn,type,warm,wave,wean,wear,wheel",
   "on": "add,call,carry,catch,count,feed,get,give,go,grind,head,hold,keep,lay,log,pass,pop,power,put,send,show,snap,switch,take,tell,try,turn,wait",
@@ -1884,7 +1884,7 @@ Object.keys(symmetric).forEach(function(k) {
 });
 
 //forms that don't have in/out symmetry
-let asymmetric = {
+const asymmetric = {
   "about": "bring,fool,gad,go,root",
   "after": "go,look,take",
   "ahead": "get,go,press",
@@ -1923,14 +1923,14 @@ main = main.reduce(function(h, s) {
 }, {});
 
 //conjugate every phrasal verb. takes ~30ms
-let tags = {
+const tags = {
   present: "VB",
   past: "VBD",
   future: "VBF",
   gerund: "VBG",
   infinitive: "VBP",
 };
-let cache = {}; //cache individual verbs to speed it up
+const cache = {}; //cache individual verbs to speed it up
 let split, verb, particle, phrasal;
 Object.keys(main).forEach(function(s) {
   split = s.split(" ");
@@ -1950,7 +1950,7 @@ Object.keys(main).forEach(function(s) {
 // console.log(main["wiring up"] === "VBG")
 module.exports = main;
 
-},{"../term/verb/conjugate/conjugate.js":44}],12:[function(require,module,exports){
+},{"../term/verb/conjugate/conjugate.js":43}],12:[function(require,module,exports){
 //common nouns that have no plural form. These are suprisingly rare
 //used in noun.inflect(), and added as nouns in lexicon
 module.exports = [
@@ -2673,6 +2673,7 @@ module.exports = [
 },{}],14:[function(require,module,exports){
 "use strict";
 exports.pluck = function(arr, str) {
+  arr = arr || []
   return arr.map(function(o) {
     return o[str];
   });
@@ -2709,43 +2710,75 @@ exports.titlecase = function(str) {
 
 },{}],15:[function(require,module,exports){
 "use strict";
-let Text = require("./text/text.js");
+const Text = require("./text/text.js");
+const Term = require("./term/term.js");
+const Verb = require("./term/verb/verb.js");
+const Noun = require("./term/noun/noun.js");
+const Value = require("./term/value/value.js");
+const Adjective = require("./term/adjective/adjective.js");
+const Adverb = require("./term/adverb/adverb.js");
 
-//by abstracting Text, we allow multiple Text objects by the same user
-let nlp = function(str) {
-  return new Text(str);
+//function returns a text object if there's a param, otherwise
+const Api = function(str) {
+  this.Term = function(s) {
+    return new Term(s);
+  };
+  this.Verb = function(s) {
+    return new Verb(s);
+  };
+  this.Adverb = function(s) {
+    return new Adverb(s);
+  };
+  this.Noun = function(s) {
+    return new Noun(s);
+  };
+  this.Adjective = function(s) {
+    return new Adjective(s);
+  };
+  if (str) {
+    return new Text(str);
+  }
 };
 
-module.exports = nlp;
+module.exports = Api;
 
-},{"./text/text.js":53}],16:[function(require,module,exports){
+//return a Text object..
+// let nlp1=new Api("john is cool")
+// console.log(nlp1.text())
+
+//return a Term/Value object
+let nlp2 = new Api();
+// console.log(nlp2.Term("john"));
+console.log(nlp2.Verb("walk").conjugate());
+
+},{"./term/adjective/adjective.js":23,"./term/adverb/adverb.js":29,"./term/noun/noun.js":36,"./term/term.js":40,"./term/value/value.js":42,"./term/verb/verb.js":49,"./text/text.js":52}],16:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
 //it's built by conjugating and inflecting a small seed of terms
 "use strict";
-let fns = require("./fns.js");
-let verb_conjugate = require("./term/verb/conjugate/conjugate.js");
+const fns = require("./fns.js");
+const verb_conjugate = require("./term/verb/conjugate/conjugate.js");
 
-let lexicon = {};
+const lexicon = {};
 
-let addObj = function(obj) {
-  let keys = Object.keys(obj);
-  let l = keys.length;
+const addObj = function(obj) {
+  const keys = Object.keys(obj);
+  const l = keys.length;
   for (let i = 0; i < l; i++) {
     lexicon[keys[i]] = obj[keys[i]];
   }
 };
 
-let addArr = function(arr, tag) {
-  let l = arr.length;
+const addArr = function(arr, tag) {
+  const l = arr.length;
   for (let i = 0; i < l; i++) {
     lexicon[arr[i]] = tag;
   }
 };
 
 //conjugate all verbs.
-let verbs = require("./data/verbs.js");
+const verbs = require("./data/verbs.js");
 for (let i = 0; i < verbs.length; i++) {
-  let c = verb_conjugate(verbs[i]);
+  const c = verb_conjugate(verbs[i]);
   lexicon[c.infinitive] = "VBP";
   lexicon[c.past] = "VBD";
   lexicon[c.gerund] = "VBG";
@@ -2768,7 +2801,7 @@ addArr(require("./data/numbers.js"), "CD");
 //a little fancy
 addArr(Object.keys(require("./data/firstnames.js")), "NN");
 //add irregular nouns
-let irregNouns = require("./data/irregular_nouns.js");
+const irregNouns = require("./data/irregular_nouns.js");
 addArr(fns.pluck(irregNouns, 0), "NN");
 addArr(fns.pluck(irregNouns, 1), "NNS");
 
@@ -2797,15 +2830,15 @@ addObj(require("./data/phrasal_verbs.js"));
 
 module.exports = lexicon;
 
-},{"./data/abbreviations.js":1,"./data/adjectives.js":2,"./data/dates.js":3,"./data/demonyms.js":4,"./data/firstnames.js":5,"./data/honourifics.js":6,"./data/irregular_nouns.js":7,"./data/misc.js":8,"./data/multiples.js":9,"./data/numbers.js":10,"./data/phrasal_verbs.js":11,"./data/uncountables.js":12,"./data/verbs.js":13,"./fns.js":14,"./term/verb/conjugate/conjugate.js":44}],17:[function(require,module,exports){
+},{"./data/abbreviations.js":1,"./data/adjectives.js":2,"./data/dates.js":3,"./data/demonyms.js":4,"./data/firstnames.js":5,"./data/honourifics.js":6,"./data/irregular_nouns.js":7,"./data/misc.js":8,"./data/multiples.js":9,"./data/numbers.js":10,"./data/phrasal_verbs.js":11,"./data/uncountables.js":12,"./data/verbs.js":13,"./fns.js":14,"./term/verb/conjugate/conjugate.js":43}],17:[function(require,module,exports){
 "use strict";
-let Verb = require("../../term/verb/verb.js");
-let Noun = require("../../term/noun/noun.js");
-let Value = require("../../term/value/value.js");
-let Adverb = require("../../term/adverb/adverb.js");
-let Adjective = require("../../term/adjective/adjective.js");
+const Verb = require("../../term/verb/verb.js");
+const Noun = require("../../term/noun/noun.js");
+const Value = require("../../term/value/value.js");
+const Adverb = require("../../term/adverb/adverb.js");
+const Adjective = require("../../term/adjective/adjective.js");
 
-let mapping = {
+const mapping = {
   "NN": Noun,
   "NNA": Noun,
   "NNP": Noun,
@@ -2841,7 +2874,7 @@ let mapping = {
 };
 
 //swap the Term object with a proper Pos class
-let assign = function(t, pos, reason) {
+const assign = function(t, pos, reason) {
   if (mapping[pos] !== undefined) {
     t = new mapping[pos](t.text);
     t.reason = reason;
@@ -2851,12 +2884,12 @@ let assign = function(t, pos, reason) {
 
 module.exports = assign;
 
-},{"../../term/adjective/adjective.js":23,"../../term/adverb/adverb.js":29,"../../term/noun/noun.js":36,"../../term/value/value.js":43,"../../term/verb/verb.js":50}],18:[function(require,module,exports){
+},{"../../term/adjective/adjective.js":23,"../../term/adverb/adverb.js":29,"../../term/noun/noun.js":36,"../../term/value/value.js":42,"../../term/verb/verb.js":49}],18:[function(require,module,exports){
 //add a 'quiet' token for contractions so we can represent their grammar
 "use strict";
-let Term = require("../../term/term.js");
+const Term = require("../../term/term.js");
 
-let contractions = {
+const contractions = {
   "i'd": ["i", "would"],
   "she'd": ["she", "would"],
   "he'd": ["he", "would"],
@@ -2880,12 +2913,12 @@ let contractions = {
   "cannot": ["can", "not"]
 };
 
-let handle_contractions = function(terms) {
+const handle_contractions = function(terms) {
   for (let i = 0; i < terms.length; i++) {
-    let t = terms[i];
+    const t = terms[i];
     if (contractions[t.normal] !== undefined) {
-      let split = contractions[t.normal];
-      let fixup = [].concat(
+      const split = contractions[t.normal];
+      const fixup = [].concat(
         terms.slice(0, i),
         [new Term(split[0])],
         [new Term(split[1])],
@@ -2902,12 +2935,12 @@ module.exports = handle_contractions;
 },{"../../term/term.js":40}],19:[function(require,module,exports){
 "use strict";
 
-let assign = require("./assign");
-let lexicon = require("../../lexicon.js");
+const assign = require("./assign");
+const lexicon = require("../../lexicon.js");
 
 
 //consult lexicon for this known-word
-let lexicon_pass = function(terms) {
+const lexicon_pass = function(terms) {
   return terms.map(function(t) {
     //check lexicon straight-up
     if (lexicon[t.normal] !== undefined) {
@@ -2915,7 +2948,7 @@ let lexicon_pass = function(terms) {
     }
     //try to match it without a prefix - eg. outworked -> worked
     if (t.normal.match(/^(over|under|out|-|un|re|en).{4}/)) {
-      let attempt = t.normal.replace(/^(over|under|out|.*?-|un|re|en)/, "");
+      const attempt = t.normal.replace(/^(over|under|out|.*?-|un|re|en)/, "");
       return assign(t, lexicon[attempt], "lexicon_prefix");
     }
     return t;
@@ -2927,13 +2960,13 @@ module.exports = lexicon_pass;
 },{"../../lexicon.js":16,"./assign":17}],20:[function(require,module,exports){
 //part-of-speech tagging
 "use strict";
-let lexicon_pass = require("./lexicon_pass");
-let contractions = require("./contractions");
-let assign = require("./assign");
-let word_rules = require("./word_rules");
+const lexicon_pass = require("./lexicon_pass");
+const contractions = require("./contractions");
+const assign = require("./assign");
+const word_rules = require("./word_rules");
 
 //set POS for capitalised words
-let capital_signals = function(terms) {
+const capital_signals = function(terms) {
   //first words need careful rules
   if (terms[0].is_acronym()) {
     terms[0] = assign(terms[0], "NN", "acronym");
@@ -2948,18 +2981,19 @@ let capital_signals = function(terms) {
 };
 
 //regex-rules for words/suffixes
-let rules_pass = function(terms) {
+const rules_pass = function(terms) {
   for (let i = 0; i < terms.length; i++) {
     for (let o = 0; o < word_rules.length; o++) {
       if (terms[i].normal.length > 4 && terms[i].normal.match(word_rules[o].reg)) {
-        return assign(terms[i], word_rules[o].pos, "rules_pass");
+        terms[i]= assign(terms[i], word_rules[o].pos, "rules_pass");
+        break
       }
     }
   }
   return terms;
 };
 
-let tagger = function(s) {
+const tagger = function(s) {
   s.terms = capital_signals(s.terms);
   s.terms = contractions(s.terms);
   s.terms = lexicon_pass(s.terms);
@@ -3092,36 +3126,33 @@ module.exports = [
 
 },{}],22:[function(require,module,exports){
 "use strict";
-let Term = require("../term/term.js");
-let fns = require("../fns.js");
-let tagger = require("./pos/tagger.js");
+const Term = require("../term/term.js");
+const fns = require("../fns.js");
+const tagger = require("./pos/tagger.js");
 
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {
 
   constructor(str) {
     this.str = str || "";
-    let terms = str.split(" ");
+    const terms = str.split(" ");
     this.terms = terms.map(function(s, i) {
-      let info = {
+      const info = {
         index: i
       };
       return new Term(s, info);
     });
+    this.terms = tagger(this);
   }
 
   //Sentence methods:
 
   //the ending punctuation
   terminator() {
-    let allowed = {
-      ".": true,
-      "!": true,
-      "?": true
-    };
-    let char = this.str.slice(-1) || "";
-    if (allowed[char]) {
-      return char;
+    const allowed = [".", "?", "!"];
+    const punct = this.str.slice(-1) || "";
+    if (allowed.indexOf(punct) !== -1) {
+      return punct;
     }
     return ".";
   }
@@ -3134,8 +3165,8 @@ class Sentence {
 
   //is it a question/statement
   sentence_type() {
-    let char = this.terminator();
-    let types = {
+    const char = this.terminator();
+    const types = {
       "?": "interrogative",
       "!": "exclamative",
       ".": "declarative",
@@ -3159,12 +3190,12 @@ module.exports = Sentence;
 
 },{"../fns.js":14,"../term/term.js":40,"./pos/tagger.js":20}],23:[function(require,module,exports){
 "use strict";
-let Term = require("../term.js");
+const Term = require("../term.js");
 
-let to_comparative = require("./to_comparative");
-let to_superlative = require("./to_superlative");
-let adj_to_adv = require("./to_adverb");
-let adj_to_noun = require("./to_noun");
+const to_comparative = require("./to_comparative");
+const to_superlative = require("./to_superlative");
+const adj_to_adv = require("./to_adverb");
+const adj_to_noun = require("./to_noun");
 
 class Adjective extends Term {
   constructor(str) {
@@ -3393,8 +3424,8 @@ module.exports = [
 },{}],25:[function(require,module,exports){
 //turn 'quick' into 'quickly'
 "use strict";
-let adj_to_adv = function(str) {
-  let irregulars = {
+const adj_to_adv = function(str) {
+  const irregulars = {
     "idle": "idly",
     "public": "publicly",
     "vague": "vaguely",
@@ -3418,7 +3449,7 @@ let adj_to_adv = function(str) {
     "bad": "badly"
   };
 
-  let dont = {
+  const dont = {
     "foreign": 1,
     "black": 1,
     "modern": 1,
@@ -3463,7 +3494,7 @@ let adj_to_adv = function(str) {
     "adult": 1
   };
 
-  let transforms = [{
+  const transforms = [{
     reg: /al$/i,
     repl: "ally"
   }, {
@@ -3489,7 +3520,7 @@ let adj_to_adv = function(str) {
     repl: "ly"
   }];
 
-  let not_matches = [
+  const not_matches = [
     /airs$/,
     /ll$/,
     /ee.$/,
@@ -3524,10 +3555,10 @@ module.exports = adj_to_adv;
 },{}],26:[function(require,module,exports){
 //turn 'quick' into 'quickly'
 "use strict";
-let convertables = require("./convertables");
+const convertables = require("./convertables");
 
-let to_comparative = function(str) {
-  let irregulars = {
+const to_comparative = function(str) {
+  const irregulars = {
     "grey": "greyer",
     "gray": "grayer",
     "green": "greener",
@@ -3539,7 +3570,7 @@ let to_comparative = function(str) {
     "sad": "sadder"
   };
 
-  let dont = {
+  const dont = {
     "overweight": 1,
     "main": 1,
     "nearby": 1,
@@ -3549,7 +3580,7 @@ let to_comparative = function(str) {
     "certain": 1
   };
 
-  let transforms = [{
+  const transforms = [{
     reg: /y$/i,
     repl: "ier"
   }, {
@@ -3563,7 +3594,7 @@ let to_comparative = function(str) {
     repl: "nger"
   }];
 
-  let matches = [
+  const matches = [
     /ght$/,
     /nge$/,
     /ough$/,
@@ -3576,7 +3607,7 @@ let to_comparative = function(str) {
     /e[ae]p$/
   ];
 
-  let not_matches = [
+  const not_matches = [
     /ary$/,
     /ous$/
   ];
@@ -3623,8 +3654,8 @@ module.exports = to_comparative;
 },{"./convertables":24}],27:[function(require,module,exports){
 //convert cute to cuteness
 "use strict";
-let to_noun = function(w) {
-  let irregulars = {
+const to_noun = function(w) {
+  const irregulars = {
     "clean": "cleanliness",
     "naivety": "naivety"
   };
@@ -3640,7 +3671,7 @@ let to_noun = function(w) {
   if (w.match(/w$/)) {
     return w;
   }
-  let transforms = [{
+  const transforms = [{
     "reg": /y$/,
     "repl": "iness"
   }, {
@@ -3694,10 +3725,10 @@ module.exports = to_noun;
 },{}],28:[function(require,module,exports){
 //turn 'quick' into 'quickest'
 "use strict";
-let convertables = require("./convertables");
+const convertables = require("./convertables");
 
-let to_superlative = function(str) {
-  let irregulars = {
+const to_superlative = function(str) {
+  const irregulars = {
     "nice": "nicest",
     "late": "latest",
     "hard": "hardest",
@@ -3709,12 +3740,12 @@ let to_superlative = function(str) {
     "good": "best"
   };
 
-  let dont = {
+  const dont = {
     "overweight": 1,
     "ready": 1
   };
 
-  let transforms = [{
+  const transforms = [{
     "reg": /y$/i,
     "repl": "iest"
   }, {
@@ -3728,7 +3759,7 @@ let to_superlative = function(str) {
     "repl": "ngest"
   }];
 
-  let matches = [
+  const matches = [
     /ght$/,
     /nge$/,
     /ough$/,
@@ -3740,11 +3771,11 @@ let to_superlative = function(str) {
     /...p$/
   ];
 
-  let not_matches = [
+  const not_matches = [
     /ary$/
   ];
 
-  let generic_transformation = function(s) {
+  const generic_transformation = function(s) {
     if (s.match(/e$/)) {
       return s + "st";
     }
@@ -3788,8 +3819,8 @@ module.exports = to_superlative;
 
 },{"./convertables":24}],29:[function(require,module,exports){
 "use strict";
-let Term = require("../term.js");
-let to_adjective = require("./to_adjective.js");
+const Term = require("../term.js");
+const to_adjective = require("./to_adjective.js");
 
 class Adverb extends Term {
   constructor(str) {
@@ -3809,8 +3840,8 @@ module.exports = Adverb;
 },{"../term.js":40,"./to_adjective.js":30}],30:[function(require,module,exports){
 //turns 'quickly' into 'quick'
 "use strict";
-let to_adjective = function(str) {
-  let irregulars = {
+const to_adjective = function(str) {
+  const irregulars = {
     "idly": "idle",
     "sporadically": "sporadic",
     "basically": "basic",
@@ -3830,7 +3861,7 @@ let to_adjective = function(str) {
     "jolly": "jolly",
     "wholly": "whole"
   };
-  let transforms = [{
+  const transforms = [{
     "reg": /bly$/i,
     "repl": "ble"
   }, {
@@ -3872,7 +3903,7 @@ module.exports = to_adjective;
 // built with patterns+exceptions from https://en.wikipedia.org/wiki/British_spelling
 "use strict";
 
-let patterns = [
+const patterns = [
   // ise -> ize
   {
     reg: /([^aeiou][iy])s(e|ed|es|ing)?$/,
@@ -3915,7 +3946,7 @@ let patterns = [
   }
 ];
 
-let americanize = function(str) {
+const americanize = function(str) {
   for (let i = 0; i < patterns.length; i++) {
     if (str.match(patterns[i].reg)) {
       return str.replace(patterns[i].reg, patterns[i].repl);
@@ -3936,7 +3967,7 @@ module.exports = americanize;
 // (some patterns are only safe to do in one direction)
 "use strict";
 
-let patterns = [
+const patterns = [
   // ise -> ize
   {
     reg: /([^aeiou][iy])z(e|ed|es|ing)?$/,
@@ -3986,7 +4017,7 @@ let patterns = [
   }
 ];
 
-let britishize = function(str) {
+const britishize = function(str) {
   for (let i = 0; i < patterns.length; i++) {
     if (str.match(patterns[i].reg)) {
       return str.replace(patterns[i].reg, patterns[i].repl);
@@ -4004,7 +4035,7 @@ module.exports = britishize;
 "use strict";
 
 //chooses an indefinite aricle 'a/an' for a word
-let irregulars = {
+const irregulars = {
   "hour": "an",
   "heir": "an",
   "heirloom": "an",
@@ -4015,7 +4046,7 @@ let irregulars = {
 };
 
 
-let is_acronym = function(s) {
+const is_acronym = function(s) {
   //no periods
   if (s.length <= 5 && s.match(/^[A-Z]*$/)) {
     return true;
@@ -4028,12 +4059,12 @@ let is_acronym = function(s) {
 };
 
 
-let indefinite_article = function(str) {
+const indefinite_article = function(str) {
   if (!str) {
     return null;
   }
   //pronounced letters of acronyms that get a 'an'
-  let an_acronyms = {
+  const an_acronyms = {
     A: true,
     E: true,
     F: true,
@@ -4048,7 +4079,7 @@ let indefinite_article = function(str) {
     X: true
   };
   //'a' regexes
-  let a_regexs = [
+  const a_regexs = [
     /^onc?e/i, //'wu' sound of 'o'
     /^u[bcfhjkqrstn][aeiou]/i, // 'yu' sound for hard 'u'
     /^eul/i
@@ -4082,10 +4113,10 @@ module.exports = indefinite_article;
 
 },{}],34:[function(require,module,exports){
 "use strict";
-let irregulars = require("../../data/irregular_nouns");
+const irregulars = require("../../data/irregular_nouns");
 
 //similar to plural/singularize rules, but not the same
-let plural_indicators = [
+const plural_indicators = [
   /(^v)ies$/i,
   /ises$/i,
   /ives$/i,
@@ -4109,7 +4140,7 @@ let plural_indicators = [
 ];
 
 //similar to plural/singularize rules, but not the same
-let singular_indicators = [
+const singular_indicators = [
   /(ax|test)is$/i,
   /(octop|vir|radi|nucle|fung|cact|stimul)us$/i,
   /(octop|vir)i$/i,
@@ -4132,10 +4163,10 @@ let singular_indicators = [
   /^(?!talis|.*hu)(.*)man$/i
 ];
 
-let is_plural = function(str) {
+const is_plural = function(str) {
   str = (str || "").toLowerCase();
   //handle 'mayors of chicago'
-  let preposition = str.match(/([a-z]*) (of|in|by|for) [a-z]/);
+  const preposition = str.match(/([a-z]*) (of|in|by|for) [a-z]/);
   if (preposition && preposition[1]) {
     str = preposition[1];
   }
@@ -4177,14 +4208,14 @@ module.exports = is_plural;
 },{"../../data/irregular_nouns":7}],35:[function(require,module,exports){
 //uncountables are words that shouldn't ever inflect, for metaphysical reasons, like 'peace'
 "use strict";
-let uncountable_arr = require("../../data/uncountables.js");
+const uncountable_arr = require("../../data/uncountables.js");
 
-let uncountable = uncountable_arr.reduce(function(h, a) {
+const uncountable = uncountable_arr.reduce(function(h, a) {
   h[a] = true;
   return h;
 }, {});
 
-let is_uncountable = function(str) {
+const is_uncountable = function(str) {
   if (uncountable[str]) {
     return true;
   }
@@ -4196,12 +4227,12 @@ module.exports = is_uncountable;
 
 },{"../../data/uncountables.js":12}],36:[function(require,module,exports){
 "use strict";
-let Term = require("../term.js");
-let article = require("./article.js");
-let is_plural = require("./is_plural.js");
-let singularize = require("./singularize.js");
-let pluralize = require("./pluralize.js");
-let is_uncountable = require("./is_uncountable.js");
+const Term = require("../term.js");
+const article = require("./article.js");
+const is_plural = require("./is_plural.js");
+const singularize = require("./singularize.js");
+const pluralize = require("./pluralize.js");
+const is_uncountable = require("./is_uncountable.js");
 
 class Noun extends Term {
   constructor(str) {
@@ -4234,12 +4265,12 @@ module.exports = Noun;
 
 },{"../term.js":40,"./article.js":33,"./is_plural.js":34,"./is_uncountable.js":35,"./pluralize.js":37,"./singularize.js":38}],37:[function(require,module,exports){
 "use strict";
-let is_uncountable = require("./is_uncountable.js");
-let irregulars = require("../../data/irregular_nouns.js");
-let is_plural = require("./is_plural.js");
-let fns = require("../../fns.js");
+const is_uncountable = require("./is_uncountable.js");
+const irregulars = require("../../data/irregular_nouns.js");
+const is_plural = require("./is_plural.js");
+const fns = require("../../fns.js");
 
-let pluralize_rules = [
+const pluralize_rules = [
   [/(ax|test)is$/i, "$1es"],
   [/(octop|vir|radi|nucle|fung|cact|stimul)us$/i, "$1i"],
   [/(octop|vir)i$/i, "$1i"],
@@ -4272,8 +4303,8 @@ let pluralize_rules = [
 });
 
 
-let pluralize = function(str) {
-  let low = str.toLowerCase();
+const pluralize = function(str) {
+  const low = str.toLowerCase();
   //uncountable
   if (is_uncountable(low)) { //uncountables shouldn't ever inflect
     return str;
@@ -4283,7 +4314,7 @@ let pluralize = function(str) {
     return str;
   }
   //irregular
-  let found = irregulars.filter(function(r) {
+  const found = irregulars.filter(function(r) {
     return r[0] === low;
   });
   if (found[0]) {
@@ -4295,9 +4326,9 @@ let pluralize = function(str) {
   }
   //inflect first word of preposition-phrase
   if (str.match(/([a-z]*) (of|in|by|for) [a-z]/)) {
-    let first = (str.match(/^([a-z]*) (of|in|by|for) [a-z]/) || [])[1];
+    const first = (str.match(/^([a-z]*) (of|in|by|for) [a-z]/) || [])[1];
     if (first) {
-      let better_first = pluralize(first);
+      const better_first = pluralize(first);
       return better_first + str.replace(first, "");
     }
   }
@@ -4322,12 +4353,12 @@ module.exports = pluralize;
 
 },{"../../data/irregular_nouns.js":7,"../../fns.js":14,"./is_plural.js":34,"./is_uncountable.js":35}],38:[function(require,module,exports){
 "use strict";
-let is_uncountable = require("./is_uncountable.js");
-let irregulars = require("../../data/irregular_nouns.js");
-let is_plural = require("./is_plural.js");
-let fns = require("../../fns.js");
+const is_uncountable = require("./is_uncountable.js");
+const irregulars = require("../../data/irregular_nouns.js");
+const is_plural = require("./is_plural.js");
+const fns = require("../../fns.js");
 
-let singularize_rules = [
+const singularize_rules = [
   [/([^v])ies$/i, "$1y"],
   [/ises$/i, "isis"],
   [/ives$/i, "ife"],
@@ -4359,8 +4390,8 @@ let singularize_rules = [
   };
 });
 
-let singularize = function(str) {
-  let low = str.toLowerCase();
+const singularize = function(str) {
+  const low = str.toLowerCase();
   //uncountable
   if (is_uncountable(low)) {
     return str;
@@ -4370,7 +4401,7 @@ let singularize = function(str) {
     return str;
   }
   //irregular
-  let found = irregulars.filter(function(r) {
+  const found = irregulars.filter(function(r) {
     return r[1] === low;
   });
   if (found[0]) {
@@ -4381,9 +4412,9 @@ let singularize = function(str) {
   }
   //inflect first word of preposition-phrase
   if (str.match(/([a-z]*) (of|in|by|for) [a-z]/)) {
-    let first = str.match(/^([a-z]*) (of|in|by|for) [a-z]/);
+    const first = str.match(/^([a-z]*) (of|in|by|for) [a-z]/);
     if (first && first[1]) {
-      let better_first = singularize(first[1]);
+      const better_first = singularize(first[1]);
       return better_first + str.replace(first[1], "");
     }
   }
@@ -4419,14 +4450,14 @@ function postprocess(arr) {
   if (arr.length > 2) {
     return arr;
   }
-  let ones = [
+  const ones = [
     /^[^aeiou]?ion/,
     /^[^aeiou]?ised/,
     /^[^aeiou]?iled/
   ];
-  let l = arr.length;
+  const l = arr.length;
   if (l > 1) {
-    let suffix = arr[l - 2] + arr[l - 1];
+    const suffix = arr[l - 2] + arr[l - 1];
     for (let i = 0; i < ones.length; i++) {
       if (suffix.match(ones[i])) {
         arr[l - 2] = arr[l - 2] + arr[l - 1];
@@ -4437,13 +4468,13 @@ function postprocess(arr) {
   return arr;
 }
 
-let syllables = function(str) {
+const syllables = function(str) {
   let all = [];
 
   //method is nested because it's called recursively
-  let doer = function(w) {
-    let vow = /[aeiouy]$/;
-    let chars = w.split("");
+  const doer = function(w) {
+    const vow = /[aeiouy]$/;
+    const chars = w.split("");
     let before = "";
     let after = "";
     let current = "";
@@ -4500,9 +4531,10 @@ module.exports = syllables;
 
 },{}],40:[function(require,module,exports){
 "use strict";
-let syllables = require("./syllables");
-let americanize = require("./americanize");
-let britishize = require("./britishize");
+const syllables = require("./syllables");
+const americanize = require("./americanize");
+const britishize = require("./britishize");
+// const Verb = require("./verb/verb.js");
 
 class Term {
   constructor(str) {
@@ -4510,6 +4542,7 @@ class Term {
     this.text = str.trim();
     this.normal = this.normalize();
     this.reason = "";
+    this.parent = "?";
   }
 
   //Term methods..
@@ -4553,366 +4586,11 @@ class Term {
 }
 
 // let t = new Term("synthesise")
-// console.log(t.americanize())
+// console.log(t.isVerb())
 
 module.exports = Term;
 
 },{"./americanize":31,"./britishize":32,"./syllables":39}],41:[function(require,module,exports){
-// #generates properly-formatted dates from free-text date forms
-// #by spencer kelly 2014
-"use strict";
-let months = "(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|aug|sept|oct|nov|dec),?";
-let days = "([0-9]{1,2}),?";
-let years = "([12][0-9]{3})";
-
-let to_obj = function(arr, places) {
-  return Object.keys(places).reduce(function(h, k) {
-    h[k] = arr[places[k]];
-    return h;
-  }, {});
-};
-
-let regexes = [{
-  reg: String(months) + " " + String(days) + "-" + String(days) + " " + String(years),
-  example: "March 7th-11th 1987",
-  process: function(arr) {
-    if (!arr) {
-      arr = [];
-    }
-    let places = {
-      month: 1,
-      day: 2,
-      to_day: 3,
-      year: 4
-    };
-    return to_obj(arr, places);
-  }
-}, {
-  reg: String(days) + " of " + String(months) + " to " + String(days) + " of " + String(months) + " " + String(years),
-  example: "28th of September to 5th of October 2008",
-  process: function(arr) {
-    if (!arr) {
-      arr = [];
-    }
-    let places = {
-      day: 1,
-      month: 2,
-      to_day: 3,
-      to_month: 4,
-      to_year: 5
-    };
-    return to_obj(arr, places);
-  }
-}, {
-  reg: String(months) + " " + String(days) + " to " + String(months) + " " + String(days) + " " + String(years),
-  example: "March 7th to june 11th 1987",
-  process: function(arr) {
-    if (!arr) {
-      arr = [];
-    }
-    let places = {
-      month: 1,
-      day: 2,
-      to_month: 3,
-      to_day: 4,
-      year: 5,
-      to_year: 5
-    };
-    return to_obj(arr, places);
-  }
-}, {
-  reg: "between " + String(days) + " " + String(months) + " and " + String(days) + " " + String(months) + " " + String(years),
-  example: "between 13 February and 15 February 1945",
-  process: function(arr) {
-    if (!arr) {
-      arr = [];
-    }
-    let places = {
-      day: 1,
-      month: 2,
-      to_day: 3,
-      to_month: 4,
-      year: 5,
-      to_year: 5
-    };
-    return to_obj(arr, places);
-  }
-}, {
-  reg: "between " + String(months) + " " + String(days) + " and " + String(months) + " " + String(days) + " " + String(years),
-  example: "between March 7th and june 11th 1987",
-  process: function(arr) {
-    if (!arr) {
-      arr = [];
-    }
-    let places = {
-      month: 1,
-      day: 2,
-      to_month: 3,
-      to_day: 4,
-      year: 5,
-      to_year: 5
-    };
-    return to_obj(arr, places);
-  }
-}, {
-  reg: String(months) + " " + String(days) + " " + String(years),
-  example: "March 1st 1987",
-  process: function(arr) {
-    if (!arr) {
-      arr = [];
-    }
-    let places = {
-      month: 1,
-      day: 2,
-      year: 3
-    };
-    return to_obj(arr, places);
-  }
-}, {
-  reg: String(days) + " - " + String(days) + " of " + String(months) + " " + String(years),
-  example: "3rd - 5th of March 1969",
-  process: function(arr) {
-    if (!arr) {
-      arr = [];
-    }
-    let places = {
-      day: 1,
-      to_day: 2,
-      month: 3,
-      year: 4
-    };
-    return to_obj(arr, places);
-  }
-}, {
-  reg: String(days) + " of " + String(months) + " " + String(years),
-  example: "3rd of March 1969",
-  process: function(arr) {
-    if (!arr) {
-      arr = [];
-    }
-    let places = {
-      day: 1,
-      month: 2,
-      year: 3
-    };
-    return to_obj(arr, places);
-  }
-}, {
-  reg: String(months) + " " + years + ",? to " + String(months) + " " + String(years),
-  example: "September 1939 to April 1945",
-  process: function(arr) {
-    if (!arr) {
-      arr = [];
-    }
-    let places = {
-      month: 1,
-      year: 2,
-      to_month: 3,
-      to_year: 4
-    };
-    return to_obj(arr, places);
-  }
-}, {
-  reg: String(months) + " " + String(years),
-  example: "March 1969",
-  process: function(arr) {
-    if (!arr) {
-      arr = [];
-    }
-    let places = {
-      month: 1,
-      year: 2
-    };
-    return to_obj(arr, places);
-  }
-}, {
-  reg: String(months) + " " + days,
-  example: "March 18th",
-  process: function(arr) {
-    if (!arr) {
-      arr = [];
-    }
-    let places = {
-      month: 1,
-      day: 2
-    };
-    return to_obj(arr, places);
-  }
-}, {
-  reg: String(days) + " of " + months,
-  example: "18th of March",
-  process: function(arr) {
-    if (!arr) {
-      arr = [];
-    }
-    let places = {
-      month: 2,
-      day: 1
-    };
-    return to_obj(arr, places);
-  }
-}, {
-  reg: years + " ?- ?" + String(years),
-  example: "1997-1998",
-  process: function(arr) {
-    if (!arr) {
-      arr = [];
-    }
-    let places = {
-      year: 1,
-      to_year: 2
-    };
-    return to_obj(arr, places);
-  }
-}, {
-  reg: years,
-  example: "1998",
-  process: function(arr) {
-    if (!arr) {
-      arr = [];
-    }
-    let places = {
-      year: 1
-    };
-    return to_obj(arr, places);
-  }
-}].map(function(o) {
-  o.reg = new RegExp(o.reg, "g");
-  return o;
-});
-
-//0 based months, 1 based days...
-let months_obj = {
-  january: 0,
-  february: 1,
-  march: 2,
-  april: 3,
-  may: 4,
-  june: 5,
-  july: 6,
-  august: 7,
-  september: 8,
-  october: 9,
-  november: 10,
-  december: 11,
-  jan: 0,
-  feb: 1,
-  mar: 2,
-  apr: 3,
-  aug: 7,
-  sept: 8,
-  oct: 9,
-  nov: 10,
-  dec: 11
-};
-
-//thirty days hath september...
-let last_dates = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-let preprocess = function(str) {
-  str = str.toLowerCase();
-  str = str.replace(/([0-9])(th|rd|st)/g, "$1");
-  return str;
-};
-
-let postprocess = function(obj, options) {
-  let d = new Date();
-  options = options || {};
-  obj.year = parseInt(obj.year, 10) || undefined;
-  obj.day = parseInt(obj.day, 10) || undefined;
-  obj.to_day = parseInt(obj.to_day, 10) || undefined;
-  obj.to_year = parseInt(obj.to_year, 10) || undefined;
-  obj.month = months_obj[obj.month];
-  obj.to_month = months_obj[obj.to_month];
-  //swap to_month and month
-  if (obj.to_month !== undefined && obj.month === undefined) {
-    obj.month = obj.to_month;
-  }
-  if (obj.to_month === undefined && obj.month !== undefined) {
-    obj.to_month = obj.month;
-  }
-  //swap to_year and year
-  if (obj.to_year && !obj.year) {
-    obj.year = obj.to_year;
-  }
-  if (!obj.to_year && obj.year && obj.to_month !== undefined) {
-    obj.to_year = obj.year;
-  }
-  if (options.assume_year && !obj.year) {
-    obj.year = d.getFullYear();
-  }
-  //make sure date is in that month..
-  if (obj.day !== undefined && obj.day > 31 || obj.month !== undefined && obj.day > last_dates[obj.month]) {
-    obj.day = undefined;
-  }
-  //make sure to date is after from date. fail everything if so...
-  //todo: do this smarter
-  if (obj.to_month !== undefined && obj.to_month < obj.month) {
-    return {};
-  }
-  if (obj.to_year && obj.to_year < obj.year) {
-    obj.year = undefined;
-    obj.to_year = undefined;
-  }
-
-  //make sure date is in reasonable range (very opinionated)
-  if (obj.year > 2090 || obj.year < 1200) {
-    obj.year = undefined;
-    obj.to_year = undefined;
-  }
-  //format result better
-  obj = {
-    day: obj.day,
-    month: obj.month,
-    year: obj.year,
-    to: {
-      day: obj.to_day,
-      month: obj.to_month,
-      year: obj.to_year
-    }
-  };
-  //add javascript date objects, if you can
-  if (obj.year && obj.day && obj.month !== undefined) {
-    obj.date_object = new Date();
-    obj.date_object.setYear(obj.year);
-    obj.date_object.setMonth(obj.month);
-    obj.date_object.setDate(obj.day);
-  }
-  if (obj.to.year && obj.to.day && obj.to.month !== undefined) {
-    obj.to.date_object = new Date();
-    obj.to.date_object.setYear(obj.to.year);
-    obj.to.date_object.setMonth(obj.to.month);
-    obj.to.date_object.setDate(obj.to.day);
-  }
-  //if we have enough data to return a result..
-  if (obj.year || obj.month !== undefined) {
-    return obj;
-  }
-  return {};
-};
-
-//pass through sequence of regexes until tempate is matched..
-let date_extractor = function(str, options) {
-  options = options || {};
-  str = preprocess(str);
-  let l = regexes.length;
-  for (let i = 0; i < l; i += 1) {
-    let obj = regexes[i];
-    if (str.match(obj.reg)) {
-      let clone_reg = new RegExp(obj.reg.source, "i"); //this avoids a memory-leak
-      let arr = clone_reg.exec(str);
-      let good = obj.process(arr);
-      return postprocess(good, options);
-    }
-  }
-};
-
-// console.log(date_extractor("1998"))
-// console.log(date_extractor("1999"))
-
-module.exports = date_extractor;
-
-},{}],42:[function(require,module,exports){
 // converts spoken numbers into integers  "fifty seven point eight" -> 57.8
 //
 // Spoken numbers take the following format
@@ -4924,7 +4602,7 @@ module.exports = date_extractor;
 "use strict";
 //these sets of numbers each have different rules
 //[tenth, hundreth, thousandth..] are ambiguous because they could be ordinal like fifth, or decimal like one-one-hundredth, so are ignored
-let ones = {
+const ones = {
   "a": 1,
   "zero": 0,
   "one": 1,
@@ -4946,7 +4624,7 @@ let ones = {
   "eighth": 8,
   "ninth": 9
 };
-let teens = {
+const teens = {
   "ten": 10,
   "eleven": 11,
   "twelve": 12,
@@ -4967,7 +4645,7 @@ let teens = {
   "eighteenth": 18,
   "nineteenth": 19
 };
-let tens = {
+const tens = {
   "twenty": 20,
   "thirty": 30,
   "forty": 40,
@@ -4985,7 +4663,7 @@ let tens = {
   "eightieth": 80,
   "ninetieth": 90
 };
-let multiple = {
+const multiple = {
   "hundred": 100,
   "grand": 1000,
   "thousand": 1000,
@@ -5002,12 +4680,12 @@ let multiple = {
 };
 // let decimal_multiple={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
 
-let to_number = function(s) {
+const to_number = function(s) {
   //remember these concerns for possible errors
   let ones_done = false;
   let teens_done = false;
   let tens_done = false;
-  let multiple_done = {};
+  const multiple_done = {};
   let total = 0;
   let global_multiplier = 1;
   //pretty-printed numbers
@@ -5026,7 +4704,7 @@ let to_number = function(s) {
     return null;
   }
   //support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
-  let mults = [{
+  const mults = [{
     reg: /^(minus|negative)[\s\-]/i,
     mult: -1
   }, {
@@ -5045,7 +4723,7 @@ let to_number = function(s) {
   }
 
   //do each word in turn..
-  let words = s.toString().split(/[\s\-]+/);
+  const words = s.toString().split(/[\s\-]+/);
   let w, x;
   let current_sum = 0;
   let local_multiplier = 1;
@@ -5194,11 +4872,11 @@ let to_number = function(s) {
 //kick it into module
 module.exports = to_number;
 
-},{}],43:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 "use strict";
-let Term = require("../term.js");
-let date_extractor = require("./date_extractor.js");
-let to_number = require("./to_number.js");
+const Term = require("../term.js");
+// const date_extractor = require("./date_extractor.js");
+const to_number = require("./to_number.js");
 
 class Value extends Term {
   constructor(str) {
@@ -5207,9 +4885,9 @@ class Value extends Term {
   }
 
   is_date() {
-    let months = /(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|aug|sept|oct|nov|dec)/i;
-    let times = /1?[0-9]:[0-9]{2}/;
-    let days = /\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday|mon|tues|wed|thurs|fri|sat|sun)\b/i;
+    const months = /(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|aug|sept|oct|nov|dec)/i;
+    const times = /1?[0-9]:[0-9]{2}/;
+    const days = /\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday|mon|tues|wed|thurs|fri|sat|sun)\b/i;
     if (this.normal.match(months) || this.normal.match(times) || this.normal.match(days)) {
       return true;
     }
@@ -5221,26 +4899,22 @@ class Value extends Term {
   }
 
   date_extractor() {
-    return date_extractor(this.normal);
+    return ""; 
   }
-
 }
-
-// let t = new Value("january 5th 1998")
-// console.log(t.date_extractor())
 
 module.exports = Value;
 
-},{"../term.js":40,"./date_extractor.js":41,"./to_number.js":42}],44:[function(require,module,exports){
+},{"../term.js":40,"./to_number.js":41}],43:[function(require,module,exports){
 //turn a verb into its other grammatical forms.
 "use strict";
-let verb_to_doer = require("./to_doer");
-let verb_irregulars = require("./verb_irregulars");
-let verb_rules = require("./verb_rules");
-let predict = require("./predict_form.js");
+const verb_to_doer = require("./to_doer");
+const verb_irregulars = require("./verb_irregulars");
+const verb_rules = require("./verb_rules");
+const predict = require("./predict_form.js");
 
 //fallback to this transformation if it has an unknown prefix
-let fallback = function(w) {
+const fallback = function(w) {
   let infinitive;
   if (w.length > 4) {
     infinitive = w.replace(/ed$/, "");
@@ -5274,7 +4948,7 @@ let fallback = function(w) {
 };
 
 //make sure object has all forms
-let fufill = function(obj, prefix) {
+const fufill = function(obj, prefix) {
   if (!obj.infinitive) {
     return obj;
   }
@@ -5315,18 +4989,18 @@ let fufill = function(obj, prefix) {
   return obj;
 };
 
-let conjugate = function(w) {
+const conjugate = function(w) {
   if (w === undefined) {
     return {};
   }
 
   //for phrasal verbs ('look out'), conjugate look, then append 'out'
-  let phrasal_reg = new RegExp("^(.*?) (in|out|on|off|behind|way|with|of|do|away|across|ahead|back|over|under|together|apart|up|upon|aback|down|about|before|after|around|to|forth|round|through|along|onto)$", "i");
+  const phrasal_reg = new RegExp("^(.*?) (in|out|on|off|behind|way|with|of|do|away|across|ahead|back|over|under|together|apart|up|upon|aback|down|about|before|after|around|to|forth|round|through|along|onto)$", "i");
   if (w.match(" ") && w.match(phrasal_reg)) {
-    let split = w.match(phrasal_reg, "");
-    let phrasal_verb = split[1];
-    let particle = split[2];
-    let result = conjugate(phrasal_verb); //recursive
+    const split = w.match(phrasal_reg, "");
+    const phrasal_verb = split[1];
+    const particle = split[2];
+    const result = conjugate(phrasal_verb); //recursive
     delete result["doer"];
     Object.keys(result).forEach(function(k) {
       if (result[k]) {
@@ -5353,28 +5027,28 @@ let conjugate = function(w) {
   //chop it if it's future-tense
   w = w.replace(/^will /i, "");
   //un-prefix the verb, and add it in later
-  let prefix = (w.match(/^(over|under|re|anti|full)\-?/i) || [])[0];
-  let verb = w.replace(/^(over|under|re|anti|full)\-?/i, "");
+  const prefix = (w.match(/^(over|under|re|anti|full)\-?/i) || [])[0];
+  const verb = w.replace(/^(over|under|re|anti|full)\-?/i, "");
   //check irregulars
   let obj = {};
   let l = verb_irregulars.length;
   for (let i = 0; i < l; i++) {
-    let x = verb_irregulars[i];
+    const x = verb_irregulars[i];
     if (verb === x.present || verb === x.gerund || verb === x.past || verb === x.infinitive) {
       obj = JSON.parse(JSON.stringify(verb_irregulars[i])); // object 'clone' hack, to avoid mem leak
       return fufill(obj, prefix);
     }
   }
   //guess the tense, so we know which transormation to make
-  let predicted = predict(w) || "infinitive";
+  const predicted = predict(w) || "infinitive";
 
   //check against suffix rules
   l = verb_rules[predicted].length;
   for (let i = 0; i < l; i++) {
-    let r = verb_rules[predicted][i];
+    const r = verb_rules[predicted][i];
     if (w.match(r.reg)) {
       obj[predicted] = w;
-      let keys = Object.keys(r.repl);
+      const keys = Object.keys(r.repl);
       for (let o = 0; o < keys.length; o++) {
         if (keys[o] === predicted) {
           obj[keys[o]] = w;
@@ -5408,17 +5082,17 @@ module.exports = conjugate;
 // console.log(conjugate("had tried"))
 // console.log(conjugate("have tried"))
 
-},{"./predict_form.js":45,"./to_doer":47,"./verb_irregulars":48,"./verb_rules":49}],45:[function(require,module,exports){
+},{"./predict_form.js":44,"./to_doer":46,"./verb_irregulars":47,"./verb_rules":48}],44:[function(require,module,exports){
 "use strict";
 //this method is used to predict which current conjugation a verb is
 
 //this method is the slowest in the whole library, basically TODO:whaaa
-let suffix_rules = require("./suffix_rules");
-let fns = require("../../../fns.js");
+const suffix_rules = require("./suffix_rules");
+const fns = require("../../../fns.js");
 
 //todo: support will/have/haven't etc
-let predict = function(w) {
-  let arr = Object.keys(suffix_rules);
+const predict = function(w) {
+  const arr = Object.keys(suffix_rules);
   for (let i = 0; i < arr.length; i++) {
     if (fns.endsWith(w, arr[i])) {
       return suffix_rules[arr[i]];
@@ -5429,10 +5103,10 @@ let predict = function(w) {
 
 module.exports = predict;
 
-},{"../../../fns.js":14,"./suffix_rules":46}],46:[function(require,module,exports){
+},{"../../../fns.js":14,"./suffix_rules":45}],45:[function(require,module,exports){
 "use strict";
 //generated from test data
-let compact = {
+const compact = {
   "gerund": [
     "ing"
   ],
@@ -5519,11 +5193,12 @@ let compact = {
     "s"
   ]
 };
-let suffix_rules = {};
-let keys = Object.keys(compact);
-let l = keys.length;
-let l2, i;
-for (i = 0; i < l; i++) {
+const suffix_rules = {};
+const keys = Object.keys(compact);
+const l = keys.length;
+let l2;
+
+for (let i = 0; i < l; i++) {
   l2 = compact[keys[i]].length;
   for (let o = 0; o < l2; o++) {
     suffix_rules[compact[keys[i]][o]] = keys[i];
@@ -5531,13 +5206,13 @@ for (i = 0; i < l; i++) {
 }
 module.exports = suffix_rules;
 
-},{}],47:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 //somone who does this present-tense verb
 //turn 'walk' into 'walker'
 "use strict";
-let doer = function(str) {
+const doer = function(str) {
   str = str || "";
-  let irregulars = {
+  const irregulars = {
     "tie": "tier",
     "dream": "dreamer",
     "sail": "sailer",
@@ -5549,7 +5224,7 @@ let doer = function(str) {
     "deal": "dealer",
     "spin": "spinner"
   };
-  let dont = {
+  const dont = {
     "aid": 1,
     "fail": 1,
     "appear": 1,
@@ -5563,7 +5238,7 @@ let doer = function(str) {
     "understand": 1,
     "bet": 1
   };
-  let transforms = [{
+  const transforms = [{
     "reg": /e$/i,
     "repl": "er"
   }, {
@@ -5596,9 +5271,9 @@ let doer = function(str) {
 // console.log(verb_to_doer('watch'))
 module.exports = doer;
 
-},{}],48:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 "use strict";
-let types = [
+const types = [
   "infinitive",
   "gerund",
   "past",
@@ -5608,7 +5283,7 @@ let types = [
 ];
 
 //list of verb irregular verb forms, compacted to save space. ('_' -> infinitive )
-let compact = [
+const compact = [
   [
     "arise",
     "arising",
@@ -6550,7 +6225,7 @@ let compact = [
 ];
 //expand compact version out
 module.exports = compact.map(function(arr) {
-  let obj = {};
+  const obj = {};
   for (let i = 0; i < arr.length; i++) {
     obj[types[i]] = arr[i].replace(/_/, arr[0]);
   }
@@ -6559,7 +6234,7 @@ module.exports = compact.map(function(arr) {
 
 // console.log(JSON.stringify(verb_irregulars, null, 2));
 
-},{}],49:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 // regex rules for each part of speech that convert it to all other parts of speech.
 // used in combination with the generic 'fallback' method
 "use strict";
@@ -6992,7 +6667,7 @@ let verb_rules = {
 //unpack compressed form
 verb_rules = Object.keys(verb_rules).reduce(function(h, k) {
   h[k] = verb_rules[k].map(function(a) {
-    let obj = {
+    const obj = {
       reg: new RegExp(a[0], "i"),
       repl: {
         infinitive: a[1]["in"],
@@ -7012,13 +6687,13 @@ verb_rules = Object.keys(verb_rules).reduce(function(h, k) {
 module.exports = verb_rules;
 // console.log(JSON.stringify(verb_rules, null, 2));
 
-},{}],50:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 "use strict";
-let Term = require("../term.js");
-let conjugate = require("./conjugate/conjugate.js");
-let predict_form = require("./conjugate/predict_form.js");
+const Term = require("../term.js");
+const conjugate = require("./conjugate/conjugate.js");
+const predict_form = require("./conjugate/predict_form.js");
 
-let allowed_forms = {
+const allowed_forms = {
   infinitive: 1,
   present: 1,
   past: 1,
@@ -7060,7 +6735,7 @@ class Verb extends Term {
 
   //is this verb negative already?
   isNegative() {
-    let str = this.normal;
+    const str = this.normal;
     if (str.match(/n't$/)) {
       return true;
     }
@@ -7081,24 +6756,24 @@ class Verb extends Term {
 
 module.exports = Verb;
 
-},{"../term.js":40,"./conjugate/conjugate.js":44,"./conjugate/predict_form.js":45}],51:[function(require,module,exports){
+},{"../term.js":40,"./conjugate/conjugate.js":43,"./conjugate/predict_form.js":44}],50:[function(require,module,exports){
 "use strict";
 //split a string into all possible parts
-let fns = require("../fns.js");
+const fns = require("../fns.js");
 
 //n-gram takes a list of pre-cleaned terms, and makes no assumptions
-let ngram = function(terms, options) {
+const ngram = function(terms, options) {
   options = options || {};
-  let min_count = options.min_count || 1; // minimum hit-count
-  let max_size = options.max_size || 5; // maximum gram count
-  let keys = [null];
+  const min_count = options.min_count || 1; // minimum hit-count
+  const max_size = options.max_size || 5; // maximum gram count
+  const keys = [null];
   let results = [];
   //prepare the keys object
   for (let i = 1; i <= max_size; i++) {
     keys.push({});
   }
   // Create a hash for counting..
-  let textlen = terms.length;
+  const textlen = terms.length;
   for (let i = 0; i < textlen; i++) {
     let s = terms[i];
     keys[1][s] = (keys[1][s] || 0) + 1;
@@ -7114,10 +6789,10 @@ let ngram = function(terms, options) {
   // map the hash to an array for sorting
   for (let k = 1; k < max_size; k++) {
     results[k] = [];
-    let key = keys[k];
-    let words = Object.keys(keys[k]);
+    const key = keys[k];
+    const words = Object.keys(keys[k]);
     for (let i = 0; i < words.length; i++) {
-      let word = words[i];
+      const word = words[i];
       if (key[word] >= min_count) {
         results[k].push({
           "word": word,
@@ -7142,17 +6817,17 @@ let ngram = function(terms, options) {
 
 module.exports = ngram;
 
-},{"../fns.js":14}],52:[function(require,module,exports){
+},{"../fns.js":14}],51:[function(require,module,exports){
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
 "use strict";
 let abbreviations = require("../data/abbreviations");
 
-let sentence_parser = function(text) {
-  let sentences = [];
+const sentence_parser = function(text) {
+  const sentences = [];
   //first do a greedy-split..
-  let chunks = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
+  const chunks = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
 
   //date abbrevs.
   //these are added seperately because they are not nouns
@@ -7161,12 +6836,12 @@ let sentence_parser = function(text) {
   abbreviations = abbreviations.concat(["ex", "eg", "ie", "circa", "ca", "cca", "vs", "etc", "esp", "ft", "bc", "ad"]);
 
   //detection of non-sentence chunks
-  let abbrev_reg = new RegExp("\\b(" + abbreviations.join("|") + ")[.!?] ?$", "i");
-  let acronym_reg = new RegExp("[ |\.][A-Z]\.?$", "i");
-  let elipses_reg = new RegExp("\\.\\.\\.*$");
+  const abbrev_reg = new RegExp("\\b(" + abbreviations.join("|") + ")[.!?] ?$", "i");
+  const acronym_reg = new RegExp("[ |\.][A-Z]\.?$", "i");
+  const elipses_reg = new RegExp("\\.\\.\\.*$");
 
   //loop through these chunks, and join the non-sentence chunks back together..
-  let chunks_length = chunks.length;
+  const chunks_length = chunks.length;
   for (let i = 0; i < chunks_length; i++) {
     if (chunks[i]) {
       //trim whitespace
@@ -7190,12 +6865,12 @@ let sentence_parser = function(text) {
 
 module.exports = sentence_parser;
 
-},{"../data/abbreviations":1}],53:[function(require,module,exports){
+},{"../data/abbreviations":1}],52:[function(require,module,exports){
 "use strict";
-let sentence_parser = require("./sentence_parser.js");
-let Sentence = require("../sentence/sentence.js");
-let ngram = require("./ngram.js");
-let fns = require("../fns.js");
+const sentence_parser = require("./sentence_parser.js");
+const Sentence = require("../sentence/sentence.js");
+const ngram = require("./ngram.js");
+const fns = require("../fns.js");
 
 //a text object is a series of sentences, along with the generic methods for transforming them
 class Text {
@@ -7217,25 +6892,30 @@ class Text {
 
   //map over sentence methods
   text() {
-    let arr = this.sentences.map(function(s) {
+    const arr = this.sentences.map(function(s) {
       return s.text();
     });
     return fns.flatten(arr).join(" ");
   }
   terms() {
-    let arr = this.sentences.map(function(s) {
+    const arr = this.sentences.map(function(s) {
       return s.terms;
     });
     return fns.flatten(arr);
   }
   normalised() {
-    let arr = this.sentences.map(function(s) {
+    const arr = this.sentences.map(function(s) {
       return s.normalized();
     });
     return fns.flatten(arr).join(" ");
+  }
+  parents(){
+    return this.sentences.map(function(s) {
+      return s.parents();
+    })
   }
 }
 
 module.exports = Text;
 
-},{"../fns.js":14,"../sentence/sentence.js":22,"./ngram.js":51,"./sentence_parser.js":52}]},{},[15]);
+},{"../fns.js":14,"../sentence/sentence.js":22,"./ngram.js":50,"./sentence_parser.js":51}]},{},[15]);

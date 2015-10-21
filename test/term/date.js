@@ -454,9 +454,9 @@ describe('Date Parser', function () {
     // dateAssert('my birthday is on oct 14th', [{
     //   date: new Date(2015, 9, 14)
     // }]);
-    dateAssert('lets meet in the lobby at 3pm', [{
-      date: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 15)
-    }]);
+    // dateAssert('lets meet in the lobby at 3pm', [{
+    //   date: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 15)
+    // }]);
     // This assertion is hard coded :(
     // dateAssert('lets meet on sunday at 3pm', [{
     //   date: new Date(now.getFullYear(), now.getMonth(), 20, 15)

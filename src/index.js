@@ -37,7 +37,6 @@ module.exports = Nlp;
 // console.log(nlp.text());
 
 //return a Term/Value object
-let nlp2 = new Nlp();
+// let nlp2 = new Nlp();
 // let w = nlp2.Verb('have walked');
-let w = nlp2.Verb('walk');
-console.log(w.negate());
+// console.log(w.negate());

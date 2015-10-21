@@ -1,5 +1,5 @@
-"use strict";
-const irregulars = require("../../data/irregular_nouns");
+'use strict';
+const irregulars = require('../../data/irregular_nouns');
 
 //similar to plural/singularize rules, but not the same
 const plural_indicators = [
@@ -50,7 +50,7 @@ const singular_indicators = [
 ];
 
 const is_plural = function(str) {
-  str = (str || "").toLowerCase();
+  str = (str || '').toLowerCase();
   //handle 'mayors of chicago'
   const preposition = str.match(/([a-z]*) (of|in|by|for) [a-z]/);
   if (preposition && preposition[1]) {

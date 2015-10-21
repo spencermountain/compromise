@@ -1,34 +1,34 @@
-"use strict";
-const is_uncountable = require("./is_uncountable.js");
-const irregulars = require("../../data/irregular_nouns.js");
-const is_plural = require("./is_plural.js");
-const fns = require("../../fns.js");
+'use strict';
+const is_uncountable = require('./is_uncountable.js');
+const irregulars = require('../../data/irregular_nouns.js');
+const is_plural = require('./is_plural.js');
+const fns = require('../../fns.js');
 
 const singularize_rules = [
-  [/([^v])ies$/i, "$1y"],
-  [/ises$/i, "isis"],
-  [/ives$/i, "ife"],
-  [/(antenn|formul|nebul|vertebr|vit)ae$/i, "$1a"],
-  [/(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i, "$1us"],
-  [/(buffal|tomat|tornad)(oes)$/i, "$1o"],
-  [/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i, "$1sis"],
-  [/(vert|ind|cort)(ices)$/i, "$1ex"],
-  [/(matr|append)(ices)$/i, "$1ix"],
-  [/(x|ch|ss|sh|s|z|o)es$/i, "$1"],
-  [/men$/i, "man"],
-  [/(n)ews$/i, "$1ews"],
-  [/([ti])a$/i, "$1um"],
-  [/([^f])ves$/i, "$1fe"],
-  [/([lr])ves$/i, "$1f"],
-  [/([^aeiouy]|qu)ies$/i, "$1y"],
-  [/(s)eries$/i, "$1eries"],
-  [/(m)ovies$/i, "$1ovie"],
-  [/([m|l])ice$/i, "$1ouse"],
-  [/(cris|ax|test)es$/i, "$1is"],
-  [/(alias|status)es$/i, "$1"],
-  [/(ss)$/i, "$1"],
-  [/(ics)$/i, "$1"],
-  [/s$/i, ""]
+  [/([^v])ies$/i, '$1y'],
+  [/ises$/i, 'isis'],
+  [/ives$/i, 'ife'],
+  [/(antenn|formul|nebul|vertebr|vit)ae$/i, '$1a'],
+  [/(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i, '$1us'],
+  [/(buffal|tomat|tornad)(oes)$/i, '$1o'],
+  [/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i, '$1sis'],
+  [/(vert|ind|cort)(ices)$/i, '$1ex'],
+  [/(matr|append)(ices)$/i, '$1ix'],
+  [/(x|ch|ss|sh|s|z|o)es$/i, '$1'],
+  [/men$/i, 'man'],
+  [/(n)ews$/i, '$1ews'],
+  [/([ti])a$/i, '$1um'],
+  [/([^f])ves$/i, '$1fe'],
+  [/([lr])ves$/i, '$1f'],
+  [/([^aeiouy]|qu)ies$/i, '$1y'],
+  [/(s)eries$/i, '$1eries'],
+  [/(m)ovies$/i, '$1ovie'],
+  [/([m|l])ice$/i, '$1ouse'],
+  [/(cris|ax|test)es$/i, '$1is'],
+  [/(alias|status)es$/i, '$1'],
+  [/(ss)$/i, '$1'],
+  [/(ics)$/i, '$1'],
+  [/s$/i, '']
 ].map(function(a) {
   return {
     reg: a[0],
@@ -61,7 +61,7 @@ const singularize = function(str) {
     const first = str.match(/^([a-z]*) (of|in|by|for) [a-z]/);
     if (first && first[1]) {
       const better_first = singularize(first[1]);
-      return better_first + str.replace(first[1], "");
+      return better_first + str.replace(first[1], '');
     }
   }
   //regular

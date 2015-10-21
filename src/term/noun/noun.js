@@ -1,15 +1,15 @@
-"use strict";
-const Term = require("../term.js");
-const article = require("./article.js");
-const is_plural = require("./is_plural.js");
-const singularize = require("./singularize.js");
-const pluralize = require("./pluralize.js");
-const is_uncountable = require("./is_uncountable.js");
+'use strict';
+const Term = require('../term.js');
+const article = require('./article.js');
+const is_plural = require('./is_plural.js');
+const singularize = require('./singularize.js');
+const pluralize = require('./pluralize.js');
+const is_uncountable = require('./is_uncountable.js');
 
 class Noun extends Term {
   constructor(str) {
     super(str);
-    this.parent = "noun";
+    this.parent = 'noun';
   }
   //noun methods
   article() {

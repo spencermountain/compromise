@@ -1,7 +1,7 @@
-"use strict";
-const Term = require("../term.js");
-const conjugate = require("./conjugate/conjugate.js");
-const predict_form = require("./conjugate/predict_form.js");
+'use strict';
+const Term = require('../term.js');
+const conjugate = require('./conjugate/conjugate.js');
+const predict_form = require('./conjugate/predict_form.js');
 
 const allowed_forms = {
   infinitive: 1,
@@ -15,7 +15,7 @@ const allowed_forms = {
 class Verb extends Term {
   constructor(str, form) {
     super(str);
-    this.parent = "verb";
+    this.parent = 'verb';
     this.conjugations = {}; //cached conjugations
     //if we've been told which
     if (form && allowed_forms[form]) {
@@ -36,7 +36,7 @@ class Verb extends Term {
 
   //retrieve a specific form
   conjugation(type) {
-    type = type || "infinitive";
+    type = type || 'infinitive';
     //check cached conjugations
     if (this.conjugations[type] === undefined) {
       this.conjugate();

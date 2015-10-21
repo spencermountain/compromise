@@ -1,12 +1,12 @@
-"use strict";
-const Term = require("../term.js");
+'use strict';
+const Term = require('../term.js');
 // const date_extractor = require("./date_extractor.js");
-const to_number = require("./to_number.js");
+const to_number = require('./to_number.js');
 
 class Value extends Term {
   constructor(str) {
     super(str);
-    this.parent = "value";
+    this.parent = 'value';
   }
 
   is_date() {
@@ -24,7 +24,7 @@ class Value extends Term {
   }
 
   date_extractor() {
-    return ""; 
+    return '';
   }
 }
 

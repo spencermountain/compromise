@@ -2,47 +2,47 @@
 //turn 'walk' into 'walker'
 
 const doer = function(str) {
-  str = str || "";
+  str = str || '';
   const irregulars = {
-    "tie": "tier",
-    "dream": "dreamer",
-    "sail": "sailer",
-    "run": "runner",
-    "rub": "rubber",
-    "begin": "beginner",
-    "win": "winner",
-    "claim": "claimant",
-    "deal": "dealer",
-    "spin": "spinner"
+    'tie': 'tier',
+    'dream': 'dreamer',
+    'sail': 'sailer',
+    'run': 'runner',
+    'rub': 'rubber',
+    'begin': 'beginner',
+    'win': 'winner',
+    'claim': 'claimant',
+    'deal': 'dealer',
+    'spin': 'spinner'
   };
 
   const dont = {
-    "aid": 1,
-    "fail": 1,
-    "appear": 1,
-    "happen": 1,
-    "seem": 1,
-    "try": 1,
-    "say": 1,
-    "marry": 1,
-    "be": 1,
-    "forbid": 1,
-    "understand": 1,
-    "bet": 1
+    'aid': 1,
+    'fail': 1,
+    'appear': 1,
+    'happen': 1,
+    'seem': 1,
+    'try': 1,
+    'say': 1,
+    'marry': 1,
+    'be': 1,
+    'forbid': 1,
+    'understand': 1,
+    'bet': 1
   };
 
   const transforms = [{
-    "reg": /e$/i,
-    "repl": "er"
+    'reg': /e$/i,
+    'repl': 'er'
   }, {
-    "reg": /([aeiou])([mlgp])$/i,
-    "repl": "$1$2$2er"
+    'reg': /([aeiou])([mlgp])$/i,
+    'repl': '$1$2$2er'
   }, {
-    "reg": /([rlf])y$/i,
-    "repl": "$1ier"
+    'reg': /([rlf])y$/i,
+    'repl': '$1ier'
   }, {
-    "reg": /^(.?.[aeiou])t$/i,
-    "repl": "$1tter"
+    'reg': /^(.?.[aeiou])t$/i,
+    'repl': '$1tter'
   }];
 
   if (dont.hasOwnProperty(str)) {
@@ -56,7 +56,7 @@ const doer = function(str) {
       return str.replace(transforms[i].reg, transforms[i].repl);
     }
   }
-  return str + "er";
+  return str + 'er';
 };
 
 // console.log(doer('watch'))

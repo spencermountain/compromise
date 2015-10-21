@@ -1,34 +1,34 @@
-"use strict";
-const is_uncountable = require("./is_uncountable.js");
-const irregulars = require("../../data/irregular_nouns.js");
-const is_plural = require("./is_plural.js");
-const fns = require("../../fns.js");
+'use strict';
+const is_uncountable = require('./is_uncountable.js');
+const irregulars = require('../../data/irregular_nouns.js');
+const is_plural = require('./is_plural.js');
+const fns = require('../../fns.js');
 
 const pluralize_rules = [
-  [/(ax|test)is$/i, "$1es"],
-  [/(octop|vir|radi|nucle|fung|cact|stimul)us$/i, "$1i"],
-  [/(octop|vir)i$/i, "$1i"],
-  [/([rl])f$/i, "$1ves"],
-  [/(alias|status)$/i, "$1es"],
-  [/(bu)s$/i, "$1ses"],
-  [/(al|ad|at|er|et|ed|ad)o$/i, "$1oes"],
-  [/([ti])um$/i, "$1a"],
-  [/([ti])a$/i, "$1a"],
-  [/sis$/i, "ses"],
-  [/(?:([^f])fe|([lr])f)$/i, "$1ves"],
-  [/(hive)$/i, "$1s"],
-  [/([^aeiouy]|qu)y$/i, "$1ies"],
-  [/(x|ch|ss|sh|s|z)$/i, "$1es"],
-  [/(matr|vert|ind|cort)(ix|ex)$/i, "$1ices"],
-  [/([m|l])ouse$/i, "$1ice"],
-  [/([m|l])ice$/i, "$1ice"],
-  [/^(ox)$/i, "$1en"],
-  [/^(oxen)$/i, "$1"],
-  [/(quiz)$/i, "$1zes"],
-  [/(antenn|formul|nebul|vertebr|vit)a$/i, "$1ae"],
-  [/(sis)$/i, "ses"],
-  [/^(?!talis|.*hu)(.*)man$/i, "$1men"],
-  [/(.*)/i, "$1s"]
+  [/(ax|test)is$/i, '$1es'],
+  [/(octop|vir|radi|nucle|fung|cact|stimul)us$/i, '$1i'],
+  [/(octop|vir)i$/i, '$1i'],
+  [/([rl])f$/i, '$1ves'],
+  [/(alias|status)$/i, '$1es'],
+  [/(bu)s$/i, '$1ses'],
+  [/(al|ad|at|er|et|ed|ad)o$/i, '$1oes'],
+  [/([ti])um$/i, '$1a'],
+  [/([ti])a$/i, '$1a'],
+  [/sis$/i, 'ses'],
+  [/(?:([^f])fe|([lr])f)$/i, '$1ves'],
+  [/(hive)$/i, '$1s'],
+  [/([^aeiouy]|qu)y$/i, '$1ies'],
+  [/(x|ch|ss|sh|s|z)$/i, '$1es'],
+  [/(matr|vert|ind|cort)(ix|ex)$/i, '$1ices'],
+  [/([m|l])ouse$/i, '$1ice'],
+  [/([m|l])ice$/i, '$1ice'],
+  [/^(ox)$/i, '$1en'],
+  [/^(oxen)$/i, '$1'],
+  [/(quiz)$/i, '$1zes'],
+  [/(antenn|formul|nebul|vertebr|vit)a$/i, '$1ae'],
+  [/(sis)$/i, 'ses'],
+  [/^(?!talis|.*hu)(.*)man$/i, '$1men'],
+  [/(.*)/i, '$1s']
 ].map(function(a) {
   return {
     reg: a[0],
@@ -63,7 +63,7 @@ const pluralize = function(str) {
     const first = (str.match(/^([a-z]*) (of|in|by|for) [a-z]/) || [])[1];
     if (first) {
       const better_first = pluralize(first);
-      return better_first + str.replace(first, "");
+      return better_first + str.replace(first, '');
     }
   }
   //regular

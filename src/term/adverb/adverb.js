@@ -1,11 +1,11 @@
-"use strict";
-const Term = require("../term.js");
-const to_adjective = require("./to_adjective.js");
+'use strict';
+const Term = require('../term.js');
+const to_adjective = require('./to_adjective.js');
 
 class Adverb extends Term {
   constructor(str) {
     super(str);
-    this.parent = "adverb";
+    this.parent = 'adverb';
   }
   to_adjective() {
     return to_adjective(this.normal);

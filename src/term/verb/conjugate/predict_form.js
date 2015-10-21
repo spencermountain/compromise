@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 //this method is used to predict which current conjugation a verb is
 
 //this method is the slowest in the whole library, basically TODO:whaaa
-const suffix_rules = require("./suffix_rules");
-const fns = require("../../../fns.js");
+const suffix_rules = require('./suffix_rules');
+const fns = require('../../../fns.js');
 
 //todo: support will/have/haven't etc
 const predict = function(w) {
@@ -13,7 +13,7 @@ const predict = function(w) {
       return suffix_rules[arr[i]];
     }
   }
-  return "infinitive";
+  return 'infinitive';
 };
 
 module.exports = predict;

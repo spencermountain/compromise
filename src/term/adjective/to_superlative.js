@@ -1,37 +1,37 @@
 //turn 'quick' into 'quickest'
-"use strict";
-const convertables = require("./convertables");
+'use strict';
+const convertables = require('./convertables');
 
 const to_superlative = function(str) {
   const irregulars = {
-    "nice": "nicest",
-    "late": "latest",
-    "hard": "hardest",
-    "inner": "innermost",
-    "outer": "outermost",
-    "far": "furthest",
-    "worse": "worst",
-    "bad": "worst",
-    "good": "best"
+    'nice': 'nicest',
+    'late': 'latest',
+    'hard': 'hardest',
+    'inner': 'innermost',
+    'outer': 'outermost',
+    'far': 'furthest',
+    'worse': 'worst',
+    'bad': 'worst',
+    'good': 'best'
   };
 
   const dont = {
-    "overweight": 1,
-    "ready": 1
+    'overweight': 1,
+    'ready': 1
   };
 
   const transforms = [{
-    "reg": /y$/i,
-    "repl": "iest"
+    'reg': /y$/i,
+    'repl': 'iest'
   }, {
-    "reg": /([aeiou])t$/i,
-    "repl": "$1ttest"
+    'reg': /([aeiou])t$/i,
+    'repl': '$1ttest'
   }, {
-    "reg": /([aeou])de$/i,
-    "repl": "$1dest"
+    'reg': /([aeou])de$/i,
+    'repl': '$1dest'
   }, {
-    "reg": /nge$/i,
-    "repl": "ngest"
+    'reg': /nge$/i,
+    'repl': 'ngest'
   }];
 
   const matches = [
@@ -52,9 +52,9 @@ const to_superlative = function(str) {
 
   const generic_transformation = function(s) {
     if (s.match(/e$/)) {
-      return s + "st";
+      return s + 'st';
     }
-    return s + "est";
+    return s + 'est';
   };
 
   for (let i = 0; i < transforms.length; i++) {
@@ -68,7 +68,7 @@ const to_superlative = function(str) {
   }
 
   if (dont.hasOwnProperty(str)) {
-    return "most " + str;
+    return 'most ' + str;
   }
 
   if (irregulars.hasOwnProperty(str)) {
@@ -76,7 +76,7 @@ const to_superlative = function(str) {
   }
   for (let i = 0; i < not_matches.length; i++) {
     if (str.match(not_matches[i])) {
-      return "most " + str;
+      return 'most ' + str;
     }
   }
 
@@ -85,7 +85,7 @@ const to_superlative = function(str) {
       return generic_transformation(str);
     }
   }
-  return "most " + str;
+  return 'most ' + str;
 };
 
 // console.log(to_superlative("great"))

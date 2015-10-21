@@ -6,84 +6,84 @@
 // combile the [one/teen/ten]s as 'current_sum', then multiply it by its following multiple
 // multiple not repeat
 
-"use strict";
+'use strict';
 //these sets of numbers each have different rules
 //[tenth, hundreth, thousandth..] are ambiguous because they could be ordinal like fifth, or decimal like one-one-hundredth, so are ignored
 const ones = {
-  "a": 1,
-  "zero": 0,
-  "one": 1,
-  "two": 2,
-  "three": 3,
-  "four": 4,
-  "five": 5,
-  "six": 6,
-  "seven": 7,
-  "eight": 8,
-  "nine": 9,
-  "first": 1,
-  "second": 2,
-  "third": 3,
-  "fourth": 4,
-  "fifth": 5,
-  "sixth": 6,
-  "seventh": 7,
-  "eighth": 8,
-  "ninth": 9
+  'a': 1,
+  'zero': 0,
+  'one': 1,
+  'two': 2,
+  'three': 3,
+  'four': 4,
+  'five': 5,
+  'six': 6,
+  'seven': 7,
+  'eight': 8,
+  'nine': 9,
+  'first': 1,
+  'second': 2,
+  'third': 3,
+  'fourth': 4,
+  'fifth': 5,
+  'sixth': 6,
+  'seventh': 7,
+  'eighth': 8,
+  'ninth': 9
 };
 const teens = {
-  "ten": 10,
-  "eleven": 11,
-  "twelve": 12,
-  "thirteen": 13,
-  "fourteen": 14,
-  "fifteen": 15,
-  "sixteen": 16,
-  "seventeen": 17,
-  "eighteen": 18,
-  "nineteen": 19,
-  "eleventh": 11,
-  "twelfth": 12,
-  "thirteenth": 13,
-  "fourteenth": 14,
-  "fifteenth": 15,
-  "sixteenth": 16,
-  "seventeenth": 17,
-  "eighteenth": 18,
-  "nineteenth": 19
+  'ten': 10,
+  'eleven': 11,
+  'twelve': 12,
+  'thirteen': 13,
+  'fourteen': 14,
+  'fifteen': 15,
+  'sixteen': 16,
+  'seventeen': 17,
+  'eighteen': 18,
+  'nineteen': 19,
+  'eleventh': 11,
+  'twelfth': 12,
+  'thirteenth': 13,
+  'fourteenth': 14,
+  'fifteenth': 15,
+  'sixteenth': 16,
+  'seventeenth': 17,
+  'eighteenth': 18,
+  'nineteenth': 19
 };
 const tens = {
-  "twenty": 20,
-  "thirty": 30,
-  "forty": 40,
-  "fifty": 50,
-  "sixty": 60,
-  "seventy": 70,
-  "eighty": 80,
-  "ninety": 90,
-  "twentieth": 20,
-  "thirtieth": 30,
-  "fourtieth": 40,
-  "fiftieth": 50,
-  "sixtieth": 60,
-  "seventieth": 70,
-  "eightieth": 80,
-  "ninetieth": 90
+  'twenty': 20,
+  'thirty': 30,
+  'forty': 40,
+  'fifty': 50,
+  'sixty': 60,
+  'seventy': 70,
+  'eighty': 80,
+  'ninety': 90,
+  'twentieth': 20,
+  'thirtieth': 30,
+  'fourtieth': 40,
+  'fiftieth': 50,
+  'sixtieth': 60,
+  'seventieth': 70,
+  'eightieth': 80,
+  'ninetieth': 90
 };
 const multiple = {
-  "hundred": 100,
-  "grand": 1000,
-  "thousand": 1000,
-  "million": 1000000,
-  "billion": 1000000000,
-  "trillion": 1000000000000,
-  "quadrillion": 1000000000000000,
-  "quintillion": 1000000000000000000,
-  "sextillion": 1000000000000000000000,
-  "septillion": 1000000000000000000000000,
-  "octillion": 1000000000000000000000000000,
-  "nonillion": 1000000000000000000000000000000,
-  "decillion": 1000000000000000000000000000000000
+  'hundred': 100,
+  'grand': 1000,
+  'thousand': 1000,
+  'million': 1000000,
+  'billion': 1000000000,
+  'trillion': 1000000000000,
+  'quadrillion': 1000000000000000,
+  'quintillion': 1000000000000000000,
+  'sextillion': 1000000000000000000000,
+  'septillion': 1000000000000000000000000,
+  'octillion': 1000000000000000000000000000,
+  'nonillion': 1000000000000000000000000000000,
+  'decillion': 1000000000000000000000000000000000
 };
 // let decimal_multiple={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
 
@@ -96,9 +96,9 @@ const to_number = function(s) {
   let total = 0;
   let global_multiplier = 1;
   //pretty-printed numbers
-  s = s.replace(/, ?/g, "");
+  s = s.replace(/, ?/g, '');
   //parse-out currency
-  s = s.replace(/[$£€]/, "");
+  s = s.replace(/[$£€]/, '');
   //try to finish-fast
   if (s.match(/[0-9]\.[0-9]/) && parseFloat(s) === s) {
     return parseFloat(s);
@@ -124,7 +124,7 @@ const to_number = function(s) {
   for (let i = 0; i < mults.length; i++) {
     if (s.match(mults[i].reg)) {
       global_multiplier = mults[i].mult;
-      s = s.replace(mults[i].reg, "");
+      s = s.replace(mults[i].reg, '');
       break;
     }
   }
@@ -139,12 +139,12 @@ const to_number = function(s) {
     w = words[i];
 
     //skip 'and' eg. five hundred and twelve
-    if (w === "and") {
+    if (w === 'and') {
       continue;
     }
 
     //..we're doing decimals now
-    if (w === "point" || w === "decimal") {
+    if (w === 'point' || w === 'decimal') {
       if (decimal_mode) {
         return null;
       } //two point one point six

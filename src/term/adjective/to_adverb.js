@@ -1,99 +1,99 @@
 //turn 'quick' into 'quickly'
-"use strict";
+'use strict';
 const adj_to_adv = function(str) {
   const irregulars = {
-    "idle": "idly",
-    "public": "publicly",
-    "vague": "vaguely",
-    "day": "daily",
-    "icy": "icily",
-    "single": "singly",
-    "female": "womanly",
-    "male": "manly",
-    "simple": "simply",
-    "whole": "wholly",
-    "special": "especially",
-    "straight": "straight",
-    "wrong": "wrong",
-    "fast": "fast",
-    "hard": "hard",
-    "late": "late",
-    "early": "early",
-    "well": "well",
-    "best": "best",
-    "latter": "latter",
-    "bad": "badly"
+    'idle': 'idly',
+    'public': 'publicly',
+    'vague': 'vaguely',
+    'day': 'daily',
+    'icy': 'icily',
+    'single': 'singly',
+    'female': 'womanly',
+    'male': 'manly',
+    'simple': 'simply',
+    'whole': 'wholly',
+    'special': 'especially',
+    'straight': 'straight',
+    'wrong': 'wrong',
+    'fast': 'fast',
+    'hard': 'hard',
+    'late': 'late',
+    'early': 'early',
+    'well': 'well',
+    'best': 'best',
+    'latter': 'latter',
+    'bad': 'badly'
   };
 
   const dont = {
-    "foreign": 1,
-    "black": 1,
-    "modern": 1,
-    "next": 1,
-    "difficult": 1,
-    "degenerate": 1,
-    "young": 1,
-    "awake": 1,
-    "back": 1,
-    "blue": 1,
-    "brown": 1,
-    "orange": 1,
-    "complex": 1,
-    "cool": 1,
-    "dirty": 1,
-    "done": 1,
-    "empty": 1,
-    "fat": 1,
-    "fertile": 1,
-    "frozen": 1,
-    "gold": 1,
-    "grey": 1,
-    "gray": 1,
-    "green": 1,
-    "medium": 1,
-    "parallel": 1,
-    "outdoor": 1,
-    "unknown": 1,
-    "undersized": 1,
-    "used": 1,
-    "welcome": 1,
-    "yellow": 1,
-    "white": 1,
-    "fixed": 1,
-    "mixed": 1,
-    "super": 1,
-    "guilty": 1,
-    "tiny": 1,
-    "able": 1,
-    "unable": 1,
-    "same": 1,
-    "adult": 1
+    'foreign': 1,
+    'black': 1,
+    'modern': 1,
+    'next': 1,
+    'difficult': 1,
+    'degenerate': 1,
+    'young': 1,
+    'awake': 1,
+    'back': 1,
+    'blue': 1,
+    'brown': 1,
+    'orange': 1,
+    'complex': 1,
+    'cool': 1,
+    'dirty': 1,
+    'done': 1,
+    'empty': 1,
+    'fat': 1,
+    'fertile': 1,
+    'frozen': 1,
+    'gold': 1,
+    'grey': 1,
+    'gray': 1,
+    'green': 1,
+    'medium': 1,
+    'parallel': 1,
+    'outdoor': 1,
+    'unknown': 1,
+    'undersized': 1,
+    'used': 1,
+    'welcome': 1,
+    'yellow': 1,
+    'white': 1,
+    'fixed': 1,
+    'mixed': 1,
+    'super': 1,
+    'guilty': 1,
+    'tiny': 1,
+    'able': 1,
+    'unable': 1,
+    'same': 1,
+    'adult': 1
   };
 
   const transforms = [{
     reg: /al$/i,
-    repl: "ally"
+    repl: 'ally'
   }, {
     reg: /ly$/i,
-    repl: "ly"
+    repl: 'ly'
   }, {
     reg: /(.{3})y$/i,
-    repl: "$1ily"
+    repl: '$1ily'
   }, {
     reg: /que$/i,
-    repl: "quely"
+    repl: 'quely'
   }, {
     reg: /ue$/i,
-    repl: "uly"
+    repl: 'uly'
   }, {
     reg: /ic$/i,
-    repl: "ically"
+    repl: 'ically'
   }, {
     reg: /ble$/i,
-    repl: "bly"
+    repl: 'bly'
   }, {
     reg: /l$/i,
-    repl: "ly"
+    repl: 'ly'
   }];
 
   const not_matches = [
@@ -122,7 +122,7 @@ const adj_to_adv = function(str) {
       return str.replace(transforms[i].reg, transforms[i].repl);
     }
   }
-  return str + "ly";
+  return str + 'ly';
 };
 // console.log(adj_to_adv('direct'))
 

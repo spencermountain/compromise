@@ -1,42 +1,42 @@
 //turn 'quick' into 'quickly'
-"use strict";
-const convertables = require("./convertables");
+'use strict';
+const convertables = require('./convertables');
 
 const to_comparative = function(str) {
   const irregulars = {
-    "grey": "greyer",
-    "gray": "grayer",
-    "green": "greener",
-    "yellow": "yellower",
-    "red": "redder",
-    "good": "better",
-    "well": "better",
-    "bad": "worse",
-    "sad": "sadder"
+    'grey': 'greyer',
+    'gray': 'grayer',
+    'green': 'greener',
+    'yellow': 'yellower',
+    'red': 'redder',
+    'good': 'better',
+    'well': 'better',
+    'bad': 'worse',
+    'sad': 'sadder'
   };
 
   const dont = {
-    "overweight": 1,
-    "main": 1,
-    "nearby": 1,
-    "asleep": 1,
-    "weekly": 1,
-    "secret": 1,
-    "certain": 1
+    'overweight': 1,
+    'main': 1,
+    'nearby': 1,
+    'asleep': 1,
+    'weekly': 1,
+    'secret': 1,
+    'certain': 1
   };
 
   const transforms = [{
     reg: /y$/i,
-    repl: "ier"
+    repl: 'ier'
   }, {
     reg: /([aeiou])t$/i,
-    repl: "$1tter"
+    repl: '$1tter'
   }, {
     reg: /([aeou])de$/i,
-    repl: "$1der"
+    repl: '$1der'
   }, {
     reg: /nge$/i,
-    repl: "nger"
+    repl: 'nger'
   }];
 
   const matches = [
@@ -69,9 +69,9 @@ const to_comparative = function(str) {
 
   if (convertables.hasOwnProperty(str)) {
     if (str.match(/e$/)) {
-      return str + "r";
+      return str + 'r';
     }
-    return str + "er";
+    return str + 'er';
   }
 
   if (irregulars.hasOwnProperty(str)) {
@@ -80,16 +80,16 @@ const to_comparative = function(str) {
 
   for (let i = 0; i < not_matches.length; i++) {
     if (str.match(not_matches[i])) {
-      return "more " + str;
+      return 'more ' + str;
     }
   }
 
   for (let i = 0; i < matches.length; i++) {
     if (str.match(matches[i])) {
-      return str + "er";
+      return str + 'er';
     }
   }
-  return "more " + str;
+  return 'more ' + str;
 };
 
 // console.log(to_comparative("great"))

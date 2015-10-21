@@ -1,6 +1,6 @@
 //uncountables are words that shouldn't ever inflect, for metaphysical reasons, like 'peace'
-"use strict";
-const uncountable_arr = require("../../data/uncountables.js");
+'use strict';
+const uncountable_arr = require('../../data/uncountables.js');
 
 const uncountable = uncountable_arr.reduce(function(h, a) {
   h[a] = true;

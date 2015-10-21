@@ -1,14 +1,14 @@
-"use strict";
+'use strict';
 
 //chooses an indefinite aricle 'a/an' for a word
 const irregulars = {
-  "hour": "an",
-  "heir": "an",
-  "heirloom": "an",
-  "honest": "an",
-  "honour": "an",
-  "honor": "an",
-  "uber": "an" //german u
+  'hour': 'an',
+  'heir': 'an',
+  'heirloom': 'an',
+  'honest': 'an',
+  'honour': 'an',
+  'honor': 'an',
+  'uber': 'an' //german u
 };
 
 
@@ -59,19 +59,19 @@ const indefinite_article = function(str) {
   }
   //spelled-out acronyms
   if (is_acronym(str) && an_acronyms.hasOwnProperty(str.substr(0, 1))) {
-    return "an";
+    return 'an';
   }
   //'a' regexes
   for (let i = 0; i < a_regexs.length; i++) {
     if (str.match(a_regexs[i])) {
-      return "a";
+      return 'a';
     }
   }
   //basic vowel-startings
   if (str.match(/^[aeiou]/i)) {
-    return "an";
+    return 'an';
   }
-  return "a";
+  return 'a';
 };
 
 // console.log(indefinite_article("wolf") === "a")

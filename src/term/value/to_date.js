@@ -28,19 +28,19 @@ var rules = {
 
 // Shorthand for date functions
 var _methods = {
-  day: "UTCDate",
-  month: "UTCMonth",
-  year: "UTCFullYear",
-  weekDay: "UTCDay",
+  day: 'UTCDate',
+  month: 'UTCMonth',
+  year: 'UTCFullYear',
+  weekDay: 'UTCDay',
   // Time
-  hours: "UTCHours",
-  minutes: "UTCMinutes",
-  seconds: "UTCSeconds"
+  hours: 'UTCHours',
+  minutes: 'UTCMinutes',
+  seconds: 'UTCSeconds'
 };
 
 // Helpers
 var stringCheck = function (input) {
-  return (typeof input === 'string' && input.trim() !== "");
+  return (typeof input === 'string' && input.trim() !== '');
 };
 
 var hyphenatedDates = function(str, recover) {
@@ -59,14 +59,14 @@ var hyphenatedDates = function(str, recover) {
 };
 
 function get(D, t) {
-  var method = ["get",_methods[t]].join("");
+  var method = ['get', _methods[t]].join('');
   return (D && method)
     ? D[method]() + ((t === 'month') ? 1 : 0)
     : false;
 }
 
 function blank(nowD, text) {
-  
+
   if (!nowD) {
     return {
       text: text.trim(),
@@ -86,20 +86,20 @@ function blank(nowD, text) {
 
   return {
     text: text.trim(),
-    day: get(nowD,"day"),
-    month: get(nowD,"month"),
-    year: get(nowD,"year"),
-    weekDay: get(nowD,"weekDay"),
-    hours: get(nowD,"hours"),
-    minutes: get(nowD,"minutes"),
-    seconds: get(nowD,"seconds"),
+    day: get(nowD, 'day'),
+    month: get(nowD, 'month'),
+    year: get(nowD, 'year'),
+    weekDay: get(nowD, 'weekDay'),
+    hours: get(nowD, 'hours'),
+    minutes: get(nowD, 'minutes'),
+    seconds: get(nowD, 'seconds'),
     Date: nowD || {},
     to: false
   };
 }
 
 var parseInput = function(input) {
-  
+
   var ranges = input.split(rules.range).filter(stringCheck);
   var dates = [];
 
@@ -113,7 +113,7 @@ var parseInput = function(input) {
     dates = parts.map(function(item) {
       var innerpart1 = item.split(rules.multiburst.on).filter(stringCheck);
       var innerpart2 = item.split(rules.multiburst.at2).filter(stringCheck);
-      
+
       if (innerpart1.length === 2) {
         // first with on
         item = innerpart1[1];
@@ -134,20 +134,20 @@ var parseInput = function(input) {
             item = innerpart2[1];
           }
         } else {
-          console.log("We need to test this...", innerpart2);          
+          console.log('We need to test this...', innerpart2);
         }
       }
-      
+
       var td = Date.create(item);
       if (td.isValid()) {
         return blank(Date.future(item), item);
       } else {
 
         // Last attempt, lets peel it back one token at a time.
-        var tok = item.split(" ");
+        var tok = item.split(' ');
         for (var i = 0; i < tok.length; i++) {
           var na = tok.slice(i);
-          var revisedInput = na.join(" ");
+          var revisedInput = na.join(' ');
           var td = Date.create(revisedInput);
           if (td.isValid()) {
             return blank(Date.future(revisedInput), revisedInput);
@@ -176,14 +176,14 @@ var extractDates = function(input) {
 };
 
 var stripCommas = function (str) {
-  return str.replace(/,/g, "");
+  return str.replace(/,/g, '');
 };
 
-var cleanArray = function (actual){
+var cleanArray = function (actual) {
   var newArray = new Array();
-  for(var i = 0; i<actual.length; i++){
-      if (actual[i]){
-        newArray.push(actual[i]);
+  for(var i = 0; i < actual.length; i++) {
+    if (actual[i]) {
+      newArray.push(actual[i]);
     }
   }
   return newArray;

@@ -7,3 +7,6 @@ npm install
 grunt build
 grunt watch
 ```
+
+
+[![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/pr)](http://issuestats.com/github/spencermountain/nlp_compromise)

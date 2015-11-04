@@ -2,6 +2,7 @@
 const Term = require('../term.js');
 const article = require('./article.js');
 const is_plural = require('./is_plural.js');
+const is_person = require('./is_person.js');
 const singularize = require('./singularize.js');
 const pluralize = require('./pluralize.js');
 const is_uncountable = require('./is_uncountable.js');
@@ -28,6 +29,11 @@ class Noun extends Term {
   singularize() {
     return singularize(this.normal);
   }
+  //mining
+  is_person() {
+    return is_person(this.normal);
+  }
+
 }
 
 // let t = new Noun("forks")

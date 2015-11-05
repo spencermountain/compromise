@@ -9,12 +9,6 @@ const sentence_parser = function(text) {
   //first do a greedy-split..
   const chunks = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
 
-  //date abbrevs.
-  //these are added seperately because they are not nouns
-  abbreviations = abbreviations.concat(['jan', 'feb', 'mar', 'apr', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'sept', 'sep']);
-  //misc non-noun abbreviations
-  abbreviations = abbreviations.concat(['ex', 'eg', 'ie', 'circa', 'ca', 'cca', 'vs', 'etc', 'esp', 'ft', 'bc', 'ad']);
-
   //detection of non-sentence chunks
   const abbrev_reg = new RegExp('\\b(' + abbreviations.join('|') + ')[.!?] ?$', 'i');
   const acronym_reg = new RegExp('[ |\.][A-Z]\.?$', 'i');

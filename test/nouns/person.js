@@ -70,7 +70,6 @@ describe('person gender', function() {
     ];
     tests.forEach(function(a) {
       let n = new Person(a[0]);
-      console.log(n.gender());
       (a[1] === n.gender()).should.equal(true);
     });
     done();

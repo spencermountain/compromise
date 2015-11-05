@@ -8,4 +8,4 @@ class Organisation extends Noun {
   }
 }
 
-module.exports = Person;
+module.exports = Organisation;

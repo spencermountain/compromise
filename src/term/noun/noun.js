@@ -19,7 +19,6 @@ class Noun extends Term {
   article() {
     return article(this.normal);
   }
-
   is_plural() {
     return is_plural(this.normal);
   }
@@ -37,7 +36,7 @@ class Noun extends Term {
     return is_person(this.normal);
   }
   is_organisation() {
-    return is_organisation(this.normal);
+    return is_organisation(this.normal, this.text);
   }
   is_date() {
     return is_date(this.normal);

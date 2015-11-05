@@ -1,14 +1,18 @@
 
 'use strict';
 
-// const places = require('../../data/places');
+const dates = require('../../../data/dates');
 
 const is_date = function(str) {
-  const months = /(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|aug|sept|oct|nov|dec)/i;
-  const times = /1?[0-9]:[0-9]{2}/;
-  const days = /\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday|mon|tues|wed|thurs|fri|sat|sun)\b/i;
-  if (this.normal.match(months) || this.normal.match(times) || this.normal.match(days)) {
+  let day_reg = '(\\b' + dates.join('\\b|\\b') + '\\b)';
+  day_reg = new RegExp(day_reg, 'i');
+  const times_reg = /1?[0-9]:[0-9]{2}/;
+  if (str.match(day_reg) || str.match(times_reg)) {
     return true;
   }
   return false;
 };
+
+module.exports = is_date;
+
+// console.log(is_date('january fifth, 2015'));

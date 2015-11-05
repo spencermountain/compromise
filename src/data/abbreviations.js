@@ -5,7 +5,8 @@ const honourifics = require('./honourifics'); //stored seperately, for 'noun.is_
 
 //common abbreviations
 let main = [
-  'arc', 'al', 'exp', 'rd', 'st', 'dist', 'mt', 'fy', 'pd', 'pl', 'plz', 'tce', 'llb', 'md', 'bl', 'ma', 'ba', 'lit'
+  'arc', 'al', 'exp', 'rd', 'st', 'dist', 'mt', 'fy', 'pd', 'pl', 'plz', 'tce', 'llb', 'md', 'bl', 'ma', 'ba', 'lit',
+  'ex', 'eg', 'ie', 'circa', 'ca', 'cca', 'vs', 'etc', 'esp', 'ft', 'bc', 'ad'
 ];
 
 //person titles like 'jr', (stored seperately)
@@ -26,8 +27,14 @@ let places = [
 ];
 main = main.concat(places);
 
+//date abbrevs.
+//these are added seperately because they are not nouns
+let dates = ['jan', 'feb', 'mar', 'apr', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'sept', 'sep'];
+main = main.concat(dates);
+
 module.exports = {
   abbreviations: main,
-  orgs,
-  places
+  dates: dates,
+  orgs: orgs,
+  places: places
 };

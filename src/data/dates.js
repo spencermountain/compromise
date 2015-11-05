@@ -33,5 +33,12 @@ module.exports = [
   'thursday',
   'friday',
   'saturday',
-  'sunday'
+  'sunday',
+  'mon',
+  'tues',
+  'wed',
+  'thurs',
+  'fri',
+  'sat',
+  'sun'
 ];

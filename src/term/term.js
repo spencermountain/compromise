@@ -2,7 +2,6 @@
 const syllables = require('./syllables');
 const americanize = require('./americanize');
 const britishize = require('./britishize');
-// const Verb = require("./verb/verb.js");
 
 class Term {
   constructor(str, tag) {

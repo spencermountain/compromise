@@ -6,6 +6,7 @@ const Noun = require('./term/noun/noun.js');
 const Value = require('./term/value/value.js');
 const Adjective = require('./term/adjective/adjective.js');
 const Adverb = require('./term/adverb/adverb.js');
+const Person = require('./term/noun/person/person.js');
 
 //function returns a text object if there's a param, otherwise
 const Nlp = function(str) {
@@ -39,6 +40,9 @@ module.exports = Nlp;
 
 //return a Term/Value object
 // let nlp2 = new Nlp();
+
+let p = new Person('John Smith jr.');
 // let w = nlp2.Verb('have walked');
-// let w = nlp2.Noun('John SMith');
-// console.log(w.is_person());
+// console.log(p instanceof Person);
+// console.log(p instanceof Noun);
+console.log(p);

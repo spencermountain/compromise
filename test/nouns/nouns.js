@@ -72,5 +72,39 @@ describe('nouns', function() {
   });
 
 
+  it('is_person', function(done) {
+    let tests = [
+      ['five hundred feet', false],
+      ['50 square feet', false],
+      ['90 hertz', false],
+      ['John Smith', true],
+      ['dr. John Smith', true],
+      ['John Smith jr.', true],
+      ['John Jacob Smith', true],
+      // ['Jani K. Smith', true],
+      ['asdfefs', false],
+      ['octopus', false],
+      ['tree', false],
+      ['i', false],
+      ['FBI', false],
+      ['F.B.I.', false],
+      ['Fun ltd', false],
+      ['Fun co', false],
+      ['Smith & Rogers', false],
+      ['google', false],
+      ['tuesday', false],
+      ['february', false],
+      ['february fifth', false],
+      ['tuesday march 5th', false],
+      ['tuesday march 5th, 2015', false],
+    ];
+    tests.forEach(function(a) {
+      let n = new Noun(a[0]);
+      (a[1]).should.equal(n.is_person());
+    });
+    done();
+  });
+
+
 
 });

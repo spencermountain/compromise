@@ -2,7 +2,10 @@
 const Term = require('../term.js');
 const article = require('./article.js');
 const is_plural = require('./is_plural.js');
-const is_person = require('./is_person.js');
+const is_place = require('./place/is_place.js');
+const is_person = require('./person/is_person.js');
+const is_date = require('./date/is_date.js');
+const is_organisation = require('./organisation/is_organisation.js');
 const singularize = require('./singularize.js');
 const pluralize = require('./pluralize.js');
 const is_uncountable = require('./is_uncountable.js');
@@ -29,18 +32,15 @@ class Noun extends Term {
   singularize() {
     return singularize(this.normal);
   }
-  //mining
+  //sub-classes
   is_person() {
     return is_person(this.normal);
   }
+  is_organisation() {
+    return is_organisation(this.normal);
+  }
   is_date() {
-    const months = /(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|aug|sept|oct|nov|dec)/i;
-    const times = /1?[0-9]:[0-9]{2}/;
-    const days = /\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday|mon|tues|wed|thurs|fri|sat|sun)\b/i;
-    if (this.normal.match(months) || this.normal.match(times) || this.normal.match(days)) {
-      return true;
-    }
-    return false;
+    return is_date(this.normal);
   }
 
 }

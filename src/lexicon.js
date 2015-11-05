@@ -37,7 +37,7 @@ for (let i = 0; i < verbs.length; i++) {
   }
 }
 
-addArr(require('./data/abbreviations.js'), 'NNAB');
+addArr(require('./data/abbreviations.js').abbreviations, 'NNAB');
 addArr(require('./data/adjectives.js'), 'JJ');
 addArr(require('./data/demonyms.js'), 'JJ');
 addArr(require('./data/honourifics.js'), 'NNAB');

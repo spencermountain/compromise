@@ -3,7 +3,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
 
     watch: {
-      files: ['./src/**'],
+      files: ['./src/**', './src/term/**'],
       tasks: ['run:run'],
     },
 

@@ -42,8 +42,10 @@ class Value extends Noun {
         numbers += ' ' + w;
       } else if (this.is_unit(w)) { //optional units come after the number
         this.unit = w;
-        this.measurement = units[w].category;
-        this.unit_name = units[w].name;
+        if (units[w]) {
+          this.measurement = units[w].category;
+          this.unit_name = units[w].name;
+        }
       }
     }
     this.number = to_number(numbers);

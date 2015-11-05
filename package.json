@@ -41,7 +41,7 @@
     },
     "ecmaFeatures": {
       "modules": true,
-      "jsx": true,
+      "jsx": true
     },
     "rules": {
       "no-cond-assign": 2,

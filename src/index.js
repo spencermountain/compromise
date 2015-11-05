@@ -44,6 +44,9 @@ const API = function(str) {
 };
 
 let nlp = new API;
+if (typeof window === 'object') {
+  window.nlp = nlp;
+}
 module.exports = nlp;
 
 // let n = nlp.Value('five hundred feet');

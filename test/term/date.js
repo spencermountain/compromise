@@ -4,7 +4,7 @@ let should = require('should');
 let Term = require('../../src/term/term.js');
 let tests = require('./british_terms.js');
 
-let to_date = require('../../src/term/value/to_date');
+let to_date = require('../../src/term/noun/value/to_date');
 let helpers = require('../dateHelpers');
 
 let dateEqual = function (a, b, message, debug) {

@@ -1,9 +1,9 @@
 'use strict';
-const Term = require('../term.js');
+const Noun = require('../noun.js');
 // const date_extractor = require("./date_extractor.js");
 const to_number = require('./to_number.js');
 
-class Value extends Term {
+class Value extends Noun {
   constructor(str) {
     super(str);
     this.parent = 'value';

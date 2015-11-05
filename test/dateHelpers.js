@@ -1,5 +1,9 @@
 'use strict';
-let to_date = require('../src/term/value/to_date');
+let to_date = require('../src/term/noun/value/to_date');
+
+let testGetDaysInMonth = function(year, month) {
+  return 32 - new Date(year, month, 32).getDate();
+};
 
 exports.testCreateDate = function(date_string) {
   return new to_date(date_string);
@@ -19,6 +23,7 @@ exports.getAbsoluteDate = function(year, month, day, hours, minutes, seconds, mi
 
   return d;
 };
+
 exports.getRelativeDate = function(year, month, day, hours, minutes, seconds, milliseconds) {
   let d = new Date();
   let setYear = d.getFullYear() + (year || 0);
@@ -77,10 +82,6 @@ exports.getDateWithWeekdayAndOffset = function(weekday, offset, hours, minutes, 
   d.setSeconds(seconds || 0);
   d.setMilliseconds(milliseconds || 0);
   return d;
-};
-
-let testGetDaysInMonth = function(year, month) {
-  return 32 - new Date(year, month, 32).getDate();
 };
 
 exports.testGetDaysInMonth = testGetDaysInMonth;

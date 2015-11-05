@@ -12,7 +12,7 @@ describe('Sentence Manipulation Methods', function() {
     ];
 
     tests.forEach(function(a) {
-      let s = new nlp(a[0]);
+      let s = nlp.Text(a[0]);
       s.to_past();
       s.text().should.equal(a[1]);
       s.to_future();

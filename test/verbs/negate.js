@@ -16,7 +16,7 @@ describe('verb negate', function() {
   ];
 
   tests.forEach(function(a) {
-    let n = new nlp(a[0]);
+    let n = nlp.Text(a[0]);
     it(a[1], function(done) {
       n.terms()[0].negate().should.equal(a[1]);
       done();

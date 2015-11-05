@@ -2,7 +2,7 @@
 const Term = require('../../term/term.js');
 const Verb = require('../../term/verb/verb.js');
 const Noun = require('../../term/noun/noun.js');
-const Value = require('../../term/value/value.js');
+const Value = require('../../term/noun/value/value.js');
 const Adverb = require('../../term/adverb/adverb.js');
 const Adjective = require('../../term/adjective/adjective.js');
 

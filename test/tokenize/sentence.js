@@ -28,7 +28,7 @@ describe('tokenize sentence tests', function() {
       ['I made $5.60 today in 1 hour of work.  The E.M.T.\'s were on time, but only barely.', 2]
     ];
     tests.forEach(function(a) {
-      let n = new nlp(a[0]);
+      let n = nlp.Text(a[0]);
       n.sentences.should.have.length(a[1]);
     });
     done();

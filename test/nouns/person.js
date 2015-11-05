@@ -10,6 +10,7 @@ describe('parse name', function() {
       ['dr. John Smith', 'dr'],
       ['John Smith jr.', 'jr'],
       ['John Jacob Smith', null],
+      ['Jani K. Smith', null],
       ['asdfefs', null]
     ];
     tests.forEach(function(a) {
@@ -25,6 +26,7 @@ describe('parse name', function() {
       ['dr. John Smith', 'john'],
       ['John Smith jr.', 'john'],
       ['John Jacob Smith', 'john'],
+      ['Jani K. Smith', 'jani'],
       ['asdfefs', null]
     ];
     tests.forEach(function(a) {
@@ -40,6 +42,7 @@ describe('parse name', function() {
       ['dr. John Smith', 'smith'],
       ['John Smith jr.', 'smith'],
       ['John Jacob Smith', 'smith'],
+      ['Jani K. Smith', 'smith'],
     ];
     tests.forEach(function(a) {
       let n = new Person(a[0]);
@@ -48,4 +51,28 @@ describe('parse name', function() {
     done();
   });
 
+});
+
+describe('person gender', function() {
+  it('gets gender', function(done) {
+    let tests = [
+      ['John Smith', 'Male'],
+      ['dr. John Smith', 'Male'],
+      ['Jane Doe', 'Female'],
+      ['Jane', 'Female'],
+      //ambiguous gender
+      ['Jan Smith', null],
+      ['Jan', null],
+      //unknown name
+      ['Jani K. Smith', 'Female'],
+      ['Jani', null],
+      ['asdfefs', null]
+    ];
+    tests.forEach(function(a) {
+      let n = new Person(a[0]);
+      console.log(n.gender());
+      (a[1] === n.gender()).should.equal(true);
+    });
+    done();
+  });
 });

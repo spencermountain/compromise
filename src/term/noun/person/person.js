@@ -23,6 +23,7 @@ constructor(str) {
 //turn a multi-word string into [first, middle, last, honourific]
 parse() {
   let words = this.normal.split(' ');
+
   //first-word honourific
   if (honourifics[words[0]]) {
     this.honourific = words[0];
@@ -35,6 +36,14 @@ parse() {
   }
   //see if the first word is now a known first-name
   if (firstnames[words[0]]) {
+    this.firstName = words[0];
+    words = words.slice(1, words.length);
+  } else {
+    //ambiguous one-word name
+    if (words.length === 1) {
+      return;
+    }
+    //looks like an unknown first-name
     this.firstName = words[0];
     words = words.slice(1, words.length);
   }
@@ -56,11 +65,12 @@ gender() {
   if (firstnames[this.firstName] === 'f') {
     return 'Female';
   }
-  if (this.firstName.match(/...[aei]$/)) { //this is almost-always true
+  if (this.firstName.match(/.(i|ee|[a|e]y|a)$/)) { //this is almost-always true
     return 'Female';
   }
   return null;
 }
+
 pronoun() {
   let gender = this.gender();
   if (gender === 'Male') {

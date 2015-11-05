@@ -41,9 +41,9 @@ module.exports = nlp;
 
 
 
-console.log(nlp.Text('john is nice'));
-let p = nlp.Person('John Smith jr.');
+// console.log(nlp.Text('john is nice'));
+let p = nlp.Person('Jani Smith jr.');
 // let w = nlp2.Verb('have walked');
 // console.log(p instanceof Person);
 // console.log(p instanceof Noun);
-console.log(p);
+console.log(p.gender());

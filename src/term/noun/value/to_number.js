@@ -7,87 +7,18 @@
 // multiple not repeat
 
 'use strict';
+const nums = require('./numbers.js');
+const units = require('./units.js');
+
 //these sets of numbers each have different rules
 //[tenth, hundreth, thousandth..] are ambiguous because they could be ordinal like fifth, or decimal like one-one-hundredth, so are ignored
-const ones = {
-  'a': 1,
-  'zero': 0,
-  'one': 1,
-  'two': 2,
-  'three': 3,
-  'four': 4,
-  'five': 5,
-  'six': 6,
-  'seven': 7,
-  'eight': 8,
-  'nine': 9,
-  'first': 1,
-  'second': 2,
-  'third': 3,
-  'fourth': 4,
-  'fifth': 5,
-  'sixth': 6,
-  'seventh': 7,
-  'eighth': 8,
-  'ninth': 9
-};
-const teens = {
-  'ten': 10,
-  'eleven': 11,
-  'twelve': 12,
-  'thirteen': 13,
-  'fourteen': 14,
-  'fifteen': 15,
-  'sixteen': 16,
-  'seventeen': 17,
-  'eighteen': 18,
-  'nineteen': 19,
-  'eleventh': 11,
-  'twelfth': 12,
-  'thirteenth': 13,
-  'fourteenth': 14,
-  'fifteenth': 15,
-  'sixteenth': 16,
-  'seventeenth': 17,
-  'eighteenth': 18,
-  'nineteenth': 19
-};
-const tens = {
-  'twenty': 20,
-  'thirty': 30,
-  'forty': 40,
-  'fifty': 50,
-  'sixty': 60,
-  'seventy': 70,
-  'eighty': 80,
-  'ninety': 90,
-  'twentieth': 20,
-  'thirtieth': 30,
-  'fourtieth': 40,
-  'fiftieth': 50,
-  'sixtieth': 60,
-  'seventieth': 70,
-  'eightieth': 80,
-  'ninetieth': 90
-};
-const multiple = {
-  'hundred': 100,
-  'grand': 1000,
-  'thousand': 1000,
-  'million': 1000000,
-  'billion': 1000000000,
-  'trillion': 1000000000000,
-  'quadrillion': 1000000000000000,
-  'quintillion': 1000000000000000000,
-  'sextillion': 1000000000000000000000,
-  'septillion': 1000000000000000000000000,
-  'octillion': 1000000000000000000000000000,
-  'nonillion': 1000000000000000000000000000000,
-  'decillion': 1000000000000000000000000000000000
-};
 // let decimal_multiple={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
 
 const to_number = function(s) {
+  if (s === null) {
+    return null;
+  }
+  s = s.trim();
   //remember these concerns for possible errors
   let ones_done = false;
   let teens_done = false;
@@ -160,11 +91,11 @@ const to_number = function(s) {
     if (decimal_mode) {
       x = null;
       //allow consecutive ones in decimals eg. 'two point zero five nine'
-      if (ones[w] !== undefined) {
-        x = ones[w];
+      if (nums.ones[w] !== undefined) {
+        x = nums.ones[w];
       }
-      if (teens[w] !== undefined) {
-        x = teens[w];
+      if (nums.teens[w] !== undefined) {
+        x = nums.teens[w];
       }
       if (parseInt(w, 10) === w) {
         x = parseInt(w, 10);
@@ -198,7 +129,7 @@ const to_number = function(s) {
     }
 
     //ones rules
-    if (ones[w] !== undefined) {
+    if (nums.ones[w] !== undefined) {
       if (ones_done) {
         return null;
       } // eg. five seven
@@ -206,11 +137,11 @@ const to_number = function(s) {
         return null;
       } // eg. five seventeen
       ones_done = true;
-      current_sum += ones[w];
+      current_sum += nums.ones[w];
       continue;
     }
     //teens rules
-    if (teens[w]) {
+    if (nums.teens[w]) {
       if (ones_done) {
         return null;
       } // eg. five seventeen
@@ -221,11 +152,11 @@ const to_number = function(s) {
         return null;
       } // eg. sixty fifteen
       teens_done = true;
-      current_sum += teens[w];
+      current_sum += nums.teens[w];
       continue;
     }
     //tens rules
-    if (tens[w]) {
+    if (nums.tens[w]) {
       if (ones_done) {
         return null;
       } // eg. five seventy
@@ -236,11 +167,11 @@ const to_number = function(s) {
         return null;
       } // eg. twenty seventy
       tens_done = true;
-      current_sum += tens[w];
+      current_sum += nums.tens[w];
       continue;
     }
     //multiple rules
-    if (multiple[w]) {
+    if (nums.multiples[w]) {
       if (multiple_done[w]) {
         return null;
       } // eg. five hundred six hundred
@@ -252,9 +183,9 @@ const to_number = function(s) {
       //case of 'hundred million', (2 consecutive multipliers)
       if (current_sum === 0) {
         total = total || 1; //dont ever multiply by 0
-        total *= multiple[w];
+        total *= nums.multiples[w];
       } else {
-        current_sum *= multiple[w];
+        current_sum *= nums.multiples[w];
         total += current_sum;
       }
       current_sum = 0;
@@ -272,7 +203,7 @@ const to_number = function(s) {
   return total;
 };
 
-// console.log(to_number("sixteen hundred"))
+// console.log(to_number('five hundred'));
 // console.log(to_number("a hundred"))
 // console.log(to_number("four point seven seven"))
 

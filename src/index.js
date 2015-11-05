@@ -46,6 +46,6 @@ const API = function(str) {
 let nlp = new API;
 module.exports = nlp;
 
-let n = nlp.Text('it is January 5th');
+let n = nlp.Value('five hundred feet');
 // console.log(p instanceof Noun);
 console.log(n);

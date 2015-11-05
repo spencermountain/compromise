@@ -4,6 +4,7 @@ const Term = require('./term/term.js');
 const Verb = require('./term/verb/verb.js');
 const Noun = require('./term/noun/noun.js');
 const Value = require('./term/noun/value/value.js');
+const DateClass = require('./term/noun/date/date.js');
 const Adjective = require('./term/adjective/adjective.js');
 const Adverb = require('./term/adverb/adverb.js');
 const Person = require('./term/noun/person/person.js');
@@ -25,6 +26,12 @@ const API = function(str) {
   this.Person = function(s) {
     return new Person(s);
   };
+  this.Date = function(s) {
+    return new DateClass(s);
+  };
+  this.Value = function(s) {
+    return new Value(s);
+  };
   this.Adjective = function(s) {
     return new Adjective(s);
   };
@@ -39,11 +46,6 @@ const API = function(str) {
 let nlp = new API;
 module.exports = nlp;
 
-
-
-// console.log(nlp.Text('john is nice'));
-let p = nlp.Person('Jani Smith jr.');
-// let w = nlp2.Verb('have walked');
-// console.log(p instanceof Person);
+let n = nlp.Text('it is January 5th');
 // console.log(p instanceof Noun);
-console.log(p.gender());
+console.log(n);

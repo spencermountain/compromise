@@ -1,31 +1,17 @@
 'use strict';
 const Noun = require('../noun.js');
-// const date_extractor = require("./date_extractor.js");
 const to_number = require('./to_number.js');
 
 class Value extends Noun {
   constructor(str) {
     super(str);
-    this.parent = 'value';
-  }
-
-  is_date() {
-    const months = /(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|aug|sept|oct|nov|dec)/i;
-    const times = /1?[0-9]:[0-9]{2}/;
-    const days = /\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday|mon|tues|wed|thurs|fri|sat|sun)\b/i;
-    if (this.normal.match(months) || this.normal.match(times) || this.normal.match(days)) {
-      return true;
-    }
-    return false;
+    this.parent = 'noun';
   }
 
   to_number() {
-    return to_number(this.normal);
+    return to_number(this.text);
   }
 
-  date_extractor() {
-    return '';
-  }
 }
 
 module.exports = Value;

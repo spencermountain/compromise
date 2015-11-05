@@ -1,5 +1,5 @@
 'use strict';
-let to_date = require('../src/term/noun/value/to_date');
+let to_date = require('../src/term/noun/date/parse');
 
 let testGetDaysInMonth = function(year, month) {
   return 32 - new Date(year, month, 32).getDate();

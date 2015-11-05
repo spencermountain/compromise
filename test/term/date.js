@@ -4,7 +4,6 @@ let should = require('should');
 let Term = require('../../src/term/term.js');
 let tests = require('./british_terms.js');
 
-let to_date = require('../../src/term/noun/value/to_date');
 let helpers = require('../dateHelpers');
 
 let dateEqual = function (a, b, message, debug) {
@@ -30,7 +29,7 @@ let dateEqual = function (a, b, message, debug) {
         let offset1 = Math.abs(date0To - date1To);
         (offset1 < buffer).should.be.true();
       }
-    } else if (a && a.length > 1 && a.length == b.length) {
+    } else if (a && a.length > 1 && a.length === b.length) {
 
       // TODO - Sort out arrays of multi matches.
       for (let i = 0; i < a.length; i++) {

@@ -40,7 +40,8 @@
       "es6": true
     },
     "ecmaFeatures": {
-      "modules": true
+      "modules": true,
+      "jsx": true,
     },
     "rules": {
       "no-cond-assign": 2,

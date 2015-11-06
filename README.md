@@ -4,10 +4,10 @@
 * smaller than jQuery *(100k)*
 * keypress speed, constant-time
 * No dependencies, training, or configuration
+> npm install nlp_compromise
 
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 [![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
-> npm install nlp_compromise
 
 ```javascript
 nlp.Text('she sells seashells').to_past().text()

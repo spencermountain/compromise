@@ -165,7 +165,8 @@ nlp_compromise={
 ```
 
 #Help
-[![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](superscriptjs.slack.com/messages/nlp_compromise/)
+* [More Documentation](./docs/docs.mid)
+[![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](http://superscriptjs.slack.com/messages/nlp_compromise/)
 
 #Contribution
 [![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/pr)](http://issuestats.com/github/spencermountain/nlp_compromise)

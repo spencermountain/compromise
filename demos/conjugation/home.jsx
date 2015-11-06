@@ -43,7 +43,7 @@ let Home = React.createClass({
     });
   },
   newWord: function() {
-    console.log(nlp.Lexicon['walk']);
+    // console.log(window.nlp.Lexicon['walk']);
   },
   render: function () {
     let cmp = this;

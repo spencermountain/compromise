@@ -1,9 +1,9 @@
 # Natural Language Processing with no guff
 
-* Scores 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
-* Smaller than jQuery *(100k)*
-* Key-press speed, constant time.
-* No dependencies, training, or configuring
+* scores 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
+* smaller than jQuery *(100k)*
+* keypress speed.
+* No dependencies, training, configuring, or prolog
 
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 [![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
@@ -18,7 +18,7 @@ nlp.Text('she sells seashells').to_past().text()
 > Welcome to v2.0!
 > Please [file an issue](https://github.com/spencermountain/nlp_compromise/issues/new) if you find something
 
-# Use
+## Off you go,
 > npm install nlp_compromise
 
 ```javascript
@@ -26,23 +26,23 @@ nlp = require("nlp_compromise")
 nlp.Text("she sells seashells").negate().text()
 // she didn't sell seashells
 nlp.Term("hamburger").syllables()
-//[ 'ham', 'bur', 'ger' ]
+// [ 'ham', 'bur', 'ger' ]
 ```
 
 ```javascript
 <script src="https://rawgit.com/spencermountain/nlp_compromise/2.0/builds/nlp_compromise.es5.js"> </script>
 <script>
   nlp.Noun("dinosaur").pluralize()
-  //dinosaurs
+  // dinosaurs
 </script>
 ```
 
 ### Sentence segmentation
 ```javascript
 nlp.Text("Hi Dr. Miller the price is 4.59 for the U.C.L.A. Ph.Ds.").sentences.length
-//1
+// 1
 nlp.Text("Tony Danza sells sea-shells").terms().length
-//3
+// 3
 ```
 
 ### Syllable hyphenization
@@ -50,15 +50,15 @@ nlp.Text("Tony Danza sells sea-shells").terms().length
 *70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)*
 ```javascript
 nlp.Text("calgary flames").syllables()
-//[ 'cal', 'gar', 'y', 'flames']
+// [ 'cal', 'gar', 'y', 'flames']
 ```
 
 ### US-UK Localization
 ```javascript
 nlp.Term("favourite").americanize()
-//favorite
+// favorite
 nlp.Term("synthesized").britishize()
-//synthesised
+// synthesised
 ```
 ### N-gram
 ```javascript
@@ -70,7 +70,7 @@ options.max_size = 5 // maximum gram count. prevents the result from becoming gi
 ### Date parsing
 ```javascript
 nlp.value("I married April for the 2nd time on June 5th 1998 ").date()
-//[Date object]   d.toLocaleString() -> "04/2/1998"
+// [Date object]   d.toLocaleString() -> "04/2/1998"
 ```
 ### Number parsing
 ```javascript

@@ -440,7 +440,7 @@ verb_rules = Object.keys(verb_rules).reduce(function(h, k) {
       }
     };
     if (a[1]['do']) {
-      obj.repl.doer = a[1]['do'];
+      obj.repl.actor = a[1]['do'];
     }
     return obj;
   });

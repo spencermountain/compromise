@@ -29,8 +29,8 @@ for (let i = 0; i < verbs.length; i++) {
   lexicon[c.past] = 'VBD';
   lexicon[c.gerund] = 'VBG';
   lexicon[c.present] = 'VBZ';
-  if (c.doer) {
-    lexicon[c.doer] = 'NNA';
+  if (c.actor) {
+    lexicon[c.actor] = 'NNA';
   }
   if (c.participle) {
     lexicon[c.participle] = 'VBN';

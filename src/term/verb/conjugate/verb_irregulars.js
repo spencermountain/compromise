@@ -4,7 +4,7 @@ const types = [
   'gerund',
   'past',
   'present',
-  'doer',
+  'actor',
   'future'
 ];
 

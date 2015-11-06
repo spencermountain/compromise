@@ -54,7 +54,7 @@ const negate = function(v) {
     return 'not ' + v.text;
   }
   //walker -> non-walker ?
-  if (v.form() === 'doer') {
+  if (v.form() === 'actor') {
     return 'non-' + v.text;
   }
   //walk -> not walk ?

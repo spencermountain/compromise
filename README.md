@@ -7,7 +7,7 @@ A Natural-Language-Processing library *in Javascript*, small-enough for the brow
 [![Video](http://i.vimeocdn.com/video/493948602_320.jpg)](https://vimeo.com/109880250)
 
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
-[![npm version](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
+[![Gemnasium](https://img.shields.io/spencermountain/nlp_compromise/he.svg)]()
 
 # Install
 npm install nlp_compromise
@@ -160,6 +160,11 @@ nlp_compromise={
 #Contribution
 [![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/pr)](http://issuestats.com/github/spencermountain/nlp_compromise)
 [![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/issue)](http://issuestats.com/github/spencermountain/nlp_compromise)
+[![npm version](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
+
+[![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](superscriptjs.slack.com/messages/nlp_compromise/)
+
+
 
 * [Changelog](https://github.com/spencermountain/nlp_compromise/blob/master/docs/changelog.md)
 * [Development](https://github.com/spencermountain/nlp_compromise/blob/master/docs/development.md)

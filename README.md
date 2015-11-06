@@ -12,13 +12,13 @@
 nlp.Text('she sells seashells').to_past().text()
 //she sold seashells
 ```
-> Welcome to v2.0!
-> Please [file an issue](https://github.com/spencermountain/nlp_compromise/issues/new) if you find something
-
 * [Long Text Demo](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/state_of_the_union/index.html)
 * [Conjugation Demo](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/conjugation/index.html)
 
-# Install
+> Welcome to v2.0!
+> Please [file an issue](https://github.com/spencermountain/nlp_compromise/issues/new) if you find something
+
+# Use
 > npm install nlp_compromise
 
 ```javascript
@@ -37,7 +37,7 @@ nlp.Term("hamburger").syllables()
 </script>
 ```
 
-* Sentence segmentation
+### Sentence segmentation
 ```javascript
 nlp.Text("Hi Dr. Miller the price is 4.59 for the U.C.L.A. Ph.Ds.").sentences.length
 //1
@@ -45,7 +45,7 @@ nlp.Text("Tony Danza sells sea-shells").terms().length
 //3
 ```
 
-* Syllable hyphenization
+### Syllable hyphenization
 
 *70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)*
 ```javascript
@@ -53,26 +53,26 @@ nlp.Text("calgary flames").syllables()
 //[ 'cal', 'gar', 'y', 'flames']
 ```
 
-* US-UK Localization
+### US-UK Localization
 ```javascript
 nlp.Term("favourite").americanize()
 //favorite
 nlp.Term("synthesized").britishize()
 //synthesised
 ```
-* N-gram
+### N-gram
 ```javascript
 nlp.Text("She sells seashells by the seashore.").ngram({min_count:1, max_size:5})
 // [{ word: 'she sells', count: 2, size: 2 }, ...
 options.min_count = 1 // throws away seldom-repeated grams
 options.max_size = 5 // maximum gram count. prevents the result from becoming gigantic
 ```
-* Date parsing
+### Date parsing
 ```javascript
 nlp.value("I married April for the 2nd time on June 5th 1998 ").date()
 //[Date object]   d.toLocaleString() -> "04/2/1998"
 ```
-* Number parsing
+### Number parsing
 ```javascript
 nlp.Value("two thousand five hundred and sixty").number
 // 2560
@@ -83,7 +83,7 @@ nlp.Value("two thousand five hundred and sixty").number
 ```
 
 
-#API
+##Full API
 ```javascript
 nlp_compromise={
   Text :{

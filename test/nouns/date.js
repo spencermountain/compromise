@@ -2,7 +2,6 @@
 let mocha = require('mocha');
 let should = require('should');
 let Term = require('../../src/term/term.js');
-let tests = require('./british_terms.js');
 
 let helpers = require('../dateHelpers');
 

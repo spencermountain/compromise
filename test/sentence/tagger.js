@@ -7,11 +7,11 @@ describe('pos tag', function() {
 
   it('Basic', function(done) {
     let tests = [
-      ['John is pretty', ['noun', 'verb', 'adjective']],
-      ['John was lofty', ['noun', 'verb', 'adjective']],
-      ['John Smith was lofty', ['noun', 'verb', 'adjective']],
-      ['asdfes was lofty', ['noun', 'verb', 'adjective']],
-      ['asdfes lksejfj was lofty', ['noun', 'verb', 'adjective']],
+      ['John is pretty', ['Person', 'Verb', 'Adjective']],
+      ['John was lofty', ['Person', 'Verb', 'Adjective']],
+      ['John Smith was lofty', ['Person', 'Verb', 'Adjective']],
+      ['asdfes was lofty', ['Noun', 'Verb', 'Adjective']],
+      ['asdfes lksejfj was lofty', ['Noun', 'Verb', 'Adjective']],
     ];
     tests.forEach(function(a) {
       let n = nlp.Text(a[0]);

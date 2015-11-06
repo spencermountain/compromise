@@ -12,12 +12,12 @@ const pos = require('./pos');
 const capital_signals = function(terms) {
   //first words need careful rules
   if (terms[0].is_acronym()) {
-    terms[0] = assign(terms[0], 'NN', 'acronym');
+    terms[0] = assign(terms[0], 'Noun', 'acronym');
   }
   //non-first-word capitals are nouns
   for (let i = 1; i < terms.length; i++) {
     if (terms[i].is_capital() || terms[i].is_acronym()) {
-      terms[i] = assign(terms[i], 'NN', 'capital_signal');
+      terms[i] = assign(terms[i], 'Noun', 'capital_signal');
     }
   }
   return terms;
@@ -74,8 +74,9 @@ const grammar_rules_pass = function(s) {
 
 const noun_fallback = function(terms) {
   for(let i = 0; i < terms.length; i++) {
+    console.log(terms[i].pos);
     if (terms[i].pos === '?') {
-      terms[i] = assign(terms[i], 'NN', 'fallback');
+      terms[i] = assign(terms[i], 'Noun', 'fallback');
     }
   }
   return terms;
@@ -87,7 +88,16 @@ const specific_pos = function(terms) {
     let t = terms[i];
     if (t instanceof pos.Noun) {
       if (t.is_person()) {
-        terms[i] = assign(t, pos.Person);
+        terms[i] = assign(t, 'Person');
+      }
+      if (t.is_place()) {
+        terms[i] = assign(t, 'Place');
+      }
+      if (t.is_value()) {
+        terms[i] = assign(t, 'Value');
+      }
+      if (t.is_date()) {
+        terms[i] = assign(t, 'Date');
       }
     }
   }

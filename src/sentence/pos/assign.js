@@ -1,10 +1,10 @@
 'use strict';
-const partsofSpeech = require('./pos');
-let Noun = partsofSpeech.Noun;
-let Verb = partsofSpeech.Verb;
-let Adjective = partsofSpeech.Adjective;
-let Adverb = partsofSpeech.Adjective;
-let Term = partsofSpeech.Term;
+const pos = require('./pos');
+let Noun = pos.Noun;
+let Verb = pos.Verb;
+let Adjective = pos.Adjective;
+let Adverb = pos.Adjective;
+let Term = pos.Term;
 
 const mapping = {
   'NN': Noun,
@@ -36,24 +36,21 @@ const mapping = {
   'RB': Adverb,
   'RBR': Adverb,
   'RBS': Adverb,
-  'DT': Term,
-  'IN': Term,
-  'CC': Term,
-
-  'Term': Term,
-  'Noun': Noun,
   'Adjective': Adjective,
   'Verb': Verb,
   'Adverb': Adverb,
-  'Value': Noun,
+  'Noun': Noun,
+  'Value': pos.Value,
+  'Place': pos.Place,
+  'Person': pos.Person,
+  'Date': pos._Date,
 };
 
 //swap the Term object with a proper Pos class
-const assign = function(t, pos, reason) {
-  if (mapping[pos] !== undefined) {
-    t = new mapping[pos](t.text, pos);
-    t.reason = reason;
-  }
+const assign = function(t, tag, reason) {
+  let P = mapping[tag] || Term;
+  t = new P(t.text, tag);
+  t.reason = reason;
   return t;
 };
 

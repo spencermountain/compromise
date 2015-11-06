@@ -60,7 +60,7 @@ if (typeof window === 'object') {
 }
 module.exports = nlp;
 
-console.log(nlp.Text('John Smith is cute').tags());
+// console.log(nlp.Text('John Smith is in Canada').terms());
 
 // let n = nlp.Value('five hundred feet');
 // console.log(p instanceof Noun);

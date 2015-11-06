@@ -4,29 +4,76 @@ A Natural-Language-Processing library *in Javascript*, small-enough for the brow
 > Welcome to v2.0!
 > Please [file an issue](https://github.com/spencermountain/nlp_compromise/issues/new) if you find something
 
-[![Video](http://i.vimeocdn.com/video/493948602_640.jpg)](https://vimeo.com/109880250)
+[![Video](http://i.vimeocdn.com/video/493948602_320.jpg)](https://vimeo.com/109880250)
 
-[![npm version](https://badge.fury.io/js/nlp_compromise.svg)](http://badge.fury.io/js/nlp_compromise)
-
-[Changelog](https://github.com/spencermountain/nlp_compromise/blob/master/docs/changelog.md)
-[Development](https://github.com/spencermountain/nlp_compromise/blob/master/docs/development.md)
+[![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
+[![npm version](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 
 # Install
+npm install nlp_compromise
 ```javascript
-$ npm install nlp_compromise
-
 nlp = require("nlp_compromise")
+nlp.Text("she sells seashells").to_past().text()
+// she sold seashells
 nlp.Term("hamburger").syllables()
 //[ 'ham', 'bur', 'ger' ]
 ```
 
 ```javascript
-<script src="https://rawgit.com/spencermountain/nlp_compromise/master/client_side/nlp.min.js"> </script>
+<script src="https://rawgit.com/spencermountain/nlp_compromise/2.0/builds/nlp_compromise.es5.js"> </script>
 <script>
   nlp.Noun("dinosaur").pluralize()
   //dinosaurs
 </script>
 ```
+
+#Some showing-off
+## Sentence segmentation
+```javascript
+nlp.Text("Hi Dr. Miller the price is 4.59 for the U.C.L.A. Ph.Ds.").sentences.length
+//1
+nlp.Text("Tony Danza sells sea-shells").terms().length
+//3
+```
+
+## Syllable hyphenization
+70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)  0.5k
+```javascript
+nlp.Text("calgary flames").syllables()
+//[ 'cal', 'gar', 'y', 'flames']
+```
+
+## US-UK Localization
+```javascript
+nlp.Term("favourite").americanize()
+//favorite
+nlp.Term("synthesized").britishize()
+//synthesised
+```
+## N-gram
+```javascript
+nlp.Text("She sells seashells by the seashore.").ngram({min_count:1, max_size:5})
+// [{ word: 'she sells', count: 2, size: 2 }, ...
+options.min_count // throws away seldom-repeated grams. defaults to 1
+options.max_size // maximum gram count. prevents the result from becoming gigantic. defaults to 5
+```
+### Date parsing
+```javascript
+nlp.value("I married April for the 2nd time on June 5th 1998 ").date()
+// { text: 'June 5th 1998',
+//   from: { year: '1998', month: '06', day: '05' },
+//   to: {} }
+```
+### Number parsing
+```javascript
+nlp.Value("two thousand five hundred and sixty").number
+//2560
+-nlp.value("twenty one hundred").number
+-//2100
+-nlp.Value("nine two hundred").number
+-//null
+```
+
 
 #API
 ```javascript
@@ -37,9 +84,9 @@ nlp_compromise={
     to_future(),  //she will sell seashells
     negate(),     //she doesn't sell seashells
     tags(),       //she sells seashells -> [Noun, Verb, Noun]
-    ngram({max_size:2, min_count:1}),      //she sells seashells -> [she sells, sells seashells]
     terms(),
     normalised(),
+    ngram({max_size:2}),//[[she sells, sells seashells],[she, sells, seashells]]
   },
   Term :{
     syllables(),   //hamburger -> ['ham','bur','ger']
@@ -110,5 +157,12 @@ nlp_compromise={
 }
 ```
 
-## Licence
-MIT
+#Contribution
+[![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/pr)](http://issuestats.com/github/spencermountain/nlp_compromise)
+[![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/issue)](http://issuestats.com/github/spencermountain/nlp_compromise)
+
+* [Changelog](https://github.com/spencermountain/nlp_compromise/blob/master/docs/changelog.md)
+* [Development](https://github.com/spencermountain/nlp_compromise/blob/master/docs/development.md)
+
+[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+

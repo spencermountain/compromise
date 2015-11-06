@@ -10,6 +10,9 @@ module.exports = function (grunt) {
     run: {
       run: {
         exec: 'iojs ./src/index.js',
+      },
+      demo: {
+        exec: 'python -m SimpleHTTPServer 8888',
       }
     },
 
@@ -53,7 +56,7 @@ module.exports = function (grunt) {
         }
       }
     },
-    //
+
     // eslint: {
     //   options: {
     //     configFile: "./eslint.json",
@@ -98,8 +101,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-run');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-filesize');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
   grunt.registerTask('default', ['watch']);
+  grunt.registerTask('demo', ['run:demo']);
   grunt.registerTask('test', ['mochaTest']);
   grunt.registerTask('lint', ['eslint']);
   grunt.registerTask('build', ['browserify', 'babel', 'uglify', 'filesize']);

@@ -15,24 +15,24 @@
     "build": "grunt build"
   },
   "devDependencies": {
-    "babel": "^5.8.23",
-    "babel-runtime": "^5.8.23",
-    "eslint": "^1.2.1",
-    "grunt": "~0.4.*",
-    "grunt-babel": "^5.0.1",
-    "grunt-browserify": "^4.0.0",
-    "grunt-contrib-uglify": "^0.9.2",
-    "grunt-contrib-watch": "*",
-    "grunt-eslint": "^17.1.0",
-    "grunt-filesize": "0.0.7",
-    "grunt-mocha-test": "^0.12.7",
-    "grunt-run": "^0.4.0",
-    "mocha": "^2.2.5",
-    "should": "^7.0.4"
+    "babel": "5.8.x",
+    "babel-runtime": "5.8.x",
+    "eslint": "1.2.x",
+    "grunt": "~0.4.x",
+    "grunt-babel": "5.0.x",
+    "grunt-browserify": "4.0.x",
+    "grunt-contrib-uglify": "0.9.x",
+    "grunt-contrib-watch": "0.6.x",
+    "grunt-eslint": "17.1.x",
+    "grunt-filesize": "0.0.x",
+    "grunt-mocha-test": "0.12.x",
+    "grunt-run": "0.4.x",
+    "mocha": "2.2.x",
+    "should": "7.0.x"
   },
   "license": "MIT",
   "dependencies": {
-    "sugar-date": "^1.5.1"
+    "sugar-date": "1.5.x"
   },
 
   "eslintConfig": {

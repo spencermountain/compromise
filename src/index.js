@@ -12,6 +12,7 @@ const Place = require('./term/noun/place/place.js');
 const _Date = require('./term/noun/date/date.js');
 const Organisation = require('./term/noun/organisation/organisation.js');
 
+const Lexicon = require('./lexicon.js');
 
 //function returns a text object if there's a param, otherwise
 const API = function(str) {

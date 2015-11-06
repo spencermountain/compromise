@@ -14,12 +14,12 @@ class Text {
   }
 
   //Text methods
-  ngram() {
+  ngram(options) {
     let terms = this.terms();
     terms = terms.map(function(t) {
       return t.normal;
     });
-    return ngram(terms);
+    return ngram(terms, options);
   }
 
   //map over sentence methods

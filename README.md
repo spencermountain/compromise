@@ -30,80 +30,83 @@ nlp.Term("hamburger").syllables()
 
 #API
 ```javascript
-module.exports={
+nlp_compromise={
   Text :{
-    ngram(),
+    to_past(),    //she sold seashells
+    to_present(), //she sells seashells
+    to_future(),  //she will sell seashells
+    negate(),     //she doesn't sell seashells
+    tags(),       //she sells seashells -> [Noun, Verb, Noun]
+    ngram({max_size:2, min_count:1}),      //she sells seashells -> [she sells, sells seashells]
     terms(),
     normalised(),
-    tags(),
-    to_past(),
-    to_present(),
-    to_future(),
   },
   Term :{
-    syllables(),
-    americanize(),
-    britishize(),
-    is_capital(),
+    syllables(),   //hamburger -> ['ham','bur','ger']
+    britishize(),  //favorite -> favourite
+    americanize(), //synthesised -> synthesized
+    is_capital(),  //Tony Danza -> true
   },
   Sentence :{
-    terminator(),
-    sentence_type(),
-    to_past(),
-    to_present(),
-    to_future(),
+    sentence_type(), //declarative, interrogative, exclamative
+    terminator(),    //the sentence-ending punctuation
+    to_past(),       //she sold seashells
+    to_present(),    //she sells seashells
+    to_future(),     //she will sell seashells
+    negate(),        //she doesn't sell seashells
+    tags(),          //she sells seashells -> [Noun, Verb, Noun]
     normalised(),
     text(),
-    tags(),
   },
   Verb :{
-    conjugate(),
-    conjugation(),
-    to_past(),
-    to_present(),
-    to_future(),
-    isNegative(),
-    negate(),
+    to_past(),     //walk -> walked
+    to_present(),  //walking -> walk
+    to_future(),   //walk -> will walk
+    conjugate(),   //all forms {}
+    conjugation(), //infinitive,present,past,future
+    negate(),      //walk -> didn't walk
+    isNegative(),  //is the verb already negated
   },
   Adjective :{
     to_comparative(), //quick -> quicker
     to_superlative(), //quick -> quickest
-    to_noun(), //quick -> quickness
-    to_adverb(), //quick -> quickly
-    conjugate(), //all forms {}
+    to_noun(),        //quick -> quickness
+    to_adverb(),      //quick -> quickly
+    conjugate(),      //all forms {}
   },
   Adverb :{
-    to_adjective()
+    to_adjective()  // quickly -> quick
   },
   Noun :{
-    article(),
-    is_plural(),
-    is_uncountable(),
-    pluralize(),
-    singularize(),
-    is_person(),
-    is_place(),
-    is_organisation(),
-    is_date(),
-    is_value(),
+    article(),        //ostrich -> an
+    is_uncountable(), //(doesn't inflect) knowledge -> true
+    pluralize(),      //hamburger -> hamburgers
+    singularize(),    //hamburgers -> hamburger
+    is_plural(),      //humburgers -> true
+    is_person(),      //tony hawk -> true
+    is_place(),       //Baghdad -> true
+    is_organisation(),//C.I.A. -> true
+    is_date(),        //January 5th -> true
+    is_value(),       //fifteen books -> true
   },
   Value :{
-    number,
-    unit,
-    unit_name,
-    measurement,
+    number,     //fifty kilometers -> 50
+    unit,       //fifty km -> km
+    unit_name,  //fifty km -> kilometer
+    measurement,//fifty km -> distance
   },
   Person :{
-    honourific,
-    firstName,
-    middleName,
-    lastName
+    gender(),   //Tony Hawk -> Male
+    honourific, //Dr. Tony Hawk -> Dr
+    firstName,  //Homer J. Simpson -> Homer
+    middleName, //Homer Jay Simpson -> Jay
+    lastName    //Homer Jay Simpson -> Simpson
   },
   Date :{
-    date
+    date  //Tuesday July 5th, 1974 -> Date()
   },
   Place :{},
-  Organisation :{},
+  Organisation :{}
 }
 ```
 

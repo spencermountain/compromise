@@ -3,7 +3,7 @@
 * scores 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 * smaller than jQuery *(100k)*
 * keypress speed.
-* No dependencies, training, configuring, or prolog
+* No dependencies, training, or configuring
 
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 [![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
@@ -18,14 +18,15 @@ nlp.Text('she sells seashells').to_past().text()
 > Welcome to v2.0!
 > Please [file an issue](https://github.com/spencermountain/nlp_compromise/issues/new) if you find something
 
-## Off you go,
+## Off you go:
 > npm install nlp_compromise
 
 ```javascript
-nlp = require("nlp_compromise")
-nlp.Text("she sells seashells").negate().text()
+nlp = require("nlp_compromise");
+nlp.Text("she sells seashells").negate().text();
 // she didn't sell seashells
-nlp.Term("hamburger").syllables()
+
+nlp.Term("hamburger").syllables();
 // [ 'ham', 'bur', 'ger' ]
 ```
 
@@ -172,8 +173,8 @@ nlp_compromise={
 [![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/pr)](http://issuestats.com/github/spencermountain/nlp_compromise)
 [![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/issue)](http://issuestats.com/github/spencermountain/nlp_compromise)
 
-* [Changelog](https://github.com/spencermountain/nlp_compromise/blob/master/docs/changelog.md)
-* [Development](https://github.com/spencermountain/nlp_compromise/blob/master/docs/development.md)
+* [Changelog](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/changelog.md)
+* [Development](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/development.md)
 
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 

@@ -3,7 +3,7 @@
 
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 [![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
-
+[![CodacyBadge](https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062)](https://www.codacy.com/app/spencerkelly86/nlp_compromise)
 * scores 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 * smaller than jQuery *(100k)*
 * keypress speed, constant-time
@@ -76,9 +76,9 @@ nlp.value("I married April for the 2nd time on June 5th 1998 ").date()
 nlp.Value("two thousand five hundred and sixty").number
 // 2560
 -nlp.value("twenty one hundred").number
--// 2100
+// 2100
 -nlp.Value("nine two hundred").number
--// null
+// null
 ```
 
 

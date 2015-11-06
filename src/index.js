@@ -50,6 +50,7 @@ const API = function(str) {
   this.Organisation = function(s) {
     return new Organisation(s);
   };
+  this.Lexicon = Lexicon;
   if (str) {
     return new Text(str);
   }

@@ -26,19 +26,25 @@ let Home = React.createClass({
   result: function() {
     let cmp = this;
     return Object.keys(this.state.words).map(function(k) {
+      let negated = nlp.Verb(cmp.state.words[k]).negate();
       return (
         <Row>
-          <Col md={6}>
-            <b>{k}</b>
+          <Col md={4}>
+            {k + ':'}
           </Col>
-          <Col md={6}>
-            {cmp.state.words[k]}
+          <Col md={4}>
+            <b>{cmp.state.words[k]}</b>
+          </Col>
+          <Col md={4}>
+            {negated}
           </Col>
         </Row>
         );
     });
   },
-
+  newWord: function() {
+    console.log(nlp.Lexicon['walk']);
+  },
   render: function () {
     let cmp = this;
     let state = this.state;
@@ -63,6 +69,7 @@ let Home = React.createClass({
           <Col md={4} ></Col>
           <Col md={4} >
             <Input type="text" value={this.state.word} onChange={this.update}/>
+            <Glyphicon onClick={this.newWord} glyph='refresh' />
           </Col>
         </Row>
 

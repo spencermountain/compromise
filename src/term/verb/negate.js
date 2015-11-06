@@ -39,7 +39,7 @@ const negate = function(v) {
   //multiple-word verbs, like 'have walked'
   let words = v.normal.split(' ');
   if (words.length > 1 && exceptions[words[0]]) {
-    return exceptions[words[0]] + words.slice(1, words.length).join(' ');
+    return exceptions[words[0]] + ' ' + words.slice(1, words.length).join(' ');
   }
   //walked -> didn't walk
   if (v.form() === 'past') {

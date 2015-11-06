@@ -12,6 +12,18 @@ class Adjective extends Term {
     this.pos = 'Adjective';
   }
 
+  to_comparative() {
+    return to_comparative(this.normal);
+  }
+  to_superlative() {
+    return to_superlative(this.normal);
+  }
+  to_noun() {
+    return adj_to_noun(this.normal);
+  }
+  to_adverb() {
+    return adj_to_adv(this.normal);
+  }
   conjugate() {
     return {
       comparative: to_comparative(this.normal),

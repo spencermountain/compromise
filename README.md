@@ -30,45 +30,81 @@ nlp.Term("hamburger").syllables()
 
 #API
 ```javascript
-const API = function(str) {
-  this.Term = function(s) {
-    return new Term(s);
-  };
-  this.Verb = function(s) {
-    return new Verb(s);
-  };
-  this.Adverb = function(s) {
-    return new Adverb(s);
-  };
-  this.Adjective = function(s) {
-    return new Adjective(s);
-  };
-  this.Text = function(s) {
-    return new Text(s);
-  };
-
-  this.Noun = function(s) {
-    return new Noun(s);
-  };
-  this.Person = function(s) {
-    return new Person(s);
-  };
-  this.Date = function(s) {
-    return new _Date(s);
-  };
-  this.Value = function(s) {
-    return new Value(s);
-  };
-  this.Place = function(s) {
-    return new Place(s);
-  };
-  this.Organisation = function(s) {
-    return new Organisation(s);
-  };
-  if (str) {
-    return new Text(str);
-  }
-};
+module.exports={
+  Text :{
+    ngram(),
+    terms(),
+    normalised(),
+    tags(),
+    to_past(),
+    to_present(),
+    to_future(),
+  },
+  Term :{
+    syllables(),
+    americanize(),
+    britishize(),
+    is_capital(),
+  },
+  Sentence :{
+    terminator(),
+    sentence_type(),
+    to_past(),
+    to_present(),
+    to_future(),
+    normalised(),
+    text(),
+    tags(),
+  },
+  Verb :{
+    conjugate(),
+    conjugation(),
+    to_past(),
+    to_present(),
+    to_future(),
+    isNegative(),
+    negate(),
+  },
+  Adjective :{
+    to_comparative(), //quick -> quicker
+    to_superlative(), //quick -> quickest
+    to_noun(), //quick -> quickness
+    to_adverb(), //quick -> quickly
+    conjugate(), //all forms {}
+  },
+  Adverb :{
+    to_adjective()
+  },
+  Noun :{
+    article(),
+    is_plural(),
+    is_uncountable(),
+    pluralize(),
+    singularize(),
+    is_person(),
+    is_place(),
+    is_organisation(),
+    is_date(),
+    is_value(),
+  },
+  Value :{
+    number,
+    unit,
+    unit_name,
+    measurement,
+  },
+  Person :{
+    honourific,
+    firstName,
+    middleName,
+    lastName
+  },
+  Date :{
+    date
+  },
+  Place :{},
+  Organisation :{},
+}
 ```
 
 ## Licence

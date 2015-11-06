@@ -85,78 +85,78 @@ nlp.Value("two thousand five hundred and sixty").number
 ```javascript
 nlp_compromise={
   Text :{
-    to_past: function    //she sold seashells
-    to_present: function //she sells seashells
-    to_future: function  //she will sell seashells
-    negate: function     //she doesn't sell seashells
-    tags: function       //she sells seashells -> [Noun, Verb, Noun]
-    terms: function
-    normalised: function
+    to_past: function()    //she sold seashells
+    to_present: function() //she sells seashells
+    to_future: function()  //she will sell seashells
+    negate: function()     //she doesn't sell seashells
+    tags: function()       //she sells seashells -> [Noun, Verb, Noun]
+    terms: function()
+    normalised: function()
     ngram({max_size:2}),//[[she sells, sells seashells],[she, sells, seashells]]
   },
   Term :{
-    syllables: function   //hamburger -> ['ham','bur','ger']
-    britishize: function  //favorite -> favourite
-    americanize: function //synthesised -> synthesized
-    is_capital: function  //Tony Danza -> true
+    syllables: function()   //hamburger -> ['ham','bur','ger']
+    britishize: function()  //favorite -> favourite
+    americanize: function() //synthesised -> synthesized
+    is_capital: function()  //Tony Danza -> true
   },
   Sentence :{
-    sentence_type: function //declarative, interrogative, exclamative
-    terminator: function    //the sentence-ending punctuation
-    to_past: function       //she sold seashells
-    to_present: function    //she sells seashells
-    to_future: function     //she will sell seashells
-    negate: function        //she doesn't sell seashells
-    tags: function          //she sells seashells -> [Noun, Verb, Noun]
-    normalised: function
-    text: function
+    sentence_type: function() //declarative, interrogative, exclamative
+    terminator: function()    //the sentence-ending punctuation
+    to_past: function()       //she sold seashells
+    to_present: function()    //she sells seashells
+    to_future: function()     //she will sell seashells
+    negate: function()        //she doesn't sell seashells
+    tags: function()          //she sells seashells -> [Noun, Verb, Noun]
+    normalised: function()
+    text: function()
   },
   Verb :{
-    to_past: function     //walk -> walked
-    to_present: function  //walking -> walk
-    to_future: function   //walk -> will walk
-    conjugate: function   //all forms {}
-    conjugation: function //infinitive,present,past,future
-    negate: function      //walk -> didn't walk
-    isNegative: function  //is the verb already negated
+    to_past: function()     //walk -> walked
+    to_present: function()  //walking -> walk
+    to_future: function()   //walk -> will walk
+    conjugate: function()   //all forms {}
+    conjugation: function() //infinitive,present,past,future
+    negate: function()      //walk -> didn't walk
+    isNegative: function()  //is the verb already negated
   },
   Adjective :{
-    to_comparative: function //quick -> quicker
-    to_superlative: function //quick -> quickest
-    to_noun: function        //quick -> quickness
-    to_adverb: function      //quick -> quickly
-    conjugate: function      //all forms {}
+    to_comparative: function() //quick -> quicker
+    to_superlative: function() //quick -> quickest
+    to_noun: function()        //quick -> quickness
+    to_adverb: function()      //quick -> quickly
+    conjugate: function()      //all forms {}
   },
   Adverb :{
-    to_adjective()  // quickly -> quick
+    to_adjective: function()  //quickly -> quick
   },
   Noun :{
-    article: function        //ostrich -> an
-    is_uncountable: function //(doesn't inflect) knowledge -> true
-    pluralize: function      //hamburger -> hamburgers
-    singularize: function    //hamburgers -> hamburger
-    is_plural: function      //humburgers -> true
-    is_person: function      //tony hawk -> true
-    is_place: function       //Baghdad -> true
-    is_organisation: function//C.I.A. -> true
-    is_date: function        //January 5th -> true
-    is_value: function       //fifteen books -> true
+    article: function()        //ostrich -> an
+    is_uncountable: function() //(doesn't inflect) knowledge -> true
+    pluralize: function()      //hamburger -> hamburgers
+    singularize: function()    //hamburgers -> hamburger
+    is_plural: function()      //humburgers -> true
+    is_person: function()      //tony hawk -> true
+    is_place: function()       //Baghdad -> true
+    is_organisation: function()//C.I.A. -> true
+    is_date: function()        //January 5th -> true
+    is_value: function()       //fifteen books -> true
   },
   Value :{
-    number,     //fifty kilometers -> 50
-    unit,       //fifty km -> km
-    unit_name,  //fifty km -> kilometer
-    measurement,//fifty km -> distance
+    number: Number,     //fifty kilometers -> 50
+    unit: String,       //fifty km -> km
+    unit_name: String,  //fifty km -> kilometer
+    measurement: String,//fifty km -> distance
   },
   Person :{
-    gender: function   //Tony Hawk -> Male
-    honourific, //Dr. Tony Hawk -> Dr
-    firstName,  //Homer J. Simpson -> Homer
-    middleName, //Homer Jay Simpson -> Jay
-    lastName    //Homer Jay Simpson -> Simpson
+    gender: function()   //Tony Hawk -> Male
+    honourific: String, //Dr. Tony Hawk -> Dr
+    firstName: String,  //Homer J. Simpson -> Homer
+    middleName: String, //Homer Jay Simpson -> Jay
+    lastName: String    //Homer Jay Simpson -> Simpson
   },
   Date :{
-    date  //Tuesday July 5th, 1974 -> Date()
+    date: Date  //Tuesday July 5th, 1974 -> Date()
   },
   Place :{},
   Organisation :{}

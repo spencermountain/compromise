@@ -29,10 +29,10 @@ nlp.Text('she sells seashells').to_past().text()
 ```
 ```javascript
 nlp = require("nlp_compromise");
-nlp.Text("she sells seashells").negate().text();
+nlp.Text("she sells seashells").negate().text()
 // she didn't sell seashells
 
-nlp.Term("hamburger").syllables();
+nlp.Term("hamburger").syllables()
 // [ 'ham', 'bur', 'ger' ]
 ```
 
@@ -45,7 +45,6 @@ nlp.Text("Tony Danza sells sea-shells").terms().length
 ```
 
 ### Syllable hyphenization
-
 *70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)*
 ```javascript
 nlp.Text("calgary flames").syllables()
@@ -53,6 +52,7 @@ nlp.Text("calgary flames").syllables()
 ```
 
 ### US-UK Localization
+*90% on the [superscript dataset](https://github.com/silentrob/normalizer/blob/master/data/british.txt)*
 ```javascript
 nlp.Term("favourite").americanize()
 // favorite

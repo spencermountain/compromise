@@ -4,6 +4,7 @@ const article = require('./article.js');
 const is_plural = require('./is_plural.js');
 const is_place = require('./place/is_place.js');
 const is_person = require('./person/is_person.js');
+const is_value = require('./value/is_value.js');
 const is_date = require('./date/is_date.js');
 const is_organisation = require('./organisation/is_organisation.js');
 const singularize = require('./singularize.js');
@@ -40,6 +41,9 @@ class Noun extends Term {
   }
   is_date() {
     return is_date(this.normal);
+  }
+  is_value() {
+    return is_value(this.normal);
   }
 
 }

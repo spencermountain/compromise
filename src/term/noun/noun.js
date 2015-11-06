@@ -45,6 +45,9 @@ class Noun extends Term {
   is_value() {
     return is_value(this.normal);
   }
+  is_place() {
+    return is_place(this.normal);
+  }
 
 }
 

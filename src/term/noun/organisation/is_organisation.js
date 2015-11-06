@@ -19,20 +19,21 @@ let org_names = org_data.organisations.reduce(function(h, s) {
 }, {});
 
 const is_organisation = function(str, text) {
+  text = text || '';
   //some known organisations, like microsoft
   if (org_names[str]) {
     return true;
   }
   //no period acronyms
-  if (str.length <= 5 && text.match(/^[A-Z][A-Z]+$/) !== null) {
+  if (text.length <= 5 && text.match(/^[A-Z][A-Z]+$/) !== null) {
     return true;
   }
   //period acronyms
-  if (str.length >= 4 && text.match(/^([A-Z]\.)*$/) !== null) {
+  if (text.length >= 4 && text.match(/^([A-Z]\.)*$/) !== null) {
     return true;
   }
   // eg 'Smith & Co'
-  if (str.match(/ (&|and|of) /)) {
+  if (str.match(/ (&|of) /)) {
     return true;
   }
   // eg pets.com
@@ -50,4 +51,4 @@ const is_organisation = function(str, text) {
 
 module.exports = is_organisation;
 
-// console.log(is_organisation('FBI'));
+// console.log(is_organisation('4 hundred and ten'));

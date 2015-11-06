@@ -3,6 +3,49 @@ let mocha = require('mocha');
 let should = require('should');
 let Noun = require('../../src/term/noun/noun.js');
 
+let all_tests = {
+
+  people: [
+    'John Smith',
+    'dr. John Smith',
+    'John Smith jr.',
+    'John Jacob Smith',
+    'Jani K. Smith',
+    'K.L Smith',
+    'John K.L Smith',
+    'agnes john',
+    'spencer kelly',
+  ],
+  basic: [
+    'asdfefs',
+    'octopus',
+    'walrus',
+    'prototype',
+    'object',
+    'tree',
+    'i',
+  ],
+  organisation: [
+    'FBI',
+    'NASA',
+    'F.B.I.',
+    'Fun ltd',
+    'Fun co',
+    'Fun and co',
+    'Smith & Rogers',
+    'google',
+    'google inc',
+  ],
+  dates: [
+    'tuesday',
+    'february',
+    'february fifth',
+    'january fifth 2013',
+    'tuesday march 5th',
+  ]
+};
+
+
 describe('nouns', function() {
 
   it('is_date', function(done) {
@@ -10,6 +53,13 @@ describe('nouns', function() {
       ['five hundred feet', false],
       ['50 square feet', false],
       ['90 hertz', false],
+      ['two books', false],
+      ['two hundred', false],
+      ['4 hundred and ten', false],
+      ['4 and a half million', false],
+      ['499 thousand', false],
+      ['499', false],
+      ['4,899', false],
       ['John Smith', false],
       ['dr. John Smith', false],
       ['John Smith jr.', false],
@@ -43,6 +93,13 @@ describe('nouns', function() {
       ['five hundred feet', false],
       ['50 square feet', false],
       ['90 hertz', false],
+      ['two books', false],
+      ['two hundred', false],
+      ['4 hundred and ten', false],
+      ['4 and a half million', false],
+      ['499 thousand', false],
+      ['499', false],
+      ['4,899', false],
       ['John Smith', false],
       ['dr. John Smith', false],
       ['John Smith jr.', false],
@@ -77,6 +134,13 @@ describe('nouns', function() {
       ['five hundred feet', false],
       ['50 square feet', false],
       ['90 hertz', false],
+      ['two books', false],
+      ['two hundred', false],
+      ['4 hundred and ten', false],
+      ['4 and a half million', false],
+      ['499 thousand', false],
+      ['499', false],
+      ['4,899', false],
       ['John Smith', true],
       ['dr. John Smith', true],
       ['John Smith jr.', true],
@@ -110,6 +174,13 @@ describe('nouns', function() {
       ['five hundred feet', true],
       ['50 square feet', true],
       ['90 hertz', true],
+      ['two books', true],
+      ['two hundred', true],
+      ['4 hundred and ten', true],
+      ['4 and a half million', true],
+      ['499 thousand', true],
+      ['499', true],
+      ['4,899', true],
       ['John Smith', false],
       ['dr. John Smith', false],
       ['John Smith jr.', false],
@@ -134,6 +205,47 @@ describe('nouns', function() {
     tests.forEach(function(a) {
       let n = new Noun(a[0]);
       (a[1]).should.equal(n.is_value());
+    });
+    done();
+  });
+
+
+  it('is_place', function(done) {
+    let tests = [
+      ['five hundred feet', false],
+      ['50 square feet', false],
+      ['90 hertz', false],
+      ['two books', false],
+      ['two hundred', false],
+      ['4 hundred and ten', false],
+      ['4 and a half million', false],
+      ['499 thousand', false],
+      ['499', false],
+      ['4,899', false],
+      ['John Smith', false],
+      ['dr. John Smith', false],
+      ['John Smith jr.', false],
+      ['John Jacob Smith', false],
+      ['Jani K. Smith', false],
+      ['asdfefs', false],
+      ['octopus', false],
+      ['tree', false],
+      ['i', false],
+      ['FBI', false],
+      ['F.B.I.', false],
+      ['Fun ltd', false],
+      ['Fun co', false],
+      ['Smith & Rogers', false],
+      ['google', false],
+      ['tuesday', false],
+      ['february', false],
+      ['february fifth', false],
+      ['tuesday march 5th', false],
+      ['tuesday march 5th, 2015', false],
+    ];
+    tests.forEach(function(a) {
+      let n = new Noun(a[0]);
+      (a[1]).should.equal(n.is_place());
     });
     done();
   });

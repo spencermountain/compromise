@@ -1,21 +1,23 @@
 
-A **Natural-Language-Processing** library *in Javascript*, small-enough for the browser, and quick-enough to run on keypress :two_men_holding_hands:
+A **Natural-Language-Processing** library *in Javascript*: :two_men_holding_hands:
+* Smaller than jQuery *(100k)*
+* Key-press speed, constant time.
+* Scores 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
+* No dependencies, training, or confiuring
 
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 [![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 
-It does [tons of clever things](http://rawgit.com/spencermountain/nlp_compromise/master/client_side/basic_demo/index.html). it's smaller than jquery, and scores 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/).
 ```javascript
 nlp.Text('she sells seashells').to_past().text()
 //she sold seashells
 ```
-> Welcome to v2.0!
-> Please [file an issue](https://github.com/spencermountain/nlp_compromise/issues/new) if you find something
 
 ##Check it out
+> Welcome to v2.0!
+> Please [file an issue](https://github.com/spencermountain/nlp_compromise/issues/new) if you find something
 * [Long Text Demo](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/state_of_the_union/index.html)
 * [Conjugation Demo](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/conjugation/index.html)
-
 
 # Install
 ```npm install nlp_compromise```

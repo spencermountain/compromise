@@ -1,6 +1,6 @@
 //turn a verb into its other grammatical forms.
 'use strict';
-const verb_to_doer = require('./to_doer');
+const verb_to_actor = require('./to_actor');
 const verb_irregulars = require('./verb_irregulars');
 const verb_rules = require('./verb_rules');
 const predict = require('./predict_form.js');
@@ -13,7 +13,7 @@ const fallback = function(w) {
   } else {
     infinitive = w.replace(/d$/, '');
   }
-  let present, past, gerund, doer;
+  let present, past, gerund, actor;
   if (w.match(/[^aeiou]$/)) {
     gerund = w + 'ing';
     past = w + 'ed';
@@ -22,19 +22,19 @@ const fallback = function(w) {
     } else {
       present = w + 's';
     }
-    doer = verb_to_doer(infinitive);
+    actor = verb_to_actor(infinitive);
   } else {
     gerund = w.replace(/[aeiou]$/, 'ing');
     past = w.replace(/[aeiou]$/, 'ed');
     present = w.replace(/[aeiou]$/, 'es');
-    doer = verb_to_doer(infinitive);
+    actor = verb_to_actor(infinitive);
   }
   return {
     infinitive: infinitive,
     present: present,
     past: past,
     gerund: gerund,
-    doer: doer,
+    actor: actor,
     future: 'will ' + infinitive
   };
 };
@@ -47,8 +47,8 @@ const fufill = function(obj, prefix) {
   if (!obj.gerund) {
     obj.gerund = obj.infinitive + 'ing';
   }
-  if (!obj.doer) {
-    obj.doer = verb_to_doer(obj.infinitive);
+  if (!obj.actor) {
+    obj.actor = verb_to_actor(obj.infinitive);
   }
   if (!obj.present) {
     obj.present = obj.infinitive + 's';
@@ -93,7 +93,7 @@ const conjugate = function(w) {
     const phrasal_verb = split[1];
     const particle = split[2];
     const result = conjugate(phrasal_verb); //recursive
-    delete result['doer'];
+    delete result['actor'];
     Object.keys(result).forEach(function(k) {
       if (result[k]) {
         result[k] += ' ' + particle;

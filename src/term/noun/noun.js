@@ -12,8 +12,9 @@ const pluralize = require('./pluralize.js');
 const is_uncountable = require('./is_uncountable.js');
 
 class Noun extends Term {
-  constructor(str) {
+  constructor(str, tag) {
     super(str);
+    this.tag = tag;
     this.pos = 'Noun';
   }
   //noun methods

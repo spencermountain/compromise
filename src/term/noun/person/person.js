@@ -56,6 +56,12 @@ class Person extends Noun {
   }
 
   gender() {
+    if (this.normal === 'he') {
+      return 'Male';
+    }
+    if (this.normal === 'she') {
+      return 'Female';
+    }
     if (!this.firstName) {
       return null;
     }

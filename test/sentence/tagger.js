@@ -12,6 +12,8 @@ describe('pos tag', function() {
       ['John Smith was lofty', ['Person', 'Verb', 'Adjective']],
       ['asdfes was lofty', ['Noun', 'Verb', 'Adjective']],
       ['asdfes lksejfj was lofty', ['Noun', 'Verb', 'Adjective']],
+      ['Spencer Kelly is in Canada', ['Person', 'Verb', 'Preposition', 'Place']],
+      ['He is in Canada', ['Person', 'Verb', 'Preposition', 'Place']],
     ];
     tests.forEach(function(a) {
       let n = nlp.Text(a[0]);

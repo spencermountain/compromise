@@ -9,7 +9,7 @@ const allowed_forms = {
   present: 1,
   past: 1,
   gerund: 1,
-  doer: 1,
+  actor: 1,
   future: 1
 };
 

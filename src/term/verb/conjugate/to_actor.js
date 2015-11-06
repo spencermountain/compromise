@@ -1,7 +1,7 @@
 //somone who does this present-tense verb
 //turn 'walk' into 'walker'
 'use strict';
-const doer = function(str) {
+const actor = function(str) {
   str = str || '';
   const irregulars = {
     'tie': 'tier',
@@ -57,7 +57,7 @@ const doer = function(str) {
   return str + 'er';
 };
 
-// console.log(verb_to_doer('set'))
-// console.log(verb_to_doer('sweep'))
-// console.log(verb_to_doer('watch'))
-module.exports = doer;
+// console.log(verb_to_actor('set'))
+// console.log(verb_to_actor('sweep'))
+// console.log(verb_to_actor('watch'))
+module.exports = actor;

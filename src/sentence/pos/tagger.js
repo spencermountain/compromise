@@ -74,7 +74,6 @@ const grammar_rules_pass = function(s) {
 
 const noun_fallback = function(terms) {
   for(let i = 0; i < terms.length; i++) {
-    console.log(terms[i].pos);
     if (terms[i].pos === '?') {
       terms[i] = assign(terms[i], 'Noun', 'fallback');
     }
@@ -113,6 +112,7 @@ const tagger = function(s) {
   s.terms = grammar_rules_pass(s);
   s.terms = chunk_neighbours(s.terms);
   s.terms = noun_fallback(s.terms);
+  //turns the general pos into specific ones
   s.terms = specific_pos(s.terms);
   return s.terms;
 };

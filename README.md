@@ -4,10 +4,10 @@
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 [![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 
-* gets 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
+* scores 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 * smaller than jQuery *(100k)*
 * keypress speed, constant-time
-* No dependencies, training, or configuration
+* no dependencies, training, or configuration
 
 ```javascript
 nlp.Text('she sells seashells').to_past().text()
@@ -20,7 +20,13 @@ nlp.Text('she sells seashells').to_past().text()
 > Please [file an issue](https://github.com/spencermountain/nlp_compromise/issues/new) if you find something
 
 ## Off you go:
-
+```javascript
+<script src="./nlp_compromise.es5.js"> </script>
+<script>
+  nlp.Noun("dinosaur").pluralize()
+  // dinosaurs
+</script>
+```
 ```javascript
 nlp = require("nlp_compromise");
 nlp.Text("she sells seashells").negate().text();
@@ -28,14 +34,6 @@ nlp.Text("she sells seashells").negate().text();
 
 nlp.Term("hamburger").syllables();
 // [ 'ham', 'bur', 'ger' ]
-```
-
-```javascript
-<script src="https://rawgit.com/spencermountain/nlp_compromise/2.0/builds/nlp_compromise.es5.js"> </script>
-<script>
-  nlp.Noun("dinosaur").pluralize()
-  // dinosaurs
-</script>
 ```
 
 ### Sentence segmentation

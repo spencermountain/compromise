@@ -1,10 +1,10 @@
+# Natural Language Processing with no guff
 
-A **Natural-Language-Processing** library *in Javascript*: :two_men_holding_hands:
+* Scores 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 * Smaller than jQuery *(100k)*
 * Key-press speed, constant time.
-* Scores 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
-* No dependencies, training, or confiuring
-
+* No dependencies, training, or configuring
+* browser, server, mobile
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 [![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 

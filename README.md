@@ -1,12 +1,13 @@
-# Natural Language Processing with no guff
+## Natural Language Processing in javascript
 
-* scores 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
+* gets 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 * smaller than jQuery *(100k)*
-* keypress speed.
-* No dependencies, training, or configuring
+* keypress speed, constant-time
+* No dependencies, training, or configuration
 
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 [![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
+> npm install nlp_compromise
 
 ```javascript
 nlp.Text('she sells seashells').to_past().text()
@@ -19,7 +20,6 @@ nlp.Text('she sells seashells').to_past().text()
 > Please [file an issue](https://github.com/spencermountain/nlp_compromise/issues/new) if you find something
 
 ## Off you go:
-> npm install nlp_compromise
 
 ```javascript
 nlp = require("nlp_compromise");

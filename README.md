@@ -1,16 +1,15 @@
 
 A Natural-Language-Processing library *in Javascript*, small-enough for the browser, and quick-enough to run on keypress :two_men_holding_hands:
 
+[![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
+[![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 > Welcome to v2.0!
 > Please [file an issue](https://github.com/spencermountain/nlp_compromise/issues/new) if you find something
 
 [![Video](http://i.vimeocdn.com/video/493948602_320.jpg)](https://vimeo.com/109880250)
 
-[![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
-[![Gemnasium](https://img.shields.io/spencermountain/nlp_compromise/he.svg)]()
-
 # Install
-npm install nlp_compromise
+```npm install nlp_compromise```
 ```javascript
 nlp = require("nlp_compromise")
 nlp.Text("she sells seashells").to_past().text()
@@ -27,8 +26,7 @@ nlp.Term("hamburger").syllables()
 </script>
 ```
 
-#Some showing-off
-## Sentence segmentation
+* Sentence segmentation
 ```javascript
 nlp.Text("Hi Dr. Miller the price is 4.59 for the U.C.L.A. Ph.Ds.").sentences.length
 //1
@@ -36,35 +34,35 @@ nlp.Text("Tony Danza sells sea-shells").terms().length
 //3
 ```
 
-## Syllable hyphenization
+* Syllable hyphenization
 70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)  0.5k
 ```javascript
 nlp.Text("calgary flames").syllables()
 //[ 'cal', 'gar', 'y', 'flames']
 ```
 
-## US-UK Localization
+* US-UK Localization
 ```javascript
 nlp.Term("favourite").americanize()
 //favorite
 nlp.Term("synthesized").britishize()
 //synthesised
 ```
-## N-gram
+* N-gram
 ```javascript
 nlp.Text("She sells seashells by the seashore.").ngram({min_count:1, max_size:5})
 // [{ word: 'she sells', count: 2, size: 2 }, ...
 options.min_count // throws away seldom-repeated grams. defaults to 1
 options.max_size // maximum gram count. prevents the result from becoming gigantic. defaults to 5
 ```
-### Date parsing
+* Date parsing
 ```javascript
 nlp.value("I married April for the 2nd time on June 5th 1998 ").date()
 // { text: 'June 5th 1998',
 //   from: { year: '1998', month: '06', day: '05' },
 //   to: {} }
 ```
-### Number parsing
+* Number parsing
 ```javascript
 nlp.Value("two thousand five hundred and sixty").number
 //2560
@@ -157,14 +155,12 @@ nlp_compromise={
 }
 ```
 
+#Help
+[![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](superscriptjs.slack.com/messages/nlp_compromise/)
+
 #Contribution
 [![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/pr)](http://issuestats.com/github/spencermountain/nlp_compromise)
 [![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/issue)](http://issuestats.com/github/spencermountain/nlp_compromise)
-[![npm version](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
-
-[![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](superscriptjs.slack.com/messages/nlp_compromise/)
-
-
 
 * [Changelog](https://github.com/spencermountain/nlp_compromise/blob/master/docs/changelog.md)
 * [Development](https://github.com/spencermountain/nlp_compromise/blob/master/docs/development.md)

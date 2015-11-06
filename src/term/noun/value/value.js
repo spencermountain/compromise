@@ -7,7 +7,7 @@ const nums = require('./numbers.js');
 class Value extends Noun {
   constructor(str) {
     super(str);
-    this.parent = 'noun';
+    this.pos = 'Value';
     this.number = null;
     this.unit = null;
     this.unit_name = null;

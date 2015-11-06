@@ -5,7 +5,7 @@ const parse = require('./parse.js');
 class Date extends Noun {
   constructor(str) {
     super(str);
-    this.parent = 'date';
+    this.pos = 'Date';
     this.date = null;
     this.parse();
   }

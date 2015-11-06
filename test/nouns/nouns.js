@@ -3,49 +3,6 @@ let mocha = require('mocha');
 let should = require('should');
 let Noun = require('../../src/term/noun/noun.js');
 
-let all_tests = {
-
-  people: [
-    'John Smith',
-    'dr. John Smith',
-    'John Smith jr.',
-    'John Jacob Smith',
-    'Jani K. Smith',
-    'K.L Smith',
-    'John K.L Smith',
-    'agnes john',
-    'spencer kelly',
-  ],
-  basic: [
-    'asdfefs',
-    'octopus',
-    'walrus',
-    'prototype',
-    'object',
-    'tree',
-    'i',
-  ],
-  organisation: [
-    'FBI',
-    'NASA',
-    'F.B.I.',
-    'Fun ltd',
-    'Fun co',
-    'Fun and co',
-    'Smith & Rogers',
-    'google',
-    'google inc',
-  ],
-  dates: [
-    'tuesday',
-    'february',
-    'february fifth',
-    'january fifth 2013',
-    'tuesday march 5th',
-  ]
-};
-
-
 describe('nouns', function() {
 
   it('is_date', function(done) {

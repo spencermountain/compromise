@@ -14,7 +14,7 @@ const is_uncountable = require('./is_uncountable.js');
 class Noun extends Term {
   constructor(str) {
     super(str);
-    this.parent = 'noun';
+    this.pos = 'Noun';
   }
   //noun methods
   article() {

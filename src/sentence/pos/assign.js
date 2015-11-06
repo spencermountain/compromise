@@ -1,10 +1,10 @@
 'use strict';
-const Term = require('../../term/term.js');
-const Verb = require('../../term/verb/verb.js');
-const Noun = require('../../term/noun/noun.js');
-const Value = require('../../term/noun/value/value.js');
-const Adverb = require('../../term/adverb/adverb.js');
-const Adjective = require('../../term/adjective/adjective.js');
+const partsofSpeech = require('./pos');
+let Noun = partsofSpeech.Noun;
+let Verb = partsofSpeech.Verb;
+let Adjective = partsofSpeech.Adjective;
+let Adverb = partsofSpeech.Adjective;
+let Term = partsofSpeech.Term;
 
 const mapping = {
   'NN': Noun,
@@ -18,6 +18,9 @@ const mapping = {
   'NNG': Noun,
   'PP': Noun,
   'PRP': Noun,
+  'CD': Noun,
+  'NU': Noun,
+  'DA': Noun,
   'VB': Verb,
   'VBD': Verb,
   'VBP': Verb,
@@ -26,16 +29,13 @@ const mapping = {
   'VBN': Verb,
   'VBZ': Verb,
   'CP': Verb,
+  'MD': Verb,
   'JJ': Adjective,
   'JJR': Adjective,
   'JJS': Adjective,
   'RB': Adverb,
   'RBR': Adverb,
   'RBS': Adverb,
-  'CD': Value,
-  'NU': Value,
-  'DA': Value,
-  'MD': Verb,
   'DT': Term,
   'IN': Term,
   'CC': Term,
@@ -45,7 +45,7 @@ const mapping = {
   'Adjective': Adjective,
   'Verb': Verb,
   'Adverb': Adverb,
-  'Value': Value,
+  'Value': Noun,
 };
 
 //swap the Term object with a proper Pos class

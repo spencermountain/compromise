@@ -2,6 +2,7 @@
 const Term = require('../term/term.js');
 const fns = require('../fns.js');
 const tagger = require('./pos/tagger.js');
+const pos = require('./pos/pos.js');
 
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {
@@ -49,21 +50,21 @@ class Sentence {
 
   to_past() {
     this.terms.forEach(function(t) {
-      if (t.parent === 'verb') {
+      if (t instanceof pos.Verb) {
         t.to_past();
       }
     });
   }
   to_present() {
     this.terms.forEach(function(t) {
-      if (t.parent === 'verb') {
+      if (t instanceof pos.Verb) {
         t.to_present();
       }
     });
   }
   to_future() {
     this.terms.forEach(function(t) {
-      if (t.parent === 'verb') {
+      if (t instanceof pos.Verb) {
         t.to_future();
       }
     });
@@ -77,7 +78,7 @@ class Sentence {
     return fns.pluck(this.terms, 'text').join(' ');
   }
   tags() {
-    return fns.pluck(this.terms, 'parent');
+    return fns.pluck(this.terms, 'pos');
   }
 }
 

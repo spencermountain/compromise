@@ -12,7 +12,7 @@ class Term {
       CC: 'Conjunction',
       IN: 'Preposition',
     };
-    this.parent = types[tag] || '?';
+    this.pos = types[tag] || '?';
   }
 
   changeTo(str) {

@@ -15,6 +15,7 @@ module.exports = [
   'accurate',
   'actual',
   'acute',
+  'cute',
   'adept',
   'adequate',
   'adult',

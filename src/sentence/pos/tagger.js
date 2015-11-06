@@ -6,6 +6,7 @@ const assign = require('./assign');
 const word_rules = require('./word_rules');
 const grammar_rules = require('./grammar_rules');
 const fns = require('../../fns');
+const pos = require('./pos');
 
 //set POS for capitalised words
 const capital_signals = function(terms) {
@@ -41,13 +42,13 @@ const chunk_neighbours = function(terms) {
   let last = null;
   for(let i = 0; i < terms.length; i++) {
     let t = terms[i];
-    if (last !== null && t.parent === last) {
+    if (last !== null && t.pos === last) {
       new_terms[new_terms.length - 1].text += ' ' + t.text;
       new_terms[new_terms.length - 1].normalize();
     } else {
       new_terms.push(t);
     }
-    last = t.parent;
+    last = t.pos;
   }
   return new_terms;
 };
@@ -73,8 +74,21 @@ const grammar_rules_pass = function(s) {
 
 const noun_fallback = function(terms) {
   for(let i = 0; i < terms.length; i++) {
-    if (terms[i].parent === '?') {
+    if (terms[i].pos === '?') {
       terms[i] = assign(terms[i], 'NN', 'fallback');
+    }
+  }
+  return terms;
+};
+
+//turn nouns into person/place
+const specific_pos = function(terms) {
+  for(let i = 0; i < terms.length; i++) {
+    let t = terms[i];
+    if (t instanceof pos.Noun) {
+      if (t.is_person()) {
+        terms[i] = assign(t, pos.Person);
+      }
     }
   }
   return terms;
@@ -89,6 +103,7 @@ const tagger = function(s) {
   s.terms = grammar_rules_pass(s);
   s.terms = chunk_neighbours(s.terms);
   s.terms = noun_fallback(s.terms);
+  s.terms = specific_pos(s.terms);
   return s.terms;
 };
 

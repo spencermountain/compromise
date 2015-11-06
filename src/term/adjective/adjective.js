@@ -9,7 +9,7 @@ const adj_to_noun = require('./to_noun');
 class Adjective extends Term {
   constructor(str) {
     super(str);
-    this.parent = 'adjective';
+    this.pos = 'Adjective';
   }
 
   conjugate() {

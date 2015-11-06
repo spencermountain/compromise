@@ -1,5 +1,6 @@
 'use script';
 const fns = require('../fns.js');
+const pos = require('./pos/pos.js');
 //negate makes s sentence mean s opposite thing.
 const negate = function(s) {
   //these are cheap ways to negate s meaning
@@ -54,7 +55,7 @@ const negate = function(s) {
     }
 
     // find s first verb..
-    if (tok.pos.parent === 'verb') {
+    if (tok instanceof pos.Verb) {
       // if verb is already negative, make it not negative
       if (tok.analysis.negative()) {
         if (s.tokens[i + 1] && s.tokens[i + 1].normalised === 'not') {

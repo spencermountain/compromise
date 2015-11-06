@@ -81,7 +81,6 @@ nlp.Value("two thousand five hundred and sixty").number
 // null
 ```
 
-
 ##Full API
 ```javascript
 nlp_compromise={
@@ -165,7 +164,7 @@ nlp_compromise={
 ```
 
 #Help
-* [More Documentation](./docs/docs.mid)
+* [More Documentation](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/docs.md)
 [![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](http://superscriptjs.slack.com/messages/nlp_compromise/)
 
 #Contribution

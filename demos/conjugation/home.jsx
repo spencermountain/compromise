@@ -25,10 +25,10 @@ let Home = React.createClass({
 
   result: function() {
     let cmp = this;
-    return Object.keys(this.state.words).map(function(k) {
+    return Object.keys(this.state.words).map(function(k, i) {
       let negated = nlp.Verb(cmp.state.words[k]).negate();
       return (
-        <Row>
+        <Row key={i}>
           <Col md={4}>
             {k + ':'}
           </Col>
@@ -43,7 +43,15 @@ let Home = React.createClass({
     });
   },
   newWord: function() {
-    // console.log(window.nlp.Lexicon['walk']);
+    let keys = Object.keys(window.nlp.Lexicon);
+    keys = keys.filter(function(k) {
+      return window.nlp.Lexicon[k].match(/^VB/);
+    });
+    let l = keys.length;
+    let r = parseInt(Math.random() * l, 10);
+    this.state.word = keys[r];
+    this.setState(this.state);
+    this.update();
   },
   render: function () {
     let cmp = this;
@@ -53,9 +61,13 @@ let Home = React.createClass({
       top: {
         height: 200,
         display: 'block'
+      },
+      img: {
+        width: 40,
+        cursor: 'pointer',
+        textAlign: 'left'
       }
     };
-
     return (
       <Grid flex={true} style={css.grid}>
         <Row>
@@ -69,13 +81,15 @@ let Home = React.createClass({
           <Col md={4} ></Col>
           <Col md={4} >
             <Input type="text" value={this.state.word} onChange={this.update}/>
-            <Glyphicon onClick={this.newWord} glyph='refresh' />
+          </Col>
+          <Col md={4} >
+            <img style={css.img} src="./refresh.ico" onClick={this.newWord}/>
           </Col>
         </Row>
 
         <Row>
-          <Col md={4} ></Col>
-          <Col md={4} >
+          <Col md={3} ></Col>
+          <Col md={6} >
             {this.result()}
           </Col>
         </Row>

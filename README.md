@@ -4,6 +4,7 @@
 * smaller than jQuery *(100k)*
 * keypress speed, constant-time
 * No dependencies, training, or configuration
+
 > npm install nlp_compromise
 
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)

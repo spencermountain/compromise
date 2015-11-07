@@ -78,7 +78,7 @@ class Sentence {
     return fns.pluck(this.terms, 'text').join(' ');
   }
   tags() {
-    return fns.pluck(this.terms, 'pos');
+    return fns.pluck(this.terms, 'tag');
   }
 }
 

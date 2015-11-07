@@ -1,12 +1,47 @@
 //part-of-speech tagging
 'use strict';
-const lexicon_pass = require('./lexicon_pass');
 const contractions = require('./contractions');
-const assign = require('./assign');
+const lexicon = require('../../lexicon.js');
 const word_rules = require('./word_rules');
 const grammar_rules = require('./grammar_rules');
 const fns = require('../../fns');
 const pos = require('./pos');
+
+//swap the Term object with a proper Pos class
+const assign = function(t, tag, reason) {
+  let P = pos.classMapping[tag] || pos.Term;
+  t = new P(t.text, tag);
+  t.reason = reason;
+  return t;
+};
+
+
+//consult lexicon for this known-word
+const lexicon_pass = function(terms) {
+  return terms.map(function(t) {
+    //check lexicon straight-up
+    if (lexicon[t.normal] !== undefined) {
+      return assign(t, lexicon[t.normal], 'lexicon_pass');
+    }
+    //try to match it without a prefix - eg. outworked -> worked
+    if (t.normal.match(/^(over|under|out|-|un|re|en).{4}/)) {
+      const attempt = t.normal.replace(/^(over|under|out|.*?-|un|re|en)/, '');
+      return assign(t, lexicon[attempt], 'lexicon_prefix');
+    }
+    //match 'twenty-eight'
+    if (t.normal.match(/-/)) {
+      let sides = t.normal.split('-');
+      if (lexicon[sides[0]]) {
+        return assign(t, lexicon[sides[0]], 'lexicon_dash');
+      }
+      if (lexicon[sides[1]]) {
+        return assign(t, lexicon[sides[1]], 'lexicon_dash');
+      }
+    }
+    return t;
+  });
+};
+
 
 //set POS for capitalised words
 const capital_signals = function(terms) {
@@ -26,9 +61,12 @@ const capital_signals = function(terms) {
 //regex hints for words/suffixes
 const word_rules_pass = function(terms) {
   for (let i = 0; i < terms.length; i++) {
+    if (terms[i].tag !== '?') {
+      continue;
+    }
     for (let o = 0; o < word_rules.length; o++) {
       if (terms[i].normal.length > 4 && terms[i].normal.match(word_rules[o].reg)) {
-        terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass');
+        terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass_' + o);
         break;
       }
     }
@@ -74,7 +112,7 @@ const grammar_rules_pass = function(s) {
 
 const noun_fallback = function(terms) {
   for(let i = 0; i < terms.length; i++) {
-    if (terms[i].pos === '?') {
+    if (terms[i].tag === '?') {
       terms[i] = assign(terms[i], 'Noun', 'fallback');
     }
   }

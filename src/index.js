@@ -64,5 +64,6 @@ module.exports = nlp;
 
 // console.log(nlp.Verb('walked'));
 
-// let n = nlp.Text('toronto on Saturday');
-// console.log(n.terms());
+// let n = nlp.Text('terrorist leaders who');
+let n = nlp.Text('Spencer Kelly is in Canada');
+console.log(n.terms());

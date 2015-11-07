@@ -7,18 +7,18 @@ describe('pos tag', function() {
 
   it('Basic', function(done) {
     let tests = [
-      ['John is pretty', ['Person', 'Verb', 'Adjective']],
-      ['John was lofty', ['Person', 'Verb', 'Adjective']],
-      ['John Smith was lofty', ['Person', 'Verb', 'Adjective']],
-      ['asdfes was lofty', ['Noun', 'Verb', 'Adjective']],
-      ['asdfes lksejfj was lofty', ['Noun', 'Verb', 'Adjective']],
-      ['Spencer Kelly is in Canada', ['Person', 'Verb', 'Preposition', 'Place']],
-      ['He is in Canada', ['Person', 'Verb', 'Preposition', 'Place']],
+      ['John is pretty', ['Person', 'Copula', 'Adjective']],
+      ['John was lofty', ['Person', 'Copula', 'Adjective']],
+      ['John Smith was lofty', ['Person', 'Copula', 'Adjective']],
+      ['asdfes was lofty', ['Noun', 'Copula', 'Adjective']],
+      ['asdfes lksejfj was lofty', ['Noun', 'Copula', 'Adjective']],
+      ['Spencer Kelly is in Canada', ['Person', 'Copula', 'Preposition', 'Place']],
+      ['He is in Canada', ['Person', 'Copula', 'Preposition', 'Place']],
     ];
     tests.forEach(function(a) {
       let n = nlp.Text(a[0]);
       let tags = n.tags()[0];
-      tags.should.deepEqual(a[1]);
+      (a[1]).should.deepEqual(tags);
     });
 
     done();

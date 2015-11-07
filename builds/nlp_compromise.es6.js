@@ -7767,8 +7767,8 @@ module.exports = nlp;
 
 // console.log(nlp.Verb('walked'));
 
-// let n = nlp.Text('toronto on Saturday');
-// console.log(n.terms());
+let n = nlp.Text('reach every book');
+console.log(n.terms());
 
 },{"./lexicon.js":22,"./term/adjective/adjective.js":31,"./term/adverb/adverb.js":37,"./term/noun/date/date.js":42,"./term/noun/noun.js":47,"./term/noun/organisation/organisation.js":49,"./term/noun/person/person.js":51,"./term/noun/place/place.js":53,"./term/noun/value/value.js":60,"./term/term.js":62,"./term/verb/verb.js":69,"./text/text.js":72}],22:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
@@ -7929,10 +7929,7 @@ const mapping = {
 
 //swap the Term object with a proper Pos class
 const assign = function(t, tag, reason) {
-  if (!mapping[tag]) {
-    console.log(t.text + '   ' + tag);
-  }
-  let P = mapping[tag] || Term;
+  let P = mapping[tag] || pos.Term;
   t = new P(t.text, tag);
   t.reason = reason;
   return t;
@@ -8166,9 +8163,12 @@ const capital_signals = function(terms) {
 //regex hints for words/suffixes
 const word_rules_pass = function(terms) {
   for (let i = 0; i < terms.length; i++) {
+    if (terms[i].tag !== '?') {
+      continue;
+    }
     for (let o = 0; o < word_rules.length; o++) {
       if (terms[i].normal.length > 4 && terms[i].normal.match(word_rules[o].reg)) {
-        terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass');
+        terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass_' + o);
         break;
       }
     }
@@ -8478,8 +8478,9 @@ const adj_to_adv = require('./to_adverb');
 const adj_to_noun = require('./to_noun');
 
 class Adjective extends Term {
-  constructor(str) {
+  constructor(str, tag) {
     super(str);
+    this.tag = tag;
     this.pos = 'Adjective';
   }
 
@@ -9115,8 +9116,9 @@ const Term = require('../term.js');
 const to_adjective = require('./to_adjective.js');
 
 class Adverb extends Term {
-  constructor(str) {
+  constructor(str, tag) {
     super(str);
+    this.tag = tag;
     this.pos = 'Adverb';
   }
   to_adjective() {
@@ -9856,8 +9858,9 @@ const Noun = require('../noun.js');
 const parse = require('./parse.js');
 
 class Date extends Noun {
-  constructor(str) {
+  constructor(str, tag) {
     super(str);
+    this.tag = tag;
     this.pos = 'Date';
     this.date = null;
     this.parse();
@@ -10325,8 +10328,9 @@ module.exports = is_organisation;
 const Noun = require('../noun.js');
 
 class Organisation extends Noun {
-  constructor(str) {
+  constructor(str, tag) {
     super(str);
+    this.tag = tag;
     this.pos = 'Organisation';
   }
 }
@@ -10370,8 +10374,9 @@ honourifics = honourifics.reduce(function(h, s) {
 }, {});
 
 class Person extends Noun {
-  constructor(str) {
+  constructor(str, tag) {
     super(str);
+    this.tag = tag;
     this.pos = 'Person';
     this.honourific = null;
     this.firstName = null;
@@ -10510,8 +10515,9 @@ module.exports = is_place;
 const Noun = require('../noun.js');
 
 const Place = class Place extends Noun {
-constructor(str) {
+constructor(str, tag) {
   super(str);
+  this.tag = tag;
   this.pos = 'Place';
 }
 };
@@ -11238,8 +11244,9 @@ const units = require('./units.js');
 const nums = require('./numbers.js');
 
 class Value extends Noun {
-  constructor(str) {
+  constructor(str, tag) {
     super(str);
+    this.tag = tag;
     this.pos = 'Value';
     this.number = null;
     this.unit = null;
@@ -11396,7 +11403,8 @@ class Term {
       Preposition: 'Preposition',
     };
 
-    this.pos = types[tag] || '?';
+    this.pos = '?';
+    this.tag = types[tag] || '?';
   }
 
   changeTo(str) {
@@ -12361,6 +12369,7 @@ const allowed_forms = {
 class Verb extends Term {
   constructor(str, form) {
     super(str);
+    this.tag = form;
     this.pos = 'Verb';
     this.conjugations = {}; //cached conjugations
     //if we've been told which

@@ -3,7 +3,7 @@
 'use strict';
 const fns = require('./fns.js');
 const verb_conjugate = require('./term/verb/conjugate/conjugate.js');
-const grand_mapping = require('./data/grand_mapping.js');
+const grand_mapping = require('./sentence/pos/pos.js').tag_mapping;
 
 const lexicon = {};
 

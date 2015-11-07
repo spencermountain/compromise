@@ -12,8 +12,8 @@ class Term {
       Conjunction: 'Conjunction',
       Preposition: 'Preposition',
     };
-
-    this.pos = types[tag] || '?';
+    this.pos = 'Term';
+    this.tag = types[tag] || '?';
   }
 
   changeTo(str) {

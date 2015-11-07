@@ -1,4 +1,4 @@
-const grand_mapping = require('../../data/grand_mapping.js');
+const tag_mapping = require('./pos.js').tag_mapping;
 //regex patterns and parts of speech],
 module.exports = [
   ['.[cts]hy$', 'JJ'],
@@ -115,6 +115,6 @@ module.exports = [
 ].map(function(a) {
   return {
     reg: new RegExp(a[0], 'i'),
-    pos: grand_mapping[a[1]]
+    pos: tag_mapping[a[1]]
   };
 });

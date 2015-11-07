@@ -3,6 +3,8 @@
 'use strict';
 const fns = require('./fns.js');
 const verb_conjugate = require('./term/verb/conjugate/conjugate.js');
+const to_comparative = require('./term/adjective/to_comparative.js');
+const to_superlative = require('./term/adjective/to_superlative.js');
 const grand_mapping = require('./sentence/pos/pos.js').tag_mapping;
 
 const lexicon = {};
@@ -23,28 +25,28 @@ const addArr = function(arr, tag) {
 };
 
 //conjugate all verbs.
-let verb_forms = {
+const verbMap = {
   infinitive: 'Infinitive',
   past: 'PastTense',
-  gerund: 'Gerund',
   present: 'PresentTense',
+  future: 'FutureTense',
   actor: 'Actor',
-  participle: 'Participle',
+  gerund: 'Gerund',
 };
 const verbs = require('./data/verbs.js');
 for (let i = 0; i < verbs.length; i++) {
-  const c = verb_conjugate(verbs[i]);
-  Object.keys(c).forEach(function(k) {
-    if (k && verb_forms[k]) {
-      lexicon[c[k]] = verb_forms[k];
+  const o = verb_conjugate(verbs[i]);
+  Object.keys(o).forEach(function(k) {
+    if (k && o[k]) {
+      lexicon[o[k]] = verbMap[k];
     }
   });
 }
 //irregular verbs
 require('./data/verb_irregulars.js').forEach(function(o) {
   Object.keys(o).forEach(function(k) {
-    if (k && verb_forms[k]) {
-      lexicon[o[k]] = verb_forms[k];
+    if (k && o[k]) {
+      lexicon[o[k]] = verbMap[k];
     }
   });
 });
@@ -57,7 +59,11 @@ let places = require('./data/places.js');
 addArr(places.countries, 'Place');
 addArr(places.cities, 'Place');
 
-addArr(require('./data/adjectives.js'), 'Adjective');
+require('./data/adjectives.js').forEach(function(s) {
+  lexicon[s] = 'Adjective';
+  lexicon[to_comparative(s)] = 'Comparative';
+  lexicon[to_superlative(s)] = 'Superlative';
+});
 addObj(require('./data/convertables.js'));
 
 addArr(require('./data/abbreviations.js').abbreviations, 'Abbreviation');
@@ -112,6 +118,6 @@ Object.keys(lexicon).forEach(function(k) {
 // console.log(lexicon['loaves'] === 'NNS');
 // console.log(lexicon['he'] === 'PRP');
 // console.log(lexicon['canada'] === 'Noun');
-// console.log(lexicon['short']);
+// console.log(lexicon['is']);
 
 module.exports = lexicon;

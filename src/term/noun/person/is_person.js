@@ -7,8 +7,15 @@ honourifics = honourifics.reduce(function(h, s) {
   return h;
 }, {});
 
+let whitelist = {
+  'he': true,
+  'she': true,
+  'i': true,
+  'you': true,
+};
+
 const is_person = function(str) {
-  if (str === 'he' || str === 'she' || firstnames[str]) {
+  if (whitelist[str] || firstnames[str]) {
     return true;
   }
   let words = str.split(' ');

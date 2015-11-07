@@ -1,8 +1,9 @@
 //add a 'quiet' token for contractions so we can represent their grammar
+//some contractions need detailed POS tense info, to resolve the is/was/has part
 'use strict';
-const Term = require('../../term/term.js');
+const pos = require('../../sentence/pos/pos.js');
 
-const contractions = {
+const easy_contractions = {
   'i\'d': ['i', 'would'],
   'she\'d': ['she', 'would'],
   'he\'d': ['he', 'would'],
@@ -25,22 +26,76 @@ const contractions = {
   'they\'re': ['they', 'are'],
   'cannot': ['can', 'not']
 };
+let ambiguous = {
+  'he\'s': 'he',
+  'she\'s': 'she',
+  'it\'s': 'it',
+  'who\'s': 'who',
+  'what\'s': 'what',
+  'where\'s': 'where',
+  'when\'s': 'when',
+  'why\'s': 'why',
+  'how\'s': 'how'
+};
 
-const handle_contractions = function(terms) {
+
+//take remaining sentence after contraction and decide which verb fits best [is/was/has]
+let chooseVerb = function(terms) {
+  for(let i = 0; i < terms.length; i++) {
+    //he's nice
+    if (terms[i].pos['Adjective']) {
+      return 'is';
+    }
+    //he's followed
+    if (terms[i].tag === 'PastTense') {
+      return 'has';
+    }
+    //he's following
+    if (terms[i].tag === 'Gerund') {
+      return 'is';
+    }
+  }
+  return 'is';
+};
+
+const easy_ones = function(terms) {
   for (let i = 0; i < terms.length; i++) {
     const t = terms[i];
-    if (contractions[t.normal] !== undefined) {
-      const split = contractions[t.normal];
+    if (easy_contractions[t.normal]) {
+      let pronoun = easy_contractions[t.normal][0];
+      let verb = easy_contractions[t.normal][1];
+      let new_terms = [new pos.Term(pronoun), new pos.Verb(verb)];
       const fixup = [].concat(
         terms.slice(0, i),
-        [new Term(split[0])],
-        [new Term(split[1])],
+        new_terms,
         terms.slice(i + 1, terms.length)
       );
-      return handle_contractions(fixup); //recursive
+      return easy_ones(fixup); //recursive
     }
   }
   return terms;
 };
 
-module.exports = handle_contractions;
+const hard_ones = function(terms) {
+  for (let i = 0; i < terms.length; i++) {
+    const t = terms[i];
+    if (ambiguous[t.normal]) {
+      let pronoun = ambiguous[t.normal];
+      let verb = chooseVerb(terms.slice(i, terms.length)); //send the rest of the sentence over
+      let new_terms = [new pos.Term(pronoun), new pos.Verb(verb)];
+      const fixup = [].concat(
+        terms.slice(0, i),
+        new_terms,
+        terms.slice(i + 1, terms.length)
+      );
+      return hard_ones(fixup); //recursive
+    }
+  }
+  return terms;
+};
+
+
+module.exports = {
+  easy_ones,
+  hard_ones
+};

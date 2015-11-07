@@ -6281,6 +6281,7 @@ module.exports = [
 
 },{}],18:[function(require,module,exports){
 'use strict';
+
 const types = [
   'infinitive',
   'gerund',
@@ -7924,8 +7925,8 @@ module.exports = nlp;
 
 // console.log(nlp.Verb('walked'));
 
-let n = nlp.Text('so short a time');
-console.log(n.terms());
+// let n = nlp.Text('where\'s the pencil disappeared');
+// console.log(n.terms());
 
 },{"./lexicon.js":22,"./term/adjective/adjective.js":30,"./term/adverb/adverb.js":35,"./term/noun/date/date.js":40,"./term/noun/noun.js":45,"./term/noun/organisation/organisation.js":47,"./term/noun/person/person.js":49,"./term/noun/place/place.js":51,"./term/noun/value/value.js":58,"./term/term.js":60,"./term/verb/verb.js":67,"./text/text.js":70}],22:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
@@ -7933,6 +7934,8 @@ console.log(n.terms());
 'use strict';
 const fns = require('./fns.js');
 const verb_conjugate = require('./term/verb/conjugate/conjugate.js');
+const to_comparative = require('./term/adjective/to_comparative.js');
+const to_superlative = require('./term/adjective/to_superlative.js');
 const grand_mapping = require('./sentence/pos/pos.js').tag_mapping;
 
 const lexicon = {};
@@ -7953,28 +7956,28 @@ const addArr = function(arr, tag) {
 };
 
 //conjugate all verbs.
-let verb_forms = {
+const verbMap = {
   infinitive: 'Infinitive',
   past: 'PastTense',
-  gerund: 'Gerund',
   present: 'PresentTense',
+  future: 'FutureTense',
   actor: 'Actor',
-  participle: 'Participle',
+  gerund: 'Gerund',
 };
 const verbs = require('./data/verbs.js');
 for (let i = 0; i < verbs.length; i++) {
-  const c = verb_conjugate(verbs[i]);
-  Object.keys(c).forEach(function(k) {
-    if (k && verb_forms[k]) {
-      lexicon[c[k]] = verb_forms[k];
+  const o = verb_conjugate(verbs[i]);
+  Object.keys(o).forEach(function(k) {
+    if (k && o[k]) {
+      lexicon[o[k]] = verbMap[k];
     }
   });
 }
 //irregular verbs
 require('./data/verb_irregulars.js').forEach(function(o) {
   Object.keys(o).forEach(function(k) {
-    if (k && verb_forms[k]) {
-      lexicon[o[k]] = verb_forms[k];
+    if (k && o[k]) {
+      lexicon[o[k]] = verbMap[k];
     }
   });
 });
@@ -7987,7 +7990,11 @@ let places = require('./data/places.js');
 addArr(places.countries, 'Place');
 addArr(places.cities, 'Place');
 
-addArr(require('./data/adjectives.js'), 'Adjective');
+require('./data/adjectives.js').forEach(function(s) {
+  lexicon[s] = 'Adjective';
+  lexicon[to_comparative(s)] = 'Comparative';
+  lexicon[to_superlative(s)] = 'Superlative';
+});
 addObj(require('./data/convertables.js'));
 
 addArr(require('./data/abbreviations.js').abbreviations, 'Abbreviation');
@@ -8042,16 +8049,17 @@ Object.keys(lexicon).forEach(function(k) {
 // console.log(lexicon['loaves'] === 'NNS');
 // console.log(lexicon['he'] === 'PRP');
 // console.log(lexicon['canada'] === 'Noun');
-// console.log(lexicon['short']);
+// console.log(lexicon['is']);
 
 module.exports = lexicon;
 
-},{"./data/abbreviations.js":3,"./data/adjectives.js":4,"./data/convertables.js":5,"./data/dates.js":6,"./data/demonyms.js":7,"./data/firstnames.js":8,"./data/honourifics.js":9,"./data/irregular_nouns.js":10,"./data/misc.js":11,"./data/multiples.js":12,"./data/numbers.js":13,"./data/organisations.js":14,"./data/phrasal_verbs.js":15,"./data/places.js":16,"./data/uncountables.js":17,"./data/verb_irregulars.js":18,"./data/verbs.js":19,"./fns.js":20,"./sentence/pos/pos.js":26,"./term/verb/conjugate/conjugate.js":61}],23:[function(require,module,exports){
+},{"./data/abbreviations.js":3,"./data/adjectives.js":4,"./data/convertables.js":5,"./data/dates.js":6,"./data/demonyms.js":7,"./data/firstnames.js":8,"./data/honourifics.js":9,"./data/irregular_nouns.js":10,"./data/misc.js":11,"./data/multiples.js":12,"./data/numbers.js":13,"./data/organisations.js":14,"./data/phrasal_verbs.js":15,"./data/places.js":16,"./data/uncountables.js":17,"./data/verb_irregulars.js":18,"./data/verbs.js":19,"./fns.js":20,"./sentence/pos/pos.js":26,"./term/adjective/to_comparative.js":32,"./term/adjective/to_superlative.js":34,"./term/verb/conjugate/conjugate.js":61}],23:[function(require,module,exports){
 //add a 'quiet' token for contractions so we can represent their grammar
+//some contractions need detailed POS tense info, to resolve the is/was/has part
 'use strict';
-const Term = require('../../term/term.js');
+const pos = require('../../sentence/pos/pos.js');
 
-const contractions = {
+const easy_contractions = {
   'i\'d': ['i', 'would'],
   'she\'d': ['she', 'would'],
   'he\'d': ['he', 'would'],
@@ -8074,27 +8082,81 @@ const contractions = {
   'they\'re': ['they', 'are'],
   'cannot': ['can', 'not']
 };
+let ambiguous = {
+  'he\'s': 'he',
+  'she\'s': 'she',
+  'it\'s': 'it',
+  'who\'s': 'who',
+  'what\'s': 'what',
+  'where\'s': 'where',
+  'when\'s': 'when',
+  'why\'s': 'why',
+  'how\'s': 'how'
+};
 
-const handle_contractions = function(terms) {
+
+//take remaining sentence after contraction and decide which verb fits best [is/was/has]
+let chooseVerb = function(terms) {
+  for(let i = 0; i < terms.length; i++) {
+    //he's nice
+    if (terms[i].pos['Adjective']) {
+      return 'is';
+    }
+    //he's followed
+    if (terms[i].tag === 'PastTense') {
+      return 'has';
+    }
+    //he's following
+    if (terms[i].tag === 'Gerund') {
+      return 'is';
+    }
+  }
+  return 'is';
+};
+
+const easy_ones = function(terms) {
   for (let i = 0; i < terms.length; i++) {
     const t = terms[i];
-    if (contractions[t.normal] !== undefined) {
-      const split = contractions[t.normal];
+    if (easy_contractions[t.normal]) {
+      let pronoun = easy_contractions[t.normal][0];
+      let verb = easy_contractions[t.normal][1];
+      let new_terms = [new pos.Term(pronoun), new pos.Verb(verb)];
       const fixup = [].concat(
         terms.slice(0, i),
-        [new Term(split[0])],
-        [new Term(split[1])],
+        new_terms,
         terms.slice(i + 1, terms.length)
       );
-      return handle_contractions(fixup); //recursive
+      return easy_ones(fixup); //recursive
     }
   }
   return terms;
 };
 
-module.exports = handle_contractions;
+const hard_ones = function(terms) {
+  for (let i = 0; i < terms.length; i++) {
+    const t = terms[i];
+    if (ambiguous[t.normal]) {
+      let pronoun = ambiguous[t.normal];
+      let verb = chooseVerb(terms.slice(i, terms.length)); //send the rest of the sentence over
+      let new_terms = [new pos.Term(pronoun), new pos.Verb(verb)];
+      const fixup = [].concat(
+        terms.slice(0, i),
+        new_terms,
+        terms.slice(i + 1, terms.length)
+      );
+      return hard_ones(fixup); //recursive
+    }
+  }
+  return terms;
+};
 
-},{"../../term/term.js":60}],24:[function(require,module,exports){
+
+module.exports = {
+  easy_ones,
+  hard_ones
+};
+
+},{"../../sentence/pos/pos.js":26}],24:[function(require,module,exports){
 //fancy combining/chunking of terms
 'use strict';
 const pos = require('./pos');
@@ -8307,9 +8369,9 @@ const tag_mapping = {
   'VBD': 'PastTense',
   'VBF': 'FutureTense',
   'VBP': 'Infinitive',
+  'VBZ': 'PresentTense',
   'VBG': 'Gerund',
   'VBN': 'Verb',
-  'VBZ': 'PresentTense',
   'CP': 'Copula',
   'MD': 'Modal',
   'JJ': 'Adjective',
@@ -8324,9 +8386,11 @@ const classMapping = {
   'Acronym': Noun,
   'Plural': Noun,
   'Pronoun': Noun,
+  'Actor': Noun,
 
   'Verb': Verb,
   'PresentTense': Verb,
+  'FutureTense': Verb,
   'PastTense': Verb,
   'Infinitive': Verb,
   'Gerund': Verb,
@@ -8481,7 +8545,7 @@ const grammar_rules_pass = function(s) {
 
 const noun_fallback = function(terms) {
   for(let i = 0; i < terms.length; i++) {
-    if (terms[i].tag === '?') {
+    if (terms[i].tag === '?' && terms[i].normal.match(/[a-z]/)) {
       terms[i] = assign(terms[i], 'Noun', 'fallback');
     }
   }
@@ -8513,15 +8577,16 @@ const specific_pos = function(terms) {
 const tagger = function(s) {
   //word-level rules
   s.terms = capital_signals(s.terms);
-  s.terms = contractions(s.terms);
+  s.terms = contractions.easy_ones(s.terms);
   s.terms = lexicon_pass(s.terms);
   s.terms = word_rules_pass(s.terms);
   //repeat these steps a couple times, to wiggle-out the grammar
-  for(let i = 0; i < 1; i++) {
+  for(let i = 0; i < 2; i++) {
     s.terms = grammar_rules_pass(s);
     s.terms = chunk_neighbours(s.terms);
     s.terms = noun_fallback(s.terms);
     s.terms = specific_pos(s.terms);
+    s.terms = contractions.hard_ones(s.terms);
     s.terms = fancy_lumping(s.terms);
   }
   return s.terms;
@@ -10416,8 +10481,15 @@ honourifics = honourifics.reduce(function(h, s) {
   return h;
 }, {});
 
+let whitelist = {
+  'he': true,
+  'she': true,
+  'i': true,
+  'you': true,
+};
+
 const is_person = function(str) {
-  if (str === 'he' || str === 'she' || firstnames[str]) {
+  if (whitelist[str] || firstnames[str]) {
     return true;
   }
   let words = str.split(' ');

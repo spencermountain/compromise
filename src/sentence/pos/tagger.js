@@ -112,7 +112,7 @@ const grammar_rules_pass = function(s) {
 
 const noun_fallback = function(terms) {
   for(let i = 0; i < terms.length; i++) {
-    if (terms[i].tag === '?') {
+    if (terms[i].tag === '?' && terms[i].normal.match(/[a-z]/)) {
       terms[i] = assign(terms[i], 'Noun', 'fallback');
     }
   }
@@ -144,15 +144,16 @@ const specific_pos = function(terms) {
 const tagger = function(s) {
   //word-level rules
   s.terms = capital_signals(s.terms);
-  s.terms = contractions(s.terms);
+  s.terms = contractions.easy_ones(s.terms);
   s.terms = lexicon_pass(s.terms);
   s.terms = word_rules_pass(s.terms);
   //repeat these steps a couple times, to wiggle-out the grammar
-  for(let i = 0; i < 1; i++) {
+  for(let i = 0; i < 2; i++) {
     s.terms = grammar_rules_pass(s);
     s.terms = chunk_neighbours(s.terms);
     s.terms = noun_fallback(s.terms);
     s.terms = specific_pos(s.terms);
+    s.terms = contractions.hard_ones(s.terms);
     s.terms = fancy_lumping(s.terms);
   }
   return s.terms;

@@ -1,7 +1,7 @@
 //turn a verb into its other grammatical forms.
 'use strict';
 const verb_to_actor = require('./to_actor');
-const verb_irregulars = require('./verb_irregulars');
+const verb_irregulars = require('../../../data/verb_irregulars');
 const verb_rules = require('./verb_rules');
 const predict = require('./predict_form.js');
 

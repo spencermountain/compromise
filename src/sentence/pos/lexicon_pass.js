@@ -16,6 +16,16 @@ const lexicon_pass = function(terms) {
       const attempt = t.normal.replace(/^(over|under|out|.*?-|un|re|en)/, '');
       return assign(t, lexicon[attempt], 'lexicon_prefix');
     }
+    //match 'twenty-eight'
+    if (t.normal.match(/-/)) {
+      let sides = t.normal.split('-');
+      if (lexicon[sides[0]]) {
+        return assign(t, lexicon[sides[0]], 'lexicon_dash');
+      }
+      if (lexicon[sides[1]]) {
+        return assign(t, lexicon[sides[1]], 'lexicon_dash');
+      }
+    }
     return t;
   });
 };

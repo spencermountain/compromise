@@ -958,4 +958,4 @@ module.exports = compact.map(function(arr) {
   return obj;
 });
 
-// console.log(JSON.stringify(verb_irregulars, null, 2));
+// console.log(JSON.stringify(module.exports, null, 2));

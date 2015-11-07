@@ -1,10 +1,14 @@
 let {Tab, Tabs, Grid, Row, Col, Input} = ReactBootstrap;
 
 let colours = {
-  noun: 'steelblue',
-  adjective: '#e5762b',
-  verb: 'darkseagreen',
-  adverb: 'mediumturquoise'
+  Noun: 'steelblue',
+  Adjective: '#e5762b',
+  Verb: 'darkseagreen',
+  Adverb: 'mediumturquoise',
+  Person: 'cornflowerblue',
+  Place: 'cornflowerblue',
+  Value: 'lightsalmon',
+  Date: 'lightcoral',
 };
 
 
@@ -14,10 +18,12 @@ let Home = React.createClass({
     return {
       text: this.props.text || '',
       result: {},
-      show: this.props.show || 'noun'
+      show: this.props.show || 'Noun'
     };
   },
-  componentDidMount: function () {},
+  componentDidMount: function () {
+    this.fetch('Clinton_1998');
+  },
 
   fetch: function (file) {
     let cmp = this;
@@ -51,6 +57,13 @@ let Home = React.createClass({
       );
   },
 
+  isHighlighted: function(t, str) {
+    if (t.pos === str) {
+      return true;
+    }
+    return false;
+  },
+
   result: function() {
     let cmp = this;
     let sentence_css = {
@@ -62,10 +75,10 @@ let Home = React.createClass({
           margin: 5,
           borderBottom: '2px solid white'
         };
-        if (t.parent === cmp.state.show) {
-          css.borderBottom = '2px solid ' + colours[t.parent];
+        if (cmp.isHighlighted(t, cmp.state.show)) {
+          css.borderBottom = '2px solid ' + colours[t.pos];
         }
-        return <span style={css} key={i}>{t.text}</span>;
+        return <span style={css} key={i} title={t.pos}>{t.text}</span>;
       });
       return (
         <div style={sentence_css} key={key}>
@@ -75,10 +88,13 @@ let Home = React.createClass({
     });
 
     let actions = [
-      'noun',
-      'adjective',
-      'verb',
-      'adverb',
+      'Noun',
+      'Adjective',
+      'Verb',
+      'Person',
+      'Place',
+      'Date',
+      'Value',
     ];
     let tabs = actions.map(function(s, i) {
       return <Tab key={i} eventKey={s} title={s}></Tab>;

@@ -435,6 +435,6 @@ let cities = [
 ];
 
 module.exports = {
-  countries,
-  cities,
+  countries: countries,
+  cities: cities,
 };

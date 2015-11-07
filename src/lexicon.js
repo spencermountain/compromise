@@ -22,57 +22,83 @@ const addArr = function(arr, tag) {
 };
 
 //conjugate all verbs.
+let verb_forms = {
+  infinitive: 'VBP',
+  past: 'VBD',
+  gerund: 'VBG',
+  present: 'VBZ',
+  actor: 'NNA',
+  participle: 'VBN',
+};
 const verbs = require('./data/verbs.js');
 for (let i = 0; i < verbs.length; i++) {
   const c = verb_conjugate(verbs[i]);
-  lexicon[c.infinitive] = 'VBP';
-  lexicon[c.past] = 'VBD';
-  lexicon[c.gerund] = 'VBG';
-  lexicon[c.present] = 'VBZ';
-  if (c.actor) {
-    lexicon[c.actor] = 'NNA';
-  }
-  if (c.participle) {
-    lexicon[c.participle] = 'VBN';
-  }
+  Object.keys(c).forEach(function(k) {
+    if (k && verb_forms[k]) {
+      lexicon[c[k]] = verb_forms[k];
+    }
+  });
 }
+//irregular verbs
+require('./data/verb_irregulars.js').forEach(function(o) {
+  Object.keys(o).forEach(function(k) {
+    if (k && verb_forms[k]) {
+      lexicon[o[k]] = verb_forms[k];
+    }
+  });
+});
+
+let orgs = require('./data/organisations.js');
+addArr(orgs.organisations, 'Noun');
+addArr(orgs.suffixes, 'Noun');
+let places = require('./data/places.js');
+addArr(orgs.countries, 'Noun');
+addArr(orgs.cities, 'Noun');
 
 addArr(require('./data/abbreviations.js').abbreviations, 'NNAB');
-addArr(require('./data/adjectives.js'), 'JJ');
-addArr(require('./data/demonyms.js'), 'JJ');
+addArr(require('./data/adjectives.js'), 'Adjective');
+addArr(require('./data/demonyms.js'), 'Adjective');
 addArr(require('./data/honourifics.js'), 'NNAB');
-addArr(require('./data/uncountables.js'), 'NN');
-addArr(require('./data/dates.js'), 'CD');
-addArr(require('./data/numbers.js'), 'CD');
+addArr(require('./data/uncountables.js'), 'Noun');
+addArr(require('./data/dates.js'), 'Value');
+addArr(require('./data/numbers.js'), 'Value');
 //a little fancy
-addArr(Object.keys(require('./data/firstnames.js')), 'NN');
+addArr(Object.keys(require('./data/firstnames.js')), 'Noun');
 //add irregular nouns
 const irregNouns = require('./data/irregular_nouns.js');
-addArr(fns.pluck(irregNouns, 0), 'NN');
+addArr(fns.pluck(irregNouns, 0), 'Noun');
 addArr(fns.pluck(irregNouns, 1), 'NNS');
 
 addObj(require('./data/misc.js'));
 addObj(require('./data/multiples.js'));
 addObj(require('./data/phrasal_verbs.js'));
 
+//just in case
+lexicon[false] = undefined;
+lexicon[true] = undefined;
+lexicon[undefined] = undefined;
+lexicon[null] = undefined;
+lexicon[''] = undefined;
+
 // console.log(Object.keys(lexicon).length)
 // console.log(lexicon)
 
-// console.log(lexicon['once again'] === "RB")
-// console.log(lexicon['seven'] === "CD")
-// console.log(lexicon['sleep'] === "VBP")
-// console.log(lexicon['slept'] === "VBD")
-// console.log(lexicon['sleeping'] === "VBG")
-// console.log(lexicon['canadian'] === "JJ")
-// console.log(lexicon['july'] === "CD")
-// console.log(lexicon[null] === undefined)
-// console.log(lexicon["dr"] === "NNAB")
-// console.log(lexicon["sounds"] === "VBZ")
-// console.log(lexicon["look after"] === "VBP")
-// console.log(lexicon['tony'] === "NN")
-// console.log(lexicon['loaf'] === "NN")
-// console.log(lexicon['loaves'] === "NNS")
-// console.log(lexicon['he'] === "PRP")
+// console.log(lexicon['once again'] === 'RB');
+// console.log(lexicon['seven'] === 'Value');
+// console.log(lexicon['sleep'] === 'VBP');
+// console.log(lexicon['slept'] === 'VBD');
+// console.log(lexicon['sleeping'] === 'VBG');
+// console.log(lexicon['canadian'] === 'JJ');
+// console.log(lexicon['july'] === 'Value');
+// console.log(lexicon[null] === undefined);
+// console.log(lexicon['dr'] === 'NNAB');
+// console.log(lexicon['sounds'] === 'VBZ');
+// console.log(lexicon['look after'] === 'VBP');
+// console.log(lexicon['tony'] === 'Noun');
+// console.log(lexicon['loaf'] === 'Noun');
+// console.log(lexicon['loaves'] === 'NNS');
+// console.log(lexicon['he'] === 'PRP');
+console.log(lexicon['canada'] === 'Noun');
 // console.log(lexicon['the']);
 
 module.exports = lexicon;

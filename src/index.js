@@ -64,7 +64,5 @@ module.exports = nlp;
 
 // console.log(nlp.Verb('walked'));
 
-// let n = nlp.Value('five hundred feet');
-// console.log(p instanceof Noun);
-// console.log(n);
-console.log(nlp.Lexicon.fun);
+let n = nlp.Text('Twenty-eight months have passed'); // since September 11th, 2001 - over two years without an attack on American soil');
+console.log(n.terms());

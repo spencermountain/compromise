@@ -10,8 +10,9 @@ honourifics = honourifics.reduce(function(h, s) {
 }, {});
 
 class Person extends Noun {
-  constructor(str) {
+  constructor(str, tag) {
     super(str);
+    this.tag = tag;
     this.pos = 'Person';
     this.honourific = null;
     this.firstName = null;

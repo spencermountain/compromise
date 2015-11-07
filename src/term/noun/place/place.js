@@ -2,8 +2,9 @@
 const Noun = require('../noun.js');
 
 const Place = class Place extends Noun {
-constructor(str) {
+constructor(str, tag) {
   super(str);
+  this.tag = tag;
   this.pos = 'Place';
 }
 };

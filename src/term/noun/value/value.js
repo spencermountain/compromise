@@ -5,8 +5,9 @@ const units = require('./units.js');
 const nums = require('./numbers.js');
 
 class Value extends Noun {
-  constructor(str) {
+  constructor(str, tag) {
     super(str);
+    this.tag = tag;
     this.pos = 'Value';
     this.number = null;
     this.unit = null;

@@ -16,6 +16,7 @@ const allowed_forms = {
 class Verb extends Term {
   constructor(str, form) {
     super(str);
+    this.tag = form;
     this.pos = 'Verb';
     this.conjugations = {}; //cached conjugations
     //if we've been told which

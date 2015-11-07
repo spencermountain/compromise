@@ -7,8 +7,9 @@ const adj_to_adv = require('./to_adverb');
 const adj_to_noun = require('./to_noun');
 
 class Adjective extends Term {
-  constructor(str) {
+  constructor(str, tag) {
     super(str);
+    this.tag = tag;
     this.pos = 'Adjective';
   }
 

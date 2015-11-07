@@ -52,8 +52,8 @@ let orgs = require('./data/organisations.js');
 addArr(orgs.organisations, 'Noun');
 addArr(orgs.suffixes, 'Noun');
 let places = require('./data/places.js');
-addArr(orgs.countries, 'Noun');
-addArr(orgs.cities, 'Noun');
+addArr(places.countries, 'Noun');
+addArr(places.cities, 'Noun');
 
 addArr(require('./data/abbreviations.js').abbreviations, 'NNAB');
 addArr(require('./data/adjectives.js'), 'Adjective');

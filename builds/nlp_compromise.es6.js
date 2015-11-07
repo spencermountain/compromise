@@ -5918,8 +5918,8 @@ let cities = [
 ];
 
 module.exports = {
-  countries,
-  cities,
+  countries: countries,
+  cities: cities,
 };
 
 },{}],16:[function(require,module,exports){
@@ -7779,6 +7779,9 @@ require('./data/verb_irregulars.js').forEach(function(o) {
 let orgs = require('./data/organisations.js');
 addArr(orgs.organisations, 'Noun');
 addArr(orgs.suffixes, 'Noun');
+let places = require('./data/places.js');
+addArr(places.countries, 'Noun');
+addArr(places.cities, 'Noun');
 
 addArr(require('./data/abbreviations.js').abbreviations, 'NNAB');
 addArr(require('./data/adjectives.js'), 'Adjective');
@@ -7799,6 +7802,9 @@ addObj(require('./data/multiples.js'));
 addObj(require('./data/phrasal_verbs.js'));
 
 //just in case
+lexicon[false] = undefined;
+lexicon[true] = undefined;
+lexicon[undefined] = undefined;
 lexicon[null] = undefined;
 lexicon[''] = undefined;
 
@@ -7820,11 +7826,12 @@ lexicon[''] = undefined;
 // console.log(lexicon['loaf'] === 'Noun');
 // console.log(lexicon['loaves'] === 'NNS');
 // console.log(lexicon['he'] === 'PRP');
+console.log(lexicon['canada'] === 'Noun');
 // console.log(lexicon['the']);
 
 module.exports = lexicon;
 
-},{"./data/abbreviations.js":3,"./data/adjectives.js":4,"./data/dates.js":5,"./data/demonyms.js":6,"./data/firstnames.js":7,"./data/honourifics.js":8,"./data/irregular_nouns.js":9,"./data/misc.js":10,"./data/multiples.js":11,"./data/numbers.js":12,"./data/organisations.js":13,"./data/phrasal_verbs.js":14,"./data/uncountables.js":16,"./data/verb_irregulars.js":17,"./data/verbs.js":18,"./fns.js":19,"./term/verb/conjugate/conjugate.js":62}],22:[function(require,module,exports){
+},{"./data/abbreviations.js":3,"./data/adjectives.js":4,"./data/dates.js":5,"./data/demonyms.js":6,"./data/firstnames.js":7,"./data/honourifics.js":8,"./data/irregular_nouns.js":9,"./data/misc.js":10,"./data/multiples.js":11,"./data/numbers.js":12,"./data/organisations.js":13,"./data/phrasal_verbs.js":14,"./data/places.js":15,"./data/uncountables.js":16,"./data/verb_irregulars.js":17,"./data/verbs.js":18,"./fns.js":19,"./term/verb/conjugate/conjugate.js":62}],22:[function(require,module,exports){
 'use strict';
 const pos = require('./pos');
 let Noun = pos.Noun;

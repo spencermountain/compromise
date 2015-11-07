@@ -3,6 +3,7 @@
 'use strict';
 const fns = require('./fns.js');
 const verb_conjugate = require('./term/verb/conjugate/conjugate.js');
+const grand_mapping = require('./data/grand_mapping.js');
 
 const lexicon = {};
 
@@ -23,12 +24,12 @@ const addArr = function(arr, tag) {
 
 //conjugate all verbs.
 let verb_forms = {
-  infinitive: 'VBP',
-  past: 'VBD',
-  gerund: 'VBG',
-  present: 'VBZ',
-  actor: 'NNA',
-  participle: 'VBN',
+  infinitive: 'Infinitive',
+  past: 'PastTense',
+  gerund: 'Gerund',
+  present: 'PresentTense',
+  actor: 'Actor',
+  participle: 'Participle',
 };
 const verbs = require('./data/verbs.js');
 for (let i = 0; i < verbs.length; i++) {
@@ -51,34 +52,44 @@ require('./data/verb_irregulars.js').forEach(function(o) {
 let orgs = require('./data/organisations.js');
 addArr(orgs.organisations, 'Noun');
 addArr(orgs.suffixes, 'Noun');
-let places = require('./data/places.js');
-addArr(places.countries, 'Noun');
-addArr(places.cities, 'Noun');
 
-addArr(require('./data/abbreviations.js').abbreviations, 'NNAB');
+let places = require('./data/places.js');
+addArr(places.countries, 'Place');
+addArr(places.cities, 'Place');
+
+addArr(require('./data/abbreviations.js').abbreviations, 'Abbreviation');
 addArr(require('./data/adjectives.js'), 'Adjective');
 addArr(require('./data/demonyms.js'), 'Adjective');
-addArr(require('./data/honourifics.js'), 'NNAB');
+addArr(require('./data/honourifics.js'), 'Honourific');
 addArr(require('./data/uncountables.js'), 'Noun');
-addArr(require('./data/dates.js'), 'Value');
+addArr(require('./data/dates.js'), 'Date');
 addArr(require('./data/numbers.js'), 'Value');
 //a little fancy
-addArr(Object.keys(require('./data/firstnames.js')), 'Noun');
+addArr(Object.keys(require('./data/firstnames.js')), 'Name');
 //add irregular nouns
 const irregNouns = require('./data/irregular_nouns.js');
 addArr(fns.pluck(irregNouns, 0), 'Noun');
-addArr(fns.pluck(irregNouns, 1), 'NNS');
+addArr(fns.pluck(irregNouns, 1), 'Plural');
 
 addObj(require('./data/misc.js'));
 addObj(require('./data/multiples.js'));
 addObj(require('./data/phrasal_verbs.js'));
 
 //just in case
-lexicon[false] = undefined;
-lexicon[true] = undefined;
-lexicon[undefined] = undefined;
-lexicon[null] = undefined;
-lexicon[''] = undefined;
+delete lexicon[false];
+delete lexicon[true];
+delete lexicon[undefined];
+delete lexicon[null];
+delete lexicon[''];
+
+//use 'Noun', not 'NN'
+Object.keys(lexicon).forEach(function(k) {
+  if (!grand_mapping[lexicon[k]]) {
+    // console.log(lexicon[k]);
+  }
+  lexicon[k] = grand_mapping[lexicon[k]] || lexicon[k];
+});
+
 
 // console.log(Object.keys(lexicon).length)
 // console.log(lexicon)
@@ -98,7 +109,7 @@ lexicon[''] = undefined;
 // console.log(lexicon['loaf'] === 'Noun');
 // console.log(lexicon['loaves'] === 'NNS');
 // console.log(lexicon['he'] === 'PRP');
-console.log(lexicon['canada'] === 'Noun');
+// console.log(lexicon['canada'] === 'Noun');
 // console.log(lexicon['the']);
 
 module.exports = lexicon;

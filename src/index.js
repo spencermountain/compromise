@@ -64,5 +64,5 @@ module.exports = nlp;
 
 // console.log(nlp.Verb('walked'));
 
-let n = nlp.Text('Twenty-eight months have passed'); // since September 11th, 2001 - over two years without an attack on American soil');
-console.log(n.terms());
+// let n = nlp.Text('toronto on Saturday');
+// console.log(n.terms());

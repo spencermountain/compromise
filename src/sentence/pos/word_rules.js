@@ -1,3 +1,4 @@
+const grand_mapping = require('../../data/grand_mapping.js');
 //regex patterns and parts of speech],
 module.exports = [
   ['.[cts]hy$', 'JJ'],
@@ -79,8 +80,8 @@ module.exports = [
   ['.\'ll$', 'MD'],
   ['.\'t$', 'VB'],
   ['.tches$', 'VB'],
-  ['^https?\:?\/\/[a-z0-9]', 'CD'], //the colon is removed in normalisation
-  ['^www\.[a-z0-9]', 'CD'],
+  ['^https?\:?\/\/[a-z0-9]', 'NN'], //the colon is removed in normalisation
+  ['^www\.[a-z0-9]', 'NN'],
   ['.ize$', 'VB'],
   ['.[^aeiou]ise$', 'VB'],
   ['.[aeiou]te$', 'VB'],
@@ -114,6 +115,6 @@ module.exports = [
 ].map(function(a) {
   return {
     reg: new RegExp(a[0], 'i'),
-    pos: a[1]
+    pos: grand_mapping[a[1]]
   };
 });

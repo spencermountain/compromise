@@ -5,13 +5,13 @@ const misc = {
   'etc': 'FW', //foreign words
   'ie': 'FW',
 
-  'there': 'EX',
+  'there': 'NN',
 
   'better': 'JJR',
   'earlier': 'JJR',
 
   'has': 'VB',
-  'more': 'RBR',
+  'more': 'RB',
 
   'sounds': 'VBZ'
 };
@@ -397,5 +397,5 @@ for (let i = 0; i < keys.length; i++) {
     misc[arr[i2]] = keys[i];
   }
 }
-
+// console.log(misc.a);
 module.exports = misc;

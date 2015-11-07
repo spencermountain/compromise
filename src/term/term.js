@@ -8,10 +8,11 @@ class Term {
     this.changeTo(str);
     this.reason = '';
     let types = {
-      DT: 'Determiner',
-      CC: 'Conjunction',
-      IN: 'Preposition',
+      Determiner: 'Determiner',
+      Conjunction: 'Conjunction',
+      Preposition: 'Preposition',
     };
+
     this.pos = types[tag] || '?';
   }
 

@@ -13,7 +13,7 @@ class Term {
       Preposition: 'Preposition',
       Posessive: 'Posessive',
     };
-    this.pos = 'Term';
+    this.pos = {};
     this.tag = types[tag] || '?';
   }
 

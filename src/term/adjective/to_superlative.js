@@ -1,6 +1,6 @@
 //turn 'quick' into 'quickest'
 'use strict';
-const convertables = require('./convertables');
+const convertables = require('../../data/convertables.js');
 
 const to_superlative = function(str) {
   const irregulars = {

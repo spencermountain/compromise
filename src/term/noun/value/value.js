@@ -8,7 +8,7 @@ class Value extends Noun {
   constructor(str, tag) {
     super(str);
     this.tag = tag;
-    this.pos = 'Value';
+    this.pos['Value'] = true;
     this.number = null;
     this.unit = null;
     this.unit_name = null;

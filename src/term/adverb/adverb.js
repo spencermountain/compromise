@@ -6,7 +6,7 @@ class Adverb extends Term {
   constructor(str, tag) {
     super(str);
     this.tag = tag;
-    this.pos = 'Adverb';
+    this.pos['Adverb'] = true;
   }
   to_adjective() {
     return to_adjective(this.normal);

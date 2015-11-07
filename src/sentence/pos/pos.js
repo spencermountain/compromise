@@ -60,7 +60,6 @@ const classMapping = {
   'Acronym': Noun,
   'Plural': Noun,
   'Pronoun': Noun,
-  'Name': Noun,
 
   'Verb': Verb,
   'PresentTense': Verb,

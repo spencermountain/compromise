@@ -5,7 +5,8 @@ class Organisation extends Noun {
   constructor(str, tag) {
     super(str);
     this.tag = tag;
-    this.pos = 'Organisation';
+    this.pos['Organisation'] = true;
+
   }
 }
 

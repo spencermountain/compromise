@@ -6,7 +6,7 @@ class Date extends Noun {
   constructor(str, tag) {
     super(str);
     this.tag = tag;
-    this.pos = 'Date';
+    this.pos['Date'] = true;
     this.date = null;
     this.parse();
   }

@@ -10,7 +10,7 @@ class Adjective extends Term {
   constructor(str, tag) {
     super(str);
     this.tag = tag;
-    this.pos = 'Adjective';
+    this.pos['Adjective'] = true;
   }
 
   to_comparative() {

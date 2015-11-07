@@ -8,13 +8,15 @@ honourifics = honourifics.reduce(function(h, s) {
 }, {});
 
 const is_person = function(str) {
-  let words = str.split(' ');
-  let first = words[0];
-  if (str === 'he' || str === 'she') {
+  if (str === 'he' || str === 'she' || firstnames[str]) {
     return true;
   }
-  if (honourifics[first] || firstnames[first]) {
-    return true;
+  let words = str.split(' ');
+  if (words.length > 1) {
+    let first = words[0];
+    if (honourifics[first] || firstnames[first]) {
+      return true;
+    }
   }
   return false;
 };

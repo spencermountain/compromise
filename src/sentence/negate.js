@@ -40,7 +40,7 @@ const negate = function(s) {
   for (let i = 0; i < s.tokens.length; i++) {
     const tok = s.tokens[i];
     // handle ambiguous contractions
-    if (tok.pos_reason === 'ambiguous_contraction') {
+    if (tok.reason === 'ambiguous_contraction') {
       tok.text = tok.normalised;
     }
 

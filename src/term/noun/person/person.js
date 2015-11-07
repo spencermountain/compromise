@@ -13,7 +13,7 @@ class Person extends Noun {
   constructor(str, tag) {
     super(str);
     this.tag = tag;
-    this.pos = 'Person';
+    this.pos['Person'] = true;
     this.honourific = null;
     this.firstName = null;
     this.middleName = null;

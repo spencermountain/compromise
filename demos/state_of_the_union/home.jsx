@@ -58,7 +58,7 @@ let Home = React.createClass({
   },
 
   isHighlighted: function(t, str) {
-    if (t.pos === str) {
+    if (t.pos[str]) {
       return true;
     }
     return false;
@@ -76,9 +76,9 @@ let Home = React.createClass({
           borderBottom: '2px solid white'
         };
         if (cmp.isHighlighted(t, cmp.state.show)) {
-          css.borderBottom = '2px solid ' + colours[t.pos];
+          css.borderBottom = '2px solid ' + colours[cmp.state.show];
         }
-        return <span style={css} key={i} title={t.pos}>{t.text}</span>;
+        return <span style={css} key={i} title={t.tag + '  ' + t.reason}>{t.text}</span>;
       });
       return (
         <div style={sentence_css} key={key}>

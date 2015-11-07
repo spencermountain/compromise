@@ -42,7 +42,6 @@ const lexicon_pass = function(terms) {
   });
 };
 
-
 //set POS for capitalised words
 const capital_signals = function(terms) {
   //first words need careful rules
@@ -90,9 +89,6 @@ const chunk_neighbours = function(terms) {
   }
   return new_terms;
 };
-
-
-
 
 
 //hints from the sentence grammar
@@ -146,18 +142,19 @@ const specific_pos = function(terms) {
 };
 
 const tagger = function(s) {
+  //word-level rules
   s.terms = capital_signals(s.terms);
   s.terms = contractions(s.terms);
   s.terms = lexicon_pass(s.terms);
   s.terms = word_rules_pass(s.terms);
-  //repeat these two
-  s.terms = grammar_rules_pass(s);
-  s.terms = chunk_neighbours(s.terms);
-  s.terms = noun_fallback(s.terms);
-  //turns the general pos into specific ones
-  s.terms = specific_pos(s.terms);
-  //combine combinations of terms
-  s.terms = fancy_lumping(s.terms);
+  //repeat these steps a couple times, to wiggle-out the grammar
+  for(let i = 0; i < 1; i++) {
+    s.terms = grammar_rules_pass(s);
+    s.terms = chunk_neighbours(s.terms);
+    s.terms = noun_fallback(s.terms);
+    s.terms = specific_pos(s.terms);
+    s.terms = fancy_lumping(s.terms);
+  }
   return s.terms;
 };
 

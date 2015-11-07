@@ -17,7 +17,7 @@ class Verb extends Term {
   constructor(str, form) {
     super(str);
     this.tag = form;
-    this.pos = 'Verb';
+    this.pos['Verb'] = true;
     this.conjugations = {}; //cached conjugations
     //if we've been told which
     if (form && allowed_forms[form]) {

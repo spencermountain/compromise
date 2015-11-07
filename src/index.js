@@ -64,5 +64,5 @@ module.exports = nlp;
 
 // console.log(nlp.Verb('walked'));
 
-let n = nlp.Text('Walter Capps');
+let n = nlp.Text('so short a time');
 console.log(n.terms());

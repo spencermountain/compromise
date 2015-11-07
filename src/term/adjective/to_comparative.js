@@ -1,6 +1,6 @@
 //turn 'quick' into 'quickly'
 'use strict';
-const convertables = require('./convertables');
+const convertables = require('../../data/convertables.js');
 
 const to_comparative = function(str) {
   const irregulars = {

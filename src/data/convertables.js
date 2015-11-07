@@ -195,6 +195,6 @@ module.exports = [
   'curly',
   'angry'
 ].reduce(function(h, s) {
-  h[s] = true;
+  h[s] = 'Adjective';
   return h;
 }, {});

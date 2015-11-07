@@ -15,7 +15,7 @@ class Noun extends Term {
   constructor(str, tag) {
     super(str);
     this.tag = tag;
-    this.pos = 'Noun';
+    this.pos['Noun'] = true;
   }
   //noun methods
   article() {

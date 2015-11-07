@@ -57,15 +57,17 @@ let places = require('./data/places.js');
 addArr(places.countries, 'Place');
 addArr(places.cities, 'Place');
 
-addArr(require('./data/abbreviations.js').abbreviations, 'Abbreviation');
 addArr(require('./data/adjectives.js'), 'Adjective');
+addObj(require('./data/convertables.js'));
+
+addArr(require('./data/abbreviations.js').abbreviations, 'Abbreviation');
 addArr(require('./data/demonyms.js'), 'Adjective');
 addArr(require('./data/honourifics.js'), 'Honourific');
 addArr(require('./data/uncountables.js'), 'Noun');
 addArr(require('./data/dates.js'), 'Date');
 addArr(require('./data/numbers.js'), 'Value');
 //a little fancy
-addArr(Object.keys(require('./data/firstnames.js')), 'Name');
+addArr(Object.keys(require('./data/firstnames.js')), 'Person');
 //add irregular nouns
 const irregNouns = require('./data/irregular_nouns.js');
 addArr(fns.pluck(irregNouns, 0), 'Noun');
@@ -110,6 +112,6 @@ Object.keys(lexicon).forEach(function(k) {
 // console.log(lexicon['loaves'] === 'NNS');
 // console.log(lexicon['he'] === 'PRP');
 // console.log(lexicon['canada'] === 'Noun');
-// console.log(lexicon['the']);
+// console.log(lexicon['short']);
 
 module.exports = lexicon;

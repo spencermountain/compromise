@@ -5,7 +5,7 @@ const Place = class Place extends Noun {
 constructor(str, tag) {
   super(str);
   this.tag = tag;
-  this.pos = 'Place';
+  this.pos['Place'] = true;
 }
 };
 

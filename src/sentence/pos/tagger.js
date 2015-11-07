@@ -4,6 +4,7 @@ const contractions = require('./contractions');
 const lexicon = require('../../lexicon.js');
 const word_rules = require('./word_rules');
 const grammar_rules = require('./grammar_rules');
+const fancy_lumping = require('./fancy_lumping');
 const fns = require('../../fns');
 const pos = require('./pos');
 
@@ -14,7 +15,6 @@ const assign = function(t, tag, reason) {
   t.reason = reason;
   return t;
 };
-
 
 //consult lexicon for this known-word
 const lexicon_pass = function(terms) {
@@ -80,16 +80,20 @@ const chunk_neighbours = function(terms) {
   let last = null;
   for(let i = 0; i < terms.length; i++) {
     let t = terms[i];
-    if (last !== null && t.pos === last) {
+    if (last !== null && t.tag === last) {
       new_terms[new_terms.length - 1].text += ' ' + t.text;
       new_terms[new_terms.length - 1].normalize();
     } else {
       new_terms.push(t);
     }
-    last = t.pos;
+    last = t.tag;
   }
   return new_terms;
 };
+
+
+
+
 
 //hints from the sentence grammar
 const grammar_rules_pass = function(s) {
@@ -152,6 +156,8 @@ const tagger = function(s) {
   s.terms = noun_fallback(s.terms);
   //turns the general pos into specific ones
   s.terms = specific_pos(s.terms);
+  //combine combinations of terms
+  s.terms = fancy_lumping(s.terms);
   return s.terms;
 };
 

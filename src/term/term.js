@@ -11,6 +11,7 @@ class Term {
       Determiner: 'Determiner',
       Conjunction: 'Conjunction',
       Preposition: 'Preposition',
+      Posessive: 'Posessive',
     };
     this.pos = 'Term';
     this.tag = types[tag] || '?';

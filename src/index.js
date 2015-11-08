@@ -62,7 +62,6 @@ if (typeof window === 'object') {
 }
 module.exports = nlp;
 
-// console.log(nlp.Verb('walked'));
-
-// let n = nlp.Text('where\'s the pencil disappeared');
-// console.log(n.terms());
+// let n = nlp.Text('The pen blew up');
+let n = nlp.Text('the Captain of Jamaica');
+console.log(n.terms());

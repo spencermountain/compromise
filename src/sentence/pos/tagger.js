@@ -126,15 +126,14 @@ const specific_pos = function(terms) {
     if (t instanceof pos.Noun) {
       if (t.is_person()) {
         terms[i] = assign(t, 'Person');
-      }
-      if (t.is_place()) {
+      } else if (t.is_place()) {
         terms[i] = assign(t, 'Place');
-      }
-      if (t.is_value()) {
+      } else if (t.is_value()) {
         terms[i] = assign(t, 'Value');
-      }
-      if (t.is_date()) {
+      } else if (t.is_date()) {
         terms[i] = assign(t, 'Date');
+      } else if (t.is_organisation()) {
+        terms[i] = assign(t, 'Organisation');
       }
     }
   }

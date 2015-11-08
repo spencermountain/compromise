@@ -33,7 +33,11 @@ const is_organisation = function(str, text) {
     return true;
   }
   // eg 'Smith & Co'
-  if (str.match(/ (&|of) /)) {
+  if (str.match(/ & /)) {
+    return true;
+  }
+  // Girlscouts of Canada
+  if (str.match(/..s of /)) {
     return true;
   }
   // eg pets.com
@@ -51,4 +55,4 @@ const is_organisation = function(str, text) {
 
 module.exports = is_organisation;
 
-// console.log(is_organisation('4 hundred and ten'));
+// console.log(is_organisation('Captain of Jamaica'));

@@ -32,15 +32,18 @@ let placeSignals = [
   'county',
   'state',
   'province',
-];
-placeSignals.forEach(function(s) {
-  isPlace[s] = true;
-});
+].reduce(function(h, s) {
+  h[s] = true;
+  return h;
+}, {});
 
 const is_place = function(str) {
   let words = str.split();
   for(let i = 0; i < words.length; i++) {
-    if (isPlace[words[i]] || placeSignals[words[i]]) {
+    if (isPlace[words[i]]) {
+      return true;
+    }
+    if (placeSignals[words[i]] && !placeSignals[str]) {
       return true;
     }
   }

@@ -80,6 +80,32 @@ class Sentence {
   tags() {
     return fns.pluck(this.terms, 'tag');
   }
+  //mining
+  people() {
+    return this.terms.filter(function(t) {
+      return t.pos['Person'];
+    });
+  }
+  places() {
+    return this.terms.filter(function(t) {
+      return t.pos['Place'];
+    });
+  }
+  dates() {
+    return this.terms.filter(function(t) {
+      return t.pos['Date'];
+    });
+  }
+  organisations() {
+    return this.terms.filter(function(t) {
+      return t.pos['Organisation'];
+    });
+  }
+  values() {
+    return this.terms.filter(function(t) {
+      return t.pos['Value'];
+    });
+  }
 }
 
 module.exports = Sentence;

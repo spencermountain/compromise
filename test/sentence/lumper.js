@@ -10,6 +10,11 @@ describe('lumper test', function() {
       ['John Baseball', ['Person']],
       ['John sr.', ['Person']],
       ['Dr. John', ['Person']],
+      ['she said "dutch oven"', ['Person', 'PastTense', 'Noun']],
+      ['she said "huge dutch oven"', ['Person', 'PastTense', 'Noun']],
+      ['the Captain of Jamaica', ['Determiner', 'Noun']],
+      ['joe will have walked', ['Person', 'PluperfectTense']],
+      ['joe had walked', ['Person', 'PastTense']],
     ];
     tests.forEach(function(a) {
       let n = nlp.Text(a[0]);

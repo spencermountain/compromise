@@ -61,14 +61,16 @@ const classMapping = {
   'Plural': Noun,
   'Pronoun': Noun,
   'Actor': Noun,
+  'Abbreviation': Noun,
 
   'Verb': Verb,
   'PresentTense': Verb,
   'FutureTense': Verb,
   'PastTense': Verb,
   'Infinitive': Verb,
+  'PerfectTense': Verb,
+  'PluperfectTense': Verb,
   'Gerund': Verb,
-  'Abbreviation': Verb,
   'Copula': Verb,
   'Modal': Verb,
 
@@ -86,6 +88,7 @@ const classMapping = {
   'Value': Value,
   'Place': Place,
   'Person': Person,
+  'Organisation': Organisation,
   'Date': _Date,
 };
 

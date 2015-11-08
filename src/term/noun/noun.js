@@ -17,6 +17,9 @@ class Noun extends Term {
     super(str);
     this.tag = tag;
     this.pos['Noun'] = true;
+    if (tag) {
+      this.pos[tag] = true;
+    }
   }
   //noun methods
   article() {
@@ -62,5 +65,5 @@ class Noun extends Term {
 
 module.exports = Noun;
 
-let t = new Noun('John');
-console.log(t.pronoun());
+// let t = new Noun('John');
+// console.log(t.pronoun());

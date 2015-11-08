@@ -2,27 +2,81 @@
 'use strict';
 const pos = require('./pos');
 
-const shouldLump = function(a, b) {
+const shouldLumpThree = function(a, b, c) {
+  if (!a || !b || !c) {
+    return false;
+  }
   const lump_rules = [
     {
-      condition: (a.tag === 'Person' && b.tag === 'Honourific' || a.tag === 'Honourific' && b.tag === 'Person'), //"John sr."
+      condition: (a.pos.Noun && b.text === '&' && c.pos.Noun), //John & Joe's
       result: 'Person',
     },
     {
-      condition: (a.tag === 'Person' && b.is_capital()), //'Person, Capital -> Person'
+      condition: (a.pos.Noun && b.text === 'N' && c.pos.Noun), //John N Joe's
       result: 'Person',
     },
     {
-      condition: (a.tag === 'Date' && b.tag === 'Value'), //June 4
+      condition: (a.pos.Date && b.normal === 'the' && c.pos.Value), //June the 5th
+      result: 'Person',
+    },
+    {
+      condition: (a.is_capital() && b.normal === 'of' && c.is_capital()), //President of Mexico
+      result: 'Noun',
+    },
+    {
+      condition: (a.text.match(/^["']/) && !b.text.match(/["']/) && c.match(/["']$/)), //three-word quote
+      result: 'Noun',
+    },
+    {
+      condition: (a.normal === 'will' && b.normal === 'have' && b.pos.Verb), //will have walk
+      result: 'FutureTense',
+    },
+  ];
+  for(let i = 0; i < lump_rules.length; i++) {
+    if (lump_rules[i].condition) {
+      return lump_rules[i].result;
+    }
+  }
+  return false;
+};
+
+const shouldLumpTwo = function(a, b) {
+  if (!a || !b) {
+    return false;
+  }
+  const lump_rules = [
+    {
+      condition: (a.pos.Person && b.pos.Honourific || a.pos.Honourific && b.pos.Person), //"John sr."
+      result: 'Person',
+    },
+    {
+      condition: (a.pos.Honourific && b.is_capital()), //'Dr. John
+      result: 'Person',
+    },
+    {
+      condition: (a.pos.Person && b.is_capital()), //'Person, Capital -> Person'
+      result: 'Person',
+    },
+    {
+      condition: (a.pos.Date && b.pos.Value), //June 4
       result: 'Date',
     },
-    // {
-    //   condition: (), //
-    //   result: '',
-    // },
-    //
-
-
+    {
+      condition: (a.is_capital() && b.pos['Organisation'] || b.is_capital() && a.pos['Organisation']), //Canada Inc
+      result: 'Organisation',
+    },
+    {
+      condition: (a.text.match(/^["']/) && b.text.match(/["']$/)), //two-word quote
+      result: 'Noun',
+    },
+    {
+      condition: (a.normal === 'will' && b.pos.Verb), //will walk (perfect)
+      result: 'PerfectTense',
+    },
+    {
+      condition: (a.normal.match(/^will ha(ve|d)$/) && b.pos.Verb), //will have walked (pluperfect)
+      result: 'PluperfectTense',
+    },
   ];
   for(let i = 0; i < lump_rules.length; i++) {
     if (lump_rules[i].condition) {
@@ -33,24 +87,33 @@ const shouldLump = function(a, b) {
 };
 
 
-const lump = function(a, b, tag) {
-  let c = pos.classMapping[tag] || pos.Term;
-  let t = new c(a.text + ' ' + b.text, tag);
-  t.reason = 'lumped(' + t.reason + ')';
-  return t;
-};
-
 const fancy_lumping = function(terms) {
   for(let i = 1; i < terms.length; i++) {
     let a = terms[i - 1];
     let b = terms[i];
+    let c = terms[i + 1];
 
-    // Person, Capital -> "Person Capital"
-    let l = shouldLump(a, b);
-    if (l !== false) {
-      terms[i] = lump(a, b, l);
+    // rules for lumping two terms
+    let tag = shouldLumpTwo(a, b);
+    if (tag !== false) {
+      let Cl = pos.classMapping[tag] || pos.Term;
+      terms[i] = new Cl(a.text + ' ' + b.text, tag);
+      terms[i].reason = 'lumped(' + terms[i].reason + ')';
       terms[i - 1] = null;
       continue;
+    }
+
+    // rules for lumpting three terms
+    if (c) {
+      tag = shouldLumpThree(a, b, c);
+      if (tag !== false) {
+        let Cl = pos.classMapping[tag] || pos.Term;
+        terms[i - 1] = new Cl([a.text, b.text, c.text].join(' '), tag);
+        terms[i - 1].reason = 'lumped(' + terms[i].reason + ')';
+        terms[i] = null;
+        terms[i + 1] = null;
+        continue;
+      }
     }
 
   }

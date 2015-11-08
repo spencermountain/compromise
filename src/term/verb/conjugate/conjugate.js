@@ -35,7 +35,10 @@ const fallback = function(w) {
     past: past,
     gerund: gerund,
     actor: actor,
-    future: 'will ' + infinitive
+    future: 'will ' + infinitive,
+    perfect: 'have ' + past,
+    pluperfect: 'had ' + past,
+    future_perfect: 'will have ' + past,
   };
 };
 

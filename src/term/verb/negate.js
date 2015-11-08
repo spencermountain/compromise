@@ -42,23 +42,23 @@ const negate = function(v) {
     return exceptions[words[0]] + ' ' + words.slice(1, words.length).join(' ');
   }
   //walked -> didn't walk
-  if (v.form() === 'past') {
+  if (v.form() === 'PastTense') {
     return 'didn\'t ' + v.conjugate()['infinitive'];
   }
   //walks -> doesn't walk
-  if (v.form() === 'present') {
+  if (v.form() === 'PresentTense') {
     return 'doesn\'t ' + v.conjugate()['infinitive'];
   }
   //walking -> not walking
-  if (v.form() === 'gerund') {
+  if (v.form() === 'Gerund') {
     return 'not ' + v.text;
   }
   //walker -> non-walker ?
-  if (v.form() === 'actor') {
+  if (v.form() === 'Actor') {
     return 'non-' + v.text;
   }
   //walk -> not walk ?
-  if (v.form() === 'infinitive') {
+  if (v.form() === 'Infinitive') {
     return 'not ' + v.text;
   }
 

@@ -4,25 +4,32 @@ const conjugate = require('./conjugate/conjugate.js');
 const predict_form = require('./conjugate/predict_form.js');
 const negate = require('./negate.js');
 
-const allowed_forms = {
-  infinitive: 1,
-  present: 1,
-  past: 1,
-  gerund: 1,
-  actor: 1,
-  future: 1
+const verbTags = {
+  infinitive: 'Verb',
+  present: 'PresentTense',
+  past: 'PastTense',
+  gerund: 'Gerund',
+  actor: 'Actor',
+  future: 'FutureTense',
+  pluperfect: 'PluperfectTense',
+  perfect: 'PerfectTense',
+
+  PerfectTense: 'PerfectTense',
+  PluperfectTense: 'PluperfectTense',
+  FutureTense: 'FutureTense',
+  PastTense: 'PastTense',
 };
 
 class Verb extends Term {
-  constructor(str, form) {
+  constructor(str, tag) {
     super(str);
-    this.tag = form;
+    this.tag = tag;
     this.pos['Verb'] = true;
     this.conjugations = {}; //cached conjugations
     //if we've been told which
-    if (form && allowed_forms[form]) {
-      this._form = form;
-      this.conjugations[form] = this.normal;
+    if (tag && verbTags[tag]) {
+      this.pos[tag] = true;
+      this.conjugations[tag] = this.normal;
     } else {
       this.form();
     }
@@ -31,20 +38,23 @@ class Verb extends Term {
   //which current conjugation form it is
   form() {
     //if we haven't been told
-    if (!this._form) {
-      this._form = predict_form(this.normal);
+    if (!this.tag) {
+      this.tag = predict_form(this.normal);
     }
-    //else, predict it
-    return this._form;
+    return this.tag;
   }
 
   //retrieve a specific form
-  conjugation(type) {
-    type = type || 'infinitive';
+  conjugation() {
     //check cached conjugations
-    if (this.conjugations[type] === undefined) {
-      this.conjugate();
+    this.conjugations = this.conjugate();
+    let keys = Object.keys(this.conjugations);
+    for(let i = 0; i < keys.length; i++) {
+      if (this.conjugations[keys[i]] === this.normal) {
+        return keys[i];
+      }
     }
+    return predict(this.normal);
   }
 
   conjugate() {
@@ -56,7 +66,7 @@ class Verb extends Term {
     if (!this.conjugations[tense]) {
       this.conjugate(this.normal);
     }
-    this._form = tense;
+    this.tag = verbTags[tense];
     this.changeTo(this.conjugations[tense]);
     return this.conjugations[tense];
   }
@@ -65,7 +75,7 @@ class Verb extends Term {
     if (!this.conjugations[tense]) {
       this.conjugate(this.normal);
     }
-    this._form = tense;
+    this.tag = verbTags[tense];
     this.changeTo(this.conjugations[tense]);
     return this.conjugations[tense];
   }
@@ -74,7 +84,7 @@ class Verb extends Term {
     if (!this.conjugations[tense]) {
       this.conjugate(this.normal);
     }
-    this._form = tense;
+    this.tag = verbTags[tense];
     this.changeTo(this.conjugations[tense]);
     return this.conjugations[tense];
   }

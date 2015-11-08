@@ -45,7 +45,10 @@ let Home = React.createClass({
   newWord: function() {
     let keys = Object.keys(window.nlp.Lexicon);
     keys = keys.filter(function(k) {
-      return window.nlp.Lexicon[k].match(/^VB/);
+      if (!window.nlp.Lexicon[k]) {
+        console.log(k);
+      }
+      return window.nlp.Lexicon[k] === 'Infinitive';
     });
     let l = keys.length;
     let r = parseInt(Math.random() * l, 10);

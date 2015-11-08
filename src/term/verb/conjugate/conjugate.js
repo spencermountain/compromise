@@ -96,7 +96,7 @@ const conjugate = function(w) {
     const phrasal_verb = split[1];
     const particle = split[2];
     const result = conjugate(phrasal_verb); //recursive
-    delete result['actor'];
+    // delete result['actor'];
     Object.keys(result).forEach(function(k) {
       if (result[k]) {
         result[k] += ' ' + particle;

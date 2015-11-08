@@ -27,17 +27,26 @@ const addArr = function(arr, tag) {
 //conjugate all verbs.
 const verbMap = {
   infinitive: 'Infinitive',
+  present: 'PresentTense',
   past: 'PastTense',
   present: 'PresentTense',
-  future: 'FutureTense',
-  actor: 'Actor',
   gerund: 'Gerund',
+  actor: 'Actor',
+  future: 'FutureTense',
+  pluperfect: 'PluperfectTense',
+  perfect: 'PerfectTense',
+
+  PerfectTense: 'PerfectTense',
+  PluperfectTense: 'PluperfectTense',
+  FutureTense: 'FutureTense',
+  PastTense: 'PastTense',
+  PresentTense: 'PresentTense',
 };
 const verbs = require('./data/verbs.js');
 for (let i = 0; i < verbs.length; i++) {
   const o = verb_conjugate(verbs[i]);
   Object.keys(o).forEach(function(k) {
-    if (k && o[k]) {
+    if (k && o[k] && verbMap[k]) {
       lexicon[o[k]] = verbMap[k];
     }
   });

@@ -5,9 +5,10 @@ const predict_form = require('./conjugate/predict_form.js');
 const negate = require('./negate.js');
 
 const verbTags = {
-  infinitive: 'Verb',
+  infinitive: 'Infinitive',
   present: 'PresentTense',
   past: 'PastTense',
+  present: 'PresentTense',
   gerund: 'Gerund',
   actor: 'Actor',
   future: 'FutureTense',
@@ -18,6 +19,7 @@ const verbTags = {
   PluperfectTense: 'PluperfectTense',
   FutureTense: 'FutureTense',
   PastTense: 'PastTense',
+  PresentTense: 'PresentTense',
 };
 
 class Verb extends Term {
@@ -30,19 +32,9 @@ class Verb extends Term {
     if (tag && verbTags[tag]) {
       this.pos[tag] = true;
       this.conjugations[tag] = this.normal;
-    } else {
-      this.form();
     }
   }
 
-  //which current conjugation form it is
-  form() {
-    //if we haven't been told
-    if (!this.tag) {
-      this.tag = predict_form(this.normal);
-    }
-    return this.tag;
-  }
 
   //retrieve a specific form
   conjugation() {
@@ -51,10 +43,10 @@ class Verb extends Term {
     let keys = Object.keys(this.conjugations);
     for(let i = 0; i < keys.length; i++) {
       if (this.conjugations[keys[i]] === this.normal) {
-        return keys[i];
+        return verbTags[keys[i]];
       }
     }
-    return predict(this.normal);
+    return verbTags[predict(this.normal)];
   }
 
   conjugate() {

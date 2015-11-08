@@ -67,6 +67,7 @@ const classMapping = {
   'PresentTense': Verb,
   'FutureTense': Verb,
   'PastTense': Verb,
+  'PresentTense': Verb,
   'Infinitive': Verb,
   'PerfectTense': Verb,
   'PluperfectTense': Verb,

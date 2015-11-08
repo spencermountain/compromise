@@ -19,6 +19,9 @@ const predict = function(w) {
   if (w.match(/have [a-z]{2}/)) {
     return 'perfect';
   }
+  if (w.match(/..erer$/)) {
+    return 'actor';
+  }
 
   const arr = Object.keys(suffix_rules);
   for (let i = 0; i < arr.length; i++) {

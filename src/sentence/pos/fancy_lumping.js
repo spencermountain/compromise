@@ -62,6 +62,10 @@ const shouldLumpTwo = function(a, b) {
       result: 'Date',
     },
     {
+      condition: (a.pos.Value && b.pos.Noun), //5 books
+      result: 'Value',
+    },
+    {
       condition: (a.is_capital() && b.pos['Organisation'] || b.is_capital() && a.pos['Organisation']), //Canada Inc
       result: 'Organisation',
     },

@@ -8,6 +8,7 @@ const negate = function(v) {
     'are': 'aren\'t',
     'was': 'wasn\'t',
     'will': 'won\'t',
+    'had': 'hadn\'t',
     //modals
     'did': 'didn\'t',
     'would': 'wouldn\'t',
@@ -41,24 +42,25 @@ const negate = function(v) {
   if (words.length > 1 && exceptions[words[0]]) {
     return exceptions[words[0]] + ' ' + words.slice(1, words.length).join(' ');
   }
+  let form = v.conjugation();
   //walked -> didn't walk
-  if (v.form() === 'PastTense') {
+  if (form === 'PastTense') {
     return 'didn\'t ' + v.conjugate()['infinitive'];
   }
   //walks -> doesn't walk
-  if (v.form() === 'PresentTense') {
+  if (form === 'PresentTense') {
     return 'doesn\'t ' + v.conjugate()['infinitive'];
   }
   //walking -> not walking
-  if (v.form() === 'Gerund') {
+  if (form === 'Gerund') {
     return 'not ' + v.text;
   }
   //walker -> non-walker ?
-  if (v.form() === 'Actor') {
+  if (form === 'Actor') {
     return 'non-' + v.text;
   }
   //walk -> not walk ?
-  if (v.form() === 'Infinitive') {
+  if (form === 'Infinitive') {
     return 'not ' + v.text;
   }
 

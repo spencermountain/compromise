@@ -15,6 +15,7 @@ describe('lumper test', function() {
       ['the Captain of Jamaica', ['Determiner', 'Noun']],
       ['joe will have walked', ['Person', 'PluperfectTense']],
       ['joe had walked', ['Person', 'PastTense']],
+      ['joe had 5 books', ['Person', 'PastTense', 'Value']],
     ];
     tests.forEach(function(a) {
       let n = nlp.Text(a[0]);

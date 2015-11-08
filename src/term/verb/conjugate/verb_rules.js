@@ -2,6 +2,17 @@
 // used in combination with the generic 'fallback' method
 'use strict';
 let verb_rules = {
+  'actor': [
+    [
+      '(er)er$',
+      {
+        'in': '$1',
+        'pr': '$1s',
+        'g': '$1ing',
+        'pa': '$1ed'
+      }
+    ],
+  ],
   'infinitive': [
     [
       '(eed)$',

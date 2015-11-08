@@ -1,7 +1,7 @@
 'use strict';
 //recieves a verb object, and returns a negated string
 //sort out don't/didn't/doesn't/won't
-const negate = function(v) {
+const negate = function(v, form) {
 
   let exceptions = {
     'is': 'isn\'t',
@@ -42,7 +42,7 @@ const negate = function(v) {
   if (words.length > 1 && exceptions[words[0]]) {
     return exceptions[words[0]] + ' ' + words.slice(1, words.length).join(' ');
   }
-  let form = v.conjugation();
+  form = form || v.conjugation();
   //walked -> didn't walk
   if (form === 'PastTense') {
     return 'didn\'t ' + v.conjugate()['infinitive'];

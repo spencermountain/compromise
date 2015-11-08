@@ -8,7 +8,6 @@ const verbTags = {
   infinitive: 'Infinitive',
   present: 'PresentTense',
   past: 'PastTense',
-  present: 'PresentTense',
   gerund: 'Gerund',
   actor: 'Actor',
   future: 'FutureTense',
@@ -91,11 +90,11 @@ class Verb extends Term {
     return false;
   }
 
-  negate() {
+  negate(form) {
     if (this.isNegative()) {
       return this.text;
     }
-    this.changeTo(negate(this));
+    this.changeTo(negate(this, form));
     return this.text;
 
   }

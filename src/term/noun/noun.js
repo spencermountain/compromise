@@ -4,6 +4,7 @@ const article = require('./article.js');
 const is_plural = require('./is_plural.js');
 const is_place = require('./place/is_place.js');
 const is_person = require('./person/is_person.js');
+const pronoun = require('./pronoun.js');
 const is_value = require('./value/is_value.js');
 const is_date = require('./date/is_date.js');
 const is_organisation = require('./organisation/is_organisation.js');
@@ -21,6 +22,10 @@ class Noun extends Term {
   article() {
     return article(this.normal);
   }
+  pronoun() {
+    return pronoun(this.normal);
+  }
+
   is_plural() {
     return is_plural(this.normal);
   }
@@ -52,7 +57,7 @@ class Noun extends Term {
 
 }
 
-// let t = new Noun("forks")
-// console.log(t.singularize())
-
 module.exports = Noun;
+
+// let t = new Noun('forks');
+// console.log(t.pronoun());

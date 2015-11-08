@@ -1,10 +1,10 @@
 // not all cultures use the firstname-lastname practice. this does make some assumptions.
-
 'use strict';
 const Noun = require('../noun.js');
 const firstnames = require('../../../data/firstnames');
-let honourifics = require('../../../data/honourifics');
-honourifics = honourifics.reduce(function(h, s) {
+const guess_gender = require('./gender.js');
+
+const honourifics = require('../../../data/honourifics').reduce(function(h, s) {
   h[s] = true;
   return h;
 }, {});
@@ -57,38 +57,12 @@ class Person extends Noun {
   }
 
   gender() {
-    if (this.normal === 'he') {
-      return 'Male';
-    }
-    if (this.normal === 'she') {
-      return 'Female';
-    }
-    if (!this.firstName) {
-      return null;
-    }
-    if (firstnames[this.firstName] === 'm') {
-      return 'Male';
-    }
-    if (firstnames[this.firstName] === 'f') {
-      return 'Female';
-    }
-    if (this.firstName.match(/.(i|ee|[a|e]y|a)$/)) { //this is almost-always true
-      return 'Female';
-    }
-    return null;
-  }
-
-  pronoun() {
-    let gender = this.gender();
-    if (gender === 'Male') {
-      return 'he';
-    }
-    if (gender === 'Female') {
-      return 'she';
-    }
-    return 'they'; //singular 'they'
+    return guess_gender(this.normal, this.firstName);
   }
 
 }
 
 module.exports = Person;
+
+// let p = new Person('John Smith');
+// console.log(p.gender());

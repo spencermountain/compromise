@@ -5,7 +5,7 @@ const gender = require('./person/gender.js');
 
 const pronoun = function(str) {
   if (is_person(str)) {
-    let g = gender(str, str);
+    let g = gender(str);
     if (g === 'Male') {
       return 'he';
     } else if (g === 'Female') {
@@ -21,3 +21,5 @@ const pronoun = function(str) {
 };
 
 module.exports = pronoun;
+
+// console.log(pronoun('Illi Danza'));

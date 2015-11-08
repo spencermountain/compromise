@@ -23,6 +23,9 @@ class Noun extends Term {
     return article(this.normal);
   }
   pronoun() {
+    if (this.is_organisation() || this.is_place() || this.is_value()) {
+      return 'it';
+    }
     return pronoun(this.normal);
   }
 

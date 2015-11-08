@@ -27,3 +27,5 @@ const is_person = function(str) {
 };
 
 module.exports = is_person;
+
+// console.log(is_person('Illi Danza'));

@@ -11,6 +11,16 @@ describe('pronoun', function() {
       ['Jane', 'she'],
       ['turtle', 'it'],
       ['turtles', 'they'],
+      ['Toronto', 'it'],
+      ['studying', 'it'],
+      ['horses', 'they'],
+      ['road bikes', 'they'],
+      ['NHL goaltenders', 'they'],
+      ['Tony Danza', 'he'],
+      ['Tanya Danza', 'she'],
+      ['Mrs. Tanya Danza', 'she'],
+      ['John G. Fishermore Institute', 'it'],
+      ['John Fisher & sons', 'it'],
     ];
     tests.forEach(function(a) {
       let n = new Noun(a[0]);

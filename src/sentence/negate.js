@@ -3,6 +3,9 @@ const fns = require('../fns.js');
 const pos = require('./pos/pos.js');
 //negate makes s sentence mean s opposite thing.
 const negate = function(s) {
+  if (!s) {
+    return '';
+  }
   //these are cheap ways to negate s meaning
   // ('none' is ambiguous because it could mean (all or some) )
   const logic_negate = {

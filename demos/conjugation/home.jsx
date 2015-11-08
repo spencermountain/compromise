@@ -5,7 +5,7 @@ let Home = React.createClass({
   getInitialState: function () {
     return {
       words: {},
-      word: '',
+      word: 'walk',
     };
   },
   componentDidMount: function () {
@@ -13,7 +13,7 @@ let Home = React.createClass({
   },
 
   update: function (el) {
-    let word = this.state.word || 'walk';
+    let word = this.state.word || '';
     if (el) {
       word = el.target.value || '';
     }
@@ -29,13 +29,13 @@ let Home = React.createClass({
       let negated = nlp.Verb(cmp.state.words[k]).negate();
       return (
         <Row key={i}>
-          <Col md={4}>
+          <Col md={4} xs={4}>
             {k + ':'}
           </Col>
-          <Col md={4}>
+          <Col md={4} xs={4}>
             <b>{cmp.state.words[k]}</b>
           </Col>
-          <Col md={4}>
+          <Col md={4} xs={4}>
             {negated}
           </Col>
         </Row>
@@ -81,18 +81,18 @@ let Home = React.createClass({
         </Row>
 
         <Row>
-          <Col md={4} ></Col>
-          <Col md={4} >
+          <Col md={4} xs={0}></Col>
+          <Col md={4} xs={10}>
             <Input type="text" value={this.state.word} onChange={this.update}/>
           </Col>
-          <Col md={4} >
+          <Col md={4} xs={2}>
             <img style={css.img} src="./refresh.ico" onClick={this.newWord}/>
           </Col>
         </Row>
 
         <Row>
-          <Col md={3} ></Col>
-          <Col md={6} >
+          <Col md={3} xs={0}></Col>
+          <Col md={6} xs={12}>
             {this.result()}
           </Col>
         </Row>

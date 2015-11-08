@@ -7924,7 +7924,7 @@ if (typeof window === 'object') {
 module.exports = nlp;
 
 // let n = nlp.Text('The pen blew up');
-let n = nlp.Verb('walks').negate();
+let n = nlp.Verb('sufferer').negate();
 console.log(n);
 
 },{"./lexicon.js":22,"./term/adjective/adjective.js":30,"./term/adverb/adverb.js":35,"./term/noun/date/date.js":40,"./term/noun/noun.js":45,"./term/noun/organisation/organisation.js":47,"./term/noun/person/person.js":51,"./term/noun/place/place.js":53,"./term/noun/value/value.js":61,"./term/term.js":63,"./term/verb/verb.js":70,"./text/text.js":73}],22:[function(require,module,exports){
@@ -11812,6 +11812,9 @@ const predict = require('./predict_form.js');
 
 //fallback to this transformation if it has an unknown prefix
 const fallback = function(w) {
+  if (!w) {
+    return {};
+  }
   let infinitive;
   if (w.length > 4) {
     infinitive = w.replace(/ed$/, '');
@@ -11901,7 +11904,7 @@ const conjugate = function(w) {
     const phrasal_verb = split[1];
     const particle = split[2];
     const result = conjugate(phrasal_verb); //recursive
-    delete result['actor'];
+    // delete result['actor'];
     Object.keys(result).forEach(function(k) {
       if (result[k]) {
         result[k] += ' ' + particle;
@@ -12003,6 +12006,9 @@ const predict = function(w) {
   }
   if (w.match(/have [a-z]{2}/)) {
     return 'perfect';
+  }
+  if (w.match(/..erer$/)) {
+    return 'actor';
   }
 
   const arr = Object.keys(suffix_rules);
@@ -12189,6 +12195,17 @@ module.exports = actor;
 // used in combination with the generic 'fallback' method
 'use strict';
 let verb_rules = {
+  'actor': [
+    [
+      '(er)er$',
+      {
+        'in': '$1',
+        'pr': '$1s',
+        'g': '$1ing',
+        'pa': '$1ed'
+      }
+    ],
+  ],
   'infinitive': [
     [
       '(eed)$',

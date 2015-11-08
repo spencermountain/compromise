@@ -7,6 +7,9 @@ const predict = require('./predict_form.js');
 
 //fallback to this transformation if it has an unknown prefix
 const fallback = function(w) {
+  if (!w) {
+    return {};
+  }
   let infinitive;
   if (w.length > 4) {
     infinitive = w.replace(/ed$/, '');

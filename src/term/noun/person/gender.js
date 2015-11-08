@@ -1,13 +1,16 @@
 'use strict';
 const firstnames = require('../../../data/firstnames');
+const parse_name = require('./parse_name.js');
 
-const gender = function(normal, firstName) {
+const gender = function(normal) {
   if (normal === 'he') {
     return 'Male';
   }
   if (normal === 'she') {
     return 'Female';
   }
+  let o = parse_name(normal);
+  let firstName = o.firstName;
   if (!firstName) {
     return null;
   }

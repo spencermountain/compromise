@@ -1,8 +1,8 @@
 // not all cultures use the firstname-lastname practice. this does make some assumptions.
 'use strict';
 const Noun = require('../noun.js');
-const firstnames = require('../../../data/firstnames');
 const guess_gender = require('./gender.js');
+const parse_name = require('./parse_name.js');
 
 const honourifics = require('../../../data/honourifics').reduce(function(h, s) {
   h[s] = true;
@@ -23,41 +23,15 @@ class Person extends Noun {
 
   //turn a multi-word string into [first, middle, last, honourific]
   parse() {
-    let words = this.normal.split(' ');
-
-    //first-word honourific
-    if (honourifics[words[0]]) {
-      this.honourific = words[0];
-      words = words.slice(1, words.length);
-    }
-    //last-word honourific
-    if (honourifics[words[words.length - 1]]) {
-      this.honourific = words[words.length - 1];
-      words = words.slice(0, words.length - 1);
-    }
-    //see if the first word is now a known first-name
-    if (firstnames[words[0]]) {
-      this.firstName = words[0];
-      words = words.slice(1, words.length);
-    } else {
-      //ambiguous one-word name
-      if (words.length === 1) {
-        return;
-      }
-      //looks like an unknown first-name
-      this.firstName = words[0];
-      words = words.slice(1, words.length);
-    }
-    //assume the remaining is '[middle..] [last]'
-    if (words[words.length - 1]) {
-      this.lastName = words[words.length - 1];
-      words = words.slice(0, words.length - 1);
-    }
-    this.middleName = words.join(' ');
+    let o = parse_name(this.normal);
+    this.honourific = o.honourific;
+    this.firstName = o.firstName;
+    this.middleName = o.middleName;
+    this.lastName = o.lastName;
   }
 
   gender() {
-    return guess_gender(this.normal, this.firstName);
+    return guess_gender(this.normal);
   }
 
 }

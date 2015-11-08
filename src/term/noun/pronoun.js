@@ -5,7 +5,7 @@ const gender = require('./person/gender.js');
 
 const pronoun = function(str) {
   if (is_person(str)) {
-    let g = gender(str);
+    let g = gender(str, str);
     if (g === 'Male') {
       return 'he';
     } else if (g === 'Female') {

@@ -59,5 +59,5 @@ class Noun extends Term {
 
 module.exports = Noun;
 
-// let t = new Noun('forks');
-// console.log(t.pronoun());
+let t = new Noun('John');
+console.log(t.pronoun());

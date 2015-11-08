@@ -6,7 +6,11 @@ let Noun = require('../../src/term/noun/noun.js');
 describe('pronoun', function() {
   it('gets pronoun', function(done) {
     let tests = [
-      // ['John', 'he']
+      ['John', 'he'],
+      // ['John Smith', 'he'],
+      ['Jane', 'she'],
+      ['turtle', 'it'],
+      ['turtles', 'they'],
     ];
     tests.forEach(function(a) {
       let n = new Noun(a[0]);

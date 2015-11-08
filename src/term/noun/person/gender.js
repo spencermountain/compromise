@@ -18,21 +18,21 @@ const gender = function(normal, firstName) {
     return 'Female';
   }
   //male honourifics
-  if (normal.match(/\b(mr|mister|sr|jr)\b/, i)) {
+  if (normal.match(/\b(mr|mister|sr|jr)\b/i)) {
     return 'Male';
   }
   //female honourifics
-  if (normal.match(/^(mrs|miss|ms|misses|mme|mlle)\.? /, i)) {
+  if (normal.match(/^(mrs|miss|ms|misses|mme|mlle)\.? /i)) {
     return 'Female';
   }
   //statistical guesses
-  if (firstName.match(/.(i|ee|[a|e]y|a)$/)) { //this is almost-always true
+  if (firstName.match(/.(i|ee|[a|e]y|a)$/i)) { //this is almost-always true
     return 'Female';
   }
-  if (firstName.match(/[ou]$/)) { //if it ends in a 'oh or uh', male
+  if (firstName.match(/[ou]$/i)) { //if it ends in a 'oh or uh', male
     return 'Male';
   }
-  if (firstName.match(/(nn|ll|tt)/)) { //if it has double-consonants, female
+  if (firstName.match(/(nn|ll|tt)/i)) { //if it has double-consonants, female
     return 'Female';
   }
   return null;

@@ -1,11 +1,11 @@
-//terms that are "CD", a 'value' term
-module.exports = [
-  //months
+'use strict';
+//terms that are 'Date' term
+let months = [
   'january',
   'february',
-  // "march",
+  // "march",  //ambig
   'april',
-  // "may",
+  // "may",   //ambig
   'june',
   'july',
   'august',
@@ -26,7 +26,8 @@ module.exports = [
   'dec',
   'sept',
   'sep',
-  //days
+];
+let days = [
   'monday',
   'tuesday',
   'wednesday',
@@ -42,3 +43,7 @@ module.exports = [
   'sat',
   'sun'
 ];
+module.exports = {
+  days: days,
+  months: months
+};

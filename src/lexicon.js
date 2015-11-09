@@ -29,7 +29,6 @@ const verbMap = {
   infinitive: 'Infinitive',
   present: 'PresentTense',
   past: 'PastTense',
-  present: 'PresentTense',
   gerund: 'Gerund',
   actor: 'Actor',
   future: 'FutureTense',
@@ -60,11 +59,11 @@ require('./data/verb_irregulars.js').forEach(function(o) {
   });
 });
 
-let orgs = require('./data/organisations.js');
+const orgs = require('./data/organisations.js');
 addArr(orgs.organisations, 'Noun');
 addArr(orgs.suffixes, 'Noun');
 
-let places = require('./data/places.js');
+const places = require('./data/places.js');
 addArr(places.countries, 'Place');
 addArr(places.cities, 'Place');
 
@@ -79,7 +78,9 @@ addArr(require('./data/abbreviations.js').abbreviations, 'Abbreviation');
 addArr(require('./data/demonyms.js'), 'Adjective');
 addArr(require('./data/honourifics.js'), 'Honourific');
 addArr(require('./data/uncountables.js'), 'Noun');
-addArr(require('./data/dates.js'), 'Date');
+const dates = require('./data/dates.js');
+addArr(dates.months, 'Date');
+addArr(dates.days, 'Date');
 addArr(require('./data/numbers.js'), 'Value');
 //a little fancy
 addArr(Object.keys(require('./data/firstnames.js')), 'Person');

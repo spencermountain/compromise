@@ -40,6 +40,7 @@ describe('nouns', function() {
     ];
     tests.forEach(function(a) {
       let n = new Noun(a[0]);
+      console.log(a[0] + '   ' + n.is_date() + '   ' + a[1]);
       (a[1]).should.equal(n.is_date());
     });
     done();

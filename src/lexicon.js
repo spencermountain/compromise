@@ -5,7 +5,7 @@ const fns = require('./fns.js');
 const verb_conjugate = require('./term/verb/conjugate/conjugate.js');
 const to_comparative = require('./term/adjective/to_comparative.js');
 const to_superlative = require('./term/adjective/to_superlative.js');
-const grand_mapping = require('./sentence/pos/pos.js').tag_mapping;
+const grand_mapping = require('./sentence/pos/parts_of_speech.js').tag_mapping;
 
 const lexicon = {};
 
@@ -29,7 +29,6 @@ const verbMap = {
   infinitive: 'Infinitive',
   present: 'PresentTense',
   past: 'PastTense',
-  present: 'PresentTense',
   gerund: 'Gerund',
   actor: 'Actor',
   future: 'FutureTense',

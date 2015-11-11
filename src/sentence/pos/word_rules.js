@@ -1,4 +1,4 @@
-const tag_mapping = require('./pos.js').tag_mapping;
+const tag_mapping = require('./parts_of_speech.js').tag_mapping;
 //regex patterns and parts of speech],
 module.exports = [
   ['.[cts]hy$', 'JJ'],

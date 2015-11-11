@@ -1,6 +1,6 @@
 //fancy combining/chunking of terms
 'use strict';
-const pos = require('./pos');
+const pos = require('./parts_of_speech');
 
 const shouldLumpThree = function(a, b, c) {
   if (!a || !b || !c) {

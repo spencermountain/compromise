@@ -62,6 +62,5 @@ if (typeof window === 'object') {
 }
 module.exports = nlp;
 
-// let n = nlp.Text('The pen blew up');
-let n = nlp.Verb('sufferer').negate();
+let n = nlp.Text('The pen blew up').terms();
 console.log(n);

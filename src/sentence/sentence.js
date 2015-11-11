@@ -2,7 +2,7 @@
 const Term = require('../term/term.js');
 const fns = require('../fns.js');
 const tagger = require('./pos/tagger.js');
-const pos = require('./pos/pos.js');
+const pos = require('./pos/parts_of_speech.js');
 
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {

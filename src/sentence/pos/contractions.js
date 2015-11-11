@@ -1,7 +1,7 @@
 //add a 'quiet' token for contractions so we can represent their grammar
 //some contractions need detailed POS tense info, to resolve the is/was/has part
 'use strict';
-const pos = require('../../sentence/pos/pos.js');
+const pos = require('../../sentence/pos/parts_of_speech.js');
 
 const easy_contractions = {
   'i\'d': ['i', 'would'],

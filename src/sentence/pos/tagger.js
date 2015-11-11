@@ -5,8 +5,9 @@ const lexicon = require('../../lexicon.js');
 const word_rules = require('./word_rules');
 const grammar_rules = require('./grammar_rules');
 const fancy_lumping = require('./fancy_lumping');
+const phrasal_verbs = require('./phrasal_verbs');
 const fns = require('../../fns');
-const pos = require('./pos');
+const pos = require('./parts_of_speech');
 
 //swap the Term object with a proper Pos class
 const assign = function(t, tag, reason) {
@@ -151,6 +152,7 @@ const tagger = function(s) {
     s.terms = grammar_rules_pass(s);
     s.terms = chunk_neighbours(s.terms);
     s.terms = noun_fallback(s.terms);
+    s.terms = phrasal_verbs(s.terms);
     s.terms = specific_pos(s.terms);
     s.terms = contractions.hard_ones(s.terms);
     s.terms = fancy_lumping(s.terms);

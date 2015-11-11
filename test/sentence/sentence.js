@@ -121,5 +121,19 @@ describe('Sentence Class Methods', function() {
     done();
   });
 
+  it('Passive voice', function(done) {
+    let tests = [
+      ['the drink was drank by me', true],
+      ['My birthday was approaching by June 5th', false],
+      ['Oh say can you see? By the dawn\'s early rise.', false],
+    ];
+
+    tests.forEach(function(a) {
+      let bool = nlp.Sentence(a[0]).is_passive();
+      (bool).should.eql(a[1]);
+    });
+    done();
+  });
+
 
 });

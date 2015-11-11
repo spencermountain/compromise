@@ -1,49 +1,11 @@
 //turn a verb into its other grammatical forms.
 'use strict';
 const verb_to_actor = require('./to_actor');
-const verb_irregulars = require('../../../data/verb_irregulars');
-const verb_rules = require('./verb_rules');
+const to_infinitive = require('./to_infinitive');
+const from_infinitive = require('./from_infinitive');
+const irregular_verbs = require('./irregular_verbs');
 const predict = require('./predict_form.js');
 
-//fallback to this transformation if it has an unknown prefix
-const fallback = function(w) {
-  if (!w) {
-    return {};
-  }
-  let infinitive;
-  if (w.length > 4) {
-    infinitive = w.replace(/ed$/, '');
-  } else {
-    infinitive = w.replace(/d$/, '');
-  }
-  let present, past, gerund, actor;
-  if (w.match(/[^aeiou]$/)) {
-    gerund = w + 'ing';
-    past = w + 'ed';
-    if (w.match(/ss$/)) {
-      present = w + 'es'; //'passes'
-    } else {
-      present = w + 's';
-    }
-    actor = verb_to_actor(infinitive);
-  } else {
-    gerund = w.replace(/[aeiou]$/, 'ing');
-    past = w.replace(/[aeiou]$/, 'ed');
-    present = w.replace(/[aeiou]$/, 'es');
-    actor = verb_to_actor(infinitive);
-  }
-  return {
-    infinitive: infinitive,
-    present: present,
-    past: past,
-    gerund: gerund,
-    actor: actor,
-    future: 'will ' + infinitive,
-    perfect: 'have ' + past,
-    pluperfect: 'had ' + past,
-    future_perfect: 'will have ' + past,
-  };
-};
 
 //make sure object has all forms
 const fufill = function(obj, prefix) {
@@ -74,7 +36,7 @@ const fufill = function(obj, prefix) {
   }
   //perfect is 'have'+past-tense
   if (!obj.perfect) {
-    obj.perfect = 'have ' + obj.past;
+    obj.perfect = 'have ' + (obj.participle || obj.past);
   }
   //pluperfect is 'had'+past-tense
   if (!obj.pluperfect) {
@@ -86,6 +48,44 @@ const fufill = function(obj, prefix) {
   }
   return obj;
 };
+
+//fallback to this transformation if it has an unknown prefix
+const fallback = function(w) {
+  if (!w) {
+    return {};
+  }
+  let infinitive;
+  if (w.length > 4) {
+    infinitive = w.replace(/ed$/, '');
+  } else {
+    infinitive = w.replace(/d$/, '');
+  }
+  let present, past, gerund, actor;
+  if (w.match(/[^aeiou]$/)) {
+    gerund = w + 'ing';
+    past = w + 'ed';
+    if (w.match(/ss$/)) {
+      present = w + 'es'; //'passes'
+    } else {
+      present = w + 's';
+    }
+    actor = verb_to_actor(infinitive);
+  } else {
+    gerund = w.replace(/[aeiou]$/, 'ing');
+    past = w.replace(/[aeiou]$/, 'ed');
+    present = w.replace(/[aeiou]$/, 'es');
+    actor = verb_to_actor(infinitive);
+  }
+  let obj = {
+    infinitive: infinitive,
+    present: present,
+    past: past,
+    gerund: gerund,
+    actor: actor
+  };
+  return fufill(obj);
+};
+
 
 const conjugate = function(w) {
   if (w === undefined) {
@@ -99,7 +99,6 @@ const conjugate = function(w) {
     const phrasal_verb = split[1];
     const particle = split[2];
     const result = conjugate(phrasal_verb); //recursive
-    // delete result['actor'];
     Object.keys(result).forEach(function(k) {
       if (result[k]) {
         result[k] += ' ' + particle;
@@ -109,61 +108,38 @@ const conjugate = function(w) {
   }
 
   //for pluperfect ('had tried') remove 'had' and call it past-tense
-  if (w.match(/^had [a-z]/i)) {
-    w = w.replace(/^had /i, '');
-  }
+  w = w.replace(/^had /i, '');
   //for perfect ('have tried') remove 'have' and call it past-tense
-  if (w.match(/^have [a-z]/i)) {
-    w = w.replace(/^have /i, '');
-  }
-
+  w = w.replace(/^have /i, '');
   //for future perfect ('will have tried') remove 'will have' and call it past-tense
-  if (w.match(/^will have [a-z]/i)) {
-    w = w.replace(/^will have /i, '');
-  }
-
+  w = w.replace(/^will have /i, '');
   //chop it if it's future-tense
   w = w.replace(/^will /i, '');
+
   //un-prefix the verb, and add it in later
   const prefix = (w.match(/^(over|under|re|anti|full)\-?/i) || [])[0];
   const verb = w.replace(/^(over|under|re|anti|full)\-?/i, '');
-  //check irregulars
-  let obj = {};
-  let l = verb_irregulars.length;
-  for (let i = 0; i < l; i++) {
-    const x = verb_irregulars[i];
-    if (verb === x.present || verb === x.gerund || verb === x.past || verb === x.infinitive) {
-      obj = JSON.parse(JSON.stringify(verb_irregulars[i])); // object 'clone' hack, to avoid mem leak
-      return fufill(obj, prefix);
-    }
-  }
+
   //guess the tense, so we know which transormation to make
   const predicted = predict(w) || 'infinitive';
-
   //check against suffix rules
-  l = verb_rules[predicted].length;
-  for (let i = 0; i < l; i++) {
-    const r = verb_rules[predicted][i];
-    if (w.match(r.reg)) {
-      obj[predicted] = w;
-      const keys = Object.keys(r.repl);
-      for (let o = 0; o < keys.length; o++) {
-        if (keys[o] === predicted) {
-          obj[keys[o]] = w;
-        } else {
-          obj[keys[o]] = w.replace(r.reg, r.repl[keys[o]]);
-        }
-      }
-      return fufill(obj);
-    }
-  }
+  let infinitive = to_infinitive(w, predicted);
+  //check irregulars
+  let obj = irregular_verbs[infinitive] || {};
 
-  //produce a generic transformation
-  return fallback(w);
+  obj = from_infinitive(infinitive);
+  // return obj;
+  return fufill(obj);
+
+//produce a generic transformation
+// return fallback(w);
 };
 module.exports = conjugate;
 
-// console.log(conjugate("walking"))
+// console.log(conjugate('smell'));
+// console.log(conjugate('taken'));
+
+
 // console.log(conjugate("overtook"))
 // console.log(conjugate("watch out"))
 // console.log(conjugate("watch"))

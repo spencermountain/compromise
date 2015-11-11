@@ -1,9 +1,13 @@
 'use strict';
-//generated from test data
+//suffix signals for verb tense, generated from test data
 const compact = {
-  'gerund': [
-    'ing'
+  'participle': [
+    'own',
+    'unk',
+    'ung',
+    'en'
   ],
+  'gerund': [],
   'infinitive': [
     'ate',
     'ize',
@@ -90,10 +94,9 @@ const compact = {
 const suffix_rules = {};
 const keys = Object.keys(compact);
 const l = keys.length;
-let l2;
 
 for (let i = 0; i < l; i++) {
-  l2 = compact[keys[i]].length;
+  let l2 = compact[keys[i]].length;
   for (let o = 0; o < l2; o++) {
     suffix_rules[compact[keys[i]][o]] = keys[i];
   }

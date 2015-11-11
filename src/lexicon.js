@@ -5,7 +5,7 @@ const fns = require('./fns.js');
 const verb_conjugate = require('./term/verb/conjugate/conjugate.js');
 const to_comparative = require('./term/adjective/to_comparative.js');
 const to_superlative = require('./term/adjective/to_superlative.js');
-const grand_mapping = require('./sentence/pos/pos.js').tag_mapping;
+const grand_mapping = require('./sentence/pos/parts_of_speech.js').tag_mapping;
 
 const lexicon = {};
 
@@ -50,14 +50,6 @@ for (let i = 0; i < verbs.length; i++) {
     }
   });
 }
-//irregular verbs
-require('./data/verb_irregulars.js').forEach(function(o) {
-  Object.keys(o).forEach(function(k) {
-    if (k && o[k]) {
-      lexicon[o[k]] = verbMap[k];
-    }
-  });
-});
 
 const orgs = require('./data/organisations.js');
 addArr(orgs.organisations, 'Noun');

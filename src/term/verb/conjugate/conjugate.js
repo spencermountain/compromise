@@ -1,9 +1,9 @@
 //turn a verb into its other grammatical forms.
 'use strict';
 const verb_to_actor = require('./to_actor');
-const verb_irregulars = require('../../../data/verb_irregulars');
 const to_infinitive = require('./to_infinitive');
 const from_infinitive = require('./from_infinitive');
+const irregular_verbs = require('./irregular_verbs');
 const predict = require('./predict_form.js');
 
 
@@ -119,20 +119,14 @@ const conjugate = function(w) {
   //un-prefix the verb, and add it in later
   const prefix = (w.match(/^(over|under|re|anti|full)\-?/i) || [])[0];
   const verb = w.replace(/^(over|under|re|anti|full)\-?/i, '');
-  //check irregulars
-  let obj = {};
-  // let l = verb_irregulars.length;
-  // for (let i = 0; i < l; i++) {
-  //   const x = verb_irregulars[i];
-  //   if (verb === x.present || verb === x.gerund || verb === x.past || verb === x.infinitive) {
-  //     obj = JSON.parse(JSON.stringify(verb_irregulars[i])); // object 'clone' hack, to avoid mem leak
-  //     return fufill(obj, prefix);
-  //   }
-  // }
+
   //guess the tense, so we know which transormation to make
   const predicted = predict(w) || 'infinitive';
   //check against suffix rules
   let infinitive = to_infinitive(w, predicted);
+  //check irregulars
+  let obj = irregular_verbs[infinitive] || {};
+
   obj = from_infinitive(infinitive);
   // return obj;
   return fufill(obj);

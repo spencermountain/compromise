@@ -50,14 +50,6 @@ for (let i = 0; i < verbs.length; i++) {
     }
   });
 }
-//irregular verbs
-require('./data/verb_irregulars.js').forEach(function(o) {
-  Object.keys(o).forEach(function(k) {
-    if (k && o[k]) {
-      lexicon[o[k]] = verbMap[k];
-    }
-  });
-});
 
 let orgs = require('./data/organisations.js');
 addArr(orgs.organisations, 'Noun');

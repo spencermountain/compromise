@@ -3,8 +3,10 @@
 const verb_to_actor = require('./to_actor');
 const to_infinitive = require('./to_infinitive');
 const from_infinitive = require('./from_infinitive');
-const irregular_verbs = require('./irregular_verbs');
+const irregular_verbs = require('../../../data/irregular_verbs');
 const predict = require('./predict_form.js');
+
+
 
 
 //make sure object has all forms
@@ -125,9 +127,11 @@ const conjugate = function(w) {
   //check against suffix rules
   let infinitive = to_infinitive(w, predicted);
   //check irregulars
-  let obj = irregular_verbs[infinitive] || {};
-
-  obj = from_infinitive(infinitive);
+  let obj = irregular_verbs[w] || irregular_verbs[infinitive];
+  //apply regex-transformations
+  if (!obj) {
+    obj = from_infinitive(infinitive);
+  }
   // return obj;
   return fufill(obj);
 
@@ -136,7 +140,7 @@ const conjugate = function(w) {
 };
 module.exports = conjugate;
 
-// console.log(conjugate('smell'));
+console.log(conjugate('was'));
 // console.log(conjugate('taken'));
 
 

@@ -1,4 +1,12 @@
 'use strict';
+const irregular_verbs = require('../../../data/irregular_verbs');
+let known_verbs = {};
+Object.keys(irregular_verbs).forEach(function(k) {
+  Object.keys(irregular_verbs[k]).forEach(function(k2) {
+    known_verbs[irregular_verbs[k][k2]] = k;
+  });
+});
+
 
 let rules = {
   participle: [
@@ -144,6 +152,9 @@ let rules = {
 };
 
 const to_infinitive = function (str, from_tense) {
+  if (known_verbs[str]) {
+    return known_verbs[str];
+  }
   if (from_tense === 'infinitive') {
     return str;
   }

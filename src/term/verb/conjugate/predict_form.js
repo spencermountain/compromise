@@ -1,11 +1,28 @@
 'use strict';
 //this method is used to predict which current conjugation a verb is
 
-//this method is the slowest in the whole library, basically TODO:whaaa
+//this method is the slowest in the whole library,
 const suffix_rules = require('./suffix_rules');
+const irregular_verbs = require('../../../data/irregular_verbs');
 const fns = require('../../../fns.js');
 
+let known_verbs = {};
+Object.keys(irregular_verbs).forEach(function(k) {
+  Object.keys(irregular_verbs[k]).forEach(function(k2) {
+    known_verbs[irregular_verbs[k][k2]] = k2;
+  });
+});
+
 const predict = function(w) {
+
+  //check if known infinitive
+  if (irregular_verbs[w]) {
+    return 'infinitive';
+  }
+  //check if known infinitive
+  if (known_verbs[w]) {
+    return known_verbs[w];
+  }
 
   if (w.match(/will ha(ve|d) [a-z]{2}/)) {
     return 'future_perfect';

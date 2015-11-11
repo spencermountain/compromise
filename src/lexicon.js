@@ -50,12 +50,21 @@ for (let i = 0; i < verbs.length; i++) {
     }
   });
 }
+const irreg = require('./data/irregular_verbs.js');
+Object.keys(irreg).forEach(function(k) {
+  lexicon[k] = verbMap['infinitive'];
+  Object.keys(irreg[k]).forEach(function(k2) {
+    lexicon[irreg[k][k2]] = verbMap[k2];
+  });
 
-const orgs = require('./data/organisations.js');
+});
+
+
+let orgs = require('./data/organisations.js');
 addArr(orgs.organisations, 'Noun');
 addArr(orgs.suffixes, 'Noun');
 
-const places = require('./data/places.js');
+let places = require('./data/places.js');
 addArr(places.countries, 'Place');
 addArr(places.cities, 'Place');
 
@@ -70,9 +79,7 @@ addArr(require('./data/abbreviations.js').abbreviations, 'Abbreviation');
 addArr(require('./data/demonyms.js'), 'Adjective');
 addArr(require('./data/honourifics.js'), 'Honourific');
 addArr(require('./data/uncountables.js'), 'Noun');
-const dates = require('./data/dates.js');
-addArr(dates.months, 'Date');
-addArr(dates.days, 'Date');
+addArr(require('./data/dates.js'), 'Date');
 addArr(require('./data/numbers.js'), 'Value');
 //a little fancy
 addArr(Object.keys(require('./data/firstnames.js')), 'Person');

@@ -66,5 +66,5 @@ if (typeof window === 'object') {
 }
 module.exports = nlp;
 
-// let n = nlp.Verb('drank').conjugate();
-// console.log(n);
+let n = nlp.Text('joe will have walked').terms();
+console.log(n);

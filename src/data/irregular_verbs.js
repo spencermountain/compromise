@@ -14,6 +14,12 @@ module.exports = {
     actor: '',
     gerund: 'am'
   },
+  is: {
+    past: 'was',
+    present: 'is',
+    actor: '',
+    gerund: 'being'
+  },
   beat: {
     gerund: 'beating',
     actor: 'beater'

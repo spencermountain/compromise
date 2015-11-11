@@ -163,7 +163,7 @@ const conjugate = function(w) {
 };
 module.exports = conjugate;
 
-// console.log(conjugate("walking"))
+// console.log(conjugate('know'));
 // console.log(conjugate("overtook"))
 // console.log(conjugate("watch out"))
 // console.log(conjugate("watch"))

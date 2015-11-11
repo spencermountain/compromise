@@ -13,9 +13,14 @@ particles = particles.reduce(function (h, s) {
 
 //combine ['blew','up'] -> 'blew up'
 let phrasal_verbs = function(terms) {
-  for(var i = 0; i < terms.length - 1; i++) {
-    if (terms[i].pos['Verb'] && particles[terms[i + 1].normal]) {
+  for(let i = 0; i < terms.length - 1; i++) {
+    if (terms[i] && terms[i].pos['Verb'] && particles[terms[i + 1].normal]) {
+      //don't do 'is in'
+      if (terms[i].pos['Copula']) {
+        continue;
+      }
       terms[i].text = terms[i].text + ' ' + terms[i + 1].text;
+      terms[i].reason = 'phrasal(' + terms[i].reason + ')';
       terms[i + 1] = null;
       terms[i].normalize();
       terms[i].conjugate();

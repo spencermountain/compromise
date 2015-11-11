@@ -1,6 +1,7 @@
 'use strict';
 const Term = require('./term/term.js');
 const Text = require('./text/text.js');
+const Sentence = require('./sentence/sentence.js');
 const Verb = require('./term/verb/verb.js');
 const Adjective = require('./term/adjective/adjective.js');
 const Adverb = require('./term/adverb/adverb.js');
@@ -27,6 +28,9 @@ const API = function(str) {
   };
   this.Adjective = function(s) {
     return new Adjective(s);
+  };
+  this.Sentence = function(s) {
+    return new Sentence(s);
   };
   this.Text = function(s) {
     return new Text(s);
@@ -62,5 +66,5 @@ if (typeof window === 'object') {
 }
 module.exports = nlp;
 
-let n = nlp.Text('The pen blew up').terms();
+let n = nlp.Sentence('The drink was drank by me').is_passive();
 console.log(n);

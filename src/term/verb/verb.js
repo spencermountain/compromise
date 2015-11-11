@@ -28,8 +28,8 @@ class Verb extends Term {
     this.pos['Verb'] = true;
     this.conjugations = {}; //cached conjugations
     //if we've been told which
+    this.pos[tag] = true;
     if (tag && verbTags[tag]) {
-      this.pos[tag] = true;
       this.conjugations[tag] = this.normal;
     }
   }

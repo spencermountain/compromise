@@ -3,6 +3,7 @@ const Term = require('../term/term.js');
 const fns = require('../fns.js');
 const tagger = require('./pos/tagger.js');
 const pos = require('./pos/parts_of_speech.js');
+const passive_voice = require('./passive_voice.js');
 
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {
@@ -46,6 +47,10 @@ class Sentence {
       '.': 'declarative',
     };
     return types[char] || 'declarative';
+  }
+
+  is_passive() {
+    return passive_voice(this);
   }
 
   to_past() {

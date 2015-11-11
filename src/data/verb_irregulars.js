@@ -6,7 +6,8 @@ const types = [
   'past',
   'present',
   'actor',
-  'future'
+  'future',
+  'participle',
 ];
 
 //list of verb irregular verb forms, compacted to save space. ('_' -> infinitive )
@@ -16,7 +17,8 @@ const compact = [
     'arising',
     'arose',
     '_s',
-    '_r'
+    '_r',
+    '_n'
   ],
   [
     'babysit',

@@ -22,10 +22,13 @@ const predict = function(w) {
   if (w.match(/..erer$/)) {
     return 'actor';
   }
+  if (w.match(/(^[aeiou])ing$/)) {
+    return 'gerund';
+  }
 
   const arr = Object.keys(suffix_rules);
   for (let i = 0; i < arr.length; i++) {
-    if (fns.endsWith(w, arr[i])) {
+    if (fns.endsWith(w, arr[i]) && arr[i].length < w.length) {
       return suffix_rules[arr[i]];
     }
   }

@@ -66,5 +66,5 @@ if (typeof window === 'object') {
 }
 module.exports = nlp;
 
-let n = nlp.Sentence('The drink was drank by me').is_passive();
-console.log(n);
+// let n = nlp.Verb('drank').conjugate();
+// console.log(n);

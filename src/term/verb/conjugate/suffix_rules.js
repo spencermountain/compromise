@@ -1,18 +1,13 @@
 'use strict';
 //suffix signals for verb tense, generated from test data
 const compact = {
-  'participle': [
-    'own',
-    'unk',
-    'ung',
-    'en'
-  ],
   'gerund': [],
   'infinitive': [
     'ate',
     'ize',
     'tion',
     'rify',
+    'then',
     'ress',
     'ify',
     'age',
@@ -45,6 +40,12 @@ const compact = {
     'eed',
     'er',
     'le'
+  ],
+  'participle': [
+    'own',
+    'unk',
+    'ung',
+    'en'
   ],
   'past': [
     'ed',

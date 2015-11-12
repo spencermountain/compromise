@@ -1537,6 +1537,393 @@ main = main.map(function(a) {
 module.exports = main;
 
 },{}],9:[function(require,module,exports){
+//a list of exceptions to the verb rules
+module.exports = {
+  arise: {
+    past: 'arose',
+    participle: 'arisen'
+  },
+  babysit: {
+    past: 'babysat',
+    actor: 'babysitter'
+  },
+  be: {
+    past: 'was',
+    present: 'am',
+    future: 'will be',
+    perfect: 'have been',
+    pluperfect: 'had been',
+    future_perfect: 'will have been',
+    actor: '',
+    gerund: 'am'
+  },
+  is: {
+    past: 'was',
+    present: 'is',
+    future: 'will be',
+    perfect: 'have been',
+    pluperfect: 'had been',
+    future_perfect: 'will have been',
+    actor: '',
+    gerund: 'being'
+  },
+  beat: {
+    gerund: 'beating',
+    actor: 'beater'
+  },
+  begin: {
+    gerund: 'beginning',
+    past: 'began'
+  },
+  bet: {
+    actor: 'better'
+  },
+  bind: {
+    past: 'bound'
+  },
+  bite: {
+    gerund: 'biting',
+    past: 'bit'
+  },
+  bleed: {
+    past: 'bled'
+  },
+  break: {
+    past: 'broke'
+  },
+  breed: {
+    past: 'bred'
+  },
+  bring: {
+    past: 'brought'
+  },
+  broadcast: {
+    past: 'broadcast'
+  },
+  build: {
+    past: 'built'
+  },
+  buy: {
+    past: 'bought'
+  },
+  catch: {
+    past: 'caught'
+  },
+  choose: {
+    gerund: 'choosing',
+    past: 'chose'
+  },
+  cost: {
+    past: 'cost'
+  },
+  deal: {
+    past: 'dealt'
+  },
+  dig: {
+    gerund: 'digging',
+    past: 'dug'
+  },
+  do: {
+    past: 'did',
+    present: 'does'
+  },
+  draw: {
+    past: 'drew'
+  },
+  drink: {
+    past: 'drank'
+  },
+  drive: {
+    gerund: 'driving',
+    past: 'drove'
+  },
+  eat: {
+    gerund: 'eating',
+    past: 'ate',
+    actor: 'eater'
+  },
+  fall: {
+    past: 'fell'
+  },
+  feed: {
+    past: 'fed'
+  },
+  feel: {
+    past: 'felt',
+    actor: 'feeler'
+  },
+  fight: {
+    past: 'fought'
+  },
+  find: {
+    past: 'found'
+  },
+  fly: {
+    past: 'flew'
+  },
+  forbid: {
+    past: 'forbade'
+  },
+  forget: {
+    gerund: 'forgeting',
+    past: 'forgot'
+  },
+  forgive: {
+    gerund: 'forgiving',
+    past: 'forgave'
+  },
+  freeze: {
+    gerund: 'freezing',
+    past: 'froze'
+  },
+  get: {
+    past: 'got'
+  },
+  give: {
+    gerund: 'giving',
+    past: 'gave'
+  },
+  go: {
+    past: 'went',
+    present: 'goes'
+  },
+  hang: {
+    past: 'hung'
+  },
+  have: {
+    gerund: 'having',
+    past: 'had',
+    present: 'has'
+  },
+  hear: {
+    past: 'heard'
+  },
+  hide: {
+    past: 'hid'
+  },
+  hold: {
+    past: 'held'
+  },
+  hurt: {
+    past: 'hurt'
+  },
+  lay: {
+    past: 'laid'
+  },
+  lead: {
+    past: 'led'
+  },
+  leave: {
+    past: 'left'
+  },
+  lie: {
+    gerund: 'lying',
+    past: 'lay'
+  },
+  light: {
+    past: 'lit'
+  },
+  lose: {
+    gerund: 'losing',
+    past: 'lost'
+  },
+  make: {
+    past: 'made'
+  },
+  mean: {
+    past: 'meant'
+  },
+  meet: {
+    gerund: 'meeting',
+    past: 'met',
+    actor: 'meeter'
+  },
+  pay: {
+    past: 'paid'
+  },
+  read: {
+    past: 'read'
+  },
+  ring: {
+    past: 'rang'
+  },
+  rise: {
+    past: 'rose'
+  },
+  run: {
+    gerund: 'running',
+    past: 'ran'
+  },
+  say: {
+    past: 'said'
+  },
+  see: {
+    past: 'saw'
+  },
+  sell: {
+    past: 'sold'
+  },
+  shine: {
+    past: 'shone'
+  },
+  shoot: {
+    past: 'shot'
+  },
+  show: {
+    past: 'showed'
+  },
+  sing: {
+    past: 'sang'
+  },
+  sink: {
+    past: 'sank'
+  },
+  sit: {
+    past: 'sat'
+  },
+  slide: {
+    past: 'slid'
+  },
+  speak: {
+    past: 'spoke'
+  },
+  spin: {
+    gerund: 'spinning',
+    past: 'spun'
+  },
+  spread: {
+    past: 'spread'
+  },
+  stand: {
+    past: 'stood'
+  },
+  steal: {
+    past: 'stole',
+    actor: 'stealer'
+  },
+  stick: {
+    past: 'stuck'
+  },
+  sting: {
+    past: 'stung'
+  },
+  strike: {
+    gerund: 'striking',
+    past: 'struck'
+  },
+  swear: {
+    past: 'swore'
+  },
+  swim: {
+    past: 'swam'
+  },
+  swing: {
+    past: 'swung'
+  },
+  teach: {
+    past: 'taught'
+  },
+  tear: {
+    past: 'tore'
+  },
+  tell: {
+    past: 'told'
+  },
+  think: {
+    past: 'thought'
+  },
+  understand: {
+    past: 'understood'
+  },
+  wake: {
+    past: 'woke'
+  },
+  wear: {
+    past: 'wore'
+  },
+  win: {
+    gerund: 'winning',
+    past: 'won'
+  },
+  withdraw: {
+    past: 'withdrew'
+  },
+  write: {
+    gerund: 'writing',
+    past: 'wrote'
+  },
+  tie: {
+    gerund: 'tying',
+    past: 'tied'
+  },
+  ski: {
+    past: 'skiied'
+  },
+  boil: {
+    actor: 'boiler'
+  },
+  miss: {
+    present: 'miss'
+  },
+  act: {
+    actor: 'actor'
+  },
+  compete: {
+    gerund: 'competing',
+    past: 'competed',
+    actor: 'competitor'
+  },
+  being: {
+    gerund: 'are',
+    past: 'were',
+    present: 'are'
+  },
+  imply: {
+    past: 'implied',
+    present: 'implies'
+  },
+  ice: {
+    gerund: 'icing',
+    past: 'iced'
+  },
+  develop: {
+    past: 'develop',
+    actor: 'developer'
+  },
+  wait: {
+    gerund: 'waiting',
+    past: 'waited',
+    actor: 'waiter'
+  },
+  aim: {
+    actor: 'aimer'
+  },
+  spill: {
+    past: 'spilt'
+  },
+  drop: {
+    gerund: 'dropping',
+    past: 'dropped'
+  },
+  log: {
+    gerund: 'logging',
+    past: 'logged'
+  },
+  rub: {
+    gerund: 'rubbing',
+    past: 'rubbed'
+  },
+  smash: {
+    present: 'smashes'
+  },
+  suit: {
+    gerund: 'suiting',
+    past: 'suited',
+    actor: 'suiter'
+  }
+};
+
+},{}],10:[function(require,module,exports){
 'use strict';
 
 const misc = {
@@ -1939,7 +2326,7 @@ for (let i = 0; i < keys.length; i++) {
 // console.log(misc.a);
 module.exports = misc;
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 //common terms that are multi-word, but one part-of-speech
 //these should not include phrasal verbs, like 'looked out'. These are handled elsewhere.
 module.exports = {
@@ -2016,7 +2403,7 @@ module.exports = {
   'head start': 'NN'
 };
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 module.exports = [
   //numbers
   'minus',
@@ -2062,7 +2449,7 @@ module.exports = [
   'decillion'
 ];
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 //just a few named-organisations
 //no acronyms needed. no product/brand pollution.
@@ -2133,7 +2520,7 @@ module.exports = {
   organisations: organisations
 };
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 //phrasal verbs are two words that really mean one verb.
 //'beef up' is one verb, and not some direction of beefing.
 //by @spencermountain, 2015 mit
@@ -2256,7 +2643,7 @@ Object.keys(main).forEach(function(s) {
 // console.log(main["wiring up"] === "VBG")
 module.exports = main;
 
-},{"../term/verb/conjugate/conjugate.js":63}],14:[function(require,module,exports){
+},{"../term/verb/conjugate/conjugate.js":65}],15:[function(require,module,exports){
 'use strict';
 
 let countries = [
@@ -2698,7 +3085,7 @@ module.exports = {
   cities: cities,
 };
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 //common nouns that have no plural form. These are suprisingly rare
 //used in noun.inflect(), and added as nouns in lexicon
 module.exports = [
@@ -2853,972 +3240,8 @@ module.exports = [
   'hertz'
 ];
 
-},{}],16:[function(require,module,exports){
-'use strict';
-
-const types = [
-  'infinitive',
-  'gerund',
-  'past',
-  'present',
-  'actor',
-  'future'
-];
-
-//list of verb irregular verb forms, compacted to save space. ('_' -> infinitive )
-const compact = [
-  [
-    'arise',
-    'arising',
-    'arose',
-    '_s',
-    '_r'
-  ],
-  [
-    'babysit',
-    '_ting',
-    'babysat',
-    '_s',
-    '_ter'
-  ],
-  [
-    'be',
-    '_ing',
-    'was',
-    'is',
-    ''
-  ],
-  [
-    'beat',
-    '_ing',
-    '_',
-    '_s',
-    '_er'
-  ],
-  [
-    'become',
-    'becoming',
-    'became',
-    '_s',
-    '_r'
-  ],
-  [
-    'bend',
-    '_ing',
-    'bent',
-    '_s',
-    '_er'
-  ],
-  [
-    'begin',
-    '_ning',
-    'began',
-    '_s',
-    '_ner'
-  ],
-  [
-    'bet',
-    '_ting',
-    '_',
-    '_s',
-    '_ter'
-  ],
-  [
-    'bind',
-    '_ing',
-    'bound',
-    '_s',
-    '_er'
-  ],
-  [
-    'bite',
-    'biting',
-    'bit',
-    '_s',
-    '_r'
-  ],
-  [
-    'bleed',
-    '_ing',
-    'bled',
-    '_s',
-    '_er'
-  ],
-  [
-    'blow',
-    '_ing',
-    'blew',
-    '_s',
-    '_er'
-  ],
-  [
-    'break',
-    '_ing',
-    'broke',
-    '_s',
-    '_er'
-  ],
-  [
-    'breed',
-    '_ing',
-    'bred',
-    '_s',
-    '_er'
-  ],
-  [
-    'bring',
-    '_ing',
-    'brought',
-    '_s',
-    '_er'
-  ],
-  [
-    'broadcast',
-    '_ing',
-    '_',
-    '_s',
-    '_er'
-  ],
-  [
-    'build',
-    '_ing',
-    'built',
-    '_s',
-    '_er'
-  ],
-  [
-    'buy',
-    '_ing',
-    'bought',
-    '_s',
-    '_er'
-  ],
-  [
-    'catch',
-    '_ing',
-    'caught',
-    '_es',
-    '_er'
-  ],
-  [
-    'choose',
-    'choosing',
-    'chose',
-    '_s',
-    '_r'
-  ],
-  [
-    'come',
-    'coming',
-    'came',
-    '_s',
-    '_r'
-  ],
-  [
-    'cost',
-    '_ing',
-    '_',
-    '_s',
-    '_er'
-  ],
-  [
-    'cut',
-    '_ting',
-    '_',
-    '_s',
-    '_ter'
-  ],
-  [
-    'deal',
-    '_ing',
-    '_t',
-    '_s',
-    '_er'
-  ],
-  [
-    'dig',
-    '_ging',
-    'dug',
-    '_s',
-    '_ger'
-  ],
-  [
-    'do',
-    '_ing',
-    'did',
-    '_es',
-    '_er'
-  ],
-  [
-    'draw',
-    '_ing',
-    'drew',
-    '_s',
-    '_er'
-  ],
-  [
-    'drink',
-    '_ing',
-    'drank',
-    '_s',
-    '_er'
-  ],
-  [
-    'drive',
-    'driving',
-    'drove',
-    '_s',
-    '_r'
-  ],
-  [
-    'eat',
-    '_ing',
-    'ate',
-    '_s',
-    '_er'
-  ],
-  [
-    'fall',
-    '_ing',
-    'fell',
-    '_s',
-    '_er'
-  ],
-  [
-    'feed',
-    '_ing',
-    'fed',
-    '_s',
-    '_er'
-  ],
-  [
-    'feel',
-    '_ing',
-    'felt',
-    '_s',
-    '_er'
-  ],
-  [
-    'fight',
-    '_ing',
-    'fought',
-    '_s',
-    '_er'
-  ],
-  [
-    'find',
-    '_ing',
-    'found',
-    '_s',
-    '_er'
-  ],
-  [
-    'fly',
-    '_ing',
-    'flew',
-    '_s',
-    'flier'
-  ],
-  [
-    'forbid',
-    '_ing',
-    'forbade',
-    '_s',
-
-  ],
-  [
-    'forget',
-    '_ing',
-    'forgot',
-    '_s',
-    '_er'
-  ],
-  [
-    'forgive',
-    'forgiving',
-    'forgave',
-    '_s',
-    '_r'
-  ],
-  [
-    'freeze',
-    'freezing',
-    'froze',
-    '_s',
-    '_r'
-  ],
-  [
-    'get',
-    '_ting',
-    'got',
-    '_s',
-    '_ter'
-  ],
-  [
-    'give',
-    'giving',
-    'gave',
-    '_s',
-    '_r'
-  ],
-  [
-    'go',
-    '_ing',
-    'went',
-    '_es',
-    '_er'
-  ],
-  [
-    'grow',
-    '_ing',
-    'grew',
-    '_s',
-    '_er'
-  ],
-  [
-    'hang',
-    '_ing',
-    'hung',
-    '_s',
-    '_er'
-  ],
-  [
-    'have',
-    'having',
-    'had',
-    'has',
-
-  ],
-  [
-    'hear',
-    '_ing',
-    '_d',
-    '_s',
-    '_er'
-  ],
-  [
-    'hide',
-    'hiding',
-    'hid',
-    '_s',
-    '_r'
-  ],
-  [
-    'hit',
-    '_ting',
-    '_',
-    '_s',
-    '_ter'
-  ],
-  [
-    'hold',
-    '_ing',
-    'held',
-    '_s',
-    '_er'
-  ],
-  [
-    'hurt',
-    '_ing',
-    '_',
-    '_s',
-    '_er'
-  ],
-  [
-    'know',
-    '_ing',
-    'knew',
-    '_s',
-    '_er'
-  ],
-  [
-    'relay',
-    '_ing',
-    '_ed',
-    '_s',
-    '_er'
-  ],
-  [
-    'lay',
-    '_ing',
-    'laid',
-    '_s',
-    '_er'
-  ],
-  [
-    'lead',
-    '_ing',
-    'led',
-    '_s',
-    '_er'
-  ],
-  [
-    'leave',
-    'leaving',
-    'left',
-    '_s',
-    '_r'
-  ],
-  [
-    'lend',
-    '_ing',
-    'lent',
-    '_s',
-    '_er'
-  ],
-  [
-    'let',
-    '_ting',
-    '_',
-    '_s',
-    '_ter'
-  ],
-  [
-    'lie',
-    'lying',
-    'lay',
-    '_s',
-    '_r'
-  ],
-  [
-    'light',
-    '_ing',
-    'lit',
-    '_s',
-    '_er'
-  ],
-  [
-    'lose',
-    'losing',
-    'lost',
-    '_s',
-    '_r'
-  ],
-  [
-    'make',
-    'making',
-    'made',
-    '_s',
-    '_r'
-  ],
-  [
-    'mean',
-    '_ing',
-    '_t',
-    '_s',
-    '_er'
-  ],
-  [
-    'meet',
-    '_ing',
-    'met',
-    '_s',
-    '_er'
-  ],
-  [
-    'pay',
-    '_ing',
-    'paid',
-    '_s',
-    '_er'
-  ],
-  [
-    'put',
-    '_ting',
-    '_',
-    '_s',
-    '_ter'
-  ],
-  [
-    'quit',
-    '_ting',
-    '_',
-    '_s',
-    '_ter'
-  ],
-  [
-    'read',
-    '_ing',
-    '_',
-    '_s',
-    '_er'
-  ],
-  [
-    'ride',
-    'riding',
-    'rode',
-    '_s',
-    '_r'
-  ],
-  [
-    'ring',
-    '_ing',
-    'rang',
-    '_s',
-    '_er'
-  ],
-  [
-    'rise',
-    'rising',
-    'rose',
-    '_s',
-    '_r'
-  ],
-  [
-    'run',
-    '_ning',
-    'ran',
-    '_s',
-    '_ner'
-  ],
-  [
-    'say',
-    '_ing',
-    'said',
-    '_s',
-
-  ],
-  [
-    'see',
-    '_ing',
-    'saw',
-    '_s',
-    '_r'
-  ],
-  [
-    'sell',
-    '_ing',
-    'sold',
-    '_s',
-    '_er'
-  ],
-  [
-    'send',
-    '_ing',
-    'sent',
-    '_s',
-    '_er'
-  ],
-  [
-    'set',
-    '_ting',
-    '_',
-    '_s',
-    '_ter'
-  ],
-  [
-    'shake',
-    'shaking',
-    'shook',
-    '_s',
-    '_r'
-  ],
-  [
-    'shine',
-    'shining',
-    'shone',
-    '_s',
-    '_r'
-  ],
-  [
-    'shoot',
-    '_ing',
-    'shot',
-    '_s',
-    '_er'
-  ],
-  [
-    'show',
-    '_ing',
-    '_ed',
-    '_s',
-    '_er'
-  ],
-  [
-    'shut',
-    '_ting',
-    '_',
-    '_s',
-    '_ter'
-  ],
-  [
-    'sing',
-    '_ing',
-    'sang',
-    '_s',
-    '_er'
-  ],
-  [
-    'sink',
-    '_ing',
-    'sank',
-    '_s',
-    '_er'
-  ],
-  [
-    'sit',
-    '_ting',
-    'sat',
-    '_s',
-    '_ter'
-  ],
-  [
-    'slide',
-    'sliding',
-    'slid',
-    '_s',
-    '_r'
-  ],
-  [
-    'speak',
-    '_ing',
-    'spoke',
-    '_s',
-    '_er'
-  ],
-  [
-    'spend',
-    '_ing',
-    'spent',
-    '_s',
-    '_er'
-  ],
-  [
-    'spin',
-    '_ning',
-    'spun',
-    '_s',
-    '_ner'
-  ],
-  [
-    'spread',
-    '_ing',
-    '_',
-    '_s',
-    '_er'
-  ],
-  [
-    'stand',
-    '_ing',
-    'stood',
-    '_s',
-    '_er'
-  ],
-  [
-    'steal',
-    '_ing',
-    'stole',
-    '_s',
-    '_er'
-  ],
-  [
-    'stick',
-    '_ing',
-    'stuck',
-    '_s',
-    '_er'
-  ],
-  [
-    'sting',
-    '_ing',
-    'stung',
-    '_s',
-    '_er'
-  ],
-  [
-    'strike',
-    'striking',
-    'struck',
-    '_s',
-    '_r'
-  ],
-  [
-    'swear',
-    '_ing',
-    'swore',
-    '_s',
-    '_er'
-  ],
-  [
-    'swim',
-    '_ing',
-    'swam',
-    '_s',
-    '_mer'
-  ],
-  [
-    'swing',
-    '_ing',
-    'swung',
-    '_s',
-    '_er'
-  ],
-  [
-    'take',
-    'taking',
-    'took',
-    '_s',
-    '_r'
-  ],
-  [
-    'teach',
-    '_ing',
-    'taught',
-    '_s',
-    '_er'
-  ],
-  [
-    'tear',
-    '_ing',
-    'tore',
-    '_s',
-    '_er'
-  ],
-  [
-    'tell',
-    '_ing',
-    'told',
-    '_s',
-    '_er'
-  ],
-  [
-    'think',
-    '_ing',
-    'thought',
-    '_s',
-    '_er'
-  ],
-  [
-    'throw',
-    '_ing',
-    'threw',
-    '_s',
-    '_er'
-  ],
-  [
-    'understand',
-    '_ing',
-    'understood',
-    '_s',
-
-  ],
-  [
-    'wake',
-    'waking',
-    'woke',
-    '_s',
-    '_r'
-  ],
-  [
-    'wear',
-    '_ing',
-    'wore',
-    '_s',
-    '_er'
-  ],
-  [
-    'win',
-    '_ning',
-    'won',
-    '_s',
-    '_ner'
-  ],
-  [
-    'withdraw',
-    '_ing',
-    'withdrew',
-    '_s',
-    '_er'
-  ],
-  [
-    'write',
-    'writing',
-    'wrote',
-    '_s',
-    '_r'
-  ],
-  [
-    'tie',
-    'tying',
-    '_d',
-    '_s',
-    '_r'
-  ],
-  [
-    'obey',
-    '_ing',
-    '_ed',
-    '_s',
-    '_er'
-  ],
-  [
-    'ski',
-    '_ing',
-    '_ied',
-    '_s',
-    '_er'
-  ],
-  [
-    'boil',
-    '_ing',
-    '_ed',
-    '_s',
-    '_er'
-  ],
-  [
-    'miss',
-    '_ing',
-    '_ed',
-    '_',
-    '_er'
-  ],
-  [
-    'act',
-    '_ing',
-    '_ed',
-    '_s',
-    '_or'
-  ],
-  [
-    'compete',
-    'competing',
-    '_d',
-    '_s',
-    'competitor'
-  ],
-  [
-    'being',
-    'are',
-    'were',
-    'are',
-
-  ],
-  [
-    'imply',
-    '_ing',
-    'implied',
-    'implies',
-    'implier'
-  ],
-  [
-    'ice',
-    'icing',
-    '_d',
-    '_s',
-    '_r'
-  ],
-  [
-    'develop',
-    '_ing',
-    '_',
-    '_s',
-    '_er'
-  ],
-  [
-    'wait',
-    '_ing',
-    '_ed',
-    '_s',
-    '_er'
-  ],
-  [
-    'aim',
-    '_ing',
-    '_ed',
-    '_s',
-    '_er'
-  ],
-  [
-    'spill',
-    '_ing',
-    'spilt',
-    '_s',
-    '_er'
-  ],
-  [
-    'drop',
-    '_ping',
-    '_ped',
-    '_s',
-    '_per'
-  ],
-  [
-    'head',
-    '_ing',
-    '_ed',
-    '_s',
-    '_er'
-  ],
-  [
-    'log',
-    '_ging',
-    '_ged',
-    '_s',
-    '_ger'
-  ],
-  [
-    'rub',
-    '_bing',
-    '_bed',
-    '_s',
-    '_ber'
-  ],
-  [
-    'smash',
-    '_ing',
-    '_ed',
-    '_es',
-    '_er'
-  ],
-  [
-    'add',
-    '_ing',
-    '_ed',
-    '_s',
-    '_er'
-  ],
-  [
-    'word',
-    '_ing',
-    '_ed',
-    '_s',
-    '_er'
-  ],
-  [
-    'suit',
-    '_ing',
-    '_ed',
-    '_s',
-    '_er'
-  ],
-  [
-    'be',
-    'am',
-    'was',
-    'am',
-    ''
-  ],
-  [
-    'load',
-    '_ing',
-    '_ed',
-    '_s',
-    '_er'
-  ]
-];
-//expand compact version out
-module.exports = compact.map(function(arr) {
-  const obj = {};
-  for (let i = 0; i < arr.length; i++) {
-    obj[types[i]] = arr[i].replace(/_/, arr[0]);
-  }
-  return obj;
-});
-
-// console.log(JSON.stringify(module.exports, null, 2));
-
 },{}],17:[function(require,module,exports){
-//most-frequent non-irregular verbs, to be conjugated for the lexicon
+//most-frequent non-irregular verbs, in infinitive form, to be conjugated for the lexicon
 //this list is the seed, from which various forms are conjugated
 module.exports = [
   'collapse',
@@ -4376,10 +3799,10 @@ module.exports = [
   'enhance',
   'distinguish',
   'avoid',
-  //contractions
-  'don\'t',
-  'won\'t',
-  'what\'s' //somewhat ambiguous (what does|what are)
+//contractions
+// 'don\'t',
+// 'won\'t',
+// 'what\'s' //somewhat ambiguous (what does|what are)
 ];
 
 },{}],18:[function(require,module,exports){
@@ -4436,6 +3859,7 @@ exports.titlecase = function(str) {
 'use strict';
 const Term = require('./term/term.js');
 const Text = require('./text/text.js');
+const Sentence = require('./sentence/sentence.js');
 const Verb = require('./term/verb/verb.js');
 const Adjective = require('./term/adjective/adjective.js');
 const Adverb = require('./term/adverb/adverb.js');
@@ -4462,6 +3886,9 @@ const API = function(str) {
   };
   this.Adjective = function(s) {
     return new Adjective(s);
+  };
+  this.Sentence = function(s) {
+    return new Sentence(s);
   };
   this.Text = function(s) {
     return new Text(s);
@@ -4497,11 +3924,10 @@ if (typeof window === 'object') {
 }
 module.exports = nlp;
 
-// let n = nlp.Text('The pen blew up');
-let n = nlp.Verb('sufferer').negate();
-console.log(n);
+// let n = nlp.Verb('approaching').conjugation();
+// console.log(n);
 
-},{"./lexicon.js":20,"./term/adjective/adjective.js":28,"./term/adverb/adverb.js":33,"./term/noun/date/date.js":38,"./term/noun/noun.js":44,"./term/noun/organisation/organisation.js":46,"./term/noun/person/person.js":50,"./term/noun/place/place.js":52,"./term/noun/value/value.js":60,"./term/term.js":62,"./term/verb/verb.js":69,"./text/text.js":72}],20:[function(require,module,exports){
+},{"./lexicon.js":20,"./sentence/sentence.js":29,"./term/adjective/adjective.js":30,"./term/adverb/adverb.js":35,"./term/noun/date/date.js":40,"./term/noun/noun.js":46,"./term/noun/organisation/organisation.js":48,"./term/noun/person/person.js":52,"./term/noun/place/place.js":54,"./term/noun/value/value.js":62,"./term/term.js":64,"./term/verb/verb.js":72,"./text/text.js":75}],20:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
 //it's built by conjugating and inflecting a small seed of terms
 'use strict';
@@ -4509,7 +3935,7 @@ const fns = require('./fns.js');
 const verb_conjugate = require('./term/verb/conjugate/conjugate.js');
 const to_comparative = require('./term/adjective/to_comparative.js');
 const to_superlative = require('./term/adjective/to_superlative.js');
-const grand_mapping = require('./sentence/pos/pos.js').tag_mapping;
+const grand_mapping = require('./sentence/pos/parts_of_speech.js').tag_mapping;
 
 const lexicon = {};
 
@@ -4545,7 +3971,9 @@ const verbMap = {
   PastTense: 'PastTense',
   PresentTense: 'PresentTense',
 };
-const verbs = require('./data/verbs.js');
+
+const irregulars = require('./data/irregular_verbs.js');
+let verbs = require('./data/verbs.js').concat(Object.keys(irregulars));
 for (let i = 0; i < verbs.length; i++) {
   const o = verb_conjugate(verbs[i]);
   Object.keys(o).forEach(function(k) {
@@ -4554,20 +3982,12 @@ for (let i = 0; i < verbs.length; i++) {
     }
   });
 }
-//irregular verbs
-require('./data/verb_irregulars.js').forEach(function(o) {
-  Object.keys(o).forEach(function(k) {
-    if (k && o[k]) {
-      lexicon[o[k]] = verbMap[k];
-    }
-  });
-});
 
-const orgs = require('./data/organisations.js');
+let orgs = require('./data/organisations.js');
 addArr(orgs.organisations, 'Noun');
 addArr(orgs.suffixes, 'Noun');
 
-const places = require('./data/places.js');
+let places = require('./data/places.js');
 addArr(places.countries, 'Place');
 addArr(places.cities, 'Place');
 
@@ -4582,9 +4002,7 @@ addArr(require('./data/abbreviations.js').abbreviations, 'Abbreviation');
 addArr(require('./data/demonyms.js'), 'Adjective');
 addArr(require('./data/honourifics.js'), 'Honourific');
 addArr(require('./data/uncountables.js'), 'Noun');
-const dates = require('./data/dates.js');
-addArr(dates.months, 'Date');
-addArr(dates.days, 'Date');
+addArr(require('./data/dates.js'), 'Date');
 addArr(require('./data/numbers.js'), 'Value');
 //a little fancy
 addArr(Object.keys(require('./data/firstnames.js')), 'Person');
@@ -4636,11 +4054,34 @@ Object.keys(lexicon).forEach(function(k) {
 
 module.exports = lexicon;
 
-},{"./data/abbreviations.js":1,"./data/adjectives.js":2,"./data/convertables.js":3,"./data/dates.js":4,"./data/demonyms.js":5,"./data/firstnames.js":6,"./data/honourifics.js":7,"./data/irregular_nouns.js":8,"./data/misc.js":9,"./data/multiples.js":10,"./data/numbers.js":11,"./data/organisations.js":12,"./data/phrasal_verbs.js":13,"./data/places.js":14,"./data/uncountables.js":15,"./data/verb_irregulars.js":16,"./data/verbs.js":17,"./fns.js":18,"./sentence/pos/pos.js":24,"./term/adjective/to_comparative.js":30,"./term/adjective/to_superlative.js":32,"./term/verb/conjugate/conjugate.js":63}],21:[function(require,module,exports){
+},{"./data/abbreviations.js":1,"./data/adjectives.js":2,"./data/convertables.js":3,"./data/dates.js":4,"./data/demonyms.js":5,"./data/firstnames.js":6,"./data/honourifics.js":7,"./data/irregular_nouns.js":8,"./data/irregular_verbs.js":9,"./data/misc.js":10,"./data/multiples.js":11,"./data/numbers.js":12,"./data/organisations.js":13,"./data/phrasal_verbs.js":14,"./data/places.js":15,"./data/uncountables.js":16,"./data/verbs.js":17,"./fns.js":18,"./sentence/pos/parts_of_speech.js":25,"./term/adjective/to_comparative.js":32,"./term/adjective/to_superlative.js":34,"./term/verb/conjugate/conjugate.js":65}],21:[function(require,module,exports){
+'use strict';
+
+//boolean if sentence has
+
+// "[copula] [pastTense] by"
+// "[pastParticiple] by"
+const passive_voice = function(s) {
+  let terms = s.terms;
+  for(let i = 0; i < terms.length - 2; i++) {
+    if (terms[i].pos['Copula'] && terms[i + 1].pos['Verb'] && terms[i + 2].normal === 'by') {
+      //don't do 'june was approaching by then'
+      if (terms[i + 1].pos['Gerund']) {
+        continue;
+      }
+      return true;
+    }
+  }
+  return false;
+};
+
+module.exports = passive_voice;
+
+},{}],22:[function(require,module,exports){
 //add a 'quiet' token for contractions so we can represent their grammar
 //some contractions need detailed POS tense info, to resolve the is/was/has part
 'use strict';
-const pos = require('../../sentence/pos/pos.js');
+const pos = require('../../sentence/pos/parts_of_speech.js');
 
 const easy_contractions = {
   'i\'d': ['i', 'would'],
@@ -4739,10 +4180,10 @@ module.exports = {
   hard_ones
 };
 
-},{"../../sentence/pos/pos.js":24}],22:[function(require,module,exports){
+},{"../../sentence/pos/parts_of_speech.js":25}],23:[function(require,module,exports){
 //fancy combining/chunking of terms
 'use strict';
-const pos = require('./pos');
+const pos = require('./parts_of_speech');
 
 const shouldLumpThree = function(a, b, c) {
   if (!a || !b || !c) {
@@ -4873,7 +4314,7 @@ const fancy_lumping = function(terms) {
 
 module.exports = fancy_lumping;
 
-},{"./pos":24}],23:[function(require,module,exports){
+},{"./parts_of_speech":25}],24:[function(require,module,exports){
 module.exports = [
   {
     'before': ['Determiner', '?'],
@@ -4973,7 +4414,7 @@ module.exports = [
   }
 ];
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 
 const Term = require('../../term/term.js');
 
@@ -5084,7 +4525,45 @@ module.exports = {
   Noun,
 };
 
-},{"../../term/adjective/adjective.js":28,"../../term/adverb/adverb.js":33,"../../term/noun/date/date.js":38,"../../term/noun/noun.js":44,"../../term/noun/organisation/organisation.js":46,"../../term/noun/person/person.js":50,"../../term/noun/place/place.js":52,"../../term/noun/value/value.js":60,"../../term/term.js":62,"../../term/verb/verb.js":69}],25:[function(require,module,exports){
+},{"../../term/adjective/adjective.js":30,"../../term/adverb/adverb.js":35,"../../term/noun/date/date.js":40,"../../term/noun/noun.js":46,"../../term/noun/organisation/organisation.js":48,"../../term/noun/person/person.js":52,"../../term/noun/place/place.js":54,"../../term/noun/value/value.js":62,"../../term/term.js":64,"../../term/verb/verb.js":72}],26:[function(require,module,exports){
+'use strict';
+
+//some prepositions are clumped onto the back of a verb "looked for", "looks at"
+//they should be combined with the verb, sometimes.
+//does not handle seperated phrasal verbs ('take the coat off' -> 'take off')
+
+
+let particles = ['in', 'out', 'on', 'off', 'behind', 'way', 'with', 'of', 'do', 'away', 'across', 'ahead', 'back', 'over', 'under', 'together', 'apart', 'up', 'upon', 'aback', 'down', 'about', 'before', 'after', 'around', 'to', 'forth', 'round', 'through', 'along', 'onto'];
+particles = particles.reduce(function (h, s) {
+  h[s] = true;
+  return h;
+}, {});
+
+//combine ['blew','up'] -> 'blew up'
+let phrasal_verbs = function(terms) {
+  for(let i = 0; i < terms.length - 1; i++) {
+    if (terms[i] && terms[i].pos['Verb'] && particles[terms[i + 1].normal]) {
+      //don't do 'is in'
+      if (terms[i].pos['Copula']) {
+        continue;
+      }
+      terms[i].text = terms[i].text + ' ' + terms[i + 1].text;
+      terms[i].reason = 'phrasal(' + terms[i].reason + ')';
+      terms[i + 1] = null;
+      terms[i].normalize();
+      terms[i].conjugate();
+    }
+  }
+  //remove killed-off ones
+  terms = terms.filter(function(t) {
+    return t !== null;
+  });
+  return terms;
+};
+
+module.exports = phrasal_verbs;
+
+},{}],27:[function(require,module,exports){
 //part-of-speech tagging
 'use strict';
 const contractions = require('./contractions');
@@ -5092,8 +4571,9 @@ const lexicon = require('../../lexicon.js');
 const word_rules = require('./word_rules');
 const grammar_rules = require('./grammar_rules');
 const fancy_lumping = require('./fancy_lumping');
+const phrasal_verbs = require('./phrasal_verbs');
 const fns = require('../../fns');
-const pos = require('./pos');
+const pos = require('./parts_of_speech');
 
 //swap the Term object with a proper Pos class
 const assign = function(t, tag, reason) {
@@ -5238,6 +4718,7 @@ const tagger = function(s) {
     s.terms = grammar_rules_pass(s);
     s.terms = chunk_neighbours(s.terms);
     s.terms = noun_fallback(s.terms);
+    s.terms = phrasal_verbs(s.terms);
     s.terms = specific_pos(s.terms);
     s.terms = contractions.hard_ones(s.terms);
     s.terms = fancy_lumping(s.terms);
@@ -5247,8 +4728,8 @@ const tagger = function(s) {
 
 module.exports = tagger;
 
-},{"../../fns":18,"../../lexicon.js":20,"./contractions":21,"./fancy_lumping":22,"./grammar_rules":23,"./pos":24,"./word_rules":26}],26:[function(require,module,exports){
-const tag_mapping = require('./pos.js').tag_mapping;
+},{"../../fns":18,"../../lexicon.js":20,"./contractions":22,"./fancy_lumping":23,"./grammar_rules":24,"./parts_of_speech":25,"./phrasal_verbs":26,"./word_rules":28}],28:[function(require,module,exports){
+const tag_mapping = require('./parts_of_speech.js').tag_mapping;
 //regex patterns and parts of speech],
 module.exports = [
   ['.[cts]hy$', 'JJ'],
@@ -5369,12 +4850,13 @@ module.exports = [
   };
 });
 
-},{"./pos.js":24}],27:[function(require,module,exports){
+},{"./parts_of_speech.js":25}],29:[function(require,module,exports){
 'use strict';
 const Term = require('../term/term.js');
 const fns = require('../fns.js');
 const tagger = require('./pos/tagger.js');
-const pos = require('./pos/pos.js');
+const pos = require('./pos/parts_of_speech.js');
+const passive_voice = require('./passive_voice.js');
 
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {
@@ -5418,6 +4900,10 @@ class Sentence {
       '.': 'declarative',
     };
     return types[char] || 'declarative';
+  }
+
+  is_passive() {
+    return passive_voice(this);
   }
 
   to_past() {
@@ -5482,7 +4968,7 @@ class Sentence {
 
 module.exports = Sentence;
 
-},{"../fns.js":18,"../term/term.js":62,"./pos/pos.js":24,"./pos/tagger.js":25}],28:[function(require,module,exports){
+},{"../fns.js":18,"../term/term.js":64,"./passive_voice.js":21,"./pos/parts_of_speech.js":25,"./pos/tagger.js":27}],30:[function(require,module,exports){
 'use strict';
 const Term = require('../term.js');
 
@@ -5526,7 +5012,7 @@ class Adjective extends Term {
 
 module.exports = Adjective;
 
-},{"../term.js":62,"./to_adverb":29,"./to_comparative":30,"./to_noun":31,"./to_superlative":32}],29:[function(require,module,exports){
+},{"../term.js":64,"./to_adverb":31,"./to_comparative":32,"./to_noun":33,"./to_superlative":34}],31:[function(require,module,exports){
 //turn 'quick' into 'quickly'
 'use strict';
 const adj_to_adv = function(str) {
@@ -5657,7 +5143,7 @@ const adj_to_adv = function(str) {
 
 module.exports = adj_to_adv;
 
-},{}],30:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 //turn 'quick' into 'quickly'
 'use strict';
 const convertables = require('../../data/convertables.js');
@@ -5756,7 +5242,7 @@ const to_comparative = function(str) {
 
 module.exports = to_comparative;
 
-},{"../../data/convertables.js":3}],31:[function(require,module,exports){
+},{"../../data/convertables.js":3}],33:[function(require,module,exports){
 //convert cute to cuteness
 'use strict';
 const to_noun = function(w) {
@@ -5827,7 +5313,7 @@ const to_noun = function(w) {
 
 module.exports = to_noun;
 
-},{}],32:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 //turn 'quick' into 'quickest'
 'use strict';
 const convertables = require('../../data/convertables.js');
@@ -5922,7 +5408,7 @@ const to_superlative = function(str) {
 
 module.exports = to_superlative;
 
-},{"../../data/convertables.js":3}],33:[function(require,module,exports){
+},{"../../data/convertables.js":3}],35:[function(require,module,exports){
 'use strict';
 const Term = require('../term.js');
 const to_adjective = require('./to_adjective.js');
@@ -5943,7 +5429,7 @@ class Adverb extends Term {
 
 module.exports = Adverb;
 
-},{"../term.js":62,"./to_adjective.js":34}],34:[function(require,module,exports){
+},{"../term.js":64,"./to_adjective.js":36}],36:[function(require,module,exports){
 //turns 'quickly' into 'quick'
 'use strict';
 const to_adjective = function(str) {
@@ -6004,7 +5490,7 @@ const to_adjective = function(str) {
 // console.log(to_adjective('marvelously') === 'marvelous')
 module.exports = to_adjective;
 
-},{}],35:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 // convert british spellings into american ones
 // built with patterns+exceptions from https://en.wikipedia.org/wiki/British_spelling
 'use strict';
@@ -6280,7 +5766,7 @@ const americanize = function(str) {
 
 module.exports = americanize;
 
-},{}],36:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 // convert american spellings into british ones
 // built with patterns+exceptions from https://en.wikipedia.org/wiki/British_spelling
 // (some patterns are only safe to do in one direction)
@@ -6584,7 +6070,7 @@ const britishize = function(str) {
 
 module.exports = britishize;
 
-},{}],37:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 'use strict';
 
 //chooses an indefinite aricle 'a/an' for a word
@@ -6664,7 +6150,7 @@ const indefinite_article = function(str) {
 // console.log(indefinite_article("wolf") === "a")
 module.exports = indefinite_article;
 
-},{}],38:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 'use strict';
 const Noun = require('../noun.js');
 const parse_date = require('./parse_date.js');
@@ -6699,7 +6185,7 @@ module.exports = _Date;
 // let d = new _Date('june thirtieth 1983');
 // console.log(d.interpret());
 
-},{"../noun.js":44,"./parse_date.js":41}],39:[function(require,module,exports){
+},{"../noun.js":46,"./parse_date.js":43}],41:[function(require,module,exports){
 'use strict';
 
 const dates = require('../../../data/dates').months;
@@ -6731,7 +6217,7 @@ const rules = [{
 });
 module.exports = rules;
 
-},{"../../../data/dates":4}],40:[function(require,module,exports){
+},{"../../../data/dates":4}],42:[function(require,module,exports){
 
 'use strict';
 
@@ -6754,7 +6240,7 @@ module.exports = is_date;
 
 // console.log(is_date('january fifth, 2015'));
 
-},{"../../../data/dates":4}],41:[function(require,module,exports){
+},{"../../../data/dates":4}],43:[function(require,module,exports){
 'use strict';
 // #generates properly-formatted dates from free-text date forms
 // #by spencer kelly 2015
@@ -6859,7 +6345,7 @@ module.exports = date_parser;
 // console.log(date_extractor('june 5th 1999'));
 // console.log(date_extractor('june second 1999'));
 
-},{"../value/to_number.js":58,"./date_rules.js":39}],42:[function(require,module,exports){
+},{"../value/to_number.js":60,"./date_rules.js":41}],44:[function(require,module,exports){
 'use strict';
 const irregulars = require('../../data/irregular_nouns');
 
@@ -6953,7 +6439,7 @@ const is_plural = function(str) {
 
 module.exports = is_plural;
 
-},{"../../data/irregular_nouns":8}],43:[function(require,module,exports){
+},{"../../data/irregular_nouns":8}],45:[function(require,module,exports){
 //uncountables are words that shouldn't ever inflect, for metaphysical reasons, like 'peace'
 'use strict';
 const uncountable_arr = require('../../data/uncountables.js');
@@ -6973,7 +6459,7 @@ const is_uncountable = function(str) {
 // console.log(is_uncountable("dog") === false)
 module.exports = is_uncountable;
 
-},{"../../data/uncountables.js":15}],44:[function(require,module,exports){
+},{"../../data/uncountables.js":16}],46:[function(require,module,exports){
 'use strict';
 const Term = require('../term.js');
 const article = require('./article.js');
@@ -7044,7 +6530,7 @@ module.exports = Noun;
 // let t = new Noun('John');
 // console.log(t.pronoun());
 
-},{"../term.js":62,"./article.js":37,"./date/is_date.js":40,"./is_plural.js":42,"./is_uncountable.js":43,"./organisation/is_organisation.js":45,"./person/is_person.js":48,"./place/is_place.js":51,"./pluralize.js":53,"./pronoun.js":54,"./singularize.js":55,"./value/is_value.js":56}],45:[function(require,module,exports){
+},{"../term.js":64,"./article.js":39,"./date/is_date.js":42,"./is_plural.js":44,"./is_uncountable.js":45,"./organisation/is_organisation.js":47,"./person/is_person.js":50,"./place/is_place.js":53,"./pluralize.js":55,"./pronoun.js":56,"./singularize.js":57,"./value/is_value.js":58}],47:[function(require,module,exports){
 'use strict';
 const firstnames = require('../../../data/firstnames');
 const abbreviations = require('../../../data/abbreviations');
@@ -7104,7 +6590,7 @@ module.exports = is_organisation;
 
 // console.log(is_organisation('Captain of Jamaica'));
 
-},{"../../../data/abbreviations":1,"../../../data/firstnames":6,"../../../data/organisations":12}],46:[function(require,module,exports){
+},{"../../../data/abbreviations":1,"../../../data/firstnames":6,"../../../data/organisations":13}],48:[function(require,module,exports){
 'use strict';
 const Noun = require('../noun.js');
 
@@ -7119,7 +6605,7 @@ class Organisation extends Noun {
 
 module.exports = Organisation;
 
-},{"../noun.js":44}],47:[function(require,module,exports){
+},{"../noun.js":46}],49:[function(require,module,exports){
 'use strict';
 const firstnames = require('../../../data/firstnames');
 const parse_name = require('./parse_name.js');
@@ -7167,7 +6653,7 @@ module.exports = gender;
 // console.log(gender('john', 'john') === 'Male');
 // console.log(gender('jane smith', 'jane') === 'Female');
 
-},{"../../../data/firstnames":6,"./parse_name.js":49}],48:[function(require,module,exports){
+},{"../../../data/firstnames":6,"./parse_name.js":51}],50:[function(require,module,exports){
 'use strict';
 const firstnames = require('../../../data/firstnames');
 let honourifics = require('../../../data/honourifics').reduce(function(h, s) {
@@ -7200,7 +6686,7 @@ module.exports = is_person;
 
 // console.log(is_person('Illi Danza'));
 
-},{"../../../data/firstnames":6,"../../../data/honourifics":7}],49:[function(require,module,exports){
+},{"../../../data/firstnames":6,"../../../data/honourifics":7}],51:[function(require,module,exports){
 'use strict';
 const firstnames = require('../../../data/firstnames');
 const honourifics = require('../../../data/honourifics').reduce(function(h, s) {
@@ -7254,7 +6740,7 @@ module.exports = parse_name;
 
 // console.log(parse_name('john smith'));
 
-},{"../../../data/firstnames":6,"../../../data/honourifics":7}],50:[function(require,module,exports){
+},{"../../../data/firstnames":6,"../../../data/honourifics":7}],52:[function(require,module,exports){
 // not all cultures use the firstname-lastname practice. this does make some assumptions.
 'use strict';
 const Noun = require('../noun.js');
@@ -7298,7 +6784,7 @@ module.exports = Person;
 // let p = new Person('John Smith');
 // console.log(p.gender());
 
-},{"../../../data/honourifics":7,"../noun.js":44,"./gender.js":47,"./parse_name.js":49}],51:[function(require,module,exports){
+},{"../../../data/honourifics":7,"../noun.js":46,"./gender.js":49,"./parse_name.js":51}],53:[function(require,module,exports){
 'use strict';
 
 const places = require('../../../data/places');
@@ -7354,7 +6840,7 @@ const is_place = function(str) {
 
 module.exports = is_place;
 
-},{"../../../data/abbreviations":1,"../../../data/places":14}],52:[function(require,module,exports){
+},{"../../../data/abbreviations":1,"../../../data/places":15}],54:[function(require,module,exports){
 'use strict';
 const Noun = require('../noun.js');
 
@@ -7368,7 +6854,7 @@ constructor(str, tag) {
 
 module.exports = Place;
 
-},{"../noun.js":44}],53:[function(require,module,exports){
+},{"../noun.js":46}],55:[function(require,module,exports){
 'use strict';
 const is_uncountable = require('./is_uncountable.js');
 const irregulars = require('../../data/irregular_nouns.js');
@@ -7456,7 +6942,7 @@ const pluralize = function(str) {
 // console.log(pluralize('mayor of chicago') === "mayors of chicago")
 module.exports = pluralize;
 
-},{"../../data/irregular_nouns.js":8,"../../fns.js":18,"./is_plural.js":42,"./is_uncountable.js":43}],54:[function(require,module,exports){
+},{"../../data/irregular_nouns.js":8,"../../fns.js":18,"./is_plural.js":44,"./is_uncountable.js":45}],56:[function(require,module,exports){
 'use strict';
 const is_person = require('./person/is_person.js');
 const is_plural = require('./is_plural.js');
@@ -7483,7 +6969,7 @@ module.exports = pronoun;
 
 // console.log(pronoun('Illi Danza'));
 
-},{"./is_plural.js":42,"./person/gender.js":47,"./person/is_person.js":48}],55:[function(require,module,exports){
+},{"./is_plural.js":44,"./person/gender.js":49,"./person/is_person.js":50}],57:[function(require,module,exports){
 'use strict';
 const is_uncountable = require('./is_uncountable.js');
 const irregulars = require('../../data/irregular_nouns.js');
@@ -7569,7 +7055,7 @@ const singularize = function(str) {
 
 module.exports = singularize;
 
-},{"../../data/irregular_nouns.js":8,"../../fns.js":18,"./is_plural.js":42,"./is_uncountable.js":43}],56:[function(require,module,exports){
+},{"../../data/irregular_nouns.js":8,"../../fns.js":18,"./is_plural.js":44,"./is_uncountable.js":45}],58:[function(require,module,exports){
 'use strict';
 
 const numbers = require('../../../data/numbers');
@@ -7596,7 +7082,7 @@ const is_value = function(str) {
 
 module.exports = is_value;
 
-},{"../../../data/numbers":11,"../date/is_date":40,"./numbers":57}],57:[function(require,module,exports){
+},{"../../../data/numbers":12,"../date/is_date":42,"./numbers":59}],59:[function(require,module,exports){
 const ones = {
   'a': 1,
   'zero': 0,
@@ -7709,7 +7195,7 @@ module.exports = {
   prefixes,
 };
 
-},{}],58:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 // converts spoken numbers into integers  "fifty seven point eight" -> 57.8
 //
 // Spoken numbers take the following format
@@ -7922,7 +7408,7 @@ const to_number = function(s) {
 //kick it into module
 module.exports = to_number;
 
-},{"./numbers.js":57,"./units.js":59}],59:[function(require,module,exports){
+},{"./numbers.js":59,"./units.js":61}],61:[function(require,module,exports){
 const units = {
   'Temperature': {
     '°C': 'Celsius',
@@ -8107,7 +7593,7 @@ module.exports = Object.keys(units).reduce(function(h, k) {
   return h;
 }, {});
 
-},{}],60:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 'use strict';
 const Noun = require('../noun.js');
 const to_number = require('./to_number.js');
@@ -8166,7 +7652,7 @@ class Value extends Noun {
 
 module.exports = Value;
 
-},{"../noun.js":44,"./numbers.js":57,"./to_number.js":58,"./units.js":59}],61:[function(require,module,exports){
+},{"../noun.js":46,"./numbers.js":59,"./to_number.js":60,"./units.js":61}],63:[function(require,module,exports){
 //chop a string into pronounced syllables
 'use strict';
 
@@ -8258,7 +7744,7 @@ const syllables = function(str) {
 
 module.exports = syllables;
 
-},{}],62:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 'use strict';
 const syllables = require('./syllables');
 const americanize = require('./americanize');
@@ -8331,13 +7817,65 @@ class Term {
 
 module.exports = Term;
 
-},{"./americanize":35,"./britishize":36,"./syllables":61}],63:[function(require,module,exports){
+},{"./americanize":37,"./britishize":38,"./syllables":63}],65:[function(require,module,exports){
 //turn a verb into its other grammatical forms.
 'use strict';
 const verb_to_actor = require('./to_actor');
-const verb_irregulars = require('../../../data/verb_irregulars');
-const verb_rules = require('./verb_rules');
+const to_infinitive = require('./to_infinitive');
+const from_infinitive = require('./from_infinitive');
+const irregular_verbs = require('../../../data/irregular_verbs');
 const predict = require('./predict_form.js');
+
+
+//make sure object has all forms
+const fufill = function(obj, prefix) {
+  if (!obj.infinitive) {
+    return obj;
+  }
+  if (!obj.gerund) {
+    if (obj.infinitive.match(/e$/)) {
+      obj.gerund = obj.infinitive.replace(/e$/, 'ing');
+    } else {
+      obj.gerund = obj.infinitive + 'ing';
+    }
+  }
+  if (obj.actor === undefined) {
+    obj.actor = verb_to_actor(obj.infinitive);
+  }
+  if (!obj.present) {
+    obj.present = obj.infinitive + 's';
+  }
+  if (!obj.past) {
+    if (obj.infinitive.match(/e$/)) {
+      obj.past = obj.infinitive + 'd';
+    } else {
+      obj.past = obj.infinitive + 'ed';
+    }
+  }
+  //add the prefix to all forms, if it exists
+  if (prefix) {
+    Object.keys(obj).forEach(function(k) {
+      obj[k] = prefix + obj[k];
+    });
+  }
+  //future is 'will'+infinitive
+  if (!obj.future) {
+    obj.future = 'will ' + obj.infinitive;
+  }
+  //perfect is 'have'+past-tense
+  if (!obj.perfect) {
+    obj.perfect = 'have ' + (obj.participle || obj.past);
+  }
+  //pluperfect is 'had'+past-tense
+  if (!obj.pluperfect) {
+    obj.pluperfect = 'had ' + obj.past;
+  }
+  //future perfect is 'will have'+past-tense
+  if (!obj.future_perfect) {
+    obj.future_perfect = 'will have ' + obj.past;
+  }
+  return obj;
+};
 
 //fallback to this transformation if it has an unknown prefix
 const fallback = function(w) {
@@ -8366,60 +7904,16 @@ const fallback = function(w) {
     present = w.replace(/[aeiou]$/, 'es');
     actor = verb_to_actor(infinitive);
   }
-  return {
+  let obj = {
     infinitive: infinitive,
     present: present,
     past: past,
     gerund: gerund,
-    actor: actor,
-    future: 'will ' + infinitive,
-    perfect: 'have ' + past,
-    pluperfect: 'had ' + past,
-    future_perfect: 'will have ' + past,
+    actor: actor
   };
+  return fufill(obj);
 };
 
-//make sure object has all forms
-const fufill = function(obj, prefix) {
-  if (!obj.infinitive) {
-    return obj;
-  }
-  if (!obj.gerund) {
-    obj.gerund = obj.infinitive + 'ing';
-  }
-  if (!obj.actor) {
-    obj.actor = verb_to_actor(obj.infinitive);
-  }
-  if (!obj.present) {
-    obj.present = obj.infinitive + 's';
-  }
-  if (!obj.past) {
-    obj.past = obj.infinitive + 'ed';
-  }
-  //add the prefix to all forms, if it exists
-  if (prefix) {
-    Object.keys(obj).forEach(function(k) {
-      obj[k] = prefix + obj[k];
-    });
-  }
-  //future is 'will'+infinitive
-  if (!obj.future) {
-    obj.future = 'will ' + obj.infinitive;
-  }
-  //perfect is 'have'+past-tense
-  if (!obj.perfect) {
-    obj.perfect = 'have ' + obj.past;
-  }
-  //pluperfect is 'had'+past-tense
-  if (!obj.pluperfect) {
-    obj.pluperfect = 'had ' + obj.past;
-  }
-  //future perfect is 'will have'+past-tense
-  if (!obj.future_perfect) {
-    obj.future_perfect = 'will have ' + obj.past;
-  }
-  return obj;
-};
 
 const conjugate = function(w) {
   if (w === undefined) {
@@ -8433,7 +7927,6 @@ const conjugate = function(w) {
     const phrasal_verb = split[1];
     const particle = split[2];
     const result = conjugate(phrasal_verb); //recursive
-    // delete result['actor'];
     Object.keys(result).forEach(function(k) {
       if (result[k]) {
         result[k] += ' ' + particle;
@@ -8443,61 +7936,43 @@ const conjugate = function(w) {
   }
 
   //for pluperfect ('had tried') remove 'had' and call it past-tense
-  if (w.match(/^had [a-z]/i)) {
-    w = w.replace(/^had /i, '');
-  }
+  w = w.replace(/^had /i, '');
   //for perfect ('have tried') remove 'have' and call it past-tense
-  if (w.match(/^have [a-z]/i)) {
-    w = w.replace(/^have /i, '');
-  }
-
+  w = w.replace(/^have /i, '');
   //for future perfect ('will have tried') remove 'will have' and call it past-tense
-  if (w.match(/^will have [a-z]/i)) {
-    w = w.replace(/^will have /i, '');
-  }
-
+  w = w.replace(/^will have /i, '');
   //chop it if it's future-tense
   w = w.replace(/^will /i, '');
+
   //un-prefix the verb, and add it in later
   const prefix = (w.match(/^(over|under|re|anti|full)\-?/i) || [])[0];
   const verb = w.replace(/^(over|under|re|anti|full)\-?/i, '');
-  //check irregulars
-  let obj = {};
-  let l = verb_irregulars.length;
-  for (let i = 0; i < l; i++) {
-    const x = verb_irregulars[i];
-    if (verb === x.present || verb === x.gerund || verb === x.past || verb === x.infinitive) {
-      obj = JSON.parse(JSON.stringify(verb_irregulars[i])); // object 'clone' hack, to avoid mem leak
-      return fufill(obj, prefix);
-    }
-  }
+
   //guess the tense, so we know which transormation to make
   const predicted = predict(w) || 'infinitive';
-
   //check against suffix rules
-  l = verb_rules[predicted].length;
-  for (let i = 0; i < l; i++) {
-    const r = verb_rules[predicted][i];
-    if (w.match(r.reg)) {
-      obj[predicted] = w;
-      const keys = Object.keys(r.repl);
-      for (let o = 0; o < keys.length; o++) {
-        if (keys[o] === predicted) {
-          obj[keys[o]] = w;
-        } else {
-          obj[keys[o]] = w.replace(r.reg, r.repl[keys[o]]);
-        }
-      }
-      return fufill(obj);
+  let infinitive = to_infinitive(w, predicted);
+  //check irregulars
+  let obj = irregular_verbs[w] || irregular_verbs[infinitive] || {};
+  obj.infinitive = infinitive;
+  //apply regex-transformations
+  let conjugations = from_infinitive(infinitive);
+  Object.keys(conjugations).forEach(function(k) {
+    if (!obj[k]) {
+      obj[k] = conjugations[k];
     }
-  }
+  });
+  // return obj;
+  return fufill(obj);
 
-  //produce a generic transformation
-  return fallback(w);
+//produce a generic transformation
+// return fallback(w);
 };
 module.exports = conjugate;
 
-// console.log(conjugate("walking"))
+// console.log(conjugate('convolute'));
+
+
 // console.log(conjugate("overtook"))
 // console.log(conjugate("watch out"))
 // console.log(conjugate("watch"))
@@ -8514,15 +7989,201 @@ module.exports = conjugate;
 // console.log(conjugate("had tried"))
 // console.log(conjugate("have tried"))
 
-},{"../../../data/verb_irregulars":16,"./predict_form.js":64,"./to_actor":66,"./verb_rules":67}],64:[function(require,module,exports){
+},{"../../../data/irregular_verbs":9,"./from_infinitive":66,"./predict_form.js":67,"./to_actor":69,"./to_infinitive":70}],66:[function(require,module,exports){
+'use strict';
+
+let rules = [
+  {
+    reg: /(eave)$/i,
+    repl: {
+      pr: '$1s',
+      pa: '$1d',
+      gr: 'eaving',
+      ar: '$1r'
+    }
+  },
+  {
+    reg: /(end)$/i,
+    repl: {
+      pr: '$1s',
+      pa: 'ent',
+      gr: '$1ing',
+      ar: '$1er'
+    }
+  },
+  {
+    reg: /(ide)$/i,
+    repl: {
+      pr: '$1s',
+      pa: 'ode',
+      gr: 'iding',
+      ar: 'ider'
+    }
+  },
+  {
+    reg: /(ake)$/i,
+    repl: {
+      pr: '$1s',
+      pa: 'ook',
+      gr: 'aking',
+      ar: '$1r'
+    }
+  },
+  {
+    reg: /(eed)$/i,
+    repl: {
+      pr: '$1s',
+      pa: '$1ed',
+      gr: '$1ing',
+      ar: '$1er'
+    }
+  },
+
+  {
+    reg: /(e)(ep)$/i,
+    repl: {
+      pr: '$1$2s',
+      pa: '$1pt',
+      gr: '$1$2ing',
+      ar: '$1$2er'
+    }
+  }, {
+    reg: /(a[tg]|i[zn]|ur|nc|gl|is)e$/i,
+    repl: {
+      pr: '$1es',
+      pa: '$1ed',
+      gr: '$1ing',
+      prt: '$1en'
+    }
+  }, {
+    reg: /([i|f|rr])y$/i,
+    repl: {
+      pr: '$1ies',
+      pa: '$1ied',
+      gr: '$1ying'
+    }
+  }, {
+    reg: /([td]er)$/i,
+    repl: {
+      pr: '$1s',
+      pa: '$1ed',
+      gr: '$1ing'
+    }
+  }, {
+    reg: /([bd]l)e$/i,
+    repl: {
+      pr: '$1es',
+      pa: '$1ed',
+      gr: '$1ing'
+    }
+  }, {
+    reg: /(ish|tch|ess)$/i,
+    repl: {
+      pr: '$1es',
+      pa: '$1ed',
+      gr: '$1ing'
+    }
+  }, {
+    reg: /(ion|end|e[nc]t)$/i,
+    repl: {
+      pr: '$1s',
+      pa: '$1ed',
+      gr: '$1ing'
+    }
+  }, {
+    reg: /(om)e$/i,
+    repl: {
+      pr: '$1es',
+      pa: 'ame',
+      gr: '$1ing'
+    }
+  }, {
+    reg: /([aeiu])([pt])$/i,
+    repl: {
+      pr: '$1$2s',
+      pa: '$1$2',
+      gr: '$1$2$2ing'
+    }
+  }, {
+    reg: /(er)$/i,
+    repl: {
+      pr: '$1s',
+      pa: '$1ed',
+      gr: '$1ing'
+    }
+  }, {
+    reg: /(en)$/i,
+    repl: {
+      pr: '$1s',
+      pa: '$1ed',
+      gr: '$1ing'
+    },
+  },
+  {
+    reg: /(..)(ow)$/i,
+    repl: {
+      pr: '$1$2s',
+      pa: '$1ew',
+      gr: '$1$2ing',
+      prt: '$1$2n'
+    }
+  }
+];
+
+let keys = {
+  pr: 'present',
+  pa: 'past',
+  gr: 'gerund',
+  prt: 'participle',
+  ar: 'actor',
+};
+
+const from_infinitive = function(str) {
+  let obj = {
+    infinitive: str
+  };
+  if (!str) {
+    return obj;
+  }
+  for(let i = 0; i < rules.length; i++) {
+    if (str.match(rules[i].reg)) {
+      Object.keys(rules[i].repl).forEach(function(k) {
+        obj[keys[k]] = str.replace(rules[i].reg, rules[i].repl[k]);
+      });
+      return obj;
+    }
+  }
+  return obj;
+};
+// console.log(from_infinitive('arise'));
+
+module.exports = from_infinitive;
+
+},{}],67:[function(require,module,exports){
 'use strict';
 //this method is used to predict which current conjugation a verb is
 
-//this method is the slowest in the whole library, basically TODO:whaaa
-const suffix_rules = require('./suffix_rules');
+//this method is the slowest in the whole library,
 const fns = require('../../../fns.js');
+const suffix_rules = require('./suffix_rules');
+const irregular_verbs = require('../../../data/irregular_verbs');
+let known_verbs = Object.keys(irregular_verbs).reduce(function(h, k) {
+  Object.keys(irregular_verbs[k]).forEach(function(k2) {
+    h[irregular_verbs[k][k2]] = k2;
+  });
+  return h;
+}, {});
 
 const predict = function(w) {
+
+  //check if known infinitive
+  if (irregular_verbs[w]) {
+    return 'infinitive';
+  }
+  //check if known infinitive
+  if (known_verbs[w]) {
+    return known_verbs[w];
+  }
 
   if (w.match(/will ha(ve|d) [a-z]{2}/)) {
     return 'future_perfect';
@@ -8539,10 +8200,13 @@ const predict = function(w) {
   if (w.match(/..erer$/)) {
     return 'actor';
   }
+  if (w.match(/[^aeiou]ing$/)) {
+    return 'gerund';
+  }
 
   const arr = Object.keys(suffix_rules);
   for (let i = 0; i < arr.length; i++) {
-    if (fns.endsWith(w, arr[i])) {
+    if (fns.endsWith(w, arr[i]) && arr[i].length < w.length) {
       return suffix_rules[arr[i]];
     }
   }
@@ -8551,18 +8215,17 @@ const predict = function(w) {
 
 module.exports = predict;
 
-},{"../../../fns.js":18,"./suffix_rules":65}],65:[function(require,module,exports){
+},{"../../../data/irregular_verbs":9,"../../../fns.js":18,"./suffix_rules":68}],68:[function(require,module,exports){
 'use strict';
-//generated from test data
+//suffix signals for verb tense, generated from test data
 const compact = {
-  'gerund': [
-    'ing'
-  ],
+  'gerund': [],
   'infinitive': [
     'ate',
     'ize',
     'tion',
     'rify',
+    'then',
     'ress',
     'ify',
     'age',
@@ -8595,6 +8258,12 @@ const compact = {
     'eed',
     'er',
     'le'
+  ],
+  'participle': [
+    'own',
+    'unk',
+    'ung',
+    'en'
   ],
   'past': [
     'ed',
@@ -8644,17 +8313,16 @@ const compact = {
 const suffix_rules = {};
 const keys = Object.keys(compact);
 const l = keys.length;
-let l2;
 
 for (let i = 0; i < l; i++) {
-  l2 = compact[keys[i]].length;
+  let l2 = compact[keys[i]].length;
   for (let o = 0; o < l2; o++) {
     suffix_rules[compact[keys[i]][o]] = keys[i];
   }
 }
 module.exports = suffix_rules;
 
-},{}],66:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 //somone who does this present-tense verb
 //turn 'walk' into 'walker'
 'use strict';
@@ -8719,471 +8387,181 @@ const actor = function(str) {
 // console.log(verb_to_actor('watch'))
 module.exports = actor;
 
-},{}],67:[function(require,module,exports){
-// regex rules for each part of speech that convert it to all other parts of speech.
-// used in combination with the generic 'fallback' method
+},{}],70:[function(require,module,exports){
 'use strict';
-let verb_rules = {
-  'actor': [
-    [
-      '(er)er$',
-      {
-        'in': '$1',
-        'pr': '$1s',
-        'g': '$1ing',
-        'pa': '$1ed'
-      }
-    ],
-  ],
-  'infinitive': [
-    [
-      '(eed)$',
-      {
-        'pr': '$1s',
-        'g': '$1ing',
-        'pa': '$1ed',
-        'do': '$1er'
-      }
-    ],
-    [
-      '(e)(ep)$',
-      {
-        'pr': '$1$2s',
-        'g': '$1$2ing',
-        'pa': '$1pt',
-        'do': '$1$2er'
-      }
-    ],
-    [
-      '(a[tg]|i[zn]|ur|nc|gl|is)e$',
-      {
-        'pr': '$1es',
-        'g': '$1ing',
-        'pa': '$1ed'
-      }
-    ],
-    [
-      '([i|f|rr])y$',
-      {
-        'pr': '$1ies',
-        'g': '$1ying',
-        'pa': '$1ied'
-      }
-    ],
-    [
-      '([td]er)$',
-      {
-        'pr': '$1s',
-        'g': '$1ing',
-        'pa': '$1ed'
-      }
-    ],
-    [
-      '([bd]l)e$',
-      {
-        'pr': '$1es',
-        'g': '$1ing',
-        'pa': '$1ed'
-      }
-    ],
-    [
-      '(ish|tch|ess)$',
-      {
-        'pr': '$1es',
-        'g': '$1ing',
-        'pa': '$1ed'
-      }
-    ],
-    [
-      '(ion|end|e[nc]t)$',
-      {
-        'pr': '$1s',
-        'g': '$1ing',
-        'pa': '$1ed'
-      }
-    ],
-    [
-      '(om)e$',
-      {
-        'pr': '$1es',
-        'g': '$1ing',
-        'pa': 'ame'
-      }
-    ],
-    [
-      '([aeiu])([pt])$',
-      {
-        'pr': '$1$2s',
-        'g': '$1$2$2ing',
-        'pa': '$1$2'
-      }
-    ],
-    [
-      '(er)$',
-      {
-        'pr': '$1s',
-        'g': '$1ing',
-        'pa': '$1ed'
-      }
-    ],
-    [
-      '(en)$',
-      {
-        'pr': '$1s',
-        'g': '$1ing',
-        'pa': '$1ed'
-      }
-    ]
-  ],
-  'present': [
-    [
-      '(ies)$',
-      {
-        'in': 'y',
-        'g': 'ying',
-        'pa': 'ied'
-      }
-    ],
-    [
-      '(tch|sh)es$',
-      {
-        'in': '$1',
-        'g': '$1ing',
-        'pa': '$1ed'
-      }
-    ],
-    [
-      '(ss)es$',
-      {
-        'in': '$1',
-        'g': '$1ing',
-        'pa': '$1ed'
-      }
-    ],
-    [
-      '([tzlshicgrvdnkmu])es$',
-      {
-        'in': '$1e',
-        'g': '$1ing',
-        'pa': '$1ed'
-      }
-    ],
-    [
-      '(n[dtk]|c[kt]|[eo]n|i[nl]|er|a[ytrl])s$',
-      {
-        'in': '$1',
-        'g': '$1ing',
-        'pa': '$1ed'
-      }
-    ],
-    [
-      '(ow)s$',
-      {
-        'in': '$1',
-        'g': '$1ing',
-        'pa': 'ew'
-      }
-    ],
-    [
-      '(op)s$',
-      {
-        'in': '$1',
-        'g': '$1ping',
-        'pa': '$1ped'
-      }
-    ],
-    [
-      '([eirs])ts$',
-      {
-        'in': '$1t',
-        'g': '$1tting',
-        'pa': '$1tted'
-      }
-    ],
-    [
-      '(ll)s$',
-      {
-        'in': '$1',
-        'g': '$1ing',
-        'pa': '$1ed'
-      }
-    ],
-    [
-      '(el)s$',
-      {
-        'in': '$1',
-        'g': '$1ling',
-        'pa': '$1led'
-      }
-    ],
-    [
-      '(ip)es$',
-      {
-        'in': '$1e',
-        'g': '$1ing',
-        'pa': '$1ed'
-      }
-    ],
-    [
-      'ss$',
-      {
-        'in': 'ss',
-        'g': 'ssing',
-        'pa': 'ssed'
-      }
-    ],
-    [
-      's$',
-      {
-        'in': '',
-        'g': 'ing',
-        'pa': 'ed'
-      }
-    ]
-  ],
-  'gerund': [
-    [
-      'pping$',
-      {
-        'in': 'p',
-        'pr': 'ps',
-        'pa': 'pped'
-      }
-    ],
-    [
-      'lling$',
-      {
-        'in': 'll',
-        'pr': 'lls',
-        'pa': 'lled'
-      }
-    ],
-    [
-      'tting$',
-      {
-        'in': 't',
-        'pr': 'ts',
-        'pa': 't'
-      }
-    ],
-    [
-      'ssing$',
-      {
-        'in': 'ss',
-        'pr': 'sses',
-        'pa': 'ssed'
-      }
-    ],
-    [
-      'gging$',
-      {
-        'in': 'g',
-        'pr': 'gs',
-        'pa': 'gged'
-      }
-    ],
-    [
-      '([^aeiou])ying$',
-      {
-        'in': '$1y',
-        'pr': '$1ies',
-        'pa': '$1ied',
-        'do': '$1ier'
-      }
-    ],
-    [
-      '(i.)ing$',
-      {
-        'in': '$1e',
-        'pr': '$1es',
-        'pa': '$1ed'
-      }
-    ],
-    [
-      '(u[rtcb]|[bdtpkg]l|n[cg]|a[gdkvtc]|[ua]s|[dr]g|yz|o[rlsp]|cre)ing$',
-      {
-        'in': '$1e',
-        'pr': '$1es',
-        'pa': '$1ed'
-      }
-    ],
-    [
-      '(ch|sh)ing$',
-      {
-        'in': '$1',
-        'pr': '$1es',
-        'pa': '$1ed'
-      }
-    ],
-    [
-      '(..)ing$',
-      {
-        'in': '$1',
-        'pr': '$1s',
-        'pa': '$1ed'
-      }
-    ]
-  ],
-  'past': [
-    [
-      '(ued)$',
-      {
-        'pr': 'ues',
-        'g': 'uing',
-        'pa': 'ued',
-        'do': 'uer'
-      }
-    ],
-    [
-      '(e|i)lled$',
-      {
-        'pr': '$1lls',
-        'g': '$1lling',
-        'pa': '$1lled',
-        'do': '$1ller'
-      }
-    ],
-    [
-      '(sh|ch)ed$',
-      {
-        'in': '$1',
-        'pr': '$1es',
-        'g': '$1ing',
-        'do': '$1er'
-      }
-    ],
-    [
-      '(tl|gl)ed$',
-      {
-        'in': '$1e',
-        'pr': '$1es',
-        'g': '$1ing',
-        'do': '$1er'
-      }
-    ],
-    [
-      '(ss)ed$',
-      {
-        'in': '$1',
-        'pr': '$1es',
-        'g': '$1ing',
-        'do': '$1er'
-      }
-    ],
-    [
-      'pped$',
-      {
-        'in': 'p',
-        'pr': 'ps',
-        'g': 'pping',
-        'do': 'pper'
-      }
-    ],
-    [
-      'tted$',
-      {
-        'in': 't',
-        'pr': 'ts',
-        'g': 'tting',
-        'do': 'tter'
-      }
-    ],
-    [
-      'gged$',
-      {
-        'in': 'g',
-        'pr': 'gs',
-        'g': 'gging',
-        'do': 'gger'
-      }
-    ],
-    [
-      '(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ail|ld|en|oo.|er|k|pp|w|ou.|rt|ght|rm)ed$',
-      {
-        'in': '$1',
-        'pr': '$1s',
-        'g': '$1ing',
-        'do': '$1er'
-      }
-    ],
-    [
-      '(..[^aeiou])ed$',
-      {
-        'in': '$1e',
-        'pr': '$1es',
-        'g': '$1ing',
-        'do': '$1er'
-      }
-    ],
-    [
-      'ied$',
-      {
-        'in': 'y',
-        'pr': 'ies',
-        'g': 'ying',
-        'do': 'ier'
-      }
-    ],
-    [
-      '(.o)ed$',
-      {
-        'in': '$1o',
-        'pr': '$1os',
-        'g': '$1oing',
-        'do': '$1oer'
-      }
-    ],
-    [
-      '(.i)ed$',
-      {
-        'in': '$1',
-        'pr': '$1s',
-        'g': '$1ing',
-        'do': '$1er'
-      }
-    ],
-    [
-      '([rl])ew$',
-      {
-        'in': '$1ow',
-        'pr': '$1ows',
-        'g': '$1owing'
-      }
-    ],
-    [
-      '([pl])t$',
-      {
-        'in': '$1t',
-        'pr': '$1ts',
-        'g': '$1ting'
-      }
-    ]
-  ]
-};
-//unpack compressed form
-verb_rules = Object.keys(verb_rules).reduce(function(h, k) {
-  h[k] = verb_rules[k].map(function(a) {
-    const obj = {
-      reg: new RegExp(a[0], 'i'),
-      repl: {
-        infinitive: a[1]['in'],
-        present: a[1]['pr'],
-        past: a[1]['pa'],
-        gerund: a[1]['g']
-      }
-    };
-    if (a[1]['do']) {
-      obj.repl.actor = a[1]['do'];
-    }
-    return obj;
+const irregular_verbs = require('../../../data/irregular_verbs');
+let known_verbs = Object.keys(irregular_verbs).reduce(function(h, k) {
+  Object.keys(irregular_verbs[k]).forEach(function(k2) {
+    h[irregular_verbs[k][k2]] = k;
   });
   return h;
 }, {});
 
-module.exports = verb_rules;
-// console.log(JSON.stringify(verb_rules, null, 2));
 
-},{}],68:[function(require,module,exports){
+let rules = {
+  participle: [
+    {
+      reg: /own$/i,
+      to: 'ow'
+    },
+    {
+      reg: /(.)un([g|k])$/i,
+      to: '$1in$2'
+    },
+    {
+      reg: /(..)en$/i,
+      to: '$1e'
+    },
+  ],
+  actor: [
+    {
+      reg: /(er)er$/i,
+      to: '$1'
+    }
+  ],
+  present: [
+    {
+      reg: /(ies)$/i,
+      to: 'y'
+    }, {
+      reg: /(tch|sh)es$/i,
+      to: '$1'
+    }, {
+      reg: /(ss)es$/i,
+      to: '$1'
+    }, {
+      reg: /([tzlshicgrvdnkmu])es$/i,
+      to: '$1e'
+    }, {
+      reg: /(n[dtk]|c[kt]|[eo]n|i[nl]|er|a[ytrl])s$/i,
+      to: '$1'
+    }, {
+      reg: /(ow)s$/i,
+      to: '$1'
+    }, {
+      reg: /(op)s$/i,
+      to: '$1'
+    }, {
+      reg: /([eirs])ts$/i,
+      to: '$1t'
+    }, {
+      reg: /(ll)s$/i,
+      to: '$1'
+    }, {
+      reg: /(el)s$/i,
+      to: '$1'
+    }, {
+      reg: /(ip)es$/i,
+      to: '$1e'
+    }, {
+      reg: /ss$/i,
+      to: 'ss'
+    }, {
+      reg: /s$/i,
+      to: ''
+    }],
+  gerund: [
+    {
+      reg: /pping$/i,
+      to: 'p'
+    }, {
+      reg: /lling$/i,
+      to: 'll'
+    }, {
+      reg: /tting$/i,
+      to: 't'
+    }, {
+      reg: /ssing$/i,
+      to: 'ss'
+    }, {
+      reg: /gging$/i,
+      to: 'g'
+    }, {
+      reg: /([^aeiou])ying$/i,
+      to: '$1y'
+    }, {
+      reg: /(i.)ing$/i,
+      to: '$1e'
+    }, {
+      reg: /(u[rtcb]|[bdtpkg]l|n[cg]|a[gdkvtc]|[ua]s|[dr]g|yz|o[rlsp]|cre)ing$/i,
+      to: '$1e'
+    }, {
+      reg: /(ch|sh)ing$/i,
+      to: '$1'
+    }, {
+      reg: /(..)ing$/i,
+      to: '$1'
+    }],
+  past: [
+    {
+      reg: /(ued)$/i,
+      to: 'ue'
+    }, {
+      reg: /(e|i)lled$/i,
+      to: '$1ll'
+    }, {
+      reg: /(sh|ch)ed$/i,
+      to: '$1'
+    }, {
+      reg: /(tl|gl)ed$/i,
+      to: '$1e'
+    }, {
+      reg: /(ss)ed$/i,
+      to: '$1'
+    }, {
+      reg: /pped$/i,
+      to: 'p'
+    }, {
+      reg: /tted$/i,
+      to: 't'
+    }, {
+      reg: /gged$/i,
+      to: 'g'
+    }, {
+      reg: /(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ail|ld|en|oo.|er|k|pp|w|ou.|rt|ght|rm)ed$/i,
+      to: '$1'
+    }, {
+      reg: /(..[^aeiou])ed$/i,
+      to: '$1e'
+    }, {
+      reg: /ied$/i,
+      to: 'y'
+    }, {
+      reg: /(.o)ed$/i,
+      to: '$1o'
+    }, {
+      reg: /(.i)ed$/i,
+      to: '$1'
+    }, {
+      reg: /([rl])ew$/i,
+      to: '$1ow'
+    }, {
+      reg: /([pl])t$/i,
+      to: '$1t'
+    }]
+};
+
+const to_infinitive = function (str, from_tense) {
+  if (known_verbs[str]) {
+    return known_verbs[str];
+  }
+  if (from_tense === 'infinitive') {
+    return str;
+  }
+  let regs = rules[from_tense] || [];
+  for(let i = 0; i < regs.length; i++) {
+    if (str.match(regs[i].reg)) {
+      return str.replace(regs[i].reg, regs[i].to);
+    }
+  }
+  return str;
+};
+
+// console.log(to_infinitive('wrecked', 'past'));
+
+module.exports = to_infinitive;
+
+},{"../../../data/irregular_verbs":9}],71:[function(require,module,exports){
 'use strict';
 //recieves a verb object, and returns a negated string
 //sort out don't/didn't/doesn't/won't
@@ -9256,7 +8634,7 @@ const negate = function(v, form) {
 
 module.exports = negate;
 
-},{}],69:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 'use strict';
 const Term = require('../term.js');
 const conjugate = require('./conjugate/conjugate.js');
@@ -9287,8 +8665,8 @@ class Verb extends Term {
     this.pos['Verb'] = true;
     this.conjugations = {}; //cached conjugations
     //if we've been told which
+    this.pos[tag] = true;
     if (tag && verbTags[tag]) {
-      this.pos[tag] = true;
       this.conjugations[tag] = this.normal;
     }
   }
@@ -9365,7 +8743,7 @@ class Verb extends Term {
 
 module.exports = Verb;
 
-},{"../term.js":62,"./conjugate/conjugate.js":63,"./conjugate/predict_form.js":64,"./negate.js":68}],70:[function(require,module,exports){
+},{"../term.js":64,"./conjugate/conjugate.js":65,"./conjugate/predict_form.js":67,"./negate.js":71}],73:[function(require,module,exports){
 'use strict';
 //split a string into all possible parts
 const fns = require('../fns.js');
@@ -9426,7 +8804,7 @@ const ngram = function(terms, options) {
 
 module.exports = ngram;
 
-},{"../fns.js":18}],71:[function(require,module,exports){
+},{"../fns.js":18}],74:[function(require,module,exports){
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
@@ -9468,7 +8846,7 @@ const sentence_parser = function(text) {
 
 module.exports = sentence_parser;
 
-},{"../data/abbreviations":1}],72:[function(require,module,exports){
+},{"../data/abbreviations":1}],75:[function(require,module,exports){
 'use strict';
 const sentence_parser = require('./sentence_parser.js');
 const Sentence = require('../sentence/sentence.js');
@@ -9572,4 +8950,4 @@ class Text {
 
 module.exports = Text;
 
-},{"../fns.js":18,"../sentence/sentence.js":27,"./ngram.js":70,"./sentence_parser.js":71}]},{},[19]);
+},{"../fns.js":18,"../sentence/sentence.js":29,"./ngram.js":73,"./sentence_parser.js":74}]},{},[19]);

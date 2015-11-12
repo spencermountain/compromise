@@ -13,7 +13,11 @@ const fufill = function(obj, prefix) {
     return obj;
   }
   if (!obj.gerund) {
-    obj.gerund = obj.infinitive + 'ing';
+    if (obj.infinitive.match(/e$/)) {
+      obj.gerund = obj.infinitive.replace(/e$/, 'ing');
+    } else {
+      obj.gerund = obj.infinitive + 'ing';
+    }
   }
   if (obj.actor === undefined) {
     obj.actor = verb_to_actor(obj.infinitive);
@@ -146,8 +150,7 @@ const conjugate = function(w) {
 };
 module.exports = conjugate;
 
-// console.log(conjugate('is'));
-// console.log(conjugate('taken'));
+// console.log(conjugate('convolute'));
 
 
 // console.log(conjugate("overtook"))

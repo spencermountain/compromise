@@ -66,5 +66,5 @@ if (typeof window === 'object') {
 }
 module.exports = nlp;
 
-let n = nlp.Verb('approaching').conjugation();
-console.log(n);
+// let n = nlp.Verb('approaching').conjugation();
+// console.log(n);

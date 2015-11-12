@@ -4,11 +4,6 @@ const Noun = require('../noun.js');
 const guess_gender = require('./gender.js');
 const parse_name = require('./parse_name.js');
 
-const honourifics = require('../../../data/honourifics').reduce(function(h, s) {
-  h[s] = true;
-  return h;
-}, {});
-
 class Person extends Noun {
   constructor(str, tag) {
     super(str);

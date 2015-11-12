@@ -1,7 +1,6 @@
 'use strict';
 const Term = require('../term.js');
 const conjugate = require('./conjugate/conjugate.js');
-const predict_form = require('./conjugate/predict_form.js');
 const negate = require('./negate.js');
 
 const verbTags = {

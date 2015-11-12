@@ -36,7 +36,6 @@ class Value extends Noun {
   parse() {
     let words = this.normal.split(' ');
     let numbers = '';
-    let unit = '';
     for(let i = 0; i < words.length; i++) {
       let w = words[i];
       if (nums.ones[w] || nums.teens[w] || nums.tens[w] || nums.multiples[w]) {

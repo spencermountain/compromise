@@ -103,9 +103,9 @@ const prefixes = {
 };
 
 module.exports = {
-  ones,
-  teens,
-  tens,
-  multiples,
-  prefixes,
+  ones: ones,
+  teens: teens,
+  tens: tens,
+  multiples: multiples,
+  prefixes: prefixes,
 };

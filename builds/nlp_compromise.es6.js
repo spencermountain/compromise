@@ -4662,7 +4662,6 @@ const chunk_neighbours = function(terms) {
 const grammar_rules_pass = function(s) {
   let tags = s.tags();
   for(let i = 0; i < s.terms.length; i++) {
-    let t = s.terms[i];
     for(let o = 0; o < grammar_rules.length; o++) {
       let rule = grammar_rules[o];
       //does this rule match
@@ -6532,7 +6531,6 @@ module.exports = Noun;
 
 },{"../term.js":64,"./article.js":39,"./date/is_date.js":42,"./is_plural.js":44,"./is_uncountable.js":45,"./organisation/is_organisation.js":47,"./person/is_person.js":50,"./place/is_place.js":53,"./pluralize.js":55,"./pronoun.js":56,"./singularize.js":57,"./value/is_value.js":58}],47:[function(require,module,exports){
 'use strict';
-const firstnames = require('../../../data/firstnames');
 const abbreviations = require('../../../data/abbreviations');
 const org_data = require('../../../data/organisations');
 
@@ -6590,7 +6588,7 @@ module.exports = is_organisation;
 
 // console.log(is_organisation('Captain of Jamaica'));
 
-},{"../../../data/abbreviations":1,"../../../data/firstnames":6,"../../../data/organisations":13}],48:[function(require,module,exports){
+},{"../../../data/abbreviations":1,"../../../data/organisations":13}],48:[function(require,module,exports){
 'use strict';
 const Noun = require('../noun.js');
 
@@ -6747,11 +6745,6 @@ const Noun = require('../noun.js');
 const guess_gender = require('./gender.js');
 const parse_name = require('./parse_name.js');
 
-const honourifics = require('../../../data/honourifics').reduce(function(h, s) {
-  h[s] = true;
-  return h;
-}, {});
-
 class Person extends Noun {
   constructor(str, tag) {
     super(str);
@@ -6784,7 +6777,7 @@ module.exports = Person;
 // let p = new Person('John Smith');
 // console.log(p.gender());
 
-},{"../../../data/honourifics":7,"../noun.js":46,"./gender.js":49,"./parse_name.js":51}],53:[function(require,module,exports){
+},{"../noun.js":46,"./gender.js":49,"./parse_name.js":51}],53:[function(require,module,exports){
 'use strict';
 
 const places = require('../../../data/places');
@@ -7058,7 +7051,6 @@ module.exports = singularize;
 },{"../../data/irregular_nouns.js":8,"../../fns.js":18,"./is_plural.js":44,"./is_uncountable.js":45}],58:[function(require,module,exports){
 'use strict';
 
-const numbers = require('../../../data/numbers');
 const nums = require('./numbers');
 const is_date = require('../date/is_date');
 
@@ -7082,7 +7074,7 @@ const is_value = function(str) {
 
 module.exports = is_value;
 
-},{"../../../data/numbers":12,"../date/is_date":42,"./numbers":59}],59:[function(require,module,exports){
+},{"../date/is_date":42,"./numbers":59}],59:[function(require,module,exports){
 const ones = {
   'a': 1,
   'zero': 0,
@@ -7188,11 +7180,11 @@ const prefixes = {
 };
 
 module.exports = {
-  ones,
-  teens,
-  tens,
-  multiples,
-  prefixes,
+  ones: ones,
+  teens: teens,
+  tens: tens,
+  multiples: multiples,
+  prefixes: prefixes,
 };
 
 },{}],60:[function(require,module,exports){
@@ -7206,8 +7198,6 @@ module.exports = {
 
 'use strict';
 const nums = require('./numbers.js');
-const units = require('./units.js');
-
 //these sets of numbers each have different rules
 //[tenth, hundreth, thousandth..] are ambiguous because they could be ordinal like fifth, or decimal like one-one-hundredth, so are ignored
 // let decimal_multiple={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
@@ -7408,7 +7398,7 @@ const to_number = function(s) {
 //kick it into module
 module.exports = to_number;
 
-},{"./numbers.js":59,"./units.js":61}],61:[function(require,module,exports){
+},{"./numbers.js":59}],61:[function(require,module,exports){
 const units = {
   'Temperature': {
     '°C': 'Celsius',
@@ -7632,7 +7622,6 @@ class Value extends Noun {
   parse() {
     let words = this.normal.split(' ');
     let numbers = '';
-    let unit = '';
     for(let i = 0; i < words.length; i++) {
       let w = words[i];
       if (nums.ones[w] || nums.teens[w] || nums.tens[w] || nums.multiples[w]) {
@@ -7877,44 +7866,6 @@ const fufill = function(obj, prefix) {
   return obj;
 };
 
-//fallback to this transformation if it has an unknown prefix
-const fallback = function(w) {
-  if (!w) {
-    return {};
-  }
-  let infinitive;
-  if (w.length > 4) {
-    infinitive = w.replace(/ed$/, '');
-  } else {
-    infinitive = w.replace(/d$/, '');
-  }
-  let present, past, gerund, actor;
-  if (w.match(/[^aeiou]$/)) {
-    gerund = w + 'ing';
-    past = w + 'ed';
-    if (w.match(/ss$/)) {
-      present = w + 'es'; //'passes'
-    } else {
-      present = w + 's';
-    }
-    actor = verb_to_actor(infinitive);
-  } else {
-    gerund = w.replace(/[aeiou]$/, 'ing');
-    past = w.replace(/[aeiou]$/, 'ed');
-    present = w.replace(/[aeiou]$/, 'es');
-    actor = verb_to_actor(infinitive);
-  }
-  let obj = {
-    infinitive: infinitive,
-    present: present,
-    past: past,
-    gerund: gerund,
-    actor: actor
-  };
-  return fufill(obj);
-};
-
-
 const conjugate = function(w) {
   if (w === undefined) {
     return {};
@@ -7945,8 +7896,12 @@ const conjugate = function(w) {
   w = w.replace(/^will /i, '');
 
   //un-prefix the verb, and add it in later
-  const prefix = (w.match(/^(over|under|re|anti|full)\-?/i) || [])[0];
-  const verb = w.replace(/^(over|under|re|anti|full)\-?/i, '');
+  let prefix = '';
+  let match = w.match(/^(over|under|re|anti|full)[- ]?([a-z]*)/i);
+  if (match) {
+    prefix = match[1];
+    w = match[2];
+  }
 
   //guess the tense, so we know which transormation to make
   const predicted = predict(w) || 'infinitive';
@@ -7962,18 +7917,14 @@ const conjugate = function(w) {
       obj[k] = conjugations[k];
     }
   });
-  // return obj;
-  return fufill(obj);
-
-//produce a generic transformation
-// return fallback(w);
+  return fufill(obj, prefix);
 };
 module.exports = conjugate;
 
 // console.log(conjugate('convolute'));
 
 
-// console.log(conjugate("overtook"))
+// console.log(conjugate('overtake'));
 // console.log(conjugate("watch out"))
 // console.log(conjugate("watch"))
 // console.log(conjugate("smash"))
@@ -8638,7 +8589,6 @@ module.exports = negate;
 'use strict';
 const Term = require('../term.js');
 const conjugate = require('./conjugate/conjugate.js');
-const predict_form = require('./conjugate/predict_form.js');
 const negate = require('./negate.js');
 
 const verbTags = {
@@ -8743,7 +8693,7 @@ class Verb extends Term {
 
 module.exports = Verb;
 
-},{"../term.js":64,"./conjugate/conjugate.js":65,"./conjugate/predict_form.js":67,"./negate.js":71}],73:[function(require,module,exports){
+},{"../term.js":64,"./conjugate/conjugate.js":65,"./negate.js":71}],73:[function(require,module,exports){
 'use strict';
 //split a string into all possible parts
 const fns = require('../fns.js');

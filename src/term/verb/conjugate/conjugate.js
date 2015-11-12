@@ -57,44 +57,6 @@ const fufill = function(obj, prefix) {
   return obj;
 };
 
-//fallback to this transformation if it has an unknown prefix
-const fallback = function(w) {
-  if (!w) {
-    return {};
-  }
-  let infinitive;
-  if (w.length > 4) {
-    infinitive = w.replace(/ed$/, '');
-  } else {
-    infinitive = w.replace(/d$/, '');
-  }
-  let present, past, gerund, actor;
-  if (w.match(/[^aeiou]$/)) {
-    gerund = w + 'ing';
-    past = w + 'ed';
-    if (w.match(/ss$/)) {
-      present = w + 'es'; //'passes'
-    } else {
-      present = w + 's';
-    }
-    actor = verb_to_actor(infinitive);
-  } else {
-    gerund = w.replace(/[aeiou]$/, 'ing');
-    past = w.replace(/[aeiou]$/, 'ed');
-    present = w.replace(/[aeiou]$/, 'es');
-    actor = verb_to_actor(infinitive);
-  }
-  let obj = {
-    infinitive: infinitive,
-    present: present,
-    past: past,
-    gerund: gerund,
-    actor: actor
-  };
-  return fufill(obj);
-};
-
-
 const conjugate = function(w) {
   if (w === undefined) {
     return {};
@@ -125,8 +87,12 @@ const conjugate = function(w) {
   w = w.replace(/^will /i, '');
 
   //un-prefix the verb, and add it in later
-  const prefix = (w.match(/^(over|under|re|anti|full)\-?/i) || [])[0];
-  const verb = w.replace(/^(over|under|re|anti|full)\-?/i, '');
+  let prefix = '';
+  let match = w.match(/^(over|under|re|anti|full)[- ]?([a-z]*)/i);
+  if (match) {
+    prefix = match[1];
+    w = match[2];
+  }
 
   //guess the tense, so we know which transormation to make
   const predicted = predict(w) || 'infinitive';
@@ -142,18 +108,14 @@ const conjugate = function(w) {
       obj[k] = conjugations[k];
     }
   });
-  // return obj;
-  return fufill(obj);
-
-//produce a generic transformation
-// return fallback(w);
+  return fufill(obj, prefix);
 };
 module.exports = conjugate;
 
 // console.log(conjugate('convolute'));
 
 
-// console.log(conjugate("overtook"))
+// console.log(conjugate('overtake'));
 // console.log(conjugate("watch out"))
 // console.log(conjugate("watch"))
 // console.log(conjugate("smash"))

@@ -96,7 +96,6 @@ const chunk_neighbours = function(terms) {
 const grammar_rules_pass = function(s) {
   let tags = s.tags();
   for(let i = 0; i < s.terms.length; i++) {
-    let t = s.terms[i];
     for(let o = 0; o < grammar_rules.length; o++) {
       let rule = grammar_rules[o];
       //does this rule match

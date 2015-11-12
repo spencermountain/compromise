@@ -265,8 +265,8 @@ const americanize = function(str) {
 
 // console.log(americanize("synthesise") === "synthesize")
 // console.log(americanize('are'));
-console.log(americanize('yoghourt') === 'yogurt');
-console.log(americanize('yoghourts') === 'yogurts');
-console.log(exceptions['yoghourt']);
+// console.log(americanize('yoghourt') === 'yogurt');
+// console.log(americanize('yoghourts') === 'yogurts');
+// console.log(exceptions['yoghourt']);
 
 module.exports = americanize;

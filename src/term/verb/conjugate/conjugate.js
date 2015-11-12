@@ -7,8 +7,6 @@ const irregular_verbs = require('../../../data/irregular_verbs');
 const predict = require('./predict_form.js');
 
 
-
-
 //make sure object has all forms
 const fufill = function(obj, prefix) {
   if (!obj.infinitive) {
@@ -17,14 +15,18 @@ const fufill = function(obj, prefix) {
   if (!obj.gerund) {
     obj.gerund = obj.infinitive + 'ing';
   }
-  if (!obj.actor) {
+  if (obj.actor === undefined) {
     obj.actor = verb_to_actor(obj.infinitive);
   }
   if (!obj.present) {
     obj.present = obj.infinitive + 's';
   }
   if (!obj.past) {
-    obj.past = obj.infinitive + 'ed';
+    if (obj.infinitive.match(/e$/)) {
+      obj.past = obj.infinitive + 'd';
+    } else {
+      obj.past = obj.infinitive + 'ed';
+    }
   }
   //add the prefix to all forms, if it exists
   if (prefix) {
@@ -127,11 +129,15 @@ const conjugate = function(w) {
   //check against suffix rules
   let infinitive = to_infinitive(w, predicted);
   //check irregulars
-  let obj = irregular_verbs[w] || irregular_verbs[infinitive];
+  let obj = irregular_verbs[w] || irregular_verbs[infinitive] || {};
+  obj.infinitive = infinitive;
   //apply regex-transformations
-  if (!obj) {
-    obj = from_infinitive(infinitive);
-  }
+  let conjugations = from_infinitive(infinitive);
+  Object.keys(conjugations).forEach(function(k) {
+    if (!obj[k]) {
+      obj[k] = conjugations[k];
+    }
+  });
   // return obj;
   return fufill(obj);
 
@@ -140,7 +146,7 @@ const conjugate = function(w) {
 };
 module.exports = conjugate;
 
-console.log(conjugate('was'));
+// console.log(conjugate('is'));
 // console.log(conjugate('taken'));
 
 

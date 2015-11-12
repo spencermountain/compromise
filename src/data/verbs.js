@@ -1,4 +1,4 @@
-//most-frequent non-irregular verbs, to be conjugated for the lexicon
+//most-frequent non-irregular verbs, in infinitive form, to be conjugated for the lexicon
 //this list is the seed, from which various forms are conjugated
 module.exports = [
   'collapse',
@@ -556,8 +556,8 @@ module.exports = [
   'enhance',
   'distinguish',
   'avoid',
-  //contractions
-  'don\'t',
-  'won\'t',
-  'what\'s' //somewhat ambiguous (what does|what are)
+//contractions
+// 'don\'t',
+// 'won\'t',
+// 'what\'s' //somewhat ambiguous (what does|what are)
 ];

@@ -1,11 +1,11 @@
 'use strict';
 const irregular_verbs = require('../../../data/irregular_verbs');
-let known_verbs = {};
-Object.keys(irregular_verbs).forEach(function(k) {
+let known_verbs = Object.keys(irregular_verbs).reduce(function(h, k) {
   Object.keys(irregular_verbs[k]).forEach(function(k2) {
-    known_verbs[irregular_verbs[k][k2]] = k;
+    h[irregular_verbs[k][k2]] = k;
   });
-});
+  return h;
+}, {});
 
 
 let rules = {

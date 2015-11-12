@@ -2,16 +2,15 @@
 //this method is used to predict which current conjugation a verb is
 
 //this method is the slowest in the whole library,
+const fns = require('../../../fns.js');
 const suffix_rules = require('./suffix_rules');
 const irregular_verbs = require('../../../data/irregular_verbs');
-const fns = require('../../../fns.js');
-
-let known_verbs = {};
-Object.keys(irregular_verbs).forEach(function(k) {
+let known_verbs = Object.keys(irregular_verbs).reduce(function(h, k) {
   Object.keys(irregular_verbs[k]).forEach(function(k2) {
-    known_verbs[irregular_verbs[k][k2]] = k2;
+    h[irregular_verbs[k][k2]] = k2;
   });
-});
+  return h;
+}, {});
 
 const predict = function(w) {
 
@@ -39,7 +38,7 @@ const predict = function(w) {
   if (w.match(/..erer$/)) {
     return 'actor';
   }
-  if (w.match(/(^[aeiou])ing$/)) {
+  if (w.match(/[^aeiou]ing$/)) {
     return 'gerund';
   }
 

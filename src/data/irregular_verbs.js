@@ -2,7 +2,7 @@
 module.exports = {
   arise: {
     past: 'arose',
-    future: 'arisen'
+    participle: 'arisen'
   },
   babysit: {
     past: 'babysat',
@@ -11,12 +11,20 @@ module.exports = {
   be: {
     past: 'was',
     present: 'am',
+    future: 'will be',
+    perfect: 'have been',
+    pluperfect: 'had been',
+    future_perfect: 'will have been',
     actor: '',
     gerund: 'am'
   },
   is: {
     past: 'was',
     present: 'is',
+    future: 'will be',
+    perfect: 'have been',
+    pluperfect: 'had been',
+    future_perfect: 'will have been',
     actor: '',
     gerund: 'being'
   },

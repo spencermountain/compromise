@@ -41,7 +41,9 @@ const verbMap = {
   PastTense: 'PastTense',
   PresentTense: 'PresentTense',
 };
-const verbs = require('./data/verbs.js');
+
+const irregulars = require('./data/irregular_verbs.js');
+let verbs = require('./data/verbs.js').concat(Object.keys(irregulars));
 for (let i = 0; i < verbs.length; i++) {
   const o = verb_conjugate(verbs[i]);
   Object.keys(o).forEach(function(k) {
@@ -50,15 +52,6 @@ for (let i = 0; i < verbs.length; i++) {
     }
   });
 }
-const irreg = require('./data/irregular_verbs.js');
-Object.keys(irreg).forEach(function(k) {
-  lexicon[k] = verbMap['infinitive'];
-  Object.keys(irreg[k]).forEach(function(k2) {
-    lexicon[irreg[k][k2]] = verbMap[k2];
-  });
-
-});
-
 
 let orgs = require('./data/organisations.js');
 addArr(orgs.organisations, 'Noun');

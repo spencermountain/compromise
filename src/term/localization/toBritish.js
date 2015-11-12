@@ -2,6 +2,10 @@
 // built with patterns+exceptions from https://en.wikipedia.org/wiki/British_spelling
 // (some patterns are only safe to do in one direction)
 'use strict';
+const exceptions = require('./exceptions').reduce(function(h, a) {
+  h[a[1]] = a[0];
+  return h;
+}, {});
 
 const patterns = [
   // ise -> ize
@@ -288,6 +292,13 @@ const patterns = [
 ];
 
 const britishize = function(str) {
+  if (exceptions[str]) {
+    return exceptions[str];
+  }
+  let single = str.replace(/s$/, ''); //eww
+  if (exceptions[single]) {
+    return exceptions[single];
+  }
   for (let i = 0; i < patterns.length; i++) {
     if (str.match(patterns[i].reg)) {
       return str.replace(patterns[i].reg, patterns[i].repl);

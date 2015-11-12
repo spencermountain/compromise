@@ -1,6 +1,11 @@
 // convert british spellings into american ones
 // built with patterns+exceptions from https://en.wikipedia.org/wiki/British_spelling
 'use strict';
+const exceptions = require('./exceptions').reduce(function(h, a) {
+  h[a[0]] = a[1];
+  return h;
+}, {});
+
 
 const patterns = [
   // ise -> ize
@@ -8,17 +13,18 @@ const patterns = [
     reg: /([^aeiou][iy])s(e|ed|es|ing)?$/,
     repl: '$1z$2'
   },
+
   // our -> or
   {
-    reg: /(..)our(ly|y|ite|ed|ing|s|al|ous|ful)?$/,
+    reg: /colour/,
+    repl: 'color'
+  },
+  {
+    reg: /(..)our(ly|y|ite|ed|ing|s|al|ous|ies|full?|able|ably|er|ism|ist|less)?s?$/,
     repl: '$1or$2'
   },
 
-  // re -> er
-  {
-    reg: /(.[^cdnv])re(s)?$/,
-    repl: '$1er$2'
-  },
+
   // xion -> tion
   {
     reg: /([aeiou])xion([ed])?$/,
@@ -26,7 +32,7 @@ const patterns = [
   },
   //logue -> log
   {
-    reg: /logue/,
+    reg: /logue?/,
     repl: 'log'
   },
   // ae -> e
@@ -53,8 +59,8 @@ const patterns = [
     repl: 'izabl$1'
   },
   {
-    reg: /iliser/,
-    repl: 'ilizer'
+    reg: /iser/,
+    repl: 'izer'
   },
   {
     reg: /(..)sing(ly)?/,
@@ -83,6 +89,11 @@ const patterns = [
   {
     reg: /centre/,
     repl: 'center'
+  },
+  // re -> er
+  {
+    reg: /(.[^cdnv])re(s)?$/,
+    repl: '$1er$2'
   },
   {
     reg: /fibre/,
@@ -220,13 +231,31 @@ const patterns = [
   {
     reg: /anaesthetis/,
     repl: 'anesthetiz'
+  },
+  {
+    reg: /anaesthetise/,
+    repl: 'anesthetize'
+  },
+  {
+    reg: /disc$/,
+    repl: 'disk'
+  },
+  {
+    reg: /tranquillise/,
+    repl: 'tranquilize'
   }
 ];
 
 const americanize = function(str) {
+  if (exceptions[str]) {
+    return exceptions[str];
+  }
+  let single = str.replace(/s$/, ''); //eww
+  if (exceptions[single]) {
+    return exceptions[single] + 's';
+  }
   for (let i = 0; i < patterns.length; i++) {
     if (str.match(patterns[i].reg)) {
-      console.log(patterns[i]);
       return str.replace(patterns[i].reg, patterns[i].repl);
     }
   }
@@ -235,6 +264,9 @@ const americanize = function(str) {
 };
 
 // console.log(americanize("synthesise") === "synthesize")
-console.log(americanize('are'));
+// console.log(americanize('are'));
+console.log(americanize('yoghourt') === 'yogurt');
+console.log(americanize('yoghourts') === 'yogurts');
+console.log(exceptions['yoghourt']);
 
 module.exports = americanize;

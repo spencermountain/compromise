@@ -1,7 +1,7 @@
 'use strict';
 const syllables = require('./syllables');
-const americanize = require('./americanize');
-const britishize = require('./britishize');
+const americanize = require('./localization/toAmerican');
+const britishize = require('./localization/toBritish');
 
 class Term {
   constructor(str, tag) {
@@ -65,7 +65,7 @@ class Term {
   }
 }
 
-// let t = new Term("synthesise")
-// console.log(t.isVerb())
+// let t = new Term('synthesise');
+// console.log(t.britishize());
 
 module.exports = Term;

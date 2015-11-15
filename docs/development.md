@@ -32,7 +32,7 @@ git tag -a v2.x.x -m "tag bower release"
 git push origin master --tags
 ```
 
-#stuff to achieve
+#TODO:
 * co-reference resolution (he/she/its). ```pronoun.reference(), noun.references()```
 * caching by sentence, so unchanged-sentences aren't re-parsed on keystroke
 * somehow integrate the bigger, looser tests with the unit tests, to better catch regressions

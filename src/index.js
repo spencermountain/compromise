@@ -16,55 +16,60 @@ const Organisation = require('./term/noun/organisation/organisation.js');
 const Lexicon = require('./lexicon.js');
 
 //function returns a text object if there's a param, otherwise
-const API = function(str) {
-  this.Term = function(s) {
+const API = {
+  models : {
+    Term,
+    Sentence,
+    Text
+  },
+  Term : function(s) {
     return new Term(s);
-  };
-  this.Verb = function(s) {
+  },
+  Verb : function(s) {
     return new Verb(s);
-  };
-  this.Adverb = function(s) {
+  },
+  Adverb : function(s) {
     return new Adverb(s);
-  };
-  this.Adjective = function(s) {
+  },
+  Adjective : function(s) {
     return new Adjective(s);
-  };
-  this.Sentence = function(s) {
+  },
+  Sentence : function(s) {
     return new Sentence(s);
-  };
-  this.Text = function(s) {
+  },
+  Text : function(s) {
     return new Text(s);
-  };
-
-  this.Noun = function(s) {
+  },
+  Noun : function(s) {
     return new Noun(s);
-  };
-  this.Person = function(s) {
+  },
+  Person : function(s) {
     return new Person(s);
-  };
-  this.Date = function(s) {
+  },
+  Date : function(s) {
     return new _Date(s);
-  };
-  this.Value = function(s) {
+  },
+  Value : function(s) {
     return new Value(s);
-  };
-  this.Place = function(s) {
+  },
+  Place : function(s) {
     return new Place(s);
-  };
-  this.Organisation = function(s) {
+  },
+  Organisation : function(s) {
     return new Organisation(s);
-  };
-  this.Lexicon = Lexicon;
-  if (str) {
-    return new Text(str);
   }
 };
 
-let nlp = new API;
+let nlp = API;
+// nlp.Term.capitalise = function() {
+//   return this.text.toUpperCase();
+// };
+
 if (typeof window === 'object') {
   window.nlp = nlp;
 }
 module.exports = nlp;
 
-// let n = nlp.Verb('approaching').conjugation();
-// console.log(n);
+
+// let n = nlp.Term('approaching');
+// console.log(n.capitalise());

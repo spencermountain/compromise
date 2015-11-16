@@ -46,6 +46,12 @@ class Text {
       return s.tags();
     });
   }
+  syllables() {
+    return this.sentences.reduce(function(arr, s) {
+      arr = arr.concat(s.syllables());
+      return arr;
+    }, []);
+  }
   to_past() {
     return this.sentences.map(function(s) {
       return s.to_past();

@@ -3874,58 +3874,63 @@ const Organisation = require('./term/noun/organisation/organisation.js');
 const Lexicon = require('./lexicon.js');
 
 //function returns a text object if there's a param, otherwise
-const API = function(str) {
-  this.Term = function(s) {
+const API = {
+  models : {
+    Term,
+    Sentence,
+    Text
+  },
+  Term : function(s) {
     return new Term(s);
-  };
-  this.Verb = function(s) {
+  },
+  Verb : function(s) {
     return new Verb(s);
-  };
-  this.Adverb = function(s) {
+  },
+  Adverb : function(s) {
     return new Adverb(s);
-  };
-  this.Adjective = function(s) {
+  },
+  Adjective : function(s) {
     return new Adjective(s);
-  };
-  this.Sentence = function(s) {
+  },
+  Sentence : function(s) {
     return new Sentence(s);
-  };
-  this.Text = function(s) {
+  },
+  Text : function(s) {
     return new Text(s);
-  };
-
-  this.Noun = function(s) {
+  },
+  Noun : function(s) {
     return new Noun(s);
-  };
-  this.Person = function(s) {
+  },
+  Person : function(s) {
     return new Person(s);
-  };
-  this.Date = function(s) {
+  },
+  Date : function(s) {
     return new _Date(s);
-  };
-  this.Value = function(s) {
+  },
+  Value : function(s) {
     return new Value(s);
-  };
-  this.Place = function(s) {
+  },
+  Place : function(s) {
     return new Place(s);
-  };
-  this.Organisation = function(s) {
+  },
+  Organisation : function(s) {
     return new Organisation(s);
-  };
-  this.Lexicon = Lexicon;
-  if (str) {
-    return new Text(str);
   }
 };
 
-let nlp = new API;
+let nlp = API;
+// nlp.Term.capitalise = function() {
+//   return this.text.toUpperCase();
+// };
+
 if (typeof window === 'object') {
   window.nlp = nlp;
 }
 module.exports = nlp;
 
-// let n = nlp.Verb('approaching').conjugation();
-// console.log(n);
+
+let n = nlp.Text('approaching');
+console.log(n.syllables());
 
 },{"./lexicon.js":20,"./sentence/sentence.js":29,"./term/adjective/adjective.js":30,"./term/adverb/adverb.js":35,"./term/noun/date/date.js":41,"./term/noun/noun.js":47,"./term/noun/organisation/organisation.js":49,"./term/noun/person/person.js":53,"./term/noun/place/place.js":55,"./term/noun/value/value.js":63,"./term/term.js":65,"./term/verb/verb.js":73,"./text/text.js":76}],20:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
@@ -4936,6 +4941,12 @@ class Sentence {
   }
   tags() {
     return fns.pluck(this.terms, 'tag');
+  }
+  syllables() {
+    return this.terms.reduce(function(arr, t) {
+      arr = arr.concat(t.syllables());
+      return arr;
+    }, []);
   }
   //mining
   people() {
@@ -9027,6 +9038,12 @@ class Text {
     return this.sentences.map(function(s) {
       return s.tags();
     });
+  }
+  syllables() {
+    return this.sentences.reduce(function(arr, s) {
+      arr = arr.concat(s.syllables());
+      return arr;
+    }, []);
   }
   to_past() {
     return this.sentences.map(function(s) {

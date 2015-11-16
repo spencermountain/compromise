@@ -71,5 +71,5 @@ if (typeof window === 'object') {
 module.exports = nlp;
 
 
-// let n = nlp.Term('approaching');
-// console.log(n.capitalise());
+let n = nlp.Text('approaching');
+console.log(n.syllables());

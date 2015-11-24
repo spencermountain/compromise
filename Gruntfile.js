@@ -101,7 +101,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-run');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-filesize');
-  grunt.loadNpmTasks('grunt-contrib-connect');
+  // grunt.loadNpmTasks('grunt-contrib-connect');
 
   grunt.registerTask('default', ['watch']);
   grunt.registerTask('demo', ['run:demo']);

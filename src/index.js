@@ -65,11 +65,12 @@ let nlp = API;
 //   return this.text.toUpperCase();
 // };
 
-if (typeof window === 'object') {
-  window.nlp = nlp;
+//export to window or webworker
+if (typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'function') {
+  self.nlp = nlp;
 }
 module.exports = nlp;
 
 
-let n = nlp.Text('approaching');
-console.log(n.syllables());
+// let n = nlp.Text('approaching');
+// console.log(n.syllables());

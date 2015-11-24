@@ -4,19 +4,19 @@
 // if we're server-side, grab files, otherwise assume they're prepended already
 // console.time('nlp_boot')
 
-var parents = require("./src/parents/parents")
+var parents = require("./src/parents/parents");
 
 var sentence_parser = require('./src/methods/tokenization/sentence');
 var tokenize = require('./src/methods/tokenization/tokenize');
 var ngram = require('./src/methods/tokenization/ngram');
 
 //tokenize
-var normalize = require('./src/methods/transliteration/unicode_normalisation')
+var normalize = require('./src/methods/transliteration/unicode_normalisation');
 var syllables = require('./src/methods/syllables/syllable');
 
 //localization
-var americanize = require('./src/methods/localization/americanize')
-var britishize = require('./src/methods/localization/britishize')
+var americanize = require('./src/methods/localization/americanize');
+var britishize = require('./src/methods/localization/britishize');
 
 //part of speech tagging
 var pos = require('./src/pos');
@@ -43,11 +43,11 @@ var nlp = {
   denormalize: normalize.denormalize,
   pos: pos,
   spot: spot
-}
+};
 
-//export it for client-side
-if (typeof window!=="undefined") { //is this right?
-  window.nlp = nlp
+//export it for client-side, webworker
+if (typeof window === "object" || typeof DedicatedWorkerGlobalScope === "function") {
+  self.nlp = nlp;
 }
 
 //export it for server-side

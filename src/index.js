@@ -72,5 +72,5 @@ if (typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'functio
 module.exports = nlp;
 
 
-// let n = nlp.Text('approaching');
-// console.log(n.syllables());
+// let n = nlp.Verb('teach');
+// console.log(n.conjugate());

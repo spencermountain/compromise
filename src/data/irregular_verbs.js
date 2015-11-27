@@ -282,7 +282,8 @@ module.exports = {
     past: 'swung'
   },
   teach: {
-    past: 'taught'
+    past: 'taught',
+    present: 'teaches'
   },
   tear: {
     past: 'tore'

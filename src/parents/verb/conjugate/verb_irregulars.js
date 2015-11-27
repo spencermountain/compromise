@@ -706,7 +706,7 @@ var compact = [
       "teach",
       "_ing",
       "taught",
-      "_s",
+      "_es",
       "_er"
     ],
     [

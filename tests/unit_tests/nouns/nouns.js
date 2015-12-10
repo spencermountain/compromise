@@ -1,7 +1,7 @@
 'use strict';
 let mocha = require('mocha');
 let should = require('should');
-let Noun = require('../../src/term/noun/noun.js');
+let Noun = require('../../../src/term/noun/noun.js');
 
 describe('nouns', function() {
 

@@ -1,7 +1,5 @@
 'use strict';
-let mocha = require('mocha');
-let should = require('should');
-let Value = require('../../src/term/noun/value/value.js');
+let Value = require('../../../src/term/noun/value/value.js');
 
 describe('parse value', function() {
 

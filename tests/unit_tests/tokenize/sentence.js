@@ -1,7 +1,5 @@
 'use strict';
-let mocha = require('mocha');
-let should = require('should');
-let nlp = require('../../src/index');
+let nlp = require('../../../src/index');
 
 describe('tokenize sentence tests', function() {
   it('tokenize basic sentence', function(done) {

@@ -1,7 +1,5 @@
 'use strict';
-let mocha = require('mocha');
-let should = require('should');
-let Person = require('../../src/term/noun/person/person.js');
+let Person = require('../../../src/term/noun/person/person.js');
 
 describe('parse name', function() {
   it('gets honourific', function(done) {

@@ -1,7 +1,5 @@
 'use strict';
-let mocha = require('mocha');
-let should = require('should');
-let Term = require('../../src/term/term.js');
+let Term = require('../../../src/term/term.js');
 let tests = require('./british_terms.js');
 
 describe('localize', function() {

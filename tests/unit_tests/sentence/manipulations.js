@@ -1,7 +1,5 @@
 'use strict';
-let mocha = require('mocha');
-let should = require('should');
-let nlp = require('../../src/index.js');
+let nlp = require('../../../src/index.js');
 
 describe('Sentence Manipulation Methods', function() {
 

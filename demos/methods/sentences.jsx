@@ -1,9 +1,9 @@
 let {Row, Col, Input} = ReactBootstrap;
 
-let Syllables = React.createClass({
+let Sentences = React.createClass({
   getInitialState: function () {
     return {
-      word: 'hamburger',
+      word: 'hi Dr. John',
       result: []
     };
   },
@@ -11,13 +11,15 @@ let Syllables = React.createClass({
     this.update();
   },
   update: function (el) {
-    let word = 'hamburger';
+    let word = 'hi Dr. John';
     if (el && el.target) {
       word = el.target.value || '';
     }
-    let t = nlp.Text(word);
-    this.state.result = t.syllables();
     this.state.word = word;
+    let t = nlp.Text(word);
+    this.state.result = t.sentences.map(function(s) {
+      return s.text();
+    });
     this.setState(this.state);
   },
   render: function () {
@@ -35,7 +37,7 @@ let Syllables = React.createClass({
         color: 'grey'
       }
     };
-    let code = 'nlp.Text(\'\').syllables()';
+    let code = 'nlp.Text(\'\').sentences';
     let result = state.result.map(function(a, i) {
       return <span key={i} style={css.part}>{a + ','}</span>;
     });
@@ -43,7 +45,7 @@ let Syllables = React.createClass({
       <Row>
         <Row>
           <Col md={2} xs={2} style={css.title}>
-            {'Syllables'}
+            {'Sentences'}
           </Col>
           <Col md={10} xs={10} style={css.code}>
             {code}
@@ -52,7 +54,7 @@ let Syllables = React.createClass({
         <Row>
           <Col md={1} xs={1}></Col>
           <Col md={10} xs={10}>
-            <Input type="text" value={this.state.word} bsSize="large" placeholder="Syllables" addonAfter={'Syllables'} onChange={this.update} />
+            <Input type="text" value={this.state.word} bsSize="large" placeholder="Sentences" addonAfter={'Sentences'} onChange={this.update} />
           </Col>
         </Row>
         <Row>
@@ -65,4 +67,4 @@ let Syllables = React.createClass({
   }
 });
 
-window.Syllables = Syllables;
+window.Sentences = Sentences;

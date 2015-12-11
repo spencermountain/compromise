@@ -25,16 +25,18 @@
     "grunt-contrib-watch": "0.6.x",
     "grunt-eslint": "17.1.x",
     "grunt-filesize": "0.0.x",
+    "grunt-mocha-istanbul": "^3.0.1",
     "grunt-mocha-test": "0.12.x",
     "grunt-run": "0.4.x",
+    "istanbul": "^0.4.1",
     "mocha": "2.2.x",
-    "should": "7.0.x"
+    "should": "7.0.x",
+    "grunt-mocha-istanbul":"3.*.*"
   },
   "license": "MIT",
   "dependencies": {
     "sugar-date": "1.5.x"
   },
-
   "eslintConfig": {
     "env": {
       "es6": true
@@ -55,7 +57,11 @@
       "no-redeclare": 2,
       "radix": 1,
       "indent": 0,
-      "quotes": [1, "single", "avoid-escape"],
+      "quotes": [
+        1,
+        "single",
+        "avoid-escape"
+      ],
       "no-shadow": 2,
       "no-unused-vars": 0,
       "no-lonely-if": 1,
@@ -69,7 +75,6 @@
       "no-unused-expressions": 2
     }
   },
-
   "esformatter": {
     "plugins": [
       "esformatter-quotes",

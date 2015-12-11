@@ -57,14 +57,6 @@ module.exports = function (grunt) {
       }
     },
 
-    // eslint: {
-    //   options: {
-    //     configFile: "./eslint.json",
-    //     useEslintrc: false
-    //   },
-    //   target: ["./src"]
-    // },
-
     filesize: {
       base: {
         files: [{
@@ -89,6 +81,12 @@ module.exports = function (grunt) {
         },
         src: ['tests/unit_tests/*/*.js']
       }
+    },
+
+    mocha_istanbul: {
+      coverage: {
+        src: 'tests/unit_tests/*/*.js',
+      }
     }
 
   });
@@ -101,11 +99,12 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-run');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-filesize');
-  // grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-mocha-istanbul');
 
   grunt.registerTask('default', ['watch']);
   grunt.registerTask('demo', ['run:demo']);
   grunt.registerTask('test', ['mochaTest']);
+  grunt.registerTask('coverage', ['mocha_istanbul']);
   grunt.registerTask('lint', ['eslint']);
   grunt.registerTask('build', ['browserify', 'babel', 'uglify', 'filesize']);
 };

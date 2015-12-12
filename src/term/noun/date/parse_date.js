@@ -68,6 +68,7 @@ let wrangle = {
 
 //cleanup string
 const preprocess = function(str) {
+  str = str.toLowerCase();
   str = str.replace(/([0-9]+)(nd|rd|th|st)/i, '$1');
   let words = str.split(' ').map(function(w) {
     if (!w.match(/[0-9]/)) {
@@ -99,5 +100,5 @@ const date_parser = function(str) {
 };
 module.exports = date_parser;
 // console.log(wrangle.year('1998'));
-// console.log(date_extractor('june 5th 1999'));
+// console.log(date_parser('March 1st 1987'));
 // console.log(date_extractor('june second 1999'));

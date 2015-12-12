@@ -64,5 +64,5 @@ class Noun extends Term {
 
 module.exports = Noun;
 
-let t = new Noun('NDA');
-console.log(t.article());
+// let t = new Noun('NDA');
+// console.log(t.article());

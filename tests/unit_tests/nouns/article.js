@@ -18,8 +18,6 @@ describe('article', function() {
     ];
     tests.forEach(function(a) {
       let n = nlp.Noun(a[0]);
-      console.log(a);
-      console.log(n.article());
       n.article().should.equal(a[1]);
     });
     done();

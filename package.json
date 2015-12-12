@@ -12,8 +12,7 @@
     "lint": "grunt lint",
     "watch": "grunt watch",
     "run": "grunt",
-    "build": "grunt build",
-    "coverage": "grunt coverage"
+    "build": "grunt build"
   },
   "devDependencies": {
     "babel": "5.x.x",

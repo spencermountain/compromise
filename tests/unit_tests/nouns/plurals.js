@@ -90,6 +90,7 @@ describe('noun inflection', function() {
       //test that plural.pluralize()==plural..
       ['snakes', 'snakes'],
       ['skis', 'skis'],
+      ['mayor of chicago', 'mayors of chicago'],
       // ["Barrymores", "Barrymores"],
       ['witches', 'witches'],
       ['boxes', 'boxes'],
@@ -160,6 +161,7 @@ describe('noun inflection', function() {
       ['nerds', 'nerd'],
       ['lollipops', 'lollipop'],
       ['eyebrows', 'eyebrow'],
+      ['mayors of chicago', 'mayor of chicago'],
       //test that sungular.singularize()==singular..
       ['mango', 'mango'],
       ['memento', 'memento'],

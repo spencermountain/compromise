@@ -1,5 +1,6 @@
 'use strict';
 const syllables = require('./syllables');
+const is_acronym = require('./is_acronym');
 const americanize = require('./localization/toAmerican');
 const britishize = require('./localization/toBritish');
 
@@ -32,10 +33,7 @@ class Term {
     return false;
   }
   is_acronym() {
-    if (this.text.match(/([A-Z]\.)+[A-Z]?$/)) {
-      return true;
-    }
-    return false;
+    return is_acronym(this.text);
   }
 
   normalize() {
@@ -65,7 +63,7 @@ class Term {
   }
 }
 
-// let t = new Term('synthesise');
+// let t = new Term('NSA');
 // console.log(t.britishize());
 
 module.exports = Term;

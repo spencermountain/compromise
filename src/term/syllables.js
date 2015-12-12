@@ -7,9 +7,12 @@ function postprocess(arr) {
   arr = arr.map(function(w) {
     return w.trim();
   });
-  if (arr.length > 2) {
-    return arr;
-  }
+  arr = arr.filter(function(w) {
+    return w !== '';
+  });
+  // if (arr.length > 2) {
+  //   return arr;
+  // }
   const ones = [
     /^[^aeiou]?ion/,
     /^[^aeiou]?ised/,
@@ -85,6 +88,6 @@ const syllables = function(str) {
   return all;
 };
 
-// console.log(syllables("suddenly"))
+// console.log(syllables('civilised'));
 
 module.exports = syllables;

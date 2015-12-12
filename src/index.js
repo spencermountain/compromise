@@ -18,9 +18,9 @@ const Lexicon = require('./lexicon.js');
 //function returns a text object if there's a param, otherwise
 const API = {
   models : {
-    Term,
-    Sentence,
-    Text
+    Term: Term,
+    Sentence: Sentence,
+    Text: Text
   },
   Term : function(s) {
     return new Term(s);
@@ -57,7 +57,8 @@ const API = {
   },
   Organisation : function(s) {
     return new Organisation(s);
-  }
+  },
+  Lexicon: Lexicon
 };
 
 let nlp = API;
@@ -72,5 +73,5 @@ if (typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'functio
 module.exports = nlp;
 
 
-// let n = nlp.Verb('teach');
-// console.log(n.conjugate());
+// let n = nlp.Noun('N.D.A');
+// console.log(n.article());

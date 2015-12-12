@@ -1,5 +1,7 @@
 'use strict';
 
+const is_acronym = require('../is_acronym.js');
+
 //chooses an indefinite aricle 'a/an' for a word
 const irregulars = {
   'hour': 'an',
@@ -10,20 +12,6 @@ const irregulars = {
   'honor': 'an',
   'uber': 'an' //german u
 };
-
-
-const is_acronym = function(s) {
-  //no periods
-  if (s.length <= 5 && s.match(/^[A-Z]*$/)) {
-    return true;
-  }
-  //with periods
-  if (s.length >= 4 && s.match(/^([A-Z]\.)*$/)) {
-    return true;
-  }
-  return false;
-};
-
 
 const indefinite_article = function(str) {
   if (!str) {
@@ -74,5 +62,6 @@ const indefinite_article = function(str) {
   return 'a';
 };
 
-// console.log(indefinite_article("wolf") === "a")
 module.exports = indefinite_article;
+
+// console.log(indefinite_article('N.D.A'));

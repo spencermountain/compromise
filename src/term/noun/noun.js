@@ -23,7 +23,7 @@ class Noun extends Term {
   }
   //noun methods
   article() {
-    return article(this.normal);
+    return article(this.text);
   }
   pronoun() {
     if (this.is_organisation() || this.is_place() || this.is_value()) {
@@ -31,7 +31,6 @@ class Noun extends Term {
     }
     return pronoun(this.normal);
   }
-
   is_plural() {
     return is_plural(this.normal);
   }
@@ -65,5 +64,5 @@ class Noun extends Term {
 
 module.exports = Noun;
 
-// let t = new Noun('John');
-// console.log(t.pronoun());
+let t = new Noun('NDA');
+console.log(t.article());

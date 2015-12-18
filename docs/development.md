@@ -1,4 +1,4 @@
-#WElcome, good person
+###WElcome, good person
 
 I am very welcoming to all pull requests, and feature requests in all forms.
 NLP is a solvable problem in scale, and all forms of input are gracious and lovely. I am also friendly and approachable. There is lots of work to be done.
@@ -7,7 +7,22 @@ NLP is a solvable problem in scale, and all forms of input are gracious and love
 * unit tests are in ```./tests``` and can be run with 'npm test'
 * 'grunt build' command joins all various scripts into a client-side js file
 
-# Building
+### Add new words to the Lexicon
+```javascript
+nlp.Text("hakuna matada").tags() //["Noun"]
+nlp.Lexicon["hakuna matada"]="Expression"
+nlp.Text("hakuna matada").tags() //["Expression"]
+```
+
+### Plugins
+```javascript
+let nlp = require('nlp_compromise')
+nlp.models.Term.capitalise=function(){
+  return this.text.toUpperCase()
+}
+```
+
+### Building
 needs an Es6 env, like `nvm use iojs-v2.3.0`
 ```
 npm install
@@ -18,7 +33,7 @@ grunt watch
 `grunt demo`
 and visit http://localhost:8888/demos/
 
-# Releasing
+### Releasing
 casual versioning/publishing with semvar:
 
 ```bash
@@ -32,7 +47,7 @@ git tag -a v2.x.x -m "tag bower release"
 git push origin master --tags
 ```
 
-#TODO:
+####Todo:
 * co-reference resolution (he/she/its). ```pronoun.reference(), noun.references()```
 * caching by sentence, so unchanged-sentences aren't re-parsed on keystroke
 * somehow integrate the bigger, looser tests with the unit tests, to better catch regressions
@@ -47,7 +62,7 @@ git push origin master --tags
 * habitual aspect support 'used to walk'
 
 
-#file size
+###file size
 of minimized, es5 clientside build:
 * April 2015 - 109kb
 * May 1st - 103kb
@@ -55,7 +70,7 @@ of minimized, es5 clientside build:
 * May 10th - 88kb
 * May 18th - 99kb
 
-#speed
+###speed
 benchmarked unit tests on backend + frontend
 * May 2015  520ms front, 315ms back
 

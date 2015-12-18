@@ -2,8 +2,29 @@
 let Term = require('../../../src/term/term.js');
 let tests = require('./british_terms.js');
 
-describe('localize', function() {
 
+let tiny_tests = [
+  ['accessorise', 'accessorize'],
+  ['accessorised', 'accessorized'],
+  ['accessorises', 'accessorizes'],
+  ['accessorising', 'accessorizing'],
+  ['acclimatisation', 'acclimatization'],
+  ['acclimatise', 'acclimatize'],
+  ['acclimatised', 'acclimatized'],
+  ['acclimatises', 'acclimatizes'],
+  ['acclimatising', 'acclimatizing'],
+  ['popularise', 'popularize'],
+  ['popularised', 'popularized'],
+  ['popularises', 'popularizes'],
+  ['popularising', 'popularizing'],
+  ['pouffe', 'pouf'],
+  ['pouffes', 'poufs'],
+  ['practise', 'practice'],
+  ['practised', 'practiced'],
+  ['practises', 'practices']
+];
+
+describe('localize', function() {
   //americanize it
   it('americanize', function(done) {
     tests.forEach(function(a) {
@@ -13,10 +34,12 @@ describe('localize', function() {
     done();
   });
   //britishize it
-  //   let t2 = new Term(a[1]);
-  //   it(a[0], function(done) {
-  //     t2.britishize().should.equal(a[0]);
-  //     done();
-  //   });
+  it('britishize', function(done) {
+    tiny_tests.forEach(function(a) {
+      let t = new Term(a[1]);
+      t.britishize().should.equal(a[0]);
+    });
+    done();
+  });
 
 });

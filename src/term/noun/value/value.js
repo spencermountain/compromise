@@ -34,11 +34,15 @@ class Value extends Noun {
   }
 
   parse() {
-    let words = this.normal.split(' ');
+    let words = this.text.toLowerCase().split(' ');
+    let number_words = {
+      minus: true,
+      point: true
+    };
     let numbers = '';
     for(let i = 0; i < words.length; i++) {
       let w = words[i];
-      if (nums.ones[w] || nums.teens[w] || nums.tens[w] || nums.multiples[w]) {
+      if (nums.ones[w] || nums.teens[w] || nums.tens[w] || nums.multiples[w] || number_words[w] || w.match(/[0-9]/)) {
         numbers += ' ' + w;
       } else if (this.is_unit(w)) { //optional units come after the number
         this.unit = w;

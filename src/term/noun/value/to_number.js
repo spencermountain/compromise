@@ -12,11 +12,39 @@ const nums = require('./numbers.js');
 //[tenth, hundreth, thousandth..] are ambiguous because they could be ordinal like fifth, or decimal like one-one-hundredth, so are ignored
 // let decimal_multiple={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
 
+
+//test for nearly-values, like phonenumbers, or whatever
+const is_number = function(s) {
+  //phone numbers, etc
+  if (s.match(/[:@]/)) {
+    return false;
+  }
+  //if there's a number, then something, then a number
+  if (s.match(/[0-9][^0-9,\.][0-9]/)) {
+    return false;
+  }
+  return true;
+};
+
+//try the best to turn this into a integer/float
 const to_number = function(s) {
-  if (s === null) {
+  if (s === null || s === undefined) {
     return null;
   }
+  //if it's already a number,
+  if (typeof s === 'number') {
+    return s;
+  }
+  //remove symbols, commas, etc
+  if (is_number(s) !== true) {
+    return null;
+  }
+  s = s.replace(/[\$%\(\)~,]/g, '');
   s = s.trim();
+  //if it's a number-as-string
+  if (s.match(/^[0-9\.\-]+$/)) {
+    return parseFloat(s);
+  }
   //remember these concerns for possible errors
   let ones_done = false;
   let teens_done = false;
@@ -28,13 +56,6 @@ const to_number = function(s) {
   s = s.replace(/, ?/g, '');
   //parse-out currency
   s = s.replace(/[$£€]/, '');
-  //try to finish-fast
-  if (s.match(/[0-9]\.[0-9]/) && parseFloat(s) === s) {
-    return parseFloat(s);
-  }
-  if (parseInt(s, 10) === s) {
-    return parseInt(s, 10);
-  }
   //try to die fast. (phone numbers or times)
   if (s.match(/[0-9][\-:][0-9]/)) {
     return null;
@@ -117,7 +138,7 @@ const to_number = function(s) {
     }
 
     //if it's already an actual number
-    if (w.match(/^[0-9]\.[0-9]$/)) {
+    if (w.match(/^[0-9\.]+$/)) {
       current_sum += parseFloat(w);
       continue;
     }
@@ -125,7 +146,6 @@ const to_number = function(s) {
       current_sum += parseInt(w, 10);
       continue;
     }
-
     //ones rules
     if (nums.ones[w] !== undefined) {
       if (ones_done) {
@@ -201,9 +221,9 @@ const to_number = function(s) {
   return total;
 };
 
-// console.log(to_number('five hundred'));
+// console.log(to_number('minus five hundred'));
 // console.log(to_number("a hundred"))
-// console.log(to_number("four point seven seven"))
+// console.log(to_number('four point six'));
 
 //kick it into module
 module.exports = to_number;

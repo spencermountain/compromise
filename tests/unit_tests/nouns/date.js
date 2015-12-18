@@ -64,9 +64,7 @@ describe('date', function () {
     tests.forEach(function (a) {
       let n = nlp.Date(a[0]);
       let w = a[1];
-      console.log(a[0]);
       let o = n.data;
-      console.log(o);
       (o.month || '').should.equal(w[0] || '');
       (o.day || '').should.equal(w[1] || '');
       (o.year || '').should.equal(w[2] || '');

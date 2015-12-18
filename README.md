@@ -2,14 +2,14 @@
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 [![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 [![CodacyBadge](https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062)](https://www.codacy.com/app/spencerkelly86/nlp_compromise)
-## Yup,
+### Yup,
 * smaller than jQuery *(100k)*
 * gets 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 * keypress speed, constant-time
 * no dependencies, training, or configuration
+* IE9+
 
-Just a [rule-based, satisfactory, use-focused](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/docs.md) NLP library
-### [Check it out](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/conjugation/index.html)
+Just a [rule-based, use-focused, satisfactory](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/docs.md) javascript library   **[Check it out](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/conjugation/index.html)**
 
 <h6>&nbsp;&nbsp;&nbsp;:boom: Welcome to <a href="https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/changelog.md">v2.0!</a> Please [file an issue</a> if you find something :boom:</h6>
 
@@ -33,6 +33,11 @@ nlp.Text("she sells seashells").negate().text()
 nlp.Term("hamburger").syllables()
 // [ 'ham', 'bur', 'ger' ]
 ```
+
+First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell
 
 ### Sentence segmentation
 ```javascript

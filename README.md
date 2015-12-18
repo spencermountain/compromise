@@ -8,20 +8,18 @@
 * keypress speed, constant-time
 * no dependencies, training, or configuration
 * caniuse, yup. IE9+
- |
-------------- | -------------
+
 Just a [rule-based, use-focused, satisfactory](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/docs.md) javascript library   | **[Check it out](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/conjugation/index.html)**
+------------- | -------------
 
 <h6>&nbsp;&nbsp;&nbsp;:boom: Welcome to <a href="https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/changelog.md">v2.0!</a> Please [file an issue</a> if you find something :boom:</h6>
 
 ## Off you go:
 > `npm install nlp_compromise`
-```
-var nlp = require("nlp_compromise");
-<script src="./nlp_compromise.es5.js"> </script>
-```
+`var nlp = require("nlp_compromise");`
+`<script src="./nlp_compromise.es5.js"> </script>`
 
-### Yup,
+### Yep
 ```javascript
 nlp.Text('she sells seashells').to_past().text()
 //she sold seashells

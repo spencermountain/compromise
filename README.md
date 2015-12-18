@@ -9,163 +9,57 @@
 * no dependencies, training, or configuration
 * caniuse, yup. IE9+
 
-Just a [rule-based, use-focused, satisfactory](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/docs.md) javascript library   |
-------------- | -------------
-##&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[Check it out](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/conjugation/index.html)**
+Just a [rule-based, use-focused, satisfactory](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/docs.md) javascript library for parsing and modifying english
+##&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[Check it out](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/conjugation/index.html)**
 
 <h6>&nbsp;&nbsp;&nbsp;:boom: Welcome to <a href="https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/changelog.md">v2.0!</a> Please [file an issue</a> if you find something :boom:</h6>
 
 ## Off you go:
 > `npm install nlp_compromise`
 
-> `var nlp = require("nlp_compromise");`
-
 > `<script src="./nlp_compromise.es5.js"> </script>`
 
 ```javascript
+var nlp = require("nlp_compromise");
+
 nlp.Text('she sells seashells').to_past().text()
 //she sold seashells
-
-nlp.Noun("dinosaur").pluralize()
-// dinosaurs
 
 nlp.Text("she sells seashells").negate().text()
 // she didn't sell seashells
 
 nlp.Term("hamburger").syllables()
 // [ 'ham', 'bur', 'ger' ]
-```
 
-|   |  |
-| ------------- | ------------- |
-| Sentence segmentation  | `nlp.Text("Hi Dr. Miller the price is 4.59 for the U.C.L.A. Ph.Ds.").sentences.length` |
-| Syllable hyphenization  | `nlp.Text("calgary flames").syllables()// [ 'cal', 'gar', 'y', 'flames']` |
-| US-UK Localization  | Content Cell |
-| Content Cell  | Content Cell |
+nlp.Noun("dinosaur").pluralize()
+// dinosaurs
 
-
-### US-UK Localization
-*90% on the [superscript dataset](https://github.com/silentrob/normalizer/blob/master/data/british.txt)*
-```javascript
-nlp.Term("favourite").americanize()
-// favorite
-nlp.Term("synthesized").britishize()
-// synthesised
-```
-### N-gram
-```javascript
-nlp.Text("She sells seashells by the seashore.").ngram({min_count:1, max_size:5})
-// [{ word: 'she sells', count: 2, size: 2 }, ...
-options.min_count = 1 // throws away seldom-repeated grams
-options.max_size = 5 // maximum gram count. prevents the result from becoming gigantic
-```
-### Date parsing
-```javascript
-nlp.value("I married April for the 2nd time on June 5th 1998 ").date()
-// [Date object]   d.toLocaleString() -> "04/2/1998"
-```
-### Number parsing
-```javascript
 nlp.Value("two thousand five hundred and sixty").number
 // 2560
--nlp.value("twenty one hundred").number
-// 2100
--nlp.Value("nine two hundred").number
-// null
 ```
 
-##Full API
+### [View the Full API Documentation](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/api.md)
+
+##[Development](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/development.md)
+[![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](http://superscriptjs.slack.com/messages/nlp_compromise/)
+### Add new words to the Lexicon
 ```javascript
-nlp_compromise={
-  Text :{
-    to_past: function()    //she sold seashells
-    to_present: function() //she sells seashells
-    to_future: function()  //she will sell seashells
-    negate: function()     //she doesn't sell seashells
-    tags: function()       //she sells seashells -> [Noun, Verb, Noun]
-    terms: function()
-    normalised: function()
-    ngram({max_size:2}),//[[she sells, sells seashells],[she, sells, seashells]]
-  },
-  Term :{
-    syllables: function()   //hamburger -> ['ham','bur','ger']
-    britishize: function()  //favorite -> favourite
-    americanize: function() //synthesised -> synthesized
-    is_capital: function()  //Tony Danza -> true
-  },
-  Sentence :{
-    sentence_type: function() //declarative, interrogative, exclamative
-    terminator: function()    //the sentence-ending punctuation
-    to_past: function()       //she sold seashells
-    to_present: function()    //she sells seashells
-    to_future: function()     //she will sell seashells
-    negate: function()        //she doesn't sell seashells
-    tags: function()          //she sells seashells -> [Noun, Verb, Noun]
-    normalised: function()
-    text: function()
-  },
-  Verb :{
-    to_past: function()     //walk -> walked
-    to_present: function()  //walking -> walk
-    to_future: function()   //walk -> will walk
-    conjugate: function()   //all forms {}
-    conjugation: function() //infinitive,present,past,future
-    negate: function()      //walk -> didn't walk
-    isNegative: function()  //is the verb already negated
-  },
-  Adjective :{
-    to_comparative: function() //quick -> quicker
-    to_superlative: function() //quick -> quickest
-    to_noun: function()        //quick -> quickness
-    to_adverb: function()      //quick -> quickly
-    conjugate: function()      //all forms {}
-  },
-  Adverb :{
-    to_adjective: function()  //quickly -> quick
-  },
-  Noun :{
-    article: function()        //ostrich -> an
-    is_uncountable: function() //(doesn't inflect) knowledge -> true
-    pluralize: function()      //hamburger -> hamburgers
-    singularize: function()    //hamburgers -> hamburger
-    is_plural: function()      //humburgers -> true
-    is_person: function()      //tony hawk -> true
-    is_place: function()       //Baghdad -> true
-    is_organisation: function()//C.I.A. -> true
-    is_date: function()        //January 5th -> true
-    is_value: function()       //fifteen books -> true
-  },
-  Value :{
-    number: Number,     //fifty kilometers -> 50
-    unit: String,       //fifty km -> km
-    unit_name: String,  //fifty km -> kilometer
-    measurement: String,//fifty km -> distance
-  },
-  Person :{
-    gender: function()   //Tony Hawk -> Male
-    honourific: String, //Dr. Tony Hawk -> Dr
-    firstName: String,  //Homer J. Simpson -> Homer
-    middleName: String, //Homer Jay Simpson -> Jay
-    lastName: String    //Homer Jay Simpson -> Simpson
-  },
-  Date :{
-    date: Date  //Tuesday July 5th, 1974 -> Date()
-  },
-  Place :{},
-  Organisation :{}
+nlp.Text("hakuna matada").tags() //["Noun"]
+nlp.Lexicon["hakuna matada"]="Expression"
+nlp.Text("hakuna matada").tags() //["Expression"]
+```
+
+### Plugins
+```javascript
+let nlp = require('nlp_compromise')
+nlp.models.Term.capitalise=function(){
+  return this.text.toUpperCase()
 }
 ```
-
-#Help
-* [More Documentation](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/docs.md)
-[![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](http://superscriptjs.slack.com/messages/nlp_compromise/)
-
-#Contribution
+* [Changelog](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/changelog.md)
 [![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/pr)](http://issuestats.com/github/spencermountain/nlp_compromise)
 [![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/issue)](http://issuestats.com/github/spencermountain/nlp_compromise)
 
-* [Changelog](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/changelog.md)
-* [Development](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/development.md)
 
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 

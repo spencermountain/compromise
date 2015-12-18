@@ -9,14 +9,17 @@
 * no dependencies, training, or configuration
 * caniuse, yup. IE9+
 
-Just a [rule-based, use-focused, satisfactory](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/docs.md) javascript library   | **[Check it out](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/conjugation/index.html)**
+Just a [rule-based, use-focused, satisfactory](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/docs.md) javascript library   |
 ------------- | -------------
+##&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[Check it out](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/conjugation/index.html)**
 
 <h6>&nbsp;&nbsp;&nbsp;:boom: Welcome to <a href="https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/changelog.md">v2.0!</a> Please [file an issue</a> if you find something :boom:</h6>
 
 ## Off you go:
 > `npm install nlp_compromise`
+
 > `var nlp = require("nlp_compromise");`
+
 > `<script src="./nlp_compromise.es5.js"> </script>`
 
 ```javascript
@@ -35,17 +38,8 @@ nlp.Term("hamburger").syllables()
 
 |   |  |
 | ------------- | ------------- |
-| Sentence segmentation  | ```javascript
-nlp.Text("Hi Dr. Miller the price is 4.59 for the U.C.L.A. Ph.Ds.").sentences.length
-// 1
-nlp.Text("Tony Danza sells sea-shells").terms().length
-// 3
-``` |
-| Syllable hyphenization  | *70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)*
-```javascript
-nlp.Text("calgary flames").syllables()
-// [ 'cal', 'gar', 'y', 'flames']
-``` |
+| Sentence segmentation  | `nlp.Text("Hi Dr. Miller the price is 4.59 for the U.C.L.A. Ph.Ds.").sentences.length` |
+| Syllable hyphenization  | `nlp.Text("calgary flames").syllables()// [ 'cal', 'gar', 'y', 'flames']` |
 | US-UK Localization  | Content Cell |
 | Content Cell  | Content Cell |
 

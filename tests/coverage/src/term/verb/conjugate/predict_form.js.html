@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/term/verb/conjugate/predict_form.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../index.html">all files</a> / <a href="index.html">src/term/verb/conjugate/</a> predict_form.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">83.33% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>25/30</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">75% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>15/20</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>3/3</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">83.33% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>25/30</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">108×</span>
+<span class="cline-any cline-yes">167×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">108×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1316×</span>
+<span class="cline-any cline-yes">188×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1128×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1115×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1115×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1115×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1115×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1115×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1115×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1111×</span>
+<span class="cline-any cline-yes">1111×</span>
+<span class="cline-any cline-yes">64100×</span>
+<span class="cline-any cline-yes">567×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">544×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+//this method is used to predict which current conjugation a verb is
+&nbsp;
+//this method is the slowest in the whole library,
+const fns = require('../../../fns.js');
+const suffix_rules = require('./suffix_rules');
+const irregular_verbs = require('../../../data/irregular_verbs');
+let known_verbs = Object.keys(irregular_verbs).reduce(function(h, k) {
+  Object.keys(irregular_verbs[k]).forEach(function(k2) {
+    h[irregular_verbs[k][k2]] = k2;
+  });
+  return h;
+}, {});
+&nbsp;
+const predict = function(w) {
+&nbsp;
+  //check if known infinitive
+  if (irregular_verbs[w]) {
+    return 'infinitive';
+  }
+  //check if known infinitive
+  if (known_verbs[w]) {
+    return known_verbs[w];
+  }
+&nbsp;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (w.match(/will ha(ve|d) [a-z]{2}/)) {
+<span class="cstat-no" title="statement not covered" >    return 'future_perfect';</span>
+  }
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (w.match(/will [a-z]{2}/)) {
+<span class="cstat-no" title="statement not covered" >    return 'future';</span>
+  }
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (w.match(/had [a-z]{2}/)) {
+<span class="cstat-no" title="statement not covered" >    return 'pluperfect';</span>
+  }
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (w.match(/have [a-z]{2}/)) {
+<span class="cstat-no" title="statement not covered" >    return 'perfect';</span>
+  }
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (w.match(/..erer$/)) {
+<span class="cstat-no" title="statement not covered" >    return 'actor';</span>
+  }
+  if (w.match(/[^aeiou]ing$/)) {
+    return 'gerund';
+  }
+&nbsp;
+  const arr = Object.keys(suffix_rules);
+  for (let i = 0; i &lt; arr.length; i++) {
+    if (fns.endsWith(w, arr[i]) &amp;&amp; arr[i].length &lt; w.length) {
+      return suffix_rules[arr[i]];
+    }
+  }
+  return 'infinitive';
+};
+&nbsp;
+module.exports = predict;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Dec 18 2015 15:13:12 GMT-0500 (EST)
+</div>
+</div>
+<script src="../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../sorter.js"></script>
+</body>
+</html>

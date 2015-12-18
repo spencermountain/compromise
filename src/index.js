@@ -72,5 +72,5 @@ if (typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'functio
 }
 module.exports = nlp;
 
-// let n = nlp.Text('55 and 55');
-// console.log(n.ngram()[0][0]);
+// let n = nlp.Date('2012');
+// console.log(n.date());

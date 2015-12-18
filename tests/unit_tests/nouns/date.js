@@ -31,6 +31,7 @@ describe('date', function () {
       ['March 1st 1987', [2, 1, 1987]],
       ['June 22nd 2014', [5, 22, 2014]],
       ['June 22nd 1997', [5, 22, 1997]],
+    // ['200bc', [5, 22, 1997]],
     ];
     tests.forEach(function (a) {
       let n = nlp.Date(a[0]);
@@ -76,6 +77,7 @@ describe('date', function () {
     let tests = [
       ['303rd of March 1969', [2, null, 1969]],
       ['4103', [null, null, null]],
+      ['January 5th 4032', [0, 5, null]],
     ];
     tests.forEach(function (a) {
       let n = nlp.Date(a[0]);

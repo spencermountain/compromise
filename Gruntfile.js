@@ -84,10 +84,15 @@ module.exports = function (grunt) {
     },
 
     mocha_istanbul: {
-      coverage: {
+      coverageSpecial: {
         src: 'tests/unit_tests/*/*.js',
+        options: {
+          reportFormats: ['html'],
+          quiet: true,
+          coverageFolder: './tests/coverage',
+        }
       }
-    }
+    },
 
   });
 
@@ -106,5 +111,5 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['mochaTest']);
   grunt.registerTask('coverage', ['mocha_istanbul']);
   grunt.registerTask('lint', ['eslint']);
-  grunt.registerTask('build', ['browserify', 'babel', 'uglify', 'filesize']);
+  grunt.registerTask('build', ['mocha_istanbul', 'browserify', 'babel', 'uglify', 'filesize']);
 };

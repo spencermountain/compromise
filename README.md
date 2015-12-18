@@ -8,13 +8,9 @@
 * keypress speed, constant-time
 * no dependencies, training, or configuration
 
-```javascript
-```
-* [Long Text Demo](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/state_of_the_union/index.html)
-* [Conjugation Demo](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/conjugation/index.html)
+### [Check it out](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/conjugation/index.html)
 
-<h6>:boom: Welcome to [v2.0!](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/changelog.md) Please [file an issue](https://github.com/spencermountain/nlp_compromise/issues/new) if you find something :boom:</h6>
----
+<h6>:boom: Welcome to <a href="https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/changelog.md">v2.0!</a> Please [file an issue</a> if you find something :boom:</h6>
 
 ## Off you go:
 ```

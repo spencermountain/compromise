@@ -61,6 +61,10 @@ let tests = [
   ['twenty first', 21],
   ['fifty ninth', 59],
   ['nine hundred fiftieth', 950],
+  [950, 950],
+  [999999950, 999999950],
+  [8080999999950, 8080999999950],
+  [null, null],
 ];
 
 

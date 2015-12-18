@@ -6,6 +6,10 @@ const britishize = require('./localization/toBritish');
 
 class Term {
   constructor(str, tag) {
+    if (str === null || str === undefined) {
+      str = '';
+    }
+    str = (str).toString();
     this.changeTo(str);
     this.reason = '';
     let types = {

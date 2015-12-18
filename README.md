@@ -8,7 +8,7 @@
 * keypress speed, constant-time
 * no dependencies, training, or configuration
 * caniuse, yup. IE9+
-
+ |
 ------------- | -------------
 Just a [rule-based, use-focused, satisfactory](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/docs.md) javascript library   | **[Check it out](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/conjugation/index.html)**
 

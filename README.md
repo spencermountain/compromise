@@ -4,7 +4,7 @@
 [![CodacyBadge](https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062)](https://www.codacy.com/app/spencerkelly86/nlp_compromise)
 ### Yup,
 * smaller than jQuery *(100k)*
-* gets 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
+* 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 * keypress speed, constant-time
 * no dependencies, training, or configuration
 * caniuse, yup. IE9+
@@ -16,10 +16,9 @@ Just a [rule-based, use-focused, satisfactory](https://github.com/spencermountai
 
 ## Off you go:
 > `npm install nlp_compromise`
-`var nlp = require("nlp_compromise");`
-`<script src="./nlp_compromise.es5.js"> </script>`
+> `var nlp = require("nlp_compromise");`
+> `<script src="./nlp_compromise.es5.js"> </script>`
 
-### Yep
 ```javascript
 nlp.Text('she sells seashells').to_past().text()
 //she sold seashells
@@ -34,25 +33,22 @@ nlp.Term("hamburger").syllables()
 // [ 'ham', 'bur', 'ger' ]
 ```
 
-First Header  | Second Header
-------------- | -------------
-Content Cell  | Content Cell
-Content Cell  | Content Cell
-
-### Sentence segmentation
-```javascript
+|   |  |
+| ------------- | ------------- |
+| Sentence segmentation  | ```javascript
 nlp.Text("Hi Dr. Miller the price is 4.59 for the U.C.L.A. Ph.Ds.").sentences.length
 // 1
 nlp.Text("Tony Danza sells sea-shells").terms().length
 // 3
-```
-
-### Syllable hyphenization
-*70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)*
+``` |
+| Syllable hyphenization  | *70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)*
 ```javascript
 nlp.Text("calgary flames").syllables()
 // [ 'cal', 'gar', 'y', 'flames']
-```
+``` |
+| US-UK Localization  | Content Cell |
+| Content Cell  | Content Cell |
+
 
 ### US-UK Localization
 *90% on the [superscript dataset](https://github.com/silentrob/normalizer/blob/master/data/british.txt)*

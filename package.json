@@ -3,6 +3,7 @@
   "name": "nlp_compromise",
   "description": "natural language processing in the browser",
   "version": "2.0.0",
+  "date": "",
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/nlp_compromise.git"
@@ -25,13 +26,13 @@
     "grunt-contrib-watch": "0.6.x",
     "grunt-eslint": "17.1.x",
     "grunt-filesize": "0.0.x",
-    "grunt-mocha-istanbul": "^3.0.1",
+    "grunt-mocha-istanbul": "3.*.*",
     "grunt-mocha-test": "0.12.x",
     "grunt-run": "0.4.x",
     "istanbul": "^0.4.1",
     "mocha": "2.2.x",
     "should": "7.0.x",
-    "grunt-mocha-istanbul":"3.*.*"
+    "grunt-bumpup": "0.*.*"
   },
   "license": "MIT",
   "dependencies": {

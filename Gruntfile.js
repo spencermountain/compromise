@@ -94,10 +94,16 @@ module.exports = function (grunt) {
       }
     },
 
+    bumpup: {
+      file: 'package.json',
+      options: {
+        dateformat: 'ddd YYYY-MM-DD HH:mm z'
+      }
+    }
+
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-babel');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -105,11 +111,12 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-filesize');
   grunt.loadNpmTasks('grunt-mocha-istanbul');
+  grunt.loadNpmTasks('grunt-bumpup');
 
   grunt.registerTask('default', ['watch']);
   grunt.registerTask('demo', ['run:demo']);
   grunt.registerTask('test', ['mochaTest']);
   grunt.registerTask('coverage', ['mocha_istanbul']);
-  grunt.registerTask('lint', ['eslint']);
+  grunt.registerTask('bump', ['bumpup']);
   grunt.registerTask('build', ['mocha_istanbul', 'browserify', 'babel', 'uglify', 'filesize']);
 };

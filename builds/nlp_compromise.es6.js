@@ -3931,8 +3931,8 @@ if (typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'functio
 }
 module.exports = nlp;
 
-// let n = nlp.Date('2012');
-// console.log(n.date());
+// let n = nlp.Verb('speak');
+// console.log(n.conjugate());
 
 },{"./lexicon.js":20,"./sentence/sentence.js":29,"./term/adjective/adjective.js":30,"./term/adverb/adverb.js":35,"./term/noun/date/date.js":42,"./term/noun/noun.js":48,"./term/noun/organisation/organisation.js":50,"./term/noun/person/person.js":54,"./term/noun/place/place.js":56,"./term/noun/value/value.js":64,"./term/term.js":66,"./term/verb/verb.js":74,"./text/text.js":77}],20:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags

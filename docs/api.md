@@ -1,114 +1,3 @@
-##Noun methods:
-```javascript
-nlp.noun("earthquakes").singularize()
-//earthquake
-
-nlp.noun("earthquake").pluralize()
-//earthquakes
-
-nlp.noun('veggie burger').is_plural()
-//false
-
-nlp.noun('tony danza').is_person()
-//true
-nlp.noun('Tony J. Danza elementary school').is_person()
-//false
-nlp.noun('SS Tony danza').is_person()
-//false
-
-nlp.noun('hour').article()
-//an
-
-nlp.noun('mayors of toronto').conjugate()
-//{ plural: 'mayors of toronto', singular: 'mayor of toronto' }
-
-nlp.noun("tooth").pronoun()
-//it
-nlp.noun("teeth").pronoun()
-//they
-nlp.noun("Tony Hawk").pronoun()
-//"he"
-nlp.noun("Nancy Hawk").pronoun()
-//"she"
-
-var he = nlp.pos("Tony Danza is great. He lives in L.A.").sentences[1].tokens[0]
-he.analysis.reference_to()
-//{text:"Tony Danza"...}
-```
-
-##Verb methods:
-```javascript
-nlp.verb("walked").conjugate()
-//{ infinitive: 'walk',
-//  present: 'walks',
-//  past: 'walked',
-//  gerund: 'walking'}
-nlp.verb('swimming').to_past()
-//swam
-nlp.verb('swimming').to_present()
-//swims
-nlp.verb('swimming').to_future()
-//will swim
-```
-##Adjective methods:
-```javascript
-nlp.adjective("quick").conjugate()
-//  { comparative: 'quicker',
-//    superlative: 'quickest',
-//    adverb: 'quickly',
-//    noun: 'quickness'}
-```
-##Adverb methods
-```javascript
-nlp.adverb("quickly").conjugate()
-//  { adjective: 'quick'}
-```
-
-##Doin stuff
-### Sentence segmentation
-```javascript
-nlp.Text("Hi Dr. Miller the price is 4.59 for the U.C.L.A. Ph.Ds.").sentences.length
-// 1
-nlp.Text("Tony Danza sells sea-shells").terms().length
-// 3
-```
-
-### Syllable hyphenization
-*70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)*
-```javascript
-nlp.Text("calgary flames").syllables()
-// [ 'cal', 'gar', 'y', 'flames']
-```
-
-### US-UK Localization
-*90% on the [superscript dataset](https://github.com/silentrob/normalizer/blob/master/data/british.txt)*
-```javascript
-nlp.Term("favourite").americanize()
-// favorite
-nlp.Term("synthesized").britishize()
-// synthesised
-```
-### N-gram
-```javascript
-nlp.Text("She sells seashells by the seashore.").ngram({min_count:1, max_size:5})
-// [{ word: 'she sells', count: 2, size: 2 }, ...
-options.min_count = 1 // throws away seldom-repeated grams
-options.max_size = 5 // maximum gram count. prevents the result from becoming gigantic
-```
-### Date parsing
-```javascript
-nlp.value("I married April for the 2nd time on June 5th 1998 ").date()
-// [Date object]   d.toLocaleString() -> "04/2/1998"
-```
-### Number parsing
-```javascript
-nlp.Value("two thousand five hundred and sixty").number
-// 2560
--nlp.value("twenty one hundred").number
-// 2100
--nlp.Value("nine two hundred").number
-// null
-```
 
 ##Full API
 ```javascript
@@ -190,4 +79,112 @@ nlp_compromise={
   Place :{},
   Organisation :{}
 }
+```
+
+##Noun methods:
+```javascript
+nlp.Noun("earthquakes").singularize()
+//earthquake
+
+nlp.Noun("earthquake").pluralize()
+//earthquakes
+
+nlp.Noun('veggie burger').is_plural()
+//false
+
+nlp.Noun('tony danza').is_person()
+//true
+nlp.Noun('Tony J. Danza elementary school').is_person()
+//false
+nlp.Noun('SS Tony danza').is_person()
+//false
+
+nlp.Noun('hour').article()
+//an
+
+nlp.Noun('mayors of toronto').conjugate()
+//{ plural: 'mayors of toronto', singular: 'mayor of toronto' }
+
+nlp.Noun("tooth").pronoun()
+//it
+nlp.Noun("teeth").pronoun()
+//they
+nlp.Noun("Tony Hawk").pronoun()
+//"he"
+nlp.Noun("Nancy Hawk").pronoun()
+//"she"
+```
+
+##Verb methods:
+```javascript
+nlp.Verb("walked").conjugate()
+//{ infinitive: 'walk',
+//  present: 'walks',
+//  past: 'walked',
+//  gerund: 'walking'}
+nlp.Verb('swimming').to_past()
+//swam
+nlp.Verb('swimming').to_present()
+//swims
+nlp.Verb('swimming').to_future()
+//will swim
+```
+##Adjective methods:
+```javascript
+nlp.Adjective("quick").conjugate()
+//  { comparative: 'quicker',
+//    superlative: 'quickest',
+//    adverb: 'quickly',
+//    noun: 'quickness'}
+```
+##Adverb methods
+```javascript
+nlp.Adverb("quickly").conjugate()
+//  { adjective: 'quick'}
+```
+
+##Doin stuff
+### Sentence segmentation
+```javascript
+nlp.Text("Hi Dr. Miller the price is 4.59 for the U.C.L.A. Ph.Ds.").sentences.length
+// 1
+nlp.Text("Tony Danza sells sea-shells").terms().length
+// 3
+```
+
+### Syllable hyphenization
+*70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)*
+```javascript
+nlp.Text("calgary flames").syllables()
+// [ 'cal', 'gar', 'y', 'flames']
+```
+
+### US-UK Localization
+*90% on the [superscript dataset](https://github.com/silentrob/normalizer/blob/master/data/british.txt)*
+```javascript
+nlp.Term("favourite").americanize()
+// favorite
+nlp.Term("synthesized").britishize()
+// synthesised
+```
+### N-gram
+```javascript
+nlp.Text("She sells seashells by the seashore.").ngram({min_count:1, max_size:5})
+// [{ word: 'she sells', count: 2, size: 2 }, ...
+options.min_count = 1 // throws away seldom-repeated grams
+options.max_size = 5 // maximum gram count. prevents the result from becoming gigantic
+```
+### Date parsing
+```javascript
+nlp.Value("I married April for the 2nd time on June 5th 1998 ").date()
+// [Date object]   d.toLocaleString() -> "04/2/1998"
+```
+### Number parsing
+```javascript
+nlp.Value("two thousand five hundred and sixty").number
+// 2560
+-nlp.Value("twenty one hundred").number
+// 2100
+-nlp.Value("nine two hundred").number
+// null
 ```

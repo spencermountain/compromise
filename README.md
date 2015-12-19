@@ -20,7 +20,7 @@ It's a [rule-based, use-focused, and satisfactory](https://github.com/spencermou
 > `<script src="./builds/nlp_compromise.es5.min.js"> </script>`
 
 ```javascript
-const nlp = require("nlp_compromise");
+let nlp = require("nlp_compromise");
 
 nlp.Text('She sells seashells').to_past()
 // She sold seashells
@@ -28,11 +28,20 @@ nlp.Text('She sells seashells').to_past()
 nlp.Text("She sells seashells").negate()
 // She didn't sell seashells
 
-nlp.Text("hamburger").syllables();
+nlp.Term("hamburger").syllables();
 // [ 'ham', 'bur', 'ger' ]
 
-nlp.Verb("spoke").to_present();
-// "speak"
+nlp.Verb("spoke").conjugate();
+// { past: 'spoke',
+//   infinitive: 'speak',
+//   gerund: 'speaking',
+//   actor: 'speaker',
+//   present: 'speaks',
+//   future: 'will speak',
+//   perfect: 'have spoke',
+//   pluperfect: 'had spoke',
+//   future_perfect: 'will have spoke'
+// }
 
 nlp.Noun("dinosaur").pluralize();
 // "dinosaurs"
@@ -43,6 +52,9 @@ nlp.Person("Tony Hawk").article();
 nlp.Value("five hundred and sixty").number;
 // 560
 
+nlp.Term("favourite").americanize()
+// favorite
+
 nlp.Text("Tony Danza did a backflip").people();
 // "Tony Danza"
 ```
@@ -50,12 +62,11 @@ nlp.Text("Tony Danza did a backflip").people();
 ### [View the Full API Documentation](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/api.md)
 
 ##Development
-[![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](http://superscriptjs.slack.com/messages/nlp_compromise/)
-[Contribution](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/development.md)
+[![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](http://superscriptjs.slack.com/messages/nlp_compromise/)[![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/pr)](http://issuestats.com/github/spencermountain/nlp_compromise)
+[![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/issue)](http://issuestats.com/github/spencermountain/nlp_compromise)
+* [Contributing](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/development.md)
 
 * [Changelog](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/changelog.md)
-[![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/pr)](http://issuestats.com/github/spencermountain/nlp_compromise)
-[![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/issue)](http://issuestats.com/github/spencermountain/nlp_compromise)
 
 
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)

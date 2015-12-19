@@ -89,8 +89,8 @@ var API={models:{Term:_Term,Sentence:_Sentence,Text:_Text},Term:function Term(s)
 //   return this.text.toUpperCase();
 // };
 //export to window or webworker
-if(typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'function'){self.nlp = nlp;}module.exports = nlp; // let n = nlp.Date('2012');
-// console.log(n.date());
+if(typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'function'){self.nlp = nlp;}module.exports = nlp; // let n = nlp.Verb('speak');
+// console.log(n.conjugate());
 },{"./lexicon.js":20,"./sentence/sentence.js":29,"./term/adjective/adjective.js":30,"./term/adverb/adverb.js":35,"./term/noun/date/date.js":42,"./term/noun/noun.js":48,"./term/noun/organisation/organisation.js":50,"./term/noun/person/person.js":54,"./term/noun/place/place.js":56,"./term/noun/value/value.js":64,"./term/term.js":66,"./term/verb/verb.js":74,"./text/text.js":77}],20:[function(require,module,exports){ //the lexicon is a big hash of words to pos tags
 //it's built by conjugating and inflecting a small seed of terms
 'use strict';var fns=require('./fns.js');var verb_conjugate=require('./term/verb/conjugate/conjugate.js');var to_comparative=require('./term/adjective/to_comparative.js');var to_superlative=require('./term/adjective/to_superlative.js');var grand_mapping=require('./sentence/pos/parts_of_speech.js').tag_mapping;var lexicon={};var addObj=function addObj(obj){var keys=Object.keys(obj);var l=keys.length;for(var _i6=0;_i6 < l;_i6++) {lexicon[keys[_i6]] = obj[keys[_i6]];}};var addArr=function addArr(arr,tag){var l=arr.length;for(var _i7=0;_i7 < l;_i7++) {lexicon[arr[_i7]] = tag;}}; //conjugate all verbs.

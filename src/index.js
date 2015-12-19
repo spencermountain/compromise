@@ -72,5 +72,5 @@ if (typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'functio
 }
 module.exports = nlp;
 
-// let n = nlp.Date('2012');
-// console.log(n.date());
+// let n = nlp.Verb('speak');
+// console.log(n.conjugate());

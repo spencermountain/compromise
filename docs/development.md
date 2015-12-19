@@ -17,7 +17,7 @@ nlp.Text("hakuna matada").tags() //["Expression"]
 ### Plugins
 ```javascript
 let nlp = require('nlp_compromise')
-nlp.models.Term.capitalise=function(){
+nlp.Term.capitalise=function(){
   return this.text.toUpperCase()
 }
 ```
@@ -64,6 +64,7 @@ git push origin master --tags
 
 ###file size
 of minimized, es5 clientside build:
+* December 2015 - 108kb
 * April 2015 - 109kb
 * May 1st - 103kb
 * May 8th - 79kb

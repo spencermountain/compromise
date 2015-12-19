@@ -22,47 +22,47 @@ It's a [rule-based, use-focused, and satisfactory](https://github.com/spencermou
 ```javascript
 let nlp = require("nlp_compromise");
 
-nlp.Text('She sells seashells').to_past()
-// She sold seashells
-
-nlp.Text("She sells seashells").negate()
+nlp.text("She sells seashells").negate()
 // She didn't sell seashells
 
-nlp.Verb("spoke").conjugate();
+nlp.text('She sells seashells').to_past()
+// She sold seashells
+
+nlp.verb("speak").conjugate();
 // { past: 'spoke',
 //   infinitive: 'speak',
 //   gerund: 'speaking',
 //   actor: 'speaker',
 //   present: 'speaks',
 //   future: 'will speak',
-//   perfect: 'have spoke',
-//   pluperfect: 'had spoke',
-//   future_perfect: 'will have spoke'
+//   perfect: 'have spoken',
+//   pluperfect: 'had spoken',
+//   future_perfect: 'will have spoken'
 // }
 
-nlp.Term("hamburger").syllables();
+nlp.term("hamburger").syllables();
 // [ 'ham', 'bur', 'ger' ]
 
-nlp.Noun("dinosaur").pluralize();
+nlp.noun("dinosaur").pluralize();
 // "dinosaurs"
 
-nlp.Person("Tony Hawk").article();
+nlp.person("Tony Hawk").article();
 // "he"
 
-nlp.Value("five hundred and sixty").number;
+nlp.value("five hundred and sixty").number;
 // 560
 
-nlp.Term("favourite").americanize()
+nlp.term("favourite").americanize()
 // favorite
 
-nlp.Text("Tony Danza did a kickflip").people();
+nlp.text("Tony Danza did a kickflip").people();
 // "Tony Danza"
 ```
 
-nlp_compromise also has a modest, though very clever [plugin ecosystem](https://github.com/spencermountain/nlp_compromise/blob/2.0/plugins):
+it's also got a modest, though very clever [plugin ecosystem](https://github.com/spencermountain/nlp_compromise/blob/2.0/plugins):
 ```javascript
+t = nlp_compromise.text('it is a cool library.');
 nlp_compromise.mixin(valley_girl);
-var t = nlp_compromise.text('it is a cool library.');
 t.valley_girl();
 t.text();
 // "So basically, it is like, a cool library."
@@ -75,6 +75,7 @@ t.text();
 ## Development
 [![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/pr)](http://issuestats.com/github/spencermountain/nlp_compromise)
 [![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/issue)](http://issuestats.com/github/spencermountain/nlp_compromise)
+nlp_compromise aims to be the best way to work with language in js. This is only done with  many eyes and many hands.
 
 [![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](http://superscriptjs.slack.com/messages/nlp_compromise/)
 * [Contributing](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/development.md)

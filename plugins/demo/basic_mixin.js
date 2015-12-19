@@ -9,13 +9,14 @@ var my_mixin = {
     }
   }
 };
+module.exports = my_mixin;
 
 /////
-// Usage:
-////
-const nlp_compromise = require('../../src/index');
-nlp_compromise.mixin(my_mixin);
-var t = nlp_compromise.term('work');
-t.fun();
-console.log(t.text);
-// "work!"
+////  Usage:
+/////
+// var nlp_compromise = require('../../src/index');
+// nlp_compromise.mixin(my_mixin);
+// var t = nlp_compromise.term('work');
+// t.fun();
+// console.log(t.text);
+// // "work!"

@@ -20,6 +20,9 @@ class Term {
     };
     this.pos = {};
     this.tag = types[tag] || '?';
+    if (types[tag]) {
+      this.pos[types[tag]] = true;
+    }
   }
 
   rebuild() {

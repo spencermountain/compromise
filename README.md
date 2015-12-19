@@ -59,6 +59,15 @@ nlp.Text("Tony Danza did a kickflip").people();
 // "Tony Danza"
 ```
 
+nlp_compromise also has a modest, though very clever [plugin ecosystem](https://github.com/spencermountain/nlp_compromise/blob/2.0/plugins):
+```javascript
+nlp_compromise.mixin(valley_girl);
+var t = nlp_compromise.text('it is a cool library.');
+t.valley_girl();
+t.text();
+// "So basically, it is like, a cool library."
+```
+
 ### [View the Full API Documentation](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/api.md)
 
 

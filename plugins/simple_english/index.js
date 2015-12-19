@@ -22,13 +22,13 @@ let simple_english = {
     }
   }
 };
-
+module.exports = simple_english;
 /////
 // Usage:
 ////
-const nlp_compromise = require('../../src/index');
-nlp_compromise.mixin(simple_english);
-var s = nlp_compromise.text('She administers the needle');
-s.simplify();
-console.log(s.text());
-//She gives the needle
+// const nlp_compromise = require('../../src/index');
+// nlp_compromise.mixin(simple_english);
+// var s = nlp_compromise.text('She administers the needle');
+// s.simplify();
+// console.log(s.text());
+// // "She gives the needle"

@@ -19,6 +19,16 @@ class Sentence {
 
   //Sentence methods:
 
+  //insert a new word at this point
+  addBefore(i, str) {
+    let t = new Term(str);
+    this.terms.splice(i, 0, t);
+  }
+  addAfter(i, str) {
+    let t = new Term(str);
+    this.terms.splice(i + 1, 0, t);
+  }
+
   //the ending punctuation
   terminator() {
     const allowed = ['.', '?', '!'];

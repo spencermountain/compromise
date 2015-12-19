@@ -30,7 +30,7 @@ class Person extends Noun {
   }
 
 }
-
+Person.fn = Person.prototype;
 module.exports = Person;
 
 // let p = new Person('John Smith');

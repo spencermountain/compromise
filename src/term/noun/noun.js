@@ -62,6 +62,8 @@ class Noun extends Term {
 
 }
 
+Noun.fn = Noun.prototype;
+
 module.exports = Noun;
 
 // let t = new Noun('NDA');

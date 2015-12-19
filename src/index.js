@@ -1,76 +1,88 @@
 'use strict';
-const Term = require('./term/term.js');
-const Text = require('./text/text.js');
-const Sentence = require('./sentence/sentence.js');
-const Verb = require('./term/verb/verb.js');
-const Adjective = require('./term/adjective/adjective.js');
-const Adverb = require('./term/adverb/adverb.js');
-
-const Noun = require('./term/noun/noun.js');
-const Value = require('./term/noun/value/value.js');
-const Person = require('./term/noun/person/person.js');
-const Place = require('./term/noun/place/place.js');
-const _Date = require('./term/noun/date/date.js');
-const Organisation = require('./term/noun/organisation/organisation.js');
-
-const Lexicon = require('./lexicon.js');
-
-//function returns a text object if there's a param, otherwise
-const API = {
-  models : {
-    Term: Term,
-    Sentence: Sentence,
-    Text: Text
-  },
-  Term : function(s) {
-    return new Term(s);
-  },
-  Verb : function(s) {
-    return new Verb(s);
-  },
-  Adverb : function(s) {
-    return new Adverb(s);
-  },
-  Adjective : function(s) {
-    return new Adjective(s);
-  },
-  Sentence : function(s) {
-    return new Sentence(s);
-  },
-  Text : function(s) {
-    return new Text(s);
-  },
-  Noun : function(s) {
-    return new Noun(s);
-  },
-  Person : function(s) {
-    return new Person(s);
-  },
-  Date : function(s) {
-    return new _Date(s);
-  },
-  Value : function(s) {
-    return new Value(s);
-  },
-  Place : function(s) {
-    return new Place(s);
-  },
-  Organisation : function(s) {
-    return new Organisation(s);
-  },
-  Lexicon: Lexicon
+const models = {
+  Term : require('./term/term.js'),
+  Text : require('./text/text.js'),
+  Sentence : require('./sentence/sentence.js'),
+  Verb : require('./term/verb/verb.js'),
+  Adjective : require('./term/adjective/adjective.js'),
+  Adverb : require('./term/adverb/adverb.js'),
+  Noun : require('./term/noun/noun.js'),
+  Value : require('./term/noun/value/value.js'),
+  Person : require('./term/noun/person/person.js'),
+  Place : require('./term/noun/place/place.js'),
+  Date : require('./term/noun/date/date.js'),
+  Organisation : require('./term/noun/organisation/organisation.js'),
+  Lexicon : require('./lexicon.js'),
 };
 
-let nlp = API;
-// nlp.Term.capitalise = function() {
-//   return this.text.toUpperCase();
-// };
+function NLP(context) {
+
+  context = context || {};
+  Object.keys(context).forEach(function(k) {
+    if (k === 'Lexicon') {
+      Object.keys(context[k]).forEach(function(word) {
+        Lexicon[word] = context[k][word];
+      });
+    } else if (models[k]) {
+      Object.keys(context[k]).forEach(function(method) {
+        models[k].fn[method] = context[k][method];
+      });
+    }
+  });
+
+  this.term = function(s) {
+    return new models.Term(s);
+  };
+  this.noun = function(s) {
+    return new models.Noun(s);
+  };
+  this.verb = function(s) {
+    return new models.Verb(s);
+  };
+  this.adjective = function(s) {
+    return new models.Adjective(s);
+  };
+  this.adverb = function(s) {
+    return new models.Adverb(s);
+  };
+
+  this.value = function(s) {
+    return new models.Value(s);
+  };
+  this.person = function(s) {
+    return new models.Person(s);
+  };
+  this.place = function(s) {
+    return new models.Place(s);
+  };
+  this.date = function(s) {
+    return new models.Date(s);
+  };
+  this.organisation = function(s) {
+    return new models.Organisation(s);
+  };
+
+  this.text = function(s) {
+    return new models.Text(s);
+  };
+  this.sentence = function(s) {
+    return new models.Sentence(s);
+  };
+}
 
 //export to window or webworker
 if (typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'function') {
-  self.nlp = nlp;
+  self.nlp_compromise = NLP;
 }
-module.exports = nlp;
+//export to commonjs
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = NLP;
+}
+//export to amd
+if (typeof define === 'function' && define.amd) {
+  define(NLP);
+}
 
-// let n = nlp.Verb('speak');
-// console.log(n.conjugate());
+// let nlp = new NLP();
+// let word = nlp.verb('speak');
+// console.log(word.conjugate());

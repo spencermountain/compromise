@@ -11,11 +11,8 @@ class Sentence {
   constructor(str) {
     this.str = str || '';
     const terms = str.split(' ');
-    this.terms = terms.map(function(s, i) {
-      const info = {
-        index: i
-      };
-      return new Term(s, info);
+    this.terms = terms.map(function(s) {
+      return new Term(s);
     });
     this.terms = tagger(this);
   }
@@ -76,11 +73,11 @@ class Sentence {
   }
 
   //map over Term methods
-  normalized() {
-    return fns.pluck(this.terms, 'normal').join(' ');
-  }
   text() {
     return fns.pluck(this.terms, 'text').join(' ');
+  }
+  normalized() {
+    return fns.pluck(this.terms, 'normal').join(' ');
   }
   tags() {
     return fns.pluck(this.terms, 'tag');
@@ -118,5 +115,7 @@ class Sentence {
     });
   }
 }
+
+Sentence.fn = Sentence.prototype;
 
 module.exports = Sentence;

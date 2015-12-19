@@ -8,5 +8,5 @@ constructor(str, tag) {
   this.pos['Place'] = true;
 }
 };
-
+Place.fn = Place.prototype;
 module.exports = Place;

@@ -99,6 +99,7 @@ class Verb extends Term {
   }
 
 }
+Verb.fn = Verb.prototype;
 
 // let v = new Verb("walk", "asdf")
 // console.log(v.form())

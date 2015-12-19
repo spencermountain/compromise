@@ -7,20 +7,31 @@ NLP is a solvable problem in scale, and all forms of input are gracious and love
 * unit tests are in ```./tests``` and can be run with 'npm test'
 * 'grunt build' command joins all various scripts into a client-side js file
 
-### Add new words to the Lexicon
+### Plugins
+```javascript
+const nlp_compromise = require("nlp_compromise")
+let plugin = {
+  Term: {
+    fun : function() {
+      this.text += '!';
+      return this;
+    }
+  }
+};
+let nlp = new nlp_compromise(plugin);
+let w = nlp.term('work').fun();
+console.log(w.text);
+// "work!"
+```
+
+
+## Add new words to the Lexicon
 ```javascript
 nlp.Text("hakuna matada").tags() //["Noun"]
 nlp.Lexicon["hakuna matada"]="Expression"
 nlp.Text("hakuna matada").tags() //["Expression"]
 ```
 
-### Plugins
-```javascript
-let nlp = require('nlp_compromise')
-nlp.Term.capitalise=function(){
-  return this.text.toUpperCase()
-}
-```
 
 ### Building
 needs an Es6 env, like `nvm use iojs-v2.3.0`

@@ -67,6 +67,7 @@ class Term {
   }
 }
 
+Term.fn = Term.prototype;
 // let t = new Term('NSA');
 // console.log(t.britishize());
 

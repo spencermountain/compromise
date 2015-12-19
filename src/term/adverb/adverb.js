@@ -12,7 +12,7 @@ class Adverb extends Term {
     return to_adjective(this.normal);
   }
 }
-
+Adverb.fn = Adverb.prototype;
 // let t = new Adverb("quickly")
 // console.log(t.to_adjective())
 

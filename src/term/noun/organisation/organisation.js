@@ -9,5 +9,5 @@ class Organisation extends Noun {
 
   }
 }
-
+Organisation.fn = Organisation.prototype;
 module.exports = Organisation;

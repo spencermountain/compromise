@@ -37,6 +37,7 @@ class _Date extends Noun {
   }
 
 }
+_Date.fn = _Date.prototype;
 
 module.exports = _Date;
 

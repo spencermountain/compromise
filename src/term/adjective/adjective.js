@@ -35,7 +35,7 @@ class Adjective extends Term {
   }
 
 }
-
+Adjective.fn = Adjective.prototype;
 // let t = new Adjective("quick")
 // console.log(t.conjugate())
 

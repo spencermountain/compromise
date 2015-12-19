@@ -3858,81 +3858,96 @@ exports.titlecase = function(str) {
 
 },{}],19:[function(require,module,exports){
 'use strict';
-const Term = require('./term/term.js');
-const Text = require('./text/text.js');
-const Sentence = require('./sentence/sentence.js');
-const Verb = require('./term/verb/verb.js');
-const Adjective = require('./term/adjective/adjective.js');
-const Adverb = require('./term/adverb/adverb.js');
 
-const Noun = require('./term/noun/noun.js');
-const Value = require('./term/noun/value/value.js');
-const Person = require('./term/noun/person/person.js');
-const Place = require('./term/noun/place/place.js');
-const _Date = require('./term/noun/date/date.js');
-const Organisation = require('./term/noun/organisation/organisation.js');
-
-const Lexicon = require('./lexicon.js');
-
-//function returns a text object if there's a param, otherwise
-const API = {
-  models : {
-    Term: Term,
-    Sentence: Sentence,
-    Text: Text
-  },
-  Term : function(s) {
-    return new Term(s);
-  },
-  Verb : function(s) {
-    return new Verb(s);
-  },
-  Adverb : function(s) {
-    return new Adverb(s);
-  },
-  Adjective : function(s) {
-    return new Adjective(s);
-  },
-  Sentence : function(s) {
-    return new Sentence(s);
-  },
-  Text : function(s) {
-    return new Text(s);
-  },
-  Noun : function(s) {
-    return new Noun(s);
-  },
-  Person : function(s) {
-    return new Person(s);
-  },
-  Date : function(s) {
-    return new _Date(s);
-  },
-  Value : function(s) {
-    return new Value(s);
-  },
-  Place : function(s) {
-    return new Place(s);
-  },
-  Organisation : function(s) {
-    return new Organisation(s);
-  },
-  Lexicon: Lexicon
+let models = {
+  Term : require('./term/term.js'),
+  Text : require('./text/text.js'),
+  Sentence : require('./sentence/sentence.js'),
+  Verb : require('./term/verb/verb.js'),
+  Adjective : require('./term/adjective/adjective.js'),
+  Adverb : require('./term/adverb/adverb.js'),
+  Noun : require('./term/noun/noun.js'),
+  Value : require('./term/noun/value/value.js'),
+  Person : require('./term/noun/person/person.js'),
+  Place : require('./term/noun/place/place.js'),
+  Date : require('./term/noun/date/date.js'),
+  Organisation : require('./term/noun/organisation/organisation.js'),
+  Lexicon : require('./lexicon.js'),
 };
 
-let nlp = API;
-// nlp.Term.capitalise = function() {
-//   return this.text.toUpperCase();
-// };
+const extend = function(m, context) {
+  context = context || {};
+  return m;
+};
+
+function NLP() {
+
+  this.mixin = function(obj) {
+    obj = obj || {};
+    Object.keys(obj).forEach(function(k) {
+      Object.keys(obj[k]).forEach(function(method) {
+        models[k].fn[method] = obj[k][method];
+      });
+    });
+  };
+
+  this.term = function(s, context) {
+    return extend(new models.Term(s), context);
+  };
+  this.noun = function(s) {
+    return new models.Noun(s);
+  };
+  this.verb = function(s) {
+    return new models.Verb(s);
+  };
+  this.adjective = function(s) {
+    return new models.Adjective(s);
+  };
+  this.adverb = function(s) {
+    return new models.Adverb(s);
+  };
+
+  this.value = function(s) {
+    return new models.Value(s);
+  };
+  this.person = function(s) {
+    return new models.Person(s);
+  };
+  this.place = function(s) {
+    return new models.Place(s);
+  };
+  this.date = function(s) {
+    return new models.Date(s);
+  };
+  this.organisation = function(s) {
+    return new models.Organisation(s);
+  };
+
+  this.text = function(s) {
+    return new models.Text(s);
+  };
+  this.sentence = function(s) {
+    return new models.Sentence(s);
+  };
+}
+
+let nlp = new NLP();
 
 //export to window or webworker
 if (typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'function') {
-  self.nlp = nlp;
+  self.nlp_compromise = nlp;
 }
-module.exports = nlp;
+//export to commonjs
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = nlp;
+}
+//export to amd
+if (typeof define === 'function' && define.amd) {
+  define(nlp);
+}
 
-// let n = nlp.Verb('speak');
-// console.log(n.conjugate());
+// let word = nlp.verb('speak');
+// console.log(word.conjugate());
 
 },{"./lexicon.js":20,"./sentence/sentence.js":29,"./term/adjective/adjective.js":30,"./term/adverb/adverb.js":35,"./term/noun/date/date.js":42,"./term/noun/noun.js":48,"./term/noun/organisation/organisation.js":50,"./term/noun/person/person.js":54,"./term/noun/place/place.js":56,"./term/noun/value/value.js":64,"./term/term.js":66,"./term/verb/verb.js":74,"./text/text.js":77}],20:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
@@ -4870,16 +4885,23 @@ class Sentence {
   constructor(str) {
     this.str = str || '';
     const terms = str.split(' ');
-    this.terms = terms.map(function(s, i) {
-      const info = {
-        index: i
-      };
-      return new Term(s, info);
+    this.terms = terms.map(function(s) {
+      return new Term(s);
     });
     this.terms = tagger(this);
   }
 
   //Sentence methods:
+
+  //insert a new word at this point
+  addBefore(i, str) {
+    let t = new Term(str);
+    this.terms.splice(i, 0, t);
+  }
+  addAfter(i, str) {
+    let t = new Term(str);
+    this.terms.splice(i + 1, 0, t);
+  }
 
   //the ending punctuation
   terminator() {
@@ -4935,11 +4957,11 @@ class Sentence {
   }
 
   //map over Term methods
-  normalized() {
-    return fns.pluck(this.terms, 'normal').join(' ');
-  }
   text() {
     return fns.pluck(this.terms, 'text').join(' ');
+  }
+  normalized() {
+    return fns.pluck(this.terms, 'normal').join(' ');
   }
   tags() {
     return fns.pluck(this.terms, 'tag');
@@ -4977,6 +4999,8 @@ class Sentence {
     });
   }
 }
+
+Sentence.fn = Sentence.prototype;
 
 module.exports = Sentence;
 
@@ -5018,7 +5042,7 @@ class Adjective extends Term {
   }
 
 }
-
+Adjective.fn = Adjective.prototype;
 // let t = new Adjective("quick")
 // console.log(t.conjugate())
 
@@ -5435,7 +5459,7 @@ class Adverb extends Term {
     return to_adjective(this.normal);
   }
 }
-
+Adverb.fn = Adverb.prototype;
 // let t = new Adverb("quickly")
 // console.log(t.to_adjective())
 
@@ -6389,6 +6413,7 @@ class _Date extends Noun {
   }
 
 }
+_Date.fn = _Date.prototype;
 
 module.exports = _Date;
 
@@ -6752,6 +6777,8 @@ class Noun extends Term {
 
 }
 
+Noun.fn = Noun.prototype;
+
 module.exports = Noun;
 
 // let t = new Noun('NDA');
@@ -6828,7 +6855,7 @@ class Organisation extends Noun {
 
   }
 }
-
+Organisation.fn = Organisation.prototype;
 module.exports = Organisation;
 
 },{"../noun.js":48}],51:[function(require,module,exports){
@@ -6999,7 +7026,7 @@ class Person extends Noun {
   }
 
 }
-
+Person.fn = Person.prototype;
 module.exports = Person;
 
 // let p = new Person('John Smith');
@@ -7072,7 +7099,7 @@ constructor(str, tag) {
   this.pos['Place'] = true;
 }
 };
-
+Place.fn = Place.prototype;
 module.exports = Place;
 
 },{"../noun.js":48}],57:[function(require,module,exports){
@@ -7890,6 +7917,7 @@ class Value extends Noun {
   }
 
 }
+Value.fn = Value.prototype;
 
 module.exports = Value;
 
@@ -8011,13 +8039,20 @@ class Term {
     };
     this.pos = {};
     this.tag = types[tag] || '?';
+    if (types[tag]) {
+      this.pos[types[tag]] = true;
+    }
   }
 
-  changeTo(str) {
-    str = str || '';
-    this.text = str.trim();
+  rebuild() {
+    this.text = this.text || '';
+    this.text = this.text.trim();
     this.normal = '';
     this.normalize();
+  }
+  changeTo(str) {
+    this.text = str;
+    this.rebuild();
   }
 
   //Term methods..
@@ -8058,6 +8093,7 @@ class Term {
   }
 }
 
+Term.fn = Term.prototype;
 // let t = new Term('NSA');
 // console.log(t.britishize());
 
@@ -8944,6 +8980,7 @@ class Verb extends Term {
   }
 
 }
+Verb.fn = Verb.prototype;
 
 // let v = new Verb("walk", "asdf")
 // console.log(v.form())
@@ -9063,7 +9100,7 @@ const fns = require('../fns.js');
 //a text object is a series of sentences, along with the generic methods for transforming them
 class Text {
   constructor(str) {
-    this.str = str || '';
+    this.raw_text = str || '';
     this.sentences = sentence_parser(str).map(function(s) {
       return new Sentence(s);
     });
@@ -9082,6 +9119,12 @@ class Text {
   text() {
     const arr = this.sentences.map(function(s) {
       return s.text();
+    });
+    return fns.flatten(arr).join(' ');
+  }
+  normalized() {
+    const arr = this.sentences.map(function(s) {
+      return s.normalized();
     });
     return fns.flatten(arr).join(' ');
   }
@@ -9160,6 +9203,7 @@ class Text {
     return arr;
   }
 }
+Text.fn = Text.prototype;
 
 module.exports = Text;
 

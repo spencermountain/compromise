@@ -10,17 +10,17 @@
 * caniuse, yup. IE9+
 
 It's a [rule-based, use-focused, and satisfactory](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/docs.md) javascript library for understanding and changing written english
-###&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[Check it out](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/conjugation/index.html)**
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[Check it out](http://rawgit.com/spencermountain/nlp_compromise/2.0/demos/conjugation/index.html)**
 
-<h6>&nbsp;&nbsp;&nbsp;:boom: Welcome to <a href="https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/changelog.md">v2.0!</a> Please [file an issue</a> if you find something :boom:</h6>
+<h6>&nbsp;&nbsp;&nbsp;:boom: Welcome to <a href="https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/changelog.md">v2.0!</a> Please <a href="https://github.com/spencermountain/nlp_compromise/issues">file an issue</a> if you find something :boom:</h6>
 
 ## Off you go:
 > `npm install nlp_compromise`
 
-> `<script src="./nlp_compromise.es5.js"> </script>`
+> `<script src="./builds/nlp_compromise.es5.min.js"> </script>`
 
 ```javascript
-var nlp = require("nlp_compromise");
+const nlp = require("nlp_compromise");
 
 nlp.Text('She sells seashells').to_past()
 // She sold seashells
@@ -31,11 +31,20 @@ nlp.Text("She sells seashells").negate()
 nlp.Text("hamburger").syllables();
 // [ 'ham', 'bur', 'ger' ]
 
+nlp.Verb("spoke").to_present();
+// "speak"
+
 nlp.Noun("dinosaur").pluralize();
-// dinosaurs
+// "dinosaurs"
+
+nlp.Person("Tony Hawk").article();
+// "he"
 
 nlp.Value("five hundred and sixty").number;
 // 560
+
+nlp.Text("Tony Danza did a backflip").people();
+// "Tony Danza"
 ```
 
 ### [View the Full API Documentation](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/api.md)

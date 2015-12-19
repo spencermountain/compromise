@@ -1,6 +1,6 @@
-let {Tab, Tabs, Grid, Row, Col, Input} = ReactBootstrap;
+let {Row, Col, Input, Grid} = ReactBootstrap;
 
-let Home = React.createClass({
+let Conjugation = React.createClass({
 
   getInitialState: function () {
     return {
@@ -57,8 +57,6 @@ let Home = React.createClass({
     this.update();
   },
   render: function () {
-    let cmp = this;
-    let state = this.state;
     let css = {
       grid: {},
       top: {
@@ -81,7 +79,7 @@ let Home = React.createClass({
         </Row>
 
         <Row>
-          <Col md={4} xs={0}></Col>
+          <Col md={4} xs={0}/>
           <Col md={4} xs={10}>
             <Input type="text" value={this.state.word} onChange={this.update}/>
           </Col>
@@ -91,15 +89,14 @@ let Home = React.createClass({
         </Row>
 
         <Row>
-          <Col md={3} xs={0}></Col>
+          <Col md={3} xs={0}/>
           <Col md={6} xs={12}>
             {this.result()}
           </Col>
         </Row>
 
         <Row>
-          <Col md={3} >
-          </Col>
+          <Col md={3} />
         </Row>
       </Grid>
       );
@@ -107,10 +104,4 @@ let Home = React.createClass({
 
 });
 
-
-window.setTimeout(function () {
-  ReactDOM.render(
-    <Home/>,
-    document.getElementById('main')
-  );
-}, 500);
+window.Conjugation = Conjugation;

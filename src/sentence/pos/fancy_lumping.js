@@ -24,7 +24,7 @@ const shouldLumpThree = function(a, b, c) {
       result: 'Noun',
     },
     {
-      condition: (a.text.match(/^["']/) && !b.text.match(/["']/) && c.match(/["']$/)), //three-word quote
+      condition: (a.text.match(/^["']/) && !b.text.match(/["']/) && c.text.match(/["']$/)), //three-word quote
       result: 'Noun',
     },
     {

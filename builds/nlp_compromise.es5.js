@@ -136,7 +136,7 @@ var new_terms=[new pos.Term(pronoun),new pos.Verb(verb)];var fixup=[].concat(ter
 result:'Person'},{condition:a.pos.Noun && b.text === 'N' && c.pos.Noun, //John N Joe's
 result:'Person'},{condition:a.pos.Date && b.normal === 'the' && c.pos.Value, //June the 5th
 result:'Person'},{condition:a.is_capital() && b.normal === 'of' && c.is_capital(), //President of Mexico
-result:'Noun'},{condition:a.text.match(/^["']/) && !b.text.match(/["']/) && c.match(/["']$/), //three-word quote
+result:'Noun'},{condition:a.text.match(/^["']/) && !b.text.match(/["']/) && c.text.match(/["']$/), //three-word quote
 result:'Noun'},{condition:a.normal === 'will' && b.normal === 'have' && b.pos.Verb, //will have walk
 result:'FutureTense'}];for(var _i13=0;_i13 < lump_rules.length;_i13++) {if(lump_rules[_i13].condition){return lump_rules[_i13].result;}}return false;};var shouldLumpTwo=function shouldLumpTwo(a,b){if(!a || !b){return false;}var lump_rules=[{condition:a.pos.Person && b.pos.Honourific || a.pos.Honourific && b.pos.Person, //"John sr."
 result:'Person'},{condition:a.pos.Honourific && b.is_capital(), //'Dr. John

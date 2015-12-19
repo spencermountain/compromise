@@ -9,7 +9,7 @@ describe('Sentence Manipulation Methods', function() {
       ['he is quick', 'he was quick', 'he will be quick'],
     ];
     tests.forEach(function(a) {
-      let s = nlp.Text(a[0]);
+      let s = nlp.text(a[0]);
       s.to_past();
       s.text().should.equal(a[1]);
       s.to_future();

@@ -15,7 +15,7 @@ describe('adjective methods', function() {
       ['cute', 'cutely'],
     ];
     tests.forEach(function(a) {
-      let adv = nlp.Adjective(a[0]);
+      let adv = nlp.adjective(a[0]);
       (adv.to_adverb() || '').should.equal(a[1]);
     });
     done();
@@ -32,7 +32,7 @@ describe('adjective methods', function() {
       ['cute', 'cutest'],
     ];
     tests.forEach(function(a) {
-      let adv = nlp.Adjective(a[0]);
+      let adv = nlp.adjective(a[0]);
       (adv.to_superlative() || '').should.equal(a[1]);
     });
     done();
@@ -49,14 +49,14 @@ describe('adjective methods', function() {
       ['cute', 'cuter'],
     ];
     tests.forEach(function(a) {
-      let adv = nlp.Adjective(a[0]);
+      let adv = nlp.adjective(a[0]);
       (adv.to_comparative() || '').should.equal(a[1]);
     });
     done();
   });
 
   it('conjugate', function(done) {
-    let adv = nlp.Adjective('nice');
+    let adv = nlp.adjective('nice');
     let o = adv.conjugate();
     (o.comparative).should.equal('nicer');
     (o.superlative).should.equal('nicest');

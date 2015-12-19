@@ -147,7 +147,7 @@ let verbs = [{
 describe('verb conjugate', function() {
   it('infinitive stays infinitive', function(done) {
     verbs.forEach(function(o) {
-      let c = nlp.Verb(o.infinitive).conjugate();
+      let c = nlp.verb(o.infinitive).conjugate();
       (c.infinitive).should.equal(o.infinitive);
     });
     done();
@@ -155,7 +155,7 @@ describe('verb conjugate', function() {
 
   it('infinitive becomes past', function(done) {
     verbs.forEach(function(o) {
-      let c = nlp.Verb(o.infinitive).conjugate();
+      let c = nlp.verb(o.infinitive).conjugate();
       (c.past).should.equal(o.past);
     });
     done();
@@ -163,7 +163,7 @@ describe('verb conjugate', function() {
 
   it('infinitive becomes present', function(done) {
     verbs.forEach(function(o) {
-      let c = nlp.Verb(o.infinitive).conjugate();
+      let c = nlp.verb(o.infinitive).conjugate();
       (c.present).should.equal(o.present);
     });
     done();
@@ -171,7 +171,7 @@ describe('verb conjugate', function() {
 
   it('infinitive becomes gerund', function(done) {
     verbs.forEach(function(o) {
-      let c = nlp.Verb(o.infinitive).conjugate();
+      let c = nlp.verb(o.infinitive).conjugate();
       (c.gerund).should.equal(o.gerund);
     });
     done();
@@ -179,7 +179,7 @@ describe('verb conjugate', function() {
 
   it('past stays past', function(done) {
     verbs.forEach(function(o) {
-      let c = nlp.Verb(o.past).conjugate();
+      let c = nlp.verb(o.past).conjugate();
       (c.past).should.equal(o.past);
     });
     done();
@@ -187,7 +187,7 @@ describe('verb conjugate', function() {
 
   it('past becomes present', function(done) {
     verbs.forEach(function(o) {
-      let c = nlp.Verb(o.past).conjugate();
+      let c = nlp.verb(o.past).conjugate();
       (c.present).should.equal(o.present);
     });
     done();
@@ -195,7 +195,7 @@ describe('verb conjugate', function() {
 
   it('past becomes gerund', function(done) {
     verbs.forEach(function(o) {
-      let c = nlp.Verb(o.past).conjugate();
+      let c = nlp.verb(o.past).conjugate();
       (c.gerund).should.equal(o.gerund);
     });
     done();
@@ -203,7 +203,7 @@ describe('verb conjugate', function() {
 
   it('present stays present', function(done) {
     verbs.forEach(function(o) {
-      let c = nlp.Verb(o.present).conjugate();
+      let c = nlp.verb(o.present).conjugate();
       (c.present).should.equal(o.present);
     });
     done();
@@ -211,7 +211,7 @@ describe('verb conjugate', function() {
 
   it('present becomes past', function(done) {
     verbs.forEach(function(o) {
-      let c = nlp.Verb(o.present).conjugate();
+      let c = nlp.verb(o.present).conjugate();
       (c.past).should.equal(o.past);
     });
     done();
@@ -219,7 +219,7 @@ describe('verb conjugate', function() {
 
   it('present becomes gerund', function(done) {
     verbs.forEach(function(o) {
-      let c = nlp.Verb(o.present).conjugate();
+      let c = nlp.verb(o.present).conjugate();
       (c.gerund).should.equal(o.gerund);
     });
     done();

@@ -61,7 +61,7 @@ describe('to_adjective', function() {
       ['vertically', 'vertical']
     ];
     tests.forEach(function(a) {
-      let adv = nlp.Adverb(a[0]);
+      let adv = nlp.adverb(a[0]);
       adv.to_adjective().should.equal(a[1]);
     });
     done();

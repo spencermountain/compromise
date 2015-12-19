@@ -17,7 +17,7 @@ describe('article', function() {
       ['ukalele', 'a'],
     ];
     tests.forEach(function(a) {
-      let n = nlp.Noun(a[0]);
+      let n = nlp.noun(a[0]);
       n.article().should.equal(a[1]);
     });
     done();

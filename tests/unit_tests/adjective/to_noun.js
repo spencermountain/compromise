@@ -15,7 +15,7 @@ describe('adjective', function() {
       ['clean', 'cleanliness'],
     ];
     tests.forEach(function(a) {
-      let adv = nlp.Adjective(a[0]);
+      let adv = nlp.adjective(a[0]);
       adv.to_noun().should.equal(a[1]);
     });
     done();

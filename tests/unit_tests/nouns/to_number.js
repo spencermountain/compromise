@@ -71,7 +71,7 @@ let tests = [
 describe('to noun', function() {
   it('text to noun', function(done) {
     tests.forEach(function(a) {
-      let v = nlp.Value(a[0]);
+      let v = nlp.value(a[0]);
       (v.number || '').should.equal(a[1] || '');
     });
     done();

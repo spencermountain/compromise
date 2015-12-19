@@ -34,7 +34,7 @@ describe('date', function () {
     // ['200bc', [5, 22, 1997]],
     ];
     tests.forEach(function (a) {
-      let n = nlp.Date(a[0]);
+      let n = nlp.date(a[0]);
       let w = a[1];
       let d = n.date();
       d.getMonth().should.equal(w[0]);
@@ -43,6 +43,7 @@ describe('date', function () {
     });
     done();
   });
+
   it('partial dates', function (done) {
     let tests = [
       ['3rd of March 1969', [2, 3, 1969]],
@@ -63,7 +64,7 @@ describe('date', function () {
       ['jan 1921', [0, null, 1921]],
     ];
     tests.forEach(function (a) {
-      let n = nlp.Date(a[0]);
+      let n = nlp.date(a[0]);
       let w = a[1];
       let o = n.data;
       (o.month || '').should.equal(w[0] || '');
@@ -80,7 +81,7 @@ describe('date', function () {
       ['January 5th 4032', [0, 5, null]],
     ];
     tests.forEach(function (a) {
-      let n = nlp.Date(a[0]);
+      let n = nlp.date(a[0]);
       let w = a[1];
       let o = n.data;
       (o.month || '').should.equal(w[0] || '');

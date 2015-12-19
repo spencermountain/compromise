@@ -4,7 +4,7 @@ let nlp = require('../../../src/index.js');
 describe('Sentence Class Methods', function() {
 
   it('Basic', function(done) {
-    let sen = nlp.Text('Hello World').sentences[0];
+    let sen = nlp.text('Hello World').sentences[0];
     let methods = [
       'terminator',
       'text',
@@ -25,7 +25,7 @@ describe('Sentence Class Methods', function() {
       ['Tony is okay', '.']
     ];
     tests.forEach(function(a) {
-      let s = nlp.Text(a[0]).sentences[0];
+      let s = nlp.text(a[0]).sentences[0];
       s.terminator().should.eql(a[1]);
     });
     done();
@@ -40,7 +40,7 @@ describe('Sentence Class Methods', function() {
     ];
 
     tests.forEach(function(a) {
-      let people = nlp.Text(a[0]).people();
+      let people = nlp.text(a[0]).people();
       people = people.map(function(t) {
         return t.text;
       });
@@ -57,7 +57,7 @@ describe('Sentence Class Methods', function() {
     ];
 
     tests.forEach(function(a) {
-      let arr = nlp.Text(a[0]).places();
+      let arr = nlp.text(a[0]).places();
       arr = arr.map(function(t) {
         return t.text;
       });
@@ -74,7 +74,7 @@ describe('Sentence Class Methods', function() {
     ];
 
     tests.forEach(function(a) {
-      let arr = nlp.Text(a[0]).dates();
+      let arr = nlp.text(a[0]).dates();
       arr = arr.map(function(t) {
         return t.text;
       });
@@ -92,7 +92,7 @@ describe('Sentence Class Methods', function() {
     ];
 
     tests.forEach(function(a) {
-      let arr = nlp.Text(a[0]).values();
+      let arr = nlp.text(a[0]).values();
       arr = arr.map(function(t) {
         return t.text;
       });
@@ -110,7 +110,7 @@ describe('Sentence Class Methods', function() {
     ];
 
     tests.forEach(function(a) {
-      let arr = nlp.Text(a[0]).organisations();
+      let arr = nlp.text(a[0]).organisations();
       arr = arr.map(function(t) {
         return t.text;
       });
@@ -127,7 +127,7 @@ describe('Sentence Class Methods', function() {
     ];
 
     tests.forEach(function(a) {
-      let bool = nlp.Sentence(a[0]).is_passive();
+      let bool = nlp.sentence(a[0]).is_passive();
       (bool).should.eql(a[1]);
     });
     done();

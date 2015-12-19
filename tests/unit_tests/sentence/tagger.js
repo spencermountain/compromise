@@ -14,7 +14,7 @@ describe('pos tag', function() {
       ['He is in Canada', ['Person', 'Copula', 'Preposition', 'Place']],
     ];
     tests.forEach(function(a) {
-      let n = nlp.Text(a[0]);
+      let n = nlp.text(a[0]);
       let tags = n.tags()[0];
       (a[1]).should.deepEqual(tags);
     });

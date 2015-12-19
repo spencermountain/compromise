@@ -18,7 +18,6 @@ let models = {
 
 const extend = function(m, context) {
   context = context || {};
-
   return m;
 };
 

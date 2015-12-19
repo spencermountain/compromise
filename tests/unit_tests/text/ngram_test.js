@@ -14,7 +14,7 @@ describe('ngram', function() {
       ['55 and 55', '55', 2],
     ];
     tests.forEach(function(a) {
-      let n = nlp.Text(a[0]);
+      let n = nlp.text(a[0]);
       let topgram = n.ngram()[0][0];
       topgram.word.should.equal(a[1]);
       topgram.count.should.equal(a[2]);

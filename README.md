@@ -59,7 +59,7 @@ nlp.text("Tony Danza did a kickflip").people();
 // "Tony Danza"
 ```
 
-it's also got a modest, though very clever [plugin ecosystem](https://github.com/spencermountain/nlp_compromise/blob/2.0/plugins):
+it's also got a modest, though very ambitious [plugin ecosystem](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/plugins):
 ```javascript
 t = nlp_compromise.text('it is a cool library.');
 nlp_compromise.mixin(valley_girl);
@@ -75,7 +75,8 @@ t.text();
 ## Development
 [![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/pr)](http://issuestats.com/github/spencermountain/nlp_compromise)
 [![Issue Stats](http://issuestats.com/github/spencermountain/nlp_compromise/badge/issue)](http://issuestats.com/github/spencermountain/nlp_compromise)
-nlp_compromise aims to be the best way to work with language in js. This is only done with  many eyes and many hands.
+
+*nlp_compromise* aims to be the best way to work with language in js. This is only done with  many eyes and many hands.
 
 [![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](http://superscriptjs.slack.com/messages/nlp_compromise/)
 * [Contributing](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/development.md)

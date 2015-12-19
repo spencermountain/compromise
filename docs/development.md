@@ -7,20 +7,20 @@ NLP is a solvable problem in scale, and all forms of input are gracious and love
 * unit tests are in ```./tests``` and can be run with 'npm test'
 * 'grunt build' command joins all various scripts into a client-side js file
 
-### Plugins
+### Extending nlp_compromise with Plugins/Mixins
+nlp_compromise attempts to become the best way to work with, interpret, and manipulate language in javascript. Any sort of procedure or analysis can be applied, then shared as a mixin.
 ```javascript
 const nlp_compromise = require("nlp_compromise")
-let plugin = {
+let my_mixin = {
   Term: {
     fun : function() {
-      this.text += '!';
-      return this;
+      return this.text + '!';
     }
   }
 };
-let nlp = new nlp_compromise(plugin);
-let w = nlp.term('work').fun();
-console.log(w.text);
+nlp.mixin(my_mixin);
+let w = nlp.term('work');
+w.fun()
 // "work!"
 ```
 

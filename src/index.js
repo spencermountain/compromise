@@ -1,5 +1,6 @@
 'use strict';
-const models = {
+
+let models = {
   Term : require('./term/term.js'),
   Text : require('./text/text.js'),
   Sentence : require('./sentence/sentence.js'),
@@ -15,23 +16,25 @@ const models = {
   Lexicon : require('./lexicon.js'),
 };
 
-function NLP(context) {
-
+const extend = function(m, context) {
   context = context || {};
-  Object.keys(context).forEach(function(k) {
-    if (k === 'Lexicon') {
-      Object.keys(context[k]).forEach(function(word) {
-        Lexicon[word] = context[k][word];
-      });
-    } else if (models[k]) {
-      Object.keys(context[k]).forEach(function(method) {
-        models[k].fn[method] = context[k][method];
-      });
-    }
-  });
 
-  this.term = function(s) {
-    return new models.Term(s);
+  return m;
+};
+
+function NLP() {
+
+  this.mixin = function(obj) {
+    obj = obj || {};
+    Object.keys(obj).forEach(function(k) {
+      Object.keys(obj[k]).forEach(function(method) {
+        models[k].fn[method] = obj[k][method];
+      });
+    });
+  };
+
+  this.term = function(s, context) {
+    return extend(new models.Term(s), context);
   };
   this.noun = function(s) {
     return new models.Noun(s);
@@ -70,19 +73,20 @@ function NLP(context) {
   };
 }
 
+let nlp = new NLP();
+
 //export to window or webworker
 if (typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'function') {
-  self.nlp_compromise = NLP;
+  self.nlp_compromise = nlp;
 }
 //export to commonjs
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = NLP;
+  module.exports = nlp;
 }
 //export to amd
 if (typeof define === 'function' && define.amd) {
-  define(NLP);
+  define(nlp);
 }
 
-// let nlp = new NLP();
 // let word = nlp.verb('speak');
 // console.log(word.conjugate());

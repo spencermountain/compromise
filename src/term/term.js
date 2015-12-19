@@ -22,11 +22,15 @@ class Term {
     this.tag = types[tag] || '?';
   }
 
-  changeTo(str) {
-    str = str || '';
-    this.text = str.trim();
+  rebuild() {
+    this.text = this.text || '';
+    this.text = this.text.trim();
     this.normal = '';
     this.normalize();
+  }
+  changeTo(str) {
+    this.text = str;
+    this.rebuild();
   }
 
   //Term methods..

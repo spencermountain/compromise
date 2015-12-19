@@ -59,10 +59,10 @@ nlp.text("Tony Danza did a kickflip").people();
 // "Tony Danza"
 ```
 
-it's also got a modest, though very ambitious [plugin ecosystem](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/plugins):
+it's also got a modest, though very ambitious [plugin ecosystem](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/plugins.md):
 ```javascript
-t = nlp_compromise.text('it is a cool library.');
 nlp_compromise.mixin(valley_girl);
+t = nlp_compromise.text('it is a cool library.');
 t.valley_girl();
 t.text();
 // "So basically, it is like, a cool library."

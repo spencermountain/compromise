@@ -11,12 +11,10 @@ nlp_compromise={
     terms: function()
     normalised: function()
     ngram({max_size:2}),//[[she sells, sells seashells],[she, sells, seashells]]
-  },
-  Term :{
-    syllables: function()   //hamburger -> ['ham','bur','ger']
-    britishize: function()  //favorite -> favourite
-    americanize: function() //synthesised -> synthesized
-    is_capital: function()  //Tony Danza -> true
+    contractions:{
+      expand: function()
+      contract: function()
+    }
   },
   Sentence :{
     sentence_type: function() //declarative, interrogative, exclamative
@@ -28,6 +26,16 @@ nlp_compromise={
     tags: function()          //she sells seashells -> [Noun, Verb, Noun]
     normalised: function()
     text: function()
+    contractions:{
+      expand: function()
+      contract: function()
+    }
+  },
+  Term :{
+    syllables: function()   //hamburger -> ['ham','bur','ger']
+    britishize: function()  //favorite -> favourite
+    americanize: function() //synthesised -> synthesized
+    is_capital: function()  //Tony Danza -> true
   },
   Verb :{
     to_past: function()     //walk -> walked
@@ -150,6 +158,16 @@ nlp.Text("Hi Dr. Miller the price is 4.59 for the U.C.L.A. Ph.Ds.").sentences.le
 // 1
 nlp.Text("Tony Danza sells sea-shells").terms().length
 // 3
+```
+
+### Contractions
+```javascript
+let t = nlp.text(`i'll be there`);
+t.text()
+// "i'll be there"
+t.contractions.expand();
+t.text()
+// "i will be there"
 ```
 
 ### Syllable hyphenization

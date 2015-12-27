@@ -87,7 +87,7 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let t = nlp.text(`i'll be there`);
-// console.log(t.text());
-// t.render_contractions();
-// console.log(t.text());
+let t = nlp.text(`i'll be there`);
+console.log(t.text());
+t.contractions.expand();
+console.log(t.text());

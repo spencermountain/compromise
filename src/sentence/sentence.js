@@ -9,12 +9,27 @@ const passive_voice = require('./passive_voice.js');
 class Sentence {
 
   constructor(str) {
+    const the = this;
     this.str = str || '';
     const terms = str.split(' ');
     this.terms = terms.map(function(s) {
       return new Term(s);
     });
     this.terms = tagger(this);
+    //contractions
+    //the hard part is already done, just flip them
+    this.contractions = {
+      //convert "he'd go" to "he would go"
+      expand: function() {
+        the.terms.forEach(function(t) {
+          if (t.implicit) {
+            t.changeTo(t.implicit);
+            t.implicit = '';
+          }
+        });
+        return the;
+      }
+    };
   }
 
   //Sentence methods:
@@ -83,18 +98,6 @@ class Sentence {
     this.terms.forEach(function(t) {
       if (t instanceof pos.Verb) {
         t.to_future();
-      }
-    });
-    return this;
-  }
-
-  //convert "he'd go" to "he would go"
-  //the hard part is already done, just flip them
-  render_contractions() {
-    this.terms.forEach(function(t) {
-      if (t.implicit) {
-        t.changeTo(t.implicit);
-        t.implicit = '';
       }
     });
     return this;

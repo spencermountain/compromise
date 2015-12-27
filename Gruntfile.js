@@ -97,7 +97,7 @@ module.exports = function (grunt) {
       debug: {
         src: ['src/**/*.js'],
         options: {
-          output: 'docs/build/'
+          output: 'docs/browse/'
         }
       }
     },

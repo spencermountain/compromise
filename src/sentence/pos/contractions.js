@@ -62,15 +62,13 @@ const easy_ones = function(terms) {
   for (let i = 0; i < terms.length; i++) {
     const t = terms[i];
     if (easy_contractions[t.normal]) {
-      let pronoun = easy_contractions[t.normal][0];
-      let verb = easy_contractions[t.normal][1];
-      let new_terms = [new pos.Term(pronoun), new pos.Verb(verb)];
-      const fixup = [].concat(
-        terms.slice(0, i),
-        new_terms,
-        terms.slice(i + 1, terms.length)
-      );
-      return easy_ones(fixup); //recursive
+      //first one assumes the whole word, but has implicit first-half of contraction
+      terms[i].implicit = easy_contractions[t.normal][0];
+      //second one gets an empty term '', but has an implicit verb, like 'is'
+      let word_two = new pos.Term('');
+      word_two.implicit = easy_contractions[t.normal][1];
+      terms.splice(i + 1, 0, word_two);
+      i++;
     }
   }
   return terms;
@@ -82,13 +80,13 @@ const hard_ones = function(terms) {
     if (ambiguous[t.normal]) {
       let pronoun = ambiguous[t.normal];
       let verb = chooseVerb(terms.slice(i, terms.length)); //send the rest of the sentence over
-      let new_terms = [new pos.Term(pronoun), new pos.Verb(verb)];
-      const fixup = [].concat(
-        terms.slice(0, i),
-        new_terms,
-        terms.slice(i + 1, terms.length)
-      );
-      return hard_ones(fixup); //recursive
+      //first one assumes the whole word, but has implicit first-half of contraction
+      terms[i].implicit = pronoun;
+      //second one gets an empty term '', but has an implicit verb, like 'is'
+      let word_two = new pos.Term('');
+      word_two.implicit = verb;
+      terms.splice(i + 1, 0, word_two);
+      i++;
     }
   }
   return terms;

@@ -6,13 +6,22 @@ const britishize = require('./localization/to_british');
 
 class Term {
   constructor(str, tag) {
+    //fail-safe
     if (str === null || str === undefined) {
       str = '';
     }
     str = (str).toString();
-    this.changeTo(str);
+    //set .text
+    this.text = str;
+    //the normalised working-version of the word
+    this.normal = '';
+    //if it's a contraction, the 'hidden word'
+    this.implicit = '';
+    //set .normal
+    this.rebuild();
+    //the reasoning behind it's part-of-speech
     this.reason = '';
-    //orphaned POS that have no methods
+    //these are orphaned POS that have no methods
     let types = {
       Determiner: 'Determiner',
       Conjunction: 'Conjunction',
@@ -21,6 +30,7 @@ class Term {
     };
     this.pos = {};
     this.tag = types[tag] || '?';
+    //record them in pos{}
     if (types[tag]) {
       this.pos[types[tag]] = true;
     }
@@ -66,12 +76,14 @@ class Term {
     this.normal = str;
     return this.normal;
   }
+  //localization for us/uk
   americanize() {
     return americanize(this.normal);
   }
   britishize() {
     return britishize(this.normal);
   }
+  //naiive regex-based syllable splitting
   syllables() {
     return syllables(this.normal);
   }

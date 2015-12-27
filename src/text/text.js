@@ -73,6 +73,11 @@ class Text {
       return s.to_future();
     });
   }
+  render_contractions() {
+    return this.sentences.map(function(s) {
+      return s.render_contractions();
+    });
+  }
   //mining
   people() {
     let arr = [];

@@ -12,8 +12,10 @@ const pos = require('./parts_of_speech');
 //swap the Term object with a proper Pos class
 const assign = function(t, tag, reason) {
   let P = pos.classMapping[tag] || pos.Term;
+  let implicit = t.implicit;
   t = new P(t.text, tag);
   t.reason = reason;
+  t.implicit = implicit;
   return t;
 };
 
@@ -80,7 +82,8 @@ const chunk_neighbours = function(terms) {
   let last = null;
   for(let i = 0; i < terms.length; i++) {
     let t = terms[i];
-    if (last !== null && t.tag === last) {
+    //if the tags match (but it's not a hidden contraction)
+    if (last !== null && t.tag === last && !t.implicit) {
       new_terms[new_terms.length - 1].text += ' ' + t.text;
       new_terms[new_terms.length - 1].normalize();
     } else {

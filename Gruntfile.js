@@ -93,7 +93,14 @@ module.exports = function (grunt) {
         }
       }
     },
-
+    docco: {
+      debug: {
+        src: ['src/**/*.js'],
+        options: {
+          output: 'docs/build/'
+        }
+      }
+    },
     bumpup: {
       file: 'package.json',
       options: {
@@ -103,6 +110,7 @@ module.exports = function (grunt) {
 
   });
 
+  grunt.loadNpmTasks('grunt-docco');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-babel');
   grunt.loadNpmTasks('grunt-browserify');
@@ -115,6 +123,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', ['watch']);
   grunt.registerTask('demo', ['run:demo']);
+  grunt.registerTask('docs', ['docco']);
   grunt.registerTask('test', ['mochaTest']);
   grunt.registerTask('coverage', ['mocha_istanbul']);
   grunt.registerTask('bump', ['bumpup']);

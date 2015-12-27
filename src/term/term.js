@@ -1,8 +1,8 @@
 'use strict';
 const syllables = require('./syllables');
 const is_acronym = require('./is_acronym');
-const americanize = require('./localization/toAmerican');
-const britishize = require('./localization/toBritish');
+const americanize = require('./localization/to_american');
+const britishize = require('./localization/to_british');
 
 class Term {
   constructor(str, tag) {
@@ -12,6 +12,7 @@ class Term {
     str = (str).toString();
     this.changeTo(str);
     this.reason = '';
+    //orphaned POS that have no methods
     let types = {
       Determiner: 'Determiner',
       Conjunction: 'Conjunction',
@@ -25,6 +26,7 @@ class Term {
     }
   }
 
+  //when the text changes, rebuild derivative fields
   rebuild() {
     this.text = this.text || '';
     this.text = this.text.trim();
@@ -43,10 +45,11 @@ class Term {
     }
     return false;
   }
+  //FBI or F.B.I.
   is_acronym() {
     return is_acronym(this.text);
   }
-
+  //working word
   normalize() {
     let str = this.text || '';
     str = str.toLowerCase();

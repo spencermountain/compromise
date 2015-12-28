@@ -37,7 +37,10 @@ let ambiguous = {
   'why\'s': 'why',
   'how\'s': 'how'
 };
-
+let opposite_map = Object.keys(ambiguous).reduce(function(h, k) {
+  h[ambiguous[k]] = k;
+  return h;
+}, {});
 
 //take remaining sentence after contraction and decide which verb fits best [is/was/has]
 let chooseVerb = function(terms) {
@@ -92,8 +95,41 @@ const hard_ones = function(terms) {
   return terms;
 };
 
+const combine_contraction = function(terms, i, k) {
+  //combine two terms
+  terms[i].implicit = terms[i].text;
+  terms[i + 1].implicit = terms[i + 1].text;
+  terms[i].text = k;
+  terms[i].rebuild();
+  //undo second term
+  terms[i + 1].text = '';
+  terms[i + 1].rebuild();
+  return terms;
+};
+
+//turn 'i will' into "i'll"
+const contract = function(terms) {
+  for (let i = 0; i < terms.length - 1; i++) {
+    const t = terms[i];
+    Object.keys(easy_contractions).forEach(function(k) {
+      let arr = easy_contractions[k];
+      let next = terms[i + 1];
+      if (terms[i].normal === arr[0] && next.normal === arr[1]) {
+        terms = combine_contraction(terms, i, k);
+        return;
+      }
+      //'hard ones'
+      if (opposite_map[terms[i].normal] && (next.normal === 'is' || next.normal === 'was' || next.normal === 'has')) {
+        terms = combine_contraction(terms, i, opposite_map[terms[i].normal]);
+        return;
+      }
+    });
+  }
+  return terms;
+};
 
 module.exports = {
   easy_ones,
-  hard_ones
+  hard_ones,
+  contract
 };

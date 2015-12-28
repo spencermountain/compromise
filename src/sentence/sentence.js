@@ -4,6 +4,7 @@ const fns = require('../fns.js');
 const tagger = require('./pos/tagger.js');
 const pos = require('./pos/parts_of_speech.js');
 const passive_voice = require('./passive_voice.js');
+const contract = require('./pos/contractions.js').contract;
 
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {
@@ -12,15 +13,16 @@ class Sentence {
     const the = this;
     this.str = str || '';
     const terms = str.split(' ');
+    //build-up term-objects
     this.terms = terms.map(function(s) {
       return new Term(s);
     });
     this.terms = tagger(this);
     //contractions
-    //the hard part is already done, just flip them
     this.contractions = {
-      //convert "he'd go" to "he would go"
+      // "he'd go" -> "he would go"
       expand: function() {
+        //the hard part is already done, just flip them
         the.terms.forEach(function(t) {
           if (t.implicit) {
             t.changeTo(t.implicit);
@@ -28,6 +30,10 @@ class Sentence {
           }
         });
         return the;
+      },
+      // "he would go" -> "he'd go"
+      contract: function() {
+        return contract(the.terms);
       }
     };
   }
@@ -105,11 +111,26 @@ class Sentence {
 
   //map over Term methods
   text() {
-    return fns.pluck(this.terms, 'text').join(' ');
+    return this.terms.reduce(function(s, t) {
+      //implicit contractions shouldn't be included
+      if (t.text) {
+        if (s === '') {
+          s = t.text;
+        } else {
+          s += ' ' + t.text;
+        }
+      }
+      return s;
+    }, '');
   }
   //like text but for cleaner text
   normalized() {
-    return fns.pluck(this.terms, 'normal').join(' ');
+    return this.terms.reduce(function(s, t) {
+      if (t.text) {
+        s += ' ' + t.normal;
+      }
+      return s;
+    }, '');
   }
   //return only the POS tags
   tags() {

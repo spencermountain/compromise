@@ -10,10 +10,10 @@ nlp_compromise={
     tags: function()       //she sells seashells -> [Noun, Verb, Noun]
     terms: function()
     normalised: function()
-    ngram({max_size:2}),//[[she sells, sells seashells],[she, sells, seashells]]
+    ngram({max_size:2}),    //[[she sells, sells seashells],[she, sells, seashells]]
     contractions:{
-      expand: function()
-      contract: function()
+      expand: function()     // i'll -> i will
+      contract: function()   // i will -> i'll
     }
   },
   Sentence :{
@@ -27,8 +27,8 @@ nlp_compromise={
     normalised: function()
     text: function()
     contractions:{
-      expand: function()
-      contract: function()
+      expand: function()     // i'll -> i will
+      contract: function()   // i will -> i'll
     }
   },
   Term :{

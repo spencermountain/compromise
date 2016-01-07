@@ -67,6 +67,8 @@ t.valley_girl();
 // "So basically, it is like, a cool library."
 ```
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[try it out](https://tonicdev.com/spencermountain/nlpcompromise)
+
 ### [View the Full API Documentation](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/api.md)
 
 

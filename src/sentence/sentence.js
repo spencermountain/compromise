@@ -4,6 +4,7 @@ const fns = require('../fns.js');
 const tagger = require('./pos/tagger.js');
 const pos = require('./pos/parts_of_speech.js');
 const passive_voice = require('./passive_voice.js');
+const negate = require('./negate.js');
 const contract = require('./pos/contractions.js').contract;
 
 //a sentence is an array of Term objects, along with their various methods
@@ -80,6 +81,10 @@ class Sentence {
   // A was verbed by B - B verbed A
   is_passive() {
     return passive_voice(this);
+  }
+  // A is B - A is not B
+  negate() {
+    return negate(this);
   }
   // john walks quickly -> john walked quickly
   to_past() {

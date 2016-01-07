@@ -90,6 +90,11 @@ class Text {
       return s.to_future();
     });
   }
+  negate() {
+    return this.sentences.map(function(s) {
+      return s.negate();
+    });
+  }
   //mining
   people() {
     let arr = [];

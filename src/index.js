@@ -87,6 +87,6 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let t = nlp.sentence(`he was some`);
-// t.contractions.contract();
+// let t = nlp.text(`he was there`);
+// t.negate();
 // console.log(t.text());

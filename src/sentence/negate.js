@@ -1,6 +1,6 @@
-'use script';
+'use strict';
 const fns = require('../fns.js');
-const pos = require('./pos/pos.js');
+const pos = require('./pos/parts_of_speech.js');
 //negate makes s sentence mean s opposite thing.
 const negate = function(s) {
   if (!s) {
@@ -40,17 +40,17 @@ const negate = function(s) {
     'must': 'mustn\'t'
   };
   //loop through each term..
-  for (let i = 0; i < s.tokens.length; i++) {
-    const tok = s.tokens[i];
+  for (let i = 0; i < s.terms.length; i++) {
+    const tok = s.terms[i];
     // handle ambiguous contractions
     if (tok.reason === 'ambiguous_contraction') {
-      tok.text = tok.normalised;
+      tok.text = tok.normal;
     }
 
     //turn 'is' into 'isn't', etc - make sure 'is' isnt followed by a 'not', too
-    if (logic_negate[tok.normalised] && (!s.tokens[i + 1] || s.tokens[i + 1].normalised !== 'not')) {
-      tok.text = logic_negate[tok.normalised];
-      tok.normalised = logic_negate[tok.normalised];
+    if (logic_negate[tok.normal] && (!s.terms[i + 1] || s.terms[i + 1].normal !== 'not')) {
+      tok.text = logic_negate[tok.normal];
+      tok.normal = logic_negate[tok.normal];
       if (tok.capitalised) {
         tok.text = fns.titlecase(tok.text);
       }
@@ -60,17 +60,17 @@ const negate = function(s) {
     // find s first verb..
     if (tok instanceof pos.Verb) {
       // if verb is already negative, make it not negative
-      if (tok.analysis.negative()) {
-        if (s.tokens[i + 1] && s.tokens[i + 1].normalised === 'not') {
-          s.tokens.splice(i + 1, 1);
+      if (tok.isNegative()) {
+        if (s.terms[i + 1] && s.terms[i + 1].normal === 'not') {
+          s.terms.splice(i + 1, 1);
         }
         return s;
       }
 
       //turn future-tense 'will go' into "won't go"
-      if (tok.normalised.match(/^will /i)) {
+      if (tok.normal.match(/^will /i)) {
         tok.text = tok.text.replace(/^will /i, 'won\'t ');
-        tok.normalised = tok.text;
+        tok.normal = tok.text;
         if (tok.capitalised) {
           tok.text = fns.titlecase(tok.text);
         }
@@ -78,41 +78,41 @@ const negate = function(s) {
       }
       // - INFINITIVE-
       // 'i walk' -> "i don't walk"
-      if (tok.analysis.form === 'infinitive' && tok.analysis.form !== 'future') {
-        tok.text = 'don\'t ' + (tok.analysis.conjugate().infinitive || tok.text);
-        tok.normalised = tok.text.toLowerCase();
+      if (tok.pos['infinitive'] && tok.conjugation() !== 'future') {
+        tok.text = 'don\'t ' + (tok.conjugate().infinitive || tok.text);
+        tok.normal = tok.text.toLowerCase();
         return s;
       }
       // - GERUND-
       // if verb is gerund, 'walking' -> "not walking"
-      if (tok.analysis.form === 'gerund') {
+      if (tok.conjugation() === 'gerund') {
         tok.text = 'not ' + tok.text;
-        tok.normalised = tok.text.toLowerCase();
+        tok.normal = tok.text.toLowerCase();
         return s;
       }
       // - PAST-
       // if verb is past-tense, 'he walked' -> "he did't walk"
-      if (tok.analysis.tense === 'past') {
+      if (tok.tense === 'past') {
         tok.text = 'didn\'t ' + (tok.analysis.conjugate().infinitive || tok.text);
-        tok.normalised = tok.text.toLowerCase();
+        tok.normal = tok.text.toLowerCase();
         return s;
       }
       // - PRESENT-
       // if verb is present-tense, 'he walks' -> "he doesn't walk"
-      if (tok.analysis.tense === 'present') {
-        tok.text = 'doesn\'t ' + (tok.analysis.conjugate().infinitive || tok.text);
-        tok.normalised = tok.text.toLowerCase();
+      if (tok.conjugations.present) {
+        tok.text = 'doesn\'t ' + (tok.conjugate().infinitive || tok.text);
+        tok.normal = tok.text.toLowerCase();
         return s;
       }
       // - FUTURE-
       // if verb is future-tense, 'will go' -> won't go. easy-peasy
-      if (tok.analysis.tense === 'future') {
-        if (tok.normalised === 'will') {
-          tok.normalised = 'won\'t';
+      if (tok.conjugations.future) {
+        if (tok.normal === 'will') {
+          tok.normal = 'won\'t';
           tok.text = 'won\'t';
         } else {
           tok.text = tok.text.replace(/^will /i, 'won\'t ');
-          tok.normalised = tok.normalised.replace(/^will /i, 'won\'t ');
+          tok.normal = tok.normal.replace(/^will /i, 'won\'t ');
         }
         if (tok.capitalised) {
           tok.text = fns.titlecase(tok.text);

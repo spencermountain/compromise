@@ -25,21 +25,4 @@ describe('lumper test', function() {
   });
 
 
-  it('contractions', function(done) {
-
-    nlp.text('he\'s fun').terms()[1].normal.should.equal('is');
-    nlp.text('she\'s walking').terms()[1].normal.should.equal('is');
-    nlp.text('where\'s waldo').terms()[1].normal.should.equal('is');
-    nlp.text('where\'s he going?').terms()[1].normal.should.equal('is');
-    nlp.text('where\'s the pencil?').terms()[1].normal.should.equal('is');
-    nlp.text('he\'s walked').terms()[1].normal.should.equal('has');
-    nlp.text('it\'s got the best features').terms()[1].normal.should.equal('has');
-    nlp.text('it\'s achieved each goal').terms()[1].normal.should.equal('has');
-    nlp.text('where\'s he disappeared to?').terms()[1].normal.should.equal('has');
-    nlp.text('where\'s the pencil disappeared to?').terms()[1].normal.should.equal('has');
-    done();
-  });
-
-
-
 });

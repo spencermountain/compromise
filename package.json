@@ -3,6 +3,7 @@
   "name": "nlp_compromise",
   "description": "natural language processing in the browser",
   "version": "2.0.0",
+  "main": "src/index.js",
   "date": "",
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "grunt-mocha-istanbul": "3.*.*",
     "grunt-mocha-test": "0.12.x",
     "grunt-run": "0.4.x",
+    "grunt-docco":"0.*.*",
     "istanbul": "^0.4.1",
     "mocha": "2.2.x",
     "should": "7.0.x",

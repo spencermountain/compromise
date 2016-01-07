@@ -1,17 +1,27 @@
 'use strict';
 const syllables = require('./syllables');
 const is_acronym = require('./is_acronym');
-const americanize = require('./localization/toAmerican');
-const britishize = require('./localization/toBritish');
+const americanize = require('./localization/to_american');
+const britishize = require('./localization/to_british');
 
 class Term {
   constructor(str, tag) {
+    //fail-safe
     if (str === null || str === undefined) {
       str = '';
     }
     str = (str).toString();
-    this.changeTo(str);
+    //set .text
+    this.text = str;
+    //the normalised working-version of the word
+    this.normal = '';
+    //if it's a contraction, the 'hidden word'
+    this.implicit = '';
+    //set .normal
+    this.rebuild();
+    //the reasoning behind it's part-of-speech
     this.reason = '';
+    //these are orphaned POS that have no methods
     let types = {
       Determiner: 'Determiner',
       Conjunction: 'Conjunction',
@@ -20,11 +30,13 @@ class Term {
     };
     this.pos = {};
     this.tag = types[tag] || '?';
+    //record them in pos{}
     if (types[tag]) {
       this.pos[types[tag]] = true;
     }
   }
 
+  //when the text changes, rebuild derivative fields
   rebuild() {
     this.text = this.text || '';
     this.text = this.text.trim();
@@ -43,10 +55,11 @@ class Term {
     }
     return false;
   }
+  //FBI or F.B.I.
   is_acronym() {
     return is_acronym(this.text);
   }
-
+  //working word
   normalize() {
     let str = this.text || '';
     str = str.toLowerCase();
@@ -63,12 +76,14 @@ class Term {
     this.normal = str;
     return this.normal;
   }
+  //localization for us/uk
   americanize() {
     return americanize(this.normal);
   }
   britishize() {
     return britishize(this.normal);
   }
+  //naiive regex-based syllable splitting
   syllables() {
     return syllables(this.normal);
   }

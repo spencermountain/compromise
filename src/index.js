@@ -87,5 +87,6 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let word = nlp.verb('speak');
-// console.log(word.conjugate());
+// let t = nlp.sentence(`he was some`);
+// t.contractions.contract();
+// console.log(t.text());

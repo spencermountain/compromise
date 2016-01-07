@@ -2,9 +2,9 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "nlp_compromise",
   "description": "natural language processing in the browser",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "src/index.js",
-  "date": "",
+  "date": "Thu 2016-01-07 19:40 UTC",
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/nlp_compromise.git"
@@ -30,15 +30,14 @@
     "grunt-mocha-istanbul": "3.*.*",
     "grunt-mocha-test": "0.12.x",
     "grunt-run": "0.4.x",
-    "grunt-docco":"0.*.*",
+    "grunt-docco": "0.*.*",
     "istanbul": "^0.4.1",
     "mocha": "2.2.x",
     "should": "7.0.x",
     "grunt-bumpup": "0.*.*"
   },
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "eslintConfig": {
     "env": {
       "es6": true

@@ -9,10 +9,10 @@
 * caniuse, yup. IE9+
 * no dependencies, training, or configuration
 
-It's a [rule-based, use-focused, and satisfactory](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/docs.md) javascript library for understanding and changing written english
-### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[- Check it out - ](http://rawgit.com/spencermountain/nlp_compromise/2.0/demo/index.html)**
+It's a [rule-based, user-focused, and satisfactory](https://github.com/spencermountain/nlp_compromise/blob/master/docs/docs.md) javascript library for understanding and changing written english
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[- Check it out - ](http://rawgit.com/spencermountain/nlp_compromise/master/demo/index.html)**
 
-<h6>&nbsp;&nbsp;&nbsp;:boom: Welcome to <a href="https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/changelog.md">v2.0!</a>&nbsp;&nbsp; Please <a href="https://github.com/spencermountain/nlp_compromise/issues">file an issue</a> if you find something :boom:</h6>
+<h6>&nbsp;&nbsp;&nbsp;:boom: Welcome to <a href="https://github.com/spencermountain/nlp_compromise/blob/master/docs/changelog.md">v2.0!</a>&nbsp;&nbsp; Please <a href="https://github.com/spencermountain/nlp_compromise/issues">file an issue</a> if you find something :boom:</h6>
 
 ## Off you go:
 > `npm install nlp_compromise`
@@ -46,6 +46,9 @@ nlp.term("hamburger").syllables();
 nlp.noun("dinosaur").pluralize();
 // "dinosaurs"
 
+nlp.text("Tony Danza did a kickflip").people();
+// "Tony Danza"
+
 nlp.person("Tony Hawk").article();
 // "he"
 
@@ -54,12 +57,9 @@ nlp.value("five hundred and sixty").number;
 
 nlp.term("favourite").americanize()
 // favorite
-
-nlp.text("Tony Danza did a kickflip").people();
-// "Tony Danza"
 ```
 
-we've also got a modest, though very ambitious [plugin ecosystem](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/plugins.md):
+we've also got a modest, though very ambitious [plugin ecosystem](https://github.com/spencermountain/nlp_compromise/blob/master/docs/plugins.md):
 ```javascript
 nlp_compromise.mixin(valley_girl);
 t = nlp_compromise.text('it is a cool library.');
@@ -69,7 +69,7 @@ t.valley_girl();
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[try it out](https://tonicdev.com/spencermountain/nlpcompromise)
 
-### [View the Full API Documentation](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/api.md)
+### [View the Full API Documentation](https://github.com/spencermountain/nlp_compromise/blob/master/docs/api.md)
 
 
 
@@ -79,10 +79,11 @@ t.valley_girl();
 
 *nlp_compromise aims to be the best way to work with language in js. This is only done with many hands. Contributions in all forms are appreciated and respected.*
 
-[![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](http://superscriptjs.slack.com/messages/nlp_compromise/)
-* [Contributing](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/development.md)
+Join our slack group [![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](http://superscriptjs.slack.com/messages/nlp_compromise/)
+or our infrequent [announcement email-list](http://eepurl.com/bL9YRv)
+* [Contributing](https://github.com/spencermountain/nlp_compromise/blob/master/docs/development.md)
 
-* [Changelog](https://github.com/spencermountain/nlp_compromise/blob/2.0/docs/changelog.md)
+* [Changelog](https://github.com/spencermountain/nlp_compromise/blob/master/docs/changelog.md)
 
 
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)

@@ -3946,8 +3946,9 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let word = nlp.verb('speak');
-// console.log(word.conjugate());
+// let t = nlp.sentence(`he was some`);
+// t.contractions.contract();
+// console.log(t.text());
 
 },{"./lexicon.js":20,"./sentence/sentence.js":29,"./term/adjective/adjective.js":30,"./term/adverb/adverb.js":35,"./term/noun/date/date.js":42,"./term/noun/noun.js":48,"./term/noun/organisation/organisation.js":50,"./term/noun/person/person.js":54,"./term/noun/place/place.js":56,"./term/noun/value/value.js":64,"./term/term.js":66,"./term/verb/verb.js":74,"./text/text.js":77}],20:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
@@ -4139,7 +4140,10 @@ let ambiguous = {
   'why\'s': 'why',
   'how\'s': 'how'
 };
-
+let opposite_map = Object.keys(ambiguous).reduce(function(h, k) {
+  h[ambiguous[k]] = k;
+  return h;
+}, {});
 
 //take remaining sentence after contraction and decide which verb fits best [is/was/has]
 let chooseVerb = function(terms) {
@@ -4164,15 +4168,13 @@ const easy_ones = function(terms) {
   for (let i = 0; i < terms.length; i++) {
     const t = terms[i];
     if (easy_contractions[t.normal]) {
-      let pronoun = easy_contractions[t.normal][0];
-      let verb = easy_contractions[t.normal][1];
-      let new_terms = [new pos.Term(pronoun), new pos.Verb(verb)];
-      const fixup = [].concat(
-        terms.slice(0, i),
-        new_terms,
-        terms.slice(i + 1, terms.length)
-      );
-      return easy_ones(fixup); //recursive
+      //first one assumes the whole word, but has implicit first-half of contraction
+      terms[i].implicit = easy_contractions[t.normal][0];
+      //second one gets an empty term '', but has an implicit verb, like 'is'
+      let word_two = new pos.Term('');
+      word_two.implicit = easy_contractions[t.normal][1];
+      terms.splice(i + 1, 0, word_two);
+      i++;
     }
   }
   return terms;
@@ -4184,22 +4186,55 @@ const hard_ones = function(terms) {
     if (ambiguous[t.normal]) {
       let pronoun = ambiguous[t.normal];
       let verb = chooseVerb(terms.slice(i, terms.length)); //send the rest of the sentence over
-      let new_terms = [new pos.Term(pronoun), new pos.Verb(verb)];
-      const fixup = [].concat(
-        terms.slice(0, i),
-        new_terms,
-        terms.slice(i + 1, terms.length)
-      );
-      return hard_ones(fixup); //recursive
+      //first one assumes the whole word, but has implicit first-half of contraction
+      terms[i].implicit = pronoun;
+      //second one gets an empty term '', but has an implicit verb, like 'is'
+      let word_two = new pos.Term('');
+      word_two.implicit = verb;
+      terms.splice(i + 1, 0, word_two);
+      i++;
     }
   }
   return terms;
 };
 
+const combine_contraction = function(terms, i, k) {
+  //combine two terms
+  terms[i].implicit = terms[i].text;
+  terms[i + 1].implicit = terms[i + 1].text;
+  terms[i].text = k;
+  terms[i].rebuild();
+  //undo second term
+  terms[i + 1].text = '';
+  terms[i + 1].rebuild();
+  return terms;
+};
+
+//turn 'i will' into "i'll"
+const contract = function(terms) {
+  for (let i = 0; i < terms.length - 1; i++) {
+    const t = terms[i];
+    Object.keys(easy_contractions).forEach(function(k) {
+      let arr = easy_contractions[k];
+      let next = terms[i + 1];
+      if (terms[i].normal === arr[0] && next.normal === arr[1]) {
+        terms = combine_contraction(terms, i, k);
+        return;
+      }
+      //'hard ones'
+      if (opposite_map[terms[i].normal] && (next.normal === 'is' || next.normal === 'was' || next.normal === 'has')) {
+        terms = combine_contraction(terms, i, opposite_map[terms[i].normal]);
+        return;
+      }
+    });
+  }
+  return terms;
+};
 
 module.exports = {
   easy_ones,
-  hard_ones
+  hard_ones,
+  contract
 };
 
 },{"../../sentence/pos/parts_of_speech.js":25}],23:[function(require,module,exports){
@@ -4600,8 +4635,10 @@ const pos = require('./parts_of_speech');
 //swap the Term object with a proper Pos class
 const assign = function(t, tag, reason) {
   let P = pos.classMapping[tag] || pos.Term;
+  let implicit = t.implicit;
   t = new P(t.text, tag);
   t.reason = reason;
+  t.implicit = implicit;
   return t;
 };
 
@@ -4668,7 +4705,8 @@ const chunk_neighbours = function(terms) {
   let last = null;
   for(let i = 0; i < terms.length; i++) {
     let t = terms[i];
-    if (last !== null && t.tag === last) {
+    //if the tags match (but it's not a hidden contraction)
+    if (last !== null && t.tag === last && !t.implicit) {
       new_terms[new_terms.length - 1].text += ' ' + t.text;
       new_terms[new_terms.length - 1].normalize();
     } else {
@@ -4878,17 +4916,38 @@ const fns = require('../fns.js');
 const tagger = require('./pos/tagger.js');
 const pos = require('./pos/parts_of_speech.js');
 const passive_voice = require('./passive_voice.js');
+const contract = require('./pos/contractions.js').contract;
 
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {
 
   constructor(str) {
+    const the = this;
     this.str = str || '';
     const terms = str.split(' ');
+    //build-up term-objects
     this.terms = terms.map(function(s) {
       return new Term(s);
     });
     this.terms = tagger(this);
+    //contractions
+    this.contractions = {
+      // "he'd go" -> "he would go"
+      expand: function() {
+        //the hard part is already done, just flip them
+        the.terms.forEach(function(t) {
+          if (t.implicit) {
+            t.changeTo(t.implicit);
+            t.implicit = '';
+          }
+        });
+        return the;
+      },
+      // "he would go" -> "he'd go"
+      contract: function() {
+        return contract(the.terms);
+      }
+    };
   }
 
   //Sentence methods:
@@ -4930,39 +4989,62 @@ class Sentence {
     return types[char] || 'declarative';
   }
 
+  // A was verbed by B - B verbed A
   is_passive() {
     return passive_voice(this);
   }
-
+  // john walks quickly -> john walked quickly
   to_past() {
     this.terms.forEach(function(t) {
       if (t instanceof pos.Verb) {
         t.to_past();
       }
     });
+    return this;
   }
+  // john walked quickly -> john walks quickly
   to_present() {
     this.terms.forEach(function(t) {
       if (t instanceof pos.Verb) {
         t.to_present();
       }
     });
+    return this;
   }
+  // john walked quickly -> john will walk quickly
   to_future() {
     this.terms.forEach(function(t) {
       if (t instanceof pos.Verb) {
         t.to_future();
       }
     });
+    return this;
   }
 
   //map over Term methods
   text() {
-    return fns.pluck(this.terms, 'text').join(' ');
+    return this.terms.reduce(function(s, t) {
+      //implicit contractions shouldn't be included
+      if (t.text) {
+        if (s === '') {
+          s = t.text;
+        } else {
+          s += ' ' + t.text;
+        }
+      }
+      return s;
+    }, '');
   }
+  //like text but for cleaner text
   normalized() {
-    return fns.pluck(this.terms, 'normal').join(' ');
+    return this.terms.reduce(function(s, t) {
+      if (t.text) {
+        s += ' ' + t.normal;
+      }
+      return s;
+    }, '');
   }
+  //return only the POS tags
   tags() {
     return fns.pluck(this.terms, 'tag');
   }
@@ -4972,7 +5054,7 @@ class Sentence {
       return arr;
     }, []);
   }
-  //mining
+  //mining for specific things
   people() {
     return this.terms.filter(function(t) {
       return t.pos['Person'];
@@ -5004,7 +5086,7 @@ Sentence.fn = Sentence.prototype;
 
 module.exports = Sentence;
 
-},{"../fns.js":18,"../term/term.js":66,"./passive_voice.js":21,"./pos/parts_of_speech.js":25,"./pos/tagger.js":27}],30:[function(require,module,exports){
+},{"../fns.js":18,"../term/term.js":66,"./passive_voice.js":21,"./pos/contractions.js":22,"./pos/parts_of_speech.js":25,"./pos/tagger.js":27}],30:[function(require,module,exports){
 'use strict';
 const Term = require('../term.js');
 
@@ -8020,17 +8102,27 @@ module.exports = syllables;
 'use strict';
 const syllables = require('./syllables');
 const is_acronym = require('./is_acronym');
-const americanize = require('./localization/toAmerican');
-const britishize = require('./localization/toBritish');
+const americanize = require('./localization/to_american');
+const britishize = require('./localization/to_british');
 
 class Term {
   constructor(str, tag) {
+    //fail-safe
     if (str === null || str === undefined) {
       str = '';
     }
     str = (str).toString();
-    this.changeTo(str);
+    //set .text
+    this.text = str;
+    //the normalised working-version of the word
+    this.normal = '';
+    //if it's a contraction, the 'hidden word'
+    this.implicit = '';
+    //set .normal
+    this.rebuild();
+    //the reasoning behind it's part-of-speech
     this.reason = '';
+    //these are orphaned POS that have no methods
     let types = {
       Determiner: 'Determiner',
       Conjunction: 'Conjunction',
@@ -8039,11 +8131,13 @@ class Term {
     };
     this.pos = {};
     this.tag = types[tag] || '?';
+    //record them in pos{}
     if (types[tag]) {
       this.pos[types[tag]] = true;
     }
   }
 
+  //when the text changes, rebuild derivative fields
   rebuild() {
     this.text = this.text || '';
     this.text = this.text.trim();
@@ -8062,10 +8156,11 @@ class Term {
     }
     return false;
   }
+  //FBI or F.B.I.
   is_acronym() {
     return is_acronym(this.text);
   }
-
+  //working word
   normalize() {
     let str = this.text || '';
     str = str.toLowerCase();
@@ -8082,12 +8177,14 @@ class Term {
     this.normal = str;
     return this.normal;
   }
+  //localization for us/uk
   americanize() {
     return americanize(this.normal);
   }
   britishize() {
     return britishize(this.normal);
   }
+  //naiive regex-based syllable splitting
   syllables() {
     return syllables(this.normal);
   }
@@ -8099,7 +8196,7 @@ Term.fn = Term.prototype;
 
 module.exports = Term;
 
-},{"./is_acronym":37,"./localization/toAmerican":39,"./localization/toBritish":40,"./syllables":65}],67:[function(require,module,exports){
+},{"./is_acronym":37,"./localization/to_american":39,"./localization/to_british":40,"./syllables":65}],67:[function(require,module,exports){
 //turn a verb into its other grammatical forms.
 'use strict';
 const verb_to_actor = require('./to_actor');
@@ -9100,10 +9197,27 @@ const fns = require('../fns.js');
 //a text object is a series of sentences, along with the generic methods for transforming them
 class Text {
   constructor(str) {
+    const the = this;
     this.raw_text = str || '';
+    //build-up sentence methods
     this.sentences = sentence_parser(str).map(function(s) {
       return new Sentence(s);
     });
+
+    this.contractions = {
+      // he'd -> he would
+      expand: function() {
+        return the.sentences.map(function(s) {
+          return s.contractions.expand();
+        });
+      },
+      // he would -> he'd
+      contract: function() {
+        return the.sentences.map(function(s) {
+          return s.contractions.contract();
+        });
+      }
+    };
   }
 
   //Text methods

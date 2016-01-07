@@ -9,7 +9,7 @@
 * caniuse, yup. IE9+
 * no dependencies, training, or configuration
 
-It's a [rule-based, user-focused, and satisfactory](https://github.com/spencermountain/nlp_compromise/blob/master/docs/docs.md) javascript library for understanding and changing written english
+It's a [rule-based, user-focused, and satisfactory](https://github.com/spencermountain/nlp_compromise/blob/master/docs/justification.md) javascript library for understanding and changing written english
 ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[- Check it out - ](http://rawgit.com/spencermountain/nlp_compromise/master/demo/index.html)**
 
 <h6>&nbsp;&nbsp;&nbsp;:boom: Welcome to <a href="https://github.com/spencermountain/nlp_compromise/blob/master/docs/changelog.md">v2.0!</a>&nbsp;&nbsp; Please <a href="https://github.com/spencermountain/nlp_compromise/issues">file an issue</a> if you find something :boom:</h6>

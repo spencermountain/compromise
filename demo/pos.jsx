@@ -1,5 +1,5 @@
 let {Tab, Tabs, Grid, Row, Col, Input} = ReactBootstrap;
-
+let {nlp_compromise} = window;
 let colours = {
   Noun: 'steelblue',
   Adjective: '#e5762b',
@@ -52,7 +52,7 @@ let Pos = React.createClass({
     }
     $.get('./texts/' + file + '.txt', function (txt) {
       cmp.state.text = txt;
-      cmp.state.result = nlp.Text(txt);
+      cmp.state.result = nlp_compromise.text(txt);
       console.log(cmp.state.result);
       cmp.setState(cmp.state);
     });

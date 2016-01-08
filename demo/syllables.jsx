@@ -1,4 +1,5 @@
 let {Row, Col, Input} = ReactBootstrap;
+let {nlp_compromise} = window;
 
 let Syllables = React.createClass({
   getInitialState: function () {
@@ -15,7 +16,7 @@ let Syllables = React.createClass({
     if (el && el.target) {
       word = el.target.value || '';
     }
-    let t = nlp.Text(word);
+    let t = nlp_compromise.text(word);
     this.state.result = t.syllables();
     this.state.word = word;
     this.setState(this.state);

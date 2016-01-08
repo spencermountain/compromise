@@ -1,4 +1,5 @@
 let {Row, Col, Input} = ReactBootstrap;
+let {nlp_compromise} = window;
 
 let Sentences = React.createClass({
   getInitialState: function () {
@@ -16,7 +17,7 @@ let Sentences = React.createClass({
       word = el.target.value || '';
     }
     this.state.word = word;
-    let t = nlp.Text(word);
+    let t = nlp_compromise.text(word);
     this.state.result = t.sentences.map(function(s) {
       return s.text();
     });

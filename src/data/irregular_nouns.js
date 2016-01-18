@@ -8,7 +8,6 @@ let main = [
   ['leaf', 'leaves'],
   ['database', '_s'],
   ['quiz', '_zes'],
-  ['child', '_ren'],
   ['stomach', '_s'],
   ['sex', '_es'],
   ['move', '_s'],

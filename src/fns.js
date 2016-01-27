@@ -35,6 +35,14 @@ exports.compact = function(arr) {
   });
 };
 
+//shallow-combine two objects
+exports.extend = function (objA, objB) {
+  Object.keys(objB).forEach(function (k) {
+    objA[k] = objB[k];
+  });
+  return objA;
+};
+
 //string utilities
 exports.endsWith = function(str, suffix) {
   return str.indexOf(suffix, str.length - suffix.length) !== -1;

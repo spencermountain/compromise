@@ -87,5 +87,5 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let t = nlp.verb(`go`);
-// console.log(t.conjugate());
+// let t = nlp.text(`For example. This doesn't work for the US`);
+// console.log(t.sentences[0].text());

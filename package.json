@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "nlp_compromise",
   "description": "natural language processing in the browser",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "src/index.js",
   "date": "Thu 2016-01-07 19:40 UTC",
   "repository": {

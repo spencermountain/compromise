@@ -4,10 +4,9 @@
   "description": "natural language processing in the browser",
   "version": "2.0.2",
   "main": "src/index.js",
-  "date": "Thu 2016-01-07 19:40 UTC",
   "repository": {
     "type": "git",
-    "url": "git://github.com/spencermountain/nlp_compromise.git"
+    "url": "git://github.com/nlp-compromise/nlp_compromise.git"
   },
   "scripts": {
     "test": "grunt test",

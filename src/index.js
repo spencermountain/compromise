@@ -87,6 +87,5 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let t = nlp.text(`he was there`);
-// t.negate();
-// console.log(t.text());
+// let t = nlp.verb(`go`);
+// console.log(t.conjugate());

@@ -86,6 +86,7 @@ const conjugate = function(w) {
   //chop it if it's future-tense
   w = w.replace(/^will /i, '');
 
+
   //un-prefix the verb, and add it in later
   let prefix = '';
   let match = w.match(/^(over|under|re|anti|full)[- ]?([a-z]*)/i);
@@ -93,14 +94,13 @@ const conjugate = function(w) {
     prefix = match[1];
     w = match[2];
   }
-
   //guess the tense, so we know which transormation to make
   const predicted = predict(w) || 'infinitive';
   //check against suffix rules
   let infinitive = to_infinitive(w, predicted);
   //check irregulars
   let obj = irregular_verbs[w] || irregular_verbs[infinitive] || {};
-  obj.infinitive = infinitive;
+  // obj.infinitive = infinitive;
   //apply regex-transformations
   let conjugations = from_infinitive(infinitive);
   Object.keys(conjugations).forEach(function(k) {
@@ -115,7 +115,7 @@ module.exports = conjugate;
 // console.log(conjugate('convolute'));
 
 
-// console.log(conjugate('overtake'));
+// console.log(conjugate('goes'));
 // console.log(conjugate("watch out"))
 // console.log(conjugate("watch"))
 // console.log(conjugate("smash"))

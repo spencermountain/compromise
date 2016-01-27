@@ -167,6 +167,6 @@ const to_infinitive = function (str, from_tense) {
   return str;
 };
 
-// console.log(to_infinitive('wrecked', 'past'));
+// console.log(to_infinitive('underwent', 'past'));
 
 module.exports = to_infinitive;

@@ -9,7 +9,7 @@ module.exports = function (grunt) {
 
     run: {
       run: {
-        exec: 'iojs ./src/index.js',
+        exec: 'node ./src/index.js',
       },
       demo: {
         exec: 'python -m SimpleHTTPServer 8888',

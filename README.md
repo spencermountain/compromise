@@ -3,13 +3,12 @@
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 [![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 
-nlp_compromise aims to be the fair, and reasonable way to use language in software.
-
 ```javascript
-const nlp = require("nlp_compromise");
 nlp.text("She sells seashells").negate()
 // She didn't sell seashells
 ```
+
+**nlp_compromise** aims to be the fair and reasonable way to use language in software.
 
 ### Yup,
 * smaller than jQuery *(100k)*

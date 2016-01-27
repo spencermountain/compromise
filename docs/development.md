@@ -1,18 +1,15 @@
 ###WElcome, good person
 
-I am very welcoming to all pull requests, and feature requests in all forms.
-NLP is a solvable problem in scale, and all forms of input are gracious and lovely. I am also friendly and approachable. There is lots of work to be done.
+NLP is a solvable problem at scale, and all forms of input are gracious and lovely. We're very friendly and approachable. There is lots of work to be done.
 
-* code is in ```/src```
-* unit tests are in ```./tests``` and can be run with 'npm test'
-* 'grunt build' command joins all various scripts into a client-side js file
+* unit tests are run with 'npm test'
+* 'grunt build' command joins all various scripts into a static js file
 
 ### Extending nlp_compromise with Plugins/Mixins
 see [Documentation](./plugins.md)
 
-
 ### Building
-needs an Es6 env, like `nvm use iojs-v2.3.0`
+needs an ES6 env, like `nvm use 4`
 ```
 npm install
 grunt build
@@ -24,7 +21,7 @@ grunt docs
 and visit http://localhost:8888/demos/
 
 ### Releasing
-casual versioning/publishing with semvar:
+casual versioning/publishing as semvar, Major is breaking, minor is improving.
 
 ```bash
 npm test #ensure unit tests pass

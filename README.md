@@ -8,16 +8,16 @@ nlp.text("She sells seashells").negate()
 // She didn't sell seashells
 ```
 
-**nlp_compromise** aims to be the fair and reasonable way to use language in software.
+**nlp_compromise** aims to be the reasonable way to use language in software.
 
 ### Yup,
 * smaller than jQuery *(100k)*
 * 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 * keypress speed, constant-time
-* caniuse, uhuh. IE9+
-* no dependencies, training, or configuration
+* caniuse, yessir. IE9+
+* no dependencies, training, or configuration.
 
-It's a [rule-based, use-focused, and satisfactory](https://github.com/spencermountain/nlp_compromise/blob/master/docs/justification.md) javascript library for understanding, changing, and generating written english.
+It's a [use-focused, satisfactory](https://github.com/spencermountain/nlp_compromise/blob/master/docs/justification.md) javascript library for understanding, changing, and making written english.
 ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[- Check it out - ](http://rawgit.com/spencermountain/nlp_compromise/master/demo/index.html)**
 
 <h6>&nbsp;&nbsp;&nbsp;:boom: Welcome to <a href="https://github.com/spencermountain/nlp_compromise/blob/master/docs/changelog.md">v2.0!</a>&nbsp;&nbsp; Please <a href="https://github.com/spencermountain/nlp_compromise/issues">file an issue</a> if you find something :boom:</h6>

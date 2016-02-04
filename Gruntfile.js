@@ -12,20 +12,20 @@ module.exports = function (grunt) {
         exec: 'node ./src/index.js'
       },
       build: {
-        exec: 'browserify ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] -o ./builds/nlp-compromise.es5.js '
+        exec: 'browserify ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] -o ./builds/nlp_compromise.es5.js '
       }
     },
 
 
     uglify: {
       'do': {
-        src: ['./builds/nlp-compromise.es5.js'],
-        dest: './builds/nlp-compromise.es5.min.js'
+        src: ['./builds/nlp_compromise.es5.js'],
+        dest: './builds/nlp_compromise.es5.min.js'
       },
       'options': {
         preserveComments: false,
         mangle: true,
-        banner: ' /*nlp-compromise, Spencer Kelly. MIT 2015*/\n',
+        banner: ' /*nlp_compromise, Spencer Kelly. MIT 2015*/\n',
         compress: {
           drop_console: true,
           dead_code: true,
@@ -39,7 +39,7 @@ module.exports = function (grunt) {
     filesize: {
       base: {
         files: [{
-          src: ['./build/nlp-compromise.es5.js']
+          src: ['./builds/nlp_compromise.es5.js']
         }],
         options: {
           ouput: [{

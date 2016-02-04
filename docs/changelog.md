@@ -2,6 +2,10 @@ Uses semvar, with occasional releases to npm and bower.
 
 here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
 
+### v.3
+* v3.0.0 - Feb 2016
+  * split ngram, locale, and syllables into plugins in seperate repo
+
 ### v.2
 * v2.0.0 - Nov 2015 &nbsp;  **(Breaking)**
   * es6 classes, babel building

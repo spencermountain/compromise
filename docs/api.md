@@ -10,7 +10,6 @@ nlp_compromise={
     tags: function()       //she sells seashells -> [Noun, Verb, Noun]
     terms: function()
     normalised: function()
-    ngram({max_size:2}),    //[[she sells, sells seashells],[she, sells, seashells]]
     contractions:{
       expand: function()     // i'll -> i will
       contract: function()   // i will -> i'll
@@ -32,10 +31,10 @@ nlp_compromise={
     }
   },
   term :{
-    syllables: function()   //hamburger -> ['ham','bur','ger']
-    britishize: function()  //favorite -> favourite
-    americanize: function() //synthesised -> synthesized
     is_capital: function()  //Tony Danza -> true
+    is_acronym: function()  //FBI -> true
+    normalize: function()  //Dr. King -> "dr king"
+    changeTo: function()  // nlp.term("Mr. Jones").changeTo("Mrs. Jones")
   },
   verb :{
     to_past: function()     //walk -> walked
@@ -74,7 +73,7 @@ nlp_compromise={
     unit_name: String,  //fifty km -> kilometer
     measurement: String,//fifty km -> distance
   },
-  Pperson :{
+  person :{
     gender: function()   //Tony Hawk -> Male
     honourific: String, //Dr. Tony Hawk -> Dr
     firstName: String,  //Homer J. Simpson -> Homer
@@ -170,28 +169,6 @@ t.text()
 // "i will be there"
 ```
 
-### Syllable hyphenization
-*70% on the [moby hyphenization corpus](http://www.gutenberg.org/dirs/etext02/mhyph10.zip)*
-```javascript
-nlp.text("calgary flames").syllables()
-// [ 'cal', 'gar', 'y', 'flames']
-```
-
-### US-UK Localization
-*90% on the [superscript dataset](https://github.com/silentrob/normalizer/blob/master/data/british.txt)*
-```javascript
-nlp.term("favourite").americanize()
-// favorite
-nlp.term("synthesized").britishize()
-// synthesised
-```
-### N-gram
-```javascript
-nlp.text("She sells seashells by the seashore.").ngram({min_count:1, max_size:5})
-// [{ word: 'she sells', count: 2, size: 2 }, ...
-options.min_count = 1 // throws away seldom-repeated grams
-options.max_size = 5 // maximum gram count. prevents the result from becoming gigantic
-```
 ### Date parsing
 ```javascript
 nlp.value("I married April for the 2nd time on June 5th 1998 ").date()

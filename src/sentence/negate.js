@@ -123,7 +123,6 @@ const negate = function(s) {
       return s;
     }
   }
-
   return s;
 };
 

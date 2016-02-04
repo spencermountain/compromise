@@ -1,7 +1,6 @@
 'use strict';
 const sentence_parser = require('./sentence_parser.js');
 const Sentence = require('../sentence/sentence.js');
-const ngram = require('./ngram.js');
 const fns = require('../fns.js');
 
 //a text object is a series of sentences, along with the generic methods for transforming them
@@ -30,14 +29,6 @@ class Text {
     };
   }
 
-  //Text methods
-  ngram(options) {
-    let terms = this.terms();
-    terms = terms.map(function(t) {
-      return t.normal;
-    });
-    return ngram(terms, options);
-  }
 
   //map over sentence methods
   text() {
@@ -68,12 +59,6 @@ class Text {
     return this.sentences.map(function(s) {
       return s.tags();
     });
-  }
-  syllables() {
-    return this.sentences.reduce(function(arr, s) {
-      arr = arr.concat(s.syllables());
-      return arr;
-    }, []);
   }
   to_past() {
     return this.sentences.map(function(s) {

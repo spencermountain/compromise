@@ -73,7 +73,7 @@ class Sentence {
     const types = {
       '?': 'interrogative',
       '!': 'exclamative',
-      '.': 'declarative',
+      '.': 'declarative'
     };
     return types[char] || 'declarative';
   }
@@ -84,7 +84,8 @@ class Sentence {
   }
   // A is B - A is not B
   negate() {
-    return negate(this);
+    negate(this);
+    return this;
   }
   // john walks quickly -> john walked quickly
   to_past() {
@@ -140,12 +141,6 @@ class Sentence {
   //return only the POS tags
   tags() {
     return fns.pluck(this.terms, 'tag');
-  }
-  syllables() {
-    return this.terms.reduce(function(arr, t) {
-      arr = arr.concat(t.syllables());
-      return arr;
-    }, []);
   }
   //mining for specific things
   people() {

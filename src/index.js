@@ -23,7 +23,7 @@ const extend = function(m, context) {
 
 function NLP() {
 
-  this.mixin = function(obj) {
+  this.plugin = function(obj) {
     obj = obj || {};
     Object.keys(obj).forEach(function(k) {
       Object.keys(obj[k]).forEach(function(method) {

@@ -5,7 +5,7 @@
 
 ```javascript
 nlp.text("She sells seashells").negate()
-// She didn't sell seashells
+// She doesn't sell seashells
 ```
 
 **nlp_compromise** aims to be the reasonable way to use language in software.

@@ -19,12 +19,28 @@ let models = {
 const extend = function(m, context) {
   context = context || {};
   return m;
+},
+
+  isFunction = function(obj) {
+    // typeof obj == "function" also works
+    // but not in older browsers. :-/
+    return Object.prototype.toString.call(obj) === "[object Function]";
 };
 
 function NLP() {
 
   this.plugin = function(obj) {
+
     obj = obj || {};
+
+    // Check if obj is a function
+    // If so, pass it an instance of the library,
+    // run it in current context
+    // and use the returned interface
+
+    if ( isFunction( obj ))
+      obj = obj.call(this, this);
+
     Object.keys(obj).forEach(function(k) {
       Object.keys(obj[k]).forEach(function(method) {
         models[k].fn[method] = obj[k][method];

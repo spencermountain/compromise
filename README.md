@@ -5,7 +5,7 @@
 
 ```javascript
 nlp.text("She sells seashells").negate()
-// She didn't sell seashells
+// She doesn't sell seashells
 ```
 
 **nlp_compromise** aims to be the reasonable way to use language in software.
@@ -60,16 +60,23 @@ nlp.text("Tony Danza did a kickflip").people();
 nlp.value("five hundred and sixty").number;
 // 560
 
-nlp.term("favourite").americanize()
-// favorite
 ```
 
 we've also got a modest, though ambitious [plugin ecosystem](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/plugins.md):
 ```javascript
-nlp_compromise.mixin(valley_girl);
-t = nlp_compromise.text('it is a cool library.');
-t.valley_girl();
-// "So basically, it is like, a cool library."
+nlp.plugin(require("nlp-locale"))
+nlp.term("favourite").toAmerican()
+// favorite
+
+nlp.plugin(require("nlp-syllables"));
+var t2 = nlp.term('houston texas');
+t2.syllables()
+//[ [ 'hous', 'ton' ], [ 'tex', 'as' ] ]
+
+nlp.plugin(require("nlp-ngram"));
+var t4 = nlp.text(`Tony Hawk played Tony Hawk's pro skater`);
+t4.ngram({min_count: 2});
+// [ { word: 'tony hawk', count: 2, size: 1 } ]
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[try it out](https://tonicdev.com/nlp-compromise/nlpcompromise)
@@ -84,7 +91,7 @@ t.valley_girl();
 
 Join our slack group [![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](http://superscriptjs.slack.com/messages/nlp_compromise/)
 or our infrequent [announcement email-list](http://eepurl.com/bL9YRv)
-* [Contributing](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/development.md)
+* [Contributing](https://github.com/nlp-compromise/nlp_compromise/blob/master/contributing.md)
 
 * [Changelog](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/changelog.md)
 

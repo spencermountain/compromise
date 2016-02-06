@@ -13,7 +13,7 @@ let models = {
   Place : require('./term/noun/place/place.js'),
   Date : require('./term/noun/date/date.js'),
   Organisation : require('./term/noun/organisation/organisation.js'),
-  Lexicon : require('./lexicon.js'),
+  Lexicon : require('./lexicon.js')
 };
 
 const extend = function(m, context) {
@@ -23,7 +23,7 @@ const extend = function(m, context) {
 
 function NLP() {
 
-  this.mixin = function(obj) {
+  this.plugin = function(obj) {
     obj = obj || {};
     Object.keys(obj).forEach(function(k) {
       Object.keys(obj[k]).forEach(function(method) {

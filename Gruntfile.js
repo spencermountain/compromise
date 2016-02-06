@@ -3,40 +3,19 @@ module.exports = function (grunt) {
   grunt.initConfig({
 
     watch: {
-      files: ['./src/*', './src/**', './src/term/**', './src/sentence/**'],
-      tasks: ['run:run'],
+      files: ['./src/*', './src/**'],
+      tasks: ['run:index']
     },
 
     run: {
-      run: {
-        exec: 'node ./src/index.js',
+      index: {
+        exec: 'node ./src/index.js'
       },
-      demo: {
-        exec: 'python -m SimpleHTTPServer 8888',
+      build: {
+        exec: 'browserify ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] -o ./builds/nlp_compromise.es5.js '
       }
     },
 
-    'browserify': {
-      client: {
-        src: './src/index.js',
-        dest: './builds/nlp_compromise.es6.js',
-        options: {
-          'standalone': true
-        }
-      }
-    },
-
-    'babel': {
-      options: {
-        sourceMap: true,
-        compact: true
-      },
-      dist: {
-        files: {
-          './builds/nlp_compromise.es5.js': './builds/nlp_compromise.es6.js',
-        }
-      }
-    },
 
     uglify: {
       'do': {
@@ -46,7 +25,7 @@ module.exports = function (grunt) {
       'options': {
         preserveComments: false,
         mangle: true,
-        banner: ' /*nlp_comprimise,  MIT 2015*/\n',
+        banner: ' /*nlp_compromise, Spencer Kelly. MIT 2015*/\n',
         compress: {
           drop_console: true,
           dead_code: true,
@@ -60,7 +39,7 @@ module.exports = function (grunt) {
     filesize: {
       base: {
         files: [{
-          src: ['./builds/nlp_compromise.es5.min.js']
+          src: ['./builds/nlp_compromise.es5.js']
         }],
         options: {
           ouput: [{
@@ -70,62 +49,42 @@ module.exports = function (grunt) {
       }
     },
 
-    mochaTest: {
-      test: {
-        options: {
-          require: 'babel/register',
-          reporter: 'spec',
-          clearRequireCache: true,
-          colors: true,
-          growl: false
-        },
-        src: ['tests/unit_tests/*/*.js']
-      }
-    },
+    // mochaTest: {
+    //   test: {
+    //     options: {
+    //       require: 'babel/register',
+    //       reporter: 'spec',
+    //       clearRequireCache: true,
+    //       colors: true,
+    //       growl: false
+    //     },
+    //     src: ['test/unit_tests/*/*.js']
+    //   }
+    // },
 
     mocha_istanbul: {
       coverageSpecial: {
-        src: 'tests/unit_tests/*/*.js',
+        src: 'test/unit_tests/*/*.js',
         options: {
           reportFormats: ['html'],
           quiet: true,
-          coverageFolder: './tests/coverage',
+          coverageFolder: './tests/coverage'
         }
-      }
-    },
-    docco: {
-      debug: {
-        src: ['src/**/*.js'],
-        options: {
-          output: 'docs/browse/'
-        }
-      }
-    },
-    bumpup: {
-      file: 'package.json',
-      options: {
-        dateformat: 'ddd YYYY-MM-DD HH:mm z'
       }
     }
 
   });
 
-  grunt.loadNpmTasks('grunt-docco');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-babel');
-  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-run');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-filesize');
   grunt.loadNpmTasks('grunt-mocha-istanbul');
-  grunt.loadNpmTasks('grunt-bumpup');
 
-  grunt.registerTask('default', ['watch']);
-  grunt.registerTask('demo', ['run:demo']);
-  grunt.registerTask('docs', ['docco']);
-  grunt.registerTask('test', ['mochaTest']);
+  grunt.registerTask('default', ['run:index']);
+  grunt.registerTask('watch', ['watch']);
   grunt.registerTask('coverage', ['mocha_istanbul']);
-  grunt.registerTask('bump', ['bumpup']);
-  grunt.registerTask('build', ['mocha_istanbul', 'browserify', 'babel', 'uglify', 'filesize']);
+  grunt.registerTask('test', ['mochaTest']);
+  grunt.registerTask('build', ['mochaTest', 'run:build', 'uglify', 'filesize']);
 };

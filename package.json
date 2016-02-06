@@ -2,111 +2,32 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "nlp_compromise",
   "description": "natural language processing in the browser",
-  "version": "2.0.2",
-  "main": "src/index.js",
+  "version": "3.0.1",
+  "main": "./builds/nlp_compromise.es5.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/nlp-compromise/nlp_compromise.git"
   },
   "scripts": {
-    "test": "grunt test",
-    "lint": "grunt lint",
-    "watch": "grunt watch",
     "run": "grunt",
+    "test": "grunt test",
+    "watch": "grunt watch",
     "build": "grunt build"
   },
-  "devDependencies": {
-    "babel": "5.x.x",
-    "babel-runtime": "5.x.x",
-    "eslint": "1.2.x",
-    "grunt": "~0.4.x",
-    "grunt-babel": "5.0.x",
-    "grunt-browserify": "4.0.x",
-    "grunt-contrib-uglify": "0.9.x",
-    "grunt-contrib-watch": "0.6.x",
-    "grunt-eslint": "17.1.x",
-    "grunt-filesize": "0.0.x",
-    "grunt-mocha-istanbul": "3.*.*",
-    "grunt-mocha-test": "0.12.x",
-    "grunt-run": "0.4.x",
-    "grunt-docco": "0.*.*",
-    "istanbul": "^0.4.1",
-    "mocha": "2.2.x",
-    "should": "7.0.x",
-    "grunt-bumpup": "0.*.*"
-  },
-  "license": "MIT",
   "dependencies": {},
-  "eslintConfig": {
-    "env": {
-      "es6": true
-    },
-    "ecmaFeatures": {
-      "modules": true,
-      "jsx": true
-    },
-    "rules": {
-      "no-cond-assign": 2,
-      "no-var": 1,
-      "prefer-const": 0,
-      "no-extra-parens": 0,
-      "no-dupe-keys": 2,
-      "no-unreachable": 2,
-      "eqeqeq": 1,
-      "no-native-reassign": 2,
-      "no-redeclare": 2,
-      "radix": 1,
-      "indent": 0,
-      "quotes": [
-        1,
-        "single",
-        "avoid-escape"
-      ],
-      "no-shadow": 2,
-      "no-unused-vars": 0,
-      "no-lonely-if": 1,
-      "no-use-before-define": 2,
-      "no-bitwise": 2,
-      "no-dupe-class-members": 2,
-      "guard-for-in": 1,
-      "consistent-return": 2,
-      "no-octal-escape": 2,
-      "no-constant-condition": 1,
-      "no-unused-expressions": 2
-    }
+  "devDependencies": {
+    "babel-preset-es2015": "6.3.13",
+    "babelify": "7.2.0",
+    "browserify": "13.0.0",
+    "grunt": "0.4.5",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-watch": "0.6.1",
+    "grunt-filesize": "0.0.7",
+    "grunt-mocha-istanbul": "3.0.1",
+    "grunt-mocha-test": "0.12.7",
+    "grunt-run": "0.5.2",
+    "mocha": "2.4.3",
+    "should": "8.2.1"
   },
-  "esformatter": {
-    "plugins": [
-      "esformatter-quotes",
-      "esformatter-parseint",
-      "esformatter-braces",
-      "esformatter-semicolons"
-    ],
-    "quotes": {
-      "type": "single",
-      "avoidEscape": false
-    },
-    "whiteSpace": {
-      "before": {
-        "ParameterList": -1,
-        "ParameterComma": -1,
-        "FunctionDeclarationOpeningBrace": -1,
-        "FunctionDeclarationClosingBrace": -1,
-        "ForStatementExpressionOpening": -1
-      },
-      "after": {
-        "FunctionName": -1,
-        "ParameterComma": 1,
-        "FunctionReservedWord": -1,
-        "ParameterList": -1,
-        "FunctionDeclarationOpeningBrace": -1,
-        "PropertyName": -1
-      }
-    },
-    "lineBreak": {
-      "before": {
-        "EndOfFile": 1
-      }
-    }
-  }
+  "license": "MIT"
 }

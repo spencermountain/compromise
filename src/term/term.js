@@ -1,8 +1,5 @@
 'use strict';
-const syllables = require('./syllables');
 const is_acronym = require('./is_acronym');
-const americanize = require('./localization/to_american');
-const britishize = require('./localization/to_british');
 
 class Term {
   constructor(str, tag) {
@@ -75,17 +72,6 @@ class Term {
     }
     this.normal = str;
     return this.normal;
-  }
-  //localization for us/uk
-  americanize() {
-    return americanize(this.normal);
-  }
-  britishize() {
-    return britishize(this.normal);
-  }
-  //naiive regex-based syllable splitting
-  syllables() {
-    return syllables(this.normal);
   }
 }
 

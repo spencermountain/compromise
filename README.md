@@ -18,14 +18,15 @@ nlp.text("She sells seashells").negate()
 * no dependencies, training, or configuration.
 
 It's a [use-focused, satisfactory](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/justification.md) javascript library for understanding, changing, and making written english.
-### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[- Check it out - ](http://rawgit.com/nlp-compromise/nlp_compromise/master/demo/index.html)**
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[- Check it out - ](http://rawgit.com/nlp-compromise/website/master/demo/index.html)**
 
 <h6>&nbsp;&nbsp;&nbsp;:boom: Welcome to <a href="https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/changelog.md">v2.0!</a>&nbsp;&nbsp; Please <a href="https://github.com/nlp-compromise/nlp_compromise/issues">file an issue</a> if you find something :boom:</h6>
 
 ## Off you go:
 > `npm install nlp_compromise`
 
-> `<script src="./builds/nlp_compromise.es5.min.js"> </script>`
+> `<script src="http://rawgit.com/nlp-compromise/nlp_compromise/master/builds/nlp-compromise.es5.min.js"></script>
+`
 
 ```javascript
 let nlp = require("nlp_compromise");

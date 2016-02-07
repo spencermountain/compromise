@@ -49,18 +49,18 @@ module.exports = function (grunt) {
       }
     },
 
-    // mochaTest: {
-    //   test: {
-    //     options: {
-    //       require: 'babel/register',
-    //       reporter: 'spec',
-    //       clearRequireCache: true,
-    //       colors: true,
-    //       growl: false
-    //     },
-    //     src: ['test/unit_tests/*/*.js']
-    //   }
-    // },
+    mochaTest: {
+      test: {
+        options: {
+          require: 'babel/register',
+          reporter: 'spec',
+          clearRequireCache: true,
+          colors: true,
+          growl: false
+        },
+        src: ['test/unit_tests/*/*.js']
+      }
+    },
 
     mocha_istanbul: {
       coverageSpecial: {

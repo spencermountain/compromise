@@ -114,13 +114,13 @@ const contract = function(terms) {
     Object.keys(easy_contractions).forEach(function(k) {
       let arr = easy_contractions[k];
       let next = terms[i + 1];
-      if (terms[i].normal === arr[0] && next.normal === arr[1]) {
+      if (t.normal === arr[0] && next.normal === arr[1]) {
         terms = combine_contraction(terms, i, k);
         return;
       }
       //'hard ones'
-      if (opposite_map[terms[i].normal] && (next.normal === 'is' || next.normal === 'was' || next.normal === 'has')) {
-        terms = combine_contraction(terms, i, opposite_map[terms[i].normal]);
+      if (opposite_map[t.normal] && (next.normal === 'is' || next.normal === 'was' || next.normal === 'has')) {
+        terms = combine_contraction(terms, i, opposite_map[t.normal]);
         return;
       }
     });

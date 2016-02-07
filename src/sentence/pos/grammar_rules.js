@@ -1,6 +1,11 @@
 module.exports = [
+  //determiner hints
   {
     'before': ['Determiner', '?'],
+    'after': ['Determiner', 'Noun']
+  },
+  {
+    'before': ['Determiner', 'Verb'],
     'after': ['Determiner', 'Noun']
   },
   {

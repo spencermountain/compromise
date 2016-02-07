@@ -100,11 +100,15 @@ const chunk_neighbours = function(terms) {
 //hints from the sentence grammar
 const grammar_rules_pass = function(s) {
   let tags = s.tags();
+  console.log(tags);
   for(let i = 0; i < s.terms.length; i++) {
     for(let o = 0; o < grammar_rules.length; o++) {
       let rule = grammar_rules[o];
       //does this rule match
+      // console.log(rule.before);
+      // console.log(tags.slice(i, i + rule.before.length));
       if (fns.sameArr(rule.before, tags.slice(i, i + rule.before.length))) {
+        console.log('====');
         //change before/after for each term
         for(let c = 0; c < rule.before.length; c++) {
           s.terms[i + c] = assign(s.terms[i + c], rule.after[c], 'grammar_rule ' + c);

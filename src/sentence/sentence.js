@@ -2,7 +2,6 @@
 const Term = require('../term/term.js');
 const fns = require('../fns.js');
 const tagger = require('./pos/tagger.js');
-const pos = require('./pos/parts_of_speech.js');
 const passive_voice = require('./passive_voice.js');
 const negate = require('./negate.js');
 const contract = require('./pos/contractions.js').contract;
@@ -87,33 +86,6 @@ class Sentence {
     negate(this);
     return this;
   }
-  // john walks quickly -> john walked quickly
-  to_past() {
-    this.terms.forEach(function(t) {
-      if (t instanceof pos.Verb) {
-        t.to_past();
-      }
-    });
-    return this;
-  }
-  // john walked quickly -> john walks quickly
-  to_present() {
-    this.terms.forEach(function(t) {
-      if (t instanceof pos.Verb) {
-        t.to_present();
-      }
-    });
-    return this;
-  }
-  // john walked quickly -> john will walk quickly
-  to_future() {
-    this.terms.forEach(function(t) {
-      if (t instanceof pos.Verb) {
-        t.to_future();
-      }
-    });
-    return this;
-  }
 
   //map over Term methods
   text() {
@@ -138,9 +110,15 @@ class Sentence {
       return s;
     }, '');
   }
-  //return only the POS tags
+  //return only the main POS classnames/tags
   tags() {
-    return fns.pluck(this.terms, 'tag');
+    return this.terms.map(function(t) {
+      if (t.constructor.name !== 'Term') {
+        return t.constructor.name;
+      } else {
+        return t.tag;
+      }
+    });
   }
   //mining for specific things
   people() {

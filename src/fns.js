@@ -54,3 +54,10 @@ exports.titlecase = function(str) {
   }
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+
+// typeof obj == "function" also works
+// but not in older browsers. :-/
+exports.isFunction = function(obj) {
+  return Object.prototype.toString.call(obj) === '[object Function]';
+};

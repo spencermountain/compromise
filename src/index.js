@@ -1,4 +1,5 @@
 'use strict';
+const fns = require('./fns.js');
 
 let models = {
   Term : require('./term/term.js'),
@@ -16,16 +17,6 @@ let models = {
   Lexicon : require('./lexicon.js')
 };
 
-const extend = function(m, context) {
-  context = context || {};
-  return m;
-},
-
-  isFunction = function(obj) {
-    // typeof obj == "function" also works
-    // but not in older browsers. :-/
-    return Object.prototype.toString.call(obj) === "[object Function]";
-};
 
 function NLP() {
 
@@ -38,8 +29,9 @@ function NLP() {
     // run it in current context
     // and use the returned interface
 
-    if ( isFunction( obj ))
+    if (fns.isFunction(obj)) {
       obj = obj.call(this, this);
+    }
 
     Object.keys(obj).forEach(function(k) {
       Object.keys(obj[k]).forEach(function(method) {
@@ -48,8 +40,8 @@ function NLP() {
     });
   };
 
-  this.term = function(s, context) {
-    return extend(new models.Term(s), context);
+  this.term = function(s) {
+    return new models.Term(s);
   };
   this.noun = function(s) {
     return new models.Noun(s);
@@ -103,5 +95,5 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let t = nlp.text(`For example. This doesn't work for the US`);
-// console.log(t.sentences[0].text());
+// let text = nlp.sentence('He does not care');
+// console.log(text.to_present().text());

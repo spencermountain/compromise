@@ -20,7 +20,7 @@ nlp.text("She sells seashells").negate()
 It's a [use-focused, satisfactory](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/justification.md) javascript library for understanding, changing, and making written english.
 ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[- Check it out - ](http://rawgit.com/nlp-compromise/website/master/demo/index.html)**
 
-<h6>&nbsp;&nbsp;&nbsp;:boom: Welcome to <a href="https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/changelog.md">v2.0!</a>&nbsp;&nbsp; Please <a href="https://github.com/nlp-compromise/nlp_compromise/issues">file an issue</a> if you find something :boom:</h6>
+<h6>&nbsp;&nbsp;&nbsp;:boom: Welcome to <a href="https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/changelog.md">v3.0!</a>&nbsp;&nbsp; Please <a href="https://github.com/nlp-compromise/nlp_compromise/issues">file an issue</a> if you find something :boom:</h6>
 
 ## Off you go:
 > `npm install nlp_compromise`
@@ -29,7 +29,7 @@ It's a [use-focused, satisfactory](https://github.com/nlp-compromise/nlp_comprom
 `
 
 ```javascript
-let nlp = require("nlp_compromise");
+let nlp = require("nlp_compromise"); // or nlp = window.nlp_compromise
 
 nlp.text('She sells seashells').to_past()
 // She sold seashells

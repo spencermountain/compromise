@@ -5,6 +5,7 @@ const tagger = require('./pos/tagger.js');
 const passive_voice = require('./passive_voice.js');
 const negate = require('./negate.js');
 const contract = require('./pos/contractions.js').contract;
+const change_tense = require('./tense.js');
 
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {
@@ -142,6 +143,23 @@ class Sentence {
       return t.pos['Value'];
     });
   }
+
+  // john walks quickly -> john walked quickly
+  to_past() {
+    change_tense(this, 'past');
+    return this;
+  }
+  // john walked quickly -> john walks quickly
+  to_present() {
+    change_tense(this, 'present');
+    return this;
+  }
+  // john walked quickly -> john will walk quickly
+  to_future() {
+    change_tense(this, 'future');
+    return this;
+  }
+
 }
 
 Sentence.fn = Sentence.prototype;

@@ -95,5 +95,6 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let text = nlp.sentence('He does not care');
+let text = nlp.sentence('He does not care');
+console.log(text.tags());
 // console.log(text.to_present().text());

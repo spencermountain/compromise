@@ -2,7 +2,6 @@
 const Term = require('../../term/term.js');
 
 const Verb = require('../../term/verb/verb.js');
-const Copula = require('../../term/verb/copula/copula.js');
 const Adverb = require('../../term/adverb/adverb.js');
 const Adjective = require('../../term/adjective/adjective.js');
 
@@ -72,7 +71,7 @@ const classMapping = {
   'PerfectTense': Verb,
   'PluperfectTense': Verb,
   'Gerund': Verb,
-  'Copula': Copula,
+  'Copula': Verb,
   'Modal': Verb,
 
   'Comparative': Adjective,

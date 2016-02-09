@@ -96,7 +96,18 @@ const chunk_neighbours = function(terms) {
   return new_terms;
 };
 
-const hasTags = function(terms, tags) {};
+//tests a subset of terms against a array of tags
+const hasTags = function(terms, tags) {
+  if (terms.length !== tags.length) {
+    return false;
+  }
+  for(var i = 0; i < tags.length; i++) {
+    if (!terms[i].pos[tags[i]]) {
+      return false;
+    }
+  }
+  return true;
+};
 
 //hints from the sentence grammar
 const grammar_rules_pass = function(s) {
@@ -107,13 +118,10 @@ const grammar_rules_pass = function(s) {
       //does this rule match
       let terms = s.terms.slice(i, i + rule.before.length);
       if (hasTags(terms, rule.before)) {
-        console.log(rule.before);
         //change before/after for each term
         for(let c = 0; c < rule.before.length; c++) {
           s.terms[i + c] = assign(s.terms[i + c], rule.after[c], 'grammar_rule ' + c);
         }
-      }
-      if (fns.sameArr(rule.before, tags.slice(i, i + rule.before.length))) {
       }
     }
   }
@@ -157,7 +165,7 @@ const tagger = function(s) {
   s.terms = lexicon_pass(s.terms);
   s.terms = word_rules_pass(s.terms);
   //repeat these steps a couple times, to wiggle-out the grammar
-  for(let i = 0; i < 2; i++) {
+  for(let i = 0; i < 1; i++) {
     s.terms = grammar_rules_pass(s);
     s.terms = chunk_neighbours(s.terms);
     s.terms = noun_fallback(s.terms);

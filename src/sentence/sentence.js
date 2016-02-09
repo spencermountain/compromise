@@ -113,11 +113,7 @@ class Sentence {
   //return only the main POS classnames/tags
   tags() {
     return this.terms.map(function(t) {
-      if (t.constructor.name !== 'Term') {
-        return t.constructor.name;
-      } else {
-        return t.tag;
-      }
+      return t.tag || '?';
     });
   }
   //mining for specific things

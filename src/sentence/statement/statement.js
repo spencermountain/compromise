@@ -26,6 +26,7 @@ Statement.fn = Statement.prototype;
 
 module.exports = Statement;
 
-let s = new Statement('john walks to the store');
+let s = new Statement('john is a person');
 console.log(s.tags());
-console.log(s.to_past().text());
+console.log(s);
+// console.log(s.to_past().text());

@@ -153,6 +153,7 @@ const from_infinitive = function(str) {
   if (!str) {
     return obj;
   }
+  console.log(str);
   for(let i = 0; i < rules.length; i++) {
     if (str.match(rules[i].reg)) {
       Object.keys(rules[i].repl).forEach(function(k) {

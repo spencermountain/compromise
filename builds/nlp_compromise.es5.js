@@ -5109,6 +5109,7 @@ var from_infinitive = function from_infinitive(str) {
   if (!str) {
     return obj;
   }
+  console.log(str);
 
   var _loop = function _loop(i) {
     if (str.match(rules[i].reg)) {

@@ -1,3 +1,22 @@
+*nlp_compromise* has three main classes, *Term*, *Sentence*, and *Text*:
+```coffeescript
+Term => # A word/token with a Part-of-speech
+  Adjective =>
+  Adverb =>
+  Verb =>
+  Noun =>
+    Person =>
+    Place =>
+    Date =>
+    Organisation =>
+    Value =>
+
+Sentence => # A list of Terms and their methods
+  Statement =>
+  Question =>
+
+Text => # A list of Sentences and their methods
+```
 
 ##Full API
 ```javascript

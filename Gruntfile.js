@@ -39,7 +39,7 @@ module.exports = function (grunt) {
     filesize: {
       base: {
         files: [{
-          src: ['./builds/nlp_compromise.es5.js']
+          src: ['./builds/nlp_compromise.es5.min.js']
         }],
         options: {
           ouput: [{

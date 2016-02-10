@@ -1,6 +1,5 @@
 'use strict';
 const Term = require('../term/term.js');
-const fns = require('../fns.js');
 const tagger = require('./pos/tagger.js');
 const passive_voice = require('./passive_voice.js');
 const negate = require('./negate.js');

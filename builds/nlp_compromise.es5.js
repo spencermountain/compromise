@@ -1076,7 +1076,9 @@ module.exports = ['aircraft', 'bass', 'bison', 'fowl', 'halibut', 'moose', 'salm
 
 //most-frequent non-irregular verbs, in infinitive form, to be conjugated for the lexicon
 //this list is the seed, from which various forms are conjugated
-module.exports = ['collapse', 'stake', 'forsee', 'suck', 'answer', 'argue', 'tend', 'examine', 'depend', 'form', 'figure', 'mind', 'surround', 'suspect', 'reflect', 'wonder', 'hope', 'end', 'thank', 'file', 'regard', 'report', 'imagine', 'consider', 'ensure', 'cause', 'work', 'enter', 'stop', 'defeat', 'surge', 'launch', 'turn', 'like', 'control', 'relate', 'remember', 'join', 'listen', 'train', 'spring', 'enjoy', 'fail', 'recognize', 'obtain', 'learn', 'fill', 'announce', 'prevent', 'achieve', 'realize', 'involve', 'remove', 'aid', 'visit', 'test', 'prepare', 'ask', 'carry', 'suppose', 'determine', 'raise', 'love', 'use', 'pull', 'improve', 'contain', 'offer', 'talk', 'pick', 'care', 'express', 'remain', 'operate', 'close', 'add', 'mention', 'support', 'decide', 'walk', 'vary', 'demand', 'describe', 'agree', 'happen', 'allow', 'suffer', 'study', 'press', 'watch', 'seem', 'occur', 'contribute', 'claim', 'compare', 'apply', 'direct', 'discuss', 'indicate', 'require', 'change', 'fix', 'reach', 'prove', 'expect', 'exist', 'play', 'permit', 'kill', 'charge', 'increase', 'believe', 'create', 'continue', 'live', 'help', 'represent', 'edit', 'serve', 'appear', 'cover', 'maintain', 'start', 'stay', 'move', 'extend', 'design', 'supply', 'suggest', 'want', 'approach', 'call', 'include', 'try', 'receive', 'save', 'discover', 'marry', 'need', 'establish', 'keep', 'assume', 'attend', 'unite', 'explain', 'publish', 'accept', 'settle', 'reduce', 'do', 'look', 'interact', 'concern', 'labor', 'return', 'select', 'die', 'provide', 'seek', 'wish', 'finish', 'follow', 'disagree', 'produce', 'attack', 'attempt', 'brake', 'brush', 'burn', 'bang', 'bomb', 'budget', 'comfort', 'cook', 'copy', 'cough', 'crush', 'cry', 'check', 'claw', 'clip', 'combine', 'damage', 'desire', 'doubt', 'drain', 'dance', 'decrease', 'defect', 'deposit', 'drift', 'dip', 'dive', 'divorce', 'dream', 'exchange', 'envy', 'exert', 'exercise', 'export', 'fold', 'flood', 'focus', 'forecast', 'fracture', 'grip', 'guide', 'guard', 'guarantee', 'guess', 'hate', 'heat', 'handle', 'hire', 'host', 'hunt', 'hurry', 'import', 'judge', 'jump', 'jam', 'kick', 'kiss', 'knock', 'laugh', 'lift', 'lock', 'lecture', 'link', 'load', 'loan', 'lump', 'melt', 'message', 'murder', 'neglect', 'overlap', 'overtake', 'overuse', 'print', 'protest', 'pump', 'push', 'post', 'progress', 'promise', 'purchase', 'regret', 'request', 'reward', 'roll', 'rub', 'rent', 'repair', 'sail', 'scale', 'screw', 'shock', 'sleep', 'slip', 'smash', 'smell', 'smoke', 'sneeze', 'snow', 'surprise', 'scratch', 'search', 'share', 'shave', 'spit', 'splash', 'stain', 'stress', 'switch', 'taste', 'touch', 'trade', 'trick', 'twist', 'trap', 'travel', 'tune', 'undergo', 'undo', 'uplift', 'vote', 'wash', 'wave', 'whistle', 'wreck', 'yawn', 'betray', 'restrict', 'perform', 'worry', 'point', 'activate', 'fear', 'plan', 'note', 'face', 'predict', 'differ', 'deserve', 'torture', 'recall', 'count', 'admit', 'insist', 'lack', 'pass', 'belong', 'complain', 'constitute', 'rely', 'refuse', 'range', 'cite', 'flash', 'arrive', 'reveal', 'consist', 'observe', 'notice', 'trust', 'display', 'view', 'stare', 'acknowledge', 'owe', 'gaze', 'treat', 'account', 'gather', 'address', 'confirm', 'estimate', 'manage', 'participate', 'sneak', 'drop', 'mirror', 'experience', 'strive', 'arch', 'dislike', 'favor', 'earn', 'emphasize', 'match', 'question', 'emerge', 'encourage', 'matter', 'name', 'head', 'line', 'slam', 'list', 'warn', 'ignore', 'resemble', 'feature', 'place', 'reverse', 'accuse', 'spoil', 'retain', 'survive', 'praise', 'function', 'please', 'date', 'remind', 'deliver', 'echo', 'engage', 'deny', 'yield', 'center', 'gain', 'anticipate', 'reason', 'side', 'thrive', 'defy', 'dodge', 'enable', 'applaud', 'bear', 'persist', 'pose', 'reject', 'attract', 'await', 'inhibit', 'declare', 'process', 'risk', 'urge', 'value', 'block', 'confront', 'credit', 'cross', 'amuse', 'dare', 'resent', 'smile', 'gloss', 'threaten', 'collect', 'depict', 'dismiss', 'submit', 'benefit', 'step', 'deem', 'limit', 'sense', 'issue', 'embody', 'force', 'govern', 'replace', 'bother', 'cater', 'adopt', 'empower', 'outweigh', 'alter', 'enrich', 'influence', 'prohibit', 'pursue', 'warrant', 'convey', 'approve', 'reserve', 'rest', 'strain', 'wander', 'adjust', 'dress', 'market', 'mingle', 'disapprove', 'evaluate', 'flow', 'inhabit', 'pop', 'rule', 'depart', 'roam', 'assert', 'disappear', 'envision', 'pause', 'afford', 'challenge', 'grab', 'grumble', 'house', 'portray', 'revel', 'base', 'conduct', 'review', 'stem', 'crave', 'mark', 'store', 'target', 'unlock', 'weigh', 'resist', 'drag', 'pour', 'reckon', 'assign', 'cling', 'rank', 'attach', 'decline', 'destroy', 'interfere', 'paint', 'skip', 'sprinkle', 'wither', 'allege', 'retire', 'score', 'monitor', 'expand', 'honor', 'pack', 'assist', 'float', 'appeal', 'stretch', 'undermine', 'assemble', 'boast', 'bounce', 'grasp', 'install', 'borrow', 'crack', 'elect', 'shout', 'contrast', 'overcome', 'relax', 'relent', 'strengthen', 'conform', 'dump', 'pile', 'scare', 'relive', 'resort', 'rush', 'boost', 'cease', 'command', 'excel', 'plug', 'plunge', 'proclaim', 'discourage', 'endure', 'ruin', 'stumble', 'abandon', 'cheat', 'convince', 'merge', 'convert', 'harm', 'multiply', 'overwhelm', 'chew', 'invent', 'bury', 'wipe', 'added', 'took', 'define', 'goes', 'measure', 'enhance', 'distinguish', 'avoid'];
+module.exports = ['collapse', 'stake', 'forsee', 'suck', 'answer', 'argue', 'tend', 'examine', 'depend', 'form', 'figure', 'mind', 'surround', 'suspect', 'reflect', 'wonder', 'hope', 'end', 'thank', 'file', 'regard', 'report', 'imagine', 'consider', 'ensure', 'cause', 'work', 'enter', 'stop', 'defeat', 'surge', 'launch', 'turn', 'like', 'control', 'relate', 'remember', 'join', 'listen', 'train', 'spring', 'enjoy', 'fail', 'recognize', 'obtain', 'learn', 'fill', 'announce', 'prevent', 'achieve', 'realize', 'involve', 'remove', 'aid', 'visit', 'test', 'prepare', 'ask', 'carry', 'suppose', 'determine', 'raise', 'love', 'use', 'pull', 'improve', 'contain', 'offer', 'talk', 'pick', 'care', 'express', 'remain', 'operate', 'close', 'add', 'mention', 'support', 'decide', 'walk', 'vary', 'demand', 'describe', 'agree', 'happen', 'allow', 'suffer', 'study', 'press',
+// 'watch', //omg Object.watch bug
+'seem', 'occur', 'contribute', 'claim', 'compare', 'apply', 'direct', 'discuss', 'indicate', 'require', 'change', 'fix', 'reach', 'prove', 'expect', 'exist', 'play', 'permit', 'kill', 'charge', 'increase', 'believe', 'create', 'continue', 'live', 'help', 'represent', 'edit', 'serve', 'appear', 'cover', 'maintain', 'start', 'stay', 'move', 'extend', 'design', 'supply', 'suggest', 'want', 'approach', 'call', 'include', 'try', 'receive', 'save', 'discover', 'marry', 'need', 'establish', 'keep', 'assume', 'attend', 'unite', 'explain', 'publish', 'accept', 'settle', 'reduce', 'do', 'look', 'interact', 'concern', 'labor', 'return', 'select', 'die', 'provide', 'seek', 'wish', 'finish', 'follow', 'disagree', 'produce', 'attack', 'attempt', 'brake', 'brush', 'burn', 'bang', 'bomb', 'budget', 'comfort', 'cook', 'copy', 'cough', 'crush', 'cry', 'check', 'claw', 'clip', 'combine', 'damage', 'desire', 'doubt', 'drain', 'dance', 'decrease', 'defect', 'deposit', 'drift', 'dip', 'dive', 'divorce', 'dream', 'exchange', 'envy', 'exert', 'exercise', 'export', 'fold', 'flood', 'focus', 'forecast', 'fracture', 'grip', 'guide', 'guard', 'guarantee', 'guess', 'hate', 'heat', 'handle', 'hire', 'host', 'hunt', 'hurry', 'import', 'judge', 'jump', 'jam', 'kick', 'kiss', 'knock', 'laugh', 'lift', 'lock', 'lecture', 'link', 'load', 'loan', 'lump', 'melt', 'message', 'murder', 'neglect', 'overlap', 'overtake', 'overuse', 'print', 'protest', 'pump', 'push', 'post', 'progress', 'promise', 'purchase', 'regret', 'request', 'reward', 'roll', 'rub', 'rent', 'repair', 'sail', 'scale', 'screw', 'shock', 'sleep', 'slip', 'smash', 'smell', 'smoke', 'sneeze', 'snow', 'surprise', 'scratch', 'search', 'share', 'shave', 'spit', 'splash', 'stain', 'stress', 'switch', 'taste', 'touch', 'trade', 'trick', 'twist', 'trap', 'travel', 'tune', 'undergo', 'undo', 'uplift', 'vote', 'wash', 'wave', 'whistle', 'wreck', 'yawn', 'betray', 'restrict', 'perform', 'worry', 'point', 'activate', 'fear', 'plan', 'note', 'face', 'predict', 'differ', 'deserve', 'torture', 'recall', 'count', 'admit', 'insist', 'lack', 'pass', 'belong', 'complain', 'constitute', 'rely', 'refuse', 'range', 'cite', 'flash', 'arrive', 'reveal', 'consist', 'observe', 'notice', 'trust', 'display', 'view', 'stare', 'acknowledge', 'owe', 'gaze', 'treat', 'account', 'gather', 'address', 'confirm', 'estimate', 'manage', 'participate', 'sneak', 'drop', 'mirror', 'experience', 'strive', 'arch', 'dislike', 'favor', 'earn', 'emphasize', 'match', 'question', 'emerge', 'encourage', 'matter', 'name', 'head', 'line', 'slam', 'list', 'warn', 'ignore', 'resemble', 'feature', 'place', 'reverse', 'accuse', 'spoil', 'retain', 'survive', 'praise', 'function', 'please', 'date', 'remind', 'deliver', 'echo', 'engage', 'deny', 'yield', 'center', 'gain', 'anticipate', 'reason', 'side', 'thrive', 'defy', 'dodge', 'enable', 'applaud', 'bear', 'persist', 'pose', 'reject', 'attract', 'await', 'inhibit', 'declare', 'process', 'risk', 'urge', 'value', 'block', 'confront', 'credit', 'cross', 'amuse', 'dare', 'resent', 'smile', 'gloss', 'threaten', 'collect', 'depict', 'dismiss', 'submit', 'benefit', 'step', 'deem', 'limit', 'sense', 'issue', 'embody', 'force', 'govern', 'replace', 'bother', 'cater', 'adopt', 'empower', 'outweigh', 'alter', 'enrich', 'influence', 'prohibit', 'pursue', 'warrant', 'convey', 'approve', 'reserve', 'rest', 'strain', 'wander', 'adjust', 'dress', 'market', 'mingle', 'disapprove', 'evaluate', 'flow', 'inhabit', 'pop', 'rule', 'depart', 'roam', 'assert', 'disappear', 'envision', 'pause', 'afford', 'challenge', 'grab', 'grumble', 'house', 'portray', 'revel', 'base', 'conduct', 'review', 'stem', 'crave', 'mark', 'store', 'target', 'unlock', 'weigh', 'resist', 'drag', 'pour', 'reckon', 'assign', 'cling', 'rank', 'attach', 'decline', 'destroy', 'interfere', 'paint', 'skip', 'sprinkle', 'wither', 'allege', 'retire', 'score', 'monitor', 'expand', 'honor', 'pack', 'assist', 'float', 'appeal', 'stretch', 'undermine', 'assemble', 'boast', 'bounce', 'grasp', 'install', 'borrow', 'crack', 'elect', 'shout', 'contrast', 'overcome', 'relax', 'relent', 'strengthen', 'conform', 'dump', 'pile', 'scare', 'relive', 'resort', 'rush', 'boost', 'cease', 'command', 'excel', 'plug', 'plunge', 'proclaim', 'discourage', 'endure', 'ruin', 'stumble', 'abandon', 'cheat', 'convince', 'merge', 'convert', 'harm', 'multiply', 'overwhelm', 'chew', 'invent', 'bury', 'wipe', 'added', 'took', 'define', 'goes', 'measure', 'enhance', 'distinguish', 'avoid'];
 
 },{}],18:[function(require,module,exports){
 'use strict';
@@ -1248,6 +1250,7 @@ if (typeof define === 'function' && define.amd) {
 // let text = nlp.sentence('He does not care');
 // console.log(text.tags());
 // console.log(text.to_present().text());
+// console.log(nlp.verb('watch').conjugate());
 
 },{"./fns.js":18,"./lexicon.js":20,"./sentence/sentence.js":30,"./term/adjective/adjective.js":32,"./term/adverb/adverb.js":37,"./term/noun/date/date.js":41,"./term/noun/noun.js":47,"./term/noun/organisation/organisation.js":49,"./term/noun/person/person.js":53,"./term/noun/place/place.js":55,"./term/noun/value/value.js":63,"./term/term.js":64,"./term/verb/verb.js":72,"./text/text.js":74}],20:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
@@ -2148,7 +2151,6 @@ var hasTags = function hasTags(terms, tags) {
 
 //hints from the sentence grammar
 var grammar_rules_pass = function grammar_rules_pass(s) {
-  var tags = s.tags();
   for (var i = 0; i < s.terms.length; i++) {
     for (var o = 0; o < grammar_rules.length; o++) {
       var rule = grammar_rules[o];
@@ -2237,7 +2239,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Term = require('../term/term.js');
-var fns = require('../fns.js');
 var tagger = require('./pos/tagger.js');
 var passive_voice = require('./passive_voice.js');
 var _negate = require('./negate.js');
@@ -2456,7 +2457,7 @@ Sentence.fn = Sentence.prototype;
 
 module.exports = Sentence;
 
-},{"../fns.js":18,"../term/term.js":64,"./negate.js":21,"./passive_voice.js":22,"./pos/contractions.js":23,"./pos/tagger.js":28,"./tense.js":31}],31:[function(require,module,exports){
+},{"../term/term.js":64,"./negate.js":21,"./passive_voice.js":22,"./pos/contractions.js":23,"./pos/tagger.js":28,"./tense.js":31}],31:[function(require,module,exports){
 'use strict';
 //change a sentence to past, present, or future tense
 
@@ -2484,7 +2485,12 @@ var change_tense = function change_tense(s, tense) {
   return s;
 };
 
-['john walks to the church', 'john walks and feeds the birds', 'john always walks', 'will you walk?'];
+// [
+//   'john walks to the church',
+//   'john walks and feeds the birds',
+//   'john always walks',
+//   'will you walk?',
+// ];
 
 module.exports = change_tense;
 
@@ -5106,10 +5112,10 @@ var from_infinitive = function from_infinitive(str) {
   var obj = {
     infinitive: str
   };
-  if (!str) {
+  if (!str || typeof str !== 'string') {
+    // console.log(str);
     return obj;
   }
-  console.log(str);
 
   var _loop = function _loop(i) {
     if (str.match(rules[i].reg)) {
@@ -5129,7 +5135,7 @@ var from_infinitive = function from_infinitive(str) {
   }
   return obj;
 };
-// console.log(from_infinitive('arise'));
+// console.log(from_infinitive('watch'));
 
 module.exports = from_infinitive;
 

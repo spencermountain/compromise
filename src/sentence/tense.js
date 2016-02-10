@@ -24,12 +24,12 @@ const change_tense = function(s, tense) {
   return s;
 };
 
-[
-  'john walks to the church',
-  'john walks and feeds the birds',
-  'john always walks',
-  'will you walk?',
-];
+// [
+//   'john walks to the church',
+//   'john walks and feeds the birds',
+//   'john always walks',
+//   'will you walk?',
+// ];
 
 
 module.exports = change_tense;

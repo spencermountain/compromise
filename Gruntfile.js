@@ -2,6 +2,8 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
 
+    pkg: grunt.file.readJSON('./package.json'),
+
     watch: {
       files: ['./src/*', './src/**'],
       tasks: ['run:index']
@@ -25,7 +27,7 @@ module.exports = function (grunt) {
       'options': {
         preserveComments: false,
         mangle: true,
-        banner: ' /*nlp_compromise, Spencer Kelly. MIT 2015*/\n',
+        banner: ' /*nlp_compromise <%= pkg.version %>  MIT*/\n\n',
         compress: {
           drop_console: true,
           dead_code: true,

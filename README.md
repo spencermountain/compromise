@@ -25,7 +25,7 @@ It's a [use-focused, satisfactory](https://github.com/nlp-compromise/nlp_comprom
 ## Off you go:
 > `npm install nlp_compromise`
 
-> `<script src="http://rawgit.com/nlp-compromise/nlp_compromise/master/builds/nlp-compromise.es5.min.js"></script>
+> `<script src="http://cdn.nlpcompromise.com/nlp_compromise.es5.min.js"></script>
 `
 
 ```javascript
@@ -77,7 +77,7 @@ t4.ngram({min_count: 2});
 // [ { word: 'tony hawk', count: 2, size: 1 } ]
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[try it out](https://tonicdev.com/nlp-compromise/nlpcompromise)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[try it out](https://tonicdev.com/spencermountain/nlpcompromise)
 
 ### [View the Full API Documentation](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/api.md)
 

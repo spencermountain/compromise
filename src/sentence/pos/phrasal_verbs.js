@@ -22,8 +22,8 @@ let phrasal_verbs = function(terms) {
       terms[i].text = terms[i].text + ' ' + terms[i + 1].text;
       terms[i].reason = 'phrasal(' + terms[i].reason + ')';
       terms[i + 1] = null;
-      terms[i].normalize();
-      terms[i].conjugate();
+      terms[i].rebuild();
+      // terms[i].conjugate();
     }
   }
   //remove killed-off ones

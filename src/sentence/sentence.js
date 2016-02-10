@@ -1,11 +1,12 @@
 'use strict';
 const Term = require('../term/term.js');
-const fns = require('../fns.js');
 const tagger = require('./pos/tagger.js');
-const pos = require('./pos/parts_of_speech.js');
 const passive_voice = require('./passive_voice.js');
 const negate = require('./negate.js');
 const contract = require('./pos/contractions.js').contract;
+const change_tense = require('./tense.js');
+// const statement = require('./statement/statement.js');
+// const question = require('./question/question.js');
 
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {
@@ -87,33 +88,6 @@ class Sentence {
     negate(this);
     return this;
   }
-  // john walks quickly -> john walked quickly
-  to_past() {
-    this.terms.forEach(function(t) {
-      if (t instanceof pos.Verb) {
-        t.to_past();
-      }
-    });
-    return this;
-  }
-  // john walked quickly -> john walks quickly
-  to_present() {
-    this.terms.forEach(function(t) {
-      if (t instanceof pos.Verb) {
-        t.to_present();
-      }
-    });
-    return this;
-  }
-  // john walked quickly -> john will walk quickly
-  to_future() {
-    this.terms.forEach(function(t) {
-      if (t instanceof pos.Verb) {
-        t.to_future();
-      }
-    });
-    return this;
-  }
 
   //map over Term methods
   text() {
@@ -138,9 +112,11 @@ class Sentence {
       return s;
     }, '');
   }
-  //return only the POS tags
+  //return only the main POS classnames/tags
   tags() {
-    return fns.pluck(this.terms, 'tag');
+    return this.terms.map(function(t) {
+      return t.tag || '?';
+    });
   }
   //mining for specific things
   people() {
@@ -168,6 +144,23 @@ class Sentence {
       return t.pos['Value'];
     });
   }
+
+  // john walks quickly -> john walked quickly
+  to_past() {
+    change_tense(this, 'past');
+    return this;
+  }
+  // john walked quickly -> john walks quickly
+  to_present() {
+    change_tense(this, 'present');
+    return this;
+  }
+  // john walked quickly -> john will walk quickly
+  to_future() {
+    change_tense(this, 'future');
+    return this;
+  }
+
 }
 
 Sentence.fn = Sentence.prototype;

@@ -97,7 +97,7 @@ const conjugate = function(w) {
   //guess the tense, so we know which transormation to make
   const predicted = predict(w) || 'infinitive';
   //check against suffix rules
-  let infinitive = to_infinitive(w, predicted);
+  let infinitive = to_infinitive(w, predicted) || '';
   //check irregulars
   let obj = irregular_verbs[w] || irregular_verbs[infinitive] || {};
   // obj.infinitive = infinitive;

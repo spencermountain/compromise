@@ -5,6 +5,8 @@ let models = {
   Term : require('./term/term.js'),
   Text : require('./text/text.js'),
   Sentence : require('./sentence/sentence.js'),
+  Statement : require('./sentence/statement/statement.js'),
+  Question : require('./sentence/question/question.js'),
   Verb : require('./term/verb/verb.js'),
   Adjective : require('./term/adjective/adjective.js'),
   Adverb : require('./term/adverb/adverb.js'),
@@ -78,6 +80,12 @@ function NLP() {
   this.sentence = function(s) {
     return new models.Sentence(s);
   };
+  this.statement = function(s) {
+    return new models.Statement(s);
+  };
+  this.question = function(s) {
+    return new models.Question(s);
+  };
 }
 
 let nlp = new NLP();
@@ -96,4 +104,6 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // let text = nlp.sentence('He does not care');
+// console.log(text.tags());
 // console.log(text.to_present().text());
+// console.log(nlp.verb('watch').conjugate());

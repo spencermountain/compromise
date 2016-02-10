@@ -90,7 +90,7 @@ module.exports = [
   'suffer',
   'study',
   'press',
-  'watch',
+  // 'watch', //omg Object.watch bug
   'seem',
   'occur',
   'contribute',

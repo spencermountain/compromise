@@ -1,6 +1,8 @@
 'use strict';
 const sentence_parser = require('./sentence_parser.js');
 const Sentence = require('../sentence/sentence.js');
+const Question = require('../sentence/question/question.js');
+const Statement = require('../sentence/statement/statement.js');
 const fns = require('../fns.js');
 
 //a text object is a series of sentences, along with the generic methods for transforming them
@@ -8,8 +10,14 @@ class Text {
   constructor(str) {
     const the = this;
     this.raw_text = str || '';
-    //build-up sentence methods
+    //build-up sentence/statement methods
     this.sentences = sentence_parser(str).map(function(s) {
+      let last_char = s.slice(-1);
+      if (last_char === '?') {
+        return new Question(s);
+      } else if (last_char === '.' || last_char === '!') {
+        return new Statement(s);
+      }
       return new Sentence(s);
     });
 

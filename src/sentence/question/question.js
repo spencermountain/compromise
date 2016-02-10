@@ -1,8 +1,7 @@
 'use strict';
 const Sentence = require('../sentence.js');
-// const change_tense = require('../tense.js');
 
-class Statement extends Sentence {
+class Question extends Sentence {
   constructor(str) {
     super(str);
   }
@@ -22,11 +21,8 @@ class Statement extends Sentence {
 //   return this;
 // }
 }
-Statement.fn = Statement.prototype;
+Question.fn = Question.prototype;
 
-module.exports = Statement;
+module.exports = Question;
 
-// let s = new Statement('john is a person');
-// console.log(s.tags());
-// console.log(s);
-// console.log(s.to_past().text());
+// let s = new Question('is John a person?');

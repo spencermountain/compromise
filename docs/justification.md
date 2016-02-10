@@ -1,3 +1,5 @@
+nlp_compromise is not the most accurate, or most clever nlp toolkit.
+
 ##Justification
 If the 80-20 rule applies for most things, the ''94-6 rule'' applies when working with language - by [Zipfs law](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10):
 >The **[top 10 words](http://www.businessinsider.com/zipfs-law-and-the-most-common-words-in-english-2013-10)** account for 25% of used language.
@@ -28,18 +30,18 @@ It puts a 'silent token' into the phrase for contractions. Otherwise a meaningfu
 nlp.pos("i'm good.")
  [{
    text:"i'm",
-   normalised:"i",
-   pos:"PRP"
+   implicit:"i",
+   pos:{"PRP":true}
  },
  {
    text:"",
-   normalised:"am",
-   pos:"CP"
+   implicit:"am",
+   pos:{"CP":true}
  },
  {
    text:"good.",
-   normalised:"good",
-   pos:"JJ"
+   implicit:"",
+   pos:{"JJ":true}
  }]
 ```
 ####Tokenization
@@ -49,12 +51,12 @@ nlp.pos("tony hawk won").tags()
 //tony hawk   NN
 //won   VB
 ```
-To turn this off:
+<!-- To turn this off:
 ```javascript
 nlp.pos("tony hawk won", {dont_combine:true}).tags()
 //tony   NN
 //hawk   NN
 //won   VB
-```
+```-->
 ####Phrasal Verbs
-'beef up' is one verb, and not some direction of beefing.
+'beef up' is one verb, and not two terms. (ie. It's not a direction of beefing.) But many false-positives are avoided - *sleep in* is combined, but *sleep out* is not. *Brighten up* is combined, but *brighten down* is not.

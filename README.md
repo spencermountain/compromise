@@ -49,9 +49,6 @@ nlp.verb("speak").conjugate();
 nlp.noun("dinosaur").pluralize();
 // "dinosaurs"
 
-nlp.term("hamburger").syllables();
-// [ 'ham', 'bur', 'ger' ]
-
 nlp.person("Tony Hawk").article();
 // "he"
 

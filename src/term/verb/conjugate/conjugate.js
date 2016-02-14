@@ -6,7 +6,6 @@ const from_infinitive = require('./from_infinitive');
 const irregular_verbs = require('../../../data/irregular_verbs');
 const predict = require('./predict_form.js');
 
-
 //make sure object has all forms
 const fufill = function(obj, prefix) {
   if (!obj.infinitive) {
@@ -64,7 +63,7 @@ const conjugate = function(w) {
 
   //for phrasal verbs ('look out'), conjugate look, then append 'out'
   const phrasal_reg = new RegExp('^(.*?) (in|out|on|off|behind|way|with|of|do|away|across|ahead|back|over|under|together|apart|up|upon|aback|down|about|before|after|around|to|forth|round|through|along|onto)$', 'i');
-  if (w.match(' ') && w.match(phrasal_reg)) {
+  if (w.match(phrasal_reg)) {
     const split = w.match(phrasal_reg, '');
     const phrasal_verb = split[1];
     const particle = split[2];
@@ -100,6 +99,9 @@ const conjugate = function(w) {
   let infinitive = to_infinitive(w, predicted) || '';
   //check irregulars
   let obj = irregular_verbs[w] || irregular_verbs[infinitive] || {};
+  obj = Object.assign({}, obj);
+  // console.log(obj);
+  // console.log('===');
   // obj.infinitive = infinitive;
   //apply regex-transformations
   let conjugations = from_infinitive(infinitive);
@@ -112,7 +114,6 @@ const conjugate = function(w) {
 };
 module.exports = conjugate;
 
-// console.log(conjugate('convolute'));
 
 
 // console.log(conjugate('goes'));
@@ -129,4 +130,4 @@ module.exports = conjugate;
 // console.log(conjugate("bog"))
 // console.log(conjugate("nod"))
 // console.log(conjugate("had tried"))
-// console.log(conjugate("have tried"))
+// console.log(conjugate("wrote about"))

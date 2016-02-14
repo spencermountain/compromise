@@ -1,5 +1,5 @@
 //a list of exceptions to the verb rules
-module.exports = {
+const irregular_verbs = {
   arise: {
     past: 'arose',
     participle: 'arisen'
@@ -384,3 +384,4 @@ module.exports = {
     actor: 'suiter'
   }
 };
+module.exports = irregular_verbs;

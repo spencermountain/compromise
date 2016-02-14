@@ -79,7 +79,6 @@ class Verb extends Term {
     return this.conjugations[tense];
   }
 
-
   //is this verb negative already?
   isNegative() {
     const str = this.normal;
@@ -95,13 +94,12 @@ class Verb extends Term {
     }
     this.changeTo(negate(this, form));
     return this.text;
-
   }
-
 }
 Verb.fn = Verb.prototype;
 
-// let v = new Verb("walk", "asdf")
-// console.log(v.form())
-
 module.exports = Verb;
+
+// let v = new Verb('cost of');
+// v.conjugate();
+// console.log(v.conjugate());

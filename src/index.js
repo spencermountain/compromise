@@ -103,7 +103,7 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let text = nlp.sentence('He does not care');
-// console.log(text.tags());
-// console.log(text.to_present().text());
-// console.log(nlp.verb('watch').conjugate());
+// let text = nlp.sentence('wrote about');
+// text.terms[0].conjugate()
+// text.terms[0].conjugate()
+// console.log(text.terms[0].conjugate());

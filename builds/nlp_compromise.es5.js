@@ -385,7 +385,7 @@ module.exports = main;
 'use strict';
 
 //a list of exceptions to the verb rules
-module.exports = {
+var irregular_verbs = {
   arise: {
     past: 'arose',
     participle: 'arisen'
@@ -770,6 +770,7 @@ module.exports = {
     actor: 'suiter'
   }
 };
+module.exports = irregular_verbs;
 
 },{}],10:[function(require,module,exports){
 'use strict';
@@ -1255,10 +1256,10 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let text = nlp.sentence('He does not care');
-// console.log(text.tags());
-// console.log(text.to_present().text());
-// console.log(nlp.verb('watch').conjugate());
+// let text = nlp.sentence('wrote about');
+// text.terms[0].conjugate()
+// text.terms[0].conjugate()
+// console.log(text.terms[0].conjugate());
 
 },{"./fns.js":18,"./lexicon.js":20,"./sentence/question/question.js":30,"./sentence/sentence.js":31,"./sentence/statement/statement.js":32,"./term/adjective/adjective.js":34,"./term/adverb/adverb.js":39,"./term/noun/date/date.js":43,"./term/noun/noun.js":49,"./term/noun/organisation/organisation.js":51,"./term/noun/person/person.js":55,"./term/noun/place/place.js":57,"./term/noun/value/value.js":65,"./term/term.js":66,"./term/verb/verb.js":74,"./text/text.js":76}],20:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
@@ -4997,7 +4998,7 @@ var conjugate = function conjugate(w) {
 
   //for phrasal verbs ('look out'), conjugate look, then append 'out'
   var phrasal_reg = new RegExp('^(.*?) (in|out|on|off|behind|way|with|of|do|away|across|ahead|back|over|under|together|apart|up|upon|aback|down|about|before|after|around|to|forth|round|through|along|onto)$', 'i');
-  if (w.match(' ') && w.match(phrasal_reg)) {
+  if (w.match(phrasal_reg)) {
     var _ret = function () {
       var split = w.match(phrasal_reg, '');
       var phrasal_verb = split[1];
@@ -5038,6 +5039,9 @@ var conjugate = function conjugate(w) {
   var infinitive = to_infinitive(w, predicted) || '';
   //check irregulars
   var obj = irregular_verbs[w] || irregular_verbs[infinitive] || {};
+  obj = Object.assign({}, obj);
+  // console.log(obj);
+  // console.log('===');
   // obj.infinitive = infinitive;
   //apply regex-transformations
   var conjugations = from_infinitive(infinitive);
@@ -5049,8 +5053,6 @@ var conjugate = function conjugate(w) {
   return fufill(obj, prefix);
 };
 module.exports = conjugate;
-
-// console.log(conjugate('convolute'));
 
 // console.log(conjugate('goes'));
 // console.log(conjugate("watch out"))
@@ -5066,7 +5068,7 @@ module.exports = conjugate;
 // console.log(conjugate("bog"))
 // console.log(conjugate("nod"))
 // console.log(conjugate("had tried"))
-// console.log(conjugate("have tried"))
+// console.log(conjugate("wrote about"))
 
 },{"../../../data/irregular_verbs":9,"./from_infinitive":68,"./predict_form.js":69,"./to_actor":71,"./to_infinitive":72}],68:[function(require,module,exports){
 'use strict';
@@ -5758,10 +5760,11 @@ var Verb = function (_Term) {
 
 Verb.fn = Verb.prototype;
 
-// let v = new Verb("walk", "asdf")
-// console.log(v.form())
-
 module.exports = Verb;
+
+// let v = new Verb('cost of');
+// v.conjugate();
+// console.log(v.conjugate());
 
 },{"../term.js":66,"./conjugate/conjugate.js":67,"./negate.js":73}],75:[function(require,module,exports){
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.

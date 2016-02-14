@@ -466,6 +466,10 @@ var irregular_verbs = {
   deal: {
     past: 'dealt'
   },
+  die: {
+    past: 'died',
+    gerund: 'dying'
+  },
   dig: {
     gerund: 'digging',
     past: 'dug'
@@ -5040,9 +5044,6 @@ var conjugate = function conjugate(w) {
   //check irregulars
   var obj = irregular_verbs[w] || irregular_verbs[infinitive] || {};
   obj = Object.assign({}, obj);
-  // console.log(obj);
-  // console.log('===');
-  // obj.infinitive = infinitive;
   //apply regex-transformations
   var conjugations = from_infinitive(infinitive);
   Object.keys(conjugations).forEach(function (k) {
@@ -5054,11 +5055,8 @@ var conjugate = function conjugate(w) {
 };
 module.exports = conjugate;
 
-// console.log(conjugate('goes'));
-// console.log(conjugate("watch out"))
-// console.log(conjugate("watch"))
-// console.log(conjugate("smash"))
-// console.log(conjugate("word"))
+// console.log(conjugate('die'));
+
 // // broken
 // console.log(conjugate("read"))
 // console.log(conjugate("free"))

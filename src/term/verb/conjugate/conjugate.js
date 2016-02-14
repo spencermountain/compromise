@@ -100,9 +100,6 @@ const conjugate = function(w) {
   //check irregulars
   let obj = irregular_verbs[w] || irregular_verbs[infinitive] || {};
   obj = Object.assign({}, obj);
-  // console.log(obj);
-  // console.log('===');
-  // obj.infinitive = infinitive;
   //apply regex-transformations
   let conjugations = from_infinitive(infinitive);
   Object.keys(conjugations).forEach(function(k) {
@@ -114,13 +111,8 @@ const conjugate = function(w) {
 };
 module.exports = conjugate;
 
+// console.log(conjugate('die'));
 
-
-// console.log(conjugate('goes'));
-// console.log(conjugate("watch out"))
-// console.log(conjugate("watch"))
-// console.log(conjugate("smash"))
-// console.log(conjugate("word"))
 // // broken
 // console.log(conjugate("read"))
 // console.log(conjugate("free"))

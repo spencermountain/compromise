@@ -80,6 +80,10 @@ const irregular_verbs = {
   deal: {
     past: 'dealt'
   },
+  die: {
+    past: 'died',
+    gerund: 'dying',
+  },
   dig: {
     gerund: 'digging',
     past: 'dug'

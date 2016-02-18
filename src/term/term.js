@@ -24,6 +24,7 @@ class Term {
       Conjunction: 'Conjunction',
       Preposition: 'Preposition',
       Posessive: 'Posessive',
+      Expression: 'Expression'
     };
     this.pos = {};
     this.tag = types[tag] || '?';

@@ -78,20 +78,40 @@ const word_rules_pass = function(terms) {
   return terms;
 };
 
+const should_chunk = function(a, b) {
+  if (!a || !b) {
+    return false;
+  }
+  const dont_chunk = {
+    Expression: true
+  };
+  if (dont_chunk[a.tag] || dont_chunk[b.tag]) {
+    return false;
+  }
+  //dont chunk contractions (again)
+  if (a.implicit || b.implicit) {
+    return false;
+  }
+  if (a.tag === b.tag) {
+    return true;
+  }
+  return false;
+};
+
 //turn [noun, noun..] into [noun..]
 const chunk_neighbours = function(terms) {
   let new_terms = [];
-  let last = null;
+  let last_one = null;
   for(let i = 0; i < terms.length; i++) {
     let t = terms[i];
     //if the tags match (but it's not a hidden contraction)
-    if (last !== null && t.tag === last && !t.implicit) {
+    if (should_chunk(last_one, t)) {
       new_terms[new_terms.length - 1].text += ' ' + t.text;
       new_terms[new_terms.length - 1].normalize();
     } else {
       new_terms.push(t);
     }
-    last = t.tag;
+    last_one = t;
   }
   return new_terms;
 };
@@ -142,16 +162,38 @@ const specific_pos = function(terms) {
     let t = terms[i];
     if (t instanceof pos.Noun) {
       if (t.is_person()) {
-        terms[i] = assign(t, 'Person');
+        terms[i] = assign(t, 'Person', 'is_person');
       } else if (t.is_place()) {
-        terms[i] = assign(t, 'Place');
+        terms[i] = assign(t, 'Place', 'is_place');
       } else if (t.is_value()) {
-        terms[i] = assign(t, 'Value');
+        terms[i] = assign(t, 'Value', 'is_value');
       } else if (t.is_date()) {
-        terms[i] = assign(t, 'Date');
+        terms[i] = assign(t, 'Date', 'is_date');
       } else if (t.is_organisation()) {
-        terms[i] = assign(t, 'Organisation');
+        terms[i] = assign(t, 'Organisation', 'is_organisation');
       }
+    }
+  }
+  return terms;
+};
+
+//clear-up ambiguous interjections "ok[Int], thats ok[Adj]"
+const interjection_fixes = function(terms) {
+  const interjections = {
+    ok: true,
+    so: true,
+    please: true,
+    alright: true,
+    well: true
+  };
+  for(let i = 0; i < terms.length; i++) {
+    if (i > 3) {
+      break;
+    }
+    if (interjections[terms[i].normal]) {
+      terms[i] = assign(terms[i], 'Expression', 'interjection_fixes');
+    } else {
+      break;
     }
   }
   return terms;
@@ -163,6 +205,7 @@ const tagger = function(s) {
   s.terms = contractions.easy_ones(s.terms);
   s.terms = lexicon_pass(s.terms);
   s.terms = word_rules_pass(s.terms);
+  s.terms = interjection_fixes(s.terms);
   //repeat these steps a couple times, to wiggle-out the grammar
   for(let i = 0; i < 1; i++) {
     s.terms = grammar_rules_pass(s);

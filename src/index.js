@@ -103,5 +103,5 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let text = nlp.sentence('ok so please go');
-// console.log(text.terms);
+let text = nlp.sentence('ok, so please go');
+console.log(text.terms);

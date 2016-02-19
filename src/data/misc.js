@@ -329,6 +329,7 @@ const compact = {
   'UH': [
     'uhh',
     'uh-oh',
+    'please',
     'ugh',
     'sheesh',
     'eww',

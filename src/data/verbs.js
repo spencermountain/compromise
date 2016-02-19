@@ -373,7 +373,7 @@ module.exports = [
   'survive',
   'praise',
   'function',
-  'please',
+  // 'please', //too awkward
   'date',
   'remind',
   'deliver',

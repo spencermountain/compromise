@@ -101,7 +101,7 @@ const hasTags = function(terms, tags) {
   if (terms.length !== tags.length) {
     return false;
   }
-  for(var i = 0; i < tags.length; i++) {
+  for(let i = 0; i < tags.length; i++) {
     if (!terms[i].pos[tags[i]]) {
       return false;
     }

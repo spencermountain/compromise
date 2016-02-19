@@ -1,66 +1,17 @@
 //part-of-speech tagging
 'use strict';
 const contractions = require('./contractions');
-const lexicon = require('../../lexicon.js');
 const word_rules = require('./word_rules');
 const grammar_rules = require('./grammar_rules');
 const fancy_lumping = require('./fancy_lumping');
 const phrasal_verbs = require('./phrasal_verbs');
-const fns = require('../../fns');
+const interjection_fixes = require('./interjection_fixes');
+const lexicon_pass = require('./lexicon_pass');
+const capital_signals = require('./capital_signals');
 const pos = require('./parts_of_speech');
+const assign = require('./assign');
 
-//swap the Term object with a proper Pos class
-const assign = function (t, tag, reason) {
-  let old_pos = t.pos;
-  let P = pos.classMapping[tag] || pos.Term;
-  let implicit = t.implicit;
-  t = new P(t.text, tag);
-  t.reason = reason;
-  t.implicit = implicit;
-  t.pos = fns.extend(t.pos, old_pos);
-  return t;
-};
 
-//consult lexicon for this known-word
-const lexicon_pass = function(terms) {
-  return terms.map(function(t) {
-    //check lexicon straight-up
-    if (lexicon[t.normal] !== undefined) {
-      return assign(t, lexicon[t.normal], 'lexicon_pass');
-    }
-    //try to match it without a prefix - eg. outworked -> worked
-    if (t.normal.match(/^(over|under|out|-|un|re|en).{4}/)) {
-      const attempt = t.normal.replace(/^(over|under|out|.*?-|un|re|en)/, '');
-      return assign(t, lexicon[attempt], 'lexicon_prefix');
-    }
-    //match 'twenty-eight'
-    if (t.normal.match(/-/)) {
-      let sides = t.normal.split('-');
-      if (lexicon[sides[0]]) {
-        return assign(t, lexicon[sides[0]], 'lexicon_dash');
-      }
-      if (lexicon[sides[1]]) {
-        return assign(t, lexicon[sides[1]], 'lexicon_dash');
-      }
-    }
-    return t;
-  });
-};
-
-//set POS for capitalised words
-const capital_signals = function(terms) {
-  //first words need careful rules
-  if (terms[0].is_acronym()) {
-    terms[0] = assign(terms[0], 'Noun', 'acronym');
-  }
-  //non-first-word capitals are nouns
-  for (let i = 1; i < terms.length; i++) {
-    if (terms[i].is_capital() || terms[i].is_acronym()) {
-      terms[i] = assign(terms[i], 'Noun', 'capital_signal');
-    }
-  }
-  return terms;
-};
 
 //regex hints for words/suffixes
 const word_rules_pass = function(terms) {
@@ -177,28 +128,6 @@ const specific_pos = function(terms) {
       } else if (t.is_organisation()) {
         terms[i] = assign(t, 'Organisation', 'is_organisation');
       }
-    }
-  }
-  return terms;
-};
-
-//clear-up ambiguous interjections "ok[Int], thats ok[Adj]"
-const interjection_fixes = function(terms) {
-  const interjections = {
-    ok: true,
-    so: true,
-    please: true,
-    alright: true,
-    well: true
-  };
-  for(let i = 0; i < terms.length; i++) {
-    if (i > 3) {
-      break;
-    }
-    if (interjections[terms[i].normal]) {
-      terms[i] = assign(terms[i], 'Expression', 'interjection_fixes');
-    } else {
-      break;
     }
   }
   return terms;

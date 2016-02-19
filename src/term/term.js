@@ -47,8 +47,14 @@ class Term {
   }
 
   //Term methods..
+  has_comma() {
+    if (this.text.match(/,$/)) {
+      return true;
+    }
+    return false;
+  }
   is_capital() {
-    if (this.text.match(/[A-Z][a-z]/)) { //tranditional capital
+    if (this.text.match(/[A-Z][a-z]/)) {
       return true;
     }
     return false;

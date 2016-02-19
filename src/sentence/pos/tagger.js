@@ -82,6 +82,11 @@ const should_chunk = function(a, b) {
   if (!a || !b) {
     return false;
   }
+  //if A has a comma, don't chunk it
+  if (a.has_comma()) {
+    return false;
+  }
+  //dont chunk these pos
   const dont_chunk = {
     Expression: true
   };

@@ -89,7 +89,6 @@ function NLP() {
 }
 
 let nlp = new NLP();
-
 //export to window or webworker
 if (typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'function') {
   self.nlp_compromise = nlp;
@@ -103,5 +102,5 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-let text = nlp.sentence('ok, so please go');
-console.log(text.terms);
+// let text = nlp.sentence('ok, so please go');
+// console.log(text.terms);

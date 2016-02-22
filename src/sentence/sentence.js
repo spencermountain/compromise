@@ -5,6 +5,7 @@ const passive_voice = require('./passive_voice.js');
 const negate = require('./negate.js');
 const contract = require('./pos/contractions.js').contract;
 const change_tense = require('./tense.js');
+const lookup = require('./lookup.js');
 // const statement = require('./statement/statement.js');
 // const question = require('./question/question.js');
 
@@ -50,6 +51,12 @@ class Sentence {
   addAfter(i, str) {
     let t = new Term(str);
     this.terms.splice(i + 1, 0, t);
+  }
+
+  //a regex-like lookup for a sentence.
+  // returns an array of terms
+  lookup(str) {
+    return lookup(this.terms, str);
   }
 
   //the ending punctuation
@@ -166,3 +173,6 @@ class Sentence {
 Sentence.fn = Sentence.prototype;
 
 module.exports = Sentence;
+
+// let s = new Sentence('the dog played');
+// console.log(s.lookup('the [Adjective] played').text());

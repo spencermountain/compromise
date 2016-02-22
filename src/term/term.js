@@ -1,5 +1,6 @@
 'use strict';
 const is_acronym = require('./is_acronym');
+const fns = require('../fns');
 
 class Term {
   constructor(str, tag) {
@@ -12,6 +13,9 @@ class Term {
     this.text = str;
     //the normalised working-version of the word
     this.normal = '';
+    // the simplified inflected, conjugated version
+    // (akin to lemma or stem but full word)
+    this.root = '';
     //if it's a contraction, the 'hidden word'
     this.implicit = '';
     //set .normal
@@ -44,6 +48,39 @@ class Term {
   changeTo(str) {
     this.text = str;
     this.rebuild();
+  }
+  //a regex-like string search
+  lookup(str) {
+    //wildcard
+    if (str === '*') {
+      return true;
+    }
+    //a regular string-match
+    if (this.normal === str || this.text === str || this.root === str) {
+      return true;
+    }
+    //declare a POS-match like this '[Noun]'
+    let bracketed = str.match(/^\[(.*?)\]$/);
+    if (bracketed) {
+      //a pos match
+      let pos = fns.titlecase(bracketed[1]);
+      if (this.pos[pos]) {
+        return true;
+      }
+      return false;
+    }
+    //declare a list-match like this '(a|an)'
+    let listed = str.match(/^\((.*?)\)$/);
+    if (listed) {
+      let list = listed[1].split('|');
+      for(let i = 0; i < list.length; i++) {
+        if (list[i] === this.normal || list[i] === this.text || list[i] === this.root) {
+          return true;
+        }
+      }
+      return false;
+    }
+    return false;
   }
 
   //Term methods..
@@ -83,7 +120,7 @@ class Term {
 }
 
 Term.fn = Term.prototype;
-// let t = new Term('NSA');
-// console.log(t.britishize());
+// let t = new Term('quick');
+// console.log(t.lookup('(fun|nice|quick|cool)'));
 
 module.exports = Term;

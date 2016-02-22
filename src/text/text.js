@@ -68,6 +68,18 @@ class Text {
       return s.tags();
     });
   }
+
+  //a regex-like lookup for a sentence.
+  // returns an array of terms
+  lookup(str) {
+    let arr = [];
+    for(let i = 0; i < this.sentences.length; i++) {
+      arr = arr.concat(this.sentences[i].lookup(str));
+    }
+    return arr;
+  }
+
+  //transformations
   to_past() {
     return this.sentences.map(function(s) {
       return s.to_past();

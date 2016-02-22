@@ -11,8 +11,6 @@ const capital_signals = require('./capital_signals');
 const pos = require('./parts_of_speech');
 const assign = require('./assign');
 
-
-
 //regex hints for words/suffixes
 const word_rules_pass = function(terms) {
   for (let i = 0; i < terms.length; i++) {

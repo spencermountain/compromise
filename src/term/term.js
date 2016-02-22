@@ -1,5 +1,6 @@
 'use strict';
 const is_acronym = require('./is_acronym');
+const match = require('./match');
 const fns = require('../fns');
 
 class Term {
@@ -50,37 +51,8 @@ class Term {
     this.rebuild();
   }
   //a regex-like string search
-  lookup(str) {
-    //wildcard
-    if (str === '*') {
-      return true;
-    }
-    //a regular string-match
-    if (this.normal === str || this.text === str || this.root === str) {
-      return true;
-    }
-    //declare a POS-match like this '[Noun]'
-    let bracketed = str.match(/^\[(.*?)\]$/);
-    if (bracketed) {
-      //a pos match
-      let pos = fns.titlecase(bracketed[1]);
-      if (this.pos[pos]) {
-        return true;
-      }
-      return false;
-    }
-    //declare a list-match like this '(a|an)'
-    let listed = str.match(/^\((.*?)\)$/);
-    if (listed) {
-      let list = listed[1].split('|');
-      for(let i = 0; i < list.length; i++) {
-        if (list[i] === this.normal || list[i] === this.text || list[i] === this.root) {
-          return true;
-        }
-      }
-      return false;
-    }
-    return false;
+  match(str, options) {
+    return match(this, str, options);
   }
 
   //Term methods..

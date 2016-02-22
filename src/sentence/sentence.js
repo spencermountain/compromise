@@ -5,7 +5,7 @@ const passive_voice = require('./passive_voice.js');
 const negate = require('./negate.js');
 const contract = require('./pos/contractions.js').contract;
 const change_tense = require('./tense.js');
-const lookup = require('./lookup.js');
+const match = require('./match.js');
 // const statement = require('./statement/statement.js');
 // const question = require('./question/question.js');
 
@@ -53,10 +53,13 @@ class Sentence {
     this.terms.splice(i + 1, 0, t);
   }
 
-  //a regex-like lookup for a sentence.
-  // returns an array of terms
-  lookup(str) {
-    return lookup(this.terms, str);
+  // a regex-like lookup for a list of terms.
+  // returns matches in a 'Terms' class
+  match(str, options) {
+    return match.firstMatch(this.terms, str, options);
+  }
+  matches(str, options) {
+    return match.findAll(this.terms, str, options);
   }
 
   //the ending punctuation
@@ -175,4 +178,4 @@ Sentence.fn = Sentence.prototype;
 module.exports = Sentence;
 
 // let s = new Sentence('the dog played');
-// console.log(s.lookup('the [Adjective] played').text());
+// console.log(s.match('the [Noun]').text());

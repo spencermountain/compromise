@@ -16,7 +16,7 @@ describe('term lookup', function() {
   tests.forEach(function(a) {
     it(a.join(' '), function(done) {
       let t = nlp.adjective(a[0]);
-      (t.lookup(a[1]) === a[2]).should.equal(true);
+      (t.match(a[1]) === a[2]).should.equal(true);
       done();
     });
   });
@@ -35,7 +35,7 @@ describe('sentence lookup', function() {
   tests.forEach(function(a) {
     it(a.join(' '), function(done) {
       let t = nlp.sentence(a[0]);
-      (t.lookup(a[1]).text() === a[2]).should.equal(true);
+      (t.match(a[1]).text() === a[2]).should.equal(true);
       done();
     });
   });

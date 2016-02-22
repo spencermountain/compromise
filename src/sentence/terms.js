@@ -1,9 +1,15 @@
 'use strict';
 
-//a slice of term objects
+// a slice of term objects returned from .match()
+// ideally changes that happen here happen in the original object
 class Terms {
   constructor(terms) {
     this.terms = terms;
+    //a short-cut for testing a match result
+    this.exists = false;
+    if (this.terms.length > 0) {
+      this.exists = true;
+    }
   }
   //a regex-like lookup for a sentence.
   // returns an array of terms

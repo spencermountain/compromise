@@ -40,7 +40,16 @@ const findAll = function(terms, str, options) {
   return result;
 };
 
+//calls Terms.replace() on each found result
+const replaceAll = function(terms, str, replacement, options) {
+  let list = findAll(terms, str, options);
+  list.forEach((t) => {
+    t.replace(replacement, options);
+  });
+};
+
 module.exports = {
   firstMatch,
-  findAll
+  findAll,
+  replaceAll,
 };

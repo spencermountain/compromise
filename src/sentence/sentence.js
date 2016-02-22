@@ -5,9 +5,7 @@ const passive_voice = require('./passive_voice.js');
 const negate = require('./negate.js');
 const contract = require('./pos/contractions.js').contract;
 const change_tense = require('./tense.js');
-const match = require('./match.js');
-// const statement = require('./statement/statement.js');
-// const question = require('./question/question.js');
+const match = require('./match/match.js');
 
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {
@@ -60,6 +58,11 @@ class Sentence {
   }
   matches(str, options) {
     return match.findAll(this.terms, str, options);
+  }
+  //returns a transformed sentence
+  replace(str, replacement, options) {
+    let terms = match.replaceAll(this.terms, str, replacement, options);
+    return this;
   }
 
   //the ending punctuation
@@ -178,4 +181,4 @@ Sentence.fn = Sentence.prototype;
 module.exports = Sentence;
 
 // let s = new Sentence('the dog played');
-// console.log(s.match('the [Noun]').text());
+// console.log(s.replace('the [Noun]', 'the cat').text());

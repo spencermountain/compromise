@@ -11,16 +11,19 @@ class Terms {
       this.exists = true;
     }
   }
-  //a regex-like lookup for a sentence.
-  // returns an array of terms
-  lookup(str) {
-    return lookup(this.terms, str);
+  //wha, this is possible eg. text.match().match()
+  match(str, options) {
+    return match(this.terms, str, options);
   }
   //a 1-1 replacement of strings
-  replace(str) {
+  replace(str, options) {
     let words = str.split(' ');
-    for(let i = 0; i < terms.length; i++) {
-      terms[i].changeTo(words[i] || '');
+    for(let i = 0; i < this.terms.length; i++) {
+      //umm, this is like a capture-group in regexp..
+      if (words[i] === '$') {
+        continue;
+      }
+      this.terms[i].changeTo(words[i] || '');
     }
   }
   text() {

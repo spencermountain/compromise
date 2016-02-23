@@ -202,3 +202,17 @@ nlp.value("two thousand five hundred and sixty").number
 -nlp.value("nine two hundred").number
 // null
 ```
+
+#Augmenting the lexicon
+you can pass in your own lexicon, or an augmented version
+
+```javascript
+ // fetch the current one
+ let lexicon = nlp.lexicon()
+ // augment it
+ lexicon["apple"] = "Person"
+ // use it for the pos-tagging
+ let s = nlp.sentence('apple', {lexicon:lexicon});
+ console.log(s.tags());
+ // ['Person']
+```

@@ -18,8 +18,6 @@ let models = {
   Organisation : require('./term/noun/organisation/organisation.js')
 };
 
-let lexicon = require('./lexicon.js');
-
 function NLP() {
 
   this.plugin = function(obj) {
@@ -37,7 +35,7 @@ function NLP() {
     });
   };
   this.lexicon = function() {
-    return lexicon;
+    return require('./lexicon.js');
   };
 
   this.term = function(s) {
@@ -100,10 +98,11 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let options = {
-//   lexicon: {
-//     apple: 'Person'
-//   }
-// };
-// text = nlp.sentence('apple', options);
-// console.log(text.terms);
+// let lexicon = nlp.lexicon();
+// // augment it
+// lexicon['apple'] = 'Person';
+// // use it for the pos-tagging
+// let s = nlp.sentence('apple', {
+//   lexicon: lexicon
+// });
+// console.log(s.tags());

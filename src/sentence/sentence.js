@@ -10,15 +10,16 @@ const match = require('./match/match.js');
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {
 
-  constructor(str) {
-    const the = this;
+  constructor(str, options) {
     this.str = str || '';
+    options = options || {};
+    const the = this;
     const terms = str.split(' ');
     //build-up term-objects
     this.terms = terms.map(function(s) {
       return new Term(s);
     });
-    this.terms = tagger(this);
+    this.terms = tagger(this, options);
     //contractions
     this.contractions = {
       // "he'd go" -> "he would go"

@@ -18,6 +18,7 @@ let models = {
   Organisation : require('./term/noun/organisation/organisation.js')
 };
 
+let lexicon = require('./lexicon.js');
 
 function NLP() {
 
@@ -35,7 +36,9 @@ function NLP() {
       });
     });
   };
-  this.lexicon = require('./lexicon.js');
+  this.lexicon = function() {
+    return lexicon;
+  };
 
   this.term = function(s) {
     return new models.Term(s);
@@ -69,11 +72,11 @@ function NLP() {
     return new models.Organisation(s);
   };
 
-  this.text = function(s) {
-    return new models.Text(s);
+  this.text = function(s, options) {
+    return new models.Text(s, options);
   };
-  this.sentence = function(s) {
-    return new models.Sentence(s);
+  this.sentence = function(s, options) {
+    return new models.Sentence(s, options);
   };
   this.statement = function(s) {
     return new models.Statement(s);
@@ -97,5 +100,10 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let text = nlp.sentence('now go');
+// let options = {
+//   lexicon: {
+//     apple: 'Person'
+//   }
+// };
+// text = nlp.sentence('apple', options);
 // console.log(text.terms);

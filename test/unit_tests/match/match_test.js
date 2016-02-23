@@ -37,7 +37,7 @@ describe('sentence lookup', function() {
   tests.forEach(function(a) {
     it(a.join(' '), function(done) {
       let t = nlp.sentence(a[0]);
-      (t.match(a[1]).text() === a[2]).should.equal(true);
+      (t.match(a[1]).text() || '').should.equal(a[2]);
       done();
     });
   });
@@ -51,7 +51,8 @@ describe('replace', function() {
   tests.forEach(function(a) {
     it(a.join(' '), function(done) {
       let s = nlp.sentence(a[0]);
-      s.match()(t.match(a[1]).text() === a[2]).should.equal(true);
+      let replaced = s.replace(a[1], a[2]).text();
+      (replaced || '').should.equal(a[3]);
       done();
     });
   });

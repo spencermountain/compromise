@@ -1,4 +1,5 @@
 'use strict';
+const match = require('./match.js');
 
 // a slice of term objects returned from .match()
 // ideally changes that happen here happen in the original object
@@ -19,7 +20,7 @@ class Terms {
   replace(str, options) {
     let words = str.split(' ');
     for(let i = 0; i < this.terms.length; i++) {
-      //umm, this is like a capture-group in regexp..
+      //   //umm, this is like a capture-group in regexp..
       if (words[i] === '$') {
         continue;
       }

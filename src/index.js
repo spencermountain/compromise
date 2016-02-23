@@ -15,32 +15,27 @@ let models = {
   Person : require('./term/noun/person/person.js'),
   Place : require('./term/noun/place/place.js'),
   Date : require('./term/noun/date/date.js'),
-  Organisation : require('./term/noun/organisation/organisation.js'),
-  Lexicon : require('./lexicon.js')
+  Organisation : require('./term/noun/organisation/organisation.js')
 };
 
 
 function NLP() {
 
   this.plugin = function(obj) {
-
     obj = obj || {};
-
-    // Check if obj is a function
-    // If so, pass it an instance of the library,
-    // run it in current context
-    // and use the returned interface
-
+    // if obj is a function, pass it an instance of this nlp library
     if (fns.isFunction(obj)) {
+      // run it in this current context
       obj = obj.call(this, this);
     }
-
+    //apply each plugin to the correct prototypes
     Object.keys(obj).forEach(function(k) {
       Object.keys(obj[k]).forEach(function(method) {
         models[k].fn[method] = obj[k][method];
       });
     });
   };
+  this.lexicon = require('./lexicon.js');
 
   this.term = function(s) {
     return new models.Term(s);

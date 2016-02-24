@@ -20,12 +20,13 @@ It's [not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/blob/ma
 
 ## Off you go:
 > `npm install nlp_compromise`
+> `<script src="http://cdn.nlpcompromise.com/nlp_compromise.latest.min.js"></script>`
 
-```html
-<script src="http://cdn.nlpcompromise.com/nlp_compromise.latest.min.js"></script>
-```
 ```javascript
 let nlp = require("nlp_compromise"); // or nlp = window.nlp_compromise
+
+nlp.noun("dinosaur").pluralize();
+// "dinosaurs"
 
 nlp.verb("speak").conjugate();
 // { past: 'spoke',
@@ -44,9 +45,6 @@ nlp.text('She sells seashells').negate()
 
 nlp.sentence('the dog played').replace('the [Noun]', 'the cat')
 // the cat played
-
-nlp.noun("dinosaur").pluralize();
-// "dinosaurs"
 
 nlp.person("Tony Hawk").article();
 // "he"

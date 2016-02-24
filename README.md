@@ -9,7 +9,7 @@ nlp.text('She sells seashells').to_past()
 ```
 ### Yup,
 * **100k** js file
-* 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
+* **86%** on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 * keypress speed, constant-time
 * caniuse, uhuh. **IE9+**
 * no dependencies, training, configuration, or prolog.

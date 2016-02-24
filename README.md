@@ -42,14 +42,14 @@ nlp.verb("speak").conjugate();
 nlp.text('She sells seashells').negate()
 // She didn't sell seashells
 
-nlp.sentence('the dog played').replace('the [Noun]', 'the cat')
-// the cat played
+nlp.sentence('I fed the dog').replace('the [Noun]', 'the cat')
+// I fed the cat
+
+nlp.text("Tony Hawk did a kickflip").people();
+// "Tony Hawk"
 
 nlp.person("Tony Hawk").article();
 // "he"
-
-nlp.text("Tony Danza did a kickflip").people();
-// "Tony Danza"
 
 nlp.value("five hundred and sixty").number;
 // 560

@@ -73,7 +73,7 @@ t2.syllables()
 nlp.plugin(require("nlp-ngram"));
 var t4 = nlp.text(`Tony Hawk played Tony Hawk's pro skater`);
 t4.ngram({min_count: 2});
-// [ { word: 'tony hawk', count: 2, size: 1 } ]
+// [{word:'tony hawk', count:2, size:1}]
 ```
 
 ### [View the Full API Documentation](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/api.md)
@@ -82,13 +82,13 @@ t4.ngram({min_count: 2});
 [![Issue Stats](http://issuestats.com/github/nlp-compromise/nlp_compromise/badge/pr)](http://issuestats.com/github/nlp-compromise/nlp_compromise)
 [![Issue Stats](http://issuestats.com/github/nlp-compromise/nlp_compromise/badge/issue)](http://issuestats.com/github/nlp-compromise/nlp_compromise)
 
-*useful nlp is a problem only solved with many hands. [Contributing](https://github.com/nlp-compromise/nlp_compromise/blob/master/contributing.md) in any form is valued.*
+*Useful NLP is a problem only solved with many hands. [Contributing](https://github.com/nlp-compromise/nlp_compromise/blob/master/contributing.md) in any form is valued.*
 
 Join our [slack group](https://superscriptjs.slack.com/messages/nlp_compromise/) or our infrequent [announcement email-list](http://eepurl.com/bL9YRv).
 
 Or just pickup an [open issue](https://github.com/nlp-compromise/nlp_compromise/issues)
 
-[We're moving fast](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/changelog.md) and use SemVer
+[We're moving fast](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/changelog.md)
 
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 

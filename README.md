@@ -14,7 +14,7 @@ nlp.text('She sells seashells').to_past()
 * caniuse, uhuh. **IE9+**
 * no dependencies, training, configuration, or prolog.
 
-It's a [deliberately-handy, not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/justification.md) library for understanding, changing, and manipulating written english.
+It's a [deliberately-handy, and not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/justification.md) tool for understanding, changing, and playing with english.
 
 ## Off you go:
 > `npm install nlp_compromise`

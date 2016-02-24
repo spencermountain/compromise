@@ -1,4 +1,4 @@
-### Natural Language Processing in the browser
+### NLP in the browser :boom:
 [![CodacyBadge](https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062)](https://www.codacy.com/app/spencerkelly86/nlp_compromise)
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 [![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
@@ -11,19 +11,18 @@ t.negate()
 // She didn't sell seashells
 ```
 
-**nlp_compromise** is the cool way to use language in software.
+**nlp_compromise** is a cool way to use language in software.
 
 ### Yup,
-* **(100k)** js file - *smaller than jQuery*
-* 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
-* keypress speed, constant-time
+* **100k** js file - *smaller than jQuery*
+* 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/) - *part-of-speech tagging*
+* keypress speed, constant-time - *parse a novel, who cares.*
 * caniuse, uhuh. IE9+
 * no dependencies, training, or configuration.
 
-It's a [use-focused, satisfactory](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/justification.md) javascript library for understanding, changing, and making written english.
-### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[- Check it out - ](http://rawgit.com/nlp-compromise/website/master/demo/index.html)**
+It's a deliberately-handy library for understanding, changing, and manipulating written english. It's not overly-fancy.
 
-<h6>&nbsp;&nbsp;&nbsp;:boom: Welcome to <a href="https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/changelog.md">v3.0!</a>&nbsp;&nbsp; Please <a href="https://github.com/nlp-compromise/nlp_compromise/issues">file an issue</a> if you find something :boom:</h6>
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[- Check it out - ](http://rawgit.com/nlp-compromise/website/master/demo/index.html)**
 
 ## Off you go:
 > `npm install nlp_compromise`

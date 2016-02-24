@@ -1,7 +1,8 @@
 [![CodacyBadge](https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062)](https://www.codacy.com/app/spencerkelly86/nlp_compromise)
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 [![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
-**nlp_compromise** can does NLP in the browser.
+
+**nlp_compromise** does NLP in the browser.
 ```javascript
 nlp.text('She sells seashells').to_past()
 // She sold seashells
@@ -13,13 +14,13 @@ nlp.text('She sells seashells').to_past()
 * caniuse, uhuh. IE9+
 * no dependencies, training, or configuration.
 
-It's a handy library for understanding, changing, and manipulating written english.
+It's a deliberately-handy library for understanding, changing, and manipulating written english.
 
-It's deliberately [not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/justification.md).
+It's [not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/justification.md)..
 
 ## Off you go:
 > `npm install nlp_compromise`
-or
+
 ```html
 <script src="http://cdn.nlpcompromise.com/nlp_compromise.latest.min.js"></script>
 ```

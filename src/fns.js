@@ -52,9 +52,9 @@ exports.titlecase = function(str) {
   if (!str) {
     return '';
   }
+  str = str.toLowerCase();
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
-
 
 // typeof obj == "function" also works
 // but not in older browsers. :-/

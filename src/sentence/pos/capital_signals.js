@@ -1,5 +1,5 @@
 'use strict';
-
+const assign = require('./assign');
 //set POS for capitalised words
 const capital_signals = function(terms) {
   //first words need careful rules

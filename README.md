@@ -34,6 +34,9 @@ let nlp = require("nlp_compromise"); // or nlp = window.nlp_compromise
 nlp.text('She sells seashells').to_past()
 // She sold seashells
 
+nlp.sentence('the dog ate the food').replace('the [Noun]', 'the cat').text();
+// the cat ate the food
+
 nlp.verb("speak").conjugate();
 // { past: 'spoke',
 //   infinitive: 'speak',

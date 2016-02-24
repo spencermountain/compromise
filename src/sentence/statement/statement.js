@@ -3,8 +3,8 @@ const Sentence = require('../sentence.js');
 // const change_tense = require('../tense.js');
 
 class Statement extends Sentence {
-  constructor(str) {
-    super(str);
+  constructor(str, options) {
+    super(str, options);
   }
 // // john walks quickly -> john walked quickly
 // to_past() {

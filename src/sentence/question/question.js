@@ -2,8 +2,8 @@
 const Sentence = require('../sentence.js');
 
 class Question extends Sentence {
-  constructor(str) {
-    super(str);
+  constructor(str, options) {
+    super(str, options);
   }
 // // john walks quickly -> john walked quickly
 // to_past() {

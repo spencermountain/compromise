@@ -15,31 +15,27 @@ let models = {
   Person : require('./term/noun/person/person.js'),
   Place : require('./term/noun/place/place.js'),
   Date : require('./term/noun/date/date.js'),
-  Organisation : require('./term/noun/organisation/organisation.js'),
-  Lexicon : require('./lexicon.js')
+  Organisation : require('./term/noun/organisation/organisation.js')
 };
-
 
 function NLP() {
 
   this.plugin = function(obj) {
-
     obj = obj || {};
-
-    // Check if obj is a function
-    // If so, pass it an instance of the library,
-    // run it in current context
-    // and use the returned interface
-
+    // if obj is a function, pass it an instance of this nlp library
     if (fns.isFunction(obj)) {
+      // run it in this current context
       obj = obj.call(this, this);
     }
-
+    //apply each plugin to the correct prototypes
     Object.keys(obj).forEach(function(k) {
       Object.keys(obj[k]).forEach(function(method) {
         models[k].fn[method] = obj[k][method];
       });
     });
+  };
+  this.lexicon = function() {
+    return require('./lexicon.js');
   };
 
   this.term = function(s) {
@@ -74,11 +70,11 @@ function NLP() {
     return new models.Organisation(s);
   };
 
-  this.text = function(s) {
-    return new models.Text(s);
+  this.text = function(s, options) {
+    return new models.Text(s, options);
   };
-  this.sentence = function(s) {
-    return new models.Sentence(s);
+  this.sentence = function(s, options) {
+    return new models.Sentence(s, options);
   };
   this.statement = function(s) {
     return new models.Statement(s);
@@ -102,5 +98,13 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-let text = nlp.sentence('now go');
-console.log(text.terms);
+// let lexicon = nlp.lexicon();
+// // augment it
+// lexicon['apple'] = 'Person';
+// // use it for the pos-tagging
+// let s = nlp.sentence('apple', {
+//   lexicon: lexicon
+// });
+// console.log(s.tags());
+
+// console.log(nlp.text('John was lofty').terms());

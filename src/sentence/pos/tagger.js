@@ -11,8 +11,6 @@ const capital_signals = require('./capital_signals');
 const pos = require('./parts_of_speech');
 const assign = require('./assign');
 
-
-
 //regex hints for words/suffixes
 const word_rules_pass = function(terms) {
   for (let i = 0; i < terms.length; i++) {
@@ -133,11 +131,11 @@ const specific_pos = function(terms) {
   return terms;
 };
 
-const tagger = function(s) {
+const tagger = function(s, options) {
   //word-level rules
   s.terms = capital_signals(s.terms);
   s.terms = contractions.easy_ones(s.terms);
-  s.terms = lexicon_pass(s.terms);
+  s.terms = lexicon_pass(s.terms, options);
   s.terms = word_rules_pass(s.terms);
   s.terms = interjection_fixes(s.terms);
   //repeat these steps a couple times, to wiggle-out the grammar

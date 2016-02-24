@@ -1,5 +1,7 @@
 'use strict';
 const is_acronym = require('./is_acronym');
+const match = require('./match');
+const fns = require('../fns');
 
 class Term {
   constructor(str, tag) {
@@ -12,6 +14,9 @@ class Term {
     this.text = str;
     //the normalised working-version of the word
     this.normal = '';
+    // the simplified inflected, conjugated version
+    // (akin to lemma or stem but full word)
+    this.root = '';
     //if it's a contraction, the 'hidden word'
     this.implicit = '';
     //set .normal
@@ -44,6 +49,10 @@ class Term {
   changeTo(str) {
     this.text = str;
     this.rebuild();
+  }
+  //a regex-like string search
+  match(str, options) {
+    return match(this, str, options);
   }
 
   //Term methods..
@@ -83,7 +92,7 @@ class Term {
 }
 
 Term.fn = Term.prototype;
-// let t = new Term('NSA');
-// console.log(t.britishize());
+// let t = new Term('quick');
+// console.log(t.lookup('(fun|nice|quick|cool)'));
 
 module.exports = Term;

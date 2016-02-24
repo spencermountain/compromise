@@ -3,14 +3,10 @@
 [![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 
 ```javascript
-t = nlp.text('She sells seashells')
-t.to_past()
+nlp.text('She sells seashells').to_past()
 // She sold seashells
-t.negate()
-// She didn't sell seashells
 ```
-
-**nlp_compromise** is a cool way to use language in software.
+**nlp_compromise** can do cool NLP in the browser.
 
 ### Yup,
 * **100k** js file
@@ -44,6 +40,9 @@ nlp.verb("speak").conjugate();
 //   pluperfect: 'had spoken',
 //   future_perfect: 'will have spoken'
 // }
+
+nlp.text('She sells seashells').negate()
+// She didn't sell seashells
 
 nlp.sentence('the dog played').replace('the [Noun]', 'the cat')
 // the cat played

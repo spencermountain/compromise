@@ -11,12 +11,10 @@ nlp.text('She sells seashells').to_past()
 * **100k** js file
 * 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 * keypress speed, constant-time
-* caniuse, uhuh. IE9+
-* no dependencies, training, or configuration.
+* caniuse, uhuh. **IE9+**
+* no dependencies, training, configuration, or prolog.
 
-It's a deliberately-handy library for understanding, changing, and manipulating written english.
-
-It's [not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/justification.md)..
+It's a [deliberately-handy, not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/justification.md) library for understanding, changing, and manipulating written english.
 
 ## Off you go:
 > `npm install nlp_compromise`
@@ -57,7 +55,7 @@ nlp.value("five hundred and sixty").number;
 // 560
 
 ```
-
+#Plugin/Mixins
 we've also got a modest, though ambitious [plugin ecosystem](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/plugins.md):
 ```javascript
 nlp.plugin(require("nlp-locale"))
@@ -75,22 +73,18 @@ t4.ngram({min_count: 2});
 // [ { word: 'tony hawk', count: 2, size: 1 } ]
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[try it out](https://tonicdev.com/spencermountain/nlpcompromise)
-
 ### [View the Full API Documentation](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/api.md)
 
 ## Development
 [![Issue Stats](http://issuestats.com/github/nlp-compromise/nlp_compromise/badge/pr)](http://issuestats.com/github/nlp-compromise/nlp_compromise)
 [![Issue Stats](http://issuestats.com/github/nlp-compromise/nlp_compromise/badge/issue)](http://issuestats.com/github/nlp-compromise/nlp_compromise)
 
-*nlp_compromise is a wicked-problem solved with many hands. Contributions in all forms are respected.*
+*useful nlp is a wicked-problem, only solved with many hands. [Contributing](https://github.com/nlp-compromise/nlp_compromise/blob/master/contributing.md) in any form is valued.*
 
 Join our slack group [![slack](https://img.shields.io/badge/slack-superscriptjs-brightgreen.svg)](http://superscriptjs.slack.com/messages/nlp_compromise/)
 or our infrequent [announcement email-list](http://eepurl.com/bL9YRv)
-* [Contributing](https://github.com/nlp-compromise/nlp_compromise/blob/master/contributing.md)
 
-* [Changelog](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/changelog.md)
-
+[Changelog](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/changelog.md)
 
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 

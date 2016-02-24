@@ -106,3 +106,5 @@ if (typeof define === 'function' && define.amd) {
 //   lexicon: lexicon
 // });
 // console.log(s.tags());
+
+// console.log(nlp.text('John was lofty').terms());

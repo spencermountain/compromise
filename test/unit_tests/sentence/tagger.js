@@ -1,25 +1,56 @@
 'use strict';
 let nlp = require('../../../src/index.js');
 
-describe('pos tag', function() {
+const tagMatch = function(terms, tags) {
+  if (terms.length !== tags.length) {
+    return false;
+  }
+  for(let i = 0; i < terms.length; i++) {
+    if (!terms[i].pos[tags[i]]) {
+      return false;
+    }
+  }
+  return true;
+};
 
-  it('Basic', function(done) {
-    let tests = [
-      ['John is pretty', ['Person', 'Copula', 'Adjective']],
-      ['John was lofty', ['Person', 'Copula', 'Adjective']],
-      ['John Smith was lofty', ['Person', 'Copula', 'Adjective']],
-      ['asdfes was lofty', ['Noun', 'Copula', 'Adjective']],
-      ['asdfes lksejfj was lofty', ['Noun', 'Copula', 'Adjective']],
-      ['Spencer Kelly is in Canada', ['Person', 'Copula', 'Preposition', 'Place']],
-      ['He is in Canada', ['Person', 'Copula', 'Preposition', 'Place']],
-    ];
-    tests.forEach(function(a) {
-      let n = nlp.text(a[0]);
-      let tags = n.tags()[0];
-      (a[1]).should.deepEqual(tags);
+describe('basic pos tag', function() {
+
+  let tests = [
+    ['John is pretty', ['Person', 'Copula', 'Adjective']],
+    ['John was lofty', ['Person', 'Copula', 'Adjective']],
+    ['John Smith was lofty', ['Person', 'Copula', 'Adjective']],
+    ['asdfes was lofty', ['Noun', 'Copula', 'Adjective']],
+    ['asdfes lksejfj was lofty', ['Noun', 'Copula', 'Adjective']],
+    ['Spencer Kelly is in Canada', ['Person', 'Copula', 'Preposition', 'Place']],
+    ['He is in Canada', ['Person', 'Copula', 'Preposition', 'Place']],
+  ];
+  tests.forEach(function(a) {
+    it(a[0], function(done) {
+      let s = nlp.sentence(a[0]);
+      (tagMatch(s.terms, a[1])).should.equal(true);
+      done();
     });
 
-    done();
+  });
+});
+
+
+describe('custom lexicon', function() {
+  let lex = nlp.lexicon();
+  lex.apple = 'Person';
+  const options = {
+    lexicon: lex
+  };
+  let tests = [
+    ['Apple was good', ['Person', 'Copula', 'Adjective']],
+  ];
+  tests.forEach(function(a) {
+    it(a[0], function(done) {
+      let s = nlp.sentence(a[0], options);
+      (tagMatch(s.terms, a[1])).should.equal(true);
+      done();
+    });
+
   });
 
 });

@@ -7,18 +7,19 @@ const fns = require('../fns.js');
 
 //a text object is a series of sentences, along with the generic methods for transforming them
 class Text {
-  constructor(str) {
+  constructor(str, options) {
+    options = options || {};
     const the = this;
     this.raw_text = str || '';
     //build-up sentence/statement methods
     this.sentences = sentence_parser(str).map(function(s) {
       let last_char = s.slice(-1);
       if (last_char === '?') {
-        return new Question(s);
+        return new Question(s, options);
       } else if (last_char === '.' || last_char === '!') {
-        return new Statement(s);
+        return new Statement(s, options);
       }
-      return new Sentence(s);
+      return new Sentence(s, options);
     });
 
     this.contractions = {

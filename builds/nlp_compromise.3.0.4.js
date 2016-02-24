@@ -38,7 +38,9 @@ function NLP() {
       });
     });
   };
-  this.lexicon = require('./lexicon.js');
+  this.lexicon = function () {
+    return require('./lexicon.js');
+  };
 
   this.term = function (s) {
     return new models.Term(s);
@@ -72,11 +74,11 @@ function NLP() {
     return new models.Organisation(s);
   };
 
-  this.text = function (s) {
-    return new models.Text(s);
+  this.text = function (s, options) {
+    return new models.Text(s, options);
   };
-  this.sentence = function (s) {
-    return new models.Sentence(s);
+  this.sentence = function (s, options) {
+    return new models.Sentence(s, options);
   };
   this.statement = function (s) {
     return new models.Statement(s);
@@ -100,8 +102,16 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let text = nlp.sentence('now go');
-// console.log(text.terms);
+// let lexicon = nlp.lexicon();
+// // augment it
+// lexicon['apple'] = 'Person';
+// // use it for the pos-tagging
+// let s = nlp.sentence('apple', {
+//   lexicon: lexicon
+// });
+// console.log(s.tags());
+
+// console.log(nlp.text('John was lofty').terms());
 
 },{"./fns.js":19,"./lexicon.js":20,"./sentence/question/question.js":36,"./sentence/sentence.js":37,"./sentence/statement/statement.js":38,"./term/adjective/adjective.js":40,"./term/adverb/adverb.js":45,"./term/noun/date/date.js":50,"./term/noun/noun.js":56,"./term/noun/organisation/organisation.js":58,"./term/noun/person/person.js":62,"./term/noun/place/place.js":64,"./term/noun/value/value.js":72,"./term/term.js":73,"./term/verb/verb.js":81,"./text/text.js":83}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -2095,11 +2105,12 @@ module.exports = interjection_fixes;
 },{"./assign":25}],31:[function(require,module,exports){
 'use strict';
 
-var lexicon = require('../../lexicon.js');
+var defaultLexicon = require('../../lexicon.js');
 var assign = require('./assign');
 
 //consult lexicon for this known-word
-var lexicon_pass = function lexicon_pass(terms) {
+var lexicon_pass = function lexicon_pass(terms, options) {
+  var lexicon = options.lexicon || defaultLexicon;
   return terms.map(function (t) {
     //check lexicon straight-up
     if (lexicon[t.normal] !== undefined) {
@@ -2407,11 +2418,11 @@ var specific_pos = function specific_pos(terms) {
   return terms;
 };
 
-var tagger = function tagger(s) {
+var tagger = function tagger(s, options) {
   //word-level rules
   s.terms = capital_signals(s.terms);
   s.terms = contractions.easy_ones(s.terms);
-  s.terms = lexicon_pass(s.terms);
+  s.terms = lexicon_pass(s.terms, options);
   s.terms = word_rules_pass(s.terms);
   s.terms = interjection_fixes(s.terms);
   //repeat these steps a couple times, to wiggle-out the grammar
@@ -2456,10 +2467,10 @@ var Sentence = require('../sentence.js');
 var Question = function (_Sentence) {
   _inherits(Question, _Sentence);
 
-  function Question(str) {
+  function Question(str, options) {
     _classCallCheck(this, Question);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Question).call(this, str));
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Question).call(this, str, options));
   }
   // // john walks quickly -> john walked quickly
   // to_past() {
@@ -2504,17 +2515,18 @@ var _match = require('./match/match.js');
 //a sentence is an array of Term objects, along with their various methods
 
 var Sentence = function () {
-  function Sentence(str) {
+  function Sentence(str, options) {
     _classCallCheck(this, Sentence);
 
-    var the = this;
     this.str = str || '';
+    options = options || {};
+    var the = this;
     var terms = str.split(' ');
     //build-up term-objects
     this.terms = terms.map(function (s) {
       return new Term(s);
     });
-    this.terms = tagger(this);
+    this.terms = tagger(this, options);
     //contractions
     this.contractions = {
       // "he'd go" -> "he would go"
@@ -2753,10 +2765,10 @@ var Sentence = require('../sentence.js');
 var Statement = function (_Sentence) {
   _inherits(Statement, _Sentence);
 
-  function Statement(str) {
+  function Statement(str, options) {
     _classCallCheck(this, Statement);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Statement).call(this, str));
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Statement).call(this, str, options));
   }
   // // john walks quickly -> john walked quickly
   // to_past() {
@@ -6109,20 +6121,21 @@ var fns = require('../fns.js');
 //a text object is a series of sentences, along with the generic methods for transforming them
 
 var Text = function () {
-  function Text(str) {
+  function Text(str, options) {
     _classCallCheck(this, Text);
 
+    options = options || {};
     var the = this;
     this.raw_text = str || '';
     //build-up sentence/statement methods
     this.sentences = sentence_parser(str).map(function (s) {
       var last_char = s.slice(-1);
       if (last_char === '?') {
-        return new Question(s);
+        return new Question(s, options);
       } else if (last_char === '.' || last_char === '!') {
-        return new Statement(s);
+        return new Statement(s, options);
       }
-      return new Sentence(s);
+      return new Sentence(s, options);
     });
 
     this.contractions = {

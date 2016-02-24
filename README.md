@@ -4,17 +4,20 @@
 [![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 
 ```javascript
-nlp.text("She sells seashells").negate()
-// She doesn't sell seashells
+let t = nlp.text('She sells seashells')
+t.to_past()
+// She sold seashells
+t.negate()
+// She didn't sell seashells
 ```
 
-**nlp_compromise** aims to be the reasonable way to use language in software.
+**nlp_compromise** is the cool way to use language in software.
 
 ### Yup,
-* smaller than jQuery *(100k)*
+* **(100k)** js file - *smaller than jQuery*
 * 86% on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 * keypress speed, constant-time
-* caniuse, yessir. IE9+
+* caniuse, uhuh. IE9+
 * no dependencies, training, or configuration.
 
 It's a [use-focused, satisfactory](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/justification.md) javascript library for understanding, changing, and making written english.
@@ -25,17 +28,11 @@ It's a [use-focused, satisfactory](https://github.com/nlp-compromise/nlp_comprom
 ## Off you go:
 > `npm install nlp_compromise`
 
-> `<script src="http://cdn.nlpcompromise.com/nlp_compromise.es5.min.js"></script>
+> `<script src="http://cdn.nlpcompromise.com/nlp_compromise.latest.min.js"></script>
 `
 
 ```javascript
 let nlp = require("nlp_compromise"); // or nlp = window.nlp_compromise
-
-nlp.text('She sells seashells').to_past()
-// She sold seashells
-
-nlp.sentence('the dog ate the food').replace('the [Noun]', 'the cat').text();
-// the cat ate the food
 
 nlp.verb("speak").conjugate();
 // { past: 'spoke',
@@ -48,6 +45,9 @@ nlp.verb("speak").conjugate();
 //   pluperfect: 'had spoken',
 //   future_perfect: 'will have spoken'
 // }
+
+nlp.sentence('the dog played').replace('the [Noun]', 'the cat')
+// the cat played
 
 nlp.noun("dinosaur").pluralize();
 // "dinosaurs"

@@ -20,6 +20,7 @@ It's [not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/blob/ma
 
 ## Off you go:
 > `npm install nlp_compromise`
+
 > `<script src="http://cdn.nlpcompromise.com/nlp_compromise.latest.min.js"></script>`
 
 ```javascript

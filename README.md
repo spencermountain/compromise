@@ -10,13 +10,13 @@ nlp.text('She sells seashells').to_past()
 ### Yup,
 * **100k** js file
 * **86%** on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
-* keypress speed, constant-time
+* keypress speed, constant-time.
 * caniuse, uhuh. **IE9+**
 * no dependencies, training, configuration, or prolog.
 
-It's a [deliberately-handy, and not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/justification.md) tool for understanding, changing, and playing with english.
+It's a [handy, and not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/justification.md) tool for understanding, changing, and playing with english.
 
-## Off you go:
+## Off you go,
 > `npm install nlp_compromise`
 
 > `<script src="http://cdn.nlpcompromise.com/nlp_compromise.latest.min.js"></script>`
@@ -58,15 +58,18 @@ nlp.value("five hundred and sixty").number;
 #Plugin/Mixins
 we've also got a modest, though ambitious [plugin ecosystem](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/plugins.md):
 ```javascript
+//US-UK localization
 nlp.plugin(require("nlp-locale"))
 nlp.term("favourite").toAmerican()
 // favorite
 
+//syllable hyphenization
 nlp.plugin(require("nlp-syllables"));
 var t2 = nlp.term('houston texas');
 t2.syllables()
 //[ [ 'hous', 'ton' ], [ 'tex', 'as' ] ]
 
+//semantic n-gram
 nlp.plugin(require("nlp-ngram"));
 var t4 = nlp.text(`Tony Hawk played Tony Hawk's pro skater`);
 t4.ngram({min_count: 2});

@@ -14,18 +14,15 @@ module.exports = function (grunt) {
         exec: 'node ./src/index.js'
       },
       build: {
-        exec: 'browserify ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] -o ./builds/nlp_compromise.latest.js '
-      },
-      copy: {
-        exec: 'cp ./builds/nlp_compromise.latest.js ./builds/nlp_compromise.<%=pkg.version%>.js'
+        exec: 'browserify ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] -o ./builds/nlp_compromise.js '
       }
     },
 
 
     uglify: {
       'do': {
-        src: ['./builds/nlp_compromise.latest.js'],
-        dest: './builds/nlp_compromise.latest.min.js'
+        src: ['./builds/nlp_compromise.js'],
+        dest: './builds/nlp_compromise.min.js'
       },
       'options': {
         preserveComments: false,
@@ -44,7 +41,7 @@ module.exports = function (grunt) {
     filesize: {
       base: {
         files: [{
-          src: ['./builds/nlp_compromise.latest.min.js']
+          src: ['./builds/nlp_compromise.min.js']
         }],
         options: {
           ouput: [{
@@ -91,5 +88,5 @@ module.exports = function (grunt) {
   grunt.registerTask('watch', ['watch']);
   grunt.registerTask('coverage', ['mocha_istanbul']);
   grunt.registerTask('test', ['mochaTest']);
-  grunt.registerTask('build', ['mochaTest', 'run:build', 'run:copy', 'uglify', 'filesize']);
+  grunt.registerTask('build', ['mochaTest', 'run:build', 'uglify', 'filesize']);
 };

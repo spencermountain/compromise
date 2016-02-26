@@ -99,4 +99,4 @@ if (typeof define === 'function' && define.amd) {
 }
 
 
-console.log(nlp.text('this easter').terms());
+// console.log(nlp.text('this easter').terms());

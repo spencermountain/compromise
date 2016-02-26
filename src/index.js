@@ -98,13 +98,5 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let lexicon = nlp.lexicon();
-// // augment it
-// lexicon['apple'] = 'Person';
-// // use it for the pos-tagging
-// let s = nlp.sentence('apple', {
-//   lexicon: lexicon
-// });
-// console.log(s.tags());
 
-// console.log(nlp.text('John was lofty').terms());
+// console.log(nlp.text('Franklin Delano Roosevelt could walk the walk.').terms());

@@ -102,16 +102,7 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// let lexicon = nlp.lexicon();
-// // augment it
-// lexicon['apple'] = 'Person';
-// // use it for the pos-tagging
-// let s = nlp.sentence('apple', {
-//   lexicon: lexicon
-// });
-// console.log(s.tags());
-
-// console.log(nlp.text('John was lofty').terms());
+// console.log(nlp.text('Franklin Delano Roosevelt could walk the walk.').terms());
 
 },{"./fns.js":19,"./lexicon.js":20,"./sentence/question/question.js":36,"./sentence/sentence.js":37,"./sentence/statement/statement.js":38,"./term/adjective/adjective.js":40,"./term/adverb/adverb.js":45,"./term/noun/date/date.js":50,"./term/noun/noun.js":56,"./term/noun/organisation/organisation.js":58,"./term/noun/person/person.js":62,"./term/noun/place/place.js":64,"./term/noun/value/value.js":72,"./term/term.js":73,"./term/verb/verb.js":81,"./text/text.js":83}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -1690,15 +1681,13 @@ module.exports = passive_voice;
 var pos = require('./parts_of_speech');
 var fns = require('../../fns');
 
-//swap the Term object with a proper Pos class
+//set the part-of-speech of a particular term
 var assign = function assign(t, tag, reason) {
-  var old_pos = t.pos;
   var P = pos.classMapping[tag] || pos.Term;
   var implicit = t.implicit;
   t = new P(t.text, tag);
   t.reason = reason;
   t.implicit = implicit;
-  t.pos = fns.extend(t.pos, old_pos);
   return t;
 };
 module.exports = assign;

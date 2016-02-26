@@ -99,4 +99,4 @@ if (typeof define === 'function' && define.amd) {
 }
 
 
-// console.log(nlp.text('Franklin Delano Roosevelt could walk the walk.').terms());
+// console.log(nlp.text('sunday the fifth').terms());

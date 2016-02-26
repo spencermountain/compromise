@@ -102,7 +102,7 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.text('Franklin Delano Roosevelt could walk the walk.').terms());
+// console.log(nlp.text('sunday the fifth').terms());
 
 },{"./fns.js":19,"./lexicon.js":20,"./sentence/question/question.js":36,"./sentence/sentence.js":37,"./sentence/statement/statement.js":38,"./term/adjective/adjective.js":40,"./term/adverb/adverb.js":45,"./term/noun/date/date.js":50,"./term/noun/noun.js":56,"./term/noun/organisation/organisation.js":58,"./term/noun/person/person.js":62,"./term/noun/place/place.js":64,"./term/noun/value/value.js":72,"./term/term.js":73,"./term/verb/verb.js":81,"./text/text.js":83}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -1872,7 +1872,7 @@ var shouldLumpThree = function shouldLumpThree(a, b, c) {
     result: 'Person'
   }, {
     condition: a.pos.Date && b.normal === 'the' && c.pos.Value, //June the 5th
-    result: 'Person'
+    result: 'Date'
   }, {
     condition: a.is_capital() && b.normal === 'of' && c.is_capital(), //President of Mexico
     result: 'Noun'
@@ -1939,10 +1939,10 @@ var fancy_lumping = function fancy_lumping(terms) {
 
     // rules for lumping two terms
     var tag = shouldLumpTwo(a, b);
-    if (tag !== false) {
+    if (tag) {
       var Cl = pos.classMapping[tag] || pos.Term;
       terms[i] = new Cl(a.text + ' ' + b.text, tag);
-      terms[i].reason = 'lumped(' + terms[i].reason + ')';
+      terms[i].reason = 'lumpedtwo(' + terms[i].reason + ')';
       terms[i - 1] = null;
       continue;
     }
@@ -1950,10 +1950,10 @@ var fancy_lumping = function fancy_lumping(terms) {
     // rules for lumpting three terms
     if (c) {
       tag = shouldLumpThree(a, b, c);
-      if (tag !== false) {
+      if (tag) {
         var Cl = pos.classMapping[tag] || pos.Term;
         terms[i - 1] = new Cl([a.text, b.text, c.text].join(' '), tag);
-        terms[i - 1].reason = 'lumped(' + terms[i].reason + ')';
+        terms[i - 1].reason = 'lumpedThree(' + terms[i].reason + ')';
         terms[i] = null;
         terms[i + 1] = null;
         continue;

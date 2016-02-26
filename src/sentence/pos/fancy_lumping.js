@@ -17,7 +17,7 @@ const shouldLumpThree = function(a, b, c) {
     },
     {
       condition: (a.pos.Date && b.normal === 'the' && c.pos.Value), //June the 5th
-      result: 'Person',
+      result: 'Date',
     },
     {
       condition: (a.is_capital() && b.normal === 'of' && c.is_capital()), //President of Mexico
@@ -99,10 +99,10 @@ const fancy_lumping = function(terms) {
 
     // rules for lumping two terms
     let tag = shouldLumpTwo(a, b);
-    if (tag !== false) {
+    if (tag) {
       let Cl = pos.classMapping[tag] || pos.Term;
       terms[i] = new Cl(a.text + ' ' + b.text, tag);
-      terms[i].reason = 'lumped(' + terms[i].reason + ')';
+      terms[i].reason = 'lumpedtwo(' + terms[i].reason + ')';
       terms[i - 1] = null;
       continue;
     }
@@ -110,10 +110,10 @@ const fancy_lumping = function(terms) {
     // rules for lumpting three terms
     if (c) {
       tag = shouldLumpThree(a, b, c);
-      if (tag !== false) {
+      if (tag) {
         let Cl = pos.classMapping[tag] || pos.Term;
         terms[i - 1] = new Cl([a.text, b.text, c.text].join(' '), tag);
-        terms[i - 1].reason = 'lumped(' + terms[i].reason + ')';
+        terms[i - 1].reason = 'lumpedThree(' + terms[i].reason + ')';
         terms[i] = null;
         terms[i + 1] = null;
         continue;

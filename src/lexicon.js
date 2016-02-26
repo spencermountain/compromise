@@ -72,7 +72,11 @@ addArr(require('./data/abbreviations.js').abbreviations, 'Abbreviation');
 addArr(require('./data/demonyms.js'), 'Adjective');
 addArr(require('./data/honourifics.js'), 'Honourific');
 addArr(require('./data/uncountables.js'), 'Noun');
-addArr(require('./data/dates.js'), 'Date');
+let dates = require('./data/dates.js');
+addArr(dates.days, 'Date');
+addArr(dates.months, 'Date');
+addArr(dates.durations, 'Date');
+addArr(dates.relative, 'Date');
 addArr(require('./data/numbers.js'), 'Value');
 //a little fancy
 addArr(Object.keys(require('./data/firstnames.js')), 'Person');

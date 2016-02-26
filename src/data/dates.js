@@ -44,7 +44,31 @@ let days = [
   'sun'
 ];
 
+let durations = [
+  'millisecond',
+  'second',
+  'minute',
+  'hour',
+  'morning',
+  'afternoon',
+  'evening',
+  'night',
+  'day',
+  'week',
+  'month',
+  'year',
+  'decade',
+  'century',
+];
+let relative = [
+  'yesterday',
+  'today',
+  'tomorrow',
+];
+
 module.exports = {
   days: days,
-  months: months
+  months: months,
+  durations: durations,
+  relative: relative
 };

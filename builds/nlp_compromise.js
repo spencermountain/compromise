@@ -102,7 +102,7 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-console.log(nlp.text('this easter').terms());
+// console.log(nlp.text('this easter').terms());
 
 },{"./fns.js":20,"./lexicon.js":21,"./sentence/question/question.js":37,"./sentence/sentence.js":38,"./sentence/statement/statement.js":39,"./term/adjective/adjective.js":41,"./term/adverb/adverb.js":46,"./term/noun/date/date.js":51,"./term/noun/noun.js":57,"./term/noun/organisation/organisation.js":59,"./term/noun/person/person.js":63,"./term/noun/place/place.js":65,"./term/noun/value/value.js":73,"./term/term.js":74,"./term/verb/verb.js":82,"./text/text.js":84}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -168,9 +168,14 @@ var months = ['january', 'february',
 'june', 'july', 'august', 'september', 'october', 'november', 'december', 'jan', 'feb', 'mar', 'apr', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'sept', 'sep'];
 var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
 
+var durations = ['millisecond', 'second', 'minute', 'hour', 'morning', 'afternoon', 'evening', 'night', 'day', 'week', 'month', 'year', 'decade', 'century'];
+var relative = ['yesterday', 'today', 'tomorrow'];
+
 module.exports = {
   days: days,
-  months: months
+  months: months,
+  durations: durations,
+  relative: relative
 };
 
 },{}],6:[function(require,module,exports){
@@ -1457,7 +1462,11 @@ addArr(require('./data/abbreviations.js').abbreviations, 'Abbreviation');
 addArr(require('./data/demonyms.js'), 'Adjective');
 addArr(require('./data/honourifics.js'), 'Honourific');
 addArr(require('./data/uncountables.js'), 'Noun');
-addArr(require('./data/dates.js'), 'Date');
+var dates = require('./data/dates.js');
+addArr(dates.days, 'Date');
+addArr(dates.months, 'Date');
+addArr(dates.durations, 'Date');
+addArr(dates.relative, 'Date');
 addArr(require('./data/numbers.js'), 'Value');
 //a little fancy
 addArr(Object.keys(require('./data/firstnames.js')), 'Person');

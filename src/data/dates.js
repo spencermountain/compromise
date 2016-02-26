@@ -43,6 +43,7 @@ let days = [
   'sat',
   'sun'
 ];
+
 module.exports = {
   days: days,
   months: months

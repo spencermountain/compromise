@@ -84,6 +84,10 @@ addArr(fns.pluck(irregNouns, 1), 'Plural');
 addObj(require('./data/misc.js'));
 addObj(require('./data/multiples.js'));
 addObj(require('./data/phrasal_verbs.js'));
+//add named holidays, like 'easter'
+Object.keys(require('./data/holidays.js')).forEach(function(k) {
+  lexicon[k] = 'Date';
+});
 
 //just in case
 delete lexicon[false];

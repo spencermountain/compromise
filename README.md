@@ -86,7 +86,7 @@ t4.ngram({min_count: 2});
 
 Join our [slack group](https://superscriptjs.slack.com/messages/nlp_compromise/) or our infrequent [announcement email-list](http://eepurl.com/bL9YRv).
 
-Or just pickup an [open issue](https://github.com/nlp-compromise/nlp_compromise/issues)
+Or just pick up an [open issue](https://github.com/nlp-compromise/nlp_compromise/issues)
 
 [We're moving fast](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/changelog.md)
 

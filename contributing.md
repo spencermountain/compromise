@@ -21,7 +21,7 @@ grunt docs
 and visit http://localhost:8888/demos/
 
 ### Releasing
-casual versioning/publishing as semvar, Major is breaking, minor is improving.
+casual versioning/publishing as semver, Major is breaking, minor is improving.
 
 ```bash
 npm test #ensure unit tests pass

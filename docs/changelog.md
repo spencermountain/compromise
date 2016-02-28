@@ -1,4 +1,4 @@
-Uses semvar, with occasional releases to npm and bower.
+Uses semver, with occasional releases to npm and bower.
 
 here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
 

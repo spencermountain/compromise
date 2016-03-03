@@ -72,12 +72,18 @@ class Text {
 
   //a regex-like lookup for a sentence.
   // returns an array of terms
-  lookup(str) {
+  match(str, options) {
     let arr = [];
     for(let i = 0; i < this.sentences.length; i++) {
-      arr = arr.concat(this.sentences[i].lookup(str));
+      arr = arr.concat(this.sentences[i].match(str, options));
     }
     return arr;
+  }
+  replace(str, replacement, options) {
+    for(let i = 0; i < this.sentences.length; i++) {
+      this.sentences[i].replace(str, replacement, options);
+    }
+    return this;
   }
 
   //transformations

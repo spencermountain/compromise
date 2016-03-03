@@ -99,4 +99,5 @@ if (typeof define === 'function' && define.amd) {
 }
 
 
-// console.log(nlp.text('this easter').terms());
+// console.log(nlp.text('the boy and the girl.').replace('the [Noun]', 'the house', {}).text());
+// console.log(nlp.text('the boy and the girl. The cat and the dog').match('the [Noun]').map((t) => t.text()));

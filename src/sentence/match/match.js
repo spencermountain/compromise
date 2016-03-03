@@ -13,19 +13,6 @@ const tryMatch = function(terms, words, options) {
   return true;
 };
 
-//find first match and return Terms
-const firstMatch = function(terms, str, options) {
-  let words = str.split(' ');
-  let len = terms.length - words.length + 1;
-  for(let i = 0; i < len; i++) {
-    let slice = terms.slice(i, i + words.length);
-    if (tryMatch(slice, words)) {
-      return new Terms(slice);
-    }
-  }
-  return new Terms([]);
-};
-
 //find first match and return []Terms
 const findAll = function(terms, str, options) {
   let result = [];
@@ -49,7 +36,6 @@ const replaceAll = function(terms, str, replacement, options) {
 };
 
 module.exports = {
-  firstMatch,
   findAll,
   replaceAll,
 };

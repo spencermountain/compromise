@@ -53,11 +53,8 @@ class Sentence {
   }
 
   // a regex-like lookup for a list of terms.
-  // returns matches in a 'Terms' class
+  // returns [] of matches in a 'Terms' class
   match(str, options) {
-    return match.firstMatch(this.terms, str, options);
-  }
-  matches(str, options) {
     return match.findAll(this.terms, str, options);
   }
   //returns a transformed sentence

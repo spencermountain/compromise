@@ -2,6 +2,8 @@ Uses semver, with occasional releases to npm and bower.
 
 here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
 
+### v.4  &nbsp;  
+* 4.0.0 - grammar-aware match & replace functions
 ### v.3  &nbsp;  **(Breaking)**
 * 3.0.2 - Statement & Question classes
 * v3.0.0 - Feb 2016

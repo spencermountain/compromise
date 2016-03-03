@@ -14,10 +14,21 @@ const tryMatch = function(terms, words, options) {
 };
 
 //find first match and return []Terms
-const findAll = function(terms, str, options) {
+const findAll = function(terms, match_str, options) {
   let result = [];
-  let words = str.split(' ');
+  let words = match_str.split(' ');
   let len = terms.length - words.length + 1;
+  //support ^ token as 'must start at 0'
+  if (words[0] && words[0].substr(0, 1) === '^') {
+    words[0] = words[0].replace(/^\^/, '');
+    let slice = terms.slice(0, words.length);
+    if (tryMatch(slice, words)) {
+      return [new Terms(slice)];
+    } else {
+      return [];
+    }
+  }
+  //not-^, the normal repeating ones
   for(let i = 0; i < len; i++) {
     let slice = terms.slice(i, i + words.length);
     if (tryMatch(slice, words)) {

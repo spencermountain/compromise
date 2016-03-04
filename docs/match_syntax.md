@@ -1,9 +1,10 @@
 # Matching syntax
 
-nlp_compromise offers a neat way to lookup/replace words based on their parsed representations, as opposed to just their characters.
-It resembles regex superficially.
+nlp_compromise gives a neat way to lookup/replace words in a text, based on their parsed, interpreted representations- as opposed to just their characters.
 
-All results are an array of `Terms` objects, which allows you to manipulate individual matches, or operate on them in bulk. Transformations to matches apply to the original terms themselves.
+It superficially resembles regex.
+
+Results are an array of `Terms` objects, which allows you to manipulate individual matches, or operate on them in bulk. Transformations to matches apply to the original terms themselves, so you can efficiently inspect, transform, then return your parsed text.
 
 Both `nlp.sentence()` and `nlp.text` match/replace methods behave the same, except matches are sentence-aware, and they don't occur between sentences - ie. you can't do `"o say can you see ... home of the brave"`.
 
@@ -20,7 +21,7 @@ you can loosen a search by any matching part-of-speech, allowing you to find all
 ```javascript
 let matches = nlp.text('John eats glue').match('john eats [Noun]')
 match[0].text()
-//"John eats"
+//"John eats glue"
 ```
 
 ## Alias matching
@@ -36,11 +37,11 @@ The "." character means 'any term'.
 ```javascript
 let matches = nlp.text('John eats glue').match('john . glue')
 match[0].text()
-//"John eats"
+//"John eats glue"
 ```
 The "..." characters mean 'any terms until'.
 ```javascript
-let matches = nlp.text('John always ravenously eats glue').match('john ... eats')
+let matches = nlp.text('John always ravenously eats his glue').match('john ... eats')
 match[0].text()
 //"John always ravenously eats"
 ```
@@ -67,8 +68,8 @@ match[0].text()
 
 An ending '$' character means 'must be at the end of the sentence'.
 ```javascript
-let matches = nlp.text('John eats glue').match('. eats glue$')
+let matches = nlp.text('John eats glue').match('eats glue$')
 match[0].text()
-//"John eats glue"
+//"eats glue"
 ```
 

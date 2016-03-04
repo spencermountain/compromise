@@ -8,6 +8,12 @@ Results are an array of `Terms` objects, which allows you to manipulate individu
 
 Both `nlp.sentence()` and `nlp.text` match/replace methods behave the same, except matches are sentence-aware, and they don't occur between sentences - ie. you can't do `"o say can you see ... home of the brave"`.
 
+Importantly, multiple-word tokens must be hyphenated to get matched. nlp_compromise chunks neighbouring words [into one term]("./justification#Tokenization").
+```javascript
+ nlp.text('Tony Hawk kick-flips').match('tony-hawk kick-flips')
+ //"tony hawk kick-flips"
+```
+
 ## Basic matching
 term-term matches use normalised & non-normalised text as a direct lookup:
 ```javascript
@@ -27,27 +33,27 @@ match[0].text()
 ## Alias matching
 you can loosen a search further, for words that 'mean' the same, using the fledgling nlp_compromise 'alias' feature. Different conjugations, forms, and synonyms are tentatively supported.
 ```javascript
-let matches = nlp.text('John ate glue').match('john _eat_')
+let matches = nlp.text('John ate glue').match('john ~eat~ glue')
 match[0].text()
-//"John ate"
+//"John ate glue"
 ```
 
 ## Wildcard matching
-The "." character means 'any term'.
+The `.` character means 'any one term'.
 ```javascript
 let matches = nlp.text('John eats glue').match('john . glue')
 match[0].text()
 //"John eats glue"
 ```
-The "..." characters mean 'any terms until'.
+The `*` means 'all terms until'. It may be 0.
 ```javascript
-let matches = nlp.text('John always ravenously eats his glue').match('john ... eats')
+let matches = nlp.text('John always ravenously eats his glue').match('john * eats')
 match[0].text()
 //"John always ravenously eats"
 ```
 
 ## Optional matching
-The "?" character at the end of a word means it isn't necessary to be there.
+The `?` character at the end of a word means it isn't necessary to be there.
 ```javascript
 let matches = nlp.text('John eats glue').match('john always? eats glue')
 match[0].text()
@@ -58,15 +64,23 @@ match[0].text()
 //"John eats glue"
 ```
 
-## Flag matches
-A leading '^' character means 'at the start of a sentence'.
+## List of options
+`(word1|word2)` parentheses allow listing possible matches for the word
+```javascript
+let matches = nlp.text('John eats glue').match('john (eats|sniffs|wears) .')
+match[0].text()
+//"John eats glue"
+```
+
+## Location flags
+A leading `^` character means 'at the start of a sentence'.
 ```javascript
 let matches = nlp.text('John eats glue').match('^john eats ...')
 match[0].text()
 //"John eats glue"
 ```
 
-An ending '$' character means 'must be at the end of the sentence'.
+An ending `$` character means 'must be at the end of the sentence'.
 ```javascript
 let matches = nlp.text('John eats glue').match('eats glue$')
 match[0].text()

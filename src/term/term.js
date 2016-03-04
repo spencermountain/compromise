@@ -54,6 +54,11 @@ class Term {
   match(str, options) {
     return match(this, str, options);
   }
+  //the 'root' singular/infinitive/whatever.
+  // method is overloaded by each pos type
+  alias() {
+    return this.normal;
+  }
 
   //Term methods..
   has_comma() {
@@ -76,7 +81,11 @@ class Term {
   normalize() {
     let str = this.text || '';
     str = str.toLowerCase();
+    //strip grammatical punctuation
     str = str.replace(/[,\.!:;\?\(\)]/, '');
+    //convert hyphenations to a multiple-word term
+    str = str.replace(/([a-z])\-([a-z])/, '$1 $2');
+    //remove quotations + scare-quotes
     str = str.replace(/’/g, '\'');
     str = str.replace(/"/g, '');
     // coerce single curly quotes

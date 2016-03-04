@@ -43,10 +43,25 @@ exports.extend = function (objA, objB) {
   return objA;
 };
 
+//last element in an array
+exports.last = function(arr) {
+  if (arr.length <= 0) {
+    return null;
+  }
+  return arr[arr.length - 1];
+};
+
 //string utilities
 exports.endsWith = function(str, suffix) {
   return str.indexOf(suffix, str.length - suffix.length) !== -1;
 };
+exports.startsWith = function(str, prefix) {
+  if (str && str.length && str.substr(0, 1) === prefix) {
+    return true;
+  }
+  return false;
+};
+
 
 exports.titlecase = function(str) {
   if (!str) {

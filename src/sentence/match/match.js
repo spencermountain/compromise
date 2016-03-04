@@ -2,62 +2,27 @@
 // a regex-like lookup for a list of terms.
 // returns matches in a 'Terms' class
 const Terms = require('./terms');
-const fns = require('../../fns.js');
+const syntax_parse = require('./syntax_parse');
+
 
 //a particular slice of regs+terms to try of equal-length
-const tryMatch = function(terms, regs, options) {
-  for(let i = 0; i < terms.length; i++) {
-    if (!terms[i].match(regs[i], options)) {
-      return false;
-    }
-  }
-  return true;
-};
+// const tryMatch = function(terms, regs, options) {
+//   for(let i = 0; i < terms.length; i++) {
+//     if (!terms[i].match(regs[i], options)) {
+//       return false;
+//     }
+//   }
+//   return true;
+// };
+//
+// //does this reg match this term?
+// const doesMatch = function(term, reg, options) {
+//   return term.match(reg, options);
+// };
 
-//does this reg match this term?
-const doesMatch = function(term, reg, options) {
-  return term.match(reg, options);
-};
-
-//find the regex-like syntaxes in this term
-const parseSignal = function(term) {
-  let signals = {};
-  //pos flag
-  if (fns.startsWith(term, '[') && fns.endsWith(term, ']')) {
-    term = term.replace(/\]$/, '');
-    term = term.replace(/^\[/, '');
-    signals.pos = true;
-  }
-  //optional flag
-  if (fns.endsWith(term, '?')) {
-    term = term.replace(/\?$/, '');
-    signals.optional = true;
-  }
-  //alias flag
-  if (fns.startsWith(term, '~') && fns.endsWith(term, '~')) {
-    term = term.replace(/^\~/, '');
-    term = term.replace(/\~$/, '');
-    signals.alias = true;
-  }
-  //leading ^ flag
-  if (fns.startsWith(term, '^')) {
-    term = term.replace(/^\^/, '');
-    signals.leading = true;
-  }
-  //trailing $ flag
-  if (fns.endsWith(term, '$')) {
-    term = term.replace(/\$$/, '');
-    signals.trailing = true;
-  }
-  return {
-    term,
-    signals
-  };
-};
-console.log(parseSignal('~fun?'));
 
 //take a slice of terms, and try to match starting here
-const tryFrom = function(terms, regs, options) {
+const tryFromHere = function(terms, regs, options) {
   let result = [];
   let current_t = 0;
   for(let r = 0; r < regs.length; r++) {
@@ -87,13 +52,13 @@ const findAll = function(terms, match_str, options) {
   // '^' token is 'must start at 0'
   if (regs[0] && regs[0].substr(0, 1) === '^') {
     regs[0] = regs[0].replace(/^\^/, '');
-    return tryFrom(terms, regs, options);
+    return tryFromHere(terms, regs, options);
   }
 
   //try starting from each term
   for(let i = 0; i < terms.length; i++) {
     let termSlice = terms.slice(i, terms.length);
-    let match = tryFrom(termSlice, regs, options);
+    let match = tryFromHere(termSlice, regs, options);
     if (match) {
       result.push(match);
     }

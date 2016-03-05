@@ -14,9 +14,6 @@ class Term {
     this.text = str;
     //the normalised working-version of the word
     this.normal = '';
-    // the simplified inflected, conjugated version
-    // (akin to lemma or stem but full word)
-    this.root = '';
     //if it's a contraction, the 'hidden word'
     this.implicit = '';
     //set .normal
@@ -57,7 +54,7 @@ class Term {
   }
   //the 'root' singular/infinitive/whatever.
   // method is overloaded by each pos type
-  alias() {
+  root() {
     return this.normal;
   }
 

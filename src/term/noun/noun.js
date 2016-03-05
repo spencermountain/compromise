@@ -25,6 +25,9 @@ class Noun extends Term {
   article() {
     return article(this.text);
   }
+  root() {
+    return this.singularize();
+  }
   pronoun() {
     if (this.is_organisation() || this.is_place() || this.is_value()) {
       return 'it';

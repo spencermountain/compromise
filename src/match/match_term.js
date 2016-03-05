@@ -26,8 +26,7 @@ const match_term = function(term, reg) {
   }
   //support ~alias~ syntax
   if (signals.alias) {
-    let alias = term.alias();
-    if (reg.term === alias) {
+    if (reg.term === term.root()) {
       return true;
     }
     return false;

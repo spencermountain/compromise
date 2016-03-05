@@ -33,6 +33,9 @@ class Verb extends Term {
     }
   }
 
+  root() {
+    return this.conjugate().infinitive;
+  }
 
   //retrieve a specific form
   conjugation() {

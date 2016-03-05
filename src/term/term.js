@@ -2,7 +2,6 @@
 const is_acronym = require('./is_acronym');
 const match_term = require('../match/match_term');
 const syntax_parse = require('../match/syntax_parse');
-const fns = require('../fns');
 
 class Term {
   constructor(str, tag) {

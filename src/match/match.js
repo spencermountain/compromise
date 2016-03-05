@@ -41,7 +41,6 @@ const tryFromHere = function(terms, regs, options) {
 const findAll = function(terms, match_str, options) {
   let result = [];
   let regs = syntax_parse(match_str || '');
-  let len = terms.length - regs.length + 1;
 
   // one-off lookup for ^
   // '^' token is 'must start at 0'
@@ -50,7 +49,8 @@ const findAll = function(terms, match_str, options) {
   }
 
   //try starting from each term
-  for(let i = 0; i < terms.length; i++) {
+  let len = terms.length - regs.length + 1;
+  for(let i = 0; i < len; i++) {
     let termSlice = terms.slice(i, terms.length);
     let match = tryFromHere(termSlice, regs, options);
     if (match) {

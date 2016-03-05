@@ -76,6 +76,11 @@ module.exports = function (grunt) {
           coverageFolder: './tests/coverage'
         }
       }
+    },
+
+    eslint: {
+      target: ['./src/**'],
+      configFile: './.eslintrc'
     }
 
   });
@@ -85,11 +90,13 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-run');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-filesize');
+  grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-mocha-istanbul');
 
   grunt.registerTask('default', ['run:index']);
   grunt.registerTask('watch', ['watch']);
   grunt.registerTask('coverage', ['mocha_istanbul']);
   grunt.registerTask('test', ['mochaTest']);
-  grunt.registerTask('build', ['mochaTest', 'run:build', 'uglify', 'filesize']);
+  grunt.registerTask('lint', ['eslint']);
+  grunt.registerTask('build', ['mochaTest', 'eslint', 'run:build', 'uglify', 'filesize']);
 };

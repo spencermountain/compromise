@@ -23,7 +23,7 @@
       "avoid-escape"
     ],
     "no-shadow": 2,
-    "no-unused-vars": 0,
+    "no-unused-vars": 2,
     "no-lonely-if": 1,
     "no-use-before-define": 2,
     "no-bitwise": 2,

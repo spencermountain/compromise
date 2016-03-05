@@ -1,6 +1,5 @@
 'use strict';
 const pos = require('./parts_of_speech');
-const fns = require('../../fns');
 
 //set the part-of-speech of a particular term
 const assign = function (t, tag, reason) {

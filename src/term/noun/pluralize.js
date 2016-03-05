@@ -72,6 +72,7 @@ const pluralize = function(str) {
       return str.replace(pluralize_rules[i].reg, pluralize_rules[i].repl);
     }
   }
+  return null;
 };
 // console.log(pluralize('gas') === "gases")
 // console.log(pluralize('narrative') === "narratives")

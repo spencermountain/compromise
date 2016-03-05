@@ -59,7 +59,7 @@ class Sentence {
   }
   //returns a transformed sentence
   replace(str, replacement, options) {
-    let terms = match.replaceAll(this.terms, str, replacement, options);
+    match.replaceAll(this.terms, str, replacement, options);
     return this;
   }
 

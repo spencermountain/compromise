@@ -14,7 +14,7 @@ class Result {
     return match(this.terms, str, options);
   }
   //a 1-1 replacement of strings
-  replace(str, options) {
+  replace(str) {
     let words = str.split(' ');
     for(let i = 0; i < this.terms.length; i++) {
       //   //umm, this is like a capture-group in regexp..

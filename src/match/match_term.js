@@ -3,7 +3,7 @@ const fns = require('../fns.js');
 
 //a regex-like string search
 // returns a boolean for match/not
-const match_term = function(term, reg, options) {
+const match_term = function(term, reg) {
   let signals = reg.signals;
 
   //support optional (foo|bar) syntax

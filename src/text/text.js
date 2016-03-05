@@ -52,17 +52,20 @@ class Text {
     });
     return fns.flatten(arr).join(' ');
   }
+
+  //further 'lemmatisation/inflection'
+  root() {
+    const arr = this.sentences.map(function(s) {
+      return s.root();
+    });
+    return fns.flatten(arr).join(' ');
+  }
+
   terms() {
     const arr = this.sentences.map(function(s) {
       return s.terms;
     });
     return fns.flatten(arr);
-  }
-  normalised() {
-    const arr = this.sentences.map(function(s) {
-      return s.normalized();
-    });
-    return fns.flatten(arr).join(' ');
   }
   tags() {
     return this.sentences.map(function(s) {

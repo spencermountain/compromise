@@ -28,11 +28,12 @@ nlp_compromise={
     negate: function()     //she doesn't sell seashells
     tags: function()       //she sells seashells -> [Noun, Verb, Noun]
     terms: function()
-    normalised: function()
+    normalized: function()
     contractions:{
       expand: function()     // i'll -> i will
       contract: function()   // i will -> i'll
     }
+    root: function()        // she sold seashells -> "she sell seashell"
   },
   sentence :{
     sentence_type: function() //declarative, interrogative, exclamative
@@ -42,18 +43,20 @@ nlp_compromise={
     to_future: function()     //she will sell seashells
     negate: function()        //she doesn't sell seashells
     tags: function()          //she sells seashells -> [Noun, Verb, Noun]
-    normalised: function()
+    normalized: function()
     text: function()
     contractions:{
       expand: function()     // i'll -> i will
       contract: function()   // i will -> i'll
     }
+    root: function()        // she sold seashells -> "she sell seashell"
   },
   term :{
     is_capital: function()  //Tony Danza -> true
     is_acronym: function()  //FBI -> true
-    normalize: function()  //Dr. King -> "dr king"
-    changeTo: function()  // nlp.term("Mr. Jones").changeTo("Mrs. Jones")
+    normalize: function()   //Dr. King -> "dr king"
+    changeTo: function()    // nlp.term("Mr. Jones").changeTo("Mrs. Jones")
+    root: function()        // just the normalised form
   },
   verb :{
     to_past: function()     //walk -> walked
@@ -63,6 +66,7 @@ nlp_compromise={
     conjugation: function() //infinitive,present,past,future
     negate: function()      //walk -> didn't walk
     isNegative: function()  //is the verb already negated
+    root: function()        //infinitive form
   },
   adjective :{
     to_comparative: function() //quick -> quicker
@@ -85,6 +89,7 @@ nlp_compromise={
     is_organisation: function()//C.I.A. -> true
     is_date: function()        //January 5th -> true
     is_value: function()       //fifteen books -> true
+    root: function()           // singular form
   },
   value :{
     number: Number,     //fifty kilometers -> 50
@@ -97,12 +102,19 @@ nlp_compromise={
     honourific: String, //Dr. Tony Hawk -> Dr
     firstName: String,  //Homer J. Simpson -> Homer
     middleName: String, //Homer Jay Simpson -> Jay
-    lastName: String    //Homer Jay Simpson -> Simpson
+    lastName: String,    //Homer Jay Simpson -> Simpson
+    root: function()   // "{firstName} {lastName}"
   },
   date :{
     date: Date  //Tuesday July 5th, 1974 -> Date()
   },
-  place :{},
+  place :{
+    city: String,     // Toronto, Canada -> Toronto
+    region: String,   // Toronto, Ontario -> Ontario
+    country: String,  // Toronto canada -> Canada
+    title: String,    // minus the location info
+    root: String      // the title
+  },
   organisation :{}
 }
 ```

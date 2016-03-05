@@ -123,6 +123,14 @@ class Sentence {
       return s;
     }, '');
   }
+
+  //further 'lemmatisation/inflection'
+  root() {
+    return this.terms.reduce(function(s, t) {
+      s += ' ' + t.root;
+      return s;
+    }, '').trim();
+  }
   //return only the main POS classnames/tags
   tags() {
     return this.terms.map(function(t) {

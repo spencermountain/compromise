@@ -15,6 +15,9 @@ module.exports = function (grunt) {
       },
       build: {
         exec: 'browserify ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] -o ./builds/nlp_compromise.js '
+      },
+      coverage: {
+        exec: ''
       }
     },
 

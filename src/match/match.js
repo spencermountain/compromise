@@ -1,27 +1,28 @@
 'use strict';
 // a regex-like lookup for a list of terms.
 // returns matches in a 'Terms' class
-const Terms = require('./terms');
+const Result = require('./result');
 const syntax_parse = require('./syntax_parse');
+const match_term = require('./match_term');
 
 
 // take a slice of our terms, and try a match starting here
 const tryFromHere = function(terms, regs, options) {
   let result = [];
-  for(let r = 0; r < regs.length; r++) {
-    let term = terms[r];
+  for(let i = 0; i < regs.length; i++) {
+    let term = terms[i];
     //if we hit the end of terms, prematurely
     if (!term) {
       return null;
     }
     //find a match with term, (..), [..], or ~..~ syntax
-    if (term.match(regs[r], options)) {
+    if (match_term(term, regs[i], options)) {
       result.push(terms[i]);
       continue;
     }
     //support wildcards, some matching logic
     // '.' means easy-pass
-    if (regs[r].signals.any_one) {
+    if (regs[i].signals.any_one) {
       result.push(terms[i]);
       continue;
     }
@@ -35,6 +36,7 @@ const tryFromHere = function(terms, regs, options) {
   return result;
 };
 
+
 //find first match and return []Terms
 const findAll = function(terms, match_str, options) {
   let result = [];
@@ -44,7 +46,7 @@ const findAll = function(terms, match_str, options) {
   // one-off lookup for ^
   // '^' token is 'must start at 0'
   if (regs[0].leading) {
-    return tryFromHere(terms, regs, options);
+    return new Result(tryFromHere(terms, regs, options));
   }
 
   //try starting from each term
@@ -52,10 +54,9 @@ const findAll = function(terms, match_str, options) {
     let termSlice = terms.slice(i, terms.length);
     let match = tryFromHere(termSlice, regs, options);
     if (match) {
-      result.push(match);
+      result.push(new Result(match));
     }
   }
-
   return result;
 };
 

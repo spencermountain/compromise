@@ -3,7 +3,7 @@ const match = require('./match.js');
 
 // a slice of term objects returned from .match()
 // ideally changes that happen here happen in the original object
-class Terms {
+class Result {
   constructor(terms) {
     this.terms = terms;
     //a short-cut for testing a match result
@@ -41,4 +41,4 @@ class Terms {
   }
 }
 //a slice of term objects
-module.exports = Terms;
+module.exports = Result;

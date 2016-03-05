@@ -3,17 +3,19 @@
 'use strict';
 const pos = require('../../sentence/pos/parts_of_speech.js');
 
-const easy_contractions = {
+const irregulars = {
   'i\'d': ['i', 'would'],
   'she\'d': ['she', 'would'],
   'he\'d': ['he', 'would'],
   'they\'d': ['they', 'would'],
   'we\'d': ['we', 'would'],
+
   'i\'ll': ['i', 'will'],
   'she\'ll': ['she', 'will'],
   'he\'ll': ['he', 'will'],
   'they\'ll': ['they', 'will'],
   'we\'ll': ['we', 'will'],
+
   'i\'ve': ['i', 'have'],
   'they\'ve': ['they', 'have'],
   'we\'ve': ['we', 'have'],
@@ -21,14 +23,21 @@ const easy_contractions = {
   'would\'ve': ['would', 'have'],
   'could\'ve': ['could', 'have'],
   'must\'ve': ['must', 'have'],
+
   'i\'m': ['i', 'am'],
   'we\'re': ['we', 'are'],
   'they\'re': ['they', 'are'],
-  'cannot': ['can', 'not']
+
+  'cannot': ['can', 'not'],
+  'ain\'t': ['is', 'not'],
+  'won\'t': ['will', 'not'],
+  'can\'t': ['can', 'not']
 };
 let ambiguous = {
   'he\'s': 'he',
   'she\'s': 'she',
+  'there\'s': 'there',
+  'that\'s': 'that',
   'it\'s': 'it',
   'who\'s': 'who',
   'what\'s': 'what',
@@ -61,15 +70,30 @@ let chooseVerb = function(terms) {
   return 'is';
 };
 
+//couldn't, shouldn't, wouldn't
+const negative_contraction = function(str) {
+  if (str.match(/..n't$/)) {
+    return [str.replace(/n't$/, ''), 'not'];
+  }
+  return null;
+};
+
+
 const easy_ones = function(terms) {
   for (let i = 0; i < terms.length; i++) {
     const t = terms[i];
-    if (easy_contractions[t.normal]) {
+    //try the explicit ones
+    let two_words = irregulars[t.normal];
+    //try 'nt ones
+    if (!two_words) {
+      two_words = negative_contraction(t.normal);
+    }
+    if (two_words) {
       //first one assumes the whole word, but has implicit first-half of contraction
-      terms[i].implicit = easy_contractions[t.normal][0];
+      terms[i].implicit = two_words[0];
       //second one gets an empty term '', but has an implicit verb, like 'is'
       let word_two = new pos.Term('');
-      word_two.implicit = easy_contractions[t.normal][1];
+      word_two.implicit = two_words[1];
       terms.splice(i + 1, 0, word_two);
       i++;
     }
@@ -111,8 +135,8 @@ const combine_contraction = function(terms, i, k) {
 const contract = function(terms) {
   for (let i = 0; i < terms.length - 1; i++) {
     const t = terms[i];
-    Object.keys(easy_contractions).forEach(function(k) {
-      let arr = easy_contractions[k];
+    Object.keys(irregulars).forEach(function(k) {
+      let arr = irregulars[k];
       let next = terms[i + 1];
       if (t.normal === arr[0] && next.normal === arr[1]) {
         terms = combine_contraction(terms, i, k);

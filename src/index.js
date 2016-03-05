@@ -104,4 +104,7 @@ if (typeof define === 'function' && define.amd) {
 // let match = nlp.sentence('the dog played').match('the dog [Adverb]? played');
 // console.log(match[0].text());
 
-// console.log(nlp.person('john g. smith').root());
+// let t = nlp.text('doesn\'t there\'s i\'d i\'ll can\'t won\'t wasn\'t weren\'t wouldn\'t haven\'t');
+// let t = nlp.sentence(`do not, did not, there is, i would, i will, can not, will not, was not, were not, would not, have not, he will, he is, he was`);
+// t.contractions.contract();
+// console.log(t.text());

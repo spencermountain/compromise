@@ -34,6 +34,7 @@ describe('sentence lookup', function() {
     ['the dog played', 'the [Adjective] played', ''],
     ['the dog played', 'the (cat|dog|piano) played', 'the dog played'],
     ['the dog played', 'the (cat|piano) played', ''],
+    ['the dog played', 'the . played', 'the dog played'],
   ];
   tests.forEach(function(a) {
     it(a.join(' | '), function(done) {
@@ -49,18 +50,18 @@ describe('sentence lookup', function() {
 
 });
 
-// describe('replace', function() {
-//   let tests = [
-//     ['the dog played', 'the dog', 'the cat', 'the cat played'],
-//     ['the boy and the girl', 'the [Noun]', 'the house', 'the house and the house']
-//   ];
-//   tests.forEach(function(a) {
-//     it(a.join(' | '), function(done) {
-//       let s = nlp.sentence(a[0]);
-//       let replaced = s.replace(a[1], a[2]).text();
-//       (replaced || '').should.equal(a[3]);
-//       done();
-//     });
-//   });
-//
-// });
+describe('replace', function() {
+  let tests = [
+    ['the dog played', 'the dog', 'the cat', 'the cat played'],
+    ['the boy and the girl', 'the [Noun]', 'the house', 'the house and the house']
+  ];
+  tests.forEach(function(a) {
+    it(a.join(' | '), function(done) {
+      let s = nlp.sentence(a[0]);
+      let replaced = s.replace(a[1], a[2]).text();
+      (replaced || '').should.equal(a[3]);
+      done();
+    });
+  });
+
+});

@@ -57,6 +57,10 @@ const findAll = function(terms, match_str, options) {
       result.push(new Result(match));
     }
   }
+  //if we have no results, return an empty Match() object
+  if (result.length === 0) {
+    result.push(new Result([]));
+  }
   return result;
 };
 
@@ -68,13 +72,6 @@ const replaceAll = function(terms, str, replacement, options) {
   });
 };
 
-
-//things to test
-// * "john eats glue" "john eats glue", true
-// * "john eats glue" "john eats", true
-// * "john eats glue" "eats glue", true
-// * "john eats glue" "eats glue all day", false
-// *
 
 module.exports = {
   findAll,

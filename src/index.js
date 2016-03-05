@@ -100,4 +100,6 @@ if (typeof define === 'function' && define.amd) {
 
 
 // console.log(nlp.text('the boy and the girl.').replace('the [Noun]', 'the house', {}).text());
-// console.log(nlp.sentence('the dog played').match('the dog played')[0].text());
+
+// let match = nlp.sentence('the dog played').match('the dog [Adverb]? played');
+// console.log(match[0].text());

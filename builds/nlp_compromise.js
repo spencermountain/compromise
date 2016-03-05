@@ -102,9 +102,12 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.text('this easter').terms());
+// console.log(nlp.text('the boy and the girl.').replace('the [Noun]', 'the house', {}).text());
 
-},{"./fns.js":20,"./lexicon.js":21,"./sentence/question/question.js":37,"./sentence/sentence.js":38,"./sentence/statement/statement.js":39,"./term/adjective/adjective.js":41,"./term/adverb/adverb.js":46,"./term/noun/date/date.js":51,"./term/noun/noun.js":57,"./term/noun/organisation/organisation.js":59,"./term/noun/person/person.js":63,"./term/noun/place/place.js":65,"./term/noun/value/value.js":73,"./term/term.js":74,"./term/verb/verb.js":82,"./text/text.js":84}],2:[function(require,module,exports){
+// let match = nlp.sentence('the dog played').match('the dog [Adverb]? played');
+// console.log(match[0].text());
+
+},{"./fns.js":20,"./lexicon.js":21,"./sentence/question/question.js":39,"./sentence/sentence.js":40,"./sentence/statement/statement.js":41,"./term/adjective/adjective.js":43,"./term/adverb/adverb.js":48,"./term/noun/date/date.js":52,"./term/noun/noun.js":58,"./term/noun/organisation/organisation.js":60,"./term/noun/person/person.js":64,"./term/noun/place/place.js":66,"./term/noun/value/value.js":74,"./term/term.js":75,"./term/verb/verb.js":83,"./text/text.js":85}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
 //there are all nouns, or at the least, belong beside one.
 'use strict';
@@ -1283,7 +1286,7 @@ Object.keys(main).forEach(function (s) {
 // console.log(main["wiring up"] === "VBG")
 module.exports = main;
 
-},{"../term/verb/conjugate/conjugate.js":75}],17:[function(require,module,exports){
+},{"../term/verb/conjugate/conjugate.js":76}],17:[function(require,module,exports){
 'use strict';
 
 var countries = ['china', 'india', 'america', 'united states', 'usa', 'u.s.a.', 'ussr', 'united states of america', 'indonesia', 'brazil', 'pakistan', 'nigeria', 'bangladesh', 'russia', 'japan', 'mexico', 'philippines', 'vietnam', 'ethiopia', 'egypt', 'germany', 'iran', 'turkey', 'dr congo', 'thailand', 'france', 'united kingdom', 'italy', 'myanmar', 'south africa', 'south korea', 'colombia', 'spain', 'ukraine', 'tanzania', 'kenya', 'argentina', 'algeria', 'poland', 'sudan', 'uganda', 'canada', 'iraq', 'morocco', 'peru', 'uzbekistan', 'saudi arabia', 'malaysia', 'venezuela', 'nepal', 'afghanistan', 'yemen', 'north korea', 'ghana', 'mozambique', 'taiwan', 'australia', 'syria', 'madagascar', 'angola', 'cameroon', 'sri lanka', 'romania', 'burkina faso', 'niger', 'kazakhstan', 'netherlands', 'chile', 'malawi', 'ecuador', 'guatemala', 'côte d\'ivoire', 'mali', 'cambodia', 'senegal', 'zambia', 'zimbabwe', 'chad', 'south sudan', 'belgium', 'cuba', 'tunisia', 'guinea', 'greece', 'rwanda', 'czech republic', 'somalia', 'portugal', 'haiti', 'benin', 'burundi', 'bolivia', 'hungary', 'sweden', 'belarus', 'dominican republic', 'azerbaijan', 'honduras', 'austria', 'united arab emirates', 'israel', 'switzerland', 'tajikistan', 'bulgaria', 'serbia', 'papua new guinea', 'paraguay', 'laos', 'jordan', 'el salvador', 'eritrea', 'libya', 'togo', 'sierra leone', 'nicaragua', 'kyrgyzstan', 'denmark', 'finland', 'slovakia', 'turkmenistan', 'norway', 'lebanon', 'costa rica', 'central african republic', 'republic of ireland', 'new zealand', 'georgia', 'congo-brazzaville', 'palestine', 'liberia', 'croatia', 'oman', 'bosnia and herzegovina', 'kuwait', 'moldova', 'mauritania', 'panama', 'uruguay', 'armenia', 'lithuania', 'albania', 'mongolia', 'jamaica', 'namibia', 'lesotho', 'qatar', 'macedonia', 'slovenia', 'botswana', 'latvia', 'gambia', 'guinea-bissau', 'gabon', 'equatorial guinea', 'trinidad-tobago', 'estonia', 'mauritius', 'swaziland', 'bahrain', 'timor-leste', 'djibouti', 'cyprus', 'fiji', 'guyana', 'comoros', 'bhutan', 'solomon islands', 'luxembourg', 'suriname', 'cape verde', 'malta', 'bahamas', 'iceland'];
@@ -1362,9 +1365,23 @@ exports.extend = function (objA, objB) {
   return objA;
 };
 
+//last element in an array
+exports.last = function (arr) {
+  if (arr.length <= 0) {
+    return null;
+  }
+  return arr[arr.length - 1];
+};
+
 //string utilities
 exports.endsWith = function (str, suffix) {
   return str.indexOf(suffix, str.length - suffix.length) !== -1;
+};
+exports.startsWith = function (str, prefix) {
+  if (str && str.length && str.substr(0, 1) === prefix) {
+    return true;
+  }
+  return false;
 };
 
 exports.titlecase = function (str) {
@@ -1521,46 +1538,68 @@ Object.keys(lexicon).forEach(function (k) {
 
 module.exports = lexicon;
 
-},{"./data/abbreviations.js":2,"./data/adjectives.js":3,"./data/convertables.js":4,"./data/dates.js":5,"./data/demonyms.js":6,"./data/firstnames.js":7,"./data/holidays.js":8,"./data/honourifics.js":9,"./data/irregular_nouns.js":10,"./data/irregular_verbs.js":11,"./data/misc.js":12,"./data/multiples.js":13,"./data/numbers.js":14,"./data/organisations.js":15,"./data/phrasal_verbs.js":16,"./data/places.js":17,"./data/uncountables.js":18,"./data/verbs.js":19,"./fns.js":20,"./sentence/pos/parts_of_speech.js":33,"./term/adjective/to_comparative.js":43,"./term/adjective/to_superlative.js":45,"./term/verb/conjugate/conjugate.js":75}],22:[function(require,module,exports){
+},{"./data/abbreviations.js":2,"./data/adjectives.js":3,"./data/convertables.js":4,"./data/dates.js":5,"./data/demonyms.js":6,"./data/firstnames.js":7,"./data/holidays.js":8,"./data/honourifics.js":9,"./data/irregular_nouns.js":10,"./data/irregular_verbs.js":11,"./data/misc.js":12,"./data/multiples.js":13,"./data/numbers.js":14,"./data/organisations.js":15,"./data/phrasal_verbs.js":16,"./data/places.js":17,"./data/uncountables.js":18,"./data/verbs.js":19,"./fns.js":20,"./sentence/pos/parts_of_speech.js":35,"./term/adjective/to_comparative.js":45,"./term/adjective/to_superlative.js":47,"./term/verb/conjugate/conjugate.js":76}],22:[function(require,module,exports){
 'use strict';
 // a regex-like lookup for a list of terms.
 // returns matches in a 'Terms' class
 
-var Terms = require('./terms');
+var Result = require('./result');
+var syntax_parse = require('./syntax_parse');
+var match_term = require('./match_term');
 
-//a particular slice of words+terms to try of equal-length
-var tryMatch = function tryMatch(terms, words, options) {
-  for (var i = 0; i < terms.length; i++) {
-    if (!terms[i].match(words[i], options)) {
-      return false;
+// take a slice of our terms, and try a match starting here
+var tryFromHere = function tryFromHere(terms, regs, options) {
+  var result = [];
+  for (var i = 0; i < regs.length; i++) {
+    var term = terms[i];
+    //if we hit the end of terms, prematurely
+    if (!term) {
+      return null;
     }
-  }
-  return true;
-};
-
-//find first match and return Terms
-var firstMatch = function firstMatch(terms, str, options) {
-  var words = str.split(' ');
-  var len = terms.length - words.length + 1;
-  for (var i = 0; i < len; i++) {
-    var slice = terms.slice(i, i + words.length);
-    if (tryMatch(slice, words)) {
-      return new Terms(slice);
+    //find a match with term, (..), [..], or ~..~ syntax
+    if (match_term(term, regs[i], options)) {
+      result.push(terms[i]);
+      continue;
     }
+    //support wildcards, some matching logic
+    // '.' means easy-pass
+    if (regs[i].signals.any_one) {
+      result.push(terms[i]);
+      continue;
+    }
+    //else, if term was optional, continue anyways
+    // if (regs[r].signals.optional) {
+    //   continue;
+    // }
+    return null;
   }
-  return new Terms([]);
+  //success, return terms subset
+  return result;
 };
 
 //find first match and return []Terms
-var findAll = function findAll(terms, str, options) {
+var findAll = function findAll(terms, match_str, options) {
   var result = [];
-  var words = str.split(' ');
-  var len = terms.length - words.length + 1;
-  for (var i = 0; i < len; i++) {
-    var slice = terms.slice(i, i + words.length);
-    if (tryMatch(slice, words)) {
-      result.push(new Terms(slice));
+  var regs = syntax_parse(match_str || '');
+  var len = terms.length - regs.length + 1;
+
+  // one-off lookup for ^
+  // '^' token is 'must start at 0'
+  if (regs[0].leading) {
+    return new Result(tryFromHere(terms, regs, options));
+  }
+
+  //try starting from each term
+  for (var i = 0; i < terms.length; i++) {
+    var termSlice = terms.slice(i, terms.length);
+    var match = tryFromHere(termSlice, regs, options);
+    if (match) {
+      result.push(new Result(match));
     }
+  }
+  //if we have no results, return an empty Match() object
+  if (result.length === 0) {
+    result.push(new Result([]));
   }
   return result;
 };
@@ -1574,12 +1613,58 @@ var replaceAll = function replaceAll(terms, str, replacement, options) {
 };
 
 module.exports = {
-  firstMatch: firstMatch,
   findAll: findAll,
   replaceAll: replaceAll
 };
 
-},{"./terms":23}],23:[function(require,module,exports){
+},{"./match_term":23,"./result":24,"./syntax_parse":25}],23:[function(require,module,exports){
+'use strict';
+
+var fns = require('../fns.js');
+
+//a regex-like string search
+// returns a boolean for match/not
+var match_term = function match_term(term, reg, options) {
+  var signals = reg.signals;
+
+  //support optional (foo|bar) syntax
+  if (signals.one_of) {
+    var arr = reg.term.split('|');
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] === term.normal || arr[i] === term.text) {
+        return true;
+      }
+    }
+    return false;
+  }
+  //support [Pos] syntax
+  if (signals.pos) {
+    var pos = fns.titlecase(reg.term);
+    if (term.pos[pos]) {
+      return true;
+    }
+    return false;
+  }
+  //support ~alias~ syntax
+  if (signals.alias) {
+    var alias = term.alias();
+    if (reg.term === alias) {
+      return true;
+    }
+    return false;
+  }
+
+  //straight-up text match
+  if (reg.term === term.normal || reg.term === term.text) {
+    return true;
+  }
+
+  return false;
+};
+
+module.exports = match_term;
+
+},{"../fns.js":20}],24:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1591,20 +1676,17 @@ var _match = require('./match.js');
 // a slice of term objects returned from .match()
 // ideally changes that happen here happen in the original object
 
-var Terms = function () {
-  function Terms(terms) {
-    _classCallCheck(this, Terms);
+var Result = function () {
+  function Result(terms) {
+    _classCallCheck(this, Result);
 
     this.terms = terms;
     //a short-cut for testing a match result
-    this.exists = false;
-    if (this.terms.length > 0) {
-      this.exists = true;
-    }
+    this.found = this.terms.length > 0;
   }
   //wha, this is possible eg. text.match().match()
 
-  _createClass(Terms, [{
+  _createClass(Result, [{
     key: 'match',
     value: function match(str, options) {
       return _match(this.terms, str, options);
@@ -1641,13 +1723,98 @@ var Terms = function () {
     }
   }]);
 
-  return Terms;
+  return Result;
 }();
 //a slice of term objects
 
-module.exports = Terms;
+module.exports = Result;
 
-},{"./match.js":22}],24:[function(require,module,exports){
+},{"./match.js":22}],25:[function(require,module,exports){
+'use strict';
+// parse a search lookup term find the regex-like syntax in this term
+
+var fns = require('../fns.js');
+// flags:
+// {
+//   pos: true,
+//   optional: true,
+//   one_of: true,
+//   alias: true,
+//   leading: true,
+//   trailing: true,
+//   any_one: true,
+//   any_many: true,
+// }
+
+var parse_term = function parse_term(term, i) {
+  term = term || '';
+  term = term.trim();
+  var signals = {};
+  //order matters!
+
+  //leading ^ flag
+  if (fns.startsWith(term, '^')) {
+    term = term.substr(1, term.length);
+    signals.leading = true;
+  }
+  //trailing $ flag means ending
+  if (fns.endsWith(term, '$')) {
+    term = term.replace(/\$$/, '');
+    signals.trailing = true;
+  }
+  //optional flag
+  if (fns.endsWith(term, '?')) {
+    term = term.replace(/\?$/, '');
+    signals.optional = true;
+  }
+
+  //pos flag
+  if (fns.startsWith(term, '[') && fns.endsWith(term, ']')) {
+    term = term.replace(/\]$/, '');
+    term = term.replace(/^\[/, '');
+    signals.pos = true;
+  }
+  //one_of options flag
+  if (fns.startsWith(term, '(') && fns.endsWith(term, ')')) {
+    term = term.replace(/\)$/, '');
+    term = term.replace(/^\(/, '');
+    signals.one_of = true;
+  }
+  //alias flag
+  if (fns.startsWith(term, '~') && fns.endsWith(term, '~')) {
+    term = term.replace(/^\~/, '');
+    term = term.replace(/\~$/, '');
+    signals.alias = true;
+  }
+
+  //a period means anything
+  if (term === '.') {
+    signals.any_one = true;
+  }
+  //a * means anything
+  if (term === '*') {
+    signals.any_many = true;
+  }
+  return {
+    term: term,
+    signals: signals,
+    i: i
+  };
+};
+// console.log(parse_term('~fun~?'));
+
+//turn a match string into an array of objects
+var parse_all = function parse_all(str) {
+  str = str || '';
+  str = str.replace(/ +/, ' ');
+  str = str.trim();
+  return str.split(' ').map(parse_term);
+};
+// console.log(parse_all(''));
+
+module.exports = parse_all;
+
+},{"../fns.js":20}],26:[function(require,module,exports){
 'use strict';
 
 var fns = require('../fns.js');
@@ -1779,7 +1946,7 @@ var negate = function negate(s) {
 
 module.exports = negate;
 
-},{"../fns.js":20,"./pos/parts_of_speech.js":33}],25:[function(require,module,exports){
+},{"../fns.js":20,"./pos/parts_of_speech.js":35}],27:[function(require,module,exports){
 'use strict';
 
 //boolean if sentence has
@@ -1803,7 +1970,7 @@ var passive_voice = function passive_voice(s) {
 
 module.exports = passive_voice;
 
-},{}],26:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 
 var pos = require('./parts_of_speech');
@@ -1820,7 +1987,7 @@ var assign = function assign(t, tag, reason) {
 };
 module.exports = assign;
 
-},{"../../fns":20,"./parts_of_speech":33}],27:[function(require,module,exports){
+},{"../../fns":20,"./parts_of_speech":35}],29:[function(require,module,exports){
 'use strict';
 
 var assign = require('./assign');
@@ -1840,7 +2007,7 @@ var capital_signals = function capital_signals(terms) {
 };
 module.exports = capital_signals;
 
-},{"./assign":26}],28:[function(require,module,exports){
+},{"./assign":28}],30:[function(require,module,exports){
 //add a 'quiet' token for contractions so we can represent their grammar
 //some contractions need detailed POS tense info, to resolve the is/was/has part
 'use strict';
@@ -1982,7 +2149,7 @@ module.exports = {
   contract: contract
 };
 
-},{"../../sentence/pos/parts_of_speech.js":33}],29:[function(require,module,exports){
+},{"../../sentence/pos/parts_of_speech.js":35}],31:[function(require,module,exports){
 //fancy combining/chunking of terms
 'use strict';
 
@@ -2097,7 +2264,7 @@ var fancy_lumping = function fancy_lumping(terms) {
 
 module.exports = fancy_lumping;
 
-},{"./parts_of_speech":33}],30:[function(require,module,exports){
+},{"./parts_of_speech":35}],32:[function(require,module,exports){
 'use strict';
 
 module.exports = [
@@ -2189,7 +2356,7 @@ module.exports = [
   'after': ['Adverb', 'Verb']
 }];
 
-},{}],31:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 'use strict';
 
 var assign = require('./assign');
@@ -2219,7 +2386,7 @@ var interjection_fixes = function interjection_fixes(terms) {
 
 module.exports = interjection_fixes;
 
-},{"./assign":26}],32:[function(require,module,exports){
+},{"./assign":28}],34:[function(require,module,exports){
 'use strict';
 
 var defaultLexicon = require('../../lexicon.js');
@@ -2253,7 +2420,7 @@ var lexicon_pass = function lexicon_pass(terms, options) {
 };
 module.exports = lexicon_pass;
 
-},{"../../lexicon.js":21,"./assign":26}],33:[function(require,module,exports){
+},{"../../lexicon.js":21,"./assign":28}],35:[function(require,module,exports){
 'use strict';
 
 var Term = require('../../term/term.js');
@@ -2363,7 +2530,7 @@ module.exports = {
   Noun: Noun
 };
 
-},{"../../term/adjective/adjective.js":41,"../../term/adverb/adverb.js":46,"../../term/noun/date/date.js":51,"../../term/noun/noun.js":57,"../../term/noun/organisation/organisation.js":59,"../../term/noun/person/person.js":63,"../../term/noun/place/place.js":65,"../../term/noun/value/value.js":73,"../../term/term.js":74,"../../term/verb/verb.js":82}],34:[function(require,module,exports){
+},{"../../term/adjective/adjective.js":43,"../../term/adverb/adverb.js":48,"../../term/noun/date/date.js":52,"../../term/noun/noun.js":58,"../../term/noun/organisation/organisation.js":60,"../../term/noun/person/person.js":64,"../../term/noun/place/place.js":66,"../../term/noun/value/value.js":74,"../../term/term.js":75,"../../term/verb/verb.js":83}],36:[function(require,module,exports){
 'use strict';
 
 //some prepositions are clumped onto the back of a verb "looked for", "looks at"
@@ -2400,7 +2567,7 @@ var phrasal_verbs = function phrasal_verbs(terms) {
 
 module.exports = phrasal_verbs;
 
-},{}],35:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 //part-of-speech tagging
 'use strict';
 
@@ -2557,7 +2724,7 @@ var tagger = function tagger(s, options) {
 
 module.exports = tagger;
 
-},{"./assign":26,"./capital_signals":27,"./contractions":28,"./fancy_lumping":29,"./grammar_rules":30,"./interjection_fixes":31,"./lexicon_pass":32,"./parts_of_speech":33,"./phrasal_verbs":34,"./word_rules":36}],36:[function(require,module,exports){
+},{"./assign":28,"./capital_signals":29,"./contractions":30,"./fancy_lumping":31,"./grammar_rules":32,"./interjection_fixes":33,"./lexicon_pass":34,"./parts_of_speech":35,"./phrasal_verbs":36,"./word_rules":38}],38:[function(require,module,exports){
 'use strict';
 
 var tag_mapping = require('./parts_of_speech.js').tag_mapping;
@@ -2570,7 +2737,7 @@ module.exports = [['.[cts]hy$', 'JJ'], ['.[st]ty$', 'JJ'], ['.[lnr]ize$', 'VB'],
   };
 });
 
-},{"./parts_of_speech.js":33}],37:[function(require,module,exports){
+},{"./parts_of_speech.js":35}],39:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2614,7 +2781,7 @@ module.exports = Question;
 
 // let s = new Question('is John a person?');
 
-},{"../sentence.js":38}],38:[function(require,module,exports){
+},{"../sentence.js":40}],40:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -2627,7 +2794,7 @@ var passive_voice = require('./passive_voice.js');
 var _negate = require('./negate.js');
 var _contract = require('./pos/contractions.js').contract;
 var change_tense = require('./tense.js');
-var _match = require('./match/match.js');
+var _match = require('../match/match.js');
 
 //a sentence is an array of Term objects, along with their various methods
 
@@ -2682,17 +2849,12 @@ var Sentence = function () {
     }
 
     // a regex-like lookup for a list of terms.
-    // returns matches in a 'Terms' class
+    // returns [] of matches in a 'Terms' class
 
   }, {
     key: 'match',
-    value: function match(str, options) {
-      return _match.firstMatch(this.terms, str, options);
-    }
-  }, {
-    key: 'matches',
-    value: function matches(str, options) {
-      return _match.findAll(this.terms, str, options);
+    value: function match(match_str, options) {
+      return _match.findAll(this.terms, match_str, options);
     }
     //returns a transformed sentence
 
@@ -2867,7 +3029,7 @@ module.exports = Sentence;
 // let s = new Sentence('the dog played');
 // console.log(s.replace('the [Noun]', 'the cat').text());
 
-},{"../term/term.js":74,"./match/match.js":22,"./negate.js":24,"./passive_voice.js":25,"./pos/contractions.js":28,"./pos/tagger.js":35,"./tense.js":40}],39:[function(require,module,exports){
+},{"../match/match.js":22,"../term/term.js":75,"./negate.js":26,"./passive_voice.js":27,"./pos/contractions.js":30,"./pos/tagger.js":37,"./tense.js":42}],41:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2915,7 +3077,7 @@ module.exports = Statement;
 // console.log(s);
 // console.log(s.to_past().text());
 
-},{"../sentence.js":38}],40:[function(require,module,exports){
+},{"../sentence.js":40}],42:[function(require,module,exports){
 'use strict';
 //change a sentence to past, present, or future tense
 
@@ -2952,7 +3114,7 @@ var change_tense = function change_tense(s, tense) {
 
 module.exports = change_tense;
 
-},{"./pos/parts_of_speech.js":33}],41:[function(require,module,exports){
+},{"./pos/parts_of_speech.js":35}],43:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3024,7 +3186,7 @@ Adjective.fn = Adjective.prototype;
 
 module.exports = Adjective;
 
-},{"../term.js":74,"./to_adverb":42,"./to_comparative":43,"./to_noun":44,"./to_superlative":45}],42:[function(require,module,exports){
+},{"../term.js":75,"./to_adverb":44,"./to_comparative":45,"./to_noun":46,"./to_superlative":47}],44:[function(require,module,exports){
 //turn 'quick' into 'quickly'
 'use strict';
 
@@ -3151,7 +3313,7 @@ var adj_to_adv = function adj_to_adv(str) {
 
 module.exports = adj_to_adv;
 
-},{}],43:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 //turn 'quick' into 'quickly'
 'use strict';
 
@@ -3237,7 +3399,7 @@ var to_comparative = function to_comparative(str) {
 
 module.exports = to_comparative;
 
-},{"../../data/convertables.js":4}],44:[function(require,module,exports){
+},{"../../data/convertables.js":4}],46:[function(require,module,exports){
 //convert cute to cuteness
 'use strict';
 
@@ -3309,7 +3471,7 @@ var to_noun = function to_noun(w) {
 
 module.exports = to_noun;
 
-},{}],45:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 //turn 'quick' into 'quickest'
 'use strict';
 
@@ -3393,7 +3555,7 @@ var to_superlative = function to_superlative(str) {
 
 module.exports = to_superlative;
 
-},{"../../data/convertables.js":4}],46:[function(require,module,exports){
+},{"../../data/convertables.js":4}],48:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3436,7 +3598,7 @@ Adverb.fn = Adverb.prototype;
 
 module.exports = Adverb;
 
-},{"../term.js":74,"./to_adjective.js":47}],47:[function(require,module,exports){
+},{"../term.js":75,"./to_adjective.js":49}],49:[function(require,module,exports){
 //turns 'quickly' into 'quick'
 'use strict';
 
@@ -3498,7 +3660,7 @@ var to_adjective = function to_adjective(str) {
 // console.log(to_adjective('marvelously') === 'marvelous')
 module.exports = to_adjective;
 
-},{}],48:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 'use strict';
 
 var is_acronym = function is_acronym(str) {
@@ -3514,49 +3676,7 @@ var is_acronym = function is_acronym(str) {
 };
 module.exports = is_acronym;
 
-},{}],49:[function(require,module,exports){
-'use strict';
-
-var fns = require('../fns.js');
-
-//a regex-like string search
-// returns a boolean for match/not
-var match = function match(term, str, options) {
-  //wildcard
-  if (str === '*') {
-    return true;
-  }
-  //a regular string-match
-  if (term.normal === str || term.text === str || term.root === str) {
-    return true;
-  }
-  //declare a POS-match like term '[Noun]'
-  var bracketed = str.match(/^\[(.*?)\]$/);
-  if (bracketed) {
-    //a pos match
-    var pos = fns.titlecase(bracketed[1]);
-    if (term.pos[pos]) {
-      return true;
-    }
-    return false;
-  }
-  //declare a list-match like term '(a|an)'
-  var listed = str.match(/^\((.*?)\)$/);
-  if (listed) {
-    var list = listed[1].split('|');
-    for (var i = 0; i < list.length; i++) {
-      if (list[i] === term.normal || list[i] === term.text || list[i] === term.root) {
-        return true;
-      }
-    }
-    return false;
-  }
-  return false;
-};
-
-module.exports = match;
-
-},{"../fns.js":20}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 'use strict';
 
 var is_acronym = require('../is_acronym.js');
@@ -3623,7 +3743,7 @@ module.exports = indefinite_article;
 
 // console.log(indefinite_article('N.D.A'));
 
-},{"../is_acronym.js":48}],51:[function(require,module,exports){
+},{"../is_acronym.js":50}],52:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3692,7 +3812,7 @@ module.exports = _Date;
 // let d = new _Date('June 4th 1993');
 // console.log(d.date());
 
-},{"../noun.js":57,"./parse_date.js":54}],52:[function(require,module,exports){
+},{"../noun.js":58,"./parse_date.js":55}],53:[function(require,module,exports){
 'use strict';
 
 var months = require('../../../data/dates').months.concat(['march', 'may']); //(march and may are ambiguous grammatically)
@@ -3733,7 +3853,7 @@ var rules = [{
 });
 module.exports = rules;
 
-},{"../../../data/dates":5}],53:[function(require,module,exports){
+},{"../../../data/dates":5}],54:[function(require,module,exports){
 
 'use strict';
 
@@ -3756,7 +3876,7 @@ module.exports = is_date;
 
 // console.log(is_date('january fifth, 2015'));
 
-},{"../../../data/dates":5}],54:[function(require,module,exports){
+},{"../../../data/dates":5}],55:[function(require,module,exports){
 'use strict';
 // #generates properly-formatted dates from free-text date forms
 // #by spencer kelly 2015
@@ -3863,7 +3983,7 @@ module.exports = date_parser;
 // console.log(date_parser('March 1st 1987'));
 // console.log(date_extractor('june second 1999'));
 
-},{"../value/to_number.js":71,"./date_rules.js":52}],55:[function(require,module,exports){
+},{"../value/to_number.js":72,"./date_rules.js":53}],56:[function(require,module,exports){
 'use strict';
 
 var irregulars = require('../../data/irregular_nouns');
@@ -3917,7 +4037,7 @@ var is_plural = function is_plural(str) {
 
 module.exports = is_plural;
 
-},{"../../data/irregular_nouns":10}],56:[function(require,module,exports){
+},{"../../data/irregular_nouns":10}],57:[function(require,module,exports){
 //uncountables are words that shouldn't ever inflect, for metaphysical reasons, like 'peace'
 'use strict';
 
@@ -3938,7 +4058,7 @@ var is_uncountable = function is_uncountable(str) {
 // console.log(is_uncountable("dog") === false)
 module.exports = is_uncountable;
 
-},{"../../data/uncountables.js":18}],57:[function(require,module,exports){
+},{"../../data/uncountables.js":18}],58:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4051,7 +4171,7 @@ module.exports = Noun;
 // let t = new Noun('NDA');
 // console.log(t.article());
 
-},{"../term.js":74,"./article.js":50,"./date/is_date.js":53,"./is_plural.js":55,"./is_uncountable.js":56,"./organisation/is_organisation.js":58,"./person/is_person.js":61,"./place/is_place.js":64,"./pluralize.js":66,"./pronoun.js":67,"./singularize.js":68,"./value/is_value.js":69}],58:[function(require,module,exports){
+},{"../term.js":75,"./article.js":51,"./date/is_date.js":54,"./is_plural.js":56,"./is_uncountable.js":57,"./organisation/is_organisation.js":59,"./person/is_person.js":62,"./place/is_place.js":65,"./pluralize.js":67,"./pronoun.js":68,"./singularize.js":69,"./value/is_value.js":70}],59:[function(require,module,exports){
 'use strict';
 
 var abbreviations = require('../../../data/abbreviations');
@@ -4113,7 +4233,7 @@ module.exports = is_organisation;
 
 // console.log(is_organisation('Captain of Jamaica'));
 
-},{"../../../data/abbreviations":2,"../../../data/organisations":15}],59:[function(require,module,exports){
+},{"../../../data/abbreviations":2,"../../../data/organisations":15}],60:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4144,7 +4264,7 @@ var Organisation = function (_Noun) {
 Organisation.fn = Organisation.prototype;
 module.exports = Organisation;
 
-},{"../noun.js":57}],60:[function(require,module,exports){
+},{"../noun.js":58}],61:[function(require,module,exports){
 'use strict';
 
 var firstnames = require('../../../data/firstnames');
@@ -4196,7 +4316,7 @@ module.exports = gender;
 // console.log(gender('john', 'john') === 'Male');
 // console.log(gender('jane smith', 'jane') === 'Female');
 
-},{"../../../data/firstnames":7,"./parse_name.js":62}],61:[function(require,module,exports){
+},{"../../../data/firstnames":7,"./parse_name.js":63}],62:[function(require,module,exports){
 'use strict';
 
 var firstnames = require('../../../data/firstnames');
@@ -4230,7 +4350,7 @@ module.exports = is_person;
 
 // console.log(is_person('Illi Danza'));
 
-},{"../../../data/firstnames":7,"../../../data/honourifics":9}],62:[function(require,module,exports){
+},{"../../../data/firstnames":7,"../../../data/honourifics":9}],63:[function(require,module,exports){
 'use strict';
 
 var firstnames = require('../../../data/firstnames');
@@ -4285,7 +4405,7 @@ module.exports = parse_name;
 
 // console.log(parse_name('john smith'));
 
-},{"../../../data/firstnames":7,"../../../data/honourifics":9}],63:[function(require,module,exports){
+},{"../../../data/firstnames":7,"../../../data/honourifics":9}],64:[function(require,module,exports){
 // not all cultures use the firstname-lastname practice. this does make some assumptions.
 'use strict';
 
@@ -4346,7 +4466,7 @@ module.exports = Person;
 // let p = new Person('John Smith');
 // console.log(p.gender());
 
-},{"../noun.js":57,"./gender.js":60,"./parse_name.js":62}],64:[function(require,module,exports){
+},{"../noun.js":58,"./gender.js":61,"./parse_name.js":63}],65:[function(require,module,exports){
 'use strict';
 
 var places = require('../../../data/places');
@@ -4388,7 +4508,7 @@ var is_place = function is_place(str) {
 
 module.exports = is_place;
 
-},{"../../../data/abbreviations":2,"../../../data/places":17}],65:[function(require,module,exports){
+},{"../../../data/abbreviations":2,"../../../data/places":17}],66:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4417,7 +4537,7 @@ var Place = function (_Noun) {
 Place.fn = Place.prototype;
 module.exports = Place;
 
-},{"../noun.js":57}],66:[function(require,module,exports){
+},{"../noun.js":58}],67:[function(require,module,exports){
 'use strict';
 
 var is_uncountable = require('./is_uncountable.js');
@@ -4481,7 +4601,7 @@ var pluralize = function pluralize(str) {
 // console.log(pluralize('mayor of chicago') === "mayors of chicago")
 module.exports = pluralize;
 
-},{"../../data/irregular_nouns.js":10,"../../fns.js":20,"./is_plural.js":55,"./is_uncountable.js":56}],67:[function(require,module,exports){
+},{"../../data/irregular_nouns.js":10,"../../fns.js":20,"./is_plural.js":56,"./is_uncountable.js":57}],68:[function(require,module,exports){
 'use strict';
 
 var is_person = require('./person/is_person.js');
@@ -4509,7 +4629,7 @@ module.exports = pronoun;
 
 // console.log(pronoun('Illi Danza'));
 
-},{"./is_plural.js":55,"./person/gender.js":60,"./person/is_person.js":61}],68:[function(require,module,exports){
+},{"./is_plural.js":56,"./person/gender.js":61,"./person/is_person.js":62}],69:[function(require,module,exports){
 'use strict';
 
 var is_uncountable = require('./is_uncountable.js');
@@ -4572,7 +4692,7 @@ var singularize = function singularize(str) {
 
 module.exports = singularize;
 
-},{"../../data/irregular_nouns.js":10,"../../fns.js":20,"./is_plural.js":55,"./is_uncountable.js":56}],69:[function(require,module,exports){
+},{"../../data/irregular_nouns.js":10,"../../fns.js":20,"./is_plural.js":56,"./is_uncountable.js":57}],70:[function(require,module,exports){
 'use strict';
 
 var nums = require('./numbers');
@@ -4598,7 +4718,7 @@ var is_value = function is_value(str) {
 
 module.exports = is_value;
 
-},{"../date/is_date":53,"./numbers":70}],70:[function(require,module,exports){
+},{"../date/is_date":54,"./numbers":71}],71:[function(require,module,exports){
 'use strict';
 
 var ones = {
@@ -4713,7 +4833,7 @@ module.exports = {
   prefixes: prefixes
 };
 
-},{}],71:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 // converts spoken numbers into integers  "fifty seven point eight" -> 57.8
 //
 // Spoken numbers take the following format
@@ -4945,7 +5065,7 @@ var to_number = function to_number(s) {
 //kick it into module
 module.exports = to_number;
 
-},{"./numbers.js":70}],72:[function(require,module,exports){
+},{"./numbers.js":71}],73:[function(require,module,exports){
 'use strict';
 
 var units = {
@@ -5132,7 +5252,7 @@ module.exports = Object.keys(units).reduce(function (h, k) {
   return h;
 }, {});
 
-},{}],73:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5217,7 +5337,7 @@ Value.fn = Value.prototype;
 
 module.exports = Value;
 
-},{"../noun.js":57,"./numbers.js":70,"./to_number.js":71,"./units.js":72}],74:[function(require,module,exports){
+},{"../noun.js":58,"./numbers.js":71,"./to_number.js":72,"./units.js":73}],75:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5225,7 +5345,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var _is_acronym = require('./is_acronym');
-var _match = require('./match');
+var match_term = require('../match/match_term');
+var syntax_parse = require('../match/syntax_parse');
 var fns = require('../fns');
 
 var Term = function () {
@@ -5286,8 +5407,17 @@ var Term = function () {
 
   }, {
     key: 'match',
-    value: function match(str, options) {
-      return _match(this, str, options);
+    value: function match(match_str, options) {
+      var reg = syntax_parse(match_str)[0];
+      return match_term(this, reg, options);
+    }
+    //the 'root' singular/infinitive/whatever.
+    // method is overloaded by each pos type
+
+  }, {
+    key: 'alias',
+    value: function alias() {
+      return this.normal;
     }
 
     //Term methods..
@@ -5322,7 +5452,11 @@ var Term = function () {
     value: function normalize() {
       var str = this.text || '';
       str = str.toLowerCase();
+      //strip grammatical punctuation
       str = str.replace(/[,\.!:;\?\(\)]/, '');
+      //convert hyphenations to a multiple-word term
+      str = str.replace(/([a-z])\-([a-z])/, '$1 $2');
+      //remove quotations + scare-quotes
       str = str.replace(/’/g, '\'');
       str = str.replace(/"/g, '');
       // coerce single curly quotes
@@ -5342,11 +5476,12 @@ var Term = function () {
 
 Term.fn = Term.prototype;
 // let t = new Term('quick');
-// console.log(t.lookup('(fun|nice|quick|cool)'));
+// console.log(t.match('(fun|nice|cool)'));
+// console.log(t.match('[Adjective]'));
 
 module.exports = Term;
 
-},{"../fns":20,"./is_acronym":48,"./match":49}],75:[function(require,module,exports){
+},{"../fns":20,"../match/match_term":23,"../match/syntax_parse":25,"./is_acronym":50}],76:[function(require,module,exports){
 //turn a verb into its other grammatical forms.
 'use strict';
 
@@ -5481,7 +5616,7 @@ module.exports = conjugate;
 // console.log(conjugate("had tried"))
 // console.log(conjugate("wrote about"))
 
-},{"../../../data/irregular_verbs":11,"./from_infinitive":76,"./predict_form.js":77,"./to_actor":79,"./to_infinitive":80}],76:[function(require,module,exports){
+},{"../../../data/irregular_verbs":11,"./from_infinitive":77,"./predict_form.js":78,"./to_actor":80,"./to_infinitive":81}],77:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -5654,7 +5789,7 @@ var from_infinitive = function from_infinitive(str) {
 
 module.exports = from_infinitive;
 
-},{}],77:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 'use strict';
 //this method is used to predict which current conjugation a verb is
 
@@ -5711,7 +5846,7 @@ var predict = function predict(w) {
 
 module.exports = predict;
 
-},{"../../../data/irregular_verbs":11,"../../../fns.js":20,"./suffix_rules":78}],78:[function(require,module,exports){
+},{"../../../data/irregular_verbs":11,"../../../fns.js":20,"./suffix_rules":79}],79:[function(require,module,exports){
 'use strict';
 //suffix signals for verb tense, generated from test data
 
@@ -5734,7 +5869,7 @@ for (var i = 0; i < l; i++) {
 }
 module.exports = suffix_rules;
 
-},{}],79:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 //somone who does this present-tense verb
 //turn 'walk' into 'walker'
 'use strict';
@@ -5800,7 +5935,7 @@ var actor = function actor(str) {
 // console.log(verb_to_actor('watch'))
 module.exports = actor;
 
-},{}],80:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 'use strict';
 
 var irregular_verbs = require('../../../data/irregular_verbs');
@@ -5965,7 +6100,7 @@ var to_infinitive = function to_infinitive(str, from_tense) {
 
 module.exports = to_infinitive;
 
-},{"../../../data/irregular_verbs":11}],81:[function(require,module,exports){
+},{"../../../data/irregular_verbs":11}],82:[function(require,module,exports){
 'use strict';
 //recieves a verb object, and returns a negated string
 //sort out don't/didn't/doesn't/won't
@@ -6038,7 +6173,7 @@ var negate = function negate(v, form) {
 
 module.exports = negate;
 
-},{}],82:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6177,7 +6312,7 @@ module.exports = Verb;
 // v.conjugate();
 // console.log(v.conjugate());
 
-},{"../term.js":74,"./conjugate/conjugate.js":75,"./negate.js":81}],83:[function(require,module,exports){
+},{"../term.js":75,"./conjugate/conjugate.js":76,"./negate.js":82}],84:[function(require,module,exports){
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
@@ -6222,7 +6357,7 @@ var sentence_parser = function sentence_parser(text) {
 module.exports = sentence_parser;
 // console.log(sentence_parser('For example. This doesn\'t work for the US'));
 
-},{"../data/abbreviations":2}],84:[function(require,module,exports){
+},{"../data/abbreviations":2}],85:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6317,13 +6452,21 @@ var Text = function () {
     // returns an array of terms
 
   }, {
-    key: 'lookup',
-    value: function lookup(str) {
+    key: 'match',
+    value: function match(str, options) {
       var arr = [];
       for (var i = 0; i < this.sentences.length; i++) {
-        arr = arr.concat(this.sentences[i].lookup(str));
+        arr = arr.concat(this.sentences[i].match(str, options));
       }
       return arr;
+    }
+  }, {
+    key: 'replace',
+    value: function replace(str, replacement, options) {
+      for (var i = 0; i < this.sentences.length; i++) {
+        this.sentences[i].replace(str, replacement, options);
+      }
+      return this;
     }
 
     //transformations
@@ -6412,5 +6555,5 @@ Text.fn = Text.prototype;
 
 module.exports = Text;
 
-},{"../fns.js":20,"../sentence/question/question.js":37,"../sentence/sentence.js":38,"../sentence/statement/statement.js":39,"./sentence_parser.js":83}]},{},[1])(1)
+},{"../fns.js":20,"../sentence/question/question.js":39,"../sentence/sentence.js":40,"../sentence/statement/statement.js":41,"./sentence_parser.js":84}]},{},[1])(1)
 });

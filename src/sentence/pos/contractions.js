@@ -28,10 +28,9 @@ const irregulars = {
   'we\'re': ['we', 'are'],
   'they\'re': ['they', 'are'],
 
-  'cannot': ['can', 'not'],
+  'can\'t': ['can', 'not'],
   'ain\'t': ['is', 'not'],
-  'won\'t': ['will', 'not'],
-  'can\'t': ['can', 'not']
+  'won\'t': ['will', 'not']
 };
 let ambiguous = {
   'he\'s': 'he',
@@ -51,24 +50,9 @@ let opposite_map = Object.keys(ambiguous).reduce(function(h, k) {
   return h;
 }, {});
 
-//take remaining sentence after contraction and decide which verb fits best [is/was/has]
-let chooseVerb = function(terms) {
-  for(let i = 0; i < terms.length; i++) {
-    //he's nice
-    if (terms[i].pos['Adjective']) {
-      return 'is';
-    }
-    //he's followed
-    if (terms[i].tag === 'PastTense') {
-      return 'has';
-    }
-    //he's following
-    if (terms[i].tag === 'Gerund') {
-      return 'is';
-    }
-  }
-  return 'is';
-};
+////
+///// Expand Methods
+///
 
 //couldn't, shouldn't, wouldn't
 const negative_contraction = function(str) {
@@ -101,6 +85,25 @@ const easy_ones = function(terms) {
   return terms;
 };
 
+//take remaining sentence after contraction and decide which verb fits best [is/was/has]
+let chooseVerb = function(terms) {
+  for(let i = 0; i < terms.length; i++) {
+    //he's nice
+    if (terms[i].pos['Adjective']) {
+      return 'is';
+    }
+    //he's followed
+    if (terms[i].tag === 'PastTense') {
+      return 'has';
+    }
+    //he's following
+    if (terms[i].tag === 'Gerund') {
+      return 'is';
+    }
+  }
+  return 'is';
+};
+
 const hard_ones = function(terms) {
   for (let i = 0; i < terms.length; i++) {
     const t = terms[i];
@@ -119,6 +122,11 @@ const hard_ones = function(terms) {
   return terms;
 };
 
+
+////
+///// Contract Methods
+///
+
 const combine_contraction = function(terms, i, k) {
   //combine two terms
   terms[i].implicit = terms[i].text;
@@ -131,24 +139,81 @@ const combine_contraction = function(terms, i, k) {
   return terms;
 };
 
+
+const contract_irregulars = function(terms) {
+  for (let i = 0; i < terms.length - 1; i++) {
+    let t = terms[i];
+    let next = terms[i + 1];
+    //try irregulars
+    let keys = Object.keys(irregulars);
+    for(let o = 0; o < keys.length; o++) {
+      let k = keys[o];
+      let arr = irregulars[k];
+      if (t.normal === arr[0] && next.normal === arr[1]) {
+        return combine_contraction(terms, i, k);
+      }
+    }
+
+    //try ambiguous ones
+    if (opposite_map[t.normal] && (next.normal === 'is' || next.normal === 'was' || next.normal === 'has')) {
+      return combine_contraction(terms, i, opposite_map[t.normal]);
+    }
+    return terms;
+  }
+};
+
+const contract_negative = function(terms) {
+  //verbs that aren't modals or copulas, but have n't contractions
+  let contract_verbs = {
+    can: true,
+    do: true,
+    did: true,
+    have: true,
+    were: true,
+    was: true
+  };
+  for (let i = 0; i < terms.length - 1; i++) {
+    let t = terms[i];
+    let next = terms[i + 1];
+    //try negative ones
+    if (next.normal === 'not') {
+      //a good candidate for a negative contraction
+      if (contract_verbs[t.normal] || t.pos['Modal'] || t.pos['Copula']) {
+        let shorter = t.normal + 'n\'t';
+        terms = combine_contraction(terms, i, shorter);
+        continue;
+      }
+    }
+  }
+  return terms;
+};
+
+//turn 'you will' to "you'll"
+const contract_will = function(terms) {
+  for (let i = 0; i < terms.length - 1; i++) {
+    let t = terms[i];
+    let next = terms[i + 1];
+    //try negative ones
+    if (next.normal === 'will') {
+      //a good candidate for a negative contraction
+      if (t.pos['Person'] || t.pos['Pronoun']) {
+        let shorter = t.normal + '\'ll';
+        terms = combine_contraction(terms, i, shorter);
+        continue;
+      }
+    }
+
+  }
+  return terms;
+};
+
 //turn 'i will' into "i'll"
 const contract = function(terms) {
-  for (let i = 0; i < terms.length - 1; i++) {
-    const t = terms[i];
-    Object.keys(irregulars).forEach(function(k) {
-      let arr = irregulars[k];
-      let next = terms[i + 1];
-      if (t.normal === arr[0] && next.normal === arr[1]) {
-        terms = combine_contraction(terms, i, k);
-        return;
-      }
-      //'hard ones'
-      if (opposite_map[t.normal] && (next.normal === 'is' || next.normal === 'was' || next.normal === 'has')) {
-        terms = combine_contraction(terms, i, opposite_map[t.normal]);
-        return;
-      }
-    });
-  }
+  //to irregular versions
+  terms = contract_irregulars(terms);
+  //to systematic versions
+  terms = contract_negative(terms);
+  terms = contract_will(terms);
   return terms;
 };
 

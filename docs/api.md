@@ -8,7 +8,7 @@ Term => # A word/token with a Part-of-speech
     Person =>
     Place =>
     Date =>
-    Organisation =>
+    Organization =>
     Value =>
 
 Sentence => # A list of Terms and their methods
@@ -86,7 +86,7 @@ nlp_compromise={
     is_plural: function()      //humburgers -> true
     is_person: function()      //tony hawk -> true
     is_place: function()       //Baghdad -> true
-    is_organisation: function()//C.I.A. -> true
+    is_organization: function()//C.I.A. -> true
     is_date: function()        //January 5th -> true
     is_value: function()       //fifteen books -> true
     root: function()           // singular form
@@ -115,7 +115,7 @@ nlp_compromise={
     title: String,    // minus the location info
     root: String      // the title
   },
-  organisation :{}
+  organization :{}
 }
 ```
 

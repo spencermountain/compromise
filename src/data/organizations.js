@@ -1,7 +1,7 @@
 'use strict';
-//just a few named-organisations
+//just a few named-organizations
 //no acronyms needed. no product/brand pollution.
-let organisations = [
+let organizations = [
   'google',
   'microsoft',
   'walmart',
@@ -65,5 +65,5 @@ let suffixes = [
 
 module.exports = {
   suffixes: suffixes,
-  organisations: organisations
+  organizations: organizations
 };

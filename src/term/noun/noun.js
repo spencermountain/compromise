@@ -7,7 +7,7 @@ const is_person = require('./person/is_person.js');
 const pronoun = require('./pronoun.js');
 const is_value = require('./value/is_value.js');
 const is_date = require('./date/is_date.js');
-const is_organisation = require('./organisation/is_organisation.js');
+const is_organization = require('./organization/is_organization.js');
 const singularize = require('./singularize.js');
 const pluralize = require('./pluralize.js');
 const is_uncountable = require('./is_uncountable.js');
@@ -29,7 +29,7 @@ class Noun extends Term {
     return this.singularize();
   }
   pronoun() {
-    if (this.is_organisation() || this.is_place() || this.is_value()) {
+    if (this.is_organization() || this.is_place() || this.is_value()) {
       return 'it';
     }
     return pronoun(this.normal);
@@ -50,8 +50,8 @@ class Noun extends Term {
   is_person() {
     return is_person(this.normal);
   }
-  is_organisation() {
-    return is_organisation(this.normal, this.text);
+  is_organization() {
+    return is_organization(this.normal, this.text);
   }
   is_date() {
     return is_date(this.normal);

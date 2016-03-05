@@ -125,10 +125,10 @@ class Text {
     }
     return arr;
   }
-  organisations() {
+  organizations() {
     let arr = [];
     for(let i = 0; i < this.sentences.length; i++) {
-      arr = arr.concat(this.sentences[i].organisations());
+      arr = arr.concat(this.sentences[i].organizations());
     }
     return arr;
   }

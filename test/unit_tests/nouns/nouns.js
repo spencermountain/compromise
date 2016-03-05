@@ -45,7 +45,7 @@ describe('nouns', function() {
     done();
   });
 
-  it('is_organisation', function(done) {
+  it('is_organization', function(done) {
     let tests = [
       ['five hundred feet', false],
       ['50 square feet', false],
@@ -80,7 +80,7 @@ describe('nouns', function() {
     ];
     tests.forEach(function(a) {
       let n = new Noun(a[0]);
-      (a[1]).should.equal(n.is_organisation());
+      (a[1]).should.equal(n.is_organization());
     });
     done();
   });

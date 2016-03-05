@@ -153,9 +153,9 @@ class Sentence {
       return t.pos['Date'];
     });
   }
-  organisations() {
+  organizations() {
     return this.terms.filter(function(t) {
-      return t.pos['Organisation'];
+      return t.pos['Organization'];
     });
   }
   values() {

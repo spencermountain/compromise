@@ -66,8 +66,8 @@ const shouldLumpTwo = function(a, b) {
       result: 'Value',
     },
     {
-      condition: (a.is_capital() && b.pos['Organisation'] || b.is_capital() && a.pos['Organisation']), //Canada Inc
-      result: 'Organisation',
+      condition: (a.is_capital() && b.pos['Organization'] || b.is_capital() && a.pos['Organization']), //Canada Inc
+      result: 'Organization',
     },
     {
       condition: (a.text.match(/^["']/) && b.text.match(/["']$/)), //two-word quote

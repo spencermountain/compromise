@@ -15,7 +15,7 @@ let models = {
   Person : require('./term/noun/person/person.js'),
   Place : require('./term/noun/place/place.js'),
   Date : require('./term/noun/date/date.js'),
-  Organisation : require('./term/noun/organisation/organisation.js')
+  Organization : require('./term/noun/organization/organization.js')
 };
 
 function NLP() {
@@ -66,8 +66,8 @@ function NLP() {
   this.date = function(s) {
     return new models.Date(s);
   };
-  this.organisation = function(s) {
-    return new models.Organisation(s);
+  this.organization = function(s) {
+    return new models.Organization(s);
   };
 
   this.text = function(s, options) {

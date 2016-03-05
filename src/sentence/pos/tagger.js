@@ -123,8 +123,8 @@ const specific_pos = function(terms) {
         terms[i] = assign(t, 'Value', 'is_value');
       } else if (t.is_date()) {
         terms[i] = assign(t, 'Date', 'is_date');
-      } else if (t.is_organisation()) {
-        terms[i] = assign(t, 'Organisation', 'is_organisation');
+      } else if (t.is_organization()) {
+        terms[i] = assign(t, 'Organization', 'is_organization');
       }
     }
   }

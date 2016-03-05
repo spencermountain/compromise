@@ -53,8 +53,8 @@ for (let i = 0; i < verbs.length; i++) {
   });
 }
 
-let orgs = require('./data/organisations.js');
-addArr(orgs.organisations, 'Noun');
+let orgs = require('./data/organizations.js');
+addArr(orgs.organizations, 'Noun');
 addArr(orgs.suffixes, 'Noun');
 
 let places = require('./data/places.js');

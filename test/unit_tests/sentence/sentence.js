@@ -101,16 +101,15 @@ describe('Sentence Class Methods', function() {
     done();
   });
 
-  it('Organisations', function(done) {
+  it('Organizations', function(done) {
     let tests = [
       ['The 5 books in Toronto is best in January', []],
       ['My birthday is June 5th', []],
       ['Oh say can you see? By the dawn\'s early rise.', []],
       ['Google may purchase Cannabis Inc', ['Google', 'Cannabis Inc']],
     ];
-
     tests.forEach(function(a) {
-      let arr = nlp.text(a[0]).organisations();
+      let arr = nlp.text(a[0]).organizations();
       arr = arr.map(function(t) {
         return t.text;
       });

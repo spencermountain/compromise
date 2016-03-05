@@ -8,7 +8,7 @@ const Adjective = require('../../term/adjective/adjective.js');
 const Noun = require('../../term/noun/noun.js');
 const Person = require('../../term/noun/person/person.js');
 const Place = require('../../term/noun/place/place.js');
-const Organisation = require('../../term/noun/organisation/organisation.js');
+const Organization = require('../../term/noun/organization/organization.js');
 const Value = require('../../term/noun/value/value.js');
 const _Date = require('../../term/noun/date/date.js');
 
@@ -88,7 +88,7 @@ const classMapping = {
   'Value': Value,
   'Place': Place,
   'Person': Person,
-  'Organisation': Organisation,
+  'Organization': Organization,
   'Date': _Date,
 };
 
@@ -101,7 +101,7 @@ module.exports = {
   Verb,
   Person,
   Place,
-  Organisation,
+  Organization,
   Adjective,
   Adverb,
   Noun,

@@ -1,6 +1,6 @@
 'use strict';
 const abbreviations = require('../../../data/abbreviations');
-const org_data = require('../../../data/organisations');
+const org_data = require('../../../data/organizations');
 
 //words like 'co' and ltd
 let org_suffix = abbreviations.orgs.reduce(function(h, s) {
@@ -12,14 +12,14 @@ org_data.suffixes.forEach(function(s) { //a few more
 });
 
 //named orgs like google and nestle
-let org_names = org_data.organisations.reduce(function(h, s) {
+let org_names = org_data.organizations.reduce(function(h, s) {
   h[s] = true;
   return h;
 }, {});
 
-const is_organisation = function(str, text) {
+const is_organization = function(str, text) {
   text = text || '';
-  //some known organisations, like microsoft
+  //some known organizations, like microsoft
   if (org_names[str]) {
     return true;
   }
@@ -52,6 +52,6 @@ const is_organisation = function(str, text) {
   return false;
 };
 
-module.exports = is_organisation;
+module.exports = is_organization;
 
-// console.log(is_organisation('Captain of Jamaica'));
+// console.log(is_organization('Captain of Jamaica'));

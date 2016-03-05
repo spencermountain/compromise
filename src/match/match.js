@@ -5,38 +5,31 @@ const Terms = require('./terms');
 const syntax_parse = require('./syntax_parse');
 
 
-//a particular slice of regs+terms to try of equal-length
-// const tryMatch = function(terms, regs, options) {
-//   for(let i = 0; i < terms.length; i++) {
-//     if (!terms[i].match(regs[i], options)) {
-//       return false;
-//     }
-//   }
-//   return true;
-// };
-//
-// //does this reg match this term?
-// const doesMatch = function(term, reg, options) {
-//   return term.match(reg, options);
-// };
-
-
-//take a slice of terms, and try to match starting here
+// take a slice of our terms, and try a match starting here
 const tryFromHere = function(terms, regs, options) {
   let result = [];
-  let current_t = 0;
   for(let r = 0; r < regs.length; r++) {
-    let term = terms[current_t];
+    let term = terms[r];
     //if we hit the end of terms, prematurely
     if (!term) {
       return null;
     }
-    //if we're good, keep going
-    if (doesMatch(term, regs[r], options)) {
+    //find a match with term, (..), [..], or ~..~ syntax
+    if (term.match(regs[r], options)) {
       result.push(terms[i]);
       continue;
     }
-  //else, if term is optional, continue
+    //support wildcards, some matching logic
+    // '.' means easy-pass
+    if (regs[r].signals.any_one) {
+      result.push(terms[i]);
+      continue;
+    }
+    //else, if term was optional, continue anyways
+    // if (regs[r].signals.optional) {
+    //   continue;
+    // }
+    return null;
   }
   //success, return terms subset
   return result;
@@ -45,13 +38,12 @@ const tryFromHere = function(terms, regs, options) {
 //find first match and return []Terms
 const findAll = function(terms, match_str, options) {
   let result = [];
-  let regs = match_str.split(' ');
+  let regs = syntax_parse(match_str || '');
   let len = terms.length - regs.length + 1;
 
   // one-off lookup for ^
   // '^' token is 'must start at 0'
-  if (regs[0] && regs[0].substr(0, 1) === '^') {
-    regs[0] = regs[0].replace(/^\^/, '');
+  if (regs[0].leading) {
     return tryFromHere(terms, regs, options);
   }
 

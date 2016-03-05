@@ -5,7 +5,7 @@ const passive_voice = require('./passive_voice.js');
 const negate = require('./negate.js');
 const contract = require('./pos/contractions.js').contract;
 const change_tense = require('./tense.js');
-const match = require('./match/match.js');
+const match = require('../match/match.js');
 
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {

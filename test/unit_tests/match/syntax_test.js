@@ -1,6 +1,6 @@
 
 'use strict';
-let parse = require('../../../src/sentence/match/syntax_parse.js');
+let parse = require('../../../src/match/syntax_parse.js');
 
 // flags:
 // {
@@ -11,10 +11,11 @@ let parse = require('../../../src/sentence/match/syntax_parse.js');
 //   trailing: true,
 //   any_one: true,
 //   any_many: true,
+//   one_of: true,
 // }
 
 describe('match syntax test', function() {
-  //adjective tests
+  //multiple-flag terms can get funky
   let tests = [
     ['term', {}],
     ['[term]', {
@@ -31,8 +32,25 @@ describe('match syntax test', function() {
     }],
     ['^term', {
       'leading': true
+    }],
+    ['^(term)', {
+      'leading': true,
+      'one_of': true
+    }],
+    ['^(term)?', {
+      'leading': true,
+      'one_of': true,
+      'optional': true
+    }],
+    ['^[term]', {
+      'pos': true,
+      'leading': true
+    }],
+    ['^~term~$', {
+      'alias': true,
+      'leading': true,
+      'trailing': true
     }]
-
   ];
   tests.forEach(function(a) {
     it(a[0], function(done) {

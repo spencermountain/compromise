@@ -1,6 +1,7 @@
 'use strict';
 const is_acronym = require('./is_acronym');
-const match = require('./match');
+const match_term = require('../match/match_term');
+const syntax_parse = require('../match/syntax_parse');
 const fns = require('../fns');
 
 class Term {
@@ -51,8 +52,9 @@ class Term {
     this.rebuild();
   }
   //a regex-like string search
-  match(str, options) {
-    return match(this, str, options);
+  match(match_str, options) {
+    let reg = syntax_parse(match_str)[0];
+    return match_term(this, reg, options);
   }
   //the 'root' singular/infinitive/whatever.
   // method is overloaded by each pos type
@@ -102,6 +104,7 @@ class Term {
 
 Term.fn = Term.prototype;
 // let t = new Term('quick');
-// console.log(t.lookup('(fun|nice|quick|cool)'));
+// console.log(t.match('(fun|nice|cool)'));
+// console.log(t.match('[Adjective]'));
 
 module.exports = Term;

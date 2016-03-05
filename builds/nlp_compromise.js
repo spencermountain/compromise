@@ -19,7 +19,7 @@ var models = {
   Person: require('./term/noun/person/person.js'),
   Place: require('./term/noun/place/place.js'),
   Date: require('./term/noun/date/date.js'),
-  Organisation: require('./term/noun/organisation/organisation.js')
+  Organization: require('./term/noun/organization/organization.js')
 };
 
 function NLP() {
@@ -70,8 +70,8 @@ function NLP() {
   this.date = function (s) {
     return new models.Date(s);
   };
-  this.organisation = function (s) {
-    return new models.Organisation(s);
+  this.organization = function (s) {
+    return new models.Organization(s);
   };
 
   this.text = function (s, options) {
@@ -107,7 +107,13 @@ if (typeof define === 'function' && define.amd) {
 // let match = nlp.sentence('the dog played').match('the dog [Adverb]? played');
 // console.log(match[0].text());
 
-},{"./fns.js":20,"./lexicon.js":21,"./sentence/question/question.js":39,"./sentence/sentence.js":40,"./sentence/statement/statement.js":41,"./term/adjective/adjective.js":43,"./term/adverb/adverb.js":48,"./term/noun/date/date.js":52,"./term/noun/noun.js":58,"./term/noun/organisation/organisation.js":60,"./term/noun/person/person.js":64,"./term/noun/place/place.js":66,"./term/noun/value/value.js":74,"./term/term.js":75,"./term/verb/verb.js":83,"./text/text.js":85}],2:[function(require,module,exports){
+// let t = nlp.text('doesn\'t there\'s i\'d i\'ll can\'t won\'t wasn\'t weren\'t wouldn\'t haven\'t');
+// let t = nlp.sentence(`do not, did not, there is, i would, i will, can not, will not, was not, were not, would not, have not, he will, he is, he was`);
+// let t = nlp.sentence(`he is there`);
+// t.contractions.contract();
+// console.log(t.text());
+
+},{"./fns.js":20,"./lexicon.js":21,"./sentence/question/question.js":39,"./sentence/sentence.js":40,"./sentence/statement/statement.js":41,"./term/adjective/adjective.js":43,"./term/adverb/adverb.js":48,"./term/noun/date/date.js":52,"./term/noun/noun.js":58,"./term/noun/organization/organization.js":60,"./term/noun/person/person.js":64,"./term/noun/place/place.js":66,"./term/noun/value/value.js":74,"./term/term.js":75,"./term/verb/verb.js":83,"./text/text.js":85}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
 //there are all nouns, or at the least, belong beside one.
 'use strict';
@@ -1164,16 +1170,16 @@ module.exports = [
 
 },{}],15:[function(require,module,exports){
 'use strict';
-//just a few named-organisations
+//just a few named-organizations
 //no acronyms needed. no product/brand pollution.
 
-var organisations = ['google', 'microsoft', 'walmart', 'exxonmobil', 'glencore', 'samsung', 'chevron', 'at&t', 'verizon', 'costco', 'nestlé', '7-eleven', 'adidas', 'nike', 'acer', 'mcdonalds', 'mcdonald\'s', 'comcast', 'compaq', 'craigslist', 'cisco', 'disney', 'coca cola', 'dupont', 'ebay', 'facebook', 'fedex', 'kmart', 'kodak', 'monsanto', 'myspace', 'netflix', 'sony', 'telus', 'twitter', 'usps', 'ubs', 'ups', 'walgreens', 'youtube', 'yahoo!', 'yamaha'];
+var organizations = ['google', 'microsoft', 'walmart', 'exxonmobil', 'glencore', 'samsung', 'chevron', 'at&t', 'verizon', 'costco', 'nestlé', '7-eleven', 'adidas', 'nike', 'acer', 'mcdonalds', 'mcdonald\'s', 'comcast', 'compaq', 'craigslist', 'cisco', 'disney', 'coca cola', 'dupont', 'ebay', 'facebook', 'fedex', 'kmart', 'kodak', 'monsanto', 'myspace', 'netflix', 'sony', 'telus', 'twitter', 'usps', 'ubs', 'ups', 'walgreens', 'youtube', 'yahoo!', 'yamaha'];
 
 var suffixes = ['center', 'centre', 'memorial', 'school', 'university', 'bank', 'college', 'house', 'foundation', 'department', 'institute', 'club', 'co', 'sons'];
 
 module.exports = {
   suffixes: suffixes,
-  organisations: organisations
+  organizations: organizations
 };
 
 },{}],16:[function(require,module,exports){
@@ -1328,6 +1334,14 @@ exports.pluck = function (arr, str) {
   });
 };
 
+//make an array of strings easier to lookup
+exports.toObj = function (arr) {
+  return arr.reduce(function (h, a) {
+    h[a] = true;
+    return h;
+  }, {});
+};
+
 exports.flatten = function (arr) {
   var all = [];
   arr.forEach(function (a) {
@@ -1460,8 +1474,8 @@ for (var i = 0; i < verbs.length; i++) {
   _loop(i);
 }
 
-var orgs = require('./data/organisations.js');
-addArr(orgs.organisations, 'Noun');
+var orgs = require('./data/organizations.js');
+addArr(orgs.organizations, 'Noun');
 addArr(orgs.suffixes, 'Noun');
 
 var places = require('./data/places.js');
@@ -1538,7 +1552,7 @@ Object.keys(lexicon).forEach(function (k) {
 
 module.exports = lexicon;
 
-},{"./data/abbreviations.js":2,"./data/adjectives.js":3,"./data/convertables.js":4,"./data/dates.js":5,"./data/demonyms.js":6,"./data/firstnames.js":7,"./data/holidays.js":8,"./data/honourifics.js":9,"./data/irregular_nouns.js":10,"./data/irregular_verbs.js":11,"./data/misc.js":12,"./data/multiples.js":13,"./data/numbers.js":14,"./data/organisations.js":15,"./data/phrasal_verbs.js":16,"./data/places.js":17,"./data/uncountables.js":18,"./data/verbs.js":19,"./fns.js":20,"./sentence/pos/parts_of_speech.js":35,"./term/adjective/to_comparative.js":45,"./term/adjective/to_superlative.js":47,"./term/verb/conjugate/conjugate.js":76}],22:[function(require,module,exports){
+},{"./data/abbreviations.js":2,"./data/adjectives.js":3,"./data/convertables.js":4,"./data/dates.js":5,"./data/demonyms.js":6,"./data/firstnames.js":7,"./data/holidays.js":8,"./data/honourifics.js":9,"./data/irregular_nouns.js":10,"./data/irregular_verbs.js":11,"./data/misc.js":12,"./data/multiples.js":13,"./data/numbers.js":14,"./data/organizations.js":15,"./data/phrasal_verbs.js":16,"./data/places.js":17,"./data/uncountables.js":18,"./data/verbs.js":19,"./fns.js":20,"./sentence/pos/parts_of_speech.js":35,"./term/adjective/to_comparative.js":45,"./term/adjective/to_superlative.js":47,"./term/verb/conjugate/conjugate.js":76}],22:[function(require,module,exports){
 'use strict';
 // a regex-like lookup for a list of terms.
 // returns matches in a 'Terms' class
@@ -1581,7 +1595,6 @@ var tryFromHere = function tryFromHere(terms, regs, options) {
 var findAll = function findAll(terms, match_str, options) {
   var result = [];
   var regs = syntax_parse(match_str || '');
-  var len = terms.length - regs.length + 1;
 
   // one-off lookup for ^
   // '^' token is 'must start at 0'
@@ -1590,7 +1603,8 @@ var findAll = function findAll(terms, match_str, options) {
   }
 
   //try starting from each term
-  for (var i = 0; i < terms.length; i++) {
+  var len = terms.length - regs.length + 1;
+  for (var i = 0; i < len; i++) {
     var termSlice = terms.slice(i, terms.length);
     var match = tryFromHere(termSlice, regs, options);
     if (match) {
@@ -1624,7 +1638,7 @@ var fns = require('../fns.js');
 
 //a regex-like string search
 // returns a boolean for match/not
-var match_term = function match_term(term, reg, options) {
+var match_term = function match_term(term, reg) {
   var signals = reg.signals;
 
   //support optional (foo|bar) syntax
@@ -1647,8 +1661,7 @@ var match_term = function match_term(term, reg, options) {
   }
   //support ~alias~ syntax
   if (signals.alias) {
-    var alias = term.alias();
-    if (reg.term === alias) {
+    if (reg.term === term.root()) {
       return true;
     }
     return false;
@@ -1695,7 +1708,7 @@ var Result = function () {
 
   }, {
     key: 'replace',
-    value: function replace(str, options) {
+    value: function replace(str) {
       var words = str.split(' ');
       for (var i = 0; i < this.terms.length; i++) {
         //   //umm, this is like a capture-group in regexp..
@@ -1974,7 +1987,6 @@ module.exports = passive_voice;
 'use strict';
 
 var pos = require('./parts_of_speech');
-var fns = require('../../fns');
 
 //set the part-of-speech of a particular term
 var assign = function assign(t, tag, reason) {
@@ -1987,7 +1999,7 @@ var assign = function assign(t, tag, reason) {
 };
 module.exports = assign;
 
-},{"../../fns":20,"./parts_of_speech":35}],29:[function(require,module,exports){
+},{"./parts_of_speech":35}],29:[function(require,module,exports){
 'use strict';
 
 var assign = require('./assign');
@@ -2014,17 +2026,19 @@ module.exports = capital_signals;
 
 var pos = require('../../sentence/pos/parts_of_speech.js');
 
-var easy_contractions = {
+var irregulars = {
   'i\'d': ['i', 'would'],
   'she\'d': ['she', 'would'],
   'he\'d': ['he', 'would'],
   'they\'d': ['they', 'would'],
   'we\'d': ['we', 'would'],
+
   'i\'ll': ['i', 'will'],
   'she\'ll': ['she', 'will'],
   'he\'ll': ['he', 'will'],
   'they\'ll': ['they', 'will'],
   'we\'ll': ['we', 'will'],
+
   'i\'ve': ['i', 'have'],
   'they\'ve': ['they', 'have'],
   'we\'ve': ['we', 'have'],
@@ -2032,14 +2046,20 @@ var easy_contractions = {
   'would\'ve': ['would', 'have'],
   'could\'ve': ['could', 'have'],
   'must\'ve': ['must', 'have'],
+
   'i\'m': ['i', 'am'],
   'we\'re': ['we', 'are'],
   'they\'re': ['they', 'are'],
-  'cannot': ['can', 'not']
+
+  'can\'t': ['can', 'not'],
+  'ain\'t': ['is', 'not'],
+  'won\'t': ['will', 'not']
 };
 var ambiguous = {
   'he\'s': 'he',
   'she\'s': 'she',
+  'there\'s': 'there',
+  'that\'s': 'that',
   'it\'s': 'it',
   'who\'s': 'who',
   'what\'s': 'what',
@@ -2052,6 +2072,40 @@ var opposite_map = Object.keys(ambiguous).reduce(function (h, k) {
   h[ambiguous[k]] = k;
   return h;
 }, {});
+
+////
+///// Expand Methods
+///
+
+//couldn't, shouldn't, wouldn't
+var negative_contraction = function negative_contraction(str) {
+  if (str.match(/..n't$/)) {
+    return [str.replace(/n't$/, ''), 'not'];
+  }
+  return null;
+};
+
+var easy_ones = function easy_ones(terms) {
+  for (var i = 0; i < terms.length; i++) {
+    var t = terms[i];
+    //try the explicit ones
+    var two_words = irregulars[t.normal];
+    //try 'nt ones
+    if (!two_words) {
+      two_words = negative_contraction(t.normal);
+    }
+    if (two_words) {
+      //first one assumes the whole word, but has implicit first-half of contraction
+      terms[i].implicit = two_words[0];
+      //second one gets an empty term '', but has an implicit verb, like 'is'
+      var word_two = new pos.Term('');
+      word_two.implicit = two_words[1];
+      terms.splice(i + 1, 0, word_two);
+      i++;
+    }
+  }
+  return terms;
+};
 
 //take remaining sentence after contraction and decide which verb fits best [is/was/has]
 var chooseVerb = function chooseVerb(terms) {
@@ -2072,22 +2126,6 @@ var chooseVerb = function chooseVerb(terms) {
   return 'is';
 };
 
-var easy_ones = function easy_ones(terms) {
-  for (var i = 0; i < terms.length; i++) {
-    var t = terms[i];
-    if (easy_contractions[t.normal]) {
-      //first one assumes the whole word, but has implicit first-half of contraction
-      terms[i].implicit = easy_contractions[t.normal][0];
-      //second one gets an empty term '', but has an implicit verb, like 'is'
-      var word_two = new pos.Term('');
-      word_two.implicit = easy_contractions[t.normal][1];
-      terms.splice(i + 1, 0, word_two);
-      i++;
-    }
-  }
-  return terms;
-};
-
 var hard_ones = function hard_ones(terms) {
   for (var i = 0; i < terms.length; i++) {
     var t = terms[i];
@@ -2106,6 +2144,10 @@ var hard_ones = function hard_ones(terms) {
   return terms;
 };
 
+////
+///// Contract Methods
+///
+
 var combine_contraction = function combine_contraction(terms, i, k) {
   //combine two terms
   terms[i].implicit = terms[i].text;
@@ -2118,28 +2160,81 @@ var combine_contraction = function combine_contraction(terms, i, k) {
   return terms;
 };
 
-//turn 'i will' into "i'll"
-var contract = function contract(terms) {
-  var _loop = function _loop(i) {
+var contract_irregulars = function contract_irregulars(terms) {
+  for (var i = 0; i < terms.length - 1; i++) {
     var t = terms[i];
-    Object.keys(easy_contractions).forEach(function (k) {
-      var arr = easy_contractions[k];
-      var next = terms[i + 1];
+    var next = terms[i + 1];
+    //try irregulars
+    var keys = Object.keys(irregulars);
+    for (var o = 0; o < keys.length; o++) {
+      var k = keys[o];
+      var arr = irregulars[k];
       if (t.normal === arr[0] && next.normal === arr[1]) {
         terms = combine_contraction(terms, i, k);
-        return;
+        i += 1;
       }
-      //'hard ones'
-      if (opposite_map[t.normal] && (next.normal === 'is' || next.normal === 'was' || next.normal === 'has')) {
-        terms = combine_contraction(terms, i, opposite_map[t.normal]);
-        return;
-      }
-    });
-  };
+    }
 
-  for (var i = 0; i < terms.length - 1; i++) {
-    _loop(i);
+    //try ambiguous ones
+    if (opposite_map[t.normal] && (next.normal === 'is' || next.normal === 'was' || next.normal === 'has')) {
+      terms = combine_contraction(terms, i, opposite_map[t.normal]);
+      i += 1;
+    }
   }
+  return terms;
+};
+
+var contract_negative = function contract_negative(terms) {
+  //verbs that aren't modals or copulas, but have n't contractions
+  var contract_verbs = {
+    can: true,
+    do: true,
+    did: true,
+    have: true,
+    were: true,
+    was: true
+  };
+  for (var i = 0; i < terms.length - 1; i++) {
+    var t = terms[i];
+    var next = terms[i + 1];
+    //try negative ones
+    if (next.normal === 'not') {
+      //a good candidate for a negative contraction
+      if (contract_verbs[t.normal] || t.pos['Modal'] || t.pos['Copula']) {
+        var shorter = t.normal + 'n\'t';
+        terms = combine_contraction(terms, i, shorter);
+        continue;
+      }
+    }
+  }
+  return terms;
+};
+
+//turn 'you will' to "you'll"
+var contract_will = function contract_will(terms) {
+  for (var i = 0; i < terms.length - 1; i++) {
+    var t = terms[i];
+    var next = terms[i + 1];
+    //try negative ones
+    if (next.normal === 'will') {
+      //a good candidate for a negative contraction
+      if (t.pos['Person'] || t.pos['Pronoun']) {
+        var shorter = t.normal + '\'ll';
+        terms = combine_contraction(terms, i, shorter);
+        continue;
+      }
+    }
+  }
+  return terms;
+};
+
+//turn 'i will' into "i'll"
+var contract = function contract(terms) {
+  //to irregular versions
+  terms = contract_irregulars(terms);
+  //to systematic versions
+  terms = contract_negative(terms);
+  terms = contract_will(terms);
   return terms;
 };
 
@@ -2206,8 +2301,8 @@ var shouldLumpTwo = function shouldLumpTwo(a, b) {
     condition: a.pos.Value && b.pos.Noun, //5 books
     result: 'Value'
   }, {
-    condition: a.is_capital() && b.pos['Organisation'] || b.is_capital() && a.pos['Organisation'], //Canada Inc
-    result: 'Organisation'
+    condition: a.is_capital() && b.pos['Organization'] || b.is_capital() && a.pos['Organization'], //Canada Inc
+    result: 'Organization'
   }, {
     condition: a.text.match(/^["']/) && b.text.match(/["']$/), //two-word quote
     result: 'Noun'
@@ -2432,7 +2527,7 @@ var Adjective = require('../../term/adjective/adjective.js');
 var Noun = require('../../term/noun/noun.js');
 var Person = require('../../term/noun/person/person.js');
 var Place = require('../../term/noun/place/place.js');
-var Organisation = require('../../term/noun/organisation/organisation.js');
+var Organization = require('../../term/noun/organization/organization.js');
 var Value = require('../../term/noun/value/value.js');
 var _Date = require('../../term/noun/date/date.js');
 
@@ -2511,7 +2606,7 @@ var classMapping = {
   'Value': Value,
   'Place': Place,
   'Person': Person,
-  'Organisation': Organisation,
+  'Organization': Organization,
   'Date': _Date
 };
 
@@ -2524,13 +2619,13 @@ module.exports = {
   Verb: Verb,
   Person: Person,
   Place: Place,
-  Organisation: Organisation,
+  Organization: Organization,
   Adjective: Adjective,
   Adverb: Adverb,
   Noun: Noun
 };
 
-},{"../../term/adjective/adjective.js":43,"../../term/adverb/adverb.js":48,"../../term/noun/date/date.js":52,"../../term/noun/noun.js":58,"../../term/noun/organisation/organisation.js":60,"../../term/noun/person/person.js":64,"../../term/noun/place/place.js":66,"../../term/noun/value/value.js":74,"../../term/term.js":75,"../../term/verb/verb.js":83}],36:[function(require,module,exports){
+},{"../../term/adjective/adjective.js":43,"../../term/adverb/adverb.js":48,"../../term/noun/date/date.js":52,"../../term/noun/noun.js":58,"../../term/noun/organization/organization.js":60,"../../term/noun/person/person.js":64,"../../term/noun/place/place.js":66,"../../term/noun/value/value.js":74,"../../term/term.js":75,"../../term/verb/verb.js":83}],36:[function(require,module,exports){
 'use strict';
 
 //some prepositions are clumped onto the back of a verb "looked for", "looks at"
@@ -2694,8 +2789,8 @@ var specific_pos = function specific_pos(terms) {
         terms[i] = assign(t, 'Value', 'is_value');
       } else if (t.is_date()) {
         terms[i] = assign(t, 'Date', 'is_date');
-      } else if (t.is_organisation()) {
-        terms[i] = assign(t, 'Organisation', 'is_organisation');
+      } else if (t.is_organization()) {
+        terms[i] = assign(t, 'Organization', 'is_organization');
       }
     }
   }
@@ -2861,7 +2956,7 @@ var Sentence = function () {
   }, {
     key: 'replace',
     value: function replace(str, replacement, options) {
-      var terms = _match.replaceAll(this.terms, str, replacement, options);
+      _match.replaceAll(this.terms, str, replacement, options);
       return this;
     }
 
@@ -2946,6 +3041,17 @@ var Sentence = function () {
         return s;
       }, '');
     }
+
+    //further 'lemmatisation/inflection'
+
+  }, {
+    key: 'root',
+    value: function root() {
+      return this.terms.reduce(function (s, t) {
+        s += ' ' + t.root;
+        return s;
+      }, '').trim();
+    }
     //return only the main POS classnames/tags
 
   }, {
@@ -2979,10 +3085,10 @@ var Sentence = function () {
       });
     }
   }, {
-    key: 'organisations',
-    value: function organisations() {
+    key: 'organizations',
+    value: function organizations() {
       return this.terms.filter(function (t) {
-        return t.pos['Organisation'];
+        return t.pos['Organization'];
       });
     }
   }, {
@@ -4077,7 +4183,7 @@ var _is_person = require('./person/is_person.js');
 var _pronoun = require('./pronoun.js');
 var _is_value = require('./value/is_value.js');
 var _is_date = require('./date/is_date.js');
-var _is_organisation = require('./organisation/is_organisation.js');
+var _is_organization = require('./organization/is_organization.js');
 var _singularize = require('./singularize.js');
 var _pluralize = require('./pluralize.js');
 var _is_uncountable = require('./is_uncountable.js');
@@ -4105,9 +4211,14 @@ var Noun = function (_Term) {
       return _article(this.text);
     }
   }, {
+    key: 'root',
+    value: function root() {
+      return this.singularize();
+    }
+  }, {
     key: 'pronoun',
     value: function pronoun() {
-      if (this.is_organisation() || this.is_place() || this.is_value()) {
+      if (this.is_organization() || this.is_place() || this.is_value()) {
         return 'it';
       }
       return _pronoun(this.normal);
@@ -4140,9 +4251,9 @@ var Noun = function (_Term) {
       return _is_person(this.normal);
     }
   }, {
-    key: 'is_organisation',
-    value: function is_organisation() {
-      return _is_organisation(this.normal, this.text);
+    key: 'is_organization',
+    value: function is_organization() {
+      return _is_organization(this.normal, this.text);
     }
   }, {
     key: 'is_date',
@@ -4171,11 +4282,11 @@ module.exports = Noun;
 // let t = new Noun('NDA');
 // console.log(t.article());
 
-},{"../term.js":75,"./article.js":51,"./date/is_date.js":54,"./is_plural.js":56,"./is_uncountable.js":57,"./organisation/is_organisation.js":59,"./person/is_person.js":62,"./place/is_place.js":65,"./pluralize.js":67,"./pronoun.js":68,"./singularize.js":69,"./value/is_value.js":70}],59:[function(require,module,exports){
+},{"../term.js":75,"./article.js":51,"./date/is_date.js":54,"./is_plural.js":56,"./is_uncountable.js":57,"./organization/is_organization.js":59,"./person/is_person.js":62,"./place/is_place.js":65,"./pluralize.js":67,"./pronoun.js":68,"./singularize.js":69,"./value/is_value.js":70}],59:[function(require,module,exports){
 'use strict';
 
 var abbreviations = require('../../../data/abbreviations');
-var org_data = require('../../../data/organisations');
+var org_data = require('../../../data/organizations');
 
 //words like 'co' and ltd
 var org_suffix = abbreviations.orgs.reduce(function (h, s) {
@@ -4188,14 +4299,14 @@ org_data.suffixes.forEach(function (s) {
 });
 
 //named orgs like google and nestle
-var org_names = org_data.organisations.reduce(function (h, s) {
+var org_names = org_data.organizations.reduce(function (h, s) {
   h[s] = true;
   return h;
 }, {});
 
-var is_organisation = function is_organisation(str, text) {
+var is_organization = function is_organization(str, text) {
   text = text || '';
-  //some known organisations, like microsoft
+  //some known organizations, like microsoft
   if (org_names[str]) {
     return true;
   }
@@ -4229,11 +4340,11 @@ var is_organisation = function is_organisation(str, text) {
   return false;
 };
 
-module.exports = is_organisation;
+module.exports = is_organization;
 
-// console.log(is_organisation('Captain of Jamaica'));
+// console.log(is_organization('Captain of Jamaica'));
 
-},{"../../../data/abbreviations":2,"../../../data/organisations":15}],60:[function(require,module,exports){
+},{"../../../data/abbreviations":2,"../../../data/organizations":15}],60:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4244,25 +4355,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var Noun = require('../noun.js');
 
-var Organisation = function (_Noun) {
-  _inherits(Organisation, _Noun);
+var Organization = function (_Noun) {
+  _inherits(Organization, _Noun);
 
-  function Organisation(str, tag) {
-    _classCallCheck(this, Organisation);
+  function Organization(str, tag) {
+    _classCallCheck(this, Organization);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Organisation).call(this, str));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Organization).call(this, str));
 
     _this.tag = tag;
-    _this.pos['Organisation'] = true;
+    _this.pos['Organization'] = true;
 
     return _this;
   }
 
-  return Organisation;
+  return Organization;
 }(Noun);
 
-Organisation.fn = Organisation.prototype;
-module.exports = Organisation;
+Organization.fn = Organization.prototype;
+module.exports = Organization;
 
 },{"../noun.js":58}],61:[function(require,module,exports){
 'use strict';
@@ -4439,9 +4550,18 @@ var Person = function (_Noun) {
     return _this;
   }
 
-  //turn a multi-word string into [first, middle, last, honourific]
+  //proper normalised name without the cruft
 
   _createClass(Person, [{
+    key: 'root',
+    value: function root() {
+      var str = (this.firstName || '') + ' ' + (this.lastName || '');
+      return str.trim();
+    }
+
+    //turn a multi-word string into [first, middle, last, honourific]
+
+  }, {
     key: 'parse',
     value: function parse() {
       var o = parse_name(this.normal);
@@ -4511,6 +4631,8 @@ module.exports = is_place;
 },{"../../../data/abbreviations":2,"../../../data/places":17}],66:[function(require,module,exports){
 'use strict';
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -4518,6 +4640,11 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Noun = require('../noun.js');
+var places = require('../../../data/places.js');
+var fns = require('../../../fns.js');
+//make cities/countries easy to lookup
+var countries = fns.toObj(places.countries);
+var cities = fns.toObj(places.cities);
 
 var Place = function (_Noun) {
   _inherits(Place, _Noun);
@@ -4529,15 +4656,51 @@ var Place = function (_Noun) {
 
     _this.tag = tag;
     _this.pos['Place'] = true;
+
+    _this.title = null;
+    _this.city = null;
+    _this.region = null; //'2nd-tier' (state/province/county/whatever)
+    _this.country = null;
+    _this.parse();
     return _this;
   }
+
+  _createClass(Place, [{
+    key: 'root',
+    value: function root() {
+      return this.title || this.normal;
+    }
+  }, {
+    key: 'parse',
+    value: function parse() {
+      //parse a comma-described place like "toronto, ontario"
+      var terms = this.normal.split(' ');
+      this.title = terms[0];
+      for (var i = 0; i < terms.length; i++) {
+        var t = terms[i];
+        if (cities[t]) {
+          this.city = fns.titlecase(t);
+        } else if (countries[t]) {
+          this.country = fns.titlecase(t);
+        } else if (this.city !== null) {
+          //if we already got the city..
+          this.region = fns.titlecase(t);
+        } else {
+          //it's part of the title
+          this.title += ' ' + t;
+        }
+      }
+    }
+  }]);
 
   return Place;
 }(Noun);
 Place.fn = Place.prototype;
 module.exports = Place;
 
-},{"../noun.js":58}],67:[function(require,module,exports){
+// console.log(new Place('Toronto, Ontario, Canada'));
+
+},{"../../../data/places.js":17,"../../../fns.js":20,"../noun.js":58}],67:[function(require,module,exports){
 'use strict';
 
 var is_uncountable = require('./is_uncountable.js');
@@ -4588,6 +4751,7 @@ var pluralize = function pluralize(str) {
       return str.replace(pluralize_rules[i].reg, pluralize_rules[i].repl);
     }
   }
+  return null;
 };
 // console.log(pluralize('gas') === "gases")
 // console.log(pluralize('narrative') === "narratives")
@@ -5347,7 +5511,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var _is_acronym = require('./is_acronym');
 var match_term = require('../match/match_term');
 var syntax_parse = require('../match/syntax_parse');
-var fns = require('../fns');
 
 var Term = function () {
   function Term(str, tag) {
@@ -5362,9 +5525,6 @@ var Term = function () {
     this.text = str;
     //the normalised working-version of the word
     this.normal = '';
-    // the simplified inflected, conjugated version
-    // (akin to lemma or stem but full word)
-    this.root = '';
     //if it's a contraction, the 'hidden word'
     this.implicit = '';
     //set .normal
@@ -5415,8 +5575,8 @@ var Term = function () {
     // method is overloaded by each pos type
 
   }, {
-    key: 'alias',
-    value: function alias() {
+    key: 'root',
+    value: function root() {
       return this.normal;
     }
 
@@ -5481,7 +5641,7 @@ Term.fn = Term.prototype;
 
 module.exports = Term;
 
-},{"../fns":20,"../match/match_term":23,"../match/syntax_parse":25,"./is_acronym":50}],76:[function(require,module,exports){
+},{"../match/match_term":23,"../match/syntax_parse":25,"./is_acronym":50}],76:[function(require,module,exports){
 //turn a verb into its other grammatical forms.
 'use strict';
 
@@ -6224,9 +6384,15 @@ var Verb = function (_Term) {
     return _this;
   }
 
-  //retrieve a specific form
-
   _createClass(Verb, [{
+    key: 'root',
+    value: function root() {
+      return this.conjugate().infinitive;
+    }
+
+    //retrieve a specific form
+
+  }, {
     key: 'conjugation',
     value: function conjugation() {
       //check cached conjugations
@@ -6424,6 +6590,17 @@ var Text = function () {
       });
       return fns.flatten(arr).join(' ');
     }
+
+    //further 'lemmatisation/inflection'
+
+  }, {
+    key: 'root',
+    value: function root() {
+      var arr = this.sentences.map(function (s) {
+        return s.root();
+      });
+      return fns.flatten(arr).join(' ');
+    }
   }, {
     key: 'terms',
     value: function terms() {
@@ -6431,14 +6608,6 @@ var Text = function () {
         return s.terms;
       });
       return fns.flatten(arr);
-    }
-  }, {
-    key: 'normalised',
-    value: function normalised() {
-      var arr = this.sentences.map(function (s) {
-        return s.normalized();
-      });
-      return fns.flatten(arr).join(' ');
     }
   }, {
     key: 'tags',
@@ -6520,11 +6689,11 @@ var Text = function () {
       return arr;
     }
   }, {
-    key: 'organisations',
-    value: function organisations() {
+    key: 'organizations',
+    value: function organizations() {
       var arr = [];
       for (var i = 0; i < this.sentences.length; i++) {
-        arr = arr.concat(this.sentences[i].organisations());
+        arr = arr.concat(this.sentences[i].organizations());
       }
       return arr;
     }

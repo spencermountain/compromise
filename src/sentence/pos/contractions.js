@@ -150,16 +150,18 @@ const contract_irregulars = function(terms) {
       let k = keys[o];
       let arr = irregulars[k];
       if (t.normal === arr[0] && next.normal === arr[1]) {
-        return combine_contraction(terms, i, k);
+        terms = combine_contraction(terms, i, k);
+        i += 1;
       }
     }
 
     //try ambiguous ones
     if (opposite_map[t.normal] && (next.normal === 'is' || next.normal === 'was' || next.normal === 'has')) {
-      return combine_contraction(terms, i, opposite_map[t.normal]);
+      terms = combine_contraction(terms, i, opposite_map[t.normal]);
+      i += 1;
     }
-    return terms;
   }
+  return terms;
 };
 
 const contract_negative = function(terms) {

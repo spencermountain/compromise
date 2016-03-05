@@ -16,6 +16,12 @@ class Person extends Noun {
     this.parse();
   }
 
+  //proper normalised name without the cruft
+  root() {
+    let str = (this.firstName || '') + ' ' + (this.lastName || '');
+    return str.trim();
+  }
+
   //turn a multi-word string into [first, middle, last, honourific]
   parse() {
     let o = parse_name(this.normal);

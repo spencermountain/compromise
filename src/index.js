@@ -104,4 +104,4 @@ if (typeof define === 'function' && define.amd) {
 // let match = nlp.sentence('the dog played').match('the dog [Adverb]? played');
 // console.log(match[0].text());
 
-// console.log(nlp.verb('shadowed').root());
+// console.log(nlp.person('john g. smith').root());

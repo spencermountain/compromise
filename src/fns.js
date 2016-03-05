@@ -6,6 +6,14 @@ exports.pluck = function(arr, str) {
   });
 };
 
+//make an array of strings easier to lookup
+exports.toObj = function(arr) {
+  return arr.reduce(function(h, a) {
+    h[a] = true;
+    return h;
+  }, {});
+};
+
 exports.flatten = function(arr) {
   let all = [];
   arr.forEach(function(a) {

@@ -18,7 +18,7 @@
     "radix": 1,
     "indent": 0,
     "quotes": [
-      1,
+      0,
       "single",
       "avoid-escape"
     ],

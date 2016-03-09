@@ -101,11 +101,5 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.text('the boy and the girl.').replace('the [Noun]', 'the house', {}).text());
 
-// let match = nlp.sentence('the dog played').match('the dog [Adverb]? played');
+// let match = nlp.sentence('the dog quickly played').match('the dog [Adverb]? played');
 // console.log(match[0].text());
-
-// let t = nlp.text('doesn\'t there\'s i\'d i\'ll can\'t won\'t wasn\'t weren\'t wouldn\'t haven\'t');
-// let t = nlp.sentence(`do not, did not, there is, i would, i will, can not, will not, was not, were not, would not, have not, he will, he is, he was`);
-// let t = nlp.sentence(`he is there`);
-// t.contractions.contract();
-// console.log(t.text());

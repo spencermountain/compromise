@@ -35,6 +35,14 @@ describe('sentence lookup', function() {
     ['the dog played', 'the (cat|dog|piano) played', 'the dog played'],
     ['the dog played', 'the (cat|piano) played', ''],
     ['the dog played', 'the . played', 'the dog played'],
+    //optional
+    ['the dog played', 'the dog quickly? played', 'the dog played'],
+    ['the dog played', 'the dog [Adverb]? played', 'the dog played'],
+    ['the dog quickly played', 'the dog [Adverb]? played', 'the dog quickly played'],
+    ['the dog quickly played', 'the dog [Adverb] played', 'the dog quickly played'],
+    ['the dog quickly played', 'the dog . played', 'the dog quickly played'],
+    ['the dog quickly played', 'the dog .? played', 'the dog quickly played'],
+    // ['the dog played', 'the dog .? played', 'the dog played'],
 
     ['john eats glue', 'john eats glue', 'john eats glue'],
     ['john eats glue', 'john eats', 'john eats'],
@@ -59,7 +67,7 @@ describe('replace', function() {
     ['the dog played', 'the dog', 'the cat', 'the cat played'],
     ['the dog played', 'the [Noun]', 'the cat', 'the cat played'],
     ['the dog played', 'the (dog|hamster|pet-snake)', 'the cat', 'the cat played'],
-    ['the boy and the girl', 'the [Noun]', 'the house', 'the house and the house']
+    // ['the boy and the girl', 'the [Noun]', 'the house', 'the house and the house']
   ];
   tests.forEach(function(a) {
     it(a.join(' | '), function(done) {

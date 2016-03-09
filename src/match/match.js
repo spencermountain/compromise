@@ -9,27 +9,31 @@ const match_term = require('./match_term');
 // take a slice of our terms, and try a match starting here
 const tryFromHere = function(terms, regs, options) {
   let result = [];
+  let which_term=0
   for(let i = 0; i < regs.length; i++) {
-    let term = terms[i];
+    let term = terms[which_term];
     //if we hit the end of terms, prematurely
     if (!term) {
       return null;
     }
     //find a match with term, (..), [..], or ~..~ syntax
     if (match_term(term, regs[i], options)) {
-      result.push(terms[i]);
+      result.push(terms[which_term]);
+      which_term+=1
       continue;
     }
     //support wildcards, some matching logic
     // '.' means easy-pass
     if (regs[i].signals.any_one) {
-      result.push(terms[i]);
+      result.push(terms[which_term]);
+      which_term+=1
       continue;
     }
     //else, if term was optional, continue anyways
-    // if (regs[r].signals.optional) {
-    //   continue;
-    // }
+    if (regs[i].signals.optional) {
+      continue; //(this increments i, but not which_term)
+    }
+    //attempt is dead.
     return null;
   }
   //success, return terms subset
@@ -49,12 +53,13 @@ const findAll = function(terms, match_str, options) {
   }
 
   //try starting from each term
-  let len = terms.length - regs.length + 1;
+  let len = terms.length// - regs.length + 1;
   for(let i = 0; i < len; i++) {
     let termSlice = terms.slice(i, terms.length);
     let match = tryFromHere(termSlice, regs, options);
     if (match) {
       result.push(new Result(match));
+      break
     }
   }
   //if we have no results, return an empty Match() object

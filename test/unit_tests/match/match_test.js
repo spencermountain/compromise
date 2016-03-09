@@ -44,6 +44,17 @@ describe('sentence lookup', function() {
     ['the dog quickly played', 'the dog .? played', 'the dog quickly played'],
     // ['the dog played', 'the dog .? played', 'the dog played'],
 
+    //leading/trailing logic
+    ['the dog played', 'the dog played$', 'the dog played'],
+    ['the dog played', 'the dog', 'the dog'],
+    ['the dog played', 'the dog$', ''],
+    ['the dog played', 'the dog$ played', ''],
+    ['the dog played', '^the dog', 'the dog'],
+    ['the dog played', 'dog played', 'dog played'],
+    ['the dog played', '^dog played', ''],
+    ['the dog played', '^played', ''],
+    ['the dog played', '^the', 'the'],
+
     ['john eats glue', 'john eats glue', 'john eats glue'],
     ['john eats glue', 'john eats', 'john eats'],
     ['john eats glue', 'eats glue', 'eats glue'],

@@ -104,14 +104,8 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.text('the boy and the girl.').replace('the [Noun]', 'the house', {}).text());
 
-// let match = nlp.sentence('the dog played').match('the dog [Adverb]? played');
+// let match = nlp.sentence('the dog played').match('^dog played');
 // console.log(match[0].text());
-
-// let t = nlp.text('doesn\'t there\'s i\'d i\'ll can\'t won\'t wasn\'t weren\'t wouldn\'t haven\'t');
-// let t = nlp.sentence(`do not, did not, there is, i would, i will, can not, will not, was not, were not, would not, have not, he will, he is, he was`);
-// let t = nlp.sentence(`he is there`);
-// t.contractions.contract();
-// console.log(t.text());
 
 },{"./fns.js":20,"./lexicon.js":21,"./sentence/question/question.js":39,"./sentence/sentence.js":40,"./sentence/statement/statement.js":41,"./term/adjective/adjective.js":43,"./term/adverb/adverb.js":48,"./term/noun/date/date.js":52,"./term/noun/noun.js":58,"./term/noun/organization/organization.js":60,"./term/noun/person/person.js":64,"./term/noun/place/place.js":66,"./term/noun/value/value.js":74,"./term/term.js":75,"./term/verb/verb.js":83,"./text/text.js":85}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -1564,27 +1558,39 @@ var match_term = require('./match_term');
 // take a slice of our terms, and try a match starting here
 var tryFromHere = function tryFromHere(terms, regs, options) {
   var result = [];
+  var which_term = 0;
   for (var i = 0; i < regs.length; i++) {
-    var term = terms[i];
+    var term = terms[which_term];
     //if we hit the end of terms, prematurely
     if (!term) {
       return null;
     }
     //find a match with term, (..), [..], or ~..~ syntax
     if (match_term(term, regs[i], options)) {
-      result.push(terms[i]);
+      //handle '$' logic
+      if (regs[i].signals.trailing && terms[which_term + 1]) {
+        return null;
+      }
+      //handle '^' logic
+      if (regs[i].signals.leading && which_term !== 0) {
+        return null;
+      }
+      result.push(terms[which_term]);
+      which_term += 1;
       continue;
     }
     //support wildcards, some matching logic
     // '.' means easy-pass
     if (regs[i].signals.any_one) {
-      result.push(terms[i]);
+      result.push(terms[which_term]);
+      which_term += 1;
       continue;
     }
     //else, if term was optional, continue anyways
-    // if (regs[r].signals.optional) {
-    //   continue;
-    // }
+    if (regs[i].signals.optional) {
+      continue; //(this increments i, but not which_term)
+    }
+    //attempt is dead.
     return null;
   }
   //success, return terms subset
@@ -1598,12 +1604,13 @@ var findAll = function findAll(terms, match_str, options) {
 
   // one-off lookup for ^
   // '^' token is 'must start at 0'
-  if (regs[0].leading) {
-    return new Result(tryFromHere(terms, regs, options));
+  if (regs[0].signals.leading) {
+    var match = tryFromHere(terms, regs, options) || [];
+    return [new Result(match || [])];
   }
 
-  //try starting from each term
-  var len = terms.length - regs.length + 1;
+  //repeating version starting from each term
+  var len = terms.length; // - regs.length + 1;
   for (var i = 0; i < len; i++) {
     var termSlice = terms.slice(i, terms.length);
     var match = tryFromHere(termSlice, regs, options);

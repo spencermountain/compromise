@@ -18,6 +18,14 @@ const tryFromHere = function(terms, regs, options) {
     }
     //find a match with term, (..), [..], or ~..~ syntax
     if (match_term(term, regs[i], options)) {
+      //handle '$' logic
+      if(regs[i].signals.trailing && terms[which_term+1]){
+        return null
+      }
+      //handle '^' logic
+      if(regs[i].signals.leading && which_term!==0){
+        return null
+      }
       result.push(terms[which_term]);
       which_term+=1
       continue;
@@ -48,18 +56,18 @@ const findAll = function(terms, match_str, options) {
 
   // one-off lookup for ^
   // '^' token is 'must start at 0'
-  if (regs[0].leading) {
-    return new Result(tryFromHere(terms, regs, options));
+  if (regs[0].signals.leading) {
+    let match=tryFromHere(terms, regs, options) || []
+    return [new Result(match||[])];
   }
 
-  //try starting from each term
+  //repeating version starting from each term
   let len = terms.length// - regs.length + 1;
   for(let i = 0; i < len; i++) {
     let termSlice = terms.slice(i, terms.length);
     let match = tryFromHere(termSlice, regs, options);
     if (match) {
       result.push(new Result(match));
-      break
     }
   }
   //if we have no results, return an empty Match() object

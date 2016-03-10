@@ -805,7 +805,7 @@ var compact = {
   //interjections
   'UH': ['uhh', 'uh-oh', 'please', 'ugh', 'sheesh', 'eww', 'pff', 'voila', 'oy', 'eep', 'hurrah', 'yuck', 'ow', 'duh', 'oh', 'hmm', 'yeah', 'whoa', 'ooh', 'whee', 'ah', 'bah', 'gah', 'yaa', 'phew', 'gee', 'ahem', 'eek', 'meh', 'yahoo', 'oops', 'd\'oh', 'psst', 'argh', 'grr', 'nah', 'shhh', 'whew', 'mmm', 'yay', 'uh-huh', 'boo', 'wow', 'nope'],
 
-  //nouns that shouldnt be seen as a verb
+  //special nouns that shouldnt be seen as a verb
   'NN': ['president', 'dollar', 'student', 'patent', 'funding', 'morning', 'banking', 'ceiling', 'energy', 'secretary', 'purpose', 'friends', 'event']
 };
 //unpack the compact terms into the misc lexicon..
@@ -1334,16 +1334,107 @@ module.exports = main;
 },{"../term/verb/conjugate/conjugate.js":78}],18:[function(require,module,exports){
 'use strict';
 
-var countries = ['china', 'india', 'america', 'united states', 'usa', 'u.s.a.', 'ussr', 'united states of america', 'indonesia', 'brazil', 'pakistan', 'nigeria', 'bangladesh', 'russia', 'japan', 'mexico', 'philippines', 'vietnam', 'ethiopia', 'egypt', 'germany', 'iran', 'turkey', 'dr congo', 'thailand', 'france', 'united kingdom', 'italy', 'myanmar', 'south africa', 'south korea', 'colombia', 'spain', 'ukraine', 'tanzania', 'kenya', 'argentina', 'algeria', 'poland', 'sudan', 'uganda', 'canada', 'iraq', 'morocco', 'peru', 'uzbekistan', 'saudi arabia', 'malaysia', 'venezuela', 'nepal', 'afghanistan', 'yemen', 'north korea', 'ghana', 'mozambique', 'taiwan', 'australia', 'syria', 'madagascar', 'angola', 'cameroon', 'sri lanka', 'romania', 'burkina faso', 'niger', 'kazakhstan', 'netherlands', 'chile', 'malawi', 'ecuador', 'guatemala', 'côte d\'ivoire', 'mali', 'cambodia', 'senegal', 'zambia', 'zimbabwe', 'chad', 'south sudan', 'belgium', 'cuba', 'tunisia', 'guinea', 'greece', 'rwanda', 'czech republic', 'somalia', 'portugal', 'haiti', 'benin', 'burundi', 'bolivia', 'hungary', 'sweden', 'belarus', 'dominican republic', 'azerbaijan', 'honduras', 'austria', 'united arab emirates', 'israel', 'switzerland', 'tajikistan', 'bulgaria', 'serbia', 'papua new guinea', 'paraguay', 'laos', 'jordan', 'el salvador', 'eritrea', 'libya', 'togo', 'sierra leone', 'nicaragua', 'kyrgyzstan', 'denmark', 'finland', 'slovakia', 'turkmenistan', 'norway', 'lebanon', 'costa rica', 'central african republic', 'republic of ireland', 'new zealand', 'georgia', 'congo-brazzaville', 'palestine', 'liberia', 'croatia', 'oman', 'bosnia and herzegovina', 'kuwait', 'moldova', 'mauritania', 'panama', 'uruguay', 'armenia', 'lithuania', 'albania', 'mongolia', 'jamaica', 'namibia', 'lesotho', 'qatar', 'macedonia', 'slovenia', 'botswana', 'latvia', 'gambia', 'guinea-bissau', 'gabon', 'equatorial guinea', 'trinidad-tobago', 'estonia', 'mauritius', 'swaziland', 'bahrain', 'timor-leste', 'djibouti', 'cyprus', 'fiji', 'guyana', 'comoros', 'bhutan', 'solomon islands', 'luxembourg', 'suriname', 'cape verde', 'malta', 'bahamas', 'iceland'];
+var fns = require('../fns');
 
-var cities = ['shanghai', 'beijing', 'guangzhou', 'tianjin', 'shenzhen', 'mumbai', 'new delhi', 'chennai', 'bangalore', 'ahmedabad', 'new york', 'los angeles', 'chicago', 'houston', 'philadelphia', 'phoenix', 'jakarta', 'rio de janeiro', 'salvador', 'brasília', 'curitiba', 'karachi', 'dhaka', 'chittagong', 'moscow', 'saint petersburg', 'yekaterinburg', 'tokyo', 'yokohama', 'osaka', 'nagoya', 'sapporo', 'kobe', 'mexico', 'guadalajara', 'puebla', 'manila', 'cebu', 'ho chi minh', 'hanoi', 'cairo', 'alexandria', 'giza', 'berlin', 'hamburg', 'munich', 'cologne', 'frankfurt', 'stuttgart', 'tehran', 'karaj', 'istanbul', 'ankara', 'i̇zmir', 'bursa', 'bangkok', 'chiang mai', 'paris', 'marseille', 'lyon', 'toulouse', 'nice', 'nantes', 'london', 'birmingham', 'manchester', 'liverpool', 'rome', 'milan', 'naples', 'turin', 'palermo', 'genoa', 'yangon', 'mandalay', 'cape town', 'port elizabeth', 'pretoria', 'durban', 'seoul', 'busan', 'incheon', 'daegu', 'daejeon', 'bogotá', 'medellín', 'barranquilla', 'madrid', 'barcelona', 'valencia', 'seville', 'zaragoza', 'kiev', 'kharkiv', 'odessa', 'dnipropetrovsk', 'lviv', 'buenos aires', 'rosario', 'la plata', 'warsaw', 'kraków', 'łódź', 'wrocław', 'poznań', 'gdańsk', 'kampala', 'toronto', 'vancouver', 'calgary', 'ottawa', 'edmonton', 'fes', 'tangier', 'lima', 'kuala lumpur', 'caracas', 'kabul', 'sana\'a', 'pyongyang', 'new taipei', 'kaohsiung', 'taichung', 'taipei', 'tainan', 'sydney', 'melbourne', 'brisbane', 'perth', 'damascus', 'homs', 'colombo', 'kandy', 'bucharest', 'timișoara', 'iași', 'cluj-napoca', 'constanța', 'craiova', 'hauts-bassins region', 'nord region', 'almaty', 'amsterdam', 'the hague', 'rotterdam', 'utrecht', 'eindhoven', 'tilburg', 'santiago', 'quito', 'guatemala', 'abidjan', 'phnom penh', 'dakar', 'antwerp', 'ghent', 'charleroi', 'liège', 'brussels', 'havana', 'tunis', 'athens', 'thessaloniki', 'piraeus', 'patras', 'heraklion', 'prague', 'brno', 'pilsen', 'lisbon', 'porto', 'budapest', 'miskolc', 'stockholm', 'gothenburg', 'malmö', 'västerås', 'minsk', 'baku', 'tegucigalpa', 'vienna', 'graz', 'linz', 'salzburg', 'innsbruck', 'abu dhabi', 'tel aviv', 'haifa', 'ashdod', 'petah tikva', 'zürich', 'geneva', 'basel', 'lausanne', 'bern', 'winterthur', 'dushanbe', 'sofia', 'varna', 'burgas', 'belgrade', 'niš', 'amman', 'aqaba', 'san salvador', 'copenhagen', 'aarhus', 'aalborg', 'helsinki', 'espoo', 'tampere', 'vantaa', 'turku', 'bratislava', 'košice', 'ashgabat', 'oslo', 'bergen', 'trondheim', 'beirut', 'san josé', 'dublin', 'cork', 'auckland', 'christchurch', 'wellington', 'hamilton', 'dunedin', 'tbilisi', 'zagreb', 'split', 'banja luka', 'kuwait', 'chișinău', 'panama', 'montevideo', 'yerevan', 'vilnius', 'kaunas', 'klaipėda', 'tirana', 'ulan bator', 'doha', 'skopje', 'ljubljana', 'maribor', 'riga', 'daugavpils', 'tallinn', 'tartu', 'nicosia', 'limassol', 'luxembourg', 'reykjavik', 'kópavogur'];
+var countries = ['usa', 'u.s.a.', 'ussr', 'brazil', 'bangladesh', 'mexico', 'vietnam', 'egypt', 'germany', 'turkey', 'france', 'united kingdom', 'italy', 'kenya', 'iraq', 'morocco', 'peru', 'yemen', 'mozambique', 'sri lanka', 'burkina faso', 'niger', 'netherlands', 'chile', 'malawi', 'ecuador', 'côte d\'ivoire', 'mali', 'zimbabwe', 'chad', 'belgium', 'cuba', 'greece', 'haiti', 'burundi', 'hungary', 'sweden', 'honduras', 'israel', 'laos', 'el salvador', 'libya', 'nicaragua', 'denmark', 'congo-brazzaville', 'kuwait', 'moldova', 'panama', 'jamaica', 'lesotho', 'guinea-bissau', 'timor-leste', 'djibouti', 'fiji', 'comoros', 'solomon islands', 'luxembourg', 'suriname', 'cape verde', 'malta', 'bahamas'];
+var compressed_countries = {
+  istan: 'pak,uzbek,afghan,tajik,turkmen',
+  ublic: 'czech rep,dominican rep,central african rep',
+  uinea: 'g,papua new g,equatorial g',
+  land: 'thai,po,switzer,fin,republic of ire,new zea,swazi,ice',
+  ania: 'tanz,rom,maurit,lithu,alb',
+  rica: 'ame,united states of ame,south af,costa ',
+  mbia: 'colo,za,ga',
+  eria: 'nig,alg,lib',
+  nia: 'arme,macedo,slove,esto',
+  sia: 'indone,rus,malay,tuni',
+  ina: 'ch,argent,bosnia and herzegov',
+  tan: 'kazakhs,kyrgyzs,bhu',
+  ana: 'gh,botsw,guy',
+  bia: 'saudi ara,ser,nami',
+  lia: 'austra,soma,mongo',
+  rea: 'south ko,north ko,erit',
+  dan: 'su,south su,jor',
+  ria: 'sy,aust,bulga',
+  ia: 'ind,ethiop,cambod,boliv,slovak,georg,croat,latv',
+  an: 'jap,ir,taiw,azerbaij,om',
+  da: 'ugan,cana,rwan',
+  us: 'belar,mauriti,cypr',
+  al: 'nep,seneg,portug',
+  in: 'spa,ben,bahra',
+  go: 'dr con,to,trinidad-toba',
+  la: 'venezue,ango,guatema',
+  es: 'united stat,philippin,united arab emirat',
+  on: 'camero,leban,gab',
+  ar: 'myanm,madagasc,qat',
+  ay: 'paragu,norw,urugu',
+  ne: 'ukrai,sierra leo,palesti'
+};
+countries = fns.expand_suffixes(countries, compressed_countries);
+
+/////
+var cities = ['guangzhou', 'ahmedabad', 'phoenix', 'jakarta', 'curitiba', 'moscow', 'tokyo', 'nagoya', 'kobe', 'mexico', 'cebu', 'ho chi minh', 'hanoi', 'giza', 'frankfurt', 'stuttgart', 'i̇zmir', 'paris', 'toulouse', 'nice', 'rome', 'palermo', 'genoa', 'cape town', 'port elizabeth', 'bogotá', 'medellín', 'seville', 'zaragoza', 'kiev', 'odessa', 'rosario', 'la plata', 'warsaw', 'kraków', 'łódź', 'wrocław', 'poznań', 'calgary', 'ottawa', 'sydney', 'perth', 'homs', 'iași', 'cluj-napoca', 'almaty', 'the hague', 'utrecht', 'phnom penh', 'antwerp', 'ghent', 'brussels', 'tunis', 'athens', 'thessaloniki', 'prague', 'brno', 'miskolc', 'stockholm', 'västerås', 'tegucigalpa', 'graz', 'innsbruck', 'abu dhabi', 'haifa', 'ashdod', 'dushanbe', 'niš', 'aqaba', 'aalborg', 'helsinki', 'espoo', 'vantaa', 'turku', 'košice', 'ashgabat', 'oslo', 'trondheim', 'auckland', 'tbilisi', 'zagreb', 'split', 'kuwait', 'montevideo', 'klaipėda', 'doha', 'skopje', 'riga', 'luxembourg', 'reykjavik'];
+
+var suffix_compressed_cities = {
+  burg: 'saint peters,yekaterin,ham,til,gothen,salz',
+  ton: 'hous,edmon,welling,hamil',
+  ion: 'hauts-bassins reg,nord reg,herakl',
+  ana: 'hav,tir,ljublj',
+  ara: 'guadalaj,ank,timișo',
+  an: 'tehr,mil,durb,bus,tain,abidj,amm,yerev',
+  ia: 'philadelph,brasíl,alexandr,pretor,valenc,sof,nicos',
+  on: 'ly,lond,yang,inche,daeje,lisb',
+  en: 'shenzh,eindhov,pils,copenhag,berg',
+  ng: 'beiji,chittago,pyongya,kaohsiu,taichu',
+  in: 'tianj,berl,tur,dubl,duned',
+  es: 'los angel,nant,napl,buenos air,f',
+  la: 'pueb,mani,barranquil,kampa,guatema',
+  or: 'salvad,san salvad,ulan bat,marib',
+  us: 'damasc,pirae,aarh,vilni',
+  as: 'carac,patr,burg,kaun',
+  va: 'craio,petah tik,gene,bratisla',
+  ai: 'shangh,mumb,chenn,chiang m',
+  ne: 'colog,melbour,brisba,lausan',
+  er: 'manchest,vancouv,tangi',
+  ka: 'dha,osa,banja lu',
+  ro: 'rio de janei,sappo,cai',
+  am: 'birmingh,amsterd,rotterd',
+  ur: 'kuala lump,winterth,kópavog',
+  ch: 'muni,züri,christchur',
+  na: 'barcelo,vien,var',
+  ma: 'yokoha,li,pana',
+  ul: 'istanb,seo,kab',
+  to: 'toron,qui,por',
+  iv: 'khark,lv,tel av',
+  sk: 'dnipropetrov,gdań,min'
+};
+
+cities = fns.expand_suffixes(cities, suffix_compressed_cities);
+
+var prefix_compressed_cities = {
+  'new ': 'delhi,york,taipei',
+  san: 'a\'a,tiago, josé',
+  ta: 'ipei,mpere,llinn,rtu',
+  ba: 'ngalore,ngkok,ku,sel',
+  li: 'verpool,ège,nz,massol',
+  ma: 'rseille,ndalay,drid,lmö',
+  be: 'rn,lgrade,irut',
+  ka: 'rachi,raj,ndy',
+  da: 'egu,kar,ugavpils',
+  ch: 'icago,arleroi,ișinău',
+  co: 'lombo,nstanța,rk',
+  bu: 'rsa,charest,dapest'
+};
+cities = fns.expand_prefixes(cities, prefix_compressed_cities);
 
 module.exports = {
   countries: countries,
   cities: cities
 };
+// console.log(cities[99]);
+// console.log(countries[99]);
 
-},{}],19:[function(require,module,exports){
+},{"../fns":21}],19:[function(require,module,exports){
 'use strict';
 
 //common nouns that have no plural form. These are suprisingly rare
@@ -2295,6 +2386,13 @@ module.exports = capital_signals;
 'use strict';
 
 var pos = require('../../sentence/pos/parts_of_speech.js');
+
+// 'd
+// 'll
+// 're
+// n't
+
+// 's
 
 var irregulars = {
   'i\'d': ['i', 'would'],

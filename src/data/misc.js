@@ -373,7 +373,7 @@ const compact = {
     'nope'
   ],
 
-  //nouns that shouldnt be seen as a verb
+  //special nouns that shouldnt be seen as a verb
   'NN': [
     'president',
     'dollar',

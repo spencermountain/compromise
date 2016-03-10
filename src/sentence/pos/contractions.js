@@ -3,6 +3,15 @@
 'use strict';
 const pos = require('../../sentence/pos/parts_of_speech.js');
 
+// 'd
+// 'll
+// 've
+// 're
+// n't
+
+// 's
+
+
 const irregulars = {
   'i\'d': ['i', 'would'],
   'she\'d': ['she', 'would'],

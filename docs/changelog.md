@@ -3,8 +3,9 @@ Uses semver, with occasional releases to npm and bower.
 here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
 
 ### v.4  &nbsp;  
-* 4.0.0 - grammar-aware match & replace functions
+* 4.1.3 - added readable-compression to adj, verbs (121kb -> 117kb)
 * 4.1.0 - hyphenated words are normalized into spaces
+* 4.0.0 - grammar-aware match & replace functions
 
 ### v.3  &nbsp;  **(Breaking)**
 * 3.0.2 - Statement & Question classes

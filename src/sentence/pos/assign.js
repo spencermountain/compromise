@@ -4,10 +4,10 @@ const pos = require('./parts_of_speech');
 //set the part-of-speech of a particular term
 const assign = function (t, tag, reason) {
   let P = pos.classMapping[tag] || pos.Term;
-  let implicit = t.implicit;
+  let expansion = t.expansion;
   t = new P(t.text, tag);
   t.reason = reason;
-  t.implicit = implicit;
+  t.expansion = expansion;
   return t;
 };
 module.exports = assign;

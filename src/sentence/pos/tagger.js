@@ -1,6 +1,5 @@
 //part-of-speech tagging
 'use strict';
-const contractions = require('./contractions');
 const word_rules = require('./word_rules');
 const grammar_rules = require('./grammar_rules');
 const fancy_lumping = require('./fancy_lumping');
@@ -43,7 +42,7 @@ const should_chunk = function(a, b) {
     return false;
   }
   //dont chunk contractions (again)
-  if (a.implicit || b.implicit) {
+  if (a.expansion || b.expansion) {
     return false;
   }
   if (a.tag === b.tag) {
@@ -134,7 +133,7 @@ const specific_pos = function(terms) {
 const tagger = function(s, options) {
   //word-level rules
   s.terms = capital_signals(s.terms);
-  s.terms = contractions.easy_ones(s.terms);
+  // s.terms = contractions.easy_ones(s.terms);
   s.terms = lexicon_pass(s.terms, options);
   s.terms = word_rules_pass(s.terms);
   s.terms = interjection_fixes(s.terms);
@@ -145,7 +144,7 @@ const tagger = function(s, options) {
     s.terms = noun_fallback(s.terms);
     s.terms = phrasal_verbs(s.terms);
     s.terms = specific_pos(s.terms);
-    s.terms = contractions.hard_ones(s.terms);
+    // s.terms = contractions.hard_ones(s.terms);
     s.terms = fancy_lumping(s.terms);
   }
   return s.terms;

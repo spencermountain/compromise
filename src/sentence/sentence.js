@@ -1,11 +1,15 @@
 'use strict';
-const Term = require('../term/term.js');
-const tagger = require('./pos/tagger.js');
-const passive_voice = require('./passive_voice.js');
-const negate = require('./negate.js');
-const contract = require('./pos/contractions.js').contract;
-const change_tense = require('./tense.js');
-const match = require('../match/match.js');
+const Term = require('../term/term');
+const tagger = require('./pos/tagger');
+const passive_voice = require('./passive_voice');
+const negate = require('./negate');
+const contractions = {
+  interpret: require('./contractions/interpret'),
+  contract: require('./contractions/contract'),
+  expand: require('./contractions/expand'),
+};
+const change_tense = require('./tense');
+const match = require('../match/match');
 
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {
@@ -19,23 +23,21 @@ class Sentence {
     this.terms = terms.map(function(s) {
       return new Term(s);
     });
+    //part-of-speech tagging
     this.terms = tagger(this, options);
-    //contractions
+    // process contractions
+    this.terms = contractions.interpret(this.terms);
+    //now the hard part is already done, just flip them
     this.contractions = {
       // "he'd go" -> "he would go"
       expand: function() {
-        //the hard part is already done, just flip them
-        the.terms.forEach(function(t) {
-          if (t.implicit) {
-            t.changeTo(t.implicit);
-            t.implicit = '';
-          }
-        });
+        the.terms = contractions.expand(the.terms);
         return the;
       },
       // "he would go" -> "he'd go"
       contract: function() {
-        return contract(the.terms);
+        the.terms = contractions.contract(the.terms);
+        return the;
       }
     };
   }
@@ -186,5 +188,9 @@ Sentence.fn = Sentence.prototype;
 
 module.exports = Sentence;
 
-// let s = new Sentence('the dog played');
-// console.log(s.replace('the [Noun]', 'the cat').text());
+// let s = new Sentence(`don't go`);
+// console.log(s.text());
+// s.contractions.expand();
+// console.log(s.text());
+// s.contractions.contract();
+// console.log(s.text());

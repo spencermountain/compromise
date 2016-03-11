@@ -15,6 +15,12 @@ const lexicon_pass = function(terms, options) {
       const attempt = t.normal.replace(/^(over|under|out|.*?-|un|re|en)/, '');
       return assign(t, lexicon[attempt], 'lexicon_prefix');
     }
+    //try to match without a contraction - "they've" -> "they"
+    if (t.has_abbreviation()) {
+      const attempt = t.normal.replace(/'.*/, '');
+      return assign(t, lexicon[attempt], 'lexicon_prefix');
+    }
+
     //match 'twenty-eight'
     if (t.normal.match(/-/)) {
       let sides = t.normal.split('-');

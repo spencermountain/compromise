@@ -15,7 +15,7 @@ class Term {
     //the normalised working-version of the word
     this.normal = '';
     //if it's a contraction, the 'hidden word'
-    this.implicit = '';
+    this.expansion = '';
     //set .normal
     this.rebuild();
     //the reasoning behind it's part-of-speech
@@ -65,6 +65,12 @@ class Term {
     }
     return false;
   }
+  has_abbreviation() {
+    if (this.text.match(/[a-z]'[a-z][a-z]?$/)) {
+      return true;
+    }
+    return false;
+  }
   is_capital() {
     if (this.text.match(/[A-Z][a-z]/)) {
       return true;
@@ -99,8 +105,8 @@ class Term {
 }
 
 Term.fn = Term.prototype;
-// let t = new Term('quick');
-// console.log(t.match('(fun|nice|cool)'));
-// console.log(t.match('[Adjective]'));
+// let t = new Term(`spencer'd`);
+// console.log(t.match('(fun|nice|cool|quick)'));
+// console.log(t.has_abbreviation());
 
 module.exports = Term;

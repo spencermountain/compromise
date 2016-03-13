@@ -47,6 +47,7 @@ git push origin master --tags
 * some smaller and more specific subset builds from grunt.
 * perfect 'have walked' & pluperfect 'had walked' & future perfect 'will have walked' support
 * habitual aspect support 'used to walk'
+* consult [Ryan Schuft's influction library](https://github.com/dariusk/cyberfiction/blob/master/lib/inflection.js)
 
 
 ###file size
@@ -63,4 +64,3 @@ benchmarked unit tests on backend + frontend
 * May 2015  520ms front, 315ms back
 
 have a nice day
-

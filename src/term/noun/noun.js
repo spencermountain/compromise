@@ -20,6 +20,9 @@ class Noun extends Term {
     if (tag) {
       this.pos[tag] = true;
     }
+    if (this.is_plural()) {
+      this.pos['Plural'] = true;
+    }
   }
   //noun methods
   article() {

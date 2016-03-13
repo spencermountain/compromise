@@ -2,8 +2,12 @@
   "env": {
     "es6": true
   },
-  "ecmaFeatures": {
-    "modules": true
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
   },
   "rules": {
     "no-cond-assign": 2,

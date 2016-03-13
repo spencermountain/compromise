@@ -99,7 +99,7 @@ if (typeof define === 'function' && define.amd) {
 }
 
 
-// console.log(nlp.text('the boy and the girl.').replace('the [Noun]', 'the house', {}).text());
+// console.log(nlp.text('the boy and the girl.').replace('the [Noun]', 'the cyber$1', {}).text());
 
 // let match = nlp.sentence('the dog played').match('^dog played');
 // console.log(match[0].text());

@@ -17,8 +17,15 @@ class Result {
   replace(str) {
     let words = str.split(' ');
     for(let i = 0; i < this.terms.length; i++) {
-      //   //umm, this is like a capture-group in regexp..
+      //umm, this is like a capture-group in regexp..
+      //so just leave it
       if (words[i] === '$') {
+        continue;
+      }
+      //allow replacements with the capture group, like 'cyber-$1'
+      if (words[i].match(/\$1/)) {
+        let combined = words[1].replace(/\$1/, this.terms[i].text);
+        this.terms[i].changeTo(combined);
         continue;
       }
       this.terms[i].changeTo(words[i] || '');

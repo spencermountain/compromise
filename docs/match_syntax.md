@@ -72,6 +72,14 @@ match[0].text()
 //"John eats glue"
 ```
 
+## Capture-groups
+`$1` matches the current word
+```javascript
+let matches = nlp.text('John eats the glue').replace('the [Noun]', 'the cyber-$1')
+match[0].text()
+//"John eats the cyber-glue"
+```
+
 ## Location flags
 A leading `^` character means 'at the start of a sentence'.
 ```javascript
@@ -86,4 +94,3 @@ let matches = nlp.text('John eats glue').match('eats glue$')
 match[0].text()
 //"eats glue"
 ```
-

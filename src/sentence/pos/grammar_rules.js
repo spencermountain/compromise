@@ -4,10 +4,10 @@ module.exports = [
     'before': ['Determiner', '?'],
     'after': ['Determiner', 'Noun']
   },
-  {
-    'before': ['Determiner', 'Verb'],
-    'after': ['Determiner', 'Noun']
-  },
+  // {
+  //   'before': ['Determiner', 'Verb'],
+  //   'after': ['Determiner', 'Noun']
+  // },
   {
     'before': ['Determiner', 'Adjective', 'Verb'],
     'after': ['Noun', 'Noun', 'Noun']

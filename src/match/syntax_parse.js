@@ -74,7 +74,6 @@ const parse_term = function(term, i) {
 
 //turn a match string into an array of objects
 const parse_all = function(regs) {
-  console.log(regs);
   regs = regs || [];
   return regs.map(parse_term);
 };

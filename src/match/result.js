@@ -14,8 +14,7 @@ class Result {
     return match(this.terms, str, options);
   }
   //a 1-1 replacement of strings
-  replace(str) {
-    let words = str.split(' ');
+  replace(words) {
     for(let i = 0; i < this.terms.length; i++) {
       //umm, this is like a capture-group in regexp..
       //so just leave it
@@ -30,6 +29,7 @@ class Result {
       }
       this.terms[i].changeTo(words[i] || '');
     }
+    return this;
   }
   text() {
     return this.terms.reduce(function(s, t) {

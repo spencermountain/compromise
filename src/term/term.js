@@ -49,8 +49,8 @@ class Term {
   }
   //a regex-like string search
   match(match_str, options) {
-    let reg = syntax_parse(match_str)[0];
-    return match_term(this, reg, options);
+    let reg = syntax_parse([match_str]);
+    return match_term(this, reg[0], options);
   }
   //the 'root' singular/infinitive/whatever.
   // method is overloaded by each pos type
@@ -77,6 +77,16 @@ class Term {
     }
     return false;
   }
+  //utility method to avoid lumping words with non-word stuff
+  is_word() {
+    if (this.text.match(/^\[.*?\]$/)) {
+      return false;
+    }
+    if (!this.text.match(/[a-z|0-9]/i)) {
+      return false;
+    }
+    return true;
+  }
   //FBI or F.B.I.
   is_acronym() {
     return is_acronym(this.text);
@@ -86,7 +96,7 @@ class Term {
     let str = this.text || '';
     str = str.toLowerCase();
     //strip grammatical punctuation
-    str = str.replace(/[,\.!:;\?\(\)]/, '');
+    str = str.replace(/[,\.!:;\?\(\)^$]/, '');
     //convert hyphenations to a multiple-word term
     str = str.replace(/([a-z])\-([a-z])/, '$1 $2');
     //remove quotations + scare-quotes

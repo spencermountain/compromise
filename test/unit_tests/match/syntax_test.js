@@ -54,7 +54,7 @@ describe('match syntax test', function() {
   ];
   tests.forEach(function(a) {
     it(a[0], function(done) {
-      let o = parse(a[0])[0];
+      let o = parse([a[0]])[0];
       o.term.should.equal('term');
       (o.signals).should.deepEqual(a[1]);
       done();

@@ -54,14 +54,26 @@ class Sentence {
     this.terms.splice(i + 1, 0, t);
   }
 
+  //tokenize the match string, just like you'd tokenize the sentence.
+  //this avoids lumper/splitter problems between haystack and needle
+  tokenize_match(str) {
+    let regs = new Sentence(str).terms;
+    regs = regs.map((t) => t.text);
+    regs = regs.filter((t) => t !== '');
+    return regs;
+  }
+
   // a regex-like lookup for a list of terms.
   // returns [] of matches in a 'Terms' class
   match(match_str, options) {
-    return match.findAll(this.terms, match_str, options);
+    let regs = this.tokenize_match(match_str);
+    return match.findAll(this.terms, regs, options);
   }
   //returns a transformed sentence
-  replace(str, replacement, options) {
-    match.replaceAll(this.terms, str, replacement, options);
+  replace(match_str, replacement, options) {
+    let regs = this.tokenize_match(match_str);
+    replacement = this.tokenize_match(replacement);
+    match.replaceAll(this.terms, regs, replacement, options);
     return this;
   }
 

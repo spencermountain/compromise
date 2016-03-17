@@ -44,6 +44,10 @@ const shouldLumpTwo = function(a, b) {
   if (!a || !b) {
     return false;
   }
+  //don't chunk non-word things with word-things
+  if (a.is_word() === false || b.is_word() === false) {
+    return false;
+  }
   const lump_rules = [
     {
       condition: (a.pos.Person && b.pos.Honourific || a.pos.Honourific && b.pos.Person), //"John sr."

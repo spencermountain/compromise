@@ -22,7 +22,6 @@ const tryFromHere = function(terms, regs, options) {
       result.push(terms[which_term]);
       which_term += 1;
       term = terms[which_term];
-    // continue;
     }
     //find a match with term, (..), [..], or ~..~ syntax
     if (match_term(term, regs[i], options)) {
@@ -58,9 +57,9 @@ const tryFromHere = function(terms, regs, options) {
 
 
 //find first match and return []Terms
-const findAll = function(terms, match_str, options) {
+const findAll = function(terms, regs, options) {
   let result = [];
-  let regs = syntax_parse(match_str || '');
+  regs = syntax_parse(regs || '');
 
   // one-off lookup for ^
   // '^' token is 'must start at 0'
@@ -86,8 +85,8 @@ const findAll = function(terms, match_str, options) {
 };
 
 //calls Terms.replace() on each found result
-const replaceAll = function(terms, str, replacement, options) {
-  let list = findAll(terms, str, options);
+const replaceAll = function(terms, regs, replacement, options) {
+  let list = findAll(terms, regs, options);
   list.forEach((t) => {
     t.replace(replacement, options);
   });

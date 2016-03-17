@@ -103,7 +103,8 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
-// console.log(nlp.text(`if you don't mind`).match(`if you don't mind`)[0].text());
+// console.log(nlp.text(`the dog quickly played`).match(`the dog . played`)[0].text());
+// console.log(nlp.text(`would like to`).match(`would like to`)[0].text());
 
 },{"./fns.js":22,"./lexicon.js":23,"./sentence/question/question.js":43,"./sentence/sentence.js":44,"./sentence/statement/statement.js":45,"./term/adjective/adjective.js":47,"./term/adverb/adverb.js":52,"./term/noun/date/date.js":56,"./term/noun/noun.js":62,"./term/noun/organization/organization.js":64,"./term/noun/person/person.js":68,"./term/noun/place/place.js":70,"./term/noun/value/value.js":78,"./term/term.js":79,"./term/verb/verb.js":87,"./text/text.js":89}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -1926,7 +1927,6 @@ var tryFromHere = function tryFromHere(terms, regs, options) {
       result.push(terms[which_term]);
       which_term += 1;
       term = terms[which_term];
-      // continue;
     }
     //find a match with term, (..), [..], or ~..~ syntax
     if (match_term(term, regs[i], options)) {
@@ -1961,9 +1961,9 @@ var tryFromHere = function tryFromHere(terms, regs, options) {
 };
 
 //find first match and return []Terms
-var findAll = function findAll(terms, match_str, options) {
+var findAll = function findAll(terms, regs, options) {
   var result = [];
-  var regs = syntax_parse(match_str || '');
+  regs = syntax_parse(regs || '');
 
   // one-off lookup for ^
   // '^' token is 'must start at 0'
@@ -1989,8 +1989,8 @@ var findAll = function findAll(terms, match_str, options) {
 };
 
 //calls Terms.replace() on each found result
-var replaceAll = function replaceAll(terms, str, replacement, options) {
-  var list = findAll(terms, str, options);
+var replaceAll = function replaceAll(terms, regs, replacement, options) {
+  var list = findAll(terms, regs, options);
   list.forEach(function (t) {
     t.replace(replacement, options);
   });
@@ -2078,8 +2078,7 @@ var Result = function () {
 
   }, {
     key: 'replace',
-    value: function replace(str) {
-      var words = str.split(' ');
+    value: function replace(words) {
       for (var i = 0; i < this.terms.length; i++) {
         //umm, this is like a capture-group in regexp..
         //so just leave it
@@ -2094,6 +2093,7 @@ var Result = function () {
         }
         this.terms[i].changeTo(words[i] || '');
       }
+      return this;
     }
   }, {
     key: 'text',
@@ -2200,11 +2200,10 @@ var parse_term = function parse_term(term, i) {
 // console.log(parse_term('~fun~?'));
 
 //turn a match string into an array of objects
-var parse_all = function parse_all(str) {
-  str = str || '';
-  str = str.replace(/ +/, ' ');
-  str = str.trim();
-  return str.split(' ').map(parse_term);
+var parse_all = function parse_all(regs) {
+  console.log(regs);
+  regs = regs || [];
+  return regs.map(parse_term);
 };
 // console.log(parse_all(''));
 
@@ -2584,6 +2583,10 @@ var shouldLumpThree = function shouldLumpThree(a, b, c) {
 
 var shouldLumpTwo = function shouldLumpTwo(a, b) {
   if (!a || !b) {
+    return false;
+  }
+  //don't chunk non-word things with word-things
+  if (a.is_word() === false || b.is_word() === false) {
     return false;
   }
   var lump_rules = [{
@@ -3009,6 +3012,10 @@ var should_chunk = function should_chunk(a, b) {
   if (a.has_comma()) {
     return false;
   }
+  //don't chunk non-word things with word-things
+  if (a.is_word() === false || b.is_word() === false) {
+    return false;
+  }
   //dont chunk these pos
   var dont_chunk = {
     Expression: true
@@ -3253,20 +3260,39 @@ var Sentence = function () {
       this.terms.splice(i + 1, 0, t);
     }
 
+    //tokenize the match string, just like you'd tokenize the sentence.
+    //this avoids lumper/splitter problems between haystack and needle
+
+  }, {
+    key: 'tokenize_match',
+    value: function tokenize_match(str) {
+      var regs = new Sentence(str).terms;
+      regs = regs.map(function (t) {
+        return t.text;
+      });
+      regs = regs.filter(function (t) {
+        return t !== '';
+      });
+      return regs;
+    }
+
     // a regex-like lookup for a list of terms.
     // returns [] of matches in a 'Terms' class
 
   }, {
     key: 'match',
     value: function match(match_str, options) {
-      return _match.findAll(this.terms, match_str, options);
+      var regs = this.tokenize_match(match_str);
+      return _match.findAll(this.terms, regs, options);
     }
     //returns a transformed sentence
 
   }, {
     key: 'replace',
-    value: function replace(str, replacement, options) {
-      _match.replaceAll(this.terms, str, replacement, options);
+    value: function replace(match_str, replacement, options) {
+      var regs = this.tokenize_match(match_str);
+      replacement = this.tokenize_match(replacement);
+      _match.replaceAll(this.terms, regs, replacement, options);
       return this;
     }
 
@@ -5881,8 +5907,8 @@ var Term = function () {
   }, {
     key: 'match',
     value: function match(match_str, options) {
-      var reg = syntax_parse(match_str)[0];
-      return match_term(this, reg, options);
+      var reg = syntax_parse([match_str]);
+      return match_term(this, reg[0], options);
     }
     //the 'root' singular/infinitive/whatever.
     // method is overloaded by each pos type
@@ -5919,6 +5945,19 @@ var Term = function () {
       }
       return false;
     }
+    //utility method to avoid lumping words with non-word stuff
+
+  }, {
+    key: 'is_word',
+    value: function is_word() {
+      if (this.text.match(/^\[.*?\]$/)) {
+        return false;
+      }
+      if (!this.text.match(/[a-z|0-9]/i)) {
+        return false;
+      }
+      return true;
+    }
     //FBI or F.B.I.
 
   }, {
@@ -5934,7 +5973,7 @@ var Term = function () {
       var str = this.text || '';
       str = str.toLowerCase();
       //strip grammatical punctuation
-      str = str.replace(/[,\.!:;\?\(\)]/, '');
+      str = str.replace(/[,\.!:;\?\(\)^$]/, '');
       //convert hyphenations to a multiple-word term
       str = str.replace(/([a-z])\-([a-z])/, '$1 $2');
       //remove quotations + scare-quotes

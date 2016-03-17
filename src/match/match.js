@@ -19,6 +19,7 @@ const tryFromHere = function(terms, regs, options) {
     }
     //if it's a contraction, go to next term
     if (term.normal === '') {
+      result.push(terms[which_term]);
       which_term += 1;
       term = terms[which_term];
     // continue;

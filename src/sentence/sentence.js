@@ -107,23 +107,19 @@ class Sentence {
     return this.terms.reduce(function(s, t) {
       //implicit contractions shouldn't be included
       if (t.text) {
-        if (s === '') {
-          s = t.text;
-        } else {
-          s += ' ' + t.text;
-        }
+        s += ' ' + t.text;
       }
       return s;
-    }, '');
+    }, '').trim();
   }
   //like text but for cleaner text
   normalized() {
     return this.terms.reduce(function(s, t) {
-      if (t.text) {
+      if (t.normal) {
         s += ' ' + t.normal;
       }
       return s;
-    }, '');
+    }, '').trim();
   }
 
   //further 'lemmatisation/inflection'

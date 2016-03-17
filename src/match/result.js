@@ -32,16 +32,22 @@ class Result {
     }
   }
   text() {
-    return this.terms.reduce((arr, t) => {
-      arr.push(t.text);
-      return arr;
-    }, []).join(' ');
+    return this.terms.reduce(function(s, t) {
+      //implicit contractions shouldn't be included
+      if (t.text) {
+        s += ' ' + t.text;
+      }
+      return s;
+    }, '').trim();
   }
   normal() {
-    return this.terms.reduce((arr, t) => {
-      arr.push(t.normal);
-      return arr;
-    }, []).join(' ');
+    return this.terms.reduce(function(s, t) {
+      //implicit contractions shouldn't be included
+      if (t.normal) {
+        s += ' ' + t.normal;
+      }
+      return s;
+    }, '').trim();
   }
 }
 //a slice of term objects

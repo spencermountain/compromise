@@ -103,7 +103,7 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
-// console.log(nlp.text(`if you don't mind`).match(`if you don't mind`)[0]);
+// console.log(nlp.text(`if you don't mind`).match(`if you don't mind`)[0].text());
 
 },{"./fns.js":22,"./lexicon.js":23,"./sentence/question/question.js":43,"./sentence/sentence.js":44,"./sentence/statement/statement.js":45,"./term/adjective/adjective.js":47,"./term/adverb/adverb.js":52,"./term/noun/date/date.js":56,"./term/noun/noun.js":62,"./term/noun/organization/organization.js":64,"./term/noun/person/person.js":68,"./term/noun/place/place.js":70,"./term/noun/value/value.js":78,"./term/term.js":79,"./term/verb/verb.js":87,"./text/text.js":89}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -1923,6 +1923,7 @@ var tryFromHere = function tryFromHere(terms, regs, options) {
     }
     //if it's a contraction, go to next term
     if (term.normal === '') {
+      result.push(terms[which_term]);
       which_term += 1;
       term = terms[which_term];
       // continue;
@@ -2097,18 +2098,24 @@ var Result = function () {
   }, {
     key: 'text',
     value: function text() {
-      return this.terms.reduce(function (arr, t) {
-        arr.push(t.text);
-        return arr;
-      }, []).join(' ');
+      return this.terms.reduce(function (s, t) {
+        //implicit contractions shouldn't be included
+        if (t.text) {
+          s += ' ' + t.text;
+        }
+        return s;
+      }, '').trim();
     }
   }, {
     key: 'normal',
     value: function normal() {
-      return this.terms.reduce(function (arr, t) {
-        arr.push(t.normal);
-        return arr;
-      }, []).join(' ');
+      return this.terms.reduce(function (s, t) {
+        //implicit contractions shouldn't be included
+        if (t.normal) {
+          s += ' ' + t.normal;
+        }
+        return s;
+      }, '').trim();
     }
   }]);
 
@@ -3323,14 +3330,10 @@ var Sentence = function () {
       return this.terms.reduce(function (s, t) {
         //implicit contractions shouldn't be included
         if (t.text) {
-          if (s === '') {
-            s = t.text;
-          } else {
-            s += ' ' + t.text;
-          }
+          s += ' ' + t.text;
         }
         return s;
-      }, '');
+      }, '').trim();
     }
     //like text but for cleaner text
 
@@ -3338,11 +3341,11 @@ var Sentence = function () {
     key: 'normalized',
     value: function normalized() {
       return this.terms.reduce(function (s, t) {
-        if (t.text) {
+        if (t.normal) {
           s += ' ' + t.normal;
         }
         return s;
-      }, '');
+      }, '').trim();
     }
 
     //further 'lemmatisation/inflection'

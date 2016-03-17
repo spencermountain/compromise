@@ -9,32 +9,37 @@ const match_term = require('./match_term');
 // take a slice of our terms, and try a match starting here
 const tryFromHere = function(terms, regs, options) {
   let result = [];
-  let which_term=0
+  let which_term = 0;
   for(let i = 0; i < regs.length; i++) {
     let term = terms[which_term];
     //if we hit the end of terms, prematurely
     if (!term) {
       return null;
     }
+    //if it's a contraction, skip it
+    if (term.normal === '') {
+      which_term += 1;
+      continue;
+    }
     //find a match with term, (..), [..], or ~..~ syntax
     if (match_term(term, regs[i], options)) {
       //handle '$' logic
-      if(regs[i].signals.trailing && terms[which_term+1]){
-        return null
+      if (regs[i].signals.trailing && terms[which_term + 1]) {
+        return null;
       }
       //handle '^' logic
-      if(regs[i].signals.leading && which_term!==0){
-        return null
+      if (regs[i].signals.leading && which_term !== 0) {
+        return null;
       }
       result.push(terms[which_term]);
-      which_term+=1
+      which_term += 1;
       continue;
     }
     //support wildcards, some matching logic
     // '.' means easy-pass
     if (regs[i].signals.any_one) {
       result.push(terms[which_term]);
-      which_term+=1
+      which_term += 1;
       continue;
     }
     //else, if term was optional, continue anyways
@@ -57,12 +62,12 @@ const findAll = function(terms, match_str, options) {
   // one-off lookup for ^
   // '^' token is 'must start at 0'
   if (regs[0].signals.leading) {
-    let match=tryFromHere(terms, regs, options) || []
-    return [new Result(match||[])];
+    let match = tryFromHere(terms, regs, options) || [];
+    return [new Result(match || [])];
   }
 
   //repeating version starting from each term
-  let len = terms.length// - regs.length + 1;
+  let len = terms.length; // - regs.length + 1;
   for(let i = 0; i < len; i++) {
     let termSlice = terms.slice(i, terms.length);
     let match = tryFromHere(termSlice, regs, options);

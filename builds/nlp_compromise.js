@@ -102,10 +102,8 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.text('the boy and the girl.').replace('the [Noun]', 'the house', {}).text());
-
-// let match = nlp.sentence('the dog played').match('^dog played');
-// console.log(match[0].text());
+// console.log(nlp.value('six hundred and fifty nine').parse());
+// console.log(nlp.text(`if you don't mind`).match(`if you don't mind`));
 
 },{"./fns.js":22,"./lexicon.js":23,"./sentence/question/question.js":43,"./sentence/sentence.js":44,"./sentence/statement/statement.js":45,"./term/adjective/adjective.js":47,"./term/adverb/adverb.js":52,"./term/noun/date/date.js":56,"./term/noun/noun.js":62,"./term/noun/organization/organization.js":64,"./term/noun/person/person.js":68,"./term/noun/place/place.js":70,"./term/noun/value/value.js":78,"./term/term.js":79,"./term/verb/verb.js":87,"./text/text.js":89}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -1922,6 +1920,11 @@ var tryFromHere = function tryFromHere(terms, regs, options) {
     if (!term) {
       return null;
     }
+    //if it's a contraction, skip it
+    if (term.normal === '') {
+      which_term += 1;
+      continue;
+    }
     //find a match with term, (..), [..], or ~..~ syntax
     if (match_term(term, regs[i], options)) {
       //handle '$' logic
@@ -2075,8 +2078,15 @@ var Result = function () {
     value: function replace(str) {
       var words = str.split(' ');
       for (var i = 0; i < this.terms.length; i++) {
-        //   //umm, this is like a capture-group in regexp..
+        //umm, this is like a capture-group in regexp..
+        //so just leave it
         if (words[i] === '$') {
+          continue;
+        }
+        //allow replacements with the capture group, like 'cyber-$1'
+        if (words[i].match(/\$1/)) {
+          var combined = words[1].replace(/\$1/, this.terms[i].text);
+          this.terms[i].changeTo(combined);
           continue;
         }
         this.terms[i].changeTo(words[i] || '');
@@ -2649,10 +2659,12 @@ module.exports = [
 {
   'before': ['Determiner', '?'],
   'after': ['Determiner', 'Noun']
-}, {
-  'before': ['Determiner', 'Verb'],
-  'after': ['Determiner', 'Noun']
-}, {
+},
+// {
+//   'before': ['Determiner', 'Verb'],
+//   'after': ['Determiner', 'Noun']
+// },
+{
   'before': ['Determiner', 'Adjective', 'Verb'],
   'after': ['Noun', 'Noun', 'Noun']
 }, {
@@ -4493,6 +4505,9 @@ var Noun = function (_Term) {
     _this.pos['Noun'] = true;
     if (tag) {
       _this.pos[tag] = true;
+    }
+    if (_this.is_plural()) {
+      _this.pos['Plural'] = true;
     }
     return _this;
   }

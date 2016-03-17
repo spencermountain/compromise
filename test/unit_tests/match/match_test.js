@@ -58,7 +58,15 @@ describe('sentence lookup', function() {
     ['john eats glue', 'john eats glue', 'john eats glue'],
     ['john eats glue', 'john eats', 'john eats'],
     ['john eats glue', 'eats glue', 'eats glue'],
-    ['john eats glue', 'eats glue all day', '']
+    ['john eats glue', 'eats glue all day', ''],
+
+    //test contractions
+    [`if you don't mind`, `you don't mind`, `you don't mind`],
+    [`if you don't mind`, `you don't care`, ``],
+    [`if you don't mind`, `you don't`, `you don't`],
+    [`if you don't mind`, `don't mind`, `don't mind`],
+    [`if you didn't care`, `didn't`, `didn't`],
+    [`if you wouldn't care, i'll eat here`, `i'll eat`, `i'll eat`],
 
   ];
   tests.forEach(function(a) {
@@ -78,7 +86,7 @@ describe('replace', function() {
     ['the dog played', 'the dog', 'the cat', 'the cat played'],
     ['the dog played', 'the [Noun]', 'the cat', 'the cat played'],
     ['the dog played', 'the (dog|hamster|pet-snake)', 'the cat', 'the cat played'],
-    // ['the boy and the girl', 'the [Noun]', 'the house', 'the house and the house']
+  // ['the boy and the girl', 'the [Noun]', 'the house', 'the house and the house']
   ];
   tests.forEach(function(a) {
     it(a.join(' | '), function(done) {

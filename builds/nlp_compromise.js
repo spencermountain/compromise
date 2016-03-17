@@ -103,7 +103,7 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
-// console.log(nlp.text(`if you don't mind`).match(`if you don't mind`));
+// console.log(nlp.text(`if you don't mind`).match(`if you don't mind`)[0]);
 
 },{"./fns.js":22,"./lexicon.js":23,"./sentence/question/question.js":43,"./sentence/sentence.js":44,"./sentence/statement/statement.js":45,"./term/adjective/adjective.js":47,"./term/adverb/adverb.js":52,"./term/noun/date/date.js":56,"./term/noun/noun.js":62,"./term/noun/organization/organization.js":64,"./term/noun/person/person.js":68,"./term/noun/place/place.js":70,"./term/noun/value/value.js":78,"./term/term.js":79,"./term/verb/verb.js":87,"./text/text.js":89}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -1916,14 +1916,16 @@ var tryFromHere = function tryFromHere(terms, regs, options) {
   var which_term = 0;
   for (var i = 0; i < regs.length; i++) {
     var term = terms[which_term];
+    // console.log(regs[i]);
     //if we hit the end of terms, prematurely
     if (!term) {
       return null;
     }
-    //if it's a contraction, skip it
+    //if it's a contraction, go to next term
     if (term.normal === '') {
       which_term += 1;
-      continue;
+      term = terms[which_term];
+      // continue;
     }
     //find a match with term, (..), [..], or ~..~ syntax
     if (match_term(term, regs[i], options)) {

@@ -12,14 +12,16 @@ const tryFromHere = function(terms, regs, options) {
   let which_term = 0;
   for(let i = 0; i < regs.length; i++) {
     let term = terms[which_term];
+    // console.log(regs[i]);
     //if we hit the end of terms, prematurely
     if (!term) {
       return null;
     }
-    //if it's a contraction, skip it
+    //if it's a contraction, go to next term
     if (term.normal === '') {
       which_term += 1;
-      continue;
+      term = terms[which_term];
+    // continue;
     }
     //find a match with term, (..), [..], or ~..~ syntax
     if (match_term(term, regs[i], options)) {

@@ -1,7 +1,6 @@
 //part-of-speech tagging
 'use strict';
 const word_rules = require('./word_rules');
-const grammar_rules = require('./grammar_rules');
 const grammar_pass = require('./grammar_pass');
 const lumper = require('./lumper');
 const fancy_lumping = require('./fancy_lumping');
@@ -26,39 +25,6 @@ const word_rules_pass = function(terms) {
     }
   }
   return terms;
-};
-
-
-//tests a subset of terms against a array of tags
-const hasTags = function(terms, tags) {
-  if (terms.length !== tags.length) {
-    return false;
-  }
-  for(let i = 0; i < tags.length; i++) {
-    if (!terms[i].pos[tags[i]]) {
-      return false;
-    }
-  }
-  return true;
-};
-
-//hints from the sentence grammar
-const grammar_rules_pass = function(s) {
-  for(let i = 0; i < s.terms.length; i++) {
-    for(let o = 0; o < grammar_rules.length; o++) {
-      let rule = grammar_rules[o];
-      //does this rule match
-      let terms = s.terms.slice(i, i + rule.before.length);
-      if (hasTags(terms, rule.before)) {
-        //change before/after for each term
-        for(let c = 0; c < rule.before.length; c++) {
-          s.terms[i + c] = assign(s.terms[i + c], rule.after[c], 'grammar_rule #' + o);
-        }
-        break;
-      }
-    }
-  }
-  return s.terms;
 };
 
 const noun_fallback = function(terms) {
@@ -94,19 +60,16 @@ const specific_pos = function(terms) {
 const tagger = function(s, options) {
   //word-level rules
   s.terms = capital_signals(s.terms);
-  // s.terms = contractions.easy_ones(s.terms);
   s.terms = lexicon_pass(s.terms, options);
   s.terms = word_rules_pass(s.terms);
   s.terms = interjection_fixes(s.terms);
   //repeat these steps a couple times, to wiggle-out the grammar
   for(let i = 0; i < 2; i++) {
     s.terms = grammar_pass(s);
-    s.terms = grammar_rules_pass(s);
     s.terms = lumper(s.terms);
     s.terms = noun_fallback(s.terms);
     s.terms = phrasal_verbs(s.terms);
     s.terms = specific_pos(s.terms);
-    // s.terms = contractions.hard_ones(s.terms);
     s.terms = fancy_lumping(s.terms);
   }
   return s.terms;

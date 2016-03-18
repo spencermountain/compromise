@@ -96,8 +96,9 @@ const grammar_rules_pass = function(s) {
       if (hasTags(terms, rule.before)) {
         //change before/after for each term
         for(let c = 0; c < rule.before.length; c++) {
-          s.terms[i + c] = assign(s.terms[i + c], rule.after[c], 'grammar_rule ' + c);
+          s.terms[i + c] = assign(s.terms[i + c], rule.after[c], 'grammar_rule #' + o);
         }
+        break;
       }
     }
   }

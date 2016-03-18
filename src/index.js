@@ -101,8 +101,11 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
 // console.log(nlp.text(`if you don't mind`).match(`you don't`)[0].text());
-// console.log(nlp.text(`don't mind`).terms());
+// console.log(nlp.text(`Peter the flight`).terms());
+// console.log(nlp.text(`book the flight`).terms());
 
 
 //slang
 // invite
+// wit
+// gonna

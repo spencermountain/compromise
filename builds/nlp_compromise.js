@@ -104,10 +104,13 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
 // console.log(nlp.text(`if you don't mind`).match(`you don't`)[0].text());
-// console.log(nlp.text(`don't mind`).terms());
+// console.log(nlp.text(`Peter the flight`).terms());
+// console.log(nlp.text(`book the flight`).terms());
 
 //slang
 // invite
+// wit
+// gonna
 
 },{"./fns.js":22,"./lexicon.js":23,"./sentence/question/question.js":43,"./sentence/sentence.js":44,"./sentence/statement/statement.js":45,"./term/adjective/adjective.js":47,"./term/adverb/adverb.js":52,"./term/noun/date/date.js":56,"./term/noun/noun.js":62,"./term/noun/organization/organization.js":64,"./term/noun/person/person.js":68,"./term/noun/place/place.js":70,"./term/noun/value/value.js":78,"./term/term.js":79,"./term/verb/verb.js":87,"./text/text.js":89}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -2668,6 +2671,17 @@ module.exports = [
   'before': ['Unknown', 'Determiner', 'Noun'],
   'after': ['Verb', 'Determiner', 'Noun']
 },
+//"peter the great"
+{
+  'before': ['Person', 'Determiner', 'Noun'],
+  'after': ['Person', 'Determiner', 'Noun']
+},
+//"book the flight"
+{
+  'before': ['Noun', 'Determiner', 'Noun'],
+  'after': ['Verb', 'Determiner', 'Noun']
+},
+
 //posessive hints
 {
   'before': ['Posessive', 'Unknown'],
@@ -3056,8 +3070,9 @@ var grammar_rules_pass = function grammar_rules_pass(s) {
       if (hasTags(terms, rule.before)) {
         //change before/after for each term
         for (var c = 0; c < rule.before.length; c++) {
-          s.terms[i + c] = assign(s.terms[i + c], rule.after[c], 'grammar_rule ' + c);
+          s.terms[i + c] = assign(s.terms[i + c], rule.after[c], 'grammar_rule #' + o);
         }
+        break;
       }
     }
   }

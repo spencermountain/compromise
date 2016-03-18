@@ -23,6 +23,9 @@ describe('basic pos tag', function() {
     ['asdfes lksejfj was lofty', ['Noun', 'Copula', 'Adjective']],
     ['Spencer Kelly is in Canada', ['Person', 'Copula', 'Preposition', 'Place']],
     ['He is in Canada', ['Person', 'Copula', 'Preposition', 'Place']],
+    //fancier stuff
+    ['Peter the man', ['Person', 'Determiner', 'Noun']],
+    ['book the flight', ['Verb', 'Determiner', 'Noun']],
   ];
   tests.forEach(function(a) {
     it(a[0], function(done) {

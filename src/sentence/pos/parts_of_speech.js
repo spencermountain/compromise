@@ -25,9 +25,8 @@ const tag_mapping = {
   // 'NNAB': 'Noun',
   // 'NNPS': 'Noun',
   // 'NNG': 'Noun',
-  // 'CD': 'Noun',
   // 'NU': 'Noun',
-  // 'DA': 'Noun',
+  'DA': 'Date',
 
   //glue
   'PP': 'Posessive',

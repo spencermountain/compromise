@@ -1,6 +1,7 @@
 const tag_mapping = require('./parts_of_speech.js').tag_mapping;
 //regex patterns and parts of speech],
 module.exports = [
+  ['^[0-9][0-9]?\:[0-9]{2}$', 'DA'],
   ['.[cts]hy$', 'JJ'],
   ['.[st]ty$', 'JJ'],
   ['.[lnr]ize$', 'VB'],
@@ -111,7 +112,7 @@ module.exports = [
   ['[aeiou][^aeiou]id$', 'JJ'],
   ['.[^aeiou]ish$', 'JJ'],
   ['.[^aeiou]ive$', 'JJ'],
-  ['[ea]{2}zy$', 'JJ'],
+  ['[ea]{2}zy$', 'JJ']
 ].map(function(a) {
   return {
     reg: new RegExp(a[0], 'i'),

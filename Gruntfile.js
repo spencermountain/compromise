@@ -5,7 +5,7 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('./package.json'),
 
     watch: {
-      files: ['./src/*', './src/**'],
+      files: ['./src/*.js', './src/**.js'],
       tasks: ['run:index']
     },
 

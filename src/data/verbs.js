@@ -194,7 +194,9 @@ let arr = [
   'added',
   'took',
   'goes',
-  'avoid'
+  'avoid',
+  'come',
+  'set',
 ];
 
 module.exports = fns.expand_suffixes(arr, compressed);

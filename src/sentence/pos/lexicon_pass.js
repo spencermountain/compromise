@@ -11,7 +11,7 @@ const lexicon_pass = function(terms, options) {
       return assign(t, lexicon[t.normal], 'lexicon_pass');
     }
     //try to match it without a prefix - eg. outworked -> worked
-    if (t.normal.match(/^(over|under|out|-|un|re|en).{4}/)) {
+    if (t.normal.match(/^(over|under|out|-|un|re|en).{3}/)) {
       const attempt = t.normal.replace(/^(over|under|out|.*?-|un|re|en)/, '');
       return assign(t, lexicon[attempt], 'lexicon_prefix');
     }

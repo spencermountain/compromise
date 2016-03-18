@@ -54,7 +54,6 @@ let suffixes = [
   'university',
   'bank',
   'college',
-  'house',
   'foundation',
   'department',
   'institute',

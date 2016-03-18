@@ -43,10 +43,13 @@ const is_organization = function(str, text) {
   if (str.match(/[a-z]{3}\.(com|net|org|biz)/)) { //not a perfect url regex, but a "org.com"
     return true;
   }
+  // "foobar inc."
   let words = str.split(' ');
-  let last = words[words.length - 1];
-  if (org_suffix[last]) {
-    return true;
+  if (words.length > 1) {
+    let last = words[words.length - 1];
+    if (org_suffix[last]) {
+      return true;
+    }
   }
 
   return false;

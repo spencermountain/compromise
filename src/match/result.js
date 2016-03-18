@@ -6,8 +6,6 @@ const match = require('./match.js');
 class Result {
   constructor(terms) {
     this.terms = terms;
-    //a short-cut for testing a match result
-    this.found = (this.terms.length > 0);
   }
   //wha, this is possible eg. text.match().match()
   match(str, options) {

@@ -72,8 +72,10 @@ describe('sentence lookup', function() {
   tests.forEach(function(a) {
     it(a.join(' | '), function(done) {
       let t = nlp.sentence(a[0]);
-      let r = t.match(a[1])[0];
-      r = r.text();
+      let r = t.match(a[1]);
+      if (r) {
+        r = r[0].text();
+      }
       (r || '').should.equal(a[2]);
       done();
     });

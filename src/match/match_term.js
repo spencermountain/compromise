@@ -4,6 +4,10 @@ const fns = require('../fns.js');
 //a regex-like string search
 // returns a boolean for match/not
 const match_term = function(term, reg) {
+  //fail-fast
+  if (!term || !reg || !reg.signals) {
+    return false;
+  }
   let signals = reg.signals;
 
   //support optional (foo|bar) syntax

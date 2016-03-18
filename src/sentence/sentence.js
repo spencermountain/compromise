@@ -57,7 +57,7 @@ class Sentence {
   //tokenize the match string, just like you'd tokenize the sentence.
   //this avoids lumper/splitter problems between haystack and needle
   tokenize_match(str) {
-    let regs = new Sentence(str).terms;
+    let regs = new Sentence(str).terms; //crazy!
     regs = regs.map((t) => t.text);
     regs = regs.filter((t) => t !== '');
     return regs;

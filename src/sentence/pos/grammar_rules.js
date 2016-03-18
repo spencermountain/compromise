@@ -21,15 +21,15 @@ module.exports = [
     'after': ['Verb', 'Determiner', 'Noun'],
   },
   //"peter the great"
-  {
-    'before': ['Person', 'Determiner', 'Noun'],
-    'after': ['Person', 'Determiner', 'Noun']
-  },
-  //"book the flight"
-  {
-    'before': ['Noun', 'Determiner', 'Noun'],
-    'after': ['Verb', 'Determiner', 'Noun']
-  },
+  // {
+  //   'before': ['Person', 'Determiner', 'Noun'],
+  //   'after': ['Person', 'Determiner', 'Noun']
+  // },
+  // //"book the flight"
+  // {
+  //   'before': ['Noun', 'Determiner', 'Noun'],
+  //   'after': ['Verb', 'Determiner', 'Noun']
+  // },
 
   //posessive hints
   {

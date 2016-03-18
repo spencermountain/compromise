@@ -65,7 +65,11 @@ const findAll = function(terms, regs, options) {
   // '^' token is 'must start at 0'
   if (regs[0].signals.leading) {
     let match = tryFromHere(terms, regs, options) || [];
-    return [new Result(match || [])];
+    if (match) {
+      return [new Result(match)];
+    } else {
+      return null;
+    }
   }
 
   //repeating version starting from each term
@@ -77,9 +81,9 @@ const findAll = function(terms, regs, options) {
       result.push(new Result(match));
     }
   }
-  //if we have no results, return an empty Match() object
+  //if we have no results, return null
   if (result.length === 0) {
-    result.push(new Result([]));
+    return null;
   }
   return result;
 };

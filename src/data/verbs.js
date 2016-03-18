@@ -197,6 +197,7 @@ let arr = [
   'avoid',
   'come',
   'set',
+  'pay'
 ];
 
 module.exports = fns.expand_suffixes(arr, compressed);

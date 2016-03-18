@@ -100,5 +100,9 @@ if (typeof define === 'function' && define.amd) {
 
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
-// console.log(nlp.text(`the dog quickly played`).match(`the dog . played`)[0].text());
-// console.log(nlp.text(`6:15`).terms());
+// console.log(nlp.text(`if you don't mind`).match(`you don't`)[0].text());
+// console.log(nlp.text(`don't mind`).terms());
+
+
+//slang
+// invite

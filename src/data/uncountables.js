@@ -104,7 +104,6 @@ module.exports = [
   'noise',
   'oxygen',
   'paper',
-  'pay',
   'peace',
   'peanut',
   'pepper',
@@ -149,5 +148,7 @@ module.exports = [
   'fahrenheit',
   'celcius',
   'kelvin',
-  'hertz'
+  'hertz',
+  'everyone',
+  'everybody'
 ];

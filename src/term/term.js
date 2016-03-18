@@ -79,7 +79,7 @@ class Term {
   }
   //utility method to avoid lumping words with non-word stuff
   is_word() {
-    if (this.text.match(/^\[.*?\]$/)) {
+    if (this.text.match(/^\[.*?\]\??$/)) {
       return false;
     }
     if (!this.text.match(/[a-z|0-9]/i)) {

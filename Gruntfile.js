@@ -81,6 +81,16 @@ module.exports = function (grunt) {
     eslint: {
       target: ['./src/**'],
       configFile: './.eslintrc'
+    },
+
+    bump: {
+      options: {
+        files: ['package.json'],
+        updateConfigs: [],
+        commit: false,
+        push: false,
+        createTag: false
+      }
     }
 
   });
@@ -92,6 +102,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-filesize');
   grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-mocha-istanbul');
+  grunt.loadNpmTasks('grunt-bump');
 
   grunt.registerTask('default', ['run:index']);
   grunt.registerTask('watch', ['watch']);

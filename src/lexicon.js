@@ -108,26 +108,5 @@ Object.keys(lexicon).forEach(function(k) {
   lexicon[k] = grand_mapping[lexicon[k]] || lexicon[k];
 });
 
-
-// console.log(Object.keys(lexicon).length)
-// console.log(lexicon)
-
-// console.log(lexicon['once again'] === 'RB');
-// console.log(lexicon['seven'] === 'Value');
-// console.log(lexicon['sleep'] === 'VBP');
-// console.log(lexicon['slept'] === 'VBD');
-// console.log(lexicon['sleeping'] === 'VBG');
-// console.log(lexicon['canadian'] === 'JJ');
-// console.log(lexicon['july'] === 'Value');
-// console.log(lexicon[null] === undefined);
-// console.log(lexicon['dr'] === 'NNAB');
-// console.log(lexicon['sounds'] === 'VBZ');
-// console.log(lexicon['look after'] === 'VBP');
-// console.log(lexicon['tony'] === 'Noun');
-// console.log(lexicon['loaf'] === 'Noun');
-// console.log(lexicon['loaves'] === 'NNS');
-// console.log(lexicon['he'] === 'PRP');
-// console.log(lexicon['canada'] === 'Noun');
 // console.log(lexicon['is']);
-
 module.exports = lexicon;

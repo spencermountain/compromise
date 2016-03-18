@@ -142,7 +142,7 @@ const tagger = function(s, options) {
   s.terms = word_rules_pass(s.terms);
   s.terms = interjection_fixes(s.terms);
   //repeat these steps a couple times, to wiggle-out the grammar
-  for(let i = 0; i < 1; i++) {
+  for(let i = 0; i < 2; i++) {
     s.terms = grammar_rules_pass(s);
     s.terms = chunk_neighbours(s.terms);
     s.terms = noun_fallback(s.terms);

@@ -8,6 +8,7 @@ const phrasal_verbs = require('./phrasal_verbs');
 const interjection_fixes = require('./interjection_fixes');
 const lexicon_pass = require('./lexicon_pass');
 const capital_signals = require('./capital_signals');
+const conditional_pass = require('./conditional_pass');
 const pos = require('./parts_of_speech');
 const assign = require('./assign');
 
@@ -72,6 +73,7 @@ const tagger = function(s, options) {
     s.terms = specific_pos(s.terms);
     s.terms = fancy_lumping(s.terms);
   }
+  s.terms = conditional_pass(s.terms);
   return s.terms;
 };
 

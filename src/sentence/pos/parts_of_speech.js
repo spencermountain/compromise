@@ -27,6 +27,7 @@ const tag_mapping = {
   // 'NNG': 'Noun',
   'AC': 'Actor',
   'DA': 'Date',
+  'CO': 'Condition',
 
   //glue
   'PP': 'Posessive',

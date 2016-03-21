@@ -189,6 +189,17 @@ class Sentence {
     change_tense(this, 'future');
     return this;
   }
+  strip_conditions() {
+    this.terms = this.terms.filter((t, i) => {
+      //remove preceding condition
+      if (i > 0 && t.pos['Condition'] && !this.terms[i - 1].pos['Condition']) {
+        this.terms[i - 1].text = this.terms[i - 1].text.replace(/,$/, '');
+        this.terms[i - 1].rebuild();
+      }
+      return !t.pos['Condition'];
+    });
+    return this;
+  }
 
 }
 

@@ -30,7 +30,6 @@ const compact = {
     'but',
     'for',
     'and',
-    'if',
     'however',
     'before',
     'although',
@@ -38,6 +37,12 @@ const compact = {
     'plus',
     'versus',
     'not'
+  ],
+  'CO': [
+    'if',
+    'unless',
+    'otherwise',
+    'notwithstanding'
   ],
 
   'VBD': [

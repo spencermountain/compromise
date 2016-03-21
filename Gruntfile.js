@@ -105,7 +105,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-bump');
 
   grunt.registerTask('default', ['run:index']);
-  grunt.registerTask('watch', ['watch']);
   grunt.registerTask('coverage', ['mocha_istanbul']);
   grunt.registerTask('test', ['mochaTest']);
   grunt.registerTask('lint', ['eslint']);

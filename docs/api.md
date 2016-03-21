@@ -228,3 +228,34 @@ you can pass in your own lexicon, or an augmented version
  console.log(s.tags());
  // ['Person']
 ```
+
+#Question classification
+### easier ones
+* who
+  - who is..
+* where;
+  - where is..
+* when;  - **sometimes a conditional**
+  - when is..
+* why;  - **sometimes a conditional**
+  - why is..
+* yesNo;
+  - is she..
+
+### hard ones
+* what;
+  - what is..
+* which
+  - which is ..
+* selection
+    - what person  [who]
+    - what year  [when]
+    - which actor [who]
+    - which material
+* how;
+  - how is..
+* number
+  - how many
+  - how fast
+  - how old
+  - what amount

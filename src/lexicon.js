@@ -93,6 +93,9 @@ Object.keys(require('./data/holidays.js')).forEach(function(k) {
   lexicon[k] = 'Date';
 });
 
+//professions
+addArr(require('./data/professions.js'), 'Actor');
+
 //just in case
 delete lexicon[false];
 delete lexicon[true];
@@ -102,11 +105,8 @@ delete lexicon[''];
 
 //use 'Noun', not 'NN'
 Object.keys(lexicon).forEach(function(k) {
-  if (!grand_mapping[lexicon[k]]) {
-    // console.log(lexicon[k]);
-  }
   lexicon[k] = grand_mapping[lexicon[k]] || lexicon[k];
 });
 
-// console.log(lexicon['is']);
+// console.log(lexicon['dietician']);
 module.exports = lexicon;

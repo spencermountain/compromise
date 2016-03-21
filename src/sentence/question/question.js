@@ -16,5 +16,6 @@ Question.fn = Question.prototype;
 
 module.exports = Question;
 
-let q = new Question(`accordingly, is he cool?`);
+// let q = new Question(`accordingly, is he cool?`);
+let q = new Question(`where is cool?`);
 console.log(q.form());

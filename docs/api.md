@@ -239,10 +239,11 @@ you can pass in your own lexicon, or an augmented version
   - when is..
 * why;  - **sometimes a conditional**
   - why is..
-* yesNo;
-  - is she..
 
 ### hard ones
+* yesNo;
+  - is she..
+  - do they..
 * what;
   - what is..
 * which

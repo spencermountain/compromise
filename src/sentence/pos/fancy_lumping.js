@@ -66,6 +66,10 @@ const shouldLumpTwo = function(a, b) {
       result: 'Date',
     },
     {
+      condition: (a.pos.Noun && b.pos.Actor), //Aircraft designer
+      result: 'Actor',
+    },
+    {
       condition: (a.pos.Value && b.pos.Noun), //5 books
       result: 'Value',
     },

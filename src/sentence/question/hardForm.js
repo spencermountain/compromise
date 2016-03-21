@@ -9,11 +9,16 @@ let hardFormVerb = {
 let knownForm = {
   time: 'when',
   day: 'when',
+  year: 'when',
+
+  person: 'who', //more covered by pos["Actor"]
+
+  amount: 'number',
+  number: 'number',
 };
 
 const hardForm = function(s, i) {
   let t = s.terms[i];
-  let lastTerm = s.terms[i - 1];
   let nextTerm = s.terms[i + 1];
   // which, or what
   let questionWord = hardFormVerb[t.normal] || hardFormVerb[t.expanded];

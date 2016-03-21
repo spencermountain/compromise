@@ -119,6 +119,7 @@ module.exports = [
   ['.logist$', 'AC'],
   ['..ier$', 'AC'],
   ['.[^aeiou][ao]pher$', 'AC'],
+  ['.tive$', 'AC'],
   ['[aeiou].*ist$', 'JJ'],
 ].map(function(a) {
   return {

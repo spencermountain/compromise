@@ -26,13 +26,17 @@ const question_form = function(s) {
   //loop through and find first signal
   for(let i = 0; i < s.terms.length; i++) {
 
-    //who is..
+    //who is.. -> "who"
     let form = easyForm(s, i);
     if (form) {
       return form;
     }
-
-    //is he..
+    //which politician.. -> "who"
+    form = hardForm(s, i);
+    if (form) {
+      return form;
+    }
+    //is he..  -> "yesNo"
     if (yesNoTerm(s, i)) {
       return 'yesNo';
     }

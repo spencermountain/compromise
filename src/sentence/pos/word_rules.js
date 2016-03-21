@@ -71,7 +71,6 @@ module.exports = [
   ['. so$', 'RB'],
   ['.ints$', 'NN'],
   ['.[gt]led$', 'JJ'],
-  ['[aeiou].*ist$', 'JJ'],
   ['.lked$', 'VB'],
   ['.fully$', 'RB'],
   ['.*ould$', 'MD'],
@@ -114,7 +113,13 @@ module.exports = [
   ['[aeiou][^aeiou]id$', 'JJ'],
   ['.[^aeiou]ish$', 'JJ'],
   ['.[^aeiou]ive$', 'JJ'],
-  ['[ea]{2}zy$', 'JJ']
+  ['[ea]{2}zy$', 'JJ'],
+  ['[^aeiou]ician$', 'AC'],
+  ['.keeper$', 'AC'],
+  ['.logist$', 'AC'],
+  ['..ier$', 'AC'],
+  ['.[^aeiou][ao]pher$', 'AC'],
+  ['[aeiou].*ist$', 'JJ'],
 ].map(function(a) {
   return {
     reg: new RegExp(a[0], 'i'),

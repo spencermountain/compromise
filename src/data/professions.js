@@ -46,5 +46,8 @@ module.exports = [
   'soldier',
   'surgeon',
   'researcher',
-  'practitioner'
+  'practitioner',
+  'politician',
+  'musician',
+  'artist'
 ];

@@ -36,7 +36,7 @@ const grammar_rules_pass = function(s) {
         for(let c = 0; c < rule.before.length; c++) {
           if (rule.after[c]) {
             let newPos = rule.after[c].match(/^\[(.*?)\]$/)[1];
-            s.terms[i + c] = assign(s.terms[i + c], newPos, 'grammar_rule #' + o);
+            s.terms[i + c] = assign(s.terms[i + c], newPos, 'grammar_rule  (' + rule.before.join(',') + ')');
           }
         }
         break;

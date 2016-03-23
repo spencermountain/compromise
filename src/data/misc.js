@@ -13,7 +13,9 @@ const misc = {
   'has': 'VB',
   'more': 'RB',
 
-  'sounds': 'VBZ'
+  'sounds': 'VBZ',
+  //special case for took/taken
+  'taken': 'VBD'
 };
 
 const compact = {
@@ -269,7 +271,10 @@ const compact = {
     'il',
     'elle',
     'yourself',
-    '\'em'
+    '\'em',
+    'i\'m',
+    'i\'d',
+    'i\'ll',
   ],
 
   //some manual adverbs (the rest are generated)
@@ -395,7 +400,32 @@ const compact = {
     'secretary',
     'purpose',
     'friends',
-    'event'
+    'event',
+    'room',
+    'door',
+    'thing'
+  ],
+  //family-terms are people
+  PN: [
+    'father',
+    'mother',
+    'sister',
+    'brother',
+    'aunt',
+    'uncle',
+    'grandfather',
+    'grandmother',
+    'cousin',
+    'stepfather',
+    'stepmother',
+    'boy',
+    'girl',
+    'man',
+    'woman',
+    'guy',
+    'dude',
+    'bro',
+    'gentleman',
   ]
 };
 //unpack the compact terms into the misc lexicon..

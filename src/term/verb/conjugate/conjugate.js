@@ -122,4 +122,4 @@ module.exports = conjugate;
 // console.log(conjugate("bog"))
 // console.log(conjugate("nod"))
 // console.log(conjugate("had tried"))
-// console.log(conjugate("wrote about"))
+// console.log(conjugate('take'));

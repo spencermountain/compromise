@@ -200,7 +200,15 @@ let arr = [
   'pay',
   'grow',
   'inspect',
-  'instruct'
+  'instruct',
+  'know',
+  'take',
+  'let',
+  'sort',
+  'put',
+  'take',
+  'cut',
+  'become',
 ];
 
 module.exports = fns.expand_suffixes(arr, compressed);

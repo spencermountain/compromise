@@ -5,6 +5,7 @@ const fns = require('./fns.js');
 const verb_conjugate = require('./term/verb/conjugate/conjugate.js');
 const to_comparative = require('./term/adjective/to_comparative.js');
 const to_superlative = require('./term/adjective/to_superlative.js');
+const to_adverb = require('./term/adjective/to_adverb.js');
 const grand_mapping = require('./sentence/pos/parts_of_speech.js').tag_mapping;
 
 const lexicon = {};
@@ -65,8 +66,14 @@ require('./data/adjectives.js').forEach(function(s) {
   lexicon[s] = 'Adjective';
   lexicon[to_comparative(s)] = 'Comparative';
   lexicon[to_superlative(s)] = 'Superlative';
+  lexicon[to_adverb(s)] = 'Adverb';
 });
-addObj(require('./data/convertables.js'));
+Object.keys(require('./data/convertables.js')).forEach(function(s) {
+  lexicon[s] = 'Adjective';
+  lexicon[to_comparative(s)] = 'Comparative';
+  lexicon[to_superlative(s)] = 'Superlative';
+  lexicon[to_adverb(s)] = 'Adverb';
+});
 
 addArr(require('./data/abbreviations.js').abbreviations, 'Abbreviation');
 addArr(require('./data/demonyms.js'), 'Adjective');
@@ -108,5 +115,5 @@ Object.keys(lexicon).forEach(function(k) {
   lexicon[k] = grand_mapping[lexicon[k]] || lexicon[k];
 });
 
-// console.log(lexicon['dietician']);
+// console.log(lexicon['slowly']);
 module.exports = lexicon;

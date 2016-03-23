@@ -29,6 +29,7 @@ module.exports = {
   'en masse': 'RB',
   'point blank': 'RB',
   'up front': 'JJ',
+  'in front': 'JJ',
   'in situ': 'JJ',
   'in vitro': 'JJ',
   'ad hoc': 'JJ',

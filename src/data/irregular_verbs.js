@@ -1,5 +1,10 @@
 //a list of exceptions to the verb rules
 const irregular_verbs = {
+  take: {
+    perfect: 'have taken',
+    pluperfect: 'had taken',
+    future_perfect: 'will have taken'
+  },
   arise: {
     past: 'arose',
     participle: 'arisen'

@@ -20,9 +20,9 @@ const starts = {
 };
 
 
-//find the next upcoming comma
+// find the next upcoming comma
 const nextComma = function(terms, i) {
-  let max = terms.length;
+  let max = terms.length - 1;
   if (max > i + 7) {
     max = i + 7;
   }
@@ -40,7 +40,10 @@ const nextComma = function(terms, i) {
 
 //set these terms as conditional
 const tagCondition = function(terms, start, stop) {
-  for(let i = start; i <= stop; i++) {
+  for(let i = start; i < stop; i++) {
+    if (!terms[i]) {
+      break;
+    }
     terms[i].pos['Condition'] = true;
   }
 };
@@ -55,6 +58,7 @@ const conditional_pass = function(terms) {
         i += until - 1;
       }
     }
+    break;
   }
   return terms;
 };

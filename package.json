@@ -29,6 +29,7 @@
     "grunt-mocha-test": "0.12.7",
     "grunt-run": "0.5.2",
     "mocha": "2.4.3",
+    "nlp-corpus": "latest",
     "should": "8.2.1"
   },
   "license": "MIT"

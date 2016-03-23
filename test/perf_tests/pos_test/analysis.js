@@ -7,7 +7,7 @@ const fallback = require('./fallback');
 
 
 const analysis = function() {
-  const str = corpus.text.fiction();
+  const str = corpus.text.friends();
   console.time('parse');
   let text = nlp.text(str);
   console.timeEnd('parse');

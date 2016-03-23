@@ -209,6 +209,9 @@ let arr = [
   'take',
   'cut',
   'become',
+  'reply',
+  'happen',
+  'watch',
 ];
 
 module.exports = fns.expand_suffixes(arr, compressed);

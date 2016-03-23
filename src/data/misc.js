@@ -1,21 +1,16 @@
 'use strict';
 
 const misc = {
-
-  'etc': 'FW', //foreign words
-  'ie': 'FW',
-
   'there': 'NN',
 
   'better': 'JJR',
   'earlier': 'JJR',
 
   'has': 'VB',
-  'more': 'RB',
-
   'sounds': 'VBZ',
   //special case for took/taken
-  'taken': 'VBD'
+  'taken': 'VBD',
+  'msg': 'VB' //slang
 };
 
 const compact = {
@@ -29,6 +24,7 @@ const compact = {
     'whether',
     'though',
     'because',
+    'cuz',
     'but',
     'for',
     'and',
@@ -275,6 +271,7 @@ const compact = {
     'i\'m',
     'i\'d',
     'i\'ll',
+    'u' //slang
   ],
 
   //some manual adverbs (the rest are generated)
@@ -332,12 +329,18 @@ const compact = {
     'meanwhile',
     'hence',
     'further',
-    'furthermore'
+    'furthermore',
+    'more',
+    'way',
+    'kinda',
+    'totally',
   ],
 
-  //interjections
-  'UH': [
+  //interjections, expressions
+  'EX': [
+    'uh',
     'uhh',
+    'uh huh',
     'uh-oh',
     'please',
     'ugh',
@@ -347,6 +350,9 @@ const compact = {
     'voila',
     'oy',
     'hi',
+    'hello',
+    'bye',
+    'goodbye',
     'hey',
     'hai',
     'eep',
@@ -379,15 +385,26 @@ const compact = {
     'shhh',
     'whew',
     'mmm',
+    'ooo',
     'yay',
     'uh-huh',
     'boo',
     'wow',
-    'nope'
+    'nope',
+    'haha',
+    'hahaha',
+    'lol',
+    'lols',
+    'ya',
+    'hee',
+    'ohh',
+    'eh',
+    'yup'
   ],
 
   //special nouns that shouldnt be seen as a verb
   'NN': [
+    'god',
     'president',
     'dollar',
     'student',
@@ -403,12 +420,24 @@ const compact = {
     'event',
     'room',
     'door',
-    'thing'
+    'thing',
+    'things',
+    'stuff',
+    'lunch',
+    'breakfast',
+    'dinner',
+    'home',
+    'tmr',
+    'problem'
   ],
   //family-terms are people
   PN: [
     'father',
     'mother',
+    'mom',
+    'dad',
+    'mommy',
+    'daddy',
     'sister',
     'brother',
     'aunt',
@@ -426,6 +455,7 @@ const compact = {
     'dude',
     'bro',
     'gentleman',
+    'someone',
   ]
 };
 //unpack the compact terms into the misc lexicon..

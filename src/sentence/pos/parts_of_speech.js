@@ -33,8 +33,7 @@ const tag_mapping = {
   //glue
   'PP': 'Posessive',
   'PRP': 'Pronoun',
-  'UH': 'Expression', //interjection
-  'FW': 'Expression', //foreign-word
+  'EX': 'Expression', //interjection
   'DT': 'Determiner',
   'CC': 'Conjunction',
   'IN': 'Preposition',

@@ -28,19 +28,19 @@ const nextComma = function(terms, i) {
   }
   for(let x = i; x < max; x++) { //don't be too aggressive
     if (terms[x].has_comma()) {
-      return x + i;
+      return x;
     }
   }
   //allow trailing conditions too
   if (i > 5 && terms.length - i < 5) {
-    return terms.length - 1;
+    return terms.length;
   }
   return null;
 };
 
 //set these terms as conditional
 const tagCondition = function(terms, start, stop) {
-  for(let i = start; i < stop; i++) {
+  for(let i = start; i <= stop; i++) {
     if (!terms[i]) {
       break;
     }
@@ -49,16 +49,24 @@ const tagCondition = function(terms, start, stop) {
 };
 
 const conditional_pass = function(terms) {
-  for(let i = 0; i < terms.length; i++) {
-    let t = terms[i];
-    if (starts[t.normal]) {
+
+  //try leading condition
+  if (starts[terms[0].normal]) {
+    let until = nextComma(terms, 0);
+    if (until) {
+      tagCondition(terms, 0, until);
+    }
+  }
+
+  //try trailing condition
+  for(let i = 3; i < terms.length; i++) {
+    if (starts[terms[i].normal] && terms[i - 1].has_comma()) {
       let until = nextComma(terms, i);
       if (until) {
         tagCondition(terms, i, until);
-        i += until - 1;
+        i += until;
       }
     }
-    break;
   }
   return terms;
 };

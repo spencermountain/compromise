@@ -208,7 +208,8 @@ let arr = [
   'widespread',
   'woozy',
   'wrong',
-  'final'
+  'final',
+  'true'
 ];
 
 module.exports = fns.expand_suffixes(arr, compressed);

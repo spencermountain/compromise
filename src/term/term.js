@@ -2,6 +2,7 @@
 const is_acronym = require('./is_acronym');
 const match_term = require('../match/match_term');
 const syntax_parse = require('../match/syntax_parse');
+const implied = require('./implied');
 
 class Term {
   constructor(str, tag) {
@@ -14,7 +15,7 @@ class Term {
     this.text = str;
     //the normalised working-version of the word
     this.normal = '';
-    //if it's a contraction, the 'hidden word'
+    //if it's a contraction or slang, the implication, or 'hidden word'
     this.expansion = '';
     //set .normal
     this.rebuild();
@@ -43,6 +44,7 @@ class Term {
     this.text = this.text.trim();
     this.normal = '';
     this.normalize();
+    this.expansion = implied(this.normal);
   }
   changeTo(str) {
     this.text = str;
@@ -116,8 +118,8 @@ class Term {
 }
 
 Term.fn = Term.prototype;
-// let t = new Term(`spencer'd`);
+// let t = new Term(`plz`);
 // console.log(t.match('(fun|nice|cool|quick)'));
-// console.log(t.has_abbreviation());
+// console.log(t.expansion);
 
 module.exports = Term;

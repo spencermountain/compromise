@@ -358,7 +358,7 @@ const irregular_verbs = {
     past: 'iced'
   },
   develop: {
-    past: 'develop',
+    past: 'developed',
     actor: 'developer'
   },
   wait: {

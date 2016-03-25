@@ -67,10 +67,10 @@ module.exports = [
     'before': ['[Verb]', '[Conjunction]', '[Verb]'],
     'after': ['[Verb]', '[Verb]', '[Verb]'],
   },
-  {
-    'before': ['[Noun]', '[Conjunction]', '[Noun]'],
-    'after': ['[Noun]', '[Noun]', '[Noun]'],
-  },
+  // {
+  //   'before': ['[Noun]', '[Conjunction]', '[Noun]'],
+  //   'after': ['[Noun]', '[Noun]', '[Noun]'],
+  // },
   {
     'before': ['[Adjective]', '[Conjunction]', '[Adjective]'],
     'after': ['[Adjective]', '[Adjective]', '[Adjective]'],

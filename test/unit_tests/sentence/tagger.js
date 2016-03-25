@@ -27,6 +27,8 @@ describe('basic pos tag', function() {
     ['walk the walk', ['Verb', 'Determiner', 'Noun']],
     ['Peter the man', ['Person', 'Determiner', 'Noun']],
     ['book the flight', ['Verb', 'Determiner', 'Noun']],
+    //slang, contractions
+    ['u r nice', ['Pronoun', 'Copula', 'Adjective']],
   ];
   tests.forEach(function(a) {
     it(a[0], function(done) {

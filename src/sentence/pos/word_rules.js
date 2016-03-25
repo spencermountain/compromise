@@ -121,6 +121,17 @@ module.exports = [
   ['.[^aeiou][ao]pher$', 'AC'],
   ['.tive$', 'AC'],
   ['[aeiou].*ist$', 'JJ'],
+  //slang things
+  ['^um+$', 'EX'], //ummmm
+  ['^([hyj]a)+$', 'EX'], //hahah
+  ['^(k)+$', 'EX'], //kkkk
+  ['^(yo)+$', 'EX'], //yoyo
+  ['^yes+$', 'EX'], //yessss
+  ['^no+$', 'EX'], //noooo
+  ['^lol[sz]$', 'EX'], //lol
+  ['^woo+[pt]?$', 'EX'], //woo
+  ['^ug?h+$', 'EX'], //uhh
+  ['^uh[ -]?oh$', 'EX'], //uhoh
 ].map(function(a) {
   return {
     reg: new RegExp(a[0], 'i'),

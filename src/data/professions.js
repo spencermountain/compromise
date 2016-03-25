@@ -49,5 +49,9 @@ module.exports = [
   'practitioner',
   'politician',
   'musician',
-  'artist'
+  'artist',
+  'secretary',
+  'minister',
+  'deputy',
+  'president'
 ];

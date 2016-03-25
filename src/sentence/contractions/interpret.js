@@ -14,6 +14,26 @@ const supported = {
 // 's': 'is' //or was
 };
 
+const irregulars = {
+  'dunno': ['do', 'not', 'know'],
+  'wanna': ['want', 'to'],
+  'gonna': ['going', 'to'],
+  'im': ['i', 'am'],
+  'dont': ['do', 'not'],
+  'don\'t': ['do', 'not'],
+  'dun': ['do', 'not'],
+  'cannot': ['can', 'not'],
+  'alot': ['a', 'lot'],
+  'where\'d': ['where', 'did'],
+  'when\'d': ['when', 'did'],
+  'how\'d': ['how', 'did'],
+  'what\'d': ['what', 'did'],
+  'aint': ['is', 'not'], //or 'are'
+  'brb': ['be', 'right', 'back'],
+  'let\'s': ['let', 'us'],
+  'shan\'t': ['should', 'not'],
+};
+
 
 //puts a 'implicit term' in this sentence, at 'i'
 const handle_simple = function(terms, i, particle) {

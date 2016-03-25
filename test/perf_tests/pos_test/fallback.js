@@ -24,7 +24,7 @@ const fallback = function(text) {
     }
     return 1;
   });
-  arr = arr.slice(0, 50);
+  arr = arr.slice(0, 150);
   // arr = arr.filter((a) => a[1] > 0);
   return arr;
 };

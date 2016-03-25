@@ -64,6 +64,9 @@ let relative = [
   'yesterday',
   'today',
   'tomorrow',
+  'week',
+  'weekend',
+  'tonight',
 ];
 
 module.exports = {

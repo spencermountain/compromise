@@ -30,6 +30,7 @@ let organizations = [
   'facebook',
   'fedex',
   'kmart',
+  'kkk',
   'kodak',
   'monsanto',
   'myspace',

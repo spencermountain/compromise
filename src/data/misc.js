@@ -44,10 +44,6 @@ const compact = {
   ],
 
   'VBD': [
-    'where\'d',
-    'when\'d',
-    'how\'d',
-    'what\'d',
     'said',
     'had',
     'been',
@@ -208,15 +204,8 @@ const compact = {
     'shall',
     'should',
     'ought',
-    'shouldn\'t',
-    'wouldn\'t',
-    'couldn\'t',
-    'mustn\'t',
-    'shan\'t',
     'shant',
     'lets', //arguable
-    'who\'d',
-    'let\'s'
   ],
 
   //posessive pronouns
@@ -268,10 +257,6 @@ const compact = {
     'elle',
     'yourself',
     '\'em',
-    'i\'m',
-    'i\'d',
-    'i\'ll',
-    'u' //slang
   ],
 
   //some manual adverbs (the rest are generated)
@@ -405,7 +390,6 @@ const compact = {
   //special nouns that shouldnt be seen as a verb
   'NN': [
     'god',
-    'president',
     'dollar',
     'student',
     'patent',
@@ -414,9 +398,8 @@ const compact = {
     'banking',
     'ceiling',
     'energy',
-    'secretary',
     'purpose',
-    'friends',
+    'friend',
     'event',
     'room',
     'door',
@@ -427,8 +410,12 @@ const compact = {
     'breakfast',
     'dinner',
     'home',
-    'tmr',
-    'problem'
+    'problem',
+    'body',
+    'world',
+    'city',
+    'death',
+    'others',
   ],
   //family-terms are people
   PN: [
@@ -450,7 +437,13 @@ const compact = {
     'boy',
     'girl',
     'man',
+    'men',
     'woman',
+    'women',
+    'number',
+    'system',
+    'example',
+    'part',
     'guy',
     'dude',
     'bro',

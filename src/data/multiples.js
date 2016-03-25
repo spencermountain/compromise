@@ -18,6 +18,7 @@ module.exports = {
   'at best': 'RB',
   'at large': 'RB',
   'for good': 'RB',
+  'for example': 'RB',
   'vice versa': 'JJ',
   'en route': 'JJ',
   'for sure': 'RB',

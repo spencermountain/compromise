@@ -10,6 +10,10 @@ const lexicon_pass = function(terms, options) {
     if (lexicon[t.normal] !== undefined) {
       return assign(t, lexicon[t.normal], 'lexicon_pass');
     }
+
+    if (lexicon[t.expansion] !== undefined) {
+      return assign(t, lexicon[t.expansion], 'lexicon_expansion');
+    }
     //try to match it without a prefix - eg. outworked -> worked
     if (t.normal.match(/^(over|under|out|-|un|re|en).{3}/)) {
       const attempt = t.normal.replace(/^(over|under|out|.*?-|un|re|en)/, '');

@@ -77,3 +77,8 @@ Like lemmatisation, it inflects/conjugates/truncates and gorks the sentence into
 
 ####Phrasal Verbs
 'beef up' is one verb, and not two terms. (ie. It's not a direction of beefing.) But many false-positives are avoided - *sleep in* is combined, but *sleep out* is not. *Brighten up* is combined, but *brighten down* is not.
+
+
+##Timing
+Nlp_compromise parses most sentences in half a millisecond. This sounds fast, but is still a relevant amount of time. A novel may take 20 seconds at that speed.
+[Here's a plot](https://docs.google.com/spreadsheets/d/1O-U2NqIXH-3XgxZthlpVwndxN4ZkXcm59NUr6vqpQXc/edit#gid=0) of how it handles different sized texts on a macbook. The important note is that it's linear, or O(n) with respect to input.

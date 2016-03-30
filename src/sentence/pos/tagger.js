@@ -20,7 +20,7 @@ const word_rules_pass = function(terms) {
       continue;
     }
     for (let o = 0; o < word_rules.length; o++) {
-      if (terms[i].text.length > 3 && terms[i].normal.match(word_rules[o].reg)) {
+      if (terms[i].normal.match(word_rules[o].reg)) {
         terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass_' + o);
         break;
       }
@@ -68,11 +68,11 @@ const tagger = function(s, options) {
   //repeat these steps a couple times, to wiggle-out the grammar
   for(let i = 0; i < 2; i++) {
     s.terms = grammar_pass(s);
+    s.terms = specific_noun(s.terms);
+    s.terms = ambiguous_dates(s.terms);
     s.terms = lumper(s.terms);
     s.terms = noun_fallback(s.terms);
     s.terms = phrasal_verbs(s.terms);
-    s.terms = specific_noun(s.terms);
-    s.terms = ambiguous_dates(s.terms);
     s.terms = fancy_lumping(s.terms);
   }
   s.terms = conditional_pass(s.terms);

@@ -30,7 +30,7 @@ const rules = [
   },
   {
     reg: `${day} ${month}`, //'18th of March',
-    order: ['month', 'day']
+    order: ['day', 'month']
   },
   {
     reg: `${month}`, //'january'

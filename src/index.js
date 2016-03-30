@@ -100,7 +100,7 @@ if (typeof define === 'function' && define.amd) {
 
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
-// console.log(nlp.sentence(`april the 1st`).terms);
+// console.log(nlp.sentence(`buy eggs on 2 june`).terms);
 
 
 //slang

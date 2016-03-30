@@ -100,9 +100,7 @@ if (typeof define === 'function' && define.amd) {
 
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
-// console.log(nlp.text(`if you don't mind`).match(`you don't`)[0].text());
-// console.log(nlp.text(`eggs and bacon`).terms());
-// nlp.sentence(`if it is raining, the driveway is wet, if it is fun`);
+// console.log(nlp.sentence(`april the 1st`).terms);
 
 
 //slang

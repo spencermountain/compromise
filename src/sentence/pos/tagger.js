@@ -9,6 +9,7 @@ const interjection_fixes = require('./interjection_fixes');
 const lexicon_pass = require('./lexicon_pass');
 const capital_signals = require('./capital_signals');
 const conditional_pass = require('./conditional_pass');
+const ambiguous_dates = require('./ambiguous_dates');
 const pos = require('./parts_of_speech');
 const assign = require('./assign');
 
@@ -38,7 +39,7 @@ const noun_fallback = function(terms) {
 };
 
 //turn nouns into person/place
-const specific_pos = function(terms) {
+const specific_noun = function(terms) {
   for(let i = 0; i < terms.length; i++) {
     let t = terms[i];
     if (t instanceof pos.Noun) {
@@ -70,7 +71,8 @@ const tagger = function(s, options) {
     s.terms = lumper(s.terms);
     s.terms = noun_fallback(s.terms);
     s.terms = phrasal_verbs(s.terms);
-    s.terms = specific_pos(s.terms);
+    s.terms = specific_noun(s.terms);
+    s.terms = ambiguous_dates(s.terms);
     s.terms = fancy_lumping(s.terms);
   }
   s.terms = conditional_pass(s.terms);

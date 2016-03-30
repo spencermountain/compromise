@@ -1,5 +1,5 @@
 'use strict';
-
+const lexicon = require('../../lexicon.js');
 let friendlies = [
   ['Noun', 'Abbreviation'],
   ['Abbreviation', 'Noun'],
@@ -8,6 +8,10 @@ let friendlies = [
 const should_chunk = function(a, b) {
   if (!a || !b) {
     return false;
+  }
+  //if it's a known multiple-word term
+  if (lexicon[a.normal + ' ' + b.normal]) {
+    return true;
   }
   //if A has a comma, don't chunk it
   if (a.has_comma()) {

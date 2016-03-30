@@ -51,6 +51,10 @@ class Noun extends Term {
   }
   //sub-classes
   is_person() {
+    //don't overwrite dates, etc
+    if (this.tag === 'Date') {
+      return false;
+    }
     return is_person(this.normal);
   }
   is_organization() {
@@ -60,6 +64,10 @@ class Noun extends Term {
     return is_date(this.normal);
   }
   is_value() {
+    //don't overwrite dates, etc
+    if (this.tag === 'Date') {
+      return false;
+    }
     return is_value(this.normal);
   }
   is_place() {

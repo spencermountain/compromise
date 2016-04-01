@@ -85,10 +85,9 @@ const conjugate = function(w) {
   //chop it if it's future-tense
   w = w.replace(/^will /i, '');
 
-
   //un-prefix the verb, and add it in later
   let prefix = '';
-  let match = w.match(/^(over|under|re|anti|full)[- ]?([a-z]*)/i);
+  let match = w.match(/^(over|under|re|anti|full)[- ]?([^aeiou][a-z]*)/i);
   if (match) {
     prefix = match[1];
     w = match[2];
@@ -111,15 +110,7 @@ const conjugate = function(w) {
 };
 module.exports = conjugate;
 
-// console.log(conjugate('die'));
+// console.log(conjugate('open'));
 
 // // broken
-// console.log(conjugate("read"))
-// console.log(conjugate("free"))
-// console.log(conjugate("flesh"))
-// console.log(conjugate("branch"))
-// console.log(conjugate("spred"))
-// console.log(conjugate("bog"))
-// console.log(conjugate("nod"))
-// console.log(conjugate("had tried"))
-// console.log(conjugate('take'));
+// console.log(conjugate('spred'));

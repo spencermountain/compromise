@@ -1,7 +1,7 @@
 'use strict';
-const assign = require('./assign');
+const assign = require('../assign');
 
-//clear-up ambiguous interjections "ok[Int], thats ok[Adj]"
+//clear-up ambiguous interjections "ok"[Int], "thats ok"[Adj]
 const interjection_fixes = function(terms) {
   const interjections = {
     ok: true,

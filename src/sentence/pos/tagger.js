@@ -1,33 +1,36 @@
 //part-of-speech tagging
 'use strict';
-const word_rules = require('./word_rules');
-const grammar_pass = require('./grammar_pass');
+
 const lumper = require('./lumper');
 const fancy_lumping = require('./fancy_lumping');
-const phrasal_verbs = require('./phrasal_verbs');
-const interjection_fixes = require('./interjection_fixes');
-const lexicon_pass = require('./lexicon_pass');
-const capital_signals = require('./capital_signals');
-const conditional_pass = require('./conditional_pass');
-const ambiguous_dates = require('./ambiguous_dates');
 const pos = require('./parts_of_speech');
 const assign = require('./assign');
 
+const grammar_pass = require('./passes/grammar_pass');
+const phrasal_verbs = require('./passes/phrasal_verbs');
+const interjection_fixes = require('./passes/interjection_fixes');
+const lexicon_pass = require('./passes/lexicon_pass');
+const capital_signals = require('./passes/capital_signals');
+const conditional_pass = require('./passes/conditional_pass');
+const ambiguous_dates = require('./passes/ambiguous_dates');
+const multiple_pass = require('./passes/multiples_pass');
+const regex_pass = require('./passes/regex_pass');
+
 //regex hints for words/suffixes
-const word_rules_pass = function(terms) {
-  for (let i = 0; i < terms.length; i++) {
-    if (terms[i].tag !== '?') {
-      continue;
-    }
-    for (let o = 0; o < word_rules.length; o++) {
-      if (terms[i].normal.match(word_rules[o].reg)) {
-        terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass_' + o);
-        break;
-      }
-    }
-  }
-  return terms;
-};
+// const word_rules_pass = function(terms) {
+//   for (let i = 0; i < terms.length; i++) {
+//     if (terms[i].tag !== '?') {
+//       continue;
+//     }
+//     for (let o = 0; o < word_rules.length; o++) {
+//       if (terms[i].normal.match(word_rules[o].reg)) {
+//         terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass_' + o);
+//         break;
+//       }
+//     }
+//   }
+//   return terms;
+// };
 
 const noun_fallback = function(terms) {
   for(let i = 0; i < terms.length; i++) {
@@ -63,8 +66,9 @@ const tagger = function(s, options) {
   //word-level rules
   s.terms = capital_signals(s.terms);
   s.terms = lexicon_pass(s.terms, options);
-  s.terms = word_rules_pass(s.terms);
+  s.terms = regex_pass(s.terms);
   s.terms = interjection_fixes(s.terms);
+  s.terms = multiple_pass(s.terms);
   //repeat these steps a couple times, to wiggle-out the grammar
   for(let i = 0; i < 2; i++) {
     s.terms = grammar_pass(s);

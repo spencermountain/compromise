@@ -1,4 +1,7 @@
+//turns a verb in any form, into it's infinitive version
+// eg "walked" -> "walk"
 'use strict';
+
 const irregular_verbs = require('../../../data/irregular_verbs');
 let known_verbs = Object.keys(irregular_verbs).reduce(function(h, k) {
   Object.keys(irregular_verbs[k]).forEach(function(k2) {
@@ -18,10 +21,10 @@ let rules = {
       reg: /(.)un([g|k])$/i,
       to: '$1in$2'
     },
-    {
-      reg: /(..)en$/i,
-      to: '$1e'
-    },
+  // {
+  //   reg: /(..)en$/i,
+  //   to: '$1e'
+  // },
   ],
   actor: [
     {

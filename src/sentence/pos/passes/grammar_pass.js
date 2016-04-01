@@ -1,6 +1,6 @@
 'use strict';
-const assign = require('./assign');
-const grammar_rules = require('./grammar_rules');
+const assign = require('../assign');
+const grammar_rules = require('./rules/grammar_rules');
 // const match = require('../../match/match');
 
 

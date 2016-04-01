@@ -1,5 +1,5 @@
 'use strict';
-const assign = require('./assign');
+const assign = require('../assign');
 
 const tough_dates = {
   may: true,

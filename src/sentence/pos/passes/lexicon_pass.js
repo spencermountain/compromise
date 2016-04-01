@@ -1,6 +1,6 @@
 'use strict';
-let defaultLexicon = require('../../lexicon.js');
-const assign = require('./assign');
+let defaultLexicon = require('../../../lexicon.js');
+const assign = require('../assign');
 
 //consult lexicon for this known-word
 const lexicon_pass = function(terms, options) {

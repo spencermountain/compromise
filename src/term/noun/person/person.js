@@ -14,6 +14,19 @@ class Person extends Noun {
     this.middleName = null;
     this.lastName = null;
     this.parse();
+    if (this.isPronoun()) {
+      this.pos['Pronoun'] = true;
+    }
+  }
+
+  isPronoun() {
+    let whitelist = {
+      'he': true,
+      'she': true,
+      'i': true,
+      'you': true,
+    };
+    return whitelist[this.normal];
   }
 
   //proper normalised name without the cruft

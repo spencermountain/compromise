@@ -135,7 +135,23 @@ let rules = [
       gr: '$1$2ing',
       prt: '$1$2n'
     }
-  }
+  },
+  {
+    reg: /(..)([cs]h)$/i,
+    repl: {
+      pr: '$1$2es',
+      pa: '$1$2ed',
+      gr: '$1$2ing'
+    },
+  },
+  {
+    reg: /([^aeiou][ou])(g|d)$/i,
+    repl: {
+      pr: '$1$2s',
+      pa: '$1$2$2ed',
+      gr: '$1$2$2ing'
+    },
+  },
 ];
 
 let keys = {

@@ -5,6 +5,10 @@ const irregular_verbs = {
     pluperfect: 'had taken',
     future_perfect: 'will have taken'
   },
+  free: {
+    gerund: 'freeing',
+    actor: ''
+  },
   arise: {
     past: 'arose',
     participle: 'arisen'

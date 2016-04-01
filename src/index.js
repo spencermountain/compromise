@@ -98,9 +98,10 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-
+// console.log(nlp.verb('loosen').conjugate());
 // console.log(nlp.value('six hundred and fifty nine').parse());
-// console.log(nlp.sentence(`joe will have walked`).terms);
+// console.log(nlp.sentence(`april fools day`).terms);
+// console.log(nlp.sentence(`He is in Canada`).terms);
 
 
 //slang

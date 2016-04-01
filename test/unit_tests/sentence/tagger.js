@@ -7,6 +7,8 @@ const tagMatch = function(terms, tags) {
   }
   for(let i = 0; i < terms.length; i++) {
     if (!terms[i].pos[tags[i]]) {
+      console.log(terms[i].pos);
+      console.log(tags[i]);
       return false;
     }
   }
@@ -22,7 +24,7 @@ describe('basic pos tag', function() {
     ['asdfes was lofty', ['Noun', 'Copula', 'Adjective']],
     ['asdfes lksejfj was lofty', ['Noun', 'Copula', 'Adjective']],
     ['Spencer Kelly is in Canada', ['Person', 'Copula', 'Preposition', 'Place']],
-    ['He is in Canada', ['Person', 'Copula', 'Preposition', 'Place']],
+    ['He is in Canada', ['Pronoun', 'Copula', 'Preposition', 'Place']],
     //fancier stuff
     ['walk the walk', ['Verb', 'Determiner', 'Noun']],
     ['Peter the man', ['Person', 'Determiner', 'Noun']],

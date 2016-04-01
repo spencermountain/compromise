@@ -38,7 +38,12 @@ class Noun extends Term {
     return pronoun(this.normal);
   }
   is_plural() {
-    return is_plural(this.normal);
+    let isPlural = is_plural(this.normal);
+    if (this.pos['Date']) {
+      isPlural = false;
+    }
+    this.pos['Plural'] = isPlural;
+    return isPlural;
   }
   is_uncountable() {
     return is_uncountable(this.normal);

@@ -106,5 +106,5 @@ Verb.fn = Verb.prototype;
 
 module.exports = Verb;
 
-// let v = new Verb('is');
+// let v = new Verb('stunk up');
 // console.log(v.negate());

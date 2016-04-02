@@ -250,7 +250,8 @@ const irregular_verbs = {
     past: 'sang'
   },
   sink: {
-    past: 'sank'
+    past: 'sank',
+    pluperfect: 'had sunk'
   },
   sit: {
     past: 'sat'

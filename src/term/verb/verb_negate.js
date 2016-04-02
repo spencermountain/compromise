@@ -9,7 +9,7 @@
 
 const negate = function(v) {
 
-  let exceptions = {
+  let known_forms = {
     'is': 'isn\'t',
     'are': 'aren\'t',
     'was': 'wasn\'t',
@@ -24,29 +24,24 @@ const negate = function(v) {
     'must': 'mustn\'t',
     'have': 'haven\'t',
     'does': 'doesn\'t',
-    //un-negate?
-    'didn\'t': 'did',
-    'doesn\'t': 'does',
-    'wouldn\'t': 'would',
-    'couldn\'t': 'could',
-    'shouldn\'t': 'should',
-    'can\'t': 'can',
-    'won\'t': 'will',
-    'mustn\'t': 'must',
-    'shan\'t': 'shall',
-    'shant': 'shall',
-    'not': '',
-    'don\'t': '',
   };
-  //hard-coded exceptions
-  if (exceptions[v.normal]) {
-    return exceptions[v.normal];
+  //hard-coded explicit forms
+  if (known_forms[v.normal]) {
+    return known_forms[v.normal];
   }
+  //try to un-negate?
+  // let keys = Object.keys(known_forms);
+  // for(let i = 0; i < keys.length; i++) {
+  //   if (known_forms[keys[i]] === v.normal) {
+  //     return keys[i];
+  //   }
+  // }
+
 
   //multiple-word verbs, like 'have walked'
   let words = v.normal.split(' ');
-  if (words.length > 1 && exceptions[words[0]]) {
-    return exceptions[words[0]] + ' ' + words.slice(1, words.length).join(' ');
+  if (words.length > 1 && known_forms[words[0]]) {
+    return known_forms[words[0]] + ' ' + words.slice(1, words.length).join(' ');
   }
   let form = v.conjugation();
   //walked -> didn't walk

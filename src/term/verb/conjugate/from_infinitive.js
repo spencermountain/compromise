@@ -11,6 +11,15 @@ let rules = [
     }
   },
   {
+    reg: /(ink)$/i,
+    repl: {
+      pr: '$1s',
+      pa: 'unk',
+      gr: '$1ing',
+      ar: '$1er'
+    }
+  },
+  {
     reg: /(end)$/i,
     repl: {
       pr: '$1s',

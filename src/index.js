@@ -99,8 +99,8 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
-// console.log(nlp.sentence(`he walked`).negate().text());
 // console.log(nlp.sentence('he will be quick').to_present().text());
+// console.log(nlp.verb(`didn't swim`).negate().text);
 
 
 //slang

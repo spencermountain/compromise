@@ -126,44 +126,44 @@ describe('nouns', function() {
     done();
   });
 
-  let tests = [
-    ['five hundred feet', true],
-    ['50 square feet', true],
-    ['90 hertz', true],
-    ['two books', true],
-    ['two hundred', true],
-    ['4 hundred and ten', true],
-    ['4 and a half million', true],
-    ['499 thousand', true],
-    ['499', true],
-    ['4,899', true],
-    ['John Smith', false],
-    ['dr. John Smith', false],
-    ['John Smith jr.', false],
-    ['John Jacob Smith', false],
-    ['Jani K. Smith', false],
-    ['asdfefs', false],
-    ['octopus', false],
-    ['tree', false],
-    ['i', false],
-    ['FBI', false],
-    ['F.B.I.', false],
-    ['Fun ltd', false],
-    ['Fun co', false],
-    ['Smith & Rogers', false],
-    ['google', false],
-    ['tuesday', false],
-    ['february', false],
-    ['february fifth', false],
-    ['tuesday march 5th', false],
-    ['tuesday march 5th, 2015', false],
-  ];
-  tests.forEach(function(a) {
-    it('is_value ' + a[0], function(done) {
+  it('is_value', function(done) {
+    let tests = [
+      ['five hundred feet', true],
+      ['50 square feet', true],
+      ['90 hertz', true],
+      ['two books', true],
+      ['two hundred', true],
+      ['4 hundred and ten', true],
+      ['4 and a half million', true],
+      ['499 thousand', true],
+      ['499', true],
+      ['4,899', true],
+      ['John Smith', false],
+      ['dr. John Smith', false],
+      ['John Smith jr.', false],
+      ['John Jacob Smith', false],
+      ['Jani K. Smith', false],
+      ['asdfefs', false],
+      ['octopus', false],
+      ['tree', false],
+      ['i', false],
+      ['FBI', false],
+      ['F.B.I.', false],
+      ['Fun ltd', false],
+      ['Fun co', false],
+      ['Smith & Rogers', false],
+      ['google', false],
+      ['tuesday', false],
+      ['february', false],
+      ['february fifth', false],
+      ['tuesday march 5th', false],
+      ['tuesday march 5th, 2015', false],
+    ];
+    tests.forEach(function(a) {
       let n = new Noun(a[0]);
       (a[1]).should.equal(n.is_value());
-      done();
     });
+    done();
   });
 
 

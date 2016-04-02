@@ -7,7 +7,7 @@ describe('parse value', function() {
     let tests = [
       ['five hundred feet', 500],
       ['fifty square feet', 50],
-    // ['90 hertz', 90],
+      ['90 hertz', 90],
     ];
     tests.forEach(function(a) {
       let n = new Value(a[0]);
@@ -33,11 +33,11 @@ describe('parse value', function() {
     let tests = [
       ['five hundred feet', 'Distance'],
       ['fifty hertz', 'Frequency'],
-    // ['seven Gb', 'Data'],
+    // ['7Gb', 'Data'],
     ];
     tests.forEach(function(a) {
       let n = new Value(a[0]);
-      (a[1] === n.measurement).should.equal(true);
+      (n.measurement || '').should.equal(a[1]);
     });
     done();
   });

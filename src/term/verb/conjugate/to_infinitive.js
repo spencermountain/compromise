@@ -119,6 +119,9 @@ let rules = {
       reg: /(tl|gl)ed$/i,
       to: '$1e'
     }, {
+      reg: /(um?pt?)ed$/i,
+      to: '$1'
+    }, {
       reg: /(ss)ed$/i,
       to: '$1'
     }, {

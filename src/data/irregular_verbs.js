@@ -17,9 +17,9 @@ const irregular_verbs = {
     past: 'babysat',
     actor: 'babysitter'
   },
-  be: {
+  be: { // this is crazy-hard and shouldn't be here
     past: 'was',
-    present: 'am',
+    present: 'is',
     future: 'will be',
     perfect: 'have been',
     pluperfect: 'had been',

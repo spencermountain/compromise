@@ -6,17 +6,19 @@ describe('verb negate', function() {
   let tests = [
     ['walks', 'doesn\'t walk'],
     ['walked', 'didn\'t walk'],
-    // ['walking', 'not walking'],
+    ['walking', 'not walking'],
     ['walk', 'not walk'],
-    // ['will walk', 'won\'t walk'],
+    ['will walk', 'won\'t walk'],
+    ['will have walked', 'won\'t have walked'],
     ['is', 'isn\'t'],
     ['will', 'won\'t'],
+    ['was', 'wasn\'t'],
   ];
 
   tests.forEach(function(a) {
-    let n = nlp.text(a[0]);
+    let v = nlp.verb(a[0]);
     it(a[1], function(done) {
-      n.terms()[0].negate().should.equal(a[1]);
+      (v.negate().normal).should.equal(a[1]);
       done();
     });
   });

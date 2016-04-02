@@ -2,7 +2,7 @@
 const Term = require('../term/term');
 const tagger = require('./pos/tagger');
 const passive_voice = require('./passive_voice');
-const negate = require('./negate');
+const negate = require('./sentence_negate');
 const contractions = {
   interpret: require('./contractions/interpret'),
   contract: require('./contractions/contract'),

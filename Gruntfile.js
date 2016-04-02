@@ -73,7 +73,7 @@ module.exports = function (grunt) {
         options: {
           reportFormats: ['html'],
           quiet: true,
-          coverageFolder: './tests/coverage'
+          coverageFolder: './test/coverage'
         }
       }
     },

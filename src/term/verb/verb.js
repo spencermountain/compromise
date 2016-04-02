@@ -1,7 +1,8 @@
 'use strict';
 const Term = require('../term.js');
 const conjugate = require('./conjugate/conjugate.js');
-const negate = require('./negate.js');
+const negate = require('./verb_negate.js');
+const predict_form = require('./conjugate/predict_form.js');
 
 const verbTags = {
   infinitive: 'Infinitive',
@@ -11,13 +12,7 @@ const verbTags = {
   actor: 'Actor',
   future: 'FutureTense',
   pluperfect: 'PluperfectTense',
-  perfect: 'PerfectTense',
-
-  PerfectTense: 'PerfectTense',
-  PluperfectTense: 'PluperfectTense',
-  FutureTense: 'FutureTense',
-  PastTense: 'PastTense',
-  PresentTense: 'PresentTense',
+  perfect: 'PerfectTense'
 };
 
 class Verb extends Term {
@@ -25,14 +20,13 @@ class Verb extends Term {
     super(str);
     this.tag = tag;
     this.pos['Verb'] = true;
-    this.conjugations = {}; //cached conjugations
     //if we've been told which
-    this.pos[tag] = true;
-    if (tag && verbTags[tag]) {
-      this.conjugations[tag] = this.normal;
+    if (tag) {
+      this.pos[tag] = true;
     }
   }
 
+  //'root' for a verb means infinitive
   root() {
     return this.conjugate().infinitive;
   }
@@ -40,69 +34,77 @@ class Verb extends Term {
   //retrieve a specific form
   conjugation() {
     //check cached conjugations
-    this.conjugations = this.conjugate();
-    let keys = Object.keys(this.conjugations);
+    let conjugations = this.conjugate();
+    let keys = Object.keys(conjugations);
     for(let i = 0; i < keys.length; i++) {
-      if (this.conjugations[keys[i]] === this.normal) {
+      if (conjugations[keys[i]] === this.normal) {
         return verbTags[keys[i]];
       }
     }
-    return verbTags[predict(this.normal)];
+    //try to guess
+    return verbTags[predict_form(this.normal)];
+  }
+  tense() {
+    //map conjugation onto past/present/future
+    let tenses = {
+      infinitive: 'present',
+      gerund: 'present',
+      actor: 'present',
+      present: 'present',
+      past: 'past',
+      future: 'future',
+      perfect: 'past',
+      pluperfect: 'past',
+      future_perfect: 'future'
+    };
+    let c = this.conjugation();
+    return tenses[c] || 'present';
   }
 
   conjugate() {
-    this.conjugations = conjugate(this.normal);
-    return this.conjugations;
+    return conjugate(this.normal);
   }
   to_past() {
     let tense = 'past';
-    if (!this.conjugations[tense]) {
-      this.conjugate(this.normal);
-    }
+    let conjugations = this.conjugate(this.normal);
     this.tag = verbTags[tense];
-    this.changeTo(this.conjugations[tense]);
-    return this.conjugations[tense];
+    this.changeTo(conjugations[tense]);
+    return conjugations[tense];
   }
   to_present() {
     let tense = 'present';
-    if (!this.conjugations[tense]) {
-      this.conjugate(this.normal);
-    }
+    let conjugations = this.conjugate(this.normal);
     this.tag = verbTags[tense];
-    this.changeTo(this.conjugations[tense]);
-    return this.conjugations[tense];
+    this.changeTo(conjugations[tense]);
+    return conjugations[tense];
   }
   to_future() {
     let tense = 'future';
-    if (!this.conjugations[tense]) {
-      this.conjugate(this.normal);
-    }
+    let conjugations = this.conjugate(this.normal);
     this.tag = verbTags[tense];
-    this.changeTo(this.conjugations[tense]);
-    return this.conjugations[tense];
+    this.changeTo(conjugations[tense]);
+    return conjugations[tense];
   }
 
   //is this verb negative already?
   isNegative() {
     const str = this.normal;
+    //yep, pretty simple
     if (str.match(/(n't|\bnot\b)/)) {
       return true;
     }
     return false;
   }
 
-  negate(form) {
-    if (this.isNegative()) {
-      return this.text;
-    }
-    this.changeTo(negate(this, form));
-    return this.text;
+  //turn 'walked' to "didn't walk"
+  negate() {
+    this.changeTo(negate(this));
+    return this;
   }
 }
 Verb.fn = Verb.prototype;
 
 module.exports = Verb;
 
-// let v = new Verb('cost of');
-// v.conjugate();
-// console.log(v.conjugate());
+// let v = new Verb('is');
+// console.log(v.negate());

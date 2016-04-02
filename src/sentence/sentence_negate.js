@@ -15,29 +15,7 @@ const negate = function(s) {
     'someone': 'no one',
     'somebody': 'nobody',
     // everything:"nothing",
-    'always': 'never',
-    //copulas
-    'is': 'isn\'t',
-    'are': 'aren\'t',
-    'was': 'wasn\'t',
-    'will': 'won\'t',
-    //modals
-    'didn\'t': 'did',
-    'wouldn\'t': 'would',
-    'couldn\'t': 'could',
-    'shouldn\'t': 'should',
-    'can\'t': 'can',
-    'won\'t': 'will',
-    'mustn\'t': 'must',
-    'shan\'t': 'shall',
-    'shant': 'shall',
-
-    'did': 'didn\'t',
-    'would': 'wouldn\'t',
-    'could': 'couldn\'t',
-    'should': 'shouldn\'t',
-    'can': 'can\'t',
-    'must': 'mustn\'t'
+    'always': 'never'
   };
   //loop through each term..
   for (let i = 0; i < s.terms.length; i++) {
@@ -66,6 +44,8 @@ const negate = function(s) {
         }
         return s;
       }
+      let conjugation = tok.conjugation();
+      let tense = tok.tense();
 
       //turn future-tense 'will go' into "won't go"
       if (tok.normal.match(/^will /i)) {
@@ -78,35 +58,37 @@ const negate = function(s) {
       }
       // - INFINITIVE-
       // 'i walk' -> "i don't walk"
-      if (tok.pos['infinitive'] && tok.conjugation() !== 'future') {
+      if (tok.pos['infinitive'] && conjugation !== 'future') {
         tok.text = 'don\'t ' + (tok.conjugate().infinitive || tok.text);
         tok.normal = tok.text.toLowerCase();
         return s;
       }
       // - GERUND-
       // if verb is gerund, 'walking' -> "not walking"
-      if (tok.conjugation() === 'gerund') {
+      if (conjugation === 'gerund') {
         tok.text = 'not ' + tok.text;
         tok.normal = tok.text.toLowerCase();
         return s;
       }
       // - PAST-
       // if verb is past-tense, 'he walked' -> "he did't walk"
-      if (tok.tense === 'past') {
+      console.log(tok);
+      if (tense === 'past') {
+        console.log(tok);
         tok.text = 'didn\'t ' + (tok.analysis.conjugate().infinitive || tok.text);
         tok.normal = tok.text.toLowerCase();
         return s;
       }
       // - PRESENT-
       // if verb is present-tense, 'he walks' -> "he doesn't walk"
-      if (tok.conjugations.present) {
+      if (tense === 'present') {
         tok.text = 'doesn\'t ' + (tok.conjugate().infinitive || tok.text);
         tok.normal = tok.text.toLowerCase();
         return s;
       }
       // - FUTURE-
       // if verb is future-tense, 'will go' -> won't go. easy-peasy
-      if (tok.conjugations.future) {
+      if (tense === 'future') {
         if (tok.normal === 'will') {
           tok.normal = 'won\'t';
           tok.text = 'won\'t';

@@ -1,7 +1,13 @@
 'use strict';
 //recieves a verb object, and returns a negated string
 //sort out don't/didn't/doesn't/won't
-const negate = function(v, form) {
+
+// logic:
+// [past tense] - "sold" -> "didn't sell"
+// [present] - "sells" -> "doesn't sell"
+// [future] - "will sell" -> "won't sell"
+
+const negate = function(v) {
 
   let exceptions = {
     'is': 'isn\'t',
@@ -16,7 +22,7 @@ const negate = function(v, form) {
     'should': 'shouldn\'t',
     'can': 'can\'t',
     'must': 'mustn\'t',
-    'have': 'hasn\'t',
+    'have': 'haven\'t',
     'does': 'doesn\'t',
     //un-negate?
     'didn\'t': 'did',
@@ -42,7 +48,7 @@ const negate = function(v, form) {
   if (words.length > 1 && exceptions[words[0]]) {
     return exceptions[words[0]] + ' ' + words.slice(1, words.length).join(' ');
   }
-  form = form || v.conjugation();
+  let form = v.conjugation();
   //walked -> didn't walk
   if (form === 'PastTense') {
     return 'didn\'t ' + v.conjugate()['infinitive'];

@@ -3,7 +3,7 @@
 const pos = require('./pos/parts_of_speech.js');
 
 //conjugate a specific verb
-const flip = function(t, tense) {
+const flip_verb = function(t, tense) {
   if (tense === 'present') {
     t.to_present();
   } else if (tense === 'past') {
@@ -18,7 +18,7 @@ const change_tense = function(s, tense) {
   //convert all verbs
   s.terms.forEach(function(t) {
     if (t instanceof pos.Verb) {
-      flip(t, tense);
+      flip_verb(t, tense);
     }
   });
   return s;

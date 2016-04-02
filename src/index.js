@@ -99,9 +99,7 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
-// console.log(nlp.sentence('he will be quick').to_present().text());
-// console.log(nlp.text(`everything is "good" i guess`).terms());
-
+// console.log(nlp.sentence('fire the missles').replace('the [Noun]', 'the +cyber $1').text());
 
 //slang
 // invite

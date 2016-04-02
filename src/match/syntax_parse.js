@@ -49,10 +49,16 @@ const parse_term = function(term, i) {
     signals.one_of = true;
   }
   //alias flag
-  if (fns.startsWith(term, '~') && fns.endsWith(term, '~')) {
+  if (fns.startsWith(term, '~')) {
     term = term.replace(/^\~/, '');
     term = term.replace(/\~$/, '');
     signals.alias = true;
+  }
+  //addition flag
+  if (fns.startsWith(term, '+')) {
+    term = term.replace(/^\+/, '');
+    term = term.replace(/\+$/, '');
+    signals.extra = true;
   }
 
   //a period means anything

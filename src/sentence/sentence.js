@@ -2,7 +2,6 @@
 const Term = require('../term/term');
 const tagger = require('./pos/tagger');
 const passive_voice = require('./passive_voice');
-const negate = require('./sentence_negate');
 const contractions = {
   interpret: require('./contractions/interpret'),
   contract: require('./contractions/contract'),
@@ -108,9 +107,8 @@ class Sentence {
   is_passive() {
     return passive_voice(this);
   }
-  // A is B - A is not B
+  // Question doesn't have negate, this is a placeholder
   negate() {
-    negate(this);
     return this;
   }
 

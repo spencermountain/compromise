@@ -1,4 +1,3 @@
-
 'use strict';
 let nlp = require('../../../src/index.js');
 

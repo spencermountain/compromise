@@ -15,6 +15,7 @@ const conditional_pass = require('./passes/conditional_pass');
 const ambiguous_dates = require('./passes/ambiguous_dates');
 const multiple_pass = require('./passes/multiples_pass');
 const regex_pass = require('./passes/regex_pass');
+const quotation_pass = require('./passes/quotation_pass');
 
 //regex hints for words/suffixes
 // const word_rules_pass = function(terms) {
@@ -80,6 +81,7 @@ const tagger = function(s, options) {
     s.terms = fancy_lumping(s.terms);
   }
   s.terms = conditional_pass(s.terms);
+  s.terms = quotation_pass(s.terms);
   return s.terms;
 };
 

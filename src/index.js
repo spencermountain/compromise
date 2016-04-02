@@ -100,7 +100,7 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
 // console.log(nlp.sentence('he will be quick').to_present().text());
-// console.log(nlp.statement(`everything is good`).negate().text());
+// console.log(nlp.text(`everything is "good" i guess`).terms());
 
 
 //slang

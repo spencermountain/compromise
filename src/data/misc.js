@@ -225,11 +225,9 @@ const compact = {
     'your',
     'our',
     'its',
-    'nothing',
     'herself',
     'hers',
     'themselves',
-    'everything',
     'myself',
     'itself',
     'her', //this one is pretty ambiguous
@@ -389,6 +387,8 @@ const compact = {
 
   //special nouns that shouldnt be seen as a verb
   'NN': [
+    'nothing',
+    'everything',
     'god',
     'dollar',
     'student',

@@ -1,6 +1,7 @@
 'use strict';
 //recieves a verb object, and returns a negated string
 //sort out don't/didn't/doesn't/won't
+const fns = require('../../fns');
 
 // logic:
 // [past tense] - "sold" -> "didn't sell"
@@ -9,7 +10,7 @@
 
 const negate = function(v) {
 
-  let known_forms = {
+  let known_negation = {
     'is': 'isn\'t',
     'are': 'aren\'t',
     'was': 'wasn\'t',
@@ -23,25 +24,23 @@ const negate = function(v) {
     'can': 'can\'t',
     'must': 'mustn\'t',
     'have': 'haven\'t',
+    'has': 'hasn\'t',
     'does': 'doesn\'t',
   };
   //hard-coded explicit forms
-  if (known_forms[v.normal]) {
-    return known_forms[v.normal];
+  if (known_negation[v.normal]) {
+    return known_negation[v.normal];
   }
-  //try to un-negate?
-  // let keys = Object.keys(known_forms);
-  // for(let i = 0; i < keys.length; i++) {
-  //   if (known_forms[keys[i]] === v.normal) {
-  //     return keys[i];
-  //   }
-  // }
-
+  //try to un-negate?  create corrollary
+  let known_affirmation = fns.reverseObj(known_negation);
+  if (known_affirmation[v.normal]) {
+    return known_affirmation[v.normal];
+  }
 
   //multiple-word verbs, like 'have walked'
   let words = v.normal.split(' ');
-  if (words.length > 1 && known_forms[words[0]]) {
-    return known_forms[words[0]] + ' ' + words.slice(1, words.length).join(' ');
+  if (words.length > 1 && known_negation[words[0]]) {
+    return known_negation[words[0]] + ' ' + words.slice(1, words.length).join(' ');
   }
   let form = v.conjugation();
   //walked -> didn't walk

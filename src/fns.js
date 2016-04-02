@@ -13,6 +13,13 @@ exports.toObj = function(arr) {
     return h;
   }, {});
 };
+//turn key->value into value->key
+exports.reverseObj = function(obj) {
+  return Object.keys(obj).reduce(function(h, k) {
+    h[obj[k]] = k;
+    return h;
+  }, {});
+};
 
 exports.flatten = function(arr) {
   let all = [];

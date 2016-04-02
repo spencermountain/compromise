@@ -1,10 +1,14 @@
 'use strict';
 const Sentence = require('../sentence.js');
-// const change_tense = require('../tense.js');
+const negate = require('./negate/negate.js');
 
 class Statement extends Sentence {
   constructor(str, options) {
     super(str, options);
+  }
+  negate() {
+    negate(this);
+    return this;
   }
 }
 Statement.fn = Statement.prototype;

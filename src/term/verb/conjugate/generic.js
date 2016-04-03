@@ -24,6 +24,9 @@ const generic = {
     if (inf.endsWith('e')) {
       return inf + 'd';
     }
+    if (inf.endsWith('ed')) {
+      return inf;
+    }
     return inf + 'ed';
   },
 

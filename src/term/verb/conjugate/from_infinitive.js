@@ -161,6 +161,14 @@ let rules = [
       gr: '$1$2$2ing'
     },
   },
+  {
+    reg: /([^aeiou][aeiou])(b|t|p|m)$/i,
+    repl: {
+      pr: '$1$2s',
+      pa: '$1$2$2ed',
+      gr: '$1$2$2ing'
+    },
+  },
 ];
 
 let keys = {
@@ -181,6 +189,7 @@ const from_infinitive = function(str) {
   }
   for(let i = 0; i < rules.length; i++) {
     if (str.match(rules[i].reg)) {
+      // console.log(rules[i]);
       Object.keys(rules[i].repl).forEach(function(k) {
         obj[keys[k]] = str.replace(rules[i].reg, rules[i].repl[k]);
       });

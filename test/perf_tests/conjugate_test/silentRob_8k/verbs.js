@@ -2147,11 +2147,11 @@ module.exports = [
     'past participle': 'plated'
   },
   {
-    'infinitive': 'Gallicize',
-    '3rd singular present': 'Gallicizes',
-    'present participle': 'Gallicizing',
-    'past': 'Gallicized',
-    'past participle': 'Gallicized'
+    'infinitive': 'gallicize',
+    '3rd singular present': 'gallicizes',
+    'present participle': 'gallicizing',
+    'past': 'gallicized',
+    'past participle': 'gallicized'
   },
   {
     'infinitive': 'remarry',
@@ -3375,11 +3375,11 @@ module.exports = [
     'past participle': 'reticulated'
   },
   {
-    'infinitive': 'Platonize',
-    '3rd singular present': 'Platonizes',
-    'present participle': 'Platonizing',
-    'past': 'Platonized',
-    'past participle': 'Platonized'
+    'infinitive': 'platonize',
+    '3rd singular present': 'platonizes',
+    'present participle': 'platonizing',
+    'past': 'platonized',
+    'past participle': 'platonized'
   },
   {
     'infinitive': 'meddle',
@@ -4178,11 +4178,11 @@ module.exports = [
     'past participle': 'signed'
   },
   {
-    'infinitive': 'Islamize',
-    '3rd singular present': 'Islamizes',
-    'present participle': 'Islamizing',
-    'past': 'Islamized',
-    'past participle': 'Islamized'
+    'infinitive': 'islamize',
+    '3rd singular present': 'islamizes',
+    'present participle': 'islamizing',
+    'past': 'islamized',
+    'past participle': 'islamized'
   },
   {
     'infinitive': 'educate',
@@ -5025,11 +5025,11 @@ module.exports = [
     'past participle': 'dumfounded'
   },
   {
-    'infinitive': 'Braille',
-    '3rd singular present': 'Brailles',
-    'present participle': 'Brailling',
-    'past': 'Brailled',
-    'past participle': 'Brailled'
+    'infinitive': 'braille',
+    '3rd singular present': 'brailles',
+    'present participle': 'brailling',
+    'past': 'brailled',
+    'past participle': 'brailled'
   },
   {
     'infinitive': 'envelop',
@@ -5371,11 +5371,11 @@ module.exports = [
     'past participle': 'winkled'
   },
   {
-    'infinitive': 'Africanize',
-    '3rd singular present': 'Africanizes',
-    'present participle': 'Africanizing',
-    'past': 'Africanized',
-    'past participle': 'Africanized'
+    'infinitive': 'africanize',
+    '3rd singular present': 'africanizes',
+    'present participle': 'africanizing',
+    'past': 'africanized',
+    'past participle': 'africanized'
   },
   {
     'infinitive': 'prospect',
@@ -7552,11 +7552,11 @@ module.exports = [
     'past participle': 'tinselled'
   },
   {
-    'infinitive': 'Hellenize',
-    '3rd singular present': 'Hellenizes',
-    'present participle': 'Hellenizing',
-    'past': 'Hellenized',
-    'past participle': 'Hellenized'
+    'infinitive': 'hellenize',
+    '3rd singular present': 'hellenizes',
+    'present participle': 'hellenizing',
+    'past': 'hellenized',
+    'past participle': 'hellenized'
   },
   {
     'infinitive': 'overexpose',
@@ -7839,11 +7839,11 @@ module.exports = [
     'past participle': 'perforated'
   },
   {
-    'infinitive': 'LHlike',
-    '3rd singular present': 'LHlikes',
-    'present participle': 'LHliking',
-    'past': 'LHliked',
-    'past participle': 'LHliked'
+    'infinitive': 'lhlike',
+    '3rd singular present': 'lhlikes',
+    'present participle': 'lhliking',
+    'past': 'lhliked',
+    'past participle': 'lhliked'
   },
   {
     'infinitive': 'contrast',
@@ -8602,11 +8602,11 @@ module.exports = [
     'past participle': 'bypassed'
   },
   {
-    'infinitive': 'Judaize',
-    '3rd singular present': 'Judaizes',
-    'present participle': 'Judaizing',
-    'past': 'Judaized',
-    'past participle': 'Judaized'
+    'infinitive': 'judaize',
+    '3rd singular present': 'judaizes',
+    'present participle': 'judaizing',
+    'past': 'judaized',
+    'past participle': 'judaized'
   },
   {
     'infinitive': 'sauce',
@@ -8759,11 +8759,11 @@ module.exports = [
     'past participle': 'vowelized'
   },
   {
-    'infinitive': 'Gothicize',
-    '3rd singular present': 'Gothicizes',
-    'present participle': 'Gothicizing',
-    'past': 'Gothicized',
-    'past participle': 'Gothicized'
+    'infinitive': 'gothicize',
+    '3rd singular present': 'gothicizes',
+    'present participle': 'gothicizing',
+    'past': 'gothicized',
+    'past participle': 'gothicized'
   },
   {
     'infinitive': 'salute',
@@ -9945,11 +9945,11 @@ module.exports = [
     'past participle': 'rattled'
   },
   {
-    'infinitive': 'Mace',
-    '3rd singular present': 'Maces',
-    'present participle': 'Maceing',
-    'past': 'Maced',
-    'past participle': 'Maced'
+    'infinitive': 'mace',
+    '3rd singular present': 'maces',
+    'present participle': 'maceing',
+    'past': 'maced',
+    'past participle': 'maced'
   },
   {
     'infinitive': 'veneer',
@@ -10092,11 +10092,11 @@ module.exports = [
     'past participle': 'comported'
   },
   {
-    'infinitive': 'Mimeograph',
-    '3rd singular present': 'Mimeographes',
-    'present participle': 'Mimeographing',
-    'past': 'Mimeographed',
-    'past participle': 'Mimeographed'
+    'infinitive': 'mimeograph',
+    '3rd singular present': 'mimeographes',
+    'present participle': 'mimeographing',
+    'past': 'mimeographed',
+    'past participle': 'mimeographed'
   },
   {
     'infinitive': 'caramelize',
@@ -11854,11 +11854,11 @@ module.exports = [
     'past participle': 'unplugged'
   },
   {
-    'infinitive': 'Aryanize',
-    '3rd singular present': 'Aryanizes',
-    'present participle': 'Aryanizing',
-    'past': 'Aryanized',
-    'past participle': 'Aryanized'
+    'infinitive': 'aryanize',
+    '3rd singular present': 'aryanizes',
+    'present participle': 'aryanizing',
+    'past': 'aryanized',
+    'past participle': 'aryanized'
   },
   {
     'infinitive': 'rubbish',
@@ -12372,11 +12372,11 @@ module.exports = [
     'past participle': 'garbed'
   },
   {
-    'infinitive': 'Hebraize',
-    '3rd singular present': 'Hebraizes',
-    'present participle': 'Hebraizing',
-    'past': 'Hebraized',
-    'past participle': 'Hebraized'
+    'infinitive': 'hebraize',
+    '3rd singular present': 'hebraizes',
+    'present participle': 'hebraizing',
+    'past': 'hebraized',
+    'past participle': 'hebraized'
   },
   {
     'infinitive': 'earn',
@@ -14418,11 +14418,11 @@ module.exports = [
     'past participle': 'sustained'
   },
   {
-    'infinitive': 'Hispanicize',
-    '3rd singular present': 'Hispanicizes',
-    'present participle': 'Hispanicizing',
-    'past': 'Hispanicized',
-    'past participle': 'Hispanicized'
+    'infinitive': 'hispanicize',
+    '3rd singular present': 'hispanicizes',
+    'present participle': 'hispanicizing',
+    'past': 'hispanicized',
+    'past participle': 'hispanicized'
   },
   {
     'infinitive': 'disfeature',
@@ -15438,11 +15438,11 @@ module.exports = [
     'past participle': 'burgled'
   },
   {
-    'infinitive': 'X-ray',
-    '3rd singular present': 'X-rays',
-    'present participle': 'X-raying',
-    'past': 'X-rayed',
-    'past participle': 'X-rayed'
+    'infinitive': 'x-ray',
+    '3rd singular present': 'x-rays',
+    'present participle': 'x-raying',
+    'past': 'x-rayed',
+    'past participle': 'x-rayed'
   },
   {
     'infinitive': 'overcall',
@@ -15487,11 +15487,11 @@ module.exports = [
     'past participle': 'maundered'
   },
   {
-    'infinitive': 'Jew',
-    '3rd singular present': 'Jews',
-    'present participle': 'Jewing',
-    'past': 'Jewed',
-    'past participle': 'Jewed'
+    'infinitive': 'jew',
+    '3rd singular present': 'jews',
+    'present participle': 'jewing',
+    'past': 'jewed',
+    'past participle': 'jewed'
   },
   {
     'infinitive': 'synonymize',
@@ -16082,11 +16082,11 @@ module.exports = [
     'past participle': 'sheafed'
   },
   {
-    'infinitive': 'Xerox',
-    '3rd singular present': 'Xeroxes',
-    'present participle': 'Xeroxing',
-    'past': 'Xeroxed',
-    'past participle': 'Xeroxed'
+    'infinitive': 'xerox',
+    '3rd singular present': 'xeroxes',
+    'present participle': 'xeroxing',
+    'past': 'xeroxed',
+    'past participle': 'xeroxed'
   },
   {
     'infinitive': 'fag',
@@ -17182,11 +17182,11 @@ module.exports = [
     'past participle': 'backwashed'
   },
   {
-    'infinitive': 'Christianize',
-    '3rd singular present': 'Christianizes',
-    'present participle': 'Christianizing',
-    'past': 'Christianized',
-    'past participle': 'Christianized'
+    'infinitive': 'christianize',
+    '3rd singular present': 'christianizes',
+    'present participle': 'christianizing',
+    'past': 'christianized',
+    'past participle': 'christianized'
   },
   {
     'infinitive': 'revoice',
@@ -18687,11 +18687,11 @@ module.exports = [
     'past participle': 'subinfeudated'
   },
   {
-    'infinitive': 'Latinize',
-    '3rd singular present': 'Latinizes',
-    'present participle': 'Latinizing',
-    'past': 'Latinized',
-    'past participle': 'Latinized'
+    'infinitive': 'latinize',
+    '3rd singular present': 'latinizes',
+    'present participle': 'latinizing',
+    'past': 'latinized',
+    'past participle': 'latinized'
   },
   {
     'infinitive': 'gun',
@@ -18736,11 +18736,11 @@ module.exports = [
     'past participle': 'disqualified'
   },
   {
-    'infinitive': 'Grecize',
-    '3rd singular present': 'Grecizes',
-    'present participle': 'Grecizing',
-    'past': 'Grecized',
-    'past participle': 'Grecized'
+    'infinitive': 'grecize',
+    '3rd singular present': 'grecizes',
+    'present participle': 'grecizing',
+    'past': 'grecized',
+    'past participle': 'grecized'
   },
   {
     'infinitive': 'brave',
@@ -18939,11 +18939,11 @@ module.exports = [
     'past participle': 'gawped'
   },
   {
-    'infinitive': 'English',
-    '3rd singular present': 'Englishes',
-    'present participle': 'Englishing',
-    'past': 'Englished',
-    'past participle': 'Englished'
+    'infinitive': 'english',
+    '3rd singular present': 'englishes',
+    'present participle': 'englishing',
+    'past': 'englished',
+    'past participle': 'englished'
   },
   {
     'infinitive': 'gorge',
@@ -21053,11 +21053,11 @@ module.exports = [
     'past participle': 'forborne'
   },
   {
-    'infinitive': 'Americanize',
-    '3rd singular present': 'Americanizes',
-    'present participle': 'Americanizing',
-    'past': 'Americanized',
-    'past participle': 'Americanized'
+    'infinitive': 'americanize',
+    '3rd singular present': 'americanizes',
+    'present participle': 'americanizing',
+    'past': 'americanized',
+    'past participle': 'americanized'
   },
   {
     'infinitive': 'soil',
@@ -21378,11 +21378,11 @@ module.exports = [
     'past participle': 'cogitated'
   },
   {
-    'infinitive': 'Russianize',
-    '3rd singular present': 'Russianizes',
-    'present participle': 'Russianizing',
-    'past': 'Russianized',
-    'past participle': 'Russianized'
+    'infinitive': 'russianize',
+    '3rd singular present': 'russianizes',
+    'present participle': 'russianizing',
+    'past': 'russianized',
+    'past participle': 'russianized'
   },
   {
     'infinitive': 'disproportionate',
@@ -21578,11 +21578,11 @@ module.exports = [
     'past participle': 'laughed'
   },
   {
-    'infinitive': 'Orientalize',
-    '3rd singular present': 'Orientalizes',
-    'present participle': 'Orientalizing',
-    'past': 'Orientalized',
-    'past participle': 'Orientalized'
+    'infinitive': 'orientalize',
+    '3rd singular present': 'orientalizes',
+    'present participle': 'orientalizing',
+    'past': 'orientalized',
+    'past participle': 'orientalized'
   },
   {
     'infinitive': 'doublecross',
@@ -22449,11 +22449,11 @@ module.exports = [
     'past participle': 'fenced'
   },
   {
-    'infinitive': 'French-polish',
-    '3rd singular present': 'French-polishes',
-    'present participle': 'French-polishing',
-    'past': 'French-polished',
-    'past participle': 'French-polished'
+    'infinitive': 'french-polish',
+    '3rd singular present': 'french-polishes',
+    'present participle': 'french-polishing',
+    'past': 'french-polished',
+    'past participle': 'french-polished'
   },
   {
     'infinitive': 'archaize',
@@ -25920,11 +25920,11 @@ module.exports = [
     'past participle': 'disinterred'
   },
   {
-    'infinitive': 'Germanize',
-    '3rd singular present': 'Germanizes',
-    'present participle': 'Germanizing',
-    'past': 'Germanized',
-    'past participle': 'Germanized'
+    'infinitive': 'germanize',
+    '3rd singular present': 'germanizes',
+    'present participle': 'germanizing',
+    'past': 'germanized',
+    'past participle': 'germanized'
   },
   {
     'infinitive': 'underscore',
@@ -26144,11 +26144,11 @@ module.exports = [
     'past participle': 'hysterectomized'
   },
   {
-    'infinitive': 'Teutonize',
-    '3rd singular present': 'Teutonizes',
-    'present participle': 'Teutonizing',
-    'past': 'Teutonized',
-    'past participle': 'Teutonized'
+    'infinitive': 'teutonize',
+    '3rd singular present': 'teutonizes',
+    'present participle': 'teutonizing',
+    'past': 'teutonized',
+    'past participle': 'teutonized'
   },
   {
     'infinitive': 'embowel',
@@ -27999,11 +27999,11 @@ module.exports = [
     'past participle': 'preached'
   },
   {
-    'infinitive': 'Occidentalize',
-    '3rd singular present': 'Occidentalizes',
-    'present participle': 'Occidentalizing',
-    'past': 'Occidentalized',
-    'past participle': 'Occidentalized'
+    'infinitive': 'occidentalize',
+    '3rd singular present': 'occidentalizes',
+    'present participle': 'occidentalizing',
+    'past': 'occidentalized',
+    'past participle': 'occidentalized'
   },
   {
     'infinitive': 'encarnalize',
@@ -29382,11 +29382,11 @@ module.exports = [
     'past participle': 'horsewhipped'
   },
   {
-    'infinitive': 'Teletype',
-    '3rd singular present': 'Teletypes',
-    'present participle': 'Teletyping',
-    'past': 'Teletyped',
-    'past participle': 'Teletyped'
+    'infinitive': 'teletype',
+    '3rd singular present': 'teletypes',
+    'present participle': 'teletyping',
+    'past': 'teletyped',
+    'past participle': 'teletyped'
   },
   {
     'infinitive': 'baksheesh',
@@ -29578,11 +29578,11 @@ module.exports = [
     'past participle': 'psycho-analysed'
   },
   {
-    'infinitive': 'Romanize',
-    '3rd singular present': 'Romanizes',
-    'present participle': 'Romanizing',
-    'past': 'Romanized',
-    'past participle': 'Romanized'
+    'infinitive': 'romanize',
+    '3rd singular present': 'romanizes',
+    'present participle': 'romanizing',
+    'past': 'romanized',
+    'past participle': 'romanized'
   },
   {
     'infinitive': 'rampart',
@@ -33192,11 +33192,11 @@ module.exports = [
     'past participle': 'stone-walled'
   },
   {
-    'infinitive': 'Frenchify',
-    '3rd singular present': 'Frenchifies',
-    'present participle': 'Frenchifying',
-    'past': 'Frenchified',
-    'past participle': 'Frenchified'
+    'infinitive': 'frenchify',
+    '3rd singular present': 'frenchifies',
+    'present participle': 'frenchifying',
+    'past': 'frenchified',
+    'past participle': 'frenchified'
   },
   {
     'infinitive': 'down',
@@ -33939,11 +33939,11 @@ module.exports = [
     'past participle': 'nationalized'
   },
   {
-    'infinitive': 'Europeanize',
-    '3rd singular present': 'Europeanizes',
-    'present participle': 'Europeanizing',
-    'past': 'Europeanized',
-    'past participle': 'Europeanized'
+    'infinitive': 'europeanize',
+    '3rd singular present': 'europeanizes',
+    'present participle': 'europeanizing',
+    'past': 'europeanized',
+    'past participle': 'europeanized'
   },
   {
     'infinitive': 'lynch',
@@ -35687,11 +35687,11 @@ module.exports = [
     'past participle': 'shown'
   },
   {
-    'infinitive': 'Prussianize',
-    '3rd singular present': 'Prussianizes',
-    'present participle': 'Prussianizing',
-    'past': 'Prussianized',
-    'past participle': 'Prussianized'
+    'infinitive': 'prussianize',
+    '3rd singular present': 'prussianizes',
+    'present participle': 'prussianizing',
+    'past': 'prussianized',
+    'past participle': 'prussianized'
   },
   {
     'infinitive': 'accession',
@@ -38375,11 +38375,11 @@ module.exports = [
     'past participle': 'sprigged'
   },
   {
-    'infinitive': 'Balkanize',
-    '3rd singular present': 'Balkanizes',
-    'present participle': 'Balkanizing',
-    'past': 'Balkanized',
-    'past participle': 'Balkanized'
+    'infinitive': 'balkanize',
+    '3rd singular present': 'balkanizes',
+    'present participle': 'balkanizing',
+    'past': 'balkanized',
+    'past participle': 'balkanized'
   },
   {
     'infinitive': 'bleat',
@@ -40524,11 +40524,11 @@ module.exports = [
     'past participle': 'bidden'
   },
   {
-    'infinitive': 'Mohammedanize',
-    '3rd singular present': 'Mohammedanizes',
-    'present participle': 'Mohammedanizing',
-    'past': 'Mohammedanized',
-    'past participle': 'Mohammedanized'
+    'infinitive': 'mohammedanize',
+    '3rd singular present': 'mohammedanizes',
+    'present participle': 'mohammedanizing',
+    'past': 'mohammedanized',
+    'past participle': 'mohammedanized'
   },
   {
     'infinitive': 'displace',
@@ -43473,11 +43473,11 @@ module.exports = [
     'past participle': 'roughhoused'
   },
   {
-    'infinitive': 'Italianize',
-    '3rd singular present': 'Italianizes',
-    'present participle': 'Italianizing',
-    'past': 'Italianized',
-    'past participle': 'Italianized'
+    'infinitive': 'italianize',
+    '3rd singular present': 'italianizes',
+    'present participle': 'italianizing',
+    'past': 'italianized',
+    'past participle': 'italianized'
   },
   {
     'infinitive': 'anodize',
@@ -43676,11 +43676,11 @@ module.exports = [
     'past participle': 'minified'
   },
   {
-    'infinitive': 'Photostat',
-    '3rd singular present': 'Photostats',
-    'present participle': 'Photostatting',
-    'past': 'Photostatted',
-    'past participle': 'Photostatted'
+    'infinitive': 'photostat',
+    '3rd singular present': 'photostats',
+    'present participle': 'photostatting',
+    'past': 'photostatted',
+    'past participle': 'photostatted'
   },
   {
     'infinitive': 'protect',
@@ -45015,11 +45015,11 @@ module.exports = [
     'past participle': 'muzzled'
   },
   {
-    'infinitive': 'Hoover',
-    '3rd singular present': 'Hoovers',
-    'present participle': 'Hoovering',
-    'past': 'Hoovered',
-    'past participle': 'Hoovered'
+    'infinitive': 'hoover',
+    '3rd singular present': 'hoovers',
+    'present participle': 'hoovering',
+    'past': 'hoovered',
+    'past participle': 'hoovered'
   },
   {
     'infinitive': 'violate',
@@ -48075,11 +48075,11 @@ module.exports = [
     'past participle': 'pur_eed'
   },
   {
-    'infinitive': 'Nazify',
-    '3rd singular present': 'Nazifies',
-    'present participle': 'Nazifying',
-    'past': 'Nazified',
-    'past participle': 'Nazified'
+    'infinitive': 'nazify',
+    '3rd singular present': 'nazifies',
+    'present participle': 'nazifying',
+    'past': 'nazified',
+    'past participle': 'nazified'
   },
   {
     'infinitive': 'reapportion',
@@ -49337,11 +49337,11 @@ module.exports = [
     'past participle': 'replied'
   },
   {
-    'infinitive': 'Normanize',
-    '3rd singular present': 'Normanizes',
-    'present participle': 'Normanizing',
-    'past': 'Normanized',
-    'past participle': 'Normanized'
+    'infinitive': 'normanize',
+    '3rd singular present': 'normanizes',
+    'present participle': 'normanizing',
+    'past': 'normanized',
+    'past participle': 'normanized'
   },
   {
     'infinitive': 'corbel',
@@ -51286,11 +51286,11 @@ module.exports = [
     'past participle': 'cast'
   },
   {
-    'infinitive': 'Roneo',
-    '3rd singular present': 'Roneos',
-    'present participle': 'Roneoing',
-    'past': 'Roneoed',
-    'past participle': 'Roneoed'
+    'infinitive': 'roneo',
+    '3rd singular present': 'roneos',
+    'present participle': 'roneoing',
+    'past': 'roneoed',
+    'past participle': 'roneoed'
   },
   {
     'infinitive': 'embank',
@@ -53353,11 +53353,11 @@ module.exports = [
     'past participle': 'postfixed'
   },
   {
-    'infinitive': 'Gnosticize',
-    '3rd singular present': 'Gnosticizes',
-    'present participle': 'Gnosticizing',
-    'past': 'Gnosticized',
-    'past participle': 'Gnosticized'
+    'infinitive': 'gnosticize',
+    '3rd singular present': 'gnosticizes',
+    'present participle': 'gnosticizing',
+    'past': 'gnosticized',
+    'past participle': 'gnosticized'
   },
   {
     'infinitive': 'stash',
@@ -54880,11 +54880,11 @@ module.exports = [
     'past participle': 'heightened'
   },
   {
-    'infinitive': 'Australianize',
-    '3rd singular present': 'Australianizes',
-    'present participle': 'Australianizing',
-    'past': 'Australianized',
-    'past participle': 'Australianized'
+    'infinitive': 'australianize',
+    '3rd singular present': 'australianizes',
+    'present participle': 'australianizing',
+    'past': 'australianized',
+    'past participle': 'australianized'
   },
   {
     'infinitive': 'shove',
@@ -55447,11 +55447,11 @@ module.exports = [
     'past participle': 'roughcast'
   },
   {
-    'infinitive': 'Sanforize',
-    '3rd singular present': 'Sanforizes',
-    'present participle': 'Sanforizing',
-    'past': 'Sanforized',
-    'past participle': 'Sanforized'
+    'infinitive': 'sanforize',
+    '3rd singular present': 'sanforizes',
+    'present participle': 'sanforizing',
+    'past': 'sanforized',
+    'past participle': 'sanforized'
   },
   {
     'infinitive': 'tinker',
@@ -57276,11 +57276,11 @@ module.exports = [
     'past participle': 'outed'
   },
   {
-    'infinitive': 'Afrikanerize',
-    '3rd singular present': 'Afrikanerizes',
-    'present participle': 'Afrikanerizing',
-    'past': 'Afrikanerized',
-    'past participle': 'Afrikanerized'
+    'infinitive': 'afrikanerize',
+    '3rd singular present': 'afrikanerizes',
+    'present participle': 'afrikanerizing',
+    'past': 'afrikanerized',
+    'past participle': 'afrikanerized'
   },
   {
     'infinitive': 'effloresce',

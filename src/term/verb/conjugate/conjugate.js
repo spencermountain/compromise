@@ -5,32 +5,30 @@ const to_infinitive = require('./to_infinitive');
 const from_infinitive = require('./from_infinitive');
 const irregular_verbs = require('../../../data/irregular_verbs');
 const predict = require('./predict_form.js');
+const generic = require('./generic.js');
+const strip_prefix = require('./strip_prefix.js');
+
 
 //make sure object has all forms
 const fufill = function(obj, prefix) {
+  //we're toast if there's no infinitive
   if (!obj.infinitive) {
     return obj;
   }
+  //apply generic methods to missing forms
   if (!obj.gerund) {
-    if (obj.infinitive.match(/e$/)) {
-      obj.gerund = obj.infinitive.replace(/e$/, 'ing');
-    } else {
-      obj.gerund = obj.infinitive + 'ing';
-    }
+    obj.gerund = generic.gerund(obj);
+  }
+  if (!obj.present) {
+    obj.present = generic.present(obj);
+  }
+  if (!obj.past) {
+    obj.past = generic.past(obj);
   }
   if (obj.actor === undefined) {
     obj.actor = verb_to_actor(obj.infinitive);
   }
-  if (!obj.present) {
-    obj.present = obj.infinitive + 's';
-  }
-  if (!obj.past) {
-    if (obj.infinitive.match(/e$/)) {
-      obj.past = obj.infinitive + 'd';
-    } else {
-      obj.past = obj.infinitive + 'ed';
-    }
-  }
+
   //add the prefix to all forms, if it exists
   if (prefix) {
     Object.keys(obj).forEach(function(k) {
@@ -39,22 +37,23 @@ const fufill = function(obj, prefix) {
   }
   //future is 'will'+infinitive
   if (!obj.future) {
-    obj.future = 'will ' + obj.infinitive;
+    obj.future = generic.future(obj);
   }
   //perfect is 'have'+past-tense
   if (!obj.perfect) {
-    obj.perfect = 'have ' + (obj.participle || obj.past);
+    obj.perfect = generic.perfect(obj);
   }
   //pluperfect is 'had'+past-tense
   if (!obj.pluperfect) {
-    obj.pluperfect = 'had ' + obj.past;
+    obj.pluperfect = generic.pluperfect(obj);
   }
   //future perfect is 'will have'+past-tense
   if (!obj.future_perfect) {
-    obj.future_perfect = 'will have ' + obj.past;
+    obj.future_perfect = generic.future_perfect(obj);
   }
   return obj;
 };
+
 
 const conjugate = function(w) {
   if (w === undefined) {
@@ -86,12 +85,9 @@ const conjugate = function(w) {
   w = w.replace(/^will /i, '');
 
   //un-prefix the verb, and add it in later
-  let prefix = '';
-  let match = w.match(/^(over|under|re|anti|full)[- ]?([^aeiou][a-z]*)/i);
-  if (match) {
-    prefix = match[1];
-    w = match[2];
-  }
+  let prefix = strip_prefix(w);
+  w = w.replace(prefix, '');
+
   //guess the tense, so we know which transormation to make
   const predicted = predict(w) || 'infinitive';
   //check against suffix rules
@@ -110,7 +106,4 @@ const conjugate = function(w) {
 };
 module.exports = conjugate;
 
-// console.log(conjugate('open'));
-
-// // broken
-// console.log(conjugate('spred'));
+// console.log(conjugate('convoluted'));

@@ -103,7 +103,7 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.sentence(`don't go`).match(`do not`));
 // console.log(nlp.sentence(`do not go`).match(`do not`));
-// console.log(nlp.sentence(`i dunno`).match(`do not`));
+// console.log(nlp.sentence(`i dunno`).match(`do not`)[0].text());
 // .match(`do not`));
 
 //slang

@@ -68,6 +68,10 @@ describe('sentence lookup', function() {
     [`if you didn't care`, `didn't`, `didn't`],
     [`if you wouldn't care, i'll eat here`, `i'll eat`, `i'll eat`],
 
+    [`don't go`, `do not`, `don't`],
+    [`do not go`, `do not`, `do not`],
+    [`i dunno`, `do not`, `dunno`],
+
   ];
   tests.forEach(function(a) {
     it(a.join(' | '), function(done) {

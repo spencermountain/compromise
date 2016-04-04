@@ -60,7 +60,6 @@ const tryFromHere = function(terms, regs, options) {
 const findAll = function(terms, regs, options) {
   let result = [];
   regs = syntax_parse(regs || '');
-
   // one-off lookup for ^
   // '^' token is 'must start at 0'
   if (regs[0].signals.leading) {

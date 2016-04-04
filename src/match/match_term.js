@@ -35,9 +35,8 @@ const match_term = function(term, reg) {
     }
     return false;
   }
-
   //straight-up text match
-  if (reg.term === term.normal || reg.term === term.text) {
+  if (reg.term === term.normal || reg.term === term.text || reg.term === term.expansion) {
     return true;
   }
 

@@ -18,6 +18,7 @@ const starts = {
   'according': true,
   'notwithstanding': true,
   'when': true,
+  'before': true,
 };
 
 // ensure there's a verb in a couple words

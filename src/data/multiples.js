@@ -73,5 +73,6 @@ module.exports = {
   'united states': 'NN',
   'united kingdom': 'NN',
   'great britain': 'NN',
-  'head start': 'NN'
+  'head start': 'NN',
+  'make sure': 'VB'
 };

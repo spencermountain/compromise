@@ -10,14 +10,14 @@ let tests = [
   [`they've begun`, ['they', 'have']],
   [`they'll begun`, ['they', 'will']],
   [`we've begun`, ['we', 'have']],
-  [`don't go`, ['do', 'not']],
+  [`don't go`, ['do not', 'go']],
   // dont expand leading 'nt contraction
-  // [`mustn't go`, ['must', 'not']],
-  // [`haven't gone`, ['have', 'not']],
-  // [`isn't going`, ['is', 'not']],
-  // ['can\'t go', ['can', 'not']],
-  // ['ain\'t go', ['is', 'not']],
-  // ['won\'t go', ['will', 'not']]
+  [`mustn't go`, ['must not', 'go']],
+  [`haven't gone`, ['have not', 'gone']],
+  [`isn't going`, ['is not', 'going']],
+  ['can\'t go', ['can not', 'go']],
+  ['ain\'t going', ['is not', 'going']],
+  ['won\'t go', ['will not', 'go']],
 
   ['i\'d go', ['i', 'would']],
   ['she\'d go', ['she', 'would']],
@@ -43,21 +43,27 @@ let tests = [
   ['we\'re going', ['we', 'are']],
   ['they\'re going', ['they', 'are']],
 
+  [`don't`, ['do not']],
+  [`do not`, ['do not']],
+  [`dunno`, ['do not', 'know']],
 
-// [`spencer's going`, ['spencer', 'is']],
+  [`spencer's`, ['spencer', 'is']],
+  [`he's`, ['he', 'is']],
 ];
 
 
 describe('contractions', function() {
 
-  it('expand', function(done) {
-    tests.forEach(function(a) {
+  tests.forEach(function(a) {
+    it('expand ' + a[0], function(done) {
       let t = nlp.text(a[0]);
       t.contractions.expand();
       t.terms()[0].normal.should.equal(a[1][0]);
-      t.terms()[1].normal.should.equal(a[1][1]);
+      if (t.terms()[1]) {
+        t.terms()[1].normal.should.equal(a[1][1]);
+      }
+      done();
     });
-    done();
   });
 
   it('contract', function(done) {

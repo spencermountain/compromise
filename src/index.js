@@ -101,7 +101,10 @@ if (typeof define === 'function' && define.amd) {
 // console.log(nlp.value('six hundred and fifty nine').parse());
 // console.log(nlp.sentence('fire the missles').replace('the [Noun]', 'the +cyber $1').text());
 
-// console.log(nlp.sentence(`when i'm at work, buy some eggs for kathrine`).terms);
+// console.log(nlp.sentence(`don't go`).match(`do not`));
+// console.log(nlp.sentence(`do not go`).match(`do not`));
+// console.log(nlp.sentence(`i dunno`).match(`do not`));
+// .match(`do not`));
 
 //slang
 // invite

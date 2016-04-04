@@ -15,23 +15,32 @@ const supported = {
 };
 
 const irregulars = {
-  'dunno': ['do', 'not', 'know'],
+  'dunno': ['do not', 'know'],
   'wanna': ['want', 'to'],
   'gonna': ['going', 'to'],
   'im': ['i', 'am'],
-  'dont': ['do', 'not'],
-  'don\'t': ['do', 'not'],
-  'dun': ['do', 'not'],
-  'cannot': ['can', 'not'],
   'alot': ['a', 'lot'],
+
+  'dont': ['do not'],
+  'don\'t': ['do not'],
+  'dun': ['do not'],
+
+  'won\'t': ['will not'],
+  'wont': ['will not'],
+
+  'can\'t': ['can not'],
+  'cannot': ['can not'],
+
+  'aint': ['is not'], //or 'are'
+  'ain\'t': ['is not'],
+  'shan\'t': ['should not'],
+
   'where\'d': ['where', 'did'],
   'when\'d': ['when', 'did'],
   'how\'d': ['how', 'did'],
   'what\'d': ['what', 'did'],
-  'aint': ['is', 'not'], //or 'are'
   'brb': ['be', 'right', 'back'],
   'let\'s': ['let', 'us'],
-  'shan\'t': ['should', 'not'],
 };
 
 
@@ -46,22 +55,22 @@ const handle_simple = function(terms, i, particle) {
   return terms;
 };
 
-// `n't` contractions
+// `n't` contractions - negate doesn't have a second term
 const handle_negate = function(terms, i) {
-  //dont expand negated first term - "isn't x done?", "wouldn't x go?"
-  const allowed_intros = {
-    'don\'t': true,
-    'mustn\'t': true
-  };
-  if (i === 0 && !allowed_intros[terms[i].normal]) {
-    return terms;
-  }
   //fixup current term
   terms[i].expansion = terms[i].text.replace(/n'.*/, '');
-  //make ghost-term
-  let second_word = new pos.Term('');
-  second_word.expansion = 'not';
-  terms.splice(i + 1, 0, second_word);
+  terms[i].expansion += ' not';
+  return terms;
+};
+
+// expand manual contractions
+const handle_irregulars = function(terms, x, arr) {
+  terms[x].expansion = arr[0];
+  for(let i = 1; i < arr.length; i++) {
+    let t = new pos.Term('');
+    t.expansion = arr[i];
+    terms.splice(x + i, 0, t);
+  }
   return terms;
 };
 
@@ -80,6 +89,12 @@ const handle_copula = function(terms, i) {
 //turn all contraction-forms into 'silent' tokens
 const interpret = function(terms) {
   for(let i = 0; i < terms.length; i++) {
+    //known-forms
+    if (irregulars[terms[i].normal]) {
+      terms = handle_irregulars(terms, i, irregulars[terms[i].normal]);
+      continue;
+    }
+    //words with an apostrophe
     if (terms[i].has_abbreviation()) {
       let split = terms[i].normal.split(/'/);
       let pre = split[0];

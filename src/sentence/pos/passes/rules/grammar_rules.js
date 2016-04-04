@@ -63,9 +63,10 @@ module.exports = [
     'before': ['[Adverb]', '[Conjunction]', '[Adverb]'],
     'after': ['[Adverb]', '[Adverb]', '[Adverb]'],
   },
+  //do not
   {
-    'before': ['[Verb]', '[Conjunction]', '[Verb]'],
-    'after': ['[Verb]', '[Verb]', '[Verb]'],
+    'before': ['[Verb]', 'not'],
+    'after': ['[Verb]', '[Verb]'],
   },
   // {
   //   'before': ['[Noun]', '[Conjunction]', '[Noun]'],

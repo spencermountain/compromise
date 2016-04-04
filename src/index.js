@@ -102,7 +102,7 @@ if (typeof define === 'function' && define.amd) {
 // console.log(nlp.sentence('fire the missles').replace('the [Noun]', 'the +cyber $1').text());
 
 // console.log(nlp.sentence(`don't forget`).match(`don't forget`));
-// console.log(nlp.sentence(`don't forget about`).terms);
+// console.log(nlp.sentence(`don't mess about`).terms);
 
 // console.log(nlp.sentence(`i dunno`).match(`do not`)[0].text());
 // .match(`do not`));

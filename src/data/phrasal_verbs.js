@@ -55,7 +55,7 @@ Object.keys(symmetric).forEach(function(k) {
 
 //forms that don't have in/out symmetry
 const asymmetric = {
-  'about': 'bring,fool,gad,go,root',
+  'about': 'bring,fool,gad,go,root,mess',
   'after': 'go,look,take',
   'ahead': 'get,go,press',
   'along': 'bring,move',
@@ -63,7 +63,7 @@ const asymmetric = {
   'around': 'ask,boss,bring,call,come,fool,get,horse,joke,lie,mess,play',
   'away': 'back,carry,file,frighten,hide,wash',
   'back': 'fall,fight,hit,hold,look,pay,stand,think',
-  'by': 'drop,get,go,stop,swear,swing,tick,zip',
+  'by': 'come,drop,get,go,stop,swear,swing,tick,zip',
   'down': 'bog,calm,fall,hand,hunker,jot,knock,lie,narrow,note,pat,pour,run,tone,trickle,wear',
   'for': 'fend,file,gun,hanker,root,shoot',
   'forth': 'bring,come',
@@ -121,5 +121,5 @@ Object.keys(main).forEach(function(s) {
 });
 
 // console.log(main);
-// console.log(main['forget about']);
+// console.log(main['mess about']);
 module.exports = main;

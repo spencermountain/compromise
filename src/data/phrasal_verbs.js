@@ -101,7 +101,10 @@ const tags = {
   infinitive: 'VBP',
 };
 const cache = {}; //cache individual verbs to speed it up
-let split, verb, particle, phrasal;
+let split,
+  verb,
+  particle,
+  phrasal;
 Object.keys(main).forEach(function(s) {
   split = s.split(' ');
   verb = split[0];
@@ -117,5 +120,6 @@ Object.keys(main).forEach(function(s) {
   });
 });
 
-// console.log(main["wiring up"] === "VBG")
+// console.log(main);
+// console.log(main['forget about']);
 module.exports = main;

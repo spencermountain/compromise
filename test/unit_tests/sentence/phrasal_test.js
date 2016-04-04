@@ -7,7 +7,7 @@ describe('phrasal_tests: ', function() {
   let tests = [
     [`he is really good`, ['he', 'is', 'really', 'good']],
     [`he is upset about it`, ['he', 'is', 'upset', 'about', 'it']],
-    [`he will mess about with it`, ['he', 'will', 'mess about', 'with', 'it']],
+    [`he will mess about with it`, ['he', 'will mess about', 'with', 'it']],
 
     [`come forward`, ['come forward']],
     [`come together`, ['come together']],

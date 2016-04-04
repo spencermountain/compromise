@@ -67,9 +67,9 @@ const tagger = function(s, options) {
   //word-level rules
   s.terms = capital_signals(s.terms);
   s.terms = lexicon_pass(s.terms, options);
+  s.terms = multiple_pass(s.terms);
   s.terms = regex_pass(s.terms);
   s.terms = interjection_fixes(s.terms);
-  s.terms = multiple_pass(s.terms);
   //repeat these steps a couple times, to wiggle-out the grammar
   for(let i = 0; i < 2; i++) {
     s.terms = grammar_pass(s);

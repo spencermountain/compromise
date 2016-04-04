@@ -213,6 +213,9 @@ let arr = [
   'happen',
   'watch',
   'associate',
+  'send',
+  'archive',
+  'cancel',
 ];
 
 module.exports = fns.expand_suffixes(arr, compressed);

@@ -17,17 +17,29 @@ const starts = {
   'unless': true,
   'according': true,
   'notwithstanding': true,
+  'when': true,
 };
 
+// ensure there's a verb in a couple words
+const verbSoon = function(terms, x) {
+  for(let i = 0; i < 5; i++) {
+    if (terms[i + x].pos['Verb']) {
+      return true;
+    }
+  }
+  return false;
+};
 
 // find the next upcoming comma
 const nextComma = function(terms, i) {
+  //don't be too aggressive
   let max = terms.length - 1;
   if (max > i + 7) {
     max = i + 7;
   }
-  for(let x = i; x < max; x++) { //don't be too aggressive
-    if (terms[x].has_comma()) {
+  for(let x = i; x < max; x++) {
+    //ensure there's a command and a verb coming up soon
+    if (terms[x].has_comma() && verbSoon(terms, x)) {
       return x;
     }
   }

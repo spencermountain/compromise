@@ -19,11 +19,12 @@ let phrasal_verbs = function(terms) {
       if (terms[i].pos['Copula']) {
         continue;
       }
+      terms[i].pos['Phrasal'] = true;
       terms[i].text = terms[i].text + ' ' + terms[i + 1].text;
       terms[i].reason = 'phrasal(' + terms[i].reason + ')';
       terms[i + 1] = null;
       terms[i].rebuild();
-      // terms[i].conjugate();
+    // terms[i].conjugate();
     }
   }
   //remove killed-off ones

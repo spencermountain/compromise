@@ -17,11 +17,14 @@ const should_chunk = function(a, b) {
     return false;
   }
   //dont chunk these pos
-  const dont_chunk = {
-    Expression: true
-  };
-  if (dont_chunk[a.tag] || dont_chunk[b.tag]) {
-    return false;
+  const dont_chunk = [
+    'Expression',
+    'Phrasal'
+  ];
+  for(let i = 0; i < dont_chunk.length; i++) {
+    if (a.pos[dont_chunk[i]] || b.pos[dont_chunk[i]]) {
+      return false;
+    }
   }
   //dont chunk contractions (again)
   if (a.expansion || b.expansion) {

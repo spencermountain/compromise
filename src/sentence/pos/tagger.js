@@ -17,22 +17,6 @@ const multiple_pass = require('./passes/multiples_pass');
 const regex_pass = require('./passes/regex_pass');
 const quotation_pass = require('./passes/quotation_pass');
 
-//regex hints for words/suffixes
-// const word_rules_pass = function(terms) {
-//   for (let i = 0; i < terms.length; i++) {
-//     if (terms[i].tag !== '?') {
-//       continue;
-//     }
-//     for (let o = 0; o < word_rules.length; o++) {
-//       if (terms[i].normal.match(word_rules[o].reg)) {
-//         terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass_' + o);
-//         break;
-//       }
-//     }
-//   }
-//   return terms;
-// };
-
 const noun_fallback = function(terms) {
   for(let i = 0; i < terms.length; i++) {
     if (terms[i].tag === '?' && terms[i].normal.match(/[a-z]/)) {

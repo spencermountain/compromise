@@ -2599,7 +2599,7 @@ module.exports = [
   ['as a precaution', 'for safety'],
   ['until such time', 'until'],
   ['the majority of', 'most of'],
-  ['per seâreally'],
+  ['per se', 'really'],
   ['bear the burden', 'have the trouble'],
   ['confidentiality', 'secretly'],
   ['misinterpreting', 'misunderstanding'],

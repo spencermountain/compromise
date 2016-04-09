@@ -79,7 +79,7 @@ let compressed = {
   en: 'barr,brok,crav,op,sudd,unev,unwritt,wood',
   ic: 'alcohol,didact,gener,hispan,organ,publ,symbol',
   ny: 'ma,pho,pu,shi,skin,ti,za',
-  st: 'again,fir,mo,populi,raci,robu,uttermo',
+  st: 'again,mo,populi,raci,robu,uttermo',
   ne: 'do,go,insa,obsce,picayu,sere',
   nd: 'behi,bla,bli,profou,undergrou,wou',
   le: 'midd,multip,sing,so,subt,who',

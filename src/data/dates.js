@@ -58,8 +58,15 @@ let durations = [
   'month',
   'year',
   'decade',
-  'century',
 ];
+//add their plurals
+let len = durations.length;
+for(let i = 0; i < len; i++) {
+  durations.push(durations[i] + 's');
+}
+durations.push('century');
+durations.push('centuries');
+
 let relative = [
   'yesterday',
   'today',

@@ -1,11 +1,12 @@
 //common terms that are multi-word, but one part-of-speech
 //these should not include phrasal verbs, like 'looked out'. These are handled elsewhere.
 module.exports = {
+  'a few': 'CD', //different than 'few people'
   'of course': 'RB',
   'at least': 'RB',
   'no longer': 'RB',
   'sort of': 'RB',
-  'at first': 'RB',
+  // 'at first': 'RB',
   'once again': 'RB',
   'once more': 'RB',
   'up to': 'RB',

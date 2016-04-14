@@ -7,27 +7,43 @@ let abbreviations = require('../data/abbreviations').abbreviations;
 const sentence_parser = function(text) {
   const sentences = [];
   //first do a greedy-split..
-  const chunks = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
+  let chunks = [];
+  let splits = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
+  //filter-out the grap ones
+  for(let i = 0; i < splits.length; i++) {
+    let s = splits[i];
+    if (!s || s === '') {
+      continue;
+    }
+    //this is meaningful whitespace
+    if (!s.match(/\S/)) {
+      //add it to the last one
+      if (chunks[chunks.length - 1]) {
+        chunks[chunks.length - 1] += s;
+        continue;
+      } else if (splits[i + 1]) { //add it to the next one
+        splits[i + 1] = s + splits[i + 1];
+        continue;
+      }
+    //else, only whitespace, no terms, no sentence
+    }
+    chunks.push(s);
+  }
 
   //detection of non-sentence chunks
   const abbrev_reg = new RegExp('\\b(' + abbreviations.join('|') + ')[.!?] ?$', 'i');
-  const acronym_reg = new RegExp('[ |\.][A-Z]\.?$', 'i');
-  const elipses_reg = new RegExp('\\.\\.\\.*$');
-
+  const acronym_reg = new RegExp('[ |\.][A-Z]\.? +?$', 'i');
+  const elipses_reg = new RegExp('\\.\\.\\.* +?$');
   //loop through these chunks, and join the non-sentence chunks back together..
-  const chunks_length = chunks.length;
-  for (let i = 0; i < chunks_length; i++) {
-    if (chunks[i]) {
-      //trim whitespace
-      chunks[i] = chunks[i].replace(/^\s+|\s+$/g, '');
-      //should this chunk be combined with the next one?
-      if (chunks[i + 1] && (chunks[i].match(abbrev_reg) || chunks[i].match(acronym_reg) || chunks[i].match(elipses_reg))) {
-        chunks[i + 1] = ((chunks[i] || '') + ' ' + (chunks[i + 1] || '')).replace(/ +/g, ' ');
-      } else if (chunks[i] && chunks[i].length > 0) { //this chunk is a proper sentence..
-        sentences.push(chunks[i]);
-        chunks[i] = '';
-      }
+  for (let i = 0; i < chunks.length; i++) {
+    //should this chunk be combined with the next one?
+    if (chunks[i + 1] && (chunks[i].match(abbrev_reg) || chunks[i].match(acronym_reg) || chunks[i].match(elipses_reg))) {
+      chunks[i + 1] = (chunks[i] + ' ' + (chunks[i + 1] || '')); //.replace(/ +/g, ' ');
+    } else if (chunks[i] && chunks[i].length > 0) { //this chunk is a proper sentence..
+      sentences.push(chunks[i]);
+      chunks[i] = '';
     }
+
   }
   //if we never got a sentence, return the given text
   if (sentences.length === 0) {
@@ -38,4 +54,4 @@ const sentence_parser = function(text) {
 };
 
 module.exports = sentence_parser;
-// console.log(sentence_parser('For example. This doesn\'t work for the US'));
+// console.log(sentence_parser('i think it is good ... or else.'));

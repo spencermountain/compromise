@@ -17,6 +17,7 @@ const indefinite_article = function(str) {
   if (!str) {
     return null;
   }
+
   //pronounced letters of acronyms that get a 'an'
   const an_acronyms = {
     A: true,

@@ -26,6 +26,14 @@ class Noun extends Term {
   }
   //noun methods
   article() {
+    //if it's a person, it's he/she, not a/an
+    if (this.pos['Person']) {
+      return this.pronoun();
+    }
+    //groups of people are 'they'
+    if (this.pos['Organization']) {
+      return 'they';
+    }
     return article(this.text);
   }
   root() {

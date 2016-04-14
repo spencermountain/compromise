@@ -39,16 +39,19 @@ nlp.verb("speak").conjugate();
 //   future_perfect: 'will have spoken'
 // }
 
-nlp.text('She sells seashells').negate()
+nlp.text('She sells seashells').negate().text()
 // She didn't sell seashells
 
-nlp.sentence('I fed the dog').replace('the [Noun]', 'the cat')
+nlp.sentence('I fed the dog').replace('the [Noun]', 'the cat').text()
 // I fed the cat
 
 nlp.text("Tony Hawk did a kickflip").people();
-// "Tony Hawk"
+// [ Person { text: 'Tony Hawk' ..} ]
 
-nlp.person("Tony Hawk").article();
+nlp.noun("vacuum").article();
+// "a"
+
+nlp.person("Tony Hawk").pronoun();
 // "he"
 
 nlp.value("five hundred and sixty").number;
@@ -91,4 +94,3 @@ Or just pick up an [open issue](https://github.com/nlp-compromise/nlp_compromise
 [We're moving fast](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/changelog.md)
 
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
-

@@ -48,6 +48,16 @@ class Person extends Noun {
     return guess_gender(this.normal);
   }
 
+  pronoun() {
+    const pronouns = {
+      Male: 'he',
+      Female: 'she',
+    };
+    let gender = this.gender();
+    //return 'singular they' if no gender is found
+    return pronouns[gender] || 'they';
+  }
+
 }
 Person.fn = Person.prototype;
 module.exports = Person;

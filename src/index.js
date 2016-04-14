@@ -106,7 +106,7 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.sentence(`i dunno`).match(`do not`)[0].text());
 // .match(`do not`));
-
+// console.log(nlp.organization('google').article());
 //slang
 // invite
 // wit

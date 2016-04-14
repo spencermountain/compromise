@@ -110,7 +110,7 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.sentence(`i dunno`).match(`do not`)[0].text());
 // .match(`do not`));
-
+// console.log(nlp.organization('google').article());
 //slang
 // invite
 // wit
@@ -4673,6 +4673,7 @@ var indefinite_article = function indefinite_article(str) {
   if (!str) {
     return null;
   }
+
   //pronounced letters of acronyms that get a 'an'
   var an_acronyms = {
     A: true,
@@ -5082,6 +5083,14 @@ var Noun = function (_Term) {
   _createClass(Noun, [{
     key: 'article',
     value: function article() {
+      //if it's a person, it's he/she, not a/an
+      if (this.pos['Person']) {
+        return this.pronoun();
+      }
+      //groups of people are 'they'
+      if (this.pos['Organization']) {
+        return 'they';
+      }
       return _article(this.text);
     }
   }, {
@@ -5479,6 +5488,17 @@ var Person = function (_Noun) {
     key: 'gender',
     value: function gender() {
       return guess_gender(this.normal);
+    }
+  }, {
+    key: 'pronoun',
+    value: function pronoun() {
+      var pronouns = {
+        Male: 'he',
+        Female: 'she'
+      };
+      var gender = this.gender();
+      //return 'singular they' if no gender is found
+      return pronouns[gender] || 'they';
     }
   }]);
 

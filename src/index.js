@@ -102,4 +102,4 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log('|' + nlp.sentence('on 4:23am july   5th  ').text() + '|');
 // console.log(nlp.text(`Oh say can you see? By the dawn's early rise.`).sentences);
-// console.log(nlp.text(`july   5th  `).terms());
+// console.log(nlp.text(`2nd of march, 2015`).text());

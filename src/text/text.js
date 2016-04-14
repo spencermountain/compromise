@@ -44,7 +44,7 @@ class Text {
     const arr = this.sentences.map(function(s) {
       return s.text();
     });
-    return fns.flatten(arr).join(' ');
+    return fns.flatten(arr).join('');
   }
   normalized() {
     const arr = this.sentences.map(function(s) {

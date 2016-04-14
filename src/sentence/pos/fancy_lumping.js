@@ -118,6 +118,8 @@ const fancy_lumping = function(terms) {
     if (tag) {
       let Cl = pos.classMapping[tag] || pos.Term;
       let space = a.whitespace.trailing + b.whitespace.preceding;
+      // console.log(terms[i - 1]);
+      // console.log(terms[i]);
       terms[i] = new Cl(a.text + space + b.text, tag);
       terms[i].reason = 'lumpedtwo(' + terms[i].reason + ')';
       terms[i].whitespace.preceding = a.whitespace.preceding;
@@ -136,6 +138,9 @@ const fancy_lumping = function(terms) {
         let text = a.text + space1 + b.text + space2 + c.text;
         terms[i - 1] = new Cl(text, tag);
         terms[i - 1].reason = 'lumpedThree(' + terms[i].reason + ')';
+        //transfer unused-up whitespace
+        terms[i - 1].whitespace.preceding = a.whitespace.preceding;
+        terms[i - 1].whitespace.trailing = c.whitespace.trailing;
         terms[i] = null;
         terms[i + 1] = null;
         continue;

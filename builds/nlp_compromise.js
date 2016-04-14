@@ -104,7 +104,9 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
 
-// console.log('|' + nlp.sentence('    john').text() + '|');
+// console.log('|' + nlp.sentence('on 4:23am july   5th  ').text() + '|');
+// console.log(nlp.text(`Oh say can you see? By the dawn's early rise.`).sentences);
+// console.log(nlp.text(`2nd of march, 2015`).text());
 
 },{"./fns.js":23,"./lexicon.js":24,"./sentence/question/question.js":52,"./sentence/sentence.js":55,"./sentence/statement/statement.js":57,"./term/adjective/adjective.js":59,"./term/adverb/adverb.js":64,"./term/noun/date/date.js":69,"./term/noun/noun.js":75,"./term/noun/organization/organization.js":77,"./term/noun/person/person.js":81,"./term/noun/place/place.js":83,"./term/noun/value/value.js":91,"./term/term.js":92,"./term/verb/verb.js":101,"./text/text.js":104}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -2525,6 +2527,8 @@ var fancy_lumping = function fancy_lumping(terms) {
     if (tag) {
       var Cl = pos.classMapping[tag] || pos.Term;
       var space = a.whitespace.trailing + b.whitespace.preceding;
+      // console.log(terms[i - 1]);
+      // console.log(terms[i]);
       terms[i] = new Cl(a.text + space + b.text, tag);
       terms[i].reason = 'lumpedtwo(' + terms[i].reason + ')';
       terms[i].whitespace.preceding = a.whitespace.preceding;
@@ -2543,6 +2547,9 @@ var fancy_lumping = function fancy_lumping(terms) {
         var text = a.text + space1 + b.text + space2 + c.text;
         terms[i - 1] = new Cl(text, tag);
         terms[i - 1].reason = 'lumpedThree(' + terms[i].reason + ')';
+        //transfer unused-up whitespace
+        terms[i - 1].whitespace.preceding = a.whitespace.preceding;
+        terms[i - 1].whitespace.trailing = c.whitespace.trailing;
         terms[i] = null;
         terms[i + 1] = null;
         continue;
@@ -7563,28 +7570,44 @@ var abbreviations = require('../data/abbreviations').abbreviations;
 var sentence_parser = function sentence_parser(text) {
   var sentences = [];
   //first do a greedy-split..
-  var chunks = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
+  var chunks = [];
+  var splits = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
+  //filter-out the grap ones
+  for (var i = 0; i < splits.length; i++) {
+    var s = splits[i];
+    if (!s || s === '') {
+      continue;
+    }
+    //this is meaningful whitespace
+    if (!s.match(/\S/)) {
+      //add it to the last one
+      if (chunks[chunks.length - 1]) {
+        chunks[chunks.length - 1] += s;
+        continue;
+      } else if (splits[i + 1]) {
+        //add it to the next one
+        splits[i + 1] = s + splits[i + 1];
+        continue;
+      }
+      //else, only whitespace, no terms, no sentence
+    }
+    chunks.push(s);
+  }
 
   //detection of non-sentence chunks
   var abbrev_reg = new RegExp('\\b(' + abbreviations.join('|') + ')[.!?] ?$', 'i');
-  var acronym_reg = new RegExp('[ |\.][A-Z]\.?$', 'i');
-  var elipses_reg = new RegExp('\\.\\.\\.*$');
-
+  var acronym_reg = new RegExp('[ |\.][A-Z]\.? +?$', 'i');
+  var elipses_reg = new RegExp('\\.\\.\\.* +?$');
   //loop through these chunks, and join the non-sentence chunks back together..
-  var chunks_length = chunks.length;
-  for (var i = 0; i < chunks_length; i++) {
-    if (chunks[i]) {
-      //trim whitespace
-      chunks[i] = chunks[i].replace(/^\s+|\s+$/g, '');
-      //should this chunk be combined with the next one?
-      if (chunks[i + 1] && (chunks[i].match(abbrev_reg) || chunks[i].match(acronym_reg) || chunks[i].match(elipses_reg))) {
-        chunks[i + 1] = ((chunks[i] || '') + ' ' + (chunks[i + 1] || '')).replace(/ +/g, ' ');
-      } else if (chunks[i] && chunks[i].length > 0) {
+  for (var i = 0; i < chunks.length; i++) {
+    //should this chunk be combined with the next one?
+    if (chunks[i + 1] && (chunks[i].match(abbrev_reg) || chunks[i].match(acronym_reg) || chunks[i].match(elipses_reg))) {
+      chunks[i + 1] = chunks[i] + (chunks[i + 1] || ''); //.replace(/ +/g, ' ');
+    } else if (chunks[i] && chunks[i].length > 0) {
         //this chunk is a proper sentence..
         sentences.push(chunks[i]);
         chunks[i] = '';
       }
-    }
   }
   //if we never got a sentence, return the given text
   if (sentences.length === 0) {
@@ -7595,7 +7618,7 @@ var sentence_parser = function sentence_parser(text) {
 };
 
 module.exports = sentence_parser;
-// console.log(sentence_parser('For example. This doesn\'t work for the US'));
+// console.log(sentence_parser('    Dr. Smith is nice?    He lives in Spain?  He does?? '));
 
 },{"../data/abbreviations":2}],104:[function(require,module,exports){
 'use strict';
@@ -7654,7 +7677,7 @@ var Text = function () {
       var arr = this.sentences.map(function (s) {
         return s.text();
       });
-      return fns.flatten(arr).join(' ');
+      return fns.flatten(arr).join('');
     }
   }, {
     key: 'normalized',

@@ -38,7 +38,7 @@ const sentence_parser = function(text) {
   for (let i = 0; i < chunks.length; i++) {
     //should this chunk be combined with the next one?
     if (chunks[i + 1] && (chunks[i].match(abbrev_reg) || chunks[i].match(acronym_reg) || chunks[i].match(elipses_reg))) {
-      chunks[i + 1] = (chunks[i] + ' ' + (chunks[i + 1] || '')); //.replace(/ +/g, ' ');
+      chunks[i + 1] = (chunks[i] + (chunks[i + 1] || '')); //.replace(/ +/g, ' ');
     } else if (chunks[i] && chunks[i].length > 0) { //this chunk is a proper sentence..
       sentences.push(chunks[i]);
       chunks[i] = '';
@@ -54,4 +54,4 @@ const sentence_parser = function(text) {
 };
 
 module.exports = sentence_parser;
-// console.log(sentence_parser('i think it is good ... or else.'));
+// console.log(sentence_parser('    Dr. Smith is nice?    He lives in Spain?  He does?? '));

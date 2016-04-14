@@ -20,8 +20,11 @@ class Sentence {
     const words = str.split(/( +)/);
     //build-up term-objects
     this.terms = [];
+    if (words[0] === '') {
+      words.shift();
+    }
     for(let i = 0; i < words.length; i++) {
-      if (!words[i]) {
+      if (!words[i] || !words[i].match(/\S/i)) {
         continue;
       }
       let whitespace = {

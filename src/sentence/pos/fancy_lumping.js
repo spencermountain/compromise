@@ -117,8 +117,11 @@ const fancy_lumping = function(terms) {
     let tag = shouldLumpTwo(a, b);
     if (tag) {
       let Cl = pos.classMapping[tag] || pos.Term;
-      terms[i] = new Cl(a.text + ' ' + b.text, tag);
+      let space = a.whitespace.trailing + b.whitespace.preceding;
+      terms[i] = new Cl(a.text + space + b.text, tag);
       terms[i].reason = 'lumpedtwo(' + terms[i].reason + ')';
+      terms[i].whitespace.preceding = a.whitespace.preceding;
+      terms[i].whitespace.trailing = b.whitespace.trailing;
       terms[i - 1] = null;
       continue;
     }
@@ -128,7 +131,10 @@ const fancy_lumping = function(terms) {
       tag = shouldLumpThree(a, b, c);
       if (tag) {
         let Cl = pos.classMapping[tag] || pos.Term;
-        terms[i - 1] = new Cl([a.text, b.text, c.text].join(' '), tag);
+        let space1 = a.whitespace.trailing + b.whitespace.preceding;
+        let space2 = b.whitespace.trailing + c.whitespace.preceding;
+        let text = a.text + space1 + b.text + space2 + c.text;
+        terms[i - 1] = new Cl(text, tag);
         terms[i - 1].reason = 'lumpedThree(' + terms[i].reason + ')';
         terms[i] = null;
         terms[i + 1] = null;

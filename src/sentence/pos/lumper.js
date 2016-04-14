@@ -54,7 +54,8 @@ const chunk_neighbours = function(terms) {
     let t = terms[i];
     //if the tags match (but it's not a hidden contraction)
     if (should_chunk(last_one, t)) {
-      new_terms[new_terms.length - 1].text += ' ' + t.text;
+      let space = last_one.whitespace.trailing + t.whitespace.preceding;
+      new_terms[new_terms.length - 1].text += space + t.text;
       new_terms[new_terms.length - 1].normalize();
     } else {
       new_terms.push(t);

@@ -103,18 +103,8 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
-// console.log(nlp.sentence('fire the missles').replace('the [Noun]', 'the +cyber $1').text());
 
-// console.log(nlp.sentence(`don't forget`).match(`don't forget`));
-// console.log(nlp.sentence(`at 1st priority`).terms);
-
-// console.log(nlp.sentence(`i dunno`).match(`do not`)[0].text());
-// .match(`do not`));
-// console.log(nlp.organization('google').article());
-//slang
-// invite
-// wit
-// gonna
+// console.log('|' + nlp.sentence('    john').text() + '|');
 
 },{"./fns.js":23,"./lexicon.js":24,"./sentence/question/question.js":52,"./sentence/sentence.js":55,"./sentence/statement/statement.js":57,"./term/adjective/adjective.js":59,"./term/adverb/adverb.js":64,"./term/noun/date/date.js":69,"./term/noun/noun.js":75,"./term/noun/organization/organization.js":77,"./term/noun/person/person.js":81,"./term/noun/place/place.js":83,"./term/noun/value/value.js":91,"./term/term.js":92,"./term/verb/verb.js":101,"./text/text.js":104}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -2425,8 +2415,10 @@ var pos = require('./parts_of_speech');
 var assign = function assign(t, tag, reason) {
   var P = pos.classMapping[tag] || pos.Term;
   var expansion = t.expansion;
+  var whitespace = t.whitespace;
   t = new P(t.text, tag);
   t.reason = reason;
+  t.whitespace = whitespace;
   t.expansion = expansion;
   return t;
 };
@@ -2532,8 +2524,11 @@ var fancy_lumping = function fancy_lumping(terms) {
     var tag = shouldLumpTwo(a, b);
     if (tag) {
       var Cl = pos.classMapping[tag] || pos.Term;
-      terms[i] = new Cl(a.text + ' ' + b.text, tag);
+      var space = a.whitespace.trailing + b.whitespace.preceding;
+      terms[i] = new Cl(a.text + space + b.text, tag);
       terms[i].reason = 'lumpedtwo(' + terms[i].reason + ')';
+      terms[i].whitespace.preceding = a.whitespace.preceding;
+      terms[i].whitespace.trailing = b.whitespace.trailing;
       terms[i - 1] = null;
       continue;
     }
@@ -2543,7 +2538,10 @@ var fancy_lumping = function fancy_lumping(terms) {
       tag = shouldLumpThree(a, b, c);
       if (tag) {
         var Cl = pos.classMapping[tag] || pos.Term;
-        terms[i - 1] = new Cl([a.text, b.text, c.text].join(' '), tag);
+        var space1 = a.whitespace.trailing + b.whitespace.preceding;
+        var space2 = b.whitespace.trailing + c.whitespace.preceding;
+        var text = a.text + space1 + b.text + space2 + c.text;
+        terms[i - 1] = new Cl(text, tag);
         terms[i - 1].reason = 'lumpedThree(' + terms[i].reason + ')';
         terms[i] = null;
         terms[i + 1] = null;
@@ -2612,7 +2610,8 @@ var chunk_neighbours = function chunk_neighbours(terms) {
     var t = terms[i];
     //if the tags match (but it's not a hidden contraction)
     if (should_chunk(last_one, t)) {
-      new_terms[new_terms.length - 1].text += ' ' + t.text;
+      var space = last_one.whitespace.trailing + t.whitespace.preceding;
+      new_terms[new_terms.length - 1].text += space + t.text;
       new_terms[new_terms.length - 1].normalize();
     } else {
       new_terms.push(t);
@@ -3098,10 +3097,13 @@ var multiples_pass = function multiples_pass(terms) {
     //if the tags match (but it's not a hidden contraction)
     if (should_merge(last_one, t)) {
       var last = new_terms[new_terms.length - 1];
-      last.text += ' ' + t.text;
+      var space = t.whitespace.preceding + last.whitespace.trailing;
+      last.text += space + t.text;
       last.rebuild();
+      last.whitespace.trailing = t.whitespace.trailing;
       var pos = lexicon[last.normal];
       new_terms[new_terms.length - 1] = assign(last, pos, 'multiples_pass_lexicon');
+      new_terms[new_terms.length - 1].whitespace = last.whitespace;
     } else {
       new_terms.push(t);
     }
@@ -3678,11 +3680,26 @@ var Sentence = function () {
     this.str = str || '';
     options = options || {};
     var the = this;
-    var terms = str.split(' ');
+    var words = str.split(/( +)/);
     //build-up term-objects
-    this.terms = terms.map(function (s) {
-      return new Term(s);
-    });
+    this.terms = [];
+    if (words[0] === '') {
+      words.shift();
+    }
+    for (var i = 0; i < words.length; i++) {
+      if (!words[i] || !words[i].match(/\S/i)) {
+        continue;
+      }
+      var whitespace = {
+        preceding: words[i - 1],
+        trailing: words[i + 1]
+      };
+      //don't use them twice
+      words[i - 1] = null;
+      words[i + 1] = null;
+      this.terms.push(new Term(words[i], null, whitespace));
+    }
+    // console.log(this.terms);
     //part-of-speech tagging
     this.terms = tagger(this, options);
     // process contractions
@@ -3814,10 +3831,10 @@ var Sentence = function () {
       return this.terms.reduce(function (s, t) {
         //implicit contractions shouldn't be included
         if (t.text) {
-          s += ' ' + t.text;
+          s += (t.whitespace.preceding || '') + t.text + (t.whitespace.trailing || '');
         }
         return s;
-      }, '').trim();
+      }, '');
     }
     //like text but for cleaner text
 
@@ -3922,10 +3939,12 @@ var Sentence = function () {
         //remove preceding condition
         if (i > 0 && t.pos['Condition'] && !_this.terms[i - 1].pos['Condition']) {
           _this.terms[i - 1].text = _this.terms[i - 1].text.replace(/,$/, '');
+          _this.terms[i - 1].whitespace.trailing = '';
           _this.terms[i - 1].rebuild();
         }
         return !t.pos['Condition'];
       });
+      //
       return this;
     }
   }]);
@@ -6439,7 +6458,7 @@ var syntax_parse = require('../match/syntax_parse');
 var implied = require('./implied');
 
 var Term = function () {
-  function Term(str, tag) {
+  function Term(str, tag, whitespace) {
     _classCallCheck(this, Term);
 
     //fail-safe
@@ -6447,6 +6466,10 @@ var Term = function () {
       str = '';
     }
     str = str.toString();
+    //trailing & preceding whitespace
+    this.whitespace = whitespace || {};
+    this.whitespace.preceding = this.whitespace.preceding || '';
+    this.whitespace.trailing = this.whitespace.trailing || '';
     //set .text
     this.text = str;
     //the normalised working-version of the word

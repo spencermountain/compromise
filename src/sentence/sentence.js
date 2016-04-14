@@ -17,11 +17,23 @@ class Sentence {
     this.str = str || '';
     options = options || {};
     const the = this;
-    const terms = str.split(' ');
+    const words = str.split(/( +)/);
     //build-up term-objects
-    this.terms = terms.map(function(s) {
-      return new Term(s);
-    });
+    this.terms = [];
+    for(let i = 0; i < words.length; i++) {
+      if (!words[i]) {
+        continue;
+      }
+      let whitespace = {
+        preceding: words[i - 1],
+        trailing: words[i + 1],
+      };
+      //don't use them twice
+      words[i - 1] = null;
+      words[i + 1] = null;
+      this.terms.push(new Term(words[i], null, whitespace));
+    }
+    // console.log(this.terms);
     //part-of-speech tagging
     this.terms = tagger(this, options);
     // process contractions
@@ -117,10 +129,10 @@ class Sentence {
     return this.terms.reduce(function(s, t) {
       //implicit contractions shouldn't be included
       if (t.text) {
-        s += ' ' + t.text;
+        s += (t.whitespace.preceding || '') + t.text + (t.whitespace.trailing || '');
       }
       return s;
-    }, '').trim();
+    }, '');
   }
   //like text but for cleaner text
   normalized() {
@@ -192,10 +204,12 @@ class Sentence {
       //remove preceding condition
       if (i > 0 && t.pos['Condition'] && !this.terms[i - 1].pos['Condition']) {
         this.terms[i - 1].text = this.terms[i - 1].text.replace(/,$/, '');
+        this.terms[i - 1].whitespace.trailing = '';
         this.terms[i - 1].rebuild();
       }
       return !t.pos['Condition'];
     });
+    //
     return this;
   }
 

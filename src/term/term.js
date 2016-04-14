@@ -5,12 +5,16 @@ const syntax_parse = require('../match/syntax_parse');
 const implied = require('./implied');
 
 class Term {
-  constructor(str, tag) {
+  constructor(str, tag, whitespace) {
     //fail-safe
     if (str === null || str === undefined) {
       str = '';
     }
     str = (str).toString();
+    //trailing & preceding whitespace
+    this.whitespace = whitespace || {};
+    this.whitespace.preceding = this.whitespace.preceding || '';
+    this.whitespace.trailing = this.whitespace.trailing || '';
     //set .text
     this.text = str;
     //the normalised working-version of the word

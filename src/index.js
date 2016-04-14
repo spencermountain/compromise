@@ -99,15 +99,5 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
-// console.log(nlp.sentence('fire the missles').replace('the [Noun]', 'the +cyber $1').text());
 
-// console.log(nlp.sentence(`don't forget`).match(`don't forget`));
-// console.log(nlp.sentence(`at 1st priority`).terms);
-
-// console.log(nlp.sentence(`i dunno`).match(`do not`)[0].text());
-// .match(`do not`));
-// console.log(nlp.organization('google').article());
-//slang
-// invite
-// wit
-// gonna
+// console.log('|' + nlp.sentence('the stool falls over').to_past().text() + '|');

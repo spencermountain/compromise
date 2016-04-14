@@ -21,10 +21,13 @@ const multiples_pass = function(terms) {
     //if the tags match (but it's not a hidden contraction)
     if (should_merge(last_one, t)) {
       let last = new_terms[new_terms.length - 1];
-      last.text += ' ' + t.text;
+      let space = t.whitespace.preceding + last.whitespace.trailing;
+      last.text += space + t.text;
       last.rebuild();
+      last.whitespace.trailing = t.whitespace.trailing;
       let pos = lexicon[last.normal];
       new_terms[new_terms.length - 1] = assign(last, pos, 'multiples_pass_lexicon');
+      new_terms[new_terms.length - 1].whitespace = last.whitespace;
     } else {
       new_terms.push(t);
     }

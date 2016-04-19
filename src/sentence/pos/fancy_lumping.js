@@ -6,6 +6,8 @@ const shouldLumpThree = function(a, b, c) {
   if (!a || !b || !c) {
     return false;
   }
+  //some weak-pos
+
   const lump_rules = [
     {
       condition: (a.pos.Noun && b.text === '&' && c.pos.Noun), //John & Joe's
@@ -35,6 +37,10 @@ const shouldLumpThree = function(a, b, c) {
       condition: (a.normal === 'will' && b.normal === 'have' && b.pos.Verb), //will have walk
       result: 'FutureTense',
     },
+    {
+      condition: (a.pos.Date && (c.pos.Date || c.pos.Ordinal) && (b.pos.Preposition || b.pos.Determiner || b.pos.Conjunction || b.pos.Adjective)), //3hrs after 5pm
+      result: 'Date',
+    },
   ];
   for(let i = 0; i < lump_rules.length; i++) {
     if (lump_rules[i].condition) {
@@ -58,7 +64,7 @@ const shouldLumpTwo = function(a, b) {
       result: 'Person',
     },
     {
-      condition: (a.pos.Value && (b.normal === 'am' || b.normal === 'pm')), //6 am
+      condition: ((a.pos.Value || a.pos.Date) && (b.normal === 'am' || b.normal === 'pm')), //6 am
       result: 'Date',
     },
     {
@@ -75,6 +81,10 @@ const shouldLumpTwo = function(a, b) {
     },
     {
       condition: (a.pos.Value && b.pos.Date), //4 June
+      result: 'Date',
+    },
+    {
+      condition: ((a.normal === 'last' || a.normal === 'next' || a.normal === 'this') && b.pos.Date), //last wednesday
       result: 'Date',
     },
     {
@@ -100,6 +110,11 @@ const shouldLumpTwo = function(a, b) {
     {
       condition: (a.normal.match(/^will ha(ve|d)$/) && b.pos.Verb), //will have walked (pluperfect)
       result: 'PluperfectTense',
+    },
+    //timezones
+    {
+      condition: (b.normal.match(/(standard|daylight|summer) time/) && (a.pos['Adjective'] || a.pos['Place'])),
+      result: 'Date',
     },
   ];
   for(let i = 0; i < lump_rules.length; i++) {

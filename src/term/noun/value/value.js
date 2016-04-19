@@ -13,7 +13,14 @@ class Value extends Noun {
     this.unit = null;
     this.unit_name = null;
     this.measurement = null;
+    if (this.is_ordinal()) {
+      this.pos['Ordinal'] = true;
+    }
     this.parse();
+  }
+
+  is_ordinal() {
+    return this.normal.match(/^[0-9]+(rd|st|nd|th)$/);
   }
 
   is_unit(s) {
@@ -52,6 +59,7 @@ class Value extends Noun {
         }
       }
     }
+    numbers = numbers.trim();
     this.number = to_number(numbers);
   }
 

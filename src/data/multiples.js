@@ -77,5 +77,9 @@ module.exports = {
   'head start': 'NN',
   'make sure': 'VB',
   'keep tabs': 'VB',
-  'credit card': 'NN'
+  'credit card': 'NN',
+  //timezones
+  'standard time': 'DA',
+  'daylight time': 'DA',
+  'summer time': 'DA'
 };

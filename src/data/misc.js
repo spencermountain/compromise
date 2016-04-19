@@ -10,7 +10,16 @@ const misc = {
   'sounds': 'VBZ',
   //special case for took/taken
   'taken': 'VBD',
-  'msg': 'VB' //slang
+  'msg': 'VB', //slang
+  //date
+  'noon': 'DA',
+  'midnight': 'DA',
+  //errr....
+  'now': 'DA',
+  'morning': 'DA',
+  'evening': 'DA',
+  'afternoon': 'DA',
+  'ago': 'DA'
 };
 
 const compact = {
@@ -259,7 +268,7 @@ const compact = {
 
   //some manual adverbs (the rest are generated)
   'RB': [
-    'now',
+    // 'now',
     'again',
     'already',
     'soon',
@@ -270,7 +279,6 @@ const compact = {
     'instead',
     'yes',
     'alone',
-    'ago',
     'indeed',
     'ever',
     'quite',
@@ -394,7 +402,6 @@ const compact = {
     'student',
     'patent',
     'funding',
-    'morning',
     'banking',
     'ceiling',
     'energy',

@@ -8,8 +8,8 @@ const should_chunk = function(a, b) {
   if (!a || !b) {
     return false;
   }
-  //if A has a comma, don't chunk it
-  if (a.has_comma()) {
+  //if A has a comma, don't chunk it, (unless it's a  date)
+  if (a.has_comma() && !a.pos.Date) {
     return false;
   }
   //don't chunk non-word things with word-things
@@ -57,6 +57,8 @@ const chunk_neighbours = function(terms) {
       let space = last_one.whitespace.trailing + t.whitespace.preceding;
       new_terms[new_terms.length - 1].text += space + t.text;
       new_terms[new_terms.length - 1].normalize();
+      new_terms[new_terms.length - 1].whitespace.trailing = t.whitespace.trailing;
+      new_terms[new_terms.length - 1].whitespace.preceding = last_one.whitespace.preceding;
     } else {
       new_terms.push(t);
     }

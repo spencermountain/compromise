@@ -58,6 +58,10 @@ const shouldLumpTwo = function(a, b) {
       result: 'Person',
     },
     {
+      condition: (a.pos.Value && (b.normal === 'am' || b.normal === 'pm')), //6 am
+      result: 'Date',
+    },
+    {
       condition: (a.pos.Honourific && b.is_capital()), //'Dr. John
       result: 'Person',
     },

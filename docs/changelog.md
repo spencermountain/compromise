@@ -3,6 +3,7 @@ Uses semver, with occasional releases to npm and bower.
 here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
 
 ### v.4  &nbsp;  
+* 4.7.0 - whitespace reproduction in .text() methods
 * 4.6.0 - move negate from sentence to verb & statement
 * 4.2.0 - rename 'implicit' to 'expansion' for smarter contractions
 * 4.1.3 - added readable-compression to adj, verbs (121kb -> 117kb)

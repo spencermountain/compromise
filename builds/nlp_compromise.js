@@ -104,7 +104,7 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
 
-console.log(nlp.text('2nd of march, 2015').text() + '|');
+// console.log(nlp.text(`2nd of march, 2015`).text() + '|');
 
 },{"./fns.js":23,"./lexicon.js":24,"./sentence/question/question.js":52,"./sentence/sentence.js":55,"./sentence/statement/statement.js":57,"./term/adjective/adjective.js":59,"./term/adverb/adverb.js":64,"./term/noun/date/date.js":69,"./term/noun/noun.js":75,"./term/noun/organization/organization.js":77,"./term/noun/person/person.js":81,"./term/noun/place/place.js":83,"./term/noun/value/value.js":91,"./term/term.js":92,"./term/verb/verb.js":101,"./text/text.js":104}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods

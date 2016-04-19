@@ -100,4 +100,4 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
 
-console.log(nlp.text(`2nd of march, 2015`).text() + '|');
+// console.log(nlp.text(`2nd of march, 2015`).text() + '|');

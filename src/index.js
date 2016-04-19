@@ -100,4 +100,4 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
 
-// console.log(nlp.text(`he will have walked home`).terms());
+// console.log(nlp.text(`jan 24, 2011 12:00`).terms());

@@ -6,6 +6,7 @@ const tough_dates = {
   april: true,
   march: true,
   june: true,
+  jan: true,
 };
 
 //neighbouring words that indicate it is a date

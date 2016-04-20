@@ -104,7 +104,8 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
 
-// console.log(nlp.text(`2nd of march, 2015`).text() + '|');
+// console.log(nlp.sentence(`our house looks great`).terms);
+// console.log(nlp.sentence(`our house looks great`).to_future().text());
 
 },{"./fns.js":23,"./lexicon.js":24,"./sentence/question/question.js":52,"./sentence/sentence.js":55,"./sentence/statement/statement.js":57,"./term/adjective/adjective.js":59,"./term/adverb/adverb.js":64,"./term/noun/date/date.js":69,"./term/noun/noun.js":75,"./term/noun/organization/organization.js":77,"./term/noun/person/person.js":81,"./term/noun/place/place.js":83,"./term/noun/value/value.js":91,"./term/term.js":92,"./term/verb/verb.js":101,"./text/text.js":104}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -900,7 +901,11 @@ var misc = {
   'morning': 'DA',
   'evening': 'DA',
   'afternoon': 'DA',
-  'ago': 'DA'
+  'ago': 'DA',
+  //end of day, end of month
+  'eod': 'DA',
+  'eom': 'DA'
+
 };
 
 var compact = {
@@ -2961,6 +2966,7 @@ module.exports = conditional_pass;
 
 var assign = require('../assign');
 var grammar_rules = require('./rules/grammar_rules');
+var fns = require('../../../fns');
 // const match = require('../../match/match');
 
 //tests a subset of terms against a array of tags
@@ -2970,7 +2976,7 @@ var hasTags = function hasTags(terms, tags) {
   }
   for (var i = 0; i < tags.length; i++) {
     //do a [tag] match
-    if (tags[i].startsWith('[') && tags[i].endsWith(']')) {
+    if (fns.startsWith(tags[i], '[') && fns.endsWith(tags[i], ']')) {
       var pos = tags[i].match(/^\[(.*?)\]$/)[1];
       if (!terms[i].pos[pos]) {
         return false;
@@ -3006,55 +3012,7 @@ var grammar_rules_pass = function grammar_rules_pass(s) {
 };
 module.exports = grammar_rules_pass;
 
-// //this supports a subset of our matching syntax, for speed/complexity purposes.
-// let rules = [
-//   {
-//     from: ['[Noun]', 'the', '[Noun]'],
-//     to: ['Verb', null, null]
-//   }
-// ];
-//
-// //determines if this rule matches the terms from index i
-// const matches_from = function(i, terms, regs) {
-//   for(i = i; i < regs.length; i++) {
-//     //try a '[Pos]' match
-//     if (regs[i].startsWith('[') && regs[i].endsWith(']')) {
-//       let pos = regs[i].match(/^\[(.*?)\]$/)[1];
-//       if (!terms[i].pos[pos]) {
-//         return false;
-//       }
-//       continue;
-//     }
-//     //try a regular text-match
-//     if (terms[i].normal !== regs[i]) {
-//       return false;
-//     }
-//   }
-//   return true;
-// };
-//
-// const grammar_pass = function(s) {
-//   for(let r = 0; r < rules.length; r++) {
-//     for(let i = 0; i < s.terms.length; i++) {
-//       //stop before the end
-//       // if (rules[r].from.length > s.terms.length) {
-//       //   break;
-//       // }
-//       //does this rule match from here?
-//       if (matches_from(i, s.terms, rules[r].from)) {
-//         //set the new pos tags
-//         for(let w = 0; w < rules[r].to.length; w++) {
-//           s.terms[i + w] = assign(s.terms[i + w], rules[r].to[w], 'grammar_transforms #' + r);
-//         }
-//       }
-//     }
-//   }
-//   return s.terms;
-// };
-//
-// module.exports = grammar_pass;
-
-},{"../assign":33,"./rules/grammar_rules":47}],41:[function(require,module,exports){
+},{"../../../fns":23,"../assign":33,"./rules/grammar_rules":47}],41:[function(require,module,exports){
 'use strict';
 
 var assign = require('../assign');
@@ -7021,11 +6979,12 @@ module.exports = from_infinitive;
 'use strict';
 //non-specifc, 'hail-mary' transforms from infinitive, into other forms
 
+var fns = require('../../../fns');
 var generic = {
 
   gerund: function gerund(o) {
     var inf = o.infinitive;
-    if (inf.endsWith('e')) {
+    if (fns.endsWith(inf, 'e')) {
       return inf.replace(/e$/, 'ing');
     }
     return inf + 'ing';
@@ -7033,7 +6992,7 @@ var generic = {
 
   present: function present(o) {
     var inf = o.infinitive;
-    if (inf.endsWith('s')) {
+    if (fns.endsWith(inf, 's')) {
       return inf + 'es';
     }
     return inf + 's';
@@ -7041,10 +7000,10 @@ var generic = {
 
   past: function past(o) {
     var inf = o.infinitive;
-    if (inf.endsWith('e')) {
+    if (fns.endsWith(inf, 'e')) {
       return inf + 'd';
     }
-    if (inf.endsWith('ed')) {
+    if (fns.endsWith(inf, 'ed')) {
       return inf;
     }
     return inf + 'ed';
@@ -7070,7 +7029,7 @@ var generic = {
 
 module.exports = generic;
 
-},{}],96:[function(require,module,exports){
+},{"../../../fns":23}],96:[function(require,module,exports){
 'use strict';
 //this method is used to predict which current conjugation a verb is
 

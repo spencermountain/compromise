@@ -19,7 +19,11 @@ const misc = {
   'morning': 'DA',
   'evening': 'DA',
   'afternoon': 'DA',
-  'ago': 'DA'
+  'ago': 'DA',
+  //end of day, end of month
+  'eod': 'DA',
+  'eom': 'DA',
+
 };
 
 const compact = {

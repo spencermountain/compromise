@@ -191,7 +191,8 @@ let cities = [
   'skopje',
   'riga',
   'luxembourg',
-  'reykjavik'
+  'reykjavik',
+  'kingston',
 ];
 
 let suffix_compressed_cities = {

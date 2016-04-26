@@ -100,7 +100,4 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
 
-// console.log(nlp.sentence(`notably kingston bandleader sonny bradshaw`).terms);
-// console.log(nlp.sentence(`she learned french and german`).terms);
-// console.log(nlp.sentence(`sindhu valley`).terms);
 // console.log(nlp.sentence(`our house looks great`).to_future().text());

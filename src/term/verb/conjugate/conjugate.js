@@ -106,4 +106,4 @@ const conjugate = function(w) {
 };
 module.exports = conjugate;
 
-// console.log(conjugate('used'));
+// console.log(conjugate('learn'));

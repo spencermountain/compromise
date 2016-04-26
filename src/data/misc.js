@@ -332,6 +332,7 @@ const compact = {
     'way',
     'kinda',
     'totally',
+  // 'notably',
   ],
 
   //interjections, expressions

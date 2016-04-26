@@ -63,6 +63,9 @@ addArr(places.countries, 'Place');
 addArr(places.cities, 'Place');
 
 require('./data/adjectives.js').forEach(function(s) {
+  // if (lexicon[s]) {
+  //   console.log(s);
+  // }
   lexicon[s] = 'Adjective';
   lexicon[to_comparative(s)] = 'Comparative';
   lexicon[to_superlative(s)] = 'Superlative';

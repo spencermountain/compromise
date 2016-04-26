@@ -18,7 +18,7 @@ abbreviations.places.forEach(function(s) {
 });
 
 //these are signals too
-let placeSignals = [
+let firstwords = [
   'west',
   'east',
   'nort',
@@ -27,6 +27,13 @@ let placeSignals = [
   'eastern',
   'nortern',
   'southern',
+  'mount',
+].reduce(function(h, s) {
+  h[s] = true;
+  return h;
+}, {});
+
+const lastwords = [
   'city',
   'town',
   'county',
@@ -35,7 +42,6 @@ let placeSignals = [
   'country',
   'state',
   'province',
-  'mount',
   'mountain',
   'river',
   'valley',
@@ -49,12 +55,20 @@ let placeSignals = [
 }, {});
 
 const is_place = function(str) {
-  let words = str.split();
-  for(let i = 0; i < words.length; i++) {
-    if (isPlace[words[i]]) {
+  let words = str.split(' ');
+
+  if (words.length > 1) {
+    //first words, like 'eastern'
+    if (firstwords[words[0]]) {
       return true;
     }
-    if (placeSignals[words[i]] && !placeSignals[str]) {
+    //last words, like 'mountain'
+    if (lastwords[words[words.length - 1]]) {
+      return true;
+    }
+  }
+  for(let i = 0; i < words.length; i++) {
+    if (isPlace[words[i]]) {
       return true;
     }
   }

@@ -2,7 +2,6 @@ const tag_mapping = require('../../parts_of_speech.js').tag_mapping;
 //regex patterns and parts of speech],
 module.exports = [
   ['^[0-9]+ ?(am|pm)$', 'DA'],
-  ['^[0-9]{1,4}[-/][0-9]{1,2}[-/][0-9]{1,4}$', 'DA'], //1999/12/25
   ['^[0-9]+(st|nd|rd)?$', 'CD'],
   ['^[a-z]et$', 'VB'],
   ['cede$', 'VB'],

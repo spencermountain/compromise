@@ -98,7 +98,6 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.person('john g. m. smith').root());
 // console.log(nlp.value('six hundred and fifty nine').parse());
 
 // let str = 'Oo-ee-oo I look just like Buddy Holly. Oh-oh, and you\'re Mary Tyler Moore';

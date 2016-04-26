@@ -289,7 +289,7 @@ let arr = [
 // '100th day to 200th',
 // 'march'
 ];
-describe('date', function () {
+describe('has tag \'date\'', function () {
 
   arr.forEach((s) => {
     let terms = nlp.sentence(s).terms;

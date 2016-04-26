@@ -98,7 +98,9 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
+// console.log(nlp.person('john g. m. smith').root());
 // console.log(nlp.value('six hundred and fifty nine').parse());
 
-// console.log(nlp.text(`joey's appartments in toronto!`).topics());
+// let str = 'Oo-ee-oo I look just like Buddy Holly. Oh-oh, and you\'re Mary Tyler Moore';
+// console.log(nlp.text(str).topics());
 // console.log(nlp.sentence(`our house looks great`).to_future().text());

@@ -57,6 +57,12 @@ nlp.person("Tony Hawk").pronoun();
 nlp.value("five hundred and sixty").number;
 // 560
 
+nlp.text(require('nlp-corpus').text.friends()).topics()//11 seasons of friends
+// [ { count: 2523, text: 'ross' },
+//   { count: 1922, text: 'joey' },
+//   { count: 1876, text: 'god' },
+//   { count: 1411, text: 'rachel' },
+//   ....
 ```
 #Plugin/Mixins
 we've also got a modest, though ambitious [plugin ecosystem](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/plugins.md):

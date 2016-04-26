@@ -31,7 +31,13 @@ class Person extends Noun {
 
   //proper normalised name without the cruft
   root() {
-    let str = (this.firstName || '') + ' ' + (this.lastName || '');
+    let str = this.firstName || '';
+    if (this.middleName) {
+      str += ' ' + this.middleName;
+    }
+    if (this.lastName) {
+      str += ' ' + this.lastName;
+    }
     return str.trim();
   }
 

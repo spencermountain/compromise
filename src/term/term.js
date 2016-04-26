@@ -103,9 +103,9 @@ class Term {
     let str = this.text || '';
     str = str.toLowerCase();
     //strip grammatical punctuation
-    str = str.replace(/[,\.!:;\?\(\)^$]/, '');
+    str = str.replace(/[,\.!:;\?\(\)^$]/g, '');
     //convert hyphenations to a multiple-word term
-    str = str.replace(/([a-z])\-([a-z])/, '$1 $2');
+    str = str.replace(/([a-z])\-([a-z])/g, '$1 $2');
     // coerce single curly quotes
     str = str.replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]+/g, '\'');
     // coerce double curly quotes

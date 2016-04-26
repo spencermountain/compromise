@@ -200,6 +200,21 @@ t.text()
 // "i will be there"
 ```
 
+### Named-Entity Recognition
+```javascript
+let str="Oo-ee-oo I look just like Buddy Holly. Oh-oh, and you're Mary Tyler Moore"
+nlp.text(str).topics()
+// [ { count: 1, text: 'mary tyler moore' },
+//   { count: 1, text: 'buddy holly' }
+// ]
+```
+A `Named-Entity` is not always agreed-upon, but it shouldn't be too hard to cherry-pick what you'd like:
+```javascript
+nlp.text('').people()
+nlp.text('').organizations()
+nlp.text('').places()
+```
+
 ### Date parsing
 ```javascript
 nlp.value("I married April for the 2nd time on June 5th 1998 ").date()

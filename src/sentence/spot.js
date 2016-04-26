@@ -6,6 +6,7 @@ const blacklist = {
   woman: true,
   girl: true,
   boy: true,
+  guy: true,
   father: true,
   mother: true,
   sister: true,
@@ -15,12 +16,14 @@ const blacklist = {
 const consolidate = function(topics) {
   let names = {};
   for(let i = 0; i < topics.length; i++) {
-    let t = topics[i];
-    names[t.normal] = names[t.normal] || {
-      count: 0,
-      text: t.text
-    };
-    names[t.normal].count += 1;
+    let normal = topics[i].root();
+    if (normal) {
+      names[normal] = names[normal] || {
+        count: 0,
+        text: normal
+      };
+      names[normal].count += 1;
+    }
   }
   //sort by freq
   let arr = Object.keys(names).map((k) => names[k]);

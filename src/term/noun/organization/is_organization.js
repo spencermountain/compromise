@@ -11,6 +11,7 @@ const blacklist = {
   ie: true,
   eg: true,
   gps: true,
+  dna: true,
   sms: true, //these should maybe be somewhere else
 };
 

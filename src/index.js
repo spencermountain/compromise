@@ -100,4 +100,5 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
 
+// console.log(nlp.text(`Toronto and Tony Hawk both live in Toronto. Tony Hawk is cool.`).topics());
 // console.log(nlp.sentence(`our house looks great`).to_future().text());

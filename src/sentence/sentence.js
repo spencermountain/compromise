@@ -218,7 +218,7 @@ class Sentence {
   }
 
   //named-entity recognition
-  spot() {
+  topics() {
     return spot(this);
   }
 

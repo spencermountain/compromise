@@ -147,16 +147,28 @@ class Text {
     return arr;
   }
   //more generic named-entity recognition
-  spot() {
+  topics() {
+    //consolodate topics across sentences
     let obj = {};
     for(let i = 0; i < this.sentences.length; i++) {
-      let terms = this.sentences[i].spot();
-      for(let o = 0; o < terms.length; o++) {
-        obj[terms[o][0]] = obj[terms[o][0]] || [];
-        obj[terms[o][0]].push(terms[o]);
+      let topics = this.sentences[i].topics();
+      for(let o = 0; o < topics.length; o++) {
+        if (obj[topics[o].text]) {
+          obj[topics[o].text].count += topics[o].count;
+        } else {
+          obj[topics[o].text] = topics[o];
+        }
       }
     }
-    return obj;
+    //sort by frequency
+    let arr = Object.keys(obj).map((k) => obj[k]);
+    return arr.sort((a, b) => {
+      if (a.count > b.count) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
   }
 }
 Text.fn = Text.prototype;

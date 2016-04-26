@@ -14,37 +14,53 @@ const blacklist = {
 
 const consolidate = function(topics) {
   let names = {};
+  for(let i = 0; i < topics.length; i++) {
+    let t = topics[i];
+    names[t.normal] = names[t.normal] || {
+      count: 0,
+      text: t.text
+    };
+    names[t.normal].count += 1;
+  }
+  //sort by freq
+  let arr = Object.keys(names).map((k) => names[k]);
+  return arr.sort((a, b) => {
+    if (a.count > b.count) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
 };
 
 
 const spot = function(s) {
   let topics = [];
-  s.terms.forEach((t, i) => {
+  for(let i = 0; i < s.terms.length; i++) {
+    let t = s.terms[i];
     //some stop-words
     if (blacklist[t.normal]) {
-      return false;
+      continue;
     }
     //grab person, place, locations
-    if (t.pos['Location'] || t.pos['Organization']) {
-      topics.push([t.normal, 'location/org']);
-      return true;
+    if (t.pos['Place'] || t.pos['Organization']) {
+      topics.push(t);
+      continue;
     }
     if (t.pos['Person'] && !t.pos['Pronoun']) {
-      topics.push([t.normal, 'person']);
-      return true;
+      topics.push(t);
+      continue;
     }
     //add capitalized nouns...
     if (i !== 0 && t.pos['Noun'] && t.is_capital()) {
       //no dates, or values
       if (t.pos['Value'] || t.pos['Date'] || t.pos['Pronoun']) {
-        return false;
+        continue;
       }
-      topics.push([t.normal, 'capital']);
-      return true;
+      topics.push(t);
     }
-
-  });
-  return topics;
+  }
+  return consolidate(topics);
 };
 
 module.exports = spot;

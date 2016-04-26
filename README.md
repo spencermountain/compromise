@@ -39,8 +39,8 @@ nlp.verb("speak").conjugate();
 //   future_perfect: 'will have spoken'
 // }
 
-nlp.text('She sells seashells').negate().text()
-// She didn't sell seashells
+nlp.statement('She sells seashells').negate().text()
+// She doesn't sell seashells
 
 nlp.sentence('I fed the dog').replace('the [Noun]', 'the cat').text()
 // I fed the cat

@@ -30,8 +30,19 @@ let placeSignals = [
   'city',
   'town',
   'county',
+  'village',
+  'province',
+  'country',
   'state',
   'province',
+  'mount',
+  'mountain',
+  'river',
+  'valley',
+  'park',
+  'avenue',
+  'street',
+  'road', //these should maybe be somewhere else
 ].reduce(function(h, s) {
   h[s] = true;
   return h;

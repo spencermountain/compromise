@@ -146,6 +146,18 @@ class Text {
     }
     return arr;
   }
+  //more generic named-entity recognition
+  spot() {
+    let obj = {};
+    for(let i = 0; i < this.sentences.length; i++) {
+      let terms = this.sentences[i].spot();
+      for(let o = 0; o < terms.length; o++) {
+        obj[terms[o][0]] = obj[terms[o][0]] || [];
+        obj[terms[o][0]].push(terms[o]);
+      }
+    }
+    return obj;
+  }
 }
 Text.fn = Text.prototype;
 

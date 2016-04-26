@@ -13,6 +13,7 @@ module.exports = {
   'by now': 'RB',
   'all but': 'RB',
   'just about': 'RB',
+  'so called': 'JJ', //?
   'on board': 'JJ',
   'a lot': 'RB',
   'by far': 'RB',

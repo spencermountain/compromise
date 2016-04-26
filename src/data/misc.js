@@ -23,7 +23,10 @@ const misc = {
   //end of day, end of month
   'eod': 'DA',
   'eom': 'DA',
-
+  'number': 'NN',
+  'system': 'NN',
+  'example': 'NN',
+  'part': 'NN',
 };
 
 const compact = {
@@ -451,10 +454,6 @@ const compact = {
     'men',
     'woman',
     'women',
-    'number',
-    'system',
-    'example',
-    'part',
     'guy',
     'dude',
     'bro',

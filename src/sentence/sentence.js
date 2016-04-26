@@ -8,6 +8,7 @@ const contractions = {
   expand: require('./contractions/expand'),
 };
 const change_tense = require('./tense');
+const spot = require('./spot');
 const match = require('../match/match');
 
 //a sentence is an array of Term objects, along with their various methods
@@ -214,6 +215,11 @@ class Sentence {
     });
     //
     return this;
+  }
+
+  //named-entity recognition
+  spot() {
+    return spot(this);
   }
 
 }

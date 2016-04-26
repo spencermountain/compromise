@@ -24,7 +24,7 @@ const starts = {
 // ensure there's a verb in a couple words
 const verbSoon = function(terms, x) {
   for(let i = 0; i < 5; i++) {
-    if (terms[i + x].pos['Verb']) {
+    if (terms[i + x] && terms[i + x].pos['Verb']) {
       return true;
     }
   }

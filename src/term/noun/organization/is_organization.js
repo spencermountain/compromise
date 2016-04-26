@@ -2,6 +2,18 @@
 const abbreviations = require('../../../data/abbreviations');
 const org_data = require('../../../data/organizations');
 
+//some boring capitalised acronyms you see frequently
+const blacklist = {
+  url: true,
+  http: true,
+  wtf: true,
+  irl: true,
+  ie: true,
+  eg: true,
+  gps: true,
+  sms: true, //these should maybe be somewhere else
+};
+
 //words like 'co' and ltd
 let org_suffix = abbreviations.orgs.reduce(function(h, s) {
   h[s] = true;
@@ -19,6 +31,10 @@ let org_names = org_data.organizations.reduce(function(h, s) {
 
 const is_organization = function(str, text) {
   text = text || '';
+  //blacklist some boring ones
+  if (blacklist[str]) {
+    return false;
+  }
   //some known organizations, like microsoft
   if (org_names[str]) {
     return true;

@@ -8,7 +8,6 @@ let arr = [
   'anthony',
   'armand',
   'arthur',
-  'august',
   'bill',
   'billy',
   'bobby',

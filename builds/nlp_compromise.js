@@ -104,9 +104,8 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
 
-// console.log('|' + nlp.sentence('on 4:23am july   5th  ').text() + '|');
-// console.log(nlp.text(`Oh say can you see? By the dawn's early rise.`).sentences);
-// console.log(nlp.text(`2nd of march, 2015`).text());
+// console.log(nlp.sentence(`our house looks great`).terms);
+// console.log(nlp.sentence(`our house looks great`).to_future().text());
 
 },{"./fns.js":23,"./lexicon.js":24,"./sentence/question/question.js":52,"./sentence/sentence.js":55,"./sentence/statement/statement.js":57,"./term/adjective/adjective.js":59,"./term/adverb/adverb.js":64,"./term/noun/date/date.js":69,"./term/noun/noun.js":75,"./term/noun/organization/organization.js":77,"./term/noun/person/person.js":81,"./term/noun/place/place.js":83,"./term/noun/value/value.js":91,"./term/term.js":92,"./term/verb/verb.js":101,"./text/text.js":104}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -276,6 +275,10 @@ var months = ['january', 'february',
 // "may",   //ambig
 'june', 'july', 'august', 'september', 'october', 'november', 'december', 'jan', 'feb', 'mar', 'apr', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'sept', 'sep'];
 var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
+//add 'mondays'
+for (var i = 0; i <= 6; i++) {
+  days.push(days[i] + 's');
+}
 
 var durations = ['millisecond', 'second', 'minute', 'hour', 'morning', 'afternoon', 'evening', 'night', 'day', 'week', 'month', 'year', 'decade'];
 //add their plurals
@@ -889,7 +892,20 @@ var misc = {
   'sounds': 'VBZ',
   //special case for took/taken
   'taken': 'VBD',
-  'msg': 'VB' //slang
+  'msg': 'VB', //slang
+  //date
+  'noon': 'DA',
+  'midnight': 'DA',
+  //errr....
+  'now': 'DA',
+  'morning': 'DA',
+  'evening': 'DA',
+  'afternoon': 'DA',
+  'ago': 'DA',
+  //end of day, end of month
+  'eod': 'DA',
+  'eom': 'DA'
+
 };
 
 var compact = {
@@ -926,13 +942,15 @@ var compact = {
   'PRP': ['it', 'they', 'i', 'them', 'you', 'she', 'me', 'he', 'him', 'ourselves', 'us', 'we', 'thou', 'il', 'elle', 'yourself', '\'em'],
 
   //some manual adverbs (the rest are generated)
-  'RB': ['now', 'again', 'already', 'soon', 'directly', 'toward', 'forever', 'apart', 'instead', 'yes', 'alone', 'ago', 'indeed', 'ever', 'quite', 'perhaps', 'where', 'then', 'here', 'thus', 'very', 'often', 'once', 'never', 'why', 'when', 'away', 'always', 'sometimes', 'also', 'maybe', 'so', 'just', 'well', 'several', 'such', 'randomly', 'too', 'rather', 'abroad', 'almost', 'anyway', 'twice', 'aside', 'moreover', 'anymore', 'newly', 'damn', 'somewhat', 'somehow', 'meanwhile', 'hence', 'further', 'furthermore', 'more', 'way', 'kinda', 'totally'],
+  'RB': [
+  // 'now',
+  'again', 'already', 'soon', 'directly', 'toward', 'forever', 'apart', 'instead', 'yes', 'alone', 'indeed', 'ever', 'quite', 'perhaps', 'where', 'then', 'here', 'thus', 'very', 'often', 'once', 'never', 'why', 'when', 'away', 'always', 'sometimes', 'also', 'maybe', 'so', 'just', 'well', 'several', 'such', 'randomly', 'too', 'rather', 'abroad', 'almost', 'anyway', 'twice', 'aside', 'moreover', 'anymore', 'newly', 'damn', 'somewhat', 'somehow', 'meanwhile', 'hence', 'further', 'furthermore', 'more', 'way', 'kinda', 'totally'],
 
   //interjections, expressions
   'EX': ['uh', 'uhh', 'uh huh', 'uh-oh', 'please', 'ugh', 'sheesh', 'eww', 'pff', 'voila', 'oy', 'hi', 'hello', 'bye', 'goodbye', 'hey', 'hai', 'eep', 'hurrah', 'yuck', 'ow', 'duh', 'oh', 'hmm', 'yeah', 'whoa', 'ooh', 'whee', 'ah', 'bah', 'gah', 'yaa', 'phew', 'gee', 'ahem', 'eek', 'meh', 'yahoo', 'oops', 'd\'oh', 'psst', 'argh', 'grr', 'nah', 'shhh', 'whew', 'mmm', 'ooo', 'yay', 'uh-huh', 'boo', 'wow', 'nope', 'haha', 'hahaha', 'lol', 'lols', 'ya', 'hee', 'ohh', 'eh', 'yup'],
 
   //special nouns that shouldnt be seen as a verb
-  'NN': ['nothing', 'everything', 'god', 'dollar', 'student', 'patent', 'funding', 'morning', 'banking', 'ceiling', 'energy', 'purpose', 'friend', 'event', 'room', 'door', 'thing', 'things', 'stuff', 'lunch', 'breakfast', 'dinner', 'home', 'problem', 'body', 'world', 'city', 'death', 'others'],
+  'NN': ['nothing', 'everything', 'god', 'dollar', 'student', 'patent', 'funding', 'banking', 'ceiling', 'energy', 'purpose', 'friend', 'event', 'room', 'door', 'thing', 'things', 'stuff', 'lunch', 'breakfast', 'dinner', 'home', 'problem', 'body', 'world', 'city', 'death', 'others'],
   //family-terms are people
   PN: ['father', 'mother', 'mom', 'dad', 'mommy', 'daddy', 'sister', 'brother', 'aunt', 'uncle', 'grandfather', 'grandmother', 'cousin', 'stepfather', 'stepmother', 'boy', 'girl', 'man', 'men', 'woman', 'women', 'number', 'system', 'example', 'part', 'guy', 'dude', 'bro', 'gentleman', 'someone']
 };
@@ -1029,7 +1047,11 @@ module.exports = {
   'head start': 'NN',
   'make sure': 'VB',
   'keep tabs': 'VB',
-  'credit card': 'NN'
+  'credit card': 'NN',
+  //timezones
+  'standard time': 'DA',
+  'daylight time': 'DA',
+  'summer time': 'DA'
 };
 
 },{}],14:[function(require,module,exports){
@@ -1193,7 +1215,7 @@ module.exports = arr;
 var fns = require('../../fns');
 
 //the unique/uncompressed names..
-var arr = ['adolfo', 'angelo', 'anthony', 'armand', 'arthur', 'august', 'bill', 'billy', 'bobby', 'bradford', 'bret', 'caleb', 'carroll', 'cliff', 'clifford', 'craig', 'curt', 'derek', 'doug', 'dwight', 'edmund', 'eli', 'elliot', 'enrique', 'erik', 'felipe', 'felix', 'francisco', 'frank', 'george', 'glenn', 'greg', 'gregg', 'hans', 'hugh', 'ira', 'irving', 'isaac', 'jim', 'kermit', 'kurt', 'leo', 'levi', 'lorenzo', 'lou', 'pablo', 'pat', 'percy', 'philip', 'phillip', 'rex', 'ricky', 'shaun', 'shawn', 'sterling', 'steve', 'tim', 'timothy', 'wilbur', 'williams', 'wm', 'woodrow'];
+var arr = ['adolfo', 'angelo', 'anthony', 'armand', 'arthur', 'bill', 'billy', 'bobby', 'bradford', 'bret', 'caleb', 'carroll', 'cliff', 'clifford', 'craig', 'curt', 'derek', 'doug', 'dwight', 'edmund', 'eli', 'elliot', 'enrique', 'erik', 'felipe', 'felix', 'francisco', 'frank', 'george', 'glenn', 'greg', 'gregg', 'hans', 'hugh', 'ira', 'irving', 'isaac', 'jim', 'kermit', 'kurt', 'leo', 'levi', 'lorenzo', 'lou', 'pablo', 'pat', 'percy', 'philip', 'phillip', 'rex', 'ricky', 'shaun', 'shawn', 'sterling', 'steve', 'tim', 'timothy', 'wilbur', 'williams', 'wm', 'woodrow'];
 
 //compressed by frequent suffixes
 var suffix_compressed = {
@@ -2436,6 +2458,8 @@ var shouldLumpThree = function shouldLumpThree(a, b, c) {
   if (!a || !b || !c) {
     return false;
   }
+  //some weak-pos
+
   var lump_rules = [{
     condition: a.pos.Noun && b.text === '&' && c.pos.Noun, //John & Joe's
     result: 'Person'
@@ -2457,6 +2481,9 @@ var shouldLumpThree = function shouldLumpThree(a, b, c) {
   }, {
     condition: a.normal === 'will' && b.normal === 'have' && b.pos.Verb, //will have walk
     result: 'FutureTense'
+  }, {
+    condition: a.pos.Date && (c.pos.Date || c.pos.Ordinal) && (b.pos.Preposition || b.pos.Determiner || b.pos.Conjunction || b.pos.Adjective), //3hrs after 5pm
+    result: 'Date'
   }];
   for (var i = 0; i < lump_rules.length; i++) {
     if (lump_rules[i].condition) {
@@ -2478,6 +2505,9 @@ var shouldLumpTwo = function shouldLumpTwo(a, b) {
     condition: a.pos.Person && b.pos.Honourific || a.pos.Honourific && b.pos.Person, //"John sr."
     result: 'Person'
   }, {
+    condition: (a.pos.Value || a.pos.Date) && (b.normal === 'am' || b.normal === 'pm'), //6 am
+    result: 'Date'
+  }, {
     condition: a.pos.Honourific && b.is_capital(), //'Dr. John
     result: 'Person'
   }, {
@@ -2488,6 +2518,9 @@ var shouldLumpTwo = function shouldLumpTwo(a, b) {
     result: 'Date'
   }, {
     condition: a.pos.Value && b.pos.Date, //4 June
+    result: 'Date'
+  }, {
+    condition: (a.normal === 'last' || a.normal === 'next' || a.normal === 'this') && b.pos.Date, //last wednesday
     result: 'Date'
   }, {
     condition: a.pos.Noun && b.pos.Actor, //Aircraft designer
@@ -2507,6 +2540,11 @@ var shouldLumpTwo = function shouldLumpTwo(a, b) {
   }, {
     condition: a.normal.match(/^will ha(ve|d)$/) && b.pos.Verb, //will have walked (pluperfect)
     result: 'PluperfectTense'
+  },
+  //timezones
+  {
+    condition: b.normal.match(/(standard|daylight|summer) time/) && (a.pos['Adjective'] || a.pos['Place']),
+    result: 'Date'
   }];
   for (var i = 0; i < lump_rules.length; i++) {
     if (lump_rules[i].condition) {
@@ -2574,8 +2612,8 @@ var should_chunk = function should_chunk(a, b) {
   if (!a || !b) {
     return false;
   }
-  //if A has a comma, don't chunk it
-  if (a.has_comma()) {
+  //if A has a comma, don't chunk it, (unless it's a  date)
+  if (a.has_comma() && !a.pos.Date) {
     return false;
   }
   //don't chunk non-word things with word-things
@@ -2620,6 +2658,8 @@ var chunk_neighbours = function chunk_neighbours(terms) {
       var space = last_one.whitespace.trailing + t.whitespace.preceding;
       new_terms[new_terms.length - 1].text += space + t.text;
       new_terms[new_terms.length - 1].normalize();
+      new_terms[new_terms.length - 1].whitespace.trailing = t.whitespace.trailing;
+      new_terms[new_terms.length - 1].whitespace.preceding = last_one.whitespace.preceding;
     } else {
       new_terms.push(t);
     }
@@ -2745,11 +2785,24 @@ module.exports = {
 
 var assign = require('../assign');
 
+//date words that are sometimes-not..
 var tough_dates = {
   may: true,
   april: true,
   march: true,
-  june: true
+  june: true,
+  jan: true
+};
+
+//an integer that looks year-like
+var maybe_year = function maybe_year(t) {
+  if (t.pos.Value) {
+    var num = t.number || 0;
+    if (num >= 1900 && num < 2030) {
+      return true;
+    }
+  }
+  return false;
 };
 
 //neighbouring words that indicate it is a date
@@ -2760,6 +2813,7 @@ var date_signals = {
   during: true,
   from: true,
   to: true,
+  in: true,
   of: true,
   the: true,
   next: true
@@ -2768,9 +2822,10 @@ var date_signals = {
 var ambiguous_dates = function ambiguous_dates(terms) {
   for (var i = 0; i < terms.length; i++) {
     var t = terms[i];
-    if (tough_dates[t.normal]) {
-
+    if (tough_dates[t.normal] || maybe_year(t)) {
+      //'march' or '2015'
       //if nearby another date or value
+      // console.log(terms[i + 1].pos.Verb);
       if (terms[i + 1] && (terms[i + 1].pos['Value'] || terms[i + 1].pos['Date'])) {
         terms[i] = assign(t, 'Date', 'date_signal');
         continue;
@@ -2911,6 +2966,7 @@ module.exports = conditional_pass;
 
 var assign = require('../assign');
 var grammar_rules = require('./rules/grammar_rules');
+var fns = require('../../../fns');
 // const match = require('../../match/match');
 
 //tests a subset of terms against a array of tags
@@ -2920,7 +2976,7 @@ var hasTags = function hasTags(terms, tags) {
   }
   for (var i = 0; i < tags.length; i++) {
     //do a [tag] match
-    if (tags[i].startsWith('[') && tags[i].endsWith(']')) {
+    if (fns.startsWith(tags[i], '[') && fns.endsWith(tags[i], ']')) {
       var pos = tags[i].match(/^\[(.*?)\]$/)[1];
       if (!terms[i].pos[pos]) {
         return false;
@@ -2956,55 +3012,7 @@ var grammar_rules_pass = function grammar_rules_pass(s) {
 };
 module.exports = grammar_rules_pass;
 
-// //this supports a subset of our matching syntax, for speed/complexity purposes.
-// let rules = [
-//   {
-//     from: ['[Noun]', 'the', '[Noun]'],
-//     to: ['Verb', null, null]
-//   }
-// ];
-//
-// //determines if this rule matches the terms from index i
-// const matches_from = function(i, terms, regs) {
-//   for(i = i; i < regs.length; i++) {
-//     //try a '[Pos]' match
-//     if (regs[i].startsWith('[') && regs[i].endsWith(']')) {
-//       let pos = regs[i].match(/^\[(.*?)\]$/)[1];
-//       if (!terms[i].pos[pos]) {
-//         return false;
-//       }
-//       continue;
-//     }
-//     //try a regular text-match
-//     if (terms[i].normal !== regs[i]) {
-//       return false;
-//     }
-//   }
-//   return true;
-// };
-//
-// const grammar_pass = function(s) {
-//   for(let r = 0; r < rules.length; r++) {
-//     for(let i = 0; i < s.terms.length; i++) {
-//       //stop before the end
-//       // if (rules[r].from.length > s.terms.length) {
-//       //   break;
-//       // }
-//       //does this rule match from here?
-//       if (matches_from(i, s.terms, rules[r].from)) {
-//         //set the new pos tags
-//         for(let w = 0; w < rules[r].to.length; w++) {
-//           s.terms[i + w] = assign(s.terms[i + w], rules[r].to[w], 'grammar_transforms #' + r);
-//         }
-//       }
-//     }
-//   }
-//   return s.terms;
-// };
-//
-// module.exports = grammar_pass;
-
-},{"../assign":33,"./rules/grammar_rules":47}],41:[function(require,module,exports){
+},{"../../../fns":23,"../assign":33,"./rules/grammar_rules":47}],41:[function(require,module,exports){
 'use strict';
 
 var assign = require('../assign');
@@ -3213,18 +3221,33 @@ module.exports = quotation_pass;
 var word_rules = require('./rules/word_rules');
 var assign = require('../assign');
 
+//word-rules that run on '.text', not '.normal'
+var punct_rules = [{
+  reg: new RegExp('^[12]?[0-9]\:[0-9]{2}( am| pm)?$', 'i'),
+  pos: 'Date'
+}];
+
 var regex_pass = function regex_pass(terms) {
-  for (var i = 0; i < terms.length; i++) {
+  terms.forEach(function (t, i) {
     if (terms[i].tag !== '?') {
-      continue;
+      return;
     }
+    //regexes that involve punctuation
+    for (var o = 0; o < punct_rules.length; o++) {
+      if (terms[i].text.match(punct_rules[o].reg)) {
+        terms[i] = assign(terms[i], punct_rules[o].pos, 'rules_pass_' + o);
+        return;
+      }
+    }
+    //bigger list of regexes on normal
     for (var o = 0; o < word_rules.length; o++) {
       if (terms[i].normal.match(word_rules[o].reg)) {
         terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass_' + o);
-        break;
+        return;
       }
     }
-  }
+  });
+
   return terms;
 };
 
@@ -3329,10 +3352,11 @@ module.exports = [
   'after': ['[Modal]', '[Adverb]', '[Verb]']
 },
 //ambiguous dates (march/may)
+// {
+//   'before': ['[Modal]', '[Value]'],
+//   'after': ['[Modal]', '[Verb]'],
+// },
 {
-  'before': ['[Modal]', '[Value]'],
-  'after': ['[Modal]', '[Verb]']
-}, {
   'before': ['[Adverb]', '[Value]'],
   'after': ['[Adverb]', '[Verb]']
 }];
@@ -3342,7 +3366,7 @@ module.exports = [
 
 var tag_mapping = require('../../parts_of_speech.js').tag_mapping;
 //regex patterns and parts of speech],
-module.exports = [['^[0-9][0-9]?\:[0-9]{2}$', 'DA'], ['^[0-9]{2}([0-9]{2})?[-/][0-9]{2}[-/][0-9]{2}([0-9]{2})?$', 'DA'], //1999/12/25
+module.exports = [['^[0-9]+ ?(am|pm)$', 'DA'], ['^[0-9]{1,4}[-/][0-9]{1,2}[-/][0-9]{1,4}$', 'DA'], //1999/12/25
 ['^[0-9]+(st|nd|rd)?$', 'CD'], ['^[a-z]et$', 'VB'], ['cede$', 'VB'], ['.[cts]hy$', 'JJ'], ['.[st]ty$', 'JJ'], ['.[lnr]ize$', 'VB'], ['.[gk]y$', 'JJ'], ['.fies$', 'VB'], ['.some$', 'JJ'], ['.[nrtumcd]al$', 'JJ'], ['.que$', 'JJ'], ['.[tnl]ary$', 'JJ'], ['.[di]est$', 'JJS'], ['^(un|de|re)\\-[a-z]..', 'VB'], ['.lar$', 'JJ'], ['[bszmp]{2}y', 'JJ'], ['.zes$', 'VB'], ['.[icldtgrv]ent$', 'JJ'], ['.[rln]ates$', 'VBZ'], ['.[oe]ry$', 'JJ'], ['[rdntkdhs]ly$', 'RB'], ['.[lsrnpb]ian$', 'JJ'], ['.[^aeiou]ial$', 'JJ'], ['.[^aeiou]eal$', 'JJ'], ['.[vrl]id$', 'JJ'], ['.[ilk]er$', 'JJR'], ['.ike$', 'JJ'], ['.ends?$', 'VB'], ['.wards$', 'RB'], ['.rmy$', 'JJ'], ['.rol$', 'NN'], ['.tors$', 'NN'], ['.azy$', 'JJ'], ['.where$', 'RB'], ['.ify$', 'VB'], ['.bound$', 'JJ'], ['.ens$', 'VB'], ['.oid$', 'JJ'], ['.vice$', 'NN'], ['.rough$', 'JJ'], ['.mum$', 'JJ'], ['.teen(th)?$', 'CD'], ['.oses$', 'VB'], ['.ishes$', 'VB'], ['.ects$', 'VB'], ['.tieth$', 'CD'], ['.ices$', 'NN'], ['.bles$', 'VB'], ['.pose$', 'VB'], ['.ions$', 'NN'], ['.ean$', 'JJ'], ['.[ia]sed$', 'JJ'], ['.tized$', 'VB'], ['.llen$', 'JJ'], ['.fore$', 'RB'], ['.ances$', 'NN'], ['.gate$', 'VB'], ['.nes$', 'VB'], ['.less$', 'RB'], ['.ried$', 'JJ'], ['.gone$', 'JJ'], ['.made$', 'JJ'], ['.[pdltrkvyns]ing$', 'JJ'], ['.tions$', 'NN'], ['.tures$', 'NN'], ['.ous$', 'JJ'], ['.ports$', 'NN'], ['. so$', 'RB'], ['.ints$', 'NN'], ['.[gt]led$', 'JJ'], ['.lked$', 'VB'], ['.fully$', 'RB'], ['.*ould$', 'MD'], ['^-?[0-9]+(.[0-9]+)?$', 'CD'], ['[a-z]*\\-[a-z]*\\-', 'JJ'], ['[a-z]\'s$', 'NNO'], ['.\'n$', 'VB'], ['.\'re$', 'CP'], ['.\'ll$', 'MD'], ['.\'t$', 'VB'], ['.tches$', 'VB'], ['^https?\:?\/\/[a-z0-9]', 'NN'], //the colon is removed in normalisation
 ['^www\.[a-z0-9]', 'NN'], ['.ize$', 'VB'], ['.[^aeiou]ise$', 'VB'], ['.[aeiou]te$', 'VB'], ['.ea$', 'NN'], ['[aeiou][pns]er$', 'NN'], ['.ia$', 'NN'], ['.sis$', 'NN'], ['.[aeiou]na$', 'NN'], ['.[^aeiou]ity$', 'NN'], ['.[^aeiou]ium$', 'NN'], ['.[^aeiou][ei]al$', 'JJ'], ['.ffy$', 'JJ'], ['.[^aeiou]ic$', 'JJ'], ['.(gg|bb|zz)ly$', 'JJ'], ['.[aeiou]my$', 'JJ'], ['.[aeiou]ble$', 'JJ'], ['.[^aeiou]ful$', 'JJ'], ['.[^aeiou]ish$', 'JJ'], ['.[^aeiou]ica$', 'NN'], ['[aeiou][^aeiou]is$', 'NN'], ['[^aeiou]ard$', 'NN'], ['[^aeiou]ism$', 'NN'], ['.[^aeiou]ity$', 'NN'], ['.[^aeiou]ium$', 'NN'], ['.[lstrn]us$', 'NN'], ['..ic$', 'JJ'], ['[aeiou][^aeiou]id$', 'JJ'], ['.[^aeiou]ish$', 'JJ'], ['.[^aeiou]ive$', 'JJ'], ['[ea]{2}zy$', 'JJ'], ['[^aeiou]ician$', 'AC'], ['.keeper$', 'AC'], ['.logist$', 'AC'], ['..ier$', 'AC'], ['.[^aeiou][ao]pher$', 'AC'], ['.tive$', 'AC'], ['[aeiou].*ist$', 'JJ'],
 //slang things
@@ -6397,11 +6421,19 @@ var Value = function (_Noun) {
     _this.unit = null;
     _this.unit_name = null;
     _this.measurement = null;
+    if (_this.is_ordinal()) {
+      _this.pos['Ordinal'] = true;
+    }
     _this.parse();
     return _this;
   }
 
   _createClass(Value, [{
+    key: 'is_ordinal',
+    value: function is_ordinal() {
+      return this.normal.match(/^[0-9]+(rd|st|nd|th)$/);
+    }
+  }, {
     key: 'is_unit',
     value: function is_unit(s) {
       if (units[s]) {
@@ -6441,6 +6473,7 @@ var Value = function (_Noun) {
           }
         }
       }
+      numbers = numbers.trim();
       this.number = to_number(numbers);
     }
   }]);
@@ -6946,11 +6979,12 @@ module.exports = from_infinitive;
 'use strict';
 //non-specifc, 'hail-mary' transforms from infinitive, into other forms
 
+var fns = require('../../../fns');
 var generic = {
 
   gerund: function gerund(o) {
     var inf = o.infinitive;
-    if (inf.endsWith('e')) {
+    if (fns.endsWith(inf, 'e')) {
       return inf.replace(/e$/, 'ing');
     }
     return inf + 'ing';
@@ -6958,7 +6992,7 @@ var generic = {
 
   present: function present(o) {
     var inf = o.infinitive;
-    if (inf.endsWith('s')) {
+    if (fns.endsWith(inf, 's')) {
       return inf + 'es';
     }
     return inf + 's';
@@ -6966,10 +7000,10 @@ var generic = {
 
   past: function past(o) {
     var inf = o.infinitive;
-    if (inf.endsWith('e')) {
+    if (fns.endsWith(inf, 'e')) {
       return inf + 'd';
     }
-    if (inf.endsWith('ed')) {
+    if (fns.endsWith(inf, 'ed')) {
       return inf;
     }
     return inf + 'ed';
@@ -6995,7 +7029,7 @@ var generic = {
 
 module.exports = generic;
 
-},{}],96:[function(require,module,exports){
+},{"../../../fns":23}],96:[function(require,module,exports){
 'use strict';
 //this method is used to predict which current conjugation a verb is
 

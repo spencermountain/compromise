@@ -43,6 +43,10 @@ let days = [
   'sat',
   'sun'
 ];
+//add 'mondays'
+for(let i = 0; i <= 6; i++) {
+  days.push(days[i] + 's');
+}
 
 let durations = [
   'millisecond',

@@ -1,11 +1,11 @@
 'use strict';
 //non-specifc, 'hail-mary' transforms from infinitive, into other forms
-
+const fns = require('../../../fns');
 const generic = {
 
   gerund: (o) => {
     let inf = o.infinitive;
-    if (inf.endsWith('e')) {
+    if (fns.endsWith(inf, 'e')) {
       return inf.replace(/e$/, 'ing');
     }
     return inf + 'ing';
@@ -13,7 +13,7 @@ const generic = {
 
   present: (o) => {
     let inf = o.infinitive;
-    if (inf.endsWith('s')) {
+    if (fns.endsWith(inf, 's')) {
       return inf + 'es';
     }
     return inf + 's';
@@ -21,10 +21,10 @@ const generic = {
 
   past: (o) => {
     let inf = o.infinitive;
-    if (inf.endsWith('e')) {
+    if (fns.endsWith(inf, 'e')) {
       return inf + 'd';
     }
-    if (inf.endsWith('ed')) {
+    if (fns.endsWith(inf, 'ed')) {
       return inf;
     }
     return inf + 'ed';

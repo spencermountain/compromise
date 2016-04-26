@@ -104,10 +104,10 @@ module.exports = [
     'after': ['[Modal]', '[Adverb]', '[Verb]'],
   },
   //ambiguous dates (march/may)
-  {
-    'before': ['[Modal]', '[Value]'],
-    'after': ['[Modal]', '[Verb]'],
-  },
+  // {
+  //   'before': ['[Modal]', '[Value]'],
+  //   'after': ['[Modal]', '[Verb]'],
+  // },
   {
     'before': ['[Adverb]', '[Value]'],
     'after': ['[Adverb]', '[Verb]'],

@@ -19,8 +19,24 @@ class Value extends Noun {
     this.parse();
   }
 
-  is_ordinal() {
-    return this.normal.match(/^[^0-9]+(rd|st|nd|th)$/);
+  is_ordinal() { //todo: make this clever.
+    //1st
+    if (this.normal.match(/^[0-9]+(rd|st|nd|th)$/)) {
+      return true;
+    }
+    //..second
+    if (this.normal.match(/[ -](first|second|third|fourth|fifth|sixth|seventh|eighth|ninth)$/)) {
+      return true;
+    }
+    //..teenth
+    if (this.normal.match(/\b(eleventh|twelfth|thirteenth|fourteenth|fifteenth|sixteenth|seventeenth|eighteenth|ninteenth)$/)) {
+      return true;
+    }
+    //..tenth
+    if (this.normal.match(/\b(tenth|twentieth|thirtieth|fourtieth|fiftieth|sixtieth|seventieth|eightieth|nintieth|hundreth|thousandth|millionth|billionth)$/)) {
+      return true;
+    }
+    return false;
   }
 
   root() {

@@ -151,7 +151,7 @@ class Sentence {
   //further 'lemmatisation/inflection'
   root() {
     return this.terms.reduce(function(s, t) {
-      s += ' ' + t.root;
+      s += ' ' + t.root();
       return s;
     }, '').trim();
   }

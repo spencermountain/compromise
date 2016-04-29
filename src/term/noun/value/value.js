@@ -23,6 +23,14 @@ class Value extends Noun {
     return this.normal.match(/^[^0-9]+(rd|st|nd|th)$/);
   }
 
+  root() {
+    let str = this.number;
+    if (this.unit) {
+      str += ' ' + this.unit;
+    }
+    return str;
+  }
+
   is_unit(s) {
     if (units[s]) {
       return true;

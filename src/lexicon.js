@@ -63,9 +63,6 @@ addArr(places.countries, 'Place');
 addArr(places.cities, 'Place');
 
 require('./data/adjectives.js').forEach(function(s) {
-  // if (lexicon[s]) {
-  //   console.log(s);
-  // }
   lexicon[s] = 'Adjective';
   lexicon[to_comparative(s)] = 'Comparative';
   lexicon[to_superlative(s)] = 'Superlative';
@@ -87,7 +84,15 @@ addArr(dates.days, 'Date');
 addArr(dates.months, 'Date');
 addArr(dates.durations, 'Date');
 addArr(dates.relative, 'Date');
-addArr(require('./data/numbers.js'), 'Value');
+
+//unpack the numbers
+let nums = require('./data/numbers.js');
+let all_nums = Object.keys(nums).reduce((arr, k) => {
+  arr = arr.concat(Object.keys(nums[k]));
+  return arr;
+}, []);
+addArr(all_nums, 'Value');
+
 //a little fancy
 addArr(Object.keys(require('./data/firstnames.js')), 'Person');
 //add irregular nouns

@@ -200,6 +200,24 @@ t.text()
 // "i will be there"
 ```
 
+### Normalization
+nlp_compromise is useful for reducing/normalizing text to specific levels:
+```javascript
+let t = nlp.text(`Dr. John Smith is   five feet tall.`);
+t.text()
+// "Dr. John Smith is   five feet tall."
+t.normal()
+// "dr john smith is 5 feet tall"
+t.root()
+// "john smith is 5 feet tall"
+```
+* *.text()*  - returns a pixel-perfect recreation of the input text.
+* *.normal()*  - returns a highly-standardized but readable version of the text. Punctuation, whitespace, numbers, and case are coerced.
+* *.root()*  - returns an 'aggressive-but-accurate' machine-readable reduction. Ordinals -> cardinals, verbs -> infinitive...
+
+Every Term has these methods individually, so may be interpreted more specifically.
+if you'd like to reduce things even further, `.strip_conditions()` may be helpful.
+
 ### Named-Entity Recognition
 ```javascript
 let str="Oo-ee-oo I look just like Buddy Holly. Oh-oh, and you're Mary Tyler Moore"

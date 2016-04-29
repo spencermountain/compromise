@@ -1,8 +1,9 @@
 'use strict';
-const Noun = require('../noun.js');
-const to_number = require('./to_number.js');
-const units = require('./units.js');
-const nums = require('./numbers.js');
+const Noun = require('../noun');
+const to_number = require('./to_number');
+const to_text = require('./to_text');
+const units = require('./units');
+const nums = require('../../../data/numbers');
 
 class Value extends Noun {
   constructor(str, tag) {
@@ -87,7 +88,12 @@ class Value extends Noun {
     this.number = to_number(numbers);
   }
 
+  textual() {
+    return to_text(this.number);
+  }
+
 }
 Value.fn = Value.prototype;
-
 module.exports = Value;
+
+// console.log(new Value(3));

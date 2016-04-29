@@ -17,6 +17,7 @@
     "no-dupe-keys": 2,
     "no-unreachable": 2,
     "eqeqeq": 1,
+    "keyword-spacing": 0,
     "no-native-reassign": 2,
     "no-redeclare": 2,
     "radix": 1,

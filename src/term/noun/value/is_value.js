@@ -1,6 +1,6 @@
 'use strict';
 
-const nums = require('./numbers');
+const nums = require('../../../data/numbers.js');
 const is_date = require('../date/is_date');
 
 const is_value = function(str) {

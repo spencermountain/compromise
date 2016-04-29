@@ -58,9 +58,9 @@ let tests = [
   ['sixteen hundred sixteen point eight', 1616.8],
   ['four point seven nine', 4.79],
   ['four point sixteen', 4.16],
-  ['twenty first', 21],
-  ['fifty ninth', 59],
-  ['nine hundred fiftieth', 950],
+  // ['twenty first', 21],
+  // ['fifty ninth', 59],
+  // ['nine hundred fiftieth', 950],
   [950, 950],
   [999999950, 999999950],
   [8080999999950, 8080999999950],
@@ -68,8 +68,8 @@ let tests = [
 ];
 
 
-describe('to noun', function() {
-  it('text to noun', function(done) {
+describe('to number', function() {
+  it('text to number', function(done) {
     tests.forEach(function(a) {
       let v = nlp.value(a[0]);
       (v.number || '').should.equal(a[1] || '');

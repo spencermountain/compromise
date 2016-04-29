@@ -7,7 +7,7 @@
 // multiple not repeat
 
 'use strict';
-const nums = require('./numbers.js');
+const nums = require('../../../data/numbers.js');
 //these sets of numbers each have different rules
 //[tenth, hundreth, thousandth..] are ambiguous because they could be ordinal like fifth, or decimal like one-one-hundredth, so are ignored
 // let decimal_multiple={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
@@ -81,7 +81,8 @@ const to_number = function(s) {
 
   //do each word in turn..
   const words = s.toString().split(/[\s\-]+/);
-  let w, x;
+  let w,
+    x;
   let current_sum = 0;
   let local_multiplier = 1;
   let decimal_mode = false;

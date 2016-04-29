@@ -20,7 +20,7 @@ class Value extends Noun {
   }
 
   is_ordinal() {
-    return this.normal.match(/^[0-9]+(rd|st|nd|th)$/);
+    return this.normal.match(/^[^0-9]+(rd|st|nd|th)$/);
   }
 
   is_unit(s) {

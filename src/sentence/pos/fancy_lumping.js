@@ -26,6 +26,10 @@ const shouldLumpThree = function(a, b, c) {
       result: 'Date',
     },
     {
+      condition: (a.pos.Date && b.pos.Preposition && c.pos.Value), //June 5th to 7th
+      result: 'Date',
+    },
+    {
       condition: (a.is_capital() && b.normal === 'of' && c.is_capital()), //President of Mexico
       result: 'Noun',
     },
@@ -92,7 +96,7 @@ const shouldLumpTwo = function(a, b) {
       result: 'Actor',
     },
     {
-      condition: (a.pos.Value && b.pos.Noun), //5 books
+      condition: (a.pos.Value && b.pos.Noun && !a.pos.Ordinal), //5 books
       result: 'Value',
     },
     {

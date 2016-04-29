@@ -100,6 +100,4 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.value('six hundred and fifty nine').parse());
 
-// let str = 'Oo-ee-oo I look just like Buddy Holly. Oh-oh, and you\'re Mary Tyler Moore';
-// console.log(nlp.text(str).topics());
-// console.log(nlp.sentence(`our house looks great`).to_future().text());
+// console.log(nlp.text('may 2nd to 5th').terms());

@@ -72,9 +72,14 @@ class Value extends Noun {
       point: true
     };
     let numbers = '';
+    //seperate number-words from unit-words
     for(let i = 0; i < words.length; i++) {
       let w = words[i];
-      if (nums.ones[w] || nums.teens[w] || nums.tens[w] || nums.multiples[w] || number_words[w] || w.match(/[0-9]/)) {
+      if (w.match(/[0-9]/) || number_words[w]) {
+        numbers += ' ' + w;
+      } else if (nums.ones[w] || nums.teens[w] || nums.tens[w] || nums.multiples[w]) {
+        numbers += ' ' + w;
+      } else if (nums.ordinal_ones[w] || nums.ordinal_teens[w] || nums.ordinal_tens[w] || nums.ordinal_multiples[w]) {
         numbers += ' ' + w;
       } else if (this.is_unit(w)) { //optional units come after the number
         this.unit = w;
@@ -96,4 +101,4 @@ class Value extends Noun {
 Value.fn = Value.prototype;
 module.exports = Value;
 
-// console.log(new Value(3));
+// console.log(new Value('twenty first').number);

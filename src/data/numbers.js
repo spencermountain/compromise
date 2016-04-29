@@ -61,6 +61,7 @@ const ordinal = {
     'ninth': 9
   },
   teens: {
+    'tenth': 10,
     'eleventh': 11,
     'twelfth': 12,
     'thirteenth': 13,

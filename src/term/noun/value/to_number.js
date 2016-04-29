@@ -12,6 +12,12 @@ const nums = require('../../../data/numbers.js');
 //[tenth, hundreth, thousandth..] are ambiguous because they could be ordinal like fifth, or decimal like one-one-hundredth, so are ignored
 // let decimal_multiple={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
 
+let mapping = {
+  ones: Object.assign({}, nums.ones, nums.ordinal_ones),
+  teens: Object.assign({}, nums.teens, nums.ordinal_teens),
+  tens: Object.assign({}, nums.tens, nums.ordinal_tens),
+  multiples: Object.assign({}, nums.multiples, nums.ordinal_multiples),
+};
 
 //test for nearly-values, like phonenumbers, or whatever
 const is_number = function(s) {
@@ -111,11 +117,11 @@ const to_number = function(s) {
     if (decimal_mode) {
       x = null;
       //allow consecutive ones in decimals eg. 'two point zero five nine'
-      if (nums.ones[w] !== undefined) {
-        x = nums.ones[w];
+      if (mapping.ones[w] !== undefined) {
+        x = mapping.ones[w];
       }
-      if (nums.teens[w] !== undefined) {
-        x = nums.teens[w];
+      if (mapping.teens[w] !== undefined) {
+        x = mapping.teens[w];
       }
       if (parseInt(w, 10) === w) {
         x = parseInt(w, 10);
@@ -148,7 +154,7 @@ const to_number = function(s) {
       continue;
     }
     //ones rules
-    if (nums.ones[w] !== undefined) {
+    if (mapping.ones[w] !== undefined) {
       if (ones_done) {
         return null;
       } // eg. five seven
@@ -156,11 +162,11 @@ const to_number = function(s) {
         return null;
       } // eg. five seventeen
       ones_done = true;
-      current_sum += nums.ones[w];
+      current_sum += mapping.ones[w];
       continue;
     }
     //teens rules
-    if (nums.teens[w]) {
+    if (mapping.teens[w]) {
       if (ones_done) {
         return null;
       } // eg. five seventeen
@@ -171,11 +177,11 @@ const to_number = function(s) {
         return null;
       } // eg. sixty fifteen
       teens_done = true;
-      current_sum += nums.teens[w];
+      current_sum += mapping.teens[w];
       continue;
     }
     //tens rules
-    if (nums.tens[w]) {
+    if (mapping.tens[w]) {
       if (ones_done) {
         return null;
       } // eg. five seventy
@@ -186,11 +192,11 @@ const to_number = function(s) {
         return null;
       } // eg. twenty seventy
       tens_done = true;
-      current_sum += nums.tens[w];
+      current_sum += mapping.tens[w];
       continue;
     }
     //multiple rules
-    if (nums.multiples[w]) {
+    if (mapping.multiples[w]) {
       if (multiple_done[w]) {
         return null;
       } // eg. five hundred six hundred
@@ -202,9 +208,9 @@ const to_number = function(s) {
       //case of 'hundred million', (2 consecutive multipliers)
       if (current_sum === 0) {
         total = total || 1; //dont ever multiply by 0
-        total *= nums.multiples[w];
+        total *= mapping.multiples[w];
       } else {
-        current_sum *= nums.multiples[w];
+        current_sum *= mapping.multiples[w];
         total += current_sum;
       }
       current_sum = 0;
@@ -225,6 +231,7 @@ const to_number = function(s) {
 // console.log(to_number('minus five hundred'));
 // console.log(to_number("a hundred"))
 // console.log(to_number('four point six'));
+// console.log(to_number('twenty first'));
 
 //kick it into module
 module.exports = to_number;

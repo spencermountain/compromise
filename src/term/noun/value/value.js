@@ -4,6 +4,10 @@ const to_number = require('./to_number');
 const to_text = require('./to_text');
 const units = require('./units');
 const nums = require('../../../data/numbers');
+const fns = require('../../../fns');
+//get an array of ordinal (first, second...) numbers
+let ordinals = Object.assign({}, nums.ordinal_ones, nums.ordinal_teens, nums.ordinal_tens, nums.ordinal_multiples);
+ordinals = Object.keys(ordinals);
 
 class Value extends Noun {
   constructor(str, tag) {
@@ -14,6 +18,8 @@ class Value extends Noun {
     this.unit = null;
     this.unit_name = null;
     this.measurement = null;
+    // this.text = str;
+    // this.normal = str;
     if (this.is_ordinal()) {
       this.pos['Ordinal'] = true;
     }
@@ -25,19 +31,43 @@ class Value extends Noun {
     if (this.normal.match(/^[0-9]+(rd|st|nd|th)$/)) {
       return true;
     }
-    //..second
-    if (this.normal.match(/[ -](first|second|third|fourth|fifth|sixth|seventh|eighth|ninth)$/)) {
-      return true;
-    }
-    //..teenth
-    if (this.normal.match(/\b(eleventh|twelfth|thirteenth|fourteenth|fifteenth|sixteenth|seventeenth|eighteenth|ninteenth)$/)) {
-      return true;
-    }
-    //..tenth
-    if (this.normal.match(/\b(tenth|twentieth|thirtieth|fourtieth|fiftieth|sixtieth|seventieth|eightieth|nintieth|hundreth|thousandth|millionth|billionth)$/)) {
-      return true;
+    //first, second...
+    for(let i = 0; i < ordinals.length; i++) {
+      if (fns.endsWith(this.normal, ordinals[i])) {
+        return true;
+      }
     }
     return false;
+  }
+
+  //turn an integer like 22 into '22nd'
+  to_ordinal(num) {
+    num = '' + num;
+    //fail safely
+    if (!num.match(/[0-9]$/)) {
+      return num;
+    }
+    if (fns.endsWith(num, '1')) {
+      return num + 'st';
+    }
+    if (fns.endsWith(num, '2')) {
+      return num + 'nd';
+    }
+    if (fns.endsWith(num, '3')) {
+      return num + 'rd';
+    }
+    return num + 'th';
+  }
+
+  normalize() {
+    let str = '' + (this.number || '');
+    if (this.is_ordinal()) {
+      str = this.to_ordinal(str);
+    }
+    if (this.unit) {
+      str += ' ' + this.unit;
+    }
+    return str;
   }
 
   root() {
@@ -101,4 +131,4 @@ class Value extends Noun {
 Value.fn = Value.prototype;
 module.exports = Value;
 
-// console.log(new Value('twenty first').number);
+// console.log(new Value('twenty first').normalize());

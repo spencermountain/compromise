@@ -31,7 +31,10 @@ exports.flatten = function(arr) {
 
 //string utilities
 exports.endsWith = function(str, suffix) {
-  return str.indexOf(suffix, str.length - suffix.length) !== -1;
+  if (str && suffix && str.indexOf(suffix, str.length - suffix.length) !== -1) {
+    return true;
+  }
+  return false;
 };
 exports.startsWith = function(str, prefix) {
   if (str && str.length && str.substr(0, 1) === prefix) {

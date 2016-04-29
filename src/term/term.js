@@ -30,7 +30,7 @@ class Term {
       Determiner: 'Determiner',
       Conjunction: 'Conjunction',
       Preposition: 'Preposition',
-      Posessive: 'Posessive',
+      Possessive: 'Possessive',
       Expression: 'Expression',
       Condition: 'Condition'
     };

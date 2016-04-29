@@ -18,7 +18,7 @@ const tag_mapping = {
   'NNA': 'Acronym',
   'NNS': 'Plural',
   'NN': 'Noun',
-  'NNO': 'Posessive',
+  'NNO': 'Possessive',
   'CD': 'Value',
   // 'NNP': 'Noun',
   // 'NNPA': 'Noun',
@@ -31,7 +31,7 @@ const tag_mapping = {
   'PN': 'Person',
 
   //glue
-  'PP': 'Posessive',
+  'PP': 'Possessive',
   'PRP': 'Pronoun',
   'EX': 'Expression', //interjection
   'DT': 'Determiner',
@@ -82,7 +82,7 @@ const classMapping = {
   'Preposition': Term,
   'Expression': Term,
   'Conjunction': Term,
-  'Posessive': Term,
+  'Possessive': Term,
 
   'Adverb': Adverb,
   'Value': Value,

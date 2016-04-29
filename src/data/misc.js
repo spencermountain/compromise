@@ -224,7 +224,7 @@ const compact = {
     'lets', //arguable
   ],
 
-  //posessive pronouns
+  //Possessive pronouns
   'PP': [
     'mine',
     'something',

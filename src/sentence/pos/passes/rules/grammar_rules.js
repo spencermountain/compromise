@@ -31,18 +31,18 @@ module.exports = [
     'after': ['[Verb]', null, '[Noun]']
   },
 
-  //posessive hints
+  //Possessive hints
   {
-    'before': ['[Posessive]', '[?]'],
-    'after': ['[Posessive]', '[Noun]'],
+    'before': ['[Possessive]', '[?]'],
+    'after': ['[Possessive]', '[Noun]'],
   },
   {
-    'before': ['[Posessive]', '[Verb]'],
-    'after': ['[Posessive]', '[Noun]'],
+    'before': ['[Possessive]', '[Verb]'],
+    'after': ['[Possessive]', '[Noun]'],
   },
   {
-    'before': ['[?]', '[Posessive]', '[Noun]'],
-    'after': ['[Verb]', '[Posessive]', '[Noun]'],
+    'before': ['[?]', '[Possessive]', '[Noun]'],
+    'after': ['[Verb]', '[Possessive]', '[Noun]'],
   },
   //copula hints
   {

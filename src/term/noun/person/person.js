@@ -31,6 +31,9 @@ class Person extends Noun {
 
   //proper normalised name without the cruft
   root() {
+    if (this.isPronoun()) {
+      return this.normal;
+    }
     let str = this.firstName || '';
     if (this.middleName) {
       str += ' ' + this.middleName;
@@ -38,7 +41,7 @@ class Person extends Noun {
     if (this.lastName) {
       str += ' ' + this.lastName;
     }
-    return str.trim();
+    return str.trim() || this.normal;
   }
 
   //turn a multi-word string into [first, middle, last, honourific]

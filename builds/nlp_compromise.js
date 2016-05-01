@@ -102,11 +102,7 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.value('six hundred and fifty nine').parse());
-
-// let str = 'Oo-ee-oo I look just like Buddy Holly. Oh-oh, and you\'re Mary Tyler Moore';
-// console.log(nlp.text(str).topics());
-// console.log(nlp.sentence(`our house looks great`).to_future().text());
+// console.log(nlp.value('six hundred and fifty nine thousand').number);
 
 },{"./fns.js":23,"./lexicon.js":24,"./sentence/question/question.js":52,"./sentence/sentence.js":55,"./sentence/statement/statement.js":58,"./term/adjective/adjective.js":60,"./term/adverb/adverb.js":65,"./term/noun/date/date.js":70,"./term/noun/noun.js":76,"./term/noun/organization/organization.js":78,"./term/noun/person/person.js":82,"./term/noun/place/place.js":84,"./term/noun/value/value.js":92,"./term/term.js":93,"./term/verb/verb.js":102,"./text/text.js":105}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -941,7 +937,7 @@ var compact = {
   'MD': ['can', 'may', 'could', 'might', 'will', 'ought to', 'would', 'must', 'shall', 'should', 'ought', 'shant', 'lets'],
 
   //arguable
-  //posessive pronouns
+  //Possessive pronouns
   'PP': ['mine', 'something', 'none', 'anything', 'anyone', 'theirs', 'himself', 'ours', 'his', 'my', 'their', 'yours', 'your', 'our', 'its', 'herself', 'hers', 'themselves', 'myself', 'itself', 'her', //this one is pretty ambiguous
   'who', 'whom', 'whose'],
 
@@ -1370,9 +1366,143 @@ module.exports = arr;
 },{"../../fns":23}],16:[function(require,module,exports){
 'use strict';
 
-module.exports = [
-//numbers
-'minus', 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety', 'hundred', 'thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'sextillion', 'septillion', 'octillion', 'nonillion', 'decillion'];
+var cardinal = {
+  ones: {
+    'a': 1,
+    'zero': 0,
+    'one': 1,
+    'two': 2,
+    'three': 3,
+    'four': 4,
+    'five': 5,
+    'six': 6,
+    'seven': 7,
+    'eight': 8,
+    'nine': 9
+  },
+  teens: {
+    'ten': 10,
+    'eleven': 11,
+    'twelve': 12,
+    'thirteen': 13,
+    'fourteen': 14,
+    'fifteen': 15,
+    'sixteen': 16,
+    'seventeen': 17,
+    'eighteen': 18,
+    'nineteen': 19
+  },
+  tens: {
+    'twenty': 20,
+    'thirty': 30,
+    'forty': 40,
+    'fifty': 50,
+    'sixty': 60,
+    'seventy': 70,
+    'eighty': 80,
+    'ninety': 90
+  },
+  multiples: {
+    'hundred': 100,
+    'grand': 1000,
+    'thousand': 1000,
+    'million': 1000000,
+    'billion': 1000000000,
+    'trillion': 1000000000000,
+    'quadrillion': 1000000000000000,
+    'quintillion': 1000000000000000000,
+    'sextillion': 1000000000000000000000,
+    'septillion': 1000000000000000000000000
+  }
+};
+
+var ordinal = {
+  ones: {
+    'first': 1,
+    'second': 2,
+    'third': 3,
+    'fourth': 4,
+    'fifth': 5,
+    'sixth': 6,
+    'seventh': 7,
+    'eighth': 8,
+    'ninth': 9
+  },
+  teens: {
+    'tenth': 10,
+    'eleventh': 11,
+    'twelfth': 12,
+    'thirteenth': 13,
+    'fourteenth': 14,
+    'fifteenth': 15,
+    'sixteenth': 16,
+    'seventeenth': 17,
+    'eighteenth': 18,
+    'nineteenth': 19
+  },
+  tens: {
+    'twentieth': 20,
+    'thirtieth': 30,
+    'fourtieth': 40,
+    'fiftieth': 50,
+    'sixtieth': 60,
+    'seventieth': 70,
+    'eightieth': 80,
+    'ninetieth': 90
+  },
+  multiples: {
+    'hundredth': 100,
+    'thousandth': 1000,
+    'millionth': 1000000,
+    'billionth': 1000000000,
+    'trillionth': 1000000000000,
+    'quadrillionth': 1000000000000000,
+    'quintillionth': 1000000000000000000,
+    'sextillionth': 1000000000000000000000,
+    'septillionth': 1000000000000000000000000
+  }
+};
+
+//used for the units
+var prefixes = {
+  'yotta': 1,
+  'zeta': 1,
+  'peta': 1,
+  'tera': 1,
+  'giga': 1,
+  'mega': 1,
+  'kilo': 1,
+  'hecto': 1,
+  'deca': 1,
+  'centi': 1,
+  'centa': 1,
+  'milli': 1,
+  'micro': 1,
+  'nano': 1,
+  'pico': 1,
+  'femto': 1,
+  'atto': 1,
+  'zepto': 1,
+  'yokto': 1,
+
+  'square': 1,
+  'cubic': 1,
+  'quartic': 1
+};
+
+module.exports = {
+  ones: cardinal.ones,
+  teens: cardinal.teens,
+  tens: cardinal.tens,
+  multiples: cardinal.multiples,
+
+  ordinal_ones: ordinal.ones,
+  ordinal_teens: ordinal.teens,
+  ordinal_tens: ordinal.tens,
+  ordinal_multiples: ordinal.multiples,
+
+  prefixes: prefixes
+};
 
 },{}],17:[function(require,module,exports){
 'use strict';
@@ -1747,7 +1877,10 @@ exports.flatten = function (arr) {
 
 //string utilities
 exports.endsWith = function (str, suffix) {
-  return str.indexOf(suffix, str.length - suffix.length) !== -1;
+  if (str && suffix && str.indexOf(suffix, str.length - suffix.length) !== -1) {
+    return true;
+  }
+  return false;
 };
 exports.startsWith = function (str, prefix) {
   if (str && str.length && str.substr(0, 1) === prefix) {
@@ -1867,9 +2000,6 @@ addArr(places.countries, 'Place');
 addArr(places.cities, 'Place');
 
 require('./data/adjectives.js').forEach(function (s) {
-  // if (lexicon[s]) {
-  //   console.log(s);
-  // }
   lexicon[s] = 'Adjective';
   lexicon[to_comparative(s)] = 'Comparative';
   lexicon[to_superlative(s)] = 'Superlative';
@@ -1891,7 +2021,15 @@ addArr(dates.days, 'Date');
 addArr(dates.months, 'Date');
 addArr(dates.durations, 'Date');
 addArr(dates.relative, 'Date');
-addArr(require('./data/numbers.js'), 'Value');
+
+//unpack the numbers
+var nums = require('./data/numbers.js');
+var all_nums = Object.keys(nums).reduce(function (arr, k) {
+  arr = arr.concat(Object.keys(nums[k]));
+  return arr;
+}, []);
+addArr(all_nums, 'Value');
+
 //a little fancy
 addArr(Object.keys(require('./data/firstnames.js')), 'Person');
 //add irregular nouns
@@ -2485,6 +2623,9 @@ var shouldLumpThree = function shouldLumpThree(a, b, c) {
     condition: a.pos.Value && b.pos.Preposition && c.pos.Date, //June the 5th
     result: 'Date'
   }, {
+    condition: a.pos.Date && b.pos.Preposition && c.pos.Value, //June 5th to 7th
+    result: 'Date'
+  }, {
     condition: a.is_capital() && b.normal === 'of' && c.is_capital(), //President of Mexico
     result: 'Noun'
   }, {
@@ -2538,7 +2679,7 @@ var shouldLumpTwo = function shouldLumpTwo(a, b) {
     condition: a.pos.Noun && b.pos.Actor, //Aircraft designer
     result: 'Actor'
   }, {
-    condition: a.pos.Value && b.pos.Noun, //5 books
+    condition: a.pos.Value && b.pos.Noun && !a.pos.Ordinal, //5 books
     result: 'Value'
   }, {
     condition: a.is_capital() && b.pos['Organization'] || b.is_capital() && a.pos['Organization'], //Canada Inc
@@ -2703,7 +2844,7 @@ var tag_mapping = {
   'NNA': 'Acronym',
   'NNS': 'Plural',
   'NN': 'Noun',
-  'NNO': 'Posessive',
+  'NNO': 'Possessive',
   'CD': 'Value',
   // 'NNP': 'Noun',
   // 'NNPA': 'Noun',
@@ -2716,7 +2857,7 @@ var tag_mapping = {
   'PN': 'Person',
 
   //glue
-  'PP': 'Posessive',
+  'PP': 'Possessive',
   'PRP': 'Pronoun',
   'EX': 'Expression', //interjection
   'DT': 'Determiner',
@@ -2767,7 +2908,7 @@ var classMapping = {
   'Preposition': Term,
   'Expression': Term,
   'Conjunction': Term,
-  'Posessive': Term,
+  'Possessive': Term,
 
   'Adverb': Adverb,
   'Value': Value,
@@ -3303,16 +3444,16 @@ module.exports = [
   'after': ['[Verb]', null, '[Noun]']
 },
 
-//posessive hints
+//Possessive hints
 {
-  'before': ['[Posessive]', '[?]'],
-  'after': ['[Posessive]', '[Noun]']
+  'before': ['[Possessive]', '[?]'],
+  'after': ['[Possessive]', '[Noun]']
 }, {
-  'before': ['[Posessive]', '[Verb]'],
-  'after': ['[Posessive]', '[Noun]']
+  'before': ['[Possessive]', '[Verb]'],
+  'after': ['[Possessive]', '[Noun]']
 }, {
-  'before': ['[?]', '[Posessive]', '[Noun]'],
-  'after': ['[Verb]', '[Posessive]', '[Noun]']
+  'before': ['[?]', '[Possessive]', '[Noun]'],
+  'after': ['[Verb]', '[Possessive]', '[Noun]']
 },
 //copula hints
 {
@@ -3904,7 +4045,7 @@ var Sentence = function () {
     key: 'root',
     value: function root() {
       return this.terms.reduce(function (s, t) {
-        s += ' ' + t.root;
+        s += ' ' + t.root();
         return s;
       }, '').trim();
     }
@@ -5109,7 +5250,7 @@ module.exports = date_parser;
 // console.log(date_parser('March 1st 1987'));
 // console.log(date_extractor('june second 1999'));
 
-},{"../value/to_number.js":90,"./date_rules.js":71}],74:[function(require,module,exports){
+},{"../value/to_number.js":89,"./date_rules.js":71}],74:[function(require,module,exports){
 'use strict';
 
 var irregulars = require('../../data/irregular_nouns');
@@ -5634,6 +5775,9 @@ var Person = function (_Noun) {
   }, {
     key: 'root',
     value: function root() {
+      if (this.isPronoun()) {
+        return this.normal;
+      }
       var str = this.firstName || '';
       if (this.middleName) {
         str += ' ' + this.middleName;
@@ -5641,7 +5785,7 @@ var Person = function (_Noun) {
       if (this.lastName) {
         str += ' ' + this.lastName;
       }
-      return str.trim();
+      return str.trim() || this.normal;
     }
 
     //turn a multi-word string into [first, middle, last, honourific]
@@ -5969,7 +6113,7 @@ module.exports = singularize;
 },{"../../data/irregular_nouns.js":10,"../../fns.js":23,"./is_plural.js":74,"./is_uncountable.js":75}],88:[function(require,module,exports){
 'use strict';
 
-var nums = require('./numbers');
+var nums = require('../../../data/numbers.js');
 var is_date = require('../date/is_date');
 
 var is_value = function is_value(str) {
@@ -5992,122 +6136,7 @@ var is_value = function is_value(str) {
 
 module.exports = is_value;
 
-},{"../date/is_date":72,"./numbers":89}],89:[function(require,module,exports){
-'use strict';
-
-var ones = {
-  'a': 1,
-  'zero': 0,
-  'one': 1,
-  'two': 2,
-  'three': 3,
-  'four': 4,
-  'five': 5,
-  'six': 6,
-  'seven': 7,
-  'eight': 8,
-  'nine': 9,
-  'first': 1,
-  'second': 2,
-  'third': 3,
-  'fourth': 4,
-  'fifth': 5,
-  'sixth': 6,
-  'seventh': 7,
-  'eighth': 8,
-  'ninth': 9
-};
-var teens = {
-  'ten': 10,
-  'eleven': 11,
-  'twelve': 12,
-  'thirteen': 13,
-  'fourteen': 14,
-  'fifteen': 15,
-  'sixteen': 16,
-  'seventeen': 17,
-  'eighteen': 18,
-  'nineteen': 19,
-  'eleventh': 11,
-  'twelfth': 12,
-  'thirteenth': 13,
-  'fourteenth': 14,
-  'fifteenth': 15,
-  'sixteenth': 16,
-  'seventeenth': 17,
-  'eighteenth': 18,
-  'nineteenth': 19
-};
-var tens = {
-  'twenty': 20,
-  'thirty': 30,
-  'forty': 40,
-  'fifty': 50,
-  'sixty': 60,
-  'seventy': 70,
-  'eighty': 80,
-  'ninety': 90,
-  'twentieth': 20,
-  'thirtieth': 30,
-  'fourtieth': 40,
-  'fiftieth': 50,
-  'sixtieth': 60,
-  'seventieth': 70,
-  'eightieth': 80,
-  'ninetieth': 90
-};
-var multiples = {
-  'hundred': 100,
-  'grand': 1000,
-  'thousand': 1000,
-  'million': 1000000,
-  'billion': 1000000000,
-  'trillion': 1000000000000,
-  'quadrillion': 1000000000000000,
-  'quintillion': 1000000000000000000,
-  'sextillion': 1000000000000000000000,
-  'septillion': 1000000000000000000000000,
-  'octillion': 1000000000000000000000000000,
-  'nonillion': 1000000000000000000000000000000,
-  'decillion': 1000000000000000000000000000000000
-};
-
-//used for the units
-var prefixes = {
-  'yotta': 1,
-  'zeta': 1,
-  'peta': 1,
-  'tera': 1,
-  'giga': 1,
-  'mega': 1,
-  'kilo': 1,
-  'hecto': 1,
-  'deca': 1,
-  'centi': 1,
-  'centa': 1,
-  'milli': 1,
-  'micro': 1,
-  'nano': 1,
-  'pico': 1,
-  'femto': 1,
-  'atto': 1,
-  'zepto': 1,
-  'yokto': 1,
-
-  'square': 1,
-  'cubic': 1,
-  'quartic': 1
-};
-
-module.exports = {
-  ones: ones,
-  teens: teens,
-  tens: tens,
-  multiples: multiples,
-  prefixes: prefixes
-};
-
-},{}],90:[function(require,module,exports){
+},{"../../../data/numbers.js":16,"../date/is_date":72}],89:[function(require,module,exports){
 // converts spoken numbers into integers  "fifty seven point eight" -> 57.8
 //
 // Spoken numbers take the following format
@@ -6118,10 +6147,17 @@ module.exports = {
 
 'use strict';
 
-var nums = require('./numbers.js');
+var nums = require('../../../data/numbers.js');
 //these sets of numbers each have different rules
 //[tenth, hundreth, thousandth..] are ambiguous because they could be ordinal like fifth, or decimal like one-one-hundredth, so are ignored
 // let decimal_multiple={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
+
+var mapping = {
+  ones: Object.assign({}, nums.ones, nums.ordinal_ones),
+  teens: Object.assign({}, nums.teens, nums.ordinal_teens),
+  tens: Object.assign({}, nums.tens, nums.ordinal_tens),
+  multiples: Object.assign({}, nums.multiples, nums.ordinal_multiples)
+};
 
 //test for nearly-values, like phonenumbers, or whatever
 var is_number = function is_number(s) {
@@ -6221,11 +6257,11 @@ var to_number = function to_number(s) {
     if (decimal_mode) {
       x = null;
       //allow consecutive ones in decimals eg. 'two point zero five nine'
-      if (nums.ones[w] !== undefined) {
-        x = nums.ones[w];
+      if (mapping.ones[w] !== undefined) {
+        x = mapping.ones[w];
       }
-      if (nums.teens[w] !== undefined) {
-        x = nums.teens[w];
+      if (mapping.teens[w] !== undefined) {
+        x = mapping.teens[w];
       }
       if (parseInt(w, 10) === w) {
         x = parseInt(w, 10);
@@ -6258,7 +6294,7 @@ var to_number = function to_number(s) {
       continue;
     }
     //ones rules
-    if (nums.ones[w] !== undefined) {
+    if (mapping.ones[w] !== undefined) {
       if (ones_done) {
         return null;
       } // eg. five seven
@@ -6266,11 +6302,11 @@ var to_number = function to_number(s) {
         return null;
       } // eg. five seventeen
       ones_done = true;
-      current_sum += nums.ones[w];
+      current_sum += mapping.ones[w];
       continue;
     }
     //teens rules
-    if (nums.teens[w]) {
+    if (mapping.teens[w]) {
       if (ones_done) {
         return null;
       } // eg. five seventeen
@@ -6281,11 +6317,11 @@ var to_number = function to_number(s) {
         return null;
       } // eg. sixty fifteen
       teens_done = true;
-      current_sum += nums.teens[w];
+      current_sum += mapping.teens[w];
       continue;
     }
     //tens rules
-    if (nums.tens[w]) {
+    if (mapping.tens[w]) {
       if (ones_done) {
         return null;
       } // eg. five seventy
@@ -6296,11 +6332,11 @@ var to_number = function to_number(s) {
         return null;
       } // eg. twenty seventy
       tens_done = true;
-      current_sum += nums.tens[w];
+      current_sum += mapping.tens[w];
       continue;
     }
     //multiple rules
-    if (nums.multiples[w]) {
+    if (mapping.multiples[w]) {
       if (multiple_done[w]) {
         return null;
       } // eg. five hundred six hundred
@@ -6312,9 +6348,9 @@ var to_number = function to_number(s) {
       //case of 'hundred million', (2 consecutive multipliers)
       if (current_sum === 0) {
         total = total || 1; //dont ever multiply by 0
-        total *= nums.multiples[w];
+        total *= mapping.multiples[w];
       } else {
-        current_sum *= nums.multiples[w];
+        current_sum *= mapping.multiples[w];
         total += current_sum;
       }
       current_sum = 0;
@@ -6335,11 +6371,91 @@ var to_number = function to_number(s) {
 // console.log(to_number('minus five hundred'));
 // console.log(to_number("a hundred"))
 // console.log(to_number('four point six'));
+// console.log(to_number('twenty first'));
 
 //kick it into module
 module.exports = to_number;
 
-},{"./numbers.js":89}],91:[function(require,module,exports){
+},{"../../../data/numbers.js":16}],90:[function(require,module,exports){
+'use strict';
+// const nums = require('../../../data/numbers.js');
+// const fns = require('../../../fns.js');
+
+var ones_mapping = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+var tens_mapping = [['ninety', 90], ['eighty', 80], ['seventy', 70], ['sixty', 60], ['fifty', 50], ['forty', 40], ['thirty', 30], ['twenty', 20]];
+
+var sequence = [[1000000000, 'million'], [100000000, 'hundred million'], [1000000, 'million'], [100000, 'hundred thousand'], [1000, 'thousand'], [100, 'hundred'], [1, 'one']];
+
+//turn number into an array of magnitudes
+var breakdown_magnitudes = function breakdown_magnitudes(num) {
+  var working = num;
+  var have = [];
+  sequence.forEach(function (a) {
+    if (num > a[0]) {
+      var howmany = Math.floor(working / a[0]);
+      working -= howmany * a[0];
+      if (howmany) {
+        have.push({
+          unit: a[1],
+          count: howmany
+        });
+      }
+    }
+  });
+  return have;
+};
+
+//turn numbers from 100-0 into their text
+var breakdown_hundred = function breakdown_hundred(num) {
+  var str = '';
+  for (var i = 0; i < tens_mapping.length; i++) {
+    if (num >= tens_mapping[i][1]) {
+      num -= tens_mapping[i][1];
+      str += ' ' + tens_mapping[i][0];
+    }
+  }
+  //(hopefully) we should only have 20-0 now
+  if (ones_mapping[num]) {
+    str += ' ' + ones_mapping[num];
+  }
+  return str.trim();
+};
+
+var to_text = function to_text(num) {
+  var isNegative = false;
+  if (num < 0) {
+    isNegative = true;
+    num = Math.abs(num);
+  }
+  //break-down into units, counts
+  var units = breakdown_magnitudes(num);
+  //build-up the string from its components
+  var str = '';
+  for (var i = 0; i < units.length; i++) {
+    var unit_name = units[i].unit;
+    if (unit_name === 'one') {
+      unit_name = '';
+      //put an 'and' in here
+      if (str.length > 1) {
+        str += ' and';
+      }
+    }
+    str += ' ' + breakdown_hundred(units[i].count) + ' ' + unit_name;
+  }
+  str = str || 'zero';
+  str = str.replace(/ +/g, ' ');
+  str = str.trim();
+  if (isNegative) {
+    str = 'negative ' + str;
+  }
+  return str;
+};
+
+module.exports = to_text;
+
+// console.log(to_text(-500));
+
+},{}],91:[function(require,module,exports){
 'use strict';
 
 var units = {
@@ -6537,10 +6653,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Noun = require('../noun.js');
-var to_number = require('./to_number.js');
-var units = require('./units.js');
-var nums = require('./numbers.js');
+var Noun = require('../noun');
+var to_number = require('./to_number');
+var to_text = require('./to_text');
+var units = require('./units');
+var nums = require('../../../data/numbers');
+var fns = require('../../../fns');
+//get an array of ordinal (first, second...) numbers
+var ordinals = Object.assign({}, nums.ordinal_ones, nums.ordinal_teens, nums.ordinal_tens, nums.ordinal_multiples);
+ordinals = Object.keys(ordinals);
 
 var Value = function (_Noun) {
   _inherits(Value, _Noun);
@@ -6556,6 +6677,8 @@ var Value = function (_Noun) {
     _this.unit = null;
     _this.unit_name = null;
     _this.measurement = null;
+    // this.text = str;
+    // this.normal = str;
     if (_this.is_ordinal()) {
       _this.pos['Ordinal'] = true;
     }
@@ -6566,7 +6689,61 @@ var Value = function (_Noun) {
   _createClass(Value, [{
     key: 'is_ordinal',
     value: function is_ordinal() {
-      return this.normal.match(/^[0-9]+(rd|st|nd|th)$/);
+      //todo: make this clever.
+      //1st
+      if (this.normal.match(/^[0-9]+(rd|st|nd|th)$/)) {
+        return true;
+      }
+      //first, second...
+      for (var i = 0; i < ordinals.length; i++) {
+        if (fns.endsWith(this.normal, ordinals[i])) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    //turn an integer like 22 into '22nd'
+
+  }, {
+    key: 'to_ordinal',
+    value: function to_ordinal(num) {
+      num = '' + num;
+      //fail safely
+      if (!num.match(/[0-9]$/)) {
+        return num;
+      }
+      if (fns.endsWith(num, '1')) {
+        return num + 'st';
+      }
+      if (fns.endsWith(num, '2')) {
+        return num + 'nd';
+      }
+      if (fns.endsWith(num, '3')) {
+        return num + 'rd';
+      }
+      return num + 'th';
+    }
+  }, {
+    key: 'normalize',
+    value: function normalize() {
+      var str = '' + (this.number || '');
+      if (this.is_ordinal()) {
+        str = this.to_ordinal(str);
+      }
+      if (this.unit) {
+        str += ' ' + this.unit;
+      }
+      return str;
+    }
+  }, {
+    key: 'root',
+    value: function root() {
+      var str = this.number;
+      if (this.unit) {
+        str += ' ' + this.unit;
+      }
+      return str;
     }
   }, {
     key: 'is_unit',
@@ -6595,9 +6772,14 @@ var Value = function (_Noun) {
         point: true
       };
       var numbers = '';
+      //seperate number-words from unit-words
       for (var i = 0; i < words.length; i++) {
         var w = words[i];
-        if (nums.ones[w] || nums.teens[w] || nums.tens[w] || nums.multiples[w] || number_words[w] || w.match(/[0-9]/)) {
+        if (w.match(/[0-9]/) || number_words[w]) {
+          numbers += ' ' + w;
+        } else if (nums.ones[w] || nums.teens[w] || nums.tens[w] || nums.multiples[w]) {
+          numbers += ' ' + w;
+        } else if (nums.ordinal_ones[w] || nums.ordinal_teens[w] || nums.ordinal_tens[w] || nums.ordinal_multiples[w]) {
           numbers += ' ' + w;
         } else if (this.is_unit(w)) {
           //optional units come after the number
@@ -6611,16 +6793,22 @@ var Value = function (_Noun) {
       numbers = numbers.trim();
       this.number = to_number(numbers);
     }
+  }, {
+    key: 'textual',
+    value: function textual() {
+      return to_text(this.number);
+    }
   }]);
 
   return Value;
 }(Noun);
 
 Value.fn = Value.prototype;
-
 module.exports = Value;
 
-},{"../noun.js":76,"./numbers.js":89,"./to_number.js":90,"./units.js":91}],93:[function(require,module,exports){
+// console.log(new Value('twenty first').normalize());
+
+},{"../../../data/numbers":16,"../../../fns":23,"../noun":76,"./to_number":89,"./to_text":90,"./units":91}],93:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6660,7 +6848,7 @@ var Term = function () {
       Determiner: 'Determiner',
       Conjunction: 'Conjunction',
       Preposition: 'Preposition',
-      Posessive: 'Posessive',
+      Possessive: 'Possessive',
       Expression: 'Expression',
       Condition: 'Condition'
     };

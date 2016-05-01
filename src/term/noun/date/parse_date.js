@@ -1,7 +1,7 @@
 'use strict';
 // #generates properly-formatted dates from free-text date forms
 // #by spencer kelly 2015
-const to_number = require('../value/to_number.js');
+const to_number = require('../value/parse/to_number.js');
 //regexes to top-parse
 const rules = require('./date_rules.js');
 

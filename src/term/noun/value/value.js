@@ -1,6 +1,6 @@
 'use strict';
 const Noun = require('../noun');
-const to_number = require('./to_number');
+const to_number = require('./parse/to_number');
 const to_text = require('./to_text');
 const units = require('./units');
 const nums = require('../../../data/numbers');
@@ -25,6 +25,19 @@ class Value extends Noun {
     }
     this.parse();
   }
+
+  //test for nearly-numbers, like phonenumbers, or whatever
+  is_number(s) {
+    //phone numbers, etc
+    if (s.match(/[:@]/)) {
+      return false;
+    }
+    //if there's a number, then something, then a number
+    if (s.match(/[0-9][^0-9,\.][0-9]/)) {
+      return false;
+    }
+    return true;
+  };
 
   is_ordinal() { //todo: make this clever.
     //1st

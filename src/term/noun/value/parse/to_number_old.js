@@ -19,18 +19,9 @@ let mapping = {
   multiples: Object.assign({}, nums.multiples, nums.ordinal_multiples),
 };
 
-//test for nearly-values, like phonenumbers, or whatever
-const is_number = function(s) {
-  //phone numbers, etc
-  if (s.match(/[:@]/)) {
-    return false;
-  }
-  //if there's a number, then something, then a number
-  if (s.match(/[0-9][^0-9,\.][0-9]/)) {
-    return false;
-  }
-  return true;
-};
+
+
+
 
 //try the best to turn this into a integer/float
 const to_number = function(s) {
@@ -45,8 +36,8 @@ const to_number = function(s) {
   if (is_number(s) !== true) {
     return null;
   }
-  s = s.replace(/[\$%\(\)~,]/g, '');
-  s = s.trim();
+  s = normalize(s);
+
   //if it's a number-as-string
   if (s.match(/^[0-9\.\-]+$/)) {
     return parseFloat(s);
@@ -58,32 +49,9 @@ const to_number = function(s) {
   const multiple_done = {};
   let total = 0;
   let global_multiplier = 1;
-  //pretty-printed numbers
-  s = s.replace(/, ?/g, '');
-  //parse-out currency
-  s = s.replace(/[$£€]/, '');
-  //try to die fast. (phone numbers or times)
-  if (s.match(/[0-9][\-:][0-9]/)) {
-    return null;
-  }
-  //support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
-  const mults = [{
-    reg: /^(minus|negative)[\s\-]/i,
-    mult: -1
-  }, {
-    reg: /^(a\s)?half[\s\-](of\s)?/i,
-    mult: 0.5
-  }, {
-    reg: /^(a\s)?quarter[\s\-]/i,
-    mult: 0.25
-  }];
-  for (let i = 0; i < mults.length; i++) {
-    if (s.match(mults[i].reg)) {
-      global_multiplier = mults[i].mult;
-      s = s.replace(mults[i].reg, '');
-      break;
-    }
-  }
+
+
+
 
   //do each word in turn..
   const words = s.toString().split(/[\s\-]+/);

@@ -104,7 +104,7 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.value('six hundred and fifty nine thousand').number);
 
-},{"./fns.js":23,"./lexicon.js":24,"./sentence/question/question.js":52,"./sentence/sentence.js":55,"./sentence/statement/statement.js":58,"./term/adjective/adjective.js":60,"./term/adverb/adverb.js":65,"./term/noun/date/date.js":70,"./term/noun/noun.js":76,"./term/noun/organization/organization.js":78,"./term/noun/person/person.js":82,"./term/noun/place/place.js":84,"./term/noun/value/value.js":92,"./term/term.js":93,"./term/verb/verb.js":102,"./text/text.js":105}],2:[function(require,module,exports){
+},{"./fns.js":23,"./lexicon.js":24,"./sentence/question/question.js":52,"./sentence/sentence.js":55,"./sentence/statement/statement.js":58,"./term/adjective/adjective.js":60,"./term/adverb/adverb.js":65,"./term/noun/date/date.js":70,"./term/noun/noun.js":76,"./term/noun/organization/organization.js":78,"./term/noun/person/person.js":82,"./term/noun/place/place.js":84,"./term/noun/value/value.js":94,"./term/term.js":95,"./term/verb/verb.js":104,"./text/text.js":107}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
 //there are all nouns, or at the least, belong beside one.
 'use strict';
@@ -1629,7 +1629,7 @@ Object.keys(main).forEach(function (s) {
 // console.log(main['mess about']);
 module.exports = main;
 
-},{"../term/verb/conjugate/conjugate.js":94}],19:[function(require,module,exports){
+},{"../term/verb/conjugate/conjugate.js":96}],19:[function(require,module,exports){
 'use strict';
 
 var fns = require('../fns');
@@ -2063,7 +2063,7 @@ Object.keys(lexicon).forEach(function (k) {
 // console.log(lexicon['april fools']);
 module.exports = lexicon;
 
-},{"./data/abbreviations.js":2,"./data/adjectives.js":3,"./data/convertables.js":4,"./data/dates.js":5,"./data/demonyms.js":6,"./data/firstnames.js":7,"./data/holidays.js":8,"./data/honourifics.js":9,"./data/irregular_nouns.js":10,"./data/irregular_verbs.js":11,"./data/misc.js":12,"./data/multiples.js":13,"./data/numbers.js":16,"./data/organizations.js":17,"./data/phrasal_verbs.js":18,"./data/places.js":19,"./data/professions.js":20,"./data/uncountables.js":21,"./data/verbs.js":22,"./fns.js":23,"./sentence/pos/parts_of_speech.js":36,"./term/adjective/to_adverb.js":61,"./term/adjective/to_comparative.js":62,"./term/adjective/to_superlative.js":64,"./term/verb/conjugate/conjugate.js":94}],25:[function(require,module,exports){
+},{"./data/abbreviations.js":2,"./data/adjectives.js":3,"./data/convertables.js":4,"./data/dates.js":5,"./data/demonyms.js":6,"./data/firstnames.js":7,"./data/holidays.js":8,"./data/honourifics.js":9,"./data/irregular_nouns.js":10,"./data/irregular_verbs.js":11,"./data/misc.js":12,"./data/multiples.js":13,"./data/numbers.js":16,"./data/organizations.js":17,"./data/phrasal_verbs.js":18,"./data/places.js":19,"./data/professions.js":20,"./data/uncountables.js":21,"./data/verbs.js":22,"./fns.js":23,"./sentence/pos/parts_of_speech.js":36,"./term/adjective/to_adverb.js":61,"./term/adjective/to_comparative.js":62,"./term/adjective/to_superlative.js":64,"./term/verb/conjugate/conjugate.js":96}],25:[function(require,module,exports){
 'use strict';
 // a regex-like lookup for a list of terms.
 // returns matches in a 'Terms' class
@@ -2933,7 +2933,7 @@ module.exports = {
   Noun: Noun
 };
 
-},{"../../term/adjective/adjective.js":60,"../../term/adverb/adverb.js":65,"../../term/noun/date/date.js":70,"../../term/noun/noun.js":76,"../../term/noun/organization/organization.js":78,"../../term/noun/person/person.js":82,"../../term/noun/place/place.js":84,"../../term/noun/value/value.js":92,"../../term/term.js":93,"../../term/verb/verb.js":102}],37:[function(require,module,exports){
+},{"../../term/adjective/adjective.js":60,"../../term/adverb/adverb.js":65,"../../term/noun/date/date.js":70,"../../term/noun/noun.js":76,"../../term/noun/organization/organization.js":78,"../../term/noun/person/person.js":82,"../../term/noun/place/place.js":84,"../../term/noun/value/value.js":94,"../../term/term.js":95,"../../term/verb/verb.js":104}],37:[function(require,module,exports){
 'use strict';
 
 var assign = require('../assign');
@@ -4161,7 +4161,7 @@ module.exports = Sentence;
 // s.contractions.contract();
 // console.log(s.text());
 
-},{"../match/match":25,"../term/term":93,"./contractions/contract":29,"./contractions/expand":30,"./contractions/interpret":31,"./passive_voice":32,"./pos/tagger":49,"./spot":56,"./tense":59}],56:[function(require,module,exports){
+},{"../match/match":25,"../term/term":95,"./contractions/contract":29,"./contractions/expand":30,"./contractions/interpret":31,"./passive_voice":32,"./pos/tagger":49,"./spot":56,"./tense":59}],56:[function(require,module,exports){
 'use strict';
 //generic named-entity-recognition
 
@@ -4431,7 +4431,7 @@ Adjective.fn = Adjective.prototype;
 
 module.exports = Adjective;
 
-},{"../term.js":93,"./to_adverb":61,"./to_comparative":62,"./to_noun":63,"./to_superlative":64}],61:[function(require,module,exports){
+},{"../term.js":95,"./to_adverb":61,"./to_comparative":62,"./to_noun":63,"./to_superlative":64}],61:[function(require,module,exports){
 //turn 'quick' into 'quickly'
 'use strict';
 
@@ -4843,7 +4843,7 @@ Adverb.fn = Adverb.prototype;
 
 module.exports = Adverb;
 
-},{"../term.js":93,"./to_adjective.js":66}],66:[function(require,module,exports){
+},{"../term.js":95,"./to_adjective.js":66}],66:[function(require,module,exports){
 //turns 'quickly' into 'quick'
 'use strict';
 
@@ -5148,7 +5148,7 @@ module.exports = is_date;
 // #generates properly-formatted dates from free-text date forms
 // #by spencer kelly 2015
 
-var to_number = require('../value/to_number.js');
+var to_number = require('../value/parse/to_number.js');
 //regexes to top-parse
 var rules = require('./date_rules.js');
 
@@ -5250,7 +5250,7 @@ module.exports = date_parser;
 // console.log(date_parser('March 1st 1987'));
 // console.log(date_extractor('june second 1999'));
 
-},{"../value/to_number.js":89,"./date_rules.js":71}],74:[function(require,module,exports){
+},{"../value/parse/to_number.js":91,"./date_rules.js":71}],74:[function(require,module,exports){
 'use strict';
 
 var irregulars = require('../../data/irregular_nouns');
@@ -5467,7 +5467,7 @@ module.exports = Noun;
 // let t = new Noun('NDA');
 // console.log(t.article());
 
-},{"../term.js":93,"./article.js":69,"./date/is_date.js":72,"./is_plural.js":74,"./is_uncountable.js":75,"./organization/is_organization.js":77,"./person/is_person.js":80,"./place/is_place.js":83,"./pluralize.js":85,"./pronoun.js":86,"./singularize.js":87,"./value/is_value.js":88}],77:[function(require,module,exports){
+},{"../term.js":95,"./article.js":69,"./date/is_date.js":72,"./is_plural.js":74,"./is_uncountable.js":75,"./organization/is_organization.js":77,"./person/is_person.js":80,"./place/is_place.js":83,"./pluralize.js":85,"./pronoun.js":86,"./singularize.js":87,"./value/is_value.js":88}],77:[function(require,module,exports){
 'use strict';
 
 var abbreviations = require('../../../data/abbreviations');
@@ -6137,76 +6137,34 @@ var is_value = function is_value(str) {
 module.exports = is_value;
 
 },{"../../../data/numbers.js":16,"../date/is_date":72}],89:[function(require,module,exports){
-// converts spoken numbers into integers  "fifty seven point eight" -> 57.8
-//
-// Spoken numbers take the following format
-// [sixty five] (thousand) [sixty five] (hundred) [sixty five]
-// aka: [one/teen/ten] (multiple) [one/teen/ten] (multiple) ...
-// combile the [one/teen/ten]s as 'current_sum', then multiply it by its following multiple
-// multiple not repeat
+'use strict';
+// handle 'nine point eight four'
 
+var nums = require('../../../../data/numbers.js');
+var ones = Object.assign({}, nums.ones, nums.teens, nums.ordinal_ones, nums.ordinal_teens);
+
+//concatenate into a string with leading '0.'
+var decimals = function decimals(words) {
+  var str = '0.';
+  for (var i = 0; i < words.length; i++) {
+    var w = words[i];
+    if (ones[w]) {
+      str += ones[w];
+    } else {
+      return 0;
+    }
+  }
+  return parseFloat(str);
+};
+
+module.exports = decimals;
+
+},{"../../../../data/numbers.js":16}],90:[function(require,module,exports){
 'use strict';
 
-var nums = require('../../../data/numbers.js');
-//these sets of numbers each have different rules
-//[tenth, hundreth, thousandth..] are ambiguous because they could be ordinal like fifth, or decimal like one-one-hundredth, so are ignored
-// let decimal_multiple={'tenth':0.1, 'hundredth':0.01, 'thousandth':0.001, 'millionth':0.000001,'billionth':0.000000001};
+//support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
 
-var mapping = {
-  ones: Object.assign({}, nums.ones, nums.ordinal_ones),
-  teens: Object.assign({}, nums.teens, nums.ordinal_teens),
-  tens: Object.assign({}, nums.tens, nums.ordinal_tens),
-  multiples: Object.assign({}, nums.multiples, nums.ordinal_multiples)
-};
-
-//test for nearly-values, like phonenumbers, or whatever
-var is_number = function is_number(s) {
-  //phone numbers, etc
-  if (s.match(/[:@]/)) {
-    return false;
-  }
-  //if there's a number, then something, then a number
-  if (s.match(/[0-9][^0-9,\.][0-9]/)) {
-    return false;
-  }
-  return true;
-};
-
-//try the best to turn this into a integer/float
-var to_number = function to_number(s) {
-  if (s === null || s === undefined) {
-    return null;
-  }
-  //if it's already a number,
-  if (typeof s === 'number') {
-    return s;
-  }
-  //remove symbols, commas, etc
-  if (is_number(s) !== true) {
-    return null;
-  }
-  s = s.replace(/[\$%\(\)~,]/g, '');
-  s = s.trim();
-  //if it's a number-as-string
-  if (s.match(/^[0-9\.\-]+$/)) {
-    return parseFloat(s);
-  }
-  //remember these concerns for possible errors
-  var ones_done = false;
-  var teens_done = false;
-  var tens_done = false;
-  var multiple_done = {};
-  var total = 0;
-  var global_multiplier = 1;
-  //pretty-printed numbers
-  s = s.replace(/, ?/g, '');
-  //parse-out currency
-  s = s.replace(/[$£€]/, '');
-  //try to die fast. (phone numbers or times)
-  if (s.match(/[0-9][\-:][0-9]/)) {
-    return null;
-  }
-  //support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
+var find_modifiers = function find_modifiers(str) {
   var mults = [{
     reg: /^(minus|negative)[\s\-]/i,
     mult: -1
@@ -6218,165 +6176,141 @@ var to_number = function to_number(s) {
     mult: 0.25
   }];
   for (var i = 0; i < mults.length; i++) {
-    if (s.match(mults[i].reg)) {
-      global_multiplier = mults[i].mult;
-      s = s.replace(mults[i].reg, '');
-      break;
+    if (str.match(mults[i].reg)) {
+      return {
+        amount: mults[i].mult,
+        str: str.replace(mults[i].reg, '')
+      };
     }
   }
-
-  //do each word in turn..
-  var words = s.toString().split(/[\s\-]+/);
-  var w = undefined,
-      x = undefined;
-  var current_sum = 0;
-  var local_multiplier = 1;
-  var decimal_mode = false;
-  for (var i = 0; i < words.length; i++) {
-    w = words[i];
-
-    //skip 'and' eg. five hundred and twelve
-    if (w === 'and') {
-      continue;
-    }
-
-    //..we're doing decimals now
-    if (w === 'point' || w === 'decimal') {
-      if (decimal_mode) {
-        return null;
-      } //two point one point six
-      decimal_mode = true;
-      total += current_sum;
-      current_sum = 0;
-      ones_done = false;
-      local_multiplier = 0.1;
-      continue;
-    }
-
-    //handle special rules following a decimal
-    if (decimal_mode) {
-      x = null;
-      //allow consecutive ones in decimals eg. 'two point zero five nine'
-      if (mapping.ones[w] !== undefined) {
-        x = mapping.ones[w];
-      }
-      if (mapping.teens[w] !== undefined) {
-        x = mapping.teens[w];
-      }
-      if (parseInt(w, 10) === w) {
-        x = parseInt(w, 10);
-      }
-      if (!x) {
-        return null;
-      }
-      if (x < 10) {
-        total += x * local_multiplier;
-        local_multiplier = local_multiplier * 0.1; // next number is next decimal place
-        current_sum = 0;
-        continue;
-      }
-      //two-digit decimals eg. 'two point sixteen'
-      if (x < 100) {
-        total += x * (local_multiplier * 0.1);
-        local_multiplier = local_multiplier * 0.01; // next number is next decimal place
-        current_sum = 0;
-        continue;
-      }
-    }
-
-    //if it's already an actual number
-    if (w.match(/^[0-9\.]+$/)) {
-      current_sum += parseFloat(w);
-      continue;
-    }
-    if (parseInt(w, 10) === w) {
-      current_sum += parseInt(w, 10);
-      continue;
-    }
-    //ones rules
-    if (mapping.ones[w] !== undefined) {
-      if (ones_done) {
-        return null;
-      } // eg. five seven
-      if (teens_done) {
-        return null;
-      } // eg. five seventeen
-      ones_done = true;
-      current_sum += mapping.ones[w];
-      continue;
-    }
-    //teens rules
-    if (mapping.teens[w]) {
-      if (ones_done) {
-        return null;
-      } // eg. five seventeen
-      if (teens_done) {
-        return null;
-      } // eg. fifteen seventeen
-      if (tens_done) {
-        return null;
-      } // eg. sixty fifteen
-      teens_done = true;
-      current_sum += mapping.teens[w];
-      continue;
-    }
-    //tens rules
-    if (mapping.tens[w]) {
-      if (ones_done) {
-        return null;
-      } // eg. five seventy
-      if (teens_done) {
-        return null;
-      } // eg. fiveteen seventy
-      if (tens_done) {
-        return null;
-      } // eg. twenty seventy
-      tens_done = true;
-      current_sum += mapping.tens[w];
-      continue;
-    }
-    //multiple rules
-    if (mapping.multiples[w]) {
-      if (multiple_done[w]) {
-        return null;
-      } // eg. five hundred six hundred
-      multiple_done[w] = true;
-      //reset our concerns. allow 'five hundred five'
-      ones_done = false;
-      teens_done = false;
-      tens_done = false;
-      //case of 'hundred million', (2 consecutive multipliers)
-      if (current_sum === 0) {
-        total = total || 1; //dont ever multiply by 0
-        total *= mapping.multiples[w];
-      } else {
-        current_sum *= mapping.multiples[w];
-        total += current_sum;
-      }
-      current_sum = 0;
-      continue;
-    }
-    //if word is not a known thing now, die
-    return null;
-  }
-  if (current_sum) {
-    total += (current_sum || 1) * local_multiplier;
-  }
-  //combine with global multiplier, like 'minus' or 'half'
-  total = total * global_multiplier;
-
-  return total;
+  return {
+    amount: 1,
+    str: str
+  };
 };
 
-// console.log(to_number('minus five hundred'));
-// console.log(to_number("a hundred"))
-// console.log(to_number('four point six'));
-// console.log(to_number('twenty first'));
+module.exports = find_modifiers;
 
-//kick it into module
+},{}],91:[function(require,module,exports){
+'use strict';
+// Spoken numbers take the following format
+// [sixty five] (thousand) [sixty five] (hundred) [sixty five]
+// aka: [one/teen/ten] (multiple) [one/teen/ten] (multiple) ...
+
+var nums = require('../../../../data/numbers.js');
+var find_modifiers = require('./modifiers.js');
+var parse_decimals = require('./decimals.js');
+
+var ones = Object.assign({}, nums.ones, nums.ordinal_ones);
+var teens = Object.assign({}, nums.teens, nums.ordinal_teens);
+var tens = Object.assign({}, nums.tens, nums.ordinal_tens);
+var multiples = Object.assign({}, nums.multiples, nums.ordinal_multiples);
+
+var normalize = function normalize(s) {
+  //pretty-printed numbers
+  s = s.replace(/, ?/g, '');
+  //parse-out currency
+  s = s.replace(/[$£€]/, '');
+  s = s.replace(/[\$%\(\)~,]/g, '');
+  s = s.trim();
+  return s;
+};
+
+var section_sum = function section_sum(obj) {
+  return Object.keys(obj).reduce(function (sum, k) {
+    sum += obj[k];
+    return sum;
+  }, 0);
+};
+
+//prevent things like 'fifteen ten', and 'five sixty'
+var appropriate = function appropriate(w, has) {
+  if (ones[w]) {
+    if (has.ones || has.teens) {
+      return false;
+    }
+  } else if (teens[w]) {
+    if (has.ones || has.teens || has.tens) {
+      return false;
+    }
+  } else if (tens[w]) {
+    if (has.ones || has.teens || has.tens) {
+      return false;
+    }
+  }
+  return true;
+};
+
+var to_number = function to_number(str) {
+  //try to fail-fast
+  if (!str || typeof str === 'number') {
+    return str;
+  }
+  str = normalize(str);
+  var modifier = find_modifiers(str);
+  str = modifier.str;
+  var biggest_yet = 0;
+  var has = {};
+  var sum = 0;
+
+  var words = str.split(' ');
+  for (var i = 0; i < words.length; i++) {
+    var w = words[i];
+    if (!w || w === 'and') {
+      continue;
+    }
+    //decimal mode
+    if (w === 'point') {
+      sum += section_sum(has);
+      sum += parse_decimals(words.slice(i + 1, words.length));
+      return sum;
+    }
+    //maybe it's just a number typed as a string
+    if (w.match(/^[0-9,\. ]+$/)) {
+      sum += parseFloat(w.replace(/[, ]/g, '')) || 0;
+      continue;
+    }
+    //prevent mismatched units, like 'seven eleven'
+    if (!appropriate(w, has)) {
+      return null;
+    }
+    //collect 'has' values
+    if (ones[w]) {
+      has['ones'] = ones[w];
+    } else if (teens[w]) {
+      has['teens'] = teens[w];
+    } else if (tens[w]) {
+      has['tens'] = tens[w];
+    } else if (multiples[w]) {
+      //something has gone wrong : 'two hundred five hundred'
+      if (multiples[w] === biggest_yet) {
+        return null;
+      }
+      //if it's the biggest yet, multiply the whole sum - eg 'five hundred thousand'
+      if (multiples[w] > biggest_yet) {
+        biggest_yet = multiples[w];
+        sum += section_sum(has);
+        sum = (sum || 1) * multiples[w];
+      } else {
+        //it's smaller, so only multiply section_sum - eg 'five thousand one hundred'
+        sum += (section_sum(has) || 1) * multiples[w];
+      }
+      //reset our section
+      has = {};
+    }
+  }
+  //dump the remaining has values
+  sum += section_sum(has);
+  //post-process add modifier
+  sum *= modifier.amount;
+  return sum;
+};
+
 module.exports = to_number;
 
-},{"../../../data/numbers.js":16}],90:[function(require,module,exports){
+// console.log(to_number(' twelve one'));
+
+},{"../../../../data/numbers.js":16,"./decimals.js":89,"./modifiers.js":90}],92:[function(require,module,exports){
 'use strict';
 // const nums = require('../../../data/numbers.js');
 // const fns = require('../../../fns.js');
@@ -6453,9 +6387,9 @@ var to_text = function to_text(num) {
 
 module.exports = to_text;
 
-// console.log(to_text(-500));
+// console.log(to_text(-5));
 
-},{}],91:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 'use strict';
 
 var units = {
@@ -6642,7 +6576,7 @@ module.exports = Object.keys(units).reduce(function (h, k) {
   return h;
 }, {});
 
-},{}],92:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6654,7 +6588,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Noun = require('../noun');
-var to_number = require('./to_number');
+var to_number = require('./parse/to_number');
 var to_text = require('./to_text');
 var units = require('./units');
 var nums = require('../../../data/numbers');
@@ -6686,7 +6620,22 @@ var Value = function (_Noun) {
     return _this;
   }
 
+  //test for nearly-numbers, like phonenumbers, or whatever
+
   _createClass(Value, [{
+    key: 'is_number',
+    value: function is_number(s) {
+      //phone numbers, etc
+      if (s.match(/[:@]/)) {
+        return false;
+      }
+      //if there's a number, then something, then a number
+      if (s.match(/[0-9][^0-9,\.][0-9]/)) {
+        return false;
+      }
+      return true;
+    }
+  }, {
     key: 'is_ordinal',
     value: function is_ordinal() {
       //todo: make this clever.
@@ -6796,7 +6745,7 @@ var Value = function (_Noun) {
   }, {
     key: 'textual',
     value: function textual() {
-      return to_text(this.number);
+      return to_text(this.number || this.normal || this.text);
     }
   }]);
 
@@ -6806,9 +6755,9 @@ var Value = function (_Noun) {
 Value.fn = Value.prototype;
 module.exports = Value;
 
-// console.log(new Value('twenty first').normalize());
+// console.log(new Value(-5).textual());
 
-},{"../../../data/numbers":16,"../../../fns":23,"../noun":76,"./to_number":89,"./to_text":90,"./units":91}],93:[function(require,module,exports){
+},{"../../../data/numbers":16,"../../../fns":23,"../noun":76,"./parse/to_number":91,"./to_text":92,"./units":93}],95:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6977,7 +6926,7 @@ Term.fn = Term.prototype;
 
 module.exports = Term;
 
-},{"../match/match_term":26,"../match/syntax_parse":28,"./implied":67,"./is_acronym":68}],94:[function(require,module,exports){
+},{"../match/match_term":26,"../match/syntax_parse":28,"./implied":67,"./is_acronym":68}],96:[function(require,module,exports){
 //turn a verb into its other grammatical forms.
 'use strict';
 
@@ -7095,7 +7044,7 @@ module.exports = conjugate;
 
 // console.log(conjugate('learn'));
 
-},{"../../../data/irregular_verbs":11,"./from_infinitive":95,"./generic.js":96,"./predict_form.js":97,"./strip_prefix.js":98,"./to_actor":100,"./to_infinitive":101}],95:[function(require,module,exports){
+},{"../../../data/irregular_verbs":11,"./from_infinitive":97,"./generic.js":98,"./predict_form.js":99,"./strip_prefix.js":100,"./to_actor":102,"./to_infinitive":103}],97:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -7298,7 +7247,7 @@ var from_infinitive = function from_infinitive(str) {
 
 module.exports = from_infinitive;
 
-},{}],96:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 'use strict';
 //non-specifc, 'hail-mary' transforms from infinitive, into other forms
 
@@ -7352,7 +7301,7 @@ var generic = {
 
 module.exports = generic;
 
-},{"../../../fns":23}],97:[function(require,module,exports){
+},{"../../../fns":23}],99:[function(require,module,exports){
 'use strict';
 //this method is used to predict which current conjugation a verb is
 
@@ -7409,7 +7358,7 @@ var predict = function predict(w) {
 
 module.exports = predict;
 
-},{"../../../data/irregular_verbs":11,"../../../fns.js":23,"./suffix_rules":99}],98:[function(require,module,exports){
+},{"../../../data/irregular_verbs":11,"../../../fns.js":23,"./suffix_rules":101}],100:[function(require,module,exports){
 'use strict';
 // 'over-kill' should use conjugation rules of 'kill', etc..
 
@@ -7424,7 +7373,7 @@ var strip_prefix = function strip_prefix(str) {
 
 module.exports = strip_prefix;
 
-},{}],99:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 'use strict';
 //suffix signals for verb tense, generated from test data
 
@@ -7447,7 +7396,7 @@ for (var i = 0; i < l; i++) {
 }
 module.exports = suffix_rules;
 
-},{}],100:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 //somone who does this present-tense verb
 //turn 'walk' into 'walker'
 'use strict';
@@ -7513,7 +7462,7 @@ var actor = function actor(str) {
 // console.log(verb_to_actor('watch'))
 module.exports = actor;
 
-},{}],101:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 //turns a verb in any form, into it's infinitive version
 // eg "walked" -> "walk"
 'use strict';
@@ -7691,7 +7640,7 @@ var to_infinitive = function to_infinitive(str, from_tense) {
 
 module.exports = to_infinitive;
 
-},{"../../../data/irregular_verbs":11}],102:[function(require,module,exports){
+},{"../../../data/irregular_verbs":11}],104:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -7843,7 +7792,7 @@ module.exports = Verb;
 // let v = new Verb('stunk up');
 // console.log(v.negate());
 
-},{"../term.js":93,"./conjugate/conjugate.js":94,"./conjugate/predict_form.js":97,"./verb_negate.js":103}],103:[function(require,module,exports){
+},{"../term.js":95,"./conjugate/conjugate.js":96,"./conjugate/predict_form.js":99,"./verb_negate.js":105}],105:[function(require,module,exports){
 'use strict';
 //recieves a verb object, and returns a negated string
 //sort out don't/didn't/doesn't/won't
@@ -7916,7 +7865,7 @@ var negate = function negate(v) {
 
 module.exports = negate;
 
-},{"../../fns":23}],104:[function(require,module,exports){
+},{"../../fns":23}],106:[function(require,module,exports){
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
@@ -7977,7 +7926,7 @@ var sentence_parser = function sentence_parser(text) {
 module.exports = sentence_parser;
 // console.log(sentence_parser('    Dr. Smith is nice?    He lives in Spain?  He does?? '));
 
-},{"../data/abbreviations":2}],105:[function(require,module,exports){
+},{"../data/abbreviations":2}],107:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -8207,5 +8156,5 @@ Text.fn = Text.prototype;
 
 module.exports = Text;
 
-},{"../fns.js":23,"../sentence/question/question.js":52,"../sentence/sentence.js":55,"../sentence/statement/statement.js":58,"./sentence_parser.js":104}]},{},[1])(1)
+},{"../fns.js":23,"../sentence/question/question.js":52,"../sentence/sentence.js":55,"../sentence/statement/statement.js":58,"./sentence_parser.js":106}]},{},[1])(1)
 });

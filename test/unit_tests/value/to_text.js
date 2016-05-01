@@ -34,7 +34,7 @@ let tests = [
 
 describe('number to text', function() {
   tests.forEach(function(a) {
-    it(a[1], function(done) {
+    it(a, function(done) {
       let v = nlp.value(a[0]);
       (v.textual() || '').should.equal(a[1] || '');
       done();

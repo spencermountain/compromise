@@ -137,11 +137,11 @@ class Value extends Noun {
   }
 
   textual() {
-    return to_text(this.number);
+    return to_text(this.number || this.normal || this.text);
   }
 
 }
 Value.fn = Value.prototype;
 module.exports = Value;
 
-// console.log(new Value('twenty first').normalize());
+// console.log(new Value(-5).textual());

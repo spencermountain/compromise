@@ -114,4 +114,4 @@ const to_number = function(str) {
 
 module.exports = to_number;
 
-console.log(to_number(' twelve one'));
+// console.log(to_number(' twelve one'));

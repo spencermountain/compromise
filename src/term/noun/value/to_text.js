@@ -113,4 +113,4 @@ const to_text = function(num) {
 
 module.exports = to_text;
 
-// console.log(to_text(-500));
+// console.log(to_text(-5));

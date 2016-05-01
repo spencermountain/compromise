@@ -62,6 +62,8 @@ let tests = [
   ['fifty ninth', 59],
   ['nine hundred fiftieth', 950],
   ['five thousand nine hundred fiftieth', 5950],
+  ['six hundred and fifty nine', 659],
+  ['six hundred and fifty nine thousand', 659000],
   [950, 950],
   [999999950, 999999950],
   [8080999999950, 8080999999950],

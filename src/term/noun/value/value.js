@@ -109,10 +109,13 @@ class Value extends Noun {
   }
 
   parse() {
-    let words = this.text.toLowerCase().split(' ');
+    let words = this.text.toLowerCase().split(/[ -]/);
     let number_words = {
       minus: true,
-      point: true
+      negative: true,
+      point: true,
+      half: true,
+      quarter: true,
     };
     let numbers = '';
     //seperate number-words from unit-words
@@ -144,4 +147,5 @@ class Value extends Noun {
 Value.fn = Value.prototype;
 module.exports = Value;
 
-// console.log(new Value(-5).textual());
+// console.log(new Value('five hundred eighteen').number);
+console.log(new Value('minus eighty eight point nine nine').number);

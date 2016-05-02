@@ -5,7 +5,7 @@
 let nlp = require('../../../src/index.js');
 
 let tests = [
-  [-5, 'negative five'],
+  // [-5, 'negative five'],
   [5, 'five'],
   [15, 'fifteen'],
   [10, 'ten'],

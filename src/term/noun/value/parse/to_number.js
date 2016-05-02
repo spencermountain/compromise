@@ -15,6 +15,7 @@ const multiples = Object.assign({}, nums.multiples, nums.ordinal_multiples);
 const normalize = (s) => {
   //pretty-printed numbers
   s = s.replace(/, ?/g, '');
+  s = s.replace(/([a-z])-([a-z])/gi, '$1 $2');
   //parse-out currency
   s = s.replace(/[$£€]/, '');
   s = s.replace(/[\$%\(\)~,]/g, '');
@@ -69,6 +70,7 @@ const to_number = function(str) {
     if (w === 'point') {
       sum += section_sum(has);
       sum += parse_decimals(words.slice(i + 1, words.length));
+      sum *= modifier.amount;
       return sum;
     }
     //maybe it's just a number typed as a string
@@ -114,4 +116,4 @@ const to_number = function(str) {
 
 module.exports = to_number;
 
-// console.log(to_number(' twelve one'));
+// console.log(to_number('half a million'));

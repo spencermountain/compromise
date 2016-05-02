@@ -109,6 +109,9 @@ class Value extends Noun {
   }
 
   parse() {
+    if (!this.is_number(this.text)) {
+      return;
+    }
     let words = this.text.toLowerCase().split(/[ -]/);
     let number_words = {
       minus: true,
@@ -148,4 +151,4 @@ Value.fn = Value.prototype;
 module.exports = Value;
 
 // console.log(new Value('five hundred eighteen').number);
-console.log(new Value('minus eighty eight point nine nine').number);
+// console.log(new Value('minus eighty eight point nine nine').number);

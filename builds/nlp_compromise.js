@@ -6209,6 +6209,7 @@ var multiples = Object.assign({}, nums.multiples, nums.ordinal_multiples);
 var normalize = function normalize(s) {
   //pretty-printed numbers
   s = s.replace(/, ?/g, '');
+  s = s.replace(/([a-z])-([a-z])/gi, '$1 $2');
   //parse-out currency
   s = s.replace(/[$£€]/, '');
   s = s.replace(/[\$%\(\)~,]/g, '');
@@ -6263,6 +6264,7 @@ var to_number = function to_number(str) {
     if (w === 'point') {
       sum += section_sum(has);
       sum += parse_decimals(words.slice(i + 1, words.length));
+      sum *= modifier.amount;
       return sum;
     }
     //maybe it's just a number typed as a string
@@ -6308,7 +6310,7 @@ var to_number = function to_number(str) {
 
 module.exports = to_number;
 
-// console.log(to_number(' twelve one'));
+// console.log(to_number('half a million'));
 
 },{"../../../../data/numbers.js":16,"./decimals.js":89,"./modifiers.js":90}],92:[function(require,module,exports){
 'use strict';
@@ -6715,10 +6717,16 @@ var Value = function (_Noun) {
   }, {
     key: 'parse',
     value: function parse() {
-      var words = this.text.toLowerCase().split(' ');
+      if (!this.is_number(this.text)) {
+        return;
+      }
+      var words = this.text.toLowerCase().split(/[ -]/);
       var number_words = {
         minus: true,
-        point: true
+        negative: true,
+        point: true,
+        half: true,
+        quarter: true
       };
       var numbers = '';
       //seperate number-words from unit-words
@@ -6755,7 +6763,8 @@ var Value = function (_Noun) {
 Value.fn = Value.prototype;
 module.exports = Value;
 
-// console.log(new Value(-5).textual());
+// console.log(new Value('five hundred eighteen').number);
+// console.log(new Value('minus eighty eight point nine nine').number);
 
 },{"../../../data/numbers":16,"../../../fns":23,"../noun":76,"./parse/to_number":91,"./to_text":92,"./units":93}],95:[function(require,module,exports){
 'use strict';

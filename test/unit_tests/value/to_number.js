@@ -47,7 +47,6 @@ let tests = [
   [950, 950],
   [999999950, 999999950],
   [8080999999950, 8080999999950],
-
   ['fifteen million and two', 15000002],
   ['six hundred and eighteen', 618],
   ['two hundred thousand', 200000],
@@ -76,31 +75,30 @@ describe('to number', function() {
 
 
 
-let arr = [
-  ['12:32', null],
-  ['123-1231', null],
-  ['seven eleven', null],
-  ['ten-four', null],
-  ['one seven', null],
-  ['one ten', null],
-  ['one twelve', null],
-  ['one thirty', null],
-  ['nine fifty', null],
-  ['five six', null],
-  ['nine seventy', null],
-  ['nine two hundred', null],
-  ['ten one', null],
-  ['twelve one', null],
-  ['seventy five two', null],
-  ['two hundred three hundred', null],
-  ['sixty fifteen hundred', null],
-  ['one twenty', null],
-  ['twenty five twenty', null],
-  ['', null],
-  [null, null],
-];
 describe('invalid numbers', function() {
-  tests.forEach(function(a) {
+  [
+    ['12:32', null],
+    ['123-1231', null],
+    ['seven eleven', null],
+    ['ten-four', null],
+    ['one seven', null],
+    ['one ten', null],
+    ['one twelve', null],
+    ['one thirty', null],
+    ['nine fifty', null],
+    ['five six', null],
+    ['nine seventy', null],
+    ['nine two hundred', null],
+    ['ten one', null],
+    ['twelve one', null],
+    ['seventy five two', null],
+    ['two hundred three hundred', null],
+    ['sixty fifteen hundred', null],
+    ['one twenty', null],
+    ['twenty five twenty', null],
+    ['', null],
+    [null, null],
+  ].forEach(function(a) {
     it(a[0], function(done) {
       let v = nlp.value(a[0]);
       (v.number || '').should.equal(a[1] || '');

@@ -98,4 +98,4 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.value('six hundred and fifty nine thousand').number);
+// console.log(nlp.sentence('first').terms);

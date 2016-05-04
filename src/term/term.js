@@ -46,6 +46,7 @@ class Term {
   rebuild() {
     this.text = this.text || '';
     this.text = this.text.trim();
+
     this.normal = '';
     this.normalize();
     this.expansion = implied(this.normal);
@@ -123,8 +124,7 @@ class Term {
 }
 
 Term.fn = Term.prototype;
-// let t = new Term(`plz`);
-// console.log(t.match('(fun|nice|cool|quick)'));
-// console.log(t.expansion);
+// let t = new Term(`first`);
+// console.log(t.normal);
 
 module.exports = Term;

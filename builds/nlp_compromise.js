@@ -102,7 +102,7 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.value('six hundred and fifty nine thousand').number);
+// console.log(nlp.sentence('first').terms);
 
 },{"./fns.js":23,"./lexicon.js":24,"./sentence/question/question.js":52,"./sentence/sentence.js":55,"./sentence/statement/statement.js":58,"./term/adjective/adjective.js":60,"./term/adverb/adverb.js":65,"./term/noun/date/date.js":70,"./term/noun/noun.js":76,"./term/noun/organization/organization.js":78,"./term/noun/person/person.js":82,"./term/noun/place/place.js":84,"./term/noun/value/value.js":94,"./term/term.js":95,"./term/verb/verb.js":104,"./text/text.js":107}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -6675,18 +6675,19 @@ var Value = function (_Noun) {
       }
       return num + 'th';
     }
-  }, {
-    key: 'normalize',
-    value: function normalize() {
-      var str = '' + (this.number || '');
-      if (this.is_ordinal()) {
-        str = this.to_ordinal(str);
-      }
-      if (this.unit) {
-        str += ' ' + this.unit;
-      }
-      return str;
-    }
+
+    //overwrite term.normalize?
+    // normalize() {
+    //   let str = '' + (this.number || '');
+    //   if (this.is_ordinal()) {
+    //     str = this.to_ordinal(str);
+    //   }
+    //   if (this.unit) {
+    //     str += ' ' + this.unit;
+    //   }
+    //   return str;
+    // }
+
   }, {
     key: 'root',
     value: function root() {
@@ -6763,7 +6764,7 @@ var Value = function (_Noun) {
 Value.fn = Value.prototype;
 module.exports = Value;
 
-// console.log(new Value('five hundred eighteen').number);
+// console.log(new Value('first').normal);
 // console.log(new Value('minus eighty eight point nine nine').number);
 
 },{"../../../data/numbers":16,"../../../fns":23,"../noun":76,"./parse/to_number":91,"./to_text":92,"./units":93}],95:[function(require,module,exports){
@@ -6825,6 +6826,7 @@ var Term = function () {
     value: function rebuild() {
       this.text = this.text || '';
       this.text = this.text.trim();
+
       this.normal = '';
       this.normalize();
       this.expansion = implied(this.normal);
@@ -6929,9 +6931,8 @@ var Term = function () {
 }();
 
 Term.fn = Term.prototype;
-// let t = new Term(`plz`);
-// console.log(t.match('(fun|nice|cool|quick)'));
-// console.log(t.expansion);
+// let t = new Term(`first`);
+// console.log(t.normal);
 
 module.exports = Term;
 

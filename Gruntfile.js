@@ -11,8 +11,8 @@ module.exports = function (grunt) {
 
     run: {
       index: {
-        // exec: 'node ./src/index.js'
-        exec: 'node /home/spencer/mountain/nlp/nlp_compromise/src/term/noun/value/parse/to_number.js'
+        exec: 'node ./src/index.js'
+      // exec: 'node /home/spencer/mountain/nlp/nlp_compromise/src/term/noun/value/parse/to_number.js'
       },
       build: {
         exec: 'browserify ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] -o ./builds/nlp_compromise.js '

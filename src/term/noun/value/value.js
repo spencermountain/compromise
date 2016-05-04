@@ -72,16 +72,17 @@ class Value extends Noun {
     return num + 'th';
   }
 
-  normalize() {
-    let str = '' + (this.number || '');
-    if (this.is_ordinal()) {
-      str = this.to_ordinal(str);
-    }
-    if (this.unit) {
-      str += ' ' + this.unit;
-    }
-    return str;
-  }
+  //overwrite term.normalize?
+  // normalize() {
+  //   let str = '' + (this.number || '');
+  //   if (this.is_ordinal()) {
+  //     str = this.to_ordinal(str);
+  //   }
+  //   if (this.unit) {
+  //     str += ' ' + this.unit;
+  //   }
+  //   return str;
+  // }
 
   root() {
     let str = this.number;
@@ -150,5 +151,5 @@ class Value extends Noun {
 Value.fn = Value.prototype;
 module.exports = Value;
 
-// console.log(new Value('five hundred eighteen').number);
+// console.log(new Value('first').normal);
 // console.log(new Value('minus eighty eight point nine nine').number);

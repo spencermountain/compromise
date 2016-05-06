@@ -335,11 +335,12 @@ module.exports = names;
 
 },{"./names/female":14,"./names/male":15}],8:[function(require,module,exports){
 'use strict';
+
+var fns = require('../fns');
 //turns holiday-names into text-versions of their dates
 //https://en.wikipedia.org/wiki/federal_holidays_in_the_united_states
 
 //some major, and unambiguous holidays with the same date each year
-
 var annual = {
   //general
   'new years eve': 'december 31',
@@ -443,11 +444,11 @@ var astronomical = {
 };
 //select current year
 var thisYear = new Date().getFullYear();
-var holidays = Object.assign(annual, astronomical[thisYear] || {});
+var holidays = fns.extend(annual, astronomical[thisYear] || {});
 
 module.exports = holidays;
 
-},{}],9:[function(require,module,exports){
+},{"../fns":23}],9:[function(require,module,exports){
 'use strict';
 
 //these are common person titles used in the lexicon and sentence segmentation methods
@@ -1887,6 +1888,14 @@ exports.startsWith = function (str, prefix) {
     return true;
   }
   return false;
+};
+
+exports.extend = function (a, b) {
+  var keys = Object.keys(b);
+  for (var i = 0; i < keys.length; i++) {
+    a[keys[i]] = b[keys[i]];
+  }
+  return a;
 };
 
 exports.titlecase = function (str) {
@@ -6141,7 +6150,12 @@ module.exports = is_value;
 // handle 'nine point eight four'
 
 var nums = require('../../../../data/numbers.js');
-var ones = Object.assign({}, nums.ones, nums.teens, nums.ordinal_ones, nums.ordinal_teens);
+var fns = require('../../../../fns');
+var ones = {};
+ones = fns.extend(ones, nums.ones);
+ones = fns.extend(ones, nums.teens);
+ones = fns.extend(ones, nums.ordinal_ones);
+ones = fns.extend(ones, nums.ordinal_teens);
 
 //concatenate into a string with leading '0.'
 var decimals = function decimals(words) {
@@ -6159,7 +6173,7 @@ var decimals = function decimals(words) {
 
 module.exports = decimals;
 
-},{"../../../../data/numbers.js":16}],90:[function(require,module,exports){
+},{"../../../../data/numbers.js":16,"../../../../fns":23}],90:[function(require,module,exports){
 'use strict';
 
 //support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
@@ -6198,13 +6212,25 @@ module.exports = find_modifiers;
 // aka: [one/teen/ten] (multiple) [one/teen/ten] (multiple) ...
 
 var nums = require('../../../../data/numbers.js');
+var fns = require('../../../../fns.js');
 var find_modifiers = require('./modifiers.js');
 var parse_decimals = require('./decimals.js');
 
-var ones = Object.assign({}, nums.ones, nums.ordinal_ones);
-var teens = Object.assign({}, nums.teens, nums.ordinal_teens);
-var tens = Object.assign({}, nums.tens, nums.ordinal_tens);
-var multiples = Object.assign({}, nums.multiples, nums.ordinal_multiples);
+var ones = {};
+var teens = {};
+var tens = {};
+var multiples = {};
+ones = fns.extend(ones, nums.ones);
+ones = fns.extend(ones, nums.ordinal_ones);
+
+teens = fns.extend(teens, nums.teens);
+teens = fns.extend(teens, nums.ordinal_teens);
+
+tens = fns.extend(tens, nums.tens);
+tens = fns.extend(tens, nums.ordinal_tens);
+
+multiples = fns.extend(multiples, nums.multiples);
+multiples = fns.extend(multiples, nums.ordinal_multiples);
 
 var normalize = function normalize(s) {
   //pretty-printed numbers
@@ -6312,7 +6338,7 @@ module.exports = to_number;
 
 // console.log(to_number('half a million'));
 
-},{"../../../../data/numbers.js":16,"./decimals.js":89,"./modifiers.js":90}],92:[function(require,module,exports){
+},{"../../../../data/numbers.js":16,"../../../../fns.js":23,"./decimals.js":89,"./modifiers.js":90}],92:[function(require,module,exports){
 'use strict';
 // const nums = require('../../../data/numbers.js');
 // const fns = require('../../../fns.js');
@@ -6596,7 +6622,11 @@ var units = require('./units');
 var nums = require('../../../data/numbers');
 var fns = require('../../../fns');
 //get an array of ordinal (first, second...) numbers
-var ordinals = Object.assign({}, nums.ordinal_ones, nums.ordinal_teens, nums.ordinal_tens, nums.ordinal_multiples);
+var ordinals = {};
+ordinals = fns.extend(ordinals, nums.ordinal_ones);
+ordinals = fns.extend(ordinals, nums.ordinal_teens);
+ordinals = fns.extend(ordinals, nums.ordinal_tens);
+ordinals = fns.extend(ordinals, nums.ordinal_multiples);
 ordinals = Object.keys(ordinals);
 
 var Value = function (_Noun) {
@@ -6949,6 +6979,7 @@ var irregular_verbs = require('../../../data/irregular_verbs');
 var predict = require('./predict_form.js');
 var generic = require('./generic.js');
 var strip_prefix = require('./strip_prefix.js');
+var fns = require('../../../fns.js');
 
 //make sure object has all forms
 var fufill = function fufill(obj, prefix) {
@@ -7040,7 +7071,7 @@ var conjugate = function conjugate(w) {
   var infinitive = to_infinitive(w, predicted) || '';
   //check irregulars
   var obj = irregular_verbs[w] || irregular_verbs[infinitive] || {};
-  obj = Object.assign({}, obj);
+  obj = fns.extend({}, obj);
   //apply regex-transformations
   var conjugations = from_infinitive(infinitive);
   Object.keys(conjugations).forEach(function (k) {
@@ -7054,7 +7085,7 @@ module.exports = conjugate;
 
 // console.log(conjugate('learn'));
 
-},{"../../../data/irregular_verbs":11,"./from_infinitive":97,"./generic.js":98,"./predict_form.js":99,"./strip_prefix.js":100,"./to_actor":102,"./to_infinitive":103}],97:[function(require,module,exports){
+},{"../../../data/irregular_verbs":11,"../../../fns.js":23,"./from_infinitive":97,"./generic.js":98,"./predict_form.js":99,"./strip_prefix.js":100,"./to_actor":102,"./to_infinitive":103}],97:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };

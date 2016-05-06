@@ -1,4 +1,5 @@
 'use strict';
+const fns = require('../fns');
 //turns holiday-names into text-versions of their dates
 //https://en.wikipedia.org/wiki/federal_holidays_in_the_united_states
 
@@ -107,6 +108,6 @@ const astronomical = {
 };
 //select current year
 let thisYear = new Date().getFullYear();
-let holidays = Object.assign(annual, astronomical[thisYear] || {});
+let holidays = fns.extend(annual, astronomical[thisYear] || {});
 
 module.exports = holidays;

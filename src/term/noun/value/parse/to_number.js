@@ -3,13 +3,25 @@
 // [sixty five] (thousand) [sixty five] (hundred) [sixty five]
 // aka: [one/teen/ten] (multiple) [one/teen/ten] (multiple) ...
 const nums = require('../../../../data/numbers.js');
+const fns = require('../../../../fns.js');
 const find_modifiers = require('./modifiers.js');
 const parse_decimals = require('./decimals.js');
 
-const ones = Object.assign({}, nums.ones, nums.ordinal_ones);
-const teens = Object.assign({}, nums.teens, nums.ordinal_teens);
-const tens = Object.assign({}, nums.tens, nums.ordinal_tens);
-const multiples = Object.assign({}, nums.multiples, nums.ordinal_multiples);
+let ones = {};
+let teens = {};
+let tens = {};
+let multiples = {};
+ones = fns.extend(ones, nums.ones);
+ones = fns.extend(ones, nums.ordinal_ones);
+
+teens = fns.extend(teens, nums.teens);
+teens = fns.extend(teens, nums.ordinal_teens);
+
+tens = fns.extend(tens, nums.tens);
+tens = fns.extend(tens, nums.ordinal_tens);
+
+multiples = fns.extend(multiples, nums.multiples);
+multiples = fns.extend(multiples, nums.ordinal_multiples);
 
 
 const normalize = (s) => {

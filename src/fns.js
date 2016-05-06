@@ -43,6 +43,13 @@ exports.startsWith = function(str, prefix) {
   return false;
 };
 
+exports.extend = function(a, b) {
+  const keys = Object.keys(b);
+  for(let i = 0; i < keys.length; i++) {
+    a[keys[i]] = b[keys[i]];
+  }
+  return a;
+};
 
 exports.titlecase = function(str) {
   if (!str) {

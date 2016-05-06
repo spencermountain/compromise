@@ -1,7 +1,12 @@
 'use strict';
 // handle 'nine point eight four'
 const nums = require('../../../../data/numbers.js');
-const ones = Object.assign({}, nums.ones, nums.teens, nums.ordinal_ones, nums.ordinal_teens);
+const fns = require('../../../../fns');
+let ones = {};
+ones = fns.extend(ones, nums.ones);
+ones = fns.extend(ones, nums.teens);
+ones = fns.extend(ones, nums.ordinal_ones);
+ones = fns.extend(ones, nums.ordinal_teens);
 
 //concatenate into a string with leading '0.'
 const decimals = function(words) {

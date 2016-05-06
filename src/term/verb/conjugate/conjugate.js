@@ -7,6 +7,7 @@ const irregular_verbs = require('../../../data/irregular_verbs');
 const predict = require('./predict_form.js');
 const generic = require('./generic.js');
 const strip_prefix = require('./strip_prefix.js');
+const fns = require('../../../fns.js');
 
 
 //make sure object has all forms
@@ -94,7 +95,7 @@ const conjugate = function(w) {
   let infinitive = to_infinitive(w, predicted) || '';
   //check irregulars
   let obj = irregular_verbs[w] || irregular_verbs[infinitive] || {};
-  obj = Object.assign({}, obj);
+  obj = fns.extend({}, obj);
   //apply regex-transformations
   let conjugations = from_infinitive(infinitive);
   Object.keys(conjugations).forEach(function(k) {

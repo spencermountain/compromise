@@ -6,7 +6,11 @@ const units = require('./units');
 const nums = require('../../../data/numbers');
 const fns = require('../../../fns');
 //get an array of ordinal (first, second...) numbers
-let ordinals = Object.assign({}, nums.ordinal_ones, nums.ordinal_teens, nums.ordinal_tens, nums.ordinal_multiples);
+let ordinals = {};
+ordinals = fns.extend(ordinals, nums.ordinal_ones);
+ordinals = fns.extend(ordinals, nums.ordinal_teens);
+ordinals = fns.extend(ordinals, nums.ordinal_tens);
+ordinals = fns.extend(ordinals, nums.ordinal_multiples);
 ordinals = Object.keys(ordinals);
 
 class Value extends Noun {

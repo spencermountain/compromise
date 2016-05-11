@@ -8,7 +8,10 @@ const sentence_parser = function(text) {
   const sentences = [];
   //first do a greedy-split..
   let chunks = [];
-  let splits = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
+  // This was the splitter regex updated to fix quoted punctuation marks.
+  // let splits = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
+  // todo: look for side effects in this regex replacement:
+  let splits = text.split(/(\S.+?[.!?])(?=\s+|$)/g);
   //filter-out the grap ones
   for(let i = 0; i < splits.length; i++) {
     let s = splits[i];

@@ -51,6 +51,7 @@ const handle_simple = function(terms, i, particle) {
   //make ghost-term
   let second_word = new pos.Verb('');
   second_word.expansion = particle;
+  second_word.whitespace.trailing = ' ';
   terms.splice(i + 1, 0, second_word);
   return terms;
 };

@@ -15,12 +15,16 @@ module.exports = function (grunt) {
       // exec: 'node /home/spencer/mountain/nlp/nlp_compromise/src/term/noun/value/parse/to_number.js'
       },
       build: {
-        exec: 'browserify ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] -o ./builds/nlp_compromise.js '
+        exec: './node_modules/.bin/browserify ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] -o ./builds/nlp_compromise.js '
       },
       coverage: {
         exec: ''
+      },
+      demo: {
+        exec: './node_modules/.bin/http-server demo'
       }
     },
+
 
 
     uglify: {
@@ -109,5 +113,6 @@ module.exports = function (grunt) {
   grunt.registerTask('coverage', ['mocha_istanbul']);
   grunt.registerTask('test', ['mochaTest']);
   grunt.registerTask('lint', ['eslint']);
+  grunt.registerTask('demo', ['build', 'run:demo']);
   grunt.registerTask('build', ['mochaTest', 'eslint', 'run:build', 'uglify', 'filesize']);
 };

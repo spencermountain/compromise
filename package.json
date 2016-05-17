@@ -12,7 +12,9 @@
     "run": "grunt",
     "test": "grunt test",
     "watch": "grunt watch",
-    "build": "grunt build"
+    "coverage": "grunt coverage",
+    "build": "grunt build",
+    "demo": "grunt demo"
   },
   "dependencies": {},
   "devDependencies": {
@@ -28,6 +30,8 @@
     "grunt-mocha-istanbul": "3.0.1",
     "grunt-mocha-test": "0.12.7",
     "grunt-run": "0.5.2",
+    "http-server": "^0.9.0",
+    "istanbul": "^0.4.3",
     "mocha": "2.4.3",
     "nlp-corpus": "latest",
     "should": "8.2.1"

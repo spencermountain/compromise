@@ -1,23 +1,23 @@
-###WElcome, good person
+###Welcome, good person
 
 NLP is a solvable problem at scale, and all forms of input are gracious and lovely. We're very friendly and approachable. There is lots of work to be done.
 
-* unit tests are run with 'npm test'
-* 'grunt build' command joins all various scripts into a static js file
+* unit tests are run with `npm test`
+* `npm run build` command joins all various scripts into a static js file
 
-### Extending nlp_compromise with Plugins/Mixins
+### Extending nlp\_compromise with Plugins/Mixins
 see [Documentation](./plugins.md)
 
 ### Building
 needs an ES6 env, like `nvm use 4`
 ```
 npm install
-grunt build
-grunt watch
-grunt docs
+npm run build
+npm run watch
+npm run docs
 ```
 
-`grunt demo`
+`npm run demo`
 and visit http://localhost:8888/demos/
 
 ### Releasing
@@ -26,7 +26,7 @@ casual versioning/publishing as semver, Major is breaking, minor is improving.
 ```bash
 npm test #ensure unit tests pass
 
-grunt build #build client-side scripts
+npm run build #build client-side scripts
 
 npm publish #push npm version
 #bump bower

@@ -63,13 +63,15 @@ nlp.pos("tony hawk won", {dont_combine:true}).tags()
 ##Normalisation
 nlp_compromise has three levels of text normalisation:
 ### Text
-ensures sane whitespace:
+Ensures sane whitespace:
 * `nlp.person('Dr. John H. Smith').text()` -> 'Dr. John H. Smith'
-* `nlp.text('He ate the eggs.').normal()` -> 'He ate the eggs.'
+* `nlp.text('He ate the eggs.').text()` -> 'He ate the eggs.'
+
 ### Normal
-removes punctuation, capitalisation, hyphens. Still valid & readable:
-* `nlp.person('Dr. John H. Smith').normal` -> 'dr john h smith'
+Removes punctuation, capitalisation, hyphens. Still valid & readable:
+* `nlp.person('Dr. John H. Smith').normal()` -> 'dr john h smith'
 * `nlp.text('He ate the eggs.').normal()` -> 'he ate the eggs'
+
 ### Root
 Like lemmatisation, it inflects/conjugates/truncates and gorks the sentence into being more robot-understandable:
 * `nlp.person('Dr. John H. Smith').root()` -> 'john smith'

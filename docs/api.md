@@ -235,8 +235,8 @@ nlp.text('').places()
 
 ### Date parsing
 ```javascript
-nlp.value("I married April for the 2nd time on June 5th 1998 ").date()
-// [Date object]   d.toLocaleString() -> "04/2/1998"
+nlp.sentence("I married April for the 2nd time on June 5th 1998 ").dates()
+// [data: { year: 1998, month: 5, day: 5 }]
 ```
 ### Number parsing
 ```javascript
@@ -262,7 +262,7 @@ you can pass in your own lexicon, or an augmented version
  // ['Person']
 ```
 
-#Question classification
+<!-- #Question classification
 ### easier ones
 * who
   - who is..
@@ -292,4 +292,4 @@ you can pass in your own lexicon, or an augmented version
   - how many
   - how fast
   - how old
-  - what amount
+  - what amount -->

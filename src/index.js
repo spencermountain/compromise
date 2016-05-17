@@ -98,8 +98,4 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.sentence('first').terms);
-// let r = nlp.sentence('The giraffe ate the apples.').terms.filter((t) => {
-//   return t.pos.Noun;
-// });
-// console.log(r);
+// console.log(nlp.sentence('I married April for the 2nd time on June 5th 1998 ').dates());

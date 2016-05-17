@@ -27,7 +27,7 @@ The lexicon was built using the [American National Corpus](http://www.americanna
 ####Contractions
 It puts a 'silent token' into the phrase for contractions. Otherwise a meaningful part-of-speech could be neglected.
 ```javascript
-nlp.pos("i'm good.")
+nlp.sentence("i'm good.")
  [{
    text:"i'm",
    implicit:"i",
@@ -47,13 +47,13 @@ nlp.pos("i'm good.")
 ####Tokenization
 Neighbouring words with the same part of speech are merged together, unless there is punctuation, different capitalisation, or some special cases.
 ```javascript
-nlp.pos("tony hawk won").tags()
+nlp.sentence("tony hawk won").tags()
 //tony hawk   NN
 //won   VB
 ```
 <!-- To turn this off:
 ```javascript
-nlp.pos("tony hawk won", {dont_combine:true}).tags()
+nlp.sentence("tony hawk won", {dont_combine:true}).tags()
 //tony   NN
 //hawk   NN
 //won   VB

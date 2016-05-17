@@ -99,4 +99,11 @@ describe('contractions', function() {
     done();
   });
 
+  it('outputs correct whitespace', function() {
+   let test = ['We\'ve only just begun', 'We have only just begun'];
+   let t = nlp.text(test[0]);
+   t.contractions.expand()
+   t.text().should.equal(test[1]);
+  })
+
 });

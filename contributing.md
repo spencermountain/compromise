@@ -1,4 +1,4 @@
-###WElcome, good person
+###Welcome, good person
 
 NLP is a solvable problem at scale, and all forms of input are gracious and lovely. We're very friendly and approachable. There is lots of work to be done.
 

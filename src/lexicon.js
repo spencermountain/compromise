@@ -123,5 +123,4 @@ Object.keys(lexicon).forEach(function(k) {
   lexicon[k] = grand_mapping[lexicon[k]] || lexicon[k];
 });
 
-// console.log(lexicon['april fools']);
 module.exports = lexicon;

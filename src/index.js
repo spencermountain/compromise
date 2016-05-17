@@ -99,3 +99,7 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.sentence('first').terms);
+// let r = nlp.sentence('The giraffe ate the apples.').terms.filter((t) => {
+//   return t.pos.Noun;
+// });
+// console.log(r);

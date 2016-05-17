@@ -12,6 +12,7 @@
     "run": "grunt",
     "test": "grunt test",
     "watch": "grunt watch",
+    "coverage": "grunt coverage",
     "build": "grunt build",
     "demo": "grunt docs"
   },

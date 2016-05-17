@@ -14,6 +14,10 @@
     "watch": "grunt watch",
     "build": "grunt build"
   },
+  "files": [
+    "builds/",
+    "src/"
+  ],
   "dependencies": {},
   "devDependencies": {
     "babel-preset-es2015": "6.3.13",

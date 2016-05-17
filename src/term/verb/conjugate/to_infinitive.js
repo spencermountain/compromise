@@ -164,7 +164,7 @@ let rules = {
 };
 
 const to_infinitive = function (str, from_tense) {
-  if (known_verbs[str]) {
+  if (known_verbs.hasOwnProperty(str)) {
     return known_verbs[str];
   }
   if (from_tense === 'infinitive') {
@@ -179,6 +179,6 @@ const to_infinitive = function (str, from_tense) {
   return str;
 };
 
-// console.log(to_infinitive('underwent', 'past'));
+// console.log(to_infinitive('watch', 'infinitive'));
 
 module.exports = to_infinitive;

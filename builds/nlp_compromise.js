@@ -103,6 +103,10 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.sentence('first').terms);
+// let r = nlp.sentence('The giraffe ate the apples.').terms.filter((t) => {
+//   return t.pos.Noun;
+// });
+// console.log(r);
 
 },{"./fns.js":23,"./lexicon.js":24,"./sentence/question/question.js":52,"./sentence/sentence.js":55,"./sentence/statement/statement.js":58,"./term/adjective/adjective.js":60,"./term/adverb/adverb.js":65,"./term/noun/date/date.js":70,"./term/noun/noun.js":76,"./term/noun/organization/organization.js":78,"./term/noun/person/person.js":82,"./term/noun/place/place.js":84,"./term/noun/value/value.js":94,"./term/term.js":95,"./term/verb/verb.js":104,"./text/text.js":107}],2:[function(require,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
@@ -2069,7 +2073,6 @@ Object.keys(lexicon).forEach(function (k) {
   lexicon[k] = grand_mapping[lexicon[k]] || lexicon[k];
 });
 
-// console.log(lexicon['april fools']);
 module.exports = lexicon;
 
 },{"./data/abbreviations.js":2,"./data/adjectives.js":3,"./data/convertables.js":4,"./data/dates.js":5,"./data/demonyms.js":6,"./data/firstnames.js":7,"./data/holidays.js":8,"./data/honourifics.js":9,"./data/irregular_nouns.js":10,"./data/irregular_verbs.js":11,"./data/misc.js":12,"./data/multiples.js":13,"./data/numbers.js":16,"./data/organizations.js":17,"./data/phrasal_verbs.js":18,"./data/places.js":19,"./data/professions.js":20,"./data/uncountables.js":21,"./data/verbs.js":22,"./fns.js":23,"./sentence/pos/parts_of_speech.js":36,"./term/adjective/to_adverb.js":61,"./term/adjective/to_comparative.js":62,"./term/adjective/to_superlative.js":64,"./term/verb/conjugate/conjugate.js":96}],25:[function(require,module,exports){
@@ -7662,7 +7665,7 @@ var rules = {
 };
 
 var to_infinitive = function to_infinitive(str, from_tense) {
-  if (known_verbs[str]) {
+  if (known_verbs.hasOwnProperty(str)) {
     return known_verbs[str];
   }
   if (from_tense === 'infinitive') {
@@ -7677,7 +7680,7 @@ var to_infinitive = function to_infinitive(str, from_tense) {
   return str;
 };
 
-// console.log(to_infinitive('underwent', 'past'));
+// console.log(to_infinitive('watch', 'infinitive'));
 
 module.exports = to_infinitive;
 
@@ -7919,7 +7922,7 @@ var sentence_parser = function sentence_parser(text) {
   //first do a greedy-split..
   var chunks = [];
   // This was the splitter regex updated to fix quoted punctuation marks.
-  // var splits = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
+  // let splits = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
   // todo: look for side effects in this regex replacement:
   var splits = text.split(/(\S.+?[.!?])(?=\s+|$)/g);
   //filter-out the grap ones

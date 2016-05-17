@@ -12,7 +12,8 @@
     "run": "grunt",
     "test": "grunt test",
     "watch": "grunt watch",
-    "build": "grunt build"
+    "build": "grunt build",
+    "demo": "grunt docs"
   },
   "dependencies": {},
   "devDependencies": {

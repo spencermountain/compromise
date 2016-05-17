@@ -105,8 +105,9 @@ class Value extends Noun {
       return true;
     }
     //try singular version
-    s = s.replace(/s$/); //ew
-    if (units[s]) {
+    s = s.replace(/s$/, ''); //ew
+    const s2 = s.replace(/e$/, '');
+    if (units[s] || units[s2]) {
       return true;
     }
 

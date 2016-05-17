@@ -21,6 +21,9 @@ describe('parse value', function() {
     let tests = [
       ['five hundred feet', 'feet'],
       ['fifty hertz', 'hertz'],
+      ['5 g', 'g'],
+      ['3 grams', 'grams'],
+      ['2 inches', 'inches'],
     ];
     tests.forEach(function(a) {
       let n = new Value(a[0]);

@@ -57,7 +57,7 @@ module.exports = [
   'jamaican',
   'japanese',
   'jordanian',
-  'kazakh'
+  'kazakh',
   'kenyan',
   'korean',
   'kuwaiti',

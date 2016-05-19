@@ -14,6 +14,13 @@ describe('sentence negate: ', function() {
     [`he has walked`, `he hasn't walked`],
     [`he will have walked`, `he won't have walked`],
     [`he is walking`, `he isn't walking`],
+    //pronoun + infinitive
+    [`i like running`, `i don't like running`],
+    [`they swim`, `they don't swim`],
+    [`we enjoy playing`, `we don't enjoy playing`],
+    [`we don't swim`, `we do swim`],
+    [`i don't care`, `i do care`],
+    [`they don't care`, `they do care`],
     //logical negations
     ['john always walks', 'john never walks'],
     ['john always walks quickly', 'john never walks quickly'],

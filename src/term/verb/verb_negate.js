@@ -26,6 +26,7 @@ const negate = function(v) {
     'have': 'haven\'t',
     'has': 'hasn\'t',
     'does': 'doesn\'t',
+    'do': 'don\'t',
   };
   //hard-coded explicit forms
   if (known_negation[v.normal]) {

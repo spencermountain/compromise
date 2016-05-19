@@ -14,7 +14,9 @@
     "watch": "grunt watch",
     "coverage": "grunt coverage",
     "build": "grunt build",
-    "demo": "grunt demo"
+    "build_windows": "grunt build_windows",
+    "demo": "grunt demo",
+    "demo_windows": "grunt demo_windows"
   },
   "dependencies": {},
   "devDependencies": {

@@ -21,6 +21,10 @@ describe('sentence negate: ', function() {
     [`we don't swim`, `we do swim`],
     [`i don't care`, `i do care`],
     [`they don't care`, `they do care`],
+    //does not, is not, are not, etc.
+    [`apples are not bad`, `apples are bad`],
+    [`he does not like it`, `he does like it`],
+    [`have not died yet`, `have died yet`],
     //logical negations
     ['john always walks', 'john never walks'],
     ['john always walks quickly', 'john never walks quickly'],

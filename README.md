@@ -4,7 +4,7 @@
 
 **nlp_compromise** does NLP in the browser.
 ```javascript
-nlp.text('She sells seashells').to_past()
+nlp.sentence('She sells seashells').to_past().text()
 // She sold seashells
 ```
 ### Yup,

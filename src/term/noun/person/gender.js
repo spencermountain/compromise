@@ -38,9 +38,11 @@ const gender = function(normal) {
   if (firstName.match(/(nn|ll|tt)/i)) { //if it has double-consonants, female
     return 'Female';
   }
+  // name not recognized, or recognized as of indeterminate gender
   return null;
 };
 module.exports = gender;
 
 // console.log(gender('john', 'john') === 'Male');
 // console.log(gender('jane smith', 'jane') === 'Female');
+// console.log(gender('jan smith', 'jan') === null);

@@ -8,9 +8,9 @@ let terms = dates.months.concat(dates.days);
 let day_reg = '(\\b' + terms.join('\\b|\\b') + '\\b)';
 day_reg = new RegExp(day_reg, 'i');
 const times_reg = /1?[0-9]:[0-9]{2}/;
-
+const years_reg = /^[1-9]\d*$/;
 const is_date = function(str) {
-  if (str.match(day_reg) || str.match(times_reg)) {
+  if (str.match(day_reg) || str.match(times_reg) || str.match(years_reg)) {
     return true;
   }
   return false;

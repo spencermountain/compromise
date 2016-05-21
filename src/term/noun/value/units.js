@@ -152,6 +152,7 @@ const units = {
     'won': 'currency',
     'krona': 'currency',
     'dirham': 'currency',
+    'zloty': 'currency',
     '€': 'currency',
     '$': 'currency',
     '¥': 'currency',
@@ -164,7 +165,8 @@ const units = {
     'EUR': 'currency',
     'CNY': 'currency',
     'EGP': 'currency',
-    'MXN': 'currency'
+    'MXN': 'currency',
+    'PLN': 'currency'
   }
 };
 

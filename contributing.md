@@ -12,13 +12,13 @@ see [Documentation](./plugins.md)
 needs an ES6 env, like `nvm use 4`
 ```
 npm install
-npm run build
+npm run build or npm run build_windows
 npm run watch
 npm run docs
 ```
 
-`npm run demo`
-and visit http://localhost:8888/demos/
+`npm run demo` or `npm run demo_windows`
+and visit http://localhost:8080/
 
 ### Releasing
 casual versioning/publishing as semver, Major is breaking, minor is improving.

@@ -169,7 +169,14 @@ describe('noun inflection', function() {
       ['tornado', 'tornado'],
       ['person', 'person'],
       ['goose', 'goose'],
-      ['mouse', 'mouse']
+      ['mouse', 'mouse'],
+      ['calves', 'calf'],
+      ['olives', 'olive'],
+      ['loaves', 'loaf'],
+      ['oafs', 'oaf'],
+      ['wives', 'wife'],
+      ['roofs', 'roof'],
+      ['hooves', 'hoof']
     ];
     tests.forEach(function(a) {
       let n = new Noun(a[0]);

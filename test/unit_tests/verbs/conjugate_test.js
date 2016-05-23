@@ -141,6 +141,11 @@ let verbs = [{
   'present': 'farms',
   'past': 'farmed',
   'gerund': 'farming'
+}, {
+  'infinitive': 'develop',
+  'present': 'develops',
+  'past': 'developed',
+  'gerund': 'developing'  
 }];
 
 

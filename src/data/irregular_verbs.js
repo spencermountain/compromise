@@ -364,7 +364,8 @@ const irregular_verbs = {
   },
   develop: {
     past: 'developed',
-    actor: 'developer'
+    actor: 'developer',
+    gerund: 'developing'
   },
   wait: {
     gerund: 'waiting',

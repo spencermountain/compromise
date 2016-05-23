@@ -481,7 +481,6 @@ const units = {
     'euro': 'currency',
     'lira': 'currency',
     'pound': 'currency',
-    'GBP': 'currency',
     'pence': 'currency',
     'peso': 'currency',
     'sterling': 'currency',
@@ -496,6 +495,8 @@ const units = {
     'krona': 'currency',
     'dirham': 'currency',
     'real': 'currency',
+    'zloty': 'currency',
+    'forint': 'currency',
     //currency symbols
     '€': 'currency',
     '$': 'currency',

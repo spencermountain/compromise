@@ -113,6 +113,12 @@ class Value extends Noun {
       return true;
     }
 
+    s = this.unit.replace(/es$/, '');
+    if (units[s]) {
+      this.unit = this.unit.replace(/es$/, '');
+      return true;
+    }
+
     return false;
   }
 
@@ -130,6 +136,7 @@ class Value extends Noun {
     };
     var numbers = '';
     var raw_units = '';
+
     //seperate number-words from unit-words
     for (var i = 0; i < words.length; i++) {
       var w = words[i];
@@ -139,22 +146,13 @@ class Value extends Noun {
         numbers += ' ' + w;
       } else if (nums.ordinal_ones[w] || nums.ordinal_teens[w] || nums.ordinal_tens[w] || nums.ordinal_multiples[w]) {
         numbers += ' ' + w;
-      } /*else if (this.is_unit(w)) { //optional units come after the number
-        this.unit = w;
-        if (units[w]) {
-          this.measurement = units[w].category;
-          this.unit_name = units[w].name;
-        }
-      } */
-      else {
+      } else {
         raw_units += ' ' + w;
-        console.log("***  " + raw_units);
       }
     }
-    console.log("==== " + raw_units.trim());
+
     this.unit = raw_units.trim();
     if (this.is_unit()) {
-      console.log("so: " + this.unit);
       this.measurement = units[this.unit].category;
       this.unit_name = units[this.unit].name;
     }

@@ -92,7 +92,8 @@ describe('replace', function() {
     ['the dog played', 'the dog', 'the cat', 'the cat played'],
     ['the dog played', 'the [Noun]', 'the cat', 'the cat played'],
     ['the dog played', 'the (dog|hamster|pet-snake)', 'the cat', 'the cat played'],
-    ['the boy and the girl', 'the [Noun]', 'the house', 'the house and the house']
+    ['the boy and the girl', 'the [Noun]', 'the house', 'the house and the house'],
+    ['the boy and the girl', 'the cat', 'the house', 'the boy and the girl'],
   ];
   tests.forEach(function(a) {
     it(a.join(' | '), function(done) {

@@ -22,8 +22,12 @@ describe('parse value', function() {
       ['five hundred feet', 'feet'],
       ['fifty hertz', 'hertz'],
       ['100 dollars', 'dollar'],
-      ['EUR 9.99', 'EUR'],
-      ['nine south sudanese pounds', 'south sudanese pound']
+      ['EUR 9.99', 'eur'],
+      ['nine south sudanese pounds', 'south sudanese pound'],
+      ['5 g', 'g'],
+      ['3 grams', 'gram'],
+      ['2 inches', 'inch'],
+      ['2 in', 'in'],
     ];
     tests.forEach(function(a) {
       let n = new Value(a[0]);

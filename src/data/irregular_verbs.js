@@ -261,7 +261,9 @@ const irregular_verbs = {
   },
   speak: {
     past: 'spoke',
-    perfect: 'have spoken'
+    perfect: 'have spoken',
+    pluperfect: 'had spoken',
+    future_perfect: 'will have spoken'
   },
   spin: {
     gerund: 'spinning',

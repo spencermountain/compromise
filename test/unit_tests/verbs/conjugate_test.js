@@ -156,7 +156,9 @@ let verbs = [{
   'present': 'speaks',
   'past': 'spoke',
   'gerund': 'speaking',
-  'perfect': 'have spoken'   
+  'perfect': 'have spoken',
+  'pluperfect': 'had spoken',
+  'future_perfect': 'will have spoken'   
 }];
 
 
@@ -249,5 +251,26 @@ describe('verb conjugate', function() {
       (c.perfect).should.equal(o.perfect);
     });
     done();
-  })
+  });
+
+  it('infinitive becomes pluperfect', function(done) {
+    verbs
+    .filter(function(v) {return v.pluperfect})
+    .forEach(function(o) {
+      let c = nlp.verb(o.infinitive).conjugate();
+      (c.pluperfect).should.equal(o.pluperfect);
+    });
+    done();
+  });
+
+  it('infinitive becomes future perfect', function(done) {
+    verbs
+    .filter(function(v) {return v.future_perfect})
+    .forEach(function(o) {
+      let c = nlp.verb(o.infinitive).conjugate();
+      (c.future_perfect).should.equal(o.future_perfect);
+    });
+    done();
+  });
+
 });

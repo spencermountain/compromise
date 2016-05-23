@@ -146,6 +146,17 @@ let verbs = [{
   'present': 'develops',
   'past': 'developed',
   'gerund': 'developing'  
+}, {
+  'infinitive': 'criticise',
+  'present': 'criticises',
+  'past': 'criticised',
+  'gerund': 'criticising'   
+}, {
+  'infinitive': 'speak',
+  'present': 'speaks',
+  'past': 'spoke',
+  'gerund': 'speaking',
+  'perfect': 'have spoken'   
 }];
 
 
@@ -230,4 +241,13 @@ describe('verb conjugate', function() {
     done();
   });
 
+  it('infinitive becomes perfect', function(done) {
+    verbs
+    .filter(function(v) {return v.perfect})
+    .forEach(function(o) {
+      let c = nlp.verb(o.infinitive).conjugate();
+      (c.perfect).should.equal(o.perfect);
+    });
+    done();
+  })
 });

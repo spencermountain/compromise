@@ -260,7 +260,8 @@ const irregular_verbs = {
     past: 'slid'
   },
   speak: {
-    past: 'spoke'
+    past: 'spoke',
+    perfect: 'have spoken'
   },
   spin: {
     gerund: 'spinning',

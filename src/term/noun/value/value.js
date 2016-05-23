@@ -96,17 +96,20 @@ class Value extends Noun {
     return str;
   }
 
-  is_unit(s) {
-    if (units[s]) {
+  is_unit() {
+    if (units[this.unit]) {
       return true;
     }
-    s = s.toLowerCase();
+
+    var s = this.unit.toLowerCase();
     if (nums.prefixes[s]) {
       return true;
     }
+
     //try singular version
-    s = s.replace(/s$/); //ew
+    s = this.unit.replace(/s$/, '');
     if (units[s]) {
+      this.unit = this.unit.replace(/s$/, '');
       return true;
     }
 
@@ -125,24 +128,37 @@ class Value extends Noun {
       half: true,
       quarter: true,
     };
-    let numbers = '';
+    var numbers = '';
+    var raw_units = '';
     //seperate number-words from unit-words
-    for(let i = 0; i < words.length; i++) {
-      let w = words[i];
+    for (var i = 0; i < words.length; i++) {
+      var w = words[i];
       if (w.match(/[0-9]/) || number_words[w]) {
         numbers += ' ' + w;
       } else if (nums.ones[w] || nums.teens[w] || nums.tens[w] || nums.multiples[w]) {
         numbers += ' ' + w;
       } else if (nums.ordinal_ones[w] || nums.ordinal_teens[w] || nums.ordinal_tens[w] || nums.ordinal_multiples[w]) {
         numbers += ' ' + w;
-      } else if (this.is_unit(w)) { //optional units come after the number
+      } /*else if (this.is_unit(w)) { //optional units come after the number
         this.unit = w;
         if (units[w]) {
           this.measurement = units[w].category;
           this.unit_name = units[w].name;
         }
+      } */
+      else {
+        raw_units += ' ' + w;
+        console.log("***  " + raw_units);
       }
     }
+    console.log("==== " + raw_units.trim());
+    this.unit = raw_units.trim();
+    if (this.is_unit()) {
+      console.log("so: " + this.unit);
+      this.measurement = units[this.unit].category;
+      this.unit_name = units[this.unit].name;
+    }
+
     numbers = numbers.trim();
     this.number = to_number(numbers);
   }

@@ -98,4 +98,4 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.sentence('confer $500 to John for going to New York').terms);
+// console.log(nlp.value('$100'));

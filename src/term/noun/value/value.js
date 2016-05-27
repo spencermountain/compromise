@@ -150,11 +150,26 @@ class Value extends Noun {
         raw_units += ' ' + w;
       }
     }
-
     this.unit = raw_units.trim();
+    //is the word something like 'dollars'
     if (this.is_unit()) {
       this.measurement = units[this.unit].category;
       this.unit_name = units[this.unit].name;
+    }
+    //support '$400' => 400 dollars
+    let firstChar = this.text.substr(0, 1);
+    const symbolic_currency = {
+      '€': 'euro',
+      '$': 'dollar',
+      '¥': 'yen',
+      '£': 'pound',
+      '¢': 'cent',
+      '฿': 'bitcoin'
+    };
+    if (symbolic_currency[firstChar]) {
+      this.measurement = 'Money';
+      this.unit_name = 'currency';
+      this.unit = symbolic_currency[firstChar];
     }
 
     numbers = numbers.trim();

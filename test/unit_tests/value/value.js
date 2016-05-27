@@ -22,6 +22,9 @@ describe('parse value', function() {
       ['five hundred feet', 'feet'],
       ['fifty hertz', 'hertz'],
       ['100 dollars', 'dollar'],
+      ['$100', 'dollar'],
+      ['¥2.5', 'yen'],
+      ['€3,000,100', 'euro'],
       ['EUR 9.99', 'eur'],
       ['nine south sudanese pounds', 'south sudanese pound'],
       ['5 g', 'g'],
@@ -31,7 +34,7 @@ describe('parse value', function() {
     ];
     tests.forEach(function(a) {
       let n = new Value(a[0]);
-      (a[1] === n.unit).should.equal(true);
+      (a[1] || '').should.equal(n.unit);
     });
     done();
   });

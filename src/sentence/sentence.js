@@ -15,10 +15,15 @@ const match = require('../match/match');
 class Sentence {
 
   constructor(str, options) {
-    this.str = str || '';
+    this.str = '';
+    if (typeof str === 'string') {
+      this.str = str;
+    } else if (typeof str === 'number') {
+      this.str = '' + str;
+    }
     options = options || {};
     const the = this;
-    const words = str.split(/( +)/);
+    const words = this.str.split(/( +)/);
     //build-up term-objects
     this.terms = [];
     if (words[0] === '') {

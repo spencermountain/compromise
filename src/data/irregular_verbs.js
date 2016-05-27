@@ -260,7 +260,10 @@ const irregular_verbs = {
     past: 'slid'
   },
   speak: {
-    past: 'spoke'
+    past: 'spoke',
+    perfect: 'have spoken',
+    pluperfect: 'had spoken',
+    future_perfect: 'will have spoken'
   },
   spin: {
     gerund: 'spinning',
@@ -364,7 +367,8 @@ const irregular_verbs = {
   },
   develop: {
     past: 'developed',
-    actor: 'developer'
+    actor: 'developer',
+    gerund: 'developing'
   },
   wait: {
     gerund: 'waiting',

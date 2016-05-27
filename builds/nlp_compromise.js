@@ -1945,7 +1945,8 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.value('$100'));
+// console.log(nlp.sentence(null));
+// console.log(nlp.text(' \n\n\t spencer is here\n\nhe is here too'));
 
 },{"./fns.js":22,"./lexicon.js":24,"./sentence/question/question.js":52,"./sentence/sentence.js":55,"./sentence/statement/statement.js":58,"./term/adjective/adjective.js":60,"./term/adverb/adverb.js":65,"./term/noun/date/date.js":70,"./term/noun/noun.js":76,"./term/noun/organization/organization.js":78,"./term/noun/person/person.js":82,"./term/noun/place/place.js":84,"./term/noun/value/value.js":94,"./term/term.js":95,"./term/verb/verb.js":104,"./text/text.js":107}],24:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
@@ -3033,7 +3034,7 @@ var assign = require('../assign');
 //set POS for capitalised words
 var capital_signals = function capital_signals(terms) {
   //first words need careful rules
-  if (terms[0].is_acronym()) {
+  if (terms[0] && terms[0].is_acronym()) {
     terms[0] = assign(terms[0], 'Noun', 'acronym');
   }
   //non-first-word capitals are nouns
@@ -3113,7 +3114,7 @@ var tagCondition = function tagCondition(terms, start, stop) {
 var conditional_pass = function conditional_pass(terms) {
 
   //try leading condition
-  if (starts[terms[0].normal]) {
+  if (terms[0] && starts[terms[0].normal]) {
     var until = nextComma(terms, 0);
     if (until) {
       tagCondition(terms, 0, until);
@@ -3888,10 +3889,15 @@ var Sentence = function () {
   function Sentence(str, options) {
     _classCallCheck(this, Sentence);
 
-    this.str = str || '';
+    this.str = '';
+    if (typeof str === 'string') {
+      this.str = str;
+    } else if (typeof str === 'number') {
+      this.str = '' + str;
+    }
     options = options || {};
     var the = this;
-    var words = str.split(/( +)/);
+    var words = this.str.split(/( +)/);
     //build-up term-objects
     this.terms = [];
     if (words[0] === '') {
@@ -8352,6 +8358,10 @@ var sentence_parser = function sentence_parser(text) {
   var sentences = [];
   //first do a greedy-split..
   var chunks = [];
+  //ensure it 'smells like' a sentence
+  if (!text || typeof text !== 'string' || !text.match(/\w/)) {
+    return sentences;
+  }
   // This was the splitter regex updated to fix quoted punctuation marks.
   // let splits = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
   // todo: look for side effects in this regex replacement:
@@ -8425,9 +8435,15 @@ var Text = function () {
 
     options = options || {};
     var the = this;
-    this.raw_text = str || '';
+    if (typeof str === 'string') {
+      this.raw_text = str;
+    } else if (typeof str === 'number') {
+      this.raw_text = '' + str;
+    } else {
+      this.raw_text = '';
+    }
     //build-up sentence/statement methods
-    this.sentences = sentence_parser(str).map(function (s) {
+    this.sentences = sentence_parser(this.raw_text).map(function (s) {
       var last_char = s.slice(-1);
       if (last_char === '?') {
         return new Question(s, options);

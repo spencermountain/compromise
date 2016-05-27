@@ -31,7 +31,7 @@ describe('text sanity-test', function() {
     nlp.sentence({}).terms.length.should.equal(0);
 
     nlp.sentence(55).terms.length.should.equal(1);
-    nlp.sentence('hi world').terms.length.should.equal(1);
+    nlp.sentence('hi').terms.length.should.equal(1);
 
     done();
   });

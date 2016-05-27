@@ -122,6 +122,7 @@ module.exports = [
   ['.[^aeiou][ao]pher$', 'AC'],
   ['.tive$', 'AC'],
   ['[aeiou].*ist$', 'JJ'],
+  ['[^i]fer$', 'VB'],
   //slang things
   ['^um+$', 'EX'], //ummmm
   ['^([hyj]a)+$', 'EX'], //hahah

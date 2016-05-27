@@ -98,4 +98,4 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.sentence('I married April for the 2nd time on June 5th 1998 ').dates());
+// console.log(nlp.sentence('confer $500 to John for going to New York').terms);

@@ -13,6 +13,8 @@ describe('adjective methods', function() {
       ['full', ''],
       ['quixotic', 'quixotically'],
       ['cute', 'cutely'],
+      ['good', 'well'],
+      ['low', 'low']
     ];
     tests.forEach(function(a) {
       let adv = nlp.adjective(a[0]);

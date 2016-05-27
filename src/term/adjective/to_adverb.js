@@ -20,6 +20,10 @@ const adj_to_adv = function(str) {
     'late': 'late',
     'early': 'early',
     'well': 'well',
+    'good': 'well',
+    'little': 'little',
+    'long': 'long',
+    'low': 'low',
     'best': 'best',
     'latter': 'latter',
     'bad': 'badly'

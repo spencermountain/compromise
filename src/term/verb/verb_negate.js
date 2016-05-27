@@ -26,6 +26,7 @@ const negate = function(v) {
     'have': 'haven\'t',
     'has': 'hasn\'t',
     'does': 'doesn\'t',
+    'do': 'don\'t',
   };
   //hard-coded explicit forms
   if (known_negation[v.normal]) {
@@ -39,6 +40,9 @@ const negate = function(v) {
 
   //multiple-word verbs, like 'have walked'
   let words = v.normal.split(' ');
+  if (words.length > 1 && words[1] == 'not') {
+    return words[0];
+  }
   if (words.length > 1 && known_negation[words[0]]) {
     return known_negation[words[0]] + ' ' + words.slice(1, words.length).join(' ');
   }

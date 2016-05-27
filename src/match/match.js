@@ -89,9 +89,11 @@ const findAll = function(terms, regs, options) {
 //calls Terms.replace() on each found result
 const replaceAll = function(terms, regs, replacement, options) {
   let list = findAll(terms, regs, options);
-  list.forEach((t) => {
-    t.replace(replacement, options);
-  });
+  if (list) {
+    list.forEach((t) => {
+      t.replace(replacement, options);
+    });
+  }
 };
 
 

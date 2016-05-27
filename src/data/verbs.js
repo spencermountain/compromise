@@ -216,7 +216,8 @@ let arr = [
   'send',
   'archive',
   'cancel',
-  'learn'
+  'learn',
+  'transfer'
 ];
 
 module.exports = fns.expand_suffixes(arr, compressed);

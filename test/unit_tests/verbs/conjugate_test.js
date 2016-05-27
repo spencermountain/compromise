@@ -141,6 +141,24 @@ let verbs = [{
   'present': 'farms',
   'past': 'farmed',
   'gerund': 'farming'
+}, {
+  'infinitive': 'develop',
+  'present': 'develops',
+  'past': 'developed',
+  'gerund': 'developing'  
+}, {
+  'infinitive': 'criticise',
+  'present': 'criticises',
+  'past': 'criticised',
+  'gerund': 'criticising'   
+}, {
+  'infinitive': 'speak',
+  'present': 'speaks',
+  'past': 'spoke',
+  'gerund': 'speaking',
+  'perfect': 'have spoken',
+  'pluperfect': 'had spoken',
+  'future_perfect': 'will have spoken'   
 }];
 
 
@@ -221,6 +239,36 @@ describe('verb conjugate', function() {
     verbs.forEach(function(o) {
       let c = nlp.verb(o.present).conjugate();
       (c.gerund).should.equal(o.gerund);
+    });
+    done();
+  });
+
+  it('infinitive becomes perfect', function(done) {
+    verbs
+    .filter(function(v) {return v.perfect})
+    .forEach(function(o) {
+      let c = nlp.verb(o.infinitive).conjugate();
+      (c.perfect).should.equal(o.perfect);
+    });
+    done();
+  });
+
+  it('infinitive becomes pluperfect', function(done) {
+    verbs
+    .filter(function(v) {return v.pluperfect})
+    .forEach(function(o) {
+      let c = nlp.verb(o.infinitive).conjugate();
+      (c.pluperfect).should.equal(o.pluperfect);
+    });
+    done();
+  });
+
+  it('infinitive becomes future perfect', function(done) {
+    verbs
+    .filter(function(v) {return v.future_perfect})
+    .forEach(function(o) {
+      let c = nlp.verb(o.infinitive).conjugate();
+      (c.future_perfect).should.equal(o.future_perfect);
     });
     done();
   });

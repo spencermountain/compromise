@@ -96,17 +96,26 @@ class Value extends Noun {
     return str;
   }
 
-  is_unit(s) {
-    if (units[s]) {
+  is_unit() {
+    if (units[this.unit]) {
       return true;
     }
-    s = s.toLowerCase();
+
+    let s = this.unit.toLowerCase();
     if (nums.prefixes[s]) {
       return true;
     }
+
     //try singular version
-    s = s.replace(/s$/); //ew
+    s = this.unit.replace(/s$/, '');
     if (units[s]) {
+      this.unit = this.unit.replace(/s$/, '');
+      return true;
+    }
+
+    s = this.unit.replace(/es$/, '');
+    if (units[s]) {
+      this.unit = this.unit.replace(/es$/, '');
       return true;
     }
 
@@ -126,8 +135,10 @@ class Value extends Noun {
       quarter: true,
     };
     let numbers = '';
+    let raw_units = '';
+
     //seperate number-words from unit-words
-    for(let i = 0; i < words.length; i++) {
+    for (let i = 0; i < words.length; i++) {
       let w = words[i];
       if (w.match(/[0-9]/) || number_words[w]) {
         numbers += ' ' + w;
@@ -135,14 +146,32 @@ class Value extends Noun {
         numbers += ' ' + w;
       } else if (nums.ordinal_ones[w] || nums.ordinal_teens[w] || nums.ordinal_tens[w] || nums.ordinal_multiples[w]) {
         numbers += ' ' + w;
-      } else if (this.is_unit(w)) { //optional units come after the number
-        this.unit = w;
-        if (units[w]) {
-          this.measurement = units[w].category;
-          this.unit_name = units[w].name;
-        }
+      } else {
+        raw_units += ' ' + w;
       }
     }
+    this.unit = raw_units.trim();
+    //is the word something like 'dollars'
+    if (this.is_unit()) {
+      this.measurement = units[this.unit].category;
+      this.unit_name = units[this.unit].name;
+    }
+    //support '$400' => 400 dollars
+    let firstChar = this.text.substr(0, 1);
+    const symbolic_currency = {
+      '€': 'euro',
+      '$': 'dollar',
+      '¥': 'yen',
+      '£': 'pound',
+      '¢': 'cent',
+      '฿': 'bitcoin'
+    };
+    if (symbolic_currency[firstChar]) {
+      this.measurement = 'Money';
+      this.unit_name = 'currency';
+      this.unit = symbolic_currency[firstChar];
+    }
+
     numbers = numbers.trim();
     this.number = to_number(numbers);
   }

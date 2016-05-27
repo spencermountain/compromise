@@ -6,8 +6,10 @@ const implied = require('./implied');
 
 class Term {
   constructor(str, tag, whitespace) {
-    //fail-safe
-    if (str === null || str === undefined) {
+    //don't pass non-strings through here any further..
+    if (typeof str === 'number') {
+      str = '' + str;
+    } else if (typeof str !== 'string') {
       str = '';
     }
     str = (str).toString();

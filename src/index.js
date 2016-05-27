@@ -98,5 +98,5 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.sentence(null));
+// console.log(nlp.term({}));
 // console.log(nlp.text(' \n\n\t spencer is here\n\nhe is here too'));

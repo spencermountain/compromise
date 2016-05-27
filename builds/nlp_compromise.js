@@ -1945,7 +1945,7 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.sentence(null));
+// console.log(nlp.term({}));
 // console.log(nlp.text(' \n\n\t spencer is here\n\nhe is here too'));
 
 },{"./fns.js":22,"./lexicon.js":24,"./sentence/question/question.js":52,"./sentence/sentence.js":55,"./sentence/statement/statement.js":58,"./term/adjective/adjective.js":60,"./term/adverb/adverb.js":65,"./term/noun/date/date.js":70,"./term/noun/noun.js":76,"./term/noun/organization/organization.js":78,"./term/noun/person/person.js":82,"./term/noun/place/place.js":84,"./term/noun/value/value.js":94,"./term/term.js":95,"./term/verb/verb.js":104,"./text/text.js":107}],24:[function(require,module,exports){
@@ -7249,8 +7249,10 @@ var Term = function () {
   function Term(str, tag, whitespace) {
     _classCallCheck(this, Term);
 
-    //fail-safe
-    if (str === null || str === undefined) {
+    //don't pass non-strings through here any further..
+    if (typeof str === 'number') {
+      str = '' + str;
+    } else if (typeof str !== 'string') {
       str = '';
     }
     str = str.toString();

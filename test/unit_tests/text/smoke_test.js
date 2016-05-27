@@ -36,4 +36,28 @@ describe('text sanity-test', function() {
     done();
   });
 
+  it('term methods handle funny stuff', function(done) {
+    const funny = [
+      '',
+      '  ',
+      null,
+      '\n\n',
+      [],
+      {}
+    ];
+    funny.forEach((str) => {
+      nlp.term(str).normal.should.equal('');
+      nlp.verb(str).normal.should.equal('');
+      nlp.noun(str).normal.should.equal('');
+      nlp.adjective(str).normal.should.equal('');
+      nlp.adverb(str).normal.should.equal('');
+      nlp.value(str).normal.should.equal('');
+      nlp.person(str).normal.should.equal('');
+      nlp.date(str).normal.should.equal('');
+      nlp.organization(str).normal.should.equal('');
+    });
+
+    done();
+  });
+
 });

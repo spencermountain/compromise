@@ -101,7 +101,7 @@ class Value extends Noun {
       return true;
     }
 
-    var s = this.unit.toLowerCase();
+    let s = this.unit.toLowerCase();
     if (nums.prefixes[s]) {
       return true;
     }
@@ -134,12 +134,12 @@ class Value extends Noun {
       half: true,
       quarter: true,
     };
-    var numbers = '';
-    var raw_units = '';
+    let numbers = '';
+    let raw_units = '';
 
     //seperate number-words from unit-words
-    for (var i = 0; i < words.length; i++) {
-      var w = words[i];
+    for (let i = 0; i < words.length; i++) {
+      let w = words[i];
       if (w.match(/[0-9]/) || number_words[w]) {
         numbers += ' ' + w;
       } else if (nums.ones[w] || nums.teens[w] || nums.tens[w] || nums.multiples[w]) {

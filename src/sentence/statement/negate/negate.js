@@ -38,10 +38,10 @@ const negate = function(s) {
       //different rule for i/we/they/you + infinitive
       //that is, 'i walk' -> 'i don\'t walk', not 'I not walk'
       function isPronounAndInfinitive() {
-        if (s.terms[i-1]) {
-          var p = s.terms[i-1].text;
-          return (p == 'i' || p == 'we' || p == 'they' || p == 'you') &&
-                (t.pos['Infinitive']);
+        if (s.terms[i - 1]) {
+          let p = s.terms[i - 1].text;
+          return (p === 'i' || p === 'we' || p === 'they' || p === 'you') &&
+            (t.pos['Infinitive']);
         }
         return false;
       }

@@ -285,6 +285,9 @@ const irregular_verbs = {
   sting: {
     past: 'stung'
   },
+  stream: {
+    actor: 'streamer'
+  },
   strike: {
     gerund: 'striking',
     past: 'struck'

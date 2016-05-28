@@ -11,6 +11,8 @@ const change_tense = require('./tense');
 const spot = require('./spot');
 const match = require('../match/match');
 
+
+
 //a sentence is an array of Term objects, along with their various methods
 class Sentence {
 
@@ -74,25 +76,16 @@ class Sentence {
     this.terms.splice(i + 1, 0, t);
   }
 
-  //tokenize the match string, just like you'd tokenize the sentence.
-  //this avoids lumper/splitter problems between haystack and needle
-  tokenize_match(str) {
-    let regs = new Sentence(str).terms; //crazy!
-    regs = regs.map((t) => t.text);
-    regs = regs.filter((t) => t !== '');
-    return regs;
-  }
-
   // a regex-like lookup for a list of terms.
   // returns [] of matches in a 'Terms' class
   match(match_str, options) {
-    let regs = this.tokenize_match(match_str);
+    let regs = tokenize_match(match_str);
     return match.findAll(this.terms, regs, options);
   }
   //returns a transformed sentence
   replace(match_str, replacement, options) {
-    let regs = this.tokenize_match(match_str);
-    replacement = this.tokenize_match(replacement);
+    let regs = tokenize_match(match_str);
+    replacement = tokenize_match(replacement);
     match.replaceAll(this.terms, regs, replacement, options);
     return this;
   }
@@ -228,6 +221,17 @@ class Sentence {
   }
 
 }
+
+//unpublished methods
+//tokenize the match string, just like you'd tokenize the sentence.
+//this avoids lumper/splitter problems between haystack and needle
+const tokenize_match = function(str) {
+  let regs = new Sentence(str).terms; //crazy!
+  regs = regs.map((t) => t.text);
+  regs = regs.filter((t) => t !== '');
+  return regs;
+};
+
 
 Sentence.fn = Sentence.prototype;
 

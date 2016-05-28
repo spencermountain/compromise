@@ -3882,6 +3882,7 @@ var contractions = {
 var change_tense = require('./tense');
 var spot = require('./spot');
 var _match = require('../match/match');
+var tokenize_match = function tokenize_match() {};
 
 //a sentence is an array of Term objects, along with their various methods
 
@@ -3953,29 +3954,13 @@ var Sentence = function () {
       this.terms.splice(i + 1, 0, t);
     }
 
-    //tokenize the match string, just like you'd tokenize the sentence.
-    //this avoids lumper/splitter problems between haystack and needle
-
-  }, {
-    key: 'tokenize_match',
-    value: function tokenize_match(str) {
-      var regs = new Sentence(str).terms; //crazy!
-      regs = regs.map(function (t) {
-        return t.text;
-      });
-      regs = regs.filter(function (t) {
-        return t !== '';
-      });
-      return regs;
-    }
-
     // a regex-like lookup for a list of terms.
     // returns [] of matches in a 'Terms' class
 
   }, {
     key: 'match',
     value: function match(match_str, options) {
-      var regs = this.tokenize_match(match_str);
+      var regs = tokenize_match(match_str);
       return _match.findAll(this.terms, regs, options);
     }
     //returns a transformed sentence
@@ -3983,8 +3968,8 @@ var Sentence = function () {
   }, {
     key: 'replace',
     value: function replace(match_str, replacement, options) {
-      var regs = this.tokenize_match(match_str);
-      replacement = this.tokenize_match(replacement);
+      var regs = tokenize_match(match_str);
+      replacement = tokenize_match(replacement);
       _match.replaceAll(this.terms, regs, replacement, options);
       return this;
     }
@@ -4176,6 +4161,21 @@ var Sentence = function () {
 
   return Sentence;
 }();
+
+//unpublished methods
+//tokenize the match string, just like you'd tokenize the sentence.
+//this avoids lumper/splitter problems between haystack and needle
+
+tokenize_match = function tokenize_match(str) {
+  var regs = new Sentence(str).terms; //crazy!
+  regs = regs.map(function (t) {
+    return t.text;
+  });
+  regs = regs.filter(function (t) {
+    return t !== '';
+  });
+  return regs;
+};
 
 Sentence.fn = Sentence.prototype;
 

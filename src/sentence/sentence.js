@@ -10,7 +10,7 @@ const contractions = {
 const change_tense = require('./tense');
 const spot = require('./spot');
 const match = require('../match/match');
-
+let tokenize_match = function() {};
 
 
 //a sentence is an array of Term objects, along with their various methods
@@ -225,7 +225,7 @@ class Sentence {
 //unpublished methods
 //tokenize the match string, just like you'd tokenize the sentence.
 //this avoids lumper/splitter problems between haystack and needle
-const tokenize_match = function(str) {
+tokenize_match = function(str) {
   let regs = new Sentence(str).terms; //crazy!
   regs = regs.map((t) => t.text);
   regs = regs.filter((t) => t !== '');

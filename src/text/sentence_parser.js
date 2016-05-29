@@ -8,6 +8,10 @@ const sentence_parser = function(text) {
   const sentences = [];
   //first do a greedy-split..
   let chunks = [];
+  //ensure it 'smells like' a sentence
+  if (!text || typeof text !== 'string' || !text.match(/\w/)) {
+    return sentences;
+  }
   // This was the splitter regex updated to fix quoted punctuation marks.
   // let splits = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
   // todo: look for side effects in this regex replacement:

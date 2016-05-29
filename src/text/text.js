@@ -10,9 +10,15 @@ class Text {
   constructor(str, options) {
     options = options || {};
     const the = this;
-    this.raw_text = str || '';
+    if (typeof str === 'string') {
+      this.raw_text = str;
+    } else if (typeof str === 'number') {
+      this.raw_text = '' + str;
+    } else {
+      this.raw_text = '';
+    }
     //build-up sentence/statement methods
-    this.sentences = sentence_parser(str).map(function(s) {
+    this.sentences = sentence_parser(this.raw_text).map(function(s) {
       let last_char = s.slice(-1);
       if (last_char === '?') {
         return new Question(s, options);

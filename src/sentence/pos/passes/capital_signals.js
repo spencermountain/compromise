@@ -3,7 +3,7 @@ const assign = require('../assign');
 //set POS for capitalised words
 const capital_signals = function(terms) {
   //first words need careful rules
-  if (terms[0].is_acronym()) {
+  if (terms[0] && terms[0].is_acronym()) {
     terms[0] = assign(terms[0], 'Noun', 'acronym');
   }
   //non-first-word capitals are nouns

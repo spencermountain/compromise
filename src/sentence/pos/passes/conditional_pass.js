@@ -64,7 +64,7 @@ const tagCondition = function(terms, start, stop) {
 const conditional_pass = function(terms) {
 
   //try leading condition
-  if (starts[terms[0].normal]) {
+  if (terms[0] && starts[terms[0].normal]) {
     let until = nextComma(terms, 0);
     if (until) {
       tagCondition(terms, 0, until);

@@ -98,4 +98,5 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.value('$100'));
+// console.log(nlp.term({}));
+// console.log(nlp.text(' \n\n\t spencer is here\n\nhe is here too'));

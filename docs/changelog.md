@@ -3,6 +3,8 @@ Uses semver, with occasional releases to npm and bower.
 here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
 
 ### v.4  &nbsp;  
+* 4.12.0 - more-sensible responses for invalid, non-string inputs
+* 4.11.0 - 14 PRs, with fixes for currencies, pluralization, conjugation
 * 4.10.0 - Value.to_text() new method, fix "Posessive" POS typo
 * 4.9.0 - return of the text.spot() method (Re:#107)
 * 4.8.0 - more aggressive lumping of dates, like 'last week of february'

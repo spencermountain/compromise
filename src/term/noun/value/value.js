@@ -22,6 +22,7 @@ class Value extends Noun {
     this.unit = null;
     this.unit_name = null;
     this.measurement = null;
+    this.of_what = '';
     // this.text = str;
     // this.normal = str;
     if (this.is_ordinal()) {
@@ -174,6 +175,15 @@ class Value extends Noun {
 
     numbers = numbers.trim();
     this.number = to_number(numbers);
+
+    //of_what
+    var of_pos = this.text.indexOf(' of ');
+    if (of_pos > 0) {
+      this.of_what = this.text.substring(of_pos + 4).trim();
+    } else if (this.unit_name) {
+      this.of_what = this.unit_name;
+    }
+
   }
 
   textual() {

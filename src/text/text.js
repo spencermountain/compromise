@@ -1,6 +1,6 @@
 'use strict';
 const sentence_parser = require('./sentence_parser.js');
-const Sentence = require('../sentence/sentence.js');
+// const Sentence = require('../sentence/sentence.js');
 const Question = require('../sentence/question/question.js');
 const Statement = require('../sentence/statement/statement.js');
 const fns = require('../fns.js');
@@ -20,26 +20,26 @@ class Text {
     //build-up sentence/statement methods
     this.sentences = sentence_parser(this.raw_text).map(function(s) {
       let last_char = s.slice(-1);
-      if (last_char === '?') {
+      if (last_char === '?') { //TODO:be smartr
         return new Question(s, options);
-      } else if (last_char === '.' || last_char === '!') {
-        return new Statement(s, options);
       }
-      return new Sentence(s, options);
+      return new Statement(s, options);
     });
 
     this.contractions = {
       // he'd -> he would
       expand: function() {
-        return the.sentences.map(function(s) {
+        the.sentences = the.sentences.map(function(s) {
           return s.contractions.expand();
         });
+        return the;
       },
       // he would -> he'd
       contract: function() {
-        return the.sentences.map(function(s) {
+        the.sentences = the.sentences.map(function(s) {
           return s.contractions.contract();
         });
+        return the;
       }
     };
   }
@@ -97,25 +97,30 @@ class Text {
 
   //transformations
   to_past() {
-    return this.sentences.map(function(s) {
+    this.sentences = this.sentences.map(function(s) {
       return s.to_past();
     });
+    return this;
   }
   to_present() {
-    return this.sentences.map(function(s) {
+    this.sentences = this.sentences.map(function(s) {
       return s.to_present();
     });
+    return this;
   }
   to_future() {
-    return this.sentences.map(function(s) {
+    this.sentences = this.sentences.map(function(s) {
       return s.to_future();
     });
+    return this;
   }
   negate() {
-    return this.sentences.map(function(s) {
+    this.sentences = this.sentences.map(function(s) {
       return s.negate();
     });
+    return this;
   }
+
   //mining
   people() {
     let arr = [];

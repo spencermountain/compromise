@@ -71,6 +71,8 @@ describe('sentence lookup', function() {
     [`don't go`, `do not`, `don't`],
     [`do not go`, `do not`, `do not`],
     [`i dunno`, `do not`, `dunno`],
+    //bugs
+    [`really remind me to buy`, '[Adverb]? [Infinitive] (me|us) (to|for)', `really remind me to`],
 
   ];
   tests.forEach(function(a) {

@@ -95,6 +95,9 @@ class Term {
     if (!this.text.match(/[a-z|0-9]/i)) {
       return false;
     }
+    if (this.text.match(/[\|#\<\>]/i)) {
+      return false;
+    }
     return true;
   }
   //FBI or F.B.I.

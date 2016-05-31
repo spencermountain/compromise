@@ -52,12 +52,12 @@ const handle_negate = function(terms, i) {
 
 //puts a 'implicit term' in this sentence, at 'i'
 const handle_simple = function(terms, i, particle) {
-  //fixup current term
   terms[i].expansion = terms[i].text.replace(/'.*/, '');
   //make ghost-term
   let second_word = new pos.Verb('');
   second_word.expansion = particle;
-  second_word.whitespace.trailing = ' ';
+  second_word.whitespace.trailing = terms[i].whitespace.trailing;
+  terms[i].whitespace.trailing = ' ';
   terms.splice(i + 1, 0, second_word);
   return terms;
 };
@@ -67,7 +67,8 @@ const handle_irregulars = function(terms, x, arr) {
   terms[x].expansion = arr[0];
   for(let i = 1; i < arr.length; i++) {
     let t = new pos.Term('');
-    t.whitespace.trailing = ' ';
+    t.whitespace.trailing = terms[x].whitespace.trailing; //move whitespace
+    terms[x].whitespace.trailing = ' ';
     t.expansion = arr[i];
     terms.splice(x + i, 0, t);
   }
@@ -80,7 +81,7 @@ const handle_copula = function(terms, i) {
   terms[i].expansion = terms[i].text.replace(/'s$/, '');
   //make ghost-term
   let second_word = new pos.Verb('');
-  second_word.whitespace.trailing = terms[i].whitespace.trailing;
+  second_word.whitespace.trailing = terms[i].whitespace.trailing; //move whitespace
   terms[i].whitespace.trailing = ' ';
   second_word.expansion = 'is';
   terms.splice(i + 1, 0, second_word);

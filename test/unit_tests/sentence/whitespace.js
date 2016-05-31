@@ -66,6 +66,10 @@ describe('preserve whitespace with contractions', function() {
   let tests = [
     ['John\'s    nice.', 'John is    nice.'],
     ['John Smith\'s    nice.', 'John Smith is    nice.'],
+    ['John isn\'t    nice.', 'John is not    nice.'],
+    ['John didn\'t    go.', 'John did not    go.'],
+    ['I wanna    go.', 'I want to    go.'],
+    ['they\'ve    gone.', 'they have    gone.'],
   ];
   tests.forEach(function(a) {
     let t = nlp.text(a[0]);

@@ -10,8 +10,8 @@ let annual = {
   'new years': 'january 1',
   'new years day': 'january 1',
   'thanksgiving': 'fourth thursday in november',
-  'christmas eve': 'december 24',
-  'christmas': 'december 24',
+  'christmas eve': 'december 25',
+  'christmas': 'december 25',
   'christmas day': 'december 24',
   'saint patricks day': 'march 17',
   'st patricks day': 'march 17',
@@ -53,6 +53,7 @@ let annual = {
   'rememberance day': 'november 11',
   'august civic holiday': 'first monday in august',
   'natal day': 'first monday in august',
+  'boxing day': 'december 26'
 
   //european
   'all saints day': 'november 1',

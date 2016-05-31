@@ -27,6 +27,11 @@ const units = {
     'gal': 'gallon',
     'bbl': 'petroleum barrel',
     'pt': 'pint',
+    'qt': 'quart',
+    'tsp': 'teaspoon',
+    'tbsp': 'tablespoon',
+    'cp': 'cup',
+    'fl oz': 'fluid ounce',
   },
   'Distance': {
     'km': 'kilometer',

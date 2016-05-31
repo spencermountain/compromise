@@ -1,6 +1,21 @@
 'use strict';
 let nlp = require('../../../src/index.js');
 
+
+// describe('possessives are not contractions', function() {
+//   [
+//     [`he's good`, `he is good`],
+//   ].forEach(function(a) {
+//     it('preserves contractions', function(done) {
+//       let t = nlp.text(a[0]);
+//       t.contractions.expand().text().should.equal(a[1]);
+//       done();
+//     });
+//   });
+// });
+
+
+
 let tests = [
   [`he's a hero`, ['he', 'is']],
   [`she's here`, ['she', 'is']],
@@ -100,10 +115,10 @@ describe('contractions', function() {
   });
 
   it('outputs correct whitespace', function() {
-   let test = ['We\'ve only just begun', 'We have only just begun'];
-   let t = nlp.text(test[0]);
-   t.contractions.expand()
-   t.text().should.equal(test[1]);
-  })
+    let test = ['We\'ve only just begun', 'We have only just begun'];
+    let t = nlp.text(test[0]);
+    t.contractions.expand();
+    t.text().should.equal(test[1]);
+  });
 
 });

@@ -23,29 +23,27 @@ let months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'a
 
 describe('date', function () {
 
-  it('full dates', function (done) {
-    let tests = [
-      ['june 5th 1999', [5, 5, 1999]],
-      ['january 1st 1644', [0, 1, 1644]],
-      ['June 4th 1993', [5, 4, 1993]],
-      ['March 1st 1987', [2, 1, 1987]],
-      ['June 22nd 2014', [5, 22, 2014]],
-      ['June 22nd 1997', [5, 22, 1997]],
-    // ['200bc', [5, 22, 1997]],
-    ];
-    tests.forEach(function (a) {
-      let n = nlp.date(a[0]);
-      let w = a[1];
-      let d = n.date();
-      d.getMonth().should.equal(w[0]);
-      d.getDate().should.equal(w[1]);
-      d.getFullYear().should.equal(w[2]);
+  let tests = [
+    ['june 5th 1999', [5, 5, 1999]],
+    ['january 1st 1644', [0, 1, 1644]],
+    ['June 4th 1993', [5, 4, 1993]],
+    ['March 1st 1987', [2, 1, 1987]],
+    ['June 22nd 2014', [5, 22, 2014]],
+    ['June 22nd 1997', [5, 22, 1997]],
+  // ['200bc', [5, 22, 1997]],
+  ];
+  tests.forEach(function (a) {
+    it('full dates  -' + a[0], function (done) {
+      let d = nlp.date(a[0]);
+      d.data.month.should.equal(a[1][0]);
+      d.data.day.should.equal(a[1][1]);
+      d.data.year.should.equal(a[1][2]);
+      done();
     });
-    done();
   });
 
   it('partial dates', function (done) {
-    let tests = [
+    [
       ['3rd of March 1969', [2, 3, 1969]],
       ['2nd of April 1929', [3, 2, 1929]],
       ['March 1969', [2, null, 1969]],
@@ -62,8 +60,7 @@ describe('date', function () {
       ['february 10th', [1, 10, null]],
       ['february 30th', [1, 30, null]],
       ['jan 1921', [0, null, 1921]],
-    ];
-    tests.forEach(function (a) {
+    ].forEach(function (a) {
       let n = nlp.date(a[0]);
       let w = a[1];
       let o = n.data;
@@ -75,12 +72,11 @@ describe('date', function () {
   });
 
   it('not dates', function (done) {
-    let tests = [
+    [
       ['303rd of March 1969', [2, null, 1969]],
       ['4103', [null, null, null]],
       ['January 5th 4032', [0, 5, null]],
-    ];
-    tests.forEach(function (a) {
+    ].forEach(function (a) {
       let n = nlp.date(a[0]);
       let w = a[1];
       let o = n.data;

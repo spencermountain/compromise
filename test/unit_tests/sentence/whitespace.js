@@ -61,3 +61,18 @@ describe('preserve whitespace between sentences', function() {
     });
   });
 });
+
+describe('preserve whitespace with contractions', function() {
+  let tests = [
+    ['John\'s    nice.', 'John is    nice.'],
+    ['John Smith\'s    nice.', 'John Smith is    nice.'],
+  ];
+  tests.forEach(function(a) {
+    let t = nlp.text(a[0]);
+    t.contractions.expand();
+    it(a, function(done) {
+      (t.text()).should.equal(a[1]);
+      done();
+    });
+  });
+});

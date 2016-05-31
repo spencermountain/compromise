@@ -9,13 +9,33 @@ describe('possessives are not contractions', function() {
     [`spencer's really good`, `spencer is really good`],
     [`he's good`, `he is good`],
     [`google's about to earn money`, `google is about to earn money`],
+    [`toronto's citizens`, `toronto's citizens`],
     [`rocket's red glare`, `rocket's red glare`],
     [`somebody's walking`, `somebody is walking`],
-    [`toronto's citizens`, `toronto's citizens`],
+    [`everyone's here`, `everyone's here`],
+    [`the tornado's power`, `the tornado's power`],
   ].forEach(function(a) {
-    it('preserves contractions', function(done) {
+    it(a[0], function(done) {
       let t = nlp.text(a[0]);
       t.contractions.expand().text().should.equal(a[1]);
+      done();
+    });
+  });
+});
+
+describe('contractions get POS', function() {
+  [
+    [`john's good`, `Person`],
+    [`ankara's good`, `Place`],
+    [`January's good`, `Date`],
+
+    [`john's cousin`, `Person`],
+    [`ankara's citizens`, `Place`],
+    [`January's weather`, `Date`],
+  ].forEach(function(a) {
+    it(a[0], function(done) {
+      let s = nlp.sentence(a[0]);
+      s.terms[0].pos[a[1]].should.equal(true);
       done();
     });
   });

@@ -23,7 +23,12 @@ describe('tokenize sentence tests', function() {
       ['What\'s my age again? What\'s my age again?', 2],
       ['the problem, eg. the javascript', 1],
       ['Dr. Tony is nice. He lives on Elm St. in Vancouver BC. Canada', 2],
-      ['I made $5.60 today in 1 hour of work.  The E.M.T.\'s were on time, but only barely.', 2]
+      ['I made $5.60 today in 1 hour of work.  The E.M.T.\'s were on time, but only barely.', 2],
+      ['Hi there.\nEveryone wins.', 2],
+      ['Hi there!\n\nEveryone wins.', 2],
+      ['Hi there\nEveryone wins', 2],
+      ['Hi there.\n Everyone wins', 2],
+      ['Hi there!!\nEveryone wins\n\n', 2],
     ];
     tests.forEach(function(a) {
       let n = nlp.text(a[0]);

@@ -21,6 +21,7 @@ exports.reverseObj = function(obj) {
   }, {});
 };
 
+//turn a nested array into one array
 exports.flatten = function(arr) {
   let all = [];
   arr.forEach(function(a) {

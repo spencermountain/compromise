@@ -53,7 +53,6 @@ let annual = {
   'rememberance day': 'november 11',
   'august civic holiday': 'first monday in august',
   'natal day': 'first monday in august',
-  'boxing day': 'december 26'
 
   //european
   'all saints day': 'november 1',

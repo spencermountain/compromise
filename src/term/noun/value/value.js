@@ -60,6 +60,11 @@ class Value extends Noun {
 
   //turn an integer like 22 into '22nd'
   to_ordinal(num) {
+    //teens are all 'th'
+    if (num >= 10 && num <= 20) {
+      return '' + num + 'th';
+    }
+    //treat it as a string..
     num = '' + num;
     //fail safely
     if (!num.match(/[0-9]$/)) {
@@ -98,7 +103,12 @@ class Value extends Noun {
   }
 
   is_unit() {
+    //if it's a known unit
     if (units[this.unit]) {
+      return true;
+    }
+    //currencies are derived-through POS
+    if (this.pos['Currency']) {
       return true;
     }
 

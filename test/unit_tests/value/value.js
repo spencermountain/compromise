@@ -3,6 +3,19 @@ let Value = require('../../../src/term/noun/value/value.js');
 
 describe('parse value', function() {
 
+  it('to_ordinal', function(done) {
+    let tests = [
+      [11, '11th'],
+      [5, '5th'],
+      [22, '22nd'],
+    ];
+    tests.forEach(function(a) {
+      let n = new Value(a[0]);
+      (n.to_ordinal()).should.equal(a[1]);
+    });
+    done();
+  });
+
   it('gets number', function(done) {
     let tests = [
       ['five hundred feet', 500],

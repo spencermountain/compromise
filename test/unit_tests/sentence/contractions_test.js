@@ -2,18 +2,24 @@
 let nlp = require('../../../src/index.js');
 
 
-// describe('possessives are not contractions', function() {
-//   [
-//     [`he's good`, `he is good`],
-//   ].forEach(function(a) {
-//     it('preserves contractions', function(done) {
-//       let t = nlp.text(a[0]);
-//       t.contractions.expand().text().should.equal(a[1]);
-//       done();
-//     });
-//   });
-// });
-
+describe('possessives are not contractions', function() {
+  [
+    [`spencer's good`, `spencer is good`],
+    [`spencer's house`, `spencer's house`],
+    [`spencer's really good`, `spencer is really good`],
+    [`he's good`, `he is good`],
+    [`google's about to earn money`, `google is about to earn money`],
+    [`rocket's red glare`, `rocket's red glare`],
+    [`somebody's walking`, `somebody is walking`],
+    [`toronto's citizens`, `toronto's citizens`],
+  ].forEach(function(a) {
+    it('preserves contractions', function(done) {
+      let t = nlp.text(a[0]);
+      t.contractions.expand().text().should.equal(a[1]);
+      done();
+    });
+  });
+});
 
 
 let tests = [
@@ -62,8 +68,8 @@ let tests = [
   [`do not`, ['do not']],
   [`dunno`, ['do not', 'know']],
 
-  [`spencer's`, ['spencer', 'is']],
-  [`he's`, ['he', 'is']],
+  [`spencer's going`, ['spencer', 'is']],
+  [`he's going`, ['he', 'is']],
 ];
 
 
@@ -82,15 +88,14 @@ describe('contractions', function() {
   });
 
   it('contract', function(done) {
-    let arr = [
+    [
       [`he is a hero`, `he's`],
       [`she is here`, `she's`],
       [`it is a hero`, `it's`],
       [`he would win`, `he'd`],
       [`they would win`, `they'd`],
       [`they have begun`, `they've`],
-    ];
-    arr.forEach(function(a) {
+    ].forEach(function(a) {
       let t = nlp.text(a[0]);
       t.contractions.contract();
       t.terms()[0].normal.should.equal(a[1]);
@@ -100,14 +105,13 @@ describe('contractions', function() {
   });
 
   it('preserves contractions', function(done) {
-    let tests = [
+    [
       `he is a hero`,
       `she is here`,
       `it is a hero`,
       `he would win`,
       `they would win`,
-    ];
-    tests.forEach(function(a) {
+    ].forEach(function(a) {
       let t = nlp.text(a);
       t.text().should.equal(a);
     });
@@ -115,10 +119,14 @@ describe('contractions', function() {
   });
 
   it('outputs correct whitespace', function() {
-    let test = ['We\'ve only just begun', 'We have only just begun'];
-    let t = nlp.text(test[0]);
-    t.contractions.expand();
-    t.text().should.equal(test[1]);
+    [
+      ['We\'ve only just begun', 'We have only just begun'],
+      ['We\'ve   only just begun', 'We have   only just begun']
+    ].forEach((a) => {
+      let t = nlp.text(a[0]);
+      t.contractions.expand();
+      t.text().should.equal(a[1]);
+    });
   });
 
 });

@@ -36,10 +36,10 @@ module.exports = [
     'before': ['[Possessive]', '[?]'],
     'after': ['[Possessive]', '[Noun]'],
   },
-  {
-    'before': ['[Possessive]', '[Verb]'],
-    'after': ['[Possessive]', '[Noun]'],
-  },
+  // {
+  //   'before': ['[Possessive]', '[Verb]'],
+  //   'after': ['[Possessive]', '[Noun]'],
+  // },
   {
     'before': ['[?]', '[Possessive]', '[Noun]'],
     'after': ['[Verb]', '[Possessive]', '[Noun]'],

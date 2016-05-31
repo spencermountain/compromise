@@ -38,7 +38,7 @@ module.exports = [
   ['.where$', 'RB'],
   ['.ify$', 'VB'],
   ['.bound$', 'JJ'],
-  ['.ens$', 'VB'],
+  ['.[^z]ens$', 'VB'],
   ['.oid$', 'JJ'],
   ['.vice$', 'NN'],
   ['.rough$', 'JJ'],

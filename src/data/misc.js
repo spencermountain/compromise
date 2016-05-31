@@ -2,6 +2,7 @@
 
 const misc = {
   'there': 'NN',
+  'here': 'NN',
 
   'better': 'JJR',
   'earlier': 'JJR',
@@ -27,6 +28,7 @@ const misc = {
   'system': 'NN',
   'example': 'NN',
   'part': 'NN',
+  'house': 'NN',
 };
 
 const compact = {
@@ -271,6 +273,8 @@ const compact = {
     'elle',
     'yourself',
     '\'em',
+    'he\'s',
+    'she\'s',
   ],
 
   //some manual adverbs (the rest are generated)
@@ -292,7 +296,6 @@ const compact = {
     'perhaps',
     'where',
     'then',
-    'here',
     'thus',
     'very',
     'often',

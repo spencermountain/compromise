@@ -409,7 +409,6 @@ const compact = {
     'nothing',
     'everything',
     'god',
-    'dollar',
     'student',
     'patent',
     'funding',

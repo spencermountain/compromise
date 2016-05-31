@@ -62,6 +62,7 @@ const classMapping = {
   'Pronoun': Noun,
   'Actor': Noun,
   'Abbreviation': Noun,
+  'Currency': Noun,
 
   'Verb': Verb,
   'PresentTense': Verb,

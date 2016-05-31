@@ -44,7 +44,7 @@ const shouldLumpThree = function(a, b, c) {
     {
       condition: (a.pos.Date && (c.pos.Date || c.pos.Ordinal) && (b.pos.Preposition || b.pos.Determiner || b.pos.Conjunction || b.pos.Adjective)), //3hrs after 5pm
       result: 'Date',
-    },
+    }
   ];
   for(let i = 0; i < lump_rules.length; i++) {
     if (lump_rules[i].condition) {
@@ -119,6 +119,10 @@ const shouldLumpTwo = function(a, b) {
     {
       condition: (b.normal.match(/(standard|daylight|summer) time/) && (a.pos['Adjective'] || a.pos['Place'])),
       result: 'Date',
+    },
+    {
+      condition: (a.pos.Demonym && b.pos.Currency), //canadian dollar, Brazilian pesos
+      result: 'Currency',
     },
   ];
   for(let i = 0; i < lump_rules.length; i++) {

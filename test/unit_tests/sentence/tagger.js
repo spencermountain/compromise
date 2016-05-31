@@ -33,6 +33,7 @@ describe('basic pos tag', function() {
     ['u r nice', ['Pronoun', 'Copula', 'Adjective']],
 
     ['canadian bacon', ['Demonym', 'Noun']],
+    ['canadian dollar', ['Currency']],
   ];
   tests.forEach(function(a) {
     it(a[0], function(done) {

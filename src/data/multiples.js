@@ -83,5 +83,6 @@ module.exports = {
   'standard time': 'DA',
   'daylight time': 'DA',
   'summer time': 'DA',
-  'fl oz': 'NN'
+  'fl oz': 'NN',
+  'us dollar': 'NN'
 };

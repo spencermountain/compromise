@@ -77,6 +77,7 @@ Object.keys(require('./data/convertables.js')).forEach(function(s) {
 
 addArr(require('./data/abbreviations.js').abbreviations, 'Abbreviation');
 addArr(require('./data/demonyms.js'), 'Demonym');
+addArr(require('./data/currencies.js'), 'Currency');
 addArr(require('./data/honourifics.js'), 'Honourific');
 addArr(require('./data/uncountables.js'), 'Noun');
 let dates = require('./data/dates.js');

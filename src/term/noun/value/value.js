@@ -44,7 +44,7 @@ class Value extends Noun {
     return true;
   };
 
-  is_ordinal() { //todo: make this clever.
+  is_ordinal() {
     //1st
     if (this.normal.match(/^[0-9]+(rd|st|nd|th)$/)) {
       return true;
@@ -59,7 +59,12 @@ class Value extends Noun {
   }
 
   //turn an integer like 22 into '22nd'
-  to_ordinal(num) {
+  to_ordinal() {
+    let num = this.number;
+    //fail fast
+    if (!num && num !== 0) {
+      return '';
+    }
     //teens are all 'th'
     if (num >= 10 && num <= 20) {
       return '' + num + 'th';
@@ -204,5 +209,4 @@ class Value extends Noun {
 Value.fn = Value.prototype;
 module.exports = Value;
 
-// console.log(new Value('first').normal);
-// console.log(new Value('minus eighty eight point nine nine').number);
+// console.log(new Value('fifty saudi riyals'));

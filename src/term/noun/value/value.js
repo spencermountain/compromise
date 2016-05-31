@@ -177,7 +177,7 @@ class Value extends Noun {
     this.number = to_number(numbers);
 
     //of_what
-    var of_pos = this.text.indexOf(' of ');
+    let of_pos = this.text.indexOf(' of ');
     if (of_pos > 0) {
       this.of_what = this.text.substring(of_pos + 4).trim();
     } else if (this.unit_name) {

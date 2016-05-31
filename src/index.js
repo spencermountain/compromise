@@ -100,5 +100,4 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.text(' \n\n\t spencer is here\n\nhe is here too'));
 // console.log(nlp.sentence(`john's good`).contractions.expand().terms);
-// console.log(nlp.sentence(`everyone's here`).contractions.expand().text());
-// console.log(nlp.text(`Jon doe is a geek`).people());
+// console.log(nlp.sentence(`canadian franc`).terms);

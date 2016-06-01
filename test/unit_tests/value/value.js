@@ -20,6 +20,9 @@ describe('parse value', function() {
       ['five hundred feet', 500],
       ['fifty square feet', 50],
       ['90 hertz', 90],
+      ['5 six-ounce containers', 5],
+      ['twelve 2-gram containers', 12],
+      ['thirty-seven forever-21 stores', 37],
     ].forEach(function(a) {
       let n = new Value(a[0]);
       (a[1] === n.number).should.equal(true);

@@ -44,6 +44,27 @@ class Value extends Noun {
     return true;
   };
 
+  is_number_word(w) {
+    let number_words = {
+      minus: true,
+      negative: true,
+      point: true,
+      half: true,
+      quarter: true,
+    };
+
+    if (w.match(/[0-9]/) || number_words[w]) {
+      return true;
+    } else if (nums.ones[w] || nums.teens[w] || nums.tens[w] || nums.multiples[w]) {
+      return true;
+    } else if (nums.ordinal_ones[w] || nums.ordinal_teens[w] || nums.ordinal_tens[w] || nums.ordinal_multiples[w]) {
+      return true;
+    }
+
+    return false;
+  };
+
+
   is_ordinal() {
     //1st
     if (this.normal.match(/^[0-9]+(rd|st|nd|th)$/)) {
@@ -141,25 +162,29 @@ class Value extends Noun {
     if (!this.is_number(this.text)) {
       return;
     }
-    let words = this.text.toLowerCase().split(/[ -]/);
-    let number_words = {
-      minus: true,
-      negative: true,
-      point: true,
-      half: true,
-      quarter: true,
-    };
+
+    let words = this.text.toLowerCase().split(/[ ]/);
+    //split at '-' only for numbers like twenty-two, sixty-seven, etc.
+    //so that 'twelve six-gram pieces' returns 12 for number, not null
+    //however, still returns null for 'three sevel-eleven stores' 
+    for (let i = 0; i < words.length; i++) {
+      let w = words[i];
+      if ((w.indexOf('-') == w.lastIndexOf('-')) && w.indexOf('-') > -1) {
+        let halves = w.split(/[-]/);
+        if (this.is_number_word(halves[0]) && this.is_number_word(halves[1])) {
+          words[i] = halves[0];
+          words.splice(i+1, 0, halves[1]);
+        }
+      }
+    }
+
     let numbers = '';
     let raw_units = '';
 
     //seperate number-words from unit-words
     for (let i = 0; i < words.length; i++) {
       let w = words[i];
-      if (w.match(/[0-9]/) || number_words[w]) {
-        numbers += ' ' + w;
-      } else if (nums.ones[w] || nums.teens[w] || nums.tens[w] || nums.multiples[w]) {
-        numbers += ' ' + w;
-      } else if (nums.ordinal_ones[w] || nums.ordinal_teens[w] || nums.ordinal_tens[w] || nums.ordinal_multiples[w]) {
+      if (this.is_number_word(w)) {
         numbers += ' ' + w;
       } else {
         raw_units += ' ' + w;
@@ -167,6 +192,8 @@ class Value extends Noun {
     }
     this.unit = raw_units.trim();
 
+    //if raw_units is something like "grams of sugar", try it first,
+    //then "grams of", and then "grams".
     while (this.unit != '') {
     if (this.is_unit() && units[this.unit]) {
       this.measurement = units[this.unit].category;

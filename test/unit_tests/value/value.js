@@ -36,11 +36,13 @@ describe('parse value', function() {
     ['¥2.5', 'yen'],
     ['€3,000,100', 'euro'],
     ['EUR 9.99', 'eur'],
-    // ['nine south sudanese pounds', 'south sudanese pound'],
     ['5 g', 'g'],
     ['3 grams', 'gram'],
     ['2 inches', 'inch'],
     ['2 in', 'in'],
+    ['5 g sugar', 'g'],
+    ['10 grams of sugar', 'gram'],
+    ['fifty inches of snow', 'inch'],
   ].forEach(function(a) {
     it(a[0], function(done) {
       let n = new Value(a[0]);
@@ -53,7 +55,6 @@ describe('parse value', function() {
     ['five hundred feet', 'Distance'],
     ['100 kilometers', 'Distance'],
     ['fifty hertz', 'Frequency'],
-    // ['fifty saudi riyals', 'Money'],
     ['59 thousand $', 'Money'],
     ['100 mb', 'Data'],
     ['50 руб', 'Money'],

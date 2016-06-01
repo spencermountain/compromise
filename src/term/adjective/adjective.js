@@ -10,6 +10,9 @@ class Adjective extends Term {
   constructor(str, tag) {
     super(str);
     this.tag = tag;
+    if (tag) {
+      this.pos[tag] = true;
+    }
     this.pos['Adjective'] = true;
   }
 

@@ -62,6 +62,7 @@ const classMapping = {
   'Pronoun': Noun,
   'Actor': Noun,
   'Abbreviation': Noun,
+  'Currency': Noun,
 
   'Verb': Verb,
   'PresentTense': Verb,
@@ -77,6 +78,7 @@ const classMapping = {
   'Comparative': Adjective,
   'Superlative': Adjective,
   'Adjective': Adjective,
+  'Demonym': Adjective,
 
   'Determiner': Term,
   'Preposition': Term,

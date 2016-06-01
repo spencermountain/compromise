@@ -20,19 +20,29 @@ const punct_rules = [
 
 const regex_pass = function(terms) {
   terms.forEach((t, i) => {
+    //don't overwrite
     if (terms[i].tag !== '?') {
       return;
     }
+    let text = terms[i].text;
+    let normal = terms[i].normal;
+    //normalize apostrophe s for grammatical purposes
+    if (terms[i].has_abbreviation()) {
+      let split = terms[i].normal.split(/'/);
+      if (split[1] === 's') {
+        normal = split[0];
+      }
+    }
     //regexes that involve punctuation
     for(let o = 0; o < punct_rules.length; o++) {
-      if (terms[i].text.match(punct_rules[o].reg)) {
+      if (text.match(punct_rules[o].reg)) {
         terms[i] = assign(terms[i], punct_rules[o].pos, 'rules_pass_' + o);
         return;
       }
     }
     //bigger list of regexes on normal
     for (let o = 0; o < word_rules.length; o++) {
-      if (terms[i].normal.match(word_rules[o].reg)) {
+      if (normal.match(word_rules[o].reg)) {
         terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass_' + o);
         return;
       }

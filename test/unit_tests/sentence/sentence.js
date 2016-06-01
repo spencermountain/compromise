@@ -3,20 +3,6 @@ let nlp = require('../../../src/index.js');
 
 describe('Sentence Class Methods', function() {
 
-  it('Basic', function(done) {
-    let sen = nlp.text('Hello World').sentences[0];
-    let methods = [
-      'terminator',
-      'text',
-    ];
-
-    methods.forEach(function(m) {
-      sen.__proto__.hasOwnProperty(m).should.equal(true);
-    });
-
-    done();
-  });
-
   it('Termination', function(done) {
     let tests = [
       ['Tony is nice.', '.'],

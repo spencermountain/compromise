@@ -75,7 +75,7 @@ const parse_term = function(term, i) {
     i
   };
 };
-// console.log(parse_term('~fun~?'));
+// console.log(parse_term('(one|1) (two|2)'));
 
 
 //turn a match string into an array of objects

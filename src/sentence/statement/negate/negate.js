@@ -17,6 +17,7 @@ let logical_affirm = fns.reverseObj(logical_negate);
 logical_affirm['nobody'] = 'somebody';
 
 const negate = function(s) {
+
   for(let i = 0; i < s.terms.length; i++) {
     let t = s.terms[i];
     //these verbs are red-herrings
@@ -35,6 +36,7 @@ const negate = function(s) {
     }
     //negate the first verb
     if (t.pos['Verb']) {
+
       //different rule for i/we/they/you + infinitive
       //that is, 'i walk' -> 'i don\'t walk', not 'I not walk'
       function isPronounAndInfinitive() {
@@ -50,7 +52,6 @@ const negate = function(s) {
         t.changeTo('don\'t ' + t.text);
         break;
       }
-
       t.negate();
       break;
     }

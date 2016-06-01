@@ -67,7 +67,16 @@ class Term {
   root() {
     return this.normal;
   }
-
+  //strip apostrophe s
+  strip_apostrophe() {
+    if (this.normal.match(/[a-z]'[a-z][a-z]?$/)) {
+      let split = this.normal.split(/'/);
+      if (split[1] === 's') {
+        return split[0];
+      }
+    }
+    return this.normal;
+  }
   //Term methods..
   has_comma() {
     if (this.text.match(/,$/)) {
@@ -81,6 +90,7 @@ class Term {
     }
     return false;
   }
+
   is_capital() {
     if (this.text.match(/[A-Z][a-z]/)) {
       return true;
@@ -93,6 +103,9 @@ class Term {
       return false;
     }
     if (!this.text.match(/[a-z|0-9]/i)) {
+      return false;
+    }
+    if (this.text.match(/[\|#\<\>]/i)) {
       return false;
     }
     return true;

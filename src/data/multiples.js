@@ -82,5 +82,7 @@ module.exports = {
   //timezones
   'standard time': 'DA',
   'daylight time': 'DA',
-  'summer time': 'DA'
+  'summer time': 'DA',
+  'fl oz': 'NN',
+  'us dollar': 'NN'
 };

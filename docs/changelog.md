@@ -2,6 +2,10 @@ Uses semver, with occasional releases to npm and bower.
 
 here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
 
+### v.5  &nbsp;  
+* 5.1.0 - newlines split sentences
+* 5.0.0 - Text methods now return this, instead of array of sentences
+
 ### v.4  &nbsp;  
 * 4.12.0 - more-sensible responses for invalid, non-string inputs
 * 4.11.0 - 14 PRs, with fixes for currencies, pluralization, conjugation

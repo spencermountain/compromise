@@ -3,6 +3,17 @@
 // @spencermountain 2015 MIT
 'use strict';
 let abbreviations = require('../data/abbreviations').abbreviations;
+let fns = require('../fns');
+
+const naiive_split = function(text) {
+  //first, split by newline
+  let splits = text.split(/(\n+)/);
+  //split by period, question-mark, and exclamation-mark
+  splits = splits.map(function(str) {
+    return str.split(/(\S.+?[.!?])(?=\s+|$)/g);
+  });
+  return fns.flatten(splits);
+};
 
 const sentence_parser = function(text) {
   const sentences = [];
@@ -15,7 +26,7 @@ const sentence_parser = function(text) {
   // This was the splitter regex updated to fix quoted punctuation marks.
   // let splits = text.split(/(\S.+?[.\?!])(?=\s+|$|")/g);
   // todo: look for side effects in this regex replacement:
-  let splits = text.split(/(\S.+?[.!?])(?=\s+|$)/g);
+  let splits = naiive_split(text);
   //filter-out the grap ones
   for(let i = 0; i < splits.length; i++) {
     let s = splits[i];
@@ -61,4 +72,4 @@ const sentence_parser = function(text) {
 };
 
 module.exports = sentence_parser;
-// console.log(sentence_parser('    Dr. Smith is nice?    He lives in Spain?  He does?? '));
+// console.log(sentence_parser('Hi there.\n\n \nEveryone wins\n'));

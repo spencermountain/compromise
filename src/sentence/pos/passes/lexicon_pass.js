@@ -6,29 +6,39 @@ const assign = require('../assign');
 const lexicon_pass = function(terms, options) {
   let lexicon = options.lexicon || defaultLexicon;
   return terms.map(function(t) {
+
+    let normal = t.normal;
+    //normalize apostrophe s for grammatical purposes
+    if (t.has_abbreviation()) {
+      let split = normal.split(/'/);
+      if (split[1] === 's') {
+        normal = split[0];
+      }
+    }
+
     //check lexicon straight-up
-    if (lexicon[t.normal] !== undefined) {
-      return assign(t, lexicon[t.normal], 'lexicon_pass');
+    if (lexicon[normal] !== undefined) {
+      return assign(t, lexicon[normal], 'lexicon_pass');
     }
 
     if (lexicon[t.expansion] !== undefined) {
       return assign(t, lexicon[t.expansion], 'lexicon_expansion');
     }
     //try to match it without a prefix - eg. outworked -> worked
-    if (t.normal.match(/^(over|under|out|-|un|re|en).{3}/)) {
-      const attempt = t.normal.replace(/^(over|under|out|.*?-|un|re|en)/, '');
+    if (normal.match(/^(over|under|out|-|un|re|en).{3}/)) {
+      const attempt = normal.replace(/^(over|under|out|.*?-|un|re|en)/, '');
       return assign(t, lexicon[attempt], 'lexicon_prefix');
     }
     //try to match without a contraction - "they've" -> "they"
     if (t.has_abbreviation()) {
-      let attempt = t.normal.replace(/'(ll|re|ve|re|d|m)/, '');
-      // attempt = t.normal.replace(/n't/, '');
+      let attempt = normal.replace(/'(ll|re|ve|re|d|m)/, '');
+      // attempt = normal.replace(/n't/, '');
       return assign(t, lexicon[attempt], 'lexicon_prefix');
     }
 
     //match 'twenty-eight'
-    if (t.normal.match(/-/)) {
-      let sides = t.normal.split('-');
+    if (normal.match(/-/)) {
+      let sides = normal.split('-');
       if (lexicon[sides[0]]) {
         return assign(t, lexicon[sides[0]], 'lexicon_dash');
       }

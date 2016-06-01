@@ -31,6 +31,9 @@ describe('basic pos tag', function() {
     ['book the flight', ['Verb', 'Determiner', 'Noun']],
     //slang, contractions
     ['u r nice', ['Pronoun', 'Copula', 'Adjective']],
+
+    ['canadian bacon', ['Demonym', 'Noun']],
+    ['canadian dollar', ['Currency']],
   ];
   tests.forEach(function(a) {
     it(a[0], function(done) {

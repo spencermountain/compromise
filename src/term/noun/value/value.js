@@ -44,7 +44,7 @@ class Value extends Noun {
     return true;
   };
 
-  is_ordinal() { //todo: make this clever.
+  is_ordinal() {
     //1st
     if (this.normal.match(/^[0-9]+(rd|st|nd|th)$/)) {
       return true;
@@ -59,7 +59,17 @@ class Value extends Noun {
   }
 
   //turn an integer like 22 into '22nd'
-  to_ordinal(num) {
+  to_ordinal() {
+    let num = this.number;
+    //fail fast
+    if (!num && num !== 0) {
+      return '';
+    }
+    //teens are all 'th'
+    if (num >= 10 && num <= 20) {
+      return '' + num + 'th';
+    }
+    //treat it as a string..
     num = '' + num;
     //fail safely
     if (!num.match(/[0-9]$/)) {
@@ -98,7 +108,12 @@ class Value extends Noun {
   }
 
   is_unit() {
+    //if it's a known unit
     if (units[this.unit]) {
+      return true;
+    }
+    //currencies are derived-through POS
+    if (this.pos['Currency']) {
       return true;
     }
 
@@ -177,7 +192,7 @@ class Value extends Noun {
     this.number = to_number(numbers);
 
     //of_what
-    var of_pos = this.text.indexOf(' of ');
+    let of_pos = this.text.indexOf(' of ');
     if (of_pos > 0) {
       this.of_what = this.text.substring(of_pos + 4).trim();
     } else if (this.unit_name) {
@@ -194,5 +209,4 @@ class Value extends Noun {
 Value.fn = Value.prototype;
 module.exports = Value;
 
-// console.log(new Value('first').normal);
-// console.log(new Value('minus eighty eight point nine nine').number);
+// console.log(new Value('fifty saudi riyals'));

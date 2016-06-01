@@ -34,6 +34,7 @@ const units = {
     'bbl': 'petroleum barrel',
     'pt': 'pint',
     'qt': 'quart',
+    'tbl': 'tablespoon',
     'tsp': 'teaspoon',
     'tbsp': 'tablespoon',
     'cp': 'cup',

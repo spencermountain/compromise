@@ -134,7 +134,6 @@ class Value extends Noun {
       this.unit = this.unit.replace(/es$/, '');
       return true;
     }
-
     return false;
   }
 
@@ -167,11 +166,17 @@ class Value extends Noun {
       }
     }
     this.unit = raw_units.trim();
-    //is the word something like 'dollars'
-    if (this.is_unit()) {
+
+    while (this.unit != '') {
+    if (this.is_unit() && units[this.unit]) {
       this.measurement = units[this.unit].category;
       this.unit_name = units[this.unit].name;
+      break;
+    } else {
+      this.unit = this.unit.substr(0, this.unit.lastIndexOf(' ')).trim();
     }
+  }
+
     //support '$400' => 400 dollars
     let firstChar = this.text.substr(0, 1);
     const symbolic_currency = {

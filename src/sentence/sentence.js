@@ -186,6 +186,28 @@ class Sentence {
     });
   }
 
+  //parts of speech
+  nouns() {
+    return this.terms.filter(function(t) {
+      return t.pos['Noun'];
+    });
+  }
+  adjectives() {
+    return this.terms.filter(function(t) {
+      return t.pos['Adjective'];
+    });
+  }
+  verbs() {
+    return this.terms.filter(function(t) {
+      return t.pos['Verb'];
+    });
+  }
+  adverbs() {
+    return this.terms.filter(function(t) {
+      return t.pos['Adverb'];
+    });
+  }
+
   // john walks quickly -> john walked quickly
   to_past() {
     change_tense(this, 'past');

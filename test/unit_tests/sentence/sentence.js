@@ -53,6 +53,70 @@ describe('Sentence Class Methods', function() {
     done();
   });
 
+  it('Nouns', function(done) {
+    let tests = [
+      ['Cat eats meat.', ['Cat', 'meat.']],
+      ['Running, swimming, jumping.', []],
+    ];
+
+    tests.forEach(function(a) {
+      let arr = nlp.text(a[0]).nouns();
+      arr = arr.map(function(t) {
+        return t.text;
+      });
+      arr.should.eql(a[1]);
+    });
+    done();
+  });
+
+  it('Adjectives', function(done) {
+    let tests = [
+      ['Nice dog is eating', ['Nice']],
+      ['Beautiful, dirty, rich.', ['Beautiful,', 'dirty,', 'rich.']],
+    ];
+
+    tests.forEach(function(a) {
+      let arr = nlp.text(a[0]).adjectives();
+      arr = arr.map(function(t) {
+        return t.text;
+      });
+      arr.should.eql(a[1]);
+    });
+    done();
+  });
+
+  it('Verbs', function(done) {
+    let tests = [
+      ['Cat eats meat.', ['eats']],
+      ['Beijing China grows each year. It is usually sunny.', ['grows', 'is']],
+      ['Running, swimming, jumping.', ['Running,', 'swimming,', 'jumping.']],
+    ];
+
+    tests.forEach(function(a) {
+      let arr = nlp.text(a[0]).verbs();
+      arr = arr.map(function(t) {
+        return t.text;
+      });
+      arr.should.eql(a[1]);
+    });
+    done();
+  });
+
+  it('Adverbs', function(done) {
+    let tests = [
+      ['Eat gently, slowly.', ['gently,', 'slowly.']],
+    ];
+
+    tests.forEach(function(a) {
+      let arr = nlp.text(a[0]).adverbs();
+      arr = arr.map(function(t) {
+        return t.text;
+      });
+      arr.should.eql(a[1]);
+    });
+    done();
+  });
+
   it('Dates', function(done) {
     let tests = [
       ['Toronto is best in January', ['January']],

@@ -247,10 +247,48 @@ let prefix_compressed_cities = {
 };
 cities = fns.expand_prefixes(cities, prefix_compressed_cities);
 
+//some of the busiest airports in the world from
+//https://www.world-airport-codes.com/world-top-30-airports.html
+let airports = [
+  'atl',
+  'pek',
+  'lhr',
+  'hnd',
+  'ord',
+  'lax',
+  'cdg',
+  'dfw',
+  'cgk',
+  'dxb',
+  'fra',
+  'hkg',
+  'den',
+  'bkk',
+  'ams',
+  'jfk',
+  'ist',
+  'sfo',
+  'clt',
+  'las',
+  'phx',
+  'iax',
+  'kul',
+  'mia',
+  'icn',
+  'muc',
+  'syd',
+  'fco',
+  'mco',
+  'bcn',
+  'yyz',
+  'lgw',
+  'phl',
+]
 
 module.exports = {
   countries: countries,
   cities: cities,
+  airports: airports
 };
 // console.log(cities[99]);
 // console.log(countries[99]);

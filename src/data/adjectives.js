@@ -155,7 +155,7 @@ let arr = [
   'humdrum',
   'inside',
   'kaput',
-  'lax',
+//  'lax', -> airports
   'left',
   'less',
   'level',

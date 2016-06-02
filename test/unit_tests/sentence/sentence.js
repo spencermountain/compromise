@@ -39,6 +39,7 @@ describe('Sentence Class Methods', function() {
     let tests = [
       ['Toronto is the biggest city in Canada', ['Toronto', 'Canada']],
       ['Beijing China grows each year. It is usually sunny.', ['Beijing China']],
+      ['How long is the flight from SFO to LAX? Both in the USA!', ['SFO', 'LAX?', 'USA!']],
       ['Oh say can you see? By the dawn\'s early rise.', []],
     ];
 

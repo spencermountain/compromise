@@ -12,6 +12,10 @@ let isPlace = places.countries.reduce(function(h, s) {
 places.cities.forEach(function(s) {
   isPlace[s] = true;
 });
+//add airports
+places.airports.forEach(function(s) {
+  isPlace[s] = true;
+});
 //add place abbreviations names
 abbreviations.places.forEach(function(s) {
   isPlace[s] = true;
@@ -67,7 +71,7 @@ const is_place = function(str) {
       return true;
     }
   }
-  for(let i = 0; i < words.length; i++) {
+  for (let i = 0; i < words.length; i++) {
     if (isPlace[words[i]]) {
       return true;
     }

@@ -3,6 +3,7 @@
 // Definitions by:
 // 2426021684 and Eshan Singh <eshansingh@gmail.com>
 // Found a bug? Create an issue on nlp-compromise/nlp_compromise and mention @2426021684 and @eshansingh.
+
 export function plugin(plugin: any): void
 export function lexicon(): Lexicon
 export function text(string: string, options?: any): Text
@@ -45,9 +46,8 @@ export type OtherTag = "Possessive" | "Expression" |  "Determiner" | "Conjunctio
 export type TermTag = "?" | OtherTag | NounTag | VerbTag | AbjectiveTag | AdverbTag
 
 export interface POS {
-  [key: string]: boolean // Access by pos["key"]
+  [key: string]: boolean
   
-  /* Accea by pos.key*/
   Acronym: boolean
   Plural: boolean
   Noun: boolean
@@ -84,11 +84,11 @@ export interface POS {
 }
 
 export interface Lexicon {
-  [key: string]: TermTag;
+  [key: string]: TermTag  
 }
 
 export interface Result {
-  terms: Term[];
+  terms: Term[]  
   match(string: string, options?: any): Result[]
   normal(): string
   replace(words: string[]): Result
@@ -118,6 +118,10 @@ export interface Text {
   dates(): _Date[]
   values(): Value[]
   topics(): Topic[]
+  nouns(): Noun[]
+  adjectives(): Abjective[]
+  verbs(): Verb[]
+  adverbs(): Adverb[]
   text(): string
   sentences: Sentence[]
   raw_text: string
@@ -152,6 +156,10 @@ export interface Sentence {
   dates(): _Date[]
   organization(): Organization[]
   values(): Value[]
+  nouns(): Noun[]
+  adjectives(): Abjective[]
+  verbs(): Verb[]
+  adverbs(): Adverb[]
   strip_conditions(): this
   topics: Topic[]
   str: string
@@ -297,6 +305,6 @@ export interface Organization extends Noun {
 }
 
 export interface Topic {
-  count: number;
-  text: string;
+  count: number
+  text: string
 }

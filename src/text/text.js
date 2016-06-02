@@ -121,6 +121,36 @@ class Text {
     return this;
   }
 
+  //parts of speech
+  nouns() {
+    let arr = [];
+    for(let i = 0; i < this.sentences.length; i++) {
+      arr = arr.concat(this.sentences[i].nouns());
+    }
+    return arr;
+  }
+  adjectives() {
+    let arr = [];
+    for(let i = 0; i < this.sentences.length; i++) {
+      arr = arr.concat(this.sentences[i].adjectives());
+    }
+    return arr;
+  }
+  verbs() {
+    let arr = [];
+    for(let i = 0; i < this.sentences.length; i++) {
+      arr = arr.concat(this.sentences[i].verbs());
+    }
+    return arr;
+  }
+  adverbs() {
+    let arr = [];
+    for(let i = 0; i < this.sentences.length; i++) {
+      arr = arr.concat(this.sentences[i].adverbs());
+    }
+    return arr;
+  }
+
   //mining
   people() {
     let arr = [];

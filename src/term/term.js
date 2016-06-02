@@ -136,6 +136,21 @@ class Term {
     this.normal = str;
     return this.normal;
   }
+
+  forms() {
+    if (this.pos['Noun']) {
+      return { 'singular': this.singularize(),
+               'plural': this.pluralize()
+             };
+    } else if (this.pos['Verb'] || this.pos['Adjective']) {
+      return this.conjugate();
+    } else if (this.pos['Adverb']) {
+      return {
+        'adjective': this.to_adjective()
+      };
+    }
+  }
+
 }
 
 Term.fn = Term.prototype;

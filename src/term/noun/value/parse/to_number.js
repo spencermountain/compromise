@@ -90,6 +90,14 @@ const to_number = function(str) {
       sum += parseFloat(w.replace(/[, ]/g, '')) || 0;
       continue;
     }
+    //improper fraction
+    const improperFractionMatch = w.match(/^([0-9,\. ]+)\/([0-9,\. ]+)$/)\
+    if (improperFractionMatch) {
+      const num = parseFloat(improperFractionMatch[1].replace(/[, ]/g, ''))
+      const denom = parseFloat(improperFractionMatch[2].replace(/[, ]/g, ''))
+      sum += (num/denom) || 0;
+      continue;
+    }
     //prevent mismatched units, like 'seven eleven'
     if (!appropriate(w, has)) {
       return null;

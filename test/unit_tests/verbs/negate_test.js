@@ -10,7 +10,7 @@ let tests = [
   ['walks', 'doesn\'t walk'],
   ['walked', 'didn\'t walk'],
   ['walking', 'not walking'],
-  ['walk', 'not walk'],
+  ['walk', 'don\'t walk'],
   ['will walk', 'won\'t walk'],
   ['will have walked', 'won\'t have walked'],
 

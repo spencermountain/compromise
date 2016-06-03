@@ -12,6 +12,10 @@ const should_chunk = function(a, b) {
   if (a.has_comma() && !a.pos.Date) {
     return false;
   }
+  //eg "spencer's house"
+  if (a.pos['Possessive']) {
+    return false;
+  }
   //don't chunk non-word things with word-things
   if (a.is_word() === false || b.is_word() === false) {
     return false;

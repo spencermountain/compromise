@@ -65,7 +65,7 @@ class Term {
   //the 'root' singular/infinitive/whatever.
   // method is overloaded by each pos type
   root() {
-    return this.normal;
+    return this.strip_apostrophe();
   }
   //strip apostrophe s
   strip_apostrophe() {
@@ -77,7 +77,7 @@ class Term {
     }
     return this.normal;
   }
-  //Term methods..
+
   has_comma() {
     if (this.text.match(/,$/)) {
       return true;
@@ -139,9 +139,10 @@ class Term {
 
   forms() {
     if (this.pos['Noun']) {
-      return { 'singular': this.singularize(),
-               'plural': this.pluralize()
-             };
+      return {
+        'singular': this.singularize(),
+        'plural': this.pluralize()
+      };
     } else if (this.pos['Verb'] || this.pos['Adjective']) {
       return this.conjugate();
     } else if (this.pos['Adverb']) {

@@ -68,23 +68,23 @@ class Noun extends Term {
     if (this.tag === 'Date') {
       return false;
     }
-    return is_person(this.normal);
+    return is_person(this.strip_apostrophe());
   }
   is_organization() {
-    return is_organization(this.normal, this.text);
+    return is_organization(this.strip_apostrophe(), this.text);
   }
   is_date() {
-    return is_date(this.normal);
+    return is_date(this.strip_apostrophe());
   }
   is_value() {
     //don't overwrite dates, etc
     if (this.tag === 'Date') {
       return false;
     }
-    return is_value(this.normal);
+    return is_value(this.strip_apostrophe());
   }
   is_place() {
-    return is_place(this.normal);
+    return is_place(this.strip_apostrophe());
   }
 
 }

@@ -1,6 +1,5 @@
 'use strict';
 let pos = require('../../parts_of_speech');
-let is_possessive = require('./is_possessive');
 //places a 'silent' term where a contraction, like "they're" exists
 
 //the formulaic contraction types:
@@ -114,7 +113,7 @@ const interpret = function(terms) {
         continue;
       }
       //eg "spencer's" -if it's possessive, it's not a contraction.
-      if (post === 's' && is_possessive(terms, i)) {
+      if (post === 's' && terms[i].pos['Possessive']) {
         continue;
       }
       // eg "spencer's"

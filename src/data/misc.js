@@ -2,7 +2,7 @@
 
 const misc = {
   'there': 'NN',
-  'here': 'NN',
+  'here': 'JJ',
 
   'better': 'JJR',
   'earlier': 'JJR',

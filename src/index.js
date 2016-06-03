@@ -98,6 +98,4 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.sentence(`It's raining in Bankok`).root());
-// console.log(nlp.sentence(`spencer's house`).contractions.expand().text());
-// console.log(nlp.sentence(`it's a hero`).contractions.expand().text());
+// console.log(nlp.sentence(`she's here`).terms);

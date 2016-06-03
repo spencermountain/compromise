@@ -1,5 +1,5 @@
 'use strict';
-let pos = require('../pos/parts_of_speech');
+let pos = require('../../parts_of_speech');
 let is_possessive = require('./is_possessive');
 //places a 'silent' term where a contraction, like "they're" exists
 

@@ -3,7 +3,6 @@ const Term = require('../term/term');
 const tagger = require('./pos/tagger');
 const passive_voice = require('./passive_voice');
 const contractions = {
-  interpret: require('./contractions/interpret'),
   contract: require('./contractions/contract'),
   expand: require('./contractions/expand'),
 };
@@ -48,7 +47,6 @@ class Sentence {
     //part-of-speech tagging
     this.terms = tagger(this, options);
     // process contractions
-    this.terms = contractions.interpret(this.terms);
     //now the hard part is already done, just flip them
     this.contractions = {
       // "he'd go" -> "he would go"

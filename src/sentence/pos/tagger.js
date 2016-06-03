@@ -16,6 +16,7 @@ const ambiguous_dates = require('./passes/ambiguous_dates');
 const multiple_pass = require('./passes/multiples_pass');
 const regex_pass = require('./passes/regex_pass');
 const quotation_pass = require('./passes/quotation_pass');
+const contraction_pass = require('./passes/contractions/interpret');
 
 const noun_fallback = function(terms) {
   for(let i = 0; i < terms.length; i++) {
@@ -66,6 +67,7 @@ const tagger = function(s, options) {
   }
   s.terms = conditional_pass(s.terms);
   s.terms = quotation_pass(s.terms);
+  s.terms = contraction_pass(s.terms);
   return s.terms;
 };
 

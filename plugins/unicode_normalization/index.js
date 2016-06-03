@@ -14,10 +14,10 @@ let mixin = {
     }
   }
 };
-
-const nlp = require('../../src/index');
-nlp.mixin(mixin);
-
-let w = nlp.term('Jørgen Fróði Čukić');
-console.log(w.normalize().text);
-//"Jorgen Frooi cukic"
+module.exports = mixin;
+// const nlp = require('../../src/index');
+// nlp.mixin(mixin);
+//
+// let w = nlp.term('Jørgen Fróði Čukić');
+// console.log(w.normalize().text);
+// //"Jorgen Frooi cukic"

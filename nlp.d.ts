@@ -218,7 +218,7 @@ export interface Term {
   is_word(): boolean
   match(match: string, options?: any): boolean
   rebuild(): void
-  form(): NounForm|VerbForm|AbjectiveForm|AdverbForm|AbjectiveForm
+  forms(): NounForm|VerbForm|AbjectiveForm|AdverbForm|AbjectiveForm
   text: string
 }
 
@@ -232,7 +232,7 @@ export interface Verb extends Term {
   isNegative(): boolean
   tag: VerbTag
   tense(): VerbTense
-  form(): VerbForm
+  forms(): VerbForm
 }
 
 export interface Abjective extends Term {
@@ -242,13 +242,13 @@ export interface Abjective extends Term {
   to_adverb(): string
   conjugate(): AbjectiveForm
   tag: AbjectiveTag
-  form(): AbjectiveForm
+  forms(): AbjectiveForm
 }
 
 export interface Adverb extends Term {
   to_adjective(): string
   tag: AdverbTag
-  form(): AdverbForm
+  forms(): AdverbForm
 }
 
 export interface Noun extends Term {
@@ -264,7 +264,7 @@ export interface Noun extends Term {
   is_value(): boolean
   pronoun(): NounPronoun
   tag: NounTag
-  form(): NounForm
+  forms(): NounForm
 }
 
 export interface Value extends Noun {

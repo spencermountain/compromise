@@ -11,8 +11,8 @@ module.exports = [
   'cny',
   'xaf',
   'xof',
-  'aud',
   'eur',
+  'jpy',
   //some common, unambiguous currency names
   'denar',
   'dobra',

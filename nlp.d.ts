@@ -45,6 +45,29 @@ export type AdverbTag = "Adverb"
 export type OtherTag = "Possessive" | "Expression" |  "Determiner" | "Conjunction" | "Preposition"
 export type TermTag = "?" | OtherTag | NounTag | VerbTag | AbjectiveTag | AdverbTag
 
+export type NounForm = {
+  singular: string
+  plural: string
+}
+
+export type VerbForm = {
+  infinitive: string,
+  present: string,
+  past: string,
+  gerund: string
+}
+
+export type AbjectiveForm = {
+  comparative: string,
+  superlative: string,
+  adverb: string,
+  noun: string
+}
+
+export type AdverbForm = {
+  abjective: string
+}
+
 export interface POS {
   [key: string]: boolean
   
@@ -195,6 +218,7 @@ export interface Term {
   is_word(): boolean
   match(match: string, options?: any): boolean
   rebuild(): void
+  forms(): NounForm|VerbForm|AbjectiveForm|AdverbForm|AbjectiveForm
   text: string
 }
 
@@ -202,17 +226,13 @@ export interface Verb extends Term {
   to_past(): string
   to_present(): string
   to_future(): string
-  conjugate(): {
-    infinitive: string,
-    present: string,
-    past: string,
-    gerund: string
-  }
+  conjugate(): VerbForm
   conjugation(): VerbTag
   negate(): Verb
   isNegative(): boolean
   tag: VerbTag
   tense(): VerbTense
+  forms(): VerbForm
 }
 
 export interface Abjective extends Term {
@@ -220,18 +240,15 @@ export interface Abjective extends Term {
   to_superlative(): string
   to_noun(): string
   to_adverb(): string
-  conjugate(): {
-    comparative: string,
-    superlative: string,
-    adverb: string,
-    noun: string
-  }
+  conjugate(): AbjectiveForm
   tag: AbjectiveTag
+  forms(): AbjectiveForm
 }
 
 export interface Adverb extends Term {
   to_adjective(): string
   tag: AdverbTag
+  forms(): AdverbForm
 }
 
 export interface Noun extends Term {
@@ -245,12 +262,9 @@ export interface Noun extends Term {
   is_organization(): boolean
   is_date(): boolean
   is_value(): boolean
-  conjugate(): {
-    plural: string,
-    singular: string
-  }
   pronoun(): NounPronoun
   tag: NounTag
+  forms(): NounForm
 }
 
 export interface Value extends Noun {

@@ -85,7 +85,12 @@ class Term {
     return false;
   }
   has_abbreviation() {
+    // "spencer's"
     if (this.text.match(/[a-z]'[a-z][a-z]?$/)) {
+      return true;
+    }
+    // "flanders' house"
+    if (this.text.match(/[a-z]s'$/)) {
       return true;
     }
     return false;
@@ -150,6 +155,7 @@ class Term {
         'adjective': this.to_adjective()
       };
     }
+    return {};
   }
 
 }

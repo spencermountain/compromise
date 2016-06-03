@@ -46,12 +46,13 @@ class Noun extends Term {
     return pronoun(this.normal);
   }
   is_plural() {
-    let isPlural = is_plural(this.normal);
-    if (this.pos['Date']) {
-      isPlural = false;
+    if (this.pos['Date'] || this.pos['Possessive']) {
+      return false;
+    } else if (this.has_abbreviation()) { //contractions & possessives are not plural
+      return false;
+    } else {
+      return is_plural(this.normal);
     }
-    this.pos['Plural'] = isPlural;
-    return isPlural;
   }
   is_uncountable() {
     return is_uncountable(this.strip_apostrophe());

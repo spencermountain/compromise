@@ -17,6 +17,10 @@ describe('noun inflection', function() {
       ['eyebrows', true],
       ['child', false],
       ['children', true],
+      ['spencer\'s', false],
+      ['toronto\'s', false],
+      // ['simpsons\'', false],
+      ['she\'s', false],
     ];
     tests.forEach(function(a) {
       let n = new Noun(a[0]);

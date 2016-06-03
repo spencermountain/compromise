@@ -39,7 +39,7 @@ class Value extends Noun {
     }
     //if there's a number, then something, then a number
     if (s.match(/[0-9][^(0-9|\/),\.][0-9]/)) {
-      if(/((?:[0-9]|.)+) ((?:[0-9]|.)+)\/((?:[0-9]|.)+)/){
+      if(s.match(/((?:[0-9]|\.)+) ((?:[0-9]|\.)+)\/((?:[0-9]|\.)+)/)){ // I'm sure there is a better regexpxs
         return true
       }
       return false;

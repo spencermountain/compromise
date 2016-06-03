@@ -3,7 +3,17 @@
 // 'spencer's nice' -> 'spencer is nice'
 // 'spencer's house' -> 'spencer's house'
 
+const blacklist = {
+  'it\'s': true,
+  'that\'s': true
+};
+
+//a possessive means "'s" describes ownership, not a contraction, like 'is'
 const is_possessive = function(terms, x) {
+
+  if (blacklist[terms[x].normal]) {
+    return false;
+  }
   //some parts-of-speech can't be possessive
   if (terms[x].pos['Pronoun']) {
     return false;

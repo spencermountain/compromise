@@ -54,13 +54,13 @@ class Noun extends Term {
     return isPlural;
   }
   is_uncountable() {
-    return is_uncountable(this.normal);
+    return is_uncountable(this.strip_apostrophe());
   }
   pluralize() {
-    return pluralize(this.normal);
+    return pluralize(this.strip_apostrophe());
   }
   singularize() {
-    return singularize(this.normal);
+    return singularize(this.strip_apostrophe());
   }
   //sub-classes
   is_person() {

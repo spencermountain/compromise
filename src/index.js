@@ -98,7 +98,5 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.text(' \n\n\t spencer is here\n\nhe is here too'));
-// console.log(nlp.sentence(`john's good`).contractions.expand().terms);
-// console.log(nlp.sentence(`canadian dollar`).match('[Demonym]'));
-// console.log(nlp.sentence(`east caribbean dollar`).terms);
+// console.log(nlp.sentence(`It's raining in Bankok`).root());
+// console.log(nlp.sentence(`it's a hero`).contractions.expand().text());

@@ -98,5 +98,4 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-console.log(nlp.sentence('it was five hundred and seventy two.').terms);
 // console.log(nlp.text('hi John. He is good').normal());

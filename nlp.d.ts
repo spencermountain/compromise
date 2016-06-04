@@ -70,27 +70,27 @@ export type AdverbForm = {
 
 export interface POS {
   [key: string]: boolean
-  
+
   Acronym: boolean
   Plural: boolean
   Noun: boolean
   Value: boolean
   Place: boolean
   Organization: boolean
-  
+
   Currency: boolean
   Actor: boolean
   Date: boolean
   Condition: boolean
   Person: boolean
-  
+
   Possessive: boolean
   Pronoun: boolean
   Expression: boolean //interjection
   Determiner: boolean
   Conjunction: boolean
   Preposition: boolean
-  
+
   //verbs
   Verb: boolean
   PastTense: boolean
@@ -107,11 +107,11 @@ export interface POS {
 }
 
 export interface Lexicon {
-  [key: string]: TermTag  
+  [key: string]: TermTag
 }
 
 export interface Result {
-  terms: Term[]  
+  terms: Term[]
   match(string: string, options?: any): Result[]
   normal(): string
   replace(words: string[]): Result
@@ -130,7 +130,7 @@ export interface Text {
   negate(): Text
   tags(): TermTag[][]
   terms(): Term[]
-  normalized(): string
+  normal(): string
   contractions: Contractions<this>
   root(): string
   match(str: string, options?: any): Result[]
@@ -163,7 +163,7 @@ export interface Sentence {
   to_future(): Sentence
   negate(): this
   tags(): Term[]
-  normalized(): string
+  normal(): string
   text(): string
   contractions: Contractions<this>
   root(): string
@@ -193,7 +193,7 @@ export interface Question extends Sentence {
 }
 
 export interface Statement extends Sentence {
-  
+
 }
 
 export interface Term {

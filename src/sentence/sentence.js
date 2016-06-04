@@ -135,7 +135,7 @@ class Sentence {
     }, '');
   }
   //like text but for cleaner text
-  normalized() {
+  normal() {
     return this.terms.reduce(function(s, t) {
       if (t.normal) {
         s += ' ' + t.normal;

@@ -52,7 +52,7 @@ class Text {
     });
     return fns.flatten(arr).join('');
   }
-  normalized() {
+  normal() {
     const arr = this.sentences.map(function(s) {
       return s.normalized();
     });

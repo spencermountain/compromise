@@ -98,4 +98,4 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.sentence(`she's here`).terms);
+// console.log(nlp.sentence('Dr. John Smith is five feet tall.').normal());

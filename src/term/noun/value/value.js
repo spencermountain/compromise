@@ -39,8 +39,8 @@ class Value extends Noun {
     }
     //if there's a number, then something, then a number
     if (s.match(/[0-9][^(0-9|\/),\.][0-9]/)) {
-      if(s.match(/((?:[0-9]|\.)+) ((?:[0-9]|\.)+)\/((?:[0-9]|\.)+)/)){ // I'm sure there is a better regexpxs
-        return true
+      if (s.match(/((?:[0-9]|\.)+) ((?:[0-9]|\.)+)\/((?:[0-9]|\.)+)/)) { // I'm sure there is a better regexpxs
+        return true;
       }
       return false;
     }
@@ -111,8 +111,8 @@ class Value extends Noun {
     return num + 'th';
   }
 
-  //overwrite term.normalize?
-  // normalize() {
+  //overwrite term.normal?
+  // normal() {
   //   let str = '' + (this.number || '');
   //   if (this.is_ordinal()) {
   //     str = this.to_ordinal(str);

@@ -8,7 +8,7 @@ describe('Sentence Class Methods', function() {
       ['Tony is nice.', '.'],
       ['Tony is nice!', '!'],
       ['Is Tony is nice?', '?'],
-      ['Tony is okay', '.']
+      ['Tony is okay', '']
     ];
     tests.forEach(function(a) {
       let s = nlp.text(a[0]).sentences[0];

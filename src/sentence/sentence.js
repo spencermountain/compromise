@@ -90,12 +90,16 @@ class Sentence {
 
   //the ending punctuation
   terminator() {
-    const allowed = ['.', '?', '!'];
-    const punct = this.str.slice(-1) || '';
-    if (allowed.indexOf(punct) !== -1) {
-      return punct;
+    const allowed = {
+      '.': true,
+      '?': true,
+      '!': true
+    };
+    let char = this.str.match(/([\.\?\!])\W*$/);
+    if (char && allowed[char[1]]) {
+      return char[1];
     }
-    return '.';
+    return '';
   }
 
   //part-of-speech assign each term
@@ -136,12 +140,13 @@ class Sentence {
   }
   //like text but for cleaner text
   normal() {
-    return this.terms.reduce(function(s, t) {
+    let str = this.terms.reduce(function(s, t) {
       if (t.normal) {
         s += ' ' + t.normal;
       }
       return s;
     }, '').trim();
+    return str + this.terminator();
   }
 
   //further 'lemmatisation/inflection'
@@ -231,8 +236,18 @@ class Sentence {
       }
       return !t.pos['Condition'];
     });
-    //
     return this;
+  }
+
+  //'semantic' word-count, skips over implicit terms and things
+  word_count() {
+    return this.terms.filter((t) => {
+      //a quiet term, from a contraction
+      if (t.normal === '') {
+        return false;
+      }
+      return true;
+    }).length;
   }
 
   //named-entity recognition

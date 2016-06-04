@@ -54,7 +54,7 @@ class Text {
   }
   normal() {
     const arr = this.sentences.map(function(s) {
-      return s.normalized();
+      return s.normal();
     });
     return fns.flatten(arr).join(' ');
   }
@@ -210,6 +210,14 @@ class Text {
         return 1;
       }
     });
+  }
+  //'semantic' word-count, skips over implicit terms and things
+  word_count() {
+    let count = 0;
+    for(let i = 0; i < this.sentences.length; i++) {
+      count += this.sentences[i].word_count();
+    }
+    return count;
   }
 }
 Text.fn = Text.prototype;

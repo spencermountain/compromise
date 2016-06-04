@@ -163,7 +163,7 @@ module.exports = ['absurd', 'aggressive', 'alert', 'alive', 'awesome', 'beautifu
 
 module.exports = [
 //some most-common iso-codes (most are too ambiguous)
-'usd', 'cad', 'aud', 'gbp', 'krw', 'inr', 'hkd', 'dkk', 'cny', 'xaf', 'xof', 'aud', 'eur',
+'usd', 'cad', 'aud', 'gbp', 'krw', 'inr', 'hkd', 'dkk', 'cny', 'xaf', 'xof', 'eur', 'jpy',
 //some common, unambiguous currency names
 'denar', 'dobra', 'forint', 'kwanza', 'kyat', 'lempira', 'pound sterling', 'riel', 'yen', 'zloty',
 //colloquial currency names
@@ -807,7 +807,7 @@ module.exports = irregular_verbs;
 
 var misc = {
   'there': 'NN',
-  'here': 'NN',
+  'here': 'JJ',
 
   'better': 'JJR',
   'earlier': 'JJR',
@@ -1471,7 +1471,7 @@ var opposites = {
 //forms that have in/out symmetry
 var symmetric = {
   'away': 'blow,bounce,bring,call,come,cut,drop,fire,get,give,go,keep,pass,put,run,send,shoot,switch,take,tie,throw',
-  'in': 'bang,barge,bash,beat,block,book,box,break,bring,burn,butt,carve,cash,check,come,cross,drop,fall,fence,fill,give,grow,hand,hang,head,jack,keep,leave,let,lock,log,move,opt,pack,peel,pull,put,rain,reach,ring,rub,send,set,settle,shut,sign,smash,snow,strike,take,try,turn,type,warm,wave,wean,wear,wheel',
+  'in': 'bang,barge,bash,beat,block,book,box,break,bring,burn,butt,carve,cash,check,come,cross,drop,fall,fence,fill,give,grow,hand,hang,head,jack,keep,leave,let,lock,log,move,opt,pack,peel,pull,put,reach,ring,rub,send,set,settle,shut,sign,smash,snow,strike,take,try,turn,type,warm,wave,wean,wear,wheel',
   'on': 'add,call,carry,catch,count,feed,get,give,go,grind,head,hold,keep,lay,log,pass,pop,power,put,send,show,snap,switch,take,tell,try,turn,wait',
   'over': 'come,go,look,read,run,talk',
   'together': 'come,pull,put',
@@ -1974,10 +1974,7 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.text(' \n\n\t spencer is here\n\nhe is here too'));
-// console.log(nlp.sentence(`john's good`).contractions.expand().terms);
-// console.log(nlp.sentence(`canadian dollar`).match('[Demonym]'));
-// console.log(nlp.sentence(`east caribbean dollar`).terms);
+// console.log(nlp.sentence(`she's here`).terms);
 
 },{"./fns.js":23,"./lexicon.js":25,"./sentence/question/question.js":54,"./sentence/sentence.js":57,"./sentence/statement/statement.js":60,"./term/adjective/adjective.js":62,"./term/adverb/adverb.js":67,"./term/noun/date/date.js":72,"./term/noun/noun.js":78,"./term/noun/organization/organization.js":80,"./term/noun/person/person.js":84,"./term/noun/place/place.js":86,"./term/noun/value/value.js":96,"./term/term.js":97,"./term/verb/verb.js":106,"./text/text.js":109}],25:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
@@ -2113,8 +2110,9 @@ Object.keys(lexicon).forEach(function (k) {
 });
 
 module.exports = lexicon;
+// console.log(lexicon['raining in']);
 
-},{"./data/abbreviations.js":1,"./data/adjectives.js":2,"./data/convertables.js":3,"./data/currencies.js":4,"./data/dates.js":5,"./data/demonyms.js":6,"./data/firstnames.js":7,"./data/holidays.js":8,"./data/honourifics.js":9,"./data/irregular_nouns.js":10,"./data/irregular_verbs.js":11,"./data/misc.js":12,"./data/multiples.js":13,"./data/numbers.js":16,"./data/organizations.js":17,"./data/phrasal_verbs.js":18,"./data/places.js":19,"./data/professions.js":20,"./data/uncountables.js":21,"./data/verbs.js":22,"./fns.js":23,"./sentence/pos/parts_of_speech.js":38,"./term/adjective/to_adverb.js":63,"./term/adjective/to_comparative.js":64,"./term/adjective/to_superlative.js":66,"./term/verb/conjugate/conjugate.js":98}],26:[function(require,module,exports){
+},{"./data/abbreviations.js":1,"./data/adjectives.js":2,"./data/convertables.js":3,"./data/currencies.js":4,"./data/dates.js":5,"./data/demonyms.js":6,"./data/firstnames.js":7,"./data/holidays.js":8,"./data/honourifics.js":9,"./data/irregular_nouns.js":10,"./data/irregular_verbs.js":11,"./data/misc.js":12,"./data/multiples.js":13,"./data/numbers.js":16,"./data/organizations.js":17,"./data/phrasal_verbs.js":18,"./data/places.js":19,"./data/professions.js":20,"./data/uncountables.js":21,"./data/verbs.js":22,"./fns.js":23,"./sentence/pos/parts_of_speech.js":36,"./term/adjective/to_adverb.js":63,"./term/adjective/to_comparative.js":64,"./term/adjective/to_superlative.js":66,"./term/verb/conjugate/conjugate.js":98}],26:[function(require,module,exports){
 'use strict';
 // a regex-like lookup for a list of terms.
 // returns matches in a 'Terms' class
@@ -2486,176 +2484,6 @@ module.exports = expand;
 },{}],32:[function(require,module,exports){
 'use strict';
 
-var pos = require('../pos/parts_of_speech');
-var is_possessive = require('./is_possessive');
-//places a 'silent' term where a contraction, like "they're" exists
-
-//the formulaic contraction types:
-var supported = {
-  'll': 'will',
-  'd': 'would',
-  've': 'have',
-  're': 'are',
-  'm': 'am' //this is not the safest way to support i'm
-  //these ones are a bit tricksier:
-  // 't': 'not',
-  // 's': 'is' //or was
-};
-
-var irregulars = {
-  'dunno': ['do not', 'know'],
-  'wanna': ['want', 'to'],
-  'gonna': ['going', 'to'],
-  'im': ['i', 'am'],
-  'alot': ['a', 'lot'],
-
-  'dont': ['do not'],
-  'don\'t': ['do not'],
-  'dun': ['do not'],
-
-  'won\'t': ['will not'],
-  'wont': ['will not'],
-
-  'can\'t': ['can not'],
-  'cannot': ['can not'],
-
-  'aint': ['is not'], //or 'are'
-  'ain\'t': ['is not'],
-  'shan\'t': ['should not'],
-
-  'where\'d': ['where', 'did'],
-  'when\'d': ['when', 'did'],
-  'how\'d': ['how', 'did'],
-  'what\'d': ['what', 'did'],
-  'brb': ['be', 'right', 'back'],
-  'let\'s': ['let', 'us']
-};
-
-// `n't` contractions - negate doesn't have a second term
-var handle_negate = function handle_negate(terms, i) {
-  terms[i].expansion = terms[i].text.replace(/n'.*/, '');
-  terms[i].expansion += ' not';
-  return terms;
-};
-
-//puts a 'implicit term' in this sentence, at 'i'
-var handle_simple = function handle_simple(terms, i, particle) {
-  terms[i].expansion = terms[i].text.replace(/'.*/, '');
-  //make ghost-term
-  var second_word = new pos.Verb('');
-  second_word.expansion = particle;
-  second_word.whitespace.trailing = terms[i].whitespace.trailing;
-  terms[i].whitespace.trailing = ' ';
-  terms.splice(i + 1, 0, second_word);
-  return terms;
-};
-
-// expand manual contractions
-var handle_irregulars = function handle_irregulars(terms, x, arr) {
-  terms[x].expansion = arr[0];
-  for (var i = 1; i < arr.length; i++) {
-    var t = new pos.Term('');
-    t.whitespace.trailing = terms[x].whitespace.trailing; //move whitespace
-    terms[x].whitespace.trailing = ' ';
-    t.expansion = arr[i];
-    terms.splice(x + i, 0, t);
-  }
-  return terms;
-};
-
-// `'s` contractions
-var handle_copula = function handle_copula(terms, i) {
-  //fixup current term
-  terms[i].expansion = terms[i].text.replace(/'s$/, '');
-  //make ghost-term
-  var second_word = new pos.Verb('');
-  second_word.whitespace.trailing = terms[i].whitespace.trailing; //move whitespace
-  terms[i].whitespace.trailing = ' ';
-  second_word.expansion = 'is';
-  terms.splice(i + 1, 0, second_word);
-  return terms;
-};
-
-//turn all contraction-forms into 'silent' tokens
-var interpret = function interpret(terms) {
-  for (var i = 0; i < terms.length; i++) {
-    //known-forms
-    if (irregulars[terms[i].normal]) {
-      terms = handle_irregulars(terms, i, irregulars[terms[i].normal]);
-      continue;
-    }
-    //words with an apostrophe
-    if (terms[i].has_abbreviation()) {
-      var split = terms[i].normal.split(/'/);
-      var pre = split[0];
-      var post = split[1];
-      // eg "they've"
-      if (supported[post]) {
-        terms = handle_simple(terms, i, supported[post]);
-        continue;
-      }
-      // eg "couldn't"
-      if (post === 't' && pre.match(/n$/)) {
-        terms = handle_negate(terms, i);
-        continue;
-      }
-      //eg "spencer's" -if it's possessive, it's not a contraction.
-      if (post === 's' && is_possessive(terms, i)) {
-        continue;
-      }
-      // eg "spencer's"
-      if (post === 's') {
-        terms = handle_copula(terms, i);
-        continue;
-      }
-    }
-  }
-
-  return terms;
-};
-
-module.exports = interpret;
-
-// let t = new pos.Verb(`spencer's`);
-// let terms = interpret([t]);
-// console.log(terms);
-
-},{"../pos/parts_of_speech":38,"./is_possessive":33}],33:[function(require,module,exports){
-'use strict';
-//decide if an apostrophe s is a contraction or not
-// 'spencer's nice' -> 'spencer is nice'
-// 'spencer's house' -> 'spencer's house'
-
-var is_possessive = function is_possessive(terms, x) {
-  //some parts-of-speech can't be possessive
-  if (terms[x].pos['Pronoun']) {
-    return false;
-  }
-  var nextWord = terms[x + 1];
-  //last word is possessive  - "better than spencer's"
-  if (!nextWord) {
-    return true;
-  }
-  //next word is 'house'
-  if (nextWord.pos['Noun']) {
-    return true;
-  }
-  //rocket's red glare
-  if (nextWord.pos['Adjective'] && terms[x + 2] && terms[x + 2].pos['Noun']) {
-    return true;
-  }
-  //next word is an adjective
-  if (nextWord.pos['Adjective'] || nextWord.pos['Verb'] || nextWord.pos['Adverb']) {
-    return false;
-  }
-  return false;
-};
-
-module.exports = is_possessive;
-
-},{}],34:[function(require,module,exports){
-'use strict';
-
 //boolean if sentence has
 
 // "[copula] [pastTense] by"
@@ -2677,7 +2505,7 @@ var passive_voice = function passive_voice(s) {
 
 module.exports = passive_voice;
 
-},{}],35:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 'use strict';
 
 var pos = require('./parts_of_speech');
@@ -2695,7 +2523,7 @@ var assign = function assign(t, tag, reason) {
 };
 module.exports = assign;
 
-},{"./parts_of_speech":38}],36:[function(require,module,exports){
+},{"./parts_of_speech":36}],34:[function(require,module,exports){
 //fancy combining/chunking of terms
 'use strict';
 
@@ -2856,7 +2684,7 @@ var fancy_lumping = function fancy_lumping(terms) {
 
 module.exports = fancy_lumping;
 
-},{"./parts_of_speech":38}],37:[function(require,module,exports){
+},{"./parts_of_speech":36}],35:[function(require,module,exports){
 'use strict';
 
 var friendlies = [['Noun', 'Abbreviation'], ['Abbreviation', 'Noun']];
@@ -2867,6 +2695,10 @@ var should_chunk = function should_chunk(a, b) {
   }
   //if A has a comma, don't chunk it, (unless it's a  date)
   if (a.has_comma() && !a.pos.Date) {
+    return false;
+  }
+  //eg "spencer's house"
+  if (a.pos['Possessive']) {
     return false;
   }
   //don't chunk non-word things with word-things
@@ -2923,7 +2755,7 @@ var chunk_neighbours = function chunk_neighbours(terms) {
 
 module.exports = chunk_neighbours;
 
-},{}],38:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 'use strict';
 
 var Term = require('../../term/term.js');
@@ -3035,7 +2867,7 @@ module.exports = {
   Noun: Noun
 };
 
-},{"../../term/adjective/adjective.js":62,"../../term/adverb/adverb.js":67,"../../term/noun/date/date.js":72,"../../term/noun/noun.js":78,"../../term/noun/organization/organization.js":80,"../../term/noun/person/person.js":84,"../../term/noun/place/place.js":86,"../../term/noun/value/value.js":96,"../../term/term.js":97,"../../term/verb/verb.js":106}],39:[function(require,module,exports){
+},{"../../term/adjective/adjective.js":62,"../../term/adverb/adverb.js":67,"../../term/noun/date/date.js":72,"../../term/noun/noun.js":78,"../../term/noun/organization/organization.js":80,"../../term/noun/person/person.js":84,"../../term/noun/place/place.js":86,"../../term/noun/value/value.js":96,"../../term/term.js":97,"../../term/verb/verb.js":106}],37:[function(require,module,exports){
 'use strict';
 
 var assign = require('../assign');
@@ -3107,7 +2939,7 @@ var ambiguous_dates = function ambiguous_dates(terms) {
 
 module.exports = ambiguous_dates;
 
-},{"../assign":35}],40:[function(require,module,exports){
+},{"../assign":33}],38:[function(require,module,exports){
 'use strict';
 
 var assign = require('../assign');
@@ -3127,7 +2959,7 @@ var capital_signals = function capital_signals(terms) {
 };
 module.exports = capital_signals;
 
-},{"../assign":35}],41:[function(require,module,exports){
+},{"../assign":33}],39:[function(require,module,exports){
 'use strict';
 
 var starts = {
@@ -3216,7 +3048,143 @@ var conditional_pass = function conditional_pass(terms) {
 
 module.exports = conditional_pass;
 
-},{}],42:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
+'use strict';
+
+var pos = require('../../parts_of_speech');
+//places a 'silent' term where a contraction, like "they're" exists
+
+//the formulaic contraction types:
+var supported = {
+  'll': 'will',
+  'd': 'would',
+  've': 'have',
+  're': 'are',
+  'm': 'am' //this is not the safest way to support i'm
+  //these ones are a bit tricksier:
+  // 't': 'not',
+  // 's': 'is' //or was
+};
+
+var irregulars = {
+  'dunno': ['do not', 'know'],
+  'wanna': ['want', 'to'],
+  'gonna': ['going', 'to'],
+  'im': ['i', 'am'],
+  'alot': ['a', 'lot'],
+
+  'dont': ['do not'],
+  'don\'t': ['do not'],
+  'dun': ['do not'],
+
+  'won\'t': ['will not'],
+  'wont': ['will not'],
+
+  'can\'t': ['can not'],
+  'cannot': ['can not'],
+
+  'aint': ['is not'], //or 'are'
+  'ain\'t': ['is not'],
+  'shan\'t': ['should not'],
+
+  'where\'d': ['where', 'did'],
+  'when\'d': ['when', 'did'],
+  'how\'d': ['how', 'did'],
+  'what\'d': ['what', 'did'],
+  'brb': ['be', 'right', 'back'],
+  'let\'s': ['let', 'us']
+};
+
+// `n't` contractions - negate doesn't have a second term
+var handle_negate = function handle_negate(terms, i) {
+  terms[i].expansion = terms[i].text.replace(/n'.*/, '');
+  terms[i].expansion += ' not';
+  return terms;
+};
+
+//puts a 'implicit term' in this sentence, at 'i'
+var handle_simple = function handle_simple(terms, i, particle) {
+  terms[i].expansion = terms[i].text.replace(/'.*/, '');
+  //make ghost-term
+  var second_word = new pos.Verb('');
+  second_word.expansion = particle;
+  second_word.whitespace.trailing = terms[i].whitespace.trailing;
+  terms[i].whitespace.trailing = ' ';
+  terms.splice(i + 1, 0, second_word);
+  return terms;
+};
+
+// expand manual contractions
+var handle_irregulars = function handle_irregulars(terms, x, arr) {
+  terms[x].expansion = arr[0];
+  for (var i = 1; i < arr.length; i++) {
+    var t = new pos.Term('');
+    t.whitespace.trailing = terms[x].whitespace.trailing; //move whitespace
+    terms[x].whitespace.trailing = ' ';
+    t.expansion = arr[i];
+    terms.splice(x + i, 0, t);
+  }
+  return terms;
+};
+
+// `'s` contractions
+var handle_copula = function handle_copula(terms, i) {
+  //fixup current term
+  terms[i].expansion = terms[i].text.replace(/'s$/, '');
+  //make ghost-term
+  var second_word = new pos.Verb('');
+  second_word.whitespace.trailing = terms[i].whitespace.trailing; //move whitespace
+  terms[i].whitespace.trailing = ' ';
+  second_word.expansion = 'is';
+  terms.splice(i + 1, 0, second_word);
+  return terms;
+};
+
+//turn all contraction-forms into 'silent' tokens
+var interpret = function interpret(terms) {
+  for (var i = 0; i < terms.length; i++) {
+    //known-forms
+    if (irregulars[terms[i].normal]) {
+      terms = handle_irregulars(terms, i, irregulars[terms[i].normal]);
+      continue;
+    }
+    //words with an apostrophe
+    if (terms[i].has_abbreviation()) {
+      var split = terms[i].normal.split(/'/);
+      var pre = split[0];
+      var post = split[1];
+      // eg "they've"
+      if (supported[post]) {
+        terms = handle_simple(terms, i, supported[post]);
+        continue;
+      }
+      // eg "couldn't"
+      if (post === 't' && pre.match(/n$/)) {
+        terms = handle_negate(terms, i);
+        continue;
+      }
+      //eg "spencer's" -if it's possessive, it's not a contraction.
+      if (post === 's' && terms[i].pos['Possessive']) {
+        continue;
+      }
+      // eg "spencer's"
+      if (post === 's') {
+        terms = handle_copula(terms, i);
+        continue;
+      }
+    }
+  }
+
+  return terms;
+};
+
+module.exports = interpret;
+
+// let t = new pos.Verb(`spencer's`);
+// let terms = interpret([t]);
+// console.log(terms);
+
+},{"../../parts_of_speech":36}],41:[function(require,module,exports){
 'use strict';
 
 var assign = require('../assign');
@@ -3267,7 +3235,7 @@ var grammar_rules_pass = function grammar_rules_pass(s) {
 };
 module.exports = grammar_rules_pass;
 
-},{"../../../fns":23,"../assign":35,"./rules/grammar_rules":49}],43:[function(require,module,exports){
+},{"../../../fns":23,"../assign":33,"./rules/grammar_rules":49}],42:[function(require,module,exports){
 'use strict';
 
 var assign = require('../assign');
@@ -3297,7 +3265,7 @@ var interjection_fixes = function interjection_fixes(terms) {
 
 module.exports = interjection_fixes;
 
-},{"../assign":35}],44:[function(require,module,exports){
+},{"../assign":33}],43:[function(require,module,exports){
 'use strict';
 
 var defaultLexicon = require('../../../lexicon.js');
@@ -3352,7 +3320,7 @@ var lexicon_pass = function lexicon_pass(terms, options) {
 };
 module.exports = lexicon_pass;
 
-},{"../../../lexicon.js":25,"../assign":35}],45:[function(require,module,exports){
+},{"../../../lexicon.js":25,"../assign":33}],44:[function(require,module,exports){
 'use strict';
 
 var lexicon = require('../../../lexicon.js');
@@ -3394,7 +3362,7 @@ var multiples_pass = function multiples_pass(terms) {
 
 module.exports = multiples_pass;
 
-},{"../../../lexicon.js":25,"../assign":35}],46:[function(require,module,exports){
+},{"../../../lexicon.js":25,"../assign":33}],45:[function(require,module,exports){
 'use strict';
 
 //some prepositions are clumped onto the back of a verb "looked for", "looks at"
@@ -3431,7 +3399,74 @@ var phrasal_verbs = function phrasal_verbs(terms) {
 
 module.exports = phrasal_verbs;
 
-},{"../../../data/phrasal_verbs":18}],47:[function(require,module,exports){
+},{"../../../data/phrasal_verbs":18}],46:[function(require,module,exports){
+'use strict';
+
+var assign = require('../assign');
+//decide if an apostrophe s is a contraction or not
+// 'spencer's nice' -> 'spencer is nice'
+// 'spencer's house' -> 'spencer's house'
+
+//these are always contractions
+var blacklist = {
+  'it\'s': true,
+  'that\'s': true
+};
+
+//a possessive means "'s" describes ownership, not a contraction, like 'is'
+var is_possessive = function is_possessive(terms, x) {
+  //these are always contractions, not possessive
+  if (blacklist[terms[x].normal]) {
+    return false;
+  }
+  //"spencers'" - this is always possessive - eg "flanders'"
+  if (terms[x].normal.match(/[a-z]s'$/)) {
+    return true;
+  }
+  //if no apostrophe s, return
+  if (!terms[x].normal.match(/[a-z]'s$/)) {
+    return false;
+  }
+  //some parts-of-speech can't be possessive
+  if (terms[x].pos['Pronoun']) {
+    return false;
+  }
+  var nextWord = terms[x + 1];
+  //last word is possessive  - "better than spencer's"
+  if (!nextWord) {
+    return true;
+  }
+  //next word is 'house'
+  if (nextWord.pos['Noun']) {
+    return true;
+  }
+  //rocket's red glare
+  if (nextWord.pos['Adjective'] && terms[x + 2] && terms[x + 2].pos['Noun']) {
+    return true;
+  }
+  //next word is an adjective
+  if (nextWord.pos['Adjective'] || nextWord.pos['Verb'] || nextWord.pos['Adverb']) {
+    return false;
+  }
+  return false;
+};
+
+//tag each term as possessive, if it should
+var possessive_pass = function possessive_pass(terms) {
+  for (var i = 0; i < terms.length; i++) {
+    if (is_possessive(terms, i)) {
+      //if it's not already a noun, co-erce it to one
+      if (!terms[i].pos['Noun']) {
+        terms[i] = assign(terms[i], 'Noun', 'possessive_pass');
+      }
+      terms[i].pos['Possessive'] = true;
+    }
+  }
+  return terms;
+};
+module.exports = possessive_pass;
+
+},{"../assign":33}],47:[function(require,module,exports){
 'use strict';
 // knowing if something is inside a quotation is important grammatically
 //set all the words inside quotations marks as pos['Quotation']=true
@@ -3534,7 +3569,7 @@ var regex_pass = function regex_pass(terms) {
 
 module.exports = regex_pass;
 
-},{"../assign":35,"./rules/word_rules":50}],49:[function(require,module,exports){
+},{"../assign":33,"./rules/word_rules":50}],49:[function(require,module,exports){
 'use strict';
 
 module.exports = [
@@ -3669,7 +3704,7 @@ map(function (a) {
   };
 });
 
-},{"../../parts_of_speech.js":38}],51:[function(require,module,exports){
+},{"../../parts_of_speech.js":36}],51:[function(require,module,exports){
 //part-of-speech tagging
 'use strict';
 
@@ -3688,6 +3723,8 @@ var ambiguous_dates = require('./passes/ambiguous_dates');
 var multiple_pass = require('./passes/multiples_pass');
 var regex_pass = require('./passes/regex_pass');
 var quotation_pass = require('./passes/quotation_pass');
+var possessive_pass = require('./passes/possessive_pass');
+var contraction_pass = require('./passes/contractions/interpret');
 
 var noun_fallback = function noun_fallback(terms) {
   for (var i = 0; i < terms.length; i++) {
@@ -3735,15 +3772,17 @@ var tagger = function tagger(s, options) {
     s.terms = noun_fallback(s.terms);
     s.terms = phrasal_verbs(s.terms);
     s.terms = fancy_lumping(s.terms);
+    s.terms = possessive_pass(s.terms);
   }
   s.terms = conditional_pass(s.terms);
   s.terms = quotation_pass(s.terms);
+  s.terms = contraction_pass(s.terms);
   return s.terms;
 };
 
 module.exports = tagger;
 
-},{"./assign":35,"./fancy_lumping":36,"./lumper":37,"./parts_of_speech":38,"./passes/ambiguous_dates":39,"./passes/capital_signals":40,"./passes/conditional_pass":41,"./passes/grammar_pass":42,"./passes/interjection_fixes":43,"./passes/lexicon_pass":44,"./passes/multiples_pass":45,"./passes/phrasal_verbs":46,"./passes/quotation_pass":47,"./passes/regex_pass":48}],52:[function(require,module,exports){
+},{"./assign":33,"./fancy_lumping":34,"./lumper":35,"./parts_of_speech":36,"./passes/ambiguous_dates":37,"./passes/capital_signals":38,"./passes/conditional_pass":39,"./passes/contractions/interpret":40,"./passes/grammar_pass":41,"./passes/interjection_fixes":42,"./passes/lexicon_pass":43,"./passes/multiples_pass":44,"./passes/phrasal_verbs":45,"./passes/possessive_pass":46,"./passes/quotation_pass":47,"./passes/regex_pass":48}],52:[function(require,module,exports){
 'use strict';
 //build-out this mapping
 
@@ -3976,7 +4015,6 @@ var Term = require('../term/term');
 var tagger = require('./pos/tagger');
 var passive_voice = require('./passive_voice');
 var contractions = {
-  interpret: require('./contractions/interpret'),
   contract: require('./contractions/contract'),
   expand: require('./contractions/expand')
 };
@@ -4022,7 +4060,6 @@ var Sentence = function () {
     //part-of-speech tagging
     this.terms = tagger(this, options);
     // process contractions
-    this.terms = contractions.interpret(this.terms);
     //now the hard part is already done, just flip them
     this.contractions = {
       // "he'd go" -> "he would go"
@@ -4322,7 +4359,7 @@ module.exports = Sentence;
 // s.contractions.contract();
 // console.log(s.text());
 
-},{"../match/match":26,"../term/term":97,"./contractions/contract":30,"./contractions/expand":31,"./contractions/interpret":32,"./passive_voice":34,"./pos/tagger":51,"./spot":58,"./tense":61}],58:[function(require,module,exports){
+},{"../match/match":26,"../term/term":97,"./contractions/contract":30,"./contractions/expand":31,"./passive_voice":32,"./pos/tagger":51,"./spot":58,"./tense":61}],58:[function(require,module,exports){
 'use strict';
 //generic named-entity-recognition
 
@@ -4548,7 +4585,7 @@ var change_tense = function change_tense(s, tense) {
 
 module.exports = change_tense;
 
-},{"./pos/parts_of_speech.js":38}],62:[function(require,module,exports){
+},{"./pos/parts_of_speech.js":36}],62:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5602,27 +5639,29 @@ var Noun = function (_Term) {
   }, {
     key: 'is_plural',
     value: function is_plural() {
-      var isPlural = _is_plural(this.normal);
-      if (this.pos['Date']) {
-        isPlural = false;
+      if (this.pos['Date'] || this.pos['Possessive']) {
+        return false;
+      } else if (this.has_abbreviation()) {
+        //contractions & possessives are not plural
+        return false;
+      } else {
+        return _is_plural(this.normal);
       }
-      this.pos['Plural'] = isPlural;
-      return isPlural;
     }
   }, {
     key: 'is_uncountable',
     value: function is_uncountable() {
-      return _is_uncountable(this.normal);
+      return _is_uncountable(this.strip_apostrophe());
     }
   }, {
     key: 'pluralize',
     value: function pluralize() {
-      return _pluralize(this.normal);
+      return _pluralize(this.strip_apostrophe());
     }
   }, {
     key: 'singularize',
     value: function singularize() {
-      return _singularize(this.normal);
+      return _singularize(this.strip_apostrophe());
     }
     //sub-classes
 
@@ -5633,17 +5672,17 @@ var Noun = function (_Term) {
       if (this.tag === 'Date') {
         return false;
       }
-      return _is_person(this.normal);
+      return _is_person(this.strip_apostrophe());
     }
   }, {
     key: 'is_organization',
     value: function is_organization() {
-      return _is_organization(this.normal, this.text);
+      return _is_organization(this.strip_apostrophe(), this.text);
     }
   }, {
     key: 'is_date',
     value: function is_date() {
-      return _is_date(this.normal);
+      return _is_date(this.strip_apostrophe());
     }
   }, {
     key: 'is_value',
@@ -5652,12 +5691,12 @@ var Noun = function (_Term) {
       if (this.tag === 'Date') {
         return false;
       }
-      return _is_value(this.normal);
+      return _is_value(this.strip_apostrophe());
     }
   }, {
     key: 'is_place',
     value: function is_place() {
-      return _is_place(this.normal);
+      return _is_place(this.strip_apostrophe());
     }
   }]);
 
@@ -6327,7 +6366,6 @@ var nums = require('../../../data/numbers.js');
 var is_date = require('../date/is_date');
 
 var is_value = function is_value(str) {
-  console.log("Hello0");
   var words = str.split(' ');
   //'january 5' is not a value
   if (is_date(str)) {
@@ -6471,7 +6509,6 @@ var appropriate = function appropriate(w, has) {
 };
 
 var to_number = function to_number(str) {
-  console.log("Hello1");
   //try to fail-fast
   if (!str || typeof str === 'number') {
     return str;
@@ -6482,12 +6519,20 @@ var to_number = function to_number(str) {
   var biggest_yet = 0;
   var has = {};
   var sum = 0;
-
+  var isNegative = false;
   var words = str.split(' ');
   for (var i = 0; i < words.length; i++) {
     var w = words[i];
     if (!w || w === 'and') {
       continue;
+    }
+    if (w === "-" || w === "negative") {
+      isNegative = true;
+      continue;
+    }
+    if (w.startsWith("-")) {
+      isNegative = true;
+      w = w.substr(1);
     }
     //decimal mode
     if (w === 'point') {
@@ -6502,9 +6547,7 @@ var to_number = function to_number(str) {
       continue;
     }
     //improper fraction
-    console.log("hi");
     var improperFractionMatch = w.match(/^([0-9,\. ]+)\/([0-9,\. ]+)$/);
-    console.log(improperFractionMatch);
     if (improperFractionMatch) {
       var num = parseFloat(improperFractionMatch[1].replace(/[, ]/g, ''));
       var denom = parseFloat(improperFractionMatch[2].replace(/[, ]/g, ''));
@@ -6544,6 +6587,7 @@ var to_number = function to_number(str) {
   sum += section_sum(has);
   //post-process add modifier
   sum *= modifier.amount;
+  sum *= isNegative ? -1 : 1;
   return sum;
 };
 
@@ -6857,7 +6901,8 @@ var Value = function (_Noun) {
       }
       //if there's a number, then something, then a number
       if (s.match(/[0-9][^(0-9|\/),\.][0-9]/)) {
-        if (/((?:[0-9]|.)+) ((?:[0-9]|.)+)\/((?:[0-9]|.)+)/) {
+        if (s.match(/((?:[0-9]|\.)+) ((?:[0-9]|\.)+)\/((?:[0-9]|\.)+)/)) {
+          // I'm sure there is a better regexpxs
           return true;
         }
         return false;
@@ -6989,7 +7034,6 @@ var Value = function (_Noun) {
     key: 'parse',
     value: function parse() {
       if (!this.is_number(this.text)) {
-        console.log("******Returning");
         return;
       }
 
@@ -7051,7 +7095,6 @@ var Value = function (_Noun) {
       }
 
       numbers = numbers.trim();
-      console.log(numbers);
       this.number = to_number(numbers);
 
       //of_what
@@ -7164,7 +7207,7 @@ var Term = function () {
   }, {
     key: 'root',
     value: function root() {
-      return this.normal;
+      return this.strip_apostrophe();
     }
     //strip apostrophe s
 
@@ -7179,8 +7222,6 @@ var Term = function () {
       }
       return this.normal;
     }
-    //Term methods..
-
   }, {
     key: 'has_comma',
     value: function has_comma() {
@@ -7192,7 +7233,12 @@ var Term = function () {
   }, {
     key: 'has_abbreviation',
     value: function has_abbreviation() {
+      // "spencer's"
       if (this.text.match(/[a-z]'[a-z][a-z]?$/)) {
+        return true;
+      }
+      // "flanders' house"
+      if (this.text.match(/[a-z]s'$/)) {
         return true;
       }
       return false;
@@ -7252,6 +7298,23 @@ var Term = function () {
       }
       this.normal = str;
       return this.normal;
+    }
+  }, {
+    key: 'forms',
+    value: function forms() {
+      if (this.pos['Noun']) {
+        return {
+          'singular': this.singularize(),
+          'plural': this.pluralize()
+        };
+      } else if (this.pos['Verb'] || this.pos['Adjective']) {
+        return this.conjugate();
+      } else if (this.pos['Adverb']) {
+        return {
+          'adjective': this.to_adjective()
+        };
+      }
+      return {};
     }
   }]);
 
@@ -8199,9 +8262,9 @@ var negate = function negate(v) {
   if (form === 'Actor') {
     return 'non-' + v.text;
   }
-  //walk -> not walk ?
+  //walk -> don't walk ?
   if (form === 'Infinitive') {
-    return 'not ' + v.text;
+    return 'don\'t ' + v.text;
   }
 
   return v.text;

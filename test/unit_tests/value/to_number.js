@@ -67,7 +67,9 @@ let tests = [
   ['-1 1/10', -1 - 1/10],
   ['1 1/20', 1 + 1/20],
   ['1/2 million', 500000],
-  ['1 1/2 million', 1500000]
+  ['1 1/2 million', 1500000],
+  ['negative five', -5],
+  ['negative hundred', -100]
 ];
 describe('to number', function() {
   tests.forEach(function(a) {

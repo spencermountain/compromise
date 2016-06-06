@@ -6,7 +6,7 @@ const contractions = {
   contract: require('./contractions/contract'),
   expand: require('./contractions/expand'),
 };
-const change_tense = require('./tense');
+const change_tense = require('./change_tense');
 const spot = require('./spot');
 const match = require('../match/match');
 let tokenize_match = function() {};

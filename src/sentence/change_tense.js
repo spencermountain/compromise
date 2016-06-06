@@ -16,11 +16,22 @@ const flip_verb = function(t, tense) {
 
 const change_tense = function(s, tense) {
   //convert all verbs
-  s.terms.forEach(function(t) {
+  for(let i = 0; i < s.terms.length; i++) {
+    let t = s.terms[i];
     if (t instanceof pos.Verb) {
-      flip_verb(t, tense);
+      //ignore gerunds too - "is walking"
+      if (t.pos['Gerund']) {
+        continue;
+      }
+      //ignore true infinitives, "go to sleep"
+      if (t.pos['Infinitive']) {
+        if (s.terms[i - 1] && s.terms[i - 1].normal === 'to') {
+          continue;
+        }
+      }
+      s.terms[i] = flip_verb(t, tense);
     }
-  });
+  }
   return s;
 };
 

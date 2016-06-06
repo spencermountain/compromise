@@ -6,10 +6,10 @@ const irregular_verbs = {
     future_perfect: 'will have taken'
   },
   can: {
-    gerund: 'doing',
+    gerund: '',
     present: 'can',
     past: 'could',
-    future: 'could',
+    future: 'can',
     perfect: 'could',
     pluperfect: 'could',
     future_perfect: 'can',

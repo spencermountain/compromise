@@ -11,7 +11,12 @@ describe('Sentence Change tense', function() {
     // ['i usually use the stairs', 'i usually used the stairs', 'i usually will use the stairs'],
     // ['cardboard is made of tree fibre', 'cardboard was made of tree fibre', 'cardboard will be made of tree fibre'],
     ['he finishes first', 'he finished first', 'he will finish first'],
-    ['our house looks great', 'our house looked great', 'our house will look great']
+    ['our house looks great', 'our house looked great', 'our house will look great'],
+    //infinitives
+    ['he does what he can to stop', 'he did what he could to stop', 'he will do what he can to stop'],
+    ['goes to sleep', 'went to sleep', 'will go to sleep'],
+  //grammatical-number
+  // ['we do what we can to stop', 'we did what we could to stop', 'we will do what we can to stop'],
   ];
   tests.forEach(function(a) {
     it(a[0], function(done) {

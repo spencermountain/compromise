@@ -5,6 +5,16 @@ const irregular_verbs = {
     pluperfect: 'had taken',
     future_perfect: 'will have taken'
   },
+  can: {
+    gerund: 'doing',
+    present: 'can',
+    past: 'could',
+    future: 'could',
+    perfect: 'could',
+    pluperfect: 'could',
+    future_perfect: 'can',
+    actor: ''
+  },
   free: {
     gerund: 'freeing',
     actor: ''
@@ -18,7 +28,7 @@ const irregular_verbs = {
     actor: 'babysitter'
   },
   be: { // this is crazy-hard and shouldn't be here
-    past: 'was',
+    past: 'been',
     present: 'is',
     future: 'will be',
     perfect: 'have been',

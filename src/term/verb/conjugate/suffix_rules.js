@@ -1,7 +1,9 @@
 'use strict';
 //suffix signals for verb tense, generated from test data
 const compact = {
-  'gerund': [],
+  'gerund': [
+    'ing'
+  ],
   'infinitive': [
     'ate',
     'ize',

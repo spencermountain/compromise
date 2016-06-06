@@ -125,4 +125,4 @@ Object.keys(lexicon).forEach(function(k) {
 });
 
 module.exports = lexicon;
-// console.log(lexicon['raining in']);
+// console.log(lexicon['doing']);

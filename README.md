@@ -83,6 +83,13 @@ nlp.plugin(require("nlp-ngram"));
 var t4 = nlp.text(`Tony Hawk played Tony Hawk's pro skater`);
 t4.ngram({min_count: 2});
 // [{word:'tony hawk', count:2, size:1}]
+
+//grammar links
+nlp.plugin(require('nlp-links'));
+var sen = nlp.sentence('I fed the dog').withLinks();
+// Each term now has links to words they are grammatically connected to
+sen.terms[1].links[1].target.word; // terms[1] is verb 'fed'
+// 'dog'
 ```
 
 ### [View the Full API Documentation](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/api.md)

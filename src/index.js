@@ -98,5 +98,4 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.sentence('move that chair to the table').terms);
-// console.log(nlp.verb('win').to_adjective());
+// console.log(nlp.sentence('table is moveable').terms);

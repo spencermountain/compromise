@@ -1974,7 +1974,7 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.sentence('Dr. John Smith is five feet tall.').normal());
+// console.log(nlp.text('hi John. He is good').normal());
 
 },{"./fns.js":23,"./lexicon.js":25,"./sentence/question/question.js":54,"./sentence/sentence.js":57,"./sentence/statement/statement.js":60,"./term/adjective/adjective.js":62,"./term/adverb/adverb.js":67,"./term/noun/date/date.js":72,"./term/noun/noun.js":78,"./term/noun/organization/organization.js":80,"./term/noun/person/person.js":84,"./term/noun/place/place.js":86,"./term/noun/value/value.js":96,"./term/term.js":97,"./term/verb/verb.js":106,"./text/text.js":109}],25:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
@@ -2531,8 +2531,6 @@ var shouldLumpThree = function shouldLumpThree(a, b, c) {
   if (!a || !b || !c) {
     return false;
   }
-  //some weak-pos
-
   var lump_rules = [{
     condition: a.pos.Noun && b.text === '&' && c.pos.Noun, //John & Joe's
     result: 'Person'
@@ -2560,6 +2558,9 @@ var shouldLumpThree = function shouldLumpThree(a, b, c) {
   }, {
     condition: a.pos.Date && (c.pos.Date || c.pos.Ordinal) && (b.pos.Preposition || b.pos.Determiner || b.pos.Conjunction || b.pos.Adjective), //3hrs after 5pm
     result: 'Date'
+  }, {
+    condition: a.pos.Value && b.normal === 'and' && c.pos.Value, //two hundred and three
+    result: 'Value'
   }];
   for (var i = 0; i < lump_rules.length; i++) {
     if (lump_rules[i].condition) {
@@ -4116,12 +4117,16 @@ var Sentence = function () {
   }, {
     key: 'terminator',
     value: function terminator() {
-      var allowed = ['.', '?', '!'];
-      var punct = this.str.slice(-1) || '';
-      if (allowed.indexOf(punct) !== -1) {
-        return punct;
+      var allowed = {
+        '.': true,
+        '?': true,
+        '!': true
+      };
+      var char = this.str.match(/([\.\?\!])\W*$/);
+      if (char && allowed[char[1]]) {
+        return char[1];
       }
-      return '.';
+      return '';
     }
 
     //part-of-speech assign each term
@@ -4180,12 +4185,13 @@ var Sentence = function () {
   }, {
     key: 'normal',
     value: function normal() {
-      return this.terms.reduce(function (s, t) {
+      var str = this.terms.reduce(function (s, t) {
         if (t.normal) {
           s += ' ' + t.normal;
         }
         return s;
       }, '').trim();
+      return str + this.terminator();
     }
 
     //further 'lemmatisation/inflection'
@@ -4314,8 +4320,21 @@ var Sentence = function () {
         }
         return !t.pos['Condition'];
       });
-      //
       return this;
+    }
+
+    //'semantic' word-count, skips over implicit terms and things
+
+  }, {
+    key: 'word_count',
+    value: function word_count() {
+      return this.terms.filter(function (t) {
+        //a quiet term, from a contraction
+        if (t.normal === '') {
+          return false;
+        }
+        return true;
+      }).length;
     }
 
     //named-entity recognition
@@ -6972,8 +6991,8 @@ var Value = function (_Noun) {
       return num + 'th';
     }
 
-    //overwrite term.normalize?
-    // normalize() {
+    //overwrite term.normal?
+    // normal() {
     //   let str = '' + (this.number || '');
     //   if (this.is_ordinal()) {
     //     str = this.to_ordinal(str);
@@ -8341,7 +8360,7 @@ var sentence_parser = function sentence_parser(text) {
 };
 
 module.exports = sentence_parser;
-// console.log(sentence_parser('Hi there.\n\n \nEveryone wins\n'));
+// console.log(sentence_parser('hi John. He is good'));
 
 },{"../data/abbreviations":1,"../fns":23}],109:[function(require,module,exports){
 'use strict';
@@ -8413,7 +8432,7 @@ var Text = function () {
     key: 'normal',
     value: function normal() {
       var arr = this.sentences.map(function (s) {
-        return s.normalized();
+        return s.normal();
       });
       return fns.flatten(arr).join(' ');
     }
@@ -8614,6 +8633,17 @@ var Text = function () {
           return 1;
         }
       });
+    }
+    //'semantic' word-count, skips over implicit terms and things
+
+  }, {
+    key: 'word_count',
+    value: function word_count() {
+      var count = 0;
+      for (var i = 0; i < this.sentences.length; i++) {
+        count += this.sentences[i].word_count();
+      }
+      return count;
     }
   }]);
 

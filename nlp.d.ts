@@ -233,6 +233,7 @@ export interface Verb extends Term {
   tag: VerbTag
   tense(): VerbTense
   forms(): VerbForm
+  to_adjective(): string
 }
 
 export interface Abjective extends Term {

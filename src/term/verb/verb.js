@@ -2,6 +2,7 @@
 const Term = require('../term.js');
 const conjugate = require('./conjugate/conjugate.js');
 const negate = require('./verb_negate.js');
+const to_adjective = require('./to_adjective.js');
 const predict_form = require('./conjugate/predict_form.js');
 
 const verbTags = {
@@ -84,6 +85,9 @@ class Verb extends Term {
     this.tag = verbTags[tense];
     this.changeTo(conjugations[tense]);
     return conjugations[tense];
+  }
+  to_adjective() {
+    return to_adjective(this.conjugate().infinitive);
   }
 
   //is this verb negative already?

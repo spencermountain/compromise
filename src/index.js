@@ -98,4 +98,5 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.text('hi John. He is good').normal());
+// console.log(nlp.sentence('move that chair to the table').terms);
+// console.log(nlp.verb('win').to_adjective());

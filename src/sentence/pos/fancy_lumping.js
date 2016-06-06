@@ -46,7 +46,7 @@ const shouldLumpThree = function(a, b, c) {
     {
       condition: (a.pos.Value && b.normal === 'and' && c.pos.Value), //two hundred and three
       result: 'Value',
-    },
+    }
   ];
   for(let i = 0; i < lump_rules.length; i++) {
     if (lump_rules[i].condition) {
@@ -125,7 +125,7 @@ const shouldLumpTwo = function(a, b) {
     {
       condition: (a.pos.Demonym && b.pos.Currency), //canadian dollar, Brazilian pesos
       result: 'Currency',
-    },
+    }
   ];
   for(let i = 0; i < lump_rules.length; i++) {
     if (lump_rules[i].condition) {

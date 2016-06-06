@@ -3,6 +3,7 @@
 'use strict';
 const fns = require('./fns.js');
 const verb_conjugate = require('./term/verb/conjugate/conjugate.js');
+const verb_to_adjective = require('./term/verb/to_adjective.js');
 const to_comparative = require('./term/adjective/to_comparative.js');
 const to_superlative = require('./term/adjective/to_superlative.js');
 const to_adverb = require('./term/adjective/to_adverb.js');
@@ -52,6 +53,8 @@ for (let i = 0; i < verbs.length; i++) {
       lexicon[o[k]] = verbMap[k];
     }
   });
+  //also add their adjective form - "walkable"
+  lexicon[verb_to_adjective(verbs[i])] = 'Adjective';
 }
 
 let orgs = require('./data/organizations.js');

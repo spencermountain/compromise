@@ -5,7 +5,7 @@
 **nlp_compromise** does NLP in the browser.
 ```javascript
 nlp.sentence('She sells seashells').to_past().text()
-// She sold seashells
+// 'She sold seashells'
 ```
 ### Yup,
 * **100k** js file
@@ -22,12 +22,12 @@ It's a [handy, and not overly-fancy](https://github.com/nlp-compromise/nlp_compr
 > `<script src="https://npmcdn.com/nlp_compromise@latest/builds/nlp_compromise.min.js"></script>`
 
 ```javascript
-let nlp = require("nlp_compromise"); // or nlp = window.nlp_compromise
+let nlp = require('nlp_compromise'); // or nlp = window.nlp_compromise
 
-nlp.noun("dinosaur").pluralize();
-// "dinosaurs"
+nlp.noun('dinosaur').pluralize();
+// 'dinosaurs'
 
-nlp.verb("speak").conjugate();
+nlp.verb('speak').conjugate();
 // { past: 'spoke',
 //   infinitive: 'speak',
 //   gerund: 'speaking',
@@ -40,21 +40,21 @@ nlp.verb("speak").conjugate();
 // }
 
 nlp.statement('She sells seashells').negate().text()
-// She doesn't sell seashells
+// 'She doesn't sell seashells'
 
 nlp.sentence('I fed the dog').replace('the [Noun]', 'the cat').text()
-// I fed the cat
+// 'I fed the cat'
 
-nlp.text("Tony Hawk did a kickflip").people();
+nlp.text('Tony Hawk did a kickflip').people();
 // [ Person { text: 'Tony Hawk' ..} ]
 
-nlp.noun("vacuum").article();
-// "a"
+nlp.noun('vacuum').article();
+// 'a'
 
-nlp.person("Tony Hawk").pronoun();
-// "he"
+nlp.person('Tony Hawk').pronoun();
+// 'he'
 
-nlp.value("five hundred and sixty").number;
+nlp.value('five hundred and sixty').number;
 // 560
 
 nlp.text(require('nlp-corpus').text.friends()).topics()//11 seasons of friends
@@ -68,18 +68,18 @@ nlp.text(require('nlp-corpus').text.friends()).topics()//11 seasons of friends
 we've also got a modest, though ambitious [plugin ecosystem](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/plugins.md):
 ```javascript
 //US-UK localization
-nlp.plugin(require("nlp-locale"))
-nlp.term("favourite").toAmerican()
-// favorite
+nlp.plugin(require('nlp-locale'))
+nlp.term('favourite').toAmerican()
+// 'favorite'
 
 //syllable hyphenization
-nlp.plugin(require("nlp-syllables"));
+nlp.plugin(require('nlp-syllables'));
 var t2 = nlp.term('houston texas');
 t2.syllables()
 //[ [ 'hous', 'ton' ], [ 'tex', 'as' ] ]
 
 //semantic n-gram
-nlp.plugin(require("nlp-ngram"));
+nlp.plugin(require('nlp-ngram'));
 var t4 = nlp.text(`Tony Hawk played Tony Hawk's pro skater`);
 t4.ngram({min_count: 2});
 // [{word:'tony hawk', count:2, size:1}]

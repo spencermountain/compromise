@@ -63,9 +63,9 @@ const negate = function(v) {
   if (form === 'Actor') {
     return 'non-' + v.text;
   }
-  //walk -> not walk ?
+  //walk -> don't walk ?
   if (form === 'Infinitive') {
-    return 'not ' + v.text;
+    return 'don\'t ' + v.text;
   }
 
   return v.text;

@@ -62,6 +62,14 @@ let tests = [
   ['five hundred eighteen', 518],
   ['eighty eight point nine nine', 88.99],
   ['minus eighty eight point nine nine', -88.99],
+  ['1/2', 1/2],
+  ['-1/5', -1/5],
+  ['-1 1/10', -1 - 1/10],
+  ['1 1/20', 1 + 1/20],
+  ['1/2 million', 500000],
+  ['1 1/2 million', 1500000],
+  ['negative five', -5],
+  ['negative hundred', -100]
 ];
 describe('to number', function() {
   tests.forEach(function(a) {

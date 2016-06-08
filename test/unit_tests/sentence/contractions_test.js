@@ -12,7 +12,7 @@ describe('possessives are not contractions', function() {
     [`toronto's citizens`, `toronto's citizens`],
     [`rocket's red glare`, `rocket's red glare`],
     [`somebody's walking`, `somebody is walking`],
-    [`everyone's here`, `everyone's here`],
+    [`everyone's victories`, `everyone's victories`],
     [`the tornado's power`, `the tornado's power`],
   ].forEach(function(a) {
     it(a[0], function(done) {
@@ -35,7 +35,7 @@ describe('contractions get POS', function() {
   ].forEach(function(a) {
     it(a[0], function(done) {
       let s = nlp.sentence(a[0]);
-      s.terms[0].pos[a[1]].should.equal(true);
+      (s.terms[0].pos[a[1]] || '').should.equal(true);
       done();
     });
   });

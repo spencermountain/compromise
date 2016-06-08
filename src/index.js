@@ -98,7 +98,5 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.text(' \n\n\t spencer is here\n\nhe is here too'));
-// console.log(nlp.sentence(`john's good`).contractions.expand().terms);
-// console.log(nlp.sentence(`canadian dollar`).terms);
-// console.log(nlp.sentence(`east caribbean dollar`).terms);
+// console.log(nlp.sentence('he is currently doing everything he can to stop the problem').to_past().text());
+// console.log(nlp.sentence('we did what we can').to_present().text());

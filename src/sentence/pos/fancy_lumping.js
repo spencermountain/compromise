@@ -6,8 +6,6 @@ const shouldLumpThree = function(a, b, c) {
   if (!a || !b || !c) {
     return false;
   }
-  //some weak-pos
-
   const lump_rules = [
     {
       condition: (a.pos.Noun && b.text === '&' && c.pos.Noun), //John & Joe's
@@ -44,6 +42,10 @@ const shouldLumpThree = function(a, b, c) {
     {
       condition: (a.pos.Date && (c.pos.Date || c.pos.Ordinal) && (b.pos.Preposition || b.pos.Determiner || b.pos.Conjunction || b.pos.Adjective)), //3hrs after 5pm
       result: 'Date',
+    },
+    {
+      condition: (a.pos.Value && b.normal === 'and' && c.pos.Value), //two hundred and three
+      result: 'Value',
     }
   ];
   for(let i = 0; i < lump_rules.length; i++) {
@@ -123,7 +125,7 @@ const shouldLumpTwo = function(a, b) {
     {
       condition: (a.pos.Demonym && b.pos.Currency), //canadian dollar, Brazilian pesos
       result: 'Currency',
-    },
+    }
   ];
   for(let i = 0; i < lump_rules.length; i++) {
     if (lump_rules[i].condition) {

@@ -38,7 +38,10 @@ class Value extends Noun {
       return false;
     }
     //if there's a number, then something, then a number
-    if (s.match(/[0-9][^0-9,\.][0-9]/)) {
+    if (s.match(/[0-9][^(0-9|\/),\.][0-9]/)) {
+      if (s.match(/((?:[0-9]|\.)+) ((?:[0-9]|\.)+)\/((?:[0-9]|\.)+)/)) { // I'm sure there is a better regexpxs
+        return true;
+      }
       return false;
     }
     return true;
@@ -108,8 +111,8 @@ class Value extends Noun {
     return num + 'th';
   }
 
-  //overwrite term.normalize?
-  // normalize() {
+  //overwrite term.normal?
+  // normal() {
   //   let str = '' + (this.number || '');
   //   if (this.is_ordinal()) {
   //     str = this.to_ordinal(str);
@@ -166,14 +169,14 @@ class Value extends Noun {
     let words = this.text.toLowerCase().split(/[ ]/);
     //split at '-' only for numbers like twenty-two, sixty-seven, etc.
     //so that 'twelve six-gram pieces' returns 12 for number, not null
-    //however, still returns null for 'three sevel-eleven stores' 
+    //however, still returns null for 'three sevel-eleven stores'
     for (let i = 0; i < words.length; i++) {
       let w = words[i];
-      if ((w.indexOf('-') == w.lastIndexOf('-')) && w.indexOf('-') > -1) {
+      if ((w.indexOf('-') === w.lastIndexOf('-')) && w.indexOf('-') > -1) {
         let halves = w.split(/[-]/);
         if (this.is_number_word(halves[0]) && this.is_number_word(halves[1])) {
           words[i] = halves[0];
-          words.splice(i+1, 0, halves[1]);
+          words.splice(i + 1, 0, halves[1]);
         }
       }
     }
@@ -194,15 +197,15 @@ class Value extends Noun {
 
     //if raw_units is something like "grams of sugar", try it first,
     //then "grams of", and then "grams".
-    while (this.unit != '') {
-    if (this.is_unit() && units[this.unit]) {
-      this.measurement = units[this.unit].category;
-      this.unit_name = units[this.unit].name;
-      break;
-    } else {
-      this.unit = this.unit.substr(0, this.unit.lastIndexOf(' ')).trim();
+    while (this.unit !== '') {
+      if (this.is_unit() && units[this.unit]) {
+        this.measurement = units[this.unit].category;
+        this.unit_name = units[this.unit].name;
+        break;
+      } else {
+        this.unit = this.unit.substr(0, this.unit.lastIndexOf(' ')).trim();
+      }
     }
-  }
 
     //support '$400' => 400 dollars
     let firstChar = this.text.substr(0, 1);

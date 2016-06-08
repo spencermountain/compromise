@@ -140,8 +140,10 @@ nlp.noun('SS Tony danza').is_person()
 nlp.noun('hour').article()
 //an
 
-nlp.noun('mayors of toronto').conjugate()
-//{ plural: 'mayors of toronto', singular: 'mayor of toronto' }
+nlp.noun('church').pluralize()
+//churches
+nlp.noun('mayors of toronto').singularize()
+//mayor of toronto
 
 nlp.noun("tooth").pronoun()
 //it

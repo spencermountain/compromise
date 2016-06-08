@@ -2,7 +2,11 @@ Uses semver, with occasional releases to npm and bower.
 
 here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
 
+### v.6  &nbsp;  
+* 6.0.0 - be consistent with `text.normal()`, `term.all_forms()`, `text.word_count()`. `text.normal()` includes sentence-terminators, like periods etc.
+
 ### v.5  &nbsp;  
+* 5.2.0 - airport codes support, helper methods for specific POS
 * 5.1.0 - newlines split sentences
 * 5.0.0 - Text methods now return this, instead of array of sentences
 

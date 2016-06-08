@@ -46,21 +46,22 @@ class Noun extends Term {
     return pronoun(this.normal);
   }
   is_plural() {
-    let isPlural = is_plural(this.normal);
-    if (this.pos['Date']) {
-      isPlural = false;
+    if (this.pos['Date'] || this.pos['Possessive']) {
+      return false;
+    } else if (this.has_abbreviation()) { //contractions & possessives are not plural
+      return false;
+    } else {
+      return is_plural(this.normal);
     }
-    this.pos['Plural'] = isPlural;
-    return isPlural;
   }
   is_uncountable() {
-    return is_uncountable(this.normal);
+    return is_uncountable(this.strip_apostrophe());
   }
   pluralize() {
-    return pluralize(this.normal);
+    return pluralize(this.strip_apostrophe());
   }
   singularize() {
-    return singularize(this.normal);
+    return singularize(this.strip_apostrophe());
   }
   //sub-classes
   is_person() {
@@ -68,23 +69,23 @@ class Noun extends Term {
     if (this.tag === 'Date') {
       return false;
     }
-    return is_person(this.normal);
+    return is_person(this.strip_apostrophe());
   }
   is_organization() {
-    return is_organization(this.normal, this.text);
+    return is_organization(this.strip_apostrophe(), this.text);
   }
   is_date() {
-    return is_date(this.normal);
+    return is_date(this.strip_apostrophe());
   }
   is_value() {
     //don't overwrite dates, etc
     if (this.tag === 'Date') {
       return false;
     }
-    return is_value(this.normal);
+    return is_value(this.strip_apostrophe());
   }
   is_place() {
-    return is_place(this.normal);
+    return is_place(this.strip_apostrophe());
   }
 
 }

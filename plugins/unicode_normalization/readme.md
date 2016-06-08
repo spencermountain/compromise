@@ -5,7 +5,15 @@ a hugely-ignorant, and widely subjective transliteration of latin, cryllic, gree
 approximate visual (not semantic) relationship between unicode and ascii characters
 
 ```javascript
-nlp.normalize("Björk")
+
+const nlp = require('../../src/index');
+nlp.mixin(mixin);
+
+let w = nlp.term('Jørgen Fróði Čukić');
+console.log(w.normalize().text);
+//"Jorgen Frooi cukic"
+
+nlp.term("Björk").normalize()
 //Bjork
 ```
 and for fun,

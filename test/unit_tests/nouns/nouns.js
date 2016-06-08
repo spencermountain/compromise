@@ -210,15 +210,14 @@ describe('nouns', function() {
 
   //Noun forms()
   it('noun.forms()', function(done) {
-    var tests = [
-                  ['cat', 'cats'],
-                  ['dog', 'dogs'],
-                ];
-
-    tests.forEach(function(a) {
-      var n = new Noun(a[0]);
+    [
+      ['cat', 'cats'],
+      ['dog', 'dogs'],
+    ].forEach(function(a) {
+      let n = new Noun(a[0]);
       (JSON.stringify(n.forms())).should.equal(JSON.stringify({
-        'singular': a[0], 'plural': a[1]
+        'singular': a[0],
+        'plural': a[1]
       }));
     });
     done();

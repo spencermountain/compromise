@@ -72,4 +72,4 @@ const sentence_parser = function(text) {
 };
 
 module.exports = sentence_parser;
-// console.log(sentence_parser('Hi there.\n\n \nEveryone wins\n'));
+// console.log(sentence_parser('hi John. He is good'));

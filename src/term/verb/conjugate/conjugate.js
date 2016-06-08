@@ -62,7 +62,7 @@ const conjugate = function(w) {
   }
 
   //for phrasal verbs ('look out'), conjugate look, then append 'out'
-  const phrasal_reg = new RegExp('^(.*?) (in|out|on|off|behind|way|with|of|do|away|across|ahead|back|over|under|together|apart|up|upon|aback|down|about|before|after|around|to|forth|round|through|along|onto)$', 'i');
+  const phrasal_reg = new RegExp('^(.*?) (in|out|on|off|behind|way|with|of|away|across|ahead|back|over|under|together|apart|up|upon|aback|down|about|before|after|around|to|forth|round|through|along|onto)$', 'i');
   if (w.match(phrasal_reg)) {
     const split = w.match(phrasal_reg, '');
     const phrasal_verb = split[1];
@@ -107,4 +107,4 @@ const conjugate = function(w) {
 };
 module.exports = conjugate;
 
-// console.log(conjugate('learn'));
+// console.log(conjugate('head back'));

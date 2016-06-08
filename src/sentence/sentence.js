@@ -3,11 +3,10 @@ const Term = require('../term/term');
 const tagger = require('./pos/tagger');
 const passive_voice = require('./passive_voice');
 const contractions = {
-  interpret: require('./contractions/interpret'),
   contract: require('./contractions/contract'),
   expand: require('./contractions/expand'),
 };
-const change_tense = require('./tense');
+const change_tense = require('./change_tense');
 const spot = require('./spot');
 const match = require('../match/match');
 let tokenize_match = function() {};
@@ -48,7 +47,6 @@ class Sentence {
     //part-of-speech tagging
     this.terms = tagger(this, options);
     // process contractions
-    this.terms = contractions.interpret(this.terms);
     //now the hard part is already done, just flip them
     this.contractions = {
       // "he'd go" -> "he would go"
@@ -92,12 +90,16 @@ class Sentence {
 
   //the ending punctuation
   terminator() {
-    const allowed = ['.', '?', '!'];
-    const punct = this.str.slice(-1) || '';
-    if (allowed.indexOf(punct) !== -1) {
-      return punct;
+    const allowed = {
+      '.': true,
+      '?': true,
+      '!': true
+    };
+    let char = this.str.match(/([\.\?\!])\W*$/);
+    if (char && allowed[char[1]]) {
+      return char[1];
     }
-    return '.';
+    return '';
   }
 
   //part-of-speech assign each term
@@ -137,13 +139,14 @@ class Sentence {
     }, '');
   }
   //like text but for cleaner text
-  normalized() {
-    return this.terms.reduce(function(s, t) {
+  normal() {
+    let str = this.terms.reduce(function(s, t) {
       if (t.normal) {
         s += ' ' + t.normal;
       }
       return s;
     }, '').trim();
+    return str + this.terminator();
   }
 
   //further 'lemmatisation/inflection'
@@ -233,8 +236,18 @@ class Sentence {
       }
       return !t.pos['Condition'];
     });
-    //
     return this;
+  }
+
+  //'semantic' word-count, skips over implicit terms and things
+  word_count() {
+    return this.terms.filter((t) => {
+      //a quiet term, from a contraction
+      if (t.normal === '') {
+        return false;
+      }
+      return true;
+    }).length;
   }
 
   //named-entity recognition

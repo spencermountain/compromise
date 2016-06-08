@@ -71,12 +71,20 @@ const to_number = function(str) {
   let biggest_yet = 0;
   let has = {};
   let sum = 0;
-
+  let isNegative = false;
   let words = str.split(' ');
   for(let i = 0; i < words.length; i++) {
     let w = words[i];
     if (!w || w === 'and') {
       continue;
+    }
+    if (w === "-" || w === "negative") {
+      isNegative = true;
+      continue
+    }
+    if (w.startsWith("-")) {
+      isNegative = true;
+      w = w.substr(1)
     }
     //decimal mode
     if (w === 'point') {
@@ -88,6 +96,14 @@ const to_number = function(str) {
     //maybe it's just a number typed as a string
     if (w.match(/^[0-9,\. ]+$/)) {
       sum += parseFloat(w.replace(/[, ]/g, '')) || 0;
+      continue;
+    }
+    //improper fraction
+    const improperFractionMatch = w.match(/^([0-9,\. ]+)\/([0-9,\. ]+)$/)
+    if (improperFractionMatch) {
+      const num = parseFloat(improperFractionMatch[1].replace(/[, ]/g, ''))
+      const denom = parseFloat(improperFractionMatch[2].replace(/[, ]/g, ''))
+      sum += (num/denom) || 0;
       continue;
     }
     //prevent mismatched units, like 'seven eleven'
@@ -123,6 +139,7 @@ const to_number = function(str) {
   sum += section_sum(has);
   //post-process add modifier
   sum *= modifier.amount;
+  sum *= isNegative ? -1 : 1;
   return sum;
 };
 

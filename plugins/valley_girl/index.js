@@ -22,9 +22,9 @@ module.exports = mixin;
 /////
 // Usage:
 ////
-const nlp_compromise = require('../../src/index');
-var t = nlp_compromise.text('it is a cool library.');
-nlp_compromise.mixin(mixin);
-t.valley_girl();
-console.log(t.text());
+// const nlp_compromise = require('../../src/index');
+// var t = nlp_compromise.text('it is a cool library.');
+// nlp_compromise.mixin(mixin);
+// t.valley_girl();
+// console.log(t.text());
 // "So basically, it is like, a cool library."

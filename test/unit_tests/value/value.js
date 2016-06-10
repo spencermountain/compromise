@@ -72,14 +72,19 @@ describe('parse value', function() {
     });
   });
 
-  it('gets ofWhat', function(done) {
+  it('gets of_what', function(done) {
     [
-      ['nine kg', 'kilogram'],
+      ['nine kg', 'kg'],
       ['5 kg of copper', 'copper'],
-      ['many of these stories', 'these stories'],
-      ['room full of beautiful creatures', 'beautiful creatures'],
-      ['boxes of bags of food', 'bags of food'],
-      ['just nothing', '']
+      ['many of these stories', 'many of these stories'],
+      ['room full of beautiful creatures', 'full of beautiful creatures'],
+      ['boxes of bags of food', 'boxes of bags of food'],
+      ['5 boxes of water', 'boxes of water'],
+      ['6 of kids', 'kids'],
+      ['10 kids', 'kids'],
+      ['just nothing', 'just nothing'],
+      ['EUR 77', 'eur'],
+      ['kg', 'kg']
     ].forEach(function(a) {
       let n = new Value(a[0]);
       (n.of_what).should.equal(a[1]);

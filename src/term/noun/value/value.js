@@ -229,9 +229,33 @@ class Value extends Noun {
     //of_what
     let of_pos = this.text.indexOf(' of ');
     if (of_pos > 0) {
-      this.of_what = this.text.substring(of_pos + 4).trim();
+      var before = this.text.substring(0, of_pos).trim();
+      var after = this.text.substring(of_pos + 4).trim();
+
+      var space_pos = before.lastIndexOf(' ');
+      var w = before.substring(space_pos).trim();
+
+      //if the word before 'of' is a unit, return whatever is after 'of'
+      //else return this word + of + whatever is after 'of'
+      if (w && (this.is_unit(w) || this.is_number_word(w))) {
+        this.of_what = after;
+      } else {
+        this.of_what = w + ' of ' + after;
+      }
     } else if (this.unit_name) {
-      this.of_what = this.unit_name;
+      //if value contains a unit but no 'of', return unit
+      this.of_what = this.unit;
+    } else {
+      //if value is a number followed by words, skip numbers
+      //and return words; if there is no numbers, return full
+      var w = this.text.split(' ');
+      for (var i = 0; i < w.length; i++) {
+        if (this.is_number_word(w[i])) {
+          w[i] = '';
+          continue;
+        }
+        this.of_what = w.join(' ').trim();
+      }
     }
 
   }

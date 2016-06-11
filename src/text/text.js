@@ -121,72 +121,47 @@ class Text {
     return this;
   }
 
-  //parts of speech
-  nouns() {
+
+  //returns an array with elements from this.sentences[i].func()
+  generate_arr(func) {
     let arr = [];
-    for(let i = 0; i < this.sentences.length; i++) {
-      arr = arr.concat(this.sentences[i].nouns());
-    }
-    return arr;
-  }
-  adjectives() {
-    let arr = [];
-    for(let i = 0; i < this.sentences.length; i++) {
-      arr = arr.concat(this.sentences[i].adjectives());
-    }
-    return arr;
-  }
-  verbs() {
-    let arr = [];
-    for(let i = 0; i < this.sentences.length; i++) {
-      arr = arr.concat(this.sentences[i].verbs());
-    }
-    return arr;
-  }
-  adverbs() {
-    let arr = [];
-    for(let i = 0; i < this.sentences.length; i++) {
-      arr = arr.concat(this.sentences[i].adverbs());
+    for (var i = 0; i < this.sentences.length; i++) {
+      arr = arr.concat(this.sentences[i][func]());
     }
     return arr;
   }
 
+  //parts of speech
+  nouns() {
+    return this.generate_arr('nouns');
+  }
+  adjectives() {
+    return this.generate_arr('adjectives');
+  }
+  verbs() {
+    return this.generate_arr('verbs');
+  }
+  adverbs() {
+    return this.generate_arr('adverbs');
+  }
+
   //mining
   people() {
-    let arr = [];
-    for(let i = 0; i < this.sentences.length; i++) {
-      arr = arr.concat(this.sentences[i].people());
-    }
-    return arr;
+    return this.generate_arr('people');
   }
   places() {
-    let arr = [];
-    for(let i = 0; i < this.sentences.length; i++) {
-      arr = arr.concat(this.sentences[i].places());
-    }
-    return arr;
+    return this.generate_arr('places');
   }
   organizations() {
-    let arr = [];
-    for(let i = 0; i < this.sentences.length; i++) {
-      arr = arr.concat(this.sentences[i].organizations());
-    }
-    return arr;
+    return this.generate_arr('organizations');
   }
   dates() {
-    let arr = [];
-    for(let i = 0; i < this.sentences.length; i++) {
-      arr = arr.concat(this.sentences[i].dates());
-    }
-    return arr;
+    return this.generate_arr('dates');
   }
   values() {
-    let arr = [];
-    for(let i = 0; i < this.sentences.length; i++) {
-      arr = arr.concat(this.sentences[i].values());
-    }
-    return arr;
+    return this.generate_arr('values');
   }
+
   //more generic named-entity recognition
   topics() {
     //consolodate topics across sentences

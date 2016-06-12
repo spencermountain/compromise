@@ -103,6 +103,15 @@ module.exports = [
     'before': ['[Modal]', '[Adverb]', '[?]'],
     'after': ['[Modal]', '[Adverb]', '[Verb]'],
   },
+  { // 'red roses' => Adjective, Noun
+    'before': ['[Adjective]', '[Verb]'],
+    'after': ['[Adjective]', '[Noun]'],
+  },
+  { // 5 kittens => Value, Nouns
+    'before': ['[Value]', '[Verb]'],
+    'after': ['[Value]', '[Noun]'],
+  },
+
   //ambiguous dates (march/may)
   // {
   //   'before': ['[Modal]', '[Value]'],

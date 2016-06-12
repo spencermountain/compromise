@@ -267,5 +267,3 @@ class Value extends Noun {
 }
 Value.fn = Value.prototype;
 module.exports = Value;
-
-// console.log(new Value('fifty saudi riyals'));

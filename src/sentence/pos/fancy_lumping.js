@@ -96,11 +96,11 @@ const shouldLumpTwo = function(a, b) {
     {
       condition: (a.pos.Noun && b.pos.Actor), //Aircraft designer
       result: 'Actor',
-    },
+    }, /*
     {
       condition: (a.pos.Value && b.pos.Noun && !a.pos.Ordinal), //5 books
       result: 'Value',
-    },
+    }, */
     {
       condition: (a.is_capital() && b.pos['Organization'] || b.is_capital() && a.pos['Organization']), //Canada Inc
       result: 'Organization',

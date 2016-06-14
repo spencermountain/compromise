@@ -74,7 +74,11 @@ const shouldLumpTwo = function(a, b) {
       result: 'Date',
     },
     {
-      condition: (a.pos.Honourific && b.is_capital()), //'Dr. John
+      condition: (a.pos.Honourific && b.is_capital()), //'Dr. John'
+      result: 'Person',
+    },
+    {
+      condition: (a.pos.Person && b.pos.Possessive), // "john lkjsdf's"
       result: 'Person',
     },
     {

@@ -79,7 +79,7 @@ const shouldLumpTwo = function(a, b) {
     },
     {
       condition: (a.pos.Person && b.pos.Possessive), // "john lkjsdf's"
-      result: 'Person',
+      result: 'Possessive',
     },
     {
       condition: (a.pos.Person && b.is_capital() && !a.pos.Possessive), //'Person, Capital -> Person'
@@ -150,14 +150,19 @@ const fancy_lumping = function(terms) {
     let tag = shouldLumpTwo(a, b);
     if (tag) {
       let Cl = pos.classMapping[tag] || pos.Term;
+      //this is sneaky
+      if (tag === 'Possessive' && a.pos.Person) {
+        Cl = pos.classMapping.Person;
+      }
       let space = a.whitespace.trailing + b.whitespace.preceding;
-      // console.log(terms[i - 1]);
-      // console.log(terms[i]);
       terms[i] = new Cl(a.text + space + b.text, tag);
       terms[i].reason = 'lumpedtwo(' + terms[i].reason + ')';
       terms[i].whitespace.preceding = a.whitespace.preceding;
       terms[i].whitespace.trailing = b.whitespace.trailing;
       terms[i - 1] = null;
+      if (tag === 'Possessive') {
+        terms[i].pos.Possessive = true;
+      }
       continue;
     }
 

@@ -66,6 +66,3 @@ describe('custom lexicon', function() {
   });
 
 });
-
-console.log(nlp.text('3 buses').terms());
-console.log(nlp.text('3 trains').terms());

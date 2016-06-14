@@ -5,7 +5,9 @@ const honourifics = require('../../../data/honourifics').reduce(function(h, s) {
   return h;
 }, {});
 
-const parse_name = function(str) {
+//str is a normalized string
+//str_orig is original text [optional]
+const parse_name = function(str, str_orig) {
 
   let words = str.split(' ');
   let o = {
@@ -14,6 +16,8 @@ const parse_name = function(str) {
     middleName: null,
     lastName: null,
   };
+
+  var double_firstname = 0; //assuming no
 
   //first-word honourific
   if (honourifics[words[0]]) {
@@ -28,6 +32,16 @@ const parse_name = function(str) {
   //see if the first word is now a known first-name
   if (firstnames[words[0]]) {
     o.firstName = words[0];
+    //is it a double name like Ann-Marie?
+    if (firstnames[words[1]]
+      && str_orig
+      && words.length > 1
+      && (str_orig.indexOf(' ') > str_orig.indexOf('-')
+        || str_orig.indexOf(' ') === -1)) {
+        o.firstName += '-' + words[1];
+        words = words.slice(1, words.length);
+        double_firstname = str_orig.indexOf('-'); // > 0
+      }
     words = words.slice(1, words.length);
   } else {
     //ambiguous one-word name
@@ -39,14 +53,20 @@ const parse_name = function(str) {
     words = words.slice(1, words.length);
   }
   //assume the remaining is '[middle..] [last]'
-  if (words[words.length - 1]) {
-    o.lastName = words[words.length - 1];
-    words = words.slice(0, words.length - 1);
+  //is it a double surname?
+  if (str_orig && (str_orig.lastIndexOf('-') > double_firstname)) {
+    if (words[words.length - 2]) {
+      o.lastName = words[words.length - 2] + '-' + words[words.length - 1];
+      words = words.slice(0, words.length - 2);
+    }
+  } else {
+    if (words[words.length - 1]) {
+      o.lastName = words[words.length - 1];
+      words = words.slice(0, words.length - 1);
+    }
   }
   o.middleName = words.join(' ');
   return o;
 };
 
 module.exports = parse_name;
-
-// console.log(parse_name('john smith'));

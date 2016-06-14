@@ -20,11 +20,12 @@ describe('parse name', function() {
 
   it('gets firstname', function(done) {
     let tests = [
-      ['John Smith', 'john'],
-      ['dr. John Smith', 'john'],
-      ['John Smith jr.', 'john'],
-      ['John Jacob Smith', 'john'],
-      ['Jani K. Smith', 'jani'],
+      ['John Smith', 'John'],
+      ['dr. John Smith', 'John'],
+      ['Ann-Marie Smith-O\'Brien jr.', 'Ann-Marie'],
+      ['John Jacob Smith-o\'brien', 'John'],
+      ['Jani K. Smith', 'Jani'],
+      ['Ann-Marie', 'Ann-Marie'],
       ['asdfefs', null]
     ];
     tests.forEach(function(a) {
@@ -36,11 +37,11 @@ describe('parse name', function() {
 
   it('gets lastname', function(done) {
     let tests = [
-      ['John Smith', 'smith'],
-      ['dr. John Smith', 'smith'],
-      ['John Smith jr.', 'smith'],
-      ['John Jacob Smith', 'smith'],
-      ['Jani K. Smith', 'smith'],
+      ['John Smith', 'Smith'],
+      ['dr. John Smith', 'Smith'],
+      ['John Smith jr.', 'Smith'],
+      ['John Jacob mcdonald-williams', 'McDonald-Williams'],
+      ['Jani-Lee K. o\'brien-macneil', 'O\'Brien-MacNeil'],
     ];
     tests.forEach(function(a) {
       let n = new Person(a[0]);

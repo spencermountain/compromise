@@ -44,13 +44,35 @@ class Person extends Noun {
     return str.trim() || this.normal;
   }
 
+  //capitalizes first letter of every word in a string
+  title_case(s) {
+    if (!s) {
+      return s;
+    }
+
+    s = s.replace(/(^\w|-\w| \w)/g, function (v) {return v.toUpperCase()});
+    return s;
+  }
+
+  lastname_case(s) {
+    if (!s) {
+      return s;
+    }
+
+    s = this.title_case(s);
+    s = s.replace(/(Mc|Mac|O\')(\w)/g, function (v) {
+      return v.replace(/\w$/, function (w) {return w.toUpperCase()});
+    });
+    return s;
+  }
+
   //turn a multi-word string into [first, middle, last, honourific]
   parse() {
-    let o = parse_name(this.normal);
+    let o = parse_name(this.normal, this.text.trim());
     this.honourific = o.honourific;
-    this.firstName = o.firstName;
-    this.middleName = o.middleName;
-    this.lastName = o.lastName;
+    this.firstName = this.title_case(o.firstName);
+    this.middleName = this.title_case(o.middleName);
+    this.lastName = this.lastname_case(o.lastName);
   }
 
   gender() {
@@ -70,6 +92,8 @@ class Person extends Noun {
 }
 Person.fn = Person.prototype;
 module.exports = Person;
-
-// let p = new Person('John Smith');
-// console.log(p.gender());
+/*
+let p = new Person('Jani-Lee K. o\'brien-macneil');
+console.log(p);
+let z = new Person('Mary-Jane Willson-Johnson');
+console.log(z);*/

@@ -40,8 +40,8 @@ describe('text root()', function() {
 
   it('roots all terms', function(done) {
     //on term
-    nlp.text('Joe is 5.5 feet tall.').root().should.equal('joe is 5.5 feet tall');
-    nlp.text('Joe is five feet tall.').root().should.equal('joe is 5 feet tall');
+    nlp.text('Joe is 5.5 ft tall.').root().should.equal('joe is 5.5 ft tall');
+    nlp.text('Joe is five ft tall.').root().should.equal('joe is 5 ft tall');
     nlp.text('Dr. Joe is cool.').root().should.equal('joe is cool');
     nlp.text('it is just-right').root().should.equal('it is just right');
     done();

@@ -25,13 +25,15 @@ describe('basic pos tag', function() {
     ['asdfes lksejfj was lofty', ['Noun', 'Copula', 'Adjective']],
     ['Spencer Kelly is in Canada', ['Person', 'Copula', 'Preposition', 'Place']],
     ['He is in Canada', ['Pronoun', 'Copula', 'Preposition', 'Place']],
+    ['5 red roses', ['Value', 'Adjective', 'Noun']],
+    ['3 trains', ['Value', 'Noun']],
+    ['5 buses', ['Value', 'Noun']],
     //fancier stuff
     ['walk the walk', ['Verb', 'Determiner', 'Noun']],
     ['Peter the man', ['Person', 'Determiner', 'Noun']],
     ['book the flight', ['Verb', 'Determiner', 'Noun']],
     //slang, contractions
     ['u r nice', ['Pronoun', 'Copula', 'Adjective']],
-
     ['canadian bacon', ['Demonym', 'Noun']],
     ['canadian dollar', ['Currency']],
   ];
@@ -44,7 +46,6 @@ describe('basic pos tag', function() {
 
   });
 });
-
 
 describe('custom lexicon', function() {
   let lex = nlp.lexicon();
@@ -65,3 +66,6 @@ describe('custom lexicon', function() {
   });
 
 });
+
+//console.log(nlp.text('3 buses').terms());
+//console.log(nlp.text('3 trains').terms());

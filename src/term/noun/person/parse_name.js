@@ -40,7 +40,7 @@ const parse_name = function(str) {
   }
   //assume the remaining is '[middle..] [last]'
   if (words[words.length - 1]) {
-    o.lastName = words[words.length - 1];
+    o.lastName = words[words.length - 1].replace(/'s$/, '');
     words = words.slice(0, words.length - 1);
   }
   o.middleName = words.join(' ');

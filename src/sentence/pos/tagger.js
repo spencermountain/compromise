@@ -56,7 +56,8 @@ const tagger = function(s, options) {
   s.terms = multiple_pass(s.terms);
   s.terms = regex_pass(s.terms);
   s.terms = interjection_fixes(s.terms);
-  //repeat these steps a couple times, to wiggle-out the grammar
+  //sentence-level rules
+  //(repeat these steps a couple times, to wiggle-out the grammar)
   for(let i = 0; i < 2; i++) {
     s.terms = grammar_pass(s);
     s.terms = specific_noun(s.terms);
@@ -64,8 +65,8 @@ const tagger = function(s, options) {
     s.terms = lumper(s.terms);
     s.terms = noun_fallback(s.terms);
     s.terms = phrasal_verbs(s.terms);
-    s.terms = fancy_lumping(s.terms);
     s.terms = possessive_pass(s.terms);
+    s.terms = fancy_lumping(s.terms);
   }
   s.terms = conditional_pass(s.terms);
   s.terms = quotation_pass(s.terms);

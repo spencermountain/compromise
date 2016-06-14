@@ -28,20 +28,9 @@ class Term {
     //the reasoning behind it's part-of-speech
     this.reason = '';
     //these are orphaned POS that have no methods
-    let types = {
-      Determiner: 'Determiner',
-      Conjunction: 'Conjunction',
-      Preposition: 'Preposition',
-      Possessive: 'Possessive',
-      Expression: 'Expression',
-      Condition: 'Condition'
-    };
     this.pos = {};
-    this.tag = types[tag] || '?';
-    //record them in pos{}
-    if (types[tag]) {
-      this.pos[types[tag]] = true;
-    }
+    this.tag = tag || '?';
+    this.pos[tag] = true;
   }
 
   //when the text changes, rebuild derivative fields

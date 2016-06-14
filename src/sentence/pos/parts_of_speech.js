@@ -52,6 +52,8 @@ const tag_mapping = {
   'JJR': 'Comparative',
   'JJS': 'Superlative',
   'RB': 'Adverb',
+
+  'QU': 'Question',
 };
 
 const classMapping = {
@@ -85,6 +87,7 @@ const classMapping = {
   'Expression': Term,
   'Conjunction': Term,
   'Possessive': Term,
+  'Question': Term,
 
   'Adverb': Adverb,
   'Value': Value,

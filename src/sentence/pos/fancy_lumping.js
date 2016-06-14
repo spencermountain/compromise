@@ -78,7 +78,7 @@ const shouldLumpTwo = function(a, b) {
       result: 'Person',
     },
     {
-      condition: (a.pos.Person && b.is_capital()), //'Person, Capital -> Person'
+      condition: (a.pos.Person && b.is_capital() && !a.pos.Possessive), //'Person, Capital -> Person'
       result: 'Person',
     },
     {

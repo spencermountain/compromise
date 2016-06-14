@@ -627,7 +627,10 @@ var irregular_verbs = {
     past: 'rang'
   },
   rise: {
-    past: 'rose'
+    past: 'rose',
+    gerund: 'rising',
+    pluperfect: 'had risen',
+    future_perfect: 'will have risen'
   },
   run: {
     gerund: 'running',
@@ -1985,7 +1988,7 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.sentence('he is currently doing everything he can to stop the problem').to_past().text());
-// console.log(nlp.sentence('we did what we can').to_present().text());
+// console.log(nlp.text('why is it working'));
 
 },{"./fns.js":23,"./lexicon.js":25,"./sentence/question/question.js":55,"./sentence/sentence.js":58,"./sentence/statement/statement.js":61,"./term/adjective/adjective.js":62,"./term/adverb/adverb.js":67,"./term/noun/date/date.js":72,"./term/noun/noun.js":78,"./term/noun/organization/organization.js":80,"./term/noun/person/person.js":84,"./term/noun/place/place.js":86,"./term/noun/value/value.js":96,"./term/term.js":97,"./term/verb/verb.js":107,"./text/text.js":110}],25:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
@@ -2647,10 +2650,13 @@ var shouldLumpTwo = function shouldLumpTwo(a, b) {
     condition: (a.pos.Value || a.pos.Date) && (b.normal === 'am' || b.normal === 'pm'), //6 am
     result: 'Date'
   }, {
-    condition: a.pos.Honourific && b.is_capital(), //'Dr. John
+    condition: a.pos.Honourific && b.is_capital(), //'Dr. John'
     result: 'Person'
   }, {
-    condition: a.pos.Person && b.is_capital(), //'Person, Capital -> Person'
+    condition: a.pos.Person && b.pos.Possessive, // "john lkjsdf's"
+    result: 'Possessive'
+  }, {
+    condition: a.pos.Person && b.is_capital() && !a.pos.Possessive, //'Person, Capital -> Person'
     result: 'Person'
   }, {
     condition: a.pos.Date && b.pos.Value, //June 4
@@ -2664,10 +2670,12 @@ var shouldLumpTwo = function shouldLumpTwo(a, b) {
   }, {
     condition: a.pos.Noun && b.pos.Actor, //Aircraft designer
     result: 'Actor'
-  }, {
-    condition: a.pos.Value && b.pos.Noun && !a.pos.Ordinal, //5 books
-    result: 'Value'
-  }, {
+  }, /*
+     {
+     condition: (a.pos.Value && b.pos.Noun && !a.pos.Ordinal), //5 books
+     result: 'Value',
+     }, */
+  {
     condition: a.is_capital() && b.pos['Organization'] || b.is_capital() && a.pos['Organization'], //Canada Inc
     result: 'Organization'
   }, {
@@ -2706,14 +2714,19 @@ var fancy_lumping = function fancy_lumping(terms) {
     var tag = shouldLumpTwo(a, b);
     if (tag) {
       var Cl = pos.classMapping[tag] || pos.Term;
+      //this is sneaky
+      if (tag === 'Possessive' && a.pos.Person) {
+        Cl = pos.classMapping.Person;
+      }
       var space = a.whitespace.trailing + b.whitespace.preceding;
-      // console.log(terms[i - 1]);
-      // console.log(terms[i]);
       terms[i] = new Cl(a.text + space + b.text, tag);
       terms[i].reason = 'lumpedtwo(' + terms[i].reason + ')';
       terms[i].whitespace.preceding = a.whitespace.preceding;
       terms[i].whitespace.trailing = b.whitespace.trailing;
       terms[i - 1] = null;
+      if (tag === 'Possessive') {
+        terms[i].pos.Possessive = true;
+      }
       continue;
     }
 
@@ -3729,7 +3742,14 @@ module.exports = [
 }, {
   'before': ['[Modal]', '[Adverb]', '[?]'],
   'after': ['[Modal]', '[Adverb]', '[Verb]']
+}, { // 'red roses' => Adjective, Noun
+  'before': ['[Adjective]', '[Verb]'],
+  'after': ['[Adjective]', '[Noun]']
+}, { // 5 kittens => Value, Nouns
+  'before': ['[Value]', '[Verb]'],
+  'after': ['[Value]', '[Noun]']
 },
+
 //ambiguous dates (march/may)
 // {
 //   'before': ['[Modal]', '[Value]'],
@@ -3824,7 +3844,8 @@ var tagger = function tagger(s, options) {
   s.terms = multiple_pass(s.terms);
   s.terms = regex_pass(s.terms);
   s.terms = interjection_fixes(s.terms);
-  //repeat these steps a couple times, to wiggle-out the grammar
+  //sentence-level rules
+  //(repeat these steps a couple times, to wiggle-out the grammar)
   for (var i = 0; i < 2; i++) {
     s.terms = grammar_pass(s);
     s.terms = specific_noun(s.terms);
@@ -3832,8 +3853,8 @@ var tagger = function tagger(s, options) {
     s.terms = lumper(s.terms);
     s.terms = noun_fallback(s.terms);
     s.terms = phrasal_verbs(s.terms);
-    s.terms = fancy_lumping(s.terms);
     s.terms = possessive_pass(s.terms);
+    s.terms = fancy_lumping(s.terms);
   }
   s.terms = conditional_pass(s.terms);
   s.terms = quotation_pass(s.terms);
@@ -5994,7 +6015,7 @@ var parse_name = function parse_name(str) {
   }
   //assume the remaining is '[middle..] [last]'
   if (words[words.length - 1]) {
-    o.lastName = words[words.length - 1];
+    o.lastName = words[words.length - 1].replace(/'s$/, '');
     words = words.slice(0, words.length - 1);
   }
   o.middleName = words.join(' ');
@@ -7138,9 +7159,33 @@ var Value = function (_Noun) {
       //of_what
       var of_pos = this.text.indexOf(' of ');
       if (of_pos > 0) {
-        this.of_what = this.text.substring(of_pos + 4).trim();
+        var before = this.text.substring(0, of_pos).trim();
+        var after = this.text.substring(of_pos + 4).trim();
+
+        var space_pos = before.lastIndexOf(' ');
+        var w = before.substring(space_pos).trim();
+
+        //if the word before 'of' is a unit, return whatever is after 'of'
+        //else return this word + of + whatever is after 'of'
+        if (w && (this.is_unit(w) || this.is_number_word(w))) {
+          this.of_what = after;
+        } else {
+          this.of_what = w + ' of ' + after;
+        }
       } else if (this.unit_name) {
-        this.of_what = this.unit_name;
+        //if value contains a unit but no 'of', return unit
+        this.of_what = this.unit;
+      } else {
+        //if value is a number followed by words, skip numbers
+        //and return words; if there is no numbers, return full
+        var temp_words = this.text.split(' ');
+        for (var i = 0; i < temp_words.length; i++) {
+          if (this.is_number_word(temp_words[i])) {
+            temp_words[i] = '';
+            continue;
+          }
+          this.of_what = temp_words.join(' ').trim();
+        }
       }
     }
   }, {
@@ -7155,8 +7200,6 @@ var Value = function (_Noun) {
 
 Value.fn = Value.prototype;
 module.exports = Value;
-
-// console.log(new Value('fifty saudi riyals'));
 
 },{"../../../data/numbers":16,"../../../fns":23,"../noun":78,"./parse/to_number":93,"./to_text":94,"./units":95}],97:[function(require,module,exports){
 'use strict';
@@ -7481,7 +7524,7 @@ var conjugate = function conjugate(w) {
 };
 module.exports = conjugate;
 
-// console.log(conjugate('head back'));
+// console.log(conjugate('rose'));
 
 },{"../../../data/irregular_verbs":11,"../../../fns.js":23,"./from_infinitive":99,"./generic.js":100,"./predict_form.js":101,"./strip_prefix.js":102,"./to_actor":104,"./to_infinitive":105}],99:[function(require,module,exports){
 'use strict';
@@ -8604,43 +8647,39 @@ var Text = function () {
       return this;
     }
 
+    //returns an array with elements from this.sentences[i].func()
+
+  }, {
+    key: 'generate_arr',
+    value: function generate_arr(func) {
+      var arr = [];
+      for (var i = 0; i < this.sentences.length; i++) {
+        arr = arr.concat(this.sentences[i][func]());
+      }
+      return arr;
+    }
+
     //parts of speech
 
   }, {
     key: 'nouns',
     value: function nouns() {
-      var arr = [];
-      for (var i = 0; i < this.sentences.length; i++) {
-        arr = arr.concat(this.sentences[i].nouns());
-      }
-      return arr;
+      return this.generate_arr('nouns');
     }
   }, {
     key: 'adjectives',
     value: function adjectives() {
-      var arr = [];
-      for (var i = 0; i < this.sentences.length; i++) {
-        arr = arr.concat(this.sentences[i].adjectives());
-      }
-      return arr;
+      return this.generate_arr('adjectives');
     }
   }, {
     key: 'verbs',
     value: function verbs() {
-      var arr = [];
-      for (var i = 0; i < this.sentences.length; i++) {
-        arr = arr.concat(this.sentences[i].verbs());
-      }
-      return arr;
+      return this.generate_arr('verbs');
     }
   }, {
     key: 'adverbs',
     value: function adverbs() {
-      var arr = [];
-      for (var i = 0; i < this.sentences.length; i++) {
-        arr = arr.concat(this.sentences[i].adverbs());
-      }
-      return arr;
+      return this.generate_arr('adverbs');
     }
 
     //mining
@@ -8648,48 +8687,29 @@ var Text = function () {
   }, {
     key: 'people',
     value: function people() {
-      var arr = [];
-      for (var i = 0; i < this.sentences.length; i++) {
-        arr = arr.concat(this.sentences[i].people());
-      }
-      return arr;
+      return this.generate_arr('people');
     }
   }, {
     key: 'places',
     value: function places() {
-      var arr = [];
-      for (var i = 0; i < this.sentences.length; i++) {
-        arr = arr.concat(this.sentences[i].places());
-      }
-      return arr;
+      return this.generate_arr('places');
     }
   }, {
     key: 'organizations',
     value: function organizations() {
-      var arr = [];
-      for (var i = 0; i < this.sentences.length; i++) {
-        arr = arr.concat(this.sentences[i].organizations());
-      }
-      return arr;
+      return this.generate_arr('organizations');
     }
   }, {
     key: 'dates',
     value: function dates() {
-      var arr = [];
-      for (var i = 0; i < this.sentences.length; i++) {
-        arr = arr.concat(this.sentences[i].dates());
-      }
-      return arr;
+      return this.generate_arr('dates');
     }
   }, {
     key: 'values',
     value: function values() {
-      var arr = [];
-      for (var i = 0; i < this.sentences.length; i++) {
-        arr = arr.concat(this.sentences[i].values());
-      }
-      return arr;
+      return this.generate_arr('values');
     }
+
     //more generic named-entity recognition
 
   }, {

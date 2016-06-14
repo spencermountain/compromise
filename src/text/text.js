@@ -125,7 +125,7 @@ class Text {
   //returns an array with elements from this.sentences[i].func()
   generate_arr(func) {
     let arr = [];
-    for (var i = 0; i < this.sentences.length; i++) {
+    for (let i = 0; i < this.sentences.length; i++) {
       arr = arr.concat(this.sentences[i][func]());
     }
     return arr;

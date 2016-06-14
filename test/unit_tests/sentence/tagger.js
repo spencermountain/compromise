@@ -36,6 +36,11 @@ describe('basic pos tag', function() {
     ['u r nice', ['Pronoun', 'Copula', 'Adjective']],
     ['canadian bacon', ['Demonym', 'Noun']],
     ['canadian dollar', ['Currency']],
+    //possessive rules
+    ['bill lkjsdf\'s', ['Person']],
+    ['bill lkjsdf\'s house', ['Person', 'Noun']],
+    ['Bill Lkjsdf\'s house', ['Person', 'Noun']],
+    ['Bill Lkjsdf\'s House', ['Person', 'Noun']],
   ];
   tests.forEach(function(a) {
     it(a[0], function(done) {

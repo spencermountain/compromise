@@ -229,11 +229,11 @@ class Value extends Noun {
     //of_what
     let of_pos = this.text.indexOf(' of ');
     if (of_pos > 0) {
-      var before = this.text.substring(0, of_pos).trim();
-      var after = this.text.substring(of_pos + 4).trim();
+      let before = this.text.substring(0, of_pos).trim();
+      let after = this.text.substring(of_pos + 4).trim();
 
-      var space_pos = before.lastIndexOf(' ');
-      var w = before.substring(space_pos).trim();
+      let space_pos = before.lastIndexOf(' ');
+      let w = before.substring(space_pos).trim();
 
       //if the word before 'of' is a unit, return whatever is after 'of'
       //else return this word + of + whatever is after 'of'
@@ -248,13 +248,13 @@ class Value extends Noun {
     } else {
       //if value is a number followed by words, skip numbers
       //and return words; if there is no numbers, return full
-      var w = this.text.split(' ');
-      for (var i = 0; i < w.length; i++) {
-        if (this.is_number_word(w[i])) {
-          w[i] = '';
+      let temp_words = this.text.split(' ');
+      for (let i = 0; i < temp_words.length; i++) {
+        if (this.is_number_word(temp_words[i])) {
+          temp_words[i] = '';
           continue;
         }
-        this.of_what = w.join(' ').trim();
+        this.of_what = temp_words.join(' ').trim();
       }
     }
 

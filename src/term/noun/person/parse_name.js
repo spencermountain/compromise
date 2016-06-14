@@ -56,12 +56,12 @@ const parse_name = function(str, str_orig) {
   //is it a double surname?
   if (str_orig && (str_orig.lastIndexOf('-') > double_firstname)) {
     if (words[words.length - 2]) {
-      o.lastName = words[words.length - 2] + '-' + words[words.length - 1];
+      o.lastName = words[words.length - 2] + '-' + words[words.length - 1].replace(/'s$/, '');;
       words = words.slice(0, words.length - 2);
     }
   } else {
     if (words[words.length - 1]) {
-      o.lastName = words[words.length - 1];
+      o.lastName = words[words.length - 1].replace(/'s$/, '');
       words = words.slice(0, words.length - 1);
     }
   }

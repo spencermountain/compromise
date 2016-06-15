@@ -46,6 +46,7 @@ describe('basic pos tag', function() {
     ['which is good?', ['Question', 'Copula', 'Adjective']],
     ['bacon which is good', ['Noun', 'Pronoun', 'Copula', 'Adjective']],
     ['bacon which really is good', ['Noun', 'Pronoun', 'Adverb', 'Copula', 'Adjective']],
+    ['Douglas who really is good', ['Person', 'Pronoun', 'Adverb', 'Copula', 'Adjective']],
   ];
   tests.forEach(function(a) {
     it(a[0], function(done) {

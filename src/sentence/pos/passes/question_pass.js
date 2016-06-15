@@ -1,6 +1,5 @@
 'use strict';
 const assign = require('../assign');
-
 // question-words are awkward,
 // 'why',  //*
 // 'where',
@@ -36,17 +35,13 @@ const is_pronoun = function(terms, x) {
   return false;
 };
 
-
-
 const question_pass = function(terms) {
   for(let i = 0; i < terms.length; i++) {
-    if (!terms[i].pos.Question) {
-      continue;
-    }
-    if (is_pronoun(terms, i)) {
+    if (terms[i].pos.Question && is_pronoun(terms, i)) {
       terms[i] = assign(terms[i], 'Pronoun', 'question_is_pronoun');
     }
   }
   return terms;
 };
+
 module.exports = question_pass;

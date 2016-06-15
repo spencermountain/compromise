@@ -21,9 +21,9 @@ describe('term root()', function() {
     //on person
     nlp.person('john smith').root().should.equal('john smith');
     nlp.person('john g. smith').root().should.equal('john g smith');
-    nlp.person('mr. john g. smith').root().should.equal('john g smith');
+    nlp.person('mr. john g. smith-o\'reilly').root().should.equal('john g smith-o\'reilly');
     nlp.person('john g. m. smith').root().should.equal('john g m smith');
-    nlp.person('Dr. John Smith').root().should.equal('john smith');
+    nlp.person('Dr. John Smith-McDonald').root().should.equal('john smith-mcdonald');
     //on place
     nlp.place('Toronto').root().should.equal('toronto');
     nlp.place('Toronto, Canada').root().should.equal('toronto');

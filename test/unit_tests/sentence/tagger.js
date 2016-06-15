@@ -41,6 +41,11 @@ describe('basic pos tag', function() {
     ['bill lkjsdf\'s house', ['Person', 'Noun']],
     ['Bill Lkjsdf\'s house', ['Person', 'Noun']],
     ['Bill Lkjsdf\'s House', ['Person', 'Noun']],
+    //question
+    ['who is good?', ['Question', 'Copula', 'Adjective']],
+    ['which is good?', ['Question', 'Copula', 'Adjective']],
+    ['bacon which is good', ['Noun', 'Pronoun', 'Copula', 'Adjective']],
+    ['bacon which really is good', ['Noun', 'Pronoun', 'Adverb', 'Copula', 'Adjective']],
   ];
   tests.forEach(function(a) {
     it(a[0], function(done) {

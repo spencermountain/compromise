@@ -110,7 +110,6 @@ const compact = {
     'each',
     'whatever',
     'every',
-    'which',
     'these',
     'another',
     'plenty',
@@ -272,7 +271,7 @@ const compact = {
     'he\'s',
     'she\'s',
   ],
-  //questions are awkward pos
+  //questions are awkward pos. are clarified in question_pass
   'QU': [
     'where',
     'why',
@@ -280,7 +279,8 @@ const compact = {
     'who',
     'whom',
     'whose',
-    'what'
+    'what',
+    'which'
   ],
   //some manual adverbs (the rest are generated)
   'RB': [

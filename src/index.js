@@ -99,4 +99,4 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.sentence('he is currently doing everything he can to stop the problem').to_past().text());
-// console.log(nlp.sentence('why is it working').terms);
+// console.log(nlp.sentence('bacon which is good').terms);

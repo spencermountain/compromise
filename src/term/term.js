@@ -30,7 +30,9 @@ class Term {
     //these are orphaned POS that have no methods
     this.pos = {};
     this.tag = tag || '?';
-    this.pos[tag] = true;
+    if (tag) {
+      this.pos[tag] = true;
+    }
   }
 
   //when the text changes, rebuild derivative fields

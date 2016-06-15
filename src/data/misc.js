@@ -21,6 +21,7 @@ const misc = {
   'evening': 'DA',
   'afternoon': 'DA',
   'ago': 'DA',
+  'sometime': 'DA',
   //end of day, end of month
   'eod': 'DA',
   'eom': 'DA',

@@ -21,7 +21,7 @@ const is_hashtag = function(str) {
 };
 
 const is_atmention = function(str) {
-  if (str.match(/^@\w{2}$/)) {
+  if (str.match(/^@\w{2,}$/)) {
     return true;
   }
   return false;

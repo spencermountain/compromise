@@ -51,7 +51,10 @@ describe('basic pos tag', function() {
     ['lkj@fun.com', ['Email']],
     ['j@f.ti', ['Email']],
     ['j@ti', ['Noun']],
+    ['@ti', ['AtMention']],
     ['#funtimes', ['HashTag']],
+    ['http://fun.com/cool?fun=yes', ['Url']],
+    ['#cool fun.com @cooman', ['HashTag', 'Url', 'AtMention']],
   ];
   tests.forEach(function(a) {
     it(a[0], function(done) {

@@ -5,27 +5,30 @@ const guess_gender = require('./gender.js');
 const parse_name = require('./parse_name.js');
 
 //capitalizes first letter of every word in a string
-var title_case = function (s) {
+const title_case = function (s) {
   if (!s) {
     return s;
   }
-
-  s = s.replace(/(^\w|-\w| \w)/g, function (v) {return v.toUpperCase()});
+  s = s.replace(/(^\w|-\w| \w)/g, function (v) {
+    return v.toUpperCase();
+  });
   return s;
-}
+};
 
 //capitalizes last name taking into account Mc-, Mac-, O'-
-var lastname_case = function (s) {
+const lastname_case = function (s) {
   if (!s) {
     return s;
   }
 
   s = title_case(s);
   s = s.replace(/(Mc|Mac|O\')(\w)/g, function (v) {
-    return v.replace(/\w$/, function (w) {return w.toUpperCase()});
+    return v.replace(/\w$/, function (w) {
+      return w.toUpperCase();
+    });
   });
   return s;
-}
+};
 
 class Person extends Noun {
   constructor(str, tag) {

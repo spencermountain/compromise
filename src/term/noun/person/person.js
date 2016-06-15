@@ -4,6 +4,29 @@ const Noun = require('../noun.js');
 const guess_gender = require('./gender.js');
 const parse_name = require('./parse_name.js');
 
+//capitalizes first letter of every word in a string
+var title_case = function (s) {
+  if (!s) {
+    return s;
+  }
+
+  s = s.replace(/(^\w|-\w| \w)/g, function (v) {return v.toUpperCase()});
+  return s;
+}
+
+//capitalizes last name taking into account Mc-, Mac-, O'-
+var lastname_case = function (s) {
+  if (!s) {
+    return s;
+  }
+
+  s = title_case(s);
+  s = s.replace(/(Mc|Mac|O\')(\w)/g, function (v) {
+    return v.replace(/\w$/, function (w) {return w.toUpperCase()});
+  });
+  return s;
+}
+
 class Person extends Noun {
   constructor(str, tag) {
     super(str);
@@ -34,45 +57,27 @@ class Person extends Noun {
     if (this.isPronoun()) {
       return this.normal;
     }
-    let str = this.firstName || '';
+    let str = '';
+
+    if (this.firstName) {
+      str = this.firstName.toLowerCase();
+    }
     if (this.middleName) {
-      str += ' ' + this.middleName;
+      str += ' ' + this.middleName.toLowerCase();
     }
     if (this.lastName) {
-      str += ' ' + this.lastName;
+      str += ' ' + this.lastName.toLowerCase();
     }
     return str.trim() || this.normal;
-  }
-
-  //capitalizes first letter of every word in a string
-  title_case(s) {
-    if (!s) {
-      return s;
-    }
-
-    s = s.replace(/(^\w|-\w| \w)/g, function (v) {return v.toUpperCase()});
-    return s;
-  }
-
-  lastname_case(s) {
-    if (!s) {
-      return s;
-    }
-
-    s = this.title_case(s);
-    s = s.replace(/(Mc|Mac|O\')(\w)/g, function (v) {
-      return v.replace(/\w$/, function (w) {return w.toUpperCase()});
-    });
-    return s;
   }
 
   //turn a multi-word string into [first, middle, last, honourific]
   parse() {
     let o = parse_name(this.normal, this.text.trim());
     this.honourific = o.honourific;
-    this.firstName = this.title_case(o.firstName);
-    this.middleName = this.title_case(o.middleName);
-    this.lastName = this.lastname_case(o.lastName);
+    this.firstName = title_case(o.firstName);
+    this.middleName = title_case(o.middleName);
+    this.lastName = lastname_case(o.lastName);
   }
 
   gender() {

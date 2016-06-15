@@ -11,7 +11,7 @@ const Place = require('../../term/noun/place/place.js');
 const Organization = require('../../term/noun/organization/organization.js');
 const Value = require('../../term/noun/value/value.js');
 const _Date = require('../../term/noun/date/date.js');
-
+const Url = require('../../term/noun/url/url.js');
 
 const tag_mapping = {
   //nouns
@@ -90,9 +90,9 @@ const classMapping = {
   'Question': Term,
 
   'Email': Noun,
-  'Url': Noun,
   'AtMention': Noun,
   'HashTag': Noun,
+  'Url': Url,
 
   'Adverb': Adverb,
   'Value': Value,

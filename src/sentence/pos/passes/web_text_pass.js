@@ -32,7 +32,7 @@ const is_url = function(str) {
   if (str.match(/^(https?:\/\/|www\.)\w+\.[a-z]{2,3}/)) { //not fancy
     return true;
   }
-  // 'boogers.com'
+  // 'boo.com'
   //http://mostpopularwebsites.net/top-level-domain
   if (str.match(/^[\w\.\/]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/)) {
     return true;

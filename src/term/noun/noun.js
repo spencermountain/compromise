@@ -72,6 +72,10 @@ class Noun extends Term {
     return is_person(this.strip_apostrophe());
   }
   is_organization() {
+    //don't overwrite urls
+    if (this.pos['Url']) {
+      return false;
+    }
     return is_organization(this.strip_apostrophe(), this.text);
   }
   is_date() {

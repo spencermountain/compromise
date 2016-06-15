@@ -6,8 +6,8 @@ module.exports = function (grunt) {
 
     watch: {
       files: ['./src/*.js', './src/**', './test/unit_tests/**'],
-      tasks: ['mochaTest']
-    // tasks: ['run:index']
+      tasks: ['run:index']
+    // tasks: ['mochaTest']
     },
 
     run: {

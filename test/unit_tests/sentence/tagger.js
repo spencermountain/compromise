@@ -47,6 +47,11 @@ describe('basic pos tag', function() {
     ['bacon which is good', ['Noun', 'Pronoun', 'Copula', 'Adjective']],
     ['bacon which really is good', ['Noun', 'Pronoun', 'Adverb', 'Copula', 'Adjective']],
     ['Douglas who really is good', ['Person', 'Pronoun', 'Adverb', 'Copula', 'Adjective']],
+    //web text things
+    ['lkj@fun.com', ['Email']],
+    ['j@f.ti', ['Email']],
+    ['j@ti', ['Noun']],
+    ['#funtimes', ['HashTag']],
   ];
   tests.forEach(function(a) {
     it(a[0], function(done) {
@@ -73,7 +78,5 @@ describe('custom lexicon', function() {
       (tagMatch(s.terms, a[1])).should.equal(true);
       done();
     });
-
   });
-
 });

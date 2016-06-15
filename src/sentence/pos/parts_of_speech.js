@@ -89,6 +89,11 @@ const classMapping = {
   'Possessive': Term,
   'Question': Term,
 
+  'Email': Noun,
+  'Url': Noun,
+  'AtMention': Noun,
+  'HashTag': Noun,
+
   'Adverb': Adverb,
   'Value': Value,
   'Place': Place,

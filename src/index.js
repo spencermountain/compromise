@@ -99,4 +99,5 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.sentence('he is currently doing everything he can to stop the problem').to_past().text());
-// console.log(nlp.sentence('sasdf@sasdf.t').terms[0]);
+// console.log(nlp.sentence('@john').terms[0]);
+// console.log(nlp.sentence('http://www.fun.com').terms[0]);

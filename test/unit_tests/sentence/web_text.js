@@ -42,3 +42,32 @@ describe('is hashtag ', function() {
     });
   });
 });
+
+describe('is url ', function() {
+  let tests = [
+    [`http://cool.com/fun`, true],
+    [`https://cool.com`, true],
+    [`https://cool.com/`, true],
+    [`https://www.cool.com/`, true],
+    [`http://subdomain.cool.com/`, true],
+    [`www.fun.com/`, true],
+    [`www.fun.com`, true],
+    [`www.fun.com/foobar/fun`, true],
+    [`www.subdomain.cool.com/`, true],
+    [`wwwsubdomain.cool.com/`, true],
+    [`woo.br`, true],
+    [`woohoo.biz`, true],
+    [`woop.org/news`, true],
+    [`http://woop.org/news?foo=bar`, true],
+
+    [`http:subdomain.cool.com/`, false],
+    [`coolcom`, false],
+  ];
+  tests.forEach(function(a) {
+    it(a[0], function(done) {
+      let t = nlp.sentence(a[0]).terms[0];
+      (t.pos.Url || false).should.equal(a[1]);
+      done();
+    });
+  });
+});

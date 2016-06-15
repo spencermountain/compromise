@@ -66,7 +66,7 @@ class Noun extends Term {
   //sub-classes
   is_person() {
     //don't overwrite dates, etc
-    if (this.tag === 'Date') {
+    if (this.pos['Date']) {
       return false;
     }
     return is_person(this.strip_apostrophe());
@@ -79,7 +79,7 @@ class Noun extends Term {
   }
   is_value() {
     //don't overwrite dates, etc
-    if (this.tag === 'Date') {
+    if (this.pos['Date'] || this.pos['HashTag']) {
       return false;
     }
     return is_value(this.strip_apostrophe());

@@ -116,6 +116,8 @@ class Term {
     str = str.toLowerCase();
     //strip grammatical punctuation
     str = str.replace(/[,\.!:;\?\(\)^$]/g, '');
+    //hashtags, atmentions
+    str = str.replace(/^[#@]/, '');
     //convert hyphenations to a multiple-word term
     str = str.replace(/([a-z])\-([a-z])/g, '$1 $2');
     // coerce single curly quotes

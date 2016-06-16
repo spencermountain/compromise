@@ -36,14 +36,14 @@ const regex_pass = function(terms) {
     //regexes that involve punctuation
     for(let o = 0; o < punct_rules.length; o++) {
       if (text.match(punct_rules[o].reg)) {
-        terms[i] = assign(terms[i], punct_rules[o].pos, 'rules_pass_' + o);
+        terms[i] = assign(terms[i], punct_rules[o].pos, 'rules_pass_' + o + punct_rules[o].reg);
         return;
       }
     }
     //bigger list of regexes on normal
     for (let o = 0; o < word_rules.length; o++) {
       if (normal.match(word_rules[o].reg)) {
-        terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass_' + o);
+        terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass_' + o+ word_rules[o].reg);
         return;
       }
     }

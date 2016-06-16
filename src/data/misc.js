@@ -21,6 +21,7 @@ const misc = {
   'evening': 'DA',
   'afternoon': 'DA',
   'ago': 'DA',
+  'sometime': 'DA',
   //end of day, end of month
   'eod': 'DA',
   'eom': 'DA',
@@ -110,7 +111,6 @@ const compact = {
     'each',
     'whatever',
     'every',
-    'which',
     'these',
     'another',
     'plenty',
@@ -126,7 +126,6 @@ const compact = {
     'the',
     'that',
     'various',
-    'what',
     'either',
     'much',
     'some',
@@ -249,9 +248,6 @@ const compact = {
     'myself',
     'itself',
     'her', //this one is pretty ambiguous
-    'who',
-    'whom',
-    'whose'
   ],
 
   //personal pronouns (nouns)
@@ -276,7 +272,17 @@ const compact = {
     'he\'s',
     'she\'s',
   ],
-
+  //questions are awkward pos. are clarified in question_pass
+  'QU': [
+    'where',
+    'why',
+    'when',
+    'who',
+    'whom',
+    'whose',
+    'what',
+    'which'
+  ],
   //some manual adverbs (the rest are generated)
   'RB': [
     // 'now',
@@ -294,15 +300,12 @@ const compact = {
     'ever',
     'quite',
     'perhaps',
-    'where',
     'then',
     'thus',
     'very',
     'often',
     'once',
     'never',
-    'why',
-    'when',
     'away',
     'always',
     'sometimes',

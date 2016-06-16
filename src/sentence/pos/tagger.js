@@ -18,6 +18,8 @@ const regex_pass = require('./passes/regex_pass');
 const quotation_pass = require('./passes/quotation_pass');
 const possessive_pass = require('./passes/possessive_pass');
 const contraction_pass = require('./passes/contractions/interpret');
+const question_pass = require('./passes/question_pass');
+const web_text_pass = require('./passes/web_text_pass');
 
 const noun_fallback = function(terms) {
   for(let i = 0; i < terms.length; i++) {
@@ -56,6 +58,7 @@ const tagger = function(s, options) {
   s.terms = multiple_pass(s.terms);
   s.terms = regex_pass(s.terms);
   s.terms = interjection_fixes(s.terms);
+  s.terms = web_text_pass(s.terms);
   //sentence-level rules
   //(repeat these steps a couple times, to wiggle-out the grammar)
   for(let i = 0; i < 2; i++) {
@@ -71,6 +74,7 @@ const tagger = function(s, options) {
   s.terms = conditional_pass(s.terms);
   s.terms = quotation_pass(s.terms);
   s.terms = contraction_pass(s.terms);
+  s.terms = question_pass(s.terms);
   return s.terms;
 };
 

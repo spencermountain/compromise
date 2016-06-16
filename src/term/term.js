@@ -28,19 +28,10 @@ class Term {
     //the reasoning behind it's part-of-speech
     this.reason = '';
     //these are orphaned POS that have no methods
-    let types = {
-      Determiner: 'Determiner',
-      Conjunction: 'Conjunction',
-      Preposition: 'Preposition',
-      Possessive: 'Possessive',
-      Expression: 'Expression',
-      Condition: 'Condition'
-    };
     this.pos = {};
-    this.tag = types[tag] || '?';
-    //record them in pos{}
-    if (types[tag]) {
-      this.pos[types[tag]] = true;
+    this.tag = tag || '?';
+    if (tag) {
+      this.pos[tag] = true;
     }
   }
 
@@ -125,6 +116,8 @@ class Term {
     str = str.toLowerCase();
     //strip grammatical punctuation
     str = str.replace(/[,\.!:;\?\(\)^$]/g, '');
+    //hashtags, atmentions
+    str = str.replace(/^[#@]/, '');
     //convert hyphenations to a multiple-word term
     str = str.replace(/([a-z])\-([a-z])/g, '$1 $2');
     // coerce single curly quotes

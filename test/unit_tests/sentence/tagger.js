@@ -41,6 +41,20 @@ describe('basic pos tag', function() {
     ['bill lkjsdf\'s house', ['Person', 'Noun']],
     ['Bill Lkjsdf\'s house', ['Person', 'Noun']],
     ['Bill Lkjsdf\'s House', ['Person', 'Noun']],
+    //question
+    ['who is good?', ['Question', 'Copula', 'Adjective']],
+    ['which is good?', ['Question', 'Copula', 'Adjective']],
+    ['bacon which is good', ['Noun', 'Pronoun', 'Copula', 'Adjective']],
+    ['bacon which really is good', ['Noun', 'Pronoun', 'Adverb', 'Copula', 'Adjective']],
+    ['Douglas who really is good', ['Person', 'Pronoun', 'Adverb', 'Copula', 'Adjective']],
+    //web text things
+    ['lkj@fun.com', ['Email']],
+    ['j@f.ti', ['Email']],
+    ['j@ti', ['Noun']],
+    ['@ti', ['AtMention']],
+    ['#funtimes', ['HashTag']],
+    ['http://fun.com/cool?fun=yes', ['Url']],
+    ['#cool fun.com @cooman', ['HashTag', 'Url', 'AtMention']],
   ];
   tests.forEach(function(a) {
     it(a[0], function(done) {
@@ -67,7 +81,5 @@ describe('custom lexicon', function() {
       (tagMatch(s.terms, a[1])).should.equal(true);
       done();
     });
-
   });
-
 });

@@ -11,7 +11,7 @@ const Place = require('../../term/noun/place/place.js');
 const Organization = require('../../term/noun/organization/organization.js');
 const Value = require('../../term/noun/value/value.js');
 const _Date = require('../../term/noun/date/date.js');
-
+const Url = require('../../term/noun/url/url.js');
 
 const tag_mapping = {
   //nouns
@@ -52,6 +52,8 @@ const tag_mapping = {
   'JJR': 'Comparative',
   'JJS': 'Superlative',
   'RB': 'Adverb',
+
+  'QU': 'Question',
 };
 
 const classMapping = {
@@ -85,6 +87,12 @@ const classMapping = {
   'Expression': Term,
   'Conjunction': Term,
   'Possessive': Term,
+  'Question': Term,
+
+  'Email': Noun,
+  'AtMention': Noun,
+  'HashTag': Noun,
+  'Url': Url,
 
   'Adverb': Adverb,
   'Value': Value,

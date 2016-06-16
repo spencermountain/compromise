@@ -39,6 +39,7 @@ module.exports = {
   'de facto': 'JJ',
   'ad infinitum': 'JJ',
   'ad nauseam': 'RB',
+  'all that': 'RB',
   'for keeps': 'JJ',
   'a priori': 'JJ',
   'et cetera': 'IN',

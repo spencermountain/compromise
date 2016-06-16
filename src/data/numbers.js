@@ -35,16 +35,16 @@ const cardinal = {
     'ninety': 90,
   },
   multiples : {
-    'hundred': 100,
-    'grand': 1000,
-    'thousand': 1000,
-    'million': 1000000,
-    'billion': 1000000000,
-    'trillion': 1000000000000,
-    'quadrillion': 1000000000000000,
-    'quintillion': 1000000000000000000,
-    'sextillion': 1000000000000000000000,
-    'septillion': 1000000000000000000000000
+    'hundred': 1e2,
+    'grand': 1e3,
+    'thousand': 1e3,
+    'million': 1e6,
+    'billion': 1e9,
+    'trillion': 1e12,
+    'quadrillion': 1e15,
+    'quintillion': 1e18,
+    'sextillion': 1e21,
+    'septillion': 1e24
   }
 };
 
@@ -83,15 +83,15 @@ const ordinal = {
     'ninetieth': 90
   },
   multiples: {
-    'hundredth': 100,
-    'thousandth': 1000,
-    'millionth': 1000000,
-    'billionth': 1000000000,
-    'trillionth': 1000000000000,
-    'quadrillionth': 1000000000000000,
-    'quintillionth': 1000000000000000000,
-    'sextillionth': 1000000000000000000000,
-    'septillionth': 1000000000000000000000000
+    'hundredth': 1e2,
+    'thousandth': 1e3,
+    'millionth': 1e6,
+    'billionth': 1e9,
+    'trillionth': 1e12,
+    'quadrillionth': 1e15,
+    'quintillionth': 1e18,
+    'sextillionth': 1e21,
+    'septillionth': 1e24
   }
 };
 

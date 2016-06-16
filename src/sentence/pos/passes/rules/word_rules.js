@@ -63,7 +63,7 @@ module.exports = [
   ['.ried$', 'JJ'],
   ['.gone$', 'JJ'],
   ['.made$', 'JJ'],
-  ['.[pdltrkvynsw]ing$', 'JJ'],
+  ['.ing$', 'VB'],  //likely to be converted to adjective after lexicon pass
   ['.tions$', 'NN'],
   ['.tures$', 'NN'],
   ['.ous$', 'JJ'],

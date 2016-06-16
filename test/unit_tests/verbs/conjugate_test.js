@@ -145,12 +145,18 @@ let verbs = [{
   'infinitive': 'develop',
   'present': 'develops',
   'past': 'developed',
-  'gerund': 'developing'  
+  'gerund': 'developing'
 }, {
+  'infinitive': 'study',
+  'present': 'studies',
+  'past': 'studied',
+  'gerund': 'studying'  
+},
+ {
   'infinitive': 'criticise',
   'present': 'criticises',
   'past': 'criticised',
-  'gerund': 'criticising'   
+  'gerund': 'criticising'
 }, {
   'infinitive': 'speak',
   'present': 'speaks',
@@ -158,7 +164,7 @@ let verbs = [{
   'gerund': 'speaking',
   'perfect': 'have spoken',
   'pluperfect': 'had spoken',
-  'future_perfect': 'will have spoken'   
+  'future_perfect': 'will have spoken'
 }];
 
 

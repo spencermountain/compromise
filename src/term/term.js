@@ -160,8 +160,4 @@ class Term {
 
 }
 
-Term.fn = Term.prototype;
-// let t = new Term(`first`);
-// console.log(t.normal);
-
 module.exports = Term;

@@ -28,7 +28,7 @@ nlp_compromise={
     negate: function()     //she doesn't sell seashells
     tags: function()       //she sells seashells -> [Noun, Verb, Noun]
     terms: function()
-    normalized: function()
+    normal: function()
     contractions:{
       expand: function()     // i'll -> i will
       contract: function()   // i will -> i'll
@@ -43,7 +43,7 @@ nlp_compromise={
     to_future: function()     //she will sell seashells
     negate: function()        //she doesn't sell seashells
     tags: function()          //she sells seashells -> [Noun, Verb, Noun]
-    normalized: function()
+    normal: function()
     text: function()
     contractions:{
       expand: function()     // i'll -> i will

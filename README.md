@@ -14,7 +14,7 @@ nlp.sentence('She sells seashells').to_past().text()
 * caniuse, uhuh. **IE9+**
 * no dependencies, training, configuration, or prolog.
 
-It's a [handy, and not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/justification.md) tool for understanding, changing, and playing with english.
+It's a [handy, and not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/wiki/Justification) tool for understanding, changing, and playing with english.
 
 ## Off you go,
 > `npm install nlp_compromise`
@@ -65,7 +65,7 @@ nlp.text(require('nlp-corpus').text.friends()).topics()//11 seasons of friends
 //   ....
 ```
 #Plugin/Mixins
-we've also got a modest, though ambitious [plugin ecosystem](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/plugins.md):
+we've also got a modest, though ambitious [plugin ecosystem](https://github.com/nlp-compromise/nlp_compromise/wiki/Plugins):
 ```javascript
 //US-UK localization
 nlp.plugin(require('nlp-locale'))
@@ -92,7 +92,7 @@ sen.terms[1].links[1].target.word; // terms[1] is verb 'fed'
 // 'dog'
 ```
 
-### [View the Full API Documentation](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/api.md)
+### [View the Full API Documentation](https://github.com/nlp-compromise/nlp_compromise/wiki/API)
 
 ## Development
 [![Issue Stats](http://issuestats.com/github/nlp-compromise/nlp_compromise/badge/pr)](http://issuestats.com/github/nlp-compromise/nlp_compromise)
@@ -104,6 +104,6 @@ Join our [slack group](https://superscriptjs.slack.com/messages/nlp_compromise/)
 
 Or just pick up an [open issue](https://github.com/nlp-compromise/nlp_compromise/issues)
 
-[We're moving fast](https://github.com/nlp-compromise/nlp_compromise/blob/master/docs/changelog.md)
+[We're moving fast](https://github.com/nlp-compromise/nlp_compromise/blob/master/changelog.md)
 
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)

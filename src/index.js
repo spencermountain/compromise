@@ -100,3 +100,13 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.sentence('he is currently doing everything he can to stop the problem').to_past().text());
 // console.log(nlp.sentence('@john').terms[0]);
+
+
+// let lexicon = nlp.lexicon();
+// lexicon['reid'] = 'Male';
+// let s = nlp.sentence('reid Hoffman is nice', {
+//   lexicon: {
+//     reid: 'Male'
+//   }
+// });
+// console.log(s.terms);

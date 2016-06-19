@@ -185,5 +185,5 @@ describe('Sentence Class Methods', function() {
 
 });
 
-console.log(nlp.sentence('it was raining yesterday'));
-console.log(nlp.sentence('the movie is interesting'));
+// console.log(nlp.sentence('it was raining yesterday'));
+// console.log(nlp.sentence('the movie is interesting'));

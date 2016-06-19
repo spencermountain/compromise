@@ -30,7 +30,7 @@ main = main.concat(places);
 
 //date abbrevs.
 //these are added seperately because they are not nouns
-let dates = ['jan', 'feb', 'mar', 'apr', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'sept', 'sep'];
+let dates = ['jan', 'feb', 'mar', 'apr', 'jun', 'jul', 'aug', 'sep', 'sept', 'oct', 'nov', 'dec'];
 main = main.concat(dates);
 
 module.exports = {

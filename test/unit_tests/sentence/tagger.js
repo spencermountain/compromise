@@ -67,14 +67,14 @@ describe('basic pos tag', function() {
 });
 
 describe('custom lexicon', function() {
-  let lex = nlp.lexicon();
-  lex.apple = 'Person';
+  let lex = nlp.lexicon({'apple': 'Person', 'jackie': 'Adverb', 'amazing': 'Noun'});
   const options = {
     lexicon: lex
   };
   let tests = [
-    ['Apple was good', ['Person', 'Copula', 'Adjective']],
+    ['Apple amazing jackie', ['Person', 'Noun', 'Adverb']],
   ];
+
   tests.forEach(function(a) {
     it(a[0], function(done) {
       let s = nlp.sentence(a[0], options);

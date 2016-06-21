@@ -36,10 +36,16 @@ class Adjective extends Term {
       noun: adj_to_noun(this.normal)
     };
   }
+  all_forms() {
+    var forms = this.conjugate();
+    forms['normal'] = this.normal;
+    return forms;
+  }
 
 }
 Adjective.fn = Adjective.prototype;
-// let t = new Adjective("quick")
-// console.log(t.conjugate())
+
+//let t = new Adjective("quick")
+//console.log(t.all_forms());
 
 module.exports = Adjective;

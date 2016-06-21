@@ -105,10 +105,17 @@ class Verb extends Term {
     this.changeTo(negate(this));
     return this;
   }
+
+  all_forms() {
+    var forms = this.conjugate();
+    forms['negated'] = negate(this);
+    forms['normal'] = this.normal;
+    return forms;
+  }
 }
 Verb.fn = Verb.prototype;
 
 module.exports = Verb;
 
-// let v = new Verb('stunk up');
-// console.log(v.negate());
+//let v = new Verb('run');
+//console.log(v.all_forms());

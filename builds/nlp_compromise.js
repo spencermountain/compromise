@@ -23,7 +23,7 @@ main = main.concat(places);
 
 //date abbrevs.
 //these are added seperately because they are not nouns
-var dates = ['jan', 'feb', 'mar', 'apr', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'sept', 'sep'];
+var dates = ['jan', 'feb', 'mar', 'apr', 'jun', 'jul', 'aug', 'sep', 'sept', 'oct', 'nov', 'dec'];
 main = main.concat(dates);
 
 module.exports = {
@@ -839,6 +839,7 @@ var misc = {
   'evening': 'DA',
   'afternoon': 'DA',
   'ago': 'DA',
+  'sometime': 'DA',
   //end of day, end of month
   'eod': 'DA',
   'eom': 'DA',
@@ -1345,16 +1346,16 @@ var cardinal = {
     'ninety': 90
   },
   multiples: {
-    'hundred': 100,
-    'grand': 1000,
-    'thousand': 1000,
-    'million': 1000000,
-    'billion': 1000000000,
-    'trillion': 1000000000000,
-    'quadrillion': 1000000000000000,
-    'quintillion': 1000000000000000000,
-    'sextillion': 1000000000000000000000,
-    'septillion': 1000000000000000000000000
+    'hundred': 1e2,
+    'grand': 1e3,
+    'thousand': 1e3,
+    'million': 1e6,
+    'billion': 1e9,
+    'trillion': 1e12,
+    'quadrillion': 1e15,
+    'quintillion': 1e18,
+    'sextillion': 1e21,
+    'septillion': 1e24
   }
 };
 
@@ -1393,15 +1394,15 @@ var ordinal = {
     'ninetieth': 90
   },
   multiples: {
-    'hundredth': 100,
-    'thousandth': 1000,
-    'millionth': 1000000,
-    'billionth': 1000000000,
-    'trillionth': 1000000000000,
-    'quadrillionth': 1000000000000000,
-    'quintillionth': 1000000000000000000,
-    'sextillionth': 1000000000000000000000,
-    'septillionth': 1000000000000000000000000
+    'hundredth': 1e2,
+    'thousandth': 1e3,
+    'millionth': 1e6,
+    'billionth': 1e9,
+    'trillionth': 1e12,
+    'quadrillionth': 1e15,
+    'quintillionth': 1e18,
+    'sextillionth': 1e21,
+    'septillionth': 1e24
   }
 };
 
@@ -1826,6 +1827,13 @@ exports.flatten = function (arr) {
 
 //string utilities
 exports.endsWith = function (str, suffix) {
+  //if suffix is regex
+  if (suffix && suffix instanceof RegExp) {
+    if (str.match(suffix)) {
+      return true;
+    }
+  }
+  //if suffix is a string
   if (str && suffix && str.indexOf(suffix, str.length - suffix.length) !== -1) {
     return true;
   }
@@ -1925,8 +1933,15 @@ function NLP() {
       });
     });
   };
-  this.lexicon = function () {
-    return require('./lexicon.js');
+  this.lexicon = function (obj) {
+    obj = obj || {};
+    var lex = require('./lexicon.js');
+
+    Object.keys(obj).forEach(function (k) {
+      lex[k] = obj[k];
+    });
+
+    return lex;
   };
 
   this.term = function (s) {
@@ -1991,6 +2006,15 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.sentence('he is currently doing everything he can to stop the problem').to_past().text());
 // console.log(nlp.sentence('@john').terms[0]);
+
+// let lexicon = nlp.lexicon();
+// lexicon['reid'] = 'Male';
+// let s = nlp.sentence('reid Hoffman is nice', {
+//   lexicon: {
+//     reid: 'Male'
+//   }
+// });
+// console.log(s.terms);
 
 },{"./fns.js":23,"./lexicon.js":25,"./sentence/question/question.js":57,"./sentence/sentence.js":60,"./sentence/statement/statement.js":63,"./term/adjective/adjective.js":64,"./term/adverb/adverb.js":69,"./term/noun/date/date.js":74,"./term/noun/noun.js":80,"./term/noun/organization/organization.js":82,"./term/noun/person/person.js":86,"./term/noun/place/place.js":88,"./term/noun/value/value.js":100,"./term/term.js":101,"./term/verb/verb.js":111,"./text/text.js":114}],25:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
@@ -2697,6 +2721,9 @@ var shouldLumpTwo = function shouldLumpTwo(a, b) {
   }, {
     condition: a.pos.Demonym && b.pos.Currency, //canadian dollar, Brazilian pesos
     result: 'Currency'
+  }, { //for verbs in Past/Present Continuous ('is raining')
+    condition: a.pos.Copula && a.normal.match(/^(am|is|are|was|were)$/) && b.pos.Verb && b.normal.match(/ing$/),
+    result: 'Verb'
   }];
   for (var i = 0; i < lump_rules.length; i++) {
     if (lump_rules[i].condition) {
@@ -2817,10 +2844,11 @@ var chunk_neighbours = function chunk_neighbours(terms) {
     //if the tags match (but it's not a hidden contraction)
     if (should_chunk(last_one, t)) {
       var space = last_one.whitespace.trailing + t.whitespace.preceding;
-      new_terms[new_terms.length - 1].text += space + t.text;
-      new_terms[new_terms.length - 1].normalize();
-      new_terms[new_terms.length - 1].whitespace.trailing = t.whitespace.trailing;
-      new_terms[new_terms.length - 1].whitespace.preceding = last_one.whitespace.preceding;
+      var last = new_terms.length - 1;
+      new_terms[last].text += space + t.text;
+      new_terms[last].normalize();
+      new_terms[last].whitespace.trailing = t.whitespace.trailing;
+      new_terms[last].whitespace.preceding = last_one.whitespace.preceding;
     } else {
       new_terms.push(t);
     }
@@ -2928,6 +2956,10 @@ var classMapping = {
   'AtMention': Noun,
   'HashTag': Noun,
   'Url': Url,
+
+  //not yet fully-supported as a POS
+  'Male': Person,
+  'Female': Person,
 
   'Adverb': Adverb,
   'Value': Value,
@@ -3686,14 +3718,14 @@ var regex_pass = function regex_pass(terms) {
     //regexes that involve punctuation
     for (var o = 0; o < punct_rules.length; o++) {
       if (text.match(punct_rules[o].reg)) {
-        terms[i] = assign(terms[i], punct_rules[o].pos, 'rules_pass_' + o);
+        terms[i] = assign(terms[i], punct_rules[o].pos, 'rules_pass_' + o + punct_rules[o].reg);
         return;
       }
     }
     //bigger list of regexes on normal
     for (var o = 0; o < word_rules.length; o++) {
       if (normal.match(word_rules[o].reg)) {
-        terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass_' + o);
+        terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass_' + o + word_rules[o].reg);
         return;
       }
     }
@@ -3826,7 +3858,8 @@ module.exports = [
 
 var tag_mapping = require('../../parts_of_speech.js').tag_mapping;
 //regex patterns and parts of speech],
-module.exports = [['^[0-9]+ ?(am|pm)$', 'DA'], ['^[0-9]+(st|nd|rd)?$', 'CD'], ['^[a-z]et$', 'VB'], ['cede$', 'VB'], ['.[cts]hy$', 'JJ'], ['.[st]ty$', 'JJ'], ['.[lnr]ize$', 'VB'], ['.[gk]y$', 'JJ'], ['.fies$', 'VB'], ['.some$', 'JJ'], ['.[nrtumcd]al$', 'JJ'], ['.que$', 'JJ'], ['.[tnl]ary$', 'JJ'], ['.[di]est$', 'JJS'], ['^(un|de|re)\\-[a-z]..', 'VB'], ['.lar$', 'JJ'], ['[bszmp]{2}y', 'JJ'], ['.zes$', 'VB'], ['.[icldtgrv]ent$', 'JJ'], ['.[rln]ates$', 'VBZ'], ['.[oe]ry$', 'JJ'], ['[rdntkdhs]ly$', 'RB'], ['.[lsrnpb]ian$', 'JJ'], ['.[^aeiou]ial$', 'JJ'], ['.[^aeiou]eal$', 'JJ'], ['.[vrl]id$', 'JJ'], ['.[ilk]er$', 'JJR'], ['.ike$', 'JJ'], ['.ends?$', 'VB'], ['.wards$', 'RB'], ['.rmy$', 'JJ'], ['.rol$', 'NN'], ['.tors$', 'NN'], ['.azy$', 'JJ'], ['.where$', 'RB'], ['.ify$', 'VB'], ['.bound$', 'JJ'], ['.[^z]ens$', 'VB'], ['.oid$', 'JJ'], ['.vice$', 'NN'], ['.rough$', 'JJ'], ['.mum$', 'JJ'], ['.teen(th)?$', 'CD'], ['.oses$', 'VB'], ['.ishes$', 'VB'], ['.ects$', 'VB'], ['.tieth$', 'CD'], ['.ices$', 'NN'], ['.pose$', 'VB'], ['.ions$', 'NN'], ['.ean$', 'JJ'], ['.[ia]sed$', 'JJ'], ['.tized$', 'VB'], ['.llen$', 'JJ'], ['.fore$', 'RB'], ['.ances$', 'NN'], ['.gate$', 'VB'], ['.nes$', 'VB'], ['.less$', 'RB'], ['.ried$', 'JJ'], ['.gone$', 'JJ'], ['.made$', 'JJ'], ['.[pdltrkvyns]ing$', 'JJ'], ['.tions$', 'NN'], ['.tures$', 'NN'], ['.ous$', 'JJ'], ['.ports$', 'NN'], ['. so$', 'RB'], ['.ints$', 'NN'], ['.[gt]led$', 'JJ'], ['.lked$', 'VB'], ['.fully$', 'RB'], ['.*ould$', 'MD'], ['^-?[0-9]+(.[0-9]+)?$', 'CD'], ['[a-z]*\\-[a-z]*\\-', 'JJ'], ['[a-z]\'s$', 'NNO'], ['.\'n$', 'VB'], ['.\'re$', 'CP'], ['.\'ll$', 'MD'], ['.\'t$', 'VB'], ['.tches$', 'VB'], ['^https?\:?\/\/[a-z0-9]', 'NN'], //the colon is removed in normalisation
+module.exports = [['^[0-9]+ ?(am|pm)$', 'DA'], ['^[0-9]+(st|nd|rd)?$', 'CD'], ['^[a-z]et$', 'VB'], ['cede$', 'VB'], ['.[cts]hy$', 'JJ'], ['.[st]ty$', 'JJ'], ['.[lnr]ize$', 'VB'], ['.[gk]y$', 'JJ'], ['.fies$', 'VB'], ['.some$', 'JJ'], ['.[nrtumcd]al$', 'JJ'], ['.que$', 'JJ'], ['.[tnl]ary$', 'JJ'], ['.[di]est$', 'JJS'], ['^(un|de|re)\\-[a-z]..', 'VB'], ['.lar$', 'JJ'], ['[bszmp]{2}y', 'JJ'], ['.zes$', 'VB'], ['.[icldtgrv]ent$', 'JJ'], ['.[rln]ates$', 'VBZ'], ['.[oe]ry$', 'NN'], ['[rdntkdhs]ly$', 'RB'], ['.[lsrnpb]ian$', 'JJ'], ['.[^aeiou]ial$', 'JJ'], ['.[^aeiou]eal$', 'JJ'], ['.[vrl]id$', 'JJ'], ['.[ilk]er$', 'JJR'], ['.ike$', 'JJ'], ['.ends?$', 'VB'], ['.wards$', 'RB'], ['.rmy$', 'JJ'], ['.rol$', 'NN'], ['.tors$', 'NN'], ['.azy$', 'JJ'], ['.where$', 'RB'], ['.ify$', 'VB'], ['.bound$', 'JJ'], ['.[^z]ens$', 'VB'], ['.oid$', 'JJ'], ['.vice$', 'NN'], ['.rough$', 'JJ'], ['.mum$', 'JJ'], ['.teen(th)?$', 'CD'], ['.oses$', 'VB'], ['.ishes$', 'VB'], ['.ects$', 'VB'], ['.tieth$', 'CD'], ['.ices$', 'NN'], ['.pose$', 'VB'], ['.ions$', 'NN'], ['.ean$', 'JJ'], ['.[ia]sed$', 'JJ'], ['.tized$', 'VB'], ['.llen$', 'JJ'], ['.fore$', 'RB'], ['.ances$', 'NN'], ['.gate$', 'VB'], ['.nes$', 'VB'], ['.less$', 'RB'], ['.ried$', 'JJ'], ['.gone$', 'JJ'], ['.made$', 'JJ'], ['.ing$', 'VB'], //likely to be converted to adjective after lexicon pass
+['.tions$', 'NN'], ['.tures$', 'NN'], ['.ous$', 'JJ'], ['.ports$', 'NN'], ['. so$', 'RB'], ['.ints$', 'NN'], ['.[gt]led$', 'JJ'], ['.lked$', 'VB'], ['.fully$', 'RB'], ['.*ould$', 'MD'], ['^-?[0-9]+(.[0-9]+)?$', 'CD'], ['[a-z]*\\-[a-z]*\\-', 'JJ'], ['[a-z]\'s$', 'NNO'], ['.\'n$', 'VB'], ['.\'re$', 'CP'], ['.\'ll$', 'MD'], ['.\'t$', 'VB'], ['.tches$', 'VB'], ['^https?\:?\/\/[a-z0-9]', 'NN'], //the colon is removed in normalisation
 ['^www\.[a-z0-9]', 'NN'], ['.ize$', 'VB'], ['.[^aeiou]ise$', 'VB'], ['.[aeiou]te$', 'VB'], ['.ea$', 'NN'], ['[aeiou][pns]er$', 'NN'], ['.ia$', 'NN'], ['.sis$', 'NN'], ['.[aeiou]na$', 'NN'], ['.[^aeiou]ity$', 'NN'], ['.[^aeiou]ium$', 'NN'], ['.[^aeiou][ei]al$', 'JJ'], ['.ffy$', 'JJ'], ['.[^aeiou]ic$', 'JJ'], ['.(gg|bb|zz)ly$', 'JJ'], ['.[aeiou]my$', 'JJ'], ['.[^aeiou][ai]ble$', 'JJ'], ['.[^aeiou]eable$', 'JJ'], ['.[^aeiou]ful$', 'JJ'], ['.[^aeiou]ish$', 'JJ'], ['.[^aeiou]ica$', 'NN'], ['[aeiou][^aeiou]is$', 'NN'], ['[^aeiou]ard$', 'NN'], ['[^aeiou]ism$', 'NN'], ['.[^aeiou]ity$', 'NN'], ['.[^aeiou]ium$', 'NN'], ['.[lstrn]us$', 'NN'], ['..ic$', 'JJ'], ['[aeiou][^aeiou]id$', 'JJ'], ['.[^aeiou]ish$', 'JJ'], ['.[^aeiou]ive$', 'JJ'], ['[ea]{2}zy$', 'JJ'], ['[^aeiou]ician$', 'AC'], ['.keeper$', 'AC'], ['.logist$', 'AC'], ['..ier$', 'AC'], ['.[^aeiou][ao]pher$', 'AC'], ['.tive$', 'AC'], ['[aeiou].*ist$', 'JJ'], ['[^i]fer$', 'VB'],
 //slang things
 ['^um+$', 'EX'], //ummmm
@@ -6044,7 +6077,7 @@ var gender = function gender(normal) {
     return 'Female';
   }
   //male honourifics
-  if (normal.match(/\b(mr|mister|sr|jr)\b/i)) {
+  if (normal.match(/\b(mr|mister|sr|sir|jr)\b/i)) {
     return 'Male';
   }
   //female honourifics
@@ -7643,10 +7676,6 @@ var Term = function () {
   return Term;
 }();
 
-Term.fn = Term.prototype;
-// let t = new Term(`first`);
-// console.log(t.normal);
-
 module.exports = Term;
 
 },{"../match/match_term":27,"../match/syntax_parse":29,"./implied":71,"./is_acronym":72}],102:[function(require,module,exports){
@@ -7765,8 +7794,6 @@ var conjugate = function conjugate(w) {
   return fufill(obj, prefix);
 };
 module.exports = conjugate;
-
-// console.log(conjugate('rose'));
 
 },{"../../../data/irregular_verbs":11,"../../../fns.js":23,"./from_infinitive":103,"./generic.js":104,"./predict_form.js":105,"./strip_prefix.js":106,"./to_actor":108,"./to_infinitive":109}],103:[function(require,module,exports){
 'use strict';
@@ -7991,6 +8018,9 @@ var generic = {
     if (fns.endsWith(inf, 's')) {
       return inf + 'es';
     }
+    if (fns.endsWith(inf, /[bcdfghjklmnpqrstvwxz]y$/)) {
+      return inf.slice(0, -1) + 'ies';
+    }
     return inf + 's';
   },
 
@@ -8001,6 +8031,9 @@ var generic = {
     }
     if (fns.endsWith(inf, 'ed')) {
       return inf;
+    }
+    if (fns.endsWith(inf, /[bcdfghjklmnpqrstvwxz]y$/)) {
+      return inf.slice(0, -1) + 'ied';
     }
     return inf + 'ed';
   },

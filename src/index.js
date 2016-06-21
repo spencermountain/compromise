@@ -36,7 +36,7 @@ function NLP() {
   };
   this.lexicon = function(obj) {
     obj = obj || {};
-    var lex = require('./lexicon.js');
+    let lex = require('./lexicon.js');
 
     Object.keys(obj).forEach(function(k) {
       lex[k] = obj[k];

@@ -91,6 +91,13 @@ class Noun extends Term {
   is_place() {
     return is_place(this.strip_apostrophe());
   }
+  all_forms() {
+    return {
+      'singular': this.singularize(),
+      'plural': this.pluralize(),
+      'normal': this.normal
+    };
+  }
 
 }
 
@@ -98,5 +105,5 @@ Noun.fn = Noun.prototype;
 
 module.exports = Noun;
 
-// let t = new Noun('NDA');
-// console.log(t.article());
+//let t = new Noun('mouse');
+//console.log(t.all_forms());

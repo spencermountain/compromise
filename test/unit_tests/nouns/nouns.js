@@ -207,20 +207,4 @@ describe('nouns', function() {
     done();
   });
 
-
-  //Noun forms()
-  it('noun.forms()', function(done) {
-    [
-      ['cat', 'cats'],
-      ['dog', 'dogs'],
-    ].forEach(function(a) {
-      let n = new Noun(a[0]);
-      (JSON.stringify(n.forms())).should.equal(JSON.stringify({
-        'singular': a[0],
-        'plural': a[1]
-      }));
-    });
-    done();
-  });
-
 });

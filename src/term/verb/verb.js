@@ -107,7 +107,7 @@ class Verb extends Term {
   }
 
   all_forms() {
-    var forms = this.conjugate();
+    let forms = this.conjugate();
     forms['negated'] = negate(this);
     forms['normal'] = this.normal;
     return forms;

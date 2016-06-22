@@ -37,7 +37,7 @@ class Adjective extends Term {
     };
   }
   all_forms() {
-    var forms = this.conjugate();
+    let forms = this.conjugate();
     forms['normal'] = this.normal;
     return forms;
   }

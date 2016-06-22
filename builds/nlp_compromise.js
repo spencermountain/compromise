@@ -2005,7 +2005,7 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.sentence('he is currently doing everything he can to stop the problem').to_past().text());
-// console.log(nlp.sentence('@john').terms[0]);
+// console.log(nlp.sentence('you John').terms);
 
 // let lexicon = nlp.lexicon();
 // lexicon['reid'] = 'Male';
@@ -2682,7 +2682,8 @@ var shouldLumpTwo = function shouldLumpTwo(a, b) {
     condition: a.pos.Person && b.pos.Possessive, // "john lkjsdf's"
     result: 'Possessive'
   }, {
-    condition: a.pos.Person && b.is_capital() && !a.pos.Possessive, //'Person, Capital -> Person'
+    //"John Abcd" - needs to be careful
+    condition: a.pos.Person && !a.pos.Pronoun && b.is_capital() && !a.is_acronym() && !b.pos.Verb && !a.pos.Possessive && !a.has_comma(), //'Person, Capital -> Person'
     result: 'Person'
   }, {
     condition: a.pos.Date && b.pos.Value, //June 4
@@ -2809,7 +2810,7 @@ var should_chunk = function should_chunk(a, b) {
     return false;
   }
   //dont chunk these pos
-  var dont_chunk = ['Expression', 'Phrasal'];
+  var dont_chunk = ['Expression', 'Phrasal', 'Pronoun'];
   for (var i = 0; i < dont_chunk.length; i++) {
     if (a.pos[dont_chunk[i]] || b.pos[dont_chunk[i]]) {
       return false;
@@ -4876,14 +4877,22 @@ var Adjective = function (_Term) {
         noun: adj_to_noun(this.normal)
       };
     }
+  }, {
+    key: 'all_forms',
+    value: function all_forms() {
+      var forms = this.conjugate();
+      forms['normal'] = this.normal;
+      return forms;
+    }
   }]);
 
   return Adjective;
 }(Term);
 
 Adjective.fn = Adjective.prototype;
-// let t = new Adjective("quick")
-// console.log(t.conjugate())
+
+//let t = new Adjective("quick")
+//console.log(t.all_forms());
 
 module.exports = Adjective;
 
@@ -5292,14 +5301,23 @@ var Adverb = function (_Term) {
     value: function to_adjective() {
       return _to_adjective(this.normal);
     }
+  }, {
+    key: 'all_forms',
+    value: function all_forms() {
+      return {
+        adjective: this.to_adjective(),
+        normal: this.normal
+      };
+    }
   }]);
 
   return Adverb;
 }(Term);
 
 Adverb.fn = Adverb.prototype;
-// let t = new Adverb("quickly")
-// console.log(t.to_adjective())
+
+//let t = new Adverb("quickly")
+//console.log(t.all_forms());
 
 module.exports = Adverb;
 
@@ -5661,7 +5679,10 @@ var wrangle = {
       feb: 1,
       mar: 2,
       apr: 3,
+      jun: 5,
+      jul: 6,
       aug: 7,
+      sep: 8,
       sept: 8,
       oct: 9,
       nov: 10,
@@ -5927,6 +5948,15 @@ var Noun = function (_Term) {
     value: function is_place() {
       return _is_place(this.strip_apostrophe());
     }
+  }, {
+    key: 'all_forms',
+    value: function all_forms() {
+      return {
+        'singular': this.singularize(),
+        'plural': this.pluralize(),
+        'normal': this.normal
+      };
+    }
   }]);
 
   return Noun;
@@ -5936,8 +5966,8 @@ Noun.fn = Noun.prototype;
 
 module.exports = Noun;
 
-// let t = new Noun('NDA');
-// console.log(t.article());
+//let t = new Noun('mouse');
+//console.log(t.all_forms());
 
 },{"../term.js":101,"./article.js":73,"./date/is_date.js":76,"./is_plural.js":78,"./is_uncountable.js":79,"./organization/is_organization.js":81,"./person/is_person.js":84,"./place/is_place.js":87,"./pluralize.js":89,"./pronoun.js":90,"./singularize.js":91,"./value/is_value.js":94}],81:[function(require,module,exports){
 'use strict';
@@ -6115,13 +6145,13 @@ var honourifics = require('../../../data/honourifics').reduce(function (h, s) {
   return h;
 }, {});
 
+//these pronouns are people
 var whitelist = {
   'he': true,
   'she': true,
   'i': true,
   'you': true
 };
-
 var is_person = function is_person(str) {
   if (whitelist[str] || firstnames[str]) {
     return true;
@@ -7655,20 +7685,8 @@ var Term = function () {
       return this.normal;
     }
   }, {
-    key: 'forms',
-    value: function forms() {
-      if (this.pos['Noun']) {
-        return {
-          'singular': this.singularize(),
-          'plural': this.pluralize()
-        };
-      } else if (this.pos['Verb'] || this.pos['Adjective']) {
-        return this.conjugate();
-      } else if (this.pos['Adverb']) {
-        return {
-          'adjective': this.to_adjective()
-        };
-      }
+    key: 'all_forms',
+    value: function all_forms() {
       return {};
     }
   }]);
@@ -8597,6 +8615,14 @@ var Verb = function (_Term) {
       this.changeTo(_negate(this));
       return this;
     }
+  }, {
+    key: 'all_forms',
+    value: function all_forms() {
+      var forms = this.conjugate();
+      forms['negated'] = _negate(this);
+      forms['normal'] = this.normal;
+      return forms;
+    }
   }]);
 
   return Verb;
@@ -8606,8 +8632,8 @@ Verb.fn = Verb.prototype;
 
 module.exports = Verb;
 
-// let v = new Verb('stunk up');
-// console.log(v.negate());
+//let v = new Verb('run');
+//console.log(v.all_forms());
 
 },{"../term.js":101,"./conjugate/conjugate.js":102,"./conjugate/predict_form.js":105,"./to_adjective.js":110,"./verb_negate.js":112}],112:[function(require,module,exports){
 'use strict';

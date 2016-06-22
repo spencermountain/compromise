@@ -106,7 +106,7 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.sentence('he is currently doing everything he can to stop the problem').to_past().text());
-// console.log(nlp.sentence('John, you').terms);
+// console.log(nlp.sentence('you John').terms);
 
 
 // let lexicon = nlp.lexicon();

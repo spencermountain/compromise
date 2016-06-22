@@ -5,13 +5,13 @@ let honourifics = require('../../../data/honourifics').reduce(function(h, s) {
   return h;
 }, {});
 
+//these pronouns are people
 let whitelist = {
   'he': true,
   'she': true,
   'i': true,
   'you': true,
 };
-
 const is_person = function(str) {
   if (whitelist[str] || firstnames[str]) {
     return true;

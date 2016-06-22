@@ -55,6 +55,13 @@ describe('basic pos tag', function() {
     ['#funtimes', ['HashTag']],
     ['http://fun.com/cool?fun=yes', ['Url']],
     ['#cool fun.com @cooman', ['HashTag', 'Url', 'AtMention']],
+    //people
+    ['John swim', ['Person', 'Verb']],
+    ['John Swim', ['Person', 'Verb']],
+    ['John, John', ['Person', 'Person']],
+    ['John, you', ['Person', 'Pronoun']],
+    ['John you', ['Person', 'Pronoun']],
+    ['you John you', ['Pronoun','Person', 'Pronoun']],
   ];
   tests.forEach(function(a) {
     it(a[0], function(done) {

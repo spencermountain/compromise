@@ -86,8 +86,7 @@ describe('nouns', function() {
   });
 
 
-  it('is_person', function(done) {
-    let tests = [
+    [
       ['five hundred feet', false],
       ['50 square feet', false],
       ['90 hertz', false],
@@ -118,16 +117,16 @@ describe('nouns', function() {
       ['february fifth', false],
       ['tuesday march 5th', false],
       ['tuesday march 5th, 2015', false],
-    ];
-    tests.forEach(function(a) {
+    ].forEach(function(a) {
+      it('is_person '+a[0], function(done) {
       let n = new Noun(a[0]);
       (a[1]).should.equal(n.is_person());
+      done();
     });
-    done();
   });
 
   it('is_value', function(done) {
-    let tests = [
+    [
       ['five hundred feet', true],
       ['50 square feet', true],
       ['90 hertz', true],
@@ -158,8 +157,7 @@ describe('nouns', function() {
       ['february fifth', false],
       ['tuesday march 5th', false],
       ['tuesday march 5th, 2015', false],
-    ];
-    tests.forEach(function(a) {
+    ].forEach(function(a) {
       let n = new Noun(a[0]);
       (a[1]).should.equal(n.is_value());
     });
@@ -168,7 +166,7 @@ describe('nouns', function() {
 
 
   it('is_place', function(done) {
-    let tests = [
+    [
       ['five hundred feet', false],
       ['50 square feet', false],
       ['90 hertz', false],
@@ -199,8 +197,7 @@ describe('nouns', function() {
       ['february fifth', false],
       ['tuesday march 5th', false],
       ['tuesday march 5th, 2015', false],
-    ];
-    tests.forEach(function(a) {
+    ].forEach(function(a) {
       let n = new Noun(a[0]);
       (a[1]).should.equal(n.is_place());
     });

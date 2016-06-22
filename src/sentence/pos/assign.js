@@ -6,8 +6,10 @@ const assign = function (t, tag, reason) {
   let P = pos.classMapping[tag] || pos.Term;
   let expansion = t.expansion;
   let whitespace = t.whitespace;
+  let reasoning = t.reasoning;
   t = new P(t.text, tag);
-  t.reason = reason;
+  t.reasoning = reasoning;
+  t.reasoning.push(reason);
   t.whitespace = whitespace;
   t.expansion = expansion;
   return t;

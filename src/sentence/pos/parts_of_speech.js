@@ -100,7 +100,11 @@ const classMapping = {
 
   'Adverb': Adverb,
   'Value': Value,
+
   'Place': Place,
+  'City': Place,
+  'Country': Place,
+
   'Person': Person,
   'Organization': Organization,
   'Date': _Date,

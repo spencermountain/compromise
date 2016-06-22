@@ -62,8 +62,8 @@ addArr(orgs.organizations, 'Noun');
 addArr(orgs.suffixes, 'Noun');
 
 let places = require('./data/places.js');
-addArr(places.countries, 'Place');
-addArr(places.cities, 'Place');
+addArr(places.countries, 'Country');
+addArr(places.cities, 'City');
 
 require('./data/adjectives.js').forEach(function(s) {
   lexicon[s] = 'Adjective';

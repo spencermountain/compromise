@@ -7,7 +7,7 @@ const new_string = function(a, b) {
   return a.text + space + b.text;
 };
 
-const combine = function(terms, i, tag, reason) {
+const combine_two = function(terms, i, tag, reason) {
   let a = terms[i];
   let b = terms[i + 1];
   //fail-fast
@@ -18,7 +18,7 @@ const combine = function(terms, i, tag, reason) {
   let Pos = pos.classMapping[tag] || pos.Term;
   terms[i] = new Pos(new_string(a, b), tag);
   //copy-over reasoning
-  terms[i].reasoning = a.reasoning.concat(b.reasoning);
+  terms[i].reasoning = [a.reasoning.join(', '), b.reasoning.join(', ')];
   terms[i].reasoning.push(reason);
   //combine whitespace
   terms[i].whitespace.preceding = a.whitespace.preceding;
@@ -28,4 +28,30 @@ const combine = function(terms, i, tag, reason) {
   return terms;
 };
 
-module.exports = combine;
+const combine_three = function(terms, i, tag, reason) {
+  let a = terms[i];
+  let b = terms[i + 1];
+  let c = terms[i + 2];
+  //fail-fast
+  if (!a || !b || !c) {
+    return terms;
+  }
+  let Pos = pos.classMapping[tag] || pos.Term;
+  let space1 = a.whitespace.trailing + b.whitespace.preceding;
+  let space2 = b.whitespace.trailing + c.whitespace.preceding;
+  let text = a.text + space1 + b.text + space2 + c.text;
+  terms[i] = new Pos(text, tag);
+  terms[i].reasoning = [a.reasoning.join(', '), b.reasoning.join(', ')];
+  terms[i].reasoning.push(reason);
+  //transfer unused-up whitespace
+  terms[i].whitespace.preceding = a.whitespace.preceding;
+  terms[i].whitespace.trailing = c.whitespace.trailing;
+  terms[i + 1] = null;
+  terms[i + 2] = null;
+  return terms;
+};
+
+module.exports = {
+  two: combine_two,
+  three: combine_three,
+};

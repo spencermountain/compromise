@@ -69,7 +69,7 @@ const tagger = function(s, options) {
     s.terms = noun_fallback(s.terms);
     s.terms = phrasal_verbs(s.terms);
     s.terms = possessive_pass(s.terms);
-  // s.terms = lump_three(s.terms);
+    s.terms = lump_three(s.terms);
   }
   s.terms = conditional_pass(s.terms);
   s.terms = quotation_pass(s.terms);

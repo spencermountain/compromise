@@ -1,6 +1,6 @@
 'use strict';
 //apply lumper+splitter words to terms to combine them
-const combine = require('./combine');
+const combine = require('./combine').two;
 
 //rules that combine two words
 const do_lump = [

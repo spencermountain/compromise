@@ -82,7 +82,8 @@ const shouldLumpTwo = function(a, b) {
       result: 'Possessive',
     },
     {
-      condition: (a.pos.Person && b.is_capital() && !a.pos.Possessive), //'Person, Capital -> Person'
+      //"John Abcd" - needs to be careful
+      condition: (a.pos.Person && b.is_capital() && !a.is_acronym() && !b.pos.Verb && !a.pos.Possessive && !a.has_comma()), //'Person, Capital -> Person'
       result: 'Person',
     },
     {
@@ -138,6 +139,7 @@ const shouldLumpTwo = function(a, b) {
   ];
   for(let i = 0; i < lump_rules.length; i++) {
     if (lump_rules[i].condition) {
+      console.log(i)
       return lump_rules[i].result;
     }
   }

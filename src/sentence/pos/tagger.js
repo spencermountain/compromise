@@ -7,7 +7,6 @@ const pos = require('./parts_of_speech');
 const assign = require('./assign');
 
 const grammar_pass = require('./passes/grammar_pass');
-const phrasal_verbs = require('./passes/phrasal_verbs');
 const interjection_fixes = require('./passes/interjection_fixes');
 const lexicon_pass = require('./passes/lexicon_pass');
 const capital_signals = require('./passes/capital_signals');
@@ -67,7 +66,6 @@ const tagger = function(s, options) {
     s.terms = ambiguous_dates(s.terms);
     s.terms = lump_two(s.terms);
     s.terms = noun_fallback(s.terms);
-    s.terms = phrasal_verbs(s.terms);
     s.terms = possessive_pass(s.terms);
     s.terms = lump_three(s.terms);
   }

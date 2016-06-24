@@ -190,8 +190,8 @@ for (var i = 0; i <= 6; i++) {
 var durations = ['millisecond', 'second', 'minute', 'hour', 'morning', 'afternoon', 'evening', 'night', 'day', 'week', 'month', 'year', 'decade'];
 //add their plurals
 var len = durations.length;
-for (var i = 0; i < len; i++) {
-  durations.push(durations[i] + 's');
+for (var _i = 0; _i < len; _i++) {
+  durations.push(durations[_i] + 's');
 }
 durations.push('century');
 durations.push('centuries');
@@ -209,7 +209,8 @@ module.exports = {
 'use strict';
 
 //adjectival forms of place names, as adjectives.
-module.exports = ['afghan', 'albanian', 'algerian', 'angolan', 'argentine', 'armenian', 'australian', 'aussie', 'austrian', 'bangladeshi', 'belarusian', 'belgian', 'bolivian', 'bosnian', 'brazilian', 'bulgarian', 'cambodian', 'cameroonian', 'canadian', 'chadian', 'chilean', 'chinese', 'colombian', 'congolese', 'croatian', 'cuban', 'czech', 'dominican', 'danish', 'egyptian', 'british', 'estonian', 'ethiopian', 'ecuadorian', 'finnish', 'french', 'gambian', 'georgian', 'german', 'greek', 'ghanaian', 'guatemalan', 'haitian', 'hungarian', 'honduran', 'icelandic', 'indian', 'indonesian', 'iranian', 'iraqi', 'irish', 'israeli', 'italian', 'ivorian', // of Ivory Coast
+module.exports = ['afghan', 'albanian', 'algerian', 'angolan', 'argentine', 'armenian', 'australian', 'aussie', 'austrian', 'bangladeshi', 'basque', // of Basque Country
+'belarusian', 'belgian', 'bolivian', 'bosnian', 'brazilian', 'bulgarian', 'cambodian', 'cameroonian', 'canadian', 'chadian', 'chilean', 'chinese', 'colombian', 'congolese', 'croatian', 'cuban', 'czech', 'dominican', 'danish', 'egyptian', 'british', 'estonian', 'ethiopian', 'ecuadorian', 'finnish', 'french', 'gambian', 'georgian', 'german', 'greek', 'ghanaian', 'guatemalan', 'haitian', 'hungarian', 'honduran', 'icelandic', 'indian', 'indonesian', 'iranian', 'iraqi', 'irish', 'israeli', 'italian', 'ivorian', // of Ivory Coast
 'jamaican', 'japanese', 'jordanian', 'kazakh', 'kenyan', 'korean', 'kuwaiti', 'lao', // of Laos
 'latvian', 'lebanese', 'liberian', 'libyan', 'lithuanian', 'namibian', 'malagasy', // of Madagascar
 'macedonian', 'malaysian', 'mexican', 'mongolian', 'moroccan', 'dutch', 'nicaraguan', 'nigerian', // of Nigeria
@@ -235,12 +236,12 @@ var ambiguous = ['casey', 'jamie', 'lee', 'jaime', 'jessie', 'morgan', 'rene', '
 for (var i = 0; i < male.length; i++) {
   names[male[i]] = 'm';
 }
-for (var i = 0; i < female.length; i++) {
-  names[female[i]] = 'f';
+for (var _i = 0; _i < female.length; _i++) {
+  names[female[_i]] = 'f';
 }
 //ambiguous/unisex names
-for (var i = 0; i < ambiguous.length; i += 1) {
-  names[ambiguous[i]] = 'a';
+for (var _i2 = 0; _i2 < ambiguous.length; _i2 += 1) {
+  names[ambiguous[_i2]] = 'a';
 }
 // console.log(names['spencer']);
 // console.log(names['jill']);
@@ -875,11 +876,9 @@ var compact = {
   //modal verbs
   'MD': ['can', 'may', 'could', 'might', 'will', 'ought to', 'would', 'must', 'shall', 'should', 'ought', 'shant', 'lets'],
 
-  //arguable
   //Possessive pronouns
   'PP': ['mine', 'something', 'none', 'anything', 'anyone', 'theirs', 'himself', 'ours', 'his', 'my', 'their', 'yours', 'your', 'our', 'its', 'herself', 'hers', 'themselves', 'myself', 'itself', 'her'],
 
-  //this one is pretty ambiguous
   //personal pronouns (nouns)
   'PRP': ['it', 'they', 'i', 'them', 'you', 'she', 'me', 'he', 'him', 'ourselves', 'us', 'we', 'thou', 'il', 'elle', 'yourself', '\'em', 'he\'s', 'she\'s'],
   //questions are awkward pos. are clarified in question_pass
@@ -889,7 +888,6 @@ var compact = {
   // 'now',
   'again', 'already', 'soon', 'directly', 'toward', 'forever', 'apart', 'instead', 'yes', 'alone', 'indeed', 'ever', 'quite', 'perhaps', 'then', 'thus', 'very', 'often', 'once', 'never', 'away', 'always', 'sometimes', 'also', 'maybe', 'so', 'just', 'well', 'several', 'such', 'randomly', 'too', 'rather', 'abroad', 'almost', 'anyway', 'twice', 'aside', 'moreover', 'anymore', 'newly', 'damn', 'somewhat', 'somehow', 'meanwhile', 'hence', 'further', 'furthermore', 'more', 'way', 'kinda', 'totally'],
 
-  // 'notably',
   //interjections, expressions
   'EX': ['uh', 'uhh', 'uh huh', 'uh-oh', 'please', 'ugh', 'sheesh', 'eww', 'pff', 'voila', 'oy', 'hi', 'hello', 'bye', 'goodbye', 'hey', 'hai', 'eep', 'hurrah', 'yuck', 'ow', 'duh', 'oh', 'hmm', 'yeah', 'whoa', 'ooh', 'whee', 'ah', 'bah', 'gah', 'yaa', 'phew', 'gee', 'ahem', 'eek', 'meh', 'yahoo', 'oops', 'd\'oh', 'psst', 'argh', 'grr', 'nah', 'shhh', 'whew', 'mmm', 'ooo', 'yay', 'uh-huh', 'boo', 'wow', 'nope', 'haha', 'hahaha', 'lol', 'lols', 'ya', 'hee', 'ohh', 'eh', 'yup'],
 
@@ -1550,10 +1548,10 @@ var tags = {
   infinitive: 'VBP'
 };
 var cache = {}; //cache individual verbs to speed it up
-var split = undefined,
-    verb = undefined,
-    particle = undefined,
-    phrasal = undefined;
+var split = void 0,
+    verb = void 0,
+    particle = void 0,
+    phrasal = void 0;
 Object.keys(main).forEach(function (s) {
   split = s.split(' ');
   verb = split[0];
@@ -2231,9 +2229,9 @@ var findAll = function findAll(terms, regs, options) {
   var len = terms.length; // - regs.length + 1;
   for (var i = 0; i < len; i++) {
     var termSlice = terms.slice(i, terms.length);
-    var match = tryFromHere(termSlice, regs, options);
-    if (match) {
-      result.push(new Result(match));
+    var _match = tryFromHere(termSlice, regs, options);
+    if (_match) {
+      result.push(new Result(_match));
     }
   }
   //if we have no results, return null
@@ -2327,6 +2325,7 @@ var Result = function () {
   }
   //wha, this is possible eg. text.match().match()
 
+
   _createClass(Result, [{
     key: 'match',
     value: function match(str, options) {
@@ -2380,6 +2379,7 @@ var Result = function () {
   return Result;
 }();
 //a slice of term objects
+
 
 module.exports = Result;
 
@@ -2764,11 +2764,11 @@ var fancy_lumping = function fancy_lumping(terms) {
     if (c) {
       tag = shouldLumpThree(a, b, c);
       if (tag) {
-        var Cl = pos.classMapping[tag] || pos.Term;
+        var _Cl = pos.classMapping[tag] || pos.Term;
         var space1 = a.whitespace.trailing + b.whitespace.preceding;
         var space2 = b.whitespace.trailing + c.whitespace.preceding;
         var text = a.text + space1 + b.text + space2 + c.text;
-        terms[i - 1] = new Cl(text, tag);
+        terms[i - 1] = new _Cl(text, tag);
         terms[i - 1].reason = 'lumpedThree(' + terms[i].reason + ')';
         //transfer unused-up whitespace
         terms[i - 1].whitespace.preceding = a.whitespace.preceding;
@@ -2823,8 +2823,8 @@ var should_chunk = function should_chunk(a, b) {
   if (a.tag === b.tag) {
     return true;
   }
-  for (var i = 0; i < friendlies.length; i++) {
-    var f = friendlies[i];
+  for (var _i = 0; _i < friendlies.length; _i++) {
+    var f = friendlies[_i];
     if (a.pos[f[0]] && b.pos[f[1]]) {
       return true;
     }
@@ -3154,10 +3154,10 @@ var conditional_pass = function conditional_pass(terms) {
   //try trailing condition
   for (var i = 3; i < terms.length; i++) {
     if (starts[terms[i].normal] && terms[i - 1].has_comma()) {
-      var until = nextComma(terms, i);
-      if (until) {
-        tagCondition(terms, i, until);
-        i += until;
+      var _until = nextComma(terms, i);
+      if (_until) {
+        tagCondition(terms, i, _until);
+        i += _until;
       }
     }
   }
@@ -3418,9 +3418,9 @@ var lexicon_pass = function lexicon_pass(terms, options) {
     }
     //try to match without a contraction - "they've" -> "they"
     if (t.has_abbreviation()) {
-      var attempt = normal.replace(/'(ll|re|ve|re|d|m)/, '');
+      var _attempt = normal.replace(/'(ll|re|ve|re|d|m)/, '');
       // attempt = normal.replace(/n't/, '');
-      return assign(t, lexicon[attempt], 'lexicon_prefix');
+      return assign(t, lexicon[_attempt], 'lexicon_prefix');
     }
 
     //match 'twenty-eight'
@@ -3724,9 +3724,9 @@ var regex_pass = function regex_pass(terms) {
       }
     }
     //bigger list of regexes on normal
-    for (var o = 0; o < word_rules.length; o++) {
-      if (normal.match(word_rules[o].reg)) {
-        terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass_' + o + word_rules[o].reg);
+    for (var _o = 0; _o < word_rules.length; _o++) {
+      if (normal.match(word_rules[_o].reg)) {
+        terms[i] = assign(terms[i], word_rules[_o].pos, 'rules_pass_' + _o + word_rules[_o].reg);
         return;
       }
     }
@@ -3785,11 +3785,9 @@ module.exports = [
 //copula hints
 {
   'before': ['[Copula]', '[?]'],
-  'after': ['[Copula]', '[Adjective]'] }, // not sure
-{
+  'after': ['[Copula]', '[Adjective]'] }, {
   'before': ['[Copula]', '[Adverb]', '[?]'],
-  'after': ['[Copula]', '[Adverb]', '[Adjective]'] }, // not sure
-
+  'after': ['[Copula]', '[Adverb]', '[Adjective]'] },
 //preposition hints
 {
   'before': ['[?]', '[Preposition]'],
@@ -3872,8 +3870,7 @@ module.exports = [['^[0-9]+ ?(am|pm)$', 'DA'], ['^[0-9]+(st|nd|rd)?$', 'CD'], ['
 ['^lol[sz]$', 'EX'], //lol
 ['^woo+[pt]?$', 'EX'], //woo
 ['^ug?h+$', 'EX'], //uhh
-['^uh[ -]?oh$', 'EX']]. //uhoh
-map(function (a) {
+['^uh[ -]?oh$', 'EX']].map(function (a) {
   return {
     reg: new RegExp(a[0], 'i'),
     pos: tag_mapping[a[1]]
@@ -4163,7 +4160,6 @@ module.exports = Question;
 },{"../sentence.js":60,"./question_form":58}],58:[function(require,module,exports){
 'use strict';
 //classifies a question into:
-
 var yesNoTerm = require('./yesNo.js');
 var easyForm = require('./easyForm.js');
 var hardForm = require('./hardForm.js');
@@ -4327,6 +4323,7 @@ var Sentence = function () {
   //Sentence methods:
 
   //insert a new word at this point
+
 
   _createClass(Sentence, [{
     key: 'addBefore',
@@ -4601,6 +4598,7 @@ var Sentence = function () {
 //unpublished methods
 //tokenize the match string, just like you'd tokenize the sentence.
 //this avoids lumper/splitter problems between haystack and needle
+
 
 tokenize_match = function tokenize_match(str) {
   var regs = new Sentence(str).terms; //crazy!
@@ -5016,9 +5014,9 @@ var adj_to_adv = function adj_to_adv(str) {
       return null;
     }
   }
-  for (var i = 0; i < transforms.length; i++) {
-    if (str.match(transforms[i].reg)) {
-      return str.replace(transforms[i].reg, transforms[i].repl);
+  for (var _i = 0; _i < transforms.length; _i++) {
+    if (str.match(transforms[_i].reg)) {
+      return str.replace(transforms[_i].reg, transforms[_i].repl);
     }
   }
   return str + 'ly';
@@ -5095,14 +5093,14 @@ var to_comparative = function to_comparative(str) {
     return irregulars[str];
   }
 
-  for (var i = 0; i < not_matches.length; i++) {
-    if (str.match(not_matches[i])) {
+  for (var _i = 0; _i < not_matches.length; _i++) {
+    if (str.match(not_matches[_i])) {
       return 'more ' + str;
     }
   }
 
-  for (var i = 0; i < matches.length; i++) {
-    if (str.match(matches[i])) {
+  for (var _i2 = 0; _i2 < matches.length; _i2++) {
+    if (str.match(matches[_i2])) {
       return str + 'er';
     }
   }
@@ -5251,14 +5249,14 @@ var to_superlative = function to_superlative(str) {
   if (irregulars.hasOwnProperty(str)) {
     return irregulars[str];
   }
-  for (var i = 0; i < not_matches.length; i++) {
-    if (str.match(not_matches[i])) {
+  for (var _i = 0; _i < not_matches.length; _i++) {
+    if (str.match(not_matches[_i])) {
       return 'most ' + str;
     }
   }
 
-  for (var i = 0; i < matches.length; i++) {
-    if (str.match(matches[i])) {
+  for (var _i2 = 0; _i2 < matches.length; _i2++) {
+    if (str.match(matches[_i2])) {
       return generic_transformation(str);
     }
   }
@@ -5518,6 +5516,7 @@ var _Date = function (_Noun) {
 
   //can we make it a js Date object?
 
+
   _createClass(_Date, [{
     key: 'is_date',
     value: function is_date() {
@@ -5764,13 +5763,13 @@ var is_plural = function is_plural(str) {
       return false;
     }
   }
-  for (var i = 0; i < plural_indicators.length; i++) {
-    if (str.match(plural_indicators[i])) {
+  for (var _i = 0; _i < plural_indicators.length; _i++) {
+    if (str.match(plural_indicators[_i])) {
       return true;
     }
   }
-  for (var i = 0; i < singular_indicators.length; i++) {
-    if (str.match(singular_indicators[i])) {
+  for (var _i2 = 0; _i2 < singular_indicators.length; _i2++) {
+    if (str.match(singular_indicators[_i2])) {
       return false;
     }
   }
@@ -5855,6 +5854,7 @@ var Noun = function (_Term) {
     return _this;
   }
   //noun methods
+
 
   _createClass(Noun, [{
     key: 'article',
@@ -5988,7 +5988,6 @@ var blacklist = {
   sms: true };
 
 //words like 'co' and ltd
-//these should maybe be somewhere else
 var org_suffix = abbreviations.orgs.reduce(function (h, s) {
   h[s] = true;
   return h;
@@ -6406,8 +6405,7 @@ var firstwords = ['west', 'east', 'nort', 'south', 'western', 'eastern', 'norter
   return h;
 }, {});
 
-var lastwords = ['city', 'town', 'county', 'village', 'province', 'country', 'state', 'province', 'mountain', 'river', 'valley', 'park', 'avenue', 'street', 'road']. //these should maybe be somewhere else
-reduce(function (h, s) {
+var lastwords = ['city', 'town', 'county', 'village', 'province', 'country', 'state', 'province', 'mountain', 'river', 'valley', 'park', 'avenue', 'street', 'road'].reduce(function (h, s) {
   h[s] = true;
   return h;
 }, {});
@@ -7263,6 +7261,7 @@ var Value = function (_Noun) {
 
   //test for nearly-numbers, like phonenumbers, or whatever
 
+
   _createClass(Value, [{
     key: 'is_number',
     value: function is_number(s) {
@@ -7427,12 +7426,12 @@ var Value = function (_Noun) {
       var raw_units = '';
 
       //seperate number-words from unit-words
-      for (var i = 0; i < words.length; i++) {
-        var w = words[i];
-        if (this.is_number_word(w)) {
-          numbers += ' ' + w;
+      for (var _i = 0; _i < words.length; _i++) {
+        var _w = words[_i];
+        if (this.is_number_word(_w)) {
+          numbers += ' ' + _w;
         } else {
-          raw_units += ' ' + w;
+          raw_units += ' ' + _w;
         }
       }
       this.unit = raw_units.trim();
@@ -7475,14 +7474,14 @@ var Value = function (_Noun) {
         var after = this.text.substring(of_pos + 4).trim();
 
         var space_pos = before.lastIndexOf(' ');
-        var w = before.substring(space_pos).trim();
+        var _w2 = before.substring(space_pos).trim();
 
         //if the word before 'of' is a unit, return whatever is after 'of'
         //else return this word + of + whatever is after 'of'
-        if (w && (this.is_unit(w) || this.is_number_word(w))) {
+        if (_w2 && (this.is_unit(_w2) || this.is_number_word(_w2))) {
           this.of_what = after;
         } else {
-          this.of_what = w + ' of ' + after;
+          this.of_what = _w2 + ' of ' + after;
         }
       } else if (this.unit_name) {
         //if value contains a unit but no 'of', return unit
@@ -7491,9 +7490,9 @@ var Value = function (_Noun) {
         //if value is a number followed by words, skip numbers
         //and return words; if there is no numbers, return full
         var temp_words = this.text.split(' ');
-        for (var i = 0; i < temp_words.length; i++) {
-          if (this.is_number_word(temp_words[i])) {
-            temp_words[i] = '';
+        for (var _i2 = 0; _i2 < temp_words.length; _i2++) {
+          if (this.is_number_word(temp_words[_i2])) {
+            temp_words[_i2] = '';
             continue;
           }
           this.of_what = temp_words.join(' ').trim();
@@ -7559,6 +7558,7 @@ var Term = function () {
   }
 
   //when the text changes, rebuild derivative fields
+
 
   _createClass(Term, [{
     key: 'rebuild',
@@ -8258,11 +8258,6 @@ var rules = {
     reg: /(.)un([g|k])$/i,
     to: '$1in$2'
   }],
-
-  // {
-  //   reg: /(..)en$/i,
-  //   to: '$1e'
-  // },
   actor: [{
     reg: /(er)er$/i,
     to: '$1'
@@ -8425,7 +8420,6 @@ var rules = [[/y$/, 'i'], //relay - reliable
 //convert - 'convertible'
 //http://grammarist.com/usage/able-ible/
 //http://blog.oxforddictionaries.com/2012/10/ibles-and-ables/
-//win - winnable
 var ible_suffixes = {
   collect: true,
   exhaust: true,
@@ -8515,6 +8509,7 @@ var Verb = function (_Term) {
   }
 
   //'root' for a verb means infinitive
+
 
   _createClass(Verb, [{
     key: 'root',
@@ -8770,15 +8765,15 @@ var sentence_parser = function sentence_parser(text) {
   var acronym_reg = new RegExp('[ |\.][A-Z]\.? +?$', 'i');
   var elipses_reg = new RegExp('\\.\\.\\.* +?$');
   //loop through these chunks, and join the non-sentence chunks back together..
-  for (var i = 0; i < chunks.length; i++) {
+  for (var _i = 0; _i < chunks.length; _i++) {
     //should this chunk be combined with the next one?
-    if (chunks[i + 1] && (chunks[i].match(abbrev_reg) || chunks[i].match(acronym_reg) || chunks[i].match(elipses_reg))) {
-      chunks[i + 1] = chunks[i] + (chunks[i + 1] || ''); //.replace(/ +/g, ' ');
-    } else if (chunks[i] && chunks[i].length > 0) {
-        //this chunk is a proper sentence..
-        sentences.push(chunks[i]);
-        chunks[i] = '';
-      }
+    if (chunks[_i + 1] && (chunks[_i].match(abbrev_reg) || chunks[_i].match(acronym_reg) || chunks[_i].match(elipses_reg))) {
+      chunks[_i + 1] = chunks[_i] + (chunks[_i + 1] || ''); //.replace(/ +/g, ' ');
+    } else if (chunks[_i] && chunks[_i].length > 0) {
+      //this chunk is a proper sentence..
+      sentences.push(chunks[_i]);
+      chunks[_i] = '';
+    }
   }
   //if we never got a sentence, return the given text
   if (sentences.length === 0) {
@@ -8848,6 +8843,7 @@ var Text = function () {
   }
 
   //map over sentence methods
+
 
   _createClass(Text, [{
     key: 'text',

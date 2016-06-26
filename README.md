@@ -8,7 +8,7 @@ nlp.sentence('She sells seashells').to_past().text()
 // 'She sold seashells'
 ```
 ### Yup,
-* **100k** js file
+* **<150k** js file
 * **86%** on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
 * keypress speed, constant-time.
 * caniuse, uhuh. **IE9+**

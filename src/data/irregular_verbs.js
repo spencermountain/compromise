@@ -232,7 +232,10 @@ const irregular_verbs = {
     past: 'rang'
   },
   rise: {
-    past: 'rose'
+    past: 'rose',
+    gerund: 'rising',
+    pluperfect: 'had risen',
+    future_perfect: 'will have risen'
   },
   run: {
     gerund: 'running',

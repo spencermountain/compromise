@@ -11,9 +11,16 @@ class Adverb extends Term {
   to_adjective() {
     return to_adjective(this.normal);
   }
+  all_forms() {
+    return {
+      adjective: this.to_adjective(),
+      normal: this.normal
+    }
+  }
 }
 Adverb.fn = Adverb.prototype;
-// let t = new Adverb("quickly")
-// console.log(t.to_adjective())
+
+//let t = new Adverb("quickly")
+//console.log(t.all_forms());
 
 module.exports = Adverb;

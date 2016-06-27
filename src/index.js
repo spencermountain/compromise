@@ -34,8 +34,15 @@ function NLP() {
       });
     });
   };
-  this.lexicon = function() {
-    return require('./lexicon.js');
+  this.lexicon = function(obj) {
+    obj = obj || {};
+    let lex = require('./lexicon.js');
+
+    Object.keys(obj).forEach(function(k) {
+      lex[k] = obj[k];
+    });
+
+    return lex;
   };
 
   this.term = function(s) {
@@ -99,4 +106,14 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.sentence('he is currently doing everything he can to stop the problem').to_past().text());
-// console.log(nlp.sentence('we did what we can').to_present().text());
+// console.log(nlp.sentence('you John').terms);
+
+
+// let lexicon = nlp.lexicon();
+// lexicon['reid'] = 'Male';
+// let s = nlp.sentence('reid Hoffman is nice', {
+//   lexicon: {
+//     reid: 'Male'
+//   }
+// });
+// console.log(s.terms);

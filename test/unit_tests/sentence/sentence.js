@@ -183,5 +183,4 @@ describe('Sentence Class Methods', function() {
     done();
   });
 
-
 });

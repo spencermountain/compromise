@@ -66,12 +66,16 @@ class Noun extends Term {
   //sub-classes
   is_person() {
     //don't overwrite dates, etc
-    if (this.tag === 'Date') {
+    if (this.pos['Date']) {
       return false;
     }
     return is_person(this.strip_apostrophe());
   }
   is_organization() {
+    //don't overwrite urls
+    if (this.pos['Url']) {
+      return false;
+    }
     return is_organization(this.strip_apostrophe(), this.text);
   }
   is_date() {
@@ -79,13 +83,20 @@ class Noun extends Term {
   }
   is_value() {
     //don't overwrite dates, etc
-    if (this.tag === 'Date') {
+    if (this.pos['Date'] || this.pos['HashTag']) {
       return false;
     }
     return is_value(this.strip_apostrophe());
   }
   is_place() {
     return is_place(this.strip_apostrophe());
+  }
+  all_forms() {
+    return {
+      'singular': this.singularize(),
+      'plural': this.pluralize(),
+      'normal': this.normal
+    };
   }
 
 }
@@ -94,5 +105,5 @@ Noun.fn = Noun.prototype;
 
 module.exports = Noun;
 
-// let t = new Noun('NDA');
-// console.log(t.article());
+//let t = new Noun('mouse');
+//console.log(t.all_forms());

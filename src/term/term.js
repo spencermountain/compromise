@@ -28,19 +28,10 @@ class Term {
     //the reasoning behind it's part-of-speech
     this.reason = '';
     //these are orphaned POS that have no methods
-    let types = {
-      Determiner: 'Determiner',
-      Conjunction: 'Conjunction',
-      Preposition: 'Preposition',
-      Possessive: 'Possessive',
-      Expression: 'Expression',
-      Condition: 'Condition'
-    };
     this.pos = {};
-    this.tag = types[tag] || '?';
-    //record them in pos{}
-    if (types[tag]) {
-      this.pos[types[tag]] = true;
+    this.tag = tag || '?';
+    if (tag) {
+      this.pos[tag] = true;
     }
   }
 
@@ -125,6 +116,8 @@ class Term {
     str = str.toLowerCase();
     //strip grammatical punctuation
     str = str.replace(/[,\.!:;\?\(\)^$]/g, '');
+    //hashtags, atmentions
+    str = str.replace(/^[#@]/, '');
     //convert hyphenations to a multiple-word term
     str = str.replace(/([a-z])\-([a-z])/g, '$1 $2');
     // coerce single curly quotes
@@ -142,26 +135,10 @@ class Term {
     return this.normal;
   }
 
-  forms() {
-    if (this.pos['Noun']) {
-      return {
-        'singular': this.singularize(),
-        'plural': this.pluralize()
-      };
-    } else if (this.pos['Verb'] || this.pos['Adjective']) {
-      return this.conjugate();
-    } else if (this.pos['Adverb']) {
-      return {
-        'adjective': this.to_adjective()
-      };
-    }
-    return {};
+  all_forms() {
+    return {}
   }
 
 }
-
-Term.fn = Term.prototype;
-// let t = new Term(`first`);
-// console.log(t.normal);
 
 module.exports = Term;

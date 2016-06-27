@@ -35,6 +35,7 @@ module.exports = [
   'pound',
   'pence',
   'peso',
+  'baht',
   'sterling',
   'rand',
   'rouble',

@@ -21,7 +21,7 @@ const gender = function(normal) {
     return 'Female';
   }
   //male honourifics
-  if (normal.match(/\b(mr|mister|sr|jr)\b/i)) {
+  if (normal.match(/\b(mr|mister|sr|sir|jr)\b/i)) {
     return 'Male';
   }
   //female honourifics

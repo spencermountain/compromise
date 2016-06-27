@@ -5,8 +5,9 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('./package.json'),
 
     watch: {
-      files: ['./src/*.js', './src/**'],
+      files: ['./src/*.js', './src/**', './test/unit_tests/**'],
       tasks: ['run:index']
+    // tasks: ['mochaTest']
     },
 
     run: {

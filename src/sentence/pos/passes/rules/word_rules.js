@@ -21,7 +21,7 @@ module.exports = [
   ['.zes$', 'VB'],
   ['.[icldtgrv]ent$', 'JJ'],
   ['.[rln]ates$', 'VBZ'],
-  ['.[oe]ry$', 'JJ'],
+  ['.[oe]ry$', 'NN'],
   ['[rdntkdhs]ly$', 'RB'],
   ['.[lsrnpb]ian$', 'JJ'],
   ['.[^aeiou]ial$', 'JJ'],
@@ -63,7 +63,7 @@ module.exports = [
   ['.ried$', 'JJ'],
   ['.gone$', 'JJ'],
   ['.made$', 'JJ'],
-  ['.[pdltrkvyns]ing$', 'JJ'],
+  ['.ing$', 'VB'],  //likely to be converted to adjective after lexicon pass
   ['.tions$', 'NN'],
   ['.tures$', 'NN'],
   ['.ous$', 'JJ'],

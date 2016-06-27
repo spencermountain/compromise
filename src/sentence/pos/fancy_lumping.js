@@ -74,11 +74,16 @@ const shouldLumpTwo = function(a, b) {
       result: 'Date',
     },
     {
-      condition: (a.pos.Honourific && b.is_capital()), //'Dr. John
+      condition: (a.pos.Honourific && b.is_capital()), //'Dr. John'
       result: 'Person',
     },
     {
-      condition: (a.pos.Person && b.is_capital()), //'Person, Capital -> Person'
+      condition: (a.pos.Person && b.pos.Possessive), // "john lkjsdf's"
+      result: 'Possessive',
+    },
+    {
+      //"John Abcd" - needs to be careful
+      condition: (a.pos.Person && !a.pos.Pronoun && b.is_capital() && !a.is_acronym() && !b.pos.Verb && !a.pos.Possessive && !a.has_comma()), //'Person, Capital -> Person'
       result: 'Person',
     },
     {
@@ -96,11 +101,11 @@ const shouldLumpTwo = function(a, b) {
     {
       condition: (a.pos.Noun && b.pos.Actor), //Aircraft designer
       result: 'Actor',
-    },
+    }, /*
     {
       condition: (a.pos.Value && b.pos.Noun && !a.pos.Ordinal), //5 books
       result: 'Value',
-    },
+    }, */
     {
       condition: (a.is_capital() && b.pos['Organization'] || b.is_capital() && a.pos['Organization']), //Canada Inc
       result: 'Organization',
@@ -125,7 +130,12 @@ const shouldLumpTwo = function(a, b) {
     {
       condition: (a.pos.Demonym && b.pos.Currency), //canadian dollar, Brazilian pesos
       result: 'Currency',
-    }
+    },
+    { //for verbs in Past/Present Continuous ('is raining')
+      condition: (a.pos.Copula && a.normal.match(/^(am|is|are|was|were)$/)
+                  && b.pos.Verb && b.normal.match(/ing$/)),
+      result: 'Verb',
+    },
   ];
   for(let i = 0; i < lump_rules.length; i++) {
     if (lump_rules[i].condition) {
@@ -146,14 +156,19 @@ const fancy_lumping = function(terms) {
     let tag = shouldLumpTwo(a, b);
     if (tag) {
       let Cl = pos.classMapping[tag] || pos.Term;
+      //this is sneaky
+      if (tag === 'Possessive' && a.pos.Person) {
+        Cl = pos.classMapping.Person;
+      }
       let space = a.whitespace.trailing + b.whitespace.preceding;
-      // console.log(terms[i - 1]);
-      // console.log(terms[i]);
       terms[i] = new Cl(a.text + space + b.text, tag);
       terms[i].reason = 'lumpedtwo(' + terms[i].reason + ')';
       terms[i].whitespace.preceding = a.whitespace.preceding;
       terms[i].whitespace.trailing = b.whitespace.trailing;
       terms[i - 1] = null;
+      if (tag === 'Possessive') {
+        terms[i].pos.Possessive = true;
+      }
       continue;
     }
 

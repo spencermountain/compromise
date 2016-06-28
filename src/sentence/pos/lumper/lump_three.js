@@ -1,12 +1,12 @@
 'use strict';
 const combine = require('./combine').three;
 
-const dont_lump = [
-  // {
-  //   condition: (a, b, c) => (),
-  //   reason: ''
-  // },
-];
+// const dont_lump = [
+// {
+//   condition: (a, b, c) => (),
+//   reason: ''
+// },
+// ];
 
 const do_lump = [
   {

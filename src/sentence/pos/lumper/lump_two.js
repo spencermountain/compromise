@@ -106,6 +106,24 @@ const do_lump = [
     result: 'Noun',
     reason: 'noun-abbreviation'
   },
+  {
+    //both dates
+    condition: (a, b) => (a.pos.Date && b.pos.Date),
+    result: 'Date',
+    reason: 'two-dates'
+  },
+  {
+    //both values
+    condition: (a, b) => (a.pos.Value && b.pos.Value),
+    result: 'Value',
+    reason: 'two-values'
+  },
+  {
+    //both places
+    condition: (a, b) => (a.pos.Place && b.pos.Place),
+    result: 'Place',
+    reason: 'two-places'
+  },
 ];
 
 //exceptions or guards to the above rules, more or less

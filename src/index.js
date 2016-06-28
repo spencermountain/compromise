@@ -107,7 +107,7 @@ if (typeof define === 'function' && define.amd) {
 
 // console.log(nlp.sentence('he is currently doing everything he can to stop the problem').to_past().text());
 // console.log(nlp.sentence('top up').terms);
-// console.log(nlp.sentence('18 oct 5am').terms);
+console.log(nlp.sentence('Beijing China grows each year').terms);
 
 
 // let lexicon = nlp.lexicon();

@@ -40,7 +40,6 @@ const ambiguous_dates = function(terms) {
     let t = terms[i];
     if (tough_dates[t.normal] || maybe_year(t)) { //'march' or '2015'
       //if nearby another date or value
-      // console.log(terms[i + 1].pos.Verb);
       if (terms[i + 1] && (terms[i + 1].pos['Value'] || terms[i + 1].pos['Date'])) {
         terms[i] = assign(t, 'Date', 'date_signal');
         continue;

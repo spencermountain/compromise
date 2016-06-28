@@ -23,15 +23,21 @@ const do_lump = [
   },
   {
     //5th of June
-    condition: (a, b, c) => (a.pos.Value && b.pos.Preposition && c.pos.Date),
+    condition: (a, b, c) => (a.pos.Value && (b.pos.Conjunction || b.pos.Preposition) && c.pos.Date),
     result: 'Date',
     reason: 'Value-Prep-Date'
   },
   {
     //June 5th to 7th
-    condition: (a, b, c) => (a.pos.Date && b.pos.Preposition && c.pos.Value),
+    condition: (a, b, c) => (a.pos.Date && (b.pos.Conjunction || b.pos.Preposition) && c.pos.Value),
     result: 'Date',
     reason: 'Date-Preposition-Value'
+  },
+  {
+    //3hrs after 5pm
+    condition: (a, b, c) => (a.pos.Date && (c.pos.Date || c.pos.Ordinal) && (b.pos.Preposition || b.pos.Determiner || b.pos.Conjunction || b.pos.Adjective)),
+    result: 'Date',
+    reason: 'Date-Preposition-Date'
   },
   {
     //President of Mexico
@@ -51,12 +57,7 @@ const do_lump = [
     result: 'FutureTense',
     reason: 'will-have-Verb'
   },
-  {
-    //3hrs after 5pm
-    condition: (a, b, c) => (a.pos.Date && (c.pos.Date || c.pos.Ordinal) && (b.pos.Preposition || b.pos.Determiner || b.pos.Conjunction || b.pos.Adjective)),
-    result: 'Date',
-    reason: 'Date-Preposition-Date'
-  },
+
   {
     //two hundred and three
     condition: (a, b, c) => (a.pos.Value && b.normal === 'and' && c.pos.Value),
@@ -81,7 +82,8 @@ const lump_three = function(terms) {
       if (do_lump[o].condition(a, b, c)) {
         let new_tag = do_lump[o].result;
         let reason = do_lump[o].reason;
-        terms = combine(terms, o, new_tag, reason);
+        terms = combine(terms, i, new_tag, reason);
+        break;
       }
     }
   }

@@ -60,7 +60,7 @@ const tagger = function(s, options) {
   s.terms = web_text_pass(s.terms);
   //sentence-level rules
   //(repeat these steps a couple times, to wiggle-out the grammar)
-  for(let i = 0; i < 2; i++) {
+  for(let i = 0; i < 3; i++) {
     s.terms = grammar_pass(s);
     s.terms = specific_noun(s.terms);
     s.terms = ambiguous_dates(s.terms);

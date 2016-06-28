@@ -125,10 +125,16 @@ const do_lump = [
     reason: 'two-places'
   },
   {
-    //both places
+    //both places (this is the most aggressive rule of them all)
     condition: (a, b) => (a.pos.Noun && b.pos.Noun),
     result: 'Noun',
     reason: 'two-nouns'
+  },
+  {
+    //'have not'
+    condition: (a, b) => ((a.pos.Infinitive || a.pos.Copula || a.pos.PresentTense) && b.normal === 'not'),
+    result: 'Verb',
+    reason: 'verb-not'
   },
 ];
 
@@ -214,6 +220,8 @@ const lump_two = function(terms) {
       if (do_lump[o].condition(a, b)) {
         let new_tag = do_lump[o].result;
         let reason = do_lump[o].reason;
+        // console.log(a.normal);
+        // console.log(a.pos);
         terms = combine(terms, i, new_tag, 'chunked ' + reason);
         break;
       }

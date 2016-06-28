@@ -64,10 +64,10 @@ module.exports = [
     'after': ['[Adverb]', '[Adverb]', '[Adverb]'],
   },
   //do not
-  {
-    'before': ['[Verb]', 'not'],
-    'after': ['[Verb]', '[Verb]'],
-  },
+  // {
+  //   'before': ['[Verb]', 'not'],
+  //   'after': ['[Verb]', '[Verb]'],
+  // },
   // {
   //   'before': ['[Noun]', '[Conjunction]', '[Noun]'],
   //   'after': ['[Noun]', '[Noun]', '[Noun]'],

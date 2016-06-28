@@ -3,7 +3,7 @@ const pos = require('./parts_of_speech');
 
 //set the part-of-speech of a particular term
 const assign = function (t, tag, reason) {
-  //check if redundant
+  //check if redundant, first
   if (t.pos[tag]) {
     return t;
   }

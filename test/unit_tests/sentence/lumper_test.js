@@ -19,12 +19,17 @@ describe('lumper test', function() {
     ['John Baseball', ['Person']],
     ['John sr.', ['Person']],
     ['Dr. John', ['Person']],
-    ['she said "dutch oven"', ['Person', 'PastTense', 'Noun']],
-    ['she said "huge dutch oven"', ['Person', 'PastTense', 'Noun']],
+    ['she said "dutch oven"', ['Person', 'PastTense', 'Quotation']],
+    ['she said "huge dutch oven"', ['Person', 'PastTense', 'Quotation']],
     ['the Captain of Jamaica', ['Determiner', 'Noun']],
     ['joe will have walked', ['Person', 'Verb']],
     ['joe had walked', ['Person', 'Verb']],
-    ['joe had 5 books', ['Person', 'PastTense', 'Value', 'Noun']],
+    ['joe had 5 books', ['Person', 'PastTense', 'Value']],
+  // ['joe does walk', ['Person', 'PresentTense']],
+  // ['joe doesn\'t walk', ['Person', 'PresentTense']],
+  // ['joe does not walk', ['Person', 'PresentTense']],
+  // ['joe does not walk quickly', ['Person', 'PresentTense', 'Adverb']],
+  // ['joe does 5 books', ['Person', 'Verb', 'Value']],
   ];
   tests.forEach(function(a) {
     let s = nlp.sentence(a[0]);

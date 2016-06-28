@@ -1,13 +1,12 @@
 //part-of-speech tagging
 'use strict';
 
-const lumper = require('./lumper');
-const fancy_lumping = require('./fancy_lumping');
+const lump_two = require('./lumper/lump_two');
+const lump_three = require('./lumper/lump_three');
 const pos = require('./parts_of_speech');
 const assign = require('./assign');
 
 const grammar_pass = require('./passes/grammar_pass');
-const phrasal_verbs = require('./passes/phrasal_verbs');
 const interjection_fixes = require('./passes/interjection_fixes');
 const lexicon_pass = require('./passes/lexicon_pass');
 const capital_signals = require('./passes/capital_signals');
@@ -61,15 +60,14 @@ const tagger = function(s, options) {
   s.terms = web_text_pass(s.terms);
   //sentence-level rules
   //(repeat these steps a couple times, to wiggle-out the grammar)
-  for(let i = 0; i < 2; i++) {
+  for(let i = 0; i < 3; i++) {
     s.terms = grammar_pass(s);
     s.terms = specific_noun(s.terms);
     s.terms = ambiguous_dates(s.terms);
-    s.terms = lumper(s.terms);
-    s.terms = noun_fallback(s.terms);
-    s.terms = phrasal_verbs(s.terms);
     s.terms = possessive_pass(s.terms);
-    s.terms = fancy_lumping(s.terms);
+    s.terms = lump_two(s.terms);
+    s.terms = noun_fallback(s.terms);
+    s.terms = lump_three(s.terms);
   }
   s.terms = conditional_pass(s.terms);
   s.terms = quotation_pass(s.terms);

@@ -6,15 +6,18 @@ const assign = require('../assign');
 const punct_rules = [
   { //2:54pm
     reg: new RegExp('^[12]?[0-9]\:[0-9]{2}( am| pm)?$', 'i'),
-    pos: 'Date'
+    pos: 'Date',
+    reason: 'time_reg'
   },
   { //1999/12/25
     reg: new RegExp('^[0-9]{1,4}[-/][0-9]{1,2}[-/][0-9]{1,4}$', 'i'),
-    pos: 'Date'
+    pos: 'Date',
+    reason: 'numeric_date'
   },
   { //3:32
     reg: new RegExp('^[0-9]{1,2}:[0-9]{2}(:[0-9]{2})?', 'i'),
-    pos: 'Date'
+    pos: 'Date',
+    reason: 'time'
   },
 ];
 
@@ -36,20 +39,19 @@ const regex_pass = function(terms) {
     //regexes that involve punctuation
     for(let o = 0; o < punct_rules.length; o++) {
       if (text.match(punct_rules[o].reg)) {
-        terms[i] = assign(terms[i], punct_rules[o].pos, 'rules_pass_' + o + punct_rules[o].reg);
+        terms[i] = assign(terms[i], punct_rules[o].pos, punct_rules[o].rules);
         return;
       }
     }
     //bigger list of regexes on normal
     for (let o = 0; o < word_rules.length; o++) {
       if (normal.match(word_rules[o].reg)) {
-        terms[i] = assign(terms[i], word_rules[o].pos, 'rules_pass_' + o+ word_rules[o].reg);
+        let reason = 'regex #' + o + ' ' + word_rules[o].pos;
+        terms[i] = assign(terms[i], word_rules[o].pos, reason);
         return;
       }
     }
   });
-
-
   return terms;
 };
 

@@ -106,7 +106,14 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.sentence('he is currently doing everything he can to stop the problem').to_past().text());
-// console.log(nlp.sentence('you John').terms);
+// console.log(nlp.sentence('joe does walk').terms);
+// let lexicon = nlp.lexicon({
+//   'paris': 'Person',
+//   'donky kong': 'City',
+// });
+// console.log(nlp.sentence('Paris is amazing', {
+//   lexicon: lexicon
+// }).terms);
 
 
 // let lexicon = nlp.lexicon();

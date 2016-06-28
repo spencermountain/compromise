@@ -142,6 +142,8 @@ let cities = [
   'poznań',
   'calgary',
   'ottawa',
+  'montreal',
+  'winnipeg',
   'sydney',
   'perth',
   'homs',

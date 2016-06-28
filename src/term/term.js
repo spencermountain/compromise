@@ -26,7 +26,7 @@ class Term {
     //set .normal
     this.rebuild();
     //the reasoning behind it's part-of-speech
-    this.reason = '';
+    this.reasoning = [];
     //these are orphaned POS that have no methods
     this.pos = {};
     this.tag = tag || '?';
@@ -136,7 +136,7 @@ class Term {
   }
 
   all_forms() {
-    return {}
+    return {};
   }
 
 }

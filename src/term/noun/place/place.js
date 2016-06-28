@@ -12,7 +12,7 @@ const Place = class Place extends Noun {
     super(str);
     this.tag = tag;
     this.pos['Place'] = true;
-
+    this.pos[tag] = true;
     this.title = null;
     this.city = null;
     this.region = null; //'2nd-tier' (state/province/county/whatever)

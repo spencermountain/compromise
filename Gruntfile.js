@@ -20,9 +20,6 @@ module.exports = function (grunt) {
       build_windows: {
         exec: 'node_modules\\.bin\\browserify.cmd src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] -o builds/nlp_compromise.js '
       },
-      coverage: {
-        exec: ''
-      },
       demo: {
         exec: './node_modules/.bin/http-server demo'
       },
@@ -81,7 +78,7 @@ module.exports = function (grunt) {
         options: {
           reportFormats: ['html'],
           quiet: true,
-          coverageFolder: './test/coverage'
+          coverageFolder: './coverage'
         }
       }
     },

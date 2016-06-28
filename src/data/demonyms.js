@@ -10,6 +10,7 @@ module.exports = [
   'aussie',
   'austrian',
   'bangladeshi',
+  'basque', // of Basque Country
   'belarusian',
   'belgian',
   'bolivian',

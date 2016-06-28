@@ -38,6 +38,7 @@ const grammar_rules_pass = function(s) {
           if (rule.after[c]) {
             let newPos = rule.after[c].match(/^\[(.*?)\]$/)[1];
             s.terms[i + c] = assign(s.terms[i + c], newPos, 'grammar_rule  (' + rule.before.join(',') + ')');
+            break;
           }
         }
         break;

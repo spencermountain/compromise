@@ -64,9 +64,9 @@ const tagger = function(s, options) {
     s.terms = grammar_pass(s);
     s.terms = specific_noun(s.terms);
     s.terms = ambiguous_dates(s.terms);
+    s.terms = possessive_pass(s.terms);
     s.terms = lump_two(s.terms);
     s.terms = noun_fallback(s.terms);
-    s.terms = possessive_pass(s.terms);
     s.terms = lump_three(s.terms);
   }
   s.terms = conditional_pass(s.terms);

@@ -3,6 +3,10 @@ const pos = require('./parts_of_speech');
 
 //set the part-of-speech of a particular term
 const assign = function (t, tag, reason) {
+  //check if redundant
+  if (t.pos[tag]) {
+    return t;
+  }
   let P = pos.classMapping[tag] || pos.Term;
   let expansion = t.expansion;
   let whitespace = t.whitespace;

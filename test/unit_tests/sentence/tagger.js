@@ -26,8 +26,8 @@ describe('basic pos tag', function() {
     ['Spencer Kelly is in Canada', ['Person', 'Copula', 'Preposition', 'Place']],
     ['He is in Canada', ['Pronoun', 'Copula', 'Preposition', 'Place']],
     ['5 red roses', ['Value', 'Adjective', 'Noun']],
-    ['3 trains', ['Value', 'Noun']],
-    ['5 buses', ['Value', 'Noun']],
+    // ['3 trains', ['Value', 'Noun']],
+    // ['5 buses', ['Value', 'Noun']],
     //fancier stuff
     ['walk the walk', ['Verb', 'Determiner', 'Noun']],
     ['Peter the man', ['Person', 'Determiner', 'Noun']],
@@ -61,7 +61,7 @@ describe('basic pos tag', function() {
     ['John, John', ['Person', 'Person']],
     ['John, you', ['Person', 'Pronoun']],
     ['John you', ['Person', 'Pronoun']],
-    ['you John you', ['Pronoun','Person', 'Pronoun']],
+    ['you John you', ['Pronoun', 'Person', 'Pronoun']],
   ];
   tests.forEach(function(a) {
     it(a[0], function(done) {
@@ -74,7 +74,11 @@ describe('basic pos tag', function() {
 });
 
 describe('custom lexicon', function() {
-  let lex = nlp.lexicon({'apple': 'Person', 'jackie': 'Adverb', 'amazing': 'Noun'});
+  let lex = nlp.lexicon({
+    'apple': 'Person',
+    'jackie': 'Adverb',
+    'amazing': 'Noun'
+  });
   const options = {
     lexicon: lex
   };

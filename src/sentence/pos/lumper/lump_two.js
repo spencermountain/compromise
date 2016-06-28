@@ -29,7 +29,7 @@ const do_lump = [
   },
   {
     //"John Abcd" - needs to be careful
-    condition: (a, b) => (a.pos.Person && !a.pos.Pronoun && b.is_capital() && !a.is_acronym() && !b.pos.Verb && !a.pos.Possessive && !a.has_comma()), //'Person, Capital -> Person'
+    condition: (a, b) => (a.pos.Person && !a.pos.Pronoun && !a.pos.Possessive && !a.has_comma() && b.is_capital() && !a.is_acronym() && !b.pos.Verb), //'Person, Capital -> Person'
     result: 'Person',
     reason: 'person-titleCase'
   },
@@ -66,7 +66,7 @@ const do_lump = [
   {
     //two-word quote
     condition: (a, b) => (a.text.match(/^["']/) && b.text.match(/["']$/)),
-    result: 'Noun',
+    result: 'Quotation',
     reason: 'two-word-quote'
   },
   {
@@ -124,6 +124,12 @@ const do_lump = [
     result: 'Place',
     reason: 'two-places'
   },
+  {
+    //both places
+    condition: (a, b) => (a.pos.Noun && b.pos.Noun),
+    result: 'Noun',
+    reason: 'two-nouns'
+  },
 ];
 
 //exceptions or guards to the above rules, more or less
@@ -156,6 +162,26 @@ const dont_lump = [
   { //"Canada Cuba"
     condition: (a, b) => (a.pos['Country'] && b.pos['Country']),
     reason: 'two countries',
+  },
+  { //"John you"
+    condition: (a, b) => (a.pos['Person'] && b.pos['Pronoun']),
+    reason: 'person-pronoun',
+  },
+  { //url singleton
+    condition: (a, b) => (a.pos['Url'] || b.pos['Url']),
+    reason: 'url-no-lump',
+  },
+  { //Hashtag singleton
+    condition: (a, b) => (a.pos['Hashtag'] || b.pos['Hashtag']),
+    reason: 'hashtag-no-lump',
+  },
+  { //Email singleton
+    condition: (a, b) => (a.pos['Email'] || b.pos['Email']),
+    reason: 'email-no-lump',
+  },
+  { //Quotation singleton
+    condition: (a, b) => (a.pos['Quotation'] || b.pos['Quotation']),
+    reason: 'quotation-no-lump',
   },
 ];
 

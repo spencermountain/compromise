@@ -31,7 +31,7 @@ test('sentence tokenize:', function(t) {
     ['Hi there!!\nEveryone wins\n\n', 2],
   ].forEach(function (a) {
     var num = nlp.text(a[0]).sentences.length;
-    var msg = '"' + a[0] + '" -> ' + a[1];
+    var msg = '"' + a[0] + '" ->  ' + num;
     t.equal(num, a[1], msg);
   });
   t.end();

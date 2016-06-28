@@ -1,9 +1,11 @@
-'use strict';
-let Noun = require('../../../src/term/noun/noun.js');
+var test = require('tape');
+var nlp = require('./lib/nlp');
+var str_test = require('./lib/fns').str_test;
 
-describe('noun inflection', function() {
-  it('isplural', function(done) {
-    let tests = [
+test('==Plurals==', function(T) {
+
+  T.test('is_plural():', function(t) {
+    [
       ['octopus', false],
       ['tree', false],
       ['trees', true],
@@ -21,16 +23,91 @@ describe('noun inflection', function() {
       ['toronto\'s', false],
       // ['simpsons\'', false],
       ['she\'s', false],
-    ];
-    tests.forEach(function(a) {
-      let n = new Noun(a[0]);
-      n.is_plural().should.equal(a[1]);
+    ].forEach(function (a) {
+      var str = nlp.noun(a[0]).is_plural();
+      str_test(str, a[0], a[1], t);
     });
-    done();
+    t.end();
   });
 
-  it('pluralizes', function(done) {
-    let tests = [
+  T.test('singularize:', function(t) {
+    [
+      // ["Joneses", "Jones"],
+      ['children', 'child'],
+      ['women', 'woman'],
+      ['men', 'man'],
+      ['people', 'person'],
+      ['geese', 'goose'],
+      ['mice', 'mouse'],
+      ['barracks', 'barracks'],
+      ['deer', 'deer'],
+      ['nuclei', 'nucleus'],
+      ['syllabi', 'syllabus'],
+      ['fungi', 'fungus'],
+      ['cacti', 'cactus'],
+      ['theses', 'thesis'],
+      ['crises', 'crisis'],
+      ['phenomena', 'phenomenon'],
+      ['embryos', 'embryo'],
+      ['frescos', 'fresco'],
+      ['ghettos', 'ghetto'],
+      ['halos', 'halo'],
+      ['mangos', 'mango'],
+      ['mementos', 'memento'],
+      ['mottos', 'motto'],
+      ['tornados', 'tornado'],
+      ['tuxedos', 'tuxedo'],
+      ['volcanos', 'volcano'],
+      ['crises', 'crisis'],
+      ['analyses', 'analysis'],
+      ['aircraft', 'aircraft'],
+      ['bass', 'bass'],
+      ['bison', 'bison'],
+      ['fish', 'fish'],
+      ['fowl', 'fowl'],
+      ['kilos', 'kilo'],
+      ['kimonos', 'kimono'],
+      ['logos', 'logo'],
+      ['memos', 'memo'],
+      ['ponchos', 'poncho'],
+      ['photos', 'photo'],
+      ['pimentos', 'pimento'],
+      ['pros', 'pro'],
+      ['sombreros', 'sombrero'],
+      ['tacos', 'taco'],
+      ['memos', 'memo'],
+      ['torsos', 'torso'],
+      ['xylophones', 'xylophone'],
+      ['quintuplets', 'quintuplet'],
+      ['worrywarts', 'worrywart'],
+      ['nerds', 'nerd'],
+      ['lollipops', 'lollipop'],
+      ['eyebrows', 'eyebrow'],
+      ['mayors of chicago', 'mayor of chicago'],
+      //test that sungular.singularize()==singular..
+      ['mango', 'mango'],
+      ['memento', 'memento'],
+      ['motto', 'motto'],
+      ['tornado', 'tornado'],
+      ['person', 'person'],
+      ['goose', 'goose'],
+      ['mouse', 'mouse'],
+      ['calves', 'calf'],
+      ['olives', 'olive'],
+      ['loaves', 'loaf'],
+      ['oafs', 'oaf'],
+      ['wives', 'wife'],
+      ['roofs', 'roof'],
+      ['hooves', 'hoof']
+    ].forEach(function (a) {
+      var str = nlp.noun(a[0]).singularize();
+      str_test(str, a[0], a[1], t);
+    });
+    t.end();
+  });
+
+  T.test('pluralize:', function(t) {
+    [
       ['snake', 'snakes'],
       ['ski', 'skis'],
       // ["Barrymore", "Barrymores"],
@@ -107,89 +184,10 @@ describe('noun inflection', function() {
       ['avocados', 'avocados'],
       ['studios', 'studios'],
       ['zoos', 'zoos'],
-    ];
-    tests.forEach(function(a) {
-      let n = new Noun(a[0]);
-      n.pluralize().should.equal(a[1]);
+    ].forEach(function (a) {
+      var str = nlp.noun(a[0]).pluralize();
+      str_test(str, a[0], a[1], t);
     });
-    done();
+    t.end();
   });
-
-  it('singularizes', function(done) {
-    let tests = [
-      // ["Joneses", "Jones"],
-      ['children', 'child'],
-      ['women', 'woman'],
-      ['men', 'man'],
-      ['people', 'person'],
-      ['geese', 'goose'],
-      ['mice', 'mouse'],
-      ['barracks', 'barracks'],
-      ['deer', 'deer'],
-      ['nuclei', 'nucleus'],
-      ['syllabi', 'syllabus'],
-      ['fungi', 'fungus'],
-      ['cacti', 'cactus'],
-      ['theses', 'thesis'],
-      ['crises', 'crisis'],
-      ['phenomena', 'phenomenon'],
-      ['embryos', 'embryo'],
-      ['frescos', 'fresco'],
-      ['ghettos', 'ghetto'],
-      ['halos', 'halo'],
-      ['mangos', 'mango'],
-      ['mementos', 'memento'],
-      ['mottos', 'motto'],
-      ['tornados', 'tornado'],
-      ['tuxedos', 'tuxedo'],
-      ['volcanos', 'volcano'],
-      ['crises', 'crisis'],
-      ['analyses', 'analysis'],
-      ['aircraft', 'aircraft'],
-      ['bass', 'bass'],
-      ['bison', 'bison'],
-      ['fish', 'fish'],
-      ['fowl', 'fowl'],
-      ['kilos', 'kilo'],
-      ['kimonos', 'kimono'],
-      ['logos', 'logo'],
-      ['memos', 'memo'],
-      ['ponchos', 'poncho'],
-      ['photos', 'photo'],
-      ['pimentos', 'pimento'],
-      ['pros', 'pro'],
-      ['sombreros', 'sombrero'],
-      ['tacos', 'taco'],
-      ['memos', 'memo'],
-      ['torsos', 'torso'],
-      ['xylophones', 'xylophone'],
-      ['quintuplets', 'quintuplet'],
-      ['worrywarts', 'worrywart'],
-      ['nerds', 'nerd'],
-      ['lollipops', 'lollipop'],
-      ['eyebrows', 'eyebrow'],
-      ['mayors of chicago', 'mayor of chicago'],
-      //test that sungular.singularize()==singular..
-      ['mango', 'mango'],
-      ['memento', 'memento'],
-      ['motto', 'motto'],
-      ['tornado', 'tornado'],
-      ['person', 'person'],
-      ['goose', 'goose'],
-      ['mouse', 'mouse'],
-      ['calves', 'calf'],
-      ['olives', 'olive'],
-      ['loaves', 'loaf'],
-      ['oafs', 'oaf'],
-      ['wives', 'wife'],
-      ['roofs', 'roof'],
-      ['hooves', 'hoof']
-    ];
-    tests.forEach(function(a) {
-      let n = new Noun(a[0]);
-      n.singularize().should.equal(a[1]);
-    });
-    done();
-  });
-
 });

@@ -1,25 +1,26 @@
-'use strict';
-let Person = require('../../../src/term/noun/person/person.js');
+var test = require('tape');
+var nlp = require('./lib/nlp');
+var str_test = require('./lib/fns').str_test;
 
-describe('parse name', function() {
-  it('gets honourific', function(done) {
-    let tests = [
+test('==Person==', function(T) {
+
+  T.test('honourific:', function(t) {
+    [
       ['John Smith', null],
       ['dr. John Smith', 'dr'],
       ['John Smith jr.', 'jr'],
       ['John Jacob Smith', null],
       ['Jani K. Smith', null],
       ['asdfefs', null]
-    ];
-    tests.forEach(function(a) {
-      let n = new Person(a[0]);
-      (a[1] === n.honourific).should.equal(true);
+    ].forEach(function (a) {
+      var str = nlp.person(a[0]).honourific;
+      str_test(str, a[0], a[1], t);
     });
-    done();
+    t.end();
   });
 
-  it('gets firstname', function(done) {
-    let tests = [
+  T.test('firstName:', function(t) {
+    [
       ['John Smith', 'John'],
       ['dr. John Smith', 'John'],
       ['Ann-Marie Smith-O\'Brien jr.', 'Ann-Marie'],
@@ -27,34 +28,29 @@ describe('parse name', function() {
       ['Jani K. Smith', 'Jani'],
       ['Ann-Marie', 'Ann-Marie'],
       ['asdfefs', null]
-    ];
-    tests.forEach(function(a) {
-      let n = new Person(a[0]);
-      (a[1] === n.firstName).should.equal(true);
+    ].forEach(function (a) {
+      var str = nlp.person(a[0]).firstName;
+      str_test(str, a[0], a[1], t);
     });
-    done();
+    t.end();
   });
 
-  it('gets lastname', function(done) {
-    let tests = [
+  T.test('lastName:', function(t) {
+    [
       ['John Smith', 'Smith'],
       ['dr. John Smith', 'Smith'],
       ['John Smith jr.', 'Smith'],
       ['John Jacob mcdonald-williams', 'McDonald-Williams'],
       ['Jani-Lee K. o\'brien-macneil', 'O\'Brien-MacNeil'],
-    ];
-    tests.forEach(function(a) {
-      let n = new Person(a[0]);
-      (a[1] === n.lastName).should.equal(true);
+    ].forEach(function (a) {
+      var str = nlp.person(a[0]).lastName;
+      str_test(str, a[0], a[1], t);
     });
-    done();
+    t.end();
   });
 
-});
-
-describe('person gender', function() {
-  it('gets gender', function(done) {
-    let tests = [
+  T.test('gender():', function(t) {
+    [
       ['John Smith', 'Male'],
       ['dr. John Smith', 'Male'],
       ['Jane Doe', 'Female'],
@@ -66,11 +62,11 @@ describe('person gender', function() {
       ['Jani K. Smith', 'Female'],
       ['Jani', null],
       ['asdfefs', null]
-    ];
-    tests.forEach(function(a) {
-      let n = new Person(a[0]);
-      (a[1] === n.gender()).should.equal(true);
+    ].forEach(function (a) {
+      var str = nlp.person(a[0]).gender();
+      str_test(str, a[0], a[1], t);
     });
-    done();
+    t.end();
   });
+
 });

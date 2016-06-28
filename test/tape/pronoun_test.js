@@ -1,10 +1,11 @@
-'use strict';
-let Noun = require('../../../src/term/noun/noun.js');
+var test = require('tape');
+var nlp = require('./lib/nlp');
+var str_test = require('./lib/fns').str_test;
 
-describe('pronoun', function() {
-  let tests = [
+test('pronoun:', function(t) {
+  [
     ['John', 'he'],
-    // ['John Smith', 'he'],
+    ['John Smith', 'he'],
     ['Jane', 'she'],
     ['turtle', 'it'],
     ['turtles', 'they'],
@@ -18,12 +19,9 @@ describe('pronoun', function() {
     ['Mrs. Tanya Danza', 'she'],
     ['John G. Fishermore Institute', 'it'],
     ['John Fisher & sons', 'it'],
-  ];
-  tests.forEach(function(a) {
-    it(a[0] + ' gets pronoun', function(done) {
-      let n = new Noun(a[0]);
-      n.pronoun().should.equal(a[1]);
-      done();
-    });
+  ].forEach(function (a) {
+    var str = nlp.noun(a[0]).pronoun();
+    str_test(str, a[0], a[1], t);
   });
+  t.end();
 });

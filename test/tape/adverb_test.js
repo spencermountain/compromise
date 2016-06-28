@@ -1,12 +1,11 @@
+var test = require('tape');
+var nlp = require('./lib/nlp');
+var str_test = require('./lib/fns').str_test;
 
-'use strict';
-let nlp = require('../../../src/index.js');
+test('==Adverb==', function(T) {
 
-describe('to_adjective', function() {
-
-  //americanize it
-  it('to_adjective', function(done) {
-    let tests = [
+  T.test('to_adjective:', function(t) {
+    [
       ['quickly', 'quick'],
       ['garishly', 'garish'],
       ['tediously', 'tedious'],
@@ -59,12 +58,10 @@ describe('to_adjective', function() {
       ['namely', 'name'],
       ['formidably', 'formidable'],
       ['vertically', 'vertical']
-    ];
-    tests.forEach(function(a) {
-      let adv = nlp.adverb(a[0]);
-      adv.to_adjective().should.equal(a[1]);
+    ].forEach(function (a) {
+      var str = nlp.adverb(a[0]).to_adjective();
+      str_test(str, a[0], a[1], t);
     });
-    done();
+    t.end();
   });
-
 });

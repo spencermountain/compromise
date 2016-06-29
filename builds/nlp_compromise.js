@@ -7870,6 +7870,8 @@ var Term = function () {
   return Term;
 }();
 
+Term.fn = Term.prototype;
+
 module.exports = Term;
 
 },{"../match/match_term":27,"../match/syntax_parse":29,"./implied":71,"./is_acronym":72}],102:[function(require,module,exports){

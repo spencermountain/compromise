@@ -140,5 +140,6 @@ class Term {
   }
 
 }
+Term.fn = Term.prototype;
 
 module.exports = Term;

@@ -30,7 +30,7 @@ function NLP() {
     //apply each plugin to the correct prototypes
     Object.keys(obj).forEach(function(k) {
       Object.keys(obj[k]).forEach(function(method) {
-        models[k].fn[method] = obj[k][method];
+        models[k].prototype[method] = obj[k][method];
       });
     });
   };

@@ -1,9 +1,9 @@
-'use strict';
-let nlp = require('../../../src/index.js');
+var test = require('tape');
+var nlp = require('./lib/nlp');
+var str_test = require('./lib/fns').str_test;
 
-describe('Sentence Change tense', function() {
-
-  let tests = [
+test('sentence-change-tense:', function(t) {
+  [
     ['john walks quickly', 'john walked quickly', 'john will walk quickly'],
     ['he is quick', 'he was quick', 'he will be quick'],
     ['the stool falls over', 'the stool fell over', 'the stool will fall over'],
@@ -15,20 +15,21 @@ describe('Sentence Change tense', function() {
     //infinitives
     ['he does what he can to stop', 'he did what he could to stop', 'he will do what he can to stop'],
     ['goes to sleep', 'went to sleep', 'will go to sleep'],
-  //grammatical-number
-  // ['we do what we can to stop', 'we did what we could to stop', 'we will do what we can to stop'],
-  ];
-  tests.forEach(function(a) {
-    it(a[0], function(done) {
-      let s = nlp.text(a[0]);
-      s.to_past();
-      s.text().should.equal(a[1]);
-      s.to_future();
-      s.text().should.equal(a[2]);
-      s.to_present();
-      s.text().should.equal(a[0]);
-      done();
-    });
-  });
+    //grammatical-number
+    // ['we do what we can to stop', 'we did what we could to stop', 'we will do what we can to stop'],
 
+  ].forEach(function (a) {
+    var s = nlp.text(a[0]);
+
+    s.to_past();
+    str_test(s.text(), a[0], a[1], t);
+
+    s.to_future();
+    str_test(s.text(), a[0], a[2], t);
+
+    s.to_present();
+    str_test(s.text(), a[0], a[0], t);
+
+  });
+  t.end();
 });

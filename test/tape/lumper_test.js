@@ -1,21 +1,9 @@
-'use strict';
-let nlp = require('../../../src/index.js');
+var test = require('tape');
+var nlp = require('./lib/nlp');
+var pos_test = require('./lib/fns').pos_test;
 
-const tagMatch = function(terms, tags) {
-  if (terms.length !== tags.length) {
-    return false;
-  }
-  for(let i = 0; i < terms.length; i++) {
-    if (!terms[i].pos[tags[i]]) {
-      return false;
-    }
-  }
-  return true;
-};
-
-describe('lumper test', function() {
-
-  let tests = [
+test('lumper test:', function(t) {
+  [
     ['John Baseball', ['Person']],
     ['John sr.', ['Person']],
     ['Dr. John', ['Person']],
@@ -30,17 +18,9 @@ describe('lumper test', function() {
   // ['joe does not walk', ['Person', 'PresentTense']],
   // ['joe does not walk quickly', ['Person', 'PresentTense', 'Adverb']],
   // ['joe does 5 books', ['Person', 'Verb', 'Value']],
-  ];
-  tests.forEach(function(a) {
-    let s = nlp.sentence(a[0]);
-    it('fancy lumps: ' + a[0], function(done) {
-      // let tags = n.tags()[0];
-      // (a[1]).should.deepEqual(tags);
-      (tagMatch(s.terms, a[1])).should.equal(true);
-
-      done();
-    });
+  ].forEach(function (a) {
+    var terms = nlp.sentence(a[0]).terms;
+    pos_test(terms, a[1], t);
   });
-
-
+  t.end();
 });

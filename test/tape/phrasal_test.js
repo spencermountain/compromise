@@ -1,10 +1,10 @@
-'use strict';
-let nlp = require('../../../src/index.js');
+var test = require('tape');
+var nlp = require('./lib/nlp');
+var terms_test = require('./lib/fns').terms_test;
 
 
-
-describe('phrasal_tests: ', function() {
-  let tests = [
+test('phrasal-verbs:', function(t) {
+  [
     [`he is really good`, ['he', 'is', 'really', 'good']],
     [`he is upset about it`, ['he', 'is', 'upset', 'about', 'it']],
     [`he will mess about with it`, ['he', 'will mess about', 'with', 'it']],
@@ -15,15 +15,9 @@ describe('phrasal_tests: ', function() {
 
     [`frighten back`, ['frighten', 'back']],
     [`frighten away`, ['frighten away']],
-  ];
-  tests.forEach(function(a) {
-    it(a[0], function(done) {
-      let s = nlp.sentence(a[0]);
-      for(let i = 0; i < s.terms.length; i++) {
-        (s.terms[i].normal).should.equal(a[1][i]);
-      }
-      done();
-    });
+  ].forEach(function (a) {
+    var terms = nlp.sentence(a[0]).terms;
+    terms_test(terms, a[1], t);
   });
-
+  t.end();
 });

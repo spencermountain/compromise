@@ -10,8 +10,7 @@
     "url": "git://github.com/nlp-compromise/nlp_compromise.git"
   },
   "scripts": {
-    "run": "grunt",
-    "test": "grunt test",
+    "test": "./node_modules/tape/bin/tape ./test/tape/**/*_test.js | tap-spec",
     "watch": "grunt watch",
     "coverage": "grunt coverage",
     "build": "grunt build",

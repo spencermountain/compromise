@@ -39,6 +39,7 @@
     "http-server": "^0.9.0",
     "istanbul": "^0.4.3",
     "nlp-corpus": "latest",
+    "tap-spec": "^4.1.1",
     "tape": "^4.6.0"
   },
   "license": "MIT"

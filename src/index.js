@@ -124,3 +124,4 @@ if (typeof define === 'function' && define.amd) {
 //   }
 // });
 // console.log(s.terms);
+// console.log(nlp.sentence('They both live in Toronto. Tony Hawk is cool.').terms);

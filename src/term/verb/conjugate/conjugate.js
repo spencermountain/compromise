@@ -106,3 +106,5 @@ const conjugate = function(w) {
   return fufill(obj, prefix);
 };
 module.exports = conjugate;
+
+// console.log(conjugate('speaking'));

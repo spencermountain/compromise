@@ -35,7 +35,7 @@ test('==Value==', function(T) {
     [
       ['five hundred feet', 'feet'],
       ['fifty hertz', 'hertz'],
-      ['100 dollars', 'dollar'],
+      ['100 dollars', 'dollars'],
       ['$100', 'dollar'],
       ['¥2.5', 'yen'],
       ['€3,000,100', 'euro'],

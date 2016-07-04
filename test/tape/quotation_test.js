@@ -1,9 +1,10 @@
-'use strict';
-let nlp = require('../../../src/index.js');
+var test = require('tape');
+var nlp = require('./lib/nlp');
+var str_test = require('./lib/fns').str_test;
 
-const all_quotations = function(s) {
-  let str = '';
-  for(let i = 0; i < s.terms.length; i++) {
+var all_quotations = function(s) {
+  var str = '';
+  for(var i = 0; i < s.terms.length; i++) {
     if (s.terms[i].pos.Quotation) {
       str += ' ' + s.terms[i].normal;
     }
@@ -11,23 +12,17 @@ const all_quotations = function(s) {
   return str.trim();
 };
 
-describe('quotation: ', function() {
-
-  let tests = [
+test('quotation test:', function(t) {
+  [
     [`he is "really good"`, `really good`],
     [`he is "really good" i guess`, `really good`],
     [`he is "good" i guess`, `good`],
     [`he is "completely and utterly great" i guess`, `completely and utterly great`],
     [`“quote”`, `quote`],
     [`“quote is here”`, `quote is here`],
-  ];
-  tests.forEach(function(a) {
-    it(a[0], function(done) {
-      let s = nlp.sentence(a[0]);
-      let quote = all_quotations(s);
-      (quote).should.equal(a[1]);
-      done();
-    });
+  ].forEach(function (a) {
+    var str = all_quotations(nlp.sentence(a[0]));
+    str_test(str, a[0], a[1], t);
   });
-
+  t.end();
 });

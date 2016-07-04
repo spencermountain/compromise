@@ -32,8 +32,10 @@ const lexicon_pass = function(terms, options) {
     //try to match without a contraction - "they've" -> "they"
     if (t.has_abbreviation()) {
       let attempt = normal.replace(/'(ll|re|ve|re|d|m|s)$/, '');
-      // attempt = normal.replace(/n't/, '');
-      return assign(t, lexicon[attempt], 'lexicon_prefix');
+      // attempt = attempt.replace(/n't/, '');
+      if (lexicon[attempt]) {
+        return assign(t, lexicon[attempt], 'lexicon_suffix');
+      }
     }
 
     //match 'twenty-eight'

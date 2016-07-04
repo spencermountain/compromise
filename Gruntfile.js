@@ -7,7 +7,6 @@ module.exports = function (grunt) {
     watch: {
       files: ['./src/*.js', './src/**', './test/unit_tests/**'],
       tasks: ['run:index']
-    // tasks: ['mochaTest']
     },
 
     run: {
@@ -16,6 +15,9 @@ module.exports = function (grunt) {
       },
       build: {
         exec: './node_modules/.bin/browserify ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] -o ./builds/nlp_compromise.js '
+      },
+      test: {
+        exec: './node_modules/tape/bin/tape ./test/tape/**/*.js | tap-spec'
       },
       build_windows: {
         exec: 'node_modules\\.bin\\browserify.cmd src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] -o builds/nlp_compromise.js '
@@ -60,42 +62,9 @@ module.exports = function (grunt) {
       }
     },
 
-    mochaTest: {
-      test: {
-        options: {
-          reporter: 'spec',
-          clearRequireCache: true,
-          colors: true,
-          growl: false
-        },
-        src: ['test/unit_tests/*/**.js']
-      }
-    },
-
-    mocha_istanbul: {
-      coverageSpecial: {
-        src: 'test/unit_tests/*/*.js',
-        options: {
-          reportFormats: ['html'],
-          quiet: true,
-          coverageFolder: './coverage'
-        }
-      }
-    },
-
     eslint: {
       target: ['./src/**'],
       configFile: './.eslintrc'
-    },
-
-    bump: {
-      options: {
-        files: ['package.json'],
-        updateConfigs: [],
-        commit: false,
-        push: false,
-        createTag: false
-      }
     }
 
   });
@@ -103,16 +72,12 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-run');
-  grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-filesize');
   grunt.loadNpmTasks('grunt-eslint');
-  grunt.loadNpmTasks('grunt-mocha-istanbul');
-  grunt.loadNpmTasks('grunt-bump');
 
   grunt.registerTask('default', ['run:index']);
-  grunt.registerTask('coverage', ['mocha_istanbul']);
-  grunt.registerTask('test', ['mochaTest']);
+  grunt.registerTask('test', ['run:test']);
   grunt.registerTask('lint', ['eslint']);
   grunt.registerTask('demo', ['build', 'run:demo']);
-  grunt.registerTask('build', ['mochaTest', 'eslint', 'run:build', 'uglify', 'filesize']);
+  grunt.registerTask('build', ['run:test', 'eslint', 'run:build', 'uglify', 'filesize']);
 };

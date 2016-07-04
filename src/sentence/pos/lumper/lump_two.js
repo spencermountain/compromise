@@ -59,7 +59,7 @@ const do_lump = [
   },
   {
     //Canada Inc
-    condition: (a, b) => (a.is_capital() && b.pos['Organization'] || b.is_capital() && a.pos['Organization']),
+    condition: (a, b) => (a.is_capital() && a.pos.Noun && b.pos['Organization'] || b.is_capital() && a.pos['Organization']),
     result: 'Organization',
     reason: 'organization-org'
   },

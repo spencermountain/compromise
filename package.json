@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "nlp_compromise",
   "description": "natural language processing in the browser",
-  "version": "6.4.1",
+  "version": "6.4.2",
   "main": "./builds/nlp_compromise.js",
   "typings": "./nlp.d.ts",
   "repository": {
@@ -10,8 +10,7 @@
     "url": "git://github.com/nlp-compromise/nlp_compromise.git"
   },
   "scripts": {
-    "run": "grunt",
-    "test": "grunt test",
+    "test": "./node_modules/tape/bin/tape ./test/unit_test/**/*_test.js | tap-spec",
     "watch": "grunt watch",
     "coverage": "grunt coverage",
     "build": "grunt build",
@@ -36,13 +35,12 @@
     "grunt-eslint": "^18.0.0",
     "grunt-filesize": "0.0.7",
     "grunt-mocha-istanbul": "3.0.1",
-    "grunt-mocha-test": "0.12.7",
     "grunt-run": "0.5.2",
     "http-server": "^0.9.0",
     "istanbul": "^0.4.3",
-    "mocha": "2.4.3",
     "nlp-corpus": "latest",
-    "should": "8.2.1"
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.0"
   },
   "license": "MIT"
 }

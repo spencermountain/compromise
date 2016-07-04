@@ -106,4 +106,4 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.sentence('he is currently doing everything he can to stop the problem').to_past().text());
-// console.log(nlp.verb('speaking').conjugate());
+// console.log(nlp.noun('Jani K. Smith').is_person());

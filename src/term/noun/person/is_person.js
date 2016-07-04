@@ -23,6 +23,14 @@ const is_person = function(str) {
       return true;
     }
   }
+  //check middle initial - "phil k dick"
+  if (words.length > 2) {
+    if (words[0].length > 1 && words[2].length > 1) {
+      if (words[1].match(/^[a-z]\.?$/)) {
+        return true;
+      }
+    }
+  }
   return false;
 };
 

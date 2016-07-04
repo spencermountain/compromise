@@ -182,6 +182,6 @@ const to_infinitive = function (str, from_tense) {
   return str;
 };
 
-console.log(to_infinitive('aiming', 'gerund'));
+// console.log(to_infinitive('aiming', 'gerund'));
 
 module.exports = to_infinitive;

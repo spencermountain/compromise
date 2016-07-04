@@ -4,6 +4,11 @@ const assign = require('../assign');
 
 //word-rules that run on '.text', not '.normal'
 const punct_rules = [
+  { //'+'
+    reg: new RegExp('^[@%^&*+=~-]?$', 'i'),
+    pos: 'Symbol',
+    reason: 'independent-symbol'
+  },
   { //2:54pm
     reg: new RegExp('^[12]?[0-9]\:[0-9]{2}( am| pm)?$', 'i'),
     pos: 'Date',

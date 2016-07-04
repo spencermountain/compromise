@@ -2,6 +2,23 @@
 //apply lumper+splitter words to terms to combine them
 const combine = require('./combine').two;
 
+//not just 'Noun', but something more deliberate
+const is_specific = function(t) {
+  const specific = [
+    'Person',
+    'Place',
+    'Value',
+    'Date',
+    'Organization',
+  ];
+  for(let i = 0; i < specific.length; i++) {
+    if (t.pos[specific[i]]) {
+      return true;
+    }
+  }
+  return false;
+};
+
 //rules that combine two words
 const do_lump = [
   {
@@ -125,16 +142,16 @@ const do_lump = [
     reason: 'two-places'
   },
   {
-    //both places (this is the most aggressive rule of them all)
-    condition: (a, b) => (a.pos.Noun && b.pos.Noun),
-    result: 'Noun',
-    reason: 'two-nouns'
-  },
-  {
     //'have not'
     condition: (a, b) => ((a.pos.Infinitive || a.pos.Copula || a.pos.PresentTense) && b.normal === 'not'),
     result: 'Verb',
     reason: 'verb-not'
+  },
+  {
+    //both places (this is the most aggressive rule of them all)
+    condition: (a, b) => (a.pos.Noun && b.pos.Noun && !is_specific(a) && !is_specific(b)),
+    result: 'Noun',
+    reason: 'two-nouns'
   },
 ];
 

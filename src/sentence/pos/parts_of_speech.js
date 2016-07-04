@@ -88,6 +88,7 @@ const classMapping = {
   'Conjunction': Term,
   'Possessive': Term,
   'Question': Term,
+  'Symbol': Term,
 
   'Email': Noun,
   'AtMention': Noun,

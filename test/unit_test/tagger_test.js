@@ -50,6 +50,12 @@ test('=Tagger=', function(T) {
       ['John, you', ['Person', 'Pronoun']],
       ['John you', ['Person', 'Pronoun']],
       ['you John you', ['Pronoun', 'Person', 'Pronoun']],
+      ['10 + 9', ['Value', 'Symbol', 'Value']],
+      ['2 * 90 = 180', ['Value', 'Symbol', 'Value', 'Symbol', 'Value']],
+      ['one - seventy-six', ['Value', 'Symbol', 'Value']],
+    // ['',[]],
+    // ['',[]],
+    // ['',[]],
     ].forEach(function (a) {
       var terms = nlp.sentence(a[0]).terms;
       pos_test(terms, a[1], t);

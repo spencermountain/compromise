@@ -12,7 +12,7 @@ test('lumper test:', function(t) {
     ['the Captain of Jamaica', ['Determiner', 'Noun']],
     ['joe will have walked', ['Person', 'Verb']],
     ['joe had walked', ['Person', 'Verb']],
-    ['joe had 5 books', ['Person', 'PastTense', 'Value']],
+  // ['joe had 5 books', ['Person', 'PastTense', 'Value']],
   // ['joe does walk', ['Person', 'PresentTense']],
   // ['joe doesn\'t walk', ['Person', 'PresentTense']],
   // ['joe does not walk', ['Person', 'PresentTense']],

@@ -160,17 +160,34 @@ module.exports = ['absurd', 'aggressive', 'alert', 'alive', 'awesome', 'beautifu
 
 },{}],4:[function(require,module,exports){
 'use strict';
-
-module.exports = [
 //some most-common iso-codes (most are too ambiguous)
-'usd', 'cad', 'aud', 'gbp', 'krw', 'inr', 'hkd', 'dkk', 'cny', 'xaf', 'xof', 'eur', 'jpy',
-//some common, unambiguous currency names
-'denar', 'dobra', 'forint', 'kwanza', 'kyat', 'lempira', 'pound sterling', 'riel', 'yen', 'zloty',
-//colloquial currency names
-'dollar', 'cent', 'penny', 'dime', 'dinar', 'euro', 'lira', 'pound', 'pence', 'peso', 'baht', 'sterling', 'rand', 'rouble', 'shekel', 'sheqel', 'yuan', 'franc', 'rupee', 'shilling', 'krona', 'dirham', 'bitcoin',
-// 'real',
+
+var shortForms = ['usd', 'cad', 'aud', 'gbp', 'krw', 'inr', 'hkd', 'dkk', 'cny', 'xaf', 'xof', 'eur', 'jpy',
 //currency symbols
 '€', '$', '¥', '£', 'лв', '₡', 'kn', 'kr', '¢', 'Ft', 'Rp', '﷼', '₭', 'ден', '₨', 'zł', 'lei', 'руб', '฿'];
+
+//some common, unambiguous currency names
+var longForms = ['denar', 'dobra', 'forint', 'kwanza', 'kyat', 'lempira', 'pound sterling', 'riel', 'yen', 'zloty',
+//colloquial currency names
+'dollar', 'cent', 'penny', 'dime', 'dinar', 'euro', 'lira', 'pound', 'pence', 'peso', 'baht', 'sterling', 'rouble', 'shekel', 'sheqel', 'yuan', 'franc', 'rupee', 'shilling', 'krona', 'dirham', 'bitcoin'];
+var irregularPlurals = {
+  yen: 'yen',
+  baht: 'baht',
+  riel: 'riel',
+  penny: 'pennies'
+};
+
+//add plural forms - 'euros'
+var l = longForms.length;
+for (var i = 0; i < l; i++) {
+  if (irregularPlurals[longForms[i]]) {
+    longForms.push(irregularPlurals[longForms[i]]);
+  } else {
+    longForms.push(longForms[i] + 's');
+  }
+}
+
+module.exports = shortForms.concat(longForms);
 
 },{}],5:[function(require,module,exports){
 'use strict';
@@ -2006,6 +2023,7 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.sentence('one - seventy').terms);
+// console.log(nlp.sentence('Ava I need convert 20 dollar into euros').terms);
 
 },{"./fns.js":23,"./lexicon.js":25,"./sentence/question/question.js":57,"./sentence/sentence.js":60,"./sentence/statement/statement.js":63,"./term/adjective/adjective.js":64,"./term/adverb/adverb.js":69,"./term/noun/date/date.js":74,"./term/noun/noun.js":80,"./term/noun/organization/organization.js":82,"./term/noun/person/person.js":86,"./term/noun/place/place.js":88,"./term/noun/value/value.js":100,"./term/term.js":101,"./term/verb/verb.js":111,"./text/text.js":114}],25:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags

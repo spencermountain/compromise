@@ -118,6 +118,12 @@ const do_lump = [
     reason: 'copula-gerund'
   },
   {
+    //7 ft
+    condition: (a, b) => ((a.pos.Value && b.pos.Abbreviation) || (a.pos.Abbreviation && b.pos.Value)),
+    result: 'Value',
+    reason: 'value-abbreviation'
+  },
+  {
     //NASA Flordia
     condition: (a, b) => ((a.pos.Noun && b.pos.Abbreviation) || (a.pos.Abbreviation && b.pos.Noun)),
     result: 'Noun',

@@ -264,7 +264,11 @@ for (var i = 0; i < ambiguous.length; i += 1) {
 // console.log(names['jill']);
 // console.log(names['sue'])
 // console.log(names['jan'])
-module.exports = names;
+module.exports = {
+  all: names,
+  male: male,
+  female: female
+};
 
 },{"./names/female":14,"./names/male":15}],8:[function(require,module,exports){
 'use strict';
@@ -2022,8 +2026,8 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.sentence('one - seventy').terms);
-// console.log(nlp.sentence('Ava I need convert 20 dollar into euros').terms);
+// console.log(nlp.text('5.5 ft').terms());
+// console.log(nlp.text('joe is five ft tall').terms());
 
 },{"./fns.js":23,"./lexicon.js":25,"./sentence/question/question.js":57,"./sentence/sentence.js":60,"./sentence/statement/statement.js":63,"./term/adjective/adjective.js":64,"./term/adverb/adverb.js":69,"./term/noun/date/date.js":74,"./term/noun/noun.js":80,"./term/noun/organization/organization.js":82,"./term/noun/person/person.js":86,"./term/noun/place/place.js":88,"./term/noun/value/value.js":100,"./term/term.js":101,"./term/verb/verb.js":111,"./text/text.js":114}],25:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
@@ -2132,7 +2136,12 @@ var all_nums = Object.keys(nums).reduce(function (arr, k) {
 addArr(all_nums, 'Value');
 
 //a little fancy
-addArr(Object.keys(require('./data/firstnames.js')), 'Person');
+var firstNames = require('./data/firstnames.js');
+//add all names
+addArr(Object.keys(firstNames.all), 'Person');
+//overwrite to MalePerson, FemalePerson
+addArr(firstNames.male, 'MalePerson');
+addArr(firstNames.female, 'FemalePerson');
 //add irregular nouns
 var irregNouns = require('./data/irregular_nouns.js');
 addArr(fns.pluck(irregNouns, 0), 'Noun');
@@ -2631,6 +2640,7 @@ module.exports = assign;
 'use strict';
 
 var pos = require('../parts_of_speech');
+var fns = require('../../../fns');
 
 //get the combined text
 var new_string = function new_string(a, b) {
@@ -2645,12 +2655,22 @@ var combine_two = function combine_two(terms, i, tag, reason) {
   if (!a || !b) {
     return terms;
   }
+  //keep relevant/consistant old POS tags
+  var old_pos = {};
+  if (a.pos[tag]) {
+    old_pos = a.pos;
+  }
+  if (b.pos[tag]) {
+    old_pos = fns.extend(old_pos, b.pos);
+  }
   //find the new Pos class
   var Pos = pos.classMapping[tag] || pos.Term;
   terms[i] = new Pos(new_string(a, b), tag);
   //copy-over reasoning
   terms[i].reasoning = [a.reasoning.join(', '), b.reasoning.join(', ')];
   terms[i].reasoning.push(reason);
+  //copy-over old pos
+  terms[i].pos = fns.extend(terms[i].pos, old_pos);
   //combine whitespace
   terms[i].whitespace.preceding = a.whitespace.preceding;
   terms[i].whitespace.trailing = b.whitespace.trailing;
@@ -2687,7 +2707,7 @@ module.exports = {
   three: combine_three
 };
 
-},{"../parts_of_speech":38}],36:[function(require,module,exports){
+},{"../../../fns":23,"../parts_of_speech":38}],36:[function(require,module,exports){
 'use strict';
 
 var combine = require('./combine').three;
@@ -2837,8 +2857,8 @@ var do_lump = [{
   condition: function condition(a, b) {
     return a.pos.Person && b.pos.Possessive;
   },
-  result: 'Possessive',
-  reason: 'person-honourific'
+  result: 'Person',
+  reason: 'person-possessive'
 }, {
   //"John Abcd" - needs to be careful
   condition: function condition(a, b) {
@@ -2923,6 +2943,13 @@ var do_lump = [{
   },
   result: 'Verb',
   reason: 'copula-gerund'
+}, {
+  //7 ft
+  condition: function condition(a, b) {
+    return a.pos.Value && b.pos.Abbreviation || a.pos.Abbreviation && b.pos.Value;
+  },
+  result: 'Value',
+  reason: 'value-abbreviation'
 }, {
   //NASA Flordia
   condition: function condition(a, b) {
@@ -3176,8 +3203,8 @@ var classMapping = {
   'Url': Url,
 
   //not yet fully-supported as a POS
-  'Male': Person,
-  'Female': Person,
+  'MalePerson': Person,
+  'FemalePerson': Person,
 
   'Adverb': Adverb,
   'Value': Value,
@@ -3634,13 +3661,17 @@ var lexicon_pass = function lexicon_pass(terms, options) {
     //try to match it without a prefix - eg. outworked -> worked
     if (normal.match(/^(over|under|out|-|un|re|en).{3}/)) {
       var attempt = normal.replace(/^(over|under|out|.*?-|un|re|en)/, '');
-      return assign(t, lexicon[attempt], 'lexicon_prefix');
+      if (lexicon[attempt]) {
+        return assign(t, lexicon[attempt], 'lexicon_prefix');
+      }
     }
     //try to match without a contraction - "they've" -> "they"
     if (t.has_abbreviation()) {
       var attempt = normal.replace(/'(ll|re|ve|re|d|m|s)$/, '');
-      // attempt = normal.replace(/n't/, '');
-      return assign(t, lexicon[attempt], 'lexicon_prefix');
+      // attempt = attempt.replace(/n't/, '');
+      if (lexicon[attempt]) {
+        return assign(t, lexicon[attempt], 'lexicon_suffix');
+      }
     }
 
     //match 'twenty-eight'
@@ -6282,7 +6313,7 @@ module.exports = Organization;
 },{"../noun.js":80}],83:[function(require,module,exports){
 'use strict';
 
-var firstnames = require('../../../data/firstnames');
+var firstnames = require('../../../data/firstnames').all;
 var parse_name = require('./parse_name.js');
 
 var gender = function gender(normal) {
@@ -6336,7 +6367,7 @@ module.exports = gender;
 },{"../../../data/firstnames":7,"./parse_name.js":85}],84:[function(require,module,exports){
 'use strict';
 
-var firstnames = require('../../../data/firstnames');
+var firstnames = require('../../../data/firstnames').all;
 var honourifics = require('../../../data/honourifics').reduce(function (h, s) {
   h[s] = true;
   return h;
@@ -6378,7 +6409,7 @@ module.exports = is_person;
 },{"../../../data/firstnames":7,"../../../data/honourifics":9}],85:[function(require,module,exports){
 'use strict';
 
-var firstnames = require('../../../data/firstnames');
+var firstnames = require('../../../data/firstnames').all;
 var honourifics = require('../../../data/honourifics').reduce(function (h, s) {
   h[s] = true;
   return h;
@@ -6504,6 +6535,9 @@ var Person = function (_Noun) {
     if (_this.isPronoun()) {
       _this.pos['Pronoun'] = true;
     }
+    if (tag) {
+      _this.pos[tag] = true;
+    }
     return _this;
   }
 
@@ -6555,6 +6589,13 @@ var Person = function (_Noun) {
   }, {
     key: 'gender',
     value: function gender() {
+      //if we already know it, from the lexicon
+      if (this.pos.FemalePerson) {
+        return 'Female';
+      }
+      if (this.pos.MalePerson) {
+        return 'Male';
+      }
       return guess_gender(this.normal);
     }
   }, {

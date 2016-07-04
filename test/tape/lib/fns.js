@@ -18,7 +18,13 @@ const has_pos = function(terms, tags) {
 };
 
 const pos_test = function(terms, tags, t) {
-  var msg = 'has tags ' + tags.join(',');
+  terms = terms || [];
+  var str = '';
+  var got = terms.map(function(term) {
+    str += ' ' + term.text;
+    return Object.keys(term.pos).join('|');
+  }).join(', ');
+  var msg = '"' + str.trim() + '" has tags [' + tags.join(',') + ']   (' + got + ')';
   t.equal(has_pos(terms, tags), true, msg);
   return;
 };

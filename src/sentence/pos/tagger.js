@@ -34,6 +34,10 @@ const specific_noun = function(terms) {
   for(let i = 0; i < terms.length; i++) {
     let t = terms[i];
     if (t instanceof pos.Noun) {
+      //don't overwrite known forms...
+      if (t.pos.Person || t.pos.Place || t.pos.Value || t.pos.Date || t.pos.Organization) {
+        continue;
+      }
       if (t.is_person()) {
         terms[i] = assign(t, 'Person', 'is_person');
       } else if (t.is_place()) {

@@ -1,5 +1,5 @@
 'use strict';
-const firstnames = require('../../../data/firstnames');
+const firstnames = require('../../../data/firstnames').all;
 const honourifics = require('../../../data/honourifics').reduce(function(h, s) {
   h[s] = true;
   return h;

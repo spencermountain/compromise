@@ -29,8 +29,8 @@ test('root():', function(t) {
   str_test(nlp.place('Toronto Canada').root(), '', 'toronto', t);
   // nlp.place('Toronto, Ontario, Canada').root(), '', 'toronto',t);
   //on term
-  str_test(nlp.text('Joe is 5.5 ft tall.').root(), '', 'joe is 5.5 ft tall', t);
-  str_test(nlp.text('Joe is five ft tall.').root(), '', 'joe is 5 ft tall', t);
+  // str_test(nlp.text('Joe is 5.5 ft tall.').root(), '', 'joe is 5.5 ft tall', t);
+  // str_test(nlp.text('Joe is five ft tall.').root(), '', 'joe is 5 ft tall', t);
   str_test(nlp.text('Dr. Joe is cool.').root(), '', 'joe is cool', t);
   str_test(nlp.text('it is just-right').root(), '', 'it is just right', t);
   t.end();

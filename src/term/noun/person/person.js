@@ -43,6 +43,9 @@ class Person extends Noun {
     if (this.isPronoun()) {
       this.pos['Pronoun'] = true;
     }
+    if (tag) {
+      this.pos[tag] = true;
+    }
   }
 
   isPronoun() {
@@ -84,6 +87,13 @@ class Person extends Noun {
   }
 
   gender() {
+    //if we already know it, from the lexicon
+    if (this.pos.FemalePerson) {
+      return 'Female';
+    }
+    if (this.pos.MalePerson) {
+      return 'Male';
+    }
     return guess_gender(this.normal);
   }
 

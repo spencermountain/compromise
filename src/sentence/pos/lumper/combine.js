@@ -1,5 +1,6 @@
 'use strict';
 const pos = require('../parts_of_speech');
+const fns = require('../../../fns');
 
 //get the combined text
 const new_string = function(a, b) {
@@ -14,12 +15,19 @@ const combine_two = function(terms, i, tag, reason) {
   if (!a || !b) {
     return terms;
   }
+  //keep consistant/relevant old POS on A
+  let old_pos = {};
+  if (a.pos[tag]) {
+    old_pos = a.pos;
+  }
   //find the new Pos class
   let Pos = pos.classMapping[tag] || pos.Term;
   terms[i] = new Pos(new_string(a, b), tag);
   //copy-over reasoning
   terms[i].reasoning = [a.reasoning.join(', '), b.reasoning.join(', ')];
   terms[i].reasoning.push(reason);
+  //copy-over old pos
+  terms[i].pos = fns.extend(terms[i].pos, old_pos);
   //combine whitespace
   terms[i].whitespace.preceding = a.whitespace.preceding;
   terms[i].whitespace.trailing = b.whitespace.trailing;

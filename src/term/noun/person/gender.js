@@ -1,5 +1,5 @@
 'use strict';
-const firstnames = require('../../../data/firstnames');
+const firstnames = require('../../../data/firstnames').all;
 const parse_name = require('./parse_name.js');
 
 const gender = function(normal) {

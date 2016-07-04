@@ -105,5 +105,8 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.sentence('one - seventy').terms);
-// console.log(nlp.sentence('Ava I need convert 20 dollar into euros').terms);
+// nlp.lexicon({
+//   reid: 'FemalePerson'
+// });
+// console.log(nlp.sentence('Reid Hoffman').terms[0].gender());
+// console.log(nlp.text('Joe is 5.5 ft tall.').terms());

@@ -64,4 +64,8 @@ for (let i = 0; i < ambiguous.length; i += 1) {
 // console.log(names['jill']);
 // console.log(names['sue'])
 // console.log(names['jan'])
-module.exports = names;
+module.exports = {
+  all: names,
+  male: male,
+  female: female
+};

@@ -98,7 +98,12 @@ let all_nums = Object.keys(nums).reduce((arr, k) => {
 addArr(all_nums, 'Value');
 
 //a little fancy
-addArr(Object.keys(require('./data/firstnames.js')), 'Person');
+const firstNames = require('./data/firstnames.js');
+//add all names
+addArr(Object.keys(firstNames.all), 'Person');
+//overwrite to MalePerson, FemalePerson
+addArr(firstNames.male, 'MalePerson');
+addArr(firstNames.female, 'FemalePerson');
 //add irregular nouns
 const irregNouns = require('./data/irregular_nouns.js');
 addArr(fns.pluck(irregNouns, 0), 'Noun');

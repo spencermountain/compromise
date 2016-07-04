@@ -29,16 +29,23 @@ const pos_test = function(terms, tags, t) {
   return;
 };
 
-const terms_test = function(terms, want, t) {
-  var got = terms.map(function(t) {
-    return t.normal;
+const terms_test = function(terms, want, t, isText) {
+  var str = '';
+  var got = terms.map(function(term) {
+    str += ' ' + term.text;
+    if (isText) {
+      return term.text;
+    }
+    return term.normal;
   });
-  var msg = got.join(',') + ' -> ' + want.join(',');
+  var msg = '"' + str + '"  got: [' + got.join(',') + ']  want: [' + want.join(',') + ']';
   t.deepEqual(got, want, msg);
 };
+
+
 
 module.exports = {
   str_test: str_test,
   pos_test: pos_test,
-  terms_test: terms_test
+  terms_test: terms_test,
 };

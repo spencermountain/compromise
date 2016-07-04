@@ -17,7 +17,7 @@ module.exports = function (grunt) {
         exec: './node_modules/.bin/browserify ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] -o ./builds/nlp_compromise.js '
       },
       test: {
-        exec: './node_modules/tape/bin/tape ./test/tape/**/*.js | tap-spec'
+        exec: './node_modules/tape/bin/tape ./test/unit_test/**/*_test.js | ./node_modules/tap-spec/bin/cmd.js'
       },
       build_windows: {
         exec: 'node_modules\\.bin\\browserify.cmd src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] -o builds/nlp_compromise.js '

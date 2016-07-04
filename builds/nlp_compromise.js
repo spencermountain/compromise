@@ -1788,7 +1788,7 @@ var compressed = {
   am: 'dre,j,sl,ro',
   ry: 'va,t,c,bu'
 };
-var arr = ['hope', 'thank', 'work', 'stop', 'control', 'join', 'enjoy', 'fail', 'aid', 'ask', 'talk', 'add', 'walk', 'describe', 'study', 'seem', 'occur', 'claim', 'fix', 'help', 'design', 'include', 'need', 'keep', 'assume', 'accept', 'do', 'look', 'die', 'seek', 'attempt', 'bomb', 'cook', 'copy', 'claw', 'doubt', 'drift', 'envy', 'fold', 'flood', 'focus', 'lift', 'link', 'load', 'loan', 'melt', 'overlap', 'rub', 'repair', 'sail', 'sleep', 'trade', 'trap', 'travel', 'tune', 'undergo', 'undo', 'uplift', 'yawn', 'plan', 'reveal', 'owe', 'sneak', 'drop', 'name', 'head', 'spoil', 'echo', 'deny', 'yield', 'reason', 'defy', 'applaud', 'risk', 'step', 'deem', 'embody', 'adopt', 'convey', 'pop', 'grab', 'revel', 'stem', 'mark', 'drag', 'pour', 'reckon', 'assign', 'rank', 'destroy', 'float', 'appeal', 'grasp', 'shout', 'overcome', 'relax', 'excel', 'plug', 'proclaim', 'ruin', 'abandon', 'overwhelm', 'wipe', 'added', 'took', 'goes', 'avoid', 'come', 'set', 'pay', 'grow', 'inspect', 'instruct', 'know', 'take', 'let', 'sort', 'put', 'take', 'cut', 'become', 'reply', 'happen', 'watch', 'associate', 'send', 'archive', 'cancel', 'learn', 'transfer'];
+var arr = ['hope', 'thank', 'work', 'stop', 'control', 'join', 'enjoy', 'fail', 'aid', 'ask', 'talk', 'add', 'walk', 'describe', 'study', 'seem', 'occur', 'claim', 'fix', 'help', 'design', 'include', 'need', 'keep', 'assume', 'accept', 'do', 'look', 'die', 'seek', 'attempt', 'bomb', 'cook', 'copy', 'claw', 'doubt', 'drift', 'envy', 'fold', 'flood', 'focus', 'lift', 'link', 'load', 'loan', 'melt', 'overlap', 'rub', 'repair', 'sail', 'sleep', 'trade', 'trap', 'travel', 'tune', 'undergo', 'undo', 'uplift', 'yawn', 'plan', 'reveal', 'owe', 'sneak', 'drop', 'name', 'head', 'spoil', 'echo', 'deny', 'yield', 'reason', 'defy', 'applaud', 'risk', 'step', 'deem', 'embody', 'adopt', 'convey', 'pop', 'grab', 'revel', 'stem', 'mark', 'drag', 'pour', 'reckon', 'assign', 'rank', 'destroy', 'float', 'appeal', 'grasp', 'shout', 'overcome', 'relax', 'excel', 'plug', 'proclaim', 'ruin', 'abandon', 'overwhelm', 'wipe', 'added', 'took', 'goes', 'avoid', 'come', 'set', 'pay', 'grow', 'inspect', 'instruct', 'know', 'take', 'let', 'sort', 'put', 'take', 'cut', 'become', 'reply', 'happen', 'watch', 'associate', 'send', 'archive', 'cancel', 'learn', 'transfer', 'minus', 'plus', 'multiply', 'divide'];
 
 module.exports = fns.expand_suffixes(arr, compressed);
 
@@ -2005,24 +2005,7 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.sentence('he is currently doing everything he can to stop the problem').to_past().text());
-// console.log(nlp.sentence('joe does walk').terms);
-// let lexicon = nlp.lexicon({
-//   'paris': 'Person',
-//   'donky kong': 'City',
-// });
-// console.log(nlp.sentence('Paris is amazing', {
-//   lexicon: lexicon
-// }).terms);
-
-// let lexicon = nlp.lexicon();
-// lexicon['reid'] = 'Male';
-// let s = nlp.sentence('reid Hoffman is nice', {
-//   lexicon: {
-//     reid: 'Male'
-//   }
-// });
-// console.log(s.terms);
+// console.log(nlp.sentence('one - seventy').terms);
 
 },{"./fns.js":23,"./lexicon.js":25,"./sentence/question/question.js":57,"./sentence/sentence.js":60,"./sentence/statement/statement.js":63,"./term/adjective/adjective.js":64,"./term/adverb/adverb.js":69,"./term/noun/date/date.js":74,"./term/noun/noun.js":80,"./term/noun/organization/organization.js":82,"./term/noun/person/person.js":86,"./term/noun/place/place.js":88,"./term/noun/value/value.js":100,"./term/term.js":101,"./term/verb/verb.js":111,"./text/text.js":114}],25:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
@@ -2091,7 +2074,7 @@ for (var i = 0; i < verbs.length; i++) {
 }
 
 var orgs = require('./data/organizations.js');
-addArr(orgs.organizations, 'Noun');
+addArr(orgs.organizations, 'Organization');
 addArr(orgs.suffixes, 'Noun');
 
 var places = require('./data/places.js');
@@ -2799,6 +2782,17 @@ module.exports = lump_three;
 
 var combine = require('./combine').two;
 
+//not just 'Noun', but something more deliberate
+var is_specific = function is_specific(t) {
+  var specific = ['Person', 'Place', 'Value', 'Date', 'Organization'];
+  for (var i = 0; i < specific.length; i++) {
+    if (t.pos[specific[i]]) {
+      return true;
+    }
+  }
+  return false;
+};
+
 //rules that combine two words
 var do_lump = [{
   condition: function condition(a, b) {
@@ -2865,7 +2859,7 @@ var do_lump = [{
 }, {
   //Canada Inc
   condition: function condition(a, b) {
-    return a.is_capital() && b.pos['Organization'] || b.is_capital() && a.pos['Organization'];
+    return a.is_capital() && a.pos.Noun && b.pos['Organization'] || b.is_capital() && a.pos['Organization'];
   },
   result: 'Organization',
   reason: 'organization-org'
@@ -2940,19 +2934,19 @@ var do_lump = [{
   result: 'Place',
   reason: 'two-places'
 }, {
-  //both places (this is the most aggressive rule of them all)
-  condition: function condition(a, b) {
-    return a.pos.Noun && b.pos.Noun;
-  },
-  result: 'Noun',
-  reason: 'two-nouns'
-}, {
   //'have not'
   condition: function condition(a, b) {
     return (a.pos.Infinitive || a.pos.Copula || a.pos.PresentTense) && b.normal === 'not';
   },
   result: 'Verb',
   reason: 'verb-not'
+}, {
+  //both places (this is the most aggressive rule of them all)
+  condition: function condition(a, b) {
+    return a.pos.Noun && b.pos.Noun && !is_specific(a) && !is_specific(b);
+  },
+  result: 'Noun',
+  reason: 'two-nouns'
 }];
 
 //exceptions or guards to the above rules, more or less
@@ -3156,6 +3150,7 @@ var classMapping = {
   'Conjunction': Term,
   'Possessive': Term,
   'Question': Term,
+  'Symbol': Term,
 
   'Email': Noun,
   'AtMention': Noun,
@@ -3860,7 +3855,11 @@ var word_rules = require('./rules/word_rules');
 var assign = require('../assign');
 
 //word-rules that run on '.text', not '.normal'
-var punct_rules = [{ //2:54pm
+var punct_rules = [{ //'+'
+  reg: new RegExp('^[@%^&*+=~-]?$', 'i'),
+  pos: 'Symbol',
+  reason: 'independent-symbol'
+}, { //2:54pm
   reg: new RegExp('^[12]?[0-9]\:[0-9]{2}( am| pm)?$', 'i'),
   pos: 'Date',
   reason: 'time_reg'
@@ -4157,6 +4156,10 @@ var specific_noun = function specific_noun(terms) {
   for (var i = 0; i < terms.length; i++) {
     var t = terms[i];
     if (t instanceof pos.Noun) {
+      //don't overwrite known forms...
+      if (t.pos.Person || t.pos.Place || t.pos.Value || t.pos.Date || t.pos.Organization) {
+        continue;
+      }
       if (t.is_person()) {
         terms[i] = assign(t, 'Person', 'is_person');
       } else if (t.is_place()) {
@@ -6339,6 +6342,14 @@ var is_person = function is_person(str) {
       return true;
     }
   }
+  //check middle initial - "phil k dick"
+  if (words.length > 2) {
+    if (words[0].length > 1 && words[2].length > 1) {
+      if (words[1].match(/^[a-z]\.?$/)) {
+        return true;
+      }
+    }
+  }
   return false;
 };
 
@@ -7991,6 +8002,8 @@ var conjugate = function conjugate(w) {
 };
 module.exports = conjugate;
 
+// console.log(conjugate('speaking'));
+
 },{"../../../data/irregular_verbs":11,"../../../fns.js":23,"./from_infinitive":103,"./generic.js":104,"./predict_form.js":105,"./strip_prefix.js":106,"./to_actor":108,"./to_infinitive":109}],103:[function(require,module,exports){
 'use strict';
 
@@ -8504,8 +8517,11 @@ var rules = {
     reg: /([^aeiou])ying$/i,
     to: '$1y'
   }, {
-    reg: /(i.)ing$/i,
+    reg: /([^ae]i.)ing$/i,
     to: '$1e'
+  }, {
+    reg: /(ea.)ing$/i,
+    to: '$1'
   }, {
     reg: /(u[rtcb]|[bdtpkg]l|n[cg]|a[gdkvtc]|[ua]s|[dr]g|yz|o[rlsp]|cre)ing$/i,
     to: '$1e'
@@ -8589,7 +8605,7 @@ var to_infinitive = function to_infinitive(str, from_tense) {
   return str;
 };
 
-// console.log(to_infinitive('watch', 'infinitive'));
+// console.log(to_infinitive('aiming', 'gerund'));
 
 module.exports = to_infinitive;
 

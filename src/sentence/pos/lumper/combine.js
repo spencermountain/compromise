@@ -15,10 +15,13 @@ const combine_two = function(terms, i, tag, reason) {
   if (!a || !b) {
     return terms;
   }
-  //keep consistant/relevant old POS on A
+  //keep relevant/consistant old POS tags
   let old_pos = {};
   if (a.pos[tag]) {
     old_pos = a.pos;
+  }
+  if (b.pos[tag]) {
+    old_pos = fns.extend(old_pos, b.pos);
   }
   //find the new Pos class
   let Pos = pos.classMapping[tag] || pos.Term;

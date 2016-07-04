@@ -41,8 +41,8 @@ const do_lump = [
   {
     // "john lkjsdf's"
     condition: (a, b) => (a.pos.Person && b.pos.Possessive),
-    result: 'Possessive',
-    reason: 'person-honourific'
+    result: 'Person',
+    reason: 'person-possessive'
   },
   {
     //"John Abcd" - needs to be careful

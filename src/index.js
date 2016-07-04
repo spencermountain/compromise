@@ -105,8 +105,4 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// nlp.lexicon({
-//   reid: 'FemalePerson'
-// });
-// console.log(nlp.sentence('Reid Hoffman').terms[0].gender());
 // console.log(nlp.text('Joe is 5.5 ft tall.').terms());

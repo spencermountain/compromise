@@ -1,5 +1,6 @@
-module.exports = [
-  //some most-common iso-codes (most are too ambiguous)
+'use strict';
+//some most-common iso-codes (most are too ambiguous)
+const shortForms = [
   'usd',
   'cad',
   'aud',
@@ -13,7 +14,30 @@ module.exports = [
   'xof',
   'eur',
   'jpy',
-  //some common, unambiguous currency names
+  //currency symbols
+  '€',
+  '$',
+  '¥',
+  '£',
+  'лв',
+  '₡',
+  'kn',
+  'kr',
+  '¢',
+  'Ft',
+  'Rp',
+  '﷼',
+  '₭',
+  'ден',
+  '₨',
+  'zł',
+  'lei',
+  'руб',
+  '฿',
+];
+
+//some common, unambiguous currency names
+let longForms = [
   'denar',
   'dobra',
   'forint',
@@ -37,7 +61,6 @@ module.exports = [
   'peso',
   'baht',
   'sterling',
-  'rand',
   'rouble',
   'shekel',
   'sheqel',
@@ -47,26 +70,23 @@ module.exports = [
   'shilling',
   'krona',
   'dirham',
-  'bitcoin',
-  // 'real',
-  //currency symbols
-  '€',
-  '$',
-  '¥',
-  '£',
-  'лв',
-  '₡',
-  'kn',
-  'kr',
-  '¢',
-  'Ft',
-  'Rp',
-  '﷼',
-  '₭',
-  'ден',
-  '₨',
-  'zł',
-  'lei',
-  'руб',
-  '฿',
+  'bitcoin'
 ];
+const irregularPlurals = {
+  yen: 'yen',
+  baht: 'baht',
+  riel: 'riel',
+  penny: 'pennies',
+};
+
+//add plural forms - 'euros'
+let l = longForms.length;
+for(let i = 0; i < l; i++) {
+  if (irregularPlurals[longForms[i]]) {
+    longForms.push(irregularPlurals[longForms[i]]);
+  } else {
+    longForms.push(longForms[i] + 's');
+  }
+}
+
+module.exports = shortForms.concat(longForms);

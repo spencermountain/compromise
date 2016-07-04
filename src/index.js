@@ -106,3 +106,4 @@ if (typeof define === 'function' && define.amd) {
 }
 
 // console.log(nlp.sentence('one - seventy').terms);
+// console.log(nlp.sentence('Ava I need convert 20 dollar into euros').terms);

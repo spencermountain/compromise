@@ -2026,8 +2026,7 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.text('5.5 ft').terms());
-// console.log(nlp.text('joe is five ft tall').terms());
+// console.log(nlp.verb('played').conjugate());
 
 },{"./fns.js":23,"./lexicon.js":25,"./sentence/question/question.js":57,"./sentence/sentence.js":60,"./sentence/statement/statement.js":63,"./term/adjective/adjective.js":64,"./term/adverb/adverb.js":69,"./term/noun/date/date.js":74,"./term/noun/noun.js":80,"./term/noun/organization/organization.js":82,"./term/noun/person/person.js":86,"./term/noun/place/place.js":88,"./term/noun/value/value.js":100,"./term/term.js":101,"./term/verb/verb.js":111,"./text/text.js":114}],25:[function(require,module,exports){
 //the lexicon is a big hash of words to pos tags
@@ -8061,7 +8060,7 @@ var conjugate = function conjugate(w) {
 };
 module.exports = conjugate;
 
-// console.log(conjugate('speaking'));
+// console.log(conjugate('played'));
 
 },{"../../../data/irregular_verbs":11,"../../../fns.js":23,"./from_infinitive":103,"./generic.js":104,"./predict_form.js":105,"./strip_prefix.js":106,"./to_actor":108,"./to_infinitive":109}],103:[function(require,module,exports){
 'use strict';
@@ -8628,7 +8627,7 @@ var rules = {
     reg: /(us)ed$/i,
     to: '$1e'
   }, {
-    reg: /(..[^aeiou])ed$/i,
+    reg: /(..[^aeiouy])ed$/i,
     to: '$1e'
   }, {
     reg: /ied$/i,
@@ -8638,6 +8637,9 @@ var rules = {
     to: '$1o'
   }, {
     reg: /(.i)ed$/i,
+    to: '$1'
+  }, {
+    reg: /(a[^aeiou])ed$/i,
     to: '$1'
   }, {
     reg: /([rl])ew$/i,
@@ -8664,7 +8666,7 @@ var to_infinitive = function to_infinitive(str, from_tense) {
   return str;
 };
 
-// console.log(to_infinitive('aiming', 'gerund'));
+// console.log(to_infinitive('played', 'past'));
 
 module.exports = to_infinitive;
 

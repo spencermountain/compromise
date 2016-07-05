@@ -105,5 +105,4 @@ if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
 
-// console.log(nlp.text('5.5 ft').terms());
-// console.log(nlp.text('joe is five ft tall').terms());
+// console.log(nlp.verb('played').conjugate());

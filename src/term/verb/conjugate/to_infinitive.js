@@ -146,7 +146,7 @@ let rules = {
       reg: /(us)ed$/i,
       to: '$1e'
     }, {
-      reg: /(..[^aeiou])ed$/i,
+      reg: /(..[^aeiouy])ed$/i,
       to: '$1e'
     }, {
       reg: /ied$/i,
@@ -156,6 +156,9 @@ let rules = {
       to: '$1o'
     }, {
       reg: /(.i)ed$/i,
+      to: '$1'
+    }, {
+      reg: /(a[^aeiou])ed$/i,
       to: '$1'
     }, {
       reg: /([rl])ew$/i,
@@ -182,6 +185,6 @@ const to_infinitive = function (str, from_tense) {
   return str;
 };
 
-// console.log(to_infinitive('aiming', 'gerund'));
+// console.log(to_infinitive('played', 'past'));
 
 module.exports = to_infinitive;

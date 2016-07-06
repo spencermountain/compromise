@@ -100,7 +100,7 @@ sen.terms[1].links[1].target.word; // terms[1] is verb 'fed'
 
 *Useful NLP is a problem only solved with many hands. [Contributing](https://github.com/nlp-compromise/nlp_compromise/blob/master/contributing.md) in any form is valued.*
 
-Join our [slack group](https://superscriptjs.slack.com/messages/nlp_compromise/) or our infrequent [announcement email-list](http://eepurl.com/bL9YRv).
+Join our [slack group](http://superscript-slackin.herokuapp.com) (login from [here](https://superscriptjs.slack.com/messages/nlp_compromise/)) or our infrequent [announcement email-list](http://eepurl.com/bL9YRv).
 
 Or just pick up an [open issue](https://github.com/nlp-compromise/nlp_compromise/issues)
 

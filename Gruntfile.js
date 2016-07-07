@@ -37,7 +37,7 @@ module.exports = function (grunt) {
         exec: tape + ' ./test/unit_test/**/*_test.js | ' + tapSpec
       },
       browser_test: {
-        exec: 'browserify ./test/unit_test/*_test.js -o ./test/browser/compiled_tests.js && ' + fileServer + ' test/browser -o -c-1'
+        exec: 'browserify ./test/unit_test/*_test.js -o ./test/browser_test/compiled_tests.js && ' + fileServer + ' test/browser_test -o -c-1'
       },
       prerelease: { //test all versions serverside, client-side
         exec: tape + ' ./test/prerelease/index.js | ' + tapSpec

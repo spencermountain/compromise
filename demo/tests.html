@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+  <style>
+    body {
+        font-family: monospace;
+        white-space: pre;
+    }
+  </style>
+</head>
+<body>
+  <pre id="result"/>
+<script>
+  //overwrite console.log
+  if (typeof console === 'undefined') console = {};
+  console.log = function (msg) {
+    var el=document.getElementById("result")
+    el.innerHTML+="\n"+msg
+  };
+  setTimeout(function(){
+    tests(nlp_compromise,'minimized')
+  },800)
+</script>
+<script src="./builds/nlp_compromise.min.js"></script>
+<script src="./lib/tests.js"></script>
+</body>
+</html>

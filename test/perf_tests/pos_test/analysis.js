@@ -1,6 +1,5 @@
 'use strict';
-// const corpus = require('nlp-corpus');
-const corpus = require('/home/spencer/mountain/nlp/corpus/index.js');
+const corpus = require('nlp-corpus/index.js');
 const nlp = require('../../../src/index.js');
 const findReasons = require('./reasons');
 const fallback = require('./fallback');
@@ -12,9 +11,9 @@ const analysis = function() {
   let text = nlp.text(str);
   console.timeEnd('parse');
   console.log(text.sentences.length + ' sentences');
-  // let reasons = findReasons(text);
+  let reasons = findReasons(text);
   let fallbacks = fallback(text);
-  // console.log(reasons);
+  console.log(reasons);
   console.log(fallbacks);
   return;
 };

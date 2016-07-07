@@ -36,6 +36,10 @@ module.exports = function (grunt) {
       test: {
         exec: tape + ' ./test/unit_test/**/*_test.js | ' + tapSpec
       },
+      prerelease: { //test all versions serverside, client-side
+        exec: 'browserify ./test/prerelease/checklist.js --standalone tests -o ./demo/lib/tests.js && ' +
+          tape + ' ./test/prerelease/index.js | ' + tapSpec
+      },
 
 
       demo: {
@@ -82,5 +86,6 @@ module.exports = function (grunt) {
   grunt.registerTask('compress', ['run:uglify']);
   grunt.registerTask('lint', ['eslint']);
   grunt.registerTask('demo', ['run:demo']);
+  grunt.registerTask('prerelease', ['run:prerelease']);
   grunt.registerTask('build', ['run:test', 'eslint', 'run:cleanup', 'run:init', 'run:build', 'run:uglify', 'filesize']);
 };

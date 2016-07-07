@@ -3,6 +3,8 @@ Uses semver, with occasional releases to npm and bower.
 here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
 
 ### v.6  &nbsp;  
+* 6.5.0 - builds now using browserify + derequire()
+* 6.4.0 - re-written term-lumper logic
 * 6.3.0 - new nlp.lexicon({word:'POS'}) flow
 * 6.0.0 - be consistent with `text.normal()`, `term.all_forms()`, `text.word_count()`. `text.normal()` includes sentence-terminators, like periods etc.
 

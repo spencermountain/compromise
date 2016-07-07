@@ -17,7 +17,7 @@
 
 		<tr><td>Verb to_past: </td><td>
 		<input type="text" size="15" onKeyUp="webNlp.verb(this,this.value)"><span class="result"></span></td></tr>
-	
+
 		<tr><td>Adj comparative: </td>
 		<td><input type="text" size="15" onKeyUp="webNlp.adj(this,this.value)"><span class="result"></span></td></tr>
 
@@ -26,14 +26,14 @@
 
 		<tr><td>Name Gender:</td><td><input type="text" size="10" onKeyUp="webNlp.gender(this,this.value)"><span class="result"></span></td></tr>
 	</table></div>
-	<script src="https://npmcdn.com/nlp_compromise@latest/builds/nlp_compromise.min.js"></script>
+	<script src="./builds/nlp_compromise.min.js"></script>
 	<script>
 		var webNlp=[];
 		webNlp.gender=function (obj,value){
 			var result=nlp_compromise.person(value).pronoun();
 			obj.nextSibling.innerHTML=result;
 		}
-		webNlp.noun=function (obj,value){	
+		webNlp.noun=function (obj,value){
 			var pluralize=nlp_compromise.noun(value).pluralize();
 			if(pluralize!=nlp_compromise.noun(value).singularize())
 				var singularize=nlp_compromise.noun(value).article()+" "+nlp_compromise.noun(value).singularize();
@@ -60,7 +60,7 @@
 			for(var index of indexList)
 				result=result+' | '+index+": "+arrayList[index];
 			return result.substr(2);
-	
+
 		}
 	</script>
 </body>

@@ -21,15 +21,17 @@ module.exports = function (grunt) {
     },
 
     run: {
-      cleanup: {
+      cleanup: { //remove builds
         exec: 'rm -rf ./builds && mkdir builds'
       },
-      build: {
-        exec: browserify + ' ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] | derequire > ' + uncompressed
+      init: { //add a header, before browserify
+        exec: 'echo "/* nlp_compromise v<%= pkg.version %> MIT*/" > ' + uncompressed
       },
-      uglify: {
-        //file.js -> file.min.js
-        exec: uglify + ' ' + uncompressed + ' --mangle --compress --output ' + compressed + ' --preamble "nlp_compromise@<%= pkg.version %>" --source-map ' + compressed + '.map'
+      build: { //browserify -> babel -> derequire
+        exec: browserify + ' ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] | derequire >> ' + uncompressed
+      },
+      uglify: { // jsFile -> jsFile.min
+        exec: uglify + ' ' + uncompressed + ' --mangle --compress --output ' + compressed + ' --preamble "/*nlp_compromise v<%= pkg.version %> MIT*/"' // --source-map ' + compressed + '.map'
       },
       test: {
         exec: tape + ' ./test/unit_test/**/*_test.js | ' + tapSpec
@@ -37,7 +39,7 @@ module.exports = function (grunt) {
 
 
       demo: {
-        exec: fileServer + ' demo'
+        exec: fileServer + ' demo -o -c-1'
       },
       main: {
         exec: 'node ./src/index.js'
@@ -80,5 +82,5 @@ module.exports = function (grunt) {
   grunt.registerTask('compress', ['run:uglify']);
   grunt.registerTask('lint', ['eslint']);
   grunt.registerTask('demo', ['run:demo']);
-  grunt.registerTask('build', ['run:test', 'eslint', 'run:cleanup', 'run:build', 'run:uglify', 'filesize']);
+  grunt.registerTask('build', ['run:test', 'eslint', 'run:cleanup', 'run:init', 'run:build', 'run:uglify', 'filesize']);
 };

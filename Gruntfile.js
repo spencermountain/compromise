@@ -21,8 +21,10 @@ module.exports = function (grunt) {
     },
 
     run: {
+      cleanup: {
+        exec: 'rm -rf ./builds && mkdir builds'
+      },
       build: {
-        //browserify + babel + derequire > onefile.js
         exec: browserify + ' ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] | derequire > ' + uncompressed
       },
       uglify: {
@@ -41,10 +43,8 @@ module.exports = function (grunt) {
         exec: 'node ./src/index.js'
       },
       build_windows: {
-        exec: 'node_modules\\.bin\\browserify.cmd src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] -o builds/nlp_compromise.js '
       },
       demo_windows: {
-        exec: 'node_modules\\.bin\\http-server.cmd demo'
       }
     },
 
@@ -79,6 +79,6 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['run:test']);
   grunt.registerTask('compress', ['run:uglify']);
   grunt.registerTask('lint', ['eslint']);
-  grunt.registerTask('demo', ['build', 'run:demo']);
-  grunt.registerTask('build', ['run:test', 'eslint', 'run:build', 'run:uglify', 'filesize']);
+  grunt.registerTask('demo', ['run:demo']);
+  grunt.registerTask('build', ['run:test', 'eslint', 'run:cleanup', 'run:build', 'run:uglify', 'filesize']);
 };

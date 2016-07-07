@@ -37,7 +37,7 @@ module.exports = function (grunt) {
         exec: tape + ' ./test/unit_test/**/*_test.js | ' + tapSpec
       },
       browser_test: {
-        exec: 'browserify ./test/unit_test/*_test.js -o ./demo/lib/tests.js && ' + fileServer + ' demo -o -c-1'
+        exec: 'browserify ./test/unit_test/*_test.js -o ./test/browser/compiled_tests.js && ' + fileServer + ' test/browser -o -c-1'
       },
       prerelease: { //test all versions serverside, client-side
         exec: tape + ' ./test/prerelease/index.js | ' + tapSpec
@@ -88,7 +88,7 @@ module.exports = function (grunt) {
   grunt.registerTask('compress', ['run:uglify']);
   grunt.registerTask('lint', ['eslint']);
   grunt.registerTask('demo', ['run:demo']);
-  grunt.registerTask('browsertest', ['run:browser_test']);
+  grunt.registerTask('browser_test', ['run:browser_test']);
   grunt.registerTask('prerelease', ['run:prerelease']);
   grunt.registerTask('build', ['run:test', 'eslint', 'run:cleanup', 'run:init', 'run:build', 'run:uglify', 'filesize']);
 };

@@ -5,21 +5,58 @@
     body {
         font-family: monospace;
         white-space: pre;
+        color:grey;
+    }
+    #failures{
+      background-color:indianred;
+      color:black;
+      font-size:25px;
+    }
+    #result{
+      margin-left:5%;
+    }
+    .ok{
+      margin:2px;
+      margin-left:25px;
+      display:inline;
+      background-color:lightsteelblue;
+    }
+    .notok{
+      display:inline;
+      background-color:crimson;
+      color:white;
+      font-size:18px;
+    }
+    .header{
+      margin-left:-5%;
+      color:steelblue;
+      font-size:18px;
     }
   </style>
 </head>
 <body>
-  <pre id="result"/>
+  <pre id="failures" ></pre>
+  <pre id="result">
+    browser-based test of <a href="https://github.com/nlp-compromise/nlp_compromise" style="color:steelblue;">nlp_compromise</a>
+  </pre>
 <script>
   //overwrite console.log
   if (typeof console === 'undefined') console = {};
   console.log = function (msg) {
-    var el=document.getElementById("result")
-    el.innerHTML+="\n"+msg
+    var parent=document.getElementById("result")
+    var el=document.createElement('div')
+    msg=msg.replace(/^#/,'')
+    el.innerHTML= msg+"\n"
+     if (msg.indexOf('not ok') === 0) {
+       el.className='notok'
+       document.getElementById("failures").innerHTML+="\n"+msg
+     }else if(msg.indexOf('ok') === 0){
+       el.className='ok'
+     }else{
+       el.className='header'
+     }
+    parent.appendChild(el)
   };
-  setTimeout(function(){
-    tests(nlp_compromise,'minimized')
-  },800)
 </script>
 <script src="./builds/nlp_compromise.min.js"></script>
 <script src="./lib/tests.js"></script>

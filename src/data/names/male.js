@@ -1,5 +1,5 @@
 'use strict';
-const fns = require('../../fns');
+const fns = require('../fns');
 
 //the unique/uncompressed names..
 let arr = [
@@ -190,7 +190,7 @@ let suffix_compressed = {
   ad: 'br,ch,conr'
 };
 
-arr = fns.expand_suffixes(arr, suffix_compressed);
+arr = fns.uncompress_suffixes(arr, suffix_compressed);
 
 let prefix_compressed = {
   jos: 'eph,h,hua',
@@ -203,6 +203,6 @@ let prefix_compressed = {
   al: 'ex,fonso,i,onzo',
   gu: 'illermo,stavo,y'
 };
-arr = fns.expand_prefixes(arr, prefix_compressed);
+arr = fns.uncompress_prefixes(arr, prefix_compressed);
 
 module.exports = arr;

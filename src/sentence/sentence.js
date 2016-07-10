@@ -1,70 +1,73 @@
 'use strict';
 //a Sentence() is a list of Terms
 const fns = require('../fns');
-const Term = require('../term/Term');
-const split_terms = require('./split_terms')
-const inspect = require('./inspect/inspect')
-const transform = require('./transform/transform')
-const render = require('./render/render')
+const Term = require('../term/term');
+const split_terms = require('./split_terms');
+const get = require('./get/get');
+const transform = require('./transform/transform');
+const render = require('./render/render');
+const helpers = require('./helpers');
 
 class Sentence {
   constructor(str, context) {
     this.input = fns.ensureString(str);
     this.context = context;
-    this.terms = split_terms(this.input)
+    this.terms = split_terms(this.input);
     this.terms = this.terms.map((o) => {
-      let c = fns.copy(context)
+      let c = fns.copy(context);
       c.whitespace = {
         before: o.before || '',
-        after: o.after || '',
-      }
-      c.sentence_ref = this //give it a ref
-      return new Term(o.text, c)
-    })
+        after: o.after || ''
+      };
+      c.sentence_ref = this; //give it a ref
+      return new Term(o.text, c);
+    });
+    //parse-out terminating character
+    this.terminator = helpers.strip_terminator(this);
   }
 
   //change the text, return this
   to(method) {
     if (fns.isFunction(method)) {
-      return method(this)
+      return method(this);
     }
     //is it known?
     if (transform[method]) {
-      return transform[method](this)
+      return transform[method](this);
     }
-    return this
+    return this;
   }
 
-  //inspect, analyze, return boolean
+  //get, analyze, return boolean
   is(method) {
     if (fns.isFunction(method)) {
-      return method(this)
+      return method(this);
     }
-    return false
+    return false;
   }
 
   //get some data back
   get(method) {
     if (fns.isFunction(method)) {
-      return method(this)
+      return method(this);
     }
     //is it known?
-    if (inspect[method]) {
-      return inspect[method](this)
+    if (get[method]) {
+      return get[method](this);
     }
-    return null
+    return null;
   }
 
-  //render it as something
-  return(method) {
+  //return it as something
+  as(method) {
     if (fns.isFunction(method)) {
-      return method(this)
+      return method(this);
     }
     //is it known?
     if (render[method]) {
-      return render[method](this)
+      return render[method](this);
     }
-    return ''
+    return '';
   }
 }
-module.exports = Sentence
+module.exports = Sentence;

@@ -36,7 +36,7 @@ module.exports = [
   'lawyer',
   'officer',
   'plumber',
-  'inspector',
+  'getor',
   'psychologist',
   'receptionist',
   'roofer',

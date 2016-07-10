@@ -3,11 +3,14 @@
 module.exports = {
   text: (t) => {
     return t.sentences.reduce((str, s) => {
-      str += s.return('text')
-      return str
-    }, '')
+      str += s.as('text');
+      return str;
+    }, '');
   },
   normal: (t) => {
-
+    return t.sentences.reduce((str, s) => {
+      str += s.as('normal') + ' ';
+      return str;
+    }, '');
   }
-}
+};

@@ -1,15 +1,16 @@
 'use strict';
-const Text = require('./text/Text')
+const Text = require('./text/text');
 
 const nlp = function(str, context) {
-  return new Text(str, context)
+  return new Text(str, context);
 };
 
 module.exports = nlp;
 
 
-// console.log(nlp('john is cool. he swims').sentences[0].return('text'))
-// console.log(nlp('john is cool. he swims').return('text'))
+// console.log(nlp('John is cool. He swims').sentences[0].as('normal'));
+// console.log(nlp('John is cool. He swims').to('Exclamation').as('text'));
+console.log(nlp('John is cool!!   He swims').as('normal'));
 // nlp('john is cool').is('Question');
 //
 // import futureTense from 'someLibrary';

@@ -17,13 +17,34 @@ exports.ensureString = (input) => {
 //coerce any input into a string
 exports.ensureObject = (input) => {
   if (typeof input !== 'object') {
-    return {}
+    return {};
   }
   if (input === null || input instanceof Array) {
-    return {}
+    return {};
   }
-  return input
-}
+  return input;
+};
+
+//string utilities
+exports.endsWith = function(str, suffix) {
+  //if suffix is regex
+  if (suffix && suffix instanceof RegExp) {
+    if (str.match(suffix)) {
+      return true;
+    }
+  }
+  //if suffix is a string
+  if (str && suffix && str.indexOf(suffix, str.length - suffix.length) !== -1) {
+    return true;
+  }
+  return false;
+};
+exports.startsWith = function(str, prefix) {
+  if (str && str.length && str.substr(0, 1) === prefix) {
+    return true;
+  }
+  return false;
+};
 
 //turn a nested array into one array
 exports.flatten = function(arr) {
@@ -37,7 +58,7 @@ exports.flatten = function(arr) {
 //shallow-clone an object
 exports.copy = (o) => {
   let o2 = {};
-  o = exports.ensureObject(o)
+  o = exports.ensureObject(o);
   Object.keys(o).forEach((k) => {
     o2[k] = o[k];
   });

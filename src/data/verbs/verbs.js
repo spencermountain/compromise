@@ -199,7 +199,7 @@ let arr = [
   'set',
   'pay',
   'grow',
-  'inspect',
+  'get',
   'instruct',
   'know',
   'take',

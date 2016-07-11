@@ -1,25 +1,31 @@
-#new v7 API proposal!
+#new v7 API proposal! :heart::heart::heart::heart::heart:
 ```javascript
-nlp('', {}).to(myTransform).as(myOutput)`
+nlp('', {}).to(myTransform).as(myOutput)
 ```
-:heart::heart::heart::heart::heart:
 
-Reasoning:
-* clears-up immutable/mutable ambiguity in the api
-* supports 'no-install' first-class scripting/plugins
-* stable no-surprise return values
+###Reasoning:
+* clears-up immutable/mutable ambiguity
+* supports no-install 'first-class' scripting/plugins
+* less-surprising return values
 * avoids re-parsing problems in pos-specific methods like `nlp.value()`
 
-###no more `nlp.person()` etc.
-*every input* will now be pos tagged, and automatically supply the appropriate methods of each term.
-
-if, you know in advance, and desire to co-erce the pos:
+###no more `nlp.person(), nlp.value()...`
+**every input** will now be pos-tagged, and automatically supplied the appropriate methods of each term.
+* if you don't trust this, you can co-erce the POS:
 ```javascript
 nlp('mayor of toronto').to('Noun').to('plural').as('text')
 //mayors of toronto
 ```
+* some conditional logic for applying appropriate transformation, like
+```javascript
+nlp('doctor').to('plural').as('text')
+//doctors
+nlp('we went to the doctor to visit.').to('plural').as('text')
+//he went to the doctors to visit.
+```
 
-#Change/Transforms `.to()`
+#API
+##Change/Transforms `.to()`
 ```javascript
 nlp('john is cool').to('PastTense');
 
@@ -29,7 +35,7 @@ nlp('john is cool').to(myTransform);
 ```
 They alone should transform/mutate the state. These methods all return `this`.
 
-#Query `.get()`
+##Query `.get()`
 ```javascript
 nlp('john is cool').get(ngrams);
 //[..]
@@ -49,14 +55,14 @@ nlp('oh, great new api.').is(isSarcastic);
 ```
 
 
-#Match/subset-lookup `.match()`
+##Match/subset-lookup `.match()`
 ```javascript
 nlp('john is cool. jane is nice').match('[Person] is');
 //
 ```
 
 
-#Conditional transforms?
+##Conditional transforms? `.if()`
 like `.is()`. but somehow disables subsequent transformations
 ```javascript
 //and maybe this?
@@ -66,7 +72,7 @@ nlp('john is cool').if('Copula').to('PastTense');
 //'john was cool'
 ```
 
-#returning/outputs
+##returning/outputs `.as()`
 ```javascript
 nlp('John is cool').as('normal');
 nlp('John is cool').as('text');

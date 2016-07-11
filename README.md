@@ -1,6 +1,11 @@
 #new v7 API proposal! :heart::heart::heart::heart::heart:
 ```javascript
 nlp('', {}).to(myTransform).as(myOutput)
+
+nlp('', {}).sentences[0].to('PastTense').as('json')
+nlp('', {}).if('Question').get('Nouns')
+
+nlp('', {}).get('passiveVoice')
 ```
 
 ###Reasoning:
@@ -13,8 +18,8 @@ nlp('', {}).to(myTransform).as(myOutput)
 **every input** will now be pos-tagged, and automatically supplied the appropriate methods of each term.
 * if you don't trust this, you can co-erce the POS:
 ```javascript
-nlp('mayor of toronto').to('Noun').to('plural').as('text')
-//mayors of toronto
+nlp('john is cool').to('Noun').to('plural').as('text')
+//john is cools
 ```
 * some conditional logic for applying appropriate transformation, like
 ```javascript
@@ -25,7 +30,7 @@ nlp('we went to the doctor to visit.').to('plural').as('text')
 ```
 
 #API
-##Change/Transforms `.to()`
+##Change/Transform `.to()`
 ```javascript
 nlp('john is cool').to('PastTense');
 
@@ -38,28 +43,29 @@ They alone should transform/mutate the state. These methods all return `this`.
 ##Query `.get()`
 ```javascript
 nlp('john is cool').get(ngrams);
-//[..]
+//['john is', 'is cool'...]
 nlp('john is cool').get('verbs');
-//[Term() "is"]
+//[Term="is"]
 nlp('john is cool').get('people');
-//[Person() "john"]
+//[Person="john"]
 ```
 ##Yes/No info `.is()`
 ```javascript
 nlp('john is cool').is('Question');
-//(false)
+//false
 nlp('kick').is('Verb');
-//(true)
+//true
 nlp('oh, great new api.').is(isSarcastic);
-//(true)
+//true
 ```
 
 
 ##Match/subset-lookup `.match()`
 ```javascript
-nlp('john is cool. jane is nice').match('[Person] is');
-//
+nlp('john is cool and jane is nice').match('[Person] is');
+// [Terms[], Terms[]]
 ```
+not sure how to handle, and represent these subsets of sentences
 
 
 ##Conditional transforms? `.if()`
@@ -72,12 +78,13 @@ nlp('john is cool').if('Copula').to('PastTense');
 //'john was cool'
 ```
 
-##returning/outputs `.as()`
+##rendering, return, output `.as()`
 ```javascript
 nlp('John is cool').as('normal');
 nlp('John is cool').as('text');
 nlp('John is cool').as('html');
+//also allows a cleaner, less-crowded result
 nlp('John is cool').as('json');
-nlp('John is cool').as('debug');
+//and adhoc-scripting
 nlp('John is cool').as(myFunction);
 ```

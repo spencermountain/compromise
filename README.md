@@ -1,14 +1,16 @@
 #new v7 API
-`nlp('string', {context}).to(transform).as(output)`
+```javascript
+nlp('string', {}).to(transform).as(output)`
+```
 
 Reasoning:
-* clears up immutable/mutable ambiguities
-* supports 'no-install' first-class plugins/scripting
-* less-surprises about return values
-* fixes lumper-splitter & re-parsing problems of pos-specific methods like `nlp.value('maybe more than a value').parse()`
+* clears-up immutable/mutable ambiguity in the api
+* supports 'no-install' first-class scripting/plugins
+* stable no-surprise return values
+* avoids re-parsing problems in pos-specific methods like `nlp.value()`
 
 ###no more `nlp.person()` etc.
-so every input will now be pos tagged, and automatically supply the appropriate methods of each term.
+*every input* will now be pos tagged, and automatically supply the appropriate methods of each term.
 
 if, you know in advance, and desire to co-erce the pos:
 ```javascript
@@ -35,7 +37,7 @@ nlp('john is cool').get('verbs');
 nlp('john is cool').get('people');
 //[Person() "john"]
 ```
-###Yes/No info `.is()`
+##Yes/No info `.is()`
 ```javascript
 nlp('john is cool').is('Question');
 //(false)
@@ -54,7 +56,7 @@ nlp('john is cool. jane is nice').match('[Person] is');
 
 
 #Conditional transforms?
-like `.is()`. but flags-off transformations
+like `.is()`. but somehow disables subsequent transformations
 ```javascript
 //and maybe this?
 nlp('john is cool').if('Statement').to('Negative');
@@ -68,5 +70,7 @@ nlp('john is cool').if('Copula').to('PastTense');
 nlp('John is cool').as('normal');
 nlp('John is cool').as('text');
 nlp('John is cool').as('html');
+nlp('John is cool').as('json');
+nlp('John is cool').as('debug');
 nlp('John is cool').as(myFunction);
 ```

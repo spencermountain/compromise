@@ -1,7 +1,8 @@
-#new v7 API
+#new v7 API proposal!
 ```javascript
-nlp('string', {}).to(transform).as(output)`
+nlp('', {}).to(myTransform).as(myOutput)`
 ```
+:heart::heart::heart::heart::heart:
 
 Reasoning:
 * clears-up immutable/mutable ambiguity in the api

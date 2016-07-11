@@ -35,14 +35,7 @@ nlp('john is cool').get('verbs');
 nlp('john is cool').get('people');
 //[Person() "john"]
 ```
-
-#Match/subset-lookup `.match()`
-```javascript
-nlp('john is cool. jane is nice').match('[Person] is');
-//
-```
-
-#Yes/No info `.get()`
+###Yes/No info `.is()`
 ```javascript
 nlp('john is cool').is('Question');
 //(false)
@@ -51,6 +44,14 @@ nlp('kick').is('Verb');
 nlp('oh, great new api.').is(isSarcastic);
 //(true)
 ```
+
+
+#Match/subset-lookup `.match()`
+```javascript
+nlp('john is cool. jane is nice').match('[Person] is');
+//
+```
+
 
 #Conditional transforms?
 like `.is()`. but flags-off transformations

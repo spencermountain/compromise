@@ -11,10 +11,21 @@ module.exports = {
 
   Exclamation: (t) => {
     t.sentences = t.sentences.map((s) => {
-      if (s.is('Exclamation')) {
+      //don't turn questions into statements
+      if (s.is('Question')) {
         return s;
       }
       return s.to('Exclamation');
+    });
+    return t;
+  },
+  Statement: (t) => {
+    t.sentences = t.sentences.map((s) => {
+      //don't turn questions into statements
+      if (s.is('Question')) {
+        return s;
+      }
+      return s.to('Statement');
     });
     return t;
   }

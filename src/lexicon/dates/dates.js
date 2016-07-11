@@ -25,8 +25,9 @@ let months = [
   'nov',
   'dec',
   'sept',
-  'sep',
+  'sep'
 ];
+
 let days = [
   'monday',
   'tuesday',
@@ -43,8 +44,8 @@ let days = [
   'sat',
   'sun'
 ];
-//add 'mondays'
-for(let i = 0; i <= 6; i++) {
+//add plural eg.'mondays'
+for (let i = 0; i <= 6; i++) {
   days.push(days[i] + 's');
 }
 
@@ -61,11 +62,11 @@ let durations = [
   'week',
   'month',
   'year',
-  'decade',
+  'decade'
 ];
 //add their plurals
 let len = durations.length;
-for(let i = 0; i < len; i++) {
+for (let i = 0; i < len; i++) {
   durations.push(durations[i] + 's');
 }
 durations.push('century');
@@ -77,7 +78,7 @@ let relative = [
   'tomorrow',
   'week',
   'weekend',
-  'tonight',
+  'tonight'
 ];
 
 module.exports = {

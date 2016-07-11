@@ -47,31 +47,4 @@ let organizations = [
   'yamaha'
 ];
 
-let suffixes = [
-  'center',
-  'centre',
-  'memorial',
-  'school',
-  'government',
-  'faculty',
-  'society',
-  'union',
-  'ministry',
-  'collective',
-  'association',
-  'committee',
-  'university',
-  'bank',
-  'college',
-  'foundation',
-  'department',
-  'institute',
-  'club',
-  'co',
-  'sons'
-];
-
-module.exports = {
-  suffixes: suffixes,
-  organizations: organizations
-};
+module.exports = organizations;

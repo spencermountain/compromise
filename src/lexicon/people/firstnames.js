@@ -8,48 +8,9 @@
 'use strict';
 let male = require('./male');
 let female = require('./female');
+let ambiguous = require('./ambiguous');
 const names = {};
 
-//names commonly used in either gender
-const ambiguous = [
-  'casey',
-  'jamie',
-  'lee',
-  'jaime',
-  'jessie',
-  'morgan',
-  'rene',
-  'robin',
-  'devon',
-  'kerry',
-  'alexis',
-  'guadalupe',
-  'blair',
-  'kasey',
-  'jean',
-  'marion',
-  'aubrey',
-  'shelby',
-  'jan',
-  'shea',
-  'jade',
-  'kenyatta',
-  'kelsey',
-  'shay',
-  'lashawn',
-  'trinity',
-  'regan',
-  'jammie',
-  'cassidy',
-  'cheyenne',
-  'reagan',
-  'shiloh',
-  'marlo',
-  'andra',
-  'devan',
-  'rosario',
-  'lee'
-];
 for (let i = 0; i < male.length; i++) {
   names[male[i]] = 'm';
 }
@@ -64,8 +25,4 @@ for (let i = 0; i < ambiguous.length; i += 1) {
 // console.log(names['jill']);
 // console.log(names['sue'])
 // console.log(names['jan'])
-module.exports = {
-  all: names,
-  male: male,
-  female: female
-};
+module.exports = names;

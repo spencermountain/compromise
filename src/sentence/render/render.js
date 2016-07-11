@@ -3,9 +3,9 @@
 module.exports = {
   text: (s) => {
     return s.terms.reduce((str, t) => {
-      str += t.as('text');
-      return str;
-    }, '');
+        str += t.as('text');
+        return str;
+      }, '') + s.terminator;
   },
 
   normal: (s) => {

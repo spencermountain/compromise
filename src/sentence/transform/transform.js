@@ -9,7 +9,12 @@ module.exports = {
   },
 
   Exclamation: (s) => {
-    s.terms[s.terms.length - 1].text += '!';
+    s.terminator = '!';
+    return s;
+  },
+
+  Statement: (s) => {
+    s.terminator = '.';
     return s;
   }
 };

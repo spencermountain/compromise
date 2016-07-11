@@ -7,6 +7,7 @@ const get = require('./get/get');
 const transform = require('./transform/transform');
 const render = require('./render/render');
 const helpers = require('./helpers');
+const tagger = require('./pos/tagger');
 
 class Sentence {
   constructor(str, context) {
@@ -24,6 +25,8 @@ class Sentence {
     });
     //parse-out terminating character
     this.terminator = helpers.strip_terminator(this);
+    //do Part-of-Speech tagging
+    tagger(this);
   }
 
   //change the text, return this

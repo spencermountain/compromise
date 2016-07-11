@@ -1,0 +1,23 @@
+module.exports = [
+  'center',
+  'centre',
+  'memorial',
+  'school',
+  'government',
+  'faculty',
+  'society',
+  'union',
+  'ministry',
+  'collective',
+  'association',
+  'committee',
+  'university',
+  'bank',
+  'college',
+  'foundation',
+  'department',
+  'institute',
+  'club',
+  'co',
+  'sons'
+];

@@ -2,7 +2,8 @@
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
 'use strict';
-let abbreviations = require('../data/data').abbreviations.abbreviations;
+let data = require('../lexicon/data');
+let abbreviations = Object.keys(data.abbreviations);
 let fns = require('../fns');
 
 const naiive_split = function(text) {

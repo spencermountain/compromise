@@ -1,5 +1,5 @@
 const cardinal = {
-  ones : {
+  ones: {
     'a': 1,
     'zero': 0,
     'one': 1,
@@ -10,9 +10,9 @@ const cardinal = {
     'six': 6,
     'seven': 7,
     'eight': 8,
-    'nine': 9,
+    'nine': 9
   },
-  teens : {
+  teens: {
     'ten': 10,
     'eleven': 11,
     'twelve': 12,
@@ -22,9 +22,9 @@ const cardinal = {
     'sixteen': 16,
     'seventeen': 17,
     'eighteen': 18,
-    'nineteen': 19,
+    'nineteen': 19
   },
-  tens : {
+  tens: {
     'twenty': 20,
     'thirty': 30,
     'forty': 40,
@@ -32,9 +32,9 @@ const cardinal = {
     'sixty': 60,
     'seventy': 70,
     'eighty': 80,
-    'ninety': 90,
+    'ninety': 90
   },
-  multiples : {
+  multiples: {
     'hundred': 1e2,
     'grand': 1e3,
     'thousand': 1e3,
@@ -121,19 +121,11 @@ const prefixes = {
 
   'square': 1,
   'cubic': 1,
-  'quartic': 1,
+  'quartic': 1
 };
 
 module.exports = {
-  ones: cardinal.ones,
-  teens: cardinal.teens,
-  tens: cardinal.tens,
-  multiples: cardinal.multiples,
-
-  ordinal_ones: ordinal.ones,
-  ordinal_teens: ordinal.teens,
-  ordinal_tens: ordinal.tens,
-  ordinal_multiples: ordinal.multiples,
-
-  prefixes: prefixes,
+  cardinal: cardinal,
+  ordinal: ordinal,
+  prefixes: prefixes
 };

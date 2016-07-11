@@ -1,11 +1,20 @@
 'use strict';
 
-//shallow-clone an object
+
+//shallow-merge an object
 exports.extendObj = (o, o2) => {
-  Object.keys(o).forEach((k) => {
-    o2[k] = o[k];
+  Object.keys(o2).forEach((k) => {
+    o[k] = o2[k];
   });
-  return o2;
+  return o;
+};
+
+
+exports.addArr = (lexicon, arr, tag) => {
+  const l = arr.length;
+  for (let i = 0; i < l; i++) {
+    lexicon[arr[i]] = tag;
+  }
 };
 
 

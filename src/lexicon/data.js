@@ -1,5 +1,6 @@
 'use strict';
-//just a helper file for file paths..
+//the data is all variously compressed and sorted
+//this is just a helper file for the main file paths..
 let files = {
   'people': [
     'firstnames'

@@ -1,7 +1,6 @@
 'use strict';
 
 const misc = {
-
   'here': 'Adjective',
   'better': 'Comparative',
   'earlier': 'Superlative',

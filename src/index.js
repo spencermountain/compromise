@@ -1,7 +1,11 @@
 'use strict';
 const Text = require('./text/text');
+const log = require('./log');
+
+// debug.enable('*')
 
 const nlp = function(str, context) {
+  log(str)
   return new Text(str, context);
 };
 
@@ -11,7 +15,9 @@ module.exports = nlp;
 // console.log(nlp('John is cool. He swims').sentences[0].as('normal'));
 // console.log(nlp('John is cool. He swims').to('Exclamation').to('Statement').as('text'));
 // console.log(nlp('John is cool!!   He swims').as('normal'));
-console.log(nlp('john is cool').is('Question'));
+nlp('john is cool. he is nice', {
+  debug: 'text'
+}).is('Question')
 //
 // import futureTense from 'someLibrary';
 // nlp('john is cool').to(futureTense).as('normal');

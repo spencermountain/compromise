@@ -1,5 +1,5 @@
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
   //paths to binaries, so no globals are needed
   var browserify = './node_modules/.bin/browserify';
   var tape = './node_modules/tape/bin/tape';
@@ -15,12 +15,10 @@ module.exports = function (grunt) {
 
     pkg: grunt.file.readJSON('./package.json'),
 
-    watch: {
-      files: ['./src/*.js', './src/**', './test/unit_tests/**'],
-      tasks: ['run:main']
-    },
-
     run: {
+      watch: {
+        exec: 'watch -x -c --no-title "node" ./src/index.js'
+      },
       cleanup: { //remove builds
         exec: 'rm -rf ./builds && mkdir builds'
       },
@@ -72,8 +70,8 @@ module.exports = function (grunt) {
     eslint: {
       target: ['./src/**'],
       options: {
-        configFile: '.eslintrc',
-      },
+        configFile: '.eslintrc'
+      }
     }
 
   });
@@ -88,6 +86,7 @@ module.exports = function (grunt) {
   grunt.registerTask('compress', ['run:uglify']);
   grunt.registerTask('lint', ['eslint']);
   grunt.registerTask('demo', ['run:demo']);
+  grunt.registerTask('watch', ['run:watch']);
   grunt.registerTask('browser_test', ['run:browser_test']);
   grunt.registerTask('prerelease', ['run:prerelease']);
   grunt.registerTask('build', ['run:test', 'eslint', 'run:cleanup', 'run:init', 'run:build', 'run:uglify', 'filesize']);

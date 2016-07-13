@@ -17,7 +17,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('./package.json'),
 
     watch: {
-      files: ['./src/**', './scratch.js'],
+      files: ['./src/**', './scratch_file.js', './Gruntfile.js'],
       tasks: ['run:scratch']
     },
 
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
         exec: fileServer + ' demo -o -c-1'
       },
       scratch: {
-        exec: 'node ./scratch.js --debug'
+        exec: 'node ./scratch_file.js --debug'
       },
       build_windows: {
       },

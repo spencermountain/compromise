@@ -2,7 +2,11 @@
 //a Text() is a list of sentences, which are a list of Terms
 const fns = require('../fns');
 // const debug = require('../debug');
+<<<<<<< Updated upstream
 const logger = require('../log');
+=======
+const logger = require('../logger');
+>>>>>>> Stashed changes
 let log = function() {}
 const Sentence = require('../sentence/sentence');
 const split_sentences = require('./split_sentences');

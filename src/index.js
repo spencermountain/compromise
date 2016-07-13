@@ -1,11 +1,7 @@
 'use strict';
 const Text = require('./text/text');
-// const log = require('./log');
-
-// debug.enable('*')
 
 const nlp = function(str, context) {
-  // log(str)
   return new Text(str, context);
 };
 

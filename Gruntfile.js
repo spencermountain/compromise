@@ -16,10 +16,15 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('./package.json'),
 
+    watch: {
+      files: ['./src/**', './scratch.js'],
+      tasks: ['run:scratch']
+    },
+
     run: {
-      watch: {
-        exec: watch + ' -x "node" ./src/index.js'
-      },
+      // watch: {
+      //   exec: watch + ' "node ./scratch.js" ./ -interval=1 -ignoreDotFiles=true -ignoreUnreadableDir=true -ignoreDirectoryPattern=/node_modules/ --wait=1'
+      // },
       build: { //browserify -> babel -> derequire
         exec: browserify + ' ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] | derequire >> ' + uncompressed
       },
@@ -46,8 +51,8 @@ module.exports = function(grunt) {
       demo: {
         exec: fileServer + ' demo -o -c-1'
       },
-      main: {
-        exec: 'node ./src/index.js'
+      scratch: {
+        exec: 'node ./scratch.js --debug'
       },
       build_windows: {
       },
@@ -87,7 +92,6 @@ module.exports = function(grunt) {
   grunt.registerTask('compress', ['run:uglify']);
   grunt.registerTask('lint', ['eslint']);
   grunt.registerTask('demo', ['run:demo']);
-  grunt.registerTask('watch', ['run:watch']);
   grunt.registerTask('browser_test', ['run:browser_test']);
   grunt.registerTask('prerelease', ['run:prerelease']);
   grunt.registerTask('build', ['run:test', 'eslint', 'run:cleanup', 'run:init', 'run:build', 'run:uglify', 'filesize']);

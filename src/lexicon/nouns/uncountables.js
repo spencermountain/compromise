@@ -97,7 +97,6 @@ module.exports = [
   'lightning',
   'literature',
   'luck',
-  'melancholy',
   'milk',
   'mist',
   'music',

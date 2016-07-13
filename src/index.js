@@ -11,10 +11,10 @@ module.exports = nlp;
 // console.log(nlp('John is cool. He swims').sentences[0].as('normal'));
 // console.log(nlp('John is cool. He swims').to('Exclamation').to('Statement').as('text'));
 // console.log(nlp('John is cool!!   He swims').as('normal'));
-let context = {
-  debug: true
-}
-nlp('John is cool. He is nice', context).to('Exclamation')
+// let context = {
+//   debug: true
+// }
+// nlp('John is cool. He is nice', context).to('Exclamation')
 //
 // import futureTense from 'someLibrary';
 // nlp('john is cool').to(futureTense).as('normal');

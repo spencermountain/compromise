@@ -50,10 +50,8 @@ const compact = {
   ],
 
   Place: [
-    'new york',
     'new england',
     'new hampshire',
-    'new delhi',
     'new jersey',
     'new mexico',
     'united states',

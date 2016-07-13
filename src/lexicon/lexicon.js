@@ -11,6 +11,9 @@ const addObj = (o) => {
 const addArr = (arr, tag) => {
   const l = arr.length;
   for (let i = 0; i < l; i++) {
+    // if (lexicon[arr[i]]) {
+    // console.log('-' + arr[i] + '    ' + lexicon[arr[i]] + '->' + tag)
+    // }
     lexicon[arr[i]] = tag;
   }
 };
@@ -79,4 +82,4 @@ module.exports = lexicon;
 
 // console.log(Object.keys(data));
 // console.log(data.misc);
-console.log(lexicon.the)
+// console.log(lexicon.the)

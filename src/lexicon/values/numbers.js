@@ -1,6 +1,6 @@
 const cardinal = {
   ones: {
-    'a': 1,
+    // 'a': 1,
     'zero': 0,
     'one': 1,
     'two': 2,

@@ -12,7 +12,7 @@ const tagger = require('./pos/tagger');
 class Sentence {
   constructor(str, context) {
     this.input = fns.ensureString(str);
-    this.context = context;
+    this.context = fns.ensureObject(context)
     this.terms = split_terms(this.input);
     this.terms = this.terms.map((o) => {
       let c = fns.copy(context);

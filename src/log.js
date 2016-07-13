@@ -73,4 +73,12 @@ var debug = function(str, where) {
   console.log(padding + str)
 }
 
-module.exports = debug
+var noop=function(){}
+
+var log=function(should){
+  if(should===true){
+    return debug
+  }
+  return noop
+}
+module.exports = log

@@ -10,14 +10,6 @@ exports.extendObj = (o, o2) => {
 };
 
 
-exports.addArr = (lexicon, arr, tag) => {
-  const l = arr.length;
-  for (let i = 0; i < l; i++) {
-    lexicon[arr[i]] = tag;
-  }
-};
-
-
 //uncompress data in the adhoc compressed form {'ly':'kind,quick'}
 exports.uncompress_suffixes = function(list, obj) {
   let keys = Object.keys(obj);

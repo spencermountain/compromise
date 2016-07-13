@@ -22,6 +22,7 @@
     "src/"
   ],
   "dependencies": {
+    "watch": "^0.19.1"
   },
   "devDependencies": {
     "grunt-cli": "1.2.0",

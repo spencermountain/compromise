@@ -3,6 +3,7 @@ module.exports = function(grunt) {
   //paths to binaries, so no globals are needed
   var browserify = './node_modules/.bin/browserify';
   var tape = './node_modules/tape/bin/tape';
+  var watch = './node_modules/watch/cli.js';
   var tapSpec = './node_modules/tap-spec/bin/cmd.js';
   var fileServer = './node_modules/.bin/http-server';
   var uglify = './node_modules/uglify-js/bin/uglifyjs';
@@ -17,13 +18,7 @@ module.exports = function(grunt) {
 
     run: {
       watch: {
-        exec: 'watch -x -c --no-title "node" ./src/index.js'
-      },
-      cleanup: { //remove builds
-        exec: 'rm -rf ./builds && mkdir builds'
-      },
-      init: { //add a header, before browserify
-        exec: 'echo "/* nlp_compromise v<%= pkg.version %> MIT*/" > ' + uncompressed
+        exec: watch + ' -x "node" ./src/index.js'
       },
       build: { //browserify -> babel -> derequire
         exec: browserify + ' ./src/index.js --standalone nlp_compromise -t [ babelify --presets [ es2015 ] ] | derequire >> ' + uncompressed
@@ -34,8 +29,14 @@ module.exports = function(grunt) {
       test: {
         exec: tape + ' ./test/unit_test/**/*_test.js | ' + tapSpec
       },
+      cleanup: { //remove builds
+        exec: 'rm -rf ./builds && mkdir builds'
+      },
+      init: { //add a header, before browserify
+        exec: 'echo "/* nlp_compromise v<%= pkg.version %> MIT*/" > ' + uncompressed
+      },
       browser_test: {
-        exec: 'browserify ./test/unit_test/*_test.js -o ./test/browser_test/compiled_tests.js && ' + fileServer + ' test/browser_test -o -c-1'
+        exec: browserify + ' ./test/unit_test/*_test.js -o ./test/browser_test/compiled_tests.js && ' + fileServer + ' test/browser_test -o -c-1'
       },
       prerelease: { //test all versions serverside, client-side
         exec: tape + ' ./test/prerelease/index.js | ' + tapSpec

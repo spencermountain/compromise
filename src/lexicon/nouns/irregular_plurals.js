@@ -61,10 +61,22 @@ let main = [
   ['thief', 'thieves'],
   ['tooth', 'teeth']
 ];
-
+//decompress it
 main = main.map(function(a) {
   a[1] = a[1].replace('_', a[0]);
   return a;
 });
+//build-out two mappings
+const toSingle = main.reduce((h, a) => {
+  h[a[1]] = a[0]
+  return h
+}, {})
+const toPlural = main.reduce((h, a) => {
+  h[a[0]] = a[1]
+  return h
+}, {})
 
-module.exports = main;
+module.exports = {
+  toSingle: toSingle,
+  toPlural: toPlural
+};

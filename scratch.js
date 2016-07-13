@@ -4,11 +4,12 @@
 console.log("\n\n\n\n\n\n\n========================\n\n")
 
 const nlp = require('./src/index')
-// const logger = require('./src/logger')
+const log = require('./src/log')
 
 
 let context = {
   debug: true
 }
 let r = nlp('John is cool. He is nice', context).to('Exclamation')
-console.log(r)
+log(r, 'main')
+log(r, 'main/path')

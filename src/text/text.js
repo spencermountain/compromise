@@ -2,7 +2,6 @@
 //a Text() is a list of sentences, which are a list of Terms
 const fns = require('../fns');
 // const debug = require('../debug');
-const logger = require('../logger');
 let log = function() {}
 const Sentence = require('../sentence/sentence');
 const split_sentences = require('./split_sentences');
@@ -14,7 +13,6 @@ class Text {
   constructor(str, context) {
     this.input = fns.ensureString(str);
     this.context = fns.ensureObject(context);
-    // log = logger(this.context.debug, 'text')
     this.sentences = split_sentences(this.input);
     this.sentences = this.sentences.map((s) => {
       let c = fns.copy(context);

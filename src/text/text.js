@@ -6,7 +6,7 @@ let log = function() {}
 const Sentence = require('../sentence/sentence');
 const split_sentences = require('./split_sentences');
 const get = require('./get/get');
-const transform = require('./transform/transform');
+const transforms = require('./transforms/transforms');
 const render = require('./render/render');
 
 class Text {
@@ -28,7 +28,7 @@ class Text {
       return method(this);
     }
     //is it known?
-    if (transform[method]) {
+    if (transforms[method]) {
       log('====' + method + '====')
       return transform[method](this);
     }
@@ -57,6 +57,7 @@ class Text {
 
   //return it as something
   as(method) {
+    log('====' + method + '====')
     if (fns.isFunction(method)) {
       return method(this);
     }

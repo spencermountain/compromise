@@ -1,6 +1,5 @@
 'use strict';
-const lexicon = require('../../root/lexicon/lexicon')
-const log = require('../../root/log')
+const {lexicon, log} = require('../../paths')
 const path = 'tagger/lexicon'
 
 const lexicon_pass = function(s) {

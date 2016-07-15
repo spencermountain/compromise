@@ -52,7 +52,7 @@ module.exports = function(grunt) {
         exec: fileServer + ' demo -o -c-1'
       },
       scratch: {
-        exec: 'node ./scratch_file.js --debug'
+        exec: 'node ./scratch_file.js --debug=term'
       },
       build_windows: {
       },

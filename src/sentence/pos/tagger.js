@@ -1,5 +1,5 @@
 'use strict';
-const log = require('./root/log')
+const {log} = require('./paths')
 
 const rule = {
   lexicon_step: require('./steps/lexicon/lexicon_pass')

@@ -1,14 +1,15 @@
 'use strict'
 //use this file for messing around.
 //... it is not included in the build
-console.log("\n\n\n\n")
+console.log('\n\n\n\n')
 
 const nlp = require('./src/index')
 const log = require('./src/log')
 
-
 let context = {
   debug: true
 }
-let r = nlp('John is cool. He is nice', context).to('Exclamation')
-log.show(r, '')
+let r = nlp('John is cool. He is nice', context) //.to('Exclamation')
+// log.show(r, '')
+r.get('terms')[0].to('noun')
+console.log(r.as('text'))

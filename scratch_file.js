@@ -10,6 +10,4 @@ let context = {
   debug: true
 }
 let r = nlp('John is cool. He is nice', context) //.to('Exclamation')
-// log.show(r, '')
-r.get('terms')[0].to('noun')
-console.log(r.as('text'))
+log.show(r, '')

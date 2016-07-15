@@ -1,5 +1,5 @@
 'use strict';
-const {lexicon, log} = require('../../paths')
+const {lexicon, log} = require('../paths')
 const path = 'tagger/lexicon'
 
 const lexicon_pass = function(s) {
@@ -9,7 +9,7 @@ const lexicon_pass = function(s) {
     let t = s.terms[i]
     if (lexicon[t.normal]) {
       log.change(t.normal + '  -> [' + lexicon[t.normal] + ']', path)
-    // console.log(lexicon[t.normal])
+      t.tag(lexicon[t.normal])
     }
   }
   return

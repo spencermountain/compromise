@@ -25,19 +25,20 @@
     "watch": "^0.19.1"
   },
   "devDependencies": {
+    "babel-plugin-transform-object-assign": "^6.8.0",
+    "babel-preset-es2015": "6.9.0",
+    "babelify": "7.3.0",
+    "browserify": "13.0.1",
     "grunt-cli": "1.2.0",
     "grunt-contrib-watch": "1.0.0",
     "grunt-eslint": "19.0.0",
     "grunt-filesize": "0.0.7",
     "grunt-run": "0.6.0",
-    "babelify": "7.3.0",
-    "babel-preset-es2015": "6.9.0",
-    "browserify": "13.0.1",
-    "uglify-js": "2.7.0",
-    "tape": "4.6.0",
-    "tap-spec": "4.1.1",
     "http-server": "0.9.0",
-    "nlp-corpus": "latest"
+    "nlp-corpus": "latest",
+    "tap-spec": "4.1.1",
+    "tape": "4.6.0",
+    "uglify-js": "2.7.0"
   },
   "license": "MIT"
 }

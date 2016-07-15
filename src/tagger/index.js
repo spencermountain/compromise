@@ -1,8 +1,8 @@
 'use strict';
-const {log} = require('./paths')
+const log = require('../log')
 
 const rule = {
-  lexicon_step: require('./steps/lexicon/lexicon_pass')
+  lexicon_step: require('./steps/known_words/lexicon_pass')
 }
 const tagger = function(s) {
   log.here('tagger')

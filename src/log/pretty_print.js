@@ -7,7 +7,8 @@ var format = {
   Sentence: (s, indent) => {
     console.log(indent + '[Sentence] ' + color.red(s.input))
     s.terms.forEach((t) => {
-      console.log(indent + '   ' + color.green('- ' + t.text) + '   [' + t.constructor.name + ']')
+      let pos = Object.keys(t.pos).filter((k) => k !== 'Term')
+      console.log(indent + '   ' + color.green('- ' + t.text) + '   [' + pos.join(', ') + ']')
     })
   }
 }

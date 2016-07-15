@@ -2,9 +2,10 @@
 //a Text() is a list of sentences, which are a list of Terms
 const fns = require('../fns');
 const log = require('../log');
-const transforms = require('./transforms/term');
+const tags = require('./tags');
+const transforms = require('./transforms');
 const render = require('./render/render');
-const normalize = require('./transforms/normalize');
+const normalize = require('./transforms/term/normalize');
 
 class Term {
   constructor(str, context) {
@@ -14,8 +15,18 @@ class Term {
     this.whitespace.before = fns.ensureString(this.whitespace.before);
     this.whitespace.after = fns.ensureString(this.whitespace.after);
     this.normal = normalize(this.text);
-    this.transforms = transforms
+    this.transforms = transforms.Term
     this.pos = {}
+  }
+
+  tag(pos) {
+    this.pos[pos] = true
+    let tag = tags[pos]
+    if (transforms[tag]) {
+      this.transforms = transforms[tag]
+      this.pos[tag] = true
+    }
+    return this
   }
 
   //change the text, return this

@@ -7,7 +7,7 @@ const get = require('./get/get');
 const transform = require('./transform/transform');
 const render = require('./render/render');
 const helpers = require('./helpers');
-const tagger = require('./pos/tagger');
+const tagger = require('../tagger');
 
 class Sentence {
   constructor(str, context) {
@@ -20,7 +20,7 @@ class Sentence {
         before: o.before || '',
         after: o.after || ''
       };
-      c.sentence_ref = this; //give it a ref
+      c.sentence = this; //give it a ref
       return new Term(o.text, c);
     });
     //parse-out terminating character

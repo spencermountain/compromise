@@ -29,6 +29,15 @@ class Sentence {
     tagger(this);
   }
 
+  set text(str) {
+    this.input = fns.ensureString(str);
+    this.terminator = helpers.strip_terminator(this);
+    tagger(this);
+  }
+  get text() {
+    return fns.ensureString(this.input)
+  }
+
   //change the text, return this
   to(method) {
     if (fns.isFunction(method)) {

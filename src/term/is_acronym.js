@@ -5,7 +5,7 @@ const is_acronym = function(str) {
     return true;
   }
   //like NDA
-  if (str.match(/[A-Z]{3}$/)) {
+  if (str.match(/[A-Z]{2,}$/)) {
     return true;
   }
   return false;

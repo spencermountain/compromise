@@ -75,7 +75,7 @@ module.exports = [
   {
     //will have walked (pluperfect)
     condition: (a, b) => (a.normal.match(/^will ha(ve|d)$/) && b.pos.Verb),
-    result: 'PluperfectTense',
+    result: 'Pluperfect',
     reason: 'will-have-verb'
   },
   {

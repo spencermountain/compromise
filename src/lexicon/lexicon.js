@@ -64,15 +64,15 @@ addArr(data.demonyms, 'Demonym'); //?
 //irregular verbs
 let verbForms = {
   past: 'PastTense',
-  gerund: 'GerundVerb',
   present: 'PresentTense',
   perfect: 'PerfectTense',
-  pluperfect: 'PluperfectTense',
+  pluperfect: 'Pluperfect',
   future_perfect: 'FuturePerfect',
+  gerund: 'Gerund',
   actor: 'Actor'
 };
 Object.keys(data.irregular_verbs).forEach((k) => {
-  lexicon[k] = 'InfinitiveVerb';
+  lexicon[k] = 'Infinitive';
   Object.keys(data.irregular_verbs[k]).forEach((k2) => {
     lexicon[verbForms[k2]] = data.irregular_verbs[k][k2];
   });

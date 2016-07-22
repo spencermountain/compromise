@@ -3,7 +3,7 @@
 const info = {
 
   //the punctuation at the end of this term
-  punctuation: (t) => {
+  endPunctuation: (t) => {
     let m = t.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/)
     if (m) {
       const allowed = {

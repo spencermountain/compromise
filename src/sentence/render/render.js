@@ -25,5 +25,16 @@ module.exports = {
       normal = normal += mapping[form];
     }
     return normal;
+  },
+
+  tags: (s) => {
+    return s.terms.map((t) => {
+      return {
+        text: t.text,
+        normal: t.as('normal'),
+        tags: Object.keys(t.pos)
+      }
+    })
   }
+
 };

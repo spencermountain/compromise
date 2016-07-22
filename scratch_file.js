@@ -10,9 +10,10 @@ const Term = require('./src/term/term');
 let context = {
   debug: true
 };
+nlp('John is cool!!   He delishes in Toronkkto').as('printTags');
 // let r = nlp('I will bust-out', context) //.to('Exclamation')
 // log.show(r, '')
-console.log(new Term('peace').tag('Noun').info('hasPlural'));
+// console.log(new Term('peace').tag('Noun').info('hasPlural'));
 // console.log(t.to.fun().fun2())
 // t.text = 'Fun'
 // console.log(t.normal)

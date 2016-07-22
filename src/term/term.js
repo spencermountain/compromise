@@ -7,6 +7,7 @@ const info = require('./info');
 const transforms = require('./transforms');
 const render = require('./render/render');
 const normalize = require('./transforms/term/normalize');
+const path = 'term'
 
 class Term {
   constructor(str, context) {
@@ -29,12 +30,13 @@ class Term {
     return fns.ensureString(this.str);
   }
 
-  tag(pos) {
+  tag(pos, reason) {
+    log.tag(this, pos, reason, path)
     this.pos[pos] = true;
     let tag = tags[pos];
     if (transforms[tag]) {
       this.transforms = transforms[tag];
-      this.infos = info[tag];
+      this.infos = info[tag] || info.Term;
       this.pos[tag] = true;
     }
     return this;

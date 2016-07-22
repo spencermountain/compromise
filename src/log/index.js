@@ -7,7 +7,8 @@ const pretty_print = require('./pretty_print')
 let dummy = {
   here: function() {},
   change: function() {},
-  show: function() {}
+  show: function() {},
+  tag: function() {}
 }
 
 const shouldPrint = (path) => {
@@ -38,6 +39,12 @@ const serverOutput = {
     if (shouldPrint(path)) {
       let indent = fns.findIndent(path) || ''
       console.log(indent + '   ' + color.green(input))
+    }
+  },
+  tag: function(t, pos, reason, path) {
+    if (shouldPrint(path)) {
+      let indent = fns.findIndent(path) || ''
+      console.log(indent + '     ' + color.green(t.normal) + ' -> ' + color.red(pos) + '    (' + reason + ')')
     }
   },
   show: function(input, path) {

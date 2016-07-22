@@ -1,5 +1,7 @@
 'use strict';
-const {lexicon, log} = require('../paths')
+const p = require('../paths')
+const lexicon = p.lexicon
+const log = p.log
 const path = 'tagger/lexicon'
 
 const lexicon_pass = function(s) {
@@ -9,11 +11,10 @@ const lexicon_pass = function(s) {
     let t = s.terms[i]
     //basic match
     if (lexicon[t.normal]) {
-      log.change(t.normal + '  -> [' + lexicon[t.normal] + ']', path)
-      t.tag(lexicon[t.normal])
+      t.tag(lexicon[t.normal], 'lexicon-match')
     }
   }
-  return
+  return s
 }
 
 module.exports = lexicon_pass

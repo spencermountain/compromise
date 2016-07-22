@@ -2,12 +2,12 @@
 //a Text() is a list of sentences, which are a list of Terms
 const fns = require('../fns');
 const log = require('../log');
-const tags = require('./tags');
+const tagset = require('../tagset');
 const info = require('./info');
 const transforms = require('./transforms');
 const render = require('./render/render');
 const normalize = require('./transforms/term/normalize');
-const path = 'term'
+const path = 'term';
 
 class Term {
   constructor(str, context) {
@@ -30,14 +30,12 @@ class Term {
     return fns.ensureString(this.str);
   }
 
-  tag(pos, reason) {
-    log.tag(this, pos, reason, path)
-    this.pos[pos] = true;
-    let tag = tags[pos];
+  tag(tag, reason) {
+    log.tag(this, tag, reason, path);
+    this.pos[tag] = true;
     if (transforms[tag]) {
       this.transforms = transforms[tag];
       this.infos = info[tag] || info.Term;
-      this.pos[tag] = true;
     }
     return this;
   }

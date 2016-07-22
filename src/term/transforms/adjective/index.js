@@ -1,8 +1,8 @@
-'use strict'
+'use strict';
 let adjective = {
   Noun: (t) => {
-    t.text += 'ness'
-    return t
+    t.text += 'ness';
+    return t;
   }
-}
-module.exports = Object.assign({}, require('../term'), adjective)
+};
+module.exports = adjective;

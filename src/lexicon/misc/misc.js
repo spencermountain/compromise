@@ -215,7 +215,7 @@ const compact = {
     'she\'s'
   ],
   //questions are awkward pos. are clarified in question_pass
-  'Question': [
+  'QuestionWord': [
     'where',
     'why',
     'when',

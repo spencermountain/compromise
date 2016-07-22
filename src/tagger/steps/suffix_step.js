@@ -1,7 +1,10 @@
 'use strict';
+const log = require('./paths').log;
 const rules = require('./data/word_rules');
+const path = 'tagger/suffix';
 
 const suffix_step = function(s) {
+  log.here(path);
   for (let i = 0; i < s.terms.length; i++) {
     let t = s.terms[i];
     for (let o = 0; o < rules.length; o++) {
@@ -11,7 +14,7 @@ const suffix_step = function(s) {
       }
     }
   }
-  return;
+  return s;
 };
 
 module.exports = suffix_step;

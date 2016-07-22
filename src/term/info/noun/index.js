@@ -18,4 +18,4 @@ const info = {
 
   }
 };
-module.exports = Object.assign({}, require('../term'), info);
+module.exports = info;

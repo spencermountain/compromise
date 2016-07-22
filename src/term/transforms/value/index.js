@@ -1,8 +1,8 @@
-'use strict'
+'use strict';
 let value = {
   Ordinal: (t) => {
-    t.text += 'th'
-    return t
+    t.text += 'th';
+    return t;
   }
-}
-module.exports = Object.assign({}, require('../noun'), value)
+};
+module.exports = value;

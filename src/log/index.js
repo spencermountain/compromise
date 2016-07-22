@@ -1,69 +1,80 @@
 'use strict';
-const fns = require('./fns')
-const color = require('./color')
-const pretty_print = require('./pretty_print')
+const fns = require('./fns');
+const color = require('./color');
+const pretty_print = require('./pretty_print');
+
+let disable = false;
 
 //dummy function
 let dummy = {
   here: function() {},
   change: function() {},
   show: function() {},
-  tag: function() {}
-}
+  tag: function() {},
+  disable: function() {
+    disable = true;
+  }
+};
 
 const shouldPrint = (path) => {
-  let arg = process.argv[2]
-  let toPrint = arg.replace(/^--debug=?/, '') || '*'
+  if (disable) {
+    return false;
+  }
+  let arg = process.argv[2];
+  let toPrint = arg.replace(/^--debug=?/, '') || '*';
   if (toPrint === '*' || toPrint == '') {
-    return true
+    return true;
   }
   if (path.indexOf(toPrint) === 0) {
-    return true
+    return true;
   }
-  return false
-}
+  return false;
+};
 
 const serverOutput = {
   here: function(path) {
     if (shouldPrint(path)) {
-      let indent = fns.findIndent(path) || ''
-      console.log(fns.makePath(path, indent))
+      let indent = fns.findIndent(path) || '';
+      console.log(fns.makePath(path, indent));
     }
   },
   warn: function(input, path) {
     if (shouldPrint(path)) {
-      console.log('   ' + color.red('---' + input))
+      console.log('   ' + color.red('---' + input));
     }
   },
   change: function(input, path) {
     if (shouldPrint(path)) {
-      let indent = fns.findIndent(path) || ''
-      console.log(indent + '   ' + color.green(input))
+      let indent = fns.findIndent(path) || '';
+      console.log(indent + '   ' + color.green(input));
     }
   },
   tag: function(t, pos, reason, path) {
     if (shouldPrint(path)) {
-      let indent = fns.findIndent(path) || ''
-      console.log(indent + '     ' + color.green(t.normal) + ' -> ' + color.red(pos) + '    (' + reason + ')')
+      let indent = fns.findIndent(path) || '';
+      console.log(indent + '     ' + color.green(t.normal) + ' -> ' + color.red(pos) + '    (' + reason + ')');
     }
   },
   show: function(input, path) {
     if (shouldPrint(path)) {
-      pretty_print(input, path)
+      pretty_print(input, path);
     }
+  },
+  disable: function() {
+    disable = true;
   }
-}
+};
 
 //figure out if it should print anything, first
 const log = (() => {
   if (!process || !process.argv || !process.argv[2]) {
-    return dummy
+    return dummy;
   }
-  let arg = process.argv[2]
+  let arg = process.argv[2];
   if (!arg.match(/^--debug/)) {
-    return dummy
+    return dummy;
   }
-  return serverOutput
-})()
+  return serverOutput;
+})();
 
-module.exports = log
+module.exports = log;

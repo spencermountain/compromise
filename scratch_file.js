@@ -8,12 +8,24 @@ const tags = require('./src/tagset');
 const log = require('./src/log');
 const Term = require('./src/term/term');
 
-log.disable();
+// log.disable();
 
 let context = {
   debug: true
 };
-// let r = nlp('John Smith is cool'); //.as('printTags');
+let t = nlp('running').sentences[0].terms[0];
+console.log(t.pos);
+t.to('PastTense');
+console.log(t.pos);
+t.to('Gerund');
+console.log(t.pos);
+// console.log(t.transforms);
+// console.log(t.canBe('Verb'));
+// console.log(t.canBe('Determiner'));
+// console.log(t.canBe('Plural'));
+// console.log(t.canBe('Person'));
+// console.log(t.canBe('Condition'));
+// console.log(t.canBe('lkjsdflkj'));
 // console.log(r.sentences[0].terms[0]);
 // let r = nlp('I will bust-out', context) //.to('Exclamation')
 // log.show(r, '')

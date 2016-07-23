@@ -1,15 +1,10 @@
-'use strict'
+'use strict';
 //the ordering of the requires-matters
-const Term = require('./term')
-const Noun = require('./noun')
-const Value = require('./value')
-const Verb = require('./verb')
-const Adjective = require('./adjective')
-
 module.exports = {
-  Term: Term,
-  Noun: Noun,
-  Value: Value,
-  Verb: Verb,
-  Adjective: Adjective
-}
+  Term: require('./term'),
+  Noun: require('./noun'),
+  Value: require('./value'),
+  Verb: require('./verb'),
+  Adjective: require('./adjective'),
+  Person: require('./person')
+};

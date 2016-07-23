@@ -3,7 +3,7 @@
 
 
 //list of inconsistent parts-of-speech
-const incompatibles = [
+const notibles = [
   //top-level pos are all inconsistent
   ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression'],
   //nouns
@@ -25,6 +25,12 @@ const incompatibles = [
   ['Infinitive', 'Gerund', 'Pluperfect', 'FuturePerfect'],
   //tenses
   ['PastTense', 'PresentTense', 'PerfectTense'],
+  //non-infinitive
+  ['Infinitive', 'PastTense'],
+  ['Infinitive', 'PresentTense'],
+  //non-gerund
+  ['Gerund', 'PastTense'],
+  ['Gerund', 'PresentTense'],
   //more verbs
   ['Copula', 'Modal']
 ];
@@ -79,26 +85,26 @@ const tree = {
 };
 
 let tags = {};
-//recursively add them, with parents
-const add_tags = (obj, parents) => {
+//recursively add them, with is
+const add_tags = (obj, is) => {
   Object.keys(obj).forEach((k) => {
-    tags[k] = parents;
+    tags[k] = is;
     if (obj[k] !== true) {
-      add_tags(obj[k], parents.concat([k])); //recursive
+      add_tags(obj[k], is.concat([k])); //recursive
     }
   });
 };
 add_tags(tree, []);
 
-//for each tag, add their incompatibilities
+//for each tag, add their notibilities
 Object.keys(tags).forEach((k) => {
   tags[k] = {
-    parents: tags[k],
+    is: [].concat(tags[k]),
     not: {}
   };
-  for (let i = 0; i < incompatibles.length; i++) {
-    if (incompatibles[i].indexOf(k) !== -1) {
-      incompatibles[i].forEach((s) => {
+  for (let i = 0; i < notibles.length; i++) {
+    if (notibles[i].indexOf(k) !== -1) {
+      notibles[i].forEach((s) => {
         if (s !== k) {
           tags[k].not[s] = true;
         }
@@ -106,15 +112,21 @@ Object.keys(tags).forEach((k) => {
     }
   }
 });
-//also add their derived incompatible types
+//also add their derived notible types
 Object.keys(tags).forEach((k) => {
-  for (let i = 0; i < tags[k].parents.length; i++) {
-    let parent = tags[k].parents[i];
+  for (let i = 0; i < tags[k].is.length; i++) {
+    let parent = tags[k].is[i];
     let bad_keys = Object.keys(tags[parent].not);
     for (let o = 0; o < bad_keys.length; o++) {
-      tags[k].not[bad_keys[o]] = parent;
+      tags[k].not[bad_keys[o]] = true;
     }
   }
 });
+//add themselves to 'is'
+Object.keys(tags).forEach((k) => {
+  // tags[k].is = tags[k].is.concat([k]);
+  tags[k].is.push(k);
+});
+
 module.exports = tags;
 // console.log(tags);

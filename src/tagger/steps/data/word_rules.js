@@ -12,7 +12,8 @@ const tag_mapping = {
   NN: 'Noun',
   EX: 'Expression',
   AC: 'Actor',
-  RB: 'Adverb'
+  RB: 'Adverb',
+  GN: 'Gerund'
 };
 //the order here matters.
 module.exports = [
@@ -78,7 +79,7 @@ module.exports = [
   ['.ried$', 'JJ'],
   ['.gone$', 'JJ'],
   ['.made$', 'JJ'],
-  ['.ing$', 'VB'], //likely to be converted to adjective after lexicon pass
+  ['.ing$', 'GN'], //likely to be converted to adjective after lexicon pass
   ['.tions$', 'NN'],
   ['.tures$', 'NN'],
   ['.ous$', 'JJ'],

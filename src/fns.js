@@ -64,3 +64,17 @@ exports.copy = (o) => {
   });
   return o2;
 };
+
+//shallow-merge an object
+exports.extend = (o, o2) => {
+  if (!o) {
+    return o2;
+  }
+  if (!o2) {
+    return o;
+  }
+  Object.keys(o2).forEach((k) => {
+    o[k] = o2[k];
+  });
+  return o;
+};

@@ -30,12 +30,39 @@ class Term {
     return fns.ensureString(this.str);
   }
 
+  //check if the term is compatible with a pos tag.
+  canBe(tag) {
+    //already compatible..
+    if (this.pos[tag]) {
+      return true;
+    }
+    //unknown tag..
+    if (!tagset[tag]) {
+      //huh? sure, go for it.
+      return true;
+    }
+    //consult tagset's incompatible tags
+    let not = Object.keys(tagset[tag].not);
+    for (let i = 0; i < not.length; i++) {
+      if (this.pos[not[i]]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   tag(tag, reason) {
     log.tag(this, tag, reason, path);
-    this.pos[tag] = true;
-    if (transforms[tag]) {
-      this.transforms = transforms[tag];
-      this.infos = info[tag] || info.Term;
+    //reset term, if necessary
+    if (this.canBe(tag) === false) {
+      this.pos = {};
+      this.transforms = {};
+      this.infos = {};
+    }
+    let tags = tagset[tag].is;
+    for (let i = 0; i < tags.length; i++) {
+      this.pos[tags[i]] = true;
+      fns.extend(this.transforms, transforms[tags[i]]);
     }
     return this;
   }

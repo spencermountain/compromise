@@ -63,6 +63,7 @@ class Term {
     for (let i = 0; i < tags.length; i++) {
       this.pos[tags[i]] = true;
       fns.extend(this.transforms, transforms[tags[i]]);
+      fns.extend(this.infos, info[tags[i]]);
     }
     return this;
   }
@@ -95,6 +96,9 @@ class Term {
   is(method) {
     if (fns.isFunction(method)) {
       return method(this);
+    }
+    if (tagset[method]) {
+      return this.pos[method] || false;
     }
     //is it known?
     if (is[method]) {

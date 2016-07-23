@@ -8,7 +8,7 @@ const tags = require('./src/tagset');
 const log = require('./src/log');
 const Term = require('./src/term/term');
 
-// log.disable();
+log.disable();
 
 let context = {
   debug: true
@@ -19,6 +19,8 @@ t.to('PastTense');
 console.log(t.pos);
 t.to('Gerund');
 console.log(t.pos);
+console.log(t.is('Person'));
+console.log(t.is('Gerund'));
 // console.log(t.transforms);
 // console.log(t.canBe('Verb'));
 // console.log(t.canBe('Determiner'));

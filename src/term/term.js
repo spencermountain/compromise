@@ -2,11 +2,10 @@
 //a Text() is a list of sentences, which are a list of Terms
 const fns = require('../fns');
 const log = require('../log');
-const tagset = require('../tagset');
-const info = require('./info');
-const transforms = require('./transforms');
+const set_tag = require('./tag');
 const render = require('./render/render');
 const normalize = require('./transforms/term/normalize');
+const info = require('./info');
 const path = 'term';
 
 class Term {
@@ -17,9 +16,10 @@ class Term {
     this.whitespace = fns.ensureObject(this.context.whitespace);
     this.whitespace.before = fns.ensureString(this.whitespace.before);
     this.whitespace.after = fns.ensureString(this.whitespace.after);
-    this.transforms = transforms.Term;
-    this.infos = info.Term;
     this.pos = {};
+    this.transforms = {};
+    this.infos = {};
+    this.tag('Term');
   }
 
   set text(str) {
@@ -30,41 +30,10 @@ class Term {
     return fns.ensureString(this.str);
   }
 
-  //check if the term is compatible with a pos tag.
-  canBe(tag) {
-    //already compatible..
-    if (this.pos[tag]) {
-      return true;
-    }
-    //unknown tag..
-    if (!tagset[tag]) {
-      //huh? sure, go for it.
-      return true;
-    }
-    //consult tagset's incompatible tags
-    let not = Object.keys(tagset[tag].not);
-    for (let i = 0; i < not.length; i++) {
-      if (this.pos[not[i]]) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   tag(tag, reason) {
     log.tag(this, tag, reason, path);
-    //reset term, if necessary
-    if (this.canBe(tag) === false) {
-      this.pos = {};
-      this.transforms = {};
-      this.infos = {};
-    }
-    let tags = tagset[tag].is;
-    for (let i = 0; i < tags.length; i++) {
-      this.pos[tags[i]] = true;
-      fns.extend(this.transforms, transforms[tags[i]]);
-      fns.extend(this.infos, info[tags[i]]);
-    }
+    set_tag(this, tag, reason);
+
     return this;
   }
 
@@ -97,10 +66,15 @@ class Term {
     if (fns.isFunction(method)) {
       return method(this);
     }
-    if (tagset[method]) {
-      return this.pos[method] || false;
+    //if we already know it is
+    if (this.pos[method]) {
+      return true;
     }
-    //is it known?
+    //if we already know this is incompatible
+    if (tagset[method] && !this.canBe(method)) {
+      return false;
+    }
+    //is it a known 'is' method?
     if (is[method]) {
       return is[method](this);
     }

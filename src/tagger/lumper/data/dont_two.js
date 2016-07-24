@@ -2,12 +2,12 @@
 //exceptions or guards to the above rules, more or less
 module.exports = [
   { //don't chunk non-word things with word-things
-    condition: (a, b) => (a.is_word() === false || b.is_word() === false),
+    condition: (a, b) => (a.info('isWord') === false || b.info('isWord') === false),
     reason: 'not a word'
   },
   {
     //if A has a comma, don't chunk it, (unless it's a date)
-    condition: (a) => (a.has_comma() && !a.pos.Date),
+    condition: (a) => (a.info('hasComma') && !a.pos.Date),
     reason: 'has a comma'
   },
   { //dont chunk over possessives, eg "spencer's house"

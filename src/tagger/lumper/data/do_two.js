@@ -26,7 +26,7 @@ module.exports = [
   },
   {
     //"John Abcd" - needs to be careful
-    condition: (a, b) => (a.pos.Person && !a.pos.Pronoun && !a.pos.Possessive && !a.has_comma() && b.info('TitleCase') && !a.is_acronym() && !b.pos.Verb), //'Person, Capital -> Person'
+    condition: (a, b) => (a.pos.Person && !a.pos.Pronoun && !a.pos.Possessive && !a.info('hasComma') && b.info('TitleCase') && !a.is_acronym() && !b.pos.Verb), //'Person, Capital -> Person'
     result: 'Person',
     reason: 'person-titleCase'
   },

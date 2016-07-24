@@ -51,7 +51,7 @@ const sentence_parser = function(text) {
 
   //detection of non-sentence chunks
   const abbrev_reg = new RegExp('\\b(' + abbreviations.join('|') + ')[.!?] ?$', 'i');
-  const acronym_reg = new RegExp('[ |\.][A-Z]\.? +?$', 'i');
+  const acronym_reg = new RegExp('[ |\.][A-Z]\.?( *)?$', 'i');
   const elipses_reg = new RegExp('\\.\\.\\.* +?$');
   //loop through these chunks, and join the non-sentence chunks back together..
   for (let i = 0; i < chunks.length; i++) {
@@ -73,4 +73,4 @@ const sentence_parser = function(text) {
 };
 
 module.exports = sentence_parser;
-// console.log(sentence_parser('hi John. He is good'));
+console.log(sentence_parser('john f. kennedy'));

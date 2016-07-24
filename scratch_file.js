@@ -13,14 +13,10 @@ log.disable();
 let context = {
   debug: true
 };
-let t = nlp('running').sentences[0].terms[0];
-console.log(t.pos);
-t.to('PastTense');
-console.log(t.pos);
-t.to('Gerund');
-console.log(t.pos);
-console.log(t.is('Person'));
-console.log(t.is('Gerund'));
+nlp('john f. kennedy').as('printTags');
+// console.log(t.is('Singular'));
+
+
 // console.log(t.transforms);
 // console.log(t.canBe('Verb'));
 // console.log(t.canBe('Determiner'));

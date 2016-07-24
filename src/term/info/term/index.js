@@ -4,7 +4,7 @@ const info = {
 
   //the punctuation at the end of this term
   endPunctuation: (t) => {
-    let m = t.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/)
+    let m = t.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/);
     if (m) {
       const allowed = {
         ',': 'comma',
@@ -14,23 +14,23 @@ const info = {
         '...': 'elipses',
         '!': 'exclamation',
         '?': 'question'
-      }
+      };
       if (allowed[m[1]]) {
-        return allowed[m[1]]
+        return allowed[m[1]];
       }
     }
-    return null
+    return null;
   },
 
   hyphenation: (t) => {
-    let m = t.text.match(/^([a-z]+)-([a-z]+)$/)
+    let m = t.text.match(/^([a-z]+)-([a-z]+)$/);
     if (m && m[1] && m[2]) {
       return {
         start: m[1],
         end: m[2]
-      }
+      };
     }
-    return null
+    return null;
   },
 
   contraction: (t) => {
@@ -40,35 +40,35 @@ const info = {
       's': true,
       'd': true,
       'm': true
-    }
-    let parts = t.text.split(/^([a-z]+)'([a-z][a-z]?)$/)
+    };
+    let parts = t.text.split(/^([a-z]+)'([a-z][a-z]?)$/);
     if (parts && allowed[parts[2]]) {
       //handle n't
       if (parts[2] === 't' && parts[1].match(/[a-z]n$/)) {
-        parts[1] = parts[1].replace(/n$/, '')
-        parts[2] = 'n\'t' //dunno..
+        parts[1] = parts[1].replace(/n$/, '');
+        parts[2] = 'n\'t'; //dunno..
       }
       return {
         start: parts[1],
         end: parts[2]
-      }
+      };
     }
     // "flanders' house"
-    parts = t.text.split(/^([a-z]+s)'$/)
+    parts = t.text.split(/^([a-z]+s)'$/);
     if (parts) {
       return {
         start: parts[1],
         end: ''
-      }
+      };
     }
-    return null
+    return null;
   },
 
   titleCase: (t) => {
     if (t.text.match(/^[A-Z][a-z]/)) {
-      return true
+      return true;
     }
-    return false
+    return false;
   },
 
   //utility method to avoid lumping words with non-word stuff
@@ -95,8 +95,15 @@ const info = {
       return true;
     }
     return false;
+  },
+
+  hasComma: (t) => {
+    if (t.info('endPunctuation') === 'comma') {
+      return true;
+    }
+    return false;
   }
 
-}
+};
 
-module.exports = info
+module.exports = info;

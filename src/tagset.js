@@ -81,7 +81,8 @@ const tree = {
   Condition: true,
   Possessive: true,
   QuestionWord: true,
-  Expression: true
+  Expression: true,
+  Term: true //fallback
 };
 
 let tags = {};

@@ -19,7 +19,12 @@ module.exports = {
       return s.as('tags');
     });
   },
-  prettyPrint: (t) => {
+  html: (t) => {
+    return t.sentences.reduce((str, s) => {
+      return str + s.render('html') + '\n'
+    }, '')
+  },
+  prettyprint: (t) => {
     t.sentences.forEach((s) => {
       console.log(' ');
       s.terms.forEach((term) => {

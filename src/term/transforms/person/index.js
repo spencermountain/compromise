@@ -1,9 +1,9 @@
 'use strict';
 module.exports = {
-  Formal: (t) => {
+  formal: (t) => {
     return t;
   },
-  Informal: (t) => {
+  informal: (t) => {
     return t;
   }
 };

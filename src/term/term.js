@@ -5,9 +5,8 @@ const log = require('../log');
 const set_tag = require('./tag');
 const tagset = require('../tagset');
 const build_whitespace = require('./whitespace');
-const render = require('./render/render');
+const render = require('./render');
 const normalize = require('./transforms/term/normalize');
-const path = 'term';
 
 class Term {
   constructor(str, context) {
@@ -40,7 +39,7 @@ class Term {
       return method(this);
     }
     //is it a known transformation?
-    method = fns.titleCase(method);
+    method = method.toLowerCase();
     if (this.transforms[method]) {
       return this.transforms[method](this);
     }
@@ -57,6 +56,7 @@ class Term {
     if (fns.isFunction(method)) {
       return method(this);
     }
+    method = method.toLowerCase();
     if (this.infos[method]) {
       return this.infos[method](this);
     }
@@ -68,6 +68,7 @@ class Term {
     if (fns.isFunction(method)) {
       return method(this);
     }
+    method = fns.titleCase(method);
     //if we already know it is
     if (this.pos[method]) {
       return true;
@@ -77,6 +78,7 @@ class Term {
       return false;
     }
     //is it a known 'is' method?
+    method = method.toLowerCase();
     if (is[method]) {
       return is[method](this);
     }
@@ -88,6 +90,7 @@ class Term {
       return method(this);
     }
     //is it known?
+    method = method.toLowerCase();
     if (render[method]) {
       return render[method](this);
     }

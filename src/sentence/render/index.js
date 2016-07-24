@@ -27,6 +27,14 @@ module.exports = {
     return normal;
   },
 
+  html: (s) => {
+    let html = s.terms.reduce((str, t) => {
+      return str + '\n  ' + t.render('html')
+    }, '')
+    let classes = ['nlpSentence', s.info('SentenceType')]
+    return '<span class="' + classes.join(' ') + '">' + html + '\n</span>'
+  },
+
   tags: (s) => {
     return s.terms.map((t) => {
       return {

@@ -8,12 +8,12 @@ module.exports = {
     return s;
   },
 
-  Exclamation: (s) => {
+  exclamation: (s) => {
     s.terminator = '!';
     return s;
   },
 
-  Statement: (s) => {
+  statement: (s) => {
     s.terminator = '.';
     return s;
   }

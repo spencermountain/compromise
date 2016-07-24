@@ -2,19 +2,19 @@
 const normalize = require('./normalize');
 
 module.exports = {
-  Normal: (t) => {
+  normal: (t) => {
     t.text += normalize(t.text);
     return t;
   },
-  LowerCase: (t) => {
+  lowercase: (t) => {
     t.text = t.text.toLowerCase();
     return t;
   },
-  UpperCase: (t) => {
+  uppercase: (t) => {
     t.text = t.text.toUpperCase();
     return t;
   },
-  TitleCase: (t) => {
+  titlecase: (t) => {
     t.text = t.text.replace(/^[a-z]/, (x) => x.toUpperCase());
     return t;
   }

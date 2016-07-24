@@ -1,4 +1,7 @@
 'use strict';
+
+const renderHtml = require('./renderHtml');
+
 //supported Sentence.return() methods
 module.exports = {
   text: (t) => {
@@ -6,5 +9,8 @@ module.exports = {
   },
   normal: (t) => {
     return t.normal;
+  },
+  html: (t) => {
+    return renderHtml(t);
   }
 };

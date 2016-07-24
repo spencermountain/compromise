@@ -3,9 +3,9 @@
 const fns = require('../fns');
 const Term = require('../term/term');
 const split_terms = require('./split_terms');
-const get = require('./get/get');
-const transform = require('./transform/transform');
-const render = require('./render/render');
+const info = require('./info');
+const transform = require('./transform');
+const render = require('./render');
 const helpers = require('./helpers');
 const tagger = require('../tagger');
 
@@ -49,7 +49,7 @@ class Sentence {
       return method(this);
     }
     //is it a known transformation?
-    method = fns.titleCase(method);
+    method = method.toLowerCase();
     if (transform[method]) {
       return transform[method](this);
     }
@@ -69,15 +69,19 @@ class Sentence {
   }
 
   //get some data back
-  get(method) {
+  info(method) {
     if (fns.isFunction(method)) {
       return method(this);
     }
     //is it known?
-    if (get[method]) {
-      return get[method](this);
+    method = method.toLowerCase();
+    if (info[method]) {
+      return info[method](this);
     }
-    return null;
+    //otherwise, try each term
+    return this.terms.map((t) => {
+      return t.info(method);
+    });
   }
 
   //return it as something
@@ -86,10 +90,14 @@ class Sentence {
       return method(this);
     }
     //is it known?
+    method = method.toLowerCase();
     if (render[method]) {
       return render[method](this);
     }
-    return '';
+    //otherwise, try each term
+    return this.terms.map((t) => {
+      return t.render(method);
+    });
   }
 }
 module.exports = Sentence;

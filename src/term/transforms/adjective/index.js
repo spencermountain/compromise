@@ -1,6 +1,6 @@
 'use strict';
 let adjective = {
-  Noun: (t) => {
+  noun: (t) => {
     t.text += 'ness';
     return t;
   }

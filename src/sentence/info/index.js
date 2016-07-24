@@ -1,7 +1,7 @@
 'use strict';
 //supported Sentence.get() methods
 module.exports = {
-  sentenceType: (s) => {
+  sentencetype: (s) => {
     let terminator = s.terminator || '';
     //grab only the first character (eg. "!!!")
     terminator = terminator.substr(0, 1);

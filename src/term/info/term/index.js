@@ -3,7 +3,7 @@
 const info = {
 
   //the punctuation at the end of this term
-  endPunctuation: (t) => {
+  endpunctuation: (t) => {
     let m = t.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/);
     if (m) {
       const allowed = {
@@ -64,7 +64,7 @@ const info = {
     return null;
   },
 
-  titleCase: (t) => {
+  titlecase: (t) => {
     if (t.text.match(/^[A-Z][a-z]/)) {
       return true;
     }
@@ -73,7 +73,11 @@ const info = {
 
   //is it perhaps not an english word?
   //.. to avoid lumping words with non-word stuff
-  isWord: (t) => {
+  isword: (t) => {
+    //assume a contraction produces a word-word
+    if (t.silent_term) {
+      return true;
+    }
     //no letters or numbers
     if (!t.text.match(/[a-z|0-9]/i)) {
       return false;
@@ -96,7 +100,7 @@ const info = {
     return true;
   },
 
-  isAcronym: (t) => {
+  isacronym: (t) => {
     //like N.D.A
     if (t.text.match(/([A-Z]\.)+[A-Z]?$/i)) {
       return true;
@@ -112,7 +116,7 @@ const info = {
     return false;
   },
 
-  hasComma: (t) => {
+  hascomma: (t) => {
     if (t.info('endPunctuation') === 'comma') {
       return true;
     }

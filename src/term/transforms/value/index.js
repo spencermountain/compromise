@@ -1,6 +1,6 @@
 'use strict';
 let value = {
-  Ordinal: (t) => {
+  ordinal: (t) => {
     t.text += 'th';
     return t;
   }

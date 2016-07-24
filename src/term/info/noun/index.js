@@ -3,10 +3,10 @@ const isPlural = require('./isPlural');
 const hasPlural = require('./hasPlural');
 
 const info = {
-  isPlural: (t) => {
+  isplural: (t) => {
     return isPlural(t.normal);
   },
-  hasPlural: (t) => {
+  hasplural: (t) => {
     return hasPlural(t.normal);
   },
   article: (t) => {

@@ -9,7 +9,7 @@ module.exports = {
     return t;
   },
 
-  Exclamation: (t) => {
+  exclamation: (t) => {
     t.sentences = t.sentences.map((s) => {
       //don't turn questions into statements
       if (s.is('Question')) {
@@ -19,7 +19,7 @@ module.exports = {
     });
     return t;
   },
-  Statement: (t) => {
+  statement: (t) => {
     t.sentences = t.sentences.map((s) => {
       //don't turn questions into statements
       if (s.is('Question')) {

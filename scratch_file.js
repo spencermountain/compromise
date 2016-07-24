@@ -15,7 +15,8 @@ log.disable();
 // nlp('3$8').as('printTags');
 // nlp('united kingdom').as('printTags');
 // nlp('he said i\'m very nice').as('printTags');
-nlp('i dunno about').to('titleCase').render('prettyPrint');
+// nlp('i dunno about').to('titleCase').render('prettyPrint');
+console.log(nlp('hello. <script>alert(\'hji\')</script> so<br/> yeah').render('html'));
 // console.log(t.is('Singular'));
 
 

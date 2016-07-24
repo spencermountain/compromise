@@ -73,4 +73,4 @@ const sentence_parser = function(text) {
 };
 
 module.exports = sentence_parser;
-console.log(sentence_parser('john f. kennedy'));
+// console.log(sentence_parser('john f. kennedy'));

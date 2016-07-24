@@ -133,10 +133,10 @@ module.exports = [
     result: 'Verb',
     reason: 'verb-not'
   },
-  {
-    //both places (this is the most aggressive rule of them all)
-    condition: (a, b) => (a.pos.Noun && b.pos.Noun && !is_specific(a) && !is_specific(b)),
-    result: 'Noun',
-    reason: 'two-nouns'
-  }
+// {
+//   //both places (this is the most aggressive rule of them all)
+//   condition: (a, b) => (a.pos.Noun && b.pos.Noun && !is_specific(a) && !is_specific(b)),
+//   result: 'Noun',
+//   reason: 'two-nouns'
+// }
 ];

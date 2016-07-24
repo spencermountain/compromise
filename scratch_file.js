@@ -8,12 +8,14 @@ const tags = require('./src/tagset');
 const log = require('./src/log');
 const Term = require('./src/term/term');
 
-log.disable();
+// log.disable();
 
 let context = {
   debug: true
 };
-nlp('john f. kennedy').as('printTags');
+// nlp('  john f.   kennedy  ').as('printTags');
+// nlp('6 am').as('printTags');
+nlp('3$8').as('printTags');
 // console.log(t.is('Singular'));
 
 

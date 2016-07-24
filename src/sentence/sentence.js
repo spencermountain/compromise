@@ -12,16 +12,12 @@ const tagger = require('../tagger');
 class Sentence {
   constructor(str, context) {
     this.input = fns.ensureString(str);
-    this.context = fns.ensureObject(context)
+    this.context = fns.ensureObject(context);
     this.terms = split_terms(this.input);
-    this.terms = this.terms.map((o) => {
+    this.terms = this.terms.map((txt) => {
       let c = fns.copy(context);
-      c.whitespace = {
-        before: o.before || '',
-        after: o.after || ''
-      };
       c.sentence = this; //give it a ref
-      return new Term(o.text, c);
+      return new Term(txt, c);
     });
     //parse-out terminating character
     this.terminator = helpers.strip_terminator(this);
@@ -35,7 +31,7 @@ class Sentence {
     tagger(this);
   }
   get text() {
-    return fns.ensureString(this.input)
+    return fns.ensureString(this.input);
   }
 
   //change the text, return this

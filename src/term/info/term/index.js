@@ -71,27 +71,42 @@ const info = {
     return false;
   },
 
-  //utility method to avoid lumping words with non-word stuff
+  //is it perhaps not an english word?
+  //.. to avoid lumping words with non-word stuff
   isWord: (t) => {
-    if (t.text.match(/^\[.*?\]\??$/)) {
-      return false;
-    }
+    //no letters or numbers
     if (!t.text.match(/[a-z|0-9]/i)) {
       return false;
     }
-    if (t.text.match(/[\|#\<\>]/i)) {
+    //has letters, but with no vowels
+    if (t.normal.match(/[a-z]/) && t.normal.length > 1 && !t.normal.match(/[aeiouy]/i)) {
       return false;
+    }
+    //has numbers but not a 'value'
+    if (t.normal.match(/[0-9]/)) {
+      //s4e
+      if (t.normal.match(/[a-z][0-9][a-z]/)) {
+        return false;
+      }
+      //ensure it looks like a 'value' eg '-$4,231.00'
+      if (!t.normal.match(/^([$-])*?([0-9,\.])*?([s\$%])*?$/)) {
+        return false;
+      }
     }
     return true;
   },
 
   isAcronym: (t) => {
     //like N.D.A
-    if (t.text.match(/([A-Z]\.)+[A-Z]?$/)) {
+    if (t.text.match(/([A-Z]\.)+[A-Z]?$/i)) {
+      return true;
+    }
+    //like 'F.'
+    if (t.text.match(/^[A-Z]\.$/i)) {
       return true;
     }
     //like NDA
-    if (t.text.match(/[A-Z]{3}$/)) {
+    if (t.text.match(/[A-Z]{3}$/i)) {
       return true;
     }
     return false;

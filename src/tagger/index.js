@@ -5,7 +5,8 @@ const step = {
   lexicon_step: require('./steps/lexicon_pass'),
   capital_step: require('./steps/capital_step'),
   suffix_step: require('./steps/suffix_step'),
-  web_step: require('./steps/web_step')
+  web_step: require('./steps/web_step'),
+  noun_fallback: require('./steps/noun_fallback')
 };
 
 const lumper = {
@@ -19,6 +20,7 @@ const tagger = function(s) {
   s = step.capital_step(s);
   s = step.web_step(s);
   s = step.suffix_step(s);
+  s = step.noun_fallback(s);
   s = lumper.lump_two(s);
   s = lumper.lump_three(s);
   return s;

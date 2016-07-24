@@ -1,5 +1,5 @@
 'use strict';
-const fns = require('../../log/fns')
+const fns = require('../../log/fns');
 //supported Sentence.return() methods
 module.exports = {
   text: (t) => {
@@ -16,16 +16,16 @@ module.exports = {
   },
   tags: (t) => {
     return t.sentences.map((s) => {
-      return s.as('tags')
+      return s.as('tags');
     });
   },
   printTags: (t) => {
     t.sentences.forEach((s) => {
-      console.log('--')
+      console.log(' ');
       s.as('tags').forEach((tag) => {
-        let niceTags = tag.tags.map((w) => w).join(', ')
-        console.log(fns.rightPad('   "' + tag.normal + '"', 15) + '- ' + niceTags)
-      })
+        let niceTags = tag.tags.map((w) => w).join(', ');
+        console.log(fns.rightPad('   "' + tag.normal + '"', 15) + '- ' + niceTags);
+      });
     });
   }
 };

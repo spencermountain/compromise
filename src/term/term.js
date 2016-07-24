@@ -3,19 +3,18 @@
 const fns = require('../fns');
 const log = require('../log');
 const set_tag = require('./tag');
+const build_whitespace = require('./whitespace');
 const render = require('./render/render');
 const normalize = require('./transforms/term/normalize');
-const info = require('./info');
 const path = 'term';
 
 class Term {
   constructor(str, context) {
     this.str = fns.ensureString(str);
-    this.normal = normalize(this.text);
     this.context = fns.ensureObject(context);
-    this.whitespace = fns.ensureObject(this.context.whitespace);
-    this.whitespace.before = fns.ensureString(this.whitespace.before);
-    this.whitespace.after = fns.ensureString(this.whitespace.after);
+    this.whitespace = build_whitespace(this.str);
+    this.text = this.str.trim();
+    this.normal = normalize(this.text);
     this.pos = {};
     this.transforms = {};
     this.infos = {};
@@ -33,10 +32,8 @@ class Term {
   tag(tag, reason) {
     log.tag(this, tag, reason, path);
     set_tag(this, tag, reason);
-
     return this;
   }
-
   //change the text, return this
   to(method) {
     if (fns.isFunction(method)) {

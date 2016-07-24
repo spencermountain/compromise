@@ -2,7 +2,7 @@
 //a Text() is a list of sentences, which are a list of Terms
 const fns = require('../fns');
 // const debug = require('../debug');
-let log = function() {}
+let log = function() {};
 const Sentence = require('../sentence/sentence');
 const split_sentences = require('./split_sentences');
 const get = require('./get/get');
@@ -14,12 +14,12 @@ class Text {
     this.input = fns.ensureString(str);
     this.context = fns.ensureObject(context);
     this.sentences = split_sentences(this.input);
-    this.sentences = this.sentences.map((s) => {
+    this.sentences = this.sentences.map((txt) => {
       let c = fns.copy(context);
       c.parent = this; //give it our ref
-      return new Sentence(s, c);
+      return new Sentence(txt, c);
     });
-    log(this)
+    log(this);
   }
 
   //change the text, return this
@@ -29,7 +29,7 @@ class Text {
     }
     //is it known?
     if (transforms[method]) {
-      log('====' + method + '====')
+      log('====' + method + '====');
       return transform[method](this);
     }
     return this;
@@ -57,7 +57,7 @@ class Text {
 
   //return it as something
   as(method) {
-    log('====' + method + '====')
+    log('====' + method + '====');
     if (fns.isFunction(method)) {
       return method(this);
     }

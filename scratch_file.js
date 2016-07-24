@@ -15,7 +15,8 @@ let context = {
 };
 // nlp('  john f.   kennedy  ').as('printTags');
 // nlp('6 am').as('printTags');
-nlp('3$8').as('printTags');
+// nlp('3$8').as('printTags');
+nlp('united kingdom').as('printTags');
 // console.log(t.is('Singular'));
 
 

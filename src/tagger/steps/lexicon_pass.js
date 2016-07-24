@@ -1,5 +1,5 @@
 'use strict';
-const p = require('./paths');
+const p = require('../paths');
 const lexicon = p.lexicon;
 const log = p.log;
 const path = 'tagger/lexicon';

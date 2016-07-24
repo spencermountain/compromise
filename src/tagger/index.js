@@ -10,12 +10,14 @@ const step = {
 };
 
 const lumper = {
+  lexicon_lump: require('./lumper/lexicon_lump'),
   lump_two: require('./lumper/lump_two'),
   lump_three: require('./lumper/lump_three')
 };
 
 const tagger = function(s) {
   log.here('tagger');
+  s = lumper.lexicon_lump(s);
   s = step.lexicon_step(s);
   s = step.capital_step(s);
   s = step.web_step(s);

@@ -18,7 +18,7 @@ class Term {
     this.pos = {};
     this.transforms = {};
     this.infos = {};
-    this.tag('Term');
+    this.tag('Term', 'constructor');
   }
 
   set text(str) {
@@ -28,9 +28,7 @@ class Term {
   get text() {
     return fns.ensureString(this.str);
   }
-
   tag(tag, reason) {
-    log.tag(this, tag, reason, path);
     set_tag(this, tag, reason);
     return this;
   }

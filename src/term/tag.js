@@ -1,9 +1,11 @@
 'use strict';
 //set a term as a particular Part-of-speech
+const log = require('../log');
 const info = require('./info');
 const transforms = require('./transforms');
 const tagset = require('../tagset');
 const fns = require('../fns');
+const path = 'tagger';
 
 //check if the term is compatible with a pos tag.
 const canBe = (term, tag) => {
@@ -26,7 +28,11 @@ const canBe = (term, tag) => {
   return true;
 };
 
-const set_tag = function(term, tag) {
+const set_tag = function(term, tag, reason) {
+  //log only the interesting ones
+  if (tag !== 'Term') {
+    log.tag(term, tag, reason, path);
+  }
   //reset term, if necessary
   if (canBe(term, tag) === false) {
     term.pos = {};

@@ -41,8 +41,8 @@ const info = {
       'd': true,
       'm': true
     };
-    let parts = t.text.split(/^([a-z]+)'([a-z][a-z]?)$/);
-    if (parts && allowed[parts[2]]) {
+    let parts = t.text.match(/^([a-z]+)'([a-z][a-z]?)$/);
+    if (parts && parts[1] && allowed[parts[2]]) {
       //handle n't
       if (parts[2] === 't' && parts[1].match(/[a-z]n$/)) {
         parts[1] = parts[1].replace(/n$/, '');
@@ -54,7 +54,7 @@ const info = {
       };
     }
     // "flanders' house"
-    parts = t.text.split(/^([a-z]+s)'$/);
+    parts = t.text.match(/^([a-z]+s)'$/);
     if (parts) {
       return {
         start: parts[1],

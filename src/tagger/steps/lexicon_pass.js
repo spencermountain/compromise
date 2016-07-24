@@ -9,9 +9,15 @@ const lexicon_pass = function(s) {
   //loop through each term
   for (let i = 0; i < s.terms.length; i++) {
     let t = s.terms[i];
-    //basic match
+    //contraction lookup
+    if (t.silent_term && lexicon[t.silent_term]) {
+      t.tag(lexicon[t.silent_term], 'silent_term-lexicon');
+      continue;
+    }
+    //basic term lookup
     if (lexicon[t.normal]) {
       t.tag(lexicon[t.normal], 'lexicon-match');
+      continue;
     }
   }
   return s;

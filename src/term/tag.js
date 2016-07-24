@@ -39,6 +39,10 @@ const set_tag = function(term, tag, reason) {
     term.transforms = {};
     term.infos = {};
   }
+  if (!tagset[tag]) {
+    console.warn('unknown tag ' + tag);
+    return;
+  }
   let tags = tagset[tag].is;
   for (let i = 0; i < tags.length; i++) {
     term.pos[tags[i]] = true;

@@ -13,6 +13,7 @@ class Term {
     this.str = fns.ensureString(str);
     this.context = fns.ensureObject(context);
     this.whitespace = build_whitespace(this.str);
+    this.silent_term = '';
     this.text = this.str.trim();
     this.normal = normalize(this.text);
     this.pos = {};

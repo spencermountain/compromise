@@ -9,6 +9,8 @@ const step = {
   noun_fallback: require('./steps/noun_fallback')
 };
 
+const interpret_contractions = require('./contraction');
+
 const lumper = {
   lexicon_lump: require('./lumper/lexicon_lump'),
   lump_two: require('./lumper/lump_two'),
@@ -17,6 +19,7 @@ const lumper = {
 
 const tagger = function(s) {
   log.here('tagger');
+  s = interpret_contractions(s);
   s = lumper.lexicon_lump(s);
   s = step.lexicon_step(s);
   s = step.capital_step(s);

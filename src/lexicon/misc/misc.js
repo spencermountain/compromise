@@ -310,5 +310,5 @@ for (let i = 0; i < keys.length; i++) {
     misc[arr[i2]] = keys[i];
   }
 }
-// console.log(misc.a);
 module.exports = misc;
+// console.log(misc.very);

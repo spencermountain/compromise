@@ -17,7 +17,6 @@ const addArr = (arr, tag) => {
     lexicon[arr[i]] = tag;
   }
 };
-
 //let a rip.
 addObj(data.misc);
 addObj(data.abbreviations);
@@ -82,4 +81,4 @@ module.exports = lexicon;
 
 // console.log(Object.keys(data));
 // console.log(data.misc);
-// console.log(lexicon.the)
+// console.log(lexicon.could);

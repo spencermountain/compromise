@@ -33,7 +33,16 @@ class Sentence {
   get text() {
     return fns.ensureString(this.input);
   }
-
+  //add a word at a specific location
+  addWord(str, i, tag) {
+    let t = new Term(str);
+    if (tag) {
+      t.tag(tag, 'add-word');
+    }
+    let before = this.terms.slice(0, i + 1);
+    let after = this.terms.slice(i + 1, this.terms.length);
+    this.terms = before.concat([t], after);
+  }
   //change the text, return this
   to(method) {
     if (fns.isFunction(method)) {

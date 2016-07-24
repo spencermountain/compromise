@@ -28,10 +28,14 @@ class Text {
       return method(this);
     }
     //is it known?
+    method = fns.titleCase(method);
     if (transforms[method]) {
-      log('====' + method + '====');
       return transform[method](this);
     }
+    //else, apply it to each sentence
+    this.sentences.map((s) => {
+      return s.to(method);
+    });
     return this;
   }
 
@@ -56,7 +60,7 @@ class Text {
   }
 
   //return it as something
-  as(method) {
+  render(method) {
     log('====' + method + '====');
     if (fns.isFunction(method)) {
       return method(this);

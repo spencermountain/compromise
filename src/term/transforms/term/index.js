@@ -1,13 +1,21 @@
-'use strict'
-const normalize = require('./normalize')
+'use strict';
+const normalize = require('./normalize');
 
 module.exports = {
-  Normalize: (t) => {
-    t.text += normalize(t.text)
-    return t
+  Normal: (t) => {
+    t.text += normalize(t.text);
+    return t;
   },
-  Exclaim: (t) => {
-    t.text += '!'
-    return t
+  LowerCase: (t) => {
+    t.text = t.text.toLowerCase();
+    return t;
+  },
+  UpperCase: (t) => {
+    t.text = t.text.toUpperCase();
+    return t;
+  },
+  TitleCase: (t) => {
+    t.text = t.text.replace(/^[a-z]/, (x) => x.toUpperCase());
+    return t;
   }
-}
+};

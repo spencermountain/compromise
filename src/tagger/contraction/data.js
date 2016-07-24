@@ -13,30 +13,33 @@ exports.easy_ends = {
 };
 
 exports.irregulars = {
-  'dunno': ['do not', 'know'],
+  'dunno': ['do', 'not', 'know'],
   'wanna': ['want', 'to'],
   'gonna': ['going', 'to'],
   'im': ['i', 'am'],
   'alot': ['a', 'lot'],
 
-  'dont': ['do not'],
-  'don\'t': ['do not'],
-  'dun': ['do not'],
+  'dont': ['do', 'not'],
+  'dun': ['do', 'not'],
 
-  'won\'t': ['will not'],
-  'wont': ['will not'],
+  'won\'t': ['will', 'not'],
+  'wont': ['will', 'not'],
 
-  'can\'t': ['can not'],
-  'cannot': ['can not'],
+  'cant': ['can', 'not'],
+  'cannot': ['can', 'not'],
 
-  'aint': ['is not'], //or 'are'
-  'ain\'t': ['is not'],
-  'shan\'t': ['should not'],
+  'aint': ['is', 'not'], //or 'are'
+  'ain\'t': ['is', 'not'],
+  'shan\'t': ['should', 'not'],
 
   'where\'d': ['where', 'did'],
+  'whered': ['where', 'did'],
   'when\'d': ['when', 'did'],
+  'whend': ['when', 'did'],
   'how\'d': ['how', 'did'],
+  'howd': ['how', 'did'],
   'what\'d': ['what', 'did'],
-  'brb': ['be', 'right', 'back'],
-  'let\'s': ['let', 'us']
+  'whatd': ['what', 'did'],
+  'let\'s': ['let', 'us'],
+  'brb': ['be', 'right', 'back']
 };

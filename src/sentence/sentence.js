@@ -48,10 +48,15 @@ class Sentence {
     if (fns.isFunction(method)) {
       return method(this);
     }
-    //is it known?
+    //is it a known transformation?
+    method = fns.titleCase(method);
     if (transform[method]) {
       return transform[method](this);
     }
+    //else, apply it to each term
+    this.terms = this.terms.map((t) => {
+      return t.to(method);
+    });
     return this;
   }
 
@@ -76,7 +81,7 @@ class Sentence {
   }
 
   //return it as something
-  as(method) {
+  render(method) {
     if (fns.isFunction(method)) {
       return method(this);
     }

@@ -3,6 +3,7 @@
 const fns = require('../fns');
 const log = require('../log');
 const set_tag = require('./tag');
+const tagset = require('../tagset');
 const build_whitespace = require('./whitespace');
 const render = require('./render/render');
 const normalize = require('./transforms/term/normalize');
@@ -38,9 +39,14 @@ class Term {
     if (fns.isFunction(method)) {
       return method(this);
     }
-    //is it known?
+    //is it a known transformation?
+    method = fns.titleCase(method);
     if (this.transforms[method]) {
       return this.transforms[method](this);
+    }
+    //is it just a pos-tag?
+    if (tagset[method]) {
+      this.tag(method);
     }
     log.change('no method ' + method, 'term');
     return this;
@@ -77,7 +83,7 @@ class Term {
     return false;
   }
   //return it as something
-  as(method) {
+  render(method) {
     if (fns.isFunction(method)) {
       return method(this);
     }

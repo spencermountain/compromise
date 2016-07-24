@@ -19,12 +19,18 @@ module.exports = {
       return s.as('tags');
     });
   },
-  printTags: (t) => {
+  prettyPrint: (t) => {
     t.sentences.forEach((s) => {
       console.log(' ');
-      s.as('tags').forEach((tag) => {
-        let niceTags = tag.tags.map((w) => w).join(', ');
-        console.log(fns.rightPad('   "' + tag.normal + '"', 15) + '- ' + niceTags);
+      s.terms.forEach((term) => {
+        let niceTags = Object.keys(term.pos).filter((tag) => tag !== 'Term').join(', ');
+        let title = '"' + term.text + '"';
+        let silent = '';
+        if (term.silent_term) {
+          silent = '  [' + term.silent_term + ']';
+        }
+        silent = fns.rightPad(silent, 15);
+        console.log(fns.rightPad('   ' + title, 12) + silent + '- ' + niceTags);
       });
     });
   }

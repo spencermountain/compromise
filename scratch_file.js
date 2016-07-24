@@ -10,15 +10,12 @@ const Term = require('./src/term/term');
 
 log.disable();
 
-let context = {
-  debug: true
-};
 // nlp('  john f.   kennedy  ').as('printTags');
 // nlp('6 am').as('printTags');
 // nlp('3$8').as('printTags');
 // nlp('united kingdom').as('printTags');
 // nlp('he said i\'m very nice').as('printTags');
-nlp('i couldn\'t go').as('printTags');
+nlp('i dunno about').to('titleCase').render('prettyPrint');
 // console.log(t.is('Singular'));
 
 

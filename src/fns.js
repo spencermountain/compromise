@@ -46,6 +46,10 @@ exports.startsWith = function(str, prefix) {
   return false;
 };
 
+exports.titleCase = (str) => {
+  return str.replace(/^[a-z]/, (x) => x.toUpperCase());
+};
+
 //turn a nested array into one array
 exports.flatten = function(arr) {
   let all = [];

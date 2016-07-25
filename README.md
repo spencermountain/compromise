@@ -2,9 +2,14 @@
 ```javascript
 nlp('', {}).to(myTransform).render(myOutput)
 
-nlp('', {}).if('Question').info('Nouns')
+nlp('This is experimental.', {}).to('Exclamation').render('Text')
+//"This is experimental!"
 
-nlp('', {}).sentences[0].to('PastTense').render('json')
+nlp('washing machine', {}).to('Noun').to('Plural').render('Html')
+//<span class="Noun Plural"/>washing&nbsp;machines</span>
+
+nlp("It's really   good ", {}).sentences[0].to('PastTense').to('StripAdverbs').render('Normalized')
+//it is good.
 ```
 
 ###Reasoning:

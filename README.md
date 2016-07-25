@@ -1,4 +1,4 @@
-#new v7 API proposal! :heart::heart::heart::heart::heart:
+#new v7 API proposal! :heart::heart::heart:
 ```javascript
 nlp('', {}).to(myTransform).render(myOutput)
 
@@ -48,9 +48,9 @@ nlp('john is cool').render(myTransform);
 ```
 They alone should transform/mutate the state. These methods all return `this`.
 
-##Query `.get()`
+##Query `.info()`
 ```javascript
-nlp('john is cool').info(ngrams);
+nlp('john is cool').info(ngramsFn);
 //['john is', 'is cool'...]
 nlp('john is cool').info('verbs');
 //[Term="is"]

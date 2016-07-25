@@ -1,11 +1,10 @@
 #new v7 API proposal! :heart::heart::heart::heart::heart:
 ```javascript
-nlp('', {}).to(myTransform).as(myOutput)
+nlp('', {}).to(myTransform).render(myOutput)
 
-nlp('', {}).sentences[0].to('PastTense').as('json')
-nlp('', {}).if('Question').get('Nouns')
+nlp('', {}).if('Question').info('Nouns')
 
-nlp('', {}).get('passiveVoice')
+nlp('', {}).sentences[0].to('PastTense').render('json')
 ```
 
 ###Reasoning:
@@ -18,35 +17,35 @@ nlp('', {}).get('passiveVoice')
 **every input** will now be pos-tagged, and automatically supplied the appropriate methods of each term.
 * if you don't trust this, you can co-erce the POS:
 ```javascript
-nlp('john is cool').to('Noun').to('plural').as('text')
+nlp('john is cool').to('Noun').to('plural').render('text')
 //john is cools
 ```
 * some conditional logic for applying appropriate transformation, like
 ```javascript
-nlp('doctor').to('plural').as('text')
+nlp('doctor').to('plural').render('text')
 //doctors
-nlp('we went to the doctor to visit.').to('plural').as('text')
+nlp('we went to the doctor to visit.').to('plural').render('text')
 //he went to the doctors to visit.
 ```
 
 #API
-##Change/Transform `.to()`
+##Change/Transform `.render()`
 ```javascript
-nlp('john is cool').to('PastTense');
+nlp('john is cool').render('PastTense');
 
-nlp('john is cool').to('Question');
+nlp('john is cool').render('Question');
 
-nlp('john is cool').to(myTransform);
+nlp('john is cool').render(myTransform);
 ```
 They alone should transform/mutate the state. These methods all return `this`.
 
 ##Query `.get()`
 ```javascript
-nlp('john is cool').get(ngrams);
+nlp('john is cool').info(ngrams);
 //['john is', 'is cool'...]
-nlp('john is cool').get('verbs');
+nlp('john is cool').info('verbs');
 //[Term="is"]
-nlp('john is cool').get('people');
+nlp('john is cool').info('people');
 //[Person="john"]
 ```
 ##Yes/No info `.is()`
@@ -55,7 +54,7 @@ nlp('john is cool').is('Question');
 //false
 nlp('kick').is('Verb');
 //true
-nlp('oh, great new api.').is(isSarcastic);
+nlp('oh, great new api.').is(mySarcasmDetector);
 //true
 ```
 
@@ -78,13 +77,13 @@ nlp('john is cool').if('Copula').to('PastTense');
 //'john was cool'
 ```
 
-##rendering, return, output `.as()`
+##rendering, return, output `.render()`
 ```javascript
-nlp('John is cool').as('normal');
-nlp('John is cool').as('text');
-nlp('John is cool').as('html');
+nlp('John is cool').render('normal');
+nlp('John is cool').render('text');
+nlp('John is cool').render('html');
 //also allows a cleaner, less-crowded result
-nlp('John is cool').as('json');
+nlp('John is cool').render('json');
 //and adhoc-scripting
-nlp('John is cool').as(myFunction);
+nlp('John is cool').render(myFunction);
 ```

@@ -8,12 +8,16 @@ nlp('This is experimental.', {}).to('Exclamation').render('Text')
 nlp('washing machine', {}).to('Noun').to('Plural').render('Html')
 //<span class="Noun Plural"/>washing&nbsp;machines</span>
 
-nlp("It's really   good ", {}).sentences[0].to('PastTense').to('StripAdverbs').render('Normalized')
-//it is good.
+nlp("It's really   good ", {}).to('PastTense').to('StripAdverbs').render('Normalized')
+//it was good.
+
+nlp("two tbsp of sugar", {}).info('Values')[0].unit
+//tablespoon
 ```
 
 ###Reasoning:
 * clears-up immutable/mutable ambiguity
+* requires less working knowledge of internals
 * supports no-install 'first-class' scripting/plugins
 * less-surprising return values
 * avoids re-parsing problems in pos-specific methods like `nlp.value()`

@@ -1,5 +1,6 @@
 'use strict';
-//im not sure this is safe.
+//turn xml special characters into apersand-encoding.
+//i'm not sure this is perfectly safe.
 const escapeHtml = (s) => {
   const HTML_CHAR_MAP = {
     '<': '&lt;',
@@ -39,6 +40,7 @@ const sanitize = (html) => {
   return html.replace(/</g, '&lt;');
 }
 
+//turn the term into ~properly~ formatted html
 const renderHtml = function(t) {
   let classes = Object.keys(t.pos).filter((tag) => tag !== 'Term');
   classes = classes.map(c => 'nlp' + c);

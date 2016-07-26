@@ -1,4 +1,6 @@
 'use strict';
+const wrestleVerb = require('./wrestle');
+
 let verb = {
   pasttense: (t) => {
     t.text += 'ed';
@@ -9,6 +11,9 @@ let verb = {
     t.text += 'ing';
     t.tag('Gerund', 'manual');
     return t;
+  },
+  specific: (t) => {
+    return wrestleVerb(t)
   }
 };
 module.exports = verb;

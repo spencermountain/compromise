@@ -8,7 +8,7 @@ const tags = require('./src/tagset');
 const log = require('./src/log');
 const Term = require('./src/term/term');
 
-log.disable();
+// log.disable();
 
 // nlp('  john f.   kennedy  ').as('printTags');
 // nlp('6 am').as('printTags');
@@ -20,4 +20,4 @@ log.disable();
 // console.log(t.is('Singular'));
 
 
-console.log(nlp('don').sentences[0].terms[0].pos);
+console.log(nlp('apple').sentences[0].terms[0].to('Person').pos);

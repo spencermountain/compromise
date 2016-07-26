@@ -7,6 +7,8 @@ const tagset = require('../tagset');
 const build_whitespace = require('./whitespace');
 const render = require('./render');
 const normalize = require('./transforms/term/normalize');
+const info = require('./info');
+const transforms = require('./transforms');
 
 class Term {
   constructor(str, context) {
@@ -17,9 +19,8 @@ class Term {
     this.text = this.str.trim();
     this.normal = normalize(this.text);
     this.pos = {};
-    this.transforms = {};
-    this.infos = {};
-    this.tag('Term', 'constructor');
+    this.transforms = transforms.Term;
+    this.infos = info.Term;
   }
 
   set text(str) {
@@ -39,13 +40,15 @@ class Term {
       return method(this);
     }
     //is it a known transformation?
-    method = method.toLowerCase();
-    if (this.transforms[method]) {
-      return this.transforms[method](this);
+    let transform = this.transforms[method.toLowerCase()]
+    if (transform) {
+      return transform(this);
     }
     //is it just a pos-tag?
+    method = fns.titleCase(method)
     if (tagset[method]) {
-      this.tag(method);
+      this.tag(method, 'manual-tag');
+      return this.to('Specific')
     }
     log.change('no method ' + method, 'term');
     return this;

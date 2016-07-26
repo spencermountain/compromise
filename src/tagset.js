@@ -3,35 +3,37 @@
 
 const tree = {
   Noun: {
-    Singular: true,
+    Singular: {
+      Pronoun: true,
+      Person: {
+        MalePerson: true,
+        FemalePerson: true
+      },
+      Place: {
+        Country: true,
+        City: true
+      },
+      Organization: true,
+      Value: {
+        Currency: true,
+        Ordinal: true,
+        Cardinal: true
+      },
+      Date: true
+    },
     Plural: true,
     Actor: true,
-    Demonym: true,
-    Pronoun: true,
-    Person: {
-      MalePerson: true,
-      FemalePerson: true
-    },
-    Place: {
-      Country: true,
-      City: true
-    },
-    Organization: true,
-    Value: {
-      Currency: true,
-      Ordinal: true,
-      Cardinal: true
-    },
-    Date: true
+    Demonym: true
   },
   Verb: {
-    Infinitive: true,
+    PresentTense: {
+      Infinitive: true,
+      Gerund: true
+    },
     PastTense: true,
-    PresentTense: true,
     PerfectTense: true,
     Pluperfect: true,
     FuturePerfect: true,
-    Gerund: true,
     Copula: true,
     Modal: true
   },

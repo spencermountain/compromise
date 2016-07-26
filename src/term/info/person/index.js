@@ -3,7 +3,7 @@
 
 const info = {
   gender: (t) => {
-    return 'MalePerson'
+    return 'MalePerson' //TODO
   }
 };
 module.exports = info;

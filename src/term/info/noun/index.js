@@ -5,13 +5,13 @@ const article = require('./article');
 
 const info = {
   isplural: (t) => {
-    return isPlural(t.normal);
+    return isPlural(t);
   },
   hasplural: (t) => {
-    return hasPlural(t.normal);
+    return hasPlural(t);
   },
   article: (t) => {
-    return article(t.normal)
+    return article(t)
   }
 };
 module.exports = info;

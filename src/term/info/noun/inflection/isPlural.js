@@ -2,8 +2,20 @@
 const irregulars = require('../../paths').data.irregular_plurals;
 const rules = require('./rules')
 
-const is_plural = function(str) {
-  str = (str || '').toLowerCase();
+//first, try to guess based on existing tags
+const couldEvenBePlural = (t) => {
+  if (t.pos.Person || t.pos.Value || t.pos.Organization || t.pos.Date) {
+    return false
+  }
+  return true
+}
+
+const is_plural = function(t) {
+  let str = t.normal
+  //inspect the existing tags to see if a plural is valid
+  if (!couldEvenBePlural(t)) {
+    return false
+  }
   //handle 'mayors of chicago'
   const preposition = str.match(/([a-z]*) (of|in|by|for) [a-z]/);
   if (preposition && preposition[1]) {
@@ -16,6 +28,7 @@ const is_plural = function(str) {
   if (irregulars.toPlural[str]) {
     return false;
   }
+  //check the suffix-type rules for indications
   for (let i = 0; i < rules.plural_indicators.length; i++) {
     if (str.match(rules.plural_indicators[i])) {
       return true;
@@ -26,7 +39,7 @@ const is_plural = function(str) {
       return false;
     }
   }
-  // some 'looks pretty plural' rules
+  // a fallback 'looks pretty plural' rule..
   if (str.match(/s$/) && !str.match(/ss$/) && str.length > 3) { //needs some lovin'
     return true;
   }

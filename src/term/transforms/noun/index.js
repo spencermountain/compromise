@@ -1,4 +1,5 @@
 'use strict';
+const wrestleNoun = require('./wrestle')
 let noun = {
   plural: (t) => {
     t.text += 's';
@@ -9,6 +10,9 @@ let noun = {
     t.text.replace('s$', '');
     t.tag('Singular');
     return t;
+  },
+  specific: (t) => {
+    return wrestleNoun(t)
   }
 };
 module.exports = noun;

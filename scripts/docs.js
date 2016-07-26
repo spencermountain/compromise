@@ -1,4 +1,6 @@
+//generate new docs
 require('shelljs/global');
+config.silent = true
 var jsdoc = './node_modules/jsdoc-parse/bin/cli.js'
 
 var transforms = [

@@ -1,5 +1,5 @@
 'use strict';
-const paths = require('../paths')
+// const paths = require('../paths')
 //turn just 'Noun', into something more
 
 const wrestleNoun = function(t) {

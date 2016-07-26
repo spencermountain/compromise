@@ -225,7 +225,7 @@ var nlp = function nlp(str, context) {
 
 module.exports = nlp;
 
-},{"./text/text":67}],4:[function(_dereq_,module,exports){
+},{"./text/text":66}],4:[function(_dereq_,module,exports){
 'use strict';
 //the data is all variously compressed and sorted
 //this is just a helper file for the main file paths..
@@ -447,7 +447,7 @@ var shouldPrint = function shouldPrint(path) {
   }
   var arg = process.argv[2];
   var toPrint = arg.replace(/^--debug=?/, '') || '*';
-  if (toPrint === '*' || toPrint == '') {
+  if (toPrint === '*' || toPrint === '') {
     return true;
   }
   if (path.indexOf(toPrint) === 0) {
@@ -2044,8 +2044,8 @@ module.exports = info;
 var info = {
 
   //return a float/integer
-  number: function number(t) {
-    return 42;
+  number: function number() {
+    return 42; //TODO
   }
 
 };
@@ -2423,7 +2423,7 @@ var Term = function () {
 
 module.exports = Term;
 
-},{"../fns":2,"../log":9,"../tagset":34,"./info":35,"./render":47,"./tag":49,"./transforms":52,"./transforms/term/normalize":59,"./whitespace":63}],51:[function(_dereq_,module,exports){
+},{"../fns":2,"../log":9,"../tagset":34,"./info":35,"./render":47,"./tag":49,"./transforms":52,"./transforms/term/normalize":58,"./whitespace":62}],51:[function(_dereq_,module,exports){
 'use strict';
 
 var adjective = {
@@ -2447,7 +2447,7 @@ module.exports = {
   Person: _dereq_('./person')
 };
 
-},{"./adjective":51,"./noun":53,"./person":56,"./term":58,"./value":60,"./verb":61}],53:[function(_dereq_,module,exports){
+},{"./adjective":51,"./noun":53,"./person":55,"./term":57,"./value":59,"./verb":60}],53:[function(_dereq_,module,exports){
 'use strict';
 
 var wrestleNoun = _dereq_('./wrestle');
@@ -2473,8 +2473,7 @@ module.exports = noun;
 
 },{"./wrestle":54}],54:[function(_dereq_,module,exports){
 'use strict';
-
-var paths = _dereq_('../paths');
+// const paths = require('../paths')
 //turn just 'Noun', into something more
 
 var wrestleNoun = function wrestleNoun(t) {
@@ -2491,9 +2490,7 @@ var wrestleNoun = function wrestleNoun(t) {
 
 module.exports = wrestleNoun;
 
-},{"../paths":55}],55:[function(_dereq_,module,exports){
-arguments[4][41][0].apply(exports,arguments)
-},{"../../fns":2,"../../lexicon/data":4,"../../log":9,"dup":41}],56:[function(_dereq_,module,exports){
+},{}],55:[function(_dereq_,module,exports){
 'use strict';
 
 var wrestle = _dereq_('./wrestle');
@@ -2510,7 +2507,7 @@ module.exports = {
   }
 };
 
-},{"./wrestle":57}],57:[function(_dereq_,module,exports){
+},{"./wrestle":56}],56:[function(_dereq_,module,exports){
 'use strict';
 //more-spefic tags for a person
 
@@ -2529,7 +2526,7 @@ var wrestle = function wrestle(t) {
 
 module.exports = wrestle;
 
-},{}],58:[function(_dereq_,module,exports){
+},{}],57:[function(_dereq_,module,exports){
 'use strict';
 
 var normalize = _dereq_('./normalize');
@@ -2559,7 +2556,7 @@ module.exports = {
   }
 };
 
-},{"./normalize":59}],59:[function(_dereq_,module,exports){
+},{"./normalize":58}],58:[function(_dereq_,module,exports){
 'use strict';
 
 var normalize = function normalize(str) {
@@ -2583,7 +2580,7 @@ module.exports = normalize;
 
 // console.log(normalize('Dr. V Cooper'));
 
-},{}],60:[function(_dereq_,module,exports){
+},{}],59:[function(_dereq_,module,exports){
 'use strict';
 
 var value = {
@@ -2594,7 +2591,7 @@ var value = {
 };
 module.exports = value;
 
-},{}],61:[function(_dereq_,module,exports){
+},{}],60:[function(_dereq_,module,exports){
 'use strict';
 
 var wrestleVerb = _dereq_('./wrestle');
@@ -2616,7 +2613,7 @@ var verb = {
 };
 module.exports = verb;
 
-},{"./wrestle":62}],62:[function(_dereq_,module,exports){
+},{"./wrestle":61}],61:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -2649,7 +2646,7 @@ var wrestleVerb = function wrestleVerb(t) {
 
 module.exports = wrestleVerb;
 
-},{}],63:[function(_dereq_,module,exports){
+},{}],62:[function(_dereq_,module,exports){
 'use strict';
 
 var build_whitespace = function build_whitespace(str) {
@@ -2671,7 +2668,7 @@ var build_whitespace = function build_whitespace(str) {
 };
 module.exports = build_whitespace;
 
-},{}],64:[function(_dereq_,module,exports){
+},{}],63:[function(_dereq_,module,exports){
 'use strict';
 //nearly every inspection method is over at /sentence/info
 
@@ -2688,7 +2685,7 @@ module.exports = {
   }
 };
 
-},{}],65:[function(_dereq_,module,exports){
+},{}],64:[function(_dereq_,module,exports){
 'use strict';
 
 var fns = _dereq_('../../log/fns');
@@ -2735,7 +2732,7 @@ module.exports = {
   }
 };
 
-},{"../../log/fns":8}],66:[function(_dereq_,module,exports){
+},{"../../log/fns":8}],65:[function(_dereq_,module,exports){
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
@@ -2815,7 +2812,7 @@ var sentence_parser = function sentence_parser(text) {
 module.exports = sentence_parser;
 // console.log(sentence_parser('john f. kennedy'));
 
-},{"../fns":2,"../lexicon/data":4}],67:[function(_dereq_,module,exports){
+},{"../fns":2,"../lexicon/data":4}],66:[function(_dereq_,module,exports){
 'use strict';
 //a Text() is a list of sentences, which are a list of Terms
 
@@ -2927,7 +2924,7 @@ var Text = function () {
 
 module.exports = Text;
 
-},{"../fns":2,"../sentence/sentence":14,"./info":64,"./render":65,"./split_sentences":66,"./transforms/transforms":68}],68:[function(_dereq_,module,exports){
+},{"../fns":2,"../sentence/sentence":14,"./info":63,"./render":64,"./split_sentences":65,"./transforms/transforms":67}],67:[function(_dereq_,module,exports){
 'use strict';
 //supported Text.to() transformation methods
 

@@ -22,7 +22,7 @@ const shouldPrint = (path) => {
   }
   let arg = process.argv[2];
   let toPrint = arg.replace(/^--debug=?/, '') || '*';
-  if (toPrint === '*' || toPrint == '') {
+  if (toPrint === '*' || toPrint === '') {
     return true;
   }
   if (path.indexOf(toPrint) === 0) {

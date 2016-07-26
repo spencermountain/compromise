@@ -4,10 +4,13 @@ var tape = './node_modules/tape/bin/tape';
 var tapSpec = './node_modules/tap-spec/bin/cmd.js';
 
 //run tests server-side
-exec(tape + ' ./test/unit_test/**/*_test.js | ' + tapSpec)
+exec(tape + ' ./test/unit/**/*_test.js | ' + tapSpec)
 
 //test all versions serverside, client-side
 exec(tape + ' ./test/prerelease/index.js | ' + tapSpec)
+
+//generate new docs
+exec('node ./docs.js')
 
 //run tests on the client-side
 var cmd = browserify + ' ./test/unit_test/*_test.js '

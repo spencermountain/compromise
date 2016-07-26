@@ -3,8 +3,8 @@
 const info = {
 
   //return a float/integer
-  number: (t) => {
-    return 42
+  number: () => {
+    return 42 //TODO
   }
 
 }

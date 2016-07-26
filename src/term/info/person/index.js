@@ -2,7 +2,7 @@
 // const findGender = require('./gender');
 
 const info = {
-  gender: (t) => {
+  gender: () => {
     return 'MalePerson' //TODO
   }
 };

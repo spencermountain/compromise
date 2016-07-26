@@ -16,21 +16,8 @@ log.disable();
 // nlp('united kingdom').as('printTags');
 // nlp('he said i\'m very nice').as('printTags');
 // nlp('i dunno about').to('titleCase').render('prettyPrint');
-console.log(nlp('hello. <script>alert(\'hji\')</script> so<br/> yeah').render('html'));
+// console.log(nlp('hello. <script>alert(\'hji\')</script> so<br/> yeah').render('html'));
 // console.log(t.is('Singular'));
 
 
-// console.log(t.transforms);
-// console.log(t.canBe('Verb'));
-// console.log(t.canBe('Determiner'));
-// console.log(t.canBe('Plural'));
-// console.log(t.canBe('Person'));
-// console.log(t.canBe('Condition'));
-// console.log(t.canBe('lkjsdflkj'));
-// console.log(r.sentences[0].terms[0]);
-// let r = nlp('I will bust-out', context) //.to('Exclamation')
-// log.show(r, '')
-// console.log(new Term('peace').tag('Noun').info('hasPlural'));
-// console.log(t.to.fun().fun2())
-// t.text = 'Fun'
-// console.log(t.normal)
+console.log(nlp('don').sentences[0].terms[0].pos);

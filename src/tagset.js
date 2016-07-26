@@ -1,41 +1,6 @@
 'use strict';
 //the POS tags we use, according to their dependencies
 
-
-//list of inconsistent parts-of-speech
-const notibles = [
-  //top-level pos are all inconsistent
-  ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression'],
-  //nouns
-  ['Person', 'Organization', 'Value', 'Date', 'Place', 'Actor', 'Demonym', 'Pronoun'],
-  //things that can't be plural
-  ['Plural', 'Singular'],
-  ['Plural', 'Pronoun'],
-  ['Plural', 'Person'],
-  ['Plural', 'Organization'],
-  ['Plural', 'Currency'],
-  ['Plural', 'Ordinal'],
-  //people
-  ['MalePerson', 'FemalePerson'],
-  //adjectives
-  ['Comparative', 'Superlative'],
-  //values
-  ['Currency', 'Ordinal'], //$"5.50th"?
-  //verbs
-  ['Infinitive', 'Gerund', 'Pluperfect', 'FuturePerfect'],
-  //tenses
-  ['PastTense', 'PresentTense', 'PerfectTense'],
-  //non-infinitive
-  ['Infinitive', 'PastTense'],
-  ['Infinitive', 'PresentTense'],
-  //non-gerund
-  ['Gerund', 'PastTense'],
-  ['Gerund', 'PresentTense'],
-  //more verbs
-  ['Copula', 'Modal']
-];
-
-
 const tree = {
   Noun: {
     Singular: true,
@@ -85,6 +50,38 @@ const tree = {
   Term: true //fallback
 };
 
+//list of inconsistent parts-of-speech
+const conflicts = [
+  //top-level pos are all inconsistent
+  ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression'],
+  //nouns
+  ['Person', 'Organization', 'Value', 'Date', 'Place', 'Actor', 'Demonym', 'Pronoun'],
+  //things that can't be plural
+  ['Plural', 'Singular'],
+  ['Plural', 'Pronoun'],
+  ['Plural', 'Person'],
+  ['Plural', 'Organization'],
+  ['Plural', 'Currency'],
+  ['Plural', 'Ordinal'],
+  //people
+  ['MalePerson', 'FemalePerson'],
+  //adjectives
+  ['Comparative', 'Superlative'],
+  //values
+  ['Currency', 'Ordinal'], //$"5.50th"?
+  //verbs
+  ['Infinitive', 'Gerund', 'Pluperfect', 'FuturePerfect'],
+  //tenses
+  ['PastTense', 'PresentTense', 'PerfectTense'],
+  //non-infinitive
+  ['Infinitive', 'PastTense'],
+  ['Infinitive', 'PresentTense'],
+  //non-gerund
+  ['Gerund', 'PastTense'],
+  ['Gerund', 'PresentTense'],
+  //more verbs
+  ['Copula', 'Modal']
+];
 let tags = {};
 //recursively add them, with is
 const add_tags = (obj, is) => {
@@ -103,9 +100,9 @@ Object.keys(tags).forEach((k) => {
     is: [].concat(tags[k]),
     not: {}
   };
-  for (let i = 0; i < notibles.length; i++) {
-    if (notibles[i].indexOf(k) !== -1) {
-      notibles[i].forEach((s) => {
+  for (let i = 0; i < conflicts.length; i++) {
+    if (conflicts[i].indexOf(k) !== -1) {
+      conflicts[i].forEach((s) => {
         if (s !== k) {
           tags[k].not[s] = true;
         }

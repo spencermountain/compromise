@@ -1,6 +1,7 @@
 'use strict';
-const isPlural = require('./isPlural');
-const hasPlural = require('./hasPlural');
+const isPlural = require('./inflection/isPlural');
+const hasPlural = require('./inflection/hasPlural');
+const article = require('./article');
 
 const info = {
   isplural: (t) => {
@@ -10,12 +11,7 @@ const info = {
     return hasPlural(t.normal);
   },
   article: (t) => {
-
-    //the || ''
-    // not people, plurals,
-
-    //a || an || ''
-
+    return article(t.normal)
   }
 };
 module.exports = info;

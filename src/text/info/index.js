@@ -1,9 +1,7 @@
 'use strict';
-//supported Sentence.get() methods
+//nearly every inspection method is over at /sentence/info
 module.exports = {
-  sentenceType: () => {
 
-  },
   terms: (t) => {
     let arr = [];
     t.sentences.forEach((s) => {

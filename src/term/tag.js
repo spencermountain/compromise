@@ -5,6 +5,7 @@ const info = require('./info');
 const transforms = require('./transforms');
 const tagset = require('../tagset');
 const fns = require('../fns');
+const wrestlePos = require('./wrestlePos')
 const path = 'tagger';
 
 //check if the term is compatible with a pos tag.
@@ -49,6 +50,8 @@ const set_tag = function(term, tag, reason) {
     fns.extend(term.transforms, transforms[tags[i]]);
     fns.extend(term.infos, info[tags[i]]);
   }
+  //fire inspection-methods for these new pos
+  term = wrestlePos(term)
   return;
 };
 

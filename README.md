@@ -1,14 +1,23 @@
-#new v7 API proposal! :heart::heart::heart::heart::heart:
+#new v7 API proposal! :heart::heart::heart:
 ```javascript
 nlp('', {}).to(myTransform).render(myOutput)
 
-nlp('', {}).if('Question').info('Nouns')
+nlp('This is experimental.', {}).to('Exclamation').render('Text')
+//"This is experimental!"
 
-nlp('', {}).sentences[0].to('PastTense').render('json')
+nlp('washing machine', {}).to('Noun').to('Plural').render('Html')
+//<span class="Noun Plural"/>washing&nbsp;machines</span>
+
+nlp("It's really   good ", {}).to('PastTense').to('StripAdverbs').render('Normalized')
+//it was good.
+
+nlp("two tbsp of sugar", {}).info('Values')[0].unit
+//tablespoon
 ```
 
 ###Reasoning:
 * clears-up immutable/mutable ambiguity
+* requires less working knowledge of internals
 * supports no-install 'first-class' scripting/plugins
 * less-surprising return values
 * avoids re-parsing problems in pos-specific methods like `nlp.value()`
@@ -39,9 +48,9 @@ nlp('john is cool').render(myTransform);
 ```
 They alone should transform/mutate the state. These methods all return `this`.
 
-##Query `.get()`
+##Query `.info()`
 ```javascript
-nlp('john is cool').info(ngrams);
+nlp('john is cool').info(ngramsFn);
 //['john is', 'is cool'...]
 nlp('john is cool').info('verbs');
 //[Term="is"]

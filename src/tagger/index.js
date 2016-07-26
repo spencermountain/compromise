@@ -27,9 +27,11 @@ const tagger = function(s) {
   s = step.web_step(s);
   s = step.suffix_step(s);
   s = step.noun_fallback(s);
-  s = lumper.lump_two(s);
-  s = lumper.lump_three(s);
-  s = step.wrestle(s);
+  for (let i = 0; i < 2; i++) {
+    s = lumper.lump_two(s);
+    s = lumper.lump_three(s);
+    s = step.wrestle(s);
+  }
   return s;
 };
 

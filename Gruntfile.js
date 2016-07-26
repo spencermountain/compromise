@@ -7,6 +7,7 @@ module.exports = function(grunt) {
   var tapSpec = './node_modules/tap-spec/bin/cmd.js';
   var fileServer = './node_modules/.bin/http-server';
   var uglify = './node_modules/uglify-js/bin/uglifyjs';
+  var jsdoc = './node_modules/jsdoc-parse/bin/cli.js'
 
   //paths
   var uncompressed = './builds/nlp_compromise.js';
@@ -47,6 +48,9 @@ module.exports = function(grunt) {
         exec: tape + ' ./test/prerelease/index.js | ' + tapSpec
       },
 
+      docs: {
+        exec: jsdoc + ' '
+      },
 
       demo: {
         exec: fileServer + ' demo -o -c-1'

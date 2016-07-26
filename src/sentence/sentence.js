@@ -4,7 +4,7 @@ const fns = require('../fns');
 const Term = require('../term/term');
 const split_terms = require('./split_terms');
 const info = require('./info');
-const transform = require('./transform');
+const transforms = require('./transforms');
 const render = require('./render');
 const helpers = require('./helpers');
 const tagger = require('../tagger');
@@ -50,8 +50,8 @@ class Sentence {
     }
     //is it a known transformation?
     method = method.toLowerCase();
-    if (transform[method]) {
-      return transform[method](this);
+    if (transforms[method]) {
+      return transforms[method](this);
     }
     //else, apply it to each term
     this.terms = this.terms.map((t) => {

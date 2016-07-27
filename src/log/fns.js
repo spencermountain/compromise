@@ -1,5 +1,5 @@
 'use strict';
-const color = require('./color')
+const chalk = require('chalk')
 
 exports.rightPad = function(str, width, char) {
   char = char || ' ';
@@ -26,6 +26,6 @@ exports.makePath = (path, indent) => {
     path += ':'
   }
   path = indent + path
-  path = color.yellow(path)
+  path = chalk.yellow(path)
   return path
 }

@@ -648,6 +648,7 @@ module.exports = {
     var html = s.terms.reduce(function (str, t) {
       return str + '\n  ' + t.render('html');
     }, '');
+    html += s.terminator;
     var classes = ['nlpSentence', s.info('SentenceType')];
     return '<span class="' + classes.join(' ') + '">' + html + '\n</span>';
   },

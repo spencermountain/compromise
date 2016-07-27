@@ -1,6 +1,6 @@
 'use strict';
 const fns = require('./fns');
-const color = require('./color');
+const chalk = require('chalk');
 const pretty_print = require('./pretty_print');
 
 let disable = false;
@@ -40,7 +40,7 @@ const serverOutput = {
   },
   warn: function(input, path) {
     if (shouldPrint(path)) {
-      console.log('   ' + color.red('---' + input));
+      console.log('   ' + chalk.red('---' + input));
     }
   },
   change: function(input, path) {

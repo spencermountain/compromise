@@ -1,19 +1,19 @@
 'use strict'
 const fns = require('./fns')
-const color = require('./color')
+const chalk = require('chalk')
 
 //specific-ways to print classes
 var format = {
   Sentence: (s, indent) => {
-    console.log(indent + '[Sentence] ' + color.red(s.input))
+    console.log(indent + '[Sentence] ' + chalk.red(s.input))
     s.terms.forEach((t) => {
       let pos = Object.keys(t.pos).filter((k) => k !== 'Term')
-      console.log(indent + '   ' + color.green('- ' + t.text) + '   [' + pos.join(', ') + ']')
+      console.log(indent + '   ' + chalk.green('- ' + t.text) + '   [' + pos.join(', ') + ']')
     })
   }
 }
 format.Text = (t, indent) => {
-  console.log(indent + '[Text] ' + color.red(t.input))
+  console.log(indent + '[Text] ' + chalk.red(t.input))
   t.sentences.forEach((s) => {
     format.Sentence(s, indent + '   ')
   })

@@ -31,6 +31,7 @@ module.exports = {
     let html = s.terms.reduce((str, t) => {
       return str + '\n  ' + t.render('html')
     }, '')
+    html += s.terminator
     let classes = ['nlpSentence', s.info('SentenceType')]
     return '<span class="' + classes.join(' ') + '">' + html + '\n</span>'
   },

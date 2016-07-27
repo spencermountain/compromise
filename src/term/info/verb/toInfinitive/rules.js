@@ -1,18 +1,7 @@
-//turns a verb in any form, into it's infinitive version
-// eg "walked" -> "walk"
-'use strict';
-
-const irregular_verbs = require('../../../data/irregular_verbs');
-let known_verbs = Object.keys(irregular_verbs).reduce(function(h, k) {
-  Object.keys(irregular_verbs[k]).forEach(function(k2) {
-    h[irregular_verbs[k][k2]] = k;
-  });
-  return h;
-}, {});
-
-
+'use strict'
+//rules for turning a verb into infinitive form
 let rules = {
-  participle: [
+  Participle: [
     {
       reg: /own$/i,
       to: 'ow'
@@ -20,19 +9,15 @@ let rules = {
     {
       reg: /(.)un([g|k])$/i,
       to: '$1in$2'
-    },
-  // {
-  //   reg: /(..)en$/i,
-  //   to: '$1e'
-  // },
+    }
   ],
-  actor: [
+  Actor: [
     {
       reg: /(er)er$/i,
       to: '$1'
     }
   ],
-  present: [
+  PresentTense: [
     {
       reg: /(ies)$/i,
       to: 'y'
@@ -73,7 +58,7 @@ let rules = {
       reg: /s$/i,
       to: ''
     }],
-  gerund: [
+  Gerund: [
     {
       reg: /pping$/i,
       to: 'p'
@@ -108,7 +93,7 @@ let rules = {
       reg: /(..)ing$/i,
       to: '$1'
     }],
-  past: [
+  PastTense: [
     {
       reg: /(ued)$/i,
       to: 'ue'
@@ -168,23 +153,4 @@ let rules = {
       to: '$1t'
     }]
 };
-
-const to_infinitive = function (str, from_tense) {
-  if (known_verbs.hasOwnProperty(str)) {
-    return known_verbs[str];
-  }
-  if (from_tense === 'infinitive') {
-    return str;
-  }
-  let regs = rules[from_tense] || [];
-  for(let i = 0; i < regs.length; i++) {
-    if (str.match(regs[i].reg)) {
-      return str.replace(regs[i].reg, regs[i].to);
-    }
-  }
-  return str;
-};
-
-// console.log(to_infinitive('played', 'past'));
-
-module.exports = to_infinitive;
+module.exports = rules

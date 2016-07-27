@@ -7,11 +7,7 @@ let verb = {
     t.tag('PastTense', 'manual');
     return t;
   },
-  gerund: (t) => {
-    t.text += 'ing';
-    t.tag('Gerund', 'manual');
-    return t;
-  },
+
   specific: (t) => {
     return wrestleVerb(t)
   }

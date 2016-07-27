@@ -35,16 +35,19 @@ const tree = {
     Pluperfect: true,
     FuturePerfect: true,
     Copula: true,
-    Modal: true
+    Modal: true,
+    PhrasalVerb: true
   },
   Adjective: {
     Comparative: true,
     Superlative: true
   },
   Adverb: true,
-  Determiner: true,
-  Conjunction: true,
-  Preposition: true,
+  Glue: {
+    Determiner: true,
+    Conjunction: true,
+    Preposition: true
+  },
   Condition: true,
   Possessive: true,
   QuestionWord: true,

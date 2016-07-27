@@ -21,6 +21,9 @@ class Text {
     });
     log(this);
   }
+  terms() {
+    return this.info('Terms')
+  }
 
   //change the text, return this
   to(method) {

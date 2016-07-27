@@ -1,11 +1,19 @@
 'use strict';
 const predictForm = require('./predict')
-
+const conjugate = require('./conjugation')
+const toInfinitive = require('./toInfinitive')
 const info = {
 
   //try to predict which form this verb is
   conjugation: (t) => {
     return predictForm(t)
+  },
+  infinitive: (t) => {
+    return toInfinitive(t)
+  },
+  //return all forms of this verb
+  conjugate: (t) => {
+    return conjugate(t)
   },
 
   tense: (t) => {

@@ -9,7 +9,7 @@ const noun_fallback = function(s) {
     }
     //ensure it only has the tag 'Term'
     let tags = Object.keys(s.terms[i].pos);
-    if (tags.length <= 1 && tags[0] === 'Term') {
+    if (tags.length === 0) {
       //ensure it's atleast word-looking
       if (s.terms[i].info('isWord') === false) {
         continue;

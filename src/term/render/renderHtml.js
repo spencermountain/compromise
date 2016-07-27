@@ -45,10 +45,10 @@ const renderHtml = function(t) {
   let classes = Object.keys(t.pos).filter((tag) => tag !== 'Term');
   classes = classes.map(c => 'nlp' + c);
   classes = classes.join(' ');
-  let text = t.whitespace.before + t.text + t.whitespace.after;
-  text = sanitize(text)
+  let text = sanitize(t.text)
   text = escapeHtml(text);
-  return '<span class="' + classes + '">' + text + '</span>';
+  let el = '<span class="' + classes + '">' + text + '</span>';
+  return escapeHtml(t.whitespace.before) + el + escapeHtml(t.whitespace.after)
 };
 
 module.exports = renderHtml;

@@ -14,8 +14,11 @@ log.disable();
 // nlp('6 am').render('prettyPrint');
 // nlp('3$8').render('prettyPrint');
 // console.log(nlp('step up').terms()[0].info('Conjugate'));
-let ts = nlp('I am good. He will step up for this now').if('Verb')
-console.log(ts)
+let r = nlp('He will walk. Is it cool? It said so.')
+// r.render('pretty')
+console.log(r.is('Noun'))
+// console.log(r.if('Verb').to('Normal').render('text'))
+// console.log(r.render('text'))
 // console.log(t.info('after').map((t) => t.normal));
 // nlp('the united kingdom is really nice.').render('prettyPrint');
 // nlp('he said i\'m very nice').render('prettyPrint');

@@ -2,7 +2,7 @@
 
 const info = {
 
-  //the punctuation at the end of this term
+  /** the punctuation at the end of this term*/
   endpunctuation: (t) => {
     let m = t.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/);
     if (m) {
@@ -22,6 +22,7 @@ const info = {
     return null;
   },
 
+  /** interpret a term's hyphenation */
   hyphenation: (t) => {
     let m = t.text.match(/^([a-z]+)-([a-z]+)$/);
     if (m && m[1] && m[2]) {
@@ -33,6 +34,7 @@ const info = {
     return null;
   },
 
+  /** interpret a terms' contraction */
   contraction: (t) => {
     const allowed = {
       'll': true,
@@ -64,42 +66,7 @@ const info = {
     return null;
   },
 
-  titlecase: (t) => {
-    if (t.text.match(/^[A-Z][a-z]/)) {
-      return true;
-    }
-    return false;
-  },
-
-  //is it perhaps not an english word?
-  //.. to avoid lumping words with non-word stuff
-  isword: (t) => {
-    //assume a contraction produces a word-word
-    if (t.silent_term) {
-      return true;
-    }
-    //no letters or numbers
-    if (!t.text.match(/[a-z|0-9]/i)) {
-      return false;
-    }
-    //has letters, but with no vowels
-    if (t.normal.match(/[a-z]/) && t.normal.length > 1 && !t.normal.match(/[aeiouy]/i)) {
-      return false;
-    }
-    //has numbers but not a 'value'
-    if (t.normal.match(/[0-9]/)) {
-      //s4e
-      if (t.normal.match(/[a-z][0-9][a-z]/)) {
-        return false;
-      }
-      //ensure it looks like a 'value' eg '-$4,231.00'
-      if (!t.normal.match(/^([$-])*?([0-9,\.])*?([s\$%])*?$/)) {
-        return false;
-      }
-    }
-    return true;
-  },
-
+  /** does it appear to be an acronym, like FBI or M.L.B. */
   isacronym: (t) => {
     //like N.D.A
     if (t.text.match(/([A-Z]\.)+[A-Z]?$/i)) {
@@ -116,13 +83,16 @@ const info = {
     return false;
   },
 
+  /** check if the term ends with a comma */
   hascomma: (t) => {
     if (t.info('endPunctuation') === 'comma') {
       return true;
     }
     return false;
   },
-  termindex: (t) => {
+
+  /** where in the sentence is it? zero-based. */
+  index: (t) => {
     let terms = t.context.sentence.terms
     for (let i = 0; i < terms.length; i++) {
       if (terms[i] === t) {
@@ -131,14 +101,18 @@ const info = {
     }
     return null
   },
+
+  /** get a list of words to the left of this one, in reversed order */
   before: (t) => {
     let terms = t.context.sentence.terms
-    let i = t.info('TermIndex')
+    let i = t.info('index')
     return terms.slice(0, i)
   },
+
+  /** get a list of words to the right of this one */
   after: (t) => {
     let terms = t.context.sentence.terms
-    let i = t.info('TermIndex')
+    let i = t.info('index')
     return terms.slice(i, terms.length - 1)
   }
 

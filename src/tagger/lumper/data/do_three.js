@@ -38,7 +38,7 @@ module.exports = [
   },
   {
     //President of Mexico
-    condition: (a, b, c) => (a.info('titleCase') && b.normal === 'of' && c.info('titleCase')),
+    condition: (a, b, c) => (a.is('titleCase') && b.normal === 'of' && c.is('titleCase')),
     result: 'Noun',
     reason: 'Capital-of-Capital'
   },

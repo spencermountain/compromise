@@ -2,12 +2,15 @@
 //a Text() is a list of sentences, which are a list of Terms
 const fns = require('../fns');
 const log = require('../log');
-const set_tag = require('./tag');
+const tg = require('./tag')
+const set_tag = tg.set_tag;
+const canBe = tg.canBe;
 const tagset = require('../tagset');
 const build_whitespace = require('./whitespace');
 const render = require('./render');
 const normalize = require('./transforms/term/normalize');
 const info = require('./info');
+const is_methods = require('./is');
 const transforms = require('./transforms');
 
 class Term {
@@ -21,6 +24,7 @@ class Term {
     this.pos = {};
     this.transforms = transforms.Term;
     this.infos = info.Term;
+    this.is_methods = is_methods.Term;
   }
 
   set text(str) {
@@ -63,10 +67,14 @@ class Term {
     }
     method = method.toLowerCase();
     if (this.infos[method]) {
-      // console.log(method)
       return this.infos[method](this);
     }
     return null;
+  }
+
+  /** is this POS compatible with the current term? */
+  canBe(str) {
+    return canBe(this, str)
   }
 
   /** inspect the term, return boolean */
@@ -75,18 +83,18 @@ class Term {
       return method(this);
     }
     method = fns.titleCase(method);
-    //if we already know it is
+    //if we already know that it is
     if (this.pos[method]) {
       return true;
     }
-    //if we already know this is incompatible
-    if (tagset[method]) { //&& !this.canBe(method)) {
+    //if we already know this POS is incompatible
+    if (tagset[method] && !this.canBe(method)) {
       return false;
     }
     //is it a known 'is' method?
     method = method.toLowerCase();
-    if (is[method]) {
-      return is[method](this);
+    if (this.is_methods[method]) {
+      return this.is_methods[method](this);
     }
     return false;
   }

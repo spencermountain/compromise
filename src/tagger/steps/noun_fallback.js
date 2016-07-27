@@ -11,7 +11,7 @@ const noun_fallback = function(s) {
     let tags = Object.keys(s.terms[i].pos);
     if (tags.length === 0) {
       //ensure it's atleast word-looking
-      if (s.terms[i].info('isWord') === false) {
+      if (s.terms[i].is('wordlike') === false) {
         continue;
       }
       s.terms[i].tag('Noun', 'noun-fallback');

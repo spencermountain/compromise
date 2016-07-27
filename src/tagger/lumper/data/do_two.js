@@ -14,7 +14,7 @@ module.exports = [
   },
   {
     //'Dr. John'
-    condition: (a, b) => (a.pos.Honourific && b.info('TitleCase')),
+    condition: (a, b) => (a.pos.Honourific && b.is('TitleCase')),
     result: 'Person',
     reason: 'person-honourific'
   },
@@ -26,7 +26,7 @@ module.exports = [
   },
   {
     //"John Abcd" - needs to be careful
-    condition: (a, b) => (a.pos.Person && !a.pos.Pronoun && !a.pos.Possessive && !a.info('hasComma') && b.info('TitleCase') && !a.is_acronym() && !b.pos.Verb), //'Person, Capital -> Person'
+    condition: (a, b) => (a.pos.Person && !a.pos.Pronoun && !a.pos.Possessive && !a.info('hasComma') && b.is('TitleCase') && !a.is_acronym() && !b.pos.Verb), //'Person, Capital -> Person'
     result: 'Person',
     reason: 'person-titleCase'
   },
@@ -56,7 +56,7 @@ module.exports = [
   },
   {
     //Canada Inc
-    condition: (a, b) => (a.info('TitleCase') && a.pos.Noun && b.pos['Organization'] || b.info('TitleCase') && a.pos['Organization']),
+    condition: (a, b) => (a.is('TitleCase') && a.pos.Noun && b.pos['Organization'] || b.info('TitleCase') && a.pos['Organization']),
     result: 'Organization',
     reason: 'organization-org'
   },

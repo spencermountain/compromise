@@ -11,6 +11,7 @@ let dummy = {
   change: function() {},
   show: function() {},
   tag: function() {},
+  pos: function() {},
   disable: function() {
     disable = true;
   }
@@ -62,6 +63,20 @@ const serverOutput = {
   },
   disable: function() {
     disable = true;
+  },
+  pos: function(tag) {
+    const known = {
+      Noun: (s) => chalk.green(s),
+      Person: (s) => chalk.bgGreen(s),
+      Verb: (s) => chalk.red(s),
+      Adjective: (s) => chalk.cyan(s),
+      Adverb: (s) => chalk.yellow(s),
+      Determiner: (s) => chalk.grey(s)
+    }
+    if (known[tag]) {
+      return known[tag](tag)
+    }
+    return tag
   }
 };
 

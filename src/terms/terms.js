@@ -1,7 +1,6 @@
 'use strict';
-//Terms() is an array of Terms, and their methods
-const fns = require('../fns');
-const log = require('../log');
+// Terms() is an array of Terms, with utility methods that map over them
+const render = require('./render');
 
 class Terms {
   constructor(terms) {
@@ -9,7 +8,7 @@ class Terms {
   }
   /** map through each term and get its info */
   info(method) {
-    this.terms = this.terms.map((t) => {
+    return this.terms.map((t) => {
       return t.info(method);
     });
   }
@@ -18,6 +17,19 @@ class Terms {
     this.terms = this.terms.map((t) => {
       return t.to(method);
     });
+    return this
+  }
+  /** reduce the output of each term into one result */
+  render(method) {
+    //if we have a specialised method for 'Terms'
+    if (render[method]) {
+      return render[method](this)
+    }
+    //just do a reduce over terms
+    return this.terms.reduce((col, t) => {
+      col += t.render(method);
+      return col
+    }, '');
   }
 }
 module.exports = Terms

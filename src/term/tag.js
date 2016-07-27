@@ -49,4 +49,7 @@ const set_tag = function(term, tag, reason) {
   return;
 };
 
-module.exports = set_tag;
+module.exports = {
+  set_tag: set_tag,
+  canBe: canBe
+};

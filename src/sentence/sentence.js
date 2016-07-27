@@ -4,7 +4,8 @@ const fns = require('../fns');
 const Term = require('../term/term');
 const Terms = require('../terms/terms');
 const split_terms = require('./split_terms');
-const info = require('./info');
+const info_methods = require('./info');
+const is_methods = require('./is');
 const transforms = require('./transforms');
 const render = require('./render');
 const helpers = require('./helpers');
@@ -22,6 +23,9 @@ class Sentence {
     });
     //parse-out terminating character
     this.terminator = helpers.strip_terminator(this);
+    this.transforms = transforms
+    this.infos = info_methods
+    this.is_methods = is_methods
     //do Part-of-Speech tagging
     tagger(this);
   }
@@ -58,8 +62,8 @@ class Sentence {
     }
     //is it a known transformation?
     method = method.toLowerCase();
-    if (transforms[method]) {
-      return transforms[method](this);
+    if (this.transforms[method]) {
+      return this.transforms[method](this);
     }
     //else, apply it to each term
     this.terms = this.terms.map((t) => {
@@ -73,7 +77,15 @@ class Sentence {
     if (fns.isFunction(method)) {
       return method(this);
     }
-    return false;
+    //is it a known transformation?
+    method = method.toLowerCase();
+    if (this.is_methods[method]) {
+      return this.is_methods[method](this);
+    }
+    //otherwise, try each term
+    return this.terms.map((t) => {
+      return t.is(method);
+    });
   }
 
   /** get some data back */
@@ -83,8 +95,8 @@ class Sentence {
     }
     //is it known?
     method = method.toLowerCase();
-    if (info[method]) {
-      return info[method](this);
+    if (this.infos[method]) {
+      return this.infos[method](this);
     }
     //otherwise, try each term
     return this.terms.map((t) => {

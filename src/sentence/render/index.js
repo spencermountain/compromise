@@ -1,17 +1,20 @@
 'use strict';
+const log = require('../../log');
+const chalk = require('chalk');
+
 //supported Sentence.return() methods
 module.exports = {
   /** return a pixel-perfect reproduction of the input, with whitespace preserved */
   text: (s) => {
     return s.terms.reduce((str, t) => {
-        str += t.as('text');
+        str += t.render('text');
         return str;
       }, '') + s.terminator;
   },
   /** return a string with normalized punctuation, trimmed whitespace, and lowercased */
   normal: (s) => {
     let normal = s.terms.reduce((str, t) => {
-      str += ' ' + t.as('normal');
+      str += ' ' + t.render('normal');
       return str;
     }, '');
     normal = normal.trim();
@@ -38,15 +41,10 @@ module.exports = {
     return '<span class="' + classes.join(' ') + '">' + html + '\n</span>'
   },
 
-  /** a simplified response for Part-of-Speech tagging*/
-  tags: (s) => {
-    return s.terms.map((t) => {
-      return {
-        text: t.text,
-        normal: t.as('normal'),
-        tags: Object.keys(t.pos)
-      }
-    })
+  pretty: (s) => {
+    s.terms.forEach((t) => {
+      t.render('pretty')
+    });
   }
 
 };

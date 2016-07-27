@@ -54,8 +54,12 @@ class Text {
     if (fns.isFunction(method)) {
       return method(this);
     }
+    //else, apply it to each sentence as a map
     method = method.toLowerCase();
-    return false;
+    return this.sentences.map((s) => {
+      return s.is(method);
+    });
+    return null;
   }
 
   /** get some data back */

@@ -4,7 +4,13 @@ const normalize = require('./normalize');
 module.exports = {
   /**a readable, normalized form - trim whitespace, normalize punctuation, and lowercase */
   normal: (t) => {
-    t.text += normalize(t.text);
+    t.text = normalize(t.text);
+    t.whitespace.before = ''
+    t.whitespace.after = ' '
+    //don't append a space at the end
+    if (t.is('last')) {
+      t.whitespace.after = ''
+    }
     return t;
   },
   /** set all characters to lower/downcase*/

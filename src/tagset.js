@@ -36,7 +36,9 @@ const tree = {
     FuturePerfect: true,
     Copula: true,
     Modal: true,
-    PhrasalVerb: true
+    Auxillary: true,
+    PhrasalVerb: true,
+    Negative: true
   },
   Adjective: {
     Comparative: true,

@@ -31,7 +31,7 @@ addArr(data.groups, 'Noun');
 addArr(data.adjectives, 'Adjective');
 addArr(data.superlatives, 'Adjective');
 addArr(data.currencies, 'Currency');
-addArr(data.phrasal_verbs, 'Verb');
+addArr(data.phrasal_verbs, 'PhrasalVerb');
 addArr(data.verbs, 'Verb');
 
 //number-words are well-structured

@@ -48,12 +48,12 @@ module.exports = [
     result: 'Noun',
     reason: 'Three-word-quote'
   },
-  {
-    //will have walk
-    condition: (a, b, c) => (a.normal === 'will' && b.normal === 'have' && c.pos.Verb),
-    result: 'FutureTense',
-    reason: 'will-have-Verb'
-  },
+  // {
+  //   //will have walk
+  //   condition: (a, b, c) => (a.normal === 'will' && b.normal === 'have' && c.pos.Verb),
+  //   result: 'FutureTense',
+  //   reason: 'will-have-Verb'
+  // },
 
   {
     //two hundred and three

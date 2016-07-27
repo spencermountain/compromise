@@ -14,63 +14,25 @@ const strip_particle = (str) => {
   return null
 }
 
-//look-around at neighbouring words to see if this verb is negated
-const findNegation = (t) => {
-  const negations = {
-    not: true,
-    no: true
-  }
-  //look at the few words before
-  let before = t.info('before')
-  for (let i = 0; i < before.length; i++) {
-    if (negations[before[i].normal] || negations[before[i].silent_term]) {
-      return before[i].normal
+//parse-out common verb prefixes, for conjugation
+const strip_prefix = function(str) {
+  let match = str.match(/^(over|under|re|anti|full|cross)([- ])?([^aeiou][a-z]*)/i);
+  if (match) {
+    return {
+      prefix: match[1] + (match[2] || ''),
+      root: match[3]
     }
-    if (before[i].pos.Verb || before[i].pos.Adverb) {
-      continue
-    }
-    break
   }
-  //look at the next word after
-  let after = t.info('after')
-  if (after[0] && after[0].normal === 'not') {
-    return after[0].normal
+  return {
+    root: str
   }
-  return null
-}
-
-//look-around at neighbouring words to see if this verb is negated
-const findAuxillaries = (t) => {
-  //auxillaries
-  const aux = {
-    will: true,
-    was: true,
-    have: true,
-    had: true
-  }
-  let found = []
-  //look at the 3 words before
-  let before = t.info('before')
-  for (let i = 0; i < before.length; i++) {
-    if (before[i].pos.Modal || aux[before[i].normal] || aux[before[i].silent_term]) {
-      found.unshift(before[i].normal) //(before terms are reversed)
-      continue
-    }
-    if (before[i].normal === 'not') {
-      continue
-    }
-    break
-  }
-  if (found.length === 0) {
-    return null
-  }
-  return found
-}
+};
 
 const components = function(t) {
   let all = {
     auxillaries: null,
     negation: null,
+    prefix: null,
     root: null,
     particle: null
   }
@@ -80,11 +42,17 @@ const components = function(t) {
       all.root = parts.phrasal
       all.particle = parts.particle
     }
+  } else {
+    all.root = t.normal
   }
   //find the 'not' or 'no'
-  all.negation = findNegation(t)
+  all.negation = t.info('Negation')
   //find the 'will have had...' infront of the verb
-  all.auxillaries = findAuxillaries(t)
+  all.auxillaries = t.info('Auxillaries')
+  //strp prefixes
+  let parts = strip_prefix(all.root || '')
+  all.root = parts.root
+  all.prefix = parts.prefix
   return all
 }
 

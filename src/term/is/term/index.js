@@ -54,6 +54,14 @@ const term = {
       }
     }
     return true;
+  },
+
+  /** is this a word like 'not' that reverses a verb*/
+  negation: (t) => {
+    if (t.normal === 'not' || t.silent_term === 'not') {
+      return true
+    }
+    return false
   }
 
 }

@@ -127,6 +127,7 @@ module.exports = [
   ['[aeiou].*ist$', 'Adjective'],
   ['[^i]fer$', 'Infinitive'],
   ['(bb|tt|gg|pp|ll|nn|mm)', 'Verb'], //rubbed
+  ['[aeiou]ked$', 'PastTense'], //hooked
   //slang things
   ['^um+$', 'Expression'], //ummmm
   ['^([hyj]a)+$', 'Expression'], //hahah

@@ -8,12 +8,12 @@ const tags = require('./src/tagset');
 const log = require('./src/log');
 const Term = require('./src/term/term');
 
-log.disable();
+// log.disable();
 
 // nlp('  john f.   kennedy  ').render('prettyPrint');
 // nlp('6 am').render('prettyPrint');
 // nlp('3$8').render('prettyPrint');
-console.log(nlp('i think he will have not step up').info('terms')[6].info('components'));
+console.log(nlp('i think he will have not over-booked').info('terms')[6].info('components'));
 // let r = nlp('He will walk. Is John cool? It said so.')
 // r.render('pretty')
 // console.log(r.if('Noun').is('Person'))

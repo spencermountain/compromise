@@ -2,6 +2,7 @@
 //set a term as a particular Part-of-speech
 const log = require('../log');
 const info = require('./info');
+const is_methods = require('./is');
 const transforms = require('./transforms');
 const tagset = require('../tagset');
 const fns = require('../fns');
@@ -35,6 +36,7 @@ const set_tag = function(term, tag, reason) {
     term.pos = {};
     term.transforms = {};
     term.infos = {};
+    term.is_methods = {};
   }
   if (!tagset[tag]) {
     console.warn('unknown tag ' + tag + ' - ' + reason);
@@ -45,6 +47,7 @@ const set_tag = function(term, tag, reason) {
     term.pos[tags[i]] = true;
     term.transforms = Object.assign({}, term.transforms, transforms[tags[i]])
     term.infos = Object.assign({}, term.infos, info[tags[i]])
+    term.is_methods = Object.assign({}, term.is_methods, is_methods[tags[i]])
   }
   return;
 };

@@ -20,6 +20,7 @@ const info = {
   conjugate: (t) => {
     return conjugate(t)
   },
+
   /** is it past/present/future tense */
   tense: (t) => {
     let tenses = {
@@ -40,7 +41,43 @@ const info = {
       }
     }
     return null
-  }
+  },
 
+  /** look around for the auxillary terms before this, like 'would have had' */
+  auxillaries: (t) => {
+    //if this is an auxillary, return nothing
+    if (t.is('Auxillary')) {
+      return []
+    }
+    let arr = []
+    let before = t.info('Before').slice(0, 4)
+    for (let i = 0; i < before.length; i++) {
+      if (before[i].is('Auxillary')) {
+        arr.unshift(before[i]) //(before terms are reversed)
+      } else if (before[i].is('Negation')) {
+        continue
+      } else {
+        break
+      }
+    }
+    return arr
+  },
+
+  /** find the term that reverses the meaning of this verb */
+  negation: (t) => {
+    //look at the words before
+    let before = t.info('Before').slice(0, 3)
+    for (let i = 0; i < before.length; i++) {
+      if (before[i].normal === 'not' || before[i].silent_term === 'not') {
+        return before[i]
+      }
+    }
+    //look at the next word after - 'is not'
+    let after = t.info('after')
+    if (after[0] && after[0].normal === 'not') {
+      return after[0]
+    }
+    return null
+  }
 }
 module.exports = info

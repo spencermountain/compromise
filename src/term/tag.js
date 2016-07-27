@@ -37,7 +37,7 @@ const set_tag = function(term, tag, reason) {
     term.infos = {};
   }
   if (!tagset[tag]) {
-    console.warn('unknown tag ' + tag);
+    console.warn('unknown tag ' + tag + ' - ' + reason);
     return;
   }
   let tags = tagset[tag].is;

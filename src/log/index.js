@@ -46,13 +46,13 @@ const serverOutput = {
   change: function(input, path) {
     if (shouldPrint(path)) {
       let indent = fns.findIndent(path) || '';
-      console.log(indent + '   ' + color.green(input));
+      console.log(indent + '   ' + chalk.green(input));
     }
   },
   tag: function(t, pos, reason, path) {
     if (shouldPrint(path)) {
       let indent = fns.findIndent(path) || '';
-      console.log(indent + '     ' + color.green(t.normal) + ' -> ' + color.red(pos) + '    (' + reason + ')');
+      console.log(indent + '     ' + chalk.green(t.normal) + ' -> ' + chalk.red(pos) + '    (' + reason + ')');
     }
   },
   show: function(input, path) {

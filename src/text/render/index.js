@@ -42,19 +42,21 @@ module.exports = {
     }, '')
   },
   prettyprint: (t) => {
+    console.log('\n\n')
     t.sentences.forEach((s) => {
-      console.log(' ');
       s.terms.forEach((term) => {
         let niceTags = Object.keys(term.pos).map((tag) => PosColor(tag)).join(', ');
-
+        niceTags = fns.rightPad(niceTags, 40)
         let title = '\'' + term.text + '\'';
         let silent = '';
         if (term.silent_term) {
           silent = '  [' + term.silent_term + ']';
         }
         silent = fns.rightPad(silent, 6);
-        console.log(fns.rightPad('   ' + title, 20) + silent + '- ' + niceTags);
+        let reason = chalk.green('  - ' + (term.context.reason || ''))
+        console.log(fns.rightPad('   ' + title, 20) + silent + '  ' + niceTags + reason);
       });
+      console.log('   ' + chalk.bgCyan('-----------'));
     });
   }
 };

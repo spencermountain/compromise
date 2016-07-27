@@ -17,6 +17,7 @@ module.exports = [
   'then',
   'thus',
   'very',
+  'really',
   'often',
   'once',
   'never',

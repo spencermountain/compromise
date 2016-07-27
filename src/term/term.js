@@ -32,6 +32,7 @@ class Term {
   }
   tag(tag, reason) {
     set_tag(this, tag, reason);
+    this.context.reason = reason
     return this;
   }
   //change the text, return this

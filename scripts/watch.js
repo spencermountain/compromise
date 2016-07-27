@@ -30,11 +30,15 @@ var banner = function() {
   return emojis[keys[r]]
 }
 
-
-watch.watchTree('./', options, function(f, curr, prev) {
+var run = function() {
   console.log(banner())
-  exec('node ./scratch_file.js --color')
+  exec('node ./scratch_file.js --debug --color')
   console.log('\n\n\n\n\n\n\n')
+}
+
+run()
+watch.watchTree('./', options, function() {
+  run()
 })
 // watch.watchTree('./test/unit', options, function(f, curr, prev) {
 //   exec('node ./scripts/test.js')

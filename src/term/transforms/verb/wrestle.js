@@ -22,8 +22,10 @@ const wrestleVerb = function(t) {
     }
   }
   //determine this verb's conjugation
-  let form = t.info('conjugation')
-  t.tag(form, 'wrestle-conjugation')
+  let form = t.info('Conjugation')
+  if (form) {
+    t.tag(form, 'wrestle-conjugation')
+  }
   return t
 }
 

@@ -25,7 +25,6 @@ exports.makePath = (path, indent) => {
   if (path) {
     path += ':'
   }
-  path = indent + path
-  path = chalk.yellow(path)
+  path = indent + chalk.blue(chalk.bgCyan(path))
   return path
 }

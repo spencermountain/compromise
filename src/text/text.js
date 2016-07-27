@@ -4,6 +4,7 @@ const fns = require('../fns');
 // const debug = require('../debug');
 let log = function() {};
 const Sentence = require('../sentence/sentence');
+const Terms = require('../terms/terms');
 const split_sentences = require('./split_sentences');
 const info = require('./info');
 const transforms = require('./transforms/transforms');
@@ -21,11 +22,17 @@ class Text {
     });
     log(this);
   }
-  terms() {
-    return this.info('Terms')
+
+  /** return a subset of (flattened) terms with this condition */
+  if(str) {
+    let terms = this.sentences.reduce((arr, s) => {
+      arr = arr.concat(s.if(str).terms)
+      return arr
+    }, [])
+    return new Terms(terms)
   }
 
-  //change the text, return this
+  /** change the text, return this */
   to(method) {
     if (fns.isFunction(method)) {
       return method(this);
@@ -42,7 +49,7 @@ class Text {
     return this;
   }
 
-  //get, analyze, return boolean
+  /**get, analyze, return boolean */
   is(method) {
     if (fns.isFunction(method)) {
       return method(this);
@@ -51,7 +58,7 @@ class Text {
     return false;
   }
 
-  //get some data back
+  /** get some data back */
   info(method) {
     if (fns.isFunction(method)) {
       return method(this);
@@ -67,7 +74,7 @@ class Text {
     });
   }
 
-  //return it as something
+  /** return it as something */
   render(method) {
     log('====' + method + '====');
     if (fns.isFunction(method)) {

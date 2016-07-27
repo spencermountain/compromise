@@ -2,6 +2,7 @@
 //a Sentence() is a list of Terms
 const fns = require('../fns');
 const Term = require('../term/term');
+const Terms = require('../terms/terms');
 const split_terms = require('./split_terms');
 const info = require('./info');
 const transforms = require('./transforms');
@@ -24,7 +25,6 @@ class Sentence {
     //do Part-of-Speech tagging
     tagger(this);
   }
-
   set text(str) {
     this.input = fns.ensureString(str);
     this.terminator = helpers.strip_terminator(this);
@@ -33,7 +33,14 @@ class Sentence {
   get text() {
     return fns.ensureString(this.input);
   }
-  //add a word at a specific location
+
+  /** return a subset of flatten terms with the condition */
+  if(str) {
+    let terms = this.terms.filter((t) => t.is(str))
+    return new Terms(terms)
+  }
+
+  /** add a word at a specific location */
   addWord(str, i, tag) {
     let t = new Term(str);
     if (tag) {
@@ -43,7 +50,8 @@ class Sentence {
     let after = this.terms.slice(i + 1, this.terms.length);
     this.terms = before.concat([t], after);
   }
-  //change the text, return this
+
+  /** change the text, return this */
   to(method) {
     if (fns.isFunction(method)) {
       return method(this);
@@ -60,7 +68,7 @@ class Sentence {
     return this;
   }
 
-  //get, analyze, return boolean
+  /** get, analyze, return boolean */
   is(method) {
     if (fns.isFunction(method)) {
       return method(this);
@@ -68,7 +76,7 @@ class Sentence {
     return false;
   }
 
-  //get some data back
+  /** get some data back */
   info(method) {
     if (fns.isFunction(method)) {
       return method(this);
@@ -84,7 +92,7 @@ class Sentence {
     });
   }
 
-  //return it as something
+  /** return it as something */
   render(method) {
     if (fns.isFunction(method)) {
       return method(this);

@@ -1,13 +1,14 @@
 'use strict';
 //supported Sentence.return() methods
 module.exports = {
+  /** return a pixel-perfect reproduction of the input, with whitespace preserved */
   text: (s) => {
     return s.terms.reduce((str, t) => {
         str += t.as('text');
         return str;
       }, '') + s.terminator;
   },
-
+  /** return a string with normalized punctuation, trimmed whitespace, and lowercased */
   normal: (s) => {
     let normal = s.terms.reduce((str, t) => {
       str += ' ' + t.as('normal');
@@ -18,7 +19,7 @@ module.exports = {
     let form = s.get('sentenceType');
     const mapping = {
       'Exclamation': '!',
-      'Declarative': '.',
+      'Statement': '.',
       'Question': '?'
     };
     if (mapping[form]) {
@@ -27,6 +28,7 @@ module.exports = {
     return normal;
   },
 
+  /** a '& encoded', sanitized html representation of the text*/
   html: (s) => {
     let html = s.terms.reduce((str, t) => {
       return str + '\n  ' + t.render('html')
@@ -36,6 +38,7 @@ module.exports = {
     return '<span class="' + classes.join(' ') + '">' + html + '\n</span>'
   },
 
+  /** a simplified response for Part-of-Speech tagging*/
   tags: (s) => {
     return s.terms.map((t) => {
       return {

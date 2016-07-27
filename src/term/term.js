@@ -30,12 +30,13 @@ class Term {
   get text() {
     return fns.ensureString(this.str);
   }
+  /** tag this term as a known part-of-speech */
   tag(tag, reason) {
     set_tag(this, tag, reason);
     this.context.reason = reason
     return this;
   }
-  //change the text, return this
+  /** change the text, return this */
   to(method) {
     if (fns.isFunction(method)) {
       return method(this);
@@ -55,7 +56,7 @@ class Term {
     return this;
   }
 
-  //get some data back
+  /** get some data back */
   info(method) {
     if (fns.isFunction(method)) {
       return method(this);
@@ -68,7 +69,7 @@ class Term {
     return null;
   }
 
-  //get, analyze, return boolean
+  /** inspect the term, return boolean */
   is(method) {
     if (fns.isFunction(method)) {
       return method(this);
@@ -79,7 +80,7 @@ class Term {
       return true;
     }
     //if we already know this is incompatible
-    if (tagset[method] && !this.canBe(method)) {
+    if (tagset[method]) { //&& !this.canBe(method)) {
       return false;
     }
     //is it a known 'is' method?
@@ -89,7 +90,8 @@ class Term {
     }
     return false;
   }
-  //return it as something
+
+  /** return it as something */
   render(method) {
     if (fns.isFunction(method)) {
       return method(this);

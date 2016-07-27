@@ -131,9 +131,15 @@ const info = {
     }
     return null
   },
-  termsAfter: (t) => {
+  before: (t) => {
+    let terms = t.context.sentence.terms
     let i = t.info('TermIndex')
-    console.log(i)
+    return terms.slice(0, i)
+  },
+  after: (t) => {
+    let terms = t.context.sentence.terms
+    let i = t.info('TermIndex')
+    return terms.slice(i, terms.length - 1)
   }
 
 };

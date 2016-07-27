@@ -14,8 +14,9 @@ log.disable();
 // nlp('6 am').render('prettyPrint');
 // nlp('3$8').render('prettyPrint');
 // console.log(nlp('step up').terms()[0].info('Conjugate'));
-let t = nlp('we think he will step up from now on').info('Terms')[4]
-console.log(t.info('termIndex'));
+let t = nlp('he will step up for this now').terms()[2]
+console.log(t)
+console.log(t.info('TermIndex'));
 // nlp('the united kingdom is really nice.').render('prettyPrint');
 // nlp('he said i\'m very nice').render('prettyPrint');
 // nlp('i dunno about').to('titleCase').render('prettyPrint');

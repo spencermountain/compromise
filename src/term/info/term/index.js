@@ -122,8 +122,7 @@ const info = {
     }
     return false;
   },
-
-  termIndex: (t) => {
+  termindex: (t) => {
     let terms = t.context.sentence.terms
     for (let i = 0; i < terms.length; i++) {
       if (terms[i] === t) {

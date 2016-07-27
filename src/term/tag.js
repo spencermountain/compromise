@@ -43,8 +43,8 @@ const set_tag = function(term, tag, reason) {
   let tags = tagset[tag].is;
   for (let i = 0; i < tags.length; i++) {
     term.pos[tags[i]] = true;
-    fns.extend(term.transforms, transforms[tags[i]]);
-    fns.extend(term.infos, info[tags[i]]);
+    term.transforms = Object.assign({}, term.transforms, transforms[tags[i]])
+    term.infos = Object.assign({}, term.infos, info[tags[i]])
   }
   return;
 };

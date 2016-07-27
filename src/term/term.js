@@ -62,6 +62,7 @@ class Term {
     }
     method = method.toLowerCase();
     if (this.infos[method]) {
+      // console.log(method)
       return this.infos[method](this);
     }
     return null;

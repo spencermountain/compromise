@@ -1,9 +1,12 @@
 'use strict';
+const log = require('../paths').log;
+const path = 'lumper/lump_three';
 const combine = require('./combine');
 const do_three = require('./data/do_three');
 // const dont_three = require('./data/dont_three');
 
 const lump_three = function(s) {
+  log.here(path);
   for (let o = 0; o < do_three.length; o++) {
     for (let i = 0; i < s.terms.length - 2; i++) {
       let a = s.terms[i];

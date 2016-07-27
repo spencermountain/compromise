@@ -121,6 +121,20 @@ const info = {
       return true;
     }
     return false;
+  },
+
+  termIndex: (t) => {
+    let terms = t.context.sentence.terms
+    for (let i = 0; i < terms.length; i++) {
+      if (terms[i] === t) {
+        return i
+      }
+    }
+    return null
+  },
+  termsAfter: (t) => {
+    let i = t.info('TermIndex')
+    console.log(i)
   }
 
 };

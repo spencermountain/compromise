@@ -5,7 +5,6 @@ const path = 'tagger/wrestle';
 const wrestle = function(s) {
   log.here(path);
   s.terms = s.terms.map((t) => {
-    console.log(t.pos)
     return t.to('Specific')
   })
   return s

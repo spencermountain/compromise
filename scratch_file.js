@@ -8,13 +8,14 @@ const tags = require('./src/tagset');
 const log = require('./src/log');
 const Term = require('./src/term/term');
 
-// log.disable();
+log.disable();
 
 // nlp('  john f.   kennedy  ').render('prettyPrint');
 // nlp('6 am').render('prettyPrint');
 // nlp('3$8').render('prettyPrint');
 // console.log(nlp('step up').terms()[0].info('Conjugate'));
-console.log(nlp('we think he will step up from now on').render('prettyPrint'));
+let t = nlp('we think he will step up from now on').info('Terms')[4]
+console.log(t.info('termIndex'));
 // nlp('the united kingdom is really nice.').render('prettyPrint');
 // nlp('he said i\'m very nice').render('prettyPrint');
 // nlp('i dunno about').to('titleCase').render('prettyPrint');

@@ -105,8 +105,14 @@ const info = {
   /** get a list of words to the left of this one, in reversed order */
   before: (t) => {
     let terms = t.context.sentence.terms
-    let i = t.info('index')
-    return terms.slice(0, i)
+    let index = t.info('index')
+    terms = terms.slice(0, index)
+    let reversed = []
+    var len = terms.length;
+    for (let i = (len - 1); i !== 0; i--) {
+      reversed.push(terms[i]);
+    }
+    return reversed
   },
 
   /** get a list of words to the right of this one */

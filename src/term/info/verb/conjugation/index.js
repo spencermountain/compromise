@@ -18,7 +18,10 @@ const conjugate = function(t) {
   let inf = all['Infinitive'] || t.normal
   //to Actor
   if (!all.Actor) {
-    all.Actor = to.Actor(inf)
+    //a phrasal like 'step up' can't be an actor -'step upper'?
+    if (!t.pos.PhrasalVerb) {
+      all.Actor = to.Actor(inf)
+    }
   }
 
   return all

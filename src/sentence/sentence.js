@@ -38,7 +38,7 @@ class Sentence {
     return fns.ensureString(this.input);
   }
 
-  /** return a subset of flatten terms with the condition */
+  /** return a subset of flattened terms with the condition */
   if(str) {
     let terms = this.terms.filter((t) => t.is(str))
     return new Terms(terms)

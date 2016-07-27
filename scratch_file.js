@@ -13,10 +13,10 @@ log.disable();
 // nlp('  john f.   kennedy  ').render('prettyPrint');
 // nlp('6 am').render('prettyPrint');
 // nlp('3$8').render('prettyPrint');
-// console.log(nlp('step up').terms()[0].info('Conjugate'));
-let r = nlp('He will walk. Is it cool? It said so.')
+console.log(nlp('i think he will have not step up').info('terms')[6].info('components'));
+// let r = nlp('He will walk. Is John cool? It said so.')
 // r.render('pretty')
-console.log(r.is('Noun'))
+// console.log(r.if('Noun').is('Person'))
 // console.log(r.if('Verb').to('Normal').render('text'))
 // console.log(r.render('text'))
 // console.log(t.info('after').map((t) => t.normal));

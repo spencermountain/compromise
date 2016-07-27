@@ -1,6 +1,7 @@
 'use strict';
 // Terms() is an array of Terms, with utility methods that map over them
 const render = require('./render');
+const fns = require('../fns');
 
 class Terms {
   constructor(terms) {
@@ -18,6 +19,22 @@ class Terms {
       return t.to(method);
     });
     return this
+  }
+  /** return a subset of flattened terms with the condition */
+  if(str) {
+    let terms = this.terms.filter((t) => t.is(str))
+    return new Terms(terms)
+  }
+
+  /** get, analyze, return boolean */
+  is(method) {
+    if (fns.isFunction(method)) {
+      return method(this);
+    }
+    //otherwise, try each term
+    return this.terms.map((t) => {
+      return t.is(method);
+    });
   }
   /** reduce the output of each term into one result */
   render(method) {

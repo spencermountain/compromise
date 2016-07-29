@@ -8,21 +8,24 @@ const tags = require('./src/tagset');
 const log = require('./src/log');
 const Term = require('./src/term/term');
 
-// log.disable();
+log.disable();
 
-// nlp('  john f.   kennedy  ').render('prettyPrint');
-// nlp('6 am').render('prettyPrint');
-// nlp('3$8').render('prettyPrint');
-console.log(nlp('i think he will have not over-booked').info('terms')[6].info('components'));
+// nlp('  john f.   kennedy  ').render('pretty');
+// nlp('6 am').render('pretty');
+// nlp('3$8').render('pretty');
+console.log(nlp('five hundredth').info('terms')[0].is('textOrdinal'));
+console.log(nlp('five hundred').info('terms')[0].is('textCardinal'));
+console.log(nlp('500').info('terms')[0].is('numberCardinal'));
+console.log(nlp('500th').info('terms')[0].is('numberOrdinal'));
 // let r = nlp('He will walk. Is John cool? It said so.')
 // r.render('pretty')
 // console.log(r.if('Noun').is('Person'))
 // console.log(r.if('Verb').to('Normal').render('text'))
 // console.log(r.render('text'))
 // console.log(t.info('after').map((t) => t.normal));
-// nlp('the united kingdom is really nice.').render('prettyPrint');
-// nlp('he said i\'m very nice').render('prettyPrint');
-// nlp('i dunno about').to('titleCase').render('prettyPrint');
+// nlp('the united kingdom is really nice.').render('pretty');
+// nlp('he said i\'m very nice').render('pretty');
+// nlp('i dunno about').to('titleCase').render('pretty');
 // console.log(nlp('hello. <script>alert(\'hji\')</script> so<br/> yeah').render('html'));
 // console.log(t.is('Singular'));
 

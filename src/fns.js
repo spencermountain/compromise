@@ -39,6 +39,7 @@ exports.endsWith = function(str, suffix) {
   }
   return false;
 };
+
 exports.startsWith = function(str, prefix) {
   if (str && str.length && str.substr(0, 1) === prefix) {
     return true;

@@ -5,7 +5,8 @@
 //the order here matters.
 module.exports = [
   ['^[0-9]+ ?(am|pm)$', 'Date'],
-  ['^[0-9]+(st|nd|rd)?$', 'Value'],
+  ['[0-9](st|nd|rd|r?th)$', 'NumberOrdinal'],
+  ['^[0-9,\.]+$', 'NumberCardinal'],
   ['^[a-z]et$', 'Verb'],
   ['cede$', 'Infinitive'],
   ['.[cts]hy$', 'Adjective'],

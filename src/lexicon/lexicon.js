@@ -36,16 +36,16 @@ addArr(data.verbs, 'Verb');
 
 //number-words are well-structured
 let obj = data.numbers.ordinal;
-addArr(Object.keys(obj.ones), 'Value');
-addArr(Object.keys(obj.teens), 'Value');
-addArr(Object.keys(obj.tens), 'Value');
-addArr(Object.keys(obj.multiples), 'Value');
+addArr(Object.keys(obj.ones), 'TextOrdinal');
+addArr(Object.keys(obj.teens), 'TextOrdinal');
+addArr(Object.keys(obj.tens), 'TextOrdinal');
+addArr(Object.keys(obj.multiples), 'TextOrdinal');
 obj = data.numbers.cardinal;
-addArr(Object.keys(obj.ones), 'Value');
-addArr(Object.keys(obj.teens), 'Value');
-addArr(Object.keys(obj.tens), 'Value');
-addArr(Object.keys(obj.multiples), 'Value');
-addArr(Object.keys(data.numbers.prefixes), 'Value');
+addArr(Object.keys(obj.ones), 'TextCardinal');
+addArr(Object.keys(obj.teens), 'TextCardinal');
+addArr(Object.keys(obj.tens), 'TextCardinal');
+addArr(Object.keys(obj.multiples), 'TextCardinal');
+addArr(Object.keys(data.numbers.prefixes), 'TextCardinal');
 
 //singular/plural
 addArr(Object.keys(data.irregular_plurals.toPlural), 'Singular');

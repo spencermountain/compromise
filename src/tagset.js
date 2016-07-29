@@ -16,8 +16,14 @@ const tree = {
       Organization: true,
       Value: {
         Currency: true,
-        Ordinal: true,
-        Cardinal: true
+        Ordinal: {
+          NumberOrdinal: true,
+          TextOrdinal: true
+        },
+        Cardinal: {
+          NumberCardinal: true,
+          TextCardinal: true
+        }
       },
       Date: true
     },

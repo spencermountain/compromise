@@ -18,7 +18,7 @@ const Term = require('./src/term/term');
 // console.log(nlp('500').info('terms')[0].is('numberCardinal'));
 // nlp('he is five hundred and seven years old').to('Number').render('pretty')
 // console.log(nlp('eighth apple').info('terms')[0])
-console.log(nlp('the eighth apple').to('Number').to('Cardinal').render('text'))
+// console.log(nlp('the eighth apple').to('Number').to('Cardinal').render('text'))
 // console.log(nlp('eighth').if('Value').to('Number').terms[0].text)
 // console.log(nlp('8th').info('parse'))
 // r.if('Value').to('Number');

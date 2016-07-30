@@ -11,7 +11,8 @@ const misc = {
   //special case for took/taken
   'taken': 'PastTense',
   'msg': 'Verb', //slang
-  'a few': 'Value' //different than 'few people'
+  'a few': 'Value', //different than 'few people'
+  'years old': 'Unit' //special case
 };
 
 const compact = {

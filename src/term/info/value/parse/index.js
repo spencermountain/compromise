@@ -4,6 +4,8 @@ const findModifiers = require('./findModifiers')
 const words = require('./data')
 const isValid = require('./validate')
 const parseDecimals = require('./parseDecimals')
+const log = require('../../paths').log
+const path = 'parseNumber'
 
 // a 'section' is something like 'fifty-nine thousand'
 // turn a section into something we can add to - like 59000
@@ -16,9 +18,10 @@ const section_sum = (obj) => {
 
 //turn a string into a number
 const parse = function(t) {
+  log.here('parseNumber', path)
   let str = t.normal
   //handle a string of mostly numbers
-  if (t.pos.NumberCardinal || t.pos.NumberOrdinal) {
+  if (t.is('NumberValue')) {
     return parseNumeric(str)
   }
   let modifier = findModifiers(str);
@@ -51,6 +54,7 @@ const parse = function(t) {
     //improper fraction
     const improperFractionMatch = w.match(/^([0-9,\. ]+)\/([0-9,\. ]+)$/)
     if (improperFractionMatch) {
+      log.here('fractionMath', path)
       const num = parseFloat(improperFractionMatch[1].replace(/[, ]/g, ''))
       const denom = parseFloat(improperFractionMatch[2].replace(/[, ]/g, ''))
       if (denom) {
@@ -60,6 +64,8 @@ const parse = function(t) {
     }
     //prevent mismatched units, like 'seven eleven'
     if (!isValid(w, has)) {
+      log.warn('invalid state', path)
+      log.warn(has, path)
       return null;
     }
     //buildup section, collect 'has' values
@@ -72,9 +78,11 @@ const parse = function(t) {
     } else if (words.tens[w]) {
       has['tens'] = words.tens[w];
     } else if (words.multiples[w]) {
+      // log.show(has, path)
       let mult = words.multiples[w]
       //something has gone wrong : 'two hundred five hundred'
       if (mult === biggest_yet) {
+        log.warn('invalid multiplier', path)
         return null;
       }
       //if it's the biggest yet, multiply the whole sum - eg 'five hundred thousand'

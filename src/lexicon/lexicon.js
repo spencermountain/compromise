@@ -33,20 +33,20 @@ addArr(data.superlatives, 'Adjective');
 addArr(data.currencies, 'Currency');
 addArr(data.phrasal_verbs, 'PhrasalVerb');
 addArr(data.verbs, 'Verb');
+addArr(data.units, 'Unit');
 
 //number-words are well-structured
 let obj = data.numbers.ordinal;
-addArr(Object.keys(obj.ones), 'TextOrdinal');
-addArr(Object.keys(obj.teens), 'TextOrdinal');
-addArr(Object.keys(obj.tens), 'TextOrdinal');
-addArr(Object.keys(obj.multiples), 'TextOrdinal');
+addArr(Object.keys(obj.ones), 'Ordinal');
+addArr(Object.keys(obj.teens), 'Ordinal');
+addArr(Object.keys(obj.tens), 'Ordinal');
+addArr(Object.keys(obj.multiples), 'Ordinal');
 obj = data.numbers.cardinal;
-addArr(Object.keys(obj.ones), 'TextCardinal');
-addArr(Object.keys(obj.teens), 'TextCardinal');
-addArr(Object.keys(obj.tens), 'TextCardinal');
-addArr(Object.keys(obj.multiples), 'TextCardinal');
-addArr(Object.keys(data.numbers.prefixes), 'TextCardinal');
-
+addArr(Object.keys(obj.ones), 'Cardinal');
+addArr(Object.keys(obj.teens), 'Cardinal');
+addArr(Object.keys(obj.tens), 'Cardinal');
+addArr(Object.keys(obj.multiples), 'Cardinal');
+addArr(Object.keys(data.numbers.prefixes), 'Cardinal');
 //singular/plural
 addArr(Object.keys(data.irregular_plurals.toPlural), 'Singular');
 addArr(Object.keys(data.irregular_plurals.toSingle), 'Plural');
@@ -81,4 +81,4 @@ module.exports = lexicon;
 
 // console.log(Object.keys(data));
 // console.log(data.misc);
-// console.log(lexicon.house);
+// console.log(lexicon.eighth);

@@ -16,19 +16,16 @@ const tree = {
       Organization: true,
       Value: {
         Currency: true,
-        Ordinal: {
-          NumberOrdinal: true,
-          TextOrdinal: true
-        },
-        Cardinal: {
-          NumberCardinal: true,
-          TextCardinal: true
-        }
+        Ordinal: true,
+        Cardinal: true,
+        TextValue: true,
+        NumberValue: true
       },
       Date: true
     },
     Plural: true,
     Actor: true,
+    Unit: true,
     Demonym: true
   },
   Verb: {
@@ -81,7 +78,9 @@ const conflicts = [
   //adjectives
   ['Comparative', 'Superlative'],
   //values
-  ['Currency', 'Ordinal'], //$"5.50th"?
+  ['Ordinal', 'Cardinal'],
+  ['TextValue', 'NumberValue'],
+  ['Ordinal', 'Currency'], //$5.50th
   //verbs
   ['Infinitive', 'Gerund', 'Pluperfect', 'FuturePerfect'],
   //tenses

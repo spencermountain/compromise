@@ -17,4 +17,6 @@ const toOrdinal = function(num) {
   return str
 }
 
-module.exports = toOrdinal
+module.exports = {
+  ordinal: toOrdinal
+}

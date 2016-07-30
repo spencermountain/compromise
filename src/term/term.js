@@ -56,7 +56,7 @@ class Term {
       this.tag(method, 'manual-tag');
       return this.to('Specific')
     }
-    log.change('no method ' + method, 'term');
+    log.change('no method ' + method + ' for ' + this.normal, 'term');
     return this;
   }
 

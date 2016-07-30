@@ -46,12 +46,7 @@ let value = {
 
   /** an ordinal is '5th', or 'fifth', instead of 5 */
   ordinal: (t) => {
-    //a numerical-ordinal, like 33rd
-    if (t.is('NumericalOrdinal')) {
-      return true
-    }
-    //a textual-ordinal, like 'fifty fifth'
-    if (t.is('NumericalOrdinal')) {
+    if (t.is('NumberOrdinal') || t.is('TextOrdinal')) {
       return true
     }
     return false
@@ -59,12 +54,22 @@ let value = {
 
   /** a cardinal is a number that is not an ordinal like 'fifth', but a regular number, like 'five' */
   cardinal: (t) => {
-    //a numerical-ordinal, like 33rd
-    if (t.is('NumericalCardinal')) {
+    if (t.is('NumberCardinal') || t.is('TextCardinal')) {
       return true
     }
-    //a textual-ordinal, like 'fifty fifth'
-    if (t.is('NumericalCardinal')) {
+    return false
+  },
+
+  /** a TextValue is a number that's spelled-out*/
+  textvalue: (t) => {
+    if (t.is('TextCardinal') || t.is('TextOrdinal')) {
+      return true
+    }
+    return false
+  },
+  /** a TextValue is a number that's spelled-out*/
+  numbervalue: (t) => {
+    if (t.is('NumberCardinal') || t.is('NumberOrdinal')) {
       return true
     }
     return false

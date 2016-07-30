@@ -8,7 +8,7 @@ const tags = require('./src/tagset');
 const log = require('./src/log');
 const Term = require('./src/term/term');
 
-log.disable();
+// log.enable('');
 
 // nlp('  john f.   kennedy  ').render('pretty');
 // nlp('6 am').render('pretty');
@@ -16,7 +16,13 @@ log.disable();
 // console.log(nlp('five hundredth').info('terms')[0].is('textOrdinal'));
 // console.log(nlp('five hundred').info('terms')[0].is('textCardinal'));
 // console.log(nlp('500').info('terms')[0].is('numberCardinal'));
-console.log(nlp('five hundred and 7 point 2 nine').info('terms')[0].info('number'));
+// nlp('he is five hundred and seven years old').to('Number').render('pretty')
+// console.log(nlp('eighth apple').info('terms')[0])
+console.log(nlp('the eighth apple').to('Number').to('Cardinal').render('text'))
+// console.log(nlp('eighth').if('Value').to('Number').terms[0].text)
+// console.log(nlp('8th').info('parse'))
+// r.if('Value').to('Number');
+// r.render('pretty')
 // let r = nlp('He will walk. Is John cool? It said so.')
 // r.render('pretty')
 // console.log(r.if('Noun').is('Person'))

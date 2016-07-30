@@ -3,7 +3,7 @@ const fns = require('./fns');
 const chalk = require('chalk');
 const pretty_print = require('./pretty_print');
 
-let disable = false;
+let enable = false;
 
 //dummy function
 let dummy = {
@@ -12,21 +12,24 @@ let dummy = {
   show: function() {},
   tag: function() {},
   pos: function() {},
-  disable: function() {
-    disable = true;
+  enable: (str) => {
+    enable = str || true;
+  },
+  disable: () => {
+    enable = false;
   }
 };
 
 const shouldPrint = (path) => {
-  if (disable) {
+  if (!enable) {
     return false;
   }
-  let arg = process.argv[2];
-  let toPrint = arg.replace(/^--debug=?/, '') || '*';
-  if (toPrint === '*' || toPrint === '') {
+  // let arg = process.argv[2];
+  // let toPrint = arg.replace(/^--debug=?/, '') || '*';
+  if (enable === true || enable === '*' || enable === '') {
     return true;
   }
-  if (path.indexOf(toPrint) === 0) {
+  if (path.indexOf(enable) === 0) {
     return true;
   }
   return false;
@@ -62,7 +65,10 @@ const serverOutput = {
     }
   },
   disable: function() {
-    disable = true;
+    enable = false;
+  },
+  enable: function(str) {
+    enable = str || true;
   },
   pos: function(tag) {
     const known = {

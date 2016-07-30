@@ -5,8 +5,9 @@
 //the order here matters.
 module.exports = [
   ['^[0-9]+ ?(am|pm)$', 'Date'],
-  ['[0-9](st|nd|rd|r?th)$', 'NumberOrdinal'],
-  ['^[0-9,\.]+$', 'NumberCardinal'],
+  ['[0-9](st|nd|rd|r?th)$', 'NumberOrdinal'], //like 5th
+  ['([0-9])([a-z]{1,2})$', 'NumberCardinal'], //like 5kg
+  ['^[0-9,\.]+$', 'NumberCardinal'], //like 5
   ['^[a-z]et$', 'Verb'],
   ['cede$', 'Infinitive'],
   ['.[cts]hy$', 'Adjective'],

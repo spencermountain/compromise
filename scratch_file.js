@@ -16,7 +16,7 @@ log.disable();
 // console.log(nlp('five hundredth').info('terms')[0].is('textOrdinal'));
 // console.log(nlp('five hundred').info('terms')[0].is('textCardinal'));
 // console.log(nlp('500').info('terms')[0].is('numberCardinal'));
-console.log(nlp('5008.9').info('terms')[0].info('textOrdinal'));
+console.log(nlp('five hundred and 7 point 2 nine').info('terms')[0].info('number'));
 // let r = nlp('He will walk. Is John cool? It said so.')
 // r.render('pretty')
 // console.log(r.if('Noun').is('Person'))

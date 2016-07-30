@@ -60,5 +60,11 @@ module.exports = [
     condition: (a, b, c) => (a.pos.Value && b.normal === 'and' && c.pos.Value),
     result: 'Value',
     reason: 'Value-and-Value'
+  },
+  {
+    //two point three
+    condition: (a, b, c) => (a.pos.Value && b.normal === 'point' && c.pos.Value),
+    result: 'Value',
+    reason: 'Value-and-Value'
   }
 ];

@@ -20,7 +20,8 @@
   },
   "files": [
     "builds/",
-    "src/"
+    "src/",
+    "nlp.d.ts"
   ],
   "dependencies": {},
   "devDependencies": {

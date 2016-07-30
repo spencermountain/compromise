@@ -7,7 +7,8 @@ let files = {
   ],
   'values': [
     'currencies',
-    'numbers'
+    'numbers',
+    'ordinalMap'
   ],
   dates: [
     'dates',

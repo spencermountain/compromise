@@ -36,7 +36,6 @@ const cardinal = {
   },
   multiples: {
     'hundred': 1e2,
-    'grand': 1e3,
     'thousand': 1e3,
     'million': 1e6,
     'billion': 1e9,
@@ -50,6 +49,7 @@ const cardinal = {
 
 const ordinal = {
   ones: {
+    'zeroth': 0,
     'first': 1,
     'second': 2,
     'third': 3,

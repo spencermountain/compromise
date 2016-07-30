@@ -13,10 +13,10 @@ log.disable();
 // nlp('  john f.   kennedy  ').render('pretty');
 // nlp('6 am').render('pretty');
 // nlp('3$8').render('pretty');
-console.log(nlp('five hundredth').info('terms')[0].is('textOrdinal'));
-console.log(nlp('five hundred').info('terms')[0].is('textCardinal'));
-console.log(nlp('500').info('terms')[0].is('numberCardinal'));
-console.log(nlp('500th').info('terms')[0].is('numberOrdinal'));
+// console.log(nlp('five hundredth').info('terms')[0].is('textOrdinal'));
+// console.log(nlp('five hundred').info('terms')[0].is('textCardinal'));
+// console.log(nlp('500').info('terms')[0].is('numberCardinal'));
+console.log(nlp('5008.9').info('terms')[0].info('textOrdinal'));
 // let r = nlp('He will walk. Is John cool? It said so.')
 // r.render('pretty')
 // console.log(r.if('Noun').is('Person'))

@@ -1,5 +1,6 @@
 'use strict';
-const parse = require('./parse')
+const toNumber = require('./toNumber')
+const toText = require('./toText')
 
 const info = {
 
@@ -11,10 +12,22 @@ const info = {
   ordinalForm: (t) => {
 
   },
-
   /** return a float/integer version of this number*/
   number: (t) => {
-    return parse(t)
+    return toNumber(t)
+  },
+
+  /** return a spelled-out ordinal version of this number*/
+  textordinal: (t) => {
+    return toText.ordinal(t)
+  },
+  /** return a spelled-out cardinal version  version of this number*/
+  textcardinal: (t) => {
+    return toText.cardinal(t)
+  },
+  /** return a textual version of this number*/
+  textual: (t) => {
+    return toText.ordinal(t)
   }
 
 }

@@ -16,6 +16,29 @@ let value = {
   Ordinal: (t) => {
     t.text += 'th';
     return t;
+  },
+  specific: (t) => {
+    //is it already a specific value?
+    if (t.pos.NumberCardinal || t.pos.TextCardinal || t.pos.NumberOrdinal || t.pos.TextOrdinal) {
+      return t
+    }
+    if (t.is('NumberCardinal')) {
+      t.tag('NumberCardinal', 'wrestle-value')
+      return t
+    }
+    if (t.is('TextCardinal')) {
+      t.tag('TextCardinal', 'wrestle-value')
+      return t
+    }
+    if (t.is('NumberOrdinal')) {
+      t.tag('TextOrdinal', 'wrestle-value')
+      return t
+    }
+    if (t.is('TextOrdinal')) {
+      t.tag('TextOrdinal', 'wrestle-value')
+      return t
+    }
+    return t
   }
 };
 module.exports = value;

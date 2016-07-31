@@ -1,41 +1,36 @@
 'use strict';
-const termList = require('./termList')
+// const TermList = require('./termList')
 
-const sentenceList = (sentences, parent) => {
-  let fn = () => {
-    return sentences
+class SentenceList {
+  constructor(sentences) {
+    this.sentences = sentences
   }
-
-  let terms = sentences.reduce((arr, s) => {
-    arr = arr.concat(s.split(' '))
-    return arr
-  }, [])
-  fn.terms = termList(terms, parent)
-
-  fn.first = () => {
-    return sentences[0]
+  if(str) {
+    this.sentences = this.sentences.filter((s) => s.is(str))
+    return this
   }
-  fn.last = () => {
-    return sentences[sentences.length - 1]
+  filter(fn) {
+    this.sentences = this.sentences.filter(fn)
+    return this
   }
-  fn.subset = () => {
-    return sentenceList([1, 1, 1])
+  unique() {
+    return this
   }
-  fn.find = () => {
-    return fn
+  reverse() {
+    return this
   }
-  fn.reverse = () => {
-    return fn
+  first() {
+    return this.sentences[0]
   }
-  fn.unique = () => {
-    return fn
+  text() {
+    return this.sentences.reduce((str, s) => {
+      str += s.text() + ' '
+      return str
+    }, '')
   }
-  fn.and = () => {
-    return parent
+  print() {
+    console.log(this.text())
   }
-  return fn
 }
 
-
-
-module.exports = sentenceList
+module.exports = SentenceList

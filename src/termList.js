@@ -1,30 +1,37 @@
 'use strict';
 
-const termList = (arr, parent) => {
-  let fn = () => {
-    return arr
+const plurals = require('./tags').plurals
+
+class TermList {
+  constructor(terms) {
+    this.terms = terms
+    //add tag filters for each pos
+    Object.keys(plurals).forEach((k) => {
+      this[k] = () => {
+        return this.if(plurals[k])
+      }
+    })
   }
-  fn.first = () => {
-    return arr[0]
+  if(str) {
+    this.terms = this.terms.filter((t) => t.is(str))
+    return this
   }
-  fn.last = () => {
-    return arr[arr.length - 1]
+  filter(fn) {
+    this.terms = this.terms.filter(fn)
+    return this
   }
-  fn.find = () => {
-    return fn
+  unique() {
+    return this
   }
-  fn.reverse = () => {
-    return fn
+  first() {
+    return this.terms[0]
   }
-  fn.unique = () => {
-    return fn
+  text() {
+    return this.terms.map((t) => t.text)
   }
-  fn.and = () => {
-    return parent
+  print() {
+    console.log(this.text())
   }
-  return fn
 }
 
-
-
-module.exports = termList
+module.exports = TermList

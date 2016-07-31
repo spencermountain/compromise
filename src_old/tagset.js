@@ -1,6 +1,5 @@
 'use strict';
 //the POS tags we use, according to their dependencies
-
 const tree = {
   Noun: {
     Singular: {

@@ -8,7 +8,7 @@ const tags = require('./src/tagset');
 const log = require('./src/log');
 const Term = require('./src/term/term');
 
-// log.enable('');
+log.enable('');
 
 // nlp('  john f.   kennedy  ').render('pretty');
 // nlp('6 am').render('pretty');
@@ -36,3 +36,5 @@ const Term = require('./src/term/term');
 // console.log(t.is('Singular'));
 
 // console.log(nlp('apples').sentences[0].terms[0].info('Conjugations'));
+
+nlp('quickly lkjsdfi').render('pretty')

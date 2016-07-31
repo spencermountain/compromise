@@ -1,29 +1,52 @@
 'use strict';
+const markov = require('./data/neighbours')
+const afterThisWord = markov.afterThisWord
+const beforeThisWord = markov.beforeThisWord
+const beforeThisPos = markov.beforeThisPos
+const afterThisPos = markov.afterThisPos
 
-
-const lookLeft = {
-  Modal: 'Verb', // would foo..
-  Determiner: 'Noun', // the foo
-  Possessive: 'Noun', // spencer's foo
-  Copula: 'Adjective' // is foo
-}
-//reads backwards
-const lookRight = {
-  Preposition: 'Verb', // foo for..
-  Determiner: 'Verb', // foo the..
-}
-
-//for unknown terms, look left + right first
+//for unknown terms, look left + right first, and hit-up the markov-chain for clues
 const neighbour_step = function(s) {
-  for (let i = 0; i < s.terms.length; i++) {
+  s.terms.forEach((t, n) => {
     //is it still unknown?
-    let tags = Object.keys(s.terms[i].pos);
-    if (tags.length === 0) {
-      if (s.terms[i - 1]) {
-
+    let termTags = Object.keys(t.pos);
+    if (termTags.length === 0) {
+      let lastTerm = s.terms[n - 1]
+      let nextTerm = s.terms[n + 1]
+      //look at last word
+      if (lastTerm && afterThisWord[lastTerm.normal]) {
+        t.tag(afterThisWord[lastTerm.normal], 'neighbour-after-"' + lastTerm.normal + '"')
+        return
+      }
+      //look at next word
+      if (nextTerm && beforeThisWord[nextTerm.normal]) {
+        t.tag(beforeThisWord[nextTerm.normal], 'neighbour-before-"' + nextTerm.normal + '"')
+        return
+      }
+      //look at the last POS
+      let tags = []
+      if (lastTerm) {
+        tags = Object.keys(lastTerm.pos)
+        for (let i = 0; i < tags.length; i++) {
+          if (afterThisPos[tags[i]]) {
+            t.tag(afterThisPos[tags[i]], 'neighbour-after-[' + tags[i] + ']')
+            return
+          }
+        }
+      }
+      //look at the next POS
+      if (nextTerm) {
+        tags = Object.keys(nextTerm.pos)
+        for (let i = 0; i < tags.length; i++) {
+          if (beforeThisPos[tags[i]]) {
+            t.tag(beforeThisPos[tags[i]], 'neighbour-before-[' + tags[i] + ']')
+            return
+          }
+        }
       }
     }
-  }
+  })
+
   return s;
 };
 

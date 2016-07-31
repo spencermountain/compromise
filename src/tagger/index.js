@@ -6,6 +6,7 @@ const step = {
   capital_step: require('./steps/capital_step'),
   suffix_step: require('./steps/suffix_step'),
   web_step: require('./steps/web_step'),
+  neighbour_step: require('./steps/neighbour_step'),
   wrestle: require('./steps/wrestle'),
   noun_fallback: require('./steps/noun_fallback')
 };
@@ -26,6 +27,7 @@ const tagger = function(s) {
   s = step.capital_step(s);
   s = step.web_step(s);
   s = step.suffix_step(s);
+  s = step.neighbour_step(s);
   s = step.noun_fallback(s);
   for (let i = 0; i < 2; i++) {
     s = lumper.lump_two(s);

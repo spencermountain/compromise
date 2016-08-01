@@ -29,7 +29,7 @@ const term = {
   },
 
   /** check if it is word-like in english */
-  wordlike: (t) => {
+  word: (t) => {
     //assume a contraction produces a word-word
     if (t.silent_term) {
       return true;

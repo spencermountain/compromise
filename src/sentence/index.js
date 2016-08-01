@@ -1,10 +1,10 @@
 'use strict';
 //
-let term = {
+let sentence = {
   info: require('./info'),
   is: require('./is'),
   
   transform: require('./transform')
 }
 
-module.exports = term
+module.exports = sentence

@@ -1,8 +1,9 @@
 'use strict';
 const renderHtml = require('./renderHtml');
 const chalk = require('chalk');
-const log = require('../../log');
-const fns = require('../../log/fns');
+const paths = require('../paths')
+const log = paths.log
+const fns = paths.fns
 
 //supported Sentence.return() methods
 module.exports = {

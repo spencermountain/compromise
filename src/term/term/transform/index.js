@@ -1,10 +1,9 @@
 'use strict';
-const normalize = require('./normalize');
 
 module.exports = {
   /**a readable, normalized form - trim whitespace, normalize punctuation, and lowercase */
-  normal: (t) => {
-    t.text = normalize(t.text);
+  normalized: (t) => {
+    t.text = t.info('normalized')
     t.whitespace.before = ''
     t.whitespace.after = ' '
     //don't append a space at the end
@@ -27,9 +26,5 @@ module.exports = {
   titlecase: (t) => {
     t.text = t.text.replace(/^[a-z]/, (x) => x.toUpperCase());
     return t;
-  },
-  /** find more aggressive tags for this term (overloaded)*/
-  specific: (t) => { //to be overloaded
-    return t
   }
 };

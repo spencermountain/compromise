@@ -1,6 +1,12 @@
 'use strict';
+const normalize = require('./normalize')
 
 const info = {
+
+  /* normalize punctuation, whitespace & case */
+  normalized: (t) => {
+    return normalize(t.text)
+  },
 
   /** the punctuation at the end of this term*/
   endpunctuation: (t) => {

@@ -1,7 +1,7 @@
 'use strict';
 //a lexicon is a giant object of known words
 
-const data = require('./data');
+const data = require('./index');
 const fns = require('./fns');
 let lexicon = {};
 

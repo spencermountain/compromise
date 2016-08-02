@@ -87,11 +87,11 @@ exports.extend = (o, o2) => {
 //a very naaive inflector for
 //our public-facing one is in ./terms/noun/info
 exports.toPlural = (str) => {
-  const nochange = {
-    Glue: true
+  const irregular = {
+    Glue: 'Glue'
   }
-  if (nochange[str]) {
-    return str
+  if (irregular[str]) {
+    return irregular[str]
   }
   if (str.match(/y$/i)) {
     return str.replace(/y$/i, 'ies')

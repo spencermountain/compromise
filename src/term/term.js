@@ -18,7 +18,7 @@ class Term {
   before(n) {
     let terms = this.context.sentence.terms
     //get terms before this
-    let index = this.info('index')
+    let index = this.index()
     terms = terms.slice(0, index)
     //reverse them
     let reversed = []
@@ -36,12 +36,24 @@ class Term {
   /** get a list of words to the right of this one */
   next(n) {
     let terms = this.context.sentence.terms
-    let i = t.info('index')
+    let i = this.index()
     let end = terms.length - 1
     if (n) {
       end = n
     }
     return terms.slice(i, end)
+  }
+
+
+  /** where in the sentence is it? zero-based. */
+  index() {
+    let terms = this.context.sentence.terms
+    for (let i = 0; i < terms.length; i++) {
+      if (terms[i] === t) {
+        return i
+      }
+    }
+    return null
   }
 
 }

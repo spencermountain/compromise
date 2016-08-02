@@ -78,18 +78,8 @@ const info = {
       return true;
     }
     return false;
-  },
-
-  /** where in the sentence is it? zero-based. */
-  index: (t) => {
-    let terms = t.context.sentence.terms
-    for (let i = 0; i < terms.length; i++) {
-      if (terms[i] === t) {
-        return i
-      }
-    }
-    return null
   }
+
 
 };
 

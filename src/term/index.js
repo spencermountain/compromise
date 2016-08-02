@@ -12,7 +12,7 @@ let terms = [
   'value',
   'verb'
 ].reduce((h, t) => {
-  h[t] = require('./' + t)
+  h[t] = require('./' + t + '/index.js')
   return h
 }, {})
 

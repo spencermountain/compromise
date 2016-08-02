@@ -2,7 +2,7 @@
 
 module.exports = {
   /**a readable, normalized form - trim whitespace, normalize punctuation, and lowercase */
-  normalized: (t) => {
+  normal: (t) => {
     t.text = t.info('normalized')
     t.whitespace.before = ''
     t.whitespace.after = ' '

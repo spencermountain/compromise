@@ -72,23 +72,6 @@ const info = {
     return null;
   },
 
-  /** does it appear to be an acronym, like FBI or M.L.B. */
-  isacronym: (t) => {
-    //like N.D.A
-    if (t.text.match(/([A-Z]\.)+[A-Z]?$/i)) {
-      return true;
-    }
-    //like 'F.'
-    if (t.text.match(/^[A-Z]\.$/i)) {
-      return true;
-    }
-    //like NDA
-    if (t.text.match(/[A-Z]{3}$/i)) {
-      return true;
-    }
-    return false;
-  },
-
   /** check if the term ends with a comma */
   hascomma: (t) => {
     if (t.info('endPunctuation') === 'comma') {
@@ -106,26 +89,6 @@ const info = {
       }
     }
     return null
-  },
-
-  /** get a list of words to the left of this one, in reversed order */
-  before: (t) => {
-    let terms = t.context.sentence.terms
-    let index = t.info('index')
-    terms = terms.slice(0, index)
-    let reversed = []
-    var len = terms.length;
-    for (let i = (len - 1); i !== 0; i--) {
-      reversed.push(terms[i]);
-    }
-    return reversed
-  },
-
-  /** get a list of words to the right of this one */
-  after: (t) => {
-    let terms = t.context.sentence.terms
-    let i = t.info('index')
-    return terms.slice(i, terms.length - 1)
   }
 
 };

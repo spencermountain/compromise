@@ -33,6 +33,7 @@ const grab_methods = (str) => {
 module.exports = {
   transforms: grab_methods('transform'),
   infos: grab_methods('info'),
-  is_methods: grab_methods('is')
+  is_methods: grab_methods('is'),
+  renders: terms.term.render
 }
-console.log(module.exports)
+// console.log(module.exports)

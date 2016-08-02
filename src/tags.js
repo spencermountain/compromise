@@ -72,27 +72,6 @@ const add_tags = (obj, is) => {
 add_tags(tree, []);
 
 
-//make plurals
-const irregulars = {
-  Person: 'people',
-  MalePerson: 'males',
-  FemalePerson: 'females',
-  City: 'cities',
-  Currency: 'currencies',
-  Country: 'countries'
-}
-let plurals = Object.keys(tags).reduce((h, tag) => {
-  if (irregulars[tag]) {
-    h[irregulars[tag]] = tag
-  } else {
-    let plural = tag.charAt(0).toLowerCase() + tag.substr(1) + 's'
-    h[plural] = tag
-  }
-  return h
-}, {})
-
-
 module.exports = {
-  tags: tags,
-  plurals: plurals
+  tags: tags
 }

@@ -83,3 +83,24 @@ exports.extend = (o, o2) => {
   });
   return o;
 };
+
+//a very naaive inflector for
+//our public-facing one is in ./terms/noun/info
+exports.toPlural = (str) => {
+  const nochange = {
+    Glue: true
+  }
+  if (nochange[str]) {
+    return str
+  }
+  if (str.match(/y$/i)) {
+    return str.replace(/y$/i, 'ies')
+  }
+  if (str.match(/person$/i)) {
+    return str.replace(/person$$/i, 'People')
+  }
+  if (str.match(/s$/i)) {
+    return str
+  }
+  return str + 's'
+}

@@ -1,5 +1,6 @@
-//convert cute to cuteness
 'use strict';
+//convert 'cute' to 'cuteness'
+
 const to_noun = function(w) {
   const irregulars = {
     'clean': 'cleanliness',

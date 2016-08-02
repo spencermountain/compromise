@@ -27,14 +27,6 @@ let value = {
     t.text = '' + num
     t.tag('Ordinal')
     return t;
-  },
-
-  specific: (t) => {
-    //is it already a specific value?
-    if ((t.pos.Ordinal || t.pos.Cardinal) && (t.pos.TextValue || t.pos.NumberValue)) {
-      return t
-    }
-    return t
   }
 };
 module.exports = value;

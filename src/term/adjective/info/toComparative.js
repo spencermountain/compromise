@@ -1,6 +1,6 @@
 //turn 'quick' into 'quickly'
 'use strict';
-const convertables = require('../../data/convertables.js');
+const convertables = require('../paths').data.convertables
 
 const irregulars = {
   'grey': 'greyer',

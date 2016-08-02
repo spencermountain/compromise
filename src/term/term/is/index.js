@@ -62,6 +62,23 @@ const term = {
       return true
     }
     return false
+  },
+
+  /** does it appear to be an acronym, like FBI or M.L.B. */
+  acronym: (t) => {
+    //like N.D.A
+    if (t.text.match(/([A-Z]\.)+[A-Z]?$/i)) {
+      return true;
+    }
+    //like 'F.'
+    if (t.text.match(/^[A-Z]\.$/i)) {
+      return true;
+    }
+    //like NDA
+    if (t.text.match(/[A-Z]{3}$/i)) {
+      return true;
+    }
+    return false;
   }
 
 }

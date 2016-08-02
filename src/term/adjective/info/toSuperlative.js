@@ -1,6 +1,6 @@
 //turn 'quick' into 'quickest'
 'use strict';
-const convertables = require('../../data/convertables.js');
+const convertables = require('../paths').data.convertables
 
 const irregulars = {
   'nice': 'nicest',

@@ -12,7 +12,7 @@ const info = {
     return toInfinitive(t)
   },
   /** return all forms of this verb */
-  conjugate: (t) => {
+  conjugations: (t) => {
     return conjugate(t)
   },
 

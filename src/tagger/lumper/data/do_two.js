@@ -26,7 +26,7 @@ module.exports = [
   },
   {
     //"John Abcd" - needs to be careful
-    condition: (a, b) => (a.pos.Person && !a.pos.Pronoun && !a.pos.Possessive && !a.info('hasComma') && b.is('TitleCase') && !a.is_acronym() && !b.pos.Verb), //'Person, Capital -> Person'
+    condition: (a, b) => (a.pos.Person && !a.pos.Pronoun && !a.pos.Possessive && !a.info('hasComma') && b.is('TitleCase') && !a.is('Acronym') && !b.pos.Verb), //'Person, Capital -> Person'
     result: 'Person',
     reason: 'person-titleCase'
   },
@@ -66,18 +66,6 @@ module.exports = [
     result: 'Quotation',
     reason: 'two-word-quote'
   },
-  // {
-  //   //will walk (perfect)
-  //   condition: (a, b) => (a.normal === 'will' && b.pos.Verb),
-  //   result: 'PerfectTense',
-  //   reason: 'will-verb'
-  // },
-  // {
-  //   //will have walked (pluperfect)
-  //   condition: (a, b) => (a.normal.match(/^will ha(ve|d)$/) && b.pos.Verb),
-  //   result: 'Pluperfect',
-  //   reason: 'will-have-verb'
-  // },
   {
     //timezones
     condition: (a, b) => (b.normal.match(/(standard|daylight|summer) time/) && (a.pos['Adjective'] || a.pos['Place'])),
@@ -90,13 +78,6 @@ module.exports = [
     result: 'Currency',
     reason: 'demonym-currency'
   },
-  // {
-  //   //for verbs in Past/Present Continuous ('is raining')
-  //   condition: (a, b) => (a.pos.Copula && a.normal.match(/^(am|is|are|was|were)$/)
-  //     && b.pos.Verb && b.normal.match(/ing$/)),
-  //   result: 'Verb',
-  //   reason: 'copula-gerund'
-  // },
   {
     //7 ft
     condition: (a, b) => ((a.pos.Value && b.pos.Abbreviation) || (a.pos.Abbreviation && b.pos.Value)),
@@ -126,17 +107,6 @@ module.exports = [
     condition: (a, b) => (a.pos.Place && b.pos.Place),
     result: 'Place',
     reason: 'two-places'
-  },
-// {
-//   //'have not'
-//   condition: (a, b) => ((a.pos.Infinitive || a.pos.Copula || a.pos.PresentTense) && b.normal === 'not'),
-//   result: 'Verb',
-//   reason: 'verb-not'
-// },
-// {
-//   //both places (this is the most aggressive rule of them all)
-//   condition: (a, b) => (a.pos.Noun && b.pos.Noun && !is_specific(a) && !is_specific(b)),
-//   result: 'Noun',
-//   reason: 'two-nouns'
-// }
+  }
+
 ];

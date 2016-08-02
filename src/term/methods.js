@@ -10,7 +10,7 @@ let transforms = {}
 // each POS tag is a filter in plural form,
 // and a transform, like 'toNoun'
 Object.keys(tags).forEach((tag) => {
-  const plural = fns.toPlural(tag)
+  const plural = fns.toPlural(tag.toLowerCase())
   filters[plural] = (t) => {
     return t.pos[tag]
   }
@@ -22,7 +22,7 @@ Object.keys(tags).forEach((tag) => {
 
 // 'is' methods become filters in plural form
 Object.keys(terms.is_methods).forEach((method) => {
-  const plural = fns.toPlural(method)
+  const plural = fns.toPlural(method.toLowerCase())
   filters[plural] = (t) => {
     return t.is(method)
   }
@@ -38,7 +38,7 @@ Object.keys(terms.transforms).forEach((method) => {
 //
 //'info' methods - are 'get' calls
 Object.keys(terms.infos).forEach((method) => {
-  const name = fns.titleCase(fns.toPlural(method))
+  const name = fns.toPlural(method)
   get[name] = (t) => {
     return t.info(method)
   }
@@ -49,4 +49,3 @@ module.exports = {
   get: get,
   transforms: transforms
 }
-console.log(module.exports)

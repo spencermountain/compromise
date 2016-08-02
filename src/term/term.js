@@ -3,6 +3,7 @@
 class Term {
   constructor(str) {
     this.text = str
+    this.normal = str.toLowerCase()
     this.pos = {}
   }
 
@@ -12,6 +13,15 @@ class Term {
       return true
     }
     return false
+  }
+
+  /** fetch ad-hoc information about this term */
+  info() {
+    return null
+  }
+  /** set the term as this part-of-speech */
+  tag(tag) {
+    this.pos[tag] = true
   }
 
   /** get a list of words to the left of this one, in reversed order */

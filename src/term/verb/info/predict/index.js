@@ -1,5 +1,5 @@
 'use strict';
-const paths = require('../paths')
+const paths = require('../../paths')
 const log = paths.log
 const fns = paths.fns
 const suffix_rules = require('./suffix_rules');

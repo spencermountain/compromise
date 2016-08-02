@@ -2,6 +2,7 @@
 const predictForm = require('./predict')
 const conjugate = require('./conjugation')
 const toInfinitive = require('./toInfinitive')
+
 const info = {
   /** try to predict which form this verb is */
   conjugation: (t) => {

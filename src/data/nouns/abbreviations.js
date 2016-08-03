@@ -113,7 +113,7 @@ let compact = {
   ],
 
   //Honourifics
-  Person: [
+  Honourific: [
     'llb',
     'jr',
     'mr',

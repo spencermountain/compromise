@@ -1,12 +1,13 @@
-'use strict';
+
 //the POS tags we use, according to their dependencies
-const tree = {
+module.exports = {
   Noun: {
     Singular: {
       Pronoun: true,
       Person: {
         MalePerson: true,
-        FemalePerson: true
+        FemalePerson: true,
+        Honourific: true
       },
       Place: {
         Country: true,
@@ -57,21 +58,3 @@ const tree = {
   QuestionWord: true,
   Expression: true
 };
-
-//make tags
-let tags = {};
-//recursively add them, with is
-const add_tags = (obj, is) => {
-  Object.keys(obj).forEach((k) => {
-    tags[k] = is;
-    if (obj[k] !== true) {
-      add_tags(obj[k], is.concat([k])); //recursive
-    }
-  });
-};
-add_tags(tree, []);
-
-
-module.exports = {
-  tags: tags
-}

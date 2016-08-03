@@ -56,7 +56,7 @@ module.exports = [
   },
   {
     //Canada Inc
-    condition: (a, b) => (a.is('TitleCase') && a.pos.Noun && b.pos['Organization'] || b.info('TitleCase') && a.pos['Organization']),
+    condition: (a, b) => (a.is('TitleCase') && a.pos.Noun && b.pos['Organization'] || b.is('TitleCase') && a.pos['Organization']),
     result: 'Organization',
     reason: 'organization-org'
   },

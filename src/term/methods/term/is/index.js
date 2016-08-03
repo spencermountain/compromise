@@ -4,20 +4,20 @@ const term = {
 
   /** is this the first term in the sentence? */
   first: (t) => {
-    let index = t.index()
+    let index = t.index();
     if (index === 0) {
-      return true
+      return true;
     }
-    return false
+    return false;
   },
 
   /** is this the last term in the sentence? */
   last: (t) => {
-    let index = t.index()
+    let index = t.index();
     if (index === t.context.sentence.terms.length - 1) {
-      return true
+      return true;
     }
-    return false
+    return false;
   },
 
   /** check if the text has one capital letter, the first one */
@@ -59,28 +59,28 @@ const term = {
   /** is this a word like 'not' that reverses a verb*/
   negation: (t) => {
     if (t.normal === 'not' || t.silent_term === 'not') {
-      return true
+      return true;
     }
-    return false
+    return false;
   },
 
   /** does it appear to be an acronym, like FBI or M.L.B. */
   acronym: (t) => {
     //like N.D.A
-    if (t.text.match(/([A-Z]\.)+[A-Z]?$/i)) {
+    if (t.text.match(/([A-Z]\.)+[A-Z]?$/)) {
       return true;
     }
     //like 'F.'
-    if (t.text.match(/^[A-Z]\.$/i)) {
+    if (t.text.match(/^[A-Z]\.$/)) {
       return true;
     }
     //like NDA
-    if (t.text.match(/[A-Z]{3}$/i)) {
+    if (t.text.match(/[A-Z]{3}$/)) {
       return true;
     }
     return false;
   }
 
-}
+};
 
-module.exports = term
+module.exports = term;

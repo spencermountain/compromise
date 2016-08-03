@@ -4,5 +4,9 @@ module.exports = {
   here: () => {
   },
   show: () => {
+  },
+  tag: () => {
+  },
+  change: () => {
   }
-}
+};

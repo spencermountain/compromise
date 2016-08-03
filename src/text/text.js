@@ -1,12 +1,12 @@
 'use strict';
-const Sentence = require('../sentence/sentence')
-const TermList = require('../termList/termList')
-const SentenceList = require('../sentenceList/sentenceList')
-const plurals = require('../tags').plurals
+const Sentence = require('../sentence/sentence');
+const TermList = require('../termList/termList');
+const SentenceList = require('../sentenceList/sentenceList');
+// const plurals = require('../tags').plurals
 const split_sentences = require('./split_sentences');
 const fns = require('../fns');
 // const term_methods = require('../term/methods');
-const tags = require('../tags').tags
+// const tags = require('../tags').tags
 
 
 class Text {
@@ -19,28 +19,26 @@ class Text {
       return new Sentence(txt, c);
     });
 
-  //add tag filters for each pos
-  // Object.keys(term_methods).forEach((kind) => {
-  //   Object.keys(term_methods[kind]).forEach((method) => {
-  //     this[method] = term_methods[kind][method]
-  //   })
-  // })
+    let terms = this._sentences.reduce((arr, s) => {
+      arr = arr.concat(s._terms);
+      return arr;
+    }, []);
+    this._terms = new TermList(terms);
   }
   terms() {
-    let terms = this._sentences.reduce((arr, s) => arr.concat(s.terms), [])
-    return new TermList(terms)
+    return this._terms;
   }
   sentences() {
-    return new SentenceList(this._sentences)
+    return new SentenceList(this._sentences);
   }
   text() {
     return this._sentences.reduce((str, s) => {
       for (let i = 0; i < s.terms.length; i++) {
-        str += ' ' + s.terms[i].text + ' '
+        str += ' ' + s.terms[i].text + ' ';
       }
-      return str
-    }, '')
+      return str;
+    }, '');
   }
 
 }
-module.exports = Text
+module.exports = Text;

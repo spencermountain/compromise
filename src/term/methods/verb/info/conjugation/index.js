@@ -1,14 +1,21 @@
 'use strict';
 const checkIrregulars = require('./irregulars');
+const suffixPass = require('./suffixes');
+const toActor = require('./toActor');
+const generic = require('./generic');
 
 //turn a verb into all it's forms
-const to = {
-  Actor: require('./toActor'),
-  PastTense: require('./toPast'),
-};
-
 const conjugate = function(t) {
-  let all = {};
+  let all = {
+    PastTense: null,
+    PresentTense: null,
+    FutureTense: null,
+    Infinitive: null,
+    GerundVerb: null,
+    Actor: null,
+    PerfectTense: null,
+    Pluperfect: null,
+  };
   //first, get its current form
   let form = t.info('Conjugation');
   if (form) {
@@ -19,18 +26,28 @@ const conjugate = function(t) {
   }
   //check irregular forms
   all = Object.assign(all, checkIrregulars(t.normal));
+
   //ok, send this infinitive to all conjugators
   let inf = all['Infinitive'] || t.normal;
+
+  //check suffix rules
+  all = Object.assign(all, suffixPass(inf));
+
+  //ad-hoc each missing form
   //to Actor
   if (!all.Actor) {
     //a phrasal like 'step up' can't be an actor -'step upper'?
     if (!t.pos.PhrasalVerb) {
-      all.Actor = to.Actor(inf);
+      all.Actor = toActor(inf);
     }
   }
-  if (!all.PastTense) {
-    all.PastTense = to.PastTense(inf);
-  }
+  //use fallback, generic transformations
+  Object.keys(all).forEach((k) => {
+    if (!all[k]) {
+      all[k] = generic[k](all);
+    }
+  });
+
   return all;
 };
 

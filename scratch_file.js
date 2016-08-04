@@ -8,5 +8,6 @@ const nlp = require('./src/index');
 // let str = 'roads and houses are nice, but a road is a house and are chairs';
 // let r = nlp(str).terms().tense();
 // let r = nlp('he was incredibly cool').terms().adverbs().remove().text();
-let r = nlp('fifth of four').terms().toNumber().text();
-console.log(r);
+// let r = nlp('fifth of four').terms().toNumber().toCardinal().text();
+// console.log(r);
+console.log(nlp('plant').terms()._terms[0].info('conjugations'));

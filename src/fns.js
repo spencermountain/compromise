@@ -89,18 +89,18 @@ exports.extend = (o, o2) => {
 exports.toPlural = (str) => {
   const irregular = {
     Glue: 'Glue'
-  }
+  };
   if (irregular[str]) {
-    return irregular[str]
+    return irregular[str];
   }
   if (str.match(/y$/i)) {
-    return str.replace(/y$/i, 'ies')
+    return str.replace(/y$/i, 'ies');
   }
   if (str.match(/person$/i)) {
-    return str.replace(/person$$/i, 'People')
+    return str.replace(/person$$/i, 'people');
   }
   if (str.match(/s$/i)) {
-    return str
+    return str;
   }
-  return str + 's'
-}
+  return str + 's';
+};

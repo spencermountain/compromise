@@ -1,20 +1,20 @@
 'use strict';
-const predictForm = require('./predict')
-const conjugate = require('./conjugation')
-const toInfinitive = require('./toInfinitive')
+const predictForm = require('./predict');
+const conjugate = require('./conjugation');
+const toInfinitive = require('./toInfinitive');
 
 const info = {
   /** try to predict which form this verb is */
   conjugation: (t) => {
-    return predictForm(t)
+    return predictForm(t);
   },
   /** return the main 'default' form of the verb*/
   infinitive: (t) => {
-    return toInfinitive(t)
+    return toInfinitive(t);
   },
   /** return all forms of this verb */
   conjugations: (t) => {
-    return conjugate(t)
+    return conjugate(t);
   },
 
   /** is it past/present/future tense */
@@ -30,50 +30,50 @@ const info = {
       Pluperfect: 'PastTense',
       FuturePerfect: 'FutureTense'
     };
-    let keys = Object.keys(tenses)
+    let keys = Object.keys(tenses);
     for (let i = 0; i < keys.length; i++) {
       if (t.pos[keys[i]]) {
-        return tenses[keys[i]]
+        return tenses[keys[i]];
       }
     }
-    return null
+    return 'PresentTense'; //hmm, default?
   },
 
   /** look around for the auxillary terms before this, like 'would have had' */
   auxillaries: (t) => {
     //if this is an auxillary, return nothing
     if (t.is('Auxillary')) {
-      return []
+      return [];
     }
-    let arr = []
-    let before = t.info('Before').slice(0, 4)
+    let arr = [];
+    let before = t.info('Before').slice(0, 4);
     for (let i = 0; i < before.length; i++) {
       if (before[i].is('Auxillary')) {
-        arr.unshift(before[i]) //(before terms are reversed)
+        arr.unshift(before[i]); //(before terms are reversed)
       } else if (before[i].is('Negation')) {
-        continue
+        continue;
       } else {
-        break
+        break;
       }
     }
-    return arr
+    return arr;
   },
 
   /** find a term object that reverses the meaning of this verb */
   negation: (t) => {
     //look at the words before
-    let before = t.info('Before').slice(0, 3)
+    let before = t.info('Before').slice(0, 3);
     for (let i = 0; i < before.length; i++) {
       if (before[i].normal === 'not' || before[i].silent_term === 'not') {
-        return before[i]
+        return before[i];
       }
     }
     //look at the next word after - 'is not'
-    let after = t.info('after')
+    let after = t.info('after');
     if (after[0] && after[0].normal === 'not') {
-      return after[0]
+      return after[0];
     }
-    return null
+    return null;
   },
 
   /** parse-out common verb prefixes, for conjugation*/
@@ -83,9 +83,9 @@ const info = {
       return {
         prefix: match[1] + (match[2] || ''),
         root: match[3]
-      }
+      };
     }
-    return null
+    return null;
   },
 
   /**for phrasal verbs ('look out'), conjugate look, then append 'out'*/
@@ -96,9 +96,9 @@ const info = {
       return {
         phrasal: split[1],
         particle: split[2]
-      }
+      };
     }
-    return null
+    return null;
   },
 
   /** find the auxillary, root, and particle of this verb*/
@@ -108,7 +108,7 @@ const info = {
       auxillaries: t.info('Auxillaries'),
       particle: t.info('Particle'),
       prefix: t.info('Prefix')
-    }
+    };
   }
-}
-module.exports = info
+};
+module.exports = info;

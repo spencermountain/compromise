@@ -28,7 +28,7 @@ addArr(data.places.countries, 'Country');
 addArr(data.uncountables, 'Noun');
 addArr(data.organizations, 'Organization');
 addArr(data.groups, 'Noun');
-addArr(data.adjectives, 'Adjective');
+// addArr(data.adjectives, 'Adjective');
 addArr(data.superlatives, 'Adjective');
 addArr(data.currencies, 'Currency');
 addArr(data.phrasal_verbs, 'PhrasalVerb');
@@ -61,19 +61,10 @@ addArr(data.professions, 'Actor'); //?
 addArr(data.demonyms, 'Demonym'); //?
 
 //irregular verbs
-let verbForms = {
-  past: 'PastTense',
-  present: 'PresentTense',
-  perfect: 'PerfectTense',
-  pluperfect: 'Pluperfect',
-  future_perfect: 'FuturePerfect',
-  gerund: 'Gerund',
-  actor: 'Actor'
-};
 Object.keys(data.irregular_verbs).forEach((k) => {
   lexicon[k] = 'Infinitive';
   Object.keys(data.irregular_verbs[k]).forEach((k2) => {
-    lexicon[verbForms[k2]] = data.irregular_verbs[k][k2];
+    lexicon[data.irregular_verbs[k][k2]] = k2;
   });
 });
 
@@ -81,4 +72,4 @@ module.exports = lexicon;
 
 // console.log(Object.keys(data));
 // console.log(data.misc);
-// console.log(lexicon.eighth);
+// console.log(lexicon.understood);

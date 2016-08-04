@@ -2,6 +2,7 @@
 const set_tag = require('./tag').set_tag;
 const methods = require('./methods');
 const build_whitespace = require('./whitespace');
+// console.log(methods);
 
 class Term {
   constructor(str) {
@@ -19,8 +20,8 @@ class Term {
       return true;
     }
     str = str.toLowerCase();
-    if (methods.is_methods[str]) {
-      return methods.is_methods[str](this);
+    if (methods.is[str]) {
+      return methods.is[str](this);
     }
     return false;
   }
@@ -35,6 +36,18 @@ class Term {
     }
     return null;
   }
+
+  /** methods that change this term */
+  to(str) {
+    str = str.toLowerCase();
+    if (methods.transform[str]) {
+      return methods.transform[str](this);
+    } else {
+      console.log('missing method ' + str);
+    }
+    return null;
+  }
+
   /** set the term as this part-of-speech */
   tag(tag) {
     set_tag(this, tag, '');

@@ -1,16 +1,20 @@
 'use strict';
-const term_methods = require('../term/methods');
+const methods = require('../term/methods');
 
 class TermList {
   constructor(terms) {
     this._terms = terms;
-    //add tag filters for each pos
-    Object.keys(term_methods.filters).forEach((method) => {
+    //add filters
+    Object.keys(methods.filters).forEach((method) => {
       this[method] = () => {
-        this._terms = this._terms.filter((t) => {
-          return t.is(term_methods.filters[method]);
-        });
+        this._terms = methods.filters[method](this._terms);
         return this;
+      };
+    });
+    //add map over info methods
+    Object.keys(methods.infos).forEach((method) => {
+      this[method] = () => {
+        return methods.infos[method](this._terms);
       };
     });
   }
@@ -26,6 +30,9 @@ class TermList {
   }
   last() {
     return this._terms[this._terms.length - 1];
+  }
+  count() {
+    return this._terms.length;
   }
   text() {
     return this._terms.map((t) => t.text);

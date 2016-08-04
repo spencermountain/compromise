@@ -3,12 +3,12 @@
 module.exports = {
   /**a readable, normalized form - trim whitespace, normalize punctuation, and lowercase */
   normal: (t) => {
-    t.text = t.info('normalized')
-    t.whitespace.before = ''
-    t.whitespace.after = ' '
+    t.text = t.info('normalized');
+    t.whitespace.before = '';
+    t.whitespace.after = ' ';
     //don't append a space at the end
     if (t.is('last')) {
-      t.whitespace.after = ''
+      t.whitespace.after = '';
     }
     return t;
   },

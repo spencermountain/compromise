@@ -5,18 +5,19 @@ const terms = require('./terms');
 //collect all transforms for a termslist
 let all = {};
 Object.keys(terms).forEach((k) => {
-  let tag = fns.titleCase(k);
-  Object.keys(terms[k].info).forEach((method) => {
-    all[method] = (ts) => {
-      for(let i = 0; i < ts.length.length; i++) {
-        let t = ts[i];
-        if (!t.pos[tag]) {
-          continue;
+  Object.keys(terms[k].transform).forEach((method) => {
+    let name = 'to' + fns.titleCase(method);
+    //make a termList method..
+    all[name] = (ts) => {
+      ts._terms = ts._terms.map((t) => {
+        if (k === 'term' || t.pos[k]) {
+          return t.to(method);
         }
-        ts.to(method);
-      }
+        return t;
+      });
       return ts;
     };
+
   });
 });
 module.exports = all;

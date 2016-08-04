@@ -1,17 +1,19 @@
 'use strict';
 const set_tag = require('./tag').set_tag;
 const methods = require('./methods');
+const normalize = require('./normalize');
+const fns = require('../fns');
 const build_whitespace = require('./whitespace');
 // console.log(methods);
 
 class Term {
   constructor(str, context) {
-    this.text = str;
-    this.context = context;
+    this.text = fns.ensureString(str);
+    this.context = fns.ensureObject(context);
     this.pos = {};
     this.whitespace = build_whitespace(this.text);
     this.text = this.text.trim();
-    this.normal = this.text.toLowerCase().trim();
+    this.normal = normalize(this.text);
     this.silent_term = '';
   }
 

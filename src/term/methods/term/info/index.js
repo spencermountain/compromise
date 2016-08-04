@@ -1,11 +1,11 @@
 'use strict';
-const normalize = require('./normalize');
+// const normalize = require('./normalize');
 
 const info = {
 
   /* normalize punctuation, whitespace & case */
   normalized: (t) => {
-    return normalize(t.text);
+    return t.normal;
   },
 
   /** the punctuation at the end of this term*/

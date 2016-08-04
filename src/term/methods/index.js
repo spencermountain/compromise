@@ -20,6 +20,6 @@ let methods = {
   //termlist methods
   filters: require('./filters'),
   infos: require('./infos'),
-// transforms: require('./transforms'),
+  transforms: require('./transforms'),
 };
 module.exports = methods;

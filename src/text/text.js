@@ -23,7 +23,9 @@ class Text {
       arr = arr.concat(s._terms);
       return arr;
     }, []);
-    this._terms = new TermList(terms);
+    let c = fns.copy(context);
+    c.text = this;
+    this._terms = new TermList(terms, c);
   }
   terms() {
     return this._terms;
@@ -33,8 +35,8 @@ class Text {
   }
   text() {
     return this._sentences.reduce((str, s) => {
-      for (let i = 0; i < s.terms.length; i++) {
-        str += ' ' + s.terms[i].text + ' ';
+      for (let i = 0; i < s._terms.length; i++) {
+        str += ' ' + s._terms[i].text + ' ';
       }
       return str;
     }, '');

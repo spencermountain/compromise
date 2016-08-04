@@ -1,11 +1,11 @@
 'use strict';
-const normalize = require('./normalize')
+const normalize = require('./normalize');
 
 const info = {
 
   /* normalize punctuation, whitespace & case */
   normalized: (t) => {
-    return normalize(t.text)
+    return normalize(t.text);
   },
 
   /** the punctuation at the end of this term*/
@@ -78,8 +78,18 @@ const info = {
       return true;
     }
     return false;
-  }
+  },
 
+  /** where in the sentence is it? zero-based. */
+  index(t) {
+    let terms = t.context.sentence._terms;
+    for (let i = 0; i < terms.length; i++) {
+      if (terms[i] === t) {
+        return i;
+      }
+    }
+    return null;
+  }
 
 };
 

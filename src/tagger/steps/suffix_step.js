@@ -15,7 +15,7 @@ const suffix_step = function(s) {
       let r = rules[o];
       if (t.normal.match(r.reg)) {
         t.tag(r.pos, 'suffix-step- "' + r.str + '"');
-        break
+        break;
       }
     }
   }

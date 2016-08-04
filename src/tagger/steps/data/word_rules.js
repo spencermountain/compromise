@@ -27,7 +27,7 @@ module.exports = [
   ['.[icldtgrv]ent$', 'Adjective'],
   ['.[rln]ates$', 'PresentTense'],
   ['.[oe]ry$', 'Singular'],
-  ['[rdntkdhs]ly$', 'Adverb'],
+  ['[rdntkbhs]ly$', 'Adverb'],
   ['.[lsrnpb]ian$', 'Adjective'],
   ['.[^aeiou]ial$', 'Adjective'],
   ['.[^aeiou]eal$', 'Adjective'],

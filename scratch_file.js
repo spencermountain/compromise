@@ -7,5 +7,5 @@ const nlp = require('./src/index');
 // console.log(nlp('this is a sentence. it is nice').sentences.unique().first())
 // let str = 'roads and houses are nice, but a road is a house and are chairs';
 // let r = nlp(str).terms().tense();
-let r = nlp('he understood').terms()._terms[1].to('pastTense');
+let r = nlp('he was incredibly cool').terms().adverbs().remove().text();
 console.log(r);

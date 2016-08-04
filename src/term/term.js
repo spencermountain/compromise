@@ -5,13 +5,21 @@ const build_whitespace = require('./whitespace');
 // console.log(methods);
 
 class Term {
-  constructor(str) {
+  constructor(str, context) {
     this.text = str;
+    this.context = context;
     this.pos = {};
     this.whitespace = build_whitespace(this.text);
     this.text = this.text.trim();
     this.normal = this.text.toLowerCase().trim();
     this.silent_term = '';
+  }
+
+  remove() {
+    let s = this.context.sentence;
+    let index = this.info('index');
+    s._terms.splice(index, 1);
+    return s;
   }
 
   /** queries about this term with true or false answer */
@@ -50,14 +58,15 @@ class Term {
 
   /** set the term as this part-of-speech */
   tag(tag) {
-    set_tag(this, tag, '');
+    this.pos[tag] = true;
+  // set_tag(this, tag, '');
   }
 
   /** get a list of words to the left of this one, in reversed order */
   before(n) {
     let terms = this.context.sentence.terms;
     //get terms before this
-    let index = this.index();
+    let index = this.info('index');
     terms = terms.slice(0, index);
     //reverse them
     let reversed = [];
@@ -75,24 +84,12 @@ class Term {
   /** get a list of words to the right of this one */
   next(n) {
     let terms = this.context.sentence.terms;
-    let i = this.index();
+    let i = this.info('index');
     let end = terms.length - 1;
     if (n) {
       end = n;
     }
     return terms.slice(i, end);
-  }
-
-
-  /** where in the sentence is it? zero-based. */
-  index() {
-    let terms = this.context.sentence.terms;
-    for (let i = 0; i < terms.length; i++) {
-      if (terms[i] === t) {
-        return i;
-      }
-    }
-    return null;
   }
 
 }

@@ -2,8 +2,9 @@
 const methods = require('../term/methods');
 
 class TermList {
-  constructor(terms) {
+  constructor(terms, context) {
     this._terms = terms;
+    this.context = context || {};
     //add filters
     Object.keys(methods.filters).forEach((method) => {
       this[method] = () => {
@@ -18,7 +19,12 @@ class TermList {
       };
     });
   }
-
+  /** remove all these selected terms from their sentences */
+  remove() {
+    this._terms.forEach((t) => t.remove());
+    this._terms = [];
+    return this.context.text;
+  }
   first() {
     return this._terms[0];
   }

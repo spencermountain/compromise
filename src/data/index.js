@@ -1,49 +1,26 @@
 'use strict';
 //the data is all variously compressed and sorted
 //this is just a helper file for the main file paths..
-let files = {
-  'people': [
-    'firstnames'
-  ],
-  'values': [
-    'currencies',
-    'numbers',
-    'ordinalMap',
-    'units'
-  ],
-  dates: [
-    'dates',
-    'holidays'
-  ],
-  'nouns': [
-    'professions',
-    'abbreviations',
-    'demonyms',
-    'irregular_plurals',
-    'places',
-    'uncountables'
-  ],
-  'organizations': [
-    'organizations',
-    'groups'
-  ],
-  'adjectives': [
-    'adjectives',
-    'superlatives'
-  ],
-  'verbs': [
-    'irregular_verbs',
-    'phrasal_verbs',
-    'verbs'
-  ],
-  misc: [
-    'misc'
-  ]
+module.exports = {
+  'firstnames': require('./people/firstnames'),
+  'currencies': require('./values/currencies'),
+  'numbers': require('./values/numbers'),
+  'ordinalMap': require('./values/ordinalMap'),
+  'units': require('./values/units'),
+  'dates': require('./dates/dates'),
+  'holidays': require('./dates/holidays'),
+  'professions': require('./nouns/professions'),
+  'abbreviations': require('./nouns/abbreviations'),
+  'demonyms': require('./nouns/demonyms'),
+  'irregular_plurals': require('./nouns/irregular_plurals'),
+  'places': require('./nouns/places'),
+  'uncountables': require('./nouns/uncountables'),
+  'organizations': require('./organizations/organizations'),
+  'groups': require('./organizations/groups'),
+  'adjectives': require('./adjectives/adjectives'),
+  'superlatives': require('./adjectives/adjectives'),
+  'irregular_verbs': require('./verbs/irregular_verbs'),
+  'phrasal_verbs': require('./verbs/phrasal_verbs'),
+  'verbs': require('./verbs/verbs'),
+  'misc': require('./misc/misc'),
 };
-let data = {};
-Object.keys(files).forEach((k) => {
-  files[k].forEach((s) => {
-    data[s] = require('./' + k + '/' + s);
-  });
-});
-module.exports = data;

@@ -1,11 +1,11 @@
 'use strict';
-const parseNumeric = require('./parseNumeric')
-const findModifiers = require('./findModifiers')
-const words = require('./data')
-const isValid = require('./validate')
-const parseDecimals = require('./parseDecimals')
-const log = require('../../paths').log
-const path = 'parseNumber'
+const parseNumeric = require('./parseNumeric');
+const findModifiers = require('./findModifiers');
+const words = require('./data');
+const isValid = require('./validate');
+const parseDecimals = require('./parseDecimals');
+const log = require('../../paths').log;
+const path = 'parseNumber';
 
 // a 'section' is something like 'fifty-nine thousand'
 // turn a section into something we can add to - like 59000
@@ -18,11 +18,12 @@ const section_sum = (obj) => {
 
 //turn a string into a number
 const parse = function(t) {
-  log.here('parseNumber', path)
-  let str = t.normal
+  log.here('parseNumber', path);
+  let str = t.normal;
+  console.log(str);
   //handle a string of mostly numbers
-  if (t.is('NumberValue')) {
-    return parseNumeric(str)
+  if (t.pos['NumberValue'] || str.match(/^[0-9]+(st|nd|rd|th)?$/)) {
+    return parseNumeric(str);
   }
   let modifier = findModifiers(str);
   str = modifier.str;
@@ -38,11 +39,11 @@ const parse = function(t) {
     }
     if (w === '-' || w === 'negative') {
       isNegative = true;
-      continue
+      continue;
     }
     if (w.startsWith('-')) {
       isNegative = true;
-      w = w.substr(1)
+      w = w.substr(1);
     }
     //decimal mode
     if (w === 'point') {
@@ -52,11 +53,11 @@ const parse = function(t) {
       return sum;
     }
     //improper fraction
-    const improperFractionMatch = w.match(/^([0-9,\. ]+)\/([0-9,\. ]+)$/)
+    const improperFractionMatch = w.match(/^([0-9,\. ]+)\/([0-9,\. ]+)$/);
     if (improperFractionMatch) {
-      log.here('fractionMath', path)
-      const num = parseFloat(improperFractionMatch[1].replace(/[, ]/g, ''))
-      const denom = parseFloat(improperFractionMatch[2].replace(/[, ]/g, ''))
+      log.here('fractionMath', path);
+      const num = parseFloat(improperFractionMatch[1].replace(/[, ]/g, ''));
+      const denom = parseFloat(improperFractionMatch[2].replace(/[, ]/g, ''));
       if (denom) {
         sum += (num / denom) || 0;
       }
@@ -64,13 +65,13 @@ const parse = function(t) {
     }
     //prevent mismatched units, like 'seven eleven'
     if (!isValid(w, has)) {
-      log.warn('invalid state', path)
-      log.warn(has, path)
+      log.warn('invalid state', path);
+      log.warn(has, path);
       return null;
     }
     //buildup section, collect 'has' values
     if (w.match(/^[0-9]$/)) {
-      has['ones'] = parseInt(w, 10) //not technically right
+      has['ones'] = parseInt(w, 10); //not technically right
     } else if (words.ones[w]) {
       has['ones'] = words.ones[w];
     } else if (words.teens[w]) {
@@ -79,10 +80,10 @@ const parse = function(t) {
       has['tens'] = words.tens[w];
     } else if (words.multiples[w]) {
       // log.show(has, path)
-      let mult = words.multiples[w]
+      let mult = words.multiples[w];
       //something has gone wrong : 'two hundred five hundred'
       if (mult === biggest_yet) {
-        log.warn('invalid multiplier', path)
+        log.warn('invalid multiplier', path);
         return null;
       }
       //if it's the biggest yet, multiply the whole sum - eg 'five hundred thousand'
@@ -104,6 +105,6 @@ const parse = function(t) {
   sum *= modifier.amount;
   sum *= isNegative ? -1 : 1;
   return sum;
-}
+};
 
-module.exports = parse
+module.exports = parse;

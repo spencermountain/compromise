@@ -5,6 +5,7 @@ const SentenceList = require('../sentenceList/sentenceList');
 // const plurals = require('../tags').plurals
 const split_sentences = require('./split_sentences');
 const fns = require('../fns');
+const methods = require('../term/methods');
 // const term_methods = require('../term/methods');
 // const tags = require('../tags').tags
 
@@ -26,6 +27,27 @@ class Text {
     let c = fns.copy(context);
     c.text = this;
     this._terms = new TermList(terms, c);
+
+    //add filters
+    Object.keys(methods.filters).forEach((method) => {
+      this[method] = () => {
+        this._terms = methods.filters[method](this._terms);
+        return this;
+      };
+    });
+    //add map over info methods
+    Object.keys(methods.infos).forEach((method) => {
+      this[method] = () => {
+        return methods.infos[method](this._terms);
+      };
+    });
+    //add transform methods
+    Object.keys(methods.transforms).forEach((method) => {
+      this[method] = () => {
+        return methods.transforms[method](this);
+      };
+    });
+
   }
   terms() {
     return this._terms;
@@ -42,5 +64,10 @@ class Text {
     }, '');
   }
 
+  clone() {
+    let txt = this.text();
+    let c = fns.copy(this.context);
+    return new Text(txt, c);
+  }
 }
 module.exports = Text;

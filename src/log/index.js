@@ -1,3 +1,5 @@
+const chalk = require('chalk');
+
 module.exports = {
   enable: () => {
   },
@@ -5,7 +7,8 @@ module.exports = {
   },
   show: () => {
   },
-  tag: () => {
+  tag: (t, pos, reason, path) => {
+    console.log('       ' + chalk.green(t.normal) + ' -> ' + chalk.red(pos) + '    (' + reason + ')');
   },
   change: () => {
   }

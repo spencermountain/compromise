@@ -3,8 +3,7 @@
 let noun = {
   info: require('./info'),
   is: require('./is'),
-  
   transform: require('./transform')
-}
+};
 
-module.exports = noun
+module.exports = noun;

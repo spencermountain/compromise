@@ -2538,7 +2538,7 @@ var nlp = function nlp(str, context) {
 
 module.exports = nlp;
 
-},{"./text/text":164}],42:[function(_dereq_,module,exports){
+},{"./text/text":166}],42:[function(_dereq_,module,exports){
 'use strict';
 
 var chalk = _dereq_('chalk');
@@ -2635,7 +2635,7 @@ var Sentence = function () {
 
 module.exports = Sentence;
 
-},{"../fns":40,"../tagger":49,"../term/term":160,"./helpers":43,"./split_terms":45}],45:[function(_dereq_,module,exports){
+},{"../fns":40,"../tagger":49,"../term/term":162,"./helpers":43,"./split_terms":45}],45:[function(_dereq_,module,exports){
 'use strict';
 //an initial, naiive split of arr based on spaces
 
@@ -2837,7 +2837,8 @@ var step = {
   web_step: _dereq_('./steps/web_step'),
   neighbour_step: _dereq_('./steps/neighbour_step'),
   // wrestle: require('./steps/wrestle'),
-  noun_fallback: _dereq_('./steps/noun_fallback')
+  noun_fallback: _dereq_('./steps/noun_fallback'),
+  punctuation_step: _dereq_('./steps/punctuation_step')
 };
 
 var interpret_contractions = _dereq_('./contraction');
@@ -2851,6 +2852,7 @@ var lumper = {
 var tagger = function tagger(s) {
   log.here('tagger');
   s = interpret_contractions(s);
+  s = step.punctuation_step(s);
   s = lumper.lexicon_lump(s);
   s = step.lexicon_step(s);
   s = step.capital_step(s);
@@ -2868,7 +2870,7 @@ var tagger = function tagger(s) {
 
 module.exports = tagger;
 
-},{"../log":42,"./contraction":48,"./lumper/lexicon_lump":53,"./lumper/lump_three":54,"./lumper/lump_two":55,"./steps/capital_step":57,"./steps/lexicon_pass":60,"./steps/neighbour_step":61,"./steps/noun_fallback":62,"./steps/suffix_step":63,"./steps/web_step":64}],50:[function(_dereq_,module,exports){
+},{"../log":42,"./contraction":48,"./lumper/lexicon_lump":53,"./lumper/lump_three":54,"./lumper/lump_two":55,"./steps/capital_step":57,"./steps/lexicon_pass":61,"./steps/neighbour_step":62,"./steps/noun_fallback":63,"./steps/punctuation_step":64,"./steps/suffix_step":65,"./steps/web_step":66}],50:[function(_dereq_,module,exports){
 'use strict';
 
 var Term = _dereq_('../../term/term');
@@ -2895,7 +2897,7 @@ var combine = function combine(s, i) {
 
 module.exports = combine;
 
-},{"../../term/term":160,"../paths":56}],51:[function(_dereq_,module,exports){
+},{"../../term/term":162,"../paths":56}],51:[function(_dereq_,module,exports){
 'use strict';
 
 //rules for combining three terms into one
@@ -3298,6 +3300,17 @@ module.exports = {
 
 },{}],59:[function(_dereq_,module,exports){
 'use strict';
+
+module.exports = [['^#[a-z]+$', 'HashTag']].map(function (a) {
+  return {
+    reg: new RegExp(a[0]),
+    pos: a[1],
+    str: a[0]
+  };
+});
+
+},{}],60:[function(_dereq_,module,exports){
+'use strict';
 //regex suffix patterns and their most common parts of speech,
 //built using wordnet, by spencer kelly.
 
@@ -3306,7 +3319,7 @@ module.exports = {
 module.exports = [['^[0-9]+ ?(am|pm)$', 'Date'], ['[0-9](st|nd|rd|r?th)$', 'NumberValue'], //like 5th
 ['([0-9])([a-z]{1,2})$', 'NumberValue'], //like 5kg
 ['^[0-9,\.]+$', 'NumberValue'], //like 5
-['^[a-z]et$', 'Verb'], ['^#[a-z]+$', 'Hashtag'], ['cede$', 'Infinitive'], ['.[cts]hy$', 'Adjective'], ['.[st]ty$', 'Adjective'], ['.[lnr]ize$', 'Infinitive'], ['.[gk]y$', 'Adjective'], ['.fies$', 'PresentTense'], ['.some$', 'Adjective'], ['.[nrtumcd]al$', 'Adjective'], ['.que$', 'Adjective'], ['.[tnl]ary$', 'Adjective'], ['.[di]est$', 'Superlative'], ['^(un|de|re)\\-[a-z]..', 'Verb'], ['.lar$', 'Adjective'], ['[bszmp]{2}y', 'Adjective'], ['.zes$', 'PresentTense'], ['.[icldtgrv]ent$', 'Adjective'], ['.[rln]ates$', 'PresentTense'], ['.[oe]ry$', 'Singular'], ['[rdntkbhs]ly$', 'Adverb'], ['.[lsrnpb]ian$', 'Adjective'], ['.[^aeiou]ial$', 'Adjective'], ['.[^aeiou]eal$', 'Adjective'], ['.[vrl]id$', 'Adjective'], ['.[ilk]er$', 'Comparative'], ['.ike$', 'Adjective'], ['.ends?$', 'Verb'], ['.wards$', 'Adverb'], ['.rmy$', 'Adjective'], ['.rol$', 'Singular'], ['.tors$', 'Noun'], ['.azy$', 'Adjective'], ['.where$', 'Adverb'], ['.ify$', 'Infinitive'], ['.bound$', 'Adjective'], ['.[^z]ens$', 'Verb'], ['.oid$', 'Adjective'], ['.vice$', 'Singular'], ['.rough$', 'Adjective'], ['.mum$', 'Adjective'], ['.teen(th)?$', 'Value'], ['.oses$', 'PresentTense'], ['.ishes$', 'PresentTense'], ['.ects$', 'PresentTense'], ['.tieth$', 'Ordinal'], ['.ices$', 'Plural'], ['.pose$', 'Infinitive'], ['.ions$', 'Plural'], ['.ean$', 'Adjective'], ['.[ia]sed$', 'Adjective'], ['.tized$', 'PastTense'], ['.llen$', 'Adjective'], ['.fore$', 'Adverb'], ['.ances$', 'Plural'], ['.gate$', 'Infinitive'], ['.nes$', 'PresentTense'], ['.less$', 'Adverb'], ['.ried$', 'Adjective'], ['.gone$', 'Adjective'], ['.made$', 'Adjective'], ['.ing$', 'Gerund'], //likely to be converted to adjective after lexicon pass
+['^[a-z]et$', 'Verb'], ['cede$', 'Infinitive'], ['.[cts]hy$', 'Adjective'], ['.[st]ty$', 'Adjective'], ['.[lnr]ize$', 'Infinitive'], ['.[gk]y$', 'Adjective'], ['.fies$', 'PresentTense'], ['.some$', 'Adjective'], ['.[nrtumcd]al$', 'Adjective'], ['.que$', 'Adjective'], ['.[tnl]ary$', 'Adjective'], ['.[di]est$', 'Superlative'], ['^(un|de|re)\\-[a-z]..', 'Verb'], ['.lar$', 'Adjective'], ['[bszmp]{2}y', 'Adjective'], ['.zes$', 'PresentTense'], ['.[icldtgrv]ent$', 'Adjective'], ['.[rln]ates$', 'PresentTense'], ['.[oe]ry$', 'Singular'], ['[rdntkbhs]ly$', 'Adverb'], ['.[lsrnpb]ian$', 'Adjective'], ['.[^aeiou]ial$', 'Adjective'], ['.[^aeiou]eal$', 'Adjective'], ['.[vrl]id$', 'Adjective'], ['.[ilk]er$', 'Comparative'], ['.ike$', 'Adjective'], ['.ends?$', 'Verb'], ['.wards$', 'Adverb'], ['.rmy$', 'Adjective'], ['.rol$', 'Singular'], ['.tors$', 'Noun'], ['.azy$', 'Adjective'], ['.where$', 'Adverb'], ['.ify$', 'Infinitive'], ['.bound$', 'Adjective'], ['.[^z]ens$', 'Verb'], ['.oid$', 'Adjective'], ['.vice$', 'Singular'], ['.rough$', 'Adjective'], ['.mum$', 'Adjective'], ['.teen(th)?$', 'Value'], ['.oses$', 'PresentTense'], ['.ishes$', 'PresentTense'], ['.ects$', 'PresentTense'], ['.tieth$', 'Ordinal'], ['.ices$', 'Plural'], ['.pose$', 'Infinitive'], ['.ions$', 'Plural'], ['.ean$', 'Adjective'], ['.[ia]sed$', 'Adjective'], ['.tized$', 'PastTense'], ['.llen$', 'Adjective'], ['.fore$', 'Adverb'], ['.ances$', 'Plural'], ['.gate$', 'Infinitive'], ['.nes$', 'PresentTense'], ['.less$', 'Adverb'], ['.ried$', 'Adjective'], ['.gone$', 'Adjective'], ['.made$', 'Adjective'], ['.ing$', 'Gerund'], //likely to be converted to adjective after lexicon pass
 ['.tions$', 'Plural'], ['.tures$', 'Plural'], ['.ous$', 'Adjective'], ['.ports$', 'Plural'], ['. so$', 'Adverb'], ['.ints$', 'Plural'], ['.[gt]led$', 'Adjective'], ['.lked$', 'PastTense'], ['.fully$', 'Adverb'], ['.*ould$', 'Modal'], ['^-?[0-9]+(.,[0-9]+)?$', 'Value'], ['[a-z]*\\-[a-z]*\\-', 'Adjective'], ['[a-z]\'s$', 'Noun'], ['.\'n$', 'Verb'], ['.\'re$', 'Copula'], ['.\'ll$', 'Modal'], ['.\'t$', 'Verb'], ['.tches$', 'PresentTense'], ['^https?\:?\/\/[a-z0-9]', 'Url'], //the colon is removed in normalisation
 ['^www\.[a-z0-9]', 'Url'], ['.ize$', 'Infinitive'], ['.[^aeiou]ise$', 'Infinitive'], ['.[aeiou]te$', 'Infinitive'], ['.ea$', 'Singular'], ['[aeiou][pns]er$', 'Singular'], ['.ia$', 'Noun'], ['.sis$', 'Singular'], ['.[aeiou]na$', 'Noun'], ['.[^aeiou]ity$', 'Singular'], ['.[^aeiou]ium$', 'Singular'], ['.[^aeiou][ei]al$', 'Adjective'], ['.ffy$', 'Adjective'], ['.[^aeiou]ic$', 'Adjective'], ['.(gg|bb|zz)ly$', 'Adjective'], ['.[aeiou]my$', 'Adjective'], ['.[^aeiou][ai]ble$', 'Adjective'], ['.[^aeiou]eable$', 'Adjective'], ['.[^aeiou]ful$', 'Adjective'], ['.[^aeiou]ish$', 'Adjective'], ['.[^aeiou]ica$', 'Singular'], ['[aeiou][^aeiou]is$', 'Singular'], ['[^aeiou]ard$', 'Singular'], ['[^aeiou]ism$', 'Singular'], ['.[^aeiou]ity$', 'Singular'], ['.[^aeiou]ium$', 'Singular'], ['.[lstrn]us$', 'Singular'], ['..ic$', 'Adjective'], ['[aeiou][^aeiou]id$', 'Adjective'], ['.[^aeiou]ish$', 'Adjective'], ['.[^aeiou]ive$', 'Adjective'], ['[ea]{2}zy$', 'Adjective'], ['[^aeiou]ician$', 'Actor'], ['.keeper$', 'Actor'], ['.logist$', 'Actor'], ['..ier$', 'Actor'], ['.[^aeiou][ao]pher$', 'Actor'], ['.tive$', 'Actor'], ['[aeiou].*ist$', 'Adjective'], ['[^i]fer$', 'Infinitive'], ['(bb|tt|gg|pp|ll|nn|mm)', 'Verb'], //rubbed
 ['[aeiou]ked$', 'PastTense'], //hooked
@@ -3328,7 +3341,7 @@ module.exports = [['^[0-9]+ ?(am|pm)$', 'Date'], ['[0-9](st|nd|rd|r?th)$', 'Numb
   };
 });
 
-},{}],60:[function(_dereq_,module,exports){
+},{}],61:[function(_dereq_,module,exports){
 'use strict';
 
 var p = _dereq_('../paths');
@@ -3357,6 +3370,10 @@ var lexicon_pass = function lexicon_pass(s) {
   //loop through each term
   for (var i = 0; i < s._terms.length; i++) {
     var t = s._terms[i];
+    //don't over-write any known tags
+    if (Object.keys(t.pos).length > 0) {
+      continue;
+    }
     //contraction lookup
     var found = check_lexicon(t.silent_term);
     if (t.silent_term && found) {
@@ -3375,7 +3392,7 @@ var lexicon_pass = function lexicon_pass(s) {
 
 module.exports = lexicon_pass;
 
-},{"../paths":56}],61:[function(_dereq_,module,exports){
+},{"../paths":56}],62:[function(_dereq_,module,exports){
 'use strict';
 
 var markov = _dereq_('./data/neighbours');
@@ -3431,7 +3448,7 @@ var neighbour_step = function neighbour_step(s) {
 
 module.exports = neighbour_step;
 
-},{"./data/neighbours":58}],62:[function(_dereq_,module,exports){
+},{"./data/neighbours":58}],63:[function(_dereq_,module,exports){
 'use strict';
 //tag word as noun if we know nothing about it, still.
 
@@ -3456,7 +3473,35 @@ var noun_fallback = function noun_fallback(s) {
 
 module.exports = noun_fallback;
 
-},{}],63:[function(_dereq_,module,exports){
+},{}],64:[function(_dereq_,module,exports){
+'use strict';
+
+var log = _dereq_('../paths').log;
+var rules = _dereq_('./data/punct_rules');
+var path = 'tagger/punctuation';
+
+var punctuation_step = function punctuation_step(s) {
+  log.here(path);
+  s._terms.forEach(function (t) {
+    //don't over-write any known tags
+    if (Object.keys(t.pos).length > 0) {
+      return;
+    }
+    //do punctuation rules (on t.text)
+    for (var i = 0; i < rules.length; i++) {
+      var r = rules[i];
+      if (t.text.match(r.reg)) {
+        t.tag(r.pos, 'punctuation-rule- "' + r.str + '"');
+        return;
+      }
+    }
+  });
+  return s;
+};
+
+module.exports = punctuation_step;
+
+},{"../paths":56,"./data/punct_rules":59}],65:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -3465,26 +3510,26 @@ var path = 'tagger/suffix';
 
 var suffix_step = function suffix_step(s) {
   log.here(path);
-  for (var i = 0; i < s._terms.length; i++) {
-    var t = s._terms[i];
+  s._terms.forEach(function (t) {
     //don't over-write any known tags
-    if (Object.keys(s._terms[i].pos).length > 0) {
-      continue;
+    if (Object.keys(t.pos).length > 0) {
+      return;
     }
+    //do normalized rules (on t.normal)
     for (var o = 0; o < rules.length; o++) {
       var r = rules[o];
       if (t.normal.match(r.reg)) {
-        t.tag(r.pos, 'suffix-step- "' + r.str + '"');
-        break;
+        t.tag(r.pos, 'word-rule- "' + r.str + '"');
+        return;
       }
     }
-  }
+  });
   return s;
 };
 
 module.exports = suffix_step;
 
-},{"../paths":56,"./data/word_rules":59}],64:[function(_dereq_,module,exports){
+},{"../paths":56,"./data/word_rules":60}],66:[function(_dereq_,module,exports){
 'use strict';
 //identify urls, hashtags, @mentions, emails
 
@@ -3554,7 +3599,7 @@ var web_pass = function web_pass(terms) {
 
 module.exports = web_pass;
 
-},{"../paths":56}],65:[function(_dereq_,module,exports){
+},{"../paths":56}],67:[function(_dereq_,module,exports){
 'use strict';
 
 //list of inconsistent parts-of-speech
@@ -3581,7 +3626,9 @@ var conflicts = [
 //non-gerund
 ['Gerund', 'PastTense'], ['Gerund', 'PresentTense'],
 //more verbs
-['Copula', 'Modal']];
+['Copula', 'Modal'],
+//web text
+['HashTag', 'Noun', 'Verb', 'Adjective', 'Adverb'], ['Email', 'Verb', 'Adjective', 'Adverb'], ['Url', 'Verb', 'Adjective', 'Adverb'], ['HashTag', 'Email', 'Url']];
 
 var find = function find(tag) {
   var arr = [];
@@ -3597,7 +3644,7 @@ var find = function find(tag) {
 
 module.exports = find;
 
-},{}],66:[function(_dereq_,module,exports){
+},{}],68:[function(_dereq_,module,exports){
 'use strict';
 
 var conflicts = _dereq_('./conflicts');
@@ -3626,7 +3673,7 @@ Object.keys(all).forEach(function (tag) {
 
 module.exports = all;
 
-},{"./conflicts":65,"./tree":67}],67:[function(_dereq_,module,exports){
+},{"./conflicts":67,"./tree":69}],69:[function(_dereq_,module,exports){
 "use strict";
 
 //the POS tags we use, according to their dependencies
@@ -3686,10 +3733,13 @@ module.exports = {
   Condition: true,
   Possessive: true,
   QuestionWord: true,
-  Expression: true
+  Expression: true,
+  Url: true,
+  HashTag: true,
+  Email: true
 };
 
-},{}],68:[function(_dereq_,module,exports){
+},{}],70:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -3702,7 +3752,7 @@ var adjective = {
 
 module.exports = adjective;
 
-},{"./info":69,"./is":74,"./transform":76}],69:[function(_dereq_,module,exports){
+},{"./info":71,"./is":76,"./transform":78}],71:[function(_dereq_,module,exports){
 'use strict';
 
 var toAdverb = _dereq_('./toAdverb');
@@ -3726,7 +3776,7 @@ var info = {
 };
 module.exports = info;
 
-},{"./toAdverb":70,"./toComparative":71,"./toNoun":72,"./toSuperlative":73}],70:[function(_dereq_,module,exports){
+},{"./toAdverb":72,"./toComparative":73,"./toNoun":74,"./toSuperlative":75}],72:[function(_dereq_,module,exports){
 //turn 'quick' into 'quickly'
 'use strict';
 
@@ -3857,7 +3907,7 @@ var adj_to_adv = function adj_to_adv(str) {
 
 module.exports = adj_to_adv;
 
-},{}],71:[function(_dereq_,module,exports){
+},{}],73:[function(_dereq_,module,exports){
 //turn 'quick' into 'quickly'
 'use strict';
 
@@ -3944,7 +3994,7 @@ var to_comparative = function to_comparative(str) {
 
 module.exports = to_comparative;
 
-},{"../paths":75}],72:[function(_dereq_,module,exports){
+},{"../paths":77}],74:[function(_dereq_,module,exports){
 'use strict';
 //convert 'cute' to 'cuteness'
 
@@ -4016,7 +4066,7 @@ var to_noun = function to_noun(w) {
 
 module.exports = to_noun;
 
-},{}],73:[function(_dereq_,module,exports){
+},{}],75:[function(_dereq_,module,exports){
 //turn 'quick' into 'quickest'
 'use strict';
 
@@ -4104,24 +4154,24 @@ var to_superlative = function to_superlative(str) {
 
 module.exports = to_superlative;
 
-},{"../paths":75}],74:[function(_dereq_,module,exports){
+},{"../paths":77}],76:[function(_dereq_,module,exports){
 'use strict';
 
 var is = {};
 module.exports = is;
 
-},{}],75:[function(_dereq_,module,exports){
+},{}],77:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = _dereq_('../paths');
 
-},{"../paths":102}],76:[function(_dereq_,module,exports){
+},{"../paths":104}],78:[function(_dereq_,module,exports){
 'use strict';
 
 var transform = {};
 module.exports = transform;
 
-},{}],77:[function(_dereq_,module,exports){
+},{}],79:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -4134,7 +4184,7 @@ var adverb = {
 
 module.exports = adverb;
 
-},{"./info":78,"./is":80,"./transform":81}],78:[function(_dereq_,module,exports){
+},{"./info":80,"./is":82,"./transform":83}],80:[function(_dereq_,module,exports){
 'use strict';
 
 var toAdjective = _dereq_('./toAdjective');
@@ -4145,7 +4195,7 @@ var info = {
 };
 module.exports = info;
 
-},{"./toAdjective":79}],79:[function(_dereq_,module,exports){
+},{"./toAdjective":81}],81:[function(_dereq_,module,exports){
 //turns 'quickly' into 'quick'
 'use strict';
 
@@ -4207,11 +4257,11 @@ var to_adjective = function to_adjective(str) {
 // console.log(to_adjective('marvelously') === 'marvelous')
 module.exports = to_adjective;
 
-},{}],80:[function(_dereq_,module,exports){
-arguments[4][74][0].apply(exports,arguments)
-},{"dup":74}],81:[function(_dereq_,module,exports){
+},{}],82:[function(_dereq_,module,exports){
 arguments[4][76][0].apply(exports,arguments)
-},{"dup":76}],82:[function(_dereq_,module,exports){
+},{"dup":76}],83:[function(_dereq_,module,exports){
+arguments[4][78][0].apply(exports,arguments)
+},{"dup":78}],84:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -4224,17 +4274,17 @@ var date = {
 
 module.exports = date;
 
-},{"./info":83,"./is":84,"./transform":85}],83:[function(_dereq_,module,exports){
+},{"./info":85,"./is":86,"./transform":87}],85:[function(_dereq_,module,exports){
 'use strict';
 
 var info = {};
 module.exports = info;
 
-},{}],84:[function(_dereq_,module,exports){
-arguments[4][74][0].apply(exports,arguments)
-},{"dup":74}],85:[function(_dereq_,module,exports){
+},{}],86:[function(_dereq_,module,exports){
 arguments[4][76][0].apply(exports,arguments)
-},{"dup":76}],86:[function(_dereq_,module,exports){
+},{"dup":76}],87:[function(_dereq_,module,exports){
+arguments[4][78][0].apply(exports,arguments)
+},{"dup":78}],88:[function(_dereq_,module,exports){
 'use strict';
 
 var tags = _dereq_('../../tags');
@@ -4267,7 +4317,7 @@ Object.keys(terms).forEach(function (term) {
 
 module.exports = all;
 
-},{"../../fns":40,"../../tags":66,"./terms":121}],87:[function(_dereq_,module,exports){
+},{"../../fns":40,"../../tags":68,"./terms":123}],89:[function(_dereq_,module,exports){
 'use strict';
 
 var terms = _dereq_('./terms');
@@ -4294,7 +4344,7 @@ var methods = {
 };
 module.exports = methods;
 
-},{"./filters":86,"./infos":88,"./terms":121,"./transforms":122}],88:[function(_dereq_,module,exports){
+},{"./filters":88,"./infos":90,"./terms":123,"./transforms":124}],90:[function(_dereq_,module,exports){
 'use strict';
 
 var fns = _dereq_('../../fns');
@@ -4318,7 +4368,7 @@ Object.keys(terms).forEach(function (k) {
 });
 module.exports = all;
 
-},{"../../fns":40,"./terms":121}],89:[function(_dereq_,module,exports){
+},{"../../fns":40,"./terms":123}],91:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -4331,7 +4381,7 @@ var noun = {
 
 module.exports = noun;
 
-},{"./info":92,"./is":97,"./transform":101}],90:[function(_dereq_,module,exports){
+},{"./info":94,"./is":99,"./transform":103}],92:[function(_dereq_,module,exports){
 'use strict';
 
 //chooses an indefinite aricle 'a/an' for a word
@@ -4391,7 +4441,7 @@ var indefinite_article = function indefinite_article(t) {
 
 module.exports = indefinite_article;
 
-},{}],91:[function(_dereq_,module,exports){
+},{}],93:[function(_dereq_,module,exports){
 'use strict';
 
 var uncountables = _dereq_('../../paths').data.uncountables;
@@ -4409,7 +4459,7 @@ var hasPlural = function hasPlural(t) {
 
 module.exports = hasPlural;
 
-},{"../../paths":102}],92:[function(_dereq_,module,exports){
+},{"../../paths":104}],94:[function(_dereq_,module,exports){
 'use strict';
 
 var hasPlural = _dereq_('./hasPlural');
@@ -4444,7 +4494,7 @@ var info = {
 };
 module.exports = info;
 
-},{"./article":90,"./hasPlural":91,"./inflect/toPlural":95,"./inflect/toSingle":96}],93:[function(_dereq_,module,exports){
+},{"./article":92,"./hasPlural":93,"./inflect/toPlural":97,"./inflect/toSingle":98}],95:[function(_dereq_,module,exports){
 'use strict';
 
 //patterns for turning 'bus' to 'buses'
@@ -4455,7 +4505,7 @@ module.exports = [[/(ax|test)is$/i, '$1es'], [/(octop|vir|radi|nucle|fung|cact|s
   };
 });
 
-},{}],94:[function(_dereq_,module,exports){
+},{}],96:[function(_dereq_,module,exports){
 'use strict';
 
 //patterns for turning 'dwarves' to 'dwarf'
@@ -4466,7 +4516,7 @@ module.exports = [[/([^v])ies$/i, '$1y'], [/ises$/i, 'isis'], [/(kn|[^o]l|w)ives
   };
 });
 
-},{}],95:[function(_dereq_,module,exports){
+},{}],97:[function(_dereq_,module,exports){
 'use strict';
 
 var irregulars = _dereq_('../../paths').data.irregular_plurals.toPlural;
@@ -4500,7 +4550,7 @@ var pluralize = function pluralize(str) {
 // console.log(pluralize('narrative') === 'narratives')
 module.exports = pluralize;
 
-},{"../../paths":100,"./data/pluralRules":93}],96:[function(_dereq_,module,exports){
+},{"../../paths":102,"./data/pluralRules":95}],98:[function(_dereq_,module,exports){
 'use strict';
 
 var irregulars = _dereq_('../../paths').data.irregular_plurals.toSingle;
@@ -4534,7 +4584,7 @@ var toSingle = function toSingle(str) {
 // console.log(toSingle('gases') === 'gas')
 module.exports = toSingle;
 
-},{"../../paths":100,"./data/singleRules":94}],97:[function(_dereq_,module,exports){
+},{"../../paths":102,"./data/singleRules":96}],99:[function(_dereq_,module,exports){
 'use strict';
 
 var isPlural = _dereq_('./isPlural');
@@ -4550,7 +4600,7 @@ var is = {
 };
 module.exports = is;
 
-},{"./isPlural":98}],98:[function(_dereq_,module,exports){
+},{"./isPlural":100}],100:[function(_dereq_,module,exports){
 'use strict';
 
 var irregulars = _dereq_('../../paths').data.irregular_plurals;
@@ -4610,7 +4660,7 @@ var is_plural = function is_plural(t) {
 
 module.exports = is_plural;
 
-},{"../../paths":102,"./rules":99}],99:[function(_dereq_,module,exports){
+},{"../../paths":104,"./rules":101}],101:[function(_dereq_,module,exports){
 'use strict';
 //similar to plural/singularize rules, but not the same
 
@@ -4623,11 +4673,11 @@ module.exports = {
   plural_indicators: plural_indicators
 };
 
-},{}],100:[function(_dereq_,module,exports){
-arguments[4][75][0].apply(exports,arguments)
-},{"../paths":102,"dup":75}],101:[function(_dereq_,module,exports){
-arguments[4][76][0].apply(exports,arguments)
-},{"dup":76}],102:[function(_dereq_,module,exports){
+},{}],102:[function(_dereq_,module,exports){
+arguments[4][77][0].apply(exports,arguments)
+},{"../paths":104,"dup":77}],103:[function(_dereq_,module,exports){
+arguments[4][78][0].apply(exports,arguments)
+},{"dup":78}],104:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -4637,7 +4687,7 @@ module.exports = {
   log: _dereq_('../../log')
 };
 
-},{"../../data":14,"../../data/lexicon":15,"../../fns":40,"../../log":42}],103:[function(_dereq_,module,exports){
+},{"../../data":14,"../../data/lexicon":15,"../../fns":40,"../../log":42}],105:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -4650,7 +4700,7 @@ var person = {
 
 module.exports = person;
 
-},{"./info":105,"./is":107,"./transform":109}],104:[function(_dereq_,module,exports){
+},{"./info":107,"./is":109,"./transform":111}],106:[function(_dereq_,module,exports){
 'use strict';
 
 var firstnames = _dereq_('../paths').data.firstnames;
@@ -4695,7 +4745,7 @@ var gender = function gender(t) {
 };
 module.exports = gender;
 
-},{"../paths":108}],105:[function(_dereq_,module,exports){
+},{"../paths":110}],107:[function(_dereq_,module,exports){
 'use strict';
 
 var parseName = _dereq_('./parseName');
@@ -4721,7 +4771,7 @@ var info = {
 };
 module.exports = info;
 
-},{"./gender":104,"./parseName":106}],106:[function(_dereq_,module,exports){
+},{"./gender":106,"./parseName":108}],108:[function(_dereq_,module,exports){
 'use strict';
 
 var data = _dereq_('../paths').data;
@@ -4793,13 +4843,13 @@ var parseName = function parseName(str, str_orig) {
 
 module.exports = parseName;
 
-},{"../paths":108}],107:[function(_dereq_,module,exports){
-arguments[4][74][0].apply(exports,arguments)
-},{"dup":74}],108:[function(_dereq_,module,exports){
-arguments[4][75][0].apply(exports,arguments)
-},{"../paths":102,"dup":75}],109:[function(_dereq_,module,exports){
+},{"../paths":110}],109:[function(_dereq_,module,exports){
 arguments[4][76][0].apply(exports,arguments)
 },{"dup":76}],110:[function(_dereq_,module,exports){
+arguments[4][77][0].apply(exports,arguments)
+},{"../paths":104,"dup":77}],111:[function(_dereq_,module,exports){
+arguments[4][78][0].apply(exports,arguments)
+},{"dup":78}],112:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -4812,13 +4862,13 @@ var place = {
 
 module.exports = place;
 
-},{"./info":111,"./is":112,"./transform":113}],111:[function(_dereq_,module,exports){
-arguments[4][83][0].apply(exports,arguments)
-},{"dup":83}],112:[function(_dereq_,module,exports){
-arguments[4][74][0].apply(exports,arguments)
-},{"dup":74}],113:[function(_dereq_,module,exports){
+},{"./info":113,"./is":114,"./transform":115}],113:[function(_dereq_,module,exports){
+arguments[4][85][0].apply(exports,arguments)
+},{"dup":85}],114:[function(_dereq_,module,exports){
 arguments[4][76][0].apply(exports,arguments)
-},{"dup":76}],114:[function(_dereq_,module,exports){
+},{"dup":76}],115:[function(_dereq_,module,exports){
+arguments[4][78][0].apply(exports,arguments)
+},{"dup":78}],116:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -4831,7 +4881,7 @@ var term = {
 
 module.exports = term;
 
-},{"./info":115,"./is":116,"./render":118,"./transform":120}],115:[function(_dereq_,module,exports){
+},{"./info":117,"./is":118,"./render":120,"./transform":122}],117:[function(_dereq_,module,exports){
 'use strict';
 // const normalize = require('./normalize');
 
@@ -4928,7 +4978,7 @@ var info = {
 
 module.exports = info;
 
-},{}],116:[function(_dereq_,module,exports){
+},{}],118:[function(_dereq_,module,exports){
 'use strict';
 //true/false methods for all Terms
 
@@ -5017,9 +5067,9 @@ var term = {
 
 module.exports = term;
 
-},{}],117:[function(_dereq_,module,exports){
-arguments[4][75][0].apply(exports,arguments)
-},{"../paths":102,"dup":75}],118:[function(_dereq_,module,exports){
+},{}],119:[function(_dereq_,module,exports){
+arguments[4][77][0].apply(exports,arguments)
+},{"../paths":104,"dup":77}],120:[function(_dereq_,module,exports){
 'use strict';
 
 var renderHtml = _dereq_('./renderHtml');
@@ -5068,7 +5118,7 @@ module.exports = {
   }
 };
 
-},{"../paths":117,"./renderHtml":119,"chalk":2}],119:[function(_dereq_,module,exports){
+},{"../paths":119,"./renderHtml":121,"chalk":2}],121:[function(_dereq_,module,exports){
 'use strict';
 //turn xml special characters into apersand-encoding.
 //i'm not sure this is perfectly safe.
@@ -5124,7 +5174,7 @@ var renderHtml = function renderHtml(t) {
 
 module.exports = renderHtml;
 
-},{}],120:[function(_dereq_,module,exports){
+},{}],122:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -5158,7 +5208,7 @@ module.exports = {
   }
 };
 
-},{}],121:[function(_dereq_,module,exports){
+},{}],123:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -5191,7 +5241,7 @@ module.exports = {
 // }, {});
 // module.exports = terms;
 
-},{"./adjective":68,"./adverb":77,"./date":82,"./noun":89,"./person":103,"./place":110,"./term":114,"./url":123,"./value":128,"./verb":142}],122:[function(_dereq_,module,exports){
+},{"./adjective":70,"./adverb":79,"./date":84,"./noun":91,"./person":105,"./place":112,"./term":116,"./url":125,"./value":130,"./verb":144}],124:[function(_dereq_,module,exports){
 'use strict';
 
 var fns = _dereq_('../../fns');
@@ -5217,7 +5267,7 @@ Object.keys(terms).forEach(function (k) {
 });
 module.exports = all;
 
-},{"../../fns":40,"./terms":121}],123:[function(_dereq_,module,exports){
+},{"../../fns":40,"./terms":123}],125:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -5230,7 +5280,7 @@ var url = {
 
 module.exports = url;
 
-},{"./info":124,"./is":126,"./transform":127}],124:[function(_dereq_,module,exports){
+},{"./info":126,"./is":128,"./transform":129}],126:[function(_dereq_,module,exports){
 'use strict';
 
 var parseUrl = _dereq_('./parseUrl');
@@ -5241,7 +5291,7 @@ var info = {
 };
 module.exports = info;
 
-},{"./parseUrl":125}],125:[function(_dereq_,module,exports){
+},{"./parseUrl":127}],127:[function(_dereq_,module,exports){
 'use strict';
 //parse a url into components, in 'loose' mode
 //taken from   http://locutus.io/php/url/parse_url/
@@ -5263,11 +5313,11 @@ var parse_url = function parse_url(str) {
 module.exports = parse_url;
 // console.log(parse_url('http://fun.domain.com/fun?foo=bar'));
 
-},{}],126:[function(_dereq_,module,exports){
-arguments[4][74][0].apply(exports,arguments)
-},{"dup":74}],127:[function(_dereq_,module,exports){
+},{}],128:[function(_dereq_,module,exports){
 arguments[4][76][0].apply(exports,arguments)
-},{"dup":76}],128:[function(_dereq_,module,exports){
+},{"dup":76}],129:[function(_dereq_,module,exports){
+arguments[4][78][0].apply(exports,arguments)
+},{"dup":78}],130:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -5279,7 +5329,7 @@ var noun = {
 
 module.exports = noun;
 
-},{"./info":129,"./is":139,"./transform":141}],129:[function(_dereq_,module,exports){
+},{"./info":131,"./is":141,"./transform":143}],131:[function(_dereq_,module,exports){
 'use strict';
 
 var toNumber = _dereq_('./toNumber');
@@ -5347,7 +5397,7 @@ var info = {
 };
 module.exports = info;
 
-},{"./parse":132,"./toNumber":136,"./toText":138}],130:[function(_dereq_,module,exports){
+},{"./parse":134,"./toNumber":138,"./toText":140}],132:[function(_dereq_,module,exports){
 'use strict';
 
 var p = _dereq_('../../paths');
@@ -5366,7 +5416,7 @@ module.exports = {
   multiples: multiples
 };
 
-},{"../../paths":140}],131:[function(_dereq_,module,exports){
+},{"../../paths":142}],133:[function(_dereq_,module,exports){
 'use strict';
 
 //support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
@@ -5398,7 +5448,7 @@ var findModifiers = function findModifiers(str) {
 
 module.exports = findModifiers;
 
-},{}],132:[function(_dereq_,module,exports){
+},{}],134:[function(_dereq_,module,exports){
 'use strict';
 
 var parseNumeric = _dereq_('./parseNumeric');
@@ -5511,7 +5561,7 @@ var parse = function parse(t) {
 
 module.exports = parse;
 
-},{"../../paths":140,"./data":130,"./findModifiers":131,"./parseDecimals":133,"./parseNumeric":134,"./validate":135}],133:[function(_dereq_,module,exports){
+},{"../../paths":142,"./data":132,"./findModifiers":133,"./parseDecimals":135,"./parseNumeric":136,"./validate":137}],135:[function(_dereq_,module,exports){
 'use strict';
 
 var words = _dereq_('./data');
@@ -5534,7 +5584,7 @@ var parseDecimals = function parseDecimals(arr) {
 
 module.exports = parseDecimals;
 
-},{"./data":130}],134:[function(_dereq_,module,exports){
+},{"./data":132}],136:[function(_dereq_,module,exports){
 'use strict';
 //parse a string like "4,200.1" into Number 4200.1
 
@@ -5557,7 +5607,7 @@ var parseNumeric = function parseNumeric(str) {
 
 module.exports = parseNumeric;
 
-},{}],135:[function(_dereq_,module,exports){
+},{}],137:[function(_dereq_,module,exports){
 'use strict';
 
 var words = _dereq_('./data');
@@ -5581,7 +5631,7 @@ var isValid = function isValid(w, has) {
 };
 module.exports = isValid;
 
-},{"./data":130}],136:[function(_dereq_,module,exports){
+},{"./data":132}],138:[function(_dereq_,module,exports){
 'use strict';
 //turn a number like 5 into an ordinal like 5th
 
@@ -5606,7 +5656,7 @@ module.exports = {
   ordinal: toOrdinal
 };
 
-},{}],137:[function(_dereq_,module,exports){
+},{}],139:[function(_dereq_,module,exports){
 'use strict';
 // turns an integer/float into a textual number, like 'fifty-five'
 
@@ -5705,7 +5755,7 @@ module.exports = to_text;
 
 // console.log(to_text(-1000.8));
 
-},{}],138:[function(_dereq_,module,exports){
+},{}],140:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -5727,7 +5777,7 @@ var toText = {
 
 module.exports = toText;
 
-},{"../../paths":140,"./buildUp":137}],139:[function(_dereq_,module,exports){
+},{"../../paths":142,"./buildUp":139}],141:[function(_dereq_,module,exports){
 'use strict';
 //'is' methods for value
 
@@ -5807,9 +5857,9 @@ var value = {
 };
 module.exports = value;
 
-},{"../paths":140}],140:[function(_dereq_,module,exports){
-arguments[4][75][0].apply(exports,arguments)
-},{"../paths":102,"dup":75}],141:[function(_dereq_,module,exports){
+},{"../paths":142}],142:[function(_dereq_,module,exports){
+arguments[4][77][0].apply(exports,arguments)
+},{"../paths":104,"dup":77}],143:[function(_dereq_,module,exports){
 'use strict';
 
 var value = {
@@ -5844,7 +5894,7 @@ var value = {
 };
 module.exports = value;
 
-},{}],142:[function(_dereq_,module,exports){
+},{}],144:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -5856,7 +5906,7 @@ var noun = {
 
 module.exports = noun;
 
-},{"./info":150,"./is":155,"./transform":157}],143:[function(_dereq_,module,exports){
+},{"./info":152,"./is":157,"./transform":159}],145:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = [{
@@ -6017,7 +6067,7 @@ module.exports = [{
   }
 }];
 
-},{}],144:[function(_dereq_,module,exports){
+},{}],146:[function(_dereq_,module,exports){
 'use strict';
 //non-specifc, 'hail-mary' transforms from infinitive, into other forms
 
@@ -6083,7 +6133,7 @@ var generic = {
 
 module.exports = generic;
 
-},{"./paths":147}],145:[function(_dereq_,module,exports){
+},{"./paths":149}],147:[function(_dereq_,module,exports){
 'use strict';
 
 var checkIrregulars = _dereq_('./irregulars');
@@ -6140,7 +6190,7 @@ var conjugate = function conjugate(t) {
 
 module.exports = conjugate;
 
-},{"./generic":144,"./irregulars":146,"./suffixes":148,"./toActor":149}],146:[function(_dereq_,module,exports){
+},{"./generic":146,"./irregulars":148,"./suffixes":150,"./toActor":151}],148:[function(_dereq_,module,exports){
 'use strict';
 
 var irregulars = _dereq_('./paths').data.irregular_verbs;
@@ -6173,12 +6223,12 @@ var checkIrregulars = function checkIrregulars(str) {
 module.exports = checkIrregulars;
 // console.log(checkIrregulars('understood'));
 
-},{"./paths":147}],147:[function(_dereq_,module,exports){
+},{"./paths":149}],149:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = _dereq_('../../paths');
 
-},{"../../paths":156}],148:[function(_dereq_,module,exports){
+},{"../../paths":158}],150:[function(_dereq_,module,exports){
 'use strict';
 
 var rules = _dereq_('./data/rules');
@@ -6211,7 +6261,7 @@ var suffixPass = function suffixPass(inf) {
 
 module.exports = suffixPass;
 
-},{"./data/rules":143}],149:[function(_dereq_,module,exports){
+},{"./data/rules":145}],151:[function(_dereq_,module,exports){
 'use strict';
 //turn 'walk' into 'walker'
 
@@ -6276,7 +6326,7 @@ var toActor = function toActor(inf) {
 
 module.exports = toActor;
 
-},{}],150:[function(_dereq_,module,exports){
+},{}],152:[function(_dereq_,module,exports){
 'use strict';
 
 var predictForm = _dereq_('./predict');
@@ -6393,7 +6443,7 @@ var info = {
 };
 module.exports = info;
 
-},{"./conjugation":145,"./predict":151,"./toInfinitive":153}],151:[function(_dereq_,module,exports){
+},{"./conjugation":147,"./predict":153,"./toInfinitive":155}],153:[function(_dereq_,module,exports){
 'use strict';
 
 var paths = _dereq_('../../paths');
@@ -6435,7 +6485,7 @@ var predictForm = function predictForm(term) {
 
 module.exports = predictForm;
 
-},{"../../paths":156,"./suffix_rules":152}],152:[function(_dereq_,module,exports){
+},{"../../paths":158,"./suffix_rules":154}],154:[function(_dereq_,module,exports){
 'use strict';
 //suffix signals for verb tense, generated from test data
 
@@ -6458,7 +6508,7 @@ for (var i = 0; i < l; i++) {
 }
 module.exports = suffix_rules;
 
-},{}],153:[function(_dereq_,module,exports){
+},{}],155:[function(_dereq_,module,exports){
 'use strict';
 //turn any verb into its infinitive form
 
@@ -6500,7 +6550,7 @@ var toInfinitive = function toInfinitive(t) {
 
 module.exports = toInfinitive;
 
-},{"../../paths":156,"./rules":154}],154:[function(_dereq_,module,exports){
+},{"../../paths":158,"./rules":156}],156:[function(_dereq_,module,exports){
 'use strict';
 //rules for turning a verb into infinitive form
 
@@ -6651,7 +6701,7 @@ var rules = {
 };
 module.exports = rules;
 
-},{}],155:[function(_dereq_,module,exports){
+},{}],157:[function(_dereq_,module,exports){
 'use strict';
 //true/false methods for Verbs
 
@@ -6676,9 +6726,9 @@ var verb = {
 };
 module.exports = verb;
 
-},{}],156:[function(_dereq_,module,exports){
-arguments[4][75][0].apply(exports,arguments)
-},{"../paths":102,"dup":75}],157:[function(_dereq_,module,exports){
+},{}],158:[function(_dereq_,module,exports){
+arguments[4][77][0].apply(exports,arguments)
+},{"../paths":104,"dup":77}],159:[function(_dereq_,module,exports){
 'use strict';
 
 var transform = {
@@ -6690,7 +6740,7 @@ var transform = {
 };
 module.exports = transform;
 
-},{}],158:[function(_dereq_,module,exports){
+},{}],160:[function(_dereq_,module,exports){
 'use strict';
 
 var normalize = function normalize(str) {
@@ -6714,7 +6764,7 @@ module.exports = normalize;
 
 // console.log(normalize('Dr. V Cooper'));
 
-},{}],159:[function(_dereq_,module,exports){
+},{}],161:[function(_dereq_,module,exports){
 'use strict';
 //set a term as a particular Part-of-speech
 
@@ -6771,7 +6821,7 @@ module.exports = {
   canBe: canBe
 };
 
-},{"../log":42,"../tags":66}],160:[function(_dereq_,module,exports){
+},{"../log":42,"../tags":68}],162:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6901,7 +6951,7 @@ var Term = function () {
 
 module.exports = Term;
 
-},{"../fns":40,"./methods":87,"./normalize":158,"./tag":159,"./whitespace":161}],161:[function(_dereq_,module,exports){
+},{"../fns":40,"./methods":89,"./normalize":160,"./tag":161,"./whitespace":163}],163:[function(_dereq_,module,exports){
 'use strict';
 
 var build_whitespace = function build_whitespace(str) {
@@ -6923,7 +6973,7 @@ var build_whitespace = function build_whitespace(str) {
 };
 module.exports = build_whitespace;
 
-},{}],162:[function(_dereq_,module,exports){
+},{}],164:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -7028,7 +7078,7 @@ var TermList = function () {
 
 module.exports = TermList;
 
-},{"../term/methods":87}],163:[function(_dereq_,module,exports){
+},{"../term/methods":89}],165:[function(_dereq_,module,exports){
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
@@ -7108,7 +7158,7 @@ var sentence_parser = function sentence_parser(text) {
 module.exports = sentence_parser;
 // console.log(sentence_parser('john f. kennedy'));
 
-},{"../data/index":14,"../fns":40}],164:[function(_dereq_,module,exports){
+},{"../data/index":14,"../fns":40}],166:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -7203,5 +7253,5 @@ var Text = function () {
 
 module.exports = Text;
 
-},{"../fns":40,"../sentence/sentence":44,"../sentenceList/sentenceList":46,"../term/methods":87,"../termList/termList":162,"./split_sentences":163}]},{},[41])(41)
+},{"../fns":40,"../sentence/sentence":44,"../sentenceList/sentenceList":46,"../term/methods":89,"../termList/termList":164,"./split_sentences":165}]},{},[41])(41)
 });

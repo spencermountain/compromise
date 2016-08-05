@@ -12,30 +12,30 @@ module.exports = [
     result: 'Person',
     reason: 'Noun-&-Noun'
   },
-  {
-    //June the 5th
-    condition: (a, b, c) => (a.pos.Date && b.normal === 'the' && c.pos.Value),
-    result: 'Date',
-    reason: 'Date-the-Value'
-  },
-  {
-    //5th of June
-    condition: (a, b, c) => (a.pos.Value && (b.pos.Conjunction || b.pos.Preposition) && c.pos.Date),
-    result: 'Date',
-    reason: 'Value-Prep-Date'
-  },
-  {
-    //June 5th to 7th
-    condition: (a, b, c) => (a.pos.Date && (b.pos.Conjunction || b.pos.Preposition) && c.pos.Value),
-    result: 'Date',
-    reason: 'Date-Preposition-Value'
-  },
-  {
-    //3hrs after 5pm
-    condition: (a, b, c) => (a.pos.Date && (c.pos.Date || c.pos.Ordinal) && (b.pos.Preposition || b.pos.Determiner || b.pos.Conjunction || b.pos.Adjective)),
-    result: 'Date',
-    reason: 'Date-Preposition-Date'
-  },
+  // {
+  //   //June the 5th
+  //   condition: (a, b, c) => (a.pos.Date && b.normal === 'the' && c.pos.Value),
+  //   result: 'Date',
+  //   reason: 'Date-the-Value'
+  // },
+  // {
+  //   //5th of June
+  //   condition: (a, b, c) => (a.pos.Value && (b.pos.Conjunction || b.pos.Preposition) && c.pos.Date),
+  //   result: 'Date',
+  //   reason: 'Value-Prep-Date'
+  // },
+  // {
+  //   //June 5th to 7th
+  //   condition: (a, b, c) => (a.pos.Date && (b.pos.Conjunction || b.pos.Preposition) && c.pos.Value),
+  //   result: 'Date',
+  //   reason: 'Date-Preposition-Value'
+  // },
+  // {
+  //   //3hrs after 5pm
+  //   condition: (a, b, c) => (a.pos.Date && (c.pos.Date || c.pos.Ordinal) && (b.pos.Preposition || b.pos.Determiner || b.pos.Conjunction || b.pos.Adjective)),
+  //   result: 'Date',
+  //   reason: 'Date-Preposition-Date'
+  // },
   {
     //President of Mexico
     condition: (a, b, c) => (a.is('titleCase') && b.normal === 'of' && c.is('titleCase')),

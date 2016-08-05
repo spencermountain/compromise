@@ -529,7 +529,9 @@ for (var i = 0; i <= 6; i++) {
   days.push(days[i] + 's');
 }
 
-var durations = ['millisecond', 'second', 'minute', 'hour', 'morning', 'afternoon', 'evening', 'night', 'day', 'week', 'month', 'year', 'decade'];
+var durations = ['millisecond',
+// 'second',
+'minute', 'hour', 'morning', 'afternoon', 'evening', 'night', 'day', 'week', 'month', 'year', 'decade'];
 //add their plurals
 var len = durations.length;
 for (var _i = 0; _i < len; _i++) {
@@ -2546,7 +2548,7 @@ module.exports = {
   here: function here() {},
   show: function show() {},
   tag: function tag(t, pos, reason, path) {
-    console.log('       ' + chalk.green(t.normal) + ' -> ' + chalk.red(pos) + '    (' + reason + ')');
+    // console.log('       ' + chalk.green(t.normal) + ' -> ' + chalk.red(pos) + '    (' + reason + ')');
   },
   change: function change() {}
 };
@@ -2611,6 +2613,11 @@ var Sentence = function () {
       if (this.role[str]) {
         return true;
       }
+      return false;
+    }
+  }, {
+    key: 'match',
+    value: function match() {
       return false;
     }
   }, {
@@ -2906,35 +2913,32 @@ module.exports = [{
   },
   result: 'Person',
   reason: 'Noun-&-Noun'
-}, {
-  //June the 5th
-  condition: function condition(a, b, c) {
-    return a.pos.Date && b.normal === 'the' && c.pos.Value;
-  },
-  result: 'Date',
-  reason: 'Date-the-Value'
-}, {
-  //5th of June
-  condition: function condition(a, b, c) {
-    return a.pos.Value && (b.pos.Conjunction || b.pos.Preposition) && c.pos.Date;
-  },
-  result: 'Date',
-  reason: 'Value-Prep-Date'
-}, {
-  //June 5th to 7th
-  condition: function condition(a, b, c) {
-    return a.pos.Date && (b.pos.Conjunction || b.pos.Preposition) && c.pos.Value;
-  },
-  result: 'Date',
-  reason: 'Date-Preposition-Value'
-}, {
-  //3hrs after 5pm
-  condition: function condition(a, b, c) {
-    return a.pos.Date && (c.pos.Date || c.pos.Ordinal) && (b.pos.Preposition || b.pos.Determiner || b.pos.Conjunction || b.pos.Adjective);
-  },
-  result: 'Date',
-  reason: 'Date-Preposition-Date'
-}, {
+},
+// {
+//   //June the 5th
+//   condition: (a, b, c) => (a.pos.Date && b.normal === 'the' && c.pos.Value),
+//   result: 'Date',
+//   reason: 'Date-the-Value'
+// },
+// {
+//   //5th of June
+//   condition: (a, b, c) => (a.pos.Value && (b.pos.Conjunction || b.pos.Preposition) && c.pos.Date),
+//   result: 'Date',
+//   reason: 'Value-Prep-Date'
+// },
+// {
+//   //June 5th to 7th
+//   condition: (a, b, c) => (a.pos.Date && (b.pos.Conjunction || b.pos.Preposition) && c.pos.Value),
+//   result: 'Date',
+//   reason: 'Date-Preposition-Value'
+// },
+// {
+//   //3hrs after 5pm
+//   condition: (a, b, c) => (a.pos.Date && (c.pos.Date || c.pos.Ordinal) && (b.pos.Preposition || b.pos.Determiner || b.pos.Conjunction || b.pos.Adjective)),
+//   result: 'Date',
+//   reason: 'Date-Preposition-Date'
+// },
+{
   //President of Mexico
   condition: function condition(a, b, c) {
     return a.is('titleCase') && b.normal === 'of' && c.is('titleCase');
@@ -3010,21 +3014,20 @@ module.exports = [{
   }, //'Person, Capital -> Person'
   result: 'Person',
   reason: 'person-titleCase'
-}, {
-  //June 4
-  condition: function condition(a, b) {
-    return a.pos.Date && b.pos.Value;
-  },
-  result: 'Date',
-  reason: 'date-value'
-}, {
-  //4 June
-  condition: function condition(a, b) {
-    return a.pos.Value && b.pos.Date;
-  },
-  result: 'Date',
-  reason: 'value-date'
-}, {
+},
+// {
+//   //June 4
+//   condition: (a, b) => (a.pos.Date && b.pos.Value),
+//   result: 'Date',
+//   reason: 'date-value'
+// },
+// {
+//   //4 June
+//   condition: (a, b) => (a.pos.Value && b.pos.Date),
+//   result: 'Date',
+//   reason: 'value-date'
+// },
+{
   //last wednesday
   condition: function condition(a, b) {
     return (a.normal === 'last' || a.normal === 'next' || a.normal === 'this') && b.pos.Date;
@@ -3303,7 +3306,7 @@ module.exports = {
 module.exports = [['^[0-9]+ ?(am|pm)$', 'Date'], ['[0-9](st|nd|rd|r?th)$', 'NumberValue'], //like 5th
 ['([0-9])([a-z]{1,2})$', 'NumberValue'], //like 5kg
 ['^[0-9,\.]+$', 'NumberValue'], //like 5
-['^[a-z]et$', 'Verb'], ['cede$', 'Infinitive'], ['.[cts]hy$', 'Adjective'], ['.[st]ty$', 'Adjective'], ['.[lnr]ize$', 'Infinitive'], ['.[gk]y$', 'Adjective'], ['.fies$', 'PresentTense'], ['.some$', 'Adjective'], ['.[nrtumcd]al$', 'Adjective'], ['.que$', 'Adjective'], ['.[tnl]ary$', 'Adjective'], ['.[di]est$', 'Superlative'], ['^(un|de|re)\\-[a-z]..', 'Verb'], ['.lar$', 'Adjective'], ['[bszmp]{2}y', 'Adjective'], ['.zes$', 'PresentTense'], ['.[icldtgrv]ent$', 'Adjective'], ['.[rln]ates$', 'PresentTense'], ['.[oe]ry$', 'Singular'], ['[rdntkbhs]ly$', 'Adverb'], ['.[lsrnpb]ian$', 'Adjective'], ['.[^aeiou]ial$', 'Adjective'], ['.[^aeiou]eal$', 'Adjective'], ['.[vrl]id$', 'Adjective'], ['.[ilk]er$', 'Comparative'], ['.ike$', 'Adjective'], ['.ends?$', 'Verb'], ['.wards$', 'Adverb'], ['.rmy$', 'Adjective'], ['.rol$', 'Singular'], ['.tors$', 'Noun'], ['.azy$', 'Adjective'], ['.where$', 'Adverb'], ['.ify$', 'Infinitive'], ['.bound$', 'Adjective'], ['.[^z]ens$', 'Verb'], ['.oid$', 'Adjective'], ['.vice$', 'Singular'], ['.rough$', 'Adjective'], ['.mum$', 'Adjective'], ['.teen(th)?$', 'Value'], ['.oses$', 'PresentTense'], ['.ishes$', 'PresentTense'], ['.ects$', 'PresentTense'], ['.tieth$', 'Ordinal'], ['.ices$', 'Plural'], ['.pose$', 'Infinitive'], ['.ions$', 'Plural'], ['.ean$', 'Adjective'], ['.[ia]sed$', 'Adjective'], ['.tized$', 'PastTense'], ['.llen$', 'Adjective'], ['.fore$', 'Adverb'], ['.ances$', 'Plural'], ['.gate$', 'Infinitive'], ['.nes$', 'PresentTense'], ['.less$', 'Adverb'], ['.ried$', 'Adjective'], ['.gone$', 'Adjective'], ['.made$', 'Adjective'], ['.ing$', 'Gerund'], //likely to be converted to adjective after lexicon pass
+['^[a-z]et$', 'Verb'], ['^#[a-z]+$', 'Hashtag'], ['cede$', 'Infinitive'], ['.[cts]hy$', 'Adjective'], ['.[st]ty$', 'Adjective'], ['.[lnr]ize$', 'Infinitive'], ['.[gk]y$', 'Adjective'], ['.fies$', 'PresentTense'], ['.some$', 'Adjective'], ['.[nrtumcd]al$', 'Adjective'], ['.que$', 'Adjective'], ['.[tnl]ary$', 'Adjective'], ['.[di]est$', 'Superlative'], ['^(un|de|re)\\-[a-z]..', 'Verb'], ['.lar$', 'Adjective'], ['[bszmp]{2}y', 'Adjective'], ['.zes$', 'PresentTense'], ['.[icldtgrv]ent$', 'Adjective'], ['.[rln]ates$', 'PresentTense'], ['.[oe]ry$', 'Singular'], ['[rdntkbhs]ly$', 'Adverb'], ['.[lsrnpb]ian$', 'Adjective'], ['.[^aeiou]ial$', 'Adjective'], ['.[^aeiou]eal$', 'Adjective'], ['.[vrl]id$', 'Adjective'], ['.[ilk]er$', 'Comparative'], ['.ike$', 'Adjective'], ['.ends?$', 'Verb'], ['.wards$', 'Adverb'], ['.rmy$', 'Adjective'], ['.rol$', 'Singular'], ['.tors$', 'Noun'], ['.azy$', 'Adjective'], ['.where$', 'Adverb'], ['.ify$', 'Infinitive'], ['.bound$', 'Adjective'], ['.[^z]ens$', 'Verb'], ['.oid$', 'Adjective'], ['.vice$', 'Singular'], ['.rough$', 'Adjective'], ['.mum$', 'Adjective'], ['.teen(th)?$', 'Value'], ['.oses$', 'PresentTense'], ['.ishes$', 'PresentTense'], ['.ects$', 'PresentTense'], ['.tieth$', 'Ordinal'], ['.ices$', 'Plural'], ['.pose$', 'Infinitive'], ['.ions$', 'Plural'], ['.ean$', 'Adjective'], ['.[ia]sed$', 'Adjective'], ['.tized$', 'PastTense'], ['.llen$', 'Adjective'], ['.fore$', 'Adverb'], ['.ances$', 'Plural'], ['.gate$', 'Infinitive'], ['.nes$', 'PresentTense'], ['.less$', 'Adverb'], ['.ried$', 'Adjective'], ['.gone$', 'Adjective'], ['.made$', 'Adjective'], ['.ing$', 'Gerund'], //likely to be converted to adjective after lexicon pass
 ['.tions$', 'Plural'], ['.tures$', 'Plural'], ['.ous$', 'Adjective'], ['.ports$', 'Plural'], ['. so$', 'Adverb'], ['.ints$', 'Plural'], ['.[gt]led$', 'Adjective'], ['.lked$', 'PastTense'], ['.fully$', 'Adverb'], ['.*ould$', 'Modal'], ['^-?[0-9]+(.,[0-9]+)?$', 'Value'], ['[a-z]*\\-[a-z]*\\-', 'Adjective'], ['[a-z]\'s$', 'Noun'], ['.\'n$', 'Verb'], ['.\'re$', 'Copula'], ['.\'ll$', 'Modal'], ['.\'t$', 'Verb'], ['.tches$', 'PresentTense'], ['^https?\:?\/\/[a-z0-9]', 'Url'], //the colon is removed in normalisation
 ['^www\.[a-z0-9]', 'Url'], ['.ize$', 'Infinitive'], ['.[^aeiou]ise$', 'Infinitive'], ['.[aeiou]te$', 'Infinitive'], ['.ea$', 'Singular'], ['[aeiou][pns]er$', 'Singular'], ['.ia$', 'Noun'], ['.sis$', 'Singular'], ['.[aeiou]na$', 'Noun'], ['.[^aeiou]ity$', 'Singular'], ['.[^aeiou]ium$', 'Singular'], ['.[^aeiou][ei]al$', 'Adjective'], ['.ffy$', 'Adjective'], ['.[^aeiou]ic$', 'Adjective'], ['.(gg|bb|zz)ly$', 'Adjective'], ['.[aeiou]my$', 'Adjective'], ['.[^aeiou][ai]ble$', 'Adjective'], ['.[^aeiou]eable$', 'Adjective'], ['.[^aeiou]ful$', 'Adjective'], ['.[^aeiou]ish$', 'Adjective'], ['.[^aeiou]ica$', 'Singular'], ['[aeiou][^aeiou]is$', 'Singular'], ['[^aeiou]ard$', 'Singular'], ['[^aeiou]ism$', 'Singular'], ['.[^aeiou]ity$', 'Singular'], ['.[^aeiou]ium$', 'Singular'], ['.[lstrn]us$', 'Singular'], ['..ic$', 'Adjective'], ['[aeiou][^aeiou]id$', 'Adjective'], ['.[^aeiou]ish$', 'Adjective'], ['.[^aeiou]ive$', 'Adjective'], ['[ea]{2}zy$', 'Adjective'], ['[^aeiou]ician$', 'Actor'], ['.keeper$', 'Actor'], ['.logist$', 'Actor'], ['..ier$', 'Actor'], ['.[^aeiou][ao]pher$', 'Actor'], ['.tive$', 'Actor'], ['[aeiou].*ist$', 'Adjective'], ['[^i]fer$', 'Infinitive'], ['(bb|tt|gg|pp|ll|nn|mm)', 'Verb'], //rubbed
 ['[aeiou]ked$', 'PastTense'], //hooked
@@ -6851,9 +6854,9 @@ var Term = function () {
 
   }, {
     key: 'tag',
-    value: function tag(_tag) {
+    value: function tag(_tag, reason) {
       this.pos[_tag] = true;
-      set_tag(this, _tag, '');
+      set_tag(this, _tag, reason);
     }
 
     /** get a list of words to the left of this one, in reversed order */

@@ -1,5 +1,5 @@
 'use strict';
-const Term = require('../term/term')
+const Term = require('../term/term');
 const split_terms = require('./split_terms');
 const helpers = require('./helpers');
 const fns = require('../fns');
@@ -17,11 +17,11 @@ class Sentence {
     //parse-out terminating character
     this._terminator = helpers.strip_terminator(this);
 
-    this.role = {}
+    this.role = {};
     if (input.match(/\?/)) {
-      this.role.Question = true
+      this.role.Question = true;
     } else {
-      this.role.Statement = true
+      this.role.Statement = true;
     }
     //do Part-of-Speech tagging
     tagger(this);
@@ -29,16 +29,19 @@ class Sentence {
 
   is(str) {
     if (this.role[str]) {
-      return true
+      return true;
     }
-    return false
+    return false;
+  }
+  match() {
+    return false;
   }
 
   text() {
     return this.terms.reduce((str, t) => {
-      str += ' ' + t.text
-      return str
-    }, '')
+      str += ' ' + t.text;
+      return str;
+    }, '');
   }
 }
-module.exports = Sentence
+module.exports = Sentence;

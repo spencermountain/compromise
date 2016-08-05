@@ -56,5 +56,8 @@ module.exports = {
   Condition: true,
   Possessive: true,
   QuestionWord: true,
-  Expression: true
+  Expression: true,
+  Url: true,
+  HashTag: true,
+  Email: true
 };

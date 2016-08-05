@@ -51,7 +51,7 @@ for (let i = 0; i <= 6; i++) {
 
 let durations = [
   'millisecond',
-  'second',
+  // 'second',
   'minute',
   'hour',
   'morning',

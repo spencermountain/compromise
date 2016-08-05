@@ -8,7 +8,8 @@ const step = {
   web_step: require('./steps/web_step'),
   neighbour_step: require('./steps/neighbour_step'),
   // wrestle: require('./steps/wrestle'),
-  noun_fallback: require('./steps/noun_fallback')
+  noun_fallback: require('./steps/noun_fallback'),
+  punctuation_step: require('./steps/punctuation_step')
 };
 
 const interpret_contractions = require('./contraction');
@@ -22,6 +23,7 @@ const lumper = {
 const tagger = function(s) {
   log.here('tagger');
   s = interpret_contractions(s);
+  s = step.punctuation_step(s);
   s = lumper.lexicon_lump(s);
   s = step.lexicon_step(s);
   s = step.capital_step(s);

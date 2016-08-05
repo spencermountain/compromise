@@ -30,18 +30,18 @@ module.exports = [
     result: 'Person',
     reason: 'person-titleCase'
   },
-  {
-    //June 4
-    condition: (a, b) => (a.pos.Date && b.pos.Value),
-    result: 'Date',
-    reason: 'date-value'
-  },
-  {
-    //4 June
-    condition: (a, b) => (a.pos.Value && b.pos.Date),
-    result: 'Date',
-    reason: 'value-date'
-  },
+  // {
+  //   //June 4
+  //   condition: (a, b) => (a.pos.Date && b.pos.Value),
+  //   result: 'Date',
+  //   reason: 'date-value'
+  // },
+  // {
+  //   //4 June
+  //   condition: (a, b) => (a.pos.Value && b.pos.Date),
+  //   result: 'Date',
+  //   reason: 'value-date'
+  // },
   {
     //last wednesday
     condition: (a, b) => ((a.normal === 'last' || a.normal === 'next' || a.normal === 'this') && b.pos.Date),

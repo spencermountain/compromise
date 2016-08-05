@@ -59,9 +59,9 @@ class Term {
   }
 
   /** set the term as this part-of-speech */
-  tag(tag) {
+  tag(tag, reason) {
     this.pos[tag] = true;
-    set_tag(this, tag, '');
+    set_tag(this, tag, reason);
   }
 
   /** get a list of words to the left of this one, in reversed order */

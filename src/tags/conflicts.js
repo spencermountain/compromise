@@ -32,7 +32,12 @@ const conflicts = [
   ['Gerund', 'PastTense'],
   ['Gerund', 'PresentTense'],
   //more verbs
-  ['Copula', 'Modal']
+  ['Copula', 'Modal'],
+  //web text
+  ['HashTag', 'Noun', 'Verb', 'Adjective', 'Adverb'],
+  ['Email', 'Verb', 'Adjective', 'Adverb'],
+  ['Url', 'Verb', 'Adjective', 'Adverb'],
+  ['HashTag', 'Email', 'Url']
 ];
 
 const find = (tag) => {

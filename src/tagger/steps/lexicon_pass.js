@@ -25,6 +25,10 @@ const lexicon_pass = function(s) {
   //loop through each term
   for (let i = 0; i < s._terms.length; i++) {
     let t = s._terms[i];
+    //don't over-write any known tags
+    if (Object.keys(t.pos).length > 0) {
+      continue;
+    }
     //contraction lookup
     let found = check_lexicon(t.silent_term);
     if (t.silent_term && found) {

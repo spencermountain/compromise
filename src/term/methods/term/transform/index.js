@@ -28,4 +28,11 @@ module.exports = {
     return t;
   },
 
+  /** normalize newlines, tabs, and multiple spaces */
+  normalwhitespace: (t) => {
+    t.whitespace.before = ' ';
+    t.whitespace.after = '';
+    return t;
+  }
+
 };

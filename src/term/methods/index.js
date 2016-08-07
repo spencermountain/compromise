@@ -17,6 +17,7 @@ let methods = {
   is: reduce_methods('is'),
   info: reduce_methods('info'),
   transform: reduce_methods('transform'),
+  pluck: reduce_methods('pluck'),
   //termlist methods
   filters: require('./filters'),
   infos: require('./infos'),

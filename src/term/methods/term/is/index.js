@@ -14,7 +14,7 @@ const term = {
   /** is this the last term in the sentence? */
   last: (t) => {
     let index = t.index();
-    if (index === t.context.sentence.terms.length - 1) {
+    if (index === t.context.sentence._terms.length - 1) {
       return true;
     }
     return false;

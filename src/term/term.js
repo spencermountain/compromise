@@ -60,7 +60,17 @@ class Term {
     if (methods.info[str]) {
       return methods.info[str](this);
     } else {
-      console.log('missing method ' + str);
+      console.log('missing \'info\' method ' + str);
+    }
+    return null;
+  }
+  /** find other terms related to this */
+  pluck(str) {
+    str = str.toLowerCase();
+    if (methods.pluck[str]) {
+      return methods.pluck[str](this);
+    } else {
+      console.log('missing \'pluck\' method ' + str);
     }
     return null;
   }
@@ -71,7 +81,7 @@ class Term {
     if (methods.transform[str]) {
       return methods.transform[str](this);
     } else {
-      console.log('missing method ' + str);
+      console.log('missing \'to\' method ' + str);
     }
     return null;
   }
@@ -84,7 +94,7 @@ class Term {
 
   /** get a list of words to the left of this one, in reversed order */
   before(n) {
-    let terms = this.context.sentence.terms;
+    let terms = this.context.sentence._terms;
     //get terms before this
     let index = this.info('index');
     terms = terms.slice(0, index);
@@ -102,8 +112,8 @@ class Term {
   }
 
   /** get a list of words to the right of this one */
-  next(n) {
-    let terms = this.context.sentence.terms;
+  after(n) {
+    let terms = this.context.sentence._terms;
     let i = this.info('index');
     let end = terms.length - 1;
     if (n) {

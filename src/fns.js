@@ -104,3 +104,14 @@ exports.toPlural = (str) => {
   }
   return str + 's';
 };
+
+exports.values = (obj) => {
+  return Object.keys(obj).map((k) => {
+    return obj[k];
+  });
+};
+exports.sum = (arr) => {
+  return arr.reduce((sum, i) => {
+    return sum + i;
+  }, 0);
+};

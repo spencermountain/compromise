@@ -33,6 +33,27 @@ module.exports = {
     t.whitespace.before = ' ';
     t.whitespace.after = '';
     return t;
+  },
+
+  /** expand all contractions */
+  expansion: (t) => {
+    if (t.silent_term) {
+      t.text = t.silent_term;
+      t.silent_term = null;
+    }
+    return t;
+  },
+
+  /** contract any (possible) contractions */
+  contraction: (t) => {
+    let after = t.next();
+    if (after && after.normal === 'not') {
+      console.log(t.pos);
+      if (t.pos.Modal || t.pos.Copula) {
+        t.text = t.text + 'n\'t';
+      }
+    }
+    return t;
   }
 
 };

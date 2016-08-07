@@ -9,7 +9,8 @@ const step = {
   neighbour_step: require('./steps/neighbour_step'),
   // wrestle: require('./steps/wrestle'),
   noun_fallback: require('./steps/noun_fallback'),
-  punctuation_step: require('./steps/punctuation_step')
+  punctuation_step: require('./steps/punctuation_step'),
+  corrections: require('./steps/corrections')
 };
 
 const interpret_contractions = require('./contraction');
@@ -31,6 +32,7 @@ const tagger = function(s) {
   s = step.suffix_step(s);
   s = step.neighbour_step(s);
   s = step.noun_fallback(s);
+  s = step.corrections(s);
   for (let i = 0; i < 2; i++) {
     s = lumper.lump_two(s);
     s = lumper.lump_three(s);

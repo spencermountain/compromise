@@ -39,9 +39,7 @@ module.exports = {
     FuturePerfect: true,
     Copula: true,
     Modal: true,
-    Auxillary: true,
     PhrasalVerb: true,
-    Negative: true
   },
   Adjective: {
     Comparative: true,
@@ -59,5 +57,7 @@ module.exports = {
   Expression: true,
   Url: true,
   HashTag: true,
-  Email: true
+  Email: true,
+  Auxillary: true,
+  Negative: true
 };

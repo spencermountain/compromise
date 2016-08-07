@@ -12,7 +12,8 @@ const misc = {
   'taken': 'PastTense',
   'msg': 'Verb', //slang
   'a few': 'Value', //different than 'few people'
-  'years old': 'Unit' //special case
+  'years old': 'Unit', //special case
+  'not': 'Negative'
 };
 
 const compact = {
@@ -79,7 +80,7 @@ const compact = {
     'how',
     'plus',
     'versus',
-    'not'
+  // 'not'
   ],
   Date: [
     //date

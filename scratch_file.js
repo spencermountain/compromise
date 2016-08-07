@@ -8,6 +8,7 @@ const nlp = require('./src/index');
 
 let str = 'She doesn\'t walk quickly. ';
 let r = nlp(str);
-// r.toContracted();
+// r.toExpansion();
+// r.toContraction();
 // console.log(r._sentences[0]._terms[1]);
 console.log(r.pretty());

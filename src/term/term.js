@@ -13,11 +13,21 @@ class Term {
     this.context = fns.ensureObject(context);
     this.pos = {};
     this.whitespace = build_whitespace(this.text);
-    this.text = this.text.trim();
+    this._text = this.text.trim();
     this.endPunct = this.endPunctuation();
     this.normal = normalize(this.text);
     this.silent_term = '';
     this.helpers = require('./helpers');
+  }
+
+  set text(str) {
+    this.whitespace = build_whitespace(str);
+    this._text = str.trim();
+    this.endPunct = this.endPunctuation();
+    this.normal = normalize(this.text);
+  }
+  get text() {
+    return this._text;
   }
 
   /** the comma, period ... punctuation that ends this sentence */
@@ -127,14 +137,19 @@ class Term {
   }
 
   /** get a list of words to the right of this one */
-  after(n) {
+  after() {
     let terms = this.context.sentence._terms;
-    let i = this.info('index');
+    let i = this.info('index') + 1;
     let end = terms.length - 1;
     if (n) {
       end = n;
     }
     return terms.slice(i, end);
+  }
+  next() {
+    let terms = this.context.sentence._terms;
+    let i = this.info('index') + 1;
+    return terms[i];
   }
 
   /** add a word before this one*/

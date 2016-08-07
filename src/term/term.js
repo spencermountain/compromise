@@ -90,6 +90,17 @@ class Term {
     return null;
   }
 
+  /** methods that change this term */
+  render(str) {
+    str = str.toLowerCase();
+    if (methods.render[str]) {
+      return methods.render[str](this);
+    } else {
+      console.log('missing \'render\' method ' + str);
+    }
+    return null;
+  }
+
   /** set the term as this part-of-speech */
   tag(tag, reason) {
     this.pos[tag] = true;

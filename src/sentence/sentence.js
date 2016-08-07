@@ -17,6 +17,12 @@ class Sentence {
     });
     //do Part-of-Speech tagging
     tagger(this);
+    //add render methods
+    Object.keys(methods.render).forEach((k) => {
+      this[k] = () => {
+        methods.render[k](this);
+      };
+    });
   }
   /**parse-out terminating character */
   get terminator() {
@@ -32,6 +38,14 @@ class Sentence {
     if (t) {
       t.endPunct = c;
     }
+  }
+
+  get arr() {
+    return this._terms;
+  }
+
+  terms() {
+    return new TermList(this._terms);
   }
 
   /** queries about this sentence with true or false answer */

@@ -1,9 +1,16 @@
 'use strict';
 const renderHtml = require('./renderHtml');
 const chalk = require('chalk');
-const paths = require('../paths')
-const log = paths.log
-const fns = paths.fns
+const paths = require('../paths');
+const log = paths.log;
+const fns = paths.fns;
+
+const colors = {
+  Noun: chalk.cyan,
+  Verb: chalk.magenta,
+  Adjective: chalk.yellow,
+  Adverb: chalk.red,
+};
 
 //supported Sentence.return() methods
 module.exports = {
@@ -25,20 +32,27 @@ module.exports = {
       text: t.text,
       normal: t.render('normal'),
       tags: Object.keys(t.pos)
-    }
+    };
   },
   /** pretty-print information for the console */
-  pretty: (term) => {
-    let niceTags = Object.keys(term.pos).map((tag) => log.pos(tag)).join(', ');
-    niceTags = fns.rightPad(niceTags, 40)
-    let title = '\'' + term.text + '\'';
+  pretty: (t) => {
+    let tags = Object.keys(t.pos).map((tag) => {
+      if (colors[tag]) {
+        return colors[tag](tag);
+      }
+      return tag;
+    }).join(', ');
+    let word = t.text + t.endPunct;
+    word = '\'' + chalk.green(word || ' ') + '\'';
     let silent = '';
-    if (term.silent_term) {
-      silent = '  [' + term.silent_term + ']';
+    if (t.silent_term) {
+      silent = '[' + t.silent_term + ']';
     }
-    silent = fns.rightPad(silent, 6);
-    let reason = chalk.green('  - ' + (term.context.reason || ''))
-    let msg = fns.rightPad('   ' + title, 20) + silent + '  ' + niceTags + reason
-    console.log(msg)
+    // word += fns.leftPad(silent, 10);
+    word = fns.leftPad(word, 25);
+    word += fns.leftPad(silent, 10);
+    // word = fns.leftPad(word, 32);
+    // word = fns.rightPad(word, 28);
+    console.log('   ' + word + '   ' + '     - ' + tags);
   }
 };

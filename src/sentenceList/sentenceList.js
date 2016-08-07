@@ -6,6 +6,7 @@ class SentenceList {
   constructor(sentences) {
     this._sentences = sentences;
 
+    //add sentence transform methods
     Object.keys(methods.transform).forEach((k) => {
       let method = 'to' + fns.titleCase(k);
       this[method] = () => {
@@ -16,6 +17,10 @@ class SentenceList {
       };
     });
 
+  }
+  /** flatten results into a reg array*/
+  get arr() {
+    return this._sentences;
   }
   if(str) {
     this._sentences = this._sentences.filter((s) => s.is(str));
@@ -35,6 +40,11 @@ class SentenceList {
     return this._sentences.reduce((str, s) => {
       return str + s.plaintext();
     }, '');
+  }
+  pretty() {
+    this._sentences.forEach((s) => {
+      s.pretty();
+    });
   }
 
 }

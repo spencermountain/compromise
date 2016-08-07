@@ -1,5 +1,13 @@
 'use strict';
-const render = {
+const chalk = require('chalk');
 
-}
-module.exports = render
+const render = {
+  /** a nicer console.log version */
+  pretty: (s) => {
+    s._terms.forEach((t) => {
+      t.render('pretty');
+    });
+    console.log(chalk.cyan('            ---'));
+  }
+};
+module.exports = render;

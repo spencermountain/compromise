@@ -112,6 +112,11 @@ class TermList {
       return str;
     }, '');
   }
+  pretty() {
+    this._terms.forEach((t) => {
+      t.render('pretty');
+    });
+  }
   /** return unique terms and their frequencies */
   byFreq() {
     return helpers.byFreq(this._terms);

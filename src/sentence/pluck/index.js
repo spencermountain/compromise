@@ -6,6 +6,9 @@ const pluck = {
   },
   last: (s) => {
     return s._terms[s._terms.length - 1];
+  },
+  firstverb: (s) => {
+
   }
 };
 

@@ -2,12 +2,9 @@
 const Sentence = require('../sentence/sentence');
 const TermList = require('../termList/termList');
 const SentenceList = require('../sentenceList/sentenceList');
-// const plurals = require('../tags').plurals
 const split_sentences = require('./split_sentences');
 const fns = require('../fns');
 const methods = require('../term/methods');
-// const term_methods = require('../term/methods');
-// const tags = require('../tags').tags
 
 class Text {
   constructor(input, context) {
@@ -53,17 +50,22 @@ class Text {
   sentences() {
     return new SentenceList(this._sentences);
   }
-  text() {
-    return this._sentences.reduce((str, s) => {
-      str += s.text();
-      return str;
-    }, '');
-  }
 
   clone() {
     let txt = this.text();
     let c = fns.copy(this.context);
     return new Text(txt, c);
   }
+  /** render the text, as it came in */
+  plaintext() {
+    return this._sentences.reduce((str, s) => {
+      str += s.text();
+      return str;
+    }, '');
+  }
+  pretty() {
+    this.sentences().pretty();
+  }
+
 }
 module.exports = Text;

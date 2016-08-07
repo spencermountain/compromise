@@ -115,3 +115,22 @@ exports.sum = (arr) => {
     return sum + i;
   }, 0);
 };
+
+
+exports.rightPad = function(str, width, char) {
+  char = char || ' ';
+  str = str.toString();
+  while (str.length < width) {
+    str += char;
+  }
+  return str;
+};
+
+exports.leftPad = function(str, width, char) {
+  char = char || ' ';
+  str = str.toString();
+  while (str.length < width) {
+    str += char;
+  }
+  return str;
+};

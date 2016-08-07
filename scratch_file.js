@@ -6,7 +6,8 @@ log.enable();
 const nlp = require('./src/index');
 // const nlp = require('./builds/nlp_compromise');
 
-let str = 'John is really good today. Is he? She really walks quickly backwards. ';
+let str = 'She doesn\'t walk quickly. ';
 let r = nlp(str);
-r.sentences().toQuestion();
-console.log(r.text());
+// r.toContracted();
+// console.log(r._sentences[0]._terms[1]);
+console.log(r.pretty());

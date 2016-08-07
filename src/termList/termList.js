@@ -1,6 +1,6 @@
 'use strict';
 const methods = require('../term/methods');
-const fns = require('../fns');
+const helpers = require('./helpers');
 const SentenceList = require('../sentenceList/sentenceList');
 
 // console.log(methods);
@@ -61,46 +61,52 @@ class TermList {
     this._terms = this._terms.filter(fn);
     return this;
   }
+  /** terms[0] wrapper */
   first() {
     return this._terms[0];
   }
+  /** terms[1] wrapper */
   second() {
     return this._terms[1];
   }
+  /** terms[2] wrapper */
   third() {
     return this._terms[2];
   }
+  /** the last result. terms[terms.length-1] wrapper */
   last() {
     return this._terms[this._terms.length - 1];
   }
-  count() {
-    return this._terms.length;
-  }
+  /** add a new term before this one*/
   append(str) {
     this._terms.forEach((t) => {
       t.append(str);
     });
     return this.context.parent;
   }
+  /** add a new term after this one*/
   prepend(str) {
     this._terms.forEach((t) => {
       t.prepend(str);
     });
     return this.context.parent;
   }
+  /** turn this term into another one*/
   replace(str) {
     this._terms.forEach((t) => {
       t.replace(str);
     });
     return this.context.parent;
   }
+  /** grab the sentence for each term*/
   sentences() {
     let sentences = this._terms.map((t) => {
       return t.context.sentence;
     });
     return new SentenceList(sentences);
   }
-  text() {
+  /** flatten these terms into text */
+  plaintext() {
     return this._terms.reduce((str, t) => {
       str += t.whitespace.before + t.text + t.whitespace.after;
       return str;
@@ -108,29 +114,7 @@ class TermList {
   }
   /** return unique terms and their frequencies */
   byFreq() {
-    let obj = {};
-    //count repeating terms
-    this._terms.forEach((t) => {
-      obj[t.normal] = obj[t.normal] || 0;
-      obj[t.normal] += 1;
-    });
-    let sum = fns.sum(fns.values(obj));
-    //set percentage
-    let result = Object.keys(obj).map((k) => {
-      let percent = ((obj[k] / sum) * 100).toFixed(1);
-      return {
-        term: k,
-        count: obj[k],
-        percent: parseFloat(percent)
-      };
-    });
-    //sort
-    return result.sort((a, b) => {
-      if (a.percent < b.percent) {
-        return 1;
-      }
-      return -1;
-    });
+    return helpers.byFreq(this._terms);
   }
 }
 

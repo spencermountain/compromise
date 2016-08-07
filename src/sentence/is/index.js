@@ -1,5 +1,5 @@
 'use strict';
 const is = {
 
-}
-module.exports = is
+};
+module.exports = is;

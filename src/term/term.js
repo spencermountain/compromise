@@ -20,6 +20,7 @@ class Term {
     this.helpers = require('./helpers');
   }
 
+  /** the comma, period ... punctuation that ends this sentence */
   endPunctuation() {
     let m = this.text.match(/([\.\?\!,;:])$/);
     if (m) {
@@ -30,11 +31,13 @@ class Term {
     return '';
   }
 
+  /** print-out this text, as it was given */
   plaintext() {
     let str = this.whitespace.before + this.text + this.endPunct + this.whitespace.after;
     return str;
   }
 
+  /** delete this term from its sentence */
   remove() {
     let s = this.context.sentence;
     let index = this.info('index');
@@ -64,6 +67,7 @@ class Term {
     }
     return null;
   }
+
   /** find other terms related to this */
   pluck(str) {
     str = str.toLowerCase();

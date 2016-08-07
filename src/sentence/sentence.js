@@ -3,9 +3,11 @@ const Term = require('../term/term');
 const split_terms = require('./split_terms');
 const fns = require('../fns');
 const tagger = require('../tagger');
+const methods = require('./index');
 
 class Sentence {
   constructor(input, context) {
+    //first, build-up the terms
     this.context = fns.ensureObject(context);
     this._terms = split_terms(input);
     this._terms = this._terms.map((txt) => {
@@ -13,24 +15,67 @@ class Sentence {
       c.sentence = this; //give it a ref
       return new Term(txt, c);
     });
-    //parse-out terminating character
-    this._terminator = this._terms[this._terms.length - 1].endPunct || '';
-    this.role = {};
-    if (this._terminator === '?') {
-      this.role.Question = true;
-    } else {
-      this.role.Statement = true;
-    }
     //do Part-of-Speech tagging
     tagger(this);
   }
+  /**parse-out terminating character */
+  get terminator() {
+    let t = this.pluck('last');
+    if (t) {
+      return t.endPunct || '';
+    }
+    return '';
+  }
+  /** actually change the last term */
+  set terminator(c) {
+    let t = this.pluck('last');
+    if (t) {
+      t.endPunct = c;
+    }
+  }
 
+  /** queries about this sentence with true or false answer */
   is(str) {
-    if (this.role[str]) {
-      return true;
+    str = str.toLowerCase();
+    if (methods.is[str]) {
+      return methods.is[str](this);
     }
     return false;
   }
+
+  /** fetch ad-hoc information about this sentence */
+  info(str) {
+    str = str.toLowerCase();
+    if (methods.info[str]) {
+      return methods.info[str](this);
+    } else {
+      console.log('missing \'info\' method ' + str);
+    }
+    return null;
+  }
+
+  /** find terms related to this sentence*/
+  pluck(str) {
+    str = str.toLowerCase();
+    if (methods.pluck[str]) {
+      return methods.pluck[str](this);
+    } else {
+      console.log('missing \'pluck\' method ' + str);
+    }
+    return null;
+  }
+
+  /** methods that transform this sentence */
+  to(str) {
+    str = str.toLowerCase();
+    if (methods.transform[str]) {
+      return methods.transform[str](this);
+    } else {
+      console.log('missing \'to\' method ' + str);
+    }
+    return null;
+  }
+
   match() {
     return false;
   }

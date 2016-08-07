@@ -6,7 +6,7 @@ log.enable();
 const nlp = require('./src/index');
 // const nlp = require('./builds/nlp_compromise');
 
-let str = 'John is really good today. She really walks quickly backwards. ';
+let str = 'John is really good today. Is he? She really walks quickly backwards. ';
 let r = nlp(str);
-console.log(r.adverbs().byFreq());
-// console.log(r.text());
+r.sentences().toQuestion();
+console.log(r.text());

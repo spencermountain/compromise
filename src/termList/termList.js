@@ -1,5 +1,7 @@
 'use strict';
 const methods = require('../term/methods');
+const SentenceList = require('../sentenceList/sentenceList');
+
 // console.log(methods);
 class TermList {
   constructor(terms, context) {
@@ -40,6 +42,11 @@ class TermList {
   map(fn) {
     return this._terms.map(fn);
   }
+  /** fake map */
+  filter(fn) {
+    this._terms = this._terms.filter(fn);
+    return this;
+  }
   first() {
     return this._terms[0];
   }
@@ -52,9 +59,32 @@ class TermList {
   last() {
     return this._terms[this._terms.length - 1];
   }
-
   count() {
     return this._terms.length;
+  }
+  append(str) {
+    this._terms.forEach((t) => {
+      t.append(str);
+    });
+    return this.context.parent;
+  }
+  prepend(str) {
+    this._terms.forEach((t) => {
+      t.prepend(str);
+    });
+    return this.context.parent;
+  }
+  replace(str) {
+    this._terms.forEach((t) => {
+      t.replace(str);
+    });
+    return this.context.parent;
+  }
+  sentences() {
+    let sentences = this._terms.map((t) => {
+      return t.context.sentence;
+    });
+    return new SentenceList(sentences);
   }
   text() {
     return this._terms.reduce((str, t) => {

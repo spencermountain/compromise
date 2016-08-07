@@ -2,7 +2,7 @@
 module.exports = [
   {
     //john f kennedy
-    condition: (a, b, c) => (a.pos.Person && b.info('isAcronym') && c.pos.Noun),
+    condition: (a, b, c) => (a.pos.Person && b.is('Acronym') && c.pos.Noun),
     result: 'Person',
     reason: 'Name-Initial-Capital'
   },

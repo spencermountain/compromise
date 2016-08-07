@@ -9,7 +9,6 @@ const methods = require('../term/methods');
 // const term_methods = require('../term/methods');
 // const tags = require('../tags').tags
 
-
 class Text {
   constructor(input, context) {
     //parse-out sentences
@@ -20,19 +19,10 @@ class Text {
       return new Sentence(txt, c);
     });
 
-    let terms = this._sentences.reduce((arr, s) => {
-      arr = arr.concat(s._terms);
-      return arr;
-    }, []);
-    let c = fns.copy(context);
-    c.text = this;
-    this._terms = new TermList(terms, c);
-
     //add filters
     Object.keys(methods.filters).forEach((method) => {
       this[method] = () => {
-        this._terms = methods.filters[method](this._terms);
-        return this;
+        return this.terms()[method]();
       };
     });
     //add map over info methods
@@ -44,22 +34,28 @@ class Text {
     //add transform methods
     Object.keys(methods.transforms).forEach((method) => {
       this[method] = () => {
-        return methods.transforms[method](this);
+        this.terms()[method]();
+        return this;
       };
     });
 
   }
+  /** return a full termlist of all sentences*/
   terms() {
-    return this._terms;
+    let terms = this._sentences.reduce((arr, s) => {
+      arr = arr.concat(s._terms);
+      return arr;
+    }, []);
+    let c = fns.copy(this.context);
+    c.parent = this;
+    return new TermList(terms, c);
   }
   sentences() {
     return new SentenceList(this._sentences);
   }
   text() {
     return this._sentences.reduce((str, s) => {
-      for (let i = 0; i < s._terms.length; i++) {
-        str += ' ' + s._terms[i].text + ' ';
-      }
+      str += s.text();
       return str;
     }, '');
   }

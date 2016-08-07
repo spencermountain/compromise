@@ -2,6 +2,7 @@
 const set_tag = require('./tag').set_tag;
 const methods = require('./methods');
 const normalize = require('./normalize');
+
 const fns = require('../fns');
 const build_whitespace = require('./whitespace');
 // console.log(methods);
@@ -13,8 +14,25 @@ class Term {
     this.pos = {};
     this.whitespace = build_whitespace(this.text);
     this.text = this.text.trim();
+    this.endPunct = this.endPunctuation();
     this.normal = normalize(this.text);
     this.silent_term = '';
+    this.helpers = require('./helpers');
+  }
+
+  endPunctuation() {
+    let m = this.text.match(/([\.\?\!,;:])$/);
+    if (m) {
+      //remove it from end of text
+      this.text = this.text.substr(0, this.text.length - 1);
+      return m[0];
+    }
+    return '';
+  }
+
+  plaintext() {
+    let str = this.whitespace.before + this.text + this.endPunct + this.whitespace.after;
+    return str;
   }
 
   remove() {
@@ -94,5 +112,37 @@ class Term {
     return terms.slice(i, end);
   }
 
+  /** add a word before this one*/
+  append(str) {
+    let term = this.helpers.makeTerm(str, this);
+    let index = this.info('Index');
+    let s = this.context.sentence;
+    s._terms.splice(index, 0, term);
+    return s;
+  }
+  /** add a new word after this one*/
+  prepend(str) {
+    let term = this.helpers.makeTerm(str, this);
+    let index = this.info('Index');
+    let s = this.context.sentence;
+    s._terms.splice(index + 1, 0, term);
+    return s;
+  }
+  /** replace this word with a new one*/
+  replace(str) {
+    let c = fns.copy(this.context);
+    let term = new Term(str, c);
+    term.whitespace.before = this.whitespace.before;
+    term.whitespace.after = this.whitespace.after;
+    term.endPunct = this.endPunct;
+    let index = this.info('Index');
+    let s = this.context.sentence;
+    s._terms[index] = term;
+    return s;
+  }
+
 }
+
+
+
 module.exports = Term;

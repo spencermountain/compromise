@@ -1,7 +1,6 @@
 'use strict';
 const Term = require('../term/term');
 const split_terms = require('./split_terms');
-const helpers = require('./helpers');
 const fns = require('../fns');
 const tagger = require('../tagger');
 
@@ -15,10 +14,9 @@ class Sentence {
       return new Term(txt, c);
     });
     //parse-out terminating character
-    this._terminator = helpers.strip_terminator(this);
-
+    this._terminator = this._terms[this._terms.length - 1].endPunct || '';
     this.role = {};
-    if (input.match(/\?/)) {
+    if (this._terminator === '?') {
       this.role.Question = true;
     } else {
       this.role.Statement = true;
@@ -38,8 +36,8 @@ class Sentence {
   }
 
   text() {
-    return this.terms.reduce((str, t) => {
-      str += ' ' + t.text;
+    return this._terms.reduce((str, t) => {
+      str += t.plaintext();
       return str;
     }, '');
   }

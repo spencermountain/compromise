@@ -26,5 +26,6 @@ module.exports = {
   titlecase: (t) => {
     t.text = t.text.replace(/^[a-z]/, (x) => x.toUpperCase());
     return t;
-  }
+  },
+
 };

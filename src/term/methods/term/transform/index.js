@@ -1,4 +1,5 @@
 'use strict';
+const contract = require('./contract');
 
 module.exports = {
   /**a readable, normalized form - trim whitespace, normalize punctuation, and lowercase */
@@ -46,14 +47,7 @@ module.exports = {
 
   /** contract any (possible) contractions */
   contraction: (t) => {
-    let after = t.next();
-    if (after && after.normal === 'not') {
-      console.log(t.pos);
-      if (t.pos.Modal || t.pos.Copula) {
-        t.text = t.text + 'n\'t';
-      }
-    }
-    return t;
+    return contract(t);
   }
 
 };

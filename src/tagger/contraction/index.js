@@ -22,11 +22,11 @@ const interpret_contractions = function(s) {
       let arr = data.irregulars[t.normal];
       s._terms[i].silent_term = arr[0];
       //add second word
-      s._terms[i].append('');
+      s._terms[i].prepend('');
       s._terms[i + 1].silent_term = arr[1];
       //if it exists, add a third word
       if (arr[2]) {
-        s._terms[i + 1].append('');
+        s._terms[i + 1].prepend('');
         s._terms[i + 2].silent_term = arr[2];
       }
       break;

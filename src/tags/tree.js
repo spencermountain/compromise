@@ -26,7 +26,8 @@ module.exports = {
     Plural: true,
     Actor: true,
     Unit: true,
-    Demonym: true
+    Demonym: true,
+    Possessive: true,
   },
   Verb: {
     PresentTense: {
@@ -52,7 +53,6 @@ module.exports = {
     Preposition: true
   },
   Condition: true,
-  Possessive: true,
   QuestionWord: true,
   Expression: true,
   Url: true,

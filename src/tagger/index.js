@@ -23,7 +23,6 @@ const lumper = {
 
 const tagger = function(s) {
   log.here('tagger');
-  s = interpret_contractions(s);
   s = step.punctuation_step(s);
   s = lumper.lexicon_lump(s);
   s = step.lexicon_step(s);
@@ -32,6 +31,8 @@ const tagger = function(s) {
   s = step.suffix_step(s);
   s = step.neighbour_step(s);
   s = step.noun_fallback(s);
+  s = interpret_contractions(s);
+  s = step.lexicon_step(s); //again, after contractions
   s = step.corrections(s);
   for (let i = 0; i < 2; i++) {
     s = lumper.lump_two(s);

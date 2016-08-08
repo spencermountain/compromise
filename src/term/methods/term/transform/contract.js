@@ -7,7 +7,9 @@ const irregular = {
 const contractable = {
   can: true,
   have: true,
-  had: true
+  had: true,
+  do: true,
+  did: true
 };
 
 //turn 'have not' into 'haven't', etc.

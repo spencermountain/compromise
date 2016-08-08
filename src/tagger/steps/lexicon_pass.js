@@ -37,6 +37,7 @@ const lexicon_pass = function(s) {
     }
     //basic term lookup
     found = check_lexicon(t.normal);
+    console.log(t.normal);
     if (found) {
       t.tag(found, 'lexicon-match');
       continue;

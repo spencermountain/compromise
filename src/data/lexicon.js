@@ -21,7 +21,6 @@ const addArr = (arr, tag) => {
 addObj(data.misc);
 addObj(data.abbreviations);
 addObj(data.firstnames);
-
 addArr(data.places.airports, 'Place');
 addArr(data.places.cities, 'City');
 addArr(data.places.countries, 'Country');
@@ -63,13 +62,21 @@ addArr(data.demonyms, 'Demonym'); //?
 //irregular verbs
 Object.keys(data.irregular_verbs).forEach((k) => {
   lexicon[k] = 'Infinitive';
-  Object.keys(data.irregular_verbs[k]).forEach((k2) => {
-    lexicon[data.irregular_verbs[k][k2]] = k2;
+  let conj = data.irregular_verbs[k];
+  Object.keys(conj).forEach((k2) => {
+    if (conj[k2]) {
+      lexicon[conj[k2]] = k2;
+    }
   });
 });
 
+//for safety (these are sneaky)
+delete lexicon[''];
+delete lexicon[' '];
+delete lexicon[null];
 module.exports = lexicon;
 
 // console.log(Object.keys(data));
 // console.log(data.misc);
 // console.log(lexicon.understood);
+// console.log(lexicon['']);

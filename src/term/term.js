@@ -137,12 +137,12 @@ class Term {
   }
 
   /** get a list of words to the right of this one */
-  after() {
+  after(n) {
     let terms = this.context.sentence._terms;
     let i = this.info('index') + 1;
     let end = terms.length - 1;
     if (n) {
-      end = n;
+      end = i + n;
     }
     return terms.slice(i, end);
   }

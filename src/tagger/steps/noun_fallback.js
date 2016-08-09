@@ -16,7 +16,6 @@ const noun_fallback = function(s) {
     if (tags.length === 0) {
       //ensure it's atleast word-looking
       if (t.is('word') === false) {
-        console.log(t.normal);
         continue;
       }
       t.tag('Noun', 'noun-fallback');

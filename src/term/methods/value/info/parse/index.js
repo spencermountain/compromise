@@ -20,7 +20,6 @@ const section_sum = (obj) => {
 const parse = function(t) {
   log.here('parseNumber', path);
   let str = t.normal;
-  console.log(str);
   //handle a string of mostly numbers
   if (t.pos['NumberValue'] || str.match(/^[0-9]+(st|nd|rd|th)?$/)) {
     return parseNumeric(str);

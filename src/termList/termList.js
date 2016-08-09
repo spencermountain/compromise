@@ -1,6 +1,7 @@
 'use strict';
 const methods = require('../term/methods');
 const helpers = require('./helpers');
+const log = require('../log');
 const SentenceList = require('../sentenceList/sentenceList');
 
 // console.log(methods);
@@ -47,9 +48,14 @@ class TermList {
 
   /** remove all these selected terms from their sentences */
   remove() {
-    this._terms.forEach((t) => t.remove());
-    this._terms = [];
-    return this.context.text;
+    console.log('---removetermlist--');
+    this._terms.forEach((t) => {
+      log.tell('removing ' + t.normal);
+      console.log('-' + t.normal);
+      t.remove();
+    });
+    // this._terms = [];
+    return this;
   }
   /** detach these terms from any pass-by-reference mutations*/
   clone() {

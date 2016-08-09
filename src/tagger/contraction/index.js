@@ -1,9 +1,19 @@
 'use strict';
 const data = require('./data');
 
+//these are always contractions
+const notPossessive = {
+  'it\'s': true,
+  'that\'s': true
+};
+
 // 's may be a contraction or a possessive
 // 'spencer's house' vs 'spencer's good'
 const isPossessive = (t) => {
+  //check blacklist
+  if (notPossessive[t.normal]) {
+    return false;
+  }
   let after = t.after(3);
   for(let i = 0; i < after.length; i++) {
     //an adjective suggests 'is good'
@@ -23,7 +33,7 @@ const isPossessive = (t) => {
   return true;
 };
 
-//for 'spencer's X' decide 'is/was/will be'
+//for 'spencer's X' decide 'is/was/will be' //todo:do this
 const isTense = (t) => {
   let after = t.after(3);
   for(let i = 0; i < after.length; i++) {
@@ -64,6 +74,10 @@ const interpret_contractions = function(s) {
     let parts = s._terms[i].info('contraction');
     if (parts) {
       parts = identify_contraction(parts);
+      //don't create a new term for "s'"
+      if (!parts.end) {
+        continue;
+      }
       //handle ambiguous "'s" contraction
       if (parts.end === 's') {
         //possessive vs contraction

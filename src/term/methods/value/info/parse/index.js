@@ -79,7 +79,6 @@ const parse = function(t) {
     } else if (words.tens[w]) {
       has['tens'] = words.tens[w];
     } else if (words.multiples[w]) {
-      // log.show(has, path)
       let mult = words.multiples[w];
       //something has gone wrong : 'two hundred five hundred'
       if (mult === biggest_yet) {

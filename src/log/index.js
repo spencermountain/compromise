@@ -13,9 +13,13 @@ module.exports = {
       console.log('  ' + chalk.yellow(chalk.underline(msg)));
     }
   },
-  show: () => {
+  tell: (str) => {
+    if (enable) {
+      str = '    ' + chalk.magenta(str);
+      console.log(str);
+    }
   },
-  tag: (t, pos, reason, path) => {
+  tag: (t, pos, reason) => {
     if (enable) {
       let title = t.normal || '[' + t.silent_term + ']';
       title = chalk.green(title);
@@ -24,7 +28,5 @@ module.exports = {
       title = fns.leftPad(title, 54);
       console.log('       ' + title + '(' + reason + ')');
     }
-  },
-  change: () => {
   }
 };

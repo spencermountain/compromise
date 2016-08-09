@@ -113,7 +113,6 @@ class Term {
 
   /** set the term as this part-of-speech */
   tag(tag, reason) {
-    this.pos[tag] = true;
     set_tag(this, tag, reason);
   }
 
@@ -181,6 +180,15 @@ class Term {
     return s;
   }
 
+  /** make a copy with no references to the original  */
+  clone() {
+    let c = fns.copy(this.context);
+    let term = new Term(this.text, c);
+    term.pos = fns.copy(this.pos);
+    term.whitespace = fns.copy(this.whitespace);
+    term.silent_term = this.silent_term;
+    return term;
+  }
 }
 
 

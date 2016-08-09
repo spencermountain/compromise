@@ -4,6 +4,7 @@ const split_terms = require('./split_terms');
 const fns = require('../fns');
 const tagger = require('../tagger');
 const methods = require('./index');
+const TermList = require('../termList/termList');
 
 class Sentence {
   constructor(input, context) {

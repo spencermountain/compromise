@@ -1,6 +1,6 @@
 module.exports = {
-  lexicon: require('../data/lexicon'),
   data: require('../data/index'),
+  lexicon: require('../data/lexicon'),
   fns: require('../fns'),
   log: require('../log')
 };

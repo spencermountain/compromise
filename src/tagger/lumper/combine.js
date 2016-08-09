@@ -10,7 +10,7 @@ const combine = function(s, i) {
   if (!b) {
     return;
   }
-  log.change('--combining: "' + a.normal + '"+"' + b.normal + '"', path);
+  log.tell('--combining: "' + a.normal + '"+"' + b.normal + '"', path);
   let text = a.whitespace.before + a.text + a.whitespace.after;
   text += b.whitespace.before + b.text + b.whitespace.after;
   s._terms[i] = new Term(text, a.context);

@@ -2,7 +2,6 @@
 //set a term as a particular Part-of-speech
 const log = require('../log');
 const tagset = require('../tags');
-const path = 'tagger';
 
 //check if the term is compatible with a pos tag.
 const canBe = (term, tag) => {
@@ -26,6 +25,11 @@ const canBe = (term, tag) => {
 };
 
 const set_tag = function(term, tag, reason) {
+  //fail-fast
+  if (!term || !tag || term.pos[tag]) {
+    return;
+  }
+  term.pos[tag] = true;
   log.tag(term, tag, reason);
   //reset term, if necessary
   if (canBe(term, tag) === false) {

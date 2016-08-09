@@ -41,11 +41,20 @@ class TermList {
     return this._terms.length;
   }
 
+  match(str) {
+    return null;
+  }
+
   /** remove all these selected terms from their sentences */
   remove() {
     this._terms.forEach((t) => t.remove());
     this._terms = [];
     return this.context.text;
+  }
+  /** detach these terms from any pass-by-reference mutations*/
+  clone() {
+    this._terms.map((t) => t.clone());
+    return this;
   }
   /** fake foreach */
   forEach(fn) {

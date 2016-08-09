@@ -36,6 +36,9 @@ class SentenceList {
   last() {
     return this._sentences[this._sentences.length - 1];
   }
+  match(regStr) {
+    return this;
+  }
   text() {
     return this._sentences.reduce((str, s) => {
       return str + s.plaintext();

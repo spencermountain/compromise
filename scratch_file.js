@@ -3,7 +3,7 @@
 //use it for messing around.
 const nlp = require('./src/index');
 // const nlp = require('./builds/nlp_compromise');
-require('./src/log').enable();
+// require('./src/log').enable();
 
 let context = {
   lexicon: {
@@ -17,4 +17,4 @@ let r = nlp(str, context);
 // r.toExpansion();
 // r.toContraction();
 // console.log(r._sentences[0]._terms[1]);
-console.log(r.pretty());
+console.log(r.toLowercase().plaintext());

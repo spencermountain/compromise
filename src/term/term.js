@@ -21,8 +21,10 @@ class Term {
   }
 
   set text(str) {
-    this.whitespace = build_whitespace(str);
     this._text = str.trim();
+    if (this._text !== str) {
+      this.whitespace = build_whitespace(str);
+    }
     this.endPunct = this.endPunctuation();
     this.normal = normalize(this.text);
   }

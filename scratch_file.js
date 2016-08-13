@@ -12,9 +12,9 @@ let context = {
 };
 
 // let str = 'spencer\'s house of flies';
-let str = 'september 5th 2018';
+let str = 'on september 5 2018';
 let r = nlp(str, context);
-r.terms().toNumber();
+// r.terms().toNumber();
 
 console.log('\n\n\n');
 r.terms().pretty();

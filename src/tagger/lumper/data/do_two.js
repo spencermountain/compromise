@@ -90,12 +90,12 @@ module.exports = [
     result: 'Noun',
     reason: 'noun-abbreviation'
   },
-  {
-    //both dates
-    condition: (a, b) => (a.pos.Date && b.pos.Date),
-    result: 'Date',
-    reason: 'two-dates'
-  },
+  // {
+  //   //both dates
+  //   condition: (a, b) => (a.pos.Date && b.pos.Date),
+  //   result: 'Date',
+  //   reason: 'two-dates'
+  // },
   // {
   //   //dates and values
   //   condition: (a, b) => (a.pos.Date && b.pos.Value),
@@ -103,8 +103,8 @@ module.exports = [
   //   reason: 'date-value'
   // },
   {
-    //both values, not ordinals
-    condition: (a, b) => (a.pos.Value && b.pos.Value && !a.pos.Ordinal && !b.pos.Ordinal),
+    //both values, not ordinals, not '5 20'
+    condition: (a, b) => (a.pos.Value && b.pos.Value && !a.pos.Ordinal && !b.pos.Ordinal && !(a.pos.Cardinal && b.pos.Cardinal)),
     result: 'Value',
     reason: 'two-values'
   },

@@ -67,7 +67,7 @@ let value = {
     return false;
   },
   /** a TextValue is a number that's spelled-out*/
-  numbervalue: (t) => {
+  Numeric: (t) => {
     if (t.is('NumberCardinal') || t.is('NumberOrdinal')) {
       return true;
     }

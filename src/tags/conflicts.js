@@ -19,7 +19,7 @@ const conflicts = [
   ['Comparative', 'Superlative'],
   //values
   ['Ordinal', 'Cardinal'],
-  ['TextValue', 'NumberValue'],
+  ['TextValue', 'Numeric'],
   ['Ordinal', 'Currency'], //$5.50th
   //verbs
   ['Infinitive', 'Gerund', 'Pluperfect', 'FuturePerfect'],
@@ -37,7 +37,9 @@ const conflicts = [
   ['HashTag', 'Noun', 'Verb', 'Adjective', 'Adverb'],
   ['Email', 'Verb', 'Adjective', 'Adverb'],
   ['Url', 'Verb', 'Adjective', 'Adverb'],
-  ['HashTag', 'Email', 'Url']
+  ['HashTag', 'Email', 'Url'],
+  //date
+  ['Month', 'Day', 'Year', 'Duration']
 ];
 
 const find = (tag) => {

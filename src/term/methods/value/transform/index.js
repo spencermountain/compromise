@@ -4,7 +4,7 @@ let value = {
   number: (t) => {
     let num = t.info('Number');
     t.text = '' + num;
-    t.tag('NumberValue');
+    t.tag('Numeric');
     return t;
   },
   /** return an textual version, like 'fourty four', or 'three hundred and eight' - or an ordinal string like 'first''*/

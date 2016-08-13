@@ -50,7 +50,7 @@ const info = {
   parse: (t) => {
     let num = parseNumber(t);
     return {
-      NumberValue: {
+      Numeric: {
         Cardinal: num,
         Ordinal: toNumber.ordinal(num)
       },

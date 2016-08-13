@@ -51,11 +51,12 @@ addArr(Object.keys(data.irregular_plurals.toPlural), 'Singular');
 addArr(Object.keys(data.irregular_plurals.toSingle), 'Plural');
 
 //dates are well-structured
-addArr(data.dates.days, 'Date');
-addArr(data.dates.months, 'Date');
-addArr(data.dates.durations, 'Date');
+addArr(data.dates.days, 'Day');
+addArr(data.dates.months, 'Month');
+addArr(data.dates.durations, 'Duration');
 addArr(data.dates.relative, 'Date');
-addArr(Object.keys(data.holidays), 'Date');
+addArr(Object.keys(data.holidays), 'Day');
+
 addArr(data.professions, 'Actor'); //?
 addArr(data.demonyms, 'Demonym'); //?
 

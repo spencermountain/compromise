@@ -14,14 +14,6 @@ module.exports = {
         City: true
       },
       Organization: true,
-      Value: {
-        Currency: true,
-        Ordinal: true,
-        Cardinal: true,
-        TextValue: true,
-        NumberValue: true
-      },
-      Date: true
     },
     Plural: true,
     Actor: true,
@@ -51,6 +43,19 @@ module.exports = {
     Determiner: true,
     Conjunction: true,
     Preposition: true
+  },
+  Value: {
+    Currency: true,
+    Ordinal: true,
+    Cardinal: true,
+    TextValue: true,
+    Numeric: true
+  },
+  Date: {
+    Month: true,
+    Day: true,
+    Year: true,
+    Duration: true
   },
   Condition: true,
   QuestionWord: true,

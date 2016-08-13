@@ -96,9 +96,15 @@ module.exports = [
     result: 'Date',
     reason: 'two-dates'
   },
+  // {
+  //   //dates and values
+  //   condition: (a, b) => (a.pos.Date && b.pos.Value),
+  //   result: 'Date',
+  //   reason: 'date-value'
+  // },
   {
-    //both values
-    condition: (a, b) => (a.pos.Value && b.pos.Value),
+    //both values, not ordinals
+    condition: (a, b) => (a.pos.Value && b.pos.Value && !a.pos.Ordinal && !b.pos.Ordinal),
     result: 'Value',
     reason: 'two-values'
   },

@@ -9,6 +9,7 @@ const step = {
   capital_step: require('./steps/capital_step'),
   suffix_step: require('./steps/suffix_step'),
   web_step: require('./steps/web_step'),
+  date_pass: require('./steps/date_pass'),
   neighbour_step: require('./steps/neighbour_step'),
   // wrestle: require('./steps/wrestle'),
   noun_fallback: require('./steps/noun_fallback'),
@@ -41,9 +42,10 @@ const tagger = function(s) {
   s = interpret_contractions(s);
   s = step.lexicon_step(s); //again, after contractions
   s = step.corrections(s);
+  s = step.date_pass(s);
   for (let i = 0; i < 2; i++) {
-    s = lumper.lump_two(s);
     s = lumper.lump_three(s);
+    s = lumper.lump_two(s);
   // s = step.wrestle(s);
   }
   return s;

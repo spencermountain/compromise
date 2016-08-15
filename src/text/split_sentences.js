@@ -2,7 +2,7 @@
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
 'use strict';
-let data = require('../lexicon/data');
+let data = require('../data/index');
 let abbreviations = Object.keys(data.abbreviations);
 let fns = require('../fns');
 

@@ -1,116 +1,198 @@
 'use strict';
-//a Text() is a list of sentences, which are a list of Terms
+const set_tag = require('./tag').set_tag;
+const methods = require('./methods');
+const normalize = require('./normalize');
+
 const fns = require('../fns');
-const log = require('../log');
-const tg = require('./tag')
-const set_tag = tg.set_tag;
-const canBe = tg.canBe;
-const tagset = require('../tagset');
 const build_whitespace = require('./whitespace');
-const render = require('./render');
-const normalize = require('./transforms/term/normalize');
-const info = require('./info');
-const is_methods = require('./is');
-const transforms = require('./transforms');
+// console.log(methods);
 
 class Term {
   constructor(str, context) {
-    this.str = fns.ensureString(str);
+    this.text = fns.ensureString(str);
     this.context = fns.ensureObject(context);
-    this.whitespace = build_whitespace(this.str);
-    this.silent_term = '';
-    this.text = this.str.trim();
-    this.normal = normalize(this.text);
     this.pos = {};
-    this.transforms = transforms.Term;
-    this.infos = info.Term;
-    this.is_methods = is_methods.Term;
+    this.whitespace = build_whitespace(str || '');
+    this._text = this.text.trim();
+    this.endPunct = this.endPunctuation();
+    this.normal = normalize(this.text);
+    this.silent_term = '';
+    this.helpers = require('./helpers');
   }
 
   set text(str) {
-    this.str = fns.ensureString(str);
+    this._text = str.trim();
+    if (this._text !== str) {
+      this.whitespace = build_whitespace(str);
+    }
+    this.endPunct = this.endPunctuation();
     this.normal = normalize(this.text);
   }
   get text() {
-    return fns.ensureString(this.str);
-  }
-  /** tag this term as a known part-of-speech */
-  tag(tag, reason) {
-    set_tag(this, tag, reason);
-    this.context.reason = reason
-    return this;
-  }
-  /** change the text, return this */
-  to(method) {
-    if (fns.isFunction(method)) {
-      return method(this);
-    }
-    //is it a known transformation?
-    let transform = this.transforms[method.toLowerCase()]
-    if (transform) {
-      return transform(this);
-    }
-    //is it just a pos-tag?
-    method = fns.titleCase(method)
-    if (tagset[method]) {
-      this.tag(method, 'manual-tag');
-      return this.to('Specific')
-    }
-    log.change('no method ' + method + ' for ' + this.normal, 'term');
-    return this;
+    return this._text;
   }
 
-  /** get some data back */
-  info(method) {
-    if (fns.isFunction(method)) {
-      return method(this);
-    }
-    method = method.toLowerCase();
-    if (this.infos[method]) {
-      return this.infos[method](this);
-    }
-    return null;
-  }
-
-  /** is this POS compatible with the current term? */
-  canBe(str) {
-    return canBe(this, str)
-  }
-
-  /** inspect the term, return boolean */
-  is(method) {
-    if (fns.isFunction(method)) {
-      return method(this);
-    }
-    method = fns.titleCase(method);
-    //if we already know that it is
-    if (this.pos[method]) {
-      return true;
-    }
-    //if we already know this POS is incompatible
-    if (tagset[method] && !this.canBe(method)) {
-      return false;
-    }
-    //is it a known 'is' method?
-    method = method.toLowerCase();
-    if (this.is_methods[method]) {
-      return this.is_methods[method](this);
-    }
-    return false;
-  }
-
-  /** return it as something */
-  render(method) {
-    if (fns.isFunction(method)) {
-      return method(this);
-    }
-    //is it known?
-    method = method.toLowerCase();
-    if (render[method]) {
-      return render[method](this);
+  /** the comma, period ... punctuation that ends this sentence */
+  endPunctuation() {
+    let m = this.text.match(/([\.\?\!,;:])$/);
+    if (m) {
+      //remove it from end of text
+      this.text = this.text.substr(0, this.text.length - 1);
+      return m[0];
     }
     return '';
   }
 
+  /** print-out this text, as it was given */
+  plaintext() {
+    let str = this.whitespace.before + this.text + this.endPunct + this.whitespace.after;
+    return str;
+  }
+
+  /** delete this term from its sentence */
+  remove() {
+    let s = this.context.sentence;
+    let index = this.info('index');
+    s._terms.splice(index, 1);
+    return s;
+  }
+
+  /** queries about this term with true or false answer */
+  is(str) {
+    if (this.pos[str]) {
+      return true;
+    }
+    str = str.toLowerCase();
+    if (methods.is[str]) {
+      return methods.is[str](this);
+    }
+    return false;
+  }
+
+  /** fetch ad-hoc information about this term */
+  info(str) {
+    str = str.toLowerCase();
+    if (methods.info[str]) {
+      return methods.info[str](this);
+    } else {
+      console.log('missing \'info\' method ' + str);
+    }
+    return null;
+  }
+
+  /** find other terms related to this */
+  pluck(str) {
+    str = str.toLowerCase();
+    if (methods.pluck[str]) {
+      return methods.pluck[str](this);
+    } else {
+      console.log('missing \'pluck\' method ' + str);
+    }
+    return null;
+  }
+
+  /** methods that change this term */
+  to(str) {
+    str = str.toLowerCase();
+    if (methods.transform[str]) {
+      return methods.transform[str](this);
+    } else {
+      console.log('missing \'to\' method ' + str);
+    }
+    return null;
+  }
+
+  /** methods that change this term */
+  render(str) {
+    str = str.toLowerCase();
+    if (methods.render[str]) {
+      return methods.render[str](this);
+    } else {
+      console.log('missing \'render\' method ' + str);
+    }
+    return null;
+  }
+
+  /** set the term as this part-of-speech */
+  tag(tag, reason) {
+    set_tag(this, tag, reason);
+  }
+
+  /** get a list of words to the left of this one, in reversed order */
+  before(n) {
+    let terms = this.context.sentence._terms;
+    //get terms before this
+    let index = this.info('index');
+    terms = terms.slice(0, index);
+    //reverse them
+    let reversed = [];
+    var len = terms.length;
+    for (let i = (len - 1); i !== 0; i--) {
+      reversed.push(terms[i]);
+    }
+    let end = terms.length;
+    if (n) {
+      end = n;
+    }
+    return reversed.slice(0, end);
+  }
+
+  /** get a list of words to the right of this one */
+  after(n) {
+    let terms = this.context.sentence._terms;
+    let i = this.info('index') + 1;
+    let end = terms.length - 1;
+    if (n) {
+      end = i + n;
+    }
+    return terms.slice(i, end);
+  }
+  next() {
+    let terms = this.context.sentence._terms;
+    let i = this.info('index') + 1;
+    return terms[i];
+  }
+
+  /** add a word before this one*/
+  append(str) {
+    let term = this.helpers.makeTerm(str, this);
+    let index = this.info('Index');
+    let s = this.context.sentence;
+    s._terms.splice(index, 0, term);
+    return s;
+  }
+  /** add a new word after this one*/
+  prepend(str) {
+    let term = this.helpers.makeTerm(str, this);
+    let index = this.info('Index');
+    let s = this.context.sentence;
+    s._terms.splice(index + 1, 0, term);
+    return s;
+  }
+  /** replace this word with a new one*/
+  replace(str) {
+    let c = fns.copy(this.context);
+    let term = new Term(str, c);
+    term.whitespace.before = this.whitespace.before;
+    term.whitespace.after = this.whitespace.after;
+    term.endPunct = this.endPunct;
+    let index = this.info('Index');
+    let s = this.context.sentence;
+    s._terms[index] = term;
+    return s;
+  }
+
+  /** make a copy with no references to the original  */
+  clone() {
+    let c = fns.copy(this.context);
+    let term = new Term(this.text, c);
+    term.pos = fns.copy(this.pos);
+    term.whitespace = fns.copy(this.whitespace);
+    term.silent_term = this.silent_term;
+    return term;
+  }
 }
+
+
+
 module.exports = Term;

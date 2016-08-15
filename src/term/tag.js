@@ -1,12 +1,7 @@
 'use strict';
 //set a term as a particular Part-of-speech
 const log = require('../log');
-const info = require('./info');
-const is_methods = require('./is');
-const transforms = require('./transforms');
-const tagset = require('../tagset');
-const fns = require('../fns');
-const path = 'tagger';
+const tagset = require('../tags');
 
 //check if the term is compatible with a pos tag.
 const canBe = (term, tag) => {
@@ -30,24 +25,27 @@ const canBe = (term, tag) => {
 };
 
 const set_tag = function(term, tag, reason) {
-  log.tag(term, tag, reason, path);
+  //fail-fast
+  if (!term || !tag || term.pos[tag]) {
+    return;
+  }
+  term.pos[tag] = true;
+  log.tag(term, tag, reason);
   //reset term, if necessary
   if (canBe(term, tag) === false) {
     term.pos = {};
-    term.transforms = {};
-    term.infos = {};
-    term.is_methods = {};
   }
   if (!tagset[tag]) {
     console.warn('unknown tag ' + tag + ' - ' + reason);
     return;
   }
+  //also set tags by deduction
   let tags = tagset[tag].is;
   for (let i = 0; i < tags.length; i++) {
-    term.pos[tags[i]] = true;
-    term.transforms = Object.assign({}, term.transforms, transforms[tags[i]])
-    term.infos = Object.assign({}, term.infos, info[tags[i]])
-    term.is_methods = Object.assign({}, term.is_methods, is_methods[tags[i]])
+    if (!term.pos[tags[i]]) {
+      log.tag(term, tags[i], 'deduction');
+      term.pos[tags[i]] = true;
+    }
   }
   return;
 };

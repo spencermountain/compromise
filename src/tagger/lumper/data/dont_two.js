@@ -2,7 +2,7 @@
 //exceptions or guards to the above rules, more or less
 module.exports = [
   { //don't chunk non-word things with word-things
-    condition: (a, b) => (a.is('wordlike') === false || b.info('wordlike') === false),
+    condition: (a, b) => (a.is('word') === false || b.info('word') === false),
     reason: 'not a word'
   },
   {

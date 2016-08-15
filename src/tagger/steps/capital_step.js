@@ -6,10 +6,10 @@ const path = 'tagger/capital';
 const capital_logic = function(s) {
   log.here(path);
   //(ignore first word)
-  for (let i = 1; i < s.terms.length; i++) {
-    let t = s.terms[i];
+  for (let i = 1; i < s._terms.length; i++) {
+    let t = s._terms[i];
     //has a capital, but isn't too weird.
-    if (t.is('titleCase') && t.is('wordlike')) {
+    if (t.is('titleCase') && t.is('word')) {
       t.tag('Noun', 'capital-step');
     }
   }

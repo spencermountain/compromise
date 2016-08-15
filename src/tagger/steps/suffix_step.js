@@ -5,20 +5,20 @@ const path = 'tagger/suffix';
 
 const suffix_step = function(s) {
   log.here(path);
-  for (let i = 0; i < s.terms.length; i++) {
-    let t = s.terms[i];
+  s._terms.forEach((t) => {
     //don't over-write any known tags
-    if (Object.keys(s.terms[i].pos).length > 0) {
-      continue;
+    if (Object.keys(t.pos).length > 0) {
+      return;
     }
+    //do normalized rules (on t.normal)
     for (let o = 0; o < rules.length; o++) {
       let r = rules[o];
       if (t.normal.match(r.reg)) {
-        t.tag(r.pos, 'suffix-step- "' + r.str + '"');
-        break
+        t.tag(r.pos, 'word-rule- "' + r.str + '"');
+        return;
       }
     }
-  }
+  });
   return s;
 };
 

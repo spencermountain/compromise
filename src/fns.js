@@ -83,3 +83,54 @@ exports.extend = (o, o2) => {
   });
   return o;
 };
+
+//a very naaive inflector for
+//our public-facing one is in ./terms/noun/info
+exports.toPlural = (str) => {
+  const irregular = {
+    Glue: 'Glue'
+  };
+  if (irregular[str]) {
+    return irregular[str];
+  }
+  if (str.match(/y$/i)) {
+    return str.replace(/y$/i, 'ies');
+  }
+  if (str.match(/person$/i)) {
+    return str.replace(/person$$/i, 'people');
+  }
+  if (str.match(/s$/i)) {
+    return str;
+  }
+  return str + 's';
+};
+
+exports.values = (obj) => {
+  return Object.keys(obj).map((k) => {
+    return obj[k];
+  });
+};
+exports.sum = (arr) => {
+  return arr.reduce((sum, i) => {
+    return sum + i;
+  }, 0);
+};
+
+
+exports.rightPad = function(str, width, char) {
+  char = char || ' ';
+  str = str.toString();
+  while (str.length < width) {
+    str += char;
+  }
+  return str;
+};
+
+exports.leftPad = function(str, width, char) {
+  char = char || ' ';
+  str = str.toString();
+  while (str.length < width) {
+    str += char;
+  }
+  return str;
+};

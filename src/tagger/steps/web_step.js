@@ -1,7 +1,7 @@
 'use strict';
 //identify urls, hashtags, @mentions, emails
-const path = 'tagger/web';
 const log = require('../paths').log;
+const path = 'tagger/web_step';
 // 'Email': Noun,
 // 'Url': Noun,
 // 'AtMention': Noun,

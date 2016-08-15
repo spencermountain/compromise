@@ -26,22 +26,22 @@ module.exports = [
   },
   {
     //"John Abcd" - needs to be careful
-    condition: (a, b) => (a.pos.Person && !a.pos.Pronoun && !a.pos.Possessive && !a.info('hasComma') && b.is('TitleCase') && !a.is_acronym() && !b.pos.Verb), //'Person, Capital -> Person'
+    condition: (a, b) => (a.pos.Person && !a.pos.Pronoun && !a.pos.Possessive && !a.info('hasComma') && b.is('TitleCase') && !a.is('Acronym') && !b.pos.Verb), //'Person, Capital -> Person'
     result: 'Person',
     reason: 'person-titleCase'
   },
-  {
-    //June 4
-    condition: (a, b) => (a.pos.Date && b.pos.Value),
-    result: 'Date',
-    reason: 'date-value'
-  },
-  {
-    //4 June
-    condition: (a, b) => (a.pos.Value && b.pos.Date),
-    result: 'Date',
-    reason: 'value-date'
-  },
+  // {
+  //   //June 4
+  //   condition: (a, b) => (a.pos.Date && b.pos.Value),
+  //   result: 'Date',
+  //   reason: 'date-value'
+  // },
+  // {
+  //   //4 June
+  //   condition: (a, b) => (a.pos.Value && b.pos.Date),
+  //   result: 'Date',
+  //   reason: 'value-date'
+  // },
   {
     //last wednesday
     condition: (a, b) => ((a.normal === 'last' || a.normal === 'next' || a.normal === 'this') && b.pos.Date),
@@ -56,7 +56,7 @@ module.exports = [
   },
   {
     //Canada Inc
-    condition: (a, b) => (a.is('TitleCase') && a.pos.Noun && b.pos['Organization'] || b.info('TitleCase') && a.pos['Organization']),
+    condition: (a, b) => (a.is('TitleCase') && a.pos.Noun && b.pos['Organization'] || b.is('TitleCase') && a.pos['Organization']),
     result: 'Organization',
     reason: 'organization-org'
   },
@@ -66,18 +66,6 @@ module.exports = [
     result: 'Quotation',
     reason: 'two-word-quote'
   },
-  // {
-  //   //will walk (perfect)
-  //   condition: (a, b) => (a.normal === 'will' && b.pos.Verb),
-  //   result: 'PerfectTense',
-  //   reason: 'will-verb'
-  // },
-  // {
-  //   //will have walked (pluperfect)
-  //   condition: (a, b) => (a.normal.match(/^will ha(ve|d)$/) && b.pos.Verb),
-  //   result: 'Pluperfect',
-  //   reason: 'will-have-verb'
-  // },
   {
     //timezones
     condition: (a, b) => (b.normal.match(/(standard|daylight|summer) time/) && (a.pos['Adjective'] || a.pos['Place'])),
@@ -90,13 +78,6 @@ module.exports = [
     result: 'Currency',
     reason: 'demonym-currency'
   },
-  // {
-  //   //for verbs in Past/Present Continuous ('is raining')
-  //   condition: (a, b) => (a.pos.Copula && a.normal.match(/^(am|is|are|was|were)$/)
-  //     && b.pos.Verb && b.normal.match(/ing$/)),
-  //   result: 'Verb',
-  //   reason: 'copula-gerund'
-  // },
   {
     //7 ft
     condition: (a, b) => ((a.pos.Value && b.pos.Abbreviation) || (a.pos.Abbreviation && b.pos.Value)),
@@ -109,15 +90,21 @@ module.exports = [
     result: 'Noun',
     reason: 'noun-abbreviation'
   },
+  // {
+  //   //both dates
+  //   condition: (a, b) => (a.pos.Date && b.pos.Date),
+  //   result: 'Date',
+  //   reason: 'two-dates'
+  // },
+  // {
+  //   //dates and values
+  //   condition: (a, b) => (a.pos.Date && b.pos.Value),
+  //   result: 'Date',
+  //   reason: 'date-value'
+  // },
   {
-    //both dates
-    condition: (a, b) => (a.pos.Date && b.pos.Date),
-    result: 'Date',
-    reason: 'two-dates'
-  },
-  {
-    //both values
-    condition: (a, b) => (a.pos.Value && b.pos.Value),
+    //both values, not ordinals, not '5 20'
+    condition: (a, b) => (a.pos.Value && b.pos.Value && !a.pos.Ordinal && !b.pos.Ordinal && !(a.pos.Cardinal && b.pos.Cardinal)),
     result: 'Value',
     reason: 'two-values'
   },
@@ -126,17 +113,6 @@ module.exports = [
     condition: (a, b) => (a.pos.Place && b.pos.Place),
     result: 'Place',
     reason: 'two-places'
-  },
-// {
-//   //'have not'
-//   condition: (a, b) => ((a.pos.Infinitive || a.pos.Copula || a.pos.PresentTense) && b.normal === 'not'),
-//   result: 'Verb',
-//   reason: 'verb-not'
-// },
-// {
-//   //both places (this is the most aggressive rule of them all)
-//   condition: (a, b) => (a.pos.Noun && b.pos.Noun && !is_specific(a) && !is_specific(b)),
-//   result: 'Noun',
-//   reason: 'two-nouns'
-// }
+  }
+
 ];

@@ -25,7 +25,7 @@ class Text {
     //add map over info methods
     Object.keys(methods.infos).forEach((method) => {
       this[method] = () => {
-        return methods.infos[method](this._terms);
+        return methods.infos[method](this.arr);
       };
     });
     //add transform methods
@@ -40,7 +40,7 @@ class Text {
   /** return a full termlist of all sentences*/
   terms() {
     let terms = this._sentences.reduce((arr, s) => {
-      arr = arr.concat(s._terms);
+      arr = arr.concat(s.arr);
       return arr;
     }, []);
     let c = fns.copy(this.context);

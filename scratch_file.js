@@ -11,13 +11,4 @@ let context = {
   }
 };
 
-let str = 'apple is nice';
-let r = nlp(str, context);
-r.terms().pretty();
-
-console.log('\n\n');
-context.lexicon = {
-  apple: 'Person'
-};
-let r2 = nlp(str, context);
-r2.terms().pretty();
+nlp('he is nice').terms().toPasttense().pretty();

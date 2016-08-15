@@ -2,10 +2,10 @@
 //grab specific terms inside this sentence
 const pluck = {
   first: (s) => {
-    return s._terms[0];
+    return s.arr[0];
   },
   last: (s) => {
-    return s._terms[s._terms.length - 1];
+    return s.arr[s.arr.length - 1];
   },
   firstverb: (s) => {
 

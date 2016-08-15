@@ -8,14 +8,14 @@ const combine = require('./combine');
 const lump_two = function(s) {
   log.here(path);
   for (let o = 0; o < do_two.length; o++) {
-    for (let i = 0; i < s._terms.length - 1; i++) {
-      let a = s._terms[i];
-      let b = s._terms[i + 1];
+    for (let i = 0; i < s.arr.length - 1; i++) {
+      let a = s.arr[i];
+      let b = s.arr[i + 1];
       if (do_two[o].condition(a, b)) {
         //merge terms
         combine(s, i);
         //tag it as POS
-        s._terms[i].tag(do_two[o].result, 'lump-two (' + do_two[o].reason + ')');
+        s.arr[i].tag(do_two[o].result, 'lump-two (' + do_two[o].reason + ')');
       }
     }
   }

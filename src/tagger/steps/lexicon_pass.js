@@ -20,8 +20,8 @@ const lexicon_pass = function(s) {
   log.here(path);
   let found;
   //loop through each term
-  for (let i = 0; i < s._terms.length; i++) {
-    let t = s._terms[i];
+  for (let i = 0; i < s.arr.length; i++) {
+    let t = s.arr[i];
     //check term without contraction
     if (t.text.match(/s'$/)) {
       let reduced = t.normal.replace(/s$/, '');

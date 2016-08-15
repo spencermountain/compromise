@@ -8,12 +8,12 @@ const path = 'tagger/multiple';
 
 const lexicon_lump = function(s) {
   log.here(path);
-  for (let i = 0; i < s._terms.length - 1; i++) {
+  for (let i = 0; i < s.arr.length - 1; i++) {
     //try 'A'+'B'
-    let str = s._terms[i].normal + ' ' + s._terms[i + 1].normal;
+    let str = s.arr[i].normal + ' ' + s.arr[i + 1].normal;
     if (lexicon[str]) {
       combine(s, i);
-      s._terms[i].tag(lexicon[str], 'multiples-lexicon');
+      s.arr[i].tag(lexicon[str], 'multiples-lexicon');
     }
   }
 

@@ -10,7 +10,7 @@ module.exports = {
 
     let term = new Term(str, c);
     //create the proper whitespace for this term
-    if (index === s._terms.length - 1) {
+    if (index === s.arr.length - 1) {
       term.whitespace.before = ' ';
     } else {
       term.whitespace.before = ' ';

@@ -10,7 +10,7 @@ Object.keys(terms).forEach((k) => {
     let name = 'to' + fns.titleCase(method);
     //make a termList method..
     all[name] = (ts) => {
-      ts._terms = ts._terms.map((t) => {
+      ts.arr = ts.arr.map((t) => {
         if (tag === 'Term' || t.pos[tag]) {
           return t.to(method);
         }

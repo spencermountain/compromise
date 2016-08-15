@@ -10,8 +10,8 @@ class Sentence {
   constructor(input, context) {
     //first, build-up the terms
     this.context = fns.ensureObject(context);
-    this._terms = split_terms(input);
-    this._terms = this._terms.map((txt) => {
+    this.arr = split_terms(input);
+    this.arr = this.arr.map((txt) => {
       let c = fns.copy(context);
       c.sentence = this; //give it a ref
       return new Term(txt, c);
@@ -41,12 +41,8 @@ class Sentence {
     }
   }
 
-  get arr() {
-    return this._terms;
-  }
-
   terms() {
-    return new TermList(this._terms);
+    return new TermList(this.arr);
   }
 
   /** queries about this sentence with true or false answer */
@@ -96,7 +92,7 @@ class Sentence {
   }
 
   text() {
-    return this._terms.reduce((str, t) => {
+    return this.arr.reduce((str, t) => {
       str += t.plaintext();
       return str;
     }, '');

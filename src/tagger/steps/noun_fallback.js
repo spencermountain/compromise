@@ -5,8 +5,8 @@ const path = 'tagger/noun_fallback';
 
 const noun_fallback = function(s) {
   log.here(path);
-  for (let i = 0; i < s._terms.length; i++) {
-    let t = s._terms[i];
+  for (let i = 0; i < s.arr.length; i++) {
+    let t = s.arr[i];
     //fail-fast
     if (t.pos.Noun || t.pos.Verb) {
       continue;

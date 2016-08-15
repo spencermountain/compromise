@@ -53,7 +53,7 @@ class Term {
   remove() {
     let s = this.context.sentence;
     let index = this.info('index');
-    s._terms.splice(index, 1);
+    s.arr.splice(index, 1);
     return s;
   }
 
@@ -120,7 +120,7 @@ class Term {
 
   /** get a list of words to the left of this one, in reversed order */
   before(n) {
-    let terms = this.context.sentence._terms;
+    let terms = this.context.sentence.arr;
     //get terms before this
     let index = this.info('index');
     terms = terms.slice(0, index);
@@ -139,7 +139,7 @@ class Term {
 
   /** get a list of words to the right of this one */
   after(n) {
-    let terms = this.context.sentence._terms;
+    let terms = this.context.sentence.arr;
     let i = this.info('index') + 1;
     let end = terms.length - 1;
     if (n) {
@@ -148,7 +148,7 @@ class Term {
     return terms.slice(i, end);
   }
   next() {
-    let terms = this.context.sentence._terms;
+    let terms = this.context.sentence.arr;
     let i = this.info('index') + 1;
     return terms[i];
   }
@@ -158,7 +158,7 @@ class Term {
     let term = this.helpers.makeTerm(str, this);
     let index = this.info('Index');
     let s = this.context.sentence;
-    s._terms.splice(index, 0, term);
+    s.arr.splice(index, 0, term);
     return s;
   }
   /** add a new word after this one*/
@@ -166,7 +166,7 @@ class Term {
     let term = this.helpers.makeTerm(str, this);
     let index = this.info('Index');
     let s = this.context.sentence;
-    s._terms.splice(index + 1, 0, term);
+    s.arr.splice(index + 1, 0, term);
     return s;
   }
   /** replace this word with a new one*/
@@ -178,7 +178,7 @@ class Term {
     term.endPunct = this.endPunct;
     let index = this.info('Index');
     let s = this.context.sentence;
-    s._terms[index] = term;
+    s.arr[index] = term;
     return s;
   }
 

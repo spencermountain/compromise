@@ -26,11 +26,6 @@ const lumper = {
 };
 
 const tagger = function(s) {
-  //add new words to the lexicon
-  if (s.context.lexicon) {
-    log.tell('extending lexicon');
-    fns.extend(lexicon, s.context.lexicon);
-  }
   s = step.punctuation_step(s);
   s = lumper.lexicon_lump(s);
   s = step.lexicon_step(s);

@@ -3,22 +3,21 @@
 //use it for messing around.
 const nlp = require('./src/index');
 // const nlp = require('./builds/nlp_compromise');
-require('./src/log').enable();
+// require('./src/log').enable();
 
 let context = {
   lexicon: {
-    gift: 'Person'
+    apple: 'Organization'
   }
 };
 
-// let str = 'spencer\'s house of flies';
-let str = 'on september 5 2018';
+let str = 'apple is nice';
 let r = nlp(str, context);
-// r.terms().toNumber();
-
-console.log('\n\n\n');
 r.terms().pretty();
-// r.toExpansion();
-// r.toContraction();
-// console.log(r._sentences[0]._terms[1]);
-// console.log(r.plaintext());
+
+console.log('\n\n');
+context.lexicon = {
+  apple: 'Person'
+};
+let r2 = nlp(str, context);
+r2.terms().pretty();

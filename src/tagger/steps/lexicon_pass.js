@@ -4,7 +4,12 @@ const lexicon = p.lexicon;
 const log = p.log;
 const path = 'tagger/lexicon';
 
-const check_lexicon = (str) => {
+const check_lexicon = (str, sentence) => {
+  //check a user's custom lexicon
+  let custom = sentence.context.lexicon || {};
+  if (custom[str]) {
+    return custom[str];
+  }
   if (lexicon[str]) {
     return lexicon[str];
   }
@@ -20,7 +25,7 @@ const lexicon_pass = function(s) {
     //check term without contraction
     if (t.text.match(/s'$/)) {
       let reduced = t.normal.replace(/s$/, '');
-      found = check_lexicon(reduced);
+      found = check_lexicon(reduced, s);
       if (found) {
         t.tag(found, 'possessive-lexicon');
         continue;
@@ -31,13 +36,13 @@ const lexicon_pass = function(s) {
       continue;
     }
     //contraction lookup
-    found = check_lexicon(t.silent_term);
+    found = check_lexicon(t.silent_term, s);
     if (t.silent_term && found) {
       t.tag(found, 'silent_term-lexicon');
       continue;
     }
     //basic term lookup
-    found = check_lexicon(t.normal);
+    found = check_lexicon(t.normal, s);
     if (found) {
       t.tag(found, 'lexicon-match');
       continue;

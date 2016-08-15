@@ -11,6 +11,7 @@ Object.keys(terms).forEach((k) => {
     //make a termList method..
     all[name] = (ts) => {
       ts.arr = ts.arr.map((t) => {
+        //only apply it
         if (tag === 'Term' || t.pos[tag]) {
           return t.to(method);
         }

@@ -3,8 +3,9 @@ const Sentence = require('../sentence/sentence');
 const TermList = require('../termList/termList');
 const SentenceList = require('../sentenceList/sentenceList');
 const split_sentences = require('./split_sentences');
+const addMethods = require('./addMethods');
 const fns = require('../fns');
-const methods = require('../term/methods');
+
 
 class Text {
   constructor(input, context) {
@@ -15,27 +16,7 @@ class Text {
       c.parent = this; //give it our ref
       return new Sentence(txt, c);
     });
-
-    //add filters
-    Object.keys(methods.filters).forEach((method) => {
-      this[method] = () => {
-        return this.terms()[method]();
-      };
-    });
-    //add map over info methods
-    Object.keys(methods.infos).forEach((method) => {
-      this[method] = () => {
-        return methods.infos[method](this.arr);
-      };
-    });
-    //add transform methods
-    Object.keys(methods.transforms).forEach((method) => {
-      this[method] = () => {
-        this.terms()[method]();
-        return this;
-      };
-    });
-
+    addMethods(this);
   }
   /** return a full termlist of all sentences*/
   terms() {

@@ -5,10 +5,4 @@ const nlp = require('./src/index');
 // const nlp = require('./builds/nlp_compromise');
 // require('./src/log').enable();
 
-let context = {
-  lexicon: {
-    apple: 'Organization'
-  }
-};
-
-nlp('he is nice').terms().toPasttense().pretty();
+nlp('he is about 50 years old').toOrdinal().pretty();

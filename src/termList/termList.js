@@ -5,7 +5,6 @@ const addMethods = require('./addMethods');
 const log = require('../log');
 const SentenceList = require('../sentenceList/sentenceList');
 
-// console.log(methods);
 class TermList {
   constructor(terms, context) {
     this.arr = terms;

@@ -1,4 +1,5 @@
 'use strict';
+const TermList = require('./termList');
 
 let methods = {
 
@@ -18,11 +19,7 @@ let methods = {
     return this;
   },
 
-  /** detach these terms from any pass-by-reference mutations*/
-  clone() {
-    this.arr.map((t) => t.clone());
-    return this;
-  },
+
   /** fake foreach */
   forEach(fn) {
     this.arr.forEach(fn);
@@ -32,11 +29,7 @@ let methods = {
   map(fn) {
     return this.arr.map(fn);
   },
-  /** fake map */
-  filter(fn) {
-    this.arr = this.arr.filter(fn);
-    return this;
-  },
+
   /** terms[0] wrapper */
   first() {
     return this.arr[0];

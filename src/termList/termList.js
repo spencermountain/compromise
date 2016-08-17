@@ -15,10 +15,23 @@ class TermList {
       this[k] = methods[k];
     });
   }
-
+  // /** fake filter */
+  // filter(fn) {
+  //   this.arr = this.arr.filter(fn);
+  //   return new Termlist(this.arr);
+  // }
   get length() {
     return this.arr.length;
   }
 }
-
+/** fake filter */
+TermList.prototype.filter = function(fn) {
+  let arr = this.arr.filter(fn);
+  return new TermList(arr);
+};
+/** detach these terms from any pass-by-reference mutations*/
+TermList.prototype.clone = function() {
+  let arr = this.arr.map((t) => t.clone());
+  return new TermList(arr);
+},
 module.exports = TermList;

@@ -5,4 +5,4 @@ const nlp = require('./src/index');
 // const nlp = require('./builds/nlp_compromise');
 // require('./src/log').enable();
 
-nlp('he is about 50 years old').toOrdinal().pretty();
+nlp('he is about 50 years old').terms().filter((t) => t.pos.Verb).pretty();

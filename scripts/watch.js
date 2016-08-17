@@ -1,11 +1,11 @@
 require('shelljs/global');
-var watch = require('watch')
+var gaze = require('gaze');
 var chalk = require('chalk');
 var options = {
   interval: 1,
   ignoreDotFiles: true,
   wait: 2
-}
+};
 
 var banner = function() {
   var emojis = {
@@ -24,22 +24,28 @@ var banner = function() {
     dress: chalk.red('👗 '),
     happy: chalk.green('😊 '),
     trumpet: chalk.yellow('🎺 ')
-  }
-  var keys = Object.keys(emojis)
-  var r = parseInt(Math.random() * keys.length - 1, 10)
-  return emojis[keys[r]]
-}
+  };
+  var keys = Object.keys(emojis);
+  var r = parseInt(Math.random() * keys.length - 1, 10);
+  return emojis[keys[r]];
+};
 
 var run = function() {
-  console.log(banner())
-  exec('node ./scratch_file.js --debug --color')
-  console.log('\n\n\n\n\n\n\n')
-}
+  console.log(banner());
+  exec('node ./scratch_file.js --debug --color');
+  console.log('\n\n\n\n\n\n\n');
+};
 
-run()
-watch.watchTree('./', options, function() {
-  run()
-})
-// watch.watchTree('./test/unit', options, function(f, curr, prev) {
-//   exec('node ./scripts/test.js')
-// })
+run();
+
+var options = {
+  interval: 1
+};
+gaze(['./scripts/*.js', './src/**/*.js'], options, function(err, watcher) {
+  var watched = this.watched();
+  // // On changed/added/deleted
+  this.on('all', function(event, filepath) {
+    run();
+    console.log(filepath + ' was ' + event);
+  });
+});

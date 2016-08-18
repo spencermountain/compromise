@@ -2,15 +2,7 @@
 //a lexicon is a giant object of known words
 const data = require('./index');
 const fns = require('./fns');
-
 const Term = require('../term/term');
-// const verbConjugate = require('../term/methods/verb/info/conjugation');
-// const verb_conjugate = require('./term/verb/conjugate/conjugate.js');
-// const verb_to_adjective = require('./term/verb/to_adjective.js');
-// const to_comparative = require('./term/adjective/to_comparative.js');
-// const to_superlative = require('./term/adjective/to_superlative.js');
-// const to_adverb = require('./term/adjective/to_adverb.js');
-
 
 let lexicon = {};
 
@@ -86,7 +78,8 @@ const wantVerbs = [
   // 'FutureTense',
   'Infinitive',
   'GerundVerb',
-  'Actor'
+  'Actor',
+  'Adjective'
 ];
 data.verbs.forEach((v) => {
   let t = new Term(v);
@@ -95,6 +88,20 @@ data.verbs.forEach((v) => {
   wantVerbs.forEach((k) => {
     if (obj[k] && !lexicon[obj[k]]) {
       lexicon[obj[k]] = k;
+    // console.log(obj[k], k);
+    }
+  });
+});
+
+//conjugate adjectives
+data.adjectives.forEach((v) => {
+  let t = new Term(v);
+  t.pos.Adjective = true;
+  let obj = t.info('adjconjugations');
+  Object.keys(obj).forEach((k) => {
+    if (obj[k] && !lexicon[obj[k]]) {
+      lexicon[obj[k]] = k;
+    // console.log(obj[k], k);
     }
   });
 });
@@ -113,4 +120,4 @@ module.exports = lexicon;
 // console.log(data.misc);
 // console.log(lexicon.great);
 // console.log(lexicon['']);
-console.log(lexicon.win);
+// console.log(lexicon.win);

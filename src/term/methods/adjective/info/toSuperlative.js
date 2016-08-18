@@ -1,6 +1,6 @@
 //turn 'quick' into 'quickest'
 'use strict';
-const convertables = require('../paths').data.convertables
+const convertables = require('../paths').data.superlatives;
 
 const irregulars = {
   'nice': 'nicest',
@@ -68,7 +68,7 @@ const to_superlative = function(str) {
     }
   }
 
-  if (convertables.hasOwnProperty(str)) {
+  if (convertables.indexOf(str) !== -1) {
     return generic_transformation(str);
   }
 

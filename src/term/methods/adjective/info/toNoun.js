@@ -4,7 +4,8 @@
 const to_noun = function(w) {
   const irregulars = {
     'clean': 'cleanliness',
-    'naivety': 'naivety'
+    'naivety': 'naivety',
+    hurt: 'hurt'
   };
   if (!w) {
     return '';

@@ -2,6 +2,7 @@
 const checkIrregulars = require('./irregulars');
 const suffixPass = require('./suffixes');
 const toActor = require('./toActor');
+const toAdjective = require('./toAdjective');
 const generic = require('./generic');
 
 //turn a verb into all it's forms
@@ -41,6 +42,9 @@ const conjugate = function(t) {
       all.Actor = toActor(inf);
     }
   }
+  //add adjective, like walk->walkable
+  all.Adjective = toAdjective(all.Infinitive);
+
   //use fallback, generic transformations
   Object.keys(all).forEach((k) => {
     if (!all[k] && generic[k]) {

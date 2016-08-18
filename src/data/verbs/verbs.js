@@ -221,7 +221,8 @@ let arr = [
   'minus',
   'plus',
   'multiply',
-  'divide'
+  'divide',
+  'win'
 ];
 
 module.exports = fns.uncompress_suffixes(arr, compressed);

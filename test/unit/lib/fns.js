@@ -9,8 +9,8 @@ const has_pos = function(terms, tags) {
   if (terms.length !== tags.length) {
     return false;
   }
-  for(var i = 0; i < terms.length; i++) {
-    if (!terms[i].pos[tags[i]]) {
+  for(var i = 0; i < terms.arr.length; i++) {
+    if (!terms.arr[i].pos[tags[i]]) {
       return false;
     }
   }
@@ -21,7 +21,7 @@ const pos_test = function(terms, tags, t) {
   terms = terms || [];
   var str = '';
   var got = terms.map(function(term) {
-    str += ' ' + term.text;
+    str += ' ' + term.normal;
     return Object.keys(term.pos).join('|');
   }).join(', ');
   var msg = '"' + str.trim() + '" has tags [' + tags.join(',') + ']   (' + got + ')';

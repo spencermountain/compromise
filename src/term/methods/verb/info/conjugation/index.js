@@ -43,7 +43,7 @@ const conjugate = function(t) {
   }
   //use fallback, generic transformations
   Object.keys(all).forEach((k) => {
-    if (!all[k]) {
+    if (!all[k] && generic[k]) {
       all[k] = generic[k](all);
     }
   });

@@ -19,7 +19,6 @@ let methods = {
     return this;
   },
 
-
   /** fake foreach */
   forEach(fn) {
     this.arr.forEach(fn);

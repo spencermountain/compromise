@@ -1,8 +1,17 @@
 'use strict';
 //a lexicon is a giant object of known words
-
 const data = require('./index');
 const fns = require('./fns');
+
+const Term = require('../term/term');
+// const verbConjugate = require('../term/methods/verb/info/conjugation');
+// const verb_conjugate = require('./term/verb/conjugate/conjugate.js');
+// const verb_to_adjective = require('./term/verb/to_adjective.js');
+// const to_comparative = require('./term/adjective/to_comparative.js');
+// const to_superlative = require('./term/adjective/to_superlative.js');
+// const to_adverb = require('./term/adjective/to_adverb.js');
+
+
 let lexicon = {};
 
 const addObj = (o) => {
@@ -18,7 +27,6 @@ const addArr = (arr, tag) => {
   }
 };
 //let a rip.
-addObj(data.misc);
 addObj(data.abbreviations);
 addObj(data.firstnames);
 addArr(data.places.airports, 'Place');
@@ -71,6 +79,30 @@ Object.keys(data.irregular_verbs).forEach((k) => {
   });
 });
 
+//conjugate verblist
+const wantVerbs = [
+  'PastTense',
+  'PresentTense',
+  // 'FutureTense',
+  'Infinitive',
+  'GerundVerb',
+  'Actor'
+];
+data.verbs.forEach((v) => {
+  let t = new Term(v);
+  t.pos.Verb = true;
+  let obj = t.info('conjugations');
+  wantVerbs.forEach((k) => {
+    if (obj[k] && !lexicon[obj[k]]) {
+      lexicon[obj[k]] = k;
+    }
+  });
+});
+
+//these ad-hoc manual ones have priority
+addObj(data.misc);
+
+
 //for safety (these are sneaky)
 delete lexicon[''];
 delete lexicon[' '];
@@ -79,5 +111,6 @@ module.exports = lexicon;
 
 // console.log(Object.keys(data));
 // console.log(data.misc);
-// console.log(lexicon.understood);
+// console.log(lexicon.great);
 // console.log(lexicon['']);
+console.log(lexicon.win);

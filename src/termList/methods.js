@@ -3,10 +3,6 @@ const TermList = require('./termList');
 
 let methods = {
 
-  match: (str) => {
-    return null;
-  },
-
   /** remove all these selected terms from their sentences */
   remove: () => {
     console.log('---removetermlist--');

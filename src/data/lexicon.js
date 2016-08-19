@@ -27,7 +27,7 @@ addArr(data.places.countries, 'Country');
 addArr(data.uncountables, 'Noun');
 addArr(data.organizations, 'Organization');
 addArr(data.groups, 'Noun');
-// addArr(data.adjectives, 'Adjective');
+addArr(data.adjectives, 'Adjective');
 addArr(data.superlatives, 'Adjective');
 addArr(data.currencies, 'Currency');
 addArr(data.phrasal_verbs, 'PhrasalVerb');
@@ -116,8 +116,4 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(Object.keys(data));
-// console.log(data.misc);
-// console.log(lexicon.great);
-// console.log(lexicon['']);
-// console.log(lexicon.win);
+// console.log(lexicon.good);

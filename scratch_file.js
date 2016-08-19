@@ -3,11 +3,7 @@
 //use it for messing around.
 const nlp = require('./src/index');
 // const nlp = require('./builds/nlp_compromise');
-require('./src/log').enable();
-let context = {
-  lexicon: {
-    'donkey kong': 'City'
-  }
-};
+// require('./src/log').enable();
 
-nlp('donkey kong', context).terms().pretty();
+let str = 'he is so good. spencer was so nice';
+nlp(str).terms().match('[copula] So').pretty();

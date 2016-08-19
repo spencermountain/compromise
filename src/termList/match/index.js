@@ -49,7 +49,7 @@ const tryHere = (terms, t, regs) => {
 //
 const match = function(terms, str) {
   let regs = syntax(str);
-  console.log(regs);
+  // console.log(regs);
   let result = new Result();
   for(let t = 0; t < terms.length; t++) {
     let m = tryHere(terms, t, regs);

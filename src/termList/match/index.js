@@ -16,6 +16,17 @@ const isFullMatch = (term, reg) => {
         return true;
       }
     }
+    return false;
+  }
+  //one-of term-match
+  if (reg.signals.oneOf) {
+    for(let i = 0; i < reg.signals.oneOf.length; i++) {
+      let str = reg.signals.oneOf[i];
+      if (term.normal === str || term.text === str) {
+        return true;
+      }
+    }
+    return false;
   }
   //text-match
   if (reg.normal && term.normal === reg.normal || term.text === reg.normal) {
@@ -38,6 +49,7 @@ const tryHere = (terms, t, regs) => {
 //
 const match = function(terms, str) {
   let regs = syntax(str);
+  console.log(regs);
   let result = new Result();
   for(let t = 0; t < terms.length; t++) {
     let m = tryHere(terms, t, regs);

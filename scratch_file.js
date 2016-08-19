@@ -6,4 +6,4 @@ const nlp = require('./src/index');
 // require('./src/log').enable();
 
 let str = 'he is so good. spencer was so nice';
-nlp(str).terms().match('[copula] So').pretty();
+nlp(str).terms().match('[copula] (so|really)').pretty();

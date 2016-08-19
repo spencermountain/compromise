@@ -47,7 +47,8 @@ const parse_term = function(term, i) {
   if (fns.startsWith(term, '(') && fns.endsWith(term, ')')) {
     term = term.replace(/\)$/, '');
     term = term.replace(/^\(/, '');
-    signals.one_of = true;
+    signals.oneOf = term.split(/\|/g).map((str) => str.toLowerCase());
+    term = null;
   }
   //alias flag
   if (fns.startsWith(term, '~')) {

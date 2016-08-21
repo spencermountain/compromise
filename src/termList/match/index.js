@@ -14,8 +14,10 @@ const startHere = (terms, startAt, regs) => {
   for(let reg_i = 0; reg_i < regs.length; reg_i++) {
     let term = terms.get(term_i);
     if (!term) {
+      console.log(chalk.red('   -dead-end '));
       return null;
     }
+    console.log('\n\n');
     //check a perfect match
     if (perfectMatch(term, regs[reg_i])) {
       term_i += 1;
@@ -25,9 +27,13 @@ const startHere = (terms, startAt, regs) => {
     }
     //skip over silent contraction terms
     if (term.silent_term && !term.normal) {
-      //try the next one
+      //try the next term, but with this regex again
       term_i += 1;
       reg_i -= 1;
+      continue;
+    }
+    //was it optional anways?
+    if (regs[reg_i].optional) {
       continue;
     }
     // console.log(chalk.red('   -dead: ' + terms.get(term_i).normal));

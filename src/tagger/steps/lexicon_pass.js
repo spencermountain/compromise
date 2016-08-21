@@ -28,14 +28,14 @@ const lexicon_pass = function(s) {
       t.tag(found, 'lexicon-match');
       continue;
     }
-    //support contractions manually
+    //support contractions (manually)
     let parts = t.info('contraction') || {};
     found = check_lexicon(parts.start, s);
     if (found) {
       t.tag(found, 'contraction-lexicon');
       continue;
     }
-    //lookup silent_term
+    //support silent_term matches
     found = check_lexicon(t.silent_term, s);
     if (t.silent_term && found) {
       t.tag(found, 'silent_term-lexicon');

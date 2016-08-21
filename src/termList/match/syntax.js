@@ -68,10 +68,12 @@ const parse_term = function(term, i) {
   //a period means anything
   if (term === '.') {
     reg.anyOne = true;
+    term = null;
   }
   //a * means anything
   if (term === '*') {
     reg.any_many = true;
+    term = null;
   }
   reg.normal = term;
   return reg;

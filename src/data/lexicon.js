@@ -116,4 +116,4 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon.good);
+// console.log(lexicon.spencer);

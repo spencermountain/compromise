@@ -22,32 +22,25 @@ const lexicon_pass = function(s) {
   //loop through each term
   for (let i = 0; i < s.arr.length; i++) {
     let t = s.arr[i];
-    //check term without contraction
-    if (t.text.match(/s'$/)) {
-      let reduced = t.normal.replace(/s$/, '');
-      found = check_lexicon(reduced, s);
-      if (found) {
-        t.tag(found, 'possessive-lexicon');
-        continue;
-      }
-    }
-    //don't over-write any known tags
-    if (Object.keys(t.pos).length > 0) {
-      continue;
-    }
-    //contraction lookup
-    found = check_lexicon(t.silent_term, s);
-    if (t.silent_term && found) {
-      t.tag(found, 'silent_term-lexicon');
-      continue;
-    }
     //basic term lookup
     found = check_lexicon(t.normal, s);
     if (found) {
       t.tag(found, 'lexicon-match');
       continue;
     }
-
+    //support contractions manually
+    let parts = t.info('contraction') || {};
+    found = check_lexicon(parts.start, s);
+    if (found) {
+      t.tag(found, 'contraction-lexicon');
+      continue;
+    }
+    //lookup silent_term
+    found = check_lexicon(t.silent_term, s);
+    if (t.silent_term && found) {
+      t.tag(found, 'silent_term-lexicon');
+      continue;
+    }
   }
   return s;
 };

@@ -24,7 +24,7 @@ class Result {
       m.forEach((t) => {
         msg += '\'' + t.normal + '\' ';
       });
-      console.log('    ' + chalk.green('✔️') + chalk.red(msg));
+      console.log('    ' + chalk.green('✔️  ') + chalk.underline(chalk.green(msg)));
     }
   }
 }

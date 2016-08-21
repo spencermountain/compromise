@@ -10,7 +10,7 @@ const info = {
 
   /** the punctuation at the end of this term*/
   endpunctuation: (t) => {
-    let m = t.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/);
+    let m = t.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/i);
     if (m) {
       const allowed = {
         ',': 'comma',
@@ -30,7 +30,7 @@ const info = {
 
   /** interpret a term's hyphenation */
   hyphenation: (t) => {
-    let m = t.text.match(/^([a-z]+)-([a-z]+)$/);
+    let m = t.normal.match(/^([a-z]+)-([a-z]+)$/);
     if (m && m[1] && m[2]) {
       return {
         start: m[1],
@@ -49,7 +49,7 @@ const info = {
       'd': true,
       'm': true
     };
-    let parts = t.text.match(/^([a-z]+)'([a-z][a-z]?)$/);
+    let parts = t.normal.match(/^([a-z]+)'([a-z][a-z]?)$/);
     if (parts && parts[1] && allowed[parts[2]]) {
       //handle n't
       if (parts[2] === 't' && parts[1].match(/[a-z]n$/)) {
@@ -62,10 +62,10 @@ const info = {
       };
     }
     // "flanders' house"
-    parts = t.text.match(/^([a-z]+s)'$/);
+    parts = t.text.match(/[a-z]s'$/i);
     if (parts) {
       return {
-        start: parts[1],
+        start: t.normal.replace(/s'?$/, ''),
         end: ''
       };
     }

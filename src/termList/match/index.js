@@ -5,78 +5,41 @@ const chalk = require('chalk');
 const syntax = require('./syntax');
 const log = require('../../log');
 const path = 'match';
+const matchp = require('./match');
+const perfectMatch = matchp.perfectMatch;
 
-//compare 1 term to one reg
-const isFullMatch = (term, reg) => {
-  if (!term || !reg) {
-    return false;
-  }
-  //support '.' - any
-  if (reg.anyOne) {
-    return true;
-  }
-  //pos-match
-  {
-    if (reg.pos) {
-      for(let i = 0; i < reg.pos.length; i++) {
-        let tag = reg.pos[i];
-        if (term.pos[tag]) {
-          return true;
-        }
-      }
-      return false;
+const startHere = (terms, startAt, regs) => {
+  let term_i = startAt;
+  //check each regex-thing
+  for(let reg_i = 0; reg_i < regs.length; reg_i++) {
+    let term = terms.get(term_i);
+    if (!term) {
+      return null;
     }
-  }
-  //one-of term-match
-  if (reg.oneOf) {
-    for(let i = 0; i < reg.oneOf.length; i++) {
-      let str = reg.oneOf[i];
-      if (term.normal === str || term.text === str) {
-        return true;
-      }
-    }
-    return false;
-  }
-  //text-match
-  if (reg.normal) {
-    if (term.normal === reg.normal || term.text === reg.normal) {
-      return true;
-    }
-    if (term.silent_term === reg.normal) {
-      return true;
-    }
-  }
-  return false;
-};
-
-//go for a new match, starting here.
-const tryHere = (terms, t, regs) => {
-  let term_i = t;
-  for(let r = 0; r < regs.length; r++) {
-    let term = terms.arr[term_i];
-    if (isFullMatch(term, regs[r])) {
+    //check a perfect match
+    if (perfectMatch(term, regs[reg_i])) {
       term_i += 1;
+      let soFar = terms.slice(startAt, term_i).plaintext();
+      log.tell(soFar + '..', path);
       continue;
     }
-    //skip-over contractions
+    //skip over silent contraction terms
     if (term.silent_term && !term.normal) {
+      //try the next one
       term_i += 1;
+      reg_i -= 1;
       continue;
     }
-    //log the reason for stopping
-    if (r > 0) {
-      let msg = terms.slice(t, term_i).plaintext();
-      msg += chalk.red('  ✖️ ' + term.normal);
-      msg = '  ~  ' + msg;
-      log.tell(msg, path);
-    }
+    // console.log(chalk.red('   -dead: ' + terms.get(term_i).normal));
     return null;
   }
-  return terms.slice(t, t + regs.length);
+  return terms.slice(startAt, term_i);
 };
+
 
 //
 const match = function(terms, str) {
+  log.here(path);
   let result = new Result();
   //fail fast
   if (!str || !terms) {
@@ -85,7 +48,7 @@ const match = function(terms, str) {
   let regs = syntax(str);
   // console.log(regs);
   for(let t = 0; t < terms.length; t++) {
-    let m = tryHere(terms, t, regs);
+    let m = startHere(terms, t, regs);
     if (m) {
       result.matches.push(m);
     }

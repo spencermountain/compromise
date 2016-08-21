@@ -35,7 +35,6 @@ const tagger = function(s) {
   s = step.neighbour_step(s);
   s = step.noun_fallback(s);
   s = interpret_contractions(s);
-  s = step.lexicon_step(s); //again, after contractions
   s = step.corrections(s);
   s = step.date_pass(s);
   for (let i = 0; i < 2; i++) {

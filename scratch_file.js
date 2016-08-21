@@ -5,7 +5,9 @@ const nlp = require('./src/index');
 // const nlp = require('./builds/nlp_compromise');
 require('./src/log').enable('match');
 
-let str = 'i think he\'s nice';
-let r = nlp(str);
+// let str = 'i think he\'s nice';
+let r = nlp('Spencers\' good');
 r.terms().pretty();
-r.match('he\'s nice').pretty();
+let m = r.match('[Person] good');
+console.log('\n\n');
+m.pretty();

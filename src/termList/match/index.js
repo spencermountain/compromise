@@ -8,18 +8,48 @@ const path = 'match';
 const matchp = require('./match');
 const perfectMatch = matchp.perfectMatch;
 
+// match everything until this reg
+const greedySkipper = (terms, i, reg) => {
+  for(i = i; i < terms.length; i++) {
+    if (perfectMatch(terms.get(i), reg)) {
+      return i;
+    }
+  }
+  return null;
+};
+
 const startHere = (terms, startAt, regs) => {
   let term_i = startAt;
   //check each regex-thing
   for(let reg_i = 0; reg_i < regs.length; reg_i++) {
     let term = terms.get(term_i);
+    let reg = regs[reg_i];
     if (!term) {
       console.log(chalk.red('   -dead-end '));
       return null;
     }
-    console.log('\n\n');
+    //support asterix
+    if (regs[reg_i].greedy) {
+      let next_reg = regs[reg_i + 1];
+      //easy, just return rest of sentence
+      if (!next_reg) {
+        return terms.slice(startAt, terms.length);
+      }
+      //otherwise, match until this next thing
+      if (next_reg) {
+        let foundAt = greedySkipper(terms, term_i, next_reg);
+        //didn't find it
+        if (!foundAt) {
+          return null;
+        }
+        //continue it further-down place
+        term_i = foundAt + 1;
+        reg_i += 1;
+        continue;
+      }
+    }
     //check a perfect match
-    if (perfectMatch(term, regs[reg_i])) {
+    if (perfectMatch(term, reg)) {
       term_i += 1;
       let soFar = terms.slice(startAt, term_i).plaintext();
       log.tell(soFar + '..', path);
@@ -33,7 +63,7 @@ const startHere = (terms, startAt, regs) => {
       continue;
     }
     //was it optional anways?
-    if (regs[reg_i].optional) {
+    if (reg.optional) {
       continue;
     }
     // console.log(chalk.red('   -dead: ' + terms.get(term_i).normal));

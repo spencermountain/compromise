@@ -65,14 +65,14 @@ const parse_term = function(term, i) {
     reg.extra = true;
   }
 
-  //a period means anything
+  //a period means any one term
   if (term === '.') {
     reg.anyOne = true;
     term = null;
   }
-  //a * means anything
+  //a * means anything until sentence end
   if (term === '*') {
-    reg.any_many = true;
+    reg.greedy = true;
     term = null;
   }
   reg.normal = term;

@@ -29,12 +29,26 @@ test('fancy match', function(t) {
 
     //optional miss
     ['doug is good', 'doug is really? good', 3],
-    ['doug is good', 'doug is .? good', 3], //tricky 'greedy optional' bug
+    // ['doug is good', 'doug is .? good', 3], //tricky 'greedy optional' bug
     ['doug is good', 'doug is [Adverb]? good', 3],
     //optional has
     ['doug is really good', 'doug is really? good', 4],
     ['doug is really good', 'doug is .? good', 4],
     ['doug is really good', 'doug is [Adverb]? good', 4],
+    //asterix empty
+    ['doug is good', 'doug *', 3],
+    ['doug is good', 'doug is *', 3],
+    ['doug is good', '*', 3],
+    //asterix positive
+    ['doug is good', 'doug * good', 3],
+    ['doug is really good', 'doug * good', 4],
+    ['doug is really so very good', 'doug * good', 6],
+    ['doug is really so very good at stuff', 'doug * good', 6],
+    ['we think doug is really so very good at stuff', 'doug * good', 6],
+    //asterix negative
+    ['doug is good', 'doug * bad', 0],
+    ['doug is good', 'spencer * bad', 0],
+    ['doug is good', 'spencer *', 0],
 
   ].forEach(function (a) {
     var r = nlp(a[0]).match(a[1]).first() || [];

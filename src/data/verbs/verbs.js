@@ -5,8 +5,11 @@ const fns = require('../fns');
 
 //suffix-index adjectives
 //  {cial:'cru,spe'} -> 'crucial', 'special'
+
+//suffix-index adjectives
+//  {cial:'cru,spe'} -> 'crucial', 'special'
 let compressed = {
-  prove: 'im,,ap,disap',
+  prove: ',im,ap,disap',
   serve: ',de,ob,re',
   ress: 'exp,p,prog,st,add,d',
   lect: 'ref,se,neg,col,e',
@@ -16,7 +19,7 @@ let compressed = {
   ture: 'frac,lec,tor,fea',
   port: 're,sup,ex,im',
   ate: 'rel,oper,indic,cre,h,activ,estim,particip,d,anticip,evalu',
-  use: 'ca,,over,ref,acc,am,pa',
+  use: ',ca,over,ref,acc,am,pa,ho',
   ive: 'l,rece,d,arr,str,surv,thr,rel',
   are: 'prep,c,comp,sh,st,decl,d,sc',
   ine: 'exam,imag,determ,comb,l,decl,underm,def',
@@ -28,7 +31,7 @@ let compressed = {
   ise: 'ra,exerc,prom,surpr,pra',
   ect: 'susp,dir,exp,def,rej',
   ter: 'en,mat,cen,ca,al',
-  end: 't,dep,,ext,att',
+  end: ',t,dep,ext,att',
   est: 't,sugg,prot,requ,r',
   ock: 'kn,l,sh,bl,unl',
   nge: 'cha,excha,ra,challe,plu',

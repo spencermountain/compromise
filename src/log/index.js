@@ -5,22 +5,22 @@ const fns = require('../fns');
 let enable = false;
 
 module.exports = {
-  enable: () => {
-    enable = true;
+  enable: (str) => {
+    enable = str || true;
   },
-  here: (msg) => {
-    if (enable) {
-      console.log('  ' + chalk.yellow(chalk.underline(msg)));
+  here: (path) => {
+    if (enable === true || enable === path) {
+      console.log('  ' + chalk.yellow(chalk.underline(path)));
     }
   },
-  tell: (str) => {
-    if (enable) {
+  tell: (str, path) => {
+    if (enable === true || enable === path) {
       str = '    ' + chalk.magenta(str);
       console.log(str);
     }
   },
   tag: (t, pos, reason) => {
-    if (enable) {
+    if (enable === true || enable === 'tagger') {
       let title = t.normal || '[' + t.silent_term + ']';
       title = chalk.green(title);
       title = fns.leftPad('\'' + title + '\'', 20);
@@ -28,5 +28,11 @@ module.exports = {
       title = fns.leftPad(title, 54);
       console.log('       ' + title + '(' + reason + ')');
     }
+  },
+  match: (t, reason) => {
+    console.log('       ' + chalk.green('-match-') + '  \'' + chalk.red(t.normal) + '\'  -  ' + reason);
+  },
+  noMatch(t) {
+    console.log('               ' + chalk.magenta('-die \'' + t.normal + '\''));
   }
 };

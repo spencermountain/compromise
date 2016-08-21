@@ -3,7 +3,9 @@
 //use it for messing around.
 const nlp = require('./src/index');
 // const nlp = require('./builds/nlp_compromise');
-// require('./src/log').enable();
+require('./src/log').enable('match');
 
-let str = 'he is so good. spencer was so nice';
-nlp(str).terms().match('[copula] (so|really)').pretty();
+let str = 'i think he\'s nice';
+let r = nlp(str);
+r.terms().pretty();
+r.match('he\'s nice').pretty();

@@ -41,7 +41,7 @@ run();
 var options = {
   interval: 1
 };
-gaze(['./scripts/watch.js', './src/**/*.js'], options, function(err, watcher) {
+gaze(['./scripts/watch.js', './src/**/*.js', './scratch_file.js'], options, function(err, watcher) {
   var watched = this.watched();
   // // On changed/added/deleted
   this.on('all', function(event, filepath) {

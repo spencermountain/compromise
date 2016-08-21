@@ -17,65 +17,64 @@ const fns = require('../../fns.js');
 const parse_term = function(term, i) {
   term = term || '';
   term = term.toLowerCase().trim();
-  let signals = {};
+  let reg = {
+    i: i
+  };
   //order matters!
 
   //leading ^ flag
   if (fns.startsWith(term, '^')) {
     term = term.substr(1, term.length);
-    signals.leading = true;
+    reg.leading = true;
   }
   //trailing $ flag means ending
   if (fns.endsWith(term, '$')) {
     term = term.replace(/\$$/, '');
-    signals.trailing = true;
+    reg.trailing = true;
   }
   //optional flag
   if (fns.endsWith(term, '?')) {
     term = term.replace(/\?$/, '');
-    signals.optional = true;
+    reg.optional = true;
   }
 
   //pos flag
   if (fns.startsWith(term, '[') && fns.endsWith(term, ']')) {
     term = term.replace(/\]$/, '');
     term = term.replace(/^\[/, '');
-    signals.pos = term.split(/\|/g).map((str) => fns.titleCase(str));
+    reg.pos = term.split(/\|/g).map((str) => fns.titleCase(str));
     term = null;
   }
   //one_of options flag
   if (fns.startsWith(term, '(') && fns.endsWith(term, ')')) {
     term = term.replace(/\)$/, '');
     term = term.replace(/^\(/, '');
-    signals.oneOf = term.split(/\|/g).map((str) => str.toLowerCase());
+    reg.oneOf = term.split(/\|/g).map((str) => str.toLowerCase());
     term = null;
   }
   //alias flag
   if (fns.startsWith(term, '~')) {
     term = term.replace(/^\~/, '');
     term = term.replace(/\~$/, '');
-    signals.alias = true;
+    reg.alias = true;
   }
   //addition flag
   if (fns.startsWith(term, '+')) {
     term = term.replace(/^\+/, '');
     term = term.replace(/\+$/, '');
-    signals.extra = true;
+    reg.extra = true;
   }
 
   //a period means anything
   if (term === '.') {
-    signals.any_one = true;
+    reg.anyOne = true;
   }
   //a * means anything
   if (term === '*') {
-    signals.any_many = true;
+    reg.any_many = true;
   }
-  return {
-    normal: term,
-    signals: signals,
-    i: i
-  };
+  reg.normal = term;
+  return reg;
 };
 // console.log(parse_term('(one|1) (two|2)'));
 

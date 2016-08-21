@@ -1,5 +1,6 @@
 'use strict';
 const TermList = require('./termList');
+const match = require('./match');
 
 let methods = {
 
@@ -88,6 +89,10 @@ let methods = {
   /** grab nth element, substitute for bracket notation */
   get(n) {
     return this.arr[n];
+  },
+  /** use a regex-like match for term subsets */
+  match(reg) {
+    return match(this, reg);
   }
 };
 

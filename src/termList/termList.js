@@ -5,8 +5,6 @@ const addMethods = require('./addMethods');
 const methods = require('./methods');
 const log = require('../log');
 const SentenceList = require('../sentenceList/sentenceList');
-const match = require('./match');
-
 
 class TermList {
   constructor(terms, context) {
@@ -35,11 +33,6 @@ TermList.prototype.filter = function(fn) {
 TermList.prototype.clone = function() {
   let arr = this.arr.map((t) => t.clone());
   return new TermList(arr);
-};
-
-/** use a regex-like match for term subsets */
-TermList.prototype.match = function(str) {
-  return match(this, str);
 };
 /**fake slice  */
 TermList.prototype.slice = function(start, end) {

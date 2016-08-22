@@ -44,7 +44,7 @@ const is_url = function(str) {
 const web_pass = function(terms) {
   log.here(path);
   for (let i = 0; i < terms.length; i++) {
-    let t = terms[i];
+    let t = terms.get(i);
     let str = t.text.trim().toLowerCase();
     if (is_email(str)) {
       t.tagAs('Email', 'web_pass');

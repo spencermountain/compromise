@@ -1,6 +1,6 @@
 'use strict';
-const Term = require('./term');
-const fns = require('../fns');
+const Term = require('./index');
+const fns = require('../../fns');
 
 module.exports = {
   makeTerm: (str, t) => {

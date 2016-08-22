@@ -1,6 +1,7 @@
 'use strict';
-const Term = require('../../term/term');
-const log = require('../paths').log;
+const paths = require('../paths');
+const Term = paths.Term;
+const log = paths.log;
 const path = 'tagger/combine';
 //merge two term objects.. carefully
 

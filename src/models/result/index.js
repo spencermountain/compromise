@@ -3,22 +3,22 @@ const chalk = require('chalk');
 //like a termList, but an array of termLists
 
 class Result {
-  constructor() {
-    this.matches = [];
+  constructor(arr) {
+    this.arr = arr || [];
   }
   count() {
-    return this.matches.length;
+    return this.arr.length;
   }
   first() {
-    return this.matches[0];
+    return this.arr[0];
   }
   last() {
-    return this.matches[this.matches.length - 1];
+    return this.arr[this.arr.length - 1];
   }
   pretty() {
-    let matches = this.matches;
-    for(let i = 0; i < matches.length; i++) {
-      let m = matches[i];
+    let arr = this.arr;
+    for(let i = 0; i < arr.length; i++) {
+      let m = arr[i];
       console.log('---' + i + '---');
       let msg = '';
       m.forEach((t) => {

@@ -1,11 +1,12 @@
 'use strict';
 const set_tag = require('./tag').set_tag;
-const methods = require('./methods');
 const normalize = require('./normalize');
-
-const fns = require('../fns');
+const fns = require('../../fns');
 const build_whitespace = require('./whitespace');
-// console.log(methods);
+const methods = {
+  info: {},
+  is: {}
+};
 
 class Term {
   constructor(str, context) {
@@ -75,7 +76,7 @@ class Term {
     if (methods.info[str]) {
       return methods.info[str](this);
     } else {
-      console.log('missing \'info\' method ' + str);
+      // console.log('missing \'info\' method ' + str);
     }
     return null;
   }

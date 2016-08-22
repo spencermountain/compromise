@@ -3,9 +3,9 @@ const log = require('../paths').log;
 const rules = require('./data/punct_rules');
 const path = 'tagger/punctuation';
 
-const punctuation_step = function(s) {
+const punctuation_step = function(ts) {
   log.here(path);
-  s.arr.forEach((t) => {
+  ts.forEach((t) => {
     //don't over-write any known tags
     if (Object.keys(t.tag).length > 0) {
       return;
@@ -20,7 +20,7 @@ const punctuation_step = function(s) {
     }
 
   });
-  return s;
+  return ts;
 };
 
 module.exports = punctuation_step;

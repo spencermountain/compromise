@@ -2,7 +2,7 @@
 //a lexicon is a giant object of known words
 const data = require('./index');
 const fns = require('./fns');
-const Term = require('../term/term');
+const Term = require('../models/term');
 
 let lexicon = {};
 
@@ -84,7 +84,7 @@ const wantVerbs = [
 data.verbs.forEach((v) => {
   let t = new Term(v);
   t.tag.Verb = true;
-  let obj = t.info('conjugations');
+  let obj = t.info('conjugations') || {};
   wantVerbs.forEach((k) => {
     if (obj[k] && !lexicon[obj[k]]) {
       lexicon[obj[k]] = k;
@@ -97,7 +97,7 @@ data.verbs.forEach((v) => {
 data.adjectives.forEach((v) => {
   let t = new Term(v);
   t.tag.Adjective = true;
-  let obj = t.info('adjconjugations');
+  let obj = t.info('adjconjugations') || {};
   Object.keys(obj).forEach((k) => {
     if (obj[k] && !lexicon[obj[k]]) {
       lexicon[obj[k]] = k;

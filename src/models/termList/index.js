@@ -1,33 +1,32 @@
 'use strict';
-
-const helpers = require('./helpers');
-const addMethods = require('./addMethods');
-const methods = require('./methods');
-const log = require('../log');
-const SentenceList = require('../sentenceList/sentenceList');
+const log = require('../../logger');
 
 class TermList {
   constructor(terms, context) {
     this.arr = terms;
     this.context = context || {};
-    addMethods(this);
-    Object.keys(methods).forEach((k) => {
-      this[k] = methods[k];
-    });
+    this.get = (n) => {
+      return this.arr[n];
+    };
   }
-  // /** fake filter */
-  // filter(fn) {
-  //   this.arr = this.arr.filter(fn);
-  //   return new Termlist(this.arr);
-  // }
   get length() {
     return this.arr.length;
+  }
+  pretty() {
+    this.arr.forEach((t) => {
+      t.render('pretty');
+    });
   }
 }
 /** fake filter */
 TermList.prototype.filter = function(fn) {
   let arr = this.arr.filter(fn);
   return new TermList(arr);
+};
+/** fake foreach */
+TermList.prototype.forEach = function(fn) {
+  let arr = this.arr.forEach(fn);
+  return this;
 };
 /** detach these terms from any pass-by-reference mutations*/
 TermList.prototype.clone = function() {

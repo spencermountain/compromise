@@ -12,7 +12,7 @@ Object.keys(terms).forEach((k) => {
     all[name] = (ts) => {
       ts.arr = ts.arr.map((t) => {
         //only apply it
-        if (tag === 'Term' || t.pos[tag]) {
+        if (tag === 'Term' || t.tag[tag]) {
           return t.to(method);
         }
         return t;

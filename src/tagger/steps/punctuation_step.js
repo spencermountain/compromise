@@ -7,14 +7,14 @@ const punctuation_step = function(s) {
   log.here(path);
   s.arr.forEach((t) => {
     //don't over-write any known tags
-    if (Object.keys(t.pos).length > 0) {
+    if (Object.keys(t.tag).length > 0) {
       return;
     }
     //do punctuation rules (on t.text)
     for(let i = 0; i < rules.length; i++) {
       let r = rules[i];
       if (t.text.match(r.reg)) {
-        t.tag(r.pos, 'punctuation-rule- "' + r.str + '"');
+        t.tagAs(r.tag, 'punctuation-rule- "' + r.str + '"');
         return;
       }
     }

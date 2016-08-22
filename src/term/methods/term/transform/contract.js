@@ -26,7 +26,7 @@ const contract = function(t) {
       return t;
     }
     //try a standard n't rule
-    if (t.pos.Modal || t.pos.Copula || contractable[t.normal]) {
+    if (t.tag.Modal || t.tag.Copula || contractable[t.normal]) {
       t.silent_term = t.text;
       t.text = t.text + 'n\'t';
       after.silent_term = after.text;

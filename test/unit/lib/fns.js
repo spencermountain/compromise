@@ -10,7 +10,7 @@ const has_pos = function(terms, tags) {
     return false;
   }
   for(var i = 0; i < terms.arr.length; i++) {
-    if (!terms.arr[i].pos[tags[i]]) {
+    if (!terms.arr[i].tag[tags[i]]) {
       return false;
     }
   }
@@ -22,7 +22,7 @@ const pos_test = function(terms, tags, t) {
   var str = '';
   var got = terms.map(function(term) {
     str += ' ' + term.normal;
-    return Object.keys(term.pos).join('|');
+    return Object.keys(term.tag).join('|');
   }).join(', ');
   var msg = '"' + str.trim() + '" has tags [' + tags.join(',') + ']   (' + got + ')';
   t.equal(has_pos(terms, tags), true, msg);

@@ -77,13 +77,13 @@ const wantVerbs = [
   'PresentTense',
   // 'FutureTense',
   'Infinitive',
-  'GerundVerb',
+  'Gerund',
   'Actor',
   'Adjective'
 ];
 data.verbs.forEach((v) => {
   let t = new Term(v);
-  t.pos.Verb = true;
+  t.tag.Verb = true;
   let obj = t.info('conjugations');
   wantVerbs.forEach((k) => {
     if (obj[k] && !lexicon[obj[k]]) {
@@ -96,7 +96,7 @@ data.verbs.forEach((v) => {
 //conjugate adjectives
 data.adjectives.forEach((v) => {
   let t = new Term(v);
-  t.pos.Adjective = true;
+  t.tag.Adjective = true;
   let obj = t.info('adjconjugations');
   Object.keys(obj).forEach((k) => {
     if (obj[k] && !lexicon[obj[k]]) {
@@ -116,4 +116,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon.spencer);
+// console.log(lexicon.singing);
+// let t = new Term('sing');
+// t.tag.Verb = true;
+// console.log(t.info('conjugations'));

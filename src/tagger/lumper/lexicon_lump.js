@@ -14,7 +14,7 @@ const lexicon_lump = function(s) {
     let str = s.arr[i].normal + ' ' + s.arr[i + 1].normal;
     if (lexicon[str] || userLex[str]) {
       combine(s, i);
-      s.arr[i].tag(lexicon[str], 'multiples-lexicon');
+      s.arr[i].tagAs(lexicon[str], 'multiples-lexicon');
     }
   }
 

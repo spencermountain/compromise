@@ -29,7 +29,7 @@ const parse_term = function(term, i) {
   if (fns.startsWith(term, '[') && fns.endsWith(term, ']')) {
     term = term.replace(/\]$/, '');
     term = term.replace(/^\[/, '');
-    reg.pos = term.split(/\|/g).map((str) => fns.titleCase(str));
+    reg.tag = term.split(/\|/g).map((str) => fns.titleCase(str));
     term = null;
   }
   //one_of options flag

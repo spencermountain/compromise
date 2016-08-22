@@ -19,7 +19,7 @@ const predictForm = function(term) {
   //do we already know the form?
   let keys = Object.keys(goodTypes);
   for (let i = 0; i < keys.length; i++) {
-    if (term.pos[keys[i]]) {
+    if (term.tag[keys[i]]) {
       log.tell('predicted ' + keys[i] + ' from pos', path);
       return keys[i];
     }

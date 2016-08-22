@@ -3,7 +3,7 @@ const rules = require('./data/rules');
 const mapping = {
   pr: 'PresentTense',
   pa: 'PastTense',
-  gr: 'GerundVerb',
+  gr: 'Gerund',
   prt: 'Participle',
   ar: 'Actor',
 };

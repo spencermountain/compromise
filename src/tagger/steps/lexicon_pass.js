@@ -25,20 +25,20 @@ const lexicon_pass = function(s) {
     //basic term lookup
     found = check_lexicon(t.normal, s);
     if (found) {
-      t.tag(found, 'lexicon-match');
+      t.tagAs(found, 'lexicon-match');
       continue;
     }
     //support contractions (manually)
     let parts = t.info('contraction') || {};
     found = check_lexicon(parts.start, s);
     if (found) {
-      t.tag(found, 'contraction-lexicon');
+      t.tagAs(found, 'contraction-lexicon');
       continue;
     }
     //support silent_term matches
     found = check_lexicon(t.silent_term, s);
     if (t.silent_term && found) {
-      t.tag(found, 'silent_term-lexicon');
+      t.tagAs(found, 'silent_term-lexicon');
       continue;
     }
   }

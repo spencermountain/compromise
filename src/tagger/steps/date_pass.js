@@ -13,7 +13,7 @@ const preDate = {
 
 //ensure a year is approximately typical for common years
 const isYear = (t) => {
-  if (t.pos.Ordinal) {
+  if (t.tag.Ordinal) {
     return false;
   }
   let num = t.info('number');
@@ -26,7 +26,7 @@ const isYear = (t) => {
 //rules for two-term dates
 const twoDates = [
   {
-    condition: (a, b) => (preDate[a.normal] && b.pos.Date),
+    condition: (a, b) => (preDate[a.normal] && b.tag.Date),
     reason: 'predate-date'
   },
 ];
@@ -34,11 +34,11 @@ const twoDates = [
 //rules for three-term dates
 const threeDates = [
   {
-    condition: (a, b, c) => (a.pos.Month && b.pos.Value && c.pos.Cardinal && isYear(c)),
+    condition: (a, b, c) => (a.tag.Month && b.tag.Value && c.tag.Cardinal && isYear(c)),
     reason: 'month-value-year'
   },
   {
-    condition: (a, b, c) => (a.pos.Date && b.normal === 'and' && c.pos.Date),
+    condition: (a, b, c) => (a.tag.Date && b.normal === 'and' && c.tag.Date),
     reason: 'date-and-date'
   },
 ];
@@ -54,16 +54,16 @@ const datePass = function(s) {
     if (c) {
       for(let o = 0; o < threeDates.length; o++) {
         if (threeDates[o].condition(a, b, c)) {
-          a.tag('Date', threeDates[o].reason);
-          b.tag('Date', threeDates[o].reason);
-          c.tag('Date', threeDates[o].reason);
+          a.tagAs('Date', threeDates[o].reason);
+          b.tagAs('Date', threeDates[o].reason);
+          c.tagAs('Date', threeDates[o].reason);
         }
       }
     }
     for(let o = 0; o < twoDates.length; o++) {
       if (twoDates[o].condition(a, b)) {
-        a.tag('Date', twoDates[o].reason);
-        b.tag('Date', twoDates[o].reason);
+        a.tagAs('Date', twoDates[o].reason);
+        b.tagAs('Date', twoDates[o].reason);
       }
     }
   }

@@ -8,17 +8,17 @@ const noun_fallback = function(s) {
   for (let i = 0; i < s.arr.length; i++) {
     let t = s.arr[i];
     //fail-fast
-    if (t.pos.Noun || t.pos.Verb) {
+    if (t.tag.Noun || t.tag.Verb) {
       continue;
     }
     //ensure it only has the tag 'Term'
-    let tags = Object.keys(t.pos);
+    let tags = Object.keys(t.tag);
     if (tags.length === 0) {
       //ensure it's atleast word-looking
       if (t.is('word') === false) {
         continue;
       }
-      t.tag('Noun', 'noun-fallback');
+      t.tagAs('Noun', 'noun-fallback');
     }
   }
   return s;

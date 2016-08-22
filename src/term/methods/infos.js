@@ -10,7 +10,7 @@ Object.keys(terms).forEach((k) => {
     all[method] = (ts) => {
       return ts.map((t) => {
         //null, if it doesn't apply
-        if (!t.pos[tag]) {
+        if (!t.tag[tag]) {
           return null;
         }
         return t.info(method);

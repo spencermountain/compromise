@@ -13,37 +13,37 @@ const neighbour_step = function(s) {
   log.here(path);
   s.arr.forEach((t, n) => {
     //is it still unknown?
-    let termTags = Object.keys(t.pos);
+    let termTags = Object.keys(t.tag);
     if (termTags.length === 0) {
       let lastTerm = s.arr[n - 1];
       let nextTerm = s.arr[n + 1];
       //look at last word for clues
       if (lastTerm && afterThisWord[lastTerm.normal]) {
-        t.tag(afterThisWord[lastTerm.normal], 'neighbour-after-"' + lastTerm.normal + '"');
+        t.tagAs(afterThisWord[lastTerm.normal], 'neighbour-after-"' + lastTerm.normal + '"');
         return;
       }
       //look at next word for clues
       if (nextTerm && beforeThisWord[nextTerm.normal]) {
-        t.tag(beforeThisWord[nextTerm.normal], 'neighbour-before-"' + nextTerm.normal + '"');
+        t.tagAs(beforeThisWord[nextTerm.normal], 'neighbour-before-"' + nextTerm.normal + '"');
         return;
       }
       //look at the last POS for clues
       let tags = [];
       if (lastTerm) {
-        tags = Object.keys(lastTerm.pos);
+        tags = Object.keys(lastTerm.tag);
         for (let i = 0; i < tags.length; i++) {
           if (afterThisPos[tags[i]]) {
-            t.tag(afterThisPos[tags[i]], 'neighbour-after-[' + tags[i] + ']');
+            t.tagAs(afterThisPos[tags[i]], 'neighbour-after-[' + tags[i] + ']');
             return;
           }
         }
       }
       //look at the next POS for clues
       if (nextTerm) {
-        tags = Object.keys(nextTerm.pos);
+        tags = Object.keys(nextTerm.tag);
         for (let i = 0; i < tags.length; i++) {
           if (beforeThisPos[tags[i]]) {
-            t.tag(beforeThisPos[tags[i]], 'neighbour-before-[' + tags[i] + ']');
+            t.tagAs(beforeThisPos[tags[i]], 'neighbour-before-[' + tags[i] + ']');
             return;
           }
         }

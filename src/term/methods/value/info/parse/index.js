@@ -21,7 +21,7 @@ const parse = function(t) {
   log.here('parseNumber', path);
   let str = t.normal;
   //handle a string of mostly numbers
-  if (t.pos['Numeric'] || str.match(/^[0-9]+(st|nd|rd|th)?$/)) {
+  if (t.tag['Numeric'] || str.match(/^[0-9]+(st|nd|rd|th)?$/)) {
     return parseNumeric(str);
   }
   let modifier = findModifiers(str);

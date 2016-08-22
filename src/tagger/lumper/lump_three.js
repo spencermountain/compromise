@@ -18,7 +18,7 @@ const lump_three = function(s) {
         //merge A+C
         combine(s, i);
         //tag it as POS
-        s.arr[i].tag(do_three[o].result, 'lump-three (' + do_three[o].reason + ')');
+        s.arr[i].tagAs(do_three[o].result, 'lump-three (' + do_three[o].reason + ')');
       }
     }
   }

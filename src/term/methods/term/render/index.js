@@ -31,12 +31,12 @@ module.exports = {
     return {
       text: t.text,
       normal: t.render('normal'),
-      tags: Object.keys(t.pos)
+      tags: Object.keys(t.tag)
     };
   },
   /** pretty-print information for the console */
   pretty: (t) => {
-    let tags = Object.keys(t.pos).map((tag) => {
+    let tags = Object.keys(t.tag).map((tag) => {
       if (colors[tag]) {
         return colors[tag](tag);
       }

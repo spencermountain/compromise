@@ -13,7 +13,7 @@ const verb = {
     if (aux[t.normal] || aux[t.silent_term]) {
       return true
     }
-    if (t.pos.Modal) {
+    if (t.tag.Modal) {
       return true
     }
     return false

@@ -10,7 +10,7 @@ const capital_logic = function(s) {
     let t = s.arr[i];
     //has a capital, but isn't too weird.
     if (t.is('titleCase') && t.is('word')) {
-      t.tag('Noun', 'capital-step');
+      t.tagAs('Noun', 'capital-step');
     }
   }
   return s;

@@ -6,7 +6,7 @@ const tagset = require('../tags');
 //check if the term is compatible with a pos tag.
 const canBe = (term, tag) => {
   //already compatible..
-  if (term.pos[tag]) {
+  if (term.tag[tag]) {
     return true;
   }
   //unknown tag..
@@ -17,7 +17,7 @@ const canBe = (term, tag) => {
   //consult tagset's incompatible tags
   let not = Object.keys(tagset[tag].not);
   for (let i = 0; i < not.length; i++) {
-    if (term.pos[not[i]]) {
+    if (term.tag[not[i]]) {
       return false;
     }
   }
@@ -26,14 +26,14 @@ const canBe = (term, tag) => {
 
 const set_tag = function(term, tag, reason) {
   //fail-fast
-  if (!term || !tag || term.pos[tag]) {
+  if (!term || !tag || term.tag[tag]) {
     return;
   }
-  term.pos[tag] = true;
-  log.tag(term, tag, reason);
+  term.tag[tag] = true;
+  log.tagAs(term, tag, reason);
   //reset term, if necessary
   if (canBe(term, tag) === false) {
-    term.pos = {};
+    term.tag = {};
   }
   if (!tagset[tag]) {
     console.warn('unknown tag ' + tag + ' - ' + reason);
@@ -42,9 +42,9 @@ const set_tag = function(term, tag, reason) {
   //also set tags by deduction
   let tags = tagset[tag].is;
   for (let i = 0; i < tags.length; i++) {
-    if (!term.pos[tags[i]]) {
-      log.tag(term, tags[i], 'deduction');
-      term.pos[tags[i]] = true;
+    if (!term.tag[tags[i]]) {
+      log.tagAs(term, tags[i], 'deduction');
+      term.tag[tags[i]] = true;
     }
   }
   return;

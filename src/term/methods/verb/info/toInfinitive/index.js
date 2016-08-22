@@ -16,7 +16,7 @@ const verb_mapping = () => {
 irregulars = verb_mapping()
 
 const toInfinitive = function(t) {
-  if (t.pos.Infinitive) {
+  if (t.tag.Infinitive) {
     return t.normal
   }
   //check the irregular verb conjugations

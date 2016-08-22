@@ -4,7 +4,7 @@ const rules = require('./rules')
 
 //first, try to guess based on existing tags
 const couldEvenBePlural = (t) => {
-  if (t.pos.Person || t.pos.Value || t.pos.Organization || t.pos.Date) {
+  if (t.tag.Person || t.tag.Value || t.tag.Organization || t.tag.Date) {
     return false
   }
   return true

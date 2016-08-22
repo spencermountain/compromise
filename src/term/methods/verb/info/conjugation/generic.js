@@ -4,7 +4,7 @@ const fns = require('./paths').fns;
 
 const generic = {
 
-  GerundVerb: (o) => {
+  Gerund: (o) => {
     let inf = o.Infinitive;
     if (fns.endsWith(inf, 'e')) {
       return inf.replace(/e$/, 'ing');

@@ -12,10 +12,10 @@ const perfectMatch = (term, reg) => {
     return true;
   }
   //pos-match
-  if (reg.pos) {
-    for(let i = 0; i < reg.pos.length; i++) {
-      let tag = reg.pos[i];
-      if (term.pos[tag]) {
+  if (reg.tag) {
+    for(let i = 0; i < reg.tag.length; i++) {
+      let tag = reg.tag[i];
+      if (term.tag[tag]) {
         return true;
       }
     }

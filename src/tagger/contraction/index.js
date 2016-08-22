@@ -17,15 +17,15 @@ const isPossessive = (t) => {
   let after = t.after(3);
   for(let i = 0; i < after.length; i++) {
     //an adjective suggests 'is good'
-    if (after[i].pos.Adjective) {
+    if (after[i].tag.Adjective) {
       return false;
     }
     //a gerund suggests 'is walking'
-    if (after[i].pos.Gerund) {
+    if (after[i].tag.Gerund) {
       return false;
     }
     //a noun suggests a possessive
-    if (after[i].pos.Noun) {
+    if (after[i].tag.Noun) {
       return true;
     }
   }
@@ -38,7 +38,7 @@ const isTense = (t) => {
   let after = t.after(3);
   for(let i = 0; i < after.length; i++) {
     //adjectives are present
-    if (after[i].pos.Adjective) {
+    if (after[i].tag.Adjective) {
       return 'is';
     }
   }
@@ -83,7 +83,7 @@ const interpret_contractions = function(s) {
         //possessive vs contraction
         //(spencer's house vs spencer's cool)
         if (isPossessive(s.arr[i])) {
-          s.arr[i].tag('Possessive');
+          s.arr[i].tagAs('Possessive');
           continue;
         }
         //handle is/was/will ambiguity

@@ -47,16 +47,16 @@ const web_pass = function(terms) {
     let t = terms[i];
     let str = t.text.trim().toLowerCase();
     if (is_email(str)) {
-      t.tag('Email', 'web_pass');
+      t.tagAs('Email', 'web_pass');
     }
     if (is_hashtag(str)) {
-      t.tag('HashTag', 'web_pass');
+      t.tagAs('HashTag', 'web_pass');
     }
     if (is_atmention(str)) {
-      t.tag('AtMention', 'web_pass');
+      t.tagAs('AtMention', 'web_pass');
     }
     if (is_url(str)) {
-      t.tag('Url', 'web_pass');
+      t.tagAs('Url', 'web_pass');
     }
   }
   return terms;

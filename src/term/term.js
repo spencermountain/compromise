@@ -11,7 +11,7 @@ class Term {
   constructor(str, context) {
     this.text = fns.ensureString(str);
     this.context = fns.ensureObject(context);
-    this.pos = {};
+    this.tag = {};
     this.whitespace = build_whitespace(str || '');
     this._text = this.text.trim();
     this.endPunct = this.endPunctuation();
@@ -59,7 +59,7 @@ class Term {
 
   /** queries about this term with true or false answer */
   is(str) {
-    if (this.pos[str]) {
+    if (this.tag[str]) {
       return true;
     }
     str = str.toLowerCase();
@@ -114,7 +114,7 @@ class Term {
   }
 
   /** set the term as this part-of-speech */
-  tag(tag, reason) {
+  tagAs(tag, reason) {
     set_tag(this, tag, reason);
   }
 
@@ -186,7 +186,7 @@ class Term {
   clone() {
     let c = fns.copy(this.context);
     let term = new Term(this.text, c);
-    term.pos = fns.copy(this.pos);
+    term.tag = fns.copy(this.tag);
     term.whitespace = fns.copy(this.whitespace);
     term.silent_term = this.silent_term;
     return term;

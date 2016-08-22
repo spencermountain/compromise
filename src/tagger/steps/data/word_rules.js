@@ -54,7 +54,7 @@ module.exports = [
   ['.ects$', 'PresentTense'],
   ['.tieth$', 'Ordinal'],
   ['.ices$', 'Plural'],
-  ['.pose$', 'Infinitive'],
+  ['.tage$', 'Infinitive'],
   ['.ions$', 'Plural'],
   ['.ean$', 'Adjective'],
   ['.[ia]sed$', 'Adjective'],
@@ -144,7 +144,7 @@ module.exports = [
 ].map(function(a) {
   return {
     reg: new RegExp(a[0]),
-    pos: a[1],
+    tag: a[1],
     str: a[0]
   };
 });

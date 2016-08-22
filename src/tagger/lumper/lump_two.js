@@ -15,7 +15,7 @@ const lump_two = function(s) {
         //merge terms
         combine(s, i);
         //tag it as POS
-        s.arr[i].tag(do_two[o].result, 'lump-two (' + do_two[o].reason + ')');
+        s.arr[i].tagAs(do_two[o].result, 'lump-two (' + do_two[o].reason + ')');
       }
     }
   }

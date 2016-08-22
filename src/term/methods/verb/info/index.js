@@ -32,7 +32,7 @@ const info = {
     };
     let keys = Object.keys(tenses);
     for (let i = 0; i < keys.length; i++) {
-      if (t.pos[keys[i]]) {
+      if (t.tag[keys[i]]) {
         return tenses[keys[i]];
       }
     }

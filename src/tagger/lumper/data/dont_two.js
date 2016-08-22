@@ -7,15 +7,15 @@ module.exports = [
   },
   {
     //if A has a comma, don't chunk it, (unless it's a date)
-    condition: (a) => (a.info('hasComma') && !a.pos.Date),
+    condition: (a) => (a.info('hasComma') && !a.tag.Date),
     reason: 'has a comma'
   },
   { //dont chunk over possessives, eg "spencer's house"
-    condition: (a) => (a.pos['Possessive']),
+    condition: (a) => (a.tag['Possessive']),
     reason: 'has possessive'
   },
   {
-    condition: (a) => (a.pos['Expression'] || a.pos['Phrasal'] || a.pos['Pronoun']),
+    condition: (a) => (a.tag['Expression'] || a.tag['Phrasal'] || a.tag['Pronoun']),
     reason: 'unchunkable pos'
   },
   { //dont chunk contractions (again)
@@ -23,31 +23,31 @@ module.exports = [
     reason: 'is contraction'
   },
   { //"Toronto Montreal"
-    condition: (a, b) => (a.pos['City'] && b.pos['City']),
+    condition: (a, b) => (a.tag['City'] && b.tag['City']),
     reason: 'two cities'
   },
   { //"Canada Cuba"
-    condition: (a, b) => (a.pos['Country'] && b.pos['Country']),
+    condition: (a, b) => (a.tag['Country'] && b.tag['Country']),
     reason: 'two countries'
   },
   { //"John you"
-    condition: (a, b) => (a.pos['Person'] && b.pos['Pronoun']),
+    condition: (a, b) => (a.tag['Person'] && b.tag['Pronoun']),
     reason: 'person-pronoun'
   },
   { //url singleton
-    condition: (a, b) => (a.pos['Url'] || b.pos['Url']),
+    condition: (a, b) => (a.tag['Url'] || b.tag['Url']),
     reason: 'url-no-lump'
   },
   { //Hashtag singleton
-    condition: (a, b) => (a.pos['Hashtag'] || b.pos['Hashtag']),
+    condition: (a, b) => (a.tag['Hashtag'] || b.tag['Hashtag']),
     reason: 'hashtag-no-lump'
   },
   { //Email singleton
-    condition: (a, b) => (a.pos['Email'] || b.pos['Email']),
+    condition: (a, b) => (a.tag['Email'] || b.tag['Email']),
     reason: 'email-no-lump'
   },
   { //Quotation singleton
-    condition: (a, b) => (a.pos['Quotation'] || b.pos['Quotation']),
+    condition: (a, b) => (a.tag['Quotation'] || b.tag['Quotation']),
     reason: 'quotation-no-lump'
   }
 ];

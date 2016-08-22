@@ -19,7 +19,7 @@ module.exports = {
       console.log(str);
     }
   },
-  tag: (t, pos, reason) => {
+  tagAs: (t, pos, reason) => {
     if (enable === true || enable === 'tagger') {
       let title = t.normal || '[' + t.silent_term + ']';
       title = chalk.green(title);

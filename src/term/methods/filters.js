@@ -10,7 +10,7 @@ Object.keys(tags).forEach((k) => {
   let method = fns.toPlural(k).toLowerCase();
   all[method] = (ts) => {
     return ts.filter((t) => {
-      return t.pos[k];
+      return t.tag[k];
     });
   };
 });

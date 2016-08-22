@@ -12,7 +12,7 @@ const conjugate = function(t) {
     PresentTense: null,
     FutureTense: null,
     Infinitive: null,
-    GerundVerb: null,
+    Gerund: null,
     Actor: null,
     PerfectTense: null,
     Pluperfect: null,
@@ -38,7 +38,7 @@ const conjugate = function(t) {
   //to Actor
   if (!all.Actor) {
     //a phrasal like 'step up' can't be an actor -'step upper'?
-    if (!t.pos.PhrasalVerb) {
+    if (!t.tag.PhrasalVerb) {
       all.Actor = toActor(inf);
     }
   }

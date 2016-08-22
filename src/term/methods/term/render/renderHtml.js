@@ -42,7 +42,7 @@ const sanitize = (html) => {
 
 //turn the term into ~properly~ formatted html
 const renderHtml = function(t) {
-  let classes = Object.keys(t.pos).filter((tag) => tag !== 'Term');
+  let classes = Object.keys(t.tag).filter((tag) => tag !== 'Term');
   classes = classes.map(c => 'nlp' + c);
   classes = classes.join(' ');
   let text = sanitize(t.text)

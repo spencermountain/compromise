@@ -29,6 +29,14 @@ const startHere = (terms, startAt, regs) => {
       // console.log(chalk.red('   -dead-end '));
       return null;
     }
+    //catch '^' errors
+    if (reg.starting && term_i > 0) {
+      return null;
+    }
+    //catch '$' errors
+    if (reg.ending && term_i !== terms.length - 1) {
+      return null;
+    }
     //support asterix
     if (regs[reg_i].greedy) {
       let next_reg = regs[reg_i + 1];
@@ -81,7 +89,7 @@ const startHere = (terms, startAt, regs) => {
 };
 
 
-//
+//main event
 const match = function(terms, str) {
   log.here(path);
   let result = new Result();
@@ -92,6 +100,10 @@ const match = function(terms, str) {
   let regs = syntax(str);
   // console.log(regs);
   for(let t = 0; t < terms.length; t++) {
+    //don't loop through if '^'
+    if (regs[0] && regs[0].starting && t > 0) {
+      break;
+    }
     let m = startHere(terms, t, regs);
     if (m) {
       result.matches.push(m);

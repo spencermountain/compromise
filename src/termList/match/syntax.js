@@ -1,36 +1,23 @@
 'use strict';
 // parse a search lookup term find the regex-like syntax in this term
 const fns = require('../../fns.js');
-// flags:
-// {
-//   pos: true,
-//   optional: true,
-//   one_of: true,
-//   alias: true,
-//   leading: true,
-//   trailing: true,
-//   any_one: true,
-//   any_many: true,
-// }
 
-
+//turn 'regex-like' search string into parsed json
 const parse_term = function(term, i) {
   term = term || '';
   term = term.toLowerCase().trim();
-  let reg = {
-    // i: i
-  };
-  //order matters!
+  let reg = {};
+  //order matters..
 
   //leading ^ flag
   if (fns.startsWith(term, '^')) {
     term = term.substr(1, term.length);
-    reg.leading = true;
+    reg.starting = true;
   }
   //trailing $ flag means ending
   if (fns.endsWith(term, '$')) {
     term = term.replace(/\$$/, '');
-    reg.trailing = true;
+    reg.ending = true;
   }
   //optional flag
   if (fns.endsWith(term, '?')) {

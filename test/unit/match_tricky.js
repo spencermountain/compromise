@@ -56,6 +56,17 @@ test('fancy match', function(t) {
     ['Dr. Spencer Smith says hi', 'dr spencer smith', 1],
     ['Dr. Spencer Smith says hi', 'dr spencer smith says', 2],
     ['Lately, Dr. Spencer Smith says hi', 'lately dr spencer smith', 2],
+    //start ^
+    ['in toronto', '^toronto', 0],
+    ['toronto', '^toronto', 1],
+    ['in toronto', '^in toronto', 2],
+    ['in toronto', 'in ^toronto', 0],
+    //end $
+    ['it snows', 'it snows', 2],
+    ['it snows', 'snows$', 1],
+    ['it snows', 'it snows$', 2],
+    ['it snows', 'it$ snows', 0],
+    ['it snows', 'foo$', 0],
   ].forEach(function (a) {
     var r = nlp(a[0]).match(a[1]).first() || [];
     var msg = '\'' + a[0] + '\' - - - \'' + a[1] + '\' - - got:' + r.length + '  want:' + a[2];

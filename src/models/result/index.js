@@ -11,12 +11,6 @@ class Result {
   count() {
     return this.arr.length;
   }
-  first() {
-    return this.arr[0];
-  }
-  last() {
-    return this.arr[this.arr.length - 1];
-  }
   pretty() {
     let arr = this.arr;
     for(let i = 0; i < arr.length; i++) {
@@ -24,10 +18,17 @@ class Result {
     }
   }
 }
+
 Result.prototype.find = function(reg) {
-  let arr = this.arr.map((ts) => {
-    return find(ts, reg)[0]; //fixme
-  });
+  let arr = [];
+  for(let i = 0; i < this.arr.length; i++) {
+    let ms = find(this.arr[i], reg);
+    for(let i = 0; i < ms.length; i++) {
+      arr.push(ms[i]);
+    }
+  }
   return new Result(arr);
 };
+//apply methods
+require('../methods').applyResult(Result);
 module.exports = Result;

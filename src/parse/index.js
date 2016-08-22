@@ -16,9 +16,14 @@ const tokenize = (str, context) => {
   return steps.split_sentences(str).map((sen) => {
     let terms = steps.split_terms(sen);
     terms = terms.map((term) => {
-      return new Term(term, this.context);
+      let c = fns.copy(context);
+      return new Term(term, c);
     });
     terms = new TermList(terms, this.context);
+    //give it parent reference
+    terms.forEach((t) => {
+      t.context.sentence = terms;
+    });
     terms = steps.tagger(terms);
     return terms;
   });

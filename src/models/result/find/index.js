@@ -1,9 +1,8 @@
 'use strict';
 //
-const Result = require('./result');
 const chalk = require('chalk');
 const syntax = require('./syntax');
-const log = require('../../log');
+const log = require('../paths').log;
 const path = 'match';
 const fullMatch = require('./fullMatch');
 const lumpMatch = require('./lumpMatch');
@@ -92,10 +91,10 @@ const startHere = (terms, startAt, regs) => {
 //main event
 const match = function(terms, str) {
   log.here(path);
-  let result = new Result();
+  let matches = [];
   //fail fast
   if (!str || !terms) {
-    return result;
+    return matches;
   }
   let regs = syntax(str);
   // console.log(regs);
@@ -106,10 +105,10 @@ const match = function(terms, str) {
     }
     let m = startHere(terms, t, regs);
     if (m) {
-      result.matches.push(m);
+      matches.push(m);
     }
   }
-  return result;
+  return matches;
 };
 
 module.exports = match;

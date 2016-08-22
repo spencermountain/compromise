@@ -1,5 +1,5 @@
 'use strict';
-const fns = require('../../fns');
+const fns = require('../paths').fns;
 
 const almostMatch = (reg_str, term) => {
   return fns.startsWith(term.normal, reg_str);

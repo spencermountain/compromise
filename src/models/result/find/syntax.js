@@ -1,6 +1,6 @@
 'use strict';
 // parse a search lookup term find the regex-like syntax in this term
-const fns = require('../../fns.js');
+const fns = require('../../../fns.js');
 
 //turn 'regex-like' search string into parsed json
 const parse_term = function(term, i) {
@@ -26,9 +26,8 @@ const parse_term = function(term, i) {
   }
 
   //pos flag
-  if (fns.startsWith(term, '[') && fns.endsWith(term, ']')) {
-    term = term.replace(/\]$/, '');
-    term = term.replace(/^\[/, '');
+  if (fns.startsWith(term, '#')) {
+    term = term.replace(/^\#/, '');
     reg.tag = term.split(/\|/g).map((str) => fns.titleCase(str));
     term = null;
   }

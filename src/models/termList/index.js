@@ -9,13 +9,22 @@ class TermList {
       return this.arr[n];
     };
   }
+
   get length() {
     return this.arr.length;
   }
+
   pretty() {
     this.arr.forEach((t) => {
       t.render('pretty');
     });
+  }
+  /** flatten these terms into text */
+  plaintext() {
+    return this.arr.reduce((str, t) => {
+      str += t.whitespace.before + t.text + t.whitespace.after;
+      return str;
+    }, '');
   }
 }
 /** fake filter */

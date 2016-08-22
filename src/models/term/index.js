@@ -5,7 +5,8 @@ const fns = require('../../fns');
 const build_whitespace = require('./whitespace');
 const methods = {
   info: {},
-  is: {}
+  is: {},
+  render: require('./render')
 };
 
 class Term {

@@ -7,4 +7,6 @@ const nlp = require('./src/index');
 
 // let str = 'i think he\'s nice';
 let r = nlp('he is nice. They walked around.');
-console.log(r.pretty());
+// console.log(r.arr[0]);
+console.log('===');
+console.log(r.find('#noun').pretty());

@@ -1,5 +1,7 @@
 'use strict';
 const chalk = require('chalk');
+const find = require('./find');
+const TermList = require('../termList');
 //like a termList, but an array of termLists
 
 class Result {
@@ -18,14 +20,14 @@ class Result {
   pretty() {
     let arr = this.arr;
     for(let i = 0; i < arr.length; i++) {
-      let m = arr[i];
-      console.log('---' + i + '---');
-      let msg = '';
-      m.forEach((t) => {
-        msg += '\'' + t.normal + '\' ';
-      });
-      console.log('    ' + chalk.green('✔️  ') + chalk.underline(chalk.green(msg)));
+      arr[i].pretty();
     }
   }
 }
+Result.prototype.find = function(reg) {
+  let arr = this.arr.map((ts) => {
+    return find(ts, reg)[0]; //fixme
+  });
+  return new Result(arr);
+};
 module.exports = Result;

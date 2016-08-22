@@ -18,7 +18,7 @@ const parse_term = function(term, i) {
   term = term || '';
   term = term.toLowerCase().trim();
   let reg = {
-    i: i
+    // i: i
   };
   //order matters!
 

@@ -6,8 +6,8 @@ const nlp = require('./src/index');
 require('./src/log').enable('match');
 
 // let str = 'i think he\'s nice';
-let r = nlp('spencer is really so very good at stuff');
+let r = nlp('Dr. Spencer Smith says hi');
 r.terms().pretty();
-let m = r.match('spencer * good');
+let m = r.match('dr spencer smith');
 console.log('\n\n');
 m.pretty();

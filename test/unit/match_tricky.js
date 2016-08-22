@@ -49,7 +49,13 @@ test('fancy match', function(t) {
     ['doug is good', 'doug * bad', 0],
     ['doug is good', 'spencer * bad', 0],
     ['doug is good', 'spencer *', 0],
-
+    // ['doug is good', 'doug * is', 0], //another tricky 'greedy optional' bug
+    //partial lumped matches
+    ['Dr. Spencer Smith says hi', 'dr', 0],
+    ['Dr. Spencer Smith says hi', 'dr spencer', 0],
+    ['Dr. Spencer Smith says hi', 'dr spencer smith', 1],
+    ['Dr. Spencer Smith says hi', 'dr spencer smith says', 2],
+    ['Lately, Dr. Spencer Smith says hi', 'lately dr spencer smith', 2],
   ].forEach(function (a) {
     var r = nlp(a[0]).match(a[1]).first() || [];
     var msg = '\'' + a[0] + '\' - - - \'' + a[1] + '\' - - got:' + r.length + '  want:' + a[2];

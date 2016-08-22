@@ -41,11 +41,14 @@ exports.endsWith = function(str, suffix) {
 };
 
 exports.startsWith = function(str, prefix) {
-  if (str && str.length && str.substr(0, 1) === prefix) {
-    return true;
+  if (str && prefix) {
+    if (str.substr(0, prefix.length) === prefix) {
+      return true;
+    }
   }
   return false;
 };
+
 
 exports.titleCase = (str) => {
   return str.replace(/^[a-z]/, (x) => x.toUpperCase());

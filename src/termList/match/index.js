@@ -5,19 +5,20 @@ const chalk = require('chalk');
 const syntax = require('./syntax');
 const log = require('../../log');
 const path = 'match';
-const matchp = require('./match');
-const perfectMatch = matchp.perfectMatch;
+const fullMatch = require('./fullMatch');
+const lumpMatch = require('./lumpMatch');
 
-// match everything until this reg
+// match everything until this point - '*'
 const greedySkipper = (terms, i, reg) => {
   for(i = i; i < terms.length; i++) {
-    if (perfectMatch(terms.get(i), reg)) {
+    if (fullMatch(terms.get(i), reg)) {
       return i;
     }
   }
   return null;
 };
 
+//try and match all regs, starting at this term
 const startHere = (terms, startAt, regs) => {
   let term_i = startAt;
   //check each regex-thing
@@ -25,7 +26,7 @@ const startHere = (terms, startAt, regs) => {
     let term = terms.get(term_i);
     let reg = regs[reg_i];
     if (!term) {
-      console.log(chalk.red('   -dead-end '));
+      // console.log(chalk.red('   -dead-end '));
       return null;
     }
     //support asterix
@@ -49,10 +50,17 @@ const startHere = (terms, startAt, regs) => {
       }
     }
     //check a perfect match
-    if (perfectMatch(term, reg)) {
+    if (fullMatch(term, reg)) {
       term_i += 1;
       let soFar = terms.slice(startAt, term_i).plaintext();
       log.tell(soFar + '..', path);
+      continue;
+    }
+    //handle partial-matches of lumped terms
+    let lumpUntil = lumpMatch(term, regs, reg_i);
+    if (lumpUntil) {
+      reg_i = lumpUntil;
+      term_i += 1;
       continue;
     }
     //skip over silent contraction terms

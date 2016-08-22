@@ -44,6 +44,4 @@ const perfectMatch = (term, reg) => {
   return false;
 };
 
-module.exports = {
-  perfectMatch: perfectMatch
-};
+module.exports = perfectMatch;

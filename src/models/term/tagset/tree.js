@@ -64,5 +64,9 @@ module.exports = {
   HashTag: true,
   Email: true,
   Auxillary: true,
-  Negative: true
+  Negative: true,
+  VerbPhrase: true,
+  NounPhrase: true,
+  ValuePhrase: true,
+  AdjectivePhrase: true,
 };

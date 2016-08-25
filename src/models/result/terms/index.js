@@ -2,12 +2,16 @@
 const log = require('../paths').log;
 
 class Terms {
-  constructor(terms, context) {
-    this.arr = terms;
+  constructor(arr, context) {
+    this.arr = arr;
     this.context = context || {};
     this.get = (n) => {
       return this.arr[n];
     };
+  // this.terms = this.arr;
+  }
+  term(n) {
+    return this.arr[n];
   }
   get length() {
     return this.arr.length;

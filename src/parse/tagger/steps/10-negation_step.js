@@ -11,11 +11,11 @@ const negation_step = function(ts) {
       //find the next verb/adjective
       for(let o = i + 1; o < ts.length; o++) {
         if (ts.get(o).tag.Verb) {
-          t.tagAs('Verb', 'negate-verb');
+          t.tagAs('VerbPhrase', 'negate-verb');
           break;
         }
         if (ts.get(o).tag.Adjective) {
-          t.tagAs('Adjective', 'negate-adj');
+          t.tagAs('AdjectivePhrase', 'negate-adj');
           break;
         }
       }

@@ -17,6 +17,7 @@ const tagger = function(ts) {
   ts = step.date_step(ts);
   ts = step.auxillary_step(ts);
   ts = step.negation_step(ts);
+  ts = step.adverb_step(ts);
   for (let i = 0; i < 2; i++) {
     ts = lumper.lump_three(ts);
     ts = lumper.lump_two(ts);

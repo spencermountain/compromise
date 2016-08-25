@@ -16,12 +16,12 @@ Result.prototype.verbs = function() {
     let verbs = [];
     for(let o = 0; o < arr[i].length; o++) {
       let t = arr[i].get(o);
-      if (t.tag.Verb) {
+      if (t.tag.Verb || t.tag.VerbPhrase) {
         verbs.push(t);
       }
     }
     if (verbs.length) {
-      verbList.push(new Terms(verbs));
+      verbList.push(verbs);
     }
   }
   return new forms.VerbList(verbList);

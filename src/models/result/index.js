@@ -14,10 +14,10 @@ class Result {
   pretty() {
     let arr = this.arr;
     for(let i = 0; i < arr.length; i++) {
-      arr[i].pretty();
-    // arr[i].forEach((t) => {
-    //   t.render('pretty');
-    // });
+      // arr[i].pretty();
+      arr[i].forEach((t) => {
+        t.render('pretty');
+      });
     }
   }
   plaintext() {

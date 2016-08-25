@@ -53,6 +53,11 @@ const findResult = function(arr, context) {
     log.tell('-VerbList-', path);
     return new forms.VerbList(arr);
   }
+  //a couple ambiguous words is a sentence
+  if (profile.terms >= 3) {
+    log.tell('-sentenceList-', path);
+    return new forms.SentenceList(arr);
+  }
   return new Result(arr);
 };
 

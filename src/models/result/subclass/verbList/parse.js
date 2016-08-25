@@ -6,12 +6,17 @@ const parse = function(arr) {
     adverbs: [],
     negation: null,
     particle: null,
-    prefix: null,
+    // prefix: null,
     root: null
   };
 
   for(let i = 0; i < arr.length; i++) {
     let t = arr.get(i);
+    //tag 'not'
+    if (t.tag.Negative) {
+      parts.negation = t.normal;
+      continue;
+    }
     //auxillaries like 'will have'
     if (t.tag.Auxillary) {
       parts.auxillaries.push(t.normal);
@@ -23,11 +28,8 @@ const parse = function(arr) {
       continue;
     }
     //otherwise, it's the root
-    parts.root = t;
-    console.log(t.tag);
+    parts.root = t.normal;
   }
-  console.log('-');
-  console.log(parts);
   return parts;
 };
 

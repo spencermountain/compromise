@@ -27,7 +27,7 @@ class Term {
     if (this._text !== str) {
       this.whitespace = build_whitespace(str);
     }
-    this.endPunct = this.endPunctuation();
+    // this.endPunct = this.endPunctuation();
     this.normal = normalize(this.text);
   }
   get text() {

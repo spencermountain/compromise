@@ -1,8 +1,8 @@
 'use strict';
 
 
-const applyTermList = function(TermList) {
 
+const addMethods = function(Result) {
 
   let methods = {
     /** remove all these selected terms from their sentences */
@@ -85,15 +85,13 @@ const applyTermList = function(TermList) {
       return helpers.byFreq(this.arr);
     },
     /** grab nth element, substitute for bracket notation */
-    get(n) {
-      return this.arr[n];
-    },
-
-
+    // get(n) {
+    //   return this.arr[n];
+    // },
     /** fake filter */
     filter : function(fn) {
       let arr = this.arr.filter(fn);
-      return new TermList(arr);
+      return new Terms(arr);
     },
     /** fake foreach */
     forEach : function(fn) {
@@ -103,49 +101,23 @@ const applyTermList = function(TermList) {
     /** detach these terms from any pass-by-reference mutations*/
     clone : function() {
       let arr = this.arr.map((t) => t.clone());
-      return new TermList(arr);
+      return new Terms(arr);
     },
     /**fake slice  */
     slice : function(start, end) {
       let arr = this.arr.slice(start, end);
-      return new TermList(arr);
+      return new Terms(arr);
     }
   };
   Object.keys(methods).forEach((k) => {
-    TermList.prototype[k] = methods[k];
-  });
-};
-
-const applyResult = function(Result) {
-  const methods = [
-    'remove',
-    'forEach',
-    'map',
-    'first',
-    'second',
-    'third',
-    'last',
-    'append',
-    'prepend',
-    'replace',
-    'sentences',
-    'plaintext',
-    'pretty',
-    'byFreq',
-    'get',
-    'filter',
-    'clone',
-    'slice'
-  ];
-  methods.forEach((k) => {
     Result.prototype[k] = function() {
       return this.arr.map((ts) => {
         return ts[k]();
       });
     };
   });
+
 };
 module.exports = {
-  applyTermList: applyTermList,
-  applyResult: applyResult,
+  addMethods: addMethods
 };

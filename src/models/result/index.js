@@ -1,7 +1,7 @@
 'use strict';
 const chalk = require('chalk');
 const find = require('./find');
-const TermList = require('../termList');
+const Terms = require('../terms');
 //like a termList, but an array of termLists
 
 class Result {
@@ -15,7 +15,21 @@ class Result {
     let arr = this.arr;
     for(let i = 0; i < arr.length; i++) {
       arr[i].pretty();
+    // arr[i].forEach((t) => {
+    //   t.render('pretty');
+    // });
     }
+  }
+  plaintext() {
+    let arr = this.arr;
+    let str = '';
+    for(let i = 0; i < arr.length; i++) {
+      for(let o = 0; o < arr[i].length; o++) {
+        let t = arr[i].get(o);
+        str += t.plaintext();
+      }
+    }
+    return str;
   }
 }
 
@@ -29,6 +43,11 @@ Result.prototype.find = function(reg) {
   }
   return new Result(arr);
 };
-//apply methods
-require('../methods').applyResult(Result);
+
+
+
 module.exports = Result;
+require('./addMethods');
+
+//apply methods
+// require('./methods').addMethods(Result);

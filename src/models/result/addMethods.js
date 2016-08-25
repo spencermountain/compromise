@@ -2,12 +2,12 @@
 
 const Result = require('./index');
 const forms = {
-  NounList: require('./nounList'),
-  ValueList: require('./valueList'),
-  VerbList: require('./verbList'),
-  SentenceList: require('./sentenceList'),
+  NounList: require('./subclass/nounList'),
+  ValueList: require('./subclass/valueList'),
+  VerbList: require('./subclass/verbList'),
+  SentenceList: require('./subclass/sentenceList'),
 };
-const Terms = require('../terms');
+const Terms = require('./terms');
 
 Result.prototype.verbs = function() {
   let arr = this.arr;

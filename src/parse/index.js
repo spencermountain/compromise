@@ -7,7 +7,7 @@ const steps = {
   findResult: require('./04-result'),
 };
 const Term = require('../models/term');
-const Terms = require('../models/terms');
+const Terms = require('../models/result/terms');
 const fns = require('../fns');
 const log = require('../logger');
 const path = 'parse';

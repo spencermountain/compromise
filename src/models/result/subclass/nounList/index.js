@@ -1,5 +1,5 @@
 'use strict';
-const Result = require('../index');
+const Result = require('../paths').Result;
 
 class NounList extends Result {
   constructor(arr, context) {

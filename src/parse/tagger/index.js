@@ -17,6 +17,7 @@ module.exports = {
     neighbour_step: require('./steps/06-neighbour_step'),
     noun_fallback: require('./steps/07-noun_fallback'),
     date_step: require('./steps/08-date_step'),
-    auxillary_step: require('./steps/09-auxillary_step')
+    auxillary_step: require('./steps/09-auxillary_step'),
+    negation_step: require('./steps/10-negation_step')
   }
 };

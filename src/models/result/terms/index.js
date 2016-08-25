@@ -1,5 +1,5 @@
 'use strict';
-const log = require('../../logger');
+const log = require('../paths').log;
 
 class Terms {
   constructor(terms, context) {

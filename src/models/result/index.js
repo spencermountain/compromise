@@ -1,7 +1,7 @@
 'use strict';
 const chalk = require('chalk');
 const find = require('./find');
-const Terms = require('../terms');
+const Terms = require('./terms');
 //like a termList, but an array of termLists
 
 class Result {

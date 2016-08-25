@@ -3,10 +3,10 @@
 //use it for messing around.
 const nlp = require('./src/index');
 // const nlp = require('./builds/nlp_compromise');
-// require('./src/logger').enable();
+require('./src/logger').enable();
 
 // let str = 'i think he\'s nice';
-let r = nlp('he is nice. we will have walked.');
-// console.log(r.pretty());
+let r = nlp('he is nice. we will not have quickly walked.');
+r.pretty();
 // r.toExclamation();
-r.verbs().pretty();
+// console.log(r.verbs());

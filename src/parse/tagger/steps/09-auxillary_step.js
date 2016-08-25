@@ -18,13 +18,13 @@ const auxillary = {
   'not': true,
 };
 
-const corrections = function(s) {
+const corrections = function(ts) {
   log.here(path);
   //set verbs as auxillaries
-  for(let i = 0; i < s.arr.length; i++) {
-    let t = s.arr[i];
+  for(let i = 0; i < ts.arr.length; i++) {
+    let t = ts.arr[i];
     if (auxillary[t.normal] || auxillary[t.silent_term]) {
-      let next = s.arr[i + 1];
+      let next = ts.arr[i + 1];
       //if next word is a verb
       if (next && (next.tag.Verb || next.tag.Adverb || next.tag.Negative)) {
         t.tagAs('Auxillary', 'corrections-auxillary');
@@ -32,7 +32,7 @@ const corrections = function(s) {
       }
     }
   }
-  return s;
+  return ts;
 };
 
 module.exports = corrections;

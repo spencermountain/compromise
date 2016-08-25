@@ -2,10 +2,10 @@
 const Result = require('../models/result');
 const log = require('../logger');
 const forms = {
-  SentenceList: require('../models/result/sentenceList'),
-  VerbList: require('../models/result/verbList'),
-  NounList: require('../models/result/nounList'),
-  ValueList: require('../models/result/valueList')
+  SentenceList: require('../models/result/subclass/sentenceList'),
+  VerbList: require('../models/result/subclass/verbList'),
+  NounList: require('../models/result/subclass/nounList'),
+  ValueList: require('../models/result/subclass/valueList')
 };
 const path = 'result';
 

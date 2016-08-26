@@ -3,11 +3,14 @@ const set_tag = require('./tag').set_tag;
 const normalize = require('./normalize');
 const fns = require('../../fns');
 const build_whitespace = require('./whitespace');
-const methods = {
-  info: {},
-  is: {},
-  render: require('./render')
-};
+
+const methods = require('./methods');
+methods.render = require('./render');
+// const methods = {
+//   info: {},
+//   is: {},
+//   render:
+// };
 
 class Term {
   constructor(str, context) {

@@ -6,8 +6,8 @@ const nlp = require('./src/index');
 // require('./src/logger').enable();
 
 // let str = 'i think he\'s nice';
-let r = nlp('we will not have quickly stepped up. he is nice.');
+let r = nlp('we will not have quickly blown away. he is nice.');
 // let r = nlp('she is not suddenly beautiful.');
 // r.pretty();
 // r.toExclamation();
-r.verbs().pretty();
+r.pretty();

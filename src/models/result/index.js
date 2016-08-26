@@ -15,6 +15,7 @@ class Result {
     let arr = this.arr;
     for(let i = 0; i < arr.length; i++) {
       // arr[i].pretty();
+      console.log('-' + i + '-');
       arr[i].forEach((t) => {
         t.render('pretty');
       });

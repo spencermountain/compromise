@@ -92,6 +92,19 @@ data.verbs.forEach((v) => {
     }
   });
 });
+//phrasal verbs
+data.phrasal_verbs.forEach((v) => {
+  let t = new Term(v);
+  t.tag.Verb = true;
+  let obj = t.info('conjugations') || {};
+  console.log(obj);
+  wantVerbs.forEach((k) => {
+    if (obj[k] && !lexicon[obj[k]]) {
+      lexicon[obj[k]] = k;
+    // console.log(obj[k], k);
+    }
+  });
+});
 
 //conjugate adjectives
 data.adjectives.forEach((v) => {

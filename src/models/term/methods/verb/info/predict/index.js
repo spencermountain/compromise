@@ -11,8 +11,10 @@ const goodTypes = {
   PastTense: true,
   PresentTense: true,
   FutureTense: true,
+  PerfectTense: true,
   Pluperfect: true,
-  FuturePerfect: true
+  FuturePerfect: true,
+  Participle: true
 };
 
 const predictForm = function(term) {

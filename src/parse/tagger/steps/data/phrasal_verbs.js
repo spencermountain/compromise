@@ -5,24 +5,24 @@
 'use strict';
 
 //start the list with some randoms
-let main = [
-  'be onto',
-  'fall behind',
-  'fall through',
-  'fool with',
-  'get across',
-  'get along',
-  'get at',
-  'give way',
-  'hear from',
-  'hear of',
-  'lash into',
-  'make do',
-  'run across',
-  'set upon',
-  'take aback',
-  'keep from'
-];
+let main = {
+  'be onto': true,
+  'fall behind': true,
+  'fall through': true,
+  'fool with': true,
+  'get across': true,
+  'get along': true,
+  'get at': true,
+  'give way': true,
+  'hear from': true,
+  'hear of': true,
+  'lash into': true,
+  'make do': true,
+  'run across': true,
+  'set upon': true,
+  'take aback': true,
+  'keep from': true,
+};
 
 //if there's a phrasal verb "keep on", there's often a "keep off"
 const opposites = {
@@ -46,9 +46,9 @@ const symmetric = {
 Object.keys(symmetric).forEach(function(k) {
   symmetric[k].split(',').forEach(function(s) {
     //add the given form
-    main.push(s + ' ' + k);
+    main[s + ' ' + k] = true;
     //add its opposite form
-    main.push(s + ' ' + opposites[k]);
+    main[s + ' ' + opposites[k]] = true;
   });
 });
 
@@ -81,9 +81,8 @@ const asymmetric = {
 };
 Object.keys(asymmetric).forEach(function(k) {
   asymmetric[k].split(',').forEach(function(s) {
-    main.push(s + ' ' + k);
+    main[s + ' ' + k];
   });
 });
 
 module.exports = main;
-// console.log(main[40]);

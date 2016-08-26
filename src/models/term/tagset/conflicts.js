@@ -39,7 +39,8 @@ const conflicts = [
   ['Url', 'Verb', 'Adjective', 'Adverb'],
   ['HashTag', 'Email', 'Url'],
   //date
-  ['Month', 'Day', 'Year', 'Duration']
+  ['Month', 'Day', 'Year', 'Duration'],
+  ['Particle', 'Conjunction', 'Adverb', 'Preposition']
 ];
 
 const find = (tag) => {

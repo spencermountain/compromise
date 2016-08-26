@@ -9,7 +9,7 @@ const checkIrregulars = function(str) {
     //matched infinitive
     if (keys[i] === str) {
       obj = Object.assign({}, obj);
-      obj.infinitive = keys[i];
+      obj.Infinitive = keys[i];
       return obj;
     }
 
@@ -18,7 +18,7 @@ const checkIrregulars = function(str) {
     for(let o = 0; o < kinds.length; o++) {
       if (obj[kinds[o]] === str) {
         obj = Object.assign({}, obj);
-        obj.infinitive = keys[i];
+        obj.Infinitive = keys[i];
         return obj;
       }
     }

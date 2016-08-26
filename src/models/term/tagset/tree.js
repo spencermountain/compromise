@@ -32,7 +32,10 @@ module.exports = {
     FuturePerfect: true,
     Copula: true,
     Modal: true,
-    PhrasalVerb: true,
+    Participle: true
+  },
+  VerbPhrase: {
+    Particle: true
   },
   Adjective: {
     Comparative: true,
@@ -65,7 +68,7 @@ module.exports = {
   Email: true,
   Auxillary: true,
   Negative: true,
-  VerbPhrase: true,
+
   NounPhrase: true,
   ValuePhrase: true,
   AdjectivePhrase: true,

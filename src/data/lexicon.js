@@ -116,6 +116,6 @@ delete lexicon[null];
 module.exports = lexicon;
 
 // console.log(lexicon.burying);
-let t = new Term('shake');
-t.tag.Verb = true;
-console.log(t.info('conjugations'));
+// let t = new Term('shake');
+// t.tag.Verb = true;
+// console.log(t.info('conjugations'));

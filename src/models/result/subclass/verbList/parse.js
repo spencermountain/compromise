@@ -6,29 +6,34 @@ const parse = function(arr) {
     adverbs: [],
     negation: null,
     particle: null,
-    // prefix: null,
     root: null
   };
-
   for(let i = 0; i < arr.length; i++) {
     let t = arr.get(i);
     //tag 'not'
     if (t.tag.Negative) {
-      parts.negation = t.normal;
+      parts.negation = t;
       continue;
     }
     //auxillaries like 'will have'
     if (t.tag.Auxillary) {
-      parts.auxillaries.push(t.normal);
+      parts.auxillaries.push(t);
       continue;
     }
     //adverbs like 'quickly'
     if (t.tag.Adverb) {
-      parts.adverbs.push(t.normal);
+      parts.adverbs.push(t);
+      continue;
+    }
+    //particles like 'up'
+    if (t.tag.Particle) {
+      parts.particle = t;
       continue;
     }
     //otherwise, it's the root
-    parts.root = t.normal;
+    if (t.tag.Verb) {
+      parts.root = t;
+    }
   }
   return parts;
 };

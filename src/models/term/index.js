@@ -6,11 +6,6 @@ const build_whitespace = require('./whitespace');
 
 const methods = require('./methods');
 methods.render = require('./render');
-// const methods = {
-//   info: {},
-//   is: {},
-//   render:
-// };
 
 class Term {
   constructor(str, context) {

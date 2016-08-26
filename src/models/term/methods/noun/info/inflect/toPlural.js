@@ -1,12 +1,12 @@
 'use strict';
-const irregulars = require('../../paths').data.irregular_plurals.toPlural
-const pluralRules = require('./data/pluralRules')
+const irregulars = require('../../paths').data.irregular_plurals.toPlural;
+const pluralRules = require('./data/pluralRules');
 
 //turn 'shoe' into 'shoes'
 const pluralize = function(str) {
   //irregular
   if (irregulars[str]) {
-    return irregulars[str]
+    return irregulars[str];
   }
 
   //inflect first word of preposition-phrase
@@ -27,5 +27,4 @@ const pluralize = function(str) {
   return null;
 };
 
-// console.log(pluralize('narrative') === 'narratives')
 module.exports = pluralize;

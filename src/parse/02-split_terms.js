@@ -24,6 +24,4 @@ const split_terms = function(str) {
 };
 
 module.exports = split_terms;
-// console.log(split_terms('john is nice'));
 // console.log(split_terms('  john   is   nice '))
-// console.log(split_terms("  john\tis \n  nice "))

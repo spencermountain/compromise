@@ -5,8 +5,6 @@ const perfectMatch = (term, reg) => {
   if (!term || !reg) {
     return false;
   }
-  // console.log(term.normal, '   ', reg);
-  // console.log('\n\n');
   //support '.' - any
   if (reg.anyOne) {
     return true;

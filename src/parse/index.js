@@ -23,7 +23,7 @@ const tokenize = (str, context) => {
       return new Term(term, c);
     });
     terms = new Terms(terms, this.context);
-    //give it parent reference
+    //give each term a parent reference
     terms.forEach((t) => {
       t.context.sentence = terms;
     });

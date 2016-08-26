@@ -4,17 +4,25 @@ const VerbPhrase = require('./verbPhrase');
 
 class VerbList extends Result {
   constructor(arr, context) {
-    //turn []terms into []VerbPhrase()
-    // console.log(arr);
     super(arr, context);
     this.arr = this.arr.map((ts) => {
       return new VerbPhrase(ts);
     });
   }
+
   conjugate() {
     return this.arr.map((vp) => {
-      return vp.conjugate();
+      // return vp.conjugate();
     });
+  }
+
+  toPositive() {
+    this.arr.forEach((vp) => {
+      if (vp.parts.negation) {
+        vp.parts.negation.remove();
+      }
+    });
+    return this;
   }
 }
 module.exports = VerbList;

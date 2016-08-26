@@ -313,4 +313,3 @@ for (let i = 0; i < keys.length; i++) {
   }
 }
 module.exports = misc;
-// console.log(misc.very);

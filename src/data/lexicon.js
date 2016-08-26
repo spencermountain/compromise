@@ -87,7 +87,6 @@ data.verbs.forEach((v) => {
   wantVerbs.forEach((k) => {
     if (obj[k] && !lexicon[obj[k]]) {
       lexicon[obj[k]] = k;
-    // console.log(obj[k], k);
     }
   });
 });
@@ -100,7 +99,6 @@ data.adjectives.forEach((v) => {
   Object.keys(obj).forEach((k) => {
     if (obj[k] && !lexicon[obj[k]]) {
       lexicon[obj[k]] = k;
-    // console.log(obj[k], k);
     }
   });
 });

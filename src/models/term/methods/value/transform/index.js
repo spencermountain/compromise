@@ -23,7 +23,6 @@ let value = {
   },
   /** turn a cardinal into an ordinal - '1st' to 1, '308th' to 308  */
   ordinal: (t) => {
-    console.log(t.normal);
     let num = t.info('Ordinal');
     t.text = '' + num;
     t.tagAs('Ordinal');

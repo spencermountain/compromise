@@ -7,8 +7,5 @@ class VerbPhrase extends Terms {
     super(arr, context);
     this.parts = parse(this);
   }
-  conjugate() {
-    console.log(this.parts.root);
-  }
 }
 module.exports = VerbPhrase;

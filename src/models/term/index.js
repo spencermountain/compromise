@@ -86,7 +86,7 @@ class Term {
     if (methods.pluck[str]) {
       return methods.pluck[str](this);
     } else {
-      console.log('missing \'pluck\' method ' + str);
+      console.warn('missing \'pluck\' method ' + str);
     }
     return null;
   }
@@ -97,7 +97,7 @@ class Term {
     if (methods.transform[str]) {
       return methods.transform[str](this);
     } else {
-      console.log('missing \'to\' method ' + str);
+      console.warn('missing \'to\' method ' + str);
     }
     return null;
   }
@@ -108,7 +108,7 @@ class Term {
     if (methods.render[str]) {
       return methods.render[str](this);
     } else {
-      console.log('missing \'render\' method ' + str);
+      console.warn('missing \'render\' method ' + str);
     }
     return null;
   }

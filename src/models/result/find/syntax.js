@@ -64,7 +64,6 @@ const parse_term = function(term, i) {
   reg.normal = term;
   return reg;
 };
-// console.log(parse_term('(one|1) (two|2)'));
 
 
 //turn a match string into an array of objects

@@ -6,5 +6,5 @@ const nlp = require('./src/index');
 // require('./src/logger').enable();
 
 // let str = 'i think he\'s nice';
-let r = nlp('it is seven degrees. he is four years old.');
-console.log(r.plaintext());
+let r = nlp('it is seven degrees. he is in fourth place.');
+console.log(r);

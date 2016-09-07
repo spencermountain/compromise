@@ -11,12 +11,12 @@ const path = 'tagger/neighbours';
 //for unknown terms, look left + right first, and hit-up the markov-chain for clues
 const neighbour_step = function(s) {
   log.here(path);
-  s.arr.forEach((t, n) => {
+  s.terms.forEach((t, n) => {
     //is it still unknown?
     let termTags = Object.keys(t.tag);
     if (termTags.length === 0) {
-      let lastTerm = s.arr[n - 1];
-      let nextTerm = s.arr[n + 1];
+      let lastTerm = s.terms[n - 1];
+      let nextTerm = s.terms[n + 1];
       //look at last word for clues
       if (lastTerm && afterThisWord[lastTerm.normal]) {
         t.tagAs(afterThisWord[lastTerm.normal], 'neighbour-after-"' + lastTerm.normal + '"');

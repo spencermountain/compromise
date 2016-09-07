@@ -55,23 +55,23 @@ const identify_contraction = function(parts) {
 };
 
 const interpret_contractions = function(s) {
-  for (let i = 0; i < s.arr.length; i++) {
-    let t = s.arr[i];
+  for (let i = 0; i < s.terms.length; i++) {
+    let t = s.terms[i];
     //interpret irregular contractions, like "let's"
     if (data.irregulars[t.normal]) {
       let arr = data.irregulars[t.normal];
-      s.arr[i].silent_term = arr[0];
+      s.terms[i].silent_term = arr[0];
       //add second word
-      s.arr[i].prepend('');
-      s.arr[i + 1].silent_term = arr[1];
+      s.terms[i].prepend('');
+      s.terms[i + 1].silent_term = arr[1];
       //if it exists, add a third word
       if (arr[2]) {
-        s.arr[i + 1].prepend('');
-        s.arr[i + 2].silent_term = arr[2];
+        s.terms[i + 1].prepend('');
+        s.terms[i + 2].silent_term = arr[2];
       }
       break;
     }
-    let parts = s.arr[i].info('contraction');
+    let parts = s.terms[i].info('contraction');
     if (parts) {
       parts = identify_contraction(parts);
       //don't create a new term for "s'"
@@ -82,16 +82,16 @@ const interpret_contractions = function(s) {
       if (parts.end === 's') {
         //possessive vs contraction
         //(spencer's house vs spencer's cool)
-        if (isPossessive(s.arr[i])) {
-          s.arr[i].tagAs('Possessive');
+        if (isPossessive(s.terms[i])) {
+          s.terms[i].tagAs('Possessive');
           continue;
         }
         //handle is/was/will ambiguity
-        parts.end = isTense(s.arr[i]);
+        parts.end = isTense(s.terms[i]);
       }
-      s.arr[i].silent_term = parts.start;
-      s.arr[i].prepend('');
-      s.arr[i + 1].silent_term = parts.end;
+      s.terms[i].silent_term = parts.start;
+      s.terms[i].prepend('');
+      s.terms[i + 1].silent_term = parts.end;
       continue;
     }
   }

@@ -3,14 +3,14 @@
 const steps = {
   split_sentences: require('./01-split_sentences'),
   split_terms: require('./02-split_terms'),
-  tagger: require('./03-tagger'),
-  findResult: require('./04-result'),
+  tagger: require('./03-tagger')
 };
 const Term = require('../models/term');
 const Terms = require('../models/result/terms');
 const fns = require('../fns');
 const log = require('../logger');
 const path = 'parse';
+const Result = require('../models/result');
 
 //turn the string into an array of termList objects
 const tokenize = (str, context) => {
@@ -33,6 +33,6 @@ const tokenize = (str, context) => {
     return terms;
   });
   //is it an array of sentences, or what
-  return steps.findResult(arr, context);
+  return new Result(arr, context);
 };
 module.exports = tokenize;

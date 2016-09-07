@@ -5,7 +5,7 @@ const path = 'tagger/suffix';
 
 const suffix_step = function(s) {
   log.here(path);
-  s.arr.forEach((t) => {
+  s.terms.forEach((t) => {
     //don't over-write any known tags
     if (Object.keys(t.tag).length > 0) {
       return;

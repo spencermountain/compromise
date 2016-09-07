@@ -3,25 +3,25 @@ const log = require('../paths').log;
 
 class Terms {
   constructor(arr, context) {
-    this.arr = arr;
+    this.terms = arr;
     this.context = context || {};
     this.get = (n) => {
-      return this.arr[n];
+      return this.terms[n];
     };
   // this.terms = this.arr;
   }
   term(n) {
-    return this.arr[n];
+    return this.terms[n];
   }
   get length() {
-    return this.arr.length;
+    return this.terms.length;
   }
   forEach(fn) {
-    this.arr.forEach(fn);
+    this.terms.forEach(fn);
     return this;
   }
   pretty() {
-    let txt = this.arr.reduce((str, t) => {
+    let txt = this.terms.reduce((str, t) => {
       str += t.plaintext();
       return str;
     }, '');

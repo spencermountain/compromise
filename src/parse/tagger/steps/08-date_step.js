@@ -47,10 +47,10 @@ const threeDates = [
 const datePass = function(s) {
   log.here(path);
   //set verbs as auxillaries
-  for(let i = 0; i < s.arr.length - 1; i++) {
-    let a = s.arr[i];
-    let b = s.arr[i + 1];
-    let c = s.arr[i + 2];
+  for(let i = 0; i < s.terms.length - 1; i++) {
+    let a = s.terms[i];
+    let b = s.terms[i + 1];
+    let c = s.terms[i + 2];
     if (c) {
       for(let o = 0; o < threeDates.length; o++) {
         if (threeDates[o].condition(a, b, c)) {

@@ -3,8 +3,8 @@ const genericMethods = require('./generic');
 const valueMethods = require('./value');
 
 const methods = {
-  value: require('./value'),
   generic: require('./generic'),
+  value: require('./value'),
 };
 
 module.exports = methods;

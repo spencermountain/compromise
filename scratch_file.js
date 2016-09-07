@@ -7,9 +7,4 @@ const nlp = require('./src/index');
 
 // let str = 'i think he\'s nice';
 let r = nlp('it is seven degrees. he is four years old.');
-// let r = nlp('she is not suddenly beautiful.');
-// r.pretty();
-// r.toExclamation();
-// r.verbs().toPositive().pretty();
 console.log(r.plaintext());
-console.log(r.toFive().plaintext());

@@ -3,11 +3,12 @@
 module.exports = (Result) => {
 
   Result.prototype.toFive = function() {
-    this.list.forEach((ts) => {
-      ts.terms.forEach((t) => {
-        console.log(t.text);
-      });
+    this.terms().forEach((t) => {
+      if (t.tag.Value) {
+        t.text = '5';
+      }
     });
+    return this;
   };
   return Result;
 };

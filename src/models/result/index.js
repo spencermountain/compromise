@@ -1,17 +1,16 @@
 'use strict';
 const chalk = require('chalk');
 const find = require('./find');
-const Terms = require('./terms');
-//an array of termLists
+
+//a result is an array of termLists
 class Result {
   constructor(arr) {
     this.list = arr || [];
   }
 }
-
+//add methods to prototype
 const methods = require('./methods');
 Object.keys(methods).forEach((k) => {
-  console.log(k);
   Result = methods[k](Result);
 });
 

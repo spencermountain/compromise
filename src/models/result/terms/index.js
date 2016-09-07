@@ -20,11 +20,14 @@ class Terms {
     this.terms.forEach(fn);
     return this;
   }
-  pretty() {
-    let txt = this.terms.reduce((str, t) => {
+  plaintext() {
+    return this.terms.reduce((str, t) => {
       str += t.plaintext();
       return str;
     }, '');
+  }
+  pretty() {
+    let txt = this.plaintext();
     console.log(txt);
   }
 }

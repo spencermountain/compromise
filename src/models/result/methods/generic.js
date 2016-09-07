@@ -6,7 +6,13 @@ const genericMethods = (Result) => {
     return this.list.length;
   };
 
-  //
+  Result.prototype.terms = function() {
+    return this.list.reduce((arr, ts) => {
+      arr = arr.concat(ts.terms);
+      return arr;
+    }, []);
+  };
+
   Result.prototype.pretty = function() {
     let list = this.list;
     for(let i = 0; i < list.length; i++) {
@@ -17,18 +23,12 @@ const genericMethods = (Result) => {
       });
     }
   };
-  //
 
   Result.prototype.plaintext = function() {
-    let arr = this.list;
-    let str = '';
-    for(let i = 0; i < arr.length; i++) {
-      for(let o = 0; o < arr[i].length; o++) {
-        let t = arr[i].get(o);
-        str += t.plaintext();
-      }
-    }
-    return str;
+    return this.list.reduce((str, ts) => {
+      str += ts.plaintext();
+      return str;
+    }, '');
   },
 
   Result.prototype.first = function(n) {
@@ -38,6 +38,7 @@ const genericMethods = (Result) => {
     let lastOne = this.list[this.list.length - 1];
     return new Result([lastOne], this.context);
   };
+
   return Result;
 };
 

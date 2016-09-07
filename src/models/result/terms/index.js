@@ -1,5 +1,8 @@
 'use strict';
-const log = require('../paths').log;
+const paths = require('../paths');
+const log = paths.log;
+const fns = paths.fns;
+const Term = require('../../term');
 
 class Terms {
   constructor(arr, context) {
@@ -32,4 +35,10 @@ class Terms {
   }
 }
 //apply methods
+Terms.prototype.clone = function() {
+  let terms = this.terms.map((t) => {
+    return t.clone();
+  });
+  return new Terms(terms, this.context);
+};
 module.exports = Terms;

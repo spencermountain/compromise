@@ -189,6 +189,7 @@ class Term {
     term.tag = fns.copy(this.tag);
     term.whitespace = fns.copy(this.whitespace);
     term.silent_term = this.silent_term;
+    term.endPunct = this.endPunct;
     return term;
   }
 }

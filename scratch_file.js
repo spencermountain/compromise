@@ -6,4 +6,5 @@ const nlp = require('./src/index');
 require('./src/log').enable();
 
 // let str = 'i think he\'s nice';
-let r = nlp('singing').pretty();
+let r = nlp('twenty five');
+console.log(r);

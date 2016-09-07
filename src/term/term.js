@@ -14,7 +14,7 @@ class Term {
     this.tag = {};
     this.whitespace = build_whitespace(str || '');
     this._text = this.text.trim();
-    this.endPunct = this.endPunctuation();
+    // this.endPunct = this.endPunctuation();
     this.normal = normalize(this.text);
     this.silent_term = '';
     this.helpers = require('./helpers');
@@ -37,7 +37,7 @@ class Term {
     let m = this.text.match(/([\.\?\!,;:])$/);
     if (m) {
       //remove it from end of text
-      this.text = this.text.substr(0, this.text.length - 1);
+      // this.text = this.text.substr(0, this.text.length - 1);
       return m[0];
     }
     return '';
@@ -45,7 +45,7 @@ class Term {
 
   /** print-out this text, as it was given */
   plaintext() {
-    let str = this.whitespace.before + this.text + this.endPunct + this.whitespace.after;
+    let str = this.whitespace.before + this.text + this.whitespace.after;
     return str;
   }
 

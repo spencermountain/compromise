@@ -14,16 +14,16 @@ Object.keys(methods).forEach((k) => {
   Result = methods[k](Result);
 });
 
-// Result.prototype.find = (reg) => {
-//   let arr = [];
-//   for(let i = 0; i < this.list.length; i++) {
-//     let ms = find(this.list[i], reg);
-//     for(let i = 0; i < ms.length; i++) {
-//       arr.push(ms[i]);
-//     }
-//   }
-//   return new Result(arr);
-// };
+Result.prototype.find = function(reg) {
+  let arr = [];
+  for(let i = 0; i < this.list.length; i++) {
+    let ms = find(this.list[i], reg);
+    for(let i = 0; i < ms.length; i++) {
+      arr.push(ms[i]);
+    }
+  }
+  return new Result(arr);
+};
 
 module.exports = Result;
 

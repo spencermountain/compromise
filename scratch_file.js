@@ -7,4 +7,4 @@ const nlp = require('./src/index');
 
 // let str = 'i think he\'s nice';
 let r = nlp('it is seven degrees. he is in fourth place.');
-console.log(r.clone().plaintext());
+console.log(r.flatten().pretty());

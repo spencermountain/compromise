@@ -18,11 +18,11 @@ const greedySkipper = (terms, i, reg) => {
 };
 
 //try and match all regs, starting at this term
-const startHere = (terms, startAt, regs) => {
+const startHere = (ts, startAt, regs) => {
   let term_i = startAt;
   //check each regex-thing
   for(let reg_i = 0; reg_i < regs.length; reg_i++) {
-    let term = terms.get(term_i);
+    let term = ts.get(term_i);
     let reg = regs[reg_i];
     if (!term) {
       // console.log(chalk.red('   -dead-end '));
@@ -33,7 +33,7 @@ const startHere = (terms, startAt, regs) => {
       return null;
     }
     //catch '$' errors
-    if (reg.ending && term_i !== terms.length - 1) {
+    if (reg.ending && term_i !== ts.length - 1) {
       return null;
     }
     //support asterix
@@ -41,11 +41,11 @@ const startHere = (terms, startAt, regs) => {
       let next_reg = regs[reg_i + 1];
       //easy, just return rest of sentence
       if (!next_reg) {
-        return terms.slice(startAt, terms.length);
+        return ts.terms.slice(startAt, ts.length);
       }
       //otherwise, match until this next thing
       if (next_reg) {
-        let foundAt = greedySkipper(terms, term_i, next_reg);
+        let foundAt = greedySkipper(ts, term_i, next_reg);
         //didn't find it
         if (!foundAt) {
           return null;
@@ -59,8 +59,8 @@ const startHere = (terms, startAt, regs) => {
     //check a perfect match
     if (fullMatch(term, reg)) {
       term_i += 1;
-      let soFar = terms.slice(startAt, term_i).plaintext();
-      log.tell(soFar + '..', path);
+      // let soFar = ts.terms.slice(startAt, term_i).plaintext();
+      // log.tell(soFar + '..', path);
       continue;
     }
     //handle partial-matches of lumped terms
@@ -84,26 +84,26 @@ const startHere = (terms, startAt, regs) => {
     // console.log(chalk.red('   -dead: ' + terms.get(term_i).normal));
     return null;
   }
-  return terms.slice(startAt, term_i);
+  return ts.terms.slice(startAt, term_i);
 };
 
 
 //main event
-const match = function(terms, str) {
+const match = function(ts, str) {
   log.here(path);
   let matches = [];
   //fail fast
-  if (!str || !terms) {
+  if (!str || !ts) {
     return matches;
   }
   let regs = syntax(str);
   // console.log(regs);
-  for(let t = 0; t < terms.length; t++) {
+  for(let t = 0; t < ts.terms.length; t++) {
     //don't loop through if '^'
     if (regs[0] && regs[0].starting && t > 0) {
       break;
     }
-    let m = startHere(terms, t, regs);
+    let m = startHere(ts, t, regs);
     if (m) {
       matches.push(m);
     }

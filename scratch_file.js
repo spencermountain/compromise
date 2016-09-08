@@ -6,5 +6,7 @@ const nlp = require('./src/index');
 // require('./src/logger').enable();
 
 // let str = 'i think he\'s nice';
-let r = nlp('it is seven degrees. he is in fourth place.');
-console.log(r.flatten().pretty());
+let r = nlp('buy eggs on friday. Eat cheese on saturday.');
+let m = r.match('on #date');
+m.tag('Fun');
+console.log(m.pretty());

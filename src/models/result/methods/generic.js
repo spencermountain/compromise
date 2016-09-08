@@ -6,15 +6,17 @@ const Terms = require('../terms');
 const genericMethods = (Result) => {
 
   const methods = {
-
+    /**did it find any matches*/
+    found: function() {
+      return this.list.length > 0;
+    },
     count : function() {
       return this.list.length;
     },
 
     terms : function() {
       return this.list.reduce((arr, ts) => {
-        arr = arr.concat(ts.terms);
-        return arr;
+        return arr.concat(ts);
       }, []);
     },
 
@@ -76,7 +78,22 @@ const genericMethods = (Result) => {
       }, []);
       let terms = new Terms(list);
       return new Result([terms], this.context);
+    },
+    /**tag all the terms in this result as something */
+    tag: function(tag) {
+      this.terms().forEach((t) => {
+        t.tagAs(tag);
+      });
+      return this;
+    },
+    /** filter-out all terms with this tag*/
+    remove: function(tag) {
+      let list = this.list.map((ts) => {
+        return ts.remove(tag);
+      });
+      return new Result(list, this.context);
     }
+
   };
 
   Object.keys(methods).forEach((k) => {

@@ -14,7 +14,7 @@ Object.keys(methods).forEach((k) => {
   Result = methods[k](Result);
 });
 
-Result.prototype.find = function(reg) {
+Result.prototype.match = function(reg) {
   let arr = [];
   for(let i = 0; i < this.list.length; i++) {
     let ms = find(this.list[i], reg);

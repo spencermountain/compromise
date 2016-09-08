@@ -29,6 +29,12 @@ class Terms {
       return str;
     }, '');
   }
+  remove(tag) {
+    this.terms = this.terms.filter((t) => {
+      return !t[tag];
+    });
+    return this;
+  }
   pretty() {
     let txt = this.plaintext();
     console.log(txt);

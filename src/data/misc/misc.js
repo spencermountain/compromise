@@ -191,7 +191,7 @@ const compact = {
     'themselves',
     'myself',
     'itself',
-    'her', //this one is pretty ambiguous
+    'her', //this one is check ambiguous
   ],
 
   //personal pronouns (nouns)

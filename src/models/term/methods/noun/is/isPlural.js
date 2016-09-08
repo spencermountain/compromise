@@ -39,7 +39,7 @@ const is_plural = function(t) {
       return false;
     }
   }
-  // a fallback 'looks pretty plural' rule..
+  // a fallback 'looks check plural' rule..
   if (str.match(/s$/) && !str.match(/ss$/) && str.length > 3) { //needs some lovin'
     return true;
   }

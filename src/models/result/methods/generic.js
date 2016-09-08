@@ -20,13 +20,13 @@ const genericMethods = (Result) => {
       }, []);
     },
 
-    pretty : function() {
+    check : function() {
       let list = this.list;
       for(let i = 0; i < list.length; i++) {
-        // arr[i].pretty();
+        // arr[i].check();
         console.log('-' + i + '-');
         list[i].forEach((t) => {
-          t.render('pretty');
+          t.render('check');
         });
       }
     },

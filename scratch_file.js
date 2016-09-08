@@ -8,5 +8,5 @@ const nlp = require('./src/index');
 // let str = 'i think he\'s nice';
 let r = nlp('buy eggs on friday. Eat cheese on saturday.');
 let m = r.match('on #date');
-m.tag('Fun');
-console.log(m.pretty());
+// m.tag('Fun');
+m.remove('on').check();

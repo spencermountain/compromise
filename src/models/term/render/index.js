@@ -34,8 +34,8 @@ module.exports = {
       tags: Object.keys(t.tag)
     };
   },
-  /** pretty-print information for the console */
-  pretty: (t) => {
+  /** check-print information for the console */
+  check: (t) => {
     let tags = Object.keys(t.tag).map((tag) => {
       if (colors[tag]) {
         return colors[tag](tag);

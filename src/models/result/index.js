@@ -18,9 +18,10 @@ Object.keys(methods).forEach((k) => {
 Result.prototype.match = function(reg) {
   let list = [];
   this.list.forEach((ts) => {
+    //an array of arrays
     let matches = ts.match(reg, this.context);
-    matches.forEach((mts) => {
-      list.push(new Terms(mts));
+    matches.forEach((ms) => {
+      list.push(new Terms(ms));
     });
   });
   return new Result(list);

@@ -3,13 +3,23 @@ const fullMatch = require('./fullMatch');
 const lumpMatch = require('./lumpMatch');
 
 // match everything until this point - '*'
-const greedySkipper = (terms, i, reg) => {
+const greedyUntil = (terms, i, reg) => {
   for(i = i; i < terms.length; i++) {
     if (fullMatch(terms.get(i), reg)) {
       return i;
     }
   }
   return null;
+};
+
+//keep matching this reg as long as possible
+const greedyOf = (terms, i, reg) => {
+  for(i = i; i < terms.length; i++) {
+    if (!fullMatch(terms.get(i), reg)) {
+      return i;
+    }
+  }
+  return i;
 };
 
 //try and match all regs, starting at this term
@@ -40,7 +50,7 @@ const startHere = (ts, startAt, regs) => {
       }
       //otherwise, match until this next thing
       if (next_reg) {
-        let foundAt = greedySkipper(ts, term_i, next_reg);
+        let foundAt = greedyUntil(ts, term_i, next_reg);
         //didn't find it
         if (!foundAt) {
           return null;
@@ -54,6 +64,10 @@ const startHere = (ts, startAt, regs) => {
     //check a perfect match
     if (fullMatch(term, reg)) {
       term_i += 1;
+      //try to greedy-match '+'
+      if (reg.consecutive) {
+        term_i = greedyOf(ts, term_i, reg);
+      }
       // let soFar = ts.terms.slice(startAt, term_i).plaintext();
       // log.tell(soFar + '..', path);
       continue;

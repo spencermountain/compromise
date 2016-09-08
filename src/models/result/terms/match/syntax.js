@@ -5,7 +5,7 @@ const fns = require('../../paths').fns;
 //turn 'regex-like' search string into parsed json
 const parse_term = function(term, i) {
   term = term || '';
-  term = term.toLowerCase().trim();
+  term = term.trim();
   let reg = {};
   //order matters..
 
@@ -23,6 +23,12 @@ const parse_term = function(term, i) {
   if (fns.endsWith(term, '?')) {
     term = term.replace(/\?$/, '');
     reg.optional = true;
+  }
+  //atleast-one-but-greedy flag
+  if (fns.endsWith(term, '+')) {
+    term = term.replace(/\+$/, '');
+    reg.optional = false;
+    reg.consecutive = true;
   }
 
   //pos flag
@@ -62,9 +68,11 @@ const parse_term = function(term, i) {
     term = null;
   }
   reg.normal = term;
+  if (reg.normal) {
+    reg.normal = reg.normal.toLowerCase();
+  }
   return reg;
 };
-
 
 //turn a match string into an array of objects
 const parse_all = function(reg) {

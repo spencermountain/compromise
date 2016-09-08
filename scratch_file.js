@@ -7,5 +7,5 @@ const nlp = require('./src/index');
 
 // let str = 'i think he\'s nice';
 let r = nlp('buy eggs quickly on friday. Eat cheese suddenly on saturday.');
-let m = r.match('#adverb on #date').remove('#adverb on');
-m.check();
+let m = r.match('#adverb on #date').tag('Fun');
+r.match('#Fun+').check();

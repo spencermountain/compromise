@@ -15,7 +15,6 @@ const match = function(ts, str) {
     return matches;
   }
   let regs = syntax(str);
-  // console.log(regs);
   for(let t = 0; t < ts.terms.length; t++) {
     //don't loop through if '^'
     if (regs[0] && regs[0].starting && t > 0) {
@@ -24,6 +23,9 @@ const match = function(ts, str) {
     let m = startHere(ts, t, regs);
     if (m) {
       matches.push(m);
+      //ok, don't try to match these again.
+      let skip = m.length;
+      t += skip; //this could use some work
     }
   }
   return matches;

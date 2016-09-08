@@ -37,8 +37,9 @@ class Terms {
     return this;
   }
   check() {
-    let txt = this.plaintext();
-    console.log(txt);
+    this.terms.forEach((t) => {
+      t.render('check');
+    });
   }
 
 }
@@ -51,8 +52,7 @@ Terms.prototype.clone = function() {
 };
 
 Terms.prototype.match = function(reg) {
-  let matchTerms = match(this, reg);
-  return new Terms(matchTerms, this.context);
+  return match(this, reg); //returns an array of matches
 };
 Terms.prototype.remove = function(reg) {
   let matchTerms = match(this, reg);

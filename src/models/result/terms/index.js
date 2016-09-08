@@ -51,7 +51,20 @@ Terms.prototype.clone = function() {
 };
 
 Terms.prototype.match = function(reg) {
-  let matchTerms = match(this.terms, reg);
+  let matchTerms = match(this, reg);
   return new Terms(matchTerms, this.context);
+};
+Terms.prototype.remove = function(reg) {
+  let matchTerms = match(this, reg);
+  matchTerms = fns.flatten(matchTerms);
+  let terms = this.terms.filter((t) => {
+    for(let i = 0; i < matchTerms.length; i++) {
+      if (t === matchTerms[i]) {
+        return false;
+      }
+    }
+    return true;
+  });
+  return new Terms(terms, this.context);
 };
 module.exports = Terms;

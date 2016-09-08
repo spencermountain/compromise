@@ -16,19 +16,15 @@ const genericMethods = (Result) => {
 
     terms : function() {
       return this.list.reduce((arr, ts) => {
-        return arr.concat(ts);
+        return arr.concat(ts.terms);
       }, []);
     },
 
     check : function() {
-      let list = this.list;
-      for(let i = 0; i < list.length; i++) {
-        // arr[i].check();
-        console.log('-' + i + '-');
-        list[i].forEach((t) => {
-          t.render('check');
-        });
-      }
+      this.list.forEach((ts, i) => {
+        console.log('--');
+        ts.check();
+      });
     },
 
     plaintext : function() {

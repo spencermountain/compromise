@@ -1,5 +1,6 @@
 'use strict';
 const chalk = require('chalk');
+const Terms = require('./terms');
 
 //a result is an array of termLists
 class Result {
@@ -15,23 +16,25 @@ Object.keys(methods).forEach((k) => {
 
 /** do a regex-like search through terms and return a subset */
 Result.prototype.match = function(reg) {
-  let list = this.list.map((ts) => {
-    return ts.match(reg, this.context);
+  let list = [];
+  this.list.forEach((ts) => {
+    let matches = ts.match(reg, this.context);
+    matches.forEach((mts) => {
+      list.push(new Terms(mts));
+    });
   });
-  return new Result(arr);
+  return new Result(list);
 };
 /** like .match(), but negative (filter-out the matches)*/
 Result.prototype.remove = function(reg) {
-  console.log(this);
-  // let list = this.list.map((ts) => {
-  //   let foundTerms = find(ts, reg);
-  //   // ts.terms = ts.terms.filter((t) => {
-  //   //   console.log(t.indexOf(foundTerms));
-  //   //   return t.indexOf(foundTerms) === -1;
-  //   // });
-  //   return ts;
-  // });
-  return new Result([], this.context);
+  let list = [];
+  this.list.forEach((ts) => {
+    let matches = ts.remove(reg, this.context);
+    if (matches) {
+      list.push(matches);
+    }
+  });
+  return new Result(list, this.context);
 };
 
 module.exports = Result;

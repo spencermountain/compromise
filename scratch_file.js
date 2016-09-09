@@ -10,4 +10,4 @@ const nlp = require('./src/index');
 // let m = r.match('#adverb on #date').tag('Fun');
 // r.match('#Fun+').check();
 
-console.log(nlp('two days').check());
+console.log(nlp('ensure he\'s ok').check());

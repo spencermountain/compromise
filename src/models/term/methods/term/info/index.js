@@ -82,7 +82,7 @@ const info = {
 
   /** where in the sentence is it? zero-based. */
   index(t) {
-    let terms = t.context.sentence.arr;
+    let terms = t.context.parent.arr;
     for (let i = 0; i < terms.length; i++) {
       if (terms[i] === t) {
         return i;

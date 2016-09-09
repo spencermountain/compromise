@@ -6,7 +6,7 @@ module.exports = {
   makeTerm: (str, t) => {
     let c = fns.copy(t.context);
     let index = t.info('index');
-    let s = t.context.sentence;
+    let s = t.context.parent;
 
     let term = new Term(str, c);
     //create the proper whitespace for this term

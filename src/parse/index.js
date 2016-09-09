@@ -17,15 +17,18 @@ const tokenize = (str, context) => {
   str = fns.ensureString(str);
   context = fns.ensureObject(context);
   let arr = steps.split_sentences(str).map((sen, i) => {
+    //find the particular words
     let terms = steps.split_terms(sen);
     terms = terms.map((term) => {
+      //make them proper Term objects
       let c = fns.copy(context);
       return new Term(term, c);
     });
+    //make it 'Terms()' object
     terms = new Terms(terms, this.context);
     //give each term a parent reference
     terms.forEach((t) => {
-      t.context.sentence = terms;
+      t.context.parent = terms;
     });
     log.tell('=sentence' + i + '=', path);
     terms = steps.tagger(terms);

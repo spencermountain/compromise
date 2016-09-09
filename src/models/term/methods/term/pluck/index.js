@@ -3,11 +3,11 @@
 const term = {
   next(t) {
     let index = t.info('Index');
-    return t.context.sentence.arr[index + 1];
+    return t.context.parent.arr[index + 1];
   },
   before(t) {
     let index = t.info('Index');
-    return t.context.sentence.arr[index - 1];
+    return t.context.parent.arr[index - 1];
   }
 };
 

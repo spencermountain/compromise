@@ -22,7 +22,4 @@ for (let i = 0; i < ambiguous.length; i += 1) {
   names[ambiguous[i]] = 'Person';
 }
 // console.log(names['spencer']);
-// console.log(names['jill']);
-// console.log(names['sue'])
-// console.log(names['jan'])
 module.exports = names;

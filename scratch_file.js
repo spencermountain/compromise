@@ -3,8 +3,11 @@
 //use it for messing around.
 const nlp = require('./src/index');
 // const nlp = require('./builds/nlp_compromise');
-require('./src/log').enable();
+// require('./src/logger').enable();
 
 // let str = 'i think he\'s nice';
-let r = nlp('twenty five');
-console.log(r);
+// let r = nlp('buy eggs quickly on friday. Eat cheese suddenly on saturday.');
+// let m = r.match('#adverb on #date').tag('Fun');
+// r.match('#Fun+').check();
+
+console.log(nlp('ensure he\'s ok').check());

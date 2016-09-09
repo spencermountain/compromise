@@ -1,9 +1,9 @@
 'use strict';
 
-const Text = require('./text/text');
+const parse = require('./parse');
 
 const nlp = function(str, context) {
-  return new Text(str, context);
+  return parse(str, context);
 };
 
 module.exports = nlp;

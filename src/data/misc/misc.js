@@ -191,7 +191,7 @@ const compact = {
     'themselves',
     'myself',
     'itself',
-    'her', //this one is pretty ambiguous
+    'her', //this one is check ambiguous
   ],
 
   //personal pronouns (nouns)
@@ -313,4 +313,3 @@ for (let i = 0; i < keys.length; i++) {
   }
 }
 module.exports = misc;
-// console.log(misc.very);

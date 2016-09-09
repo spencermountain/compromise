@@ -169,7 +169,7 @@ module.exports = [
   'happy',
   'funny',
   'lucky',
-  'pretty',
+  'check',
   'important',
   'interesting',
   'attractive',

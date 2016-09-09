@@ -20,7 +20,6 @@ module.exports = {
   'adjectives': require('./adjectives/adjectives'),
   'superlatives': require('./adjectives/convertable'),
   'irregular_verbs': require('./verbs/irregular_verbs'),
-  'phrasal_verbs': require('./verbs/phrasal_verbs'),
   'verbs': require('./verbs/verbs'),
   'misc': require('./misc/misc'),
 };

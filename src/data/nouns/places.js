@@ -282,12 +282,10 @@ let airports = [
   'yyz',
   'lgw',
   'phl',
-]
+];
 
 module.exports = {
   countries: countries,
   cities: cities,
   airports: airports
 };
-// console.log(cities[99]);
-// console.log(countries[99]);

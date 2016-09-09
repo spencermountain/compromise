@@ -7,6 +7,10 @@ class Result {
   constructor(arr) {
     this.list = arr || [];
   }
+  /** did it find anything? */
+  get found() {
+    return this.list.length > 0;
+  }
 }
 //add methods to prototype
 const methods = require('./methods');

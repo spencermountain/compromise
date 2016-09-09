@@ -30,6 +30,9 @@ class Terms {
       return str;
     }, '');
   }
+  normal() {
+    return this.terms.map((t) => t.normal).join(' ');
+  }
   remove(tag) {
     this.terms = this.terms.filter((t) => {
       return !t[tag];

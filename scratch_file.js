@@ -6,6 +6,8 @@ const nlp = require('./src/index');
 // require('./src/logger').enable();
 
 // let str = 'i think he\'s nice';
-let r = nlp('buy eggs quickly on friday. Eat cheese suddenly on saturday.');
-let m = r.match('#adverb on #date').tag('Fun');
-r.match('#Fun+').check();
+// let r = nlp('buy eggs quickly on friday. Eat cheese suddenly on saturday.');
+// let m = r.match('#adverb on #date').tag('Fun');
+// r.match('#Fun+').check();
+
+console.log(nlp('two days').check());

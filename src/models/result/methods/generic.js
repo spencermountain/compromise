@@ -6,10 +6,7 @@ const Terms = require('../terms');
 const genericMethods = (Result) => {
 
   const methods = {
-    /**did it find any matches*/
-    found: function() {
-      return this.list.length > 0;
-    },
+
     count : function() {
       return this.list.length;
     },
@@ -25,6 +22,7 @@ const genericMethods = (Result) => {
         console.log('--');
         ts.check();
       });
+      return this;
     },
 
     plaintext : function() {
@@ -34,6 +32,12 @@ const genericMethods = (Result) => {
       }, '');
     },
 
+    normal: function() {
+      return this.list.reduce((str, ts) => {
+        str += ts.normal();
+        return str;
+      }, '');
+    },
 
     get : function(n) {
       //return an empty result

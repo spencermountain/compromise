@@ -11,4 +11,8 @@ const context = {
   }
 };
 
-console.log(nlp('play some, donkey kong please', context).check());
+// let r = nlp('i wanna go');
+// let r = nlp('he\'ll go');
+// let r = nlp('spencer\'s nice');
+let r = nlp('spencer\'s nice house');
+r.check();

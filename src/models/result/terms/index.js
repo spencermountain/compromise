@@ -44,7 +44,11 @@ class Terms {
       t.render('check');
     });
   }
-
+  insertAt(text, i) {
+    let term = new Term(text, this.context);
+    this.terms.splice(i + 1, 0, term);
+    return this;
+  }
 }
 //some other methods
 Terms.prototype.clone = function() {

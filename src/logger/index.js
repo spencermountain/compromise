@@ -15,6 +15,9 @@ module.exports = {
   },
   tell: (str, path) => {
     if (enable === true || enable === path) {
+      if (typeof str === 'object') {
+        str = JSON.stringify(str);
+      }
       str = '    ' + chalk.magenta(str);
       console.log(str);
     }

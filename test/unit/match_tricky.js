@@ -6,8 +6,9 @@ test('fancy match', function(t) {
   [
     //misc
     ['doug is good', '', 0],
-    ['doug is good', '.', 1],
-    ['doug is good', '.?', 1],
+    // ['doug is good', '.', 1],
+    // ['doug is good', '.?', 1],
+    ['doug is good', '.+', 3],
 
     //contractions
     ['he\'s nice', 'he is', 2],
@@ -30,11 +31,11 @@ test('fancy match', function(t) {
     //optional miss
     ['doug is good', 'doug is really? good', 3],
     // ['doug is good', 'doug is .? good', 3], //tricky 'greedy optional' bug
-    ['doug is good', 'doug is [Adverb]? good', 3],
+    ['doug is good', 'doug is #Adverb? good', 3],
     //optional has
     ['doug is really good', 'doug is really? good', 4],
     ['doug is really good', 'doug is .? good', 4],
-    ['doug is really good', 'doug is [Adverb]? good', 4],
+    ['doug is really good', 'doug is #Adverb? good', 4],
     //asterix empty
     ['doug is good', 'doug *', 3],
     ['doug is good', 'doug is *', 3],

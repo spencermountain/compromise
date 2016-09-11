@@ -43,7 +43,7 @@ module.exports = {
       return tag;
     }).join(', ');
     let word = t.text;
-    word = '\'' + chalk.green(word || ' ') + '\'';
+    word = '\'' + chalk.green(word || '-') + '\'';
     let silent = '';
     if (t.silent_term) {
       silent = '[' + t.silent_term + ']';

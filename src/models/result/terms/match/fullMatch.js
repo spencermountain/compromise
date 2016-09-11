@@ -1,4 +1,6 @@
 'use strict';
+const log = require('../../paths').log;
+const path = 'match';
 
 //compare 1 term to one reg
 const perfectMatch = (term, reg) => {

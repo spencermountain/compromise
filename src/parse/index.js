@@ -16,8 +16,11 @@ const Result = require('../models/result');
 const tokenize = (str, context) => {
   str = fns.ensureString(str);
   context = fns.ensureObject(context);
-  let arr = steps.split_sentences(str).map((sen, i) => {
+  //step #1
+  let arr = steps.split_sentences(str);
+  arr = arr.map((sen, i) => {
     //find the particular words
+    //step #2
     let terms = steps.split_terms(sen);
     terms = terms.map((term) => {
       //make them proper Term objects
@@ -25,12 +28,13 @@ const tokenize = (str, context) => {
       return new Term(term, c);
     });
     //make it 'Terms()' object
-    terms = new Terms(terms, this.context);
+    terms = new Terms(terms, context);
     //give each term a parent reference
     terms.forEach((t) => {
       t.context.parent = terms;
     });
     log.tell('=sentence' + i + '=', path);
+    //step #3
     terms = steps.tagger(terms);
     log.tell('\n', path);
     return terms;

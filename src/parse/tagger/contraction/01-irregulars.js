@@ -1,18 +1,7 @@
+'use strict';
+const fixContraction = require('./fix');
 
-//the formulaic contraction types:
-exports.easy_ends = {
-  'll': 'will',
-  'd': 'would',
-  've': 'have',
-  're': 'are',
-  'm': 'am',
-  'n\'t': 'not'
-//these ones are a bit tricksier:
-// 't': 'not',
-// 's': 'is' //or was
-};
-
-exports.irregulars = {
+const irregulars = {
   'dunno': ['do', 'not', 'know'],
   'wanna': ['want', 'to'],
   'gonna': ['going', 'to'],
@@ -43,3 +32,18 @@ exports.irregulars = {
   'let\'s': ['let', 'us'],
   'brb': ['be', 'right', 'back']
 };
+
+//check irregulars
+const checkIrregulars = (ts) => {
+  let irreg = Object.keys(irregulars);
+  for(let i = 0; i < irreg.length; i++) {
+    let m = ts.match(irreg[i]);
+    if (m.length > 0) {
+      let fix = irregulars[irreg[i]];
+      ts = fixContraction(ts, fix, i);
+      i += 1;
+    }
+  }
+  return ts;
+};
+module.exports = checkIrregulars;

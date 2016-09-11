@@ -19,6 +19,10 @@ const noun_fallback = function(s) {
         continue;
       }
       t.tagAs('Noun', 'noun-fallback');
+      //check if it's plural, too
+      if (t.is('plural')) {
+        t.tagAs('Plural', 'fallback-plural');
+      }
     }
   }
   return s;

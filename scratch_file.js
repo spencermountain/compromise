@@ -18,8 +18,8 @@ const context = {
 // let r = nlp('spencer\'s nice house');
 // let r = nlp('it will really be the nice house');
 
-// let r = nlp(corpus.parsed.sotu().obama_2012);
-// let r = nlp('That’s not how people feel from Tokyo to Berlin; from Cape Town to Rio; where opinions of America are higher than they’ve been in years.');
-let r = nlp('spencer is nice');
+// let r = nlp(corpus.parsed.sotu().obama_2013);
+// let r = nlp('And as time ticked by, her concern was not with her tired body or aching feet, but whether folks like her would get to have their say.');
+let r = nlp('her would get');
 r.phrases();
 r.check();

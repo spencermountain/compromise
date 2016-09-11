@@ -40,9 +40,13 @@ const prettyPrint = (Result) => {
             str += chalk.red(text);
             return;
           }
+          if (t.tag.AdjectivePhrase) {
+            str += chalk.magenta(text);
+            return;
+          }
           str += text;
         });
-        console.log(str + '\n');
+        console.log('\n' + str);
       });
     },
   };

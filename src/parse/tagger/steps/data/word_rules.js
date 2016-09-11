@@ -15,6 +15,7 @@ module.exports = [
   ['.[lnr]ize$', 'Infinitive'],
   ['.[gk]y$', 'Adjective'],
   ['.fies$', 'PresentTense'],
+  ['ities$', 'Plural'],
   ['.some$', 'Adjective'],
   ['.[nrtumcd]al$', 'Adjective'],
   ['.que$', 'Adjective'],
@@ -56,6 +57,7 @@ module.exports = [
   ['.ices$', 'Plural'],
   ['.tage$', 'Infinitive'],
   ['.ions$', 'Plural'],
+  ['.tion$', 'Singular'],
   ['.ean$', 'Adjective'],
   ['.[ia]sed$', 'Adjective'],
   ['.tized$', 'PastTense'],
@@ -69,7 +71,6 @@ module.exports = [
   ['.gone$', 'Adjective'],
   ['.made$', 'Adjective'],
   ['.ing$', 'Gerund'], //likely to be converted to adjective after lexicon pass
-  ['.tions$', 'Plural'],
   ['.tures$', 'Plural'],
   ['.ous$', 'Adjective'],
   ['.ports$', 'Plural'],
@@ -129,7 +130,7 @@ module.exports = [
   ['[aeiou].*ist$', 'Adjective'],
   ['[^i]fer$', 'Infinitive'],
   ['(bb|tt|gg|pp|ll|nn|mm)', 'Verb'], //rubbed
-  ['[aeiou]ked$', 'PastTense'], //hooked
+  ['[aeiou]c?ked$', 'PastTense'], //hooked
   //slang things
   ['^um+$', 'Expression'], //ummmm
   ['^([hyj]a)+$', 'Expression'], //hahah

@@ -113,7 +113,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon.burying);
+// console.log(lexicon.place);
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.info('conjugations'));

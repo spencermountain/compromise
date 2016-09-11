@@ -7,7 +7,11 @@ const nounPhrase = function(result) {
   result.match('#Determiner #NounPhrase').tag('NounPhrase');
   //
   result.match('#Noun #Preposition #Noun').tag('NounPhrase');
+  //john and sara
   result.match('#Noun #Conjunction #Noun').tag('NounPhrase');
+  //fifty stars
+  result.match('#Value #NounPhrase').tag('NounPhrase');
+
   return result;
 };
 

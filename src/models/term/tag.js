@@ -48,7 +48,7 @@ const set_tag = function(term, tag, reason) {
   let tags = tagset[tag].is;
   for (let i = 0; i < tags.length; i++) {
     if (!term.tag[tags[i]]) {
-      log.tagAs(term, tags[i], 'deduction');
+      log.tagAs(term, tags[i], ' - - deduction-' + tag);
       term.tag[tags[i]] = true;
     }
   }

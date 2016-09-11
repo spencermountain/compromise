@@ -29,7 +29,7 @@ module.exports = {
       title = fns.leftPad('\'' + title + '\'', 20);
       title += '  ->   ' + chalk.red(pos);
       title = fns.leftPad(title, 54);
-      console.log('       ' + title + '(' + reason + ')');
+      console.log('       ' + title + '(' + (reason || '') + ')');
     }
   },
   match: (t, reason) => {

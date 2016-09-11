@@ -8,9 +8,10 @@ const corrections = function(result) {
   //the truly nice swim
   result.match('the #Adverb #Adjective #Verb').match('#Verb').tag('#Noun');
 
+  //peter the great
+  result.match('#Person the #Adjective').tag('Person');
   //book the flight
-  // result.match('#Noun the #Noun').tag('');
-
+  result.match('#Noun the #Noun').term(0).tag('Verb');
 
   // result.match('').tag('');
 

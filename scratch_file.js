@@ -22,6 +22,5 @@ const context = {
 // let r = nlp('That’s not the message we get from leaders around the world, all of whom are eager to work with us.');
 // let r = nlp('the truly nice message');
 let r = nlp('book the flight');
-console.log(r.match('#Noun the #Noun').term(3).list[0]);
-// r.phrases();
-// r.check();
+r.phrases();
+r.check();

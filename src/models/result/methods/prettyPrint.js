@@ -32,7 +32,7 @@ const prettyPrint = (Result) => {
         ts.terms.forEach((t) => {
           let text = t.plaintext();
           if (t.tag.NounPhrase) {
-            str += chalk.blue(text);
+            str += chalk.cyan(text);
             return;
           }
           if (t.tag.VerbPhrase) {

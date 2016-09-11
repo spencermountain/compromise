@@ -23,8 +23,9 @@ const genericMethods = (Result) => {
         let el = ts.terms[n];
         if (el) {
           ts.terms = [el];
+        } else {
+          ts.terms = [];
         }
-        ts.terms = [];
         return ts;
       });
       return new Result(list, this.context);

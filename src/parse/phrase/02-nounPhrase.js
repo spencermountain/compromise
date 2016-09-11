@@ -4,7 +4,7 @@ const nounPhrase = function(result) {
   //nice house
   result.match('#Adjective #Noun').tag('NounPhrase');
   //tag preceding determiner 'the nice house'
-  result.match('#Determiner #NounPhrase').tag('NounPhrase');
+  result.match('#Determiner #Noun').tag('NounPhrase');
   return result;
 };
 

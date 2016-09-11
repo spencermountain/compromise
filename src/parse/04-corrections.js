@@ -13,7 +13,11 @@ const corrections = function(result) {
   //book the flight
   result.match('#Noun the #Noun').term(0).tag('Verb');
 
-  // result.match('').tag('');
+  //he quickly foo
+  result.match('#Noun #Adverb #Noun').term(2).tag('Verb');
+
+  //is eager to go
+  result.match('#Copula #Adjective to #Verb').match('#Adjective to').tag('Verb');
 
 
   return result;

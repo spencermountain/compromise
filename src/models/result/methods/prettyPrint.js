@@ -28,7 +28,8 @@ const prettyPrint = (Result) => {
     },
 
     phrases: function() {
-      let text = this.list.reduce((str, ts) => {
+      this.list.forEach((ts) => {
+        let str = '';
         ts.terms.forEach((t) => {
           let text = t.plaintext();
           if (t.tag.NounPhrase) {
@@ -41,9 +42,8 @@ const prettyPrint = (Result) => {
           }
           str += text;
         });
-        return str;
-      }, '');
-      console.log(text);
+        console.log(str + '\n');
+      });
     },
   };
   Object.keys(methods).forEach((k) => {

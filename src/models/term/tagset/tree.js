@@ -1,25 +1,27 @@
 
 //the POS tags we use, according to their dependencies
 module.exports = {
-  Noun: {
-    Singular: {
-      Pronoun: true,
-      Person: {
-        MalePerson: true,
-        FemalePerson: true,
-        Honourific: true
+  NounPhrase: {
+    Noun: {
+      Singular: {
+        Pronoun: true,
+        Person: {
+          MalePerson: true,
+          FemalePerson: true,
+          Honourific: true
+        },
+        Place: {
+          Country: true,
+          City: true
+        },
+        Organization: true,
       },
-      Place: {
-        Country: true,
-        City: true
-      },
-      Organization: true,
+      Plural: true,
+      Actor: true,
+      Unit: true,
+      Demonym: true,
+      Possessive: true,
     },
-    Plural: true,
-    Actor: true,
-    Unit: true,
-    Demonym: true,
-    Possessive: true,
   },
   Verb: {
     PresentTense: {
@@ -69,7 +71,6 @@ module.exports = {
   Auxillary: true,
   Negative: true,
 
-  NounPhrase: true,
   ValuePhrase: true,
   AdjectivePhrase: true,
 };

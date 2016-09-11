@@ -42,7 +42,7 @@ const conflicts = [
   ['Month', 'Day', 'Year', 'Duration'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
   //phrases
-  ['NounPhrase', 'VerbPhrase']
+  ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase']
 ];
 
 const find = (tag) => {

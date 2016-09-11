@@ -5,13 +5,12 @@ const verbPhrase = function(result) {
   result.match('#Auxillary+').tag('VerbPhrase');
   // 'is'
   result.match('#Copula').tag('VerbPhrase');
-  result.match('#Verb').tag('VerbPhrase');
   //'really will'..
   result.match('#adverb #Auxillary').tag('VerbPhrase');
   //to go
   result.match('to #Infinitive').tag('VerbPhrase');
-  //get the last verb
-  result.match('#VerbPhrase #Verb').tag('VerbPhrase');
+  //work with
+  result.match('#Verb #Preposition').tag('VerbPhrase');
   return result;
 };
 

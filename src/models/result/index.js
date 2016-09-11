@@ -12,6 +12,7 @@ class Result {
     return this.list.length > 0;
   }
 }
+
 //add methods to prototype
 const methods = require('./methods');
 Object.keys(methods).forEach((k) => {

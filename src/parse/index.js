@@ -3,7 +3,8 @@
 const steps = {
   split_sentences: require('./01-split_sentences'),
   split_terms: require('./02-split_terms'),
-  tagger: require('./03-tagger')
+  tagger: require('./03-tagger'),
+  phrase: require('./04-phrases'),
 };
 const Term = require('../models/term');
 const Terms = require('../models/result/terms');
@@ -39,7 +40,10 @@ const tokenize = (str, context) => {
     log.tell('\n', path);
     return terms;
   });
-  //is it an array of sentences, or what
-  return new Result(arr, context);
+  //wrap them up into a Result
+  let result = new Result(arr, context);
+  //tag NounPhrase, VerbPhrase
+  result = steps.phrase(result);
+  return result;
 };
 module.exports = tokenize;

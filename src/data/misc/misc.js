@@ -136,14 +136,10 @@ const compact = {
 
   'Copula': [
     'is',
-    'will be',
     'are',
     'was',
     'were',
-    'am',
-    'isn\'t',
-    'ain\'t',
-    'aren\'t'
+    'am'
   ],
 
   //determiners

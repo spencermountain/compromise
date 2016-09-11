@@ -17,27 +17,7 @@ const genericMethods = (Result) => {
       }, []);
     },
 
-    check : function() {
-      this.list.forEach((ts, i) => {
-        console.log('--');
-        ts.check();
-      });
-      return this;
-    },
 
-    plaintext : function() {
-      return this.list.reduce((str, ts) => {
-        str += ts.plaintext();
-        return str;
-      }, '');
-    },
-
-    normal: function() {
-      return this.list.reduce((str, ts) => {
-        str += ts.normal();
-        return str;
-      }, '');
-    },
 
     get : function(n) {
       //return an empty result

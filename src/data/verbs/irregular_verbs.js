@@ -31,17 +31,17 @@ const irregular_verbs = {
     PastTense: 'been',
     Participle: 'been',
     PresentTense: 'is',
-    FutureTense: 'will be',
+    // FutureTense: 'will be',
     Actor: '',
     Gerund: 'am'
   },
   is: {
     PastTense: 'was',
     PresentTense: 'is',
-    FutureTense: 'will be',
-    PerfectTense: 'have been',
-    pluPerfectTense: 'had been',
-    FuturePerfect: 'will have been',
+    // FutureTense: 'will be',
+    // PerfectTense: 'have been',
+    // pluPerfectTense: 'had been',
+    // FuturePerfect: 'will have been',
     Actor: '',
     Gerund: 'being'
   },

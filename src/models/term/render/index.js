@@ -42,7 +42,7 @@ module.exports = {
       }
       return tag;
     }).join(', ');
-    let word = t.text + t.endPunct;
+    let word = t.text;
     word = '\'' + chalk.green(word || ' ') + '\'';
     let silent = '';
     if (t.silent_term) {

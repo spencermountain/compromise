@@ -9,8 +9,8 @@ const has_pos = function(terms, tags) {
   if (terms.length !== tags.length) {
     return false;
   }
-  for(var i = 0; i < terms.arr.length; i++) {
-    if (!terms.arr[i].tag[tags[i]]) {
+  for(var i = 0; i < terms.length; i++) {
+    if (!terms[i].tag[tags[i]]) {
       return false;
     }
   }

@@ -5,9 +5,10 @@ const nlp = require('./src/index');
 // const nlp = require('./builds/nlp_compromise');
 // require('./src/logger').enable();
 
-// let str = 'i think he\'s nice';
-// let r = nlp('buy eggs quickly on friday. Eat cheese suddenly on saturday.');
-// let m = r.match('#adverb on #date').tag('Fun');
-// r.match('#Fun+').check();
+const context = {
+  lexicon: {
+    'donkey kong': 'Person'
+  }
+};
 
-console.log(nlp('ensure he\'s ok').check());
+console.log(nlp('play some, donkey kong please', context).check());

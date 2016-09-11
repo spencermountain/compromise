@@ -68,7 +68,7 @@ test('fancy match', function(t) {
     ['it snows', 'it$ snows', 0],
     ['it snows', 'foo$', 0],
   ].forEach(function (a) {
-    var r = nlp(a[0]).match(a[1]).first() || [];
+    var r = nlp(a[0]).match(a[1]).terms() || [];
     var msg = '\'' + a[0] + '\' - - - \'' + a[1] + '\' - - got:' + r.length + '  want:' + a[2];
     t.equal(r.length, a[2], msg);
   });

@@ -4,7 +4,8 @@ const steps = {
   split_sentences: require('./01-split_sentences'),
   split_terms: require('./02-split_terms'),
   tagger: require('./03-tagger'),
-  phrase: require('./04-phrases'),
+  corrections: require('./04-corrections'),
+  phrase: require('./05-phrases'),
 };
 const Term = require('../models/term');
 const Terms = require('../models/result/terms');
@@ -42,6 +43,8 @@ const tokenize = (str, context) => {
   });
   //wrap them up into a Result
   let result = new Result(arr, context);
+  //fix apparent mistakes in tagging
+  result = steps.corrections(result);
   //tag NounPhrase, VerbPhrase
   result = steps.phrase(result);
   return result;

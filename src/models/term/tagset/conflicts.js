@@ -40,7 +40,9 @@ const conflicts = [
   ['HashTag', 'Email', 'Url'],
   //date
   ['Month', 'Day', 'Year', 'Duration'],
-  ['Particle', 'Conjunction', 'Adverb', 'Preposition']
+  ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
+  //phrases
+  ['NounPhrase', 'VerbPhrase']
 ];
 
 const find = (tag) => {

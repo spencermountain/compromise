@@ -4,8 +4,8 @@
 const nlp = require('./src/index');
 const corpus = require('nlp-corpus');
 // const nlp = require('./builds/nlp_compromise');
-// require('./src/logger').enable();
 
+require('./src/logger').enable('tagger/correction');
 const context = {
   lexicon: {
     'donkey kong': 'Person'
@@ -18,5 +18,10 @@ const context = {
 // let r = nlp('spencer\'s nice house');
 // let r = nlp('it will really be the nice house');
 
-let r = nlp(corpus.parsed.sotu().obama_2012);
-r.phrases();
+// let r = nlp(corpus.parsed.sotu().obama_2012);
+// let r = nlp('That’s not the message we get from leaders around the world, all of whom are eager to work with us.');
+// let r = nlp('the truly nice message');
+let r = nlp('book the flight');
+console.log(r.match('#Noun the #Noun').term(3).list[0]);
+// r.phrases();
+// r.check();

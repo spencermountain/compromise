@@ -2,7 +2,6 @@
 const fixContraction = require('./fix');
 
 const irregulars = {
-  'dunno': ['do', 'not', 'know'],
   'wanna': ['want', 'to'],
   'gonna': ['going', 'to'],
   'im': ['i', 'am'],
@@ -30,18 +29,20 @@ const irregulars = {
   'what\'d': ['what', 'did'],
   'whatd': ['what', 'did'],
   'let\'s': ['let', 'us'],
-  'brb': ['be', 'right', 'back']
+// 'dunno': ['do', 'not', 'know'],
+// 'brb': ['be', 'right', 'back']
 };
 
 //check irregulars
 const checkIrregulars = (ts) => {
   let irreg = Object.keys(irregulars);
   for(let i = 0; i < irreg.length; i++) {
-    let m = ts.match(irreg[i]);
-    if (m.length > 0) {
-      let fix = irregulars[irreg[i]];
-      ts = fixContraction(ts, fix, i);
-      i += 1;
+    for(let t = 0; t < ts.terms.length; t++) {
+      if (ts.terms[t].normal === irreg[i]) {
+        let fix = irregulars[irreg[i]];
+        ts = fixContraction(ts, fix, t);
+        break;
+      }
     }
   }
   return ts;

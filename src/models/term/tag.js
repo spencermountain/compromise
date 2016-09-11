@@ -15,9 +15,10 @@ const canBe = (term, tag) => {
     return true;
   }
   //consult tagset's incompatible tags
-  let not = Object.keys(tagset[tag].not);
-  for (let i = 0; i < not.length; i++) {
-    if (term.tag[not[i]]) {
+  let not = tagset[tag].not;
+  let tags = Object.keys(term.tag);
+  for(let i = 0; i < tags.length; i++) {
+    if (not.indexOf(tags[i]) !== -1) {
       return false;
     }
   }
@@ -25,16 +26,19 @@ const canBe = (term, tag) => {
 };
 
 const set_tag = function(term, tag, reason) {
+  tag = tag || '';
+  tag = tag.replace(/^#/, '');
   //fail-fast
   if (!term || !tag || term.tag[tag]) {
     return;
   }
-  term.tag[tag] = true;
   log.tagAs(term, tag, reason);
   //reset term, if necessary
   if (canBe(term, tag) === false) {
+    log.tell('retting tags for ' + term.normal);
     term.tag = {};
   }
+  term.tag[tag] = true;
   if (!tagset[tag]) {
     // console.warn('unknown tag ' + tag + ' - ' + reason);
     term.tag[tag] = true;

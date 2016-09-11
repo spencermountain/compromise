@@ -19,10 +19,10 @@ const isPossessive = (ts, i) => {
     return true;
   }
   //a gerund suggests 'is walking'
-  if (next_t.tag.Gerund) {
+  if (next_t.tag.VerbPhrase) {
     return true;
   }
-  return true;
+  return false;
 };
 
 
@@ -39,7 +39,9 @@ const hardOne = (ts) => {
       if (parts.end === 's') {
         //spencer's house
         if (isPossessive(ts, i)) {
-          console.log('==possessive==');
+          ts.terms[i].tagAs('#Possessive', 'hard-contraction');
+          // console.log('==possessive==');
+          continue;
         }
         //is vs was
         let arr = [parts.start, 'is'];

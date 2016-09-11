@@ -6,33 +6,37 @@ const Terms = require('../terms');
 const genericMethods = (Result) => {
 
   const methods = {
-
+    /** how many results are there?*/
     count : function() {
       return this.list.length;
     },
 
+    /** get a flat array of all terms in every result*/
     terms : function() {
       return this.list.reduce((arr, ts) => {
         return arr.concat(ts.terms);
       }, []);
     },
-
-
-
-    get : function(n) {
-      //return an empty result
-      if ((!n && n !== 0) || !this.list[n]) {
-        return new Result([], this.context);
-      }
-      let ts = this.list[n];
-      return new Result([ts], this.context);
+    /** get the nth term of each result*/
+    term : function(n) {
+      let list = this.list.map((ts) => {
+        let el = ts.terms[n];
+        if (el) {
+          ts.terms = [el];
+        }
+        ts.terms = [];
+        return ts;
+      });
+      return new Result(list, this.context);
     },
+    /**use only the first result */
     first : function(n) {
       if (!n && n !== 0) {
         return this.get(0);
       }
       return new Result(this.list.slice(0, n), this.context);
     },
+    /**use only the last result */
     last : function(n) {
       if (!n && n !== 0) {
         return this.get(this.list.length - 1);
@@ -40,6 +44,15 @@ const genericMethods = (Result) => {
       let end = this.list.length;
       let start = end - n;
       return new Result(this.list.slice(start, end), this.context);
+    },
+    /** use only the nth result*/
+    get : function(n) {
+      //return an empty result
+      if ((!n && n !== 0) || !this.list[n]) {
+        return new Result([], this.context);
+      }
+      let ts = this.list[n];
+      return new Result([ts], this.context);
     },
 
     /**copy data properly so later transformations will have no effect*/
@@ -60,9 +73,9 @@ const genericMethods = (Result) => {
       return new Result([terms], this.context);
     },
     /**tag all the terms in this result as something */
-    tag: function(tag) {
+    tag: function(tag, reason) {
       this.terms().forEach((t) => {
-        t.tagAs(tag);
+        t.tagAs(tag, reason);
       });
       return this;
     },

@@ -41,7 +41,7 @@ const startHere = (ts, startAt, regs) => {
     if (reg.ending && term_i !== ts.length - 1) {
       return null;
     }
-    //support asterix
+    //support '*'
     if (regs[reg_i].greedy) {
       let next_reg = regs[reg_i + 1];
       //easy, just return rest of sentence

@@ -26,7 +26,7 @@ const corrections = function(result) {
   result.match('#Verb than').term(0).tag('Noun', 'correction');
 
   //her polling
-  result.match('#Possessive #Verb').term(1).tag('Noun', 'correction-possessive');
+  // result.match('#Possessive #Verb').term(1).tag('Noun', 'correction-possessive');
 
   //folks like her
   result.match('#Plural like #Noun').term(1).tag('Preposition', 'correction');

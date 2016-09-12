@@ -9,6 +9,11 @@ const parse_term = function(term, i) {
   let reg = {};
   //order matters..
 
+  //negation ! flag
+  if (fns.startsWith(term, '!')) {
+    term = term.substr(1, term.length);
+    reg.negative = true;
+  }
   //leading ^ flag
   if (fns.startsWith(term, '^')) {
     term = term.substr(1, term.length);

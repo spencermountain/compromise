@@ -19,7 +19,7 @@ It's a [handy, and not overly-fancy](https://github.com/nlp-compromise/nlp_compr
 ## Off you go,
 > `npm install nlp_compromise`
 
-> `<script src="https://npmcdn.com/nlp_compromise@latest/builds/nlp_compromise.min.js"></script>`
+> `<script src="https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js"></script>`
 
 ```javascript
 let nlp = require('nlp_compromise'); // or nlp = window.nlp_compromise

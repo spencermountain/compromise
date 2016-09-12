@@ -46,7 +46,6 @@ const perfectMatch = (term, reg) => {
 
 //wrap above method, to support '!' negation
 const fullMatch = (term, reg) => {
-  console.log(reg);
   let found = perfectMatch(term, reg);
   if (reg.negative) {
     found = !!!found;
@@ -54,4 +53,4 @@ const fullMatch = (term, reg) => {
   return found;
 };
 
-module.exports = perfectMatch;
+module.exports = fullMatch;

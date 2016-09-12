@@ -21,6 +21,6 @@ const context = {
 // let r = nlp(corpus.parsed.sotu().obama_2013);
 // let r = nlp('And as time ticked by, her concern was not with her tired body or aching feet, but whether folks like her would get to have their say.');
 
-let r = nlp('is really cool').match('!#Adverb');
+let r = nlp('is really cool').match('.');
 r.phrases();
 r.check();

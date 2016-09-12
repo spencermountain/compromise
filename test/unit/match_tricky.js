@@ -6,8 +6,8 @@ test('fancy match', function(t) {
   [
     //misc
     ['doug is good', '', 0],
-    // ['doug is good', '.', 1],
-    // ['doug is good', '.?', 1],
+    ['doug is good', '.', 3],
+    ['doug is good', '.?', 3],
     ['doug is good', '.+', 3],
 
     //contractions
@@ -68,6 +68,11 @@ test('fancy match', function(t) {
     ['it snows', 'it snows$', 2],
     ['it snows', 'it$ snows', 0],
     ['it snows', 'foo$', 0],
+    //negative !
+    ['it really snows', 'it #adverb snows', 3],
+    ['it really snows', 'it !#adverb snows', 0],
+    ['it really snows. it goes.', 'it !#adverb', 2],
+    ['it is nice.', '!#adverb', 3],
   ].forEach(function (a) {
     var r = nlp(a[0]).match(a[1]).terms() || [];
     var msg = '\'' + a[0] + '\' - - - \'' + a[1] + '\' - - got:' + r.length + '  want:' + a[2];

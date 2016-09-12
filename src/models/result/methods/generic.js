@@ -80,6 +80,13 @@ const genericMethods = (Result) => {
       });
       return this;
     },
+    /**remove a tag in all the terms in this result (that had it) */
+    unTag: function(tag, reason) {
+      this.terms().forEach((t) => {
+        delete t.tag[tag];
+      });
+      return this;
+    },
     /** filter-out all terms with this tag*/
     remove: function(tag) {
       let list = this.list.map((ts) => {

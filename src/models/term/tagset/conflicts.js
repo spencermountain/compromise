@@ -5,7 +5,7 @@ const conflicts = [
   //top-level pos are all inconsistent
   ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression'],
   //nouns
-  ['Person', 'Organization', 'Value', 'Date', 'Place', 'Actor', 'Demonym', 'Pronoun'],
+  ['Person', 'Organization', 'Value', 'Place', 'Actor', 'Demonym', 'Pronoun'],
   //things that can't be plural
   ['Plural', 'Singular'],
   ['Plural', 'Pronoun'],
@@ -41,6 +41,7 @@ const conflicts = [
   //date
   ['Month', 'Day', 'Year', 'Duration'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
+  ['Date', 'Verb', 'Adjective'],
   //phrases
   ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase']
 ];

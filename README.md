@@ -55,7 +55,7 @@ Instead of `Term` objects having the methods & tooling, the library now hoists a
 
 One word is now just a list of words, of length 1.
 
-The idea is that now you can work on *arbitrary* text without *arbitrary* `nlp_compromise` choices getting in the way:
+The idea is that now you can work on **arbitrary** text without **arbitrary** `nlp_compromise` choices getting in the way:
 ```javascript
 r= nlp('singing').conjugate()
 //valid

@@ -31,6 +31,16 @@ Result.prototype.match = function(reg) {
   });
   return new Result(list);
 };
+/** return terms after this match */
+Result.prototype.after = function(reg) {
+  let after = reg + ' *';
+  return this.match(after).remove(reg);
+};
+/** return terms before this match */
+Result.prototype.before = function(reg) {
+  let before = '* ' + reg;
+  return this.match(before).remove(reg);
+};
 /** like .match(), but negative (filter-out the matches)*/
 Result.prototype.remove = function(reg) {
   let list = [];

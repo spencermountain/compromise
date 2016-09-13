@@ -4,29 +4,31 @@
 Basic match/remove flow
 ```javascript
 r = nlp('john is really nice. sara quickly walks.')
-//reach-in and transform
+//reach-in and transform parts
 r.match('#Person').toTitleCase()
-//pluck-out adverbs
+//pluck-out some parts
 r.remove('#Adverb')
 r.plaintext()
-//'John is nice. Sara walks.'
+// 'John is nice. Sara walks.'
 ```
 Persistent transforms
 ```javascript
 r = nlp('fifth of december')
 r.toCardinal().plaintext()
-//'five of december'
+// 'five of december'
 r.toValue().plaintext()
-//'5 of december'
+// '5 of december'
 ```
 Multi-term NounPhrase, VerbPhrase, AdjPhrase
 ```javascript
 r = nlp('john would not have walked')
-let vb = r.match('#VerbPhrase+') // 'would not have walked'
+let vb = r.match('#VerbPhrase+')
+vb.plaintext()
+// 'would not have walked'
 vb.toPositive().plaintext()
 //would have walked
 ```
-.clone() - non-persistent transforms
+`.clone()` - non-persistent transforms
 ```javascript
 r=nlp('This api is stable.')
 //make a non-transitive copy
@@ -49,4 +51,5 @@ The idea is that now you can work on arbitrary text without arbitrary `nlp_compr
 r=nlp('singing').conjugate() //valid
 r=nlp('was singing').conjugate() //valid
 r=nlp('john was singing').conjugate() //valid
+r=nlp('john was singing. Sara was also singing.').conjugate() //valid
 ```

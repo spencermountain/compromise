@@ -24,11 +24,11 @@ r.toCardinal().plaintext()
 r.toValue().plaintext()
 // '5 of december'
 ```
-Multi-term NounPhrase, VerbPhrase, AdjPhrase
+Multi-term `NounPhrase`, `VerbPhrase`, `AdjPhrase`
 ```javascript
 r = nlp('john would not have walked')
 
-let vb = r.match('#VerbPhrase+')
+vb = r.match('#VerbPhrase+')
 vb.plaintext()
 // 'would not have walked'
 
@@ -40,7 +40,7 @@ vb.toPositive().plaintext()
 r=nlp('This api is stable.')
 
 //make a non-transitive copy
-let tmp=r.clone()
+tmp=r.clone()
 tmp.toNegative()
 tmp.toExclamation()
 tmp.plaintext()
@@ -57,11 +57,11 @@ One word is now just a list of words, of length 1.
 
 The idea is that now you can work on arbitrary text without arbitrary `nlp_compromise` choices getting in the way:
 ```javascript
-r=nlp('singing').conjugate() //valid
+r= nlp('singing').conjugate() //valid
 
-r=nlp('would have been singing').conjugate() //valid
+r= nlp('would have been singing').conjugate() //valid
 
-r=nlp('john was singing').conjugate() //valid
+r= nlp('john was singing').conjugate() //valid
 
-r=nlp('john was singing. Sara was singing.').conjugate() //valid
+r= nlp('john was singing. Sara was singing.').conjugate() //valid
 ```

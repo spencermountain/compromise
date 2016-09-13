@@ -6,16 +6,20 @@ Basic match/remove flow
 r = nlp('john is really nice. sara quickly walks.')
 //reach-in and transform parts
 r.match('#Person').toTitleCase()
+
 //pluck-out some parts
 r.remove('#Adverb')
+
 r.plaintext()
 // 'John is nice. Sara walks.'
 ```
 Persistent transforms
 ```javascript
 r = nlp('fifth of december')
+
 r.toCardinal().plaintext()
 // 'five of december'
+
 r.toValue().plaintext()
 // '5 of december'
 ```
@@ -25,6 +29,7 @@ r = nlp('john would not have walked')
 let vb = r.match('#VerbPhrase+')
 vb.plaintext()
 // 'would not have walked'
+
 vb.toPositive().plaintext()
 //would have walked
 ```
@@ -37,6 +42,7 @@ tmp.toNegative()
 tmp.toExclamation()
 tmp.plaintext()
 //This api is not stable!
+
 r.plaintext()
 //This api is stable.
 ```

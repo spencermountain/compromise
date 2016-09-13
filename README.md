@@ -4,6 +4,7 @@
 Basic match/remove flow
 ```javascript
 r = nlp('john is really nice. sara quickly walks.')
+
 //reach-in and transform parts
 r.match('#Person').toTitleCase()
 
@@ -26,6 +27,7 @@ r.toValue().plaintext()
 Multi-term NounPhrase, VerbPhrase, AdjPhrase
 ```javascript
 r = nlp('john would not have walked')
+
 let vb = r.match('#VerbPhrase+')
 vb.plaintext()
 // 'would not have walked'
@@ -36,6 +38,7 @@ vb.toPositive().plaintext()
 `.clone()` - non-persistent transforms
 ```javascript
 r=nlp('This api is stable.')
+
 //make a non-transitive copy
 let tmp=r.clone()
 tmp.toNegative()

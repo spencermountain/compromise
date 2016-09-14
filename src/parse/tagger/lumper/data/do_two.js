@@ -42,12 +42,12 @@ module.exports = [
   //   result: 'Date',
   //   reason: 'value-date'
   // },
-  {
-    //last wednesday
-    condition: (a, b) => ((a.normal === 'last' || a.normal === 'next' || a.normal === 'this') && b.tag.Date),
-    result: 'Date',
-    reason: 'relative-date'
-  },
+  // {
+  //   //last wednesday
+  //   condition: (a, b) => ((a.normal === 'last' || a.normal === 'next' || a.normal === 'this') && b.tag.Date),
+  //   result: 'Date',
+  //   reason: 'relative-date'
+  // },
   {
     //Aircraft designer
     condition: (a, b) => (a.tag.Noun && b.tag.Actor),

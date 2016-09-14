@@ -20,13 +20,12 @@ const genericMethods = (Result) => {
     /** get the nth term of each result*/
     term : function(n) {
       let list = this.list.map((ts) => {
+        let arr = [];
         let el = ts.terms[n];
         if (el) {
-          ts.terms = [el];
-        } else {
-          ts.terms = [];
+          arr = [el];
         }
-        return ts;
+        return new Terms(arr, this.context);
       });
       return new Result(list, this.context);
     },
@@ -93,6 +92,15 @@ const genericMethods = (Result) => {
         return ts.remove(tag);
       });
       return new Result(list, this.context);
+    },
+
+    replace: function(text) {
+      this.list.forEach((ts) => {
+        ts.terms.forEach((t) => {
+          t.text = text;
+        });
+      });
+      return this;
     }
 
   };

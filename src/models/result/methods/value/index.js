@@ -17,6 +17,14 @@ const methods = {
     });
     return this;
   },
+  toOrdinal : function() {
+    this.terms().forEach((t) => {
+      if (t.tag.Value) {
+        t.to('ordinal');
+      }
+    });
+    return this;
+  },
 };
 
 

@@ -3,7 +3,7 @@ module.exports = [
 
   ['^#[a-z]+$', 'HashTag'],
   ['[a-z]s\'$', 'Possessive'],
-
+  ['^[0-9,\.]+$', 'Numeric'], //like 5
 ].map(function(a) {
   return {
     reg: new RegExp(a[0]),

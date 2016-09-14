@@ -30,24 +30,6 @@ module.exports = [
     result: 'Person',
     reason: 'person-titleCase'
   },
-  // {
-  //   //June 4
-  //   condition: (a, b) => (a.tag.Date && b.tag.Value),
-  //   result: 'Date',
-  //   reason: 'date-value'
-  // },
-  // {
-  //   //4 June
-  //   condition: (a, b) => (a.tag.Value && b.tag.Date),
-  //   result: 'Date',
-  //   reason: 'value-date'
-  // },
-  // {
-  //   //last wednesday
-  //   condition: (a, b) => ((a.normal === 'last' || a.normal === 'next' || a.normal === 'this') && b.tag.Date),
-  //   result: 'Date',
-  //   reason: 'relative-date'
-  // },
   {
     //Aircraft designer
     condition: (a, b) => (a.tag.Noun && b.tag.Actor),
@@ -90,21 +72,10 @@ module.exports = [
     result: 'Noun',
     reason: 'noun-abbreviation'
   },
-  // {
-  //   //both dates
-  //   condition: (a, b) => (a.tag.Date && b.tag.Date),
-  //   result: 'Date',
-  //   reason: 'two-dates'
-  // },
-  // {
-  //   //dates and values
-  //   condition: (a, b) => (a.tag.Date && b.tag.Value),
-  //   result: 'Date',
-  //   reason: 'date-value'
-  // },
+
   {
     //both values, not ordinals, not '5 20'
-    condition: (a, b) => (a.tag.Value && b.tag.Value && !a.tag.Ordinal && !b.tag.Ordinal && !(a.tag.Cardinal && b.tag.Cardinal)),
+    condition: (a, b) => (a.tag.Value && b.tag.Value && !a.tag.Ordinal && !b.tag.Numeric),
     result: 'Value',
     reason: 'two-values'
   },

@@ -17,6 +17,17 @@ const misc = {
 };
 
 const compact = {
+  Time: [
+    'oclock',
+    'morning',
+    'noon',
+    'afternoon',
+    'evening',
+    'night',
+    'breakfast time',
+    'lunchtime',
+    'dinnertime',
+  ],
   Adjective: [
     'so called', //?
     'on board',

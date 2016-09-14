@@ -20,6 +20,10 @@ const section_sum = (obj) => {
 const parse = function(t) {
   log.here('parseNumber', path);
   let str = t.normal;
+  //'a/an' is 1
+  if (str === 'a' || str === 'an') {
+    return 1;
+  }
   //handle a string of mostly numbers
   if (t.tag['Numeric'] || str.match(/^[0-9]+(st|nd|rd|th)?$/)) {
     return parseNumeric(str);

@@ -67,6 +67,7 @@ let durations = [
 //add their plurals
 let len = durations.length;
 for (let i = 0; i < len; i++) {
+  durations.push(durations[i]);
   durations.push(durations[i] + 's');
 }
 durations.push('century');
@@ -76,7 +77,7 @@ let relative = [
   'yesterday',
   'today',
   'tomorrow',
-  'week',
+  // 'week',
   'weekend',
   'tonight'
 ];

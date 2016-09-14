@@ -36,8 +36,13 @@ const corrections = function(result) {
   result.match('(may|march) #Value').term(0).tag('Month', 'correction-may');
   result.match('(may|march) #Date').term(0).tag('Month', 'correction-may');
   result.match('#Date (may|march)').term(1).tag('Month', 'correction-may');
+  result.match('(next|this|last) (may|march)').term(1).tag('Month', 'correction-may');
   //may the 5th
   result.match('#Date the #Ordinal').term(1).tag('Date', 'correction-date');
+  //'a/an' can mean 1
+  result.match('(a|an) (#Duration|#Value)').term(0).tag('Value');
+  //all values are either ordinal or cardinal
+  result.match('#Value').match('!#Ordinal').tag('#Cardinal');
   return result;
 };
 

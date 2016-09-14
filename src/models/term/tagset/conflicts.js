@@ -44,7 +44,9 @@ const conflicts = [
   ['Date', 'Verb', 'Adjective'],
   ['Month', 'Verb'],
   //phrases
-  ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase']
+  ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase'],
+  //a/an -> 1
+  ['Value', 'Determiner']
 ];
 
 const find = (tag) => {

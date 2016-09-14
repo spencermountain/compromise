@@ -39,7 +39,8 @@ const corrections = function(result) {
   result.match('(next|this|last) (may|march)').term(1).tag('Month', 'correction-may');
   //time
   result.match('#Value #Time').tag('Time', 'value-time');
-  result.match('(by|before|after|at|@|about) #Time').term(1).tag('Time', 'preposition-time');
+  result.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time');
+  result.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm');
   //may the 5th
   result.match('#Date the #Ordinal').term(1).tag('Date', 'correction-date');
   //'a/an' can mean 1

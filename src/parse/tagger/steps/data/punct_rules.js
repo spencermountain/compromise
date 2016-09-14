@@ -4,10 +4,10 @@ module.exports = [
   ['^#[a-z]+$', 'HashTag'],
   ['[a-z]s\'$', 'Possessive'],
   ['^[0-9,\.]+$', 'Numeric'], //like 5
-
   ['[12]?[0-9](:[0-5][0-9])? ?(am|pm)', 'Time'], //4pm
   ['[12]?[0-9](:[0-5][0-9]) ?(am|pm)?', 'Time'], //4:00pm
-  ['([pmce]st|(eastern|central|mountain|pacific)( standard)?( time)?|utc[ \+\-]*[0-9])', 'Time'], //PST, eastern time.  Todo:(only American right now)
+  ['[PMCE]ST', 'Time'], //PST, time zone abbrevs
+  ['utc ?[\+\-]?[0-9]\+?', 'Time'], //UTC 8+
   ['[a-z0-9]*? o\'?clock', 'Time'], //3 oclock
 
   // const prepositions = '(by|before|after|at|@|about)';

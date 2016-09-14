@@ -131,6 +131,7 @@ module.exports = [
   ['[^i]fer$', 'Infinitive'],
   ['(bb|tt|gg|pp|ll|nn|mm)', 'Verb'], //rubbed
   ['[aeiou]c?ked$', 'PastTense'], //hooked
+  ['(eastern|central|mountain|pacific)( standard)? time', 'Time'], //PST, eastern time.  Todo:(only American right now)
   //slang things
   ['^um+$', 'Expression'], //ummmm
   ['^([hyj]a)+$', 'Expression'], //hahah

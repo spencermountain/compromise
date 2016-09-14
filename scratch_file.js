@@ -5,7 +5,7 @@ const nlp = require('./src/index');
 const corpus = require('nlp-corpus');
 // const nlp = require('./builds/nlp_compromise');
 
-// require('./src/logger').enable();
+require('./src/logger').enable();
 const context = {
   lexicon: {
     'donkey kong': 'Person'
@@ -20,6 +20,6 @@ const context = {
 
 // let r = nlp(corpus.parsed.sotu().obama_2013);
 // let r = nlp('And as time ticked by, her concern was not with her tired body or aching feet, but whether folks like her would get to have their say.');
-let r = nlp('2:12am');
+let r = nlp('forge a relationship with the investors over christmas');
 r.check();
 // r.phrases();

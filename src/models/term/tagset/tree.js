@@ -60,7 +60,8 @@ module.exports = {
     Month: true,
     Day: true,
     Year: true,
-    Duration: true
+    Duration: true,
+    Time: true
   },
   Condition: true,
   QuestionWord: true,

@@ -20,8 +20,6 @@ const context = {
 
 // let r = nlp(corpus.parsed.sotu().obama_2013);
 // let r = nlp('And as time ticked by, her concern was not with her tired body or aching feet, but whether folks like her would get to have their say.');
-let r = nlp('june 5th 1992');
+let r = nlp('june 5th');
+r.match('#Month #Value #Value?').check();
 // r.phrases();
-r.term(0).check();
-r.term(1).check();
-r.term(2).check();

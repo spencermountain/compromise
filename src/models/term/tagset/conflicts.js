@@ -42,6 +42,7 @@ const conflicts = [
   ['Month', 'Day', 'Year', 'Duration'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
   ['Date', 'Verb', 'Adjective'],
+  ['Month', 'Verb'],
   //phrases
   ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase']
 ];

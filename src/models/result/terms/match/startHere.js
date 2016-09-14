@@ -30,6 +30,10 @@ const startHere = (ts, startAt, regs) => {
     let term = ts.get(term_i);
     let reg = regs[reg_i];
     if (!term) {
+      //we didn't need it anyways
+      if (reg.optional) {
+        continue;
+      }
       // console.log(chalk.red('   -dead-end '));
       return null;
     }

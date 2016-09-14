@@ -31,11 +31,11 @@ const corrections = function(result) {
   //folks like her
   result.match('#Plural like #Noun').term(1).tag('Preposition', 'correction');
 
-  //ambiguous 'may'
-  result.match('may #Determiner').term(0).tag('Date', 'correction-may');
-  result.match('may #Value').term(0).tag('Date', 'correction-may');
-  result.match('may #Date').term(0).tag('Date', 'correction-may');
-  result.match('#Date may').term(1).tag('Date', 'correction-may');
+  //ambiguous 'may' and 'march'
+  result.match('(may|march) #Determiner').term(0).tag('Month', 'correction-may');
+  result.match('(may|march) #Value').term(0).tag('Month', 'correction-may');
+  result.match('(may|march) #Date').term(0).tag('Month', 'correction-may');
+  result.match('#Date (may|march)').term(1).tag('Month', 'correction-may');
   //may the 5th
   result.match('#Date the #Ordinal').term(1).tag('Date', 'correction-date');
   return result;

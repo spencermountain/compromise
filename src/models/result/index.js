@@ -20,11 +20,11 @@ Object.keys(methods).forEach((k) => {
 });
 
 /** do a regex-like search through terms and return a subset */
-Result.prototype.match = function(reg) {
+Result.prototype.match = function(reg, quiet) {
   let list = [];
   this.list.forEach((ts) => {
     //an array of arrays
-    let matches = ts.match(reg, this.context);
+    let matches = ts.match(reg, quiet);
     matches.forEach((ms) => {
       list.push(new Terms(ms));
     });

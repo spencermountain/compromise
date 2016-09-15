@@ -1,21 +1,24 @@
 'use strict';
 //
-const chalk = require('chalk');
 const syntax = require('./syntax');
 const log = require('../../paths').log;
 const startHere = require('./startHere');
 const path = 'match';
 
 //main event
-const match = function(ts, str) {
-  log.here(path);
+const match = function(ts, str, quiet) {
+  if (!quiet) {
+    log.here(path);
+  }
   let matches = [];
   //fail fast
   if (!str || !ts) {
     return matches;
   }
   let regs = syntax(str);
-  log.tell(regs);
+  if (!quiet) {
+    log.tell(regs);
+  }
   for(let t = 0; t < ts.terms.length; t++) {
     //don't loop through if '^'
     if (regs[0] && regs[0].starting && t > 0) {

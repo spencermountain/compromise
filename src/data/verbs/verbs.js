@@ -61,7 +61,7 @@ let compressed = {
   ss: 'discu,gue,ki,pa,proce,cro,glo,dismi',
   ll: 'fi,pu,ki,ca,ro,sme,reca,insta',
   rn: 'tu,lea,conce,retu,bu,ea,wa,gove',
-  ce: 'redu,produ,divor,fa,noti,for,repla',
+  ce: 'redu,produ,divor,noti,for,repla',
   te: 'contribu,uni,tas,vo,no,constitu,ci',
   rt: 'sta,comfo,exe,depa,asse,reso,conve',
   ck: 'su,pi,che,ki,tri,wre',
@@ -225,7 +225,8 @@ let arr = [
   'plus',
   'multiply',
   'divide',
-  'win'
+  'win',
+  'hold fast'
 ];
 
 module.exports = fns.uncompress_suffixes(arr, compressed);

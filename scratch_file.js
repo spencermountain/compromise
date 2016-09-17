@@ -12,7 +12,8 @@ const context = {
   }
 };
 
-// let r = nlp(corpus.parsed.sotu().obama_2014);
-let r = nlp('then surely a strong and confident America');
+// let r = nlp(corpus.parsed.sotu().obama_2012);
+// r.match('will #Adjective .').check();
+let r = nlp('there is no challenge too great');
 r.check();
 r.phrases();

@@ -24,7 +24,6 @@ module.exports = [
   'much',
   'some',
   'else',
-  'no',
   //some other languages (what could go wrong?)
   'la',
   'le',

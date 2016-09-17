@@ -15,6 +15,7 @@ module.exports = [
   'information',
   'knowledge',
   'trouble',
+  'itself',
   'enjoyment',
   'fun',
   'recreation',
@@ -149,5 +150,6 @@ module.exports = [
   'kelvin',
   'hertz',
   'everyone',
-  'everybody'
+  'everybody',
+  'progress'
 ];

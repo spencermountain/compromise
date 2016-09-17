@@ -60,6 +60,7 @@ module.exports = [
   ['.tion$', 'Singular'],
   ['.ean$', 'Adjective'],
   ['.[ia]sed$', 'Adjective'],
+  ['.urned', 'PastTense'],
   ['.tized$', 'PastTense'],
   ['.[aeiou][td]ed', 'PastTense'],
   ['.llen$', 'Adjective'],

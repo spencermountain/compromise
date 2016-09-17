@@ -18,20 +18,7 @@ const addArr = (arr, tag) => {
     lexicon[arr[i]] = tag;
   }
 };
-//let a rip.
-addObj(data.abbreviations);
-addObj(data.firstnames);
-addArr(data.places.airports, 'Place');
-addArr(data.places.cities, 'City');
-addArr(data.places.countries, 'Country');
-addArr(data.uncountables, 'Noun');
-addArr(data.organizations, 'Organization');
-addArr(data.groups, 'Noun');
-addArr(data.adjectives, 'Adjective');
-addArr(data.superlatives, 'Adjective');
-addArr(data.currencies, 'Currency');
-addArr(data.verbs, 'Verb');
-addArr(data.units, 'Unit');
+
 
 //number-words are well-structured
 let obj = data.numbers.ordinal;
@@ -112,6 +99,20 @@ data.nouns.forEach((n) => {
   lexicon[plural] = 'Plural';
 });
 
+//let a rip.
+addArr(data.verbs, 'Verb');
+addObj(data.abbreviations);
+addObj(data.firstnames);
+addArr(data.places.airports, 'Place');
+addArr(data.places.cities, 'City');
+addArr(data.places.countries, 'Country');
+addArr(data.uncountables, 'Noun');
+addArr(data.organizations, 'Organization');
+addArr(data.groups, 'Noun');
+addArr(data.adjectives, 'Adjective');
+addArr(data.superlatives, 'Adjective');
+addArr(data.currencies, 'Currency');
+addArr(data.units, 'Unit');
 //these ad-hoc manual ones have priority
 addObj(data.misc);
 
@@ -122,7 +123,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon.deliberate);
+// console.log(lexicon.progress);
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.info('conjugations'));

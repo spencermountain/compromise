@@ -14,7 +14,7 @@ let compressed = {
   eful: 'car,grac,peac,sham,us,veng',
   ming: 'alar,cal,glea,unassu,unbeco,upco',
   cial: 'commer,cru,finan,ra,so,spe',
-  ure: 'fut,insec,miniat,obsc,premat,sec,s',
+  ure: 'insec,miniat,obsc,premat,sec,s',
   uent: 'congr,fl,freq,subseq',
   rate: 'accu,elabo,i,sepa',
   ific: 'horr,scient,spec,terr',

@@ -83,5 +83,6 @@ module.exports = [
   'de jure',
   'par excellence',
   'de trop',
-  'a posteriori'
+  'a posteriori',
+  'only'
 ];

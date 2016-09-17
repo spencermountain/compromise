@@ -15,7 +15,9 @@ const misc = {
   'years old': 'Unit', //special case
   'not': 'Negative',
   'never': 'Negative',
-  'no doubt': 'Noun'
+  'no': 'Negative',
+  'no doubt': 'Noun',
+  'not only': 'Adverb'
 };
 
 const compact = {
@@ -199,7 +201,6 @@ const compact = {
     'hers',
     'themselves',
     'myself',
-    'itself',
     'her', //this one is check ambiguous
   ],
 

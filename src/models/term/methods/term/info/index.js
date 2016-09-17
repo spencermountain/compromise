@@ -43,6 +43,8 @@ const info = {
   /** interpret a terms' contraction */
   contraction: (t) => {
     const allowed = {
+      're': true,
+      've': true,
       'll': true,
       't': true,
       's': true,

@@ -2,6 +2,8 @@
 //
 const verbPhrase = function(result) {
   result.match('#Verb', true).tag('VerbPhrase', 'verbphrase-verb');
+  //was quickly
+  result.match('#Adverb? #Verb #Adverb?', true).tag('VerbPhrase', 'verbphrase-verb');
   //is not
   result.match('#Verb #Negative', true).tag('VerbPhrase', 'verb-not');
   //never is

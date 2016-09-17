@@ -6,7 +6,9 @@ const adjectivePhrase = function(result) {
   // //stonger than
   // result.match('#Comparative than', true).tag('AdjectivePhrase');
   //very easy
-  result.match('#Adverb? #Adjective #Adverb?', true).tag('AdjectivePhrase');
+  result.match('#Copula #Adverb? #Negative? #Adverb? #Adjective #Adverb?', true).match('#Adverb? #Adjective #Adverb?', true).tag('AdjectivePhrase');
+  //difficult but necessary
+  result.match('#AdjectivePhrase #Conjunction #Adjective', true).tag('AdjectivePhrase');
   //is as strong as
   result.match('#AdjectivePhrase as', true).tag('AdjectivePhrase');
   return result;

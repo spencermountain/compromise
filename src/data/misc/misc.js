@@ -1,7 +1,7 @@
 'use strict';
 
 const misc = {
-  'here': 'Adjective',
+  'here': 'Noun',
   'better': 'Comparative',
   'earlier': 'Superlative',
   'make sure': 'Verb',
@@ -242,47 +242,6 @@ const compact = {
   //interjections, expressions
   'Expression': require('./expressions'),
 
-  //special nouns that shouldnt be seen as a verb
-  'Noun': [
-    'nothing',
-    'everything',
-    'god',
-    'student',
-    'patent',
-    'funding',
-    'banking',
-    'ceiling',
-    'energy',
-    'purpose',
-    'friend',
-    'event',
-    'room',
-    'door',
-    'thing',
-    'things',
-    'stuff',
-    'lunch',
-    'breakfast',
-    'dinner',
-    'home',
-    'problem',
-    'body',
-    'world',
-    'city',
-    'death',
-    'others',
-    'there',
-    'number',
-    'system',
-    'example',
-    'part',
-    'house',
-    'head start',
-    'credit card',
-    'fl oz',
-    'ad hominem',
-    'us dollar'
-  ],
   //family-terms are people
   Person: [
     'father',

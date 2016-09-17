@@ -1,7 +1,41 @@
+'use strict';
+const fns = require('../fns');
 //these are adjectives that can become comparative + superlative with out "most/more"
 //its a whitelist for conjugation
 //this data is shared between comparative/superlative methods
-module.exports = [
+
+let compressed = {
+  erate: 'degen,delib,desp,lit,mod',
+  icial: 'artif,benef,off,superf',
+  ntial: 'esse,influe,pote,substa',
+  teful: 'gra,ha,tas,was',
+  stant: 'con,di,in,resi',
+  hing: 'astonis,das,far-reac,refres,scat,screec,self-loat,soot',
+  eful: 'car,grac,peac,sham,us,veng',
+  ming: 'alar,cal,glea,unassu,unbeco,upco',
+  cial: 'commer,cru,finan,ra,so,spe',
+  ure: 'fut,insec,miniat,obsc,premat,sec,s',
+  uent: 'congr,fl,freq,subseq',
+  rate: 'accu,elabo,i,sepa',
+  ific: 'horr,scient,spec,terr',
+  rary: 'arbit,contempo,cont,tempo',
+  ntic: 'authe,fra,giga,roma',
+  nant: 'domi,malig,preg,reso',
+  nent: 'emi,immi,perma,promi',
+  iant: 'brill,def,g,luxur',
+  ging: 'dama,encoura,han,lon',
+  iate: 'appropr,immed,inappropr,intermed',
+  rect: 'cor,e,incor,indi',
+  zing: 'agoni,ama,appeti,free',
+  ine: 'div,femin,genu,mascul,prist,rout',
+  ute: 'absol,ac,c,m,resol',
+  ern: 'east,north,south,st,west',
+  tful: 'deligh,doub,fre,righ,though,wis',
+  ant: 'abund,arrog,eleg,extravag,exult,hesit,irrelev,miscre,nonchal,obeis,observ,pl,pleas,redund,relev,reluct,signific,vac,verd',
+  ing: 'absorb,car,coo,liv,lov,ly,menac,perplex,shock,stand,surpris,tell,unappeal,unconvinc,unend,unsuspect,vex,want',
+  ate: 'adequ,delic,fortun,inadequ,inn,intim,legitim,priv,sed,ultim',
+};
+let arr = [
   'absurd',
   'aggressive',
   'alert',
@@ -195,3 +229,5 @@ module.exports = [
   'curly',
   'angry'
 ];
+
+module.exports = fns.uncompress_suffixes(arr, compressed);

@@ -4,6 +4,21 @@ const path = 'correction';
 //
 const corrections = function(result) {
   log.here(path);
+
+  //the word 'so'
+  //so funny
+  result.match('so #Adjective', true).match('so', true).tag('Adverb');
+  //so the
+  result.match('so #Noun', true).match('so', true).tag('Conjunction');
+  //do so
+  result.match('do so', true).match('so', true).tag('Noun');
+  //still good
+  result.match('still #Adjective', true).match('still', true).tag('Adverb');
+  //'more' is not always an adverb
+  result.match('more #Noun', true).tag('Noun');
+  //still make
+  result.match('still #Verb', true).term(0).tag('Adverb', 'still-verb');
+
   //Determiner-signals
   //the wait to vote
   result.match('the #Verb #Preposition .', true).match('#Verb', true).tag('Noun', 'correction-determiner1');
@@ -31,10 +46,16 @@ const corrections = function(result) {
   result.match('#Verb than', true).term(0).tag('Noun', 'correction');
 
   //her polling
-  result.match('#Possessive #PresentTense').term(1).tag('Noun', 'correction-possessive');
+  result.match('#Possessive #Verb', true).term(1).tag('Noun', 'correction-possessive');
 
   //folks like her
   result.match('#Plural like #Noun', true).term(1).tag('Preposition', 'correction');
+
+  //the threat of force
+  result.match('#Determiner #Noun of #Verb', true).match('#Verb', true).tag('Noun', 'noun-of-noun');
+
+  //big dreams, critical thinking
+  result.match('#Adjective #PresentTense', true).term(1).tag('Noun', 'adj-presentTense');
 
   //ambiguous 'may' and 'march'
   result.match('(may|march) #Determiner', true).term(0).tag('Month', 'correction-may');

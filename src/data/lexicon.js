@@ -103,6 +103,15 @@ data.superlatives.forEach((a) => {
   });
 });
 
+//inflect nouns
+data.nouns.forEach((n) => {
+  lexicon[n] = 'Singular';
+  let t = new Term(n);
+  t.tag.Noun = true;
+  let plural = t.info('plural');
+  lexicon[plural] = 'Plural';
+});
+
 //these ad-hoc manual ones have priority
 addObj(data.misc);
 
@@ -113,7 +122,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon.deeper);
+// console.log(lexicon.deliberate);
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.info('conjugations'));

@@ -5,7 +5,7 @@ const nlp = require('./src/index');
 const corpus = require('nlp-corpus');
 // const nlp = require('./builds/nlp_compromise');
 
-// require('./src/logger').enable();
+require('./src/logger').enable();
 const context = {
   lexicon: {
     'donkey kong': 'Person'
@@ -13,6 +13,6 @@ const context = {
 };
 
 // let r = nlp(corpus.parsed.sotu().obama_2014);
-let r = nlp('has never really been very easy');
+let r = nlp('then surely a strong and confident America');
 r.check();
 r.phrases();

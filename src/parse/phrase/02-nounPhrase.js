@@ -11,6 +11,8 @@ const nounPhrase = function(result) {
   result.match('#Noun #Conjunction #Noun', true).tag('NounPhrase');
   //fifty stars
   result.match('#Value #NounPhrase', true).tag('NounPhrase');
+  //difficult but necessary talks
+  result.match('#Adjective #Conjunction #Adjective #NounPhrase', true).tag('NounPhrase');
 
   return result;
 };

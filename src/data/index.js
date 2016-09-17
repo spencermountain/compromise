@@ -15,6 +15,7 @@ module.exports = {
   'irregular_plurals': require('./nouns/irregular_plurals'),
   'places': require('./nouns/places'),
   'uncountables': require('./nouns/uncountables'),
+  'nouns': require('./nouns/nouns'),
   'organizations': require('./organizations/organizations'),
   'groups': require('./organizations/groups'),
   'adjectives': require('./adjectives/adjectives'),

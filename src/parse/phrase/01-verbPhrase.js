@@ -2,6 +2,10 @@
 //
 const verbPhrase = function(result) {
   result.match('#Verb', true).tag('VerbPhrase', 'verbphrase-verb');
+  //is not
+  result.match('#Verb #Negative', true).tag('VerbPhrase', 'verb-not');
+  //never is
+  result.match('never #Verb', true).tag('VerbPhrase', 'not-verb');
   //'will have had'..
   result.match('#Auxillary+', true).tag('VerbPhrase', '2');
   // 'is'

@@ -13,7 +13,8 @@
     "build": "node ./scripts/build.js",
     "demo": "node ./scripts/demo.js",
     "watch": "node ./scripts/watch.js",
-    "prepublish": "node ./scripts/prepublish.js"
+    "prepublish": "node ./scripts/prepublish.js",
+    "filesize": "node ./scripts/filesize.js"
   },
   "files": [
     "builds/",
@@ -36,7 +37,8 @@
     "shelljs": "^0.7.2",
     "tap-spec": "4.1.1",
     "tape": "4.6.0",
-    "uglify-js": "2.7.0"
+    "uglify-js": "2.7.0",
+    "uglifyify": "^3.0.3"
   },
   "license": "MIT"
 }

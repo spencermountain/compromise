@@ -1,6 +1,6 @@
 'use strict';
 const log = require('../paths').log;
-const path = 'tagger/corrections';
+const path = 'tagger/auxillary';
 //
 
 const auxillary = {

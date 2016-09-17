@@ -83,22 +83,22 @@ const wantVerbs = [
 data.verbs.forEach((v) => {
   let t = new Term(v);
   t.tag.Verb = true;
-  let obj = t.info('conjugations') || {};
+  let o = t.info('conjugations') || {};
   wantVerbs.forEach((k) => {
-    if (obj[k] && !lexicon[obj[k]]) {
-      lexicon[obj[k]] = k;
+    if (o[k] && !lexicon[o[k]]) {
+      lexicon[o[k]] = k;
     }
   });
 });
 
 //conjugate adjectives
-data.adjectives.forEach((v) => {
-  let t = new Term(v);
+data.superlatives.forEach((a) => {
+  let t = new Term(a);
   t.tag.Adjective = true;
-  let obj = t.info('adjconjugations') || {};
-  Object.keys(obj).forEach((k) => {
-    if (obj[k] && !lexicon[obj[k]]) {
-      lexicon[obj[k]] = k;
+  let o = t.info('adjconjugations') || {};
+  Object.keys(o).forEach((k) => {
+    if (o[k] && !lexicon[o[k]]) {
+      lexicon[o[k]] = k;
     }
   });
 });
@@ -113,7 +113,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon.place);
+// console.log(lexicon.deeper);
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.info('conjugations'));

@@ -20,7 +20,6 @@ module.exports = [
   'really',
   'often',
   'once',
-  'never',
   'away',
   'always',
   'sometimes',

@@ -61,6 +61,7 @@ module.exports = [
   ['.ean$', 'Adjective'],
   ['.[ia]sed$', 'Adjective'],
   ['.tized$', 'PastTense'],
+  ['.[aeiou][td]ed', 'PastTense'],
   ['.llen$', 'Adjective'],
   ['.fore$', 'Adverb'],
   ['.ances$', 'Plural'],

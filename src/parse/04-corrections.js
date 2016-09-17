@@ -1,6 +1,9 @@
 'use strict';
+const log = require('./tagger/paths').log;
+const path = 'correction';
 //
 const corrections = function(result) {
+  log.here(path);
   //Determiner-signals
   //the wait to vote
   result.match('the #Verb #Preposition .', true).match('#Verb', true).tag('Noun', 'correction-determiner1');
@@ -15,6 +18,8 @@ const corrections = function(result) {
   //book the flight
   result.match('#Noun the #Noun', true).term(0).tag('Verb', 'correction-determiner6');
 
+  //past-tense copula
+  result.match('has #Adverb? #Negative? #Adverb? been', true).tag('Copula');
 
   //he quickly foo
   result.match('#Noun #Adverb #Noun', true).term(2).tag('Verb', 'correction');
@@ -26,7 +31,7 @@ const corrections = function(result) {
   result.match('#Verb than', true).term(0).tag('Noun', 'correction');
 
   //her polling
-  // result.match('#Possessive #Verb').term(1).tag('Noun', 'correction-possessive');
+  result.match('#Possessive #PresentTense').term(1).tag('Noun', 'correction-possessive');
 
   //folks like her
   result.match('#Plural like #Noun', true).term(1).tag('Preposition', 'correction');
@@ -37,16 +42,18 @@ const corrections = function(result) {
   result.match('(may|march) #Date', true).term(0).tag('Month', 'correction-may');
   result.match('#Date (may|march)', true).term(1).tag('Month', 'correction-may');
   result.match('(next|this|last) (may|march)', true).term(1).tag('Month', 'correction-may');
-  //time
-  result.match('#Value #Time', true).tag('Time', 'value-time');
-  result.match('(by|before|after|at|@|about) #Time', true).tag('Time', 'preposition-time');
-  result.match('(#Value|#Time) (am|pm)', true).tag('Time', 'value-ampm');
-  //may the 5th
-  result.match('#Date the #Ordinal', true).term(1).tag('Date', 'correction-date');
+
   //'a/an' can mean 1
   result.match('(a|an) (#Duration|#Value)', true).term(0).tag('Value');
   //all values are either ordinal or cardinal
   result.match('#Value', true).match('!#Ordinal', true).tag('#Cardinal');
+
+  //time
+  result.match('#Cardinal #Time', true).tag('Time', 'value-time');
+  result.match('(by|before|after|at|@|about) #Time', true).tag('Time', 'preposition-time');
+  result.match('(#Value|#Time) (am|pm)', true).tag('Time', 'value-ampm');
+  //may the 5th
+  result.match('#Date the? #Ordinal', true).term(1).tag('Date', 'correction-date');
   return result;
 };
 

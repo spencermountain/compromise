@@ -9,8 +9,8 @@ module.exports = [
   {
     //6 am
     condition: (a, b) => ((a.tag.Value || a.tag.Date) && (b.normal === 'am' || b.normal === 'pm')),
-    result: 'Date',
-    reason: 'date-am/pm'
+    result: 'Time',
+    reason: 'time-am/pm'
   },
   {
     //'Dr. John'

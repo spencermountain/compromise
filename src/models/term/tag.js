@@ -35,7 +35,7 @@ const set_tag = function(term, tag, reason) {
   log.tagAs(term, tag, reason);
   //reset term, if necessary
   if (canBe(term, tag) === false) {
-    log.tell('retting tags for ' + term.normal);
+    log.tell('forgetting tags for ' + term.normal);
     term.tag = {};
   }
   term.tag[tag] = true;

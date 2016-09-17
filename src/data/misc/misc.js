@@ -13,7 +13,9 @@ const misc = {
   'msg': 'Verb', //slang
   'a few': 'Value', //different than 'few people'
   'years old': 'Unit', //special case
-  'not': 'Negative'
+  'not': 'Negative',
+  'never': 'Negative',
+  'no doubt': 'Noun'
 };
 
 const compact = {

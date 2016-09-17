@@ -1,0 +1,5 @@
+.DS_Store
+.jshintrc
+.env
+node_modules/
+viz

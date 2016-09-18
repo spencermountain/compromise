@@ -49,11 +49,14 @@ const parse_term = function(term, i) {
     reg.oneOf = term.split(/\|/g).map((str) => str.toLowerCase());
     term = null;
   }
-  //alias flag
-  if (fns.startsWith(term, '~')) {
-    term = term.replace(/^\~/, '');
-    term = term.replace(/\~$/, '');
-    reg.alias = true;
+  //min/max any '{1,3}'
+  if (fns.startsWith(term, '{') && fns.endsWith(term, '}')) {
+    let m = term.match(/\{([0-9]+), ?([0-9]+)\}/);
+    reg.minMax = {
+      min: parseInt(m[1], 10),
+      max: parseInt(m[2], 10)
+    };
+    term = null;
   }
   //addition flag
   if (fns.startsWith(term, '+')) {

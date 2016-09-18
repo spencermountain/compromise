@@ -20,6 +20,7 @@ module.exports = {
     auxillary_step: require('./steps/09-auxillary_step'),
     negation_step: require('./steps/10-negation_step'),
     adverb_step: require('./steps/11-adverb_step'),
-    phrasal_step: require('./steps/12-phrasal_step')
+    phrasal_step: require('./steps/12-phrasal_step'),
+    comma_step: require('./steps/13-comma_step')
   }
 };

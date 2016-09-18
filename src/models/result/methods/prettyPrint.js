@@ -32,6 +32,10 @@ const prettyPrint = (Result) => {
         let str = '';
         ts.terms.forEach((t) => {
           let text = t.plaintext();
+          if (t.tag.ConditionPhrase) {
+            str += chalk.magenta(text);
+            return;
+          }
           if (t.tag.NounPhrase) {
             str += chalk.cyan(text);
             return;
@@ -41,7 +45,7 @@ const prettyPrint = (Result) => {
             return;
           }
           if (t.tag.AdjectivePhrase) {
-            str += chalk.magenta(text);
+            str += chalk.green(text);
             return;
           }
           str += text;

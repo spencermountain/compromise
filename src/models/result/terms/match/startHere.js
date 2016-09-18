@@ -42,15 +42,27 @@ const startHere = (ts, startAt, regs) => {
       return null;
     }
     //catch '$' errors
-    if (reg.ending && term_i !== ts.length - 1) {
+    if (reg.ending && term_i !== ts.length - 1 && !reg.minMax) {
       return null;
     }
-    //support '*'
-    if (regs[reg_i].greedy) {
+    //support '*' and '{1,3}'
+    if (regs[reg_i].greedy || regs[reg_i].minMax) {
       let next_reg = regs[reg_i + 1];
-      //easy, just return rest of sentence
+      //if it's at the last reg, easy- just return rest of sentence
       if (!next_reg) {
-        return ts.terms.slice(startAt, ts.length);
+        let len = ts.length;
+        //..or the maximum allowed
+        if (regs[reg_i].minMax) {
+          let max = regs[reg_i].minMax.max + startAt;
+          //this case is a little tricky
+          if (regs[reg_i].ending && max < len) {
+            return null;
+          }
+          if (max < len) {
+            len = max;
+          }
+        }
+        return ts.terms.slice(startAt, len);
       }
       //otherwise, match until this next thing
       if (next_reg) {
@@ -58,6 +70,13 @@ const startHere = (ts, startAt, regs) => {
         //didn't find it
         if (!foundAt) {
           return null;
+        }
+        //if it's too close/far in min/max
+        if (regs[reg_i].minMax) {
+          let minMax = regs[reg_i].minMax;
+          if (foundAt < minMax.min || foundAt > minMax.max) {
+            return null;
+          }
         }
         //continue it further-down place
         term_i = foundAt + 1;

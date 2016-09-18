@@ -95,6 +95,7 @@ const compact = {
     'how',
     'plus',
     'versus',
+    'otherwise',
   // 'not'
   ],
   Date: [
@@ -117,7 +118,6 @@ const compact = {
   'Condition': [
     'if',
     'unless',
-    'otherwise',
     'notwithstanding'
   ],
 

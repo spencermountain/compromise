@@ -5,7 +5,7 @@ const nlp = require('./src/index');
 const corpus = require('nlp-corpus');
 // const nlp = require('./builds/nlp_compromise');
 
-require('./src/logger').enable();
+// require('./src/logger').enable();
 const context = {
   lexicon: {
     'donkey kong': 'Person'
@@ -13,7 +13,8 @@ const context = {
 };
 
 // let r = nlp(corpus.parsed.sotu().obama_2012);
-// r.match('will #Adjective .').check();
-let r = nlp('there is no challenge too great');
-r.check();
+// r.match('#ConditionPhrase+ {15,15}').phrases();
+// let r = nlp('if you, or anyone see this.');
+let r = nlp('if you make under $250,000 a year, like 98% of American families');
+// r.check();
 r.phrases();

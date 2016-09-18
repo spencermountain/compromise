@@ -73,6 +73,11 @@ test('fancy match', function(t) {
     ['it really snows', 'it !#adverb snows', 0],
     ['it really snows. it goes.', 'it !#adverb', 2],
     ['it is nice.', '!#adverb', 3],
+    //max/min {}
+    ['if it goes really well', 'if {1,2} well', 0],
+    ['if it goes really well', 'if {1,6} well', 5],
+    ['so i said that spencer is nice', '^{1,3} spencer', 0],
+    ['so i said that spencer is nice', '^{1,6} spencer', 5],
   ].forEach(function (a) {
     var r = nlp(a[0]).match(a[1]).terms() || [];
     var msg = '\'' + a[0] + '\' - - - \'' + a[1] + '\' - - got:' + r.length + '  want:' + a[2];

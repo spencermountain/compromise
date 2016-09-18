@@ -59,14 +59,14 @@ let value = {
     return false;
   },
 
-  /** a TextValue is a number that's spelled-out*/
-  textvalue: (t) => {
+  /** a TextNumber is a number that's spelled-out*/
+  TextNumber: (t) => {
     if (t.is('TextCardinal') || t.is('TextOrdinal')) {
       return true;
     }
     return false;
   },
-  /** a TextValue is a number that's spelled-out*/
+  /** a TextNumber is a number that's spelled-out*/
   Numeric: (t) => {
     if (t.is('NumberCardinal') || t.is('NumberOrdinal')) {
       return true;

@@ -20,6 +20,5 @@ const context = {
 // r.phrases();
 
 // console.log(nlp('five hundred and fifty nine').info('Number'));
-let m = nlp('2 million five hundred thousand and fifty nine is bigger than 2882');
-m.check();
-console.log(m.match('#Value+').info('NiceNumber'));
+let m = nlp('doug is 5 years old');
+console.log(m.toTextNumber().normal());

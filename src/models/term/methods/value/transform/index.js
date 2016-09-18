@@ -14,10 +14,9 @@ let value = {
     return t;
   },
   /** return an textual version, like 'fourty four', or 'three hundred and eight' - or an ordinal string like 'first''*/
-  textvalue: (t) => {
-    let num = t.info('Textual');
-    t.text = '' + num;
-    t.tagAs('TextValue');
+  textnumber: (t) => {
+    t.text = t.info('Textual');
+    t.tagAs('TextNumber');
     return t;
   },
   /** turn an ordinal into a cardinal - 1 to '1st', 308 to '308th' */

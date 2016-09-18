@@ -17,6 +17,14 @@ const methods = {
     });
     return this;
   },
+  toTextNumber : function() {
+    this.terms().forEach((t) => {
+      if (t.tag.Value) {
+        t.to('textnumber');
+      }
+    });
+    return this;
+  },
   toCardinal : function() {
     this.terms().forEach((t) => {
       if (t.tag.Value) {

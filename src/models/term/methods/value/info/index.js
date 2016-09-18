@@ -9,7 +9,7 @@ const info = {
   cardinal: (t) => {
     let num = parseNumber(t);
     //if it is textual, make a textCardinal
-    if (t.is('TextValue')) {
+    if (t.is('TextNumber')) {
       return toText.cardinal(num);
     }
     //otherwise, numerical form
@@ -20,7 +20,7 @@ const info = {
   ordinal: (t) => {
     let num = parseNumber(t);
     //if it is textual, make a textCardinal
-    if (t.is('TextValue')) {
+    if (t.is('TextNumber')) {
       return toText.ordinal(num);
     }
     //otherwise, numerical form
@@ -67,7 +67,7 @@ const info = {
         Cardinal: num,
         Ordinal: toNumber.ordinal(num)
       },
-      TextValue: {
+      TextNumber: {
         Cardinal: toText.cardinal(num),
         Ordinal: toText.ordinal(num)
       }

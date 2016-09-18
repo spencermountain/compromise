@@ -19,7 +19,7 @@ const conflicts = [
   ['Comparative', 'Superlative'],
   //values
   ['Ordinal', 'Cardinal'],
-  ['TextValue', 'Numeric'],
+  ['TextNumber', 'Numeric'],
   ['Ordinal', 'Currency'], //$5.50th
   //verbs
   ['Infinitive', 'Gerund', 'Pluperfect', 'FuturePerfect'],
@@ -44,7 +44,7 @@ const conflicts = [
   ['Date', 'Verb', 'Adjective'],
   ['Month', 'Verb'],
   //phrases
-  ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase'],
+  // ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase'],
   //a/an -> 1
   ['Value', 'Determiner']
 ];

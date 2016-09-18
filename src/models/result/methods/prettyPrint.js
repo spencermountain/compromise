@@ -21,10 +21,9 @@ const prettyPrint = (Result) => {
     },
 
     normal: function() {
-      return this.list.reduce((str, ts) => {
-        str += ts.normal();
-        return str;
-      }, '');
+      return this.list.map((ts) => {
+        return ts.normal();
+      }).join(' ');
     },
 
     phrases: function() {

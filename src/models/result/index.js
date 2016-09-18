@@ -1,6 +1,8 @@
 'use strict';
 const chalk = require('chalk');
 const Terms = require('./terms');
+const info = require('./info');
+const render = require('./render');
 
 //a result is an array of termLists
 class Result {
@@ -52,6 +54,10 @@ Result.prototype.remove = function(reg) {
   });
   return new Result(list, this.context);
 };
+/** return ad-hoc data about this result*/
+Result.prototype.info = info;
+/** different presentation logic for this result*/
+Result.prototype.render = render;
 
 module.exports = Result;
 

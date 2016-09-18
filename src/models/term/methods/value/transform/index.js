@@ -7,6 +7,12 @@ let value = {
     t.tagAs('Numeric');
     return t;
   },
+  /** return an numeric version with commas seperating major units, like '54,231.02' */
+  nicenumber: (t) => {
+    let nicenum = t.info('Nicenumber') || '';
+    t.text = nicenum;
+    return t;
+  },
   /** return an textual version, like 'fourty four', or 'three hundred and eight' - or an ordinal string like 'first''*/
   textvalue: (t) => {
     let num = t.info('Textual');

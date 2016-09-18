@@ -20,7 +20,8 @@ const tagger = function(ts) {
   // ts = step.adverb_step(ts);
   ts = step.phrasal_step(ts);
   ts = step.comma_step(ts);
-  for (let i = 0; i < 2; i++) {
+  //lump a couple times, for long ones
+  for (let i = 0; i < 3; i++) {
     ts = lumper.lump_three(ts);
     ts = lumper.lump_two(ts);
   }

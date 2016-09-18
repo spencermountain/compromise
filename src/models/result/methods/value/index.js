@@ -9,6 +9,14 @@ const methods = {
     });
     return this;
   },
+  toNiceNumber : function() {
+    this.terms().forEach((t) => {
+      if (t.tag.Value) {
+        t.to('nicenumber');
+      }
+    });
+    return this;
+  },
   toCardinal : function() {
     this.terms().forEach((t) => {
       if (t.tag.Value) {

@@ -5,6 +5,9 @@ const nlp = require('./src/index');
 const corpus = require('nlp-corpus');
 // const nlp = require('./builds/nlp_compromise');
 
+//toNumber,toValue,toOrdinal
+//match,replace,before/after
+
 // require('./src/logger').enable();
 const context = {
   lexicon: {
@@ -19,6 +22,6 @@ const context = {
 // r.check();
 // r.phrases();
 
-// console.log(nlp('five hundred and fifty nine').info('Number'));
-let m = nlp('doug is 5 years old');
-console.log(m.toTextNumber().normal());
+console.log(nlp('Mr. Clinton did so.').normal());
+// let m = nlp('feb 22');
+// m.check();

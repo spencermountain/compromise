@@ -33,7 +33,7 @@ let compressed = {
   est: 'b,dishon,hon,quick',
   ial: 'colon,impart,init,part',
   ter: 'bet,lat,ou,ut',
-  ond: 'bey,bl,sec,vagab',
+  ond: 'bey,bl,vagab',
   ady: 'he,re,sh,ste',
   eal: 'ether,id,r,surr',
   ard: 'abo,awkw,stand,straightforw',

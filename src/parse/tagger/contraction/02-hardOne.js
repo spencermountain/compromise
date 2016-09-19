@@ -16,11 +16,11 @@ const isPossessive = (ts, i) => {
   }
   //an adjective suggests 'is good'
   if (next_t.tag.Adjective) {
-    return true;
+    return false;
   }
   //a gerund suggests 'is walking'
   if (next_t.tag.VerbPhrase) {
-    return true;
+    return false;
   }
   return false;
 };

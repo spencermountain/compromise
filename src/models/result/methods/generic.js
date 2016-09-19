@@ -101,6 +101,18 @@ const genericMethods = (Result) => {
         });
       });
       return this;
+    },
+
+    expand: function() {
+      this.list.forEach((ts) => {
+        ts.terms.forEach((t) => {
+          if (t.silent_term) {
+            t.text = t.silent_term;
+            t.whitespace.after = ' ';
+          }
+        });
+      });
+      return this;
     }
 
   };

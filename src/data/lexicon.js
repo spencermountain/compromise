@@ -18,8 +18,8 @@ const addArr = (arr, tag) => {
     lexicon[arr[i]] = tag;
   }
 };
-
-
+//let a rip
+addObj(data.abbreviations);
 //number-words are well-structured
 let obj = data.numbers.ordinal;
 addArr(Object.keys(obj.ones), 'Ordinal');
@@ -101,7 +101,6 @@ data.nouns.forEach((n) => {
 
 //let a rip.
 addArr(data.verbs, 'Verb');
-addObj(data.abbreviations);
 addObj(data.firstnames);
 addArr(data.places.airports, 'Place');
 addArr(data.places.cities, 'City');
@@ -123,7 +122,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon.progress);
+// console.log(lexicon.second);
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.info('conjugations'));

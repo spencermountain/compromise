@@ -17,6 +17,9 @@ class Terms {
   term(n) {
     return this.terms[n];
   }
+  last() {
+    return this.terms[this.terms.length - 1];
+  }
   get length() {
     return this.terms.length;
   }

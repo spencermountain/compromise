@@ -22,7 +22,11 @@ const prettyPrint = (Result) => {
 
     normal: function() {
       return this.list.map((ts) => {
-        return ts.normal();
+        let str = ts.normal();
+        if (ts.last()) {
+          str += ts.last().endPunctuation();
+        }
+        return str;
       }).join(' ');
     },
 

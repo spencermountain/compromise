@@ -1,7 +1,7 @@
 //helpers to make test output messages nicer
-const str_test = function(got, input, output, t) {
-  var msg = '\'' + input + '\' -> \'' + got + '\'';
-  t.equal(got, output, msg);
+const str_test = function(got, input, want, t) {
+  var msg = '\'-> - - -> \'' + got + '\'- - - - (want: \'' + want + '\' )'; //'\'' + input + 
+  t.equal(got, want, msg);
   return;
 };
 

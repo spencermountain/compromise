@@ -1,6 +1,24 @@
 'use strict';
 const fixContraction = require('./fix');
 
+
+//these are always contractions
+// const blacklist = {
+//   'it\'s': true,
+//   'that\'s': true
+// };
+
+// //rocket's red glare
+// if (nextWord.tag['Adjective'] && terms.get(x + 2) && terms.get(x + 2).tag['Noun']) {
+//   return true;
+// }
+// //next word is an adjective
+// if (nextWord.tag['Adjective'] || nextWord.tag['Verb'] || nextWord.tag['Adverb']) {
+//   return false;
+// }
+
+
+
 // "'s" may be a contraction or a possessive
 // 'spencer's house' vs 'spencer's good'
 const isPossessive = (ts, i) => {
@@ -14,15 +32,23 @@ const isPossessive = (ts, i) => {
   if (!next_t) {
     return true;
   }
-  //an adjective suggests 'is good'
-  if (next_t.tag.Adjective || next_t.tag.Adverb) {
-    return false;
-  }
   //a gerund suggests 'is walking'
   if (next_t.tag.VerbPhrase) {
     return false;
   }
-  return true;
+  //spencer's house
+  if (next_t.tag.Noun) {
+    return true;
+  }
+  //rocket's red glare
+  if (next_t.tag.Adjective && ts.terms[i + 2] && ts.terms[i + 2].tag.Noun) {
+    return true;
+  }
+  //an adjective suggests 'is good'
+  if (next_t.tag.Adjective || next_t.tag.Adverb || next_t.tag.Verb) {
+    return false;
+  }
+  return false;
 };
 
 

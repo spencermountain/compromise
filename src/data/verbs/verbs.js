@@ -19,7 +19,7 @@ let compressed = {
   ture: 'frac,lec,tor,fea',
   port: 're,sup,ex,im',
   ate: 'rel,oper,indic,cre,h,activ,estim,particip,d,anticip,evalu',
-  use: ',ca,over,ref,acc,am,pa,ho',
+  use: ',ca,over,ref,acc,am,pa',
   ive: 'l,rece,d,arr,str,surv,thr,rel',
   are: 'prep,c,comp,sh,st,decl,d,sc',
   ine: 'exam,imag,determ,comb,l,decl,underm,def',

@@ -28,7 +28,6 @@ test('==contractions==', function(T) {
       [`john's good`, `Person`],
       [`ankara's good`, `Place`],
       [`January's good`, `Date`],
-
       [`john's cousin`, `Person`],
       [`ankara's citizens`, `Place`],
       [`January's weather`, `Date`],

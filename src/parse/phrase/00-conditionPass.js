@@ -25,7 +25,7 @@ const conditionPass = function(r) {
     m.remove('^#Comma').tag('ConditionPhrase');
   }
   // '... if so.'
-  m = r.match('#Condition {1,4}$');
+  m = r.match('#Condition {1,4}$', true);
   if (m.found) {
     m.tag('ConditionPhrase');
   }

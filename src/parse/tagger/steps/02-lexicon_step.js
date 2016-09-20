@@ -29,11 +29,13 @@ const lexicon_pass = function(s) {
       continue;
     }
     //support contractions (manually)
-    let parts = t.info('contraction') || {};
-    found = check_lexicon(parts.start, s);
-    if (found) {
-      t.tagAs(found, 'contraction-lexicon');
-      continue;
+    let parts = t.info('contraction');
+    if (parts && parts.start) {
+      found = check_lexicon(parts.start.toLowerCase(), s);
+      if (found) {
+        t.tagAs(found, 'contraction-lexicon');
+        continue;
+      }
     }
     //support silent_term matches
     found = check_lexicon(t.silent_term, s);

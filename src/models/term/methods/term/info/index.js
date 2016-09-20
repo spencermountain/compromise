@@ -1,6 +1,6 @@
 'use strict';
 // const normalize = require('./normalize');
-
+const fns = require('../paths').fns;
 const info = {
 
   /* normalize punctuation, whitespace & case */
@@ -57,6 +57,10 @@ const info = {
       if (parts[2] === 't' && parts[1].match(/[a-z]n$/)) {
         parts[1] = parts[1].replace(/n$/, '');
         parts[2] = 'n\'t'; //dunno..
+      }
+      //fix titlecase
+      if (t.is('titlecase')) {
+        parts[1] = fns.titleCase(parts[1]);
       }
       return {
         start: parts[1],

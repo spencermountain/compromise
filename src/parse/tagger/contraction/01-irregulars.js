@@ -13,6 +13,7 @@ const irregulars = {
   'won\'t': ['will', 'not'],
   'wont': ['will', 'not'],
 
+  'can\'t': ['can', 'not'],
   'cant': ['can', 'not'],
   'cannot': ['can', 'not'],
 

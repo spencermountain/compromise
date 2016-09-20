@@ -22,6 +22,6 @@ const context = {
 // r.check();
 // r.phrases();
 
-console.log(nlp('Mr. Clinton did so.').normal());
+console.log(nlp('can\'t go').expand().plaintext());
 // let m = nlp('feb 22');
 // m.check();

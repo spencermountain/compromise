@@ -105,10 +105,14 @@ const genericMethods = (Result) => {
 
     expand: function() {
       this.list.forEach((ts) => {
-        ts.terms.forEach((t) => {
+        ts.terms.forEach((t, i) => {
           if (t.silent_term) {
             t.text = t.silent_term;
-            t.whitespace.after = ' ';
+            //add whitespace too
+            let last = ts.terms[i - 1];
+            if (last) {
+              last.whitespace.after = ' ';
+            }
           }
         });
       });

@@ -68,8 +68,8 @@ const parse = function(t) {
     }
     //prevent mismatched units, like 'seven eleven'
     if (!isValid(w, has)) {
-      log.warn('invalid state', path);
-      log.warn(has, path);
+      log.tell('invalid state', path);
+      log.tell(has, path);
       return null;
     }
     //buildup section, collect 'has' values
@@ -85,7 +85,7 @@ const parse = function(t) {
       let mult = words.multiples[w];
       //something has gone wrong : 'two hundred five hundred'
       if (mult === biggest_yet) {
-        log.warn('invalid multiplier', path);
+        log.tell('invalid multiplier', path);
         return null;
       }
       //if it's the biggest yet, multiply the whole sum - eg 'five hundred thousand'

@@ -37,7 +37,7 @@ const info = {
   },
 
   /** return a textual version of this number*/
-  textual: (t) => {
+  textnumber: (t) => {
     let num = parseNumber(t);
     if (t.is('Ordinal')) {
       return toText.ordinal(num);

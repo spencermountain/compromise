@@ -65,6 +65,6 @@ module.exports = [
     //two point three
     condition: (a, b, c) => (a.tag.Value && b.normal === 'point' && c.tag.Value),
     result: 'Value',
-    reason: 'Value-and-Value'
+    reason: 'Value-point-Value'
   }
 ];

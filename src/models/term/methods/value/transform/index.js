@@ -15,7 +15,7 @@ let value = {
   },
   /** return an textual version, like 'fourty four', or 'three hundred and eight' - or an ordinal string like 'first''*/
   textnumber: (t) => {
-    t.text = t.info('Textual');
+    t.text = t.info('Textnumber');
     t.tagAs('TextNumber');
     return t;
   },

@@ -43,6 +43,15 @@ const lexicon_pass = function(s) {
       t.tagAs(found, 'silent_term-lexicon');
       continue;
     }
+    //multiple-words / hyphenation
+    let words = t.normal.split(' ');
+    if (words.length > 1) {
+      found = check_lexicon(words[words.length - 1], s);
+      if (found) {
+        t.tagAs(found, 'multiword-lexicon');
+        continue;
+      }
+    }
   }
   return s;
 };

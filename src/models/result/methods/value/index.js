@@ -4,7 +4,10 @@ const methods = {
   toNumber : function() {
     this.terms().forEach((t) => {
       if (t.tag.Value) {
-        t.to('number');
+        let num = t.info('number');
+        if (num) {
+          t.text = '' + num;
+        }
       }
     });
     return this;
@@ -12,7 +15,10 @@ const methods = {
   toNiceNumber : function() {
     this.terms().forEach((t) => {
       if (t.tag.Value) {
-        t.to('nicenumber');
+        let num = t.info('nicenumber');
+        if (num) {
+          t.text = '' + num;
+        }
       }
     });
     return this;
@@ -20,7 +26,10 @@ const methods = {
   toTextNumber : function() {
     this.terms().forEach((t) => {
       if (t.tag.Value) {
-        t.to('textnumber');
+        let num = t.info('textnumber');
+        if (num) {
+          t.text = '' + num;
+        }
       }
     });
     return this;
@@ -28,7 +37,10 @@ const methods = {
   toCardinal : function() {
     this.terms().forEach((t) => {
       if (t.tag.Value) {
-        t.to('cardinal');
+        let num = t.info('cardinal');
+        if (num) {
+          t.text = '' + num;
+        }
       }
     });
     return this;
@@ -36,7 +48,10 @@ const methods = {
   toOrdinal : function() {
     this.terms().forEach((t) => {
       if (t.tag.Value) {
-        t.to('ordinal');
+        let num = t.info('ordinal');
+        if (num) {
+          t.text = '' + num;
+        }
       }
     });
     return this;

@@ -67,6 +67,24 @@ module.exports = [
     reason: 'value-abbreviation'
   },
   {
+    //a hundred
+    condition: (a, b) => ((a.normal === 'a' || a.normal === 'an') && b.tag.Value),
+    result: 'Value',
+    reason: 'determiner-value'
+  },
+  {
+    //minus two
+    condition: (a, b) => ((a.normal === 'minus' || a.normal === 'negative') && b.tag.Value),
+    result: 'Value',
+    reason: 'minus-value'
+  },
+  {
+    //six grand
+    condition: (a, b) => (a.tag.Value && b.normal === 'grand'),
+    result: 'Value',
+    reason: 'value-grand'
+  },
+  {
     //NASA Flordia
     condition: (a, b) => ((a.tag.Noun && b.tag.Abbreviation) || (a.tag.Abbreviation && b.tag.Noun)),
     result: 'Noun',

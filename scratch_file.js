@@ -22,6 +22,9 @@ const context = {
 // r.check();
 // r.phrases();
 
-nlp(1175).toTextNumber().check();
-// let m = nlp('feb 22');
+// nlp(1175).toTextNumber().check();
+// let m = nlp('john        is  so   cool! ');
+let m = nlp('john is, fROm five toronto.');
+m.normalize();
 // m.check();
+console.log(m.plaintext());

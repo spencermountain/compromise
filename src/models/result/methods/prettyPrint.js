@@ -24,7 +24,10 @@ const prettyPrint = (Result) => {
       return this.list.map((ts) => {
         let str = ts.normal();
         if (ts.last()) {
-          str += ts.last().endPunctuation();
+          let punct = ts.last().endPunctuation();
+          if (punct === '.' || punct === '!' || punct === '?') {
+            str += punct;
+          }
         }
         return str;
       }).join(' ');

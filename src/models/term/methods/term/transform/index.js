@@ -29,25 +29,9 @@ module.exports = {
     return t;
   },
 
-  /** normalize newlines, tabs, and multiple spaces */
-  normalwhitespace: (t) => {
-    t.whitespace.before = ' ';
-    t.whitespace.after = '';
+  nopunctuation: (t) => {
+    t.text = t.text.replace(/([,;:])$/, '');
     return t;
-  },
-
-  /** expand all contractions */
-  expansion: (t) => {
-    if (t.silent_term) {
-      t.text = t.silent_term;
-      t.silent_term = null;
-    }
-    return t;
-  },
-
-  /** contract any (possible) contractions */
-  contraction: (t) => {
-    return contract(t);
   }
 
 };

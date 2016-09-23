@@ -1,5 +1,5 @@
 'use strict';
-const inspect = require('./inspect');
+const parse = require('./parse');
 const render = require('./render');
 const normalize = require('./normalize');
 const methods = require('./methods');
@@ -20,7 +20,7 @@ Object.keys(methods).forEach((k) => {
   Result = methods[k](Result);
 });
 /** return ad-hoc data about this result*/
-Result.prototype.inspect = inspect;
+Result.prototype.parse = parse;
 /** different presentation logic for this result*/
 Result.prototype.render = render;
 /** fixup transforms*/

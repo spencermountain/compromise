@@ -1,5 +1,5 @@
 'use strict';
-const Terms = require('../terms');
+const Terms = require('../../terms');
 
 const match = (Result) => {
 

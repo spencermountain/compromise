@@ -1,8 +1,8 @@
 'use strict';
-const paths = require('../paths');
+const paths = require('./paths');
 const log = paths.log;
 const fns = paths.fns;
-const Term = require('../../term');
+const Term = require('../term');
 const match = require('./match');
 
 class Terms {

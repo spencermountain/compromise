@@ -1,7 +1,7 @@
 'use strict';
 const Term = require('../../term');
-const Terms = require('../terms');
-
+const Terms = require('../../terms');
+// const VerbResult = require('./verbResult');
 
 const genericMethods = (Result) => {
 
@@ -118,7 +118,6 @@ const genericMethods = (Result) => {
       });
       return this;
     }
-
   };
 
   Object.keys(methods).forEach((k) => {

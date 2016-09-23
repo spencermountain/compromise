@@ -8,7 +8,7 @@ const steps = {
   phrase: require('./05-phrases'),
 };
 const Term = require('../models/term');
-const Terms = require('../models/result/terms');
+const Terms = require('../models/terms');
 const fns = require('../fns');
 const log = require('../logger');
 const path = 'parse';

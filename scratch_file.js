@@ -27,4 +27,4 @@ const context = {
 let m = nlp('john is, fROm five toronto.');
 m.normalize();
 // m.check();
-console.log(m.plaintext());
+console.log(m.parse());

@@ -1,7 +1,7 @@
 'use strict';
 //
 const syntax = require('./syntax');
-const log = require('../../paths').log;
+const log = require('../paths').log;
 const startHere = require('./startHere');
 const path = 'match';
 

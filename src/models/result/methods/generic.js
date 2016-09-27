@@ -86,13 +86,6 @@ const genericMethods = (Result) => {
       });
       return this;
     },
-    /** filter-out all terms with this tag*/
-    remove: function(tag) {
-      let list = this.list.map((ts) => {
-        return ts.remove(tag);
-      });
-      return new Result(list, this.context);
-    },
 
     replace: function(text) {
       this.list.forEach((ts) => {

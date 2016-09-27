@@ -83,6 +83,8 @@ const corrections = function(r) {
   r.match('(#Value|#Time) (am|pm)', true).tag('Time', 'value-ampm');
   //may the 5th
   r.match('#Date the? #Ordinal', true).term(1).tag('Date', 'correction-date');
+  //tomorrow before 3
+  r.match('#Date (by|before|after|at|@|about) #Cardinal', true).remove('^#Date').tag('Time', 'before-Cardinal');
   return r;
 };
 

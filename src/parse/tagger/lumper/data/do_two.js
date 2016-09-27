@@ -1,4 +1,14 @@
 'use strict';
+const timezones = {
+  standard: true,
+  daylight: true,
+  summer: true,
+  eastern: true,
+  pacific: true,
+  central: true,
+  mountain: true,
+};
+
 //rules that combine two words
 module.exports = [
   {
@@ -50,8 +60,8 @@ module.exports = [
   },
   {
     //timezones
-    condition: (a, b) => (b.normal.match(/(standard|daylight|summer) time/) && (a.tag['Adjective'] || a.tag['Place'])),
-    result: 'Date',
+    condition: (a, b) => (timezones[a.normal] && b.normal === 'time'),
+    result: 'Time',
     reason: 'timezone'
   },
   {

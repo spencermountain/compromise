@@ -24,7 +24,7 @@ const context = {
 
 // nlp(1175).toTextNumber().check();
 // let m = nlp('john        is  so   cool! ');
-let m = nlp('march 2nd 2 oclock');
+let m = nlp('2pm eastern time');
 // m.normalize();
 m.check();
 // console.log(m.parse());

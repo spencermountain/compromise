@@ -31,7 +31,7 @@ const match = (Result) => {
       let list = [];
       this.list.forEach((ts) => {
         let matches = ts.remove(reg, this.context);
-        if (matches) {
+        if (matches && matches.terms && matches.terms.length) {
           list.push(matches);
         }
       });

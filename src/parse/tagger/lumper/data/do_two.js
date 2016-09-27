@@ -60,7 +60,7 @@ module.exports = [
   },
   {
     //timezones
-    condition: (a, b) => (timezones[a.normal] && b.normal === 'time'),
+    condition: (a, b) => (timezones[a.normal] && (b.normal === 'standard time' || b.normal === 'time')),
     result: 'Time',
     reason: 'timezone'
   },

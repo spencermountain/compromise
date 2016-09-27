@@ -1,13 +1,3 @@
-'use strict';
-const timezones = {
-  standard: true,
-  daylight: true,
-  summer: true,
-  eastern: true,
-  pacific: true,
-  central: true,
-  mountain: true,
-};
 //rules for combining three terms into one
 module.exports = [
   {
@@ -45,11 +35,5 @@ module.exports = [
     condition: (a, b, c) => (a.tag.Value && b.normal === 'point' && c.tag.Value),
     result: 'Value',
     reason: 'Value-point-Value'
-  },
-  {
-    //eastern standard time
-    condition: (a, b, c) => (timezones[a.normal] && b.normal === 'standard' && c.normal === 'time'),
-    result: 'Time',
-    reason: 'timezone'
-  },
+  }
 ];

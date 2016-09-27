@@ -85,6 +85,9 @@ const corrections = function(r) {
   r.match('#Date the? #Ordinal', true).term(1).tag('Date', 'correction-date');
   //tomorrow before 3
   r.match('#Date (by|before|after|at|@|about) #Cardinal', true).remove('^#Date').tag('Time', 'before-Cardinal');
+  //2pm est
+  r.match('#Time (eastern|pacific|central|mountain)', true).term(1).tag('Time', 'timezone');
+  r.match('#Time (est|pst|gmt)', true).term(1).tag('Time', 'timezone abbr');
   return r;
 };
 

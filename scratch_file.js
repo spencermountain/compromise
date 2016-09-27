@@ -8,7 +8,7 @@ const corpus = require('nlp-corpus');
 //toNumber,toValue,toOrdinal
 //match,replace,before/after
 
-// require('./src/logger').enable();
+require('./src/logger').enable();
 const context = {
   lexicon: {
     'donkey kong': 'Person'
@@ -24,7 +24,7 @@ const context = {
 
 // nlp(1175).toTextNumber().check();
 // let m = nlp('john        is  so   cool! ');
-let m = nlp('john is, fROm five toronto.');
-m.normalize();
-// m.check();
-console.log(m.parse());
+let m = nlp('tomorrow morning');
+// m.normalize();
+m.check();
+// console.log(m.parse());

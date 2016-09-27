@@ -98,7 +98,7 @@ const compact = {
     'otherwise',
   // 'not'
   ],
-  Date: [
+  Time: [
     //date
     'noon',
     'midnight',
@@ -108,12 +108,13 @@ const compact = {
     'afternoon',
     'ago',
     'sometime',
-    //end of day, end of month
     'eod',
+  ],
+  Date: [
+    //end of day, end of month
     'eom',
     'standard time',
     'daylight time',
-    'summer time'
   ],
   'Condition': [
     'if',

@@ -14,6 +14,6 @@ const context = {
 // let r = nlp(corpus.parsed.sotu().obama_2012);
 // r.phrases();
 
-let m = nlp('tomorrow night');
+let m = nlp('may 12th 2018');
 m.check();
 // console.log(m.parse());

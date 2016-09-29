@@ -94,6 +94,10 @@ const corrections = function(r) {
   //2pm est
   r.match('#Time (eastern|pacific|central|mountain)', true).term(1).tag('Time', 'timezone');
   r.match('#Time (est|pst|gmt)', true).term(1).tag('Time', 'timezone abbr');
+  //saturday am
+  r.match('#Date (am|pm)', true).term(1).unTag('Verb').unTag('Copula').tag('Time', 'date-am');
+  //march 12th 2018
+  r.match('#Month #Value #Cardinal', true).tag('Date', 'month-value-cardinal');
   return r;
 };
 

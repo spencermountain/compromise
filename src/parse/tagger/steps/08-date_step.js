@@ -67,7 +67,7 @@ const datePass = function(s) {
       }
     }
     //in 2018
-    if (preDate[a.normal] && b.tag.Value) {
+    if (a.tag.Date || (preDate[a.normal]) && b.tag.Value) {
       let year = parseInt(b.normal, 10);
       if (year && year > 1200 && year < 2090) {
         a.tagAs('Date', 'in-year');

@@ -41,7 +41,7 @@ addArr(data.dates.days, 'Day');
 addArr(data.dates.months, 'Month');
 addArr(data.dates.durations, 'Duration');
 addArr(data.dates.relative, 'Date');
-addArr(Object.keys(data.holidays), 'Day');
+addArr(Object.keys(data.holidays), 'Holiday');
 
 addArr(data.professions, 'Actor'); //?
 addArr(data.demonyms, 'Demonym'); //?

@@ -66,6 +66,14 @@ const datePass = function(s) {
         b.tagAs('Date', twoDates[o].reason);
       }
     }
+    //in 2018
+    if (preDate[a.normal] && b.tag.Value) {
+      let year = parseInt(b.normal, 10);
+      if (year && year > 1200 && year < 2090) {
+        a.tagAs('Date', 'in-year');
+        b.tagAs('Date', 'in-year');
+      }
+    }
   }
   return s;
 };

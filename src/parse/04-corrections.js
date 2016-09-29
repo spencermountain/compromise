@@ -83,6 +83,12 @@ const corrections = function(r) {
   r.match('(#Value|#Time) (am|pm)', true).tag('Time', 'value-ampm');
   //may the 5th
   r.match('#Date the? #Ordinal', true).term(1).tag('Date', 'correction-date');
+  //5th of March
+  r.match('#Value of? #Month', true).term(1).tag('Date', 'value-of-month');
+  //5 March
+  r.match('#Cardinal #Month', true).tag('Date', 'cardinal-month');
+  //by 5 March
+  r.match('(by|before|after|until) #Date', true).tag('Date', 'by-date');
   //tomorrow before 3
   r.match('#Date (by|before|after|at|@|about) #Cardinal', true).remove('^#Date').tag('Time', 'before-Cardinal');
   //2pm est

@@ -26,7 +26,8 @@ module.exports = {
         Day: true,
         Year: true,
         Duration: true,
-        Time: true
+        Time: true,
+        Holiday: true
       },
     },
   },

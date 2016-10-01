@@ -15,6 +15,6 @@ const context = {
 // r.phrases();
 
 let m = nlp('john is cool. john is nice.');
-console.log(m.topk());
+console.log(JSON.stringify(m.ngram(), null, 2));
 // m.check();
 // console.log(m.parse());

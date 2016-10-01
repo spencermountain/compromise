@@ -27,6 +27,7 @@ Result.prototype.render = render;
 Result.prototype.normalize = normalize;
 
 Result.prototype.topk = require('./methods/topk');
+Result.prototype.ngram = require('./methods/ngram');
 
 
 module.exports = Result;

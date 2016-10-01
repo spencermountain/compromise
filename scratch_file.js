@@ -5,7 +5,7 @@ const nlp = require('./src/index');
 const corpus = require('nlp-corpus');
 // const nlp = require('./builds/nlp_compromise');
 
-require('./src/logger').enable();
+// require('./src/logger').enable();
 const context = {
   lexicon: {
     'donkey kong': 'Person'
@@ -14,6 +14,7 @@ const context = {
 // let r = nlp(corpus.parsed.sotu().obama_2012);
 // r.phrases();
 
-let m = nlp('may 12th 2018');
-m.check();
+let m = nlp('john is cool. john is nice.');
+console.log(m.topk());
+// m.check();
 // console.log(m.parse());

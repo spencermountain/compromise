@@ -26,6 +26,9 @@ Result.prototype.render = render;
 /** fixup transforms*/
 Result.prototype.normalize = normalize;
 
+Result.prototype.topk = require('./methods/topk');
+
+
 module.exports = Result;
 
 //apply methods

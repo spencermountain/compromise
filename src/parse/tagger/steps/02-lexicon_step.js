@@ -44,7 +44,7 @@ const lexicon_pass = function(s) {
       continue;
     }
     //multiple-words / hyphenation
-    let words = t.normal.split(' ');
+    let words = t.normal.split(/[ -]/);
     if (words.length > 1) {
       found = check_lexicon(words[words.length - 1], s);
       if (found) {

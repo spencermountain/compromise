@@ -60,6 +60,7 @@ module.exports = {
   Value: {
     Currency: true,
     Ordinal: true,
+    Fraction: true,
     Cardinal: true,
     TextNumber: true,
     Numeric: true

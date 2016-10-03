@@ -11,6 +11,8 @@ module.exports = [
   ['[a-z0-9]*? o\'?clock', 'Time'], //3 oclock
   ['[0-9]{1,4}/[0-9]{1,2}/[0-9]{1,4}', 'Date'], //03/02/89
   ['[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}', 'Date'], //03-02-89
+  ['[0-9]{1,4}/[0-9]{1,4}', 'Fraction'], //3/2ths
+
 
   // const prepositions = '(by|before|after|at|@|about)';
   // const ampm = '[12]?[0-9](:[0-5][0-9])? ?(am|pm)'; //4pm

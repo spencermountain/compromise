@@ -14,7 +14,8 @@ const context = {
 // let r = nlp(corpus.parsed.sotu().obama_2012);
 // r.phrases();
 
-let m = nlp('john is cool. john is nice.');
-console.log(JSON.stringify(m.ngram(), null, 2));
-// m.check();
-// console.log(m.parse());
+// let m = nlp('john is cool. john is nice.');
+// console.log(JSON.stringify(m.ngram(), null, 2));
+let m = nlp('june 5-7');
+m.check();
+console.log(m.list[0].terms[1]);

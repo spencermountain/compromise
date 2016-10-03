@@ -3,7 +3,7 @@ module.exports = [
 
   ['^#[a-z]+', 'HashTag'],
   ['[a-z]s\'', 'Possessive'],
-  ['[0-9,\.]+', 'Numeric'], //like 5
+  ['[0-9]([0-9,\.]*?)?]+', 'Numeric'], //like 5
   ['[12]?[0-9](:[0-5][0-9])? ?(am|pm)', 'Time'], //4pm
   ['[12]?[0-9](:[0-5][0-9]) ?(am|pm)?', 'Time'], //4:00pm
   ['[PMCE]ST', 'Time'], //PST, time zone abbrevs
@@ -12,6 +12,7 @@ module.exports = [
   ['[0-9]{1,4}/[0-9]{1,2}/[0-9]{1,4}', 'Date'], //03/02/89
   ['[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}', 'Date'], //03-02-89
   ['[0-9]{1,4}/[0-9]{1,4}', 'Fraction'], //3/2ths
+  ['[0-9]{1,2}-[0-9]{1,2}', 'Value'], //7-8
 
 
   // const prepositions = '(by|before|after|at|@|about)';

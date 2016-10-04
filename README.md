@@ -16,7 +16,7 @@
 <div align="center">
   <sub>
     by
-    <a href="https://twitter.com/spencermountain">Spencer Kelly</a> and
+    <a href="https://github.com/spencermountain">Spencer Kelly</a> and
     <a href="https://github.com/nlp-compromise/nlp_compromise/graphs/contributors">
       contributors
     </a>
@@ -24,12 +24,12 @@
 </div>
 
 <div align="center">
-  <code>nlp('my text', {context})</code>
+  <code>npm install nlp_compromise</code>
 </div>
 
 <br/>
 
-Basic match/remove flow
+##Basic match/remove flow
 ```javascript
 r = nlp('john is really nice. sara quickly walks.')
 
@@ -42,7 +42,7 @@ r.remove('#Adverb')
 r.plaintext()
 // 'John is nice. Sara walks.'
 ```
-Persistent transforms
+##Persistent transforms
 ```javascript
 r = nlp('fifth of december')
 
@@ -52,7 +52,7 @@ r.toCardinal().plaintext()
 r.toValue().plaintext()
 // '5 of december'
 ```
-Multi-term `NounPhrase`, `VerbPhrase`, `AdjPhrase`
+##Multi-term `NounPhrase`, `VerbPhrase`, `AdjPhrase`
 ```javascript
 r = nlp('john would not have walked')
 
@@ -63,7 +63,7 @@ vb.plaintext()
 vb.toPositive().plaintext()
 //would have walked
 ```
-`.clone()` - non-persistent transforms
+##`.clone()` - non-persistent transforms
 ```javascript
 r=nlp('This api is stable.')
 
@@ -78,7 +78,7 @@ r.plaintext()
 //This api is stable.
 ```
 
-###Reasoning:
+##Reasoning:
 Instead of `Term` objects having the methods & tooling, the library now hoists all this functionality to the main API, so you can filter-down, act-upon, and inspect a list of terms, just as easy as acting on a single term.
 
 One word is now just a list of words, of length 1.

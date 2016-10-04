@@ -1,5 +1,5 @@
 <div align="center">
-  <strong>nlp_compromise :mailbox_open:</strong>
+  <strong>nlp_compromise :mailbox_with_mail:</strong>
   <div>natural-language processing in the browser</div>
 
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">

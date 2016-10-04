@@ -97,7 +97,7 @@ const corrections = function(r) {
   //saturday am
   r.match('#Date (am|pm)', true).term(1).unTag('Verb').unTag('Copula').tag('Time', 'date-am');
   //late at night
-  r.match('(early|late) (at|in)? the? (night|evening|morning|afternoon)', true).tag('Time');
+  r.match('(early|late) (at|in)? the? (night|evening|morning|afternoon|day|daytime)', true).tag('Time');
   //march 12th 2018
   r.match('#Month #Value #Cardinal', true).tag('Date', 'month-value-cardinal');
   return r;

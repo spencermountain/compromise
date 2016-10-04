@@ -1,5 +1,33 @@
-# :sparkles: new v7 API working-draft :sparkles:
-`nlp('my text', {context})`
+<div align="center">
+  <strong>nlp_compromise</strong>
+  <div>natural-language processing in the browser</div>
+
+  <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
+    <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />
+  </a>
+  <a href="https://npmjs.org/package/nlp_compromise">
+    <img src="https://img.shields.io/npm/v/nlp_compromise.svg?style=flat-square" />
+  </a>
+  <a href="https://nodejs.org/api/documentation.html#documentation_stability_index">
+    <img src="https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square" />
+  </a>
+</div>
+
+<div align="center">
+  <sub>
+    by
+    <a href="https://twitter.com/spencermountain">Spencer Kelly</a> and
+    <a href="https://github.com/nlp-compromise/nlp_compromise/graphs/contributors">
+      contributors
+    </a>
+  </sub>
+</div>
+
+<div align="center">
+  <code>nlp('my text', {context})</code>
+</div>
+
+<br/>
 
 Basic match/remove flow
 ```javascript

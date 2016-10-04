@@ -29,13 +29,17 @@
 
 <br/>
 ```javascript
-var r = nlp('i look just like buddy holly').normalize().toPast()
-r.text()
+var r = nlp('i look just like buddy holly')
+
+r.normalize().toPast().text()
 // "I looked just like Buddy Holly."
+
 r.toNegative().text()
 // "I didn't look just like Buddy Holly."
+
 r.match('#Adverb').remove()
 // "I didn't look like Buddy Holly."
+
 r.match('#Person').toPronoun()
 // "I didn't look like him."
 

@@ -1,5 +1,5 @@
 <div align="center">
-  <strong>nlp_compromise :mailbox_with_mail:</strong>
+  <strong>nlp_compromise</strong>
   <div>natural-language processing in the browser</div>
 
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
@@ -28,6 +28,10 @@
 </div>
 
 <br/>
+```javascript
+nlp('wee-ooh i look just like buddy holly').normalize().toPast().text()
+//'Wee-ooh I looked just like Buddy Holly.'
+```
 
 ##Basic match/remove flow
 ```javascript

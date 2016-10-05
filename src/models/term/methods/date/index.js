@@ -2,9 +2,7 @@
 //
 let date = {
   info: require('./info'),
-  is: require('./is'),
-
-  transform: require('./transform')
+  is: require('./is')
 };
 
 module.exports = date;

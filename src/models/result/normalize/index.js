@@ -28,7 +28,7 @@ const methods = {
     r.list.forEach((ts) => {
       ts.terms.forEach((t, i) => {
         if (i === 0 || t.tag.Person || t.tag.Place || t.tag.Organization) {
-          t.to('titleCase');
+          t.text = t.info('titleCase');
         } else {
           t.text = t.text.toLowerCase();
         }
@@ -47,7 +47,7 @@ const methods = {
     r.list.forEach((ts) => {
       ts.terms.forEach((t, i) => {
         if (i < ts.terms.length - 1) {
-          t.to('nopunctuation');
+          t.text = t.info('nopunctuation');
         }
       });
     });

@@ -95,8 +95,16 @@ const info = {
       }
     }
     return null;
-  }
+  },
 
+  /** ensure the first character is a capital. Ignore other characters. */
+  titlecase: (t) => {
+    return t.text.replace(/^[a-z]/, (x) => x.toUpperCase());
+  },
+  nopunctuation: (t) => {
+    t.text = t.text.replace(/([,;:])$/, '');
+    return t;
+  }
 };
 
 module.exports = info;

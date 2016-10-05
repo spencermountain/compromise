@@ -16,6 +16,5 @@ let methods = {
   //individual term methods
   is: reduce_methods('is'),
   info: reduce_methods('info'),
-  transform: reduce_methods('transform'),
 };
 module.exports = methods;

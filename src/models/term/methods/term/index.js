@@ -2,9 +2,7 @@
 //
 let term = {
   info: require('./info'),
-  is: require('./is'),
-  render: require('./render'),
-
+  is: require('./is')
 };
 
 module.exports = term;

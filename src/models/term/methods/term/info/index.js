@@ -59,7 +59,7 @@ const info = {
         parts[2] = 'n\'t'; //dunno..
       }
       //fix titlecase
-      if (t.is('titlecase')) {
+      if (t.tag.TitleCase) {
         parts[1] = fns.titleCase(parts[1]);
       }
       return {

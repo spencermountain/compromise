@@ -12,9 +12,14 @@ module.exports = {
         },
         Place: {
           Country: true,
-          City: true
+          City: true,
+          Address: true
         },
-        Organization: true,
+        Organization: {
+          SportsTeam: true,
+          Company: true,
+          School: true,
+        },
       },
       Plural: true,
       Actor: true,
@@ -66,6 +71,7 @@ module.exports = {
     Numeric: true
   },
   Condition: true,
+  TitleCase: true,
   QuestionWord: true,
   Expression: true,
   Url: true,

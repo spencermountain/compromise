@@ -19,5 +19,22 @@ module.exports = [
   'institute',
   'club',
   'co',
-  'sons'
+  'sons',
+
+  'network',
+  'motors',
+  'capital',
+  'inc',
+  'co',
+  'brothers',
+  'entertainment',
+  'productions',
+  'bank',
+  'international',
+  'army',
+  'fund',
+  'boys',
+  'girls',
+  'church',
+  'museum'
 ];

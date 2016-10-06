@@ -28,6 +28,7 @@ Result.prototype.normalize = normalize;
 
 Result.prototype.topk = require('./methods/topk');
 Result.prototype.ngram = require('./methods/ngram');
+Result.prototype.combine = require('./methods/combine');
 
 
 module.exports = Result;

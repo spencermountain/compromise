@@ -112,6 +112,7 @@ let arr = [
   'far',
   'faux',
   'fierce ',
+  'final',
   'fit',
   'foreign',
   'fun',
@@ -126,7 +127,6 @@ let arr = [
   'humdrum',
   'inside',
   'kaput',
-  //  'lax', -> airports
   'left',
   'less',
   'level',
@@ -135,12 +135,14 @@ let arr = [
   'makeshift',
   'mammoth',
   'medium',
+  'modern',
   'moot',
   'naive',
   'nearby',
   'next',
   'nonstop',
   'north',
+  'notable',
   'offbeat',
   'ok',
   'outside',
@@ -168,6 +170,7 @@ let arr = [
   'teenage',
   'top',
   'tranquil',
+  'true',
   'ultra',
   'understood',
   'unfair',
@@ -178,11 +181,7 @@ let arr = [
   'various',
   'widespread',
   'woozy',
-  'wrong',
-  'final',
-  'true',
-  'modern',
-  'notable'
+  'wrong'
 ];
 
 module.exports = fns.uncompress_suffixes(arr, compressed);

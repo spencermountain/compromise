@@ -1,4 +1,4 @@
-/* nlp_compromise v6.5.0 MIT*/
+/* nlp_compromise v6.5.1 MIT*/
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.nlp_compromise = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
 //there are all nouns, or at the least, belong beside one.
@@ -250,7 +250,7 @@ var female = _dereq_('./names/female');
 var names = {};
 
 //names commonly used in either gender
-var ambiguous = ['casey', 'jamie', 'lee', 'jaime', 'jessie', 'morgan', 'rene', 'robin', 'devon', 'kerry', 'alexis', 'guadalupe', 'blair', 'kasey', 'jean', 'marion', 'aubrey', 'shelby', 'jan', 'shea', 'jade', 'kenyatta', 'kelsey', 'shay', 'lashawn', 'trinity', 'regan', 'jammie', 'cassidy', 'cheyenne', 'reagan', 'shiloh', 'marlo', 'andra', 'devan', 'rosario', 'lee'];
+var ambiguous = ['alexis', 'andra', 'aubrey', 'blair', 'casey', 'cassidy', 'cheyenne', 'devan', 'devon', 'guadalupe', 'jade', 'jaime', 'jamie', 'jammie', 'jan', 'jean', 'jessie', 'kasey', 'kelsey', 'kenyatta', 'kerry', 'lashawn', 'lee', 'marion', 'marlo', 'morgan', 'reagan', 'regan', 'rene', 'robin', 'rosario', 'shay', 'shea', 'shelby', 'shiloh', 'trinity'];
 for (var i = 0; i < male.length; i++) {
   names[male[i]] = 'm';
 }
@@ -1183,7 +1183,7 @@ module.exports = arr;
 var fns = _dereq_('../../fns');
 
 //the unique/uncompressed names..
-var arr = ['adolfo', 'angelo', 'anthony', 'armand', 'arthur', 'bill', 'billy', 'bobby', 'bradford', 'bret', 'caleb', 'carroll', 'cliff', 'clifford', 'craig', 'curt', 'derek', 'doug', 'dwight', 'edmund', 'eli', 'elliot', 'enrique', 'erik', 'felipe', 'felix', 'francisco', 'frank', 'george', 'glenn', 'greg', 'gregg', 'hans', 'hugh', 'ira', 'irving', 'isaac', 'jim', 'kermit', 'kurt', 'leo', 'levi', 'lorenzo', 'lou', 'pablo', 'pat', 'percy', 'philip', 'phillip', 'rex', 'ricky', 'shaun', 'shawn', 'sterling', 'steve', 'tim', 'timothy', 'wilbur', 'williams', 'wm', 'woodrow'];
+var arr = ['adolfo', 'angelo', 'anthony', 'armand', 'arthur', 'bill', 'billy', 'bobby', 'bradford', 'bret', 'caleb', 'carroll', 'cliff', 'clifford', 'craig', 'curt', 'derek', 'doug', 'dwight', 'edmund', 'eli', 'elliot', 'enrique', 'erik', 'felipe', 'felix', 'francisco', 'frank', 'george', 'glenn', 'greg', 'gregg', 'hans', 'hugh', 'ira', 'irving', 'isaac', 'jim', 'kermit', 'kurt', 'leo', 'levi', 'lorenzo', 'lou', 'pablo', 'pat', 'percy', 'philip', 'phillip', 'rex', 'ricky', 'ruben', 'shaun', 'shawn', 'sterling', 'steve', 'tim', 'timothy', 'wilbur', 'williams', 'wm', 'woodrow'];
 
 //compressed by frequent suffixes
 var suffix_compressed = {
@@ -1599,7 +1599,7 @@ module.exports = main;
 var fns = _dereq_('../fns');
 
 //uncompressed country names
-var countries = ['usa', 'u.s.a.', 'ussr', 'brazil', 'bangladesh', 'mexico', 'vietnam', 'egypt', 'germany', 'turkey', 'france', 'united kingdom', 'italy', 'kenya', 'iraq', 'morocco', 'peru', 'yemen', 'mozambique', 'sri lanka', 'burkina faso', 'niger', 'netherlands', 'chile', 'malawi', 'ecuador', 'côte d\'ivoire', 'mali', 'zimbabwe', 'chad', 'belgium', 'cuba', 'greece', 'haiti', 'burundi', 'hungary', 'sweden', 'honduras', 'israel', 'laos', 'el salvador', 'libya', 'nicaragua', 'denmark', 'congo-brazzaville', 'kuwait', 'moldova', 'panama', 'jamaica', 'lesotho', 'guinea-bissau', 'timor-leste', 'djibouti', 'fiji', 'comoros', 'solomon islands', 'luxembourg', 'suriname', 'cape verde', 'malta', 'bahamas'];
+var countries = ['bahamas', 'bangladesh', 'belgium', 'brazil', 'burkina faso', 'burundi', 'cape verde', 'chad', 'chile', 'comoros', 'congo-brazzaville', 'cuba', 'côte d\'ivoire', 'denmark', 'djibouti', 'ecuador', 'egypt', 'el salvador', 'fiji', 'france', 'germany', 'greece', 'guinea-bissau', 'haiti', 'honduras', 'hungary', 'iraq', 'israel', 'italy', 'jamaica', 'kenya', 'kuwait', 'laos', 'lesotho', 'libya', 'luxembourg', 'malawi', 'mali', 'malta', 'mexico', 'moldova', 'morocco', 'mozambique', 'netherlands', 'nicaragua', 'niger', 'panama', 'peru', 'solomon islands', 'sri lanka', 'suriname', 'sweden', 'timor-leste', 'turkey', 'u.s.a.', 'united kingdom', 'usa', 'ussr', 'vietnam', 'yemen', 'zimbabwe'];
 var compressed_countries = {
   istan: 'pak,uzbek,afghan,tajik,turkmen',
   ublic: 'czech rep,dominican rep,central african rep',
@@ -1636,7 +1636,7 @@ var compressed_countries = {
 countries = fns.expand_suffixes(countries, compressed_countries);
 
 /////uncomressed cities
-var cities = ['guangzhou', 'ahmedabad', 'phoenix', 'jakarta', 'curitiba', 'moscow', 'tokyo', 'nagoya', 'kobe', 'mexico', 'cebu', 'ho chi minh', 'hanoi', 'giza', 'frankfurt', 'stuttgart', 'i̇zmir', 'paris', 'toulouse', 'nice', 'rome', 'palermo', 'genoa', 'cape town', 'port elizabeth', 'bogotá', 'medellín', 'seville', 'zaragoza', 'kiev', 'odessa', 'rosario', 'la plata', 'warsaw', 'kraków', 'łódź', 'wrocław', 'poznań', 'calgary', 'ottawa', 'montreal', 'winnipeg', 'sydney', 'perth', 'homs', 'iași', 'cluj-napoca', 'almaty', 'the hague', 'utrecht', 'phnom penh', 'antwerp', 'ghent', 'brussels', 'tunis', 'athens', 'thessaloniki', 'prague', 'brno', 'miskolc', 'stockholm', 'västerås', 'tegucigalpa', 'graz', 'innsbruck', 'abu dhabi', 'haifa', 'ashdod', 'dushanbe', 'niš', 'aqaba', 'aalborg', 'helsinki', 'espoo', 'vantaa', 'turku', 'košice', 'ashgabat', 'oslo', 'trondheim', 'auckland', 'tbilisi', 'zagreb', 'split', 'kuwait', 'montevideo', 'klaipėda', 'doha', 'skopje', 'riga', 'luxembourg', 'reykjavik', 'kingston'];
+var cities = ['aalborg', 'abu dhabi', 'ahmedabad', 'almaty', 'antwerp', 'aqaba', 'ashdod', 'ashgabat', 'athens', 'auckland', 'bogotá', 'brno', 'brussels', 'calgary', 'cape town', 'cebu', 'cluj-napoca', 'curitiba', 'doha', 'dushanbe', 'espoo', 'frankfurt', 'genoa', 'ghent', 'giza', 'graz', 'guangzhou', 'haifa', 'hanoi', 'helsinki', 'ho chi minh', 'homs', 'iași', 'innsbruck', 'i̇zmir', 'jakarta', 'kiev', 'kingston', 'klaipėda', 'kobe', 'košice', 'kraków', 'kuwait', 'la plata', 'luxembourg', 'medellín', 'mexico', 'miskolc', 'montevideo', 'montreal', 'moscow', 'nagoya', 'nice', 'niš', 'odessa', 'oslo', 'ottawa', 'palermo', 'paris', 'perth', 'phnom penh', 'phoenix', 'port elizabeth', 'poznań', 'prague', 'reykjavik', 'riga', 'rome', 'rosario', 'seville', 'skopje', 'split', 'stockholm', 'stuttgart', 'sydney', 'tbilisi', 'tegucigalpa', 'the hague', 'thessaloniki', 'tokyo', 'toulouse', 'trondheim', 'tunis', 'turku', 'utrecht', 'vantaa', 'västerås', 'warsaw', 'winnipeg', 'wrocław', 'zagreb', 'zaragoza', 'łódź'];
 
 var suffix_compressed_cities = {
   burg: 'saint peters,yekaterin,ham,til,gothen,salz',
@@ -1692,7 +1692,7 @@ cities = fns.expand_prefixes(cities, prefix_compressed_cities);
 
 //some of the busiest airports in the world from
 //https://www.world-airport-codes.com/world-top-30-airports.html
-var airports = ['atl', 'pek', 'lhr', 'hnd', 'ord', 'lax', 'cdg', 'dfw', 'cgk', 'dxb', 'fra', 'hkg', 'den', 'bkk', 'ams', 'jfk', 'ist', 'sfo', 'clt', 'las', 'phx', 'iax', 'kul', 'mia', 'icn', 'muc', 'syd', 'fco', 'mco', 'bcn', 'yyz', 'lgw', 'phl'];
+var airports = ['ams', 'atl', 'bcn', 'bkk', 'cdg', 'cgk', 'clt', 'den', 'dfw', 'dxb', 'fco', 'fra', 'hkg', 'hnd', 'iax', 'icn', 'ist', 'jfk', 'kul', 'las', 'lax', 'lgw', 'lhr', 'mco', 'mia', 'muc', 'ord', 'pek', 'phl', 'phx', 'sfo', 'syd', 'yyz'];
 
 module.exports = {
   countries: countries,
@@ -1726,7 +1726,7 @@ var fns = _dereq_('../fns');
 //suffix-index adjectives
 //  {cial:'cru,spe'} -> 'crucial', 'special'
 var compressed = {
-  prove: 'im,,ap,disap',
+  prove: ',im,ap,disap',
   serve: ',de,ob,re',
   ress: 'exp,p,prog,st,add,d',
   lect: 'ref,se,neg,col,e',
@@ -1736,7 +1736,7 @@ var compressed = {
   ture: 'frac,lec,tor,fea',
   port: 're,sup,ex,im',
   ate: 'rel,oper,indic,cre,h,activ,estim,particip,d,anticip,evalu',
-  use: 'ca,,over,ref,acc,am,pa,ho',
+  use: ',ca,over,ref,acc,am,pa,ho',
   ive: 'l,rece,d,arr,str,surv,thr,rel',
   are: 'prep,c,comp,sh,st,decl,d,sc',
   ine: 'exam,imag,determ,comb,l,decl,underm,def',
@@ -1748,7 +1748,7 @@ var compressed = {
   ise: 'ra,exerc,prom,surpr,pra',
   ect: 'susp,dir,exp,def,rej',
   ter: 'en,mat,cen,ca,al',
-  end: 't,dep,,ext,att',
+  end: ',t,dep,ext,att',
   est: 't,sugg,prot,requ,r',
   ock: 'kn,l,sh,bl,unl',
   nge: 'cha,excha,ra,challe,plu',
@@ -2417,6 +2417,7 @@ var fns = _dereq_('../fns.js');
 //   any_many: true,
 // }
 
+
 var parse_term = function parse_term(term, i) {
   term = term || '';
   term = term.trim();
@@ -2480,6 +2481,7 @@ var parse_term = function parse_term(term, i) {
 };
 // console.log(parse_term('(one|1) (two|2)'));
 
+
 //turn a match string into an array of objects
 var parse_all = function parse_all(regs) {
   regs = regs || [];
@@ -2534,6 +2536,7 @@ var change_tense = function change_tense(s, tense) {
 //   'john always walks',
 //   'will you walk?',
 // ];
+
 
 module.exports = change_tense;
 
@@ -3556,6 +3559,7 @@ var grammar_rules = _dereq_('./rules/grammar_rules');
 var fns = _dereq_('../../../fns');
 // const match = require('../../match/match');
 
+
 //tests a subset of terms against a array of tags
 var hasTags = function hasTags(terms, tags) {
   if (terms.length !== tags.length) {
@@ -4382,6 +4386,7 @@ module.exports = Question;
 },{"../sentence.js":60,"./question_form":58}],58:[function(_dereq_,module,exports){
 'use strict';
 //classifies a question into:
+
 var yesNoTerm = _dereq_('./yesNo.js');
 var easyForm = _dereq_('./easyForm.js');
 var hardForm = _dereq_('./hardForm.js');
@@ -4958,7 +4963,6 @@ var negate = function negate(s) {
 
       //different rule for i/we/they/you + infinitive
       //that is, 'i walk' -> 'i don\'t walk', not 'I not walk'
-
       var isPronounAndInfinitive = function isPronounAndInfinitive() {
         if (s.terms[i - 1]) {
           var p = s.terms[i - 1].text;
@@ -5638,7 +5642,7 @@ var is_acronym = function is_acronym(str) {
     return true;
   }
   //like NDA
-  if (str.match(/[A-Z]{3}$/)) {
+  if (str.match(/[A-Z]{2,}$/)) {
     return true;
   }
   return false;
@@ -6625,7 +6629,6 @@ console.log(z);*/
 
 var places = _dereq_('../../../data/places');
 var abbreviations = _dereq_('../../../data/abbreviations');
-
 //add Country names
 var isPlace = places.countries.reduce(function (h, s) {
   h[s] = true;
@@ -6643,27 +6646,382 @@ places.airports.forEach(function (s) {
 abbreviations.places.forEach(function (s) {
   isPlace[s] = true;
 });
-
 //these are signals too
-var firstwords = ['west', 'east', 'nort', 'south', 'western', 'eastern', 'nortern', 'southern', 'mount'].reduce(function (h, s) {
+var firstwords = ['east', 'eastern', 'north', 'northeast', 'northern', 'northwest', 'south', 'southeast', 'southern', 'southwest', 'west', 'western'].reduce(function (h, s) {
   h[s] = true;
   return h;
 }, {});
-
-var lastwords = ['city', 'town', 'county', 'village', 'province', 'country', 'state', 'province', 'mountain', 'river', 'valley', 'park', 'avenue', 'street', 'road'].reduce(function (h, s) {
+/*
+ USPS Commonly Used Street suffixes and abbreviations
+ http://pe.usps.gov/text/pub28/28apc_002.htm
+ These are USPS recognized Street Designators, but an address pattern is necessary for disambiguation (ex: #237 Jacksonville Circl)
+ */
+// const common_street_designators = [
+//   'allee',
+//   'anex',
+//   'annx',
+//   'aven',
+//   'avenu',
+//   'avnue',
+//   'bayoo',
+//   'blfs',
+//   'bluf',
+//   'bottm',
+//   'boul',
+//   'boulv',
+//   'brdge',
+//   'brks',
+//   'brnch',
+//   'bypa',
+//   'bypas',
+//   'byps',
+//   'canyn',
+//   'causwa',
+//   'centr',
+//   'circ',
+//   'circl',
+//   'cirs',
+//   'clfs',
+//   'cmns',
+//   'cnter',
+//   'cntr',
+//   'cnyn',
+//   'cors',
+//   'crcl',
+//   'crcle',
+//   'cres',
+//   'crse',
+//   'crsent',
+//   'crsnt',
+//   'crssng',
+//   'crst',
+//   'cswy',
+//   'ctrs',
+//   'curv',
+//   'driv',
+//   'ests',
+//   'expw',
+//   'expy',
+//   'extn',
+//   'extnsn',
+//   'exts',
+//   'flds',
+//   'flts',
+//   'forg',
+//   'frds',
+//   'freewy',
+//   'frgs',
+//   'frks',
+//   'frry',
+//   'frst',
+//   'frway',
+//   'frwy',
+//   'gardn',
+//   'gatewy',
+//   'gatway',
+//   'gdns',
+//   'glns',
+//   'grden',
+//   'grdn',
+//   'grdns',
+//   'grns',
+//   'grov',
+//   'grvs',
+//   'gtway',
+//   'gtwy',
+//   'harb',
+//   'harbr',
+//   'hbrs',
+//   'highwy',
+//   'hiway',
+//   'hiwy',
+//   'hllw',
+//   'holw',
+//   'holws',
+//   'hrbor',
+//   'hway',
+//   'inlt',
+//   'islnd',
+//   'islnds',
+//   'jction',
+//   'jctn',
+//   'jctns',
+//   'jcts',
+//   'junctn',
+//   'juncton',
+//   'knls',
+//   'knol',
+//   'lcks',
+//   'ldge',
+//   'lgts',
+//   'lndg',
+//   'lndng',
+//   'lodg',
+//   'mdws',
+//   'medows',
+//   'missn',
+//   'mnrs',
+//   'mntain',
+//   'mntn',
+//   'mntns',
+//   'mountin',
+//   'mssn',
+//   'mtin',
+//   'mtwy',
+//   'opas',
+//   'orch',
+//   'orchrd',
+//   'parkwy',
+//   'pkway',
+//   'pkwys',
+//   'plns',
+//   'plza',
+//   'pnes',
+//   'prts',
+//   'psge',
+//   'radiel',
+//   'radl',
+//   'rdge',
+//   'rdgs',
+//   'rivr',
+//   'rnch',
+//   'rnchs',
+//   'rpds',
+//   'shls',
+//   'shoar',
+//   'shoars',
+//   'shrs',
+//   'skwy',
+//   'skyway',
+//   'spgs',
+//   'spng',
+//   'spngs',
+//   'sprng',
+//   'sprngs',
+//   'sqre',
+//   'sqrs',
+//   'statn',
+//   'stra',
+//   'strav',
+//   'straven',
+//   'stravenue',
+//   'stravn',
+//   'streme',
+//   'strm',
+//   'strt',
+//   'strvn',
+//   'strvnue',
+//   'sumit',
+//   'sumitt',
+//   'throughway',
+//   'tpke',
+//   'trafficway',
+//   'trak',
+//   'trce',
+//   'trfy',
+//   'trks',
+//   'trlr',
+//   'trlrs',
+//   'trls',
+//   'trnpk',
+//   'trwy',
+//   'tunel',
+//   'tunl',
+//   'tunls',
+//   'tunnl',
+//   'turnpk',
+//   'upas',
+//   'vdct',
+//   'viadct',
+//   'vill',
+//   'villag',
+//   'villg',
+//   'villiage',
+//   'vist',
+//   'vlgs',
+//   'vlly',
+//   'vlys',
+//   'vsta',
+//   'xing',
+//   'xrds'
+// ];
+/*
+ USPS Primary Street Suffix Names
+ http://pe.usps.gov/text/pub28/28apc_002.htm
+ */
+var street_designators = ['alley', 'annex', 'arcade', 'avenue', 'bayou', 'beach', 'bend', 'bluff', 'bluffs', 'blvd', 'bottom', 'boulevard', 'branch', 'bridge', 'brook', 'brooks', 'bypass', 'camp', 'canyon', 'cape', 'causeway', 'center', 'centers', 'centre', 'circle', 'circles', 'cliff', 'cliffs', 'club', 'common', 'commons', 'corner', 'corners', 'course', 'court', 'courts', 'cove', 'coves', 'creek', 'crescent', 'crest', 'crossing', 'crossroad', 'crossroads', 'curve', 'divide', 'drive', 'drives', 'estate', 'estates', 'express', 'expressway', 'extension', 'extensions', 'fall', 'falls', 'ferry', 'field', 'fields', 'flat', 'flats', 'ford', 'fords', 'forest', 'forests', 'forge', 'forges', 'fork', 'forks', 'fort', 'freeway', 'garden', 'gardens', 'gateway', 'glen', 'glens', 'green', 'greens', 'grove', 'groves', 'harbor', 'harbors', 'haven', 'heights', 'highway', 'hill', 'hills', 'hollow', 'hollows', 'inlet', 'island', 'islands', 'isle', 'isles', 'junction', 'junctions', 'key', 'keys', 'knoll', 'knolls', 'lake', 'lakes', 'land', 'landing', 'lane', 'light', 'lights', 'loaf', 'lock', 'locks', 'lodge', 'loop', 'loops', 'mall', 'manor', 'manors', 'meadow', 'meadows', 'mews', 'mill', 'mills', 'mission', 'motorway', 'mount', 'mountain', 'mountains', 'neck', 'orchard', 'overpass', 'park', 'parks', 'parkway', 'parkways', 'pass', 'passage', 'path', 'paths', 'pike', 'pikes', 'pine', 'pines', 'place', 'plain', 'plains', 'plaza', 'point', 'points', 'port', 'ports', 'prairie', 'rad', 'radial', 'ramp', 'ranch', 'ranches', 'rapid', 'rapids', 'rest', 'ridge', 'ridges', 'river', 'road', 'roads', 'route', 'run', 'row', 'shoal', 'shoals', 'shore', 'shores', 'spring', 'springs', 'spur', 'spurs', 'square', 'squares', 'station', 'stream', 'street', 'streets', 'summit', 'terrace', 'trace', 'traces', 'track', 'tracks', 'trail', 'trailer', 'trails', 'tunnel', 'tunnels', 'turnpike', 'underpass', 'union', 'unions', 'valley', 'valleys', 'vally', 'via', 'viaduct', 'view', 'views', 'village', 'villages', 'ville', 'vista', 'walk', 'walks', 'wall', 'way', 'ways', 'well', 'wells'].reduce(function (h, s) {
   h[s] = true;
   return h;
 }, {});
-
+/*
+/*
+ USPS Primary Street Suffix Names
+ http://pe.usps.gov/text/pub28/28apc_002.htm
+ These are valid, but only given an address pattern (such as street number)
+ */
+// const street_designator_abbreviation = [
+//   'ally',
+//   'aly',
+//   'anx',
+//   'arc',
+//   'av',
+//   'ave',
+//   'avn',
+//   'bch',
+//   'bg',
+//   'bgs',
+//   'blf',
+//   'bnd',
+//   'bot',
+//   'br',
+//   'brg',
+//   'brk',
+//   'btm',
+//   'burg',
+//   'burgs',
+//   'byp',
+//   'byu',
+//   'cen',
+//   'cent',
+//   'cir',
+//   'clb',
+//   'clf',
+//   'cmn',
+//   'cmp',
+//   'cor',
+//   'cp',
+//   'cpe',
+//   'crk',
+//   'ct',
+//   'ctr',
+//   'cts',
+//   'cv',
+//   'cvs',
+//   'cyn',
+//   'dale',
+//   'dam',
+//   'div',
+//   'dl',
+//   'dm',
+//   'dr',
+//   'drs',
+//   'drv',
+//   'dv',
+//   'dvd',
+//   'est',
+//   'exp',
+//   'expr',
+//   'ext',
+//   'fld',
+//   'fls',
+//   'flt',
+//   'frd',
+//   'frg',
+//   'frk',
+//   'frt',
+//   'fry',
+//   'ft',
+//   'fwy',
+//   'gdn',
+//   'gln',
+//   'grn',
+//   'grv',
+//   'hbr',
+//   'hl',
+//   'hls',
+//   'ht',
+//   'hts',
+//   'hvn',
+//   'hwy',
+//   'iss',
+//   'jct',
+//   'knl',
+//   'ky',
+//   'kys',
+//   'lc',
+//   'ldg',
+//   'lf',
+//   'lgt',
+//   'lk',
+//   'lks',
+//   'ln',
+//   'mdw',
+//   'ml',
+//   'mls',
+//   'mnr',
+//   'mnt',
+//   'msn',
+//   'mt',
+//   'mtn',
+//   'mtns',
+//   'nck',
+//   'oval',
+//   'ovl',
+//   'pkwy',
+//   'pky',
+//   'pl',
+//   'pln',
+//   'plz',
+//   'pne',
+//   'pr',
+//   'prk',
+//   'prr',
+//   'prt',
+//   'pt',
+//   'pts',
+//   'rd',
+//   'rdg',
+//   'rds',
+//   'riv',
+//   'rpd',
+//   'rst',
+//   'rte',
+//   'rue',
+//   'rvr',
+//   'shl',
+//   'shr',
+//   'smt',
+//   'spg',
+//   'sq',
+//   'sqr',
+//   'sqs',
+//   'squ',
+//   'st',
+//   'sta',
+//   'stn',
+//   'str',
+//   'sts',
+//   'ter',
+//   'terr',
+//   'trk',
+//   'trl',
+//   'un',
+//   'uns',
+//   'vis',
+//   'vl',
+//   'vlg',
+//   'vly',
+//   'vst',
+//   'vw',
+//   'vws',
+//   'wl',
+//   'wls',
+//   'wy',
+//   'xrd',
+// ];
+var lastwords = ['city', 'county', 'province', 'state', 'territory', 'town'];
 var is_place = function is_place(str) {
   var words = str.split(' ');
-
   if (words.length > 1) {
     //first words, like 'eastern'
     if (firstwords[words[0]]) {
       return true;
     }
-    //last words, like 'mountain'
+    //last words, like 'road, street, lane, circle'
+    if (street_designators[words[words.length - 1]]) {
+      return true;
+    }
+    //last words, like 'city, town, state'
     if (lastwords[words[words.length - 1]]) {
       return true;
     }
@@ -6673,10 +7031,8 @@ var is_place = function is_place(str) {
       return true;
     }
   }
-
   return false;
 };
-
 module.exports = is_place;
 
 },{"../../../data/abbreviations":1,"../../../data/places":19}],88:[function(_dereq_,module,exports){
@@ -7141,11 +7497,11 @@ var to_number = function to_number(str) {
     if (!w || w === 'and') {
       continue;
     }
-    if (w === "-" || w === "negative") {
+    if (w === '-' || w === 'negative') {
       isNegative = true;
       continue;
     }
-    if (w.startsWith("-")) {
+    if (fns.startsWith(w, '-')) {
       isNegative = true;
       w = w.substr(1);
     }

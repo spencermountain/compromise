@@ -78,13 +78,13 @@ const to_number = function(str) {
     if (!w || w === 'and') {
       continue;
     }
-    if (w === "-" || w === "negative") {
+    if (w === '-' || w === 'negative') {
       isNegative = true;
-      continue
+      continue;
     }
-    if (w.startsWith("-")) {
+    if (fns.startsWith(w, '-')) {
       isNegative = true;
-      w = w.substr(1)
+      w = w.substr(1);
     }
     //decimal mode
     if (w === 'point') {
@@ -99,11 +99,11 @@ const to_number = function(str) {
       continue;
     }
     //improper fraction
-    const improperFractionMatch = w.match(/^([0-9,\. ]+)\/([0-9,\. ]+)$/)
+    const improperFractionMatch = w.match(/^([0-9,\. ]+)\/([0-9,\. ]+)$/);
     if (improperFractionMatch) {
-      const num = parseFloat(improperFractionMatch[1].replace(/[, ]/g, ''))
-      const denom = parseFloat(improperFractionMatch[2].replace(/[, ]/g, ''))
-      sum += (num/denom) || 0;
+      const num = parseFloat(improperFractionMatch[1].replace(/[, ]/g, ''));
+      const denom = parseFloat(improperFractionMatch[2].replace(/[, ]/g, ''));
+      sum += (num / denom) || 0;
       continue;
     }
     //prevent mismatched units, like 'seven eleven'

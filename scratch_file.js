@@ -17,6 +17,6 @@ const context = {
 // let r = nlp('Air France is cool');
 // let r = nlp('destiny\'s child');
 // let r = nlp('guinea-bissau');
-let r = nlp('côte d\'ivoire');
-console.log(r.terms());
+// let r = nlp('  ');
+let r = nlp('\n\n');
 r.check();

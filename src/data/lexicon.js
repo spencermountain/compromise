@@ -56,9 +56,6 @@ addArr(data.dates.durations, 'Duration');
 Object.keys(data.irregular_verbs).forEach((k) => {
   lexicon[k] = 'Infinitive';
   let conj = data.irregular_verbs[k];
-  if (k === 'write') {
-    console.log(conj);
-  }
   Object.keys(conj).forEach((k2) => {
     if (conj[k2]) {
       lexicon[conj[k2]] = k2;
@@ -129,7 +126,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-console.log(lexicon.wrote);
+// console.log(lexicon['¥']);
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.info('conjugations'));

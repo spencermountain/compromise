@@ -10,9 +10,9 @@ var garbage = [
   {},
 ];
 test('garbage:', function(t) {
-  garbage.forEach(function (g) {
+  garbage.forEach(function (g, i) {
     var num = nlp(g).list.length;
-    var msg = (typeof g) + 'text input';
+    var msg = (typeof g) + ' text input #' + i;
     t.equal(num, 0, msg);
   });
   t.end();

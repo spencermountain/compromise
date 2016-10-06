@@ -36,7 +36,7 @@ test('pos from-lexicon', function(t) {
     ['jaime', 'Person'],
     ['claire', 'FemalePerson'],
     ['arthur', 'MalePerson'],
-    // ['¥', 'Currency'],
+    ['¥', 'Currency'],
     ['pence', 'Currency'],
     ['seven', 'Value'],
     ['seventeen', 'Value'],

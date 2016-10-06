@@ -21,7 +21,7 @@ const sentence_parser = function(text) {
   //first do a greedy-split..
   let chunks = [];
   //ensure it 'smells like' a sentence
-  if (!text || typeof text !== 'string' || !text.match(/\w/)) {
+  if (!text || typeof text !== 'string' || !text.match(/\S/)) {
     return sentences;
   }
   // This was the splitter regex updated to fix quoted punctuation marks.

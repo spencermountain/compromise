@@ -16,7 +16,7 @@ const capital_logic = function(s) {
   }
   //support first-word of sentence as proper titlecase
   let t = s.terms[0];
-  if (t.is('titlecase')) {
+  if (t && t.is('titlecase')) {
     if (t.tag.Person || t.tag.Organization || t.tag.Place) {
       t.tagAs('TitleCase', 'first-term-capital');
     }

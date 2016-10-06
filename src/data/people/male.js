@@ -62,7 +62,6 @@ let arr = [
   'timothy',
   'wilbur',
   'williams',
-  'wm',
   'woodrow'
 ];
 

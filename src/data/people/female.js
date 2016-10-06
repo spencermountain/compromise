@@ -13,7 +13,6 @@ let arr = [
   'claire',
   'cleo',
   'consuelo',
-  // 'dawn',
   'eleanor',
   'eliza',
   'erika',

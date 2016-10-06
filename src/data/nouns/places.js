@@ -14,7 +14,7 @@ let countries = [
   'comoros',
   'congo-brazzaville',
   'cuba',
-  'côte d\'ivoire',
+  'cote d\'ivoire',
   'denmark',
   'djibouti',
   'ecuador',
@@ -162,7 +162,7 @@ let cities = [
   'phnom penh',
   'phoenix',
   'port elizabeth',
-  'poznań',
+  'poznan',
   'prague',
   'reykjavik',
   'riga',
@@ -216,14 +216,14 @@ let suffix_compressed_cities = {
   ka: 'dha,osa,banja lu',
   ro: 'rio de janei,sappo,cai',
   am: 'birmingh,amsterd,rotterd',
-  ur: 'kuala lump,winterth,kópavog',
-  ch: 'muni,züri,christchur',
+  ur: 'kuala lump,winterth,kopavog',
+  ch: 'muni,zuri,christchur',
   na: 'barcelo,vien,var',
   ma: 'yokoha,li',
   ul: 'istanb,seo,kab',
   to: 'toron,qui,por',
   iv: 'khark,lv,tel av',
-  sk: 'dnipropetrov,gdań,min'
+  sk: 'dnipropetrov,gdan,min'
 };
 
 cities = fns.uncompress_suffixes(cities, suffix_compressed_cities);
@@ -234,12 +234,12 @@ let prefix_compressed_cities = {
   ta: 'ipei,mpere,llinn,rtu',
   ba: 'ngalore,ngkok,ku,sel',
   li: 'verpool,ège,nz,massol',
-  ma: 'rseille,ndalay,drid,lmö',
+  ma: 'rseille,ndalay,drid,lmo',
   be: 'rn,lgrade,irut',
   ka: 'rachi,raj,ndy',
   da: 'egu,kar,ugavpils',
-  ch: 'icago,arleroi,ișinău',
-  co: 'lombo,nstanța,rk',
+  ch: 'icago,arleroi,ișinau',
+  co: 'lombo,nstanta,rk',
   bu: 'rsa,charest,dapest'
 };
 cities = fns.uncompress_prefixes(cities, prefix_compressed_cities);

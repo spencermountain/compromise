@@ -12,7 +12,7 @@ module.exports = [
   'adidas',
   'aig',
   'al qaeda',
-  'al-jazeera',
+  'al jazeera',
   'alcatel',
   'alcatel-lucent',
   'altair',

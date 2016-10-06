@@ -5,7 +5,6 @@ const fns = require('../fns');
 let arr = [
   'abby',
   'amy',
-  'autumn',
   'bobbi',
   'brooke',
   'carol',

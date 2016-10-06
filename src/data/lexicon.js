@@ -39,20 +39,26 @@ addArr(Object.keys(data.irregular_plurals.toSingle), 'Plural');
 //dates are well-structured
 addArr(data.dates.days, 'Day');
 addArr(data.dates.months, 'Month');
-addArr(data.dates.durations, 'Duration');
 addArr(data.dates.relative, 'Date');
 addArr(data.holidays, 'Holiday');
 
 addArr(data.professions, 'Actor'); //?
 addArr(data.demonyms, 'Demonym');
-addArr(data.sportsTeams, 'sportsTeam');
+addArr(data.sportsTeams, 'SportsTeam');
 addArr(data.bands, 'Organization');
 addArr(data.orgWords, 'Noun');
+
+let units = data.units.words.filter((s) => s.length > 1);
+addArr(units, 'Unit');
+addArr(data.dates.durations, 'Duration');
 
 //irregular verbs
 Object.keys(data.irregular_verbs).forEach((k) => {
   lexicon[k] = 'Infinitive';
   let conj = data.irregular_verbs[k];
+  if (k === 'write') {
+    console.log(conj);
+  }
   Object.keys(conj).forEach((k2) => {
     if (conj[k2]) {
       lexicon[conj[k2]] = k2;
@@ -113,7 +119,6 @@ addArr(data.organizations, 'Organization');
 addArr(data.adjectives, 'Adjective');
 addArr(data.superlatives, 'Adjective');
 addArr(data.currencies, 'Currency');
-addArr(data.units, 'Unit');
 //these ad-hoc manual ones have priority
 addObj(data.misc);
 
@@ -124,7 +129,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon.oclock);
+console.log(lexicon.wrote);
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.info('conjugations'));

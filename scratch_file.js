@@ -18,5 +18,5 @@ const context = {
 // let r = nlp('destiny\'s child');
 // let r = nlp('guinea-bissau');
 // let r = nlp('  ');
-let r = nlp('\n\n');
+let r = nlp('google inc');
 r.check();

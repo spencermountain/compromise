@@ -107,3 +107,19 @@ Or just pick up an [open issue](https://github.com/nlp-compromise/nlp_compromise
 [We're moving fast](https://github.com/nlp-compromise/nlp_compromise/blob/master/changelog.md)
 
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+
+#See also
+* [naturalNode](https://github.com/NaturalNode/natural) - decidedly fancier statistical nlp in javascript
+* [SuperScript](http://superscriptjs.com/) - clever conversation engine in javascript
+* [NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics) - conjugation, inflection, correction etc in javascript
+* [reText](https://github.com/wooorm/retext) - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
+* [jsPos](https://code.google.com/archive/p/jspos/) - the time-tested Brill-tagger in js
+* [spaCy](https://spacy.io/) - speedy, multilingual tagger in Python/Cython
+
+(don't forget
+[NLTK](http://www.nltk.org/),
+[GATE](https://gate.ac.uk),
+the [Stanford Parser](http://nlp.stanford.edu/software/lex-parser.shtml),
+and
+the [Illinois toolkit](http://cogcomp.cs.illinois.edu/page/software/)
+)

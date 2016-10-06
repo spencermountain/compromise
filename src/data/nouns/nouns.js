@@ -38,5 +38,8 @@ module.exports = [
   'ad hominem',
   'us dollar',
   'tragedy',
-  'economy'
+  'economy',
+  'super bowl',
+  'world series',
+  'grand slam'
 ];

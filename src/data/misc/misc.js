@@ -62,7 +62,14 @@ const compact = {
     'new mexico',
     'united states',
     'united kingdom',
-    'great britain'
+    'great britain',
+    'great lakes',
+    'pacific ocean',
+    'atlantic ocean',
+    'indian ocean',
+    'arctic ocean',
+    'antarctic ocean',
+    'everglades',
   ],
   //conjunctions
   'Conjunction': [

@@ -113,11 +113,12 @@ r= nlp('john was singing. Sara was singing.').conjugate()
 
 
 #See also
-* [naturalNode](https://github.com/NaturalNode/natural) - statistical nlp in javascript
-* [SuperScript](http://superscriptjs.com/) - clever bot engine in javascript
-* [NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics) - conjugation, inflection, spelling correction in javascript
-* [jsPos](https://code.google.com/archive/p/jspos/) - Brill-tagger in javascript
+* [naturalNode](https://github.com/NaturalNode/natural) - decidedly fancier, statistical nlp in javascript
+* [SuperScript](http://superscriptjs.com/) - clever conversation engine in javascript
+* [NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics) - conjugation, inflection, correction, etc in js
+* [jsPos](https://code.google.com/archive/p/jspos/) - the time-tested Brill-tagger in javascript
 * [spaCy](https://spacy.io/) - speedy, multilingual nlp in Python/Cython
+
 (don't forget
 [NLTK](http://www.nltk.org/),
 [GATE](https://gate.ac.uk),

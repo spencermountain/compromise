@@ -14,5 +14,6 @@ const context = {
 // let r = nlp(corpus.parsed.sotu().obama_2012);
 // r.phrases();
 
-let r = nlp('Air France is cool');
+// let r = nlp('Air France is cool');
+let r = nlp('We\'ve').expand(); //.plaintext();
 r.check();

@@ -1,6 +1,7 @@
 'use strict';
 //add a silent term
 const fixContraction = (ts, arr, i) => {
+
   //add a new term
   ts.insertAt('', i);
   let t = ts.terms[i];

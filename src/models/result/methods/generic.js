@@ -100,7 +100,12 @@ const genericMethods = (Result) => {
       this.list.forEach((ts) => {
         ts.terms.forEach((t, i) => {
           if (t.silent_term) {
-            t.text = t.silent_term;
+            if (t.is('titlecase')) {
+              t.text = t.silent_term;
+              t.text = t.info('titlecase');
+            } else {
+              t.text = t.silent_term;
+            }
             //add whitespace too
             let last = ts.terms[i - 1];
             if (last) {

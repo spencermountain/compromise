@@ -307,7 +307,7 @@ module.exports = [
   'syndicat',
   'department',
   'departments',
-  'comprehensive'
+  'comprehensive',
   'radio',
   'fm',
   'am',

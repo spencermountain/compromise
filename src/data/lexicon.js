@@ -44,7 +44,10 @@ addArr(data.dates.relative, 'Date');
 addArr(data.holidays, 'Holiday');
 
 addArr(data.professions, 'Actor'); //?
-addArr(data.demonyms, 'Demonym'); //?
+addArr(data.demonyms, 'Demonym');
+addArr(data.sportsTeams, 'sportsTeam');
+addArr(data.bands, 'Organization');
+addArr(data.orgWords, 'Noun');
 
 //irregular verbs
 Object.keys(data.irregular_verbs).forEach((k) => {
@@ -107,7 +110,6 @@ addArr(data.places.cities, 'City');
 addArr(data.places.countries, 'Country');
 addArr(data.uncountables, 'Noun');
 addArr(data.organizations, 'Organization');
-addArr(data.groups, 'Noun');
 addArr(data.adjectives, 'Adjective');
 addArr(data.superlatives, 'Adjective');
 addArr(data.currencies, 'Currency');

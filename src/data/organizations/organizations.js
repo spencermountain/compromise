@@ -1,7 +1,7 @@
 'use strict';
 //just a few named-organizations
 //no acronyms needed. no product/brand pollution.
-let organizations = [
+module.exports = [
   '20th century fox',
   '3m',
   '7-eleven',
@@ -260,5 +260,3 @@ let organizations = [
   'youtube',
   'ywca'
 ];
-
-module.exports = organizations;

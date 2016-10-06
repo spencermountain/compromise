@@ -1,3 +1,4 @@
+//todo remove/normalize plural forms
 module.exports = [
   'administration',
   'agence',
@@ -135,7 +136,6 @@ module.exports = [
   'media',
   'memorial',
   'mercantile exchange',
-  'mining',
   'ministere',
   'ministry',
   'mobile',
@@ -143,7 +143,7 @@ module.exports = [
   'motors',
   'musee',
   'museum',
-  'network',
+  // 'network',
   'news',
   'news service',
   'observatory',
@@ -202,7 +202,6 @@ module.exports = [
   'telegraph',
   'television',
   'times',
-  'tours',
   'tribunal',
   'trust',
   'tv',

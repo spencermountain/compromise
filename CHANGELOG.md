@@ -1,9 +1,13 @@
-Uses semver, with occasional releases to npm and bower.
+# CHANGE LOG
 
-here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
+### Version Semantics  &nbsp; 
+* MAJOR version when we make incompatible API changes,
+* MINOR version when we add functionality in a backwards-compatible manner, and
+* PATCH version when we make backwards-compatible bug fixes.
+Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
 
 ### v.6  &nbsp;  
-* 6.5.0 - builds now using browserify + derequire()
+* 6.5.0 - builds now use browserify + derequire()
 * 6.4.0 - re-written term-lumper logic
 * 6.3.0 - new nlp.lexicon({word:'POS'}) flow
 * 6.0.0 - be consistent with `text.normal()`, `term.all_forms()`, `text.word_count()`. `text.normal()` includes sentence-terminators, like periods etc.
@@ -29,7 +33,7 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 ### v.3  &nbsp;  **(Breaking)**
 * 3.0.2 - Statement & Question classes
 * v3.0.0 - Feb 2016
-  * split ngram, locale, and syllables into plugins in seperate repo
+  * split ngram, locale, and syllables into plugins in separate repository.
 
 ### v.2
 * v2.0.0 - Nov 2015 &nbsp;  **(Breaking)**

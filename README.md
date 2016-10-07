@@ -1,26 +1,74 @@
+# NLP Compromise
 [![CodacyBadge](https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062)](https://www.codacy.com/app/spencerkelly86/nlp_compromise)
 [![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 [![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
 
-**nlp_compromise** does NLP in the browser.
-```javascript
-nlp.sentence('She sells seashells').to_past().text()
-// 'She sold seashells'
+ 
+NLP-Compromise is a Javascript framework that provides a set of natural language analysis 
+and manipulation tools. It can give the base forms of words, their parts of speech, whether they are names of companies, 
+people, places, etc., normalize dates, times, and numeric quantities, and mark up the structure of sentences 
+in terms of phrases and word dependencies.
+
+Unlike most NLP programs that run on the server, NLP-Compromise runs in a typical web-browser.
+
+### Significant Characteristics
+* Minimized library size is less than 200KB
+* 86% alignment with [Penn Treebank Project](http://www.cis.upenn.edu/~treebank/)
+
+## Documentation
+* [Wiki](https://github.com/nlp-compromise/nlp_compromise/wiki)
+* [API](https://github.com/nlp-compromise/nlp_compromise/wiki/API)
+
+## Development
+We try to make development with NLP Compromise as simple as possible. The information below 
+should help to get you started developing with the library and/or contributing to the project.
+
+### Technologies Used
+
+* Javascript
+* NodeJS
+* Grunt
+* Babelify
+* Browserify
+* Tape
+* Tap-Spec
+
+####Installing NodeJS
+ 
+We also use a number of node.js tools to initialize and test NLP-Compromise. 
+You must have node.js and its package manager (npm) installed. You can get these tools from 
+[nodejs.org](http://nodejs.org/).
+
+####Installing Grunt
+To install Grunt, you must first download and install [NodeJS](http://nodejs.org/) (which includes npm). npm stands for node packaged modules and is a way to manage development dependencies through node.js.
+
+Then, from the command line:
+Install grunt-cli globally with ```npm install -g grunt-cli```.
+Navigate to the root /nlp_compromise/ directory, then run ```npm install```. npm will look at the package.json file and automatically install the necessary local dependencies listed there.
+When completed, you'll be able to run the various Grunt commands provided from the command line.
+
+####Building NLP-Compromise
+[Once you have set up your environment](https://github.com/nlp-compromise/nlp_compromise/blob/master/CONTRIBUTING.MD), just run:
+
 ```
-### Yup,
-* **<150k** js file
-* **86%** on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
-* keypress speed, constant-time.
-* caniuse, uhuh. **IE9+**
-* no dependencies, training, configuration, or prolog.
+grunt package
+```
 
-It's a [handy, and not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/wiki/Justification) tool for understanding, changing, and playing with english.
+####Install with npm
 
-## Off you go,
-> `npm install nlp_compromise`
+```
+$ npm install nlp_compromise
+```
 
-> `<script src="https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js"></script>`
+####Javascript Import
 
+```
+let nlp = require('nlp_compromise');
+```
+
+####See it in Action
+Once you have the project installed and referenced in a Javascript file, you can use the following
+code to see the project in action:
 ```javascript
 let nlp = require('nlp_compromise'); // or nlp = window.nlp_compromise
 
@@ -64,46 +112,59 @@ nlp.text(require('nlp-corpus').text.friends()).topics()//11 seasons of friends
 //   { count: 1411, text: 'rachel' },
 //   ....
 ```
-#Plugin/Mixins
-we've also got a modest, though ambitious [plugin ecosystem](https://github.com/nlp-compromise/nlp_compromise/wiki/Plugins):
-```javascript
-//US-UK localization
-nlp.plugin(require('nlp-locale'))
-nlp.term('favourite').toAmerican()
-// 'favorite'
 
-//syllable hyphenization
-nlp.plugin(require('nlp-syllables'));
-var t2 = nlp.term('houston texas');
-t2.syllables()
-//[ [ 'hous', 'ton' ], [ 'tex', 'as' ] ]
+####Running tests
+To execute all unit tests, use:
 
-//semantic n-gram
-nlp.plugin(require('nlp-ngram'));
-var t4 = nlp.text(`Tony Hawk played Tony Hawk's pro skater`);
-t4.ngram({min_count: 2});
-// [{word:'tony hawk', count:2, size:1}]
+    grunt test:unit
 
-//grammar links
-nlp.plugin(require('nlp-links'));
-var sen = nlp.sentence('I fed the dog').withLinks();
-// Each term now has links to words they are grammatically connected to
-sen.terms[1].links[1].target.word; // terms[1] is verb 'fed'
-// 'dog'
+To execute end-to-end (e2e) tests, use:
+
+    grunt package
+    grunt test:e2e
+
+To learn more about the grunt tasks, run `grunt --help`
+
+####Deployment
+To deploy NLP-Compromise, simply link to the project's CDN library
+
 ```
+<script src="https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js"></script>
+```
+####Continuous Integration
 
-### [View the Full API Documentation](https://github.com/nlp-compromise/nlp_compromise/wiki/API)
+##### Travis CI
 
-## Development
-[![Issue Stats](http://issuestats.com/github/nlp-compromise/nlp_compromise/badge/pr)](http://issuestats.com/github/nlp-compromise/nlp_compromise)
-[![Issue Stats](http://issuestats.com/github/nlp-compromise/nlp_compromise/badge/issue)](http://issuestats.com/github/nlp-compromise/nlp_compromise)
+Travis CI is a continuous integration service, which can monitor GitHub for new commits to your repository and execute scripts such as building the app or running tests. The project contains a Travis configuration file, .travis.yml, which will cause Travis to run your tests when you push to GitHub.
 
-*Useful NLP is a problem only solved with many hands. [Contributing](https://github.com/nlp-compromise/nlp_compromise/blob/master/contributing.md) in any form is valued.*
+You will need to enable the integration between Travis and GitHub. See the Travis website for more instruction on how to do this.
 
-Join our [slack group](http://superscript-slackin.herokuapp.com) (login from [here](https://superscriptjs.slack.com/messages/nlp_compromise/)) or our infrequent [announcement email-list](http://eepurl.com/bL9YRv).
+####Versioning
 
-Or just pick up an [open issue](https://github.com/nlp-compromise/nlp_compromise/issues)
+We use [SemVer](http://semver.org/) for versioning. For the versions available, 
+see the [tags on this repository](https://github.com/nlp-compromise/nlp_compromise/tags). 
 
-[We're moving fast](https://github.com/nlp-compromise/nlp_compromise/blob/master/changelog.md)
+###Contributing
 
-[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+Please read [CONTRIBUTING.md](https://github.com/nlp-compromise/nlp_compromise/blob/master/CONTRIBUTING.MD) for details on our code of conduct, and the process for submitting pull requests to us.
+
+##Authors
+
+* **Spencer Kelly** - *Initial work* - [SpencerMountain](https://github.com/spencermountain)
+
+See also the list of [contributors](https://github.com/nlp-compromise/nlp_compromise/contributors) who participated in this project.
+
+##How you can help
+
+Filing issues is helpful but **pull requests** that improve the code and the docs are even better!
+Not only do we welcome all contributions, but we will gladly work with you to incorporate commits 
+and suggestions.
+
+##License
+
+Code licensed under an [MIT License](LICENSE.md).
+
+Documentation licensed under [Creative Commons BY 4.0](http://creativecommons.org/licenses/by/4.0/).
+
+
+ 

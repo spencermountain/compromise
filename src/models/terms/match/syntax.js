@@ -65,7 +65,7 @@ const parse_term = function(term, i) {
   }
   //a * means anything until sentence end
   if (term === '*') {
-    reg.greedy = true;
+    reg.astrix = true;
     term = null;
   }
   reg.normal = term;

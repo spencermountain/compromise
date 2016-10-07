@@ -1,6 +1,7 @@
 'use strict';
 const set_tag = require('./tag').set_tag;
-const normalize = require('./normalize');
+const addNormal = require('./normalize');
+const addRoot = require('./root');
 const fns = require('../../fns');
 const build_whitespace = require('./whitespace');
 
@@ -9,13 +10,13 @@ methods.render = require('./render');
 
 class Term {
   constructor(str, context) {
-    this.text = fns.ensureString(str);
+    this._text = fns.ensureString(str);
     this.context = fns.ensureObject(context);
     this.tag = {};
     this.whitespace = build_whitespace(str || '');
-    this._text = this.text.trim();
+    this._text = this._text.trim();
     // this.endPunct = this.endPunctuation();
-    this.normal = normalize(this.text);
+    this.normalize();
     this.silent_term = '';
     this.helpers = require('./helpers');
   }
@@ -25,19 +26,24 @@ class Term {
     if (this._text !== str) {
       this.whitespace = build_whitespace(str);
     }
-    // this.endPunct = this.endPunctuation();
-    this.normal = normalize(this.text);
+    this.normalize();
   }
+
   get text() {
     return this._text;
   }
 
+  normalize() {
+    addNormal(this);
+    addRoot(this);
+  }
+
   /** the comma, period ... punctuation that ends this sentence */
   endPunctuation() {
-    let m = this.text.match(/([\.\?\!,;:])$/);
+    let m = this._text.match(/([\.\?\!,;:])$/);
     if (m) {
       //remove it from end of text
-      // this.text = this.text.substr(0, this.text.length - 1);
+      // this.text = this._text.substr(0, this._text.length - 1);
       return m[0];
     }
     return '';
@@ -45,7 +51,7 @@ class Term {
 
   /** print-out this text, as it was given */
   plaintext() {
-    let str = this.whitespace.before + this.text + this.whitespace.after;
+    let str = this.whitespace.before + this._text + this.whitespace.after;
     return str;
   }
 
@@ -185,7 +191,7 @@ class Term {
   /** make a copy with no references to the original  */
   clone() {
     let c = fns.copy(this.context);
-    let term = new Term(this.text, c);
+    let term = new Term(this._text, c);
     term.tag = fns.copy(this.tag);
     term.whitespace = fns.copy(this.whitespace);
     term.silent_term = this.silent_term;

@@ -25,6 +25,9 @@ const tagger = function(ts) {
     ts = lumper.lump_three(ts);
     ts = lumper.lump_two(ts);
   }
+  // for(let i = 0; i < ts.terms.length; i++) {
+  // ts.terms[i].normalize();
+  // }
   return ts;
 };
 

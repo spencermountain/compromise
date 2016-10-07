@@ -43,7 +43,7 @@ const perfectMatch = (term, reg) => {
   }
   //text-match
   if (reg.normal) {
-    if (term.normal === reg.normal || term.text === reg.normal) {
+    if (term.normal === reg.normal || term.text === reg.normal || term.root === reg.normal) {
       return true;
     }
     //try contraction match too

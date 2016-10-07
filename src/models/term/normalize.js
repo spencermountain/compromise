@@ -1,7 +1,8 @@
 'use strict';
 const fixUnicode = require('./fixUnicode');
 
-const normalize = function(str) {
+const normalize = function(term) {
+  let str = term._text || '';
   str = str.toLowerCase();
   //(very) rough asci transliteration -  bjŏrk -> bjork
   str = fixUnicode(str);
@@ -16,7 +17,12 @@ const normalize = function(str) {
   //strip leading & trailing grammatical punctuation
   str = str.replace(/['",\.!:;\?\)]$/g, '');
   str = str.replace(/^['"\(]/g, '');
-  return str;
+
+  //compact acronyms
+  if (term.is('acronym')) {
+    str = str.replace(/\./g, '');
+  }
+  term.normal = str;
 };
 
 module.exports = normalize;

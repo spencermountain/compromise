@@ -58,13 +58,6 @@ const parse_term = function(term, i) {
     };
     term = null;
   }
-  //addition flag
-  if (fns.startsWith(term, '+')) {
-    term = term.replace(/^\+/, '');
-    term = term.replace(/\+$/, '');
-    reg.extra = true;
-  }
-
   //a period means any one term
   if (term === '.') {
     reg.anyOne = true;

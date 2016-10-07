@@ -6,8 +6,8 @@ const startHere = require('./startHere');
 const path = 'match';
 
 //main event
-const match = function(ts, str, quiet) {
-  if (!quiet) {
+const match = function(ts, str, verbose) {
+  if (verbose) {
     log.here(path);
   }
   let matches = [];
@@ -16,7 +16,8 @@ const match = function(ts, str, quiet) {
     return matches;
   }
   let regs = syntax(str);
-  if (!quiet) {
+  if (verbose) {
+    // console.log(regs);
     log.tell(regs);
   }
   for(let t = 0; t < ts.terms.length; t++) {

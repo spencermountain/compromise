@@ -61,8 +61,8 @@ Terms.prototype.clone = function() {
   return new Terms(terms, this.context);
 };
 
-Terms.prototype.match = function(reg, quiet) {
-  return match(this, reg, quiet); //returns an array of matches
+Terms.prototype.match = function(reg, verbose) {
+  return match(this, reg, verbose); //returns an array of matches
 };
 Terms.prototype.remove = function(reg) {
   let matchTerms = match(this, reg);

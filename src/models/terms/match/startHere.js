@@ -13,9 +13,15 @@ const greedyUntil = (terms, i, reg) => {
 };
 
 //keep matching this reg as long as possible
-const greedyOf = (terms, i, reg) => {
+const greedyOf = (terms, i, reg, until) => {
   for(i = i; i < terms.length; i++) {
-    if (!fullMatch(terms.get(i), reg)) {
+    let t = terms.get(i);
+    //found next reg ('until')
+    if (until && fullMatch(t, until)) {
+      return i;
+    }
+    //die here
+    if (!fullMatch(t, reg)) {
       return i;
     }
   }
@@ -84,15 +90,20 @@ const startHere = (ts, startAt, regs) => {
         continue;
       }
     }
+    //if optional, check next one
+    if (reg.optional) {
+      let until = regs[reg_i + 1];
+      term_i = greedyOf(ts, term_i, reg, until);
+      continue;
+    }
     //check a perfect match
     if (fullMatch(term, reg)) {
       term_i += 1;
       //try to greedy-match '+'
       if (reg.consecutive) {
-        term_i = greedyOf(ts, term_i, reg);
+        let until = regs[reg_i + 1];
+        term_i = greedyOf(ts, term_i, reg, until);
       }
-      // let soFar = ts.terms.slice(startAt, term_i).plaintext();
-      // log.tell(soFar + '..', path);
       continue;
     }
     //handle partial-matches of lumped terms

@@ -5,11 +5,11 @@ const match = (Result) => {
 
   const methods = {
     /** do a regex-like search through terms and return a subset */
-    match : function(reg, quiet) {
+    match : function(reg, verbose) {
       let list = [];
       this.list.forEach((ts) => {
         //an array of arrays
-        let matches = ts.match(reg, quiet);
+        let matches = ts.match(reg, verbose);
         matches.forEach((ms) => {
           list.push(new Terms(ms));
         });

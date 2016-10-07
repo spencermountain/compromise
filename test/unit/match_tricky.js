@@ -30,7 +30,7 @@ test('fancy match', function(t) {
 
     //optional miss
     ['doug is good', 'doug is really? good', 3],
-    // ['doug is good', 'doug is .? good', 3], //tricky 'greedy optional' bug
+    ['doug is good', 'doug is .? good', 3], //tricky 'greedy optional' bug
     ['doug is good', 'doug is #Adverb? good', 3],
     //optional has
     ['doug is really good', 'doug is really? good', 4],
@@ -50,7 +50,9 @@ test('fancy match', function(t) {
     ['doug is good', 'doug * bad', 0],
     ['doug is good', 'spencer * bad', 0],
     ['doug is good', 'spencer *', 0],
-    // ['doug is good', 'doug * is', 0], //another tricky 'greedy optional' bug
+    ['doug is good', 'doug * is', 2], //another tricky 'greedy optional' bug
+    ['cool, fun, great, nice', '#Adjective+ great', 3],
+
     //partial lumped matches
     ['Dr. Spencer Smith says hi', 'dr', 0],
     ['Dr. Spencer Smith says hi', 'dr spencer', 0],

@@ -2,11 +2,9 @@
 
 module.exports = {
   toPlural : function() {
-    this.text = this.text + 's';
-    return this;
+    return this.text + 's';
   },
   toSingular : function() {
-    this.text = this.text.replace(/s$/, '');
-    return this;
+    return this.text.replace(/s$/, '');
   }
 };

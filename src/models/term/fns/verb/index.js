@@ -15,21 +15,18 @@ let singularMap = {
 module.exports = {
   toPlural : function() {
     if (pluralMap[this.normal]) {
-      this.text = pluralMap[this.normal];
-      return this;
+      return pluralMap[this.normal];
     }
     if (this.tag.PresentTense) {
-      this.text = this.text.replace(/s$/, '');
-      return this;
+      return this.text.replace(/s$/, '');
     }
-    return this;
+    return this.text;
   },
   toSingular : function() {
     if (singularMap[this.normal]) {
-      this.text = singularMap[this.normal];
-      return this;
+      return singularMap[this.normal];
     }
-    return this;
+    return this.text;
   },
   infinitive: function() {
     return toInfinitive(this);

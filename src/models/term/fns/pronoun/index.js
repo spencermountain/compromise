@@ -14,14 +14,14 @@ let singularMap = {
 module.exports = {
   toPlural : function() {
     if (pluralMap[this.normal]) {
-      this.text = pluralMap[this.normal];
+      return pluralMap[this.normal];
     }
-    return this;
+    return this.text;
   },
   toSingular : function() {
     if (singularMap[this.normal]) {
-      this.text = singularMap[this.normal];
+      return singularMap[this.normal];
     }
-    return this;
+    return this.text;
   }
 };

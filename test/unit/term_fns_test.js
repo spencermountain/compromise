@@ -9,10 +9,9 @@ test('==Term_fns==', function(T) {
   T.test('noun:', function(t) {
 
     var term = firstTerm('flower');
-    term.noun.toPlural();
-    t.equal(term.normal, 'flowers');
-    term.noun.toSingular();
-    t.equal(term.normal, 'flower');
+    t.equal(term.noun.toPlural(), 'flowers');
+    term = firstTerm('flowers');
+    t.equal(term.noun.toSingular(), 'flower');
 
     t.end();
   });
@@ -20,12 +19,10 @@ test('==Term_fns==', function(T) {
   T.test('pronoun:', function(t) {
 
     var term = firstTerm('he');
-    term.pronoun.toPlural();
-    t.equal(term.normal, 'they');
+    t.equal(term.pronoun.toPlural(), 'they');
 
     term = firstTerm('those');
-    term.pronoun.toSingular();
-    t.equal(term.normal, 'this');
+    t.equal(term.pronoun.toSingular(), 'this');
 
     t.end();
   });
@@ -33,17 +30,16 @@ test('==Term_fns==', function(T) {
   T.test('verb:', function(t) {
 
     var term = firstTerm('is');
-    term.verb.toPlural();
-    t.equal(term.normal, 'are');
+    t.equal(term.verb.toPlural(), 'are');
 
     term = firstTerm('walks');
-    term.verb.toPlural();
-    t.equal(term.normal, 'walk');
+    t.equal(term.verb.toPlural(), 'walk');
 
     term = firstTerm('walked');
-    term.verb.conjugation();
-    t.equal(term.normal, 'PastTense');
+    t.equal(term.verb.conjugation(), 'PastTense');
 
+    var conj = term.verb.conjugate();
+    t.equal(conj.Gerund, 'walking');
     t.end();
   });
 });

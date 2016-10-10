@@ -1,10 +1,14 @@
 'use strict';
+const hasPlural = require('./hasPlural');
+const makeArticle = require('./makeArticle');
+const toPlural = require('./inflect/toPlural');
+const toSingular = require('./inflect/toSingle');
 
 module.exports = {
   toPlural : function() {
-    return this.text + 's';
+    return toPlural(this.text);
   },
   toSingular : function() {
-    return this.text.replace(/s$/, '');
+    return toSingular(this.text);
   }
 };

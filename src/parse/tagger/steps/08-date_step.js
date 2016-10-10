@@ -16,7 +16,7 @@ const isYear = (t) => {
   if (t.tag.Ordinal) {
     return false;
   }
-  let num = t.info('number');
+  let num = t.value.number;
   if (!num || num < 1000 || num > 3000) {
     return false;
   }

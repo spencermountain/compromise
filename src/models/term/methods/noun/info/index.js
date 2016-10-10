@@ -16,14 +16,14 @@ const info = {
   },
   /** inflect/pluralize a word like 'shoe' into 'shoes' */
   plural: (t) => {
-    if (t.info('hasPlural') && !t.is('Plural')) {
+    if (.noun.hasPlural() && !t.is('Plural')) {
       return toPlural(t.normal);
     }
     return t.normal;
   },
   /** inflect/pluralize a word like 'shoe' into 'shoes' */
   singular: (t) => {
-    if (t.info('hasPlural') && t.is('Plural')) {
+    if (.noun.hasPlural() && t.is('Plural')) {
       return toSingle(t.normal);
     }
     return t.normal;

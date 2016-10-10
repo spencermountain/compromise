@@ -25,5 +25,5 @@ const context = {
 // console.log(r.list[0]);
 // r.check();
 
-let term = nlp('walked').list[0].terms[0];
-console.log(term.verb.conjugate());
+let term = nlp('fifty-five').list[0].terms[0];
+console.log(term.value.parse());

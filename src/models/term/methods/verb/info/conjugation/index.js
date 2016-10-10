@@ -18,7 +18,7 @@ const conjugate = function(t) {
     Pluperfect: null,
   };
   //first, get its current form
-  let form = t.info('Conjugation');
+  let form = .term.conjugation();
   if (form) {
     all[form] = t.normal;
   }

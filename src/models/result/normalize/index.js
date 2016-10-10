@@ -28,7 +28,7 @@ const methods = {
     r.list.forEach((ts) => {
       ts.terms.forEach((t, i) => {
         if (i === 0 || t.tag.Person || t.tag.Place || t.tag.Organization) {
-          t.text = t.info('titleCase');
+          t.text = .term.titlecase()
         } else {
           t.text = t.text.toLowerCase();
         }

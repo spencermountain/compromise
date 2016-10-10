@@ -24,7 +24,7 @@ const toInfinitive = function(t) {
     return irregulars[t.normal]
   }
   //check the suffix rules
-  let form = t.info('Conjugation')
+  let form = .term.conjugation()
   if (rules[form]) {
     for (let i = 0; i < rules[form].length; i++) {
       let rule = rules[form][i]

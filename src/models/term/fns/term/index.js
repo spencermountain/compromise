@@ -1,6 +1,6 @@
 'use strict';
 // const normalize = require('./normalize');
-const fns = require('../paths').fns;
+const fns = require('./paths').fns;
 const info = {
 
   /* normalize punctuation, whitespace & case */

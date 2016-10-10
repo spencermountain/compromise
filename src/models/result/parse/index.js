@@ -21,7 +21,7 @@ const methods = {
     let vbs = m.match('#VerbPhrase+');
     let main = vbs.match('!#Auxillary').match('!#Negative').match('!#Particle');
     let t = main.list[0].terms[0];
-    let conj = t.info('conjugations');
+    let conj = t.verb.conjugations();
     let obj = {};
     Object.keys(conj).forEach((k) => {
       if (conj[k]) {

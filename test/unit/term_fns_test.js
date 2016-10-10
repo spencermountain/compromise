@@ -40,6 +40,10 @@ test('==Term_fns==', function(T) {
     term.verb.toPlural();
     t.equal(term.normal, 'walk');
 
+    term = firstTerm('walked');
+    term.verb.conjugation();
+    t.equal(term.normal, 'PastTense');
+
     t.end();
   });
 });

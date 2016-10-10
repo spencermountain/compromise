@@ -1,4 +1,7 @@
 'use strict';
+const predict = require('./predict');
+const toInfinitive = require('./toInfinitive');
+const conjugate = require('./conjugate');
 
 let pluralMap = {
   'is': 'are',
@@ -27,5 +30,14 @@ module.exports = {
       return this;
     }
     return this;
+  },
+  infinitive: function() {
+    return toInfinitive(this);
+  },
+  conjugation: function() {
+    return predict(this);
+  },
+  conjugate: function() {
+    return conjugate(this);
   }
 };

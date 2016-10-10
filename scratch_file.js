@@ -25,6 +25,5 @@ const context = {
 // console.log(r.list[0]);
 // r.check();
 
-let term = nlp('is').list[0].terms[0];
-term.verb.toPlural();
-console.log(term.normal);
+let term = nlp('walked').list[0].terms[0];
+console.log(term.verb.conjugate());

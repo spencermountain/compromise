@@ -18,6 +18,9 @@ const context = {
 // let r = nlp('guinea-bissau');
 // let r = nlp('  ');
 // let r = nlp('google inc');
-let r = nlp('we ate a green cherry').toPlural();
+let r = nlp('daisy');
+r.list[0].terms[0].noun.toPlural();
+// console.log(r.list[0].terms[0].noun); //.toPlural();
+// let r = nlp('woman').tag('Noun').toPlural();
 // console.log(r.list[0]);
 r.check();

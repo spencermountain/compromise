@@ -10,13 +10,9 @@ const info = {
   hasplural: (t) => {
     return hasPlural(t);
   },
-  /** whether to use a/an/this/those */
+  /** decide whether to use a/an/this/those */
   article: (t) => {
     return makeArticle(t);
-  },
-  /** find the determiner for this term**/
-  determiner: (t) => {
-
   },
   /** inflect/pluralize a word like 'shoe' into 'shoes' */
   plural: (t) => {

@@ -32,7 +32,6 @@ Result.prototype.combine = require('./methods/combine');
 Result.prototype.toPlural = require('./methods/noun/toPlural');
 Result.prototype.toSingular = require('./methods/noun/toSingular');
 
-
 module.exports = Result;
 
 //apply methods

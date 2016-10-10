@@ -25,7 +25,6 @@ const findArticle = function(ts, i) {
     if (i - o > 4) {
       return null;
     }
-    console.log(t.normal);
   }
   return null;
 };

@@ -57,11 +57,6 @@ module.exports = {
     Superlative: true
   },
   Adverb: true,
-  Glue: {
-    Determiner: true,
-    Conjunction: true,
-    Preposition: true
-  },
   Value: {
     Currency: true,
     Ordinal: true,
@@ -70,6 +65,11 @@ module.exports = {
     TextNumber: true,
     Numeric: true
   },
+  //glue
+  Determiner: true,
+  Conjunction: true,
+  Preposition: true,
+
   Condition: true,
   TitleCase: true,
   QuestionWord: true,

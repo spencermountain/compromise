@@ -19,6 +19,12 @@ class Term {
     this.normalize();
     this.silent_term = '';
     this.helpers = require('./helpers');
+
+    this.noun = {};
+    const nounObj = require('./noun');
+    Object.keys(nounObj).forEach((k) => {
+      this.noun[k] = nounObj.toPlural.bind(this);
+    });
   }
 
   set text(str) {
@@ -200,6 +206,12 @@ class Term {
   }
 }
 
-
+// const fnsNoun = require('./noun');
+// // Term.prototype.noun = {};
+// Object.keys(fnsNoun).forEach((k)=>{
+//
+// })
+// let k = 'toPlural';
+// Term.prototype.noun.toPlural = fnsNoun.toPlural;
 
 module.exports = Term;

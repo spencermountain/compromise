@@ -1,7 +1,7 @@
 'use strict';
 //
 let adjective = {
-  info: require('./info'),
+
   is: require('./is'),
 };
 

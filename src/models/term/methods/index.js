@@ -14,7 +14,6 @@ const reduce_methods = (k) => {
 
 let methods = {
   //individual term methods
-  is: reduce_methods('is'),
-  info: reduce_methods('info'),
+  is: reduce_methods('is')
 };
 module.exports = methods;

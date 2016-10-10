@@ -59,7 +59,7 @@ const hardOne = (ts) => {
     if (ts.terms[i].silent_term) {
       continue;
     }
-    let parts = ts.terms[i].info('contraction');
+    let parts = ts.terms[i].term.contraction();
     if (parts) {
       //have we found a hard one
       if (parts.end === 's') {

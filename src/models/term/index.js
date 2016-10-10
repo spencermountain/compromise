@@ -30,6 +30,7 @@ class Term {
   }
 
   set text(str) {
+    str = str || '';
     this._text = str.trim();
     if (this._text !== str) {
       this.whitespace = build_whitespace(str);
@@ -66,7 +67,7 @@ class Term {
   /** delete this term from its sentence */
   remove() {
     let s = this.context.parent;
-    let index = this.info('index');
+    let index = this.term.index();
     s.arr.splice(index, 1);
     return s;
   }
@@ -81,17 +82,6 @@ class Term {
       return methods.is[str](this);
     }
     return false;
-  }
-
-  /** fetch ad-hoc information about this term */
-  info(str) {
-    str = str.toLowerCase();
-    if (methods.info[str]) {
-      return methods.info[str](this);
-    } else {
-      // console.log('missing \'info\' method ' + str);
-    }
-    return null;
   }
 
   /** find other terms related to this */
@@ -136,7 +126,7 @@ class Term {
   before(n) {
     let terms = this.context.parent.arr;
     //get terms before this
-    let index = this.info('index');
+    let index = this.term.index();
     terms = terms.slice(0, index);
     //reverse them
     let reversed = [];
@@ -154,7 +144,7 @@ class Term {
   /** get a list of words to the right of this one */
   after(n) {
     let terms = this.context.parent.arr;
-    let i = this.info('index') + 1;
+    let i = this.term.index() + 1;
     let end = terms.length - 1;
     if (n) {
       end = i + n;
@@ -163,14 +153,14 @@ class Term {
   }
   next() {
     let terms = this.context.parent.arr;
-    let i = this.info('index') + 1;
+    let i = this.term.index() + 1;
     return terms[i];
   }
 
   /** add a word before this one*/
   append(str) {
     let term = this.helpers.makeTerm(str, this);
-    let index = this.info('Index');
+    let index = this.term.index();
     let s = this.context.parent;
     s.arr.splice(index, 0, term);
     return s;
@@ -178,7 +168,7 @@ class Term {
   /** add a new word after this one*/
   prepend(str) {
     let term = this.helpers.makeTerm(str, this);
-    let index = this.info('Index');
+    let index = this.term.index();
     let s = this.context.parent;
     s.arr.splice(index + 1, 0, term);
     return s;
@@ -190,7 +180,7 @@ class Term {
     term.whitespace.before = this.whitespace.before;
     term.whitespace.after = this.whitespace.after;
     term.endPunct = this.endPunct;
-    let index = this.info('Index');
+    let index = this.term.index();
     let s = this.context.parent;
     s.arr[index] = term;
     return s;

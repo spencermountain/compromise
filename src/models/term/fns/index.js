@@ -4,4 +4,5 @@ module.exports = {
   verb: require('./verb'),
   adjective: require('./adjective'),
   value: require('./value'),
+  term: require('./term'),
 };

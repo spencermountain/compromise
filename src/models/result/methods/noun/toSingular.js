@@ -6,8 +6,8 @@ const toSingular = function() {
   this.list = this.list.map((ts) => {
     for(let i = 0; i < ts.terms.length; i++) {
       let t = ts.terms[i];
-      if (t.tag.Noun && .noun.hasPlural()) {
-        t.text = t.info('singular');
+      if (t.tag.Noun && t.noun.hasPlural()) {
+        t.text = t.noun.toSingular();
         //also twist the determiner, eg -'a' to 'the'
         ts = twistArticle.toSingular(ts, i);
       }

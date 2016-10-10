@@ -5,7 +5,7 @@ const fns = require('../../fns');
 module.exports = {
   makeTerm: (str, t) => {
     let c = fns.copy(t.context);
-    let index = t.info('index');
+    let index = t.term.index();
     let s = t.context.parent;
 
     let term = new Term(str, c);

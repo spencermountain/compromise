@@ -29,7 +29,7 @@ const lexicon_pass = function(s) {
       continue;
     }
     //support contractions (manually)
-    let parts = t.info('contraction');
+    let parts = t.term.contraction();
     if (parts && parts.start) {
       found = check_lexicon(parts.start.toLowerCase(), s);
       if (found) {

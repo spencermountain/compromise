@@ -10,5 +10,8 @@ module.exports = {
   },
   toSingular : function() {
     return toSingular(this.text);
+  },
+  hasPlural: function() {
+    return '?'; //todo
   }
 };

@@ -33,14 +33,14 @@ const a_regexs = [
 ];
 
 const indefinite_article = function(t) {
-  let str = t.normal
+  let str = t.normal;
 
   //explicit irregular forms
   if (irregulars.hasOwnProperty(str)) {
     return irregulars[str];
   }
   //spelled-out acronyms
-  if (.term.isAcronym() && an_acronyms.hasOwnProperty(str.substr(0, 1))) {
+  if (t.term.isAcronym() && an_acronyms.hasOwnProperty(str.substr(0, 1))) {
     return 'an';
   }
   //'a' regexes

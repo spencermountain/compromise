@@ -9,7 +9,7 @@ const info = {
   cardinal: function() {
     let num = parseNumber(this);
     //if it is textual, make a textCardinal
-    if (t.is('TextNumber')) {
+    if (this.is('TextNumber')) {
       return toText.cardinal(num);
     }
     //otherwise, numerical form
@@ -20,7 +20,7 @@ const info = {
   ordinal: function() {
     let num = parseNumber(this);
     //if it is textual, make a textCardinal
-    if (t.is('TextNumber')) {
+    if (this.is('TextNumber')) {
       return toText.ordinal(num);
     }
     //otherwise, numerical form
@@ -30,7 +30,7 @@ const info = {
   /** return a float/integer version of this number*/
   number: function() {
     let n = parseNumber(this);
-    if (t.is('Ordinal')) {
+    if (this.is('Ordinal')) {
       return toNumber.ordinal(n);
     }
     return n;
@@ -39,7 +39,7 @@ const info = {
   /** return a textual version of this number*/
   textnumber: function() {
     let num = parseNumber(this);
-    if (t.is('Ordinal')) {
+    if (this.is('Ordinal')) {
       return toText.ordinal(num);
     } else {
       return toText.cardinal(num);

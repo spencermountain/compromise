@@ -3,14 +3,9 @@
 const fns = require('./paths').fns;
 const info = {
 
-  /* normalize punctuation, whitespace & case */
-  normalized: (t) => {
-    return t.normal;
-  },
-
   /** the punctuation at the end of this term*/
-  endpunctuation: (t) => {
-    let m = t.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/i);
+  endPunctuation: function() {
+    let m = this.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/i);
     if (m) {
       const allowed = {
         ',': 'comma',
@@ -29,8 +24,8 @@ const info = {
   },
 
   /** interpret a term's hyphenation */
-  hyphenation: (t) => {
-    let m = t.normal.match(/^([a-z]+)-([a-z]+)$/);
+  hyphenation: function() {
+    let m = this.normal.match(/^([a-z]+)-([a-z]+)$/);
     if (m && m[1] && m[2]) {
       return {
         start: m[1],
@@ -41,7 +36,8 @@ const info = {
   },
 
   /** interpret a terms' contraction */
-  contraction: (t) => {
+  contraction: function() {
+    let t = this;
     const allowed = {
       're': true,
       've': true,
@@ -79,15 +75,16 @@ const info = {
   },
 
   /** check if the term ends with a comma */
-  hascomma: (t) => {
-    if (t.term.endPunctuation() === 'comma') {
+  hasComma: function() {
+    if (this.term.endPunctuation() === 'comma') {
       return true;
     }
     return false;
   },
 
   /** where in the sentence is it? zero-based. */
-  index(t) {
+  index: function() {
+    let t = this;
     let terms = t.context.parent.arr;
     for (let i = 0; i < terms.length; i++) {
       if (terms[i] === t) {
@@ -98,12 +95,11 @@ const info = {
   },
 
   /** ensure the first character is a capital. Ignore other characters. */
-  titlecase: (t) => {
-    return t.text.replace(/^[a-z]/, (x) => x.toUpperCase());
+  titlecase: function() {
+    return this.text.replace(/^[a-z]/, (x) => x.toUpperCase());
   },
-  nopunctuation: (t) => {
-    t.text = t.text.replace(/([,;:])$/, '');
-    return t;
+  noPunctuation: function() {
+    return this.text.replace(/([,;:])$/, '');
   }
 };
 

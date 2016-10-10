@@ -21,7 +21,7 @@ const easyOnes = (ts) => {
     if (ts.terms[i].silent_term) {
       continue;
     }
-    let parts = ts.terms[i].info('contraction');
+    let parts = ts.terms[i].term.contraction();
     if (parts) {
       //make sure its an easy one
       if (easy_ends[parts.end]) {

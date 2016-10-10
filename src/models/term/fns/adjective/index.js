@@ -19,10 +19,10 @@ const info = {
   },
   conjugate: function(t) {
     return {
-      Adverb: t.info('adverbForm'),
-      Noun: t.info('nounForm'),
-      Comparative: t.info('comparative'),
-      Superlative: t.info('superlative'),
+      Adverb: t.adjective.adverbForm(),
+      Noun: t.adjective.nounForm(),
+      Comparative: t.adjective.comparative(),
+      Superlative: t.adjective.superlative(),
     };
   }
 };

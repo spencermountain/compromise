@@ -6,8 +6,8 @@ const toPlural = function() {
   this.list = this.list.map((ts) => {
     for(let i = 0; i < ts.terms.length; i++) {
       let t = ts.terms[i];
-      if (t.tag.Noun && .noun.hasPlural()) {
-        t.text = t.info('plural');
+      if (t.tag.Noun && t.noun.hasPlural()) {
+        t.text = t.noun.toPlural();
         //also twist the determiner, eg -'a' to 'the'
         ts = twistArticle.toPlural(ts, i);
       }

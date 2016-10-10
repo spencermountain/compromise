@@ -102,7 +102,7 @@ const genericMethods = (Result) => {
           if (t.silent_term) {
             if (t.is('titlecase')) {
               t.text = t.silent_term;
-              t.text = .term.titlecase()
+              t.text = t.term.titlecase();
             } else {
               t.text = t.silent_term;
             }

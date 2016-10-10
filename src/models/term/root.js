@@ -4,7 +4,7 @@ const rootForm = function(term) {
   let str = term.normal || term.silent_term || '';
   //plural
   // if (term.tag.Plural) {
-  // str = term.info('singular') || str;
+  // str = term.noun.Singular() || str;
   // }
   str = str.replace(/'s\b/, '');
   str = str.replace(/'\b/, '');

@@ -3,9 +3,29 @@ const uncountables = require('../../paths').data.uncountables;
 
 //certain words can't be plural, like 'peace'
 const hasPlural = function(t) {
-  let str = t.normal
+  //end quick
+  if (!t.tag.Noun) {
+    return false;
+  }
+  if (t.tag.Plural) {
+    return true;
+  }
+  //is it potentially plural?
+  const noPlural = [
+    'Pronoun',
+    'Place',
+    'Date',
+    'Value',
+    'Person'
+  ];
+  for(let i = 0; i < noPlural.length; i++) {
+    if (t.tag[noPlural[i]]) {
+      return false;
+    }
+  }
+  //terms known as un-inflectable, like 'peace'
   for (let i = 0; i < uncountables.length; i++) {
-    if (str === uncountables[i]) {
+    if (t.normal === uncountables[i]) {
       return false;
     }
   }

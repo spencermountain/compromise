@@ -18,6 +18,6 @@ const context = {
 // let r = nlp('guinea-bissau');
 // let r = nlp('  ');
 // let r = nlp('google inc');
-let r = nlp('doug is good').match('doug is .? good');
+let r = nlp('we ate a green cherry').toPlural();
 // console.log(r.list[0]);
 r.check();

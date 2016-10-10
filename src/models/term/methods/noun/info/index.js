@@ -1,6 +1,6 @@
 'use strict';
 const hasPlural = require('./hasPlural');
-const article = require('./article');
+const makeArticle = require('./makeArticle');
 const toPlural = require('./inflect/toPlural');
 const toSingle = require('./inflect/toSingle');
 
@@ -12,21 +12,25 @@ const info = {
   },
   /** whether to use a/an/this/those */
   article: (t) => {
-    return article(t)
+    return makeArticle(t);
+  },
+  /** find the determiner for this term**/
+  determiner: (t) => {
+
   },
   /** inflect/pluralize a word like 'shoe' into 'shoes' */
   plural: (t) => {
     if (t.info('hasPlural') && !t.is('Plural')) {
-      return toPlural(t.normal)
+      return toPlural(t.normal);
     }
-    return t.normal
+    return t.normal;
   },
   /** inflect/pluralize a word like 'shoe' into 'shoes' */
   singular: (t) => {
     if (t.info('hasPlural') && t.is('Plural')) {
-      return toSingle(t.normal)
+      return toSingle(t.normal);
     }
-    return t.normal
+    return t.normal;
   }
 };
 module.exports = info;

@@ -20,10 +20,12 @@ class Term {
     this.silent_term = '';
     this.helpers = require('./helpers');
 
-    this.noun = {};
-    const nounObj = require('./noun');
-    Object.keys(nounObj).forEach((k) => {
-      this.noun[k] = nounObj.toPlural.bind(this);
+    const func = require('./fns');
+    Object.keys(func).forEach((fn) => {
+      this[fn] = {};
+      Object.keys(func[fn]).forEach((k) => {
+        this[fn][k] = func[fn][k].bind(this);
+      });
     });
   }
 
@@ -205,13 +207,5 @@ class Term {
     return term;
   }
 }
-
-// const fnsNoun = require('./noun');
-// // Term.prototype.noun = {};
-// Object.keys(fnsNoun).forEach((k)=>{
-//
-// })
-// let k = 'toPlural';
-// Term.prototype.noun.toPlural = fnsNoun.toPlural;
 
 module.exports = Term;

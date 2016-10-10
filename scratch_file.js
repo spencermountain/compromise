@@ -18,9 +18,13 @@ const context = {
 // let r = nlp('guinea-bissau');
 // let r = nlp('  ');
 // let r = nlp('google inc');
-let r = nlp('daisy');
-r.list[0].terms[0].noun.toPlural();
+// let r = nlp('he');
+// r.list[0].terms[0].pronoun.toPlural().noun.toSingular();
 // console.log(r.list[0].terms[0].noun); //.toPlural();
 // let r = nlp('woman').tag('Noun').toPlural();
 // console.log(r.list[0]);
-r.check();
+// r.check();
+
+let term = nlp('is').list[0].terms[0];
+term.verb.toPlural();
+console.log(term.normal);

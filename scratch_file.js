@@ -25,5 +25,6 @@ const context = {
 // console.log(r.list[0]);
 // r.check();
 
-let term = nlp('fifty-five').list[0].terms[0];
-console.log(term.value.parse());
+let term = nlp('aircraft').list[0].terms[0];
+console.log(term.noun.hasPlural());
+console.log(term.noun.toPlural());

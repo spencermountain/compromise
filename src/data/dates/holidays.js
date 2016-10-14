@@ -2,7 +2,7 @@ module.exports = [
   'all hallows eve',
   'all saints day',
   'all sts day',
-  'april fools day',
+  'april fools',
   'armistice day',
   'australia day',
   'bastille day',

@@ -19,6 +19,9 @@ const corrections = function(r) {
   //still make
   r.match('still #Verb').term(0).tag('Adverb', 'still-verb');
 
+  //the word 'second'
+  r.match('second #Noun').term(0).unTag('Unit').tag('Ordinal', 'second-noun');
+
   //will secure our
   r.match('will #Adjective').term(1).tag('Verb', 'will-adj');
 

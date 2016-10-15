@@ -5,7 +5,7 @@ const nlp = require('./src/index');
 const corpus = require('nlp-corpus');
 // const nlp = require('./builds/nlp_compromise');
 
-// require('./src/logger').enable();
+require('./src/logger').enable();
 const context = {
   lexicon: {
     'donkey kong': 'Person'
@@ -20,6 +20,5 @@ const context = {
 
 
 // let r = nlp('she was really nice').adjectives().stripAdverbs();
-let r = nlp('spencer is nice. spencer is the leader. He is cool.').when('is #Adjective').when('#Adjective');
-console.log(r.first().normal());
-// r.parent().check();
+let r = nlp('five nor fifth nor 5 nor 5th');
+r.check();

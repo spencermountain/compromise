@@ -3,13 +3,13 @@ const toNumber = require('./toNumber');
 const toText = require('./toText');
 const parseNumber = require('./parse');
 
-const info = {
+const value = {
 
   /* return a number, like '5th', as a cardinal, like 5 */
   cardinal: function() {
     let num = parseNumber(this);
     //if it is textual, make a textCardinal
-    if (this.is('TextNumber')) {
+    if (this.is('TextValue')) {
       return toText.cardinal(num);
     }
     //otherwise, numerical form
@@ -20,7 +20,7 @@ const info = {
   ordinal: function() {
     let num = parseNumber(this);
     //if it is textual, make a textCardinal
-    if (this.is('TextNumber')) {
+    if (this.is('TextValue')) {
       return toText.ordinal(num);
     }
     //otherwise, numerical form
@@ -30,16 +30,16 @@ const info = {
   /** return a float/integer version of this number*/
   number: function() {
     let n = parseNumber(this);
-    if (this.is('Ordinal')) {
+    if (this.tag.Ordinal) {
       return toNumber.ordinal(n);
     }
     return n;
   },
 
   /** return a textual version of this number*/
-  textnumber: function() {
+  TextValue: function() {
     let num = parseNumber(this);
-    if (this.is('Ordinal')) {
+    if (this.tag.Ordinal) {
       return toText.ordinal(num);
     } else {
       return toText.cardinal(num);
@@ -75,4 +75,4 @@ const info = {
   }
 
 };
-module.exports = info;
+module.exports = value;

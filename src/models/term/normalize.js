@@ -19,7 +19,7 @@ const normalize = function(term) {
   str = str.replace(/^['"\(]/g, '');
 
   //compact acronyms
-  if (term.is('acronym')) {
+  if (term.term.isAcronym()) {
     str = str.replace(/\./g, '');
   }
   term.normal = str;

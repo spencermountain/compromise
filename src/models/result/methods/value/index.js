@@ -23,10 +23,10 @@ const methods = {
     });
     return this;
   },
-  toTextNumber : function() {
+  toTextValue : function() {
     this.terms().forEach((t) => {
       if (t.tag.Value) {
-        let num = t.value.textnumber();
+        let num = t.value.TextValue();
         if (num) {
           t.text = '' + num;
         }

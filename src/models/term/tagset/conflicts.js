@@ -19,7 +19,7 @@ const conflicts = [
   ['Comparative', 'Superlative'],
   //values
   ['Ordinal', 'Cardinal'],
-  ['TextNumber', 'Numeric'],
+  ['TextValue', 'NumericValue'],
   ['Ordinal', 'Currency'], //$5.50th
   //verbs
   ['Infinitive', 'Gerund', 'Pluperfect', 'FuturePerfect'],

@@ -45,7 +45,7 @@ let value = {
 
   /** an ordinal is '5th', or 'fifth', instead of 5 */
   ordinal: (t) => {
-    if (t.is('NumberOrdinal') || t.is('TextOrdinal')) {
+    if (t.tag.Ordinal) {
       return true;
     }
     return false;
@@ -59,14 +59,14 @@ let value = {
     return false;
   },
 
-  /** a TextNumber is a number that's spelled-out*/
-  TextNumber: (t) => {
+  /** a TextValue is a number that's spelled-out*/
+  TextValue: (t) => {
     if (t.is('TextCardinal') || t.is('TextOrdinal')) {
       return true;
     }
     return false;
   },
-  /** a TextNumber is a number that's spelled-out*/
+  /** a TextValue is a number that's spelled-out*/
   Numeric: (t) => {
     if (t.is('NumberCardinal') || t.is('NumberOrdinal')) {
       return true;

@@ -4,6 +4,7 @@ const addNormal = require('./normalize');
 const addRoot = require('./root');
 const fns = require('../../fns');
 const build_whitespace = require('./whitespace');
+const func = require('./fns');
 
 const methods = require('./methods');
 methods.render = require('./render');
@@ -16,18 +17,18 @@ class Term {
     this.sel = true;
     this.whitespace = build_whitespace(str || '');
     this._text = this._text.trim();
-    // this.endPunct = this.endPunctuation();
-    this.normalize();
-    this.silent_term = '';
-    this.helpers = require('./helpers');
 
-    const func = require('./fns');
     Object.keys(func).forEach((fn) => {
       this[fn] = {};
       Object.keys(func[fn]).forEach((k) => {
         this[fn][k] = func[fn][k].bind(this);
       });
     });
+
+    this.normalize();
+    this.silent_term = '';
+    this.helpers = require('./helpers');
+
   }
 
   set text(str) {

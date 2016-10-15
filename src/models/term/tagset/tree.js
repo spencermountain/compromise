@@ -62,8 +62,8 @@ module.exports = {
     Ordinal: true,
     Fraction: true,
     Cardinal: true,
-    TextNumber: true,
-    Numeric: true
+    TextValue: true,
+    NumericValue: true
   },
   //glue
   Determiner: true,

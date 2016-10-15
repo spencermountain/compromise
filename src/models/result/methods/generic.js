@@ -98,7 +98,7 @@ const genericMethods = (Result) => {
       this.list.forEach((ts) => {
         ts.terms.forEach((t, i) => {
           if (t.silent_term) {
-            if (t.is('titlecase')) {
+            if (t.term.isTitlecase()) {
               t.text = t.silent_term;
               t.text = t.term.titlecase();
             } else {

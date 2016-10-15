@@ -1,24 +1,29 @@
 
 # top-level
 ## non-destructive
+
 ###selections
 * [ ] nlp.when()
 * [ ] nlp.all()
 * [ ] nlp.questions()
 * [ ] nlp.statements()
 * [ ] //by tag...eg. nlp.people()
+
 ###inspection
 * [ ] nlp.parse({})
 * [ ] nlp.topk()
 * [ ] nlp.ngram()
+
 ###destructive
 * [ ] nlp.remove()
 * [ ] nlp.replace()
 * [ ] nlp.normalize({})
+
 ### verb conj wrapper
 * [ ] nlp.toPast()
 * [ ] nlp.toPresent()
 * [ ] nlp.toFuture()
+
 ### negate wrapper
 * [ ] nlp.opposite()
 

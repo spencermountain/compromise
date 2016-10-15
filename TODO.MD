@@ -1,6 +1,6 @@
 
 # top-level
-###selections
+###selections  (non-destructive)
 * [ ] nlp.when()
 * [ ] nlp.all()
 * [ ] nlp.questions()

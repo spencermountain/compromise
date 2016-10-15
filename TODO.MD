@@ -1,63 +1,63 @@
 
 # top-level
 ###selections  (non-destructive)
-* [ ] nlp.when()
-* [ ] nlp.all()
-* [ ] nlp.questions()
-* [ ] nlp.statements()
-* [ ] by tag - nlp.people()..
+* [ ] when()
+* [ ] all()
+* [ ] questions()
+* [ ] statements()
+* [ ] by tag - people()..
 
 ###inspection  (non-destructive)
-* [ ] nlp.parse({})
-* [ ] nlp.topk()
-* [ ] nlp.ngram()
+* [ ] parse({})
+* [ ] topk()
+* [ ] ngram()
 
 ##destructive
-* [ ] nlp.remove()
-* [ ] nlp.replace()
-* [ ] nlp.normalize({})
+* [ ] remove()
+* [ ] replace()
+* [ ] normalize({})
 
 ### conjugation wrapper
-* [ ] nlp.toPast()
-* [ ] nlp.toPresent()
-* [ ] nlp.toFuture()
+* [ ] toPast()
+* [ ] toPresent()
+* [ ] toFuture()
 
 ### negate wrapper
-* [ ] nlp.opposite()
+* [ ] opposite()
 
 #subset fns (some destructive)
 ###noun
-* [ ] nlp.nouns().parse()
-* [ ] nlp.nouns().toPlural()
-* [ ] nlp.nouns().toSingular()
+* [ ] nouns().parse()
+* [ ] nouns().toPlural()
+* [ ] nouns().toSingular()
 
 ###adj
-* [ ] nlp.adjectives().parse()
-* [ ] nlp.adjectives().stripAdverbs()
-* [ ] nlp.adjectives().addAdverb()
+* [ ] adjectives().parse()
+* [ ] adjectives().stripAdverbs()
+* [ ] adjectives().addAdverb()
 
 ###verb
-* [ ] nlp.verbs().parse()
-* [ ] nlp.verbs().conjugate()
-* [ ] nlp.verbs().toNegative()
-* [ ] nlp.verbs().toPositive()
+* [ ] verbs().parse()
+* [ ] verbs().conjugate()
+* [ ] verbs().toNegative()
+* [ ] verbs().toPositive()
 
 ###people
-* [ ] nlp.people().parse()
+* [ ] people().parse()
 
 ###value
-* [ ] nlp.values().parse()
-* [ ] nlp.values().toNumeric()
-* [ ] nlp.values().toTextual()
-* [ ] nlp.values().toOrdinal()
-* [ ] nlp.values().toCardinal()
+* [ ] values().parse()
+* [ ] values().toNumeric()
+* [ ] values().toTextual()
+* [ ] values().toOrdinal()
+* [ ] values().toCardinal()
 
 ###place
-* [ ] nlp.places().parse()
+* [ ] places().parse()
 
 ###date
-* [ ] nlp.dates().parse()
+* [ ] dates().parse()
 
 ###contraction
-* [ ] nlp.contractions().expand()
-* [ ] nlp.contractions().contract()
+* [ ] contractions().expand()
+* [ ] contractions().contract()

@@ -12,17 +12,17 @@
 * [ ] topk()
 * [ ] ngram()
 
-##destructive
+###transform (destructive)
 * [ ] remove()
 * [ ] replace()
 * [ ] normalize({})
 
-### conjugation wrapper
+### sentence conjugation (destructive)
 * [ ] toPast()
 * [ ] toPresent()
 * [ ] toFuture()
 
-### negate wrapper
+### sentence negation (destructive)
 * [ ] opposite()
 
 #subset fns (some destructive)

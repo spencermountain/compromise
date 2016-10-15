@@ -4,10 +4,9 @@ const addNormal = require('./normalize');
 const addRoot = require('./root');
 const fns = require('../../fns');
 const build_whitespace = require('./whitespace');
-const func = require('./fns');
-
 const methods = require('./methods');
-methods.render = require('./render');
+
+const render = require('./render');
 
 class Term {
   constructor(str, context) {
@@ -18,10 +17,10 @@ class Term {
     this.whitespace = build_whitespace(str || '');
     this._text = this._text.trim();
 
-    Object.keys(func).forEach((fn) => {
+    Object.keys(methods).forEach((fn) => {
       this[fn] = {};
-      Object.keys(func[fn]).forEach((k) => {
-        this[fn][k] = func[fn][k].bind(this);
+      Object.keys(methods[fn]).forEach((k) => {
+        this[fn][k] = methods[fn][k].bind(this);
       });
     });
 
@@ -74,40 +73,6 @@ class Term {
     return s;
   }
 
-  /** queries about this term with true or false answer */
-  is(str) {
-    if (this.tag[str]) {
-      return true;
-    }
-    str = str.toLowerCase();
-    if (methods.is[str]) {
-      return methods.is[str](this);
-    }
-    return false;
-  }
-
-  /** find other terms related to this */
-  pluck(str) {
-    str = str.toLowerCase();
-    if (methods.pluck[str]) {
-      return methods.pluck[str](this);
-    } else {
-      console.warn('missing \'pluck\' method ' + str);
-    }
-    return null;
-  }
-
-  /** methods that change this term */
-  to(str) {
-    str = str.toLowerCase();
-    if (methods.transform[str]) {
-      return methods.transform[str](this);
-    } else {
-      console.warn('missing \'to\' method ' + str);
-    }
-    return null;
-  }
-
   /** methods that change this term */
   render(str) {
     str = str.toLowerCase();
@@ -124,57 +89,6 @@ class Term {
     set_tag(this, tag, reason);
   }
 
-  /** get a list of words to the left of this one, in reversed order */
-  before(n) {
-    let terms = this.context.parent.arr;
-    //get terms before this
-    let index = this.term.index();
-    terms = terms.slice(0, index);
-    //reverse them
-    let reversed = [];
-    var len = terms.length;
-    for (let i = (len - 1); i !== 0; i--) {
-      reversed.push(terms[i]);
-    }
-    let end = terms.length;
-    if (n) {
-      end = n;
-    }
-    return reversed.slice(0, end);
-  }
-
-  /** get a list of words to the right of this one */
-  after(n) {
-    let terms = this.context.parent.arr;
-    let i = this.term.index() + 1;
-    let end = terms.length - 1;
-    if (n) {
-      end = i + n;
-    }
-    return terms.slice(i, end);
-  }
-  next() {
-    let terms = this.context.parent.arr;
-    let i = this.term.index() + 1;
-    return terms[i];
-  }
-
-  /** add a word before this one*/
-  append(str) {
-    let term = this.helpers.makeTerm(str, this);
-    let index = this.term.index();
-    let s = this.context.parent;
-    s.arr.splice(index, 0, term);
-    return s;
-  }
-  /** add a new word after this one*/
-  prepend(str) {
-    let term = this.helpers.makeTerm(str, this);
-    let index = this.term.index();
-    let s = this.context.parent;
-    s.arr.splice(index + 1, 0, term);
-    return s;
-  }
   /** replace this word with a new one*/
   replace(str) {
     let c = fns.copy(this.context);
@@ -200,5 +114,5 @@ class Term {
     return term;
   }
 }
-
+Term.prototype.render = render;
 module.exports = Term;

@@ -1,1 +1,1 @@
-module.exports = require('../paths')
+module.exports = require('../../paths');

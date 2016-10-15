@@ -23,7 +23,6 @@ const value_step = function(ts) {
           t.tagAs('NumericValue', 'NumericValue-regex');
         }
       }
-
     }
   });
   return ts;

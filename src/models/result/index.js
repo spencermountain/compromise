@@ -3,11 +3,15 @@ const parse = require('./parse');
 const render = require('./render');
 const normalize = require('./normalize');
 const methods = require('./methods');
+// const fns = require('./fns');
 
 //a result is an array of termLists
 class Result {
   constructor(arr) {
     this.list = arr || [];
+  // Object.keys(func).forEach((fn) => {
+  //   this[fn] = func[fn].bind(this);
+  // });
   }
   /** did it find anything? */
   get found() {
@@ -26,13 +30,19 @@ Result.prototype.render = render;
 /** fixup transforms*/
 Result.prototype.normalize = normalize;
 
+
+
 Result.prototype.topk = require('./methods/topk');
 Result.prototype.ngram = require('./methods/ngram');
 Result.prototype.combine = require('./methods/combine');
 Result.prototype.toPlural = require('./methods/noun/toPlural');
 Result.prototype.toSingular = require('./methods/noun/toSingular');
 
+
 module.exports = Result;
+
+const addAdjectives = require('./adjectives');
+Result = addAdjectives(Result);
 
 //apply methods
 // require('./methods').addMethods(Result);

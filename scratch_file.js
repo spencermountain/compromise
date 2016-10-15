@@ -17,7 +17,7 @@ const context = {
 // let r = nlp('Air France is cool');
 // let r = nlp('guinea-bissau');
 // let r = nlp('  ');
-// let r = nlp('google inc');
+let r = nlp('she was really nice').adjectives().stripAdverbs();
 // let r = nlp('he');
 // r.list[0].terms[0].pronoun.toPlural().noun.toSingular();
 // console.log(r.list[0].terms[0].noun); //.toPlural();
@@ -25,5 +25,5 @@ const context = {
 // console.log(r.list[0]);
 // r.check();
 
-let r = nlp('second week');
+// let r = nlp('second week');
 r.check();

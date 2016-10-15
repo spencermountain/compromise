@@ -4,18 +4,16 @@ const Result = require('../index');
 class Adjectives extends Result {
   constructor(list) {
     super(list);
+    this.parent = this;
+    return this;
   }
   stripAdverbs() {
-    console.log('hi!');
-    return this.remove('#Adverb');
+    //very cool
+    this.when('#Adverb+ #Adjective').remove('#Adverb+');
+    //cool suddenly
+    this.when('#Adjective #Adverb+').remove('#Adverb+');
+    return this;
   }
 }
 
-const addSubclass = function(R) {
-  R.prototype.adjectives = function() {
-    return new Adjectives(this.list);
-  };
-  return Result;
-};
-
-module.exports = addSubclass;
+module.exports = Adjectives;

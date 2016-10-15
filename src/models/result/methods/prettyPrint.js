@@ -6,7 +6,7 @@ const prettyPrint = (Result) => {
   const methods = {
 
     check : function() {
-      this.list.forEach((ts, i) => {
+      (this.subset || this.list).forEach((ts) => {
         console.log('--');
         ts.check();
       });
@@ -14,14 +14,14 @@ const prettyPrint = (Result) => {
     },
 
     plaintext : function() {
-      return this.list.reduce((str, ts) => {
+      return (this.subset || this.list).reduce((str, ts) => {
         str += ts.plaintext();
         return str;
       }, '');
     },
 
     normal: function() {
-      return this.list.map((ts) => {
+      return (this.subset || this.list).map((ts) => {
         let str = ts.normal();
         if (ts.last()) {
           let punct = ts.last().endPunctuation();
@@ -34,7 +34,7 @@ const prettyPrint = (Result) => {
     },
 
     phrases: function() {
-      this.list.forEach((ts) => {
+      (this.subset || this.list).forEach((ts) => {
         let str = '';
         ts.terms.forEach((t) => {
           let text = t.plaintext();

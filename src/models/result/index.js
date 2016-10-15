@@ -3,12 +3,14 @@ const parse = require('./parse');
 const render = require('./render');
 const normalize = require('./normalize');
 const methods = require('./methods');
-// const fns = require('./fns');
+// const func = require('./fns');
 
 //a result is an array of termLists
 class Result {
   constructor(arr) {
     this.list = arr || [];
+    this.subset = null;
+    this.parent = null;
   // Object.keys(func).forEach((fn) => {
   //   this[fn] = func[fn].bind(this);
   // });
@@ -23,15 +25,15 @@ class Result {
 Object.keys(methods).forEach((k) => {
   Result = methods[k](Result);
 });
-/** return ad-hoc data about this result*/
+// /** return ad-hoc data about this result*/
 Result.prototype.parse = parse;
-/** different presentation logic for this result*/
+// /** different presentation logic for this result*/
 Result.prototype.render = render;
-/** fixup transforms*/
+// /** fixup transforms*/
 Result.prototype.normalize = normalize;
-
-
-
+//
+//
+//
 Result.prototype.topk = require('./methods/topk');
 Result.prototype.ngram = require('./methods/ngram');
 Result.prototype.combine = require('./methods/combine');
@@ -41,8 +43,10 @@ Result.prototype.toSingular = require('./methods/noun/toSingular');
 
 module.exports = Result;
 
-const addAdjectives = require('./adjectives');
-Result = addAdjectives(Result);
+const Adjectives = require('./adjectives');
+Result.prototype.adjectives = function() {
+  return new Adjectives(this.list);
+};
 
 //apply methods
 // require('./methods').addMethods(Result);

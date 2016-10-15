@@ -13,6 +13,7 @@ class Term {
     this._text = fns.ensureString(str);
     this.context = fns.ensureObject(context);
     this.tag = {};
+    this.sel = true;
     this.whitespace = build_whitespace(str || '');
     this._text = this._text.trim();
     // this.endPunct = this.endPunctuation();
@@ -194,6 +195,7 @@ class Term {
     term.whitespace = fns.copy(this.whitespace);
     term.silent_term = this.silent_term;
     term.endPunct = this.endPunct;
+    term.sel = this.sel;
     return term;
   }
 }

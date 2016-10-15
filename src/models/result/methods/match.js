@@ -19,20 +19,20 @@ const match = (Result) => {
     },
 
     /** list match() but non-mutable */
-    when : function(reg, verbose) {
-      //save old one
-      this.parent = this.parent || this.clone();
-      let list = [];
-      (this.subset || this.list).forEach((ts) => {
-        //an array of arrays
-        let matches = ts.match(reg, verbose);
-        matches.forEach((ms) => {
-          list.push(new Terms(ms));
-        });
-      });
-      this.subset = list;
-      return this;
-    },
+    // when : function(reg, verbose) {
+    //   //save old one
+    //   this.parent = this.parent || this.clone();
+    //   let list = [];
+    //   (this.subset || this.list).forEach((ts) => {
+    //     //an array of arrays
+    //     let matches = ts.match(reg, verbose);
+    //     matches.forEach((ms) => {
+    //       list.push(new Terms(ms));
+    //     });
+    //   });
+    //   this.subset = list;
+    //   return this;
+    // },
 
     /** return terms after this match */
     after : function(reg) {

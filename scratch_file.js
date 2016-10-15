@@ -20,6 +20,6 @@ const context = {
 
 
 // let r = nlp('she was really nice').adjectives().stripAdverbs();
-let r = nlp('she was really nice suddenly').when('#Adverb #Adjective').when('really').remove('#Adverb');
-r.check();
-r.parent.check();
+let r = nlp('spencer is nice. spencer is the leader. He is cool.').when('is #Adjective').when('#Adjective');
+console.log(r.first().normal());
+// r.parent().check();

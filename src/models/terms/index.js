@@ -24,17 +24,17 @@ class Terms {
     return this.terms.length;
   }
   forEach(fn) {
-    this.terms.forEach(fn);
+    this.terms.filter((t) => t.sel).forEach(fn);
     return this;
   }
   plaintext() {
-    return this.terms.reduce((str, t) => {
+    return this.terms.filter((t) => t.sel).reduce((str, t) => {
       str += t.plaintext();
       return str;
     }, '');
   }
   normal() {
-    return this.terms.map((t) => t.normal).join(' ');
+    return this.terms.filter((t) => t.sel).map((t) => t.normal).join(' ');
   }
   remove(tag) {
     this.terms = this.terms.filter((t) => {
@@ -43,7 +43,7 @@ class Terms {
     return this;
   }
   check() {
-    this.terms.forEach((t) => {
+    this.terms.filter((t) => t.sel).forEach((t) => {
       t.render('check');
     });
   }
@@ -64,6 +64,20 @@ Terms.prototype.clone = function() {
 Terms.prototype.match = function(reg, verbose) {
   return match(this, reg, verbose); //returns an array of matches
 };
+
+Terms.prototype.when = function(reg, verbose) {
+  let found = match(this, reg, verbose); //returns an array of matches
+  this.terms.forEach((t) => {
+    t.sel = false;
+  });
+  found.forEach((ts) => {
+    ts.forEach((t) => {
+      t.sel = true;
+    });
+  });
+  return this;
+};
+
 Terms.prototype.remove = function(reg) {
   let matchTerms = match(this, reg);
   matchTerms = fns.flatten(matchTerms);

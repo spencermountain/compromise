@@ -6,8 +6,9 @@ const prettyPrint = (Result) => {
   const methods = {
 
     check : function() {
+      console.log('====');
       (this.subset || this.list).forEach((ts) => {
-        console.log('--');
+        console.log('   --');
         ts.check();
       });
       return this;
@@ -23,8 +24,9 @@ const prettyPrint = (Result) => {
     normal: function() {
       return (this.subset || this.list).map((ts) => {
         let str = ts.normal();
-        if (ts.last()) {
-          let punct = ts.last().endPunctuation();
+        let last = ts.last();
+        if (last && last.sel) {
+          let punct = last.endPunctuation();
           if (punct === '.' || punct === '!' || punct === '?') {
             str += punct;
           }

@@ -14,7 +14,7 @@
 * [ ] nlp.topk()
 * [ ] nlp.ngram()
 
-###destructive
+##destructive
 * [ ] nlp.remove()
 * [ ] nlp.replace()
 * [ ] nlp.normalize({})

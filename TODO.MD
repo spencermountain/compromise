@@ -1,15 +1,13 @@
 
 # top-level
-## non-destructive
-
 ###selections
 * [ ] nlp.when()
 * [ ] nlp.all()
 * [ ] nlp.questions()
 * [ ] nlp.statements()
-* [ ] //by tag...eg. nlp.people()
+* [ ] by tag - nlp.people()..
 
-###inspection
+###inspection  (non-destructive)
 * [ ] nlp.parse({})
 * [ ] nlp.topk()
 * [ ] nlp.ngram()
@@ -19,7 +17,7 @@
 * [ ] nlp.replace()
 * [ ] nlp.normalize({})
 
-### verb conj wrapper
+### conjugation wrapper
 * [ ] nlp.toPast()
 * [ ] nlp.toPresent()
 * [ ] nlp.toFuture()
@@ -28,30 +26,38 @@
 * [ ] nlp.opposite()
 
 #subset fns (some destructive)
+###noun
 * [ ] nlp.nouns().parse()
 * [ ] nlp.nouns().toPlural()
 * [ ] nlp.nouns().toSingular()
 
+###adj
 * [ ] nlp.adjectives().parse()
 * [ ] nlp.adjectives().stripAdverbs()
 * [ ] nlp.adjectives().addAdverb()
 
+###verb
 * [ ] nlp.verbs().parse()
 * [ ] nlp.verbs().conjugate()
 * [ ] nlp.verbs().toNegative()
 * [ ] nlp.verbs().toPositive()
 
+###people
 * [ ] nlp.people().parse()
 
+###value
 * [ ] nlp.values().parse()
 * [ ] nlp.values().toNumeric()
 * [ ] nlp.values().toTextual()
 * [ ] nlp.values().toOrdinal()
 * [ ] nlp.values().toCardinal()
 
+###place
 * [ ] nlp.places().parse()
 
+###date
 * [ ] nlp.dates().parse()
 
+###contraction
 * [ ] nlp.contractions().expand()
 * [ ] nlp.contractions().contract()

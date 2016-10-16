@@ -4,9 +4,13 @@ const addNormal = require('./normalize');
 const addRoot = require('./root');
 const fns = require('../../fns');
 const build_whitespace = require('./whitespace');
-const methods = require('./methods');
 
-const render = require('./render');
+const bindMethods = (o, str, self) => {
+  self[str] = {};
+  Object.keys(o).forEach((fn) => {
+    self[str][fn] = o[fn].bind(self);
+  });
+};
 
 class Term {
   constructor(str, context) {
@@ -17,17 +21,18 @@ class Term {
     this.whitespace = build_whitespace(str || '');
     this._text = this._text.trim();
 
-    Object.keys(methods).forEach((fn) => {
-      this[fn] = {};
-      Object.keys(methods[fn]).forEach((k) => {
-        this[fn][k] = methods[fn][k].bind(this);
-      });
-    });
+    bindMethods(require('./term'), 'term', this);
+    bindMethods(require('./verb'), 'verb', this);
+    bindMethods(require('./noun'), 'noun', this);
+    bindMethods(require('./adjective'), 'adjective', this);
+    bindMethods(require('./value'), 'value', this);
+    bindMethods(require('./pronoun'), 'pronoun', this);
+
+    bindMethods(require('./render'), 'render', this);
 
     this.normalize();
     this.silent_term = '';
     this.helpers = require('./helpers');
-
   }
 
   set text(str) {
@@ -73,33 +78,9 @@ class Term {
     return s;
   }
 
-  /** methods that change this term */
-  render(str) {
-    str = str.toLowerCase();
-    if (methods.render[str]) {
-      return methods.render[str](this);
-    } else {
-      console.warn('missing \'render\' method ' + str);
-    }
-    return null;
-  }
-
   /** set the term as this part-of-speech */
   tagAs(tag, reason) {
     set_tag(this, tag, reason);
-  }
-
-  /** replace this word with a new one*/
-  replace(str) {
-    let c = fns.copy(this.context);
-    let term = new Term(str, c);
-    term.whitespace.before = this.whitespace.before;
-    term.whitespace.after = this.whitespace.after;
-    term.endPunct = this.endPunct;
-    let index = this.term.index();
-    let s = this.context.parent;
-    s.arr[index] = term;
-    return s;
   }
 
   /** make a copy with no references to the original  */
@@ -114,5 +95,4 @@ class Term {
     return term;
   }
 }
-Term.prototype.render = render;
 module.exports = Term;

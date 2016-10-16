@@ -1,6 +1,6 @@
 'use strict';
 // const normalize = require('./normalize');
-const fns = require('./paths').fns;
+const fns = require('../paths').fns;
 const info = {
 
   /** the punctuation at the end of this term*/
@@ -113,7 +113,7 @@ const info = {
   /** does it appear to be an acronym, like FBI or M.L.B. */
   isAcronym: function() {
     //like N.D.A
-    if (this._text.match(/([A-Z]\.)+[A-Z]?$/)) {
+    if (this.text.match(/([A-Z]\.)+[A-Z]?$/)) {
       return true;
     }
     //like 'F.'

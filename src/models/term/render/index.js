@@ -2,7 +2,6 @@
 const renderHtml = require('./renderHtml');
 const chalk = require('chalk');
 const paths = require('../paths');
-const log = paths.log;
 const fns = paths.fns;
 
 const colors = {
@@ -15,38 +14,38 @@ const colors = {
 //supported Sentence.return() methods
 module.exports = {
   /** a pixel-perfect reproduction of the input, with whitespace preserved */
-  text: (t) => {
-    return t.whitespace.before + t.text + t.whitespace.after;
+  text: function() {
+    return this.whitespace.before + this.text + this.whitespace.after;
   },
   /** a lowercased, punctuation-cleaned, whitespace-trimmed version of the word */
-  normal: (t) => {
-    return t.normal;
+  normal: function() {
+    return this.normal;
   },
   /** the &encoded term in a span element, with POS as classNames */
-  html: (t) => {
-    return renderHtml(t);
+  html: function() {
+    return renderHtml(this);
   },
   /** a simplified response for Part-of-Speech tagging*/
-  tags: (t) => {
+  tags: function() {
     return {
-      text: t.text,
-      normal: t.render('normal'),
-      tags: Object.keys(t.tag)
+      text: this.text,
+      normal: this.normal,
+      tags: Object.keys(this.tag)
     };
   },
   /** check-print information for the console */
-  check: (t) => {
-    let tags = Object.keys(t.tag).map((tag) => {
+  check: function() {
+    let tags = Object.keys(this.tag).map((tag) => {
       if (colors[tag]) {
         return colors[tag](tag);
       }
       return tag;
     }).join(', ');
-    let word = t.text;
+    let word = this.text;
     word = '\'' + chalk.green(word || '-') + '\'';
     let silent = '';
-    if (t.silent_term) {
-      silent = '[' + t.silent_term + ']';
+    if (this.silent_term) {
+      silent = '[' + this.silent_term + ']';
     }
     // word += fns.leftPad(silent, 10);
     word = fns.leftPad(word, 25);

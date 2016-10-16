@@ -1,5 +1,5 @@
 'use strict';
-const irregulars = require('../paths').data.irregular_plurals;
+const irregulars = require('../../paths').data.irregular_plurals;
 const rules = require('./data/indicators');
 
 //first, try to guess based on existing tags

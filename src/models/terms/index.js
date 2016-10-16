@@ -44,7 +44,7 @@ class Terms {
   }
   check() {
     this.terms.filter((t) => t.sel).forEach((t) => {
-      t.render('check');
+      t.render.check();
     });
   }
   insertAt(text, i) {

@@ -1,57 +1,43 @@
 'use strict';
-const parse = require('./parse');
-const render = require('./render');
-const normalize = require('./normalize');
-const methods = require('./methods');
+// const parse = require('./parse');
+// const render = require('./render');
+// const normalize = require('./normalize');
+// const methods = require('./methods');
 // const func = require('./fns');
 
 //a result is an array of termLists
 class Result {
   constructor(arr) {
     this.list = arr || [];
-  // Object.keys(func).forEach((fn) => {
-  //   this[fn] = func[fn].bind(this);
-  // });
   }
+  //getter/setters
   /** did it find anything? */
   get found() {
     return this.list.length > 0;
   }
-  /** tag a subset as selected/non-selected **/
-  when(str, debug) {
-    this.list.forEach((ts) => {
-      ts.when(str, debug);
-    });
-    return this;
-  }
-  parent() {
-    this.list.forEach((ts) => {
-      ts.forEach((t) => {
-        t.sel = true;
-      });
-    });
-    return this;
-  }
+
 }
 
-// //add methods to prototype
-Object.keys(methods).forEach((k) => {
-  Result = methods[k](Result);
-});
-// // /** return ad-hoc data about this result*/
-Result.prototype.parse = parse;
-// // /** different presentation logic for this result*/
-Result.prototype.render = render;
-// // /** fixup transforms*/
-Result.prototype.normalize = normalize;
-// //
-// //
-// //
-Result.prototype.topk = require('./methods/topk');
-Result.prototype.ngram = require('./methods/ngram');
-Result.prototype.combine = require('./methods/combine');
-Result.prototype.toPlural = require('./methods/noun/toPlural');
-Result.prototype.toSingular = require('./methods/noun/toSingular');
+const selectFns = require('./selection');
+Result = selectFns(Result);
+
+const inspectFns = require('./inspect');
+Result = inspectFns(Result);
+
+const renderFns = require('./render');
+Result = renderFns(Result);
+
+/** different presentation logic for this result*/
+Result.prototype.render = require('./render');
+/** fixup transforms**/
+Result.prototype.normalize = require('./normalize');
+/** **/
+// Result.prototype.topk = require('./methods/topk');
+
+/** **/
+Result.prototype.ngram = require('./inspect/ngram');
+/** **/
+Result.prototype.topk = require('./inspect/topk');
 
 
 module.exports = Result;

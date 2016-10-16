@@ -2,7 +2,7 @@
 const set_tag = require('./tag').set_tag;
 const addNormal = require('./normalize');
 const addRoot = require('./root');
-const fns = require('../../fns');
+const fns = require('./paths').fns;
 const build_whitespace = require('./whitespace');
 
 const bindMethods = (o, str, self) => {

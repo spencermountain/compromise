@@ -1,7 +1,8 @@
 'use strict';
 //set a term as a particular Part-of-speech
-const log = require('../../logger');
-const tagset = require('../../tags');
+const path = require('./paths');
+const log = path.log;
+const tagset = path.tags;
 
 //check if the term is compatible with a pos tag.
 const canBe = (term, tag) => {

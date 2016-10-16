@@ -2,7 +2,7 @@
 //a lexicon is a giant object of known words
 const data = require('./index');
 const fns = require('./fns');
-const Term = require('../models/term');
+const Term = require('../term');
 
 let lexicon = {};
 

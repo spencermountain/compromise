@@ -1,9 +1,4 @@
 'use strict';
-// const parse = require('./parse');
-// const render = require('./render');
-// const normalize = require('./normalize');
-// const methods = require('./methods');
-// const func = require('./fns');
 
 //a result is an array of termLists
 class Result {
@@ -31,9 +26,6 @@ Result = renderFns(Result);
 Result.prototype.render = require('./render');
 /** fixup transforms**/
 Result.prototype.normalize = require('./normalize');
-/** **/
-// Result.prototype.topk = require('./methods/topk');
-
 /** **/
 Result.prototype.ngram = require('./inspect/ngram');
 /** **/

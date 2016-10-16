@@ -2,10 +2,10 @@
 //this file is not included in the build.
 //use it for messing around.
 const nlp = require('./src/index');
-const corpus = require('nlp-corpus');
+// const corpus = require('nlp-corpus');
 // const nlp = require('./builds/nlp_compromise');
 
-require('./src/logger').enable();
+// require('./src/logger').enable();
 const context = {
   lexicon: {
     'donkey kong': 'Person'
@@ -19,6 +19,6 @@ const context = {
 // let r = nlp('  ');
 
 
-// let r = nlp('she was really nice').adjectives().stripAdverbs();
-let r = nlp('five nor fifth nor 5 nor 5th');
-r.check();
+let r = nlp('she was really nice').adjectives().stripAdverbs();
+// let r = nlp('five nor fifth nor 5 nor 5th').val;
+r.parent().check();

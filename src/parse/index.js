@@ -7,12 +7,12 @@ const steps = {
   corrections: require('./04-corrections'),
   phrase: require('./05-phrases'),
 };
-const Term = require('../models/term');
-const Terms = require('../models/terms');
+const Term = require('../term');
+const Terms = require('../terms');
 const fns = require('../fns');
 const log = require('../logger');
 const path = 'parse';
-const Result = require('../models/result');
+const Result = require('../result');
 
 //turn the string into an array of termList objects
 const tokenize = (str, context) => {

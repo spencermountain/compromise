@@ -3,5 +3,5 @@ module.exports = {
   lexicon: require('../../data/lexicon'),
   fns: require('../../fns'),
   log: require('../../logger'),
-  Term: require('../../models/term')
+  Term: require('../../term')
 };

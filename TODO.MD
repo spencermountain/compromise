@@ -22,6 +22,10 @@
 * [ ] toPresent()
 * [ ] toFuture()
 
+### sentence inflection (destructive)
+* [ ] toPlural()
+* [ ] toSingular()
+
 ### sentence negation (destructive)
 * [ ] opposite()
 

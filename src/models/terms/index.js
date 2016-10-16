@@ -36,12 +36,6 @@ class Terms {
   normal() {
     return this.terms.filter((t) => t.sel).map((t) => t.normal).join(' ');
   }
-  remove(tag) {
-    this.terms = this.terms.filter((t) => {
-      return !t[tag];
-    });
-    return this;
-  }
   check() {
     this.terms.filter((t) => t.sel).forEach((t) => {
       t.render.check();

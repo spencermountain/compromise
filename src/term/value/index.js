@@ -37,7 +37,7 @@ const value = {
   },
 
   /** return a textual version of this number*/
-  TextValue: function() {
+  textValue: function() {
     let num = parseNumber(this);
     if (this.tag.Ordinal) {
       return toText.ordinal(num);

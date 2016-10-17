@@ -4,26 +4,26 @@ const toNoun = require('./toNoun');
 const toComparative = require('./toComparative');
 const toSuperlative = require('./toSuperlative');
 
-const info = {
-  adverbform: function(t) {
-    return toAdverb(t.normal);
+const adjective = {
+  adverbForm: function() {
+    return toAdverb(this.normal);
   },
-  nounform: function(t) {
-    return toNoun(t.normal);
+  nounForm: function() {
+    return toNoun(this.normal);
   },
-  comparative: function(t) {
-    return toComparative(t.normal);
+  comparative: function() {
+    return toComparative(this.normal);
   },
-  superlative: function(t) {
-    return toSuperlative(t.normal);
+  superlative: function() {
+    return toSuperlative(this.normal);
   },
-  conjugate: function(t) {
+  conjugate: function() {
     return {
-      Adverb: t.adjective.adverbForm(),
-      Noun: t.adjective.nounForm(),
-      Comparative: t.adjective.comparative(),
-      Superlative: t.adjective.superlative(),
+      adverbForm: this.adjective.adverbForm(),
+      nounForm: this.adjective.nounForm(),
+      comparative: this.adjective.comparative(),
+      superlative: this.adjective.superlative(),
     };
   }
 };
-module.exports = info;
+module.exports = adjective;

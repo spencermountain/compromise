@@ -10,6 +10,11 @@ class Result {
   get found() {
     return this.list.length > 0;
   }
+  get terms() {
+    return this.list.reduce((arr, ts) => {
+      return arr.concat(ts.terms.filter((t) => t.sel));
+    }, []);
+  }
 
 }
 
@@ -37,6 +42,10 @@ module.exports = Result;
 const Adjectives = require('./adjectives');
 Result.prototype.adjectives = function() {
   return new Adjectives(this.list);
+};
+const Values = require('./values');
+Result.prototype.values = function() {
+  return new Values(this.list);
 };
 
 //apply methods

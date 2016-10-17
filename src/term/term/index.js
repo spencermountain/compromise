@@ -1,7 +1,7 @@
 'use strict';
 // const normalize = require('./normalize');
 const fns = require('../paths').fns;
-const info = {
+const term = {
 
   /** the punctuation at the end of this term*/
   endPunctuation: function() {
@@ -159,4 +159,4 @@ const info = {
 
 };
 
-module.exports = info;
+module.exports = term;

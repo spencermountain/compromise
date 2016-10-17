@@ -3,7 +3,7 @@
 const topk = function(n) {
   //count occurance
   let count = {};
-  this.terms().forEach((t) => {
+  this.terms.forEach((t) => {
     count[t.normal] = count[t.normal] || 0;
     count[t.normal] += 1;
   });

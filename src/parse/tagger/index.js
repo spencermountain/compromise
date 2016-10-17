@@ -21,6 +21,8 @@ module.exports = {
     negation_step: require('./steps/10-negation_step'),
     adverb_step: require('./steps/11-adverb_step'),
     phrasal_step: require('./steps/12-phrasal_step'),
-    comma_step: require('./steps/13-comma_step')
+    comma_step: require('./steps/13-comma_step'),
+    possessive_step: require('./steps/14-possessive_step'),
+    value_step: require('./steps/15-value_step')
   }
 };

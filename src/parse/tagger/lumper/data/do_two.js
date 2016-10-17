@@ -36,7 +36,7 @@ module.exports = [
   },
   {
     //"John Abcd" - needs to be careful
-    condition: (a, b) => (a.tag.Person && !a.tag.Pronoun && !a.tag.tagsessive && !a.term.hasComma() && b.tag.TitleCase && !a.is('Acronym') && !b.tag.Verb), //'Person, Capital -> Person'
+    condition: (a, b) => (a.tag.Person && !a.tag.Pronoun && !a.tag.tagsessive && !a.term.hasComma() && b.tag.TitleCase && !a.term.isAcronym() && !b.tag.Verb), //'Person, Capital -> Person'
     result: 'Person',
     reason: 'person-titleCase'
   },
@@ -103,7 +103,7 @@ module.exports = [
 
   {
     //both values, not ordinals, not '5 20'
-    condition: (a, b) => (a.tag.Value && b.tag.Value && !a.tag.Ordinal && !b.tag.Numeric),
+    condition: (a, b) => (a.tag.Value && b.tag.Value && !a.tag.Ordinal && !b.tag.NumericValue),
     result: 'Value',
     reason: 'two-values'
   },

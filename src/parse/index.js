@@ -7,12 +7,12 @@ const steps = {
   corrections: require('./04-corrections'),
   phrase: require('./05-phrases'),
 };
-const Term = require('../models/term');
-const Terms = require('../models/terms');
+const Term = require('../term');
+const Terms = require('../terms');
 const fns = require('../fns');
 const log = require('../logger');
 const path = 'parse';
-const Result = require('../models/result');
+const Result = require('../result');
 
 //turn the string into an array of termList objects
 const tokenize = (str, context) => {
@@ -23,23 +23,23 @@ const tokenize = (str, context) => {
   arr = arr.map((sen, i) => {
     //find the particular words
     //step #2
-    let terms = steps.split_terms(sen);
-    terms = terms.map((term) => {
+    let ts = steps.split_terms(sen);
+    ts = ts.map((term) => {
       //make them proper Term objects
       let c = fns.copy(context);
       return new Term(term, c);
     });
     //make it 'Terms()' object
-    terms = new Terms(terms, context);
+    ts = new Terms(ts, context);
     //give each term a parent reference
-    terms.forEach((t) => {
-      t.context.parent = terms;
+    ts.terms.forEach((t) => {
+      t.context.parent = ts;
     });
     log.tell('=sentence' + i + '=', path);
     //step #3
-    terms = steps.tagger(terms);
+    ts = steps.tagger(ts);
     log.tell('\n', path);
-    return terms;
+    return ts;
   });
   //wrap them up into a Result
   let result = new Result(arr, context);

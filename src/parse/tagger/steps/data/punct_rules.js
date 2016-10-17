@@ -3,7 +3,7 @@ module.exports = [
 
   ['^#[a-z]+', 'HashTag'],
   ['[a-z]s\'', 'Possessive'],
-  ['[0-9]([0-9,\.]*?)?]+', 'Numeric'], //like 5
+  ['[0-9]([0-9,\.]*?)?]+', 'NumericValue'], //like 5
   ['[12]?[0-9](:[0-5][0-9])? ?(am|pm)', 'Time'], //4pm
   ['[12]?[0-9](:[0-5][0-9]) ?(am|pm)?', 'Time'], //4:00pm
   ['[PMCE]ST', 'Time'], //PST, time zone abbrevs

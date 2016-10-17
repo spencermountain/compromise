@@ -15,12 +15,12 @@ const noun_fallback = function(s) {
     let tags = Object.keys(t.tag);
     if (tags.length === 0) {
       //ensure it's atleast word-looking
-      if (t.is('word') === false) {
+      if (t.term.isWord() === false) {
         continue;
       }
       t.tagAs('Noun', 'noun-fallback');
       //check if it's plural, too
-      if (t.is('plural')) {
+      if (t.tag.Plural) {
         t.tagAs('Plural', 'fallback-plural');
       }
     }

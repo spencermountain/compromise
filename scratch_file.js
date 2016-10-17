@@ -2,7 +2,7 @@
 //this file is not included in the build.
 //use it for messing around.
 const nlp = require('./src/index');
-const corpus = require('nlp-corpus');
+// const corpus = require('nlp-corpus');
 // const nlp = require('./builds/nlp_compromise');
 
 // require('./src/logger').enable();
@@ -19,7 +19,7 @@ const context = {
 // let r = nlp('  ');
 
 
-// let r = nlp('she was really nice').adjectives().stripAdverbs();
-let r = nlp('she was really nice suddenly').when('#Adverb #Adjective').when('really').remove('#Adverb');
+// let r = nlp('she was really and immediately nice').adjectives().parse();
+let r = nlp('five nor fifth nor 5 nor 5th').values().toTextValue().toCardinal();
+// console.log(r);
 r.check();
-r.parent.check();

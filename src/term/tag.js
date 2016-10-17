@@ -45,7 +45,7 @@ const set_tag = function(term, tag, reason) {
     term.tag[tag] = true;
     return;
   }
-  //also set tags by deduction
+  // //also set tags by deduction
   let tags = tagset[tag].is;
   for (let i = 0; i < tags.length; i++) {
     if (!term.tag[tags[i]]) {

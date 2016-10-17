@@ -62,6 +62,15 @@ const match = (Result) => {
       });
       return this;
     },
+    /** opposite of .when **/
+    not: function(str, debug) {
+      this.when(str, debug);
+      //reverse it
+      this.terms.forEach((t) => {
+        t.sel = !t.sel;
+      });
+      return this;
+    },
 
     /** tag a subset as selected/non-selected **/
     or: function(str, debug) {

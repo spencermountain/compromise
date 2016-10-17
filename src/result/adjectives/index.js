@@ -4,15 +4,19 @@ const Result = require('../index');
 class Adjectives extends Result {
   constructor(list) {
     super(list);
-    this.parent = this;
+    this.when('#Adjective+');
+    return this;
+  }
+  adverbs() {
+    this.parent();
+    //very cool / cool suddenly
+    this.when('#Adverb+ #Adjective').or('#Adjective #Adverb+').when('#Adverb');
     return this;
   }
   stripAdverbs() {
-    //very cool
-    this.when('#Adverb+ #Adjective').remove('#Adverb+');
-    //cool suddenly
-    this.when('#Adjective #Adverb+').remove('#Adverb+');
-    return this;
+    this.parent();
+    this.adverbs().remove();
+    return this.parent();
   }
 }
 

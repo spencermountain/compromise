@@ -23,10 +23,6 @@ class Terms {
   get length() {
     return this.terms.length;
   }
-  forEach(fn) {
-    this.terms.filter((t) => t.sel).forEach(fn);
-    return this;
-  }
   plaintext() {
     return this.terms.filter((t) => t.sel).reduce((str, t) => {
       str += t.plaintext();
@@ -61,11 +57,8 @@ Terms.prototype.match = function(reg, verbose) {
 
 Terms.prototype.when = function(reg, verbose) {
   let found = match(this, reg, verbose); //returns an array of matches
-  this.terms.forEach((t) => {
-    t.sel = false;
-  });
-  found.forEach((ts) => {
-    ts.forEach((t) => {
+  found.forEach((arr) => {
+    arr.forEach((t) => {
       t.sel = true;
     });
   });

@@ -5,7 +5,7 @@ const path = 'tagger/punctuation';
 
 const punctuation_step = function(ts) {
   log.here(path);
-  ts.forEach((t) => {
+  ts.terms.forEach((t) => {
     //don't over-write any known tags
     if (Object.keys(t.tag).length > 0) {
       return;

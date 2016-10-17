@@ -5,7 +5,7 @@ const path = 'tagger/value';
 
 const value_step = function(ts) {
   log.here(path);
-  ts.forEach((t) => {
+  ts.terms.forEach((t) => {
     if (t.tag.Value) {
       //ordinal/cardinal
       if (!t.tag.Ordinal && !t.tag.Cardinal) {

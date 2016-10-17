@@ -33,6 +33,14 @@ const match = (Result) => {
 
     /** like .match(), but negative (filter-out the matches)*/
     remove : function(reg) {
+      //if there's no reg, remove all selected terms
+      if (!reg) {
+        this.list.forEach((ts) => {
+          ts.terms = ts.terms.filter((t) => !t.sel);
+        });
+        return this;
+      }
+      //otherwise, remove just the matches
       let list = [];
       this.list.forEach((ts) => {
         let matches = ts.remove(reg, this.context);
@@ -47,6 +55,17 @@ const match = (Result) => {
     /** tag a subset as selected/non-selected **/
     when: function(str, debug) {
       this.list.forEach((ts) => {
+        ts.terms.forEach((t) => {
+          t.sel = false;
+        });
+        ts.when(str, debug);
+      });
+      return this;
+    },
+
+    /** tag a subset as selected/non-selected **/
+    or: function(str, debug) {
+      this.list.forEach((ts) => {
         ts.when(str, debug);
       });
       return this;
@@ -55,7 +74,7 @@ const match = (Result) => {
     /** re-select all terms **/
     parent: function() {
       this.list.forEach((ts) => {
-        ts.forEach((t) => {
+        ts.terms.forEach((t) => {
           t.sel = true;
         });
       });

@@ -19,6 +19,7 @@ const context = {
 // let r = nlp('  ');
 
 
-let r = nlp('she was really nice').adjectives().stripAdverbs();
-// let r = nlp('five nor fifth nor 5 nor 5th').val;
-r.parent().check();
+let r = nlp('she was really nice. She went quickly. She was good suddenly.').adjectives().stripAdverbs();
+// let r = nlp('she was really nice.').adjectives().adverbs();
+r.check();
+// r.parent().check();

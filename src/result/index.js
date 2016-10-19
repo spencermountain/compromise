@@ -22,7 +22,6 @@ class Result {
       return arr.concat(ts.terms.filter((t) => t.sel));
     }, []);
   }
-
 }
 
 const selectFns = require('./selection');
@@ -43,21 +42,19 @@ Result.prototype.ngram = require('./inspect/ngram');
 /** **/
 Result.prototype.topk = require('./inspect/topk');
 
-
 module.exports = Result;
 
-const Adjectives = require('./adjectives');
-Result.prototype.adjectives = function() {
-  return new Adjectives(this.list);
-};
-const Values = require('./values');
-Result.prototype.values = function() {
-  return new Values(this.list);
-};
-const People = require('./people');
-Result.prototype.people = function() {
-  return new People(this.list);
-};
-
-//apply methods
-// require('./methods').addMethods(Result);
+//add tag-namespaced methods
+[
+  'Adjectives',
+  'Nouns',
+  'Verbs',
+  'Values',
+  'People',
+].forEach((k) => {
+  let str = k.toLowerCase();
+  const Cl = require('./' + str);
+  Result.prototype[str] = function() {
+    return new Cl(this.list);
+  };
+});

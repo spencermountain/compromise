@@ -43,19 +43,20 @@ nlp('I look just like buddy holly').toPast().text()
     has changed!
   </div>
 </div>
-<h2 align="center">
-  <a href="http://nlpcompromise.com">Demos</a>
-  <span> | </span>
-  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started">Quick-start</a>
-  <span> | </span>
-  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/API">Docs</a>
-</h1>
 ### Yup,
 * a [140k js file](https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js)
 * **[86%](https://github.com/nlp-compromise/nlp_compromise/wiki/Accuracy)** on the **Penn treebank**
 * [keypress speed](https://github.com/nlp-compromise/nlp_compromise/wiki/Performance), constant-time.
 * caniuse, uhuh. **IE9+**
 * [no dependencies](https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started), training, configuration, or prolog
+
+<h2 align="center">
+  <a href="http://nlpcompromise.com">Demos</a>
+  <span>&nbsp; | &nbsp;</span>
+  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started">Quick-start</a>
+  <span>&nbsp; | &nbsp;</span>
+  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/API">Docs</a>
+</h1>
 
 ###grammar, for the win
 ```javascript

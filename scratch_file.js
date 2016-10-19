@@ -22,4 +22,5 @@ const context = {
 
 let r = nlp('dr. john stewart and Hillary Clinton ate the cheese').people();
 // console.log(r);
-r.check();
+// r.check();
+console.log(r.parse());

@@ -10,6 +10,13 @@ class Result {
   get found() {
     return this.list.length > 0;
   }
+  /** how many results are there?*/
+  get length() {
+    return this.list.length;
+  }
+  get count() {
+    return this.list.length;
+  }
   get terms() {
     return this.list.reduce((arr, ts) => {
       return arr.concat(ts.terms.filter((t) => t.sel));

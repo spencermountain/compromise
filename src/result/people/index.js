@@ -18,6 +18,7 @@ class People extends Result {
     let m = this.clone().remove('#Honorific');
     m.remove('the *'); //jabba the hut
     m = m.match('#Person');
+    m.check();
     //1-names are sneaky
     if (m.count === 1) {
       let term = m.terms()[0];
@@ -53,8 +54,9 @@ class People extends Result {
     }
     return null;
   }
+
   firstName() {
-    return this.match('Person').terms(0).normal();
+    return this.match('^#Person').normal();
   }
   middleName() {}
   lastName() {}

@@ -4,11 +4,6 @@ const Terms = require('../../terms');
 const genericMethods = (Result) => {
 
   const methods = {
-    /** how many results are there?*/
-    count : function() {
-      return this.list.length;
-    },
-
 
     /** get the nth term of each result*/
     term : function(n) {

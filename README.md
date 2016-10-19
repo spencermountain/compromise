@@ -36,6 +36,13 @@ var nlp = require('nlp_compromise')
 nlp('I look just like buddy holly').toPast().text()
 // "I looked just like buddy holly."
 ```
+<h2 align="center">
+  <a href="http://nlpcompromise.com">Demos</a>
+  <span>&nbsp; | &nbsp;</span>
+  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started">Quick-start</a>
+  <span>&nbsp; | &nbsp;</span>
+  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/API">Docs</a>
+</h2>
 <div align="center">
   :boom:Welcome to <b>v7</b>:boom:
   <div>
@@ -50,13 +57,6 @@ nlp('I look just like buddy holly').toPast().text()
 * caniuse, uhuh. **IE9+**
 * [no dependencies](https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started), training, configuration, or prolog
 
-<h2 align="center">
-  <a href="http://nlpcompromise.com">Demos</a>
-  <span>&nbsp; | &nbsp;</span>
-  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started">Quick-start</a>
-  <span>&nbsp; | &nbsp;</span>
-  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/API">Docs</a>
-</h1>
 
 ###grammar, for the win
 ```javascript

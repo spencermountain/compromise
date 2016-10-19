@@ -60,7 +60,7 @@ nlp('I look just like buddy holly').toPast().text()
 * [no dependencies](https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started), training, configuration, or prolog
 
 
-###Grammar, for the win
+###Grammar, for the win:
 ```javascript
 r = nlp('john is really nice. sara quickly walks.')
 
@@ -122,18 +122,22 @@ r = nlp("björk's the guest-singer at seven thirty.").normalize().text()
 
 ###named-entity recognition
 ```javascript
-r = nlp('an opera about richard nixon visiting china').match('(#Person|#Place|#Organization)').asArray()
-//[ {text:'richard nixon', tags:['Person']}, {text:'china', tags:'Place'} ]
+r = nlp('an opera about richard nixon visiting china')
+r.match('(#Person|#Place|#Organization)').asArray()
+//[{ text:'richard nixon', tags:['Person'] },
+// { text:'china', tags:['Place', 'Country'] }]
 ```
 
 ###fancy outputs
 ```javascript
 r = nlp('Tony Hawk won').asHtml()
-// <span>
-//  <span class="Person Noun MalePerson">Tony Hawk</span>
-//  <span>&nbsp;</span>
-//  <span class="Verb PastTense">won</span>
-// </span>
+```
+```html
+<span>
+  <span class="Person Noun MalePerson">Tony Hawk</span>
+  <span>&nbsp;</span>
+  <span class="Verb PastTense">won</span>
+</span>
 ```
 <h3 align="center">
   and yes, ofcourse, there's <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/API">a lot more stuff</a>.

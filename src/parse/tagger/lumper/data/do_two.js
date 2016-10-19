@@ -12,7 +12,7 @@ const timezones = {
 //rules that combine two words
 module.exports = [
   {
-    condition: (a, b) => ((a.tag.Person && b.tag.Honourific) || (a.tag.Honourific && b.tag.Person)), //"John sr."
+    condition: (a, b) => ((a.tag.Person && b.tag.Honorific) || (a.tag.Honorific && b.tag.Person)), //"John sr."
     result: 'Person',
     reason: 'person-words'
   },
@@ -23,9 +23,9 @@ module.exports = [
   },
   {
     //'Dr. John'
-    condition: (a, b) => (a.tag.Honourific && b.tag.TitleCase),
+    condition: (a, b) => (a.tag.Honorific && b.tag.TitleCase),
     result: 'Person',
-    reason: 'person-honourific'
+    reason: 'person-honorific'
   },
   {
     // "john lkjsdf's"

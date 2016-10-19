@@ -8,7 +8,7 @@ module.exports = {
         Person: {
           MalePerson: true,
           FemalePerson: true,
-          Honourific: true
+          Honorific: true
         },
         Place: {
           Country: true,

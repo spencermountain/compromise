@@ -20,6 +20,6 @@ const context = {
 // let r = nlp('Air France is cool');
 // let r = nlp('guinea-bissau');
 
-let r = nlp('john stewart and Hillary Clinton ate the cheese').people();
+let r = nlp('dr. john stewart and Hillary Clinton ate the cheese').people();
 // console.log(r);
 r.check();

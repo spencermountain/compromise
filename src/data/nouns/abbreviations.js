@@ -112,8 +112,8 @@ let compact = {
     'circa'
   ],
 
-  //Honourifics
-  Honourific: [
+  //Honorifics
+  Honorific: [
     'adj',
     'adm',
     'adv',

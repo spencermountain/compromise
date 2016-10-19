@@ -33,18 +33,18 @@ nlp('I look just like buddy holly').toPast().text()
 // "I looked just like buddy holly."
 ```
 <div align="center">
-  inspect and play-with english text,
+  inspect and play with english text,
   <div>
-    with a focus on being <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Justification">handy, and not overly-fancy</a>
+    focus on being <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Justification">handy, and not overly-fancy</a>
   </div>
 </div>
 
 ### Yup,
-* [a ~140k js file](https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js)
+* a [140k js file](https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js)
 * **[86%](https://github.com/nlp-compromise/nlp_compromise/wiki/Accuracy)** on the **Penn treebank**
 * [keypress speed](https://github.com/nlp-compromise/nlp_compromise/wiki/Performance), constant-time.
 * caniuse, uhuh. **IE9+**
-* no dependencies, training, configuration, or prolog
+* [no dependencies](https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started), training, configuration, or prolog
 
 ##grammar ftw
 ```javascript
@@ -129,10 +129,10 @@ we're using semver, we're fun, and moving fast.
 #See also
 * **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier statistical nlp in javascript
 * **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in javascript
-* **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection, correction etc in javascript
+* **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection, etc in javascript
 * **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
-* **[jsPos](https://code.google.com/archive/p/jspos/)** - the time-tested Brill-tagger in js
-* **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in Python/Cython
+* **[jsPos](https://code.google.com/archive/p/jspos/)** - js-build of the time-tested Brill-tagger
+* **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
 
 (don't forget legendary
 [NLTK](http://www.nltk.org/),

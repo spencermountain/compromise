@@ -21,6 +21,11 @@ const context = {
 
 // let r = nlp('she was really and immediately nice').adjectives().parse();
 // let r = nlp('five nor fifth nor 5 nor 5th').values().toTextValue().toCardinal();
-let r = nlp('this Monday').match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('DateChunk');
+// let r = nlp('this Monday').match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('DateChunk');
 // console.log(r);
-r.check();
+// r.check();
+
+console.log(require('nlp-corpus').text);
+var corpus = require('nlp-corpus').text.friends();
+let arr = nlp(corpus).match('#Person').topk();
+console.log(arr);

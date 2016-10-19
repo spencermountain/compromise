@@ -105,26 +105,26 @@ r.toNegative()
 ```javascript
 r = nlp('fifth of december')
 
-r.values().toNumber().text()
-// '5 of december'
-
 r.values().toCardinal().text()
 // 'five of december'
+
+r.values().toNumber().text()
+// '5 of december'
 ```
 
 ###Clever normalization:
 ```javascript
-r = nlp("björk's the guest-singer at seven thirty.").normalize().text()
-//'Bjork is the guest singer at 7:30.'
+r = nlp("the guest-singer's björk at seven thirty.").normalize().text()
+//'The guest singer is Bjork at 7:30.'
 ```
 
 ###Named-entity recognition:
 ```javascript
-r = nlp('an opera about richard nixon visiting china')
+r = nlp('the opera about richard nixon visiting china')
 r.match('(#Person|#Place|#Organization)').asArray()
 // [
-//  { text:'richard nixon', tags:['Person'] },
-//  { text:'china', tags:['Place', 'Country'] }
+//   { text:'richard nixon', tags:['Person'] },
+//   { text:'china', tags:['Place', 'Country'] }
 // ]
 ```
 
@@ -147,6 +147,7 @@ r = nlp('Tony Hawk won').asHtml()
   we're fun, we're using <b>semver</b>, and moving fast.
   <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing">:hammer_and_wrench: get involved :dancer:</a>
 </div>
+<br/>
 <div align="center">
   <a href="https://www.youtube.com/watch?v=tk_JGu2AbJY">
     <img src="http://img.youtube.com/vi/tk_JGu2AbJY/mqdefault.jpg"/>
@@ -165,10 +166,10 @@ r = nlp('Tony Hawk won').asHtml()
 * **[jsPos](https://code.google.com/archive/p/jspos/)** - js-build of the time-tested Brill-tagger
 * **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
 
-(and don't forget
+(don't forget
 [NLTK](http://www.nltk.org/),
 [GATE](https://gate.ac.uk),
-[Stanford Parser](http://nlp.stanford.edu/software/lex-parser.shtml),
+[Stanford](http://nlp.stanford.edu/software/lex-parser.shtml),
 and
 [Illinois toolkit](http://cogcomp.cs.illinois.edu/page/software/)
 )

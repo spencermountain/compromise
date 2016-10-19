@@ -1,6 +1,6 @@
 <div align="center">
   <strong>nlp_compromise</strong>
-  <div>pretty-fun natural-language processing</div>
+  <div>natural-language processing in the browser</div>
 
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />
@@ -25,14 +25,13 @@
 
 <div align="center">
   <code>npm install nlp_compromise</code>
+  to make it pretty-fun to inspect, generate, and play-with written english
 </div>
 
-nlp_compromise makes it pretty fun to inspect, generate, and play-with written english.
 <br/>
 ```javascript
-var nlp = require('nlp_compromise')
-nlp('I look just like Buddy Holly').toPast().text()
-// "I looked just like Buddy Holly."
+nlp('Wee-ooh, I look just like buddy holly').toPast().text()
+// "Wee-ooh, I looked just like buddy holly."
 ```
 ### Yup,
 * **<150k** js file

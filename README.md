@@ -81,8 +81,7 @@ r = nlp('she sells seashells by the seashore.').toFuture().text()
 r.verbs().conjugate()
 // [{ PastTense: 'sold',
 //    Infinitive: 'sell',
-//    Gerund: 'selling'
-//    ...
+//    Gerund: 'selling', ...
 // }]
 ```
 
@@ -115,7 +114,7 @@ r.values().toNumber().text()
 ###Clever normalization:
 ```javascript
 r = nlp("the guest-singer's björk at seven thirty.").normalize().text()
-//'The guest singer is Bjork at 7:30.'
+// 'The guest singer is Bjork at 7:30.'
 ```
 
 ###Named-entity recognition:
@@ -123,8 +122,8 @@ r = nlp("the guest-singer's björk at seven thirty.").normalize().text()
 r = nlp('the opera about richard nixon visiting china')
 r.match('(#Person|#Place|#Organization)').asArray()
 // [
-//   { text:'richard nixon', tags:['Person'] },
-//   { text:'china', tags:['Place', 'Country'] }
+//   { text: 'richard nixon', tags: ['Person'] },
+//   { text: 'china', tags: ['Place', 'Country'] }
 // ]
 ```
 
@@ -142,7 +141,7 @@ r = nlp('Tony Hawk won').asHtml()
   and yes, ofcourse, there's <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/API">a lot more stuff</a>.
 </h3>
 
-##join
+###Join:
 <div align="center">
   we're fun, we're using <b>semver</b>, and moving fast.
   <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing">:hammer_and_wrench: get involved :dancer:</a>

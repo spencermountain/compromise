@@ -124,18 +124,22 @@ r = nlp("björk's the guest-singer at seven thirty.").normalize().text()
 ```javascript
 r = nlp('an opera about richard nixon visiting china')
 r.match('(#Person|#Place|#Organization)').asArray()
-//[{ text:'richard nixon', tags:['Person'] },
-// { text:'china', tags:['Place', 'Country'] }]
+// [
+//  { text:'richard nixon', tags:['Person'] },
+//  { text:'china', tags:['Place', 'Country'] }
+// ]
 ```
 
 ###fancy outputs
 ```javascript
 r = nlp('Tony Hawk won').asHtml()
+/*
 <span>
   <span class="Person Noun MalePerson">Tony Hawk</span>
   <span>&nbsp;</span>
   <span class="Verb PastTense">won</span>
 </span>
+*/
 ```
 <h3 align="center">
   and yes, ofcourse, there's <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/API">a lot more stuff</a>.

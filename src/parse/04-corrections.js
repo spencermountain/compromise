@@ -73,7 +73,7 @@ const corrections = function(r) {
   r.match('(may|march) #Value').term(0).tag('Month', 'correction-may');
   r.match('(may|march) #Date').term(0).tag('Month', 'correction-may');
   r.match('#Date (may|march)').term(1).tag('Month', 'correction-may');
-  r.match('(next|this|last) (may|march)').term(1).tag('Month', 'correction-may');
+  r.match('(next|this|last) (may|march)').term(1).tag('Month', 'correction-may'); //maybe not 'this'
 
   //'a/an' can mean 1
   r.match('(a|an) (#Duration|#Value)').term(0).tag('Value');
@@ -81,6 +81,7 @@ const corrections = function(r) {
   r.match('#Value').match('!#Ordinal').tag('#Cardinal');
 
   //time
+  r.check();
   r.match('#Cardinal #Time').tag('Time', 'value-time');
   r.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time');
   r.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm');
@@ -91,7 +92,7 @@ const corrections = function(r) {
   //5 March
   r.match('#Cardinal #Month').tag('Date', 'cardinal-month');
   //by 5 March
-  r.match('(by|before|after|until) #Date').tag('Date', 'by-date');
+  r.match('due? (by|before|after|until) #Date').tag('Date', 'by-date');
   //tomorrow before 3
   r.match('#Date (by|before|after|at|@|about) #Cardinal').remove('^#Date').tag('Time', 'before-Cardinal');
   //2pm est
@@ -100,6 +101,8 @@ const corrections = function(r) {
   //saturday am
   r.match('#Date (am|pm)').term(1).unTag('Verb').unTag('Copula').tag('Time', 'date-am');
   //late at night
+  r.match('at night').tag('Time');
+  r.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time');
   r.match('(early|late) (at|in)? the? (night|evening|morning|afternoon|day|daytime)').tag('Time');
   //march 12th 2018
   r.match('#Month #Value #Cardinal').tag('Date', 'month-value-cardinal');

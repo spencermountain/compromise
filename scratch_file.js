@@ -5,7 +5,7 @@ const nlp = require('./src/index');
 // const corpus = require('nlp-corpus');
 // const nlp = require('./builds/nlp_compromise');
 
-// require('./src/logger').enable();
+require('./src/logger').enable();
 const context = {
   lexicon: {
     'donkey kong': 'Person'
@@ -20,7 +20,8 @@ const context = {
 // let r = nlp('Air France is cool');
 // let r = nlp('guinea-bissau');
 
-let r = nlp('dr. john stewart and Hillary Clinton ate the cheese').nouns();
+// let r = nlp('dr. john stewart and Hillary Clinton ate the cheese').nouns();
+let r = nlp('this day');
 // console.log(r);
 r.check();
 // console.log(r.parse());

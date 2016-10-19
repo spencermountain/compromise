@@ -43,6 +43,13 @@ nlp('I look just like buddy holly').toPast().text()
     has changed!
   </div>
 </div>
+<h1 align="center">
+  <a href="http://nlpcompromise.com">Demos</a>
+  <span> | </span>
+  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started">Quick-start</a>
+  <span> | </span>
+  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/API">Docs</a>
+</h1>
 ### Yup,
 * a [140k js file](https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js)
 * **[86%](https://github.com/nlp-compromise/nlp_compromise/wiki/Accuracy)** on the **Penn treebank**
@@ -130,7 +137,7 @@ r = nlp('Tony Hawk won').asHtml()
 </h3>
 
 ##join
-we're using semver, we're fun, and moving fast.
+we're fun, we're using semver, and moving fast.
 <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing">:hammer_and_wrench: get involved :dancer:</a>
 <div align="center">
   <a href="https://www.youtube.com/watch?v=tk_JGu2AbJY">

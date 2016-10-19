@@ -42,6 +42,8 @@ nlp('I look just like buddy holly').toPast().text()
   <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started">Quick-start</a>
   <span>&nbsp; | &nbsp;</span>
   <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/API">Docs</a>
+  <span>&nbsp; | &nbsp;</span>
+  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Accuracy">Accuracy</a>
 </h3>
 <div align="center">
   :boom:Welcome to <b>v7</b>:boom:
@@ -58,7 +60,7 @@ nlp('I look just like buddy holly').toPast().text()
 * [no dependencies](https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started), training, configuration, or prolog
 
 
-###grammar, for the win
+###Grammar, for the win
 ```javascript
 r = nlp('john is really nice. sara quickly walks.')
 
@@ -72,7 +74,7 @@ r.text()
 // 'John is nice. Sara walks.'
 ```
 
-###conjugation
+###Conjugation
 ```javascript
 r = nlp('she sells seashells by the seashore.').toFuture().text()
 //'she will sell seashells...'
@@ -86,7 +88,7 @@ r.verbs().conjugate()
 // }]
 ```
 
-###plural/singular
+###Plural/singular
 ```javascript
 r = nlp('a bottle of beer on the wall.')
 r.nouns().first().toPlural()
@@ -94,7 +96,7 @@ r.text()
 //'The bottles of beer on the wall.'
 ```
 
-###negation
+###Negation
 ```javascript
 r = nlp('london is calling')
 r.toNegative()

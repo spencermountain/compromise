@@ -131,8 +131,6 @@ r.match('(#Person|#Place|#Organization)').asArray()
 ###fancy outputs
 ```javascript
 r = nlp('Tony Hawk won').asHtml()
-```
-```html
 <span>
   <span class="Person Noun MalePerson">Tony Hawk</span>
   <span>&nbsp;</span>

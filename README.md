@@ -133,6 +133,13 @@ r = nlp('Tony Hawk won').asHtml()
 we're using semver, we're fun, and moving fast.
 <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing">:hammer_and_wrench: get involved :dancer:</a>
 
+<a href="https://www.youtube.com/watch?v=tk_JGu2AbJY">
+  <img src="http://img.youtube.com/vi/tk_JGu2AbJY/mqdefault.jpg"/>
+</a>
+<a href="https://www.youtube.com/watch?v=WuPVS2tCg8s">
+  <img src="http://img.youtube.com/vi/WuPVS2tCg8s/mqdefault.jpg"/>
+</a>
+
 #See also
 * **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript
 * **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in javascript

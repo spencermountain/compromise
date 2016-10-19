@@ -32,16 +32,15 @@ nlp('I look just like buddy holly').toPast().text()
 // "I looked just like buddy holly."
 ```
 <div align="center">
-  <div>inspect and play-with english text</div>
-  <div>with a focus on being <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Justification">handy, and not overly-fancy</a></div>
+inspect and play-with english text with focus on being <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Justification">handy, and not overly-fancy</a>
 </div>
 
 ### Yup,
-* ~**140k** js file
-* **86%** on the **Penn treebank** test
-* keypress speed, constant-time.
+* a [~140k js file](https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js)
+* **86%** on the ***Penn treebank test***
+* keypress speed, constant-time. [~0.5ms](https://github.com/nlp-compromise/nlp_compromise/wiki/Performance)/sentence.
 * caniuse, uhuh. **IE9+**
-* no dependencies, training, configuration .. or prolog.
+* no dependencies, training, configuration .. or prolog
 
 ##Grammar ftw
 ```javascript

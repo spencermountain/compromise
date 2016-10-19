@@ -28,21 +28,25 @@
 </div>
 <br/>
 ```javascript
+var nlp = require('nlp_compromise')
 nlp('I look just like buddy holly').toPast().text()
 // "I looked just like buddy holly."
 ```
 <div align="center">
-inspect and play-with english text with focus on being <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Justification">handy, and not overly-fancy</a>
+  inspect and play-with english text,
+  <div>
+    with a focus on being <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Justification">handy, and not overly-fancy</a>
+  </div>
 </div>
 
 ### Yup,
-* a [~140k js file](https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js)
-* **86%** on the ***Penn treebank test***
-* keypress speed, constant-time. [~0.5ms](https://github.com/nlp-compromise/nlp_compromise/wiki/Performance)/sentence.
+* [a ~140k js file](https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js)
+* **[86%](https://github.com/nlp-compromise/nlp_compromise/wiki/Accuracy)** on the **Penn treebank**
+* [keypress speed](https://github.com/nlp-compromise/nlp_compromise/wiki/Performance), constant-time.
 * caniuse, uhuh. **IE9+**
-* no dependencies, training, configuration .. or prolog
+* no dependencies, training, configuration, or prolog
 
-##Grammar ftw
+##grammar ftw
 ```javascript
 r = nlp('john is really nice. sara quickly walks.')
 
@@ -52,14 +56,13 @@ r.remove('#Adverb')
 //reach-in and transform parts
 r.match('#Person').toTitleCase()
 
-r.plaintext()
+r.text()
 // 'John is nice. Sara walks.'
 ```
 
-##Verb conjugation
+##verb manipulation
 ```javascript
-r = nlp('she sells seashells by the seashore.')
-r.toFuture().text()
+r = nlp('she sells seashells by the seashore.').toFuture().text()
 //'she will sell seashells...'
 
 //blast-out all conjugations
@@ -72,7 +75,7 @@ r.verbs().conjugate()
 // }]
 ```
 
-##Plural/singular
+##plural/singular
 ```javascript
 r = nlp('a bottle of beer on the wall.')
 r.match('bottle').toPlural()
@@ -80,14 +83,14 @@ r.text()
 //'The bottles of beer on the wall.'
 ```
 
-##Negation
+##negation
 ```javascript
 r = nlp('london is calling')
 r.toNegative()
 //'london is not calling'
 ```
 
-##Number conversion
+##value conversion
 ```javascript
 r = nlp('fifth of december')
 
@@ -98,13 +101,13 @@ r.values().toCardinal().text()
 // 'five of december'
 ```
 
-##Clever normalization
+##clever normalization
 ```javascript
 r = nlp("björk's the guest-singer at seven thirty.").normalize().text()
 //'Bjork is the guest singer at 7:30.'
 ```
 
-##output
+##fun outputs
 ```javascript
 r = nlp('Tony Hawk won').asHtml()
 //<span>
@@ -117,25 +120,24 @@ r = nlp('Tony Hawk won').asHtml()
   and yes, ofcourse, there's <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/API">a lot more stuff</a>.
 </h3>
 
-<h2 align="center">
-  <div>we're using semver, we're fun, and moving fast.</div>
-  <div>
-    <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing">:hammer_and_wrench: get involved :dancer:</a>.
-  </div>
-</h3>
+##join
+we're using semver, we're fun, and moving fast.
+<div align="center">
+  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing">:hammer_and_wrench: get involved :dancer:</a>
+</div>
 
 #See also
-* [naturalNode](https://github.com/NaturalNode/natural) - decidedly fancier statistical nlp in javascript
-* [SuperScript](http://superscriptjs.com/) - clever conversation engine in javascript
-* [NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics) - conjugation, inflection, correction etc in javascript
-* [reText](https://github.com/wooorm/retext) - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
-* [jsPos](https://code.google.com/archive/p/jspos/) - the time-tested Brill-tagger in js
-* [spaCy](https://spacy.io/) - speedy, multilingual tagger in Python/Cython
+* **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier statistical nlp in javascript
+* **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in javascript
+* **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection, correction etc in javascript
+* **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
+* **[jsPos](https://code.google.com/archive/p/jspos/)** - the time-tested Brill-tagger in js
+* **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in Python/Cython
 
-(don't forget
+(don't forget legendary
 [NLTK](http://www.nltk.org/),
 [GATE](https://gate.ac.uk),
-the [Stanford Parser](http://nlp.stanford.edu/software/lex-parser.shtml),
+[Stanford Parser](http://nlp.stanford.edu/software/lex-parser.shtml),
 and
-the [Illinois toolkit](http://cogcomp.cs.illinois.edu/page/software/)
+[Illinois toolkit](http://cogcomp.cs.illinois.edu/page/software/)
 )

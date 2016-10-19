@@ -28,22 +28,22 @@
 </div>
 <br/>
 ```javascript
-nlp('Wee-ooh, I look just like buddy holly').toPast().text()
-// "Wee-ooh, I looked just like buddy holly."
+nlp('I look just like buddy holly').toPast().text()
+// "I looked just like buddy holly."
 ```
 <div align="center">
   <div>a fun way to inspect and play-with english text</div>
-  <div>a focus on being [handy, and not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/wiki/Justification)</div>
+  <div>a focus on being <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Justification">handy, and not overly-fancy</a></div>
 </div>
 
 ### Yup,
 * ~**140k** js file
-* **86%** on the **Penn treebank** POS-tag test
+* **86%** on the **Penn treebank** test
 * keypress speed, constant-time.
 * caniuse, uhuh. **IE9+**
-* no dependencies, training, configuration, or prolog.
+* no dependencies, training, configuration .. or prolog.
 
-##Grammatical 'reach-in'
+<h2 align="center">Grammar ft<h2>
 ```javascript
 r = nlp('john is really nice. sara quickly walks.')
 
@@ -60,18 +60,17 @@ r.plaintext()
 ##Verb conjugation
 ```javascript
 r = nlp('she sells seashells by the seashore.')
-//finds the correct verb to conjugate
 r.toFuture().text()
 //'she will sell seashells...'
 
 //blast-out all conjugations
 r.verbs().conjugate()
-// {
+// [{
 //   PastTense: 'sold',
 //   Infinitive: 'sell',
 //   Gerund: 'selling'
 //   ...
-// }
+// }]
 ```
 
 ##Plural/singular
@@ -89,7 +88,7 @@ r.toNegative()
 //'london is not calling'
 ```
 
-##Value interpretation
+##Number conversion
 ```javascript
 r = nlp('fifth of december')
 
@@ -102,19 +101,29 @@ r.values().toCardinal().text()
 
 ##Clever normalization
 ```javascript
-r = nlp("björk's the guest-singer at seven thirty.").normalize({contrations:true, case:true, unicode:true, hyphens:true}).text()
+r = nlp("björk's the guest-singer at seven thirty.").normalize().text()
 //'Bjork is the guest singer at 7:30.'
 ```
 
-##Ad-hoc output
+##output
 ```javascript
-r = nlp('Tony Hawk won.').asHtml()
+r = nlp('Tony Hawk won').asHtml()
 //<span>
 //  <span class="Person Noun MalePerson">Tony Hawk</span>
-//  &nbsp;
+//  <span>&nbsp;</span>
 //  <span class="Verb PastTense">won</span>
 //</span>
 ```
+<h3 align="center">
+  and yes, ofcourse, there's <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/API">a lot more stuff</a>.
+</h3>
+
+<h2 align="center">
+  <div>we're using semver, we're fun, and moving fast.</div>
+  <div>
+    <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing">:hammer_and_wrench: get involved :dancer:</a>.
+  </div>
+</h3>
 
 #See also
 * [naturalNode](https://github.com/NaturalNode/natural) - decidedly fancier statistical nlp in javascript

@@ -1,6 +1,6 @@
 <div align="center">
   <strong>nlp_compromise</strong>
-  <div>natural-language processing in the browser</div>
+  <div>pretty-fun natural-language processing</div>
 
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />
@@ -27,20 +27,21 @@
   <code>npm install nlp_compromise</code>
 </div>
 
+nlp_compromise makes it pretty fun to inspect, generate, and play-with written english.
 <br/>
 ```javascript
-var r = nlp('i look just like buddy holly').normalize()
-r.toPast()
+var nlp = require('nlp_compromise')
+nlp('I look just like Buddy Holly').toPast().text()
 // "I looked just like Buddy Holly."
-
-r.toNegative()
-// "I didn't look just like Buddy Holly."
-
-r.match('#Adverb').remove()
-// "I didn't look like Buddy Holly."
-r.match('#Person').toPronoun()
-// "I didn't look like him."
 ```
+### Yup,
+* **<150k** js file
+* **86%** on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
+* keypress speed, constant-time.
+* caniuse, uhuh. **IE9+**
+* no dependencies, training, configuration, or prolog.
+
+It's a [handy, and not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/wiki/Justification) tool for understanding, changing, and playing with english.
 
 ##Basic match/remove flow
 ```javascript

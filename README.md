@@ -27,13 +27,15 @@
   <code>npm install nlp_compromise</code>
 </div>
 <br/>
+<h4>
 ```javascript
 nlp('I look just like buddy holly').toPast().text()
 // "I looked just like buddy holly."
 ```
+</h4>
 <div align="center">
-  <div>a fun way to inspect and play-with english text</div>
-  <div>a focus on being <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Justification">handy, and not overly-fancy</a></div>
+  <div>inspect and play-with english text</div>
+  <div>with a focus on being <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Justification">handy, and not overly-fancy</a></div>
 </div>
 
 ### Yup,
@@ -43,7 +45,7 @@ nlp('I look just like buddy holly').toPast().text()
 * caniuse, uhuh. **IE9+**
 * no dependencies, training, configuration .. or prolog.
 
-<h2 align="center">Grammar ft<h2>
+##Grammar ftw
 ```javascript
 r = nlp('john is really nice. sara quickly walks.')
 

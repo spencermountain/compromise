@@ -103,7 +103,7 @@ r.toNegative()
 // 'london is not calling'
 ```
 
-###number interpretation
+###Number interpretation
 ```javascript
 r = nlp('fifth of december')
 
@@ -114,13 +114,13 @@ r.values().toCardinal().text()
 // 'five of december'
 ```
 
-###clever normalization
+###Clever normalization
 ```javascript
 r = nlp("björk's the guest-singer at seven thirty.").normalize().text()
 //'Bjork is the guest singer at 7:30.'
 ```
 
-###named-entity recognition
+###Named-entity recognition
 ```javascript
 r = nlp('an opera about richard nixon visiting china')
 r.match('(#Person|#Place|#Organization)').asArray()
@@ -130,11 +130,10 @@ r.match('(#Person|#Place|#Organization)').asArray()
 // ]
 ```
 
-###fancy outputs
+###Fancy outputs
 ```javascript
 r = nlp('Tony Hawk won').asHtml()
-/*
-<span>
+/*<span>
   <span class="Person Noun MalePerson">Tony Hawk</span>
   <span>&nbsp;</span>
   <span class="Verb PastTense">won</span>

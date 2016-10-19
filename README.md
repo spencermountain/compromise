@@ -25,92 +25,96 @@
 
 <div align="center">
   <code>npm install nlp_compromise</code>
-  <div>makes it fun to inspect, generate, and play-with english text</div>
 </div>
-
 <br/>
 ```javascript
 nlp('Wee-ooh, I look just like buddy holly').toPast().text()
 // "Wee-ooh, I looked just like buddy holly."
 ```
+<div align="center">
+  <div>a fun way to inspect and play-with english text</div>
+  <div>a focus on being [handy, and not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/wiki/Justification)</div>
+</div>
+
 ### Yup,
-* **<150k** js file
-* **86%** on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
+* ~**140k** js file
+* **86%** on the **Penn treebank** POS-tag test
 * keypress speed, constant-time.
 * caniuse, uhuh. **IE9+**
 * no dependencies, training, configuration, or prolog.
 
-It's a [handy, and not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/wiki/Justification) tool for understanding, changing, and playing with english.
-
-##Basic match/remove flow
+##Grammatical 'reach-in'
 ```javascript
 r = nlp('john is really nice. sara quickly walks.')
-
-//reach-in and transform parts
-r.match('#Person').toTitleCase()
 
 //pluck-out some parts
 r.remove('#Adverb')
 
+//reach-in and transform parts
+r.match('#Person').toTitleCase()
+
 r.plaintext()
 // 'John is nice. Sara walks.'
 ```
-##Persistent transforms
+
+##Verb conjugation
+```javascript
+r = nlp('she sells seashells by the seashore.')
+//finds the correct verb to conjugate
+r.toFuture().text()
+//'she will sell seashells...'
+
+//blast-out all conjugations
+r.verbs().conjugate()
+// {
+//   PastTense: 'sold',
+//   Infinitive: 'sell',
+//   Gerund: 'selling'
+//   ...
+// }
+```
+
+##Plural/singular
+```javascript
+r = nlp('a bottle of beer on the wall.')
+r.match('bottle').toPlural()
+r.text()
+//'The bottles of beer on the wall.'
+```
+
+##Negation
+```javascript
+r = nlp('london is calling')
+r.toNegative()
+//'london is not calling'
+```
+
+##Value interpretation
 ```javascript
 r = nlp('fifth of december')
 
-r.toCardinal().plaintext()
-// 'five of december'
-
-r.toValue().plaintext()
+r.values().toNumber().text()
 // '5 of december'
+
+r.values().toCardinal().text()
+// 'five of december'
 ```
-##Multi-term `NounPhrase`, `VerbPhrase`, `AdjPhrase`
+
+##Clever normalization
 ```javascript
-r = nlp('john would not have walked')
-
-vb = r.match('#VerbPhrase+')
-vb.plaintext()
-// 'would not have walked'
-
-vb.toPositive().plaintext()
-//would have walked
+r = nlp("björk's the guest-singer at seven thirty.").normalize({contrations:true, case:true, unicode:true, hyphens:true}).text()
+//'Bjork is the guest singer at 7:30.'
 ```
-##`.clone()` - non-persistent transforms
+
+##Ad-hoc output
 ```javascript
-r=nlp('This api is stable.')
-
-//make a non-transitive copy
-tmp=r.clone()
-tmp.toNegative()
-tmp.toExclamation()
-tmp.plaintext()
-//This api is not stable!
-
-r.plaintext()
-//This api is stable.
+r = nlp('Tony Hawk won.').asHtml()
+//<span>
+//  <span class="Person Noun MalePerson">Tony Hawk</span>
+//  &nbsp;
+//  <span class="Verb PastTense">won</span>
+//</span>
 ```
-
-##Reasoning:
-Instead of `Term` objects having the methods & tooling, the library now hoists all this functionality to the main API, so you can filter-down, act-upon, and inspect a list of terms, just as easy as acting on a single term.
-
-One word is now just a list of words, of length 1.
-
-The idea is that now you can work on **arbitrary** text without **arbitrary** `nlp_compromise` choices getting in the way:
-```javascript
-r= nlp('singing').conjugate()
-//valid
-
-r= nlp('would have been singing').conjugate()
-//valid
-
-r= nlp('john was singing').conjugate()
-//valid
-
-r= nlp('john was singing. Sara was singing.').conjugate()
-//valid
-```
-
 
 #See also
 * [naturalNode](https://github.com/NaturalNode/natural) - decidedly fancier statistical nlp in javascript

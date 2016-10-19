@@ -12,7 +12,6 @@
     <img src="https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square" />
   </a>
 </div>
-
 <div align="center">
   <sub>
     by
@@ -25,6 +24,7 @@
 <div align="center">
   <code>npm install nlp_compromise</code>
 </div>
+<br/>
 <div align="center">
   inspect and play with english text,
   <div>
@@ -38,9 +38,9 @@ nlp('I look just like buddy holly').toPast().text()
 // "I looked just like buddy holly."
 ```
 <div align="center">
-  :boom:Welcome to **v7**!, 
-  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/v7-upgrade-instructions">a lot</a>
-  has changed:boom:
+  :boom:Welcome to <b>v7!</b>:boom:
+  <div><a href="https://github.com/nlp-compromise/nlp_compromise/wiki/v7-upgrade-instructions">a lot</a>
+  has changed</div>
 </div>
 ### Yup,
 * a [140k js file](https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js)
@@ -49,7 +49,7 @@ nlp('I look just like buddy holly').toPast().text()
 * caniuse, uhuh. **IE9+**
 * [no dependencies](https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started), training, configuration, or prolog
 
-##ftw
+###for the win
 ```javascript
 r = nlp('john is really nice. sara quickly walks.')
 
@@ -63,7 +63,7 @@ r.text()
 // 'John is nice. Sara walks.'
 ```
 
-##conjugation
+###conjugation
 ```javascript
 r = nlp('she sells seashells by the seashore.').toFuture().text()
 //'she will sell seashells...'
@@ -78,7 +78,7 @@ r.verbs().conjugate()
 // }]
 ```
 
-##plural/singular
+###plural/singular
 ```javascript
 r = nlp('a bottle of beer on the wall.')
 r.match('bottle').toPlural()
@@ -86,14 +86,14 @@ r.text()
 //'The bottles of beer on the wall.'
 ```
 
-##negation
+###negation
 ```javascript
 r = nlp('london is calling')
 r.toNegative()
 //'london is not calling'
 ```
 
-##number interpretation
+###number interpretation
 ```javascript
 r = nlp('fifth of december')
 
@@ -104,13 +104,13 @@ r.values().toCardinal().text()
 // 'five of december'
 ```
 
-##clever normalization
+###clever normalization
 ```javascript
 r = nlp("björk's the guest-singer at seven thirty.").normalize().text()
 //'Bjork is the guest singer at 7:30.'
 ```
 
-##fancy output
+###fancy output
 ```javascript
 r = nlp('Tony Hawk won').asHtml()
 //<span>
@@ -125,9 +125,7 @@ r = nlp('Tony Hawk won').asHtml()
 
 ##join
 we're using semver, we're fun, and moving fast.
-<div align="center">
-  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing">:hammer_and_wrench: get involved :dancer:</a>
-</div>
+<a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing">:hammer_and_wrench: get involved :dancer:</a>
 
 #See also
 * **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier statistical nlp in javascript

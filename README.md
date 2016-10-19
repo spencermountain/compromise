@@ -22,9 +22,14 @@
     </a>
   </sub>
 </div>
-
 <div align="center">
   <code>npm install nlp_compromise</code>
+</div>
+<div align="center">
+  inspect and play with english text,
+  <div>
+    focus on being <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Justification">handy, and not overly-fancy</a>
+  </div>
 </div>
 <br/>
 ```javascript
@@ -33,12 +38,8 @@ nlp('I look just like buddy holly').toPast().text()
 // "I looked just like buddy holly."
 ```
 <div align="center">
-  inspect and play with english text,
-  <div>
-    focus on being <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Justification">handy, and not overly-fancy</a>
-  </div>
+:boom:Welcome to **v7**, [a lot](https://github.com/nlp-compromise/nlp_compromise/wiki/v7-upgrade-instructions) has changed:boom:
 </div>
-
 ### Yup,
 * a [140k js file](https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js)
 * **[86%](https://github.com/nlp-compromise/nlp_compromise/wiki/Accuracy)** on the **Penn treebank**
@@ -46,7 +47,7 @@ nlp('I look just like buddy holly').toPast().text()
 * caniuse, uhuh. **IE9+**
 * [no dependencies](https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started), training, configuration, or prolog
 
-##grammar ftw
+##ftw
 ```javascript
 r = nlp('john is really nice. sara quickly walks.')
 
@@ -60,7 +61,7 @@ r.text()
 // 'John is nice. Sara walks.'
 ```
 
-##verb manipulation
+##conjugation
 ```javascript
 r = nlp('she sells seashells by the seashore.').toFuture().text()
 //'she will sell seashells...'
@@ -90,7 +91,7 @@ r.toNegative()
 //'london is not calling'
 ```
 
-##value conversion
+##number interpretation
 ```javascript
 r = nlp('fifth of december')
 
@@ -107,7 +108,7 @@ r = nlp("björk's the guest-singer at seven thirty.").normalize().text()
 //'Bjork is the guest singer at 7:30.'
 ```
 
-##fun outputs
+##fancy output
 ```javascript
 r = nlp('Tony Hawk won').asHtml()
 //<span>
@@ -134,7 +135,7 @@ we're using semver, we're fun, and moving fast.
 * **[jsPos](https://code.google.com/archive/p/jspos/)** - js-build of the time-tested Brill-tagger
 * **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
 
-(don't forget legendary
+(don't forget
 [NLTK](http://www.nltk.org/),
 [GATE](https://gate.ac.uk),
 [Stanford Parser](http://nlp.stanford.edu/software/lex-parser.shtml),

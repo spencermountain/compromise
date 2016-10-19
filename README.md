@@ -27,12 +27,10 @@
   <code>npm install nlp_compromise</code>
 </div>
 <br/>
-<h4>
 ```javascript
 nlp('I look just like buddy holly').toPast().text()
 // "I looked just like buddy holly."
 ```
-</h4>
 <div align="center">
   <div>inspect and play-with english text</div>
   <div>with a focus on being <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Justification">handy, and not overly-fancy</a></div>

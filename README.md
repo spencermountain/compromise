@@ -32,7 +32,6 @@
 </div>
 <br/>
 ```javascript
-var nlp = require('nlp_compromise')
 nlp('I look just like buddy holly').toPast().text()
 // "I looked just like buddy holly."
 ```
@@ -74,12 +73,11 @@ r.text()
 // 'John is nice. Sara walks.'
 ```
 
-###Conjugation
+###Conjugation:
 ```javascript
 r = nlp('she sells seashells by the seashore.').toFuture().text()
 //'she will sell seashells...'
 
-//blast-out all conjugations
 r.verbs().conjugate()
 // [{ PastTense: 'sold',
 //    Infinitive: 'sell',
@@ -88,7 +86,7 @@ r.verbs().conjugate()
 // }]
 ```
 
-###Plural/singular
+###Plural/singular:
 ```javascript
 r = nlp('a bottle of beer on the wall.')
 r.nouns().first().toPlural()
@@ -96,14 +94,14 @@ r.text()
 //'The bottles of beer on the wall.'
 ```
 
-###Negation
+###Negation:
 ```javascript
 r = nlp('london is calling')
 r.toNegative()
 // 'london is not calling'
 ```
 
-###Number interpretation
+###Number interpretation:
 ```javascript
 r = nlp('fifth of december')
 
@@ -114,13 +112,13 @@ r.values().toCardinal().text()
 // 'five of december'
 ```
 
-###Clever normalization
+###Clever normalization:
 ```javascript
 r = nlp("björk's the guest-singer at seven thirty.").normalize().text()
 //'Bjork is the guest singer at 7:30.'
 ```
 
-###Named-entity recognition
+###Named-entity recognition:
 ```javascript
 r = nlp('an opera about richard nixon visiting china')
 r.match('(#Person|#Place|#Organization)').asArray()
@@ -130,7 +128,7 @@ r.match('(#Person|#Place|#Organization)').asArray()
 // ]
 ```
 
-###Fancy outputs
+###Fancy outputs:
 ```javascript
 r = nlp('Tony Hawk won').asHtml()
 /*<span>
@@ -145,8 +143,10 @@ r = nlp('Tony Hawk won').asHtml()
 </h3>
 
 ##join
-we're fun, we're using semver, and moving fast.
-<a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing">:hammer_and_wrench: get involved :dancer:</a>
+<div align="center">
+  we're fun, we're using <b>semver</b>, and moving fast.
+  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing">:hammer_and_wrench: get involved :dancer:</a>
+</div>
 <div align="center">
   <a href="https://www.youtube.com/watch?v=tk_JGu2AbJY">
     <img src="http://img.youtube.com/vi/tk_JGu2AbJY/mqdefault.jpg"/>

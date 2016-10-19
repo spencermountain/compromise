@@ -25,7 +25,7 @@
 
 <div align="center">
   <code>npm install nlp_compromise</code>
-  to make it pretty-fun to inspect, generate, and play-with written english
+  <div>makes it fun to inspect, generate, and play-with english text</div>
 </div>
 
 <br/>

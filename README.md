@@ -38,7 +38,9 @@ nlp('I look just like buddy holly').toPast().text()
 // "I looked just like buddy holly."
 ```
 <div align="center">
-:boom:Welcome to **v7**, [a lot](https://github.com/nlp-compromise/nlp_compromise/wiki/v7-upgrade-instructions) has changed:boom:
+  :boom:Welcome to **v7**!, 
+  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/v7-upgrade-instructions">a lot</a>
+  has changed:boom:
 </div>
 ### Yup,
 * a [140k js file](https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js)

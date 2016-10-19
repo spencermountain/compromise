@@ -136,6 +136,7 @@ we're using semver, we're fun, and moving fast.
   <a href="https://www.youtube.com/watch?v=tk_JGu2AbJY">
     <img src="http://img.youtube.com/vi/tk_JGu2AbJY/mqdefault.jpg"/>
   </a>
+  <span> &nbsp; </span>
   <a href="https://www.youtube.com/watch?v=WuPVS2tCg8s">
     <img src="http://img.youtube.com/vi/WuPVS2tCg8s/mqdefault.jpg"/>
   </a>

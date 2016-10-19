@@ -19,7 +19,7 @@ test('=Lexicon test=', function(T) {
       ['shanghai', 'City'],
       ['google', 'Organization'],
     ].forEach(function (a) {
-      var terms = nlp(a[0]).terms();
+      var terms = nlp(a[0]).terms;
       pos_test(terms, [a[1]], t);
     });
     t.end();
@@ -41,7 +41,7 @@ test('=Lexicon test=', function(T) {
       ['donkey kong wins the award', ['City', 'Verb', 'Determiner', 'Noun']],
     ];
     arr.forEach(function (a) {
-      var terms = nlp(a[0], context).terms();
+      var terms = nlp(a[0], context).terms;
       pos_test(terms, a[1], t);
     });
     //
@@ -54,7 +54,7 @@ test('=Lexicon test=', function(T) {
     //     kelly: 'MalePerson'
     //   }
     // };
-    // terms = nlp('Kelly', context).terms();
+    // terms = nlp('Kelly', context).terms;
     // pos_test(terms, ['MalePerson'], t);
     // //gender follows lumping
     // terms = nlp.sentence('Kelly Gruber', context).terms;

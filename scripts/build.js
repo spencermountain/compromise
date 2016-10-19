@@ -35,6 +35,7 @@ var cmd = browserify + ' ./src/index.js --standalone nlp_compromise';
 cmd += ' -t [ babelify --presets [ es2015 stage-2 ] ]';
 cmd += ' | ' + derequire;
 cmd += ' >> ' + uncompressed;
+// console.log(cmd);
 exec(cmd);
 
 //uglify

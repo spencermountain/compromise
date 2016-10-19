@@ -45,16 +45,23 @@ Result.prototype.topk = require('./inspect/topk');
 module.exports = Result;
 
 //add tag-namespaced methods
-[
-  'Adjectives',
-  'Nouns',
-  'Verbs',
-  'Values',
-  'People',
-].forEach((k) => {
-  let str = k.toLowerCase();
-  const Cl = require('./' + str);
-  Result.prototype[str] = function() {
-    return new Cl(this.list);
-  };
-});
+const Values = require('./values');
+Result.prototype.values = function() {
+  return new Values(this.list);
+};
+const Adjectives = require('./adjectives');
+Result.prototype.adjectives = function() {
+  return new Adjectives(this.list);
+};
+const Nouns = require('./nouns');
+Result.prototype.nouns = function() {
+  return new Nouns(this.list);
+};
+const Verbs = require('./verbs');
+Result.prototype.verbs = function() {
+  return new Verbs(this.list);
+};
+const People = require('./people');
+Result.prototype.people = function() {
+  return new People(this.list);
+};

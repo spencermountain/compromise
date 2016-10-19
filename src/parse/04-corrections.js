@@ -81,7 +81,6 @@ const corrections = function(r) {
   r.match('#Value').match('!#Ordinal').tag('#Cardinal');
 
   //time
-  r.check();
   r.match('#Cardinal #Time').tag('Time', 'value-time');
   r.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time');
   r.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm');

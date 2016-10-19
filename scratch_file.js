@@ -14,18 +14,12 @@ const context = {
 // let r = nlp(corpus.parsed.sotu().obama_2012);
 // r.phrases();
 
+// console.log(require('nlp-corpus').text);
+// var corpus = require('nlp-corpus').text.friends();
+
 // let r = nlp('Air France is cool');
 // let r = nlp('guinea-bissau');
-// let r = nlp('  ');
 
-
-// let r = nlp('she was really and immediately nice').adjectives().parse();
-// let r = nlp('five nor fifth nor 5 nor 5th').values().toTextValue().toCardinal();
-// let r = nlp('this Monday').match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('DateChunk');
+let r = nlp('john stewart and Hillary Clinton ate the cheese').people();
 // console.log(r);
-// r.check();
-
-console.log(require('nlp-corpus').text);
-var corpus = require('nlp-corpus').text.friends();
-let arr = nlp(corpus).match('#Person').topk();
-console.log(arr);
+r.check();

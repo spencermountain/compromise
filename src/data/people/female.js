@@ -178,7 +178,7 @@ let suffix_compressed = {
   ue: 'dominiq,moniq,s',
   ay: 'f,k,linds',
   te: 'celes,ka,margueri',
-  ry: 'ma,rosema,sher',
+  ry: 'ma,rosema,sher,hila,hilla',
   na: 'ed,shau,shaw',
   dy: 'jo,ju,tru',
   ti: 'chris,kris,pat',

@@ -47,6 +47,10 @@ const Values = require('./values');
 Result.prototype.values = function() {
   return new Values(this.list);
 };
+const People = require('./people');
+Result.prototype.people = function() {
+  return new People(this.list);
+};
 
 //apply methods
 // require('./methods').addMethods(Result);

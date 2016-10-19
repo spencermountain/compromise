@@ -43,7 +43,7 @@ nlp('I look just like buddy holly').toPast().text()
     has changed!
   </div>
 </div>
-<h1 align="center">
+<h2 align="center">
   <a href="http://nlpcompromise.com">Demos</a>
   <span> | </span>
   <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started">Quick-start</a>

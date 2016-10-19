@@ -130,7 +130,8 @@ r.match('(#Person|#Place|#Organization)').asArray()
 ###Fancy outputs:
 ```javascript
 r = nlp('Tony Hawk won').asHtml()
-/*<span>
+/*
+<span>
   <span class="Person Noun MalePerson">Tony Hawk</span>
   <span>&nbsp;</span>
   <span class="Verb PastTense">won</span>
@@ -141,7 +142,7 @@ r = nlp('Tony Hawk won').asHtml()
   and yes, ofcourse, there's <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/API">a lot more stuff</a>.
 </h3>
 
-###Join:
+###Join-in:
 <div align="center">
   we're fun, we're using <b>semver</b>, and moving fast.
   <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing">:hammer_and_wrench: get involved :dancer:</a>

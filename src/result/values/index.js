@@ -22,6 +22,7 @@ class Values extends Result {
   toNumber() {
     this.terms.forEach((t) => {
       t.text = '' + t.value.number();
+      t.unTag('TextValue', 'toNumber()');
       t.tagAs('NumericValue', 'toNumber()');
     });
     return this;
@@ -37,6 +38,7 @@ class Values extends Result {
   toTextValue() {
     this.terms.forEach((t) => {
       t.text = t.value.textValue();
+      t.unTag('NumericValue', 'toTextValue()');
       t.tagAs('TextValue', 'toTextValue()');
     });
     return this;
@@ -45,6 +47,7 @@ class Values extends Result {
   toCardinal() {
     this.terms.forEach((t) => {
       t.text = '' + t.value.cardinal();
+      t.unTag('Ordinal', 'toCardinal()');
       t.tagAs('Cardinal', 'toCardinal()');
     });
     return this;
@@ -53,6 +56,7 @@ class Values extends Result {
   toOrdinal() {
     this.terms.forEach((t) => {
       t.text = t.value.ordinal();
+      t.unTag('Cardinal', 'toOrdinal()');
       t.tagAs('Ordinal', 'toOrdinal()');
     });
     return this;

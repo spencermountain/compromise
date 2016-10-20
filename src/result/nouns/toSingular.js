@@ -8,6 +8,8 @@ const toSingular = function() {
       let t = ts.terms[i];
       if (t.tag.Noun && t.noun.hasPlural()) {
         t.text = t.noun.toSingular();
+        t.unTag('Plural', 'toSingular()');
+        t.tagAs('Singular', 'toSingular()');
         //also twist the determiner, eg -'a' to 'the'
         ts = twistArticle.toSingular(ts, i);
       }

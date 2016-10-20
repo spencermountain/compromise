@@ -8,6 +8,8 @@ const toPlural = function() {
       let t = ts.terms[i];
       if (t.tag.Noun && t.noun.hasPlural()) {
         t.text = t.noun.toPlural();
+        t.unTag('Singular', 'toPlural()');
+        t.tagAs('Plural', 'toPlural()');
         //also twist the determiner, eg -'a' to 'the'
         ts = twistArticle.toPlural(ts, i);
       }

@@ -20,6 +20,7 @@ const canBe = (term, tag) => {
   let tags = Object.keys(term.tag);
   for(let i = 0; i < tags.length; i++) {
     if (not.indexOf(tags[i]) !== -1) {
+      // log.tell(not[not.indexOf(tags[i])]);
       return false;
     }
   }

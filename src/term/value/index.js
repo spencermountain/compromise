@@ -1,6 +1,6 @@
 'use strict';
-const toNumber = require('./toNumber');
-const toText = require('./toText');
+const numericValue = require('./numericValue');
+const textValue = require('./textValue');
 const parseNumber = require('./parse');
 
 const value = {
@@ -10,7 +10,7 @@ const value = {
     let num = parseNumber(this);
     //if it is textual, make a textCardinal
     if (this.tag.TextValue) {
-      return toText.cardinal(num);
+      return textValue.cardinal(num);
     }
     //otherwise, numerical form
     return num;
@@ -21,17 +21,17 @@ const value = {
     let num = parseNumber(this);
     //if it is textual, make a textCardinal
     if (this.tag.TextValue) {
-      return toText.ordinal(num);
+      return textValue.ordinal(num);
     }
     //otherwise, numerical form
-    return toNumber.ordinal(num);
+    return numericValue.ordinal(num);
   },
 
   /** return a float/integer version of this number*/
   number: function() {
     let n = parseNumber(this);
     if (this.tag.Ordinal) {
-      return toNumber.ordinal(n);
+      return numericValue.ordinal(n);
     }
     return n;
   },
@@ -40,9 +40,9 @@ const value = {
   textValue: function() {
     let num = parseNumber(this);
     if (this.tag.Ordinal) {
-      return toText.ordinal(num);
+      return textValue.ordinal(num);
     } else {
-      return toText.cardinal(num);
+      return textValue.cardinal(num);
     }
   },
 
@@ -61,15 +61,15 @@ const value = {
 
   /** generate all forms for this number */
   parse: function() {
-    let num = parseNumber(this);
+    let num = numericValue(this);
     return {
       Number: {
         Cardinal: num,
         Ordinal: toNumber.ordinal(num)
       },
       Text: {
-        Cardinal: toText.cardinal(num),
-        Ordinal: toText.ordinal(num)
+        Cardinal: textValue.cardinal(num),
+        Ordinal: textValue.ordinal(num)
       }
     };
   }

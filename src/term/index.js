@@ -82,6 +82,11 @@ class Term {
   tagAs(tag, reason) {
     set_tag(this, tag, reason);
   }
+  /** remove this part-of-speech from the term*/
+  unTag(tag, reason) {
+    // log.tell('removing \'' + tag + '\'  - ' + reason);
+    delete this.tag[tag];
+  }
 
   /** make a copy with no references to the original  */
   clone() {

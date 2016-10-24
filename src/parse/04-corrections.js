@@ -84,6 +84,7 @@ const corrections = function(r) {
   r.match('#Cardinal #Time').tag('Time', 'value-time');
   r.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time');
   r.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm');
+  r.match('all day').tag('Time', 'all-day');
   //may the 5th
   r.match('#Date the? #Ordinal').term(1).tag('Date', 'correction-date');
   //5th of March

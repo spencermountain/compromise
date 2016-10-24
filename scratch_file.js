@@ -21,8 +21,6 @@ const context = {
 // let r = nlp('guinea-bissau');
 
 // let r = nlp('dr. john stewart and Hillary Clinton ate the cheese').nouns();
-let r = nlp('two days');
-r.values().toNumber().parent();
-// console.log(r);
-r.check();
-// console.log(r.parse());
+let r = nlp('june 5-7 at 8pm. he said good.');
+console.log(r.asArray());
+// r.check();

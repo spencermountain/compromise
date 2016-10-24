@@ -1,7 +1,5 @@
 'use strict';
 const Result = require('../index');
-const toPlural = require('./toPlural');
-const toSingular = require('./toSingular');
 
 class Nouns extends Result {
   constructor(list) {
@@ -15,12 +13,8 @@ class Nouns extends Result {
       return {};
     });
   }
-  toPlural() {
-    return toPlural(this);
-  }
-  toSingular() {
-    return toSingular(this);
-  }
 }
+Nouns.prototype.toPlural = require('./toPlural');
+Nouns.prototype.toSingular = require('./toSingular');
 
 module.exports = Nouns;

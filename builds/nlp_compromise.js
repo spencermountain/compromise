@@ -1,4 +1,4 @@
-/* nlp_compromise v7.1.2
+/* nlp_compromise v7.1.3
    github.com/nlp-compromise
    MIT
 */
@@ -2980,6 +2980,7 @@ var corrections = function corrections(r) {
   r.match('#Cardinal #Time').tag('Time', 'value-time');
   r.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time');
   r.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm');
+  r.match('all day').tag('Time', 'all-day');
   //may the 5th
   r.match('#Date the? #Ordinal').term(1).tag('Date', 'correction-date');
   //5th of March
@@ -5206,8 +5207,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Result = _dereq_('../index');
-var _toPlural = _dereq_('./toPlural');
-var _toSingular = _dereq_('./toSingular');
 
 var Nouns = function (_Result) {
   _inherits(Nouns, _Result);
@@ -5231,20 +5230,13 @@ var Nouns = function (_Result) {
         return {};
       });
     }
-  }, {
-    key: 'toPlural',
-    value: function toPlural() {
-      return _toPlural(this);
-    }
-  }, {
-    key: 'toSingular',
-    value: function toSingular() {
-      return _toSingular(this);
-    }
   }]);
 
   return Nouns;
 }(Result);
+
+Nouns.prototype.toPlural = _dereq_('./toPlural');
+Nouns.prototype.toSingular = _dereq_('./toSingular');
 
 module.exports = Nouns;
 
@@ -5279,7 +5271,7 @@ module.exports = toPlural;
 var twistArticle = _dereq_('./twistArticle');
 
 //inflect a term or termlist
-var toSingular = function toSingular() {
+var toSingular = function toSingular(r) {
   this.list = this.list.map(function (ts) {
     for (var i = 0; i < ts.terms.length; i++) {
       var t = ts.terms[i];

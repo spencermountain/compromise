@@ -1620,6 +1620,7 @@ var cardinal = {
   multiples: {
     'hundred': 1e2,
     'thousand': 1e3,
+    'grand': 1e3,
     'million': 1e6,
     'billion': 1e9,
     'trillion': 1e12,
@@ -5588,6 +5589,13 @@ var prettyPrint = function prettyPrint(Result) {
       return this.list.map(function (ts) {
         return ts.normal();
       });
+    },
+    asHtml: function asHtml() {
+      var html = this.terms.reduce(function (str, t) {
+        str += t.render.html();
+        return str;
+      }, '');
+      return '<span>' + html + '</span>';
     }
 
   };
@@ -6680,8 +6688,8 @@ var normalize = function normalize(term) {
   str = fixUnicode(str);
   //convert hyphenations to a multiple-word term
   str = str.replace(/([a-z])\-([a-z])/g, '$1 $2');
-  //hashtags, atmentions
-  str = str.replace(/^[#@]/, '');
+  //hashtags, atmentions, dollar signs
+  str = str.replace(/^[#@$]/, '');
   // coerce single curly quotes
   str = str.replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]+/g, '\'');
   // coerce double curly quotes

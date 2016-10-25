@@ -37,6 +37,7 @@ const cardinal = {
   multiples: {
     'hundred': 1e2,
     'thousand': 1e3,
+    'grand': 1e3,
     'million': 1e6,
     'billion': 1e9,
     'trillion': 1e12,

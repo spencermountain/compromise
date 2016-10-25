@@ -67,6 +67,13 @@ const prettyPrint = (Result) => {
         return ts.normal();
       });
     },
+    asHtml: function() {
+      let html = this.terms.reduce((str, t) => {
+        str += t.render.html();
+        return str;
+      }, '');
+      return '<span>' + html + '</span>';
+    },
 
   };
   Object.keys(methods).forEach((k) => {

@@ -26,4 +26,4 @@ let r = nlp('dr. john stewart and Hillary Clinton ate the house');
 // r.toSingular();
 r.nouns().toPlural();
 // r.check();
-console.log(r.asArray());
+console.log(r.asHtml());

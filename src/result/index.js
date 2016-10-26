@@ -65,3 +65,7 @@ const People = require('./people');
 Result.prototype.people = function() {
   return new People(this.list);
 };
+
+Result.prototype.toTextNumber = function() {
+  return new Values(this.list).toTextValue()
+}

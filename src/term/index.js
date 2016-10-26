@@ -27,7 +27,6 @@ class Term {
     bindMethods(require('./adjective'), 'adjective', this);
     bindMethods(require('./value'), 'value', this);
     bindMethods(require('./pronoun'), 'pronoun', this);
-
     bindMethods(require('./render'), 'render', this);
 
     this.normalize();

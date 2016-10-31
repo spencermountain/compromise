@@ -5,7 +5,7 @@ const nlp = require('./src/index');
 // const corpus = require('nlp-corpus');
 // const nlp = require('./builds/nlp_compromise');
 
-require('./src/logger').enable();
+// require('./src/logger').enable();
 // const context = {
 //   lexicon: {
 //     'donkey kong': 'Person'
@@ -20,10 +20,10 @@ require('./src/logger').enable();
 // let r = nlp('Air France is cool');
 // let r = nlp('guinea-bissau');
 
-let r = nlp(`june 5-7. call +1 (234) 567-8901`);
-// let r = nlp('june 5-7 at 8pm.');
-// let r = nlp('buy x all day');
-// r.toSingular();
-// r.nouns().toPlural();
-r.check();
-// console.log(r.asHtml());
+// let r = nlp(`june 5th-7th at 3pm`);
+let r = nlp('i\'d buy these nachos');
+// r.nouns().toSingular();
+// r.verbs().toPast();
+// r.normalize();
+// r.check();
+console.log(r.normal());

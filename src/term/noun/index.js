@@ -23,5 +23,8 @@ module.exports = {
   },
   isPlural: function() {
     return isPlural(this);
+  },
+  makeArticle: function() {
+    return makeArticle(this);
   }
 };

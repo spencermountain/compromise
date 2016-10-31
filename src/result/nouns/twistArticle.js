@@ -7,6 +7,10 @@ const pluralMap = {
   the: 'the',
   this: 'those',
 };
+const singularMap = {
+  these: 'this',
+  those: 'that',
+};
 
 //the article comes before this noun
 const findArticle = function(ts, i) {
@@ -14,7 +18,7 @@ const findArticle = function(ts, i) {
   for(let o = i; o >= 0; o -= 1) {
     let t = ts.terms[o];
     //smells like an article
-    if (t && pluralMap[t.normal]) {
+    if (t && pluralMap[t.normal] || singularMap[t.normal]) {
       return t;
     }
     //a verb ends the search, i think.
@@ -39,8 +43,12 @@ const toPlural = (ts, i) => {
 
 const toSingular = (ts, i) => {
   let article = findArticle(ts, i);
-  if (article && article.normal === 'normal') {
-    article.text = pluralMap[article.normal];
+  if (article) {
+    if (singularMap[article.normal]) {
+      article.text = singularMap[article.normal];
+    } else {
+      article.text = article.noun.makeArticle(); // (a/an)
+    }
   }
   return ts;
 };

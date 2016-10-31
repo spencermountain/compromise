@@ -16,7 +16,7 @@ const toSingular = function(r) {
     }
     return ts;
   });
-  return this;
+  return this.parent();
 };
 
 module.exports = toSingular;

@@ -5,7 +5,8 @@ const defaultMethods = {
   case: true,
   numbers: true,
   punctuation: true,
-  unicode: true
+  unicode: true,
+  contractions: true
 };
 
 const methods = {
@@ -39,7 +40,7 @@ const methods = {
 
   /** turn 'five' to 5, and 'fifth' to 5th*/
   numbers: (r) => {
-    return r.toNumber();
+    return r.values().toNumber();
   },
 
   /** remove commas, semicolons - but keep sentence-ending punctuation*/
@@ -52,6 +53,10 @@ const methods = {
       });
     });
     return r;
+  },
+
+  contractions: (r) => {
+    return r.contractions().expand();
   }
 };
 

@@ -9,7 +9,9 @@ const prettyPrint = (Result) => {
       console.log('====');
       this.list.forEach((ts) => {
         console.log('   --');
-        ts.check();
+        ts.terms.forEach((t) => {
+          t.render.check();
+        });
       });
       return this;
     },

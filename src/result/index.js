@@ -44,6 +44,10 @@ Result.prototype.topk = require('./inspect/topk');
 
 module.exports = Result;
 
+const Contractions = require('./contractions');
+Result.prototype.contractions = function() {
+  return new Contractions(this.list);
+};
 //add tag-namespaced methods
 const Values = require('./values');
 Result.prototype.values = function() {
@@ -65,7 +69,3 @@ const People = require('./people');
 Result.prototype.people = function() {
   return new People(this.list);
 };
-
-Result.prototype.toTextNumber = function() {
-  return new Values(this.list).toTextValue()
-}

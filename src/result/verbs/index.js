@@ -14,13 +14,19 @@ class Verbs extends Result {
     });
   }
   toPast() {
-    return this;
+    let t = this.list[0].terms[0];
+    t.text = t.verb.pastTense();
+    return this.parent();
   }
   toPresent() {
-    return this;
+    let t = this.list[0].terms[0];
+    t.text = t.verb.presentTense();
+    return this.parent();
   }
   toFuture() {
-    return this;
+    let t = this.list[0].terms[0];
+    t.text = t.verb.futureTense();
+    return this.parent();
   }
 }
 

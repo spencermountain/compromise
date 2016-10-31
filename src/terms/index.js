@@ -30,12 +30,7 @@ class Terms {
     }, '');
   }
   normal() {
-    return this.terms.filter((t) => t.sel).map((t) => t.normal).join(' ');
-  }
-  check() {
-    this.terms.filter((t) => t.sel).forEach((t) => {
-      t.render.check();
-    });
+    return this.terms.filter((t) => t.sel && t.text).map((t) => t.normal).join(' ');
   }
   insertAt(text, i) {
     let term = new Term(text, this.context);

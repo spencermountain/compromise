@@ -4,10 +4,10 @@ const fixContraction = (ts, arr, i) => {
   //add a new term
   ts.insertAt('', i);
   let t = ts.terms[i];
-  let nextT = ts.terms[i + 1];
+  let t2 = ts.terms[i + 1];
   //add the interpretation silently
   t.silent_term = arr[0];
-  nextT.silent_term = arr[1];
+  t2.silent_term = arr[1];
   return ts;
 };
 

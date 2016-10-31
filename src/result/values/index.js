@@ -25,14 +25,14 @@ class Values extends Result {
       t.unTag('TextValue', 'toNumber()');
       t.tagAs('NumericValue', 'toNumber()');
     });
-    return this;
+    return this.parent();
   }
   /**5900 -> 5,900 */
   toNiceNumber() {
     this.terms.forEach((t) => {
       t.text = '' + t.value.nicenumber();
     });
-    return this;
+    return this.parent();
   }
   /**5 -> 'five' */
   toTextValue() {
@@ -41,7 +41,7 @@ class Values extends Result {
       t.unTag('NumericValue', 'toTextValue()');
       t.tagAs('TextValue', 'toTextValue()');
     });
-    return this;
+    return this.parent();
   }
   /**5th -> 5 */
   toCardinal() {
@@ -50,7 +50,7 @@ class Values extends Result {
       t.unTag('Ordinal', 'toCardinal()');
       t.tagAs('Cardinal', 'toCardinal()');
     });
-    return this;
+    return this.parent();
   }
   /**5 -> 5th */
   toOrdinal() {
@@ -59,7 +59,7 @@ class Values extends Result {
       t.unTag('Cardinal', 'toOrdinal()');
       t.tagAs('Ordinal', 'toOrdinal()');
     });
-    return this;
+    return this.parent();
   }
 }
 

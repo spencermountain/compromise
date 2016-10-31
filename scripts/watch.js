@@ -43,9 +43,12 @@ var options = {
 };
 gaze(['./scripts/watch.js', './src/**/*.js', './scratch_file.js'], options, function(err, watcher) {
   var watched = this.watched();
+  this.on('added', function(filepath) {
+    console.log(filepath + ' was added');
+  });
   // // On changed/added/deleted
   this.on('all', function(event, filepath) {
     run();
-    console.log(filepath + ' was ' + event);
+  // console.log(filepath + ' was ' + event);
   });
 });

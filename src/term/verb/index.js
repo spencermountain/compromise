@@ -13,21 +13,6 @@ let singularMap = {
 };
 
 module.exports = {
-  toPlural : function() {
-    if (pluralMap[this.normal]) {
-      return pluralMap[this.normal];
-    }
-    if (this.tag.PresentTense) {
-      return this.text.replace(/s$/, '');
-    }
-    return this.text;
-  },
-  toSingular : function() {
-    if (singularMap[this.normal]) {
-      return singularMap[this.normal];
-    }
-    return this.text;
-  },
   infinitive: function() {
     return toInfinitive(this);
   },
@@ -36,5 +21,14 @@ module.exports = {
   },
   conjugate: function() {
     return conjugate(this);
+  },
+  pastTense: function() {
+    return conjugate(this).PastTense;
+  },
+  presentTense: function() {
+    return conjugate(this).PresentTense;
+  },
+  futureTense: function() {
+    return conjugate(this).FutureTense;
   }
 };

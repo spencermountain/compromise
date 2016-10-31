@@ -42,7 +42,8 @@ module.exports = {
       return tag;
     }).join(', ');
     let word = this.text;
-    word = '\'' + chalk.green(word || '-') + '\'';
+    word = this.whitespace.before + word + this.whitespace.after;
+    word = '\'' + chalk.green(word || '...') + '\'';
     let silent = '';
     if (this.silent_term) {
       silent = '[' + this.silent_term + ']';

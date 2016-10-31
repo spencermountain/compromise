@@ -35,6 +35,7 @@ const tokenize = (str, context) => {
     ts.terms.forEach((t) => {
       t.context.parent = ts;
     });
+
     log.tell('=sentence' + i + '=', path);
     //step #3
     ts = steps.tagger(ts);

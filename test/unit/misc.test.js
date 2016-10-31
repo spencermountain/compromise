@@ -25,10 +25,22 @@ test('misc:', function(t) {
   m = nlp('2 million five hundred thousand and fifty nine is bigger than 2882').values().toNiceNumber();
   t.equal(m.normal(), '2,001,559 is bigger than 2,882');
 
-  // m = nlp('doug is 5 years old').toTextNumber();
-  // t.equal(m.normal(), 'doug is five years old');
+  m = nlp('doug is 5 years old').values().toTextValue();
+  t.equal(m.normal(), 'doug is five years old');
 
+  m = nlp('i\'d buy those nachos').nouns().toSingular();
+  t.equal(m.normal(), 'i\'d buy that nacho');
 
+  m = nlp('i\'d buy these nachos').nouns().toSingular();
+  t.equal(m.normal(), 'i\'d buy this nacho');
+
+  m = nlp('i\'d buy nachos').nouns().toSingular();
+  t.equal(m.normal(), 'i\'d buy a nacho');
+
+  m = nlp('i\'d buy the nachos').nouns().toSingular();
+  t.equal(m.normal(), 'i\'d buy a nacho');
+  m = nlp('i\'d buy the eggs').nouns().toSingular();
+  t.equal(m.normal(), 'i\'d buy an egg');
 
   t.end();
 });

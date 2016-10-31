@@ -70,11 +70,11 @@ class People extends Result {
         this.append(str);
       }
     }
-    return this;
+    return this.parent();
   }
   stripHonorific() {
     this.remove('#Honorific');
-    return this;
+    return this.parent();
   }
 
 }

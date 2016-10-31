@@ -120,7 +120,7 @@ test('==Value==', function(T) {
       [900000000, 'nine hundred million'],
       [900000080, 'nine hundred million and eighty'],
     ].forEach(function (a) {
-      var str = nlp(a[0]).toTextNumber().normal();
+      var str = nlp(a[0]).values().toTextValue().normal();
       str_test(str, a[0], a[1], t);
     });
     t.end();

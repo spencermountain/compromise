@@ -16,7 +16,7 @@ const toPlural = function() {
     }
     return ts;
   });
-  return this;
+  return this.parent();
 };
 
 module.exports = toPlural;

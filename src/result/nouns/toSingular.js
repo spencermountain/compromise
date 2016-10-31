@@ -2,7 +2,7 @@
 const twistArticle = require('./twistArticle');
 
 //inflect a term or termlist
-const toSingular = function(r) {
+const toSingular = function() {
   this.list = this.list.map((ts) => {
     let len = ts.terms.length;
     for(let i = 0; i < len; i++) {

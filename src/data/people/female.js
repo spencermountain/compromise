@@ -182,7 +182,7 @@ let suffix_compressed = {
   na: 'ed,shau,shaw',
   dy: 'jo,ju,tru',
   ti: 'chris,kris,pat',
-  sy: 'bet,dai,pat',
+  sy: 'bet,pat',
   ri: 'ka,lo,sha',
   la: 'kay,priscil,wil',
   al: 'cryst,kryst,op',

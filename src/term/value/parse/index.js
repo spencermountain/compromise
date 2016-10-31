@@ -73,7 +73,7 @@ const parse = function(t) {
       return null;
     }
     //buildup section, collect 'has' values
-    if (w.match(/^[0-9]$/)) {
+    if (w.match(/^[0-9]+$/)) {
       has['ones'] = parseInt(w, 10); //not technically right
     } else if (words.ones[w]) {
       has['ones'] = words.ones[w];

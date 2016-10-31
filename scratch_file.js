@@ -17,13 +17,12 @@ const nlp = require('./src/index');
 // console.log(require('nlp-corpus').text);
 // var corpus = require('nlp-corpus').text.friends();
 
-// let r = nlp('Air France is cool');
-// let r = nlp('guinea-bissau');
-
 // let r = nlp(`june 5th-7th at 3pm`);
-let r = nlp('i\'d buy apples');
-r.nouns().toSingular();
+// let r = nlp('i\'d buy apples');
+let r = nlp('13 thousand');
+// r.nouns().toSingular();
+r.values().toNumber();
+r.check();
 // r.verbs().toPast();
 // r.normalize();
-// r.check();
 console.log(r.normal());

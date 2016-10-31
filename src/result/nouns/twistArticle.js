@@ -47,8 +47,11 @@ const toSingular = (ts, i) => {
     if (singularMap[article.normal]) {
       article.text = singularMap[article.normal];
     } else {
-      article.text = article.noun.makeArticle(); // (a/an)
+      article.text = ts.terms[i].noun.makeArticle(); // (a/an)
     }
+  } else {
+    let art = ts.terms[i].noun.makeArticle();
+    ts.insertAt(art, i - 1);
   }
   return ts;
 };

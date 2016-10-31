@@ -21,8 +21,8 @@ const nlp = require('./src/index');
 // let r = nlp('guinea-bissau');
 
 // let r = nlp(`june 5th-7th at 3pm`);
-let r = nlp('i\'d buy these nachos');
-// r.nouns().toSingular();
+let r = nlp('i\'d buy apples');
+r.nouns().toSingular();
 // r.verbs().toPast();
 // r.normalize();
 // r.check();

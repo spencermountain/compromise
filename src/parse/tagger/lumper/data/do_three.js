@@ -25,6 +25,12 @@ module.exports = [
     reason: 'Three-word-quote'
   },
   {
+    //1 800 PhoneNumber
+    condition: (a, b, c) => (a.tag.Value && b.tag.Value && c.tag.PhoneNumber && b.normal.length === 3 && a.normal.length < 3),
+    result: 'PhoneNumber',
+    reason: '1-800-PhoneNumber'
+  },
+  {
     //two hundred and three
     condition: (a, b, c) => (a.tag.Value && b.normal === 'and' && c.tag.Value),
     result: 'Value',
@@ -35,5 +41,5 @@ module.exports = [
     condition: (a, b, c) => (a.tag.Value && b.normal === 'point' && c.tag.Value),
     result: 'Value',
     reason: 'Value-point-Value'
-  }
+  },
 ];

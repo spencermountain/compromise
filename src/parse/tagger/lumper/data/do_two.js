@@ -76,6 +76,12 @@ module.exports = [
     reason: 'demonym-currency'
   },
   {
+    //(454) 232-9873
+    condition: (a, b, c) => (a.tag.Value && b.tag.PhoneNumber && a.normal.length < 3),
+    result: 'PhoneNumber',
+    reason: '(800) PhoneNumber'
+  },
+  {
     //7 ft
     condition: (a, b) => ((a.tag.Value && b.tag.Abbreviation) || (a.tag.Abbreviation && b.tag.Value)),
     result: 'Value',

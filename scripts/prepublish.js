@@ -14,7 +14,7 @@ exec(tape + ' ./test/prerelease/index.js | ' + tapSpec);
 // exec('node ./documentation.js');
 
 //run tests on the client-side
-var cmd = browserify + ' ./test/unit_test/*_test.js ';
-cmd += '-o ./test/browser_test/compiled_tests.js ';
-cmd += ' && ' + fileServer + ' test/browser_test -o -c-1';
+var cmd = browserify + ' ./test/unit/*.test.js ';
+cmd += '-o ./test/client/compiled_tests.js ';
+cmd += ' && ' + fileServer + ' test/client -o -c-1';
 exec(cmd);

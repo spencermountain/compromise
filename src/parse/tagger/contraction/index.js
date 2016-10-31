@@ -2,6 +2,7 @@
 const irregulars = require('./01-irregulars');
 const hardOne = require('./02-hardOne');
 const easyOnes = require('./03-easyOnes');
+const numberRange = require('./04-numberRange');
 
 //find and pull-apart contractions
 const interpret = function(ts) {
@@ -11,6 +12,8 @@ const interpret = function(ts) {
   ts = hardOne(ts);
   //check easy ones
   ts = easyOnes(ts);
+  //5-7
+  ts = numberRange(ts);
   return ts;
 };
 

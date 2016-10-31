@@ -63,7 +63,8 @@ module.exports = {
     Fraction: true,
     Cardinal: true,
     TextValue: true,
-    NumericValue: true
+    NumericValue: true,
+    NumberRange: true
   },
   //glue
   Determiner: true,
@@ -75,6 +76,7 @@ module.exports = {
   QuestionWord: true,
   Expression: true,
   Url: true,
+  PhoneNumber: true,
   HashTag: true,
   Email: true,
   Auxillary: true,

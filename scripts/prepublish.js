@@ -2,6 +2,7 @@ require('shelljs/global');
 var browserify = './node_modules/.bin/browserify';
 var tape = './node_modules/tape/bin/tape';
 var tapSpec = './node_modules/tap-spec/bin/cmd.js';
+var fileServer = './node_modules/http-server/bin/http-server';
 
 //run tests server-side
 exec(tape + ' ./test/unit/**/*_test.js | ' + tapSpec);
@@ -10,7 +11,7 @@ exec(tape + ' ./test/unit/**/*_test.js | ' + tapSpec);
 exec(tape + ' ./test/prerelease/index.js | ' + tapSpec);
 
 //generate new docs
-exec('node ./documentation.js');
+// exec('node ./documentation.js');
 
 //run tests on the client-side
 var cmd = browserify + ' ./test/unit_test/*_test.js ';

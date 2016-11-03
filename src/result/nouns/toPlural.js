@@ -2,7 +2,8 @@
 const twistArticle = require('./twistArticle');
 
 //inflect a term or termlist
-const toPlural = function() {
+const toPlural = function(options) {
+  options = options || {};
   this.list = this.list.map((ts) => {
     for(let i = 0; i < ts.terms.length; i++) {
       let t = ts.terms[i];
@@ -11,7 +12,9 @@ const toPlural = function() {
         t.unTag('Singular', 'toPlural()');
         t.tagAs('Plural', 'toPlural()');
         //also twist the determiner, eg -'a' to 'the'
-        ts = twistArticle.toPlural(ts, i);
+        if (!options.leave_article) {
+          ts = twistArticle.toPlural(ts, i);
+        }
       }
     }
     return ts;

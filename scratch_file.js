@@ -17,14 +17,15 @@ const nlp = require('./src/index');
 // console.log(nlp('seven eleven').values().toNumber().normal());
 // r.check();
 // console.log(r.values().parse());
-var nlp = require('./builds/nlp_compromise');
 var lexicon = {
   'jabal al gharbi district': 'Place',
   'sūq ajāj': 'Place'
 };
-var str = 'Humanitarian crisis in jabal al gharbi district. We live in sūq ajāj';
+var str = 'we live in houses and farms. He likes houses.';
 var t = nlp(str, {
   lexicon: lexicon
 });
-console.log(t.match('#Place+').asArray());
+console.log(t.match('#Noun+').nouns().toSingular({
+  leave_article: true
+}).asArray());
 // t.check();

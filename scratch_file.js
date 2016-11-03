@@ -17,7 +17,7 @@ const nlp = require('./src/index');
 // console.log(nlp('seven eleven').values().toNumber().normal());
 // r.check();
 // console.log(r.values().parse());
-
+var nlp = require('./builds/nlp_compromise');
 var lexicon = {
   'jabal al gharbi district': 'Place',
   'sūq ajāj': 'Place'

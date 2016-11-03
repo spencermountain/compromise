@@ -41,6 +41,19 @@ const tryStringFrom = (want, start, s) => {
 const lexicon_lump = function(s) {
   log.here(path);
   let uLexicon = s.context.lexicon || {};
+
+  //try the simpler, known lexicon
+  for (let i = 0; i < s.terms.length - 1; i++) {
+    //try 'A'+'B'
+    let normal = s.terms[i].normal + ' ' + s.terms[i + 1].normal;
+    let text = s.terms[i].text + ' ' + s.terms[i + 1].text;
+    let pos = lexicon[normal] || lexicon[text];
+    if (pos) {
+      combine(s, i);
+      s.terms[i].tagAs(pos, 'multiples-lexicon');
+    }
+  }
+
   //try the user's lexicon
   Object.keys(uLexicon).forEach((str) => {
     for(let i = 0; i < s.terms.length; i++) {

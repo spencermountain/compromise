@@ -11,16 +11,9 @@ const nlp = require('./src/index');
 //     'donkey kong': 'Person'
 //   }
 // };
-// let r = nlp(corpus.parsed.sotu().obama_2012);
-// r.phrases();
 
-// console.log(require('nlp-corpus').text);
-// var corpus = require('nlp-corpus').text.friends();
-
-// let r = nlp(`june 5th-7th at 3pm`);
-// let r = nlp('i\'d buy apples');
-// let r = nlp('four point sixteen');
-let r = nlp('seventy five two');
-// r.nouns().toSingular();
+// let r = nlp('half a million');
+// console.log(nlp('four point sixteen').values().toNumber().normal());
+console.log(nlp('seven eleven').values().toNumber().normal());
 // r.check();
-console.log(r.values().parse());
+// console.log(r.values().parse());

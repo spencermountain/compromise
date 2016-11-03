@@ -41,5 +41,5 @@ module.exports = [
     condition: (a, b, c) => (a.tag.Value && b.normal === 'point' && c.tag.Value),
     result: 'Value',
     reason: 'Value-point-Value'
-  },
+  }
 ];

@@ -21,9 +21,12 @@ class Values extends Result {
   /** five -> '5' */
   toNumber() {
     this.terms.forEach((t) => {
-      t.text = '' + t.value.number();
-      t.unTag('TextValue', 'toNumber()');
-      t.tagAs('NumericValue', 'toNumber()');
+      let num = t.value.number();
+      if (num) {
+        t.text = '' + num;
+        t.unTag('TextValue', 'toNumber()');
+        t.tagAs('NumericValue', 'toNumber()');
+      }
     });
     return this.parent();
   }

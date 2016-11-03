@@ -192,34 +192,33 @@ test('==Value==', function(T) {
       // ['1 1/2 million', 1500000],
       ['negative five', -5],
       ['negative hundred', -100],
-      ['12:32', ''],
-      ['123-1231', ''],
-      ['seven eleven', ''],
-      ['ten-four', ''],
-      ['one seven', ''],
-      ['one ten', ''],
-      ['one twelve', ''],
-      ['one thirty', ''],
-      ['nine fifty', ''],
-      ['five six', ''],
-      ['nine seventy', ''],
-      ['nine two hundred', ''],
-      ['ten one', ''],
-      ['twelve one', ''],
-      ['seventy five two', ''],
-      ['two hundred three hundred', ''],
-      ['sixty fifteen hundred', ''],
-      ['one twenty', ''],
-      ['twenty five twenty', ''],
+      ['12:32', null],
+      ['123-1231', null],
+      ['seven eleven', null],
+      ['ten-four', null],
+      ['one seven', null],
+      ['one ten', null],
+      ['one twelve', null],
+      ['one thirty', null],
+      ['nine fifty', null],
+      ['five six', null],
+      ['nine seventy', null],
+      ['nine two hundred', null],
+      ['ten one', null],
+      ['twelve one', null],
+      ['seventy five two', null],
+      ['two hundred three hundred', null],
+      ['sixty fifteen hundred', null],
+      ['one twenty', null],
+      ['twenty five twenty', null],
     // ['',''],
     // [null,''],
     ].forEach(function (a) {
-      var str = nlp(a[0]).values().toNumber().normal();
-      a[1] = '' + a[1];
-      if (a[1] === '') {
-        a[1] = a[0];
-      }
-      str_test(str, a[0], a[1], t);
+      var arr = nlp(a[0]).values().parse();
+      arr[0] = arr[0] || {};
+      var num = arr[0].number;
+      var msg = 'have: \'' + num + '\'   want:\'' + a[1] + '\'';
+      t.equal(num, a[1], msg);
     });
     t.end();
   });

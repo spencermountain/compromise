@@ -28,6 +28,11 @@ const lexicon_pass = function(s) {
       t.tagAs(found, 'lexicon-match');
       continue;
     }
+    found = check_lexicon(t.text, s);
+    if (found) {
+      t.tagAs(found, 'lexicon-match-text');
+      continue;
+    }
     //support contractions (manually)
     let parts = t.term.contraction();
     if (parts && parts.start) {

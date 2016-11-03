@@ -25,7 +25,7 @@ const parse = function(t) {
     return 1;
   }
   //handle a string of mostly numbers
-  if (t.tag['Numeric'] || str.match(/^[0-9]+(st|nd|rd|th)?$/)) {
+  if (t.tag.NumericValue) {
     return parseNumeric(str);
   }
   let modifier = findModifiers(str);
@@ -73,8 +73,8 @@ const parse = function(t) {
       return null;
     }
     //buildup section, collect 'has' values
-    if (w.match(/^[0-9]+$/)) {
-      has['ones'] = parseInt(w, 10); //not technically right
+    if (w.match(/^[0-9\.]+$/)) {
+      has['ones'] = parseFloat(w, 10); //not technically right
     } else if (words.ones[w]) {
       has['ones'] = words.ones[w];
     } else if (words.teens[w]) {

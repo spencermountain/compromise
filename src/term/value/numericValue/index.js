@@ -1,6 +1,9 @@
 'use strict';
 //turn a number like 5 into an ordinal like 5th
 const toOrdinal = function(num) {
+  if (!num && num !== 0) {
+    return null;
+  }
   //the teens are all 'th'
   let tens = num % 100;
   if (tens > 10 && tens < 20) {

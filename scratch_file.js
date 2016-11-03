@@ -19,10 +19,8 @@ const nlp = require('./src/index');
 
 // let r = nlp(`june 5th-7th at 3pm`);
 // let r = nlp('i\'d buy apples');
-let r = nlp('13 thousand');
+// let r = nlp('four point sixteen');
+let r = nlp('seventy five two');
 // r.nouns().toSingular();
-r.values().toNumber();
-r.check();
-// r.verbs().toPast();
-// r.normalize();
-console.log(r.normal());
+// r.check();
+console.log(r.values().parse());

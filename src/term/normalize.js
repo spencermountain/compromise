@@ -22,6 +22,8 @@ const normalize = function(term) {
   if (term.term.isAcronym()) {
     str = str.replace(/\./g, '');
   }
+  //nice-numbers
+  str = str.replace(/([0-9]),([0-9])/g, '$1$2');
   term.normal = str;
 };
 

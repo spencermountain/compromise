@@ -29,11 +29,11 @@ const value = {
 
   /** return a float/integer version of this number*/
   number: function() {
-    let n = parseNumber(this);
+    let num = parseNumber(this);
     if (this.tag.Ordinal) {
-      return numericValue.ordinal(n);
+      return numericValue.ordinal(num);
     }
-    return n;
+    return num;
   },
 
   /** return a textual version of this number*/
@@ -47,9 +47,12 @@ const value = {
   },
 
   nicenumber: function() {
-    let n = parseNumber(this);
-    n = '' + n;
-    let x = n.split('.');
+    let num = parseNumber(this);
+    if (!num && num !== 0) {
+      return null;
+    }
+    num = '' + num;
+    let x = num.split('.');
     let x1 = x[0];
     let x2 = x.length > 1 ? '.' + x[1] : '';
     let rgx = /(\d+)(\d{3})/;
@@ -57,21 +60,6 @@ const value = {
       x1 = x1.replace(rgx, '$1' + ',' + '$2');
     }
     return x1 + x2;
-  },
-
-  /** generate all forms for this number */
-  parse: function() {
-    let num = numericValue(this);
-    return {
-      Number: {
-        Cardinal: num,
-        Ordinal: toNumber.ordinal(num)
-      },
-      Text: {
-        Cardinal: textValue.cardinal(num),
-        Ordinal: textValue.ordinal(num)
-      }
-    };
   }
 
 };

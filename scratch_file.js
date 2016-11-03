@@ -19,16 +19,12 @@ const nlp = require('./src/index');
 // console.log(r.values().parse());
 
 var lexicon = {
-  // 'al gharbi district': 'Place',
-  // 'suq ajaj': 'Place',
-  // 'sūq ajāj': 'Place'
-  // 'jabal al gharbi district': 'Place'
-  'ajāj': 'Place'
+  'jabal al gharbi district': 'Place',
+  'sūq ajāj': 'Place'
 };
-// var str = 'Humanitarian crisis in jabal al gharbi district. We live in sūq ajāj';
-var str = 'ajāj';
+var str = 'Humanitarian crisis in jabal al gharbi district. We live in sūq ajāj';
 var t = nlp(str, {
   lexicon: lexicon
 });
-// console.log(t.match('#Place+').asArray());
-t.check();
+console.log(t.match('#Place+').asArray());
+// t.check();

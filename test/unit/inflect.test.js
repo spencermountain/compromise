@@ -4,31 +4,32 @@ var str_test = require('./lib/fns').str_test;
 
 test('==Plurals==', function(T) {
 
-  // T.test('is_plural():', function(t) {
-  //   [
-  //     ['octopus', false],
-  //     ['tree', false],
-  //     ['trees', true],
-  //     ['i', false],
-  //     // ["we", true],
-  //     ['mayor of chicago', false],
-  //     ['mayors of chicago', true],
-  //     ['octopus', false],
-  //     ['octopi', true],
-  //     ['eyebrow', false],
-  //     ['eyebrows', true],
-  //     ['child', false],
-  //     ['children', true],
-  //     ['spencer\'s', false],
-  //     ['toronto\'s', false],
-  //     // ['simpsons\'', false],
-  //     ['she\'s', false],
-  //   ].forEach(function (a) {
-  //     var str = nlp(a[0]).isPlural();
-  //     str_test(str, a[0], a[1], t);
-  //   });
-  //   t.end();
-  // });
+  T.test('is_plural():', function(t) {
+    [
+      ['octopus', false],
+      ['tree', false],
+      ['trees', true],
+      ['i', false],
+      // ["we", true],
+      ['mayor of chicago', false],
+      ['mayors of chicago', true],
+      ['octopus', false],
+      ['octopi', true],
+      ['eyebrow', false],
+      ['eyebrows', true],
+      ['child', false],
+      ['children', true],
+      ['spencer\'s', false],
+      ['toronto\'s', false],
+      // ['simpsons\'', false],
+      ['she\'s', false],
+    ].forEach(function (a) {
+      var term = nlp(a[0]).nouns.list[0].terms[0];
+      var msg = a[0] + ' ' + term.noun.isPlural();
+      t.equal(term.noun.isPlural(), a[1], msg);
+    });
+    t.end();
+  });
 
   T.test('singularize:', function(t) {
     [

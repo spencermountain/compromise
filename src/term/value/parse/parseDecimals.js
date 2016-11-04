@@ -1,5 +1,5 @@
 'use strict';
-const words = require('./data')
+const words = require('./data');
 
 //concatenate into a string with leading '0.'
 const parseDecimals = function(arr) {
@@ -8,8 +8,12 @@ const parseDecimals = function(arr) {
     let w = arr[i];
     if (words.ones[w]) {
       str += words.ones[w];
+    } else if (words.teens[w]) {
+      str += words.teens[w];
+    } else if (words.tens[w]) {
+      str += words.tens[w];
     } else if (w.match(/^[0-9]$/)) {
-      str += w
+      str += w;
     } else {
       return 0;
     }
@@ -17,4 +21,4 @@ const parseDecimals = function(arr) {
   return parseFloat(str);
 };
 
-module.exports = parseDecimals
+module.exports = parseDecimals;

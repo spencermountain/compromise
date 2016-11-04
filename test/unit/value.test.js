@@ -216,7 +216,7 @@ test('==Value==', function(T) {
     ].forEach(function (a) {
       var arr = nlp(a[0]).values().parse();
       arr[0] = arr[0] || {};
-      var num = arr[0].number;
+      var num = arr[0].number || null;
       var msg = 'have: \'' + num + '\'   want:\'' + a[1] + '\'';
       t.equal(num, a[1], msg);
     });

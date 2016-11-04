@@ -23,7 +23,7 @@ test('misc:', function(t) {
   t.equal(m.normal(), '2001559 is bigger than 2882');
 
   m = nlp('2 million five hundred thousand and fifty nine is bigger than 2882').values().toNiceNumber();
-  t.equal(m.normal(), '2,001,559 is bigger than 2,882');
+  t.equal(m.plaintext(), '2,001,559 is bigger than 2,882');
 
   m = nlp('doug is 5 years old').values().toTextValue();
   t.equal(m.normal(), 'doug is five years old');

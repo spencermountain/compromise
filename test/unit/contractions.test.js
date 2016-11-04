@@ -103,20 +103,20 @@ test('==contractions==', function(T) {
     t.end();
   });
 
-  // T.test('contract:', function(t) {
-  //   [
-  //     [`he is a hero`, `he's`],
-  //     [`she is here`, `she's`],
-  //     [`it is a hero`, `it's`],
-  //     [`he would win`, `he'd`],
-  //     [`they would win`, `they'd`],
-  //     [`they have begun`, `they've`],
-  //   ].forEach(function (a) {
-  //     var term = nlp(a[0]).contract().list[0].terms[0];
-  //     str_test(term.normal, a[0], a[1], t);
-  //   });
-  //   t.end();
-  // });
+  T.test('contract:', function(t) {
+    [
+      [`he is a hero`, `he's`],
+      [`she is here`, `she's`],
+      [`it is a hero`, `it's`],
+      [`he would win`, `he'd`],
+      [`they would win`, `they'd`],
+      [`they have begun`, `they've`],
+    ].forEach(function (a) {
+      var term = nlp(a[0]).contractions().contract().list[0].terms[0];
+      str_test(term.normal, a[0], a[1], t);
+    });
+    t.end();
+  });
 
   T.test('preserve-contractions:', function(t) {
     [

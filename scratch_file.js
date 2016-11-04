@@ -12,7 +12,7 @@ const nlp = require('./src/index');
 //   }
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
-let r = nlp('buys');
+let r = nlp('fuzzed');
 console.log(r.tag('Verb').verbs().parse());
 // console.log(t.noun.isPlural());
 // console.log(r.adjectives().parse());

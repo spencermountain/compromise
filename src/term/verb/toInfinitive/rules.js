@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 //rules for turning a verb into infinitive form
 let rules = {
   Participle: [
@@ -25,7 +25,7 @@ let rules = {
       reg: /(tch|sh)es$/i,
       to: '$1'
     }, {
-      reg: /(ss)es$/i,
+      reg: /(ss|zz)es$/i,
       to: '$1'
     }, {
       reg: /([tzlshicgrvdnkmu])es$/i,
@@ -98,6 +98,9 @@ let rules = {
       reg: /(ued)$/i,
       to: 'ue'
     }, {
+      reg: /([aeiou]zz)ed$/i,
+      to: '$1'
+    }, {
       reg: /(e|i)lled$/i,
       to: '$1ll'
     }, {
@@ -153,4 +156,4 @@ let rules = {
       to: '$1t'
     }]
 };
-module.exports = rules
+module.exports = rules;

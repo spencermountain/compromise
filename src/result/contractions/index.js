@@ -1,5 +1,6 @@
 'use strict';
 const Result = require('../index');
+const contract = require('./contract');
 
 class Contractions extends Result {
   constructor(list) {
@@ -25,7 +26,7 @@ class Contractions extends Result {
     return this.parent();
   }
   contract() {
-    return this.parent();
+    return contract(this.parent());
   }
 }
 

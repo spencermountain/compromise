@@ -12,8 +12,9 @@ const nlp = require('./src/index');
 //   }
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
-let r = nlp('fuzzed');
-console.log(r.tag('Verb').verbs().parse());
+let r = nlp('would not');
+r.contractions().contract();
+// console.log(r.tag('Verb').verbs().parse());
 // console.log(t.noun.isPlural());
 // console.log(r.adjectives().parse());
 // console.log(r.list[0].terms[0].term.isAcronym());

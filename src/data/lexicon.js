@@ -101,7 +101,7 @@ data.nouns.forEach((n) => {
   lexicon[n] = 'Singular';
   let t = new Term(n);
   t.tag.Noun = true;
-  let plural = t.noun.toPlural();
+  let plural = t.noun.plural();
   lexicon[plural] = 'Plural';
 });
 

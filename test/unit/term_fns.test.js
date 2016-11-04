@@ -9,9 +9,9 @@ test('==Term_fns==', function(T) {
   T.test('noun:', function(t) {
 
     var term = firstTerm('flower');
-    t.equal(term.noun.toPlural(), 'flowers');
+    t.equal(term.noun.plural(), 'flowers');
     term = firstTerm('flowers');
-    t.equal(term.noun.toSingular(), 'flower');
+    t.equal(term.noun.singular(), 'flower');
 
     t.end();
   });

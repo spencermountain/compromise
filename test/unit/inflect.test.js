@@ -101,7 +101,7 @@ test('==Plurals==', function(T) {
       ['hooves', 'hoof']
     ].forEach(function (a) {
       var term = nlp(a[0]).tag('Noun').list[0].terms[0];
-      var str = term.noun.toSingular();
+      var str = term.noun.singular();
       str_test(str, a[0], a[1], t);
     });
     t.end();
@@ -187,7 +187,7 @@ test('==Plurals==', function(T) {
       ['zoos', 'zoos'],
     ].forEach(function (a) {
       var term = nlp(a[0]).tag('Noun').list[0].terms[0];
-      var str = term.noun.toPlural();
+      var str = term.noun.plural();
       str_test(str, a[0], a[1], t);
     });
     t.end();

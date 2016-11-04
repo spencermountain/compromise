@@ -12,18 +12,18 @@ const irregulars = {
 };
 //pronounced letters of acronyms that get a 'an'
 const an_acronyms = {
-  A: true,
-  E: true,
-  F: true,
-  H: true,
-  I: true,
-  L: true,
-  M: true,
-  N: true,
-  O: true,
-  R: true,
-  S: true,
-  X: true
+  a: true,
+  e: true,
+  f: true,
+  h: true,
+  i: true,
+  l: true,
+  m: true,
+  n: true,
+  o: true,
+  r: true,
+  s: true,
+  x: true
 };
 //'a' regexes
 const a_regexs = [
@@ -40,7 +40,8 @@ const indefinite_article = function(t) {
     return irregulars[str];
   }
   //spelled-out acronyms
-  if (t.term.isAcronym() && an_acronyms.hasOwnProperty(str.substr(0, 1))) {
+  let firstLetter = str.substr(0, 1);
+  if (t.term.isAcronym() && an_acronyms.hasOwnProperty(firstLetter)) {
     return 'an';
   }
   //'a' regexes

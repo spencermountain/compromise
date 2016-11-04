@@ -33,7 +33,7 @@ const findArticle = function(ts, i) {
   return null;
 };
 
-const toPlural = (ts, i) => {
+const plural = (ts, i) => {
   let article = findArticle(ts, i);
   if (article && pluralMap[article.normal]) {
     article.text = pluralMap[article.normal];
@@ -41,7 +41,7 @@ const toPlural = (ts, i) => {
   return ts;
 };
 
-const toSingular = (ts, i) => {
+const singular = (ts, i) => {
   let article = findArticle(ts, i);
   if (article) {
     if (singularMap[article.normal]) {
@@ -57,6 +57,6 @@ const toSingular = (ts, i) => {
 };
 
 module.exports = {
-  toPlural: toPlural,
-  toSingular: toSingular,
+  plural: plural,
+  singular: singular,
 };

@@ -10,7 +10,11 @@ class Nouns extends Result {
   }
   parse() {
     return this.terms.map((t) => {
-      return {};
+      return {
+        article: t.noun.makeArticle(),
+        singular: t.noun.singular(),
+        plural: t.noun.plural(),
+      };
     });
   }
 }

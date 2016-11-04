@@ -12,8 +12,9 @@ const corpus = require('nlp-corpus');
 //   }
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
-let r = nlp('caring');
-console.log(r.adjectives().parse());
+let r = nlp('F.B.I');
+// console.log(r.adjectives().parse());
+console.log(r.list[0].terms[0].term.isAcronym());
 // r.verbs().toFuture();
 // let r = nlp('would fuzz').verbs().conjugate();
 // r.check();

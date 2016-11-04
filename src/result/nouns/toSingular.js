@@ -9,12 +9,12 @@ const toSingular = function(options) {
     for(let i = 0; i < len; i++) {
       let t = ts.terms[i];
       if (t.tag.Noun && t.noun.hasPlural()) {
-        t.text = t.noun.toSingular() || t.text;
+        t.text = t.noun.singular() || t.text;
         t.unTag('Plural', 'toSingular()');
         t.tagAs('Singular', 'toSingular()');
         //also twist the determiner, eg -'a' to 'the'
         if (!options.leave_article) {
-          ts = twistArticle.toSingular(ts, i);
+          ts = twistArticle.singular(ts, i);
         }
       }
     }

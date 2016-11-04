@@ -6,13 +6,13 @@ const toSingular = require('./inflect/toSingle');
 const isPlural = require('./inflect/isPlural');
 
 module.exports = {
-  toPlural : function() {
+  plural : function() {
     if (!this.noun.hasPlural() || this.noun.isPlural()) {
       return this.text;
     }
     return toPlural(this.text);
   },
-  toSingular : function() {
+  singular : function() {
     if (!this.noun.hasPlural() || !this.noun.isPlural()) {
       return this.text;
     }

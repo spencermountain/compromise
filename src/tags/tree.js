@@ -81,6 +81,7 @@ module.exports = {
   Email: true,
   Auxillary: true,
   Negative: true,
+  Contraction: true,
 
   ValuePhrase: true,
   AdjectivePhrase: true,

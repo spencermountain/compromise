@@ -8,6 +8,8 @@ const fixContraction = (ts, arr, i) => {
   //add the interpretation silently
   t.silent_term = arr[0];
   t2.silent_term = arr[1];
+  t.tagAs('Contraction', 'tagger-contraction');
+  t2.tagAs('Contraction', 'tagger-contraction');
   return ts;
 };
 

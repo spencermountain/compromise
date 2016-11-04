@@ -1,3 +1,13 @@
+term.punctuation reckoning  
+  * nlp('in your bones').nouns().toPlural()
+
+contraction-use internal
+contraction.contract()
+
+auxillaries+conjugation
+
+term.untag() logic
+
 
 # top-level
 ###selections  (non-destructive)

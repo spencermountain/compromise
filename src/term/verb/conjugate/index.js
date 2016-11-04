@@ -7,6 +7,10 @@ const generic = require('./generic');
 
 //turn a verb into all it's forms
 const conjugate = function(t) {
+  //dont conjugate didn't
+  if (t.tag.Contraction) {
+    t.text = t.silent_term;
+  }
   let all = {
     PastTense: null,
     PresentTense: null,

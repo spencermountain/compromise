@@ -15,6 +15,7 @@ class Verbs extends Result {
   }
   toPast() {
     let t = this.terms[0];
+    this.contractions().expand();
     if (t) {
       t.text = t.verb.pastTense();
     }
@@ -22,6 +23,7 @@ class Verbs extends Result {
   }
   toPresent() {
     let t = this.terms[0];
+    this.contractions().expand();
     if (t) {
       t.text = t.verb.presentTense();
     }
@@ -29,6 +31,7 @@ class Verbs extends Result {
   }
   toFuture() {
     let t = this.terms[0];
+    this.contractions().expand();
     if (t) {
       t.text = t.verb.futureTense();
     }

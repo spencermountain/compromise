@@ -31,13 +31,16 @@ const irregular = {
     Actor: 'babysitter'
   },
   be: { // this is crazy-hard and shouldn't be here
-    PastTense: 'been',
+    PastTense: 'was',
     Participle: 'been',
     PresentTense: 'is',
     // FutureTense: 'will be',
     Actor: '',
     Gerund: 'am'
   },
+  // will: {
+  //   PastTense: 'will',
+  // },
   is: {
     PastTense: 'was',
     PresentTense: 'is',

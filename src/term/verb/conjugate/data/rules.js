@@ -167,4 +167,12 @@ module.exports = [
       gr: '$1$2$2ing'
     },
   },
+  {
+    reg: /([aeiou]zz)$/i,
+    repl: {
+      pr: '$1es',
+      pa: '$1ed',
+      gr: '$1ing'
+    }
+  }
 ];

@@ -12,9 +12,11 @@ const corpus = require('nlp-corpus');
 //   }
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
-let r = nlp('F.B.I');
+let t = nlp('she\'s').list[0].terms[0];
+console.log(t.tag);
+console.log(t.noun.isPlural());
 // console.log(r.adjectives().parse());
-console.log(r.list[0].terms[0].term.isAcronym());
+// console.log(r.list[0].terms[0].term.isAcronym());
 // r.verbs().toFuture();
 // let r = nlp('would fuzz').verbs().conjugate();
 // r.check();

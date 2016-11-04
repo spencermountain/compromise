@@ -10,7 +10,6 @@ test('==Plurals==', function(T) {
       ['tree', false],
       ['trees', true],
       ['i', false],
-      // ["we", true],
       ['mayor of chicago', false],
       ['mayors of chicago', true],
       ['octopus', false],
@@ -24,7 +23,7 @@ test('==Plurals==', function(T) {
       // ['simpsons\'', false],
       ['she\'s', false],
     ].forEach(function (a) {
-      var term = nlp(a[0]).nouns.list[0].terms[0];
+      var term = nlp(a[0]).list[0].terms[0];
       var msg = a[0] + ' ' + term.noun.isPlural();
       t.equal(term.noun.isPlural(), a[1], msg);
     });

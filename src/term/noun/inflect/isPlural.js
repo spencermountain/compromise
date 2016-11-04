@@ -4,7 +4,7 @@ const rules = require('./data/indicators');
 
 //first, try to guess based on existing tags
 const couldEvenBePlural = (t) => {
-  if (t.tag.Person || t.tag.Value || t.tag.Organization || t.tag.Date) {
+  if (t.tag.Person || t.tag.Pronoun || t.tag.Place || t.tag.Possessive || t.tag.Value || t.tag.Organization || t.tag.Date) {
     return false;
   }
   return true;

@@ -12,8 +12,9 @@ const nlp = require('./src/index');
 //   }
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
-let r = nlp('would not');
-r.contractions().contract();
+let r = nlp('jan 24, 2011 12:00');
+let r = nlp('friday 03:00 am');
+r.match('#Date+');
 // console.log(r.tag('Verb').verbs().parse());
 // console.log(t.noun.isPlural());
 // console.log(r.adjectives().parse());

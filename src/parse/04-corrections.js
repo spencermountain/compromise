@@ -108,6 +108,11 @@ const corrections = function(r) {
   r.match('(early|late) (at|in)? the? (night|evening|morning|afternoon|day|daytime)').tag('Time');
   //march 12th 2018
   r.match('#Month #Value #Cardinal').tag('Date', 'month-value-cardinal');
+  r.match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('Date');
+  r.match('#Date #Value').tag('Date', '');
+  r.match('#Value #Date').tag('Date', '');
+  r.match('#Date #Preposition #Date').tag('Date', '');
+
   return r;
 };
 

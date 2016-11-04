@@ -57,6 +57,10 @@ const Adjectives = require('./adjectives');
 Result.prototype.adjectives = function() {
   return new Adjectives(this.list);
 };
+const Adverbs = require('./adverbs');
+Result.prototype.adverbs = function() {
+  return new Adverbs(this.list);
+};
 const Nouns = require('./nouns');
 Result.prototype.nouns = function() {
   return new Nouns(this.list);

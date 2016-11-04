@@ -25,6 +25,7 @@ class Term {
     bindMethods(require('./verb'), 'verb', this);
     bindMethods(require('./noun'), 'noun', this);
     bindMethods(require('./adjective'), 'adjective', this);
+    bindMethods(require('./adverb'), 'adverb', this);
     bindMethods(require('./value'), 'value', this);
     bindMethods(require('./pronoun'), 'pronoun', this);
     bindMethods(require('./render'), 'render', this);

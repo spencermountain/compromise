@@ -12,10 +12,9 @@ const corpus = require('nlp-corpus');
 //   }
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
-let r = nlp('asdf');
-r.tag('PastTense');
-r.unTag('PastTense');
+let r = nlp('caring');
+console.log(r.adjectives().parse());
 // r.verbs().toFuture();
 // let r = nlp('would fuzz').verbs().conjugate();
-r.check();
+// r.check();
 // console.log(r.plaintext());

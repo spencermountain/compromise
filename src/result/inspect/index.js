@@ -70,7 +70,7 @@ const genericMethods = (Result) => {
     /**remove a tag in all the terms in this result (that had it) */
     unTag: function(tag, reason) {
       this.terms.filter((t) => t.sel).forEach((t) => {
-        delete t.tag[tag];
+        t.unTag(tag, reason);
       });
       return this;
     },

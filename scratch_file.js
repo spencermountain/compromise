@@ -11,9 +11,11 @@ const corpus = require('nlp-corpus');
 //     'donkey kong': 'Person'
 //   }
 // };
-let txt = corpus.parsed.weezer().sweatersong;
-let r = nlp('i did not walk');
-r.verbs().toFuture();
-// let r = nlp('google inc');
+// let txt = corpus.parsed.weezer().sweatersong;
+let r = nlp('asdf');
+r.tag('PastTense');
+r.unTag('PastTense');
+// r.verbs().toFuture();
+// let r = nlp('would fuzz').verbs().conjugate();
 r.check();
-console.log(r.plaintext());
+// console.log(r.plaintext());

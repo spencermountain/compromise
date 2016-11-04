@@ -57,7 +57,27 @@ const set_tag = function(term, tag, reason) {
   return;
 };
 
+const unTag = (term, tag, reason) => {
+  log.tell('removing \'' + tag + '\'  - ' + reason);
+  if (!term || !tag || !term.tag[tag]) {
+    return;
+  }
+  delete term.tag[tag];
+  // //also set tags by deduction
+  let tags = tagset[tag].is;
+  for (let i = 0; i < tags.length; i++) {
+    if (term.tag[tags[i]]) {
+      log.tell('removing \'' + tags[i] + '\'  - deduction');
+      delete term.tag[tags[i]];
+    }
+  }
+  return;
+};
+
 module.exports = {
   set_tag: set_tag,
+  unTag: unTag,
   canBe: canBe
 };
+
+// console.log(tagset['Person']);

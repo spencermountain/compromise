@@ -1,13 +1,14 @@
 term.punctuation reckoning  
   * nlp('in your bones').nouns().toPlural()
 
-contraction-use internal
 contraction.contract()
 
 auxillaries+conjugation
+  * nlp('i did not walk');
 
 term.untag() logic
 
+fuzz.conjugate
 
 # top-level
 ###selections  (non-destructive)

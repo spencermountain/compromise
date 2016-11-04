@@ -42,9 +42,7 @@ test('misc:', function(t) {
   m = nlp('i\'d buy the eggs').nouns().toSingular();
   t.equal(m.normal(), 'i\'d buy an egg');
 
-
   m = nlp('men go').verbs().toPast().nouns().toSingular();
   t.equal(m.normal(), 'a man went');
-
   t.end();
 });

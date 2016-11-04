@@ -1,5 +1,5 @@
 'use strict';
-const set_tag = require('./tag').set_tag;
+const tg = require('./tag');
 const addNormal = require('./normalize');
 const addRoot = require('./root');
 const fns = require('./paths').fns;
@@ -79,12 +79,11 @@ class Term {
 
   /** set the term as this part-of-speech */
   tagAs(tag, reason) {
-    set_tag(this, tag, reason);
+    tg.set_tag(this, tag, reason);
   }
   /** remove this part-of-speech from the term*/
   unTag(tag, reason) {
-    // log.tell('removing \'' + tag + '\'  - ' + reason);
-    delete this.tag[tag];
+    tg.unTag(this, tag, reason);
   }
 
   /** make a copy with no references to the original  */

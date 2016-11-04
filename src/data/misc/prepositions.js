@@ -51,7 +51,6 @@ module.exports = [
   'till',
   'to',
   'towards',
-  'unless',
   'unlike',
   'until',
   'up',

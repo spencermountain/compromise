@@ -10,7 +10,7 @@ class Verbs extends Result {
   }
   parse() {
     return this.terms.map((t) => {
-      return {};
+      return t.verb.conjugate();
     });
   }
   toPast() {

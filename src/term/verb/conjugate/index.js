@@ -30,7 +30,7 @@ const conjugate = function(t) {
     all['Infinitive'] = t.verb.infinitive() || '';
   }
   //check irregular forms
-  all = Object.assign(all, checkIrregulars(t.normal));
+  all = Object.assign(all, checkIrregulars(all['Infinitive']));
 
   //ok, send this infinitive to all conjugators
   let inf = all['Infinitive'] || t.normal;

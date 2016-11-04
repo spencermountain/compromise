@@ -2,7 +2,7 @@
 //turn a infinitiveVerb, like "walk" into an adjective like "walkable"
 
 const rules = [
-  [/y$/, 'i'], //relay - reliable
+  [/[^aeiou]y$/, 'i'], //relay - reliable
   [/([aeiou][n])$/, '$1n'], //win - winnable
 ];
 
@@ -51,3 +51,4 @@ const toAdjective = function(str) {
 };
 
 module.exports = toAdjective;
+// console.log(toAdjective('buy'));

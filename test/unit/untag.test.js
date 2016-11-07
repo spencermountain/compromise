@@ -17,6 +17,7 @@ test('tag/untag:', function(t) {
     'FemalePerson',
     'Infinitive',
     'HashTag',
+    'Month',
   ];
   terms.forEach((tag) => {
     m = nlp('aasdf').tag(tag).unTag(tag);

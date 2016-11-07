@@ -3,8 +3,8 @@
 //list of inconsistent parts-of-speech
 const conflicts = [
   //top-level pos are all inconsistent
-  ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression'],
-  //nouns
+  ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression', 'Url', 'PhoneNumber', 'Email'],
+  //exlusive-nouns
   ['Person', 'Organization', 'Value', 'Place', 'Actor', 'Demonym', 'Pronoun'],
   //things that can't be plural
   ['Plural', 'Singular'],
@@ -13,7 +13,7 @@ const conflicts = [
   ['Plural', 'Organization'],
   ['Plural', 'Currency'],
   ['Plural', 'Ordinal'],
-  //people
+  //exlusive-people
   ['MalePerson', 'FemalePerson'],
   //adjectives
   ['Comparative', 'Superlative'],
@@ -33,18 +33,13 @@ const conflicts = [
   ['Gerund', 'PresentTense'],
   //more verbs
   ['Copula', 'Modal'],
-  //web text
-  ['HashTag', 'Noun', 'Verb', 'Adjective', 'Adverb'],
-  ['Email', 'Verb', 'Adjective', 'Adverb'],
-  ['Url', 'Verb', 'Adjective', 'Adverb'],
-  ['HashTag', 'Email', 'Url'],
   //date
   ['Month', 'Day', 'Year', 'Duration'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
-  ['Date', 'Verb', 'Adjective'],
-  ['Month', 'Verb'],
+  ['Date', 'Verb', 'Adjective', 'Person'],
+  // ['Month', 'Verb', 'Person'],
   //phrases
-  // ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase'],
+  ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase'],
   //a/an -> 1
   ['Value', 'Determiner']
 ];
@@ -60,3 +55,5 @@ const find = (tag) => {
 };
 
 module.exports = find;
+
+// console.log(find('Person'));

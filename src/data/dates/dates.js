@@ -68,6 +68,7 @@ for (let i = 0; i < len; i++) {
 }
 durations.push('century');
 durations.push('centuries');
+durations.push('seconds');
 
 let relative = [
   'yesterday',

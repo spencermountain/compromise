@@ -70,19 +70,22 @@ module.exports = {
   Determiner: true,
   Conjunction: true,
   Preposition: true,
-
-  Condition: true,
-  TitleCase: true,
   QuestionWord: true,
   Expression: true,
   Url: true,
   PhoneNumber: true,
   HashTag: true,
   Email: true,
+
+  //non-exclusive
+  Condition: true,
+  TitleCase: true,
   Auxillary: true,
   Negative: true,
   Contraction: true,
 
+  //phrases
   ValuePhrase: true,
   AdjectivePhrase: true,
+
 };

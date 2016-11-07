@@ -67,6 +67,7 @@ const unTag = (term, tag, reason) => {
   let tags = tagset[tag].is;
   for (let i = 0; i < tags.length; i++) {
     if (term.tag[tags[i]]) {
+      // console.log('removing \'' + tags[i] + '\'  - deduction');
       log.tell('removing \'' + tags[i] + '\'  - deduction');
       delete term.tag[tags[i]];
     }

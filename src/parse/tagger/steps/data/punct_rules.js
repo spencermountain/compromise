@@ -7,8 +7,8 @@ module.exports = [
   ['\\+?[0-9]', 'NumericValue'], //like +5
   ['[0-9]([0-9,\.]*?)?]+', 'NumericValue'], //like 5
   ['[0-9]{1,3}(st|nd|rd|th)?-[0-9]{1,3}(st|nd|rd|th)?', 'NumberRange'], //5-7
-  ['[12]?[0-9](:[0-5][0-9])? ?(am|pm)', 'Time'], //4pm
-  ['[12]?[0-9](:[0-5][0-9]) ?(am|pm)?', 'Time'], //4:00pm
+  ['[012]?[0-9](:[0-5][0-9])? ?(am|pm)', 'Time'], //4pm
+  ['[012]?[0-9](:[0-5][0-9]) ?(am|pm)?', 'Time'], //4:00pm
   ['[PMCE]ST', 'Time'], //PST, time zone abbrevs
   ['utc ?[\+\-]?[0-9]\+?', 'Time'], //UTC 8+
   ['[a-z0-9]*? o\'?clock', 'Time'], //3 oclock

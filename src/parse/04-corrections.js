@@ -1,6 +1,8 @@
 'use strict';
 const log = require('./tagger/paths').log;
 const path = 'correction';
+const date_corrections = require('./corrections/date_corrections');
+
 //
 const corrections = function(r) {
   log.here(path);
@@ -68,13 +70,6 @@ const corrections = function(r) {
   //big dreams, critical thinking
   r.match('#Adjective #PresentTense').term(1).tag('Noun', 'adj-presentTense');
 
-  //ambiguous 'may' and 'march'
-  r.match('(may|march) #Determiner').term(0).tag('Month', 'correction-may');
-  r.match('(may|march) #Value').term(0).tag('Month', 'correction-may');
-  r.match('(may|march) #Date').term(0).tag('Month', 'correction-may');
-  r.match('#Date (may|march)').term(1).tag('Month', 'correction-may');
-  r.match('(next|this|last) (may|march)').term(1).tag('Month', 'correction-may'); //maybe not 'this'
-
   //'a/an' can mean 1
   r.match('(a|an) (#Duration|#Value)').term(0).tag('Value');
   //half a million
@@ -82,36 +77,7 @@ const corrections = function(r) {
   //all values are either ordinal or cardinal
   r.match('#Value').match('!#Ordinal').tag('#Cardinal');
 
-  //time
-  r.match('#Cardinal #Time').tag('Time', 'value-time');
-  r.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time');
-  r.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm');
-  r.match('all day').tag('Time', 'all-day');
-  //may the 5th
-  r.match('#Date the? #Ordinal').term(1).tag('Date', 'correction-date');
-  //5th of March
-  r.match('#Value of? #Month').term(1).tag('Date', 'value-of-month');
-  //5 March
-  r.match('#Cardinal #Month').tag('Date', 'cardinal-month');
-  //by 5 March
-  r.match('due? (by|before|after|until) #Date').tag('Date', 'by-date');
-  //tomorrow before 3
-  r.match('#Date (by|before|after|at|@|about) #Cardinal').remove('^#Date').tag('Time', 'before-Cardinal');
-  //2pm est
-  r.match('#Time (eastern|pacific|central|mountain)').term(1).tag('Time', 'timezone');
-  r.match('#Time (est|pst|gmt)').term(1).tag('Time', 'timezone abbr');
-  //saturday am
-  r.match('#Date (am|pm)').term(1).unTag('Verb').unTag('Copula').tag('Time', 'date-am');
-  //late at night
-  r.match('at night').tag('Time');
-  r.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time');
-  r.match('(early|late) (at|in)? the? (night|evening|morning|afternoon|day|daytime)').tag('Time');
-  //march 12th 2018
-  r.match('#Month #Value #Cardinal').tag('Date', 'month-value-cardinal');
-  r.match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('Date');
-  r.match('#Date #Value').tag('Date', '');
-  r.match('#Value #Date').tag('Date', '');
-  r.match('#Date #Preposition #Date').tag('Date', '');
+  r = date_corrections(r);
 
   return r;
 };

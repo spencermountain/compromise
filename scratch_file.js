@@ -2,6 +2,7 @@
 //this file is not included in the build.
 //use it for messing around.
 const nlp = require('./src/index');
+const Term = require('./src/term');
 // const corpus = require('nlp-corpus');
 // const nlp = require('./builds/nlp_compromise');
 
@@ -12,14 +13,12 @@ const nlp = require('./src/index');
 //   }
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
-let r = nlp('jan 24, 2011 12:00');
-let r = nlp('friday 03:00 am');
-r.match('#Date+');
-// console.log(r.tag('Verb').verbs().parse());
-// console.log(t.noun.isPlural());
-// console.log(r.adjectives().parse());
-// console.log(r.list[0].terms[0].term.isAcronym());
-// r.verbs().toFuture();
-// let r = nlp('would fuzz').verbs().conjugate();
-r.check();
-// console.log(r.plaintext());
+
+// let r = nlp('in april');
+// let r = nlp('1 April to 31 August');
+// r.check();
+let t = new Term('april');
+t.tagAs('FemalePerson');
+// console.log(t.tag);
+t.tagAs('Month');
+console.log(t.tag);

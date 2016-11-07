@@ -21,7 +21,6 @@ let main = [
   ['appendix', 'appendices'],
   ['criterion', 'criteria'],
   ['man', 'men'],
-  ['sex', '_es'],
   ['rodeo', '_s'],
   ['epoch', '_s'],
   ['zero', '_s'],
@@ -68,13 +67,13 @@ main = main.map(function(a) {
 });
 //build-out two mappings
 const toSingle = main.reduce((h, a) => {
-  h[a[1]] = a[0]
-  return h
-}, {})
+  h[a[1]] = a[0];
+  return h;
+}, {});
 const toPlural = main.reduce((h, a) => {
-  h[a[0]] = a[1]
-  return h
-}, {})
+  h[a[0]] = a[1];
+  return h;
+}, {});
 
 module.exports = {
   toSingle: toSingle,

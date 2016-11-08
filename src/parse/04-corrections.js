@@ -39,8 +39,18 @@ const corrections = function(r) {
   r.match('the #Adjective #Verb').match('#Verb').tag('#Noun', 'correction-determiner3');
   //the truly nice swim
   r.match('the #Adverb #Adjective #Verb').match('#Verb').tag('#Noun', 'correction-determiner4');
+
+  //people chunks
+  //John L. Foo
+  r.match('#FirstName #Acronym #TitleCase').tag('Person', 'firstname-acronym-titlecase');
+  //Mr Foo
+  r.match('#Honorific #FirstName? #TitleCase').tag('Person', 'Honorific-TitleCase');
+  //John Foo
+  r.match('#FirstName #TitleCase').match('#FirstName #Noun').tag('Person', 'firstname-titlecase');
   //peter the great
-  r.match('#Person the #Adjective').tag('Person', 'correction-determiner5');
+  r.match('#FirstName the #Adjective').tag('Person', 'correction-determiner5');
+
+
   //book the flight
   r.match('#Noun the #Noun').term(0).tag('Verb', 'correction-determiner6');
   //a sense of

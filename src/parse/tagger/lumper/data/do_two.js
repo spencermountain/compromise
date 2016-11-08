@@ -105,12 +105,12 @@ module.exports = [
     result: 'Value',
     reason: 'value-grand'
   },
-  {
-    //NASA Flordia
-    condition: (a, b) => ((a.tag.Noun && b.tag.Abbreviation) || (a.tag.Abbreviation && b.tag.Noun)),
-    result: 'Noun',
-    reason: 'noun-abbreviation'
-  },
+  // {
+  //   //NASA Flordia
+  //   condition: (a, b) => ((a.tag.Noun && b.tag.Abbreviation) || (a.tag.Abbreviation && b.tag.Noun)),
+  //   result: 'Noun',
+  //   reason: 'noun-abbreviation'
+  // },
 
   {
     //half a million

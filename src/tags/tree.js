@@ -6,8 +6,10 @@ module.exports = {
       Singular: {
         Pronoun: true,
         Person: {
-          MaleName: true,
-          FemaleName: true,
+          FirstName: {
+            MaleName: true,
+            FemaleName: true,
+          },
           LastName: true,
           Honorific: true
         },
@@ -84,6 +86,7 @@ module.exports = {
   Auxillary: true,
   Negative: true,
   Contraction: true,
+  Acronym: true,
 
   //phrases
   ValuePhrase: true,

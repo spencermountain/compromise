@@ -14,9 +14,7 @@ const nlp = require('./src/index');
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
 
-let r = nlp('john'); //.tag('Verb');
-r.tag('FemalePerson');
-r.unTag('Noun');
+let r = nlp('first to last day');
 r.check();
 
 // let r = nlp('1 April to 31 August');

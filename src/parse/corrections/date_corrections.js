@@ -23,11 +23,19 @@ const corrections = function(r) {
   r.match('all day').tag('Time', 'all-day');
 
   //june the 5th
-  r.match('#Date the? #Ordinal').term(1).tag('Date', 'correction-date');
+  r.match('#Date the? #Ordinal').tag('Date', 'correction-date');
   //5th of March
-  r.match('#Value of? #Month').term(1).tag('Date', 'value-of-month');
+  r.match('#Value of? #Month').tag('Date', 'value-of-month');
   //5 March
   r.match('#Cardinal #Month').tag('Date', 'cardinal-month');
+  //march 5 to 7
+  r.match('#Month #Value to #Value').tag('Date', 'value-to-value');
+
+  //last month
+  r.match(`${thisNext} #Duration`).tag('Date', 'this-duration');
+  //for four days
+  r.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration');
+
   //by 5 March
   r.match('due? (by|before|after|until) #Date').tag('Date', 'by-date');
   //tomorrow before 3

@@ -168,7 +168,7 @@ let suffix_compressed = {
   ey: 'audr,linds,stac,trac',
   ca: 'bian,blan,francis,rebec',
   on: 'alis,allis,shann,shar',
-  il: 'abiga,apr,ga,syb',
+  il: 'abiga,ga,syb',
   ly: 'bever,emi,kimber,li',
   ea: 'andr,chels,doroth,l',
   ee: 'aim,d,desir,ren',

@@ -53,12 +53,12 @@ test('fancy match', function(t) {
     ['doug is good', 'doug * is', 2], //another tricky 'greedy optional' bug
     ['cool, fun, great, nice', '#Adjective+ great', 3],
 
-    //partial lumped matches
-    ['Dr. Spencer Smith says hi', 'dr', 0],
-    ['Dr. Spencer Smith says hi', 'dr spencer', 0],
-    ['Dr. Spencer Smith says hi', 'dr spencer smith', 1],
-    ['Dr. Spencer Smith says hi', 'dr spencer smith says', 2],
-    ['Lately, Dr. Spencer Smith says hi', 'lately dr spencer smith', 2],
+    //
+    ['Dr. Spencer Smith says hi', 'dr', 1],
+    ['Dr. Spencer Smith says hi', 'dr spencer', 2],
+    ['Dr. Spencer Smith says hi', 'dr spencer smith', 3],
+    ['Dr. Spencer Smith says hi', 'dr spencer smith says', 4],
+    ['Lately, Dr. Spencer Smith says hi', 'lately dr spencer smith', 4],
     //start ^
     ['in toronto', '^toronto', 0],
     ['toronto', '^toronto', 1],

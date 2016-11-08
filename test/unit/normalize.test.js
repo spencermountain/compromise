@@ -10,6 +10,15 @@ test('sentence():', function(t) {
     ['Mr. Clinton did so.', 'mr clinton did so.'],
     ['he is good', 'he is good'],
     ['Jack and Jill   went up the hill. She got  water.', 'jack and jill went up the hill. she got water.'],
+    ['Joe', 'joe'],
+    ['just-right', 'just right'],
+    ['camel', 'camel'],
+    // ['4', '4'],
+    // ['four', '4'],
+    ['john smith', 'john smith'],
+    // ['John G. Smith','John Smith'],
+    // ['Dr. John Smith-McDonald', 'john smith mcdonald'],
+
   // ['Contains no fruit juice \n\n All rights reserved', 'contains no fruit juice. all rights reserved'],
   ].forEach(function (a) {
     var str = nlp(a[0]).normal();

@@ -6,8 +6,9 @@ module.exports = {
       Singular: {
         Pronoun: true,
         Person: {
-          MalePerson: true,
-          FemalePerson: true,
+          MaleName: true,
+          FemaleName: true,
+          LastName: true,
           Honorific: true
         },
         Place: {

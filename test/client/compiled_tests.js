@@ -10829,10 +10829,10 @@ let ambiguous = require('./ambiguous');
 const names = {};
 
 for (let i = 0; i < male.length; i++) {
-  names[male[i]] = 'MalePerson';
+  names[male[i]] = 'MaleName';
 }
 for (let i = 0; i < female.length; i++) {
-  names[female[i]] = 'FemalePerson';
+  names[female[i]] = 'FemaleName';
 }
 //ambiguous/unisex names
 for (let i = 0; i < ambiguous.length; i += 1) {
@@ -15064,10 +15064,10 @@ const gender = function(t) {
   if (!firstName) {
     return null;
   }
-  if (firstnames[firstName] === 'MalePerson') {
+  if (firstnames[firstName] === 'MaleName') {
     return 'Male';
   }
-  if (firstnames[firstName] === 'FemalePerson') {
+  if (firstnames[firstName] === 'FemaleName') {
     return 'Female';
   }
   //male honourifics
@@ -15118,7 +15118,7 @@ class People extends Result {
     //1-names are sneaky
     if (m.count === 1) {
       let term = m.terms()[0];
-      if (term.tag.MalePerson || term.tag.FemalePerson) {
+      if (term.tag.MaleName || term.tag.FemaleName) {
         obj.firstName = m.normal();
       }
     }
@@ -15479,7 +15479,7 @@ const conflicts = [
   ['Plural', 'Currency'],
   ['Plural', 'Ordinal'],
   //people
-  ['MalePerson', 'FemalePerson'],
+  ['MaleName', 'FemaleName'],
   //adjectives
   ['Comparative', 'Superlative'],
   //values
@@ -15563,8 +15563,8 @@ module.exports = {
       Singular: {
         Pronoun: true,
         Person: {
-          MalePerson: true,
-          FemalePerson: true,
+          MaleName: true,
+          FemaleName: true,
           Honorific: true
         },
         Place: {
@@ -19336,18 +19336,18 @@ test('=Lexicon test=', function(T) {
     //
     // //set gender from lexicon
     // var terms = nlp('Kelly', context).terms;
-    // pos_test(terms, ['FemalePerson'], t);
+    // pos_test(terms, ['FemaleName'], t);
     // //set as male:
     // context = {
     //   lexicon: {
-    //     kelly: 'MalePerson'
+    //     kelly: 'MaleName'
     //   }
     // };
     // terms = nlp('Kelly', context).terms;
-    // pos_test(terms, ['MalePerson'], t);
+    // pos_test(terms, ['MaleName'], t);
     // //gender follows lumping
     // terms = nlp.sentence('Kelly Gruber', context).terms;
-    // pos_test(terms, ['MalePerson'], t);
+    // pos_test(terms, ['MaleName'], t);
 
     t.end();
   });
@@ -19734,8 +19734,8 @@ test('pos from-lexicon', function(t) {
     ['brotherhood', 'Noun'],
     ['oakland athletics', 'SportsTeam'],
     ['jaime', 'Person'],
-    ['claire', 'FemalePerson'],
-    ['arthur', 'MalePerson'],
+    ['claire', 'FemaleName'],
+    ['arthur', 'MaleName'],
     ['¥', 'Currency'],
     ['pence', 'Currency'],
     ['seven', 'Value'],

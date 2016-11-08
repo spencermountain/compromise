@@ -10,7 +10,9 @@ const prettyPrint = (Result) => {
       this.list.forEach((ts) => {
         console.log('   --');
         ts.terms.forEach((t) => {
-          t.render.check();
+          if (t.sel) {
+            t.render.check();
+          }
         });
       });
       return this;

@@ -15,6 +15,9 @@ class Sentences extends Result {
   passive() {
     // this.match('was #Adverb? #PastTense #Adverb? by');
   }
+  toNegative() {
+    this.match('#Copula').verbs().negate();
+  }
 }
 
 module.exports = Sentences;

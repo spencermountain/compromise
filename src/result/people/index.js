@@ -11,31 +11,32 @@ class People extends Result {
     return this;
   }
   parse() {
-    let obj = {
-      honorific: this.honorific(),
-      pronoun: this.pronoun(),
-    };
-    let m = this.clone().remove('#Honorific');
-    m.remove('the *'); //jabba the hut
-    m = m.match('#Person');
-    m.check();
-    //1-names are sneaky
-    if (m.count === 1) {
-      let term = m.terms()[0];
-      if (term.tag.MalePerson || term.tag.FemalePerson) {
-        obj.firstName = m.normal();
-      }
-    }
-    if (m.count === 2) {
-      obj.firstName = m.get(0).normal();
-      obj.lastName = m.get(1).normal();
-    }
-    if (m.count === 3) {
-      obj.firstName = m.get(0).normal();
-      obj.middleName = m.get(1).normal();
-      obj.lastName = m.get(2).normal();
-    }
-    return obj;
+
+    // let obj = {
+    //   honorific: this.honorific(),
+    //   pronoun: this.pronoun(),
+    // };
+    // let m = this.clone().remove('#Honorific');
+    // m.remove('the *'); //jabba the hut
+    // m.match('#Person');
+    // // m.check();
+    // //1-names are sneaky
+    // if (m.count === 1) {
+    //   let term = m.terms[0];
+    //   if (term.tag.MaleName || term.tag.FemaleName) {
+    //     obj.firstName = m.normal();
+    //   }
+    // }
+    // if (m.count === 2) {
+    //   obj.firstName = m.get(0).normal();
+    //   obj.lastName = m.get(1).normal();
+    // }
+    // if (m.count === 3) {
+    //   obj.firstName = m.get(0).normal();
+    //   obj.middleName = m.get(1).normal();
+    //   obj.lastName = m.get(2).normal();
+    // }
+    return [];
   }
   //getters
 
@@ -60,7 +61,16 @@ class People extends Result {
   }
   middleName() {}
   lastName() {}
-  pronoun() {}
+
+  pronoun() {
+    const pronouns = {
+      Male: 'he',
+      Female: 'she',
+    };
+    let gender = guessGender(this);
+    //return 'singular they' if no gender is found
+    return pronouns[gender] || 'they';
+  }
 
   //transformations
   addHonorific() {

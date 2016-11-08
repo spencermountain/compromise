@@ -19,16 +19,16 @@ test('tag inference:', function(t) {
 
 test('untag inference:', function(t) {
   var m = nlp('aasdf');
-  m.tag('FemalePerson');
+  m.tag('FemaleName');
   var term = m.list[0].terms[0];
-  t.equal(term.tag.FemalePerson, true, 'aasdf first has FemalePerson');
+  t.equal(term.tag.FemaleName, true, 'aasdf first has FemaleName');
   t.equal(term.tag.Person, true, 'aasdf first has person');
   t.equal(term.tag.Noun, true, 'aasdf first has noun');
   //remove the assumption..
   term.unTag('Noun');
   t.equal(term.tag.Noun, undefined, 'aasdf now has no noun');
   t.equal(term.tag.Person, undefined, 'aasdf now has no person(inferred)');
-  t.equal(term.tag.FemalePerson, undefined, 'aasdf now has no FemalePerson(inferred)');
+  t.equal(term.tag.FemaleName, undefined, 'aasdf now has no FemaleName(inferred)');
   t.end();
 });
 
@@ -55,7 +55,7 @@ test('tags are self-removing', function(t) {
     'Person',
     'Place',
     'PastTense',
-    'FemalePerson',
+    'FemaleName',
     'Infinitive',
     'HashTag',
     'Month',

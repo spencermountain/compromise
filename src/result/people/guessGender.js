@@ -4,15 +4,14 @@ const firstnames = require('../paths').data.firstnames;
 // used for pronoun resolution only.
 // not intended for classification, or discrimination of people.
 const gender = function(t) {
-  let o = t.firstName();
-  let firstName = o.firstName;
+  let firstName = t.firstName();
   if (!firstName) {
     return null;
   }
-  if (firstnames[firstName] === 'MalePerson') {
+  if (firstnames[firstName] === 'MaleName') {
     return 'Male';
   }
-  if (firstnames[firstName] === 'FemalePerson') {
+  if (firstnames[firstName] === 'FemaleName') {
     return 'Female';
   }
   //male honourifics

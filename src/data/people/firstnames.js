@@ -12,10 +12,10 @@ let ambiguous = require('./ambiguous');
 const names = {};
 
 for (let i = 0; i < male.length; i++) {
-  names[male[i]] = 'MalePerson';
+  names[male[i]] = 'MaleName';
 }
 for (let i = 0; i < female.length; i++) {
-  names[female[i]] = 'FemalePerson';
+  names[female[i]] = 'FemaleName';
 }
 //ambiguous/unisex names
 for (let i = 0; i < ambiguous.length; i += 1) {

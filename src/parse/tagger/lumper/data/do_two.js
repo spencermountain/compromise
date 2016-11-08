@@ -11,34 +11,34 @@ const timezones = {
 
 //rules that combine two words
 module.exports = [
-  {
-    condition: (a, b) => ((a.tag.Person && b.tag.Honorific) || (a.tag.Honorific && b.tag.Person)), //"John sr."
-    result: 'Person',
-    reason: 'person-words'
-  },
-  {
-    condition: (a, b) => (a.tag.Person && b.tag.Person && !a.tag.Comma), //john stewart
-    result: 'Person',
-    reason: 'firstname-firstname'
-  },
-  {
-    //'Dr. John'
-    condition: (a, b) => (a.tag.Honorific && b.tag.TitleCase),
-    result: 'Person',
-    reason: 'person-honorific'
-  },
-  {
-    // "john lkjsdf's"
-    condition: (a, b) => (a.tag.Person && b.tag.tagsessive),
-    result: 'Person',
-    reason: 'person-possessive'
-  },
-  {
-    //"John Abcd" - needs to be careful
-    condition: (a, b) => (a.tag.Person && !a.tag.Pronoun && !a.tag.tagsessive && !a.term.hasComma() && b.tag.TitleCase && !a.term.isAcronym() && !b.tag.Verb), //'Person, Capital -> Person'
-    result: 'Person',
-    reason: 'person-titleCase'
-  },
+  // {
+  //   condition: (a, b) => ((a.tag.Person && b.tag.Honorific) || (a.tag.Honorific && b.tag.Person)), //"John sr."
+  //   result: 'Person',
+  //   reason: 'person-words'
+  // },
+  // {
+  //   condition: (a, b) => (a.tag.Person && b.tag.Person && !a.tag.Comma), //john stewart
+  //   result: 'Person',
+  //   reason: 'firstname-firstname'
+  // },
+  // {
+  //   //'Dr. John'
+  //   condition: (a, b) => (a.tag.Honorific && b.tag.TitleCase),
+  //   result: 'Person',
+  //   reason: 'person-honorific'
+  // },
+  // {
+  //   // "john lkjsdf's"
+  //   condition: (a, b) => (a.tag.Person && b.tag.tagsessive),
+  //   result: 'Person',
+  //   reason: 'person-possessive'
+  // },
+  // {
+  //   //"John Abcd" - needs to be careful
+  //   condition: (a, b) => (a.tag.Person && !a.tag.Pronoun && !a.tag.tagsessive && !a.term.hasComma() && b.tag.TitleCase && !a.term.isAcronym() && !b.tag.Verb), //'Person, Capital -> Person'
+  //   result: 'Person',
+  //   reason: 'person-titleCase'
+  // },
   {
     //6 am
     condition: (a, b) => (a.tag.Holiday && (b.normal === 'day' || b.normal === 'eve')),

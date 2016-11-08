@@ -47,18 +47,18 @@ test('=Lexicon test=', function(T) {
     //
     // //set gender from lexicon
     // var terms = nlp('Kelly', context).terms;
-    // pos_test(terms, ['FemalePerson'], t);
+    // pos_test(terms, ['FemaleName'], t);
     // //set as male:
     // context = {
     //   lexicon: {
-    //     kelly: 'MalePerson'
+    //     kelly: 'MaleName'
     //   }
     // };
     // terms = nlp('Kelly', context).terms;
-    // pos_test(terms, ['MalePerson'], t);
+    // pos_test(terms, ['MaleName'], t);
     // //gender follows lumping
     // terms = nlp.sentence('Kelly Gruber', context).terms;
-    // pos_test(terms, ['MalePerson'], t);
+    // pos_test(terms, ['MaleName'], t);
 
     t.end();
   });

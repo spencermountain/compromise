@@ -28,9 +28,11 @@ const conflicts = [
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
   ['Date', 'Verb', 'Adjective', 'Person'],
   //phrases
-  // ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase'],
+  ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase', 'ConditionalPhrase'],
   //a/an -> 1
-  ['Value', 'Determiner']
+  ['Value', 'Determiner'],
+  ['Verb', 'NounPhrase'],
+  ['Noun', 'VerbPhrase'],
 ];
 
 const find = (tag) => {

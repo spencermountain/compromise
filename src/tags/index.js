@@ -7,9 +7,17 @@ let all = {};
 
 const all_children = (obj) => {
   let children = Object.keys(obj || {});
+  //two levels deep
   children.forEach((str) => {
     if (typeof obj[str] === 'object') {
-      children = children.concat(Object.keys(obj[str]));
+      let kids = Object.keys(obj[str]);
+      kids.forEach((gc) => {
+        if (typeof obj[str][gc] === 'object') {
+          let grandkids = Object.keys(obj[str][gc]);
+          children = children.concat(grandkids);
+        }
+      });
+      children = children.concat(kids);
     }
   });
   return children;
@@ -40,5 +48,5 @@ Object.keys(all).forEach((tag) => {
 });
 
 module.exports = all;
-// console.log(all.Verb);
+// console.log(all.Noun);
 // console.log(all_children(tree['NounPhrase']));

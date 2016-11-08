@@ -6,7 +6,7 @@ const nlp = require('./src/index');
 // const corpus = require('nlp-corpus');
 // const nlp = require('./builds/nlp_compromise');
 
-require('./src/logger').enable();
+// require('./src/logger').enable();
 // const context = {
 //   lexicon: {
 //     'donkey kong': 'Person'
@@ -14,10 +14,10 @@ require('./src/logger').enable();
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
 
-let r = nlp('april').tag('Person'); //
+let r = nlp('john'); //.tag('Verb');
+r.tag('FemalePerson');
 r.unTag('Noun');
 r.check();
-// r.check();
 
 // let r = nlp('1 April to 31 August');
 // r.check();

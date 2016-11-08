@@ -2,14 +2,55 @@
 var test = require('tape');
 var nlp = require('./lib/nlp');
 
-test('tag/untag:', function(t) {
-  m = nlp('aasdf').tag('Person');
+test('tag inference:', function(t) {
+  var m = nlp('aasdf2').unTag('Noun').unTag('NounPhrase');
   var term = m.list[0].terms[0];
-  t.equal(term.tag.Person, true, 'tag has person');
-  t.equal(term.tag.Noun, true, 'tag has noun');
+  t.equal(Object.keys(term.tag).length, 0, 'aasdf2 has no tags');
+  //give it a specific tag-
+  m.tag('Month');
+  t.equal(term.tag.Noun, true, 'aasdf2 now has Noun');
+  t.equal(term.tag.Date, true, 'aasdf2 now has Date(inferred)');
+  //give it a redundant tag-
+  m.tag('Date');
+  t.equal(term.tag.Noun, true, 'aasdf2 still has Noun');
+  t.equal(term.tag.Date, true, 'aasdf2 still has Date');
+  t.end();
+});
+
+test('untag inference:', function(t) {
+  var m = nlp('aasdf');
+  m.tag('FemalePerson');
+  var term = m.list[0].terms[0];
+  t.equal(term.tag.FemalePerson, true, 'aasdf first has FemalePerson');
+  t.equal(term.tag.Person, true, 'aasdf first has person');
+  t.equal(term.tag.Noun, true, 'aasdf first has noun');
+  //remove the assumption..
   term.unTag('Noun');
-  t.equal(term.tag.Noun, undefined, 'tag has no noun');
-  t.equal(term.tag.Person, true, 'tag still has person');
+  t.equal(term.tag.Noun, undefined, 'aasdf now has no noun');
+  t.equal(term.tag.Person, undefined, 'aasdf now has no person(inferred)');
+  t.equal(term.tag.FemalePerson, undefined, 'aasdf now has no FemalePerson(inferred)');
+  t.end();
+});
+
+
+
+test('tag idempodence:', function(t) {
+  var m = nlp('walk').tag('Verb');
+  var term = m.list[0].terms[0];
+  t.equal(term.tag.Verb, true, 'walk has Verb');
+  t.equal(term.tag.Value, undefined, 'walk has no Value');
+  //untag irrelevant stuff
+  term.unTag('Value');
+  term.unTag('Determiner');
+  term.unTag('Country');
+  term.unTag('Place');
+  t.equal(term.tag.Verb, true, 'walk has Verb after');
+  t.equal(term.tag.Value, undefined, 'walk has no Value after');
+  t.end();
+});
+
+
+test('tags are self-removing', function(t) {
   var terms = [
     'Person',
     'Place',

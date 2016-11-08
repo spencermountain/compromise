@@ -18,14 +18,10 @@ const unTagAll = (term, tag, reason) => {
   }
   unTagOne(term, tag, reason);
   if (tagset[tag]) {
-    let not = tagset[tag].not || [];
-    for(let i = 0; i < not.length; i++) {
-      unTagOne(term, not[i], reason);
-      //and also their dependents
-      let killAlso = tagset[not[i]].children || [];
-      for(let o = 0; o < killAlso.length; o++) {
-        unTagOne(term, killAlso[o], reason);
-      }
+    //pull-out their children (dependants) too
+    let killAlso = tagset[tag].children || [];
+    for(let o = 0; o < killAlso.length; o++) {
+      unTagOne(term, killAlso[o], reason);
     }
   }
   return;

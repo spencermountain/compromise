@@ -1,5 +1,5 @@
-
 //the POS tags we use, according to their dependencies
+//(dont make it too deep, cause fns aren't properly clever-enough)
 module.exports = {
   NounPhrase: {
     Noun: {

@@ -5,6 +5,18 @@ const log = path.log;
 const tagset = path.tags;
 const unTag = require('./unTag');
 
+
+const makeCompatible = (term, tag, reason) => {
+  if (!tagset[tag]) {
+    return;
+  }
+  //find incompatible tags
+  let not = tagset[tag].not || [];
+  for(let i = 0; i < not.length; i++) {
+    unTag(term, not[i], reason);
+  }
+};
+
 const tag_one = (term, tag, reason) => {
   //ignore if already tagged
   if (term.tag[tag]) {
@@ -12,7 +24,8 @@ const tag_one = (term, tag, reason) => {
   }
   reason = reason || '';
   //clean first
-  unTag(term, tag, reason);
+  makeCompatible(term, tag, reason);
+  // unTag(term, tag, reason);
   log.tell('+ ' + tag + '  ' + reason);
   term.tag[tag] = true;
 };

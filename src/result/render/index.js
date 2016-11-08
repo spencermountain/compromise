@@ -66,7 +66,14 @@ const prettyPrint = (Result) => {
 
     asArray: function() {
       return this.list.map((ts) => {
-        return ts.normal();
+        return ts.terms.map((t) => {
+          return {
+            normal: t.normal,
+            text: t.text,
+            tags: Object.keys(t.tag),
+            whitespace: t.whitespace
+          };
+        });
       });
     },
     asHtml: function() {

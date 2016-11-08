@@ -73,3 +73,15 @@ const People = require('./people');
 Result.prototype.people = function() {
   return new People(this.list);
 };
+const Sentences = require('./sentences');
+Result.prototype.sentences = function() {
+  return new Sentences(this.list);
+};
+const Statements = require('./statements');
+Result.prototype.statements = function() {
+  return new Statements(this.list);
+};
+const Questions = require('./questions');
+Result.prototype.questions = function() {
+  return new Questions(this.list);
+};

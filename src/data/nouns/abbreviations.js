@@ -4,7 +4,7 @@
 
 //common abbreviations
 let compact = {
-  Term: [
+  Noun: [
     'arc',
     'al',
     'exp',

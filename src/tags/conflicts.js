@@ -22,24 +22,13 @@ const conflicts = [
   ['TextValue', 'NumericValue'],
   ['Ordinal', 'Currency'], //$5.50th
   //verbs
-  ['Infinitive', 'Gerund', 'Pluperfect', 'FuturePerfect'],
-  //tenses
-  ['PastTense', 'PresentTense', 'PerfectTense'],
-  //non-infinitive
-  ['Infinitive', 'PastTense'],
-  ['Infinitive', 'PresentTense'],
-  //non-gerund
-  ['Gerund', 'PastTense'],
-  ['Gerund', 'PresentTense'],
-  //more verbs
-  ['Copula', 'Modal'],
+  ['PastTense', 'PerfectTense', 'Pluperfect', 'FuturePerfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund'],
   //date
   ['Month', 'Day', 'Year', 'Duration'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
   ['Date', 'Verb', 'Adjective', 'Person'],
-  // ['Month', 'Verb', 'Person'],
   //phrases
-  ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase'],
+  // ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase'],
   //a/an -> 1
   ['Value', 'Determiner']
 ];

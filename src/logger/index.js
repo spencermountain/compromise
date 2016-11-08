@@ -10,7 +10,7 @@ module.exports = {
   },
   here: (path) => {
     if (enable === true || enable === path) {
-      console.log('  ' + chalk.yellow(chalk.underline(path)));
+      // console.log('  ' + chalk.yellow(chalk.underline(path)));
     }
   },
   tell: (str, path) => {

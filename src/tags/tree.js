@@ -87,5 +87,6 @@ module.exports = {
   //phrases
   ValuePhrase: true,
   AdjectivePhrase: true,
+  ConditionPhrase: true,
 
 };

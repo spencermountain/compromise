@@ -8013,6 +8013,7 @@ for (let i = 0; i < len; i++) {
 }
 durations.push('century');
 durations.push('centuries');
+durations.push('seconds');
 
 let relative = [
   'yesterday',
@@ -8366,7 +8367,7 @@ data.nouns.forEach((n) => {
   lexicon[n] = 'Singular';
   let t = new Term(n);
   t.tag.Noun = true;
-  let plural = t.noun.toPlural();
+  let plural = t.noun.plural();
   lexicon[plural] = 'Plural';
 });
 
@@ -8391,12 +8392,12 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon['april fools']);
+// console.log(lexicon['men']);
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.verb.conjugate())
 
-},{"../term":173,"./fns":70,"./index":71}],73:[function(require,module,exports){
+},{"../term":184,"./fns":70,"./index":71}],73:[function(require,module,exports){
 module.exports = [
   // 'now',
   'a lot',
@@ -8857,9 +8858,7 @@ const compact = {
     'boy',
     'girl',
     'man',
-    'men',
     'woman',
-    'women',
     'guy',
     'dude',
     'bro',
@@ -8931,7 +8930,6 @@ module.exports = [
   'till',
   'to',
   'towards',
-  'unless',
   'unlike',
   'until',
   'up',
@@ -8953,7 +8951,7 @@ module.exports = [
 
 //common abbreviations
 let compact = {
-  Term: [
+  Noun: [
     'arc',
     'al',
     'exp',
@@ -9281,7 +9279,6 @@ let main = [
   ['appendix', 'appendices'],
   ['criterion', 'criteria'],
   ['man', 'men'],
-  ['sex', '_es'],
   ['rodeo', '_s'],
   ['epoch', '_s'],
   ['zero', '_s'],
@@ -9328,13 +9325,13 @@ main = main.map(function(a) {
 });
 //build-out two mappings
 const toSingle = main.reduce((h, a) => {
-  h[a[1]] = a[0]
-  return h
-}, {})
+  h[a[1]] = a[0];
+  return h;
+}, {});
 const toPlural = main.reduce((h, a) => {
-  h[a[0]] = a[1]
-  return h
-}, {})
+  h[a[0]] = a[1];
+  return h;
+}, {});
 
 module.exports = {
   toSingle: toSingle,
@@ -10781,7 +10778,7 @@ let suffix_compressed = {
   ey: 'audr,linds,stac,trac',
   ca: 'bian,blan,francis,rebec',
   on: 'alis,allis,shann,shar',
-  il: 'abiga,apr,ga,syb',
+  il: 'abiga,ga,syb',
   ly: 'bever,emi,kimber,li',
   ea: 'andr,chels,doroth,l',
   ee: 'aim,d,desir,ren',
@@ -10795,7 +10792,7 @@ let suffix_compressed = {
   na: 'ed,shau,shaw',
   dy: 'jo,ju,tru',
   ti: 'chris,kris,pat',
-  sy: 'bet,dai,pat',
+  sy: 'bet,pat',
   ri: 'ka,lo,sha',
   la: 'kay,priscil,wil',
   al: 'cryst,kryst,op',
@@ -11491,13 +11488,16 @@ const irregular = {
     Actor: 'babysitter'
   },
   be: { // this is crazy-hard and shouldn't be here
-    PastTense: 'been',
+    PastTense: 'was',
     Participle: 'been',
     PresentTense: 'is',
     // FutureTense: 'will be',
     Actor: '',
     Gerund: 'am'
   },
+  // will: {
+  //   PastTense: 'will',
+  // },
   is: {
     PastTense: 'was',
     PresentTense: 'is',
@@ -12393,7 +12393,7 @@ const nlp = function(str, context) {
 
 module.exports = nlp;
 
-},{"./parse":108}],102:[function(require,module,exports){
+},{"./parse":109}],102:[function(require,module,exports){
 'use strict';
 const chalk = require('chalk');
 const fns = require('../fns');
@@ -12406,7 +12406,7 @@ module.exports = {
   },
   here: (path) => {
     if (enable === true || enable === path) {
-      console.log('  ' + chalk.yellow(chalk.underline(path)));
+      // console.log('  ' + chalk.yellow(chalk.underline(path)));
     }
   },
   tell: (str, path) => {
@@ -12568,6 +12568,7 @@ const tagger = function(ts) {
   ts = step.comma_step(ts);
   ts = step.possessive_step(ts);
   ts = step.value_step(ts);
+  ts = step.acronym_step(ts);
   //lump a couple times, for long ones
   for (let i = 0; i < 3; i++) {
     ts = lumper.lump_three(ts);
@@ -12581,10 +12582,12 @@ const tagger = function(ts) {
 
 module.exports = tagger;
 
-},{"./tagger":118}],106:[function(require,module,exports){
+},{"./tagger":120}],106:[function(require,module,exports){
 'use strict';
 const log = require('./tagger/paths').log;
 const path = 'correction';
+const date_corrections = require('./corrections/date_corrections');
+
 //
 const corrections = function(r) {
   log.here(path);
@@ -12621,8 +12624,18 @@ const corrections = function(r) {
   r.match('the #Adjective #Verb').match('#Verb').tag('#Noun', 'correction-determiner3');
   //the truly nice swim
   r.match('the #Adverb #Adjective #Verb').match('#Verb').tag('#Noun', 'correction-determiner4');
+
+  //people chunks
+  //John L. Foo
+  r.match('#FirstName #Acronym #TitleCase').tag('Person', 'firstname-acronym-titlecase');
+  //Mr Foo
+  r.match('#Honorific #FirstName? #TitleCase').tag('Person', 'Honorific-TitleCase');
+  //John Foo
+  r.match('#FirstName #TitleCase').match('#FirstName #Noun').tag('Person', 'firstname-titlecase');
   //peter the great
-  r.match('#Person the #Adjective').tag('Person', 'correction-determiner5');
+  r.match('#FirstName the #Adjective').tag('Person', 'correction-determiner5');
+
+
   //book the flight
   r.match('#Noun the #Noun').term(0).tag('Verb', 'correction-determiner6');
   //a sense of
@@ -12652,50 +12665,21 @@ const corrections = function(r) {
   //big dreams, critical thinking
   r.match('#Adjective #PresentTense').term(1).tag('Noun', 'adj-presentTense');
 
-  //ambiguous 'may' and 'march'
-  r.match('(may|march) #Determiner').term(0).tag('Month', 'correction-may');
-  r.match('(may|march) #Value').term(0).tag('Month', 'correction-may');
-  r.match('(may|march) #Date').term(0).tag('Month', 'correction-may');
-  r.match('#Date (may|march)').term(1).tag('Month', 'correction-may');
-  r.match('(next|this|last) (may|march)').term(1).tag('Month', 'correction-may'); //maybe not 'this'
-
   //'a/an' can mean 1
   r.match('(a|an) (#Duration|#Value)').term(0).tag('Value');
+  //half a million
+  r.match('(half|quarter) a? #Value').tag('Value');
   //all values are either ordinal or cardinal
   r.match('#Value').match('!#Ordinal').tag('#Cardinal');
 
-  //time
-  r.match('#Cardinal #Time').tag('Time', 'value-time');
-  r.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time');
-  r.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm');
-  r.match('all day').tag('Time', 'all-day');
-  //may the 5th
-  r.match('#Date the? #Ordinal').term(1).tag('Date', 'correction-date');
-  //5th of March
-  r.match('#Value of? #Month').term(1).tag('Date', 'value-of-month');
-  //5 March
-  r.match('#Cardinal #Month').tag('Date', 'cardinal-month');
-  //by 5 March
-  r.match('due? (by|before|after|until) #Date').tag('Date', 'by-date');
-  //tomorrow before 3
-  r.match('#Date (by|before|after|at|@|about) #Cardinal').remove('^#Date').tag('Time', 'before-Cardinal');
-  //2pm est
-  r.match('#Time (eastern|pacific|central|mountain)').term(1).tag('Time', 'timezone');
-  r.match('#Time (est|pst|gmt)').term(1).tag('Time', 'timezone abbr');
-  //saturday am
-  r.match('#Date (am|pm)').term(1).unTag('Verb').unTag('Copula').tag('Time', 'date-am');
-  //late at night
-  r.match('at night').tag('Time');
-  r.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time');
-  r.match('(early|late) (at|in)? the? (night|evening|morning|afternoon|day|daytime)').tag('Time');
-  //march 12th 2018
-  r.match('#Month #Value #Cardinal').tag('Date', 'month-value-cardinal');
+  r = date_corrections(r);
+
   return r;
 };
 
 module.exports = corrections;
 
-},{"./tagger/paths":125}],107:[function(require,module,exports){
+},{"./corrections/date_corrections":108,"./tagger/paths":127}],107:[function(require,module,exports){
 'use strict';
 const conditionPass = require('./phrase/00-conditionPass');
 const verbPhrase = require('./phrase/01-verbPhrase');
@@ -12712,7 +12696,69 @@ const phraseTag = function(result) {
 
 module.exports = phraseTag;
 
-},{"./phrase/00-conditionPass":109,"./phrase/01-verbPhrase":110,"./phrase/02-nounPhrase":111,"./phrase/03-adjectivePhrase":112}],108:[function(require,module,exports){
+},{"./phrase/00-conditionPass":110,"./phrase/01-verbPhrase":111,"./phrase/02-nounPhrase":112,"./phrase/03-adjectivePhrase":113}],108:[function(require,module,exports){
+'use strict';
+const log = require('../tagger/paths').log;
+const path = 'date_correction';
+
+//ambiguous 'may' and 'march'
+const months = '(may|march|jan|april)';
+const preps = '(in|by|before|for|during|on|until|after)';
+const thisNext = '(last|next|this|previous|current|upcoming|coming)';
+const dayTime = '(night|evening|morning|afternoon|day|daytime)';
+
+const corrections = function(r) {
+  log.here(path);
+
+  r.match(`${months} (#Determiner|#Value|#Date)`).term(0).tag('Month', 'correction-may');
+  r.match(`#Date ${months}`).term(1).tag('Month', 'correction-may');
+  r.match(`${preps} ${months}`).term(1).tag('Month', 'correction-may');
+  r.match(`(next|this|last) ${months}`).term(1).tag('Month', 'correction-may'); //maybe not 'this'
+
+  //time
+  r.match('#Cardinal #Time').tag('Time', 'value-time');
+  r.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time');
+  r.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm');
+  r.match('all day').tag('Time', 'all-day');
+
+  //june the 5th
+  r.match('#Date the? #Ordinal').tag('Date', 'correction-date');
+  //5th of March
+  r.match('#Value of? #Month').tag('Date', 'value-of-month');
+  //5 March
+  r.match('#Cardinal #Month').tag('Date', 'cardinal-month');
+  //march 5 to 7
+  r.match('#Month #Value to #Value').tag('Date', 'value-to-value');
+
+  //last month
+  r.match(`${thisNext} #Duration`).tag('Date', 'this-duration');
+  //for four days
+  r.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration');
+
+  //by 5 March
+  r.match('due? (by|before|after|until) #Date').tag('Date', 'by-date');
+  //tomorrow before 3
+  r.match('#Date (by|before|after|at|@|about) #Cardinal').remove('^#Date').tag('Time', 'before-Cardinal');
+  //2pm est
+  r.match('#Time (eastern|pacific|central|mountain)').term(1).tag('Time', 'timezone');
+  r.match('#Time (est|pst|gmt)').term(1).tag('Time', 'timezone abbr');
+  //saturday am
+  r.match('#Date (am|pm)').term(1).unTag('Verb').unTag('Copula').tag('Time', 'date-am');
+  //late at night
+  r.match('at night').tag('Time');
+  r.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time');
+  r.match('(early|late) (at|in)? the? (night|evening|morning|afternoon|day|daytime)').tag('Time');
+  //march 12th 2018
+  r.match('#Month #Value #Cardinal').tag('Date', 'month-value-cardinal');
+  r.match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('Date');
+  r.match('#Date #Value').tag('Date', '');
+  r.match('#Value #Date').tag('Date', '');
+  r.match('#Date #Preposition #Date').tag('Date', '');
+  return r;
+};
+module.exports = corrections;
+
+},{"../tagger/paths":127}],109:[function(require,module,exports){
 'use strict';
 
 const steps = {
@@ -12750,6 +12796,7 @@ const tokenize = (str, context) => {
     ts.terms.forEach((t) => {
       t.context.parent = ts;
     });
+
     log.tell('=sentence' + i + '=', path);
     //step #3
     ts = steps.tagger(ts);
@@ -12766,7 +12813,7 @@ const tokenize = (str, context) => {
 };
 module.exports = tokenize;
 
-},{"../fns":100,"../logger":102,"../result":146,"../term":173,"../terms":217,"./01-split_sentences":103,"./02-split_terms":104,"./03-tagger":105,"./04-corrections":106,"./05-phrases":107}],109:[function(require,module,exports){
+},{"../fns":100,"../logger":102,"../result":152,"../term":184,"../terms":229,"./01-split_sentences":103,"./02-split_terms":104,"./03-tagger":105,"./04-corrections":106,"./05-phrases":107}],110:[function(require,module,exports){
 'use strict';
 
 //
@@ -12803,7 +12850,7 @@ const conditionPass = function(r) {
 
 module.exports = conditionPass;
 
-},{}],110:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 'use strict';
 //
 const verbPhrase = function(result) {
@@ -12829,7 +12876,7 @@ const verbPhrase = function(result) {
 
 module.exports = verbPhrase;
 
-},{}],111:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 'use strict';
 //
 const nounPhrase = function(result) {
@@ -12851,7 +12898,7 @@ const nounPhrase = function(result) {
 
 module.exports = nounPhrase;
 
-},{}],112:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 'use strict';
 //
 const adjectivePhrase = function(result) {
@@ -12870,7 +12917,7 @@ const adjectivePhrase = function(result) {
 
 module.exports = adjectivePhrase;
 
-},{}],113:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 'use strict';
 const fixContraction = require('./fix');
 
@@ -12923,7 +12970,7 @@ const checkIrregulars = (ts) => {
 };
 module.exports = checkIrregulars;
 
-},{"./fix":116}],114:[function(require,module,exports){
+},{"./fix":118}],115:[function(require,module,exports){
 'use strict';
 const fixContraction = require('./fix');
 
@@ -13007,7 +13054,7 @@ const hardOne = (ts) => {
 
 module.exports = hardOne;
 
-},{"./fix":116}],115:[function(require,module,exports){
+},{"./fix":118}],116:[function(require,module,exports){
 'use strict';
 const fixContraction = require('./fix');
 
@@ -13048,27 +13095,68 @@ const easyOnes = (ts) => {
 };
 module.exports = easyOnes;
 
-},{"./fix":116}],116:[function(require,module,exports){
+},{"./fix":118}],117:[function(require,module,exports){
+'use strict';
+
+const numberRange = (ts) => {
+  for(let i = 0; i < ts.terms.length; i++) {
+    let t = ts.terms[i];
+    //skip existing
+    if (t.silent_term) {
+      continue;
+    }
+    if (t.tag.NumberRange) {
+      let parts = t.text.split(/-/);
+      ts.insertAt('-', i);
+      ts.insertAt(parts[1], i + 1);
+      t.text = parts[0];
+      let t2 = ts.terms[i + 1];
+      t2.silent_term = 'to';
+      let t3 = ts.terms[i + 2];
+      t2.whitespace.before = '';
+      t2.whitespace.after = '';
+      t3.whitespace.before = '';
+      t3.whitespace.after = t.whitespace.after;
+      t.whitespace.after = '';
+      t.tag = {
+        Value: true,
+      };
+      t2.tag = {
+        Preposition: true,
+      };
+      t3.tag = {
+        Value: true,
+      };
+    }
+  }
+  return ts;
+};
+module.exports = numberRange;
+
+},{}],118:[function(require,module,exports){
 'use strict';
 //add a silent term
 const fixContraction = (ts, arr, i) => {
   //add a new term
   ts.insertAt('', i);
   let t = ts.terms[i];
-  let nextT = ts.terms[i + 1];
+  let t2 = ts.terms[i + 1];
   //add the interpretation silently
   t.silent_term = arr[0];
-  nextT.silent_term = arr[1];
+  t2.silent_term = arr[1];
+  t.tagAs('Contraction', 'tagger-contraction');
+  t2.tagAs('Contraction', 'tagger-contraction');
   return ts;
 };
 
 module.exports = fixContraction;
 
-},{}],117:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 'use strict';
 const irregulars = require('./01-irregulars');
 const hardOne = require('./02-hardOne');
 const easyOnes = require('./03-easyOnes');
+const numberRange = require('./04-numberRange');
 
 //find and pull-apart contractions
 const interpret = function(ts) {
@@ -13078,12 +13166,14 @@ const interpret = function(ts) {
   ts = hardOne(ts);
   //check easy ones
   ts = easyOnes(ts);
+  //5-7
+  ts = numberRange(ts);
   return ts;
 };
 
 module.exports = interpret;
 
-},{"./01-irregulars":113,"./02-hardOne":114,"./03-easyOnes":115}],118:[function(require,module,exports){
+},{"./01-irregulars":114,"./02-hardOne":115,"./03-easyOnes":116,"./04-numberRange":117}],120:[function(require,module,exports){
 //the steps and processes of pos-tagging
 module.exports = {
   contraction: {
@@ -13109,11 +13199,12 @@ module.exports = {
     phrasal_step: require('./steps/12-phrasal_step'),
     comma_step: require('./steps/13-comma_step'),
     possessive_step: require('./steps/14-possessive_step'),
-    value_step: require('./steps/15-value_step')
+    value_step: require('./steps/15-value_step'),
+    acronym_step: require('./steps/16-acronym_step')
   }
 };
 
-},{"./contraction":117,"./lumper/lexicon_lump":122,"./lumper/lump_three":123,"./lumper/lump_two":124,"./steps/01-punctuation_step":126,"./steps/02-lexicon_step":127,"./steps/03-capital_step":128,"./steps/04-web_step":129,"./steps/05-suffix_step":130,"./steps/06-neighbour_step":131,"./steps/07-noun_fallback":132,"./steps/08-date_step":133,"./steps/09-auxillary_step":134,"./steps/10-negation_step":135,"./steps/11-adverb_step":136,"./steps/12-phrasal_step":137,"./steps/13-comma_step":138,"./steps/14-possessive_step":139,"./steps/15-value_step":140}],119:[function(require,module,exports){
+},{"./contraction":119,"./lumper/lexicon_lump":124,"./lumper/lump_three":125,"./lumper/lump_two":126,"./steps/01-punctuation_step":128,"./steps/02-lexicon_step":129,"./steps/03-capital_step":130,"./steps/04-web_step":131,"./steps/05-suffix_step":132,"./steps/06-neighbour_step":133,"./steps/07-noun_fallback":134,"./steps/08-date_step":135,"./steps/09-auxillary_step":136,"./steps/10-negation_step":137,"./steps/11-adverb_step":138,"./steps/12-phrasal_step":139,"./steps/13-comma_step":140,"./steps/14-possessive_step":141,"./steps/15-value_step":142,"./steps/16-acronym_step":143}],121:[function(require,module,exports){
 'use strict';
 const paths = require('../paths');
 const Term = paths.Term;
@@ -13144,32 +13235,38 @@ const combine = function(s, i) {
 
 module.exports = combine;
 
-},{"../paths":125}],120:[function(require,module,exports){
+},{"../paths":127}],122:[function(require,module,exports){
 //rules for combining three terms into one
 module.exports = [
-  {
-    //john f kennedy
-    condition: (a, b, c) => (a.tag.Person && b.term.isAcronym() && c.tag.Noun),
-    result: 'Person',
-    reason: 'Name-Initial-Capital'
-  },
+  // {
+  //   //john f kennedy
+  //   condition: (a, b, c) => (a.tag.Person && b.term.isAcronym() && c.tag.Noun),
+  //   result: 'Person',
+  //   reason: 'Name-Initial-Capital'
+  // },
   {
     //John & Joe's
     condition: (a, b, c) => (a.tag.Noun && (b.text === '&' || b.normal === 'n') && c.tag.Noun),
     result: 'Person',
     reason: 'Noun-&-Noun'
   },
-  {
-    //President of Mexico
-    condition: (a, b, c) => (a.tag.TitleCase && b.normal === 'of' && c.tag.TitleCase),
-    result: 'Noun',
-    reason: 'Capital-of-Capital'
-  },
+  // {
+  //   //President of Mexico
+  //   condition: (a, b, c) => (a.tag.TitleCase && b.normal === 'of' && c.tag.TitleCase),
+  //   result: 'Noun',
+  //   reason: 'Capital-of-Capital'
+  // },
   {
     //three-word quote
     condition: (a, b, c) => (a.text.match(/^["']/) && !b.text.match(/["']/) && c.text.match(/["']$/)),
     result: 'Noun',
     reason: 'Three-word-quote'
+  },
+  {
+    //1 800 PhoneNumber
+    condition: (a, b, c) => (a.tag.Value && b.tag.Value && c.tag.PhoneNumber && b.normal.length === 3 && a.normal.length < 3),
+    result: 'PhoneNumber',
+    reason: '1-800-PhoneNumber'
   },
   {
     //two hundred and three
@@ -13185,7 +13282,7 @@ module.exports = [
   }
 ];
 
-},{}],121:[function(require,module,exports){
+},{}],123:[function(require,module,exports){
 'use strict';
 const timezones = {
   standard: true,
@@ -13199,34 +13296,34 @@ const timezones = {
 
 //rules that combine two words
 module.exports = [
-  {
-    condition: (a, b) => ((a.tag.Person && b.tag.Honorific) || (a.tag.Honorific && b.tag.Person)), //"John sr."
-    result: 'Person',
-    reason: 'person-words'
-  },
-  {
-    condition: (a, b) => (a.tag.Person && b.tag.Person && !a.tag.Comma), //john stewart
-    result: 'Person',
-    reason: 'firstname-firstname'
-  },
-  {
-    //'Dr. John'
-    condition: (a, b) => (a.tag.Honorific && b.tag.TitleCase),
-    result: 'Person',
-    reason: 'person-honorific'
-  },
-  {
-    // "john lkjsdf's"
-    condition: (a, b) => (a.tag.Person && b.tag.tagsessive),
-    result: 'Person',
-    reason: 'person-possessive'
-  },
-  {
-    //"John Abcd" - needs to be careful
-    condition: (a, b) => (a.tag.Person && !a.tag.Pronoun && !a.tag.tagsessive && !a.term.hasComma() && b.tag.TitleCase && !a.term.isAcronym() && !b.tag.Verb), //'Person, Capital -> Person'
-    result: 'Person',
-    reason: 'person-titleCase'
-  },
+  // {
+  //   condition: (a, b) => ((a.tag.Person && b.tag.Honorific) || (a.tag.Honorific && b.tag.Person)), //"John sr."
+  //   result: 'Person',
+  //   reason: 'person-words'
+  // },
+  // {
+  //   condition: (a, b) => (a.tag.Person && b.tag.Person && !a.tag.Comma), //john stewart
+  //   result: 'Person',
+  //   reason: 'firstname-firstname'
+  // },
+  // {
+  //   //'Dr. John'
+  //   condition: (a, b) => (a.tag.Honorific && b.tag.TitleCase),
+  //   result: 'Person',
+  //   reason: 'person-honorific'
+  // },
+  // {
+  //   // "john lkjsdf's"
+  //   condition: (a, b) => (a.tag.Person && b.tag.tagsessive),
+  //   result: 'Person',
+  //   reason: 'person-possessive'
+  // },
+  // {
+  //   //"John Abcd" - needs to be careful
+  //   condition: (a, b) => (a.tag.Person && !a.tag.Pronoun && !a.tag.tagsessive && !a.term.hasComma() && b.tag.TitleCase && !a.term.isAcronym() && !b.tag.Verb), //'Person, Capital -> Person'
+  //   result: 'Person',
+  //   reason: 'person-titleCase'
+  // },
   {
     //6 am
     condition: (a, b) => (a.tag.Holiday && (b.normal === 'day' || b.normal === 'eve')),
@@ -13264,6 +13361,12 @@ module.exports = [
     reason: 'demonym-currency'
   },
   {
+    //(454) 232-9873
+    condition: (a, b, c) => (a.tag.Value && b.tag.PhoneNumber && a.normal.length < 3),
+    result: 'PhoneNumber',
+    reason: '(800) PhoneNumber'
+  },
+  {
     //7 ft
     condition: (a, b) => ((a.tag.Value && b.tag.Abbreviation) || (a.tag.Abbreviation && b.tag.Value)),
     result: 'Value',
@@ -13287,13 +13390,19 @@ module.exports = [
     result: 'Value',
     reason: 'value-grand'
   },
-  {
-    //NASA Flordia
-    condition: (a, b) => ((a.tag.Noun && b.tag.Abbreviation) || (a.tag.Abbreviation && b.tag.Noun)),
-    result: 'Noun',
-    reason: 'noun-abbreviation'
-  },
+  // {
+  //   //NASA Flordia
+  //   condition: (a, b) => ((a.tag.Noun && b.tag.Abbreviation) || (a.tag.Abbreviation && b.tag.Noun)),
+  //   result: 'Noun',
+  //   reason: 'noun-abbreviation'
+  // },
 
+  {
+    //half a million
+    condition: (a, b) => ((a.normal === 'half' || a.normal === 'quarter') && b.tag.Value),
+    result: 'Value',
+    reason: 'half-value'
+  },
   {
     //both values, not ordinals, not '5 20'
     condition: (a, b) => (a.tag.Value && b.tag.Value && !a.tag.Ordinal && !b.tag.NumericValue),
@@ -13315,33 +13424,79 @@ module.exports = [
 
 ];
 
-},{}],122:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 'use strict';
 //check for "united" + "kingdom" in lexicon, and combine + tag it
 const combine = require('./combine');
 const p = require('../paths');
 const log = p.log;
 const lexicon = p.lexicon;
+const fns = p.fns;
 const path = 'tagger/multiple';
+
+const combineMany = (s, i, count) => {
+  for(let n = 0; n < count; n++) {
+    combine(s, i);
+  }
+};
+
+//try to concatenate multiple-words to get this term
+const tryStringFrom = (want, start, s) => {
+  let text = '';
+  let normal = '';
+  for(let i = start; i < s.terms.length; i++) {
+    if (i === start) {
+      text = s.terms[i].text;
+      normal = s.terms[i].normal;
+    } else {
+      text += ' ' + s.terms[i].text;
+      normal += ' ' + s.terms[i].normal;
+    }
+    //we've gone too far
+    if (normal.length > want.length) {
+      return false;
+    }
+    if (text === want || normal === want) {
+      let count = i - start;
+      combineMany(s, start, count);
+      return true;
+    }
+  }
+  return false;
+};
 
 const lexicon_lump = function(s) {
   log.here(path);
-  let userLex = s.context.lexicon || {};
+  let uLexicon = s.context.lexicon || {};
+
+  //try the simpler, known lexicon
   for (let i = 0; i < s.terms.length - 1; i++) {
     //try 'A'+'B'
-    let str = s.terms[i].normal + ' ' + s.terms[i + 1].normal;
-    if (lexicon[str] || userLex[str]) {
+    let normal = s.terms[i].normal + ' ' + s.terms[i + 1].normal;
+    let text = s.terms[i].text + ' ' + s.terms[i + 1].text;
+    let pos = lexicon[normal] || lexicon[text];
+    if (pos) {
       combine(s, i);
-      s.terms[i].tagAs(lexicon[str], 'multiples-lexicon');
+      s.terms[i].tagAs(pos, 'multiples-lexicon');
     }
   }
 
+  //try the user's lexicon
+  Object.keys(uLexicon).forEach((str) => {
+    for(let i = 0; i < s.terms.length; i++) {
+      if (fns.startsWith(str, s.terms[i].normal) || fns.startsWith(str, s.terms[i].text)) {
+        if (tryStringFrom(str, i, s)) {
+          s.terms[i].tagAs(uLexicon[str], 'user-lexicon-lump');
+        }
+      }
+    }
+  });
   return s;
 };
 
 module.exports = lexicon_lump;
 
-},{"../paths":125,"./combine":119}],123:[function(require,module,exports){
+},{"../paths":127,"./combine":121}],125:[function(require,module,exports){
 'use strict';
 const log = require('../paths').log;
 const path = 'lumper/lump_three';
@@ -13371,7 +13526,7 @@ const lump_three = function(s) {
 
 module.exports = lump_three;
 
-},{"../paths":125,"./combine":119,"./data/do_three":120}],124:[function(require,module,exports){
+},{"../paths":127,"./combine":121,"./data/do_three":122}],126:[function(require,module,exports){
 'use strict';
 const log = require('../paths').log;
 const path = 'lumper/lump_two';
@@ -13398,7 +13553,7 @@ const lump_two = function(s) {
 
 module.exports = lump_two;
 
-},{"../paths":125,"./combine":119,"./data/do_two":121}],125:[function(require,module,exports){
+},{"../paths":127,"./combine":121,"./data/do_two":123}],127:[function(require,module,exports){
 module.exports = {
   data: require('../../data/index'),
   lexicon: require('../../data/lexicon'),
@@ -13407,7 +13562,7 @@ module.exports = {
   Term: require('../../term')
 };
 
-},{"../../data/index":71,"../../data/lexicon":72,"../../fns":100,"../../logger":102,"../../term":173}],126:[function(require,module,exports){
+},{"../../data/index":71,"../../data/lexicon":72,"../../fns":100,"../../logger":102,"../../term":184}],128:[function(require,module,exports){
 'use strict';
 const log = require('../paths').log;
 const rules = require('./data/punct_rules');
@@ -13435,7 +13590,7 @@ const punctuation_step = function(ts) {
 
 module.exports = punctuation_step;
 
-},{"../paths":125,"./data/punct_rules":143}],127:[function(require,module,exports){
+},{"../paths":127,"./data/punct_rules":146}],129:[function(require,module,exports){
 'use strict';
 const p = require('../paths');
 const lexicon = p.lexicon;
@@ -13464,6 +13619,11 @@ const lexicon_pass = function(s) {
     found = check_lexicon(t.normal, s);
     if (found) {
       t.tagAs(found, 'lexicon-match');
+      continue;
+    }
+    found = check_lexicon(t.text, s);
+    if (found) {
+      t.tagAs(found, 'lexicon-match-text');
       continue;
     }
     //support contractions (manually)
@@ -13496,7 +13656,7 @@ const lexicon_pass = function(s) {
 
 module.exports = lexicon_pass;
 
-},{"../paths":125}],128:[function(require,module,exports){
+},{"../paths":127}],130:[function(require,module,exports){
 'use strict';
 //titlecase is a signal for a noun
 const log = require('../paths').log;
@@ -13525,7 +13685,7 @@ const capital_logic = function(s) {
 
 module.exports = capital_logic;
 
-},{"../paths":125}],129:[function(require,module,exports){
+},{"../paths":127}],131:[function(require,module,exports){
 'use strict';
 //identify urls, hashtags, @mentions, emails
 const log = require('../paths').log;
@@ -13592,7 +13752,7 @@ const web_pass = function(terms) {
 
 module.exports = web_pass;
 
-},{"../paths":125}],130:[function(require,module,exports){
+},{"../paths":127}],132:[function(require,module,exports){
 'use strict';
 const log = require('../paths').log;
 const rules = require('./data/word_rules');
@@ -13619,7 +13779,7 @@ const suffix_step = function(s) {
 
 module.exports = suffix_step;
 
-},{"../paths":125,"./data/word_rules":144}],131:[function(require,module,exports){
+},{"../paths":127,"./data/word_rules":147}],133:[function(require,module,exports){
 'use strict';
 const markov = require('./data/neighbours');
 const afterThisWord = markov.afterThisWord;
@@ -13678,7 +13838,7 @@ const neighbour_step = function(s) {
 
 module.exports = neighbour_step;
 
-},{"../paths":125,"./data/neighbours":141}],132:[function(require,module,exports){
+},{"../paths":127,"./data/neighbours":144}],134:[function(require,module,exports){
 'use strict';
 const log = require('../paths').log;
 const path = 'tagger/noun_fallback';
@@ -13711,7 +13871,7 @@ const noun_fallback = function(s) {
 
 module.exports = noun_fallback;
 
-},{"../paths":125}],133:[function(require,module,exports){
+},{"../paths":127}],135:[function(require,module,exports){
 'use strict';
 const log = require('../paths').log;
 const path = 'tagger/datePass';
@@ -13794,7 +13954,7 @@ const datePass = function(s) {
 
 module.exports = datePass;
 
-},{"../paths":125}],134:[function(require,module,exports){
+},{"../paths":127}],136:[function(require,module,exports){
 'use strict';
 const log = require('../paths').log;
 const path = 'tagger/auxillary';
@@ -13834,7 +13994,7 @@ const corrections = function(ts) {
 
 module.exports = corrections;
 
-},{"../paths":125}],135:[function(require,module,exports){
+},{"../paths":127}],137:[function(require,module,exports){
 'use strict';
 const log = require('../paths').log;
 const path = 'tagger/negation';
@@ -13863,7 +14023,7 @@ const negation_step = function(ts) {
 
 module.exports = negation_step;
 
-},{"../paths":125}],136:[function(require,module,exports){
+},{"../paths":127}],138:[function(require,module,exports){
 'use strict';
 const log = require('../paths').log;
 const path = 'tagger/adverb';
@@ -13909,7 +14069,7 @@ const adverb_step = function(ts) {
 
 module.exports = adverb_step;
 
-},{"../paths":125}],137:[function(require,module,exports){
+},{"../paths":127}],139:[function(require,module,exports){
 'use strict';
 const log = require('../paths').log;
 const phrasals = require('./data/phrasal_verbs');
@@ -13954,7 +14114,7 @@ const phrasals_step = function(ts) {
 
 module.exports = phrasals_step;
 
-},{"../paths":125,"./data/phrasal_verbs":142}],138:[function(require,module,exports){
+},{"../paths":127,"./data/phrasal_verbs":145}],140:[function(require,module,exports){
 'use strict';
 //-types of comma-use-
 // PlaceComma - Hollywood, California
@@ -14075,7 +14235,7 @@ const commaStep = function(ts) {
 
 module.exports = commaStep;
 
-},{}],139:[function(require,module,exports){
+},{}],141:[function(require,module,exports){
 'use strict';
 //decide if an apostrophe s is a contraction or not
 // 'spencer's nice' -> 'spencer is nice'
@@ -14142,7 +14302,7 @@ const possessiveStep = function(terms) {
 };
 module.exports = possessiveStep;
 
-},{}],140:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
 'use strict';
 'use strict';
 const log = require('../paths').log;
@@ -14175,7 +14335,41 @@ const value_step = function(ts) {
 
 module.exports = value_step;
 
-},{"../paths":125}],141:[function(require,module,exports){
+},{"../paths":127}],143:[function(require,module,exports){
+'use strict';
+'use strict';
+const log = require('../paths').log;
+const path = 'tagger/acronym_step';
+
+const isAcronym = (t) => {
+  //like N.D.A
+  if (t.text.match(/([A-Z]\.)+[A-Z]?$/)) {
+    return true;
+  }
+  //like 'F.'
+  if (t.text.match(/^[A-Z]\.$/)) {
+    return true;
+  }
+  //like NDA
+  if (t.text.match(/[A-Z]{3}$/)) {
+    return true;
+  }
+  return false;
+};
+
+const acronym_step = function(ts) {
+  log.here(path);
+  ts.terms.forEach((t) => {
+    if (isAcronym(t)) {
+      t.tagAs('Acronym');
+    }
+  });
+  return ts;
+};
+
+module.exports = acronym_step;
+
+},{"../paths":127}],144:[function(require,module,exports){
 'use strict';
 //markov-like stats about co-occurance, for hints about unknown terms
 //basically, a little-bit better than the noun-fallback
@@ -14251,7 +14445,7 @@ module.exports = {
   afterThisPos: afterThisPos
 }
 
-},{}],142:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
 //phrasal verbs are two words that really mean one verb.
 //'beef up' is one verb, and not some direction of beefing.
 //by @spencermountain, 2015 mit
@@ -14341,15 +14535,19 @@ Object.keys(asymmetric).forEach(function(k) {
 
 module.exports = main;
 
-},{}],143:[function(require,module,exports){
+},{}],146:[function(require,module,exports){
 //these are regexes applied to t.text, instead of t.normal
 module.exports = [
 
   ['^#[a-z]+', 'HashTag'],
   ['[a-z]s\'', 'Possessive'],
+  ['[0-9]{3}-[0-9]{4}', 'PhoneNumber'],
+  ['\\+?[0-9]', 'NumericValue'], //like +5
   ['[0-9]([0-9,\.]*?)?]+', 'NumericValue'], //like 5
-  ['[12]?[0-9](:[0-5][0-9])? ?(am|pm)', 'Time'], //4pm
-  ['[12]?[0-9](:[0-5][0-9]) ?(am|pm)?', 'Time'], //4:00pm
+  ['[0-9]{1,3}(st|nd|rd|th)?-[0-9]{1,3}(st|nd|rd|th)?', 'NumberRange'], //5-7
+  ['[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])', 'Time'], //4:32:32
+  ['[012]?[0-9](:[0-5][0-9])?(:[0-5][0-9])? ?(am|pm)', 'Time'], //4pm
+  ['[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])? ?(am|pm)?', 'Time'], //4:00pm
   ['[PMCE]ST', 'Time'], //PST, time zone abbrevs
   ['utc ?[\+\-]?[0-9]\+?', 'Time'], //UTC 8+
   ['[a-z0-9]*? o\'?clock', 'Time'], //3 oclock
@@ -14375,7 +14573,7 @@ module.exports = [
   };
 });
 
-},{}],144:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 'use strict';
 //regex suffix patterns and their most common parts of speech,
 //built using wordnet, by spencer kelly.
@@ -14531,7 +14729,7 @@ module.exports = [
   };
 });
 
-},{}],145:[function(require,module,exports){
+},{}],148:[function(require,module,exports){
 'use strict';
 const Result = require('../index');
 
@@ -14567,7 +14765,119 @@ class Adjectives extends Result {
 
 module.exports = Adjectives;
 
-},{"../index":146}],146:[function(require,module,exports){
+},{"../index":152}],149:[function(require,module,exports){
+'use strict';
+const Result = require('../index');
+
+class Adverbs extends Result {
+  constructor(list) {
+    super(list);
+    this.when('#Adverb+');
+    return this;
+  }
+  parse() {
+    return this.terms.map((t) => {
+      return {
+        adjectiveForm: t.adverb.adjectiveForm(),
+      };
+    });
+  }
+}
+
+module.exports = Adverbs;
+
+},{"../index":152}],150:[function(require,module,exports){
+'use strict';
+
+//the plumbing to turn two words into a contraction
+const combine = (a, b) => {
+  b.whitespace.after = a.whitespace.after;
+  a.whitespace.after = '';
+  b.whitespace.before = '';
+  a.silent_term = a.text;
+  b.silent_term = b.text;
+  b.text = '';
+  a.tagAs('Contraction', 'new-contraction');
+  b.tagAs('Contraction', 'new-contraction');
+};
+
+const contract = function(r) {
+  //he is -> he's
+  r.match('#Noun is').list.forEach((ts) => {
+    combine(ts.terms[0], ts.terms[1]);
+    ts.terms[0].text += '\'s';
+  });
+  //he would -> he'd
+  r.match('#Noun would').list.forEach((ts) => {
+    combine(ts.terms[0], ts.terms[1]);
+    ts.terms[0].text += '\'d';
+  });
+  //they are -> they're
+  r.match('(they|we) are').list.forEach((ts) => {
+    combine(ts.terms[0], ts.terms[1]);
+    ts.terms[0].text += '\'re';
+  });
+  //they will -> they'll
+  r.match('(they|we) will').list.forEach((ts) => {
+    combine(ts.terms[0], ts.terms[1]);
+    ts.terms[0].text += '\'ll';
+  });
+  //they have -> they've
+  r.match('(they|we) have').list.forEach((ts) => {
+    combine(ts.terms[0], ts.terms[1]);
+    ts.terms[0].text += '\'ve';
+  });
+  //i am -> i'm
+  r.match('i am').list.forEach((ts) => {
+    combine(ts.terms[0], ts.terms[1]);
+    ts.terms[0].text += '\'m';
+  });
+  //is not -> isn't
+  r.match('(is|are|#Modal) not').list.forEach((ts) => {
+    combine(ts.terms[0], ts.terms[1]);
+    ts.terms[0].text += 'n\'t';
+  });
+  return r;
+};
+
+module.exports = contract;
+
+},{}],151:[function(require,module,exports){
+'use strict';
+const Result = require('../index');
+const contract = require('./contract');
+
+class Contractions extends Result {
+  constructor(list) {
+    super(list);
+    this.when('#Contraction+');
+    return this;
+  }
+  parse() {
+    return this.terms.map((t) => {
+      return {};
+    });
+  }
+  expand() {
+    this.list.forEach((ts) => {
+      ts.terms.forEach((t) => {
+        if (t.silent_term) {
+          t.text = t.silent_term;
+          t.whitespace.before = ' ';
+          t.unTag('Contraction', 'expanded');
+        }
+      });
+    });
+    return this.parent();
+  }
+  contract() {
+    return contract(this.parent());
+  }
+}
+
+module.exports = Contractions;
+
+},{"../index":152,"./contract":150}],152:[function(require,module,exports){
 'use strict';
 
 //a result is an array of termLists
@@ -14614,6 +14924,10 @@ Result.prototype.topk = require('./inspect/topk');
 
 module.exports = Result;
 
+const Contractions = require('./contractions');
+Result.prototype.contractions = function() {
+  return new Contractions(this.list);
+};
 //add tag-namespaced methods
 const Values = require('./values');
 Result.prototype.values = function() {
@@ -14622,6 +14936,10 @@ Result.prototype.values = function() {
 const Adjectives = require('./adjectives');
 Result.prototype.adjectives = function() {
   return new Adjectives(this.list);
+};
+const Adverbs = require('./adverbs');
+Result.prototype.adverbs = function() {
+  return new Adverbs(this.list);
 };
 const Nouns = require('./nouns');
 Result.prototype.nouns = function() {
@@ -14635,12 +14953,20 @@ const People = require('./people');
 Result.prototype.people = function() {
   return new People(this.list);
 };
+const Sentences = require('./sentences');
+Result.prototype.sentences = function() {
+  return new Sentences(this.list);
+};
+const Statements = require('./statements');
+Result.prototype.statements = function() {
+  return new Statements(this.list);
+};
+const Questions = require('./questions');
+Result.prototype.questions = function() {
+  return new Questions(this.list);
+};
 
-Result.prototype.toTextNumber = function() {
-  return new Values(this.list).toTextValue()
-}
-
-},{"./adjectives":145,"./inspect":147,"./inspect/ngram":148,"./inspect/topk":149,"./normalize":150,"./nouns":151,"./people":157,"./render":158,"./selection":159,"./values":160,"./verbs":161}],147:[function(require,module,exports){
+},{"./adjectives":148,"./adverbs":149,"./contractions":151,"./inspect":153,"./inspect/ngram":154,"./inspect/topk":155,"./normalize":156,"./nouns":157,"./people":163,"./questions":164,"./render":165,"./selection":166,"./sentences":167,"./statements":168,"./values":169,"./verbs":170}],153:[function(require,module,exports){
 'use strict';
 const Terms = require('../../terms');
 
@@ -14713,7 +15039,7 @@ const genericMethods = (Result) => {
     /**remove a tag in all the terms in this result (that had it) */
     unTag: function(tag, reason) {
       this.terms.filter((t) => t.sel).forEach((t) => {
-        delete t.tag[tag];
+        t.unTag(tag, reason);
       });
       return this;
     },
@@ -14757,7 +15083,7 @@ const genericMethods = (Result) => {
 
 module.exports = genericMethods;
 
-},{"../../terms":217}],148:[function(require,module,exports){
+},{"../../terms":229}],154:[function(require,module,exports){
 'use strict';
 //ngrams are consecutive terms of a specific size
 const ngram = function(options) {
@@ -14814,7 +15140,7 @@ const ngram = function(options) {
 
 module.exports = ngram;
 
-},{}],149:[function(require,module,exports){
+},{}],155:[function(require,module,exports){
 'use strict';
 //
 const topk = function(n) {
@@ -14851,7 +15177,7 @@ const topk = function(n) {
 
 module.exports = topk;
 
-},{}],150:[function(require,module,exports){
+},{}],156:[function(require,module,exports){
 'use strict';
 //
 const defaultMethods = {
@@ -14859,7 +15185,8 @@ const defaultMethods = {
   case: true,
   numbers: true,
   punctuation: true,
-  unicode: true
+  unicode: true,
+  contractions: true
 };
 
 const methods = {
@@ -14893,7 +15220,7 @@ const methods = {
 
   /** turn 'five' to 5, and 'fifth' to 5th*/
   numbers: (r) => {
-    return r.toNumber();
+    return r.values().toNumber();
   },
 
   /** remove commas, semicolons - but keep sentence-ending punctuation*/
@@ -14906,6 +15233,10 @@ const methods = {
       });
     });
     return r;
+  },
+
+  contractions: (r) => {
+    return r.contractions().expand();
   }
 };
 
@@ -14922,7 +15253,7 @@ const normalize = function(obj) {
 
 module.exports = normalize;
 
-},{}],151:[function(require,module,exports){
+},{}],157:[function(require,module,exports){
 'use strict';
 const Result = require('../index');
 
@@ -14935,7 +15266,11 @@ class Nouns extends Result {
   }
   parse() {
     return this.terms.map((t) => {
-      return {};
+      return {
+        article: t.noun.makeArticle(),
+        singular: t.noun.singular(),
+        plural: t.noun.plural(),
+      };
     });
   }
 }
@@ -14944,55 +15279,62 @@ Nouns.prototype.toSingular = require('./toSingular');
 
 module.exports = Nouns;
 
-},{"../index":146,"./toPlural":152,"./toSingular":153}],152:[function(require,module,exports){
+},{"../index":152,"./toPlural":158,"./toSingular":159}],158:[function(require,module,exports){
 'use strict';
 const twistArticle = require('./twistArticle');
 
 //inflect a term or termlist
-const toPlural = function() {
+const toPlural = function(options) {
+  options = options || {};
   this.list = this.list.map((ts) => {
     for(let i = 0; i < ts.terms.length; i++) {
       let t = ts.terms[i];
       if (t.tag.Noun && t.noun.hasPlural()) {
-        t.text = t.noun.toPlural();
+        t.text = t.noun.plural();
         t.unTag('Singular', 'toPlural()');
         t.tagAs('Plural', 'toPlural()');
         //also twist the determiner, eg -'a' to 'the'
-        ts = twistArticle.toPlural(ts, i);
+        if (!options.leave_article) {
+          ts = twistArticle.plural(ts, i);
+        }
       }
     }
     return ts;
   });
-  return this;
+  return this.parent();
 };
 
 module.exports = toPlural;
 
-},{"./twistArticle":154}],153:[function(require,module,exports){
+},{"./twistArticle":160}],159:[function(require,module,exports){
 'use strict';
 const twistArticle = require('./twistArticle');
 
 //inflect a term or termlist
-const toSingular = function(r) {
+const toSingular = function(options) {
+  options = options || {};
   this.list = this.list.map((ts) => {
-    for(let i = 0; i < ts.terms.length; i++) {
+    let len = ts.terms.length;
+    for(let i = 0; i < len; i++) {
       let t = ts.terms[i];
       if (t.tag.Noun && t.noun.hasPlural()) {
-        t.text = t.noun.toSingular();
+        t.text = t.noun.singular() || t.text;
         t.unTag('Plural', 'toSingular()');
         t.tagAs('Singular', 'toSingular()');
         //also twist the determiner, eg -'a' to 'the'
-        ts = twistArticle.toSingular(ts, i);
+        if (!options.leave_article) {
+          ts = twistArticle.singular(ts, i);
+        }
       }
     }
     return ts;
   });
-  return this;
+  return this.parent();
 };
 
 module.exports = toSingular;
 
-},{"./twistArticle":154}],154:[function(require,module,exports){
+},{"./twistArticle":160}],160:[function(require,module,exports){
 'use strict';
 
 //articles that are sensitive to singular/plural
@@ -15002,6 +15344,10 @@ const pluralMap = {
   the: 'the',
   this: 'those',
 };
+const singularMap = {
+  these: 'this',
+  those: 'that',
+};
 
 //the article comes before this noun
 const findArticle = function(ts, i) {
@@ -15009,7 +15355,7 @@ const findArticle = function(ts, i) {
   for(let o = i; o >= 0; o -= 1) {
     let t = ts.terms[o];
     //smells like an article
-    if (t && pluralMap[t.normal]) {
+    if (t && pluralMap[t.normal] || singularMap[t.normal]) {
       return t;
     }
     //a verb ends the search, i think.
@@ -15024,7 +15370,7 @@ const findArticle = function(ts, i) {
   return null;
 };
 
-const toPlural = (ts, i) => {
+const plural = (ts, i) => {
   let article = findArticle(ts, i);
   if (article && pluralMap[article.normal]) {
     article.text = pluralMap[article.normal];
@@ -15032,35 +15378,41 @@ const toPlural = (ts, i) => {
   return ts;
 };
 
-const toSingular = (ts, i) => {
+const singular = (ts, i) => {
   let article = findArticle(ts, i);
-  if (article && article.normal === 'normal') {
-    article.text = pluralMap[article.normal];
+  if (article) {
+    if (singularMap[article.normal]) {
+      article.text = singularMap[article.normal];
+    } else {
+      article.text = ts.terms[i].noun.makeArticle(); // (a/an)
+    }
+  } else {
+    let art = ts.terms[i].noun.makeArticle();
+    ts.insertAt(art, i - 1);
   }
   return ts;
 };
 
 module.exports = {
-  toPlural: toPlural,
-  toSingular: toSingular,
+  plural: plural,
+  singular: singular,
 };
 
-},{}],155:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 module.exports = {
   fns: require('../fns'),
   log: require('../logger'),
   data: require('../data'),
 };
 
-},{"../data":71,"../fns":100,"../logger":102}],156:[function(require,module,exports){
+},{"../data":71,"../fns":100,"../logger":102}],162:[function(require,module,exports){
 'use strict';
 const firstnames = require('../paths').data.firstnames;
 // make a statistical assumption about the gender of the person based on their given name
 // used for pronoun resolution only.
 // not intended for classification, or discrimination of people.
 const gender = function(t) {
-  let o = t.firstName();
-  let firstName = o.firstName;
+  let firstName = t.firstName();
   if (!firstName) {
     return null;
   }
@@ -15093,7 +15445,7 @@ const gender = function(t) {
 };
 module.exports = gender;
 
-},{"../paths":155}],157:[function(require,module,exports){
+},{"../paths":161}],163:[function(require,module,exports){
 'use strict';
 const Result = require('../index');
 //this is used for pronoun and honorifics, and not intented for more-than grammatical use (see #117)
@@ -15107,31 +15459,32 @@ class People extends Result {
     return this;
   }
   parse() {
-    let obj = {
-      honorific: this.honorific(),
-      pronoun: this.pronoun(),
-    };
-    let m = this.clone().remove('#Honorific');
-    m.remove('the *'); //jabba the hut
-    m = m.match('#Person');
-    m.check();
-    //1-names are sneaky
-    if (m.count === 1) {
-      let term = m.terms()[0];
-      if (term.tag.MaleName || term.tag.FemaleName) {
-        obj.firstName = m.normal();
-      }
-    }
-    if (m.count === 2) {
-      obj.firstName = m.get(0).normal();
-      obj.lastName = m.get(1).normal();
-    }
-    if (m.count === 3) {
-      obj.firstName = m.get(0).normal();
-      obj.middleName = m.get(1).normal();
-      obj.lastName = m.get(2).normal();
-    }
-    return obj;
+
+    // let obj = {
+    //   honorific: this.honorific(),
+    //   pronoun: this.pronoun(),
+    // };
+    // let m = this.clone().remove('#Honorific');
+    // m.remove('the *'); //jabba the hut
+    // m.match('#Person');
+    // // m.check();
+    // //1-names are sneaky
+    // if (m.count === 1) {
+    //   let term = m.terms[0];
+    //   if (term.tag.MaleName || term.tag.FemaleName) {
+    //     obj.firstName = m.normal();
+    //   }
+    // }
+    // if (m.count === 2) {
+    //   obj.firstName = m.get(0).normal();
+    //   obj.lastName = m.get(1).normal();
+    // }
+    // if (m.count === 3) {
+    //   obj.firstName = m.get(0).normal();
+    //   obj.middleName = m.get(1).normal();
+    //   obj.lastName = m.get(2).normal();
+    // }
+    return [];
   }
   //getters
 
@@ -15156,7 +15509,16 @@ class People extends Result {
   }
   middleName() {}
   lastName() {}
-  pronoun() {}
+
+  pronoun() {
+    const pronouns = {
+      Male: 'he',
+      Female: 'she',
+    };
+    let gender = guessGender(this);
+    //return 'singular they' if no gender is found
+    return pronouns[gender] || 'they';
+  }
 
   //transformations
   addHonorific() {
@@ -15166,18 +15528,36 @@ class People extends Result {
         this.append(str);
       }
     }
-    return this;
+    return this.parent();
   }
   stripHonorific() {
     this.remove('#Honorific');
-    return this;
+    return this.parent();
   }
 
 }
 
 module.exports = People;
 
-},{"../index":146,"./guessGender":156}],158:[function(require,module,exports){
+},{"../index":152,"./guessGender":162}],164:[function(require,module,exports){
+'use strict';
+const Result = require('../index');
+
+class Questions extends Result {
+  constructor(list) {
+    super(list);
+    return this;
+  }
+  parse() {
+    return this.terms.map((t) => {
+      return {};
+    });
+  }
+}
+
+module.exports = Questions;
+
+},{"../index":152}],165:[function(require,module,exports){
 'use strict';
 const chalk = require('chalk');
 
@@ -15189,7 +15569,11 @@ const prettyPrint = (Result) => {
       console.log('====');
       this.list.forEach((ts) => {
         console.log('   --');
-        ts.check();
+        ts.terms.forEach((t) => {
+          if (t.sel) {
+            t.render.check();
+          }
+        });
       });
       return this;
     },
@@ -15243,10 +15627,22 @@ const prettyPrint = (Result) => {
     },
 
     asArray: function() {
-      return this.list.map((ts) => {
-        return ts.normal();
+      var result = [];
+      this.list.forEach(ts => {
+        ts.terms.forEach(t =>
+          result.push(
+            {
+                normal: t.normal,
+                text: t.text,
+                tags: Object.keys(t.tag),
+                whitespace: t.whitespace
+            }
+          )
+        )
       });
+      return result;
     },
+
     asHtml: function() {
       let html = this.terms.reduce((str, t) => {
         str += t.render.html();
@@ -15264,7 +15660,7 @@ const prettyPrint = (Result) => {
 
 module.exports = prettyPrint;
 
-},{"chalk":8}],159:[function(require,module,exports){
+},{"chalk":8}],166:[function(require,module,exports){
 'use strict';
 const Terms = require('../../terms');
 
@@ -15365,7 +15761,50 @@ const match = (Result) => {
 };
 module.exports = match;
 
-},{"../../terms":217}],160:[function(require,module,exports){
+},{"../../terms":229}],167:[function(require,module,exports){
+'use strict';
+const Result = require('../index');
+
+class Sentences extends Result {
+  constructor(list) {
+    super(list);
+    return this;
+  }
+  parse() {
+    return this.terms.map((t) => {
+      return {
+      };
+    });
+  }
+  passive() {
+    // this.match('was #Adverb? #PastTense #Adverb? by');
+  }
+  toNegative() {
+    this.match('#Copula').verbs().negate();
+  }
+}
+
+module.exports = Sentences;
+
+},{"../index":152}],168:[function(require,module,exports){
+'use strict';
+const Result = require('../index');
+
+class Statements extends Result {
+  constructor(list) {
+    super(list);
+    return this;
+  }
+  parse() {
+    return this.terms.map((t) => {
+      return {};
+    });
+  }
+}
+
+module.exports = Statements;
+
+},{"../index":152}],169:[function(require,module,exports){
 'use strict';
 const Result = require('../index');
 
@@ -15389,18 +15828,21 @@ class Values extends Result {
   /** five -> '5' */
   toNumber() {
     this.terms.forEach((t) => {
-      t.text = '' + t.value.number();
-      t.unTag('TextValue', 'toNumber()');
-      t.tagAs('NumericValue', 'toNumber()');
+      let num = t.value.number();
+      if (num) {
+        t.text = '' + num;
+        t.unTag('TextValue', 'toNumber()');
+        t.tagAs('NumericValue', 'toNumber()');
+      }
     });
-    return this;
+    return this.parent();
   }
   /**5900 -> 5,900 */
   toNiceNumber() {
     this.terms.forEach((t) => {
       t.text = '' + t.value.nicenumber();
     });
-    return this;
+    return this.parent();
   }
   /**5 -> 'five' */
   toTextValue() {
@@ -15409,7 +15851,7 @@ class Values extends Result {
       t.unTag('NumericValue', 'toTextValue()');
       t.tagAs('TextValue', 'toTextValue()');
     });
-    return this;
+    return this.parent();
   }
   /**5th -> 5 */
   toCardinal() {
@@ -15418,7 +15860,7 @@ class Values extends Result {
       t.unTag('Ordinal', 'toCardinal()');
       t.tagAs('Cardinal', 'toCardinal()');
     });
-    return this;
+    return this.parent();
   }
   /**5 -> 5th */
   toOrdinal() {
@@ -15427,13 +15869,13 @@ class Values extends Result {
       t.unTag('Cardinal', 'toOrdinal()');
       t.tagAs('Ordinal', 'toOrdinal()');
     });
-    return this;
+    return this.parent();
   }
 }
 
 module.exports = Values;
 
-},{"../index":146}],161:[function(require,module,exports){
+},{"../index":152}],170:[function(require,module,exports){
 'use strict';
 const Result = require('../index');
 
@@ -15446,30 +15888,45 @@ class Verbs extends Result {
   }
   parse() {
     return this.terms.map((t) => {
-      return {};
+      return t.verb.conjugate();
     });
   }
   toPast() {
-    return this;
+    let t = this.terms[0];
+    this.contractions().expand();
+    if (t) {
+      t.text = t.verb.pastTense();
+    }
+    return this.parent();
   }
   toPresent() {
-    return this;
+    let t = this.terms[0];
+    this.contractions().expand();
+    if (t) {
+      t.text = t.verb.presentTense();
+    }
+    return this.parent();
   }
   toFuture() {
-    return this;
+    let t = this.terms[0];
+    this.contractions().expand();
+    if (t) {
+      t.text = t.verb.futureTense();
+    }
+    return this.parent();
   }
 }
 
 module.exports = Verbs;
 
-},{"../index":146}],162:[function(require,module,exports){
+},{"../index":152}],171:[function(require,module,exports){
 'use strict';
 
 //list of inconsistent parts-of-speech
 const conflicts = [
   //top-level pos are all inconsistent
-  ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression'],
-  //nouns
+  ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression', 'Url', 'PhoneNumber', 'Email'],
+  //exlusive-nouns
   ['Person', 'Organization', 'Value', 'Place', 'Actor', 'Demonym', 'Pronoun'],
   //things that can't be plural
   ['Plural', 'Singular'],
@@ -15478,8 +15935,9 @@ const conflicts = [
   ['Plural', 'Organization'],
   ['Plural', 'Currency'],
   ['Plural', 'Ordinal'],
-  //people
+  //exlusive-people
   ['MaleName', 'FemaleName'],
+  ['FirstName', 'LastName', 'Honorific'],
   //adjectives
   ['Comparative', 'Superlative'],
   //values
@@ -15487,31 +15945,17 @@ const conflicts = [
   ['TextValue', 'NumericValue'],
   ['Ordinal', 'Currency'], //$5.50th
   //verbs
-  ['Infinitive', 'Gerund', 'Pluperfect', 'FuturePerfect'],
-  //tenses
-  ['PastTense', 'PresentTense', 'PerfectTense'],
-  //non-infinitive
-  ['Infinitive', 'PastTense'],
-  ['Infinitive', 'PresentTense'],
-  //non-gerund
-  ['Gerund', 'PastTense'],
-  ['Gerund', 'PresentTense'],
-  //more verbs
-  ['Copula', 'Modal'],
-  //web text
-  ['HashTag', 'Noun', 'Verb', 'Adjective', 'Adverb'],
-  ['Email', 'Verb', 'Adjective', 'Adverb'],
-  ['Url', 'Verb', 'Adjective', 'Adverb'],
-  ['HashTag', 'Email', 'Url'],
+  ['PastTense', 'PerfectTense', 'Pluperfect', 'FuturePerfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund'],
   //date
   ['Month', 'Day', 'Year', 'Duration'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
-  ['Date', 'Verb', 'Adjective'],
-  ['Month', 'Verb'],
+  ['Date', 'Verb', 'Adjective', 'Person'],
   //phrases
-  // ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase'],
+  ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase', 'ConditionalPhrase'],
   //a/an -> 1
-  ['Value', 'Determiner']
+  ['Value', 'Determiner'],
+  ['Verb', 'NounPhrase'],
+  ['Noun', 'VerbPhrase'],
 ];
 
 const find = (tag) => {
@@ -15526,17 +15970,41 @@ const find = (tag) => {
 
 module.exports = find;
 
-},{}],163:[function(require,module,exports){
+// console.log(find('Person'));
+
+},{}],172:[function(require,module,exports){
 'use strict';
 const conflicts = require('./conflicts');
 const tree = require('./tree');
 
 //make tags
 let all = {};
+
+const all_children = (obj) => {
+  let children = Object.keys(obj || {});
+  //two levels deep
+  children.forEach((str) => {
+    if (typeof obj[str] === 'object') {
+      let kids = Object.keys(obj[str]);
+      kids.forEach((gc) => {
+        if (typeof obj[str][gc] === 'object') {
+          let grandkids = Object.keys(obj[str][gc]);
+          children = children.concat(grandkids);
+        }
+      });
+      children = children.concat(kids);
+    }
+  });
+  return children;
+};
+
 //recursively add them, with is
 const add_tags = (obj, is) => {
   Object.keys(obj).forEach((k) => {
-    all[k] = is;
+    all[k] = {
+      parents: is,
+      children: all_children(obj[k])
+    };
     if (obj[k] !== true) {
       add_tags(obj[k], is.concat([k])); //recursive
     }
@@ -15546,25 +16014,32 @@ add_tags(tree, []);
 
 //add conflicts
 Object.keys(all).forEach((tag) => {
-  all[tag] = {
-    is: all[tag],
-    not: conflicts(tag)
-  };
+  all[tag].not = conflicts(tag);
+  let parents = all[tag].parents;
+  for(let i = 0; i < parents.length; i++) {
+    let alsoNot = conflicts(parents[i]);
+    all[tag].not = all[tag].not.concat(alsoNot);
+  }
 });
 
 module.exports = all;
+// console.log(all.Noun);
+// console.log(all_children(tree['NounPhrase']));
 
-},{"./conflicts":162,"./tree":164}],164:[function(require,module,exports){
-
+},{"./conflicts":171,"./tree":173}],173:[function(require,module,exports){
 //the POS tags we use, according to their dependencies
+//(dont make it too deep, cause fns aren't properly clever-enough)
 module.exports = {
   NounPhrase: {
     Noun: {
       Singular: {
         Pronoun: true,
         Person: {
-          MaleName: true,
-          FemaleName: true,
+          FirstName: {
+            MaleName: true,
+            FemaleName: true,
+          },
+          LastName: true,
           Honorific: true
         },
         Place: {
@@ -15620,28 +16095,36 @@ module.exports = {
     Fraction: true,
     Cardinal: true,
     TextValue: true,
-    NumericValue: true
+    NumericValue: true,
+    NumberRange: true
   },
   //glue
   Determiner: true,
   Conjunction: true,
   Preposition: true,
-
-  Condition: true,
-  TitleCase: true,
   QuestionWord: true,
   Expression: true,
   Url: true,
+  PhoneNumber: true,
   HashTag: true,
   Email: true,
+
+  //non-exclusive
+  Condition: true,
+  TitleCase: true,
   Auxillary: true,
   Negative: true,
+  Contraction: true,
+  Acronym: true,
 
+  //phrases
   ValuePhrase: true,
   AdjectivePhrase: true,
+  ConditionPhrase: true,
+
 };
 
-},{}],165:[function(require,module,exports){
+},{}],174:[function(require,module,exports){
 'use strict';
 const toAdverb = require('./toAdverb');
 const toNoun = require('./toNoun');
@@ -15672,10 +16155,10 @@ const adjective = {
 };
 module.exports = adjective;
 
-},{"./toAdverb":167,"./toComparative":168,"./toNoun":169,"./toSuperlative":170}],166:[function(require,module,exports){
+},{"./toAdverb":176,"./toComparative":177,"./toNoun":178,"./toSuperlative":179}],175:[function(require,module,exports){
 module.exports = require('../paths');
 
-},{"../paths":184}],167:[function(require,module,exports){
+},{"../paths":195}],176:[function(require,module,exports){
 //turn 'quick' into 'quickly'
 'use strict';
 const adj_to_adv = function(str) {
@@ -15810,7 +16293,7 @@ const adj_to_adv = function(str) {
 
 module.exports = adj_to_adv;
 
-},{}],168:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 //turn 'quick' into 'quickly'
 'use strict';
 const convertables = require('./paths').data.superlatives;
@@ -15910,7 +16393,7 @@ const to_comparative = function(str) {
 
 module.exports = to_comparative;
 
-},{"./paths":166}],169:[function(require,module,exports){
+},{"./paths":175}],178:[function(require,module,exports){
 'use strict';
 //convert 'cute' to 'cuteness'
 
@@ -15983,7 +16466,7 @@ const to_noun = function(w) {
 
 module.exports = to_noun;
 
-},{}],170:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
 //turn 'quick' into 'quickest'
 'use strict';
 const convertables = require('./paths').data.superlatives;
@@ -16083,7 +16566,78 @@ const to_superlative = function(str) {
 
 module.exports = to_superlative;
 
-},{"./paths":166}],171:[function(require,module,exports){
+},{"./paths":175}],180:[function(require,module,exports){
+'use strict';
+const toAdjective = require('./to_adjective');
+const adverb = {
+  adjectiveForm: function() {
+    return toAdjective(this.normal);
+  },
+};
+module.exports = adverb;
+
+},{"./to_adjective":181}],181:[function(require,module,exports){
+//turns 'quickly' into 'quick'
+'use strict';
+const to_adjective = function(str) {
+  const irregulars = {
+    'idly': 'idle',
+    'sporadically': 'sporadic',
+    'basically': 'basic',
+    'grammatically': 'grammatical',
+    'alphabetically': 'alphabetical',
+    'economically': 'economical',
+    'conically': 'conical',
+    'politically': 'political',
+    'vertically': 'vertical',
+    'practically': 'practical',
+    'theoretically': 'theoretical',
+    'critically': 'critical',
+    'fantastically': 'fantastic',
+    'mystically': 'mystical',
+    'pornographically': 'pornographic',
+    'fully': 'full',
+    'jolly': 'jolly',
+    'wholly': 'whole'
+  };
+  const transforms = [{
+    'reg': /bly$/i,
+    'repl': 'ble'
+  }, {
+    'reg': /gically$/i,
+    'repl': 'gical'
+  }, {
+    'reg': /([rsdh])ically$/i,
+    'repl': '$1ical'
+  }, {
+    'reg': /ically$/i,
+    'repl': 'ic'
+  }, {
+    'reg': /uly$/i,
+    'repl': 'ue'
+  }, {
+    'reg': /ily$/i,
+    'repl': 'y'
+  }, {
+    'reg': /(.{3})ly$/i,
+    'repl': '$1'
+  }];
+  if (irregulars.hasOwnProperty(str)) {
+    return irregulars[str];
+  }
+  for (let i = 0; i < transforms.length; i++) {
+    if (str.match(transforms[i].reg)) {
+      return str.replace(transforms[i].reg, transforms[i].repl);
+    }
+  }
+  return str;
+};
+
+// console.log(to_adjective('quickly') === 'quick')
+// console.log(to_adjective('marvelously') === 'marvelous')
+module.exports = to_adjective;
+
+},{}],182:[function(require,module,exports){
 'use strict';
 //a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
 //approximate visual (not semantic or phonetic) relationship between unicode and ascii characters
@@ -16140,7 +16694,7 @@ const fixUnicode = (str) => {
 module.exports = fixUnicode;
 // console.log(fixUnicode('bjŏȒk'));
 
-},{}],172:[function(require,module,exports){
+},{}],183:[function(require,module,exports){
 'use strict';
 const Term = require('./index');
 const fns = require('./paths').fns;
@@ -16162,9 +16716,10 @@ module.exports = {
   }
 };
 
-},{"./index":173,"./paths":184}],173:[function(require,module,exports){
+},{"./index":184,"./paths":195}],184:[function(require,module,exports){
 'use strict';
-const set_tag = require('./tag').set_tag;
+const setTag = require('./setTag');
+const unTag = require('./unTag');
 const addNormal = require('./normalize');
 const addRoot = require('./root');
 const fns = require('./paths').fns;
@@ -16190,6 +16745,7 @@ class Term {
     bindMethods(require('./verb'), 'verb', this);
     bindMethods(require('./noun'), 'noun', this);
     bindMethods(require('./adjective'), 'adjective', this);
+    bindMethods(require('./adverb'), 'adverb', this);
     bindMethods(require('./value'), 'value', this);
     bindMethods(require('./pronoun'), 'pronoun', this);
     bindMethods(require('./render'), 'render', this);
@@ -16244,12 +16800,11 @@ class Term {
 
   /** set the term as this part-of-speech */
   tagAs(tag, reason) {
-    set_tag(this, tag, reason);
+    setTag(this, tag, reason);
   }
   /** remove this part-of-speech from the term*/
   unTag(tag, reason) {
-    // log.tell('removing \'' + tag + '\'  - ' + reason);
-    delete this.tag[tag];
+    unTag(this, tag, reason);
   }
 
   /** make a copy with no references to the original  */
@@ -16266,7 +16821,7 @@ class Term {
 }
 module.exports = Term;
 
-},{"./adjective":165,"./helpers":172,"./normalize":174,"./noun":176,"./paths":184,"./pronoun":185,"./render":186,"./root":188,"./tag":189,"./term":190,"./value":191,"./verb":210,"./whitespace":216}],174:[function(require,module,exports){
+},{"./adjective":174,"./adverb":180,"./helpers":183,"./normalize":185,"./noun":187,"./paths":195,"./pronoun":196,"./render":197,"./root":199,"./setTag":200,"./term":201,"./unTag":202,"./value":203,"./verb":222,"./whitespace":228}],185:[function(require,module,exports){
 'use strict';
 const fixUnicode = require('./fixUnicode');
 
@@ -16291,6 +16846,8 @@ const normalize = function(term) {
   if (term.term.isAcronym()) {
     str = str.replace(/\./g, '');
   }
+  //nice-numbers
+  str = str.replace(/([0-9]),([0-9])/g, '$1$2');
   term.normal = str;
 };
 
@@ -16298,7 +16855,7 @@ module.exports = normalize;
 
 // console.log(normalize('Dr. V Cooper'));
 
-},{"./fixUnicode":171}],175:[function(require,module,exports){
+},{"./fixUnicode":182}],186:[function(require,module,exports){
 'use strict';
 const uncountables = require('../paths').data.uncountables;
 
@@ -16335,7 +16892,7 @@ const hasPlural = function(t) {
 
 module.exports = hasPlural;
 
-},{"../paths":184}],176:[function(require,module,exports){
+},{"../paths":195}],187:[function(require,module,exports){
 'use strict';
 const hasPlural = require('./hasPlural');
 const makeArticle = require('./makeArticle');
@@ -16344,13 +16901,13 @@ const toSingular = require('./inflect/toSingle');
 const isPlural = require('./inflect/isPlural');
 
 module.exports = {
-  toPlural : function() {
+  plural : function() {
     if (!this.noun.hasPlural() || this.noun.isPlural()) {
       return this.text;
     }
     return toPlural(this.text);
   },
-  toSingular : function() {
+  singular : function() {
     if (!this.noun.hasPlural() || !this.noun.isPlural()) {
       return this.text;
     }
@@ -16361,10 +16918,13 @@ module.exports = {
   },
   isPlural: function() {
     return isPlural(this);
+  },
+  makeArticle: function() {
+    return makeArticle(this);
   }
 };
 
-},{"./hasPlural":175,"./inflect/isPlural":180,"./inflect/toPlural":181,"./inflect/toSingle":182,"./makeArticle":183}],177:[function(require,module,exports){
+},{"./hasPlural":186,"./inflect/isPlural":191,"./inflect/toPlural":192,"./inflect/toSingle":193,"./makeArticle":194}],188:[function(require,module,exports){
 'use strict';
 //similar to plural/singularize rules, but not the same
 const plural_indicators = [
@@ -16418,7 +16978,7 @@ module.exports = {
   plural_indicators: plural_indicators
 }
 
-},{}],178:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 //patterns for turning 'bus' to 'buses'
 module.exports = [
   [/(ax|test)is$/i, '$1es'],
@@ -16453,7 +17013,7 @@ module.exports = [
   };
 });
 
-},{}],179:[function(require,module,exports){
+},{}],190:[function(require,module,exports){
 //patterns for turning 'dwarves' to 'dwarf'
 module.exports = [
   [/([^v])ies$/i, '$1y'],
@@ -16487,14 +17047,14 @@ module.exports = [
   };
 });
 
-},{}],180:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 'use strict';
 const irregulars = require('../../paths').data.irregular_plurals;
 const rules = require('./data/indicators');
 
 //first, try to guess based on existing tags
 const couldEvenBePlural = (t) => {
-  if (t.tag.Person || t.tag.Value || t.tag.Organization || t.tag.Date) {
+  if (t.tag.Person || t.tag.Pronoun || t.tag.Place || t.tag.Possessive || t.tag.Value || t.tag.Organization || t.tag.Date) {
     return false;
   }
   return true;
@@ -16545,7 +17105,7 @@ const is_plural = function(t) {
 
 module.exports = is_plural;
 
-},{"../../paths":184,"./data/indicators":177}],181:[function(require,module,exports){
+},{"../../paths":195,"./data/indicators":188}],192:[function(require,module,exports){
 'use strict';
 const irregulars = require('../../paths').data.irregular_plurals.toPlural;
 const pluralRules = require('./data/pluralRules');
@@ -16577,7 +17137,7 @@ const pluralize = function(str) {
 
 module.exports = pluralize;
 
-},{"../../paths":184,"./data/pluralRules":178}],182:[function(require,module,exports){
+},{"../../paths":195,"./data/pluralRules":189}],193:[function(require,module,exports){
 'use strict';
 const irregulars = require('../../paths').data.irregular_plurals.toSingle;
 const singleRules = require('./data/singleRules');
@@ -16610,7 +17170,7 @@ const toSingle = function(str) {
 // console.log(toSingle('gases') === 'gas')
 module.exports = toSingle;
 
-},{"../../paths":184,"./data/singleRules":179}],183:[function(require,module,exports){
+},{"../../paths":195,"./data/singleRules":190}],194:[function(require,module,exports){
 'use strict';
 
 //chooses an indefinite aricle 'a/an' for a word
@@ -16625,18 +17185,18 @@ const irregulars = {
 };
 //pronounced letters of acronyms that get a 'an'
 const an_acronyms = {
-  A: true,
-  E: true,
-  F: true,
-  H: true,
-  I: true,
-  L: true,
-  M: true,
-  N: true,
-  O: true,
-  R: true,
-  S: true,
-  X: true
+  a: true,
+  e: true,
+  f: true,
+  h: true,
+  i: true,
+  l: true,
+  m: true,
+  n: true,
+  o: true,
+  r: true,
+  s: true,
+  x: true
 };
 //'a' regexes
 const a_regexs = [
@@ -16653,7 +17213,8 @@ const indefinite_article = function(t) {
     return irregulars[str];
   }
   //spelled-out acronyms
-  if (t.term.isAcronym() && an_acronyms.hasOwnProperty(str.substr(0, 1))) {
+  let firstLetter = str.substr(0, 1);
+  if (t.term.isAcronym() && an_acronyms.hasOwnProperty(firstLetter)) {
     return 'an';
   }
   //'a' regexes
@@ -16671,7 +17232,7 @@ const indefinite_article = function(t) {
 
 module.exports = indefinite_article;
 
-},{}],184:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 module.exports = {
   fns: require('../fns'),
   log: require('../logger'),
@@ -16679,7 +17240,7 @@ module.exports = {
   tags: require('../tags')
 };
 
-},{"../data":71,"../fns":100,"../logger":102,"../tags":163}],185:[function(require,module,exports){
+},{"../data":71,"../fns":100,"../logger":102,"../tags":172}],196:[function(require,module,exports){
 'use strict';
 
 let pluralMap = {
@@ -16708,7 +17269,7 @@ module.exports = {
   }
 };
 
-},{}],186:[function(require,module,exports){
+},{}],197:[function(require,module,exports){
 'use strict';
 const renderHtml = require('./renderHtml');
 const chalk = require('chalk');
@@ -16753,6 +17314,7 @@ module.exports = {
       return tag;
     }).join(', ');
     let word = this.text;
+    word = this.whitespace.before + word + this.whitespace.after;
     word = '\'' + chalk.green(word || '-') + '\'';
     let silent = '';
     if (this.silent_term) {
@@ -16767,7 +17329,7 @@ module.exports = {
   }
 };
 
-},{"../paths":184,"./renderHtml":187,"chalk":8}],187:[function(require,module,exports){
+},{"../paths":195,"./renderHtml":198,"chalk":8}],198:[function(require,module,exports){
 'use strict';
 //turn xml special characters into apersand-encoding.
 //i'm not sure this is perfectly safe.
@@ -16823,7 +17385,7 @@ const renderHtml = function(t) {
 
 module.exports = renderHtml;
 
-},{}],188:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 'use strict';
 //
 const rootForm = function(term) {
@@ -16839,72 +17401,60 @@ const rootForm = function(term) {
 
 module.exports = rootForm;
 
-},{}],189:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 'use strict';
 //set a term as a particular Part-of-speech
 const path = require('./paths');
 const log = path.log;
 const tagset = path.tags;
+const unTag = require('./unTag');
 
-//check if the term is compatible with a pos tag.
-const canBe = (term, tag) => {
-  //already compatible..
-  if (term.tag[tag]) {
-    return true;
-  }
-  //unknown tag..
+
+const makeCompatible = (term, tag, reason) => {
   if (!tagset[tag]) {
-    //huh? sure, go for it.
-    return true;
+    return;
   }
-  //consult tagset's incompatible tags
-  let not = tagset[tag].not;
-  let tags = Object.keys(term.tag);
-  for(let i = 0; i < tags.length; i++) {
-    if (not.indexOf(tags[i]) !== -1) {
-      // log.tell(not[not.indexOf(tags[i])]);
-      return false;
-    }
+  //find incompatible tags
+  let not = tagset[tag].not || [];
+  for(let i = 0; i < not.length; i++) {
+    unTag(term, not[i], reason);
   }
-  return true;
 };
 
-const set_tag = function(term, tag, reason) {
+const tag_one = (term, tag, reason) => {
+  //ignore if already tagged
+  if (term.tag[tag]) {
+    return;
+  }
+  reason = reason || '';
+  //clean first
+  makeCompatible(term, tag, reason);
+  // unTag(term, tag, reason);
+  log.tell('+ ' + tag + '  ' + reason);
+  term.tag[tag] = true;
+};
+
+const tagAll = function(term, tag, reason) {
+  if (!term || !tag) {
+    return;
+  }
   tag = tag || '';
   tag = tag.replace(/^#/, '');
-  //fail-fast
-  if (!term || !tag || term.tag[tag]) {
-    return;
-  }
-  log.tagAs(term, tag, reason);
-  //reset term, if necessary
-  if (canBe(term, tag) === false) {
-    log.tell('forgetting tags for ' + term.normal);
-    term.tag = {};
-  }
-  term.tag[tag] = true;
-  if (!tagset[tag]) {
-    // console.warn('unknown tag ' + tag + ' - ' + reason);
-    term.tag[tag] = true;
-    return;
-  }
-  // //also set tags by deduction
-  let tags = tagset[tag].is;
-  for (let i = 0; i < tags.length; i++) {
-    if (!term.tag[tags[i]]) {
-      log.tagAs(term, tags[i], ' - - deduction-' + tag);
-      term.tag[tags[i]] = true;
+  tag_one(term, tag, reason);
+  //find assumed-tags
+  if (tagset[tag]) {
+    let tags = tagset[tag].parents || [];
+    for(let i = 0; i < tags.length; i++) {
+      tag_one(term, tags[i], '');
     }
   }
-  return;
 };
 
-module.exports = {
-  set_tag: set_tag,
-  canBe: canBe
-};
 
-},{"./paths":184}],190:[function(require,module,exports){
+module.exports = tagAll;
+// console.log(tagset['Person']);
+
+},{"./paths":195,"./unTag":202}],201:[function(require,module,exports){
 'use strict';
 // const normalize = require('./normalize');
 const fns = require('../paths').fns;
@@ -17068,7 +17618,38 @@ const term = {
 
 module.exports = term;
 
-},{"../paths":184}],191:[function(require,module,exports){
+},{"../paths":195}],202:[function(require,module,exports){
+'use strict';
+//set a term as a particular Part-of-speech
+const path = require('./paths');
+const log = path.log;
+const tagset = path.tags;
+
+//remove a tag from a term
+const unTagOne = (term, tag, reason) => {
+  if (term.tag[tag]) {
+    log.tell('   --' + tag + ' ' + (reason || ''));
+    delete term.tag[tag];
+  }
+};
+
+const unTagAll = (term, tag, reason) => {
+  if (!term || !tag) {
+    return;
+  }
+  unTagOne(term, tag, reason);
+  if (tagset[tag]) {
+    //pull-out their children (dependants) too
+    let killAlso = tagset[tag].children || [];
+    for(let o = 0; o < killAlso.length; o++) {
+      unTagOne(term, killAlso[o], reason);
+    }
+  }
+  return;
+};
+module.exports = unTagAll;
+
+},{"./paths":195}],203:[function(require,module,exports){
 'use strict';
 const numericValue = require('./numericValue');
 const textValue = require('./textValue');
@@ -17100,11 +17681,11 @@ const value = {
 
   /** return a float/integer version of this number*/
   number: function() {
-    let n = parseNumber(this);
+    let num = parseNumber(this);
     if (this.tag.Ordinal) {
-      return numericValue.ordinal(n);
+      return numericValue.ordinal(num);
     }
-    return n;
+    return num;
   },
 
   /** return a textual version of this number*/
@@ -17118,9 +17699,12 @@ const value = {
   },
 
   nicenumber: function() {
-    let n = parseNumber(this);
-    n = '' + n;
-    let x = n.split('.');
+    let num = parseNumber(this);
+    if (!num && num !== 0) {
+      return null;
+    }
+    num = '' + num;
+    let x = num.split('.');
     let x1 = x[0];
     let x2 = x.length > 1 ? '.' + x[1] : '';
     let rgx = /(\d+)(\d{3})/;
@@ -17128,30 +17712,18 @@ const value = {
       x1 = x1.replace(rgx, '$1' + ',' + '$2');
     }
     return x1 + x2;
-  },
-
-  /** generate all forms for this number */
-  parse: function() {
-    let num = numericValue(this);
-    return {
-      Number: {
-        Cardinal: num,
-        Ordinal: toNumber.ordinal(num)
-      },
-      Text: {
-        Cardinal: textValue.cardinal(num),
-        Ordinal: textValue.ordinal(num)
-      }
-    };
   }
 
 };
 module.exports = value;
 
-},{"./numericValue":192,"./parse":195,"./textValue":201}],192:[function(require,module,exports){
+},{"./numericValue":204,"./parse":207,"./textValue":213}],204:[function(require,module,exports){
 'use strict';
 //turn a number like 5 into an ordinal like 5th
 const toOrdinal = function(num) {
+  if (!num && num !== 0) {
+    return null;
+  }
   //the teens are all 'th'
   let tens = num % 100;
   if (tens > 10 && tens < 20) {
@@ -17178,7 +17750,7 @@ module.exports = {
   ordinal: toOrdinal
 };
 
-},{}],193:[function(require,module,exports){
+},{}],205:[function(require,module,exports){
 const p = require('../paths');
 const numbers = p.data.numbers;
 
@@ -17195,7 +17767,7 @@ module.exports = {
   multiples: multiples
 };
 
-},{"../paths":199}],194:[function(require,module,exports){
+},{"../paths":211}],206:[function(require,module,exports){
 'use strict';
 
 //support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
@@ -17226,7 +17798,7 @@ const findModifiers = (str) => {
 
 module.exports = findModifiers;
 
-},{}],195:[function(require,module,exports){
+},{}],207:[function(require,module,exports){
 'use strict';
 const parseNumeric = require('./parseNumeric');
 const findModifiers = require('./findModifiers');
@@ -17254,7 +17826,7 @@ const parse = function(t) {
     return 1;
   }
   //handle a string of mostly numbers
-  if (t.tag['Numeric'] || str.match(/^[0-9]+(st|nd|rd|th)?$/)) {
+  if (t.tag.NumericValue) {
     return parseNumeric(str);
   }
   let modifier = findModifiers(str);
@@ -17302,8 +17874,8 @@ const parse = function(t) {
       return null;
     }
     //buildup section, collect 'has' values
-    if (w.match(/^[0-9]$/)) {
-      has['ones'] = parseInt(w, 10); //not technically right
+    if (w.match(/^[0-9\.]+$/)) {
+      has['ones'] = parseFloat(w, 10); //not technically right
     } else if (words.ones[w]) {
       has['ones'] = words.ones[w];
     } else if (words.teens[w]) {
@@ -17340,9 +17912,9 @@ const parse = function(t) {
 
 module.exports = parse;
 
-},{"../paths":199,"./data":193,"./findModifiers":194,"./parseDecimals":196,"./parseNumeric":197,"./validate":198}],196:[function(require,module,exports){
+},{"../paths":211,"./data":205,"./findModifiers":206,"./parseDecimals":208,"./parseNumeric":209,"./validate":210}],208:[function(require,module,exports){
 'use strict';
-const words = require('./data')
+const words = require('./data');
 
 //concatenate into a string with leading '0.'
 const parseDecimals = function(arr) {
@@ -17351,8 +17923,12 @@ const parseDecimals = function(arr) {
     let w = arr[i];
     if (words.ones[w]) {
       str += words.ones[w];
+    } else if (words.teens[w]) {
+      str += words.teens[w];
+    } else if (words.tens[w]) {
+      str += words.tens[w];
     } else if (w.match(/^[0-9]$/)) {
-      str += w
+      str += w;
     } else {
       return 0;
     }
@@ -17360,9 +17936,9 @@ const parseDecimals = function(arr) {
   return parseFloat(str);
 };
 
-module.exports = parseDecimals
+module.exports = parseDecimals;
 
-},{"./data":193}],197:[function(require,module,exports){
+},{"./data":205}],209:[function(require,module,exports){
 'use strict';
 //parse a string like "4,200.1" into Number 4200.1
 const parseNumeric = (str) => {
@@ -17384,7 +17960,7 @@ const parseNumeric = (str) => {
 
 module.exports = parseNumeric
 
-},{}],198:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 'use strict';
 const words = require('./data')
 
@@ -17407,9 +17983,9 @@ const isValid = (w, has) => {
 };
 module.exports = isValid
 
-},{"./data":193}],199:[function(require,module,exports){
-arguments[4][166][0].apply(exports,arguments)
-},{"../paths":184,"dup":166}],200:[function(require,module,exports){
+},{"./data":205}],211:[function(require,module,exports){
+arguments[4][175][0].apply(exports,arguments)
+},{"../paths":195,"dup":175}],212:[function(require,module,exports){
 'use strict';
 // turns an integer/float into a textual number, like 'fifty-five'
 
@@ -17554,17 +18130,23 @@ module.exports = to_text;
 
 // console.log(to_text(-1000.8));
 
-},{}],201:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
 'use strict';
 //
 const toOrdinal = require('../paths').data.ordinalMap.toOrdinal;
 const buildUp = require('./buildUp');
 const toText = {
   cardinal: (num) => {
+    if (!num && num !== 0) {
+      return null;
+    }
     let arr = buildUp(num);
     return arr.join(' ');
   },
   ordinal: (num) => {
+    if (!num && num !== 0) {
+      return null;
+    }
     let arr = buildUp(num);
     //convert the last number to an ordinal
     let last = arr[arr.length - 1];
@@ -17575,7 +18157,7 @@ const toText = {
 
 module.exports = toText;
 
-},{"../paths":199,"./buildUp":200}],202:[function(require,module,exports){
+},{"../paths":211,"./buildUp":212}],214:[function(require,module,exports){
 module.exports = [
   {
     reg: /(eave)$/i,
@@ -17745,9 +18327,17 @@ module.exports = [
       gr: '$1$2$2ing'
     },
   },
+  {
+    reg: /([aeiou]zz)$/i,
+    repl: {
+      pr: '$1es',
+      pa: '$1ed',
+      gr: '$1ing'
+    }
+  }
 ];
 
-},{}],203:[function(require,module,exports){
+},{}],215:[function(require,module,exports){
 'use strict';
 //non-specifc, 'hail-mary' transforms from infinitive, into other forms
 const fns = require('./paths').fns;
@@ -17812,7 +18402,7 @@ const generic = {
 
 module.exports = generic;
 
-},{"./paths":206}],204:[function(require,module,exports){
+},{"./paths":218}],216:[function(require,module,exports){
 'use strict';
 const checkIrregulars = require('./irregulars');
 const suffixPass = require('./suffixes');
@@ -17822,6 +18412,10 @@ const generic = require('./generic');
 
 //turn a verb into all it's forms
 const conjugate = function(t) {
+  //dont conjugate didn't
+  if (t.tag.Contraction) {
+    t.text = t.silent_term;
+  }
   let all = {
     PastTense: null,
     PresentTense: null,
@@ -17841,7 +18435,7 @@ const conjugate = function(t) {
     all['Infinitive'] = t.verb.infinitive() || '';
   }
   //check irregular forms
-  all = Object.assign(all, checkIrregulars(t.normal));
+  all = Object.assign(all, checkIrregulars(all['Infinitive']));
 
   //ok, send this infinitive to all conjugators
   let inf = all['Infinitive'] || t.normal;
@@ -17872,7 +18466,7 @@ const conjugate = function(t) {
 
 module.exports = conjugate;
 
-},{"./generic":203,"./irregulars":205,"./suffixes":207,"./toActor":208,"./toAdjective":209}],205:[function(require,module,exports){
+},{"./generic":215,"./irregulars":217,"./suffixes":219,"./toActor":220,"./toAdjective":221}],217:[function(require,module,exports){
 'use strict';
 const irregulars = require('./paths').data.irregular_verbs;
 
@@ -17905,9 +18499,9 @@ const checkIrregulars = function(str) {
 module.exports = checkIrregulars;
 // console.log(checkIrregulars('understood'));
 
-},{"./paths":206}],206:[function(require,module,exports){
-arguments[4][166][0].apply(exports,arguments)
-},{"../paths":211,"dup":166}],207:[function(require,module,exports){
+},{"./paths":218}],218:[function(require,module,exports){
+arguments[4][175][0].apply(exports,arguments)
+},{"../paths":223,"dup":175}],219:[function(require,module,exports){
 'use strict';
 const rules = require('./data/rules');
 const mapping = {
@@ -17939,7 +18533,7 @@ const suffixPass = function(inf) {
 
 module.exports = suffixPass;
 
-},{"./data/rules":202}],208:[function(require,module,exports){
+},{"./data/rules":214}],220:[function(require,module,exports){
 'use strict';
 //turn 'walk' into 'walker'
 const irregulars = {
@@ -18003,12 +18597,12 @@ const toActor = function(inf) {
 
 module.exports = toActor
 
-},{}],209:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 'use strict';
 //turn a infinitiveVerb, like "walk" into an adjective like "walkable"
 
 const rules = [
-  [/y$/, 'i'], //relay - reliable
+  [/[^aeiou]y$/, 'i'], //relay - reliable
   [/([aeiou][n])$/, '$1n'], //win - winnable
 ];
 
@@ -18057,13 +18651,13 @@ const toAdjective = function(str) {
 };
 
 module.exports = toAdjective;
+// console.log(toAdjective('buy'));
 
-},{}],210:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 'use strict';
 const predict = require('./predict');
 const toInfinitive = require('./toInfinitive');
 const conjugate = require('./conjugate');
-
 let pluralMap = {
   'is': 'are',
   'have': 'has'
@@ -18072,7 +18666,6 @@ let singularMap = {
   'are': 'is',
   'has': 'have'
 };
-
 module.exports = {
   toPlural : function() {
     if (pluralMap[this.normal]) {
@@ -18097,12 +18690,21 @@ module.exports = {
   },
   conjugate: function() {
     return conjugate(this);
+  },
+  pastTense: function() {
+    return conjugate(this).PastTense;
+  },
+  presentTense: function() {
+    return conjugate(this).PresentTense;
+  },
+  futureTense: function() {
+    return conjugate(this).FutureTense;
   }
 };
 
-},{"./conjugate":204,"./predict":212,"./toInfinitive":214}],211:[function(require,module,exports){
-arguments[4][166][0].apply(exports,arguments)
-},{"../paths":184,"dup":166}],212:[function(require,module,exports){
+},{"./conjugate":216,"./predict":224,"./toInfinitive":226}],223:[function(require,module,exports){
+arguments[4][175][0].apply(exports,arguments)
+},{"../paths":195,"dup":175}],224:[function(require,module,exports){
 'use strict';
 const paths = require('../paths');
 const log = paths.log;
@@ -18145,7 +18747,7 @@ const predictForm = function(term) {
 
 module.exports = predictForm;
 
-},{"../paths":211,"./suffix_rules":213}],213:[function(require,module,exports){
+},{"../paths":223,"./suffix_rules":225}],225:[function(require,module,exports){
 'use strict';
 //suffix signals for verb tense, generated from test data
 const compact = {
@@ -18255,7 +18857,7 @@ for (let i = 0; i < l; i++) {
 }
 module.exports = suffix_rules;
 
-},{}],214:[function(require,module,exports){
+},{}],226:[function(require,module,exports){
 'use strict';
 //turn any verb into its infinitive form
 const rules = require('./rules');
@@ -18296,8 +18898,8 @@ const toInfinitive = function(t) {
 
 module.exports = toInfinitive;
 
-},{"../paths":211,"./rules":215}],215:[function(require,module,exports){
-'use strict'
+},{"../paths":223,"./rules":227}],227:[function(require,module,exports){
+'use strict';
 //rules for turning a verb into infinitive form
 let rules = {
   Participle: [
@@ -18324,7 +18926,7 @@ let rules = {
       reg: /(tch|sh)es$/i,
       to: '$1'
     }, {
-      reg: /(ss)es$/i,
+      reg: /(ss|zz)es$/i,
       to: '$1'
     }, {
       reg: /([tzlshicgrvdnkmu])es$/i,
@@ -18397,6 +18999,9 @@ let rules = {
       reg: /(ued)$/i,
       to: 'ue'
     }, {
+      reg: /([aeiou]zz)ed$/i,
+      to: '$1'
+    }, {
       reg: /(e|i)lled$/i,
       to: '$1ll'
     }, {
@@ -18452,9 +19057,9 @@ let rules = {
       to: '$1t'
     }]
 };
-module.exports = rules
+module.exports = rules;
 
-},{}],216:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 'use strict';
 const build_whitespace = (str) => {
   let whitespace = {
@@ -18475,7 +19080,7 @@ const build_whitespace = (str) => {
 };
 module.exports = build_whitespace;
 
-},{}],217:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 'use strict';
 const paths = require('./paths');
 const log = paths.log;
@@ -18508,12 +19113,7 @@ class Terms {
     }, '');
   }
   normal() {
-    return this.terms.filter((t) => t.sel).map((t) => t.normal).join(' ');
-  }
-  check() {
-    this.terms.filter((t) => t.sel).forEach((t) => {
-      t.render.check();
-    });
+    return this.terms.filter((t) => t.sel && t.text).map((t) => t.normal).join(' ');
   }
   insertAt(text, i) {
     let term = new Term(text, this.context);
@@ -18558,7 +19158,7 @@ Terms.prototype.remove = function(reg) {
 };
 module.exports = Terms;
 
-},{"../term":173,"./match":219,"./paths":223}],218:[function(require,module,exports){
+},{"../term":184,"./match":231,"./paths":235}],230:[function(require,module,exports){
 'use strict';
 const paths = require('../paths');
 const log = paths.log;
@@ -18626,7 +19226,7 @@ const fullMatch = (term, reg) => {
 
 module.exports = fullMatch;
 
-},{"../paths":223}],219:[function(require,module,exports){
+},{"../paths":235}],231:[function(require,module,exports){
 'use strict';
 //
 const syntax = require('./syntax');
@@ -18667,7 +19267,7 @@ const match = function(ts, str, verbose) {
 
 module.exports = match;
 
-},{"../paths":223,"./startHere":221,"./syntax":222}],220:[function(require,module,exports){
+},{"../paths":235,"./startHere":233,"./syntax":234}],232:[function(require,module,exports){
 'use strict';
 const fns = require('../paths').fns;
 
@@ -18699,7 +19299,7 @@ const lumpMatch = function(term, regs, reg_i) {
 
 module.exports = lumpMatch;
 
-},{"../paths":223}],221:[function(require,module,exports){
+},{"../paths":235}],233:[function(require,module,exports){
 'use strict';
 const fullMatch = require('./fullMatch');
 const lumpMatch = require('./lumpMatch');
@@ -18848,7 +19448,7 @@ const startHere = (ts, startAt, regs) => {
 
 module.exports = startHere;
 
-},{"./fullMatch":218,"./lumpMatch":220}],222:[function(require,module,exports){
+},{"./fullMatch":230,"./lumpMatch":232}],234:[function(require,module,exports){
 'use strict';
 // parse a search lookup term find the regex-like syntax in this term
 const fns = require('../paths').fns;
@@ -18935,13 +19535,407 @@ const parse_all = function(reg) {
 
 module.exports = parse_all;
 
-},{"../paths":223}],223:[function(require,module,exports){
+},{"../paths":235}],235:[function(require,module,exports){
 module.exports = {
   fns: require('../fns'),
   log: require('../logger'),
 };
 
-},{"../fns":100,"../logger":102}],224:[function(require,module,exports){
+},{"../fns":100,"../logger":102}],236:[function(require,module,exports){
+var test = require('tape');
+var nlp = require('./lib/nlp');
+var str_test = require('./lib/fns').str_test;
+
+test('==Adjective==', function(T) {
+
+  T.test('to_adverb:', function(t) {
+    [
+      ['quick', 'quickly'],
+      // ['idle', 'idly'],
+      ['dirty', null],
+      ['fun', null],
+      ['full', null],
+      ['quixotic', 'quixotically'],
+      ['cute', 'cutely'],
+      ['good', 'well'],
+      ['low', 'low']
+    ].forEach(function (a) {
+      var arr = nlp(a[0]).adjectives().parse();
+      var obj = arr[0];
+      str_test(obj.adverbForm, a[0], a[1], t);
+    });
+    t.end();
+  });
+
+  T.test(' to_superlative', function(t) {
+    [
+      ['quick', 'quickest'],
+      ['friendly', 'friendliest'],
+      // ['caring', 'most caring'],
+      ['fun', 'most fun'],
+      ['full', 'fullest'],
+      ['quixotic', 'most quixotic'],
+      ['cute', 'cutest'],
+    ].forEach(function (a) {
+      var arr = nlp(a[0]).adjectives().parse();
+      var obj = arr[0];
+      str_test(obj.superlative, a[0], a[1], t);
+    });
+    t.end();
+  });
+  //
+  T.test(' to_comparative', function(t) {
+    [
+      ['quick', 'quicker'],
+      ['friendly', 'friendlier'],
+      // ['caring', 'more caring'],
+      ['fun', 'more fun'],
+      ['full', 'fuller'],
+      ['quixotic', 'more quixotic'],
+      ['cute', 'cuter'],
+    ].forEach(function (a) {
+      var arr = nlp(a[0]).adjectives().parse();
+      var obj = arr[0];
+      str_test(obj.comparative, a[0], a[1], t);
+    });
+    t.end();
+  });
+  //
+  T.test(' to_noun', function(t) {
+    [
+      ['quick', 'quickness'],
+      ['fancy', 'fanciness'],
+      // ['ferocious', 'ferociousness'],
+      // ['', ''],
+      // [' ', ''],
+      ['clean', 'cleanliness'],
+    ].forEach(function (a) {
+      var arr = nlp(a[0]).adjectives().parse();
+      var obj = arr[0];
+      str_test(obj.nounForm, a[0], a[1], t);
+    });
+    t.end();
+  });
+  //
+  T.test(' conjugate', function(t) {
+    var o = nlp('nice').adjectives().parse()[0];
+    str_test(o.comparative, 'nice', 'nicer', t);
+    str_test(o.superlative, 'nice', 'nicest', t);
+    str_test(o.adverbForm, 'nice', 'nicely', t);
+    str_test(o.nounForm, 'nice', 'niceness', t);
+    t.end();
+  });
+
+  T.end();
+});
+
+},{"./lib/fns":245,"./lib/nlp":246,"tape":60}],237:[function(require,module,exports){
+var test = require('tape');
+var nlp = require('./lib/nlp');
+
+test('==Adverb==', function(T) {
+
+  T.test('to_adjective:', function(t) {
+    [
+      ['quickly', 'quick'],
+      ['garishly', 'garish'],
+      ['tediously', 'tedious'],
+      ['frightfully', 'frightful'],
+      ['tortuously', 'tortuous'],
+      ['privately', 'private'],
+      ['unambiguously', 'unambiguous'],
+      ['cortically', 'cortic'],
+      ['biradially', 'biradial'],
+      ['meanly', 'mean'],
+      ['raspingly', 'rasping'],
+      ['comprehensively', 'comprehensive'],
+      ['fervently', 'fervent'],
+      ['nationally', 'national'],
+      ['maternally', 'maternal'],
+      ['flashily', 'flashy'],
+      ['only', 'only'],
+      ['narrowly', 'narrow'],
+      ['blasphemously', 'blasphemous'],
+      ['abortively', 'abortive'],
+      ['inoffensively', 'inoffensive'],
+      ['truly', 'true'],
+      ['gently', 'gent'],
+      ['tolerantly', 'tolerant'],
+      ['enchantingly', 'enchanting'],
+      ['unswervingly', 'unswerving'],
+      ['grubbily', 'grubby'],
+      ['longitudinally', 'longitudinal'],
+      ['thermodynamically', 'thermodynamic'],
+      ['mirthfully', 'mirthful'],
+      ['salaciously', 'salacious'],
+      ['dourly', 'dour'],
+      ['credulously', 'credulous'],
+      ['carefully', 'careful'],
+      ['knowingly', 'knowing'],
+      ['geometrically', 'geometrical'],
+      ['unassailably', 'unassailable'],
+      ['antecedently', 'antecedent'],
+      ['adjectively', 'adjective'],
+      ['hebdomadally', 'hebdomadal'],
+      ['dizzily', 'dizzy'],
+      ['obnoxiously', 'obnoxious'],
+      ['thirstily', 'thirsty'],
+      ['biennially', 'biennial'],
+      ['roguishly', 'roguish'],
+      ['mentally', 'mental'],
+      ['incessantly', 'incessant'],
+      ['intelligently', 'intelligent'],
+      ['perseveringly', 'persevering'],
+      ['namely', 'name'],
+      ['formidably', 'formidable'],
+      ['vertically', 'vertical']
+    ].forEach(function (a) {
+      var o = nlp(a[0]).tag('Adverb').adverbs().parse()[0];
+      var msg = a[0] + ' -> ' + o.adjectiveForm;
+      t.equal(o.adjectiveForm, a[1], msg);
+    });
+    t.end();
+  });
+});
+
+},{"./lib/nlp":246,"tape":60}],238:[function(require,module,exports){
+var test = require('tape');
+var nlp = require('./lib/nlp');
+var str_test = require('./lib/fns').str_test;
+
+test('.article():', function(t) {
+  [
+    ['duck', 'a'],
+    ['eavesdropper', 'an'],
+    ['alligator', 'an'],
+    ['hour', 'an'],
+    ['NDA', 'an'],
+    ['F.B.I', 'an'],
+    ['N.D.A.', 'an'],
+    ['eulogy', 'a'],
+    ['ukalele', 'a'],
+  ].forEach(function (a) {
+    var o = nlp(a[0]).tag('Noun').nouns().parse()[0];
+    var msg = a[0] + ' -> ' + o.article;
+    t.equal(o.article, a[1], msg);
+  });
+  t.end();
+});
+
+},{"./lib/fns":245,"./lib/nlp":246,"tape":60}],239:[function(require,module,exports){
+var test = require('tape');
+var nlp = require('./lib/nlp');
+var str_test = require('./lib/fns').str_test;
+
+
+test('conditions:', function(t) {
+  [
+    ['if it is raining, the driveway is wet', 'the driveway is wet'],
+    ['if it is raining, the driveway is wet, unless it is snowing', 'the driveway is wet'],
+  ].forEach(function (a) {
+    var str = nlp(a[0]).remove('#ConditionPhrase+').normal();
+    str_test(str, a[0], a[1], t);
+  });
+  t.end();
+});
+
+},{"./lib/fns":245,"./lib/nlp":246,"tape":60}],240:[function(require,module,exports){
+var test = require('tape');
+var nlp = require('./lib/nlp');
+
+var arr = [
+  {
+    'Infinitive': 'convolute',
+    'PresentTense': 'convolutes',
+    'Gerund': 'convoluting',
+    'PastTense': 'convoluted'
+  }, {
+    'PresentTense': 'presents',
+    'Gerund': 'presenting',
+    'PastTense': 'presented',
+    'Infinitive': 'present'
+  }, {
+    'PresentTense': 'angulates',
+    'Gerund': 'angulating',
+    'PastTense': 'angulated',
+    'Infinitive': 'angulate'
+  }, {
+    'PresentTense': 'conjures',
+    'Gerund': 'conjuring',
+    'PastTense': 'conjured',
+    'Infinitive': 'conjure'
+  }, {
+    'PresentTense': 'denounces',
+    'Gerund': 'denouncing',
+    'PastTense': 'denounced',
+    'Infinitive': 'denounce'
+  }, {
+    'PresentTense': 'watches',
+    'Gerund': 'watching',
+    'PastTense': 'watched',
+    'Infinitive': 'watch'
+  }, {
+    'PresentTense': 'tingles',
+    'Gerund': 'tingling',
+    'PastTense': 'tingled',
+    'Infinitive': 'tingle'
+  }, {
+    'PresentTense': 'mortises',
+    'Gerund': 'mortising',
+    'PastTense': 'mortised',
+    'Infinitive': 'mortise'
+  }, {
+    'PresentTense': 'disguises',
+    'Gerund': 'disguising',
+    'PastTense': 'disguised',
+    'Infinitive': 'disguise'
+  }, {
+    'Infinitive': 'effect',
+    'Gerund': 'effecting',
+    'PastTense': 'effected',
+    'PresentTense': 'effects'
+  }, {
+    'Infinitive': 'want',
+    'Gerund': 'wanting',
+    'PastTense': 'wanted',
+    'PresentTense': 'wants'
+  }, {
+    'Infinitive': 'power',
+    'Gerund': 'powering',
+    'PastTense': 'powered',
+    'PresentTense': 'powers'
+  }, {
+    'Infinitive': 'overcompensate',
+    'PresentTense': 'overcompensates',
+    'PastTense': 'overcompensated',
+    'Gerund': 'overcompensating'
+  }, {
+    'Infinitive': 'ice',
+    'PresentTense': 'ices',
+    'PastTense': 'iced',
+    'Gerund': 'icing'
+  }, {
+    'Infinitive': 'buy',
+    'PresentTense': 'buys',
+    'PastTense': 'bought',
+    'Gerund': 'buying'
+  }, {
+    'Infinitive': 'flower',
+    'PresentTense': 'flowers',
+    'PastTense': 'flowered',
+    'Gerund': 'flowering'
+  }, {
+    'Infinitive': 'rage',
+    'PresentTense': 'rages',
+    'PastTense': 'raged',
+    'Gerund': 'raging'
+  }, {
+    'Infinitive': 'drive',
+    'PresentTense': 'drives',
+    'PastTense': 'drove',
+    'Gerund': 'driving'
+  }, {
+    'Infinitive': 'foul',
+    'PresentTense': 'fouls',
+    'PastTense': 'fouled',
+    'Gerund': 'fouling'
+  }, {
+    'Infinitive': 'overthrow',
+    'PresentTense': 'overthrows',
+    'Gerund': 'overthrowing',
+    'PastTense': 'overthrew'
+  }, {
+    'Infinitive': 'aim',
+    'PresentTense': 'aims',
+    'PastTense': 'aimed',
+    'Gerund': 'aiming'
+  }, {
+    'PresentTense': 'unifies',
+    'Gerund': 'unifying',
+    'PastTense': 'unified',
+    'Infinitive': 'unify'
+  }, {
+    'PresentTense': 'addresses',
+    'Gerund': 'addressing',
+    'PastTense': 'addressed',
+    'Infinitive': 'address'
+  }, {
+    'Infinitive': 'bumble',
+    'PresentTense': 'bumbles',
+    'PastTense': 'bumbled',
+    'Gerund': 'bumbling'
+  }, {
+    'Infinitive': 'snipe',
+    'PresentTense': 'snipes',
+    'PastTense': 'sniped',
+    'Gerund': 'sniping'
+  }, {
+    'PresentTense': 'relishes',
+    'Gerund': 'relishing',
+    'PastTense': 'relished',
+    'Infinitive': 'relish'
+  }, {
+    'Infinitive': 'lengthen',
+    'Gerund': 'lengthening',
+    'PastTense': 'lengthened',
+    'PresentTense': 'lengthens'
+  }, {
+    'Infinitive': 'farm',
+    'PresentTense': 'farms',
+    'PastTense': 'farmed',
+    'Gerund': 'farming'
+  },
+  // {
+  //   'Infinitive': 'develop',
+  //   'PresentTense': 'develops',
+  //   'PastTense': 'developed',
+  //   'Gerund': 'developing'
+  // },
+  {
+    'Infinitive': 'study',
+    'PresentTense': 'studies',
+    'PastTense': 'studied',
+    'Gerund': 'studying'
+  },
+  {
+    'Infinitive': 'criticise',
+    'PresentTense': 'criticises',
+    'PastTense': 'criticised',
+    'Gerund': 'criticising'
+  }, {
+    'Infinitive': 'speak',
+    'PresentTense': 'speaks',
+    'PastTense': 'spoke',
+    'Gerund': 'speaking',
+  }, {
+    'Infinitive': 'fuzz',
+    'PresentTense': 'fuzzes',
+    'PastTense': 'fuzzed',
+    'Gerund': 'fuzzing',
+  }
+];
+test('conjugation:', function(t) {
+
+  var test_conjugation = function(inf, o, form, original) {
+    var msg = 'from ' + original + ' to ' + form + ':  [' + o[original] + '] -> [' + inf[form] + ']';
+    t.equal(inf[form], o[form], msg);
+  };
+
+  arr.forEach(function(o) {
+    var forms = ['Infinitive', 'PastTense', 'PresentTense', 'Gerund'];
+    for(var i = 0; i < forms.length; i++) {
+      var from = forms[i];
+      var inf = nlp(o[from]).tag('Verb').verbs().parse()[0];
+      test_conjugation(inf, o, 'Infinitive', from);
+      test_conjugation(inf, o, 'PastTense', from);
+      test_conjugation(inf, o, 'PresentTense', from);
+      test_conjugation(inf, o, 'Gerund', from);
+    }
+  });
+  t.end();
+});
+
+},{"./lib/nlp":246,"tape":60}],241:[function(require,module,exports){
 var test = require('tape');
 var nlp = require('./lib/nlp');
 var str_test = require('./lib/fns').str_test;
@@ -19047,20 +20041,20 @@ test('==contractions==', function(T) {
     t.end();
   });
 
-  // T.test('contract:', function(t) {
-  //   [
-  //     [`he is a hero`, `he's`],
-  //     [`she is here`, `she's`],
-  //     [`it is a hero`, `it's`],
-  //     [`he would win`, `he'd`],
-  //     [`they would win`, `they'd`],
-  //     [`they have begun`, `they've`],
-  //   ].forEach(function (a) {
-  //     var term = nlp(a[0]).contract().list[0].terms[0];
-  //     str_test(term.normal, a[0], a[1], t);
-  //   });
-  //   t.end();
-  // });
+  T.test('contract:', function(t) {
+    [
+      [`he is a hero`, `he's`],
+      [`she is here`, `she's`],
+      [`it is a hero`, `it's`],
+      [`he would win`, `he'd`],
+      [`they would win`, `they'd`],
+      [`they have begun`, `they've`],
+    ].forEach(function (a) {
+      var term = nlp(a[0]).contractions().contract().list[0].terms[0];
+      str_test(term.normal, a[0], a[1], t);
+    });
+    t.end();
+  });
 
   T.test('preserve-contractions:', function(t) {
     [
@@ -19089,38 +20083,339 @@ test('==contractions==', function(T) {
 
 });
 
-},{"./lib/fns":227,"./lib/nlp":228,"tape":60}],225:[function(require,module,exports){
+},{"./lib/fns":245,"./lib/nlp":246,"tape":60}],242:[function(require,module,exports){
+var test = require('tape');
+var nlp = require('./lib/nlp');
+var pos_test = require('./lib/fns').pos_test;
+
+test('date-tag :', function(t) {
+  [
+    'yesterday',
+    'today',
+    'tomorrow',
+    'morning',
+    'afternoon',
+    'evening',
+    'noon',
+    'midnight',
+    'yesterday at noon',
+    'yesterday at midnight',
+    'today at noon',
+    'today at midnight',
+    'tomorrow at noon',
+    'tomorrow at midnight',
+    'this morning',
+    'this afternoon',
+    'this evening',
+    'yesterday morning',
+    'yesterday afternoon',
+    'yesterday evening',
+    'today morning',
+    'today afternoon',
+    'today evening',
+    'tomorrow morning',
+    'tomorrow afternoon',
+    'tomorrow evening',
+    'thursday morning',
+    'thursday afternoon',
+    'thursday evening',
+    '6:00 yesterday',
+    '6:00 today',
+    '6:00 tomorrow',
+    '5am yesterday',
+    '5am today',
+    '5am tomorrow',
+    '4pm yesterday',
+    '4pm today',
+    '4pm tomorrow',
+    'tuesday last week',
+    'tuesday this week',
+    'tuesday next week',
+    'last week wednesday',
+    'this week wednesday',
+    'next week wednesday',
+    '10 seconds ago',
+    '10 minutes ago',
+    '10 hours ago',
+    '10 days ago',
+    '10 weeks ago',
+    '10 months ago',
+    '10 years ago',
+    'saturday',
+    'sunday 11:00',
+    'yesterday at 4:00',
+    'today at 4:00',
+    'tomorrow at 4:00',
+    'yesterday at 6:45am',
+    'today at 6:45am',
+    'tomorrow at 6:45am',
+    'yesterday at 6:45pm',
+    'today at 6:45pm',
+    'tomorrow at 6:45pm',
+    'yesterday at 2:32 AM',
+    'today at 2:32 AM',
+    'tomorrow at 2:32 AM',
+    'yesterday at 2:32 PM',
+    'today at 2:32 PM',
+    'tomorrow at 2:32 PM',
+    'yesterday 02:32',
+    'today 02:32',
+    'tomorrow 02:32',
+    'yesterday 2:32am',
+    'today 2:32am',
+    'tomorrow 2:32am',
+    'yesterday 2:32pm',
+    'today 2:32pm',
+    'tomorrow 2:32pm',
+    'wednesday at 14:30',
+    'wednesday at 02:30am',
+    'wednesday at 02:30pm',
+    'wednesday 14:30',
+    'wednesday 02:30am',
+    'wednesday 02:30pm',
+    'friday 03:00 am',
+    'friday 03:00 pm',
+    'sunday at 05:00 am',
+    'sunday at 05:00 pm',
+    '4th february',
+    'november 3rd',
+    'last june',
+    'next october',
+    '6 am',
+    '5am',
+    '5:30am',
+    '8 pm',
+    '4pm',
+    '4:20pm',
+    '06:56:06 am',
+    '06:56:06 pm',
+    'mon 2:35',
+    '1:00 sun',
+    '1am sun',
+    '1pm sun',
+    '1:00 on sun',
+    '1am on sun',
+    '1pm on sun',
+    '12:14 PM',
+    '12:14 AM',
+    '2 seconds before now',
+    '2 minutes before now',
+    '2 hours before now',
+    '2 days before now',
+    '2 weeks before now',
+    '2 months before now',
+    '2 years before now',
+    '4 seconds from now',
+    '4 minutes from now',
+    '4 hours from now',
+    '4 days from now',
+    '4 weeks from now',
+    '4 months from now',
+    '4 years from now',
+    // '6 in the morning',
+    // '4 in the afternoon',
+    // '9 in the evening',
+    // 'monday 6 in the morning',
+    // 'monday 4 in the afternoon',
+    // 'monday 9 in the evening',
+    'last sunday at 21:45',
+    'monday last week',
+    '12th day last month',
+    '12th day this month',
+    '12th day next month',
+    '1st tuesday last november',
+    '1st tuesday this november',
+    '1st tuesday next november',
+    '10 hours before noon',
+    '10 hours before midnight',
+    '5 hours after noon',
+    '5 hours after midnight',
+    'noon last friday',
+    'midnight last friday',
+    'noon this friday',
+    'midnight this friday',
+    'noon next friday',
+    'midnight next friday',
+    'last friday at 20:00',
+    'this friday at 20:00',
+    'next friday at 20:00',
+    '1:00 last friday',
+    '1:00 this friday',
+    '1:00 next friday',
+    '1am last friday',
+    '1am this friday',
+    '1am next friday',
+    '1pm last friday',
+    '1pm this friday',
+    '1pm next friday',
+    '5 am last monday',
+    '5 am this monday',
+    '5 am next monday',
+    '5 pm last monday',
+    '5 pm this monday',
+    '5 pm next monday',
+    'last wednesday 7am',
+    'this wednesday 7am',
+    'next wednesday 7am',
+    'last wednesday 7pm',
+    'this wednesday 7pm',
+    'next wednesday 7pm',
+    'last tuesday 11 am',
+    'this tuesday 11 am',
+    'next tuesday 11 am',
+    'last tuesday 11 pm',
+    'this tuesday 11 pm',
+    'next tuesday 11 pm',
+    'yesterday at 13:00',
+    'today at 13:00',
+    '2nd friday in august',
+    '3rd wednesday in november',
+    'tomorrow 1 year ago',
+    '11 january 2 years ago',
+    '6 mondays from now',
+    // 'final thursday in april',
+    'last thursday in april',
+    'monday to friday',
+    '1 April to 31 August',
+    '1999-12-31 to tomorrow',
+    // 'now to 2010-01-01',
+    '2009-03-10 9:00 to 11:00',
+    '26 oct 10:00 am to 11:00 am',
+    // 'jan 1 to 2',
+    '16:00 nov 6 to 17:00',
+    'may 2nd to 5th',
+    '6am dec 5 to 7am',
+    // '1/3 to 2/3',
+    // '2/3 to in 1 week',
+    // '3/3 21:00 to in 5 days',
+    // 'first day of 2009 to last day of 2009',
+    // 'first day of may to last day of may',
+    // 'first to last day of 2008',
+    // 'first to last day of september',
+    'for 4 seconds',
+    'for 4 minutes',
+    'for 4 hours',
+    'for 4 days',
+    'for 4 weeks',
+    'for 4 months',
+    'for 4 years',
+    'january 11',
+    '11 january',
+    '18 oct 17:00',
+    '18 oct 5am',
+    '18 oct 5pm',
+    '18 oct 5 am',
+    '18 oct 5 pm',
+    'dec 25',
+    'feb 28 3:00',
+    'feb 28 3am',
+    'feb 28 3pm',
+    'feb 28 3 am',
+    'feb 28 3 pm',
+    '19:00 jul 1',
+    '7am jul 1',
+    '7pm jul 1',
+    '7 am jul 1',
+    '7 pm jul 1',
+    'jan 24, 2011 12:00',
+    'jan 24, 2011 12am',
+    'jan 24, 2011 12pm',
+    'may 27th',
+    // '2005',
+    'march 1st 2009',
+    'february 14, 2004',
+    'jan 3 2010',
+    '3 jan 2000',
+    '2010 october 28',
+    // '1/3',
+    // '1/3 16:00',
+    '4:00',
+    '17:00',
+    '3:20:00',
+    '1st day last year',
+    '1st day this year',
+    '1st day next year',
+    '6th day last week',
+    '6th day this week',
+    '6th day next week',
+    'yesterday 7 seconds ago',
+    'yesterday 7 minutes ago',
+    'yesterday 7 hours ago',
+    'yesterday 7 days ago',
+    'yesterday 7 weeks ago',
+    'yesterday 7 months ago',
+    'yesterday 7 years ago',
+    'tomorrow 3 seconds ago',
+    'tomorrow 3 minutes ago',
+    'tomorrow 3 hours ago',
+    'tomorrow 3 days ago',
+    'tomorrow 3 weeks ago',
+    'tomorrow 3 months ago',
+    'tomorrow 3 years ago',
+    '2nd monday',
+    '100th day',
+    '11 january next year',
+    '11 january this year',
+    '11 january last year',
+    '6 hours before yesterday',
+    '6 hours before tomorrow',
+    '3 hours after yesterday',
+    '3 hours after tomorrow',
+    'saturday 3 months ago at 17:00',
+    'saturday 3 months ago at 5:00am',
+    'saturday 3 months ago at 5:00pm',
+    '4th day last week',
+    '8th month last year',
+    '8th month this year',
+    '8th month next year',
+    'fri 3 months ago at 5am',
+    'wednesday 1 month ago at 8pm',
+    'October 2006',
+    '27/5/1979',
+  // '-5min',
+  // '+2d',
+  // '100th day to 200th',
+  // 'march'
+  ].forEach(function(first) {
+    var str = nlp(first).match('#Date+').plaintext();
+    var msg = first + '  -> ' + str;
+    t.equal(first, str, msg);
+  });
+  t.end();
+});
+
+},{"./lib/fns":245,"./lib/nlp":246,"tape":60}],243:[function(require,module,exports){
 var test = require('tape');
 var nlp = require('./lib/nlp');
 var str_test = require('./lib/fns').str_test;
 
 test('==Plurals==', function(T) {
 
-  // T.test('is_plural():', function(t) {
-  //   [
-  //     ['octopus', false],
-  //     ['tree', false],
-  //     ['trees', true],
-  //     ['i', false],
-  //     // ["we", true],
-  //     ['mayor of chicago', false],
-  //     ['mayors of chicago', true],
-  //     ['octopus', false],
-  //     ['octopi', true],
-  //     ['eyebrow', false],
-  //     ['eyebrows', true],
-  //     ['child', false],
-  //     ['children', true],
-  //     ['spencer\'s', false],
-  //     ['toronto\'s', false],
-  //     // ['simpsons\'', false],
-  //     ['she\'s', false],
-  //   ].forEach(function (a) {
-  //     var str = nlp(a[0]).isPlural();
-  //     str_test(str, a[0], a[1], t);
-  //   });
-  //   t.end();
-  // });
+  T.test('is_plural():', function(t) {
+    [
+      ['octopus', false],
+      ['tree', false],
+      ['trees', true],
+      ['i', false],
+      ['mayor of chicago', false],
+      ['mayors of chicago', true],
+      ['octopus', false],
+      ['octopi', true],
+      ['eyebrow', false],
+      ['eyebrows', true],
+      ['child', false],
+      ['children', true],
+      ['spencer\'s', false],
+      ['toronto\'s', false],
+      // ['simpsons\'', false],
+      ['she\'s', false],
+    ].forEach(function (a) {
+      var term = nlp(a[0]).list[0].terms[0];
+      var msg = a[0] + ' ' + term.noun.isPlural();
+      t.equal(term.noun.isPlural(), a[1], msg);
+    });
+    t.end();
+  });
 
   T.test('singularize:', function(t) {
     [
@@ -19193,7 +20488,7 @@ test('==Plurals==', function(T) {
       ['hooves', 'hoof']
     ].forEach(function (a) {
       var term = nlp(a[0]).tag('Noun').list[0].terms[0];
-      var str = term.noun.toSingular();
+      var str = term.noun.singular();
       str_test(str, a[0], a[1], t);
     });
     t.end();
@@ -19279,14 +20574,14 @@ test('==Plurals==', function(T) {
       ['zoos', 'zoos'],
     ].forEach(function (a) {
       var term = nlp(a[0]).tag('Noun').list[0].terms[0];
-      var str = term.noun.toPlural();
+      var str = term.noun.plural();
       str_test(str, a[0], a[1], t);
     });
     t.end();
   });
 });
 
-},{"./lib/fns":227,"./lib/nlp":228,"tape":60}],226:[function(require,module,exports){
+},{"./lib/fns":245,"./lib/nlp":246,"tape":60}],244:[function(require,module,exports){
 var test = require('tape');
 var nlp = require('./lib/nlp');
 var pos_test = require('./lib/fns').pos_test;
@@ -19353,7 +20648,7 @@ test('=Lexicon test=', function(T) {
   });
 });
 
-},{"./lib/fns":227,"./lib/nlp":228,"tape":60}],227:[function(require,module,exports){
+},{"./lib/fns":245,"./lib/nlp":246,"tape":60}],245:[function(require,module,exports){
 //helpers to make test output messages nicer
 const str_test = function(got, input, want, t) {
   var msg = '\'-> - - -> \'' + got + '\'- - - - (want: \'' + want + '\' )'; //'\'' + input + 
@@ -19406,7 +20701,7 @@ module.exports = {
   terms_test: terms_test,
 };
 
-},{}],228:[function(require,module,exports){
+},{}],246:[function(require,module,exports){
 var nlp;
 if (typeof window !== undefined) {
   nlp = require('../../../src/index');
@@ -19419,7 +20714,7 @@ if (typeof window !== undefined) {
 
 module.exports = nlp;
 
-},{"../../../src/index":101}],229:[function(require,module,exports){
+},{"../../../src/index":101}],247:[function(require,module,exports){
 var test = require('tape');
 var nlp = require('./lib/nlp');
 var str_test = require('./lib/fns').str_test;
@@ -19507,7 +20802,7 @@ test('==Match ==', function(T) {
 
 });
 
-},{"./lib/fns":227,"./lib/nlp":228,"tape":60}],230:[function(require,module,exports){
+},{"./lib/fns":245,"./lib/nlp":246,"tape":60}],248:[function(require,module,exports){
 var test = require('tape');
 var nlp = require('./lib/nlp');
 
@@ -19563,12 +20858,12 @@ test('fancy match', function(t) {
     ['doug is good', 'doug * is', 2], //another tricky 'greedy optional' bug
     ['cool, fun, great, nice', '#Adjective+ great', 3],
 
-    //partial lumped matches
-    ['Dr. Spencer Smith says hi', 'dr', 0],
-    ['Dr. Spencer Smith says hi', 'dr spencer', 0],
-    ['Dr. Spencer Smith says hi', 'dr spencer smith', 1],
-    ['Dr. Spencer Smith says hi', 'dr spencer smith says', 2],
-    ['Lately, Dr. Spencer Smith says hi', 'lately dr spencer smith', 2],
+    //
+    ['Dr. Spencer Smith says hi', 'dr', 1],
+    ['Dr. Spencer Smith says hi', 'dr spencer', 2],
+    ['Dr. Spencer Smith says hi', 'dr spencer smith', 3],
+    ['Dr. Spencer Smith says hi', 'dr spencer smith says', 4],
+    ['Lately, Dr. Spencer Smith says hi', 'lately dr spencer smith', 4],
     //start ^
     ['in toronto', '^toronto', 0],
     ['toronto', '^toronto', 1],
@@ -19598,7 +20893,7 @@ test('fancy match', function(t) {
   t.end();
 });
 
-},{"./lib/nlp":228,"tape":60}],231:[function(require,module,exports){
+},{"./lib/nlp":246,"tape":60}],249:[function(require,module,exports){
 var test = require('tape');
 var nlp = require('./lib/nlp');
 
@@ -19624,17 +20919,31 @@ test('misc:', function(t) {
   t.equal(m.normal(), '2001559 is bigger than 2882');
 
   m = nlp('2 million five hundred thousand and fifty nine is bigger than 2882').values().toNiceNumber();
-  t.equal(m.normal(), '2,001,559 is bigger than 2,882');
+  t.equal(m.plaintext(), '2,001,559 is bigger than 2,882');
 
-  // m = nlp('doug is 5 years old').toTextNumber();
-  // t.equal(m.normal(), 'doug is five years old');
+  m = nlp('doug is 5 years old').values().toTextValue();
+  t.equal(m.normal(), 'doug is five years old');
 
+  m = nlp('i\'d buy those nachos').nouns().toSingular();
+  t.equal(m.normal(), 'i\'d buy that nacho');
 
+  m = nlp('i\'d buy these nachos').nouns().toSingular();
+  t.equal(m.normal(), 'i\'d buy this nacho');
 
+  m = nlp('i\'d buy nachos').nouns().toSingular();
+  t.equal(m.normal(), 'i\'d buy a nacho');
+
+  m = nlp('i\'d buy the nachos').nouns().toSingular();
+  t.equal(m.normal(), 'i\'d buy a nacho');
+  m = nlp('i\'d buy the eggs').nouns().toSingular();
+  t.equal(m.normal(), 'i\'d buy an egg');
+
+  m = nlp('men go').verbs().toPast().nouns().toSingular();
+  t.equal(m.normal(), 'a man went');
   t.end();
 });
 
-},{"./lib/nlp":228,"tape":60}],232:[function(require,module,exports){
+},{"./lib/nlp":246,"tape":60}],250:[function(require,module,exports){
 var test = require('tape');
 var nlp = require('./lib/nlp');
 var str_test = require('./lib/fns').str_test;
@@ -19647,6 +20956,15 @@ test('sentence():', function(t) {
     ['Mr. Clinton did so.', 'mr clinton did so.'],
     ['he is good', 'he is good'],
     ['Jack and Jill   went up the hill. She got  water.', 'jack and jill went up the hill. she got water.'],
+    ['Joe', 'joe'],
+    ['just-right', 'just right'],
+    ['camel', 'camel'],
+    // ['4', '4'],
+    // ['four', '4'],
+    ['john smith', 'john smith'],
+    // ['John G. Smith','John Smith'],
+    // ['Dr. John Smith-McDonald', 'john smith mcdonald'],
+
   // ['Contains no fruit juice \n\n All rights reserved', 'contains no fruit juice. all rights reserved'],
   ].forEach(function (a) {
     var str = nlp(a[0]).normal();
@@ -19655,14 +20973,14 @@ test('sentence():', function(t) {
   t.end();
 });
 
-},{"./lib/fns":227,"./lib/nlp":228,"tape":60}],233:[function(require,module,exports){
+},{"./lib/fns":245,"./lib/nlp":246,"tape":60}],251:[function(require,module,exports){
 var test = require('tape');
 var nlp = require('./lib/nlp');
 
 test('organization test', function(t) {
   var arr = [
     'google',
-    'google inc',
+  // 'google inc',
   ];
   arr.forEach(function (str) {
     var terms = nlp(str).list[0].terms;
@@ -19676,7 +20994,7 @@ test('organization test', function(t) {
   t.end();
 });
 
-},{"./lib/nlp":228,"tape":60}],234:[function(require,module,exports){
+},{"./lib/nlp":246,"tape":60}],252:[function(require,module,exports){
 var test = require('tape');
 var nlp = require('./lib/nlp');
 
@@ -19686,7 +21004,7 @@ test('==.person()==', function(T) {
     [
       'john stewart',
       'martha stewart',
-      'dr. martin luther king',
+    // 'dr. Martin Luther King',
     ].forEach((a) => {
       var str = nlp(a).people().plaintext();
       var msg = '\'' + a + '\'  becomes \'' + str + '\'';
@@ -19697,7 +21015,7 @@ test('==.person()==', function(T) {
 
 });
 
-},{"./lib/nlp":228,"tape":60}],235:[function(require,module,exports){
+},{"./lib/nlp":246,"tape":60}],253:[function(require,module,exports){
 var test = require('tape');
 var nlp = require('./lib/nlp');
 
@@ -19757,7 +21075,7 @@ test('pos from-lexicon', function(t) {
   t.end();
 });
 
-},{"./lib/nlp":228,"tape":60}],236:[function(require,module,exports){
+},{"./lib/nlp":246,"tape":60}],254:[function(require,module,exports){
 var test = require('tape');
 var nlp = require('./lib/nlp');
 
@@ -19769,9 +21087,9 @@ test('==Term_fns==', function(T) {
   T.test('noun:', function(t) {
 
     var term = firstTerm('flower');
-    t.equal(term.noun.toPlural(), 'flowers');
+    t.equal(term.noun.plural(), 'flowers');
     term = firstTerm('flowers');
-    t.equal(term.noun.toSingular(), 'flower');
+    t.equal(term.noun.singular(), 'flower');
 
     t.end();
   });
@@ -19804,7 +21122,78 @@ test('==Term_fns==', function(T) {
   });
 });
 
-},{"./lib/nlp":228,"tape":60}],237:[function(require,module,exports){
+},{"./lib/nlp":246,"tape":60}],255:[function(require,module,exports){
+
+var test = require('tape');
+var nlp = require('./lib/nlp');
+
+test('tag inference:', function(t) {
+  var m = nlp('aasdf2').unTag('Noun').unTag('NounPhrase');
+  var term = m.list[0].terms[0];
+  t.equal(Object.keys(term.tag).length, 0, 'aasdf2 has no tags');
+  //give it a specific tag-
+  m.tag('Month');
+  t.equal(term.tag.Noun, true, 'aasdf2 now has Noun');
+  t.equal(term.tag.Date, true, 'aasdf2 now has Date(inferred)');
+  //give it a redundant tag-
+  m.tag('Date');
+  t.equal(term.tag.Noun, true, 'aasdf2 still has Noun');
+  t.equal(term.tag.Date, true, 'aasdf2 still has Date');
+  t.end();
+});
+
+test('untag inference:', function(t) {
+  var m = nlp('aasdf');
+  m.tag('FemaleName');
+  var term = m.list[0].terms[0];
+  t.equal(term.tag.FemaleName, true, 'aasdf first has FemaleName');
+  t.equal(term.tag.Person, true, 'aasdf first has person');
+  t.equal(term.tag.Noun, true, 'aasdf first has noun');
+  //remove the assumption..
+  term.unTag('Noun');
+  t.equal(term.tag.Noun, undefined, 'aasdf now has no noun');
+  t.equal(term.tag.Person, undefined, 'aasdf now has no person(inferred)');
+  t.equal(term.tag.FemaleName, undefined, 'aasdf now has no FemaleName(inferred)');
+  t.end();
+});
+
+
+
+test('tag idempodence:', function(t) {
+  var m = nlp('walk').tag('Verb');
+  var term = m.list[0].terms[0];
+  t.equal(term.tag.Verb, true, 'walk has Verb');
+  t.equal(term.tag.Value, undefined, 'walk has no Value');
+  //untag irrelevant stuff
+  term.unTag('Value');
+  term.unTag('Determiner');
+  term.unTag('Country');
+  term.unTag('Place');
+  t.equal(term.tag.Verb, true, 'walk has Verb after');
+  t.equal(term.tag.Value, undefined, 'walk has no Value after');
+  t.end();
+});
+
+
+test('tags are self-removing', function(t) {
+  var terms = [
+    'Person',
+    'Place',
+    'PastTense',
+    'FemaleName',
+    'Infinitive',
+    'HashTag',
+    'Month',
+  ];
+  terms.forEach((tag) => {
+    m = nlp('aasdf').tag(tag).unTag(tag);
+    var t0 = m.list[0].terms[0];
+    t.equal(t0.tag[tag], undefined, 'tag removes self ' + tag);
+  });
+  t.end();
+});
+
+},{"./lib/nlp":246,"tape":60}],256:[function(require,module,exports){
 var test = require('tape');
 var nlp = require('./lib/nlp');
 var str_test = require('./lib/fns').str_test;
@@ -19927,7 +21316,7 @@ test('==Value==', function(T) {
       [900000000, 'nine hundred million'],
       [900000080, 'nine hundred million and eighty'],
     ].forEach(function (a) {
-      var str = nlp(a[0]).toTextNumber().normal();
+      var str = nlp(a[0]).values().toTextValue().normal();
       str_test(str, a[0], a[1], t);
     });
     t.end();
@@ -19999,41 +21388,40 @@ test('==Value==', function(T) {
       // ['1 1/2 million', 1500000],
       ['negative five', -5],
       ['negative hundred', -100],
-      ['12:32', ''],
-      ['123-1231', ''],
-      ['seven eleven', ''],
-      ['ten-four', ''],
-      ['one seven', ''],
-      ['one ten', ''],
-      ['one twelve', ''],
-      ['one thirty', ''],
-      ['nine fifty', ''],
-      ['five six', ''],
-      ['nine seventy', ''],
-      ['nine two hundred', ''],
-      ['ten one', ''],
-      ['twelve one', ''],
-      ['seventy five two', ''],
-      ['two hundred three hundred', ''],
-      ['sixty fifteen hundred', ''],
-      ['one twenty', ''],
-      ['twenty five twenty', ''],
+      ['12:32', null],
+      ['123-1231', null],
+      ['seven eleven', null],
+      ['ten-four', null],
+      ['one seven', null],
+      ['one ten', null],
+      ['one twelve', null],
+      ['one thirty', null],
+      ['nine fifty', null],
+      ['five six', null],
+      ['nine seventy', null],
+      ['nine two hundred', null],
+      ['ten one', null],
+      ['twelve one', null],
+      ['seventy five two', null],
+      ['two hundred three hundred', null],
+      ['sixty fifteen hundred', null],
+      ['one twenty', null],
+      ['twenty five twenty', null],
     // ['',''],
     // [null,''],
     ].forEach(function (a) {
-      var str = nlp(a[0]).values().toNumber().normal();
-      a[1] = '' + a[1];
-      if (a[1] === '') {
-        a[1] = a[0];
-      }
-      str_test(str, a[0], a[1], t);
+      var arr = nlp(a[0]).values().parse();
+      arr[0] = arr[0] || {};
+      var num = arr[0].number || null;
+      var msg = 'have: \'' + num + '\'   want:\'' + a[1] + '\'';
+      t.equal(num, a[1], msg);
     });
     t.end();
   });
 
 });
 
-},{"./lib/fns":227,"./lib/nlp":228,"tape":60}],238:[function(require,module,exports){
+},{"./lib/fns":245,"./lib/nlp":246,"tape":60}],257:[function(require,module,exports){
 var test = require('tape');
 var nlp = require('./lib/nlp');
 var str_test = require('./lib/fns').str_test;
@@ -20106,7 +21494,7 @@ test('=Web Terminology=', function(T) {
 
 });
 
-},{"./lib/fns":227,"./lib/nlp":228,"tape":60}],239:[function(require,module,exports){
+},{"./lib/fns":245,"./lib/nlp":246,"tape":60}],258:[function(require,module,exports){
 var test = require('tape');
 var nlp = require('./lib/nlp');
 var str_test = require('./lib/fns').str_test;
@@ -20186,4 +21574,4 @@ test('=Whitespace=', function(T) {
 
 });
 
-},{"./lib/fns":227,"./lib/nlp":228,"tape":60}]},{},[224,225,226,229,230,231,232,233,234,235,236,237,238,239]);
+},{"./lib/fns":245,"./lib/nlp":246,"tape":60}]},{},[236,237,238,239,240,241,242,243,244,247,248,249,250,251,252,253,254,255,256,257,258]);

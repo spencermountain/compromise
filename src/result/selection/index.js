@@ -19,6 +19,19 @@ const match = (Result) => {
       return new Result(list);
     },
 
+    /** turn result into two seperate results */
+    splitAfter: function(reg, verbose) {
+      let list = [];
+      this.list.forEach((ts) => {
+        let ms = ts.splitAfter(reg);
+        ms.forEach((r) => {
+          list.push(new Terms(r));
+        });
+      });
+      this.list = list;
+      return this;
+    },
+
     /** return terms after this match */
     after : function(reg) {
       let after = reg + ' *';

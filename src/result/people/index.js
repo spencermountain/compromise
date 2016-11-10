@@ -1,17 +1,24 @@
 'use strict';
 const Result = require('../index');
+const Person = require('./person');
 //this is used for pronoun and honorifics, and not intented for more-than grammatical use (see #117)
 const guessGender = require('./guessGender');
 
 class People extends Result {
   constructor(list) {
     super(list);
-    // this.check();
-    this.when('#Person+');
-    return this;
+  // this.check();
+  // this.when('#Person+');
+  // this.clone();
+  // let people = this.match('#Person+');
+  // people.splitAfter('#ClauseEnd');
+  // this.people = this.list.map((ts) => {
+  //   return new Person(ts.terms);
+  // });
+  // return this;
   }
   parse() {
-
+    return this.people.map((p) => p.parse());
     // let obj = {
     //   honorific: this.honorific(),
     //   pronoun: this.pronoun(),

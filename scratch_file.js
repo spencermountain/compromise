@@ -14,11 +14,12 @@ const nlp = require('./src/index');
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
 
-let r = nlp('tony Shark, dave Lawrence played pool. john Smith is cool').people();
+let r = nlp('tony Shark, dave Lawrence played pool. Is he good? John Smith is cool');
 // r.check();
 // console.log(r.asArray());
-// console.log(r.parse());
-r.check();
+console.log(r.questions().parse());
+// r.check();
+
 
 
 // let r = nlp('1 April to 31 August');

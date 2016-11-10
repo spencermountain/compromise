@@ -7,8 +7,10 @@ class Sentences extends Result {
     return this;
   }
   parse() {
-    return this.terms.map((t) => {
+    return this.list.map((ts) => {
       return {
+        text: ts.plaintext(),
+        normal: ts.normal()
       };
     });
   }

@@ -88,6 +88,14 @@ const match = (Result) => {
         });
       });
       return this;
+    },
+
+    filter: function(fn) {
+      this.list = this.list.filter((ts) => {
+        for(let i = 0; i < ts.terms.length; i++) {
+
+        }
+      });
     }
 
   };

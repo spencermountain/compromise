@@ -3,7 +3,8 @@ const paths = require('./paths');
 const log = paths.log;
 const fns = paths.fns;
 const Term = require('../term');
-const match = require('./match');
+const matchTerms = require('./match');
+const splitTerms = require('./splitTerms');
 
 class Terms {
   constructor(arr, context) {
@@ -58,40 +59,52 @@ Terms.prototype.clone = function() {
 };
 
 Terms.prototype.match = function(reg, verbose) {
-  return match(this, reg, verbose); //returns an array of matches
+  return matchTerms(this, reg, verbose); //returns an array of matches
 };
 
-//make one split, from a term Object
-Terms.prototype.splitAt = function(term) {
-  let before = [];
-  let after = [];
-  for(let i = 0; i < this.terms.length; i++) {
-    let t = this.terms[i];
-    if (t == term) {
-      let len = this.terms.length;
-      before.push(this.terms[i]);
-      after = this.terms.slice(i + 1, len);
-      if (before.length > 0) {
-        return [before, after];
-      }
-      return [after];
-    }
-    before.push(this.terms[i]);
-  }
-  return [before];
+Terms.prototype.splitBefore = function(reg, verbose) {
+  let all = [];
+  let ms = matchTerms(this, reg, verbose); //returns an array of matches
+  ms.forEach((match) => {
+    splitTerms(this, match[0]).forEach((a) => {
+      all.push(a);
+    });
+  });
+  return all;
 };
 
 Terms.prototype.splitAfter = function(reg, verbose) {
-  let terms = [];
-  let ms = match(this, reg, verbose); //returns an array of matches
+  let all = [];
+  let ms = matchTerms(this, reg, verbose); //returns an array of matches
   ms.forEach((match) => {
     let endTerm = match[match.length - 1];
-    let arr = this.splitAt(endTerm);
-    for(let i = 0; i < arr.length; i++) {
-      terms.push(arr[i]);
-    }
+    splitTerms(this, endTerm, true).forEach((a) => {
+      all.push(a);
+    });
   });
-  return terms;
+  return all;
+};
+
+Terms.prototype.splitOn = function(reg, verbose) {
+  let all = [];
+  let ms = matchTerms(this, reg, verbose); //returns an array of matches
+  ms.forEach((mts) => {
+    for(let i = 0; i < this.terms.length; i++) {
+      if (this.terms[i] === mts[0]) {
+        //first piece
+        let before = this.terms.slice(0, i);
+        all.push(before);
+
+        //second piece
+        let end_index = i + mts.length;
+        let end = this.terms.slice(end_index, this.terms.length);
+        all.push(end);
+        return;
+      }
+    }
+    all.push(this.terms);
+  });
+  return all;
 };
 
 Terms.prototype.subset = function(tag) {
@@ -102,7 +115,7 @@ Terms.prototype.subset = function(tag) {
 };
 
 Terms.prototype.when = function(reg, verbose) {
-  let found = match(this, reg, verbose); //returns an array of matches
+  let found = matchTerms(this, reg, verbose); //returns an array of matches
   found.forEach((arr) => {
     arr.forEach((t) => {
       t.sel = true;
@@ -112,11 +125,11 @@ Terms.prototype.when = function(reg, verbose) {
 };
 
 Terms.prototype.remove = function(reg) {
-  let matchTerms = match(this, reg);
-  matchTerms = fns.flatten(matchTerms);
+  let ms = matchTerms(this, reg);
+  ms = fns.flatten(ms);
   let terms = this.terms.filter((t) => {
-    for(let i = 0; i < matchTerms.length; i++) {
-      if (t === matchTerms[i]) {
+    for(let i = 0; i < ms.length; i++) {
+      if (t === ms[i]) {
         return false;
       }
     }

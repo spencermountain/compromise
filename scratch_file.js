@@ -14,10 +14,11 @@ const nlp = require('./src/index');
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
 
-let r = nlp('tony Shark, dave Lawrence played pool. Is he good? John Smith, John Hopkins are cool');
-r = r.match('#Person+');
-r = r.splitAfter('#Person #ClauseEnd');
+let r = nlp('maybe doug but possibly nancy');
+// r = r.match('#Person+');
+r = r.splitBefore('but');
 r.check();
+console.log(r.asArray());
 // console.log(r.asArray());
 // console.log(r.people().parse());
 // r.check();

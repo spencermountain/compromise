@@ -23,9 +23,31 @@ const match = (Result) => {
     splitAfter: function(reg, verbose) {
       let list = [];
       this.list.forEach((ts) => {
-        let ms = ts.splitAfter(reg);
-        ms.forEach((r) => {
-          list.push(new Terms(r));
+        ts.splitAfter(reg, verbose).forEach((mts) => {
+          list.push(new Terms(mts));
+        });
+      });
+      this.list = list;
+      return this;
+    },
+
+    /** turn result into two seperate results */
+    splitBefore: function(reg, verbose) {
+      let list = [];
+      this.list.forEach((ts) => {
+        ts.splitBefore(reg, verbose).forEach((mts) => {
+          list.push(new Terms(mts));
+        });
+      });
+      this.list = list;
+      return this;
+    },
+    /** turn result into two seperate results */
+    splitOn: function(reg, verbose) {
+      let list = [];
+      this.list.forEach((ts) => {
+        ts.splitOn(reg, verbose).forEach((mts) => {
+          list.push(new Terms(mts));
         });
       });
       this.list = list;

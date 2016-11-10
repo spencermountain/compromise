@@ -67,18 +67,11 @@ const prettyPrint = (Result) => {
     },
 
     asArray: function() {
-      var result = [];
-      this.list.forEach(ts => {
-        ts.terms.forEach(t =>
-          result.push(
-            {
-                normal: t.normal,
-                text: t.text,
-                tags: Object.keys(t.tag),
-                whitespace: t.whitespace
-            }
-          )
-        )
+      return this.list.map((ts) => {
+        return {
+          normal: ts.normal(),
+          text: ts.plaintext(),
+        };
       });
       return result;
     },

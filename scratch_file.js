@@ -6,7 +6,7 @@ const nlp = require('./src/index');
 // const corpus = require('nlp-corpus');
 // const nlp = require('./builds/nlp_compromise');
 
-// require('./src/logger').enable();
+require('./src/logger').enable();
 // const context = {
 //   lexicon: {
 //     'donkey kong': 'Person'
@@ -14,7 +14,7 @@ const nlp = require('./src/index');
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
 
-var str = 'adds in the today queue';
+var str = 'second week';
 var m = nlp(str);
 // m.values().toNiceNumber();
 // console.log(m.plaintext());

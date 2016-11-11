@@ -14,11 +14,13 @@ const nlp = require('./src/index');
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
 
-let r = nlp('maybe doug but possibly nancy');
+let r = nlp('maybe doug Wright, jim Bean but not possibly nancy'); //.people();
+r = r.match('#Person+');
+r.splitAfter('#ClauseEnd');
 // r = r.match('#Person+');
-r = r.splitBefore('but');
+// r = r.splitBefore('but');
 r.check();
-console.log(r.asArray());
+// console.log(r.asArray());
 // console.log(r.asArray());
 // console.log(r.people().parse());
 // r.check();

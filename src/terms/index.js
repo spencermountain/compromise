@@ -78,7 +78,9 @@ Terms.prototype.splitAfter = function(reg, verbose) {
   let ms = matchTerms(this, reg, verbose); //returns an array of matches
   ms.forEach((match) => {
     let endTerm = match[match.length - 1];
-    splitTerms(this, endTerm, true).forEach((a) => {
+    let arr = splitTerms(this, endTerm, true);
+    // console.log(arr);
+    arr.forEach((a) => {
       all.push(a);
     });
   });

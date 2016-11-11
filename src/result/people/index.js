@@ -7,14 +7,14 @@ const guessGender = require('./guessGender');
 class People extends Result {
   constructor(list) {
     super(list);
-  // this.check();
-  // this.when('#Person+');
-  // this.clone();
-  // let people = this.match('#Person+');
-  // people.splitAfter('#ClauseEnd');
-  // this.people = this.list.map((ts) => {
-  //   return new Person(ts.terms);
-  // });
+    // this.check();
+    this.when('#Person+');
+    // this.clone();
+    // let people = this.match('#Person+');
+    // people.splitAfter('#ClauseEnd');
+    this.people = this.list.map((ts) => {
+      return new Person(ts.terms);
+    });
   // return this;
   }
   parse() {

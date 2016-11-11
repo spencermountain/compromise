@@ -16,7 +16,8 @@ const match = (Result) => {
         });
       });
       // this.list = list;
-      return new Result(list);
+      let parent = this.parent || this;
+      return new Result(list, parent);
     },
 
     /** turn result into two seperate results */
@@ -115,7 +116,7 @@ const match = (Result) => {
       return this;
     },
 
-    /** re-select all terms **/
+    /** resume all terms **/
     parent: function() {
       this.list.forEach((ts) => {
         ts.terms.forEach((t) => {

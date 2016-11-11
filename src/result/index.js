@@ -2,8 +2,9 @@
 
 //a result is an array of termLists
 class Result {
-  constructor(arr) {
+  constructor(arr, parent) {
     this.list = arr || [];
+    this.parent = parent;
   }
   //getter/setters
   /** did it find anything? */
@@ -21,6 +22,9 @@ class Result {
     return this.list.reduce((arr, ts) => {
       return arr.concat(ts.terms.filter((t) => t.sel));
     }, []);
+  }
+  all() {
+    return this.parent || this;
   }
 }
 

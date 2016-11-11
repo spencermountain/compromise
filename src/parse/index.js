@@ -4,15 +4,15 @@ const steps = {
   split_sentences: require('./01-split_sentences'),
   split_terms: require('./02-split_terms'),
   tagger: require('./03-tagger'),
-  corrections: require('./04-corrections'),
-  phrase: require('./05-phrases'),
+  buildup: require('./04-buildup'),
+  corrections: require('./05-corrections'),
+  phrase: require('./06-phrases'),
 };
 const Term = require('../term');
 const Terms = require('../terms');
 const fns = require('../fns');
 const log = require('../logger');
 const path = 'parse';
-const Result = require('../result');
 
 //turn the string into an array of termList objects
 const tokenize = (str, context) => {
@@ -43,7 +43,7 @@ const tokenize = (str, context) => {
     return ts;
   });
   //wrap them up into a Result
-  let result = new Result(arr, context);
+  let result = steps.buildup(arr, context);
   //fix apparent mistakes in tagging
   result = steps.corrections(result);
   //tag NounPhrase, VerbPhrase

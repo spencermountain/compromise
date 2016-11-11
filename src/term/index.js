@@ -21,6 +21,7 @@ class Term {
     this.sel = true;
     this.whitespace = build_whitespace(str || '');
     this._text = this._text.trim();
+    this.parent = null;
 
     bindMethods(require('./term'), 'term', this);
     bindMethods(require('./verb'), 'verb', this);

@@ -14,13 +14,18 @@ const nlp = require('./src/index');
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
 
-let r = nlp('maybe doug is right');
-r = r.match('doug is right');
-r = r.match('is right');
-r = r.match('#Verb').replace('5');
+var str = '2 hundred million 7 hundred thousand seven hundred';
+var m = nlp(str);
+// m.values().toNiceNumber();
+// console.log(m.plaintext());
+
+// let r = nlp('maybe doug is right');
+// r = r.match('doug is right');
+// r = r.match('is right');
+// r = r.match('#Verb').replace('5');
 // r = r.term(0)
-r = r.all();
-r.check();
+// r = r.all();
+m.check();
 // console.log(r.asArray());
 // console.log(r.asArray());
 // console.log(r.people().parse());

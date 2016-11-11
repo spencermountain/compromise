@@ -5,7 +5,7 @@ class Verbs extends Result {
   constructor(list) {
     super(list);
     // this.check();
-    this.when('#Verb+');
+    this.match('#Verb+');
     return this;
   }
   parse() {
@@ -19,7 +19,7 @@ class Verbs extends Result {
     if (t) {
       t.text = t.verb.pastTense();
     }
-    return this.parent();
+    return this.all();
   }
   toPresent() {
     let t = this.terms[0];
@@ -27,7 +27,7 @@ class Verbs extends Result {
     if (t) {
       t.text = t.verb.presentTense();
     }
-    return this.parent();
+    return this.all();
   }
   toFuture() {
     let t = this.terms[0];
@@ -35,7 +35,7 @@ class Verbs extends Result {
     if (t) {
       t.text = t.verb.futureTense();
     }
-    return this.parent();
+    return this.all();
   }
 }
 

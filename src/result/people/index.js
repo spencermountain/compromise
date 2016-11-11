@@ -8,7 +8,7 @@ class People extends Result {
   constructor(list) {
     super(list);
     // this.check();
-    this.when('#Person+');
+    this.match('#Person+');
     // this.clone();
     // let people = this.match('#Person+');
     // people.splitAfter('#ClauseEnd');
@@ -87,11 +87,11 @@ class People extends Result {
         this.append(str);
       }
     }
-    return this.parent();
+    return this.all();
   }
   stripHonorific() {
     this.remove('#Honorific');
-    return this.parent();
+    return this.all();
   }
 
 }

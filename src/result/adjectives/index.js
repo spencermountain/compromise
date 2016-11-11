@@ -5,7 +5,7 @@ class Adjectives extends Result {
   constructor(list) {
     super(list);
     // this.check();
-    this.when('#Adjective+');
+    this.match('#Adjective+');
     return this;
   }
   parse() {
@@ -19,15 +19,15 @@ class Adjectives extends Result {
     });
   }
   adverbs() {
-    this.parent();
+    this.all();
     //very cool / cool suddenly
-    this.when('#Adverb+ #Adjective').or('#Adjective #Adverb+').when('#Adverb');
+    this.match('#Adverb+ #Adjective').or('#Adjective #Adverb+').match('#Adverb');
     return this;
   }
   stripAdverbs() {
-    this.parent();
+    this.all();
     this.adverbs().remove();
-    return this.parent();
+    return this.all();
   }
 }
 

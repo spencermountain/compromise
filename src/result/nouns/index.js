@@ -6,7 +6,7 @@ class Nouns extends Result {
   constructor(list) {
     super(list);
     // this.check();
-    this.when('#Noun+');
+    this.match('#Noun+');
     return this;
   }
   parse() {

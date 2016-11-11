@@ -31,6 +31,12 @@ module.exports = [
     reason: '1-800-PhoneNumber'
   },
   {
+    //two hundred sixty three
+    condition: (a, b, c) => (a.tag.Value && b.tag.Value && c.tag.Value),
+    result: 'Value',
+    reason: 'Value-Value-Value'
+  },
+  {
     //two hundred and three
     condition: (a, b, c) => (a.tag.Value && b.normal === 'and' && c.tag.Value),
     result: 'Value',

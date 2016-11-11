@@ -19,30 +19,40 @@ test('garbage:', function(t) {
 });
 
 test('misc:', function(t) {
-  var m = nlp('2 million five hundred thousand and fifty nine is bigger than 2882').values().toNumber();
-  t.equal(m.normal(), '2001559 is bigger than 2882');
+  var str = '2 million five hundred thousand and fifty nine is bigger than 2882';
+  var m = nlp(str).values().toNumber();
+  t.equal(m.normal(), '2001559 is bigger than 2882', str);
 
-  m = nlp('2 million five hundred thousand and fifty nine is bigger than 2882').values().toNiceNumber();
-  t.equal(m.plaintext(), '2,001,559 is bigger than 2,882');
+  str = '2 million five hundred thousand and fifty nine is bigger than 2882';
+  m = nlp(str).values().toNiceNumber();
+  t.equal(m.plaintext(), '2,001,559 is bigger than 2,882', str);
 
-  m = nlp('doug is 5 years old').values().toTextValue();
-  t.equal(m.normal(), 'doug is five years old');
+  str = 'doug is 5 years old';
+  m = nlp(str).values().toTextValue();
+  t.equal(m.normal(), 'doug is five years old', str);
 
-  m = nlp('i\'d buy those nachos').nouns().toSingular();
-  t.equal(m.normal(), 'i\'d buy that nacho');
+  str = 'i\'d buy those nachos';
+  m = nlp(str).nouns().toSingular();
+  t.equal(m.normal(), 'i\'d buy that nacho', str);
 
-  m = nlp('i\'d buy these nachos').nouns().toSingular();
-  t.equal(m.normal(), 'i\'d buy this nacho');
+  str = 'i\'d buy these nachos';
+  m = nlp(str).nouns().toSingular();
+  t.equal(m.normal(), 'i\'d buy this nacho', str);
 
-  m = nlp('i\'d buy nachos').nouns().toSingular();
-  t.equal(m.normal(), 'i\'d buy a nacho');
+  str = 'i\'d buy nachos';
+  m = nlp(str).nouns().toSingular();
+  t.equal(m.normal(), 'i\'d buy a nacho', str);
 
-  m = nlp('i\'d buy the nachos').nouns().toSingular();
-  t.equal(m.normal(), 'i\'d buy a nacho');
-  m = nlp('i\'d buy the eggs').nouns().toSingular();
-  t.equal(m.normal(), 'i\'d buy an egg');
+  str = 'i\'d buy the nachos';
+  m = nlp(str).nouns().toSingular();
+  t.equal(m.normal(), 'i\'d buy a nacho', str);
 
-  m = nlp('men go').verbs().toPast().nouns().toSingular();
-  t.equal(m.normal(), 'a man went');
+  str = 'i\'d buy the eggs';
+  m = nlp(str).nouns().toSingular();
+  t.equal(m.normal(), 'i\'d buy an egg', str);
+
+  str = 'men go';
+  m = nlp(str).verbs().toPast().nouns().toSingular();
+  t.equal(m.normal(), 'a man went', str);
   t.end();
 });

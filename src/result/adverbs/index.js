@@ -4,7 +4,7 @@ const Result = require('../index');
 class Adverbs extends Result {
   constructor(list) {
     super(list);
-    this.when('#Adverb+');
+    this.match('#Adverb+');
     return this;
   }
   parse() {

@@ -4,7 +4,7 @@ const Result = require('../index');
 class Values extends Result {
   constructor(list) {
     super(list);
-    this.when('#Value+');
+    this.list = this.match('#Value+').list;
     return this;
   }
   parse() {
@@ -28,14 +28,14 @@ class Values extends Result {
         t.tagAs('NumericValue', 'toNumber()');
       }
     });
-    return this.parent();
+    return this.all();
   }
   /**5900 -> 5,900 */
   toNiceNumber() {
     this.terms.forEach((t) => {
       t.text = '' + t.value.nicenumber();
     });
-    return this.parent();
+    return this.all();
   }
   /**5 -> 'five' */
   toTextValue() {
@@ -44,7 +44,7 @@ class Values extends Result {
       t.unTag('NumericValue', 'toTextValue()');
       t.tagAs('TextValue', 'toTextValue()');
     });
-    return this.parent();
+    return this.all();
   }
   /**5th -> 5 */
   toCardinal() {
@@ -53,7 +53,7 @@ class Values extends Result {
       t.unTag('Ordinal', 'toCardinal()');
       t.tagAs('Cardinal', 'toCardinal()');
     });
-    return this.parent();
+    return this.all();
   }
   /**5 -> 5th */
   toOrdinal() {
@@ -62,7 +62,7 @@ class Values extends Result {
       t.unTag('Cardinal', 'toOrdinal()');
       t.tagAs('Ordinal', 'toOrdinal()');
     });
-    return this.parent();
+    return this.all();
   }
 }
 

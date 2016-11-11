@@ -5,7 +5,7 @@ const contract = require('./contract');
 class Contractions extends Result {
   constructor(list) {
     super(list);
-    this.when('#Contraction+');
+    this.match('#Contraction+');
     return this;
   }
   parse() {
@@ -23,10 +23,10 @@ class Contractions extends Result {
         }
       });
     });
-    return this.parent();
+    return this.all();
   }
   contract() {
-    return contract(this.parent());
+    return contract(this.all());
   }
 }
 

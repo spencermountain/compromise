@@ -174,6 +174,18 @@ test('==Value==', function(T) {
       ['two hundred thousand', 200000],
       ['six million ninety', 6000090],
       ['twenty-two hundred', 2200],
+
+      ['two million five hundred thousand', 2500000],
+      ['one billion five hundred thousand', 1000500000],
+      ['one billion five hundred thousand and eight', 1000500008],
+      ['a million fifty thousand and eight', 1050008],
+      ['a million twenty five thousand and fifty-two', 1025052],
+      ['minus two million twenty five thousand and eighty', -2025080],
+
+      ['7 hundred and 8 thousand', 708000],
+      ['2 hundred and sixty 9 thousand seven hundred', 269700],
+      ['2 hundred and six million 7 hundred thousand seven hundred', 206700700],
+
       ['minus 70', -70],
       ['minus eight', -8],
       ['minus 8 hundred', -800],
@@ -217,7 +229,7 @@ test('==Value==', function(T) {
       var arr = nlp(a[0]).values().parse();
       arr[0] = arr[0] || {};
       var num = arr[0].number || null;
-      var msg = 'have: \'' + num + '\'   want:\'' + a[1] + '\'';
+      var msg = '\'' + a[0] + '\' - - have: \'' + num + '\'   want:\'' + a[1] + '\'';
       t.equal(num, a[1], msg);
     });
     t.end();

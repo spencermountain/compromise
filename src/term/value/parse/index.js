@@ -10,6 +10,7 @@ const path = 'parseNumber';
 // a 'section' is something like 'fifty-nine thousand'
 // turn a section into something we can add to - like 59000
 const section_sum = (obj) => {
+  // console.log(obj);
   return Object.keys(obj).reduce((sum, k) => {
     sum += obj[k];
     return sum;
@@ -30,13 +31,15 @@ const parse = function(t) {
   }
   let modifier = findModifiers(str);
   str = modifier.str;
-  let biggest_yet = 0;
+  let last_mult = null;
   let has = {};
   let sum = 0;
   let isNegative = false;
   let terms = str.split(/[ -]/);
+  // console.log(terms);
   for (let i = 0; i < terms.length; i++) {
     let w = terms[i];
+    // console.log(i + '  - ' + w);
     if (!w || w === 'and') {
       continue;
     }
@@ -84,21 +87,33 @@ const parse = function(t) {
     } else if (words.multiples[w]) {
       let mult = words.multiples[w];
       //something has gone wrong : 'two hundred five hundred'
-      if (mult === biggest_yet) {
+      if (mult === last_mult) {
         log.tell('invalid multiplier', path);
         return null;
       }
-      //if it's the biggest yet, multiply the whole sum - eg 'five hundred thousand'
-      if (mult > biggest_yet) {
-        biggest_yet = mult;
-        sum += section_sum(has);
-        sum = (sum || 1) * mult;
-      } else {
-        //it's smaller, so only multiply section_sum - eg 'five thousand one hundred'
-        sum += (section_sum(has) || 1) * mult;
+      //support 'hundred thousand'
+      //this one is tricky..
+      if (mult === 100 && terms[i + 1]) {
+        // has['hundreds']=
+        var w2 = terms[i + 1];
+        if (words.multiples[w2]) {
+          mult *= words.multiples[w2]; //hundredThousand/hundredMillion
+          i += 1;
+        }
       }
-      //reset our section
-      has = {};
+      //natural order of things
+      //five thousand, one hundred..
+      if (last_mult === null || mult < last_mult) {
+        sum += (section_sum(has) || 1) * mult;
+        last_mult = mult;
+        has = {};
+      } else {
+        //maybe hundred .. thousand
+        sum += section_sum(has);
+        last_mult = mult;
+        sum = (sum || 1) * mult;
+        has = {};
+      }
     }
   }
   //dump the remaining has values

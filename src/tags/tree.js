@@ -29,15 +29,15 @@ module.exports = {
       Unit: true,
       Demonym: true,
       Possessive: true,
-      Date: {
-        Month: true,
-        Day: true,
-        Year: true,
-        Duration: true,
-        Time: true,
-        Holiday: true
-      },
     },
+  },
+  Date: {
+    Month: true,
+    Day: true,
+    Year: true,
+    Duration: true,
+    Time: true,
+    Holiday: true
   },
   Verb: {
     PresentTense: {

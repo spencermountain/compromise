@@ -14,7 +14,7 @@ const nlp = require('./src/index');
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
 
-var str = '2 hundred million 7 hundred thousand seven hundred';
+var str = 'adds in the today queue';
 var m = nlp(str);
 // m.values().toNiceNumber();
 // console.log(m.plaintext());

@@ -31,7 +31,6 @@ const match = (Result) => {
       this.list = list;
       return this;
     },
-
     /** turn result into two seperate results */
     splitBefore: function(reg, verbose) {
       let list = [];
@@ -69,14 +68,17 @@ const match = (Result) => {
 
     /** like .match(), but negative (filter-out the matches)*/
     remove : function(reg) {
-      //if there's no reg, remove all selected terms
+      //if there's no reg, remove these selected terms
       if (!reg) {
         this.list.forEach((ts) => {
-          ts.terms = ts.terms.filter((t) => !t.sel);
+          ts.terms.forEach((t) => {
+            t.remove();
+          });
         });
+        this.list = [];
         return this;
       }
-      //otherwise, remove just the matches
+      //otherwise, remove these matches
       let list = [];
       this.list.forEach((ts) => {
         let matches = ts.remove(reg, this.context);
@@ -85,44 +87,6 @@ const match = (Result) => {
         }
       });
       this.list = list;
-      return this;
-    },
-
-    /** tag a subset as selected/non-selected **/
-    when: function(str, debug) {
-      this.list.forEach((ts) => {
-        ts.terms.forEach((t) => {
-          t.sel = false;
-        });
-        ts.when(str, debug);
-      });
-      return this;
-    },
-    /** opposite of .when **/
-    not: function(str, debug) {
-      this.when(str, debug);
-      //reverse it
-      this.terms.forEach((t) => {
-        t.sel = !t.sel;
-      });
-      return this;
-    },
-
-    /** tag a subset as selected/non-selected **/
-    or: function(str, debug) {
-      this.list.forEach((ts) => {
-        ts.when(str, debug);
-      });
-      return this;
-    },
-
-    /** resume all terms **/
-    parent: function() {
-      this.list.forEach((ts) => {
-        ts.terms.forEach((t) => {
-          t.sel = true;
-        });
-      });
       return this;
     },
 

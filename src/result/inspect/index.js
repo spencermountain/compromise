@@ -15,15 +15,17 @@ const genericMethods = (Result) => {
         }
         return new Terms(arr, this.context);
       });
-      return new Result(list, this.context);
+      return new Result(list, this.parent);
     },
+
     /**use only the first result */
     first : function(n) {
       if (!n && n !== 0) {
         return this.get(0);
       }
-      return new Result(this.list.slice(0, n), this.context);
+      return new Result(this.list.slice(0, n), this.parent);
     },
+
     /**use only the last result */
     last : function(n) {
       if (!n && n !== 0) {
@@ -31,16 +33,17 @@ const genericMethods = (Result) => {
       }
       let end = this.list.length;
       let start = end - n;
-      return new Result(this.list.slice(start, end), this.context);
+      return new Result(this.list.slice(start, end), this.parent);
     },
+
     /** use only the nth result*/
     get : function(n) {
       //return an empty result
       if ((!n && n !== 0) || !this.list[n]) {
-        return new Result([], this.context);
+        return new Result([], this.parent);
       }
       let ts = this.list[n];
-      return new Result([ts], this.context);
+      return new Result([ts], this.parent);
     },
 
     /**copy data properly so later transformations will have no effect*/
@@ -58,18 +61,18 @@ const genericMethods = (Result) => {
         return all;
       }, []);
       let terms = new Terms(list);
-      return new Result([terms], this.context);
+      return new Result([terms], this.parent);
     },
     /**tag all the terms in this result as something */
     tag: function(tag, reason) {
-      this.terms.filter((t) => t.sel).forEach((t) => {
+      this.terms.forEach((t) => {
         t.tagAs(tag, reason);
       });
       return this;
     },
     /**remove a tag in all the terms in this result (that had it) */
     unTag: function(tag, reason) {
-      this.terms.filter((t) => t.sel).forEach((t) => {
+      this.terms.forEach((t) => {
         t.unTag(tag, reason);
       });
       return this;
@@ -77,7 +80,7 @@ const genericMethods = (Result) => {
 
     replace: function(text) {
       this.list.forEach((ts) => {
-        ts.terms.filter((t) => t.sel).forEach((t) => {
+        ts.terms.forEach((t) => {
           t.text = text;
         });
       });
@@ -86,7 +89,7 @@ const genericMethods = (Result) => {
 
     expand: function() {
       this.list.forEach((ts) => {
-        ts.terms.filter((t) => t.sel).forEach((t, i) => {
+        ts.terms.forEach((t, i) => {
           if (t.silent_term) {
             if (t.term.isTitlecase()) {
               t.text = t.silent_term;

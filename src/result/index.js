@@ -20,7 +20,7 @@ class Result {
   }
   get terms() {
     return this.list.reduce((arr, ts) => {
-      return arr.concat(ts.terms.filter((t) => t.sel));
+      return arr.concat(ts.terms);
     }, []);
   }
   all() {

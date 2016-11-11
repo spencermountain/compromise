@@ -28,13 +28,13 @@ class Terms {
     return this.terms.length;
   }
   plaintext() {
-    return this.terms.filter((t) => t.sel).reduce((str, t) => {
+    return this.terms.reduce((str, t) => {
       str += t.plaintext();
       return str;
     }, '');
   }
   normal() {
-    return this.terms.filter((t) => t.sel && t.text).map((t) => t.normal).join(' ');
+    return this.terms.filter((t) => t.text).map((t) => t.normal).join(' ');
   }
   insertAt(text, i) {
     let term = new Term(text, this.context);
@@ -47,6 +47,9 @@ class Terms {
   filter(fn) {
     let terms = this.terms.filter(fn);
     return new Terms(terms, this.context);
+  }
+  endPunctuation() {
+    return this.last().endPunctuation();
   }
 
 }
@@ -116,17 +119,13 @@ Terms.prototype.subset = function(tag) {
   return new Terms(terms, this.context);
 };
 
-Terms.prototype.when = function(reg, verbose) {
-  let found = matchTerms(this, reg, verbose); //returns an array of matches
-  found.forEach((arr) => {
-    arr.forEach((t) => {
-      t.sel = true;
-    });
-  });
-  return this;
-};
-
 Terms.prototype.remove = function(reg) {
+  if (!reg) {
+    this.terms.forEach((t) => {
+      t.remove();
+    });
+    return this;
+  }
   let ms = matchTerms(this, reg);
   ms = fns.flatten(ms);
   let terms = this.terms.filter((t) => {

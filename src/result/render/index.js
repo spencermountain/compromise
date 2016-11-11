@@ -10,9 +10,7 @@ const prettyPrint = (Result) => {
       this.list.forEach((ts) => {
         console.log('   --');
         ts.terms.forEach((t) => {
-          if (t.sel) {
-            t.render.check();
-          }
+          t.render.check();
         });
       });
       return this;
@@ -29,7 +27,7 @@ const prettyPrint = (Result) => {
       return this.list.map((ts) => {
         let str = ts.normal();
         let last = ts.last();
-        if (last && last.sel) {
+        if (last) {
           let punct = last.endPunctuation();
           if (punct === '.' || punct === '!' || punct === '?') {
             str += punct;

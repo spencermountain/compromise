@@ -15,12 +15,12 @@ const nlp = require('./src/index');
 // let txt = corpus.parsed.weezer().sweatersong;
 
 let r = nlp('maybe doug is right');
+r = r.match('doug is right');
 r = r.match('is right');
-r = r.match('is');
-// r.splitAfter('#ClauseEnd');
-// r = r.match('#Person+');
-// r = r.splitBefore('but');
-r.all().check();
+r = r.match('#Verb').replace('5');
+// r = r.term(0)
+r = r.all();
+r.check();
 // console.log(r.asArray());
 // console.log(r.asArray());
 // console.log(r.people().parse());

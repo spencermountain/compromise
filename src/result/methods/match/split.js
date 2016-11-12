@@ -1,5 +1,4 @@
 'use strict';
-const Terms = require('../paths').Terms
 
 const splitMethods = (Result) => {
 
@@ -9,7 +8,7 @@ const splitMethods = (Result) => {
       let list = [];
       this.list.forEach((ts) => {
         ts.splitAfter(reg, verbose).forEach((mts) => {
-          list.push(new Terms(mts));
+          list.push(mts);
         });
       });
       this.list = list;
@@ -20,7 +19,7 @@ const splitMethods = (Result) => {
       let list = [];
       this.list.forEach((ts) => {
         ts.splitBefore(reg, verbose).forEach((mts) => {
-          list.push(new Terms(mts));
+          list.push(mts);
         });
       });
       this.list = list;
@@ -31,7 +30,7 @@ const splitMethods = (Result) => {
       let list = [];
       this.list.forEach((ts) => {
         ts.splitOn(reg, verbose).forEach((mts) => {
-          list.push(new Terms(mts));
+          list.push(mts);
         });
       });
       this.list = list;

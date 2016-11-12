@@ -15,9 +15,9 @@ const nlp = require('./src/index');
 // let txt = corpus.parsed.weezer().sweatersong;
 
 // var m = nlp('the cat is nice').replace('cat', 'stinky dog');
-var str = 'abc walk def wait xyz';
+var str = 'abc x here x here2';
 // var m = nlp(str).splitAfter('#Comma')
-var m = nlp(str).splitAfter('#Verb')
+var m = nlp(str).splitBefore('x')
   // var m = nlp(str).match('#Comma')
 m.check()
   // console.log(m)

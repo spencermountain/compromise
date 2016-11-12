@@ -1,12 +1,10 @@
 'use strict';
-const Terms = require('../paths').Terms
-
 const splitMethods = (Result) => {
 
   const methods = {
 
     /** do a regex-like search through terms and return a subset */
-    match: function(reg, verbose) {
+    match: function (reg, verbose) {
       let list = [];
       this.list.forEach((ts) => {
         //an array of arrays
@@ -21,13 +19,13 @@ const splitMethods = (Result) => {
     },
 
     /** return terms after this match */
-    after: function(reg) {
+    after: function (reg) {
       let after = reg + ' *';
       return this.match(after).remove(reg);
     },
 
     /** return terms before this match */
-    before: function(reg) {
+    before: function (reg) {
       let before = '* ' + reg;
       return this.match(before).remove(reg);
     },

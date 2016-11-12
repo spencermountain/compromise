@@ -5,3 +5,4 @@ node_modules/
 coverage/
 .nyc_output/
 viz
+ pm-debug.log

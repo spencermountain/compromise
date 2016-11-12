@@ -1,7 +1,9 @@
 'use strict';
+const Term = require('../../term');
 
+//turn a string into an array of terms (naiive for now, lumped later)
 const tokenize = function (str) {
-  let result = [];
+  let all = [];
   //start with a naiive split
   const arr = str.split(/(\S+)/);
   //greedy merge whitespace+arr to the right
@@ -9,16 +11,16 @@ const tokenize = function (str) {
   for (let i = 0; i < arr.length; i++) {
     //if it's more than a whitespace
     if (arr[i].match(/\S/)) {
-      result.push(carry + arr[i]);
+      all.push(carry + arr[i]);
       carry = '';
     } else {
       carry += arr[i];
     }
   }
   //handle last one
-  if (carry && result.length > 0) {
-    result[result.length - 1] += carry; //put it on the end
+  if (carry && all.length > 0) {
+    all[all.length - 1] += carry; //put it on the end
   }
-  return result;
+  return all.map((t) => new Term(t))
 };
 module.exports = tokenize

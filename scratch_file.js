@@ -15,9 +15,9 @@ const nlp = require('./src/index');
 // let txt = corpus.parsed.weezer().sweatersong;
 
 // var m = nlp('the cat is nice').replace('cat', 'stinky dog');
-var str = 'he is nice';
+var str = 'he is nice. he walks home.';
 // var m = nlp(str).splitAfter('#Comma')
-var m = nlp(str).append('really')
+var m = nlp(str) //.append('really')
   // var m = nlp(str).match('#Comma')
 m.check()
   // console.log(m)

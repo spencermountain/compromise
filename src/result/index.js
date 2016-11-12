@@ -1,6 +1,6 @@
 'use strict';
-
-
+const Terms = require('./paths').Terms
+const tokenize = require('./tokenize');
 
 //a result is an array of termLists
 class Result {
@@ -21,6 +21,16 @@ class Result {
     return this.list.reduce((arr, ts) => {
       return arr.concat(ts.terms);
     }, []);
+  }
+  static fromString(str) {
+    let sentences = tokenize(str)
+    let list = sentences.map((s) => Terms.fromString(s))
+    let r = new Result(list)
+      //give each ts a ref to the result
+    r.list.forEach((ts) => {
+      ts.parent = r;
+    });
+    return r
   }
 }
 

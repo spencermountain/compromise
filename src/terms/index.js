@@ -1,6 +1,6 @@
 'use strict';
 const tagger = require('./tagger');
-const tokenize = require('./tokenize');
+const tokenize = require('./methods/tokenize');
 
 class Terms {
   constructor(arr, context) {
@@ -14,19 +14,26 @@ class Terms {
   get length() {
     return this.terms.length;
   }
-  tagger() {
+  posTag() {
     tagger(this)
     return this
   }
-  static tokenize(str) {
-    return tokenize(str)
+  static fromString(str) {
+    let termArr = tokenize(str)
+    let ts = new Terms(termArr)
+      //give each term a reference to this ts
+    ts.terms.forEach((t) => {
+      t.parent = ts;
+    });
+    ts.posTag()
+    return ts
   }
 }
 Terms = require('./match')(Terms);
-Terms = require('./split')(Terms);
-Terms = require('./insert')(Terms);
-Terms = require('./render')(Terms);
-Terms = require('./misc')(Terms);
-Terms = require('./transform')(Terms);
+Terms = require('./methods/split')(Terms);
+Terms = require('./methods/insert')(Terms);
+Terms = require('./methods/render')(Terms);
+Terms = require('./methods/misc')(Terms);
+Terms = require('./methods/transform')(Terms);
 
 module.exports = Terms;

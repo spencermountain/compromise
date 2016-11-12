@@ -1,6 +1,4 @@
 'use strict';
-const fns = require('../fns');
-
 
 //break apart a termlist into (before, match after)
 const breakUpHere = (terms, ts) => {

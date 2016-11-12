@@ -62,6 +62,7 @@ const splitMethods = (Terms) => {
         all.push(termArr)
       }
       //make them termlists
+      all = all.filter(a => a && a.length)
       all = all.map((ts) => new Terms(ts))
       return all;
     },
@@ -97,7 +98,8 @@ const splitMethods = (Terms) => {
         }
       }
       //make them termlists
-      all = all.filter(a => a && a.length).map((ts) => new Terms(ts))
+      all = all.filter(a => a && a.length)
+      all = all.map((ts) => new Terms(ts))
       return all;
     },
 

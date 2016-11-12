@@ -2,4 +2,6 @@
 .jshintrc
 .env
 node_modules/
+coverage/
+.nyc_output/
 viz

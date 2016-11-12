@@ -17,6 +17,11 @@ class People extends Result {
     });
     // return this;
   }
+  find() {
+    let people = this.match('#Person+');
+    // people.splitAfter('#Comma')
+    return people
+  }
   parse() {
       return this.people.map((p) => p.parse());
       // let obj = {

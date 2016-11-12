@@ -4,7 +4,6 @@ const log = paths.log;
 const fns = paths.fns;
 const Term = require('../term');
 const matchTerms = require('./match');
-const splitTerms = require('./splitTerms');
 const tagger = require('./tagger');
 
 class Terms {
@@ -16,6 +15,9 @@ class Terms {
     };
     // this.terms = this.arr;
   }
+  get length() {
+    return this.terms.length;
+  }
   term(n) {
     return this.terms[n];
   }
@@ -24,9 +26,6 @@ class Terms {
   }
   last() {
     return this.terms[this.terms.length - 1];
-  }
-  get length() {
-    return this.terms.length;
   }
   plaintext() {
     return this.terms.reduce((str, t) => {
@@ -70,60 +69,6 @@ Terms.prototype.match = function(reg, verbose) {
   return matchTerms(this, reg, verbose); //returns an array of matches
 };
 
-Terms.prototype.splitBefore = function(reg, verbose) {
-  let all = [];
-  let ms = matchTerms(this, reg, verbose); //returns an array of matches
-  ms.forEach((match) => {
-    splitTerms(this, match[0]).forEach((a) => {
-      all.push(a);
-    });
-  });
-  return all;
-};
-
-Terms.prototype.splitAfter = function(reg, verbose) {
-  let all = [];
-  let ms = matchTerms(this, reg, verbose); //returns an array of matches
-  ms.forEach((match) => {
-    let endTerm = match[match.length - 1];
-    let arr = splitTerms(this, endTerm, true);
-    // console.log(arr);
-    arr.forEach((a) => {
-      all.push(a);
-    });
-  });
-  return all;
-};
-
-Terms.prototype.splitOn = function(reg, verbose) {
-  let all = [];
-  let ms = matchTerms(this, reg, verbose); //returns an array of matches
-  ms.forEach((mts) => {
-    for (let i = 0; i < this.terms.length; i++) {
-      if (this.terms[i] === mts[0]) {
-        //first piece
-        let before = this.terms.slice(0, i);
-        all.push(before);
-
-        //second piece
-        let end_index = i + mts.length;
-        let end = this.terms.slice(end_index, this.terms.length);
-        all.push(end);
-        return;
-      }
-    }
-    all.push(this.terms);
-  });
-  return all;
-};
-
-Terms.prototype.subset = function(tag) {
-  let terms = this.terms.filter((t) => {
-    return t.tag[tag];
-  });
-  return new Terms(terms, this.context);
-};
-
 Terms.prototype.remove = function(reg) {
   if (!reg) {
     this.terms.forEach((t) => {
@@ -143,4 +88,7 @@ Terms.prototype.remove = function(reg) {
   });
   return new Terms(terms, this.context);
 };
+
+Terms = require('./split')(Terms);
+
 module.exports = Terms;

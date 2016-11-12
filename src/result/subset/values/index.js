@@ -4,8 +4,11 @@ const Result = require('../../index');
 class Values extends Result {
   constructor(list) {
     super(list);
-    this.list = this.match('#Value+').list;
+    // this.list = this.match('#Value+').list;
     return this;
+  }
+  find() {
+    return this.match('#Value+')
   }
   parse() {
       return this.terms.map((t) => {
@@ -20,7 +23,7 @@ class Values extends Result {
     }
     /** five -> '5' */
   toNumber() {
-      this.terms.forEach((t) => {
+      this.find().terms.forEach((t) => {
         let num = t.value.number();
         if (num) {
           t.text = '' + num;
@@ -28,6 +31,7 @@ class Values extends Result {
           t.tagAs('NumericValue', 'toNumber()');
         }
       });
+      this.all().check()
       return this.all();
     }
     /**5900 -> 5,900 */

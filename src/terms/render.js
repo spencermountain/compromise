@@ -3,14 +3,19 @@
 const miscMethods = (Terms) => {
 
   const methods = {
-    plaintext: function() {
+    plaintext: function () {
       return this.terms.reduce((str, t) => {
         str += t.plaintext();
         return str;
       }, '');
     },
-    normal: function() {
+    normal: function () {
       return this.terms.filter((t) => t.text).map((t) => t.normal).join(' ');
+    },
+    check: function () {
+      this.terms.forEach((t) => {
+        t.render.check();
+      });
     }
   }
 

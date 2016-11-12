@@ -30,6 +30,7 @@ Result = require('./methods/match/match')(Result);
 Result = require('./methods/match/remove')(Result);
 Result = require('./methods/match/replace')(Result);
 Result = require('./methods/match/split')(Result);
+Result = require('./methods/match/insert')(Result);
 Result = require('./methods/build/render')(Result);
 Result.prototype.topk = require('./methods/build/topk');
 Result.prototype.ngram = require('./methods/build/ngram');
@@ -50,7 +51,7 @@ const subset = {
   }
   //term subsets
 Object.keys(subset).forEach((k) => {
-  Result.prototype[k] = function() {
+  Result.prototype[k] = function () {
     return new subset[k](this.list);
   };
 })

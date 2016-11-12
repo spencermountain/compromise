@@ -1,7 +1,6 @@
 'use strict';
-//an initial, naiive split of arr based on spaces
 
-const split_terms = function(str) {
+const tokenize = function (str) {
   let result = [];
   //start with a naiive split
   const arr = str.split(/(\S+)/);
@@ -22,6 +21,4 @@ const split_terms = function(str) {
   }
   return result;
 };
-
-module.exports = split_terms;
-// console.log(split_terms('  john   is   nice '))
+module.exports = tokenize

@@ -5,25 +5,23 @@ const prettyPrint = (Result) => {
 
   const methods = {
 
-    check : function() {
+    check: function () {
       console.log('====');
       this.list.forEach((ts) => {
         console.log('   --');
-        ts.terms.forEach((t) => {
-          t.render.check();
-        });
+        ts.check()
       });
       return this;
     },
 
-    plaintext : function() {
+    plaintext: function () {
       return this.list.reduce((str, ts) => {
         str += ts.plaintext();
         return str;
       }, '');
     },
 
-    normal: function() {
+    normal: function () {
       return this.list.map((ts) => {
         let str = ts.normal();
         let last = ts.last();
@@ -37,7 +35,7 @@ const prettyPrint = (Result) => {
       }).join(' ');
     },
 
-    phrases: function() {
+    phrases: function () {
       this.list.forEach((ts) => {
         let str = '';
         ts.terms.forEach((t) => {
@@ -64,7 +62,7 @@ const prettyPrint = (Result) => {
       });
     },
 
-    asArray: function() {
+    asArray: function () {
       return this.list.map((ts) => {
         return {
           normal: ts.normal(),
@@ -74,7 +72,7 @@ const prettyPrint = (Result) => {
       return result;
     },
 
-    asHtml: function() {
+    asHtml: function () {
       let html = this.terms.reduce((str, t) => {
         str += t.render.html();
         return str;

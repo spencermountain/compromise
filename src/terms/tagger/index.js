@@ -27,7 +27,7 @@ const step = {
   acronym_step: require('./steps/16-acronym_step')
 }
 
-const tagger = function(ts) {
+const tagger = function (ts) {
   ts = step.punctuation_step(ts);
   ts = lumper.lexicon_lump(ts);
   ts = step.lexicon_step(ts);

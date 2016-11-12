@@ -1,6 +1,8 @@
 'use strict';
 const Terms = require('./paths').Terms
 const tokenize = require('./tokenize');
+const corrections = require('./tag/corrections');
+const tagPhrase = require('./tag/phrase');
 
 //a result is an array of termLists
 class Result {
@@ -30,6 +32,8 @@ class Result {
     r.list.forEach((ts) => {
       ts.parent = r;
     });
+    r = corrections(r)
+    r = tagPhrase(r)
     return r
   }
 }

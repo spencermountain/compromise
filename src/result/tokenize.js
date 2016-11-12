@@ -2,9 +2,9 @@
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
 'use strict';
-let data = require('../data/index');
-let abbreviations = Object.keys(data.abbreviations);
-let fns = require('../fns');
+const fns = require('./paths').fns
+const data = require('../data/index');
+const abbreviations = Object.keys(data.abbreviations);
 
 const naiive_split = function (text) {
   //first, split by newline
@@ -18,7 +18,8 @@ const naiive_split = function (text) {
 
 const sentence_parser = function (text) {
   const sentences = [];
-  //first do a greedy-split..
+  text = fns.ensureString(text)
+    //first do a greedy-split..
   let chunks = [];
   //ensure it 'smells like' a sentence
   if (!text || typeof text !== 'string' || !text.match(/\S/)) {

@@ -1,12 +1,11 @@
 'use strict';
-const log = require('../logger')
+const log = require('../paths').log
 const path = 'correction';
-const date_corrections = require('./corrections/date_corrections');
+const date_corrections = require('./date_corrections');
 
 //
-const corrections = function(r) {
+const corrections = function (r) {
   log.here(path);
-
   //the word 'so'
   //so funny
   r.match('so #Adjective').match('so').tag('Adverb');

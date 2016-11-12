@@ -1,5 +1,5 @@
 'use strict';
-const log = require('../../logger')
+const log = require('../paths').log
 const path = 'date_correction';
 
 //ambiguous 'may' and 'march'
@@ -8,7 +8,7 @@ const preps = '(in|by|before|for|during|on|until|after)';
 const thisNext = '(last|next|this|previous|current|upcoming|coming)';
 // const dayTime = '(night|evening|morning|afternoon|day|daytime)';
 
-const corrections = function(r) {
+const corrections = function (r) {
   log.here(path);
 
   r.match(`${months} (#Determiner|#Value|#Date)`).term(0).tag('Month', 'correction-may');

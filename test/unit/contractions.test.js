@@ -137,7 +137,7 @@ test('==contractions==', function(T) {
       ['We\'ve only just begun', 'we have only just begun'],
       ['We\'ve   only just begun', 'we have   only just begun']
     ].forEach(function(a) {
-      var str = nlp(a[0]).contractions().expand().normal();
+      var str = nlp(a[0]).contractions().expand().plaintext();
       str_test(str, a[0], a[1], t);
     });
     t.end();

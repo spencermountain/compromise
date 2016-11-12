@@ -17,8 +17,10 @@ class Contractions extends Result {
     this.list.forEach((ts) => {
       ts.terms.forEach((t) => {
         if (t.silent_term) {
+          if (!t.text) {
+            t.whitespace.before = ' '
+          }
           t.text = t.silent_term;
-          t.whitespace.before = ' ';
           t.unTag('Contraction', 'expanded');
         }
       });

@@ -15,6 +15,7 @@ const nlp = require('./src/index');
 // let txt = corpus.parsed.weezer().sweatersong;
 
 // var m = nlp('the cat is nice').replace('cat', 'stinky dog');
-var m = nlp('he isn\'t nice').contractions().expand()
+var m = nlp('We\'ve   only').contractions().expand()
   // r = r.all();
 m.check();
+console.log('|' + m.plaintext())

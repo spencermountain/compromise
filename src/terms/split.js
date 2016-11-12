@@ -1,39 +1,38 @@
 'use strict';
-const matchTerms = require('./match');
 
-//
-const breakHere = (ts, term, isAfter) => {
+//break apart a termlist logic, for reuse
+const breakIntoThree = (ts, ms) => {
+  let findFirst = ms.terms[0]
+  let len = ms.terms.length
+  let result = {
+    before: [],
+    match: [],
+    after: [],
+  }
   for (let i = 0; i < ts.terms.length; i++) {
-    let t = ts.terms[i];
-    if (t === term) {
-      let len = ts.terms.length;
-      //split after this term
-      let before = ts.terms.slice(i, len);
-      let after = ts.terms.slice(i, len);
-      if (before.length === 0) {
-        return [after];
-      }
-      return [before, after];
+    //match the term ref
+    if (ts.terms[i] === findFirst) {
+      console.log(ts.terms[i].normal)
+      result.before = ts.terms.slice(0, i)
+      result.match = ts.terms.slice(i, i + len)
+      result.after = ts.terms.slice(i + len, ts.terms.length)
+      return result
     }
   }
-  return [ts, terns];
-};
-
+  return result
+}
 
 const splitMethods = (Terms) => {
 
   const methods = {
 
     splitAfter: function(reg, verbose) {
-      let all = [];
-      let ms = matchTerms(this, reg, verbose); //returns an array of matches
-      ms.forEach((match) => {
-        let endTerm = match[match.length - 1];
-        let arr = splitHere(this, endTerm, true);
-        // console.log(arr);
-        arr.forEach((a) => {
-          all.push(a);
-        });
+      let arr = this.match(reg, verbose); //returns an array of ts
+      let all = []
+      arr.forEach((ms) => {
+        let result = breakIntoThree(this, ms)
+        all.push(result.before.concat(result.match))
+        all.push(result.after)
       });
       return all;
     },
@@ -48,3 +47,4 @@ const splitMethods = (Terms) => {
 };
 
 module.exports = splitMethods;
+exports = splitMethods;

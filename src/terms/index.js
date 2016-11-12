@@ -1,5 +1,4 @@
 'use strict';
-const matchTerms = require('./match');
 const tagger = require('./tagger');
 
 class Terms {
@@ -19,13 +18,8 @@ class Terms {
     return this
   }
 }
-
-Terms.prototype.match = function(reg, verbose) {
-  return matchTerms(this, reg, verbose); //returns an array of matches
-};
-
-
 Terms = require('./split')(Terms);
+Terms = require('./match')(Terms);
 Terms = require('./render')(Terms);
 Terms = require('./misc')(Terms);
 Terms = require('./transform')(Terms);

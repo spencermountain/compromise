@@ -17,7 +17,7 @@ test('==contractions==', function(T) {
       [`everyone's victories`, `everyone's victories`],
       [`the tornado's power`, `the tornado's power`],
     ].forEach(function(a) {
-      var str = nlp(a[0]).contractions().expand().plaintext();
+      var str = nlp(a[0]).contractions().expand().normal();
       str_test(str, a[0], a[1], t);
     });
     t.end();
@@ -132,12 +132,12 @@ test('==contractions==', function(T) {
     t.end();
   });
 
-  T.test('supports whitespace:', function(t) {
+  T.test('contraction-supports-whitespace:', function(t) {
     [
-      ['We\'ve only just begun', 'We have only just begun'],
-      ['We\'ve   only just begun', 'We have   only just begun']
+      ['We\'ve only just begun', 'we have only just begun'],
+      ['We\'ve   only just begun', 'we have   only just begun']
     ].forEach(function(a) {
-      var str = nlp(a[0]).contractions().expand().plaintext();
+      var str = nlp(a[0]).contractions().expand().normal();
       str_test(str, a[0], a[1], t);
     });
     t.end();

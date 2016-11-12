@@ -14,7 +14,8 @@
     "demo": "node ./scripts/demo.js",
     "watch": "node ./scripts/watch.js",
     "prepublish": "node ./scripts/prepublish.js",
-    "filesize": "node ./scripts/filesize.js"
+    "filesize": "node ./scripts/filesize.js",
+    "coverage": "node ./scripts/coverage.js"
   },
   "files": [
     "builds/",
@@ -34,6 +35,7 @@
     "http-server": "0.9.0",
     "jsdoc-parse": "^1.2.7",
     "nlp-corpus": "latest",
+    "nyc": "^8.4.0",
     "shelljs": "^0.7.2",
     "tap-spec": "4.1.1",
     "tape": "4.6.0",

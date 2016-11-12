@@ -1,8 +1,6 @@
 'use strict';
-const paths = require('../paths');
-const log = paths.log;
+const paths = require('./paths');
 const fns = paths.fns;
-const path = 'match';
 
 //compare 1 term to one reg
 const perfectMatch = (term, reg) => {
@@ -15,7 +13,7 @@ const perfectMatch = (term, reg) => {
   }
   //pos-match
   if (reg.tag) {
-    for(let i = 0; i < reg.tag.length; i++) {
+    for (let i = 0; i < reg.tag.length; i++) {
       let tag = reg.tag[i];
       if (term.tag[tag]) {
         return true;
@@ -25,7 +23,7 @@ const perfectMatch = (term, reg) => {
   }
   //one-of term-match
   if (reg.oneOf) {
-    for(let i = 0; i < reg.oneOf.length; i++) {
+    for (let i = 0; i < reg.oneOf.length; i++) {
       let str = reg.oneOf[i];
       //try a tag match
       if (str.match(/^#/)) {
@@ -34,7 +32,7 @@ const perfectMatch = (term, reg) => {
         if (term.tag[tag]) {
           return true;
         }
-      //try a string-match
+        //try a string-match
       } else if (term.normal === str || term.text === str) {
         return true;
       }

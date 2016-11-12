@@ -1,6 +1,6 @@
 'use strict';
 
-const match = (Result) => {
+const remove = (Result) => {
 
   const methods = {
 
@@ -34,4 +34,4 @@ const match = (Result) => {
   });
   return Result;
 };
-module.exports = match;
+module.exports = remove;

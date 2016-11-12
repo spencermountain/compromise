@@ -1,6 +1,6 @@
 'use strict';
 // parse a search lookup term find the regex-like syntax in this term
-const fns = require('../paths').fns;
+const fns = require('./paths').fns;
 
 //turn 'regex-like' search string into parsed json
 const parse_term = function(term, i) {

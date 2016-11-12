@@ -16,6 +16,7 @@ const nlp = require('./src/index');
 
 // var m = nlp('the cat is nice').replace('cat', 'stinky dog');
 var str = 'john, jim, and paul';
-var m = nlp(str).splitAfter('#Comma')
+// var m = nlp(str).splitAfter('#Comma')
+var m = nlp(str).match('#Comma')
   // .people().find();
 m.check()

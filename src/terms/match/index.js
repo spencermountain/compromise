@@ -1,7 +1,7 @@
 'use strict';
 //
 const syntax = require('./syntax');
-const log = require('../paths').log;
+const log = require('./paths').log;
 const startHere = require('./startHere');
 const path = 'match';
 
@@ -20,7 +20,7 @@ const match = function(ts, str, verbose) {
     // console.log(regs);
     log.tell(regs);
   }
-  for(let t = 0; t < ts.terms.length; t++) {
+  for (let t = 0; t < ts.terms.length; t++) {
     //don't loop through if '^'
     if (regs[0] && regs[0].starting && t > 0) {
       break;

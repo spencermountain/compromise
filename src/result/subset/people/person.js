@@ -1,5 +1,5 @@
 'use strict';
-const Terms = require('../paths').Terms;
+const Terms = require('../../paths').Terms;
 
 class Person extends Terms {
   constructor(terms) {

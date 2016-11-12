@@ -1,5 +1,5 @@
 'use strict';
-const Result = require('../index');
+const Result = require('../../index');
 
 class Adverbs extends Result {
   constructor(list) {

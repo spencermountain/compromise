@@ -16,8 +16,8 @@ test('==contractions==', function(T) {
       [`somebody's walking`, `somebody is walking`],
       [`everyone's victories`, `everyone's victories`],
       [`the tornado's power`, `the tornado's power`],
-    ].forEach(function (a) {
-      var str = nlp(a[0]).expand().plaintext();
+    ].forEach(function(a) {
+      var str = nlp(a[0]).contractions().expand().plaintext();
       str_test(str, a[0], a[1], t);
     });
     t.end();
@@ -31,7 +31,7 @@ test('==contractions==', function(T) {
       [`john's cousin`, `Person`],
       [`ankara's citizens`, `Place`],
       [`January's weather`, `Date`],
-    ].forEach(function (a) {
+    ].forEach(function(a) {
       var term = nlp(a[0]).list[0].terms[0];
       var msg = term.text + ' has tag ' + a[1];
       t.equal(term.tag[a[1]], true, msg);
@@ -88,8 +88,8 @@ test('==contractions==', function(T) {
 
       [`spencer's going`, ['spencer', 'is']],
       [`he's going`, ['he', 'is']],
-    ].forEach(function (a) {
-      var s = nlp(a[0]).expand().list[0];
+    ].forEach(function(a) {
+      var s = nlp(a[0]).contractions().expand().list[0];
       var got = [s.terms[0].normal];
       if (a[1][1] && s.terms[1]) {
         got.push(s.terms[1].normal);
@@ -111,7 +111,7 @@ test('==contractions==', function(T) {
       [`he would win`, `he'd`],
       [`they would win`, `they'd`],
       [`they have begun`, `they've`],
-    ].forEach(function (a) {
+    ].forEach(function(a) {
       var term = nlp(a[0]).contractions().contract().list[0].terms[0];
       str_test(term.normal, a[0], a[1], t);
     });
@@ -125,7 +125,7 @@ test('==contractions==', function(T) {
       `it is a hero`,
       `he would win`,
       `they would win`,
-    ].forEach(function (a) {
+    ].forEach(function(a) {
       var str = nlp(a[0]).normal();
       str_test(str, a[0], a[0], t);
     });
@@ -136,8 +136,8 @@ test('==contractions==', function(T) {
     [
       ['We\'ve only just begun', 'We have only just begun'],
       ['We\'ve   only just begun', 'We have   only just begun']
-    ].forEach(function (a) {
-      var str = nlp(a[0]).expand().plaintext();
+    ].forEach(function(a) {
+      var str = nlp(a[0]).contractions().expand().plaintext();
       str_test(str, a[0], a[1], t);
     });
     t.end();

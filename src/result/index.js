@@ -1,21 +1,20 @@
 'use strict';
 
+
+
 //a result is an array of termLists
 class Result {
   constructor(arr, parent) {
-    this.list = arr || [];
-    this.parent = parent;
-  }
-  //getter/setters
-  /** did it find anything? */
+      this.list = arr || [];
+      this.parent = parent;
+    }
+    //getter/setters
+    /** did it find anything? */
   get found() {
-    return this.list.length > 0;
-  }
-  /** how many results are there?*/
+      return this.list.length > 0;
+    }
+    /** how many results are there?*/
   get length() {
-    return this.list.length;
-  }
-  get count() {
     return this.list.length;
   }
   get terms() {
@@ -23,69 +22,35 @@ class Result {
       return arr.concat(ts.terms);
     }, []);
   }
-  all() {
-    return this.parent || this;
-  }
 }
 
-const selectFns = require('./selection');
-Result = selectFns(Result);
-
-const inspectFns = require('./inspect');
-Result = inspectFns(Result);
-
-const renderFns = require('./render');
-Result = renderFns(Result);
-
-/** different presentation logic for this result*/
-Result.prototype.render = require('./render');
-/** fixup transforms**/
-Result.prototype.normalize = require('./normalize');
-/** **/
-Result.prototype.ngram = require('./inspect/ngram');
-/** **/
-Result.prototype.topk = require('./inspect/topk');
+Result = require('./methods/misc')(Result);
+Result = require('./methods/tag')(Result);
+Result = require('./methods/match/match')(Result);
+Result = require('./methods/match/remove')(Result);
+Result = require('./methods/match/replace')(Result);
+Result = require('./methods/match/split')(Result);
+Result = require('./methods/build/render')(Result);
+Result.prototype.topk = require('./methods/build/topk');
+Result.prototype.ngram = require('./methods/build/ngram');
+Result.prototype.normalize = require('./methods/normalize');
 
 module.exports = Result;
-
-const Contractions = require('./contractions');
-Result.prototype.contractions = function() {
-  return new Contractions(this.list);
-};
-//add tag-namespaced methods
-const Values = require('./values');
-Result.prototype.values = function() {
-  return new Values(this.list);
-};
-const Adjectives = require('./adjectives');
-Result.prototype.adjectives = function() {
-  return new Adjectives(this.list);
-};
-const Adverbs = require('./adverbs');
-Result.prototype.adverbs = function() {
-  return new Adverbs(this.list);
-};
-const Nouns = require('./nouns');
-Result.prototype.nouns = function() {
-  return new Nouns(this.list);
-};
-const Verbs = require('./verbs');
-Result.prototype.verbs = function() {
-  return new Verbs(this.list);
-};
-const People = require('./people');
-Result.prototype.people = function() {
-  return new People(this.list);
-};
-const Sentences = require('./sentences');
-Result.prototype.sentences = function() {
-  return new Sentences(this.list);
-};
-const Statements = require('./statements');
-Result.prototype.statements = function() {
-  return new Statements(this.list);
-};
-const Questions = require('./questions');
-Result.prototype.questions = function() {
-  return new Questions(this.list);
-};
+const subset = {
+    adjectives: require('./subset/adjectives'),
+    adverbs: require('./subset/adverbs'),
+    contractions: require('./subset/contractions'),
+    nouns: require('./subset/nouns'),
+    people: require('./subset/people'),
+    values: require('./subset/values'),
+    verbs: require('./subset/verbs'),
+    sentences: require('./subset/sentences'),
+    statements: require('./subset/sentences/statements'),
+    questions: require('./subset/sentences/questions'),
+  }
+  //term subsets
+Object.keys(subset).forEach((k) => {
+  Result.prototype[k] = function() {
+    return new subset[k](this.list);
+  };
+})

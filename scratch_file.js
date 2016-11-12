@@ -6,7 +6,7 @@ const nlp = require('./src/index');
 // const corpus = require('nlp-corpus');
 // const nlp = require('./builds/nlp_compromise');
 
-require('./src/logger').enable();
+// require('./src/logger').enable();
 // const context = {
 //   lexicon: {
 //     'donkey kong': 'Person'
@@ -14,30 +14,7 @@ require('./src/logger').enable();
 // };
 // let txt = corpus.parsed.weezer().sweatersong;
 
-var str = 'second week';
-var m = nlp(str);
-// m.values().toNiceNumber();
-// console.log(m.plaintext());
-
-// let r = nlp('maybe doug is right');
-// r = r.match('doug is right');
-// r = r.match('is right');
-// r = r.match('#Verb').replace('5');
-// r = r.term(0)
-// r = r.all();
+// var m = nlp('the cat is nice').replace('cat', 'stinky dog');
+var m = nlp('he isn\'t nice').contractions().expand()
+  // r = r.all();
 m.check();
-// console.log(r.asArray());
-// console.log(r.asArray());
-// console.log(r.people().parse());
-// r.check();
-
-
-
-// let r = nlp('1 April to 31 August');
-// r.check();
-// let t = new Term('april');
-// t.tagAs('Infinitive');
-// console.log(t.tag);
-//
-// t.tagAs('Month');
-// console.log(t.tag);

@@ -5,6 +5,7 @@ const fns = paths.fns;
 const Term = require('../term');
 const matchTerms = require('./match');
 const splitTerms = require('./splitTerms');
+const tagger = require('./tagger');
 
 class Terms {
   constructor(arr, context) {
@@ -13,7 +14,7 @@ class Terms {
     this.get = (n) => {
       return this.terms[n];
     };
-  // this.terms = this.arr;
+    // this.terms = this.arr;
   }
   term(n) {
     return this.terms[n];
@@ -50,6 +51,10 @@ class Terms {
   }
   endPunctuation() {
     return this.last().endPunctuation();
+  }
+  tagger() {
+    tagger(this)
+    return this
   }
 
 }
@@ -94,7 +99,7 @@ Terms.prototype.splitOn = function(reg, verbose) {
   let all = [];
   let ms = matchTerms(this, reg, verbose); //returns an array of matches
   ms.forEach((mts) => {
-    for(let i = 0; i < this.terms.length; i++) {
+    for (let i = 0; i < this.terms.length; i++) {
       if (this.terms[i] === mts[0]) {
         //first piece
         let before = this.terms.slice(0, i);
@@ -129,7 +134,7 @@ Terms.prototype.remove = function(reg) {
   let ms = matchTerms(this, reg);
   ms = fns.flatten(ms);
   let terms = this.terms.filter((t) => {
-    for(let i = 0; i < ms.length; i++) {
+    for (let i = 0; i < ms.length; i++) {
       if (t === ms[i]) {
         return false;
       }

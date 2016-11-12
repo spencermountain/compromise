@@ -1,5 +1,5 @@
 'use strict';
-const firstnames = require('../paths').data.firstnames;
+const firstnames = require('../../paths').data.firstnames;
 // make a statistical assumption about the gender of the person based on their given name
 // used for pronoun resolution only.
 // not intended for classification, or discrimination of people.

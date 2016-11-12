@@ -1,12 +1,12 @@
 'use strict';
-const log = require('../tagger/paths').log;
+const log = require('../../logger')
 const path = 'date_correction';
 
 //ambiguous 'may' and 'march'
 const months = '(may|march|jan|april)';
 const preps = '(in|by|before|for|during|on|until|after)';
 const thisNext = '(last|next|this|previous|current|upcoming|coming)';
-const dayTime = '(night|evening|morning|afternoon|day|daytime)';
+// const dayTime = '(night|evening|morning|afternoon|day|daytime)';
 
 const corrections = function(r) {
   log.here(path);

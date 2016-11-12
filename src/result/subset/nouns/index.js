@@ -1,5 +1,5 @@
 'use strict';
-const Result = require('../index');
+const Result = require('../../index');
 const Noun = require('./noun');
 
 class Nouns extends Result {

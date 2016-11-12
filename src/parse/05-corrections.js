@@ -1,5 +1,5 @@
 'use strict';
-const log = require('./tagger/paths').log;
+const log = require('../logger')
 const path = 'correction';
 const date_corrections = require('./corrections/date_corrections');
 

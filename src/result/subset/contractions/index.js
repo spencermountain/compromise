@@ -1,5 +1,5 @@
 'use strict';
-const Result = require('../index');
+const Result = require('../../index');
 const contract = require('./contract');
 
 class Contractions extends Result {

@@ -44,7 +44,7 @@ const sentence_parser = function(text) {
         splits[i + 1] = s + splits[i + 1];
         continue;
       }
-    //else, only whitespace, no terms, no sentence
+      //else, only whitespace, no terms, no sentence
     }
     chunks.push(s);
   }

@@ -18,7 +18,7 @@ const nlp = require('./src/index');
 // var str = '984767';
 // var m = nlp(str).splitAfter('#Comma')
 // var m = nlp(str).values().toTextValue()
-console.log(nlp(5).values().toTextValue())
+console.log(nlp(asdf5).values().toTextValue())
   //.append('really')
   // var m = nlp(str).match('#Comma')
   // m.check()

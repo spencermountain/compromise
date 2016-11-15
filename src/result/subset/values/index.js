@@ -25,25 +25,25 @@ class Values extends Result {
   toNumber() {
       this.find().terms.forEach((t) => {
         let num = t.value.number();
-        if (num) {
+        if (num || num === 0) {
           t.text = '' + num;
           t.unTag('TextValue', 'toNumber()');
           t.tagAs('NumericValue', 'toNumber()');
         }
       });
-      this.all().check()
+      // this.all().check()
       return this.all();
     }
     /**5900 -> 5,900 */
   toNiceNumber() {
-      this.terms.forEach((t) => {
+      this.find().terms.forEach((t) => {
         t.text = '' + t.value.nicenumber();
       });
       return this.all();
     }
     /**5 -> 'five' */
   toTextValue() {
-      this.terms.forEach((t) => {
+      this.find().terms.forEach((t) => {
         t.text = t.value.textValue();
         t.unTag('NumericValue', 'toTextValue()');
         t.tagAs('TextValue', 'toTextValue()');
@@ -52,7 +52,7 @@ class Values extends Result {
     }
     /**5th -> 5 */
   toCardinal() {
-      this.terms.forEach((t) => {
+      this.find().terms.forEach((t) => {
         t.text = '' + t.value.cardinal();
         t.unTag('Ordinal', 'toCardinal()');
         t.tagAs('Cardinal', 'toCardinal()');
@@ -61,7 +61,7 @@ class Values extends Result {
     }
     /**5 -> 5th */
   toOrdinal() {
-    this.terms.forEach((t) => {
+    this.find().terms.forEach((t) => {
       t.text = t.value.ordinal();
       t.unTag('Cardinal', 'toOrdinal()');
       t.tagAs('Ordinal', 'toOrdinal()');

@@ -18,9 +18,9 @@ class Terms {
     tagger(this)
     return this
   }
-  static fromString(str) {
+  static fromString(str, context) {
     let termArr = tokenize(str)
-    let ts = new Terms(termArr)
+    let ts = new Terms(termArr, context)
       //give each term a reference to this ts
     ts.terms.forEach((t) => {
       t.parent = ts;

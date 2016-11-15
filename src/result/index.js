@@ -6,9 +6,10 @@ const tagPhrase = require('./tag/phrase');
 
 //a result is an array of termLists
 class Result {
-  constructor(arr, parent) {
+  constructor(arr, context) {
+      context = context || {}
       this.list = arr || [];
-      this.parent = parent;
+      this.parent = context.parent;
     }
     //getter/setters
     /** did it find anything? */
@@ -24,10 +25,10 @@ class Result {
       return arr.concat(ts.terms);
     }, []);
   }
-  static fromString(str) {
+  static fromString(str, context) {
     let sentences = tokenize(str)
-    let list = sentences.map((s) => Terms.fromString(s))
-    let r = new Result(list)
+    let list = sentences.map((s) => Terms.fromString(s, context))
+    let r = new Result(list, context)
       //give each ts a ref to the result
     r.list.forEach((ts) => {
       ts.parent = r;

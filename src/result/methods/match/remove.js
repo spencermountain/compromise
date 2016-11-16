@@ -5,7 +5,7 @@ const remove = (Result) => {
   const methods = {
 
     /** like .match(), but negative (filter-out the matches)*/
-    remove: function(reg) {
+    remove: function (reg) {
       //if there's no reg, remove these selected terms
       if (!reg) {
         this.list.forEach((ts) => {

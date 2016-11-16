@@ -1,5 +1,7 @@
 'use strict';
 const Term = require('../../term');
+const fns = require('../paths').fns
+
 
 const transforms = (Terms) => {
 
@@ -16,6 +18,7 @@ const transforms = (Terms) => {
       });
       return new Terms(terms, this.context);
     },
+
     remove: function (reg) {
       if (!reg) {
         this.terms.forEach((t) => {
@@ -23,15 +26,23 @@ const transforms = (Terms) => {
         });
         return this;
       }
-      let ms = this.match(reg);
+      let foundTerms = []
+        //this is pretty shit code..
+      let mtArr = this.match(reg);
+      mtArr.forEach((ms) => {
+        ms.terms.forEach((t) => {
+          foundTerms.push(t)
+        })
+      })
       let terms = this.terms.filter((t) => {
-        for (let i = 0; i < ms.length; i++) {
-          if (t === ms[i]) {
+        for (let i = 0; i < foundTerms.length; i++) {
+          if (t === foundTerms[i]) {
             return false;
           }
         }
         return true;
       });
+      console.log(terms.map(t => t.normal))
       return new Terms(terms, this.context);
     }
 
@@ -44,4 +55,4 @@ const transforms = (Terms) => {
   return Terms;
 };
 
-module.exports = transforms;
+module.exports = transforms;;

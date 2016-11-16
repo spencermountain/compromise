@@ -35,5 +35,4 @@ Terms = require('./methods/insert')(Terms);
 Terms = require('./methods/render')(Terms);
 Terms = require('./methods/misc')(Terms);
 Terms = require('./methods/transform')(Terms);
-
 module.exports = Terms;

@@ -13,14 +13,12 @@ const context = {
     march: 'Person'
   }
 };
-// let txt = corpus.parsed.weezer().sweatersong;
+// var m = nlp('aasdf2').unTag('Noun').unTag('NounPhrase');
+// m.tag('FemaleName');
+// m.check()
+// m.unTag('Noun');
+// m.check()
 
-// var m = nlp('the cat is nice').replace('cat', 'stinky dog');
-// var str = '984767';
-// var m = nlp(str).splitAfter('#Comma')
-// var m = nlp(str).values().toTextValue()
-var m = nlp('2nd of march', context).values().toTextValue()
-  //.append('really')
-  // var m = nlp(str).match('#Comma')
-m.check()
-  // console.log(m)
+let m = nlp('if it is raining, the driveway is wet')
+  // m = m.remove('#ConditionPhrase+')
+m.remove('#ConditionPhrase+').check()

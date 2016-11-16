@@ -42,7 +42,6 @@ const transforms = (Terms) => {
         }
         return true;
       });
-      console.log(terms.map(t => t.normal))
       return new Terms(terms, this.context);
     }
 

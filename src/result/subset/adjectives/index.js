@@ -5,11 +5,13 @@ class Adjectives extends Result {
   constructor(list) {
     super(list);
     // this.check();
-    this.match('#Adjective+');
     return this;
   }
+  find() {
+    return this.match('#Adjective+');
+  }
   parse() {
-    return this.terms.map((t) => {
+    return this.find().terms.map((t) => {
       return {
         comparative: t.adjective.comparative(),
         superlative: t.adjective.superlative(),

@@ -4,14 +4,13 @@ const Result = require('../../index');
 class Values extends Result {
   constructor(list) {
     super(list);
-    // this.list = this.match('#Value+').list;
     return this;
   }
   find() {
     return this.match('#Value+')
   }
   parse() {
-      return this.terms.map((t) => {
+      return this.find().terms.map((t) => {
         return {
           number: t.value.number(),
           nicenumber: t.value.nicenumber(),

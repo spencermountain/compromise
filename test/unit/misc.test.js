@@ -5,11 +5,9 @@ var garbage = [
   '',
   '  ',
   null,
-  '\n\n',
-  [],
-  {},
+  '\n\n', [], {},
 ];
-test('garbage:', function(t) {
+test('garbage:', function (t) {
   garbage.forEach(function (g, i) {
     var num = nlp(g).list.length;
     var msg = (typeof g) + ' text input #' + i;
@@ -18,14 +16,14 @@ test('garbage:', function(t) {
   t.end();
 });
 
-test('misc:', function(t) {
+test('misc:', function (t) {
   var str = '2 million five hundred thousand and fifty nine is bigger than 2882';
   var m = nlp(str).values().toNumber();
-  t.equal(m.normal(), '2001559 is bigger than 2882', str);
+  t.equal(m.normal(), '2500059 is bigger than 2882', str);
 
   str = '2 million five hundred thousand and fifty nine is bigger than 2882';
   m = nlp(str).values().toNiceNumber();
-  t.equal(m.plaintext(), '2,001,559 is bigger than 2,882', str);
+  t.equal(m.plaintext(), '2,500,059 is bigger than 2,882', str);
 
   str = 'doug is 5 years old';
   m = nlp(str).values().toTextValue();

@@ -13,12 +13,9 @@ const context = {
     march: 'Person'
   }
 };
-// var m = nlp('aasdf2').unTag('Noun').unTag('NounPhrase');
-// m.tag('FemaleName');
-// m.check()
-// m.unTag('Noun');
-// m.check()
 
-let m = nlp('if it is raining, the driveway is wet')
-  // m = m.remove('#ConditionPhrase+')
-m.remove('#ConditionPhrase+').check()
+var m = nlp('aasdf2').unTag('Noun').unTag('NounPhrase');
+m.tag('FemaleName');
+m.check()
+m.unTag('Noun');
+m.check()

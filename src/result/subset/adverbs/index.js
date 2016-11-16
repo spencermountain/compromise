@@ -4,11 +4,13 @@ const Result = require('../../index');
 class Adverbs extends Result {
   constructor(list) {
     super(list);
-    this.match('#Adverb+');
     return this;
   }
+  find() {
+    return this.match('#Adverb+');
+  }
   parse() {
-    return this.terms.map((t) => {
+    return this.find().terms.map((t) => {
       return {
         adjectiveForm: t.adverb.adjectiveForm(),
       };

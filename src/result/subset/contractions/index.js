@@ -5,11 +5,13 @@ const contract = require('./contract');
 class Contractions extends Result {
   constructor(list) {
     super(list);
-    this.match('#Contraction+');
     return this;
   }
+  find() {
+    return this.match('#Contraction+');
+  }
   parse() {
-    return this.terms.map((t) => {
+    return this.find().terms.map((t) => {
       return {};
     });
   }

@@ -2772,11 +2772,12 @@ var tagPhrase = _dereq_('./tag/phrase');
 //a result is an array of termLists
 
 var Result = function () {
-  function Result(arr, parent) {
+  function Result(arr, context) {
     _classCallCheck(this, Result);
 
+    context = context || {};
     this.list = arr || [];
-    this.parent = parent;
+    this.parent = context.parent;
   }
   //getter/setters
   /** did it find anything? */
@@ -2803,12 +2804,12 @@ var Result = function () {
     }
   }], [{
     key: 'fromString',
-    value: function fromString(str) {
+    value: function fromString(str, context) {
       var sentences = tokenize(str);
       var list = sentences.map(function (s) {
-        return Terms.fromString(s);
+        return Terms.fromString(s, context);
       });
-      var r = new Result(list);
+      var r = new Result(list, context);
       //give each ts a ref to the result
       r.list.forEach(function (ts) {
         ts.parent = r;
@@ -3462,14 +3463,18 @@ var Adjectives = function (_Result) {
     // this.check();
     var _this = _possibleConstructorReturn(this, (Adjectives.__proto__ || Object.getPrototypeOf(Adjectives)).call(this, list));
 
-    _this.match('#Adjective+');
     return _ret = _this, _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Adjectives, [{
+    key: 'find',
+    value: function find() {
+      return this.match('#Adjective+');
+    }
+  }, {
     key: 'parse',
     value: function parse() {
-      return this.terms.map(function (t) {
+      return this.find().terms.map(function (t) {
         return {
           comparative: t.adjective.comparative(),
           superlative: t.adjective.superlative(),
@@ -3523,14 +3528,18 @@ var Adverbs = function (_Result) {
 
     var _this = _possibleConstructorReturn(this, (Adverbs.__proto__ || Object.getPrototypeOf(Adverbs)).call(this, list));
 
-    _this.match('#Adverb+');
     return _ret = _this, _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Adverbs, [{
+    key: 'find',
+    value: function find() {
+      return this.match('#Adverb+');
+    }
+  }, {
     key: 'parse',
     value: function parse() {
-      return this.terms.map(function (t) {
+      return this.find().terms.map(function (t) {
         return {
           adjectiveForm: t.adverb.adjectiveForm()
         };
@@ -3624,14 +3633,18 @@ var Contractions = function (_Result) {
 
     var _this = _possibleConstructorReturn(this, (Contractions.__proto__ || Object.getPrototypeOf(Contractions)).call(this, list));
 
-    _this.match('#Contraction+');
     return _ret = _this, _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Contractions, [{
+    key: 'find',
+    value: function find() {
+      return this.match('#Contraction+');
+    }
+  }, {
     key: 'parse',
     value: function parse() {
-      return this.terms.map(function (t) {
+      return this.find().terms.map(function (t) {
         return {};
       });
     }
@@ -3688,14 +3701,18 @@ var Nouns = function (_Result) {
     // this.check();
     var _this = _possibleConstructorReturn(this, (Nouns.__proto__ || Object.getPrototypeOf(Nouns)).call(this, list));
 
-    _this.match('#Noun+');
     return _ret = _this, _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Nouns, [{
+    key: 'find',
+    value: function find() {
+      return this.match('#Noun+');
+    }
+  }, {
     key: 'parse',
     value: function parse() {
-      return this.terms.map(function (t) {
+      return this.find().terms.map(function (t) {
         return {
           article: t.noun.makeArticle(),
           singular: t.noun.singular(),
@@ -4263,7 +4280,6 @@ var Values = function (_Result) {
 
     _classCallCheck(this, Values);
 
-    // this.list = this.match('#Value+').list;
     var _this = _possibleConstructorReturn(this, (Values.__proto__ || Object.getPrototypeOf(Values)).call(this, list));
 
     return _ret = _this, _possibleConstructorReturn(_this, _ret);
@@ -4277,7 +4293,7 @@ var Values = function (_Result) {
   }, {
     key: 'parse',
     value: function parse() {
-      return this.terms.map(function (t) {
+      return this.find().terms.map(function (t) {
         return {
           number: t.value.number(),
           nicenumber: t.value.nicenumber(),
@@ -4380,21 +4396,25 @@ var Verbs = function (_Result) {
     // this.check();
     var _this = _possibleConstructorReturn(this, (Verbs.__proto__ || Object.getPrototypeOf(Verbs)).call(this, list));
 
-    _this.match('#Verb+');
     return _ret = _this, _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Verbs, [{
+    key: 'find',
+    value: function find() {
+      return this.match('#Verb+');
+    }
+  }, {
     key: 'parse',
     value: function parse() {
-      return this.terms.map(function (t) {
+      return this.find().terms.map(function (t) {
         return t.verb.conjugate();
       });
     }
   }, {
     key: 'toPast',
     value: function toPast() {
-      var t = this.terms[0];
+      var t = this.find().terms[0];
       this.contractions().expand();
       if (t) {
         t.text = t.verb.pastTense();
@@ -4404,7 +4424,7 @@ var Verbs = function (_Result) {
   }, {
     key: 'toPresent',
     value: function toPresent() {
-      var t = this.terms[0];
+      var t = this.find().terms[0];
       this.contractions().expand();
       if (t) {
         t.text = t.verb.presentTense();
@@ -4414,7 +4434,7 @@ var Verbs = function (_Result) {
   }, {
     key: 'toFuture',
     value: function toFuture() {
-      var t = this.terms[0];
+      var t = this.find().terms[0];
       this.contractions().expand();
       if (t) {
         t.text = t.verb.futureTense();
@@ -6445,9 +6465,16 @@ var unTagAll = function unTagAll(term, tag, reason) {
   unTagOne(term, tag, reason);
   if (tagset[tag]) {
     //pull-out their children (dependants) too
+    //this should probably be recursive, instead of just 2-deep
     var killAlso = tagset[tag].children || [];
     for (var o = 0; o < killAlso.length; o++) {
+      //kill its child
       unTagOne(term, killAlso[o], reason);
+      //kill grandchildren too
+      var kill2 = tagset[killAlso[o]].children || [];
+      for (var i2 = 0; i2 < kill2.length; i2++) {
+        unTagOne(term, kill2[i2], reason);
+      }
     }
   }
   return;
@@ -7801,9 +7828,9 @@ var Terms = function () {
     }
   }], [{
     key: 'fromString',
-    value: function fromString(str) {
+    value: function fromString(str, context) {
       var termArr = tokenize(str);
-      var ts = new Terms(termArr);
+      var ts = new Terms(termArr, context);
       //give each term a reference to this ts
       ts.terms.forEach(function (t) {
         t.parent = ts;
@@ -7822,7 +7849,6 @@ Terms = _dereq_('./methods/insert')(Terms);
 Terms = _dereq_('./methods/render')(Terms);
 Terms = _dereq_('./methods/misc')(Terms);
 Terms = _dereq_('./methods/transform')(Terms);
-
 module.exports = Terms;
 
 },{"./match":146,"./methods/insert":151,"./methods/misc":152,"./methods/render":153,"./methods/split":154,"./methods/tokenize":155,"./methods/transform":156,"./tagger":164}],145:[function(_dereq_,module,exports){
@@ -8491,6 +8517,7 @@ module.exports = tokenize;
 'use strict';
 
 var Term = _dereq_('../../term');
+var fns = _dereq_('../paths').fns;
 
 var transforms = function transforms(Terms) {
 
@@ -8507,6 +8534,7 @@ var transforms = function transforms(Terms) {
       });
       return new Terms(terms, this.context);
     },
+
     remove: function remove(reg) {
       if (!reg) {
         this.terms.forEach(function (t) {
@@ -8514,10 +8542,17 @@ var transforms = function transforms(Terms) {
         });
         return this;
       }
-      var ms = this.match(reg);
+      var foundTerms = [];
+      //this is pretty shit code..
+      var mtArr = this.match(reg);
+      mtArr.forEach(function (ms) {
+        ms.terms.forEach(function (t) {
+          foundTerms.push(t);
+        });
+      });
       var terms = this.terms.filter(function (t) {
-        for (var i = 0; i < ms.length; i++) {
-          if (t === ms[i]) {
+        for (var i = 0; i < foundTerms.length; i++) {
+          if (t === foundTerms[i]) {
             return false;
           }
         }
@@ -8535,9 +8570,9 @@ var transforms = function transforms(Terms) {
   return Terms;
 };
 
-module.exports = transforms;
+module.exports = transforms;;
 
-},{"../../term":99}],157:[function(_dereq_,module,exports){
+},{"../../term":99,"../paths":157}],157:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {

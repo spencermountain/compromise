@@ -1,23 +1,24 @@
-
 var test = require('tape');
 var nlp = require('./lib/nlp');
 
-test('tag inference:', function(t) {
+test('tag inference:', function (t) {
   var m = nlp('aasdf2').unTag('Noun').unTag('NounPhrase');
   var term = m.list[0].terms[0];
   t.equal(Object.keys(term.tag).length, 0, 'aasdf2 has no tags');
   //give it a specific tag-
-  m.tag('Month');
+  m.tag('SportsTeam');
+  term = m.list[0].terms[0];
   t.equal(term.tag.Noun, true, 'aasdf2 now has Noun');
-  t.equal(term.tag.Date, true, 'aasdf2 now has Date(inferred)');
+  t.equal(term.tag.Organization, true, 'aasdf2 now has Organization(inferred)');
   //give it a redundant tag-
-  m.tag('Date');
+  m.tag('Organization');
+  term = m.list[0].terms[0];
   t.equal(term.tag.Noun, true, 'aasdf2 still has Noun');
-  t.equal(term.tag.Date, true, 'aasdf2 still has Date');
+  t.equal(term.tag.Organization, true, 'aasdf2 still has Organization');
   t.end();
 });
 
-test('untag inference:', function(t) {
+test('untag inference:', function (t) {
   var m = nlp('aasdf');
   m.tag('FemaleName');
   var term = m.list[0].terms[0];
@@ -34,7 +35,7 @@ test('untag inference:', function(t) {
 
 
 
-test('tag idempodence:', function(t) {
+test('tag idempodence:', function (t) {
   var m = nlp('walk').tag('Verb');
   var term = m.list[0].terms[0];
   t.equal(term.tag.Verb, true, 'walk has Verb');
@@ -50,7 +51,7 @@ test('tag idempodence:', function(t) {
 });
 
 
-test('tags are self-removing', function(t) {
+test('tags are self-removing', function (t) {
   var terms = [
     'Person',
     'Place',

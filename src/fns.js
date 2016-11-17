@@ -1,7 +1,7 @@
 'use strict';
 // typeof obj == "function" also works
 // but not in older browsers. :-/
-exports.isFunction = function(obj) {
+exports.isFunction = function (obj) {
   return Object.prototype.toString.call(obj) === '[object Function]';
 };
 
@@ -26,7 +26,7 @@ exports.ensureObject = (input) => {
 };
 
 //string utilities
-exports.endsWith = function(str, suffix) {
+exports.endsWith = function (str, suffix) {
   //if suffix is regex
   if (suffix && suffix instanceof RegExp) {
     if (str.match(suffix)) {
@@ -40,7 +40,7 @@ exports.endsWith = function(str, suffix) {
   return false;
 };
 
-exports.startsWith = function(str, prefix) {
+exports.startsWith = function (str, prefix) {
   if (str && prefix) {
     if (str.substr(0, prefix.length) === prefix) {
       return true;
@@ -55,9 +55,9 @@ exports.titleCase = (str) => {
 };
 
 //turn a nested array into one array
-exports.flatten = function(arr) {
+exports.flatten = function (arr) {
   let all = [];
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     all = all.concat(a);
   });
   return all;
@@ -113,6 +113,15 @@ exports.values = (obj) => {
     return obj[k];
   });
 };
+
+// exports.toObj = (arr) => {
+//   let obj = {}
+//   for (let i = 0; i < arr.length; i++) {
+//     obj[arr[i]] = true
+//   }
+//   return obj
+// }
+
 exports.sum = (arr) => {
   return arr.reduce((sum, i) => {
     return sum + i;
@@ -120,7 +129,7 @@ exports.sum = (arr) => {
 };
 
 
-exports.rightPad = function(str, width, char) {
+exports.rightPad = function (str, width, char) {
   char = char || ' ';
   str = str.toString();
   while (str.length < width) {
@@ -129,7 +138,7 @@ exports.rightPad = function(str, width, char) {
   return str;
 };
 
-exports.leftPad = function(str, width, char) {
+exports.leftPad = function (str, width, char) {
   char = char || ' ';
   str = str.toString();
   while (str.length < width) {

@@ -7,25 +7,15 @@ const nlp = require('./src/index');
 // const nlp = require('./builds/nlp_compromise');
 
 // require('./src/logger').enable();
-// const context = {
-//   lexicon: {
-//     'donkey kong': 'Person'
-//   }
-// };
-// let txt = corpus.parsed.weezer().sweatersong;
+const context = {
+  lexicon: {
+    'donkey kong': 'Person',
+    march: 'Person'
+  }
+};
 
-let r = nlp('tony Shark, dave Lawrence played pool. john Smith is cool').people();
-// r.check();
-// console.log(r.asArray());
-// console.log(r.parse());
-r.check();
-
-
-// let r = nlp('1 April to 31 August');
-// r.check();
-// let t = new Term('april');
-// t.tagAs('Infinitive');
-// console.log(t.tag);
-//
-// t.tagAs('Month');
-// console.log(t.tag);
+var m = nlp('aasdf2').unTag('Noun').unTag('NounPhrase');
+m.tag('FemaleName');
+m.check()
+m.unTag('Noun');
+m.check()

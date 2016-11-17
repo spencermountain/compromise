@@ -1,5 +1,5 @@
 'use strict';
-const fns = require('../paths').fns;
+const fns = require('./paths').fns;
 
 const almostMatch = (reg_str, term) => {
   return fns.startsWith(term.normal, reg_str);
@@ -11,7 +11,7 @@ const lumpMatch = function(term, regs, reg_i) {
   //is this a partial match? 'tony'& 'tony hawk'
   if (almostMatch(reg_str, term)) {
     //try to grow it
-    for(reg_i = reg_i + 1; reg_i < regs.length; reg_i++) {
+    for (reg_i = reg_i + 1; reg_i < regs.length; reg_i++) {
       reg_str += ' ' + regs[reg_i].normal;
       //is it now perfect?
       if (reg_str === term.normal) {

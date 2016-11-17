@@ -1,6 +1,14 @@
 //helpers to make test output messages nicer
 const str_test = function(got, input, want, t) {
-  var msg = '\'-> - - -> \'' + got + '\'- - - - (want: \'' + want + '\' )'; //'\'' + input + 
+  var msg = '\'-> - - -> \'' + got + '\'- - - - (want: \'' + want + '\' )'; //'\'' + input +
+  t.equal(got, want, msg);
+  return;
+};
+
+const arr_test = function(got, input, want, t) {
+  got = JSON.stringify(got);
+  want = JSON.stringify(want);
+  var msg = '\'-> - - -> \'' + got + '\'- - - - (want: \'' + want + '\' )'; //'\'' + input +
   t.equal(got, want, msg);
   return;
 };
@@ -48,4 +56,5 @@ module.exports = {
   str_test: str_test,
   pos_test: pos_test,
   terms_test: terms_test,
+  arr_test: arr_test,
 };

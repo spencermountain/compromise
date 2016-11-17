@@ -19,6 +19,11 @@ const addArr = (arr, tag) => {
   }
 };
 //let a rip
+
+let units = data.units.words.filter((s) => s.length > 1);
+addArr(units, 'Unit');
+addArr(data.dates.durations, 'Duration');
+
 addObj(data.abbreviations);
 //number-words are well-structured
 let obj = data.numbers.ordinal;
@@ -47,10 +52,6 @@ addArr(data.demonyms, 'Demonym');
 addArr(data.sportsTeams, 'SportsTeam');
 addArr(data.bands, 'Organization');
 addArr(data.orgWords, 'Noun');
-
-let units = data.units.words.filter((s) => s.length > 1);
-addArr(units, 'Unit');
-addArr(data.dates.durations, 'Duration');
 
 //irregular verbs
 Object.keys(data.irregular_verbs).forEach((k) => {
@@ -126,7 +127,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon['men']);
+// console.log(lexicon['second']);
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.verb.conjugate())

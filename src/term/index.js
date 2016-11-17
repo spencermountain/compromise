@@ -18,9 +18,9 @@ class Term {
     this._text = fns.ensureString(str);
     this.context = fns.ensureObject(context);
     this.tag = {};
-    this.sel = true;
     this.whitespace = build_whitespace(str || '');
     this._text = this._text.trim();
+    this.parent = null;
 
     bindMethods(require('./term'), 'term', this);
     bindMethods(require('./verb'), 'verb', this);
@@ -71,12 +71,22 @@ class Term {
     return str;
   }
 
+  index() {
+    let ts = this.parent;
+    if (!ts) {
+      return null;
+    }
+    return ts.terms.indexOf(this);
+  }
+
   /** delete this term from its sentence */
   remove() {
-    let s = this.context.parent;
-    let index = this.term.index();
-    s.arr.splice(index, 1);
-    return s;
+    let ts = this.parent;
+    if (!ts) {
+      return null;
+    }
+    ts.terms.splice(this.index(), 1);
+    return ts;
   }
 
   /** set the term as this part-of-speech */
@@ -95,8 +105,6 @@ class Term {
     term.tag = fns.copy(this.tag);
     term.whitespace = fns.copy(this.whitespace);
     term.silent_term = this.silent_term;
-    term.endPunct = this.endPunct;
-    term.sel = this.sel;
     return term;
   }
 }

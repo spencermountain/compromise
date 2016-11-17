@@ -1,9 +1,6 @@
 'use strict';
-const paths = require('./paths');
-const log = paths.log;
-const fns = paths.fns;
-const Term = require('../term');
-const match = require('./match');
+const tagger = require('./tagger');
+const tokenize = require('./methods/tokenize');
 
 class Terms {
   constructor(arr, context) {
@@ -12,65 +9,30 @@ class Terms {
     this.get = (n) => {
       return this.terms[n];
     };
-  // this.terms = this.arr;
-  }
-  term(n) {
-    return this.terms[n];
-  }
-  last() {
-    return this.terms[this.terms.length - 1];
+    // this.terms = this.arr;
   }
   get length() {
     return this.terms.length;
   }
-  plaintext() {
-    return this.terms.filter((t) => t.sel).reduce((str, t) => {
-      str += t.plaintext();
-      return str;
-    }, '');
+  posTag() {
+    tagger(this)
+    return this
   }
-  normal() {
-    return this.terms.filter((t) => t.sel && t.text).map((t) => t.normal).join(' ');
-  }
-  insertAt(text, i) {
-    let term = new Term(text, this.context);
-    this.terms.splice(i + 1, 0, term);
-    return this;
+  static fromString(str, context) {
+    let termArr = tokenize(str)
+    let ts = new Terms(termArr, context)
+      //give each term a reference to this ts
+    ts.terms.forEach((t) => {
+      t.parent = ts;
+    });
+    ts.posTag()
+    return ts
   }
 }
-//some other methods
-Terms.prototype.clone = function() {
-  let terms = this.terms.map((t) => {
-    return t.clone();
-  });
-  return new Terms(terms, this.context);
-};
-
-Terms.prototype.match = function(reg, verbose) {
-  return match(this, reg, verbose); //returns an array of matches
-};
-
-Terms.prototype.when = function(reg, verbose) {
-  let found = match(this, reg, verbose); //returns an array of matches
-  found.forEach((arr) => {
-    arr.forEach((t) => {
-      t.sel = true;
-    });
-  });
-  return this;
-};
-
-Terms.prototype.remove = function(reg) {
-  let matchTerms = match(this, reg);
-  matchTerms = fns.flatten(matchTerms);
-  let terms = this.terms.filter((t) => {
-    for(let i = 0; i < matchTerms.length; i++) {
-      if (t === matchTerms[i]) {
-        return false;
-      }
-    }
-    return true;
-  });
-  return new Terms(terms, this.context);
-};
+Terms = require('./match')(Terms);
+Terms = require('./methods/split')(Terms);
+Terms = require('./methods/insert')(Terms);
+Terms = require('./methods/render')(Terms);
+Terms = require('./methods/misc')(Terms);
+Terms = require('./methods/transform')(Terms);
 module.exports = Terms;

@@ -1,46 +1,20 @@
 {
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "nlp_compromise",
-  "description": "natural language processing in the browser",
-  "version": "7.0.0-alpha1",
-  "main": "./builds/nlp_compromise.min.js",
+  "description": "redirect dummy-package for nlp_compromise typo",
+  "version": "6.7.0",
+  "main": "./index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/nlp-compromise/nlp_compromise.git"
   },
-  "scripts": {
-    "test": "node ./scripts/test.js",
-    "build": "node ./scripts/build.js",
-    "demo": "node ./scripts/demo.js",
-    "watch": "node ./scripts/watch.js",
-    "prepublish": "node ./scripts/prepublish.js",
-    "filesize": "node ./scripts/filesize.js",
-    "coverage": "node ./scripts/coverage.js"
-  },
+  "scripts": {},
   "files": [
     "builds/",
     "src/"
   ],
   "dependencies": {
-    "chalk": "^1.1.3"
-  },
-  "devDependencies": {
-    "babel-preset-es2015": "6.9.0",
-    "babel-preset-stage-2": "^6.11.0",
-    "babelify": "7.3.0",
-    "browserify": "13.0.1",
-    "derequire": "^2.0.3",
-    "eslint": "^3.1.1",
-    "gaze": "^1.1.1",
-    "http-server": "0.9.0",
-    "jsdoc-parse": "^1.2.7",
-    "nlp-corpus": "latest",
-    "nyc": "^8.4.0",
-    "shelljs": "^0.7.2",
-    "tap-spec": "4.1.1",
-    "tape": "4.6.0",
-    "uglify-js": "2.7.0",
-    "uglifyify": "^3.0.3"
+    "nlp_compromise": "latest"
   },
   "license": "MIT"
 }

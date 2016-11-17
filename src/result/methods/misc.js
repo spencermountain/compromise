@@ -6,7 +6,7 @@ const genericMethods = (Result) => {
   const methods = {
 
     /**copy data properly so later transformations will have no effect*/
-    clone: function() {
+    clone: function () {
       let list = this.list.map((ts) => {
         return ts.clone();
       });
@@ -14,7 +14,7 @@ const genericMethods = (Result) => {
     },
 
     /**turn all sentences into one, for example*/
-    flatten: function() {
+    flatten: function () {
       let list = this.list.reduce((all, ts) => {
         all = all.concat(ts.terms);
         return all;
@@ -23,12 +23,12 @@ const genericMethods = (Result) => {
       return new Result([terms], this.parent);
     },
 
-    all: function() {
+    all: function () {
       return this.parent || this;
     },
 
     /** get the nth term of each result*/
-    term: function(n) {
+    term: function (n) {
       let list = this.list.map((ts) => {
         let arr = [];
         let el = ts.terms[n];
@@ -41,7 +41,7 @@ const genericMethods = (Result) => {
     },
 
     /**use only the first result */
-    first: function(n) {
+    first: function (n) {
       if (!n && n !== 0) {
         return this.get(0);
       }
@@ -49,7 +49,7 @@ const genericMethods = (Result) => {
     },
 
     /**use only the last result */
-    last: function(n) {
+    last: function (n) {
       if (!n && n !== 0) {
         return this.get(this.list.length - 1);
       }
@@ -59,7 +59,7 @@ const genericMethods = (Result) => {
     },
 
     /** use only the nth result*/
-    get: function(n) {
+    get: function (n) {
       //return an empty result
       if ((!n && n !== 0) || !this.list[n]) {
         return new Result([], this.parent);
@@ -67,6 +67,11 @@ const genericMethods = (Result) => {
       let ts = this.list[n];
       return new Result([ts], this.parent);
     },
+
+    filter: function (fn) {
+      this.list = this.list.filter(fn)
+      return this
+    }
 
   };
 

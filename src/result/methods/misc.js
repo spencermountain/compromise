@@ -69,8 +69,16 @@ const genericMethods = (Result) => {
     },
 
     filter: function (fn) {
-      this.list = this.list.filter(fn)
-      return this
+      //treat it as a termlist filter
+      if (typeof fn === 'string') {
+        let list = this.list.filter((ts) => {
+          return ts.has(fn)
+        })
+        return new Result(list, this.parent);
+      }
+      //ad-hoc filter-method
+      let list = this.list.filter(fn)
+      return new Result(list, this.parent);
     }
 
   };

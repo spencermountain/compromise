@@ -1,7 +1,7 @@
 'use strict';
 const fixUnicode = require('./fixUnicode');
 
-const normalize = function(term) {
+const normalize = function (term) {
   let str = term._text || '';
   str = str.toLowerCase();
   //(very) rough asci transliteration -  bjŏrk -> bjork
@@ -14,10 +14,12 @@ const normalize = function(term) {
   str = str.replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]+/g, '\'');
   // coerce double curly quotes
   str = str.replace(/[\u201C\u201D\u201E\u201F\u2033\u2036]+/g, '');
-  //strip leading & trailing grammatical punctuation
-  str = str.replace(/['",\.!:;\?\)]$/g, '');
-  str = str.replace(/^['"\(]/g, '');
 
+  //strip leading & trailing grammatical punctuation
+  if (!str.match(/^[:;]/)) {
+    str = str.replace(/['",\.!:;\?\)]$/g, '');
+    str = str.replace(/^['"\(]/g, '');
+  }
   //compact acronyms
   if (term.term.isAcronym()) {
     str = str.replace(/\./g, '');

@@ -21,7 +21,7 @@ test('splitAfter', function (t) {
     ['doug is really nice', 'is', ['doug is', 'really nice']],
   ].forEach(function (a) {
     var want = a[2];
-    var got = nlp(a[0]).splitAfter(a[1]).asArray().map((o) => o.normal);
+    var got = nlp(a[0]).splitAfter(a[1]).asArray()
     arr_test(got, a[0], want, t);
   });
   t.end();
@@ -42,7 +42,7 @@ test('splitBefore', function (t) {
     ['a x b x', 'x', ['a', 'x b', 'x']],
   ].forEach(function (a) {
     var want = a[2];
-    var got = nlp(a[0]).splitBefore(a[1]).asArray().map((o) => o.normal);
+    var got = nlp(a[0]).splitBefore(a[1]).asArray()
     arr_test(got, a[0], want, t);
   });
   t.end();
@@ -63,7 +63,7 @@ test('splitOn', function (t) {
     ['a x b x', 'x', ['a', 'b']],
   ].forEach(function (a) {
     var want = a[2];
-    var got = nlp(a[0]).splitOn(a[1]).asArray().map((o) => o.normal);
+    var got = nlp(a[0]).splitOn(a[1]).asArray()
     arr_test(got, a[0], want, t);
   });
   t.end();

@@ -33,10 +33,10 @@ const matchMethods = (Terms) => {
     /**return first match */
     matchOne: function (str) {
       let regs = syntax(str);
-      for (let i = 0; i < this.terms.length; i++) {
+      for (let t = 0; t < this.terms.length; t++) {
         //don't loop through if '^'
         if (regs[0] && regs[0].starting && t > 0) {
-          return null
+          break;
         }
         let m = startHere(this, t, regs);
         if (m) {
@@ -48,7 +48,8 @@ const matchMethods = (Terms) => {
 
     /**return first match */
     has: function (str) {
-      return !!this.matchOne(str)
+      let m = this.matchOne(str)
+      return !!m
     }
 
   }
@@ -60,4 +61,4 @@ const matchMethods = (Terms) => {
   return Terms;
 };
 
-module.exports = matchMethods;
+module.exports = matchMethods;;

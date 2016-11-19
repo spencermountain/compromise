@@ -78,6 +78,7 @@ module.exports = {
   Url: true,
   PhoneNumber: true,
   HashTag: true,
+  Emoji: true,
   Email: true,
 
   //non-exclusive

@@ -12,7 +12,7 @@ const makeCompatible = (term, tag, reason) => {
   }
   //find incompatible tags
   let not = tagset[tag].not || [];
-  for(let i = 0; i < not.length; i++) {
+  for (let i = 0; i < not.length; i++) {
     unTag(term, not[i], reason);
   }
 };
@@ -26,11 +26,11 @@ const tag_one = (term, tag, reason) => {
   //clean first
   makeCompatible(term, tag, reason);
   // unTag(term, tag, reason);
-  log.tell('+ ' + tag + '  ' + reason);
+  log.tagAs(term, tag, reason)
   term.tag[tag] = true;
 };
 
-const tagAll = function(term, tag, reason) {
+const tagAll = function (term, tag, reason) {
   if (!term || !tag) {
     return;
   }
@@ -40,7 +40,7 @@ const tagAll = function(term, tag, reason) {
   //find assumed-tags
   if (tagset[tag]) {
     let tags = tagset[tag].parents || [];
-    for(let i = 0; i < tags.length; i++) {
+    for (let i = 0; i < tags.length; i++) {
       tag_one(term, tags[i], '');
     }
   }

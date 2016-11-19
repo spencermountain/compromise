@@ -3,7 +3,7 @@
 //list of inconsistent parts-of-speech
 const conflicts = [
   //top-level pos are all inconsistent
-  ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression', 'Url', 'PhoneNumber', 'Email'],
+  ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression', 'Url', 'PhoneNumber', 'Email', 'Emoji'],
   //exlusive-nouns
   ['Person', 'Organization', 'Value', 'Place', 'Actor', 'Demonym', 'Pronoun'],
   //things that can't be plural
@@ -34,11 +34,12 @@ const conflicts = [
   ['Value', 'Determiner'],
   ['Verb', 'NounPhrase'],
   ['Noun', 'VerbPhrase'],
+
 ];
 
 const find = (tag) => {
   let arr = [];
-  for(let i = 0; i < conflicts.length; i++) {
+  for (let i = 0; i < conflicts.length; i++) {
     if (conflicts[i].indexOf(tag) !== -1) {
       arr = arr.concat(conflicts[i]);
     }

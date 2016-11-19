@@ -91,9 +91,9 @@ class Term {
 
   /** set the term as this part-of-speech */
   tagAs(tag, reason) {
-    setTag(this, tag, reason);
-  }
-  /** remove this part-of-speech from the term*/
+      setTag(this, tag, reason);
+    }
+    /** remove this part-of-speech from the term*/
   unTag(tag, reason) {
     unTag(this, tag, reason);
   }

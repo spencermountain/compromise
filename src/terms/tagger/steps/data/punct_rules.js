@@ -17,8 +17,6 @@ module.exports = [
   ['[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}', 'Date'], //03-02-89
   ['[0-9]{1,4}/[0-9]{1,4}', 'Fraction'], //3/2ths
   ['[0-9]{1,2}-[0-9]{1,2}', 'Value'], //7-8
-
-
   // const prepositions = '(by|before|after|at|@|about)';
   // const ampm = '[12]?[0-9](:[0-5][0-9])? ?(am|pm)'; //4pm
   // const time = '[12]?[0-9](:[0-5][0-9]) ?(am|pm)?'; //4:00pm
@@ -27,7 +25,7 @@ module.exports = [
   // const time_of_day = '\\b(morning|noon|afternoon|evening|night|breakfast|lunch(time)?|dinner|supper)\\b';
 
 
-].map(function(a) {
+].map(function (a) {
   return {
     reg: new RegExp('^' + a[0] + '$'),
     tag: a[1],

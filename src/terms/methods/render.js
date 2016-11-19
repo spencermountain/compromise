@@ -1,14 +1,20 @@
 'use strict';
 
-const miscMethods = (Terms) => {
+const renderMethods = (Terms) => {
 
   const methods = {
+
     plaintext: function () {
-      return this.terms.reduce((str, t) => {
-        str += t.plaintext();
+      return this.terms.reduce((str, t, i) => {
+        if (i === 0) {
+          str += t.text + t.whitespace.after;
+        } else {
+          str += t.whitespace.before + t.text + t.whitespace.after;
+        }
         return str;
       }, '');
     },
+
     normal: function () {
       return this.terms.filter((t) => t.text).map((t) => t.normal).join(' ');
     },
@@ -26,4 +32,4 @@ const miscMethods = (Terms) => {
   return Terms;
 };
 
-module.exports = miscMethods;
+module.exports = renderMethods;

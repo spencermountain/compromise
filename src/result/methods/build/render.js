@@ -15,10 +15,7 @@ const prettyPrint = (Result) => {
     },
 
     plaintext: function () {
-      return this.list.reduce((str, ts) => {
-        str += ts.plaintext();
-        return str;
-      }, '');
+      return this.list.map((ts) => ts.plaintext()).join(' ')
     },
 
     normal: function () {

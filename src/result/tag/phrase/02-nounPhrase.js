@@ -1,6 +1,6 @@
 'use strict';
 //
-const nounPhrase = function(result) {
+const nounPhrase = function (result) {
   //fifty stars
   result.match('#Value #Noun').tag('NounPhrase');
   //nice house

@@ -14,7 +14,7 @@ const genericMethods = (Result) => {
     },
 
     /**turn all sentences into one, for example*/
-    flatten: function () {
+    terms: function () {
       let list = this.list.reduce((all, ts) => {
         all = all.concat(ts.terms);
         return all;

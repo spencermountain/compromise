@@ -11,6 +11,9 @@ class Terms {
     };
     // this.terms = this.arr;
   }
+  get found() {
+    return this.terms.length > 0
+  }
   get length() {
     return this.terms.length;
   }

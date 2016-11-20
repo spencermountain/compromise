@@ -13,13 +13,13 @@ class Result {
     }
     /** how many results are there?*/
   get length() {
-    return this.list.length;
-  }
-  get terms() {
-    return this.list.reduce((arr, ts) => {
-      return arr.concat(ts.terms);
-    }, []);
-  }
+      return this.list.length;
+    }
+    // get terms() {
+    //   return this.list.reduce((arr, ts) => {
+    //     return arr.concat(ts.terms);
+    //   }, []);
+    // }
 }
 
 module.exports = Result;

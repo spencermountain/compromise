@@ -7,10 +7,12 @@ const miscMethods = (Terms) => {
       return this.terms[n];
     },
     first: function () {
-      return this.terms[0];
+      let t = this.terms[0]
+      return new Terms([t]);
     },
     last: function () {
-      return this.terms[this.terms.length - 1];
+      let t = this.terms[this.terms.length - 1]
+      return new Terms([t]);
     },
     endPunctuation: function () {
       return this.last().endPunctuation();

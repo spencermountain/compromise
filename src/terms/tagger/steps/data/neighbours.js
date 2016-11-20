@@ -38,6 +38,7 @@ let beforeThisWord = {
   himself: 'Verb', //31% //see himself
   went: 'Noun', //43% //he went
   who: 'Noun', //47% //person who
+  jr: 'Person'
 }
 
 //following this POS, this is likely
@@ -54,6 +55,7 @@ let afterThisPos = {
   Superlative: 'Noun', //43%
   Demonym: 'Noun', //38%
   Organization: 'Verb', //33%
+  Honorific: 'Person', //
 }
 
 //in advance of this POS, this is likely

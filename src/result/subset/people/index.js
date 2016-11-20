@@ -2,7 +2,6 @@
 const Result = require('../../index');
 const Person = require('./person');
 //this is used for pronoun and honorifics, and not intented for more-than grammatical use (see #117)
-const guessGender = require('./guessGender');
 
 class People extends Result {
   constructor(list) {

@@ -1,9 +1,4 @@
 'use strict';
-const Terms = require('./paths').Terms
-const tokenize = require('./tokenize');
-const corrections = require('./tag/corrections');
-const tagPhrase = require('./tag/phrase');
-
 //a result is an array of termLists
 class Result {
   constructor(arr, context) {
@@ -25,20 +20,9 @@ class Result {
       return arr.concat(ts.terms);
     }, []);
   }
-  static fromString(str, context) {
-    let sentences = tokenize(str)
-    let list = sentences.map((s) => Terms.fromString(s, context))
-    let r = new Result(list, context)
-      //give each ts a ref to the result
-    r.list.forEach((ts) => {
-      ts.parent = r;
-    });
-    r = corrections(r)
-    r = tagPhrase(r)
-    return r
-  }
 }
 
+module.exports = Result;
 Result = require('./methods/misc')(Result);
 Result = require('./methods/tag')(Result);
 Result = require('./methods/match/match')(Result);
@@ -51,7 +35,6 @@ Result.prototype.topk = require('./methods/build/topk');
 Result.prototype.ngram = require('./methods/build/ngram');
 Result.prototype.normalize = require('./methods/normalize');
 
-module.exports = Result;
 const subset = {
     adjectives: require('./subset/adjectives'),
     adverbs: require('./subset/adverbs'),

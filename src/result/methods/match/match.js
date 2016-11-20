@@ -9,7 +9,7 @@ const splitMethods = (Result) => {
       this.list.forEach((ts) => {
         //an array of arrays
         let matches = ts.match(reg, verbose)
-        matches.forEach((ms) => {
+        matches.list.forEach((ms) => {
           list.push(ms);
         });
       });

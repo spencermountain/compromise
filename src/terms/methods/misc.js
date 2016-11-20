@@ -12,13 +12,6 @@ const miscMethods = (Terms) => {
     last: function () {
       return this.terms[this.terms.length - 1];
     },
-    map: function (fn) {
-      return this.terms.map(fn);
-    },
-    filter: function (fn) {
-      let terms = this.terms.filter(fn);
-      return new Terms(terms, this.context);
-    },
     endPunctuation: function () {
       return this.last().endPunctuation();
     },

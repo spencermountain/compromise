@@ -27,7 +27,7 @@ const splitMethods = (Terms) => {
       let ms = this.match(reg, verbose); //Array[ts]
       let termArr = this.terms
       let all = []
-      ms.forEach((lookFor) => {
+      ms.list.forEach((lookFor) => {
           let section = breakUpHere(termArr, lookFor)
           if (section.before && section.match) {
             all.push(section.before.concat(section.match))
@@ -48,7 +48,7 @@ const splitMethods = (Terms) => {
       let ms = this.match(reg, verbose); //Array[ts]
       let termArr = this.terms
       let all = []
-      ms.forEach((lookFor) => {
+      ms.list.forEach((lookFor) => {
           let section = breakUpHere(termArr, lookFor)
           if (section.before) {
             all.push(section.before)
@@ -70,7 +70,7 @@ const splitMethods = (Terms) => {
       let ms = this.match(reg, verbose); //Array[ts]
       let termArr = this.terms
       let all = []
-      ms.forEach((lookFor) => {
+      ms.list.forEach((lookFor) => {
           let section = breakUpHere(termArr, lookFor)
           if (section.before) {
             all.push(section.before)
@@ -87,7 +87,7 @@ const splitMethods = (Terms) => {
       //cleanup-step: merge all (middle) matches with the next one
       for (let i = 0; i < all.length; i++) {
         for (let o = 0; o < ms.length; o++) {
-          if (ms[o].terms[0] === all[i][0]) {
+          if (ms.list[o].terms[0] === all[i][0]) {
             if (all[i + 1]) {
               all[i] = all[i].concat(all[i + 1])
               all[i + 1] = []

@@ -1,10 +1,10 @@
 'use strict';
 
-const Result = require('./result');
+const buildResult = require('./result/build');
 const pkg = require('../package.json');
 
 const nlp = function (str, context) {
-  return Result.fromString(str, context);
+  return buildResult(str, context);
 };
 nlp.version = pkg.version;
 

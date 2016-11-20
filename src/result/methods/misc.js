@@ -79,6 +79,26 @@ const genericMethods = (Result) => {
       //ad-hoc filter-method
       let list = this.list.filter(fn)
       return new Result(list, this.parent);
+    },
+    forEach: function (fn) {
+      this.list.forEach(fn)
+      return this
+    },
+    map: function (fn) {
+      //treat it as a termlist filter
+      if (typeof fn === 'string') {
+        let list = this.list.map((ts) => {
+          return ts[fn]()
+        })
+        return new Result(list)
+      }
+      let list = this.list.map(fn)
+      return new Result(list)
+    },
+    //turn two result objects into one
+    combine: function (r) {
+      this.list = this.list.concat(r.list)
+      return this
     }
 
   };

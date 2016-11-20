@@ -28,7 +28,7 @@ const transforms = (Terms) => {
       }
       let foundTerms = []
         //this is pretty shit code..
-      let mtArr = this.match(reg);
+      let mtArr = this.match(reg).list;
       mtArr.forEach((ms) => {
         ms.terms.forEach((t) => {
           foundTerms.push(t)
@@ -43,8 +43,24 @@ const transforms = (Terms) => {
         return true;
       });
       return new Terms(terms, this.context);
-    }
+    },
 
+    //like match, but remove them from original
+    pluck: function (reg) {
+      let found = this.match(reg)
+        //remove them from `this`
+      let index = 0
+      let lookFor = found.terms[index]
+      this.terms = this.terms.filter((t) => {
+        if (t === lookFor) {
+          index += 1
+          lookFor = found.terms[index]
+          return false
+        }
+        return true
+      })
+      return found
+    }
   }
 
   //hook them into result.proto

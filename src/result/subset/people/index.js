@@ -12,18 +12,14 @@ class People extends Result {
   }
   find() {
     let people = this.splitAfter('#Comma')
-    people = people.match('#Noun+');
+    people = people.match('#Person+');
     people.list = people.list.map((ts) => {
       return new Person(ts.terms)
     })
     return people
   }
   parse() {
-    return this.list.map((ts) => {
-      return {
-        firstName: ts.firstname
-      }
-    })
+    return this.list.map((ts) => ts.parse())
   }
 }
 

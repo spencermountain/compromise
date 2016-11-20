@@ -1,8 +1,5 @@
 var test = require('tape');
 var nlp = require('./lib/nlp');
-var str_test = require('./lib/fns').str_test;
-
-
 
 test('result methods', function (t) {
   let text = 'this :cookie: <3 💯 so good. It is really nice. Yes it is <3';
@@ -14,7 +11,7 @@ test('result methods', function (t) {
 
   //filter string
   let small = m.filter('#Emoji')
-  t.equal(small.normal(), 'this :cookie <3 💯 so good. yes it is <3', 'nlp.filter string')
+  t.equal(small.normal(), 'this :cookie: <3 💯 so good. yes it is <3', 'nlp.filter string')
 
   //filter method
   small = m.filter((ts) => {

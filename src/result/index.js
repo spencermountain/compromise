@@ -60,6 +60,7 @@ const subset = {
     people: require('./subset/people'),
     values: require('./subset/values'),
     verbs: require('./subset/verbs'),
+    subjects: require('./subset/subjects'),
     sentences: require('./subset/sentences'),
     statements: require('./subset/sentences/statements'),
     questions: require('./subset/sentences/questions'),

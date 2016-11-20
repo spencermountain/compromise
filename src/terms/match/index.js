@@ -3,6 +3,8 @@
 const syntax = require('./lib/syntax');
 const log = require('./lib/paths').log;
 const startHere = require('./lib/startHere');
+const Result = require('../../result');
+
 
 const matchMethods = (Terms) => {
   const methods = {
@@ -61,4 +63,4 @@ const matchMethods = (Terms) => {
   return Terms;
 };
 
-module.exports = matchMethods;;
+module.exports = matchMethods;;;

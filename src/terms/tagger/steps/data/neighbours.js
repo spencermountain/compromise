@@ -46,7 +46,7 @@ let afterThisPos = {
   Possessive: 'Noun', //41% //his song
   Determiner: 'Noun', //47%
   Adverb: 'Verb', //20%
-  Person: 'Verb', //40%
+  // Person: 'Verb', //40%
   Pronoun: 'Verb', //40%
   Value: 'Noun', //47%
   Ordinal: 'Noun', //53%

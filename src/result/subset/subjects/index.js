@@ -5,10 +5,11 @@ class Subjects extends Result {
   constructor(list) {
     super(list);
     // this.check();
-    return this;
+    return this.find()
   }
   find() {
-    return this.match('#Noun+');
+    let subjects = this.splitAfter('#Comma')
+    return subjects.match('#Noun+');
   }
   parse() {
     return this.find().terms.map((t) => {

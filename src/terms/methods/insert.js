@@ -4,8 +4,8 @@ const insertMethods = (Terms) => {
 
   const methods = {
     append: function (str) {
-      let terms = Terms.tokenize(str)
-      console.log(terms)
+      // let terms = Terms.tokenize(str)
+      // console.log(terms)
       return this
     },
   }

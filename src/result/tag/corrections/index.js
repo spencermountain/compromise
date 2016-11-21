@@ -86,6 +86,11 @@ const corrections = function (r) {
   //all values are either ordinal or cardinal
   r.match('#Value').match('!#Ordinal').tag('#Cardinal');
 
+
+  //last names
+  r.match('#FirstName #Acronym? #TitleCase').tag('#Person').lastTerm().tag('#LastName')
+  r.match('#FirstName #Acronym #Noun').tag('#Person').lastTerm().tag('#LastName')
+
   r = date_corrections(r);
 
   return r;

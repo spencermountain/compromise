@@ -19,7 +19,7 @@ const genericMethods = (Result) => {
         all = all.concat(ts.terms);
         return all;
       }, []);
-      let terms = new Terms(list);
+      // let terms = new Terms(list);
       // return new Result([terms], this.parent);
       return list
     },
@@ -39,6 +39,13 @@ const genericMethods = (Result) => {
         return new Terms(arr, this.context);
       });
       return new Result(list, this.parent);
+    },
+
+    firstTerm: function () {
+      return this.match('^.')
+    },
+    lastTerm: function () {
+      return this.match('.$')
     },
 
     /**use only the first result */

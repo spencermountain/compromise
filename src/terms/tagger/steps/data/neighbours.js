@@ -56,6 +56,7 @@ let afterThisPos = {
   Demonym: 'Noun', //38%
   Organization: 'Verb', //33%
   Honorific: 'Person', //
+  FirstName: 'Person', //
 }
 
 //in advance of this POS, this is likely

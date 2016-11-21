@@ -2,9 +2,9 @@ var test = require('tape');
 var nlp = require('./lib/nlp');
 var pos_test = require('./lib/fns').pos_test;
 
-test('=Lexicon test=', function(T) {
+test('=Lexicon test=', function (T) {
 
-  T.test('default lexicon:', function(t) {
+  T.test('default lexicon:', function (t) {
     [
       ['great', 'Adjective'],
       ['walked', 'PastTense'],
@@ -19,13 +19,13 @@ test('=Lexicon test=', function(T) {
       ['shanghai', 'City'],
       ['google', 'Organization'],
     ].forEach(function (a) {
-      var terms = nlp(a[0]).terms;
+      var terms = nlp(a[0]).terms();
       pos_test(terms, [a[1]], t);
     });
     t.end();
   });
 
-  T.test('adjusted lexicon:', function(t) {
+  T.test('adjusted lexicon:', function (t) {
     //place new words
     var context = {
       lexicon: {
@@ -41,7 +41,7 @@ test('=Lexicon test=', function(T) {
       ['donkey kong wins the award', ['City', 'Verb', 'Determiner', 'Noun']],
     ];
     arr.forEach(function (a) {
-      var terms = nlp(a[0], context).terms;
+      var terms = nlp(a[0], context).terms();
       pos_test(terms, a[1], t);
     });
     //

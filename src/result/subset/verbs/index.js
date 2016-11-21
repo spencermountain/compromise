@@ -11,12 +11,12 @@ class Verbs extends Result {
     return this.match('#Verb+');
   }
   parse() {
-    return this.find().terms.map((t) => {
+    return this.find().terms().map((t) => {
       return t.verb.conjugate();
     });
   }
   toPast() {
-    let t = this.find().terms[0];
+    let t = this.find().terms()[0];
     this.contractions().expand();
     if (t) {
       t.text = t.verb.pastTense();
@@ -24,7 +24,7 @@ class Verbs extends Result {
     return this.all();
   }
   toPresent() {
-    let t = this.find().terms[0];
+    let t = this.find().terms()[0];
     this.contractions().expand();
     if (t) {
       t.text = t.verb.presentTense();
@@ -32,7 +32,7 @@ class Verbs extends Result {
     return this.all();
   }
   toFuture() {
-    let t = this.find().terms[0];
+    let t = this.find().terms()[0];
     this.contractions().expand();
     if (t) {
       t.text = t.verb.futureTense();

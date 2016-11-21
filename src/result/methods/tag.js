@@ -7,14 +7,14 @@ const splitMethods = (Result) => {
 
     /**tag all the terms in this result as something */
     tag: function (tag, reason) {
-      this.terms().list[0].terms.forEach((t) => {
+      this.terms().forEach((t) => {
         t.tagAs(tag, reason);
       });
       return this;
     },
     /**remove a tag in all the terms in this result (that had it) */
     unTag: function (tag, reason) {
-      this.terms().list[0].terms.forEach((t) => {
+      this.terms().forEach((t) => {
         t.unTag(tag, reason);
       });
       return this;

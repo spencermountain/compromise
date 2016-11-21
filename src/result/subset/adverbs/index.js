@@ -10,7 +10,7 @@ class Adverbs extends Result {
     return this.match('#Adverb+');
   }
   parse() {
-    return this.find().terms.map((t) => {
+    return this.find().terms().map((t) => {
       return {
         adjectiveForm: t.adverb.adjectiveForm(),
       };

@@ -1,6 +1,6 @@
 'use strict';
 const Result = require('../../index');
-const Noun = require('./noun');
+// const Noun = require('./noun');
 
 class Nouns extends Result {
   constructor(list) {
@@ -12,7 +12,7 @@ class Nouns extends Result {
     return this.match('#Noun+');
   }
   parse() {
-    return this.find().terms.map((t) => {
+    return this.find().terms().map((t) => {
       return {
         article: t.noun.makeArticle(),
         singular: t.noun.singular(),

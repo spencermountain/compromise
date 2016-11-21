@@ -11,7 +11,7 @@ class Adjectives extends Result {
     return this.match('#Adjective+');
   }
   parse() {
-    return this.find().terms.map((t) => {
+    return this.find().terms().map((t) => {
       return {
         comparative: t.adjective.comparative(),
         superlative: t.adjective.superlative(),

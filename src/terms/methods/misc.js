@@ -15,7 +15,7 @@ const miscMethods = (Terms) => {
       return new Terms([t]);
     },
     endPunctuation: function () {
-      return this.last().endPunctuation();
+      return this.last().terms[0].endPunctuation();
     },
   }
 

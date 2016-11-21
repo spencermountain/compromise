@@ -20,7 +20,8 @@ const genericMethods = (Result) => {
         return all;
       }, []);
       let terms = new Terms(list);
-      return new Result([terms], this.parent);
+      // return new Result([terms], this.parent);
+      return list
     },
 
     all: function () {

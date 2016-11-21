@@ -2,7 +2,7 @@ var test = require('tape');
 var nlp = require('./lib/nlp');
 
 
-test('fancy match', function(t) {
+test('fancy match', function (t) {
   [
     //misc
     ['doug is good', '', 0],
@@ -81,7 +81,7 @@ test('fancy match', function(t) {
     ['so i said that spencer is nice', '^{1,3} spencer', 0],
     ['so i said that spencer is nice', '^{1,6} spencer', 5],
   ].forEach(function (a) {
-    var r = nlp(a[0]).match(a[1]).terms || [];
+    var r = nlp(a[0]).match(a[1]).terms() || [];
     var msg = '\'' + a[0] + '\' - - - \'' + a[1] + '\' - - got:' + r.length + '  want:' + a[2];
     t.equal(r.length, a[2], msg);
   });

@@ -62,5 +62,6 @@ module.exports = [
   'whereas',
   'with',
   'within',
-  'without'
+  'without',
+  '-' //june - july
 ];

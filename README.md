@@ -16,6 +16,16 @@ nlp.sentence('She sells seashells').to_past().text()
 
 It's a [handy, and not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/wiki/Justification) tool for understanding, changing, and playing with english.
 
+<div align="center">
+  <div>
+    :boom: 
+    <a href="https://github.com/nlp-compromise/nlp_compromise/tree/v7">v7</a> 
+    is coming!
+   :boom: 
+  </div>
+  <div>it's <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/v7-upgrade-instructions">huge!</a></div>
+</div>
+
 ## Off you go,
 > `npm install nlp_compromise`
 

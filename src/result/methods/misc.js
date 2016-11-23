@@ -107,6 +107,14 @@ const genericMethods = (Result) => {
     combine: function (r) {
       this.list = this.list.concat(r.list)
       return this
+    },
+    flatten: function () {
+      let terms = []
+      this.list.forEach((ts) => {
+        terms = terms.concat(ts.terms)
+      })
+      let ts = new Terms(terms)
+      return new Result([ts])
     }
 
   };

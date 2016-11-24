@@ -33,7 +33,7 @@ module.exports = {
   },
   Date: {
     Month: true,
-    Day: true,
+    WeekDay: true,
     Year: true,
     Duration: true,
     Time: true,

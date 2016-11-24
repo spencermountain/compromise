@@ -10,10 +10,14 @@ const punctuation_step = function(ts) {
     if (Object.keys(t.tag).length > 0) {
       return;
     }
+    //ok, normalise it a little,
+    let str=t.text
+    str=str.replace(/[,\.\?]$/,'')
+    
     //do punctuation rules (on t.text)
     for(let i = 0; i < rules.length; i++) {
       let r = rules[i];
-      if (t.text.match(r.reg)) {
+      if (str.match(r.reg)) {
         t.tagAs(r.tag, 'punctuation-rule- "' + r.str + '"');
         return;
       }

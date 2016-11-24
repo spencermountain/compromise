@@ -25,7 +25,7 @@ const conflicts = [
   //verbs
   ['PastTense', 'PerfectTense', 'Pluperfect', 'FuturePerfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund'],
   //date
-  ['Month', 'Day', 'Year', 'Duration'],
+  ['Month', 'WeekDay', 'Year', 'Duration'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
   ['Date', 'Verb', 'Adjective', 'Person'],
   //phrases

@@ -2,7 +2,7 @@ var test = require('tape');
 var nlp = require('./lib/nlp');
 
 //test a word from each file in ./data/**
-test('pos from-lexicon', function(t) {
+test('pos from-lexicon', function (t) {
   var arr = [
     ['toronto', 'City'],
     ['mexico', 'Country'],
@@ -12,7 +12,7 @@ test('pos from-lexicon', function(t) {
     ['moderate', 'Adjective'],
     ['extreme', 'Adjective'],
     ['august', 'Month'],
-    ['saturday', 'Day'],
+    ['saturday', 'WeekDay'],
     ['minute', 'Duration'],
     ['valentines day', 'Holiday'],
     ['ash wednesday', 'Holiday'],

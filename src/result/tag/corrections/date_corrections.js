@@ -4,7 +4,7 @@ const path = 'date_correction';
 
 //ambiguous 'may' and 'march'
 const months = '(may|march|jan|april)';
-const preps = '(in|by|before|for|during|on|until|after)';
+const preps = '(in|by|before|for|during|on|until|after|of)';
 const thisNext = '(last|next|this|previous|current|upcoming|coming)';
 // const dayTime = '(night|evening|morning|afternoon|day|daytime)';
 

@@ -6,7 +6,7 @@ const parseNumber = require('./parse');
 const value = {
 
   /* return a number, like '5th', as a cardinal, like 5 */
-  cardinal: function() {
+  cardinal: function () {
     let num = parseNumber(this);
     //if it is textual, make a textCardinal
     if (this.tag.TextValue) {
@@ -17,7 +17,7 @@ const value = {
   },
 
   /* return a number, like '5', as an ordinal, like '5th' */
-  ordinal: function() {
+  ordinal: function () {
     let num = parseNumber(this);
     //if it is textual, make a textCardinal
     if (this.tag.TextValue) {
@@ -28,7 +28,7 @@ const value = {
   },
 
   /** return a float/integer version of this number*/
-  number: function() {
+  number: function () {
     let num = parseNumber(this);
     if (this.tag.Ordinal) {
       return numericValue.ordinal(num);
@@ -37,7 +37,7 @@ const value = {
   },
 
   /** return a textual version of this number*/
-  textValue: function() {
+  textValue: function () {
     let num = parseNumber(this);
     if (this.tag.Ordinal) {
       return textValue.ordinal(num);
@@ -46,7 +46,7 @@ const value = {
     }
   },
 
-  nicenumber: function() {
+  nicenumber: function () {
     let num = parseNumber(this);
     if (!num && num !== 0) {
       return null;

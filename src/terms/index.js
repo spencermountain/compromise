@@ -9,13 +9,25 @@ class Terms {
     this.get = (n) => {
       return this.terms[n];
     };
-    // this.terms = this.arr;
+    this.parent = this.context.parent || null
+      // this.terms = this.arr;
   }
   get found() {
     return this.terms.length > 0
   }
   get length() {
     return this.terms.length;
+  }
+  get index() {
+    let result = this.parent
+    if (result) {
+      for (let i = 0; i < result.list.length; i++) {
+        if (result.list[i] === this) {
+          return i
+        }
+      }
+    }
+    return null
   }
   posTag() {
     tagger(this)

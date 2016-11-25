@@ -5,8 +5,8 @@ const log = require('../../paths').log
 
 
 class Person extends Terms {
-  constructor(terms) {
-    super(terms);
+  constructor(terms, context) {
+    super(terms, context);
     this.firstName = this.pluck('#FirstName+').list[0]
     this.middleName = this.pluck('#Acronym+')
     this.honorifics = this.pluck('#Honorific')

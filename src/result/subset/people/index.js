@@ -13,7 +13,7 @@ class People extends Result {
     let people = this.splitAfter('#Comma')
     people = people.match('#Person+');
     people.list = people.list.map((ts) => {
-      return new Person(ts.terms)
+      return new Person(ts.terms, ts.context)
     })
     return people
   }

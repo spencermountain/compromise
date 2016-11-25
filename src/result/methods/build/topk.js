@@ -1,17 +1,18 @@
 'use strict';
 //
-const topk = function(n) {
+const topk = function (n) {
   //count occurance
   let count = {};
-  this.terms.forEach((t) => {
-    count[t.normal] = count[t.normal] || 0;
-    count[t.normal] += 1;
+  this.list.forEach((ts) => {
+    let str = ts.normal()
+    count[str] = count[str] || 0;
+    count[str] += 1;
   });
   //turn into an array
   let all = [];
   Object.keys(count).forEach((k) => {
     all.push({
-      term: k,
+      normal: k,
       count: count[k],
     });
   });

@@ -33,3 +33,12 @@ test('unique:', function (t) {
   fns.arr_test(r.asArray(), str, want, t)
   t.end();
 });
+
+test('topk:', function (t) {
+  let str = 'John xoo, John fredman, john xoo, John davis'
+  let r = nlp(str).people()
+  let a = r.topk()
+  t.equal(a[0].normal, 'john xoo', 'topk is sorted')
+  t.equal(a[0].count, 2, 'topk finds two')
+  t.end();
+});

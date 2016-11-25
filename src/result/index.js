@@ -25,6 +25,7 @@ class Result {
 module.exports = Result;
 Result = require('./methods/misc')(Result);
 Result = require('./methods/tag')(Result);
+Result = require('./methods/sort')(Result);
 Result = require('./methods/match/match')(Result);
 Result = require('./methods/match/remove')(Result);
 Result = require('./methods/match/replace')(Result);

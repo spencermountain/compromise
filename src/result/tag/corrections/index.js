@@ -89,6 +89,7 @@ const corrections = function (r) {
 
   //last names
   r.match('#FirstName #Acronym? #TitleCase').tag('#Person').lastTerm().tag('#LastName')
+  r.match('#FirstName (#Singular|#Possessive)').tag('#Person').lastTerm().tag('#LastName')
   r.match('#FirstName #Acronym #Noun').tag('#Person').lastTerm().tag('#LastName')
 
   r = date_corrections(r);

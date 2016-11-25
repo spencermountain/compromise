@@ -8,7 +8,7 @@ const fns = p.fns;
 const path = 'tagger/multiple';
 
 const combineMany = (s, i, count) => {
-  for(let n = 0; n < count; n++) {
+  for (let n = 0; n < count; n++) {
     combine(s, i);
   }
 };
@@ -17,7 +17,7 @@ const combineMany = (s, i, count) => {
 const tryStringFrom = (want, start, s) => {
   let text = '';
   let normal = '';
-  for(let i = start; i < s.terms.length; i++) {
+  for (let i = start; i < s.terms.length; i++) {
     if (i === start) {
       text = s.terms[i].text;
       normal = s.terms[i].normal;
@@ -38,9 +38,9 @@ const tryStringFrom = (want, start, s) => {
   return false;
 };
 
-const lexicon_lump = function(s) {
+const lexicon_lump = function (s) {
   log.here(path);
-  let uLexicon = s.context.lexicon || {};
+  let uLexicon = s.lexicon || {};
 
   //try the simpler, known lexicon
   for (let i = 0; i < s.terms.length - 1; i++) {
@@ -56,7 +56,7 @@ const lexicon_lump = function(s) {
 
   //try the user's lexicon
   Object.keys(uLexicon).forEach((str) => {
-    for(let i = 0; i < s.terms.length; i++) {
+    for (let i = 0; i < s.terms.length; i++) {
       if (fns.startsWith(str, s.terms[i].normal) || fns.startsWith(str, s.terms[i].text)) {
         if (tryStringFrom(str, i, s)) {
           s.terms[i].tagAs(uLexicon[str], 'user-lexicon-lump');

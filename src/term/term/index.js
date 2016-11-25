@@ -4,7 +4,7 @@ const fns = require('../paths').fns;
 const term = {
 
   /** the punctuation at the end of this term*/
-  endPunctuation: function() {
+  endPunctuation: function () {
     let m = this.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/i);
     if (m) {
       const allowed = {
@@ -24,7 +24,7 @@ const term = {
   },
 
   /** interpret a term's hyphenation */
-  hyphenation: function() {
+  hyphenation: function () {
     let m = this.normal.match(/^([a-z]+)-([a-z]+)$/);
     if (m && m[1] && m[2]) {
       return {
@@ -36,7 +36,7 @@ const term = {
   },
 
   /** interpret a terms' contraction */
-  contraction: function() {
+  contraction: function () {
     let t = this;
     const allowed = {
       're': true,
@@ -75,7 +75,7 @@ const term = {
   },
 
   /** check if the term ends with a comma */
-  hasComma: function() {
+  hasComma: function () {
     if (this.term.endPunctuation() === 'comma') {
       return true;
     }
@@ -83,9 +83,9 @@ const term = {
   },
 
   /** where in the sentence is it? zero-based. */
-  index: function() {
+  index: function () {
     let t = this;
-    let terms = t.context.parent.arr;
+    let terms = t.parent.arr;
     for (let i = 0; i < terms.length; i++) {
       if (terms[i] === t) {
         return i;
@@ -95,23 +95,23 @@ const term = {
   },
 
   /** ensure the first character is a capital. Ignore other characters. */
-  titlecase: function() {
+  titlecase: function () {
     return this.text.replace(/^[a-z]/, (x) => x.toUpperCase());
   },
 
   /** check if the text has one capital letter, the first one */
-  isTitlecase: function() {
+  isTitlecase: function () {
     if (this.text.match(/^[A-Z][a-z]/)) {
       return true;
     }
     return false;
   },
 
-  noPunctuation: function() {
+  noPunctuation: function () {
     return this.text.replace(/([,;:])$/, '');
   },
   /** does it appear to be an acronym, like FBI or M.L.B. */
-  isAcronym: function() {
+  isAcronym: function () {
     //like N.D.A
     if (this.text.match(/([A-Z]\.)+[A-Z]?$/)) {
       return true;
@@ -129,7 +129,7 @@ const term = {
 
 
   /** check if it is word-like in english */
-  isWord: function() {
+  isWord: function () {
     let t = this;
     //assume a contraction produces a word-word
     if (t.silent_term) {

@@ -15,7 +15,7 @@ const splitMethods = (Result) => {
       });
       // this.list = list;
       let parent = this.parent || this;
-      return new Result(list, parent);
+      return new Result(list, this.lexicon, parent);
     },
 
     /** find the first result */

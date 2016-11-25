@@ -6,7 +6,7 @@ const path = 'tagger/lexicon';
 
 const check_lexicon = (str, sentence) => {
   //check a user's custom lexicon
-  let custom = sentence.context.lexicon || {};
+  let custom = sentence.lexicon || {};
   if (custom[str]) {
     return custom[str];
   }
@@ -16,7 +16,7 @@ const check_lexicon = (str, sentence) => {
   return null;
 };
 
-const lexicon_pass = function(s) {
+const lexicon_pass = function (s) {
   log.here(path);
   let found;
   //loop through each term

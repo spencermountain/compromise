@@ -46,8 +46,8 @@ module.exports = {
     },
     PastTense: true,
     PerfectTense: true,
-    Pluperfect: true,
     FuturePerfect: true,
+    Pluperfect: true,
     Copula: true,
     Modal: true,
     Participle: true

@@ -1,6 +1,12 @@
 'use strict';
 // parse a search lookup term find the regex-like syntax in this term
 const fns = require('./paths').fns;
+//
+const camelCase = {
+  sportsteam: 'SportsTeam',
+  futureperfect: 'FuturePerfect',
+  numberrange: 'NumberRange'
+}
 
 //turn 'regex-like' search string into parsed json
 const parse_term = function (term, i) {
@@ -39,7 +45,14 @@ const parse_term = function (term, i) {
   //pos flag
   if (fns.startsWith(term, '#')) {
     term = term.replace(/^\#/, '');
-    reg.tag = term.split(/\|/g).map((str) => fns.titleCase(str));
+    reg.tag = term.split(/\|/g).map((str) => {
+      str = str.toLowerCase()
+      str = camelCase[str] || str
+      str = str.replace(/name$/, 'Name')
+      str = str.replace(/tense$/, 'Tense')
+      str = str.replace(/value$/, 'Value')
+      return fns.titleCase(str)
+    });
     term = null;
   }
   //one_of options flag

@@ -3,14 +3,12 @@ const tagger = require('./tagger');
 const tokenize = require('./methods/tokenize');
 
 class Terms {
-  constructor(arr, context) {
+  constructor(arr, lexicon, parent) {
     this.terms = arr;
-    this.context = context || {};
     this.get = (n) => {
       return this.terms[n];
     };
-    this.parent = this.context.parent || null
-      // this.terms = this.arr;
+    this.parent = parent
   }
   get found() {
     return this.terms.length > 0
@@ -33,9 +31,10 @@ class Terms {
     tagger(this)
     return this
   }
-  static fromString(str, context) {
+
+  static fromString(str, lexicon, parent) {
     let termArr = tokenize(str)
-    let ts = new Terms(termArr, context)
+    let ts = new Terms(termArr, lexicon)
       //give each term a reference to this ts
     ts.terms.forEach((t) => {
       t.parent = ts;

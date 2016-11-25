@@ -27,10 +27,10 @@ const matchMethods = (Terms) => {
         }
       }
       matches = matches.map((a) => {
-          return new Terms(a)
+          return new Terms(a, this.lexicon, this.parent)
         })
         // return matches
-      let r = new Result(matches);
+      let r = new Result(matches, this.lexicon, this.parent);
       return r
     },
 

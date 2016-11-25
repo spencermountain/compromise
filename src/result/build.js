@@ -6,10 +6,10 @@ const tagPhrase = require('./tag/phrase');
 const Terms = require('./paths').Terms
 
 //build a new pos-tagged Result obj from a string
-const fromString = (str, context) => {
+const fromString = (str, lexicon) => {
   let sentences = tokenize(str)
-  let list = sentences.map((s) => Terms.fromString(s, context))
-  let r = new Result(list, context)
+  let list = sentences.map((s) => Terms.fromString(s, lexicon))
+  let r = new Result(list, lexicon)
     //give each ts a ref to the result
   r.list.forEach((ts) => {
     ts.parent = r;

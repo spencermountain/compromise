@@ -91,6 +91,8 @@ const corrections = function (r) {
   r.match('#FirstName #Acronym? #TitleCase').tag('#Person').lastTerm().tag('#LastName')
   r.match('#FirstName (#Singular|#Possessive)').tag('#Person').lastTerm().tag('#LastName')
   r.match('#FirstName #Acronym #Noun').tag('#Person').lastTerm().tag('#LastName')
+  r.match('(lady|queen) #TitleCase').tag('#FemalePerson')
+  r.match('(king|pope) #TitleCase').tag('#MalePerson')
 
   r = date_corrections(r);
 

@@ -1,13 +1,13 @@
 var test = require('tape');
 var nlp = require('./lib/nlp');
 
-test('==.person()==', function(T) {
+test('==.person()==', function (T) {
 
-  T.test('tricky names:', function(t) {
+  T.test('tricky names:', function (t) {
     [
       'john stewart',
       'martha stewart',
-    // 'dr. Martin Luther King',
+      // 'dr. Martin Luther King',
     ].forEach((a) => {
       var str = nlp(a).people().plaintext();
       var msg = '\'' + a + '\'  becomes \'' + str + '\'';

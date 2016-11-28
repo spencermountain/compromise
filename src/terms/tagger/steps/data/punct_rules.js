@@ -27,14 +27,13 @@ module.exports = [
   ['[0-9]{1,4}/[0-9]{1,4}', 'Fraction'], //3/2ths
   ['[0-9]{1,2}-[0-9]{1,2}', 'Value'], //7-8
 
-  //mostly-irish lastname patterns
-  //macdonell
-  ['ma?cd[aeiou].*', 'LastName'],
   //mc'adams
   ['ma?c\'.*', 'LastName'],
   //o'douggan
   ['o\'[^aeiouy].*', 'LastName'],
 
+
+  //de/van
 
 ].map(function (a) {
   return {

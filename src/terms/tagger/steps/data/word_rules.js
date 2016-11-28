@@ -145,7 +145,33 @@ module.exports = [
   ['^woo+[pt]?$', 'Expression'], //woo
   ['^ug?h+$', 'Expression'], //uhh
   ['^uh[ -]?oh$', 'Expression'], //uhoh
-].map(function(a) {
+
+  //lastname patterns
+  //https://en.wikipedia.org/wiki/List_of_family_name_affixes
+  //macdonell
+  ['^ma?cd[aeiou]', 'LastName'],
+  //icelandic/swedish
+  ['.sdottir$', 'LastName'], //female
+  ['.sson$', 'LastName'], //male
+  //polish
+  ['.[oau][wvl]ski$', 'LastName'], //male
+  ['.[oau][wvl]ska$', 'LastName'], //female
+  ['.czyk$', 'LastName'] //male
+  ['.marek$', 'LastName'] //male
+  //east-europe Hasanov, etc
+  ['.[^aeiou][ai][kln]ov$', 'LastName'], //
+  ['..chuk$', 'LastName'], //
+  ['..enko$', 'LastName'], //
+  ['.v[iy]ch$', 'LastName'], //
+  //greek
+  ['.opoulos$', 'LastName'], //
+  ['.akis$', 'LastName'], //
+  //lithuania
+  ['.auskas$', 'LastName']
+  //norway
+  ['.nss?en$', 'LastName']
+
+].map(function (a) {
   return {
     reg: new RegExp(a[0]),
     tag: a[1],

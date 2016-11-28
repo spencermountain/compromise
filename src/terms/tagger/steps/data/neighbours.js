@@ -67,6 +67,7 @@ let beforeThisPos = {
   Modal: 'Noun', //38%
   PluperfectTense: 'Noun', //40%
   PerfectTense: 'Verb', //32%
+  LastName: 'FirstName', //
 }
 module.exports = {
   beforeThisWord: beforeThisWord,

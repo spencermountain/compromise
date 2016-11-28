@@ -156,8 +156,8 @@ module.exports = [
   //polish
   ['.[oau][wvl]ski$', 'LastName'], //male
   ['.[oau][wvl]ska$', 'LastName'], //female
-  ['.czyk$', 'LastName'] //male
-  ['.marek$', 'LastName'] //male
+  ['.czyk$', 'LastName'], //male
+  ['.marek$', 'LastName'], //male
   //east-europe Hasanov, etc
   ['.[^aeiou][ai][kln]ov$', 'LastName'], //
   ['..chuk$', 'LastName'], //
@@ -167,7 +167,7 @@ module.exports = [
   ['.opoulos$', 'LastName'], //
   ['.akis$', 'LastName'], //
   //lithuania
-  ['.auskas$', 'LastName']
+  ['.auskas$', 'LastName'],
   //norway
   ['.nss?en$', 'LastName']
 

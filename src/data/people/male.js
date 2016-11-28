@@ -1,5 +1,6 @@
 'use strict';
 const fns = require('../fns');
+//names with a distinctive signal that they identify as a male, internationally
 
 //the unique/uncompressed names..
 let arr = [
@@ -66,6 +67,8 @@ let arr = [
 ];
 
 //compressed by frequent suffixes
+//comprssed with
+//https://github.com/nlp-compromise/thumb/blob/master/src/compress/compress.js
 let suffix_compressed = {
   rence: 'cla,lau,law,te,ter',
   lbert: 'a,de,e,gi,wi',

@@ -48,6 +48,13 @@ test('pos from-lexicon', function (t) {
     ['write', 'Verb'],
     ['survive', 'Verb'],
     ['attempt', 'Verb'],
+    ['mc\'adams', 'LastName'],
+    ['Müller', 'LastName'],
+    ['muller', 'LastName'],
+    ['425-1231', 'PhoneNumber'],
+    ['823-425-1231', 'PhoneNumber'],
+    ['823 425-1231', 'PhoneNumber'],
+    ['(823) 425-1231', 'PhoneNumber'],
   ];
   arr.forEach(function (a) {
     var term = nlp(a[0]).list[0].terms[0];

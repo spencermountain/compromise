@@ -109,6 +109,7 @@ data.nouns.forEach((n) => {
 //let a rip.
 addArr(data.verbs, 'Verb');
 addObj(data.firstnames);
+addArr(data.lastnames, 'LastName');
 addArr(data.places.airports, 'Place');
 addArr(data.places.cities, 'City');
 addArr(data.places.countries, 'Country');
@@ -127,7 +128,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon['second']);
+// console.log(lexicon['muller']);
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.verb.conjugate())

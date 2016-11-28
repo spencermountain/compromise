@@ -3,6 +3,7 @@
 //this is just a helper file for the main file paths..
 module.exports = {
   'firstnames': require('./people/firstnames'),
+  'lastnames': require('./people/lastnames'),
 
   'currencies': require('./values/currencies'),
   'numbers': require('./values/numbers'),

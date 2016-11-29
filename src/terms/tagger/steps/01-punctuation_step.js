@@ -3,6 +3,16 @@ const log = require('../paths').log;
 const rules = require('./data/punct_rules');
 const path = 'tagger/punctuation';
 
+const oneLetters = {
+  a: true,
+  i: true,
+  //e-speak
+  u: true,
+  r: true,
+  c: true,
+  k: true
+}
+
 const punctuation_step = function (ts) {
   log.here(path);
   ts.terms.forEach((t) => {
@@ -20,6 +30,10 @@ const punctuation_step = function (ts) {
         t.tagAs(r.tag, 'punctuation-rule- "' + r.str + '"');
         return;
       }
+    }
+    //terms like 'e'
+    if (str.length === 1 && !oneLetters[str]) {
+      t.tagAs('Acronym', 'one-letter-acronym')
     }
 
   });

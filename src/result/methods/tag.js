@@ -35,6 +35,7 @@ const splitMethods = (Result) => {
       if (this.canBe(tag)) {
         this.tag(tag)
       }
+      return this
     }
   }
 

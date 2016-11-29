@@ -1,6 +1,8 @@
 'use strict';
 // const normalize = require('./normalize');
-const fns = require('../paths').fns;
+const path = require('../paths');
+const fns = path.fns;
+const tagset = path.tags;
 const term = {
 
   /** the punctuation at the end of this term*/
@@ -127,6 +129,17 @@ const term = {
     return false;
   },
 
+
+  /** is this tag compatible with this word */
+  canBe: function (tag) {
+    let not = tagset[tag].not || [];
+    for (let i = 0; i < not.length; i++) {
+      if (this.tag[not[i]]) {
+        return false
+      }
+    }
+    return true
+  },
 
   /** check if it is word-like in english */
   isWord: function () {

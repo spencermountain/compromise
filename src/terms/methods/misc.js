@@ -17,6 +17,17 @@ const miscMethods = (Terms) => {
     endPunctuation: function () {
       return this.last().terms[0].endPunctuation();
     },
+    canBe: function (tag) {
+      tag = tag || ''
+      tag = tag.replace(/^#/, '')
+        //atleast one of these
+      for (let i = 0; i < this.terms.length; i++) {
+        if (!this.terms[i].term.canBe(tag)) {
+          return false
+        }
+      }
+      return true
+    }
   }
 
   //hook them into result.proto

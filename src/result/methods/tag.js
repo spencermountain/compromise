@@ -20,6 +20,22 @@ const splitMethods = (Result) => {
       return this;
     },
 
+    /** see if these terms can become this tag*/
+    canBe: function (tag) {
+      for (let i = 0; i < this.list.length; i++) {
+        if (!this.list[i].canBe(tag)) {
+          return false
+        }
+      }
+      return true
+    },
+
+    /** only tag this selection if it's consistent */
+    tagMaybe: function (tag) {
+      if (this.canBe(tag)) {
+        this.tag(tag)
+      }
+    }
   }
 
   //hook them into result.proto

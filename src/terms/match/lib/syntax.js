@@ -5,7 +5,8 @@ const fns = require('./paths').fns;
 const camelCase = {
   sportsteam: 'SportsTeam',
   futureperfect: 'FuturePerfect',
-  numberrange: 'NumberRange'
+  numberrange: 'NumberRange',
+  titlecase: 'TitleCase'
 }
 
 //turn 'regex-like' search string into parsed json

@@ -63,7 +63,8 @@ let arr = [
   'timothy',
   'wilbur',
   'williams',
-  'woodrow'
+  'woodrow',
+  'muhammad'
 ];
 
 //compressed by frequent suffixes

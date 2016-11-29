@@ -119,6 +119,7 @@ let list = [
   'jo',
   'joni',
   'kate',
+  'katie',
   'kathryn',
   'kay',
   'kim',
@@ -158,7 +159,8 @@ let list = [
   'tami',
   'tamika',
   'therese',
-  'toni'
+  'toni',
+  'gisele'
 ]
 list = fns.uncompress_suffixes(list, compressed);
 
@@ -166,7 +168,6 @@ for (let i = 0; i < list.length; i++) {
   let str = list[i]
   if (str.match(/[^ea]y$/)) {
     list.push(str.replace(/y$/, 'i'))
-    list.push(str.replace(/y$/, 'y'))
   }
   if (str.match(/ll/)) {
     list.push(str.replace(/ll/, 'l'))
@@ -202,6 +203,7 @@ const no_change = [
   'dolly',
   'dorothy',
   'hilary',
+  'hillary',
   'kimberly',
   'rosemary',
   'sally',
@@ -214,3 +216,4 @@ const no_change = [
 ]
 list = list.concat(no_change)
 module.exports = list
+console.log(list.indexOf('katie'))

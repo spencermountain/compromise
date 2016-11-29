@@ -25,7 +25,8 @@ const step = {
   possessive_step: require('./steps/14-possessive_step'),
   value_step: require('./steps/15-value_step'),
   acronym_step: require('./steps/16-acronym_step'),
-  emoji_step: require('./steps/17-emoji_step')
+  emoji_step: require('./steps/17-emoji_step'),
+  person_step: require('./steps/18-person_step')
 };
 // const corrections = require('./corrections');
 // const tagPhrase = require('./tagPhrase');
@@ -51,6 +52,7 @@ const tagger = function (ts) {
   ts = step.possessive_step(ts);
   ts = step.value_step(ts);
   ts = step.acronym_step(ts);
+  ts = step.person_step(ts);
   //lump a couple times, for long ones
   for (let i = 0; i < 3; i++) {
     ts = lumper.lump_three(ts);

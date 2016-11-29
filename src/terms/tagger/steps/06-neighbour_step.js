@@ -9,7 +9,7 @@ const path = 'tagger/neighbours';
 
 //basically a last-ditch effort before everything falls back to a noun
 //for unknown terms, look left + right first, and hit-up the markov-chain for clues
-const neighbour_step = function(s) {
+const neighbour_step = function (s) {
   log.here(path);
   s.terms.forEach((t, n) => {
     //is it still unknown?

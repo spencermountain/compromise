@@ -27,7 +27,7 @@ const compressed = {
   inda: 'bel,l,luc,mel',
   arla: 'c,d,k,m',
   lena: 'e,je,,magda',
-  ine: 'carol,cather,ela,franc,gerald,jan,jasm,jeann,joseph,kathar,kather,lorra,max,nad,paul',
+  ine: 'carol,cather,cel,ela,franc,gerald,jan,jasm,jeann,joseph,kathar,kather,lorra,max,nad,paul',
   ice: 'al,beatr,bern,cand,clar,eun,jan,patr',
   ela: 'andj,ang,carm,gabri,graci,l,manu,pam',
   ara: 'barb,c,cl,k,l,tam,t,z',
@@ -216,4 +216,4 @@ const no_change = [
 ]
 list = list.concat(no_change)
 module.exports = list
-console.log(list.indexOf('katie'))
+  // console.log(list.indexOf('katie'))

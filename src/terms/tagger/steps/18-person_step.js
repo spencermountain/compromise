@@ -15,11 +15,11 @@ const person_step = function (ts) {
   ts.match('#Acronym #TitleCase').tagMaybe('#Person')
   ts.match('#Noun van der? #Noun').tagMaybe('#Person')
   ts.match('#FirstName de #Noun').tagMaybe('#Person')
-  ts.match('(king|queen|prince|saint) of #Noun').tagMaybe('#Person')
-  ts.match('#FirstName al #Noun').tagMaybe('#Person')
+  ts.match('(king|queen|prince|saint|lady) of? #Noun').tagMaybe('#Person')
+  ts.match('#FirstName (bin|al) #Noun').tagMaybe('#Person')
 
   //ambiguous firstnames
-  let maybe = ['will', 'may', 'april', 'june']
+  let maybe = ['will', 'may', 'april', 'june', 'said', 'rob', 'wade', 'ray', 'rusty', 'drew', 'miles', 'jack', 'chuck', 'randy', 'jan', 'pat', 'cliff', 'bill']
   maybe = '(' + maybe.join('|') + ')'
   ts.match(maybe + ' #LastName').firstTerm().tag('#FirstName')
 

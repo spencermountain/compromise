@@ -15,6 +15,15 @@ class Dates extends Result {
     })
     return dates
   }
+  toShortForm() {
+    this.match('(#Month|#WeekDay)').terms().forEach((t) => {
+      t = t.date.toShortForm()
+    })
+    return this
+  }
+  toLongForm() {
+    return this
+  }
   parse() {
     return this.list.map((ts) => ts.parse())
   }

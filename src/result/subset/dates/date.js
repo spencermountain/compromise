@@ -1,28 +1,24 @@
 'use strict';
 const Terms = require('../../paths').Terms;
 const parsePunt = require('./parsePunt');
+const parseSection = require('./parseSection');
+const parseRelative = require('./parseRelative');
+const parseDate = require('./parseDate');
 
 class Date extends Terms {
   constructor(terms, context) {
     super(terms, context);
     this.month = this.match('#Month')
   }
-  parseRelative() {
-    return null
-  }
-  parseDate() {
-    return {
-      month: null,
-      date: null,
-      day: null,
-      year: null,
-      knownDate: null
-    }
-  }
+
   parse() {
     let obj = {}
-    obj.punt = parsePunt(this)
-    obj.parseRelative = this.parseRelative()
+      //parsing order matters..
+      //[two days before] [the start of] [this] [thursday]
+    obj.punt = parsePunt(this) //two days before
+    obj.section = parseSection(this) //the start of
+    obj.relative = parseRelative(this) //this
+    obj.relative = parseDate(this) //thursday
     return obj
   }
 }

@@ -6,7 +6,8 @@ const path = 'date_correction';
 const months = '(may|march|jan|april)';
 const preps = '(in|by|before|for|during|on|until|after|of)';
 const thisNext = '(last|next|this|previous|current|upcoming|coming)';
-// const dayTime = '(night|evening|morning|afternoon|day|daytime)';
+const sections = '(start|end|middle|starting|ending|midpoint|beginning)'
+  // const dayTime = '(night|evening|morning|afternoon|day|daytime)';
 
 const corrections = function (r) {
   log.here(path);
@@ -32,7 +33,7 @@ const corrections = function (r) {
   r.match('#Month #Value to #Value').tag('Date', 'value-to-value');
 
   //last month
-  r.match(`${thisNext} #Duration`).tag('Date', 'this-duration');
+  r.match(`${thisNext} #Date`).tag('Date', 'thisNext-date');
   //for four days
   r.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration');
 
@@ -55,6 +56,13 @@ const corrections = function (r) {
   r.match('#Date #Value').tag('Date', '');
   r.match('#Value #Date').tag('Date', '');
   r.match('#Date #Preposition #Date').tag('Date', '');
+
+  //two days before
+  r.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction');
+
+  //start of june
+  r.match(`the? ${sections} of #Date`).tag('Date', 'section-of-date');
+
   return r;
 };
 module.exports = corrections;

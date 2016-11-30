@@ -28,9 +28,10 @@ class Term {
     bindMethods(require('./adjective'), 'adjective', this);
     bindMethods(require('./adverb'), 'adverb', this);
     bindMethods(require('./value'), 'value', this);
-    bindMethods(require('./date'), 'date', this);
     bindMethods(require('./pronoun'), 'pronoun', this);
     bindMethods(require('./render'), 'render', this);
+    bindMethods(require('./month'), 'month', this);
+    bindMethods(require('./weekday'), 'weekday', this);
 
     this.normalize();
     this.silent_term = '';

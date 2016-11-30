@@ -16,12 +16,21 @@ class Dates extends Result {
     return dates
   }
   toShortForm() {
-    this.match('(#Month|#WeekDay)').terms().forEach((t) => {
-      t = t.date.toShortForm()
+    this.match('#Month').terms().forEach((t) => {
+      t = t.month.toShortForm()
+    })
+    this.match('#WeekDay').terms().forEach((t) => {
+      t = t.weekday.toShortForm()
     })
     return this
   }
   toLongForm() {
+    this.match('#Month').terms().forEach((t) => {
+      t = t.month.toLongForm()
+    })
+    this.match('#WeekDay').terms().forEach((t) => {
+      t = t.weekday.toLongForm()
+    })
     return this
   }
   parse() {

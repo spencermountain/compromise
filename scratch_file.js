@@ -19,4 +19,4 @@ const lexicon = {
 let r = nlp('two days before the start of this next wednesday june 5th 1992', lexicon)
   // r.check()
   // console.log(r.dates().parse())
-r.dates().toLongForm().check()
+r.dates().toShortForm().check()

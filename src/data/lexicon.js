@@ -44,7 +44,7 @@ addArr(Object.keys(data.irregular_plurals.toSingle), 'Plural');
 //dates are well-structured
 addArr(data.dates.days, 'WeekDay');
 addArr(data.dates.months, 'Month');
-addArr(data.dates.relative, 'Date');
+addArr(data.dates.relative, 'RelativeDay');
 addArr(data.holidays, 'Holiday');
 
 addArr(data.professions, 'Actor'); //?

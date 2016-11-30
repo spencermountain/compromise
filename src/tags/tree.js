@@ -34,6 +34,7 @@ module.exports = {
   Date: {
     Month: true,
     WeekDay: true,
+    RelativeDay: true,
     Year: true,
     Duration: true,
     Time: true,

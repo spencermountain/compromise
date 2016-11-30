@@ -31,7 +31,8 @@ const tag_one = (term, tag, reason) => {
 };
 
 const tagAll = function (term, tag, reason) {
-  if (!term || !tag) {
+  if (!term || !tag || typeof tag !== 'string') {
+    console.log(tag)
     return;
   }
   tag = tag || '';

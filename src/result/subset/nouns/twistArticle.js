@@ -13,9 +13,9 @@ const singularMap = {
 };
 
 //the article comes before this noun
-const findArticle = function(ts, i) {
+const findArticle = function (ts, i) {
   //look backward a couple terms for the article
-  for(let o = i; o >= 0; o -= 1) {
+  for (let o = i; o >= 0; o -= 1) {
     let t = ts.terms[o];
     //smells like an article
     if (t && pluralMap[t.normal] || singularMap[t.normal]) {
@@ -47,11 +47,11 @@ const singular = (ts, i) => {
     if (singularMap[article.normal]) {
       article.text = singularMap[article.normal];
     } else {
-      article.text = ts.terms[i].noun.makeArticle(); // (a/an)
+      // article.text = ts.terms[i].noun.makeArticle(); // (a/an)
     }
   } else {
-    let art = ts.terms[i].noun.makeArticle();
-    ts.insertAt(art, i - 1);
+    // let art = ts.terms[i].noun.makeArticle();
+    // ts.insertAt(art, i - 1);
   }
   return ts;
 };

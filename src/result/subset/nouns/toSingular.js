@@ -2,11 +2,11 @@
 const twistArticle = require('./twistArticle');
 
 //inflect a term or termlist
-const toSingular = function(options) {
+const toSingular = function (options) {
   options = options || {};
   this.list = this.list.map((ts) => {
     let len = ts.terms.length;
-    for(let i = 0; i < len; i++) {
+    for (let i = 0; i < len; i++) {
       let t = ts.terms[i];
       if (t.tag.Noun && t.noun.hasPlural()) {
         t.text = t.noun.singular() || t.text;

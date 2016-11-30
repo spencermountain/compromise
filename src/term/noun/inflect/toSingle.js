@@ -3,12 +3,11 @@ const irregulars = require('../../paths').data.irregular_plurals.toSingle;
 const singleRules = require('./data/singleRules');
 
 //turn 'shoes' into 'shoe'
-const toSingle = function(str) {
+const toSingle = function (str) {
   //irregular
   if (irregulars[str]) {
     return irregulars[str];
   }
-
   //inflect first word of preposition-phrase
   if (str.match(/([a-z]*) (of|in|by|for) [a-z]/)) {
     const first = (str.match(/^([a-z]*) (of|in|by|for) [a-z]/) || [])[1];
@@ -29,3 +28,4 @@ const toSingle = function(str) {
 
 // console.log(toSingle('gases') === 'gas')
 module.exports = toSingle;
+// console.log(toSingle('days'))

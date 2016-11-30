@@ -35,6 +35,7 @@ const subset = {
     adverbs: require('./subset/adverbs'),
     contractions: require('./subset/contractions'),
     nouns: require('./subset/nouns'),
+    dates: require('./subset/dates'),
     people: require('./subset/people'),
     values: require('./subset/values'),
     verbs: require('./subset/verbs'),

@@ -2,7 +2,7 @@
 const uncountables = require('../paths').data.uncountables;
 
 //certain words can't be plural, like 'peace'
-const hasPlural = function(t) {
+const hasPlural = function (t) {
   //end quick
   if (!t.tag.Noun) {
     return false;
@@ -14,11 +14,14 @@ const hasPlural = function(t) {
   const noPlural = [
     'Pronoun',
     'Place',
-    'Date',
     'Value',
-    'Person'
+    'Person',
+    'Month',
+    'WeekDay',
+    'RelativeDay',
+    'Holiday',
   ];
-  for(let i = 0; i < noPlural.length; i++) {
+  for (let i = 0; i < noPlural.length; i++) {
     if (t.tag[noPlural[i]]) {
       return false;
     }

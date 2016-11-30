@@ -2,15 +2,29 @@
 const irregulars = require('../../paths').data.irregular_plurals;
 const rules = require('./data/indicators');
 
+
+//is it potentially plural?
+const noPlural = [
+  'Pronoun',
+  'Place',
+  'Value',
+  'Person',
+  'Month',
+  'WeekDay',
+  'RelativeDay',
+  'Holiday',
+];
 //first, try to guess based on existing tags
 const couldEvenBePlural = (t) => {
-  if (t.tag.Person || t.tag.Pronoun || t.tag.Place || t.tag.Possessive || t.tag.Value || t.tag.Organization || t.tag.Date) {
-    return false;
+  for (let i = 0; i < noPlural.length; i++) {
+    if (t.tag[noPlural[i]]) {
+      return false
+    }
   }
   return true;
 };
 
-const is_plural = function(t) {
+const is_plural = function (t) {
   let str = t.normal;
   //inspect the existing tags to see if a plural is valid
   if (!couldEvenBePlural(t)) {
@@ -52,5 +66,6 @@ const is_plural = function(t) {
 // console.log(is_plural('eyebrows') === true)
 // console.log(is_plural('child') === false)
 // console.log(is_plural('children') === true)
+// console.log(is_plural('days') === true)
 
 module.exports = is_plural;

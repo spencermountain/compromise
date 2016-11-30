@@ -5,10 +5,11 @@ const tokenize = require('./methods/tokenize');
 class Terms {
   constructor(arr, lexicon, parent) {
     this.terms = arr;
+    this.lexicon = lexicon
+    this.parent = parent
     this.get = (n) => {
       return this.terms[n];
     };
-    this.parent = parent
   }
   get found() {
     return this.terms.length > 0

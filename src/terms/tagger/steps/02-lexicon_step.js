@@ -16,19 +16,19 @@ const check_lexicon = (str, sentence) => {
   return null;
 };
 
-const lexicon_pass = function (s) {
+const lexicon_pass = function (ts) {
   log.here(path);
   let found;
   //loop through each term
-  for (let i = 0; i < s.terms.length; i++) {
-    let t = s.terms[i];
+  for (let i = 0; i < ts.terms.length; i++) {
+    let t = ts.terms[i];
     //basic term lookup
-    found = check_lexicon(t.normal, s);
+    found = check_lexicon(t.normal, ts);
     if (found) {
       t.tagAs(found, 'lexicon-match');
       continue;
     }
-    found = check_lexicon(t.text, s);
+    found = check_lexicon(t.text, ts);
     if (found) {
       t.tagAs(found, 'lexicon-match-text');
       continue;
@@ -36,14 +36,14 @@ const lexicon_pass = function (s) {
     //support contractions (manually)
     let parts = t.term.contraction();
     if (parts && parts.start) {
-      found = check_lexicon(parts.start.toLowerCase(), s);
+      found = check_lexicon(parts.start.toLowerCase(), ts);
       if (found) {
         t.tagAs(found, 'contraction-lexicon');
         continue;
       }
     }
     //support silent_term matches
-    found = check_lexicon(t.silent_term, s);
+    found = check_lexicon(t.silent_term, ts);
     if (t.silent_term && found) {
       t.tagAs(found, 'silent_term-lexicon');
       continue;
@@ -51,14 +51,14 @@ const lexicon_pass = function (s) {
     //multiple-words / hyphenation
     let words = t.normal.split(/[ -]/);
     if (words.length > 1) {
-      found = check_lexicon(words[words.length - 1], s);
+      found = check_lexicon(words[words.length - 1], ts);
       if (found) {
         t.tagAs(found, 'multiword-lexicon');
         continue;
       }
     }
   }
-  return s;
+  return ts;
 };
 
 module.exports = lexicon_pass;

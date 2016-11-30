@@ -6,10 +6,10 @@ const longDays = data.longDays
 module.exports = {
   index: function () {
     if (this.tag.WeekDay) {
-      if (longDays[this.normal]) {
+      if (longDays[this.normal] !== undefined) {
         return longDays[this.normal]
       }
-      if (shortDays[this.normal]) {
+      if (shortDays[this.normal] !== undefined) {
         return shortDays[this.normal]
       }
     }

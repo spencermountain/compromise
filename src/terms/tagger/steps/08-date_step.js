@@ -16,7 +16,7 @@ const isYear = (t) => {
   if (t.tag.Ordinal) {
     return false;
   }
-  let num = t.value.number;
+  let num = t.value.cardinal;
   if (!num || num < 1000 || num > 3000) {
     return false;
   }
@@ -24,35 +24,30 @@ const isYear = (t) => {
 };
 
 //rules for two-term dates
-const twoDates = [
-  {
-    condition: (a, b) => (preDate[a.normal] && b.tag.Date),
-    reason: 'predate-date'
-  },
-];
+const twoDates = [{
+  condition: (a, b) => (preDate[a.normal] && b.tag.Date),
+  reason: 'predate-date'
+}, ];
 
 //rules for three-term dates
-const threeDates = [
-  {
-    condition: (a, b, c) => (a.tag.Month && b.tag.Value && c.tag.Cardinal && isYear(c)),
-    reason: 'month-value-year'
-  },
-  {
-    condition: (a, b, c) => (a.tag.Date && b.normal === 'and' && c.tag.Date),
-    reason: 'date-and-date'
-  },
-];
+const threeDates = [{
+  condition: (a, b, c) => (a.tag.Month && b.tag.Value && c.tag.Cardinal && isYear(c)),
+  reason: 'month-value-year'
+}, {
+  condition: (a, b, c) => (a.tag.Date && b.normal === 'and' && c.tag.Date),
+  reason: 'date-and-date'
+}, ];
 
 //non-destructively tag values & prepositions as dates
-const datePass = function(s) {
+const datePass = function (s) {
   log.here(path);
   //set verbs as auxillaries
-  for(let i = 0; i < s.terms.length - 1; i++) {
+  for (let i = 0; i < s.terms.length - 1; i++) {
     let a = s.terms[i];
     let b = s.terms[i + 1];
     let c = s.terms[i + 2];
     if (c) {
-      for(let o = 0; o < threeDates.length; o++) {
+      for (let o = 0; o < threeDates.length; o++) {
         if (threeDates[o].condition(a, b, c)) {
           a.tagAs('Date', threeDates[o].reason);
           b.tagAs('Date', threeDates[o].reason);
@@ -60,7 +55,7 @@ const datePass = function(s) {
         }
       }
     }
-    for(let o = 0; o < twoDates.length; o++) {
+    for (let o = 0; o < twoDates.length; o++) {
       if (twoDates[o].condition(a, b)) {
         a.tagAs('Date', twoDates[o].reason);
         b.tagAs('Date', twoDates[o].reason);

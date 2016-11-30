@@ -24,16 +24,16 @@ const parsePunt = (r) => {
   }
   //interpret 'value + duration'
   if (m.found) {
-    let num = m.values().parse()[0]
-    if (num) {
-      num = num.cardinal
-    }
-    let str = m.match('#Duration').nouns().toSingular().normal()
-    if (durations[str]) {
-      duration = str
-      direction = num
-        // r.remove(m)
-    }
+    r.match('#Value #Duration').forEach((ts) => {
+      let num = ts.match('#Value').values().toNumber().parse()[0]
+      if (num) {
+        num = num.cardinal
+      }
+      let str = ts.match('#Duration').nouns().toSingular().normal()
+      if (durations[str]) {
+        duration[str] = num
+      }
+    })
   }
   return {
     direction: direction,

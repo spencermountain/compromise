@@ -1,12 +1,15 @@
 'use strict';
+//parse '5 days before', 'three weeks after'..
 const durations = {
-    year: true,
-    month: true,
-    week: true,
-    day: true,
-    hour: true,
-  }
-  //
+  year: true,
+  quarter: true,
+  month: true,
+  week: true,
+  weekend: true,
+  day: true,
+  hour: true,
+}
+
 const parsePunt = (r) => {
   let direction = null
   let duration = {}
@@ -19,15 +22,18 @@ const parsePunt = (r) => {
     m = r.match('#Value #Duration (before)')
     direction = 'backward'
   }
-  //interpret 'value duration'
+  //interpret 'value + duration'
   if (m.found) {
     let num = m.values().parse()[0]
     if (num) {
       num = num.number
     }
-    let duration = m.match('#Duration').nouns().toSingular().normal()
-
-    console.log(duration)
+    let str = m.match('#Duration').nouns().toSingular().normal()
+    if (durations[str]) {
+      duration = str
+      direction = num
+        // r.remove(m)
+    }
   }
   return {
     direction: direction,

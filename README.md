@@ -21,7 +21,7 @@
   </sub>
 </div>
 <div align="center">
-  <code>npm install nlp_compromise</code>
+  <code>npm install nlp_compromise@next</code>
 </div>
 <br/>
 <div align="center">

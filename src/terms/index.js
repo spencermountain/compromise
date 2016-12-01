@@ -3,10 +3,11 @@ const tagger = require('./tagger');
 const tokenize = require('./methods/tokenize');
 
 class Terms {
-  constructor(arr, lexicon, parent) {
+  constructor(arr, lexicon, parent, full) {
     this.terms = arr;
     this.lexicon = lexicon
     this.parent = parent
+    this.full = full
     this.get = (n) => {
       return this.terms[n];
     };
@@ -17,20 +18,18 @@ class Terms {
   get length() {
     return this.terms.length;
   }
-  get index() {
-    let result = this.parent
-    if (Text) {
-      for (let i = 0; i < result.list.length; i++) {
-        if (result.list[i] === this) {
-          return i
-        }
-      }
-    }
-    return null
-  }
   posTag() {
     tagger(this)
     return this
+  }
+  all() {
+    return this.full || this
+  }
+  place() {
+
+  }
+  wut() {
+    return 'Terms'
   }
 
   static fromString(str, lexicon, parent) {
@@ -50,4 +49,5 @@ Terms = require('./methods/insert')(Terms);
 Terms = require('./methods/render')(Terms);
 Terms = require('./methods/misc')(Terms);
 Terms = require('./methods/transform')(Terms);
+module.exports = Terms;;
 module.exports = Terms;

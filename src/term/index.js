@@ -51,6 +51,9 @@ class Term {
   get text() {
     return this._text;
   }
+  wut() {
+    return 'Term'
+  }
 
   normalize() {
     addNormal(this);

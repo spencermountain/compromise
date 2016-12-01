@@ -15,6 +15,7 @@ test('fancy match', function (t) {
     ['he\'s nice', 'is nice', 2],
     ['he\'s nice', 'he\'s', 1],
     ['he\'s nice', 'he\'s nice', 3],
+    ['he\'s nice', 'nice', 1],
 
     //over/under
     ['he is nice', 'is nice and good', 0],

@@ -14,6 +14,9 @@ class Text {
   get length() {
     return this.list.length;
   }
+  wut() {
+    return 'Text'
+  }
 }
 
 module.exports = Text;
@@ -23,11 +26,11 @@ Text = require('./methods/sort')(Text);
 Text = require('./methods/match/match')(Text);
 Text = require('./methods/match/remove')(Text);
 Text = require('./methods/match/replace')(Text);
-Text = require('./methods/match/split')(Text);
-Text = require('./methods/match/insert')(Text);
-Text = require('./methods/build/render')(Text);
-Text.prototype.topk = require('./methods/build/topk');
-Text.prototype.ngram = require('./methods/build/ngram');
+Text = require('./methods/render/render')(Text);
+Text = require('./methods/split')(Text);
+Text = require('./methods/insert')(Text);
+Text.prototype.topk = require('./methods/render/topk');
+Text.prototype.ngram = require('./methods/render/ngram');
 Text.prototype.normalize = require('./methods/normalize');
 
 const subset = {

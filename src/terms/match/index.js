@@ -10,7 +10,7 @@ const matchMethods = (Terms) => {
   const methods = {
 
     /**match all */
-    match: function (str) {
+    match: function (str, verbose) {
       let matches = [];
       let regs = syntax(str);
       for (let t = 0; t < this.terms.length; t++) {
@@ -18,7 +18,7 @@ const matchMethods = (Terms) => {
         if (regs[0] && regs[0].starting && t > 0) {
           break;
         }
-        let m = startHere(this, t, regs);
+        let m = startHere(this, t, regs, verbose);
         if (m) {
           matches.push(m);
           //ok, don't try to match these again.
@@ -27,7 +27,7 @@ const matchMethods = (Terms) => {
         }
       }
       matches = matches.map((a) => {
-          return new Terms(a, this.lexicon, this.parent)
+          return new Terms(a, this.lexicon, this.parent, this)
         })
         // return matches
       let r = new Text(matches, this.lexicon, this.parent);

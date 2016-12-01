@@ -4,7 +4,7 @@ const lumpMatch = require('./lumpMatch');
 
 // match everything until this point - '*'
 const greedyUntil = (terms, i, reg) => {
-  for(i = i; i < terms.length; i++) {
+  for (i = i; i < terms.length; i++) {
     if (fullMatch(terms.get(i), reg)) {
       return i;
     }
@@ -14,7 +14,7 @@ const greedyUntil = (terms, i, reg) => {
 
 //keep matching this reg as long as possible
 const greedyOf = (terms, i, reg, until) => {
-  for(i = i; i < terms.length; i++) {
+  for (i = i; i < terms.length; i++) {
     let t = terms.get(i);
     //found next reg ('until')
     if (until && fullMatch(t, until)) {
@@ -29,10 +29,10 @@ const greedyOf = (terms, i, reg, until) => {
 };
 
 //try and match all regs, starting at this term
-const startHere = (ts, startAt, regs) => {
+const startHere = (ts, startAt, regs, verbose) => {
   let term_i = startAt;
   //check each regex-thing
-  for(let reg_i = 0; reg_i < regs.length; reg_i++) {
+  for (let reg_i = 0; reg_i < regs.length; reg_i++) {
     let term = ts.get(term_i);
     let reg = regs[reg_i];
     let next_reg = regs[reg_i + 1];
@@ -119,6 +119,17 @@ const startHere = (ts, startAt, regs) => {
       continue;
     }
 
+    if (term.silent_term && !term.normal) { //skip over silent contraction terms
+      //we will continue on it, but not start on it
+      if (reg_i === 0) {
+        return null
+      }
+      //try the next term, but with this regex again
+      term_i += 1;
+      reg_i -= 1;
+      continue;
+    }
+
     //handle partial-matches of lumped terms
     let lumpUntil = lumpMatch(term, regs, reg_i);
     if (lumpUntil) {
@@ -127,13 +138,6 @@ const startHere = (ts, startAt, regs) => {
       continue;
     }
 
-    //skip over silent contraction terms
-    if (term.silent_term && !term.normal) {
-      //try the next term, but with this regex again
-      term_i += 1;
-      reg_i -= 1;
-      continue;
-    }
 
     //was it optional anways?
     if (reg.optional) {

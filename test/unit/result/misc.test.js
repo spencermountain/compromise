@@ -29,28 +29,28 @@ test('misc:', function (t) {
   m = nlp(str).values().toTextValue();
   t.equal(m.normal(), 'doug is five years old', str);
 
-  str = 'i\'d buy those nachos';
-  m = nlp(str).sentences().toSingular();
-  t.equal(m.normal(), 'i\'d buy that nacho', str);
-
-  str = 'i\'d buy these nachos';
-  m = nlp(str).sentences().toSingular();
-  t.equal(m.normal(), 'i\'d buy this nacho', str);
-
-  str = 'i\'d buy nachos';
-  m = nlp(str).sentences().toSingular();
-  t.equal(m.normal(), 'i\'d buy a nacho', str);
-
-  str = 'i\'d buy the nachos';
-  m = nlp(str).sentences().toSingular();
-  t.equal(m.normal(), 'i\'d buy a nacho', str);
-
-  str = 'i\'d buy the eggs';
-  m = nlp(str).sentences().toSingular();
-  t.equal(m.normal(), 'i\'d buy an egg', str);
-
-  str = 'men go';
-  m = nlp(str).verbs().toPast().nouns().toSingular();
-  t.equal(m.normal(), 'a man went', str);
+  // str = 'i\'d buy those nachos';
+  // m = nlp(str).sentences().toSingular();
+  // t.equal(m.normal(), 'i\'d buy that nacho', str);
+  //
+  // str = 'i\'d buy these nachos';
+  // m = nlp(str).sentences().toSingular();
+  // t.equal(m.normal(), 'i\'d buy this nacho', str);
+  //
+  // str = 'i\'d buy nachos';
+  // m = nlp(str).sentences().toSingular();
+  // t.equal(m.normal(), 'i\'d buy a nacho', str);
+  //
+  // str = 'i\'d buy the nachos';
+  // m = nlp(str).sentences().toSingular();
+  // t.equal(m.normal(), 'i\'d buy a nacho', str);
+  //
+  // str = 'i\'d buy the eggs';
+  // m = nlp(str).sentences().toSingular();
+  // t.equal(m.normal(), 'i\'d buy an egg', str);
+  //
+  // str = 'men go';
+  // m = nlp(str).sentences().toPast().nouns().toSingular();
+  // t.equal(m.normal(), 'a man went', str);
   t.end();
 });

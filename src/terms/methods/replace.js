@@ -9,14 +9,18 @@ const replaceMethods = (Terms) => {
       if (str === undefined) {
         return this.replaceWith(reg)
       }
-      let ts = this.match(reg)
       ts.replaceWith(str)
       return this
     },
+
     /**swap this for that */
-    replaceWith: function (str) {
+    replaceWith: function (str, tag) {
       let ts = Terms.fromString(str)
-      this.terms = ts.terms
+      if (tag) {
+        ts.set_tag(tag, 'user-given')
+      }
+      ts.tagAs(tag, 'given')
+      this.terms.forEach((ts) => {})
       return this
     }
 
@@ -29,4 +33,4 @@ const replaceMethods = (Terms) => {
   return Terms;
 };
 
-module.exports = replaceMethods;
+module.exports = replaceMethods;;

@@ -23,6 +23,7 @@ module.exports = Text;
 Text = require('./methods/misc')(Text);
 Text = require('./methods/tag')(Text);
 Text = require('./methods/sort')(Text);
+Text = require('./methods/case')(Text);
 Text = require('./methods/match/match')(Text);
 Text = require('./methods/match/remove')(Text);
 Text = require('./methods/match/replace')(Text);

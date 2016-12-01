@@ -5,7 +5,7 @@ const renderMethods = (Terms) => {
   const methods = {
 
     plaintext: function () {
-      return this.terms.reduce((str, t, i) => {
+      return this.selected.reduce((str, t, i) => {
         // if (i === 0) {
         //   str += t.text + t.whitespace.after;
         // } else if (i === this.terms.length - 1) {
@@ -18,11 +18,11 @@ const renderMethods = (Terms) => {
     },
 
     normal: function () {
-      return this.terms.filter((t) => t.text).map((t) => t.normal).join(' ');
+      return this.selected.filter((t) => t.text).map((t) => t.normal).join(' ');
     },
 
     check: function () {
-      this.terms.forEach((t) => {
+      this.selected.forEach((t) => {
         t.render.check();
       });
     }

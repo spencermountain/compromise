@@ -18,12 +18,21 @@ class Terms {
   get length() {
     return this.terms.length;
   }
+  get selected() {
+      return this.terms.filter((t) => t.sel);
+    }
+    // set selected(arr) {
+    //
+    // }
   posTag() {
     tagger(this)
     return this
   }
   all() {
-    return this.full || this
+    this.terms.forEach((t) => {
+      t.sel = true
+    })
+    return this
   }
   place() {
 
@@ -44,9 +53,12 @@ class Terms {
   }
 }
 Terms = require('./match')(Terms);
+Terms = require('./methods/case')(Terms);
 Terms = require('./methods/split')(Terms);
 Terms = require('./methods/insert')(Terms);
 Terms = require('./methods/replace')(Terms);
+Terms = require('./methods/tag')(Terms);
+Terms = require('./methods/remove')(Terms);
 Terms = require('./methods/render')(Terms);
 Terms = require('./methods/misc')(Terms);
 Terms = require('./methods/transform')(Terms);

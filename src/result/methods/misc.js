@@ -25,7 +25,8 @@ const genericMethods = (Text) => {
     },
 
     all: function () {
-      return this.parent || this;
+      this.list.forEach((ts) => ts.all())
+      return this
     },
 
     /** get the nth term of each result*/

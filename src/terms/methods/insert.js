@@ -11,10 +11,10 @@ const insertMethods = (Terms) => {
       return this
     },
     insertAfter: function (str) {
-      let ts = Terms.fromString(str)
-      this.terms = this.terms.concat(ts.terms)
-      let index = this.last().terms[0].index()
-      console.log(this.all().wut())
+      // let ts = Terms.fromString(str)
+      // this.terms = this.terms.concat(ts.terms)
+      // let index = this.last().terms[0].index()
+      // console.log(this.all().wut())
       return this
     },
     insertAt: function (str, i) {}

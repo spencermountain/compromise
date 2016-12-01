@@ -1,11 +1,11 @@
 'use strict';
-const fullMatch = require('./fullMatch');
 const lumpMatch = require('./lumpMatch');
 
 // match everything until this point - '*'
-const greedyUntil = (terms, i, reg) => {
-  for (i = i; i < terms.length; i++) {
-    if (fullMatch(terms.get(i), reg)) {
+const greedyUntil = (ts, i, reg) => {
+  for (i = i; i < ts.length; i++) {
+    let t = ts.terms[i]
+    if (t.isMatch(reg)) {
       return i;
     }
   }
@@ -13,15 +13,15 @@ const greedyUntil = (terms, i, reg) => {
 };
 
 //keep matching this reg as long as possible
-const greedyOf = (terms, i, reg, until) => {
-  for (i = i; i < terms.length; i++) {
-    let t = terms.get(i);
-    //found next reg ('until')
-    if (until && fullMatch(t, until)) {
+const greedyOf = (ts, i, reg, until) => {
+  for (i = i; i < ts.length; i++) {
+    let t = ts.terms[i]
+      //found next reg ('until')
+    if (until && t.isMatch(until)) {
       return i;
     }
     //die here
-    if (!fullMatch(t, reg)) {
+    if (!t.isMatch(reg)) {
       return i;
     }
   }
@@ -33,7 +33,7 @@ const startHere = (ts, startAt, regs, verbose) => {
   let term_i = startAt;
   //check each regex-thing
   for (let reg_i = 0; reg_i < regs.length; reg_i++) {
-    let term = ts.get(term_i);
+    let term = ts.terms[term_i];
     let reg = regs[reg_i];
     let next_reg = regs[reg_i + 1];
 
@@ -109,7 +109,7 @@ const startHere = (ts, startAt, regs, verbose) => {
     }
 
     //check a perfect match
-    if (fullMatch(term, reg)) {
+    if (term.isMatch(reg)) {
       term_i += 1;
       //try to greedy-match '+'
       if (reg.consecutive) {

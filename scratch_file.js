@@ -13,7 +13,9 @@ const nlp = require('./src/index');
 let str = 'he is nice. i\'d buy the eggs. The people danced.';
 // let m = nlp(str).sentences().toNegative();
 // let m = nlp(str).match('#Verb').insertAfter('not') //.all()
-let m = nlp(str).match('buy', true) //.all()
+// let m = nlp(str).match('#Verb').replaceWith('eat').all()
+
+let m = nlp('the dog quickly played').match('the dog #Adverb? played')
 
 m.check()
   // r.dates().toShortForm().check()

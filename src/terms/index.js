@@ -28,7 +28,7 @@ class Terms {
   place() {
 
   }
-  wut() {
+  className() {
     return 'Terms'
   }
 
@@ -46,6 +46,7 @@ class Terms {
 Terms = require('./match')(Terms);
 Terms = require('./methods/split')(Terms);
 Terms = require('./methods/insert')(Terms);
+Terms = require('./methods/replace')(Terms);
 Terms = require('./methods/render')(Terms);
 Terms = require('./methods/misc')(Terms);
 Terms = require('./methods/transform')(Terms);

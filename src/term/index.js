@@ -1,6 +1,7 @@
 'use strict';
 const setTag = require('./setTag');
 const unTag = require('./unTag');
+const isMatch = require('./isMatch');
 const addNormal = require('./normalize');
 const addRoot = require('./root');
 const fns = require('./paths').fns;
@@ -51,7 +52,7 @@ class Term {
   get text() {
     return this._text;
   }
-  wut() {
+  className() {
     return 'Term'
   }
 
@@ -102,6 +103,11 @@ class Term {
     /** remove this part-of-speech from the term*/
   unTag(tag, reason) {
     unTag(this, tag, reason);
+  }
+
+  /** true/false helper for terms.match()*/
+  isMatch(reg, verbose) {
+    return isMatch(this, reg, verbose)
   }
 
   /** make a copy with no references to the original  */

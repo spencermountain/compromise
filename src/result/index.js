@@ -14,7 +14,7 @@ class Text {
   get length() {
     return this.list.length;
   }
-  wut() {
+  className() {
     return 'Text'
   }
 }

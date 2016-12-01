@@ -164,6 +164,11 @@ const term = {
     return true;
   },
 
+  insertAfter: function () {
+    let index = this.index()
+    console.log(this.parent)
+  }
+
 };
 
 module.exports = term;

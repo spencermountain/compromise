@@ -15,7 +15,19 @@ class Verbs extends Text {
       return t.verb.conjugate();
     });
   }
+  isNegative() {
+    return this.match('#Negative').found
+  }
   toNegative() {
+    if (this.isNegative()) {
+      return this
+    }
+    let t = this.lastTerm().terms()[0]
+    if (t.tag.Copula) {
+      t.copula.toNegative()
+    } else {
+      t.verb.toNegative()
+    }
     return this
   }
   toPositive() {

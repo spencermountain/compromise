@@ -3,6 +3,9 @@
 const insertMethods = (Terms) => {
 
   const methods = {
+    insertAfter: function (str) {
+
+    },
     append: function (str) {
       // let terms = Terms.tokenize(str)
       // console.log(terms)

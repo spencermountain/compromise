@@ -35,7 +35,7 @@ class Sentences extends Text {
   toNegative() {
     let cp = this.match('#Copula')
     if (cp.found) {
-      cp.verbs().toNegative();
+      cp.firstTerm().verbs().toNegative();
     } else {
       this.match('#Verb').firstTerm().verbs().toNegative();
     }

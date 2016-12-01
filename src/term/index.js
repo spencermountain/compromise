@@ -31,6 +31,7 @@ class Term {
     bindMethods(require('./pronoun'), 'pronoun', this);
     bindMethods(require('./render'), 'render', this);
     bindMethods(require('./month'), 'month', this);
+    bindMethods(require('./copula'), 'copula', this);
     bindMethods(require('./weekday'), 'weekday', this);
 
     this.normalize();

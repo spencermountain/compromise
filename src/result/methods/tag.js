@@ -22,21 +22,14 @@ const splitMethods = (Result) => {
 
     /** see if these terms can become this tag*/
     canBe: function (tag) {
-      for (let i = 0; i < this.list.length; i++) {
-        if (!this.list[i].canBe(tag)) {
-          return false
-        }
-      }
-      return true
+      this.list.forEach((ts) => {
+        ts.terms = ts.terms.filter((t) => {
+          return t.term.canBe(tag)
+        })
+      })
+      return this
     },
 
-    /** only tag this selection if it's consistent */
-    tagMaybe: function (tag) {
-      if (this.canBe(tag)) {
-        this.tag(tag)
-      }
-      return this
-    }
   }
 
   //hook them into result.proto

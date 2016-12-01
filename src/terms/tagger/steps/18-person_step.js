@@ -6,17 +6,17 @@ const path = 'tagger/person_step';
 const person_step = function (ts) {
   log.here(path);
   // x Lastname
-  ts.match('#Noun #LastName').firstTerm().tagMaybe('#FirstName')
+  ts.match('#Noun #LastName').firstTerm().canBe('#FirstName').tag('#FirstName')
 
   // Firstname x
-  ts.match('#FirstName #Noun').lastTerm().tagMaybe('#LastName')
+  ts.match('#FirstName #Noun').lastTerm().canBe('#LastName').tag('#LastName')
 
   //j.k Rowling
-  ts.match('#Acronym #TitleCase').tagMaybe('#Person')
-  ts.match('#Noun van der? #Noun').tagMaybe('#Person')
-  ts.match('#FirstName de #Noun').tagMaybe('#Person')
-  ts.match('(king|queen|prince|saint|lady) of? #Noun').tagMaybe('#Person')
-  ts.match('#FirstName (bin|al) #Noun').tagMaybe('#Person')
+  ts.match('#Acronym #TitleCase').canBe('#Person').tag('#Person')
+  ts.match('#Noun van der? #Noun').canBe('#Person').tag('#Person')
+  ts.match('#FirstName de #Noun').canBe('#Person').tag('#Person')
+  ts.match('(king|queen|prince|saint|lady) of? #Noun').canBe('#Person').tag('#Person')
+  ts.match('#FirstName (bin|al) #Noun').canBe('#Person').tag('#Person')
 
   //ambiguous firstnames
   let maybe = ['will', 'may', 'april', 'june', 'said', 'rob', 'wade', 'ray', 'rusty', 'drew', 'miles', 'jack', 'chuck', 'randy', 'jan', 'pat', 'cliff', 'bill']

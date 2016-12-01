@@ -30,23 +30,23 @@ test('misc:', function (t) {
   t.equal(m.normal(), 'doug is five years old', str);
 
   str = 'i\'d buy those nachos';
-  m = nlp(str).nouns().toSingular();
+  m = nlp(str).sentences().toSingular();
   t.equal(m.normal(), 'i\'d buy that nacho', str);
 
   str = 'i\'d buy these nachos';
-  m = nlp(str).nouns().toSingular();
+  m = nlp(str).sentences().toSingular();
   t.equal(m.normal(), 'i\'d buy this nacho', str);
 
   str = 'i\'d buy nachos';
-  m = nlp(str).nouns().toSingular();
+  m = nlp(str).sentences().toSingular();
   t.equal(m.normal(), 'i\'d buy a nacho', str);
 
   str = 'i\'d buy the nachos';
-  m = nlp(str).nouns().toSingular();
+  m = nlp(str).sentences().toSingular();
   t.equal(m.normal(), 'i\'d buy a nacho', str);
 
   str = 'i\'d buy the eggs';
-  m = nlp(str).nouns().toSingular();
+  m = nlp(str).sentences().toSingular();
   t.equal(m.normal(), 'i\'d buy an egg', str);
 
   str = 'men go';

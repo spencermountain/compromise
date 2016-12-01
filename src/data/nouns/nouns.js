@@ -1,4 +1,13 @@
+//most nouns do not nead to be listed
+//for many reasons, these look like not-nouns
 module.exports = [
+  //double-consonant rule
+  'egg',
+  'bottle',
+  'cottage',
+  'kitty',
+  'doggy',
+
   'ad hominem',
   'banking',
   'body',

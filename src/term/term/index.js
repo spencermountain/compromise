@@ -101,14 +101,6 @@ const term = {
     return this.text.replace(/^[a-z]/, (x) => x.toUpperCase());
   },
 
-  /** check if the text has one capital letter, the first one */
-  isTitlecase: function () {
-    if (this.text.match(/^[A-Z][a-z]/)) {
-      return true;
-    }
-    return false;
-  },
-
   noPunctuation: function () {
     return this.text.replace(/([,;:])$/, '');
   },
@@ -132,6 +124,8 @@ const term = {
 
   /** is this tag compatible with this word */
   canBe: function (tag) {
+    tag = tag || ''
+    tag = tag.replace(/^#/, '')
     let not = tagset[tag].not || [];
     for (let i = 0; i < not.length; i++) {
       if (this.tag[not[i]]) {

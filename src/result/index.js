@@ -14,6 +14,11 @@ class Text {
   get length() {
     return this.list.length;
   }
+  each(fn) {
+    this.list.forEach((ts) => {
+      ts.each(fn)
+    })
+  }
   className() {
     return 'Text'
   }

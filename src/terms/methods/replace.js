@@ -19,8 +19,11 @@ const replaceMethods = (Terms) => {
       if (tag) {
         ts.set_tag(tag, 'user-given')
       }
-      ts.tagAs(tag, 'given')
-      this.terms.forEach((ts) => {})
+      this.each((i, len) => {
+        console.log(i + ' - ' + len)
+        console.log(this.terms.slice(i, i + len).map((t) => t.normal))
+        console.log('')
+      })
       return this
     }
 

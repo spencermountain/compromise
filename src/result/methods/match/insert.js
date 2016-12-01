@@ -1,7 +1,7 @@
 'use strict';
 const Terms = require('../paths').Terms
 
-const insertMethods = (Result) => {
+const insertMethods = (Text) => {
 
   const methods = {
     /** add these terms to the end */
@@ -14,8 +14,8 @@ const insertMethods = (Result) => {
   };
   //put them on Result.proto
   Object.keys(methods).forEach((k) => {
-    Result.prototype[k] = methods[k];
+    Text.prototype[k] = methods[k];
   });
-  return Result;
+  return Text;
 };
 module.exports = insertMethods;

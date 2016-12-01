@@ -1,7 +1,7 @@
 'use strict';
 const Terms = require('../../terms');
 
-const sortMethod = (Result) => {
+const sortMethod = (Text) => {
 
   const methods = {
 
@@ -39,9 +39,9 @@ const sortMethod = (Result) => {
 
   //hook them into result.proto
   Object.keys(methods).forEach((k) => {
-    Result.prototype[k] = methods[k];
+    Text.prototype[k] = methods[k];
   });
-  return Result;
+  return Text;
 };
 
 module.exports = sortMethod;

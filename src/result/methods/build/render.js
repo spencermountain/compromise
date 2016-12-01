@@ -1,7 +1,7 @@
 'use strict';
 const chalk = require('chalk');
 
-const prettyPrint = (Result) => {
+const prettyPrint = (Text) => {
 
   const methods = {
 
@@ -76,9 +76,9 @@ const prettyPrint = (Result) => {
 
   };
   Object.keys(methods).forEach((k) => {
-    Result.prototype[k] = methods[k];
+    Text.prototype[k] = methods[k];
   });
-  return Result;
+  return Text;
 };
 
 module.exports = prettyPrint;

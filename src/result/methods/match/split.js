@@ -1,6 +1,6 @@
 'use strict';
 
-const splitMethods = (Result) => {
+const splitMethods = (Text) => {
 
   const methods = {
     /** turn result into two seperate results */
@@ -40,9 +40,9 @@ const splitMethods = (Result) => {
 
   //hook them into result.proto
   Object.keys(methods).forEach((k) => {
-    Result.prototype[k] = methods[k];
+    Text.prototype[k] = methods[k];
   });
-  return Result;
+  return Text;
 };
 
 module.exports = splitMethods;

@@ -1,8 +1,8 @@
 'use strict';
-const Result = require('../../index');
+const Text = require('../../index');
 // const Noun = require('./noun');
 
-class Nouns extends Result {
+class Nouns extends Text {
   constructor(list) {
     super(list);
     // this.check();

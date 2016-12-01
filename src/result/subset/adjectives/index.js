@@ -1,7 +1,7 @@
 'use strict';
-const Result = require('../../index');
+const Text = require('../../index');
 
-class Adjectives extends Result {
+class Adjectives extends Text {
   constructor(list) {
     super(list);
     // this.check();

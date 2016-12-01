@@ -1,6 +1,6 @@
 'use strict';
-//a result is an array of termLists
-class Result {
+//a Text is an array of termLists
+class Text {
   constructor(arr, lexicon, parent) {
       this.list = arr || [];
       this.parent = parent;
@@ -10,25 +10,25 @@ class Result {
   get found() {
       return this.list.length > 0;
     }
-    /** how many results are there?*/
+    /** how many Texts are there?*/
   get length() {
     return this.list.length;
   }
 }
 
-module.exports = Result;
-Result = require('./methods/misc')(Result);
-Result = require('./methods/tag')(Result);
-Result = require('./methods/sort')(Result);
-Result = require('./methods/match/match')(Result);
-Result = require('./methods/match/remove')(Result);
-Result = require('./methods/match/replace')(Result);
-Result = require('./methods/match/split')(Result);
-Result = require('./methods/match/insert')(Result);
-Result = require('./methods/build/render')(Result);
-Result.prototype.topk = require('./methods/build/topk');
-Result.prototype.ngram = require('./methods/build/ngram');
-Result.prototype.normalize = require('./methods/normalize');
+module.exports = Text;
+Text = require('./methods/misc')(Text);
+Text = require('./methods/tag')(Text);
+Text = require('./methods/sort')(Text);
+Text = require('./methods/match/match')(Text);
+Text = require('./methods/match/remove')(Text);
+Text = require('./methods/match/replace')(Text);
+Text = require('./methods/match/split')(Text);
+Text = require('./methods/match/insert')(Text);
+Text = require('./methods/build/render')(Text);
+Text.prototype.topk = require('./methods/build/topk');
+Text.prototype.ngram = require('./methods/build/ngram');
+Text.prototype.normalize = require('./methods/normalize');
 
 const subset = {
     adjectives: require('./subset/adjectives'),
@@ -46,7 +46,7 @@ const subset = {
   }
   //term subsets
 Object.keys(subset).forEach((k) => {
-  Result.prototype[k] = function () {
+  Text.prototype[k] = function () {
     return new subset[k](this.list);
   };
 })

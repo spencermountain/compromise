@@ -1,7 +1,7 @@
 'use strict';
-const Result = require('../../index');
+const Text = require('../../index');
 
-class Verbs extends Result {
+class Verbs extends Text {
   constructor(list) {
     super(list);
     // this.check();
@@ -14,6 +14,12 @@ class Verbs extends Result {
     return this.find().terms().map((t) => {
       return t.verb.conjugate();
     });
+  }
+  toNegative() {
+    return this
+  }
+  toPositive() {
+    return this
   }
   toPast() {
     let t = this.find().terms()[0];

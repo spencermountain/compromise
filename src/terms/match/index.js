@@ -3,7 +3,7 @@
 const syntax = require('./lib/syntax');
 const log = require('./lib/paths').log;
 const startHere = require('./lib/startHere');
-const Result = require('../../result/index');
+const Text = require('../../result/index');
 
 
 const matchMethods = (Terms) => {
@@ -30,7 +30,7 @@ const matchMethods = (Terms) => {
           return new Terms(a, this.lexicon, this.parent)
         })
         // return matches
-      let r = new Result(matches, this.lexicon, this.parent);
+      let r = new Text(matches, this.lexicon, this.parent);
       return r
     },
 

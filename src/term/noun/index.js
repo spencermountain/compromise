@@ -10,13 +10,13 @@ module.exports = {
     if (!this.noun.hasPlural() || this.noun.isPlural()) {
       return this.text;
     }
-    return toPlural(this.text);
+    return toPlural(this.normal);
   },
   singular: function () {
     if (!this.noun.hasPlural() || !this.noun.isPlural()) {
       return this.text;
     }
-    return toSingular(this.text);
+    return toSingular(this.normal);
   },
   hasPlural: function () {
     return hasPlural(this);

@@ -19,7 +19,7 @@ class Terms {
   }
   get index() {
     let result = this.parent
-    if (result) {
+    if (Text) {
       for (let i = 0; i < result.list.length; i++) {
         if (result.list[i] === this) {
           return i

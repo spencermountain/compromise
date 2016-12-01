@@ -1,7 +1,7 @@
 'use strict';
-const Result = require('../../index');
+const Text = require('../../index');
 
-class Sentences extends Result {
+class Sentences extends Text {
   constructor(list) {
     super(list);
     this.list = this.find().list
@@ -26,15 +26,24 @@ class Sentences extends Result {
     return this
   }
   toPlural() {
+    let nouns = this.match('#Noun').match('!#Pronoun').firstTerm()
+    nouns.nouns().toPlural()
     return this
   }
 
   /** negate the main/first copula*/
   toNegative() {
-    this.match('#Copula').verbs().negate();
+    let cp = this.match('#Copula')
+    if (cp.found) {
+      cp.verbs().toNegative();
+    } else {
+      this.match('#Verb').firstTerm().verbs().toNegative();
+    }
+    return this
   }
   toPositive() {
     this.match('#Negative').remove();
+    return this
   }
 
   /** conjugate the main/first verb*/

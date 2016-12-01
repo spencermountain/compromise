@@ -65,10 +65,10 @@ const normalize = function(obj) {
   obj = obj || defaultMethods;
   Object.keys(obj).forEach((k) => {
     if (obj[k] && methods[k]) {
-      result = methods[k](result);
+      result = methods[k](Text);
     }
   });
-  return result;
+  return Text;
 };
 
 module.exports = normalize;

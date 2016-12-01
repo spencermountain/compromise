@@ -1,7 +1,7 @@
 'use strict';
-const Result = require('../index');
+const Text = require('../index');
 
-class Questions extends Result {
+class Questions extends Text {
   constructor(list) {
     super(list);
     this.selection = this.list.filter((ts) => {

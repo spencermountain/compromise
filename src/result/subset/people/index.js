@@ -1,9 +1,9 @@
 'use strict';
-const Result = require('../../index');
+const Text = require('../../index');
 const Person = require('./person');
 //this is used for pronoun and honorifics, and not intented for more-than grammatical use (see #117)
 
-class People extends Result {
+class People extends Text {
   constructor(list) {
     super(list);
     this.list = this.find().list

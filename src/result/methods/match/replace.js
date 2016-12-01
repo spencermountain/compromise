@@ -1,7 +1,7 @@
 'use strict';
 const Terms = require('../paths').Terms
 
-const replaceMethods = (Result) => {
+const replaceMethods = (Text) => {
 
   const methods = {
     /** remove this subset, and insert this new thing in there */
@@ -12,8 +12,8 @@ const replaceMethods = (Result) => {
   };
   //put them on Result.proto
   Object.keys(methods).forEach((k) => {
-    Result.prototype[k] = methods[k];
+    Text.prototype[k] = methods[k];
   });
-  return Result;
+  return Text;
 };
 module.exports = replaceMethods;

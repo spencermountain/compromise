@@ -1,8 +1,8 @@
 'use strict';
-const Result = require('../../index');
+const Text = require('../../index');
 const contract = require('./contract');
 
-class Contractions extends Result {
+class Contractions extends Text {
   constructor(list) {
     super(list);
     return this;

@@ -1,6 +1,6 @@
 'use strict';
 
-const remove = (Result) => {
+const remove = (Text) => {
 
   const methods = {
 
@@ -42,13 +42,13 @@ const remove = (Result) => {
       this.forEach((ts) => {
         list = list.concat(ts.pluck(reg).list)
       })
-      return new Result(list, this)
+      return new Text(list, this)
     }
 
   };
   Object.keys(methods).forEach((k) => {
-    Result.prototype[k] = methods[k];
+    Text.prototype[k] = methods[k];
   });
-  return Result;
+  return Text;
 };
 module.exports = remove;

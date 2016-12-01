@@ -1,5 +1,5 @@
 'use strict';
-const splitMethods = (Result) => {
+const splitMethods = (Text) => {
 
   const methods = {
 
@@ -15,7 +15,7 @@ const splitMethods = (Result) => {
       });
       // this.list = list;
       let parent = this.parent || this;
-      return new Result(list, this.lexicon, parent);
+      return new Text(list, this.lexicon, parent);
     },
 
     /** find the first result */
@@ -24,7 +24,7 @@ const splitMethods = (Result) => {
         let ms = this.list[i].match(reg, verbose)
         if (ms && ms.length) {
           let parent = this.parent || this;
-          return new Result(ms, parent);
+          return new Text(ms, parent);
         }
       }
       return null
@@ -57,9 +57,9 @@ const splitMethods = (Result) => {
 
   //hook them into result.proto
   Object.keys(methods).forEach((k) => {
-    Result.prototype[k] = methods[k];
+    Text.prototype[k] = methods[k];
   });
-  return Result;
+  return Text;
 };
 
 module.exports = splitMethods;

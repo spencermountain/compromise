@@ -1,5 +1,6 @@
 //most nouns do not nead to be listed
-//for many reasons, these look like not-nouns
+//for whatever reasons, these look like not-nouns
+//so make sure they become nouns
 module.exports = [
   //double-consonant rule
   'egg',

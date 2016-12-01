@@ -1,7 +1,7 @@
 'use strict';
 const Terms = require('../../terms');
 
-const splitMethods = (Result) => {
+const splitMethods = (Text) => {
 
   const methods = {
 
@@ -34,9 +34,9 @@ const splitMethods = (Result) => {
 
   //hook them into result.proto
   Object.keys(methods).forEach((k) => {
-    Result.prototype[k] = methods[k];
+    Text.prototype[k] = methods[k];
   });
-  return Result;
+  return Text;
 };
 
 module.exports = splitMethods;

@@ -1,5 +1,5 @@
 'use strict';
-const Result = require('./index');
+const Text = require('./index');
 const tokenize = require('./tokenize');
 const corrections = require('./tag/corrections');
 const tagPhrase = require('./tag/phrase');
@@ -9,7 +9,7 @@ const Terms = require('./paths').Terms
 const fromString = (str, lexicon) => {
   let sentences = tokenize(str)
   let list = sentences.map((s) => Terms.fromString(s, lexicon))
-  let r = new Result(list, lexicon)
+  let r = new Text(list, lexicon)
     //give each ts a ref to the result
   r.list.forEach((ts) => {
     ts.parent = r;

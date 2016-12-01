@@ -1,7 +1,7 @@
 'use strict';
 const Terms = require('../../terms');
 
-const genericMethods = (Result) => {
+const genericMethods = (Text) => {
 
   const methods = {
 
@@ -10,7 +10,7 @@ const genericMethods = (Result) => {
       let list = this.list.map((ts) => {
         return ts.clone();
       });
-      return new Result(list);
+      return new Text(list);
     },
 
     /**turn all sentences into one, for example*/
@@ -20,7 +20,7 @@ const genericMethods = (Result) => {
         return all;
       }, []);
       // let terms = new Terms(list);
-      // return new Result([terms], this.parent);
+      // return new Text([terms], this.parent);
       return list
     },
 
@@ -38,7 +38,7 @@ const genericMethods = (Result) => {
         }
         return new Terms(arr, this.context);
       });
-      return new Result(list, this.parent);
+      return new Text(list, this.parent);
     },
 
     firstTerm: function () {
@@ -53,7 +53,7 @@ const genericMethods = (Result) => {
       if (!n && n !== 0) {
         return this.get(0);
       }
-      return new Result(this.list.slice(0, n), this.parent);
+      return new Text(this.list.slice(0, n), this.parent);
     },
 
     /**use only the last result */
@@ -63,17 +63,17 @@ const genericMethods = (Result) => {
       }
       let end = this.list.length;
       let start = end - n;
-      return new Result(this.list.slice(start, end), this.parent);
+      return new Text(this.list.slice(start, end), this.parent);
     },
 
     /** use only the nth result*/
     get: function (n) {
       //return an empty result
       if ((!n && n !== 0) || !this.list[n]) {
-        return new Result([], this.parent);
+        return new Text([], this.parent);
       }
       let ts = this.list[n];
-      return new Result([ts], this.parent);
+      return new Text([ts], this.parent);
     },
 
     filter: function (fn) {
@@ -82,11 +82,11 @@ const genericMethods = (Result) => {
         let list = this.list.filter((ts) => {
           return ts.has(fn)
         })
-        return new Result(list, this.parent);
+        return new Text(list, this.parent);
       }
       //ad-hoc filter-method
       let list = this.list.filter(fn)
-      return new Result(list, this.parent);
+      return new Text(list, this.parent);
     },
     forEach: function (fn) {
       this.list.forEach(fn)
@@ -98,10 +98,10 @@ const genericMethods = (Result) => {
         let list = this.list.map((ts) => {
           return ts[fn]()
         })
-        return new Result(list)
+        return new Text(list)
       }
       let list = this.list.map(fn)
-      return new Result(list)
+      return new Text(list)
     },
     //turn two result objects into one
     combine: function (r) {
@@ -114,15 +114,15 @@ const genericMethods = (Result) => {
         terms = terms.concat(ts.terms)
       })
       let ts = new Terms(terms)
-      return new Result([ts])
+      return new Text([ts])
     }
 
   };
 
   Object.keys(methods).forEach((k) => {
-    Result.prototype[k] = methods[k];
+    Text.prototype[k] = methods[k];
   });
-  return Result;
+  return Text;
 };
 
 module.exports = genericMethods;

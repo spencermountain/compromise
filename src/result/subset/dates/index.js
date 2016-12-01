@@ -1,8 +1,8 @@
 'use strict';
-const Result = require('../../index');
+const Text = require('../../index');
 const Date = require('./date');
 
-class Dates extends Result {
+class Dates extends Text {
   constructor(list) {
     super(list);
     this.list = this.find().list

@@ -4,12 +4,12 @@ const verbPhrase = require('./01-verbPhrase');
 const nounPhrase = require('./02-nounPhrase');
 const AdjectivePhrase = require('./03-adjectivePhrase');
 //
-const phraseTag = function (result) {
-  result = conditionPass(result);
-  result = verbPhrase(result);
-  result = nounPhrase(result);
-  result = AdjectivePhrase(result);
-  return result;
+const phraseTag = function (Text) {
+  Text = conditionPass(Text);
+  Text = verbPhrase(Text);
+  Text = nounPhrase(Text);
+  Text = AdjectivePhrase(Text);
+  return Text;
 };
 
 module.exports = phraseTag;

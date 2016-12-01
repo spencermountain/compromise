@@ -1,20 +1,20 @@
 'use strict';
 //
-const nounPhrase = function (result) {
+const nounPhrase = function (r) {
   //fifty stars
-  result.match('#Value #Noun').tag('NounPhrase');
+  r.match('#Value #Noun').tag('NounPhrase');
   //nice house
-  result.match('#Adjective #NounPhrase').tag('NounPhrase');
+  r.match('#Adjective #NounPhrase').tag('NounPhrase');
   //tag preceding determiner 'the nice house'
-  result.match('#Determiner #NounPhrase').tag('NounPhrase');
+  r.match('#Determiner #NounPhrase').tag('NounPhrase');
   //
-  result.match('#Noun #Preposition #Noun').tag('NounPhrase');
+  r.match('#Noun #Preposition #Noun').tag('NounPhrase');
   //john and sara
-  result.match('#Noun #Conjunction #Noun').tag('NounPhrase');
+  r.match('#Noun #Conjunction #Noun').tag('NounPhrase');
   //difficult but necessary talks
-  result.match('#Adjective #Conjunction #Adjective #NounPhrase').tag('NounPhrase');
+  r.match('#Adjective #Conjunction #Adjective #NounPhrase').tag('NounPhrase');
 
-  return result;
+  return r;
 };
 
 module.exports = nounPhrase;

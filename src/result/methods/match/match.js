@@ -18,13 +18,6 @@ const splitMethods = (Text) => {
       return new Text(list, this.lexicon, parent);
     },
 
-    grab: function (reg, verbose) {
-      this.list.forEach((ts) => {
-        ts.grab(reg, verbose)
-      })
-      return this
-    },
-
     /** find the first result */
     matchOne: function (reg, verbose) {
       for (let i = 0; i < this.list.length; i++) {

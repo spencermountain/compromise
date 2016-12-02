@@ -5,7 +5,7 @@ const caseMethods = (Terms) => {
   const methods = {
 
     toTitleCase: function () {
-      this.selected.forEach((t) => {
+      this.terms.forEach((t) => {
         t.text = t.term.titlecase()
       })
       return this

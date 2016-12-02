@@ -1,17 +1,19 @@
 'use strict';
+const mutate = require('../mutate');
 
 const replaceMethods = (Terms) => {
   const methods = {
 
     /**swap this for that */
-    replace: function (reg, str) {
+    replace: function (str1, str2) {
       //in this form, we 'replaceWith'
-      if (str === undefined) {
-        return this.replaceWith(reg)
+      if (str2 === undefined) {
+        return this.replaceWith(str1)
       }
-      ts.replaceWith(str)
+      this.match(str1).replaceWith(str2)
       return this
     },
+
 
     /**swap this for that */
     replaceWith: function (str, tag) {
@@ -19,12 +21,10 @@ const replaceMethods = (Terms) => {
       if (tag) {
         ts.set_tag(tag, 'user-given')
       }
-      this.each((i, len) => {
-        console.log(i + ' - ' + len)
-        console.log(this.terms.slice(i, i + len).map((t) => t.normal))
-        console.log('')
-      })
-      return this
+      let index = this.terms[0].index()
+      this.parentTerms = mutate.deleteThese(this.parentTerms, this)
+      this.parentTerms = mutate.insertAt(this.parentTerms, index, ts)
+      return this.parentTerms
     }
 
   }

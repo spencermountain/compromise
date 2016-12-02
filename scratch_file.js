@@ -13,11 +13,9 @@ const nlp = require('./src/index');
 let str = 'josh is nice. Also, Dana Thomas is cooler then Tom. doug works hard.';
 // let m = nlp(str).select('#Person').toTitleCase().all()
 let m = nlp(str)
-m.match('#Person+').insertBefore('----') //replaceWith('spencer kelly')
-m.match('#Person+').insertAfter('DUUUUUDE') //replaceWith('spencer kelly')
-  // let m = nlp(str).remove('#Person').remove('cooler') //replaceWith('spencer kelly')
+// m.match('#Person+').replaceWith('toronto')
+m.replace('#Person+','spencer kelly')
+// m.replace('#Verb','was')
+m.match('#Verb')
 m.check()
-  // r.dates().toShortForm().check()
-  // m.terms().forEach((t) => {
-  //   console.log(t.normal + ' - ' + t.index())
-  // })
+// m.match('#Person+').insertAfter('DUUUUUDE') //replaceWith('spencer kelly')

@@ -8,13 +8,13 @@ const replaceMethods = (Text) => {
       this.list.forEach((ts) => {
         ts.replace(reg, str)
       })
-      return this
+      return this.parent
     },
     replaceWith: function (str) {
       this.list.forEach((ts) => {
         ts.replaceWith(str)
       })
-      return this
+      return this.parent
     },
   };
   //put them on Result.proto

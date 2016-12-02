@@ -20,7 +20,6 @@ class Term {
     this.tag = {};
     this.whitespace = build_whitespace(str || '');
     this._text = this._text.trim();
-    this.sel = true
     this.parent = null;
 
     bindMethods(require('./term'), 'term', this);

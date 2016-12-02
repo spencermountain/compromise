@@ -18,15 +18,9 @@ class Terms {
   get length() {
     return this.terms.length;
   }
-  get selected() {
-    return this.terms.filter((t) => t.sel);
-  }
   get isA() {
       return 'Terms'
     }
-    // set selected(arr) {
-    //
-    // }
   posTag() {
     tagger(this)
     return this

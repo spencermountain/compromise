@@ -37,36 +37,6 @@ const matchMethods = (Terms) => {
       return r
     },
 
-    find: function (str, verbose) {
-      let all = []
-      let regs = syntax(str);
-      for (let t = 0; t < this.selected.length; t++) {
-        //don't loop through if '^'
-        if (regs[0] && regs[0].starting && t > 0) {
-          break;
-        }
-        let foundTerms = startHere(this, t, regs, verbose);
-        if (foundTerms) { //array of terms
-          all = all.concat(foundTerms)
-            //ok, don't try to match these again.
-          let skip = foundTerms.length - 1;
-          t += skip; //this could use some work
-        }
-      }
-      return all
-    },
-
-    grab: function (str, verbose) {
-      let foundTerms = this.find(str, verbose)
-        //unselect everything else
-      this.selected.forEach((t) => {
-        if (foundTerms.indexOf(t) === -1) {
-          t.sel = false
-        }
-      })
-      return this
-    },
-
     /**return first match */
     matchOne: function (str) {
       let regs = syntax(str);

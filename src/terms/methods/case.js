@@ -6,12 +6,24 @@ const caseMethods = (Terms) => {
 
     toTitleCase: function () {
       this.terms.forEach((t) => {
-        t.text = t.term.titlecase()
-      })
-      return this
+        t.text = t.term.titlecase();
+      });
+      return this;
+    },
+    toLowerCase: function () {
+      this.terms.forEach((t) => {
+        t.text = t.text.toLowerCase();
+      });
+      return this;
+    },
+    toUpperCase: function () {
+      this.terms.forEach((t) => {
+        t.text = t.text.toUpperCase();
+      });
+      return this;
     },
 
-  }
+  };
 
   //hook them into result.proto
   Object.keys(methods).forEach((k) => {

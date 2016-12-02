@@ -1,40 +1,40 @@
 'use strict';
 //
 const getTerms = (needle) => {
-  let arr = []
+  let arr = [];
   if (needle.isA === 'Terms') {
-    arr = needle.terms
+    arr = needle.terms;
   } else if (needle.isA === 'Text') {
-    arr = needle.terms()
+    arr = needle.terms();
   } else if (needle.isA === 'Term') {
-    arr = [needle]
+    arr = [needle];
   }
-  return arr
-}
+  return arr;
+};
 
 //remove them
 exports.deleteThese = (parent, needle) => {
-  let arr = getTerms(needle)
+  let arr = getTerms(needle);
   parent.terms = parent.terms.filter((t) => {
     for (let i = 0; i < arr.length; i++) {
       if (t === arr[i]) {
-        return false
+        return false;
       }
     }
-    return true
-  })
-  return parent
-}
+    return true;
+  });
+  return parent;
+};
 
 //add them
 exports.insertAt = (parent, i, needle) => {
-  let arr = getTerms(needle)
+  let arr = getTerms(needle);
   //handle whitespace
-  if(i>0){
-    arr[0].whitespace.before=' '
+  if (i > 0 && arr[0]) {
+    arr[0].whitespace.before = ' ';
   }
   //gnarly splice
   //-( basically  - terms.splice(i+1, 0, arr) )
-  Array.prototype.splice.apply(parent.terms, [i,0].concat(arr));
-  return parent
-}
+  Array.prototype.splice.apply(parent.terms, [i, 0].concat(arr));
+  return parent;
+};

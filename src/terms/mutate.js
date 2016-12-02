@@ -1,7 +1,6 @@
 'use strict';
 //
-
-exports.deleteThese = (parent, needle) => {
+const getTerms = (needle) => {
   let arr = []
   if (needle.isA === 'Terms') {
     arr = needle.terms
@@ -10,7 +9,12 @@ exports.deleteThese = (parent, needle) => {
   } else if (needle.isA === 'Term') {
     arr = [needle]
   }
-  //remove them
+  return arr
+}
+
+//remove them
+exports.deleteThese = (parent, needle) => {
+  let arr = getTerms(needle)
   parent.terms = parent.terms.filter((t) => {
     for (let i = 0; i < arr.length; i++) {
       if (t === arr[i]) {
@@ -19,6 +23,13 @@ exports.deleteThese = (parent, needle) => {
     }
     return true
   })
+  return parent
+}
 
+//add them
+exports.insertAt = (parent, i, needle) => {
+  let arr = needle.terms
+  //gnarly splice - basically   terms.splice(i+1, 0, arr)
+  Array.prototype.splice.apply(parent.terms, [i+1,0].concat(arr));
   return parent
 }

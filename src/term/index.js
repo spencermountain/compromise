@@ -15,9 +15,8 @@ const bindMethods = (o, str, self) => {
 };
 
 class Term {
-  constructor(str, context) {
+  constructor(str) {
     this._text = fns.ensureString(str);
-    this.context = fns.ensureObject(context);
     this.tag = {};
     this.whitespace = build_whitespace(str || '');
     this._text = this._text.trim();
@@ -80,7 +79,7 @@ class Term {
   }
 
   index() {
-    let ts = this.parent;
+    let ts = this.parentTerms;
     if (!ts) {
       return null;
     }
@@ -113,8 +112,7 @@ class Term {
 
   /** make a copy with no references to the original  */
   clone() {
-    let c = fns.copy(this.context);
-    let term = new Term(this._text, c);
+    let term = new Term(this._text, null);
     term.tag = fns.copy(this.tag);
     term.whitespace = fns.copy(this.whitespace);
     term.silent_term = this.silent_term;

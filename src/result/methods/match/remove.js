@@ -4,9 +4,8 @@ const remove = (Text) => {
 
   const methods = {
 
-    /** like .match(), but negative (filter-out the matches)*/
+    /** destructive, mutating delete*/
     remove: function (reg) {
-      //if there's no reg, remove these selected terms
       this.list.forEach((ts) => {
         ts.remove(reg)
       })

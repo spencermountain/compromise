@@ -1,21 +1,19 @@
 'use strict';
 const Terms = require('../index');
-
+const mutate = require('../mutate');
 
 const insertMethods = (Terms) => {
 
   const methods = {
     insertBefore: function (str) {
-      let ts = Terms.fromString(str)
-      this.terms = ts.terms.concat(this.terms)
       return this
     },
     insertAfter: function (str) {
-      // let ts = Terms.fromString(str)
-      // this.terms = this.terms.concat(ts.terms)
-      // let index = this.last().terms[0].index()
-      // console.log(this.all().wut())
-      return this
+      let ts = Terms.fromString(str)
+      let index = this.terms[this.terms.length - 1].index()
+      this.parentTerms = mutate.insertAt(this.parentTerms, index, ts)
+      // console.log(this.parentTerms.normal())
+      return this.parentTerms
     },
     insertAt: function (str, i) {}
 

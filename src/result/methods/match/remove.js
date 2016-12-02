@@ -10,7 +10,7 @@ const remove = (Text) => {
       this.list.forEach((ts) => {
         ts.remove(reg)
       })
-      return this
+      return this.parent
     },
 
     //like match, but removes matching terms from original

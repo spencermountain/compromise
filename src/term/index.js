@@ -53,7 +53,7 @@ class Term {
   get text() {
     return this._text;
   }
-  className() {
+  get isA() {
     return 'Term'
   }
 

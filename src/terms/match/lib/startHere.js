@@ -109,7 +109,7 @@ const startHere = (ts, startAt, regs, verbose) => {
     }
 
     //check a perfect match
-    if (term.isMatch(reg)) {
+    if (term.isMatch(reg, verbose)) {
       term_i += 1;
       //try to greedy-match '+'
       if (reg.consecutive) {

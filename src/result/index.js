@@ -3,24 +3,27 @@
 class Text {
   constructor(arr, lexicon, parent) {
       this.list = arr || [];
-      this.parent = parent;
+      this._parent = parent
     }
     //getter/setters
     /** did it find anything? */
   get found() {
-      return this.list.length > 0;
+    return this.list.length > 0;
+  }
+  get parent() {
+      return this._parent || this
     }
     /** how many Texts are there?*/
   get length() {
     return this.list.length;
   }
+  get isA() {
+    return 'Text'
+  }
   each(fn) {
     this.list.forEach((ts) => {
       ts.each(fn)
     })
-  }
-  className() {
-    return 'Text'
   }
 }
 

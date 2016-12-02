@@ -13,6 +13,9 @@ const matchMethods = (Terms) => {
     match: function (str, verbose) {
       let matches = [];
       let regs = syntax(str);
+      // if (verbose) {
+      //   console.log(regs)
+      // }
       for (let t = 0; t < this.terms.length; t++) {
         //don't loop through if '^'
         if (regs[0] && regs[0].starting && t > 0) {

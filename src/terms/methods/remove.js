@@ -1,16 +1,18 @@
 'use strict';
+const mutate = require('../mutate');
 
 const removeMethods = (Terms) => {
 
   const methods = {
 
     remove: function (reg) {
-      //actually remove selected terms
-      if (reg) {
-        this.select(reg)
+      if (!reg) {
+        this.parentTerms = mutate.deleteThese(this.parentTerms, this)
+        return this
       }
-      this.terms = this.terms.filter((t) => !t.sel) //bye!
-      return this.all()
+      let found = this.match(reg)
+      this.parentTerms = mutate.deleteThese(this.parentTerms, found)
+      return this
     },
 
 
@@ -40,4 +42,4 @@ const removeMethods = (Terms) => {
   return Terms;
 };
 
-module.exports = removeMethods;;
+module.exports = removeMethods;;;

@@ -3,15 +3,18 @@ const tagger = require('./tagger');
 const tokenize = require('./methods/tokenize');
 
 class Terms {
-  constructor(arr, lexicon, parent, full) {
-    this.terms = arr;
-    this.lexicon = lexicon
-    this.parent = parent
-    this.full = full
-    this.get = (n) => {
-      return this.terms[n];
-    };
-  }
+  constructor(arr, lexicon, originalText, termsFull) {
+      this.terms = arr;
+      this.lexicon = lexicon
+      this.parentText = originalText
+      this.parentTerms = termsFull || this
+      this.get = (n) => {
+        return this.terms[n];
+      };
+    }
+    // get parentTerms() {
+    //   return this._parentTerms || this
+    // }
   get found() {
     return this.terms.length > 0
   }
@@ -19,7 +22,10 @@ class Terms {
     return this.terms.length;
   }
   get selected() {
-      return this.terms.filter((t) => t.sel);
+    return this.terms.filter((t) => t.sel);
+  }
+  get isA() {
+      return 'Terms'
     }
     // set selected(arr) {
     //
@@ -29,31 +35,7 @@ class Terms {
     return this
   }
   all() {
-    this.terms.forEach((t) => {
-      t.sel = true
-    })
-    return this
-  }
-  each(fn) {
-    let start = null
-    for (let i = 0; i < this.terms.length; i++) {
-      let t = this.terms[i]
-      if (t.sel) {
-        if (start === null) {
-          start = i
-        }
-      } else if (start !== null) {
-        fn(start, i)
-        start = null
-      }
-    }
-    if (start !== null) {
-      fn(start, this.terms.length)
-    }
-    return this
-  }
-  className() {
-    return 'Terms'
+    return this.parentText || this
   }
 
   static fromString(str, lexicon, parent) {
@@ -77,5 +59,4 @@ Terms = require('./methods/remove')(Terms);
 Terms = require('./methods/render')(Terms);
 Terms = require('./methods/misc')(Terms);
 Terms = require('./methods/transform')(Terms);
-module.exports = Terms;;
-module.exports = Terms;;
+module.exports = Terms;

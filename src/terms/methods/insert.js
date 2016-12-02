@@ -6,17 +6,17 @@ const insertMethods = (Terms) => {
 
   const methods = {
     insertBefore: function (str) {
-      return this
+      let ts = Terms.fromString(str)
+      let index = this.terms[0].index()
+      this.parentTerms = mutate.insertAt(this.parentTerms, index, ts)
+      return this.parentTerms
     },
     insertAfter: function (str) {
       let ts = Terms.fromString(str)
       let index = this.terms[this.terms.length - 1].index()
-      this.parentTerms = mutate.insertAt(this.parentTerms, index, ts)
-      // console.log(this.parentTerms.normal())
+      this.parentTerms = mutate.insertAt(this.parentTerms, index+1, ts)
       return this.parentTerms
-    },
-    insertAt: function (str, i) {}
-
+    }
   }
 
   //hook them into result.proto

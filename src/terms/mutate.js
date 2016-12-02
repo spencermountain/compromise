@@ -29,7 +29,8 @@ exports.deleteThese = (parent, needle) => {
 //add them
 exports.insertAt = (parent, i, needle) => {
   let arr = needle.terms
-  //gnarly splice - basically   terms.splice(i+1, 0, arr)
-  Array.prototype.splice.apply(parent.terms, [i+1,0].concat(arr));
+  //gnarly splice
+  //- basically   terms.splice(i+1, 0, arr)
+  Array.prototype.splice.apply(parent.terms, [i,0].concat(arr));
   return parent
 }

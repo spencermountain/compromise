@@ -6,13 +6,7 @@ const renderMethods = (Terms) => {
 
     plaintext: function () {
       return this.terms.reduce((str, t, i) => {
-        // if (i === 0) {
-        //   str += t.text + t.whitespace.after;
-        // } else if (i === this.terms.length - 1) {
-        //   str += t.whitespace.before + t.text
-        // } else {
         str += t.whitespace.before + t.text + t.whitespace.after;
-        // }
         return str;
       }, '');
     },

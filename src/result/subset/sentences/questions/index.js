@@ -4,13 +4,16 @@ const Text = require('../index');
 class Questions extends Text {
   constructor(list) {
     super(list);
-    this.selection = this.list.filter((ts) => {
-      return ts.last().endPunctuation() === '?';
-    });
+    this.list=this.find().list
     return this;
   }
+  find(){
+    return this.list.filter((ts) => {
+      return ts.last().endPunctuation() === '?';
+    });
+  }
   parse() {
-    return this.selection.map((ts) => {
+    return this.list.map((ts) => {
       return {
         text: ts.plaintext(),
         normal: ts.normal()

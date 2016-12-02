@@ -1,8 +1,8 @@
 'use strict';
-const Term = require('../../term');
+const Term = require('../term');
 
 //turn a string into an array of terms (naiive for now, lumped later)
-const tokenize = function (str) {
+const fromString = function (str) {
   let all = [];
   //start with a naiive split
   const arr = str.split(/(\S+)/);
@@ -23,4 +23,4 @@ const tokenize = function (str) {
   }
   return all.map((t) => new Term(t))
 };
-module.exports = tokenize
+module.exports = fromString

@@ -11,13 +11,13 @@ const insertMethod = (Text) => {
       this.list.forEach((ts) => {
         ts.insertBefore(str)
       })
-      return this
+      return this.parent
     },
     insertAfter: function (str) {
       this.list.forEach((ts) => {
         ts.insertAfter(str)
       })
-      return this
+      return this.parent
     },
 
   }

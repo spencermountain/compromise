@@ -3,9 +3,9 @@ var nlp = require('../lib/nlp');
 var str_test = require('../lib/fns').str_test;
 
 
-test('==Match ==', function(T) {
+test('==Match ==', function (T) {
 
-  T.test('term-match :', function(t) {
+  T.test('term-match :', function (t) {
     [
       ['quick', 'quick', true],
       ['Quick', 'Quick', true],
@@ -14,7 +14,7 @@ test('==Match ==', function(T) {
       ['quick', '#Noun', false],
       ['quick', '(fun|nice|quick|cool)', true],
       ['quick', '(fun|nice|good)', false],
-    ].forEach(function(a) {
+    ].forEach(function (a) {
       var m = nlp(a[0]).match(a[1]);
       var msg = a[0] + ' matches ' + a[1] + ' ' + a[2];
       t.equal(m.found, a[2], msg);
@@ -22,7 +22,7 @@ test('==Match ==', function(T) {
     t.end();
   });
 
-  T.test('sentence-match:', function(t) {
+  T.test('sentence-match:', function (t) {
     [
       ['the dog played', 'the dog', 'the dog'],
       ['the dog played', 'the dog played', 'the dog played'],
@@ -72,12 +72,13 @@ test('==Match ==', function(T) {
       //bugs
       // [`really remind me to buy`, '#Adverb? #Infinitive (me|us) (to|for)', `really remind me to`],
 
-    ].forEach(function(a) {
+    ].forEach(function (a) {
       var m = nlp(a[0]).match(a[1]);
       if (!m.found) {
-        t.equal(a[2], '', 'no-match: ' + a[0]);
+        t.equal(a[2], '', 'no-match: ' + a[0] + ' - -' + a[1]);
       } else {
-        str_test(m.normal(), a[0], a[2], t);
+        let msg = '\'' + a[0] + '\'  - ' + a[1] + ' - - have : \'' + m.normal() + '\''
+        t.equal(m.normal(), a[2], msg)
       }
     });
     t.end();

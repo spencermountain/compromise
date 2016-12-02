@@ -3,19 +3,27 @@
 class Text {
   constructor(arr, lexicon, parent) {
       this.list = arr || [];
-      this.parent = parent;
+      this._parent = parent
     }
     //getter/setters
     /** did it find anything? */
   get found() {
-      return this.list.length > 0;
+    return this.list.length > 0;
+  }
+  get parent() {
+      return this._parent || this
     }
     /** how many Texts are there?*/
   get length() {
     return this.list.length;
   }
-  wut() {
+  get isA() {
     return 'Text'
+  }
+  each(fn) {
+    this.list.forEach((ts) => {
+      ts.each(fn)
+    })
   }
 }
 
@@ -23,9 +31,10 @@ module.exports = Text;
 Text = require('./methods/misc')(Text);
 Text = require('./methods/tag')(Text);
 Text = require('./methods/sort')(Text);
+Text = require('./methods/case')(Text);
 Text = require('./methods/match/match')(Text);
-Text = require('./methods/match/remove')(Text);
-Text = require('./methods/match/replace')(Text);
+Text = require('./methods/remove')(Text);
+Text = require('./methods/replace')(Text);
 Text = require('./methods/render/render')(Text);
 Text = require('./methods/split')(Text);
 Text = require('./methods/insert')(Text);

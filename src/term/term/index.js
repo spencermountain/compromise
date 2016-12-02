@@ -166,7 +166,7 @@ const term = {
 
   insertAfter: function () {
     let index = this.index()
-    console.log(this.parent)
+      // console.log(this.parent)
   }
 
 };

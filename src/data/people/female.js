@@ -79,7 +79,7 @@ const compressed = {
   in: 'caitl,er,kar,krist',
   on: 'alis,man,shann,shar',
   an: 'meag,meg,megh,sus'
-}
+};
 
 let list = [
   'abigail',
@@ -161,37 +161,40 @@ let list = [
   'therese',
   'toni',
   'gisele'
-]
+];
 list = fns.uncompress_suffixes(list, compressed);
 
 for (let i = 0; i < list.length; i++) {
-  let str = list[i]
+  let str = list[i];
   if (str.match(/[^ea]y$/)) {
-    list.push(str.replace(/y$/, 'i'))
+    list.push(str.replace(/y$/, 'i'));
   }
   if (str.match(/ll/)) {
-    list.push(str.replace(/ll/, 'l'))
+    list.push(str.replace(/ll/, 'l'));
   }
   if (str.match(/nn/)) {
-    list.push(str.replace(/nn/, 'n'))
+    list.push(str.replace(/nn/, 'n'));
   }
   if (str.match(/ah/)) {
-    list.push(str.replace(/ah/, 'a'))
+    list.push(str.replace(/ah/, 'a'));
   }
   if (str.match(/t$/)) {
-    list.push(str.replace(/t$/, 'tte'))
+    list.push(str.replace(/t$/, 'tte'));
+  }
+  if (str.match(/ey$/)) {
+    list.push(str.replace(/ey$/, 'y'));
   }
   if (str.match(/ie$/)) {
-    list.push(str.replace(/ie$/, 'y'))
+    list.push(str.replace(/ie$/, 'y'));
   }
   if (str.match(/ne$/)) {
-    list.push(str.replace(/ne$/, 'na'))
+    list.push(str.replace(/ne$/, 'na'));
   }
   if (str.match(/ss/)) {
-    list.push(str.replace(/ss/, 's'))
+    list.push(str.replace(/ss/, 's'));
   }
   if (str.match(/rr/)) {
-    list.push(str.replace(/rr/, 'r'))
+    list.push(str.replace(/rr/, 'r'));
   }
 }
 const no_change = [
@@ -213,7 +216,7 @@ const no_change = [
   'wendy',
   'ruby',
   'susi'
-]
-list = list.concat(no_change)
-module.exports = list
-  // console.log(list.indexOf('katie'))
+];
+list = list.concat(no_change);
+module.exports = list;
+// console.log(list.indexOf('kelley'));

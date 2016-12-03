@@ -9,14 +9,14 @@ const path = 'tagger/neighbours';
 
 //basically a last-ditch effort before everything falls back to a noun
 //for unknown terms, look left + right first, and hit-up the markov-chain for clues
-const neighbour_step = function (s) {
+const neighbour_step = function (ts) {
   log.here(path);
-  s.terms.forEach((t, n) => {
+  ts.terms.forEach((t, n) => {
     //is it still unknown?
     let termTags = Object.keys(t.tag);
     if (termTags.length === 0) {
-      let lastTerm = s.terms[n - 1];
-      let nextTerm = s.terms[n + 1];
+      let lastTerm = ts.terms[n - 1];
+      let nextTerm = ts.terms[n + 1];
       //look at last word for clues
       if (lastTerm && afterThisWord[lastTerm.normal]) {
         t.tagAs(afterThisWord[lastTerm.normal], 'neighbour-after-"' + lastTerm.normal + '"');
@@ -51,7 +51,7 @@ const neighbour_step = function (s) {
     }
   });
 
-  return s;
+  return ts;
 };
 
 module.exports = neighbour_step;

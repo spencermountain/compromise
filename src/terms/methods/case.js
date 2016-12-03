@@ -22,6 +22,16 @@ const caseMethods = (Terms) => {
       });
       return this;
     },
+    toCamelCase: function() {
+      this.toTitleCase();
+      this.terms.forEach((t, i) => {
+        if (i !== 0) {
+          t.whitespace.before = '';
+        }
+        t.whitespace.after = '';
+      });
+      return this;
+    }
 
   };
 

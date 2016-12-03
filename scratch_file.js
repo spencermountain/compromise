@@ -18,5 +18,7 @@ const nlp = require('./src/index');
 // // m.replace('#Verb','was')
 // m.match('#Verb');
 // m.check();
-console.log(nlp('he is nice').toCamelCase().plaintext());
+let r = nlp('the Spencer Kelly Festival of Silly-Walks');
+r.match('#TitleCase+').toCamelCase();
+console.log(r.plaintext());
 // m.match('#Person+').insertAfter('DUUUUUDE') //replaceWith('spencer kelly')

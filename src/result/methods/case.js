@@ -30,11 +30,7 @@ const caseMethods = (Text) => {
     /**He is nice -> HeIsNice */
     toCamelCase: function () {
       this.list.forEach((ts) => {
-        ts.toTitleCase();
-        ts.terms.forEach((t) => {
-          t.whitespace.before = '';
-          t.whitespace.after = '';
-        });
+        ts.toCamelCase();
       });
       return this;
     },

@@ -18,8 +18,10 @@ const nlp = require('./src/index');
 // m.check();
 
 // let m = nlp('john is cool').match('is').insertBefore('dude');
-let m = nlp('i do not go');
+// let m = nlp('i do not go');
 // m.whitespace.before('   ').check();
 // m.check();
-m.contractions().expand();
-console.log(m.plaintext());
+// m.contractions().expand();
+// console.log(m.plaintext());
+
+console.log(nlp('custom function').verbs().asArray());

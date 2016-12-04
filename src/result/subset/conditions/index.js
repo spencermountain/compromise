@@ -1,22 +1,23 @@
 'use strict';
 const Text = require('../../index');
 
-class Acronyms extends Text {
+class Conditions extends Text {
   constructor(list) {
     super(list);
     this.list = this.find().list;
     return this;
   }
   find() {
-    return this.match('#Acronym');
+    return this.match('#Condition+');
   }
   parse() {
     return this.terms.map((t) => {
       return {
-        text: t.text
+        if: t.text,
+        then: ''
       };
     });
   }
 }
 
-module.exports = Acronyms;
+module.exports = Conditions;

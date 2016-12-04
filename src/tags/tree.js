@@ -84,12 +84,15 @@ module.exports = {
 
   //non-exclusive
   Condition: true,
-  TitleCase: true,
   Auxillary: true,
   Negative: true,
   Contraction: true,
-  Acronym: true,
 
+  TitleCase: true,
+  CamelCase: true,
+  UpperCase: {
+    Acronym: true,
+  },
   //phrases
   ValuePhrase: true,
   AdjectivePhrase: true,

@@ -18,7 +18,8 @@ const nlp = require('./src/index');
 // m.check();
 
 // let m = nlp('john is cool').match('is').insertBefore('dude');
-let m = nlp('john is cool. he is nice');
-m.whitespace.before('   ').check();
+let m = nlp('i do not go');
+// m.whitespace.before('   ').check();
 // m.check();
+m.contractions().expand();
 console.log(m.plaintext());

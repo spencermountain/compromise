@@ -1,22 +1,23 @@
 'use strict';
 const Text = require('../../index');
 
-class Adverbs extends Text {
+class Pronouns extends Text {
   constructor(list) {
     super(list);
     this.list = this.find().list;
     return this;
   }
   find() {
-    return this.match('#Adverb+');
+    let subjects = this.splitAfter('#Comma');
+    return subjects.match('#Pronoun');
   }
   parse() {
-    return this.terms().map((t) => {
+    return this.terms.map((t) => {
       return {
-        adjectiveForm: t.adverb.adjectiveForm(),
+        text: t.text
       };
     });
   }
 }
 
-module.exports = Adverbs;
+module.exports = Pronouns;

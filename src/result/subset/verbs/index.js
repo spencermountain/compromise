@@ -4,37 +4,37 @@ const Text = require('../../index');
 class Verbs extends Text {
   constructor(list) {
     super(list);
-    // this.check();
+    this.list = this.find().list;
     return this;
   }
   find() {
     return this.match('#Verb+');
   }
   parse() {
-    return this.find().terms().map((t) => {
+    return this.terms().map((t) => {
       return t.verb.conjugate();
     });
   }
   isNegative() {
-    return this.match('#Negative').found
+    return this.match('#Negative').found;
   }
   toNegative() {
     if (this.isNegative()) {
-      return this
+      return this;
     }
-    let t = this.lastTerm().terms()[0]
+    let t = this.lastTerm().terms()[0];
     if (t.tag.Copula) {
-      t.copula.toNegative()
+      t.copula.toNegative();
     } else {
-      t.verb.toNegative()
+      t.verb.toNegative();
     }
-    return this
+    return this;
   }
   toPositive() {
-    return this
+    return this;
   }
   toPast() {
-    let t = this.find().terms()[0];
+    let t = this.terms()[0];
     this.contractions().expand();
     if (t) {
       t.text = t.verb.pastTense();
@@ -42,7 +42,7 @@ class Verbs extends Text {
     return this.all();
   }
   toPresent() {
-    let t = this.find().terms()[0];
+    let t = this.terms()[0];
     this.contractions().expand();
     if (t) {
       t.text = t.verb.presentTense();
@@ -50,7 +50,7 @@ class Verbs extends Text {
     return this.all();
   }
   toFuture() {
-    let t = this.find().terms()[0];
+    let t = this.terms()[0];
     this.contractions().expand();
     if (t) {
       t.text = t.verb.futureTense();

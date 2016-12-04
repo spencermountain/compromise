@@ -6,13 +6,14 @@ class Nouns extends Text {
   constructor(list) {
     super(list);
     // this.check();
+    this.list = this.find().list;
     return this;
   }
   find() {
     return this.match('#Noun+');
   }
   parse() {
-    return this.find().terms().map((t) => {
+    return this.terms().map((t) => {
       return {
         article: t.noun.makeArticle(),
         singular: t.noun.singular(),

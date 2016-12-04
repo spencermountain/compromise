@@ -5,45 +5,57 @@ const fromString = require('./fromString');
 class Terms {
   constructor(arr, lexicon, originalText, termsFull) {
     this.terms = arr;
-    this.lexicon = lexicon
-    this.parentText = originalText
-    this.parentTerms = termsFull || this
+    this.lexicon = lexicon;
+    this.parentText = originalText;
+    this.parentTerms = termsFull || this;
     this.get = (n) => {
       return this.terms[n];
     };
   }
   get found() {
-    return this.terms.length > 0
+    return this.terms.length > 0;
   }
   get length() {
     return this.terms.length;
   }
   get isA() {
-      return 'Terms'
-    }
+    return 'Terms';
+  }
   posTag() {
-    tagger(this)
-    return this
+    tagger(this);
+    return this;
   }
   firstTerm() {
-    return this.terms[0]
+    return this.terms[0];
   }
   lastTerm() {
-    return this.terms[this.terms.length - 1]
+    return this.terms[this.terms.length - 1];
   }
   all() {
-    return this.parentText || this
+    return this.parentText || this;
+  }
+  get whitespace() {
+    return {
+      before: (str) => {
+        this.firstTerm().whitespace.before = str;
+        return this;
+      },
+      after: (str) => {
+        this.lastTerm().whitespace.after = str;
+        return this;
+      },
+    };
   }
 
   static fromString(str, lexicon, parent) {
-    let termArr = fromString(str)
-    let ts = new Terms(termArr, lexicon, null)
-      //give each term a reference to this ts
+    let termArr = fromString(str);
+    let ts = new Terms(termArr, lexicon, null);
+    //give each term a reference to this ts
     ts.terms.forEach((t) => {
       t.parentTerms = ts;
     });
-    ts.posTag()
-    return ts
+    ts.posTag();
+    return ts;
   }
 }
 Terms = require('./match')(Terms);

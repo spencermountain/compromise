@@ -17,5 +17,8 @@ const nlp = require('./src/index');
 // m.replace('#Verb', 'was');
 // m.check();
 
-let m = nlp('john is cool').match('is').insertBefore('dude');
-m.check();
+// let m = nlp('john is cool').match('is').insertBefore('dude');
+let m = nlp('john is cool. he is nice');
+m.whitespace.before('   ').check();
+// m.check();
+console.log(m.plaintext());

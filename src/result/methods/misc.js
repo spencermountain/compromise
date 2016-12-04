@@ -21,12 +21,12 @@ const genericMethods = (Text) => {
       }, []);
       // let terms = new Terms(list);
       // return new Text([terms], this.parent);
-      return list
+      return list;
     },
 
     all: function () {
-      this.list.forEach((ts) => ts.all())
-      return this
+      this.list.forEach((ts) => ts.all());
+      return this;
     },
 
     /** get the nth term of each result*/
@@ -43,10 +43,10 @@ const genericMethods = (Text) => {
     },
 
     firstTerm: function () {
-      return this.match('^.')
+      return this.match('^.');
     },
     lastTerm: function () {
-      return this.match('.$')
+      return this.match('.$');
     },
 
     /**use only the first result */
@@ -81,42 +81,53 @@ const genericMethods = (Text) => {
       //treat it as a termlist filter
       if (typeof fn === 'string') {
         let list = this.list.filter((ts) => {
-          return ts.has(fn)
-        })
+          return ts.has(fn);
+        });
         return new Text(list, this.parent);
       }
       //ad-hoc filter-method
-      let list = this.list.filter(fn)
+      let list = this.list.filter(fn);
       return new Text(list, this.parent);
     },
     forEach: function (fn) {
-      this.list.forEach(fn)
-      return this
+      this.list.forEach(fn);
+      return this;
     },
     map: function (fn) {
       //treat it as a termlist filter
       if (typeof fn === 'string') {
         let list = this.list.map((ts) => {
-          return ts[fn]()
-        })
-        return new Text(list)
+          return ts[fn]();
+        });
+        return new Text(list);
       }
-      let list = this.list.map(fn)
-      return new Text(list)
+      let list = this.list.map(fn);
+      return new Text(list);
     },
     //turn two result objects into one
     combine: function (r) {
-      this.list = this.list.concat(r.list)
-      return this
+      this.list = this.list.concat(r.list);
+      return this;
     },
     flatten: function () {
-      let terms = []
+      let terms = [];
       this.list.forEach((ts) => {
-        terms = terms.concat(ts.terms)
-      })
-      let ts = new Terms(terms)
-      return new Text([ts])
-    }
+        terms = terms.concat(ts.terms);
+      });
+      let ts = new Terms(terms);
+      return new Text([ts]);
+    },
+    // 
+    // whitespace: function(str) {
+    //   return {
+    //     before: () => {
+    //       this.list.forEach((ts) => {
+    //         ts.whitespace.before = str;
+    //       });
+    //     },
+    //   // after: after,
+    //   };
+    // }
 
   };
 

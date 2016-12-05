@@ -9,6 +9,21 @@ const thisNext = '(last|next|this|previous|current|upcoming|coming)';
 const sections = '(start|end|middle|starting|ending|midpoint|beginning)';
 // const dayTime = '(night|evening|morning|afternoon|day|daytime)';
 
+// const isDate = (num) => {
+//   if (num && num < 31 && num > 0) {
+//     return true;
+//   }
+//   return false;
+// };
+
+//please change in one thousand years
+const isYear = (num) => {
+  if (num && num > 1000 && num < 3000) {
+    return true;
+  }
+  return false;
+};
+
 const corrections = function (r) {
   log.here(path);
 
@@ -66,6 +81,18 @@ const corrections = function (r) {
 
   //start of june
   r.match(`the? ${sections} of #Date`).tag('Date', 'section-of-date');
+
+  //year tagging
+  let value = r.match(`#Date #Value #Cardinal`).lastTerm().values();
+  let o = value.parse()[0];
+  if (o && isYear(o.cardinal)) {
+    value.tag('Year', 'date-year');
+  }
+  value = r.match(`#Date #Cardinal`).lastTerm().values();
+  o = value.parse()[0];
+  if (o && isYear(o.cardinal)) {
+    value.tag('Year', 'date-year');
+  }
 
   return r;
 };

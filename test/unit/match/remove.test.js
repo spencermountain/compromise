@@ -37,3 +37,15 @@ test('remove-match :', function(t) {
 
   t.end();
 });
+
+test('remove-logic :', function(t) {
+  let m = nlp('spencer kelly is here').match('spencer kelly').remove('spencer');
+  t.equal(m.normal(), 'kelly', 'remove(reg) returns this');
+
+  m = nlp('spencer kelly is here').match('spencer kelly').remove();
+  t.equal(m.normal(), 'is here', 'remove() returns parent');
+
+  m = nlp('spencer kelly is here').match('spencer kelly').remove('notfound');
+  t.equal(m.normal(), 'spencer kelly', 'remove(notfound) returns this');
+  t.end();
+});

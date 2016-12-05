@@ -24,4 +24,4 @@ const nlp = require('./src/index');
 // m.contractions().expand();
 // console.log(m.plaintext());
 
-nlp('buy eggs this summer').check();
+nlp('spencer kelly is here').match('spencer kelly').remove('spencer').normal();

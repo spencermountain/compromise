@@ -13,9 +13,9 @@ const getTerms = (needle) => {
 };
 
 //remove them
-exports.deleteThese = (parent, needle) => {
+exports.deleteThese = (source, needle) => {
   let arr = getTerms(needle);
-  parent.terms = parent.terms.filter((t) => {
+  source.terms = source.terms.filter((t) => {
     for (let i = 0; i < arr.length; i++) {
       if (t === arr[i]) {
         return false;
@@ -23,7 +23,7 @@ exports.deleteThese = (parent, needle) => {
     }
     return true;
   });
-  return parent;
+  return source;
 };
 
 //add them

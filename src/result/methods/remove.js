@@ -6,19 +6,27 @@ const remove = (Text) => {
 
     /** destructive, mutating delete*/
     remove: function (reg) {
+      //remove all of this, return parent
+      if (!reg) {
+        this.list.forEach((ts) => {
+          ts.remove(reg);
+        });
+        return this.parent;
+      }
+      //return subset
       this.list.forEach((ts) => {
-        ts.remove(reg)
-      })
-      return this.parent
+        ts.remove(reg);
+      });
+      return this;
     },
 
     //like match, but removes matching terms from original
     pluck: function (reg) {
-      let list = []
+      let list = [];
       this.forEach((ts) => {
-        list = list.concat(ts.pluck(reg).list)
-      })
-      return new Text(list, this)
+        list = list.concat(ts.pluck(reg).list);
+      });
+      return new Text(list, this);
     }
 
   };

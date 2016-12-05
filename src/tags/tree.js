@@ -24,20 +24,20 @@ module.exports = {
           School: true,
         },
       },
-      Date: {
-        Month: true,
-        WeekDay: true,
-        RelativeDay: true,
-        Year: true,
-        Duration: true,
-        Time: true,
-        Holiday: true
-      },
       Plural: true,
       Actor: true,
       Unit: true,
       Demonym: true,
       Possessive: true,
+    },
+    Date: { //not a noun, but usually is
+      Month: true,
+      WeekDay: true,
+      RelativeDay: true,
+      Year: true,
+      Duration: true,
+      Time: true,
+      Holiday: true
     },
   },
   Verb: {

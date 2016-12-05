@@ -24,4 +24,4 @@ const nlp = require('./src/index');
 // m.contractions().expand();
 // console.log(m.plaintext());
 
-console.log(nlp('june 5 1992 at 3:15pm').dates().parse()[0]);
+nlp('buy eggs this summer').check();

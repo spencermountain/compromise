@@ -1,6 +1,5 @@
 'use strict';
 //
-const timePreps = '';
 const isHour = (num) => {
   if (num && num > 0 && num < 25) {
     return true;
@@ -38,14 +37,23 @@ const parseTime = (r) => {
       if (m[2] === 'pm') {
         result.hour += 12;
       }
+      if (!isHour(result.hour)) {
+        result.hour = null;
+      }
     }
     //3:15
     m = t.text.match(/([12]?[0-9]):([0-9][0-9]) ?(am|pm)?/i);
     if (m) {
       result.hour = parseInt(m[1], 10);
       result.minute = parseInt(m[2], 10);
+      if (!isMinute(result.minute)) {
+        result.minute = null;
+      }
       if (m[3] === 'pm') {
         result.hour += 12;
+      }
+      if (!isHour(result.hour)) {
+        result.hour = null;
       }
     }
   });

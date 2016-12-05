@@ -1,13 +1,13 @@
 'use strict';
-const log = require('../paths').log
+const log = require('../paths').log;
 const path = 'date_correction';
 
 //ambiguous 'may' and 'march'
 const months = '(may|march|jan|april)';
 const preps = '(in|by|before|for|during|on|until|after|of)';
 const thisNext = '(last|next|this|previous|current|upcoming|coming)';
-const sections = '(start|end|middle|starting|ending|midpoint|beginning)'
-  // const dayTime = '(night|evening|morning|afternoon|day|daytime)';
+const sections = '(start|end|middle|starting|ending|midpoint|beginning)';
+// const dayTime = '(night|evening|morning|afternoon|day|daytime)';
 
 const corrections = function (r) {
   log.here(path);
@@ -22,6 +22,10 @@ const corrections = function (r) {
   r.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time');
   r.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm');
   r.match('all day').tag('Time', 'all-day');
+
+  //seasons
+  r.match(`${preps}? ${thisNext} (spring|summer|winter|fall|autumn)`).tag('Date', 'thisNext-season');
+  r.match(`the? ${sections} of (spring|summer|winter|fall|autumn)`).tag('Date', 'section-season');
 
   //june the 5th
   r.match('#Date the? #Ordinal').tag('Date', 'correction-date');

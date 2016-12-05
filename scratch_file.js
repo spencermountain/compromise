@@ -24,4 +24,4 @@ const nlp = require('./src/index');
 // m.contractions().expand();
 // console.log(m.plaintext());
 
-console.log(nlp('custom function').verbs().asArray());
+nlp('do x by this spring').check();

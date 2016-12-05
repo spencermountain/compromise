@@ -60,5 +60,5 @@ Object.keys(all).forEach((tag) => {
 });
 
 module.exports = all;
-console.log(all.Month);
+// console.log(all.Month);
 // console.log(all_children(tree['NounPhrase']));

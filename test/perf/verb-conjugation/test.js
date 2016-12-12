@@ -1,10 +1,10 @@
 'use strict';
-let verbs = require('./verbs');
-let nlp = require('../../../../src/index');
+var verbs = require('./verbs');
+var nlp = require('../../../../src/index');
 
 
-let yep = 0;
-let nope = 0;
+var yep = 0;
+var nope = 0;
 // const baddies = {};
 
 const evaluate = function(mine, robs) {
@@ -18,16 +18,16 @@ const evaluate = function(mine, robs) {
 
 console.log(verbs.length);
 //
-for(let i = 0; i < verbs.length; i++) {
-  let robs = verbs[i];
-  let mine = nlp.verb(robs.infinitive).conjugate();
+for(var i = 0; i < verbs.length; i++) {
+  var robs = verbs[i];
+  var mine = nlp.verb(robs.infinitive).conjugate();
   //test past
   evaluate(mine['past'], robs['past']);
   evaluate(mine['present'], robs['3rd singular present']);
   evaluate(mine['gerund'], robs['present participle']);
 
 }
-// // let arr = [];
+// // var arr = [];
 // // Object.keys(baddies).forEach((a) => {
 // //   if (baddies[a].length > 3) {
 // //     // console.log(a + '  ' + baddies[a]);
@@ -46,5 +46,5 @@ for(let i = 0; i < verbs.length; i++) {
 //report
 console.log(yep + ' correct');
 console.log(nope + ' incorrect');
-let percent = parseInt(yep / (yep + nope) * 100, 10);
+var percent = parseInt(yep / (yep + nope) * 100, 10);
 console.log('  ' + percent + '% correct');

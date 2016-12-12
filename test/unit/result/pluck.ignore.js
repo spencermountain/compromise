@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 var terms_test = (r, arr, t) => {
-  let have = r.asArray().map((o) => o.text).join(' ');
+  var have = r.asArray().map((o) => o.text).join(' ');
   arr = arr.join(' ');
   t.equal(have, arr);
 };

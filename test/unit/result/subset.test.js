@@ -26,8 +26,8 @@ var subsets = [
 test('all combined subsets empty:', function (t) {
   var r = nlp(freshPrince);
   var small = r.all();
-  for(let i = 0; i < subsets.length; i++) {
-    let sub = subsets[i];
+  for(var i = 0; i < subsets.length; i++) {
+    var sub = subsets[i];
     small = small[sub]();
   }
   t.equal(small.plaintext(), '', 'no-uber subset');

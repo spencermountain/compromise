@@ -5,8 +5,8 @@ const nlp = require('../../../src/index.js');
 const spot_test = function() {
   // const str = corpus.text.fiction();
   const str = corpus.text.friends();
-  let text = nlp.text(str);
-  let topics = text.topics();
+  var text = nlp.text(str);
+  var topics = text.topics();
   console.log(topics.slice(0, 100));
   return;
 };

@@ -12,10 +12,9 @@ class Questions extends Text {
   }
   static find(r) {
     r = r.all();
-    t.list = r.list.filter((ts) => {
+    return r.filter((ts) => {
       return ts.last().endPunctuation() === '?';
     });
-    return r;
   }
 }
 

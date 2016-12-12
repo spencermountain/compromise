@@ -2,18 +2,9 @@
 const Text = require('../../index');
 // const Noun = require('./noun');
 
-class Nouns extends Text {
-  constructor(list) {
-    super(list);
-    // this.check();
-    this.list = this.find().list;
-    return this;
-  }
+class Things extends Text {
   toSingular() {}
   toPlural() {}
-  find() {
-    return this.match('#Noun+');
-  }
   parse() {
     return this.terms().map((t) => {
       return {
@@ -28,7 +19,7 @@ class Nouns extends Text {
     return r.match('#Noun+');
   }
 }
-Nouns.prototype.toPlural = require('./toPlural');
-Nouns.prototype.toSingular = require('./toSingular');
+Things.prototype.toPlural = require('./toPlural');
+Things.prototype.toSingular = require('./toSingular');
 
-module.exports = Nouns;
+module.exports = Things;

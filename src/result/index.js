@@ -4,16 +4,6 @@ class Text {
   constructor(arr, lexicon, parent) {
     this.list = arr || [];
     this._parent = parent;
-  // this.whitespace = {
-  //   before: (str) => {
-  //     this.firstTerm().whitespace.before = str;
-  //     return this;
-  //   },
-  //   after: (str) => {
-  //     this.firstTerm().whitespace.before = str;
-  //     return this;
-  //   }
-  // };
   }
   //getter/setters
   /** did it find anything? */
@@ -56,7 +46,7 @@ class Text {
 }
 
 module.exports = Text;
-Text = require('./methods/misc')(Text);
+Text = require('./methods/array')(Text);
 Text = require('./methods/tag')(Text);
 Text = require('./methods/sort')(Text);
 Text = require('./methods/case')(Text);

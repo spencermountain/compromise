@@ -4,7 +4,7 @@ const contract = require('./contract');
 
 class Contractions extends Text {
   parse() {
-    return this.terms.map((t) => {
+    return this.terms().map((t) => {
       return {
         text: t.text
       };

@@ -3,7 +3,7 @@ const Text = require('../../index');
 
 class Organizations extends Text {
   parse() {
-    return this.terms.map((t) => {
+    return this.terms().map((t) => {
       return {
         text: t.text
       };

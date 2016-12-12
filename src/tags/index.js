@@ -2,13 +2,13 @@
 const conflicts = require('./conflicts');
 const tree = require('./tree');
 
-// const extra = {
-//   Month: 'Singular',
-//   Year: 'Noun',
-//   Time: 'Noun',
-//   WeekDay: 'Noun',
-//   Duration: 'Noun',
-// };
+const extra = {
+  Month: 'Singular',
+  Year: 'Noun',
+  Time: 'Noun',
+  WeekDay: 'Noun',
+  Duration: 'Noun',
+};
 
 //make tags
 let all = {};
@@ -35,9 +35,9 @@ const all_children = (obj) => {
 const add_tags = (obj, is) => {
   Object.keys(obj).forEach((k) => {
     is = is.slice(0); //clone it
-    // if (extra[k]) {
-    //   is.push(extra[k]);
-    // }
+    if (extra[k]) {
+      is.push(extra[k]);
+    }
     all[k] = {
       parents: is,
       children: all_children(obj[k])

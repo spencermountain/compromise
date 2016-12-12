@@ -4,13 +4,6 @@
 const nlp = require('./src/index');
 // require('./src/logger').enable();
 
-let all = nlp('he\'s really nice. is she going? he is nice.');
-// all.contractions().check().expand()//.all().check();
-// all.adverbs().remove();
-all.filter((ts) => {
-  return ts.endPunctuation() === '?';
-}).check().all().check();
-// nlp('spencer is nice. he is cool').match('spencer').all().check();
-
-// var m = nlp('the dog sat').insertAfter('and');
-// m.check()
+let all = nlp('six years and 2 days before the start of this next wednesday january 5th 1992 at 6pm');
+all.check();
+console.log(all.dates().parse()[0].punt);

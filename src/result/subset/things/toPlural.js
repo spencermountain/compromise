@@ -19,7 +19,7 @@ const toPlural = function(options) {
     }
     return ts;
   });
-  return this.all();
+  return this
 };
 
 module.exports = toPlural;

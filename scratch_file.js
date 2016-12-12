@@ -24,4 +24,11 @@ const nlp = require('./src/index');
 // m.contractions().expand();
 // console.log(m.plaintext());
 
-nlp('john is cool').match('john').replace('fred').check();
+let all=nlp('he\'s really nice')
+// all.contractions().check().expand()//.all().check();
+all.adverbs().remove()
+all.check()
+// nlp('spencer is nice. he is cool').match('spencer').all().check();
+
+// var m = nlp('the dog sat').insertAfter('and');
+// m.check()

@@ -20,15 +20,22 @@ class Text {
   get found() {
     return this.list.length > 0;
   }
-  get parent() {
-    return this._parent || this;
-  }
   /** how many Texts are there?*/
   get length() {
     return this.list.length;
   }
   get isA() {
     return 'Text';
+  }
+  get parent() {
+    return this._parent || this;
+  }
+  set parent(r) {
+    this._parent = r;
+    return this;
+  }
+  all() {
+    return this.parent;
   }
   get whitespace() {
     return {
@@ -64,22 +71,29 @@ Text.prototype.ngram = require('./methods/render/ngram');
 Text.prototype.normalize = require('./methods/normalize');
 
 const subset = {
+  acronyms: require('./subset/acronyms'),
   adjectives: require('./subset/adjectives'),
   adverbs: require('./subset/adverbs'),
   contractions: require('./subset/contractions'),
-  nouns: require('./subset/nouns'),
   dates: require('./subset/dates'),
+  hashTags: require('./subset/hashTags'),
+  organizations: require('./subset/organizations'),
   people: require('./subset/people'),
+  phoneNumbers: require('./subset/phoneNumbers'),
+  places: require('./subset/places'),
+  sentences: require('./subset/sentences'),
+  questions: require('./subset/sentences/questions'),
+  statements: require('./subset/sentences/statements'),
+  things: require('./subset/things'),
+  urls: require('./subset/urls'),
   values: require('./subset/values'),
   verbs: require('./subset/verbs'),
-  subjects: require('./subset/subjects'),
-  sentences: require('./subset/sentences'),
-  statements: require('./subset/sentences/statements'),
-  questions: require('./subset/sentences/questions'),
 };
 //term subsets
 Object.keys(subset).forEach((k) => {
   Text.prototype[k] = function () {
-    return new subset[k](this.list);
+    let sub = subset[k];
+    let m = sub.find(this);
+    return new subset[k](m.list, this.lexicon, this.parent);
   };
 });

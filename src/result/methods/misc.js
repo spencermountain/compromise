@@ -24,10 +24,6 @@ const genericMethods = (Text) => {
       return list;
     },
 
-    all: function () {
-      this.list.forEach((ts) => ts.all());
-      return this;
-    },
 
     /** get the nth term of each result*/
     term: function (n) {
@@ -37,9 +33,9 @@ const genericMethods = (Text) => {
         if (el) {
           arr = [el];
         }
-        return new Terms(arr, this.context);
+        return new Terms(arr, this.lexicon, this.parent);
       });
-      return new Text(list, this.parent);
+      return new Text(list, this.lexicon, this.parent);
     },
 
     firstTerm: function () {
@@ -114,10 +110,10 @@ const genericMethods = (Text) => {
       this.list.forEach((ts) => {
         terms = terms.concat(ts.terms);
       });
-      let ts = new Terms(terms);
-      return new Text([ts]);
+      let ts = new Terms(terms, this.lexicon, this.parent);
+      return new Text([ts], this.lexicon, this);
     },
-    // 
+    //
     // whitespace: function(str) {
     //   return {
     //     before: () => {

@@ -2,21 +2,19 @@
 const Text = require('../../index');
 
 class Acronyms extends Text {
-  constructor(list) {
-    super(list);
-    this.list = this.find().list;
-    return this;
-  }
-  find() {
-    return this.match('#Organization');
-  }
   parse() {
     return this.terms.map((t) => {
+      let parsed=t.text.toUpperCase().replace(/\./g).split('')
       return {
+        periods:parsed.join('.'),
+        normal:parsed.join(''),
         text: t.text
       };
     });
   }
+  static find(r){
+    return r.match('#Acronym');
+  }
 }
 
-module.exports = Organizations;
+module.exports = Acronyms;

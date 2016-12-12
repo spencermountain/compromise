@@ -2,14 +2,6 @@
 const Text = require('../../index');
 
 class Values extends Text {
-  constructor(list) {
-    super(list);
-    this.list = this.list;
-    return this;
-  }
-  find() {
-    return this.match('#Value+');
-  }
   parse() {
     return this.terms().map((t) => {
       return {
@@ -31,15 +23,14 @@ class Values extends Text {
         t.tagAs('NumericValue', 'toNumber()');
       }
     });
-    // this.all().check()
-    return this.all();
+    return this;
   }
   /**5900 -> 5,900 */
   toNiceNumber() {
     this.terms().forEach((t) => {
       t.text = '' + t.value.nicenumber();
     });
-    return this.all();
+    return this;
   }
   /**5 -> 'five' */
   toTextValue() {
@@ -48,7 +39,7 @@ class Values extends Text {
       t.unTag('NumericValue', 'toTextValue()');
       t.tagAs('TextValue', 'toTextValue()');
     });
-    return this.all();
+    return this;
   }
   /**5th -> 5 */
   toCardinal() {
@@ -57,7 +48,7 @@ class Values extends Text {
       t.unTag('Ordinal', 'toCardinal()');
       t.tagAs('Cardinal', 'toCardinal()');
     });
-    return this.all();
+    return this;
   }
   /**5 -> 5th */
   toOrdinal() {
@@ -66,7 +57,10 @@ class Values extends Text {
       t.unTag('Cardinal', 'toOrdinal()');
       t.tagAs('Ordinal', 'toOrdinal()');
     });
-    return this.all();
+    return this;
+  }
+  static find(r) {
+    return r.match('#Value+');
   }
 }
 

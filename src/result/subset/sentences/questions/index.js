@@ -2,16 +2,6 @@
 const Text = require('../index');
 
 class Questions extends Text {
-  constructor(list) {
-    super(list);
-    this.list=this.find().list
-    return this;
-  }
-  find(){
-    return this.list.filter((ts) => {
-      return ts.last().endPunctuation() === '?';
-    });
-  }
   parse() {
     return this.list.map((ts) => {
       return {
@@ -19,6 +9,13 @@ class Questions extends Text {
         normal: ts.normal()
       };
     });
+  }
+  static find(r) {
+    r = r.all();
+    t.list = r.list.filter((ts) => {
+      return ts.last().endPunctuation() === '?';
+    });
+    return r;
   }
 }
 

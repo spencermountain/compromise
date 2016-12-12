@@ -9,8 +9,8 @@ class Nouns extends Text {
     this.list = this.find().list;
     return this;
   }
-  toSingular(){}
-  toPlural(){}
+  toSingular() {}
+  toPlural() {}
   find() {
     return this.match('#Noun+');
   }
@@ -22,6 +22,10 @@ class Nouns extends Text {
         plural: t.noun.plural(),
       };
     });
+  }
+  static find(r) {
+    r = r.splitAfter('#Comma');
+    return r.match('#Noun+');
   }
 }
 Nouns.prototype.toPlural = require('./toPlural');

@@ -97,7 +97,7 @@ test('==contractions==', function(T) {
       if (a[1][2] && s.terms[2]) {
         got.push(s.terms[2].normal);
       }
-      var msg = '[' + got.join(', ') + '] should be [' + a[1].join(',') + ']';
+      var msg = '[' + got.join(', ') + '] should be [' + a[1].join(', ') + ']';
       t.deepEqual(got, a[1], msg);
     });
     t.end();

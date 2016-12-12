@@ -3,14 +3,6 @@ const Text = require('../../index');
 const contract = require('./contract');
 
 class Contractions extends Text {
-  constructor(list) {
-    super(list);
-    this.list = this.find().list;
-    return this;
-  }
-  find() {
-    return this.match('#Contraction+');
-  }
   parse() {
     return this.terms.map((t) => {
       return {
@@ -34,6 +26,9 @@ class Contractions extends Text {
   }
   contract() {
     return contract(this.all());
+  }
+  static find(r) {
+    return r.match('#Contraction+');
   }
 }
 

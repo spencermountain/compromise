@@ -18,7 +18,6 @@ test('replace-basic :', function(t) {
   m = nlp('the pit bull dog played').match('#Noun+').replace('grey snake');
   t.equal(m.plaintext(), 'the grey snake played', 'pit bull dog');
 
-
   t.end();
 });
 

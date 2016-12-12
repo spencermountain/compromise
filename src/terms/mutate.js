@@ -28,12 +28,12 @@ exports.deleteThese = (source, needle) => {
 
 //add them
 exports.insertAt = (parent, i, needle) => {
-  needle.dirty=true
+  needle.dirty = true;
   let arr = getTerms(needle);
   //handle whitespace
-  // if (i > 0 && arr[0]) {
-  //   arr[0].whitespace.before = ' ';
-  // }
+  if (i > 0 && arr[0]) {
+    arr[0].whitespace.before = ' ';
+  }
   //gnarly splice
   //-( basically  - terms.splice(i+1, 0, arr) )
   Array.prototype.splice.apply(parent.terms, [i, 0].concat(arr));

@@ -2,17 +2,11 @@
 const Text = require('../../index');
 // const Noun = require('./noun');
 
-class Nouns extends Text {
-  constructor(list) {
-    super(list);
-    // this.check();
-    return this;
-  }
-  find() {
-    return this.match('#Noun+');
-  }
+class Things extends Text {
+  toSingular() {}
+  toPlural() {}
   parse() {
-    return this.find().terms().map((t) => {
+    return this.terms().map((t) => {
       return {
         article: t.noun.makeArticle(),
         singular: t.noun.singular(),
@@ -20,8 +14,12 @@ class Nouns extends Text {
       };
     });
   }
+  static find(r) {
+    r = r.splitAfter('#Comma');
+    return r.match('#Noun+');
+  }
 }
-Nouns.prototype.toPlural = require('./toPlural');
-Nouns.prototype.toSingular = require('./toSingular');
+Things.prototype.toPlural = require('./toPlural');
+Things.prototype.toSingular = require('./toSingular');
 
-module.exports = Nouns;
+module.exports = Things;

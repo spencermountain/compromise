@@ -2,16 +2,8 @@
 const Text = require('../../index');
 
 class Adjectives extends Text {
-  constructor(list) {
-    super(list);
-    // this.check();
-    return this;
-  }
-  find() {
-    return this.match('#Adjective+');
-  }
   parse() {
-    return this.find().terms().map((t) => {
+    return this.terms().map((t) => {
       return {
         comparative: t.adjective.comparative(),
         superlative: t.adjective.superlative(),
@@ -20,16 +12,8 @@ class Adjectives extends Text {
       };
     });
   }
-  adverbs() {
-    this.all();
-    //very cool / cool suddenly
-    this.match('#Adverb+ #Adjective').or('#Adjective #Adverb+').match('#Adverb');
-    return this;
-  }
-  stripAdverbs() {
-    this.all();
-    this.adverbs().remove();
-    return this.all();
+  static find(r){
+    return r.match('#Adjective');
   }
 }
 

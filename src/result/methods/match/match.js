@@ -15,6 +15,7 @@ const splitMethods = (Text) => {
       });
       // this.list = list;
       let parent = this.parent || this;
+      // parent.check()
       return new Text(list, this.lexicon, parent);
     },
 

@@ -34,6 +34,8 @@ const conflicts = [
   ['Value', 'Determiner'],
   ['Verb', 'NounPhrase'],
   ['Noun', 'VerbPhrase'],
+  //cases
+  ['UpperCase', 'TitleCase', 'CamelCase']
 
 ];
 

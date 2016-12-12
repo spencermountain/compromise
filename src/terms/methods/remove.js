@@ -6,34 +6,43 @@ const removeMethods = (Terms) => {
   const methods = {
 
     remove: function (reg) {
-      if (!reg) {
-        this.parentTerms = mutate.deleteThese(this.parentTerms, this)
-        return this
+      //don't touch parent if empty
+      if (!this.found) {
+        return this;
       }
-      let found = this.match(reg)
-      this.parentTerms = mutate.deleteThese(this.parentTerms, found)
-      return this
+      //remove all selected
+      if (!reg) {
+        this.parentTerms = mutate.deleteThese(this.parentTerms, this);
+        return this;
+      }
+      //only remove a portion of this
+      let found = this.match(reg);
+      if (found.found) {
+        let r = mutate.deleteThese(this, found);
+        return r;
+      }
+      return this;
     },
 
 
     //like match, but remove them from original
     pluck: function (reg) {
-      let found = this.match(reg)
-        //remove them from `this`
-      let index = 0
-      let lookFor = found.terms[index]
+      let found = this.match(reg);
+      //remove them from `this`
+      let index = 0;
+      let lookFor = found.terms[index];
       this.terms = this.terms.filter((t) => {
         if (t === lookFor) {
-          index += 1
-          lookFor = found.terms[index]
-          return false
+          index += 1;
+          lookFor = found.terms[index];
+          return false;
         }
-        return true
-      })
-      return found
+        return true;
+      });
+      return found;
     }
 
-  }
+  };
 
   //hook them into result.proto
   Object.keys(methods).forEach((k) => {
@@ -42,4 +51,4 @@ const removeMethods = (Terms) => {
   return Terms;
 };
 
-module.exports = removeMethods;;;
+module.exports = removeMethods;

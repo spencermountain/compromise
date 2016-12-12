@@ -8,26 +8,26 @@ const replaceMethods = (Terms) => {
     replace: function (str1, str2) {
       //in this form, we 'replaceWith'
       if (str2 === undefined) {
-        return this.replaceWith(str1)
+        return this.replaceWith(str1);
       }
-      this.match(str1).replaceWith(str2)
-      return this
+      this.match(str1).replaceWith(str2);
+      return this;
     },
 
 
     /**swap this for that */
     replaceWith: function (str, tag) {
-      let ts = Terms.fromString(str)
+      let ts = Terms.fromString(str);
       if (tag) {
-        ts.set_tag(tag, 'user-given')
+        ts.set_tag(tag, 'user-given');
       }
-      let index = this.terms[0].index()
-      this.parentTerms = mutate.deleteThese(this.parentTerms, this)
-      this.parentTerms = mutate.insertAt(this.parentTerms, index, ts)
-      return this.parentTerms
+      let index = this.terms[0].index();
+      this.parentTerms = mutate.deleteThese(this.parentTerms, this);
+      this.parentTerms = mutate.insertAt(this.parentTerms, index, ts);
+      return this.parentTerms;
     }
 
-  }
+  };
 
   //hook them into result.proto
   Object.keys(methods).forEach((k) => {
@@ -36,4 +36,4 @@ const replaceMethods = (Terms) => {
   return Terms;
 };
 
-module.exports = replaceMethods;;
+module.exports = replaceMethods;

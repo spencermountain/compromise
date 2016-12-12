@@ -1,11 +1,11 @@
 //helpers to make test output messages nicer
-const str_test = function(got, input, want, t) {
+var str_test = function(got, input, want, t) {
   var msg = '\'-> - - -> \'' + got + '\'- - - - (want: \'' + want + '\' )'; //'\'' + input +
   t.equal(got, want, msg);
   return;
 };
 
-const arr_test = function(got, input, want, t) {
+var arr_test = function(got, input, want, t) {
   got = JSON.stringify(got);
   want = JSON.stringify(want);
   var msg = '\'-> - - -> \'' + got + '\'- - - - (want: \'' + want + '\' )'; //'\'' + input +
@@ -13,7 +13,7 @@ const arr_test = function(got, input, want, t) {
   return;
 };
 
-const has_pos = function(terms, tags) {
+var has_pos = function(terms, tags) {
   if (terms.length !== tags.length) {
     return false;
   }
@@ -25,7 +25,7 @@ const has_pos = function(terms, tags) {
   return true;
 };
 
-const pos_test = function(terms, tags, t) {
+var pos_test = function(terms, tags, t) {
   terms = terms || [];
   var str = '';
   var got = terms.map(function(term) {
@@ -37,7 +37,7 @@ const pos_test = function(terms, tags, t) {
   return;
 };
 
-const terms_test = function(terms, want, t, isText) {
+var terms_test = function(terms, want, t, isText) {
   var str = '';
   var got = terms.map(function(term) {
     str += ' ' + term.text;
@@ -50,11 +50,17 @@ const terms_test = function(terms, want, t, isText) {
   t.deepEqual(got, want, msg);
 };
 
-
+var isArray = function(someVar) {
+  if (Object.prototype.toString.call(someVar) === '[object Array]') {
+    return true;
+  }
+  return false;
+};
 
 module.exports = {
   str_test: str_test,
   pos_test: pos_test,
   terms_test: terms_test,
   arr_test: arr_test,
+  isArray: isArray
 };

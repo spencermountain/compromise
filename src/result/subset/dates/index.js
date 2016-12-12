@@ -3,18 +3,6 @@ const Text = require('../../index');
 const Date = require('./date');
 
 class Dates extends Text {
-  constructor(list) {
-    super(list);
-    this.list = this.find().list
-    return this
-  }
-  find() {
-    let dates = this.match('#Date+');
-    dates.list = dates.list.map((ts) => {
-      return new Date(ts.terms, ts.context)
-    })
-    return dates
-  }
   toShortForm() {
     this.match('#Month').terms().forEach((t) => {
       t = t.month.toShortForm()
@@ -35,6 +23,13 @@ class Dates extends Text {
   }
   parse() {
     return this.list.map((ts) => ts.parse())
+  }
+  static find(r){
+    let dates = r.match('#Date+');
+    dates.list = dates.list.map((ts) => {
+      return new Date(ts.terms, ts.lexicon, ts.parent)
+    })
+    return dates
   }
 }
 

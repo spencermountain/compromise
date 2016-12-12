@@ -3,16 +3,11 @@ const Text = require('../../index');
 const contract = require('./contract');
 
 class Contractions extends Text {
-  constructor(list) {
-    super(list);
-    return this;
-  }
-  find() {
-    return this.match('#Contraction+');
-  }
   parse() {
-    return this.find().terms.map((t) => {
-      return {};
+    return this.terms().map((t) => {
+      return {
+        text: t.text
+      };
     });
   }
   expand() {
@@ -20,7 +15,7 @@ class Contractions extends Text {
       ts.terms.forEach((t) => {
         if (t.silent_term) {
           if (!t.text) {
-            t.whitespace.before = ' '
+            t.whitespace.before = ' ';
           }
           t.text = t.silent_term;
           t.unTag('Contraction', 'expanded');
@@ -31,6 +26,9 @@ class Contractions extends Text {
   }
   contract() {
     return contract(this.all());
+  }
+  static find(r) {
+    return r.match('#Contraction+');
   }
 }
 

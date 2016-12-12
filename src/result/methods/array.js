@@ -10,7 +10,7 @@ const genericMethods = (Text) => {
       let list = this.list.map((ts) => {
         return ts.clone();
       });
-      return new Text(list);
+      return new Text(list, this.lexicon, this.parent);
     },
 
     /**turn all sentences into one, for example*/
@@ -21,13 +21,9 @@ const genericMethods = (Text) => {
       }, []);
       // let terms = new Terms(list);
       // return new Text([terms], this.parent);
-      return list
+      return list;
     },
 
-    all: function () {
-      this.list.forEach((ts) => ts.all())
-      return this
-    },
 
     /** get the nth term of each result*/
     term: function (n) {
@@ -37,16 +33,16 @@ const genericMethods = (Text) => {
         if (el) {
           arr = [el];
         }
-        return new Terms(arr, this.context);
+        return new Terms(arr, this.lexicon, this.parent);
       });
-      return new Text(list, this.parent);
+      return new Text(list, this.lexicon, this.parent);
     },
 
     firstTerm: function () {
-      return this.match('^.')
+      return this.match('^.');
     },
     lastTerm: function () {
-      return this.match('.$')
+      return this.match('.$');
     },
 
     /**use only the first result */
@@ -54,7 +50,7 @@ const genericMethods = (Text) => {
       if (!n && n !== 0) {
         return this.get(0);
       }
-      return new Text(this.list.slice(0, n), this.parent);
+      return new Text(this.list.slice(0, n), this.lexicon, this.parent);
     },
 
     /**use only the last result */
@@ -64,59 +60,59 @@ const genericMethods = (Text) => {
       }
       let end = this.list.length;
       let start = end - n;
-      return new Text(this.list.slice(start, end), this.parent);
+      return new Text(this.list.slice(start, end), this.lexicon, this.parent);
     },
 
     /** use only the nth result*/
     get: function (n) {
       //return an empty result
       if ((!n && n !== 0) || !this.list[n]) {
-        return new Text([], this.parent);
+        return new Text([], this.lexicon, this.parent);
       }
       let ts = this.list[n];
-      return new Text([ts], this.parent);
+      return new Text([ts], this.lexicon, this.parent);
     },
 
     filter: function (fn) {
       //treat it as a termlist filter
       if (typeof fn === 'string') {
         let list = this.list.filter((ts) => {
-          return ts.has(fn)
-        })
-        return new Text(list, this.parent);
+          return ts.has(fn);
+        });
+        return new Text(list, this.lexicon, this.parent);
       }
       //ad-hoc filter-method
-      let list = this.list.filter(fn)
-      return new Text(list, this.parent);
+      let list = this.list.filter(fn);
+      return new Text(list, this.lexicon, this.parent);
     },
     forEach: function (fn) {
-      this.list.forEach(fn)
-      return this
+      this.list.forEach(fn);
+      return this;
     },
     map: function (fn) {
       //treat it as a termlist filter
       if (typeof fn === 'string') {
         let list = this.list.map((ts) => {
-          return ts[fn]()
-        })
-        return new Text(list)
+          return ts[fn]();
+        });
+        return new Text(list, this.lexicon, this.parent);
       }
-      let list = this.list.map(fn)
-      return new Text(list)
+      let list = this.list.map(fn);
+      return new Text(list, this.lexicon, this.parent);
     },
     //turn two result objects into one
     combine: function (r) {
-      this.list = this.list.concat(r.list)
-      return this
+      let list = this.list.concat(r.list);
+      return new Text(list, this.lexicon, this.parent);
     },
     flatten: function () {
-      let terms = []
+      let terms = [];
       this.list.forEach((ts) => {
-        terms = terms.concat(ts.terms)
-      })
-      let ts = new Terms(terms)
-      return new Text([ts])
-    }
+        terms = terms.concat(ts.terms);
+      });
+      let ts = new Terms(terms, this.lexicon, this.parent);
+      return new Text([ts], this.lexicon, this.parent);
+    },
 
   };
 

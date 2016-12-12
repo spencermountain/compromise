@@ -20,7 +20,7 @@ const toSingular = function (options) {
     }
     return ts;
   });
-  return this.all();
+  return this
 };
 
 module.exports = toSingular;

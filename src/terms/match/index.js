@@ -1,7 +1,6 @@
 'use strict';
 //
 const syntax = require('./lib/syntax');
-const log = require('./lib/paths').log;
 const startHere = require('./lib/startHere');
 const Text = require('../../result/index');
 
@@ -13,9 +12,6 @@ const matchMethods = (Terms) => {
     match: function (str, verbose) {
       let matches = [];
       let regs = syntax(str);
-      // if (verbose) {
-      //   console.log(regs)
-      // }
       for (let t = 0; t < this.terms.length; t++) {
         //don't loop through if '^'
         if (regs[0] && regs[0].starting && t > 0) {
@@ -30,8 +26,8 @@ const matchMethods = (Terms) => {
         }
       }
       matches = matches.map((a) => {
-          return new Terms(a, this.lexicon, this.parent, this)
-        })
+        return new Terms(a, this.lexicon, this.parent, this)
+      })
         // return matches
       let r = new Text(matches, this.lexicon, this.parent);
       return r

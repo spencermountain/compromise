@@ -1,7 +1,5 @@
 'use strict';
 const Term = require('../../term');
-const fns = require('../paths').fns
-
 
 const transforms = (Terms) => {
 
@@ -16,7 +14,7 @@ const transforms = (Terms) => {
       let terms = this.terms.map((t) => {
         return t.clone();
       });
-      return new Terms(terms, this.context);
+      return new Terms(terms, this.lexicon, this.parent);
     },
 
   }

@@ -42,8 +42,11 @@ module.exports = {
       return tag;
     }).join(', ');
     let word = this.text;
-    word = this.whitespace.before + word + this.whitespace.after;
+    // word = this.whitespace.before + word + this.whitespace.after;
     word = '\'' + chalk.green(word || '-') + '\'';
+    if(this.dirty){
+      word+='*'
+    }
     let silent = '';
     if (this.silent_term) {
       silent = '[' + this.silent_term + ']';

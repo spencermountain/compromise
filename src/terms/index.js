@@ -21,6 +21,9 @@ class Terms {
   get isA() {
     return 'Terms';
   }
+  set dirty(dirt){
+    this.terms.forEach((t)=>{t.dirty=dirt})
+  }
   posTag() {
     tagger(this);
     return this;

@@ -21,6 +21,9 @@ class Term {
     this.whitespace = build_whitespace(str || '');
     this._text = this._text.trim();
     this.parent = null;
+    this.silent_term = '';
+    //has this term been modified
+    this.dirty=false
 
     bindMethods(require('./term'), 'term', this);
     bindMethods(require('./verb'), 'verb', this);
@@ -35,13 +38,13 @@ class Term {
     bindMethods(require('./weekday'), 'weekday', this);
 
     this.normalize();
-    this.silent_term = '';
     this.helpers = require('./helpers');
   }
 
   set text(str) {
     str = str || '';
     this._text = str.trim();
+    this.dirty=true
     if (this._text !== str) {
       this.whitespace = build_whitespace(str);
     }
@@ -88,6 +91,7 @@ class Term {
   /** delete this term from its sentence */
   remove() {
     let ts = this.parent;
+    this.dirty=true//redundant
     if (!ts) {
       return null;
     }

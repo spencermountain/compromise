@@ -22,6 +22,7 @@ module.exports = {
         this.text = shorten[longMonths[this.normal]]
       }
     }
+    this.dirty=true
     return this
   },
   toLongForm: function () {
@@ -31,6 +32,7 @@ module.exports = {
         this.text = longer[shortMonths[this.normal]]
       }
     }
+    this.dirty=true
     return this
   }
 

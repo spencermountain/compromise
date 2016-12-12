@@ -28,6 +28,7 @@ exports.deleteThese = (source, needle) => {
 
 //add them
 exports.insertAt = (parent, i, needle) => {
+  needle.dirty=true
   let arr = getTerms(needle);
   //handle whitespace
   // if (i > 0 && arr[0]) {

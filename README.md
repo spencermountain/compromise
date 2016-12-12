@@ -32,7 +32,7 @@
 </div>
 <br/>
 ```javascript
-nlp('I look just like buddy holly').toPast().text()
+nlp('I look just like buddy holly').sentences().toPast().text()
 // "I looked just like buddy holly."
 ```
 <h3 align="center">
@@ -69,13 +69,13 @@ r.remove('#Adverb')
 //reach-in and transform parts
 r.match('#Person').toTitleCase()
 
-r.text()
+r.plaintext()
 // 'John is nice. Sara walks.'
 ```
 
 ###Conjugation:
 ```javascript
-r = nlp('she sells seashells by the seashore.').toFuture().text()
+r = nlp('she sells seashells by the seashore.').sentences().toFuture().text()
 //'she will sell seashells...'
 
 r.verbs().conjugate()
@@ -96,7 +96,7 @@ r.text()
 ###Negation:
 ```javascript
 r = nlp('london is calling')
-r.toNegative()
+r.sentences().toNegative()
 // 'london is not calling'
 ```
 

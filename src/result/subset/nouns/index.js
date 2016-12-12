@@ -9,6 +9,8 @@ class Nouns extends Text {
     this.list = this.find().list;
     return this;
   }
+  toSingular(){}
+  toPlural(){}
   find() {
     return this.match('#Noun+');
   }

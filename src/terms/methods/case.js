@@ -8,22 +8,22 @@ const caseMethods = (Terms) => {
       this.terms.forEach((t) => {
         t.text = t.term.titlecase();
       });
-      this.terms.tagAs('#TitleCase');
+      this.tagAs('#TitleCase');
       return this;
     },
     toLowerCase: function () {
       this.terms.forEach((t) => {
         t.text = t.text.toLowerCase();
       });
-      this.terms.unTag('#TitleCase');
-      this.terms.unTag('#UpperCase');
+      this.unTag('#TitleCase');
+      this.unTag('#UpperCase');
       return this;
     },
     toUpperCase: function () {
       this.terms.forEach((t) => {
         t.text = t.text.toUpperCase();
       });
-      this.terms.tagAs('#UpperCase');
+      this.tagAs('#UpperCase');
       return this;
     },
     toCamelCase: function() {
@@ -34,7 +34,7 @@ const caseMethods = (Terms) => {
         }
         t.whitespace.after = '';
       });
-      this.terms.tagAs('#CamelCase');
+      this.tagAs('#CamelCase');
       return this;
     }
 

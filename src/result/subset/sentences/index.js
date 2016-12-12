@@ -15,12 +15,12 @@ class Sentences extends Text {
   /** inflect the main/first noun*/
   toSingular() {
     let nouns = this.match('#Noun').match('!#Pronoun').firstTerm();
-    nouns.nouns().toSingular();
+    nouns.things().toSingular();
     return this;
   }
   toPlural() {
     let nouns = this.match('#Noun').match('!#Pronoun').firstTerm();
-    nouns.nouns().toPlural();
+    nouns.things().toPlural();
     return this;
   }
 

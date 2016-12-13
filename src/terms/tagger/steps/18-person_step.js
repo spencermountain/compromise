@@ -9,8 +9,9 @@ const person_step = function (ts) {
   // x Lastname
   ts.match('#Noun #LastName').firstTerm().canBe('#FirstName').tag('#FirstName', reason);
 
-  // Firstname x
-  ts.match('#FirstName #Noun').lastTerm().canBe('#LastName').tag('#LastName', reason);
+  // Firstname x (dangerous)
+  let tmp = ts.match('#FirstName #Noun').ifNo('^#Possessive');
+  tmp.lastTerm().canBe('#LastName').tag('#LastName', reason);
 
   //j.k Rowling
   ts.match('#Acronym #TitleCase').canBe('#Person').tag('#Person', reason);

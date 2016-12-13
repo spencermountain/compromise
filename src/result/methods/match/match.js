@@ -50,6 +50,30 @@ const splitMethods = (Text) => {
       return false;
     },
 
+    if: function (reg, verbose) {
+      let list = [];
+      for(let i = 0; i < this.list.length; i++) {
+        let m = this.list[i].match(reg, verbose);
+        if (m.found) {
+          list.push(this.list[i]);
+        }
+      }
+      let parent = this.parent || this;
+      return new Text(list, this.lexicon, parent);
+    },
+
+    ifNo: function (reg, verbose) {
+      let list = [];
+      for(let i = 0; i < this.list.length; i++) {
+        let m = this.list[i].match(reg, verbose);
+        if (!m.found) {
+          list.push(this.list[i]);
+        }
+      }
+      let parent = this.parent || this;
+      return new Text(list, this.lexicon, parent);
+    },
+
     /** return terms after this match */
     after: function (reg) {
       let after = reg + ' *';

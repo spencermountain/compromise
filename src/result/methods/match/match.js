@@ -13,9 +13,17 @@ const splitMethods = (Text) => {
           list.push(ms);
         });
       });
-      // this.list = list;
       let parent = this.parent || this;
-      // parent.check()
+      return new Text(list, this.lexicon, parent);
+    },
+
+    not: function(reg, verbose) {
+      let list = [];
+      this.list.forEach((ts) => {
+        let found = ts.not(reg, verbose);
+        list = list.concat(found.list);
+      });
+      let parent = this.parent || this;
       return new Text(list, this.lexicon, parent);
     },
 

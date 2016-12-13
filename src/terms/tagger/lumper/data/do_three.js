@@ -21,7 +21,7 @@ module.exports = [
   {
     //three-word quote
     condition: (a, b, c) => (a.text.match(/^["']/) && !b.text.match(/["']/) && c.text.match(/["']$/)),
-    result: 'Noun',
+    result: 'Quotation',
     reason: 'Three-word-quote'
   },
   {

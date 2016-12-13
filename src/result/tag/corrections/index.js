@@ -1,5 +1,5 @@
 'use strict';
-const log = require('../paths').log
+const log = require('../paths').log;
 const path = 'correction';
 const date_corrections = require('./date_corrections');
 
@@ -8,15 +8,15 @@ const corrections = function (r) {
   log.here(path);
   //the word 'so'
   //so funny
-  r.match('so #Adjective').match('so').tag('Adverb');
+  r.match('so #Adjective').match('so').tag('Adverb', 'so-adv');
   //so the
-  r.match('so #Noun').match('so').tag('Conjunction');
+  r.match('so #Noun').match('so').tag('Conjunction', 'so-conj');
   //do so
-  r.match('do so').match('so').tag('Noun');
+  r.match('do so').match('so').tag('Noun', 'so-noun');
   //still good
-  r.match('still #Adjective').match('still').tag('Adverb');
+  r.match('still #Adjective').match('still').tag('Adverb', 'still-advb');
   //'more' is not always an adverb
-  r.match('more #Noun').tag('Noun');
+  r.match('more #Noun').tag('Noun', 'more-noun');
   //still make
   r.match('still #Verb').term(0).tag('Adverb', 'still-verb');
 
@@ -56,7 +56,7 @@ const corrections = function (r) {
   r.match('#Determiner #Verb of').term(1).tag('Noun', 'the-verb-of');
 
   //past-tense copula
-  r.match('has #Adverb? #Negative? #Adverb? been').tag('Copula');
+  r.match('has #Adverb? #Negative? #Adverb? been').tag('Copula', 'has-been');
 
   //he quickly foo
   r.match('#Noun #Adverb #Noun').term(2).tag('Verb', 'correction');
@@ -80,19 +80,20 @@ const corrections = function (r) {
   r.match('#Adjective #PresentTense').term(1).tag('Noun', 'adj-presentTense');
 
   //'a/an' can mean 1
-  r.match('(a|an) (#Duration|#Value)').term(0).tag('Value');
+  r.match('(a|an) (#Duration|#Value)').term(0).tag('Value', 'a-is-one');
   //half a million
-  r.match('(half|quarter) a? #Value').tag('Value');
+  r.match('(half|quarter) a? #Value').tag('Value', 'half-a-value');
   //all values are either ordinal or cardinal
-  r.match('#Value').match('!#Ordinal').tag('#Cardinal');
+  r.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
 
 
   //last names
-  r.match('#FirstName #Acronym? #TitleCase').tag('#Person').lastTerm().tag('#LastName')
-  r.match('#FirstName (#Singular|#Possessive)').tag('#Person').lastTerm().tag('#LastName')
-  r.match('#FirstName #Acronym #Noun').tag('#Person').lastTerm().tag('#LastName')
-  r.match('(lady|queen) #TitleCase').tag('#FemalePerson')
-  r.match('(king|pope) #TitleCase').tag('#MalePerson')
+  let reason = 'person-correction';
+  r.match('#FirstName #Acronym? #TitleCase').tag('#Person', reason).lastTerm().tag('#LastName', reason);
+  r.match('#FirstName (#Singular|#Possessive)').tag('#Person', reason).lastTerm().tag('#LastName', reason);
+  r.match('#FirstName #Acronym #Noun').tag('#Person', reason).lastTerm().tag('#LastName', reason);
+  r.match('(lady|queen) #TitleCase').tag('#FemalePerson', reason);
+  r.match('(king|pope) #TitleCase').tag('#MalePerson', reason);
 
   r = date_corrections(r);
 

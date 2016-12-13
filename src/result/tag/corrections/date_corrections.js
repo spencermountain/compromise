@@ -66,15 +66,15 @@ const corrections = function (r) {
   //saturday am
   r.match('#Date (am|pm)').term(1).unTag('Verb').unTag('Copula').tag('Time', 'date-am');
   //late at night
-  r.match('at night').tag('Time');
-  r.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time');
-  r.match('(early|late) (at|in)? the? (night|evening|morning|afternoon|day|daytime)').tag('Time');
+  r.match('at night').tag('Time', 'at-night');
+  r.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time', 'in-the-night');
+  r.match('(early|late) (at|in)? the? (night|evening|morning|afternoon|day|daytime)').tag('Time', 'early-evening');
   //march 12th 2018
   r.match('#Month #Value #Cardinal').tag('Date', 'month-value-cardinal');
-  r.match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('Date');
-  r.match('#Date #Value').tag('Date', '');
-  r.match('#Value #Date').tag('Date', '');
-  r.match('#Date #Preposition #Date').tag('Date', '');
+  r.match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('Date', 'next-feb');
+  r.match('#Date #Value').tag('Date', 'date-value');
+  r.match('#Value #Date').tag('Date', 'value-date');
+  r.match('#Date #Preposition #Date').tag('Date', 'date-prep-date');
 
   //two days before
   r.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction');

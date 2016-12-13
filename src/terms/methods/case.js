@@ -8,7 +8,7 @@ const caseMethods = (Terms) => {
       this.terms.forEach((t) => {
         t.text = t.term.titlecase();
       });
-      this.tagAs('#TitleCase');
+      this.tagAs('#TitleCase', 'toTitleCase');
       return this;
     },
     toLowerCase: function () {
@@ -23,7 +23,7 @@ const caseMethods = (Terms) => {
       this.terms.forEach((t) => {
         t.text = t.text.toUpperCase();
       });
-      this.tagAs('#UpperCase');
+      this.tagAs('#UpperCase', 'toUpperCase');
       return this;
     },
     toCamelCase: function() {
@@ -34,7 +34,7 @@ const caseMethods = (Terms) => {
         }
         t.whitespace.after = '';
       });
-      this.tagAs('#CamelCase');
+      this.tagAs('#CamelCase', 'toCamelCase');
       return this;
     }
 

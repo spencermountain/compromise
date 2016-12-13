@@ -63,6 +63,8 @@ const splitMethods = (Text) => {
     },
 
   };
+  //alias 'and'
+  methods.and = methods.match;
 
   //hook them into result.proto
   Object.keys(methods).forEach((k) => {

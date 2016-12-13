@@ -26,7 +26,7 @@ const tag_one = (term, tag, reason) => {
   //clean first
   makeCompatible(term, tag, reason);
   // unTag(term, tag, reason);
-  log.tagAs(term, tag, reason)
+  log.tagAs(term, tag, reason);
   term.tag[tag] = true;
 };
 
@@ -42,7 +42,7 @@ const tagAll = function (term, tag, reason) {
   if (tagset[tag]) {
     let tags = tagset[tag].parents || [];
     for (let i = 0; i < tags.length; i++) {
-      tag_one(term, tags[i], '');
+      tag_one(term, tags[i], '-');
     }
   }
 };

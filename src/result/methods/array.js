@@ -101,9 +101,18 @@ const genericMethods = (Text) => {
       return new Text(list, this.lexicon, this.parent);
     },
     //turn two result objects into one
-    combine: function (r) {
-      let list = this.list.concat(r.list);
-      return new Text(list, this.lexicon, this.parent);
+    // combine: function (r) {
+    //   let list = this.list.concat(r.list);
+    //   return new Text(list, this.lexicon, this.parent);
+    // },
+    concat: function() {
+      //any number of params
+      for(let i = 0; i < arguments.length; i++) {
+        for(let o = 0; o < arguments[i].list.length; o++) {
+          this.list.push(arguments[i].list[o]);
+        }
+      }
+      return this;
     },
     flatten: function () {
       let terms = [];

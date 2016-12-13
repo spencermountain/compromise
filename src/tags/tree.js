@@ -94,6 +94,7 @@ module.exports = {
     Acronym: true,
   },
   //phrases
+  Quotation: true,
   ValuePhrase: true,
   AdjectivePhrase: true,
   ConditionPhrase: true,

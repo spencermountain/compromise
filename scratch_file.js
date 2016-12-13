@@ -3,9 +3,10 @@
 //use it for messing around.
 const freshPrince = require('./test/unit/lib/freshPrince');
 const nlp = require('./src/index');
-// require('./src/logger').enable();
-// var m = nlp(freshPrince).nouns();
+require('./src/logger').enable();
+// var m = nlp(freshPrince).things();
 
-var m = nlp('spencer is really really cool').not('#Adverb+');
-m.check();
+let m = nlp('spencer\'s trip to France');
+m.things().check();
+// m.check();
 // console.log(m.plaintext());

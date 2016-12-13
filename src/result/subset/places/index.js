@@ -11,7 +11,7 @@ class Places extends Text {
   }
   static find(r) {
     r = r.splitAfter('#Comma');
-    return r.match('#Place');
+    return r.match('#Place+');
   }
 }
 

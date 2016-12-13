@@ -1,5 +1,6 @@
 'use strict';
 const Text = require('../../index');
+const Place = require('./place');
 
 class Places extends Text {
   parse() {
@@ -11,7 +12,11 @@ class Places extends Text {
   }
   static find(r) {
     r = r.splitAfter('#Comma');
-    return r.match('#Place+');
+    r = r.match('#Place+');
+    r.list = r.list.map((ts) => {
+      return new Place(ts.terms, ts.lexicon, ts.parent);
+    });
+    return r;
   }
 }
 

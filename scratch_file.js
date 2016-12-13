@@ -6,7 +6,9 @@ const nlp = require('./src/index');
 // require('./src/logger').enable();
 // var m = nlp(freshPrince).things();
 
-let m = nlp('spencer\'s trip to France. spencer is nice');
-m.things().check();
+// let m = nlp('the trip to Paris. it is paris france.');
+let m = nlp('spencer kelly and dr. spencer kelly');
+m.people().unique().check();
+// m.places().unique().check();
 // m.check();
-// console.log(m.plaintext());
+// console.log(m.root());

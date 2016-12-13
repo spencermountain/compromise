@@ -16,7 +16,7 @@ class Things extends Text {
     yup.concat(r.places());
     yup.concat(r.organizations());
     yup = yup.clone();
-    yup.toUpperCase();
+    // yup.toUpperCase();
     return yup;
   }
 }

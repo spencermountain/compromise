@@ -3,17 +3,16 @@ const Terms = require('../../paths').Terms;
 const guessGender = require('./guessGender');
 const log = require('../../paths').log;
 
-
 class Person extends Terms {
-  constructor(terms, context) {
-    super(terms, context);
+  constructor(arr, lexicon, parent) {
+    super(arr, lexicon, parent);
     this.firstName = this.match('#FirstName+'); //.list[0];
     this.middleName = this.match('#Acronym+');
     this.honorifics = this.match('#Honorific');
     this.lastName = new Terms([]);
     //assume first-last
     if (!this.firstName && this.length === 2) {
-      let m = this.clone().not('(#Acronym|#Honorific)');
+      let m = this.not('(#Acronym|#Honorific)');
       this.firstName = m.first();
       this.lastName = m.last();
     } else {
@@ -51,6 +50,14 @@ class Person extends Terms {
       genderGuess: this.guessGender(),
       honorifics: this.honorifics.asArray()
     };
+  }
+  root() {
+    let first = this.firstName.root();
+    let last = this.lastName.root();
+    if (first && last) {
+      return first + ' ' + last;
+    }
+    return first || last || this.root();
   }
 }
 module.exports = Person;

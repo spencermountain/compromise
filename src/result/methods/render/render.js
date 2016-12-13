@@ -9,11 +9,12 @@ const prettyPrint = (Text) => {
       console.log('====');
       this.list.forEach((ts) => {
         console.log('   --');
-        ts.check()
+        ts.check();
       });
       return this;
     },
 
+    /** a character-perfect form*/
     plaintext: function () {
       return this.list.reduce((str, ts) => {
         str += ts.plaintext();
@@ -21,6 +22,7 @@ const prettyPrint = (Text) => {
       }, '');
     },
 
+    /** a human-readable form*/
     normal: function () {
       return this.list.map((ts) => {
         let str = ts.normal();
@@ -32,6 +34,12 @@ const prettyPrint = (Text) => {
           }
         }
         return str;
+      }).join(' ');
+    },
+    /** a computer-focused, more aggressive normalization than normal()*/
+    root: function () {
+      return this.list.map((ts) => {
+        return ts.root();
       }).join(' ');
     },
 

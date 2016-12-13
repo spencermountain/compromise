@@ -10,8 +10,9 @@ class People extends Text {
   static find(r) {
     let people = r.splitAfter('#Comma');
     people = people.match('#Person+');
+    people.check();
     people.list = people.list.map((ts) => {
-      return new Person(ts.terms, ts.context);
+      return new Person(ts.terms, ts.lexicon, ts.parent);
     });
     return people;
   }

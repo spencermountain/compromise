@@ -9,33 +9,33 @@ const sortMethod = (Text) => {
     sortAlpha: function () {
       this.list = this.list.sort((a, b) => {
         if (a.plaintext() > b.plaintext()) {
-          return 1
+          return 1;
         }
-        return -1
-      })
-      return this
+        return -1;
+      });
+      return this;
     },
 
     /**reverse the order of result.list */
     reverse: function () {
-      this.list = this.list.reverse()
-      return this
+      this.list = this.list.reverse();
+      return this;
     },
 
 
     unique: function () {
-      let obj = {}
+      let obj = {};
       this.list = this.list.filter((ts) => {
-        let str = ts.normal()
+        let str = ts.root();
         if (obj[str]) {
-          return false
+          return false;
         }
-        obj[str] = true
-        return true
-      })
-      return this
+        obj[str] = true;
+        return true;
+      });
+      return this;
     }
-  }
+  };
 
   //hook them into result.proto
   Object.keys(methods).forEach((k) => {

@@ -35,7 +35,7 @@ class Sentences extends Text {
     return this;
   }
   toPositive() {
-    this.match('#Negative').remove();
+    this.match('#Negative').delete();
     return this;
   }
 

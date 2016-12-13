@@ -13,7 +13,7 @@ class Person extends Terms {
     this.lastName = new Terms([]);
     //assume first-last
     if (!this.firstName && this.length === 2) {
-      let m = this.clone().remove('(#Acronym|#Honorific)');
+      let m = this.clone().not('(#Acronym|#Honorific)');
       this.firstName = m.first();
       this.lastName = m.last();
     } else {

@@ -11,18 +11,18 @@ const conditionPass = function(r) {
   //'go a bit further, if it then has a pronoun
   m = r.match('#Condition {1,13} #ClauseEnd #Pronoun');
   if (m.found && m.match('#Comma$')) {
-    m.remove('#Pronoun$').tag('ConditionPhrase');
+    m.not('#Pronoun$').tag('ConditionPhrase');
   }
   //if it goes then ..
   m = r.match('#Condition {1,7} then');
   if (m.found) {
-    m.remove('then$').tag('ConditionPhrase');
+    m.not('then$').tag('ConditionPhrase');
   }
   //at the end of a sentence:
   //'..., if it really goes.'
   m = r.match('#Comma #Condition {1,7} .$');
   if (m.found) {
-    m.remove('^#Comma').tag('ConditionPhrase');
+    m.not('^#Comma').tag('ConditionPhrase');
   }
   // '... if so.'
   m = r.match('#Condition {1,4}$');

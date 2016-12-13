@@ -41,7 +41,7 @@ const parseDate = (r) => {
   m = r.match('#Time');
   if (m.found) {
     result.timeOfDay = parseTime(r);
-    r.remove('#Time'); //unsure
+    r.not('#Time'); //unsure
   }
 
   //january fifth 1992

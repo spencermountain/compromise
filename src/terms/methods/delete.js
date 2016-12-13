@@ -1,11 +1,11 @@
 'use strict';
 const mutate = require('../mutate');
 
-const removeMethods = (Terms) => {
+const deleteMethods = (Terms) => {
 
   const methods = {
 
-    remove: function (reg) {
+    delete: function (reg) {
       //don't touch parent if empty
       if (!this.found) {
         return this;
@@ -26,21 +26,21 @@ const removeMethods = (Terms) => {
 
 
     //like match, but remove them from original
-    pluck: function (reg) {
-      let found = this.match(reg);
-      //remove them from `this`
-      let index = 0;
-      let lookFor = found.terms[index];
-      this.terms = this.terms.filter((t) => {
-        if (t === lookFor) {
-          index += 1;
-          lookFor = found.terms[index];
-          return false;
-        }
-        return true;
-      });
-      return found;
-    }
+    // pluck: function (reg) {
+    //   let found = this.match(reg);
+    //   //remove them from `this`
+    //   let index = 0;
+    //   let lookFor = found.terms[index];
+    //   this.terms = this.terms.filter((t) => {
+    //     if (t === lookFor) {
+    //       index += 1;
+    //       lookFor = found.terms[index];
+    //       return false;
+    //     }
+    //     return true;
+    //   });
+    //   return found;
+    // }
 
   };
 
@@ -51,4 +51,4 @@ const removeMethods = (Terms) => {
   return Terms;
 };
 
-module.exports = removeMethods;
+module.exports = deleteMethods;

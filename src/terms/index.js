@@ -21,8 +21,10 @@ class Terms {
   get isA() {
     return 'Terms';
   }
-  set dirty(dirt){
-    this.terms.forEach((t)=>{t.dirty=dirt})
+  set dirty(dirt) {
+    this.terms.forEach((t) => {
+      t.dirty = dirt;
+    });
   }
   posTag() {
     tagger(this);
@@ -34,15 +36,15 @@ class Terms {
   lastTerm() {
     return this.terms[this.terms.length - 1];
   }
-  get parent(){
+  get parent() {
     return this._parent || this;
   }
-  set parent(r){
-    this._parent = r
-    return this
+  set parent(r) {
+    this._parent = r;
+    return this;
   }
   all() {
-    return this.parent
+    return this.parent;
   }
   get whitespace() {
     return {
@@ -74,7 +76,7 @@ Terms = require('./methods/split')(Terms);
 Terms = require('./methods/insert')(Terms);
 Terms = require('./methods/replace')(Terms);
 Terms = require('./methods/tag')(Terms);
-Terms = require('./methods/remove')(Terms);
+Terms = require('./methods/delete')(Terms);
 Terms = require('./methods/render')(Terms);
 Terms = require('./methods/misc')(Terms);
 Terms = require('./methods/transform')(Terms);

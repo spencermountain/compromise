@@ -22,6 +22,7 @@ const genericMethods = (Text) => {
       // let terms = new Terms(list);
       // return new Text([terms], this.parent);
       return list;
+    //      return this.match('.');
     },
 
 

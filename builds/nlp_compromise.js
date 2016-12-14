@@ -1,4 +1,4 @@
-/* nlp_compromise v7.0.0-alpha2
+/* nlp_compromise v7.0.0-alpha3
    github.com/nlp-compromise
    MIT
 */
@@ -463,7 +463,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "nlp_compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.0-alpha2",
+  "version": "7.0.0-alpha3",
   "main": "./builds/nlp_compromise.js",
   "repository": {
     "type": "git",
@@ -785,6 +785,7 @@ var data = _dereq_('./index');
 var fns = _dereq_('./fns');
 var Term = _dereq_('../term');
 
+// console.time('lexicon');
 var lexicon = {};
 
 var addObj = function addObj(o) {
@@ -908,6 +909,7 @@ module.exports = lexicon;
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.verb.conjugate())
+// console.timeEnd('lexicon');
 
 },{"../term":118,"./fns":14,"./index":15}],17:[function(_dereq_,module,exports){
 'use strict';

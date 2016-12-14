@@ -114,11 +114,16 @@ const genericMethods = (Text) => {
       }
       return this;
     },
+    /** make it into one sentence/termlist */
     flatten: function () {
       let terms = [];
       this.list.forEach((ts) => {
         terms = terms.concat(ts.terms);
       });
+      //dont create an empty ts
+      if (!terms.length) {
+        return new Text(null, this.lexicon, this.parent);
+      }
       let ts = new Terms(terms, this.lexicon, this.parent);
       return new Text([ts], this.lexicon, this.parent);
     },

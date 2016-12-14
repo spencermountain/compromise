@@ -4,8 +4,5 @@
 const nlp = require('./src/index');
 // require('./src/logger').enable();
 
-var str = 'John xoo, John fredman, john xoo, John davis';
-var r = nlp(str);
-r = r.people();
-r.unique();
-r.check();
+var r = nlp('').flatten();
+console.log(r);

@@ -32,11 +32,11 @@ const parseDate = (r) => {
   }
   m = r.match('#Month');
   if (m.found) {
-    result.month = m.terms()[0].month.index();
+    result.month = m.list[0].terms[0].month.index();
   }
   m = r.match('#WeekDay');
   if (m.found) {
-    result.weekday = m.terms()[0].weekday.index();
+    result.weekday = m.list[0].terms[0].weekday.index();
   }
   m = r.match('#Time');
   if (m.found) {

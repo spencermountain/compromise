@@ -4,7 +4,7 @@ const Text = require('../../index');
 
 class Things extends Text {
   parse() {
-    return this.terms().map((t) => {
+    return this.mapTerms((t) => {
       return {
         text: t.text
       };

@@ -4,19 +4,19 @@ const Date = require('./date');
 
 class Dates extends Text {
   toShortForm() {
-    this.match('#Month').terms().forEach((t) => {
+    this.match('#Month').forEachTerms((t) => {
       t = t.month.toShortForm()
     })
-    this.match('#WeekDay').terms().forEach((t) => {
+    this.match('#WeekDay').forEachTerms((t) => {
       t = t.weekday.toShortForm()
     })
     return this
   }
   toLongForm() {
-    this.match('#Month').terms().forEach((t) => {
+    this.match('#Month').forEachTerms((t) => {
       t = t.month.toLongForm()
     })
-    this.match('#WeekDay').terms().forEach((t) => {
+    this.match('#WeekDay').forEachTerms((t) => {
       t = t.weekday.toLongForm()
     })
     return this

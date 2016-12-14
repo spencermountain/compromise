@@ -3,7 +3,7 @@ const Text = require('../../index');
 
 class Adjectives extends Text {
   parse() {
-    return this.terms().map((t) => {
+    return this.mapTerms((t) => {
       return {
         comparative: t.adjective.comparative(),
         superlative: t.adjective.superlative(),
@@ -12,7 +12,7 @@ class Adjectives extends Text {
       };
     });
   }
-  static find(r){
+  static find(r) {
     return r.match('#Adjective');
   }
 }

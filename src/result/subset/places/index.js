@@ -4,7 +4,7 @@ const Place = require('./place');
 
 class Places extends Text {
   parse() {
-    return this.terms().map((t) => {
+    return this.mapTerms((t) => {
       return {
         text: t.text
       };

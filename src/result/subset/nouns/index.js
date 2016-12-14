@@ -6,7 +6,7 @@ class Nouns extends Text {
   toSingular() {}
   toPlural() {}
   parse() {
-    return this.terms().map((t) => {
+    return this.mapTerms((t) => {
       return {
         article: t.noun.makeArticle(),
         singular: t.noun.singular(),

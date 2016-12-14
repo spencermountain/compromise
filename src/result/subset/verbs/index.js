@@ -3,7 +3,7 @@ const Text = require('../../index');
 
 class Verbs extends Text {
   parse() {
-    return this.terms().map((t) => {
+    return this.mapTerms((t) => {
       return t.verb.conjugate();
     });
   }
@@ -14,7 +14,7 @@ class Verbs extends Text {
     if (this.isNegative()) {
       return this;
     }
-    let t = this.lastTerm().terms()[0];
+    let t = this.lastTerm().list[0].terms[0];
     if (t.tag.Copula) {
       t.copula.toNegative();
     } else {
@@ -26,7 +26,7 @@ class Verbs extends Text {
     return this;
   }
   toPast() {
-    let t = this.terms()[0];
+    let t = this.list[0].terms[0];
     this.contractions().expand();
     if (t) {
       t.text = t.verb.pastTense();
@@ -34,7 +34,7 @@ class Verbs extends Text {
     return this;
   }
   toPresent() {
-    let t = this.terms()[0];
+    let t = this.list[0].terms[0];
     this.contractions().expand();
     if (t) {
       t.text = t.verb.presentTense();
@@ -42,7 +42,7 @@ class Verbs extends Text {
     return this;
   }
   toFuture() {
-    let t = this.terms()[0];
+    let t = this.list[0].terms[0];
     this.contractions().expand();
     if (t) {
       t.text = t.verb.futureTense();

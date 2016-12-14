@@ -3,7 +3,7 @@ const Text = require('../../index');
 
 class Adverbs extends Text {
   parse() {
-    return this.terms().map((t) => {
+    return this.mapTerms((t) => {
       return {
         adjectiveForm: t.adverb.adjectiveForm(),
       };

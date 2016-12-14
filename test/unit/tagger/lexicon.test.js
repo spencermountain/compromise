@@ -19,8 +19,8 @@ test('=Lexicon test=', function (T) {
       ['shanghai', 'City'],
       ['google', 'Organization'],
     ].forEach(function (a) {
-      var terms = nlp(a[0]).terms();
-      pos_test(terms, [a[1]], t);
+      var r = nlp(a[0]);
+      pos_test(r, [a[1]], t);
     });
     t.end();
   });
@@ -31,7 +31,7 @@ test('=Lexicon test=', function (T) {
       'paris': 'Person',
       'lkjj': 'Adjective',
       'donkey kong': 'City'
-    }
+    };
 
     var arr = [
       ['paris is nice', ['Person', 'Copula', 'Adjective']],
@@ -39,8 +39,8 @@ test('=Lexicon test=', function (T) {
       ['donkey kong wins the award', ['City', 'Verb', 'Determiner', 'Noun']],
     ];
     arr.forEach(function (a) {
-      var terms = nlp(a[0], lexicon).terms();
-      pos_test(terms, a[1], t);
+      var r = nlp(a[0], lexicon);
+      pos_test(r, a[1], t);
     });
     //
     // //set gender from lexicon

@@ -3,7 +3,7 @@ const Text = require('../../index');
 
 class Acronyms extends Text {
   parse() {
-    return this.terms().map((t) => {
+    return this.mapTerms((t) => {
       let parsed = t.text.toUpperCase().replace(/\./g).split('');
       return {
         periods: parsed.join('.'),

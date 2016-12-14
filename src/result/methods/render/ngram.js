@@ -8,7 +8,7 @@ const ngram = function(options) {
   }
   //flatten terms
   let terms = this.list.map((ts) => {
-    return ts.terms.map((t) => t.normal);
+    return ts.mapTerms((t) => t.normal);
   });
 
   //count freq

@@ -17,7 +17,7 @@ const transforms = (Terms) => {
       return new Terms(terms, this.lexicon, this.parent);
     },
 
-  }
+  };
 
   //hook them into result.proto
   Object.keys(methods).forEach((k) => {
@@ -26,4 +26,4 @@ const transforms = (Terms) => {
   return Terms;
 };
 
-module.exports = transforms;;
+module.exports = transforms;

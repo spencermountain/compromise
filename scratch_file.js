@@ -4,10 +4,12 @@
 const nlp = require('./src/index');
 // require('./src/logger').enable();
 
-var r = nlp('is cool-enough'); //.dates().toLongForm();
+var m = nlp('the brown cat played').delete('brown');
+// var r = nlp('is cool-enough for john').adjectives(); //.dates().toLongForm();
 // var r = nlp('5 six-ounce containers'); //.dates().toLongForm();
 // var r = nlp('two thousand five hundred and sixty'); //.dates().toLongForm();
-
-r.terms().check();
+m.check();
+// console.log(r.parse());
+// r.terms().check();
 // console.log(r.values().toNumber().term(0).first().normal());
 // console.log(r.list[0].terms[0].normal);

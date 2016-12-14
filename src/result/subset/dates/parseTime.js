@@ -29,7 +29,7 @@ const parseTime = (r) => {
   }
 
   let time = r.match('#Time');
-  time.terms().forEach((t) => {
+  time.forEachTerms((t) => {
     //3pm
     let m = t.text.match(/([12]?[0-9]) ?(am|pm)/i);
     if (m) {

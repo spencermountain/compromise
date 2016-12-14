@@ -13,27 +13,28 @@ var arr_test = function(got, input, want, t) {
   return;
 };
 
-var has_pos = function(terms, tags) {
-  if (terms.length !== tags.length) {
+var has_pos = function(r, tags) {
+  var terms = r.terms();
+  if (r.length !== r.length) {
     return false;
   }
-  for(var i = 0; i < terms.length; i++) {
-    if (!terms[i].tag[tags[i]]) {
+  for(var i = 0; i < terms.list.length; i++) {
+    var t = terms.list[i].terms[0];
+    if (!t.tag[tags[i]]) {
       return false;
     }
   }
   return true;
 };
 
-var pos_test = function(terms, tags, t) {
-  terms = terms || [];
+var pos_test = function(r, tags, t) {
   var str = '';
-  var got = terms.map(function(term) {
+  var got = r.mapTerms(function(term) {
     str += ' ' + term.normal;
     return Object.keys(term.tag).join('|');
   }).join(', ');
   var msg = '"' + str.trim() + '" has tags [' + tags.join(',') + ']   (' + got + ')';
-  t.equal(has_pos(terms, tags), true, msg);
+  t.equal(has_pos(r, tags), true, msg);
   return;
 };
 

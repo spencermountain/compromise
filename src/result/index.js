@@ -47,6 +47,7 @@ class Text {
 
 module.exports = Text;
 Text = require('./methods/array')(Text);
+Text = require('./methods/termFns')(Text);
 Text = require('./methods/tag')(Text);
 Text = require('./methods/sort')(Text);
 Text = require('./methods/case')(Text);

@@ -5,7 +5,7 @@ const getTerms = (needle) => {
   if (needle.isA === 'Terms') {
     arr = needle.terms;
   } else if (needle.isA === 'Text') {
-    arr = needle.terms();
+    arr = needle.flatten().list[0].terms;
   } else if (needle.isA === 'Term') {
     arr = [needle];
   }

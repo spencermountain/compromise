@@ -4,6 +4,7 @@ const data = require('./index');
 const fns = require('./fns');
 const Term = require('../term');
 
+// console.time('lexicon');
 let lexicon = {};
 
 const addObj = (o) => {
@@ -132,3 +133,4 @@ module.exports = lexicon;
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.verb.conjugate())
+// console.timeEnd('lexicon');

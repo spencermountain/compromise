@@ -31,7 +31,7 @@ echo(banner).to(uncompressed);
 echo(banner).to(compressed);
 
 //browserify + derequire
-var cmd = browserify + ' ./src/index.js --standalone nlp_compromise';
+var cmd = browserify + ' ./src/index.js --standalone nlp';
 cmd += ' -t [ babelify --presets [ es2015 stage-2 ] ]';
 cmd += ' | ' + derequire;
 cmd += ' >> ' + uncompressed;

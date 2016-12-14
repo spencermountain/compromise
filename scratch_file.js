@@ -4,7 +4,7 @@
 const nlp = require('./src/index');
 // require('./src/logger').enable();
 
-var m = nlp('the brown cat played').delete('brown');
+var m = nlp('-2'); //.delete('brown');
 // var r = nlp('is cool-enough for john').adjectives(); //.dates().toLongForm();
 // var r = nlp('5 six-ounce containers'); //.dates().toLongForm();
 // var r = nlp('two thousand five hundred and sixty'); //.dates().toLongForm();

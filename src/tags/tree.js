@@ -90,9 +90,9 @@ module.exports = {
 
   TitleCase: true,
   CamelCase: true,
-  UpperCase: {
-    Acronym: true,
-  },
+  UpperCase: true,
+  Hyphenated: true,
+  Acronym: true,
   //phrases
   Quotation: true,
   ValuePhrase: true,

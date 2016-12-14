@@ -1,5 +1,9 @@
+'use strict';
+const chalk = require('chalk');
+
 setTimeout(() => {
 
+  console.log(chalk.blue('\n\n==Lexicon, etc=='));
   console.time('pre');
   const nlp = require('../src/index');
   // const nlp = require('../builds/nlp_compromise.js');
@@ -8,6 +12,7 @@ setTimeout(() => {
   // var m = nlp(freshPrince).things();
 
   // let m = nlp('the trip to Paris. it is paris france.');
+  console.log(chalk.cyan('\n\n==One sentence=='));
   console.time('parse');
   let m = nlp('spencer kelly and dr. spencer kelly');
   console.timeEnd('parse');
@@ -21,6 +26,8 @@ setTimeout(() => {
   (() => {
     const corpus = require('nlp-corpus');
     let str = corpus.poe.parsed()[5];
+
+    console.log(chalk.green('\n\n==Long text=='));
     console.time('parseBig');
     let m = nlp(str);
     console.timeEnd('parseBig');
@@ -28,6 +35,7 @@ setTimeout(() => {
     console.time('matchBig');
     m.match('#Person').normal();
     console.timeEnd('matchBig');
+    console.log('\n\n\n');
   })();
 
 }, 1000);

@@ -4,5 +4,6 @@
 const nlp = require('./src/index');
 // require('./src/logger').enable();
 
-var r = nlp('').flatten();
-console.log(r);
+var r = nlp('Sept, 2012').dates().toLongForm();
+r.check();
+// console.log(r);

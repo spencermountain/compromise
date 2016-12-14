@@ -3,7 +3,7 @@ const log = require('../paths').log;
 const path = 'date_correction';
 
 //ambiguous 'may' and 'march'
-const months = '(may|march|jan|april)';
+const months = '(may|march|jan|april|sep)';
 const preps = '(in|by|before|for|during|on|until|after|of)';
 const thisNext = '(last|next|this|previous|current|upcoming|coming)';
 const sections = '(start|end|middle|starting|ending|midpoint|beginning)';

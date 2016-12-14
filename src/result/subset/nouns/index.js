@@ -18,7 +18,7 @@ class Nouns extends Text {
     r = r.splitAfter('#Comma');
     r = r.match('#Noun+');
     r = r.not('#Pronoun');
-    r = r.not('#Date');
+    // r = r.not('#Date');
     return r;
   }
 }

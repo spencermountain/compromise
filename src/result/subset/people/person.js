@@ -6,17 +6,17 @@ const log = require('../../paths').log;
 class Person extends Terms {
   constructor(arr, lexicon, parent) {
     super(arr, lexicon, parent);
-    this.firstName = this.match('#FirstName+'); //.list[0];
+    this.firstName = this.match('#FirstName+');
     this.middleName = this.match('#Acronym+');
     this.honorifics = this.match('#Honorific');
-    this.lastName = new Terms([]);
+    this.lastName = this.match('#LastName+');
     //assume first-last
     if (!this.firstName && this.length === 2) {
       let m = this.not('(#Acronym|#Honorific)');
       this.firstName = m.first();
       this.lastName = m.last();
     } else {
-      this.lastName = this.match('#Person').list[0];
+      // this.lastName = this.match('#Person').list[0];
     }
     return this;
   }
@@ -57,7 +57,7 @@ class Person extends Terms {
     if (first && last) {
       return first + ' ' + last;
     }
-    return first || last || this.root();
+    return last || first || this.root();
   }
 }
 module.exports = Person;

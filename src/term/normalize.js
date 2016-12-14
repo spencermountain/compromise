@@ -7,7 +7,9 @@ const normalize = function (term) {
   //(very) rough asci transliteration -  bjŏrk -> bjork
   str = fixUnicode(str);
   //convert hyphenations to a multiple-word term
-  str = str.replace(/([a-z])\-([a-z])/g, '$1 $2');
+  // str = str.replace(/([a-z])\-([a-z0-9])/g, '$1 $2');
+  //
+  // str = str.replace(/([a-z])\-$/, '$1');
   //hashtags, atmentions, dollar signs
   str = str.replace(/^[#@$]/, '');
   // coerce single curly quotes

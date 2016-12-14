@@ -20,10 +20,11 @@ class Term {
     this.tag = {};
     this.whitespace = build_whitespace(str || '');
     this._text = this._text.trim();
+    this._text = this._text.replace(/([a-z])\-$/, '$1');
     this.parent = null;
     this.silent_term = '';
     //has this term been modified
-    this.dirty=false
+    this.dirty = false;
 
     bindMethods(require('./term'), 'term', this);
     bindMethods(require('./verb'), 'verb', this);
@@ -44,7 +45,7 @@ class Term {
   set text(str) {
     str = str || '';
     this._text = str.trim();
-    this.dirty=true
+    this.dirty = true;
     if (this._text !== str) {
       this.whitespace = build_whitespace(str);
     }
@@ -55,7 +56,7 @@ class Term {
     return this._text;
   }
   get isA() {
-    return 'Term'
+    return 'Term';
   }
 
   normalize() {
@@ -91,7 +92,7 @@ class Term {
   /** delete this term from its sentence */
   remove() {
     let ts = this.parent;
-    this.dirty=true//redundant
+    this.dirty = true; //redundant
     if (!ts) {
       return null;
     }
@@ -101,16 +102,16 @@ class Term {
 
   /** set the term as this part-of-speech */
   tagAs(tag, reason) {
-      setTag(this, tag, reason);
-    }
-    /** remove this part-of-speech from the term*/
+    setTag(this, tag, reason);
+  }
+  /** remove this part-of-speech from the term*/
   unTag(tag, reason) {
     unTag(this, tag, reason);
   }
 
   /** true/false helper for terms.match()*/
   isMatch(reg, verbose) {
-    return isMatch(this, reg, verbose)
+    return isMatch(this, reg, verbose);
   }
 
   /** make a copy with no references to the original  */

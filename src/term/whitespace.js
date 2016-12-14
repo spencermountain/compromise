@@ -10,8 +10,9 @@ const build_whitespace = (str) => {
     whitespace.before = m[0];
   }
   //get after
-  m = str.match(/\s+$/);
+  m = str.match(/(\s+|-)$/);
   if (m) {
+    str = str.replace(/(\s+|-)$/, '');
     whitespace.after = m[0];
   }
   return whitespace;

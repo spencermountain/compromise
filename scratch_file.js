@@ -2,8 +2,11 @@
 //this file is not included in the build.
 //use it for messing around.
 const nlp = require('./src/index');
-// require('./src/logger').enable();
+require('./src/logger').enable();
 
-var r = nlp('Sept, 2012').dates().toLongForm();
+// var r = nlp('is cool-enough'); //.dates().toLongForm();
+// var r = nlp('5 six-ounce containers'); //.dates().toLongForm();
+var r = nlp('two thousand five hundred and sixty'); //.dates().toLongForm();
 r.check();
-// console.log(r);
+console.log(r.values().toNumber().term(0).first().normal());
+// console.log(r.list[0].terms[0].normal);

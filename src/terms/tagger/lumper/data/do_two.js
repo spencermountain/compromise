@@ -112,7 +112,8 @@ module.exports = [
     condition: (a, b) => ((a.normal === 'half' || a.normal === 'quarter') && b.tag.Value),
     result: 'Value',
     reason: 'half-value'
-  }, {
+  },
+  {
     //both values, not ordinals, not '5 20'
     condition: (a, b) => (a.tag.Value && b.tag.Value && !a.tag.Ordinal && !b.tag.NumericValue),
     result: 'Value',

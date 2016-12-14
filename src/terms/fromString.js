@@ -5,7 +5,19 @@ const Term = require('../term');
 const fromString = function (str) {
   let all = [];
   //start with a naiive split
-  const arr = str.split(/(\S+)/);
+  let firstSplit = str.split(/(\S+)/);
+  let arr = [];
+  for(let i = 0; i < firstSplit.length; i++) {
+    let word = firstSplit[i];
+    let hyphen = word.match(/^([a-z]+)(-)([a-z0-9]+)/);
+    if (hyphen) { //we found one 'word-word'
+      arr.push(hyphen[1] + hyphen[2]);
+      arr.push(hyphen[3]);
+    } else {
+      arr.push(word);
+    }
+  }
+
   //greedy merge whitespace+arr to the right
   let carry = '';
   for (let i = 0; i < arr.length; i++) {
@@ -21,6 +33,6 @@ const fromString = function (str) {
   if (carry && all.length > 0) {
     all[all.length - 1] += carry; //put it on the end
   }
-  return all.map((t) => new Term(t))
+  return all.map((t) => new Term(t));
 };
-module.exports = fromString
+module.exports = fromString;

@@ -89,11 +89,11 @@ const corrections = function (r) {
 
   //last names
   let reason = 'person-correction';
-  r.match('#FirstName #Acronym? #TitleCase').tag('#Person', reason).lastTerm().tag('#LastName', reason);
-  r.match('#FirstName (#Singular|#Possessive)').tag('#Person', reason).lastTerm().tag('#LastName', reason);
-  r.match('#FirstName #Acronym #Noun').tag('#Person', reason).lastTerm().tag('#LastName', reason);
-  r.match('(lady|queen) #TitleCase').tag('#FemalePerson', reason);
-  r.match('(king|pope) #TitleCase').tag('#MalePerson', reason);
+  r.match('#FirstName #Acronym? #TitleCase').ifNo('#Date').tag('#Person', reason).lastTerm().tag('#LastName', reason);
+  r.match('#FirstName (#Singular|#Possessive)').ifNo('#Date').tag('#Person', reason).lastTerm().tag('#LastName', reason);
+  r.match('#FirstName #Acronym #Noun').ifNo('#Date').tag('#Person', reason).lastTerm().tag('#LastName', reason);
+  r.match('(lady|queen) #TitleCase').ifNo('#Date').tag('#FemalePerson', reason);
+  r.match('(king|pope) #TitleCase').ifNo('#Date').tag('#MalePerson', reason);
 
   r = date_corrections(r);
 

@@ -12,8 +12,8 @@ module.exports = [
   ['\\(?[0-9]{3}\\)?[ -]?[0-9]{3}-[0-9]{4}', 'PhoneNumber'],
 
   //values
-  ['\\+?[0-9]', 'NumericValue'], //like +5
-  ['[0-9]([0-9,\.]*?)?]+', 'NumericValue'], //like 5
+  ['^[\-\+]?[0-9]{1,3}(,[0-9]{3})+(\.[0-9]+)?$', 'NiceNumber'], //like 5,999.0
+  ['^[\-\+]?[0-9]+(\.[0-9]+)?$', 'NumericValue'], //like +5.0
   ['[0-9]{1,3}(st|nd|rd|th)?-[0-9]{1,3}(st|nd|rd|th)?', 'NumberRange'], //5-7
 
   //dates/times

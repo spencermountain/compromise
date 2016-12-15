@@ -21,6 +21,7 @@ const conflicts = [
   //values
   ['Ordinal', 'Cardinal'],
   ['TextValue', 'NumericValue'],
+  ['NiceNumber', 'TextValue'],
   ['Ordinal', 'Currency'], //$5.50th
   //verbs
   ['PastTense', 'PerfectTense', 'Pluperfect', 'FuturePerfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund'],

@@ -82,7 +82,7 @@ module.exports = [
   ['.lked$', 'PastTense'],
   ['.fully$', 'Adverb'],
   ['.*ould$', 'Modal'],
-  ['^-?[0-9]+(.,[0-9]+)?$', 'Value'],
+  ['^[\-\+]?[0-9]+(\.[0-9]+)?$', 'NumericValue'],
   ['[a-z]*\\-[a-z]*\\-', 'Adjective'],
   ['[a-z]\'s$', 'Noun'],
   ['.\'n$', 'Verb'],

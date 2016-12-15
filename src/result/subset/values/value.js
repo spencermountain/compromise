@@ -4,7 +4,6 @@ const Terms = paths.Terms;
 const parse = require('./toNumber');
 const toText = require('./toText');
 const toNiceNumber = require('./toNiceNumber');
-
 const numOrdinal = require('./numOrdinal');
 const textOrdinal = require('./textOrdinal');
 
@@ -12,7 +11,6 @@ const isOrdinal = (ts) => {
   let t = ts.lastTerm();
   return t.tag.Ordinal === true;
 };
-
 const isText = (ts) => {
   for(let i = 0; i < ts.terms.length; i++) {
     if (ts.terms[i].tag.TextValue) {
@@ -22,7 +20,13 @@ const isText = (ts) => {
   return false;
 };
 const isNumber = (ts) => {
-  return !isText(ts);
+  for(let i = 0; i < ts.terms.length; i++) {
+    let t = ts.terms[i];
+    if (t.tag.TextValue || t.tag.NiceNumber) {
+      return false;
+    }
+  }
+  return true;
 };
 
 class Value extends Terms {
@@ -37,8 +41,10 @@ class Value extends Terms {
       let num = numOrdinal(this);
       this.replaceWith(num, 'Value');
     } else {
-      let num = '' + parse(this);
-      this.replaceWith(num, 'Value');
+      let num = parse(this);
+      if (num !== null) {
+        return this.replaceWith('' + num, 'Value');
+      }
     }
     return this;
   }
@@ -104,21 +110,22 @@ class Value extends Terms {
   }
 
   parse() {
-    // let numV = this.toNumber();
-    // console.log(numV.normal());
-    // let txtV = this.toTextValue();
-    // console.log(txtV.normal());
-    return {
-      // NumericValue: {
-      //   cardinal: this.toNumber().toCardinal().normal(),
-      //   ordinal: this.toNumber().toOrdinal().normal(),
-      // },
-      // TextValue: {
-      //   cardinal: this.toTextValue().toCardinal().normal(),
-      //   ordinal: this.toTextValue().toOrdinal().normal(),
-      //   nicenumber: this.toNiceNumber().normal(),
-      // }
+    let numV = this.toNumber();
+    let obj = {
+      NumericValue: {
+        cardinal: numV.toCardinal().plaintext(),
+        ordinal: numV.toOrdinal().plaintext(),
+        nicenumber: this.toNiceNumber().plaintext(),
+      }
     };
+    obj.NumericValue.number = parseFloat(obj.NumericValue.cardinal, 10);
+
+    let txtV = this.toTextValue();
+    obj.TextValue = {
+      cardinal: txtV.toCardinal().plaintext(),
+      ordinal: txtV.toOrdinal().plaintext(),
+    };
+    return obj;
   }
 }
 Value.prototype.clone = function() {

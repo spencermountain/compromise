@@ -16,7 +16,7 @@ const insertMethods = (Terms) => {
   const methods = {
     insertBefore: function (str) {
       let ts = Terms.fromString(str);
-      let index = this.terms[0].index();
+      let index = this.index();
       //pad a space on parent
       addSpaceAt(this.parentTerms, index);
       if (index > 0) {

@@ -34,10 +34,11 @@ test('to_number:', function (t) {
     ['sixteen hundred sixteen point eight', 1616.8],
     ['four point seven nine', 4.79],
     ['four point sixteen', 4.16],
-    ['twenty first', 21],
-    ['fifty ninth', 59],
-    ['nine hundred fiftieth', 950],
-    ['five thousand nine hundred fiftieth', 5950],
+    ['twenty first', '21st'],
+    ['fifty ninth', '59th'],
+    ['nine hundred fiftieth', '950th'],
+    ['nine hundred and second', '902nd'],
+    ['five thousand nine hundred fiftieth', '5950th'],
     ['six hundred and fifty nine', 659],
     ['six hundred and fifty nine thousand', 659000],
     [950, 950],
@@ -78,33 +79,32 @@ test('to_number:', function (t) {
     // ['1 1/2 million', 1500000],
     ['negative five', -5],
     ['negative hundred', -100],
-    ['12:32', null],
-    ['123-1231', null],
-    ['seven eleven', null],
-    ['ten-four', null],
-    ['one seven', null],
-    ['one ten', null],
-    ['one twelve', null],
-    ['one thirty', null],
-    ['nine fifty', null],
-    ['five six', null],
-    ['nine seventy', null],
-    ['nine two hundred', null],
-    ['ten one', null],
-    ['twelve one', null],
-    ['seventy five two', null],
-    ['two hundred three hundred', null],
-    ['sixty fifteen hundred', null],
-    ['one twenty', null],
-    ['twenty five twenty', null],
-    // ['',''],
-    // [null,''],
+    ['12:32', ''],
+    ['123-1231', ''],
+    ['seven eleven', ''],
+    ['ten-four', ''],
+    ['one seven', ''],
+    ['one ten', ''],
+    ['one twelve', ''],
+    ['one thirty', ''],
+    ['nine fifty', ''],
+    ['five six', ''],
+    ['nine seventy', ''],
+    ['nine two hundred', ''],
+    ['ten one', ''],
+    ['twelve one', ''],
+    ['seventy five two', ''],
+    ['two hundred three hundred', ''],
+    ['sixty fifteen hundred', ''],
+    ['one twenty', ''],
+    ['twenty five twenty', ''],
+  // ['',''],
+  // [null,''],
   ].forEach(function (a) {
-    var arr = nlp(a[0]).values().parse();
-    arr[0] = arr[0] || {};
-    var num = arr[0].number || null;
+    var num = nlp(a[0]).values().toNumber().plaintext();
+    var want = '' + a[1] || a[0];
     var msg = '\'' + a[0] + '\' - - have: \'' + num + '\'   want:\'' + a[1] + '\'';
-    t.equal(num, a[1], msg);
+    t.equal(num, '' + want, msg);
   });
   t.end();
 });

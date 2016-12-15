@@ -8,18 +8,10 @@ class Values extends Text {
       return ts.parse();
     });
   }
-
   /** five -> '5' */
   toNumber() {
     this.forEach((ts) => {
       ts.toNumber();
-    });
-    return this;
-  }
-  /**5900 -> 5,900 */
-  toNiceNumber() {
-    this.forEach((ts) => {
-      ts.toNiceNumber();
     });
     return this;
   }
@@ -41,6 +33,13 @@ class Values extends Text {
   toOrdinal() {
     this.forEach((ts) => {
       ts.toOrdinal();
+    });
+    return this;
+  }
+  /**5900 -> 5,900 */
+  toNiceNumber() {
+    this.forEach((ts) => {
+      ts.toNiceNumber();
     });
     return this;
   }

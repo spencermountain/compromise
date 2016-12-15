@@ -68,8 +68,9 @@ module.exports = {
     Cardinal: true,
     TextValue: true,
     NumericValue: true,
-    NumberRange: true
+    NiceNumber: true,
   },
+  NumberRange: true,
   //glue
   Determiner: true,
   Conjunction: true,

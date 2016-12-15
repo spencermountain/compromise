@@ -21,10 +21,11 @@ const replaceMethods = (Terms) => {
       if (tag) {
         ts.tagAs(tag, 'user-given');
       }
-      let index = this.terms[0].index();
+      let index = this.index();
       this.parentTerms = mutate.deleteThese(this.parentTerms, this);
-      return mutate.insertAt(this.parentTerms, index, ts);
-    // return this.parentTerms;
+      let parent = mutate.insertAt(this.parentTerms, index, ts);
+      this.terms = parent.terms;
+      return this;
     }
 
   };

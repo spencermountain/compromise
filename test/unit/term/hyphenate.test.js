@@ -15,5 +15,12 @@ test('hyphens', function (t) {
   m = nlp(str);
   m.values().deHyphenate();
   t.equal(m.plaintext(), 'i payed seven hundred for the back-rub', 'dehyphenate-values');
+
+
+  str = 'he is the king of rock. she is the queen of cool.';
+  m = nlp(str);
+  m.match('(king|queen) of (#Noun|#Adjective)').hyphenate();
+  t.equal(m.plaintext(), 'he is the king-of-rock. she is the queen-of-cool.', 'hyphenate-match');
+
   t.end();
 });

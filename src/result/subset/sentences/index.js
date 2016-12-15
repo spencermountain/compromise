@@ -1,5 +1,7 @@
 'use strict';
 const Text = require('../../index');
+const Sentence = require('./sentence');
+
 
 class Sentences extends Text {
 
@@ -56,7 +58,11 @@ class Sentences extends Text {
     return this.match('was #Adverb? #PastTense #Adverb? by').found;
   }
   static find(r) {
-    return r.all(); //for now
+    r = r.all();
+    r.list = r.list.map((ts) => {
+      return new Sewntence(ts.terms, ts.lexicon, ts.parent, ts.parentTerms);
+    });
+    return r;
   }
 }
 

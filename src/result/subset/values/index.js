@@ -1,66 +1,54 @@
 'use strict';
 const Text = require('../../index');
+const Value = require('./value');
 
 class Values extends Text {
   parse() {
-    return this.mapTerms((t) => {
-      return {
-        number: t.value.number(),
-        nicenumber: t.value.nicenumber(),
-        textValue: t.value.textValue(),
-        cardinal: t.value.cardinal(),
-        ordinal: t.value.ordinal(),
-      };
+    return this.list.map((ts) => {
+      return ts.parse();
     });
   }
   /** five -> '5' */
   toNumber() {
-    this.forEachTerms((t) => {
-      let num = t.value.number();
-      if (num || num === 0) {
-        t.text = '' + num;
-        t.unTag('TextValue', 'toNumber()');
-        t.tagAs('NumericValue', 'toNumber()');
-      }
+    this.forEach((ts) => {
+      ts.toNumber();
     });
     return this;
   }
   /**5900 -> 5,900 */
   toNiceNumber() {
-    this.forEachTerms((t) => {
-      t.text = '' + t.value.nicenumber();
+    this.forEach((ts) => {
+      ts.toNiceNumber();
     });
     return this;
   }
   /**5 -> 'five' */
   toTextValue() {
-    this.forEachTerms((t) => {
-      t.text = t.value.textValue();
-      t.unTag('NumericValue', 'toTextValue()');
-      t.tagAs('TextValue', 'toTextValue()');
+    this.forEach((ts) => {
+      ts.toTextValue();
     });
     return this;
   }
   /**5th -> 5 */
   toCardinal() {
-    this.forEachTerms((t) => {
-      t.text = '' + t.value.cardinal();
-      t.unTag('Ordinal', 'toCardinal()');
-      t.tagAs('Cardinal', 'toCardinal()');
+    this.forEach((ts) => {
+      ts.toCardinal();
     });
     return this;
   }
   /**5 -> 5th */
   toOrdinal() {
-    this.forEachTerms((t) => {
-      t.text = t.value.ordinal();
-      t.unTag('Cardinal', 'toOrdinal()');
-      t.tagAs('Ordinal', 'toOrdinal()');
+    this.forEach((ts) => {
+      ts.toOrdinal();
     });
     return this;
   }
   static find(r) {
-    return r.match('#Value+');
+    r = r.match('#Value+');
+    r.list = r.list.map((ts) => {
+      return new Value(ts.terms, ts.lexicon, ts.parent, ts.parentTerms);
+    });
+    return r;
   }
 }
 

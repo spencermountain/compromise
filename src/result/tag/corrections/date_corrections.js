@@ -27,10 +27,21 @@ const isYear = (num) => {
 const corrections = function (r) {
   log.here(path);
 
+  //months
   r.match(`${months} (#Determiner|#Value|#Date)`).term(0).tag('Month', 'correction-may');
   r.match(`#Date ${months}`).term(1).tag('Month', 'correction-may');
   r.match(`${preps} ${months}`).term(1).tag('Month', 'correction-may');
   r.match(`(next|this|last) ${months}`).term(1).tag('Month', 'correction-may'); //maybe not 'this'
+
+  //values
+  r.match('#Value #Abbreviation').tag('Value', 'value-abbr');
+  r.match('a #Value').tag('Value', 'a-value');
+  r.match('(minus|negative) #Value').tag('Value', 'minus-value');
+  r.match('#Value grand').tag('Value', 'value-grand');
+  r.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');
+  r.match('(half|quarter) #Ordinal').tag('Value', 'half-ordinal');
+  r.match('#Value and #Value').tag('Value', 'value-and-value');
+  r.match('#Value point #Value').tag('Value', 'value-point-value');
 
   //time
   r.match('#Cardinal #Time').tag('Time', 'value-time');

@@ -19,9 +19,8 @@ const genericMethods = (Text) => {
       //   all = all.concat(ts.terms);
       //   return all;
       // }, []);
-      // // let terms = new Terms(list);
-      // // return new Text([terms], this.parent);
-      // return list;
+      // let terms = new Terms(list);
+      // return new Text([terms], this.lexicon, this.parent);
       return this.match('.');
     },
 

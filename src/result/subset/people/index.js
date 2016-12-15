@@ -11,7 +11,7 @@ class People extends Text {
     let people = r.splitAfter('#Comma');
     people = people.match('#Person+');
     people.list = people.list.map((ts) => {
-      return new Person(ts.terms, ts.lexicon, ts.parent);
+      return new Person(ts.terms, ts.lexicon, ts.parent, ts.parentTerms);
     });
     return people;
   }

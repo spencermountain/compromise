@@ -14,7 +14,7 @@ class Places extends Text {
     r = r.splitAfter('#Comma');
     r = r.match('#Place+');
     r.list = r.list.map((ts) => {
-      return new Place(ts.terms, ts.lexicon, ts.parent);
+      return new Place(ts.terms, ts.lexicon, ts.parent, ts.parentTerms);
     });
     return r;
   }

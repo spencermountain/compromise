@@ -74,26 +74,6 @@ module.exports = [
     condition: (a, b, c) => (a.tag.NumericValue && b.tag.PhoneNumber && a.normal.length <= 3),
     result: 'PhoneNumber',
     reason: '(800) PhoneNumber'
-  }, {
-    //7 ft
-    condition: (a, b) => ((a.tag.Value && b.tag.Abbreviation) || (a.tag.Abbreviation && b.tag.Value)),
-    result: 'Value',
-    reason: 'value-abbreviation'
-  }, {
-    //a hundred
-    condition: (a, b) => ((a.normal === 'a' || a.normal === 'an') && b.tag.Value),
-    result: 'Value',
-    reason: 'determiner-value'
-  }, {
-    //minus two
-    condition: (a, b) => ((a.normal === 'minus' || a.normal === 'negative') && b.tag.Value),
-    result: 'Value',
-    reason: 'minus-value'
-  }, {
-    //six grand
-    condition: (a, b) => (a.tag.Value && b.normal === 'grand'),
-    result: 'Value',
-    reason: 'value-grand'
   },
   // {
   //   //NASA Flordia
@@ -102,23 +82,45 @@ module.exports = [
   //   reason: 'noun-abbreviation'
   // },
 
-  {
-    //fourth quarter
-    condition: (a, b) => (a.tag.Ordinal && (b.normal === 'half' || b.normal === 'quarter')),
-    result: 'Value',
-    reason: 'half-value'
-  }, {
-    //half a million
-    condition: (a, b) => ((a.normal === 'half' || a.normal === 'quarter') && b.tag.Value),
-    result: 'Value',
-    reason: 'half-value'
-  },
-  {
-    //both values, not ordinals, not '5 20'
-    condition: (a, b) => (a.tag.Value && b.tag.Value && !a.tag.Ordinal && !b.tag.NumericValue),
-    result: 'Value',
-    reason: 'two-values'
-  },
+  // {
+  //   //7 ft
+  //   condition: (a, b) => ((a.tag.Value && b.tag.Abbreviation) || (a.tag.Abbreviation && b.tag.Value)),
+  //   result: 'Value',
+  //   reason: 'value-abbreviation'
+  // },
+  // {
+  //   //a hundred
+  //   condition: (a, b) => ((a.normal === 'a' || a.normal === 'an') && b.tag.Value),
+  //   result: 'Value',
+  //   reason: 'determiner-value'
+  // }, {
+  //   //minus two
+  //   condition: (a, b) => ((a.normal === 'minus' || a.normal === 'negative') && b.tag.Value),
+  //   result: 'Value',
+  //   reason: 'minus-value'
+  // }, {
+  //   //six grand
+  //   condition: (a, b) => (a.tag.Value && b.normal === 'grand'),
+  //   result: 'Value',
+  //   reason: 'value-grand'
+  // },
+  // {
+  //   //fourth quarter
+  //   condition: (a, b) => (a.tag.Ordinal && (b.normal === 'half' || b.normal === 'quarter')),
+  //   result: 'Value',
+  //   reason: 'half-value'
+  // }, {
+  //   //half a million
+  //   condition: (a, b) => ((a.normal === 'half' || a.normal === 'quarter') && b.tag.Value),
+  //   result: 'Value',
+  //   reason: 'half-value'
+  // },
+  // {
+  //   //both values, not ordinals, not '5 20'
+  //   condition: (a, b) => (a.tag.Value && b.tag.Value && !a.tag.Ordinal && !b.tag.NumericValue),
+  //   result: 'Value',
+  //   reason: 'two-values'
+  // },
   // {
   //   //both places
   //   condition: (a, b) => (a.tag.Place && b.tag.Place),

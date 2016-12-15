@@ -5,6 +5,7 @@ const Term = require('../term');
 const fromString = function (str) {
   let all = [];
   //start with a naiive split
+  str = str || '';
   let firstSplit = str.split(/(\S+)/);
   let arr = [];
   for(let i = 0; i < firstSplit.length; i++) {

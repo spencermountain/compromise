@@ -1,6 +1,9 @@
 'use strict';
+const toNumber = require('../toNumber');
+
 //turn a number like 5 into an ordinal like 5th
-const toOrdinal = function(num) {
+const numOrdinal = function(ts) {
+  let num = toNumber(ts);
   if (!num && num !== 0) {
     return null;
   }
@@ -26,6 +29,4 @@ const toOrdinal = function(num) {
   return str;
 };
 
-module.exports = {
-  ordinal: toOrdinal
-};
+module.exports = numOrdinal;

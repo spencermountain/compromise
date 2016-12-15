@@ -19,12 +19,12 @@ const replaceMethods = (Terms) => {
     replaceWith: function (str, tag) {
       let ts = Terms.fromString(str);
       if (tag) {
-        ts.set_tag(tag, 'user-given');
+        ts.tagAs(tag, 'user-given');
       }
       let index = this.terms[0].index();
       this.parentTerms = mutate.deleteThese(this.parentTerms, this);
-      this.parentTerms = mutate.insertAt(this.parentTerms, index, ts);
-      return this.parentTerms;
+      return mutate.insertAt(this.parentTerms, index, ts);
+    // return this.parentTerms;
     }
 
   };

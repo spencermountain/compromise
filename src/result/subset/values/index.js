@@ -8,6 +8,7 @@ class Values extends Text {
       return ts.parse();
     });
   }
+
   /** five -> '5' */
   toNumber() {
     this.forEach((ts) => {
@@ -51,5 +52,9 @@ class Values extends Text {
     return r;
   }
 }
-
+// Values.prototype.clone = function() {
+//   console.log('=-');
+//   let r = this.clone();
+//   return Values.find(r);
+// };
 module.exports = Values;

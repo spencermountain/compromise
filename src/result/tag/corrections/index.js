@@ -88,6 +88,7 @@ const corrections = function (r) {
 
   //money
   r.match('#Value+ #Currency').tag('#Money', 'value-currency');
+  r.match('#Money and #Money #Currency?').tag('#Money', 'money-and-money');
 
   //last names
   let reason = 'person-correction';

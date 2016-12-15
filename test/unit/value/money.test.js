@@ -18,6 +18,10 @@ test('money-basic:', function (t) {
   m = r.match('#Money+');
   t.equal(m.normal(), '12 dollars', 'match-12 dollars');
 
+  r = nlp('you should pay sixty five dollars and four cents USD');
+  m = r.match('#Money+');
+  t.equal(m.normal(), 'sixty five dollars and four cents usd', 'match-long-usd');
+
   t.end();
 });
 
@@ -27,6 +31,7 @@ test('money-has:', function (t) {
     ['$7.0', true],
     ['$7.00', true],
     ['$7.003', false],
+
     ['$7082.03', true],
     ['$2,082.03', true],
     ['€7.00', true],
@@ -34,6 +39,10 @@ test('money-has:', function (t) {
     ['£0.20', true],
     ['@0.20', false],
 
+    ['8 cents', true],
+    ['60 pence', true],
+    ['sixty pence', true],
+    ['sixty USD', true],
   ];
   tests.forEach((a) => {
     var r = nlp(a[0]);

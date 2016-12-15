@@ -4,6 +4,7 @@
 const nlp = require('./src/index');
 // require('./src/logger').enable();
 var m = nlp('sixty five dollars and four cents USD');
-// var m = r.match('#Money');
+m.values().toNumber();
+// $56.04
 m.check();
 // m.values().toNiceNumber();

@@ -29,8 +29,9 @@ const transforms = (Terms) => {
     },
     deHyphenate: function () {
       this.terms.forEach((t, i) => {
-        t.whitespace.before = '';
-        t.whitespace.after = ' ';
+        if (t.whitespace.after === '-') {
+          t.whitespace.after = ' ';
+        }
       });
       return this;
     },

@@ -56,6 +56,7 @@ Text = require('./methods/delete')(Text);
 Text = require('./methods/replace')(Text);
 Text = require('./methods/render/render')(Text);
 Text = require('./methods/split')(Text);
+Text = require('./methods/hyphens')(Text);
 Text = require('./methods/insert')(Text);
 Text.prototype.topk = require('./methods/render/topk');
 Text.prototype.ngram = require('./methods/render/ngram');

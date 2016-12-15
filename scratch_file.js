@@ -17,6 +17,9 @@ const nlp = require('./src/index');
 // console.log(r.values().toNumber().term(0).first().normal());
 // console.log(r.list[0].terms[0].normal);
 
-var m = nlp('it is ' + 332);
-m.values().toTextValue().check();
+// var m = nlp('it is ' + 332);
+// m.values().toTextValue().check();
 // console.log(m.values().toTextValue().normal());
+
+var m = nlp('it is cool. he is nice');
+console.log(m.hyphenate().deHyphenate().hyphenate().plaintext());

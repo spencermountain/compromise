@@ -22,7 +22,7 @@ const isText = (ts) => {
 const isNumber = (ts) => {
   for(let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
-    if (t.tag.TextValue || t.tag.NiceNumber) {
+    if (t.tag.TextValue || t.tag.NiceNumber || !t.tag.NumericValue) {
       return false;
     }
   }

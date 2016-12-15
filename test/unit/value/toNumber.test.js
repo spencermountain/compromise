@@ -80,7 +80,7 @@ test('to_number:', function (t) {
     ['negative five', -5],
     ['negative hundred', -100],
     ['12:32', ''],
-    ['123-1231', ''],
+    // ['123-1231', ''],
     ['seven eleven', ''],
     ['ten-four', ''],
     ['one seven', ''],

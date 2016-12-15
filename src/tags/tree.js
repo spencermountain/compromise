@@ -62,14 +62,15 @@ module.exports = {
   },
   Adverb: true,
   Value: {
-    Currency: true,
     Ordinal: true,
     Fraction: true,
     Cardinal: true,
     TextValue: true,
     NumericValue: true,
     NiceNumber: true,
+    Money: true,
   },
+  Currency: true,
   NumberRange: true,
   //glue
   Determiner: true,

@@ -10,8 +10,8 @@ const normalize = function (term) {
   // str = str.replace(/([a-z])\-([a-z0-9])/g, '$1 $2');
   //
   // str = str.replace(/([a-z])\-$/, '$1');
-  //hashtags, atmentions, dollar signs
-  str = str.replace(/^[#@$]/, '');
+  //hashtags, atmentions
+  str = str.replace(/^[#@]/, '');
   // coerce single curly quotes
   str = str.replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]+/g, '\'');
   // coerce double curly quotes

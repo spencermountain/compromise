@@ -51,8 +51,9 @@ class Values extends Text {
   }
   static find(r) {
     r = r.match('#Value+');
-    r = r.not('(a|an)$');
-    // console.log(r.list[0]);
+    if (r.has('. (a|an)')) {
+      r = r.not('(a|an)$');
+    }
     r.list = r.list.map((ts) => {
       return new Value(ts.terms, ts.lexicon, ts.parent, ts.parentTerms);
     });

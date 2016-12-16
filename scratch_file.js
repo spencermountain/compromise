@@ -18,7 +18,7 @@ const nlp = require('./src/index');
 
 // console.log(nlp('it is 55').values().toOrdinal().plaintext());
 
-let m = nlp('May twenty-fourth, 2010');
+let m = nlp('in a year');
 m = m.clone();
 m.values().toNumber();
 m.check();

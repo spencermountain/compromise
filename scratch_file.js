@@ -9,7 +9,8 @@ require('./src/logger').enable();
 // m.check();
 // m.values().toNiceNumber();
 
-var r = nlp('last week of july');
+var r = nlp('november 10th a year from now');
+r.values().toNumber();
 // var dates = r.dates().parse();
 // console.log(dates[0]);
 r.check();

@@ -4220,27 +4220,33 @@ var parseDate = function parseDate(r) {
   }
 
   //january fifth 1992
-  m = r.match('#Month #Value #Cardinal');
+  m = r.match('#Month #Value #Year');
   if (m.found) {
-    var values = m.values().parse();
-    if (isDate(values[0].cardinal)) {
-      result.date = values[0].cardinal;
-      //try a second one
-      if (values[1] && isYear(values[1].cardinal)) {
-        result.year = values[1].cardinal;
-      }
+    var numbers = m.values().numbers();
+    if (isDate(numbers[0])) {
+      result.date = numbers[0];
+    }
+    var year = parseInt(r.match('#Year').normal(), 10);
+    if (isYear(year)) {
+      result.year = year;
     }
   }
   if (!m.found) {
     //january fifth,  january 1992
     m = r.match('#Month #Value');
     if (m.found) {
-      var _values = m.values().parse();
-      var num = _values[0].cardinal;
+      var _numbers = m.values().numbers();
+      var num = _numbers[0];
       if (isDate(num)) {
         result.date = num;
-      } else if (isYear(num)) {
-        result.year = num;
+      }
+    }
+    //january 1992
+    m = r.match('#Month #Year');
+    if (m.found) {
+      var _num = parseInt(r.match('#Year').normal(), 10);
+      if (isYear(_num)) {
+        result.year = _num;
       }
     }
   }
@@ -4248,10 +4254,9 @@ var parseDate = function parseDate(r) {
   //fifth of january
   m = r.match('#Value of #Month');
   if (m.found) {
-    var o = m.values().parse()[0] || {};
-    var _num = o.cardinal;
-    if (isDate(_num)) {
-      result.date = _num;
+    var _num2 = m.values().numbers()[0];
+    if (isDate(_num2)) {
+      result.date = _num2;
     }
   }
   return result;
@@ -4289,13 +4294,12 @@ var parsePunt = function parsePunt(r) {
   //interpret 'value + duration'
   if (m.found) {
     r.match('#Value #Duration').forEach(function (ts) {
-      var num = ts.match('#Value').values().toNumber().parse()[0];
-      if (num) {
-        num = num.cardinal;
-      }
-      var str = ts.match('#Duration').nouns().toSingular().normal();
-      if (durations[str]) {
-        duration[str] = num;
+      var num = ts.match('#Value').values().toNumber().numbers()[0];
+      if (num || num === 0) {
+        var str = ts.match('#Duration').nouns().toSingular().normal();
+        if (durations[str]) {
+          duration[str] = num;
+        }
       }
     });
   }
@@ -5340,6 +5344,15 @@ var Values = function (_Text) {
         return ts.parse();
       });
     }
+    /** five -> 5 */
+
+  }, {
+    key: 'numbers',
+    value: function numbers() {
+      return this.list.map(function (ts) {
+        return ts.number();
+      });
+    }
     /** five -> '5' */
 
   }, {
@@ -5900,9 +5913,15 @@ var Value = function (_Terms) {
   }
 
   _createClass(Value, [{
-    key: 'toNumber',
-
+    key: 'number',
+    value: function number() {
+      var num = parse(this);
+      return num;
+    }
     /** five -> '5' */
+
+  }, {
+    key: 'toNumber',
     value: function toNumber() {
       //is already
       if (isNumber(this)) {
@@ -6003,7 +6022,7 @@ var Value = function (_Terms) {
           nicenumber: this.toNiceNumber().plaintext()
         }
       };
-      obj.NumericValue.number = parseFloat(obj.NumericValue.cardinal, 10);
+      obj.number = parseFloat(obj.NumericValue.cardinal, 10);
 
       var txtV = this.toTextValue();
       obj.TextValue = {
@@ -6219,13 +6238,13 @@ var corrections = function corrections(r) {
 
   //year tagging
   var value = r.match('#Date #Value #Cardinal').lastTerm().values();
-  var o = value.parse()[0];
-  if (o && isYear(o.cardinal)) {
+  var num = value.numbers()[0];
+  if (isYear(num)) {
     value.tag('Year', 'date-year');
   }
   value = r.match('#Date #Cardinal').lastTerm().values();
-  o = value.parse()[0];
-  if (o && isYear(o.cardinal)) {
+  num = value.numbers()[0];
+  if (isYear(num)) {
     value.tag('Year', 'date-year');
   }
 
@@ -6572,7 +6591,7 @@ var conflicts = [
 //adjectives
 ['Comparative', 'Superlative'],
 //values
-['Value', 'Verb', 'Adjective'], ['Ordinal', 'Cardinal'], ['TextValue', 'NumericValue'], ['NiceNumber', 'TextValue'], ['Ordinal', 'Currency'], //$5.50th
+['Value', 'Verb', 'Adjective'], ['Value', 'Year'], ['Ordinal', 'Cardinal'], ['TextValue', 'NumericValue'], ['NiceNumber', 'TextValue'], ['Ordinal', 'Currency'], //$5.50th
 //verbs
 ['PastTense', 'PerfectTense', 'Pluperfect', 'FuturePerfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund'],
 //date
@@ -12345,15 +12364,6 @@ module.exports = [['[A-Z][a-z]*', 'TitleCase'],
 //632-589-3809
 ['\\(?[0-9]{3}\\)?[ -]?[0-9]{3}-[0-9]{4}', 'PhoneNumber'],
 
-//money
-['^[\-\+]?[$€¥£]?[0-9]+(\.[0-9]{1,2})?$', 'Money'], //like $5.30
-['^[\-\+]?[$€¥£]?[0-9]{1,3}(,[0-9]{3})+(\.[0-9]{1,2})?$', 'Money'], //like $5,231.30
-
-//values
-['^[\-\+]?[0-9]{1,3}(,[0-9]{3})+(\.[0-9]+)?$', 'NiceNumber'], //like 5,999.0
-['^[\-\+]?[0-9]+(\.[0-9]+)?$', 'NumericValue'], //like +5.0
-['[0-9]{1,3}(st|nd|rd|th)?-[0-9]{1,3}(st|nd|rd|th)?', 'NumberRange'], //5-7
-
 //dates/times
 ['[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])', 'Time'], //4:32:32
 ['[012]?[0-9](:[0-5][0-9])?(:[0-5][0-9])? ?(am|pm)', 'Time'], //4pm
@@ -12363,6 +12373,16 @@ module.exports = [['[A-Z][a-z]*', 'TitleCase'],
 ['[a-z0-9]*? o\'?clock', 'Time'], //3 oclock
 ['[0-9]{1,4}/[0-9]{1,2}/[0-9]{1,4}', 'Date'], //03/02/89
 ['[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}', 'Date'], //03-02-89
+
+//money
+['^[\-\+]?[$€¥£][0-9]+(\.[0-9]{1,2})?$', 'Money'], //like $5.30
+['^[\-\+]?[$€¥£][0-9]{1,3}(,[0-9]{3})+(\.[0-9]{1,2})?$', 'Money'], //like $5,231.30
+
+//values
+['^[\-\+]?[0-9]{1,3}(,[0-9]{3})+(\.[0-9]+)?$', 'NiceNumber'], //like 5,999.0
+['^[\-\+]?[0-9]+(\.[0-9]+)?$', 'NumericValue'], //like +5.0
+['[0-9]{1,3}(st|nd|rd|th)?-[0-9]{1,3}(st|nd|rd|th)?', 'NumberRange'], //5-7
+
 ['[0-9]{1,4}/[0-9]{1,4}', 'Fraction'], //3/2ths
 ['[0-9]{1,2}-[0-9]{1,2}', 'Value'], //7-8
 

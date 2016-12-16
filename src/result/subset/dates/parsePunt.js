@@ -26,7 +26,8 @@ const parsePunt = (r) => {
   }
   //interpret 'value + duration'
   if (m.found) {
-    r.match('#Value #Duration').forEach((ts) => {
+    r.match('#Value #Duration').check().forEach((ts) => {
+      // console.log(ts.match('#Value').values().toNumber().plaintext());
       let num = ts.match('#Value').values().toNumber().numbers()[0];
       if (num || num === 0) {
         let str = ts.match('#Duration').nouns().toSingular().normal();

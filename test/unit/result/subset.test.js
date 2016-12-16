@@ -47,12 +47,13 @@ test('all subsets have a parse method:', function (t) {
 
 
 test('all subsets support .all():', function (t) {
-  var r = nlp(freshPrince);
+  var txt = freshPrince;
+  var r = nlp(txt);
   subsets.forEach((s) => {
     var sub = r[s]();
     var str = sub.all().plaintext();
     var msg = s + '.all() works';
-    t.equal(str, freshPrince, msg);
+    t.equal(str, txt, msg);
   });
   t.end();
 });

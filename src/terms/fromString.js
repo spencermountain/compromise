@@ -10,7 +10,7 @@ const fromString = function (str) {
   let arr = [];
   for(let i = 0; i < firstSplit.length; i++) {
     let word = firstSplit[i];
-    let hyphen = word.match(/^([a-z]+)(-)([a-z0-9]+)/i);
+    let hyphen = word.match(/^([a-z]+)(-)([a-z0-9].*)/i);
     if (hyphen) { //we found one 'word-word'
       arr.push(hyphen[1] + hyphen[2]);
       arr.push(hyphen[3]);
@@ -18,7 +18,6 @@ const fromString = function (str) {
       arr.push(word);
     }
   }
-
   //greedy merge whitespace+arr to the right
   let carry = '';
   for (let i = 0; i < arr.length; i++) {

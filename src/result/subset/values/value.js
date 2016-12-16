@@ -48,10 +48,11 @@ class Value extends Terms {
     } else {
       let num = parse(this);
       if (num !== null) {
-        return this.replaceWith('' + num, 'Value');
+        this.replaceWith('' + num, 'Value');
+      // return r;
       }
     }
-    return this;
+    return new Value(this.terms, this.lexicon, this.parent, this.parentTerms);
   }
   /**5 -> 'five' */
   toTextValue() {
@@ -65,10 +66,10 @@ class Value extends Terms {
       this.replaceWith(str, 'Value');
     } else {
       let num = '' + parse(this);
-      let words = toText(num);
-      return this.replaceWith(words.join(' '), 'Value');
+      let str = toText(num).join(' ');
+      this.replaceWith(str, 'Value');
     }
-    return this;
+    return new Value(this.terms, this.lexicon, this.parent, this.parentTerms);
   }
 
   /**5th -> 5 */
@@ -79,13 +80,14 @@ class Value extends Terms {
     }
     //otherwise,
     if (isText(this)) {
-      let str = toText(this);
+      let num = '' + parse(this);
+      let str = toText(num).join(' ');
       this.replaceWith(str, 'Value');
     } else {
       let num = '' + parse(this);
       this.replaceWith(num, 'Value');
     }
-    return this;
+    return new Value(this.terms, this.lexicon, this.parent, this.parentTerms);
   }
 
   /**5 -> 5th */
@@ -103,7 +105,7 @@ class Value extends Terms {
       let str = numOrdinal(this);
       this.replaceWith(str, 'Value');
     }
-    return this;
+    return new Value(this.terms, this.lexicon, this.parent, this.parentTerms);
   }
 
   /**5900 -> 5,900 */
@@ -111,7 +113,7 @@ class Value extends Terms {
     let num = parse(this);
     let str = toNiceNumber(num);
     this.replaceWith(str, 'Value');
-    return this;
+    return new Value(this.terms, this.lexicon, this.parent, this.parentTerms);
   }
 
   parse() {
@@ -124,7 +126,6 @@ class Value extends Terms {
       }
     };
     obj.number = parseFloat(obj.NumericValue.cardinal, 10);
-
     let txtV = this.toTextValue();
     obj.TextValue = {
       cardinal: txtV.toCardinal().plaintext(),

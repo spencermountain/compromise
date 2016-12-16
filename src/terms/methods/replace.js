@@ -24,8 +24,9 @@ const replaceMethods = (Terms) => {
       let index = this.index();
       this.parentTerms = mutate.deleteThese(this.parentTerms, this);
       let parent = mutate.insertAt(this.parentTerms, index, ts);
-      this.terms = parent.terms;
-      return this;
+      this.terms = ts.terms;
+      this.parentTerms = parent;
+      return ts;
     }
 
   };

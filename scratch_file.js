@@ -2,18 +2,19 @@
 //this file is not included in the build.
 //use it for messing around.
 const nlp = require('./src/index');
-require('./src/logger').enable();
+// require('./src/logger').enable();
 // var m = nlp('4:00');
 // m.values().toNumber();
 // $56.04
 // m.check();
 // m.values().toNiceNumber();
 
-var r = nlp('november 10th a year from now');
-r.values().toNumber();
 // var dates = r.dates().parse();
 // console.log(dates[0]);
-r.check();
-// var m = r.match('#Month #Value #Cardinal');
-// let values = m.values().check().parse();
-// console.log(values);
+
+// var r = nlp('six years before january 5th 1992');
+// console.log(r.match('#Value #Duration').values().plaintext());
+// console.log(r.match('#Value #Duration').values().toNumber().plaintext());
+
+// console.log(nlp('it is 55').values().toOrdinal().plaintext());
+console.log(nlp('it is 55').values().parse());

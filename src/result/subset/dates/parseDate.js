@@ -45,26 +45,32 @@ const parseDate = (r) => {
   }
 
   //january fifth 1992
-  m = r.match('#Month #Value #Cardinal');
+  m = r.match('#Month #Value #Year');
   if (m.found) {
-    let values = m.values().parse();
-    if (isDate(values[0].cardinal)) {
-      result.date = values[0].cardinal;
-      //try a second one
-      if (values[1] && isYear(values[1].cardinal)) {
-        result.year = values[1].cardinal;
-      }
+    let numbers = m.values().numbers();
+    if (isDate(numbers[0])) {
+      result.date = numbers[0];
+    }
+    let year = parseInt(r.match('#Year').normal(), 10);
+    if (isYear(year)) {
+      result.year = year;
     }
   }
   if (!m.found) {
     //january fifth,  january 1992
     m = r.match('#Month #Value');
     if (m.found) {
-      let values = m.values().parse();
-      let num = values[0].cardinal;
+      let numbers = m.values().numbers();
+      let num = numbers[0];
       if (isDate(num)) {
         result.date = num;
-      } else if (isYear(num)) {
+      }
+    }
+    //january 1992
+    m = r.match('#Month #Year');
+    if (m.found) {
+      let num = parseInt(r.match('#Year').normal(), 10);
+      if (isYear(num)) {
         result.year = num;
       }
     }
@@ -73,8 +79,7 @@ const parseDate = (r) => {
   //fifth of january
   m = r.match('#Value of #Month');
   if (m.found) {
-    let o = m.values().parse()[0] || {};
-    let num = o.cardinal;
+    let num = m.values().numbers()[0];
     if (isDate(num)) {
       result.date = num;
     }

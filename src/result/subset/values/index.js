@@ -8,6 +8,12 @@ class Values extends Text {
       return ts.parse();
     });
   }
+  /** five -> 5 */
+  numbers() {
+    return this.list.map((ts) => {
+      return ts.number();
+    });
+  }
   /** five -> '5' */
   toNumber() {
     this.forEach((ts) => {

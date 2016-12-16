@@ -95,13 +95,13 @@ const corrections = function (r) {
 
   //year tagging
   let value = r.match(`#Date #Value #Cardinal`).lastTerm().values();
-  let o = value.parse()[0];
-  if (o && isYear(o.cardinal)) {
+  let num = value.numbers()[0];
+  if (isYear(num)) {
     value.tag('Year', 'date-year');
   }
   value = r.match(`#Date #Cardinal`).lastTerm().values();
-  o = value.parse()[0];
-  if (o && isYear(o.cardinal)) {
+  num = value.numbers()[0];
+  if (isYear(num)) {
     value.tag('Year', 'date-year');
   }
 

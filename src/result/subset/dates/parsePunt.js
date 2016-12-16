@@ -27,13 +27,12 @@ const parsePunt = (r) => {
   //interpret 'value + duration'
   if (m.found) {
     r.match('#Value #Duration').forEach((ts) => {
-      let num = ts.match('#Value').values().toNumber().parse()[0];
-      if (num) {
-        num = num.cardinal;
-      }
-      let str = ts.match('#Duration').nouns().toSingular().normal();
-      if (durations[str]) {
-        duration[str] = num;
+      let num = ts.match('#Value').values().toNumber().numbers()[0];
+      if (num || num === 0) {
+        let str = ts.match('#Duration').nouns().toSingular().normal();
+        if (durations[str]) {
+          duration[str] = num;
+        }
       }
     });
   }

@@ -5,13 +5,13 @@ const relatives = {
   next: 'next',
   last: 'last',
   upcoming: 'next',
-}
+};
 const parseRelative = (r) => {
-  let known = '(' + Object.keys(relatives).join('|') + ')'
-  let m = r.match(`${known}+`).lastTerm()
+  let known = '(' + Object.keys(relatives).join('|') + ')';
+  let m = r.match(`${known}+`).lastTerm();
   if (m.found) {
-    let str = m.match(known).normal()
-    return relatives[str]
+    let str = m.match(known).normal();
+    return relatives[str];
   }
-}
-module.exports = parseRelative
+};
+module.exports = parseRelative;

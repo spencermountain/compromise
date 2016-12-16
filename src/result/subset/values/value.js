@@ -30,6 +30,11 @@ const isNumber = (ts) => {
 };
 
 class Value extends Terms {
+
+  number() {
+    let num = parse(this);
+    return num;
+  }
   /** five -> '5' */
   toNumber() {
     //is already
@@ -118,7 +123,7 @@ class Value extends Terms {
         nicenumber: this.toNiceNumber().plaintext(),
       }
     };
-    obj.NumericValue.number = parseFloat(obj.NumericValue.cardinal, 10);
+    obj.number = parseFloat(obj.NumericValue.cardinal, 10);
 
     let txtV = this.toTextValue();
     obj.TextValue = {

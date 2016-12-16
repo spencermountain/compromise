@@ -49,10 +49,9 @@ class Value extends Terms {
       let num = parse(this);
       if (num !== null) {
         this.replaceWith('' + num, 'Value');
-      // return r;
       }
     }
-    return new Value(this.terms, this.lexicon, this.parent, this.parentTerms);
+    return this;
   }
   /**5 -> 'five' */
   toTextValue() {
@@ -69,7 +68,7 @@ class Value extends Terms {
       let str = toText(num).join(' ');
       this.replaceWith(str, 'Value');
     }
-    return new Value(this.terms, this.lexicon, this.parent, this.parentTerms);
+    return this;
   }
 
   /**5th -> 5 */
@@ -87,7 +86,7 @@ class Value extends Terms {
       let num = '' + parse(this);
       this.replaceWith(num, 'Value');
     }
-    return new Value(this.terms, this.lexicon, this.parent, this.parentTerms);
+    return this;
   }
 
   /**5 -> 5th */
@@ -105,7 +104,7 @@ class Value extends Terms {
       let str = numOrdinal(this);
       this.replaceWith(str, 'Value');
     }
-    return new Value(this.terms, this.lexicon, this.parent, this.parentTerms);
+    return this;
   }
 
   /**5900 -> 5,900 */
@@ -113,24 +112,24 @@ class Value extends Terms {
     let num = parse(this);
     let str = toNiceNumber(num);
     this.replaceWith(str, 'Value');
-    return new Value(this.terms, this.lexicon, this.parent, this.parentTerms);
+    return this;
   }
 
   parse() {
-    let numV = this.toNumber();
+    let numV = this.clone().toNumber();
+    let txtV = this.clone().toTextValue();
     let obj = {
       NumericValue: {
         cardinal: numV.toCardinal().plaintext(),
         ordinal: numV.toOrdinal().plaintext(),
         nicenumber: this.toNiceNumber().plaintext(),
+      },
+      TextValue : {
+        cardinal: txtV.toCardinal().plaintext(),
+        ordinal: txtV.toOrdinal().plaintext(),
       }
     };
-    obj.number = parseFloat(obj.NumericValue.cardinal, 10);
-    let txtV = this.toTextValue();
-    obj.TextValue = {
-      cardinal: txtV.toCardinal().plaintext(),
-      ordinal: txtV.toOrdinal().plaintext(),
-    };
+    obj.number = this.number();
     return obj;
   }
 }

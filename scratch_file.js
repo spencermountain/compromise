@@ -17,4 +17,9 @@ const nlp = require('./src/index');
 // console.log(r.match('#Value #Duration').values().toNumber().plaintext());
 
 // console.log(nlp('it is 55').values().toOrdinal().plaintext());
-console.log(nlp('it is 55').values().parse());
+
+let m = nlp('May twenty-fourth, 2010');
+m = m.clone();
+m.values().toNumber();
+m.check();
+// m.values().toNumber(); //.check();

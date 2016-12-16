@@ -9,7 +9,7 @@ require('./src/logger').enable();
 // m.check();
 // m.values().toNiceNumber();
 
-var r = nlp('Sep-2012');
+var r = nlp('last week of july');
 // var dates = r.dates().parse();
 // console.log(dates[0]);
 r.check();

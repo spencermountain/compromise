@@ -43,7 +43,7 @@ module.exports = [
 
 ].map(function (a) {
   return {
-    reg: new RegExp('^' + a[0] + '$', 'i'),
+    reg: new RegExp('^' + a[0] + '$'),
     tag: a[1],
     str: a[0]
   };

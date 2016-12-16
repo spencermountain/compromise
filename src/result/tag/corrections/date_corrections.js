@@ -88,6 +88,7 @@ const corrections = function (r) {
   r.match('#Date #Preposition #Date').tag('Date', 'date-prep-date');
 
   //two days before
+  r.check();
   r.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction');
 
   //start of june

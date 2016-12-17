@@ -1,4 +1,4 @@
-/* nlp_compromise v7.0.0-alpha3
+/* nlp_compromise v7.0.0-alpha4
    github.com/nlp-compromise
    MIT
 */
@@ -463,7 +463,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "nlp_compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.0-alpha3",
+  "version": "7.0.0-alpha4",
   "main": "./builds/nlp_compromise.js",
   "repository": {
     "type": "git",
@@ -2931,6 +2931,7 @@ var genericMethods = function genericMethods(Text) {
       var list = this.list.map(function (ts) {
         return ts.clone();
       });
+      // return this;
       return new Text(list, this.lexicon, this.parent);
     },
 
@@ -4294,6 +4295,7 @@ var parsePunt = function parsePunt(r) {
   //interpret 'value + duration'
   if (m.found) {
     r.match('#Value #Duration').forEach(function (ts) {
+      // console.log(ts.match('#Value').values().toNumber().plaintext());
       var num = ts.match('#Value').values().toNumber().numbers()[0];
       if (num || num === 0) {
         var str = ts.match('#Duration').nouns().toSingular().normal();
@@ -5407,6 +5409,9 @@ var Values = function (_Text) {
     key: 'find',
     value: function find(r) {
       r = r.match('#Value+');
+      if (r.has('. (a|an)')) {
+        r = r.not('(a|an)$');
+      }
       r.list = r.list.map(function (ts) {
         return new Value(ts.terms, ts.lexicon, ts.parent, ts.parentTerms);
       });
@@ -5934,7 +5939,7 @@ var Value = function (_Terms) {
       } else {
         var _num = parse(this);
         if (_num !== null) {
-          return this.replaceWith('' + _num, 'Value');
+          this.replaceWith('' + _num, 'Value');
         }
       }
       return this;
@@ -5954,8 +5959,8 @@ var Value = function (_Terms) {
         this.replaceWith(str, 'Value');
       } else {
         var num = '' + parse(this);
-        var words = toText(num);
-        return this.replaceWith(words.join(' '), 'Value');
+        var _str = toText(num).join(' ');
+        this.replaceWith(_str, 'Value');
       }
       return this;
     }
@@ -5971,11 +5976,12 @@ var Value = function (_Terms) {
       }
       //otherwise,
       if (isText(this)) {
-        var str = toText(this);
+        var num = '' + parse(this);
+        var str = toText(num).join(' ');
         this.replaceWith(str, 'Value');
       } else {
-        var num = '' + parse(this);
-        this.replaceWith(num, 'Value');
+        var _num2 = '' + parse(this);
+        this.replaceWith(_num2, 'Value');
       }
       return this;
     }
@@ -5995,8 +6001,8 @@ var Value = function (_Terms) {
         this.replaceWith(str, 'Value');
       } else {
         //number-ordinal
-        var _str = numOrdinal(this);
-        this.replaceWith(_str, 'Value');
+        var _str2 = numOrdinal(this);
+        this.replaceWith(_str2, 'Value');
       }
       return this;
     }
@@ -6014,21 +6020,20 @@ var Value = function (_Terms) {
   }, {
     key: 'parse',
     value: function parse() {
-      var numV = this.toNumber();
+      var numV = this.clone().toNumber();
+      var txtV = this.clone().toTextValue();
       var obj = {
         NumericValue: {
           cardinal: numV.toCardinal().plaintext(),
           ordinal: numV.toOrdinal().plaintext(),
           nicenumber: this.toNiceNumber().plaintext()
+        },
+        TextValue: {
+          cardinal: txtV.toCardinal().plaintext(),
+          ordinal: txtV.toOrdinal().plaintext()
         }
       };
-      obj.number = parseFloat(obj.NumericValue.cardinal, 10);
-
-      var txtV = this.toTextValue();
-      obj.TextValue = {
-        cardinal: txtV.toCardinal().plaintext(),
-        ordinal: txtV.toOrdinal().plaintext()
-      };
+      obj.number = this.number();
       return obj;
     }
   }]);
@@ -9463,7 +9468,7 @@ var fromString = function fromString(str) {
   var arr = [];
   for (var i = 0; i < firstSplit.length; i++) {
     var word = firstSplit[i];
-    var hyphen = word.match(/^([a-z]+)(-)([a-z0-9]+)/);
+    var hyphen = word.match(/^([a-z]+)(-)([a-z0-9].*)/i);
     if (hyphen) {
       //we found one 'word-word'
       arr.push(hyphen[1] + hyphen[2]);
@@ -9472,7 +9477,6 @@ var fromString = function fromString(str) {
       arr.push(word);
     }
   }
-
   //greedy merge whitespace+arr to the right
   var carry = '';
   for (var _i = 0; _i < arr.length; _i++) {
@@ -9647,7 +9651,7 @@ var matchMethods = function matchMethods(Terms) {
         }
       }
       matches = matches.map(function (a) {
-        return new Terms(a, _this.lexicon, _this.parent, _this);
+        return new Terms(a, _this.lexicon, _this.parent, _this.parentTerms);
       });
       // return matches
       var r = new Text(matches, this.lexicon, this.parent);
@@ -9703,7 +9707,7 @@ var matchMethods = function matchMethods(Terms) {
         matches.push(terms);
       }
       matches = matches.map(function (a) {
-        return new Terms(a, _this2.lexicon, _this2.parent, _this2);
+        return new Terms(a, _this2.lexicon, _this2.parent, _this2.parentTerms);
       });
       // return matches
       var r = new Text(matches, this.lexicon, this.parent);
@@ -10272,8 +10276,9 @@ var replaceMethods = function replaceMethods(Terms) {
       var index = this.index();
       this.parentTerms = mutate.deleteThese(this.parentTerms, this);
       var parent = mutate.insertAt(this.parentTerms, index, ts);
-      this.terms = parent.terms;
-      return this;
+      this.terms = ts.terms;
+      this.parentTerms = parent;
+      return ts;
     }
 
   };
@@ -10467,7 +10472,7 @@ var transforms = function transforms(Terms) {
       var terms = this.terms.map(function (t) {
         return t.clone();
       });
-      return new Terms(terms, this.lexicon, this.parent, this.parentTerms);
+      return new Terms(terms, this.lexicon, this.parent);
     },
     hyphenate: function hyphenate() {
       var _this = this;
@@ -12379,9 +12384,9 @@ module.exports = [['[A-Z][a-z]*', 'TitleCase'],
 ['^[\-\+]?[$€¥£][0-9]{1,3}(,[0-9]{3})+(\.[0-9]{1,2})?$', 'Money'], //like $5,231.30
 
 //values
+['[0-9]{1,2}(st|nd|rd|th)?-[0-9]{1,2}(st|nd|rd|th)?', 'NumberRange'], //5-7
 ['^[\-\+]?[0-9]{1,3}(,[0-9]{3})+(\.[0-9]+)?$', 'NiceNumber'], //like 5,999.0
 ['^[\-\+]?[0-9]+(\.[0-9]+)?$', 'NumericValue'], //like +5.0
-['[0-9]{1,3}(st|nd|rd|th)?-[0-9]{1,3}(st|nd|rd|th)?', 'NumberRange'], //5-7
 
 ['[0-9]{1,4}/[0-9]{1,4}', 'Fraction'], //3/2ths
 ['[0-9]{1,2}-[0-9]{1,2}', 'Value'], //7-8

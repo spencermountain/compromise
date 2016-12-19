@@ -55,6 +55,8 @@ test('pos from-lexicon', function (t) {
     ['823-425-1231', 'PhoneNumber'],
     ['823 425-1231', 'PhoneNumber'],
     ['(823) 425-1231', 'PhoneNumber'],
+    ['invest', 'Verb'],
+    ['investing', 'Verb'],
   ];
   arr.forEach(function (a) {
     var term = nlp(a[0]).list[0].terms[0];

@@ -170,6 +170,11 @@ var arr = [
     'PresentTense': 'fuzzes',
     'PastTense': 'fuzzed',
     'Gerund': 'fuzzing',
+  }, {
+    'Infinitive': 'invest',
+    'PresentTense': 'invests',
+    'PastTense': 'invested',
+    'Gerund': 'investing'
   }
 ];
 test('conjugation:', function(t) {

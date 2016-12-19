@@ -153,6 +153,7 @@ let arr = [
   'hope',
   'include',
   'instruct',
+  'invest',
   'join',
   'keep',
   'know',

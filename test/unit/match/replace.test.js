@@ -10,7 +10,7 @@ test('replace-basic :', function(t) {
   t.equal(m.plaintext(), 'a cat played', 'a-cat');
 
   m = nlp('the dog played').match('#Noun').replace('snake');
-  t.equal(m.plaintext(), 'the snake played', 'a-cat');
+  t.equal(m.plaintext(), 'the snake played', 'snake');
 
   m = nlp('the pit bull played').match('#Noun+').replace('snake');
   t.equal(m.plaintext(), 'the snake played', 'pit bull');

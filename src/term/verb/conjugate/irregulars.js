@@ -1,28 +1,25 @@
 'use strict';
 const irregulars = require('./paths').data.irregular_verbs;
+const Irregs = Object.keys(irregulars);
 
 const checkIrregulars = function(str) {
-  let keys = Object.keys(irregulars);
-  for(let i = 0; i < keys.length; i++) {
-    let obj = irregulars[keys[i]];
-
+  for(let i = 0; i < Irregs.length; i++) {
+    let obj = irregulars[Irregs[i]];
     //matched infinitive
-    if (keys[i] === str) {
+    if (Irregs[i] === str) {
       obj = Object.assign({}, obj);
-      obj.Infinitive = keys[i];
+      obj.Infinitive = Irregs[i];
       return obj;
     }
-
     //check other forms
     let kinds = Object.keys(obj);
     for(let o = 0; o < kinds.length; o++) {
       if (obj[kinds[o]] === str) {
         obj = Object.assign({}, obj);
-        obj.Infinitive = keys[i];
+        obj.Infinitive = Irregs[i];
         return obj;
       }
     }
-
   }
   return {};
 };

@@ -3,6 +3,7 @@
 const data = require('./index');
 const fns = require('./fns');
 const Term = require('../term');
+const fastConjugate = require('../term/verb/conjugate/faster');
 
 // console.time('lexicon');
 let lexicon = {};
@@ -13,14 +14,11 @@ const addObj = (o) => {
 const addArr = (arr, tag) => {
   const l = arr.length;
   for (let i = 0; i < l; i++) {
-    // if (lexicon[arr[i]]) {
-    // console.log('-' + arr[i] + '    ' + lexicon[arr[i]] + '->' + tag)
-    // }
     lexicon[arr[i]] = tag;
   }
 };
-//let a rip
 
+//let a rip
 let units = data.units.words.filter((s) => s.length > 1);
 addArr(units, 'Unit');
 addArr(data.dates.durations, 'Duration');
@@ -69,16 +67,13 @@ Object.keys(data.irregular_verbs).forEach((k) => {
 const wantVerbs = [
   'PastTense',
   'PresentTense',
-  // 'FutureTense',
   'Infinitive',
   'Gerund',
   'Actor',
   'Adjective'
 ];
 data.verbs.forEach((v) => {
-  let t = new Term(v);
-  t.tag.Verb = true;
-  let o = t.verb.conjugate() || {};
+  let o = fastConjugate(v);
   wantVerbs.forEach((k) => {
     if (o[k] && !lexicon[o[k]]) {
       lexicon[o[k]] = k;

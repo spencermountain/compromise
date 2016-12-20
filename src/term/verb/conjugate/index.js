@@ -6,7 +6,7 @@ const toAdjective = require('./toAdjective');
 const generic = require('./generic');
 
 //turn a verb into all it's forms
-const conjugate = function(t) {
+const conjugate = function(t, verbose) {
   //dont conjugate didn't
   if (t.tag.Contraction) {
     t.text = t.silent_term;
@@ -30,13 +30,13 @@ const conjugate = function(t) {
     all['Infinitive'] = t.verb.infinitive() || '';
   }
   //check irregular forms
-  all = Object.assign(all, checkIrregulars(all['Infinitive']));
-
+  const irreg = checkIrregulars(all['Infinitive']);
+  all = Object.assign(all, irreg);
   //ok, send this infinitive to all conjugators
   let inf = all['Infinitive'] || t.normal;
 
   //check suffix rules
-  all = Object.assign(all, suffixPass(inf));
+  all = Object.assign(suffixPass(inf), all);
 
   //ad-hoc each missing form
   //to Actor

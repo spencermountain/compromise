@@ -7,6 +7,11 @@ class Verbs extends Text {
       return t.verb.conjugate();
     });
   }
+  conjugate(verbose) {
+    return this.mapTerms((t) => {
+      return t.verb.conjugate(verbose);
+    });
+  }
   isNegative() {
     return this.match('#Negative').found;
   }
@@ -53,5 +58,6 @@ class Verbs extends Text {
     return r.match('#Verb+');
   }
 }
+
 
 module.exports = Verbs;

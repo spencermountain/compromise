@@ -24,7 +24,7 @@ const checkIrregulars = function(str) {
     }
 
   }
-  return null;
+  return {};
 };
 
 module.exports = checkIrregulars;

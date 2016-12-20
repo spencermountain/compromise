@@ -46,8 +46,8 @@ module.exports = {
   conjugation: function () {
     return predict(this);
   },
-  conjugate: function () {
-    return conjugate(this);
+  conjugate: function (verbose) {
+    return conjugate(this, verbose);
   },
   pastTense: function () {
     return conjugate(this).PastTense;

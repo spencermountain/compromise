@@ -2,7 +2,7 @@
 //this file is not included in the build.
 //use it for messing around.
 const nlp = require('./src/index');
-// require('./src/logger').enable();
+require('./src/logger').enable();
 // var m = nlp('4:00');
 // m.values().toNumber();
 // $56.04
@@ -18,6 +18,6 @@ const nlp = require('./src/index');
 
 // console.log(nlp('it is 55').values().toOrdinal().plaintext());
 
-let m = nlp('5-7');
+let m = nlp('70000');
+// m.values().toTextValue(); //.check();
 m.check();
-// m.values().toNumber(); //.check();

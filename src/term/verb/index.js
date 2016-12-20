@@ -40,11 +40,11 @@ module.exports = {
   },
 
   /**conjugation*/
-  infinitive: function () {
-    return toInfinitive(this);
+  infinitive: function (verbose) {
+    return toInfinitive(this, verbose);
   },
-  conjugation: function () {
-    return predict(this);
+  conjugation: function (verbose) {
+    return predict(this, verbose);
   },
   conjugate: function (verbose) {
     return conjugate(this, verbose);

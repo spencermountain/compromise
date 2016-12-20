@@ -18,7 +18,7 @@ const nlp = require('./src/index');
 
 // console.log(nlp('it is 55').values().toOrdinal().plaintext());
 
-let m = nlp('arise');
+let m = nlp('bought').tag('Verb');
 console.log(m.verbs().conjugate(true));
 // m.values().toTextValue(); //.check();
 // m.check();

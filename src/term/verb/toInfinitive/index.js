@@ -4,6 +4,7 @@ const rules = require('./rules');
 let irregulars = require('../paths').data.irregular_verbs;
 
 //map the irregulars for easy infinitive lookup
+// {bought: 'buy'}
 const verb_mapping = () => {
   return Object.keys(irregulars).reduce((h, k) => {
     Object.keys(irregulars[k]).forEach((pos) => {
@@ -15,7 +16,7 @@ const verb_mapping = () => {
 
 irregulars = verb_mapping();
 
-const toInfinitive = function(t) {
+const toInfinitive = function(t, verbose) {
   if (t.tag.Infinitive) {
     return t.normal;
   }

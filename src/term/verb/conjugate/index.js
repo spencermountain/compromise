@@ -22,22 +22,30 @@ const conjugate = function(t, verbose) {
     Pluperfect: null,
   };
   //first, get its current form
-  let form = t.verb.conjugation();
+  let form = t.verb.conjugation(verbose);
   if (form) {
     all[form] = t.normal;
   }
   if (form !== 'Infinitive') {
-    all['Infinitive'] = t.verb.infinitive() || '';
+    all['Infinitive'] = t.verb.infinitive(verbose) || '';
   }
   //check irregular forms
-  const irreg = checkIrregulars(all['Infinitive']);
-  all = Object.assign(all, irreg);
+  const irregObj = checkIrregulars(all['Infinitive']);
+  Object.keys(irregObj).forEach((k) => {
+    if (irregObj[k] && !all[k]) {
+      all[k] = irregObj[k];
+    }
+  });
   //ok, send this infinitive to all conjugators
   let inf = all['Infinitive'] || t.normal;
 
   //check suffix rules
-  all = Object.assign(suffixPass(inf), all);
-
+  const suffObj = suffixPass(inf);
+  Object.keys(suffObj).forEach((k) => {
+    if (suffObj[k] && !all[k]) {
+      all[k] = suffObj[k];
+    }
+  });
   //ad-hoc each missing form
   //to Actor
   if (!all.Actor) {

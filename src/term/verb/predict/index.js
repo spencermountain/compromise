@@ -17,12 +17,14 @@ const goodTypes = {
   Participle: true
 };
 
-const predictForm = function(term) {
+const predictForm = function(term, verbose) {
   //do we already know the form?
   let keys = Object.keys(goodTypes);
   for (let i = 0; i < keys.length; i++) {
     if (term.tag[keys[i]]) {
-      log.tell('predicted ' + keys[i] + ' from pos', path);
+      // if (verbose) {
+      //   console.log('predicted ' + keys[i] + ' from pos', path);
+      // }
       return keys[i];
     }
   }
@@ -30,8 +32,10 @@ const predictForm = function(term) {
   const arr = Object.keys(suffix_rules);
   for (let i = 0; i < arr.length; i++) {
     if (fns.endsWith(term.normal, arr[i]) && arr[i].length < term.normal.length) {
-      const msg = 'predicted ' + suffix_rules[arr[i]] + ' from suffix ' + arr[i];
-      log.tell(msg, path);
+      // if (verbose) {
+      //   const msg = 'predicted ' + suffix_rules[arr[i]] + ' from suffix ' + arr[i];
+      //   console.log(msg, path);
+      // }
       return suffix_rules[arr[i]];
     }
   }

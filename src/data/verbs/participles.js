@@ -1,4 +1,5 @@
-//particples are a bit like past-tense
+//particples are a bit like past-tense, but used differently
+//map the infinitive to its irregular-participle
 module.exports = {
   'become': 'become',
   'begin': 'begun',
@@ -11,8 +12,8 @@ module.exports = {
   'build': 'built',
   'burn': 'burned',
   'burst': 'burst',
-  'bought': 'bought',
-  'caught': 'caught',
+  'buy': 'bought',
+  'catch': 'caught',
   'choose': 'chosen',
   'cling': 'clung',
   'come': 'come',
@@ -31,7 +32,7 @@ module.exports = {
   'fight': 'fought',
   'flee': 'fled',
   'fling': 'flung',
-  'forgot': 'forgotten',
+  'forget': 'forgotten',
   'forgive': 'forgiven',
   'freeze': 'frozen',
   'got': 'gotten',

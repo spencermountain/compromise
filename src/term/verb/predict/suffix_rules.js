@@ -42,6 +42,7 @@ const compact = {
     'est',
     'ain',
     'ant',
+    'ent',
     'eed',
     'er',
     'le',

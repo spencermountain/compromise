@@ -1,4 +1,4 @@
-/* nlp_compromise v7.0.0-alpha4
+/* nlp_compromise v7.0.0-alpha5
    github.com/nlp-compromise
    MIT
 */
@@ -463,7 +463,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "nlp_compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.0-alpha4",
+  "version": "7.0.0-alpha5",
   "main": "./builds/nlp_compromise.js",
   "repository": {
     "type": "git",
@@ -2352,7 +2352,8 @@ module.exports = irregular;
 },{"./participles":43}],43:[function(_dereq_,module,exports){
 'use strict';
 
-//particples are a bit like past-tense
+//particples are a bit like past-tense, but used differently
+//map the infinitive to its irregular-participle
 module.exports = {
   'become': 'become',
   'begin': 'begun',
@@ -2365,8 +2366,8 @@ module.exports = {
   'build': 'built',
   'burn': 'burned',
   'burst': 'burst',
-  'bought': 'bought',
-  'caught': 'caught',
+  'buy': 'bought',
+  'catch': 'caught',
   'choose': 'chosen',
   'cling': 'clung',
   'come': 'come',
@@ -2385,7 +2386,7 @@ module.exports = {
   'fight': 'fought',
   'flee': 'fled',
   'fling': 'flung',
-  'forgot': 'forgotten',
+  'forget': 'forgotten',
   'forgive': 'forgiven',
   'freeze': 'frozen',
   'got': 'gotten',
@@ -2554,7 +2555,7 @@ var compressed = {
   am: 'dre,j,sl,ro',
   ry: 'va,t,c,bu'
 };
-var arr = ['abandon', 'accept', 'add', 'added', 'adopt', 'aid', 'appeal', 'applaud', 'archive', 'ask', 'assign', 'associate', 'assume', 'attempt', 'avoid', 'become', 'bomb', 'cancel', 'claim', 'claw', 'come', 'control', 'convey', 'cook', 'copy', 'cut', 'deem', 'defy', 'deny', 'describe', 'design', 'destroy', 'die', 'divide', 'do', 'doubt', 'drag', 'drift', 'drop', 'echo', 'embody', 'enjoy', 'envy', 'excel', 'fail', 'fix', 'float', 'flood', 'focus', 'fold', 'get', 'goes', 'grab', 'grasp', 'grow', 'happen', 'head', 'help', 'hold fast', 'hope', 'include', 'instruct', 'join', 'keep', 'know', 'learn', 'let', 'lift', 'link', 'load', 'loan', 'look', 'make due', 'mark', 'melt', 'minus', 'multiply', 'name', 'need', 'occur', 'overcome', 'overlap', 'overwhelm', 'owe', 'pay', 'plan', 'plug', 'plus', 'pop', 'pour', 'proclaim', 'put', 'rank', 'reason', 'reckon', 'relax', 'repair', 'reply', 'reveal', 'revel', 'risk', 'rub', 'ruin', 'sail', 'seek', 'seem', 'send', 'set', 'shout', 'sleep', 'sneak', 'sort', 'spoil', 'stem', 'step', 'stop', 'study', 'take', 'talk', 'thank', 'took', 'trade', 'transfer', 'trap', 'travel', 'tune', 'undergo', 'undo', 'uplift', 'walk', 'watch', 'win', 'wipe', 'work', 'yawn', 'yield'];
+var arr = ['abandon', 'accept', 'add', 'added', 'adopt', 'aid', 'appeal', 'applaud', 'archive', 'ask', 'assign', 'associate', 'assume', 'attempt', 'avoid', 'become', 'bomb', 'cancel', 'claim', 'claw', 'come', 'control', 'convey', 'cook', 'copy', 'cut', 'deem', 'defy', 'deny', 'describe', 'design', 'destroy', 'die', 'divide', 'do', 'doubt', 'drag', 'drift', 'drop', 'echo', 'embody', 'enjoy', 'envy', 'excel', 'fail', 'fix', 'float', 'flood', 'focus', 'fold', 'get', 'goes', 'grab', 'grasp', 'grow', 'happen', 'head', 'help', 'hold fast', 'hope', 'include', 'instruct', 'invest', 'join', 'keep', 'know', 'learn', 'let', 'lift', 'link', 'load', 'loan', 'look', 'make due', 'mark', 'melt', 'minus', 'multiply', 'name', 'need', 'occur', 'overcome', 'overlap', 'overwhelm', 'owe', 'pay', 'plan', 'plug', 'plus', 'pop', 'pour', 'proclaim', 'put', 'rank', 'reason', 'reckon', 'relax', 'repair', 'reply', 'reveal', 'revel', 'risk', 'rub', 'ruin', 'sail', 'seek', 'seem', 'send', 'set', 'shout', 'sleep', 'sneak', 'sort', 'spoil', 'stem', 'step', 'stop', 'study', 'take', 'talk', 'thank', 'took', 'trade', 'transfer', 'trap', 'travel', 'tune', 'undergo', 'undo', 'uplift', 'walk', 'watch', 'win', 'wipe', 'work', 'yawn', 'yield'];
 
 module.exports = fns.uncompress_suffixes(arr, compressed);
 
@@ -5566,6 +5567,15 @@ var parseDecimals = _dereq_('./parseDecimals');
 var log = _dereq_('../paths').log;
 var path = 'parseNumber';
 
+//some numbers we know
+var casualForms = {
+  // 'a few': 3,
+  'a couple': 2,
+  'a dozen': 12,
+  'two dozen': 24,
+  'zero': 0
+};
+
 // a 'section' is something like 'fifty-nine thousand'
 // turn a section into something we can add to - like 59000
 var section_sum = function section_sum(obj) {
@@ -5589,6 +5599,11 @@ var alreadyNumber = function alreadyNumber(ts) {
 var parse = function parse(ts) {
   log.here('parseNumber', path);
   var str = ts.normal();
+
+  //convert some known-numbers
+  if (casualForms[str] !== undefined) {
+    return casualForms[str];
+  }
   //'a/an' is 1
   if (str === 'a' || str === 'an') {
     return 1;
@@ -5689,6 +5704,10 @@ var parse = function parse(ts) {
   //post-process add modifier
   sum *= modifier.amount;
   sum *= isNegative ? -1 : 1;
+  //dont return 0, if it went straight-through
+  if (sum === 0) {
+    return null;
+  }
   return sum;
 };
 
@@ -6076,6 +6095,13 @@ var Verbs = function (_Text) {
     value: function parse() {
       return this.mapTerms(function (t) {
         return t.verb.conjugate();
+      });
+    }
+  }, {
+    key: 'conjugate',
+    value: function conjugate(verbose) {
+      return this.mapTerms(function (t) {
+        return t.verb.conjugate(verbose);
       });
     }
   }, {
@@ -8779,7 +8805,7 @@ var toAdjective = _dereq_('./toAdjective');
 var generic = _dereq_('./generic');
 
 //turn a verb into all it's forms
-var conjugate = function conjugate(t) {
+var conjugate = function conjugate(t, verbose) {
   //dont conjugate didn't
   if (t.tag.Contraction) {
     t.text = t.silent_term;
@@ -8795,22 +8821,30 @@ var conjugate = function conjugate(t) {
     Pluperfect: null
   };
   //first, get its current form
-  var form = t.verb.conjugation();
+  var form = t.verb.conjugation(verbose);
   if (form) {
     all[form] = t.normal;
   }
   if (form !== 'Infinitive') {
-    all['Infinitive'] = t.verb.infinitive() || '';
+    all['Infinitive'] = t.verb.infinitive(verbose) || '';
   }
   //check irregular forms
-  all = Object.assign(all, checkIrregulars(all['Infinitive']));
-
+  var irregObj = checkIrregulars(all['Infinitive']);
+  Object.keys(irregObj).forEach(function (k) {
+    if (irregObj[k] && !all[k]) {
+      all[k] = irregObj[k];
+    }
+  });
   //ok, send this infinitive to all conjugators
   var inf = all['Infinitive'] || t.normal;
 
   //check suffix rules
-  all = Object.assign(all, suffixPass(inf));
-
+  var suffObj = suffixPass(inf);
+  Object.keys(suffObj).forEach(function (k) {
+    if (suffObj[k] && !all[k]) {
+      all[k] = suffObj[k];
+    }
+  });
   //ad-hoc each missing form
   //to Actor
   if (!all.Actor) {
@@ -8861,7 +8895,7 @@ var checkIrregulars = function checkIrregulars(str) {
       }
     }
   }
-  return null;
+  return {};
 };
 
 module.exports = checkIrregulars;
@@ -9065,14 +9099,14 @@ module.exports = {
   },
 
   /**conjugation*/
-  infinitive: function infinitive() {
-    return toInfinitive(this);
+  infinitive: function infinitive(verbose) {
+    return toInfinitive(this, verbose);
   },
-  conjugation: function conjugation() {
-    return predict(this);
+  conjugation: function conjugation(verbose) {
+    return predict(this, verbose);
   },
-  conjugate: function conjugate() {
-    return _conjugate(this);
+  conjugate: function conjugate(verbose) {
+    return _conjugate(this, verbose);
   },
   pastTense: function pastTense() {
     return _conjugate(this).PastTense;
@@ -9108,12 +9142,14 @@ var goodTypes = {
   Participle: true
 };
 
-var predictForm = function predictForm(term) {
+var predictForm = function predictForm(term, verbose) {
   //do we already know the form?
   var keys = Object.keys(goodTypes);
   for (var i = 0; i < keys.length; i++) {
     if (term.tag[keys[i]]) {
-      log.tell('predicted ' + keys[i] + ' from pos', path);
+      // if (verbose) {
+      //   console.log('predicted ' + keys[i] + ' from pos', path);
+      // }
       return keys[i];
     }
   }
@@ -9121,8 +9157,10 @@ var predictForm = function predictForm(term) {
   var arr = Object.keys(suffix_rules);
   for (var _i = 0; _i < arr.length; _i++) {
     if (fns.endsWith(term.normal, arr[_i]) && arr[_i].length < term.normal.length) {
-      var msg = 'predicted ' + suffix_rules[arr[_i]] + ' from suffix ' + arr[_i];
-      log.tell(msg, path);
+      // if (verbose) {
+      //   const msg = 'predicted ' + suffix_rules[arr[i]] + ' from suffix ' + arr[i];
+      //   console.log(msg, path);
+      // }
       return suffix_rules[arr[_i]];
     }
   }
@@ -9138,7 +9176,7 @@ module.exports = predictForm;
 var compact = {
   'Gerund': ['ing'],
   'Actor': ['erer'],
-  'Infinitive': ['ate', 'ize', 'tion', 'rify', 'then', 'ress', 'ify', 'age', 'nce', 'ect', 'ise', 'ine', 'ish', 'ace', 'ash', 'ure', 'tch', 'end', 'ack', 'and', 'ute', 'ade', 'ock', 'ite', 'ase', 'ose', 'use', 'ive', 'int', 'nge', 'lay', 'est', 'ain', 'ant', 'eed', 'er', 'le', 'own', 'unk', 'ung', 'en'],
+  'Infinitive': ['ate', 'ize', 'tion', 'rify', 'then', 'ress', 'ify', 'age', 'nce', 'ect', 'ise', 'ine', 'ish', 'ace', 'ash', 'ure', 'tch', 'end', 'ack', 'and', 'ute', 'ade', 'ock', 'ite', 'ase', 'ose', 'use', 'ive', 'int', 'nge', 'lay', 'est', 'ain', 'ant', 'ent', 'eed', 'er', 'le', 'own', 'unk', 'ung', 'en'],
   'PastTense': ['ed', 'lt', 'nt', 'pt', 'ew', 'ld'],
   'PresentTense': ['rks', 'cks', 'nks', 'ngs', 'mps', 'tes', 'zes', 'ers', 'les', 'acks', 'ends', 'ands', 'ocks', 'lays', 'eads', 'lls', 'els', 'ils', 'ows', 'nds', 'ays', 'ams', 'ars', 'ops', 'ffs', 'als', 'urs', 'lds', 'ews', 'ips', 'es', 'ts', 'ns', 's']
 };
@@ -9162,6 +9200,7 @@ var rules = _dereq_('./rules');
 var irregulars = _dereq_('../paths').data.irregular_verbs;
 
 //map the irregulars for easy infinitive lookup
+// {bought: 'buy'}
 var verb_mapping = function verb_mapping() {
   return Object.keys(irregulars).reduce(function (h, k) {
     Object.keys(irregulars[k]).forEach(function (pos) {
@@ -9173,7 +9212,7 @@ var verb_mapping = function verb_mapping() {
 
 irregulars = verb_mapping();
 
-var toInfinitive = function toInfinitive(t) {
+var toInfinitive = function toInfinitive(t, verbose) {
   if (t.tag.Infinitive) {
     return t.normal;
   }
@@ -12376,8 +12415,7 @@ module.exports = [['[A-Z][a-z]*', 'TitleCase'],
 ['[PMCE]ST', 'Time'], //PST, time zone abbrevs
 ['utc ?[\+\-]?[0-9]\+?', 'Time'], //UTC 8+
 ['[a-z0-9]*? o\'?clock', 'Time'], //3 oclock
-['[0-9]{1,4}/[0-9]{1,2}/[0-9]{1,4}', 'Date'], //03/02/89
-['[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}', 'Date'], //03-02-89
+['[0-9]{1,4}[/\\-\\.][0-9]{1,2}[/\\-\\.][0-9]{1,4}', 'Date'], //03/02/89, 03-02-89
 
 //money
 ['^[\-\+]?[$€¥£][0-9]+(\.[0-9]{1,2})?$', 'Money'], //like $5.30

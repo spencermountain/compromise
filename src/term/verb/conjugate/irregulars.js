@@ -1,27 +1,34 @@
 'use strict';
 const irregulars = require('./paths').data.irregular_verbs;
-const Irregs = Object.keys(irregulars);
+const infArr = Object.keys(irregulars);
+const forms = [
+  'Participle',
+  'Gerund',
+  'PastTense',
+  'PresentTense',
+  'FuturePerfect',
+  'PerfectTense',
+  'Actor'
+];
 
 const checkIrregulars = function(str) {
-  for(let i = 0; i < Irregs.length; i++) {
-    let obj = irregulars[Irregs[i]];
-    //matched infinitive
-    if (Irregs[i] === str) {
-      obj = Object.assign({}, obj);
-      obj.Infinitive = Irregs[i];
-      return obj;
-    }
-    //check other forms
-    let kinds = Object.keys(obj);
-    for(let o = 0; o < kinds.length; o++) {
-      if (obj[kinds[o]] === str) {
-        obj = Object.assign({}, obj);
-        obj.Infinitive = Irregs[i];
+  //fast infinitive lookup
+  if (irregulars[str] !== undefined) {
+    let obj = Object.assign({}, irregulars[str]);
+    obj.Infinitive = str;
+    return obj;
+  }
+  for(let i = 0; i < infArr.length; i++) {
+    for(let o = 0; o < forms.length; o++) {
+      let irObj = irregulars[infArr[i]];
+      if (irObj[forms[o]]) {
+        let obj = Object.assign({}, irObj);
+        obj.Infinitive = str;
         return obj;
       }
     }
   }
-  return {};
+  return null;
 };
 
 module.exports = checkIrregulars;

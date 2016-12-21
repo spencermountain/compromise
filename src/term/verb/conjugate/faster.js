@@ -17,11 +17,13 @@ const fasterConjugate = (inf) => {
     Infinitive: inf
   };
   const irregObj = checkIrregulars(all['Infinitive']);
-  Object.keys(irregObj).forEach((k) => {
-    if (irregObj[k] && !all[k]) {
-      all[k] = irregObj[k];
-    }
-  });
+  if (irregObj !== null) {
+    Object.keys(irregObj).forEach((k) => {
+      if (irregObj[k] && !all[k]) {
+        all[k] = irregObj[k];
+      }
+    });
+  }
   //check suffix rules
   const suffObj = suffixPass(inf);
   Object.keys(suffObj).forEach((k) => {

@@ -2,8 +2,14 @@
 //a lexicon is a giant object of known words
 const data = require('./index');
 const fns = require('./fns');
-const Term = require('../term');
 const fastConjugate = require('../term/verb/conjugate/faster');
+const toPlural = require('../term/noun/inflect/toPlural');
+const adj = {
+  toNoun: require('../term/adjective/toNoun'),
+  toSuperlative: require('../term/adjective/toSuperlative'),
+  toComparative: require('../term/adjective/toComparative'),
+  toAdverb: require('../term/adjective/toAdverb')
+};
 
 // console.time('lexicon');
 let lexicon = {};
@@ -83,22 +89,16 @@ data.verbs.forEach((v) => {
 
 //conjugate adjectives
 data.superlatives.forEach((a) => {
-  let t = new Term(a);
-  t.tag.Adjective = true;
-  let o = t.adjective.conjugate || {};
-  Object.keys(o).forEach((k) => {
-    if (o[k] && !lexicon[o[k]]) {
-      lexicon[o[k]] = k;
-    }
-  });
+  lexicon[adj.toNoun(a)] = 'Noun';
+  lexicon[adj.toAdverb(a)] = 'Adverb';
+  lexicon[adj.toSuperlative(a)] = 'Superlative';
+  lexicon[adj.toComparative(a)] = 'Comparative';
 });
 
 //inflect nouns
 data.nouns.forEach((n) => {
   lexicon[n] = 'Singular';
-  let t = new Term(n);
-  t.tag.Noun = true;
-  let plural = t.noun.plural();
+  let plural = toPlural(n);
   lexicon[plural] = 'Plural';
 });
 

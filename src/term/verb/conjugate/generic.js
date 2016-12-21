@@ -17,7 +17,7 @@ const generic = {
     if (fns.endsWith(inf, 's')) {
       return inf + 'es';
     }
-    if (fns.endsWith(inf, /[bcdfghjklmnpqrstvwxz]y$/)) {
+    if (inf.match(/[bcdfghjklmnpqrstvwxz]y$/)) {
       return inf.slice(0, -1) + 'ies';
     }
     return inf + 's';
@@ -31,7 +31,7 @@ const generic = {
     if (fns.endsWith(inf, 'ed')) {
       return inf;
     }
-    if (fns.endsWith(inf, /[bcdfghjklmnpqrstvwxz]y$/)) {
+    if (inf.match(/[bcdfghjklmnpqrstvwxz]y$/)) {
       return inf.slice(0, -1) + 'ied';
     }
     return inf + 'ed';

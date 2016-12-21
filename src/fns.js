@@ -27,14 +27,7 @@ exports.ensureObject = (input) => {
 
 //string utilities
 exports.endsWith = function (str, suffix) {
-  //if suffix is regex
-  if (suffix && suffix instanceof RegExp) {
-    if (str.match(suffix)) {
-      return true;
-    }
-  }
-  //if suffix is a string
-  if (str && suffix && str.indexOf(suffix, str.length - suffix.length) !== -1) {
+  if (str && str.substr(-suffix.length) === suffix) {
     return true;
   }
   return false;

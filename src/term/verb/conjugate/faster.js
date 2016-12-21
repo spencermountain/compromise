@@ -1,4 +1,5 @@
 'use strict';
+
 const checkIrregulars = require('./irregulars');
 const suffixPass = require('./suffixes');
 const generic = require('./generic');

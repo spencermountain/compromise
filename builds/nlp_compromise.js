@@ -2586,14 +2586,7 @@ exports.ensureObject = function (input) {
 
 //string utilities
 exports.endsWith = function (str, suffix) {
-  //if suffix is regex
-  if (suffix && suffix instanceof RegExp) {
-    if (str.match(suffix)) {
-      return true;
-    }
-  }
-  //if suffix is a string
-  if (str && suffix && str.indexOf(suffix, str.length - suffix.length) !== -1) {
+  if (str && str.substr(-suffix.length) === suffix) {
     return true;
   }
   return false;
@@ -2609,9 +2602,7 @@ exports.startsWith = function (str, prefix) {
 };
 
 exports.titleCase = function (str) {
-  return str.replace(/^[a-z]/, function (x) {
-    return x.toUpperCase();
-  });
+  return str.charAt(0).toUpperCase() + str.substr(1);
 };
 
 //turn a nested array into one array
@@ -8784,7 +8775,7 @@ var generic = {
     if (fns.endsWith(inf, 's')) {
       return inf + 'es';
     }
-    if (fns.endsWith(inf, /[bcdfghjklmnpqrstvwxz]y$/)) {
+    if (inf.match(/[bcdfghjklmnpqrstvwxz]y$/)) {
       return inf.slice(0, -1) + 'ies';
     }
     return inf + 's';
@@ -8798,7 +8789,7 @@ var generic = {
     if (fns.endsWith(inf, 'ed')) {
       return inf;
     }
-    if (fns.endsWith(inf, /[bcdfghjklmnpqrstvwxz]y$/)) {
+    if (inf.match(/[bcdfghjklmnpqrstvwxz]y$/)) {
       return inf.slice(0, -1) + 'ied';
     }
     return inf + 'ed';

@@ -44,7 +44,7 @@ exports.startsWith = function (str, prefix) {
 
 
 exports.titleCase = (str) => {
-  return str.replace(/^[a-z]/, (x) => x.toUpperCase());
+  return str.charAt(0).toUpperCase() + str.substr(1);
 };
 
 //turn a nested array into one array

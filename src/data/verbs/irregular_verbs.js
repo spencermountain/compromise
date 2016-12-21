@@ -433,10 +433,13 @@ const irregular = {
     Actor: 'suiter'
   }
 };
-
 Object.keys(participles).forEach((inf) => {
-  irregular[inf] = irregular[inf] || {};
-  irregular[inf].Participle = participles[inf];
+  if (irregular[inf]) {
+    irregular[inf].Participle = participles[inf];
+  } else {
+    irregular[inf] = {
+      Participle: participles[inf]
+    };
+  }
 });
-
 module.exports = irregular;

@@ -23,19 +23,19 @@ setTimeout(() => {
   // console.time('match');
   // m.match('#Person').normal();
   // console.timeEnd('match');
-  // (() => {
-  //   const corpus = require('nlp-corpus');
-  //   let str = corpus.poe.parsed()[5];
-  //
-  //   console.log(chalk.green('\n\n==Long text=='));
-  //   console.time('parseBig');
-  //   let m = nlp(str);
-  //   console.timeEnd('parseBig');
-  //
-  //   console.time('matchBig');
-  //   m.match('#Person').normal();
-  //   console.timeEnd('matchBig');
-  //   console.log('\n\n\n');
-  // })();
+  (() => {
+    const corpus = require('nlp-corpus');
+    let str = corpus.poe.parsed()[5];
+
+    console.log(chalk.green('\n\n==Long text=='));
+    console.time('parseBig');
+    let m = nlp(str);
+    console.timeEnd('parseBig');
+
+    console.time('matchBig');
+    m.match('#Person').normal();
+    console.timeEnd('matchBig');
+    console.log('\n\n\n');
+  })();
 
 }, 200);

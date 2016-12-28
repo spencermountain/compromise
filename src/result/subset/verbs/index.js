@@ -54,6 +54,12 @@ class Verbs extends Text {
     }
     return this;
   }
+  toAdjective() {
+    this.terms().forEach((t) => {
+      t.text = t.verb.toAdjective();
+    });
+    return this;
+  }
   static find(r) {
     return r.match('#Verb+');
   }

@@ -1,7 +1,5 @@
 var test = require('tape');
-var nlp = require('./lib/nlp');
-var str_test = require('./lib/fns').str_test;
-
+var nlp = require('../lib/nlp');
 
 test('verb-to-adjective:', function(t) {
   [
@@ -11,7 +9,7 @@ test('verb-to-adjective:', function(t) {
     ['convert', 'convertible'],
     ['see', 'visible'],
   ].forEach(function(a) {
-    var str = nlp.verb(a[0]).to_adjective();
+    var str = nlp(a[0]).verbs().toAdjective().plaintext();
     str_test(str, a[0], a[1], t);
   });
   t.end();

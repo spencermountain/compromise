@@ -49,6 +49,8 @@ const corrections = function (r) {
   //peter the great
   r.match('#FirstName the #Adjective').tag('Person', 'correction-determiner5');
 
+  //organiation
+  r.match('#Organization (inc|bros|lmt|co|incorporation|corp|corporation)').tag('Organization', 'org-abbreviation');
 
   //book the flight
   r.match('#Noun the #Noun').term(0).tag('Verb', 'correction-determiner6');

@@ -11,7 +11,7 @@ class Organizations extends Text {
   }
   static find(r) {
     r = r.splitAfter('#Comma');
-    return r.match('#Organization');
+    return r.match('#Organization+');
   }
 }
 

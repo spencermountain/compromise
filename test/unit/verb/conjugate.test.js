@@ -143,12 +143,12 @@ var arr = [
     'PastTense': 'farmed',
     'Gerund': 'farming'
   },
-  // {
-  //   'Infinitive': 'develop',
-  //   'PresentTense': 'develops',
-  //   'PastTense': 'developed',
-  //   'Gerund': 'developing'
-  // },
+  {
+    'Infinitive': 'develop',
+    'PresentTense': 'develops',
+    'PastTense': 'developed',
+    'Gerund': 'developing'
+  },
   {
     'Infinitive': 'study',
     'PresentTense': 'studies',

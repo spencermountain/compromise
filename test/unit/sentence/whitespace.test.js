@@ -59,20 +59,20 @@ test('=Whitespace=', function(T) {
     t.end();
   });
 
-  // T.test('contraction whitespace:', function(t) {
-  //   [
-  //     ['John\'s    nice.', 'John is    nice.'],
-  //     ['John Smith\'s    nice.', 'John Smith is    nice.'],
-  //     ['John isn\'t    nice.', 'John is not    nice.'],
-  //     ['John didn\'t    go.', 'John did not    go.'],
-  //     ['I wanna    go.', 'I want to    go.'],
-  //     ['they\'ve    gone.', 'they have    gone.'],
-  //   ].forEach(function (a) {
-  //     var str = nlp(a[0]).expand().plaintext();
-  //     str_test(str, a[0], a[1], t);
-  //   });
-  //   t.end();
-  // });
+  T.test('contraction whitespace:', function(t) {
+    [
+      ['John\'s    nice.', 'John is    nice.'],
+      ['John Smith\'s    nice.', 'John Smith is    nice.'],
+      ['John isn\'t    nice.', 'John is not    nice.'],
+      ['John didn\'t    go.', 'John did not    go.'],
+      ['I wanna    go.', 'I want to    go.'],
+      ['they\'ve    gone.', 'they have    gone.'],
+    ].forEach(function (a) {
+      var str = nlp(a[0]).contractions().expand().all().plaintext();
+      str_test(str, a[0], a[1], t);
+    });
+    t.end();
+  });
 
 
 });

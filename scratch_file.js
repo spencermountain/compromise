@@ -12,7 +12,7 @@ const nlp = require('./src/index');
 //bug 2
 
 // const m = nlp('he is nice, clean, and cool; he also studies - which is cool.');
-const m = nlp('he is nice - which is cool...');
+const m = nlp('he is nice - which is cool... but whatever');
 m.check();
 // m.clauses().check();
 console.log(m.plaintext());

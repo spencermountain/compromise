@@ -80,15 +80,21 @@ const commaStep = function(ts) {
     let t = ts.terms[i];
     let punct = t.endPunctuation();
     if (punct === ',') {
-      t.tag.Comma = true;
+      t.tagAs('Comma', 'comma-step');
       continue;
     }
-    if (punct === ';') {
-      t.tag.ClauseEnd = true;
+    if (punct === ';' || punct === ':') {
+      t.tagAs('ClauseEnd', 'clause-punt');
       continue;
     }
-    if (punct === ':') {
-      t.tag.ClauseEnd = true;
+    //support elipses
+    if (t.whitespace.after.match(/^\.\./)) {
+      t.tagAs('ClauseEnd', 'clause-elipses');
+      continue;
+    }
+    //support ' - ' clause
+    if (ts.terms[i + 1] && ts.terms[i + 1].whitespace.before.match(/ - /)) {
+      t.tagAs('ClauseEnd', 'hypen-clause');
       continue;
     }
   }

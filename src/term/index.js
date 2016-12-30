@@ -18,9 +18,10 @@ class Term {
   constructor(str) {
     this._text = fns.ensureString(str);
     this.tag = {};
-    this.whitespace = build_whitespace(str || '');
-    this._text = this._text.trim();
-    this._text = this._text.replace(/([a-z])\-$/, '$1');
+    //seperate whitespace from the text
+    let parsed = build_whitespace(str || '');
+    this.whitespace = parsed.whitespace;
+    this._text = parsed.text;
     this.parent = null;
     this.silent_term = '';
     //has this term been modified

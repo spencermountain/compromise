@@ -1,6 +1,12 @@
 'use strict';
 const Term = require('../term');
 
+const notWord = {
+  '-': true,
+  '--': true,
+  '...': true,
+};
+
 //turn a string into an array of terms (naiive for now, lumped later)
 const fromString = function (str) {
   let all = [];
@@ -22,7 +28,7 @@ const fromString = function (str) {
   let carry = '';
   for (let i = 0; i < arr.length; i++) {
     //if it's more than a whitespace
-    if (arr[i].match(/\S/)) {
+    if (arr[i].match(/\S/) && !notWord[arr[i]]) {
       all.push(carry + arr[i]);
       carry = '';
     } else {

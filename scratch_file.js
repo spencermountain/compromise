@@ -11,7 +11,8 @@ const nlp = require('./src/index');
 
 //bug 2
 
-const m = nlp('he is nice, clean, and cool; he also studies - which is cool.');
+// const m = nlp('he is nice, clean, and cool; he also studies - which is cool.');
+const m = nlp('he is nice - which is cool...');
 m.check();
-m.clauses().check();
-// 2 what is 10
+// m.clauses().check();
+console.log(m.plaintext());

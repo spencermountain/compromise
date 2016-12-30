@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+  <style>
+    body {
+        font-family: monospace;
+        white-space: pre;
+        color:grey;
+    }
+    #result{
+      margin-left:5%;
+    }
+    .header{
+      margin-left:-5%;
+      color:steelblue;
+      font-size:18px;
+    }
+  </style>
+</head>
+<body>
+  <pre id="result">
+    mem-leak test of <a href="https://github.com/nlp-compromise/nlp_compromise" style="color:steelblue;">nlp_compromise</a>
+  </pre>
+<script src="../../builds/nlp_compromise.js"></script>
+<script>
+var m;
+for(let i=0; i<5000; i++){
+  m=nlp('john fell asleep')
+}
+</script>
+</body>
+</html>

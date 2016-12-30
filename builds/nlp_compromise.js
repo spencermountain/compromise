@@ -494,6 +494,7 @@ module.exports={
     "gaze": "^1.1.1",
     "http-server": "0.9.0",
     "jsdoc-parse": "^1.2.7",
+    "leakage": "^0.2.0",
     "nlp-corpus": "latest",
     "nyc": "^8.4.0",
     "shelljs": "^0.7.2",
@@ -2335,12 +2336,15 @@ var irregular = {
     Actor: 'suiter'
   }
 };
-
 Object.keys(participles).forEach(function (inf) {
-  irregular[inf] = irregular[inf] || {};
-  irregular[inf].Participle = participles[inf];
+  if (irregular[inf]) {
+    irregular[inf].Participle = participles[inf];
+  } else {
+    irregular[inf] = {
+      Participle: participles[inf]
+    };
+  }
 });
-
 module.exports = irregular;
 
 },{"./participles":43}],43:[function(_dereq_,module,exports){
@@ -4664,7 +4668,7 @@ var Organizations = function (_Text) {
     key: 'find',
     value: function find(r) {
       r = r.splitAfter('#Comma');
-      return r.match('#Organization');
+      return r.match('#Organization+');
     }
   }]);
 
@@ -6143,6 +6147,14 @@ var Verbs = function (_Text) {
       }
       return this;
     }
+  }, {
+    key: 'toAdjective',
+    value: function toAdjective() {
+      this.terms().forEach(function (t) {
+        t.text = t.verb.toAdjective();
+      });
+      return this;
+    }
   }], [{
     key: 'find',
     value: function find(r) {
@@ -6320,6 +6332,9 @@ var corrections = function corrections(r) {
   r.match('#FirstName #TitleCase').match('#FirstName #Noun').tag('Person', 'firstname-titlecase');
   //peter the great
   r.match('#FirstName the #Adjective').tag('Person', 'correction-determiner5');
+
+  //organiation
+  r.match('#Organization (inc|bros|lmt|co|incorporation|corp|corporation)').tag('Organization', 'org-abbreviation');
 
   //book the flight
   r.match('#Noun the #Noun').term(0).tag('Verb', 'correction-determiner6');

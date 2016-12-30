@@ -33,6 +33,7 @@
     "gaze": "^1.1.1",
     "http-server": "0.9.0",
     "jsdoc-parse": "^1.2.7",
+    "leakage": "^0.2.0",
     "nlp-corpus": "latest",
     "nyc": "^8.4.0",
     "shelljs": "^0.7.2",

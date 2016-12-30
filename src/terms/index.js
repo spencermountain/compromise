@@ -1,6 +1,6 @@
 'use strict';
 const tagger = require('./tagger');
-const fromString = require('./fromString');
+const build = require('./build');
 
 class Terms {
   constructor(arr, lexicon, originalText, termsFull) {
@@ -60,7 +60,7 @@ class Terms {
   }
 
   static fromString(str, lexicon, parent) {
-    let termArr = fromString(str);
+    let termArr = build(str);
     let ts = new Terms(termArr, lexicon, null);
     //give each term a reference to this ts
     ts.terms.forEach((t) => {

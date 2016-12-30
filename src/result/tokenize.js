@@ -17,7 +17,7 @@ const naiive_split = function (text) {
 };
 
 const sentence_parser = function (text) {
-  const sentences = [];
+  let sentences = [];
   text = fns.ensureString(text);
   //first do a greedy-split..
   let chunks = [];

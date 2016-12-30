@@ -49,7 +49,7 @@ const term = {
       'd': true,
       'm': true
     };
-    let parts = t.normal.match(/^([a-z]+)'([a-z][a-z]?)$/);
+    let parts = t.text.match(/^([a-z]+)'([a-z][a-z]?)$/i);
     if (parts && parts[1] && allowed[parts[2]]) {
       //handle n't
       if (parts[2] === 't' && parts[1].match(/[a-z]n$/)) {
@@ -124,15 +124,15 @@ const term = {
 
   /** is this tag compatible with this word */
   canBe: function (tag) {
-    tag = tag || ''
-    tag = tag.replace(/^#/, '')
+    tag = tag || '';
+    tag = tag.replace(/^#/, '');
     let not = tagset[tag].not || [];
     for (let i = 0; i < not.length; i++) {
       if (this.tag[not[i]]) {
-        return false
+        return false;
       }
     }
-    return true
+    return true;
   },
 
   /** check if it is word-like in english */
@@ -165,8 +165,8 @@ const term = {
   },
 
   insertAfter: function () {
-    let index = this.index()
-      // console.log(this.parent)
+    let index = this.index();
+  // console.log(this.parent)
   }
 
 };

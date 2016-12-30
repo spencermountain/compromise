@@ -115,7 +115,7 @@ class Value extends Terms {
     return this;
   }
 
-  parse() {
+  data() {
     let numV = this.clone().toNumber();
     let txtV = this.clone().toTextValue();
     let obj = {

@@ -4,7 +4,7 @@ var nlp = require('../lib/nlp');
 
 test('one big dates', function (t) {
   var r = nlp('six years and 2 days before the start of this next wednesday january 5th 1992 at 6pm');
-  var dates = r.dates().parse();
+  var dates = r.dates().data();
   t.equal(dates.length, 1, 'one long date');
 
   var o = dates[0];

@@ -1,17 +1,16 @@
 'use strict';
 const Text = require('../../index');
 
-class Urls extends Text {
+class Clauses extends Text {
   data() {
     return this.mapTerms((t) => {
-      return {
-        text: t.text
-      };
+      return {};
     });
   }
   static find(r) {
-    return r.match('#Url');
+    r = r.splitAfter('#ClauseEnd');
+    return r;
   }
 }
 
-module.exports = Urls;
+module.exports = Clauses;

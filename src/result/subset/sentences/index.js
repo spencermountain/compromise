@@ -5,7 +5,7 @@ const Sentence = require('./sentence');
 
 class Sentences extends Text {
 
-  parse() {
+  data() {
     return this.list.map((ts) => {
       return {
         text: ts.plaintext(),

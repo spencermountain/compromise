@@ -14,7 +14,7 @@ test('.article():', function(t) {
     ['eulogy', 'a'],
     ['ukalele', 'a'],
   ].forEach(function (a) {
-    var o = nlp(a[0]).tag('Noun').nouns().parse()[0];
+    var o = nlp(a[0]).tag('Noun').nouns().data()[0];
     var msg = a[0] + ' -> ' + o.article;
     t.equal(o.article, a[1], msg);
   });

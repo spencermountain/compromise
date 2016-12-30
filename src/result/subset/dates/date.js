@@ -11,7 +11,7 @@ class Date extends Terms {
     this.month = this.match('#Month')
   }
 
-  parse() {
+  data() {
     let obj = {}
       //parsing order matters..
       //[two days before] [the start of] [this] [thursday]

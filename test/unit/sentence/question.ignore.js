@@ -14,7 +14,7 @@ test('question-test :', function(t) {
     [`was it fun?`, 'yesNo'],
     [`did you think it was fun?`, 'yesNo'],
   ].forEach(function(a) {
-    var str = nlp(a[0]).parse()[0].type;
+    var str = nlp(a[0]).data()[0].type;
     str_test(str, a[0], a[1], t);
   });
   t.end();

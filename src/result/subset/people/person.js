@@ -42,7 +42,7 @@ class Person extends Terms {
     //look-for regex clues
     return guessGender(this.firstName.normal());
   }
-  parse() {
+  data() {
     return {
       firstName: this.firstName.normal(),
       middleName: this.middleName.normal(),

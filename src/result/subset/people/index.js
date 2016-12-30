@@ -4,8 +4,8 @@ const Person = require('./person');
 //this is used for pronoun and honorifics, and not intented for more-than grammatical use (see #117)
 
 class People extends Text {
-  parse() {
-    return this.list.map((ts) => ts.parse());
+  data() {
+    return this.list.map((ts) => ts.data());
   }
   static find(r) {
     let people = r.splitAfter('#Comma');

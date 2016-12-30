@@ -2,7 +2,7 @@
 const Text = require('../index');
 
 class Statements extends Text {
-  parse() {
+  data() {
     return this.mapTerms((t) => {
       return {};
     });

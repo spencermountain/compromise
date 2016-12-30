@@ -2,7 +2,7 @@
 const Text = require('../../index');
 
 class Verbs extends Text {
-  parse() {
+  data() {
     return this.mapTerms((t) => {
       return t.verb.conjugate();
     });

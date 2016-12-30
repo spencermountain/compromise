@@ -3,7 +3,7 @@ const Text = require('../../index');
 const Place = require('./place');
 
 class Places extends Text {
-  parse() {
+  data() {
     return this.mapTerms((t) => {
       return {
         text: t.text

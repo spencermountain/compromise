@@ -188,7 +188,7 @@ test('conjugation:', function(t) {
     var forms = ['Infinitive', 'PastTense', 'PresentTense', 'Gerund'];
     for(var i = 0; i < forms.length; i++) {
       var from = forms[i];
-      var inf = nlp(o[from]).tag('Verb').verbs().parse()[0];
+      var inf = nlp(o[from]).tag('Verb').verbs().data()[0];
       test_conjugation(inf, o, 'Infinitive', from);
       test_conjugation(inf, o, 'PastTense', from);
       test_conjugation(inf, o, 'PresentTense', from);

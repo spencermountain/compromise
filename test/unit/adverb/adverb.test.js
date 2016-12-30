@@ -58,7 +58,7 @@ test('==Adverb==', function (T) {
       ['formidably', 'formidable'],
       ['vertically', 'vertical']
     ].forEach(function (a) {
-      var o = nlp(a[0]).tag('Adverb').adverbs().parse()[0];
+      var o = nlp(a[0]).tag('Adverb').adverbs().data()[0];
       var msg = a[0] + ' -> ' + o.adjectiveForm;
       t.equal(o.adjectiveForm, a[1], msg);
     });

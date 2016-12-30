@@ -20,7 +20,7 @@ test('pronoun:', function(t) {
     ['John G. Fishermore Institute', 'it'],
     ['John Fisher & sons', 'it'],
   ].forEach(function (a) {
-    var str = nlp(a[0]).people().parse()[0].pronoun;
+    var str = nlp(a[0]).people().data()[0].pronoun;
     str_test(str, a[0], a[1], t);
   });
   t.end();

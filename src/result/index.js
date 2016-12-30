@@ -64,23 +64,25 @@ Text.prototype.normalize = require('./methods/normalize');
 
 const subset = {
   acronyms: require('./subset/acronyms'),
+  contractions: require('./subset/contractions'),
+  sentences: require('./subset/sentences'),
+  questions: require('./subset/sentences/questions'),
+  statements: require('./subset/sentences/statements'),
+  things: require('./subset/things'),
+  clauses: require('./subset/clauses'),
+
   adjectives: require('./subset/adjectives'),
   adverbs: require('./subset/adverbs'),
-  contractions: require('./subset/contractions'),
   dates: require('./subset/dates'),
   hashTags: require('./subset/hashTags'),
   organizations: require('./subset/organizations'),
   people: require('./subset/people'),
   phoneNumbers: require('./subset/phoneNumbers'),
   places: require('./subset/places'),
-  sentences: require('./subset/sentences'),
-  questions: require('./subset/sentences/questions'),
-  statements: require('./subset/sentences/statements'),
   nouns: require('./subset/nouns'),
   urls: require('./subset/urls'),
   values: require('./subset/values'),
   verbs: require('./subset/verbs'),
-  things: require('./subset/things'),
 };
 //term subsets
 Object.keys(subset).forEach((k) => {

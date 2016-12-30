@@ -39,8 +39,8 @@ test('all subsets have a parse method:', function (t) {
   var r = nlp(freshPrince);
   subsets.forEach((s) => {
     var sub = r[s]();
-    var arr = sub.parse();
-    t.ok(fns.isArray(arr), s + '.parse() is an array');
+    var arr = sub.data();
+    t.ok(fns.isArray(arr), s + '.data() is an array');
   });
   t.end();
 });

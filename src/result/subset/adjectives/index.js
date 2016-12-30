@@ -2,7 +2,7 @@
 const Text = require('../../index');
 
 class Adjectives extends Text {
-  parse() {
+  data() {
     return this.mapTerms((t) => {
       return {
         comparative: t.adjective.comparative(),

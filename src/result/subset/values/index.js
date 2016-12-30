@@ -3,9 +3,9 @@ const Text = require('../../index');
 const Value = require('./value');
 
 class Values extends Text {
-  parse() {
+  data() {
     return this.list.map((ts) => {
-      return ts.parse();
+      return ts.data();
     });
   }
   /** five -> 5 */

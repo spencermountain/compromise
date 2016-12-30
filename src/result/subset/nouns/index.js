@@ -5,7 +5,7 @@ const Text = require('../../index');
 class Nouns extends Text {
   toSingular() {}
   toPlural() {}
-  parse() {
+  data() {
     return this.mapTerms((t) => {
       return {
         article: t.noun.makeArticle(),

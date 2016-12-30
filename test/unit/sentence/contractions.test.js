@@ -134,8 +134,8 @@ test('==contractions==', function(T) {
 
   T.test('contraction-supports-whitespace:', function(t) {
     [
-      ['We\'ve only just begun', 'we have only just begun'],
-      ['We\'ve   only just begun', 'we have   only just begun']
+      ['We\'ve only just begun', 'We have only just begun'],
+      ['We\'ve   only just begun', 'We have   only just begun']
     ].forEach(function(a) {
       var str = nlp(a[0]).contractions().expand().plaintext();
       str_test(str, a[0], a[1], t);

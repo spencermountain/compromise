@@ -2,7 +2,7 @@
 const Text = require('../index');
 
 class Questions extends Text {
-  parse() {
+  data() {
     return this.list.map((ts) => {
       return {
         text: ts.plaintext(),

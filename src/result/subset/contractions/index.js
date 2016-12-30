@@ -3,7 +3,7 @@ const Text = require('../../index');
 const contract = require('./contract');
 
 class Contractions extends Text {
-  parse() {
+  data() {
     return this.mapTerms((t) => {
       return {
         text: t.text

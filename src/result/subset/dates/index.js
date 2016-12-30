@@ -21,8 +21,8 @@ class Dates extends Text {
     });
     return this;
   }
-  parse() {
-    return this.list.map((ts) => ts.parse());
+  data() {
+    return this.list.map((ts) => ts.data());
   }
   static find(r) {
     let dates = r.match('#Date+');

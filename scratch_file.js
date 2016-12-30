@@ -4,6 +4,7 @@
 const nlp = require('./src/index');
 // require('./src/logger').enable();
 
+//bug 1.
 const m = nlp('what is 10 and 10?');
 m.values().toNumber();
 m.check();

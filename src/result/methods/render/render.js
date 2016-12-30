@@ -36,6 +36,7 @@ const prettyPrint = (Text) => {
         return str;
       }).join(' ');
     },
+
     /** a computer-focused, more aggressive normalization than normal()*/
     root: function () {
       return this.list.map((ts) => {

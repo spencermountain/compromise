@@ -1,6 +1,6 @@
 module.exports = {
   fns: require('../fns'),
-  log: require('../logger'),
+  log: require('../log'),
   data: require('../data'),
   Terms: require('../terms'),
 };

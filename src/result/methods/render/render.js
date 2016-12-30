@@ -71,6 +71,15 @@ const prettyPrint = (Text) => {
       });
     },
 
+    data: function() {
+      return this.list.map((ts) => {
+        return {
+          normal: ts.normal(),
+          text: ts.plaintext()
+        };
+      });
+    },
+
     asArray: function () {
       return this.list.map((ts) => ts.normal());
     },

@@ -16,3 +16,4 @@ const m = nlp('he is nice - which is cool... but whatever');
 m.check();
 // m.clauses().check();
 console.log(m.plaintext());
+console.log(m.clauses().data());

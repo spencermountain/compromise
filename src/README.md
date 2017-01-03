@@ -1,9 +1,7 @@
-hiiiii,
-
-#[Contributing](https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing)
+:sparkles: :sparkles: hiiiii,:sparkles: :sparkles:
 
 main structure
-<h3 align="center">
+<h3 align="left">
 
   <a href="./tags">./tags</a>  
   <div>&nbsp; - &nbsp; - the (unique) pos-tag set we use, with the logic + definition</div>
@@ -24,3 +22,7 @@ main structure
   <div>&nbsp; - &nbsp; - verb Conjugate is <a href="./term/verb/conjugate">here</a></div>
   <div>&nbsp; - &nbsp; - singular/plural logic is <a href="./term/noun/inflect">here</a></div>
 </h3>
+
+you can do it!
+
+[notes on contributing](https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing)

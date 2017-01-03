@@ -92,13 +92,13 @@ test('==contractions==', function(T) {
       [`he's going`, ['he', 'is']],
 
       [`how'd`, ['how', 'did']],
-      [`why'd`, ['why', 'did']],
-      [`who'd`, ['who', 'did']],
+      // [`why'd`, ['why', 'did']],
+      // [`who'd`, ['who', 'did']],
       [`when'll`, ['when', 'will']],
       [`how'll`, ['how', 'will']],
       [`who'll`, ['who', 'will']],
-      [`who's`, ['who', 'is']],
-      [`how's`, ['how', 'is']],
+    // [`who's`, ['who', 'is']],
+    // [`how's`, ['how', 'is']],
     ].forEach(function(a) {
       var s = nlp(a[0]).contractions().expand().list[0];
       var got = [s.terms[0].normal];
@@ -114,50 +114,50 @@ test('==contractions==', function(T) {
     t.end();
   });
   //
-  // T.test('contract:', function(t) {
-  //   [
-  //     [`he is a hero`, `he's`],
-  //     [`she is here`, `she's`],
-  //     [`it is a hero`, `it's`],
-  //     [`he would win`, `he'd`],
-  //     [`they would win`, `they'd`],
-  //     [`they have begun`, `they've`],
-  //     [`how will`, `how'll`],
-  //     [`when will`, `when'll`],
-  //     [`who did`, `who'd`],
-  //     [`who is`, `who's`],
-  //   ].forEach(function(a) {
-  //     var term = nlp(a[0]).contractions().contract().list[0].terms[0];
-  //     str_test(term.normal, a[0], a[1], t);
-  //   });
-  //   t.end();
-  // });
-  //
-  // T.test('preserve-contractions:', function(t) {
-  //   [
-  //     `he is a hero`,
-  //     `she is here`,
-  //     `it is a hero`,
-  //     `he would win`,
-  //     `they would win`,
-  //   ].forEach(function(a) {
-  //     var str = nlp(a[0]).normal();
-  //     str_test(str, a[0], a[0], t);
-  //   });
-  //   t.end();
-  // });
-  //
-  // T.test('contraction-supports-whitespace:', function(t) {
-  //   [
-  //     ['We\'ve only just begun', 'We have only just begun'],
-  //     ['We\'ve   only just begun', 'We have   only just begun']
-  //   ].forEach(function(a) {
-  //     var m = nlp(a[0]);
-  //     m.contractions().expand();
-  //     var str = m.plaintext();
-  //     str_test(str, a[0], a[1], t);
-  //   });
-  //   t.end();
-  // });
+  T.test('contract:', function(t) {
+    [
+      [`he is a hero`, `he's`],
+      [`she is here`, `she's`],
+      [`it is a hero`, `it's`],
+      [`he would win`, `he'd`],
+      [`they would win`, `they'd`],
+      [`they have begun`, `they've`],
+      [`how will`, `how'll`],
+      [`when will`, `when'll`],
+      [`who did`, `who'd`],
+      [`who is`, `who's`],
+    ].forEach(function(a) {
+      var term = nlp(a[0]).contractions().contract().list[0].terms[0];
+      str_test(term.normal, a[0], a[1], t);
+    });
+    t.end();
+  });
+
+  T.test('preserve-contractions:', function(t) {
+    [
+      `he is a hero`,
+      `she is here`,
+      `it is a hero`,
+      `he would win`,
+      `they would win`,
+    ].forEach(function(a) {
+      var str = nlp(a[0]).normal();
+      str_test(str, a[0], a[0], t);
+    });
+    t.end();
+  });
+
+  T.test('contraction-supports-whitespace:', function(t) {
+    [
+      ['We\'ve only just begun', 'We have only just begun'],
+      ['We\'ve   only just begun', 'We have   only just begun']
+    ].forEach(function(a) {
+      var m = nlp(a[0]);
+      m.contractions().expand();
+      var str = m.plaintext();
+      str_test(str, a[0], a[1], t);
+    });
+    t.end();
+  });
 
 });

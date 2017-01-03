@@ -54,7 +54,7 @@ const contract = function(ts) {
     ls.contracted = true;
   });
   //they will -> they'll
-  ts.match('(they|we|you|i) will').list.forEach((ls) => {
+  ts.match('(#Noun|#QuestionWord) will').list.forEach((ls) => {
     combine(ls.terms[0], ls.terms[1]);
     ls.terms[0].text += '\'ll';
     ls.contracted = true;

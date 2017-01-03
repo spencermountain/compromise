@@ -31,7 +31,7 @@ test('adjectives', function (t) {
   t.end();
 });
 
-test('contractions', function (t) {
+test('contractions-subset', function (t) {
   var m = nlp('he\'s nice. She could\'ve seen.');
   var have = mustBe(m.contractions().data());
   var want = ['he\'s', 'could\'ve'];

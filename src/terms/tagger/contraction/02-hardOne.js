@@ -25,7 +25,7 @@ const isPossessive = (ts, i) => {
   let t = ts.terms[i];
   let next_t = ts.terms[i + 1];
   //a pronoun can't be possessive - "he's house"
-  if (t.tag.Pronoun) {
+  if (t.tag.Pronoun || t.tag.QuestionWord) {
     return false;
   }
   //if end of sentence, it is possessive - "was spencer's"

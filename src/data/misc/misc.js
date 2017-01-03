@@ -17,7 +17,8 @@ const misc = {
   'never': 'Negative',
   'no': 'Negative',
   'no doubt': 'Noun',
-  'not only': 'Adverb'
+  'not only': 'Adverb',
+  'how\'s': 'QuestionWord' //not conjunction
 };
 
 const compact = {

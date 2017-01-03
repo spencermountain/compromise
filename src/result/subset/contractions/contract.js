@@ -28,28 +28,29 @@ const contract = function(ts) {
     ls.terms[0].text += '\'d';
     ls.contracted = true;
   });
+
   //they are -> they're
-  ts.match('(they|we) are').list.forEach((ls) => {
+  ts.match('(they|we|you) are').list.forEach((ls) => {
     combine(ls.terms[0], ls.terms[1]);
     ls.terms[0].text += '\'re';
-    ls.contracted = true;
-  });
-  //they will -> they'll
-  ts.match('(they|we) will').list.forEach((ls) => {
-    combine(ls.terms[0], ls.terms[1]);
-    ls.terms[0].text += '\'ll';
-    ls.contracted = true;
-  });
-  //they have -> they've
-  ts.match('(they|we) have').list.forEach((ls) => {
-    combine(ls.terms[0], ls.terms[1]);
-    ls.terms[0].text += '\'ve';
     ls.contracted = true;
   });
   //i am -> i'm
   ts.match('i am').list.forEach((ls) => {
     combine(ls.terms[0], ls.terms[1]);
     ls.terms[0].text += '\'m';
+    ls.contracted = true;
+  });
+  //they will -> they'll
+  ts.match('(they|we|you|i) will').list.forEach((ls) => {
+    combine(ls.terms[0], ls.terms[1]);
+    ls.terms[0].text += '\'ll';
+    ls.contracted = true;
+  });
+  //they have -> they've
+  ts.match('(they|we|you|i) have').list.forEach((ls) => {
+    combine(ls.terms[0], ls.terms[1]);
+    ls.terms[0].text += '\'ve';
     ls.contracted = true;
   });
   //is not -> isn't

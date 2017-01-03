@@ -16,8 +16,7 @@ const nlp = require('./src/index');
 // // let r = m.contractions().contract(); //.expand();
 // console.log(m.plaintext());
 
-let r = nlp(`he is cool.`);
-r.contractions().expand();
-// console.log(r.contractions().data());
+let r = nlp(`i have stood`);
+r.contractions().contract();
 // r.check();
 console.log(r.plaintext());

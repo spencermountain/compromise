@@ -21,7 +21,7 @@ test('basic is contractions', function(t) {
   t.end();
 });
 
-test('negative contractions', function(t) {
+test('do-not contractions', function(t) {
   let r = nlp(`please do not eat the marshmellow`);
   r.contractions().expand();
   t.equal(r.plaintext(), `please do not eat the marshmellow`, 'expanded-expand');
@@ -38,5 +38,24 @@ test('negative contractions', function(t) {
   r.contractions().contract();
   t.equal(r.plaintext(), `please don't eat the marshmellow`, 'contracted-contract');
 
+  t.end();
+});
+
+test('have contractions', function(t) {
+  let r = nlp(`i have stood`);
+  r.contractions().expand();
+  t.equal(r.plaintext(), `i have stood`, 'expanded-expand');
+
+  r = nlp(`i've stood`);
+  r.contractions().expand();
+  t.equal(r.plaintext(), `i have stood`, 'contracted-expand');
+
+  r = nlp(`i have stood`);
+  r.contractions().contract();
+  t.equal(r.plaintext(), `i've stood`, 'expanded-contract');
+
+  r = nlp(`i've stood`);
+  r.contractions().contract();
+  t.equal(r.plaintext(), `i've stood`, 'contracted-contract');
   t.end();
 });

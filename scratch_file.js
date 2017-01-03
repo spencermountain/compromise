@@ -9,14 +9,15 @@ const nlp = require('./src/index');
 // m.values().toNumber();
 // m.check();
 
-//bug 2
 
-// const m = nlp(`he is nice and musn't walk. The dog should've ate his dinner because it is cold. Ben's cool.`);
-// const m = nlp(`blah he's cool. Ben's cool. Zoo's cool. Caddies's cool.`);
-// let r = m.contractions();
-// r.sort('alpha');
-// r.check();
-// r.sort('chron');
-// r.check();
+// const m = nlp(`he is cool. Ben's cool. The frog is cool. Cameron's cool.`);
+// const m = nlp(`he is cool.`);
+// let r = m.contractions().expand();
+// // let r = m.contractions().contract(); //.expand();
+// console.log(m.plaintext());
 
-console.log(nlp('alligator').tag('Noun').nouns().data()[0]);
+let r = nlp(`he is cool.`);
+r.contractions().expand();
+// console.log(r.contractions().data());
+// r.check();
+console.log(r.plaintext());

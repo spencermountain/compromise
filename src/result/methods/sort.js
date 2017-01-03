@@ -1,26 +1,4 @@
 'use strict';
-const Terms = require('../../terms');
-
-const wordIndex = function(ts) {
-  let first = ts.terms[0];
-  let ref = ts.parent;
-  if (!ref || !first) {
-    return null; //maybe..
-  }
-  let n = 0;
-  for(let i = 0; i < ref.list.length; i++) {
-    let ls = ref.list[i];
-    for(let o = 0; o < ls.terms.length; o++) {
-      if (ls.terms[o] === first) {
-        return n;
-      }
-      n += 1;
-    }
-  }
-  return n;
-};
-
-
 //alphabetical sorting of a termlist array
 const alphaSort = function(r) {
   r.list.sort((a, b) => {
@@ -51,7 +29,7 @@ const chronSort = function(r) {
   let tmp = r.list.map((ts) => {
     return {
       ts: ts,
-      index: wordIndex(ts)
+      index: ts.termIndex()
     };
   });
   tmp = tmp.sort((a, b) => {

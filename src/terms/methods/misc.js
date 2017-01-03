@@ -40,6 +40,24 @@ const miscMethods = (Terms) => {
         }
       }
       return null;
+    },
+    termIndex: function() {
+      let first = this.terms[0];
+      let ref = this.parent;
+      if (!ref || !first) {
+        return null; //maybe..
+      }
+      let n = 0;
+      for(let i = 0; i < ref.list.length; i++) {
+        let ts = ref.list[i];
+        for(let o = 0; o < ts.terms.length; o++) {
+          if (ts.terms[o] === first) {
+            return n;
+          }
+          n += 1;
+        }
+      }
+      return n;
     }
   };
 

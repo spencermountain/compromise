@@ -14,6 +14,7 @@ const addSpaceAt = (ts, i) => {
 const insertMethods = (Terms) => {
 
   const methods = {
+
     insertBefore: function (str) {
       let ts = Terms.fromString(str);
       let index = this.index();
@@ -25,6 +26,7 @@ const insertMethods = (Terms) => {
       this.parentTerms = mutate.insertAt(this.parentTerms, index, ts);
       return this.parentTerms;
     },
+
     insertAfter: function (str) {
       let ts = Terms.fromString(str);
       let index = this.terms[this.terms.length - 1].index();
@@ -33,6 +35,7 @@ const insertMethods = (Terms) => {
       this.parentTerms = mutate.insertAt(this.parentTerms, index + 1, ts);
       return this.parentTerms;
     }
+
   };
 
   //hook them into result.proto

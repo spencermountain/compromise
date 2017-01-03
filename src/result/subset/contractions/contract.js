@@ -12,43 +12,53 @@ const combine = (a, b) => {
   b.tagAs('Contraction', 'new-contraction');
 };
 
-const contract = function(r) {
+const contract = function(ts) {
+  if (ts.expanded === false || ts.match('#Contraction').found) {
+    return ts;
+  }
   //he is -> he's
-  r.match('#Noun is').list.forEach((ts) => {
-    combine(ts.terms[0], ts.terms[1]);
-    ts.terms[0].text += '\'s';
+  ts.match('#Noun is').list.forEach((ls) => {
+    combine(ls.terms[0], ls.terms[1]);
+    ls.terms[0].text += '\'s';
+    ls.contracted = true;
   });
   //he would -> he'd
-  r.match('#Noun would').list.forEach((ts) => {
-    combine(ts.terms[0], ts.terms[1]);
-    ts.terms[0].text += '\'d';
+  ts.match('#Noun would').list.forEach((ls) => {
+    combine(ls.terms[0], ls.terms[1]);
+    ls.terms[0].text += '\'d';
+    ls.contracted = true;
   });
   //they are -> they're
-  r.match('(they|we) are').list.forEach((ts) => {
-    combine(ts.terms[0], ts.terms[1]);
-    ts.terms[0].text += '\'re';
+  ts.match('(they|we) are').list.forEach((ls) => {
+    combine(ls.terms[0], ls.terms[1]);
+    ls.terms[0].text += '\'re';
+    ls.contracted = true;
   });
   //they will -> they'll
-  r.match('(they|we) will').list.forEach((ts) => {
-    combine(ts.terms[0], ts.terms[1]);
-    ts.terms[0].text += '\'ll';
+  ts.match('(they|we) will').list.forEach((ls) => {
+    combine(ls.terms[0], ls.terms[1]);
+    ls.terms[0].text += '\'ll';
+    ls.contracted = true;
   });
   //they have -> they've
-  r.match('(they|we) have').list.forEach((ts) => {
-    combine(ts.terms[0], ts.terms[1]);
-    ts.terms[0].text += '\'ve';
+  ts.match('(they|we) have').list.forEach((ls) => {
+    combine(ls.terms[0], ls.terms[1]);
+    ls.terms[0].text += '\'ve';
+    ls.contracted = true;
   });
   //i am -> i'm
-  r.match('i am').list.forEach((ts) => {
-    combine(ts.terms[0], ts.terms[1]);
-    ts.terms[0].text += '\'m';
+  ts.match('i am').list.forEach((ls) => {
+    combine(ls.terms[0], ls.terms[1]);
+    ls.terms[0].text += '\'m';
+    ls.contracted = true;
   });
   //is not -> isn't
-  r.match('(is|are|#Modal) not').list.forEach((ts) => {
-    combine(ts.terms[0], ts.terms[1]);
-    ts.terms[0].text += 'n\'t';
+  ts.match('(#Copula|#Modal|do) not').list.forEach((ls) => {
+    combine(ls.terms[0], ls.terms[1]);
+    ls.terms[0].text += 'n\'t';
+    ls.contracted = true;
   });
-  return r;
+  return ts;
 };
 
 module.exports = contract;

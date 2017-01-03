@@ -1,45 +1,37 @@
 'use strict';
 const Text = require('../../index');
-const contract = require('./contract');
 const Contraction = require('./contraction');
-const findExpanded = require('./find');
+const findPossible = require('./findPossible');
 
 class Contractions extends Text {
   data() {
-    return this.list.map((ts) => {
-      return {
-        text: ts.plaintext(),
-        normal: ts.normal(),
-      };
-    });
+    return this.list.map(ts => ts.data());
   }
   contract() {
+    this.forEach((ts) => ts.contract());
     return this;
   }
   expand() {
+    this.forEach((ts) => ts.expand());
     return this;
   }
   static find(r) {
-    //always two words
-    let contracted = r.match('#Contraction #Contraction');
-    contracted.list = contracted.list.map((ts) => {
+    //find currently-contracted
+    let found = r.match('#Contraction #Contraction');
+    found.list = found.list.map((ts) => {
       let c = new Contraction(ts.terms, ts.lexicon, ts.parent, ts.parentTerms);
-      c.expanded = false;
+      c.contracted = true;
       return c;
     });
-    // console.log('==contracted==');
-    // console.log(contracted.plaintext());
-    // console.log('');
-    let expanded = findExpanded(r);
-    // console.log('==expanded==');
-    // console.log(expanded.plaintext());
-    // console.log('');
-    // expanded = expanded.not(contr);
-    // expanded.check();
-    // contr.concat(expanded);
-    let m = contracted.concat(expanded);
-    m.sort('chronological');
-    return m;
+    //find currently-expanded
+    let expanded = findPossible(r);
+    expanded.list.forEach((ts) => {
+      let c = new Contraction(ts.terms, ts.lexicon, ts.parent, ts.parentTerms);
+      c.contracted = false;
+      found.list.push(c);
+    });
+    found.sort('chronological');
+    return found;
   }
 }
 

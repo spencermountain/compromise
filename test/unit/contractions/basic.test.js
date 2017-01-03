@@ -59,3 +59,22 @@ test('have contractions', function(t) {
   t.equal(r.plaintext(), `i've stood`, 'contracted-contract');
   t.end();
 });
+
+test('repeated contract-expand', function(t) {
+  let r = nlp(`i'm good`);
+  r.contractions().expand();
+  t.equal(r.plaintext(), `i am good`, 'expand-1');
+  r.contractions().contract();
+  t.equal(r.plaintext(), `i'm good`, 'contract-1');
+  r.contractions().expand();
+  t.equal(r.plaintext(), `i am good`, 'expand-2');
+  r.contractions().contract();
+  t.equal(r.plaintext(), `i'm good`, 'contract-2');
+
+  r.contractions().contract().contract().contract();
+  t.equal(r.plaintext(), `i'm good`, 'contract-n');
+
+  r.contractions().expand().expand().expand();
+  t.equal(r.plaintext(), `i am good`, 'expand-n');
+  t.end();
+});

@@ -97,8 +97,8 @@ test('==contractions==', function(T) {
       [`when'll`, ['when', 'will']],
       [`how'll`, ['how', 'will']],
       [`who'll`, ['who', 'will']],
-    // [`who's`, ['who', 'is']],
-    // [`how's`, ['how', 'is']],
+      [`who's`, ['who', 'is']],
+      [`how's`, ['how', 'is']],
     ].forEach(function(a) {
       var s = nlp(a[0]).contractions().expand().list[0];
       var got = [s.terms[0].normal];

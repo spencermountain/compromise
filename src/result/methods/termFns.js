@@ -21,7 +21,7 @@ const termLoops = (Text) => {
       this.list.forEach((ts) => {
         let terms = ts.terms.filter(fn);
         if (terms.length) {
-          list.push(new Terms(terms, this.parent));
+          list.push(new Terms(terms, this.lexicon, this.parent));
         }
       });
       let parent = this.parent || this;

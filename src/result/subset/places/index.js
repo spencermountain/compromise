@@ -4,9 +4,10 @@ const Place = require('./place');
 
 class Places extends Text {
   data() {
-    return this.mapTerms((t) => {
+    return this.list.map((ts) => {
       return {
-        text: t.text
+        text: ts.plaintext(),
+        normal: ts.normal(),
       };
     });
   }

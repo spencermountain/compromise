@@ -16,12 +16,6 @@ const genericMethods = (Text) => {
 
     /**turn all sentences into one, for example*/
     terms: function () {
-      // let list = this.list.reduce((all, ts) => {
-      //   all = all.concat(ts.terms);
-      //   return all;
-      // }, []);
-      // let terms = new Terms(list);
-      // return new Text([terms], this.lexicon, this.parent);
       return this.match('.');
     },
 

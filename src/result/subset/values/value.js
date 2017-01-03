@@ -30,7 +30,6 @@ const isNumber = (ts) => {
 };
 
 class Value extends Terms {
-
   number() {
     let num = parse(this);
     return num;

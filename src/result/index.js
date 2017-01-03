@@ -1,9 +1,9 @@
 'use strict';
 //a Text is an array of termLists
 class Text {
-  constructor(arr, lexicon, parent) {
+  constructor(arr, lexicon, reference) {
     this.list = arr || [];
-    this._parent = parent;
+    this.reference = reference;
   }
   //getter/setters
   /** did it find anything? */
@@ -18,10 +18,10 @@ class Text {
     return 'Text';
   }
   get parent() {
-    return this._parent || this;
+    return this.reference || this;
   }
   set parent(r) {
-    this._parent = r;
+    this.reference = r;
     return this;
   }
   all() {

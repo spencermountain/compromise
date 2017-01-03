@@ -3,11 +3,11 @@ const tagger = require('./tagger');
 const build = require('./build');
 
 class Terms {
-  constructor(arr, lexicon, originalText, termsFull) {
+  constructor(arr, lexicon, refText, refTerms) {
     this.terms = arr;
     this.lexicon = lexicon;
-    this.originalText = originalText;
-    this.parentTerms = termsFull || this;
+    this.refText = refText;
+    this.refTerms = refTerms;
     this.get = (n) => {
       return this.terms[n];
     };
@@ -37,10 +37,17 @@ class Terms {
     return this.terms[this.terms.length - 1];
   }
   get parent() {
-    return this.originalText || this;
+    return this.refText || this;
   }
   set parent(r) {
-    this.originalText = r;
+    this.refText = r;
+    return this;
+  }
+  get parentTerms() {
+    return this.refTerms || this;
+  }
+  set parentTerms(r) {
+    this.refTerms = r;
     return this;
   }
   all() {

@@ -7,7 +7,7 @@ test('sortAlpha:', function (t) {
   var str = 'John xoo, John fredman, John davis';
   var r = nlp(str);
   r = r.people();
-  r.sortAlpha();
+  r.sort('alpha');
   var want = ['john davis', 'john fredman', 'john xoo'];
   fns.arr_test(r.asArray(), str, want, t);
   t.end();
@@ -17,7 +17,7 @@ test('reverse:', function (t) {
   var str = 'John xoo, John fredman, John davis';
   var r = nlp(str);
   r = r.people();
-  r.sortAlpha();
+  r.sort('alphabetical');
   r.reverse();
   var want = ['john xoo', 'john fredman', 'john davis'];
   fns.arr_test(r.asArray(), str, want, t);

@@ -8,11 +8,11 @@ const miscMethods = (Terms) => {
     },
     first: function () {
       let t = this.terms[0];
-      return new Terms([t]);
+      return new Terms([t], this.lexicon, this.parent);
     },
     last: function () {
       let t = this.terms[this.terms.length - 1];
-      return new Terms([t]);
+      return new Terms([t], this.lexicon, this.parent);
     },
     endPunctuation: function () {
       return this.last().terms[0].endPunctuation();
@@ -30,12 +30,14 @@ const miscMethods = (Terms) => {
     },
     index: function() {
       let first = this.terms[0];
-      if (!this.originalText || !first) {
+      let ref = this.parentText;
+      if (!ref || !first) {
         return null; //maybe..
       }
       let n = 0;
-      for(let i = 0; i < this.originalText.list.length; i++) {
-        let ts = this.originalText.list[i];
+      // console.log(original);
+      for(let i = 0; i < ref.list.length; i++) {
+        let ts = ref.list[i];
         for(let o = 0; o < ts.terms.length; o++) {
           if (ts.terms[o] === first) {
             return n;

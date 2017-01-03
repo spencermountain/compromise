@@ -14,13 +14,13 @@ main structure:
 
   <a href="./terms">./Terms</a>  
   <div>&nbsp;  &nbsp; - where the hard sentence-aware work gets done. </div>
-  <div>&nbsp;  &nbsp;   &nbsp; - <a href="./terms/tagger">pos-tagger is here</a></div>
-  <div>&nbsp;  &nbsp;   &nbsp; - <a href="./terms/match">match logic is here</a></div>
+  <h5>&nbsp;  &nbsp; &nbsp; &nbsp; - <a href="./terms/tagger">pos-tagger is here</a></h5>
+  <h5>&nbsp;  &nbsp; &nbsp; &nbsp; - <a href="./terms/match">match logic is here</a></h5>
 
   <a href="./term">./Term</a>  
   <div>&nbsp;  &nbsp; - the logic for sentence-unaware methods</div>
-  <div>&nbsp;  &nbsp;   &nbsp; - <a href="./term/verb/conjugate">verb Conjugate is here</a></div>
-  <div>&nbsp;  &nbsp;   &nbsp; - <a href="./term/noun/inflect">singular/plural logic is here</a></div>
+  <h5>&nbsp;  &nbsp; &nbsp; &nbsp; - <a href="./term/verb/conjugate">verb Conjugate is here</a></h5>
+  <h5>&nbsp;  &nbsp; &nbsp; &nbsp; - <a href="./term/noun/inflect">singular/plural logic is here</a></h5>
 </h3>
 
 you can do it!

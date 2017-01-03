@@ -17,7 +17,9 @@ test('==contractions==', function(T) {
       [`everyone's victories`, `everyone's victories`],
       [`the tornado's power`, `the tornado's power`],
     ].forEach(function(a) {
-      var str = nlp(a[0]).contractions().expand().normal();
+      var m = nlp(a[0]);
+      m.contractions().expand();
+      var str = m.normal();
       str_test(str, a[0], a[1], t);
     });
     t.end();
@@ -49,14 +51,14 @@ test('==contractions==', function(T) {
       [`they've begun`, ['they', 'have']],
       [`they'll begun`, ['they', 'will']],
       [`we've begun`, ['we', 'have']],
-      [`don't go`, ['do', 'not', 'go']],
+      [`don't go`, ['do', 'not']],
       // dont expand leading 'nt contraction
-      [`mustn't go`, ['must', 'not', 'go']],
-      [`haven't gone`, ['have', 'not', 'gone']],
-      [`isn't going`, ['is', 'not', 'going']],
-      ['can\'t go', ['can', 'not', 'go']],
-      ['ain\'t going', ['is', 'not', 'going']],
-      ['won\'t go', ['will', 'not', 'go']],
+      [`mustn't go`, ['must', 'not']],
+      [`haven't gone`, ['have', 'not']],
+      [`isn't going`, ['is', 'not']],
+      ['can\'t go', ['can', 'not']],
+      ['ain\'t going', ['is', 'not']],
+      ['won\'t go', ['will', 'not']],
 
       ['i\'d go', ['i', 'would']],
       ['she\'d go', ['she', 'would']],
@@ -137,7 +139,9 @@ test('==contractions==', function(T) {
       ['We\'ve only just begun', 'We have only just begun'],
       ['We\'ve   only just begun', 'We have   only just begun']
     ].forEach(function(a) {
-      var str = nlp(a[0]).contractions().expand().plaintext();
+      var m = nlp(a[0]);
+      m.contractions().expand();
+      var str = m.plaintext();
       str_test(str, a[0], a[1], t);
     });
     t.end();

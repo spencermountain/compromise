@@ -28,7 +28,6 @@ const contract = function(ts) {
     ls.terms[0].text += '\'d';
     ls.contracted = true;
   });
-
   //they are -> they're
   ts.match('(they|we|you) are').list.forEach((ls) => {
     combine(ls.terms[0], ls.terms[1]);

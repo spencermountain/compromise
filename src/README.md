@@ -11,6 +11,8 @@ main structure:
 
   <a href="./text">./Text</a>  
   <div>&nbsp;  &nbsp; - top-level API. Mostly just looping.</div>
+    <div>&nbsp;  &nbsp; &nbsp; &nbsp; - <a href="./result/subset/values">number parsing is here</a></div>
+    <div>&nbsp;  &nbsp; &nbsp; &nbsp; - <a href="./result/subset/things">named-entity/spotting is here</a></div>
 
   <a href="./terms">./Terms</a>  
   <div>&nbsp;  &nbsp; - where the hard sentence-aware work gets done. </div>
@@ -19,7 +21,7 @@ main structure:
 
   <a href="./term">./Term</a>  
   <div>&nbsp;  &nbsp; - the logic for sentence-unaware methods</div>
-  <div>&nbsp;  &nbsp; &nbsp; &nbsp; - <a href="./term/verb/conjugate">verb Conjugate is here</a></div>
+  <div>&nbsp;  &nbsp; &nbsp; &nbsp; - <a href="./term/verb/conjugate">verb conjugation is here</a></div>
   <div>&nbsp;  &nbsp; &nbsp; &nbsp; - <a href="./term/noun/inflect">singular/plural logic is here</a></div>
 </h3>
 

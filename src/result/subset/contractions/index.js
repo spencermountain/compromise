@@ -15,6 +15,18 @@ class Contractions extends Text {
     this.forEach((ts) => ts.expand());
     return this;
   }
+  contracted() {
+    this.list = this.list.filter((ts) => {
+      return ts.contracted;
+    });
+    return this;
+  }
+  expanded() {
+    this.list = this.list.filter((ts) => {
+      return !ts.contracted;
+    });
+    return this;
+  }
   static find(r) {
     //find currently-contracted
     let found = r.match('#Contraction #Contraction');

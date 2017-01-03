@@ -25,7 +25,7 @@ class Contraction extends Terms {
     return {
       text: this.plaintext(),
       normal: this.normal(),
-      isExpanded: !!!this.contracted
+      isContracted: !!this.contracted
     };
   }
   expand() {

@@ -73,6 +73,7 @@ const subset = {
   questions: require('./subset/sentences/questions'),
   statements: require('./subset/sentences/statements'),
   things: require('./subset/things'),
+  terms: require('./subset/terms'),
   clauses: require('./subset/clauses'),
 
   adjectives: require('./subset/adjectives'),

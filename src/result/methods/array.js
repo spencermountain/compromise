@@ -14,12 +14,6 @@ const genericMethods = (Text) => {
       return new Text(list, this.lexicon, this.parent);
     },
 
-    /**turn all sentences into one, for example*/
-    terms: function () {
-      return this.match('.');
-    },
-
-
     /** get the nth term of each result*/
     term: function (n) {
       let list = this.list.map((ts) => {

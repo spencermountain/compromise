@@ -17,6 +17,6 @@ const nlp = require('./src/index');
 // console.log(m.plaintext());
 
 const r = nlp('She could\'ve seen.');
-r.contractions().check();
+console.log(r.terms().data());
 // r.check();
 // console.log(r.plaintext());

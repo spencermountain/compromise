@@ -8,6 +8,7 @@ class Terms extends Text {
       return {
         normal: t.normal,
         text: t.text,
+        tags: Object.keys(t.tag)
       };
     });
   }

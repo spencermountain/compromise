@@ -2,7 +2,7 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 
 test('basic is contractions', function(t) {
-  let r = nlp(`he is cool.`);
+  var r = nlp(`he is cool.`);
   r.contractions().expand();
   t.equal(r.plaintext(), `he is cool.`, 'expanded-expand');
 
@@ -22,7 +22,7 @@ test('basic is contractions', function(t) {
 });
 
 test('do-not contractions', function(t) {
-  let r = nlp(`please do not eat the marshmellow`);
+  var r = nlp(`please do not eat the marshmellow`);
   r.contractions().expand();
   t.equal(r.plaintext(), `please do not eat the marshmellow`, 'expanded-expand');
 
@@ -42,7 +42,7 @@ test('do-not contractions', function(t) {
 });
 
 test('have contractions', function(t) {
-  let r = nlp(`i have stood`);
+  var r = nlp(`i have stood`);
   r.contractions().expand();
   t.equal(r.plaintext(), `i have stood`, 'expanded-expand');
 
@@ -61,7 +61,7 @@ test('have contractions', function(t) {
 });
 
 test('repeated contract-expand', function(t) {
-  let r = nlp(`i'm good`);
+  var r = nlp(`i'm good`);
   r.contractions().expand();
   t.equal(r.plaintext(), `i am good`, 'expand-1');
   r.contractions().contract();
@@ -76,5 +76,14 @@ test('repeated contract-expand', function(t) {
 
   r.contractions().expand().expand().expand();
   t.equal(r.plaintext(), `i am good`, 'expand-n');
+  t.end();
+});
+
+test('contracted', function(t) {
+  var r = nlp(`I'll go to Toronto. I will see.`);
+  var str = r.contractions().contracted().plaintext();
+  t.equal(str, `I'll`, 'contracted');
+  str = r.contractions().expanded().plaintext();
+  t.equal(str, `I will`, 'expanded');
   t.end();
 });

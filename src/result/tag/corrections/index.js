@@ -23,6 +23,9 @@ const corrections = function (r) {
   //the word 'second'
   r.match('second #Noun').term(0).unTag('Unit').tag('Ordinal', 'second-noun');
 
+  //the word 'how'
+  r.match('how (#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-question');
+
   //will secure our
   r.match('will #Adjective').term(1).tag('Verb', 'will-adj');
 

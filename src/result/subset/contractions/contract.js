@@ -17,13 +17,26 @@ const contract = function(ts) {
     return ts;
   }
   //he is -> he's
-  ts.match('#Noun is').list.forEach((ls) => {
+  ts.match('(#Noun|#QuestionWord) is').list.forEach((ls) => {
     combine(ls.terms[0], ls.terms[1]);
     ls.terms[0].text += '\'s';
     ls.contracted = true;
   });
+  //he did -> he'd
+  ts.match('#PronNoun did').list.forEach((ls) => {
+    combine(ls.terms[0], ls.terms[1]);
+    ls.terms[0].text += '\'d';
+    ls.contracted = true;
+  });
+  //how do -> how'd
+  ts.match('#QuestionWord (did|do)').list.forEach((ls) => {
+    combine(ls.terms[0], ls.terms[1]);
+    ls.terms[0].text += '\'d';
+    ls.contracted = true;
+  });
+
   //he would -> he'd
-  ts.match('#Noun would').list.forEach((ls) => {
+  ts.match('#Noun (could|would)').list.forEach((ls) => {
     combine(ls.terms[0], ls.terms[1]);
     ls.terms[0].text += '\'d';
     ls.contracted = true;

@@ -14,8 +14,9 @@ const nlp = require('./src/index');
 // const m = nlp(`he is nice and musn't walk. The dog should've ate his dinner because it is cold. Ben's cool.`);
 // const m = nlp(`blah he's cool. Ben's cool. Zoo's cool. Caddies's cool.`);
 // let r = m.contractions();
-let r = nlp('five hundred times i said eat 7 berries. he is 7th years old');
-r.nouns(); //.check();
-// console.log(r.values().plaintext());
-r.values().data();
-// console.log(m.plaintext());
+// r.sort('alpha');
+// r.check();
+// r.sort('chron');
+// r.check();
+
+console.log(nlp('alligator').tag('Noun').nouns().data()[0]);

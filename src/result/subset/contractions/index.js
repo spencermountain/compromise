@@ -13,9 +13,11 @@ class Contractions extends Text {
       };
     });
   }
-
   contract() {
-    return contract(this.all());
+    return this;
+  }
+  expand() {
+    return this;
   }
   static find(r) {
     //always two words

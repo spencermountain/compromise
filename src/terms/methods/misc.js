@@ -29,23 +29,17 @@ const miscMethods = (Terms) => {
       return true;
     },
     index: function() {
+      let parent = this.parentTerms;
       let first = this.terms[0];
-      let ref = this.parentText;
-      if (!ref || !first) {
+      if (!parent || !first) {
         return null; //maybe..
       }
-      let n = 0;
-      // console.log(original);
-      for(let i = 0; i < ref.list.length; i++) {
-        let ts = ref.list[i];
-        for(let o = 0; o < ts.terms.length; o++) {
-          if (ts.terms[o] === first) {
-            return n;
-          }
-          n += 1;
+      for(let i = 0; i < parent.terms.length; i++) {
+        if (first === parent.terms[i]) {
+          return i;
         }
       }
-      return n;
+      return null;
     }
   };
 

@@ -6,13 +6,12 @@ class Noun extends Terms {
     super(arr, lexicon, parent);
   }
   data() {
-    return {};
-  // let t = this.terms[0];
-  // return {
-  //   article: t.noun.makeArticle(),
-  //   singular: t.noun.singular(),
-  //   plural: t.noun.plural(),
-  // };
+    let t = this.terms[0];
+    return {
+      article: t.noun.makeArticle(),
+      singular: t.noun.singular(),
+      plural: t.noun.plural(),
+    };
   }
 }
 module.exports = Noun;

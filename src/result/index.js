@@ -27,6 +27,10 @@ class Text {
   all() {
     return this.parent;
   }
+  index() {
+    return this.list.map((ts) => ts.index());
+  }
+
   get whitespace() {
     return {
       before: (str) => {

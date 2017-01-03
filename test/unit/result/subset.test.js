@@ -1,59 +1,42 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
-var fns = require('../lib/fns');
-var freshPrince = require('../lib/freshPrince');
 
-var subsets = [
-  'acronyms',
-  'adjectives',
-  'adverbs',
-  'contractions',
-  'dates',
-  'hashTags',
-  'organizations',
-  'people',
-  'phoneNumbers',
-  'places',
-  'sentences',
-  'questions',
-  'statements',
-  'nouns',
-  'urls',
-  'values',
-  'verbs'
-];
+var mustBe = function(arr) {
+  return arr.map(t => t.normal);
+};
 
-test('all combined subsets empty:', function (t) {
-  var r = nlp(freshPrince);
-  var small = r.all();
-  for(var i = 0; i < subsets.length; i++) {
-    var sub = subsets[i];
-    small = small[sub]();
-  }
-  t.equal(small.plaintext(), '', 'no-uber subset');
+test('clauses', function (t) {
+  var m = nlp('he is nice - which is cool... but whatever');
+  var have = mustBe(m.clauses().data());
+  var want = ['he is nice', 'which is cool', 'but whatever'];
+  var msg = have.join(' -- ');
+  t.deepEqual(have, want, msg);
+
+  m = nlp('he is nice. If so, then good');
+  have = mustBe(m.clauses().data());
+  want = ['he is nice', 'if so', 'then good'];
+  msg = have.join(' -- ');
+  t.deepEqual(have, want, msg);
+
   t.end();
 });
 
+test('adjectives', function (t) {
+  var m = nlp('he is nice, cool and very fun');
+  var have = mustBe(m.adjectives().data());
+  var want = ['nice', 'cool', 'fun'];
+  var msg = have.join(' -- ');
+  t.deepEqual(have, want, msg);
 
-test('all subsets have a parse method:', function (t) {
-  var r = nlp(freshPrince);
-  subsets.forEach((s) => {
-    var sub = r[s]();
-    var arr = sub.data();
-    t.ok(fns.isArray(arr), s + '.data() is an array');
-  });
   t.end();
 });
 
+test('contractions', function (t) {
+  var m = nlp('he\'s nice. She could\'ve seen.');
+  var have = mustBe(m.contractions().data());
+  var want = ['he\'s', 'could\'ve'];
+  var msg = have.join(' -- ');
+  t.deepEqual(have, want, msg);
 
-test('all subsets support .all():', function (t) {
-  var txt = freshPrince;
-  var r = nlp(txt);
-  subsets.forEach((s) => {
-    var sub = r[s]();
-    var str = sub.all().plaintext();
-    var msg = s + '.all() works';
-    t.equal(str, txt, msg);
-  });
   t.end();
 });

@@ -6,7 +6,7 @@ class Terms {
   constructor(arr, lexicon, originalText, termsFull) {
     this.terms = arr;
     this.lexicon = lexicon;
-    this._parent = originalText;
+    this.originalText = originalText;
     this.parentTerms = termsFull || this;
     this.get = (n) => {
       return this.terms[n];
@@ -37,10 +37,10 @@ class Terms {
     return this.terms[this.terms.length - 1];
   }
   get parent() {
-    return this._parent || this;
+    return this.originalText || this;
   }
   set parent(r) {
-    this._parent = r;
+    this.originalText = r;
     return this;
   }
   all() {

@@ -11,9 +11,11 @@ const nlp = require('./src/index');
 
 //bug 2
 
-// const m = nlp('he is nice, clean, and cool; he also studies - which is cool.');
-const m = nlp('he is nice - which is cool... but whatever');
-m.check();
-// m.clauses().check();
-console.log(m.plaintext());
-console.log(m.clauses().data());
+// const m = nlp(`he is nice and musn't walk. The dog should've ate his dinner because it is cold. Ben's cool.`);
+const m = nlp(`blah he's cool. Ben's cool. Zoo's cool. Caddies's cool.`);
+let r = m.contractions();
+r.sort('alpha');
+r.sort('chron');
+r.sort('alpha');
+r.check();
+// console.log(m.plaintext());

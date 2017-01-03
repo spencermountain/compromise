@@ -9,6 +9,8 @@ class Adjectives extends Text {
         superlative: t.adjective.superlative(),
         adverbForm: t.adjective.adverbForm(),
         nounForm: t.adjective.nounForm(),
+        normal: t.normal,
+        text: t.text
       };
     });
   }

@@ -6,10 +6,12 @@ class Adverbs extends Text {
     return this.mapTerms((t) => {
       return {
         adjectiveForm: t.adverb.adjectiveForm(),
+        normal: t.normal,
+        text: t.text
       };
     });
   }
-  static find(r){
+  static find(r) {
     return r.match('#Adverb+');
   }
 }

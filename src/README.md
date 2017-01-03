@@ -4,7 +4,7 @@ main structure:
 <h3 align="left">
 
   <a href="./tags">./Tags</a>  
-  <div>&nbsp;  &nbsp; - the pos-tag set we use, with the logic + definition</div>
+  <div>&nbsp;  &nbsp; - the speech tag-set we use, with their logic + definitions</div>
 
   <a href="./data">./Data</a>  
   <div>&nbsp;  &nbsp; - you can change these like crazy and it's fine</div>
@@ -14,13 +14,13 @@ main structure:
 
   <a href="./terms">./Terms</a>  
   <div>&nbsp;  &nbsp; - where the hard sentence-aware work gets done. </div>
-  <div>&nbsp;  &nbsp; - Tagger is <a href="./terms/tagger">here</a></div>
-  <div>&nbsp;  &nbsp; - match logic is <a href="./terms/match">here</a></div>
+  <div>&nbsp;  &nbsp;   &nbsp; - <a href="./terms/tagger">pos-tagger is here</a></div>
+  <div>&nbsp;  &nbsp;   &nbsp; - <a href="./terms/match">match logic is here</a></div>
 
   <a href="./term">./Term</a>  
   <div>&nbsp;  &nbsp; - the logic for sentence-unaware methods</div>
-  <div>&nbsp;  &nbsp; - verb Conjugate is <a href="./term/verb/conjugate">here</a></div>
-  <div>&nbsp;  &nbsp; - singular/plural logic is <a href="./term/noun/inflect">here</a></div>
+  <div>&nbsp;  &nbsp;   &nbsp; - <a href="./term/verb/conjugate">verb Conjugate is here</a></div>
+  <div>&nbsp;  &nbsp;   &nbsp; - <a href="./term/noun/inflect">singular/plural logic is here</a></div>
 </h3>
 
 you can do it!

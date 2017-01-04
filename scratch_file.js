@@ -10,13 +10,23 @@ const nlp = require('./src/index');
 // m.check();
 
 
-// const m = nlp(`he is cool. Ben's cool. The frog is cool. Cameron's cool.`);
-// const m = nlp(`he is cool.`);
-// let r = m.contractions().expand();
-// // let r = m.contractions().contract(); //.expand();
-// console.log(m.plaintext());
+const r = nlp(`he is cool. Ben was cool. The frog is cool.`);
+r.verbs().sort('freq').check();
 
-const r = nlp('She could\'ve seen.');
-console.log(r.terms().data());
+// r.verbs().out('text');
+// r.verbs().out('array');
+// r.verbs().out('html');
+// r.verbs().out('json');
+// r.verbs().out('pretty');
+// r.verbs().out('debug');
+
+// r.verbs().out('ngram');
+// r.verbs().out('bigram');
+// r.verbs().out('trigram');
+// r.verbs().out('startgram');
+// r.verbs().out('endgram');
+
+// r.verbs().out('frequency');
+
 // r.check();
 // console.log(r.plaintext());

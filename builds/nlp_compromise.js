@@ -1,4 +1,4 @@
-/* nlp_compromise v7.0.0
+/* nlp_compromise v7.0.1
    github.com/nlp-compromise
    MIT
 */
@@ -404,7 +404,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "main": "./builds/nlp_compromise.js",
   "repository": {
     "type": "git",

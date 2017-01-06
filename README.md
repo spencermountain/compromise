@@ -21,6 +21,8 @@
 </div>
 <div align="center">
   <code>npm install compromise@next</code>
+</div>
+<div align="center">
   <sub>(formerly nlp_compromise)</sub>
 </div>
 <br/>

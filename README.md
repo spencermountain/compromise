@@ -1,7 +1,9 @@
 <div align="center">
   <strong>compromise</strong>
   <div>natural-language processing in the browser</div>
-  <sub>(formerly nlp_compromise)</sub>
+  <div>
+    <sub>(formerly nlp_compromise)</sub>
+  </div>
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />
   </a>

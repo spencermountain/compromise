@@ -34,10 +34,12 @@
   </div>
 </div>
 <br/>
+
 ```javascript
 nlp('I look just like buddy holly').sentences().toPast().text()
 // "I looked just like buddy holly."
 ```
+
 <h3 align="center">
   <a href="http://nlpcompromise.com">Demos</a>
   <span>&nbsp; | &nbsp;</span>
@@ -47,6 +49,7 @@ nlp('I look just like buddy holly').sentences().toPast().text()
   <span>&nbsp; | &nbsp;</span>
   <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Accuracy">Accuracy</a>
 </h3>
+
 <div align="center">
   :boom:Welcome to <b>v7</b>:boom:
   <div>
@@ -54,13 +57,13 @@ nlp('I look just like buddy holly').sentences().toPast().text()
     has changed!
   </div>
 </div>
+
 ### Yup,
 * a [140k js file](https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js)
 * **[86%](https://github.com/nlp-compromise/nlp_compromise/wiki/Accuracy)** on the **Penn treebank**
 * [keypress speed](https://github.com/nlp-compromise/nlp_compromise/wiki/Performance), constant-time.
 * caniuse, uhuh. **IE9+**
 * [no dependencies](https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started), training, configuration, or prolog
-
 
 ###Grammar, for the win:
 ```javascript
@@ -148,9 +151,13 @@ r = nlp('Tony Hawk won').asHtml()
 ###Join-in:
 <div align="center">
   we're fun, we're using <b>semver</b>, and moving fast.
-  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing">:hammer_and_wrench: get involved :dancer:</a>
+  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing">
+  :hammer_and_wrench: get involved :dancer: </a>
 </div>
 <br/>
+Thanks to the awesome [jnewman](https://github.com/jnewman) for the npm package rights. For the former promise-library, see [jnewman/compromise](https://github.com/jnewman/compromise)
+
+
 <div align="center">
   <a href="https://www.youtube.com/watch?v=tk_JGu2AbJY">
     <img src="http://img.youtube.com/vi/tk_JGu2AbJY/mqdefault.jpg"/>

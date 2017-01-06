@@ -1,9 +1,5 @@
 <div align="center">
-  <strong>compromise</strong>
   <div>natural-language processing in the browser</div>
-  <div>
-    <sub>(formerly nlp_compromise)</sub>
-  </div>
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />
   </a>
@@ -25,6 +21,9 @@
 </div>
 <div align="center">
   <code>npm install compromise@next</code>
+</div>
+<div>
+  <sub>(formerly nlp_compromise)</sub>
 </div>
 <br/>
 <div align="center">
@@ -155,9 +154,6 @@ r = nlp('Tony Hawk won').asHtml()
   :hammer_and_wrench: get involved :dancer: </a>
 </div>
 <br/>
-Thanks to the awesome [jnewman](https://github.com/jnewman) for the npm package rights. For the former promise-library, see [jnewman/compromise](https://github.com/jnewman/compromise)
-
-
 <div align="center">
   <a href="https://www.youtube.com/watch?v=tk_JGu2AbJY">
     <img src="http://img.youtube.com/vi/tk_JGu2AbJY/mqdefault.jpg"/>
@@ -169,6 +165,8 @@ Thanks to the awesome [jnewman](https://github.com/jnewman) for the npm package 
 </div>
 
 #See also
+For the former promise-library, see [jnewman/compromise](https://github.com/jnewman/compromise)
+(Thanks to the awesome [jnewman](https://github.com/jnewman) for the npm package!)
 * **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript
 * **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in javascript
 * **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript

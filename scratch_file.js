@@ -9,7 +9,6 @@ const nlp = require('./src/index');
 // m.values().toNumber();
 // m.check();
 
-
 const r = nlp(`he is cool. Ben was cool. The frog is cool.`);
 r.verbs().sort('freq').check();
 

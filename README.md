@@ -1,11 +1,14 @@
 <div align="center">
-  <strong>nlp_compromise</strong>
+  <strong>compromise</strong>
+  <div>
+    <sub>(formerly nlp_compromise)</sub>
+  </div>
   <div>natural-language processing in the browser</div>
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />
   </a>
-  <a href="https://npmjs.org/package/nlp_compromise">
-    <img src="https://img.shields.io/npm/v/nlp_compromise.svg?style=flat-square" />
+  <a href="https://npmjs.org/package/compromise">
+    <img src="https://img.shields.io/npm/v/compromise.svg?style=flat-square" />
   </a>
   <a href="https://nodejs.org/api/documentation.html#documentation_stability_index">
     <img src="https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square" />
@@ -21,7 +24,7 @@
   </sub>
 </div>
 <div align="center">
-  <code>npm install nlp_compromise@next</code>
+  <code>npm install compromise@next</code>
 </div>
 <br/>
 <div align="center">
@@ -120,7 +123,7 @@ r = nlp("the guest-singer's björk at seven thirty.").normalize().text()
 ###Named-entity recognition:
 ```javascript
 r = nlp('the opera about richard nixon visiting china')
-r.match('(#Person|#Place|#Organization)').asArray()
+r.match('(#Person|#Place|#Organization)').data()
 // [
 //   { text: 'richard nixon', tags: ['Person'] },
 //   { text: 'china', tags: ['Place', 'Country'] }

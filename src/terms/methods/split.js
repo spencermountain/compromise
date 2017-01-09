@@ -39,7 +39,10 @@ const splitMethods = (Terms) => {
         all.push(termArr);
       }
       //make them termlists
-      all = all.map((ts) => new Terms(ts, ts.lexicon, ts.parent, this.parentTerms));
+      all = all.map((ts) => {
+        let parent = this.refText; //|| this;
+        return new Terms(ts, ts.lexicon, parent, ts.refTerms);
+      });
       return all;
     },
 
@@ -61,7 +64,7 @@ const splitMethods = (Terms) => {
       }
       //make them termlists
       all = all.filter(a => a && a.length);
-      all = all.map((ts) => new Terms(ts, ts.lexicon, ts.parent, this.parentTerms));
+      all = all.map((ts) => new Terms(ts, ts.lexicon, ts.refText, this.refTerms));
       return all;
     },
 
@@ -97,7 +100,7 @@ const splitMethods = (Terms) => {
       }
       //make them termlists
       all = all.filter(a => a && a.length);
-      all = all.map((ts) => new Terms(ts, ts.lexicon, ts.parent, this.parentTerms));
+      all = all.map((ts) => new Terms(ts, ts.lexicon, ts.refText, this.refTerms));
       return all;
     },
 

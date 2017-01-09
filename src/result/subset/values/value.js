@@ -136,6 +136,6 @@ Value.prototype.clone = function() {
   let terms = this.terms.map((t) => {
     return t.clone();
   });
-  return new Value(terms, this.lexicon, this.parent, this.parentTerms);
+  return new Value(terms, this.lexicon, this.refText, this.refTerms);
 };
 module.exports = Value;

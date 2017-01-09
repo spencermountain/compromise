@@ -26,7 +26,7 @@ const matchMethods = (Terms) => {
         }
       }
       matches = matches.map((a) => {
-        return new Terms(a, this.lexicon, this.parent, this.parentTerms);
+        return new Terms(a, this.lexicon, this.refText, this.refTerms);
       });
       // return matches
       let r = new Text(matches, this.lexicon, this.parent);
@@ -90,7 +90,7 @@ const matchMethods = (Terms) => {
           matches.push(terms);
         }
         matches = matches.map((a) => {
-          return new Terms(a, this.lexicon, this.parent, this.parentTerms);
+          return new Terms(a, this.lexicon, this.refText, this.refTerms);
         });
       }
       // return matches

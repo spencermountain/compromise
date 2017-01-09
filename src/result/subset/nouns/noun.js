@@ -2,8 +2,8 @@
 const Terms = require('../../paths').Terms;
 
 class Noun extends Terms {
-  constructor(arr, lexicon, parent) {
-    super(arr, lexicon, parent);
+  constructor(arr, lexicon, refText, refTerms) {
+    super(arr, lexicon, refText, refTerms);
   }
   data() {
     let t = this.terms[0];

@@ -6,8 +6,8 @@ const parseRelative = require('./parseRelative');
 const parseDate = require('./parseDate');
 
 class Date extends Terms {
-  constructor(arr, lexicon, parent) {
-    super(arr, lexicon, parent);
+  constructor(arr, lexicon, refText, refTerms) {
+    super(arr, lexicon, refText, refTerms);
     this.month = this.match('#Month');
   }
 

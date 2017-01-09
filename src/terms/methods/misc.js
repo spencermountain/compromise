@@ -8,15 +8,15 @@ const miscMethods = (Terms) => {
     },
     first: function () {
       let t = this.terms[0];
-      return new Terms([t], this.lexicon, this.parent, this.parentTerms);
+      return new Terms([t], this.lexicon, this.refText, this.refTerms);
     },
     last: function () {
       let t = this.terms[this.terms.length - 1];
-      return new Terms([t], this.lexicon, this.parent, this.parentTerms);
+      return new Terms([t], this.lexicon, this.refText, this.refTerms);
     },
     slice: function (start, end) {
       let terms = this.terms.slice(start, end);
-      return new Terms(terms, this.lexicon, this.parent, this.parentTerms);
+      return new Terms(terms, this.lexicon, this.refText, this.refTerms);
     },
     endPunctuation: function () {
       return this.last().terms[0].endPunctuation();
@@ -47,8 +47,7 @@ const miscMethods = (Terms) => {
     },
     termIndex: function() {
       let first = this.terms[0];
-      let ref = this.refText;
-      console.log(ref.isA);
+      let ref = this.refText || this;
       if (!ref || !first) {
         return null; //maybe..
       }

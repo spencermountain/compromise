@@ -10,11 +10,11 @@ class Nouns extends Text {
   }
   static find(r) {
     r = r.splitAfter('#Comma');
-    r = r.match('#Noun+');
-    r = r.not('#Pronoun');
-    r.list = r.list.map((ts) => {
-      return new Noun(ts.terms, ts.lexicon, ts.parent, ts.parentTerms);
-    });
+    // r = r.match('#Noun+');
+    // r = r.not('#Pronoun');
+    // r.list = r.list.map((ts) => {
+    //   return new Noun(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+    // });
     // r = r.not('#Date');
     return r;
   }

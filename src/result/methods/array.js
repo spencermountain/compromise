@@ -22,7 +22,7 @@ const genericMethods = (Text) => {
         if (el) {
           arr = [el];
         }
-        return new Terms(arr, this.lexicon, this.parent, this.parentTerms);
+        return new Terms(arr, this.lexicon, this.refText, this.refTerms);
       });
       return new Text(list, this.lexicon, this.parent);
     },
@@ -116,7 +116,7 @@ const genericMethods = (Text) => {
       if (!terms.length) {
         return new Text(null, this.lexicon, this.parent);
       }
-      let ts = new Terms(terms, this.lexicon, this.parent, this.parentTerms);
+      let ts = new Terms(terms, this.lexicon, this.refText, this.refTerms);
       return new Text([ts], this.lexicon, this.parent);
     },
 

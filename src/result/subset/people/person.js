@@ -4,8 +4,8 @@ const guessGender = require('./guessGender');
 const log = require('../../paths').log;
 
 class Person extends Terms {
-  constructor(arr, lexicon, parent) {
-    super(arr, lexicon, parent);
+  constructor(arr, lexicon, refText, refTerms) {
+    super(arr, lexicon, refText, refTerms);
     this.firstName = this.match('#FirstName+');
     this.middleName = this.match('#Acronym+');
     this.honorifics = this.match('#Honorific');

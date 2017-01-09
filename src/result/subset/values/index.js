@@ -55,7 +55,7 @@ class Values extends Text {
       r = r.not('(a|an)$');
     }
     r.list = r.list.map((ts) => {
-      return new Value(ts.terms, ts.lexicon, ts.parent, ts.parentTerms);
+      return new Value(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return r;
   }

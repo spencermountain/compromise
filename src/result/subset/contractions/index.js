@@ -31,14 +31,14 @@ class Contractions extends Text {
     //find currently-contracted
     let found = r.match('#Contraction #Contraction');
     found.list = found.list.map((ts) => {
-      let c = new Contraction(ts.terms, ts.lexicon, ts.parent, ts.parentTerms);
+      let c = new Contraction(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
       c.contracted = true;
       return c;
     });
     //find currently-expanded
     let expanded = findPossible(r);
     expanded.list.forEach((ts) => {
-      let c = new Contraction(ts.terms, ts.lexicon, ts.parent, ts.parentTerms);
+      let c = new Contraction(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
       c.contracted = false;
       found.list.push(c);
     });

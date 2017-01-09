@@ -60,7 +60,7 @@ class Sentences extends Text {
   static find(r) {
     r = r.all();
     r.list = r.list.map((ts) => {
-      return new Sentence(ts.terms, ts.lexicon, ts.parent, ts.parentTerms);
+      return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return r;
   }

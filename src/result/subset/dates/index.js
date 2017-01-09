@@ -27,7 +27,7 @@ class Dates extends Text {
   static find(r) {
     let dates = r.match('#Date+');
     dates.list = dates.list.map((ts) => {
-      return new Date(ts.terms, ts.lexicon, ts.parent, ts.parentTerms);
+      return new Date(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return dates;
   }

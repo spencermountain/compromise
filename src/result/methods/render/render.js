@@ -44,32 +44,32 @@ const prettyPrint = (Text) => {
       }).join(' ');
     },
 
-    phrases: function () {
-      this.list.forEach((ts) => {
-        let str = '';
-        ts.terms.forEach((t) => {
-          let text = t.plaintext();
-          if (t.tag.ConditionPhrase) {
-            str += chalk.magenta(text);
-            return;
-          }
-          if (t.tag.NounPhrase) {
-            str += chalk.cyan(text);
-            return;
-          }
-          if (t.tag.VerbPhrase) {
-            str += chalk.red(text);
-            return;
-          }
-          if (t.tag.AdjectivePhrase) {
-            str += chalk.green(text);
-            return;
-          }
-          str += text;
-        });
-        console.log('\n' + str);
-      });
-    },
+    // phrases: function () {
+    //   this.list.forEach((ts) => {
+    //     let str = '';
+    //     ts.terms.forEach((t) => {
+    //       let text = t.plaintext();
+    //       if (t.tag.ConditionPhrase) {
+    //         str += chalk.magenta(text);
+    //         return;
+    //       }
+    //       if (t.tag.NounPhrase) {
+    //         str += chalk.cyan(text);
+    //         return;
+    //       }
+    //       if (t.tag.VerbPhrase) {
+    //         str += chalk.red(text);
+    //         return;
+    //       }
+    //       if (t.tag.AdjectivePhrase) {
+    //         str += chalk.green(text);
+    //         return;
+    //       }
+    //       str += text;
+    //     });
+    //     console.log('\n' + str);
+    //   });
+    // },
 
     data: function() {
       return this.list.map((ts) => {

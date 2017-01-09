@@ -1,13 +1,13 @@
 'use strict';
 //ngrams are consecutive terms of a specific size
-const ngram = function(options) {
+const ngram = function(r, options) {
   options = options || {};
   options.size = options.size || [1, 2, 3];
   if (typeof options.size === 'number') {
     options.size = [options.size];
   }
   //flatten terms
-  let terms = this.list.map((ts) => {
+  let terms = r.list.map((ts) => {
     return ts.mapTerms((t) => t.normal);
   });
 

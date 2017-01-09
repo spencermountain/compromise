@@ -12,7 +12,7 @@ const fromString = (str, lexicon) => {
   let r = new Text(list, lexicon);
   //give each ts a ref to the result
   r.list.forEach((ts) => {
-    ts.parent = r;
+    ts.refText = r;
   });
   r = corrections(r);
   r = tagPhrase(r);

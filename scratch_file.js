@@ -9,8 +9,11 @@ const nlp = require('./src/index');
 // m.values().toNumber();
 // m.check();
 
-var r = nlp(`Bob Dole was great. Google Inc. in Toronto is fun. Bob Dole was cool`);
-r.topics().check();
+var r = nlp(`Wanda Dole was great. Google Inc. in Toronto is fun. Wanda Dole was cool`);
+var m = r.topics();
+// m.sort('frequency');
+m.check();
+
 // r.verbs().out('text');
 // r.verbs().out('array');
 // r.verbs().out('html');

@@ -12,11 +12,13 @@ class Things extends Text {
   }
   static find(r) {
     r = r.clauses();
+    //find people/places/organizations
     let yup = r.people();
     yup.concat(r.places());
     yup.concat(r.organizations());
-    yup = yup.clone();
-    // yup.toUpperCase();
+    //return them to normal ordering
+    yup.sort('chronological');
+    // yup.unique() //? not sure
     return yup;
   }
 }

@@ -8,7 +8,7 @@ class People extends Text {
     return this.list.map((ts) => ts.data());
   }
   static find(r) {
-    let people = r.splitAfter('#Comma');
+    let people = r.clauses();
     people = people.match('#Person+');
     people.list = people.list.map((ts) => {
       return new Person(ts.terms, ts.lexicon, ts.parent, ts.parentTerms);

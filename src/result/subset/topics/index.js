@@ -11,7 +11,7 @@ class Things extends Text {
     });
   }
   static find(r) {
-    r = r.splitAfter('#Comma');
+    r = r.clauses();
     let yup = r.people();
     yup.concat(r.places());
     yup.concat(r.organizations());

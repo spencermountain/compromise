@@ -44,8 +44,8 @@ module.exports = {
     let word = this.text;
     // word = this.whitespace.before + word + this.whitespace.after;
     word = '\'' + chalk.green(word || '-') + '\'';
-    if(this.dirty){
-      word+='*'
+    if (this.dirty) {
+      word += '*';
     }
     let silent = '';
     if (this.silent_term) {
@@ -53,7 +53,7 @@ module.exports = {
     }
     // word += fns.leftPad(silent, 10);
     word = fns.leftPad(word, 25);
-    word += fns.leftPad(silent, 10);
+    word += fns.leftPad(silent, 1);
     // word = fns.leftPad(word, 32);
     // word = fns.rightPad(word, 28);
     console.log('   ' + word + '   ' + '     - ' + tags);

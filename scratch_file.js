@@ -9,9 +9,8 @@ const nlp = require('./src/index');
 // m.values().toNumber();
 // m.check();
 
-var r = nlp(`he is cool. john was cool. He is really nice.`);
-var arr = r.out('startgram', 2);
-console.log(arr);
+var r = nlp(`Bob Dole was great. Google Inc. in Toronto is fun. Bob Dole was cool`);
+r.topics().check();
 // r.verbs().out('text');
 // r.verbs().out('array');
 // r.verbs().out('html');

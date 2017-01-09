@@ -28,6 +28,19 @@ const render = {
       return arr;
     }, []);
   },
+  json: (r) => {
+    return r.list.reduce((arr, ts) => {
+      let terms = ts.terms.map((t) => {
+        return {
+          text: t.text,
+          normal: t.normal,
+          tags: t.tag
+        };
+      });
+      arr.push(terms);
+      return arr;
+    }, []);
+  },
   html: (r) => {
     let html = r.list.reduce((str, ts) => {
       let sentence = ts.terms.reduce((sen, t) => {
@@ -44,38 +57,40 @@ const render = {
       console.log('   --');
       ts.check();
     });
-    return this;
+    return r;
   }
 };
 //render/output methods
-const out = (method) => {
+const out = (r, method) => {
   if (method === 'text' || method === 'plaintext') {
-    return render.text(this);
+    return render.text(r);
   } else if (method === 'normal' || method === 'normalized') {
-    return render.normal(this);
-  } else if (method === 'array' || method === 'json') {
-    return render.array(this);
+    return render.normal(r);
+  } else if (method === 'array') {
+    return render.array(r);
+  } else if (method === 'json') {
+    return render.json(r);
   } else if (method === 'html') {
-    return render.html(this);
+    return render.html(r);
   } else if (method === 'debug' || method === 'pretty') {
-    return render.debug(this);
+    return render.debug(r);
   } else if (method === 'topk' || method === 'freq' || method === 'frequency') {
-    return topk(this);
+    return topk(r);
   } else if (method === 'ngram') {
-    return ngram(this);
+    return ngram(r);
   } else if (method === 'bigram') {
     let ops = {
       size: [2]
     };
-    return ngram(this, ops);
+    return ngram(r, ops);
   } else if (method === 'trigram') {
     let ops = {
       size: [3]
     };
-    return ngram(this, ops);
+    return ngram(r, ops);
   } else if (method === 'startgram') {
   } else if (method === 'endgram') {
   }
-  return render.text(this);
+  return render.text(r);
 };
 module.exports = out;

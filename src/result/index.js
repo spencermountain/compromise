@@ -1,4 +1,5 @@
 'use strict';
+const out = require('./methods/out');
 //a Text is an array of termLists
 class Text {
   constructor(arr, lexicon, reference) {
@@ -30,6 +31,9 @@ class Text {
   index() {
     return this.list.map((ts) => ts.index());
   }
+  out(msg) {
+    return out(this, msg);
+  }
 
   get whitespace() {
     return {
@@ -56,15 +60,16 @@ Text = require('./methods/tag')(Text);
 Text = require('./methods/sort')(Text);
 Text = require('./methods/case')(Text);
 Text = require('./methods/match/match')(Text);
+Text = require('./methods/render/render')(Text);
 Text = require('./methods/delete')(Text);
 Text = require('./methods/replace')(Text);
-Text = require('./methods/render/render')(Text);
 Text = require('./methods/split')(Text);
 Text = require('./methods/hyphens')(Text);
 Text = require('./methods/insert')(Text);
-Text.prototype.topk = require('./methods/render/topk');
-Text.prototype.ngram = require('./methods/render/ngram');
+// Text.prototype.topk = require('./methods/render/topk');
+// Text.prototype.ngram = require('./methods/render/ngram');
 Text.prototype.normalize = require('./methods/normalize');
+// Text.prototype.out =
 
 const subset = {
   acronyms: require('./subset/acronyms'),

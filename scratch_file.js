@@ -10,7 +10,7 @@ const nlp = require('./src/index');
 // m.check();
 
 const r = nlp(`he is cool. Ben was cool. The frog is cool.`);
-r.verbs().sort('freq').check();
+console.log(r.out('ngram'));
 
 // r.verbs().out('text');
 // r.verbs().out('array');

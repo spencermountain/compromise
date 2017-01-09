@@ -1,16 +1,18 @@
 'use strict';
 //accept '5', [5], and {size:[5]}
 const defaults = function(options) {
-  options = options || {};
   if (typeof options === 'number' || (options && options.length !== undefined)) {
     options = {
       size : options
     };
   }
+  options = options || {};
   if (typeof options.size === 'number') {
     options.size = [options.size];
   }
-  options.size = options.size || [1, 2, 3];
+  if (options.size === undefined) {
+    options.size = [1, 2, 3];
+  }
   return options;
 };
 
@@ -41,7 +43,7 @@ const toArray = function(obj) {
 };
 
 const startgram = function(ts, size) {
-  if (ts.length >= size) {
+  if (size > 0 && ts.length >= size) {
     let gram = ts.slice(0, size);
     let str = gram.normal();
     return str;
@@ -49,7 +51,7 @@ const startgram = function(ts, size) {
   return null;
 };
 const endgram = function(ts, size) {
-  if (ts.length >= size) {
+  if (size > 0 && ts.length >= size) {
     let end = ts.length;
     let gram = ts.slice(end - size, end);
     let str = gram.normal();
@@ -67,8 +69,10 @@ exports.start = function(r, options) {
     //count each gram #times
     r.list.forEach((ts) => {
       let str = startgram(ts, size);
-      grams[size][str] = grams[size][str] || 0;
-      grams[size][str] += 1;
+      if (str) {
+        grams[size][str] = grams[size][str] || 0;
+        grams[size][str] += 1;
+      }
     });
   });
   return toArray(grams);
@@ -83,8 +87,10 @@ exports.end = function(r, options) {
     //count each gram #times
     r.list.forEach((ts) => {
       let str = endgram(ts, size);
-      grams[size][str] = grams[size][str] || 0;
-      grams[size][str] += 1;
+      if (str) {
+        grams[size][str] = grams[size][str] || 0;
+        grams[size][str] += 1;
+      }
     });
   });
   return toArray(grams);
@@ -99,12 +105,16 @@ exports.both = function(r, options) {
     r.list.forEach((ts) => {
       //start
       let str = startgram(ts, size);
-      grams[size][str] = grams[size][str] || 0;
-      grams[size][str] += 1;
+      if (str) {
+        grams[size][str] = grams[size][str] || 0;
+        grams[size][str] += 1;
+      }
       //end
       str = endgram(ts, size);
-      grams[size][str] = grams[size][str] || 0;
-      grams[size][str] += 1;
+      if (str) {
+        grams[size][str] = grams[size][str] || 0;
+        grams[size][str] += 1;
+      }
     });
   });
   return toArray(grams);

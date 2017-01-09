@@ -9,7 +9,7 @@ const nlp = require('./src/index');
 // m.values().toNumber();
 // m.check();
 
-const r = nlp(`he is cool. john was cool. He is really nice`);
+const r = nlp(`he is cool. john was cool. He is nice`);
 console.log(r.out('edgegram', 2));
 // r.verbs().out('text');
 // r.verbs().out('array');

@@ -7,7 +7,7 @@ class Terms {
     this.terms = arr;
     this.lexicon = lexicon;
     this.refText = refText;
-    this.refTerms = refTerms;
+    this._refTerms = refTerms;
     this.get = (n) => {
       return this.terms[n];
     };
@@ -20,6 +20,13 @@ class Terms {
   }
   get isA() {
     return 'Terms';
+  }
+  get refTerms() {
+    return this._refTerms || this;
+  }
+  set refTerms(ts) {
+    this._refTerms = ts;
+    return this;
   }
   set dirty(dirt) {
     this.terms.forEach((t) => {

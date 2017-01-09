@@ -124,7 +124,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon['muller']);
+// console.log(lexicon['years']);
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.verb.conjugate())

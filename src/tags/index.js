@@ -35,9 +35,6 @@ const all_children = (obj) => {
 const add_tags = (obj, is) => {
   Object.keys(obj).forEach((k) => {
     is = is.slice(0); //clone it
-    if (extra[k]) {
-      is.push(extra[k]);
-    }
     all[k] = {
       parents: is,
       children: all_children(obj[k])
@@ -48,6 +45,13 @@ const add_tags = (obj, is) => {
   });
 };
 add_tags(tree, []);
+
+//add extras
+Object.keys(all).forEach((tag) => {
+  if (extra[tag]) {
+    all[tag].parents.push(extra[tag]);
+  }
+});
 
 //add conflicts
 Object.keys(all).forEach((tag) => {
@@ -60,5 +64,5 @@ Object.keys(all).forEach((tag) => {
 });
 
 module.exports = all;
-// console.log(all.Month);
+// console.log(all.Duration);
 // console.log(all_children(tree['NounPhrase']));

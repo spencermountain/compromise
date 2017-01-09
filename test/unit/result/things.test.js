@@ -2,7 +2,7 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 
 test('topics concat:', function (t) {
-  var things = nlp('spencer and danny are in Paris France, and germany for Google Inc and IBM').things().asArray();
+  var things = nlp('spencer and danny are in Paris France, and germany for Google Inc and IBM').topics().asArray();
   var want = [
     'spencer',
     'danny',

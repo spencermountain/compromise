@@ -27,9 +27,10 @@ test('edgegram-sizes:', function (t) {
 
 test('edgegram-sizes:', function (t) {
   var r = nlp(`he is cool. john was cool. He is really nice.`);
-  var arr = r.out('edgegram', 2);
+  var arr = r.out('startgram', 2);
   t.equal(arr[0].text, 'he is', 'sorted-by-freq');
   t.equal(arr[0].count, 2, 'normalized-counted');
   t.equal(arr[0].size, 2, 'normalized-counted');
+  t.equal(arr.length, 2, 'list-results-total');
   t.end();
 });

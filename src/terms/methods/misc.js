@@ -14,6 +14,10 @@ const miscMethods = (Terms) => {
       let t = this.terms[this.terms.length - 1];
       return new Terms([t], this.lexicon, this.parent);
     },
+    slice: function (start, end) {
+      let terms = this.terms.slice(start, end);
+      return new Terms(terms, this.lexicon, this.parent);
+    },
     endPunctuation: function () {
       return this.last().terms[0].endPunctuation();
     },

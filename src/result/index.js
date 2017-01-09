@@ -31,8 +31,8 @@ class Text {
   index() {
     return this.list.map((ts) => ts.index());
   }
-  out(msg) {
-    return out(this, msg);
+  out(msg, opts) {
+    return out(this, msg, opts);
   }
 
   get whitespace() {

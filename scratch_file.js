@@ -9,9 +9,8 @@ const nlp = require('./src/index');
 // m.values().toNumber();
 // m.check();
 
-const r = nlp(`he is cool. Ben was cool. The frog is cool.`);
-console.log(r.out('ngram'));
-
+const r = nlp(`he is cool. john was cool. He is really nice.`);
+console.log(r.out('startgram', 4));
 // r.verbs().out('text');
 // r.verbs().out('array');
 // r.verbs().out('html');

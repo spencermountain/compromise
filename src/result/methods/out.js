@@ -1,5 +1,6 @@
 'use strict';
 const ngram = require('./render/ngram');
+const edgegram = require('./render/edgegram');
 const topk = require('./render/topk');
 
 const render = {
@@ -61,7 +62,7 @@ const render = {
   }
 };
 //render/output methods
-const out = (r, method) => {
+const out = (r, method, opts) => {
   if (method === 'text' || method === 'plaintext') {
     return render.text(r);
   } else if (method === 'normal' || method === 'normalized') {
@@ -79,17 +80,21 @@ const out = (r, method) => {
   } else if (method === 'ngram') {
     return ngram(r);
   } else if (method === 'bigram') {
-    let ops = {
+    opts = opts || {
       size: [2]
     };
-    return ngram(r, ops);
+    return ngram(r, opts);
   } else if (method === 'trigram') {
-    let ops = {
+    opts = opts || {
       size: [3]
     };
-    return ngram(r, ops);
+    return ngram(r, opts);
+  } else if (method === 'edgegram') {
+    return edgegram.both(r, opts);
   } else if (method === 'startgram') {
+    return edgegram.start(r, opts);
   } else if (method === 'endgram') {
+    return edgegram.end(r, opts);
   }
   return render.text(r);
 };

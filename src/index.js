@@ -94,6 +94,7 @@ function NLP() {
 let nlp = new NLP();
 //export to window or webworker
 if (typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'function') {
+  const self = typeof self === 'undefined' ? this : self; // eslint-disable-line no-use-before-define
   self.nlp_compromise = nlp;
 }
 //export to commonjs

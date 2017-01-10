@@ -2013,6 +2013,7 @@ function NLP() {
 var nlp = new NLP();
 //export to window or webworker
 if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' || typeof DedicatedWorkerGlobalScope === 'function') {
+  var self = typeof self === 'undefined' ? undefined : self; // eslint-disable-line no-use-before-define
   self.nlp_compromise = nlp;
 }
 //export to commonjs

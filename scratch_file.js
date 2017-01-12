@@ -13,5 +13,5 @@ const nlp = require('./src/index');
 // r.sentences(1).toExclamation();
 // console.log(r.out('normal'));
 var r = nlp('I look just like buddy holly');
-console.log(r.sentences().toFutureTense().out('text'));
+console.log(r.sentences().toNegative().out('text'));
 r.check();

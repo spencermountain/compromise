@@ -60,7 +60,10 @@ class Sentence extends Terms {
     if (cp.found) {
       cp.firstTerm().verbs().toNegative();
     } else {
-      this.match('#Verb').firstTerm().verbs().toNegative();
+      let verb = this.mainVerb();
+      if (verb) {
+        verb.verb.toNegative();
+      }
     }
     return this;
   }

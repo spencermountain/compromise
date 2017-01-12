@@ -28,6 +28,20 @@ class Sentences extends Text {
     });
     return this;
   }
+  /** negative/positive */
+  toNegative() {
+    this.list.forEach((ts) => {
+      ts.toNegative();
+    });
+    return this;
+  }
+  toPositive() {
+    this.list.forEach((ts) => {
+      ts.toPositive();
+    });
+    return this;
+  }
+
 
   /** look for 'was _ by' patterns */
   passive() {

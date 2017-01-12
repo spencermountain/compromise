@@ -412,6 +412,7 @@ module.exports={
   },
   "scripts": {
     "test": "node ./scripts/test.js",
+    "browsertest": "node ./scripts/browserTest.js",
     "build": "node ./scripts/build.js",
     "demo": "node ./scripts/demo.js",
     "watch": "node ./scripts/watch.js",
@@ -2644,32 +2645,36 @@ exports.leftPad = function (str, width, char) {
 };
 
 },{}],47:[function(_dereq_,module,exports){
+(function (global){
 'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 var buildResult = _dereq_('./result/build');
 var pkg = _dereq_('../package.json');
 
+//the main thing
 var nlp = function nlp(str, context) {
   return buildResult(str, context);
 };
 nlp.version = pkg.version;
 
-//export to window or a webworker
-if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' || typeof DedicatedWorkerGlobalScope === 'function') {
-  var self = typeof self === 'undefined' ? undefined : self; // eslint-disable-line no-use-before-define
-  self.nlp = nlp;
+//and then all-the-exports...
+if (typeof self !== 'undefined') {
+  self.nlp = nlp; // Web Worker
+} else if (typeof window !== 'undefined') {
+  window.nlp = nlp; // Browser
+} else if (typeof global !== 'undefined') {
+  global.nlp = nlp; // NodeJS
 }
-//export to amd
+//don't forget amd!
 if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
-//export to commonjs
-if (typeof module !== 'undefined' && module.exports) {
+//for some reason do this too!
+if (typeof module !== 'undefined') {
   module.exports = nlp;
 }
 
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"../package.json":10,"./result/build":49}],48:[function(_dereq_,module,exports){
 'use strict';
 

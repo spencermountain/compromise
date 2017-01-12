@@ -1,23 +1,26 @@
 'use strict';
-
 const buildResult = require('./result/build');
 const pkg = require('../package.json');
 
+//the main thing
 const nlp = function (str, context) {
   return buildResult(str, context);
 };
 nlp.version = pkg.version;
 
-//export to window or a webworker
-if (typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'function') {
-  const self = typeof self === 'undefined' ? this : self; // eslint-disable-line no-use-before-define
-  self.nlp = nlp;
+//and then all-the-exports...
+if (typeof self !== 'undefined') {
+  self.nlp = nlp; // Web Worker
+} else if (typeof window !== 'undefined') {
+  window.nlp = nlp; // Browser
+} else if (typeof global !== 'undefined') {
+  global.nlp = nlp; // NodeJS
 }
-//export to amd
+//don't forget amd!
 if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
-//export to commonjs
-if (typeof module !== 'undefined' && module.exports) {
+//for some reason do this too!
+if (typeof module !== 'undefined') {
   module.exports = nlp;
 }

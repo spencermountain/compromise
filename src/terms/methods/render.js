@@ -12,9 +12,16 @@ const renderMethods = (Terms) => {
     },
 
     normal: function () {
-      return this.terms.filter((t) => t.text).map((t) => t.normal).join(' ');
+      let terms = this.terms.filter((t) => {
+        return t.text;
+      });
+      terms = terms.map((t) => {
+        return t.normal; //+ punct;
+      });
+      return terms.join(' ');
     },
 
+    /** no punctuation, fancy business **/
     root: function () {
       return this.terms.filter((t) => t.text).map((t) => t.normal).join(' ').toLowerCase();
     },

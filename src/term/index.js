@@ -73,7 +73,7 @@ class Term {
         '?': 'question'
       };
       if (allowed[m[1]]) {
-        return allowed[m[1]];
+        return m[1];
       }
     }
     return null;

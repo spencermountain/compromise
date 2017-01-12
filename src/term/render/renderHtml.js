@@ -38,17 +38,17 @@ const sanitize = (html) => {
     html = html.replace(tagOrComment, '');
   } while (html !== oldHtml);
   return html.replace(/</g, '&lt;');
-}
+};
 
 //turn the term into ~properly~ formatted html
 const renderHtml = function(t) {
   let classes = Object.keys(t.tag).filter((tag) => tag !== 'Term');
-  classes = classes.map(c => 'nlp' + c);
+  classes = classes.map(c => 'nl-' + c);
   classes = classes.join(' ');
-  let text = sanitize(t.text)
+  let text = sanitize(t.text);
   text = escapeHtml(text);
   let el = '<span class="' + classes + '">' + text + '</span>';
-  return escapeHtml(t.whitespace.before) + el + escapeHtml(t.whitespace.after)
+  return escapeHtml(t.whitespace.before) + el + escapeHtml(t.whitespace.after);
 };
 
 module.exports = renderHtml;

@@ -6,6 +6,7 @@ const pkg = require('../package.json');
 const nlp = function (str, context) {
   return buildResult(str, context);
 };
+//this is handy
 nlp.version = pkg.version;
 
 //and then all-the-exports...
@@ -20,7 +21,7 @@ if (typeof self !== 'undefined') {
 if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
-//for some reason do this too!
+//then for some reason, do this too!
 if (typeof module !== 'undefined') {
   module.exports = nlp;
 }

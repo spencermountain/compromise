@@ -45,12 +45,12 @@ const render = {
   html: (r) => {
     let html = r.list.reduce((str, ts) => {
       let sentence = ts.terms.reduce((sen, t) => {
-        sen += t.render.html();
+        sen += '\n    ' + t.render.html();
         return sen;
       }, '');
-      return '<span>' + sentence + '</span>';
+      return str += '\n  <span>' + sentence + '\n  </span>';
     }, '');
-    return '<span>' + html + '</span>';
+    return '<span> ' + html + '\n</span>';
   },
   debug: (r) => {
     console.log('====');

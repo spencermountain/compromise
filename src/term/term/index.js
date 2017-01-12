@@ -5,26 +5,6 @@ const fns = path.fns;
 const tagset = path.tags;
 const term = {
 
-  /** the punctuation at the end of this term*/
-  endPunctuation: function () {
-    let m = this.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/i);
-    if (m) {
-      const allowed = {
-        ',': 'comma',
-        ':': 'colon',
-        ';': 'semicolon',
-        '.': 'period',
-        '...': 'elipses',
-        '!': 'exclamation',
-        '?': 'question'
-      };
-      if (allowed[m[1]]) {
-        return allowed[m[1]];
-      }
-    }
-    return null;
-  },
-
   /** interpret a term's hyphenation */
   hyphenation: function () {
     let m = this.normal.match(/^([a-z]+)-([a-z]+)$/);
@@ -162,11 +142,6 @@ const term = {
       }
     }
     return true;
-  },
-
-  insertAfter: function () {
-    let index = this.index();
-  // console.log(this.parent)
   }
 
 };

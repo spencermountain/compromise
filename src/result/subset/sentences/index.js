@@ -4,43 +4,6 @@ const Sentence = require('./sentence');
 
 
 class Sentences extends Text {
-
-  data() {
-    return this.list.map((ts) => {
-      return {
-        text: ts.plaintext(),
-        normal: ts.normal()
-      };
-    });
-  }
-
-  /** inflect the main/first noun*/
-  toSingular() {
-    let nouns = this.match('#Noun').match('!#Pronoun').firstTerm();
-    nouns.things().toSingular();
-    return this;
-  }
-  toPlural() {
-    let nouns = this.match('#Noun').match('!#Pronoun').firstTerm();
-    nouns.things().toPlural();
-    return this;
-  }
-
-  /** negate the main/first copula*/
-  toNegative() {
-    let cp = this.match('#Copula');
-    if (cp.found) {
-      cp.firstTerm().verbs().toNegative();
-    } else {
-      this.match('#Verb').firstTerm().verbs().toNegative();
-    }
-    return this;
-  }
-  toPositive() {
-    this.match('#Negative').delete();
-    return this;
-  }
-
   /** conjugate the main/first verb*/
   toPast() {
     return this;
@@ -53,9 +16,31 @@ class Sentences extends Text {
   }
 
   /** look for 'was _ by' patterns */
-  isPassive() {
-    //haha
-    return this.match('was #Adverb? #PastTense #Adverb? by').found;
+  passive() {
+    this.list = this.list.filter((ts) => {
+      return ts.isPassive();
+    });
+    return this;
+  }
+
+  /** convert between question/statement/exclamation*/
+  toExclamation() {
+    this.list.forEach((ts) => {
+      ts.setPunctuation('!');
+    });
+    return this;
+  }
+  toQuestion() {
+    this.list.forEach((ts) => {
+      ts.setPunctuation('?');
+    });
+    return this;
+  }
+  toStatement() {
+    this.list.forEach((ts) => {
+      ts.setPunctuation('.');
+    });
+    return this;
   }
   static find(r) {
     r = r.all();

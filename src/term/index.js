@@ -59,22 +59,45 @@ class Term {
   get isA() {
     return 'Term';
   }
-
+  /** the punctuation at the end of this term*/
+  endPunctuation() {
+    let m = this.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/i);
+    if (m) {
+      const allowed = {
+        ',': 'comma',
+        ':': 'colon',
+        ';': 'semicolon',
+        '.': 'period',
+        '...': 'elipses',
+        '!': 'exclamation',
+        '?': 'question'
+      };
+      if (allowed[m[1]]) {
+        return allowed[m[1]];
+      }
+    }
+    return null;
+  }
+  setPunctuation(punct) {
+    this.text = this.text.replace(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/i, '');
+    this.text += punct;
+    return this;
+  }
   normalize() {
     addNormal(this);
     addRoot(this);
   }
 
-  /** the comma, period ... punctuation that ends this sentence */
-  endPunctuation() {
-    let m = this._text.match(/([\.\?\!,;:])$/);
-    if (m) {
-      //remove it from end of text
-      // this.text = this._text.substr(0, this._text.length - 1);
-      return m[0];
-    }
-    return '';
-  }
+  // /** the comma, period ... punctuation that ends this sentence */
+  // endPunctuation() {
+  //   let m = this._text.match(/([\.\?\!,;:])$/);
+  //   if (m) {
+  //     //remove it from end of text
+  //     // this.text = this._text.substr(0, this._text.length - 1);
+  //     return m[0];
+  //   }
+  //   return '';
+  // }
 
   /** print-out this text, as it was given */
   plaintext() {

@@ -19,9 +19,9 @@ child.stdout.on('error', function() {
 });
 
 //final build locations
-var banner = '/* nlp_compromise v' + pkg.version + '\n   github.com/nlp-compromise\n   MIT\n*/\n';
-var uncompressed = './builds/nlp_compromise.js';
-var compressed = './builds/nlp_compromise.min.js';
+var banner = '/* compromise v' + pkg.version + '\n   github.com/nlp-compromise\n   MIT\n*/\n';
+var uncompressed = './builds/compromise.js';
+var compressed = './builds/compromise.min.js';
 
 //cleanup. remove old builds
 exec('rm -rf ./builds && mkdir builds');

@@ -2,10 +2,10 @@ var nlp;
 if (typeof window !== undefined) {
   nlp = require('../../../src/index');
 } else {
-  nlp = window.nlp_compromise;
+  nlp = window.nlp;
   alert('browser');
 }
-// var nlp = require('../../builds/nlp_compromise');
-// var nlp = require('../../builds/nlp_compromise.min');
+// var nlp = require('../../builds/compromise');
+// var nlp = require('../../builds/compromise.min');
 
 module.exports = nlp;

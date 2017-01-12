@@ -6,7 +6,7 @@ setTimeout(() => {
   console.log(chalk.blue('\n\n==Warm-up, lexicon, etc=='));
   console.time('pre');
   const nlp = require('../src/index');
-  // const nlp = require('../builds/nlp_compromise.js');
+  // const nlp = require('../builds/compromise.js');
   console.timeEnd('pre');
   // require('./src/logger').enable();
   // var m = nlp(freshPrince).things();

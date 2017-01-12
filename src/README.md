@@ -27,4 +27,4 @@ main structure:
 
 you can do it!
 
-[some help with contributing](https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing)
+[some help with contributing](https://github.com/nlp-compromise/compromise/wiki/Contributing)

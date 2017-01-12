@@ -14,7 +14,7 @@
   <sub>
     by
     <a href="https://github.com/spencermountain">Spencer Kelly</a> and
-    <a href="https://github.com/nlp-compromise/nlp_compromise/graphs/contributors">
+    <a href="https://github.com/nlp-compromise/compromise/graphs/contributors">
       contributors
     </a>
   </sub>
@@ -29,7 +29,7 @@
 <div align="center">
   inspect and play with english text
   <div>
-    focus on being <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Justification">handy, and not overly-fancy.</a>
+    focus on being <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">handy, and not overly-fancy.</a>
   </div>
 </div>
 <br/>
@@ -42,27 +42,27 @@ nlp('I look just like buddy holly').sentences().toPast().text()
 <h3 align="center">
   <a href="http://nlpcompromise.com">Demos</a>
   <span>&nbsp; | &nbsp;</span>
-  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started">Quick-start</a>
+  <a href="https://github.com/nlp-compromise/compromise/wiki/Getting-Started">Quick-start</a>
   <span>&nbsp; | &nbsp;</span>
-  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/API">Docs</a>
+  <a href="https://github.com/nlp-compromise/compromise/wiki/API">Docs</a>
   <span>&nbsp; | &nbsp;</span>
-  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Accuracy">Accuracy</a>
+  <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">Accuracy</a>
 </h3>
 
 <div align="center">
   :boom:Welcome to <b>v7</b>:boom:
   <div>
-    <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/v7-upgrade-instructions">a lot</a>
+    <a href="https://github.com/nlp-compromise/compromise/wiki/v7-upgrade-instructions">a lot</a>
     has changed!
   </div>
 </div>
 
 ### Yup,
-* a [140k js file](https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js)
-* **[86%](https://github.com/nlp-compromise/nlp_compromise/wiki/Accuracy)** on the **Penn treebank**
-* [keypress speed](https://github.com/nlp-compromise/nlp_compromise/wiki/Performance), constant-time.
+* a [140k js file](https://unpkg.com/nlp_compromise@latest/builds/compromise.min.js)
+* **[86%](https://github.com/nlp-compromise/compromise/wiki/Accuracy)** on the **Penn treebank**
+* [keypress speed](https://github.com/nlp-compromise/compromise/wiki/Performance), constant-time.
 * caniuse, uhuh. **IE9+**
-* [no dependencies](https://github.com/nlp-compromise/nlp_compromise/wiki/Getting-Started), training, configuration, or prolog
+* [no dependencies](https://github.com/nlp-compromise/compromise/wiki/Getting-Started), training, configuration, or prolog
 
 ###Grammar, for the win:
 ```javascript
@@ -144,13 +144,13 @@ r = nlp('Tony Hawk won').asHtml()
 */
 ```
 <h3 align="center">
-  and yes, ofcourse, there's <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/API">a lot more stuff</a>.
+  and yes, ofcourse, there's <a href="https://github.com/nlp-compromise/compromise/wiki/API">a lot more stuff</a>.
 </h3>
 
 ###Join-in:
 <div align="center">
   we're fun, we're using <b>semver</b>, and moving fast.
-  <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Contributing">
+  <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">
   :hammer_and_wrench: get involved :dancer: </a>
 </div>
 <br/>

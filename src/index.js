@@ -8,4 +8,16 @@ const nlp = function (str, context) {
 };
 nlp.version = pkg.version;
 
-module.exports = nlp;
+//export to window or a webworker
+if (typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'function') {
+  const self = typeof self === 'undefined' ? this : self; // eslint-disable-line no-use-before-define
+  self.nlp = nlp;
+}
+//export to amd
+if (typeof define === 'function' && define.amd) {
+  define(nlp);
+}
+//export to commonjs
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = nlp;
+}

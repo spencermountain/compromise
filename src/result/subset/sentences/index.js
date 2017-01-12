@@ -10,13 +10,22 @@ class Sentences extends Text {
     });
   }
   /** conjugate the main/first verb*/
-  toPast() {
+  toPastTense() {
+    this.list.forEach((ts) => {
+      ts.toPastTense();
+    });
     return this;
   }
-  toPresent() {
+  toPresentTense() {
+    this.list.forEach((ts) => {
+      ts.toPresentTense();
+    });
     return this;
   }
-  toFuture() {
+  toFutureTense() {
+    this.list.forEach((ts) => {
+      ts.toFutureTense();
+    });
     return this;
   }
 

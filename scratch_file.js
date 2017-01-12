@@ -9,7 +9,9 @@ const nlp = require('./src/index');
 // m.values().toNumber();
 // m.check();
 
-var r = nlp('ben is cool. John goes to work at the FBI and CIA.');
+// var r = nlp('ben is cool. John goes to work at the FBI and CIA.');
 // r.sentences(1).toExclamation();
 // console.log(r.out('normal'));
-r.acronyms(1).check();
+var r = nlp('I look just like buddy holly');
+console.log(r.sentences().toFutureTense().out('text'));
+r.check();

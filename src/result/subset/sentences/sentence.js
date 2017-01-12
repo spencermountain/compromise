@@ -19,6 +19,41 @@ class Sentence extends Terms {
     return this;
   }
 
+  //returns a Term object
+  mainVerb() {
+    //this should be more fancy..
+    for(let i = 0; i < this.terms.length; i++) {
+      let t = this.terms[i];
+      if (t.tag.Verb && !t.tag.Auxillary) {
+        return t;
+      }
+    }
+    return null;
+  }
+
+  /** sentence tense conversion**/
+  toPastTense() {
+    let verb = this.mainVerb();
+    if (verb) {
+      verb.verb.toPastTense();
+    }
+    return this;
+  }
+  toPresentTense() {
+    let verb = this.mainVerb();
+    if (verb) {
+      verb.verb.toPresentTense();
+    }
+    return this;
+  }
+  toFutureTense() {
+    let verb = this.mainVerb();
+    if (verb) {
+      verb.verb.toFutureTense();
+    }
+    return this;
+  }
+
   /** negate the main/first copula*/
   toNegative() {
     let cp = this.match('#Copula');

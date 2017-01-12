@@ -49,6 +49,7 @@ module.exports = {
   conjugate: function (verbose) {
     return conjugate(this, verbose);
   },
+
   pastTense: function () {
     return conjugate(this).PastTense;
   },
@@ -57,5 +58,22 @@ module.exports = {
   },
   futureTense: function () {
     return conjugate(this).FutureTense;
-  }
+  },
+
+  //mutable methods
+  toPastTense: function () {
+    this.text = conjugate(this).PastTense;
+    this.tagAs('PastTense');
+    return this;
+  },
+  toPresentTense: function () {
+    this.text = conjugate(this).Infinitive;
+    this.tagAs('Infinitive');
+    return this;
+  },
+  toFutureTense: function () {
+    this.text = conjugate(this).FutureTense;
+    this.tagAs('FutureTense');
+    return this;
+  },
 };

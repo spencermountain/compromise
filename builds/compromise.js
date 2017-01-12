@@ -2655,6 +2655,7 @@ var pkg = _dereq_('../package.json');
 var nlp = function nlp(str, context) {
   return buildResult(str, context);
 };
+//this is handy
 nlp.version = pkg.version;
 
 //and then all-the-exports...
@@ -2669,7 +2670,7 @@ if (typeof self !== 'undefined') {
 if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
-//for some reason do this too!
+//then for some reason, do this too!
 if (typeof module !== 'undefined') {
   module.exports = nlp;
 }
@@ -2879,9 +2880,9 @@ var subset = {
 };
 //term subsets
 Object.keys(subset).forEach(function (k) {
-  Text.prototype[k] = function () {
+  Text.prototype[k] = function (num) {
     var sub = subset[k];
-    var m = sub.find(this);
+    var m = sub.find(this, num);
     return new subset[k](m.list, this.lexicon, this.parent);
   };
 });
@@ -3391,12 +3392,12 @@ var render = {
   html: function html(r) {
     var html = r.list.reduce(function (str, ts) {
       var sentence = ts.terms.reduce(function (sen, t) {
-        sen += t.render.html();
+        sen += '\n    ' + t.render.html();
         return sen;
       }, '');
-      return '<span>' + sentence + '</span>';
+      return str += '\n  <span>' + sentence + '\n  </span>';
     }, '');
-    return '<span>' + html + '</span>';
+    return '<span> ' + html + '\n</span>';
   },
   debug: function debug(r) {
     console.log('====');
@@ -4085,8 +4086,12 @@ var Acronyms = function (_Text) {
     }
   }], [{
     key: 'find',
-    value: function find(r) {
-      return r.match('#Acronym');
+    value: function find(r, n) {
+      r = r.match('#Acronym');
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
+      return r;
     }
   }]);
 
@@ -4133,8 +4138,12 @@ var Adjectives = function (_Text) {
     }
   }], [{
     key: 'find',
-    value: function find(r) {
-      return r.match('#Adjective');
+    value: function find(r, n) {
+      r = r.match('#Adjective');
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
+      return r;
     }
   }]);
 
@@ -4178,8 +4187,12 @@ var Adverbs = function (_Text) {
     }
   }], [{
     key: 'find',
-    value: function find(r) {
-      return r.match('#Adverb+');
+    value: function find(r, n) {
+      r = r.match('#Adverb+');
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
+      return r;
     }
   }]);
 
@@ -4212,8 +4225,11 @@ var Clauses = function (_Text) {
 
   _createClass(Clauses, null, [{
     key: 'find',
-    value: function find(r) {
+    value: function find(r, n) {
       r = r.splitAfter('#ClauseEnd');
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
       return r;
     }
   }]);
@@ -4453,7 +4469,7 @@ var Contractions = function (_Text) {
     }
   }], [{
     key: 'find',
-    value: function find(r) {
+    value: function find(r, n) {
       //find currently-contracted
       var found = r.match('#Contraction #Contraction');
       found.list = found.list.map(function (ts) {
@@ -4469,6 +4485,10 @@ var Contractions = function (_Text) {
         found.list.push(c);
       });
       found.sort('chronological');
+      //get nth element
+      if (typeof n === 'number') {
+        found = found.get(n);
+      }
       return found;
     }
   }]);
@@ -4580,8 +4600,11 @@ var Dates = function (_Text) {
     }
   }], [{
     key: 'find',
-    value: function find(r) {
+    value: function find(r, n) {
       var dates = r.match('#Date+');
+      if (typeof n === 'number') {
+        dates = dates.get(n);
+      }
       dates.list = dates.list.map(function (ts) {
         return new Date(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
       });
@@ -4874,8 +4897,12 @@ var HashTags = function (_Text) {
     }
   }], [{
     key: 'find',
-    value: function find(r) {
-      return r.match('#HashTag');
+    value: function find(r, n) {
+      r = r.match('#HashTag');
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
+      return r;
     }
   }]);
 
@@ -4922,18 +4949,19 @@ var Nouns = function (_Text) {
     }
   }], [{
     key: 'find',
-    value: function find(r) {
+    value: function find(r, n) {
       r = r.clauses();
       r = r.match('#Noun+');
       // r = r.not('#Pronoun');
-      // let dates=
       // if (r.match('#Date').found) {
       //   r = r.not('#Date');
       // }
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
       r.list = r.list.map(function (ts) {
         return new Noun(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
       });
-      // console.log(r.list);
       return r;
     }
   }]);
@@ -5140,9 +5168,13 @@ var Organizations = function (_Text) {
     }
   }], [{
     key: 'find',
-    value: function find(r) {
+    value: function find(r, n) {
       r = r.splitAfter('#Comma');
-      return r.match('#Organization+');
+      r = r.match('#Organization+');
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
+      return r;
     }
   }]);
 
@@ -5216,9 +5248,12 @@ var People = function (_Text) {
     }
   }], [{
     key: 'find',
-    value: function find(r) {
+    value: function find(r, n) {
       var people = r.clauses();
       people = people.match('#Person+');
+      if (typeof n === 'number') {
+        people = people.get(n);
+      }
       people.list = people.list.map(function (ts) {
         return new Person(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
       });
@@ -5358,7 +5393,11 @@ var PhoneNumbers = function (_Text) {
     key: 'find',
     value: function find(r) {
       r = r.splitAfter('#Comma');
-      return r.match('#PhoneNumber+');
+      r = r.match('#PhoneNumber+');
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
+      return r;
     }
   }]);
 
@@ -5402,9 +5441,12 @@ var Places = function (_Text) {
     }
   }], [{
     key: 'find',
-    value: function find(r) {
+    value: function find(r, n) {
       r = r.splitAfter('#Comma');
       r = r.match('#Place+');
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
       r.list = r.list.map(function (ts) {
         return new Place(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
       });
@@ -5487,13 +5529,154 @@ var Sentences = function (_Text) {
     key: 'data',
     value: function data() {
       return this.list.map(function (ts) {
-        return {
-          text: ts.plaintext(),
-          normal: ts.normal()
-        };
+        return ts.data();
       });
     }
+    /** conjugate the main/first verb*/
 
+  }, {
+    key: 'toPast',
+    value: function toPast() {
+      return this;
+    }
+  }, {
+    key: 'toPresent',
+    value: function toPresent() {
+      return this;
+    }
+  }, {
+    key: 'toFuture',
+    value: function toFuture() {
+      return this;
+    }
+
+    /** look for 'was _ by' patterns */
+
+  }, {
+    key: 'passive',
+    value: function passive() {
+      this.list = this.list.filter(function (ts) {
+        return ts.isPassive();
+      });
+      return this;
+    }
+
+    /** convert between question/statement/exclamation*/
+
+  }, {
+    key: 'toExclamation',
+    value: function toExclamation() {
+      this.list.forEach(function (ts) {
+        ts.setPunctuation('!');
+      });
+      return this;
+    }
+  }, {
+    key: 'toQuestion',
+    value: function toQuestion() {
+      this.list.forEach(function (ts) {
+        ts.setPunctuation('?');
+      });
+      return this;
+    }
+  }, {
+    key: 'toStatement',
+    value: function toStatement() {
+      this.list.forEach(function (ts) {
+        ts.setPunctuation('.');
+      });
+      return this;
+    }
+  }], [{
+    key: 'find',
+    value: function find(r, n) {
+      r = r.all();
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
+      r.list = r.list.map(function (ts) {
+        return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+      });
+      return new Text(r.list, this.lexicon, this.parent);
+    }
+  }]);
+
+  return Sentences;
+}(Text);
+
+module.exports = Sentences;
+
+},{"../../index":50,"./sentence":99}],98:[function(_dereq_,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Text = _dereq_('../index');
+
+var Questions = function (_Text) {
+  _inherits(Questions, _Text);
+
+  function Questions() {
+    _classCallCheck(this, Questions);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Questions).apply(this, arguments));
+  }
+
+  _createClass(Questions, null, [{
+    key: 'find',
+    value: function find(r, n) {
+      r = r.all();
+      r = r.filter(function (ts) {
+        return ts.last().endPunctuation() === '?';
+      });
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
+      return r;
+    }
+  }]);
+
+  return Questions;
+}(Text);
+
+module.exports = Questions;
+
+},{"../index":97}],99:[function(_dereq_,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Terms = _dereq_('../../paths').Terms;
+
+var Sentence = function (_Terms) {
+  _inherits(Sentence, _Terms);
+
+  function Sentence() {
+    _classCallCheck(this, Sentence);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Sentence).apply(this, arguments));
+  }
+
+  _createClass(Sentence, [{
+    key: 'data',
+    value: function data() {
+      return {
+        text: this.plaintext(),
+        normal: this.normal()
+      };
+    }
     /** inflect the main/first noun*/
 
   }, {
@@ -5527,28 +5710,21 @@ var Sentences = function (_Text) {
   }, {
     key: 'toPositive',
     value: function toPositive() {
-      this.match('#Negative').delete();
-      return this;
-    }
-
-    /** conjugate the main/first verb*/
-
-  }, {
-    key: 'toPast',
-    value: function toPast() {
+      this.match('#Negative').first().delete();
       return this;
     }
   }, {
-    key: 'toPresent',
-    value: function toPresent() {
-      return this;
+    key: 'setPunctuation',
+    value: function setPunctuation(punct) {
+      var last = this.terms[this.terms.length - 1];
+      last.setPunctuation(punct);
     }
   }, {
-    key: 'toFuture',
-    value: function toFuture() {
-      return this;
+    key: 'getPunctuation',
+    value: function getPunctuation() {
+      var last = this.terms[this.terms.length - 1];
+      return last.getPunctuation();
     }
-
     /** look for 'was _ by' patterns */
 
   }, {
@@ -5557,88 +5733,7 @@ var Sentences = function (_Text) {
       //haha
       return this.match('was #Adverb? #PastTense #Adverb? by').found;
     }
-  }], [{
-    key: 'find',
-    value: function find(r) {
-      r = r.all();
-      r.list = r.list.map(function (ts) {
-        return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-      });
-      return r;
-    }
   }]);
-
-  return Sentences;
-}(Text);
-
-module.exports = Sentences;
-
-},{"../../index":50,"./sentence":99}],98:[function(_dereq_,module,exports){
-'use strict';
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Text = _dereq_('../index');
-
-var Questions = function (_Text) {
-  _inherits(Questions, _Text);
-
-  function Questions() {
-    _classCallCheck(this, Questions);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Questions).apply(this, arguments));
-  }
-
-  _createClass(Questions, [{
-    key: 'data',
-    value: function data() {
-      return this.list.map(function (ts) {
-        return {
-          text: ts.plaintext(),
-          normal: ts.normal()
-        };
-      });
-    }
-  }], [{
-    key: 'find',
-    value: function find(r) {
-      r = r.all();
-      return r.filter(function (ts) {
-        return ts.last().endPunctuation() === '?';
-      });
-    }
-  }]);
-
-  return Questions;
-}(Text);
-
-module.exports = Questions;
-
-},{"../index":97}],99:[function(_dereq_,module,exports){
-'use strict';
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Terms = _dereq_('../../paths').Terms;
-
-var Sentence = function (_Terms) {
-  _inherits(Sentence, _Terms);
-
-  function Sentence() {
-    _classCallCheck(this, Sentence);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Sentence).apply(this, arguments));
-  }
 
   return Sentence;
 }(Terms);
@@ -5667,19 +5762,16 @@ var Statements = function (_Text) {
     return _possibleConstructorReturn(this, Object.getPrototypeOf(Statements).apply(this, arguments));
   }
 
-  _createClass(Statements, [{
-    key: 'data',
-    value: function data() {
-      return this.mapTerms(function (t) {
-        return {};
-      });
-    }
-  }], [{
+  _createClass(Statements, null, [{
     key: 'find',
-    value: function find(r) {
-      return r.filter(function (ts) {
+    value: function find(r, n) {
+      r = r.filter(function (ts) {
         return ts.last().endPunctuation() !== '?';
       });
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
+      return r;
     }
   }]);
 
@@ -5737,9 +5829,12 @@ var Terms = function (_Text) {
     }
   }], [{
     key: 'find',
-    value: function find(r) {
-      var found = r.match('.');
-      return found;
+    value: function find(r, n) {
+      r = r.match('.');
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
+      return r;
     }
   }]);
 
@@ -5782,7 +5877,7 @@ var Things = function (_Text) {
     }
   }], [{
     key: 'find',
-    value: function find(r) {
+    value: function find(r, n) {
       r = r.clauses();
       //find people/places/organizations
       var yup = r.people();
@@ -5791,6 +5886,9 @@ var Things = function (_Text) {
       //return them to normal ordering
       yup.sort('chronological');
       // yup.unique() //? not sure
+      if (typeof n === 'number') {
+        yup = yup.get(n);
+      }
       return yup;
     }
   }]);
@@ -5833,8 +5931,12 @@ var Urls = function (_Text) {
     }
   }], [{
     key: 'find',
-    value: function find(r) {
-      return r.match('#Url');
+    value: function find(r, n) {
+      r = r.match('#Url');
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
+      return r;
     }
   }]);
 
@@ -5934,10 +6036,13 @@ var Values = function (_Text) {
     }
   }], [{
     key: 'find',
-    value: function find(r) {
+    value: function find(r, n) {
       r = r.match('#Value+');
       if (r.has('. (a|an)')) {
         r = r.not('(a|an)$');
+      }
+      if (typeof n === 'number') {
+        r = r.get(n);
       }
       r.list = r.list.map(function (ts) {
         return new Value(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
@@ -6694,8 +6799,12 @@ var Verbs = function (_Text) {
     }
   }], [{
     key: 'find',
-    value: function find(r) {
-      return r.match('#Verb+');
+    value: function find(r, n) {
+      r = r.match('#Verb+');
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
+      return r;
     }
   }]);
 
@@ -8005,25 +8114,51 @@ var Term = function () {
   }
 
   _createClass(Term, [{
+    key: 'endPunctuation',
+
+    /** the punctuation at the end of this term*/
+    value: function endPunctuation() {
+      var m = this.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/i);
+      if (m) {
+        var allowed = {
+          ',': 'comma',
+          ':': 'colon',
+          ';': 'semicolon',
+          '.': 'period',
+          '...': 'elipses',
+          '!': 'exclamation',
+          '?': 'question'
+        };
+        if (allowed[m[1]]) {
+          return m[1];
+        }
+      }
+      return null;
+    }
+  }, {
+    key: 'setPunctuation',
+    value: function setPunctuation(punct) {
+      this.text = this.text.replace(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/i, '');
+      this.text += punct;
+      return this;
+    }
+  }, {
     key: 'normalize',
     value: function normalize() {
       addNormal(this);
       addRoot(this);
     }
 
-    /** the comma, period ... punctuation that ends this sentence */
-
-  }, {
-    key: 'endPunctuation',
-    value: function endPunctuation() {
-      var m = this._text.match(/([\.\?\!,;:])$/);
-      if (m) {
-        //remove it from end of text
-        // this.text = this._text.substr(0, this._text.length - 1);
-        return m[0];
-      }
-      return '';
-    }
+    // /** the comma, period ... punctuation that ends this sentence */
+    // endPunctuation() {
+    //   let m = this._text.match(/([\.\?\!,;:])$/);
+    //   if (m) {
+    //     //remove it from end of text
+    //     // this.text = this._text.substr(0, this._text.length - 1);
+    //     return m[0];
+    //   }
+    //   return '';
+    // }
 
     /** print-out this text, as it was given */
 
@@ -8739,7 +8874,7 @@ var renderHtml = function renderHtml(t) {
     return tag !== 'Term';
   });
   classes = classes.map(function (c) {
-    return 'nlp' + c;
+    return 'nl-' + c;
   });
   classes = classes.join(' ');
   var text = sanitize(t.text);
@@ -8828,26 +8963,6 @@ var path = _dereq_('../paths');
 var fns = path.fns;
 var tagset = path.tags;
 var term = {
-
-  /** the punctuation at the end of this term*/
-  endPunctuation: function endPunctuation() {
-    var m = this.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/i);
-    if (m) {
-      var allowed = {
-        ',': 'comma',
-        ':': 'colon',
-        ';': 'semicolon',
-        '.': 'period',
-        '...': 'elipses',
-        '!': 'exclamation',
-        '?': 'question'
-      };
-      if (allowed[m[1]]) {
-        return allowed[m[1]];
-      }
-    }
-    return null;
-  },
 
   /** interpret a term's hyphenation */
   hyphenation: function hyphenation() {
@@ -8987,11 +9102,6 @@ var term = {
       }
     }
     return true;
-  },
-
-  insertAfter: function insertAfter() {
-    var index = this.index();
-    // console.log(this.parent)
   }
 
 };
@@ -10930,13 +11040,16 @@ var renderMethods = function renderMethods(Terms) {
     },
 
     normal: function normal() {
-      return this.terms.filter(function (t) {
+      var terms = this.terms.filter(function (t) {
         return t.text;
-      }).map(function (t) {
-        return t.normal;
-      }).join(' ');
+      });
+      terms = terms.map(function (t) {
+        return t.normal; //+ punct;
+      });
+      return terms.join(' ');
     },
 
+    /** no punctuation, fancy business **/
     root: function root() {
       return this.terms.filter(function (t) {
         return t.text;

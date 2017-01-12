@@ -35,7 +35,7 @@
 <br/>
 
 ```javascript
-nlp('I look just like buddy holly').sentences().toPast().text()
+nlp('I look just like buddy holly').sentences().toPastTense().out('text')
 // "I looked just like buddy holly."
 ```
 
@@ -58,7 +58,7 @@ nlp('I look just like buddy holly').sentences().toPast().text()
 </div>
 
 ### Yup,
-* a [140k js file](https://unpkg.com/nlp_compromise@latest/builds/compromise.min.js)
+* a [200k js file](https://unpkg.com/compromise@latest/builds/compromise.min.js)
 * **[86%](https://github.com/nlp-compromise/compromise/wiki/Accuracy)** on the **Penn treebank**
 * [keypress speed](https://github.com/nlp-compromise/compromise/wiki/Performance), constant-time.
 * caniuse, uhuh. **IE9+**

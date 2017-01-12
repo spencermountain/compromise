@@ -9,6 +9,7 @@ const nlp = require('./src/index');
 // m.values().toNumber();
 // m.check();
 
-var r = nlp('ben is cool. John goes to work.');
+var r = nlp('ben is cool. John goes to work at the FBI and CIA.');
 // r.sentences(1).toExclamation();
-console.log(r.out('normal'));
+// console.log(r.out('normal'));
+r.acronyms(1).check();

@@ -24,8 +24,11 @@ class Dates extends Text {
   data() {
     return this.list.map((ts) => ts.data());
   }
-  static find(r) {
+  static find(r, n) {
     let dates = r.match('#Date+');
+    if (typeof n === 'number') {
+      dates = dates.get(n);
+    }
     dates.list = dates.list.map((ts) => {
       return new Date(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });

@@ -35,7 +35,7 @@ test('all combined subsets empty:', function (t) {
 });
 
 
-test('all subsets have a parse method:', function (t) {
+test('all subsets have a data method:', function (t) {
   var r = nlp(freshPrince);
   subsets.forEach((s) => {
     var sub = r[s]();
@@ -45,7 +45,6 @@ test('all subsets have a parse method:', function (t) {
   t.end();
 });
 
-
 test('all subsets support .all():', function (t) {
   var txt = freshPrince;
   var r = nlp(txt);
@@ -54,6 +53,18 @@ test('all subsets support .all():', function (t) {
     var str = sub.all().plaintext();
     var msg = s + '.all() works';
     t.equal(str, txt, msg);
+  });
+  t.end();
+});
+
+test('all subsets have an empty 100th element', function (t) {
+  var txt = freshPrince;
+  var r = nlp(txt);
+  subsets.forEach((s) => {
+    var sub = r[s](9999);
+    var str = sub.plaintext();
+    var msg = s + ' is empty';
+    t.equal(str, '', msg);
   });
   t.end();
 });

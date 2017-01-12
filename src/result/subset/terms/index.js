@@ -25,9 +25,12 @@ class Terms extends Text {
       return o;
     });
   }
-  static find(r) {
-    let found = r.match('.');
-    return found;
+  static find(r, n) {
+    r = r.match('.');
+    if (typeof n === 'number') {
+      r = r.get(n);
+    }
+    return r;
   }
 }
 

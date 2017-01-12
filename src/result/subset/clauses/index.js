@@ -2,8 +2,11 @@
 const Text = require('../../index');
 
 class Clauses extends Text {
-  static find(r) {
+  static find(r, n) {
     r = r.splitAfter('#ClauseEnd');
+    if (typeof n === 'number') {
+      r = r.get(n);
+    }
     return r;
   }
 }

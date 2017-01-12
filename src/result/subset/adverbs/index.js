@@ -11,8 +11,12 @@ class Adverbs extends Text {
       };
     });
   }
-  static find(r) {
-    return r.match('#Adverb+');
+  static find(r, n) {
+    r = r.match('#Adverb+');
+    if (typeof n === 'number') {
+      r = r.get(n);
+    }
+    return r;
   }
 }
 

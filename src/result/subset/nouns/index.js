@@ -8,18 +8,19 @@ class Nouns extends Text {
   data() {
     return this.list.map((ts) => ts.data());
   }
-  static find(r) {
+  static find(r, n) {
     r = r.clauses();
     r = r.match('#Noun+');
     // r = r.not('#Pronoun');
-    // let dates=
     // if (r.match('#Date').found) {
     //   r = r.not('#Date');
     // }
+    if (typeof n === 'number') {
+      r = r.get(n);
+    }
     r.list = r.list.map((ts) => {
       return new Noun(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
-    // console.log(r.list);
     return r;
   }
 }

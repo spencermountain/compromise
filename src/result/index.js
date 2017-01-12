@@ -34,7 +34,6 @@ class Text {
   out(msg, opts) {
     return out(this, msg, opts);
   }
-
   get whitespace() {
     return {
       before: (str) => {

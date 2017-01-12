@@ -49,10 +49,13 @@ class Values extends Text {
     });
     return this;
   }
-  static find(r) {
+  static find(r, n) {
     r = r.match('#Value+');
     if (r.has('. (a|an)')) {
       r = r.not('(a|an)$');
+    }
+    if (typeof n === 'number') {
+      r = r.get(n);
     }
     r.list = r.list.map((ts) => {
       return new Value(ts.terms, ts.lexicon, ts.refText, ts.refTerms);

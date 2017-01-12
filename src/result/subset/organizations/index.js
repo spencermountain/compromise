@@ -9,9 +9,13 @@ class Organizations extends Text {
       };
     });
   }
-  static find(r) {
+  static find(r, n) {
     r = r.splitAfter('#Comma');
-    return r.match('#Organization+');
+    r = r.match('#Organization+');
+    if (typeof n === 'number') {
+      r = r.get(n);
+    }
+    return r;
   }
 }
 

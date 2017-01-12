@@ -12,8 +12,12 @@ class Acronyms extends Text {
       };
     });
   }
-  static find(r) {
-    return r.match('#Acronym');
+  static find(r, n) {
+    r = r.match('#Acronym');
+    if (typeof n === 'number') {
+      r = r.get(n);
+    }
+    return r;
   }
 }
 

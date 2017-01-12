@@ -9,8 +9,12 @@ class HashTags extends Text {
       };
     });
   }
-  static find(r){
-    return r.match('#HashTag')
+  static find(r, n) {
+    r = r.match('#HashTag');
+    if (typeof n === 'number') {
+      r = r.get(n);
+    }
+    return r;
   }
 }
 

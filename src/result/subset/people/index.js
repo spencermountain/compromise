@@ -7,9 +7,12 @@ class People extends Text {
   data() {
     return this.list.map((ts) => ts.data());
   }
-  static find(r) {
+  static find(r, n) {
     let people = r.clauses();
     people = people.match('#Person+');
+    if (typeof n === 'number') {
+      people = people.get(n);
+    }
     people.list = people.list.map((ts) => {
       return new Person(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });

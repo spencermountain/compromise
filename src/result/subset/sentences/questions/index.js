@@ -2,19 +2,15 @@
 const Text = require('../index');
 
 class Questions extends Text {
-  data() {
-    return this.list.map((ts) => {
-      return {
-        text: ts.plaintext(),
-        normal: ts.normal()
-      };
-    });
-  }
-  static find(r) {
+  static find(r, n) {
     r = r.all();
-    return r.filter((ts) => {
+    r = r.filter((ts) => {
       return ts.last().endPunctuation() === '?';
     });
+    if (typeof n === 'number') {
+      r = r.get(n);
+    }
+    return r;
   }
 }
 

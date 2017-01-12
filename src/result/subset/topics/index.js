@@ -10,7 +10,7 @@ class Things extends Text {
       };
     });
   }
-  static find(r) {
+  static find(r, n) {
     r = r.clauses();
     //find people/places/organizations
     let yup = r.people();
@@ -19,6 +19,9 @@ class Things extends Text {
     //return them to normal ordering
     yup.sort('chronological');
     // yup.unique() //? not sure
+    if (typeof n === 'number') {
+      yup = yup.get(n);
+    }
     return yup;
   }
 }

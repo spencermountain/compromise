@@ -60,8 +60,12 @@ class Verbs extends Text {
     });
     return this;
   }
-  static find(r) {
-    return r.match('#Verb+');
+  static find(r, n) {
+    r = r.match('#Verb+');
+    if (typeof n === 'number') {
+      r = r.get(n);
+    }
+    return r;
   }
 }
 

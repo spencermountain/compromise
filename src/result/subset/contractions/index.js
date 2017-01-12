@@ -27,7 +27,7 @@ class Contractions extends Text {
     });
     return this;
   }
-  static find(r) {
+  static find(r, n) {
     //find currently-contracted
     let found = r.match('#Contraction #Contraction');
     found.list = found.list.map((ts) => {
@@ -43,6 +43,10 @@ class Contractions extends Text {
       found.list.push(c);
     });
     found.sort('chronological');
+    //get nth element
+    if (typeof n === 'number') {
+      found = found.get(n);
+    }
     return found;
   }
 }

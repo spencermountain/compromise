@@ -9,8 +9,12 @@ class Urls extends Text {
       };
     });
   }
-  static find(r) {
-    return r.match('#Url');
+  static find(r, n) {
+    r = r.match('#Url');
+    if (typeof n === 'number') {
+      r = r.get(n);
+    }
+    return r;
   }
 }
 

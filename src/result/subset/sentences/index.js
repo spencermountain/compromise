@@ -47,20 +47,15 @@ class Sentences extends Text {
     });
     return this;
   }
-  static find(r, num) {
-    let list = r.all().list;
-    //grab just the requested one
-    if (num !== undefined && num !== null) {
-      if (!list[num]) {
-        list = [];
-      } else {
-        list = [list[num]];
-      }
+  static find(r, n) {
+    r = r.all();
+    if (typeof n === 'number') {
+      r = r.get(n);
     }
-    list = list.map((ts) => {
+    r.list = r.list.map((ts) => {
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
-    return new Text(list, this.lexicon, this.parent);
+    return new Text(r.list, this.lexicon, this.parent);
   }
 }
 

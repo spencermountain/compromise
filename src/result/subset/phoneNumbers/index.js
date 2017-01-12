@@ -11,7 +11,11 @@ class PhoneNumbers extends Text {
   }
   static find(r) {
     r = r.splitAfter('#Comma');
-    return r.match('#PhoneNumber+');
+    r = r.match('#PhoneNumber+');
+    if (typeof n === 'number') {
+      r = r.get(n);
+    }
+    return r;
   }
 }
 

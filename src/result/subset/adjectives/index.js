@@ -14,8 +14,12 @@ class Adjectives extends Text {
       };
     });
   }
-  static find(r) {
-    return r.match('#Adjective');
+  static find(r, n) {
+    r = r.match('#Adjective');
+    if (typeof n === 'number') {
+      r = r.get(n);
+    }
+    return r;
   }
 }
 

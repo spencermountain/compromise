@@ -96,9 +96,9 @@ const subset = {
 };
 //term subsets
 Object.keys(subset).forEach((k) => {
-  Text.prototype[k] = function () {
+  Text.prototype[k] = function (num) {
     let sub = subset[k];
-    let m = sub.find(this);
+    let m = sub.find(this, num);
     return new subset[k](m.list, this.lexicon, this.parent);
   };
 });

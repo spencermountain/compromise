@@ -38,7 +38,7 @@ class Sentence extends Terms {
     let last = this.terms[this.terms.length - 1];
     last.setPunctuation(punct);
   }
-  getPunctuation(punct) {
+  getPunctuation() {
     let last = this.terms[this.terms.length - 1];
     return last.getPunctuation();
   }

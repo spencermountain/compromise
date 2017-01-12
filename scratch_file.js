@@ -10,5 +10,5 @@ const nlp = require('./src/index');
 // m.check();
 
 var r = nlp('ben is cool. John goes to work. Jen eats a lot.');
-r.sentences().toExclamation();
+r.sentences(1).toExclamation();
 console.log(r.out('text'));

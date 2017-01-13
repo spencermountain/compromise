@@ -1,6 +1,5 @@
 //these are regexes applied to t.text, instead of t.normal
 module.exports = [
-
   //#funtime
   ['^#[a-z]+', 'HashTag'],
   //spencer's
@@ -35,9 +34,6 @@ module.exports = [
   ['ma?c\'.*', 'LastName'],
   //o'douggan
   ['o\'[^aeiouy].*', 'LastName'],
-
-
-  //de/van
 
 ].map(function (a) {
   return {

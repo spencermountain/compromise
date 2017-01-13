@@ -17,12 +17,13 @@ const nlp = require('./src/index');
 // r.check();
 // nlp('Ludwig van Beethoven').check();
 
-var lexicon = {
-  'jardas al abid': 'Place',
-  'umm ar rizam': 'Place',
-  'tobruk': 'Place'
-};
-var sentence = 'in Jardas al Abid\'s center ';
-nlp(sentence, lexicon).check();
-let mentionedLocations = nlp(sentence, lexicon).places().data();
-console.log(mentionedLocations);
+// var lexicon = {
+//   'jardas al abid': 'Place',
+//   'umm ar rizam': 'Place',
+//   'tobruk': 'Place'
+// };
+// var sentence = 'A suicide attack hit Jardas al Abid\'s center killing one person (and the attacker) and injuring more than twenty.';
+// let mentionedLocations = nlp(sentence, lexicon).places().data();
+// console.log(mentionedLocations);
+
+nlp('Jardas-al-Abid ').check();

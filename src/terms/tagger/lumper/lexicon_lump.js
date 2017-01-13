@@ -22,7 +22,7 @@ const tryStringFrom = (want, start, ts) => {
     if (i === start) {
       text = ts.terms[i].text;
       normal = ts.terms[i].normal;
-      root = ts.terms[i].root;
+      simple = ts.terms[i].root;
     } else {
       text += ' ' + ts.terms[i].text;
       normal += ' ' + ts.terms[i].normal;
@@ -53,7 +53,7 @@ const lexicon_lump = function (ts) {
     let pos = lexicon[normal] || lexicon[text];
     if (pos) {
       combine(ts, i);
-      s.terms[i].tagAs(pos, 'multiples-lexicon');
+      ts.terms[i].tagAs(pos, 'multiples-lexicon');
     }
   }
 

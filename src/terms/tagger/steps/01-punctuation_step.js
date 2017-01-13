@@ -17,6 +17,7 @@ const punctuation_step = function (ts) {
   log.here(path);
   ts.terms.forEach((t) => {
     let str = t.text;
+    //anything can be titlecase
     if (str.match(/^[A-Z][a-z]/)) {
       t.tagAs('TitleCase', 'punct-rule');
     }

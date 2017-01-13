@@ -1,4 +1,4 @@
-/* compromise v7.0.3
+/* compromise v7.0.4
    github.com/nlp-compromise
    MIT
 */
@@ -404,7 +404,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.3",
+  "version": "7.0.4",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -5160,9 +5160,10 @@ var Organizations = function (_Text) {
   _createClass(Organizations, [{
     key: 'data',
     value: function data() {
-      return this.mapTerms(function (t) {
+      return this.list.map(function (ts) {
         return {
-          text: t.text
+          text: ts.plaintext(),
+          normal: ts.normal()
         };
       });
     }
@@ -5284,6 +5285,21 @@ var log = _dereq_('../../paths').log;
 var Person = function (_Terms) {
   _inherits(Person, _Terms);
 
+  _createClass(Person, [{
+    key: 'data',
+    value: function data() {
+      return {
+        text: this.plaintext(),
+        normal: this.normal(),
+        firstName: this.firstName.normal(),
+        middleName: this.middleName.normal(),
+        lastName: this.lastName.normal(),
+        genderGuess: this.guessGender(),
+        honorifics: this.honorifics.asArray()
+      };
+    }
+  }]);
+
   function Person(arr, lexicon, refText, refTerms) {
     var _ret;
 
@@ -5329,17 +5345,6 @@ var Person = function (_Terms) {
       }
       //look-for regex clues
       return _guessGender(this.firstName.normal());
-    }
-  }, {
-    key: 'data',
-    value: function data() {
-      return {
-        firstName: this.firstName.normal(),
-        middleName: this.middleName.normal(),
-        lastName: this.lastName.normal(),
-        genderGuess: this.guessGender(),
-        honorifics: this.honorifics.asArray()
-      };
     }
   }, {
     key: 'root',
@@ -5944,10 +5949,8 @@ var Things = function (_Text) {
   _createClass(Things, [{
     key: 'data',
     value: function data() {
-      return this.mapTerms(function (t) {
-        return {
-          text: t.text
-        };
+      return this.list.map(function (ts) {
+        return ts.data();
       });
     }
   }], [{
@@ -7059,12 +7062,14 @@ var corrections = function corrections(r) {
   r.match('#TitleCase (de|du) la? #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');
   //peter the great
   r.match('#FirstName the #Adjective').tag('Person', 'correction-determiner5');
+  //Morgan Shlkjsfne
+  r.match('#Person #TitleCase').match('#TitleCase #Noun').tag('Person', 'correction-person-titlecase');
 
   //organiation
   r.match('#Organization (inc|bros|lmt|co|incorporation|corp|corporation)').tag('Organization', 'org-abbreviation');
 
   //book the flight
-  r.match('#Noun the #Noun').term(0).tag('Verb', 'correction-determiner6');
+  // r.match('#Noun the #Noun').term(0).tag('Verb', 'correction-determiner6');
   //a sense of
   r.match('#Determiner #Verb of').term(1).tag('Noun', 'the-verb-of');
 
@@ -10387,6 +10392,14 @@ var Terms = function () {
     key: 'all',
     value: function all() {
       return this.parent;
+    }
+  }, {
+    key: 'data',
+    value: function data() {
+      return {
+        text: this.plaintext(),
+        normal: this.normal()
+      };
     }
   }, {
     key: 'found',

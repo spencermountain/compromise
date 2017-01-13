@@ -1,4 +1,4 @@
-/* compromise v7.0.2
+/* compromise v7.0.3
    github.com/nlp-compromise
    MIT
 */
@@ -404,7 +404,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.2",
+  "version": "7.0.3",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -2652,8 +2652,8 @@ var buildResult = _dereq_('./result/build');
 var pkg = _dereq_('../package.json');
 
 //the main thing
-var nlp = function nlp(str, context) {
-  return buildResult(str, context);
+var nlp = function nlp(str, lexicon) {
+  return buildResult(str, lexicon);
 };
 //this is handy
 nlp.version = pkg.version;
@@ -5535,18 +5535,45 @@ var Sentences = function (_Text) {
     /** conjugate the main/first verb*/
 
   }, {
-    key: 'toPast',
-    value: function toPast() {
+    key: 'toPastTense',
+    value: function toPastTense() {
+      this.list.forEach(function (ts) {
+        ts.toPastTense();
+      });
       return this;
     }
   }, {
-    key: 'toPresent',
-    value: function toPresent() {
+    key: 'toPresentTense',
+    value: function toPresentTense() {
+      this.list.forEach(function (ts) {
+        ts.toPresentTense();
+      });
       return this;
     }
   }, {
-    key: 'toFuture',
-    value: function toFuture() {
+    key: 'toFutureTense',
+    value: function toFutureTense() {
+      this.list.forEach(function (ts) {
+        ts.toFutureTense();
+      });
+      return this;
+    }
+    /** negative/positive */
+
+  }, {
+    key: 'toNegative',
+    value: function toNegative() {
+      this.list.forEach(function (ts) {
+        ts.toNegative();
+      });
+      return this;
+    }
+  }, {
+    key: 'toPositive',
+    value: function toPositive() {
+      this.list.forEach(function (ts) {
+        ts.toPositive();
+      });
       return this;
     }
 
@@ -5694,6 +5721,51 @@ var Sentence = function (_Terms) {
       return this;
     }
 
+    //returns a Term object
+
+  }, {
+    key: 'mainVerb',
+    value: function mainVerb() {
+      //this should be more fancy..
+      for (var i = 0; i < this.terms.length; i++) {
+        var t = this.terms[i];
+        if (t.tag.Verb && !t.tag.Auxillary) {
+          return t;
+        }
+      }
+      return null;
+    }
+
+    /** sentence tense conversion**/
+
+  }, {
+    key: 'toPastTense',
+    value: function toPastTense() {
+      var verb = this.mainVerb();
+      if (verb) {
+        verb.verb.toPastTense();
+      }
+      return this;
+    }
+  }, {
+    key: 'toPresentTense',
+    value: function toPresentTense() {
+      var verb = this.mainVerb();
+      if (verb) {
+        verb.verb.toPresentTense();
+      }
+      return this;
+    }
+  }, {
+    key: 'toFutureTense',
+    value: function toFutureTense() {
+      var verb = this.mainVerb();
+      if (verb) {
+        verb.verb.toFutureTense();
+      }
+      return this;
+    }
+
     /** negate the main/first copula*/
 
   }, {
@@ -5703,7 +5775,10 @@ var Sentence = function (_Terms) {
       if (cp.found) {
         cp.firstTerm().verbs().toNegative();
       } else {
-        this.match('#Verb').firstTerm().verbs().toNegative();
+        var verb = this.mainVerb();
+        if (verb) {
+          verb.verb.toNegative();
+        }
       }
       return this;
     }
@@ -6979,6 +7054,9 @@ var corrections = function corrections(r) {
   r.match('#Honorific #FirstName? #TitleCase').tag('Person', 'Honorific-TitleCase');
   //John Foo
   r.match('#FirstName #TitleCase').match('#FirstName #Noun').tag('Person', 'firstname-titlecase');
+  //ludwig van beethovan
+  r.match('#TitleCase (van|al) #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');
+  r.match('#TitleCase (de|du) la? #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');
   //peter the great
   r.match('#FirstName the #Adjective').tag('Person', 'correction-determiner5');
 
@@ -9799,6 +9877,7 @@ module.exports = {
   conjugate: function conjugate(verbose) {
     return _conjugate(this, verbose);
   },
+
   pastTense: function pastTense() {
     return _conjugate(this).PastTense;
   },
@@ -9807,6 +9886,23 @@ module.exports = {
   },
   futureTense: function futureTense() {
     return _conjugate(this).FutureTense;
+  },
+
+  //mutable methods
+  toPastTense: function toPastTense() {
+    this.text = _conjugate(this).PastTense;
+    this.tagAs('PastTense');
+    return this;
+  },
+  toPresentTense: function toPresentTense() {
+    this.text = _conjugate(this).Infinitive;
+    this.tagAs('Infinitive');
+    return this;
+  },
+  toFutureTense: function toFutureTense() {
+    this.text = _conjugate(this).FutureTense;
+    this.tagAs('FutureTense');
+    return this;
   }
 };
 
@@ -10210,11 +10306,17 @@ var fromString = function fromString(str) {
   var arr = [];
   for (var i = 0; i < firstSplit.length; i++) {
     var word = firstSplit[i];
-    var hyphen = word.match(/^([a-z]+)(-)([a-z0-9].*)/i);
-    if (hyphen) {
-      //we found one 'word-word'
-      arr.push(hyphen[1] + hyphen[2]);
-      arr.push(hyphen[3]);
+    var hasHyphen = word.match(/^([a-z]+)(-)([a-z0-9].*)/i);
+    if (hasHyphen) {
+      //support multiple-hyphenated-terms
+      var hyphens = word.split('-');
+      for (var o = 0; o < hyphens.length; o++) {
+        if (o === hyphens.length - 1) {
+          arr.push(hyphens[o]);
+        } else {
+          arr.push(hyphens[o] + '-');
+        }
+      }
     } else {
       arr.push(word);
     }
@@ -11893,64 +11995,67 @@ var lexicon = p.lexicon;
 var fns = p.fns;
 var path = 'tagger/multiple';
 
-var combineMany = function combineMany(s, i, count) {
+var combineMany = function combineMany(ts, i, count) {
   for (var n = 0; n < count; n++) {
-    combine(s, i);
+    combine(ts, i);
   }
 };
 
 //try to concatenate multiple-words to get this term
-var tryStringFrom = function tryStringFrom(want, start, s) {
+var tryStringFrom = function tryStringFrom(want, start, ts) {
   var text = '';
   var normal = '';
-  for (var i = start; i < s.terms.length; i++) {
+  var simple = '';
+  for (var i = start; i < ts.terms.length; i++) {
     if (i === start) {
-      text = s.terms[i].text;
-      normal = s.terms[i].normal;
+      text = ts.terms[i].text;
+      normal = ts.terms[i].normal;
+      simple = ts.terms[i].root;
     } else {
-      text += ' ' + s.terms[i].text;
-      normal += ' ' + s.terms[i].normal;
+      text += ' ' + ts.terms[i].text;
+      normal += ' ' + ts.terms[i].normal;
+      simple += ' ' + ts.terms[i].root;
     }
     //we've gone too far
+    if (text === want || normal === want || simple === want) {
+      var count = i - start;
+      combineMany(ts, start, count);
+      return true;
+    }
     if (normal.length > want.length) {
       return false;
-    }
-    if (text === want || normal === want) {
-      var count = i - start;
-      combineMany(s, start, count);
-      return true;
     }
   }
   return false;
 };
 
-var lexicon_lump = function lexicon_lump(s) {
+var lexicon_lump = function lexicon_lump(ts) {
   log.here(path);
-  var uLexicon = s.lexicon || {};
+  var uLexicon = ts.lexicon || {};
 
   //try the simpler, known lexicon
-  for (var i = 0; i < s.terms.length - 1; i++) {
+  for (var i = 0; i < ts.terms.length - 1; i++) {
     //try 'A'+'B'
-    var normal = s.terms[i].normal + ' ' + s.terms[i + 1].normal;
-    var text = s.terms[i].text + ' ' + s.terms[i + 1].text;
+    var normal = ts.terms[i].normal + ' ' + ts.terms[i + 1].normal;
+    var text = ts.terms[i].text + ' ' + ts.terms[i + 1].text;
     var pos = lexicon[normal] || lexicon[text];
     if (pos) {
-      combine(s, i);
-      s.terms[i].tagAs(pos, 'multiples-lexicon');
+      combine(ts, i);
+      ts.terms[i].tagAs(pos, 'multiples-lexicon');
     }
   }
 
   //try the user's lexicon
   Object.keys(uLexicon).forEach(function (str) {
-    for (var _i = 0; _i < s.terms.length; _i++) {
-      if (fns.startsWith(str, s.terms[_i].normal) || fns.startsWith(str, s.terms[_i].text)) {
-        if (tryStringFrom(str, _i, s)) {
-          s.terms[_i].tagAs(uLexicon[str], 'user-lexicon-lump');
+    for (var _i = 0; _i < ts.terms.length; _i++) {
+      if (fns.startsWith(str, ts.terms[_i].normal) || fns.startsWith(str, ts.terms[_i].text)) {
+        if (tryStringFrom(str, _i, ts)) {
+          ts.terms[_i].tagAs(uLexicon[str], 'user-lexicon-lump');
         }
       }
     }
   });
-  return s;
+  return ts;
 };
 
 module.exports = lexicon_lump;
@@ -12036,12 +12141,16 @@ var oneLetters = {
 var punctuation_step = function punctuation_step(ts) {
   log.here(path);
   ts.terms.forEach(function (t) {
-    //don't over-write any known tags
+    var str = t.text;
+    //anything can be titlecase
+    if (str.match(/^[A-Z][a-z]/)) {
+      t.tagAs('TitleCase', 'punct-rule');
+    }
+    //don't over-write any other known tags
     if (Object.keys(t.tag).length > 0) {
       return;
     }
     //ok, normalise it a little,
-    var str = t.text;
     str = str.replace(/[,\.\?]$/, '');
     //do punctuation rules (on t.text)
     for (var i = 0; i < rules.length; i++) {
@@ -13195,7 +13304,7 @@ module.exports = main;
 'use strict';
 
 //these are regexes applied to t.text, instead of t.normal
-module.exports = [['[A-Z][a-z]*', 'TitleCase'],
+module.exports = [
 //#funtime
 ['^#[a-z]+', 'HashTag'],
 //spencer's

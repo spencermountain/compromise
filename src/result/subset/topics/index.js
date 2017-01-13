@@ -4,10 +4,8 @@ const Text = require('../../index');
 
 class Things extends Text {
   data() {
-    return this.mapTerms((t) => {
-      return {
-        text: t.text
-      };
+    return this.list.map((ts) => {
+      return ts.data();
     });
   }
   static find(r, n) {

@@ -54,12 +54,14 @@ const corrections = function (r) {
   r.match('#TitleCase (de|du) la? #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');
   //peter the great
   r.match('#FirstName the #Adjective').tag('Person', 'correction-determiner5');
+  //Morgan Shlkjsfne
+  r.match('#Person #TitleCase').match('#TitleCase #Noun').tag('Person', 'correction-person-titlecase');
 
   //organiation
   r.match('#Organization (inc|bros|lmt|co|incorporation|corp|corporation)').tag('Organization', 'org-abbreviation');
 
   //book the flight
-  r.match('#Noun the #Noun').term(0).tag('Verb', 'correction-determiner6');
+  // r.match('#Noun the #Noun').term(0).tag('Verb', 'correction-determiner6');
   //a sense of
   r.match('#Determiner #Verb of').term(1).tag('Noun', 'the-verb-of');
 

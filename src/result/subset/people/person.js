@@ -4,6 +4,17 @@ const guessGender = require('./guessGender');
 const log = require('../../paths').log;
 
 class Person extends Terms {
+  data() {
+    return {
+      text: this.plaintext(),
+      normal: this.normal(),
+      firstName: this.firstName.normal(),
+      middleName: this.middleName.normal(),
+      lastName: this.lastName.normal(),
+      genderGuess: this.guessGender(),
+      honorifics: this.honorifics.asArray()
+    };
+  }
   constructor(arr, lexicon, refText, refTerms) {
     super(arr, lexicon, refText, refTerms);
     this.firstName = this.match('#FirstName+');
@@ -41,15 +52,6 @@ class Person extends Terms {
     }
     //look-for regex clues
     return guessGender(this.firstName.normal());
-  }
-  data() {
-    return {
-      firstName: this.firstName.normal(),
-      middleName: this.middleName.normal(),
-      lastName: this.lastName.normal(),
-      genderGuess: this.guessGender(),
-      honorifics: this.honorifics.asArray()
-    };
   }
   root() {
     let first = this.firstName.root();

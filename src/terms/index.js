@@ -60,6 +60,12 @@ class Terms {
   all() {
     return this.parent;
   }
+  data() {
+    return {
+      text: this.plaintext(),
+      normal: this.normal(),
+    };
+  }
   get whitespace() {
     return {
       before: (str) => {

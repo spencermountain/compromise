@@ -49,6 +49,8 @@ const corrections = function (r) {
   r.match('#Honorific #FirstName? #TitleCase').tag('Person', 'Honorific-TitleCase');
   //John Foo
   r.match('#FirstName #TitleCase').match('#FirstName #Noun').tag('Person', 'firstname-titlecase');
+  //ludwig van beethovan
+  r.match('#TitleCase (van|de) la? #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');
   //peter the great
   r.match('#FirstName the #Adjective').tag('Person', 'correction-determiner5');
 

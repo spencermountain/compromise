@@ -16,10 +16,17 @@ const fromString = function (str) {
   let arr = [];
   for(let i = 0; i < firstSplit.length; i++) {
     let word = firstSplit[i];
-    let hyphen = word.match(/^([a-z]+)(-)([a-z0-9].*)/i);
-    if (hyphen) { //we found one 'word-word'
-      arr.push(hyphen[1] + hyphen[2]);
-      arr.push(hyphen[3]);
+    let hasHyphen = word.match(/^([a-z]+)(-)([a-z0-9].*)/i);
+    if (hasHyphen) {
+      //support multiple-hyphenated-terms
+      let hyphens = word.split('-');
+      for(let o = 0; o < hyphens.length; o++) {
+        if (o === hyphens.length - 1) {
+          arr.push(hyphens[o]);
+        } else {
+          arr.push(hyphens[o] + '-');
+        }
+      }
     } else {
       arr.push(word);
     }

@@ -1,7 +1,6 @@
 //these are regexes applied to t.text, instead of t.normal
 module.exports = [
 
-  ['[A-Z][a-z]*', 'TitleCase'],
   //#funtime
   ['^#[a-z]+', 'HashTag'],
   //spencer's

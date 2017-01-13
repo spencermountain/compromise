@@ -3,8 +3,8 @@ const buildResult = require('./result/build');
 const pkg = require('../package.json');
 
 //the main thing
-const nlp = function (str, context) {
-  return buildResult(str, context);
+const nlp = function (str, lexicon) {
+  return buildResult(str, lexicon);
 };
 //this is handy
 nlp.version = pkg.version;

@@ -33,6 +33,7 @@
     focus on being <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">handy, and not overly-fancy.</a>
   </div>
 </div>
+<br/>
 <div align="center">
   :boom:Welcome to <b>v7</b>:boom:
   <div>
@@ -57,7 +58,7 @@ let r = nlp('I look just like buddy holly.')
 </h3>
 
 <div align="center">
-<b>no training, configuration, prolog, or jargon.</b>
+  <b>no training, configuration, or prolog.</b>
   <table align="center">
     <tr align="center">
       <td align="center">
@@ -67,7 +68,7 @@ let r = nlp('I look just like buddy holly.')
           </a>
         </b>
         <div>
-          js file🙏
+          js file
         </div>
       </td>
       <td align="center">
@@ -82,6 +83,10 @@ let r = nlp('I look just like buddy holly.')
          </div>
       </td>
       <td align="center">
+        <b>🙏</b>
+        <div>npm install</div>
+      </td>
+      <td align="center">
         <b>IE9+</b>
         <div>caniuse, uhuh.</div>
       </td>
@@ -89,12 +94,8 @@ let r = nlp('I look just like buddy holly.')
   </table>
 </div>
 <b>Yup,</b>
-
-<div align="left">
-  <b>ftw:</b>
-</div>
 <div align="center">
-the idea is, you can reach-in to a part of the text, and change it around:
+the idea is, you can reach-in to a part of the text, and change it:
 </div>
 ```javascript
 r = nlp('john is really nice. sara sings loudly.')

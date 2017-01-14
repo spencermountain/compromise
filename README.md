@@ -1,4 +1,5 @@
 <div align="center">
+  <img src="https://cloud.githubusercontent.com/assets/399657/21955621/fa2effc8-da3c-11e6-8fb1-bff41bae575d.png" />
   <div>natural-language processing in the browser</div>
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />

@@ -100,10 +100,10 @@ let r = nlp('I look just like buddy holly.')
   <b>no training, configuration, or prolog.</b>
 </div>
 <div align="center">
-  <b>Yup,</b> only the minimum <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">grammar-jargon</a>.
+  <b>Yup,</b> only the minimum <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">grammatical-jargon</a>.
 </div>
-<div align="center">
-  <b>Yup, </b>
+
+<div align="left">
   the idea is, you can <a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">reach-in</a> to a part of the text, and change it:
 </div>
 ```javascript
@@ -124,6 +124,22 @@ r.replace('is nice', 'is bad')
 r.sentences().toNegative()
 // "John is not bad. Sara doesn't sing."
 ```
+<div align="left">
+  you can also grab those parts, and analyze-the-heck out of them:
+</div>
+```javascript
+r = nlp(chomskyFanFic)
+r.places().sort('freq').unique().data()
+/*[
+  {text: 'MIT lecture hall'},
+  {text: '23 Desperado dr.'},
+  {text: 'desert island'},
+]*/
+
+r.questions().not('^but how .+').normalize().data()
+/* [] */
+```
+
 <table align="center">
   <tr>
     <td>Part-of-Speech Tagging</td>

@@ -101,25 +101,30 @@ let r = nlp('I look just like buddy holly.')
 </div>
 <br/>
 <div align="left">
-  the idea is, you can <a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">reach-in</a> to a part of the text, and change it:
+  the idea is, you can
+  <b>
+    <a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">
+      reach-in
+    </a>
+  </b> to a part of the text, and change it:
 </div>
 ```javascript
 r = nlp('john is really nice. sara sings loudly.')
 
-r.match('#Person').toTitleCase()
-//John is really nice. Sara sings loudly.
+r.match('#Person').toUpperCase()
+//JOHN is really nice. SARA sings loudly.
 
 //or pluck-out some parts,
 r.remove('#Adverb')
-// "John is nice. Sara sings."
+// "JOHN is nice. SARA sings."
 
 //replacements,
 r.replace('is nice', 'is bad')
-// "John is bad. Sara sings."
+// "JOHN is bad. SARA sings."
 
 //fancy!
 r.sentences().toNegative()
-// "John is not bad. Sara doesn't sing."
+// "JOHN is not bad. SARA doesn't sing."
 ```
 <div align="left">
   you can also grab those parts, and analyze-the-heck out of them:
@@ -136,7 +141,7 @@ r.places().sort('freq').unique().data()
 r.questions().not('^but how .+').data()
 /* [] */
 ```
- 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 
+ &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗
  <table align="center">
   <tr>
     <td>Part-of-Speech Tagging</td>
@@ -231,6 +236,17 @@ r = nlp('Tony Hawk won').out('html')
   <span> &nbsp; </span>
   <a href="https://www.youtube.com/watch?v=WuPVS2tCg8s">
     <img src="http://img.youtube.com/vi/WuPVS2tCg8s/mqdefault.jpg"/>
+  </a>
+</div>
+<div align="center">
+  <a href="https://www.twitter.com/compromisejs">
+    <img src="https://cloud.githubusercontent.com/assets/399657/21956672/a30cf206-da53-11e6-8c6c-0995cf2aef62.jpg"/>
+  </a>
+  <a href="http://superscript-slackin.herokuapp.com/">
+    <img src="https://cloud.githubusercontent.com/assets/399657/21956671/a30cbc82-da53-11e6-82d6-aaaaebc0bc93.jpg"/>
+  </a>
+  <a href="http://nlpcompromise.us12.list-manage2.com/subscribe?u=d5bd9bcc36c4bef0fd5f6e75f&id=8738c1f5ef">
+    <img src="https://cloud.githubusercontent.com/assets/399657/21956670/a30be6e0-da53-11e6-9aaf-52a10b8c3195.jpg"/>
   </a>
 </div>
 

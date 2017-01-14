@@ -39,6 +39,13 @@ let r = nlp('I look just like buddy holly.')
  r.out('text')
 // "I looked just like buddy holly."
 ```
+<div align="center">
+  :boom:Welcome to <b>v7</b>:boom:
+  <div>
+    <a href="https://github.com/nlp-compromise/compromise/wiki/v7-upgrade-instructions">a lot</a>
+    has changed!
+  </div>
+</div>
 <h3 align="center">
   <a href="http://nlpcompromise.com">Demos</a>
   <span>&nbsp; | &nbsp;</span>
@@ -49,33 +56,35 @@ let r = nlp('I look just like buddy holly.')
   <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">Accuracy</a>
 </h3>
 
-<div align="center">
-  :boom:Welcome to <b>v7</b>:boom:
-  <div>
-    <a href="https://github.com/nlp-compromise/compromise/wiki/v7-upgrade-instructions">a lot</a>
-    has changed!
-  </div>
-</div>
-
 ### Yup,
-<table align="center">
-  <tr>
-    <td>Part-of-Speech Tagging</td>
-    <td>Named-Entity Resolution</td>
-    <td>Verb Conjugation</td>
-    <td>Inflection/Pluralization</td>
-  </tr>
-</table>
-* a [200k js file](https://unpkg.com/compromise@latest/builds/compromise.min.js)
-* **[86%](https://github.com/nlp-compromise/compromise/wiki/Accuracy)** on the **Penn treebank**
-* [keypress speed](https://github.com/nlp-compromise/compromise/wiki/Performance), constant-time.
-* caniuse, uhuh. **IE9+**
-* no training, configuration, or prolog
+<div align="center">
+  <table>
+    <tr>
+      <td>
+        a
+        <a href="https://unpkg.com/compromise@latest/builds/compromise.min.js">
+          200k
+        </a> js file
+      </td>
+      <td>
+        <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">86%</a>
+         on the Penn treebank
+      </td>
+      <td>
+        caniuse, uhuh.
+        <b>IE9+</b>
+      </td>
+    </tr>
+  </table>
+</div>
+no training, configuration, or prolog.
 
 <div align="right">
-  grammar, ftw:
+  <b>grammar, ftw:</b>
 </div>
+<div align="center">
 the idea is, you can reach-in to a part of the text, and change it around:
+</div>
 ```javascript
 r = nlp('john is really nice. sara sings loudly.')
 r.match('#Person').toTitleCase()
@@ -101,7 +110,14 @@ r.people().sort().out('html')
   <span class="Person TitleCase">Sara</span>
 </span>*/
 ```
-
+<table align="center">
+  <tr>
+    <td>Part-of-Speech Tagging</td>
+    <td>Named-Entity Resolution</td>
+    <td>Verb Conjugation</td>
+    <td>Inflection/Pluralization</td>
+  </tr>
+</table>
 ###Conjugation:
 ```javascript
 r = nlp('she sells seashells by the seashore.').sentences().toFutureTense().text()
@@ -191,8 +207,6 @@ r = nlp('Tony Hawk won').out('html')
 </div>
 
 ###Don't forget about:
-For the former promise-library, see [jnewman/compromise](https://github.com/jnewman/compromise)
-(Thanks [Joshua](https://github.com/jnewman)!)
 * **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in js, too
 * **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in js
 * **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
@@ -200,12 +214,15 @@ For the former promise-library, see [jnewman/compromise](https://github.com/jnew
 * **[jsPos](https://code.google.com/archive/p/jspos/)** - js-build of the time-tested Brill-tagger
 * **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
 
+For the former promise-library, see [jnewman/compromise](https://github.com/jnewman/compromise)
+(Thanks [Joshua](https://github.com/jnewman)!)
+
 <div align="right">
 (and also don't forget
-[NLTK](http://www.nltk.org/),
-[GATE](https://gate.ac.uk),
-[Stanford](http://nlp.stanford.edu/software/lex-parser.shtml),
+<a href="http://www.nltk.org/">NLTK</a>,
+<a href="https://gate.ac.uk">GATE</a>,
+<a href="http://nlp.stanford.edu/software/lex-parser.shtml">Stanford</a>,
 and
-[Illinois toolkit](http://cogcomp.cs.illinois.edu/page/software/)
+<a href="http://cogcomp.cs.illinois.edu/page/software/">Illinois toolkit</a>
 )
 </div>

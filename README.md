@@ -33,11 +33,10 @@
     focus on being <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">handy, and not overly-fancy.</a>
   </div>
 </div>
-<br/>
 ```javascript
-let r = nlp('I look just like buddy holly')
-r.sentences().toPastTense()
-r.out('text')
+let r = nlp('I look just like buddy holly.')
+ r.sentences().toPastTense()
+ r.out('text')
 // "I looked just like buddy holly."
 ```
 <h3 align="center">
@@ -59,24 +58,48 @@ r.out('text')
 </div>
 
 ### Yup,
+<table align="center">
+  <tr>
+    <td>Part-of-Speech Tagging</td>
+    <td>Named-Entity Resolution</td>
+    <td>Verb Conjugation</td>
+    <td>Inflection/Pluralization</td>
+  </tr>
+</table>
 * a [200k js file](https://unpkg.com/compromise@latest/builds/compromise.min.js)
 * **[86%](https://github.com/nlp-compromise/compromise/wiki/Accuracy)** on the **Penn treebank**
 * [keypress speed](https://github.com/nlp-compromise/compromise/wiki/Performance), constant-time.
 * caniuse, uhuh. **IE9+**
-* [no dependencies](https://github.com/nlp-compromise/compromise/wiki/Getting-Started), training, configuration, or prolog
+* no training, configuration, or prolog
 
-###Grammar, for the win:
+<div align="right">
+  grammar, ftw:
+</div>
+the idea is, you can reach-in to a part of the text, and change it around:
 ```javascript
-r = nlp('john is really nice. sara quickly walks.')
-
-//pluck-out some parts
-r.remove('#Adverb')
-
-//reach-in and transform parts
+r = nlp('john is really nice. sara sings loudly.')
 r.match('#Person').toTitleCase()
+//John is really nice. Sara sings loudly.
 
-r.plaintext()
-// 'John is nice. Sara walks.'
+//or pluck-out some parts,
+r.remove('#Adverb')
+// "John is nice. Sara sings."
+
+//replacements,
+r.adjectives().replace('bad')
+// "John is bad. Sara sings."
+```
+.. then output as however you'd like:
+```javascript
+r.out('text')
+// "John is bad. Sara sings."
+r.out('array')
+// ['John is bad.' 'Sara sings.']
+r.people().sort().out('html')
+/*<span>
+  <span class="Person TitleCase">John</span>
+  <span class="Person TitleCase">Sara</span>
+</span>*/
 ```
 
 ###Conjugation:

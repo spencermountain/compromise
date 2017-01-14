@@ -56,31 +56,35 @@ let r = nlp('I look just like buddy holly.')
   <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">Accuracy</a>
 </h3>
 
-### Yup,
 <div align="center">
-  <table>
+  <table align="center">
     <tr>
       <td>
-        a
-        <a href="https://unpkg.com/compromise@latest/builds/compromise.min.js">
-          200k
-        </a> js file
+        <b>Ctrl+V</b>
+        <div>
+          a <a href="https://unpkg.com/compromise@latest/builds/compromise.min.js">
+            200k
+          </a> js file
+        </div>
       </td>
       <td>
-        <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">86%</a>
+        <div>
+          <b>🙏</b>
+          <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">86%</a>
          on the Penn treebank
+         </div>
       </td>
       <td>
-        caniuse, uhuh.
         <b>IE9+</b>
+        <div>caniuse, uhuh.</div>
       </td>
     </tr>
   </table>
 </div>
-no training, configuration, or prolog.
+<b>Yup,</b> no training, configuration, prolog, or jargon.
 
-<div align="right">
-  <b>grammar, ftw:</b>
+<div align="left">
+  <b>ftw:</b>
 </div>
 <div align="center">
 the idea is, you can reach-in to a part of the text, and change it around:

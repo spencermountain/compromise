@@ -84,7 +84,6 @@ let r = nlp('I look just like buddy holly.')
       </td>
     </tr>
   </table>
-  <b>no training, configuration, or prolog.</b>
 </div>
 <h3 align="center">
   <a href="http://nlpcompromise.com">demos</a>
@@ -95,10 +94,10 @@ let r = nlp('I look just like buddy holly.')
   <span>&nbsp; | &nbsp;</span>
   <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">accuracy</a>
 </h3>
-
 <div align="center">
-<b>Yup, </b>
-the idea is, you can <a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">reach-in</a> to a part of the text, and change it:
+  <b>no training, configuration, or prolog.</b>
+  <b>Yup, </b>
+  the idea is, you can <a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">reach-in</a> to a part of the text, and change it:
 </div>
 ```javascript
 r = nlp('john is really nice. sara sings loudly.')

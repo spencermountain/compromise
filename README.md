@@ -101,7 +101,7 @@ let r = nlp('I look just like buddy holly.')
 </div>
 <br/>
 <div align="left">
-  the idea is, you can
+  the idea is,
   <b>
     <a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">
       reach-in
@@ -127,7 +127,7 @@ r.sentences().toNegative()
 // "JOHN is not bad. SARA doesn't sing."
 ```
 <div align="left">
-  you can also grab those parts, and analyze-the-heck out of them:
+  grab those parts, and <b>analyze-the-heck</b> out of them:
 </div>
 ```javascript
 r = nlp(chomskyFanFic)
@@ -140,6 +140,9 @@ r.places().sort('freq').unique().data()
 
 r.questions().not('^but how .+').data()
 /* [] */
+<div align="center">
+&nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗
+</div>
 ```
  <table align="center">
   <tr>
@@ -149,10 +152,7 @@ r.questions().not('^but how .+').data()
     <td>Inflection/Pluralization</td>
   </tr>
 </table>
-<div align="center">
-  &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗
-</div>
-###Client-side
+###Client-side:
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
@@ -162,7 +162,7 @@ r.questions().not('^but how .+').data()
 </script>
 ```
 
-###Conjugation:
+###Tense:
 ```javascript
 let r = nlp('she sells seashells by the seashore.')
 r.sentences().toFutureTense().out('text')
@@ -201,7 +201,7 @@ r.values().toNumber().out('text')
 // '5 of december'
 ```
 
-###Clever normalization:
+###Unicode normalization:
 ```javascript
 r = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
@@ -212,8 +212,8 @@ r = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 r = nlp('the opera about richard nixon visiting china')
 r.topics().data()
 // [
-//   { text: 'richard nixon', tags: ['Person'] },
-//   { text: 'china', tags: ['Place', 'Country'] }
+//   { text: 'richard nixon' },
+//   { text: 'china' }
 // ]
 ```
 

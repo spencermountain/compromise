@@ -32,10 +32,13 @@
   <div>
     focus on being <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">handy, and not overly-fancy.</a>
   </div>
-  <code>
-  nlp('I look just like buddy holly').sentences().toPastTense().out('text')
-  // "I looked just like buddy holly."
-  </code>
+  <pre>
+  <pre>
+<code class="highlight highlight-source-js">
+nlp('I look just like buddy holly').sentences().toPastTense().out('text')
+// "I looked just like buddy holly."
+</code>
+  </pre>
 </div>
 <br/>
 

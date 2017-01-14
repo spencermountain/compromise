@@ -35,7 +35,9 @@
 </div>
 <br/>
 ```javascript
-nlp('I look just like buddy holly').sentences().toPastTense().out('text')
+let r = nlp('I look just like buddy holly')
+r.sentences().toPastTense()
+r.out('text')
 // "I looked just like buddy holly."
 ```
 <h3 align="center">
@@ -79,7 +81,7 @@ r.plaintext()
 
 ###Conjugation:
 ```javascript
-r = nlp('she sells seashells by the seashore.').sentences().toFuture().text()
+r = nlp('she sells seashells by the seashore.').sentences().toFutureTense().text()
 //'she will sell seashells...'
 
 r.verbs().conjugate()
@@ -124,7 +126,7 @@ r = nlp("the guest-singer's björk at seven thirty.").normalize().text()
 ###Named-entity recognition:
 ```javascript
 r = nlp('the opera about richard nixon visiting china')
-r.match('(#Person|#Place|#Organization)').data()
+r.topics().data()
 // [
 //   { text: 'richard nixon', tags: ['Person'] },
 //   { text: 'china', tags: ['Place', 'Country'] }
@@ -133,7 +135,7 @@ r.match('(#Person|#Place|#Organization)').data()
 
 ###Fancy outputs:
 ```javascript
-r = nlp('Tony Hawk won').asHtml()
+r = nlp('Tony Hawk won').out('html')
 /*
 <span>
   <span class="Person Noun MalePerson">Tony Hawk</span>
@@ -149,8 +151,10 @@ r = nlp('Tony Hawk won').asHtml()
 ###Join-in:
 <div align="center">
   we're fun, we're using <b>semver</b>, and moving fast.
-  <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">
+  <i>
+    <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">
   :hammer_and_wrench: get involved :dancer: </a>
+  </i>
 </div>
 <br/>
 <div align="center">
@@ -163,20 +167,22 @@ r = nlp('Tony Hawk won').asHtml()
   </a>
 </div>
 
-#See also
+###Don't forget about:
 For the former promise-library, see [jnewman/compromise](https://github.com/jnewman/compromise)
-(Thanks to the awesome [jnewman](https://github.com/jnewman) for the npm package!)
-* **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript
-* **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in javascript
+(Thanks [Joshua](https://github.com/jnewman)!)
+* **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in js, too
+* **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in js
 * **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
 * **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
 * **[jsPos](https://code.google.com/archive/p/jspos/)** - js-build of the time-tested Brill-tagger
 * **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
 
-(don't forget
+<div align="right">
+(and also don't forget
 [NLTK](http://www.nltk.org/),
 [GATE](https://gate.ac.uk),
 [Stanford](http://nlp.stanford.edu/software/lex-parser.shtml),
 and
 [Illinois toolkit](http://cogcomp.cs.illinois.edu/page/software/)
 )
+</div>

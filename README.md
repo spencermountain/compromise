@@ -58,8 +58,8 @@ let r = nlp('I look just like buddy holly.')
 
 <div align="center">
   <table align="center">
-    <tr>
-      <td>
+    <tr align="center">
+      <td align="center">
         <b>Ctrl+V</b>
         <div>
           a <a href="https://unpkg.com/compromise@latest/builds/compromise.min.js">
@@ -67,14 +67,17 @@ let r = nlp('I look just like buddy holly.')
           </a> js file
         </div>
       </td>
-      <td>
+      <td align="center">
         <div>
           <b>🙏</b>
-          <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">86%</a>
-         on the Penn treebank
+          <div>
+            <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">
+              86%
+            </a>
+           on the Penn treebank
          </div>
       </td>
-      <td>
+      <td align="center">
         <b>IE9+</b>
         <div>caniuse, uhuh.</div>
       </td>

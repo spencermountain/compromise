@@ -96,6 +96,8 @@ let r = nlp('I look just like buddy holly.')
 </h3>
 <div align="center">
   <b>no training, configuration, or prolog.</b>
+</div>
+<div align="center">
   <b>Yup, </b>
   the idea is, you can <a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">reach-in</a> to a part of the text, and change it:
 </div>
@@ -112,6 +114,10 @@ r.remove('#Adverb')
 //replacements,
 r.replace('is nice', 'is bad')
 // "John is bad. Sara sings."
+
+//fancy!
+r.sentences().toNegative()
+// "John is not bad. Sara doesn't sing."
 ```
 <table align="center">
   <tr>

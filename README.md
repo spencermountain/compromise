@@ -201,7 +201,7 @@ r.values().toNumber().out('text')
 // '5 of december'
 ```
 
-###Unicode normalization:
+###Normalization:
 ```javascript
 r = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'

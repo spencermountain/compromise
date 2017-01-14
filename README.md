@@ -48,18 +48,18 @@ let r = nlp('I look just like buddy holly.')
 // "I looked just like buddy holly."
 ```
 <h3 align="center">
-  <a href="http://nlpcompromise.com">Demos</a>
+  <a href="http://nlpcompromise.com">demos</a>
   <span>&nbsp; | &nbsp;</span>
   <a href="https://github.com/nlp-compromise/compromise/wiki/Getting-Started">quickStart</a>
   <span>&nbsp; | &nbsp;</span>
-  <a href="https://github.com/nlp-compromise/compromise/wiki/API">Docs</a>
+  <a href="https://github.com/nlp-compromise/compromise/wiki/API">docs</a>
   <span>&nbsp; | &nbsp;</span>
-  <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">Accuracy</a>
+  <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">accuracy</a>
 </h3>
 
 <div align="center">
   <b>no training, configuration, or prolog.</b>
-  <table align="center">
+  &nbsp; &nbsp; &nbsp; &nbsp; <table align="center">
     <tr align="center">
       <td align="center">
         <b>
@@ -108,7 +108,7 @@ r.remove('#Adverb')
 // "John is nice. Sara sings."
 
 //replacements,
-r.adjectives().replace('bad')
+r.replace('is nice', 'is bad')
 // "John is bad. Sara sings."
 ```
 <table align="center">

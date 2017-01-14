@@ -49,7 +49,6 @@ let r = nlp('I look just like buddy holly.')
 ```
 
 <div align="center">
-  <b>no training, configuration, or prolog.</b>
   <table align="center">
     <tr align="center">
       <td align="center">
@@ -85,6 +84,7 @@ let r = nlp('I look just like buddy holly.')
       </td>
     </tr>
   </table>
+  <b>no training, configuration, or prolog.</b>
 </div>
 <h3 align="center">
   <a href="http://nlpcompromise.com">demos</a>

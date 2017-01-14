@@ -33,12 +33,6 @@
     focus on being <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">handy, and not overly-fancy.</a>
   </div>
 </div>
-```javascript
-let r = nlp('I look just like buddy holly.')
- r.sentences().toPastTense()
- r.out('text')
-// "I looked just like buddy holly."
-```
 <div align="center">
   :boom:Welcome to <b>v7</b>:boom:
   <div>
@@ -46,6 +40,12 @@ let r = nlp('I look just like buddy holly.')
     has changed!
   </div>
 </div>
+```javascript
+let r = nlp('I look just like buddy holly.')
+ r.sentences().toPastTense()
+ r.out('text')
+// "I looked just like buddy holly."
+```
 <h3 align="center">
   <a href="http://nlpcompromise.com">Demos</a>
   <span>&nbsp; | &nbsp;</span>
@@ -57,23 +57,27 @@ let r = nlp('I look just like buddy holly.')
 </h3>
 
 <div align="center">
+<b>no training, configuration, prolog, or jargon.</b>
   <table align="center">
     <tr align="center">
       <td align="center">
-        <b>Ctrl+V</b>
-        <div>
-          a <a href="https://unpkg.com/compromise@latest/builds/compromise.min.js">
+        <b>
+          <a href="https://unpkg.com/compromise@latest/builds/compromise.min.js">
             200k
-          </a> js file
+          </a>
+        </b>
+        <div>
+          js file🙏
         </div>
       </td>
       <td align="center">
         <div>
-          <b>🙏</b>
-          <div>
+          <b>
             <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">
               86%
             </a>
+          </b>
+          <div>
            on the Penn treebank
          </div>
       </td>
@@ -84,7 +88,7 @@ let r = nlp('I look just like buddy holly.')
     </tr>
   </table>
 </div>
-<b>Yup,</b> no training, configuration, prolog, or jargon.
+<b>Yup,</b>
 
 <div align="left">
   <b>ftw:</b>

@@ -81,7 +81,7 @@ let r = nlp('I look just like buddy holly.')
       <td align="center">
         <b>IE9+</b>
         <div>
-           &nbsp; &nbsp;  caniuse, youbetcha. &nbsp;  &nbsp;
+           &nbsp; &nbsp;  caniuse, youbetcha &nbsp;  &nbsp;
         </div>
       </td>
     </tr>
@@ -99,7 +99,7 @@ let r = nlp('I look just like buddy holly.')
 <div align="center">
   <b>no training, configuration, or prolog.</b>
 </div>
-
+<br/>
 <div align="left">
   the idea is, you can <a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">reach-in</a> to a part of the text, and change it:
 </div>
@@ -133,11 +133,11 @@ r.places().sort('freq').unique().data()
   {text: 'desert island'},
 ]*/
 
-r.questions().not('^but how .+').normalize().data()
+r.questions().not('^but how .+').data()
 /* [] */
 ```
-🤗 🤗 🤗 🤗 🤗 🤗 🤗 🤗
-<table align="center">
+ 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 
+ <table align="center">
   <tr>
     <td>Part-of-Speech Tagging</td>
     <td>Named-Entity Resolution</td>

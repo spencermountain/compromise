@@ -34,14 +34,10 @@
   </div>
 </div>
 <br/>
-
-<div align="center" markdown="1">
 ```javascript
 nlp('I look just like buddy holly').sentences().toPastTense().out('text')
 // "I looked just like buddy holly."
 ```
-</div>
-
 <h3 align="center">
   <a href="http://nlpcompromise.com">Demos</a>
   <span>&nbsp; | &nbsp;</span>

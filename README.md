@@ -59,7 +59,7 @@ let r = nlp('I look just like buddy holly.')
 
 <div align="center">
   <b>no training, configuration, or prolog.</b>
-  &nbsp; &nbsp; &nbsp; &nbsp; <table align="center">
+  <table align="center">
     <tr align="center">
       <td align="center">
         <b>
@@ -68,7 +68,7 @@ let r = nlp('I look just like buddy holly.')
           </a>
         </b>
         <div>
-          one javascript file
+          <i>one javascript file</i>
         </div>
       </td>
       <td align="center">
@@ -79,16 +79,18 @@ let r = nlp('I look just like buddy holly.')
             </a>
           </b>
           <div>
-           on the Penn treebank
+           <i>on the Penn treebank</i>
          </div>
       </td>
       <td align="center">
         <b>🙏</b>
-        <div><code>npm install</code></div>
+        <div><code>npm install compromise</code></div>
       </td>
       <td align="center">
         <b>IE9+</b>
-        <div>caniuse, uhuh.</div>
+        <div>
+          <i>caniuse, uhuh.</i>
+        </div>
       </td>
     </tr>
   </table>

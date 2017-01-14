@@ -35,7 +35,7 @@
 </div>
 <br/>
 <div align="center">
-  :boom:Welcome to <b>v7</b>:boom:
+  💥Welcome to <b>v7</b>💥
   <div>
     <a href="https://github.com/nlp-compromise/compromise/wiki/v7-upgrade-instructions">a lot</a>
     has changed!

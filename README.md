@@ -81,7 +81,7 @@ let r = nlp('I look just like buddy holly.')
       <td align="center">
         <b>IE9+</b>
         <div>
-           &nbsp; &nbsp;  caniuse, youbet. &nbsp;  &nbsp;
+           &nbsp; &nbsp;  caniuse, youbetcha. &nbsp;  &nbsp;
         </div>
       </td>
     </tr>
@@ -98,9 +98,6 @@ let r = nlp('I look just like buddy holly.')
 </h3>
 <div align="center">
   <b>no training, configuration, or prolog.</b>
-</div>
-<div align="center">
-  <b>Yup,</b> only the minimum <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">grammatical-jargon</a>.
 </div>
 
 <div align="left">
@@ -139,7 +136,7 @@ r.places().sort('freq').unique().data()
 r.questions().not('^but how .+').normalize().data()
 /* [] */
 ```
-
+🤗 🤗 🤗 🤗 🤗 🤗 🤗 🤗
 <table align="center">
   <tr>
     <td>Part-of-Speech Tagging</td>

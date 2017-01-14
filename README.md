@@ -58,7 +58,7 @@ let r = nlp('I look just like buddy holly.')
           </a>
         </b>
         <div>
-          one javascript file
+           &nbsp; one javascript file &nbsp;
         </div>
       </td>
       <td align="center">
@@ -69,17 +69,19 @@ let r = nlp('I look just like buddy holly.')
             </a>
           </b>
           <div>
-           on the Penn treebank
+            &nbsp; on the Penn treebank &nbsp;
          </div>
       </td>
       <td align="center">
         <b>🙏</b>
-        <div><code>npm install compromise</code></div>
+        <div>
+          &nbsp; <code>npm install compromise</code> &nbsp;
+        </div>
       </td>
       <td align="center">
         <b>IE9+</b>
         <div>
-           &nbsp; caniuse, uhuh. &nbsp;
+           &nbsp; &nbsp;  caniuse, youbet. &nbsp;  &nbsp;
         </div>
       </td>
     </tr>
@@ -96,6 +98,9 @@ let r = nlp('I look just like buddy holly.')
 </h3>
 <div align="center">
   <b>no training, configuration, or prolog.</b>
+</div>
+<div align="center">
+  <b>Yup,</b> only the minimum <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">grammar-jargon</a>.
 </div>
 <div align="center">
   <b>Yup, </b>

@@ -1,6 +1,6 @@
 <div align="center">
   <img src="https://cloud.githubusercontent.com/assets/399657/21955696/46e882d4-da3e-11e6-94a6-720c34e27df7.jpg" />
-  <div>natural-language processing in the browser</div>
+  <div>natural language processing, actually in the browser</div>
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />
   </a>
@@ -21,10 +21,10 @@
   </sub>
 </div>
 <div align="center">
-  <code>npm install compromise</code>
+  <sub>(formerly nlp_compromise)</sub>
 </div>
 <div align="center">
-  <sub>(formerly nlp_compromise)</sub>
+  <code>npm install compromise</code>
 </div>
 <br/>
 <div align="center">
@@ -32,13 +32,14 @@
   <div>
     focus on being <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">handy, and not overly-fancy.</a>
   </div>
+  <code>
+  nlp('I look just like buddy holly').sentences().toPastTense().out('text')
+  // "I looked just like buddy holly."
+  </code>
 </div>
 <br/>
 
-```javascript
-nlp('I look just like buddy holly').sentences().toPastTense().out('text')
-// "I looked just like buddy holly."
-```
+
 
 <h3 align="center">
   <a href="http://nlpcompromise.com">Demos</a>

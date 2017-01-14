@@ -43,14 +43,14 @@
 </div>
 ```javascript
 let r = nlp('I look just like buddy holly.')
- r.sentences().toPastTense()
- r.out('text')
+  r.sentences().toPastTense()
+  r.out('text')
 // "I looked just like buddy holly."
 ```
 <h3 align="center">
   <a href="http://nlpcompromise.com">Demos</a>
   <span>&nbsp; | &nbsp;</span>
-  <a href="https://github.com/nlp-compromise/compromise/wiki/Getting-Started">Quick-start</a>
+  <a href="https://github.com/nlp-compromise/compromise/wiki/Getting-Started">quickStart</a>
   <span>&nbsp; | &nbsp;</span>
   <a href="https://github.com/nlp-compromise/compromise/wiki/API">Docs</a>
   <span>&nbsp; | &nbsp;</span>
@@ -68,7 +68,7 @@ let r = nlp('I look just like buddy holly.')
           </a>
         </b>
         <div>
-          js file
+          one javascript file
         </div>
       </td>
       <td align="center">
@@ -84,7 +84,7 @@ let r = nlp('I look just like buddy holly.')
       </td>
       <td align="center">
         <b>🙏</b>
-        <div>npm install</div>
+        <div><code>npm install</code></div>
       </td>
       <td align="center">
         <b>IE9+</b>
@@ -99,6 +99,7 @@ the idea is, you can reach-in to a part of the text, and change it:
 </div>
 ```javascript
 r = nlp('john is really nice. sara sings loudly.')
+
 r.match('#Person').toTitleCase()
 //John is really nice. Sara sings loudly.
 
@@ -110,18 +111,6 @@ r.remove('#Adverb')
 r.adjectives().replace('bad')
 // "John is bad. Sara sings."
 ```
-.. then output as however you'd like:
-```javascript
-r.out('text')
-// "John is bad. Sara sings."
-r.out('array')
-// ['John is bad.' 'Sara sings.']
-r.people().sort().out('html')
-/*<span>
-  <span class="Person TitleCase">John</span>
-  <span class="Person TitleCase">Sara</span>
-</span>*/
-```
 <table align="center">
   <tr>
     <td>Part-of-Speech Tagging</td>
@@ -132,7 +121,8 @@ r.people().sort().out('html')
 </table>
 ###Conjugation:
 ```javascript
-r = nlp('she sells seashells by the seashore.').sentences().toFutureTense().text()
+let r = nlp('she sells seashells by the seashore.')
+r.sentences().toFutureTense().out('text')
 //'she will sell seashells...'
 
 r.verbs().conjugate()
@@ -146,7 +136,7 @@ r.verbs().conjugate()
 ```javascript
 r = nlp('a bottle of beer on the wall.')
 r.nouns().first().toPlural()
-r.text()
+r.out('text')
 //'The bottles of beer on the wall.'
 ```
 
@@ -161,16 +151,16 @@ r.sentences().toNegative()
 ```javascript
 r = nlp('fifth of december')
 
-r.values().toCardinal().text()
+r.values().toCardinal().out('text')
 // 'five of december'
 
-r.values().toNumber().text()
+r.values().toNumber().out('text')
 // '5 of december'
 ```
 
 ###Clever normalization:
 ```javascript
-r = nlp("the guest-singer's björk at seven thirty.").normalize().text()
+r = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
 ```
 
@@ -199,7 +189,7 @@ r = nlp('Tony Hawk won').out('html')
   and yes, ofcourse, there's <a href="https://github.com/nlp-compromise/compromise/wiki/API">a lot more stuff</a>.
 </h3>
 
-###Join-in:
+<b>Join in!</b>
 <div align="center">
   we're fun, we're using <b>semver</b>, and moving fast.
   <i>
@@ -219,7 +209,7 @@ r = nlp('Tony Hawk won').out('html')
 </div>
 
 ###Don't forget about:
-* **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in js, too
+* **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript, too
 * **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in js
 * **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
 * **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
@@ -230,11 +220,12 @@ For the former promise-library, see [jnewman/compromise](https://github.com/jnew
 (Thanks [Joshua](https://github.com/jnewman)!)
 
 <div align="right">
-(and also don't forget
+(also don't forget
 <a href="http://www.nltk.org/">NLTK</a>,
 <a href="https://gate.ac.uk">GATE</a>,
 <a href="http://nlp.stanford.edu/software/lex-parser.shtml">Stanford</a>,
 and
 <a href="http://cogcomp.cs.illinois.edu/page/software/">Illinois toolkit</a>
 )
+❤️️
 </div>

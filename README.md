@@ -230,7 +230,7 @@ r = nlp('Tony Hawk won').out('html')
 </div>
 
 <table>
-  <tr>
+  <tr align="center">
     <td>
       <a href="https://www.twitter.com/compromisejs">
         <img src="https://cloud.githubusercontent.com/assets/399657/21956672/a30cf206-da53-11e6-8c6c-0995cf2aef62.jpg"/>
@@ -247,6 +247,12 @@ r = nlp('Tony Hawk won').out('html')
       <a href="http://nlpcompromise.us12.list-manage2.com/subscribe?u=d5bd9bcc36c4bef0fd5f6e75f&id=8738c1f5ef">
         <img src="https://cloud.githubusercontent.com/assets/399657/21956670/a30be6e0-da53-11e6-9aaf-52a10b8c3195.jpg"/>
         <div>&nbsp; &nbsp; &nbsp; Mailing-list &nbsp; &nbsp; &nbsp; </div>
+      </a>
+    </td>
+    <td>
+      <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">
+        <img src="https://cloud.githubusercontent.com/assets/399657/21956742/5985a89c-da55-11e6-87bc-4f0f1549d202.jpg"/>
+        <div>&nbsp; &nbsp; &nbsp; Pull-requests &nbsp; &nbsp; &nbsp; </div>
       </a>
     </td>
   </tr>

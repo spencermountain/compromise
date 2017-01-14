@@ -28,7 +28,7 @@
 </div>
 <br/>
 <div align="center">
-  inspect and play with english text
+  inspect and play with english text.
   <div>
     focus on being <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">handy, and not overly-fancy.</a>
   </div>
@@ -58,7 +58,7 @@ let r = nlp('I look just like buddy holly.')
           </a>
         </b>
         <div>
-           &nbsp; one javascript file &nbsp;
+           &nbsp; just a javascript file &nbsp;
         </div>
       </td>
       <td align="center">
@@ -97,7 +97,7 @@ let r = nlp('I look just like buddy holly.')
   <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">accuracy</a>
 </h3>
 <div align="center">
-  <b>no training, configuration, or prolog.</b>
+  <b>no training, configuration, or prolog</b>
 </div>
 <br/>
 <div align="left">
@@ -141,7 +141,6 @@ r.places().sort('freq').unique().data()
 r.questions().not('^but how .+').data()
 /* [] */
 ```
- &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗
  <table align="center">
   <tr>
     <td>Part-of-Speech Tagging</td>
@@ -150,6 +149,19 @@ r.questions().not('^but how .+').data()
     <td>Inflection/Pluralization</td>
   </tr>
 </table>
+<div align="center">
+  &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗
+</div>
+###Client-side
+```html
+<script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
+<script>
+  var r = nlp('dinosaur').nouns().toPlural()
+  console.log(r.out('text'))
+  //dinosaurs
+</script>
+```
+
 ###Conjugation:
 ```javascript
 let r = nlp('she sells seashells by the seashore.')
@@ -221,11 +233,12 @@ r = nlp('Tony Hawk won').out('html')
 </h3>
 
 <b>Join in!</b>
-<div align="center">
+<div align="left">
   we're fun, we're using <b>semver</b>, and moving fast.
   <i>
     <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">
-  :hammer_and_wrench: get involved :dancer: </a>
+     :hammer_and_wrench: get involved :dancer:
+    </a>
   </i>
 </div>
 

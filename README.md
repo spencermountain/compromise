@@ -140,10 +140,10 @@ r.places().sort('freq').unique().data()
 
 r.questions().not('^but how .+').data()
 /* [] */
+```
 <div align="center">
 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗
 </div>
-```
  <table align="center">
   <tr>
     <td>Part-of-Speech Tagging</td>

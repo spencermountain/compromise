@@ -50,7 +50,7 @@ const corrections = function (r) {
   //John Foo
   r.match('#FirstName #TitleCase').match('#FirstName #Noun').tag('Person', 'firstname-titlecase');
   //ludwig van beethovan
-  r.match('#TitleCase (van|al) #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');
+  r.match('#TitleCase (van|al|bin) #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');
   r.match('#TitleCase (de|du) la? #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');
   //peter the great
   r.match('#FirstName the #Adjective').tag('Person', 'correction-determiner5');

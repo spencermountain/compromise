@@ -4,6 +4,7 @@
 module.exports = {
   'firstnames': require('./people/firstnames'),
   'lastnames': require('./people/lastnames'),
+  'notable_people': require('./people/notable'),
 
   'currencies': require('./values/currencies'),
   'numbers': require('./values/numbers'),

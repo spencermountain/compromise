@@ -37,5 +37,6 @@ module.exports = [
   'andra',
   'devan',
   'rosario',
-  'lee'
+  'lee',
+  'mel'
 ];

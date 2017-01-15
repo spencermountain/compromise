@@ -105,6 +105,8 @@ data.nouns.forEach((n) => {
 //let a rip.
 addArr(data.verbs, 'Verb');
 addObj(data.firstnames);
+addArr(data.notable_people.female, 'FemaleName');
+addArr(data.notable_people.male, 'MaleName');
 addArr(data.lastnames, 'LastName');
 addArr(data.places.airports, 'Place');
 addArr(data.places.cities, 'City');
@@ -124,7 +126,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon['years']);
+// console.log(lexicon['tiger woods']);
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.verb.conjugate())

@@ -3,6 +3,18 @@ const log = require('../paths').log;
 const rules = require('./data/punct_rules');
 const path = 'tagger/punctuation';
 
+//not so smart (right now)
+const isRomanNumeral = function(t) {
+  if (!t.term.canBe('RomanNumeral')) {
+    return false;
+  }
+  const str = t.text;
+  if (str.length > 1 && str.match(/^[IVXCM]+$/)) {
+    return true;
+  }
+  return false;
+};
+
 const oneLetters = {
   a: true,
   i: true,
@@ -37,6 +49,10 @@ const punctuation_step = function (ts) {
     //terms like 'e'
     if (str.length === 1 && !oneLetters[str]) {
       t.tagAs('Acronym', 'one-letter-acronym');
+    }
+    //roman numerals (weak rn)
+    if (isRomanNumeral(t)) {
+      t.tagAs('RomanNumeral', 'is-roman-numeral');
     }
 
   });

@@ -9,4 +9,7 @@ const nlp = require('./src/index');
 // m.values().toNumber();
 // m.check();
 
-nlp(`Bill O'Reilly`).check();
+//unlump 2.
+// nlp(`Kobe Bryant`).check();
+
+nlp(`Andrew Lloyd Webber`).check();

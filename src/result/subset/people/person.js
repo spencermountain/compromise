@@ -42,11 +42,11 @@ class Person extends Terms {
       return 'Female';
     }
     //try known first-names
-    if (this.firstName.match('#MalePerson').found) {
+    if (this.firstName.match('#MaleName').found) {
       log.tell('known male name');
       return 'Male';
     }
-    if (this.firstName.match('#FemalePerson').found) {
+    if (this.firstName.match('#FemaleName').found) {
       log.tell('known female name');
       return 'Female';
     }

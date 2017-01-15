@@ -2,6 +2,7 @@
 const log = require('../paths').log;
 const path = 'correction';
 const date_corrections = require('./date_corrections');
+const person_corrections = require('./person_corrections');
 
 //
 const corrections = function (r) {
@@ -42,22 +43,7 @@ const corrections = function (r) {
   //the truly nice swim
   r.match('the #Adverb #Adjective #Verb').match('#Verb').tag('#Noun', 'correction-determiner4');
 
-  //people chunks
-  //John L. Foo
-  r.match('#FirstName #Acronym #TitleCase').tag('Person', 'firstname-acronym-titlecase');
-  //Mr Foo
-  r.match('#Honorific #FirstName? #TitleCase').tag('Person', 'Honorific-TitleCase');
-  //John Foo
-  r.match('#FirstName #TitleCase').match('#FirstName #Noun').tag('Person', 'firstname-titlecase');
-  //ludwig van beethovan
-  r.match('#TitleCase (van|al|bin) #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');
-  r.match('#TitleCase (de|du) la? #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');
-  //peter the great
-  r.match('#FirstName the #Adjective').tag('Person', 'correction-determiner5');
-  //Morgan Shlkjsfne
-  r.match('#Person #TitleCase').match('#TitleCase #Noun').tag('Person', 'correction-person-titlecase');
-
-  //organiation
+  //organization
   r.match('#Organization (inc|bros|lmt|co|incorporation|corp|corporation)').tag('Organization', 'org-abbreviation');
 
   //book the flight
@@ -100,14 +86,7 @@ const corrections = function (r) {
   r.match('#Value+ #Currency').tag('#Money', 'value-currency');
   r.match('#Money and #Money #Currency?').tag('#Money', 'money-and-money');
 
-  //last names
-  let reason = 'person-correction';
-  r.match('#FirstName #Acronym? #TitleCase').ifNo('#Date').tag('#Person', reason).lastTerm().tag('#LastName', reason);
-  r.match('#FirstName (#Singular|#Possessive)').ifNo('#Date').tag('#Person', reason).lastTerm().tag('#LastName', reason);
-  r.match('#FirstName #Acronym #Noun').ifNo('#Date').tag('#Person', reason).lastTerm().tag('#LastName', reason);
-  r.match('(lady|queen) #TitleCase').ifNo('#Date').tag('#FemalePerson', reason);
-  r.match('(king|pope) #TitleCase').ifNo('#Date').tag('#MalePerson', reason);
-
+  r = person_corrections(r);
   r = date_corrections(r);
 
   return r;

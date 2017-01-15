@@ -37,9 +37,11 @@ const conflicts = [
   ['Value', 'Determiner'],
   ['Verb', 'NounPhrase'],
   ['Noun', 'VerbPhrase'],
+  //roman numerals
+  ['RomanNumeral', 'Fraction', 'NiceNumber'],
+  ['RomanNumeral', 'Money'],
   //cases
   ['UpperCase', 'TitleCase', 'CamelCase']
-
 ];
 
 const find = (tag) => {

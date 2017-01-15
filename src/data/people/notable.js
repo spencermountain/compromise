@@ -12,7 +12,6 @@ exports.male = [
   'emeril lagasse',
   'rush limbaugh',
   'carson palmer',
-  'wolfgang puck',
   'ray romano',
   'ronaldinho',
   'valentino rossi',
@@ -24,6 +23,7 @@ exports.male = [
   'adolf hitler',
   'hulk hogan',
   'ashton kutcher',
+  'kobe bryant',
   'cardinal wolsey',
   'slobodan milosevic',
 ];

@@ -63,8 +63,10 @@ module.exports = {
   Adverb: true,
   Value: {
     Ordinal: true,
+    Cardinal: {
+      RomanNumeral: true,
+    },
     Fraction: true,
-    Cardinal: true,
     TextValue: true,
     NumericValue: true,
     NiceNumber: true,

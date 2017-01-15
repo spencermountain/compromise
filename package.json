@@ -15,7 +15,8 @@
     "demo": "node ./scripts/demo.js",
     "watch": "node ./scripts/watch.js",
     "filesize": "node ./scripts/filesize.js",
-    "coverage": "node ./scripts/coverage.js"
+    "coverage": "node ./scripts/coverage.js",
+    "prepublish":"npm run coverage"
   },
   "files": [
     "builds/",
@@ -29,19 +30,18 @@
     "babel-preset-stage-2": "^6.11.0",
     "babelify": "7.3.0",
     "browserify": "13.0.1",
+    "codacy-coverage": "^2.0.0",
     "derequire": "^2.0.3",
     "eslint": "^3.1.1",
     "gaze": "^1.1.1",
     "http-server": "0.9.0",
-    "jsdoc-parse": "^1.2.7",
-    "leakage": "^0.2.0",
     "nlp-corpus": "latest",
     "nyc": "^8.4.0",
     "shelljs": "^0.7.2",
+    "tap-min": "^1.1.0",
     "tap-spec": "4.1.1",
     "tape": "4.6.0",
-    "uglify-js": "2.7.0",
-    "uglifyify": "^3.0.3"
+    "uglify-js": "2.7.0"
   },
   "license": "MIT"
 }

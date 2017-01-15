@@ -234,6 +234,7 @@ r = nlp('Tony Hawk won').out('html')
 
 <b>Join in!</b>
 <div align="left">
+<img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
   we're fun, we're using <b>semver</b>, and moving fast.
   <i>
     <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">
@@ -304,3 +305,4 @@ and
 )
 ❤️️
 </div>
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062)](https://www.codacy.com/app/spencerkelly86/nlp_compromise)

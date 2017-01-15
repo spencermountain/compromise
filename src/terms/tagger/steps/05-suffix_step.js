@@ -6,15 +6,14 @@ const path = 'tagger/suffix';
 const suffix_step = function(s) {
   log.here(path);
   s.terms.forEach((t) => {
-    //don't over-write any known tags
-    if (Object.keys(t.tag).length > 0) {
-      return;
-    }
     //do normalized rules (on t.normal)
     for (let o = 0; o < rules.length; o++) {
       let r = rules[o];
       if (t.normal.match(r.reg)) {
-        t.tagAs(r.tag, 'word-rule- "' + r.str + '"');
+        //don't over-write any other known tags
+        if (t.term.canBe(r.tag)) {
+          t.tagAs(r.tag, 'word-rule- "' + r.str + '"');
+        }
         return;
       }
     }

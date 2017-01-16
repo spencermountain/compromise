@@ -12,4 +12,6 @@ const nlp = require('./src/index');
 //unlump 2.
 // nlp(`Kobe Bryant`).check();
 
-nlp(`Andrew Lloyd Webber`).check();
+nlp(`the Bank of America in the hall`, {
+  'bank of america': 'Organization'
+}).topics().check();

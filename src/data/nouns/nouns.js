@@ -28,6 +28,8 @@ module.exports = [
   'friend',
   'funding',
   'god',
+  'glacier',
+  'canary',
   'grand slam',
   'head start',
   'home',

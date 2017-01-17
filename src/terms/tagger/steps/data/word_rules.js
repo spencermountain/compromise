@@ -110,7 +110,7 @@ module.exports = [
   ['.[^aeiou][ai]ble$', 'Adjective'],
   ['.[^aeiou]eable$', 'Adjective'],
   ['.[^aeiou]ful$', 'Adjective'],
-  ['.[^aeiou]ish$', 'Adjective'],
+  ['.[^aeiouf]ish$', 'Adjective'],
   ['.[^aeiou]ica$', 'Singular'],
   ['[aeiou][^aeiou]is$', 'Singular'],
   ['[^aeiou]ard$', 'Singular'],
@@ -120,7 +120,6 @@ module.exports = [
   ['.[lstrn]us$', 'Singular'],
   ['..ic$', 'Adjective'],
   ['[aeiou][^aeiou]id$', 'Adjective'],
-  ['.[^aeiou]ish$', 'Adjective'],
   ['.[^aeiou]ive$', 'Adjective'],
   ['[ea]{2}zy$', 'Adjective'],
   ['[^aeiou]ician$', 'Actor'],
@@ -132,6 +131,7 @@ module.exports = [
   ['.[^aeiou][ao]pher$', 'Actor'],
   ['.tive$', 'Actor'],
   ['[aeiou].*ist$', 'Adjective'],
+  ['(over|under)[a-z]{2,}$', 'Adjective'],
   ['[^i]fer$', 'Infinitive'],
   ['[aeiou]c?ked$', 'PastTense'], //hooked
   ['(eastern|central|mountain|pacific)( standard)? time', 'Time'], //PST, eastern time.  Todo:(only American right now)

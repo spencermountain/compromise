@@ -13,4 +13,4 @@ require('./src/log').enable();
 
 //bug 3.
 // console.log('durian:', nlp('durian').nouns().out('text'));
-console.log('harden:', nlp('harden').nouns().out('text'));
+// console.log('harden:', nlp('harden').nouns().out('text'));

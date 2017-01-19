@@ -1,9 +1,11 @@
 'use strict';
 const fixUnicode = require('./fixUnicode');
 
-const normalize = function (term) {
-  let str = term._text || '';
+//some basic operations on a string to reduce noise
+exports.normalize = function(str) {
+  str = str || '';
   str = str.toLowerCase();
+  str = str.trim();
   //(very) rough asci transliteration -  bjŏrk -> bjork
   str = fixUnicode(str);
   //convert hyphenations to a multiple-word term
@@ -22,6 +24,12 @@ const normalize = function (term) {
     str = str.replace(/['",\.!:;\?\)]$/g, '');
     str = str.replace(/^['"\(]/g, '');
   }
+  return str;
+};
+
+exports.addNormal = function (term) {
+  let str = term._text || '';
+  str = exports.normalize(str);
   //compact acronyms
   if (term.term.isAcronym()) {
     str = str.replace(/\./g, '');
@@ -31,6 +39,5 @@ const normalize = function (term) {
   term.normal = str;
 };
 
-module.exports = normalize;
 
 // console.log(normalize('Dr. V Cooper'));

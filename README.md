@@ -251,7 +251,7 @@ r = nlp('Tony Hawk won').out('html')
       </a>
     </td>
     <td>
-      <a href="http://superscript-slackin.herokuapp.com/">
+      <a href="http://slack.compromise.cool/">
         <img src="https://cloud.githubusercontent.com/assets/399657/21956671/a30cbc82-da53-11e6-82d6-aaaaebc0bc93.jpg"/>
         <div>&nbsp; &nbsp; &nbsp; Slack group &nbsp; &nbsp; &nbsp; </div>
       </a>

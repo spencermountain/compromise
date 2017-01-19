@@ -4,9 +4,9 @@ var nlp = require('../lib/nlp');
 
 
 var lexicon = {
-  'jardas al abid': 'Place',
-  'umm ar rizam': 'Place',
-  'tobruk': 'Place'
+  'Jardas al Abid': 'Place',
+  'Umm Ar Rizam': 'Place',
+  'Tobruk': 'Place'
 };
 // var sentence = 'A suicide attack hit the centre of Tobruk killing one person (and the attacker) and injuring more than twenty.';
 // var found = nlp(sentence).places().data()[0];

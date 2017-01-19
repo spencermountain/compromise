@@ -14,7 +14,6 @@ module.exports = [
   'fat',
   'flat',
   'fresh',
-  'glad',
   'great',
   'hard',
   'light',

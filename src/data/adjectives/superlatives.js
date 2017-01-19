@@ -96,6 +96,7 @@ let arr = [
   'gentle',
   'glad',
   'glib',
+  'glad',
   'grand',
   'green',
   'gruesome',

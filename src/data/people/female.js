@@ -222,4 +222,3 @@ const no_change = [
 ];
 list = list.concat(no_change);
 module.exports = list;
-// console.log(list.indexOf('kelley'));

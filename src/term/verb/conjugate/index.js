@@ -30,7 +30,7 @@ const conjugate = function(t, verbose) {
     all['Infinitive'] = t.verb.infinitive(verbose) || '';
   }
   //check irregular forms
-  const irregObj = checkIrregulars(all['Infinitive']);
+  const irregObj = checkIrregulars(all['Infinitive']) || {};
   Object.keys(irregObj).forEach((k) => {
     if (irregObj[k] && !all[k]) {
       all[k] = irregObj[k];

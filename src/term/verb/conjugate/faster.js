@@ -40,4 +40,4 @@ const fasterConjugate = (inf) => {
   return all;
 };
 module.exports = fasterConjugate;
-// console.log(fasterConjugate('play'));
+// console.log(fasterConjugate('widening'));

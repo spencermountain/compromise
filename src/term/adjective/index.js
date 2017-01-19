@@ -1,5 +1,6 @@
 'use strict';
 const toAdverb = require('./toAdverb');
+const toVerb = require('./toVerb');
 const toNoun = require('./toNoun');
 const toComparative = require('./toComparative');
 const toSuperlative = require('./toSuperlative');
@@ -16,6 +17,9 @@ const adjective = {
   },
   superlative: function() {
     return toSuperlative(this.normal);
+  },
+  verbForm: function() {
+    return toVerb(this.normal);
   },
   conjugate: function() {
     return {

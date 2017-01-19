@@ -18,18 +18,19 @@ const checkIrregulars = function(str) {
     obj.Infinitive = str;
     return obj;
   }
+  //longer check of known-verb forms
   for(let i = 0; i < infArr.length; i++) {
     for(let o = 0; o < forms.length; o++) {
       let irObj = irregulars[infArr[i]];
-      if (irObj[forms[o]]) {
+      if (irObj[forms[o]] === str) {
         let obj = Object.assign({}, irObj);
-        obj.Infinitive = str;
+        obj.Infinitive = infArr[i];
         return obj;
       }
     }
   }
-  return null;
+  return {};
 };
 
 module.exports = checkIrregulars;
-// console.log(checkIrregulars('understood'));
+// console.log(checkIrregulars('bit'));

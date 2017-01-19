@@ -8,7 +8,8 @@ const adj = {
   toNoun: require('../term/adjective/toNoun'),
   toSuperlative: require('../term/adjective/toSuperlative'),
   toComparative: require('../term/adjective/toComparative'),
-  toAdverb: require('../term/adjective/toAdverb')
+  toAdverb: require('../term/adjective/toAdverb'),
+  toVerb: require('../term/adjective/toVerb')
 };
 
 // console.time('lexicon');
@@ -100,8 +101,20 @@ data.superlatives.forEach((a) => {
 });
 
 data.verbConverts.forEach((a) => {
+  lexicon[adj.toNoun(a)] = 'Noun';
+  lexicon[adj.toAdverb(a)] = 'Adverb';
   lexicon[adj.toSuperlative(a)] = 'Superlative';
   lexicon[adj.toComparative(a)] = 'Comparative';
+
+  const v = adj.toVerb(a);
+  lexicon[v] = 'Verb';
+  //now conjugate it
+  let o = fastConjugate(v);
+  wantVerbs.forEach((k) => {
+    if (o[k] && !lexicon[o[k]]) {
+      lexicon[o[k]] = k;
+    }
+  });
 });
 
 //inflect nouns
@@ -135,7 +148,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-console.log(lexicon['softer']);
+// console.log(lexicon['stiffened']);
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.verb.conjugate())

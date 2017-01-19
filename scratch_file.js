@@ -15,3 +15,6 @@ const nlp = require('./src/index');
 // console.log('harden:', nlp('harden').nouns().out('text'));
 
 // console.log(nlp('quick').check().adjectives().data());
+
+
+// console.log(fasterConjugate('widening'));

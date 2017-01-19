@@ -1,5 +1,6 @@
 'use strict';
-//a lexicon is a giant object of known words
+//a lexicon is a giant object of known words and their assumed pos-tag.
+//the way we make it rn is a bit of a mess.
 const data = require('./index');
 const fns = require('./fns');
 const fastConjugate = require('../term/verb/conjugate/faster');
@@ -11,6 +12,8 @@ const adj = {
   toAdverb: require('../term/adjective/toAdverb'),
   toVerb: require('../term/adjective/toVerb')
 };
+const toAdjective = require('../term/verb/toAdjective');
+
 
 // console.time('lexicon');
 let lexicon = {};
@@ -20,11 +23,7 @@ const addObj = (o) => {
 };
 const addArr = (arr, tag) => {
   const l = arr.length;
-  // console.log('----' + tag);
   for (let i = 0; i < l; i++) {
-    // if (lexicon[arr[i]]) {
-    //   console.log(arr[i]);
-    // }
     lexicon[arr[i]] = tag;
   }
 };
@@ -75,21 +74,14 @@ Object.keys(data.irregular_verbs).forEach((k) => {
 });
 
 //conjugate verblist
-const wantVerbs = [
-  'PastTense',
-  'PresentTense',
-  'Infinitive',
-  'Gerund',
-  'Actor',
-  'Adjective'
-];
 data.verbs.forEach((v) => {
   let o = fastConjugate(v);
-  wantVerbs.forEach((k) => {
+  Object.keys(o).forEach((k) => {
     if (o[k] && !lexicon[o[k]]) {
       lexicon[o[k]] = k;
     }
   });
+  lexicon[toAdjective(v)] = 'Adjective';
 });
 
 //conjugate adjectives
@@ -100,6 +92,7 @@ data.superlatives.forEach((a) => {
   lexicon[adj.toComparative(a)] = 'Comparative';
 });
 
+//even more expressive adjectives
 data.verbConverts.forEach((a) => {
   lexicon[adj.toNoun(a)] = 'Noun';
   lexicon[adj.toAdverb(a)] = 'Adverb';
@@ -110,7 +103,7 @@ data.verbConverts.forEach((a) => {
   lexicon[v] = 'Verb';
   //now conjugate it
   let o = fastConjugate(v);
-  wantVerbs.forEach((k) => {
+  Object.keys(o).forEach((k) => {
     if (o[k] && !lexicon[o[k]]) {
       lexicon[o[k]] = k;
     }
@@ -148,7 +141,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon['stiffened']);
+// console.log(lexicon['will walk']);
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.verb.conjugate())

@@ -4,6 +4,7 @@ const toInfinitive = require('./toInfinitive');
 const toNegative = require('./toNegative');
 const toPositive = require('./toPositive');
 const conjugate = require('./conjugate');
+const toAdjective = require('./toAdjective');
 let pluralMap = {
   'is': 'are',
   'have': 'has'
@@ -58,6 +59,10 @@ module.exports = {
   },
   futureTense: function () {
     return conjugate(this).FutureTense;
+  },
+
+  asAdjective: function() {
+    return toAdjective(this.normal);
   },
 
   //mutable methods

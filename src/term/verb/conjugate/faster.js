@@ -7,10 +7,9 @@ const generic = require('./generic');
 //it's way faster because it knows input is already infinitive
 
 const want = [
+  'Gerund',
   'PastTense',
   'PresentTense',
-  'FutureTense',
-  'Gerund'
 ];
 
 const fasterConjugate = (inf) => {
@@ -40,4 +39,4 @@ const fasterConjugate = (inf) => {
   return all;
 };
 module.exports = fasterConjugate;
-// console.log(fasterConjugate('widening'));
+// console.log(fasterConjugate('walk'));

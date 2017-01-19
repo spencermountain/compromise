@@ -56,6 +56,24 @@ const compact = {
     'super duper'
   ],
 
+  Verb: [
+    'lengthen',
+    'heighten',
+    'worsen',
+    'lessen',
+    'awaken',
+    'frighten',
+    'threaten',
+    'hasten',
+    'strengthen',
+    'given',
+    //misc
+    'known',
+    'shown',
+    'seen',
+    'born'
+  ],
+
   Place: [
     'new england',
     'new hampshire',
@@ -135,13 +153,6 @@ const compact = {
     'went'
   ],
 
-  'Verb': [
-    'given',
-    'known',
-    'shown',
-    'seen',
-    'born'
-  ],
 
   'Gerund': [
     'going',

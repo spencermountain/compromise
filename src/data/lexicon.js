@@ -19,7 +19,11 @@ const addObj = (o) => {
 };
 const addArr = (arr, tag) => {
   const l = arr.length;
+  // console.log('----' + tag);
   for (let i = 0; i < l; i++) {
+    // if (lexicon[arr[i]]) {
+    //   console.log(arr[i]);
+    // }
     lexicon[arr[i]] = tag;
   }
 };
@@ -95,6 +99,11 @@ data.superlatives.forEach((a) => {
   lexicon[adj.toComparative(a)] = 'Comparative';
 });
 
+data.verbConverts.forEach((a) => {
+  lexicon[adj.toSuperlative(a)] = 'Superlative';
+  lexicon[adj.toComparative(a)] = 'Comparative';
+});
+
 //inflect nouns
 data.nouns.forEach((n) => {
   lexicon[n] = 'Singular';
@@ -103,7 +112,6 @@ data.nouns.forEach((n) => {
 });
 
 //let a rip.
-addArr(data.verbs, 'Verb');
 addObj(data.firstnames);
 addArr(data.notable_people.female, 'FemaleName');
 addArr(data.notable_people.male, 'MaleName');
@@ -114,6 +122,7 @@ addArr(data.places.countries, 'Country');
 addArr(data.uncountables, 'Noun');
 addArr(data.organizations, 'Organization');
 addArr(data.adjectives, 'Adjective');
+addArr(data.verbConverts, 'Adjective');
 addArr(data.superlatives, 'Adjective');
 addArr(data.currencies, 'Currency');
 //these ad-hoc manual ones have priority
@@ -126,7 +135,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon['tiger woods']);
+console.log(lexicon['softer']);
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.log(t.verb.conjugate())

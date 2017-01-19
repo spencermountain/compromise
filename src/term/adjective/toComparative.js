@@ -1,6 +1,6 @@
 //turn 'quick' into 'quickly'
 'use strict';
-const convertables = require('./paths').data.superlatives;
+const convertables = require('./convertable');
 
 const irregulars = {
   'grey': 'greyer',
@@ -72,7 +72,7 @@ const to_comparative = function(str) {
     }
   }
 
-  if (convertables.indexOf(str) !== -1) {
+  if (convertables[str] !== undefined) {
     if (str.match(/e$/)) {
       return str + 'r';
     }

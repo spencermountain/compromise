@@ -28,7 +28,8 @@ module.exports = {
   'orgWords': require('./organizations/orgWords'),
 
   'adjectives': require('./adjectives/adjectives'),
-  'superlatives': require('./adjectives/convertable'),
+  'superlatives': require('./adjectives/superlatives'),
+  'verbConverts': require('./adjectives/verbConverts'),
 
   'irregular_verbs': require('./verbs/irregular_verbs'),
   'verbs': require('./verbs/verbs'),

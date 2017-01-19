@@ -40,7 +40,7 @@ const corrections = function (r) {
   r.match('#Value grand').tag('Value', 'value-grand');
   r.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');
   r.match('(half|quarter) #Ordinal').tag('Value', 'half-ordinal');
-  r.match('#Value and #Value').tag('Value', 'value-and-value');
+  r.match('(hundred|thousand|million|billion|trillion) and #Value').tag('Value', 'magnitude-and-value');
   r.match('#Value point #Value').tag('Value', 'value-point-value');
 
   //time

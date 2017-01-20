@@ -21,7 +21,7 @@ test('sentence():', function(t) {
 
   // ['Contains no fruit juice \n\n All rights reserved', 'contains no fruit juice. all rights reserved'],
   ].forEach(function (a) {
-    var str = nlp(a[0]).normal();
+    var str = nlp(a[0]).out('normal');
     str_test(str, a[0], a[1], t);
   });
   t.end();

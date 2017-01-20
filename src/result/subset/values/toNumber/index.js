@@ -38,7 +38,7 @@ const alreadyNumber = (ts) => {
 //turn a string into a number
 const parse = function(ts) {
   log.here('parseNumber', path);
-  let str = ts.normal();
+  let str = ts.out('normal');
 
   //convert some known-numbers
   if (casualForms[str] !== undefined) {
@@ -50,7 +50,7 @@ const parse = function(ts) {
   }
   //handle a string of mostly numbers
   if (alreadyNumber(ts)) {
-    return parseNumeric(ts.normal());
+    return parseNumeric(ts.out('normal'));
   }
   let modifier = findModifiers(str);
   str = modifier.str;

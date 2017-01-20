@@ -8,7 +8,7 @@ test('conditions:', function (t) {
     ['if it is raining, the driveway is wet', 'the driveway is wet'],
     ['if it is raining, the driveway is wet, unless it is snowing', 'the driveway is wet'],
   ].forEach(function (a) {
-    var str = nlp(a[0]).remove('#ConditionPhrase+').normal();
+    var str = nlp(a[0]).remove('#ConditionPhrase+').out('normal');
     str_test(str, a[0], a[1], t);
   });
   t.end();

@@ -11,13 +11,13 @@ test('result methods', function (t) {
 
   //filter string
   var small = m.filter('#Emoji');
-  t.equal(small.normal(), 'this :cookie: <3 💯 so good. yes it is <3', 'nlp.filter string');
+  t.equal(small.out('normal'), 'this :cookie: <3 💯 so good. yes it is <3', 'nlp.filter string');
 
   //filter method
   small = m.filter((ts) => {
     return !ts.has('#Emoji');
   });
-  t.equal(small.normal(), 'it is really nice.', 'nlp.filter method');
+  t.equal(small.out('normal'), 'it is really nice.', 'nlp.filter method');
 
   t.end();
 });

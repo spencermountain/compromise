@@ -28,7 +28,7 @@ const parseDate = (r) => {
   };
   let m = r.match('(#Holiday|today|tomorrow|yesterday)');
   if (m.found) {
-    result.knownDate = m.normal();
+    result.knownDate = m.out('normal');
   }
   m = r.match('#Month');
   if (m.found) {
@@ -51,7 +51,7 @@ const parseDate = (r) => {
     if (isDate(numbers[0])) {
       result.date = numbers[0];
     }
-    let year = parseInt(r.match('#Year').normal(), 10);
+    let year = parseInt(r.match('#Year').out('normal'), 10);
     if (isYear(year)) {
       result.year = year;
     }
@@ -69,7 +69,7 @@ const parseDate = (r) => {
     //january 1992
     m = r.match('#Month #Year');
     if (m.found) {
-      let num = parseInt(r.match('#Year').normal(), 10);
+      let num = parseInt(r.match('#Year').out('normal'), 10);
       if (isYear(num)) {
         result.year = num;
       }

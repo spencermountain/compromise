@@ -10,7 +10,7 @@ test('==Value==', function (T) {
       [5, '5th'],
       [22, '22nd'],
     ].forEach(function (a) {
-      var str = nlp(a[0]).values().toOrdinal().normal();
+      var str = nlp(a[0]).values().toOrdinal().out('normal');
       str_test(str, a[0], a[1], t);
     });
     t.end();
@@ -25,7 +25,7 @@ test('==Value==', function (T) {
       ['twelve 2-gram containers', 12],
       ['thirty-seven forever-21 stores', 37],
     ].forEach(function (a) {
-      var str = nlp(a[0]).values().toNumber().term(0).first().normal();
+      var str = nlp(a[0]).values().toNumber().term(0).first().out('normal');
       a[1] = '' + a[1];
       str_test(str, a[0], a[1], t);
     });

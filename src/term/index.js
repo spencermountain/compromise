@@ -19,7 +19,7 @@ class Term {
     this._text = fns.ensureString(str);
     this.tag = {};
     //seperate whitespace from the text
-    let parsed = build_whitespace(str || '');
+    let parsed = build_whitespace(this._text);
     this.whitespace = parsed.whitespace;
     this._text = parsed.text;
     this.parent = null;

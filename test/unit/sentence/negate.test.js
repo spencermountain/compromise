@@ -32,7 +32,7 @@ test('==negation==', function(T) {
       ['john always walks quickly', 'john never walks quickly'],
       ['everybody walks quickly', 'nobody walks quickly'],
     ].forEach(function (a) {
-      var str = nlp(a[0]).sentences().toNegative().text();
+      var str = nlp(a[0]).sentences().toNegative().out('text');
       str_test(str, a[0], a[1], t);
     });
     t.end();
@@ -59,7 +59,7 @@ test('==negation==', function(T) {
 //       // ['everybody walks quickly', 'nobody walks quickly'],
 //
 //     ].forEach(function (a) {
-//       var str = nlp(a[0]).toNegative().text();
+//       var str = nlp(a[0]).toNegative().out('text');
 //       str_test(str, a[0], a[1], t);
 //     });
 //     t.end();

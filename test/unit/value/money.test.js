@@ -4,23 +4,23 @@ var nlp = require('../lib/nlp');
 test('money-basic:', function (t) {
   var r = nlp('it is $70.23');
   var m = r.match('#Money');
-  t.equal(m.normal(), '$70.23', 'match-$70.23');
+  t.equal(m.out('normal'), '$70.23', 'match-$70.23');
 
   r = nlp('it is $703');
   m = r.match('#Money+');
-  t.equal(m.normal(), '$703', 'match-$703');
+  t.equal(m.out('normal'), '$703', 'match-$703');
 
   r = nlp('it is five euros');
   m = r.match('#Money+');
-  t.equal(m.normal(), 'five euros', 'match-five-euros');
+  t.equal(m.out('normal'), 'five euros', 'match-five-euros');
 
   r = nlp('i said five times, you should pay 12 dollars');
   m = r.match('#Money+');
-  t.equal(m.normal(), '12 dollars', 'match-12 dollars');
+  t.equal(m.out('normal'), '12 dollars', 'match-12 dollars');
 
   r = nlp('you should pay sixty five dollars and four cents USD');
   m = r.match('#Money+');
-  t.equal(m.normal(), 'sixty five dollars and four cents usd', 'match-long-usd');
+  t.equal(m.out('normal'), 'sixty five dollars and four cents usd', 'match-long-usd');
 
   t.end();
 });

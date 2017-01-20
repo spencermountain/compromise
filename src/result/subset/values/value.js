@@ -119,13 +119,13 @@ class Value extends Terms {
     let txtV = this.clone().toTextValue();
     let obj = {
       NumericValue: {
-        cardinal: numV.toCardinal().plaintext(),
-        ordinal: numV.toOrdinal().plaintext(),
-        nicenumber: this.toNiceNumber().plaintext(),
+        cardinal: numV.toCardinal().out('text'),
+        ordinal: numV.toOrdinal().out('text'),
+        nicenumber: this.toNiceNumber().out('text'),
       },
       TextValue : {
-        cardinal: txtV.toCardinal().plaintext(),
-        ordinal: txtV.toOrdinal().plaintext(),
+        cardinal: txtV.toCardinal().out('text'),
+        ordinal: txtV.toOrdinal().out('text'),
       }
     };
     obj.number = this.number();

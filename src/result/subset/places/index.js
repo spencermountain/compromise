@@ -6,8 +6,8 @@ class Places extends Text {
   data() {
     return this.list.map((ts) => {
       return {
-        text: ts.plaintext(),
-        normal: ts.normal(),
+        text: ts.out('text'),
+        normal: ts.out('normal'),
       };
     });
   }

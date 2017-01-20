@@ -19,7 +19,7 @@ test('==contractions==', function(T) {
     ].forEach(function(a) {
       var m = nlp(a[0]);
       m.contractions().expand();
-      var str = m.normal();
+      var str = m.out('normal');
       str_test(str, a[0], a[1], t);
     });
     t.end();
@@ -141,7 +141,7 @@ test('==contractions==', function(T) {
       `he would win`,
       `they would win`,
     ].forEach(function(a) {
-      var str = nlp(a[0]).normal();
+      var str = nlp(a[0]).out('normal');
       str_test(str, a[0], a[0], t);
     });
     t.end();

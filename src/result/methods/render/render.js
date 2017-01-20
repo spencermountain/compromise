@@ -17,7 +17,7 @@ const prettyPrint = (Text) => {
     /** a character-perfect form*/
     plaintext: function () {
       return this.list.reduce((str, ts) => {
-        str += ts.plaintext();
+        str += ts.out('text');
         return str;
       }, '');
     },
@@ -25,7 +25,7 @@ const prettyPrint = (Text) => {
     /** a human-readable form*/
     normal: function () {
       return this.list.map((ts) => {
-        let str = ts.normal();
+        let str = ts.out('normal');
         let last = ts.last();
         if (last) {
           let punct = last.endPunctuation();
@@ -40,7 +40,7 @@ const prettyPrint = (Text) => {
     /** a computer-focused, more aggressive normalization than normal()*/
     root: function () {
       return this.list.map((ts) => {
-        return ts.root();
+        return ts.out('root');
       }).join(' ');
     },
 
@@ -48,7 +48,7 @@ const prettyPrint = (Text) => {
     //   this.list.forEach((ts) => {
     //     let str = '';
     //     ts.terms.forEach((t) => {
-    //       let text = t.plaintext();
+    //       let text = t.out('text');
     //       if (t.tag.ConditionPhrase) {
     //         str += chalk.magenta(text);
     //         return;
@@ -74,14 +74,14 @@ const prettyPrint = (Text) => {
     data: function() {
       return this.list.map((ts) => {
         return {
-          normal: ts.normal(),
-          text: ts.plaintext()
+          normal: ts.out('normal'),
+          text: ts.out('text')
         };
       });
     },
 
     asArray: function () {
-      return this.list.map((ts) => ts.normal());
+      return this.list.map((ts) => ts.out('normal'));
     },
 
     asHtml: function () {

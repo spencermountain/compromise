@@ -10,7 +10,7 @@ const parseRelative = (r) => {
   let known = '(' + Object.keys(relatives).join('|') + ')';
   let m = r.match(`${known}+`).lastTerm();
   if (m.found) {
-    let str = m.match(known).normal();
+    let str = m.match(known).out('normal');
     return relatives[str];
   }
 };

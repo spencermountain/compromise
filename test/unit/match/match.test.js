@@ -77,8 +77,8 @@ test('==Match ==', function (T) {
       if (!m.found) {
         t.equal(a[2], '', 'no-match: ' + a[0] + ' - -' + a[1]);
       } else {
-        var msg = '\'' + a[0] + '\'  - ' + a[1] + ' - - have : \'' + m.normal() + '\'';
-        t.equal(m.normal(), a[2], msg);
+        var msg = '\'' + a[0] + '\'  - ' + a[1] + ' - - have : \'' + m.out('normal') + '\'';
+        t.equal(m.out('normal'), a[2], msg);
       }
     });
     t.end();

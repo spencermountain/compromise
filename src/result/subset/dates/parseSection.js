@@ -13,7 +13,7 @@ const parseSection = (r) => {
   let known = '(' + Object.keys(sections).join('|') + ')'
   let m = r.match(`the? ${known} of`)
   if (m.found) {
-    let str = m.match(known).normal()
+    let str = m.match(known).out('normal')
     return sections[str]
   }
 }

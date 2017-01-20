@@ -23,8 +23,8 @@ const expand = function(ts) {
 class Contraction extends Terms {
   data() {
     return {
-      text: this.plaintext(),
-      normal: this.normal(),
+      text: this.out('text'),
+      normal: this.out('normal'),
       isContracted: !!this.contracted
     };
   }

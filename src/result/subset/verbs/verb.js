@@ -10,13 +10,19 @@ class Verb extends Terms {
   }
   data() {
     return {
-      text: this.plaintext(),
-      normal: this.normal(),
-      negative: this.negative.normal(),
-      augillary: this.auxillary.normal(),
-      verb: this.verb.normal(),
+      text: this.out('text'),
+      normal: this.out('normal'),
+      negative: this.negative.out('normal'),
+      augillary: this.auxillary.out('normal'),
+      verb: this.verb.out('normal'),
     };
   }
+
+  conjugate(debug) {
+    return this.verb.list[0].terms[0].verb.conjugate(debug);
+  }
+
+  /** negation **/
   isNegative() {
     return this.match('#Negative').found;
   }
@@ -36,6 +42,21 @@ class Verb extends Terms {
   }
   toPositive() {
     return this.remove('#Negative');
+  }
+
+  /** conjugation **/
+  toPastTense() {
+    return this;
+  }
+  toPresentTense() {
+    return this;
+  }
+  toFutureTense() {
+    return this;
+  }
+
+  toAdjective() {
+    return this;
   }
 
 }

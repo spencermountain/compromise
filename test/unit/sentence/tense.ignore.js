@@ -29,13 +29,13 @@ test('sentence-change-tense:', function(t) {
     var s = nlp.text(a[0]);
 
     s.to_past();
-    str_test(s.text(), a[0], a[1], t);
+    str_test(s.out('text'), a[0], a[1], t);
 
     s.to_future();
-    str_test(s.text(), a[0], a[2], t);
+    str_test(s.out('text'), a[0], a[2], t);
 
     s.to_present();
-    str_test(s.text(), a[0], a[0], t);
+    str_test(s.out('text'), a[0], a[0], t);
 
   });
   t.end();

@@ -6,11 +6,11 @@ const log = require('../../paths').log;
 class Person extends Terms {
   data() {
     return {
-      text: this.plaintext(),
-      normal: this.normal(),
-      firstName: this.firstName.normal(),
-      middleName: this.middleName.normal(),
-      lastName: this.lastName.normal(),
+      text: this.out('text'),
+      normal: this.out('normal'),
+      firstName: this.firstName.out('normal'),
+      middleName: this.middleName.out('normal'),
+      lastName: this.lastName.out('normal'),
       genderGuess: this.guessGender(),
       honorifics: this.honorifics.asArray()
     };
@@ -51,15 +51,15 @@ class Person extends Terms {
       return 'Female';
     }
     //look-for regex clues
-    return guessGender(this.firstName.normal());
+    return guessGender(this.firstName.out('normal'));
   }
   root() {
-    let first = this.firstName.root();
-    let last = this.lastName.root();
+    let first = this.firstName.out('root');
+    let last = this.lastName.out('root');
     if (first && last) {
       return first + ' ' + last;
     }
-    return last || first || this.root();
+    return last || first || this.out('root');
   }
 }
 module.exports = Person;

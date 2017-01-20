@@ -25,7 +25,7 @@ const parseTime = (r) => {
 
   let logic = r.match('(by|before|for|during|at|until|after) #Time').firstTerm();
   if (logic.found) {
-    result.logic = logic.normal();
+    result.logic = logic.out('normal');
   }
 
   let time = r.match('#Time');

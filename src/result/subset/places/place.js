@@ -11,7 +11,7 @@ class Place extends Terms {
     return 'Place';
   }
   root() {
-    return this.city.root();
+    return this.city.out('root');
   }
 }
 module.exports = Place;

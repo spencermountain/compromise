@@ -45,7 +45,7 @@ const toArray = function(obj) {
 const startgram = function(ts, size) {
   if (size > 0 && ts.length >= size) {
     let gram = ts.slice(0, size);
-    let str = gram.normal();
+    let str = gram.out('normal');
     return str;
   }
   return null;
@@ -54,7 +54,7 @@ const endgram = function(ts, size) {
   if (size > 0 && ts.length >= size) {
     let end = ts.length;
     let gram = ts.slice(end - size, end);
-    let str = gram.normal();
+    let str = gram.out('normal');
     return str;
   }
   return null;

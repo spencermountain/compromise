@@ -14,7 +14,7 @@ setTimeout(()=>{
     console.timeEnd('parse')
     setTimeout(()=>{
       console.time('match')
-      console.log(m.match('#Noun').normal())
+      console.log(m.match('#Noun').out('normal'))
       console.timeEnd('match')
     },2000)
   },2000)

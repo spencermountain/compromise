@@ -5,7 +5,7 @@ test('hyphen-tokenize', function (t) {
   var r = nlp('super-cool work');
   t.equal(r.terms().length, 3, 'super, cool');
   t.equal(r.plaintext(), 'super-cool work', 'preserve hyphen');
-  t.equal(r.normal(), 'super cool work', 'normalize-out hyphen');
+  t.equal(r.out('normal'), 'super cool work', 'normalize-out hyphen');
 
   r = nlp('http://about.com/my-summer-vacation');
   t.equal(r.terms().length, 1, 'url hyphen');

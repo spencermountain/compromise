@@ -23,11 +23,11 @@ test('one big dates', function (t) {
 
 test('short+long form', function (t) {
   var r = nlp('wednesday, january 2nd, 2016');
-  var shorter = r.dates().toShortForm().normal();
+  var shorter = r.dates().toShortForm().out('normal');
   t.equal(shorter, 'wed jan 2nd 2016');
 
   var r2 = nlp('Thurs, feb 2nd, 2016');
-  var longer = r2.dates().toLongForm().normal();
+  var longer = r2.dates().toLongForm().out('normal');
   t.equal(longer, 'thursday february 2nd 2016');
   //
   // var r2 = nlp('Thurs, feb 2nd, 2016')

@@ -3,8 +3,8 @@ const Terms = require('../../paths').Terms;
 class Sentence extends Terms {
   data() {
     return {
-      text: this.plaintext(),
-      normal: this.normal()
+      text: this.out('text'),
+      normal: this.out('normal')
     };
   }
   /** inflect the main/first noun*/

@@ -6,13 +6,13 @@ const topk = require('./render/topk');
 const render = {
   text: (r) => {
     return r.list.reduce((str, ts) => {
-      str += ts.plaintext();
+      str += ts.out('text');
       return str;
     }, '');
   },
   normal: (r) => {
     return r.list.map((ts) => {
-      let str = ts.normal();
+      let str = ts.out('normal');
       let last = ts.last();
       if (last) {
         let punct = last.endPunctuation();
@@ -25,7 +25,7 @@ const render = {
   },
   array: (r) => {
     return r.list.reduce((arr, ts) => {
-      arr.push(ts.plaintext());
+      arr.push(ts.out('text'));
       return arr;
     }, []);
   },

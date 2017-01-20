@@ -11,7 +11,7 @@ test('if-basic:', function (t) {
 
   r = nlp('spencer is here. john was here.');
   m = r.if('is');
-  t.equal(m.normal(), 'spencer is here.', 'if-partial');
+  t.equal(m.out('normal'), 'spencer is here.', 'if-partial');
 
   t.end();
 });
@@ -27,7 +27,7 @@ test('ifNo:', function (t) {
 
   r = nlp('spencer is here. john was here.');
   m = r.ifNo('is');
-  t.equal(m.normal(), 'john was here.', 'if-no-partial');
+  t.equal(m.out('normal'), 'john was here.', 'if-no-partial');
 
   t.end();
 });

@@ -16,7 +16,7 @@ const alphaSort = function(r) {
       }
     }
     //regular compare
-    if (a.normal() > b.normal()) {
+    if (a.out('normal') > b.out('normal')) {
       return 1;
     }
     return -1;
@@ -70,7 +70,7 @@ const sortMethod = (Text) => {
     unique: function () {
       let obj = {};
       this.list = this.list.filter((ts) => {
-        let str = ts.root();
+        let str = ts.out('root');
         if (obj[str]) {
           return false;
         }

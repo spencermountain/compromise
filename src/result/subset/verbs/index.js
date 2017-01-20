@@ -8,11 +8,13 @@ class Verbs extends Text {
       return ts.data();
     });
   }
-  conjugate(verbose) {
-    return this.mapTerms((t) => {
-      return t.verb.conjugate(verbose);
+  conjugate(debug) {
+    return this.list.map((ts) => {
+      ts.conjugate(debug);
     });
   }
+
+  /** negation **/
   isNegative() {
     return this.filter((ts) => {
       ts.isNegative();
@@ -30,36 +32,33 @@ class Verbs extends Text {
     });
     return this;
   }
-  toPast() {
-    let t = this.list[0].terms[0];
-    this.contractions().expand();
-    if (t) {
-      t.text = t.verb.pastTense();
-    }
-    return this;
-  }
-  toPresent() {
-    let t = this.list[0].terms[0];
-    this.contractions().expand();
-    if (t) {
-      t.text = t.verb.presentTense();
-    }
-    return this;
-  }
-  toFuture() {
-    let t = this.list[0].terms[0];
-    this.contractions().expand();
-    if (t) {
-      t.text = t.verb.futureTense();
-    }
-    return this;
-  }
-  toAdjective() {
-    this.terms().forEach((t) => {
-      t.text = t.verb.toAdjective();
+
+  /** tense **/
+  toPastTense() {
+    this.list.forEach((ts) => {
+      ts.toPastTense();
     });
     return this;
   }
+  toPresentTense() {
+    this.list.forEach((ts) => {
+      ts.toPresentTense();
+    });
+    return this;
+  }
+  toFutureTense() {
+    this.list.forEach((ts) => {
+      ts.toFutureTense();
+    });
+    return this;
+  }
+  toAdjective() {
+    this.list.forEach((ts) => {
+      ts.toAdjective();
+    });
+    return this;
+  }
+
   static find(r, n) {
     r = r.match('#Verb+');
     if (typeof n === 'number') {

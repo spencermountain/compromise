@@ -20,7 +20,7 @@ test('misc:', function (t) {
   var str = '2 million five hundred thousand and fifty nine is bigger than 2882';
   var m = nlp(str);
   m.values().toNumber();
-  t.equal(m.normal(), '2500059 is bigger than 2882', str);
+  t.equal(m.out('normal'), '2500059 is bigger than 2882', str);
 
   str = '2 million five hundred thousand and fifty nine is bigger than 2882';
   m = nlp(str);
@@ -30,10 +30,10 @@ test('misc:', function (t) {
   str = 'doug is 5 years old';
   m = nlp(str);
   m.values().toTextValue();
-  t.equal(m.normal(), 'doug is five years old', str);
+  t.equal(m.out('normal'), 'doug is five years old', str);
 
   // str = 'men go';
   // m = nlp(str).sentences().toPast().nouns().toSingular();
-  // t.equal(m.normal(), 'a man went', str);
+  // t.equal(m.out('normal'), 'a man went', str);
   t.end();
 });

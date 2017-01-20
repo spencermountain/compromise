@@ -4,17 +4,18 @@ const path = 'verb_correction';
 
 const corrections = function (r) {
   log.here(path);
-  //verbs
+  //support a splattering of auxillaries before a verb
+  let advb = '(#Adverb|not)+?';
   //was walking
-  r.match('#Copula (#Adverb+|not)? #Gerund').term(0).tag('Auxillary', 'copula-walking');
-  //would have had
-  r.match('#Modal (#Adverb+|not)? have (#Adverb+|not)? had').term(0).tag('Auxillary', 'would-have');
-  //would be walking
-  r.match('#Modal (#Adverb+|not)? be (#Adverb+|not)? #Verb').term(0).tag('Auxillary', 'would-be');
-  //has been walking
-  r.match('has (#Adverb+|not)? been').term(0).tag('Auxillary', 'has-been');
+  r.match(`#Copula ${advb} #Gerund`).not('#Verb$').tag('Auxillary', 'copula-walking');
   //been walking
-  r.match('(be|been) (#Adverb+|not)? #Gerund').term(0).tag('Auxillary', 'be-walking');
+  r.match(`(be|been) ${advb} #Gerund`).not('#Verb$').tag('Auxillary', 'be-walking');
+  //would have had
+  r.match(`#Modal ${advb} have ${advb} had ${advb} #Verb`).not('#Verb$').tag('Auxillary', 'would-have');
+  //would be walking
+  r.match(`#Modal ${advb} (be|been) ${advb} #Verb`).not('#Verb$').tag('Auxillary', 'would-be');
+  //has been walking
+  r.match(`has ${advb} been ${advb} #Verb`).not('#Verb$').tag('Auxillary', 'has-been');
 
   return r;
 };

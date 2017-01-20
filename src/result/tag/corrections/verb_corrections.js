@@ -1,9 +1,6 @@
 'use strict';
-const log = require('../paths').log;
-const path = 'verb_correction';
 
 const corrections = function (r) {
-  log.here(path);
   //support a splattering of auxillaries before a verb
   let advb = '(#Adverb|not)+?';
   //was walking

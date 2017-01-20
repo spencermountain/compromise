@@ -8,7 +8,10 @@ const verb_corrections = require('./verb_corrections');
 //mostly pos-corections here
 const corrections = function (r) {
   log.here(path);
-  //the word 'so'
+  //don't match+tag things over two clauses
+  r = r.clauses();
+
+  //(the word 'so')
   //so funny
   r.match('so #Adjective').match('so').tag('Adverb', 'so-adv');
   //so the

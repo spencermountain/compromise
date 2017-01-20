@@ -25,9 +25,20 @@ test('verb-parts:', function(t) {
     ['john would have not had been walking', 'not', 'would have had been', ''],
     ['john would have had not been walking', 'not', 'would have had been', ''],
     ['john would have had been not walking', 'not', 'would have had been', ''],
-    //adverbs
+    //adverbs + negatives combinations
     ['john is really walking', '', 'is', 'really'],
     ['john really is walking', '', 'is', 'really'],
+    ['john is not really walking', 'not', 'is', 'really'],
+    ['john is really not walking', 'not', 'is', 'really'],
+    ['john really is not walking', 'not', 'is', 'really'],
+    ['john has really been not walking', 'not', 'has been', 'really'],
+    ['john has been really not walking', 'not', 'has been', 'really'],
+    ['john has been not really walking', 'not', 'has been', 'really'],
+    ['john would really not have had been walking', 'not', 'would have had been', 'really'],
+    ['john would not really have had been walking', 'not', 'would have had been', 'really'],
+    ['john would not have really had been walking', 'not', 'would have had been', 'really'],
+    ['john would not have had really been walking', 'not', 'would have had been', 'really'],
+    ['john would not have had been really walking', 'not', 'would have had been', 'really'],
   ];
   tests.forEach((a) => {
     var arr = nlp(a[0]).verbs().data();

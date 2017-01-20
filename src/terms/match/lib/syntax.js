@@ -6,7 +6,9 @@ const fns = require('./paths').fns;
 const parse_term = function (term, i) {
   term = term || '';
   term = term.trim();
-  let reg = {};
+  let reg = {
+    optional: false
+  };
   //order matters..
 
   //negation ! flag
@@ -32,21 +34,19 @@ const parse_term = function (term, i) {
   //atleast-one-but-greedy flag
   if (fns.endsWith(term, '+')) {
     term = term.replace(/\+$/, '');
-    reg.optional = false;
     reg.consecutive = true;
   }
-
   //pos flag
   if (fns.startsWith(term, '#')) {
     term = term.replace(/^\#/, '');
-    reg.tag = [fns.titleCase(term)]
+    reg.tag = [fns.titleCase(term)];
     term = null;
   }
   //one_of options flag
   if (fns.startsWith(term, '(') && fns.endsWith(term, ')')) {
     term = term.replace(/\)$/, '');
     term = term.replace(/^\(/, '');
-    reg.oneOf = term.split(/\|/g)
+    reg.oneOf = term.split(/\|/g);
     term = null;
   }
   //min/max any '{1,3}'
@@ -77,7 +77,7 @@ const parse_term = function (term, i) {
 
 //turn a match string into an array of objects
 const parse_all = function (reg) {
-  reg = reg || ''
+  reg = reg || '';
   reg = reg.split(/ +/);
   return reg.map(parse_term);
 };

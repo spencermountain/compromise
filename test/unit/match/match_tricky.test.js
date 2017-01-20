@@ -81,6 +81,13 @@ test('fancy match', function (t) {
     ['if it goes really well', 'if {1,6} well', 5],
     ['so i said that spencer is nice', '^{1,3} spencer', 0],
     ['so i said that spencer is nice', '^{1,6} spencer', 5],
+    //optional/consecutive
+    ['is really walking', 'is #Adverb+? walking', 3],
+    ['is walking', 'is #Adverb+? walking', 2],
+    ['is really really walking', 'is #Adverb+? walking', 4],
+    ['is really not walking', 'is (#Adverb|not)+? walking', 4],
+    ['is really not quickly walking', 'is (#Adverb|not)+? walking', 5],
+    ['is walking', 'is (#Adverb|not)+? walking', 2],
   ].forEach(function (a) {
     var r = nlp(a[0]).match(a[1]).terms() || [];
     var msg = '\'' + a[0] + '\' - - - \'' + a[1] + '\' - - got:' + r.length + '  want:' + a[2];

@@ -34,6 +34,14 @@ const insertMethods = (Terms) => {
       addSpaceAt(ts, 0);
       this.parentTerms = mutate.insertAt(this.parentTerms, index + 1, ts);
       return this.parentTerms;
+    },
+
+    insertAt: function (index, str) {
+      let ts = Terms.fromString(str);
+      //beginning whitespace to ts
+      addSpaceAt(ts, 0);
+      this.parentTerms = mutate.insertAt(this.parentTerms, index + 1, ts);
+      return this.parentTerms;
     }
 
   };

@@ -4,6 +4,5 @@
 const nlp = require('./src/index');
 // require('./src/log').enable();
 
-const m = nlp('10 and 10?');
-m.values().toNumber();
-m.check();
+const m = nlp('john will be walking');
+console.log(m.verbs().data());

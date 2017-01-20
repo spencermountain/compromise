@@ -1,10 +1,11 @@
 'use strict';
 const Text = require('../../index');
+const Verb = require('./verb');
 
 class Verbs extends Text {
   data() {
-    return this.mapTerms((t) => {
-      return t.verb.conjugate();
+    return this.list.map((ts) => {
+      return ts.data();
     });
   }
   conjugate(verbose) {
@@ -13,21 +14,20 @@ class Verbs extends Text {
     });
   }
   isNegative() {
-    return this.match('#Negative').found;
+    return this.filter((ts) => {
+      ts.isNegative();
+    });
   }
   toNegative() {
-    if (this.isNegative()) {
-      return this;
-    }
-    let t = this.lastTerm().list[0].terms[0];
-    if (t.tag.Copula) {
-      t.copula.toNegative();
-    } else {
-      t.verb.toNegative();
-    }
+    this.list.forEach((ts) => {
+      ts.toNegative();
+    });
     return this;
   }
   toPositive() {
+    this.list.forEach((ts) => {
+      ts.toPositive();
+    });
     return this;
   }
   toPast() {
@@ -65,6 +65,9 @@ class Verbs extends Text {
     if (typeof n === 'number') {
       r = r.get(n);
     }
+    r.list = r.list.map((ts) => {
+      return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+    });
     return r;
   }
 }

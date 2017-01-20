@@ -62,8 +62,8 @@ class Terms {
   }
   data() {
     return {
-      text: this.plaintext(),
-      normal: this.normal(),
+      text: this.out('text'),
+      normal: this.out('normal'),
     };
   }
   get whitespace() {

@@ -15,8 +15,7 @@
     "demo": "node ./scripts/demo.js",
     "watch": "node ./scripts/watch.js",
     "filesize": "node ./scripts/filesize.js",
-    "coverage": "node ./scripts/coverage.js",
-    "prepublish":"npm run coverage"
+    "coverage": "node ./scripts/coverage.js"
   },
   "files": [
     "builds/",

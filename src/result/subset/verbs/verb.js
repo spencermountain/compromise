@@ -1,25 +1,28 @@
 'use strict';
 const Terms = require('../../paths').Terms;
+const conjugate = require('./conjugate');
 
 class Verb extends Terms {
   constructor(arr, lexicon, refText, refTerms) {
     super(arr, lexicon, refText, refTerms);
+    this.verb = this.not('#Auxillary').not('#Negative').match('#Verb').last();
     this.negative = this.match('#Negative');
     this.auxillary = this.not('#Negative').match('#Auxillary');
-    this.verb = this.not('#Auxillary').match('#Verb');
   }
   data() {
     return {
       text: this.out('text'),
       normal: this.out('normal'),
-      negative: this.negative.out('normal'),
-      augillary: this.auxillary.out('normal'),
-      verb: this.verb.out('normal'),
+      parts: {
+        negative: this.negative.out('normal'),
+        auxillary: this.auxillary.out('normal'),
+        verb: this.verb.out('normal'),
+      }
     };
   }
 
   conjugate(debug) {
-    return this.verb.list[0].terms[0].verb.conjugate(debug);
+    return conjugate(this, debug);
   }
 
   /** negation **/

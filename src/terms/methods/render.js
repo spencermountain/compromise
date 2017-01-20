@@ -21,12 +21,6 @@ const methods = {
   /** no punctuation, fancy business **/
   root: function (ts) {
     return ts.terms.filter((t) => t.text).map((t) => t.normal).join(' ').toLowerCase();
-  },
-
-  check: function (ts) {
-    ts.terms.forEach((t) => {
-      t.render.check();
-    });
   }
 };
 methods.plaintext = methods.text;
@@ -40,6 +34,12 @@ const renderMethods = (Terms) => {
       return methods[str](this);
     }
     return null;
+  };
+  //check method
+  Terms.prototype.check = function () {
+    this.terms.forEach((t) => {
+      t.render.check();
+    });
   };
   return Terms;
 };

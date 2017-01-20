@@ -60,7 +60,7 @@ class Verbs extends Text {
   }
 
   static find(r, n) {
-    r = r.match('#Verb+');
+    r = r.match('(#Auxillary|#Verb|#Negative)+');
     if (typeof n === 'number') {
       r = r.get(n);
     }

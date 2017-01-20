@@ -3,8 +3,9 @@ const log = require('../paths').log;
 const path = 'correction';
 const date_corrections = require('./date_corrections');
 const person_corrections = require('./person_corrections');
+const verb_corrections = require('./verb_corrections');
 
-//
+//mostly pos-corections here
 const corrections = function (r) {
   log.here(path);
   //the word 'so'
@@ -51,9 +52,6 @@ const corrections = function (r) {
   //a sense of
   r.match('#Determiner #Verb of').term(1).tag('Noun', 'the-verb-of');
 
-  //past-tense copula
-  r.match('has #Adverb? #Negative? #Adverb? been').tag('Copula', 'has-been');
-
   //he quickly foo
   r.match('#Noun #Adverb #Noun').term(2).tag('Verb', 'correction');
 
@@ -86,7 +84,9 @@ const corrections = function (r) {
   r.match('#Value+ #Currency').tag('#Money', 'value-currency');
   r.match('#Money and #Money #Currency?').tag('#Money', 'money-and-money');
 
+  //more-detailed corrections
   r = person_corrections(r);
+  r = verb_corrections(r);
   r = date_corrections(r);
 
   return r;

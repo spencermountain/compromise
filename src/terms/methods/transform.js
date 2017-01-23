@@ -5,11 +5,11 @@ const transforms = (Terms) => {
 
   const methods = {
 
-    insertAt: function (text, i) {
-      let term = new Term(text, this.context);
-      this.terms.splice(i + 1, 0, term);
-      return this;
-    },
+    // insertAt: function (text, i) {
+    //   let term = new Term(text, this.context);
+    //   this.terms.splice(i + 1, 0, term);
+    //   return this;
+    // },
     clone: function () {
       let terms = this.terms.map((t) => {
         return t.clone();

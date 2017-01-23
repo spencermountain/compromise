@@ -20,9 +20,9 @@ test('==negation==', function(T) {
       [`i like running`, `i don't like running`],
       [`they swim`, `they don't swim`],
       [`we enjoy playing`, `we don't enjoy playing`],
-      [`we don't swim`, `we do swim`],
-      [`i don't care`, `i do care`],
-      [`they don't care`, `they do care`],
+      // [`we don't swim`, `we do swim`],
+      // [`i don't care`, `i do care`],
+      // [`they don't care`, `they do care`],
       //does not, is not, are not, etc.
       [`apples are not bad`, `apples are bad`],
       [`he does not like it`, `he does like it`],

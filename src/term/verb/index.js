@@ -1,8 +1,6 @@
 'use strict';
 const predict = require('./predict');
 const toInfinitive = require('./toInfinitive');
-const toNegative = require('./toNegative');
-const toPositive = require('./toPositive');
 const conjugate = require('./conjugate');
 const toAdjective = require('./toAdjective');
 let pluralMap = {

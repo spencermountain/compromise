@@ -1,5 +1,7 @@
 'use strict';
 const Terms = require('../../paths').Terms;
+const toNegative = require('./toNegative');
+
 class Sentence extends Terms {
   data() {
     return {
@@ -21,14 +23,7 @@ class Sentence extends Terms {
 
   //returns a Term object
   mainVerb() {
-    //this should be more fancy..
-    for(let i = 0; i < this.terms.length; i++) {
-      let t = this.terms[i];
-      if (t.tag.Verb && !t.tag.Auxillary) {
-        return t;
-      }
-    }
-    return null;
+    return this.match('(#Verb|#Auxillary|#Adverb)+').if('#Verb').first();
   }
 
   /** sentence tense conversion**/
@@ -56,19 +51,10 @@ class Sentence extends Terms {
 
   /** negate the main/first copula*/
   toNegative() {
-    let cp = this.match('#Copula');
-    if (cp.found) {
-      cp.firstTerm().verbs().toNegative();
-    } else {
-      let verb = this.mainVerb();
-      if (verb) {
-        verb.verb.toNegative();
-      }
-    }
-    return this;
+    return toNegative(this);
   }
   toPositive() {
-    this.match('#Negative').first().delete();
+    this.match('#Negative').first().remove();
     return this;
   }
 

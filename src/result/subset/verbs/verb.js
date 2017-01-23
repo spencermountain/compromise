@@ -1,16 +1,19 @@
 'use strict';
 const Terms = require('../../paths').Terms;
 const conjugate = require('./conjugate');
+const interpret = require('./interpret');
+const toNegative = require('./toNegative');
 
 class Verb extends Terms {
   constructor(arr, lexicon, refText, refTerms) {
     super(arr, lexicon, refText, refTerms);
     this.negative = this.match('#Negative');
-    this.verb = this.not('(#Auxillary|#Negative)').match('#Verb').last();
-    this.auxillary = this.not('(#Negative|#Adverb)').match('#Auxillary');
     this.adverbs = this.match('#Adverb');
+    let aux = this.clone().not('(#Adverb|#Negative)');
+    this.verb = aux.match('#Verb').last();
+    this.auxillary = aux.match('#Auxillary+');
   }
-  data() {
+  data(debug) {
     return {
       text: this.out('text'),
       normal: this.out('normal'),
@@ -19,7 +22,8 @@ class Verb extends Terms {
         auxillary: this.auxillary.out('normal'),
         verb: this.verb.out('normal'),
         adverbs: this.adverbs.out('normal'),
-      }
+      },
+      interpret: interpret(this, debug)
     };
   }
 
@@ -29,21 +33,16 @@ class Verb extends Terms {
 
   /** negation **/
   isNegative() {
-    return this.match('#Negative').found;
+    return this.match('#Negative').list === 1;
+  }
+  isPerfect() {
+    return this.auxillary.match('(have|had)').found;
   }
   toNegative() {
     if (this.isNegative()) {
       return this;
     }
-    let t = this.lastTerm();
-    if (t.tag.Copula) {
-      let i = t.index();
-      this.insertAt(i, 'not');
-    // t.copula.toNegative();
-    } else {
-      t.verb.toNegative();
-    }
-    return this;
+    return toNegative(this);
   }
   toPositive() {
     return this.remove('#Negative');

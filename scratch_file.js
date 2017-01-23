@@ -25,7 +25,8 @@ const nlp = require('./src/index');
 // m = nlp('they swim').sentences().toNegative();
 // console.log(m.normal() + '\n\n');
 
-let m = nlp('i walk').sentences().toNegative();
+// let m = nlp('everyone walks').replace('everyone', 'someone');
+let m = nlp('john said everyone walks').sentences().toNegative();
 console.log(m.normal() + '\n\n');
 
 

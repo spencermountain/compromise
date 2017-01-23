@@ -17,16 +17,15 @@ const replaceMethods = (Terms) => {
 
     /**swap this for that */
     replaceWith: function (str, tag) {
-      let ts = Terms.fromString(str);
+      let toAdd = Terms.fromString(str);
       if (tag) {
-        ts.tagAs(tag, 'user-given');
+        toAdd.tagAs(tag, 'user-given');
       }
       let index = this.index();
       this.parentTerms = mutate.deleteThese(this.parentTerms, this);
-      let parent = mutate.insertAt(this.parentTerms, index, ts);
-      this.terms = ts.terms;
-      this.parentTerms = parent;
-      return ts;
+      mutate.insertAt(this.parentTerms, index, toAdd);
+      this.terms = this.parentTerms.terms;
+      return toAdd;
     }
 
   };

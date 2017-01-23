@@ -65,35 +65,47 @@ const render = {
 const out = (r, method, opts) => {
   if (method === 'text' || method === 'plaintext') {
     return render.text(r);
-  } else if (method === 'normal' || method === 'normalized') {
+  }
+  if (method === 'normal' || method === 'normalized') {
     return render.normal(r);
-  } else if (method === 'array') {
+  }
+  if (method === 'array') {
     return render.array(r);
-  } else if (method === 'json') {
+  }
+  if (method === 'json') {
     return render.json(r);
-  } else if (method === 'html') {
+  }
+  if (method === 'html') {
     return render.html(r);
-  } else if (method === 'debug' || method === 'pretty') {
+  }
+  if (method === 'debug' || method === 'pretty') {
     return render.debug(r);
-  } else if (method === 'topk' || method === 'freq' || method === 'frequency') {
+  }
+  if (method === 'topk' || method === 'freq' || method === 'frequency') {
     return topk(r);
-  } else if (method === 'ngram') {
+  }
+  if (method === 'ngram') {
     return ngram(r);
-  } else if (method === 'bigram') {
+  }
+  if (method === 'bigram') {
     opts = opts || {
       size: [2]
     };
     return ngram(r, opts);
-  } else if (method === 'trigram') {
+  }
+  if (method === 'trigram') {
     opts = opts || {
       size: [3]
     };
     return ngram(r, opts);
-  } else if (method === 'edgegram') {
+  }
+  if (method === 'edgegram') {
     return edgegram.both(r, opts);
-  } else if (method === 'startgram') {
+  }
+  if (method === 'startgram') {
     return edgegram.start(r, opts);
-  } else if (method === 'endgram') {
+  }
+  if (method === 'endgram') {
     return edgegram.end(r, opts);
   }
   return render.text(r);

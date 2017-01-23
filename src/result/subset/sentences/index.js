@@ -30,9 +30,11 @@ class Sentences extends Text {
   }
   /** negative/positive */
   toNegative() {
-    this.list.forEach((ts) => {
-      ts.toNegative();
+    this.list = this.list.map((ts) => {
+      ts = ts.toNegative();
+      return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
+    // console.log(this.out('text'));
     return this;
   }
   toPositive() {

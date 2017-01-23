@@ -4,15 +4,13 @@
 
 //these terms are nicer ways to negate a sentence
 //ie. john always walks -> john always doesn't walk
-const logicalNegate = function(ts) {
-  const logic = {
-    'everyone': 'no one',
-    'everybody': 'nobody',
-    'someone': 'no one',
-    'somebody': 'nobody',
-    // everything:"nothing",
-    'always': 'never'
-  };
+const logicalNegate = {
+  'everyone': 'no one',
+  'everybody': 'nobody',
+  'someone': 'no one',
+  'somebody': 'nobody',
+  // everything:"nothing",
+  'always': 'never'
 };
 
 
@@ -21,11 +19,17 @@ const logicalNegate = function(ts) {
 //that is, 'i walk' -> 'i don\'t walk', not 'I not walk'
 
 const toNegative = (ts) => {
+  let lg = ts.match('(everyone|everybody|someone|somebody|always)').first();
+  if (lg.found && logicalNegate[lg.normal()]) {
+    let found = lg.normal();
+    // ts = ts.replace(found, logicalNegate[found]);
+    ts = ts.match(found).replaceWith(logicalNegate[found]);
+    return ts.parentTerms;
+  }
 
   //they walk -> they do not walk
   let tmp = ts.match('(#Plural|they|i|we|you) #Adverb+? (#Infinitive|#PresentTense)');
   if (tmp.found) {
-    tmp.check();
     let v = tmp.match('(#Infinitive|#PresentTense)');
     v.insertBefore('do not');
     return ts;
@@ -33,7 +37,6 @@ const toNegative = (ts) => {
   //toronto walks ->  toronto does not walk
   tmp = ts.match('(#Pronoun|#Organization|#Place|#Person) #Adverb+? #PresentTense');
   if (tmp.found) {
-    tmp.check();
     let v = tmp.match('#PresentTense');
     v.insertBefore('does not');
     v.verbs().toInfinitive();

@@ -49,8 +49,15 @@ class Sentence extends Terms {
     return this;
   }
 
+  /** negation **/
+  isNegative() {
+    return this.match('#Negative').list.length === 1;
+  }
   /** negate the main/first copula*/
   toNegative() {
+    if (this.isNegative()) {
+      return this;
+    }
     return toNegative(this);
   }
   toPositive() {

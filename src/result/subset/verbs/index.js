@@ -57,6 +57,12 @@ class Verbs extends Text {
     });
     return this;
   }
+  toInfinitive() {
+    this.list.forEach((ts) => {
+      ts.toInfinitive();
+    });
+    return this;
+  }
   toAdjective() {
     this.list.forEach((ts) => {
       ts.toAdjective();

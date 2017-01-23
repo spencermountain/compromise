@@ -15,47 +15,56 @@ const logicalNegate = function(ts) {
   };
 };
 
-// i walk -> i don't walk
-const doesNot = function(ts) {
-  //they do not walk
-  if (ts.match('^#Plural')) {
-    ts.insertAt(0, 'do not');
-    return ts;
-  }
-  //he does not walk
-  ts.insertAt(0, 'does not');
-  return ts;
-};
+
 
 //different rule for i/we/they/you + infinitive
 //that is, 'i walk' -> 'i don\'t walk', not 'I not walk'
 
 const toNegative = (ts) => {
 
-  // i walk -> i don't walk
-  let tmp = ts.match('#Noun #Adverb+? #Infinitive');
+  //they walk -> they do not walk
+  let tmp = ts.match('(#Plural|they|i|we|you) #Adverb+? (#Infinitive|#PresentTense)');
   if (tmp.found) {
-    doesNot(tmp.list[0]);
+    tmp.check();
+    let v = tmp.match('(#Infinitive|#PresentTense)');
+    v.insertBefore('do not');
+    return ts;
+  }
+  //toronto walks ->  toronto does not walk
+  tmp = ts.match('(#Pronoun|#Organization|#Place|#Person) #Adverb+? #PresentTense');
+  if (tmp.found) {
+    tmp.check();
+    let v = tmp.match('#PresentTense');
+    v.insertBefore('does not');
+    v.verbs().toInfinitive();
+    return ts;
+  }
+  //he walked
+  tmp = ts.match('#Noun #Adverb+? #PastTense');
+  if (tmp.found) {
+    let v = tmp.match('#PastTense');
+    v.insertBefore('did not');
+    v.verbs().toInfinitive();
     return ts;
   }
 
   //simplest-possible
-  let vb = ts.mainVerb();
-  ts = vb.list[0];
+  let vb = ts.mainVerb().not('#Adverb');
   //have not walked..
-  if (ts.terms.length > 1) {
-    ts.insertAt(1, 'not');
+  if (vb.terms().length > 1) {
+    vb.terms().first().insertAfter('not');
     return ts;
   }
-  if (ts.terms.length === 1) {
+  if (vb.terms().length === 1) {
     //is not
-    if (ts.terms[0].tag.Copula) {
-      ts.insertAt(1, 'not');
-      return ts;
+    let copula = vb.match('#Copula');
+    if (copula.found) {
+      copula.insertAfter('not');
+      return vb;
     }
     //not walk
-    ts.insertAt(0, 'not');
-    return ts;
+    vb.insertBefore('not');
+    return vb;
   }
   return ts;
 };

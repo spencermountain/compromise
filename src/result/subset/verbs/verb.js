@@ -33,7 +33,7 @@ class Verb extends Terms {
 
   /** negation **/
   isNegative() {
-    return this.match('#Negative').list === 1;
+    return this.match('#Negative').list.length === 1;
   }
   isPerfect() {
     return this.auxillary.match('(have|had)').found;
@@ -56,6 +56,12 @@ class Verb extends Terms {
     return this;
   }
   toFutureTense() {
+    return this;
+  }
+  toInfinitive() {
+    let obj = this.conjugate();
+    //NOT GOOD. please fix
+    this.terms[this.terms.length - 1].text = obj.Infinitive;
     return this;
   }
 

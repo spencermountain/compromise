@@ -11,6 +11,7 @@
     <img src="https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square" />
   </a>
 </div>
+
 <div align="center">
   <sub>
     by
@@ -20,13 +21,15 @@
     </a>
   </sub>
 </div>
+
 <div align="center">
   <sub>(formerly nlp_compromise)</sub>
 </div>
+
 <div align="center">
   <code>npm install compromise</code>
 </div>
-<br/>
+
 <div align="center">
   inspect and play with english text.
   <div>
@@ -34,6 +37,7 @@
   </div>
 </div>
 <br/>
+
 <div align="center">
   💥Welcome to <b>v7</b>💥
   <div>
@@ -41,6 +45,7 @@
     has changed!
   </div>
 </div>
+
 ```javascript
 let r = nlp('I look just like buddy holly.')
   r.sentences().toPastTense()
@@ -58,7 +63,7 @@ let r = nlp('I look just like buddy holly.')
           </a>
         </b>
         <div>
-           &nbsp; just a javascript file &nbsp;
+           &nbsp; one javascript file &nbsp;
         </div>
       </td>
       <td align="center">
@@ -100,35 +105,32 @@ let r = nlp('I look just like buddy holly.')
   <b>no training, configuration, or prolog</b>
 </div>
 <br/>
-<div align="left">
-  the idea is,
-  <b>
-    <a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">
-      reach-in
-    </a>
-  </b> to a part of the text, and change it:
-</div>
+
+the idea is, **[reach-in](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)** to a part of the text, and change it:
+
 ```javascript
 r = nlp('john is really nice. sara sings loudly.')
 
 r.match('#Person').toUpperCase()
 //JOHN is really nice. SARA sings loudly.
+```
 
-//or pluck-out some parts,
+or pluck-out some parts,
+```javascript
 r.remove('#Adverb')
 // "JOHN is nice. SARA sings."
 
 //replacements,
 r.replace('is nice', 'is bad')
 // "JOHN is bad. SARA sings."
-
-//fancy!
+```
+or just be downright fancy
+```javascript
 r.sentences().toNegative()
 // "JOHN is not bad. SARA doesn't sing."
 ```
-<div align="left">
-  grab those parts, and <b>analyze-the-heck</b> out of them:
-</div>
+
+or grab specific parts, and **analyze-the-heck** out of them:
 ```javascript
 r = nlp(chomskyFanFic)
 r.places().sort('freq').unique().data()
@@ -137,21 +139,19 @@ r.places().sort('freq').unique().data()
   {text: '23 Desperado dr.'},
   {text: 'desert island'},
 ]*/
-
-r.questions().not('^but how .+').data()
-/* [] */
 ```
 <div align="center">
 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗
 </div>
- <table align="center">
+<table align="center">
   <tr>
     <td>Part-of-Speech Tagging</td>
-    <td>Named-Entity Resolution</td>
+    <td>Named-Entity Recognition</td>
     <td>Verb Conjugation</td>
     <td>Inflection/Pluralization</td>
   </tr>
 </table>
+
 ###Client-side:
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
@@ -232,15 +232,9 @@ r = nlp('Tony Hawk won').out('html')
   and yes, ofcourse, there's <a href="https://github.com/nlp-compromise/compromise/wiki/API">a lot more stuff</a>.
 </h3>
 
-<b>Join in!</b>
-<div align="left">
-  we're fun, we're using <b>semver</b>, and moving fast.
-  <i>
-    <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">
-     :hammer_and_wrench: get involved :dancer:
-    </a>
-  </i>
-</div>
+**Join in!**
+we're fun, we're using <b>semver</b>, and moving fast.
+*[🛠️ get involved 💃](https://github.com/nlp-compromise/compromise/wiki/Contributing)*
 
 <table>
   <tr align="center">
@@ -304,4 +298,5 @@ and
 )
 ❤️️
 </div>
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062)](https://www.codacy.com/app/spencerkelly86/nlp_compromise)

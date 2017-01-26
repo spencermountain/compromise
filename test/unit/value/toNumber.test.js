@@ -101,7 +101,7 @@ test('to_number:', function (t) {
   // ['',''],
   // [null,''],
   ].forEach(function (a) {
-    var num = nlp(a[0]).values().toNumber().plaintext();
+    var num = nlp(a[0]).values().toNumber().out('text');
     var want = '' + a[1] || a[0];
     var msg = '\'' + a[0] + '\' - - have: \'' + num + '\'   want:\'' + a[1] + '\'';
     t.equal(num, '' + want, msg);

@@ -4,10 +4,10 @@ var nlp = require('../lib/nlp');
 test('if-basic:', function (t) {
   var r = nlp('spencer is here');
   var m = r.if('asdf');
-  t.equal(m.plaintext(), '', 'if-negative');
+  t.equal(m.out('text'), '', 'if-negative');
 
   m = r.if('spencer');
-  t.equal(m.plaintext(), 'spencer is here', 'if-positive');
+  t.equal(m.out('text'), 'spencer is here', 'if-positive');
 
   r = nlp('spencer is here. john was here.');
   m = r.if('is');
@@ -20,10 +20,10 @@ test('ifNo:', function (t) {
   var r = nlp('spencer is here');
   //ifNo
   m = r.ifNo('spencer');
-  t.equal(m.plaintext(), '', 'ifNo-positive');
+  t.equal(m.out('text'), '', 'ifNo-positive');
 
   m = r.ifNo('asdf');
-  t.equal(m.plaintext(), 'spencer is here', 'ifNo-negative');
+  t.equal(m.out('text'), 'spencer is here', 'ifNo-negative');
 
   r = nlp('spencer is here. john was here.');
   m = r.ifNo('is');

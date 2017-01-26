@@ -4,19 +4,19 @@ var nlp = require('../lib/nlp');
 test('replace-basic :', function(t) {
 
   var m = nlp('the dog played').match('dog').replace('cat');
-  t.equal(m.plaintext(), 'the cat played', 'dog-cat');
+  t.equal(m.out('text'), 'the cat played', 'dog-cat');
 
   m = nlp('the dog played').match('the dog').replace('a cat');
-  t.equal(m.plaintext(), 'a cat played', 'a-cat');
+  t.equal(m.out('text'), 'a cat played', 'a-cat');
 
   m = nlp('the dog played').match('#Noun').replace('snake');
-  t.equal(m.plaintext(), 'the snake played', 'snake');
+  t.equal(m.out('text'), 'the snake played', 'snake');
 
   m = nlp('the pit bull played').match('#Noun+').replace('snake');
-  t.equal(m.plaintext(), 'the snake played', 'pit bull');
+  t.equal(m.out('text'), 'the snake played', 'pit bull');
 
   m = nlp('the pit bull dog played').match('#Noun+').replace('grey snake');
-  t.equal(m.plaintext(), 'the grey snake played', 'pit bull dog');
+  t.equal(m.out('text'), 'the grey snake played', 'pit bull dog');
 
   t.end();
 });
@@ -29,7 +29,7 @@ test('match-replace :', function(t) {
     ['the boy and the girl', 'the #Noun', 'the house', 'the house and the house'],
     ['the boy and the girl', 'the cat', 'the house', 'the boy and the girl'],
   ].forEach(function(a) {
-    var str = nlp(a[0]).replace(a[1], a[2]).plaintext();
+    var str = nlp(a[0]).replace(a[1], a[2]).out('text');
     var msg = str + ' -- ' + a[3];
     t.equal(str, a[3], msg);
   });

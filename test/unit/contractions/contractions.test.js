@@ -100,15 +100,9 @@ test('==contractions==', function(T) {
       [`who's`, ['who', 'is']],
       [`how's`, ['how', 'is']],
     ].forEach(function(a) {
-      var s = nlp(a[0]).contractions().expand().list[0];
-      var got = [s.terms[0].normal];
-      if (a[1][1] && s.terms[1]) {
-        got.push(s.terms[1].normal);
-      }
-      if (a[1][2] && s.terms[2]) {
-        got.push(s.terms[2].normal);
-      }
-      var msg = '[' + got.join(', ') + '] should be [' + a[1].join(', ') + ']';
+      var arr = nlp(a[0]).contractions().expand().out('terms');
+      var got = arr.map(a => a.normal);
+      var msg = a[0] + '  - - [' + got.join(', ') + '] should be [' + a[1].join(', ') + ']';
       t.deepEqual(got, a[1], msg);
     });
     t.end();
@@ -154,7 +148,7 @@ test('==contractions==', function(T) {
     ].forEach(function(a) {
       var m = nlp(a[0]);
       m.contractions().expand();
-      var str = m.plaintext();
+      var str = m.out('text');
       str_test(str, a[0], a[1], t);
     });
     t.end();

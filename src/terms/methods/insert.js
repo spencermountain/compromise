@@ -13,22 +13,33 @@ const addSpaceAt = (ts, i) => {
 
 const insertMethods = (Terms) => {
 
+  //accept any sorta thing
+  const ensureTerms = function(input) {
+    if (input.isA === 'Terms') {
+      return input;
+    }
+    if (input.isA === 'Term') {
+      return new Terms([input]);
+    }
+    return Terms.fromString(input);
+  };
+
   const methods = {
 
-    insertBefore: function (str) {
-      let ts = Terms.fromString(str);
+    insertBefore: function (input) {
+      let ts = ensureTerms(input);
       let index = this.index();
       //pad a space on parent
       addSpaceAt(this.parentTerms, index);
       if (index > 0) {
         addSpaceAt(ts, 0); //if in middle of sentence
       }
-      this.parentTerms = mutate.insertAt(this.parentTerms, index-1, ts);
+      this.parentTerms = mutate.insertAt(this.parentTerms, index - 1, ts);
       return this.parentTerms;
     },
 
-    insertAfter: function (str) {
-      let ts = Terms.fromString(str);
+    insertAfter: function (input) {
+      let ts = ensureTerms(input);
       let index = this.terms[this.terms.length - 1].index();
       //beginning whitespace to ts
       addSpaceAt(ts, 0);
@@ -36,11 +47,11 @@ const insertMethods = (Terms) => {
       return this.parentTerms;
     },
 
-    insertAt: function (index, str) {
-      let ts = Terms.fromString(str);
+    insertAt: function (index, input) {
+      let ts = ensureTerms(input);
       //beginning whitespace to ts
       addSpaceAt(ts, 0);
-      this.parentTerms = mutate.insertAt(this.parentTerms, index, ts);
+      this.parentTerms = mutate.insertAt(this.parentTerms, index + 1, ts);
       return this.parentTerms;
     }
 

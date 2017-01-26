@@ -29,9 +29,8 @@ const nlp = require('./src/index');
 // let m = nlp('john said everyone walks').sentences().toNegative();
 // console.log(m.normal() + '\n\n');
 
-let m = nlp(`i dunno`)
-m.contractions().expand();
-console.log(m.normal() + '\n\n');
+let m = nlp(`mustn't go`);
+m.contractions().check();
 
 
 

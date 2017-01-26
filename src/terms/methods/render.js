@@ -21,11 +21,16 @@ const methods = {
   /** no punctuation, fancy business **/
   root: function (ts) {
     return ts.terms.filter((t) => t.text).map((t) => t.normal).join(' ').toLowerCase();
+  },
+
+  html: function (ts) {
+    return ts.terms.map((t) => t.render.html()).join(' ');
   }
 };
 methods.plaintext = methods.text;
 methods.normalize = methods.normal;
 methods.normalized = methods.normal;
+methods.tags = methods.terms;
 
 
 const renderMethods = (Terms) => {
@@ -33,7 +38,7 @@ const renderMethods = (Terms) => {
     if (methods[str]) {
       return methods[str](this);
     }
-    return null;
+    return methods.text(this);
   };
   //check method
   Terms.prototype.check = function () {

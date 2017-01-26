@@ -150,7 +150,7 @@ var tests = {
 
 test('celebrity names:', function (t) {
   Object.keys(tests).forEach((k) => {
-    var str = nlp(k).people().plaintext();
+    var str = nlp(k).people().out('text');
     var msg = '\'' + k + '\' is a person - - have: \'' + str + '\'';
     t.equal(str, k, msg);
   });

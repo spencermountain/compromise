@@ -30,7 +30,7 @@ test('all combined subsets empty:', function (t) {
     var sub = subsets[i];
     small = small[sub]();
   }
-  t.equal(small.plaintext(), '', 'no-uber subset');
+  t.equal(small.out('text'), '', 'no-uber subset');
   t.end();
 });
 
@@ -50,7 +50,7 @@ test('all subsets support .all():', function (t) {
   var r = nlp(txt);
   subsets.forEach((s) => {
     var sub = r[s]();
-    var str = sub.all().plaintext();
+    var str = sub.all().out('text');
     var msg = s + '.all() works';
     t.equal(str, txt, msg);
   });
@@ -62,7 +62,7 @@ test('all subsets have an empty 100th element', function (t) {
   var r = nlp(txt);
   subsets.forEach((s) => {
     var sub = r[s](9999);
-    var str = sub.plaintext();
+    var str = sub.out('text');
     var msg = s + ' is empty';
     t.equal(str, '', msg);
   });

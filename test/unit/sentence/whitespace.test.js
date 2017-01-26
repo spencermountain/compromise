@@ -31,7 +31,7 @@ test('=Whitespace=', function(T) {
       'it is   ipso    facto  ',
       '2nd of march, 2015'
     ].forEach(function (a) {
-      var str = nlp(a).plaintext();
+      var str = nlp(a).out('text');
       str_test(str, a, a, t);
     });
     t.end();
@@ -53,7 +53,7 @@ test('=Whitespace=', function(T) {
       '    Dr. Smith is nice?    He lives in UCLA?  He does? ',
       '    Dr. Smith is nice?    He lives in Spain?  He does?? ',
     ].forEach(function (a) {
-      var str = nlp(a).plaintext();
+      var str = nlp(a).out('text');
       str_test(str, a, a, t);
     });
     t.end();
@@ -68,7 +68,7 @@ test('=Whitespace=', function(T) {
       ['I wanna    go.', 'I want to    go.'],
       ['they\'ve    gone.', 'they have    gone.'],
     ].forEach(function (a) {
-      var str = nlp(a[0]).contractions().expand().all().plaintext();
+      var str = nlp(a[0]).contractions().expand().all().out('text');
       str_test(str, a[0], a[1], t);
     });
     t.end();

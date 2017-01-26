@@ -1,5 +1,5 @@
 'use strict';
-const Term=require('../../../term');
+const Term = require('../../../term');
 
 //add a silent term
 const fixContraction = (ts, parts, i) => {
@@ -10,16 +10,17 @@ const fixContraction = (ts, parts, i) => {
   one.tagAs('Contraction', 'tagger-contraction');
 
   //add a new empty term
-  let two=new Term('')
+  let two = new Term('');
   two.silent_term = parts[1];
   two.tagAs('Contraction', 'tagger-contraction');
-  ts.terms.push(two)
+  ts.insertAt(i, two);
+  // ts.terms.push(two);
 
   //potentially it's three-contracted-terms, like 'dunno'
-  if(parts[2]){
-    let three=new Term('')
+  if (parts[2]) {
+    let three = new Term('');
     three.silent_term = parts[2];
-    ts.terms.push(three)
+    ts.terms.push(three);
     three.tagAs('Contraction', 'tagger-contraction');
   }
 

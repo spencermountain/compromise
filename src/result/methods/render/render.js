@@ -5,9 +5,9 @@ const prettyPrint = (Text) => {
 
   const methods = {
 
-    check: function () {
+    check: function (r) {
       console.log('====');
-      this.list.forEach((ts) => {
+      r.list.forEach((ts) => {
         console.log('   --');
         ts.check();
       });
@@ -15,16 +15,16 @@ const prettyPrint = (Text) => {
     },
 
     /** a character-perfect form*/
-    plaintext: function () {
-      return this.list.reduce((str, ts) => {
+    text: function (r) {
+      return r.list.reduce((str, ts) => {
         str += ts.out('text');
         return str;
       }, '');
     },
 
     /** a human-readable form*/
-    normal: function () {
-      return this.list.map((ts) => {
+    normal: function (r) {
+      return r.list.map((ts) => {
         let str = ts.out('normal');
         let last = ts.last();
         if (last) {
@@ -38,13 +38,13 @@ const prettyPrint = (Text) => {
     },
 
     /** a computer-focused, more aggressive normalization than normal()*/
-    root: function () {
-      return this.list.map((ts) => {
+    root: function (r) {
+      return r.list.map((ts) => {
         return ts.out('root');
       }).join(' ');
     },
 
-    // phrases: function () {
+    // phrases: function (r) {
     //   this.list.forEach((ts) => {
     //     let str = '';
     //     ts.terms.forEach((t) => {
@@ -71,8 +71,8 @@ const prettyPrint = (Text) => {
     //   });
     // },
 
-    data: function() {
-      return this.list.map((ts) => {
+    data: function(r) {
+      return r.list.map((ts) => {
         return {
           normal: ts.out('normal'),
           text: ts.out('text')
@@ -80,22 +80,40 @@ const prettyPrint = (Text) => {
       });
     },
 
-    asArray: function () {
-      return this.list.map((ts) => ts.out('normal'));
+    terms: function(r) {
+      let arr = [];
+      r.list.forEach((ts) => {
+        ts.terms.forEach((t) => {
+          arr.push({
+            normal: t.normal,
+            text: t.text,
+            tags: Object.keys(t.tag)
+          });
+        });
+      });
+      return arr;
     },
 
-    asHtml: function () {
-      let html = this.terms.reduce((str, t) => {
-        str += t.render.html();
-        return str;
-      }, '');
+    asArray: function (r) {
+      return r.list.map((ts) => ts.out('normal'));
+    },
+
+    asHtml: function (r) {
+      let html = r.list.map((ts) => ts.out('html'));
       return '<span>' + html + '</span>';
     },
 
   };
-  Object.keys(methods).forEach((k) => {
-    Text.prototype[k] = methods[k];
-  });
+  Text.prototype.out = function(str) {
+    if (methods[str]) {
+      return methods[str](this);
+    }
+    return methods['text'](this);
+  };
+  Text.prototype.check = function() {
+    methods.check(this);
+    return this;
+  };
   return Text;
 };
 

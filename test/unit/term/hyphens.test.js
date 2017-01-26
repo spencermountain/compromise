@@ -4,7 +4,7 @@ var nlp = require('../lib/nlp');
 test('hyphen-tokenize', function (t) {
   var r = nlp('super-cool work');
   t.equal(r.terms().length, 3, 'super, cool');
-  t.equal(r.plaintext(), 'super-cool work', 'preserve hyphen');
+  t.equal(r.out('text'), 'super-cool work', 'preserve hyphen');
   t.equal(r.out('normal'), 'super cool work', 'normalize-out hyphen');
 
   r = nlp('http://about.com/my-summer-vacation');
@@ -30,21 +30,21 @@ test('hyphenate', function (t) {
   var m = nlp(str);
   m.hyphenate();
   t.equal(m.terms().length, 6, 'seperate terms');
-  t.equal(m.plaintext(), 'it-is-cool. he-is-nice', 'hyphenate');
+  t.equal(m.out('text'), 'it-is-cool. he-is-nice', 'hyphenate');
   m.deHyphenate();
-  t.equal(m.plaintext(), str, 'dehyphenate');
+  t.equal(m.out('text'), str, 'dehyphenate');
 
 
   str = 'i payed seven-hundred for the back-rub';
   m = nlp(str);
   m.values().deHyphenate();
-  t.equal(m.plaintext(), 'i payed seven hundred for the back-rub', 'dehyphenate-values');
+  t.equal(m.out('text'), 'i payed seven hundred for the back-rub', 'dehyphenate-values');
 
 
   str = 'he is the king of rock. she is the queen of cool.';
   m = nlp(str);
   m.match('(king|queen) of (#Noun|#Adjective)').hyphenate();
-  t.equal(m.plaintext(), 'he is the king-of-rock. she is the queen-of-cool.', 'hyphenate-match');
+  t.equal(m.out('text'), 'he is the king-of-rock. she is the queen-of-cool.', 'hyphenate-match');
 
   t.end();
 });

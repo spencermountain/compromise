@@ -290,7 +290,7 @@ test('date-tag :', function(t) {
   // '100th day to 200th',
   // 'march'
   ].forEach(function(first) {
-    var str = nlp(first).match('#Date+').plaintext();
+    var str = nlp(first).match('#Date+').out('text');
     var msg = first + '  -> ' + str;
     t.equal(first, str, msg);
   });

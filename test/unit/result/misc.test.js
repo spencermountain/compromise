@@ -25,7 +25,7 @@ test('misc:', function (t) {
   str = '2 million five hundred thousand and fifty nine is bigger than 2882';
   m = nlp(str);
   m.values().toNiceNumber();
-  t.equal(m.plaintext(), '2,500,059 is bigger than 2,882', str);
+  t.equal(m.out('text'), '2,500,059 is bigger than 2,882', str);
 
   str = 'doug is 5 years old';
   m = nlp(str);

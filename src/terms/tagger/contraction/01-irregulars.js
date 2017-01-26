@@ -20,6 +20,7 @@ const irregulars = {
   'aint': ['is', 'not'], //or 'are'
   'ain\'t': ['is', 'not'],
   'shan\'t': ['should', 'not'],
+  'imma': ['I', 'will'],
 
   'where\'d': ['where', 'did'],
   'whered': ['where', 'did'],
@@ -30,8 +31,10 @@ const irregulars = {
   'what\'d': ['what', 'did'],
   'whatd': ['what', 'did'],
   'let\'s': ['let', 'us'],
-// 'dunno': ['do', 'not', 'know'],
-// 'brb': ['be', 'right', 'back']
+
+  //multiple word contractions
+  'dunno': ['do', 'not', 'know'],
+  'brb': ['be', 'right', 'back']
 };
 
 //check irregulars

@@ -14,7 +14,6 @@ const logicalNegate = {
 };
 
 
-
 //different rule for i/we/they/you + infinitive
 //that is, 'i walk' -> 'i don\'t walk', not 'I not walk'
 

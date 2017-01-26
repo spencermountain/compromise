@@ -26,8 +26,13 @@ const nlp = require('./src/index');
 // console.log(m.normal() + '\n\n');
 
 // let m = nlp('everyone walks').replace('everyone', 'someone');
-let m = nlp('john said everyone walks').sentences().toNegative();
+// let m = nlp('john said everyone walks').sentences().toNegative();
+// console.log(m.normal() + '\n\n');
+
+let m = nlp(`i dunno`)
+m.contractions().expand();
 console.log(m.normal() + '\n\n');
+
 
 
 // nlp('a b c').match('b').insertAfter('hi').check();

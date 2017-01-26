@@ -29,7 +29,7 @@ class Contractions extends Text {
   }
   static find(r, n) {
     //find currently-contracted
-    let found = r.match('#Contraction #Contraction');
+    let found = r.match('#Contraction #Contraction #Contraction?');
     found.list = found.list.map((ts) => {
       let c = new Contraction(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
       c.contracted = true;

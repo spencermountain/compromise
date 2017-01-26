@@ -86,7 +86,7 @@ test('==contractions==', function(T) {
 
       [`don't`, ['do', 'not']],
       [`do not`, ['do', 'not']],
-      // [`dunno`, ['do', 'not', 'know']],
+      [`dunno`, ['do', 'not', 'know']],
 
       [`spencer's going`, ['spencer', 'is']],
       [`he's going`, ['he', 'is']],

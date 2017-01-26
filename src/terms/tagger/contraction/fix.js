@@ -1,15 +1,28 @@
 'use strict';
+const Term=require('../../../term');
+
 //add a silent term
-const fixContraction = (ts, arr, i) => {
-  //add a new term
-  ts.insertAt('', i);
-  let t = ts.terms[i];
-  let t2 = ts.terms[i + 1];
-  //add the interpretation silently
-  t.silent_term = arr[0];
-  t2.silent_term = arr[1];
-  t.tagAs('Contraction', 'tagger-contraction');
-  t2.tagAs('Contraction', 'tagger-contraction');
+const fixContraction = (ts, parts, i) => {
+  //add the interpretation to the contracted term
+  let one = ts.terms[i];
+  one.silent_term = parts[0];
+  //tag it as a contraction
+  one.tagAs('Contraction', 'tagger-contraction');
+
+  //add a new empty term
+  let two=new Term('')
+  two.silent_term = parts[1];
+  two.tagAs('Contraction', 'tagger-contraction');
+  ts.terms.push(two)
+
+  //potentially it's three-contracted-terms, like 'dunno'
+  if(parts[2]){
+    let three=new Term('')
+    three.silent_term = parts[2];
+    ts.terms.push(three)
+    three.tagAs('Contraction', 'tagger-contraction');
+  }
+
   return ts;
 };
 

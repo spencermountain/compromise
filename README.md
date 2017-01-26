@@ -23,7 +23,7 @@ It's a [handy, and not overly-fancy](https://github.com/nlp-compromise/nlp_compr
     is coming!
    :boom: 
   </div>
-  <div>it's <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/v7-upgrade-instructions">huge!</a></div>
+  <div>it's <a href="https://github.com/nlp-compromise/compromise/wiki/v7-Upgrade,-welcome">huge!</a></div>
 </div>
 
 ## Off you go,

@@ -44,33 +44,6 @@ const prettyPrint = (Text) => {
       }).join(' ');
     },
 
-    // phrases: function (r) {
-    //   this.list.forEach((ts) => {
-    //     let str = '';
-    //     ts.terms.forEach((t) => {
-    //       let text = t.out('text');
-    //       if (t.tag.ConditionPhrase) {
-    //         str += chalk.magenta(text);
-    //         return;
-    //       }
-    //       if (t.tag.NounPhrase) {
-    //         str += chalk.cyan(text);
-    //         return;
-    //       }
-    //       if (t.tag.VerbPhrase) {
-    //         str += chalk.red(text);
-    //         return;
-    //       }
-    //       if (t.tag.AdjectivePhrase) {
-    //         str += chalk.green(text);
-    //         return;
-    //       }
-    //       str += text;
-    //     });
-    //     console.log('\n' + str);
-    //   });
-    // },
-
     data: function(r) {
       return r.list.map((ts) => {
         return {
@@ -94,11 +67,11 @@ const prettyPrint = (Text) => {
       return arr;
     },
 
-    asArray: function (r) {
+    array: function (r) {
       return r.list.map((ts) => ts.out('normal'));
     },
 
-    asHtml: function (r) {
+    html: function (r) {
       let html = r.list.map((ts) => ts.out('html'));
       return '<span>' + html + '</span>';
     },
@@ -113,6 +86,9 @@ const prettyPrint = (Text) => {
   Text.prototype.check = function() {
     methods.check(this);
     return this;
+  };
+  Text.prototype.data = function() {
+    return methods.data(this);
   };
   return Text;
 };

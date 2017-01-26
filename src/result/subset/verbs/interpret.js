@@ -45,7 +45,7 @@ const getModal = function(ts) {
   if (!modal.found) {
     return null;
   }
-  return modal.normal();
+  return modal.out('normal');
 };
 
 //past/present/future

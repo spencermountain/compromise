@@ -23,7 +23,7 @@ class Sentence extends Terms {
 
   //returns a Term object
   mainVerb() {
-    return this.match('(#Verb|#Auxillary|#Adverb)+').if('#Verb').first();
+    return this.match('(#Verb|#Auxillary|#Adverb)+'); //.if('#Verb').first();
   }
 
   /** sentence tense conversion**/

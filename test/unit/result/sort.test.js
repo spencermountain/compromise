@@ -9,7 +9,7 @@ test('sortAlpha:', function (t) {
   r = r.people();
   r.sort('alpha');
   var want = ['john davis', 'john fredman', 'john xoo'];
-  fns.arr_test(r.asArray(), str, want, t);
+  fns.arr_test(r.out('array'), str, want, t);
   t.end();
 });
 
@@ -20,7 +20,7 @@ test('sortChronological:', function (t) {
   r.sort('alphabetical');
   r.sort('chronological');
   var want = ['john xoo', 'john fredman', 'john davis'];
-  fns.arr_test(r.asArray(), str, want, t);
+  fns.arr_test(r.out('array'), str, want, t);
   t.end();
 });
 
@@ -31,7 +31,7 @@ test('reverse:', function (t) {
   r.sort('alphabetical');
   r.reverse();
   var want = ['john xoo', 'john fredman', 'john davis'];
-  fns.arr_test(r.asArray(), str, want, t);
+  fns.arr_test(r.out('array'), str, want, t);
   t.end();
 });
 
@@ -41,7 +41,7 @@ test('unique:', function (t) {
   r = r.people();
   r.unique();
   var want = ['john xoo', 'john fredman', 'john davis'];
-  fns.arr_test(r.asArray(), str, want, t);
+  fns.arr_test(r.out('array'), str, want, t);
   t.end();
 });
 

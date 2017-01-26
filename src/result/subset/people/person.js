@@ -12,7 +12,7 @@ class Person extends Terms {
       middleName: this.middleName.out('normal'),
       lastName: this.lastName.out('normal'),
       genderGuess: this.guessGender(),
-      honorifics: this.honorifics.asArray()
+      honorifics: this.honorifics.out('array')
     };
   }
   constructor(arr, lexicon, refText, refTerms) {

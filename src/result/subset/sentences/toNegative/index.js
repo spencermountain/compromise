@@ -19,10 +19,10 @@ const logicalNegate = {
 
 const toNegative = (ts) => {
   let lg = ts.match('(everyone|everybody|someone|somebody|always)').first();
-  if (lg.found && logicalNegate[lg.normal()]) {
-    let found = lg.normal();
+  if (lg.found && logicalNegate[lg.out('normal')]) {
+    let found = lg.out('normal');
     // ts = ts.replace(found, logicalNegate[found]);
-    ts = ts.match(found).replaceWith(logicalNegate[found]);
+    // ts = ts.match(found).replaceWith(logicalNegate[found]);
     return ts.parentTerms;
   }
 
@@ -62,11 +62,11 @@ const toNegative = (ts) => {
     let copula = vb.match('#Copula');
     if (copula.found) {
       copula.insertAfter('not');
-      return vb;
+      return ts;
     }
     //not walk
     vb.insertBefore('not');
-    return vb;
+    return ts;
   }
   return ts;
 };

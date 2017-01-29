@@ -31,6 +31,14 @@ class Text {
   index() {
     return this.list.map((ts) => ts.index());
   }
+  data() {
+    return this.list.map((ts) => {
+      return {
+        normal: ts.out('normal'),
+        text: ts.out('text')
+      };
+    });
+  }
   out(msg, opts) {
     return out(this, msg, opts);
   }
@@ -59,16 +67,12 @@ Text = require('./methods/tag')(Text);
 Text = require('./methods/sort')(Text);
 Text = require('./methods/case')(Text);
 Text = require('./methods/match/match')(Text);
-Text = require('./methods/render/render')(Text);
 Text = require('./methods/delete')(Text);
 Text = require('./methods/replace')(Text);
 Text = require('./methods/split')(Text);
 Text = require('./methods/hyphens')(Text);
 Text = require('./methods/insert')(Text);
-// Text.prototype.topk = require('./methods/render/topk');
-// Text.prototype.ngram = require('./methods/render/ngram');
 Text.prototype.normalize = require('./methods/normalize');
-// Text.prototype.out =
 
 const subset = {
   acronyms: require('./subset/acronyms'),

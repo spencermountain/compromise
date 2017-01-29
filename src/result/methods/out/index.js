@@ -1,7 +1,7 @@
 'use strict';
-const ngram = require('./render/ngram');
-const edgegram = require('./render/edgegram');
-const topk = require('./render/topk');
+const ngram = require('./ngram');
+const edgegram = require('./edgegram');
+const topk = require('./topk');
 
 const render = {
   text: (r) => {
@@ -25,7 +25,7 @@ const render = {
   },
   array: (r) => {
     return r.list.reduce((arr, ts) => {
-      arr.push(ts.out('text'));
+      arr.push(ts.out('normal'));
       return arr;
     }, []);
   },
@@ -52,40 +52,38 @@ const render = {
     }, '');
     return '<span> ' + html + '\n</span>';
   },
-  debug: (r) => {
+  terms: (r) => {
+    let arr = [];
+    r.list.forEach((ts) => {
+      ts.terms.forEach((t) => {
+        arr.push({
+          text: t.text,
+          normal: t.normal,
+          tags: Object.keys(t.tag)
+        });
+      });
+    });
+    return arr;
+  },
+  check: (r) => {
     console.log('====');
     r.list.forEach((ts) => {
       console.log('   --');
       ts.check();
     });
     return r;
-  }
+  },
 };
+render.plaintext = render.text;
+render.normalized = render.normal;
+render.debug = render.check;
+render.freq = render.topk;
+render.frequency = render.topk;
+
 //render/output methods
 const out = (r, method, opts) => {
-  if (method === 'text' || method === 'plaintext') {
-    return render.text(r);
-  }
-  if (method === 'normal' || method === 'normalized') {
-    return render.normal(r);
-  }
-  if (method === 'array') {
-    return render.array(r);
-  }
-  if (method === 'json') {
-    return render.json(r);
-  }
-  if (method === 'html') {
-    return render.html(r);
-  }
-  if (method === 'debug' || method === 'pretty') {
-    return render.debug(r);
-  }
-  if (method === 'topk' || method === 'freq' || method === 'frequency') {
-    return topk(r);
-  }
-  if (method === 'ngram') {
-    return ngram(r);
+  if (render[method]) {
+    return render[method](r);
   }
   if (method === 'bigram') {
     opts = opts || {

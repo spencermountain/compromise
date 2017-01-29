@@ -9,5 +9,5 @@ const nlp = require('./src/index');
 
 
 console.log('------');
-var m = nlp('the problem, eg. the javascript');
-m.check();
+var m = nlp('john, paul, george, ringo');
+console.log(m.splitAfter('#Comma').out('array'));

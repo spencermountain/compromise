@@ -14,6 +14,9 @@ const fixContraction = (ts, parts, i) => {
   two.silent_term = parts[1];
   two.tagAs('Contraction', 'tagger-contraction');
   ts.insertAt(i, two);
+  //ensure new term has no auto-whitspace
+  two.whitespace.before = '';
+  two.whitespace.after = '';
   // ts.terms.push(two);
 
   //potentially it's three-contracted-terms, like 'dunno'

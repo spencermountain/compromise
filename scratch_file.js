@@ -29,7 +29,7 @@ const nlp = require('./src/index');
 // let m = nlp('john said everyone walks').sentences().toNegative();
 // console.log(m.normal() + '\n\n');
 
-var str = nlp('john always walks').sentences().toNegative().out('text');
-console.log(str);
+var m = nlp('he would come forward').verbs().toNegative();
+console.log(m.out('text'));
 
 // nlp('a b c').match('b').insertAfter('hi').check();

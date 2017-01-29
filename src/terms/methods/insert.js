@@ -34,7 +34,7 @@ const insertMethods = (Terms) => {
       if (index > 0) {
         addSpaceAt(ts, 0); //if in middle of sentence
       }
-      this.parentTerms = mutate.insertAt(this.parentTerms, index, ts);
+      this.parentTerms = mutate.insertAt(this.parentTerms, index - 1, ts);
       return this.parentTerms;
     },
 
@@ -43,7 +43,7 @@ const insertMethods = (Terms) => {
       let index = this.terms[this.terms.length - 1].index();
       //beginning whitespace to ts
       addSpaceAt(ts, 0);
-      this.parentTerms = mutate.insertAt(this.parentTerms, index + 1, ts);
+      this.parentTerms = mutate.insertAt(this.parentTerms, index, ts);
       return this.parentTerms;
     },
 

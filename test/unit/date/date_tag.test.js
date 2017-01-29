@@ -1,7 +1,11 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-test('date-tag :', function(t) {
+let file = '';
+if (typeof __filename !== 'undefined') {
+  file = require('path').basename(__filename).replace(/\.js$/);
+}
+test(file + ': date-tag :', function(t) {
   [
     'yesterday',
     'today',

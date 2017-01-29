@@ -71,7 +71,7 @@ class Verbs extends Text {
   }
 
   static find(r, n) {
-    r = r.match('(#Adverb|#Auxillary|#Verb|#Negative)+').if('#Verb'); //this should be (much) smarter
+    r = r.match('(#Adverb|#Auxillary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
     r = r.splitAfter('#Comma');
     if (typeof n === 'number') {
       r = r.get(n);

@@ -19,13 +19,12 @@ test('verb-to-negative:', function(t) {
     //phrasals
     [`he would come forward`, 'would not come forward'],
     [`we come together`, 'did not come together'],
-
     [`he was frightened back`, 'not frightened back'],
     [`i didn't want to frighten away the kids`, 'didn\'t want'],
   ].forEach(function (a) {
-    var vb = nlp(a[0]).verbs().toNegative()
-    var str=vb.out('normal')
-    t.equal(str, a[1], a[0]+'  -  '+str);
+    var vb = nlp(a[0]).verbs().toNegative();
+    var str = vb.out('normal');
+    t.equal(str, a[1], a[0] + '  -  ' + str);
   });
   t.end();
 });

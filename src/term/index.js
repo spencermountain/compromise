@@ -32,11 +32,9 @@ class Term {
     bindMethods(require('./noun'), 'noun', this);
     bindMethods(require('./adjective'), 'adjective', this);
     bindMethods(require('./adverb'), 'adverb', this);
-    bindMethods(require('./value'), 'value', this);
     bindMethods(require('./pronoun'), 'pronoun', this);
     bindMethods(require('./render'), 'render', this);
     bindMethods(require('./month'), 'month', this);
-    bindMethods(require('./copula'), 'copula', this);
     bindMethods(require('./weekday'), 'weekday', this);
 
     this.normalize();

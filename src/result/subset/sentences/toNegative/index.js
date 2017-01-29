@@ -22,7 +22,7 @@ const toNegative = (ts) => {
   if (lg.found && logicalNegate[lg.out('normal')]) {
     let found = lg.out('normal');
     // ts = ts.replace(found, logicalNegate[found]);
-    // ts = ts.match(found).replaceWith(logicalNegate[found]);
+    ts = ts.match(found).replaceWith(logicalNegate[found]).list[0];
     return ts.parentTerms;
   }
 

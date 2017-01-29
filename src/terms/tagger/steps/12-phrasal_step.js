@@ -5,18 +5,31 @@ const path = 'tagger/phrasal';
 
 //words that could be particles
 const particles = {
+  'aback': true,
+  'along': true,
+  'apart': true,
+  'at': true,
   'away': true,
   'back': true,
+  'by': true,
+  'do': true,
+  'down': true,
+  'forth': true,
+  'forward': true,
   'in': true,
-  'out': true,
-  'on': true,
+  'into': true,
+  'it': true,
   'off': true,
+  'on': true,
+  'out': true,
   'over': true,
-  'under': true,
+  'round': true,
+  'through': true,
   'together': true,
-  'apart': true,
+  'under': true,
   'up': true,
-  'down': true
+  'upon': true,
+  'way': true,
 };
 
 //phrasal verbs are compound verbs like 'beef up'

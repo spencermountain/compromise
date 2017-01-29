@@ -16,7 +16,7 @@ const isYear = (t) => {
   if (t.tag.Ordinal) {
     return false;
   }
-  let num = t.value.cardinal;
+  let num = parseInt(t.normal, 10);
   if (!num || num < 1000 || num > 3000) {
     return false;
   }
@@ -27,7 +27,7 @@ const isYear = (t) => {
 const twoDates = [{
   condition: (a, b) => (preDate[a.normal] && b.tag.Date),
   reason: 'predate-date'
-}, ];
+},];
 
 //rules for three-term dates
 const threeDates = [{
@@ -36,7 +36,7 @@ const threeDates = [{
 }, {
   condition: (a, b, c) => (a.tag.Date && b.normal === 'and' && c.tag.Date),
   reason: 'date-and-date'
-}, ];
+},];
 
 //non-destructively tag values & prepositions as dates
 const datePass = function (s) {

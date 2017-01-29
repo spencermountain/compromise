@@ -16,12 +16,12 @@ let main = {
   'give way': true,
   'hear from': true,
   'hear of': true,
+  'keep from': true,
   'lash into': true,
   'make do': true,
   'run across': true,
   'set upon': true,
   'take aback': true,
-  'keep from': true,
 };
 
 //if there's a phrasal verb "keep on", there's often a "keep off"
@@ -81,7 +81,7 @@ const asymmetric = {
 };
 Object.keys(asymmetric).forEach(function(k) {
   asymmetric[k].split(',').forEach(function(s) {
-    main[s + ' ' + k];
+    main[s + ' ' + k] = true;
   });
 });
 

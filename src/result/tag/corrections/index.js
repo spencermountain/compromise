@@ -9,7 +9,7 @@ const verb_corrections = require('./verb_corrections');
 const corrections = function (r) {
   log.here(path);
   //don't match+tag things over two clauses
-  r = r.clauses();
+  // r = r.clauses();
 
   //(the word 'so')
   //so funny

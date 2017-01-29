@@ -8,17 +8,6 @@ const nlp = require('./src/index');
 // var arr = nlp('would have not had been walking').match('#Auxillary+ #Verb').check();
 
 
-//bug 2. - transitive .verbs()
 console.log('------');
-var m = nlp('john is nice');
-m.sentences().toNegative();
-console.log(m.out('text'));
-console.log('------');
-
-console.log('\n\n');
-
-console.log('------');
-m = nlp('john is nice');
-m.verbs().toNegative();
-console.log(m.out('text'));
-console.log('------');
+var m = nlp('the problem, eg. the javascript');
+m.check();

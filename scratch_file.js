@@ -9,13 +9,16 @@ const nlp = require('./src/index');
 
 
 //bug 2. - transitive .verbs()
-// var m = nlp('john is nice');
+console.log('------');
+var m = nlp('john is nice');
+m.sentences().toNegative();
+console.log(m.out('text'));
+console.log('------');
 
-// m.sentences().toNegative();
-// console.log(m.out('text'));
+console.log('\n\n');
 
-// m.verbs().toNegative();
-// console.log(m.out('text'));
-
-
-console.log(nlp('wish').tag('Verb').verbs().data()[0]);
+console.log('------');
+m = nlp('john is nice');
+m.verbs().toNegative();
+console.log(m.out('text'));
+console.log('------');

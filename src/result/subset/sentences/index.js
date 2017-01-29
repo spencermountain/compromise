@@ -4,6 +4,9 @@ const Sentence = require('./sentence');
 
 
 class Sentences extends Text {
+  constructor(arr, lexicon, reference) {
+    super(arr, lexicon, reference);
+  }
   data() {
     return this.list.map((ts) => {
       return ts.data();
@@ -81,6 +84,7 @@ class Sentences extends Text {
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return new Text(r.list, this.lexicon, this.parent);
+  // return r
   }
 }
 

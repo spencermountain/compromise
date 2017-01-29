@@ -4,6 +4,9 @@ const toNegative = require('./toNegative');
 const Verb = require('../verbs/verb');
 
 class Sentence extends Terms {
+  constructor(arr, lexicon, refText, refTerms) {
+    super(arr, lexicon, refText, refTerms);
+  }
   data() {
     return {
       text: this.out('text'),

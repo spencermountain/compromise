@@ -41,7 +41,7 @@ const splitMethods = (Terms) => {
       //make them termlists
       all = all.map((ts) => {
         let parent = this.refText; //|| this;
-        return new Terms(ts, ts.lexicon, parent, ts.refTerms);
+        return new Terms(ts, this.lexicon, parent, this.refTerms);
       });
       return all;
     },

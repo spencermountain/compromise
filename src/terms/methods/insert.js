@@ -44,7 +44,6 @@ const insertMethods = (Terms) => {
       //beginning whitespace to ts
       addSpaceAt(ts, 0);
       this.parentTerms = mutate.insertAt(this.parentTerms, index + 1, ts);
-      this.refText.check();
       return this.parentTerms;
     },
 

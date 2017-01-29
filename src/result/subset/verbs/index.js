@@ -3,6 +3,9 @@ const Text = require('../../index');
 const Verb = require('./verb');
 
 class Verbs extends Text {
+  constructor(arr, lexicon, reference) {
+    super(arr, lexicon, reference);
+  }
   data() {
     return this.list.map((ts) => {
       return ts.data();
@@ -79,7 +82,8 @@ class Verbs extends Text {
     r.list = r.list.map((ts) => {
       return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
-    return r;
+    return new Text(r.list, this.lexicon, this.parent);
+  // return r;
   }
 }
 

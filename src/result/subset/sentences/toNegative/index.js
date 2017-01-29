@@ -25,49 +25,9 @@ const toNegative = (ts) => {
     ts = ts.match(found).replaceWith(logicalNegate[found]).list[0];
     return ts.parentTerms;
   }
-
-  //they walk -> they do not walk
-  let tmp = ts.match('(#Plural|they|i|we|you) #Adverb+? (#Infinitive|#PresentTense)');
-  if (tmp.found) {
-    let v = tmp.match('(#Infinitive|#PresentTense)');
-    v.insertBefore('do not');
-    return ts;
-  }
-  //toronto walks ->  toronto does not walk
-  tmp = ts.match('(#Pronoun|#Organization|#Place|#Person) #Adverb+? #PresentTense');
-  if (tmp.found) {
-    let v = tmp.match('#PresentTense');
-    v.insertBefore('does not');
-    v.verbs().toInfinitive();
-    return ts;
-  }
-  //he walked
-  tmp = ts.match('#Noun #Adverb+? #PastTense');
-  if (tmp.found) {
-    let v = tmp.match('#PastTense');
-    v.insertBefore('did not');
-    v.verbs().toInfinitive();
-    return ts;
-  }
-
-  //simplest-possible
-  let vb = ts.mainVerb().not('#Adverb');
-  //have not walked..
-  if (vb.terms().length > 1) {
-    vb.terms().first().insertAfter('not');
-    return ts;
-  }
-  if (vb.terms().length === 1) {
-    //is not
-    let copula = vb.match('#Copula');
-    if (copula.found) {
-      copula.insertAfter('not');
-      return ts;
-    }
-    //not walk
-    vb.insertBefore('not');
-    return ts;
-  }
+  //negate the main verb of the sentence
+  let vb = ts.mainVerb();
+  vb.toNegative();
   return ts;
 };
 module.exports = toNegative;

@@ -7,29 +7,15 @@ const nlp = require('./src/index');
 //bug 1. - support greedy +
 // var arr = nlp('would have not had been walking').match('#Auxillary+ #Verb').check();
 
-// let m = nlp('he is really good').sentences().toNegative();
-// console.log(m.normal() + '\n\n');
-//
-// m = nlp('he was walking').sentences().toNegative();
-// console.log(m.normal() + '\n\n');
-//
-// m = nlp('i would have been walking').sentences().toNegative();
-// console.log(m.normal() + '\n\n');
-//
-// m = nlp('she does cook').sentences().toNegative();
-// console.log(m.normal() + '\n\n');
-//
-// m = nlp('by cooking').sentences().toNegative();
-// console.log(m.normal() + '\n\n');
-//
-// m = nlp('they swim').sentences().toNegative();
-// console.log(m.normal() + '\n\n');
 
-// let m = nlp('everyone walks').replace('everyone', 'someone');
-// let m = nlp('john said everyone walks').sentences().toNegative();
-// console.log(m.normal() + '\n\n');
+//bug 2. - transitive .verbs()
+// var m = nlp('john is nice');
 
-var m = nlp('he would come forward').verbs().toNegative();
-console.log(m.out('text'));
+// m.sentences().toNegative();
+// console.log(m.out('text'));
 
-// nlp('a b c').match('b').insertAfter('hi').check();
+// m.verbs().toNegative();
+// console.log(m.out('text'));
+
+
+console.log(nlp('wish').tag('Verb').verbs().data()[0]);

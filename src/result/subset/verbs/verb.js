@@ -23,7 +23,8 @@ class Verb extends Terms {
         verb: this.verb.out('normal'),
         adverbs: this.adverbs.out('normal'),
       },
-      interpret: interpret(this, debug)
+      interpret: interpret(this, debug),
+      conjugations: conjugate(this, debug)
     };
   }
 

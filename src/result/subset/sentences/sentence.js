@@ -1,6 +1,7 @@
 'use strict';
 const Terms = require('../../paths').Terms;
 const toNegative = require('./toNegative');
+const Verb = require('../verbs/verb');
 
 class Sentence extends Terms {
   data() {
@@ -23,7 +24,8 @@ class Sentence extends Terms {
 
   //returns a Term object
   mainVerb() {
-    return this.match('(#Verb|#Auxillary|#Adverb)+'); //.if('#Verb').first();
+    let terms = this.match('(#Verb|#Auxillary|#Adverb|#Particle)+').list[0].terms;
+    return new Verb(terms, this.lexicon, this.refText, this.refTerms);
   }
 
   /** sentence tense conversion**/

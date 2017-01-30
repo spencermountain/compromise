@@ -8,9 +8,10 @@ const toNegative = (ts) => {
     return copula.list[0].insertAfter('not');
   }
   //would not walk
-  let modal = ts.match('#Auxillary').first();
+  let modal = ts.match('#Auxillary'); //.first();
   if (modal.found) {
-    return modal.list[0].insertAfter('not');
+    modal.list[0].insertAfter('not');
+    return ts;
   }
   //not walking
   let gerund = ts.match('#Gerund').last();

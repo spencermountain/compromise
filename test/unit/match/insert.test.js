@@ -27,3 +27,19 @@ test('insert-basic :', function(t) {
 
   t.end();
 });
+
+test('insert-subset-include :', function(t) {
+  var m = nlp('the dog is nice');
+  let sub = m.match('is');
+  sub.insertAfter('really');
+  t.equal(sub.out('normal'), 'is really', 'is-really');
+  t.equal(m.out('normal'), 'the dog is really nice', 'dog-is-really-nice');
+
+  m = nlp('the dog climbed the fence');
+  sub = m.match('climbed');
+  sub.insertBefore('really');
+  t.equal(sub.out('normal'), 'really climbed', 'really-quickly');
+  t.equal(m.out('normal'), 'the dog really climbed the fence', 'dog-really-climbed');
+
+  t.end();
+});

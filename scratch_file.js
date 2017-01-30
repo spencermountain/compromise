@@ -22,6 +22,6 @@ console.log('------');
 //replace
 
 
-var m = nlp('the dog sat');
-m.insertBefore('and').check();
+var m = nlp('she has walked');
+m.verbs().toNegative().check();
 console.log(m.out());

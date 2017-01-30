@@ -27,6 +27,7 @@ const insertMethods = (Terms) => {
   const methods = {
 
     insertBefore: function (input) {
+      let original_l = this.terms.length;
       let ts = ensureTerms(input);
       let index = this.index();
       //pad a space on parent
@@ -36,28 +37,36 @@ const insertMethods = (Terms) => {
       }
       this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index, ts);
       //also copy them to current selection
-      // this.terms = ts.terms.concat(this.terms);
+      if (this.terms.length === original_l) {
+        this.terms = ts.terms.concat(this.terms);
+      }
       return this;
     },
 
     insertAfter: function (input) {
+      let original_l = this.terms.length;
       let ts = ensureTerms(input);
       let index = this.terms[this.terms.length - 1].index();
       //beginning whitespace to ts
       addSpaceAt(ts, 0);
       this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index + 1, ts);
       //also copy them to current selection
-      // this.terms = this.terms.concat(ts.terms);
+      if (this.terms.length === original_l) {
+        this.terms = this.terms.concat(ts.terms);
+      }
       return this;
     },
 
     insertAt: function (index, input) {
+      let original_l = this.terms.length;
       let ts = ensureTerms(input);
       //beginning whitespace to ts
       addSpaceAt(ts, 0);
       this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index + 1, ts);
       //also copy them to current selection
-      // this.terms = this.terms.concat(ts.terms);
+      if (this.terms.length === original_l) {
+        this.terms = this.terms.concat(ts.terms);
+      }
       return this;
     }
 

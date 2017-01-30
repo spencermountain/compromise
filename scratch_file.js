@@ -9,5 +9,11 @@ const nlp = require('./src/index');
 
 
 console.log('------');
-var m = nlp('john, paul, george, ringo');
-console.log(m.splitAfter('#Comma').out('array'));
+// var m = nlp('he\'d be nice');
+// m.contractions().expand();
+// m.verbs().toNegative().check();
+
+var m = nlp('the dog is nice');
+m.verbs().replace('and').check();
+// m.insertBefore('and').check();
+console.log(m.out());

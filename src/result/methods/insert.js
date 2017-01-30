@@ -11,19 +11,19 @@ const insertMethod = (Text) => {
       this.list.forEach((ts) => {
         ts.insertBefore(str);
       });
-      return this.parent;
+      return this;
     },
     insertAfter: function (str) {
       this.list.forEach((ts) => {
         ts.insertAfter(str);
       });
-      return this.parent;
+      return this;
     },
     insertAt: function (i, str) {
       this.list.forEach((ts) => {
         ts.insertAt(i, str);
       });
-      return this.parent;
+      return this;
     }
   };
 

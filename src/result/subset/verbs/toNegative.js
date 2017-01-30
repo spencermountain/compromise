@@ -5,26 +5,22 @@ const toNegative = (ts) => {
   //is not
   let copula = ts.match('#Copula');
   if (copula.found) {
-    copula.insertAfter('not');
-    return ts;
+    return copula.list[0].insertAfter('not');
   }
   //would not walk
   let modal = ts.match('#Auxillary').first();
   if (modal.found) {
-    modal.insertAfter('not');
-    return ts;
+    return modal.list[0].insertAfter('not');
   }
   //not walking
   let gerund = ts.match('#Gerund').last();
   if (gerund.found) {
-    gerund.insertBefore('not');
-    return ts;
+    return gerund.list[0].insertBefore('not');
   }
   //didn't/doesn't walk
   let vb = ts.match('(#PresentTense|#Infinitive)').first();
   if (vb.found) {
-    vb.insertBefore('did not'); //sentences.toNegative() does this better
-    return ts;
+    return vb.list[0].insertBefore('did not'); //sentences.toNegative() does this better
   }
 
   return ts;

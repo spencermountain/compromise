@@ -39,6 +39,9 @@ class Text {
       };
     });
   }
+  check(opts) {
+    return out(this, 'check', opts);
+  }
   out(msg, opts) {
     return out(this, msg, opts);
   }

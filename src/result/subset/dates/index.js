@@ -3,6 +3,9 @@ const Text = require('../../index');
 const Date = require('./date');
 
 class Dates extends Text {
+  data() {
+    return this.list.map((ts) => ts.data());
+  }
   toShortForm() {
     this.match('#Month').forEachTerms((t) => {
       t = t.month.toShortForm();
@@ -20,9 +23,6 @@ class Dates extends Text {
       t = t.weekday.toLongForm();
     });
     return this;
-  }
-  data() {
-    return this.list.map((ts) => ts.data());
   }
   static find(r, n) {
     let dates = r.match('#Date+');

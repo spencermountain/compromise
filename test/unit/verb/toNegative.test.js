@@ -24,7 +24,7 @@ test('verb-to-negative:', function(t) {
   ].forEach(function (a) {
     var vb = nlp(a[0]).verbs().toNegative();
     var str = vb.out('normal');
-    t.equal(str, a[1], a[0] + '  -  ' + str);
+    t.equal(str, a[1], '\'' + str + '\' - want: ' + a[1]);
   });
   t.end();
 });

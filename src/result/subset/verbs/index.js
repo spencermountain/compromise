@@ -29,8 +29,8 @@ class Verbs extends Text {
     });
   }
   toNegative() {
-    this.list.forEach((ts) => {
-      ts.toNegative();
+    this.list = this.list.map((ts) => {
+      return ts.toNegative();
     });
     return this;
   }

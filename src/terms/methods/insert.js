@@ -34,8 +34,10 @@ const insertMethods = (Terms) => {
       if (index > 0) {
         addSpaceAt(ts, 0); //if in middle of sentence
       }
-      this.parentTerms = mutate.insertAt(this.parentTerms, index, ts);
-      return this.parentTerms;
+      this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index, ts);
+      //also copy them to current selection
+      // this.terms = this.terms.concat(ts.terms);
+      return this;
     },
 
     insertAfter: function (input) {
@@ -43,16 +45,20 @@ const insertMethods = (Terms) => {
       let index = this.terms[this.terms.length - 1].index();
       //beginning whitespace to ts
       addSpaceAt(ts, 0);
-      this.parentTerms = mutate.insertAt(this.parentTerms, index + 1, ts);
-      return this.parentTerms;
+      this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index + 1, ts);
+      //also copy them to current selection
+      this.terms = this.terms.concat(ts.terms);
+      return this;
     },
 
     insertAt: function (index, input) {
       let ts = ensureTerms(input);
       //beginning whitespace to ts
       addSpaceAt(ts, 0);
-      this.parentTerms = mutate.insertAt(this.parentTerms, index + 1, ts);
-      return this.parentTerms;
+      this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index + 1, ts);
+      //also copy them to current selection
+      this.terms = this.terms.concat(ts.terms);
+      return this;
     }
 
   };

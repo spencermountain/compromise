@@ -27,7 +27,7 @@ exports.deleteThese = (source, needle) => {
 };
 
 //add them
-exports.insertAt = (parent, i, needle) => {
+exports.insertAt = (terms, i, needle) => {
   needle.dirty = true;
   let arr = getTerms(needle);
   //handle whitespace
@@ -36,6 +36,6 @@ exports.insertAt = (parent, i, needle) => {
   }
   //gnarly splice
   //-( basically  - terms.splice(i+1, 0, arr) )
-  Array.prototype.splice.apply(parent.terms, [i, 0].concat(arr));
-  return parent;
+  Array.prototype.splice.apply(terms, [i, 0].concat(arr));
+  return terms;
 };

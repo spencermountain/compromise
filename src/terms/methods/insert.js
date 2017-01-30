@@ -36,7 +36,7 @@ const insertMethods = (Terms) => {
       }
       this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index, ts);
       //also copy them to current selection
-      // this.terms = this.terms.concat(ts.terms);
+      // this.terms = ts.terms.concat(this.terms);
       return this;
     },
 
@@ -47,7 +47,7 @@ const insertMethods = (Terms) => {
       addSpaceAt(ts, 0);
       this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index + 1, ts);
       //also copy them to current selection
-      this.terms = this.terms.concat(ts.terms);
+      // this.terms = this.terms.concat(ts.terms);
       return this;
     },
 
@@ -57,7 +57,7 @@ const insertMethods = (Terms) => {
       addSpaceAt(ts, 0);
       this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index + 1, ts);
       //also copy them to current selection
-      this.terms = this.terms.concat(ts.terms);
+      // this.terms = this.terms.concat(ts.terms);
       return this;
     }
 

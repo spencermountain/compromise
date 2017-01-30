@@ -13,7 +13,15 @@ console.log('------');
 // m.contractions().expand();
 // m.verbs().toNegative().check();
 
-var m = nlp('the dog is nice');
-m.verbs().replace('and').check();
-// m.insertBefore('and').check();
+
+
+
+//insertBefore
+//insertAfter
+
+//replace
+
+
+var m = nlp('the dog sat');
+m.insertBefore('and').check();
 console.log(m.out());

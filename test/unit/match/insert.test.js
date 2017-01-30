@@ -9,16 +9,20 @@ test('insert-basic :', function(t) {
   m = nlp('the dog sat').insertAfter('patiently');
   t.equal(m.out('text'), 'the dog sat patiently', 'sat-patiently');
 
-  m = nlp('the dog sat').match('dog').insertBefore('nice');
+  m = nlp('the dog sat');
+  m.match('dog').insertBefore('nice');
   t.equal(m.out('text'), 'the nice dog sat', 'nice-dog');
 
-  m = nlp('a dog sat').match('sat').insertAfter('quickly');
+  m = nlp('a dog sat');
+  m.match('sat').insertAfter('quickly');
   t.equal(m.out('text'), 'a dog sat quickly', 'sat-quickly');
 
-  m = nlp('a dog sat').match('a dog sat').insertAfter('quickly');
+  m = nlp('a dog sat');
+  m.match('a dog sat').insertAfter('quickly');
   t.equal(m.out('text'), 'a dog sat quickly', 'multi-match-quickly');
 
-  m = nlp('a dog sat').match('asdf').insertAfter('no no no');
+  m = nlp('a dog sat');
+  m.match('asdf').insertAfter('no no no');
   t.equal(m.out('text'), 'a dog sat', 'no no no no');
 
   t.end();

@@ -14,7 +14,7 @@ const transforms = (Terms) => {
       let terms = this.terms.map((t) => {
         return t.clone();
       });
-      return new Terms(terms, this.lexicon, this.refText, this.refTerms);
+      return new Terms(terms, this.lexicon, null, null); //this.refText, this.refText
     },
     hyphenate: function () {
       this.terms.forEach((t, i) => {

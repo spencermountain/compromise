@@ -22,6 +22,11 @@ console.log('------');
 //replace
 
 
-var m = nlp('she has walked');
-m.verbs().toNegative().check();
-console.log(m.out());
+var r = nlp('six months and 2 days');
+var c = r.clone().values().toNumber();
+// console.log(r.match('#Value+').list);
+// console.log(r.values().list);
+// r.values().data();
+// r.values().check();
+
+console.log(r.values().data());

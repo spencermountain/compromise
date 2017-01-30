@@ -50,7 +50,9 @@ class Values extends Text {
     return this;
   }
   static find(r, n) {
+    // r.check();
     r = r.match('#Value+');
+    // console.log(r.out('array'));
     if (r.has('. (a|an)')) {
       r = r.not('(a|an)$');
     }

@@ -11,7 +11,7 @@ const genericMethods = (Text) => {
         return ts.clone();
       });
       // return this;
-      return new Text(list, this.lexicon, this.parent);
+      return new Text(list, this.lexicon); //, this.parent
     },
 
     /** get the nth term of each result*/

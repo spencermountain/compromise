@@ -1,4 +1,4 @@
-/* compromise v7.0.5
+/* compromise v7.0.6
    github.com/nlp-compromise
    MIT
 */
@@ -463,7 +463,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.5",
+  "version": "7.0.6",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -2750,6 +2750,7 @@ exports.leftPad = function (str, width, char) {
 
 var buildResult = _dereq_('./result/build');
 var pkg = _dereq_('../package.json');
+var log = _dereq_('./log');
 
 //the main thing
 var nlp = function nlp(str, lexicon) {
@@ -2757,6 +2758,11 @@ var nlp = function nlp(str, lexicon) {
 };
 //this is handy
 nlp.version = pkg.version;
+
+//also is this
+nlp.verbose = function (str) {
+  log.enable(str);
+};
 
 //and then all-the-exports...
 if (typeof self !== 'undefined') {
@@ -2776,7 +2782,7 @@ if (typeof module !== 'undefined') {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../package.json":9,"./result/build":50}],49:[function(_dereq_,module,exports){
+},{"../package.json":9,"./log":49,"./result/build":50}],49:[function(_dereq_,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -2792,7 +2798,7 @@ module.exports = {
   },
   here: function here(path) {
     if (_enable === true || _enable === path) {
-      // console.log('  ' + chalk.yellow(chalk.underline(path)));
+      console.log('  ' + chalk.yellow(chalk.underline(path)));
     }
   },
   tell: function tell(str, path) {
@@ -3033,7 +3039,7 @@ var genericMethods = function genericMethods(Text) {
         return ts.clone();
       });
       // return this;
-      return new Text(list, this.lexicon, this.parent);
+      return new Text(list, this.lexicon); //, this.parent
     },
 
     /** get the nth term of each result*/
@@ -4777,7 +4783,11 @@ var parsePunt = function parsePunt(r) {
   //interpret 'value + duration'
   if (m.found) {
     r.match('#Value #Duration').forEach(function (ts) {
-      var num = ts.match('#Value').values().toNumber().numbers()[0];
+      var num = ts.match('*').values().data()[0];
+      // console.log(num);
+      // console.log(ts.out());
+      // console.log('------------');
+      num = num.number;
       if (num || num === 0) {
         var str = ts.match('#Duration').nouns().toSingular().out('normal');
         if (durations[str]) {
@@ -6138,8 +6148,8 @@ var Values = function (_Text) {
   }, {
     key: 'toNumber',
     value: function toNumber() {
-      this.forEach(function (ts) {
-        ts.toNumber();
+      this.list = this.list.map(function (ts) {
+        return ts.toNumber();
       });
       return this;
     }
@@ -6148,8 +6158,8 @@ var Values = function (_Text) {
   }, {
     key: 'toTextValue',
     value: function toTextValue() {
-      this.forEach(function (ts) {
-        ts.toTextValue();
+      this.list = this.list.map(function (ts) {
+        return ts.toTextValue();
       });
       return this;
     }
@@ -6158,8 +6168,8 @@ var Values = function (_Text) {
   }, {
     key: 'toCardinal',
     value: function toCardinal() {
-      this.forEach(function (ts) {
-        ts.toCardinal();
+      this.list = this.list.map(function (ts) {
+        return ts.toCardinal();
       });
       return this;
     }
@@ -6168,8 +6178,8 @@ var Values = function (_Text) {
   }, {
     key: 'toOrdinal',
     value: function toOrdinal() {
-      this.forEach(function (ts) {
-        ts.toOrdinal();
+      this.list = this.list.map(function (ts) {
+        return ts.toOrdinal();
       });
       return this;
     }
@@ -6178,8 +6188,8 @@ var Values = function (_Text) {
   }, {
     key: 'toNiceNumber',
     value: function toNiceNumber() {
-      this.forEach(function (ts) {
-        ts.toNiceNumber();
+      this.list = this.list.map(function (ts) {
+        return ts.toNiceNumber();
       });
       return this;
     }
@@ -6686,7 +6696,10 @@ var numOrdinal = _dereq_('./numOrdinal');
 var textOrdinal = _dereq_('./textOrdinal');
 
 var isOrdinal = function isOrdinal(ts) {
-  var t = ts.lastTerm();
+  var t = ts.terms[ts.terms.length - 1];
+  if (!t) {
+    return false;
+  }
   return t.tag.Ordinal === true;
 };
 var isText = function isText(ts) {
@@ -6754,14 +6767,12 @@ var Value = function (_Terms) {
       }
       //otherwise, parse it
       if (isOrdinal(this)) {
-        var str = textOrdinal(this);
-        this.replaceWith(str, 'Value');
-      } else {
-        var num = '' + parse(this);
-        var _str = toText(num).join(' ');
-        this.replaceWith(_str, 'Value');
+        var _str = textOrdinal(this);
+        return this.replaceWith(_str, 'Value');
       }
-      return this;
+      var num = '' + parse(this);
+      var str = toText(num).join(' ');
+      return this.replaceWith(str, 'Value');
     }
 
     /**5th -> 5 */
@@ -6775,14 +6786,12 @@ var Value = function (_Terms) {
       }
       //otherwise,
       if (isText(this)) {
-        var num = '' + parse(this);
-        var str = toText(num).join(' ');
-        this.replaceWith(str, 'Value');
-      } else {
         var _num2 = '' + parse(this);
-        this.replaceWith(_num2, 'Value');
+        var str = toText(_num2).join(' ');
+        return this.replaceWith(str, 'Value');
       }
-      return this;
+      var num = '' + parse(this);
+      return this.replaceWith(num, 'Value');
     }
 
     /**5 -> 5th */
@@ -7102,27 +7111,56 @@ module.exports = predict;
 //turns a verb negative - may not have enough information to do it properly
 // (eg 'did not eat' vs 'does not eat') - needs the noun
 
-var toNegative = function toNegative(ts) {
-  //is not
-  var copula = ts.match('#Copula');
-  if (copula.found) {
-    return copula.list[0].insertAfter('not');
-  }
+var toNegative = function toNegative(ts, plural) {
   //would not walk
-  var modal = ts.match('#Auxillary'); //.first();
+  var modal = ts.match('#Auxillary').first(); //.notIf('(is|are|was|will|has|had)').first(); //.first();
   if (modal.found) {
-    modal.list[0].insertAfter('not');
-    return ts;
+    var index = modal.list[0].index();
+    return ts.parentTerms.insertAt(index + 1, 'not', 'Verb');
   }
+
+  //is not
+  var copula = ts.match('(#Copula|will|has|had)').first();
+  if (copula.found) {
+    var _index = copula.list[0].index();
+    return ts.parentTerms.insertAt(_index + 1, 'not', 'Verb');
+  }
+
+  //walked -> did not walk
+  var past = ts.match('#PastTense').last();
+  if (past.found) {
+    var _vb = past.list[0];
+    var _index2 = _vb.index();
+    _vb.terms[0].text = _vb.terms[0].verb.infinitive();
+    return ts.parentTerms.insertAt(_index2, 'did not', 'Verb');
+  }
+
+  //walks -> does not walk
+  var pres = ts.match('#PresentTense').last();
+  if (pres.found) {
+    var _vb2 = pres.list[0];
+    var _index3 = _vb2.index();
+    _vb2.terms[0].text = _vb2.terms[0].verb.infinitive();
+    return ts.parentTerms.insertAt(_index3, 'does not', 'Verb');
+  }
+
   //not walking
   var gerund = ts.match('#Gerund').last();
   if (gerund.found) {
-    return gerund.list[0].insertBefore('not');
+    var _index4 = gerund.list[0].index();
+    return ts.parentTerms.insertAt(_index4, 'not', 'Verb');
   }
-  //didn't/doesn't walk
-  var vb = ts.match('(#PresentTense|#Infinitive)').first();
+
+  //walk -> do not walk
+  var vb = ts.match('#Verb').last();
   if (vb.found) {
-    return vb.list[0].insertBefore('did not'); //sentences.toNegative() does this better
+    vb = vb.list[0];
+    var _index5 = vb.index();
+    vb.terms[0].text = vb.terms[0].verb.infinitive();
+    if (plural) {
+      return ts.parentTerms.insertAt(_index5, 'does not', 'Verb');
+    }
+    return ts.parentTerms.insertAt(_index5, 'did not', 'Verb');
   }
 
   return ts;
@@ -7214,17 +7252,20 @@ var Verb = function (_Terms) {
   }, {
     key: 'toPastTense',
     value: function toPastTense() {
-      return this;
+      var obj = _conjugate(this);
+      return this.replaceWith(obj.PastTense);
     }
   }, {
     key: 'toPresentTense',
     value: function toPresentTense() {
-      return this;
+      var obj = _conjugate(this);
+      return this.replaceWith(obj.Infinitive);
     }
   }, {
     key: 'toFutureTense',
     value: function toFutureTense() {
-      return this;
+      var obj = _conjugate(this);
+      return this.replaceWith(obj.FutureTense);
     }
   }, {
     key: 'toInfinitive',
@@ -7513,7 +7554,7 @@ var corrections = function corrections(r) {
   //been walking
   r.match('(be|been) ' + advb + ' #Gerund').not('#Verb$').tag('Auxillary', 'be-walking');
   //would walk
-  r.match('#Modal ' + advb + ' #Verb').not('#Verb$').tag('Auxillary', 'modal-verb');
+  r.match('(#Modal|did) ' + advb + ' #Verb').not('#Verb$').tag('Auxillary', 'modal-verb');
   //would have had
   r.match('#Modal ' + advb + ' have ' + advb + ' had ' + advb + ' #Verb').not('#Verb$').tag('Auxillary', 'would-have');
   //would be walking
@@ -7903,21 +7944,21 @@ module.exports = {
       Holiday: true
     }
   },
-  Verb: {
-    PresentTense: {
-      Infinitive: true,
-      Gerund: true
-    },
-    PastTense: true,
-    PerfectTense: true,
-    FuturePerfect: true,
-    Pluperfect: true,
-    Copula: true,
-    Modal: true,
-    Participle: true
-  },
   VerbPhrase: {
-    Particle: true
+    Verb: {
+      PresentTense: {
+        Infinitive: true,
+        Gerund: true
+      },
+      PastTense: true,
+      PerfectTense: true,
+      FuturePerfect: true,
+      Pluperfect: true,
+      Copula: true,
+      Modal: true,
+      Participle: true,
+      Particle: true
+    }
   },
   Adjective: {
     Comparative: true,
@@ -11453,7 +11494,6 @@ module.exports = deleteMethods;
 },{"../mutate":207}],200:[function(_dereq_,module,exports){
 'use strict';
 
-var Terms = _dereq_('../index');
 var mutate = _dereq_('../mutate');
 
 //whitespace
@@ -11480,9 +11520,12 @@ var insertMethods = function insertMethods(Terms) {
 
   var methods = {
 
-    insertBefore: function insertBefore(input) {
+    insertBefore: function insertBefore(input, tag) {
       var original_l = this.terms.length;
       var ts = ensureTerms(input);
+      if (tag) {
+        ts.tagAs(tag);
+      }
       var index = this.index();
       //pad a space on parent
       addSpaceAt(this.parentTerms, index);
@@ -11497,9 +11540,12 @@ var insertMethods = function insertMethods(Terms) {
       return this;
     },
 
-    insertAfter: function insertAfter(input) {
+    insertAfter: function insertAfter(input, tag) {
       var original_l = this.terms.length;
       var ts = ensureTerms(input);
+      if (tag) {
+        ts.tagAs(tag);
+      }
       var index = this.terms[this.terms.length - 1].index();
       //beginning whitespace to ts
       addSpaceAt(ts, 0);
@@ -11511,16 +11557,28 @@ var insertMethods = function insertMethods(Terms) {
       return this;
     },
 
-    insertAt: function insertAt(index, input) {
+    insertAt: function insertAt(index, input, tag) {
+      if (index < 0) {
+        index = 0;
+      }
       var original_l = this.terms.length;
       var ts = ensureTerms(input);
-      //beginning whitespace to ts
-      addSpaceAt(ts, 0);
-      this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index + 1, ts);
+      //tag that thing too
+      if (tag) {
+        ts.tagAs(tag);
+      }
+      this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index, ts);
       //also copy them to current selection
       if (this.terms.length === original_l) {
-        this.terms = this.terms.concat(ts.terms);
+        //splice the new terms into this (yikes!)
+        Array.prototype.splice.apply(this.terms, [index, 0].concat(ts.terms));
       }
+      //beginning whitespace to ts
+      // if (index === 0) {
+      //   this.terms[0].whitespace.before = '';
+      //   this.terms[0].whitespace.after = ' ';
+      //   this.terms[ts.terms.length - 1].whitespace.after = ' ';
+      // }
       return this;
     }
 
@@ -11535,7 +11593,7 @@ var insertMethods = function insertMethods(Terms) {
 
 module.exports = insertMethods;
 
-},{"../index":191,"../mutate":207}],201:[function(_dereq_,module,exports){
+},{"../mutate":207}],201:[function(_dereq_,module,exports){
 'use strict';
 
 var miscMethods = function miscMethods(Terms) {
@@ -11698,8 +11756,8 @@ var replaceMethods = function replaceMethods(Terms) {
       var index = this.index();
       this.parentTerms = mutate.deleteThese(this.parentTerms, this);
       this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index, toAdd);
-      this.terms = this.parentTerms.terms;
-      return toAdd;
+      this.terms = toAdd.terms;
+      return this;
     }
 
   };
@@ -11900,7 +11958,7 @@ var transforms = function transforms(Terms) {
       var terms = this.terms.map(function (t) {
         return t.clone();
       });
-      return new Terms(terms, this.lexicon, this.refText, this.refTerms);
+      return new Terms(terms, this.lexicon, null, null); //this.refText, this.refText
     },
     hyphenate: function hyphenate() {
       var _this = this;
@@ -12211,6 +12269,22 @@ module.exports = numberRange;
 
 var Term = _dereq_('../../../term');
 
+var tags = {
+  'not': 'Negative',
+  'will': 'Verb',
+  'would': 'Modal',
+  'have': 'Verb',
+  'are': 'Copula',
+  'is': 'Copula',
+  'am': 'Verb'
+};
+//make sure the newly created term gets the easy tags
+var easyTag = function easyTag(t) {
+  if (tags[t.silent_term]) {
+    t.tagAs(tags[t.silent_term]);
+  }
+};
+
 //add a silent term
 var fixContraction = function fixContraction(ts, parts, i) {
   //add the interpretation to the contracted term
@@ -12223,11 +12297,11 @@ var fixContraction = function fixContraction(ts, parts, i) {
   var two = new Term('');
   two.silent_term = parts[1];
   two.tagAs('Contraction', 'tagger-contraction');
-  ts.insertAt(i, two);
+  ts.insertAt(i + 1, two);
   //ensure new term has no auto-whitspace
   two.whitespace.before = '';
   two.whitespace.after = '';
-  // ts.terms.push(two);
+  easyTag(two);
 
   //potentially it's three-contracted-terms, like 'dunno'
   if (parts[2]) {
@@ -12235,6 +12309,7 @@ var fixContraction = function fixContraction(ts, parts, i) {
     three.silent_term = parts[2];
     ts.terms.push(three);
     three.tagAs('Contraction', 'tagger-contraction');
+    easyTag(three);
   }
 
   return ts;
@@ -13714,7 +13789,7 @@ var afterThisWord = {
   first: 'Noun', //50% //first principles..
   it: 'Verb', //33%
   there: 'Verb', //35%
-  to: 'Verb', //32%
+  // to: 'Verb', //32%
   not: 'Verb', //33%
   because: 'Noun', //31%
   if: 'Noun', //32%

@@ -21,7 +21,7 @@ console.log('------');
 //replace
 
 
-var r = nlp('he has walked to bed');
+var r = nlp('i didn\'t want to frighten away');
 // r = r.values().toTextValue();
 // console.log(numV.toNiceNumber().out('text'));
 console.log(r.verbs().toNegative().out());

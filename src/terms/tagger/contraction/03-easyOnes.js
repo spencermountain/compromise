@@ -14,6 +14,7 @@ const easy_ends = {
 // 's': 'is' //or was
 };
 
+
 //unambiguous contractions, like "'ll"
 const easyOnes = (ts) => {
   for(let i = 0; i < ts.terms.length; i++) {

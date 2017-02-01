@@ -2,6 +2,7 @@
 //turns a verb negative - may not have enough information to do it properly
 // (eg 'did not eat' vs 'does not eat') - needs the noun
 const toNegative = (ts) => {
+  ts.check();
   //is not
   let copula = ts.match('#Copula');
   if (copula.found) {

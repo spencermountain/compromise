@@ -10,7 +10,7 @@ const corrections = function (r) {
   //been walking
   r.match(`(be|been) ${advb} #Gerund`).not('#Verb$').tag('Auxillary', 'be-walking');
   //would walk
-  r.match(`#Modal ${advb} #Verb`).not('#Verb$').tag('Auxillary', 'modal-verb');
+  r.match(`(#Modal|did) ${advb} #Verb`).not('#Verb$').tag('Auxillary', 'modal-verb');
   //would have had
   r.match(`#Modal ${advb} have ${advb} had ${advb} #Verb`).not('#Verb$').tag('Auxillary', 'would-have');
   //would be walking

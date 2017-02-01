@@ -40,21 +40,21 @@ module.exports = {
       Holiday: true
     },
   },
-  Verb: {
-    PresentTense: {
-      Infinitive: true,
-      Gerund: true
-    },
-    PastTense: true,
-    PerfectTense: true,
-    FuturePerfect: true,
-    Pluperfect: true,
-    Copula: true,
-    Modal: true,
-    Participle: true
-  },
   VerbPhrase: {
-    Particle: true
+    Verb: {
+      PresentTense: {
+        Infinitive: true,
+        Gerund: true
+      },
+      PastTense: true,
+      PerfectTense: true,
+      FuturePerfect: true,
+      Pluperfect: true,
+      Copula: true,
+      Modal: true,
+      Participle: true,
+      Particle: true
+    },
   },
   Adjective: {
     Comparative: true,

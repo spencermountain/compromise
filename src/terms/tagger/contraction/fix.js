@@ -30,7 +30,7 @@ const fixContraction = (ts, parts, i) => {
   let two = new Term('');
   two.silent_term = parts[1];
   two.tagAs('Contraction', 'tagger-contraction');
-  ts.insertAt(i, two);
+  ts.insertAt(i + 1, two);
   //ensure new term has no auto-whitspace
   two.whitespace.before = '';
   two.whitespace.after = '';

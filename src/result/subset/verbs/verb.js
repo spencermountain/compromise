@@ -51,13 +51,16 @@ class Verb extends Terms {
 
   /** conjugation **/
   toPastTense() {
-    return this;
+    let obj = conjugate(this);
+    return this.replaceWith(obj.PastTense);
   }
   toPresentTense() {
-    return this;
+    let obj = conjugate(this);
+    return this.replaceWith(obj.Infinitive);
   }
   toFutureTense() {
-    return this;
+    let obj = conjugate(this);
+    return this.replaceWith(obj.FutureTense);
   }
   toInfinitive() {
     let obj = this.conjugate();

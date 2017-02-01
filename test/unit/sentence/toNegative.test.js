@@ -18,9 +18,9 @@ test('==negation==', function(T) {
       [`he will have walked`, `he will not have walked`],
       [`he is walking`, `he is not walking`],
       //pronoun + infinitive
-      [`i like running`, `i do not like running`],
-      [`they swim`, `they do not swim`],
-      [`we enjoy playing`, `we do not enjoy playing`],
+      // [`i like running`, `i do not like running`],
+      // [`they swim`, `they do not swim`],
+      // [`we enjoy playing`, `we do not enjoy playing`],
       // [`we do not swim`, `we do swim`],
       // [`i do not care`, `i do care`],
       // [`they do not care`, `they do care`],

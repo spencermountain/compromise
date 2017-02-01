@@ -7,10 +7,14 @@ const nlp = require('./src/index');
 //bug 1. - support greedy +
 // var arr = nlp('would have not had been walking').match('#Auxillary+ #Verb').check();
 
+//bug 2. - gerund as nouns
+// nlp('i like running').sentences().toNegative().check();
+
+
 console.log('------');
 // var m = nlp('he\'d be nice');
 // m.contractions().expand();
-// m.verbs().toNegative().check();
+// m.sentences().toNegative().check();
 
 
 
@@ -20,21 +24,20 @@ console.log('------');
 
 //replace
 
-// console.log(nlp('has played').verbs().toNegative().all().out());
-// console.log(nlp('he has played').verbs().toNegative().out());
-// console.log(nlp('is playing').verbs().toNegative().out());
-// console.log(nlp('spencer is playing').verbs().toNegative().out());
-// console.log(nlp('will play').verbs().toNegative().out());
-// console.log(nlp('will be playing').verbs().toNegative().out());
-// console.log(nlp('had played').verbs().toNegative().out());
+// console.log(nlp('has played').sentences().toNegative().all().out());
+// console.log(nlp('he has played').sentences().toNegative().out());
+// console.log(nlp('is playing').sentences().toNegative().out());
+// console.log(nlp('spencer is playing').sentences().toNegative().out());
+// console.log(nlp('will play').sentences().toNegative().out());
+// console.log(nlp('will be playing').sentences().toNegative().out());
+// console.log(nlp('had played').sentences().toNegative().out());
 // console.log('');
-// console.log(nlp('plays').verbs().toNegative().out());
-// console.log(nlp('played').verbs().toNegative().out());
-// console.log(nlp('he walked').verbs().toNegative().out());
-
-// console.log(nlp('he has quietly surely walked on the ground').verbs().toNegative().out());
-// console.log(nlp('she really walked').verbs().toNegative().out('normal'));
-nlp('he\'s walked').check();
+// console.log(nlp('plays').sentences().toNegative().out());
+// console.log(nlp('played').sentences().toNegative().out());
+// console.log(nlp('he walked').sentences().toNegative().out());
+// console.log(nlp('he has quietly surely walked on the ground').sentences().toNegative().out());
+// console.log(nlp('she really walked').sentences().toNegative().out('normal'));
+// console.log(nlp('he walks').sentences().toNegative().out('normal'));
 
 ///===singular
 // pastTense -  john played -> john did not play

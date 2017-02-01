@@ -16,43 +16,41 @@ class Values extends Text {
   }
   /** five -> '5' */
   toNumber() {
-    this.forEach((ts) => {
-      ts.toNumber();
+    this.list = this.list.map((ts) => {
+      return ts.toNumber();
     });
     return this;
   }
   /**5 -> 'five' */
   toTextValue() {
-    this.forEach((ts) => {
-      ts.toTextValue();
+    this.list = this.list.map((ts) => {
+      return ts.toTextValue();
     });
     return this;
   }
   /**5th -> 5 */
   toCardinal() {
-    this.forEach((ts) => {
-      ts.toCardinal();
+    this.list = this.list.map((ts) => {
+      return ts.toCardinal();
     });
     return this;
   }
   /**5 -> 5th */
   toOrdinal() {
-    this.forEach((ts) => {
-      ts.toOrdinal();
+    this.list = this.list.map((ts) => {
+      return ts.toOrdinal();
     });
     return this;
   }
   /**5900 -> 5,900 */
   toNiceNumber() {
-    this.forEach((ts) => {
-      ts.toNiceNumber();
+    this.list = this.list.map((ts) => {
+      return ts.toNiceNumber();
     });
     return this;
   }
   static find(r, n) {
-    // r.check();
     r = r.match('#Value+');
-    // console.log(r.out('array'));
     if (r.has('. (a|an)')) {
       r = r.not('(a|an)$');
     }

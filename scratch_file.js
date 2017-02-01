@@ -22,11 +22,7 @@ console.log('------');
 //replace
 
 
-var r = nlp('six months and 2 days');
-var c = r.clone().values().toNumber();
-// console.log(r.match('#Value+').list);
-// console.log(r.values().list);
-// r.values().data();
-// r.values().check();
-
+var r = nlp('70000 days');
+// r = r.values().toTextValue();
+// console.log(numV.toNiceNumber().out('text'));
 console.log(r.values().data());

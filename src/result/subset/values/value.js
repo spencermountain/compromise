@@ -8,7 +8,10 @@ const numOrdinal = require('./numOrdinal');
 const textOrdinal = require('./textOrdinal');
 
 const isOrdinal = (ts) => {
-  let t = ts.lastTerm();
+  let t = ts.terms[ts.terms.length - 1];
+  if (!t) {
+    return false;
+  }
   return t.tag.Ordinal === true;
 };
 const isText = (ts) => {
@@ -61,13 +64,11 @@ class Value extends Terms {
     //otherwise, parse it
     if (isOrdinal(this)) {
       let str = textOrdinal(this);
-      this.replaceWith(str, 'Value');
-    } else {
-      let num = '' + parse(this);
-      let str = toText(num).join(' ');
-      this.replaceWith(str, 'Value');
+      return this.replaceWith(str, 'Value');
     }
-    return this;
+    let num = '' + parse(this);
+    let str = toText(num).join(' ');
+    return this.replaceWith(str, 'Value');
   }
 
   /**5th -> 5 */
@@ -80,12 +81,10 @@ class Value extends Terms {
     if (isText(this)) {
       let num = '' + parse(this);
       let str = toText(num).join(' ');
-      this.replaceWith(str, 'Value');
-    } else {
-      let num = '' + parse(this);
-      this.replaceWith(num, 'Value');
+      return this.replaceWith(str, 'Value');
     }
-    return this;
+    let num = '' + parse(this);
+    return this.replaceWith(num, 'Value');
   }
 
   /**5 -> 5th */

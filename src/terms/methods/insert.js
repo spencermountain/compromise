@@ -11,6 +11,11 @@ const addSpaceAt = (ts, i) => {
   return ts;
 };
 
+// const spliceArray = (arr, index, toAdd) => {
+//   return Array.prototype.splice.apply(arr, [index, 0].concat(toAdd));
+// };
+// console.log(spliceArray([1, 2, 3], 1, [4, 5]));
+
 const insertMethods = (Terms) => {
 
   //accept any sorta thing
@@ -65,7 +70,8 @@ const insertMethods = (Terms) => {
       this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index + 1, ts);
       //also copy them to current selection
       if (this.terms.length === original_l) {
-        this.terms = this.terms.concat(ts.terms);
+        //splice the new terms into this (yikes!)
+        Array.prototype.splice.apply(this.terms, [index, 0].concat(ts.terms));
       }
       return this;
     }

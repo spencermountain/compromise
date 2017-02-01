@@ -10,8 +10,8 @@ const toNegative = (ts) => {
   //would not walk
   let modal = ts.match('#Auxillary'); //.first();
   if (modal.found) {
-    modal.list[0].insertAfter('not');
-    return ts;
+    let index = modal.list[0].index();
+    return ts.insertAt(index, 'not');
   }
   //not walking
   let gerund = ts.match('#Gerund').last();
@@ -23,7 +23,6 @@ const toNegative = (ts) => {
   if (vb.found) {
     return vb.list[0].insertBefore('did not'); //sentences.toNegative() does this better
   }
-
   return ts;
 };
 module.exports = toNegative;

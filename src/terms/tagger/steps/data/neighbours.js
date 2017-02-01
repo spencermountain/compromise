@@ -9,7 +9,7 @@ let afterThisWord = {
   first: 'Noun', //50% //first principles..
   it: 'Verb', //33%
   there: 'Verb', //35%
-  to: 'Verb', //32%
+  // to: 'Verb', //32%
   not: 'Verb', //33%
   because: 'Noun', //31%
   if: 'Noun', //32%

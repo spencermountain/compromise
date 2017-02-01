@@ -1,6 +1,7 @@
 'use strict';
 const buildResult = require('./result/build');
 const pkg = require('../package.json');
+const log = require('./log');
 
 //the main thing
 const nlp = function (str, lexicon) {
@@ -8,6 +9,12 @@ const nlp = function (str, lexicon) {
 };
 //this is handy
 nlp.version = pkg.version;
+
+//also is this
+nlp.verbose = function(str) {
+  log.enable(str);
+};
+
 
 //and then all-the-exports...
 if (typeof self !== 'undefined') {

@@ -2,11 +2,10 @@
 //this file is not included in the build.
 //use it for messing around.
 const nlp = require('./src/index');
-// require('./src/log').enable();
+// nlp.verbose('tagger');
 
 //bug 1. - support greedy +
 // var arr = nlp('would have not had been walking').match('#Auxillary+ #Verb').check();
-
 
 console.log('------');
 // var m = nlp('he\'d be nice');
@@ -22,7 +21,8 @@ console.log('------');
 //replace
 
 
-var r = nlp('70000 days');
+var r = nlp('he has walked to bed');
 // r = r.values().toTextValue();
 // console.log(numV.toNiceNumber().out('text'));
-console.log(r.values().data());
+console.log(r.verbs().toNegative().out());
+// r.match('walked').insertBefore('not').

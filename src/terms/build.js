@@ -12,6 +12,9 @@ const fromString = function (str) {
   let all = [];
   //start with a naiive split
   str = str || '';
+  if (typeof str === 'number') {
+    str = '' + str;
+  }
   let firstSplit = str.split(/(\S+)/);
   let arr = [];
   for(let i = 0; i < firstSplit.length; i++) {

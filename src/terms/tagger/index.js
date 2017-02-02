@@ -28,8 +28,8 @@ const step = {
   emoji_step: require('./steps/17-emoji_step'),
   person_step: require('./steps/18-person_step')
 };
-// const corrections = require('./corrections');
-// const tagPhrase = require('./tagPhrase');
+const corrections = require('./corrections');
+const tagPhrase = require('./phrase');
 
 
 const tagger = function (ts) {
@@ -58,7 +58,8 @@ const tagger = function (ts) {
     ts = lumper.lump_three(ts);
     ts = lumper.lump_two(ts);
   }
-  // ts = corrections(ts)
+  ts = corrections(ts);
+  ts = tagPhrase(ts);
   return ts;
 };
 

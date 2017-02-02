@@ -102,7 +102,7 @@ const splitMethods = (Terms) => {
       all = all.filter(a => a && a.length);
       all = all.map((ts) => new Terms(ts, ts.lexicon, ts.refText, this.refTerms));
       return all;
-    },
+    }
 
   };
 

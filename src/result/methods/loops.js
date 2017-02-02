@@ -1,22 +1,23 @@
 'use strict';
-// const Terms = require('../index');
-// console.log(Terms.build)
-
+//this methods are simply loops around each termList object.
 let foreach = [
   'toTitleCase',
   'toUpperCase',
   'toLowerCase',
   'toCamelCase',
+
   'hyphenate',
   'deHyphenate',
+
   'insertBefore',
   'insertAfter',
-  'insertAt', //i, str
+  'insertAt',
+
   'replace',
   'replaceWith',
+
   'delete',
 ];
-
 
 const addMethods = (Text) => {
 

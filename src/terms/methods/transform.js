@@ -1,15 +1,9 @@
 'use strict';
-const Term = require('../../term');
 
 const transforms = (Terms) => {
 
   const methods = {
 
-    // insertAt: function (text, i) {
-    //   let term = new Term(text, this.context);
-    //   this.terms.splice(i + 1, 0, term);
-    //   return this;
-    // },
     clone: function () {
       let terms = this.terms.map((t) => {
         return t.clone();
@@ -28,14 +22,13 @@ const transforms = (Terms) => {
       return this;
     },
     deHyphenate: function () {
-      this.terms.forEach((t, i) => {
+      this.terms.forEach((t) => {
         if (t.whitespace.after === '-') {
           t.whitespace.after = ' ';
         }
       });
       return this;
-    },
-
+    }
   };
 
   //hook them into result.proto

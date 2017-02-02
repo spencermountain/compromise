@@ -3,7 +3,7 @@
 const fns = require('./paths').fns;
 
 //turn 'regex-like' search string into parsed json
-const parse_term = function (term, i) {
+const parse_term = function (term) {
   term = term || '';
   term = term.trim();
   let reg = {

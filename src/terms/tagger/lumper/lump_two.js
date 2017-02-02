@@ -47,7 +47,7 @@ const do_two = [
     reason: 'demonym-currency'
   }, {
     //(454) 232-9873
-    condition: (a, b, c) => (a.tag.NumericValue && b.tag.PhoneNumber && a.normal.length <= 3),
+    condition: (a, b) => (a.tag.NumericValue && b.tag.PhoneNumber && a.normal.length <= 3),
     result: 'PhoneNumber',
     reason: '(800) PhoneNumber'
   }

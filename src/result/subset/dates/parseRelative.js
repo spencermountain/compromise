@@ -13,5 +13,6 @@ const parseRelative = (r) => {
     let str = m.match(known).out('normal');
     return relatives[str];
   }
+  return null;
 };
 module.exports = parseRelative;

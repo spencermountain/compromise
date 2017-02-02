@@ -79,7 +79,7 @@ class Terms {
     };
   }
 
-  static fromString(str, lexicon, parent) {
+  static fromString(str, lexicon) {
     let termArr = build(str);
     let ts = new Terms(termArr, lexicon, null);
     //give each term a reference to this ts
@@ -91,13 +91,14 @@ class Terms {
   }
 }
 Terms = require('./match')(Terms);
+Terms = require('./methods/loops')(Terms);
+
 Terms = require('./methods/case')(Terms);
-Terms = require('./methods/split')(Terms);
-Terms = require('./methods/insert')(Terms);
-Terms = require('./methods/replace')(Terms);
-Terms = require('./methods/tag')(Terms);
 Terms = require('./methods/delete')(Terms);
-Terms = require('./methods/render')(Terms);
+Terms = require('./methods/insert')(Terms);
 Terms = require('./methods/misc')(Terms);
+Terms = require('./methods/render')(Terms);
+Terms = require('./methods/replace')(Terms);
+Terms = require('./methods/split')(Terms);
 Terms = require('./methods/transform')(Terms);
 module.exports = Terms;

@@ -8,19 +8,19 @@ class Dates extends Text {
   }
   toShortForm() {
     this.match('#Month').forEachTerms((t) => {
-      t = t.month.toShortForm();
+      t.month.toShortForm();
     });
     this.match('#WeekDay').forEachTerms((t) => {
-      t = t.weekday.toShortForm();
+      t.weekday.toShortForm();
     });
     return this;
   }
   toLongForm() {
     this.match('#Month').forEachTerms((t) => {
-      t = t.month.toLongForm();
+      t.month.toLongForm();
     });
     this.match('#WeekDay').forEachTerms((t) => {
-      t = t.weekday.toLongForm();
+      t.weekday.toLongForm();
     });
     return this;
   }

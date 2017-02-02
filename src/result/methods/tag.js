@@ -1,5 +1,4 @@
 'use strict';
-const Terms = require('../../terms');
 
 const splitMethods = (Text) => {
 
@@ -24,13 +23,13 @@ const splitMethods = (Text) => {
     canBe: function (tag) {
       this.list.forEach((ts) => {
         ts.terms = ts.terms.filter((t) => {
-          return t.term.canBe(tag)
-        })
-      })
-      return this
+          return t.term.canBe(tag);
+        });
+      });
+      return this;
     },
 
-  }
+  };
 
   //hook them into result.proto
   Object.keys(methods).forEach((k) => {

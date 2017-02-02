@@ -5,7 +5,7 @@ const path = 'tagger/punctuation';
 
 //not so smart (right now)
 const isRomanNumeral = function(t) {
-  if (!t.term.canBe('RomanNumeral')) {
+  if (!t.canBe('RomanNumeral')) {
     return false;
   }
   const str = t.text;
@@ -40,7 +40,7 @@ const punctuation_step = function (ts) {
       let r = rules[i];
       if (str.match(r.reg)) {
         //don't over-write any other known tags
-        if (t.term.canBe(r.tag)) {
+        if (t.canBe(r.tag)) {
           t.tagAs(r.tag, 'punctuation-rule- "' + r.str + '"');
         }
         return;

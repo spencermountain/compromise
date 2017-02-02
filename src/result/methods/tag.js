@@ -23,7 +23,7 @@ const splitMethods = (Text) => {
     canBe: function (tag) {
       this.list.forEach((ts) => {
         ts.terms = ts.terms.filter((t) => {
-          return t.term.canBe(tag);
+          return t.canBe(tag);
         });
       });
       return this;

@@ -2,7 +2,7 @@
 // const normalize = require('./normalize');
 const path = require('../paths');
 const fns = path.fns;
-const tagset = path.tags;
+
 const term = {
 
   /** interpret a term's hyphenation */
@@ -76,11 +76,6 @@ const term = {
     return null;
   },
 
-  /** ensure the first character is a capital. Ignore other characters. */
-  titlecase: function () {
-    return this.text.replace(/^[a-z]/, (x) => x.toUpperCase());
-  },
-
   noPunctuation: function () {
     return this.text.replace(/([,;:])$/, '');
   },
@@ -102,18 +97,6 @@ const term = {
   },
 
 
-  /** is this tag compatible with this word */
-  canBe: function (tag) {
-    tag = tag || '';
-    tag = tag.replace(/^#/, '');
-    let not = tagset[tag].not || [];
-    for (let i = 0; i < not.length; i++) {
-      if (this.tag[not[i]]) {
-        return false;
-      }
-    }
-    return true;
-  },
 
   /** check if it is word-like in english */
   isWord: function () {

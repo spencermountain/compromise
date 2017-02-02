@@ -26,7 +26,7 @@ const miscMethods = (Terms) => {
       tag = tag.replace(/^#/, '');
       //atleast one of these
       for (let i = 0; i < this.terms.length; i++) {
-        if (!this.terms[i].term.canBe(tag)) {
+        if (!this.terms[i].canBe(tag)) {
           return false;
         }
       }

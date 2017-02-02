@@ -1,7 +1,4 @@
 'use strict';
-const setTag = require('./setTag');
-const unTag = require('./unTag');
-const isMatch = require('./isMatch');
 const addNormal = require('./normalize').addNormal;
 const addRoot = require('./root');
 const fns = require('./paths').fns;
@@ -38,7 +35,6 @@ class Term {
     bindMethods(require('./weekday'), 'weekday', this);
 
     this.normalize();
-    this.helpers = require('./helpers');
   }
 
   set text(str) {
@@ -57,50 +53,10 @@ class Term {
   get isA() {
     return 'Term';
   }
-  /** the punctuation at the end of this term*/
-  endPunctuation() {
-    let m = this.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/i);
-    if (m) {
-      const allowed = {
-        ',': 'comma',
-        ':': 'colon',
-        ';': 'semicolon',
-        '.': 'period',
-        '...': 'elipses',
-        '!': 'exclamation',
-        '?': 'question'
-      };
-      if (allowed[m[1]]) {
-        return m[1];
-      }
-    }
-    return null;
-  }
-  setPunctuation(punct) {
-    this.text = this.text.replace(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/i, '');
-    this.text += punct;
-    return this;
-  }
+
   normalize() {
     addNormal(this);
     addRoot(this);
-  }
-
-  // /** the comma, period ... punctuation that ends this sentence */
-  // endPunctuation() {
-  //   let m = this._text.match(/([\.\?\!,;:])$/);
-  //   if (m) {
-  //     //remove it from end of text
-  //     // this.text = this._text.substr(0, this._text.length - 1);
-  //     return m[0];
-  //   }
-  //   return '';
-  // }
-
-  /** print-out this text, as it was given */
-  plaintext() {
-    let str = this.whitespace.before + this._text + this.whitespace.after;
-    return str;
   }
 
   index() {
@@ -109,31 +65,6 @@ class Term {
       return null;
     }
     return ts.terms.indexOf(this);
-  }
-
-  /** delete this term from its sentence */
-  remove() {
-    let ts = this.parent;
-    this.dirty = true; //redundant
-    if (!ts) {
-      return null;
-    }
-    ts.terms.splice(this.index(), 1);
-    return ts;
-  }
-
-  /** set the term as this part-of-speech */
-  tagAs(tag, reason) {
-    setTag(this, tag, reason);
-  }
-  /** remove this part-of-speech from the term*/
-  unTag(tag, reason) {
-    unTag(this, tag, reason);
-  }
-
-  /** true/false helper for terms.match()*/
-  isMatch(reg, verbose) {
-    return isMatch(this, reg, verbose);
   }
 
   /** make a copy with no references to the original  */
@@ -145,4 +76,8 @@ class Term {
     return term;
   }
 }
+Term = require('./methods/tag/index')(Term);
+Term = require('./methods/case')(Term);
+Term = require('./methods/punctuation')(Term);
+
 module.exports = Term;

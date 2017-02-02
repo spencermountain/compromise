@@ -4,11 +4,13 @@
 const addMehtods = (Terms) => {
 
   const foreach = [
-    ['tagAs', ''],
-    ['unTag', ''],
-    ['canBe', ''],
-    ['toTitleCase', 'TitleCase'],
+    ['tagAs'],
+    ['unTag'],
+    ['canBe'],
     ['toUpperCase', 'UpperCase'],
+    ['toLowerCase'],
+    ['toTitleCase', 'TitleCase'],
+    ['toCamelCase', 'CamelCase'],
   ];
 
   foreach.forEach((arr) => {

@@ -1,5 +1,5 @@
 'use strict';
-const fixUnicode = require('./fixUnicode');
+const killUnicode = require('./unicode');
 
 //some basic operations on a string to reduce noise
 exports.normalize = function(str) {
@@ -7,11 +7,7 @@ exports.normalize = function(str) {
   str = str.toLowerCase();
   str = str.trim();
   //(very) rough asci transliteration -  bjŏrk -> bjork
-  str = fixUnicode(str);
-  //convert hyphenations to a multiple-word term
-  // str = str.replace(/([a-z])\-([a-z0-9])/g, '$1 $2');
-  //
-  // str = str.replace(/([a-z])\-$/, '$1');
+  str = killUnicode(str);
   //hashtags, atmentions
   str = str.replace(/^[#@]/, '');
   // coerce single curly quotes

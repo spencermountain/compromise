@@ -11,7 +11,7 @@ const suffix_step = function(s) {
       let r = rules[o];
       if (t.normal.match(r.reg)) {
         //don't over-write any other known tags
-        if (t.term.canBe(r.tag)) {
+        if (t.canBe(r.tag)) {
           t.tagAs(r.tag, 'word-rule- "' + r.str + '"');
         }
         return;

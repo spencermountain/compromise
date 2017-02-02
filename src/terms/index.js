@@ -92,8 +92,6 @@ class Terms {
 }
 Terms = require('./match')(Terms);
 Terms = require('./methods/loops')(Terms);
-
-Terms = require('./methods/case')(Terms);
 Terms = require('./methods/delete')(Terms);
 Terms = require('./methods/insert')(Terms);
 Terms = require('./methods/misc')(Terms);

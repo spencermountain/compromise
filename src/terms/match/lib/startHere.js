@@ -1,11 +1,12 @@
 'use strict';
 const lumpMatch = require('./lumpMatch');
+const isMatch = require('./isMatch');
 
 // match everything until this point - '*'
 const greedyUntil = (ts, i, reg) => {
   for (i = i; i < ts.length; i++) {
-    let t = ts.terms[i]
-    if (t.isMatch(reg)) {
+    let t = ts.terms[i];
+    if (isMatch(t, reg)) {
       return i;
     }
   }
@@ -15,13 +16,13 @@ const greedyUntil = (ts, i, reg) => {
 //keep matching this reg as long as possible
 const greedyOf = (ts, i, reg, until) => {
   for (i = i; i < ts.length; i++) {
-    let t = ts.terms[i]
-      //found next reg ('until')
-    if (until && t.isMatch(until)) {
+    let t = ts.terms[i];
+    //found next reg ('until')
+    if (until && isMatch(t, until)) {
       return i;
     }
     //die here
-    if (!t.isMatch(reg)) {
+    if (!isMatch(t, reg)) {
       return i;
     }
   }
@@ -109,7 +110,7 @@ const startHere = (ts, startAt, regs, verbose) => {
     }
 
     //check a perfect match
-    if (term.isMatch(reg, verbose)) {
+    if (isMatch(term, reg, verbose)) {
       term_i += 1;
       //try to greedy-match '+'
       if (reg.consecutive) {
@@ -122,7 +123,7 @@ const startHere = (ts, startAt, regs, verbose) => {
     if (term.silent_term && !term.normal) { //skip over silent contraction terms
       //we will continue on it, but not start on it
       if (reg_i === 0) {
-        return null
+        return null;
       }
       //try the next term, but with this regex again
       term_i += 1;

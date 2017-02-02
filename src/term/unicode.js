@@ -42,7 +42,7 @@ Object.keys(compact).forEach(function (k) {
   });
 });
 
-const fixUnicode = (str) => {
+const killUnicode = (str) => {
   let chars = str.split('');
   chars.forEach((s, i) => {
     if (unicode[s]) {
@@ -51,5 +51,5 @@ const fixUnicode = (str) => {
   });
   return chars.join('');
 };
-module.exports = fixUnicode;
+module.exports = killUnicode;
 // console.log(fixUnicode('bjŏȒk'));

@@ -2,13 +2,6 @@
 const fns = require('./paths').fns;
 const build_whitespace = require('./whitespace');
 
-const bindMethods = (o, str, self) => {
-  self[str] = {};
-  Object.keys(o).forEach((fn) => {
-    self[str][fn] = o[fn].bind(self);
-  });
-};
-
 class Term {
   constructor(str) {
     this._text = fns.ensureString(str);
@@ -21,8 +14,6 @@ class Term {
     this.silent_term = '';
     //has this term been modified
     this.dirty = false;
-
-    bindMethods(require('./verb'), 'verb', this);
     this.normalize();
   }
 

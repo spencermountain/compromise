@@ -1,7 +1,8 @@
 'use strict';
 //turn any verb into its infinitive form
 const rules = require('./rules');
-let irregulars = require('../paths').data.irregular_verbs;
+let irregulars = require('../../../../../data').irregular_verbs;
+const predict = require('../predict');
 
 //map the irregulars for easy infinitive lookup
 // {bought: 'buy'}
@@ -25,7 +26,7 @@ const toInfinitive = function(t) {
     return irregulars[t.normal];
   }
   //check the suffix rules
-  let form = t.verb.conjugation();
+  let form = predict(t);
   if (rules[form]) {
     for (let i = 0; i < rules[form].length; i++) {
       let rule = rules[form][i];

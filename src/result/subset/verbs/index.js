@@ -66,11 +66,8 @@ class Verbs extends Text {
     });
     return this;
   }
-  toAdjective() {
-    this.list.forEach((ts) => {
-      ts.toAdjective();
-    });
-    return this;
+  asAdjective() {
+    return this.list.map((ts) => ts.asAdjective());
   }
 
   static find(r, n) {

@@ -1,6 +1,6 @@
 'use strict';
 //non-specifc, 'hail-mary' transforms from infinitive, into other forms
-const fns = require('./paths').fns;
+const fns = require('../../../../../fns'); //jaja!
 
 const generic = {
 

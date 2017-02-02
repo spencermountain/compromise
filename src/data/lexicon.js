@@ -3,10 +3,10 @@
 //the way we make it rn is a bit of a mess.
 const data = require('./index');
 const fns = require('./fns');
-const fastConjugate = require('../term/verb/conjugate/faster');
 const toPlural = require('../result/subset/nouns/methods/pluralize');
 const adj = require('../result/subset/adjectives/methods/index');
-const toAdjective = require('../term/verb/toAdjective');
+const toAdjective = require('../result/subset/verbs/methods/toAdjective');
+const fastConjugate = require('../result/subset/verbs/methods/conjugate/faster');
 let lexicon = {};
 // console.time('lexicon');
 
@@ -136,5 +136,4 @@ module.exports = lexicon;
 // console.log(lexicon['will walk']);
 // let t = new Term('shake');
 // t.tag.Verb = true;
-// console.log(t.verb.conjugate())
 // console.timeEnd('lexicon');

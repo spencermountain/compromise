@@ -1,6 +1,8 @@
 'use strict';
 //turns a verb negative - may not have enough information to do it properly
 // (eg 'did not eat' vs 'does not eat') - needs the noun
+const toInfinitive = require('./methods/toInfinitive');
+
 const toNegative = (ts, plural) => {
   //would not walk
   let modal = ts.match('#Auxillary').first(); //.notIf('(is|are|was|will|has|had)').first(); //.first();
@@ -21,7 +23,7 @@ const toNegative = (ts, plural) => {
   if (past.found) {
     let vb = past.list[0];
     let index = vb.index();
-    vb.terms[0].text = vb.terms[0].verb.infinitive();
+    vb.terms[0].text = toInfinitive(vb.terms[0]);
     return ts.parentTerms.insertAt(index, 'did not', 'Verb');
   }
 
@@ -30,7 +32,7 @@ const toNegative = (ts, plural) => {
   if (pres.found) {
     let vb = pres.list[0];
     let index = vb.index();
-    vb.terms[0].text = vb.terms[0].verb.infinitive();
+    vb.terms[0].text = toInfinitive(vb.terms[0]);
     return ts.parentTerms.insertAt(index, 'does not', 'Verb');
   }
 
@@ -46,7 +48,7 @@ const toNegative = (ts, plural) => {
   if (vb.found) {
     vb = vb.list[0];
     let index = vb.index();
-    vb.terms[0].text = vb.terms[0].verb.infinitive();
+    vb.terms[0].text = toInfinitive(vb.terms[0]);
     if (plural) {
       return ts.parentTerms.insertAt(index, 'does not', 'Verb');
     }

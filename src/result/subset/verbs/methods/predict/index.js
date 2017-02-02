@@ -1,6 +1,5 @@
 'use strict';
-const paths = require('../paths');
-const fns = paths.fns;
+const fns = require('../../../../../fns'); //jaja!
 const suffix_rules = require('./suffix_rules');
 
 const goodTypes = {

@@ -1,6 +1,7 @@
 'use strict';
 const Terms = require('../../paths').Terms;
-const conjugate = require('./conjugate');
+const conjugate = require('./methods/conjugate');
+const toAdjective = require('./methods/toAdjective');
 const interpret = require('./interpret');
 const toNegative = require('./toNegative');
 
@@ -10,7 +11,7 @@ class Verb extends Terms {
     this.negative = this.match('#Negative');
     this.adverbs = this.match('#Adverb');
     let aux = this.clone().not('(#Adverb|#Negative)');
-    this.verb = aux.match('#Verb').last();
+    this.verb = aux.match('#Verb').last().list[0].terms[0];
     this.auxillary = aux.match('#Auxillary+');
   }
   data(debug) {
@@ -24,12 +25,12 @@ class Verb extends Terms {
         adverbs: this.adverbs.out('normal'),
       },
       interpret: interpret(this, debug),
-      conjugations: conjugate(this, debug)
+      conjugations: conjugate(this.verb, debug)
     };
   }
 
   conjugate(debug) {
-    return conjugate(this, debug);
+    return conjugate(this.verb, debug);
   }
 
   /** negation **/
@@ -51,15 +52,15 @@ class Verb extends Terms {
 
   /** conjugation **/
   toPastTense() {
-    let obj = conjugate(this);
+    let obj = conjugate(this.verb);
     return this.replaceWith(obj.PastTense);
   }
   toPresentTense() {
-    let obj = conjugate(this);
+    let obj = conjugate(this.verb);
     return this.replaceWith(obj.Infinitive);
   }
   toFutureTense() {
-    let obj = conjugate(this);
+    let obj = conjugate(this.verb);
     return this.replaceWith(obj.FutureTense);
   }
   toInfinitive() {
@@ -69,8 +70,8 @@ class Verb extends Terms {
     return this;
   }
 
-  toAdjective() {
-    return this;
+  asAdjective() {
+    return toAdjective(this.verb.out('normal'));
   }
 
 }

@@ -1,4 +1,5 @@
 'use strict';
+const predict = require('./methods/predict');
 
 //'walking' - aka progressive
 const isContinuous = function(ts) {
@@ -65,14 +66,13 @@ const getTense = function(ts) {
     }
   }
   //look at the main verb tense
-  if (ts.verb.list[0] && ts.verb.list[0].terms[0]) {
+  if (ts.verb) {
     const tenses = {
       PastTense: 'Past',
       FutureTense: 'Future',
       FuturePerfect: 'Future',
     };
-    let t = ts.verb.list[0].terms[0];
-    let tense = t.verb.conjugation(); //yikes
+    let tense = predict(ts.verb); //yikes
     return tenses[tense] || 'Present';
   }
   return 'Present';
@@ -83,7 +83,7 @@ const getTense = function(ts) {
 
 // detect signals in auxillary verbs
 // 'will' -> future, 'have'->perfect, modals, negatives, adverbs
-const predict = (ts) => {
+const interpret = (ts) => {
   let isNeg = isNegative(ts);
   // let aux = ts.auxillary.clone();
   // aux = aux.not('(#Negative|#Adverb)');
@@ -97,4 +97,4 @@ const predict = (ts) => {
   };
   return obj;
 };
-module.exports = predict;
+module.exports = interpret;

@@ -1,5 +1,5 @@
 'use strict';
-const irregulars = require('./paths').data.irregular_verbs;
+const irregulars = require('../../../../../data').irregular_verbs;
 const infArr = Object.keys(irregulars);
 const forms = [
   'Participle',

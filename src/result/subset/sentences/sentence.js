@@ -35,21 +35,21 @@ class Sentence extends Terms {
   toPastTense() {
     let verb = this.mainVerb();
     if (verb) {
-      verb.verb.toPastTense();
+      verb.toPastTense();
     }
     return this;
   }
   toPresentTense() {
     let verb = this.mainVerb();
     if (verb) {
-      verb.verb.toPresentTense();
+      verb.toPresentTense();
     }
     return this;
   }
   toFutureTense() {
     let verb = this.mainVerb();
     if (verb) {
-      verb.verb.toFutureTense();
+      verb.toFutureTense();
     }
     return this;
   }

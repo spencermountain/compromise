@@ -4,6 +4,8 @@ const suffixPass = require('./suffixes');
 const toActor = require('./toActor');
 const toAdjective = require('./toAdjective');
 const generic = require('./generic');
+const predict = require('../predict');
+const toInfinitive = require('../toInfinitive');
 
 //turn a verb into all it's forms
 const conjugate = function(t, verbose) {
@@ -22,12 +24,12 @@ const conjugate = function(t, verbose) {
     Pluperfect: null,
   };
   //first, get its current form
-  let form = t.verb.conjugation(verbose);
+  let form = predict(t);
   if (form) {
     all[form] = t.normal;
   }
   if (form !== 'Infinitive') {
-    all['Infinitive'] = t.verb.infinitive(verbose) || '';
+    all['Infinitive'] = toInfinitive(t, verbose) || '';
   }
   //check irregular forms
   const irregObj = checkIrregulars(all['Infinitive']) || {};

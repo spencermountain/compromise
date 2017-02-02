@@ -43,7 +43,7 @@ class Noun extends Terms {
   }
   data() {
     return {
-      // article: t.noun.makeArticle(),
+      article: this.article(),
       singular: this.toSingular().out('normal'),
       plural: this.toPlural().out('normal'),
     };

@@ -32,7 +32,7 @@ const a_regexs = [
   /^eul/i
 ];
 
-const indefinite_article = function(t) {
+const makeArticle = function(t) {
   let str = t.normal;
 
   //explicit irregular forms
@@ -57,4 +57,4 @@ const indefinite_article = function(t) {
   return 'a';
 };
 
-module.exports = indefinite_article;
+module.exports = makeArticle;

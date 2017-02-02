@@ -1,11 +1,12 @@
 'use strict';
 const Text = require('../../index');
+const toAdjective = require('./toAdjective');
 
 class Adverbs extends Text {
   data() {
     return this.mapTerms((t) => {
       return {
-        adjectiveForm: t.adverb.adjectiveForm(),
+        adjectiveForm: toAdjective(t.normal),
         normal: t.normal,
         text: t.text
       };

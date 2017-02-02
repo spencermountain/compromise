@@ -23,9 +23,9 @@ test('==Plurals==', function(T) {
       // ['simpsons\'', false],
       ['she\'s', false],
     ].forEach(function (a) {
-      var term = nlp(a[0]).list[0].terms[0];
-      var msg = a[0] + ' ' + term.noun.isPlural();
-      t.equal(term.noun.isPlural(), a[1], msg);
+      var r = nlp(a[0]).nouns();
+      var msg = a[0];
+      t.equal(r.isPlural()[0], a[1], msg);
     });
     t.end();
   });
@@ -100,8 +100,8 @@ test('==Plurals==', function(T) {
       ['roofs', 'roof'],
       ['hooves', 'hoof']
     ].forEach(function (a) {
-      var term = nlp(a[0]).tag('Noun').list[0].terms[0];
-      var str = term.noun.singular();
+      var r = nlp(a[0]).tag('Noun').nouns();
+      var str = r.toSingular().out('normal');
       str_test(str, a[0], a[1], t);
     });
     t.end();
@@ -186,8 +186,8 @@ test('==Plurals==', function(T) {
       ['studios', 'studios'],
       ['zoos', 'zoos'],
     ].forEach(function (a) {
-      var term = nlp(a[0]).tag('Noun').list[0].terms[0];
-      var str = term.noun.plural();
+      var r = nlp(a[0]).tag('Noun').nouns();
+      var str = r.toPlural().out('normal');
       str_test(str, a[0], a[1], t);
     });
     t.end();

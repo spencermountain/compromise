@@ -3,8 +3,20 @@ const Text = require('../../index');
 const Noun = require('./noun');
 
 class Nouns extends Text {
-  toSingular() {}
-  toPlural() {}
+  isPlural() {
+    return this.list.map((ts) => ts.isPlural());
+  }
+  hasPlural() {
+    return this.list.map((ts) => ts.hasPlural());
+  }
+  toSingular() {
+    this.list.forEach((ts) => ts.toSingular());
+    return this;
+  }
+  toPlural() {
+    this.list.forEach((ts) => ts.toPlural());
+    return this;
+  }
   data() {
     return this.list.map((ts) => ts.data());
   }
@@ -24,7 +36,4 @@ class Nouns extends Text {
     return r;
   }
 }
-Nouns.prototype.toPlural = require('./toPlural');
-Nouns.prototype.toSingular = require('./toSingular');
-
 module.exports = Nouns;

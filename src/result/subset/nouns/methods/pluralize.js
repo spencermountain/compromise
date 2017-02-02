@@ -1,5 +1,5 @@
 'use strict';
-const irregulars = require('../../paths').data.irregular_plurals.toPlural;
+const irregulars = require('../../../../data').irregular_plurals.toPlural;
 const pluralRules = require('./data/pluralRules');
 
 //turn 'shoe' into 'shoes'

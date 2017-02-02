@@ -1,5 +1,7 @@
 'use strict';
 const parseTime = require('./parseTime');
+const weekdays = require('./weekday');
+const months = require('./weekday');
 //
 const isDate = (num) => {
   if (num && num < 31 && num > 0) {
@@ -32,11 +34,11 @@ const parseDate = (r) => {
   }
   m = r.match('#Month');
   if (m.found) {
-    result.month = m.list[0].terms[0].month.index();
+    result.month = months.index(m.list[0].terms[0]);
   }
   m = r.match('#WeekDay');
   if (m.found) {
-    result.weekday = m.list[0].terms[0].weekday.index();
+    result.weekday = weekdays.index(m.list[0].terms[0]);
   }
   m = r.match('#Time');
   if (m.found) {

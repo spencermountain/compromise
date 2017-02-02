@@ -1,6 +1,8 @@
 'use strict';
 const Text = require('../../index');
 const Date = require('./date');
+const weekdays = require('./weekday');
+const months = require('./weekday');
 
 class Dates extends Text {
   data() {
@@ -8,19 +10,19 @@ class Dates extends Text {
   }
   toShortForm() {
     this.match('#Month').forEachTerms((t) => {
-      t.month.toShortForm();
+      months.toShortForm(t);
     });
     this.match('#WeekDay').forEachTerms((t) => {
-      t.weekday.toShortForm();
+      weekdays.toShortForm(t);
     });
     return this;
   }
   toLongForm() {
     this.match('#Month').forEachTerms((t) => {
-      t.month.toLongForm();
+      months.toLongForm(t);
     });
     this.match('#WeekDay').forEachTerms((t) => {
-      t.weekday.toLongForm();
+      weekdays.toLongForm(t);
     });
     return this;
   }

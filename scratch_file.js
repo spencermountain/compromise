@@ -12,6 +12,6 @@ const nlp = require('./src/index');
 
 
 console.log('------');
-var m = nlp('he\'d be nice');
+var m = nlp('he ate the alligator');
 // m.insertAt(2, 'fun');
-console.log(m.adjectives().data());
+console.log(m.nouns().data());

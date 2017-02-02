@@ -1,7 +1,6 @@
 'use strict';
 const irregulars = require('../../paths').data.irregular_plurals;
-const rules = require('./data/indicators');
-
+const rules = require('./methods/data/indicators');
 
 //is it potentially plural?
 const noPlural = [
@@ -18,13 +17,13 @@ const noPlural = [
 const couldEvenBePlural = (t) => {
   for (let i = 0; i < noPlural.length; i++) {
     if (t.tag[noPlural[i]]) {
-      return false
+      return false;
     }
   }
   return true;
 };
 
-const is_plural = function (t) {
+const isPlural = function (t) {
   let str = t.normal;
   //inspect the existing tags to see if a plural is valid
   if (!couldEvenBePlural(t)) {
@@ -68,4 +67,4 @@ const is_plural = function (t) {
 // console.log(is_plural('children') === true)
 // console.log(is_plural('days') === true)
 
-module.exports = is_plural;
+module.exports = isPlural;

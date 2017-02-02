@@ -1,9 +1,57 @@
 'use strict';
 const log = require('../paths').log;
 const path = 'lumper/lump_two';
-const do_two = require('./data/do_two');
 const combine = require('./combine');
-// const dont_two = require('./data/dont_two');
+
+const timezones = {
+  standard: true,
+  daylight: true,
+  summer: true,
+  eastern: true,
+  pacific: true,
+  central: true,
+  mountain: true,
+};
+
+//rules that combine two words
+const do_two = [
+  {
+    //6 am
+    condition: (a, b) => (a.tag.Holiday && (b.normal === 'day' || b.normal === 'eve')),
+    result: 'Holiday',
+    reason: 'holiday-day'
+  }, {
+    //Aircraft designer
+    condition: (a, b) => (a.tag.Noun && b.tag.Actor),
+    result: 'Actor',
+    reason: 'thing-doer'
+  }, {
+    //Canada Inc
+    condition: (a, b) => (a.tag.TitleCase && a.tag.Noun && b.tag['Organization'] || b.tag.TitleCase && a.tag['Organization']),
+    result: 'Organization',
+    reason: 'organization-org'
+  }, {
+    //two-word quote
+    condition: (a, b) => (a.text.match(/^["']/) && b.text.match(/["']$/)),
+    result: 'Quotation',
+    reason: 'two-word-quote'
+  }, {
+    //timezones
+    condition: (a, b) => (timezones[a.normal] && (b.normal === 'standard time' || b.normal === 'time')),
+    result: 'Time',
+    reason: 'timezone'
+  }, {
+    //canadian dollar, Brazilian pesos
+    condition: (a, b) => (a.tag.Demonym && b.tag.Currency),
+    result: 'Currency',
+    reason: 'demonym-currency'
+  }, {
+    //(454) 232-9873
+    condition: (a, b, c) => (a.tag.NumericValue && b.tag.PhoneNumber && a.normal.length <= 3),
+    result: 'PhoneNumber',
+    reason: '(800) PhoneNumber'
+  }
+];
 
 const lump_two = function (s) {
   log.here(path);

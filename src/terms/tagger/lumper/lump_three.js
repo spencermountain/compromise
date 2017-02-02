@@ -2,8 +2,28 @@
 const log = require('../paths').log;
 const path = 'lumper/lump_three';
 const combine = require('./combine');
-const do_three = require('./data/do_three');
-// const dont_three = require('./data/dont_three');
+
+//rules for combining three terms into one
+const do_three = [
+  {
+    //John & Joe's
+    condition: (a, b, c) => (a.tag.Noun && (b.text === '&' || b.normal === 'n') && c.tag.Noun),
+    result: 'Person',
+    reason: 'Noun-&-Noun'
+  },
+  {
+    //three-word quote
+    condition: (a, b, c) => (a.text.match(/^["']/) && !b.text.match(/["']/) && c.text.match(/["']$/)),
+    result: 'Quotation',
+    reason: 'Three-word-quote'
+  },
+  {
+    //1 800 PhoneNumber
+    condition: (a, b, c) => (a.tag.Value && b.tag.Value && c.tag.PhoneNumber && b.normal.length === 3 && a.normal.length < 3),
+    result: 'PhoneNumber',
+    reason: '1-800-PhoneNumber'
+  },
+];
 
 const lump_three = function(s) {
   log.here(path);

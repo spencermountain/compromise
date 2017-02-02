@@ -73,6 +73,9 @@ const render = {
     });
     return r;
   },
+  freq: (r) => {
+    return topk(r);
+  }
 };
 render.plaintext = render.text;
 render.normalized = render.normal;

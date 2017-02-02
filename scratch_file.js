@@ -12,9 +12,9 @@ const nlp = require('./src/index');
 
 
 console.log('------');
-// var m = nlp('he\'d be nice');
-// m.contractions().expand();
-// m.sentences().toNegative().check();
+var m = nlp('he\'d be nice');
+// m.insertAt(2, 'fun');
+console.log(m.adjectives().toUpperCase().out());
 
 
 

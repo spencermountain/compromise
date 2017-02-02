@@ -64,17 +64,13 @@ class Text {
 }
 
 module.exports = Text;
+Text = require('./methods/loops')(Text);
 Text = require('./methods/array')(Text);
 Text = require('./methods/termFns')(Text);
 Text = require('./methods/tag')(Text);
 Text = require('./methods/sort')(Text);
-Text = require('./methods/case')(Text);
-Text = require('./methods/match/match')(Text);
-Text = require('./methods/delete')(Text);
-Text = require('./methods/replace')(Text);
+Text = require('./methods/match')(Text);
 Text = require('./methods/split')(Text);
-Text = require('./methods/hyphens')(Text);
-Text = require('./methods/insert')(Text);
 Text.prototype.normalize = require('./methods/normalize');
 
 const subset = {

@@ -1,10 +1,10 @@
 'use strict';
 //
-const topk = function (n) {
+const topk = function (r, n) {
   //count occurance
   let count = {};
-  this.list.forEach((ts) => {
-    let str = ts.out('normal')
+  r.list.forEach((ts) => {
+    let str = ts.out('normal');
     count[str] = count[str] || 0;
     count[str] += 1;
   });

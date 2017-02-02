@@ -22,7 +22,6 @@ class Term {
     //has this term been modified
     this.dirty = false;
 
-    bindMethods(require('./pronoun'), 'pronoun', this);
     bindMethods(require('./verb'), 'verb', this);
     this.normalize();
   }

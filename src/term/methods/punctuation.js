@@ -26,7 +26,19 @@ const addMethods = (Term) => {
       this.text = this.text.replace(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/i, '');
       this.text += punct;
       return this;
-    }
+    },
+
+    /** check if the term ends with a comma */
+    hasComma: function () {
+      if (this.endPunctuation() === 'comma') {
+        return true;
+      }
+      return false;
+    },
+
+    killPunctuation: function () {
+      return this.text.replace(/([,;:])$/, '');
+    },
   };
   //hook them into result.proto
   Object.keys(methods).forEach((k) => {

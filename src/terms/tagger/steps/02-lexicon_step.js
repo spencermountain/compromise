@@ -1,5 +1,7 @@
 'use strict';
 const p = require('../paths');
+const split = require('../contraction/split');
+
 const lexicon = p.lexicon;
 const log = p.log;
 const path = 'tagger/lexicon';
@@ -34,7 +36,7 @@ const lexicon_pass = function (ts) {
       continue;
     }
     //support contractions (manually)
-    let parts = t.term.contraction();
+    let parts = split(t);
     if (parts && parts.start) {
       found = check_lexicon(parts.start.toLowerCase(), ts);
       if (found) {

@@ -41,7 +41,7 @@ const indefinite_article = function(t) {
   }
   //spelled-out acronyms
   let firstLetter = str.substr(0, 1);
-  if (t.term.isAcronym() && an_acronyms.hasOwnProperty(firstLetter)) {
+  if (t.isAcronym() && an_acronyms.hasOwnProperty(firstLetter)) {
     return 'an';
   }
   //'a' regexes

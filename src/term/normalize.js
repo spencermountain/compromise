@@ -27,7 +27,7 @@ exports.addNormal = function (term) {
   let str = term._text || '';
   str = exports.normalize(str);
   //compact acronyms
-  if (term.term.isAcronym()) {
+  if (term.isAcronym()) {
     str = str.replace(/\./g, '');
   }
   //nice-numbers

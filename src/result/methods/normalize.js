@@ -43,7 +43,7 @@ const methods = {
   punctuation: (r) => {
     r.forEachTerms((t) => {
       if (i < ts.terms.length - 1) {
-        t.text = t.term.noPunctuation();
+        t.text = t.killPunctuation();
       }
     });
     return r;

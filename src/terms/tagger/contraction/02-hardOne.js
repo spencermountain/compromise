@@ -1,5 +1,6 @@
 'use strict';
 const fixContraction = require('./fix');
+const splitContraction = require('./split');
 
 
 //these are always contractions
@@ -59,7 +60,7 @@ const hardOne = (ts) => {
     if (ts.terms[i].silent_term) {
       continue;
     }
-    let parts = ts.terms[i].term.contraction();
+    let parts = splitContraction(ts.terms[i]);
     if (parts) {
       //have we found a hard one
       if (parts.end === 's') {

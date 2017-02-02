@@ -24,7 +24,6 @@ class Term {
     //has this term been modified
     this.dirty = false;
 
-    bindMethods(require('./term'), 'term', this);
     bindMethods(require('./verb'), 'verb', this);
     bindMethods(require('./noun'), 'noun', this);
     bindMethods(require('./adjective'), 'adjective', this);
@@ -59,6 +58,7 @@ class Term {
     addRoot(this);
   }
 
+  /** where in the sentence is it? zero-based. */
   index() {
     let ts = this.parentTerms;
     if (!ts) {
@@ -76,6 +76,7 @@ class Term {
     return term;
   }
 }
+Term = require('./methods/isA')(Term);
 Term = require('./methods/tag/index')(Term);
 Term = require('./methods/case')(Term);
 Term = require('./methods/punctuation')(Term);

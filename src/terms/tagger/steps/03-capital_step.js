@@ -9,7 +9,7 @@ const capital_logic = function (s) {
   for (let i = 1; i < s.terms.length; i++) {
     let t = s.terms[i];
     //has a capital, but isn't too weird.
-    if (t.tag.TitleCase && t.term.isWord()) {
+    if (t.tag.TitleCase && t.isWord()) {
       t.tagAs('Noun', 'capital-step');
       t.tagAs('TitleCase', 'capital-step');
     }

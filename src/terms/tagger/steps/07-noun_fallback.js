@@ -36,7 +36,7 @@ const noun_fallback = function(s) {
     //ensure it only has the tag 'Term'
     if (gotNothing(t)) {
       //ensure it's atleast word-looking
-      if (t.term.isWord() === false) {
+      if (t.isWord() === false) {
         continue;
       }
       t.tagAs('Noun', 'noun-fallback');

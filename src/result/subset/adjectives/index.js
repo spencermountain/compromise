@@ -1,17 +1,11 @@
 'use strict';
 const Text = require('../../index');
+const Adjective = require('./adjective');
 
 class Adjectives extends Text {
   data() {
-    return this.mapTerms((t) => {
-      return {
-        comparative: t.adjective.comparative(),
-        superlative: t.adjective.superlative(),
-        adverbForm: t.adjective.adverbForm(),
-        nounForm: t.adjective.nounForm(),
-        normal: t.normal,
-        text: t.text
-      };
+    return this.list.map((ts) => {
+      return ts.data();
     });
   }
   static find(r, n) {
@@ -19,6 +13,9 @@ class Adjectives extends Text {
     if (typeof n === 'number') {
       r = r.get(n);
     }
+    r.list = r.list.map((ts) => {
+      return new Adjective(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+    });
     return r;
   }
 }

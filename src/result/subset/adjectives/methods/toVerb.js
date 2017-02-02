@@ -1,5 +1,5 @@
 'use strict';
-const data = require('./paths').data;
+const data = require('../../../../data');
 //turn an adjective like 'soft' into a verb like 'soften'
 
 const irregulars = {

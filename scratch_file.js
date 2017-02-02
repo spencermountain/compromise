@@ -14,37 +14,4 @@ const nlp = require('./src/index');
 console.log('------');
 var m = nlp('he\'d be nice');
 // m.insertAt(2, 'fun');
-console.log(m.adjectives().toUpperCase().out());
-
-
-
-
-//insertBefore
-//insertAfter
-
-//replace
-
-// console.log(nlp('has played').sentences().toNegative().all().out());
-// console.log(nlp('he has played').sentences().toNegative().out());
-// console.log(nlp('is playing').sentences().toNegative().out());
-// console.log(nlp('spencer is playing').sentences().toNegative().out());
-// console.log(nlp('will play').sentences().toNegative().out());
-// console.log(nlp('will be playing').sentences().toNegative().out());
-// console.log(nlp('had played').sentences().toNegative().out());
-// console.log('');
-// console.log(nlp('plays').sentences().toNegative().out());
-// console.log(nlp('played').sentences().toNegative().out());
-// console.log(nlp('he walked').sentences().toNegative().out());
-// console.log(nlp('he has quietly surely walked on the ground').sentences().toNegative().out());
-// console.log(nlp('she really walked').sentences().toNegative().out('normal'));
-// console.log(nlp('he walks').sentences().toNegative().out('normal'));
-
-///===singular
-// pastTense -  john played -> john did not play
-// presentTense - john plays  -> john does not play
-// futureTense - john will play  -> john will not play
-
-///===plural
-// pastTense -  we played -> we did not play
-// presentTense - we play  -> we do not play
-// futureTense -  we will play -> we will not play
+console.log(m.adjectives().data());

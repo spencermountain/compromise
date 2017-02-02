@@ -22,7 +22,7 @@ class Term {
     //has this term been modified
     this.dirty = false;
 
-    bindMethods(require('./adjective'), 'adjective', this);
+    // bindMethods(require('./adjective'), 'adjective', this);
     bindMethods(require('./adverb'), 'adverb', this);
     bindMethods(require('./month'), 'month', this);
     bindMethods(require('./noun'), 'noun', this);

@@ -5,18 +5,10 @@ const data = require('./index');
 const fns = require('./fns');
 const fastConjugate = require('../term/verb/conjugate/faster');
 const toPlural = require('../term/noun/inflect/toPlural');
-const adj = {
-  toNoun: require('../term/adjective/toNoun'),
-  toSuperlative: require('../term/adjective/toSuperlative'),
-  toComparative: require('../term/adjective/toComparative'),
-  toAdverb: require('../term/adjective/toAdverb'),
-  toVerb: require('../term/adjective/toVerb')
-};
+const adj = require('../result/subset/adjectives/methods/index');
 const toAdjective = require('../term/verb/toAdjective');
-
-
-// console.time('lexicon');
 let lexicon = {};
+// console.time('lexicon');
 
 const addObj = (o) => {
   fns.extendObj(lexicon, o);

@@ -1,8 +1,7 @@
 'use strict';
 const renderHtml = require('./renderHtml');
 const chalk = require('chalk');
-const paths = require('../paths');
-const fns = paths.fns;
+const fns = require('../../paths').fns;
 
 const colors = {
   Noun: chalk.cyan,
@@ -11,8 +10,7 @@ const colors = {
   Adverb: chalk.red,
 };
 
-//supported Sentence.return() methods
-module.exports = {
+const methods = {
   /** a pixel-perfect reproduction of the input, with whitespace preserved */
   text: function() {
     return this.whitespace.before + this.text + this.whitespace.after;
@@ -59,3 +57,17 @@ module.exports = {
     console.log('   ' + word + '   ' + '     - ' + tags);
   }
 };
+
+const addMethods = (Term) => {
+  let args = arguments;
+  //hook them into result.proto
+  Term.prototype.out = function(fn) {
+    if (!methods[fn]) {
+      fn = 'text';
+    }
+    return methods[fn].apply(this, args);
+  };
+  return Term;
+};
+
+module.exports = addMethods;

@@ -2,7 +2,7 @@
 const Text = require('./index');
 const tokenize = require('./tokenize');
 const Terms = require('./paths').Terms;
-const normalize = require('../term/normalize').normalize;
+const normalize = require('../term/methods/normalize/normalize').normalize;
 
 //basically really dirty and stupid.
 const normalizeLex = function(lex) {

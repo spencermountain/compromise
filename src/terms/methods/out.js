@@ -3,7 +3,7 @@
 const methods = {
   text: function (ts) {
     return ts.terms.reduce((str, t) => {
-      str += t.whitespace.before + t.text + t.whitespace.after;
+      str += t.out('text');
       return str;
     }, '');
   },

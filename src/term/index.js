@@ -1,6 +1,4 @@
 'use strict';
-const addNormal = require('./normalize').addNormal;
-const addRoot = require('./root');
 const fns = require('./paths').fns;
 const build_whitespace = require('./whitespace');
 
@@ -24,13 +22,12 @@ class Term {
     //has this term been modified
     this.dirty = false;
 
-    bindMethods(require('./verb'), 'verb', this);
-    bindMethods(require('./noun'), 'noun', this);
     bindMethods(require('./adjective'), 'adjective', this);
     bindMethods(require('./adverb'), 'adverb', this);
-    bindMethods(require('./pronoun'), 'pronoun', this);
-    bindMethods(require('./render'), 'render', this);
     bindMethods(require('./month'), 'month', this);
+    bindMethods(require('./noun'), 'noun', this);
+    bindMethods(require('./pronoun'), 'pronoun', this);
+    bindMethods(require('./verb'), 'verb', this);
     bindMethods(require('./weekday'), 'weekday', this);
 
     this.normalize();
@@ -53,11 +50,6 @@ class Term {
     return 'Term';
   }
 
-  normalize() {
-    addNormal(this);
-    addRoot(this);
-  }
-
   /** where in the sentence is it? zero-based. */
   index() {
     let ts = this.parentTerms;
@@ -76,8 +68,10 @@ class Term {
     return term;
   }
 }
+Term = require('./methods/normalize')(Term);
 Term = require('./methods/isA')(Term);
-Term = require('./methods/tag/index')(Term);
+Term = require('./methods/out')(Term);
+Term = require('./methods/tag')(Term);
 Term = require('./methods/case')(Term);
 Term = require('./methods/punctuation')(Term);
 

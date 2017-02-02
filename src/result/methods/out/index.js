@@ -83,30 +83,30 @@ render.debug = render.check;
 render.freq = render.topk;
 render.frequency = render.topk;
 
-//render/output methods
-const out = (r, method, opts) => {
-  if (render[method]) {
-    return render[method](r);
+//render/output fns
+const out = (r, fn, opts) => {
+  if (render[fn]) {
+    return render[fn](r);
   }
-  if (method === 'bigram') {
+  if (fn === 'bigram') {
     opts = opts || {
       size: [2]
     };
     return ngram(r, opts);
   }
-  if (method === 'trigram') {
+  if (fn === 'trigram') {
     opts = opts || {
       size: [3]
     };
     return ngram(r, opts);
   }
-  if (method === 'edgegram') {
+  if (fn === 'edgegram') {
     return edgegram.both(r, opts);
   }
-  if (method === 'startgram') {
+  if (fn === 'startgram') {
     return edgegram.start(r, opts);
   }
-  if (method === 'endgram') {
+  if (fn === 'endgram') {
     return edgegram.end(r, opts);
   }
   return render.text(r);

@@ -35,7 +35,7 @@ test('not-basic :', function(t) {
   t.end();
 });
 
-test('not-from-blacklist :', function(t) {
+test('not-from-array :', function(t) {
 
   var m = nlp('spencer is really cool').not(['spencer']);
   t.equal(m.out('normal'), 'is really cool', 'not-spencer');
@@ -48,8 +48,11 @@ test('not-from-blacklist :', function(t) {
   m = nlp('spencer is really cool').not(['spencer', 'really']);
   t.equal(m.out('normal'), 'is cool', 'not-spencer-really');
   t.equal(m.length, 2, 'two-results');
+  t.end();
+});
 
-  //test object-form
+//test object-form
+test('not-from-object :', function(t) {
   m = nlp('spencer is not really cool.');
   var r = m.not({
     'not': true,
@@ -58,12 +61,22 @@ test('not-from-blacklist :', function(t) {
   t.equal(m.out('normal'), 'spencer is not really cool.', 'double-obj-remains');
   t.equal(r.out('normal'), 'spencer is cool.', 'spencer-double-obj');
 
-
   m = nlp('everyone is cool. I said hi to everyone.').not({
-    'everyone': true
+    'everyone': true,
+    'totally': true
   });
   t.equal(m.out('normal'), 'is cool. i said hi to', 'not-everyone');
 
+  m = nlp('spencer is really, secretly, very cool.');
+  var adv = m.adverbs().not({
+    'really': true,
+  });
+  t.equal(adv.out('normal'), 'secretly very', 'not-subset');
+  t.equal(adv.length, 1, 'one-result');
+
+  var adv2 = m.adverbs().not('secretly');
+  t.equal(adv2.out('normal'), 'really very', 'not-subset2');
+  t.equal(adv2.length, 2, 'two-results');
 
   t.end();
 });

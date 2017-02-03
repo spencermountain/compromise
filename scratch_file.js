@@ -12,4 +12,4 @@ const nlp = require('./src/index');
 
 
 var m = nlp('everyone is nice');
-console.log(m.terms().not(['everyone']).data());
+console.log(m.terms().match(['everyone']).data());

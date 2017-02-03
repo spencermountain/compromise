@@ -11,5 +11,5 @@ const nlp = require('./src/index');
 // nlp('i like running').sentences().toNegative().check();
 
 
-var m = nlp('banned').check();
+var m = nlp('he fucked up').check();
 console.log(m.nouns().out('array'));

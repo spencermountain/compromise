@@ -63,6 +63,8 @@ module.exports = [
   'ohh',
   'eh',
   'yup',
+  'wtf',
+  'wtaf',
   'et cetera',
   'fuck',
   'shit',

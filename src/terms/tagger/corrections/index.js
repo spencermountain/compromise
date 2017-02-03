@@ -92,8 +92,11 @@ const corrections = function (r) {
   r.match('#Money and #Money #Currency?').tag('Money', 'money-and-money');
 
   //swear-words as non-expression POS
+  //nsfw
+  r.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression');
   r.match('#Determiner (shit|damn|hell)').term(1).tag('Noun', 'swears-noun');
   r.match('(shit|damn|fuck) (#Determiner|#Possessive|them)').term(0).tag('Verb', 'swears-verb');
+  r.match('#Copula fucked up?').not('#Copula').tag('Adjective', 'swears-adjective');
 
   //more-detailed corrections
   r = person_corrections(r);

@@ -18,5 +18,11 @@ test('swears:', function(t) {
   // m = nlp('when hell freezes over').match('^when #Noun');
   // t.ok(m.found, 'swear-5');
 
+  m = nlp('he fucked up').match('he #Verb #Particle');
+  t.ok(m.found, 'swear-6');
+
+  m = nlp('it is fucked up').match('is #Adjective #Adjective');
+  t.ok(m.found, 'swear-7');
+
   t.end();
 });

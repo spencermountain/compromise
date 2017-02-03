@@ -113,5 +113,14 @@ test('==Match ==', function (T) {
     t.end();
   });
 
+  test('tag-match-tag :', function(t) {
+    var m = nlp('apple is cool');
+    m.match(['apple', 'susan']).tag('Person');
+    var p = m.people();
+    t.equal(p.out('normal'), 'apple', 'apple-tagged');
+    t.equal(m.length, 1, 'one-result');
+    t.end();
+  });
+
 
 });

@@ -34,3 +34,36 @@ test('not-basic :', function(t) {
 
   t.end();
 });
+
+test('not-from-blacklist :', function(t) {
+
+  var m = nlp('spencer is really cool').not(['spencer']);
+  t.equal(m.out('normal'), 'is really cool', 'not-spencer');
+  t.equal(m.length, 1, 'one-results');
+
+  m = nlp('spencer is really cool').not(['']);
+  t.equal(m.out('normal'), 'spencer is really cool', 'not-spencer');
+  t.equal(m.length, 1, 'one-results');
+
+  m = nlp('spencer is really cool').not(['spencer', 'really']);
+  t.equal(m.out('normal'), 'is cool', 'not-spencer-really');
+  t.equal(m.length, 2, 'two-results');
+
+  //test object-form
+  m = nlp('spencer is not really cool.');
+  var r = m.not({
+    'not': true,
+    'really': true,
+  });
+  t.equal(m.out('normal'), 'spencer is not really cool.', 'double-obj-remains');
+  t.equal(r.out('normal'), 'spencer is cool.', 'spencer-double-obj');
+
+
+  m = nlp('everyone is cool. I said hi to everyone.').not({
+    'everyone': true
+  });
+  t.equal(m.out('normal'), 'is cool. i said hi to', 'not-everyone');
+
+
+  t.end();
+});

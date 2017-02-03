@@ -11,5 +11,5 @@ const nlp = require('./src/index');
 // nlp('i like running').sentences().toNegative().check();
 
 
-var m = nlp('http://youtube.com/lkj').check();
-console.log(m.nouns().out('array'));
+var m = nlp('everyone is nice');
+console.log(m.terms().not(['everyone']).data());

@@ -35,21 +35,31 @@ class Sentence extends Terms {
   toPastTense() {
     let verb = this.mainVerb();
     if (verb) {
+      //this is really ugly..
+      let start = verb.out('normal');
       verb.toPastTense();
+      let end = verb.out('normal');
+      return this.parentTerms.replace(start, end);
     }
     return this;
   }
   toPresentTense() {
     let verb = this.mainVerb();
     if (verb) {
+      let start = verb.out('normal');
       verb.toPresentTense();
+      let end = verb.out('normal');
+      return this.parentTerms.replace(start, end);
     }
     return this;
   }
   toFutureTense() {
     let verb = this.mainVerb();
     if (verb) {
+      let start = verb.out('normal');
       verb.toFutureTense();
+      let end = verb.out('normal');
+      return this.parentTerms.replace(start, end);
     }
     return this;
   }

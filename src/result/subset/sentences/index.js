@@ -14,20 +14,20 @@ class Sentences extends Text {
   }
   /** conjugate the main/first verb*/
   toPastTense() {
-    this.list.forEach((ts) => {
-      ts.toPastTense();
+    this.list = this.list.map((ts) => {
+      return ts.toPastTense();
     });
     return this;
   }
   toPresentTense() {
-    this.list.forEach((ts) => {
-      ts.toPresentTense();
+    this.list = this.list.map((ts) => {
+      return ts.toPresentTense();
     });
     return this;
   }
   toFutureTense() {
-    this.list.forEach((ts) => {
-      ts.toFutureTense();
+    this.list = this.list.map((ts) => {
+      return ts.toFutureTense();
     });
     return this;
   }
@@ -41,12 +41,11 @@ class Sentences extends Text {
     return this;
   }
   toPositive() {
-    this.list.forEach((ts) => {
-      ts.toPositive();
+    this.list = this.list.map((ts) => {
+      return ts.toPositive();
     });
     return this;
   }
-
 
   /** look for 'was _ by' patterns */
   passive() {

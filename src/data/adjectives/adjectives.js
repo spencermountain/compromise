@@ -141,6 +141,8 @@ let arr = [
   'notable',
   'offbeat',
   'ok',
+  'online',
+  'offline',
   'outside',
   'overwrought',
   'premium',

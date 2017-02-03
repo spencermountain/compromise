@@ -4,6 +4,7 @@ module.exports = [
   'uh huh',
   'uh-oh',
   'please',
+  'plz',
   'ugh',
   'sheesh',
   'eww',

@@ -10,6 +10,8 @@ const irregulars = {
   'dont': ['do', 'not'],
   'dun': ['do', 'not'],
 
+  'ive': ['i', 'have'],
+
   'won\'t': ['will', 'not'],
   'wont': ['will', 'not'],
 
@@ -34,7 +36,14 @@ const irregulars = {
 
   //multiple word contractions
   'dunno': ['do', 'not', 'know'],
-  'brb': ['be', 'right', 'back']
+  'brb': ['be', 'right', 'back'],
+  'gtg': ['got', 'to', 'go'],
+  'irl': ['in', 'real', 'life'],
+  'tbh': ['to', 'be', 'honest'],
+  'imo': ['in', 'my', 'opinion'],
+  'til': ['today', 'i', 'learned'],
+  'rn': ['right', 'now'],
+// 'idk': ['i', 'don\'t', 'know'],
 };
 
 //check irregulars

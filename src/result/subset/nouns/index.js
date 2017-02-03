@@ -24,9 +24,7 @@ class Nouns extends Text {
     r = r.clauses();
     r = r.match('#Noun+');
     r = r.not('#Pronoun');
-    // if (r.match('#Date').found) {
-    //   r = r.not('#Date');
-    // }
+    r = r.not('#Date');
     if (typeof n === 'number') {
       r = r.get(n);
     }

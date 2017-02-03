@@ -7,6 +7,7 @@ const misc = {
   'make sure': 'Verb',
   'keep tabs': 'Verb',
   'gonna': 'Verb',
+  'cannot': 'Verb',
   'has': 'Verb',
   'sounds': 'PresentTense',
   //special case for took/taken
@@ -15,6 +16,7 @@ const misc = {
   'a few': 'Value', //different than 'few people'
   'years old': 'Unit', //special case
   'not': 'Negative',
+  'non': 'Negative',
   'never': 'Negative',
   'no': 'Negative',
   'no doubt': 'Noun',
@@ -100,6 +102,7 @@ const compact = {
     'nor',
     'whether',
     'though',
+    'tho',
     'because',
     'cuz',
     'but',

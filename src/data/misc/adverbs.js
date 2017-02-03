@@ -82,5 +82,6 @@ module.exports = [
   'very',
   'way',
   'well',
-  'yes'
+  'yes',
+  'yep',
 ];

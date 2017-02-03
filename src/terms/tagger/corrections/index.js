@@ -34,6 +34,10 @@ const corrections = function (r) {
   //will secure our
   r.match('will #Adjective').term(1).tag('Verb', 'will-adj');
 
+  //'u' as pronoun
+  r.match('u #Verb').term(0).tag('Pronoun', 'u-pronoun-1');
+  r.match('#Conjunction u').term(1).tag('Pronoun', 'u-pronoun-2');
+
   //is no walk
   r.match('is no #Verb').term(2).tag('Noun', 'is-no-verb');
 
@@ -41,11 +45,11 @@ const corrections = function (r) {
   //the wait to vote
   r.match('the #Verb #Preposition .').match('#Verb').tag('Noun', 'correction-determiner1');
   //the swim
-  r.match('the #Verb').match('#Verb').tag('#Noun', 'correction-determiner2');
+  r.match('the #Verb').match('#Verb').tag('Noun', 'correction-determiner2');
   //the nice swim
-  r.match('the #Adjective #Verb').match('#Verb').tag('#Noun', 'correction-determiner3');
+  r.match('the #Adjective #Verb').match('#Verb').tag('Noun', 'correction-determiner3');
   //the truly nice swim
-  r.match('the #Adverb #Adjective #Verb').match('#Verb').tag('#Noun', 'correction-determiner4');
+  r.match('the #Adverb #Adjective #Verb').match('#Verb').tag('Noun', 'correction-determiner4');
 
   //organization
   r.match('#Organization (inc|bros|lmt|co|incorporation|corp|corporation)').tag('Organization', 'org-abbreviation');
@@ -84,8 +88,12 @@ const corrections = function (r) {
   r.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
 
   //money
-  r.match('#Value+ #Currency').tag('#Money', 'value-currency');
-  r.match('#Money and #Money #Currency?').tag('#Money', 'money-and-money');
+  r.match('#Value+ #Currency').tag('Money', 'value-currency');
+  r.match('#Money and #Money #Currency?').tag('Money', 'money-and-money');
+
+  //swear-words as non-expression POS
+  r.match('#Determiner (shit|damn|hell)').term(1).tag('Noun', 'swears-noun');
+  r.match('(shit|damn|fuck) (#Determiner|#Possessive|them)').term(0).tag('Verb', 'swears-verb');
 
   //more-detailed corrections
   r = person_corrections(r);

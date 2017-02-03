@@ -106,6 +106,7 @@ let arr = [
   'assume',
   'attempt',
   'avoid',
+  'ban',
   'become',
   'bomb',
   'cancel',

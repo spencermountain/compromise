@@ -55,11 +55,15 @@ const irregular = {
     Gerund: 'beating',
     Actor: 'beater',
     Participle: 'beaten'
-
   },
   begin: {
     Gerund: 'beginning',
     PastTense: 'began'
+  },
+  ban: {
+    PastTense: 'banned',
+    Gerund: 'banning',
+    Actor: ''
   },
   bet: {
     Actor: 'better'

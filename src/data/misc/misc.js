@@ -6,6 +6,7 @@ const misc = {
   'earlier': 'Superlative',
   'make sure': 'Verb',
   'keep tabs': 'Verb',
+  'gonna': 'Verb',
   'has': 'Verb',
   'sounds': 'PresentTense',
   //special case for took/taken

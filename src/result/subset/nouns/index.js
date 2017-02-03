@@ -23,7 +23,7 @@ class Nouns extends Text {
   static find(r, n) {
     r = r.clauses();
     r = r.match('#Noun+');
-    // r = r.not('#Pronoun');
+    r = r.not('#Pronoun');
     // if (r.match('#Date').found) {
     //   r = r.not('#Date');
     // }

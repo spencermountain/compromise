@@ -36,9 +36,9 @@ const addfns = (Terms) => {
     },
 
     //blacklist from a match string
-    notString : function(r, needle, verbose) {
+    notString : function(r, want, verbose) {
       let matches = [];
-      let regs = syntax(needle);
+      let regs = syntax(want);
       let terms = [];
       //try the match starting from each term
       for(let i = 0; i < r.terms.length; i++) {
@@ -76,19 +76,19 @@ const addfns = (Terms) => {
   };
 
   /**return everything but these matches*/
-  Terms.prototype.not = function(needle, verbose) {
+  Terms.prototype.not = function(want, verbose) {
     //support [word, word] blacklist
-    if (typeof needle === 'object') {
-      let type = Object.prototype.toString.call(needle);
+    if (typeof want === 'object') {
+      let type = Object.prototype.toString.call(want);
       if (type === '[object Array]') {
-        return fns.notArray(this, needle, verbose);
+        return fns.notArray(this, want, verbose);
       }
       if (type === '[object Object]') {
-        return fns.notObj(this, needle, verbose);
+        return fns.notObj(this, want, verbose);
       }
     }
-    if (typeof needle === 'string') {
-      return fns.notString(this, needle, verbose);
+    if (typeof want === 'string') {
+      return fns.notString(this, want, verbose);
     }
     return this;
   };

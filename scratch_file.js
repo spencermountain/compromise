@@ -11,5 +11,8 @@ const nlp = require('./src/index');
 // nlp('i like running').sentences().toNegative().check();
 
 
-var m = nlp('everyone is nice');
-console.log(m.terms().match(['everyone']).data());
+var m = nlp('apple is cool');
+m.match(['apple']).tag('Person').check();
+m.match({
+  'apple': true
+}).tag('Person').check();

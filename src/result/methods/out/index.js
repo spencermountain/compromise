@@ -3,7 +3,7 @@ const ngram = require('./ngram');
 const edgegram = require('./edgegram');
 const topk = require('./topk');
 
-const render = {
+const methods = {
   text: (r) => {
     return r.list.reduce((str, ts) => {
       str += ts.out('text');
@@ -45,7 +45,7 @@ const render = {
   html: (r) => {
     let html = r.list.reduce((str, ts) => {
       let sentence = ts.terms.reduce((sen, t) => {
-        sen += '\n    ' + t.render.html();
+        sen += '\n    ' + t.methods.html();
         return sen;
       }, '');
       return str += '\n  <span>' + sentence + '\n  </span>';
@@ -77,38 +77,45 @@ const render = {
     return topk(r);
   }
 };
-render.plaintext = render.text;
-render.normalized = render.normal;
-render.debug = render.check;
-render.freq = render.topk;
-render.frequency = render.topk;
+methods.plaintext = methods.text;
+methods.normalized = methods.normal;
+methods.debug = methods.check;
+methods.freq = methods.topk;
+methods.frequency = methods.topk;
 
-//render/output fns
-const out = (r, fn, opts) => {
-  if (render[fn]) {
-    return render[fn](r);
-  }
-  if (fn === 'bigram') {
-    opts = opts || {
-      size: [2]
-    };
-    return ngram(r, opts);
-  }
-  if (fn === 'trigram') {
-    opts = opts || {
-      size: [3]
-    };
-    return ngram(r, opts);
-  }
-  if (fn === 'edgegram') {
-    return edgegram.both(r, opts);
-  }
-  if (fn === 'startgram') {
-    return edgegram.start(r, opts);
-  }
-  if (fn === 'endgram') {
-    return edgegram.end(r, opts);
-  }
-  return render.text(r);
+const addMethods = (Text) => {
+  Text.prototype.check = function() {
+    return methods.check(this);
+  };
+  Text.prototype.out = function(fn, opts) {
+    if (methods[fn]) {
+      return methods[fn](this);
+    }
+    if (fn === 'bigram') {
+      opts = opts || {
+        size: [2]
+      };
+      return ngram(this, opts);
+    }
+    if (fn === 'trigram') {
+      opts = opts || {
+        size: [3]
+      };
+      return ngram(this, opts);
+    }
+    if (fn === 'edgegram') {
+      return edgegram.both(this, opts);
+    }
+    if (fn === 'startgram') {
+      return edgegram.start(this, opts);
+    }
+    if (fn === 'endgram') {
+      return edgegram.end(this, opts);
+    }
+    return methods.text(this);
+  };
+  return Text;
 };
-module.exports = out;
+
+
+module.exports = addMethods;

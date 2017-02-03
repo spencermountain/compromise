@@ -1,17 +1,11 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-
-
 var lexicon = {
   'Jardas al Abid': 'Place',
   'Umm Ar Rizam': 'Place',
   'Tobruk': 'Place'
 };
-// var sentence = 'A suicide attack hit the centre of Tobruk killing one person (and the attacker) and injuring more than twenty.';
-// var found = nlp(sentence).places().data()[0];
-// console.log('Problem#1. Test to find locality in English without lexicon.');
-// t.equal('Tobruk', found);
 
 test('find locality which has hyphenation:', function (t) {
   sentence = 'A suicide attack hit the centre of Jardas-al-Abid killing one person (and the attacker) and injuring more than twenty.';

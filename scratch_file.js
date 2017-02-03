@@ -10,8 +10,9 @@ const nlp = require('./src/index');
 //bug 2. - gerund as nouns
 // nlp('i like running').sentences().toNegative().check();
 
-
-console.log('------');
 var m = nlp('he ate the alligator');
-// m.insertAt(2, 'fun');
-console.log(m.verbs().toPastTense().data());
+var neg = m.clone().sentences().toNegative();
+var past = m.clone().sentences().toPastTense();
+var pres = m.clone().sentences().toPresentTense();
+var adv = m.clone().verbs().insertBefore('really');
+console.log(m.out());

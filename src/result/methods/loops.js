@@ -17,6 +17,9 @@ let foreach = [
   'replaceWith',
 
   'delete',
+
+// 'tag',
+// 'unTag',
 ];
 
 const addMethods = (Text) => {

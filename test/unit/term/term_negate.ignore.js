@@ -1,6 +1,6 @@
 var test = require('tape');
-var nlp = require('./lib/nlp');
-var str_test = require('./lib/fns').str_test;
+var nlp = require('../..b/nlp');
+var str_test = require('../..b/fns').str_test;
 
 
 test('term negate:', function(t) {

@@ -12,6 +12,7 @@ class Person extends Terms {
       middleName: this.middleName.out('normal'),
       lastName: this.lastName.out('normal'),
       genderGuess: this.guessGender(),
+      pronoun: this.pronoun(),
       honorifics: this.honorifics.out('array')
     };
   }
@@ -52,6 +53,16 @@ class Person extends Terms {
     }
     //look-for regex clues
     return guessGender(this.firstName.out('normal'));
+  }
+  pronoun() {
+    let g = this.guessGender();
+    if (g === 'Male') {
+      return 'he';
+    }
+    if (g === 'Female') {
+      return 'she';
+    }
+    return 'they';
   }
   root() {
     let first = this.firstName.out('root');

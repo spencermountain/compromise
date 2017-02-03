@@ -1,6 +1,6 @@
 var test = require('tape');
-var nlp = require('./lib/nlp');
-var pos_test = require('./lib/fns').pos_test;
+var nlp = require('../..b/nlp');
+var pos_test = require('../..b/fns').pos_test;
 
 test('=Tagger=', function(T) {
 

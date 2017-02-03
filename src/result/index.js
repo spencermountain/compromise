@@ -1,5 +1,4 @@
 'use strict';
-const out = require('./methods/out');
 //a Text is an array of termLists
 class Text {
   constructor(arr, lexicon, reference) {
@@ -42,9 +41,6 @@ class Text {
   check(opts) {
     return out(this, 'check', opts);
   }
-  out(msg, opts) {
-    return out(this, msg, opts);
-  }
   get whitespace() {
     return {
       before: (str) => {
@@ -66,6 +62,7 @@ class Text {
 module.exports = Text;
 Text = require('./methods/loops')(Text);
 Text = require('./methods/array')(Text);
+Text = require('./methods/out')(Text);
 Text = require('./methods/termFns')(Text);
 Text = require('./methods/tag')(Text);
 Text = require('./methods/sort')(Text);

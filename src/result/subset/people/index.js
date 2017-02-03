@@ -7,6 +7,9 @@ class People extends Text {
   data() {
     return this.list.map((ts) => ts.data());
   }
+  pronoun() {
+    return this.list.map((ts) => ts.pronoun());
+  }
   static find(r, n) {
     let people = r.clauses();
     people = people.match('#Person+');

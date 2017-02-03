@@ -25,6 +25,11 @@ const methods = {
 
   html: function (ts) {
     return ts.terms.map((t) => t.render.html()).join(' ');
+  },
+  check: function(ts) {
+    ts.terms.forEach((t) => {
+      t.out('check');
+    });
   }
 };
 methods.plaintext = methods.text;
@@ -42,9 +47,7 @@ const renderMethods = (Terms) => {
   };
   //check method
   Terms.prototype.check = function () {
-    this.terms.forEach((t) => {
-      t.render.check();
-    });
+    return methods.check(this);
   };
   return Terms;
 };

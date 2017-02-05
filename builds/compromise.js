@@ -474,7 +474,7 @@ module.exports = lexicon;
 // t.tag.Verb = true;
 // console.timeEnd('lexicon');
 
-},{"../result/subset/adjectives/methods/index":61,"../result/subset/nouns/methods/pluralize":91,"../result/subset/verbs/methods/conjugate/faster":125,"../result/subset/verbs/methods/toAdjective":134,"./fns":7,"./index":8}],10:[function(_dereq_,module,exports){
+},{"../result/subset/adjectives/methods/index":62,"../result/subset/nouns/methods/pluralize":92,"../result/subset/verbs/methods/conjugate/faster":126,"../result/subset/verbs/methods/toAdjective":135,"./fns":7,"./index":8}],10:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = [
@@ -2144,11 +2144,30 @@ module.exports = fns.uncompress_suffixes(arr, compressed);
 
 },{"../fns":7}],39:[function(_dereq_,module,exports){
 'use strict';
-// typeof obj == "function" also works
-// but not in older browsers. :-/
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+var tagColors = _dereq_('./tags/colors');
+
+// https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
+var c = {
+  reset: '\x1b[0m',
+  red: '\x1b[31m',
+  green: '\x1b[32m',
+  yellow: '\x1b[33m',
+  blue: '\x1b[34m',
+  magenta: '\x1b[35m',
+  cyan: '\x1b[36m'
+};
+//dont use colors on client-side
+if (typeof module === 'undefined') {
+  Object.keys(c).forEach(function (k) {
+    c[k] = '';
+  });
+}
+
+// typeof obj == "function" also works
+// but not in older browsers. :-/
 exports.isFunction = function (obj) {
   return Object.prototype.toString.call(obj) === '[object Function]';
 };
@@ -2172,7 +2191,6 @@ exports.ensureObject = function (input) {
   }
   return input;
 };
-
 //string utilities
 exports.endsWith = function (str, suffix) {
   if (str && str.substr(-suffix.length) === suffix) {
@@ -2227,45 +2245,30 @@ exports.extend = function (o, o2) {
   return o;
 };
 
-//a very naaive inflector for
-//our public-facing one is in ./terms/noun/info
-exports.toPlural = function (str) {
-  var irregular = {
-    Glue: 'Glue'
-  };
-  if (irregular[str]) {
-    return irregular[str];
-  }
-  if (str.match(/y$/i)) {
-    return str.replace(/y$/i, 'ies');
-  }
-  if (str.match(/person$/i)) {
-    return str.replace(/person$$/i, 'people');
-  }
-  if (str.match(/s$/i)) {
-    return str;
-  }
-  return str + 's';
+//colorization
+exports.green = function (str) {
+  return c.green + str + c.reset;
 };
-
-exports.values = function (obj) {
-  return Object.keys(obj).map(function (k) {
-    return obj[k];
-  });
+exports.red = function (str) {
+  return c.red + str + c.reset;
 };
-
-// exports.toObj = (arr) => {
-//   let obj = {}
-//   for (let i = 0; i < arr.length; i++) {
-//     obj[arr[i]] = true
-//   }
-//   return obj
-// }
-
-exports.sum = function (arr) {
-  return arr.reduce(function (sum, i) {
-    return sum + i;
-  }, 0);
+exports.blue = function (str) {
+  return c.blue + str + c.reset;
+};
+exports.magenta = function (str) {
+  return c.magenta + str + c.reset;
+};
+exports.cyan = function (str) {
+  return c.cyan + str + c.reset;
+};
+exports.yellow = function (str) {
+  return c.yellow + str + c.reset;
+};
+exports.printTag = function (tag) {
+  if (tagColors[tag]) {
+    return exports[tagColors[tag]](tag);
+  }
+  return tag;
 };
 
 exports.rightPad = function (str, width, char) {
@@ -2286,7 +2289,7 @@ exports.leftPad = function (str, width, char) {
   return str;
 };
 
-},{}],40:[function(_dereq_,module,exports){
+},{"./tags/colors":141}],40:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 
@@ -2330,7 +2333,6 @@ if (typeof module !== 'undefined') {
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var fns = _dereq_('../fns');
-
 var _enable = false;
 
 module.exports = {
@@ -2354,11 +2356,11 @@ module.exports = {
   tagAs: function tagAs(t, pos, reason) {
     if (_enable === true || _enable === 'tagger') {
       var title = t.normal || '[' + t.silent_term + ']';
-      title = title;
+      title = fns.yellow(title);
       title = fns.leftPad('\'' + title + '\'', 20);
-      title += '  ->   ' + pos;
+      title += '  ->   ' + fns.printTag(pos);
       title = fns.leftPad(title, 54);
-      console.log('       ' + title + '(' + (reason || '') + ')');
+      console.log('       ' + title + '(' + fns.cyan(reason || '') + ')');
     }
   },
   match: function match(t, reason) {
@@ -2409,7 +2411,7 @@ var fromString = function fromString(str, lexicon) {
 };
 module.exports = fromString;
 
-},{"../term/methods/normalize/normalize":147,"./index":43,"./paths":56,"./tokenize":139}],43:[function(_dereq_,module,exports){
+},{"../term/methods/normalize/normalize":149,"./index":43,"./paths":57,"./tokenize":140}],43:[function(_dereq_,module,exports){
 'use strict';
 //a Text is an array of termLists
 
@@ -2451,9 +2453,9 @@ var Text = function () {
       });
     }
   }, {
-    key: 'check',
-    value: function check(opts) {
-      return out(this, 'check', opts);
+    key: 'debug',
+    value: function debug(opts) {
+      return out(this, 'debug', opts);
     }
   }, {
     key: 'found',
@@ -2549,7 +2551,7 @@ Object.keys(subset).forEach(function (k) {
   };
 });
 
-},{"./methods/array":44,"./methods/loops":45,"./methods/match":46,"./methods/normalize":47,"./methods/out":49,"./methods/sort":52,"./methods/split":53,"./methods/tag":54,"./methods/termFns":55,"./subset/acronyms":57,"./subset/adjectives":59,"./subset/adverbs":67,"./subset/clauses":69,"./subset/contractions":73,"./subset/dates":75,"./subset/hashTags":83,"./subset/nouns":85,"./subset/organizations":94,"./subset/people":96,"./subset/phoneNumbers":98,"./subset/places":99,"./subset/sentences":101,"./subset/sentences/questions":102,"./subset/sentences/statements":104,"./subset/terms":106,"./subset/topics":107,"./subset/urls":108,"./subset/values":109,"./subset/verbs":122}],44:[function(_dereq_,module,exports){
+},{"./methods/array":44,"./methods/loops":45,"./methods/match":46,"./methods/normalize":47,"./methods/out":49,"./methods/sort":52,"./methods/split":54,"./methods/tag":55,"./methods/termFns":56,"./subset/acronyms":58,"./subset/adjectives":60,"./subset/adverbs":68,"./subset/clauses":70,"./subset/contractions":74,"./subset/dates":76,"./subset/hashTags":84,"./subset/nouns":86,"./subset/organizations":95,"./subset/people":97,"./subset/phoneNumbers":99,"./subset/places":100,"./subset/sentences":102,"./subset/sentences/questions":103,"./subset/sentences/statements":105,"./subset/terms":107,"./subset/topics":108,"./subset/urls":109,"./subset/values":110,"./subset/verbs":123}],44:[function(_dereq_,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -2687,7 +2689,7 @@ var genericMethods = function genericMethods(Text) {
 
 module.exports = genericMethods;
 
-},{"../../terms":160}],45:[function(_dereq_,module,exports){
+},{"../../terms":162}],45:[function(_dereq_,module,exports){
 'use strict';
 //this methods are simply loops around each termList object.
 
@@ -3034,6 +3036,12 @@ var methods = {
       return str;
     }).join(' ');
   },
+  grid: function grid(r) {
+    return r.list.reduce(function (str, ts) {
+      str += ts.out('grid');
+      return str;
+    }, '');
+  },
   array: function array(r) {
     return r.list.reduce(function (arr, ts) {
       arr.push(ts.out('normal'));
@@ -3076,11 +3084,11 @@ var methods = {
     });
     return arr;
   },
-  check: function check(r) {
+  debug: function debug(r) {
     console.log('====');
     r.list.forEach(function (ts) {
       console.log('   --');
-      ts.check();
+      ts.debug();
     });
     return r;
   },
@@ -3090,13 +3098,12 @@ var methods = {
 };
 methods.plaintext = methods.text;
 methods.normalized = methods.normal;
-methods.debug = methods.check;
 methods.freq = methods.topk;
 methods.frequency = methods.topk;
 
 var addMethods = function addMethods(Text) {
-  Text.prototype.check = function () {
-    return methods.check(this);
+  Text.prototype.debug = function () {
+    return methods.debug(this);
   };
   Text.prototype.out = function (fn, opts) {
     if (methods[fn]) {
@@ -3231,67 +3238,27 @@ module.exports = topk;
 
 },{}],52:[function(_dereq_,module,exports){
 'use strict';
-//alphabetical sorting of a termlist array
 
-var alphaSort = function alphaSort(r) {
-  r.list.sort(function (a, b) {
-    //#1 performance speedup
-    if (a === b) {
-      return 0;
-    }
-    //#2 performance speedup
-    if (a.terms[0] && b.terms[0]) {
-      if (a.terms[0].normal > b.terms[0].normal) {
-        return 1;
-      }
-      if (a.terms[0].normal < b.terms[0].normal) {
-        return -1;
-      }
-    }
-    //regular compare
-    if (a.out('normal') > b.out('normal')) {
-      return 1;
-    }
-    return -1;
-  });
-  return r;
-};
+var sorter = _dereq_('./methods');
 
-var chronSort = function chronSort(r) {
-  //pre-compute indexes
-  var tmp = r.list.map(function (ts) {
-    return {
-      ts: ts,
-      index: ts.termIndex()
-    };
-  });
-  tmp = tmp.sort(function (a, b) {
-    if (a.index > b.index) {
-      return 1;
-    }
-    if (a.index === b.index) {
-      return 0;
-    }
-    return -1;
-  });
-  //return ts objects
-  r.list = tmp.map(function (o) {
-    return o.ts;
-  });
-  return r;
-};
+var addMethods = function addMethods(Text) {
 
-var sortMethod = function sortMethod(Text) {
-
-  var methods = {
+  var fns = {
 
     /**reorder result.list alphabetically */
     sort: function sort(method) {
+      method = method.toLowerCase();
       if (!method || method === 'alpha' || method === 'alphabetical') {
-        return alphaSort(this, Text);
+        return sorter.alpha(this, Text);
       }
       if (method === 'chron' || method === 'chronological') {
-        return chronSort(this, Text);
+        return sorter.chron(this, Text);
+      }
+      if (method === 'length') {
+        return sorter.lengthFn(this, Text);
+      }
+      if (method === 'wordcount') {
+        return sorter.wordCount(this, Text);
       }
       return this;
     },
@@ -3315,17 +3282,101 @@ var sortMethod = function sortMethod(Text) {
       return this;
     }
   };
-
   //hook them into result.proto
-  Object.keys(methods).forEach(function (k) {
-    Text.prototype[k] = methods[k];
+  Object.keys(fns).forEach(function (k) {
+    Text.prototype[k] = fns[k];
   });
   return Text;
 };
 
-module.exports = sortMethod;
+module.exports = addMethods;
 
-},{}],53:[function(_dereq_,module,exports){
+},{"./methods":53}],53:[function(_dereq_,module,exports){
+'use strict';
+
+//perform sort on pre-computed values
+
+var sortEm = function sortEm(arr) {
+  arr = arr.sort(function (a, b) {
+    if (a.index > b.index) {
+      return 1;
+    }
+    if (a.index === b.index) {
+      return 0;
+    }
+    return -1;
+  });
+  //return ts objects
+  return arr.map(function (o) {
+    return o.ts;
+  });
+};
+
+//alphabetical sorting of a termlist array
+exports.alpha = function (r) {
+  r.list.sort(function (a, b) {
+    //#1 performance speedup
+    if (a === b) {
+      return 0;
+    }
+    //#2 performance speedup
+    if (a.terms[0] && b.terms[0]) {
+      if (a.terms[0].normal > b.terms[0].normal) {
+        return 1;
+      }
+      if (a.terms[0].normal < b.terms[0].normal) {
+        return -1;
+      }
+    }
+    //regular compare
+    if (a.out('normal') > b.out('normal')) {
+      return 1;
+    }
+    return -1;
+  });
+  return r;
+};
+
+//the order they were recieved (chronological~)
+exports.chron = function (r) {
+  //pre-compute indexes
+  var tmp = r.list.map(function (ts) {
+    return {
+      ts: ts,
+      index: ts.termIndex()
+    };
+  });
+  r.list = sortEm(tmp);
+  return r;
+};
+
+//shortest matches first
+exports.lengthFn = function (r) {
+  //pre-compute indexes
+  var tmp = r.list.map(function (ts) {
+    return {
+      ts: ts,
+      index: ts.chars()
+    };
+  });
+  r.list = sortEm(tmp);
+  return r;
+};
+
+//count the number of terms in each match
+exports.wordCount = function (r) {
+  //pre-compute indexes
+  var tmp = r.list.map(function (ts) {
+    return {
+      ts: ts,
+      index: ts.length
+    };
+  });
+  r.list = sortEm(tmp);
+  return r;
+};
+
+},{}],54:[function(_dereq_,module,exports){
 'use strict';
 
 var splitMethods = function splitMethods(Text) {
@@ -3375,7 +3426,7 @@ var splitMethods = function splitMethods(Text) {
 
 module.exports = splitMethods;
 
-},{}],54:[function(_dereq_,module,exports){
+},{}],55:[function(_dereq_,module,exports){
 'use strict';
 
 var splitMethods = function splitMethods(Text) {
@@ -3418,7 +3469,7 @@ var splitMethods = function splitMethods(Text) {
 
 module.exports = splitMethods;
 
-},{}],55:[function(_dereq_,module,exports){
+},{}],56:[function(_dereq_,module,exports){
 'use strict';
 
 var Terms = _dereq_('../../terms');
@@ -3462,7 +3513,7 @@ var termLoops = function termLoops(Text) {
 
 module.exports = termLoops;
 
-},{"../../terms":160}],56:[function(_dereq_,module,exports){
+},{"../../terms":162}],57:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -3472,7 +3523,7 @@ module.exports = {
   Terms: _dereq_('../terms')
 };
 
-},{"../data":8,"../fns":39,"../log":41,"../terms":160}],57:[function(_dereq_,module,exports){
+},{"../data":8,"../fns":39,"../log":41,"../terms":162}],58:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3522,7 +3573,7 @@ var Acronyms = function (_Text) {
 
 module.exports = Acronyms;
 
-},{"../../index":43}],58:[function(_dereq_,module,exports){
+},{"../../index":43}],59:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3566,7 +3617,7 @@ var Adjective = function (_Terms) {
 
 module.exports = Adjective;
 
-},{"../../paths":56,"./methods":61}],59:[function(_dereq_,module,exports){
+},{"../../paths":57,"./methods":62}],60:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3615,7 +3666,7 @@ var Adjectives = function (_Text) {
 
 module.exports = Adjectives;
 
-},{"../../index":43,"./adjective":58}],60:[function(_dereq_,module,exports){
+},{"../../index":43,"./adjective":59}],61:[function(_dereq_,module,exports){
 'use strict';
 //an obj of adjectives that can be converted to superlative + comparative, via the lexicon data
 
@@ -3630,7 +3681,7 @@ data.verbConverts.forEach(function (a) {
 });
 module.exports = convertables;
 
-},{"../../../../data":8}],61:[function(_dereq_,module,exports){
+},{"../../../../data":8}],62:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -3641,7 +3692,7 @@ module.exports = {
   toVerb: _dereq_('./toVerb')
 };
 
-},{"./toAdverb":62,"./toComparative":63,"./toNoun":64,"./toSuperlative":65,"./toVerb":66}],62:[function(_dereq_,module,exports){
+},{"./toAdverb":63,"./toComparative":64,"./toNoun":65,"./toSuperlative":66,"./toVerb":67}],63:[function(_dereq_,module,exports){
 //turn 'quick' into 'quickly'
 'use strict';
 
@@ -3772,7 +3823,7 @@ var adj_to_adv = function adj_to_adv(str) {
 
 module.exports = adj_to_adv;
 
-},{}],63:[function(_dereq_,module,exports){
+},{}],64:[function(_dereq_,module,exports){
 //turn 'quick' into 'quickly'
 'use strict';
 
@@ -3859,7 +3910,7 @@ var to_comparative = function to_comparative(str) {
 
 module.exports = to_comparative;
 
-},{"./convertable":60}],64:[function(_dereq_,module,exports){
+},{"./convertable":61}],65:[function(_dereq_,module,exports){
 'use strict';
 //convert 'cute' to 'cuteness'
 
@@ -3932,7 +3983,7 @@ var to_noun = function to_noun(w) {
 
 module.exports = to_noun;
 
-},{}],65:[function(_dereq_,module,exports){
+},{}],66:[function(_dereq_,module,exports){
 //turn 'quick' into 'quickest'
 'use strict';
 
@@ -4020,7 +4071,7 @@ var to_superlative = function to_superlative(str) {
 
 module.exports = to_superlative;
 
-},{"./convertable":60}],66:[function(_dereq_,module,exports){
+},{"./convertable":61}],67:[function(_dereq_,module,exports){
 'use strict';
 
 var data = _dereq_('../../../../data');
@@ -4053,7 +4104,7 @@ var toVerb = function toVerb(str) {
 };
 module.exports = toVerb;
 
-},{"../../../../data":8}],67:[function(_dereq_,module,exports){
+},{"../../../../data":8}],68:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4103,7 +4154,7 @@ var Adverbs = function (_Text) {
 
 module.exports = Adverbs;
 
-},{"../../index":43,"./toAdjective":68}],68:[function(_dereq_,module,exports){
+},{"../../index":43,"./toAdjective":69}],69:[function(_dereq_,module,exports){
 //turns 'quickly' into 'quick'
 'use strict';
 
@@ -4167,7 +4218,7 @@ var toAdjective = function toAdjective(str) {
 // console.log(toAdjective('marvelously') === 'marvelous')
 module.exports = toAdjective;
 
-},{}],69:[function(_dereq_,module,exports){
+},{}],70:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4205,7 +4256,7 @@ var Clauses = function (_Text) {
 
 module.exports = Clauses;
 
-},{"../../index":43}],70:[function(_dereq_,module,exports){
+},{"../../index":43}],71:[function(_dereq_,module,exports){
 'use strict';
 
 //the plumbing to turn two words into a contraction
@@ -4285,7 +4336,7 @@ var contract = function contract(ts) {
 
 module.exports = contract;
 
-},{}],71:[function(_dereq_,module,exports){
+},{}],72:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4352,12 +4403,11 @@ var Contraction = function (_Terms) {
 
 module.exports = Contraction;
 
-},{"../../paths":56,"./contract":70}],72:[function(_dereq_,module,exports){
+},{"../../paths":57,"./contract":71}],73:[function(_dereq_,module,exports){
 'use strict';
 //find contractable, expanded-contractions
 
 var find = function find(r) {
-  // r.check();
   var remain = r.not('#Contraction');
   var m = remain.match('(#Noun|#QuestionWord) (#Copula|did|do|have|had|could|would|will)');
   m.concat(remain.match('(they|we|you|i) have'));
@@ -4370,7 +4420,7 @@ var find = function find(r) {
 };
 module.exports = find;
 
-},{}],73:[function(_dereq_,module,exports){
+},{}],74:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4464,7 +4514,7 @@ var Contractions = function (_Text) {
 
 module.exports = Contractions;
 
-},{"../../index":43,"./contraction":71,"./findPossible":72}],74:[function(_dereq_,module,exports){
+},{"../../index":43,"./contraction":72,"./findPossible":73}],75:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4512,7 +4562,7 @@ var Date = function (_Terms) {
 
 module.exports = Date;
 
-},{"../../paths":56,"./parseDate":76,"./parsePunt":77,"./parseRelative":78,"./parseSection":79}],75:[function(_dereq_,module,exports){
+},{"../../paths":57,"./parseDate":77,"./parsePunt":78,"./parseRelative":79,"./parseSection":80}],76:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4585,7 +4635,7 @@ var Dates = function (_Text) {
 
 module.exports = Dates;
 
-},{"../../index":43,"./date":74,"./weekday":82}],76:[function(_dereq_,module,exports){
+},{"../../index":43,"./date":75,"./weekday":83}],77:[function(_dereq_,module,exports){
 'use strict';
 
 var parseTime = _dereq_('./parseTime');
@@ -4679,7 +4729,7 @@ var parseDate = function parseDate(r) {
 };
 module.exports = parseDate;
 
-},{"./parseTime":80,"./weekday":82}],77:[function(_dereq_,module,exports){
+},{"./parseTime":81,"./weekday":83}],78:[function(_dereq_,module,exports){
 'use strict';
 //parse '5 days before', 'three weeks after'..
 
@@ -4730,7 +4780,7 @@ var parsePunt = function parsePunt(r) {
 };
 module.exports = parsePunt;
 
-},{}],78:[function(_dereq_,module,exports){
+},{}],79:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -4751,7 +4801,7 @@ var parseRelative = function parseRelative(r) {
 };
 module.exports = parseRelative;
 
-},{}],79:[function(_dereq_,module,exports){
+},{}],80:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -4775,7 +4825,7 @@ var parseSection = function parseSection(r) {
 };
 module.exports = parseSection;
 
-},{}],80:[function(_dereq_,module,exports){
+},{}],81:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -4839,7 +4889,7 @@ var parseTime = function parseTime(r) {
 };
 module.exports = parseTime;
 
-},{}],81:[function(_dereq_,module,exports){
+},{}],82:[function(_dereq_,module,exports){
 'use strict';
 
 //follow the javascript scheme
@@ -4863,7 +4913,7 @@ exports.shortDays = {
   'sat': 6
 };
 
-},{}],82:[function(_dereq_,module,exports){
+},{}],83:[function(_dereq_,module,exports){
 'use strict';
 
 var data = _dereq_('./data');
@@ -4902,7 +4952,7 @@ module.exports = {
   }
 };
 
-},{"./data":81}],83:[function(_dereq_,module,exports){
+},{"./data":82}],84:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4949,7 +4999,7 @@ var HashTags = function (_Text) {
 
 module.exports = HashTags;
 
-},{"../../index":43}],84:[function(_dereq_,module,exports){
+},{"../../index":43}],85:[function(_dereq_,module,exports){
 'use strict';
 
 var uncountables = _dereq_('../../../data').uncountables;
@@ -4981,7 +5031,7 @@ var hasPlural = function hasPlural(t) {
 
 module.exports = hasPlural;
 
-},{"../../../data":8}],85:[function(_dereq_,module,exports){
+},{"../../../data":8}],86:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5063,7 +5113,7 @@ var Nouns = function (_Text) {
 
 module.exports = Nouns;
 
-},{"../../index":43,"./noun":93}],86:[function(_dereq_,module,exports){
+},{"../../index":43,"./noun":94}],87:[function(_dereq_,module,exports){
 'use strict';
 
 var irregulars = _dereq_('../../paths').data.irregular_plurals;
@@ -5128,7 +5178,7 @@ var isPlural = function isPlural(t) {
 
 module.exports = isPlural;
 
-},{"../../paths":56,"./methods/data/indicators":88}],87:[function(_dereq_,module,exports){
+},{"../../paths":57,"./methods/data/indicators":89}],88:[function(_dereq_,module,exports){
 'use strict';
 
 //chooses an indefinite aricle 'a/an' for a word
@@ -5189,7 +5239,7 @@ var makeArticle = function makeArticle(t) {
 
 module.exports = makeArticle;
 
-},{}],88:[function(_dereq_,module,exports){
+},{}],89:[function(_dereq_,module,exports){
 'use strict';
 //similar to plural/singularize rules, but not the same
 
@@ -5202,7 +5252,7 @@ module.exports = {
   plural_indicators: plural_indicators
 };
 
-},{}],89:[function(_dereq_,module,exports){
+},{}],90:[function(_dereq_,module,exports){
 'use strict';
 
 //patterns for turning 'bus' to 'buses'
@@ -5213,7 +5263,7 @@ module.exports = [[/(ax|test)is$/i, '$1es'], [/(octop|vir|radi|nucle|fung|cact|s
   };
 });
 
-},{}],90:[function(_dereq_,module,exports){
+},{}],91:[function(_dereq_,module,exports){
 'use strict';
 
 //patterns for turning 'dwarves' to 'dwarf'
@@ -5224,7 +5274,7 @@ module.exports = [[/([^v])ies$/i, '$1y'], [/ises$/i, 'isis'], [/(kn|[^o]l|w)ives
   };
 });
 
-},{}],91:[function(_dereq_,module,exports){
+},{}],92:[function(_dereq_,module,exports){
 'use strict';
 
 var irregulars = _dereq_('../../../../data').irregular_plurals.toPlural;
@@ -5257,7 +5307,7 @@ var pluralize = function pluralize(str) {
 
 module.exports = pluralize;
 
-},{"../../../../data":8,"./data/pluralRules":89}],92:[function(_dereq_,module,exports){
+},{"../../../../data":8,"./data/pluralRules":90}],93:[function(_dereq_,module,exports){
 'use strict';
 
 var irregulars = _dereq_('../../../../data').irregular_plurals.toSingle;
@@ -5291,7 +5341,7 @@ var toSingle = function toSingle(str) {
 module.exports = toSingle;
 // console.log(toSingle('days'))
 
-},{"../../../../data":8,"./data/singleRules":90}],93:[function(_dereq_,module,exports){
+},{"../../../../data":8,"./data/singleRules":91}],94:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5377,7 +5427,7 @@ var Noun = function (_Terms) {
 
 module.exports = Noun;
 
-},{"../../paths":56,"./hasPlural":84,"./isPlural":86,"./makeArticle":87,"./methods/pluralize":91,"./methods/singularize":92}],94:[function(_dereq_,module,exports){
+},{"../../paths":57,"./hasPlural":85,"./isPlural":87,"./makeArticle":88,"./methods/pluralize":92,"./methods/singularize":93}],95:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5426,7 +5476,7 @@ var Organizations = function (_Text) {
 
 module.exports = Organizations;
 
-},{"../../index":43}],95:[function(_dereq_,module,exports){
+},{"../../index":43}],96:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../../paths').log;
@@ -5458,7 +5508,7 @@ var gender = function gender(firstName) {
 };
 module.exports = gender;
 
-},{"../../paths":56}],96:[function(_dereq_,module,exports){
+},{"../../paths":57}],97:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5516,7 +5566,7 @@ var People = function (_Text) {
 
 module.exports = People;
 
-},{"../../index":43,"./person":97}],97:[function(_dereq_,module,exports){
+},{"../../index":43,"./person":98}],98:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5625,7 +5675,7 @@ var Person = function (_Terms) {
 
 module.exports = Person;
 
-},{"../../paths":56,"./guessGender":95}],98:[function(_dereq_,module,exports){
+},{"../../paths":57,"./guessGender":96}],99:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5673,7 +5723,7 @@ var PhoneNumbers = function (_Text) {
 
 module.exports = PhoneNumbers;
 
-},{"../../index":43}],99:[function(_dereq_,module,exports){
+},{"../../index":43}],100:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5726,7 +5776,7 @@ var Places = function (_Text) {
 
 module.exports = Places;
 
-},{"../../index":43,"./place":100}],100:[function(_dereq_,module,exports){
+},{"../../index":43,"./place":101}],101:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5769,7 +5819,7 @@ var Place = function (_Terms) {
 
 module.exports = Place;
 
-},{"../../paths":56}],101:[function(_dereq_,module,exports){
+},{"../../paths":57}],102:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5903,7 +5953,7 @@ var Sentences = function (_Text) {
 
 module.exports = Sentences;
 
-},{"../../index":43,"./sentence":103}],102:[function(_dereq_,module,exports){
+},{"../../index":43,"./sentence":104}],103:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5944,7 +5994,7 @@ var Questions = function (_Text) {
 
 module.exports = Questions;
 
-},{"../index":101}],103:[function(_dereq_,module,exports){
+},{"../index":102}],104:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6092,7 +6142,7 @@ var Sentence = function (_Terms) {
 
 module.exports = Sentence;
 
-},{"../../paths":56,"../verbs/verb":138,"./toNegative":105}],104:[function(_dereq_,module,exports){
+},{"../../paths":57,"../verbs/verb":139,"./toNegative":106}],105:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6132,7 +6182,7 @@ var Statements = function (_Text) {
 
 module.exports = Statements;
 
-},{"../index":101}],105:[function(_dereq_,module,exports){
+},{"../index":102}],106:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -6167,7 +6217,7 @@ var toNegative = function toNegative(ts) {
 };
 module.exports = toNegative;
 
-},{}],106:[function(_dereq_,module,exports){
+},{}],107:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6230,7 +6280,7 @@ var Terms = function (_Text) {
 
 module.exports = Terms;
 
-},{"../../index":43}],107:[function(_dereq_,module,exports){
+},{"../../index":43}],108:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6283,7 +6333,7 @@ var Things = function (_Text) {
 
 module.exports = Things;
 
-},{"../../index":43}],108:[function(_dereq_,module,exports){
+},{"../../index":43}],109:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6330,7 +6380,7 @@ var Urls = function (_Text) {
 
 module.exports = Urls;
 
-},{"../../index":43}],109:[function(_dereq_,module,exports){
+},{"../../index":43}],110:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6447,7 +6497,7 @@ var Values = function (_Text) {
 
 module.exports = Values;
 
-},{"../../index":43,"./value":121}],110:[function(_dereq_,module,exports){
+},{"../../index":43,"./value":122}],111:[function(_dereq_,module,exports){
 'use strict';
 
 var toNumber = _dereq_('../toNumber');
@@ -6482,12 +6532,12 @@ var numOrdinal = function numOrdinal(ts) {
 
 module.exports = numOrdinal;
 
-},{"../toNumber":116}],111:[function(_dereq_,module,exports){
+},{"../toNumber":117}],112:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = _dereq_('../../paths');
 
-},{"../../paths":56}],112:[function(_dereq_,module,exports){
+},{"../../paths":57}],113:[function(_dereq_,module,exports){
 'use strict';
 
 var toNumber = _dereq_('../toNumber');
@@ -6505,7 +6555,7 @@ var textOrdinal = function textOrdinal(ts) {
 
 module.exports = textOrdinal;
 
-},{"../../../paths":56,"../toNumber":116,"../toText":120}],113:[function(_dereq_,module,exports){
+},{"../../../paths":57,"../toNumber":117,"../toText":121}],114:[function(_dereq_,module,exports){
 'use strict';
 
 var niceNumber = function niceNumber(num) {
@@ -6524,7 +6574,7 @@ var niceNumber = function niceNumber(num) {
 };
 module.exports = niceNumber;
 
-},{}],114:[function(_dereq_,module,exports){
+},{}],115:[function(_dereq_,module,exports){
 'use strict';
 
 var p = _dereq_('../paths');
@@ -6543,7 +6593,7 @@ module.exports = {
   multiples: multiples
 };
 
-},{"../paths":111}],115:[function(_dereq_,module,exports){
+},{"../paths":112}],116:[function(_dereq_,module,exports){
 'use strict';
 
 //support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
@@ -6572,7 +6622,7 @@ var findModifiers = function findModifiers(str) {
 
 module.exports = findModifiers;
 
-},{}],116:[function(_dereq_,module,exports){
+},{}],117:[function(_dereq_,module,exports){
 'use strict';
 
 var parseNumeric = _dereq_('./parseNumeric');
@@ -6729,7 +6779,7 @@ var parse = function parse(ts) {
 
 module.exports = parse;
 
-},{"../paths":111,"./data":114,"./findModifiers":115,"./parseDecimals":117,"./parseNumeric":118,"./validate":119}],117:[function(_dereq_,module,exports){
+},{"../paths":112,"./data":115,"./findModifiers":116,"./parseDecimals":118,"./parseNumeric":119,"./validate":120}],118:[function(_dereq_,module,exports){
 'use strict';
 
 var words = _dereq_('./data');
@@ -6756,7 +6806,7 @@ var parseDecimals = function parseDecimals(arr) {
 
 module.exports = parseDecimals;
 
-},{"./data":114}],118:[function(_dereq_,module,exports){
+},{"./data":115}],119:[function(_dereq_,module,exports){
 'use strict';
 //parse a string like "4,200.1" into Number 4200.1
 
@@ -6779,7 +6829,7 @@ var parseNumeric = function parseNumeric(str) {
 
 module.exports = parseNumeric;
 
-},{}],119:[function(_dereq_,module,exports){
+},{}],120:[function(_dereq_,module,exports){
 'use strict';
 
 var words = _dereq_('./data');
@@ -6803,7 +6853,7 @@ var isValid = function isValid(w, has) {
 };
 module.exports = isValid;
 
-},{"./data":114}],120:[function(_dereq_,module,exports){
+},{"./data":115}],121:[function(_dereq_,module,exports){
 'use strict';
 // turns an integer/float into a textual number, like 'fifty-five'
 
@@ -6902,7 +6952,7 @@ module.exports = to_text;
 
 // console.log(to_text(-1000.8));
 
-},{}],121:[function(_dereq_,module,exports){
+},{}],122:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -7083,7 +7133,7 @@ Value.prototype.clone = function () {
 };
 module.exports = Value;
 
-},{"../../paths":56,"./numOrdinal":110,"./textOrdinal":112,"./toNiceNumber":113,"./toNumber":116,"./toText":120}],122:[function(_dereq_,module,exports){
+},{"../../paths":57,"./numOrdinal":111,"./textOrdinal":113,"./toNiceNumber":114,"./toNumber":117,"./toText":121}],123:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -7216,7 +7266,7 @@ var Verbs = function (_Text) {
 
 module.exports = Verbs;
 
-},{"../../index":43,"./verb":138}],123:[function(_dereq_,module,exports){
+},{"../../index":43,"./verb":139}],124:[function(_dereq_,module,exports){
 'use strict';
 
 var predict = _dereq_('./methods/predict');
@@ -7319,7 +7369,7 @@ var interpret = function interpret(ts) {
 };
 module.exports = interpret;
 
-},{"./methods/predict":132}],124:[function(_dereq_,module,exports){
+},{"./methods/predict":133}],125:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = [{
@@ -7487,7 +7537,7 @@ module.exports = [{
   }
 }];
 
-},{}],125:[function(_dereq_,module,exports){
+},{}],126:[function(_dereq_,module,exports){
 'use strict';
 
 var checkIrregulars = _dereq_('./irregulars');
@@ -7527,7 +7577,7 @@ var fasterConjugate = function fasterConjugate(inf) {
 module.exports = fasterConjugate;
 // console.log(fasterConjugate('walk'));
 
-},{"./generic":126,"./irregulars":128,"./suffixes":129}],126:[function(_dereq_,module,exports){
+},{"./generic":127,"./irregulars":129,"./suffixes":130}],127:[function(_dereq_,module,exports){
 'use strict';
 //non-specifc, 'hail-mary' transforms from infinitive, into other forms
 
@@ -7593,7 +7643,7 @@ var generic = {
 
 module.exports = generic;
 
-},{"../../../../../fns":39}],127:[function(_dereq_,module,exports){
+},{"../../../../../fns":39}],128:[function(_dereq_,module,exports){
 'use strict';
 
 var checkIrregulars = _dereq_('./irregulars');
@@ -7668,7 +7718,7 @@ var conjugate = function conjugate(t, verbose) {
 
 module.exports = conjugate;
 
-},{"../predict":132,"../toInfinitive":135,"./generic":126,"./irregulars":128,"./suffixes":129,"./toActor":130,"./toAdjective":131}],128:[function(_dereq_,module,exports){
+},{"../predict":133,"../toInfinitive":136,"./generic":127,"./irregulars":129,"./suffixes":130,"./toActor":131,"./toAdjective":132}],129:[function(_dereq_,module,exports){
 'use strict';
 
 var irregulars = _dereq_('../../../../../data').irregular_verbs;
@@ -7699,7 +7749,7 @@ var checkIrregulars = function checkIrregulars(str) {
 module.exports = checkIrregulars;
 // console.log(checkIrregulars('bit'));
 
-},{"../../../../../data":8}],129:[function(_dereq_,module,exports){
+},{"../../../../../data":8}],130:[function(_dereq_,module,exports){
 'use strict';
 
 var rules = _dereq_('./data/rules');
@@ -7732,7 +7782,7 @@ var suffixPass = function suffixPass(inf) {
 
 module.exports = suffixPass;
 
-},{"./data/rules":124}],130:[function(_dereq_,module,exports){
+},{"./data/rules":125}],131:[function(_dereq_,module,exports){
 'use strict';
 //turn 'walk' into 'walker'
 
@@ -7797,7 +7847,7 @@ var toActor = function toActor(inf) {
 
 module.exports = toActor;
 
-},{}],131:[function(_dereq_,module,exports){
+},{}],132:[function(_dereq_,module,exports){
 'use strict';
 //turn a infinitiveVerb, like "walk" into an adjective like "walkable"
 
@@ -7851,7 +7901,7 @@ var toAdjective = function toAdjective(str) {
 module.exports = toAdjective;
 // console.log(toAdjective('buy'));
 
-},{}],132:[function(_dereq_,module,exports){
+},{}],133:[function(_dereq_,module,exports){
 'use strict';
 
 var fns = _dereq_('../../../../../fns'); //jaja!
@@ -7896,7 +7946,7 @@ var predictForm = function predictForm(term, verbose) {
 
 module.exports = predictForm;
 
-},{"../../../../../fns":39,"./suffix_rules":133}],133:[function(_dereq_,module,exports){
+},{"../../../../../fns":39,"./suffix_rules":134}],134:[function(_dereq_,module,exports){
 'use strict';
 //suffix signals for verb tense, generated from test data
 
@@ -7919,7 +7969,7 @@ for (var i = 0; i < l; i++) {
 }
 module.exports = suffix_rules;
 
-},{}],134:[function(_dereq_,module,exports){
+},{}],135:[function(_dereq_,module,exports){
 'use strict';
 //turn a infinitiveVerb, like "walk" into an adjective like "walkable"
 
@@ -7972,7 +8022,7 @@ var toAdjective = function toAdjective(str) {
 
 module.exports = toAdjective;
 
-},{}],135:[function(_dereq_,module,exports){
+},{}],136:[function(_dereq_,module,exports){
 'use strict';
 //turn any verb into its infinitive form
 
@@ -8016,7 +8066,7 @@ var toInfinitive = function toInfinitive(t) {
 
 module.exports = toInfinitive;
 
-},{"../../../../../data":8,"../predict":132,"./rules":136}],136:[function(_dereq_,module,exports){
+},{"../../../../../data":8,"../predict":133,"./rules":137}],137:[function(_dereq_,module,exports){
 'use strict';
 //rules for turning a verb into infinitive form
 
@@ -8170,7 +8220,7 @@ var rules = {
 };
 module.exports = rules;
 
-},{}],137:[function(_dereq_,module,exports){
+},{}],138:[function(_dereq_,module,exports){
 'use strict';
 //turns a verb negative - may not have enough information to do it properly
 // (eg 'did not eat' vs 'does not eat') - needs the noun
@@ -8233,7 +8283,7 @@ var toNegative = function toNegative(ts, plural) {
 };
 module.exports = toNegative;
 
-},{"./methods/toInfinitive":135}],138:[function(_dereq_,module,exports){
+},{"./methods/toInfinitive":136}],139:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -8354,7 +8404,7 @@ var Verb = function (_Terms) {
 
 module.exports = Verb;
 
-},{"../../paths":56,"./interpret":123,"./methods/conjugate":127,"./methods/toAdjective":134,"./toNegative":137}],139:[function(_dereq_,module,exports){
+},{"../../paths":57,"./interpret":124,"./methods/conjugate":128,"./methods/toAdjective":135,"./toNegative":138}],140:[function(_dereq_,module,exports){
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
@@ -8434,7 +8484,24 @@ var sentence_parser = function sentence_parser(text) {
 module.exports = sentence_parser;
 // console.log(sentence_parser('john f. kennedy'));
 
-},{"../data/index":8,"./paths":56}],140:[function(_dereq_,module,exports){
+},{"../data/index":8,"./paths":57}],141:[function(_dereq_,module,exports){
+'use strict';
+
+//used for pretty-printing on the server-side
+var colors = {
+  blue: ['Noun', 'Plural', 'Singular', 'Pronoun', 'Possessive', 'Place', 'Person', 'City'],
+  red: ['Adjective', 'Adverb'],
+  green: ['Verb', 'Auxillary', 'Negative', 'PastTense', 'PresentTense', 'FutureTense', 'Modal', 'Infinitive', 'Gerund', 'Copula'],
+  cyan: ['Preposition', 'Conjunction', 'Determiner']
+};
+module.exports = Object.keys(colors).reduce(function (h, c) {
+  colors[c].forEach(function (str) {
+    h[str] = c;
+  });
+  return h;
+}, {});
+
+},{}],142:[function(_dereq_,module,exports){
 'use strict';
 
 //list of inconsistent parts-of-speech
@@ -8481,7 +8548,7 @@ module.exports = find;
 
 // console.log(find('Person'));
 
-},{}],141:[function(_dereq_,module,exports){
+},{}],143:[function(_dereq_,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -8554,66 +8621,62 @@ module.exports = all;
 // console.log(all.Duration);
 // console.log(all_children(tree['NounPhrase']));
 
-},{"./conflicts":140,"./tree":142}],142:[function(_dereq_,module,exports){
+},{"./conflicts":142,"./tree":144}],144:[function(_dereq_,module,exports){
 "use strict";
 
 //the POS tags we use, according to their dependencies
 //(dont make it too deep, cause fns aren't properly clever-enough)
 module.exports = {
-  NounPhrase: {
-    Noun: {
-      Singular: {
-        Pronoun: true,
-        Person: {
-          FirstName: {
-            MaleName: true,
-            FemaleName: true
-          },
-          LastName: true,
-          Honorific: true
+  Noun: {
+    Singular: {
+      Pronoun: true,
+      Person: {
+        FirstName: {
+          MaleName: true,
+          FemaleName: true
         },
-        Place: {
-          Country: true,
-          City: true,
-          Address: true
-        },
-        Organization: {
-          SportsTeam: true,
-          Company: true,
-          School: true
-        }
+        LastName: true,
+        Honorific: true
       },
-      Plural: true,
-      Actor: true,
-      Unit: true,
-      Demonym: true,
-      Possessive: true
+      Place: {
+        Country: true,
+        City: true,
+        Address: true
+      },
+      Organization: {
+        SportsTeam: true,
+        Company: true,
+        School: true
+      }
     },
-    Date: { //not a noun, but usually is
-      Month: true,
-      WeekDay: true,
-      RelativeDay: true,
-      Year: true,
-      Duration: true,
-      Time: true,
-      Holiday: true
-    }
+    Plural: true,
+    Actor: true,
+    Unit: true,
+    Demonym: true,
+    Possessive: true
   },
-  VerbPhrase: {
-    Verb: {
-      PresentTense: {
-        Infinitive: true,
-        Gerund: true
-      },
-      PastTense: true,
-      PerfectTense: true,
-      FuturePerfect: true,
-      Pluperfect: true,
-      Copula: true,
-      Modal: true,
-      Participle: true,
-      Particle: true
-    }
+  Date: { //not a noun, but usually is
+    Month: true,
+    WeekDay: true,
+    RelativeDay: true,
+    Year: true,
+    Duration: true,
+    Time: true,
+    Holiday: true
+  },
+  Verb: {
+    PresentTense: {
+      Infinitive: true,
+      Gerund: true
+    },
+    PastTense: true,
+    PerfectTense: true,
+    FuturePerfect: true,
+    Pluperfect: true,
+    Copula: true,
+    Modal: true,
+    Participle: true,
+    Particle: true
   },
   Adjective: {
     Comparative: true,
@@ -8658,13 +8721,13 @@ module.exports = {
   Acronym: true,
   //phrases
   Quotation: true,
-  ValuePhrase: true,
-  AdjectivePhrase: true,
+  // ValuePhrase: true,
+  // AdjectivePhrase: true,
   ConditionPhrase: true
 
 };
 
-},{}],143:[function(_dereq_,module,exports){
+},{}],145:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -8748,7 +8811,7 @@ Term = _dereq_('./methods/punctuation')(Term);
 
 module.exports = Term;
 
-},{"./methods/case":144,"./methods/isA":145,"./methods/normalize":146,"./methods/out":150,"./methods/punctuation":152,"./methods/tag":153,"./paths":157,"./whitespace":158}],144:[function(_dereq_,module,exports){
+},{"./methods/case":146,"./methods/isA":147,"./methods/normalize":148,"./methods/out":152,"./methods/punctuation":154,"./methods/tag":155,"./paths":159,"./whitespace":160}],146:[function(_dereq_,module,exports){
 'use strict';
 
 var addMethods = function addMethods(Term) {
@@ -8792,7 +8855,7 @@ var addMethods = function addMethods(Term) {
 
 module.exports = addMethods;
 
-},{}],145:[function(_dereq_,module,exports){
+},{}],147:[function(_dereq_,module,exports){
 'use strict';
 
 var addMethods = function addMethods(Term) {
@@ -8853,7 +8916,7 @@ var addMethods = function addMethods(Term) {
 
 module.exports = addMethods;
 
-},{}],146:[function(_dereq_,module,exports){
+},{}],148:[function(_dereq_,module,exports){
 'use strict';
 
 var addNormal = _dereq_('./normalize').addNormal;
@@ -8877,7 +8940,7 @@ var addMethods = function addMethods(Term) {
 
 module.exports = addMethods;
 
-},{"./normalize":147,"./root":148}],147:[function(_dereq_,module,exports){
+},{"./normalize":149,"./root":150}],149:[function(_dereq_,module,exports){
 'use strict';
 
 var killUnicode = _dereq_('./unicode');
@@ -8921,7 +8984,7 @@ exports.addNormal = function (term) {
 
 // console.log(normalize('Dr. V Cooper'));
 
-},{"./unicode":149}],148:[function(_dereq_,module,exports){
+},{"./unicode":151}],150:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -8938,7 +9001,7 @@ var rootForm = function rootForm(term) {
 
 module.exports = rootForm;
 
-},{}],149:[function(_dereq_,module,exports){
+},{}],151:[function(_dereq_,module,exports){
 'use strict';
 //a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
 //approximate visual (not semantic or phonetic) relationship between unicode and ascii characters
@@ -8996,7 +9059,7 @@ var killUnicode = function killUnicode(str) {
 module.exports = killUnicode;
 // console.log(fixUnicode('bjŏȒk'));
 
-},{}],150:[function(_dereq_,module,exports){
+},{}],152:[function(_dereq_,module,exports){
 'use strict';
 
 var _arguments = arguments;
@@ -9025,28 +9088,22 @@ var methods = {
     };
   },
   /** check-print information for the console */
-  check: function check() {
+  debug: function debug() {
     var tags = Object.keys(this.tag).map(function (tag) {
-      // if (colors[tag]) {
-      //   return colors[tag](tag);
-      // }
-      return tag;
+      return fns.printTag(tag);
     }).join(', ');
     var word = this.text;
     // word = this.whitespace.before + word + this.whitespace.after;
-    word = '\'' + (word || '-') + '\'';
+    word = '\'' + fns.yellow(word || '-') + '\'';
     if (this.dirty) {
-      word += '*';
+      // word += fns.red('*');
     }
     var silent = '';
     if (this.silent_term) {
       silent = '[' + this.silent_term + ']';
     }
-    // word += fns.leftPad(silent, 10);
     word = fns.leftPad(word, 25);
-    word += fns.leftPad(silent, 1);
-    // word = fns.leftPad(word, 32);
-    // word = fns.rightPad(word, 28);
+    word += fns.leftPad(silent, 5);
     console.log('   ' + word + '   ' + '     - ' + tags);
   }
 };
@@ -9065,7 +9122,7 @@ var addMethods = function addMethods(Term) {
 
 module.exports = addMethods;
 
-},{"../../paths":157,"./renderHtml":151}],151:[function(_dereq_,module,exports){
+},{"../../paths":159,"./renderHtml":153}],153:[function(_dereq_,module,exports){
 'use strict';
 //turn xml special characters into apersand-encoding.
 //i'm not sure this is perfectly safe.
@@ -9121,7 +9178,7 @@ var renderHtml = function renderHtml(t) {
 
 module.exports = renderHtml;
 
-},{}],152:[function(_dereq_,module,exports){
+},{}],154:[function(_dereq_,module,exports){
 'use strict';
 
 var addMethods = function addMethods(Term) {
@@ -9173,7 +9230,7 @@ var addMethods = function addMethods(Term) {
 
 module.exports = addMethods;
 
-},{}],153:[function(_dereq_,module,exports){
+},{}],155:[function(_dereq_,module,exports){
 'use strict';
 
 var setTag = _dereq_('./setTag');
@@ -9216,9 +9273,9 @@ var addMethods = function addMethods(Term) {
 
 module.exports = addMethods;
 
-},{"./paths":154,"./setTag":155,"./unTag":156}],154:[function(_dereq_,module,exports){
-arguments[4][111][0].apply(exports,arguments)
-},{"../../paths":157,"dup":111}],155:[function(_dereq_,module,exports){
+},{"./paths":156,"./setTag":157,"./unTag":158}],156:[function(_dereq_,module,exports){
+arguments[4][112][0].apply(exports,arguments)
+},{"../../paths":159,"dup":112}],157:[function(_dereq_,module,exports){
 'use strict';
 //set a term as a particular Part-of-speech
 
@@ -9271,7 +9328,7 @@ var tagAll = function tagAll(term, tag, reason) {
 module.exports = tagAll;
 // console.log(tagset['Person']);
 
-},{"./paths":154,"./unTag":156}],156:[function(_dereq_,module,exports){
+},{"./paths":156,"./unTag":158}],158:[function(_dereq_,module,exports){
 'use strict';
 //set a term as a particular Part-of-speech
 
@@ -9310,7 +9367,7 @@ var unTagAll = function unTagAll(term, tag, reason) {
 };
 module.exports = unTagAll;
 
-},{"./paths":154}],157:[function(_dereq_,module,exports){
+},{"./paths":156}],159:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -9320,7 +9377,7 @@ module.exports = {
   tags: _dereq_('../tags')
 };
 
-},{"../data":8,"../fns":39,"../log":41,"../tags":141}],158:[function(_dereq_,module,exports){
+},{"../data":8,"../fns":39,"../log":41,"../tags":143}],160:[function(_dereq_,module,exports){
 'use strict';
 //seperate the 'meat' from the trailing/leading whitespace.
 //works in concert with ./src/result/tokenize.js
@@ -9349,7 +9406,7 @@ var build_whitespace = function build_whitespace(str) {
 };
 module.exports = build_whitespace;
 
-},{}],159:[function(_dereq_,module,exports){
+},{}],161:[function(_dereq_,module,exports){
 'use strict';
 
 var Term = _dereq_('../term');
@@ -9408,7 +9465,7 @@ var fromString = function fromString(str) {
 };
 module.exports = fromString;
 
-},{"../term":143}],160:[function(_dereq_,module,exports){
+},{"../term":145}],162:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -9556,7 +9613,7 @@ Terms = _dereq_('./methods/split')(Terms);
 Terms = _dereq_('./methods/transform')(Terms);
 module.exports = Terms;
 
-},{"./build":159,"./match":161,"./match/not":167,"./methods/delete":168,"./methods/insert":169,"./methods/loops":170,"./methods/misc":171,"./methods/out":172,"./methods/replace":173,"./methods/split":174,"./methods/transform":175,"./tagger":189}],161:[function(_dereq_,module,exports){
+},{"./build":161,"./match":163,"./match/not":169,"./methods/delete":170,"./methods/insert":171,"./methods/loops":172,"./methods/misc":173,"./methods/out":174,"./methods/replace":175,"./methods/split":176,"./methods/transform":177,"./tagger":191}],163:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -9669,7 +9726,7 @@ var matchMethods = function matchMethods(Terms) {
 
 module.exports = matchMethods;
 
-},{"../../result/index":43,"./lib/startHere":165,"./lib/syntax":166}],162:[function(_dereq_,module,exports){
+},{"../../result/index":43,"./lib/startHere":167,"./lib/syntax":168}],164:[function(_dereq_,module,exports){
 'use strict';
 
 var fns = _dereq_('./paths').fns;
@@ -9734,7 +9791,7 @@ var isMatch = function isMatch(term, reg, verbose) {
 };
 module.exports = isMatch;
 
-},{"./paths":164}],163:[function(_dereq_,module,exports){
+},{"./paths":166}],165:[function(_dereq_,module,exports){
 'use strict';
 
 var fns = _dereq_('./paths').fns;
@@ -9767,7 +9824,7 @@ var lumpMatch = function lumpMatch(term, regs, reg_i) {
 
 module.exports = lumpMatch;
 
-},{"./paths":164}],164:[function(_dereq_,module,exports){
+},{"./paths":166}],166:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -9775,7 +9832,7 @@ module.exports = {
   log: _dereq_('../../../log')
 };
 
-},{"../../../fns":39,"../../../log":41}],165:[function(_dereq_,module,exports){
+},{"../../../fns":39,"../../../log":41}],167:[function(_dereq_,module,exports){
 'use strict';
 
 var lumpMatch = _dereq_('./lumpMatch');
@@ -9930,7 +9987,7 @@ var startHere = function startHere(ts, startAt, regs, verbose) {
 
 module.exports = startHere;
 
-},{"./isMatch":162,"./lumpMatch":163}],166:[function(_dereq_,module,exports){
+},{"./isMatch":164,"./lumpMatch":165}],168:[function(_dereq_,module,exports){
 'use strict';
 // parse a search lookup term find the regex-like syntax in this term
 
@@ -10019,7 +10076,7 @@ var parse_all = function parse_all(reg) {
 
 module.exports = parse_all;
 
-},{"./paths":164}],167:[function(_dereq_,module,exports){
+},{"./paths":166}],169:[function(_dereq_,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -10122,7 +10179,7 @@ var addfns = function addfns(Terms) {
 
 module.exports = addfns;
 
-},{"../../result/index":43,"./lib/startHere":165,"./lib/syntax":166}],168:[function(_dereq_,module,exports){
+},{"../../result/index":43,"./lib/startHere":167,"./lib/syntax":168}],170:[function(_dereq_,module,exports){
 'use strict';
 
 var mutate = _dereq_('../mutate');
@@ -10161,7 +10218,7 @@ var deleteMethods = function deleteMethods(Terms) {
 
 module.exports = deleteMethods;
 
-},{"../mutate":176}],169:[function(_dereq_,module,exports){
+},{"../mutate":178}],171:[function(_dereq_,module,exports){
 'use strict';
 
 var mutate = _dereq_('../mutate');
@@ -10263,7 +10320,7 @@ var insertMethods = function insertMethods(Terms) {
 
 module.exports = insertMethods;
 
-},{"../mutate":176}],170:[function(_dereq_,module,exports){
+},{"../mutate":178}],172:[function(_dereq_,module,exports){
 'use strict';
 //these methods are simply term-methods called in a loop
 
@@ -10291,7 +10348,7 @@ var addMehtods = function addMehtods(Terms) {
 
 module.exports = addMehtods;
 
-},{}],171:[function(_dereq_,module,exports){
+},{}],173:[function(_dereq_,module,exports){
 'use strict';
 
 var miscMethods = function miscMethods(Terms) {
@@ -10356,6 +10413,20 @@ var miscMethods = function miscMethods(Terms) {
         }
       }
       return n;
+    },
+    //number of characters in this match
+    chars: function chars() {
+      return this.terms.reduce(function (i, t) {
+        i += t.whitespace.before.length;
+        i += t.text.length;
+        i += t.whitespace.after.length;
+        return i;
+      }, 0);
+    },
+
+    //just .length
+    wordCount: function wordCount() {
+      return this.terms.length;
     }
   };
 
@@ -10368,8 +10439,10 @@ var miscMethods = function miscMethods(Terms) {
 
 module.exports = miscMethods;
 
-},{}],172:[function(_dereq_,module,exports){
+},{}],174:[function(_dereq_,module,exports){
 'use strict';
+
+var fns = _dereq_('../paths').fns;
 
 var methods = {
   text: function text(ts) {
@@ -10389,6 +10462,14 @@ var methods = {
     return terms.join(' ');
   },
 
+  grid: function grid(ts) {
+    var str = '  ';
+    str += ts.terms.reduce(function (s, t) {
+      s += fns.leftPad(t.text, 16);
+      return s;
+    }, '');
+    return str + '\n\n';
+  },
   /** no punctuation, fancy business **/
   root: function root(ts) {
     return ts.terms.filter(function (t) {
@@ -10403,9 +10484,9 @@ var methods = {
       return t.render.html();
     }).join(' ');
   },
-  check: function check(ts) {
+  debug: function debug(ts) {
     ts.terms.forEach(function (t) {
-      t.out('check');
+      t.out('debug');
     });
   }
 };
@@ -10422,15 +10503,15 @@ var renderMethods = function renderMethods(Terms) {
     return methods.text(this);
   };
   //check method
-  Terms.prototype.check = function () {
-    return methods.check(this);
+  Terms.prototype.debug = function () {
+    return methods.debug(this);
   };
   return Terms;
 };
 
 module.exports = renderMethods;
 
-},{}],173:[function(_dereq_,module,exports){
+},{"../paths":179}],175:[function(_dereq_,module,exports){
 'use strict';
 
 var mutate = _dereq_('../mutate');
@@ -10472,7 +10553,7 @@ var replaceMethods = function replaceMethods(Terms) {
 
 module.exports = replaceMethods;
 
-},{"../mutate":176}],174:[function(_dereq_,module,exports){
+},{"../mutate":178}],176:[function(_dereq_,module,exports){
 'use strict';
 
 //break apart a termlist into (before, match after)
@@ -10606,7 +10687,7 @@ var splitMethods = function splitMethods(Terms) {
 module.exports = splitMethods;
 exports = splitMethods;
 
-},{}],175:[function(_dereq_,module,exports){
+},{}],177:[function(_dereq_,module,exports){
 'use strict';
 
 var transforms = function transforms(Terms) {
@@ -10651,7 +10732,7 @@ var transforms = function transforms(Terms) {
 
 module.exports = transforms;
 
-},{}],176:[function(_dereq_,module,exports){
+},{}],178:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -10695,7 +10776,7 @@ exports.insertAt = function (terms, i, needle) {
   return terms;
 };
 
-},{}],177:[function(_dereq_,module,exports){
+},{}],179:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -10706,7 +10787,7 @@ module.exports = {
   Term: _dereq_('../term')
 };
 
-},{"../data/index":8,"../data/lexicon":9,"../fns":39,"../log":41,"../term":143}],178:[function(_dereq_,module,exports){
+},{"../data/index":8,"../data/lexicon":9,"../fns":39,"../log":41,"../term":145}],180:[function(_dereq_,module,exports){
 'use strict';
 
 var fixContraction = _dereq_('./fix');
@@ -10771,7 +10852,7 @@ var checkIrregulars = function checkIrregulars(ts) {
 };
 module.exports = checkIrregulars;
 
-},{"./fix":182}],179:[function(_dereq_,module,exports){
+},{"./fix":184}],181:[function(_dereq_,module,exports){
 'use strict';
 
 var fixContraction = _dereq_('./fix');
@@ -10854,7 +10935,7 @@ var hardOne = function hardOne(ts) {
 
 module.exports = hardOne;
 
-},{"./fix":182,"./split":184}],180:[function(_dereq_,module,exports){
+},{"./fix":184,"./split":186}],182:[function(_dereq_,module,exports){
 'use strict';
 
 var fixContraction = _dereq_('./fix');
@@ -10894,7 +10975,7 @@ var easyOnes = function easyOnes(ts) {
 };
 module.exports = easyOnes;
 
-},{"./fix":182,"./split":184}],181:[function(_dereq_,module,exports){
+},{"./fix":184,"./split":186}],183:[function(_dereq_,module,exports){
 'use strict';
 
 var numberRange = function numberRange(ts) {
@@ -10932,7 +11013,7 @@ var numberRange = function numberRange(ts) {
 };
 module.exports = numberRange;
 
-},{}],182:[function(_dereq_,module,exports){
+},{}],184:[function(_dereq_,module,exports){
 'use strict';
 
 var Term = _dereq_('../../../term');
@@ -10985,7 +11066,7 @@ var fixContraction = function fixContraction(ts, parts, i) {
 
 module.exports = fixContraction;
 
-},{"../../../term":143}],183:[function(_dereq_,module,exports){
+},{"../../../term":145}],185:[function(_dereq_,module,exports){
 'use strict';
 
 var irregulars = _dereq_('./01-irregulars');
@@ -11008,7 +11089,7 @@ var interpret = function interpret(ts) {
 
 module.exports = interpret;
 
-},{"./01-irregulars":178,"./02-hardOne":179,"./03-easyOnes":180,"./04-numberRange":181}],184:[function(_dereq_,module,exports){
+},{"./01-irregulars":180,"./02-hardOne":181,"./03-easyOnes":182,"./04-numberRange":183}],186:[function(_dereq_,module,exports){
 'use strict';
 
 var allowed = {
@@ -11052,7 +11133,7 @@ var splitContraction = function splitContraction(t) {
 };
 module.exports = splitContraction;
 
-},{}],185:[function(_dereq_,module,exports){
+},{}],187:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -11165,7 +11246,7 @@ var corrections = function corrections(r) {
 };
 module.exports = corrections;
 
-},{"../paths":194}],186:[function(_dereq_,module,exports){
+},{"../paths":196}],188:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -11277,7 +11358,7 @@ var corrections = function corrections(r) {
 
 module.exports = corrections;
 
-},{"../paths":194,"./date_corrections":185,"./person_corrections":187,"./verb_corrections":188}],187:[function(_dereq_,module,exports){
+},{"../paths":196,"./date_corrections":187,"./person_corrections":189,"./verb_corrections":190}],189:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -11317,7 +11398,7 @@ var corrections = function corrections(r) {
 };
 module.exports = corrections;
 
-},{"../paths":194}],188:[function(_dereq_,module,exports){
+},{"../paths":196}],190:[function(_dereq_,module,exports){
 'use strict';
 
 var corrections = function corrections(r) {
@@ -11342,7 +11423,7 @@ var corrections = function corrections(r) {
 };
 module.exports = corrections;
 
-},{}],189:[function(_dereq_,module,exports){
+},{}],191:[function(_dereq_,module,exports){
 'use strict';
 //the steps and processes of pos-tagging
 
@@ -11410,7 +11491,7 @@ var tagger = function tagger(ts) {
 
 module.exports = tagger;
 
-},{"./contraction":183,"./corrections":186,"./lumper/lexicon_lump":191,"./lumper/lump_three":192,"./lumper/lump_two":193,"./phrase":199,"./steps/01-punctuation_step":200,"./steps/02-lexicon_step":201,"./steps/03-capital_step":202,"./steps/04-web_step":203,"./steps/05-suffix_step":204,"./steps/06-neighbour_step":205,"./steps/07-noun_fallback":206,"./steps/08-date_step":207,"./steps/09-auxillary_step":208,"./steps/10-negation_step":209,"./steps/11-adverb_step":210,"./steps/12-phrasal_step":211,"./steps/13-comma_step":212,"./steps/14-possessive_step":213,"./steps/15-value_step":214,"./steps/16-acronym_step":215,"./steps/17-emoji_step":216,"./steps/18-person_step":217}],190:[function(_dereq_,module,exports){
+},{"./contraction":185,"./corrections":188,"./lumper/lexicon_lump":193,"./lumper/lump_three":194,"./lumper/lump_two":195,"./phrase":198,"./steps/01-punctuation_step":199,"./steps/02-lexicon_step":200,"./steps/03-capital_step":201,"./steps/04-web_step":202,"./steps/05-suffix_step":203,"./steps/06-neighbour_step":204,"./steps/07-noun_fallback":205,"./steps/08-date_step":206,"./steps/09-auxillary_step":207,"./steps/10-negation_step":208,"./steps/11-adverb_step":209,"./steps/12-phrasal_step":210,"./steps/13-comma_step":211,"./steps/14-possessive_step":212,"./steps/15-value_step":213,"./steps/16-acronym_step":214,"./steps/17-emoji_step":215,"./steps/18-person_step":216}],192:[function(_dereq_,module,exports){
 'use strict';
 
 var paths = _dereq_('../paths');
@@ -11444,7 +11525,7 @@ var combine = function combine(s, i) {
 
 module.exports = combine;
 
-},{"../paths":194}],191:[function(_dereq_,module,exports){
+},{"../paths":196}],193:[function(_dereq_,module,exports){
 'use strict';
 //check for "united" + "kingdom" in lexicon, and combine + tag it
 
@@ -11520,7 +11601,7 @@ var lexicon_lump = function lexicon_lump(ts) {
 
 module.exports = lexicon_lump;
 
-},{"../paths":194,"./combine":190}],192:[function(_dereq_,module,exports){
+},{"../paths":196,"./combine":192}],194:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -11573,7 +11654,7 @@ var lump_three = function lump_three(s) {
 
 module.exports = lump_three;
 
-},{"../paths":194,"./combine":190}],193:[function(_dereq_,module,exports){
+},{"../paths":196,"./combine":192}],195:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -11661,12 +11742,12 @@ var lump_two = function lump_two(s) {
 
 module.exports = lump_two;
 
-},{"../paths":194,"./combine":190}],194:[function(_dereq_,module,exports){
+},{"../paths":196,"./combine":192}],196:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = _dereq_('../paths');
 
-},{"../paths":177}],195:[function(_dereq_,module,exports){
+},{"../paths":179}],197:[function(_dereq_,module,exports){
 'use strict';
 
 //
@@ -11704,97 +11785,25 @@ var conditionPass = function conditionPass(r) {
 
 module.exports = conditionPass;
 
-},{}],196:[function(_dereq_,module,exports){
-'use strict';
-//
-
-var verbPhrase = function verbPhrase(r) {
-  r.match('#Verb').tag('VerbPhrase', 'verbphrase-verb');
-  //was quickly
-  r.match('#Adverb? #Verb #Adverb?').tag('VerbPhrase', 'verbphrase-verb');
-  //is not
-  r.match('#Verb #Negative').tag('VerbPhrase', 'verb-not');
-  //never is
-  r.match('never #Verb').tag('VerbPhrase', 'not-verb');
-  //'will have had'..
-  r.match('#Auxillary+').tag('VerbPhrase', '2');
-  // 'is'
-  r.match('#Copula').tag('VerbPhrase', '#3');
-  //'really will'..
-  r.match('#Adverb #Auxillary').tag('VerbPhrase', '#4');
-  //to go
-  r.match('to #Infinitive').tag('VerbPhrase', '#5');
-  //work with
-  r.match('#Verb #Preposition').tag('VerbPhrase', '#6');
-  return r;
-};
-
-module.exports = verbPhrase;
-
-},{}],197:[function(_dereq_,module,exports){
-'use strict';
-//
-
-var nounPhrase = function nounPhrase(r) {
-  var reason = 'noun-phrase-correction';
-  //fifty stars
-  r.match('#Value #Noun').tag('NounPhrase', reason);
-  //nice house
-  r.match('#Adjective #NounPhrase').tag('NounPhrase', reason);
-  //tag preceding determiner 'the nice house'
-  r.match('#Determiner #NounPhrase').tag('NounPhrase', reason);
-  //
-  r.match('#Noun #Preposition #Noun').tag('NounPhrase', reason);
-  //john and sara
-  r.match('#Noun #Conjunction #Noun').tag('NounPhrase', reason);
-  //difficult but necessary talks
-  r.match('#Adjective #Conjunction #Adjective #NounPhrase').tag('NounPhrase', reason);
-
-  return r;
-};
-
-module.exports = nounPhrase;
-
 },{}],198:[function(_dereq_,module,exports){
-'use strict';
-//
-
-var adjectivePhrase = function adjectivePhrase(r) {
-  var reason = 'adjPhrase-correction';
-  //is really not so good
-  // r.match('#Copula+ #Adverb? #Negative? as? #Adverb? #Adjective').tag('AdjectivePhrase').term(0).tag('#Copula');
-  // //stonger than
-  // r.match('#Comparative than').tag('AdjectivePhrase');
-  //very easy
-  r.match('#Copula #Adverb? #Negative? #Adverb? #Adjective #Adverb?').match('#Adverb? #Adjective #Adverb?').tag('AdjectivePhrase', reason);
-  //difficult but necessary
-  r.match('#AdjectivePhrase #Conjunction #Adjective').tag('AdjectivePhrase', reason);
-  //is as strong as
-  r.match('#AdjectivePhrase as').tag('AdjectivePhrase', reason);
-  return r;
-};
-
-module.exports = adjectivePhrase;
-
-},{}],199:[function(_dereq_,module,exports){
 'use strict';
 
 var conditionPass = _dereq_('./00-conditionPass');
-var verbPhrase = _dereq_('./01-verbPhrase');
-var nounPhrase = _dereq_('./02-nounPhrase');
-var AdjectivePhrase = _dereq_('./03-adjectivePhrase');
+// const verbPhrase = require('./01-verbPhrase');
+// const nounPhrase = require('./02-nounPhrase');
+// const AdjectivePhrase = require('./03-adjectivePhrase');
 //
 var phraseTag = function phraseTag(Text) {
   Text = conditionPass(Text);
-  Text = verbPhrase(Text);
-  Text = nounPhrase(Text);
-  Text = AdjectivePhrase(Text);
+  // Text = verbPhrase(Text);
+  // Text = nounPhrase(Text);
+  // Text = AdjectivePhrase(Text);
   return Text;
 };
 
 module.exports = phraseTag;
 
-},{"./00-conditionPass":195,"./01-verbPhrase":196,"./02-nounPhrase":197,"./03-adjectivePhrase":198}],200:[function(_dereq_,module,exports){
+},{"./00-conditionPass":197}],199:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -11816,7 +11825,7 @@ var isRomanNumeral = function isRomanNumeral(t) {
 var oneLetters = {
   a: true,
   i: true,
-  //e-speak
+  //internet-slang
   u: true,
   r: true,
   c: true,
@@ -11845,7 +11854,7 @@ var punctuation_step = function punctuation_step(ts) {
       }
     }
     //terms like 'e'
-    if (str.length === 1 && !oneLetters[str]) {
+    if (str.length === 1 && !oneLetters[str.toLowerCase()]) {
       t.tagAs('Acronym', 'one-letter-acronym');
     }
     //roman numerals (weak rn)
@@ -11858,7 +11867,7 @@ var punctuation_step = function punctuation_step(ts) {
 
 module.exports = punctuation_step;
 
-},{"../paths":194,"./data/punct_rules":222}],201:[function(_dereq_,module,exports){
+},{"../paths":196,"./data/punct_rules":221}],200:[function(_dereq_,module,exports){
 'use strict';
 
 var p = _dereq_('../paths');
@@ -11927,7 +11936,7 @@ var lexicon_pass = function lexicon_pass(ts) {
 
 module.exports = lexicon_pass;
 
-},{"../contraction/split":184,"../paths":194}],202:[function(_dereq_,module,exports){
+},{"../contraction/split":186,"../paths":196}],201:[function(_dereq_,module,exports){
 'use strict';
 //titlecase is a signal for a noun
 
@@ -11957,7 +11966,7 @@ var capital_logic = function capital_logic(s) {
 
 module.exports = capital_logic;
 
-},{"../paths":194}],203:[function(_dereq_,module,exports){
+},{"../paths":196}],202:[function(_dereq_,module,exports){
 'use strict';
 //identify urls, hashtags, @mentions, emails
 
@@ -12027,7 +12036,7 @@ var web_pass = function web_pass(terms) {
 
 module.exports = web_pass;
 
-},{"../paths":194}],204:[function(_dereq_,module,exports){
+},{"../paths":196}],203:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -12054,7 +12063,7 @@ var suffix_step = function suffix_step(s) {
 
 module.exports = suffix_step;
 
-},{"../paths":194,"./data/word_rules":223}],205:[function(_dereq_,module,exports){
+},{"../paths":196,"./data/word_rules":222}],204:[function(_dereq_,module,exports){
 'use strict';
 
 var markov = _dereq_('./data/neighbours');
@@ -12114,7 +12123,7 @@ var neighbour_step = function neighbour_step(ts) {
 
 module.exports = neighbour_step;
 
-},{"../paths":194,"./data/neighbours":220}],206:[function(_dereq_,module,exports){
+},{"../paths":196,"./data/neighbours":219}],205:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -12171,7 +12180,7 @@ var noun_fallback = function noun_fallback(s) {
 
 module.exports = noun_fallback;
 
-},{"../paths":194}],207:[function(_dereq_,module,exports){
+},{"../paths":196}],206:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -12256,7 +12265,7 @@ var datePass = function datePass(s) {
 
 module.exports = datePass;
 
-},{"../paths":194}],208:[function(_dereq_,module,exports){
+},{"../paths":196}],207:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -12297,7 +12306,7 @@ var corrections = function corrections(ts) {
 
 module.exports = corrections;
 
-},{"../paths":194}],209:[function(_dereq_,module,exports){
+},{"../paths":196}],208:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -12327,7 +12336,7 @@ var negation_step = function negation_step(ts) {
 
 module.exports = negation_step;
 
-},{"../paths":194}],210:[function(_dereq_,module,exports){
+},{"../paths":196}],209:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -12373,7 +12382,7 @@ var adverb_step = function adverb_step(ts) {
 
 module.exports = adverb_step;
 
-},{"../paths":194}],211:[function(_dereq_,module,exports){
+},{"../paths":196}],210:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -12433,7 +12442,7 @@ var phrasals_step = function phrasals_step(ts) {
 
 module.exports = phrasals_step;
 
-},{"../../../result/subset/verbs/methods/toInfinitive/index.js":135,"../paths":194,"./data/phrasal_verbs":221}],212:[function(_dereq_,module,exports){
+},{"../../../result/subset/verbs/methods/toInfinitive/index.js":136,"../paths":196,"./data/phrasal_verbs":220}],211:[function(_dereq_,module,exports){
 'use strict';
 //-types of comma-use-
 // PlaceComma - Hollywood, California
@@ -12562,7 +12571,7 @@ var commaStep = function commaStep(ts) {
 
 module.exports = commaStep;
 
-},{}],213:[function(_dereq_,module,exports){
+},{}],212:[function(_dereq_,module,exports){
 'use strict';
 //decide if an apostrophe s is a contraction or not
 // 'spencer's nice' -> 'spencer is nice'
@@ -12630,7 +12639,7 @@ var possessiveStep = function possessiveStep(terms) {
 };
 module.exports = possessiveStep;
 
-},{}],214:[function(_dereq_,module,exports){
+},{}],213:[function(_dereq_,module,exports){
 'use strict';
 'use strict';
 
@@ -12664,7 +12673,7 @@ var value_step = function value_step(ts) {
 
 module.exports = value_step;
 
-},{"../paths":194}],215:[function(_dereq_,module,exports){
+},{"../paths":196}],214:[function(_dereq_,module,exports){
 'use strict';
 'use strict';
 
@@ -12683,7 +12692,7 @@ var acronym_step = function acronym_step(ts) {
 
 module.exports = acronym_step;
 
-},{"../paths":194}],216:[function(_dereq_,module,exports){
+},{"../paths":196}],215:[function(_dereq_,module,exports){
 'use strict';
 
 var fns = _dereq_('../paths').fns;
@@ -12739,7 +12748,7 @@ var emojiStep = function emojiStep(ts) {
 };
 module.exports = emojiStep;
 
-},{"../paths":194,"./data/emoji_regex":218,"./data/emoticon_list":219}],217:[function(_dereq_,module,exports){
+},{"../paths":196,"./data/emoji_regex":217,"./data/emoticon_list":218}],216:[function(_dereq_,module,exports){
 'use strict';
 'use strict';
 
@@ -12777,14 +12786,14 @@ var person_step = function person_step(ts) {
 
 module.exports = person_step;
 
-},{"../paths":194}],218:[function(_dereq_,module,exports){
+},{"../paths":196}],217:[function(_dereq_,module,exports){
 "use strict";
 
 //yep,
 //https://github.com/mathiasbynens/emoji-regex/blob/master/index.js
 module.exports = /(?:0\u20E3\n1\u20E3|2\u20E3|3\u20E3|4\u20E3|5\u20E3|6\u20E3|7\u20E3|8\u20E3|9\u20E3|#\u20E3|\*\u20E3|\uD83C(?:\uDDE6\uD83C(?:\uDDE8|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDEE|\uDDF1|\uDDF2|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFC|\uDDFD|\uDDFF)|\uDDE7\uD83C(?:\uDDE6|\uDDE7|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDEF|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFB|\uDDFC|\uDDFE|\uDDFF)|\uDDE8\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF5|\uDDF7|\uDDFA|\uDDFB|\uDDFC|\uDDFD|\uDDFE|\uDDFF)|\uDDE9\uD83C(?:\uDDEA|\uDDEC|\uDDEF|\uDDF0|\uDDF2|\uDDF4|\uDDFF)|\uDDEA\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEC|\uDDED|\uDDF7|\uDDF8|\uDDF9|\uDDFA)|\uDDEB\uD83C(?:\uDDEE|\uDDEF|\uDDF0|\uDDF2|\uDDF4|\uDDF7)|\uDDEC\uD83C(?:\uDDE6|\uDDE7|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDF1|\uDDF2|\uDDF3|\uDDF5|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFC|\uDDFE)|\uDDED\uD83C(?:\uDDF0|\uDDF2|\uDDF3|\uDDF7|\uDDF9|\uDDFA)|\uDDEE\uD83C(?:\uDDE8|\uDDE9|\uDDEA|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9)|\uDDEF\uD83C(?:\uDDEA|\uDDF2|\uDDF4|\uDDF5)|\uDDF0\uD83C(?:\uDDEA|\uDDEC|\uDDED|\uDDEE|\uDDF2|\uDDF3|\uDDF5|\uDDF7|\uDDFC|\uDDFE|\uDDFF)|\uDDF1\uD83C(?:\uDDE6|\uDDE7|\uDDE8|\uDDEE|\uDDF0|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFB|\uDDFE)|\uDDF2\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF5|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFB|\uDDFC|\uDDFD|\uDDFE|\uDDFF)|\uDDF3\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEB|\uDDEC|\uDDEE|\uDDF1|\uDDF4|\uDDF5|\uDDF7|\uDDFA|\uDDFF)|\uDDF4\uD83C\uDDF2|\uDDF5\uD83C(?:\uDDE6|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF7|\uDDF8|\uDDF9|\uDDFC|\uDDFE)|\uDDF6\uD83C\uDDE6|\uDDF7\uD83C(?:\uDDEA|\uDDF4|\uDDF8|\uDDFA|\uDDFC)|\uDDF8\uD83C(?:\uDDE6|\uDDE7|\uDDE8|\uDDE9|\uDDEA|\uDDEC|\uDDED|\uDDEE|\uDDEF|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF7|\uDDF8|\uDDF9|\uDDFB|\uDDFD|\uDDFE|\uDDFF)|\uDDF9\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEB|\uDDEC|\uDDED|\uDDEF|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF7|\uDDF9|\uDDFB|\uDDFC|\uDDFF)|\uDDFA\uD83C(?:\uDDE6|\uDDEC|\uDDF2|\uDDF8|\uDDFE|\uDDFF)|\uDDFB\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEC|\uDDEE|\uDDF3|\uDDFA)|\uDDFC\uD83C(?:\uDDEB|\uDDF8)|\uDDFD\uD83C\uDDF0|\uDDFE\uD83C(?:\uDDEA|\uDDF9)|\uDDFF\uD83C(?:\uDDE6|\uDDF2|\uDDFC)))|[\xA9\xAE\u203C\u2049\u2122\u2139\u2194-\u2199\u21A9\u21AA\u231A\u231B\u2328\u23CF\u23E9-\u23F3\u23F8-\u23FA\u24C2\u25AA\u25AB\u25B6\u25C0\u25FB-\u25FE\u2600-\u2604\u260E\u2611\u2614\u2615\u2618\u261D\u2620\u2622\u2623\u2626\u262A\u262E\u262F\u2638-\u263A\u2648-\u2653\u2660\u2663\u2665\u2666\u2668\u267B\u267F\u2692-\u2694\u2696\u2697\u2699\u269B\u269C\u26A0\u26A1\u26AA\u26AB\u26B0\u26B1\u26BD\u26BE\u26C4\u26C5\u26C8\u26CE\u26CF\u26D1\u26D3\u26D4\u26E9\u26EA\u26F0-\u26F5\u26F7-\u26FA\u26FD\u2702\u2705\u2708-\u270D\u270F\u2712\u2714\u2716\u271D\u2721\u2728\u2733\u2734\u2744\u2747\u274C\u274E\u2753-\u2755\u2757\u2763\u2764\u2795-\u2797\u27A1\u27B0\u27BF\u2934\u2935\u2B05-\u2B07\u2B1B\u2B1C\u2B50\u2B55\u3030\u303D\u3297\u3299]|\uD83C[\uDC04\uDCCF\uDD70\uDD71\uDD7E\uDD7F\uDD8E\uDD91-\uDD9A\uDE01\uDE02\uDE1A\uDE2F\uDE32-\uDE3A\uDE50\uDE51\uDF00-\uDF21\uDF24-\uDF93\uDF96\uDF97\uDF99-\uDF9B\uDF9E-\uDFF0\uDFF3-\uDFF5\uDFF7-\uDFFF]|\uD83D[\uDC00-\uDCFD\uDCFF-\uDD3D\uDD49-\uDD4E\uDD50-\uDD67\uDD6F\uDD70\uDD73-\uDD79\uDD87\uDD8A-\uDD8D\uDD90\uDD95\uDD96\uDDA5\uDDA8\uDDB1\uDDB2\uDDBC\uDDC2-\uDDC4\uDDD1-\uDDD3\uDDDC-\uDDDE\uDDE1\uDDE3\uDDEF\uDDF3\uDDFA-\uDE4F\uDE80-\uDEC5\uDECB-\uDED0\uDEE0-\uDEE5\uDEE9\uDEEB\uDEEC\uDEF0\uDEF3]|\uD83E[\uDD10-\uDD18\uDD80-\uDD84\uDDC0]/g;
 
-},{}],219:[function(_dereq_,module,exports){
+},{}],218:[function(_dereq_,module,exports){
 'use strict';
 
 //just some of the most common emoticons
@@ -12844,7 +12853,7 @@ module.exports = {
   '<\\3': true
 };
 
-},{}],220:[function(_dereq_,module,exports){
+},{}],219:[function(_dereq_,module,exports){
 'use strict';
 //markov-like stats about co-occurance, for hints about unknown terms
 //basically, a little-bit better than the noun-fallback
@@ -12920,7 +12929,7 @@ module.exports = {
   afterThisPos: afterThisPos
 };
 
-},{}],221:[function(_dereq_,module,exports){
+},{}],220:[function(_dereq_,module,exports){
 //phrasal verbs are two words that really mean one verb.
 //'beef up' is one verb, and not some direction of beefing.
 //by @spencermountain, 2015 mit
@@ -13011,7 +13020,7 @@ Object.keys(asymmetric).forEach(function (k) {
 
 module.exports = main;
 
-},{}],222:[function(_dereq_,module,exports){
+},{}],221:[function(_dereq_,module,exports){
 'use strict';
 
 //these are regexes applied to t.text, instead of t.normal
@@ -13057,7 +13066,7 @@ module.exports = [
   };
 });
 
-},{}],223:[function(_dereq_,module,exports){
+},{}],222:[function(_dereq_,module,exports){
 'use strict';
 //regex suffix patterns and their most common parts of speech,
 //built using wordnet, by spencer kelly.

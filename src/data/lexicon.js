@@ -21,6 +21,7 @@ const addArr = (arr, tag) => {
 };
 
 //let a rip
+addArr(data.uncountables, 'Noun');
 let units = data.units.words.filter((s) => s.length > 1);
 addArr(units, 'Unit');
 addArr(data.dates.durations, 'Duration');
@@ -117,7 +118,6 @@ addArr(data.lastnames, 'LastName');
 addArr(data.places.airports, 'Place');
 addArr(data.places.cities, 'City');
 addArr(data.places.countries, 'Country');
-addArr(data.uncountables, 'Noun');
 addArr(data.organizations, 'Organization');
 addArr(data.adjectives, 'Adjective');
 addArr(data.verbConverts, 'Adjective');

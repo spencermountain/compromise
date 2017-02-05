@@ -50,10 +50,8 @@ class Values extends Text {
     return this;
   }
   static find(r, n) {
-    r = r.match('#Value+');
-    if (r.has('. (a|an)')) {
-      r = r.not('(a|an)$');
-    }
+    r = r.match('#Value+ #Unit?');
+    r = r.not('#Date');
     if (typeof n === 'number') {
       r = r.get(n);
     }

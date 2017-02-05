@@ -25,13 +25,7 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.log(m.list[0].chars());
 
 
-//mutable lexicon
-let lex = {
-  'High Five': 'Verb'
-};
 // var m = nlp(fresh, lex); //.debug();
-var m = nlp('yeah, “fun” and stuff');
-m.out('debug');
-console.log(m.quotations().out('color'));
-
-// nlp('I would like -- if FBI can', lex).debug();
+var m = nlp('50 square feet');
+// m.out('debug');
+console.log(m.values().data());

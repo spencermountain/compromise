@@ -1,7 +1,6 @@
 'use strict';
 //find contractable, expanded-contractions
 const find = (r) => {
-  // r.check();
   let remain = r.not('#Contraction');
   let m = remain.match('(#Noun|#QuestionWord) (#Copula|did|do|have|had|could|would|will)');
   m.concat(remain.match('(they|we|you|i) have'));

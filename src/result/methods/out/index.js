@@ -23,6 +23,12 @@ const methods = {
       return str;
     }).join(' ');
   },
+  grid: (r) => {
+    return r.list.reduce((str, ts) => {
+      str += ts.out('grid');
+      return str;
+    }, '');
+  },
   array: (r) => {
     return r.list.reduce((arr, ts) => {
       arr.push(ts.out('normal'));
@@ -65,11 +71,11 @@ const methods = {
     });
     return arr;
   },
-  check: (r) => {
+  debug: (r) => {
     console.log('====');
     r.list.forEach((ts) => {
       console.log('   --');
-      ts.check();
+      ts.debug();
     });
     return r;
   },
@@ -79,13 +85,12 @@ const methods = {
 };
 methods.plaintext = methods.text;
 methods.normalized = methods.normal;
-methods.debug = methods.check;
 methods.freq = methods.topk;
 methods.frequency = methods.topk;
 
 const addMethods = (Text) => {
-  Text.prototype.check = function() {
-    return methods.check(this);
+  Text.prototype.debug = function() {
+    return methods.debug(this);
   };
   Text.prototype.out = function(fn, opts) {
     if (methods[fn]) {

@@ -1,13 +1,42 @@
 'use strict';
 const renderHtml = require('./renderHtml');
-const chalk = require('chalk');
 const fns = require('../../paths').fns;
 
 const colors = {
-  Noun: chalk.cyan,
-  Verb: chalk.magenta,
-  Adjective: chalk.yellow,
-  Adverb: chalk.red,
+  Noun: 'blue',
+  Plural: 'blue',
+  Singular: 'blue',
+  Pronoun: 'blue',
+  Possessive: 'blue',
+  NounPhrase: 'blue',
+  Place: 'blue',
+  Person: 'blue',
+  City: 'blue',
+
+  Adjective: 'red',
+
+  Verb: 'green',
+  Auxillary: 'green',
+  Negative: 'green',
+  VerbPhrase: 'green',
+  PastTense: 'green',
+  PresentTense: 'green',
+  FutureTense: 'green',
+  Modal: 'green',
+  Infinitive: 'green',
+  Gerund: 'green',
+  Copula: 'green',
+
+  Value: 'magenta',
+  TextValue: 'magenta',
+  Cardinal: 'magenta',
+  Ordinal: 'magenta',
+
+  Adverb: 'cyan',
+
+  Conjunction: 'yellow',
+  Preposition: 'yellow',
+  Determiner: 'yellow'
 };
 
 const methods = {
@@ -32,28 +61,25 @@ const methods = {
     };
   },
   /** check-print information for the console */
-  check: function() {
+  debug: function() {
     let tags = Object.keys(this.tag).map((tag) => {
       if (colors[tag]) {
-        return colors[tag](tag);
+        return fns[colors[tag]](tag);
       }
       return tag;
     }).join(', ');
     let word = this.text;
     // word = this.whitespace.before + word + this.whitespace.after;
-    word = '\'' + chalk.green(word || '-') + '\'';
+    word = '\'' + fns.yellow(word || '-') + '\'';
     if (this.dirty) {
-      word += '*';
+      // word += fns.red('*');
     }
     let silent = '';
     if (this.silent_term) {
       silent = '[' + this.silent_term + ']';
     }
-    // word += fns.leftPad(silent, 10);
     word = fns.leftPad(word, 25);
-    word += fns.leftPad(silent, 1);
-    // word = fns.leftPad(word, 32);
-    // word = fns.rightPad(word, 28);
+    word += fns.leftPad(silent, 5);
     console.log('   ' + word + '   ' + '     - ' + tags);
   }
 };

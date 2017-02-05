@@ -1,4 +1,5 @@
 'use strict';
+const fns = require('../paths').fns;
 
 const methods = {
   text: function (ts) {
@@ -18,6 +19,14 @@ const methods = {
     return terms.join(' ');
   },
 
+  grid: function(ts) {
+    var str = '  ';
+    str += ts.terms.reduce((s, t) => {
+      s += fns.leftPad(t.text, 16);
+      return s;
+    }, '');
+    return str + '\n\n';
+  },
   /** no punctuation, fancy business **/
   root: function (ts) {
     return ts.terms.filter((t) => t.text).map((t) => t.normal).join(' ').toLowerCase();
@@ -26,9 +35,9 @@ const methods = {
   html: function (ts) {
     return ts.terms.map((t) => t.render.html()).join(' ');
   },
-  check: function(ts) {
+  debug: function(ts) {
     ts.terms.forEach((t) => {
-      t.out('check');
+      t.out('debug');
     });
   }
 };
@@ -46,8 +55,8 @@ const renderMethods = (Terms) => {
     return methods.text(this);
   };
   //check method
-  Terms.prototype.check = function () {
-    return methods.check(this);
+  Terms.prototype.debug = function () {
+    return methods.debug(this);
   };
   return Terms;
 };

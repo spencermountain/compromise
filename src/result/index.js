@@ -38,8 +38,8 @@ class Text {
       };
     });
   }
-  check(opts) {
-    return out(this, 'check', opts);
+  debug(opts) {
+    return out(this, 'debug', opts);
   }
   get whitespace() {
     return {

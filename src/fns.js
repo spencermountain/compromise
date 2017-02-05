@@ -1,4 +1,21 @@
 'use strict';
+// https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
+const c = {
+  reset: '\x1b[0m',
+  red : '\x1b[31m',
+  green : '\x1b[32m',
+  yellow : '\x1b[33m',
+  blue : '\x1b[34m',
+  magenta : '\x1b[35m',
+  cyan : '\x1b[36m',
+};
+//dont use colors on client-side
+if (typeof module === 'undefined') {
+  Object.keys(c).forEach((k) => {
+    c[k] = '';
+  });
+}
+
 // typeof obj == "function" also works
 // but not in older browsers. :-/
 exports.isFunction = function (obj) {
@@ -13,16 +30,6 @@ exports.ensureString = (input) => {
     return '' + input;
   }
   return '';
-};
-//coerce any input into a string
-exports.ensureObject = (input) => {
-  if (typeof input !== 'object') {
-    return {};
-  }
-  if (input === null || input instanceof Array) {
-    return {};
-  }
-  return input;
 };
 
 //string utilities
@@ -41,7 +48,6 @@ exports.startsWith = function (str, prefix) {
   }
   return false;
 };
-
 
 exports.titleCase = (str) => {
   return str.charAt(0).toUpperCase() + str.substr(1);
@@ -80,47 +86,24 @@ exports.extend = (o, o2) => {
   return o;
 };
 
-//a very naaive inflector for
-//our public-facing one is in ./terms/noun/info
-exports.toPlural = (str) => {
-  const irregular = {
-    Glue: 'Glue'
-  };
-  if (irregular[str]) {
-    return irregular[str];
-  }
-  if (str.match(/y$/i)) {
-    return str.replace(/y$/i, 'ies');
-  }
-  if (str.match(/person$/i)) {
-    return str.replace(/person$$/i, 'people');
-  }
-  if (str.match(/s$/i)) {
-    return str;
-  }
-  return str + 's';
+exports.green = function(str) {
+  return c.green + str + c.reset;
 };
-
-exports.values = (obj) => {
-  return Object.keys(obj).map((k) => {
-    return obj[k];
-  });
+exports.red = function(str) {
+  return c.red + str + c.reset;
 };
-
-// exports.toObj = (arr) => {
-//   let obj = {}
-//   for (let i = 0; i < arr.length; i++) {
-//     obj[arr[i]] = true
-//   }
-//   return obj
-// }
-
-exports.sum = (arr) => {
-  return arr.reduce((sum, i) => {
-    return sum + i;
-  }, 0);
+exports.blue = function(str) {
+  return c.blue + str + c.reset;
 };
-
+exports.magenta = function(str) {
+  return c.magenta + str + c.reset;
+};
+exports.cyan = function(str) {
+  return c.cyan + str + c.reset;
+};
+exports.yellow = function(str) {
+  return c.yellow + str + c.reset;
+};
 
 exports.rightPad = function (str, width, char) {
   char = char || ' ';

@@ -62,6 +62,19 @@ const miscMethods = (Terms) => {
         }
       }
       return n;
+    },
+    //number of characters in this match
+    chars() {
+      return this.terms.reduce((i, t) => {
+        i += t.whitespace.before.length;
+        i += t.text.length;
+        i += t.whitespace.after.length;
+        return i;
+      }, 0);
+    },
+    //just .length
+    wordCount() {
+      return this.terms.length;
     }
   };
 

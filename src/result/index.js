@@ -60,35 +60,35 @@ class Text {
 }
 
 module.exports = Text;
-Text = require('./methods/loops')(Text);
 Text = require('./methods/array')(Text);
-Text = require('./methods/out')(Text);
-Text = require('./methods/termFns')(Text);
-Text = require('./methods/tag')(Text);
-Text = require('./methods/sort')(Text);
+Text = require('./methods/loops')(Text);
 Text = require('./methods/match')(Text);
+Text = require('./methods/out')(Text);
+Text = require('./methods/sort')(Text);
 Text = require('./methods/split')(Text);
+Text = require('./methods/tag')(Text);
+Text = require('./methods/termFns')(Text);
 Text.prototype.normalize = require('./methods/normalize');
 
 const subset = {
   acronyms: require('./subset/acronyms'),
-  contractions: require('./subset/contractions'),
-  sentences: require('./subset/sentences'),
-  questions: require('./subset/sentences/questions'),
-  statements: require('./subset/sentences/statements'),
-  topics: require('./subset/topics'),
-  terms: require('./subset/terms'),
-  clauses: require('./subset/clauses'),
-
   adjectives: require('./subset/adjectives'),
   adverbs: require('./subset/adverbs'),
+  clauses: require('./subset/clauses'),
+  contractions: require('./subset/contractions'),
   dates: require('./subset/dates'),
   hashTags: require('./subset/hashTags'),
+  nouns: require('./subset/nouns'),
   organizations: require('./subset/organizations'),
   people: require('./subset/people'),
   phoneNumbers: require('./subset/phoneNumbers'),
   places: require('./subset/places'),
-  nouns: require('./subset/nouns'),
+  questions: require('./subset/sentences/questions'),
+  quotations: require('./subset/quotations'),
+  sentences: require('./subset/sentences'),
+  statements: require('./subset/sentences/statements'),
+  terms: require('./subset/terms'),
+  topics: require('./subset/topics'),
   urls: require('./subset/urls'),
   values: require('./subset/values'),
   verbs: require('./subset/verbs'),

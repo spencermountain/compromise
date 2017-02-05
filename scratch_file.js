@@ -30,7 +30,8 @@ let lex = {
   'High Five': 'Verb'
 };
 // var m = nlp(fresh, lex); //.debug();
-var m = nlp('license plate but I thought, "Nah", go home');
-// console.log(m.out('color'));
+var m = nlp('yeah, “fun” and stuff');
 m.out('debug');
+console.log(m.quotations().out('color'));
+
 // nlp('I would like -- if FBI can', lex).debug();

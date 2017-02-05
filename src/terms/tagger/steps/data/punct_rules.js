@@ -2,7 +2,9 @@
 module.exports = [
   //#funtime
   ['^#[a-z]+', 'HashTag'],
-  //spencer's
+  //chillin'
+  ['[a-z]+n\'', 'Gerund'],
+  //spencers'
   ['[a-z]+s\'', 'Possessive'],
   //589-3809
   ['[0-9]{3}-[0-9]{4}', 'PhoneNumber'],

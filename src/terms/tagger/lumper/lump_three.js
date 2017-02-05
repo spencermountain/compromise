@@ -12,12 +12,6 @@ const do_three = [
     reason: 'Noun-&-Noun'
   },
   {
-    //three-word quote
-    condition: (a, b, c) => (a.text.match(/^["']/) && !b.text.match(/["']/) && c.text.match(/["']$/)),
-    result: 'Quotation',
-    reason: 'Three-word-quote'
-  },
-  {
     //1 800 PhoneNumber
     condition: (a, b, c) => (a.tag.Value && b.tag.Value && c.tag.PhoneNumber && b.normal.length === 3 && a.normal.length < 3),
     result: 'PhoneNumber',

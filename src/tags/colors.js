@@ -11,8 +11,11 @@ const colors = {
     'City',
   ],
   red: [
-    'Adjective',
-    'Adverb'
+    'Value',
+    'Ordinal',
+    'Cardinal',
+    'TextValue',
+    'NumericValue'
   ],
   green: [
     'Verb',
@@ -25,11 +28,16 @@ const colors = {
     'Infinitive',
     'Gerund',
     'Copula',
+    'Participle',
   ],
   cyan: [
     'Preposition',
     'Conjunction',
     'Determiner',
+  ],
+  black: [
+    'Adjective',
+    'Adverb'
   ]
 };
 module.exports = Object.keys(colors).reduce((h, c) => {

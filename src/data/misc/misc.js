@@ -56,7 +56,8 @@ const compact = {
     'avant garde',
     'sans serif',
     'gung ho',
-    'super duper'
+    'super duper',
+    'bourgeois'
   ],
 
   Verb: [

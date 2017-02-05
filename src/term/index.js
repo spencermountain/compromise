@@ -30,6 +30,9 @@ class Term {
   get text() {
     return this._text;
   }
+  get plaintext() {
+    return this.whitespace.before + this._text + this.whitespace.after;
+  }
   get isA() {
     return 'Term';
   }

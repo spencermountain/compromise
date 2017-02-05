@@ -31,11 +31,6 @@ const do_two = [
     result: 'Organization',
     reason: 'organization-org'
   }, {
-    //two-word quote
-    condition: (a, b) => (a.text.match(/^["']/) && b.text.match(/["']$/)),
-    result: 'Quotation',
-    reason: 'two-word-quote'
-  }, {
     //timezones
     condition: (a, b) => (timezones[a.normal] && (b.normal === 'standard time' || b.normal === 'time')),
     result: 'Time',

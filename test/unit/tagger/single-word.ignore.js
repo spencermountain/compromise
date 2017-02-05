@@ -1,5 +1,5 @@
 var test = require('tape');
-var nlp = require('../..b/nlp');
+var nlp = require('../lib/nlp');
 
 
 
@@ -40,23 +40,37 @@ test('specific_noun :', function(t) {
     ['tuesday march 5th', 'Date'],
     ['tuesday march 5th, 2015', 'Date'],
   ].forEach(function(a) {
-    var n = nlp.noun(a[0]);
-    var msg = '';
+    var r = nlp(a[0]);
 
-    msg = '"' + a[0] + '" is_person: ' + a[1];
-    t.equal(n.is_person(), (a[1] === 'Person'), msg);
+    if (a[1] === 'Person') {
+      t.equal(r.people().out(), a[0], a[0] + ' - is_person');
+    } else {
+      t.equal(r.people().out(), '', a[0] + ' - not-a-person');
+    }
 
-    msg = '"' + a[0] + '" is_place: ' + a[1];
-    t.equal(n.is_place(), (a[1] === 'Place'), msg);
+    if (a[1] === 'Place') {
+      t.equal(r.places().out(), a[0], a[0] + ' - is_place');
+    } else {
+      t.equal(r.places().out(), '', a[0] + ' - not-a-place');
+    }
 
-    msg = '"' + a[0] + '" is_value: ' + a[1];
-    t.equal(n.is_value(), (a[1] === 'Value'), msg);
+    if (a[1] === 'Value') {
+      t.equal(r.values().out(), a[0], a[0] + ' - is_value');
+    } else {
+      t.equal(r.values().out(), '', a[0] + ' - not-a-value');
+    }
 
-    msg = '"' + a[0] + '" is_date: ' + a[1];
-    t.equal(n.is_date(), (a[1] === 'Date'), msg);
+    if (a[1] === 'Date') {
+      t.equal(r.dates().out(), a[0], a[0] + ' - is_date');
+    } else {
+      t.equal(r.dates().out(), '', a[0] + ' - not-a-date');
+    }
 
-    msg = '"' + a[0] + '" is_organization: ' + a[1];
-    t.equal(n.is_organization(), (a[1] === 'Organization'), msg);
+    if (a[1] === 'Organization') {
+      t.equal(r.organizations().out(), a[0], a[0] + ' - is_organization');
+    } else {
+      t.equal(r.organizations().out(), '', a[0] + ' - not-a-org');
+    }
 
   });
   t.end();

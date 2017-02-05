@@ -4,7 +4,7 @@ const fns = require('../paths').fns;
 const methods = {
   text: function (ts) {
     return ts.terms.reduce((str, t) => {
-      str += t.out('text');
+      str += t.plaintext;
       return str;
     }, '');
   },
@@ -22,10 +22,17 @@ const methods = {
   grid: function(ts) {
     var str = '  ';
     str += ts.terms.reduce((s, t) => {
-      s += fns.leftPad(t.text, 16);
+      s += fns.leftPad(t.text, 11);
       return s;
     }, '');
     return str + '\n\n';
+  },
+
+  color: function(ts) {
+    return ts.terms.reduce((s, t) => {
+      s += fns.printTerm(t);
+      return s;
+    }, '');
   },
   /** no punctuation, fancy business **/
   root: function (ts) {
@@ -44,6 +51,7 @@ const methods = {
 methods.plaintext = methods.text;
 methods.normalize = methods.normal;
 methods.normalized = methods.normal;
+methods.colors = methods.color;
 methods.tags = methods.terms;
 
 

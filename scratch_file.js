@@ -3,7 +3,7 @@
 //use it for messing around.
 const nlp = require('./src/index');
 const fresh = require('./test/unit/lib/freshPrince.js');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 
 
 //bug 1. - support greedy +
@@ -29,5 +29,8 @@ nlp.verbose('tagger');
 let lex = {
   'High Five': 'Verb'
 };
-nlp(fresh, lex).debug();
+// var m = nlp(fresh, lex); //.debug();
+var m = nlp('license plate but I thought, "Nah", go home');
+// console.log(m.out('color'));
+m.out('debug');
 // nlp('I would like -- if FBI can', lex).debug();

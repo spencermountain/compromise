@@ -29,6 +29,12 @@ const methods = {
       return str;
     }, '');
   },
+  color: (r) => {
+    return r.list.reduce((str, ts) => {
+      str += ts.out('color');
+      return str;
+    }, '');
+  },
   array: (r) => {
     return r.list.reduce((arr, ts) => {
       arr.push(ts.out('normal'));
@@ -86,6 +92,7 @@ const methods = {
 methods.plaintext = methods.text;
 methods.normalized = methods.normal;
 methods.freq = methods.topk;
+methods.colors = methods.color;
 methods.frequency = methods.topk;
 
 const addMethods = (Text) => {

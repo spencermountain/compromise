@@ -10,6 +10,7 @@ const c = {
   blue : '\x1b[34m',
   magenta : '\x1b[35m',
   cyan : '\x1b[36m',
+  black: '\x1b[30m'
 };
 //dont use colors on client-side
 if (typeof module === 'undefined') {
@@ -116,11 +117,24 @@ exports.cyan = function(str) {
 exports.yellow = function(str) {
   return c.yellow + str + c.reset;
 };
+exports.black = function(str) {
+  return c.black + str + c.reset;
+};
 exports.printTag = function(tag) {
   if (tagColors[tag]) {
     return exports[tagColors[tag]](tag);
   }
   return tag;
+};
+exports.printTerm = function(t) {
+  let tags = Object.keys(t.tag);
+  for(let i = 0; i < tags.length; i++) {
+    if (tagColors[tags[i]]) {
+      let color = tagColors[tags[i]];
+      return exports[color](t.plaintext);
+    }
+  }
+  return c.reset + t.plaintext + c.reset;
 };
 
 exports.rightPad = function (str, width, char) {

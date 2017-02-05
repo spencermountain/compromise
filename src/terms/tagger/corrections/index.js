@@ -28,6 +28,10 @@ const corrections = function (r) {
   //the word 'second'
   r.match('second #Noun').term(0).unTag('Unit').tag('Ordinal', 'second-noun');
 
+  //foot/feet
+  r.match('(foot|feet)').tag('Noun', 'foot-noun');
+  r.match('#Value (foot|feet)').match('(foot|feet)').tag('Unit', 'foot-unit');
+
   //the word 'how'
   r.match('how (#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-question');
 
@@ -84,6 +88,7 @@ const corrections = function (r) {
   r.match('(a|an) (#Duration|#Value)').term(0).tag('Value', 'a-is-one');
   //half a million
   r.match('(half|quarter) a? #Value').tag('Value', 'half-a-value');
+  r.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half');
   //all values are either ordinal or cardinal
   r.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
 

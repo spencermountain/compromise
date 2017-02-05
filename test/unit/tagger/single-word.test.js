@@ -55,9 +55,9 @@ test('specific_noun :', function(t) {
     }
 
     if (a[1] === 'Value') {
-      t.equal(r.values().out(), a[0], a[0] + ' - is_value');
+      t.equal(r.values().noDates().out(), a[0], a[0] + ' - is_value');
     } else {
-      t.equal(r.values().out(), '', a[0] + ' - not-a-value');
+      t.equal(r.values().noDates().out(), '', a[0] + ' - not-a-value');
     }
 
     if (a[1] === 'Date') {

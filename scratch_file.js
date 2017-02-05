@@ -3,7 +3,7 @@
 //use it for messing around.
 const nlp = require('./src/index');
 const fresh = require('./test/unit/lib/freshPrince.js');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 
 
 //bug 1. - support greedy +
@@ -26,6 +26,6 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 
 
 // var m = nlp(fresh, lex); //.debug();
-var m = nlp('50 square feet');
-// m.out('debug');
+var m = nlp('Toronto University');
+m.out('debug');
 console.log(m.values().data());

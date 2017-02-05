@@ -8,6 +8,9 @@ class Values extends Text {
       return ts.data();
     });
   }
+  noDates() {
+    return this.not('#Date');
+  }
   /** five -> 5 */
   numbers() {
     return this.list.map((ts) => {
@@ -51,7 +54,7 @@ class Values extends Text {
   }
   static find(r, n) {
     r = r.match('#Value+ #Unit?');
-    r = r.not('#Date');
+    // r = r.not('#Date');
     if (typeof n === 'number') {
       r = r.get(n);
     }

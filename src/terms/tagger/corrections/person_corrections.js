@@ -24,9 +24,13 @@ const corrections = function (r) {
 
   //last names
   let reason = 'person-correction';
-  r.match('#FirstName #Acronym? #TitleCase').ifNo('#Date').tag('#Person', reason).lastTerm().tag('#LastName', reason);
-  r.match('#FirstName (#Singular|#Possessive)').ifNo('#Date').tag('#Person', reason).lastTerm().tag('#LastName', reason);
+  //Joe K. Sombrero
   r.match('#FirstName #Acronym #Noun').ifNo('#Date').tag('#Person', reason).lastTerm().tag('#LastName', reason);
+  //Jani K. Smith
+  r.match('#TitleCase #Acronym? #LastName').ifNo('#Date').tag('#Person', reason).lastTerm().tag('#LastName', reason);
+  //john bodego's
+  r.match('#FirstName (#Singular|#Possessive)').ifNo('#Date').tag('#Person', reason).lastTerm().tag('#LastName', reason);
+  //pope francis
   r.match('(lady|queen|sister) #TitleCase').ifNo('#Date').tag('#FemaleName', reason);
   r.match('(king|pope|father) #TitleCase').ifNo('#Date').tag('#MaleName', 'correction-poe');
 

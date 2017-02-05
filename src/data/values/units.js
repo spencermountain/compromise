@@ -45,7 +45,6 @@ const units = {
     'mi': 'mile',
     'in': 'inch',
     'ft': 'foot',
-    'feet': 'foot',
     'yd': 'yard'
   },
   'Weight': {
@@ -82,6 +81,7 @@ const units = {
     'yd²': 'square yard',
     'yd2': 'square yard',
     'ft²': 'square foot',
+    'sq ft': 'square feet',
     'ft2': 'square foot',
     'acre': 'acre'
   },
@@ -140,19 +140,20 @@ const units = {
 };
 
 //prepare a list of them, for the lexicon
-let words = {}
+let words = {};
 Object.keys(units).forEach((k) => {
   Object.keys(units[k]).forEach((shorter) => {
     if (shorter.length > 1) {
-      words[shorter] = true
+      words[shorter] = true;
     }
-    words[units[k][shorter]] = true
-    words[units[k][shorter] + 's'] = true
-  })
-})
-words = Object.keys(words)
+    let longer = units[k][shorter];
+    words[longer] = true;
+    words[longer + 's'] = true;
+  });
+});
+words = Object.keys(words);
 
 module.exports = {
   words: words,
   units: units
-}
+};

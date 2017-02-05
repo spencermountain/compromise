@@ -18,7 +18,7 @@ const isRomanNumeral = function(t) {
 const oneLetters = {
   a: true,
   i: true,
-  //e-speak
+  //internet-slang
   u: true,
   r: true,
   c: true,
@@ -47,7 +47,7 @@ const punctuation_step = function (ts) {
       }
     }
     //terms like 'e'
-    if (str.length === 1 && !oneLetters[str]) {
+    if (str.length === 1 && !oneLetters[str.toLowerCase()]) {
       t.tagAs('Acronym', 'one-letter-acronym');
     }
     //roman numerals (weak rn)

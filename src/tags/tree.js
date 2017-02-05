@@ -1,60 +1,56 @@
 //the POS tags we use, according to their dependencies
 //(dont make it too deep, cause fns aren't properly clever-enough)
 module.exports = {
-  NounPhrase: {
-    Noun: {
-      Singular: {
-        Pronoun: true,
-        Person: {
-          FirstName: {
-            MaleName: true,
-            FemaleName: true,
-          },
-          LastName: true,
-          Honorific: true
+  Noun: {
+    Singular: {
+      Pronoun: true,
+      Person: {
+        FirstName: {
+          MaleName: true,
+          FemaleName: true,
         },
-        Place: {
-          Country: true,
-          City: true,
-          Address: true
-        },
-        Organization: {
-          SportsTeam: true,
-          Company: true,
-          School: true,
-        },
+        LastName: true,
+        Honorific: true
       },
-      Plural: true,
-      Actor: true,
-      Unit: true,
-      Demonym: true,
-      Possessive: true,
+      Place: {
+        Country: true,
+        City: true,
+        Address: true
+      },
+      Organization: {
+        SportsTeam: true,
+        Company: true,
+        School: true,
+      },
     },
-    Date: { //not a noun, but usually is
-      Month: true,
-      WeekDay: true,
-      RelativeDay: true,
-      Year: true,
-      Duration: true,
-      Time: true,
-      Holiday: true
-    },
+    Plural: true,
+    Actor: true,
+    Unit: true,
+    Demonym: true,
+    Possessive: true,
   },
-  VerbPhrase: {
-    Verb: {
-      PresentTense: {
-        Infinitive: true,
-        Gerund: true
-      },
-      PastTense: true,
-      PerfectTense: true,
-      FuturePerfect: true,
-      Pluperfect: true,
-      Copula: true,
-      Modal: true,
-      Participle: true,
-      Particle: true
+  Date: { //not a noun, but usually is
+    Month: true,
+    WeekDay: true,
+    RelativeDay: true,
+    Year: true,
+    Duration: true,
+    Time: true,
+    Holiday: true
+  },
+  Verb: {
+    PresentTense: {
+      Infinitive: true,
+      Gerund: true
     },
+    PastTense: true,
+    PerfectTense: true,
+    FuturePerfect: true,
+    Pluperfect: true,
+    Copula: true,
+    Modal: true,
+    Participle: true,
+    Particle: true
   },
   Adjective: {
     Comparative: true,
@@ -100,7 +96,7 @@ module.exports = {
   //phrases
   Quotation: true,
   ValuePhrase: true,
-  AdjectivePhrase: true,
+  // AdjectivePhrase: true,
   ConditionPhrase: true,
 
 };

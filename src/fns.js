@@ -1,4 +1,6 @@
 'use strict';
+const tagColors = require('./tags/colors');
+
 // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 const c = {
   reset: '\x1b[0m',
@@ -31,7 +33,16 @@ exports.ensureString = (input) => {
   }
   return '';
 };
-
+//coerce any input into a string
+exports.ensureObject = (input) => {
+  if (typeof input !== 'object') {
+    return {};
+  }
+  if (input === null || input instanceof Array) {
+    return {};
+  }
+  return input;
+};
 //string utilities
 exports.endsWith = function (str, suffix) {
   if (str && str.substr(-suffix.length) === suffix) {
@@ -86,6 +97,7 @@ exports.extend = (o, o2) => {
   return o;
 };
 
+//colorization
 exports.green = function(str) {
   return c.green + str + c.reset;
 };
@@ -103,6 +115,12 @@ exports.cyan = function(str) {
 };
 exports.yellow = function(str) {
   return c.yellow + str + c.reset;
+};
+exports.printTag = function(tag) {
+  if (tagColors[tag]) {
+    return exports[tagColors[tag]](tag);
+  }
+  return tag;
 };
 
 exports.rightPad = function (str, width, char) {

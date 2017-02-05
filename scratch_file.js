@@ -3,8 +3,8 @@
 //use it for messing around.
 const nlp = require('./src/index');
 const fresh = require('./test/unit/lib/freshPrince.js');
+nlp.verbose('tagger');
 
-// nlp.verbose('tagger');
 
 //bug 1. - support greedy +
 // var arr = nlp('would have not had been walking').match('#Auxillary+ #Verb').debug();
@@ -30,3 +30,4 @@ let lex = {
   'High Five': 'Verb'
 };
 nlp(fresh, lex).debug();
+// nlp('I would like -- if FBI can', lex).debug();

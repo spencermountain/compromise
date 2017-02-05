@@ -23,11 +23,11 @@ module.exports = {
   tagAs: (t, pos, reason) => {
     if (enable === true || enable === 'tagger') {
       let title = t.normal || '[' + t.silent_term + ']';
-      title = (title);
+      title = fns.yellow(title);
       title = fns.leftPad('\'' + title + '\'', 20);
-      title += '  ->   ' + (pos);
+      title += '  ->   ' + fns.printTag(pos);
       title = fns.leftPad(title, 54);
-      console.log('       ' + title + '(' + (reason || '') + ')');
+      console.log('       ' + title + '(' + fns.cyan(reason || '') + ')');
     }
   },
   match: (t, reason) => {

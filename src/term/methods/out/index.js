@@ -2,43 +2,6 @@
 const renderHtml = require('./renderHtml');
 const fns = require('../../paths').fns;
 
-const colors = {
-  Noun: 'blue',
-  Plural: 'blue',
-  Singular: 'blue',
-  Pronoun: 'blue',
-  Possessive: 'blue',
-  NounPhrase: 'blue',
-  Place: 'blue',
-  Person: 'blue',
-  City: 'blue',
-
-  Adjective: 'red',
-
-  Verb: 'green',
-  Auxillary: 'green',
-  Negative: 'green',
-  VerbPhrase: 'green',
-  PastTense: 'green',
-  PresentTense: 'green',
-  FutureTense: 'green',
-  Modal: 'green',
-  Infinitive: 'green',
-  Gerund: 'green',
-  Copula: 'green',
-
-  Value: 'magenta',
-  TextValue: 'magenta',
-  Cardinal: 'magenta',
-  Ordinal: 'magenta',
-
-  Adverb: 'cyan',
-
-  Conjunction: 'yellow',
-  Preposition: 'yellow',
-  Determiner: 'yellow'
-};
-
 const methods = {
   /** a pixel-perfect reproduction of the input, with whitespace preserved */
   text: function() {
@@ -63,10 +26,7 @@ const methods = {
   /** check-print information for the console */
   debug: function() {
     let tags = Object.keys(this.tag).map((tag) => {
-      if (colors[tag]) {
-        return fns[colors[tag]](tag);
-      }
-      return tag;
+      return fns.printTag(tag);
     }).join(', ');
     let word = this.text;
     // word = this.whitespace.before + word + this.whitespace.after;

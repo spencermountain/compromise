@@ -14,6 +14,7 @@ const cantBe = [
   'QuestionWord',
   'Value',
   'Negative',
+  'Comma',
 ];
 
 //orgwords like 'bank' in 'Foo Bank'
@@ -25,11 +26,15 @@ orgWords = orgWords.reduce((h, str) => {
 
 //could this word be an organization
 const maybeOrg = function(t) {
-  for(let i = 0; i < cantBe.length; i++) {
-    if (t.tag[cantBe[i]]) {
-      return false;
-    }
+  //must be a noun
+  if (!t.tag.Noun) {
+    return false;
   }
+  //can't be these things
+  if (t.tag.Pronoun || t.tag.Comma || t.tag.Possessive) {
+    return false;
+  }
+  //must be one of these
   if (t.tag.TitleCase || t.tag.Organization) {
     return true;
   }

@@ -3,7 +3,8 @@
 //use it for messing around.
 const nlp = require('./src/index');
 const corpus = require('nlp-corpus');
-const sotu = corpus.sotu.parsed()[15];
+let sotu = corpus.sotu.parsed()[23];
+// sotu = `protecting Medicare, Medicaid, education, and the environment.`;
 // const fresh = require('./test/unit/lib/freshPrince.js');
 // nlp.verbose('tagger');
 
@@ -28,8 +29,7 @@ const sotu = corpus.sotu.parsed()[15];
 
 
 // var m = nlp(fresh, lex); //.debug();
-// var m = nlp(sotu);
-var m = nlp('the United States Military Southern Command, General Barry McCaffrey, as America\'s new drug czar');
-// var m = nlp('our federal government');
-m.debug();
-console.log(m.organizations().out('normal'));
+var m = nlp(sotu);
+// var m = nlp('for American education');
+// m.debug();
+console.log(m.organizations().out('array'));

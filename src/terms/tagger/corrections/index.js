@@ -56,8 +56,9 @@ const corrections = function (r) {
   r.match('the #Adverb #Adjective #Verb').match('#Verb').tag('Noun', 'correction-determiner4');
 
   //organization
-  r.match('#Organization of the? #Place').tag('Organization', 'org-of-place');
+  r.match('#Organization of the? #TitleCase').tag('Organization', 'org-of-place');
   r.match('#Organization #Country').tag('Organization', 'org-country');
+  r.match('(world|global|international|national|#Demonym) #Organization').tag('Organization', 'global-org');
 
   //book the flight
   // r.match('#Noun the #Noun').term(0).tag('Verb', 'correction-determiner6');

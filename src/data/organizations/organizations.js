@@ -147,6 +147,8 @@ module.exports = [
   'mazda',
   'mcdonald\'s',
   'mcdonalds',
+  'medicaid',
+  'medicare',
   'mercedes-benz',
   'mercedes',
   'microsoft',

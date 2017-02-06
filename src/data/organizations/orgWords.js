@@ -120,7 +120,7 @@ module.exports = [
   'journal',
   'laboratory',
   'labs',
-  'law',
+  // 'law',
   'liberation army',
   'limited',
   'local authority',

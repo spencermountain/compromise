@@ -26,11 +26,6 @@ const do_two = [
     result: 'Actor',
     reason: 'thing-doer'
   }, {
-    //Canada Inc
-    condition: (a, b) => (a.tag.TitleCase && a.tag.Noun && b.tag['Organization'] || b.tag.TitleCase && a.tag['Organization']),
-    result: 'Organization',
-    reason: 'organization-org'
-  }, {
     //timezones
     condition: (a, b) => (timezones[a.normal] && (b.normal === 'standard time' || b.normal === 'time')),
     result: 'Time',

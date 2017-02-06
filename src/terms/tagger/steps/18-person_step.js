@@ -1,7 +1,12 @@
 'use strict';
-'use strict';
 const log = require('../paths').log;
 const path = 'tagger/person_step';
+
+let titles = require('../paths').data.titles;
+titles = titles.reduce((h, str) => {
+  h[str] = true;
+  return h;
+}, {});
 
 const person_step = function (ts) {
   log.here(path);
@@ -29,6 +34,16 @@ const person_step = function (ts) {
   maybe = ['green', 'white', 'brown', 'hall', 'young', 'king', 'hill', 'cook', 'gray', 'price'];
   maybe = '(' + maybe.join('|') + ')';
   ts.match('#FirstName ' + maybe).tag('#Person', reason);
+
+  //'Professor Fink', 'General McCarthy'
+  for(let i = 0; i < ts.terms.length - 1; i++) {
+    let t = ts.terms[i];
+    if (titles[t.normal]) {
+      if (ts.terms[i + 1] && ts.terms[i + 1].tag.Person) {
+        t.tagAs('Person', 'title-person');
+      }
+    }
+  }
   return ts;
 };
 

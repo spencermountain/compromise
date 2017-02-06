@@ -114,6 +114,7 @@ data.nouns.forEach((n) => {
 addObj(data.firstnames);
 addArr(data.notable_people.female, 'FemaleName');
 addArr(data.notable_people.male, 'MaleName');
+addArr(data.titles, 'Singular');
 addArr(data.lastnames, 'LastName');
 addArr(data.places.airports, 'Place');
 addArr(data.places.cities, 'City');

@@ -56,7 +56,8 @@ const corrections = function (r) {
   r.match('the #Adverb #Adjective #Verb').match('#Verb').tag('Noun', 'correction-determiner4');
 
   //organization
-  r.match('#Organization (inc|bros|lmt|co|incorporation|corp|corporation)').tag('Organization', 'org-abbreviation');
+  r.match('#Organization of the? #Place').tag('Organization', 'org-of-place');
+  r.match('#Organization #Country').tag('Organization', 'org-country');
 
   //book the flight
   // r.match('#Noun the #Noun').term(0).tag('Verb', 'correction-determiner6');

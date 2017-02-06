@@ -2,8 +2,10 @@
 //this file is not included in the build.
 //use it for messing around.
 const nlp = require('./src/index');
-const fresh = require('./test/unit/lib/freshPrince.js');
-nlp.verbose('tagger');
+const corpus = require('nlp-corpus');
+const sotu = corpus.sotu.parsed()[15];
+// const fresh = require('./test/unit/lib/freshPrince.js');
+// nlp.verbose('tagger');
 
 
 //bug 1. - support greedy +
@@ -26,6 +28,8 @@ nlp.verbose('tagger');
 
 
 // var m = nlp(fresh, lex); //.debug();
-var m = nlp('Toronto University');
-m.out('debug');
-console.log(m.values().data());
+// var m = nlp(sotu);
+var m = nlp('the United States Military Southern Command, General Barry McCaffrey, as America\'s new drug czar');
+// var m = nlp('our federal government');
+m.debug();
+console.log(m.organizations().out('normal'));

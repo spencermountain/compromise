@@ -1,28 +1,11 @@
 'use strict';
 const Text = require('../../index');
+const Term = require('./term');
 
 class Terms extends Text {
   data() {
-    //export all the main metadata-stuff for each term
     return this.list.map((ts) => {
-      let t = ts.terms[0];
-      let o = {
-        normal: t.normal,
-        text: t.text,
-        tags: Object.keys(t.tag),
-        whitespace: t.whitespace,
-      };
-      if (t.silent_term) {
-        o.silent_term = t.silent_term;
-      }
-      if (t.dirty) {
-        o.dirty = true;
-      }
-      let punct = t.endPunctuation();
-      if (punct) {
-        o.endPunctuation = punct;
-      }
-      return o;
+      return ts.data();
     });
   }
   static find(r, n) {
@@ -30,6 +13,9 @@ class Terms extends Text {
     if (typeof n === 'number') {
       r = r.get(n);
     }
+    r.list = r.list.map((ts) => {
+      return new Term(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+    });
     return r;
   }
 }

@@ -21,7 +21,7 @@ const deleteMethods = (Terms) => {
         let r = mutate.deleteThese(this, found);
         return r;
       }
-      return this;
+      return this.parentTerms;
     }
 
   };

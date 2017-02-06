@@ -1,6 +1,9 @@
 'use strict';
 const Terms = require('../../paths').Terms;
 const tagList = require('../../paths').tags;
+const boringTags = {
+  Auxillary: true
+};
 
 class Term extends Terms {
   constructor(arr, lexicon, refText, refTerms) {
@@ -9,7 +12,13 @@ class Term extends Terms {
   }
   bestTag() {
     let tags = Object.keys(this.t.tag);
+    tags = tags.sort(); //alphabetical, first
+    //then sort by #of parent tags
     tags = tags.sort((a, b) => {
+      //bury the tags we dont want
+      if (boringTags[b]) {
+        return -1;
+      }
       if (tagList[a].parents.length > tagList[b].parents.length) {
         return -1;
       }

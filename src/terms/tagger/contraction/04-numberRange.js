@@ -9,26 +9,17 @@ const numberRange = (ts) => {
     }
     if (t.tag.NumberRange) {
       let parts = t.text.split(/-/);
-      ts.insertAt('-', i);
-      ts.insertAt(parts[1], i + 1);
       t.text = parts[0];
+      t.whitespace.after = '-';
+      ts.insertAt(i + 1, parts[1]);
+      t.text = parts[0];
+
       let t2 = ts.terms[i + 1];
       t2.silent_term = 'to';
-      let t3 = ts.terms[i + 2];
       t2.whitespace.before = '';
       t2.whitespace.after = '';
-      t3.whitespace.before = '';
-      t3.whitespace.after = t.whitespace.after;
-      t.whitespace.after = '';
-      t.tag = {
-        Value: true,
-      };
-      t2.tag = {
-        Preposition: true,
-      };
-      t3.tag = {
-        Value: true,
-      };
+      t.tagAs('Value');
+      t2.tagAs('Value');
     }
   }
   return ts;

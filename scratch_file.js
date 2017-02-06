@@ -15,8 +15,5 @@ const nlp = require('./src/index');
 //bug 2. - gerund as nouns
 // nlp('i like running').sentences().toNegative().check();
 
-
-// var str = 'doug is 5 years old';
-// var m = nlp(str);
-// m.values().toTextValue();
-// console.log(m.out());
+// bug 3. - missing whitespace
+console.log(nlp('june 5-7 1999').out());

@@ -16,8 +16,6 @@ const nlp = require('./src/index');
 // nlp('i like running').sentences().toNegative().check();
 
 
-// var m = nlp('the brown cat played').match('brown').delete();
-// console.log(m.out());
-// m.debug();
-
-console.log(nlp('john smith could\'ve walked').terms().data());
+var m = nlp('the brown cat played').match('brown').delete();
+console.log(m.out());
+m.debug();

@@ -8,6 +8,7 @@ class Terms extends Text {
       return ts.data();
     });
   }
+
   static find(r, n) {
     r = r.match('.');
     if (typeof n === 'number') {

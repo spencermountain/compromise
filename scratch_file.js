@@ -16,6 +16,7 @@ const nlp = require('./src/index');
 // nlp('i like running').sentences().toNegative().check();
 
 
-var m = nlp('the brown cat played').match('brown').delete();
-console.log(m.out());
-m.debug();
+var r = nlp('5 days');
+r.match('#Duration').debug();
+// var dates = r.dates().data();
+// console.log(dates);

@@ -1,7 +1,7 @@
 'use strict';
 const parseTime = require('./parseTime');
 const weekdays = require('./weekday');
-const months = require('./weekday');
+const months = require('./month');
 //
 const isDate = (num) => {
   if (num && num < 31 && num > 0) {

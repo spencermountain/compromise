@@ -18,7 +18,7 @@ class Date extends Terms {
     obj.punt = parsePunt(this); //two days before
     obj.section = parseSection(this); //the start of
     obj.relative = parseRelative(this); //this
-    obj.relative = parseDate(this); //thursday
+    obj.date = parseDate(this); //thursday
     return obj;
   }
 }

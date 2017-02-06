@@ -12,11 +12,11 @@ test('one big dates', function (t) {
   t.equal(o.punt.duration.year, 6, 'durationyear');
   t.equal(o.punt.duration.day, 2, 'durationday');
   t.equal(o.section, 'start', 'section');
-  t.equal(o.relative.month, 0, 'relativemonth');
-  t.equal(o.relative.date, 5, 'relativedate');
-  t.equal(o.relative.weekday, 3, 'relativeweekday');
-  t.equal(o.relative.year, 1992, 'relativeyear');
-  t.equal(o.relative.knownDate, null, 'knowndate');
+  t.equal(o.date.month, 0, 'relativemonth');
+  t.equal(o.date.date, 5, 'relativedate');
+  t.equal(o.date.weekday, 3, 'relativeweekday');
+  t.equal(o.date.year, 1992, 'relativeyear');
+  t.equal(o.date.knownDate, null, 'knowndate');
   // t.equal(o.article, a[1], msg);
   t.end();
 });

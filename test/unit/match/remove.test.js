@@ -3,16 +3,16 @@ var nlp = require('../lib/nlp');
 
 test('remove-basic :', function(t) {
 
-  var m = nlp('the brown cat played').match('brown').delete();
+  var m = nlp('the brown cat played').match('brown').delete().all();
   t.equal(m.out('text'), 'the cat played', 'brown-cat');
 
-  m = nlp('the nice brown cat played').match('nice brown').delete();
+  m = nlp('the nice brown cat played').match('nice brown').delete().all();
   t.equal(m.out('text'), 'the cat played', 'nice-brown');
 
-  m = nlp('the nice brown cat played').match('#Adjective').delete();
+  m = nlp('the nice brown cat played').match('#Adjective').delete().all();
   t.equal(m.out('text'), 'the cat played', 'adj-each');
 
-  m = nlp('the nice brown cat played').match('#Adjective+').delete();
+  m = nlp('the nice brown cat played').match('#Adjective+').delete().all();
   t.equal(m.out('text'), 'the cat played', 'adj-consecutive');
 
   t.end();
@@ -42,7 +42,7 @@ test('remove-logic :', function(t) {
   var m = nlp('spencer kelly is here').match('spencer kelly').delete('spencer');
   t.equal(m.out('normal'), 'kelly', 'remove(reg) returns this');
 
-  m = nlp('spencer kelly is here').match('spencer kelly').delete();
+  m = nlp('spencer kelly is here').match('spencer kelly').delete().all();
   t.equal(m.out('normal'), 'is here', 'remove() returns parent');
 
   m = nlp('spencer kelly is here').match('spencer kelly').delete('notfound');

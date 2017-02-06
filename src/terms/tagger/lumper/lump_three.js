@@ -8,7 +8,7 @@ const do_three = [
   {
     //John & Joe's
     condition: (a, b, c) => (a.tag.Noun && (b.text === '&' || b.normal === 'n') && c.tag.Noun),
-    result: 'Person',
+    result: 'Organization',
     reason: 'Noun-&-Noun'
   },
   {

@@ -29,7 +29,7 @@ module.exports = {
     if (t.tag.Month !== undefined) {
       if (shortMonths[t.normal] !== undefined) {
         let longer = Object.keys(longMonths);
-        this.text = longer[shortMonths[t.normal]];
+        t.text = longer[shortMonths[t.normal]];
       }
     }
     t.dirty = true;

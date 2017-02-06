@@ -2,7 +2,7 @@
 const Text = require('../../index');
 const Date = require('./date');
 const weekdays = require('./weekday');
-const months = require('./weekday');
+const months = require('./month');
 
 class Dates extends Text {
   data() {

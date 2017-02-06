@@ -75,6 +75,19 @@ const miscMethods = (Terms) => {
     //just .length
     wordCount() {
       return this.terms.length;
+    },
+
+    //this has term-order logic, so has to be here
+    toCamelCase: function() {
+      this.toTitleCase();
+      this.terms.forEach((t, i) => {
+        if (i !== 0) {
+          t.whitespace.before = '';
+        }
+        t.whitespace.after = '';
+      });
+      this.tagAs('#CamelCase', 'toCamelCase');
+      return this;
     }
   };
 

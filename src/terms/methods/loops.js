@@ -1,7 +1,7 @@
 'use strict';
 //these methods are simply term-methods called in a loop
 
-const addMehtods = (Terms) => {
+const addMethods = (Terms) => {
 
   const foreach = [
     ['tagAs'],
@@ -10,7 +10,7 @@ const addMehtods = (Terms) => {
     ['toUpperCase', 'UpperCase'],
     ['toLowerCase'],
     ['toTitleCase', 'TitleCase'],
-    ['toCamelCase', 'CamelCase'],
+  // ['toCamelCase', 'CamelCase'],
   ];
 
   foreach.forEach((arr) => {
@@ -31,4 +31,4 @@ const addMehtods = (Terms) => {
   return Terms;
 };
 
-module.exports = addMehtods;
+module.exports = addMethods;

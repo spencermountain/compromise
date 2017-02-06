@@ -17,20 +17,20 @@ module.exports = {
   },
   toShortForm: function (t) {
     if (t.tag.WeekDay) {
-      if (longDays[this.normal] !== undefined) {
+      if (longDays[t.normal] !== undefined) {
         let shorten = Object.keys(shortDays);
         t.text = shorten[longDays[t.normal]];
       }
     }
-    return this;
+    return t;
   },
   toLongForm: function (t) {
     if (t.tag.WeekDay) {
-      if (shortDays[this.normal] !== undefined) {
+      if (shortDays[t.normal] !== undefined) {
         let longer = Object.keys(longDays);
         t.text = longer[shortDays[t.normal]];
       }
     }
-    return this;
+    return t;
   }
 };

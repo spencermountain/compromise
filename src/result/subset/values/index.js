@@ -53,7 +53,8 @@ class Values extends Text {
     return this;
   }
   static find(r, n) {
-    r = r.match('#Value+ #Unit?');
+    // r = r.match('#Value+ #Unit?');
+    r = r.match('#Value+');
     // r = r.not('#Date');
     if (typeof n === 'number') {
       r = r.get(n);
@@ -64,9 +65,10 @@ class Values extends Text {
     return r;
   }
 }
-// Values.prototype.clone = function() {
-//   console.log('=-');
-//   let r = this.clone();
-//   return Values.find(r);
-// };
+Values.prototype.clone = function() {
+  let list = this.list.map((ts) => {
+    return ts.clone();
+  });
+  return new Values(list, this.lexicon);
+};
 module.exports = Values;

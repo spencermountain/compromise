@@ -16,7 +16,7 @@ const nlp = require('./src/index');
 // nlp('i like running').sentences().toNegative().check();
 
 
-var r = nlp('5 days');
-r.match('#Duration').debug();
-// var dates = r.dates().data();
-// console.log(dates);
+// var str = 'doug is 5 years old';
+// var m = nlp(str);
+// m.values().toTextValue();
+// console.log(m.out());

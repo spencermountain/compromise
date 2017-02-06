@@ -75,7 +75,8 @@ class Value extends Terms {
     }
     let num = '' + parse(val);
     let str = toText(num).join(' ');
-    return this.replaceWith(str, 'Value');
+    this.replaceWith(str, 'Value');
+    return this;
   }
 
   /**5th -> 5 */

@@ -25,7 +25,7 @@ const addMethods = (Term) => {
       if (i !== 0) {
         this.whitespace.before = '';
       }
-      this.whitespace.after = '';
+      // this.whitespace.after = '';
       this.tagAs('#CamelCase', 'toCamelCase');
       return this;
     }

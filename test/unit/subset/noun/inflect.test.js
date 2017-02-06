@@ -9,7 +9,7 @@ test('==Plurals==', function(T) {
       ['octopus', false],
       ['tree', false],
       ['trees', true],
-      ['i', false],
+      // ['i', false],
       ['mayor of chicago', false],
       ['mayors of chicago', true],
       ['octopus', false],
@@ -20,8 +20,8 @@ test('==Plurals==', function(T) {
       ['children', true],
       ['spencer\'s', false],
       ['toronto\'s', false],
-      // ['simpsons\'', false],
-      ['she\'s', false],
+    // ['simpsons\'', false],
+    // ['she\'s', false],
     ].forEach(function (a) {
       var r = nlp(a[0]).nouns();
       var msg = a[0];

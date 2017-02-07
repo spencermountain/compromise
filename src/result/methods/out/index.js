@@ -1,6 +1,6 @@
 'use strict';
-const ngram = require('./ngram');
-const edgegram = require('./edgegram');
+// const ngram = require('./ngram');
+// const edgegram = require('./edgegram');
 const topk = require('./topk');
 
 const methods = {
@@ -103,27 +103,27 @@ const addMethods = (Text) => {
     if (methods[fn]) {
       return methods[fn](this);
     }
-    if (fn === 'bigram') {
-      opts = opts || {
-        size: [2]
-      };
-      return ngram(this, opts);
-    }
-    if (fn === 'trigram') {
-      opts = opts || {
-        size: [3]
-      };
-      return ngram(this, opts);
-    }
-    if (fn === 'edgegram') {
-      return edgegram.both(this, opts);
-    }
-    if (fn === 'startgram') {
-      return edgegram.start(this, opts);
-    }
-    if (fn === 'endgram') {
-      return edgegram.end(this, opts);
-    }
+    // if (fn === 'bigram') {
+    //   opts = opts || {
+    //     size: [2]
+    //   };
+    //   return ngram(this, opts);
+    // }
+    // if (fn === 'trigram') {
+    //   opts = opts || {
+    //     size: [3]
+    //   };
+    //   return ngram(this, opts);
+    // }
+    // if (fn === 'edgegram') {
+    //   return edgegram.both(this, opts);
+    // }
+    // if (fn === 'startgram') {
+    //   return edgegram.start(this, opts);
+    // }
+    // if (fn === 'endgram') {
+    //   return edgegram.end(this, opts);
+    // }
     return methods.text(this);
   };
   return Text;

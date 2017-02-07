@@ -26,6 +26,7 @@ exports.shortMonths = {
   'aug': 7,
   'sep': 8,
   'sept': 8,
+  'oct': 9,
   'nov': 10,
   'dec': 11,
 };

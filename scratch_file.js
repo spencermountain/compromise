@@ -20,7 +20,7 @@ const nlp = require('./src/index');
 
 //bug 4.
 var m = nlp('john is nice').sentences();
-// console.log(m.out());
+console.log(m.out());
 m.toPastTense();
 console.log(m.out());
 

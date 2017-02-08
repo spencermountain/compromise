@@ -32,16 +32,17 @@ class Sentence extends Terms {
       terms = terms.list[0].terms;
       return new Verb(terms, this.lexicon, this.refText, this.refTerms);
     }
-    return terms;
+    return new Verb([], this.lexicon, this.refText, this.refTerms);
   }
 
   /** sentence tense conversion**/
   toPastTense() {
     let verb = this.mainVerb();
-    if (verb) {
+    if (verb.found) {
       //this is really ugly..
       let start = verb.verb.out('normal');
       verb.toPastTense();
+      // console.log(verb.parentTerms.out() + '!');
       let end = verb.out('normal');
       return this.parentTerms.replace(start, end);
     }

@@ -2,7 +2,6 @@
 const Text = require('../../index');
 const Sentence = require('./sentence');
 
-
 class Sentences extends Text {
   constructor(arr, lexicon, reference) {
     super(arr, lexicon, reference);

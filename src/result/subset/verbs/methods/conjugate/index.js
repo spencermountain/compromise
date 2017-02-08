@@ -4,12 +4,22 @@ const toBe = require('./toBe');
 
 //conjugation using auxillaries
 const multiWord = (vb, verbose) => {
-  if (!vb.auxillary.found) {
-    return conjugate(vb.verb, verbose);
-  }
+  let obj = conjugate(vb.verb, verbose);
   if (vb.verb.normal === 'be' && vb.auxillary.match('will').found) {
-    return toBe();
+    obj = toBe();
   }
-  return conjugate(vb.verb, verbose);
+  //apply negative
+  if (vb.negative.found) {
+    Object.keys(obj).forEach((k) => {
+      obj[k] = obj[k] + ' not';
+    });
+  }
+  //apply adverbs
+  if (vb.adverbs.found) {
+    Object.keys(obj).forEach((k) => {
+      obj[k] = obj[k] + ' ' + vb.adverbs.out();
+    });
+  }
+  return obj;
 };
 module.exports = multiWord;

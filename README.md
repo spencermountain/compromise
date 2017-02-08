@@ -102,6 +102,19 @@ sen.terms[1].links[1].target.word; // terms[1] is verb 'fed'
 // 'dog'
 ```
 
+#Extend
+Add your own lexicon, listed companies, gazetteers, anything!
+```javascript
+var nlp = require("nlp_compromise")
+var context= {
+  lexicon:
+    {
+      apple:'Organization'
+    }
+}
+nlp.text('compare apple and microsoft', context).organizations()
+```
+
 ### [View the Full API Documentation](https://github.com/nlp-compromise/nlp_compromise/wiki/API)
 
 ## Development

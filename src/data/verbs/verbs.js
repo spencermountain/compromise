@@ -136,6 +136,7 @@ let arr = [
   'enjoy',
   'envy',
   'excel',
+  'fall',
   'fail',
   'fix',
   'float',

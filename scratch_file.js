@@ -19,17 +19,18 @@ const nlp = require('./src/index');
 // console.log(nlp('june 5-7 1999').out());
 
 //bug 4.
-var m = nlp('john is nice').sentences();
-console.log(m.out());
+var m = nlp('the stool falls over').sentences();
+m.debug();
+// console.log(m.out());
 m.toPastTense();
 console.log(m.out());
 
 m.toPresentTense();
 console.log(m.out());
-
+//
 m.toFutureTense();
 console.log(m.out());
-
+//
 console.log('---------');
 m.toNegative();
 console.log(m.out());

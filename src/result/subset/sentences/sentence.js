@@ -32,7 +32,7 @@ class Sentence extends Terms {
       terms = terms.list[0].terms;
       return new Verb(terms, this.lexicon, this.refText, this.refTerms);
     }
-    return new Verb([], this.lexicon, this.refText, this.refTerms);
+    return null;
   }
 
   /** sentence tense conversion**/

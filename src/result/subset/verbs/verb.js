@@ -11,7 +11,11 @@ class Verb extends Terms {
     this.negative = this.match('#Negative');
     this.adverbs = this.match('#Adverb');
     let aux = this.clone().not('(#Adverb|#Negative)');
-    this.verb = aux.match('#Verb').last().list[0].terms[0];
+    this.verb = aux.match('#Verb').not('#Particle').last();
+    this.particle = aux.match('#Particle').last();
+    if (this.verb.found) {
+      this.verb = this.verb.list[0].terms[0];
+    }
     this.auxillary = aux.match('#Auxillary+');
   }
   data(debug) {
@@ -57,7 +61,7 @@ class Verb extends Terms {
   }
   toPresentTense() {
     let obj = this.conjugate();
-    return this.replaceWith(obj.Infinitive);
+    return this.replaceWith(obj.PresentTense);
   }
   toFutureTense() {
     let obj = this.conjugate();

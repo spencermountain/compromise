@@ -8,6 +8,12 @@ const multiWord = (vb, verbose) => {
   if (vb.verb.normal === 'be' && vb.auxillary.match('will').found) {
     obj = toBe();
   }
+  //apply particles
+  if (vb.particle.found) {
+    Object.keys(obj).forEach((k) => {
+      obj[k] = obj[k] + vb.particle.out();
+    });
+  }
   //apply negative
   if (vb.negative.found) {
     Object.keys(obj).forEach((k) => {
@@ -17,7 +23,7 @@ const multiWord = (vb, verbose) => {
   //apply adverbs
   if (vb.adverbs.found) {
     Object.keys(obj).forEach((k) => {
-      obj[k] = obj[k] + ' ' + vb.adverbs.out();
+      obj[k] = obj[k] + vb.adverbs.out();
     });
   }
   return obj;

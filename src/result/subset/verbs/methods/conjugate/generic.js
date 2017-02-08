@@ -37,26 +37,26 @@ const generic = {
     return inf + 'ed';
   },
 
-  FutureTense: (o) => {
-    return 'will ' + o.Infinitive;
-  },
-
-  PerfectTense: (o) => {
-    return 'have ' + (o.Participle || o.PastTense);
-  },
-
-  Pluperfect: (o) => {
-    if (o.PastTense) {
-      return 'had ' + o.PastTense;
-    }
-    return null;
-  },
-  FuturePerfect: (o) => {
-    if (o.PastTense) {
-      return 'will have ' + o.PastTense;
-    }
-    return null;
-  }
+  // FutureTense: (o) => {
+  //   return 'will ' + o.Infinitive;
+  // },
+  //
+  // PerfectTense: (o) => {
+  //   return 'have ' + (o.Participle || o.PastTense);
+  // },
+  //
+  // Pluperfect: (o) => {
+  //   if (o.PastTense) {
+  //     return 'had ' + o.PastTense;
+  //   }
+  //   return null;
+  // },
+  // FuturePerfect: (o) => {
+  //   if (o.PastTense) {
+  //     return 'will have ' + o.PastTense;
+  //   }
+  //   return null;
+  // }
 
 };
 

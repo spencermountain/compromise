@@ -99,3 +99,31 @@ test('positive+negative-conjugate', function(t) {
 
   t.end();
 });
+
+test('positive+negative-particle-form', function(t) {
+  var m = nlp('the stool falls over').sentences();
+
+  m.toPastTense();
+  t.equal(m.out(), 'the stool falls over', 'toPast-1');
+
+  m.toPresentTense();
+  t.equal(m.out(), 'the stool falls over', 'toPres-1');
+
+  m.toFutureTense();
+  t.equal(m.out(), 'the stool falls over', 'toFuture-1');
+
+  m.toNegative();
+  t.equal(m.out(), 'the stool falls over', 'toNeg-future');
+
+  //negative forms
+  m.toPastTense();
+  t.equal(m.out(), 'the stool falls over', 'toPast-1');
+
+  m.toPresentTense();
+  t.equal(m.out(), 'the stool falls over', 'toPres-1');
+
+  m.toFutureTense();
+  t.equal(m.out(), 'the stool falls over', 'toFuture-1');
+
+  t.end();
+});

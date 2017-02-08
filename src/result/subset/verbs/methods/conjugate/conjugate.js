@@ -24,12 +24,12 @@ const conjugate = function(t, verbose) {
   let all = {
     PastTense: null,
     PresentTense: null,
-    FutureTense: null,
+    // FutureTense: null,
     Infinitive: null,
     Gerund: null,
     Actor: null,
-    PerfectTense: null,
-    Pluperfect: null,
+  // PerfectTense: null,
+  // Pluperfect: null,
   };
   //first, get its current form
   let form = predict(t);

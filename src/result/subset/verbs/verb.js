@@ -8,6 +8,9 @@ const toNegative = require('./toNegative');
 class Verb extends Terms {
   constructor(arr, lexicon, refText, refTerms) {
     super(arr, lexicon, refText, refTerms);
+    this.parse();
+  }
+  parse() {
     this.negative = this.match('#Negative');
     this.adverbs = this.match('#Adverb');
     let aux = this.clone().not('(#Adverb|#Negative)');

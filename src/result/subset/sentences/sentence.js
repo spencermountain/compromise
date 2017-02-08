@@ -38,7 +38,7 @@ class Sentence extends Terms {
   /** sentence tense conversion**/
   toPastTense() {
     let verb = this.mainVerb();
-    if (verb.found) {
+    if (verb) {
       //this is really ugly..
       let start = verb.verb.out('normal');
       verb.toPastTense();

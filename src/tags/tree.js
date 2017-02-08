@@ -93,10 +93,11 @@ module.exports = {
   UpperCase: true,
   Hyphenated: true,
   Acronym: true,
+  ClauseEnd: true,
   //phrases
   Quotation: true,
   // ValuePhrase: true,
   // AdjectivePhrase: true,
-  ConditionPhrase: true,
+  // ConditionPhrase: true,
 
 };

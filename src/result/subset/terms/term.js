@@ -16,7 +16,7 @@ class Term extends Terms {
     //then sort by #of parent tags
     tags = tags.sort((a, b) => {
       //bury the tags we dont want
-      if (boringTags[b]) {
+      if (boringTags[b] || !tagList[a] || !tagList[b]) {
         return -1;
       }
       if (tagList[a].parents.length > tagList[b].parents.length) {

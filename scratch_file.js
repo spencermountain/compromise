@@ -1,6 +1,7 @@
 'use strict';
 //this file is not included in the build.
 //use it for messing around.
+// const nlp = require('./builds/compromise.min');
 const nlp = require('./src/index');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
@@ -19,27 +20,31 @@ const nlp = require('./src/index');
 // console.log(nlp('june 5-7 1999').out());
 
 //bug 4.
-var m = nlp('the stool falls over').sentences();
-m.debug();
+// var m = nlp('the stool falls over').sentences();
+// m.debug();
+// // console.log(m.out());
+// m.toPastTense();
 // console.log(m.out());
-m.toPastTense();
-console.log(m.out());
+//
+// m.toPresentTense();
+// console.log(m.out());
+// //
+// m.toFutureTense();
+// console.log(m.out());
+// //
+// console.log('---------');
+// m.toNegative();
+// console.log(m.out());
+// console.log('---------');
+// //
+// //
+// m.toPastTense();
+// console.log(m.out());
+// m.toPresentTense();
+// console.log(m.out());
+// m.toFutureTense();
+// console.log(m.out());
 
-m.toPresentTense();
-console.log(m.out());
-//
-m.toFutureTense();
-console.log(m.out());
-//
-console.log('---------');
-m.toNegative();
-console.log(m.out());
-console.log('---------');
-//
-//
-m.toPastTense();
-console.log(m.out());
-m.toPresentTense();
-console.log(m.out());
-m.toFutureTense();
-console.log(m.out());
+var m = nlp('dog,').terms();
+// console.log(m.list[0].terms);
+console.log(m.data());

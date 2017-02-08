@@ -5,7 +5,7 @@ const nlp = require('./src/index');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
 // sotu = `protecting Medicare, Medicaid, education, and the environment.`;
-// const fresh = require('./test/unit/lib/freshPrince.js');
+const fresh = require('./test/unit/lib/freshPrince.js');
 // nlp.verbose('tagger');
 
 
@@ -16,4 +16,8 @@ const nlp = require('./src/index');
 // nlp('i like running').sentences().toNegative().check();
 
 // bug 3. - missing whitespace
-console.log(nlp('june 5-7 1999').out());
+// console.log(nlp('june 5-7 1999').out());
+
+//bug 4.
+var m = nlp('john is nice').sentences().toNegative().toPastTense();
+console.log(m.out());

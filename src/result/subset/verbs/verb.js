@@ -25,12 +25,12 @@ class Verb extends Terms {
         adverbs: this.adverbs.out('normal'),
       },
       interpret: interpret(this, debug),
-      conjugations: conjugate(this.verb, debug)
+      conjugations: this.conjugate()
     };
   }
 
   conjugate(debug) {
-    return conjugate(this.verb, debug);
+    return conjugate(this, debug);
   }
 
   /** negation **/
@@ -52,15 +52,15 @@ class Verb extends Terms {
 
   /** conjugation **/
   toPastTense() {
-    let obj = conjugate(this.verb);
+    let obj = this.conjugate();
     return this.replaceWith(obj.PastTense);
   }
   toPresentTense() {
-    let obj = conjugate(this.verb);
+    let obj = this.conjugate();
     return this.replaceWith(obj.Infinitive);
   }
   toFutureTense() {
-    let obj = conjugate(this.verb);
+    let obj = this.conjugate();
     return this.replaceWith(obj.FutureTense);
   }
   toInfinitive() {

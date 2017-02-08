@@ -1,6 +1,5 @@
 var test = require('tape');
-var nlp = require('../..b/nlp');
-var str_test = require('../..b/fns').str_test;
+var nlp = require('../../lib/nlp');
 
 test('sentence-change-tense:', function(t) {
   [
@@ -26,17 +25,77 @@ test('sentence-change-tense:', function(t) {
   //support negative
   // ['this isn\'t one sentence. This doesn\'t make two now.', 'this was not one sentence. This didn\'t make two now.', 'this won\'t be one sentence. This won\'t make two now.']
   ].forEach(function (a) {
-    var s = nlp.text(a[0]);
+    var r = nlp(a[0]).sentences();
 
-    s.to_past();
-    str_test(s.out('text'), a[0], a[1], t);
+    r.toPastTense();
+    var str = r.out('text');
+    t.equal(str, a[1], str);
 
-    s.to_future();
-    str_test(s.out('text'), a[0], a[2], t);
+    r.toFutureTense();
+    str = r.out('text');
+    t.equal(str, a[2], str);
 
-    s.to_present();
-    str_test(s.out('text'), a[0], a[0], t);
+    r.toPresentTense();
+    str = r.out('text');
+    t.equal(str, a[0], str);
 
   });
+  t.end();
+});
+
+
+test('positive+negative-copulas', function(t) {
+  var m = nlp('john is nice').sentences();
+
+  m.toPastTense();
+  t.equal(m.out(), 'john was nice', 'toPast-1');
+
+  m.toPresentTense();
+  t.equal(m.out(), 'john is nice', 'toPres-1');
+
+  m.toFutureTense();
+  t.equal(m.out(), 'john will be nice', 'toFuture-1');
+
+  m.toNegative();
+  t.equal(m.out(), 'john will not be nice', 'toNeg-future');
+
+  //negative forms
+  m.toPastTense();
+  t.equal(m.out(), 'john was not nice', 'toPast-1');
+
+  m.toPresentTense();
+  t.equal(m.out(), 'john is not nice', 'toPres-1');
+
+  m.toFutureTense();
+  t.equal(m.out(), 'john will not be nice', 'toFuture-1');
+
+  t.end();
+});
+
+test('positive+negative-conjugate', function(t) {
+  var m = nlp('john walks quickly').sentences();
+
+  m.toPastTense();
+  t.equal(m.out(), 'john walked quickly', 'toPast-1');
+
+  m.toPresentTense();
+  t.equal(m.out(), 'john walks quickly', 'toPres-1');
+
+  m.toFutureTense();
+  t.equal(m.out(), 'john will walk quickly', 'toFuture-1');
+
+  m.toNegative();
+  t.equal(m.out(), 'john will not walk quickly', 'toNeg-future');
+
+  //negative forms
+  m.toPastTense();
+  t.equal(m.out(), 'john did not walk quickly', 'toPast-1');
+
+  m.toPresentTense();
+  t.equal(m.out(), 'john is not walking quickly', 'toPres-1');
+
+  m.toFutureTense();
+  t.equal(m.out(), 'john will not walk quickly', 'toFuture-1');
+
   t.end();
 });

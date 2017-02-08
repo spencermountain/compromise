@@ -1,6 +1,4 @@
 'use strict';
-//
-
 
 //these terms are nicer ways to negate a sentence
 //ie. john always walks -> john always doesn't walk
@@ -13,10 +11,8 @@ const logicalNegate = {
   'always': 'never'
 };
 
-
 //different rule for i/we/they/you + infinitive
 //that is, 'i walk' -> 'i don\'t walk', not 'I not walk'
-
 const toNegative = (ts) => {
   let lg = ts.match('(everyone|everybody|someone|somebody|always)').first();
   if (lg.found && logicalNegate[lg.out('normal')]) {

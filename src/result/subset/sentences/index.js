@@ -15,19 +15,22 @@ class Sentences extends Text {
   /** conjugate the main/first verb*/
   toPastTense() {
     this.list = this.list.map((ts) => {
-      return ts.toPastTense();
+      ts = ts.toPastTense();
+      return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
   }
   toPresentTense() {
     this.list = this.list.map((ts) => {
-      return ts.toPresentTense();
+      ts = ts.toPresentTense();
+      return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
   }
   toFutureTense() {
     this.list = this.list.map((ts) => {
-      return ts.toFutureTense();
+      ts = ts.toFutureTense();
+      return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
   }
@@ -37,12 +40,12 @@ class Sentences extends Text {
       ts = ts.toNegative();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
-    // console.log(this.out('text'));
     return this;
   }
   toPositive() {
     this.list = this.list.map((ts) => {
-      return ts.toPositive();
+      ts = ts.toPositive();
+      return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
   }

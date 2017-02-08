@@ -27,8 +27,12 @@ class Sentence extends Terms {
 
   //returns a Term object
   mainVerb() {
-    let terms = this.match('(#Verb|#Auxillary|#Adverb|#Particle)+').list[0].terms;
-    return new Verb(terms, this.lexicon, this.refText, this.refTerms);
+    let terms = this.match('(#Verb|#Auxillary|#Adverb|#Particle)+');
+    if (terms.found) {
+      terms = terms.list[0].terms;
+      return new Verb(terms, this.lexicon, this.refText, this.refTerms);
+    }
+    return terms;
   }
 
   /** sentence tense conversion**/
@@ -36,7 +40,7 @@ class Sentence extends Terms {
     let verb = this.mainVerb();
     if (verb) {
       //this is really ugly..
-      let start = verb.out('normal');
+      let start = verb.verb.out('normal');
       verb.toPastTense();
       let end = verb.out('normal');
       return this.parentTerms.replace(start, end);

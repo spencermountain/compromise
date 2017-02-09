@@ -39,7 +39,6 @@ const alreadyNumber = (ts) => {
 const parse = function(ts) {
   log.here('parseNumber', path);
   let str = ts.out('normal');
-
   //convert some known-numbers
   if (casualForms[str] !== undefined) {
     return casualForms[str];

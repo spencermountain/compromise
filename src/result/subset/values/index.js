@@ -53,9 +53,12 @@ class Values extends Text {
     return this;
   }
   static find(r, n) {
-    // r = r.match('#Value+ #Unit?');
     r = r.match('#Value+');
-    // r = r.not('#Date');
+    // r = r.match('#Value+ #Unit?');
+
+    //june 21st 1992 is two seperate values
+    r.splitOn('#Year');
+
     if (typeof n === 'number') {
       r = r.get(n);
     }

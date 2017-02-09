@@ -56,6 +56,9 @@ const splitMethods = (Terms) => {
         if (section.before) {
           all.push(section.before);
         }
+        if (section.match) {
+          all.push(section.match);
+        }
         termArr = section.after;
       });
       //add the remaining

@@ -20,7 +20,7 @@ const conflicts = [
   ['Comparative', 'Superlative'],
   //values
   ['Value', 'Verb', 'Adjective'],
-  ['Value', 'Year'],
+  // ['Value', 'Year'],
   ['Ordinal', 'Cardinal'],
   ['TextValue', 'NumericValue'],
   ['NiceNumber', 'TextValue'],

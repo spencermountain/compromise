@@ -44,7 +44,6 @@ const nlp = require('./src/index');
 // console.log(m.out());
 // m.toFutureTense();
 // console.log(m.out());
-
-var m = nlp('dog,').terms();
+var m = nlp('August 10 to 22, 2012').terms();
 // console.log(m.list[0].terms);
 console.log(m.data());

@@ -5,7 +5,7 @@ const fns = require('../../paths').fns;
 const methods = {
   /** a pixel-perfect reproduction of the input, with whitespace preserved */
   text: function() {
-    return this.whitespace.before + this.text + this.whitespace.after;
+    return (this.whitespace.before || '') + this.text + (this.whitespace.after || '');
   },
   /** a lowercased, punctuation-cleaned, whitespace-trimmed version of the word */
   normal: function() {

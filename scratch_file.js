@@ -6,7 +6,7 @@ const nlp = require('./src/index');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
 // sotu = `protecting Medicare, Medicaid, education, and the environment.`;
-// const fresh = require('./test/unit/lib/freshPrince.js');
+const fresh = require('./test/unit/lib/freshPrince.js');
 // nlp.verbose('tagger');
 
 
@@ -44,10 +44,24 @@ const nlp = require('./src/index');
 // console.log(m.out());
 // m.toFutureTense();
 // console.log(m.out());
-var m = nlp('january 5 to 7 1998');
-m.match('#Value+').splitOn('#Year').debug();
+// var m = nlp('january 5 to 7 1998');
+// m.match('#Value+').splitOn('#Year').debug();
 // m.values().debug();
 // m = m.values().match('#Year');
 // console.log(m.values().data());
 // console.log(m.list[0].terms);
 // console.log(m.out());
+
+
+let r = nlp(fresh);
+r.toLowerCase();
+// r.match('#Verb').toUpperCase();
+// r.list[0].terms.forEach((t) => {
+//   console.log(t.dirty);
+// });
+
+r.list.map((ts) => {
+  ts.terms.map((t) => {
+    console.log(t.out());
+  });
+});

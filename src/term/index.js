@@ -16,27 +16,22 @@ class Term {
     this.dirty = false;
     this.normalize();
   }
-
   set text(str) {
     str = str || '';
-    this._text = str.trim();
-    this.dirty = true;
+    str = str.trim();
     if (this._text !== str) {
+      this.dirty = true;
+      this._text = str;
       this.whitespace = build_whitespace(str);
+      this.normalize();
     }
-    this.normalize();
   }
-
   get text() {
     return this._text;
-  }
-  get plaintext() {
-    return this.whitespace.before + this._text + this.whitespace.after;
   }
   get isA() {
     return 'Term';
   }
-
   /** where in the sentence is it? zero-based. */
   index() {
     let ts = this.parentTerms;
@@ -45,7 +40,6 @@ class Term {
     }
     return ts.terms.indexOf(this);
   }
-
   /** make a copy with no references to the original  */
   clone() {
     let term = new Term(this._text, null);

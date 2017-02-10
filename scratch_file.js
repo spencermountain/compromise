@@ -53,21 +53,5 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.log(m.out());
 
 
-// let r = nlp('hello my name is john.');
-// r.toLowerCase();
-// r.match('#Verb').toUpperCase();
-// r.list[0].terms.forEach((t) => {
-//   console.log(t.dirty);
-// });
-
-// r.list.map((ts) => {
-//   ts.terms.map((t) => {
-//     console.log(t.out());
-//   });
-// });
-var r = nlp('We\'ve      only');
-r.list[0].terms.forEach((t) => {
-  console.log('|' + t.whitespace.before + t.text + t.whitespace.after + '|');
-});
-r.contractions().expand();
-console.log(r.out());
+let r = nlp('i think he is strong. he is very strong');
+console.log(r.ngrams().data());

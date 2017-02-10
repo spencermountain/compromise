@@ -92,6 +92,7 @@ const subset = {
   urls: require('./subset/urls'),
   values: require('./subset/values'),
   verbs: require('./subset/verbs'),
+  ngrams: require('./subset/ngrams'),
 };
 //term subsets
 Object.keys(subset).forEach((k) => {

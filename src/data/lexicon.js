@@ -56,12 +56,18 @@ addArr(data.bands, 'Organization');
 addArr(data.orgWords, 'Noun');
 
 //irregular verbs
-Object.keys(data.irregular_verbs).forEach((k) => {
-  lexicon[k] = 'Infinitive';
-  let conj = data.irregular_verbs[k];
+Object.keys(data.irregular_verbs).forEach((inf) => {
+  lexicon[inf] = 'Infinitive';
+  let conj = data.irregular_verbs[inf];
   Object.keys(conj).forEach((k2) => {
     if (conj[k2]) {
       lexicon[conj[k2]] = k2;
+    }
+  });
+  let o = fastConjugate(inf);
+  Object.keys(o).forEach((k) => {
+    if (o[k] && !lexicon[o[k]]) {
+      lexicon[o[k]] = k;
     }
   });
 });
@@ -134,7 +140,8 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon['will walk']);
+// console.log(lexicon['make']);
+// console.log(fastConjugate('make'));
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.timeEnd('lexicon');

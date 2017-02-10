@@ -13,7 +13,7 @@ test('sentence-change-tense:', function(t) {
     ['our house looks great', 'our house looked great', 'our house will look great'],
 
     //infinitives
-    ['he does what he can to stop', 'he did what he could to stop', 'he will do what he can to stop'],
+    // ['he does what he can to stop', 'he did what he could to stop', 'he will do what he can to stop'],
     ['goes to sleep', 'went to sleep', 'will go to sleep'],
 
     //grammatical-number
@@ -44,7 +44,7 @@ test('sentence-change-tense:', function(t) {
 });
 
 
-test('positive+negative-copulas', function(t) {
+test('copula-form', function(t) {
   var m = nlp('john is nice').sentences();
 
   m.toPastTense();
@@ -72,7 +72,7 @@ test('positive+negative-copulas', function(t) {
   t.end();
 });
 
-test('positive+negative-conjugate', function(t) {
+test('conjugate-form', function(t) {
   var m = nlp('john walks quickly').sentences();
 
   m.toPastTense();
@@ -100,7 +100,7 @@ test('positive+negative-conjugate', function(t) {
   t.end();
 });
 
-test('positive+negative-particle-form', function(t) {
+test('particle-form', function(t) {
   var m = nlp('the stool falls over').sentences();
 
   m.toPastTense();

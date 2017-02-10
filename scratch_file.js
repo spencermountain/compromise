@@ -53,5 +53,8 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.log(m.out());
 
 
-let r = nlp('he is strong. he is cool');
-console.log(r.ngrams(null, 2).data());
+var m = nlp('This makes').sentences();
+
+// m.toPastTense();
+// console.log(m.out());
+m.debug();

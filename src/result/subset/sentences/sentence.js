@@ -40,7 +40,7 @@ class Sentence extends Terms {
     let verb = this.mainVerb();
     if (verb) {
       //this is really ugly..
-      let start = verb.verb.out('normal');
+      let start = verb.out('normal');
       verb.toPastTense();
       // console.log(verb.parentTerms.out() + '!');
       let end = verb.out('normal');

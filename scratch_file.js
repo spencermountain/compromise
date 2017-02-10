@@ -53,7 +53,6 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.log(m.out());
 
 
-var m = nlp('john is not nice').sentences();
-
-m.toFutureTense();
+var m = nlp('john will not walk quickly').sentences();
+m.toPastTense();
 m.debug();

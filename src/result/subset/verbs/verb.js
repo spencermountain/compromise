@@ -59,6 +59,7 @@ class Verb extends Terms {
 
   /** conjugation **/
   toPastTense() {
+    // this.debug();
     let obj = this.conjugate();
     return this.replaceWith(obj.PastTense);
   }

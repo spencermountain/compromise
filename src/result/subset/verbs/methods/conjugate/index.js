@@ -29,7 +29,6 @@ const toBe = require('./toBe');
 const multiWord = (vb, verbose) => {
   let isNegative = vb.negative.found;
   let isPlural = false;
-
   //handle 'to be' verb seperately
   if (vb.verb.tag.Copula || (vb.verb.normal === 'be' && vb.auxillary.match('will').found)) {
     return toBe(isPlural, isNegative);

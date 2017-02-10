@@ -92,7 +92,7 @@ test('conjugate-form', function(t) {
   t.equal(m.out(), 'john did not walk quickly', 'toPast-neg');
 
   m.toPresentTense();
-  t.equal(m.out(), 'john is not walking quickly', 'toPres-neg');
+  t.equal(m.out(), 'john does not walk quickly', 'toPres-neg');
 
   m.toFutureTense();
   t.equal(m.out(), 'john will not walk quickly', 'toFuture-neg');

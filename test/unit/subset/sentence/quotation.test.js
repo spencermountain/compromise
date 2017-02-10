@@ -11,7 +11,7 @@ test('quotation test:', function(t) {
     [`“quote”`, `quote`],
     [`“quote is here”`, `quote is here`],
   ].forEach(function (a) {
-    var str = nlp(a[0]).match('#Quotation').out('text');
+    var str = nlp(a[0]).match('#Quotation+').out('normal');
     str_test(str, a[0], a[1], t);
   });
   t.end();

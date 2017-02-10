@@ -1,6 +1,6 @@
 var test = require('tape');
-var nlp = require('../..b/nlp');
-var pos_test = require('../..b/fns').pos_test;
+var nlp = require('../../lib/nlp');
+var pos_test = require('../../lib/fns').pos_test;
 
 test('=Tagger=', function(T) {
 
@@ -57,7 +57,7 @@ test('=Tagger=', function(T) {
     // ['',[]],
     // ['',[]],
     ].forEach(function (a) {
-      var terms = nlp.sentence(a[0]).terms;
+      var terms = nlp(a[0]).terms().data();
       pos_test(terms, a[1], t);
     });
     t.end();

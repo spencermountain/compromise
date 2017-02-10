@@ -65,5 +65,9 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 //     console.log(t.out());
 //   });
 // });
-var str = nlp('fourth day of next week').match('#Date+').out('text');
-console.log(str);
+var r = nlp('We\'ve      only just begun');
+r.list[0].terms.forEach((t) => {
+  console.log('|' + t.whitespace.before + t.text + t.whitespace.after + '|');
+});
+r.contractions().expand();
+console.log(r.out());

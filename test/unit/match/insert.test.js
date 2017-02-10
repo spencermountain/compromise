@@ -30,7 +30,7 @@ test('insert-basic :', function(t) {
 
 test('insert-subset-include :', function(t) {
   var m = nlp('the dog is nice');
-  let sub = m.match('is');
+  var sub = m.match('is');
   sub.insertAfter('really');
   t.equal(sub.out('normal'), 'is really', 'is-really');
   t.equal(m.out('normal'), 'the dog is really nice', 'dog-is-really-nice');

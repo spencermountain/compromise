@@ -18,9 +18,10 @@ class Term {
   }
   set text(str) {
     str = str || '';
+    // console.log(this._text);
     if (this._text !== str.trim()) {
       this.dirty = true;
-      let parsed = build_whitespace(this._text);
+      let parsed = build_whitespace(str);
       this.whitespace = parsed.whitespace;
       this._text = parsed.text;
       this.normalize();

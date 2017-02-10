@@ -12,7 +12,8 @@ const expand = function(ts) {
       if (!t.text) {
         t.whitespace.before = ' ';
       }
-      t.text = t.silent_term;
+      t._text = t.silent_term;
+      t.normalize();
       t.silent_term = null;
       t.unTag('Contraction', 'expanded');
     }

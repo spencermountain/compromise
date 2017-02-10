@@ -72,6 +72,10 @@ const insertMethods = (Terms) => {
       if (tag) {
         ts.tagAs(tag);
       }
+      addSpaceAt(this.parentTerms, index);
+      if (index > 0) {
+        addSpaceAt(ts, 0); //if in middle of sentence
+      }
       this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index, ts);
       //also copy them to current selection
       if (this.terms.length === original_l) {

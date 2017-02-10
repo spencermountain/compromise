@@ -6,6 +6,7 @@ class Gram extends Terms {
     super(arr, lexicon, refText, refTerms);
     this.key = this.out('normal');
     this.size = arr.length;
+    this.edge = null;
     this.count = 1;
   }
   inc() {

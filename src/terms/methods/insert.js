@@ -72,7 +72,6 @@ const insertMethods = (Terms) => {
       if (tag) {
         ts.tagAs(tag);
       }
-      addSpaceAt(this.parentTerms, index);
       if (index > 0) {
         addSpaceAt(ts, 0); //if in middle of sentence
       }

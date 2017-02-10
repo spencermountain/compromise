@@ -10,6 +10,7 @@ class Term {
     let parsed = build_whitespace(this._text);
     this.whitespace = parsed.whitespace;
     this._text = parsed.text;
+    // console.log(this.whitespace, this._text);
     this.parent = null;
     this.silent_term = '';
     //has this term been modified
@@ -18,14 +19,12 @@ class Term {
   }
   set text(str) {
     str = str || '';
-    // console.log(this._text);
-    if (this._text !== str.trim()) {
-      this.dirty = true;
-      let parsed = build_whitespace(str);
-      this.whitespace = parsed.whitespace;
-      this._text = parsed.text;
-      this.normalize();
+    this._text = str.trim();
+    this.dirty = true;
+    if (this._text !== str) {
+      this.whitespace = build_whitespace(str);
     }
+    this.normalize();
   }
   get text() {
     return this._text;

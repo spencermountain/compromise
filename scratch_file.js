@@ -65,7 +65,7 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 //     console.log(t.out());
 //   });
 // });
-var r = nlp('We\'ve      only just begun');
+var r = nlp('We\'ve      only');
 r.list[0].terms.forEach((t) => {
   console.log('|' + t.whitespace.before + t.text + t.whitespace.after + '|');
 });

@@ -1,4 +1,5 @@
 'use strict';
+
 const allowed = {
   're': true,
   've': true,

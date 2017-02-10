@@ -3,8 +3,11 @@ const Gram = require('./gram');
 
 //do all grams of one size, on one termList
 const getGrams = function(fts, n) {
-  let arr = [];
   let terms = fts.terms;
+  if (terms.length < n) {
+    return [];
+  }
+  let arr = [];
   for(let i = 0; i < terms.length - n + 1; i++) {
     let gram = new Gram(terms.slice(i, i + n));
     arr.push(gram);

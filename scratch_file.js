@@ -54,4 +54,4 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 
 
 let r = nlp('he is strong. he is cool');
-console.log(r.startGrams().data());
+console.log(r.ngrams(null, 2).data());

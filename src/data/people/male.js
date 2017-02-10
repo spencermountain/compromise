@@ -11,6 +11,7 @@ let arr = [
   'billy',
   'bobby',
   'bob',
+  'buddy', //ergh
   'bradford',
   'bret',
   'caleb',

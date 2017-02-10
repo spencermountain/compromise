@@ -11,7 +11,7 @@ const corrections = function (r) {
   //don't match+tag things over two clauses
   // r = r.clauses();
 
-  //(the word 'so')
+  //ambig prepositions/conjunctions
   //so funny
   r.match('so #Adjective').match('so').tag('Adverb', 'so-adv');
   //so the
@@ -78,6 +78,8 @@ const corrections = function (r) {
   //her polling
   r.match('#Possessive #Verb').term(1).tag('Noun', 'correction-possessive');
 
+  //like
+  r.match('just like').term(1).tag('Preposition', 'like-preposition');
   //folks like her
   r.match('#Noun like #Noun').term(1).tag('Preposition', 'correction');
 

@@ -29,7 +29,7 @@ module.exports = [
   'from',
   'in',
   'into',
-  'just like',
+  // 'just like',
   'mid',
   'midst',
   'notwithstanding',

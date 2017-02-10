@@ -53,9 +53,9 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.log(m.out());
 
 
-let r = nlp(fresh);
+let r = nlp('hello my name is john.');
 r.toLowerCase();
-// r.match('#Verb').toUpperCase();
+r.match('#Verb').toUpperCase();
 // r.list[0].terms.forEach((t) => {
 //   console.log(t.dirty);
 // });

@@ -21,8 +21,9 @@ class Term {
     str = str.trim();
     if (this._text !== str) {
       this.dirty = true;
-      this._text = str;
-      this.whitespace = build_whitespace(str);
+      let parsed = build_whitespace(this._text);
+      this.whitespace = parsed.whitespace;
+      this._text = parsed.text;
       this.normalize();
     }
   }

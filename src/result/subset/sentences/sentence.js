@@ -27,7 +27,7 @@ class Sentence extends Terms {
 
   //returns a Term object
   mainVerb() {
-    let terms = this.match('(#Verb|#Auxillary|#Adverb|#Particle)+');
+    let terms = this.match('(#Adverb|#Auxillary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
     if (terms.found) {
       terms = terms.list[0].terms;
       return new Verb(terms, this.lexicon, this.refText, this.refTerms);

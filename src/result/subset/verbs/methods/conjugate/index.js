@@ -50,8 +50,8 @@ const multiWord = (vb, verbose) => {
   }
   //apply negative
   if (isNegative) {
-    obj.PastTense = 'didn\'t ' + obj.Infinitive;
-    obj.PresentTense = 'doesn\'t ' + obj.Infinitive;
+    obj.PastTense = 'did not ' + obj.Infinitive;
+    obj.PresentTense = 'does not ' + obj.Infinitive;
   }
   //future Tense is pretty straightforward
   if (!obj.FutureTense) {

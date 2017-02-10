@@ -113,7 +113,7 @@ test('particle-form', function(t) {
   t.equal(m.out(), 'the stool will fall over', 'toFuture-1');
 
   m.toNegative();
-  t.equal(m.out(), 'the stool did not fall over', 'toNeg');
+  t.equal(m.out(), 'the stool will not fall over', 'toNeg');
 
   //negative forms
   m.toPastTense();

@@ -80,7 +80,6 @@ class Verbs extends Text {
       return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return new Text(r.list, this.lexicon, this.parent);
-  // return r;
   }
 }
 

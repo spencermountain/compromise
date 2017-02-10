@@ -61,13 +61,13 @@ test('copula-form', function(t) {
 
   //negative forms
   m.toPastTense();
-  t.equal(m.out(), 'john was not nice', 'toPast-1');
+  t.equal(m.out(), 'john was not nice', 'toPast-neg');
 
   m.toPresentTense();
-  t.equal(m.out(), 'john is not nice', 'toPres-1');
+  t.equal(m.out(), 'john is not nice', 'toPres-neg');
 
   m.toFutureTense();
-  t.equal(m.out(), 'john will not be nice', 'toFuture-1');
+  t.equal(m.out(), 'john will not be nice', 'toFuture-neg');
 
   t.end();
 });
@@ -85,17 +85,17 @@ test('conjugate-form', function(t) {
   t.equal(m.out(), 'john will walk quickly', 'toFuture-1');
 
   m.toNegative();
-  t.equal(m.out(), 'john will not walk quickly', 'toNeg-future');
+  t.equal(m.out(), 'john will not walk quickly', 'toNeg');
 
   //negative forms
   m.toPastTense();
-  t.equal(m.out(), 'john did not walk quickly', 'toPast-1');
+  t.equal(m.out(), 'john did not walk quickly', 'toPast-neg');
 
   m.toPresentTense();
-  t.equal(m.out(), 'john is not walking quickly', 'toPres-1');
+  t.equal(m.out(), 'john is not walking quickly', 'toPres-neg');
 
   m.toFutureTense();
-  t.equal(m.out(), 'john will not walk quickly', 'toFuture-1');
+  t.equal(m.out(), 'john will not walk quickly', 'toFuture-neg');
 
   t.end();
 });
@@ -104,26 +104,26 @@ test('particle-form', function(t) {
   var m = nlp('the stool falls over').sentences();
 
   m.toPastTense();
-  t.equal(m.out(), 'the stool falls over', 'toPast-1');
+  t.equal(m.out(), 'the stool fell over', 'toPast-1');
 
   m.toPresentTense();
   t.equal(m.out(), 'the stool falls over', 'toPres-1');
 
   m.toFutureTense();
-  t.equal(m.out(), 'the stool falls over', 'toFuture-1');
+  t.equal(m.out(), 'the stool will fall over', 'toFuture-1');
 
   m.toNegative();
-  t.equal(m.out(), 'the stool falls over', 'toNeg-future');
+  t.equal(m.out(), 'the stool did not fall over', 'toNeg');
 
   //negative forms
   m.toPastTense();
-  t.equal(m.out(), 'the stool falls over', 'toPast-1');
+  t.equal(m.out(), 'the stool did not fall over', 'toPast-neg');
 
   m.toPresentTense();
-  t.equal(m.out(), 'the stool falls over', 'toPres-1');
+  t.equal(m.out(), 'the stool does not fall over', 'toPres-neg');
 
   m.toFutureTense();
-  t.equal(m.out(), 'the stool falls over', 'toFuture-1');
+  t.equal(m.out(), 'the stool will not fall over', 'toFuture-neg');
 
   t.end();
 });

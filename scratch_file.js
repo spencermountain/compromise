@@ -53,15 +53,17 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.log(m.out());
 
 
-let r = nlp('hello my name is john.');
-r.toLowerCase();
-r.match('#Verb').toUpperCase();
+// let r = nlp('hello my name is john.');
+// r.toLowerCase();
+// r.match('#Verb').toUpperCase();
 // r.list[0].terms.forEach((t) => {
 //   console.log(t.dirty);
 // });
 
-r.list.map((ts) => {
-  ts.terms.map((t) => {
-    console.log(t.out());
-  });
-});
+// r.list.map((ts) => {
+//   ts.terms.map((t) => {
+//     console.log(t.out());
+//   });
+// });
+var str = nlp('fourth day of next week').match('#Date+').out('text');
+console.log(str);

@@ -4,7 +4,7 @@ const fns = require('../paths').fns;
 const methods = {
   text: function (ts) {
     return ts.terms.reduce((str, t) => {
-      str += t.plaintext;
+      str += t.out('text');
       return str;
     }, '');
   },

@@ -138,3 +138,4 @@ module.exports = lexicon;
 // let t = new Term('shake');
 // t.tag.Verb = true;
 // console.timeEnd('lexicon');
+// console.log(Object.keys(lexicon).length);

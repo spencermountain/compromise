@@ -18,8 +18,7 @@ class Term {
   }
   set text(str) {
     str = str || '';
-    str = str.trim();
-    if (this._text !== str) {
+    if (this._text !== str.trim()) {
       this.dirty = true;
       let parsed = build_whitespace(this._text);
       this.whitespace = parsed.whitespace;

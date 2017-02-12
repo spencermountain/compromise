@@ -23,7 +23,9 @@ const toNegative = (ts) => {
   }
   //negate the main verb of the sentence
   let vb = ts.mainVerb();
-  vb.toNegative();
+  if (vb) {
+    vb.toNegative();
+  }
   return ts;
 };
 module.exports = toNegative;

@@ -82,7 +82,7 @@ class Sentence extends Terms {
     return toNegative(this);
   }
   toPositive() {
-    this.match('#Negative').first().remove();
+    this.match('#Negative').first().delete();
     return this;
   }
 

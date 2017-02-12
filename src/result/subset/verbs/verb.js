@@ -35,7 +35,11 @@ class Verb extends Terms {
       conjugations: this.conjugate()
     };
   }
-
+  //which conjugation is this right now?
+  conjugation() {
+    return interpret(this, false).tense;
+  }
+  //blast-out all forms
   conjugate(debug) {
     return conjugate(this, debug);
   }
@@ -54,7 +58,7 @@ class Verb extends Terms {
     return toNegative(this);
   }
   toPositive() {
-    return this.remove('#Negative');
+    return this.match('#Negative').delete();
   }
 
   /** conjugation **/

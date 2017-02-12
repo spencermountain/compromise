@@ -1,6 +1,7 @@
 module.exports = {
   generic: {
     data: {
+      desc: 'return an array of meta-data about this subset',
       desc: '',
       example: `nlp().subset().data()`,
       returns: 'array',
@@ -30,6 +31,8 @@ module.exports = {
       returns: 'Text',
       example: `nlp('we want will! we want will!').whitespace.before('   ').out()//we want will!   we want will!`
     },
+
+    //case
     toTitleCase: {
       desc: 'set the first letter of each term as a capital',
       returns: 'Text',
@@ -60,6 +63,8 @@ module.exports = {
       returns: 'Text',
       example: `nlp('natural-language processing').dehyphenate().out()//natural language processing`
     },
+
+    //insert
     insertBefore: {
       desc: 'append a word (or words) before each match',
       returns: 'Text',
@@ -75,6 +80,8 @@ module.exports = {
       returns: 'Text',
       example: `nlp('so you are from Africa?').insertAt(2, 'like,').all().out()//so you are like, from africa?`
     },
+
+    //replace
     replaceWith: {
       desc: 'turn the current selection into something else. Essentially just delete() -> insertAt().',
       returns: 'Text',
@@ -90,6 +97,8 @@ module.exports = {
       returns: 'Text',
       example: `nlp('you don't win friends with salad').delete('do not').out()//you win friends with salad`
     },
+
+    //match
     match: {
       desc: 'zoom-in to a subset of the text, using a [regex-like syntax](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)',
       returns: 'Text',
@@ -117,6 +126,7 @@ module.exports = {
       example: `nlp(' so... you like   DONUTS? have all the donuts in the WORLD!!!').normalize().sentences(0).out()//So you like donuts?`
     },
 
+    //split
     splitOn: {
       desc: 'split matches into [before, match, after]',
       returns: 'Text',
@@ -133,6 +143,7 @@ module.exports = {
       example: `nlp('Monorail...Once again! Monorail... Monorail!').splitAfter('monorail').get(0).out()//Monorail`
     },
 
+    //tag
     tag: {
       desc: 'set a particular interpretation for these terms. Can tag your match as anything. Supported tags do dependency/conflict logic.',
       returns: 'Text',
@@ -147,14 +158,17 @@ module.exports = {
       desc: 'return only terms that have no conflicts with this tag',
       returns: 'Text',
       example: `nlp('it's fusilli jerry!').canBe('Person').out()//fusilli jerry`
-    },
-
-
-
+    }
   },
+
+
+
+
+
   subsets: {
     acronyms: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().acronyms().data()`,
         returns: 'array'
       }
@@ -162,6 +176,7 @@ module.exports = {
 
     adjectives: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().adjectives().data()`,
         returns: 'array'
       }
@@ -169,6 +184,7 @@ module.exports = {
 
     adverbs: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().adverbs().data()`,
         returns: 'array'
       }
@@ -176,6 +192,7 @@ module.exports = {
 
     clauses: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().clauses().data()`,
         returns: 'array'
       }
@@ -183,13 +200,45 @@ module.exports = {
 
     contractions: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().contractions().data()`,
         returns: 'array'
-      }
+      },
+      expand: {
+        desc: 'turn `didn\'t` into `did not`, etc',
+        returns: 'Text',
+        example: `nlp('He’s the greatest guy in history').contractions().expand().out('')//He is`
+      },
+      contract: {
+        desc: 'turn did not into didn\'t, etc.',
+        returns: 'Text',
+        example: `nlp('He is about to hit a chestnut tree').contractions().contract().out('')//He's`
+      },
+      contracted: {
+        desc: 'show only the contractions that are currently contracted -eg. `i\'ll` but not `i will`',
+        returns: 'Text',
+        example: `nlp('Lisa, I’d like to buy your rock.').contractions().contracted().out('')//I'd`
+      },
+      expanded: {
+        desc: 'show only the contractions that are currently not contracted -eg. `he would` but not `he\'d`',
+        returns: 'Text',
+        example: `nlp('Lisa, I would like to buy your rock.').contractions().expanded().out('')//I would`
+      },
+    // fn: {
+    //   desc: '',
+    //   returns: 'Text',
+    //   example: `nlp('').fn().out('')//`
+    // },
+    // fn: {
+    //   desc: '',
+    //   returns: 'Text',
+    //   example: `nlp('').fn().out('')//`
+    // },
     },
 
     dates: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().dates().data()`,
         returns: 'array'
       }
@@ -197,6 +246,7 @@ module.exports = {
 
     hashTags: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().hashTags().data()`,
         returns: 'array'
       }
@@ -204,6 +254,7 @@ module.exports = {
 
     nouns: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().nouns().data()`,
         returns: 'array'
       }
@@ -211,6 +262,7 @@ module.exports = {
 
     organizations: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().organizations().data()`,
         returns: 'array'
       }
@@ -218,6 +270,7 @@ module.exports = {
 
     people: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().people().data()`,
         returns: 'array'
       }
@@ -225,6 +278,7 @@ module.exports = {
 
     phoneNumbers: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().phoneNumbers().data()`,
         returns: 'array'
       }
@@ -232,6 +286,7 @@ module.exports = {
 
     places: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().places().data()`,
         returns: 'array'
       }
@@ -239,6 +294,7 @@ module.exports = {
 
     questions: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().questions().data()`,
         returns: 'array'
       }
@@ -246,6 +302,7 @@ module.exports = {
 
     quotations: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().quotations().data()`,
         returns: 'array'
       }
@@ -253,6 +310,7 @@ module.exports = {
 
     sentences: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().sentences().data()`,
         returns: 'array'
       }
@@ -260,6 +318,7 @@ module.exports = {
 
     statements: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().statements().data()`,
         returns: 'array'
       }
@@ -267,6 +326,7 @@ module.exports = {
 
     terms: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().terms().data()`,
         returns: 'array'
       }
@@ -274,6 +334,7 @@ module.exports = {
 
     topics: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().topics().data()`,
         returns: 'array'
       }
@@ -281,6 +342,7 @@ module.exports = {
 
     urls: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().urls().data()`,
         returns: 'array'
       }
@@ -288,6 +350,7 @@ module.exports = {
 
     values: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().values().data()`,
         returns: 'array'
       }
@@ -295,6 +358,7 @@ module.exports = {
 
     verbs: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().verbs().data()`,
         returns: 'array'
       }
@@ -302,6 +366,7 @@ module.exports = {
 
     ngrams: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().ngrams().data()`,
         returns: 'array'
       }
@@ -309,6 +374,7 @@ module.exports = {
 
     startGrams: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().startGrams().data()`,
         returns: 'array'
       }
@@ -316,6 +382,7 @@ module.exports = {
 
     endGrams: {
       data: {
+        desc: 'return an array of meta-data about this subset',
         example: `nlp().endGrams().data()`,
         returns: 'array'
       }

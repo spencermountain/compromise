@@ -67,7 +67,6 @@ Text = require('./methods/out')(Text);
 Text = require('./methods/sort')(Text);
 Text = require('./methods/split')(Text);
 Text = require('./methods/tag')(Text);
-Text = require('./methods/termFns')(Text);
 Text.prototype.normalize = require('./methods/normalize');
 
 const subset = {

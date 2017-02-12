@@ -28,27 +28,27 @@ const splitMethods = (Text) => {
     },
 
     /** find the first result */
-    matchOne: function (reg, verbose) {
-      for (let i = 0; i < this.list.length; i++) {
-        let ms = this.list[i].match(reg, verbose);
-        if (ms && ms.length) {
-          let parent = this.parent || this;
-          return new Text(ms, parent);
-        }
-      }
-      return null;
-    },
+    // matchOne: function (reg, verbose) {
+    //   for (let i = 0; i < this.list.length; i++) {
+    //     let ms = this.list[i].match(reg, verbose);
+    //     if (ms && ms.length) {
+    //       let parent = this.parent || this;
+    //       return new Text(ms, parent);
+    //     }
+    //   }
+    //   return null;
+    // },
 
     /** true/false if it countains atleast one match*/
-    has: function (reg, verbose) {
-      for (let i = 0; i < this.list.length; i++) {
-        let ms = this.list[i].match(reg, verbose);
-        if (ms && ms.length) {
-          return true;
-        }
-      }
-      return false;
-    },
+    // has: function (reg, verbose) {
+    //   for (let i = 0; i < this.list.length; i++) {
+    //     let ms = this.list[i].match(reg, verbose);
+    //     if (ms && ms.length) {
+    //       return true;
+    //     }
+    //   }
+    //   return false;
+    // },
 
     if: function (reg, verbose) {
       let list = [];
@@ -75,16 +75,16 @@ const splitMethods = (Text) => {
     },
 
     /** return terms after this match */
-    after: function (reg) {
-      let after = reg + ' *';
-      return this.match(after).not(reg);
-    },
-
-    /** return terms before this match */
-    before: function (reg) {
-      let before = '* ' + reg;
-      return this.match(before).not(reg);
-    },
+    // after: function (reg) {
+    //   let after = reg + ' *';
+    //   return this.match(after).not(reg);
+    // },
+    //
+    // /** return terms before this match */
+    // before: function (reg) {
+    //   let before = '* ' + reg;
+    //   return this.match(before).not(reg);
+    // },
 
   };
   //alias 'and'

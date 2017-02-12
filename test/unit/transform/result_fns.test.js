@@ -6,8 +6,8 @@ test('result methods', function (t) {
 
   //has method
   var m = nlp(text);
-  t.equal(m.has('#Emoji'), true, 'nlp.has positive');
-  t.equal(m.has('#SportsTeam'), false, 'nlp.has neg');
+  t.equal(m.match('#Emoji').found, true, 'nlp.has positive');
+  t.equal(m.match('#SportsTeam').found, false, 'nlp.has neg');
 
   //filter string
   var small = m.filter('#Emoji');
@@ -15,7 +15,7 @@ test('result methods', function (t) {
 
   //filter method
   small = m.filter((ts) => {
-    return !ts.has('#Emoji');
+    return !ts.match('#Emoji').found;
   });
   t.equal(small.out('normal'), 'it is really nice.', 'nlp.filter method');
 

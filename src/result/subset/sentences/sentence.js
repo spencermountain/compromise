@@ -44,7 +44,8 @@ class Sentence extends Terms {
       verb.toPastTense();
       // console.log(verb.parentTerms.out() + '!');
       let end = verb.out('normal');
-      return this.parentTerms.replace(start, end);
+      let r = this.parentTerms.replace(start, end);
+      return r;
     }
     return this;
   }

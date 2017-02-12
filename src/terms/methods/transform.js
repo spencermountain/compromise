@@ -21,7 +21,7 @@ const transforms = (Terms) => {
       });
       return this;
     },
-    deHyphenate: function () {
+    dehyphenate: function () {
       this.terms.forEach((t) => {
         if (t.whitespace.after === '-') {
           t.whitespace.after = ' ';

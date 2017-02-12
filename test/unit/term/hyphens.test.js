@@ -31,13 +31,13 @@ test('hyphenate', function (t) {
   m.hyphenate();
   t.equal(m.terms().length, 6, 'seperate terms');
   t.equal(m.out('text'), 'it-is-cool. he-is-nice', 'hyphenate');
-  m.deHyphenate();
+  m.dehyphenate();
   t.equal(m.out('text'), str, 'dehyphenate');
 
 
   str = 'i payed seven-hundred for the back-rub';
   m = nlp(str);
-  m.values().deHyphenate();
+  m.values().dehyphenate();
   t.equal(m.out('text'), 'i payed seven hundred for the back-rub', 'dehyphenate-values');
 
 

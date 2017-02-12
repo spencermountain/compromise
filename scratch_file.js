@@ -54,6 +54,7 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 
 
 var r = nlp('i look just like Buddy Holly');
-r = r.clone();
-r.sentences().toPastTense();
+// r = r.clone();
+r = r.sentences().toNegative();
+console.log(r.out());
 r.debug();

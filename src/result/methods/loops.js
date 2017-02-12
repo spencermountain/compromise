@@ -7,7 +7,7 @@ let foreach = [
   'toCamelCase',
 
   'hyphenate',
-  'deHyphenate',
+  'dehyphenate',
 
   'insertBefore',
   'insertAfter',

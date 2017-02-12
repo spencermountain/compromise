@@ -13,7 +13,8 @@ const methods = {
 
   /** make only one space between each word */
   whitespace: (r) => {
-    r.forEachTerms((t) => {
+    r.this.terms().list.forEach((ts) => {
+      let t = ts.terms[0];
       if (i > 0) {
         t.whitespace.before = ' ';
       }
@@ -24,7 +25,8 @@ const methods = {
 
   /** make first-word titlecase, and people, places titlecase */
   case: (r) => {
-    r.forEachTerms((t) => {
+    r.this.terms().list.forEach((ts) => {
+      let t = ts.terms[0];
       if (i === 0 || t.tag.Person || t.tag.Place || t.tag.Organization) {
         t.text = t.term.titlecase();
       } else {
@@ -41,7 +43,8 @@ const methods = {
 
   /** remove commas, semicolons - but keep sentence-ending punctuation*/
   punctuation: (r) => {
-    r.forEachTerms((t) => {
+    r.this.terms().list.forEach((ts) => {
+      let t = ts.terms[0];
       if (i < ts.terms.length - 1) {
         t.text = t.killPunctuation();
       }

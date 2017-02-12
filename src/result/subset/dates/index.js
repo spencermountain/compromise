@@ -9,19 +9,23 @@ class Dates extends Text {
     return this.list.map((ts) => ts.data());
   }
   toShortForm() {
-    this.match('#Month').forEachTerms((t) => {
+    this.match('#Month').terms().list.forEach((ts) => {
+      let t = ts.terms[0];
       months.toShortForm(t);
     });
-    this.match('#WeekDay').forEachTerms((t) => {
+    this.match('#WeekDay').terms().list.forEach((ts) => {
+      let t = ts.terms[0];
       weekdays.toShortForm(t);
     });
     return this;
   }
   toLongForm() {
-    this.match('#Month').forEachTerms((t) => {
+    this.match('#Month').terms().list.forEach((ts) => {
+      let t = ts.terms[0];
       months.toLongForm(t);
     });
-    this.match('#WeekDay').forEachTerms((t) => {
+    this.match('#WeekDay').terms().list.forEach((ts) => {
+      let t = ts.terms[0];
       weekdays.toLongForm(t);
     });
     return this;

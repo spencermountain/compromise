@@ -3,7 +3,8 @@ const Text = require('../../index');
 
 class Urls extends Text {
   data() {
-    return this.mapTerms((t) => {
+    return this.terms().list.map((ts) => {
+      let t = ts.terms[0];
       return {
         text: t.text
       };

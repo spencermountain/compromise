@@ -223,17 +223,7 @@ module.exports = {
         desc: 'show only the contractions that are currently not contracted -eg. `he would` but not `he\'d`',
         returns: 'Text',
         example: `nlp('Lisa, I would like to buy your rock.').contractions().expanded().out('')//I would`
-      },
-    // fn: {
-    //   desc: '',
-    //   returns: 'Text',
-    //   example: `nlp('').fn().out('')//`
-    // },
-    // fn: {
-    //   desc: '',
-    //   returns: 'Text',
-    //   example: `nlp('').fn().out('')//`
-    // },
+      }
     },
 
     dates: {
@@ -241,7 +231,17 @@ module.exports = {
         desc: 'return an array of meta-data about this subset',
         example: `nlp().dates().data()`,
         returns: 'array'
-      }
+      },
+      toShortForm: {
+        desc: 'turn \'Thurs\' and \'Sept\' into `Thursday` and `September`',
+        returns: 'Text',
+        example: `nlp('April, June, and Sept').dates().toShortForm().all().out()//Apr, Jun, and Sept`
+      },
+      toLongForm: {
+        desc: 'turn `Thursday` and `September` into \'Thurs\' and \'Sept\'',
+        returns: 'Text',
+        example: `nlp('April, June, and Sept').dates().toShortForm().all().out()//April, June, and September`
+      },
     },
 
     hashTags: {
@@ -252,12 +252,75 @@ module.exports = {
       }
     },
 
+    ngrams: {
+      data: {
+        desc: 'return an array of meta-data about this subset',
+        example: `nlp().ngrams().data()`,
+        returns: 'array'
+      },
+      unigrams: {
+        desc: 'return only the ngrams of size 1',
+        returns: 'Text',
+        example: `nlp('University of Toronto, in toronto').ngrams().unigrams(0).data()//[{normal:'toronto', count:2, size:1}]`
+      },
+      bigrams: {
+        desc: 'return only the ngrams of size 2',
+        returns: 'Text',
+        example: `nlp('The University of Ryerson and University of Toronto, in toronto').ngrams().bigrams(0).data()//[{normal:'university of', count:2, size:2}]`
+      },
+      trigrams: {
+        desc: 'return only the ngrams of size 3',
+        returns: 'Text',
+        example: `nlp('we want bart! we want bart!').ngrams().trigrams(0).data()//[{normal:'we want bart', count:2, size:3}]`
+      },
+      sort: {
+        desc: 'the default sort for ngrams - count, then size, then character length. (called by default)',
+        returns: 'Text',
+        example: `nlp('i scream, you scream, we all scream for icecream.').ngrams().sort().first().out()//scream`
+      },
+    },
+    startGrams: {
+      data: {
+        desc: 'return an array of meta-data about this subset',
+        example: `nlp().startGrams().data()`,
+        returns: 'array'
+      }
+    },
+    endGrams: {
+      data: {
+        desc: 'return an array of meta-data about this subset',
+        example: `nlp().endGrams().data()`,
+        returns: 'array'
+      }
+    },
+
     nouns: {
       data: {
         desc: 'return an array of meta-data about this subset',
         example: `nlp().nouns().data()`,
         returns: 'array'
-      }
+      },
+      isPlural: {
+        desc: 'return only the plural nouns',
+        returns: 'Text',
+        example: `nlp('All my life I’ve had one dream, to accomplish my many goals.').nouns().isPlural().out() //goals`
+      },
+      hasPlural: {
+        desc: 'return only the nouns which can be plural (sometimes called \'countable\' nouns)',
+        returns: 'Text',
+        example: `nlp('bring joy to the air, water, earth, and sky.').nouns().hasPlural().length() //0`
+      },
+      toPlural: {
+        desc: 'transform singular nouns into their plural (inflected) forms',
+        returns: 'Text',
+        example: `nlp('the purple dinosaur').nouns().toPlural().all().out()//the purple dinosaurs`
+      },
+      toSingular: {
+        desc: 'transform plural nouns into their singular forms',
+        returns: 'Text',
+        example: `nlp('the king's men').nouns().toSingular().out()//the king's man`
+      },
+
     },
 
     organizations: {
@@ -273,7 +336,17 @@ module.exports = {
         desc: 'return an array of meta-data about this subset',
         example: `nlp().people().data()`,
         returns: 'array'
-      }
+      },
+      pronoun: {
+        desc: 'find the pronoun used to refer to the person, or suggest one based on their inferred gender.',
+        returns: 'String',
+        example: `nlp('Tony Hawk did a 900').people().pronoun() //'he'`
+      },
+    // fn: {
+    //   desc: '',
+    //   returns: 'Text',
+    //   example: `nlp('').nouns().out()//`
+    // },
     },
 
     phoneNumbers: {
@@ -364,28 +437,6 @@ module.exports = {
       }
     },
 
-    ngrams: {
-      data: {
-        desc: 'return an array of meta-data about this subset',
-        example: `nlp().ngrams().data()`,
-        returns: 'array'
-      }
-    },
 
-    startGrams: {
-      data: {
-        desc: 'return an array of meta-data about this subset',
-        example: `nlp().startGrams().data()`,
-        returns: 'array'
-      }
-    },
-
-    endGrams: {
-      data: {
-        desc: 'return an array of meta-data about this subset',
-        example: `nlp().endGrams().data()`,
-        returns: 'array'
-      }
-    },
   }
 };

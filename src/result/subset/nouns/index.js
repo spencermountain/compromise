@@ -9,12 +9,12 @@ class Nouns extends Text {
   hasPlural() {
     return this.list.map((ts) => ts.hasPlural());
   }
-  toSingular() {
-    this.list.forEach((ts) => ts.toSingular());
-    return this;
-  }
   toPlural() {
     this.list.forEach((ts) => ts.toPlural());
+    return this;
+  }
+  toSingular() {
+    this.list.forEach((ts) => ts.toSingular());
     return this;
   }
   data() {

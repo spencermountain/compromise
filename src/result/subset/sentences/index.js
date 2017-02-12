@@ -50,7 +50,7 @@ class Sentences extends Text {
   }
 
   /** look for 'was _ by' patterns */
-  passive() {
+  isPassive() {
     this.list = this.list.filter((ts) => {
       return ts.isPassive();
     });

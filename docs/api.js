@@ -1,7 +1,7 @@
 module.exports = {
   generic: {
     data: {
-      desc: 'return an array of meta-data about this subset',
+      desc: 'return a handy array of meta-data for this subset',
       desc: '',
       example: `nlp().subset().data()`,
       returns: 'array',
@@ -168,7 +168,7 @@ module.exports = {
   subsets: {
     acronyms: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().acronyms().data()`,
         returns: 'array'
       }
@@ -176,7 +176,7 @@ module.exports = {
 
     adjectives: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().adjectives().data()`,
         returns: 'array'
       }
@@ -184,7 +184,7 @@ module.exports = {
 
     adverbs: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().adverbs().data()`,
         returns: 'array'
       }
@@ -192,7 +192,7 @@ module.exports = {
 
     clauses: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().clauses().data()`,
         returns: 'array'
       }
@@ -200,7 +200,7 @@ module.exports = {
 
     contractions: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().contractions().data()`,
         returns: 'array'
       },
@@ -228,7 +228,7 @@ module.exports = {
 
     dates: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().dates().data()`,
         returns: 'array'
       },
@@ -246,7 +246,7 @@ module.exports = {
 
     hashTags: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().hashTags().data()`,
         returns: 'array'
       }
@@ -254,7 +254,7 @@ module.exports = {
 
     ngrams: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().ngrams().data()`,
         returns: 'array'
       },
@@ -281,14 +281,14 @@ module.exports = {
     },
     startGrams: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().startGrams().data()`,
         returns: 'array'
       }
     },
     endGrams: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().endGrams().data()`,
         returns: 'array'
       }
@@ -296,7 +296,7 @@ module.exports = {
 
     nouns: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().nouns().data()`,
         returns: 'array'
       },
@@ -325,7 +325,7 @@ module.exports = {
 
     organizations: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().organizations().data()`,
         returns: 'array'
       }
@@ -333,7 +333,7 @@ module.exports = {
 
     people: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().people().data()`,
         returns: 'array'
       },
@@ -346,7 +346,7 @@ module.exports = {
 
     phoneNumbers: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().phoneNumbers().data()`,
         returns: 'array'
       }
@@ -354,7 +354,7 @@ module.exports = {
 
     places: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().places().data()`,
         returns: 'array'
       }
@@ -362,7 +362,7 @@ module.exports = {
 
     questions: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().questions().data()`,
         returns: 'array'
       }
@@ -370,7 +370,7 @@ module.exports = {
 
     quotations: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().quotations().data()`,
         returns: 'array'
       }
@@ -378,7 +378,7 @@ module.exports = {
 
     sentences: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().sentences().data()`,
         returns: 'array'
       },
@@ -426,17 +426,12 @@ module.exports = {
         desc: 'turn the sentence into a statement. Replace it\'s end punctuation with a period',
         returns: 'Text',
         example: `nlp('Go out on a Tuesday? Who am I, Charlie Sheen?').sentences(0).toStatement().out()//Go out on a Tuesday. Who am I, Charlie Sheen?`
-      },
-    // fn: {
-    //   desc: '',
-    //   returns: 'Text',
-    //   example: `nlp('').sentences().out()//`
-    // },
+      }
     },
 
     statements: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().statements().data()`,
         returns: 'array'
       }
@@ -444,7 +439,7 @@ module.exports = {
 
     terms: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().terms().data()`,
         returns: 'array'
       }
@@ -452,7 +447,7 @@ module.exports = {
 
     topics: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().topics().data()`,
         returns: 'array'
       }
@@ -460,7 +455,7 @@ module.exports = {
 
     urls: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().urls().data()`,
         returns: 'array'
       }
@@ -468,18 +463,59 @@ module.exports = {
 
     values: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().values().data()`,
         returns: 'array'
-      }
+      },
+      noDates: {
+        desc: 'remove numbers that are also dates, like in \'June 5th 1999\'.',
+        returns: 'Text',
+        example: `nlp('in 2016, I’m going to party like it’s on sale for $19.99.').values().noDates().length //1`
+      },
+
+      toNumber: {
+        desc: 'turn a written number like `five thousand five hundred` into it\'s numerical form, like `5500`',
+        returns: 'Text',
+        example: `nlp('ten things i hate about you').values().toNumber().all().out() //10 things i hate about you`
+      },
+      toTextValue: {
+        desc: 'turn a number like `5,500` into it\'s textual form, like `five thousand five hundred`',
+        returns: 'Text',
+        example: `nlp('10 things i hate about you').values().toTextValue().all().out() //ten things i hate about you`
+      },
+      toNiceNumber: {
+        desc: 'turn a number into numerical form, but with nice commas, like `5,500`',
+        returns: 'Text',
+        example: `nlp('five hundred sixty two thousand, four hundred and seven').values().toTextValue().all().out() //'562,407'`
+      },
+      toCardinal: {
+        desc: 'turn `fifth` into `five`, and `5th` into `5`',
+        returns: 'Text',
+        example: `nlp('twenty-third of december').values().toCardinal().all().out()//23rd of december`
+      },
+      toOrdinal: {
+        desc: 'turn `five` into `fifth` and `5` into `5th`',
+        returns: 'Text',
+        example: `nlp('three strikes').values().toOrdinal().all().nouns().toSingular().all().out() //third strike`
+      },
+      numbers: {
+        desc: 'return the actual javascript integers (or floats)',
+        returns: 'Array',
+        example: `nlp('at the seven eleven').values().numbers()// [7, 11]`
+      },
     },
 
     verbs: {
       data: {
-        desc: 'return an array of meta-data about this subset',
+        desc: 'return a handy array of meta-data for this subset',
         example: `nlp().verbs().data()`,
         returns: 'array'
-      }
+      },
+    // fn: {
+    //   desc: '',
+    //   returns: 'Text',
+    //   example: `nlp('').sentences().out()//`
+    // },
     },
 
 

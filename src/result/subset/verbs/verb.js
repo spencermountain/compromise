@@ -21,7 +21,7 @@ class Verb extends Terms {
     }
     this.auxillary = aux.match('#Auxillary+');
   }
-  data(debug) {
+  data(verbose) {
     return {
       text: this.out('text'),
       normal: this.out('normal'),
@@ -31,7 +31,7 @@ class Verb extends Terms {
         verb: this.verb.out('normal'),
         adverbs: this.adverbs.out('normal'),
       },
-      interpret: interpret(this, debug),
+      interpret: interpret(this, verbose),
       conjugations: this.conjugate()
     };
   }
@@ -40,8 +40,8 @@ class Verb extends Terms {
     return interpret(this, false).tense;
   }
   //blast-out all forms
-  conjugate(debug) {
-    return conjugate(this, debug);
+  conjugate(verbose) {
+    return conjugate(this, verbose);
   }
 
   /** negation **/
@@ -63,7 +63,6 @@ class Verb extends Terms {
 
   /** conjugation **/
   toPastTense() {
-    // this.debug();
     let obj = this.conjugate();
     return this.replaceWith(obj.PastTense);
   }

@@ -11,14 +11,14 @@ class Verbs extends Text {
       return ts.data();
     });
   }
-  conjugation(debug) {
+  conjugation(verbose) {
     return this.list.map((ts) => {
-      return ts.conjugation(debug);
+      return ts.conjugation(verbose);
     });
   }
-  conjugate(debug) {
+  conjugate(verbose) {
     return this.list.map((ts) => {
-      return ts.conjugate(debug);
+      return ts.conjugate(verbose);
     });
   }
 

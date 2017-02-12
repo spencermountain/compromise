@@ -67,7 +67,7 @@ Text = require('./methods/out')(Text);
 Text = require('./methods/sort')(Text);
 Text = require('./methods/split')(Text);
 Text = require('./methods/tag')(Text);
-Text.prototype.normalize = require('./methods/normalize');
+Text = require('./methods/normalize')(Text);
 
 const subset = {
   acronyms: require('./subset/acronyms'),

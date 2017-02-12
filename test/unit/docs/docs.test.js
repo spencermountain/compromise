@@ -3,14 +3,49 @@ var nlp = require('../lib/nlp');
 var docs = require('../../../docs/api');
 var freshPrince = require('../lib/freshPrince');
 
-// test('generic-methods-exist:', function (t) {
-//   var r = nlp(freshPrince);
-//   Object.keys(docs.generic).forEach((fn) => {
-//     console.log(fn);
-//     t.doesNotThrow(() => r[fn](), true, fn);
-//   });
-//   t.end();
-// });
+const getters = {
+  found: true,
+  length: true,
+};
+const skip = {
+  whitespace: true,
+  insertAt: true,
+  debug: true //too noisy
+};
+const needString = {
+  insertBefore: true,
+  insertAfter: true,
+  match: true,
+  splitOn: true,
+  splitBefore: true,
+  splitAfter: true,
+};
+
+test('generic-methods-run:', function (t) {
+  var r = nlp(freshPrince);
+  Object.keys(docs.generic).forEach((fn) => {
+
+    //simply call this method to see if it throws an error
+    var func = function() {
+      if (getters[fn]) {
+        //getters dont have a '()'
+        return r[fn];
+      } else if (needString[fn]) {
+        //give a dummy param
+        return r[fn]('fun');
+      } else if (skip[fn]) {
+        //these are too fancy to call
+        return typeof r[fn] === 'function';
+      } else {
+        //call this method
+        return r[fn]();
+      }
+    };
+
+    t.doesNotThrow(func, true, fn);
+  });
+  t.end();
+});
 
 test('subsets-methods-exist:', function (t) {
   var r = nlp(freshPrince);

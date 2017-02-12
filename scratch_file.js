@@ -52,8 +52,4 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.log(m.list[0].terms);
 // console.log(m.out());
 
-var docs = require('./docs/api');
-var r = nlp(fresh);
-Object.keys(docs.subsets.sentences).forEach((method) => {
-  r.sentences()[method]();
-});
+// var r = nlp(fresh).normalize();

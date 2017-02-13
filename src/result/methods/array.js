@@ -34,6 +34,8 @@ const genericMethods = (Text) => {
       return this.match('.$');
     },
 
+
+
     /**use only the first result */
     first: function (n) {
       if (!n && n !== 0) {
@@ -41,7 +43,6 @@ const genericMethods = (Text) => {
       }
       return new Text(this.list.slice(0, n), this.lexicon, this.parent);
     },
-
     /**use only the last result */
     last: function (n) {
       if (!n && n !== 0) {
@@ -51,7 +52,6 @@ const genericMethods = (Text) => {
       let start = end - n;
       return new Text(this.list.slice(start, end), this.lexicon, this.parent);
     },
-
     /** use only the nth result*/
     get: function (n) {
       //return an empty result

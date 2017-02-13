@@ -30,10 +30,10 @@ module.exports = {
     returns: 'Text',
     example: `nlp('we want bart! we want bart!').whitespace.before('   ').out()//we want bart!   we want bart!`
   },
-  // fn: {
+  // clone: {
   //   desc: '',
   //   returns: 'Text',
-  //   example: `nlp('').fn().out()//`
+  //   example: `nlp('').clone().out()//`
   // },
   // fn: {
   //   desc: '',

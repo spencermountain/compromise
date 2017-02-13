@@ -55,5 +55,5 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 
 var str = 'Amy, Alexis Smithsonian';
 var r = nlp(str);
-r = r.people();
-r.debug();
+console.log(r.questions(99).out());
+// r.debug();

@@ -28,7 +28,12 @@ module.exports = {
   whitespace: {
     desc: 'set before or after whitespace on each match',
     returns: 'Text',
-    example: `nlp('we want will! we want will!').whitespace.before('   ').out()//we want will!   we want will!`
+    example: `nlp('we want bart! we want bart!').whitespace.before('   ').out()//we want bart!   we want bart!`
+  },
+  fn: {
+    desc: '',
+    returns: 'Text',
+    example: `nlp('').whitespace.before('   ').out()//`
   },
 
   //case

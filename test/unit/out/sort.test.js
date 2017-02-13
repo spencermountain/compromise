@@ -4,11 +4,11 @@ var fns = require('../lib/fns');
 
 
 test('sortAlpha:', function (t) {
-  var str = 'John xoo, John fredman, John davis';
+  var str = 'John xoo, John fredman, John davis, John fredman,';
   var r = nlp(str);
   r = r.people();
   r.sort('alpha');
-  var want = ['john davis', 'john fredman', 'john xoo'];
+  var want = ['john davis', 'john fredman', 'john fredman', 'john xoo'];
   fns.arr_test(r.out('array'), str, want, t);
   t.end();
 });
@@ -31,6 +31,17 @@ test('reverse:', function (t) {
   r.sort('alphabetical');
   r.reverse();
   var want = ['john xoo', 'john fredman', 'john davis'];
+  fns.arr_test(r.out('array'), str, want, t);
+  t.end();
+});
+
+test('length:', function (t) {
+  var str = 'Amy, John Fredman, Dr. Bill, Alexis Smithsonian';
+  var r = nlp(str);
+  r = r.people();
+  r.sort('length');
+  r.reverse();
+  var want = ['amy', 'dr bill', 'john fredman', 'alexis smithsonian',];
   fns.arr_test(r.out('array'), str, want, t);
   t.end();
 });

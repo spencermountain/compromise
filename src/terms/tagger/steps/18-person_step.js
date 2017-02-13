@@ -12,18 +12,20 @@ const person_step = function (ts) {
   log.here(path);
   let reason = 'person-step';
   // x Lastname
-  ts.match('#Noun #LastName').firstTerm().canBe('#FirstName').tag('#FirstName', reason);
+  ts.match('#Noun #LastName').firstTerm().canBe('#FirstName').tag('#FirstName', 'noun-lastname');
 
   // Firstname x (dangerous)
-  let tmp = ts.match('#FirstName #Noun').ifNo('^#Possessive');
-  tmp.lastTerm().canBe('#LastName').tag('#LastName', reason);
+  let tmp = ts.match('#FirstName #Noun').ifNo('^#Possessive').ifNo('#Comma');
+  tmp.lastTerm().canBe('#LastName').tag('#LastName', 'firstname-noun');
 
   //j.k Rowling
-  ts.match('#Acronym #TitleCase').canBe('#Person').tag('#Person', reason);
-  ts.match('#Noun van der? #Noun').canBe('#Person').tag('#Person', reason);
-  ts.match('#FirstName de #Noun').canBe('#Person').tag('#Person', reason);
-  ts.match('(king|queen|prince|saint|lady) of? #Noun').canBe('#Person').tag('#Person', reason);
-  ts.match('#FirstName (bin|al) #Noun').canBe('#Person').tag('#Person', reason);
+  ts.match('#Acronym #TitleCase').canBe('#Person').tag('#Person', 'acronym-titlecase');
+  ts.match('#Noun van der? #Noun').canBe('#Person').tag('#Person', 'von der noun');
+  ts.match('#FirstName de #Noun').canBe('#Person').tag('#Person', 'firstname-de-noun');
+  ts.match('(king|queen|prince|saint|lady) of? #Noun').canBe('#Person').tag('#Person', 'king-of-noun');
+  ts.match('#FirstName (bin|al) #Noun').canBe('#Person').tag('#Person', 'firstname-al-noun');
+
+
 
   //ambiguous firstnames
   let maybe = ['will', 'may', 'april', 'june', 'said', 'rob', 'wade', 'ray', 'rusty', 'drew', 'miles', 'jack', 'chuck', 'randy', 'jan', 'pat', 'cliff', 'bill'];

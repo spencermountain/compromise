@@ -52,8 +52,7 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.log(m.out());
 
 // var r = nlp(fresh).normalize();
-
-var str = 'Amy, Alexis Smithsonian';
-var r = nlp(str);
-console.log(r.questions(99).out());
+var m = nlp('he eats the alligator');
+var clone = m.clone().sentences().toNegative();
 // r.debug();
+console.log(m.out());

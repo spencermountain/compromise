@@ -11,7 +11,7 @@ const genericMethods = (Text) => {
         return ts.clone();
       });
       // return this;
-      return new Text(list, this.lexicon); //, this.parent
+      return new Text(list, this.lexicon, this.parent); //, 
     },
 
     /** get the nth term of each result*/
@@ -26,7 +26,6 @@ const genericMethods = (Text) => {
       });
       return new Text(list, this.lexicon, this.parent);
     },
-
     firstTerm: function () {
       return this.match('^.');
     },
@@ -36,6 +35,15 @@ const genericMethods = (Text) => {
 
 
 
+    /** use only the nth result*/
+    get: function (n) {
+      //return an empty result
+      if ((!n && n !== 0) || !this.list[n]) {
+        return new Text([], this.lexicon, this.parent);
+      }
+      let ts = this.list[n];
+      return new Text([ts], this.lexicon, this.parent);
+    },
     /**use only the first result */
     first: function (n) {
       if (!n && n !== 0) {
@@ -52,43 +60,8 @@ const genericMethods = (Text) => {
       let start = end - n;
       return new Text(this.list.slice(start, end), this.lexicon, this.parent);
     },
-    /** use only the nth result*/
-    get: function (n) {
-      //return an empty result
-      if ((!n && n !== 0) || !this.list[n]) {
-        return new Text([], this.lexicon, this.parent);
-      }
-      let ts = this.list[n];
-      return new Text([ts], this.lexicon, this.parent);
-    },
 
-    filter: function (fn) {
-      //treat it as a termlist filter
-      if (typeof fn === 'string') {
-        let list = this.list.filter((ts) => {
-          return ts.has(fn);
-        });
-        return new Text(list, this.lexicon, this.parent);
-      }
-      //ad-hoc filter-method
-      let list = this.list.filter(fn);
-      return new Text(list, this.lexicon, this.parent);
-    },
-    forEach: function (fn) {
-      this.list.forEach(fn);
-      return this;
-    },
-    map: function (fn) {
-      //treat it as a termlist filter
-      if (typeof fn === 'string') {
-        let list = this.list.map((ts) => {
-          return ts[fn]();
-        });
-        return new Text(list, this.lexicon, this.parent);
-      }
-      let list = this.list.map(fn);
-      return new Text(list, this.lexicon, this.parent);
-    },
+
     concat: function() {
       //any number of params
       for(let i = 0; i < arguments.length; i++) {

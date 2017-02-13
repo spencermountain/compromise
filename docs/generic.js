@@ -30,11 +30,21 @@ module.exports = {
     returns: 'Text',
     example: `nlp('we want bart! we want bart!').whitespace.before('   ').out()//we want bart!   we want bart!`
   },
-  fn: {
-    desc: '',
-    returns: 'Text',
-    example: `nlp('').whitespace.before('   ').out()//`
-  },
+  // fn: {
+  //   desc: '',
+  //   returns: 'Text',
+  //   example: `nlp('').fn().out()//`
+  // },
+  // fn: {
+  //   desc: '',
+  //   returns: 'Text',
+  //   example: `nlp('').fn().out()//`
+  // },
+  // fn: {
+  //   desc: '',
+  //   returns: 'Text',
+  //   example: `nlp('').fn().out()//`
+  // },
 
   //case
   toTitleCase: {

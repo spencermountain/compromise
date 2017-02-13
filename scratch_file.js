@@ -53,6 +53,10 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 
 // var r = nlp(fresh).normalize();
 var m = nlp('he eats the alligator');
-var clone = m.clone().sentences().toNegative();
-// r.debug();
+// var clone = m.clone().insertAt(0,'YAYAYA');
+var clone = m.clone().sentences().insertAt(0, 'YAYAYA');
 console.log(m.out());
+
+
+var str = 'would somebody please think of the children';
+console.log(nlp(str).clone().toUpperCase().parent.out());

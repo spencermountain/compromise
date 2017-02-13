@@ -25,9 +25,9 @@ test('clone:', function (t) {
   t.end();
 });
 
-test('one-liner:', function (t) {
-  var str = 'would somebody please think of the children';
-  var have = nlp(str).clone().toUpperCase().parent.out();
-  t.equal(str, have, 'parent-unchanged');
-  t.end();
-});
+// test('one-liner:', function (t) {
+//   var str = 'would somebody please think of the children';
+//   var have = nlp(str).clone().toUpperCase().parent.out();
+//   t.equal(str, have, 'parent-unchanged');
+//   t.end();
+// });

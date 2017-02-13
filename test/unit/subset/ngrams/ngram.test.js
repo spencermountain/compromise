@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 var nlp = require('../../lib/nlp');
 

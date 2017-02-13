@@ -7,7 +7,7 @@ const nlp = require('./src/index');
 // let sotu = corpus.sotu.parsed()[23];
 // sotu = `protecting Medicare, Medicaid, education, and the environment.`;
 const fresh = require('./test/unit/lib/freshPrince.js');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 
 
 //bug 1. - support greedy +
@@ -53,3 +53,8 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.log(m.out());
 
 // var r = nlp(fresh).normalize();
+
+var str = 'Amy, Alexis Smithsonian';
+var r = nlp(str);
+r.debug();
+r = r.people();

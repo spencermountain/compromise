@@ -52,11 +52,25 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.log(m.out());
 
 // var r = nlp(fresh).normalize();
-var m = nlp('he eats the alligator');
-// var clone = m.clone().insertAt(0,'YAYAYA');
-var clone = m.clone().sentences().insertAt(0, 'YAYAYA');
-console.log(m.out());
+// var m = nlp('he eats the alligator');
+// // var clone = m.clone().insertAt(0,'YAYAYA');
+// var clone = m.clone().sentences().insertAt(0, 'YAYAYA');
+// console.log(m.out());
 
 
-var str = 'would somebody please think of the children';
-console.log(nlp(str).clone().toUpperCase().parent.out());
+var str = 'it is mother of pearl';
+var lexicon = {
+  'mother of pearl': 'OffWhite'
+};
+var tagSet = {
+  Noun: {
+    Singular: {
+      Color: {
+        OffWhite: true
+      }
+    }
+  }
+};
+nlp(str, lexicon, tagSet).debug();
+
+// console.log(Object.keys(nlp.lexicon()).length);

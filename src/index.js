@@ -3,6 +3,7 @@ const buildResult = require('./result/build');
 const pkg = require('../package.json');
 const log = require('./log');
 
+
 //the main thing
 const nlp = function (str, lexicon) {
   return buildResult(str, lexicon);
@@ -10,7 +11,12 @@ const nlp = function (str, lexicon) {
 //this is handy
 nlp.version = pkg.version;
 
-//also is this
+//so is this
+nlp.lexicon = function() {
+  return require('./data/lexicon');
+};
+
+//also is this much handy
 nlp.verbose = function(str) {
   log.enable(str);
 };

@@ -1,6 +1,6 @@
 'use strict';
-// const ngram = require('./ngram');
-// const edgegram = require('./edgegram');
+const topk = require('./topk');
+
 const methods = {
   text: (r) => {
     return r.list.reduce((str, ts) => {
@@ -82,11 +82,15 @@ const methods = {
       ts.debug();
     });
     return r;
+  },
+  topk: (r) => {
+    return topk(r);
   }
 };
 methods.plaintext = methods.text;
 methods.normalized = methods.normal;
 methods.colors = methods.color;
+methods.tags = methods.terms;
 
 const addMethods = (Text) => {
   Text.prototype.out = function(fn) {

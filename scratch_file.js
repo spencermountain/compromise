@@ -57,11 +57,6 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // var clone = m.clone().sentences().insertAt(0, 'YAYAYA');
 // console.log(m.out());
 
-
-var str = 'it is mother of pearl';
-var lexicon = {
-  'mother of pearl': 'OffWhite'
-};
 var tagSet = {
   Noun: {
     Singular: {
@@ -71,6 +66,12 @@ var tagSet = {
     }
   }
 };
-nlp(str, lexicon, tagSet).debug();
+var lexicon = {
+  'mother of pearl': 'OffWhite'
+};
+console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
+//[{tags: ['OffWhite', 'Color', 'Singular', 'Noun']]
+
+// console.log(nlp(str, lexicon, tagSet).terms().last().data());
 
 // console.log(Object.keys(nlp.lexicon()).length);

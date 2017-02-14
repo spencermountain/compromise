@@ -69,7 +69,7 @@ var tagSet = {
 var lexicon = {
   'mother of pearl': 'OffWhite'
 };
-console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
+console.log(nlp('it is mother of pearl. it is nice. she was cool', lexicon, tagSet).verbs().out('topk'));
 //[{tags: ['OffWhite', 'Color', 'Singular', 'Noun']]
 
 // console.log(nlp(str, lexicon, tagSet).terms().last().data());

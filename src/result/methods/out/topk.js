@@ -18,7 +18,7 @@ const topk = function (r, n) {
   });
   //add percentage
   all.forEach((o) => {
-    o.percent = ((o.count / all.length) * 100).toFixed(2);
+    o.percent = parseFloat(((o.count / r.list.length) * 100).toFixed(2));
   });
   //sort by freq
   all = all.sort((a, b) => {

@@ -2,15 +2,15 @@ require('shelljs/global');
 config.silent = true;
 var fs = require('fs');
 //use paths, so libs don't need a -g
-var browserify = './node_modules/.bin/browserify';
-var derequire = './node_modules/derequire/bin/cmd.js';
-var uglify = './node_modules/uglify-js/bin/uglifyjs';
-var eslint = './node_modules/eslint/bin/eslint.js';
+var browserify = '"node_modules/.bin/browserify"';
+var derequire = '"node_modules/.bin/derequire"';
+var uglify = '"node_modules/.bin/uglifyjs"';
+var eslint = '"node_modules/.bin/eslint"';
 
 var pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
 //first, run linter
-var child = exec(eslint + ' -c .eslintrc --color ./src/**', {
+var child = exec(eslint + ' -c .eslintrc --color "./src/**"', {
   async: true
 });
 child.stdout.on('error', function() {
@@ -31,7 +31,7 @@ echo(banner).to(uncompressed);
 echo(banner).to(compressed);
 
 //browserify + derequire
-var cmd = browserify + ' ./src/index.js --standalone nlp';
+var cmd = browserify + ' "./src/index.js" --standalone nlp';
 cmd += ' -t [ babelify --presets [ es2015 stage-2 ] ]';
 cmd += ' | ' + derequire;
 cmd += ' >> ' + uncompressed;

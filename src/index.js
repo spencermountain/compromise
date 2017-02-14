@@ -3,24 +3,23 @@ const buildResult = require('./result/build');
 const pkg = require('../package.json');
 const log = require('./log');
 
-
 //the main thing
 const nlp = function (str, lexicon) {
   return buildResult(str, lexicon);
 };
+
 //this is handy
 nlp.version = pkg.version;
 
-//so is this
+//so handy at times
 nlp.lexicon = function() {
   return require('./data/lexicon');
 };
 
-//also is this much handy
+//also this is much handy
 nlp.verbose = function(str) {
   log.enable(str);
 };
-
 
 //and then all-the-exports...
 if (typeof self !== 'undefined') {

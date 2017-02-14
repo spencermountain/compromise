@@ -24,9 +24,10 @@ class Verbs extends Text {
 
   /** negation **/
   isNegative() {
-    return this.filter((ts) => {
+    this.list = this.list.filter((ts) => {
       ts.isNegative();
     });
+    return this;
   }
   toNegative() {
     this.list = this.list.map((ts) => {

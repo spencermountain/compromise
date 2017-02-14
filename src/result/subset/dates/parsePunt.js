@@ -26,7 +26,7 @@ const parsePunt = (r) => {
   }
   //interpret 'value + duration'
   if (m.found) {
-    r.match('#Value #Duration').forEach((ts) => {
+    r.match('#Value #Duration').list.forEach((ts) => {
       let num = ts.match('*').values().data()[0] || {};
       num = num.number;
       if (num || num === 0) {

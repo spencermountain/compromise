@@ -3,13 +3,14 @@ const Text = require('../index');
 
 class Statements extends Text {
   static find(r, n) {
-    r = r.filter((ts) => {
-      return ts.last().endPunctuation() !== '?';
-    });
+    r = r.all();
     if (typeof n === 'number') {
       r = r.get(n);
     }
-    return r;
+    let list = r.list.filter((ts) => {
+      return ts.last().endPunctuation() !== '?';
+    });
+    return new Text(list, this.lexicon, this.parent);
   }
 }
 

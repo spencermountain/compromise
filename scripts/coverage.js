@@ -8,6 +8,7 @@ var test = tape + ' ./test/unit/**/*.test.js | ' + tapMin;
 //run all the tests
 console.log('\n 🏃  running tests..');
 exec(nyc + ' --reporter=text-summary ' + test);
+// exec(nyc + ' --reporter=html ' + test);
 
 //publish results for codacity
 console.log('\n\n\nPublishing results to codacity...\n');

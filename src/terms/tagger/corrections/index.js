@@ -2,7 +2,6 @@
 const log = require('../paths').log;
 const path = 'correction';
 const date_corrections = require('./date_corrections');
-const person_corrections = require('./person_corrections');
 const verb_corrections = require('./verb_corrections');
 
 //mostly pos-corections here
@@ -109,7 +108,6 @@ const corrections = function (r) {
   r.match('#Copula fucked up?').not('#Copula').tag('Adjective', 'swears-adjective');
 
   //more-detailed corrections
-  r = person_corrections(r);
   r = verb_corrections(r);
   r = date_corrections(r);
 

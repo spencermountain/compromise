@@ -1,8 +1,6 @@
 'use strict';
 // const ngram = require('./ngram');
 // const edgegram = require('./edgegram');
-const topk = require('./topk');
-
 const methods = {
   text: (r) => {
     return r.list.reduce((str, ts) => {
@@ -84,47 +82,21 @@ const methods = {
       ts.debug();
     });
     return r;
-  },
-  freq: (r) => {
-    return topk(r);
   }
 };
 methods.plaintext = methods.text;
 methods.normalized = methods.normal;
-methods.freq = methods.topk;
 methods.colors = methods.color;
-methods.frequency = methods.topk;
 
 const addMethods = (Text) => {
-  Text.prototype.debug = function() {
-    return methods.debug(this);
-  };
-  Text.prototype.out = function(fn, opts) {
+  Text.prototype.out = function(fn) {
     if (methods[fn]) {
       return methods[fn](this);
     }
-    // if (fn === 'bigram') {
-    //   opts = opts || {
-    //     size: [2]
-    //   };
-    //   return ngram(this, opts);
-    // }
-    // if (fn === 'trigram') {
-    //   opts = opts || {
-    //     size: [3]
-    //   };
-    //   return ngram(this, opts);
-    // }
-    // if (fn === 'edgegram') {
-    //   return edgegram.both(this, opts);
-    // }
-    // if (fn === 'startgram') {
-    //   return edgegram.start(this, opts);
-    // }
-    // if (fn === 'endgram') {
-    //   return edgegram.end(this, opts);
-    // }
     return methods.text(this);
+  };
+  Text.prototype.debug = function() {
+    return methods.debug(this);
   };
   return Text;
 };

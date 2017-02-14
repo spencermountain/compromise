@@ -84,8 +84,8 @@ class Sentences extends Text {
     r.list = r.list.map((ts) => {
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
-    return new Text(r.list, this.lexicon, this.parent);
-  // return r
+    // return new Text(r.list, r.lexicon, r.reference);
+    return r;
   }
 }
 

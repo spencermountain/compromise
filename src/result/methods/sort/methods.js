@@ -62,7 +62,7 @@ exports.lengthFn = function(r) {
       index: ts.chars()
     };
   });
-  r.list = sortEm(tmp);
+  r.list = sortEm(tmp).reverse();
   return r;
 };
 

@@ -8,11 +8,11 @@ class Contractions extends Text {
     return this.list.map(ts => ts.data());
   }
   contract() {
-    this.forEach((ts) => ts.contract());
+    this.list.forEach((ts) => ts.contract());
     return this;
   }
   expand() {
-    this.forEach((ts) => ts.expand());
+    this.list.forEach((ts) => ts.expand());
     return this;
   }
   contracted() {

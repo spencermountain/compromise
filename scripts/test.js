@@ -1,6 +1,6 @@
 require('shelljs/global');
 var tape = '"node_modules/.bin/tape"';
-var tapSpec = '"node_modules/.bin/tap-min" --color';
+var tapSpec = '"node_modules/.bin/tap-spec" --color';
 
 //run tests server-side
 exec(tape + ' "./test/unit/**/*.test.js" | ' + tapSpec);

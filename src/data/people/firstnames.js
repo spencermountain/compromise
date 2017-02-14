@@ -19,7 +19,7 @@ for (let i = 0; i < female.length; i++) {
 }
 //ambiguous/unisex names
 for (let i = 0; i < ambiguous.length; i += 1) {
-  names[ambiguous[i]] = 'Person';
+  names[ambiguous[i]] = 'FirstName';
 }
 // console.log(names['spencer']);
 module.exports = names;

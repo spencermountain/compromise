@@ -28,7 +28,22 @@ module.exports = {
   whitespace: {
     desc: 'set before or after whitespace on each match',
     returns: 'Text',
-    example: `nlp('we want will! we want will!').whitespace.before('   ').out()//we want will!   we want will!`
+    example: `nlp('we want bart! we want bart!').whitespace.before('   ').out()//we want bart!   we want bart!`
+  },
+  clone: {
+    desc: 'copy the object, so changes no longer effect the original (make it ~immutable)',
+    returns: 'Text',
+    example: `nlp('would somebody please think of the children').clone().toUpperCase().parent.out()//`
+  },
+  concat: {
+    desc: 'combine two results into one',
+    returns: 'Text',
+    example: `nlp('My name is Otto.').concat(nlp('i love to get blotto')).length()//2`
+  },
+  flatten: {
+    desc: 'turn a list of results into one result',
+    returns: 'Text',
+    example: `nlp('sex cauldron? I thought they closed that place down.').flatten().length() //1`
   },
 
   //case

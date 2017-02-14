@@ -4,13 +4,13 @@ const Text = require('../index');
 class Questions extends Text {
   static find(r, n) {
     r = r.all();
-    r = r.filter((ts) => {
-      return ts.last().endPunctuation() === '?';
-    });
     if (typeof n === 'number') {
       r = r.get(n);
     }
-    return r;
+    let list = r.list.filter((ts) => {
+      return ts.last().endPunctuation() === '?';
+    });
+    return new Text(list, this.lexicon, this.parent);
   }
 }
 

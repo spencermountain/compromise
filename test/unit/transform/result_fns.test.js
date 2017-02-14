@@ -10,13 +10,11 @@ test('result methods', function (t) {
   t.equal(m.match('#SportsTeam').found, false, 'nlp.has neg');
 
   //filter string
-  var small = m.filter('#Emoji');
+  var small = m.if('#Emoji');
   t.equal(small.out('normal'), 'this :cookie: <3 💯 so good. yes it is <3', 'nlp.filter string');
 
   //filter method
-  small = m.filter((ts) => {
-    return !ts.match('#Emoji').found;
-  });
+  small = m.ifNo('#Emoji');
   t.equal(small.out('normal'), 'it is really nice.', 'nlp.filter method');
 
   t.end();

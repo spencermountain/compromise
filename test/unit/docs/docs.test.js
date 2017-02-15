@@ -3,25 +3,27 @@ var nlp = require('../lib/nlp');
 var docs = require('../../../docs/api');
 var freshPrince = require('../lib/freshPrince');
 
-const getters = {
-  found: true,
-  length: true,
-};
-const skip = {
-  whitespace: true,
-  insertAt: true,
-  debug: true //too noisy
-};
-const needString = {
-  insertBefore: true,
-  insertAfter: true,
-  match: true,
-  splitOn: true,
-  splitBefore: true,
-  splitAfter: true,
-};
 
 test('generic-methods-run:', function (t) {
+
+  const getters = {
+    found: true,
+    length: true,
+  };
+  const skip = {
+    whitespace: true,
+    insertAt: true,
+    debug: true //too noisy
+  };
+  const needString = {
+    insertBefore: true,
+    insertAfter: true,
+    match: true,
+    splitOn: true,
+    splitBefore: true,
+    splitAfter: true,
+  };
+
   var r = nlp(freshPrince);
   Object.keys(docs.generic).forEach((fn) => {
 
@@ -48,6 +50,12 @@ test('generic-methods-run:', function (t) {
 });
 
 test('subsets-methods-exist:', function (t) {
+  const addParam = {
+    sentences: {
+      append: true,
+      prepend: true,
+    }
+  };
   var r = nlp(freshPrince);
   Object.keys(docs.subsets).forEach((subset) => {
     //each subset
@@ -55,7 +63,11 @@ test('subsets-methods-exist:', function (t) {
     //each method in that subset
     Object.keys(docs.subsets[subset]).forEach((method) => {
       var func = function() {
-        r[subset]()[method]();
+        if (addParam[subset] && addParam[subset][method]) {
+          r[subset]()[method]('fun');
+        } else {
+          r[subset]()[method]();
+        }
       };
       var msg = subset + '().' + method;
       t.doesNotThrow(func, true, msg);

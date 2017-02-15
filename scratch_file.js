@@ -76,6 +76,4 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 //[{tags: ['OffWhite', 'Color', 'Singular', 'Noun']]
 
 // console.log(nlp(str, lexicon, tagSet).terms().last().data());
-var r = nlp('It is nice! John is cool.');
-r.sentences().prepend('so'); // r.debug();
-console.log(r.out());
+console.log(nlp('I know so many words.').sentences().prepend('believe me').out());

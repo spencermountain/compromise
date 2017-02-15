@@ -84,7 +84,7 @@ const insertMethods = (Terms) => {
       //beginning whitespace to ts
       if (index === 0) {
         this.terms[0].whitespace.before = '';
-        this.terms[0].whitespace.after = ' ';
+        ts.terms[ts.terms.length - 1].whitespace.after = ' ';
       }
       return this;
     }

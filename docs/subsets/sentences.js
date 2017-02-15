@@ -4,6 +4,16 @@ module.exports = {
     example: `nlp().sentences().data()`,
     returns: 'array'
   },
+  prepend: {
+    desc: 'add a word (or words) at the beginning of these sentences, and move the sentnece\'s titlecase appropriately',
+    returns: 'Text',
+    example: `nlp('I know so many words.').sentences().prepend('believe me').out()//Believe me, I know so many words.`
+  },
+  append: {
+    desc: 'add a word (or words) at the end of these sentences, and move the sentnece\'s punctuation appropriately',
+    returns: 'Text',
+    example: `nlp('I know so many words.').sentences().append('big league').out() //I know so many words big league.`
+  },
   toPastTense: {
     desc: 'transform the sentences so that they are in the past tense',
     returns: 'Text',

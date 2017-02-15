@@ -13,6 +13,11 @@ test('prepend:', function(t) {
   r = nlp('John is nice. FBI are in SOHO.');
   r.sentences().prepend('so');
   t.equal(r.out('text'), 'So John is nice. So FBI are in SOHO.', 'prepend-with-persistent-capital');
+
+  r = nlp('It is nice. He lives in SOHO.');
+  r.sentences().prepend('believe me');
+  t.equal(r.out('text'), 'Believe me it is nice. Believe me he lives in SOHO.', 'multiple-word-prepend');
+
   t.end();
 });
 
@@ -24,6 +29,10 @@ test('append:', function(t) {
   r = nlp('It is nice! He lives in SOHO? I don\'t know...');
   r.sentences().append('dawg');
   t.equal(r.out('text'), 'It is nice dawg! He lives in SOHO dawg? I don\'t know dawg...', 'append-with-exclamations');
+
+  r = nlp('It is nice. He lives in SOHO.');
+  r.sentences().append('believe me');
+  t.equal(r.out('text'), 'It is nice believe me. He lives in SOHO believe me.', 'multiple-word-append');
 
   t.end();
 });

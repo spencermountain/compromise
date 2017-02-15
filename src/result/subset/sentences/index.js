@@ -56,6 +56,20 @@ class Sentences extends Text {
     });
     return this;
   }
+  /** add a word to the start */
+  prepend(str) {
+    this.list = this.list.map((ts) => {
+      return ts.prepend(str);
+    });
+    return this;
+  }
+  /** add a word to the end */
+  append(str) {
+    this.list = this.list.map((ts) => {
+      return ts.append(str);
+    });
+    return this;
+  }
 
   /** convert between question/statement/exclamation*/
   toExclamation() {

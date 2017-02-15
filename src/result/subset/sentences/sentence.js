@@ -2,6 +2,7 @@
 const Terms = require('../../paths').Terms;
 const toNegative = require('./toNegative');
 const Verb = require('../verbs/verb');
+const insert = require('./smartInsert');
 
 class Sentence extends Terms {
   constructor(arr, lexicon, refText, refTerms) {
@@ -84,6 +85,12 @@ class Sentence extends Terms {
   toPositive() {
     this.match('#Negative').first().delete();
     return this;
+  }
+  append(str) {
+    return insert.append(this, str);
+  }
+  prepend(str) {
+    return insert.prepend(this, str);
   }
 
   setPunctuation(punct) {

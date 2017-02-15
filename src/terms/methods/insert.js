@@ -82,11 +82,10 @@ const insertMethods = (Terms) => {
         Array.prototype.splice.apply(this.terms, [index, 0].concat(ts.terms));
       }
       //beginning whitespace to ts
-      // if (index === 0) {
-      //   this.terms[0].whitespace.before = '';
-      //   this.terms[0].whitespace.after = ' ';
-      //   this.terms[ts.terms.length - 1].whitespace.after = ' ';
-      // }
+      if (index === 0) {
+        this.terms[0].whitespace.before = '';
+        this.terms[0].whitespace.after = ' ';
+      }
       return this;
     }
 

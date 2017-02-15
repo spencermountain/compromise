@@ -57,21 +57,25 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // var clone = m.clone().sentences().insertAt(0, 'YAYAYA');
 // console.log(m.out());
 
-var tagSet = {
-  Noun: {
-    Singular: {
-      Color: {
-        OffWhite: true
-      }
-    }
-  }
-};
-var lexicon = {
-  'mother of pearl': 'OffWhite'
-};
-console.log(nlp('it is mother of pearl. it is nice. she was cool', lexicon, tagSet).verbs().out('topk'));
+// var tagSet = {
+//   Noun: {
+//     Singular: {
+//       Color: {
+//         OffWhite: true
+//       }
+//     }
+//   }
+// };
+// nlp.extend(tagSet);
+//
+// var lexicon = {
+//   'mother of pearl': 'OffWhite'
+// };
+// console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
+// nlp('it is mother of pearl', lexicon).list[0].tagAs('Person');
 //[{tags: ['OffWhite', 'Color', 'Singular', 'Noun']]
 
 // console.log(nlp(str, lexicon, tagSet).terms().last().data());
-
-// console.log(Object.keys(nlp.lexicon()).length);
+var r = nlp('It is nice! John is cool.');
+r.sentences().prepend('so'); // r.debug();
+console.log(r.out());

@@ -37,7 +37,8 @@ const addMethods = (Term) => {
     },
 
     killPunctuation: function () {
-      return this.text.replace(/([,;:])$/, '');
+      this.text = this._text.replace(/([,:;\/.(\.\.\.)\!\?]+)$/, '');
+      return this;
     },
   };
   //hook them into result.proto

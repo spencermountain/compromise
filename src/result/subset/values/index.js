@@ -58,7 +58,7 @@ class Values extends Text {
 
     //june 21st 1992 is two seperate values
     r.splitOn('#Year');
-
+    // r.debug();
     if (typeof n === 'number') {
       r = r.get(n);
     }

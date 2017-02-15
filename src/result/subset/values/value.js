@@ -45,6 +45,7 @@ class Value extends Terms {
   /** five -> '5' */
   toNumber() {
     let val = this.val;
+    // console.log(this.debug());
     //is already
     if (isNumber(val)) {
       return this;

@@ -38,7 +38,7 @@ const corrections = function (r) {
   r.match('a #Value').tag('Value', 'a-value');
   r.match('(minus|negative) #Value').tag('Value', 'minus-value');
   r.match('#Value grand').tag('Value', 'value-grand');
-  r.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');
+  // r.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');//not ready
   r.match('(half|quarter) #Ordinal').tag('Value', 'half-ordinal');
   r.match('(hundred|thousand|million|billion|trillion) and #Value').tag('Value', 'magnitude-and-value');
   r.match('#Value point #Value').tag('Value', 'value-point-value');
@@ -97,12 +97,18 @@ const corrections = function (r) {
   let value = r.match(`#Date #Value #Cardinal`).lastTerm().values();
   let num = value.numbers()[0];
   if (isYear(num)) {
-    value.tag('Year', 'date-year');
+    value.tag('Year', 'date-value-year');
   }
   value = r.match(`#Date #Cardinal`).lastTerm().values();
   num = value.numbers()[0];
   if (isYear(num)) {
     value.tag('Year', 'date-year');
+  }
+  //in 1998
+  value = r.match(`(in|of|by|during|for|year) #Cardinal`).lastTerm().values();
+  num = value.numbers()[0];
+  if (isYear(num)) {
+    value.tag('Year', 'preposition-year');
   }
 
   return r;

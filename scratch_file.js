@@ -7,7 +7,7 @@ const nlp = require('./src/index');
 // let sotu = corpus.sotu.parsed()[23];
 // sotu = `protecting Medicare, Medicaid, education, and the environment.`;
 const fresh = require('./test/unit/lib/freshPrince.js');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 
 //bug 1. - support greedy +
 // var arr = nlp('would have not had been walking').match('#Auxillary+ #Verb').debug();
@@ -19,43 +19,8 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.log(nlp('june 5-7 1999').out());
 
 //bug 4.
-// var m = nlp('the stool falls over').sentences();
-// m.debug();
-// // console.log(m.out());
-// m.toPastTense();
-// console.log(m.out());
-//
-// m.toPresentTense();
-// console.log(m.out());
-// //
-// m.toFutureTense();
-// console.log(m.out());
-// //
-// console.log('---------');
-// m.toNegative();
-// console.log(m.out());
-// console.log('---------');
-// //
-// //
-// m.toPastTense();
-// console.log(m.out());
-// m.toPresentTense();
-// console.log(m.out());
-// m.toFutureTense();
-// console.log(m.out());
-// var m = nlp('january 5 to 7 1998');
-// m.match('#Value+').splitOn('#Year').debug();
-// m.values().debug();
-// m = m.values().match('#Year');
-// console.log(m.values().data());
-// console.log(m.list[0].terms);
-// console.log(m.out());
+// var r = nlp('1998\'s collection').debug();
 
-// var r = nlp(fresh).normalize();
-// var m = nlp('he eats the alligator');
-// // var clone = m.clone().insertAt(0,'YAYAYA');
-// var clone = m.clone().sentences().insertAt(0, 'YAYAYA');
-// console.log(m.out());
 
 // var tagSet = {
 //   Noun: {
@@ -76,4 +41,6 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 //[{tags: ['OffWhite', 'Color', 'Singular', 'Noun']]
 
 // console.log(nlp(str, lexicon, tagSet).terms().last().data());
-console.log(nlp('I know so many words.').sentences().prepend('believe me').out());
+var r = nlp('third quarter').debug();
+r.values().toNumber();
+console.log(r.out());

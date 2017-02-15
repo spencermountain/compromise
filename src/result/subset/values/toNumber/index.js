@@ -137,6 +137,8 @@ const parse = function(ts) {
         has = {};
       }
     }
+  // console.log(w + '=-------');
+  // console.log(has);
   }
   //dump the remaining has values
   sum += section_sum(has);

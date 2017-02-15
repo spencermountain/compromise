@@ -1,5 +1,5 @@
 'use strict';
-const words = require('./data')
+const words = require('./data');
 
 //prevent things like 'fifteen ten', and 'five sixty'
 const isValid = (w, has) => {
@@ -18,4 +18,4 @@ const isValid = (w, has) => {
   }
   return true;
 };
-module.exports = isValid
+module.exports = isValid;

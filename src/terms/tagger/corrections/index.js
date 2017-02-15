@@ -91,7 +91,7 @@ const corrections = function (r) {
   //'a/an' can mean 1
   r.match('(a|an) (#Duration|#Value)').term(0).tag('Value', 'a-is-one');
   //half a million
-  r.match('(half|quarter) a? #Value').tag('Value', 'half-a-value');
+  r.match('half a? #Value').tag('Value', 'half-a-value'); //quarter not ready
   r.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half');
   //all values are either ordinal or cardinal
   r.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');

@@ -45,7 +45,7 @@ class Value extends Terms {
   /** five -> '5' */
   toNumber() {
     let val = this.val;
-    // console.log(this.debug());
+    // this.debug();
     //is already
     if (isNumber(val)) {
       return this;
@@ -56,6 +56,7 @@ class Value extends Terms {
       this.replaceWith(num, 'Value');
     } else {
       let num = parse(val);
+      // console.log(num);
       if (num !== null) {
         this.replaceWith('' + num, 'Value');
       }

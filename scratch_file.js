@@ -7,7 +7,7 @@ const nlp = require('./src/index');
 // let sotu = corpus.sotu.parsed()[23];
 // sotu = `protecting Medicare, Medicaid, education, and the environment.`;
 const fresh = require('./test/unit/lib/freshPrince.js');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 
 //bug 1. - support greedy +
 // var arr = nlp('would have not had been walking').match('#Auxillary+ #Verb').debug();
@@ -41,6 +41,6 @@ nlp.verbose('tagger');
 //[{tags: ['OffWhite', 'Color', 'Singular', 'Noun']]
 
 // console.log(nlp(str, lexicon, tagSet).terms().last().data());
-var r = nlp('third quarter').debug();
+var r = nlp('third quarter 1998'); //.debug();
 r.values().toNumber();
 console.log(r.out());

@@ -7,11 +7,11 @@ module.exports = {
   toShortForm: {
     desc: 'turn \'Thurs\' and \'Sept\' into `Thursday` and `September`',
     returns: 'Text',
-    example: `nlp('April, June, and Sept').dates().toShortForm().all().out()//Apr, Jun, and Sept`
+    example: `nlp('April, June, and Sept').dates().toShortForm().all().out()\n//Apr, Jun, and Sept`
   },
   toLongForm: {
     desc: 'turn `Thursday` and `September` into \'Thurs\' and \'Sept\'',
     returns: 'Text',
-    example: `nlp('April, June, and Sept').dates().toShortForm().all().out()//April, June, and September`
+    example: `nlp('April, June, and Sept').dates().toShortForm().all().out()\n//April, June, and September`
   },
 };

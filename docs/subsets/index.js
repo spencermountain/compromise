@@ -11,7 +11,7 @@ module.exports = {
   acronyms: {
     data: {
       desc: 'return a handy array of meta-data for this subset',
-      example: `nlp().acronyms().data()`,
+      example: `nlp('In the USA, the big CIA. The Bloods and the Crips, and the KKK.').acronyms().data()\n//[ {text:'USA'...}]`,
       returns: 'array'
     }
   },
@@ -19,7 +19,7 @@ module.exports = {
   adjectives: {
     data: {
       desc: 'return a handy array of meta-data for this subset',
-      example: `nlp().adjectives().data()`,
+      example: `nlp().adjectives().data()\n//[{text:''...}]`,
       returns: 'array'
     }
   },
@@ -27,7 +27,7 @@ module.exports = {
   adverbs: {
     data: {
       desc: 'return a handy array of meta-data for this subset',
-      example: `nlp().adverbs().data()`,
+      example: `nlp().adverbs().data()\n//[{text:''...}]`,
       returns: 'array'
     }
   },
@@ -35,7 +35,7 @@ module.exports = {
   clauses: {
     data: {
       desc: 'return a handy array of meta-data for this subset',
-      example: `nlp().clauses().data()`,
+      example: `nlp().clauses().data()\n//[{text:''...}]`,
       returns: 'array'
     }
   },
@@ -43,7 +43,7 @@ module.exports = {
   hashTags: {
     data: {
       desc: 'return a handy array of meta-data for this subset',
-      example: `nlp().hashTags().data()`,
+      example: `nlp().hashTags().data()\n//[{text:''...}]`,
       returns: 'array'
     }
   },
@@ -55,10 +55,11 @@ module.exports = {
       returns: 'array'
     }
   },
+
   endGrams: {
     data: {
       desc: 'return a handy array of meta-data for this subset',
-      example: `nlp().endGrams().data()`,
+      example: `nlp().endGrams().data()\n//[{text:''...}]`,
       returns: 'array'
     }
   },
@@ -66,7 +67,7 @@ module.exports = {
   organizations: {
     data: {
       desc: 'return a handy array of meta-data for this subset',
-      example: `nlp().organizations().data()`,
+      example: `nlp().organizations().data()\n//[{text:''...}]`,
       returns: 'array'
     }
   },
@@ -74,7 +75,7 @@ module.exports = {
   phoneNumbers: {
     data: {
       desc: 'return a handy array of meta-data for this subset',
-      example: `nlp().phoneNumbers().data()`,
+      example: `nlp().phoneNumbers().data()\n//[{text:''...}]`,
       returns: 'array'
     }
   },
@@ -82,7 +83,7 @@ module.exports = {
   places: {
     data: {
       desc: 'return a handy array of meta-data for this subset',
-      example: `nlp().places().data()`,
+      example: `nlp().places().data()\n//[{text:''...}]`,
       returns: 'array'
     }
   },
@@ -90,7 +91,7 @@ module.exports = {
   questions: {
     data: {
       desc: 'return a handy array of meta-data for this subset',
-      example: `nlp().questions().data()`,
+      example: `nlp().questions().data()\n//[{text:''...}]`,
       returns: 'array'
     }
   },
@@ -98,7 +99,7 @@ module.exports = {
   quotations: {
     data: {
       desc: 'return a handy array of meta-data for this subset',
-      example: `nlp().quotations().data()`,
+      example: `nlp().quotations().data()\n//[{text:''...}]`,
       returns: 'array'
     }
   },
@@ -106,7 +107,7 @@ module.exports = {
   statements: {
     data: {
       desc: 'return a handy array of meta-data for this subset',
-      example: `nlp().statements().data()`,
+      example: `nlp().statements().data()\n//[{text:''...}]`,
       returns: 'array'
     }
   },

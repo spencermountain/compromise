@@ -17,10 +17,8 @@ const corrections = function (r) {
   r.match(`(#Modal) ${advb} be ${advb} #Verb`).not('#Verb$').tag('Auxillary', 'would-be');
   //would been walking
   r.match(`(#Modal|had|has) ${advb} been ${advb} #Verb`).not('#Verb$').tag('Auxillary', 'would-be');
-
   //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
   r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
-
   return r;
 };
 module.exports = corrections;

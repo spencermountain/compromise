@@ -5,7 +5,6 @@
 const nlp = require('./src/index');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
-// sotu = `protecting Medicare, Medicaid, education, and the environment.`;
 const fresh = require('./test/unit/lib/freshPrince.js');
 // nlp.verbose('tagger');
 
@@ -21,7 +20,7 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 //bug 4.
 // var r = nlp('1998\'s collection').debug();
 
-//
+
 // var tagSet = {
 //   Noun: {
 //     Singular: {

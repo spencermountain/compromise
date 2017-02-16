@@ -8,10 +8,6 @@ const isPlural = (vb) => {
   if (vb.match('(is|am|do|was)').found) {
     return false;
   }
-  //infinitives are used only in plurals - XYZ look at the store
-  // if (vb.match('#Infinitive').found) {
-  //   return true;
-  // }
   //consider its prior noun
   let noun = vb.getNoun();
   if (noun && noun.found) {

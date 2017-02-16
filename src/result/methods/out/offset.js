@@ -1,7 +1,7 @@
 'use strict';
+/** say where in the original output string they are found*/
 
 const findOffset = (parent, term) => {
-  console.log(parent.out());
   let sum = 0;
   for(let i = 0; i < parent.list.length; i++) {
     for(let o = 0; o < parent.list[i].terms.length; o++) {
@@ -15,7 +15,8 @@ const findOffset = (parent, term) => {
   }
   return null;
 };
-/** say where in the original output string they are found*/
+
+//map over all-dem-results
 const allOffset = (r) => {
   let parent = r.all();
   return r.list.map((ts) => {

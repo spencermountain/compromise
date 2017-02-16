@@ -25,26 +25,27 @@ test('generic-methods-run:', function (t) {
   };
 
   var r = nlp(freshPrince);
-  Object.keys(docs.generic).forEach((fn) => {
+  Object.keys(docs.generic).forEach((type) => {
+    Object.keys(docs.generic[type]).forEach((fn) => {
+      //simply call this method to see if it throws an error
+      var func = function() {
+        if (getters[fn]) {
+          //getters dont have a '()'
+          return r[fn];
+        } else if (needString[fn]) {
+          //give a dummy param
+          return r[fn]('fun');
+        } else if (skip[fn]) {
+          //these are too fancy to call
+          return typeof r[fn] === 'function';
+        } else {
+          //call this method
+          return r[fn]();
+        }
+      };
 
-    //simply call this method to see if it throws an error
-    var func = function() {
-      if (getters[fn]) {
-        //getters dont have a '()'
-        return r[fn];
-      } else if (needString[fn]) {
-        //give a dummy param
-        return r[fn]('fun');
-      } else if (skip[fn]) {
-        //these are too fancy to call
-        return typeof r[fn] === 'function';
-      } else {
-        //call this method
-        return r[fn]();
-      }
-    };
-
-    t.doesNotThrow(func, true, fn);
+      t.doesNotThrow(func, true, fn);
+    });
   });
   t.end();
 });

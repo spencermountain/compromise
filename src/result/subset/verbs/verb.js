@@ -44,6 +44,9 @@ class Verb extends Terms {
     return conjugate(this, verbose);
   }
 
+  isPlural() {
+    return isPlural(this);
+  }
   /** negation **/
   isNegative() {
     return this.match('#Negative').list.length === 1;

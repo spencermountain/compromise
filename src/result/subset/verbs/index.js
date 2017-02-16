@@ -22,10 +22,18 @@ class Verbs extends Text {
     });
   }
 
+  /** plural/singular **/
+  isPlural() {
+    this.list = this.list.filter((ts) => {
+      return ts.isPlural();
+    });
+    return this;
+  }
+
   /** negation **/
   isNegative() {
     this.list = this.list.filter((ts) => {
-      ts.isNegative();
+      return ts.isNegative();
     });
     return this;
   }

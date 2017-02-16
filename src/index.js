@@ -4,8 +4,8 @@ const pkg = require('../package.json');
 const log = require('./log');
 
 //the main thing
-const nlp = function (str, lexicon) {
-  return buildResult(str, lexicon);
+const nlp = function (str, lexicon, tagSet) {
+  return buildResult(str, lexicon, tagSet);
 };
 
 //this is handy

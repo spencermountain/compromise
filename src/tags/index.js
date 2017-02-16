@@ -10,10 +10,9 @@ const extra = {
   Duration: 'Noun',
 };
 
-//make tags
-let all = {};
 
 const all_children = (obj) => {
+
   let children = Object.keys(obj || {});
   //two levels deep
   children.forEach((str) => {
@@ -31,38 +30,44 @@ const all_children = (obj) => {
   return children;
 };
 
-//recursively add them, with is
-const add_tags = (obj, is) => {
-  Object.keys(obj).forEach((k) => {
-    is = is.slice(0); //clone it
-    all[k] = {
-      parents: is,
-      children: all_children(obj[k])
-    };
-    if (obj[k] !== true) {
-      add_tags(obj[k], is.concat([k])); //recursive
+const build = function() {
+  //make tags
+  let all = {};
+  //recursively add them
+  const add_tags = (obj, is) => {
+    Object.keys(obj).forEach((k) => {
+      is = is.slice(0); //clone it
+      all[k] = {
+        parents: is,
+        children: all_children(obj[k])
+      };
+      if (obj[k] !== true) {
+        add_tags(obj[k], is.concat([k])); //recursive
+      }
+    });
+  };
+  add_tags(tree, []);
+
+  //add extras
+  Object.keys(all).forEach((tag) => {
+    if (extra[tag]) {
+      all[tag].parents.push(extra[tag]);
     }
   });
+
+  //add conflicts
+  Object.keys(all).forEach((tag) => {
+    all[tag].not = conflicts(tag);
+    let parents = all[tag].parents;
+    for(let i = 0; i < parents.length; i++) {
+      let alsoNot = conflicts(parents[i]);
+      all[tag].not = all[tag].not.concat(alsoNot);
+    }
+  });
+
+  return all;
 };
-add_tags(tree, []);
 
-//add extras
-Object.keys(all).forEach((tag) => {
-  if (extra[tag]) {
-    all[tag].parents.push(extra[tag]);
-  }
-});
-
-//add conflicts
-Object.keys(all).forEach((tag) => {
-  all[tag].not = conflicts(tag);
-  let parents = all[tag].parents;
-  for(let i = 0; i < parents.length; i++) {
-    let alsoNot = conflicts(parents[i]);
-    all[tag].not = all[tag].not.concat(alsoNot);
-  }
-});
-
-module.exports = all;
+module.exports = build();
 // console.log(all.Duration);
 // console.log(all_children(tree['NounPhrase']));

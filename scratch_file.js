@@ -22,26 +22,24 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // var r = nlp('1998\'s collection').debug();
 
 
-// var tagSet = {
-//   Noun: {
-//     Singular: {
-//       Color: {
-//         OffWhite: true
-//       }
-//     }
-//   }
-// };
-// nlp.extend(tagSet);
-//
-// var lexicon = {
-//   'mother of pearl': 'OffWhite'
-// };
-// console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
+var tagSet = {
+  Noun: {
+    Singular: {
+      Color: {
+        OffWhite: true
+      }
+    }
+  }
+};
+var lexicon = {
+  'mother of pearl': 'OffWhite'
+};
+console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
 // nlp('it is mother of pearl', lexicon).list[0].tagAs('Person');
 //[{tags: ['OffWhite', 'Color', 'Singular', 'Noun']]
 
 // console.log(nlp(str, lexicon, tagSet).terms().last().data());
-var r = nlp(fresh);
+// var r = nlp(fresh);
 // var r = nlp('john is cool. he went to the store.'); //.debug();
 // console.log(r.terms().first().list[0]);
-console.log(r.verbs().out('offsets'));
+// console.log(r.verbs().out('offsets'));

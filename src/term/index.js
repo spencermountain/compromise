@@ -1,6 +1,7 @@
 'use strict';
 const fns = require('./paths').fns;
 const build_whitespace = require('./whitespace');
+const makeUID = require('./makeUID');
 
 class Term {
   constructor(str) {
@@ -16,6 +17,8 @@ class Term {
     //has this term been modified
     this.dirty = false;
     this.normalize();
+    //make a unique id for this term
+    this.uid = makeUID(this.normal);
   }
   set text(str) {
     str = str || '';

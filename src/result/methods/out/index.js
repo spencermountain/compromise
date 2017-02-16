@@ -1,5 +1,6 @@
 'use strict';
 const topk = require('./topk');
+const offset = require('./offset');
 
 const methods = {
   text: (r) => {
@@ -20,6 +21,10 @@ const methods = {
       }
       return str;
     }).join(' ');
+  },
+  /** output where in the original output string they are*/
+  offsets: (r) => {
+    return offset(r);
   },
   grid: (r) => {
     return r.list.reduce((str, ts) => {
@@ -91,6 +96,7 @@ methods.plaintext = methods.text;
 methods.normalized = methods.normal;
 methods.colors = methods.color;
 methods.tags = methods.terms;
+methods.offset = methods.offsets;
 
 const addMethods = (Text) => {
   Text.prototype.out = function(fn) {

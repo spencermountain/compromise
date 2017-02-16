@@ -41,6 +41,7 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 //[{tags: ['OffWhite', 'Color', 'Singular', 'Noun']]
 
 // console.log(nlp(str, lexicon, tagSet).terms().last().data());
-var r = nlp('third quarter 1998'); //.debug();
-r.values().toNumber();
-console.log(r.out());
+var r = nlp(fresh);
+// var r = nlp('john is cool. he went to the store.'); //.debug();
+// console.log(r.terms().first().list[0]);
+console.log(r.verbs().out('offsets'));

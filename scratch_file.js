@@ -36,6 +36,5 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // };
 // console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
 
-var r = nlp('i look just like brian holder.');
-r.sentences().toNegative();
-r.debug();
+var r = nlp('John look at');
+console.log(r.debug().verbs().isPlural().out('array'));

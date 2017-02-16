@@ -8,7 +8,7 @@ const conflicts = [
   ['Person', 'Organization', 'Value', 'Place', 'Actor', 'Demonym', 'Pronoun'],
   //things that can't be plural
   ['Plural', 'Singular'],
-  ['Plural', 'Pronoun'],
+  // ['Plural', 'Pronoun'],
   ['Plural', 'Person'],
   ['Plural', 'Organization'],
   ['Plural', 'Currency'],

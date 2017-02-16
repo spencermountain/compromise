@@ -24,6 +24,9 @@ const corrections = function (r) {
   //still make
   r.match('still #Verb').term(0).tag('Adverb', 'still-verb');
 
+  //plural pronouns
+  r.match('(we|they)').tag('Plural', 'plural-pronoun');
+
   //the word 'second'
   r.match('second #Noun').term(0).unTag('Unit').tag('Ordinal', 'second-noun');
 

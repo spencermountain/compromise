@@ -4,6 +4,7 @@ const conjugate = require('./methods/conjugate');
 const toAdjective = require('./methods/toAdjective');
 const interpret = require('./interpret');
 const toNegative = require('./toNegative');
+const isPlural = require('./methods/isPlural');
 
 class Verb extends Terms {
   constructor(arr, lexicon, refText, refTerms) {
@@ -34,6 +35,13 @@ class Verb extends Terms {
       interpret: interpret(this, verbose),
       conjugations: this.conjugate()
     };
+  }
+  getNoun() {
+    if (!this.refTerms) {
+      return null;
+    }
+    let str = '#Adjective? #Noun+ ' + this.out('normal');
+    return this.refTerms.match(str).match('#Noun+');
   }
   //which conjugation is this right now?
   conjugation() {

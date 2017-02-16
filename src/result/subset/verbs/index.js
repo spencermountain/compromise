@@ -29,11 +29,23 @@ class Verbs extends Text {
     });
     return this;
   }
+  isSingular() {
+    this.list = this.list.filter((ts) => {
+      return !ts.isPlural();
+    });
+    return this;
+  }
 
   /** negation **/
   isNegative() {
     this.list = this.list.filter((ts) => {
       return ts.isNegative();
+    });
+    return this;
+  }
+  isPositive() {
+    this.list = this.list.filter((ts) => {
+      return !ts.isNegative();
     });
     return this;
   }

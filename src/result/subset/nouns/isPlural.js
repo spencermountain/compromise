@@ -1,5 +1,5 @@
 'use strict';
-const irregulars = require('../../paths').data.irregular_plurals;
+const irregulars = require('../../../data').irregular_plurals;
 const rules = require('./methods/data/indicators');
 
 //is it potentially plural?

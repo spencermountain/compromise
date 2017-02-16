@@ -3,7 +3,6 @@
 module.exports = {
   Noun: {
     Singular: {
-      Pronoun: true,
       Person: {
         FirstName: {
           MaleName: true,
@@ -24,6 +23,7 @@ module.exports = {
       },
     },
     Plural: true,
+    Pronoun: true,
     Actor: true,
     Unit: true,
     Demonym: true,

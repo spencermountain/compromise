@@ -1,6 +1,5 @@
 'use strict';
 const log = require('../paths').log;
-const isPlural = require('../../../result/subset/nouns/isPlural');
 const path = 'tagger/noun_fallback';
 //tag word as noun if we know nothing about it, still.
 
@@ -41,12 +40,6 @@ const noun_fallback = function(s) {
         continue;
       }
       t.tagAs('Noun', 'noun-fallback');
-      //check if it's plural, too
-      if (isPlural(t)) {
-        t.tagAs('Plural', 'fallback-plural');
-      } else {
-        t.tagAs('Singular', 'fallback-plural');
-      }
     }
   }
   return s;

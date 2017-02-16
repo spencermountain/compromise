@@ -2,9 +2,16 @@
 const irregulars = require('../../../data').irregular_plurals;
 const rules = require('./methods/data/indicators');
 
+const knownPlural = {
+  i: false,
+  he: false,
+  she: false,
+  we: true,
+  they: true,
+};
+
 //is it potentially plural?
 const noPlural = [
-  'Pronoun',
   'Place',
   'Value',
   'Person',
@@ -25,6 +32,11 @@ const couldEvenBePlural = (t) => {
 
 const isPlural = function (t) {
   let str = t.normal;
+
+  //whitelist a few easy ones
+  if (knownPlural[str] !== undefined) {
+    return knownPlural[str];
+  }
   //inspect the existing tags to see if a plural is valid
   if (!couldEvenBePlural(t)) {
     return false;

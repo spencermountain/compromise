@@ -1,6 +1,7 @@
 'use strict';
 //sometimes you can tell if a verb is plural/singular, just by the verb
 // i am / we were
+//othertimes you need its noun 'we walk' vs 'i walk'
 const isPlural = (vb) => {
   if (vb.match('(are|were|does)').found) {
     return true;

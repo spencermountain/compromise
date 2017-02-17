@@ -92,7 +92,7 @@ const genericMethods = (Text) => {
       if (!terms.length) {
         return new Text(null, this.lexicon, this.parent);
       }
-      let ts = new Terms(terms, this.lexicon, this.refText, this.refTerms);
+      let ts = new Terms(terms, this.lexicon, this, null);
       return new Text([ts], this.lexicon, this.parent);
     },
 

@@ -71,7 +71,7 @@ const corrections = function (r) {
   //my buddy
   r.match('#Possessive #FirstName').term(1).unTag('Person', 'possessive-name');
   //'a/an' can mean 1
-  r.match('(a|an) (#Duration|#Value)').term(0).tag('Value', 'a-is-one');
+  r.match('(a|an) (#Duration|#Value)').match('#Plural$').term(0).tag('Value', 'a-is-one');
   //half a million
   r.match('half a? #Value').tag('Value', 'half-a-value'); //quarter not ready
   r.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half');

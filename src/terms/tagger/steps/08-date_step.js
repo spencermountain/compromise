@@ -104,10 +104,23 @@ const datePass = function (ts) {
   if (isYear(num)) {
     value.tag('Year', 'date-value-year');
   }
-  value = ts.match(`#Date #Cardinal`).lastTerm().values();
+  //scoops up a bunch
+  value = ts.match(`#Date+ #Cardinal`).lastTerm().values();
   num = value.numbers()[0];
   if (isYear(num)) {
     value.tag('Year', 'date-year');
+  }
+  //feb 8 2018
+  value = ts.match(`#Month #Value #Cardinal`).lastTerm().values();
+  num = value.numbers()[0];
+  if (isYear(num)) {
+    value.tag('Year', 'date-year2');
+  }
+  //feb 8 to 10th 2018
+  value = ts.match(`#Month #Value to #Value #Cardinal`).lastTerm().values();
+  num = value.numbers()[0];
+  if (isYear(num)) {
+    value.tag('Year', 'date-year3');
   }
   //in 1998
   value = ts.match(`(in|of|by|during|for|year) #Cardinal`).lastTerm().values();

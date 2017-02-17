@@ -1,15 +1,11 @@
 'use strict';
 const log = require('../paths').log;
 const path = 'correction';
-const date_corrections = require('./date_corrections');
 const verb_corrections = require('./verb_corrections');
 
 //mostly pos-corections here
 const corrections = function (r) {
   log.here(path);
-  //don't match+tag things over two clauses
-  // r = r.clauses();
-
   //ambig prepositions/conjunctions
   //so funny
   r.match('so #Adjective').match('so').tag('Adverb', 'so-adv');
@@ -23,27 +19,18 @@ const corrections = function (r) {
   r.match('more #Noun').tag('Noun', 'more-noun');
   //still make
   r.match('still #Verb').term(0).tag('Adverb', 'still-verb');
-
-  //plural pronouns
-  // r.match('(we|they)').tag('Plural', 'plural-pronoun');
-
   //the word 'second'
   r.match('second #Noun').term(0).unTag('Unit').tag('Ordinal', 'second-noun');
-
   //foot/feet
   r.match('(foot|feet)').tag('Noun', 'foot-noun');
   r.match('#Value (foot|feet)').match('(foot|feet)').tag('Unit', 'foot-unit');
-
   //the word 'how'
   r.match('how (#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-question');
-
   //will secure our
   r.match('will #Adjective').term(1).tag('Verb', 'will-adj');
-
   //'u' as pronoun
   r.match('u #Verb').term(0).tag('Pronoun', 'u-pronoun-1');
   r.match('#Conjunction u').term(1).tag('Pronoun', 'u-pronoun-2');
-
   //is no walk
   r.match('is no #Verb').term(2).tag('Noun', 'is-no-verb');
 
@@ -63,37 +50,26 @@ const corrections = function (r) {
   r.match('(world|global|international|national|#Demonym) #Organization').tag('Organization', 'global-org');
   r.match('#TitleCase (ltd|co|inc|dept|assn|bros)').tag('Organization', 'org-abbrv');
 
-  //book the flight
-  // r.match('#Noun the #Noun').term(0).tag('Verb', 'correction-determiner6');
   //a sense of
   r.match('#Determiner #Verb of').term(1).tag('Noun', 'the-verb-of');
-
   //he quickly foo
   r.match('#Noun #Adverb #Noun').term(2).tag('Verb', 'correction');
-
   //is eager to go
   r.match('#Copula #Adjective to #Verb').match('#Adjective to').tag('Verb', 'correction');
-
   //different views than
   r.match('#Verb than').term(0).tag('Noun', 'correction');
-
   //her polling
   r.match('#Possessive #Verb').term(1).tag('Noun', 'correction-possessive');
-
   //like
   r.match('just like').term(1).tag('Preposition', 'like-preposition');
   //folks like her
   r.match('#Noun like #Noun').term(1).tag('Preposition', 'correction');
-
   //the threat of force
   r.match('#Determiner #Noun of #Verb').match('#Verb').tag('Noun', 'noun-of-noun');
-
   //big dreams, critical thinking
   r.match('#Adjective #PresentTense').term(1).tag('Noun', 'adj-presentTense');
-
   //my buddy
   r.match('#Possessive #FirstName').term(1).unTag('Person', 'possessive-name');
-
   //'a/an' can mean 1
   r.match('(a|an) (#Duration|#Value)').term(0).tag('Value', 'a-is-one');
   //half a million

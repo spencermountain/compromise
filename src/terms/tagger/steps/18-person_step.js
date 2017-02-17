@@ -25,8 +25,6 @@ const person_step = function (ts) {
   ts.match('(king|queen|prince|saint|lady) of? #Noun').canBe('#Person').tag('#Person', 'king-of-noun');
   ts.match('#FirstName (bin|al) #Noun').canBe('#Person').tag('#Person', 'firstname-al-noun');
 
-
-
   //ambiguous firstnames
   let maybe = ['will', 'may', 'april', 'june', 'said', 'rob', 'wade', 'ray', 'rusty', 'drew', 'miles', 'jack', 'chuck', 'randy', 'jan', 'pat', 'cliff', 'bill'];
   maybe = '(' + maybe.join('|') + ')';
@@ -36,7 +34,6 @@ const person_step = function (ts) {
   maybe = ['green', 'white', 'brown', 'hall', 'young', 'king', 'hill', 'cook', 'gray', 'price'];
   maybe = '(' + maybe.join('|') + ')';
   ts.match('#FirstName ' + maybe).tag('#Person', reason);
-
 
   //people chunks
   //John L. Foo

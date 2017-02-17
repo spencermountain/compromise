@@ -154,4 +154,36 @@ test('==contractions==', function(T) {
     t.end();
   });
 
+  T.test('numberRange-contraction:', function(t) {
+    var r = nlp('june 5-7 1998').match('5 to 7');
+    t.equal(r.out('normal'), '5-7', 'june 5-7 numberRange');
+
+    r = nlp('rooms 99-102').match('99 to 102');
+    t.equal(r.out('normal'), '99-102', 'rooms 99-102');
+
+    r = nlp('june 5th-7th 1998').match('5th to 7th');
+    t.equal(r.out('normal'), '5th-7th', 'june 5th-7th numberRange');
+
+    t.end();
+  });
+
+  T.test('numberRange-expand:', function(t) {
+    var r = nlp('june 5-7 1998');
+    r.contractions().expand();
+    var str = r.out('normal');
+    t.equal(str, 'june 5 to 7 1998', 'june 5-7 numberRange');
+
+    r = nlp('rooms 99-102');
+    r.contractions().expand();
+    str = r.out('normal');
+    t.equal(str, 'rooms 99 to 102', 'rooms 99-102');
+
+    r = nlp('june 5th-7th 1998');
+    r.contractions().expand();
+    str = r.out('normal');
+    t.equal(str, 'june 5th to 7th 1998', 'june 5th-7th numberRange');
+
+    t.end();
+  });
+
 });

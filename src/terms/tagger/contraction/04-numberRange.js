@@ -1,4 +1,5 @@
 'use strict';
+const fixContraction = require('./fix');
 
 const numberRange = (ts) => {
   for(let i = 0; i < ts.terms.length; i++) {
@@ -8,18 +9,13 @@ const numberRange = (ts) => {
       continue;
     }
     if (t.tag.NumberRange) {
-      let parts = t.text.split(/-/);
-      t.text = parts[0];
-      t.whitespace.after = '-';
-      ts.insertAt(i + 1, parts[1]);
-      t.text = parts[0];
-
-      let t2 = ts.terms[i + 1];
-      t2.silent_term = 'to';
-      t2.whitespace.before = '';
-      t2.whitespace.after = '';
-      t.tagAs('Value');
-      t2.tagAs('Value');
+      let arr = t.text.split(/(-)/);
+      arr[1] = 'to';
+      ts = fixContraction(ts, arr, i);
+      ts.terms[i].tagAs('NumberRange');
+      ts.terms[i + 1].tagAs('NumberRange');
+      ts.terms[i + 2].tagAs('NumberRange');
+      i += 2;
     }
   }
   return ts;

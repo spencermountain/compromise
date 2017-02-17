@@ -90,7 +90,6 @@ let arr = [
   'wei',
   'hao',
   'yi',
-  'jun',
   'lei',
   'aarav',
   'reyansh',

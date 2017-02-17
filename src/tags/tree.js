@@ -67,9 +67,9 @@ module.exports = {
     NumericValue: true,
     NiceNumber: true,
     Money: true,
+    NumberRange: true,
   },
   Currency: true,
-  NumberRange: true,
   //glue
   Determiner: true,
   Conjunction: true,

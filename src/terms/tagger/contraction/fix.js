@@ -40,7 +40,8 @@ const fixContraction = (ts, parts, i) => {
   if (parts[2]) {
     let three = new Term('');
     three.silent_term = parts[2];
-    ts.terms.push(three);
+    // ts.terms.push(three);
+    ts.insertAt(i + 2, three);
     three.tagAs('Contraction', 'tagger-contraction');
     easyTag(three);
   }

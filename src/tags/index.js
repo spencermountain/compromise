@@ -8,6 +8,7 @@ const extra = {
   Time: 'Noun',
   WeekDay: 'Noun',
   Duration: 'Noun',
+  NumberRange: 'Contraction'
 };
 
 

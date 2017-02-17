@@ -164,6 +164,9 @@ test('==contractions==', function(T) {
     r = nlp('june 5th-7th 1998').match('5th to 7th');
     t.equal(r.out('normal'), '5th-7th', 'june 5th-7th numberRange');
 
+    r = nlp('june 5th - 7th 1998').match('5th to 7th');
+    t.equal(r.out('text'), ' 5th - 7th', 'june 5th - 7th numberRange');
+
     t.end();
   });
 
@@ -182,6 +185,11 @@ test('==contractions==', function(T) {
     r.contractions().expand();
     str = r.out('normal');
     t.equal(str, 'june 5th to 7th 1998', 'june 5th-7th numberRange');
+
+    r = nlp('june 5th - 7th 1998');
+    r.contractions().expand();
+    str = r.out('normal');
+    t.equal(str, 'june 5th to 7th 1998', 'june 5th - 7th numberRange');
 
     t.end();
   });

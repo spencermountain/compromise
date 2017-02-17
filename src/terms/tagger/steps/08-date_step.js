@@ -2,75 +2,120 @@
 const log = require('../paths').log;
 const path = 'tagger/datePass';
 
-const preDate = {
-  on: true,
-  in: true,
-  before: true,
-  by: true,
-  after: true,
-  during: true,
-};
+//ambiguous 'may' and 'march'
+const months = '(may|march|jan|april|sep)';
+const preps = '(in|by|before|for|during|on|until|after|of)';
+const thisNext = '(last|next|this|previous|current|upcoming|coming)';
+const sections = '(start|end|middle|starting|ending|midpoint|beginning)';
+// const dayTime = '(night|evening|morning|afternoon|day|daytime)';
+
+// const isDate = (num) => {
+//   if (num && num < 31 && num > 0) {
+//     return true;
+//   }
+//   return false;
+// };
 
 //ensure a year is approximately typical for common years
-const isYear = (t) => {
-  if (t.tag.Ordinal) {
-    return false;
+//please change in one thousand years
+const isYear = (num) => {
+  if (num && num > 1000 && num < 3000) {
+    return true;
   }
-  let num = parseInt(t.normal, 10);
-  if (!num || num < 1000 || num > 3000) {
-    return false;
-  }
-  return true;
+  return false;
 };
 
-//rules for two-term dates
-const twoDates = [{
-  condition: (a, b) => (preDate[a.normal] && b.tag.Date),
-  reason: 'predate-date'
-},];
-
-//rules for three-term dates
-const threeDates = [{
-  condition: (a, b, c) => (a.tag.Month && b.tag.Value && c.tag.Cardinal && isYear(c)),
-  reason: 'month-value-year'
-}, {
-  condition: (a, b, c) => (a.tag.Date && b.normal === 'and' && c.tag.Date),
-  reason: 'date-and-date'
-},];
-
 //non-destructively tag values & prepositions as dates
-const datePass = function (s) {
+const datePass = function (ts) {
   log.here(path);
-  //set verbs as auxillaries
-  for (let i = 0; i < s.terms.length - 1; i++) {
-    let a = s.terms[i];
-    let b = s.terms[i + 1];
-    let c = s.terms[i + 2];
-    if (c) {
-      for (let o = 0; o < threeDates.length; o++) {
-        if (threeDates[o].condition(a, b, c)) {
-          a.tagAs('Date', threeDates[o].reason);
-          b.tagAs('Date', threeDates[o].reason);
-          c.tagAs('Date', threeDates[o].reason);
-        }
-      }
-    }
-    for (let o = 0; o < twoDates.length; o++) {
-      if (twoDates[o].condition(a, b)) {
-        a.tagAs('Date', twoDates[o].reason);
-        b.tagAs('Date', twoDates[o].reason);
-      }
-    }
-    //in 2018
-    if (a.tag.Date || (preDate[a.normal]) && b.tag.Value) {
-      let year = parseInt(b.normal, 10);
-      if (year && year > 1200 && year < 2090) {
-        a.tagAs('Date', 'in-year');
-        b.tagAs('Date', 'in-year');
-      }
-    }
+
+  ts.match(`#Month #DateRange+`).tag('Date', 'correction-numberRange');
+  // ts.match(`#Month #Value to #Value`).tag('Date', 'correction-contraction');
+
+  //months
+  ts.match(`${months} (#Determiner|#Value|#Date)`).term(0).tag('Month', 'correction-may');
+  ts.match(`#Date ${months}`).term(1).tag('Month', 'correction-may');
+  ts.match(`${preps} ${months}`).term(1).tag('Month', 'correction-may');
+  ts.match(`(next|this|last) ${months}`).term(1).tag('Month', 'correction-may'); //maybe not 'this'
+
+  //values
+  ts.match('#Value #Abbreviation').tag('Value', 'value-abbr');
+  ts.match('a #Value').tag('Value', 'a-value');
+  ts.match('(minus|negative) #Value').tag('Value', 'minus-value');
+  ts.match('#Value grand').tag('Value', 'value-grand');
+  // ts.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');//not ready
+  ts.match('(half|quarter) #Ordinal').tag('Value', 'half-ordinal');
+  ts.match('(hundred|thousand|million|billion|trillion) and #Value').tag('Value', 'magnitude-and-value');
+  ts.match('#Value point #Value').tag('Value', 'value-point-value');
+
+  //time
+  ts.match('#Cardinal #Time').tag('Time', 'value-time');
+  ts.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time');
+  ts.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm');
+  ts.match('all day').tag('Time', 'all-day');
+
+  //seasons
+  ts.match(`${preps}? ${thisNext} (spring|summer|winter|fall|autumn)`).tag('Date', 'thisNext-season');
+  ts.match(`the? ${sections} of (spring|summer|winter|fall|autumn)`).tag('Date', 'section-season');
+
+  //june the 5th
+  ts.match('#Date the? #Ordinal').tag('Date', 'correction-date');
+  //5th of March
+  ts.match('#Value of? #Month').tag('Date', 'value-of-month');
+  //5 March
+  ts.match('#Cardinal #Month').tag('Date', 'cardinal-month');
+  //march 5 to 7
+  ts.match('#Month #Value to #Value').tag('Date', 'value-to-value');
+
+  //last month
+  ts.match(`${thisNext} #Date`).tag('Date', 'thisNext-date');
+  //for four days
+  ts.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration');
+
+  //by 5 March
+  ts.match('due? (by|before|after|until) #Date').tag('Date', 'by-date');
+  //tomorrow before 3
+  ts.match('#Date (by|before|after|at|@|about) #Cardinal').not('^#Date').tag('Time', 'date-before-Cardinal');
+  //2pm est
+  ts.match('#Time (eastern|pacific|central|mountain)').term(1).tag('Time', 'timezone');
+  ts.match('#Time (est|pst|gmt)').term(1).tag('Time', 'timezone abbr');
+  //saturday am
+  ts.match('#Date (am|pm)').term(1).unTag('Verb').unTag('Copula').tag('Time', 'date-am');
+  //late at night
+  ts.match('at night').tag('Time', 'at-night');
+  ts.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time', 'in-the-night');
+  ts.match('(early|late) (at|in)? the? (night|evening|morning|afternoon|day|daytime)').tag('Time', 'early-evening');
+  //march 12th 2018
+  ts.match('#Month #Value #Cardinal').tag('Date', 'month-value-cardinal');
+  ts.match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('Date', 'next-feb');
+  ts.match('#Date #Value').tag('Date', 'date-value');
+  ts.match('#Value #Date').tag('Date', 'value-date');
+  ts.match('#Date #Preposition #Date').tag('Date', 'date-prep-date');
+
+  //two days before
+  ts.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction');
+
+  //start of june
+  ts.match(`the? ${sections} of #Date`).tag('Date', 'section-of-date');
+
+  //year tagging
+  let value = ts.match(`#Date #Value #Cardinal`).lastTerm().values();
+  let num = value.numbers()[0];
+  if (isYear(num)) {
+    value.tag('Year', 'date-value-year');
   }
-  return s;
+  value = ts.match(`#Date #Cardinal`).lastTerm().values();
+  num = value.numbers()[0];
+  if (isYear(num)) {
+    value.tag('Year', 'date-year');
+  }
+  //in 1998
+  value = ts.match(`(in|of|by|during|for|year) #Cardinal`).lastTerm().values();
+  num = value.numbers()[0];
+  if (isYear(num)) {
+    value.tag('Year', 'preposition-year');
+  }
+  return ts;
 };
 
 module.exports = datePass;

@@ -36,7 +36,5 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
 
 // var r = nlp('i look like my buddy');
-var r = nlp('Jun 5-9, 2017');
-r = r.flatten();
-r.contractions().expand();
+var r = nlp('August 10 - 22, 2012');
 r.debug();

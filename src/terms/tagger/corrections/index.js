@@ -115,7 +115,6 @@ const corrections = function (r) {
 
   //more-detailed corrections
   r = verb_corrections(r);
-  r = date_corrections(r);
 
   return r;
 };

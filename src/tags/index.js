@@ -4,7 +4,7 @@ const tree = require('./tree');
 
 const extra = {
   Month: 'Singular',
-  Year: 'Noun',
+  // Year: 'Noun',
   Time: 'Noun',
   WeekDay: 'Noun',
   Duration: 'Noun',

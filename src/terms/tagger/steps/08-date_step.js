@@ -123,11 +123,14 @@ const datePass = function (ts) {
     value.tag('Year', 'date-year3');
   }
   //in 1998
-  value = ts.match(`(in|of|by|during|for|year) #Cardinal`).lastTerm().values();
+  value = ts.match(`(in|of|by|during|before|starting|ending|for|year) #Cardinal`).lastTerm().values();
   num = value.numbers()[0];
   if (isYear(num)) {
     value.tag('Year', 'preposition-year');
   }
+  //fifth week in 1998
+  ts.match('#Duration in #Date').tag('Date', 'duration-in-date');
+
   return ts;
 };
 

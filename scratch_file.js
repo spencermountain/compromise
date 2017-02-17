@@ -36,5 +36,5 @@ nlp.verbose('tagger');
 // console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
 
 // var r = nlp('i look like my buddy');
-var r = nlp('a days ago');
+var r = nlp('a month ago');
 r.debug();

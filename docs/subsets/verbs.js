@@ -9,14 +9,14 @@ module.exports = {
   conjugation: {
     desc: 'which form of is the verb in currently? PastTense, PresentTense, Infinitive, etc',
     returns: 'String',
-    example: `nlp('My cat’s breath smells like cat food').verbs().conjugation()
+    example: `nlp('My cat's breath smells like cat food').verbs().conjugation()
 //['PresentTense']
 `
   },
   conjugate: {
-    desc: 'she walked the walk',
+    desc: 'blast-out all conjugated forms of these verbs',
     returns: 'Array',
-    example: `nlp('').verbs().conjugate()
+    example: `nlp('she walked the walk').verbs().conjugate()
 //[{Infinitive:'walk', ...}]
 `
   },

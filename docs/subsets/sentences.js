@@ -32,8 +32,8 @@ module.exports = {
   toFutureTense: {
     desc: 'transform the sentences so that they are in the future tense',
     returns: 'Text',
-    example: `nlp('I pay the Homer tax.').sentences().toFutureTense().out()
-//I will pay the Homer tax.`
+    example: `nlp('That's the home-owner tax.').sentences().toFutureTense().out()
+//That will be the home-owner tax`
   },
   toNegative: {
     desc: 'turn the sentence negative, so that it means the opposite thing',

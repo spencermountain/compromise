@@ -90,7 +90,7 @@ module.exports = {
 
   places: {
     data: {
-      desc: 'return an array of places mentioned in this text',
+      desc: 'return an array of locations mentioned in this text',
       example: `nlp('you could still go to McGill, the Harvard of Canada!').places().data()
 //[{normal:'canada'}]`,
       returns: 'array'
@@ -127,8 +127,8 @@ module.exports = {
   terms: {
     data: {
       desc: 'split all words into individual results, and return their metadata',
-      example: `nlp().terms().data()
-//[{text:''}]`,
+      example: `nlp('we should all be more like little Ruttiger').terms().data()
+//[{text:'we'}, {text:'should'}...]`,
       returns: 'array'
     }
   },

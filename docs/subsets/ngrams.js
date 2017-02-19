@@ -20,8 +20,8 @@ module.exports = {
   trigrams: {
     desc: 'return only the ngrams of size 3',
     returns: 'Text',
-    example: `nlp('we want bart! we want bart!').ngrams().trigrams(0).data()
-//[{normal:'we want bart', count:2, size:3}]`
+    example: `nlp('we like Roy! we like Roy!').ngrams().trigrams(0).data()
+//[{normal:'we like roy', count:2, size:3}]`
   },
   sort: {
     desc: 'the default sort for ngrams - count, then size, then character length. (called by default)',

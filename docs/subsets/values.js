@@ -8,7 +8,7 @@ module.exports = {
   noDates: {
     desc: 'remove numbers that are also dates, like in \'June 5th 1999\'.',
     returns: 'Text',
-    example: `nlp('in 2016, I’m going to party like it’s on sale for $19.99.').values().noDates().length
+    example: `nlp('in 2016, I'm going to party like it’s on sale for $19.99.').values().noDates().length
 //1`
   },
   toNumber: {

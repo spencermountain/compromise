@@ -1,8 +1,8 @@
 module.exports = {
   data: {
     desc: 'return a handy array of meta-data of people mentioned in the text',
-    example: `nlp('Nelson Muntz and Homer J. Simpson').people().data()
-//[{text:'Nelson Muntz', pronoun:'he'}, {text:'Homer J. Simpson', pronoun:'he'}]`,
+    example: `nlp('The bong-rattling bass of Mel Schacher? The competent drum work of Don Brewer?').people().data()
+//[{text:' Mel Schacher'}, {text:'Don Brewer'}]`,
     returns: 'array'
   },
   pronoun: {

@@ -1,8 +1,8 @@
 module.exports = {
   data: {
     desc: 'return an array of meta-data about the dates and times in this text',
-    example: `nlp('').dates().data()
-//[{text:''}]`,
+    example: `nlp('Finally, I just stopped caring. Luckily for me, it was 1980 and no one noticed.').dates().data()
+//[{text:'1980'}]`,
     returns: 'array'
   },
   toShortForm: {

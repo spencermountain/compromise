@@ -1,7 +1,7 @@
 module.exports = {
   data: {
     desc: 'return a handy array of meta-data for this the contractions in this text',
-    example: `nlp(' I'd like to request seventeen dollars for a push broom rebristling').contractions().data()
+    example: `nlp(' I’d like to request seventeen dollars for a push broom rebristling').contractions().data()
 //[{text:'I'd'}]`,
     returns: 'array'
   },

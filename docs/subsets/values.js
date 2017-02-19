@@ -1,14 +1,14 @@
 module.exports = {
   data: {
     desc: 'return a handy array of meta-data for the numbers and values in this text',
-    example: `nlp('I'd like to request seventeen dollars for a push broom rebristling').values().data()
+    example: `nlp('I’d like to request seventeen dollars for a push broom rebristling').values().data()
 //[{number:17, TextValue:{ Ordinal:'seventeenth'}, NumericValue:{ Ordinal:'17th'}} ]`,
     returns: 'array'
   },
   noDates: {
     desc: 'remove numbers that are also dates, like in \'June 5th 1999\'.',
     returns: 'Text',
-    example: `nlp('in 2016, I'm going to party like it’s on sale for $19.99.').values().noDates().length
+    example: `nlp('in 2016, I’m going to party like it’s on sale for $19.99.').values().noDates().length
 //1`
   },
   toNumber: {

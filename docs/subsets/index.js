@@ -38,7 +38,7 @@ module.exports = {
   clauses: {
     data: {
       desc: 'return an array of words split by sentence phrase (clause)',
-      example: `nlp('All right, Colossus, you're free to go, but stay away from Death Mountain').clauses().data()
+      example: `nlp('All right, Colossus, you’re free to go, but stay away from Death Mountain').clauses().data()
 //[{normal:'all right'}, {normal:'Colossus'}, {normal:'you're free to go'},]`,
       returns: 'array'
     }
@@ -64,7 +64,7 @@ module.exports = {
   endGrams: {
     data: {
       desc: 'return an array of subsequences ending at the end of each sentence or match',
-      example: `nlp('you think that's a knife? I'll show you a knife.').endGrams().data()
+      example: `nlp('you think that’s a knife? I’ll show you a knife.').endGrams().data()
 //[{normal:'knife', count:2, size:1}...]`,
       returns: 'array'
     }
@@ -82,7 +82,7 @@ module.exports = {
   phoneNumbers: {
     data: {
       desc: 'return an array of parsed phonenumbers in this text',
-      example: `nlp('Moe Sizlak. That's right. I'm a surgeon. (800) 555-0000.').phoneNumbers().data()
+      example: `nlp('Moe Sizlak. That’s right. I’m a surgeon. (800) 555-0000.').phoneNumbers().data()
 //[{text:'(800) 555-0000'}]`,
       returns: 'array'
     }
@@ -136,7 +136,7 @@ module.exports = {
   topics: {
     data: {
       desc: 'return the people, places, and organizations of this text',
-      example: `nlp('Hey everybody, I'm lookin' for Amanda Hugginkiss').topics().data()
+      example: `nlp('Hey everybody, I’m lookin’ for Amanda Hugginkiss').topics().data()
 //[{text:'Amanda Hugginkiss'}]`,
       returns: 'array'
     }

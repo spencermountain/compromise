@@ -4,7 +4,7 @@ module.exports = {
     data: {
       desc: 'return a handy array of meta-data for this subset. Default subset is sentences, but it can be anything.',
       example: `nlp('The stage was set for the Alan Parsons Project! Which I believe was some sort of hovercraft.').data()
-//[{normal:'the stage was set for the Alan Parsons Project'}...]`,
+//[{normal:'the stage was set...'}]`,
       returns: 'array',
     },
     found: {
@@ -143,7 +143,7 @@ module.exports = {
     delete: {
       desc: 'remove a match from the Text permanently. For a temporary filter, see `.not()`',
       returns: 'Text',
-      example: `nlp('you don't win friends with salad').delete('do not').out()
+      example: `nlp('you don’t win friends with salad').delete('do not').out()
 //you win friends with salad`
     },
   },

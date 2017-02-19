@@ -9,7 +9,7 @@ module.exports = {
   conjugation: {
     desc: 'which form of is the verb in currently? PastTense, PresentTense, Infinitive, etc',
     returns: 'String',
-    example: `nlp('My cat's breath smells like cat food').verbs().conjugation()
+    example: `nlp('My cat’s breath smells like cat food').verbs().conjugation()
 //['PresentTense']
 `
   },
@@ -31,7 +31,7 @@ module.exports = {
   isPlural: {
     desc: 'return only the verbs that are plural, like \'are\' but not \'is\'',
     returns: 'Text',
-    example: `nlp('We were sitting in Barney's car').verbs().isPlural().out('array')
+    example: `nlp('We were sitting in Barney’s car').verbs().isPlural().out('array')
 //[]
 `
   },
@@ -81,7 +81,7 @@ module.exports = {
   toFutureTense: {
     desc: 'turn the verb into future tense - `walked`->`will walk` etc.',
     returns: 'Text',
-    example: `nlp('I'm a furniture! ').verbs().toFutureTense().out()
+    example: `nlp('I’m a furniture! ').verbs().toFutureTense().out()
 //will be`
   },
   asAdjective: {

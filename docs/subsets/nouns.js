@@ -26,7 +26,7 @@ module.exports = {
   toSingular: {
     desc: 'transform plural nouns into their singular forms',
     returns: 'Text',
-    example: `nlp('the king's men').nouns().toSingular().out()
+    example: `nlp('the king’s men').nouns().toSingular().out()
 //the king's man`
   },
 

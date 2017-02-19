@@ -158,19 +158,19 @@ module.exports = {
     not: {
       desc: 'return parts of the text that do not match. Like .match() but opposite.',
       returns: 'Text',
-      example: `nlp('wait, there's a new mexico?').places().not('new').out()
+      example: `nlp('wait, there’s a new mexico?').places().not('new').out()
 //mexico`
     },
     if: {
       desc: 'returns only the sets which contain this match. Like a Array.filter() method, for your results',
       returns: 'Text',
-      example: `nlp('We're here, we're clear, we don't want anymore bears.').clauses().if('anymore').out()
+      example: `nlp('We’re here, we’re clear, we don’t want anymore bears.').clauses().if('anymore').out()
 //we don't want anymore bears`
     },
     ifNo: {
       desc: 'removes any sets that have this match',
       returns: 'Text',
-      example: `nlp('We're here, we're clear, we don't want anymore bears.').clauses().ifNo('anymore').out()
+      example: `nlp('We’re here, we’re clear, we don’t want anymore bears.').clauses().ifNo('anymore').out()
 //We're here, we're clear,`
     },
   },
@@ -214,7 +214,7 @@ module.exports = {
     canBe: {
       desc: 'return only terms that have no conflicts with this tag',
       returns: 'Text',
-      example: `nlp('it's fusilli jerry!').canBe('Person').out()
+      example: `nlp('it’s fusilli jerry!').canBe('Person').out()
 //fusilli jerry`
     }
   }

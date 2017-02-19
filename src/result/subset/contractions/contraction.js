@@ -23,9 +23,19 @@ const expand = function(ts) {
 
 class Contraction extends Terms {
   data() {
+    let expanded = expand(this.clone());
+    let contracted = contract(this.clone());
     return {
       text: this.out('text'),
       normal: this.out('normal'),
+      expanded: {
+        normal: expanded.out('normal'),
+        text: expanded.out('text')
+      },
+      contracted: {
+        normal: contracted.out('normal'),
+        text: contracted.out('text')
+      },
       isContracted: !!this.contracted
     };
   }

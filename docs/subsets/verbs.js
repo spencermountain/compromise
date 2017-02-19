@@ -1,8 +1,8 @@
 module.exports = {
   data: {
-    desc: 'return a handy array of meta-data for this subset',
-    example: `nlp().verbs().data()
-//[{text:''...}]
+    desc: 'return a handy array of meta-data for the verbs and their auxillaries in this text',
+    example: `nlp('he will have been walking quickly').verbs().data()
+//[{verb:'walking', auxillary:'will have been', adverb:'quickly'}]
 `,
     returns: 'array'
   },

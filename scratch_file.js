@@ -6,7 +6,7 @@ const nlp = require('./src/index');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
 const fresh = require('./test/unit/lib/freshPrince.js');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 
 //bug 1. - support greedy +
 // var arr = nlp('would have not had been walking').match('#Auxillary+ #Verb').debug();
@@ -36,5 +36,5 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
 
 // var r = nlp('i look like my buddy');
-var r = nlp('Oh hey Ross... Listen,').debug().people();
+var r = nlp('Ross... Listen,').debug().people();
 console.log(r.out());

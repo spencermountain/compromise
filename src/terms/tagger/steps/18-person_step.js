@@ -42,6 +42,8 @@ const person_step = function (ts) {
   ts.match('#FirstName #FirstName #TitleCase').tag('Person', 'firstname-firstname-titlecase');
   //Mr Foo
   ts.match('#Honorific #FirstName? #TitleCase').tag('Person', 'Honorific-TitleCase');
+  //mr X
+  ts.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase');
   //John Foo
   ts.match('#FirstName #TitleCase').match('#FirstName #Noun').tag('Person', 'firstname-titlecase');
   //ludwig van beethovan
@@ -76,6 +78,9 @@ const person_step = function (ts) {
       }
     }
   }
+
+  //remove single 'mr'
+  ts.match('#Person+').match('^#Honorific$').unTag('Person', 'single-honorific');
   return ts;
 };
 

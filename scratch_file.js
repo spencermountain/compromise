@@ -36,5 +36,5 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
 
 // var r = nlp('i look like my buddy');
-var r = nlp('Homer, have you been eating that sandwich again?').terms().slice(0, 3)
+var r = nlp('Oh hey Ross... Listen,').debug().people();
 console.log(r.out());

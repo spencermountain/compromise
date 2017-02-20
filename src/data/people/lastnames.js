@@ -39,7 +39,6 @@ module.exports = [
   'devi',
   'singh',
   'kumar',
-  'das',
   'kaur',
   'sato',
   'suzuki',
@@ -122,11 +121,8 @@ module.exports = [
   'wilson',
   'davis',
   'clark',
-  'hall',
-  'thomas',
   'moore',
   'anderson',
-  'allen',
   'lewis',
   'jackson',
   'adams',
@@ -134,7 +130,6 @@ module.exports = [
   'campbell',
   'gruber',
   'huber',
-  'bauer',
   'wagner',
   'pichler',
   'steiner',
@@ -298,7 +293,7 @@ module.exports = [
   'messi',
   'beckham',
   'cohen',
-]
+];
 
 // let obj = {}
 // module.exports.forEach((str) => {

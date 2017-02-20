@@ -22,7 +22,6 @@ exec('rm -rf ./builds && mkdir builds');
 //add a header, before our sourcecode
 exec('echo ' + banner + ' > ' + es5);
 exec('echo ' + banner + ' > ' + es5min);
-exec('echo ' + banner + ' > ' + es6);
 exec('echo ' + banner + ' > ' + es6min);
 
 //es6 main (browserify)
@@ -35,6 +34,7 @@ exec(cmd);
 cmd = babili + ' ' + es6;
 cmd += ' >> ' + es6min;
 exec(cmd);
+exec('rm ' + es6);
 
 //es5 main (browserify + derequire)
 cmd = browserify + ' "./src/index.js" --standalone nlp';
@@ -55,8 +55,8 @@ var fileSize = function(src) {
 
 //print filesizes
 console.log('\n');
-console.log('    es6 ' + fileSize(es6));
-console.log(' -  min ' + fileSize(es6min));
+// console.log('    es6 ' + fileSize(es6));
+console.log('es6.min ' + fileSize(es6min));
 console.log('\n');
 console.log('    es5 ' + fileSize(es5));
 console.log(' -  min ' + fileSize(es5min));

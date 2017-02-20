@@ -4209,9 +4209,19 @@ var Contraction = function (_Terms) {
   _createClass(Contraction, [{
     key: 'data',
     value: function data() {
+      var expanded = _expand(this.clone());
+      var contracted = _contract(this.clone());
       return {
         text: this.out('text'),
         normal: this.out('normal'),
+        expanded: {
+          normal: expanded.out('normal'),
+          text: expanded.out('text')
+        },
+        contracted: {
+          normal: contracted.out('normal'),
+          text: contracted.out('text')
+        },
         isContracted: !!this.contracted
       };
     }

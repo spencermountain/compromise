@@ -24,6 +24,12 @@ module.exports = {
       returns: 'Text',
       example: `nlp('wayne’s world, party time, excellent- weeeyooweeeyoo!').debug().out()`
     },
+    out: {
+      desc: 'render parsed data as an output. supports `text`, `normal`, `array`, `html`, `grid`, `color`, `debug`',
+      returns: 'Text',
+      example: `nlp('you might say there’s a little Uter in all of us').match('#Adjective uter').out('html')
+//<span><span class="nl-Adjective">little</span>&nbsp;<span class="nl-Person nl-FirstName">Uter</span></span>`
+    },
     whitespace: {
       desc: 'set before or after whitespace on each match',
       returns: 'Text',

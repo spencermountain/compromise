@@ -39,20 +39,20 @@ const person_step = function (ts) {
   //John L. Foo
   ts.match('#FirstName #Acronym #TitleCase').tag('Person', 'firstname-acronym-titlecase');
   //Andrew Lloyd Webber
-  ts.match('#FirstName #FirstName #TitleCase').ifNo('#ClauseEnd .').tag('Person', 'firstname-firstname-titlecase');
+  ts.match('#FirstName #FirstName #TitleCase').tag('Person', 'firstname-firstname-titlecase');
   //Mr Foo
-  ts.match('#Honorific #FirstName? #TitleCase').ifNo('#ClauseEnd .').tag('Person', 'Honorific-TitleCase');
+  ts.match('#Honorific #FirstName? #TitleCase').tag('Person', 'Honorific-TitleCase');
   //mr X
   ts.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase');
   //John Foo
-  ts.match('#FirstName #TitleCase').match('#FirstName #Noun').ifNo('#ClauseEnd .').tag('Person', 'firstname-titlecase');
+  ts.match('#FirstName #TitleCase').match('#FirstName #Noun').tag('Person', 'firstname-titlecase');
   //ludwig van beethovan
   ts.match('#TitleCase (van|al|bin) #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');
   ts.match('#TitleCase (de|du) la? #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');
   //peter the great
   ts.match('#FirstName the #Adjective').tag('Person', 'correction-determiner5');
   //Morgan Shlkjsfne
-  ts.match('#Person #TitleCase').match('#TitleCase #Noun').ifNo('#ClauseEnd .').tag('Person', 'correction-person-titlecase');
+  ts.match('#Person #TitleCase').match('#TitleCase #Noun').tag('Person', 'correction-person-titlecase');
 
   //last names
   // let reason = 'person-correction';

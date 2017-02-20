@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.13",
+  "version": "7.0.14",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -2651,6 +2651,12 @@ var genericMethods = function genericMethods(Text) {
     },
     lastTerm: function lastTerm() {
       return this.match('.$');
+    },
+
+    /** grab a subset of the results*/
+    slice: function slice(start, end) {
+      this.list = this.list.slice(start, end);
+      return this;
     },
 
     /** use only the nth result*/

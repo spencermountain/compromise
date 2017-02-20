@@ -36,7 +36,11 @@ const genericMethods = (Text) => {
       return this.match('.$');
     },
 
-
+    /** grab a subset of the results*/
+    slice: function (start, end) {
+      this.list=this.list.slice(start, end)
+      return this
+    },
 
     /** use only the nth result*/
     get: function (n) {

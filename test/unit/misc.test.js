@@ -32,6 +32,9 @@ test('misc:', function (t) {
   m.values().toTextValue();
   t.equal(m.out('normal'), 'doug is five years old', str);
 
+  var r=nlp('Homer, have you been eating that sandwich again?').terms().slice(0, 3)
+  t.equal(r.out('text'),'Homer, have you','result.slice')
+
   // str = 'men go';
   // m = nlp(str).sentences().toPast().nouns().toSingular();
   // t.equal(m.out('normal'), 'a man went', str);

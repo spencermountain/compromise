@@ -56,6 +56,12 @@ module.exports = {
       example: `nlp('jackie kennedy and aristotle onassis').people().length
 //2`
     },
+    slice: {
+      desc: 'grab a subset of the results',
+      returns: 'Text',
+      example: `nlp('Homer, have you been eating that sandwich again?').terms().slice(0, 3).out()
+//Homer, have you`
+    },
     concat: {
       desc: 'combine two results into one',
       returns: 'Text',

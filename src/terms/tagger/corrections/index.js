@@ -60,10 +60,16 @@ const corrections = function (r) {
   r.match('#Verb than').term(0).tag('Noun', 'correction');
   //her polling
   r.match('#Possessive #Verb').term(1).tag('Noun', 'correction-possessive');
+
   //like
   r.match('just like').term(1).tag('Preposition', 'like-preposition');
   //folks like her
-  r.match('#Noun like #Noun').term(1).tag('Preposition', 'correction');
+  r.match('#Noun like #Noun').term(1).tag('Preposition', 'noun-like');
+  //look like
+  r.match('#Verb like').term(1).tag('Adverb', 'verb-like');
+  //exactly like
+  r.match('#Adverb like').term(1).tag('Adverb', 'adverb-like');
+
   //the threat of force
   r.match('#Determiner #Noun of #Verb').match('#Verb').tag('Noun', 'noun-of-noun');
   //big dreams, critical thinking

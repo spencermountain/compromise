@@ -36,14 +36,24 @@ test('==negation==', function(T) {
       [`they will really be good`, `they will not really be good`],
       //different verb tenses
       [`he walks`, `he does not walk`],
+      [`he will walk`, `he will not walk`],
       [`he walked`, `he did not walk`],
       [`he has walked`, `he has not walked`],
       [`he will have walked`, `he will not have walked`],
       [`he is walking`, `he is not walking`],
+      //add adverbs
+      [`he really walks`, `he really does not walk`],
+      [`he will really walk`, `he will not really walk`],
+      [`he really walked`, `he really did not walk`],
+      [`he has really walked`, `he has not really walked`],
+      [`he will have really walked`, `he will not have really walked`],
+      [`he is really walking`, `he is not really walking`],
+      //plural noun
+      [`they walk`, `they do not walk`],
       //pronoun + infinitive
-      // [`i like running`, `i do not like running`],
-      // [`they swim`, `they do not swim`],
-      // [`we enjoy playing`, `we do not enjoy playing`],
+      [`i like running`, `i do not like running`],
+      [`they swim`, `they do not swim`],
+      [`we enjoy playing`, `we do not enjoy playing`],
       // [`we do not swim`, `we do swim`],
       // [`i do not care`, `i do care`],
       // [`they do not care`, `they do care`],

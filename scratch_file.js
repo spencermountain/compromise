@@ -36,5 +36,5 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
 
 // var r = nlp('i look like my buddy');
-var arr = nlp('Finally, I just stopped caring. Luckily for me, it was 1980 and no one noticed.').dates().data();
-console.log(arr);
+var r = nlp('I look exactly like buddy holly').debug().sentences().toNegative();
+console.log(r.out());

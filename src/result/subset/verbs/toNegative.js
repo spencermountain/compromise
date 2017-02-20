@@ -38,6 +38,11 @@ const toNegative = (ts) => {
     let vb = pres.list[0];
     let index = vb.index();
     vb.terms[0].text = toInfinitive(vb.terms[0]);
+    //some things use 'do not', everything else is 'does not'
+    let noun = ts.getNoun();
+    if (noun.match('(i|we|they|you)').found) {
+      return ts.parentTerms.insertAt(index, 'do not', 'Verb');
+    }
     return ts.parentTerms.insertAt(index, 'does not', 'Verb');
   }
 

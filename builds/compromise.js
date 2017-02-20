@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.12",
+  "version": "7.0.13",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -19,7 +19,8 @@ module.exports={
     "coverage": "node ./scripts/coverage.js"
   },
   "files": [
-    "builds/"
+    "builds/",
+    "docs/"
   ],
   "dependencies": {},
   "devDependencies": {

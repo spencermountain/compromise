@@ -13,7 +13,7 @@ exports.normalize = function(str) {
   // coerce single curly quotes
   str = str.replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]+/g, '\'');
   // coerce double curly quotes
-  str = str.replace(/[\u201C\u201D\u201E\u201F\u2033\u2036]+/g, '');
+  str = str.replace(/[\u201C\u201D\u201E\u201F\u2033\u2036"]+/g, '');
   //coerce unicode elipses
   str = str.replace(/\u2026/g, '...');
 

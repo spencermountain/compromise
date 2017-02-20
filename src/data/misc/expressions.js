@@ -1,6 +1,7 @@
 module.exports = [
   'uh',
   'uhh',
+  'uhm',
   'uh huh',
   'uh-oh',
   'please',

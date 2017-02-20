@@ -54,13 +54,15 @@ test('==negation==', function(T) {
       [`i like running`, `i do not like running`],
       [`they swim`, `they do not swim`],
       [`we enjoy playing`, `we do not enjoy playing`],
-      // [`we do not swim`, `we do swim`],
-      // [`i do not care`, `i do care`],
-      // [`they do not care`, `they do care`],
+      [`we swim`, `we do not swim`],
+      [`we do swim`, `we do not swim`],
+      [`i do care`, `i do not care`],
+      [`they do care`, `they do not care`],
+
       //does not, is not, are not, etc.
-      // [`apples are not bad`, `apples are bad`],
-      // [`he does not like it`, `he does like it`],
-      // [`have not died yet`, `have died yet`],
+      [`apples are bad`, `apples are not bad`],
+      [`he does like it`, `he does not like it`],
+      [`have died yet`, `have not died yet`],
       //logical negations
       ['john always walks', 'john never walks'],
       ['john always walks quickly', 'john never walks quickly'],

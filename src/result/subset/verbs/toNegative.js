@@ -11,8 +11,8 @@ const toNegative = (ts) => {
     return ts.parentTerms.insertAt(index + 1, 'not', 'Verb');
   }
 
-  //is not
-  let copula = ts.match('(#Copula|will|has|had)').first();
+  //words that pair easily with a 'not' - 'is not'
+  let copula = ts.match('(#Copula|will|has|had|do)').first();
   if (copula.found) {
     let index = copula.list[0].index();
     return ts.parentTerms.insertAt(index + 1, 'not', 'Verb');
@@ -33,7 +33,7 @@ const toNegative = (ts) => {
   }
 
   //walks -> does not walk
-  let pres = ts.match('#PresentTense').last();
+  let pres = ts.match('#PresentTense').first();
   if (pres.found) {
     let vb = pres.list[0];
     let index = vb.index();

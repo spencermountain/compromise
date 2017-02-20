@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.11",
+  "version": "7.0.12",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -8852,8 +8852,8 @@ var toNegative = function toNegative(ts) {
     return ts.parentTerms.insertAt(index + 1, 'not', 'Verb');
   }
 
-  //is not
-  var copula = ts.match('(#Copula|will|has|had)').first();
+  //words that pair easily with a 'not' - 'is not'
+  var copula = ts.match('(#Copula|will|has|had|do)').first();
   if (copula.found) {
     var _index = copula.list[0].index();
     return ts.parentTerms.insertAt(_index + 1, 'not', 'Verb');
@@ -8874,11 +8874,16 @@ var toNegative = function toNegative(ts) {
   }
 
   //walks -> does not walk
-  var pres = ts.match('#PresentTense').last();
+  var pres = ts.match('#PresentTense').first();
   if (pres.found) {
     var _vb2 = pres.list[0];
     var _index3 = _vb2.index();
     _vb2.terms[0].text = toInfinitive(_vb2.terms[0]);
+    //some things use 'do not', everything else is 'does not'
+    var noun = ts.getNoun();
+    if (noun.match('(i|we|they|you)').found) {
+      return ts.parentTerms.insertAt(_index3, 'do not', 'Verb');
+    }
     return ts.parentTerms.insertAt(_index3, 'does not', 'Verb');
   }
 
@@ -11960,10 +11965,16 @@ var corrections = function corrections(r) {
   r.match('#Verb than').term(0).tag('Noun', 'correction');
   //her polling
   r.match('#Possessive #Verb').term(1).tag('Noun', 'correction-possessive');
+
   //like
   r.match('just like').term(1).tag('Preposition', 'like-preposition');
   //folks like her
-  r.match('#Noun like #Noun').term(1).tag('Preposition', 'correction');
+  r.match('#Noun like #Noun').term(1).tag('Preposition', 'noun-like');
+  //look like
+  r.match('#Verb like').term(1).tag('Adverb', 'verb-like');
+  //exactly like
+  r.match('#Adverb like').term(1).tag('Adverb', 'adverb-like');
+
   //the threat of force
   r.match('#Determiner #Noun of #Verb').match('#Verb').tag('Noun', 'noun-of-noun');
   //big dreams, critical thinking

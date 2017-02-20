@@ -11,6 +11,10 @@ const methods = {
   normal: function(r) {
     return r.normal;
   },
+  /** even-more normalized than normal */
+  root: function(r) {
+    return r.root || r.normal;
+  },
   /** the &encoded term in a span element, with POS as classNames */
   html: function(r) {
     return renderHtml(r);

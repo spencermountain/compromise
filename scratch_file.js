@@ -36,5 +36,5 @@ nlp.verbose('tagger');
 // console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
 
 // var r = nlp('i look like my buddy');
-var r = nlp('uhm... "Mike Hannigan".').people();
-console.log(r.out('array'));
+var r = nlp('joey and joey\'s').terms();
+console.log(r.out('topk'));

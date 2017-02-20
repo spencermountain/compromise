@@ -36,7 +36,7 @@ const methods = {
   },
   /** no punctuation, fancy business **/
   root: function (ts) {
-    return ts.terms.filter((t) => t.text).map((t) => t.normal).join(' ').toLowerCase();
+    return ts.terms.filter((t) => t.text).map((t) => t.root).join(' ').toLowerCase();
   },
 
   html: function (ts) {

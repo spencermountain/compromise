@@ -4,7 +4,7 @@ const topk = function (r, n) {
   //count occurance
   let count = {};
   r.list.forEach((ts) => {
-    let str = ts.out('normal');
+    let str = ts.out('root');
     count[str] = count[str] || 0;
     count[str] += 1;
   });

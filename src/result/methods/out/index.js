@@ -22,6 +22,11 @@ const methods = {
       return str;
     }).join(' ');
   },
+  root: (r) => {
+    return r.list.map((ts) => {
+      return ts.out('root');
+    }).join(' ');
+  },
   /** output where in the original output string they are*/
   offsets: (r) => {
     return offset(r);
@@ -97,6 +102,8 @@ methods.normalized = methods.normal;
 methods.colors = methods.color;
 methods.tags = methods.terms;
 methods.offset = methods.offsets;
+methods.frequency = methods.topk;
+methods.freq = methods.topk;
 
 const addMethods = (Text) => {
   Text.prototype.out = function(fn) {

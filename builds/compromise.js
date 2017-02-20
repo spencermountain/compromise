@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.15",
+  "version": "7.0.16",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -1040,7 +1040,7 @@ var fns = _dereq_('../fns');
 
 //the unique/uncompressed names..
 var arr = ['abu', 'adolfo', 'anthony', 'arthur', 'billy', 'bobby', 'bob', 'buddy', //ergh
-'bradford', 'bret', 'caleb', 'clifford', 'craig', 'derek', 'doug', 'dwight', 'eli', 'elliot', 'enrique', 'felipe', 'felix', 'francisco', 'frank', 'george', 'glenn', 'greg', 'gregg', 'hans', 'hugh', 'ira', 'isaac', 'kermit', 'leo', 'levi', 'lorenzo', 'percy', 'philip', 'phillip', 'regis', 'rex', 'ricky', 'shaun', 'shaquille', 'shawn', 'steve', 'timothy', 'ty', 'wilbur', 'williams', 'woodrow', 'wolfgang', 'youssef', 'mahmoud', 'mustafa', 'hamza', 'tareq', 'ali', 'beshoi', 'mark', 'habib', 'moussa', 'adama', 'osama', 'abdoulaye', 'modibo', 'mustapha', 'aziz', 'mateo', 'santino', 'davi', 'jacob', 'vicente', 'alonso', 'maximiliano', 'jose', 'jeronimo', 'joshua', 'ajani', 'amir', 'arnav', 'suraj', 'bruno', 'yousouf', 'wei', 'hao', 'yi', 'lei', 'aarav', 'reyansh', 'arjun', 'abulfazl', 'reza', 'kathem', 'ori', 'yosef', 'itai', 'moshe', 'ichika', 'itsuki', 'tatsuki', 'asahi', 'haruki', 'tomoharu', 'yuuma', 'taichi', 'saqib', 'abubakr', 'ergi', 'marc', 'eric', 'enzo', 'pol', 'alex', 'marti', 'jakob', 'paul', 'leevi', 'aputsiaq', 'inunnguaq', 'inuk', 'francesco', 'andrea', 'mattia', 'matteo', 'tommaso', 'nikola', 'ilija', 'marko', 'luka', 'antoni', 'jakub', 'franciszek', 'filip', 'stanislaw', 'mikolaj', 'yusuf', 'berat', 'emir', 'ahmet', 'mehmet', 'leroy', 'roy', 'troy', 'floyd', 'lloyd', 'carl', 'earl', 'karl', 'raul', 'saul', 'earnest', 'ernest', 'forrest', 'arnold', 'harold', 'andrew', 'mathew', 'matthew', 'elliott', 'matt', 'scott', 'marty', 'monty', 'scotty', 'clay', 'jay', 'murray', 'monte', 'pete', 'elwood', 'jarrod', 'claude', 'clyde', 'wade', 'alfredo', 'reynaldo', 'wilfredo', 'clark', 'kirk', 'chase', 'jesse', 'cedric', 'dominic', 'josh', 'rocky', 'rodolfo', 'roosevelt', 'roscoe', 'ross', 'jeff', 'jeremy', 'jerome', 'jess', 'toby', 'todd', 'tom', 'tony', 'darryl', 'daryl', 'dave', 'joe', 'john', 'jorge', 'malcolm', 'marco', 'max', 'alfonso', 'alonzo', 'guillermo', 'gustavo'];
+'bradford', 'bret', 'caleb', 'clifford', 'craig', 'derek', 'doug', 'dwight', 'eli', 'elliot', 'enrique', 'felipe', 'felix', 'francisco', 'frank', 'george', 'glenn', 'greg', 'gregg', 'hans', 'hugh', 'ira', 'isaac', 'kermit', 'leo', 'levi', 'lorenzo', 'percy', 'philip', 'phillip', 'regis', 'rex', 'ricky', 'shaun', 'shaquille', 'shawn', 'steve', 'timothy', 'ty', 'wilbur', 'williams', 'woodrow', 'wolfgang', 'youssef', 'mahmoud', 'mustafa', 'hamza', 'tareq', 'ali', 'beshoi', 'mark', 'moe', 'habib', 'moussa', 'adama', 'osama', 'abdoulaye', 'modibo', 'mustapha', 'aziz', 'mateo', 'santino', 'davi', 'jacob', 'vicente', 'alonso', 'maximiliano', 'jose', 'jeronimo', 'joshua', 'ajani', 'amir', 'arnav', 'suraj', 'bruno', 'yousouf', 'wei', 'hao', 'yi', 'lei', 'aarav', 'reyansh', 'arjun', 'abulfazl', 'reza', 'kathem', 'ori', 'yosef', 'itai', 'moshe', 'ichika', 'itsuki', 'tatsuki', 'asahi', 'haruki', 'tomoharu', 'yuuma', 'taichi', 'saqib', 'abubakr', 'ergi', 'marc', 'eric', 'enzo', 'pol', 'alex', 'marti', 'jakob', 'paul', 'leevi', 'aputsiaq', 'inunnguaq', 'inuk', 'francesco', 'andrea', 'mattia', 'matteo', 'tommaso', 'nikola', 'ilija', 'marko', 'luka', 'antoni', 'jakub', 'franciszek', 'filip', 'stanislaw', 'mikolaj', 'yusuf', 'berat', 'emir', 'ahmet', 'mehmet', 'leroy', 'roy', 'troy', 'floyd', 'lloyd', 'carl', 'earl', 'karl', 'raul', 'saul', 'earnest', 'ernest', 'forrest', 'arnold', 'harold', 'andrew', 'mathew', 'matthew', 'elliott', 'matt', 'scott', 'marty', 'monty', 'scotty', 'clay', 'jay', 'murray', 'monte', 'pete', 'elwood', 'jarrod', 'claude', 'clyde', 'wade', 'alfredo', 'reynaldo', 'wilfredo', 'clark', 'kirk', 'chase', 'jesse', 'cedric', 'dominic', 'josh', 'rocky', 'rodolfo', 'roosevelt', 'roscoe', 'ross', 'jeff', 'jeremy', 'jerome', 'jess', 'toby', 'todd', 'tom', 'tony', 'darryl', 'daryl', 'dave', 'joe', 'john', 'jorge', 'malcolm', 'marco', 'max', 'alfonso', 'alonzo', 'guillermo', 'gustavo'];
 
 //compressed by frequent suffixes
 //comprssed with
@@ -2943,6 +2943,11 @@ var methods = {
       return str;
     }).join(' ');
   },
+  root: function root(r) {
+    return r.list.map(function (ts) {
+      return ts.out('root');
+    }).join(' ');
+  },
   /** output where in the original output string they are*/
   offsets: function offsets(r) {
     return offset(r);
@@ -3018,6 +3023,9 @@ methods.normalized = methods.normal;
 methods.colors = methods.color;
 methods.tags = methods.terms;
 methods.offset = methods.offsets;
+methods.frequency = methods.topk;
+methods.freq = methods.topk;
+methods.arr = methods.array;
 
 var addMethods = function addMethods(Text) {
   Text.prototype.out = function (fn) {
@@ -3075,7 +3083,7 @@ var topk = function topk(r, n) {
   //count occurance
   var count = {};
   r.list.forEach(function (ts) {
-    var str = ts.out('normal');
+    var str = ts.out('root');
     count[str] = count[str] || 0;
     count[str] += 1;
   });
@@ -3117,6 +3125,8 @@ var addMethods = function addMethods(Text) {
 
     /**reorder result.list alphabetically */
     sort: function sort(method) {
+      //default sort
+      method = method || 'alphabetical';
       method = method.toLowerCase();
       if (!method || method === 'alpha' || method === 'alphabetical') {
         return sorter.alpha(this, Text);
@@ -3126,6 +3136,9 @@ var addMethods = function addMethods(Text) {
       }
       if (method === 'length') {
         return sorter.lengthFn(this, Text);
+      }
+      if (method === 'freq' || method === 'frequency') {
+        return sorter.freq(this, Text);
       }
       if (method === 'wordcount') {
         return sorter.wordCount(this, Text);
@@ -3191,15 +3204,15 @@ exports.alpha = function (r) {
     }
     //#2 performance speedup
     if (a.terms[0] && b.terms[0]) {
-      if (a.terms[0].normal > b.terms[0].normal) {
+      if (a.terms[0].root > b.terms[0].root) {
         return 1;
       }
-      if (a.terms[0].normal < b.terms[0].normal) {
+      if (a.terms[0].root < b.terms[0].root) {
         return -1;
       }
     }
     //regular compare
-    if (a.out('normal') > b.out('normal')) {
+    if (a.out('root') > b.out('root')) {
       return 1;
     }
     return -1;
@@ -3240,6 +3253,27 @@ exports.wordCount = function (r) {
     return {
       ts: ts,
       index: ts.length
+    };
+  });
+  r.list = sortEm(tmp);
+  return r;
+};
+
+//sort by frequency (like topk)
+exports.freq = function (r) {
+  //get counts
+  var count = {};
+  r.list.forEach(function (ts) {
+    var str = ts.out('root');
+    count[str] = count[str] || 0;
+    count[str] += 1;
+  });
+  //pre-compute indexes
+  var tmp = r.list.map(function (ts) {
+    var num = count[ts.out('root')] || 0;
+    return {
+      ts: ts,
+      index: num * -1 //quick-reverse it
     };
   });
   r.list = sortEm(tmp);
@@ -9783,6 +9817,10 @@ var methods = {
   normal: function normal(r) {
     return r.normal;
   },
+  /** even-more normalized than normal */
+  root: function root(r) {
+    return r.root || r.normal;
+  },
   /** the &encoded term in a span element, with POS as classNames */
   html: function html(r) {
     return renderHtml(r);
@@ -11212,7 +11250,7 @@ var methods = {
     return ts.terms.filter(function (t) {
       return t.text;
     }).map(function (t) {
-      return t.normal;
+      return t.root;
     }).join(' ').toLowerCase();
   },
 

@@ -7,6 +7,8 @@ const addMethods = (Text) => {
 
     /**reorder result.list alphabetically */
     sort: function (method) {
+      //default sort
+      method = method || 'alphabetical';
       method = method.toLowerCase();
       if (!method || method === 'alpha' || method === 'alphabetical') {
         return sorter.alpha(this, Text);
@@ -16,6 +18,9 @@ const addMethods = (Text) => {
       }
       if (method === 'length') {
         return sorter.lengthFn(this, Text);
+      }
+      if (method === 'freq' || method === 'frequency') {
+        return sorter.freq(this, Text);
       }
       if (method === 'wordcount') {
         return sorter.wordCount(this, Text);

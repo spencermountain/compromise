@@ -104,6 +104,7 @@ methods.tags = methods.terms;
 methods.offset = methods.offsets;
 methods.frequency = methods.topk;
 methods.freq = methods.topk;
+methods.arr = methods.array;
 
 const addMethods = (Text) => {
   Text.prototype.out = function(fn) {

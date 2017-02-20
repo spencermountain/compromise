@@ -62,6 +62,12 @@ module.exports = {
       example: `nlp('Homer, have you been eating that sandwich again?').terms().slice(0, 3).out()
 //Homer, have you`
     },
+    sort: {
+      desc: 'set a new ordering for the sentences/results. Accepts `alphabetical`, `chronological`, `length`, `wordcount`, `frequency`',
+      returns: 'Text',
+      example: `nlp('Larry, Curly, and Moe').people().sort('alphabetical').out('array')
+//Curly, Larry, Moe`
+    },
     concat: {
       desc: 'combine two results into one',
       returns: 'Text',

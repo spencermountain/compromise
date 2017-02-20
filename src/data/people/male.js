@@ -63,6 +63,7 @@ let arr = [
   'ali',
   'beshoi',
   'mark',
+  'moe',
   'habib',
   'moussa',
   'adama',

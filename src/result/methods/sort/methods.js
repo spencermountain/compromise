@@ -24,15 +24,15 @@ exports.alpha = function(r) {
     }
     //#2 performance speedup
     if (a.terms[0] && b.terms[0]) {
-      if (a.terms[0].normal > b.terms[0].normal) {
+      if (a.terms[0].root > b.terms[0].root) {
         return 1;
       }
-      if (a.terms[0].normal < b.terms[0].normal) {
+      if (a.terms[0].root < b.terms[0].root) {
         return -1;
       }
     }
     //regular compare
-    if (a.out('normal') > b.out('normal')) {
+    if (a.out('root') > b.out('root')) {
       return 1;
     }
     return -1;
@@ -73,6 +73,27 @@ exports.wordCount = function(r) {
     return {
       ts: ts,
       index: ts.length
+    };
+  });
+  r.list = sortEm(tmp);
+  return r;
+};
+
+//sort by frequency (like topk)
+exports.freq = function(r) {
+  //get counts
+  let count = {};
+  r.list.forEach((ts) => {
+    let str = ts.out('root');
+    count[str] = count[str] || 0;
+    count[str] += 1;
+  });
+  //pre-compute indexes
+  let tmp = r.list.map((ts) => {
+    let num = count[ts.out('root')] || 0;
+    return {
+      ts: ts,
+      index: num * -1 //quick-reverse it
     };
   });
   r.list = sortEm(tmp);

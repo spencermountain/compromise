@@ -23,12 +23,10 @@ class Person extends Terms {
     this.honorifics = this.match('#Honorific');
     this.lastName = this.match('#LastName+');
     //assume first-last
-    if (!this.firstName && this.length === 2) {
+    if (!this.firstName.found && this.length > 1) {
       let m = this.not('(#Acronym|#Honorific)');
       this.firstName = m.first();
       this.lastName = m.last();
-    } else {
-      // this.lastName = this.match('#Person').list[0];
     }
     return this;
   }
@@ -52,10 +50,12 @@ class Person extends Terms {
       return 'Female';
     }
     //look-for regex clues
-    return guessGender(this.firstName.out('normal'));
+    let str = this.firstName.out('normal');
+    return guessGender(str);
   }
   pronoun() {
-    let g = this.guessGender();
+    let str = this.firstName.out('normal');
+    let g = this.guessGender(str);
     if (g === 'Male') {
       return 'he';
     }

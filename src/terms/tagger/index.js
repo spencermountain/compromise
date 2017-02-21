@@ -19,7 +19,6 @@ const step = {
   date_step: require('./steps/08-date_step'),
   auxillary_step: require('./steps/09-auxillary_step'),
   negation_step: require('./steps/10-negation_step'),
-  adverb_step: require('./steps/11-adverb_step'),
   phrasal_step: require('./steps/12-phrasal_step'),
   comma_step: require('./steps/13-comma_step'),
   possessive_step: require('./steps/14-possessive_step'),
@@ -49,7 +48,6 @@ const tagger = function (ts) {
   ts = step.date_step(ts);
   ts = step.auxillary_step(ts);
   ts = step.negation_step(ts);
-  // ts = step.adverb_step(ts);
   ts = step.phrasal_step(ts);
   ts = step.comma_step(ts);
   ts = step.possessive_step(ts);

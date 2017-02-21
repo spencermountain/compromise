@@ -19,16 +19,8 @@ const addMethods = (Term) => {
       this.tagAs('#TitleCase', 'toTitleCase');
       return this;
     },
-    toCamelCase: function() {
-      this.toTitleCase();
-      let i = this.index();
-      if (i !== 0) {
-        this.whitespace.before = '';
-      }
-      // this.whitespace.after = '';
-      this.tagAs('#CamelCase', 'toCamelCase');
-      return this;
-    },
+    //(camelCase() is handled in `./terms` )
+
     /** is it titlecased because it deserves it? Like a person's name? */
     needsTitleCase: function() {
       const titleCases = [

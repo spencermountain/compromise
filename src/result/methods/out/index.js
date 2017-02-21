@@ -65,7 +65,7 @@ const methods = {
   html: (r) => {
     let html = r.list.reduce((str, ts) => {
       let sentence = ts.terms.reduce((sen, t) => {
-        sen += '\n    ' + t.methods.html();
+        sen += '\n    ' + t.out('html');
         return sen;
       }, '');
       return str += '\n  <span>' + sentence + '\n  </span>';

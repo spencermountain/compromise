@@ -33,3 +33,15 @@ test('out-array:', function (t) {
   t.equal(arr[1], 'do not play', 'do not play #2');
   t.end();
 });
+
+test('out-others:', function (t) {
+  var str = 'texas rangers are a baseball team. They do not play in houston.';
+  var r = nlp(str).verbs();
+  var txt = r.out('text');
+  t.notEqual(r.out('html'), txt, 'html-out');
+  t.notEqual(r.out('grid'), txt, 'grid-out');
+  t.notEqual(r.out('root'), txt, 'grid-out');
+  t.notEqual(r.out('color'), txt, 'color-out');
+  t.notEqual(r.out('tags'), txt, 'tags-out');
+  t.end();
+});

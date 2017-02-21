@@ -98,8 +98,6 @@ r.out('text')
   <a href="https://github.com/nlp-compromise/compromise/wiki/Getting-Started">quickStart</a>
   <span>&nbsp; | &nbsp;</span>
   <a href="http://compromise.cool/docs">docs</a>
-  <span>&nbsp; | &nbsp;</span>
-  <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">accuracy</a>
 </h3>
 <div align="center">
   <b>no training, configuration, or prolog</b>

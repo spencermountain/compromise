@@ -232,7 +232,7 @@ r = nlp('Tony Hawk won').out('html')
 
 **Join in!**
 we're fun, we're using <b>semver</b>, and moving fast.
-*[🛠️ get involved 💃](https://github.com/nlp-compromise/compromise/wiki/Contributing)*
+[get involved](https://github.com/nlp-compromise/compromise/wiki/Contributing)
 
 <table>
   <tr align="center">
@@ -263,9 +263,7 @@ we're fun, we're using <b>semver</b>, and moving fast.
   </tr>
 </table>
 
-<br/>
-
-<div align="center">
+<div align="left">
   <a href="https://www.youtube.com/watch?v=WuPVS2tCg8s">
     <img src="http://img.youtube.com/vi/WuPVS2tCg8s/mqdefault.jpg"/>
   </a>

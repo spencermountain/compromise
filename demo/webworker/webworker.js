@@ -2,6 +2,6 @@
 self.addEventListener('message', function(e) {
   importScripts('../builds/compromise.js');
   var r = self.nlp(e.data);
-  r.toUpperCase();
-  self.postMessage(r.out('html'));
+  var s = r.sentences(0).toUpperCase();
+  self.postMessage(s.out('html'));
 }, false);

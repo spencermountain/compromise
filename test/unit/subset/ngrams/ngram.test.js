@@ -1,5 +1,4 @@
 'use strict';
-
 var test = require('tape');
 var nlp = require('../../lib/nlp');
 
@@ -15,7 +14,6 @@ test('ngram-test:', function (t) {
   t.equal(arr.length, 9, 'ngram-length');
   t.end();
 });
-
 
 test('sort-bigrams:', function (t) {
   let r = nlp('he is strong. he is cool');

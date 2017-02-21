@@ -29,7 +29,7 @@ test('short+long form', function (t) {
   var r2 = nlp('Thurs, feb 2nd, 2016');
   var longer = r2.dates().toLongForm().out('normal');
   t.equal(longer, 'thursday february 2nd 2016');
-  //
+
   // var r2 = nlp('Thurs, feb 2nd, 2016')
   // var longer = r2.dates().toLongForm().out('text')
   // t.equal(longer, 'Thursday, February 2nd, 2016')

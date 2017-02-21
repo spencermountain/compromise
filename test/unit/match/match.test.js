@@ -1,7 +1,5 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
-var str_test = require('../lib/fns').str_test;
-
 
 test('==Match ==', function (T) {
 

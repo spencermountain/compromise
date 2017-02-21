@@ -1,5 +1,6 @@
 var test = require('tape');
 var nlp = require('../../lib/nlp');
+
 //list of famous names taken from https://gate.ac.uk/gate/plugins/ANNIE/resources/gazetteer/
 var tests = {
   'john stewart': 'Male',

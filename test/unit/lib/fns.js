@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 //helpers to make test output messages nicer
 var str_test = function(got, input, want, t) {

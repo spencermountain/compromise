@@ -7,8 +7,6 @@ var terms_test = (r, arr, t) => {
   t.equal(have, arr, msg);
 };
 
-
-
 test('pluck-people :', function (t) {
   [
     ['Sally Daniels went to the park with Don Douglas', ['sally daniels', 'don douglas']],

@@ -1,6 +1,5 @@
 require('shelljs/global');
 config.silent = false;
-var fs = require('fs');
 //use paths, so libs don't need a -g
 var browserify = './node_modules/.bin/browserify';
 var derequire = './node_modules/derequire/bin/cmd.js';

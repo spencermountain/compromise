@@ -6,7 +6,5 @@ if (typeof window !== undefined) {
   nlp = window.nlp;
   alert('browser');
 }
-// var nlp = require('../../builds/compromise');
-// var nlp = require('../../builds/compromise.min');
 
 module.exports = nlp;

@@ -101,7 +101,7 @@ test('==contractions==', function(T) {
       [`how's`, ['how', 'is']],
     ].forEach(function(a) {
       var arr = nlp(a[0]).contractions().expand().out('terms');
-      var got = arr.map(a => a.normal);
+      var got = arr.map(term => term.normal);
       var msg = a[0] + '  - - [' + got.join(', ') + '] should be [' + a[1].join(', ') + ']';
       t.deepEqual(got, a[1], msg);
     });

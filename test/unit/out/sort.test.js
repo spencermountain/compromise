@@ -2,7 +2,6 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 var fns = require('../lib/fns');
 
-
 test('sortAlpha:', function (t) {
   var str = 'John xoo, John fredman, John davis, John fredman,';
   var r = nlp(str);

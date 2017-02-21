@@ -2,21 +2,6 @@
 const log = require('../paths').log;
 const path = 'tagger/organization_step';
 
-const cantBe = [
-  'Verb',
-  'Pronoun',
-  'Determiner',
-  'Adverb',
-  'Possessive',
-  'Conjunction',
-  'Preposition',
-  'Adjective',
-  'QuestionWord',
-  'Value',
-  'Negative',
-  'Comma',
-];
-
 //orgwords like 'bank' in 'Foo Bank'
 let orgWords = require('../paths').data.orgWords;
 orgWords = orgWords.reduce((h, str) => {

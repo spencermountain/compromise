@@ -3,7 +3,6 @@ var nlp = require('../lib/nlp');
 var docs = require('../../../docs/api');
 var freshPrince = require('../lib/freshPrince');
 
-
 test('generic-methods-run:', function (t) {
 
   const getters = {

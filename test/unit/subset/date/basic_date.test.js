@@ -1,7 +1,5 @@
 var test = require('tape');
 var nlp = require('../../lib/nlp');
-// var str_test = require('../../fns').str_test;
-
 
 test('date-parse :', function(t) {
   [

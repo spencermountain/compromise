@@ -22,6 +22,5 @@ test('start-sizes:', function (t) {
   t.equal(arr[0].normal, 'he is', 'sorted-by-freq');
   t.equal(arr[0].count, 2, 'normalized-counted');
   t.equal(arr[0].size, 2, 'normalized-counted');
-  // t.equal(arr.length, 2, 'list-results-total');
   t.end();
 });

@@ -38,17 +38,15 @@ var run = function() {
 
 run();
 
-var options = {
-  interval: 1
-};
-gaze(['./scripts/watch.js', './src/**/*.js', './scratch_file.js'], options, function(err, watcher) {
-  var watched = this.watched();
+gaze(['./scripts/watch.js', './src/**/*.js', './scratch_file.js'], options, function(err) {
+  if (err) {
+    console.log(err);
+  }
   this.on('added', function(filepath) {
     console.log(filepath + ' was added');
   });
   // // On changed/added/deleted
-  this.on('all', function(event, filepath) {
+  this.on('all', function() {
     run();
-  // console.log(filepath + ' was ' + event);
   });
 });

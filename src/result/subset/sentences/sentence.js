@@ -1,6 +1,7 @@
 'use strict';
 const Terms = require('../../paths').Terms;
 const toNegative = require('./toNegative');
+const toPositive = require('./toPositive');
 const Verb = require('../verbs/verb');
 const insert = require('./smartInsert');
 
@@ -26,7 +27,7 @@ class Sentence extends Terms {
     return this;
   }
 
-  //returns a Term object
+  /** find the first important verbPhrase. returns a Term object */
   mainVerb() {
     let terms = this.match('(#Adverb|#Auxillary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
     if (terms.found) {
@@ -75,7 +76,6 @@ class Sentence extends Terms {
   isNegative() {
     return this.match('#Negative').list.length === 1;
   }
-  /** negate the main/first copula*/
   toNegative() {
     if (this.isNegative()) {
       return this;
@@ -83,9 +83,13 @@ class Sentence extends Terms {
     return toNegative(this);
   }
   toPositive() {
-    this.match('#Negative').first().delete();
-    return this;
+    if (!this.isNegative()) {
+      return this;
+    }
+    return toPositive(this);
   }
+
+  /** smarter insert methods*/
   append(str) {
     return insert.append(this, str);
   }
@@ -93,6 +97,7 @@ class Sentence extends Terms {
     return insert.prepend(this, str);
   }
 
+  /** punctuation */
   setPunctuation(punct) {
     let last = this.terms[this.terms.length - 1];
     last.setPunctuation(punct);
@@ -103,8 +108,7 @@ class Sentence extends Terms {
   }
   /** look for 'was _ by' patterns */
   isPassive() {
-    //haha
-    return this.match('was #Adverb? #PastTense #Adverb? by').found;
+    return this.match('was #Adverb? #PastTense #Adverb? by').found; //haha
   }
 }
 module.exports = Sentence;

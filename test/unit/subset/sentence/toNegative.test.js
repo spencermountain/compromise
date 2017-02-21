@@ -68,30 +68,30 @@ test('==negation==', function(T) {
     t.end();
   });
 
-// T.test('sentence un-negate:', function(t) {
-//   [
-//     //copula-sentences
-//     [`john is not good`, `john is good`],
-//     [`they are not good`, `they are good`],
-//     [`they wo not be good`, `they will be good`],
-//     //different verb tenses
-//     // [`he walks`, `he does not walk`],
-//     // [`he walked`, `he did not walk`],
-//     [`he did not walk`, `he did walk`],
-//     [`he does not walk`, `he does walk`],
-//
-//     [`he has not walked`, `he has walked`],
-//     [`he wo not have walked`, `he will have walked`],
-//     [`he is not walking`, `he is walking`],
-//     // //logical negations
-//     ['john always walks', 'john never walks'],
-//     ['john always walks quickly', 'john never walks quickly'],
-//     // ['everybody walks quickly', 'nobody walks quickly'],
-//
-//   ].forEach(function (a) {
-//     var str = nlp(a[0]).sentences().toPositive().out('text');
-//     str_test(str, a[0], a[1], t);
-//   });
-//   t.end();
-// });
+  T.test('sentence un-negate:', function(t) {
+    [
+      //copula-sentences
+      [`john is not good`, `john is good`],
+      [`they are not good`, `they are good`],
+      [`they will not be good`, `they will be good`],
+      //different verb tenses
+      // [`he walks`, `he does not walk`],
+      // [`he walked`, `he did not walk`],
+      [`he did not walk`, `he did walk`],
+      [`he does not walk`, `he does walk`],
+
+      [`he has not walked`, `he has walked`],
+      [`he will not have walked`, `he will have walked`],
+      [`he is not walking`, `he is walking`],
+      // //logical negations
+      ['john never walks', 'john always walks'],
+      ['john never walks quickly', 'john always walks quickly'],
+      // ['everybody walks quickly', 'nobody walks quickly'],
+
+    ].forEach(function (a) {
+      var str = nlp(a[0]).sentences().toPositive().out('text');
+      str_test(str, a[0], a[1], t);
+    });
+    t.end();
+  });
 });

@@ -142,10 +142,10 @@ r.places().sort('freq').unique().data()
 ```
 <table align="center">
   <tr>
-    <td>Part-of-Speech Tagging️💪</td>
-    <td>Named-Entity Recognition❇️️</td>
-    <td>Verb Conjugation🍾</td>
-    <td>Inflection/Pluralization✨</td>
+    <td>Part-of-Speech Tagging️</td>
+    <td>Named-Entity Recognition️</td>
+    <td>🍾Verb Conjugation</td>
+    <td>✨Inflection/Pluralization</td>
   </tr>
 </table>
 

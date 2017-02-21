@@ -8,7 +8,7 @@
     <img src="https://img.shields.io/npm/v/compromise.svg?style=flat-square" />
   </a>
   <a href="https://nodejs.org/api/documentation.html#documentation_stability_index">
-    <img src="https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square" />
+    <img src="https://img.shields.io/badge/stability-stable-green.svg?style=flat-square" />
   </a>
 </div>
 
@@ -41,15 +41,15 @@
 <div align="center">
   💥Welcome to <b>v7</b>💥
   <div>
-    <a href="https://github.com/nlp-compromise/compromise/wiki/v7-upgrade-instructions">a lot</a>
+    <a href="https://github.com/nlp-compromise/compromise/wiki/v7-Upgrade,-welcome">a lot</a>
     has changed!
   </div>
 </div>
 
 ```javascript
 let r = nlp('I look just like buddy holly.')
-  r.sentences().toPastTense()
-  r.out('text')
+r.sentences().toPastTense()
+r.out('text')
 // "I looked just like buddy holly."
 ```
 
@@ -59,7 +59,7 @@ let r = nlp('I look just like buddy holly.')
       <td align="center">
         <b>
           <a href="https://unpkg.com/compromise@latest/builds/compromise.min.js">
-            200k
+            220k
           </a>
         </b>
         <div>
@@ -93,11 +93,11 @@ let r = nlp('I look just like buddy holly.')
   </table>
 </div>
 <h3 align="center">
-  <a href="http://nlpcompromise.com">demos</a>
+  <a href="http://compromise.cool/demos">demos</a>
   <span>&nbsp; | &nbsp;</span>
   <a href="https://github.com/nlp-compromise/compromise/wiki/Getting-Started">quickStart</a>
   <span>&nbsp; | &nbsp;</span>
-  <a href="https://github.com/nlp-compromise/compromise/wiki/API">docs</a>
+  <a href="http://compromise.cool/docs">docs</a>
   <span>&nbsp; | &nbsp;</span>
   <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">accuracy</a>
 </h3>
@@ -140,15 +140,12 @@ r.places().sort('freq').unique().data()
   {text: 'desert island'},
 ]*/
 ```
-<div align="center">
-&nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗
-</div>
 <table align="center">
   <tr>
-    <td>Part-of-Speech Tagging</td>
-    <td>Named-Entity Recognition</td>
-    <td>Verb Conjugation</td>
-    <td>Inflection/Pluralization</td>
+    <td>Part-of-Speech Tagging️💪</td>
+    <td>Named-Entity Recognition❇️️</td>
+    <td>Verb Conjugation🍾</td>
+    <td>Inflection/Pluralization✨</td>
   </tr>
 </table>
 
@@ -222,14 +219,15 @@ r.topics().data()
 r = nlp('Tony Hawk won').out('html')
 /*
 <span>
-  <span class="Person Noun MalePerson">Tony Hawk</span>
+  <span class="nl-Person nl-Noun nl-FirstName">Tony</span>
+  <span class="nl-Person nl-Noun nl-LastName">Hawk</span>
   <span>&nbsp;</span>
-  <span class="Verb PastTense">won</span>
+  <span class="nl-Verb nl-PastTense">won</span>
 </span>
 */
 ```
 <h3 align="center">
-  and yes, ofcourse, there's <a href="https://github.com/nlp-compromise/compromise/wiki/API">a lot more stuff</a>.
+  and yes, ofcourse, there's <a href="http://compromise.cool/demos">a lot more stuff</a>.
 </h3>
 
 **Join in!**

@@ -32,13 +32,13 @@ var banner = function() {
 
 var run = function() {
   console.log(banner());
-  exec('node ./scratch_file.js --debug --color');
+  exec('node ./scratch.js --debug --color');
   console.log('\n\n\n\n\n\n\n');
 };
 
 run();
 
-gaze(['./scripts/watch.js', './src/**/*.js', './scratch_file.js'], options, function(err) {
+gaze(['./scripts/watch.js', './src/**/*.js', './scratch.js'], options, function(err) {
   if (err) {
     console.log(err);
   }

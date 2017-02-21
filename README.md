@@ -39,7 +39,7 @@
 <br/>
 
 <div align="center">
-  📯Welcome to <b>v7</b>📯
+  📯 Welcome to <b>v7</b> 📯
   <div>
     <a href="https://github.com/nlp-compromise/compromise/wiki/v7-Upgrade,-welcome">a lot</a>
     has changed!
@@ -266,10 +266,6 @@ we're fun, we're using <b>semver</b>, and moving fast.
 <br/>
 
 <div align="center">
-  <a href="https://www.youtube.com/watch?v=tk_JGu2AbJY">
-    <img src="http://img.youtube.com/vi/tk_JGu2AbJY/mqdefault.jpg"/>
-  </a>
-  <span> &nbsp; </span>
   <a href="https://www.youtube.com/watch?v=WuPVS2tCg8s">
     <img src="http://img.youtube.com/vi/WuPVS2tCg8s/mqdefault.jpg"/>
   </a>

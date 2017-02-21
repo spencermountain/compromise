@@ -21,4 +21,4 @@ const nlp = require('./src/index');
 // console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
 
 var r = nlp('Larry, Curly, and Moe').terms().people().sort();
-console.log(r.out('html'));
+console.log(r.out('array'));

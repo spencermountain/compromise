@@ -6,14 +6,14 @@
     "ecmaVersion": 6,
     "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": false
     },
   },
   "rules": {
     "no-cond-assign": 2,
-    "no-var": 0,
+    "no-var": 1,
     "prefer-const": 0,
-    "no-extra-parens": 0,
+    "no-extra-parens": 1,
     "no-dupe-keys": 2,
     "no-unreachable": 2,
     "eqeqeq": 1,

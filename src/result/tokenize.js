@@ -58,7 +58,7 @@ const sentence_parser = function (text) {
   for (let i = 0; i < chunks.length; i++) {
     //should this chunk be combined with the next one?
     if (chunks[i + 1] && (chunks[i].match(abbrev_reg) || chunks[i].match(acronym_reg) || chunks[i].match(elipses_reg))) {
-      chunks[i + 1] = (chunks[i] + (chunks[i + 1] || '')); //.replace(/ +/g, ' ');
+      chunks[i + 1] = chunks[i] + (chunks[i + 1] || '');
     } else if (chunks[i] && chunks[i].length > 0) { //this chunk is a proper sentence..
       sentences.push(chunks[i]);
       chunks[i] = '';

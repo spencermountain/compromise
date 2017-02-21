@@ -11,7 +11,7 @@ module.exports = {
   },
   here: (path) => {
     if (enable === true || enable === path) {
-      console.log('  ' + (path));
+      console.log('  ' + path);
     }
   },
   tell: (str, path) => {
@@ -19,7 +19,7 @@ module.exports = {
       if (typeof str === 'object') {
         str = JSON.stringify(str);
       }
-      str = '    ' + (str);
+      str = '    ' + str;
       console.log(str);
     }
   },

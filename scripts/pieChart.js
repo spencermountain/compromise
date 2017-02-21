@@ -4,6 +4,9 @@ config.silent = false;
 var browserify = './node_modules/.bin/browserify';
 var derequire = './node_modules/derequire/bin/cmd.js';
 
+//haha-engineering
+exec('npm i uglifyify');
+
 exec('rm -rf ./viz');
 exec('mkdir viz');
 

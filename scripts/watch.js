@@ -1,6 +1,8 @@
 require('shelljs/global');
 var gaze = require('gaze');
 var chalk = require('chalk');
+//this is a nice way to 'hot-reload' compromise, while debugging something from ./scratch.js
+
 var options = {
   interval: 1,
   ignoreDotFiles: true,

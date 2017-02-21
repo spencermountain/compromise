@@ -28,6 +28,20 @@ test('garbage:', function (t) {
   t.end();
 });
 
+test('extra exports:', function (t) {
+  t.ok(nlp.version, 'version number exported');
+
+  t.doesNotThrow(() => {
+    nlp.verbose(true);
+    nlp.verbose(false);
+  }, 'can set verbosity');
+
+  var keys = Object.keys(nlp.lexicon());
+  t.ok(keys.length > 1000, 'lexicon is found');
+
+  t.end();
+});
+
 test('misc:', function (t) {
   var str = '2 million five hundred thousand and fifty nine is bigger than 2882';
   var m = nlp(str);

@@ -4,7 +4,10 @@ let enable = false;
 
 module.exports = {
   enable: (str) => {
-    enable = str || true;
+    if (str === undefined) {
+      str = true;
+    }
+    enable = str;
   },
   here: (path) => {
     if (enable === true || enable === path) {

@@ -45,6 +45,17 @@ test('length:', function (t) {
   t.end();
 });
 
+test('wordCount:', function (t) {
+  var str = 'John Fredman, Amy, Dr. Bill G. Gates';
+  var r = nlp(str);
+  r = r.people();
+  r.sort('wordCount');
+  r.reverse();
+  var want = ['dr bill g gates', 'john fredman', 'amy'];
+  fns.arr_test(r.out('array'), str, want, t);
+  t.end();
+});
+
 test('unique:', function (t) {
   var str = 'John xoo, John fredman, john xoo, John davis';
   var r = nlp(str);
@@ -55,11 +66,11 @@ test('unique:', function (t) {
   t.end();
 });
 
-// test('topk:', function (t) {
-//   var str = 'John xoo, John fredman, john xoo, John davis';
-//   var r = nlp(str).people();
-//   var a = r.topk();
-//   t.equal(a[0].normal, 'john xoo', 'topk is sorted');
-//   t.equal(a[0].count, 2, 'topk finds two');
-//   t.end();
-// });
+test('frequency:', function (t) {
+  var str = 'John xoo, John fredman, john xoo, John davis';
+  var r = nlp(str).people();
+  var a = r.out('frequency');
+  t.equal(a[0].normal, 'john xoo', 'topk is sorted');
+  t.equal(a[0].count, 2, 'topk finds two');
+  t.end();
+});

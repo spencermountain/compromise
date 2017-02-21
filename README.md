@@ -39,7 +39,7 @@
 <br/>
 
 <div align="center">
-  💥Welcome to <b>v7</b>💥
+  📯Welcome to <b>v7</b>📯
   <div>
     <a href="https://github.com/nlp-compromise/compromise/wiki/v7-Upgrade,-welcome">a lot</a>
     has changed!

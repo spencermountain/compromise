@@ -27,10 +27,6 @@
 </div>
 
 <div align="center">
-  <code>npm install compromise</code>
-</div>
-
-<div align="center">
   inspect and play with english text.
   <div>
     focus on being <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">handy, and not overly-fancy.</a>

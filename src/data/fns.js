@@ -1,6 +1,5 @@
 'use strict';
 
-
 //shallow-merge an object
 exports.extendObj = (o, o2) => {
   Object.keys(o2).forEach((k) => {
@@ -8,7 +7,6 @@ exports.extendObj = (o, o2) => {
   });
   return o;
 };
-
 
 //uncompress data in the adhoc compressed form {'ly':'kind,quick'}
 exports.uncompress_suffixes = function(list, obj) {
@@ -22,6 +20,7 @@ exports.uncompress_suffixes = function(list, obj) {
   }
   return list;
 };
+
 //uncompress data in the adhoc compressed form {'over':'blown,kill'}
 exports.uncompress_prefixes = function(list, obj) {
   let keys = Object.keys(obj);

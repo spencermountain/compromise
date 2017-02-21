@@ -29,11 +29,5 @@ module.exports = {
       title = fns.leftPad(title, 54);
       console.log('       ' + title + '(' + fns.cyan(reason || '') + ')');
     }
-  },
-  match: (t, reason) => {
-    console.log('       ' + ('-match-') + '  \'' + (t.normal) + '\'  -  ' + reason);
-  },
-  noMatch(t) {
-    console.log('               ' + ('-die \'' + t.normal + '\''));
   }
 };

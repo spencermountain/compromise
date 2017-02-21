@@ -19,12 +19,6 @@ if (typeof module === 'undefined') {
   });
 }
 
-// typeof obj == "function" also works
-// but not in older browsers. :-/
-exports.isFunction = function (obj) {
-  return Object.prototype.toString.call(obj) === '[object Function]';
-};
-
 //coerce any input into a string
 exports.ensureString = (input) => {
   if (typeof input === 'string') {
@@ -84,20 +78,6 @@ exports.copy = (o) => {
   return o2;
 };
 
-//shallow-merge an object
-exports.extend = (o, o2) => {
-  if (!o) {
-    return o2;
-  }
-  if (!o2) {
-    return o;
-  }
-  Object.keys(o2).forEach((k) => {
-    o[k] = o2[k];
-  });
-  return o;
-};
-
 //colorization
 exports.green = function(str) {
   return c.green + str + c.reset;
@@ -135,15 +115,6 @@ exports.printTerm = function(t) {
     }
   }
   return c.reset + t.plaintext + c.reset;
-};
-
-exports.rightPad = function (str, width, char) {
-  char = char || ' ';
-  str = str.toString();
-  while (str.length < width) {
-    str += char;
-  }
-  return str;
 };
 
 exports.leftPad = function (str, width, char) {

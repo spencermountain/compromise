@@ -2,7 +2,6 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 var pos_test = require('../lib/fns').pos_test;
 
-
 test('default lexicon:', function (t) {
   [
     ['great', 'Adjective'],

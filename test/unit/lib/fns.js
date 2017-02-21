@@ -1,8 +1,17 @@
 'use strict';
 
+var pad = function (str, width, char) {
+  char = char || '.';
+  str = str.toString();
+  while (str.length < width) {
+    str += char;
+  }
+  return str;
+};
+
 //helpers to make test output messages nicer
 var str_test = function(got, input, want, t) {
-  var msg = '\'-> - - -> \'' + got + '\'- - - - (want: \'' + want + '\' )'; //'\'' + input +
+  var msg = pad('\'' + got + '\'', 20) + '(want: \'' + want + '\' )'; //'\'' + input +
   t.equal(got, want, msg);
   return;
 };
@@ -10,7 +19,7 @@ var str_test = function(got, input, want, t) {
 var arr_test = function(got, input, want, t) {
   got = JSON.stringify(got);
   want = JSON.stringify(want);
-  var msg = '\'-> - - -> \'' + got + '\'- - - - (want: \'' + want + '\' )'; //'\'' + input +
+  var msg = pad('\'' + got + '\'') + ' (want: \'' + want + '\' )'; //'\'' + input +
   t.equal(got, want, msg);
   return;
 };
@@ -34,9 +43,9 @@ var pos_test = function(r, tags, t) {
   var got = r.terms().list.map(function(ts) {
     let term = ts.terms[0];
     str += ' ' + term.normal;
-    return Object.keys(term.tag).join('|');
+    return Object.keys(term.tag)[0];
   }).join(', ');
-  var msg = '"' + str.trim() + '" has tags [' + tags.join(',') + ']   (' + got + ')';
+  var msg = pad('"' + str.trim() + '"', 30) + pad(tags.join(', '), 45) + got;
   t.equal(has_pos(r, tags), true, msg);
   return;
 };
@@ -50,7 +59,7 @@ var terms_test = function(terms, want, t, isText) {
     }
     return term.normal;
   });
-  var msg = '"' + str + '"  got: [' + got.join(',') + ']  want: [' + want.join(',') + ']';
+  var msg = pad('"' + str + '"', 38) + ' got: [' + got.join(',') + ']  want: [' + want.join(',') + ']';
   t.deepEqual(got, want, msg);
 };
 

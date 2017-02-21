@@ -46,7 +46,6 @@ test('==negation==', function(T) {
       ['john always walks quickly', 'john never walks quickly'],
       ['everybody walks quickly', 'nobody walks quickly'],
 
-
       [`has played`, `has not played`],
       [`he has played`, `he has not played`],
       [`spencer is playing`, `spencer is not playing`],
@@ -75,8 +74,10 @@ test('==negation==', function(T) {
       [`they are not good`, `they are good`],
       [`they will not be good`, `they will be good`],
       //different verb tenses
-      // [`he walks`, `he does not walk`],
-      // [`he walked`, `he did not walk`],
+      [`he does not walk`, `he does walk`],
+      [`he did not walk`, `he did walk`],
+      [`he is not walking`, `he is walking`],
+      [`he has not been walking`, `he has been walking`],
       [`he did not walk`, `he did walk`],
       [`he does not walk`, `he does walk`],
 
@@ -86,8 +87,7 @@ test('==negation==', function(T) {
       // //logical negations
       ['john never walks', 'john always walks'],
       ['john never walks quickly', 'john always walks quickly'],
-      // ['everybody walks quickly', 'nobody walks quickly'],
-
+    // ['everybody walks quickly', 'nobody walks quickly'],
     ].forEach(function (a) {
       var str = nlp(a[0]).sentences().toPositive().out('text');
       str_test(str, a[0], a[1], t);

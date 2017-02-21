@@ -10,7 +10,6 @@ test('bestTag', function (t) {
   msg = str + ' - [' + have.join(', ') + ']';
   t.deepEqual(have, want, msg);
 
-
   str = 'he sang on June 5th 1991';
   m = nlp(str);
   have = m.terms().data().map(o => o.bestTag);

@@ -1,6 +1,6 @@
 var test = require('tape');
-var nlp = require('../../lib/nlp');
-var pos_test = require('../../lib/fns').pos_test;
+var nlp = require('../lib/nlp');
+var pos_test = require('../lib/fns').pos_test;
 
 test('=Tagger=', function(T) {
 
@@ -8,10 +8,10 @@ test('=Tagger=', function(T) {
     [
       ['John is pretty', ['Person', 'Copula', 'Adjective']],
       ['John was lofty', ['Person', 'Copula', 'Adjective']],
-      ['John Smith was lofty', ['Person', 'Copula', 'Adjective']],
+      ['John Smith was lofty', ['FirstName', 'LastName', 'Copula', 'Adjective']],
       ['asdfes was lofty', ['Noun', 'Copula', 'Adjective']],
       ['asdfes lksejfj was lofty', ['Noun', 'Copula', 'Adjective']],
-      ['Spencer Kelly is in Canada', ['Person', 'Copula', 'Preposition', 'Place']],
+      ['Spencer Kelly is in Canada', ['Person', 'Person', 'Copula', 'Preposition', 'Place']],
       ['He is in Canada', ['Pronoun', 'Copula', 'Preposition', 'Place']],
       ['5 red roses', ['Value', 'Adjective', 'Noun']],
       // ['3 trains', ['Value', 'Noun']],
@@ -25,10 +25,10 @@ test('=Tagger=', function(T) {
       ['canadian bacon', ['Demonym', 'Noun']],
       ['canadian dollar', ['Currency']],
       //possessive rules
-      ['bill lkjsdf\'s', ['Person']],
-      ['bill lkjsdf\'s house', ['Person', 'Noun']],
-      ['Bill Lkjsdf\'s house', ['Person', 'Noun']],
-      ['Bill Lkjsdf\'s House', ['Person', 'Noun']],
+      ['bill lkjsdf\'s', ['FirstName', 'Person']],
+      ['bill lkjsdf\'s house', ['FirstName', 'Person', 'Noun']],
+      ['Bill Lkjsdf\'s house', ['FirstName', 'Person', 'Noun']],
+      ['Bill Lkjsdf\'s House', ['FirstName', 'Person', 'Noun']],
       //question
       ['who is good?', ['Question', 'Copula', 'Adjective']],
       ['which is good?', ['Question', 'Copula', 'Adjective']],
@@ -57,7 +57,7 @@ test('=Tagger=', function(T) {
     // ['',[]],
     // ['',[]],
     ].forEach(function (a) {
-      var terms = nlp(a[0]).terms().data();
+      var terms = nlp(a[0]).terms(); //.data();
       pos_test(terms, a[1], t);
     });
     t.end();

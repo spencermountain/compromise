@@ -5,6 +5,15 @@ test('organization test', function(t) {
   var arr = [
     'google',
     'google inc',
+    'Capital One',
+    'HSBC',
+    'NASA',
+    '7-eleven',
+    'al qaeda',
+    'FBI',
+    'monsanto',
+    'Johnson & Johnson',
+  // 'Johnson & Johnson LLC',
   ];
   arr.forEach(function (str) {
     var r = nlp(str);

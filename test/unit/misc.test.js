@@ -1,13 +1,14 @@
 var test = require('tape');
 var nlp = require('./lib/nlp');
 
-var garbage = [
-  '',
-  '  ',
-  null,
-  '\n\n', [], {},
-];
+//make sure it can handle garbage inputs
 test('garbage:', function (t) {
+  var garbage = [
+    '',
+    '  ',
+    null,
+    '\n\n', [], {},
+  ];
   garbage.forEach(function (g, i) {
     var num = nlp(g).list.length;
     var msg = (typeof g) + ' text input #' + i;
@@ -32,11 +33,11 @@ test('misc:', function (t) {
   m.values().toTextValue();
   t.equal(m.out('normal'), 'doug is five years old', str);
 
-  var r=nlp('Homer, have you been eating that sandwich again?').terms().slice(0, 3)
-  t.equal(r.out('text'),'Homer, have you','result.slice')
+  var r = nlp('Homer, have you been eating that sandwich again?').terms().slice(0, 3);
+  t.equal(r.out('text'), 'Homer, have you', 'result.slice');
 
   // str = 'men go';
-  // m = nlp(str).sentences().toPast().nouns().toSingular();
+  // m = nlp(str).sentences().toPastTense().nouns().toSingular();
   // t.equal(m.out('normal'), 'a man went', str);
   t.end();
 });

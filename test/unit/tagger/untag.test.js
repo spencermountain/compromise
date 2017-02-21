@@ -33,8 +33,6 @@ test('untag inference:', function (t) {
   t.end();
 });
 
-
-
 test('tag idempodence:', function (t) {
   var m = nlp('walk').tag('Verb');
   var term = m.list[0].terms[0];
@@ -49,7 +47,6 @@ test('tag idempodence:', function (t) {
   t.equal(term.tag.Value, undefined, 'walk has no Value after');
   t.end();
 });
-
 
 test('tags are self-removing', function (t) {
   var terms = [

@@ -19,3 +19,9 @@
 
 //bug 5. - would not
 // nlp('I would like that').sentences(0).toNegative().debug()
+
+//bug 6. - inline clone
+//nlp('parent should not be uppercase').clone().toUpperCase().parent.debug()
+
+//bug 7. - adds 'a' when making singular
+nlp('men go').sentences().toPastTense().nouns().toSingular().debug();

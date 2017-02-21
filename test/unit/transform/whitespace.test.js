@@ -15,6 +15,5 @@ test('sanity-check case:', function (t) {
   m.people().whitespace.after('  ');
   t.equal(m.out('text'), 'so  john smith   is cool.');
 
-
   t.end();
 });

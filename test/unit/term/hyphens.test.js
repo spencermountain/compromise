@@ -34,12 +34,10 @@ test('hyphenate', function (t) {
   m.dehyphenate();
   t.equal(m.out('text'), str, 'dehyphenate');
 
-
-  str = 'i payed seven-hundred for the back-rub';
+  str = 'i payed seven-hundred for the sandwich';
   m = nlp(str);
   m.values().dehyphenate();
-  t.equal(m.out('text'), 'i payed seven hundred for the back-rub', 'dehyphenate-values');
-
+  t.equal(m.out('text'), 'i payed seven hundred for the sandwich', 'dehyphenate-values');
 
   str = 'he is the king of rock. she is the queen of cool.';
   m = nlp(str);

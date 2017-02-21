@@ -2,7 +2,6 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 var str_test = require('../lib/fns').str_test;
 
-
 test('sentence():', function(t) {
   [
     ['he is good', 'he is good'],
@@ -13,13 +12,11 @@ test('sentence():', function(t) {
     ['Joe', 'joe'],
     ['just-right', 'just right'],
     ['camel', 'camel'],
-    // ['4', '4'],
-    // ['four', '4'],
+    ['4', '4'],
+    ['four', 'four'],
     ['john smith', 'john smith'],
-    // ['John G. Smith','John Smith'],
-    // ['Dr. John Smith-McDonald', 'john smith mcdonald'],
-
-  // ['Contains no fruit juice \n\n All rights reserved', 'contains no fruit juice. all rights reserved'],
+    ['Dr. John Smith-McDonald', 'dr john smith mcdonald'],
+    ['Contains no fruit juice. \n\n All rights reserved', 'contains no fruit juice. all rights reserved'],
   ].forEach(function (a) {
     var str = nlp(a[0]).out('normal');
     str_test(str, a[0], a[1], t);

@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <script src="../../builds/compromise.js"></script>
+</head>
+<body>
+  hi
+</body>
+<script>
+setTimeout(()=>{
+  setTimeout(()=>{
+    console.time('parse')
+    let m = nlp('spencer kelly and dr. spencer kelly');
+    console.timeEnd('parse')
+    setTimeout(()=>{
+      console.time('match')
+      console.log(m.match('#Noun').out('normal'))
+      console.timeEnd('match')
+    },2000)
+  },2000)
+
+},2000)
+</script>
+</html>

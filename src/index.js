@@ -1,109 +1,39 @@
 'use strict';
-const fns = require('./fns.js');
+const buildResult = require('./result/build');
+const pkg = require('../package.json');
+const log = require('./log');
 
-let models = {
-  Term : require('./term/term.js'),
-  Text : require('./text/text.js'),
-  Sentence : require('./sentence/sentence.js'),
-  Statement : require('./sentence/statement/statement.js'),
-  Question : require('./sentence/question/question.js'),
-  Verb : require('./term/verb/verb.js'),
-  Adjective : require('./term/adjective/adjective.js'),
-  Adverb : require('./term/adverb/adverb.js'),
-  Noun : require('./term/noun/noun.js'),
-  Value : require('./term/noun/value/value.js'),
-  Person : require('./term/noun/person/person.js'),
-  Place : require('./term/noun/place/place.js'),
-  Date : require('./term/noun/date/date.js'),
-  Organization : require('./term/noun/organization/organization.js')
+//the main thing
+const nlp = function (str, lexicon, tagSet) {
+  return buildResult(str, lexicon, tagSet);
 };
 
-function NLP() {
+//this is handy
+nlp.version = pkg.version;
 
-  this.plugin = function(obj) {
-    obj = obj || {};
-    // if obj is a function, pass it an instance of this nlp library
-    if (fns.isFunction(obj)) {
-      // run it in this current context
-      obj = obj.call(this, this);
-    }
-    //apply each plugin to the correct prototypes
-    Object.keys(obj).forEach(function(k) {
-      Object.keys(obj[k]).forEach(function(method) {
-        models[k].prototype[method] = obj[k][method];
-      });
-    });
-  };
-  this.lexicon = function(obj) {
-    obj = obj || {};
-    let lex = require('./lexicon.js');
+//so handy at times
+nlp.lexicon = function() {
+  return require('./data/lexicon');
+};
 
-    Object.keys(obj).forEach(function(k) {
-      lex[k] = obj[k];
-    });
+//also this is much handy
+nlp.verbose = function(str) {
+  log.enable(str);
+};
 
-    return lex;
-  };
-
-  this.term = function(s) {
-    return new models.Term(s);
-  };
-  this.noun = function(s) {
-    return new models.Noun(s);
-  };
-  this.verb = function(s) {
-    return new models.Verb(s);
-  };
-  this.adjective = function(s) {
-    return new models.Adjective(s);
-  };
-  this.adverb = function(s) {
-    return new models.Adverb(s);
-  };
-
-  this.value = function(s) {
-    return new models.Value(s);
-  };
-  this.person = function(s) {
-    return new models.Person(s);
-  };
-  this.place = function(s) {
-    return new models.Place(s);
-  };
-  this.date = function(s) {
-    return new models.Date(s);
-  };
-  this.organization = function(s) {
-    return new models.Organization(s);
-  };
-
-  this.text = function(s, options) {
-    return new models.Text(s, options);
-  };
-  this.sentence = function(s, options) {
-    return new models.Sentence(s, options);
-  };
-  this.statement = function(s) {
-    return new models.Statement(s);
-  };
-  this.question = function(s) {
-    return new models.Question(s);
-  };
+//and then all-the-exports...
+if (typeof self !== 'undefined') {
+  self.nlp = nlp; // Web Worker
+} else if (typeof window !== 'undefined') {
+  window.nlp = nlp; // Browser
+} else if (typeof global !== 'undefined') {
+  global.nlp = nlp; // NodeJS
 }
-
-let nlp = new NLP();
-//export to window or webworker
-if (typeof window === 'object' || typeof DedicatedWorkerGlobalScope === 'function') {
-  const self = typeof self === 'undefined' ? this : self; // eslint-disable-line no-use-before-define
-  self.nlp_compromise = nlp;
-}
-//export to commonjs
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = nlp;
-}
-//export to amd
+//don't forget amd!
 if (typeof define === 'function' && define.amd) {
   define(nlp);
 }
-
-// console.log(nlp.verb('played').conjugate());
+//then for some reason, do this too!
+if (typeof module !== 'undefined') {
+  module.exports = nlp;
+}

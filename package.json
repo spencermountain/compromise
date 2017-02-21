@@ -1,41 +1,43 @@
 {
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
-  "name": "nlp_compromise",
+  "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "6.5.3",
-  "main": "./builds/nlp_compromise.js",
-  "typings": "./nlp.d.ts",
+  "version": "7.0.17",
+  "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/nlp-compromise/nlp_compromise.git"
+    "url": "git://github.com/nlp-compromise/compromise.git"
   },
   "scripts": {
-    "test": "./node_modules/tape/bin/tape ./test/unit_test/**/*_test.js | tap-spec",
-    "watch": "grunt watch",
-    "coverage": "grunt coverage",
-    "build": "grunt build",
-    "build_windows": "grunt build_windows",
-    "demo": "grunt demo",
-    "demo_windows": "grunt demo_windows"
+    "test": "node ./scripts/test.js",
+    "browsertest": "node ./scripts/browserTest.js",
+    "build": "node ./scripts/build.js",
+    "demo": "node ./scripts/demo.js",
+    "watch": "node ./scripts/watch.js",
+    "filesize": "node ./scripts/filesize.js",
+    "coverage": "node ./scripts/coverage.js"
   },
   "files": [
     "builds/",
-    "src/",
-    "nlp.d.ts"
+    "docs/"
   ],
   "dependencies": {},
   "devDependencies": {
     "babel-preset-es2015": "6.9.0",
+    "babel-preset-stage-2": "^6.11.0",
     "babelify": "7.3.0",
+    "babili": "0.0.11",
     "browserify": "13.0.1",
+    "chalk": "^1.1.3",
+    "codacy-coverage": "^2.0.0",
     "derequire": "^2.0.3",
-    "grunt-cli": "1.2.0",
-    "grunt-contrib-watch": "1.0.0",
-    "grunt-eslint": "19.0.0",
-    "grunt-filesize": "0.0.7",
-    "grunt-run": "0.6.0",
+    "eslint": "^3.1.1",
+    "gaze": "^1.1.1",
     "http-server": "0.9.0",
     "nlp-corpus": "latest",
+    "nyc": "^8.4.0",
+    "shelljs": "^0.7.2",
+    "tap-min": "^1.1.0",
     "tap-spec": "4.1.1",
     "tape": "4.6.0",
     "uglify-js": "2.7.0"

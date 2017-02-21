@@ -1,148 +1,302 @@
-[![CodacyBadge](https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062)](https://www.codacy.com/app/spencerkelly86/nlp_compromise)
-[![npm version](https://badge.fury.io/js/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
-[![downloads](https://img.shields.io/npm/dm/nlp_compromise.svg)](https://www.npmjs.com/package/nlp_compromise)
-
-**nlp_compromise** does NLP in the browser.
-```javascript
-nlp.sentence('She sells seashells').to_past().text()
-// 'She sold seashells'
-```
-### Yup,
-* **<150k** js file
-* **86%** on the [Penn treebank](http://www.cis.upenn.edu/~treebank/)
-* keypress speed, constant-time.
-* caniuse, uhuh. **IE9+**
-* no dependencies, training, configuration, or prolog.
-
-It's a [handy, and not overly-fancy](https://github.com/nlp-compromise/nlp_compromise/wiki/Justification) tool for understanding, changing, and playing with english.
-
 <div align="center">
-  <div>
-    :boom: 
-    <a href="https://github.com/nlp-compromise/nlp_compromise/tree/v7">v7</a> 
-    is coming!
-   :boom: 
-  </div>
-  <div>it's <a href="https://github.com/nlp-compromise/compromise/wiki/v7-Upgrade,-welcome">huge!</a></div>
+  <img src="https://cloud.githubusercontent.com/assets/399657/21955696/46e882d4-da3e-11e6-94a6-720c34e27df7.jpg" />
+  <div>natural language processing, actually in the browser</div>
+  <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
+    <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />
+  </a>
+  <a href="https://npmjs.org/package/compromise">
+    <img src="https://img.shields.io/npm/v/compromise.svg?style=flat-square" />
+  </a>
+  <a href="https://nodejs.org/api/documentation.html#documentation_stability_index">
+    <img src="https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square" />
+  </a>
 </div>
 
-## Off you go,
-> `npm install nlp_compromise`
+<div align="center">
+  <sub>
+    by
+    <a href="https://github.com/spencermountain">Spencer Kelly</a> and
+    <a href="https://github.com/nlp-compromise/compromise/graphs/contributors">
+      contributors
+    </a>
+  </sub>
+</div>
 
-> `<script src="https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js"></script>`
+<div align="center">
+  <sub>(formerly nlp_compromise)</sub>
+</div>
+
+<div align="center">
+  <code>npm install compromise</code>
+</div>
+
+<div align="center">
+  inspect and play with english text.
+  <div>
+    focus on being <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">handy, and not overly-fancy.</a>
+  </div>
+</div>
+<br/>
+
+<div align="center">
+  💥Welcome to <b>v7</b>💥
+  <div>
+    <a href="https://github.com/nlp-compromise/compromise/wiki/v7-upgrade-instructions">a lot</a>
+    has changed!
+  </div>
+</div>
 
 ```javascript
-let nlp = require('nlp_compromise'); // or nlp = window.nlp_compromise
-
-nlp.noun('dinosaur').pluralize();
-// 'dinosaurs'
-
-nlp.verb('speak').conjugate();
-// { past: 'spoke',
-//   infinitive: 'speak',
-//   gerund: 'speaking',
-//   actor: 'speaker',
-//   present: 'speaks',
-//   future: 'will speak',
-//   perfect: 'have spoken',
-//   pluperfect: 'had spoken',
-//   future_perfect: 'will have spoken'
-// }
-
-nlp.statement('She sells seashells').negate().text()
-// 'She doesn't sell seashells'
-
-nlp.sentence('I fed the dog').replace('the [Noun]', 'the cat').text()
-// 'I fed the cat'
-
-nlp.text('Tony Hawk did a kickflip').people();
-// [ Person { text: 'Tony Hawk' ..} ]
-
-nlp.noun('vacuum').article();
-// 'a'
-
-nlp.person('Tony Hawk').pronoun();
-// 'he'
-
-nlp.value('five hundred and sixty').number;
-// 560
-
-nlp.text(require('nlp-corpus').text.friends()).topics()//11 seasons of friends
-// [ { count: 2523, text: 'ross' },
-//   { count: 1922, text: 'joey' },
-//   { count: 1876, text: 'god' },
-//   { count: 1411, text: 'rachel' },
-//   ....
+let r = nlp('I look just like buddy holly.')
+  r.sentences().toPastTense()
+  r.out('text')
+// "I looked just like buddy holly."
 ```
-#Plugin/Mixins
-we've also got a modest, though ambitious [plugin ecosystem](https://github.com/nlp-compromise/nlp_compromise/wiki/Plugins):
+
+<div align="center">
+  <table align="center">
+    <tr align="center">
+      <td align="center">
+        <b>
+          <a href="https://unpkg.com/compromise@latest/builds/compromise.min.js">
+            200k
+          </a>
+        </b>
+        <div>
+           &nbsp; one javascript file &nbsp;
+        </div>
+      </td>
+      <td align="center">
+        <div>
+          <b>
+            <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">
+              86%
+            </a>
+          </b>
+          <div>
+            &nbsp; on the Penn treebank &nbsp;
+         </div>
+      </td>
+      <td align="center">
+        <b>🙏</b>
+        <div>
+          &nbsp; <code>npm install compromise</code> &nbsp;
+        </div>
+      </td>
+      <td align="center">
+        <b>IE9+</b>
+        <div>
+           &nbsp; &nbsp;  caniuse, youbetcha &nbsp;  &nbsp;
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<h3 align="center">
+  <a href="http://nlpcompromise.com">demos</a>
+  <span>&nbsp; | &nbsp;</span>
+  <a href="https://github.com/nlp-compromise/compromise/wiki/Getting-Started">quickStart</a>
+  <span>&nbsp; | &nbsp;</span>
+  <a href="https://github.com/nlp-compromise/compromise/wiki/API">docs</a>
+  <span>&nbsp; | &nbsp;</span>
+  <a href="https://github.com/nlp-compromise/compromise/wiki/Accuracy">accuracy</a>
+</h3>
+<div align="center">
+  <b>no training, configuration, or prolog</b>
+</div>
+<br/>
+
+the idea is, **[reach-in](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)** to a part of the text, and change it:
+
 ```javascript
-//US-UK localization
-nlp.plugin(require('nlp-locale'))
-nlp.term('favourite').toAmerican()
-// 'favorite'
+r = nlp('john is really nice. sara sings loudly.')
 
-//syllable hyphenization
-nlp.plugin(require('nlp-syllables'));
-var t2 = nlp.term('houston texas');
-t2.syllables()
-//[ [ 'hous', 'ton' ], [ 'tex', 'as' ] ]
-
-//semantic n-gram
-nlp.plugin(require('nlp-ngram'));
-var t4 = nlp.text(`Tony Hawk played Tony Hawk's pro skater`);
-t4.ngram({min_count: 2});
-// [{word:'tony hawk', count:2, size:1}]
-
-//grammar links
-nlp.plugin(require('nlp-links'));
-var sen = nlp.sentence('I fed the dog').withLinks();
-// Each term now has links to words they are grammatically connected to
-sen.terms[1].links[1].target.word; // terms[1] is verb 'fed'
-// 'dog'
+r.match('#Person').toUpperCase()
+//JOHN is really nice. SARA sings loudly.
 ```
 
-#Extend
-Add your own lexicon, listed companies, gazetteers, anything!
+or pluck-out some parts,
 ```javascript
-var nlp = require("nlp_compromise")
-var context= {
-  lexicon:
-    {
-      apple:'Organization'
-    }
-}
-nlp.text('compare apple and microsoft', context).organizations()
+r.remove('#Adverb')
+// "JOHN is nice. SARA sings."
+
+//replacements,
+r.replace('is nice', 'is bad')
+// "JOHN is bad. SARA sings."
+```
+or just be downright fancy
+```javascript
+r.sentences().toNegative()
+// "JOHN is not bad. SARA doesn't sing."
 ```
 
-### [View the Full API Documentation](https://github.com/nlp-compromise/nlp_compromise/wiki/API)
+or grab specific parts, and **analyze-the-heck** out of them:
+```javascript
+r = nlp(chomskyFanFic)
+r.places().sort('freq').unique().data()
+/*[
+  {text: 'MIT lecture hall'},
+  {text: '23 Desperado dr.'},
+  {text: 'desert island'},
+]*/
+```
+<div align="center">
+&nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗 &nbsp; &nbsp; 🤗
+</div>
+<table align="center">
+  <tr>
+    <td>Part-of-Speech Tagging</td>
+    <td>Named-Entity Recognition</td>
+    <td>Verb Conjugation</td>
+    <td>Inflection/Pluralization</td>
+  </tr>
+</table>
 
-## Development
-[![Issue Stats](http://issuestats.com/github/nlp-compromise/nlp_compromise/badge/pr)](http://issuestats.com/github/nlp-compromise/nlp_compromise)
-[![Issue Stats](http://issuestats.com/github/nlp-compromise/nlp_compromise/badge/issue)](http://issuestats.com/github/nlp-compromise/nlp_compromise)
+###Client-side:
+```html
+<script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
+<script>
+  var r = nlp('dinosaur').nouns().toPlural()
+  console.log(r.out('text'))
+  //dinosaurs
+</script>
+```
 
-*Useful NLP is a problem only solved with many hands. [Contributing](https://github.com/nlp-compromise/nlp_compromise/blob/master/contributing.md) in any form is valued.*
+###Tense:
+```javascript
+let r = nlp('she sells seashells by the seashore.')
+r.sentences().toFutureTense().out('text')
+//'she will sell seashells...'
 
-Join our [slack group](http://superscript-slackin.herokuapp.com) (login from [here](https://superscriptjs.slack.com/messages/nlp_compromise/)) or our infrequent [announcement email-list](http://eepurl.com/bL9YRv).
+r.verbs().conjugate()
+// [{ PastTense: 'sold',
+//    Infinitive: 'sell',
+//    Gerund: 'selling', ...
+// }]
+```
 
-Or just pick up an [open issue](https://github.com/nlp-compromise/nlp_compromise/issues)
+###Plural/singular:
+```javascript
+r = nlp('a bottle of beer on the wall.')
+r.nouns().first().toPlural()
+r.out('text')
+//'The bottles of beer on the wall.'
+```
 
-[We're moving fast](https://github.com/nlp-compromise/nlp_compromise/blob/master/changelog.md)
+###Negation:
+```javascript
+r = nlp('london is calling')
+r.sentences().toNegative()
+// 'london is not calling'
+```
 
-[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+###Number interpretation:
+```javascript
+r = nlp('fifth of december')
 
-#See also
-* [naturalNode](https://github.com/NaturalNode/natural) - decidedly fancier statistical nlp in javascript
-* [SuperScript](http://superscriptjs.com/) - clever conversation engine in javascript
-* [NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics) - conjugation, inflection, correction etc in javascript
-* [reText](https://github.com/wooorm/retext) - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
-* [jsPos](https://code.google.com/archive/p/jspos/) - the time-tested Brill-tagger in js
-* [spaCy](https://spacy.io/) - speedy, multilingual tagger in Python/Cython
+r.values().toCardinal().out('text')
+// 'five of december'
 
-(don't forget
-[NLTK](http://www.nltk.org/),
-[GATE](https://gate.ac.uk),
-the [Stanford Parser](http://nlp.stanford.edu/software/lex-parser.shtml),
+r.values().toNumber().out('text')
+// '5 of december'
+```
+
+###Normalization:
+```javascript
+r = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
+// 'The guest singer is Bjork at 7:30.'
+```
+
+###Named-entity recognition:
+```javascript
+r = nlp('the opera about richard nixon visiting china')
+r.topics().data()
+// [
+//   { text: 'richard nixon' },
+//   { text: 'china' }
+// ]
+```
+
+###Fancy outputs:
+```javascript
+r = nlp('Tony Hawk won').out('html')
+/*
+<span>
+  <span class="Person Noun MalePerson">Tony Hawk</span>
+  <span>&nbsp;</span>
+  <span class="Verb PastTense">won</span>
+</span>
+*/
+```
+<h3 align="center">
+  and yes, ofcourse, there's <a href="https://github.com/nlp-compromise/compromise/wiki/API">a lot more stuff</a>.
+</h3>
+
+**Join in!**
+we're fun, we're using <b>semver</b>, and moving fast.
+*[🛠️ get involved 💃](https://github.com/nlp-compromise/compromise/wiki/Contributing)*
+
+<table>
+  <tr align="center">
+    <td>
+      <a href="https://www.twitter.com/compromisejs">
+        <img src="https://cloud.githubusercontent.com/assets/399657/21956672/a30cf206-da53-11e6-8c6c-0995cf2aef62.jpg"/>
+        <div>&nbsp; &nbsp; &nbsp; Twitter &nbsp; &nbsp; &nbsp; </div>
+      </a>
+    </td>
+    <td>
+      <a href="http://slack.compromise.cool/">
+        <img src="https://cloud.githubusercontent.com/assets/399657/21956671/a30cbc82-da53-11e6-82d6-aaaaebc0bc93.jpg"/>
+        <div>&nbsp; &nbsp; &nbsp; Slack group &nbsp; &nbsp; &nbsp; </div>
+      </a>
+    </td>
+    <td>
+      <a href="http://nlpcompromise.us12.list-manage2.com/subscribe?u=d5bd9bcc36c4bef0fd5f6e75f&id=8738c1f5ef">
+        <img src="https://cloud.githubusercontent.com/assets/399657/21956670/a30be6e0-da53-11e6-9aaf-52a10b8c3195.jpg"/>
+        <div>&nbsp; &nbsp; &nbsp; Mailing-list &nbsp; &nbsp; &nbsp; </div>
+      </a>
+    </td>
+    <td>
+      <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">
+        <img src="https://cloud.githubusercontent.com/assets/399657/21956742/5985a89c-da55-11e6-87bc-4f0f1549d202.jpg"/>
+        <div>&nbsp; &nbsp; &nbsp; Pull-requests &nbsp; &nbsp; &nbsp; </div>
+      </a>
+    </td>
+  </tr>
+</table>
+
+<br/>
+
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=tk_JGu2AbJY">
+    <img src="http://img.youtube.com/vi/tk_JGu2AbJY/mqdefault.jpg"/>
+  </a>
+  <span> &nbsp; </span>
+  <a href="https://www.youtube.com/watch?v=WuPVS2tCg8s">
+    <img src="http://img.youtube.com/vi/WuPVS2tCg8s/mqdefault.jpg"/>
+  </a>
+</div>
+
+###Don't forget about:
+* **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript, too
+* **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in js
+* **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
+* **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
+* **[jsPos](https://code.google.com/archive/p/jspos/)** - js-build of the time-tested Brill-tagger
+* **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
+
+For the former promise-library, see [jnewman/compromise](https://github.com/jnewman/compromise)
+(Thanks [Joshua](https://github.com/jnewman)!)
+
+<div align="right">
+(also don't forget
+<a href="http://www.nltk.org/">NLTK</a>,
+<a href="https://gate.ac.uk">GATE</a>,
+<a href="http://nlp.stanford.edu/software/lex-parser.shtml">Stanford</a>,
 and
-the [Illinois toolkit](http://cogcomp.cs.illinois.edu/page/software/)
+<a href="http://cogcomp.cs.illinois.edu/page/software/">Illinois toolkit</a>
 )
+❤️️
+</div>
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062)](https://www.codacy.com/app/spencerkelly86/nlp_compromise)

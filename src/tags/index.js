@@ -13,7 +13,9 @@ const extra = {
 
 
 const all_children = (obj) => {
-
+  if (obj === true) {
+    return [];
+  }
   let children = Object.keys(obj || {});
   //two levels deep
   children.forEach((str) => {
@@ -70,5 +72,3 @@ const build = function() {
 };
 
 module.exports = build();
-// console.log(all.Duration);
-// console.log(all_children(tree['NounPhrase']));

@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.23",
+  "version": "7.0.24",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -1609,9 +1609,6 @@ var irregular = {
   buy: {
     PastTense: 'bought'
   },
-  'catch': {
-    PastTense: 'caught'
-  },
   choose: {
     Gerund: 'choosing',
     PastTense: 'chose'
@@ -1953,6 +1950,9 @@ var irregular = {
 //es3 literal support
 irregular['break'] = {
   PastTense: 'broke'
+};
+irregular['catch'] = {
+  PastTense: 'caught'
 };
 Object.keys(participles).forEach(function (inf) {
   if (irregular[inf]) {

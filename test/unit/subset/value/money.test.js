@@ -44,7 +44,7 @@ test('money-has:', function (t) {
     ['sixty pence', true],
     ['sixty USD', true],
   ];
-  tests.forEach((a) => {
+  tests.forEach(function(a) {
     var r = nlp(a[0]);
     var m = r.match('#Money');
     t.equal(m.found, a[1], 'money-has: \'' + a[0] + '\'');

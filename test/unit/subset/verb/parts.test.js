@@ -44,7 +44,7 @@ test('verb-parts:', function(t) {
     ['john would not have had been really walking', 'not', 'would have had been', 'really'],
     ['john would not have had been walking really', 'not', 'would have had been', 'really'],
   ];
-  tests.forEach((a) => {
+  tests.forEach(function(a) {
     var arr = nlp(a[0]).verbs().data();
     t.equal(arr.length, 1, '#verbs - ' + arr.length);
     t.equal(arr[0].parts.negative, a[1], 'neg-test - \'' + a[0] + '\'');

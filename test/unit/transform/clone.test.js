@@ -7,7 +7,7 @@ test('clone:', function (t) {
     'Jumanji is the best move. He eats cheese.',
     'Uperman is wayyyy better than batman!',
   ];
-  arr.forEach((str) => {
+  arr.forEach(function(str) {
     var m = nlp(str);
     var neg = m.clone().sentences().toNegative();
     var past = m.clone().sentences().toPastTense();

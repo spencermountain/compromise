@@ -2,7 +2,9 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 
 var mustBe = function(arr) {
-  return arr.map(t => t.normal);
+  return arr.map(function(t) {
+    return t.normal;
+  });
 };
 
 test('clauses', function (t) {

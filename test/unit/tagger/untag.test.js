@@ -58,7 +58,7 @@ test('tags are self-removing', function (t) {
     'HashTag',
     'Month',
   ];
-  terms.forEach((tag) => {
+  terms.forEach(function(tag) {
     m = nlp('aasdf').tag(tag).unTag(tag);
     var t0 = m.list[0].terms[0];
     t.equal(t0.tag[tag], undefined, 'tag removes self ' + tag);

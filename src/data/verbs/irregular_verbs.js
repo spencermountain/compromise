@@ -93,9 +93,6 @@ let irregular = {
   buy: {
     PastTense: 'bought'
   },
-  catch: {
-    PastTense: 'caught'
-  },
   choose: {
     Gerund: 'choosing',
     PastTense: 'chose'
@@ -437,6 +434,9 @@ let irregular = {
 //es3 literal support
 irregular['break'] = {
   PastTense: 'broke'
+};
+irregular['catch'] = {
+  PastTense: 'caught'
 };
 Object.keys(participles).forEach((inf) => {
   if (irregular[inf]) {

@@ -11,7 +11,7 @@ test('garbage:', function (t) {
   ];
   garbage.forEach(function (g, i) {
     var num = nlp(g).list.length;
-    var msg = (typeof g) + ' text input #' + i;
+    var msg = typeof g + ' text input #' + i;
     t.equal(num, 0, msg);
   });
   var str = nlp(2).out();
@@ -31,7 +31,7 @@ test('garbage:', function (t) {
 test('extra exports:', function (t) {
   t.ok(nlp.version, 'version number exported');
 
-  t.doesNotThrow(() => {
+  t.doesNotThrow(function() {
     nlp.verbose(true);
     nlp.verbose(false);
   }, 'can set verbosity');

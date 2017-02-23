@@ -76,7 +76,6 @@ const compressed = {
   sa: 'el,ro,tere,there',
   ee: 'aim,d,desir,ren',
   va: 'a,el,e,i',
-  in: 'caitl,er,kar,krist',
   on: 'alis,man,shann,shar',
   an: 'meag,meg,megh,sus'
 };
@@ -163,7 +162,12 @@ let list = [
   'tamika',
   'therese',
   'toni',
-  'gisele'
+  'gisele',
+  //in
+  'caitlin',
+  'erin',
+  'karin',
+  'kristin'
 ];
 list = fns.uncompress_suffixes(list, compressed);
 

@@ -107,7 +107,13 @@ let countries = [
   'wales',
   'wallis and futuna',
   'yemen',
-  'zimbabwe'
+  'zimbabwe',
+  //'in'
+  'spain',
+  'benin',
+  'bahrain',
+  'saint martin',
+  'liechtenstein'
 ];
 let compressed_countries = {
   sland: 'christmas i,norfolk i,bouvet i',
@@ -136,7 +142,6 @@ let compressed_countries = {
   da: 'ugan,cana,rwan',
   us: 'belar,mauriti,cypr',
   al: 'nep,seneg,portug',
-  in: 'spa,ben,bahra,saint mart,liechtenste',
   go: 'dr con,to,trinidad-toba',
   la: 'anguil,venezue,ango,guatema',
   es: 'united stat,philippin,united arab emirat,seychell,maldiv',
@@ -230,6 +235,11 @@ let cities = [
   'winnipeg',
   'wroclaw',
   'zagreb',
+  //in
+  'tianjin',
+  'berlin',
+  'turin',
+  'dublin'
 ];
 
 let suffix_compressed_cities = {
@@ -243,7 +253,6 @@ let suffix_compressed_cities = {
   on: 'ly,lond,yang,inche,daeje,lisb',
   en: 'shenzh,eindhov,pils,copenhag,berg',
   ng: 'beiji,chittago,pyongya,kaohsiu,taichu',
-  in: 'tianj,berl,tur,dubl,duned',
   es: 'los angel,nant,napl,buenos air,f',
   la: 'pueb,mani,barranquil,kampa,guatema',
   or: 'salvad,san salvad,ulan bat,marib',

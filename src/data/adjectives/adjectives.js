@@ -58,7 +58,6 @@ let compressed = {
   ty: 'faul,hef,lof,mea,sal,uppi',
   sy: 'bu,chee,lou,no,ro',
   ct: 'abstra,exa,imperfe,inta,perfe',
-  in: 'certa,highfalut,ma,tw,va',
   et: 'discre,secr,sovi,ups,viol',
   me: 'part-ti,pri,sa,supre,welco',
   cy: 'boun,fan,i,jui,spi',
@@ -178,7 +177,12 @@ let arr = [
   'various',
   'widespread',
   'woozy',
-  'wrong'
+  'wrong',
+  //in
+  'certain',
+  'highfalutin',
+  'main',
+  'vain',
 ];
 
 module.exports = fns.uncompress_suffixes(arr, compressed);

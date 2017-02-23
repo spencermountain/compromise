@@ -5,7 +5,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.23",
+  "version": "7.0.24",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -1611,9 +1611,6 @@ var irregular = {
   buy: {
     PastTense: 'bought'
   },
-  'catch': {
-    PastTense: 'caught'
-  },
   choose: {
     Gerund: 'choosing',
     PastTense: 'chose'
@@ -1955,6 +1952,9 @@ var irregular = {
 //es3 literal support
 irregular['break'] = {
   PastTense: 'broke'
+};
+irregular['catch'] = {
+  PastTense: 'caught'
 };
 Object.keys(participles).forEach(function (inf) {
   if (irregular[inf]) {
@@ -21938,8 +21938,8 @@ test('generic-methods-run:', function (t) {
   };
 
   var r = nlp(freshPrince);
-  Object.keys(docs.generic).forEach((type) => {
-    Object.keys(docs.generic[type]).forEach((fn) => {
+  Object.keys(docs.generic).forEach(function(type) {
+    Object.keys(docs.generic[type]).forEach(function(fn) {
       //simply call this method to see if it throws an error
       var func = function() {
         if (getters[fn]) {
@@ -21971,11 +21971,13 @@ test('subsets-methods-exist:', function (t) {
     }
   };
   var r = nlp(freshPrince);
-  Object.keys(docs.subsets).forEach((subset) => {
+  Object.keys(docs.subsets).forEach(function(subset) {
     //each subset
-    t.doesNotThrow(() => r[subset](), true, subset + '()');
+    t.doesNotThrow(function() {
+      return r[subset](), true, subset + '()';
+    });
     //each method in that subset
-    Object.keys(docs.subsets[subset]).forEach((method) => {
+    Object.keys(docs.subsets[subset]).forEach(function(method) {
       var func = function() {
         if (addParam[subset] && addParam[subset][method]) {
           r[subset]()[method]('fun');
@@ -22652,7 +22654,7 @@ test('garbage:', function (t) {
   ];
   garbage.forEach(function (g, i) {
     var num = nlp(g).list.length;
-    var msg = (typeof g) + ' text input #' + i;
+    var msg = typeof g + ' text input #' + i;
     t.equal(num, 0, msg);
   });
   var str = nlp(2).out();
@@ -22672,7 +22674,7 @@ test('garbage:', function (t) {
 test('extra exports:', function (t) {
   t.ok(nlp.version, 'version number exported');
 
-  t.doesNotThrow(() => {
+  t.doesNotThrow(function() {
     nlp.verbose(true);
     nlp.verbose(false);
   }, 'can set verbosity');
@@ -22716,7 +22718,7 @@ var freshPrince = require('../lib/freshPrince');
 test('offsets-equals-substr:', function (t) {
   var r = nlp(freshPrince);
   var arr = r.verbs().out('offsets');
-  arr.forEach((obj) => {
+  arr.forEach(function(obj) {
     var substr = freshPrince.substr(obj.offset, obj.length);
     t.equal(obj.text, substr, '\'' + obj.text + '\' offset ' + obj.offset);
   });
@@ -23047,7 +23049,7 @@ test('all combined subsets empty:', function (t) {
 
 test('all subsets have a data method:', function (t) {
   var r = nlp(freshPrince);
-  subsets.forEach((s) => {
+  subsets.forEach(function(s) {
     var sub = r[s]();
     var arr = sub.data();
     t.ok(fns.isArray(arr), s + '.data() is an array');
@@ -23058,7 +23060,7 @@ test('all subsets have a data method:', function (t) {
 test('all subsets support .all():', function (t) {
   var txt = freshPrince;
   var r = nlp(txt);
-  subsets.forEach((s) => {
+  subsets.forEach(function(s) {
     var sub = r[s]();
     var str = sub.all().out('text');
     var msg = s + '.all() works';
@@ -23070,7 +23072,7 @@ test('all subsets support .all():', function (t) {
 test('all subsets have an empty 100th element', function (t) {
   var txt = freshPrince;
   var r = nlp(txt);
-  subsets.forEach((s) => {
+  subsets.forEach(function(s) {
     var sub = r[s](9999);
     var str = sub.out('text');
     var msg = s + ' is empty';
@@ -23274,7 +23276,9 @@ test('==contractions==', function(T) {
       [`how's`, ['how', 'is']],
     ].forEach(function(a) {
       var arr = nlp(a[0]).contractions().expand().out('terms');
-      var got = arr.map(term => term.normal);
+      var got = arr.map(function(term) {
+        return term.normal;
+      });
       var msg = a[0] + '  - - [' + got.join(', ') + '] should be [' + a[1].join(', ') + ']';
       t.deepEqual(got, a[1], msg);
     });
@@ -24238,7 +24242,7 @@ var tests = {
 };
 
 test('celebrity names:', function (t) {
-  Object.keys(tests).forEach((k) => {
+  Object.keys(tests).forEach(function(k) {
     var str = nlp(k).people().out('text');
     var msg = '\'' + k + '\' is a person - - have: \'' + str + '\'';
     t.equal(str, k, msg);
@@ -24756,7 +24760,9 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 
 var mustBe = function(arr) {
-  return arr.map(t => t.normal);
+  return arr.map(function(t) {
+    return t.normal;
+  });
 };
 
 test('clauses', function (t) {
@@ -24860,7 +24866,7 @@ test('money-has:', function (t) {
     ['sixty pence', true],
     ['sixty USD', true],
   ];
-  tests.forEach((a) => {
+  tests.forEach(function(a) {
     var r = nlp(a[0]);
     var m = r.match('#Money');
     t.equal(m.found, a[1], 'money-has: \'' + a[0] + '\'');
@@ -25367,7 +25373,7 @@ test('verb-parts:', function(t) {
     ['john would not have had been really walking', 'not', 'would have had been', 'really'],
     ['john would not have had been walking really', 'not', 'would have had been', 'really'],
   ];
-  tests.forEach((a) => {
+  tests.forEach(function(a) {
     var arr = nlp(a[0]).verbs().data();
     t.equal(arr.length, 1, '#verbs - ' + arr.length);
     t.equal(arr[0].parts.negative, a[1], 'neg-test - \'' + a[0] + '\'');
@@ -25970,7 +25976,7 @@ test('tags are self-removing', function (t) {
     'HashTag',
     'Month',
   ];
-  terms.forEach((tag) => {
+  terms.forEach(function(tag) {
     m = nlp('aasdf').tag(tag).unTag(tag);
     var t0 = m.list[0].terms[0];
     t.equal(t0.tag[tag], undefined, 'tag removes self ' + tag);
@@ -26176,7 +26182,7 @@ test('clone:', function (t) {
     'Jumanji is the best move. He eats cheese.',
     'Uperman is wayyyy better than batman!',
   ];
-  arr.forEach((str) => {
+  arr.forEach(function(str) {
     var m = nlp(str);
     var neg = m.clone().sentences().toNegative();
     var past = m.clone().sentences().toPastTense();

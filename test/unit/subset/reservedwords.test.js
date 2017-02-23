@@ -1,0 +1,95 @@
+var test = require('tape');
+var nlp = require('../lib/nlp');
+
+test('reserved words:', function (t) {
+
+  var reserved = [
+    'abstract',
+    'boolean',
+    'break',
+    'byte',
+    'case',
+    'catch',
+    'char',
+    'class',
+    'const',
+    'continue',
+    'debugger',
+    'default',
+    'delete',
+    'do',
+    'double',
+    'else',
+    'enum',
+    'export',
+    'extends',
+    'false',
+    'final',
+    'finally',
+    'float',
+    'for',
+    'function',
+    'goto',
+    'if',
+    'implements',
+    'import',
+    'in',
+    'instanceof',
+    'int',
+    'interface',
+    'let',
+    'long',
+    'native',
+    'new',
+    'null',
+    'package',
+    'private',
+    'protected',
+    'prototype',
+    'public',
+    'return',
+    'short',
+    'static',
+    'super',
+    'switch',
+    'synchronized',
+    'this',
+    'throw',
+    'throws',
+    'transient',
+    'true',
+    'try',
+    'typeof',
+    'var',
+    'void',
+    'volatile',
+    'while',
+    'with',
+    'yeild',
+    '__prototype__',
+    '&&',
+    '||',
+    '|',
+    '\'',
+    '&',
+    'Math.PI',
+    12e34,
+    '#§$%',
+    'π',
+    'привет',
+    'café',
+    '$$$',
+    1e2,
+    '{}',
+    '[]'
+  ];
+  var str = reserved.join(' ');
+  var r = nlp(str);
+  t.equal(r.out('text'), str, 'reserved-words-are-printed');
+  t.equal(r.terms().length, reserved.length, 'reserved-length');
+  t.ok(r.verbs().data(), 'runs verb subset');
+  t.ok(r.values().data(), 'runs value subset');
+  t.ok(r.nouns().data(), 'runs noun subset');
+  t.ok(r.ngrams().data(), 'runs ngrams subset');
+  t.end();
+});

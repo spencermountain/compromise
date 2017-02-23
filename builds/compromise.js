@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.20",
+  "version": "7.0.21",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@ module.exports={
   ],
   "dependencies": {},
   "devDependencies": {
+    "babel-plugin-transform-es3-property-literals": "^6.22.0",
     "babel-preset-es2015": "6.9.0",
     "babel-preset-stage-2": "^6.11.0",
     "babelify": "7.3.0",
@@ -1046,7 +1047,9 @@ var fns = _dereq_('../fns');
 
 //the unique/uncompressed names..
 var arr = ['abu', 'adolfo', 'anthony', 'arthur', 'billy', 'bobby', 'bob', 'buddy', //ergh
-'bradford', 'bret', 'caleb', 'clifford', 'craig', 'derek', 'doug', 'dwight', 'eli', 'elliot', 'enrique', 'felipe', 'felix', 'francisco', 'frank', 'george', 'glenn', 'greg', 'gregg', 'hans', 'hugh', 'ira', 'isaac', 'kermit', 'leo', 'levi', 'lorenzo', 'percy', 'philip', 'phillip', 'regis', 'rex', 'ricky', 'shaun', 'shaquille', 'shawn', 'steve', 'timothy', 'ty', 'wilbur', 'williams', 'woodrow', 'wolfgang', 'youssef', 'mahmoud', 'mustafa', 'hamza', 'tareq', 'ali', 'beshoi', 'mark', 'moe', 'habib', 'moussa', 'adama', 'osama', 'abdoulaye', 'modibo', 'mustapha', 'aziz', 'mateo', 'santino', 'davi', 'jacob', 'vicente', 'alonso', 'maximiliano', 'jose', 'jeronimo', 'joshua', 'ajani', 'amir', 'arnav', 'suraj', 'bruno', 'yousouf', 'wei', 'hao', 'yi', 'lei', 'aarav', 'reyansh', 'arjun', 'abulfazl', 'reza', 'kathem', 'ori', 'yosef', 'itai', 'moshe', 'ichika', 'itsuki', 'tatsuki', 'asahi', 'haruki', 'tomoharu', 'yuuma', 'taichi', 'saqib', 'abubakr', 'ergi', 'marc', 'eric', 'enzo', 'pol', 'alex', 'marti', 'jakob', 'paul', 'leevi', 'aputsiaq', 'inunnguaq', 'inuk', 'francesco', 'andrea', 'mattia', 'matteo', 'tommaso', 'nikola', 'ilija', 'marko', 'luka', 'antoni', 'jakub', 'franciszek', 'filip', 'stanislaw', 'mikolaj', 'yusuf', 'berat', 'emir', 'ahmet', 'mehmet', 'leroy', 'roy', 'troy', 'floyd', 'lloyd', 'carl', 'earl', 'karl', 'raul', 'saul', 'earnest', 'ernest', 'forrest', 'arnold', 'harold', 'andrew', 'mathew', 'matthew', 'elliott', 'matt', 'scott', 'marty', 'monty', 'scotty', 'clay', 'jay', 'murray', 'monte', 'pete', 'elwood', 'jarrod', 'claude', 'clyde', 'wade', 'alfredo', 'reynaldo', 'wilfredo', 'clark', 'kirk', 'chase', 'jesse', 'cedric', 'dominic', 'josh', 'rocky', 'rodolfo', 'roosevelt', 'roscoe', 'ross', 'jeff', 'jeremy', 'jerome', 'jess', 'toby', 'todd', 'tom', 'tony', 'darryl', 'daryl', 'dave', 'joe', 'john', 'jorge', 'malcolm', 'marco', 'max', 'alfonso', 'alonzo', 'guillermo', 'gustavo'];
+'bradford', 'bret', 'caleb', 'clifford', 'craig', 'derek', 'doug', 'dwight', 'eli', 'elliot', 'enrique', 'felipe', 'felix', 'francisco', 'frank', 'george', 'glenn', 'greg', 'gregg', 'hans', 'hugh', 'ira', 'isaac', 'kermit', 'leo', 'levi', 'lorenzo', 'percy', 'philip', 'phillip', 'regis', 'rex', 'ricky', 'shaun', 'shaquille', 'shawn', 'steve', 'timothy', 'ty', 'wilbur', 'williams', 'woodrow', 'wolfgang', 'youssef', 'mahmoud', 'mustafa', 'hamza', 'tareq', 'ali', 'beshoi', 'mark', 'moe', 'habib', 'moussa', 'adama', 'osama', 'abdoulaye', 'modibo', 'mustapha', 'aziz', 'mateo', 'santino', 'davi', 'jacob', 'vicente', 'alonso', 'maximiliano', 'jose', 'jeronimo', 'joshua', 'ajani', 'amir', 'arnav', 'suraj', 'bruno', 'yousouf', 'wei', 'hao', 'yi', 'lei', 'aarav', 'reyansh', 'arjun', 'abulfazl', 'reza', 'kathem', 'ori', 'yosef', 'itai', 'moshe', 'ichika', 'itsuki', 'tatsuki', 'asahi', 'haruki', 'tomoharu', 'yuuma', 'taichi', 'saqib', 'abubakr', 'ergi', 'marc', 'eric', 'enzo', 'pol', 'alex', 'marti', 'jakob', 'paul', 'leevi', 'aputsiaq', 'inunnguaq', 'inuk', 'francesco', 'andrea', 'mattia', 'matteo', 'tommaso', 'nikola', 'ilija', 'marko', 'luka', 'antoni', 'jakub', 'franciszek', 'filip', 'stanislaw', 'mikolaj', 'yusuf', 'berat', 'emir', 'ahmet', 'mehmet', 'leroy', 'roy', 'troy', 'floyd', 'lloyd', 'carl', 'earl', 'karl', 'raul', 'saul', 'earnest', 'ernest', 'forrest', 'arnold', 'harold', 'andrew', 'mathew', 'matthew', 'elliott', 'matt', 'scott', 'marty', 'monty', 'scotty', 'clay', 'jay', 'murray', 'monte', 'pete', 'elwood', 'jarrod', 'claude', 'clyde', 'wade', 'alfredo', 'reynaldo', 'wilfredo', 'clark', 'kirk', 'chase', 'jesse', 'cedric', 'dominic', 'josh', 'rocky', 'rodolfo', 'roosevelt', 'roscoe', 'ross', 'jeff', 'jeremy', 'jerome', 'jess', 'toby', 'todd', 'tom', 'tony', 'darryl', 'daryl', 'dave', 'joe', 'john', 'jorge', 'malcolm', 'marco', 'max', 'alfonso', 'alonzo', 'guillermo', 'gustavo',
+//in
+'yassin', 'hussein', 'benjamin', 'martin', 'joaquin', 'hossein', 'colin', 'franklin', 'marlin', 'darwin', 'edwin', 'erwin', 'darin', 'darrin', 'efrain', 'quentin'];
 
 //compressed by frequent suffixes
 //comprssed with
@@ -1098,7 +1101,6 @@ var suffix_compressed = {
   'an': 'hass,ju,log,ary,roh,has,eit,yonat,ro,zor,drag,dej,stef,iv,emirh,ev,brend,d,jord,bry,de,esteb,ry,se,st,steph',
   'er': 'ik,javi,alexand,oliv,aleksand,om,christoph,kristoph,luth,elm,grov,hom,jasp,rodg,rog,spenc,tyl,xavi',
   'en': 'jayd,jad,aid,dev,eym,b,reub,rub,darr,lor,warr,all,dami,gl,k,ow,steph,stev',
-  'in': 'yass,husse,benjam,mart,joaqu,hosse,col,frankl,marl,darw,edw,erw,dar,darr,efra,quent',
   'ie': 'j,jimm,samm,tomm,bill,charl,will,ern,arch,edd,frank,fredd,lou,regg,robb',
   'is': 'alex,lu,lou,math,chr,curt,den,denn,ell,franc,lew,morr,ot,trav,will',
   'el': 'abd,ang,no,jo,ro,ab,darr,fid,lion,marc,mich,russ',
@@ -1395,7 +1397,7 @@ var units = {
     'cm': 'centimeter',
     'mm': 'millimeter',
     'mi': 'mile',
-    'in': 'inch',
+    // 'in': 'inch',
     'ft': 'foot',
     'yd': 'yard'
   },
@@ -1592,7 +1594,7 @@ var irregular = {
   bleed: {
     PastTense: 'bled'
   },
-  break: {
+  'break': {
     PastTense: 'broke'
   },
   breed: {
@@ -1610,7 +1612,7 @@ var irregular = {
   buy: {
     PastTense: 'bought'
   },
-  catch: {
+  'catch': {
     PastTense: 'caught'
   },
   choose: {
@@ -1631,7 +1633,7 @@ var irregular = {
     Gerund: 'digging',
     PastTense: 'dug'
   },
-  do: {
+  'do': {
     PastTense: 'did',
     PresentTense: 'does'
   },
@@ -2777,7 +2779,7 @@ var splitMethods = function splitMethods(Text) {
     //   return false;
     // },
 
-    if: function _if(reg, verbose) {
+    'if': function _if(reg, verbose) {
       var list = [];
       for (var i = 0; i < this.list.length; i++) {
         var m = this.list[i].match(reg, verbose);
@@ -2820,7 +2822,7 @@ module.exports = splitMethods;
 
 var defaultMethods = {
   whitespace: true,
-  case: true,
+  'case': true,
   numbers: true,
   punctuation: true,
   unicode: true,
@@ -2842,7 +2844,7 @@ var methods = {
   },
 
   /** make first-word titlecase, and people, places titlecase */
-  case: function _case(r) {
+  'case': function _case(r) {
     r.terms().list.forEach(function (ts, i) {
       var t = ts.terms[0];
       if (i === 0 || t.tag.Person || t.tag.Place || t.tag.Organization) {
@@ -4718,7 +4720,7 @@ module.exports = parsePunt;
 //
 
 var relatives = {
-  this: 'this',
+  'this': 'this',
   next: 'next',
   last: 'last',
   upcoming: 'next'
@@ -10932,7 +10934,7 @@ var deleteMethods = function deleteMethods(Terms) {
 
   var methods = {
 
-    delete: function _delete(reg) {
+    'delete': function _delete(reg) {
       //don't touch parent if empty
       if (!this.found) {
         return this;
@@ -13045,7 +13047,7 @@ var particles = {
   'down': true,
   'forth': true,
   'forward': true,
-  'in': true,
+  // 'in': true,
   'into': true,
   'it': true,
   'off': true,
@@ -13067,7 +13069,7 @@ var phrasals_step = function phrasals_step(ts) {
   for (var i = 1; i < ts.length; i++) {
     var t = ts.get(i);
     //is it a particle, like 'up'
-    if (particles[t.normal]) {
+    if (particles[t.normal] || t.normal === 'in') {
       //look backwards
       var last = ts.get(i - 1);
       if (last.tag.Verb) {
@@ -13687,10 +13689,10 @@ var afterThisWord = {
   // to: 'Verb', //32%
   not: 'Verb', //33%
   because: 'Noun', //31%
-  if: 'Noun', //32%
+  'if': 'Noun', //32%
   but: 'Noun', //26%
   who: 'Verb', //40%
-  this: 'Noun', //37%
+  'this': 'Noun', //37%
   his: 'Noun', //48%
   when: 'Noun', //33%
   you: 'Verb', //35%

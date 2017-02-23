@@ -5,17 +5,20 @@
 </head>
 <body>
   hi
+  <div id="result"></div>
 </body>
 <script>
 setTimeout(()=>{
   setTimeout(()=>{
-    console.time('parse')
-    let m = nlp('spencer kelly and dr. spencer kelly');
-    console.timeEnd('parse')
+    console.time('parse');
+    var m = nlp('spencer kelly and dr. spencer kelly');
+    console.timeEnd('parse');
     setTimeout(()=>{
-      console.time('match')
-      console.log(m.match('#Noun').out('normal'))
-      console.timeEnd('match')
+      console.time('match');
+      var str=m.match('#Noun').out('normal');
+      console.log(str);
+      document.getElementById('result').innerHTML = str;
+      console.timeEnd('match');
     },2000)
   },2000)
 

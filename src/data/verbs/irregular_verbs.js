@@ -2,7 +2,7 @@
 'use strict';
 const participles = require('./participles');
 
-const irregular = {
+let irregular = {
   take: {
     PerfectTense: 'have taken',
     pluPerfectTense: 'had taken',
@@ -77,9 +77,6 @@ const irregular = {
   },
   bleed: {
     PastTense: 'bled'
-  },
-  break: {
-    PastTense: 'broke'
   },
   breed: {
     PastTense: 'bred'
@@ -436,6 +433,10 @@ const irregular = {
     PastTense: 'suited',
     Actor: 'suiter'
   }
+};
+//es3 literal support
+irregular['break'] = {
+  PastTense: 'broke'
 };
 Object.keys(participles).forEach((inf) => {
   if (irregular[inf]) {

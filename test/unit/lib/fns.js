@@ -41,7 +41,7 @@ var has_pos = function(r, tags) {
 var pos_test = function(r, tags, t) {
   var str = '';
   var got = r.terms().list.map(function(ts) {
-    let term = ts.terms[0];
+    var term = ts.terms[0];
     str += ' ' + term.normal;
     return Object.keys(term.tag)[0];
   }).join(', ');

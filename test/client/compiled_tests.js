@@ -24382,16 +24382,16 @@ var freshPrince = require('../lib/freshPrince');
 
 test('generic-methods-run:', function (t) {
 
-  const getters = {
+  var getters = {
     found: true,
     length: true,
   };
-  const skip = {
+  var skip = {
     whitespace: true,
     insertAt: true,
     debug: true //too noisy
   };
-  const needString = {
+  var needString = {
     insertBefore: true,
     insertAfter: true,
     match: true,
@@ -24427,7 +24427,7 @@ test('generic-methods-run:', function (t) {
 });
 
 test('subsets-methods-exist:', function (t) {
-  const addParam = {
+  var addParam = {
     sentences: {
       append: true,
       prepend: true,
@@ -24539,7 +24539,7 @@ var has_pos = function(r, tags) {
 var pos_test = function(r, tags, t) {
   var str = '';
   var got = r.terms().list.map(function(ts) {
-    let term = ts.terms[0];
+    var term = ts.terms[0];
     str += ' ' + term.normal;
     return Object.keys(term.tag)[0];
   }).join(', ');
@@ -26278,8 +26278,8 @@ var nlp = require('../../lib/nlp');
 
 test('ngram-test:', function (t) {
 
-  let r = nlp('he is strong. he is cool');
-  let arr = r.ngrams().data();
+  var r = nlp('he is strong. he is cool');
+  var arr = r.ngrams().data();
 
   t.equal(arr[0].normal, 'he is', 'sorted-by-freq');
   t.equal(arr[0].count, 2, 'normalized-counted');
@@ -26290,8 +26290,8 @@ test('ngram-test:', function (t) {
 });
 
 test('sort-bigrams:', function (t) {
-  let r = nlp('he is strong. he is cool');
-  let arr = r.ngrams(null, 2).data();
+  var r = nlp('he is strong. he is cool');
+  var arr = r.ngrams(null, 2).data();
   t.equal(arr[0].normal, 'he is', '#1-by-freq');
   t.equal(arr[1].normal, 'is strong', '#2-by-freq');
   t.equal(arr[2].normal, 'is cool', '#3-by-freq');

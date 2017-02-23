@@ -5,16 +5,16 @@ var freshPrince = require('../lib/freshPrince');
 
 test('generic-methods-run:', function (t) {
 
-  const getters = {
+  var getters = {
     found: true,
     length: true,
   };
-  const skip = {
+  var skip = {
     whitespace: true,
     insertAt: true,
     debug: true //too noisy
   };
-  const needString = {
+  var needString = {
     insertBefore: true,
     insertAfter: true,
     match: true,
@@ -50,7 +50,7 @@ test('generic-methods-run:', function (t) {
 });
 
 test('subsets-methods-exist:', function (t) {
-  const addParam = {
+  var addParam = {
     sentences: {
       append: true,
       prepend: true,

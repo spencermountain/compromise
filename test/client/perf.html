@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+  <meta charset="utf-8">
   <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 </head>
 <body>
@@ -13,7 +14,7 @@ setTimeout(function(){
     console.time('parse');
     var m = nlp('spencer kelly and dr. spencer kelly');
     console.timeEnd('parse');
-    setTimeout(()=>{
+    setTimeout(function(){
       console.time('match');
       var str=m.match('#Noun').out('normal');
       console.log(str);

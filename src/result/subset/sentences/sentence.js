@@ -29,7 +29,7 @@ class Sentence extends Terms {
 
   /** find the first important verbPhrase. returns a Term object */
   mainVerb() {
-    let terms = this.match('(#Adverb|#Auxillary|#Verb|#Negative|#Particle)+').ifHas('#Verb'); //this should be (much) smarter
+    let terms = this.match('(#Adverb|#Auxillary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
     if (terms.found) {
       terms = terms.list[0].terms;
       return new Verb(terms, this.lexicon, this.refText, this.refTerms);

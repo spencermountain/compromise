@@ -43,7 +43,7 @@ exec('rm ' + path.es6);
 
 //es5 main (browserify + derequire)
 cmd = lib.browserify + ' "./src/index.js" --standalone nlp';
-cmd += ' -t [ babelify --presets [ es2015 stage-2 ] ] --plugins [transform-es3-property-literals] ';
+cmd += ' -t [ babelify --presets [ es2015 stage-2 ] --plugins [transform-es3-property-literals transform-es3-member-expression-literals] ]';
 cmd += ' | ' + lib.derequire;
 cmd += ' >> ' + path.es5;
 exec(cmd);

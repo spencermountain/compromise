@@ -5,7 +5,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.25",
+  "version": "7.0.28",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@ module.exports={
   ],
   "dependencies": {},
   "devDependencies": {
+    "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
     "babel-plugin-transform-es3-property-literals": "^6.22.0",
     "babel-preset-es2015": "6.9.0",
     "babel-preset-stage-2": "^6.11.0",
@@ -2070,7 +2071,7 @@ module.exports = {
   'sware': 'sworn',
   'sweep': 'swept',
   'thrive': 'thrived',
-  'throw': 'thrown',
+  // 'throw': 'thrown',
   'undergo': 'undergone',
   'upset': 'upset',
   'weave': 'woven',
@@ -6416,7 +6417,7 @@ var Sentence = function (_Terms) {
   }, {
     key: 'mainVerb',
     value: function mainVerb() {
-      var terms = this.match('(#Adverb|#Auxillary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
+      var terms = this.match('(#Adverb|#Auxillary|#Verb|#Negative|#Particle)+')['if']('#Verb'); //this should be (much) smarter
       if (terms.found) {
         terms = terms.list[0].terms;
         return new Verb(terms, this.lexicon, this.refText, this.refTerms);
@@ -6673,7 +6674,7 @@ var toPositive = function toPositive(ts) {
     }
   }
   //otherwise just remove 'not'
-  ts.delete('#Negative');
+  ts['delete']('#Negative');
   return ts;
 };
 module.exports = toPositive;
@@ -7816,7 +7817,7 @@ var Verbs = function (_Text) {
   }], [{
     key: 'find',
     value: function find(r, n) {
-      r = r.match('(#Adverb|#Auxillary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
+      r = r.match('(#Adverb|#Auxillary|#Verb|#Negative|#Particle)+')['if']('#Verb'); //this should be (much) smarter
       r = r.splitAfter('#Comma');
       if (typeof n === 'number') {
         r = r.get(n);
@@ -9082,7 +9083,7 @@ var Verb = function (_Terms) {
   }, {
     key: 'toPositive',
     value: function toPositive() {
-      return this.match('#Negative').delete();
+      return this.match('#Negative')['delete']();
     }
 
     /** conjugation **/

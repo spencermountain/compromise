@@ -43,7 +43,7 @@ const units = {
     'cm': 'centimeter',
     'mm': 'millimeter',
     'mi': 'mile',
-    'in': 'inch',
+    // 'in': 'inch',
     'ft': 'foot',
     'yd': 'yard'
   },

@@ -214,7 +214,9 @@ let arr = [
   'alfonso',
   'alonzo',
   'guillermo',
-  'gustavo'
+  'gustavo',
+  //in
+  'yassin', 'hussein', 'benjamin', 'martin', 'joaquin', 'hossein', 'colin', 'franklin', 'marlin', 'darwin', 'edwin', 'erwin', 'darin', 'darrin', 'efrain', 'quentin',
 ];
 
 
@@ -269,7 +271,6 @@ let suffix_compressed = {
   'an': 'hass,ju,log,ary,roh,has,eit,yonat,ro,zor,drag,dej,stef,iv,emirh,ev,brend,d,jord,bry,de,esteb,ry,se,st,steph',
   'er': 'ik,javi,alexand,oliv,aleksand,om,christoph,kristoph,luth,elm,grov,hom,jasp,rodg,rog,spenc,tyl,xavi',
   'en': 'jayd,jad,aid,dev,eym,b,reub,rub,darr,lor,warr,all,dami,gl,k,ow,steph,stev',
-  'in': 'yass,husse,benjam,mart,joaqu,hosse,col,frankl,marl,darw,edw,erw,dar,darr,efra,quent',
   'ie': 'j,jimm,samm,tomm,bill,charl,will,ern,arch,edd,frank,fredd,lou,regg,robb',
   'is': 'alex,lu,lou,math,chr,curt,den,denn,ell,franc,lew,morr,ot,trav,will',
   'el': 'abd,ang,no,jo,ro,ab,darr,fid,lion,marc,mich,russ',

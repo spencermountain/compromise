@@ -18,7 +18,7 @@ const particles = {
   'down': true,
   'forth': true,
   'forward': true,
-  'in': true,
+  // 'in': true,
   'into': true,
   'it': true,
   'off': true,
@@ -40,7 +40,7 @@ const phrasals_step = function(ts) {
   for(let i = 1; i < ts.length; i++) {
     let t = ts.get(i);
     //is it a particle, like 'up'
-    if (particles[t.normal]) {
+    if (particles[t.normal] || t.normal === 'in') {
       //look backwards
       let last = ts.get(i - 1);
       if (last.tag.Verb) {

@@ -3,5 +3,7 @@
     "es2015",
     "stage-2"
   ],
-  "plugins": []
+  "plugins": [
+    "transform-es3-property-literals"
+  ]
 }

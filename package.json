@@ -2,11 +2,11 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "nlp-compromise",
   "description": "redirect dummy-package for nlp_compromise typo",
-  "version": "6.7.4",
+  "version": "7.0.12",
   "main": "./index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/nlp-compromise/nlp_compromise.git"
+    "url": "git://github.com/nlp-compromise/compromise.git"
   },
   "scripts": {},
   "files": [

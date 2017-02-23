@@ -98,7 +98,7 @@ module.exports = {
   'sware': 'sworn',
   'sweep': 'swept',
   'thrive': 'thrived',
-  'throw': 'thrown',
+  // 'throw': 'thrown',
   'undergo': 'undergone',
   'upset': 'upset',
   'weave': 'woven',

@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.26",
+  "version": "7.0.27",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -2068,7 +2068,7 @@ module.exports = {
   'sware': 'sworn',
   'sweep': 'swept',
   'thrive': 'thrived',
-  'throw': 'thrown',
+  // 'throw': 'thrown',
   'undergo': 'undergone',
   'upset': 'upset',
   'weave': 'woven',

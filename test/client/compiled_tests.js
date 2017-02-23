@@ -1939,23 +1939,23 @@ var irregular = {
     Actor: 'suiter'
   }
 };
-//fancy es3 literal support
-irregular['break'] = {
+//fancy es3 literal support (ftw?)
+var literals = [['break', {
   PastTense: 'broke'
-};
-irregular['catch'] = {
+}], ['catch', {
   PastTense: 'caught'
-};
-irregular['do'] = {
+}], ['do', {
   PastTense: 'did',
   PresentTense: 'does'
-};
-irregular['bind'] = {
+}], ['bind', {
   PastTense: 'bound'
-};
-irregular['spread'] = {
+}], ['spread', {
   PastTense: 'spread'
-};
+}]];
+literals.forEach(function (a) {
+  irregular[a[0]] = a[1];
+});
+
 Object.keys(participles).forEach(function (inf) {
   if (irregular[inf]) {
     irregular[inf].Participle = participles[inf];
@@ -1985,7 +1985,7 @@ module.exports = {
   'burn': 'burned',
   'burst': 'burst',
   'buy': 'bought',
-  'catch': 'caught',
+  // 'catch': 'caught',
   'choose': 'chosen',
   'cling': 'clung',
   'come': 'come',
@@ -1994,7 +1994,7 @@ module.exports = {
   'deal': 'dealt',
   'dig': 'dug',
   'dive': 'dived',
-  'do': 'done',
+  // 'do': 'done',
   'draw': 'drawn',
   'dream': 'dreamt',
   'drive': 'driven',

@@ -421,23 +421,29 @@ let irregular = {
     Actor: 'suiter'
   }
 };
-//fancy es3 literal support
-irregular['break'] = {
-  PastTense: 'broke'
-};
-irregular['catch'] = {
-  PastTense: 'caught'
-};
-irregular['do'] = {
-  PastTense: 'did',
-  PresentTense: 'does'
-};
-irregular['bind'] = {
-  PastTense: 'bound',
-};
-irregular['spread'] = {
-  PastTense: 'spread'
-};
+//fancy es3 literal support (ftw?)
+const literals = [
+  ['break', {
+    PastTense: 'broke'
+  }],
+  ['catch', {
+    PastTense: 'caught'
+  }],
+  ['do', {
+    PastTense: 'did',
+    PresentTense: 'does'
+  }],
+  ['bind', {
+    PastTense: 'bound'
+  }],
+  ['spread', {
+    PastTense: 'spread'
+  }],
+];
+literals.forEach((a) => {
+  irregular[a[0]] = a[1];
+});
+
 Object.keys(participles).forEach((inf) => {
   if (irregular[inf]) {
     irregular[inf].Participle = participles[inf];

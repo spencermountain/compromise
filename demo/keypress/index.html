@@ -33,8 +33,9 @@
   <script type="text/javascript" language="javascript">
       var nlp = window.nlp;
       function toPast() {
-        var present = document.getElementById('verb').value;
+        var present = document.getElementById('verb').value || '';
         var verbs=nlp(present).verbs()
+        console.log(verbs.out('text'))
         if(!verbs.found){
           document.getElementById('nothing').innerText = '(no verbs)';
           document.getElementById('past-verb-result').innerText = '';

@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.19",
+  "version": "7.0.20",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -109,7 +109,6 @@ var compressed = {
   ty: 'faul,hef,lof,mea,sal,uppi',
   sy: 'bu,chee,lou,no,ro',
   ct: 'abstra,exa,imperfe,inta,perfe',
-  in: 'certa,highfalut,ma,tw,va',
   et: 'discre,secr,sovi,ups,viol',
   me: 'part-ti,pri,sa,supre,welco',
   cy: 'boun,fan,i,jui,spi',
@@ -126,7 +125,9 @@ var compressed = {
   ul: 'fo,gainf,helpf,painf'
 };
 
-var arr = ['ablaze', 'above', 'adult', 'ahead', 'aloof', 'arab', 'asleep', 'average', 'backwards', 'bad', 'blank', 'bogus', 'bottom', 'brisk', 'cagey', 'chief', 'civil', 'common', 'complex', 'cozy', 'crisp', 'devout', 'difficult', 'due', 'dumb', 'eerie', 'evil', 'excess', 'extra', 'fake', 'far', 'faux', 'fierce ', 'final', 'fit', 'foreign', 'fun', 'good', 'goofy', 'gratis', 'grey', 'groovy', 'gross', 'half', 'huge', 'humdrum', 'inside', 'kaput', 'left', 'level', 'lewd', 'magenta', 'makeshift', 'mammoth', 'medium', 'modern', 'moot', 'naive', 'nearby', 'next', 'nonstop', 'north', 'notable', 'offbeat', 'ok', 'online', 'offline', 'outside', 'overwrought', 'premium', 'pricey', 'pro', 'quaint', 'random', 'rear', 'rebel', 'ritzy', 'savvy', 'sexy', 'shut', 'shy', 'sleek', 'smug', 'solemn', 'south', 'stark', 'superb', 'taboo', 'teenage', 'top', 'tranquil', 'true', 'ultra', 'understood', 'unfair', 'unknown', 'upbeat', 'upstairs', 'vanilla', 'various', 'widespread', 'woozy', 'wrong'];
+var arr = ['ablaze', 'above', 'adult', 'ahead', 'aloof', 'arab', 'asleep', 'average', 'backwards', 'bad', 'blank', 'bogus', 'bottom', 'brisk', 'cagey', 'chief', 'civil', 'common', 'complex', 'cozy', 'crisp', 'devout', 'difficult', 'due', 'dumb', 'eerie', 'evil', 'excess', 'extra', 'fake', 'far', 'faux', 'fierce ', 'final', 'fit', 'foreign', 'fun', 'good', 'goofy', 'gratis', 'grey', 'groovy', 'gross', 'half', 'huge', 'humdrum', 'inside', 'kaput', 'left', 'level', 'lewd', 'magenta', 'makeshift', 'mammoth', 'medium', 'modern', 'moot', 'naive', 'nearby', 'next', 'nonstop', 'north', 'notable', 'offbeat', 'ok', 'online', 'offline', 'outside', 'overwrought', 'premium', 'pricey', 'pro', 'quaint', 'random', 'rear', 'rebel', 'ritzy', 'savvy', 'sexy', 'shut', 'shy', 'sleek', 'smug', 'solemn', 'south', 'stark', 'superb', 'taboo', 'teenage', 'top', 'tranquil', 'true', 'ultra', 'understood', 'unfair', 'unknown', 'upbeat', 'upstairs', 'vanilla', 'various', 'widespread', 'woozy', 'wrong',
+//in
+'certain', 'highfalutin', 'main', 'vain'];
 
 module.exports = fns.uncompress_suffixes(arr, compressed);
 
@@ -694,7 +695,9 @@ var fns = _dereq_('../fns');
 //uncompressed country names
 var countries = ['andorra', 'antarctica', 'antigua and barbuda', 'aruba', 'bahamas', 'bangladesh', 'barbados', 'belgium', 'belize', 'bermuda', 'bonaire', 'brazil', 'brunei', 'burkina faso', 'burundi', 'burma', 'cape verde',
 // 'chad',
-'chile', 'comoros', 'congo-brazzaville', 'cuba', 'curacao', 'cote d\'ivoire', 'denmark', 'djibouti', 'dominica', 'east timor', 'ecuador', 'egypt', 'el salvador', 'fiji', 'france', 'french guiana', 'germany', 'gibraltar', 'greece', 'grenada', 'guam', 'guinea-bissau', 'guadeloupe', 'guernsey', 'haiti', 'honduras', 'hungary', 'hong kong', 'isle of man', 'iraq', 'israel', 'ivory coast', 'italy', 'jamaica', 'jersey', 'kenya', 'kiribati', 'kosovo', 'kuwait', 'laos', 'lesotho', 'libya', 'luxembourg', 'macao', 'malawi', 'mali', 'malta', 'martinique', 'mayotte', 'moldova', 'mozambique', 'montserrat', 'montenegro', 'nauru', 'niue', 'netherlands', 'nicaragua', 'niger', 'palau', 'panama', 'peru', 'samoa', 'san marino', 'saint helena', 'sint maarten', 'singapore', 'sri lanka', 'suriname', 'sweden', 'timor-leste', 'trinidad and tobago', 'tonga', 'tokelau', 'turkey', 'tuvalu', 'u.s.a.', 'united kingdom', 'u.k.', 'usa', 'ussr', 'vanuatu', 'vietnam', 'vatican city', 'wales', 'wallis and futuna', 'yemen', 'zimbabwe'];
+'chile', 'comoros', 'congo-brazzaville', 'cuba', 'curacao', 'cote d\'ivoire', 'denmark', 'djibouti', 'dominica', 'east timor', 'ecuador', 'egypt', 'el salvador', 'fiji', 'france', 'french guiana', 'germany', 'gibraltar', 'greece', 'grenada', 'guam', 'guinea-bissau', 'guadeloupe', 'guernsey', 'haiti', 'honduras', 'hungary', 'hong kong', 'isle of man', 'iraq', 'israel', 'ivory coast', 'italy', 'jamaica', 'jersey', 'kenya', 'kiribati', 'kosovo', 'kuwait', 'laos', 'lesotho', 'libya', 'luxembourg', 'macao', 'malawi', 'mali', 'malta', 'martinique', 'mayotte', 'moldova', 'mozambique', 'montserrat', 'montenegro', 'nauru', 'niue', 'netherlands', 'nicaragua', 'niger', 'palau', 'panama', 'peru', 'samoa', 'san marino', 'saint helena', 'sint maarten', 'singapore', 'sri lanka', 'suriname', 'sweden', 'timor-leste', 'trinidad and tobago', 'tonga', 'tokelau', 'turkey', 'tuvalu', 'u.s.a.', 'united kingdom', 'u.k.', 'usa', 'ussr', 'vanuatu', 'vietnam', 'vatican city', 'wales', 'wallis and futuna', 'yemen', 'zimbabwe',
+//'in'
+'spain', 'benin', 'bahrain', 'saint martin', 'liechtenstein'];
 var compressed_countries = {
   sland: 'christmas i,norfolk i,bouvet i',
   slands: 'british virgin i,u.s. virgin i,turks and caicos i,pitcairn i,northern mariana i,marshall i,cayman i,faroe i,falkland i,cook i,cocos i,keeling i,solomon i',
@@ -722,7 +725,6 @@ var compressed_countries = {
   da: 'ugan,cana,rwan',
   us: 'belar,mauriti,cypr',
   al: 'nep,seneg,portug',
-  in: 'spa,ben,bahra,saint mart,liechtenste',
   go: 'dr con,to,trinidad-toba',
   la: 'anguil,venezue,ango,guatema',
   es: 'united stat,philippin,united arab emirat,seychell,maldiv',
@@ -734,7 +736,9 @@ var compressed_countries = {
 countries = fns.uncompress_suffixes(countries, compressed_countries);
 
 /////uncomressed cities
-var cities = ['aalborg', 'abu dhabi', 'ahmedabad', 'almaty', 'antwerp', 'aqaba', 'ashdod', 'ashgabat', 'athens', 'auckland', 'bogota', 'brussels', 'calgary', 'cape town', 'cebu', 'curitiba', 'doha', 'dushanbe', 'frankfurt', 'genoa', 'ghent', 'giza', 'graz', 'guangzhou', 'haifa', 'hanoi', 'helsinki', 'ho chi minh', 'homs', 'i̇zmir', 'jakarta', 'kiev', 'kingston', 'klaipeda', 'kobe', 'kosice', 'krakow', 'la plata', 'luxembourg', 'medellín', 'mexico', 'miskolc', 'montevideo', 'montreal', 'moscow', 'nagoya', 'nis', 'odessa', 'oslo', 'ottawa', 'palermo', 'paris', 'perth', 'phnom penh', 'phoenix', 'port elizabeth', 'poznan', 'prague', 'reykjavik', 'riga', 'rome', 'rosario', 'seville', 'skopje', 'stockholm', 'stuttgart', 'sydney', 'tbilisi', 'tegucigalpa', 'the hague', 'thessaloniki', 'tokyo', 'toulouse', 'trondheim', 'tunis', 'turku', 'utrecht', 'warsaw', 'winnipeg', 'wroclaw', 'zagreb'];
+var cities = ['aalborg', 'abu dhabi', 'ahmedabad', 'almaty', 'antwerp', 'aqaba', 'ashdod', 'ashgabat', 'athens', 'auckland', 'bogota', 'brussels', 'calgary', 'cape town', 'cebu', 'curitiba', 'doha', 'dushanbe', 'frankfurt', 'genoa', 'ghent', 'giza', 'graz', 'guangzhou', 'haifa', 'hanoi', 'helsinki', 'ho chi minh', 'homs', 'i̇zmir', 'jakarta', 'kiev', 'kingston', 'klaipeda', 'kobe', 'kosice', 'krakow', 'la plata', 'luxembourg', 'medellín', 'mexico', 'miskolc', 'montevideo', 'montreal', 'moscow', 'nagoya', 'nis', 'odessa', 'oslo', 'ottawa', 'palermo', 'paris', 'perth', 'phnom penh', 'phoenix', 'port elizabeth', 'poznan', 'prague', 'reykjavik', 'riga', 'rome', 'rosario', 'seville', 'skopje', 'stockholm', 'stuttgart', 'sydney', 'tbilisi', 'tegucigalpa', 'the hague', 'thessaloniki', 'tokyo', 'toulouse', 'trondheim', 'tunis', 'turku', 'utrecht', 'warsaw', 'winnipeg', 'wroclaw', 'zagreb',
+//in
+'tianjin', 'berlin', 'turin', 'dublin'];
 
 var suffix_compressed_cities = {
   burg: 'saint peters,yekaterin,ham,til,gothen,salz',
@@ -747,7 +751,6 @@ var suffix_compressed_cities = {
   on: 'ly,lond,yang,inche,daeje,lisb',
   en: 'shenzh,eindhov,pils,copenhag,berg',
   ng: 'beiji,chittago,pyongya,kaohsiu,taichu',
-  in: 'tianj,berl,tur,dubl,duned',
   es: 'los angel,nant,napl,buenos air,f',
   la: 'pueb,mani,barranquil,kampa,guatema',
   or: 'salvad,san salvad,ulan bat,marib',
@@ -941,12 +944,13 @@ var compressed = {
   sa: 'el,ro,tere,there',
   ee: 'aim,d,desir,ren',
   va: 'a,el,e,i',
-  in: 'caitl,er,kar,krist',
   on: 'alis,man,shann,shar',
   an: 'meag,meg,megh,sus'
 };
 
-var list = ['abigail', 'aicha', 'alya', 'andrea', 'annika', 'beatriz', 'bettye', 'brandi', 'brooke', 'carol', 'celeste', 'chelsea', 'cheryl', 'chloe', 'claire', 'cleo', 'constanza', 'consuelo', 'crystal', 'dominique', 'dorothea', 'eleanor', 'eliza', 'erika', 'fay', 'faye', 'fern', 'gail', 'genevieve', 'gertrude', 'gladys', 'heidi', 'ingrid', 'jade', 'jill', 'jo', 'jodie', 'joni', 'kate', 'katie', 'kathryn', 'kay', 'kim', 'krystal', 'latoya', 'laxmi', 'leigh', 'lindsay', 'lupe', 'lynn', 'mae', 'malika', 'margo', 'marguerite', 'marisol', 'maritza', 'maude', 'maya', 'mildred', 'miriam', 'monique', 'mrignayani', 'naomi', 'nell', 'nikki', 'olga', 'paige', 'pam', 'parvati', 'pearl', 'reba', 'robyn', 'rosalind', 'shania', 'sheryl', 'sue', 'sybil', 'tami', 'tamika', 'therese', 'toni', 'gisele'];
+var list = ['abigail', 'aicha', 'alya', 'andrea', 'annika', 'beatriz', 'bettye', 'brandi', 'brooke', 'carol', 'celeste', 'chelsea', 'cheryl', 'chloe', 'claire', 'cleo', 'constanza', 'consuelo', 'crystal', 'dominique', 'dorothea', 'eleanor', 'eliza', 'erika', 'fay', 'faye', 'fern', 'gail', 'genevieve', 'gertrude', 'gladys', 'heidi', 'ingrid', 'jade', 'jill', 'jo', 'jodie', 'joni', 'kate', 'katie', 'kathryn', 'kay', 'kim', 'krystal', 'latoya', 'laxmi', 'leigh', 'lindsay', 'lupe', 'lynn', 'mae', 'malika', 'margo', 'marguerite', 'marisol', 'maritza', 'maude', 'maya', 'mildred', 'miriam', 'monique', 'mrignayani', 'naomi', 'nell', 'nikki', 'olga', 'paige', 'pam', 'parvati', 'pearl', 'reba', 'robyn', 'rosalind', 'shania', 'sheryl', 'sue', 'sybil', 'tami', 'tamika', 'therese', 'toni', 'gisele',
+//in
+'caitlin', 'erin', 'karin', 'kristin'];
 list = fns.uncompress_suffixes(list, compressed);
 
 for (var i = 0; i < list.length; i++) {

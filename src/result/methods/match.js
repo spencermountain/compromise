@@ -89,6 +89,8 @@ const splitMethods = (Text) => {
   };
   //alias 'and'
   methods.and = methods.match;
+  //this is for ie8 compat !?
+  methods.ifHas = methods.if;
 
   //hook them into result.proto
   Object.keys(methods).forEach((k) => {

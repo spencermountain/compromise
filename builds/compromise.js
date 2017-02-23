@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.27",
+  "version": "7.0.28",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -2815,6 +2815,8 @@ var splitMethods = function splitMethods(Text) {
   };
   //alias 'and'
   methods.and = methods.match;
+  //this is for ie8 compat !?
+  methods.ifHas = methods.if;
 
   //hook them into result.proto
   Object.keys(methods).forEach(function (k) {
@@ -6414,7 +6416,7 @@ var Sentence = function (_Terms) {
   }, {
     key: 'mainVerb',
     value: function mainVerb() {
-      var terms = this.match('(#Adverb|#Auxillary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
+      var terms = this.match('(#Adverb|#Auxillary|#Verb|#Negative|#Particle)+').ifHas('#Verb'); //this should be (much) smarter
       if (terms.found) {
         terms = terms.list[0].terms;
         return new Verb(terms, this.lexicon, this.refText, this.refTerms);
@@ -7814,7 +7816,7 @@ var Verbs = function (_Text) {
   }], [{
     key: 'find',
     value: function find(r, n) {
-      r = r.match('(#Adverb|#Auxillary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
+      r = r.match('(#Adverb|#Auxillary|#Verb|#Negative|#Particle)+').ifHas('#Verb'); //this should be (much) smarter
       r = r.splitAfter('#Comma');
       if (typeof n === 'number') {
         r = r.get(n);

@@ -77,6 +77,14 @@ exports.copy = (o) => {
   });
   return o2;
 };
+exports.extend = (obj, a) => {
+  obj = exports.copy(obj);
+  let keys = Object.keys(a);
+  for(let i = 0; i < keys.length; i++) {
+    obj[keys[i]] = a[keys[i]];
+  }
+  return obj;
+};
 
 //colorization
 exports.green = function(str) {

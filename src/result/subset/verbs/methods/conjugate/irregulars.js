@@ -1,5 +1,6 @@
 'use strict';
-const irregulars = require('../../../../../data').irregular_verbs;
+const irregulars = require('../../../../../data').irregular_verbs; //weeee!
+const fns = require('../../../../../fns'); //weeee!
 const infArr = Object.keys(irregulars);
 const forms = [
   'Participle',
@@ -14,7 +15,7 @@ const forms = [
 const checkIrregulars = function(str) {
   //fast infinitive lookup
   if (irregulars[str] !== undefined) {
-    let obj = Object.assign({}, irregulars[str]);
+    let obj = fns.copy(irregulars[str]);
     obj.Infinitive = str;
     return obj;
   }
@@ -23,7 +24,7 @@ const checkIrregulars = function(str) {
     for(let o = 0; o < forms.length; o++) {
       let irObj = irregulars[infArr[i]];
       if (irObj[forms[o]] === str) {
-        let obj = Object.assign({}, irObj);
+        let obj = fns.copy(irObj);
         obj.Infinitive = infArr[i];
         return obj;
       }

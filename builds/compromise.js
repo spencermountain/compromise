@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.21",
+  "version": "7.0.22",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -1594,9 +1594,6 @@ var irregular = {
   bleed: {
     PastTense: 'bled'
   },
-  'break': {
-    PastTense: 'broke'
-  },
   breed: {
     PastTense: 'bred'
   },
@@ -1952,6 +1949,10 @@ var irregular = {
     PastTense: 'suited',
     Actor: 'suiter'
   }
+};
+//es3 literal support
+irregular['break'] = {
+  PastTense: 'broke'
 };
 Object.keys(participles).forEach(function (inf) {
   if (irregular[inf]) {

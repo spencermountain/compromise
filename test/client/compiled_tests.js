@@ -5,7 +5,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.21",
+  "version": "7.0.23",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -1596,9 +1596,6 @@ var irregular = {
   bleed: {
     PastTense: 'bled'
   },
-  'break': {
-    PastTense: 'broke'
-  },
   breed: {
     PastTense: 'bred'
   },
@@ -1955,6 +1952,10 @@ var irregular = {
     Actor: 'suiter'
   }
 };
+//es3 literal support
+irregular['break'] = {
+  PastTense: 'broke'
+};
 Object.keys(participles).forEach(function (inf) {
   if (irregular[inf]) {
     irregular[inf].Participle = participles[inf];
@@ -2258,6 +2259,14 @@ exports.copy = function (o) {
     o2[k] = o[k];
   });
   return o2;
+};
+exports.extend = function (obj, a) {
+  obj = exports.copy(obj);
+  var keys = Object.keys(a);
+  for (var i = 0; i < keys.length; i++) {
+    obj[keys[i]] = a[keys[i]];
+  }
+  return obj;
 };
 
 //colorization
@@ -7093,12 +7102,13 @@ module.exports = niceNumber;
 
 var p = _dereq_('../paths');
 var numbers = p.data.numbers;
+var fns = p.fns;
 
 //setup number-word data
-var ones = Object.assign({}, numbers.ordinal.ones, numbers.cardinal.ones);
-var teens = Object.assign({}, numbers.ordinal.teens, numbers.cardinal.teens);
-var tens = Object.assign({}, numbers.ordinal.tens, numbers.cardinal.tens);
-var multiples = Object.assign({}, numbers.ordinal.multiples, numbers.cardinal.multiples);
+var ones = fns.extend(numbers.ordinal.ones, numbers.cardinal.ones);
+var teens = fns.extend(numbers.ordinal.teens, numbers.cardinal.teens);
+var tens = fns.extend(numbers.ordinal.tens, numbers.cardinal.tens);
+var multiples = fns.extend(numbers.ordinal.multiples, numbers.cardinal.multiples);
 
 module.exports = {
   ones: ones,
@@ -8330,14 +8340,15 @@ module.exports = multiWord;
 },{"./conjugate":135,"./toBe":144}],140:[function(_dereq_,module,exports){
 'use strict';
 
-var irregulars = _dereq_('../../../../../data').irregular_verbs;
+var irregulars = _dereq_('../../../../../data').irregular_verbs; //weeee!
+var fns = _dereq_('../../../../../fns'); //weeee!
 var infArr = Object.keys(irregulars);
 var forms = ['Participle', 'Gerund', 'PastTense', 'PresentTense', 'FuturePerfect', 'PerfectTense', 'Actor'];
 
 var checkIrregulars = function checkIrregulars(str) {
   //fast infinitive lookup
   if (irregulars[str] !== undefined) {
-    var obj = Object.assign({}, irregulars[str]);
+    var obj = fns.copy(irregulars[str]);
     obj.Infinitive = str;
     return obj;
   }
@@ -8346,7 +8357,7 @@ var checkIrregulars = function checkIrregulars(str) {
     for (var o = 0; o < forms.length; o++) {
       var irObj = irregulars[infArr[i]];
       if (irObj[forms[o]] === str) {
-        var _obj = Object.assign({}, irObj);
+        var _obj = fns.copy(irObj);
         _obj.Infinitive = infArr[i];
         return _obj;
       }
@@ -8358,7 +8369,7 @@ var checkIrregulars = function checkIrregulars(str) {
 module.exports = checkIrregulars;
 // console.log(checkIrregulars('bit'));
 
-},{"../../../../../data":8}],141:[function(_dereq_,module,exports){
+},{"../../../../../data":8,"../../../../../fns":40}],141:[function(_dereq_,module,exports){
 'use strict';
 
 var rules = _dereq_('./data/rules');

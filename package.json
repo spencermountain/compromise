@@ -28,6 +28,7 @@
     "babelify": "7.3.0",
     "babili": "0.0.11",
     "browserify": "13.0.1",
+    "browserify-glob": "^0.2.0",
     "chalk": "^1.1.3",
     "codacy-coverage": "^2.0.0",
     "derequire": "^2.0.3",

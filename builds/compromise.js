@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.18",
+  "version": "7.0.19",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@ module.exports={
     "babelify": "7.3.0",
     "babili": "0.0.11",
     "browserify": "13.0.1",
+    "browserify-glob": "^0.2.0",
     "chalk": "^1.1.3",
     "codacy-coverage": "^2.0.0",
     "derequire": "^2.0.3",
@@ -9272,7 +9273,9 @@ var extra = {
 };
 
 var all_children = function all_children(obj) {
-
+  if (obj === true) {
+    return [];
+  }
   var children = Object.keys(obj || {});
   //two levels deep
   children.forEach(function (str) {
@@ -9329,8 +9332,6 @@ var build = function build() {
 };
 
 module.exports = build();
-// console.log(all.Duration);
-// console.log(all_children(tree['NounPhrase']));
 
 },{"./conflicts":155,"./tree":157}],157:[function(_dereq_,module,exports){
 "use strict";

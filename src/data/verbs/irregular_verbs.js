@@ -68,9 +68,6 @@ let irregular = {
   bet: {
     Actor: 'better'
   },
-  bind: {
-    PastTense: 'bound'
-  },
   bite: {
     Gerund: 'biting',
     PastTense: 'bit'
@@ -110,10 +107,6 @@ let irregular = {
   dig: {
     Gerund: 'digging',
     PastTense: 'dug'
-  },
-  do: {
-    PastTense: 'did',
-    PresentTense: 'does'
   },
   draw: {
     PastTense: 'drew'
@@ -294,9 +287,6 @@ let irregular = {
     Gerund: 'spinning',
     PastTense: 'spun'
   },
-  spread: {
-    PastTense: 'spread'
-  },
   stand: {
     PastTense: 'stood'
   },
@@ -431,12 +421,22 @@ let irregular = {
     Actor: 'suiter'
   }
 };
-//es3 literal support
+//fancy es3 literal support
 irregular['break'] = {
   PastTense: 'broke'
 };
 irregular['catch'] = {
   PastTense: 'caught'
+};
+irregular['do'] = {
+  PastTense: 'did',
+  PresentTense: 'does'
+};
+irregular['bind'] = {
+  PastTense: 'bound',
+};
+irregular['spread'] = {
+  PastTense: 'spread'
 };
 Object.keys(participles).forEach((inf) => {
   if (irregular[inf]) {

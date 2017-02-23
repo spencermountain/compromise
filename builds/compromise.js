@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "7.0.24",
+  "version": "7.0.25",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -1584,9 +1584,6 @@ var irregular = {
   bet: {
     Actor: 'better'
   },
-  bind: {
-    PastTense: 'bound'
-  },
   bite: {
     Gerund: 'biting',
     PastTense: 'bit'
@@ -1626,10 +1623,6 @@ var irregular = {
   dig: {
     Gerund: 'digging',
     PastTense: 'dug'
-  },
-  'do': {
-    PastTense: 'did',
-    PresentTense: 'does'
   },
   draw: {
     PastTense: 'drew'
@@ -1810,9 +1803,6 @@ var irregular = {
     Gerund: 'spinning',
     PastTense: 'spun'
   },
-  spread: {
-    PastTense: 'spread'
-  },
   stand: {
     PastTense: 'stood'
   },
@@ -1947,12 +1937,22 @@ var irregular = {
     Actor: 'suiter'
   }
 };
-//es3 literal support
+//fancy es3 literal support
 irregular['break'] = {
   PastTense: 'broke'
 };
 irregular['catch'] = {
   PastTense: 'caught'
+};
+irregular['do'] = {
+  PastTense: 'did',
+  PresentTense: 'does'
+};
+irregular['bind'] = {
+  PastTense: 'bound'
+};
+irregular['spread'] = {
+  PastTense: 'spread'
 };
 Object.keys(participles).forEach(function (inf) {
   if (irregular[inf]) {

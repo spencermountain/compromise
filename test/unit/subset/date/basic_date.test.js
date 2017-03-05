@@ -32,9 +32,10 @@ test('date-parse :', function(t) {
     ['february 10th', [1, 10, null]],
     ['february 30th', [1, 30, null]],
     ['jan 1921', [0, null, 1921]],
-  //invalid dates
-  // ['303rd of March 1969', [2, null, 1969]],
-  // ['4103', [null, null, null]],
+    //invalid dates
+    // ['303rd of March 1969', [2, null, 1969]],
+    // ['4103', [null, null, null]],
+
   // ['January 5th 4032', [0, 5, null]],
   ].forEach(function(a) {
     var arr = nlp(a[0]).dates().data();

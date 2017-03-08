@@ -23,3 +23,10 @@ test('sentence():', function(t) {
   });
   t.end();
 });
+
+test('normalize():', function(t) {
+  let str = nlp(' so... you like DONUTS? have all the donuts in the WORLD!!!').normalize().out('text');
+  let want = 'so you like donuts? have all the donuts in the world!';
+  t.equal(str, want, '.normalize()');
+  t.end();
+});

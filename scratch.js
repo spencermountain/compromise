@@ -7,6 +7,9 @@ var nlp = require('./src/index');
 // let sotu = corpus.sotu.parsed()[23];
 // const fresh = require('./test/unit/lib/freshPrince.js');
 
+// bug.1
+//  .? vs *
+
 // var tagSet = {
 //   Noun: {
 //     Singular: {
@@ -21,6 +24,4 @@ var nlp = require('./src/index');
 // };
 // console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
 
-var r = nlp('on June 5th 1992. thursday September 9th 2016 at 3am. 2018/03/28').dates();
-console.log(r.data()[1]);
-// console.log(r.out('array'));
+console.log(nlp(' so... you like DONUTS? have all the donuts in the WORLD!!!').normalize().out());

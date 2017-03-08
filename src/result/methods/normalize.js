@@ -17,6 +17,8 @@ const methods = {
       let t = ts.terms[0];
       if (i > 0) {
         t.whitespace.before = ' ';
+      } else if (i === 0) {
+        t.whitespace.before = '';
       }
       t.whitespace.after = '';
     });
@@ -25,13 +27,14 @@ const methods = {
 
   /** make first-word titlecase, and people, places titlecase */
   case: (r) => {
-    r.terms().list.forEach((ts, i) => {
-      let t = ts.terms[0];
-      if (i === 0 || t.tag.Person || t.tag.Place || t.tag.Organization) {
-        ts.toTitleCase();
-      } else {
-        ts.toLowerCase();
-      }
+    r.list.forEach((ts) => {
+      ts.terms.forEach((t, i) => {
+        if (i === 0 || t.tag.Person || t.tag.Place || t.tag.Organization) {
+          ts.toTitleCase();
+        } else {
+          ts.toLowerCase();
+        }
+      });
     });
     return r;
   },
@@ -43,11 +46,20 @@ const methods = {
 
   /** remove commas, semicolons - but keep sentence-ending punctuation*/
   punctuation: (r) => {
-    r.terms().list.forEach((ts, i) => {
-      let t = ts.terms[0];
-      if (i < ts.terms.length - 1) {
-        t.text = t.killPunctuation();
+    r.list.forEach((ts) => {
+      //first-term punctuation
+      ts.terms[0]._text = ts.terms[0]._text.replace(/^¿/, '');
+      //middle-terms
+      for(let i = 0; i < ts.terms.length - 1; i++) {
+        let t = ts.terms[i];
+        //remove non-sentence-ending stuff
+        t._text = t._text.replace(/[:;,]$/, '');
       }
+      //replace !!! with !
+      let last = ts.terms[ts.terms.length - 1];
+      last._text = last._text.replace(/\.+$/, '.');
+      last._text = last._text.replace(/!+$/, '!');
+      last._text = last._text.replace(/\?+!?$/, '?'); //support '?!'
     });
     return r;
   },

@@ -66,6 +66,7 @@ const addMethods = (Text) => {
         methods[fn](this);
       }
     });
+    return this;
   };
   return Text;
 };

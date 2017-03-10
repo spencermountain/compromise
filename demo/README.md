@@ -1,5 +1,5 @@
 
-check out the interesting demos at [http://compromise.cool/demos](compromise.cool/demos).
+check out the interesting demos at [compromise.cool/demos](http://compromise.cool/demos).
 
 these are a some simple static examples to help get things going.
 

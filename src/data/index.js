@@ -13,19 +13,19 @@ module.exports = {
   'units': require('./values/units'),
 
   'dates': require('./dates/dates'),
-  'holidays': require('./dates/holidays'),
+  // 'holidays': require('./dates/holidays'),
 
-  'professions': require('./nouns/professions'),
+  // 'professions': require('./nouns/professions'),
   'abbreviations': require('./nouns/abbreviations'),
   // 'demonyms': require('./nouns/demonyms'),
   'irregular_plurals': require('./nouns/irregular_plurals'),
-  'places': require('./nouns/places'),
+  // 'places': require('./nouns/places'),
   'uncountables': require('./nouns/uncountables'),
   'nouns': require('./nouns/nouns'),
 
   // 'organizations': require('./organizations/organizations'),
   // 'sportsTeams': require('./organizations/sportsTeams'),
-  'bands': require('./organizations/bands'),
+  // 'bands': require('./organizations/bands'),
   'orgWords': require('./organizations/orgWords'),
 
   'adjectives': require('./adjectives/adjectives'),

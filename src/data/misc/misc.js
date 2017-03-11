@@ -267,9 +267,6 @@ const compact = {
   //some manual adverbs (the rest are generated)
   'Adverb': require('./adverbs'),
 
-  //interjections, expressions
-  'Expression': require('./expressions'),
-
   //family-terms are people
   Person: [
     'father',

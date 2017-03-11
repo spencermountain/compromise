@@ -11,17 +11,19 @@ const tags = {
   Expression: require(path + 'expressions'),
   FemaleName: require(path + 'female'),
   FirstName: require(path + 'firstnames'),
+  Holiday: require(path + 'holidays'),
   LastName: require(path + 'lastnames'),
   MaleName: require(path + 'male'),
   Organization: require(path + 'organizations'),
   SportsTeam: require(path + 'sportsTeams'),
+  Actor: require(path + 'professions'),
 };
 
-const utils = {
-  orgWords: require(path + 'orgWords'),
-  uncountable: require(path + 'uncountables'),
-  PhrasalVerb: require(path + 'phrasals'),
-};
+// const utils = {
+//   orgWords: require(path + 'orgWords'),
+//   uncountable: require(path + 'uncountables'),
+//   PhrasalVerb: require(path + 'phrasals'),
+// };
 
 // console.time('trie-unpack');
 //turn these compressed strings into queryable tries (using `nlp-compromise/efrt` library)

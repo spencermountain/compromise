@@ -1,6 +1,6 @@
 'use strict';
 const log = require('../paths').log;
-const isPlural = require('../../../result/subset/nouns/isPlural');
+const isPlural = require('../../result/subset/nouns/isPlural');
 const path = 'tagger/plural';
 
 const pluralStep = function(ts) {

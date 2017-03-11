@@ -1,6 +1,6 @@
 'use strict';
 const fixContraction = require('./fix');
-const Term = require('../../../term');
+const Term = require('../../term');
 
 const numberRange = (ts) => {
   for(let i = 0; i < ts.terms.length; i++) {

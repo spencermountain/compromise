@@ -1,6 +1,7 @@
 //directory of files to pack with scripts/pack.js
 module.exports = {
   // adjectives: require('./adjectives'),
+  adverbs: require('./adverbs'),
   airports: require('./airports'),
   cities: require('./cities'),
   countries: require('./countries'),
@@ -12,9 +13,11 @@ module.exports = {
   lastnames: require('./lastnames'),
   male: require('./male'),
   organizations: require('./organizations'),
-  orgWords: require('./orgWords'),
-  phrasals: require('./phrasals'),
+  prepositions: require('./prepositions'),
   professions: require('./professions'),
   sportsTeams: require('./sportsTeams'),
-  uncountables: require('./uncountables'),
+
+// uncountables: require('./uncountables'),
+// orgWords: require('./orgWords'),
+// phrasals: require('./phrasals'),
 };

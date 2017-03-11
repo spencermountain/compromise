@@ -12,6 +12,6 @@ exec('mkdir ./src/lexicon/_packed/');
 Object.keys(data).forEach((k) => {
   let packed = efrt.pack(data[k]);
   let src = './src/lexicon/_packed/_' + k + '.js';
-  let content = 'module.exports=\'' + packed + '\'';
+  let content = 'module.exports="' + packed + '"';
   fs.writeFileSync(src, content, 'utf8');
 });

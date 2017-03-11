@@ -24,4 +24,4 @@ var nlp = require('./src/index');
 // };
 // console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
 
-console.log(nlp(' he was nice; cool.    so... you like DONUTS?! have all the donuts in the WORLD!!!').normalize().out());
+nlp('the Toronto Raptors').debug();

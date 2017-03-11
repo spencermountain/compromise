@@ -1,9 +1,7 @@
 //just a few named-organizations
 //no acronyms needed. no product/brand pollution.
 module.exports = [
-  // '20th century fox',
-  // '3m',
-  // '7-eleven',
+
   'abc',
   'academy of sciences',
   'acer',

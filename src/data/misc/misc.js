@@ -25,6 +25,11 @@ const misc = {
 };
 
 const compact = {
+  Organization: [
+    '20th century fox',
+    '3m',
+    '7-eleven',
+  ],
   Adjective: [
     'so called', //?
     'on board',

@@ -187,8 +187,6 @@ const compact = {
   //determiners
   'Determiner': require('./determiners'),
 
-  //prepositions
-  'Preposition': require('./prepositions'),
 
   //modal verbs
   'Modal': [
@@ -264,8 +262,6 @@ const compact = {
     'what',
     'which'
   ],
-  //some manual adverbs (the rest are generated)
-  'Adverb': require('./adverbs'),
 
   //family-terms are people
   Person: [

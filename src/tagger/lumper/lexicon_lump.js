@@ -6,7 +6,7 @@ const log = p.log;
 const lexicon = p.lexicon;
 const fns = p.fns;
 const path = 'tagger/multiple';
-// const tries = require('../../lexicon');
+const tries = require('../../tries');
 
 const combineMany = (ts, i, count) => {
   for (let n = 0; n < count; n++) {
@@ -52,18 +52,17 @@ const lexicon_lump = function (ts) {
     let normal = ts.terms[i].normal + ' ' + ts.terms[i + 1].normal;
     let text = ts.terms[i].text + ' ' + ts.terms[i + 1].text;
     let pos = lexicon[normal] || lexicon[text];
+
+    if (!pos) {
+      pos = tries.lookup(normal);
+    }
+
     if (pos) {
       combine(ts, i);
       ts.terms[i].tagAs(pos, 'multiples-lexicon');
     }
-  // Object.keys()
-  // for(let o = 0; o < tries.tags.length; o++) {
-  //   if (tries.tags[o][0].has(normal)) {
-  //     combine(ts, i);
-  //     ts.terms[i].tagAs(tries.tags[o][1], 'multiples-lexicon');
-  //   }
-  // }
   }
+
 
   //try the user's lexicon
   Object.keys(uLexicon).forEach((str) => {

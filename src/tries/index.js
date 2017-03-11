@@ -12,13 +12,13 @@ const tags = {
   LastName: require(path + 'lastnames'),
   MaleName: require(path + 'male'),
   Organization: require(path + 'organizations'),
-  PhrasalVerb: require(path + 'phrasals'),
   SportsTeam: require(path + 'sportsTeams'),
 };
 
 const utils = {
   orgWords: require(path + 'orgWords'),
   uncountable: require(path + 'uncountables'),
+  PhrasalVerb: require(path + 'phrasals'),
 };
 
 // console.time('trie-unpack');

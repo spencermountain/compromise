@@ -24,4 +24,4 @@ var nlp = require('./src/index');
 // };
 // console.log(nlp('it is mother of pearl', lexicon, tagSet).terms().last().out('tags'));
 
-nlp('mexico').debug();
+nlp('the stool falls over').sentences().toPresentTense().debug();

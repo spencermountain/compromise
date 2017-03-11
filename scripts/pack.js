@@ -3,7 +3,7 @@ require('shelljs/global');
 config.silent = true;
 const efrt = require('efrt');
 const fs = require('fs');
-const data = require('../src/lexicon');
+const data = require('../src/lexicon/data');
 
 //cleanup. remove old builds
 exec('rm -rf ./src/lexicon/_packed/');

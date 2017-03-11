@@ -1,6 +1,5 @@
 'use strict';
 const fns = require('../fns');
-//names with a distinctive signal that they identify as a female, internationally
 
 //compressed by frequent suffixes
 //comprssed with

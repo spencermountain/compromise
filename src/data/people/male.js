@@ -318,5 +318,3 @@ let suffix_compressed = {
 arr = fns.uncompress_suffixes(arr, suffix_compressed);
 
 module.exports = arr;
-
-// console.log(JSON.stringify(arr, null, 2))

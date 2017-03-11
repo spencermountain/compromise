@@ -1,4 +1,6 @@
 module.exports = {
   adjectives: require('./adjectives'),
-  superlatives: require('./superlatives'),
+  male: require('./male'),
+  female: require('./female'),
+  lastnames: require('./lastnames'),
 };

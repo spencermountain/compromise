@@ -1,5 +1,5 @@
 'use strict';
-const markov = require('./data/neighbours');
+const markov = require('./rules/neighbours');
 const afterThisWord = markov.afterThisWord;
 const beforeThisWord = markov.beforeThisWord;
 const beforeThisPos = markov.beforeThisPos;

@@ -1,6 +1,6 @@
 'use strict';
 const log = require('../paths').log;
-const rules = require('./data/punct_rules');
+const rules = require('./rules/punct_rules');
 const path = 'tagger/punctuation';
 
 //not so smart (right now)

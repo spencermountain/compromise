@@ -1,6 +1,6 @@
 'use strict';
 const log = require('../paths').log;
-const rules = require('./data/word_rules');
+const rules = require('./rules/word_rules');
 const path = 'tagger/suffix';
 
 const suffix_step = function(s) {

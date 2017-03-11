@@ -1,7 +1,7 @@
 'use strict';
 const fns = require('../paths').fns;
-const emojiReg = require('./data/emoji_regex');
-const emoticon = require('./data/emoticon_list');
+const emojiReg = require('./rules/emoji_regex');
+const emoticon = require('./rules/emoticon_list');
 //test for forms like ':woman_tone2:‍:ear_of_rice:'
 //https://github.com/Kikobeats/emojis-keywords/blob/master/index.js
 const isCommaEmoji = (t) => {
@@ -18,7 +18,7 @@ const isCommaEmoji = (t) => {
     if (t.text.length > 35) {
       return false;
     }
-    return true
+    return true;
   }
   return false;
 };
@@ -26,10 +26,10 @@ const isCommaEmoji = (t) => {
 //check against emoticon whitelist
 const isEmoticon = (t) => {
   //normalize the 'eyes'
-  let str = t.text.replace(/^[:;]/, ':')
-  str = str.replace(/[:;]$/, ':')
-  return emoticon[str]
-}
+  let str = t.text.replace(/^[:;]/, ':');
+  str = str.replace(/[:;]$/, ':');
+  return emoticon[str];
+};
 
 //
 const emojiStep = (ts) => {

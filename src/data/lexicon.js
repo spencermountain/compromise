@@ -50,8 +50,8 @@ addArr(data.dates.relative, 'RelativeDay');
 addArr(data.holidays, 'Holiday');
 
 addArr(data.professions, 'Actor'); //?
-addArr(data.demonyms, 'Demonym');
-// addArr(data.sportsTeams, 'SportsTeam');
+// addArr(data.demonyms, 'Demonym');
+addArr(data.sportsTeams, 'SportsTeam');
 addArr(data.bands, 'Organization');
 addArr(data.orgWords, 'Noun');
 
@@ -121,11 +121,11 @@ addObj(data.firstnames);
 addArr(data.notable_people.female, 'FemaleName');
 addArr(data.notable_people.male, 'MaleName');
 addArr(data.titles, 'Singular');
-addArr(data.lastnames, 'LastName');
+// addArr(data.lastnames, 'LastName');
 addArr(data.places.airports, 'Place');
-addArr(data.places.cities, 'City');
-addArr(data.places.countries, 'Country');
-addArr(data.organizations, 'Organization');
+// addArr(data.places.cities, 'City');
+// addArr(data.places.countries, 'Country');
+// addArr(data.organizations, 'Organization');
 addArr(data.adjectives, 'Adjective');
 addArr(data.verbConverts, 'Adjective');
 addArr(data.superlatives, 'Adjective');

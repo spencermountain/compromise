@@ -133,7 +133,6 @@ module.exports = [
   'marseille',
   'medellín',
   'melbourne',
-  'mexico',
   'milan',
   'minsk',
   'miskolc',

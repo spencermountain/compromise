@@ -17,7 +17,11 @@ const check_lexicon = (str, sentence) => {
   if (lexicon[str]) {
     return lexicon[str];
   }
-  // console.log(tries.SportsTeam.has(str));
+  for(let i = 0; i < tries.tags.length; i++) {
+    if (tries.tags[i][0].has(str)) {
+      return tries.tags[i][1];
+    }
+  }
   return null;
 };
 

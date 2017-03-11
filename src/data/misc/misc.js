@@ -29,6 +29,9 @@ const compact = {
     '20th century fox',
     '3m',
     '7-eleven',
+    'g8',
+    'motel 6',
+    'vh1',
   ],
   Adjective: [
     'so called', //?

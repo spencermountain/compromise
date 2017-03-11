@@ -194,7 +194,6 @@ let cities = [
   'la plata',
   'luxembourg',
   'medellín',
-  'mexico',
   'miskolc',
   'montevideo',
   'montreal',

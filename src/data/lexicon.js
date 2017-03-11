@@ -51,7 +51,7 @@ addArr(data.holidays, 'Holiday');
 
 addArr(data.professions, 'Actor'); //?
 addArr(data.demonyms, 'Demonym');
-addArr(data.sportsTeams, 'SportsTeam');
+// addArr(data.sportsTeams, 'SportsTeam');
 addArr(data.bands, 'Organization');
 addArr(data.orgWords, 'Noun');
 

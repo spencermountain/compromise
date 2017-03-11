@@ -6,6 +6,7 @@ const log = p.log;
 const lexicon = p.lexicon;
 const fns = p.fns;
 const path = 'tagger/multiple';
+const tries = require('../../lexicon');
 
 const combineMany = (ts, i, count) => {
   for (let n = 0; n < count; n++) {
@@ -54,6 +55,13 @@ const lexicon_lump = function (ts) {
     if (pos) {
       combine(ts, i);
       ts.terms[i].tagAs(pos, 'multiples-lexicon');
+    }
+    // Object.keys()
+    for(let o = 0; o < tries.tags.length; o++) {
+      if (tries.tags[o][0].has(normal)) {
+        combine(ts, i);
+        ts.terms[i].tagAs(tries.tags[o][1], 'multiples-lexicon');
+      }
     }
   }
 

@@ -31,4 +31,5 @@ files.tags.forEach((arr) => {
 
 module.exports = files;
 // console.log(files.tags[0].has('aloof'));
-// console.log(files.tags[1].has('taipei'));
+console.log(files.tags[1][0].has('taipei'));
+console.log(files.tags[1][0].has('mexico'));

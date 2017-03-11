@@ -3,12 +3,14 @@
 const unpack = require('./efrt-unpack');
 let path = './_packed/_';
 const tags = {
-  Adjective: require(path + 'adjectives'),
+  // Adjective: require(path + 'adjectives'),
+  Place: require(path + 'airports'),
   City: require(path + 'cities'),
   Country: require(path + 'countries'),
   Demonym: require(path + 'demonyms'),
   Expression: require(path + 'expressions'),
   FemaleName: require(path + 'female'),
+  FirstName: require(path + 'firstnames'),
   LastName: require(path + 'lastnames'),
   MaleName: require(path + 'male'),
   Organization: require(path + 'organizations'),

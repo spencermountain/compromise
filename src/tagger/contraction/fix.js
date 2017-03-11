@@ -1,5 +1,5 @@
 'use strict';
-const Term = require('../../../term');
+const Term = require('../../term');
 
 const tags = {
   'not': 'Negative',

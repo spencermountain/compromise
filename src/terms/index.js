@@ -1,5 +1,5 @@
 'use strict';
-const tagger = require('./tagger');
+const tagger = require('../tagger');
 const build = require('./build');
 
 class Terms {

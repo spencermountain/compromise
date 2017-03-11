@@ -51,8 +51,8 @@ addArr(data.holidays, 'Holiday');
 
 addArr(data.professions, 'Actor'); //?
 // addArr(data.demonyms, 'Demonym');
-addArr(data.sportsTeams, 'SportsTeam');
-addArr(data.bands, 'Organization');
+// addArr(data.sportsTeams, 'SportsTeam');
+// addArr(data.bands, 'Organization');
 addArr(data.orgWords, 'Noun');
 
 //irregular verbs
@@ -117,7 +117,7 @@ data.nouns.forEach((n) => {
 });
 
 //let a rip.
-addObj(data.firstnames);
+// addObj(data.firstnames);
 addArr(data.notable_people.female, 'FemaleName');
 addArr(data.notable_people.male, 'MaleName');
 addArr(data.titles, 'Singular');
@@ -140,7 +140,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon['make']);
+// console.log(lexicon['ugh']);
 // console.log(fastConjugate('make'));
 // let t = new Term('shake');
 // t.tag.Verb = true;

@@ -29,15 +29,15 @@ test('sentence-change-tense:', function(t) {
 
     r.toPastTense();
     var str = r.out('text');
-    t.equal(str, a[1], str);
+    t.equal(str, a[1], 'pastTense-' + str);
 
     r.toFutureTense();
     str = r.out('text');
-    t.equal(str, a[2], str);
+    t.equal(str, a[2], 'futureTense-' + str);
 
     r.toPresentTense();
     str = r.out('text');
-    t.equal(str, a[0], str);
+    t.equal(str, a[0], 'presentTense-' + str);
 
   });
   t.end();

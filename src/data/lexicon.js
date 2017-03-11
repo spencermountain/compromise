@@ -47,9 +47,9 @@ addArr(Object.keys(data.irregular_plurals.toSingle), 'Plural');
 addArr(data.dates.days, 'WeekDay');
 addArr(data.dates.months, 'Month');
 addArr(data.dates.relative, 'RelativeDay');
-addArr(data.holidays, 'Holiday');
+// addArr(data.holidays, 'Holiday');
 
-addArr(data.professions, 'Actor'); //?
+// addArr(data.professions, 'Actor'); //?
 // addArr(data.demonyms, 'Demonym');
 // addArr(data.sportsTeams, 'SportsTeam');
 // addArr(data.bands, 'Organization');
@@ -122,7 +122,7 @@ addArr(data.notable_people.female, 'FemaleName');
 addArr(data.notable_people.male, 'MaleName');
 addArr(data.titles, 'Singular');
 // addArr(data.lastnames, 'LastName');
-addArr(data.places.airports, 'Place');
+// addArr(data.places.airports, 'Place');
 // addArr(data.places.cities, 'City');
 // addArr(data.places.countries, 'Country');
 // addArr(data.organizations, 'Organization');

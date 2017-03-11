@@ -3,26 +3,28 @@
 const unpack = require('./efrt-unpack');
 let path = './_packed/_';
 const files = {
-  adjectives: require(path + 'adjectives'),
-  cities: require(path + 'cities'),
-  countries: require(path + 'countries'),
-  demonyms: require(path + 'demonyms'),
-  expressions: require(path + 'expressions'),
-  female: require(path + 'female'),
-  lastnames: require(path + 'lastnames'),
-  male: require(path + 'male'),
-  organizations: require(path + 'organizations'),
+  Adjective: require(path + 'adjectives'),
+  City: require(path + 'cities'),
+  Country: require(path + 'countries'),
+  Demonym: require(path + 'demonyms'),
+  Expression: require(path + 'expressions'),
+  FemaleName: require(path + 'female'),
+  LastName: require(path + 'lastnames'),
+  MaleName: require(path + 'male'),
+  Organization: require(path + 'organizations'),
   orgWords: require(path + 'orgWords'),
-  phrasals: require(path + 'phrasals'),
-  sportsTeams: require(path + 'sportsTeams'),
-  uncountables: require(path + 'uncountables'),
+  PhrasalVerb: require(path + 'phrasals'),
+  SportsTeam: require(path + 'sportsTeams'),
+  uncountable: require(path + 'uncountables'),
 };
-console.time('trie');
+
+// console.time('trie-unpack');
+//turn these compressed strings into queryable tries (using `nlp-compromise/efrt` library)
 Object.keys(files).forEach((k) => {
   files[k] = unpack(files[k]);
 });
-console.timeEnd('trie');
+// console.timeEnd('trie-unpack');
 
-module.exports = unpack;
+module.exports = files;
 // console.log(files.adjectives.has('aloof'));
 // console.log(files.cities.has('taipei'));

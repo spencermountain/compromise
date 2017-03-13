@@ -54,7 +54,7 @@ const lexicon_lump = function (ts) {
     let pos = lexicon[normal] || lexicon[text];
 
     if (!pos) {
-      pos = tries.lookup(normal);
+      pos = tries.lookupMulti(normal);
     }
 
     if (pos) {

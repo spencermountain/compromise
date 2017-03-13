@@ -12,4 +12,4 @@ var nlp = require('./src/index');
 //  .? vs *
 
 
-nlp('he fucked up').debug();
+nlp('he slipped up').debug();

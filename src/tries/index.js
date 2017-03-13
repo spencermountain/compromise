@@ -3,7 +3,7 @@
 const unpack = require('./efrt-unpack');
 let path = './_packed/_';
 const tags = {
-  // Adjective: require(path + 'adjectives'),
+  Adjective: require(path + 'adjectives'),
   Adverb: require(path + 'adverbs'),
   Place: require(path + 'airports'),
   City: require(path + 'cities'),
@@ -56,9 +56,35 @@ const lookup = function(str) {
   return null;
 };
 
+//same as regular lookup, but if we know it's two-words
+const lookupMulti = function(str) {
+  const single = {
+    'Adjective': true,
+    'Place': true,
+    'Demonyms': true,
+    'FemaleName': true,
+    'LastName': true,
+    'MaleName': true,
+    'Professions': true,
+  };
+  if (utils.orgWords.has(str)) {
+    return 'Noun';
+  }
+  for(let i = 0; i < keys.length; i++) {
+    if (single[keys[i]]) {
+      continue;
+    }
+    if (tags[keys[i]].has(str)) {
+      return keys[i];
+    }
+  }
+  return null;
+};
+
 module.exports = {
   lookup: lookup,
-  utils: utils
+  utils: utils,
+  lookupMulti: lookupMulti,
 };
 // console.time('trie-query');
 // console.log(lookup('aloof'));

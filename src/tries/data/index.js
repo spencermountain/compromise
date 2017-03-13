@@ -1,6 +1,7 @@
-//directory of files to pack with scripts/pack.js
+//directory of files to pack with `node scripts/pack.js`
+//they are stored in compressed form in ../_packed
 module.exports = {
-  // adjectives: require('./adjectives'),
+  adjectives: require('./adjectives'),
   adverbs: require('./adverbs'),
   airports: require('./airports'),
   cities: require('./cities'),

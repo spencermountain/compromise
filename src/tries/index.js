@@ -1,7 +1,6 @@
 'use strict';
 //to change these packed files, edit ./data then run `node scripts/pack.js`
 const unpack = require('./efrt-unpack');
-let path = './_packed/_';
 const tags = {
   Adjective: require('./_packed/_adjectives'),
   Adverb: require('./_packed/_adverbs'),

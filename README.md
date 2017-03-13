@@ -10,6 +10,9 @@
   <a href="https://nodejs.org/api/documentation.html#documentation_stability_index">
     <img src="https://img.shields.io/badge/stability-stable-green.svg?style=flat-square" />
   </a>
+  <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
+    <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
+  </a>
 </div>
 
 <div align="center">
@@ -284,5 +287,3 @@ and
 )
 ❤️️
 </div>
-
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062)](https://www.codacy.com/app/spencerkelly86/nlp_compromise)

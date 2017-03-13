@@ -24,7 +24,7 @@ const tags = {
 const utils = {
   orgWords: require(path + 'orgWords'),
   uncountable: require(path + 'uncountables'),
-//   PhrasalVerb: require(path + 'phrasals'),
+  phrasals: require(path + 'phrasals'),
 };
 
 // console.time('trie-unpack');

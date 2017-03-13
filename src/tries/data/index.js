@@ -19,5 +19,5 @@ module.exports = {
   //utils
   uncountables: require('./uncountables'),
   orgWords: require('./orgWords'),
-// phrasals: require('./phrasals'),
+  phrasals: require('./phrasals'),
 };

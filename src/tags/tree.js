@@ -50,7 +50,8 @@ module.exports = {
     Copula: true,
     Modal: true,
     Participle: true,
-    Particle: true
+    Particle: true,
+    PhrasalVerb: true
   },
   Adjective: {
     Comparative: true,

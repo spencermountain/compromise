@@ -42,7 +42,7 @@ module.exports = [
   'forgiveness',
   'fowl',
   'fruit',
-  'fun',
+  // 'fun',
   'furniture',
   'gold',
   'golf',

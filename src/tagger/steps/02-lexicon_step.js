@@ -14,12 +14,12 @@ const check_lexicon = (str, sentence) => {
   if (custom[str]) {
     return custom[str];
   }
+  if (lexicon[str]) {
+    return lexicon[str];
+  }
   let tag = tries.lookup(str);
   if (tag) {
     return tag;
-  }
-  if (lexicon[str]) {
-    return lexicon[str];
   }
   return null;
 };

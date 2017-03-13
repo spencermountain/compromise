@@ -32,6 +32,7 @@ const tags = {
 const keys = Object.keys(tags);
 keys.forEach((tag) => {
   tags[tag] = unpack(tags[tag]);
+  tags[tag].cache();
 });
 // console.timeEnd('trie-unpack');
 

@@ -1,38 +1,42 @@
-'use strict';
+require('shelljs/global');
+const benchmark = require('./lib/speed');
+const fs = require('fs');
 const chalk = require('chalk');
-const corpus = require('nlp-corpus');
 
-setTimeout(() => {
+const fileSize = function(src) {
+  var stats = fs.statSync(src);
+  return stats['size'] / 1000.0;
+};
 
-  console.log(chalk.blue('\n\n==Warm-up, lexicon, etc=='));
-  console.time('pre');
-  const nlp = require('../src/index');
-  // const nlp = require('../builds/compromise.js');
-  console.timeEnd('pre');
+const redGreen = function(last, now, unit) {
+  const diff = now - last;
+  let percent = (diff / last) * 100;
+  percent = parseInt(percent, 10);
+  if (percent < 0) {
+    console.log('       ' + chalk.green(' ' + percent + '%     ' + diff + ' ' + unit));
+  } else if (percent === 0) {
+    console.log('       ' + chalk.yellow(' ' + percent + '%     ' + diff + ' ' + unit));
+  } else {
+    console.log('       ' + chalk.red('+' + percent + '%     ' + diff + ' ' + unit));
+  }
+  console.log('');
+};
 
-  console.log(chalk.cyan('\n\n==One sentence=='));
-  console.time('parse');
-  var m = nlp('spencer kelly and dr. spencer kelly');
-  console.timeEnd('parse');
+const compare = function(obj) {
+  console.log('');
+  let last = JSON.parse(fs.readFileSync('./scripts/lib/log.json'));
+  console.log('   size:');
+  redGreen(last.size, obj.size, 'kb');
+  console.log('   init:');
+  redGreen(last.init, obj.init, 'ms');
+  console.log('   parse:');
+  redGreen(last.big, obj.big, 'ms');
+};
 
-  console.log('\n');
-  console.time('match');
-  m.match('#Person').out();
-  console.timeEnd('match');
-
-  (() => {
-    let str = corpus.poe.parsed()[5];
-
-    console.log(chalk.green('\n\n==Long text=='));
-    console.time('parseBig');
-    let m2 = nlp(str);
-    console.timeEnd('parseBig');
-
-    console.log('\n');
-    console.time('matchBig');
-    m2.match('#Person').out('normal');
-    console.timeEnd('matchBig');
-    console.log('\n\n\n');
-  })();
-
-}, 200);
+benchmark((obj) => {
+  obj.size = fileSize('builds/compromise.min.js');
+  let out = JSON.stringify(obj, null, 2);
+  compare(obj);
+// console.log(out);
+// fs.writeFileSync('./scripts/lib/log.json', out);
+});

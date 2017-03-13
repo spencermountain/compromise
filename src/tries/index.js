@@ -3,29 +3,29 @@
 const unpack = require('./efrt-unpack');
 let path = './_packed/_';
 const tags = {
-  Adjective: require(path + 'adjectives'),
-  Adverb: require(path + 'adverbs'),
-  Place: require(path + 'airports'),
-  City: require(path + 'cities'),
-  Country: require(path + 'countries'),
-  Demonym: require(path + 'demonyms'),
-  Expression: require(path + 'expressions'),
-  FemaleName: require(path + 'female'),
-  FirstName: require(path + 'firstnames'),
-  Holiday: require(path + 'holidays'),
-  LastName: require(path + 'lastnames'),
-  MaleName: require(path + 'male'),
-  Noun: require(path + 'nouns'),
-  Organization: require(path + 'organizations'),
-  SportsTeam: require(path + 'sportsTeams'),
-  Actor: require(path + 'professions'),
-  Preposition: require(path + 'prepositions'),
+  Adjective: require('./_packed/_adjectives'),
+  Adverb: require('./_packed/_adverbs'),
+  Place: require('./_packed/_airports'),
+  City: require('./_packed/_cities'),
+  Country: require('./_packed/_countries'),
+  Demonym: require('./_packed/_demonyms'),
+  Expression: require('./_packed/_expressions'),
+  FemaleName: require('./_packed/_female'),
+  FirstName: require('./_packed/_firstnames'),
+  Holiday: require('./_packed/_holidays'),
+  LastName: require('./_packed/_lastnames'),
+  MaleName: require('./_packed/_male'),
+  Noun: require('./_packed/_nouns'),
+  Organization: require('./_packed/_organizations'),
+  SportsTeam: require('./_packed/_sportsTeams'),
+  Actor: require('./_packed/_professions'),
+  Preposition: require('./_packed/_prepositions'),
 };
 
 const utils = {
-  orgWords: require(path + 'orgWords'),
-  uncountable: require(path + 'uncountables'),
-  phrasals: require(path + 'phrasals'),
+  orgWords: require('./_packed/_orgWords'),
+  uncountable: require('./_packed/_uncountables'),
+  phrasals: require('./_packed/_phrasals'),
 };
 
 // console.time('trie-unpack');

@@ -151,5 +151,8 @@ module.exports = [
   'wildlife',
   'wine',
   'wood',
-  'wool'
+  'wool',
+  'world series',
+  'world',
+  'everything'
 ];

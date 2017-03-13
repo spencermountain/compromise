@@ -15,6 +15,7 @@ const tags = {
   Holiday: require(path + 'holidays'),
   LastName: require(path + 'lastnames'),
   MaleName: require(path + 'male'),
+  Noun: require(path + 'nouns'),
   Organization: require(path + 'organizations'),
   SportsTeam: require(path + 'sportsTeams'),
   Actor: require(path + 'professions'),

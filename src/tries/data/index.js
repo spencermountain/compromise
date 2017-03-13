@@ -13,6 +13,7 @@ module.exports = {
   holidays: require('./holidays'),
   lastnames: require('./lastnames'),
   male: require('./male'),
+  nouns: require('./nouns'),
   organizations: require('./organizations'),
   prepositions: require('./prepositions'),
   professions: require('./professions'),

@@ -2,7 +2,9 @@
 const parseTime = require('./parseTime');
 const weekdays = require('./weekday');
 const months = require('./month');
-//
+//a hugely-conservative and incomplete first-pass for parsing written-dates
+
+//validate a day-of-month
 const isDate = (num) => {
   if (num && num < 31 && num > 0) {
     return true;
@@ -10,7 +12,7 @@ const isDate = (num) => {
   return false;
 };
 
-//please change in one thousand years
+//please change this in one thousand years
 const isYear = (num) => {
   if (num && num > 1000 && num < 3000) {
     return true;
@@ -25,12 +27,12 @@ const parseDate = (r) => {
     date: null,
     weekday: null,
     year: null,
-    knownDate: null,
-    timeOfDay: null,
+    named: null,
+    time: null,
   };
   let m = r.match('(#Holiday|today|tomorrow|yesterday)');
   if (m.found) {
-    result.knownDate = m.out('normal');
+    result.named = m.out('normal');
   }
   m = r.match('#Month');
   if (m.found) {
@@ -42,10 +44,9 @@ const parseDate = (r) => {
   }
   m = r.match('#Time');
   if (m.found) {
-    result.timeOfDay = parseTime(r);
+    result.time = parseTime(r);
     r.not('#Time'); //unsure
   }
-
   //january fifth 1992
   m = r.match('#Month #Value #Year');
   if (m.found) {

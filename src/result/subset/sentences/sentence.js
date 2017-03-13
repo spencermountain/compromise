@@ -9,12 +9,6 @@ class Sentence extends Terms {
   constructor(arr, lexicon, refText, refTerms) {
     super(arr, lexicon, refText, refTerms);
   }
-  data() {
-    return {
-      text: this.out('text'),
-      normal: this.out('normal')
-    };
-  }
   /** inflect the main/first noun*/
   toSingular() {
     let nouns = this.match('#Noun').match('!#Pronoun').firstTerm();

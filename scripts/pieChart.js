@@ -4,6 +4,8 @@ config.silent = false;
 var browserify = './node_modules/.bin/browserify';
 var derequire = './node_modules/derequire/bin/cmd.js';
 
+exec('du -a ./src | sort -n -r | grep .js | head -n 10');
+
 //haha-engineering
 exec('npm i uglifyify');
 

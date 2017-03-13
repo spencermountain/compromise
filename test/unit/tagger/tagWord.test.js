@@ -58,6 +58,7 @@ test('pos from-lexicon', function (t) {
     ['invest', 'Verb'],
     ['investing', 'Verb'],
     [`wallys'`, 'Possessive'],
+    [`JDI University'`, 'Organization'],
   ];
   arr.forEach(function (a) {
     var term = nlp(a[0]).list[0].terms[0];

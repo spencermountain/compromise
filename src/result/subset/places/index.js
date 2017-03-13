@@ -3,14 +3,6 @@ const Text = require('../../index');
 const Place = require('./place');
 
 class Places extends Text {
-  data() {
-    return this.list.map((ts) => {
-      return {
-        text: ts.out('text'),
-        normal: ts.out('normal'),
-      };
-    });
-  }
   static find(r, n) {
     r = r.splitAfter('#Comma');
     r = r.match('#Place+');

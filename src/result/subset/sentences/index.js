@@ -6,11 +6,6 @@ class Sentences extends Text {
   constructor(arr, lexicon, reference) {
     super(arr, lexicon, reference);
   }
-  data() {
-    return this.list.map((ts) => {
-      return ts.data();
-    });
-  }
   /** conjugate the main/first verb*/
   toPastTense() {
     this.list = this.list.map((ts) => {

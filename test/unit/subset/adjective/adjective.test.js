@@ -17,7 +17,7 @@ test('==Adjective==', function (T) {
       ['low', 'low']
     ].forEach(function (a) {
       var arr = nlp(a[0]).adjectives().data();
-      var obj = arr[0];
+      var obj = arr[0] || {};
       str_test(obj.adverbForm, a[0], a[1], t);
     });
     t.end();
@@ -34,7 +34,7 @@ test('==Adjective==', function (T) {
       ['cute', 'cutest'],
     ].forEach(function (a) {
       var arr = nlp(a[0]).adjectives().data();
-      var obj = arr[0];
+      var obj = arr[0] || {};
       str_test(obj.superlative, a[0], a[1], t);
     });
     t.end();
@@ -51,7 +51,7 @@ test('==Adjective==', function (T) {
       ['cute', 'cuter'],
     ].forEach(function (a) {
       var arr = nlp(a[0]).adjectives().data();
-      var obj = arr[0];
+      var obj = arr[0] || {};
       str_test(obj.comparative, a[0], a[1], t);
     });
     t.end();
@@ -67,14 +67,14 @@ test('==Adjective==', function (T) {
       ['clean', 'cleanliness'],
     ].forEach(function (a) {
       var arr = nlp(a[0]).adjectives().data();
-      var obj = arr[0];
+      var obj = arr[0] || {};
       str_test(obj.nounForm, a[0], a[1], t);
     });
     t.end();
   });
   //
   T.test(' conjugate', function (t) {
-    var o = nlp('nice').adjectives().data()[0];
+    var o = nlp('nice').adjectives().data()[0] || {};
     str_test(o.comparative, 'nice', 'nicer', t);
     str_test(o.superlative, 'nice', 'nicest', t);
     str_test(o.adverbForm, 'nice', 'nicely', t);

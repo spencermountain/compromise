@@ -1,8 +1,5 @@
 'use strict';
 const fns = require('../fns');
-//these are adjectives that can become comparative + superlative with out "most/more"
-//its a whitelist for conjugation
-//this data is shared between comparative/superlative methods
 
 let compressed = {
   erate: 'degen,delib,desp,lit,mod',
@@ -199,3 +196,4 @@ let arr = [
 ];
 
 module.exports = fns.uncompress_suffixes(arr, compressed);
+// console.log(JSON.stringify(module.exports.sort(), null, 2));

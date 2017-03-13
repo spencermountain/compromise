@@ -25,6 +25,14 @@ const misc = {
 };
 
 const compact = {
+  Organization: [
+    '20th century fox',
+    '3m',
+    '7-eleven',
+    'g8',
+    'motel 6',
+    'vh1',
+  ],
   Adjective: [
     'so called', //?
     'on board',
@@ -179,8 +187,6 @@ const compact = {
   //determiners
   'Determiner': require('./determiners'),
 
-  //prepositions
-  'Preposition': require('./prepositions'),
 
   //modal verbs
   'Modal': [
@@ -256,11 +262,6 @@ const compact = {
     'what',
     'which'
   ],
-  //some manual adverbs (the rest are generated)
-  'Adverb': require('./adverbs'),
-
-  //interjections, expressions
-  'Expression': require('./expressions'),
 
   //family-terms are people
   Person: [

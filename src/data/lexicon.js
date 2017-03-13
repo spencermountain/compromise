@@ -3,7 +3,6 @@
 //the way we make it rn is a bit of a mess.
 const data = require('./index');
 const fns = require('./fns');
-const toPlural = require('../result/subset/nouns/methods/pluralize');
 const adj = require('../result/subset/adjectives/methods/index');
 const toAdjective = require('../result/subset/verbs/methods/toAdjective');
 const fastConjugate = require('../result/subset/verbs/methods/conjugate/faster');
@@ -21,7 +20,7 @@ const addArr = (arr, tag) => {
 };
 
 //let a rip
-addArr(data.uncountables, 'Noun');
+// addArr(data.uncountables, 'Noun');
 let units = data.units.words.filter((s) => s.length > 1);
 addArr(units, 'Unit');
 addArr(data.dates.durations, 'Duration');
@@ -47,13 +46,13 @@ addArr(Object.keys(data.irregular_plurals.toSingle), 'Plural');
 addArr(data.dates.days, 'WeekDay');
 addArr(data.dates.months, 'Month');
 addArr(data.dates.relative, 'RelativeDay');
-addArr(data.holidays, 'Holiday');
+// addArr(data.holidays, 'Holiday');
 
-addArr(data.professions, 'Actor'); //?
-addArr(data.demonyms, 'Demonym');
-addArr(data.sportsTeams, 'SportsTeam');
-addArr(data.bands, 'Organization');
-addArr(data.orgWords, 'Noun');
+// addArr(data.professions, 'Actor'); //?
+// addArr(data.demonyms, 'Demonym');
+// addArr(data.sportsTeams, 'SportsTeam');
+// addArr(data.bands, 'Organization');
+// addArr(data.orgWords, 'Noun');
 
 //irregular verbs
 Object.keys(data.irregular_verbs).forEach((inf) => {
@@ -110,23 +109,23 @@ data.verbConverts.forEach((a) => {
 });
 
 //inflect nouns
-data.nouns.forEach((n) => {
-  lexicon[n] = 'Singular';
-  let plural = toPlural(n);
-  lexicon[plural] = 'Plural';
-});
+// data.nouns.forEach((n) => {
+//   lexicon[n] = 'Singular';
+//   let plural = toPlural(n);
+//   lexicon[plural] = 'Plural';
+// });
 
 //let a rip.
-addObj(data.firstnames);
+// addObj(data.firstnames);
 addArr(data.notable_people.female, 'FemaleName');
 addArr(data.notable_people.male, 'MaleName');
 addArr(data.titles, 'Singular');
-addArr(data.lastnames, 'LastName');
-addArr(data.places.airports, 'Place');
-addArr(data.places.cities, 'City');
-addArr(data.places.countries, 'Country');
-addArr(data.organizations, 'Organization');
-addArr(data.adjectives, 'Adjective');
+// addArr(data.lastnames, 'LastName');
+// addArr(data.places.airports, 'Place');
+// addArr(data.places.cities, 'City');
+// addArr(data.places.countries, 'Country');
+// addArr(data.organizations, 'Organization');
+// addArr(data.adjectives, 'Adjective');
 addArr(data.verbConverts, 'Adjective');
 addArr(data.superlatives, 'Adjective');
 addArr(data.currencies, 'Currency');
@@ -140,7 +139,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon['make']);
+// console.log(lexicon['ugh']);
 // console.log(fastConjugate('make'));
 // let t = new Term('shake');
 // t.tag.Verb = true;

@@ -9,7 +9,7 @@ const fileSize = function(src) {
 };
 
 const redGreen = function(last, now, unit) {
-  const diff = now - last;
+  const diff = (now - last).toFixed(2);
   let percent = (diff / last) * 100;
   percent = parseInt(percent, 10);
   if (percent < 0) {

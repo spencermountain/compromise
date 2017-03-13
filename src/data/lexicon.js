@@ -3,7 +3,6 @@
 //the way we make it rn is a bit of a mess.
 const data = require('./index');
 const fns = require('./fns');
-const toPlural = require('../result/subset/nouns/methods/pluralize');
 const adj = require('../result/subset/adjectives/methods/index');
 const toAdjective = require('../result/subset/verbs/methods/toAdjective');
 const fastConjugate = require('../result/subset/verbs/methods/conjugate/faster');
@@ -110,11 +109,11 @@ data.verbConverts.forEach((a) => {
 });
 
 //inflect nouns
-data.nouns.forEach((n) => {
-  lexicon[n] = 'Singular';
-  let plural = toPlural(n);
-  lexicon[plural] = 'Plural';
-});
+// data.nouns.forEach((n) => {
+//   lexicon[n] = 'Singular';
+//   let plural = toPlural(n);
+//   lexicon[plural] = 'Plural';
+// });
 
 //let a rip.
 // addObj(data.firstnames);

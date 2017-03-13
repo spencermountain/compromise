@@ -1,7 +1,9 @@
 //most nouns do not nead to be listed
 //for whatever reasons, these look like not-nouns
 //so make sure they become nouns
-module.exports = [
+const toPlural = require('../../result/subset/nouns/methods/pluralize');
+
+let nouns = [
   //double-consonant rule
   'egg',
   'bottle',
@@ -13,6 +15,7 @@ module.exports = [
   'banking',
   'body',
   'breakfast',
+  'canary',
   'ceiling',
   'city',
   'credit card',
@@ -22,14 +25,12 @@ module.exports = [
   'economy',
   'energy',
   'event',
-  'everything',
   'example',
   'fl oz',
   'friend',
   'funding',
-  'god',
   'glacier',
-  'canary',
+  'god',
   'grand slam',
   'head start',
   'home',
@@ -51,7 +52,10 @@ module.exports = [
   'thing',
   'things',
   'tragedy',
-  'us dollar',
-  'world',
-  'world series'
+  'us dollar'
 ];
+let len = nouns.length;
+for(let i = 0; i < len; i++) {
+  nouns.push(toPlural(nouns[i]));
+}
+module.exports = nouns;

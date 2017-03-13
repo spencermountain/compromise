@@ -13,7 +13,7 @@ module.exports = {
 
   'abbreviations': require('./nouns/abbreviations'),
   'irregular_plurals': require('./nouns/irregular_plurals'),
-  'nouns': require('./nouns/nouns'),
+  // 'nouns': require('./nouns/nouns'),
 
   'superlatives': require('./adjectives/superlatives'),
   'verbConverts': require('./adjectives/verbConverts'),

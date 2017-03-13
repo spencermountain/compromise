@@ -126,7 +126,7 @@ addArr(data.titles, 'Singular');
 // addArr(data.places.cities, 'City');
 // addArr(data.places.countries, 'Country');
 // addArr(data.organizations, 'Organization');
-addArr(data.adjectives, 'Adjective');
+// addArr(data.adjectives, 'Adjective');
 addArr(data.verbConverts, 'Adjective');
 addArr(data.superlatives, 'Adjective');
 addArr(data.currencies, 'Currency');

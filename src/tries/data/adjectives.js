@@ -1,3 +1,4 @@
+//adjectives that either aren't covered by rules, or have superlative/comparative forms
 module.exports = [
   'aberrant',
   'ablaze',

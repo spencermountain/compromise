@@ -50,7 +50,7 @@ module.exports = [
   'mmm',
   'ooo',
   'yay',
-  'uh-huh',
+  'uh huh',
   'boo',
   'wow',
   'nope',

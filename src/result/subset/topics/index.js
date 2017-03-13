@@ -1,16 +1,10 @@
 'use strict';
 const Text = require('../../index');
-// const Noun = require('./noun');
 
 class Things extends Text {
-  data() {
-    return this.list.map((ts) => {
-      return ts.data();
-    });
-  }
   static find(r, n) {
     r = r.clauses();
-    //find people/places/organizations
+    //find people, places, and organizations
     let yup = r.people();
     yup.concat(r.places());
     yup.concat(r.organizations());

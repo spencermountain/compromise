@@ -2,29 +2,6 @@
 const conjugate = require('./conjugate');
 const toBe = require('./toBe');
 
-// const generic = {
-//   FutureTense: (o) => {
-//     return 'will ' + o.Infinitive;
-//   },
-//
-//   PerfectTense: (o) => {
-//     return 'have ' + (o.Participle || o.PastTense);
-//   },
-//
-//   Pluperfect: (o) => {
-//     if (o.PastTense) {
-//       return 'had ' + o.PastTense;
-//     }
-//     return null;
-//   },
-//   FuturePerfect: (o) => {
-//     if (o.PastTense) {
-//       return 'will have ' + o.PastTense;
-//     }
-//     return null;
-//   }
-// };
-
 //conjugation using auxillaries+adverbs and stuff
 const multiWord = (vb, verbose) => {
   let isNegative = vb.negative.found;

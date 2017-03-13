@@ -21,11 +21,11 @@ const tags = {
   Preposition: require(path + 'prepositions'),
 };
 
-// const utils = {
-//   orgWords: require(path + 'orgWords'),
-//   uncountable: require(path + 'uncountables'),
+const utils = {
+  //   orgWords: require(path + 'orgWords'),
+  uncountable: require(path + 'uncountables'),
 //   PhrasalVerb: require(path + 'phrasals'),
-// };
+};
 
 // console.time('trie-unpack');
 //turn these compressed strings into queryable tries (using `nlp-compromise/efrt` library)
@@ -34,9 +34,17 @@ keys.forEach((tag) => {
   tags[tag] = unpack(tags[tag]);
   tags[tag].cache();
 });
+Object.keys(utils).forEach((k) => {
+  utils[k] = unpack(utils[k]);
+  utils[k].cache();
+});
 // console.timeEnd('trie-unpack');
 
 const lookup = function(str) {
+  //other ones
+  if (utils.uncountable.has(str)) {
+    return 'Noun';
+  }
   for(let i = 0; i < keys.length; i++) {
     if (tags[keys[i]].has(str)) {
       return keys[i];
@@ -46,7 +54,8 @@ const lookup = function(str) {
 };
 
 module.exports = {
-  lookup: lookup
+  lookup: lookup,
+  utils: utils
 };
 // console.time('trie-query');
 // console.log(lookup('aloof'));

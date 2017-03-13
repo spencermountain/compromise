@@ -20,7 +20,7 @@ module.exports = {
   // 'demonyms': require('./nouns/demonyms'),
   'irregular_plurals': require('./nouns/irregular_plurals'),
   // 'places': require('./nouns/places'),
-  'uncountables': require('./nouns/uncountables'),
+  // 'uncountables': require('./nouns/uncountables'),
   'nouns': require('./nouns/nouns'),
 
   // 'organizations': require('./organizations/organizations'),

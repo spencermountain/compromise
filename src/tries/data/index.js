@@ -16,8 +16,8 @@ module.exports = {
   prepositions: require('./prepositions'),
   professions: require('./professions'),
   sportsTeams: require('./sportsTeams'),
-
-// uncountables: require('./uncountables'),
+  //utils
+  uncountables: require('./uncountables'),
 // orgWords: require('./orgWords'),
 // phrasals: require('./phrasals'),
 };

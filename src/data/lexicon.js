@@ -21,7 +21,7 @@ const addArr = (arr, tag) => {
 };
 
 //let a rip
-addArr(data.uncountables, 'Noun');
+// addArr(data.uncountables, 'Noun');
 let units = data.units.words.filter((s) => s.length > 1);
 addArr(units, 'Unit');
 addArr(data.dates.durations, 'Duration');

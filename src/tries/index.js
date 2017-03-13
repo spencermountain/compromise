@@ -22,7 +22,7 @@ const tags = {
 };
 
 const utils = {
-  //   orgWords: require(path + 'orgWords'),
+  orgWords: require(path + 'orgWords'),
   uncountable: require(path + 'uncountables'),
 //   PhrasalVerb: require(path + 'phrasals'),
 };
@@ -43,6 +43,9 @@ Object.keys(utils).forEach((k) => {
 const lookup = function(str) {
   //other ones
   if (utils.uncountable.has(str)) {
+    return 'Noun';
+  }
+  if (utils.orgWords.has(str)) {
     return 'Noun';
   }
   for(let i = 0; i < keys.length; i++) {

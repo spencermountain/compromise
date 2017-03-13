@@ -18,6 +18,6 @@ module.exports = {
   sportsTeams: require('./sportsTeams'),
   //utils
   uncountables: require('./uncountables'),
-// orgWords: require('./orgWords'),
+  orgWords: require('./orgWords'),
 // phrasals: require('./phrasals'),
 };

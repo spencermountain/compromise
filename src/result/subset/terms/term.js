@@ -10,6 +10,18 @@ class Term extends Terms {
     super(arr, lexicon, refText, refTerms);
     this.t = this.terms[0];
   }
+  data() {
+    let t = this.t;
+    return {
+      spaceBefore: t.whitespace.before,
+      text: t.text,
+      spaceAfter: t.whitespace.after,
+      normal: t.normal,
+      implicit: t.silent_term,
+      bestTag: this.bestTag(),
+      tags: Object.keys(t.tag),
+    };
+  }
   bestTag() {
     let tags = Object.keys(this.t.tag);
     tags = tags.sort(); //alphabetical, first
@@ -25,18 +37,6 @@ class Term extends Terms {
       return 1;
     });
     return tags[0];
-  }
-  data() {
-    let t = this.t;
-    return {
-      spaceBefore: t.whitespace.before,
-      text: t.text,
-      spaceAfter: t.whitespace.after,
-      normal: t.normal,
-      implicit: t.silent_term,
-      bestTag: this.bestTag(),
-      tags: Object.keys(t.tag),
-    };
   }
 }
 module.exports = Term;

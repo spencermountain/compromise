@@ -1,11 +1,20 @@
 'use strict';
 const Text = require('../../index');
-const Adjective = require('./adjective');
+const methods = require('./methods');
 
 class Adjectives extends Text {
   data() {
     return this.list.map((ts) => {
-      return ts.data();
+      const str = ts.out('normal');
+      return {
+        comparative: methods.toComparative(str),
+        superlative: methods.toSuperlative(str),
+        adverbForm: methods.toAdverb(str),
+        nounForm: methods.toNoun(str),
+        verbForm: methods.toVerb(str),
+        normal: str,
+        text: this.out('text')
+      };
     });
   }
   static find(r, n) {
@@ -13,9 +22,6 @@ class Adjectives extends Text {
     if (typeof n === 'number') {
       r = r.get(n);
     }
-    r.list = r.list.map((ts) => {
-      return new Adjective(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
     return r;
   }
 }

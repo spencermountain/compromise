@@ -12,4 +12,4 @@ nlp.verbose('tagger');
 //  .? vs *
 
 
-nlp('fun').debug();
+nlp('JRL University').debug();

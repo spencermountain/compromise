@@ -26,7 +26,7 @@ module.exports = {
   // 'organizations': require('./organizations/organizations'),
   // 'sportsTeams': require('./organizations/sportsTeams'),
   // 'bands': require('./organizations/bands'),
-  'orgWords': require('./organizations/orgWords'),
+  // 'orgWords': require('./organizations/orgWords'),
 
   'adjectives': require('./adjectives/adjectives'),
   'superlatives': require('./adjectives/superlatives'),

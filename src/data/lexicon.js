@@ -53,7 +53,7 @@ addArr(data.dates.relative, 'RelativeDay');
 // addArr(data.demonyms, 'Demonym');
 // addArr(data.sportsTeams, 'SportsTeam');
 // addArr(data.bands, 'Organization');
-addArr(data.orgWords, 'Noun');
+// addArr(data.orgWords, 'Noun');
 
 //irregular verbs
 Object.keys(data.irregular_verbs).forEach((inf) => {

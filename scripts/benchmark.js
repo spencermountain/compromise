@@ -1,12 +1,7 @@
 require('shelljs/global');
-const benchmark = require('./lib/speed');
+const benchmark = require('./lib/benchmark');
 const fs = require('fs');
 const chalk = require('chalk');
-
-const fileSize = function(src) {
-  var stats = fs.statSync(src);
-  return stats['size'] / 1000.0;
-};
 
 const redGreen = function(last, now, unit) {
   const diff = (now - last).toFixed(2);
@@ -34,9 +29,8 @@ const compare = function(obj) {
 };
 
 benchmark((obj) => {
-  obj.size = fileSize('builds/compromise.min.js');
   let out = JSON.stringify(obj, null, 2);
   compare(obj);
-// console.log(out);
+  console.log(out);
 // fs.writeFileSync('./scripts/lib/log.json', out);
 });

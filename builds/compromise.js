@@ -13495,7 +13495,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //to change these packed files, edit ./data then run `node scripts/pack.js`
 
 var unpack = _dereq_('./efrt-unpack');
-var path = './_packed/_';
 var tags = {
   Adjective: _dereq_('./_packed/_adjectives'),
   Adverb: _dereq_('./_packed/_adverbs'),

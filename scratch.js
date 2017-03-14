@@ -11,6 +11,9 @@ var nlp = require('./src/index');
 // bug.1
 //  .? vs *
 
-console.log(nlp('He does not care.').sentences().toPresentTense().out());
+
+
+nlp('I\'m going to the shops').sentences().toPastTense().debug();
+nlp('london is calling').sentences().toNegative().debug();
 
 // nlp('economy').debug();

@@ -12,7 +12,7 @@ module.exports={
   "scripts": {
     "test": "node ./scripts/test.js",
     "browsertest": "node ./scripts/browserTest.js",
-    "build": "node ./scripts/build.js",
+    "build": "node ./scripts/build/index.js",
     "demo": "node ./scripts/demo.js",
     "watch": "node ./scripts/watch.js",
     "filesize": "node ./scripts/filesize.js",

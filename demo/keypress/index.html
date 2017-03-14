@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>compromise Demo</title>
-    <script type="text/javascript" src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
     <style>
       input {
         font-size: 30px;
@@ -29,23 +28,26 @@
       <div id="nothing"></div>
       <div id="past-verb-result"></div>
     </div>
-  </body>
-  <script type="text/javascript" language="javascript">
-      var nlp = window.nlp;
-      function toPast() {
-        var present = document.getElementById('verb').value || '';
-        var verbs=nlp(present).verbs()
-        console.log(verbs.out('text'))
-        if(!verbs.found){
-          document.getElementById('nothing').innerText = '(no verbs)';
-          document.getElementById('past-verb-result').innerText = '';
-          return
-        }
-        var obj = verbs.data()[0]
-        var past=obj.conjugations.PastTense    ||''
-        document.getElementById('nothing').innerText = '';
-        document.getElementById('past-verb-result').innerText = past;
+
+    <script type="text/javascript" src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
+    <script type="text/javascript" language="javascript">
+    var nlp = window.nlp;
+    function toPast() {
+      var present = document.getElementById('verb').value || '';
+      var verbs=nlp(present).verbs()
+      console.log(verbs.out('text'))
+      if(!verbs.found){
+        document.getElementById('nothing').innerText = '(no verbs)';
+        document.getElementById('past-verb-result').innerText = '';
+        return
       }
-      toPast();//fire!
-  </script>
+      var obj = verbs.data()[0]
+      var past=obj.conjugations.PastTense    ||''
+      document.getElementById('nothing').innerText = '';
+      document.getElementById('past-verb-result').innerText = past;
+    }
+    toPast();//fire!
+    </script>
+
+  </body>
 </html>

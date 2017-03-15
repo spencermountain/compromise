@@ -124,6 +124,13 @@ const compact = {
     'plus',
     'versus',
     'otherwise',
+    'as far as',
+    'as if',
+    'in case',
+    'provided that',
+    'supposing',
+    'no matter',
+    'yet',
   // 'not'
   ],
   Time: [

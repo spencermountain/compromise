@@ -27,11 +27,22 @@ const extendTags = function(newTags) {
 };
 
 //build a new pos-tagged Result obj from a string
-const fromString = (str, lexicon, tagSet) => {
+const fromString = (str, lexicon, tagSet, customRules) => {
   let sentences = tokenize(str);
+
+  //LS 13-03-17: include multiword lexicon entries in lexicon without white spaces or hypens
+  for (var key in lexicon) {
+    var noSpaceOrHypenKey = key.replace(/-|\s/g,"");
+
+    if(noSpaceOrHypenKey != key)
+    {
+      lexicon[noSpaceOrHypenKey] = lexicon[key];
+    }
+  }
+
   //make sure lexicon obeys standards
   lexicon = normalizeLex(lexicon);
-  let list = sentences.map((s) => Terms.fromString(s, lexicon));
+  let list = sentences.map((s) => Terms.fromString(s, lexicon, customRules));
   //extend tagset for this ref
   if (tagSet) {
     extendTags(tagSet);

@@ -104,4 +104,5 @@ Terms = require('./methods/out')(Terms);
 Terms = require('./methods/replace')(Terms);
 Terms = require('./methods/split')(Terms);
 Terms = require('./methods/transform')(Terms);
+Terms = require('./methods/lump')(Terms);
 module.exports = Terms;

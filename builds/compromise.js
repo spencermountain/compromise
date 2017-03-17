@@ -356,7 +356,7 @@ module.exports = lexicon;
 // console.timeEnd('lexicon');
 // console.log(Object.keys(lexicon).length);
 
-},{"../result/subset/adjectives/methods/index":41,"../result/subset/verbs/methods/conjugate/faster":114,"../result/subset/verbs/methods/toAdjective":125,"./fns":5,"./index":6}],8:[function(_dereq_,module,exports){
+},{"../result/subset/adjectives/methods/index":42,"../result/subset/verbs/methods/conjugate/faster":115,"../result/subset/verbs/methods/toAdjective":126,"./fns":5,"./index":6}],8:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = ['this', 'any', 'enough', 'each', 'whatever', 'every', 'these', 'another', 'plenty', 'whichever', 'neither', 'an', 'a', 'least', 'own', 'few', 'both', 'those', 'the', 'that', 'various', 'either', 'much', 'some', 'else',
@@ -401,7 +401,7 @@ var compact = {
 
   Place: ['new england', 'new hampshire', 'new jersey', 'new mexico', 'united states', 'united kingdom', 'great britain', 'great lakes', 'pacific ocean', 'atlantic ocean', 'indian ocean', 'arctic ocean', 'antarctic ocean', 'everglades'],
   //conjunctions
-  'Conjunction': ['yet', 'therefore', 'or', 'while', 'nor', 'whether', 'though', 'tho', 'because', 'cuz', 'but', 'for', 'and', 'however', 'before', 'although', 'how', 'plus', 'versus', 'otherwise'],
+  'Conjunction': ['yet', 'therefore', 'or', 'while', 'nor', 'whether', 'though', 'tho', 'because', 'cuz', 'but', 'for', 'and', 'however', 'before', 'although', 'how', 'plus', 'versus', 'otherwise', 'as far as', 'as if', 'in case', 'provided that', 'supposing', 'no matter', 'yet'],
   Time: [
   //date
   'noon', 'midnight', 'now', 'morning', 'evening', 'afternoon', 'night', 'breakfast time', 'lunchtime', 'dinnertime', 'ago', 'sometime', 'eod', 'oclock'],
@@ -1674,7 +1674,7 @@ exports.leftPad = function (str, width, char) {
   return str;
 };
 
-},{"./tags/colors":173}],22:[function(_dereq_,module,exports){
+},{"./tags/colors":175}],22:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 
@@ -1683,8 +1683,8 @@ var pkg = _dereq_('../package.json');
 var log = _dereq_('./log');
 
 //the main thing
-var nlp = function nlp(str, lexicon, tagSet) {
-  return buildResult(str, lexicon, tagSet);
+var nlp = function nlp(str, lexicon, tagSet, customRules) {
+  return buildResult(str, lexicon, tagSet, customRules);
 };
 
 //this is handy
@@ -1789,12 +1789,22 @@ var extendTags = function extendTags(newTags) {
 };
 
 //build a new pos-tagged Result obj from a string
-var fromString = function fromString(str, lexicon, tagSet) {
+var fromString = function fromString(str, lexicon, tagSet, customRules) {
   var sentences = tokenize(str);
+
+  //LS 13-03-17: include multiword lexicon entries in lexicon without white spaces or hypens
+  for (var key in lexicon) {
+    var noSpaceOrHypenKey = key.replace(/-|\s/g, "");
+
+    if (noSpaceOrHypenKey != key) {
+      lexicon[noSpaceOrHypenKey] = lexicon[key];
+    }
+  }
+
   //make sure lexicon obeys standards
   lexicon = normalizeLex(lexicon);
   var list = sentences.map(function (s) {
-    return Terms.fromString(s, lexicon);
+    return Terms.fromString(s, lexicon, customRules);
   });
   //extend tagset for this ref
   if (tagSet) {
@@ -1810,7 +1820,7 @@ var fromString = function fromString(str, lexicon, tagSet) {
 };
 module.exports = fromString;
 
-},{"../tags":175,"../term/methods/normalize/normalize":182,"./index":25,"./paths":37,"./tokenize":130}],25:[function(_dereq_,module,exports){
+},{"../tags":177,"../term/methods/normalize/normalize":184,"./index":25,"./paths":38,"./tokenize":131}],25:[function(_dereq_,module,exports){
 'use strict';
 //a Text is an array of termLists
 
@@ -1917,6 +1927,7 @@ Text = _dereq_('./methods/sort')(Text);
 Text = _dereq_('./methods/split')(Text);
 Text = _dereq_('./methods/tag')(Text);
 Text = _dereq_('./methods/normalize')(Text);
+Text = _dereq_('./methods/lump')(Text);
 
 var subset = {
   acronyms: _dereq_('./subset/acronyms'),
@@ -1953,7 +1964,7 @@ Object.keys(subset).forEach(function (k) {
   };
 });
 
-},{"./methods/array":26,"./methods/loops":27,"./methods/match":28,"./methods/normalize":29,"./methods/out":30,"./methods/sort":33,"./methods/split":35,"./methods/tag":36,"./subset/acronyms":38,"./subset/adjectives":39,"./subset/adverbs":47,"./subset/clauses":49,"./subset/contractions":53,"./subset/dates":55,"./subset/hashTags":62,"./subset/ngrams":66,"./subset/ngrams/endGrams":63,"./subset/ngrams/startGrams":67,"./subset/nouns":69,"./subset/organizations":78,"./subset/people":80,"./subset/phoneNumbers":82,"./subset/places":83,"./subset/quotations":85,"./subset/sentences":86,"./subset/sentences/questions":87,"./subset/sentences/statements":90,"./subset/terms":93,"./subset/topics":95,"./subset/urls":96,"./subset/values":97,"./subset/verbs":110}],26:[function(_dereq_,module,exports){
+},{"./methods/array":26,"./methods/loops":27,"./methods/lump":28,"./methods/match":29,"./methods/normalize":30,"./methods/out":31,"./methods/sort":34,"./methods/split":36,"./methods/tag":37,"./subset/acronyms":39,"./subset/adjectives":40,"./subset/adverbs":48,"./subset/clauses":50,"./subset/contractions":54,"./subset/dates":56,"./subset/hashTags":63,"./subset/ngrams":67,"./subset/ngrams/endGrams":64,"./subset/ngrams/startGrams":68,"./subset/nouns":70,"./subset/organizations":79,"./subset/people":81,"./subset/phoneNumbers":83,"./subset/places":84,"./subset/quotations":86,"./subset/sentences":87,"./subset/sentences/questions":88,"./subset/sentences/statements":91,"./subset/terms":94,"./subset/topics":96,"./subset/urls":97,"./subset/values":98,"./subset/verbs":111}],26:[function(_dereq_,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -2070,7 +2081,7 @@ var genericMethods = function genericMethods(Text) {
 
 module.exports = genericMethods;
 
-},{"../../terms":195}],27:[function(_dereq_,module,exports){
+},{"../../terms":197}],27:[function(_dereq_,module,exports){
 'use strict';
 //this methods are simply loops around each termList object.
 
@@ -2094,6 +2105,45 @@ var addMethods = function addMethods(Text) {
 module.exports = addMethods;
 
 },{}],28:[function(_dereq_,module,exports){
+'use strict';
+
+var lumpMethods = function lumpMethods(Text) {
+
+  var methods = {
+
+    lump: function lump() {
+      this.list.forEach(function (ts) {
+        ts.lump();
+      });
+      return this;
+    },
+
+    lumpIntoParent: function lumpIntoParent(tags, description) {
+      for (var mI = this.list.length - 1; mI >= 0; mI--) {
+        var firstTerm = this.list[mI].firstTerm();
+        var lastTerm = this.list[mI].lastTerm();
+
+        this.parent.lumpIntoOne(firstTerm, lastTerm, tags, description);
+
+        // let lumpedTerm = this.list[mI].lump(); 
+        // lumpedTerm.tagAs(tags, description);
+
+      }
+
+      return this.parent;
+    }
+  };
+
+  //hook them into result.proto
+  Object.keys(methods).forEach(function (k) {
+    Text.prototype[k] = methods[k];
+  });
+  return Text;
+};
+
+module.exports = lumpMethods;
+
+},{}],29:[function(_dereq_,module,exports){
 'use strict';
 
 var splitMethods = function splitMethods(Text) {
@@ -2184,7 +2234,7 @@ var splitMethods = function splitMethods(Text) {
 
 module.exports = splitMethods;
 
-},{}],29:[function(_dereq_,module,exports){
+},{}],30:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -2274,7 +2324,7 @@ var addMethods = function addMethods(Text) {
 };
 module.exports = addMethods;
 
-},{}],30:[function(_dereq_,module,exports){
+},{}],31:[function(_dereq_,module,exports){
 'use strict';
 
 var _topk = _dereq_('./topk');
@@ -2399,7 +2449,7 @@ var addMethods = function addMethods(Text) {
 
 module.exports = addMethods;
 
-},{"./offset":31,"./topk":32}],31:[function(_dereq_,module,exports){
+},{"./offset":32,"./topk":33}],32:[function(_dereq_,module,exports){
 'use strict';
 /** say where in the original output string they are found*/
 
@@ -2432,7 +2482,7 @@ var allOffset = function allOffset(r) {
 };
 module.exports = allOffset;
 
-},{}],32:[function(_dereq_,module,exports){
+},{}],33:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -2471,7 +2521,7 @@ var topk = function topk(r, n) {
 
 module.exports = topk;
 
-},{}],33:[function(_dereq_,module,exports){
+},{}],34:[function(_dereq_,module,exports){
 'use strict';
 
 var sorter = _dereq_('./methods');
@@ -2531,7 +2581,7 @@ var addMethods = function addMethods(Text) {
 
 module.exports = addMethods;
 
-},{"./methods":34}],34:[function(_dereq_,module,exports){
+},{"./methods":35}],35:[function(_dereq_,module,exports){
 'use strict';
 
 //perform sort on pre-computed values
@@ -2637,7 +2687,7 @@ exports.freq = function (r) {
   return r;
 };
 
-},{}],35:[function(_dereq_,module,exports){
+},{}],36:[function(_dereq_,module,exports){
 'use strict';
 
 var splitMethods = function splitMethods(Text) {
@@ -2687,7 +2737,7 @@ var splitMethods = function splitMethods(Text) {
 
 module.exports = splitMethods;
 
-},{}],36:[function(_dereq_,module,exports){
+},{}],37:[function(_dereq_,module,exports){
 'use strict';
 
 var splitMethods = function splitMethods(Text) {
@@ -2736,7 +2786,7 @@ var splitMethods = function splitMethods(Text) {
 
 module.exports = splitMethods;
 
-},{}],37:[function(_dereq_,module,exports){
+},{}],38:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -2747,7 +2797,7 @@ module.exports = {
   tags: _dereq_('../tags')
 };
 
-},{"../data":6,"../fns":21,"../log":23,"../tags":175,"../terms":195}],38:[function(_dereq_,module,exports){
+},{"../data":6,"../fns":21,"../log":23,"../tags":177,"../terms":197}],39:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -2798,7 +2848,7 @@ var Acronyms = function (_Text) {
 
 module.exports = Acronyms;
 
-},{"../../index":25}],39:[function(_dereq_,module,exports){
+},{"../../index":25}],40:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -2855,7 +2905,7 @@ var Adjectives = function (_Text) {
 
 module.exports = Adjectives;
 
-},{"../../index":25,"./methods":41}],40:[function(_dereq_,module,exports){
+},{"../../index":25,"./methods":42}],41:[function(_dereq_,module,exports){
 'use strict';
 //an obj of adjectives that can be converted to superlative + comparative, via the lexicon data
 
@@ -2870,7 +2920,7 @@ data.verbConverts.forEach(function (a) {
 });
 module.exports = convertables;
 
-},{"../../../../data":6}],41:[function(_dereq_,module,exports){
+},{"../../../../data":6}],42:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -2881,7 +2931,7 @@ module.exports = {
   toVerb: _dereq_('./toVerb')
 };
 
-},{"./toAdverb":42,"./toComparative":43,"./toNoun":44,"./toSuperlative":45,"./toVerb":46}],42:[function(_dereq_,module,exports){
+},{"./toAdverb":43,"./toComparative":44,"./toNoun":45,"./toSuperlative":46,"./toVerb":47}],43:[function(_dereq_,module,exports){
 //turn 'quick' into 'quickly'
 'use strict';
 
@@ -3012,7 +3062,7 @@ var adj_to_adv = function adj_to_adv(str) {
 
 module.exports = adj_to_adv;
 
-},{}],43:[function(_dereq_,module,exports){
+},{}],44:[function(_dereq_,module,exports){
 //turn 'quick' into 'quickly'
 'use strict';
 
@@ -3099,7 +3149,7 @@ var to_comparative = function to_comparative(str) {
 
 module.exports = to_comparative;
 
-},{"./convertable":40}],44:[function(_dereq_,module,exports){
+},{"./convertable":41}],45:[function(_dereq_,module,exports){
 'use strict';
 //convert 'cute' to 'cuteness'
 
@@ -3172,7 +3222,7 @@ var to_noun = function to_noun(w) {
 
 module.exports = to_noun;
 
-},{}],45:[function(_dereq_,module,exports){
+},{}],46:[function(_dereq_,module,exports){
 //turn 'quick' into 'quickest'
 'use strict';
 
@@ -3260,7 +3310,7 @@ var to_superlative = function to_superlative(str) {
 
 module.exports = to_superlative;
 
-},{"./convertable":40}],46:[function(_dereq_,module,exports){
+},{"./convertable":41}],47:[function(_dereq_,module,exports){
 'use strict';
 
 var data = _dereq_('../../../../data');
@@ -3293,7 +3343,7 @@ var toVerb = function toVerb(str) {
 };
 module.exports = toVerb;
 
-},{"../../../../data":6}],47:[function(_dereq_,module,exports){
+},{"../../../../data":6}],48:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3344,7 +3394,7 @@ var Adverbs = function (_Text) {
 
 module.exports = Adverbs;
 
-},{"../../index":25,"./toAdjective":48}],48:[function(_dereq_,module,exports){
+},{"../../index":25,"./toAdjective":49}],49:[function(_dereq_,module,exports){
 //turns 'quickly' into 'quick'
 'use strict';
 
@@ -3408,7 +3458,7 @@ var toAdjective = function toAdjective(str) {
 // console.log(toAdjective('marvelously') === 'marvelous')
 module.exports = toAdjective;
 
-},{}],49:[function(_dereq_,module,exports){
+},{}],50:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3446,7 +3496,7 @@ var Clauses = function (_Text) {
 
 module.exports = Clauses;
 
-},{"../../index":25}],50:[function(_dereq_,module,exports){
+},{"../../index":25}],51:[function(_dereq_,module,exports){
 'use strict';
 
 //the plumbing to turn two words into a contraction
@@ -3526,7 +3576,7 @@ var contract = function contract(ts) {
 
 module.exports = contract;
 
-},{}],51:[function(_dereq_,module,exports){
+},{}],52:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3604,7 +3654,7 @@ var Contraction = function (_Terms) {
 
 module.exports = Contraction;
 
-},{"../../paths":37,"./contract":50}],52:[function(_dereq_,module,exports){
+},{"../../paths":38,"./contract":51}],53:[function(_dereq_,module,exports){
 'use strict';
 //find contractable, expanded-contractions
 
@@ -3621,7 +3671,7 @@ var find = function find(r) {
 };
 module.exports = find;
 
-},{}],53:[function(_dereq_,module,exports){
+},{}],54:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3715,7 +3765,7 @@ var Contractions = function (_Text) {
 
 module.exports = Contractions;
 
-},{"../../index":25,"./contraction":51,"./findPossible":52}],54:[function(_dereq_,module,exports){
+},{"../../index":25,"./contraction":52,"./findPossible":53}],55:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3760,7 +3810,7 @@ var Date = function (_Terms) {
 
 module.exports = Date;
 
-},{"../../paths":37,"./parseDate":58}],55:[function(_dereq_,module,exports){
+},{"../../paths":38,"./parseDate":59}],56:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3837,7 +3887,7 @@ var Dates = function (_Text) {
 
 module.exports = Dates;
 
-},{"../../index":25,"./date":54,"./month":57,"./weekday":61}],56:[function(_dereq_,module,exports){
+},{"../../index":25,"./date":55,"./month":58,"./weekday":62}],57:[function(_dereq_,module,exports){
 'use strict';
 
 //follow the javascript scheme
@@ -3873,7 +3923,7 @@ exports.shortMonths = {
   'dec': 11
 };
 
-},{}],57:[function(_dereq_,module,exports){
+},{}],58:[function(_dereq_,module,exports){
 'use strict';
 
 var data = _dereq_('./data');
@@ -3915,7 +3965,7 @@ module.exports = {
 
 };
 
-},{"./data":56}],58:[function(_dereq_,module,exports){
+},{"./data":57}],59:[function(_dereq_,module,exports){
 'use strict';
 
 var parseTime = _dereq_('./parseTime');
@@ -4010,7 +4060,7 @@ var parseDate = function parseDate(r) {
 };
 module.exports = parseDate;
 
-},{"./month":57,"./parseTime":59,"./weekday":61}],59:[function(_dereq_,module,exports){
+},{"./month":58,"./parseTime":60,"./weekday":62}],60:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -4075,7 +4125,7 @@ var parseTime = function parseTime(r) {
 };
 module.exports = parseTime;
 
-},{}],60:[function(_dereq_,module,exports){
+},{}],61:[function(_dereq_,module,exports){
 'use strict';
 
 //follow the javascript scheme
@@ -4099,7 +4149,7 @@ exports.shortDays = {
   'sat': 6
 };
 
-},{}],61:[function(_dereq_,module,exports){
+},{}],62:[function(_dereq_,module,exports){
 'use strict';
 
 var data = _dereq_('./data');
@@ -4138,7 +4188,7 @@ module.exports = {
   }
 };
 
-},{"./data":60}],62:[function(_dereq_,module,exports){
+},{"./data":61}],63:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4176,7 +4226,7 @@ var HashTags = function (_Text) {
 
 module.exports = HashTags;
 
-},{"../../index":25}],63:[function(_dereq_,module,exports){
+},{"../../index":25}],64:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4230,7 +4280,7 @@ var EndGrams = function (_Ngrams) {
 
 module.exports = EndGrams;
 
-},{"./getGrams":64,"./index":66}],64:[function(_dereq_,module,exports){
+},{"./getGrams":65,"./index":67}],65:[function(_dereq_,module,exports){
 'use strict';
 
 var Gram = _dereq_('./gram');
@@ -4307,7 +4357,7 @@ var buildGrams = function buildGrams(r, options) {
 
 module.exports = buildGrams;
 
-},{"./gram":65}],65:[function(_dereq_,module,exports){
+},{"./gram":66}],66:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4351,7 +4401,7 @@ var Gram = function (_Terms) {
 
 module.exports = Gram;
 
-},{"../../paths":37}],66:[function(_dereq_,module,exports){
+},{"../../paths":38}],67:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4455,7 +4505,7 @@ var Ngrams = function (_Text) {
 
 module.exports = Ngrams;
 
-},{"../../index":25,"./getGrams":64}],67:[function(_dereq_,module,exports){
+},{"../../index":25,"./getGrams":65}],68:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4509,7 +4559,7 @@ var StartGrams = function (_Ngrams) {
 
 module.exports = StartGrams;
 
-},{"./getGrams":64,"./index":66}],68:[function(_dereq_,module,exports){
+},{"./getGrams":65,"./index":67}],69:[function(_dereq_,module,exports){
 'use strict';
 
 var uncountables = _dereq_('../../../tries').utils.uncountable;
@@ -4539,7 +4589,7 @@ var hasPlural = function hasPlural(t) {
 
 module.exports = hasPlural;
 
-},{"../../../tries":235}],69:[function(_dereq_,module,exports){
+},{"../../../tries":238}],70:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4621,7 +4671,7 @@ var Nouns = function (_Text) {
 
 module.exports = Nouns;
 
-},{"../../index":25,"./noun":77}],70:[function(_dereq_,module,exports){
+},{"../../index":25,"./noun":78}],71:[function(_dereq_,module,exports){
 'use strict';
 
 var irregulars = _dereq_('../../../data').irregular_plurals;
@@ -4699,7 +4749,7 @@ var isPlural = function isPlural(t) {
 
 module.exports = isPlural;
 
-},{"../../../data":6,"./methods/data/indicators":72}],71:[function(_dereq_,module,exports){
+},{"../../../data":6,"./methods/data/indicators":73}],72:[function(_dereq_,module,exports){
 'use strict';
 
 //chooses an indefinite aricle 'a/an' for a word
@@ -4760,7 +4810,7 @@ var makeArticle = function makeArticle(t) {
 
 module.exports = makeArticle;
 
-},{}],72:[function(_dereq_,module,exports){
+},{}],73:[function(_dereq_,module,exports){
 'use strict';
 //similar to plural/singularize rules, but not the same
 
@@ -4773,7 +4823,7 @@ module.exports = {
   plural_indicators: plural_indicators
 };
 
-},{}],73:[function(_dereq_,module,exports){
+},{}],74:[function(_dereq_,module,exports){
 'use strict';
 
 //patterns for turning 'bus' to 'buses'
@@ -4784,7 +4834,7 @@ module.exports = [[/(ax|test)is$/i, '$1es'], [/(octop|vir|radi|nucle|fung|cact|s
   };
 });
 
-},{}],74:[function(_dereq_,module,exports){
+},{}],75:[function(_dereq_,module,exports){
 'use strict';
 
 //patterns for turning 'dwarves' to 'dwarf'
@@ -4795,7 +4845,7 @@ module.exports = [[/([^v])ies$/i, '$1y'], [/ises$/i, 'isis'], [/(kn|[^o]l|w)ives
   };
 });
 
-},{}],75:[function(_dereq_,module,exports){
+},{}],76:[function(_dereq_,module,exports){
 'use strict';
 
 var irregulars = _dereq_('../../../../data').irregular_plurals.toPlural;
@@ -4828,7 +4878,7 @@ var pluralize = function pluralize(str) {
 
 module.exports = pluralize;
 
-},{"../../../../data":6,"./data/pluralRules":73}],76:[function(_dereq_,module,exports){
+},{"../../../../data":6,"./data/pluralRules":74}],77:[function(_dereq_,module,exports){
 'use strict';
 
 var irregulars = _dereq_('../../../../data').irregular_plurals.toSingle;
@@ -4862,7 +4912,7 @@ var toSingle = function toSingle(str) {
 module.exports = toSingle;
 // console.log(toSingle('days'))
 
-},{"../../../../data":6,"./data/singleRules":74}],77:[function(_dereq_,module,exports){
+},{"../../../../data":6,"./data/singleRules":75}],78:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4948,7 +4998,7 @@ var Noun = function (_Terms) {
 
 module.exports = Noun;
 
-},{"../../paths":37,"./hasPlural":68,"./isPlural":70,"./makeArticle":71,"./methods/pluralize":75,"./methods/singularize":76}],78:[function(_dereq_,module,exports){
+},{"../../paths":38,"./hasPlural":69,"./isPlural":71,"./makeArticle":72,"./methods/pluralize":76,"./methods/singularize":77}],79:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4987,7 +5037,7 @@ var Organizations = function (_Text) {
 
 module.exports = Organizations;
 
-},{"../../index":25}],79:[function(_dereq_,module,exports){
+},{"../../index":25}],80:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../../paths').log;
@@ -5019,7 +5069,7 @@ var gender = function gender(firstName) {
 };
 module.exports = gender;
 
-},{"../../paths":37}],80:[function(_dereq_,module,exports){
+},{"../../paths":38}],81:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5077,7 +5127,7 @@ var People = function (_Text) {
 
 module.exports = People;
 
-},{"../../index":25,"./person":81}],81:[function(_dereq_,module,exports){
+},{"../../index":25,"./person":82}],82:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5186,7 +5236,7 @@ var Person = function (_Terms) {
 
 module.exports = Person;
 
-},{"../../paths":37,"./guessGender":79}],82:[function(_dereq_,module,exports){
+},{"../../paths":38,"./guessGender":80}],83:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5235,7 +5285,7 @@ var PhoneNumbers = function (_Text) {
 
 module.exports = PhoneNumbers;
 
-},{"../../index":25}],83:[function(_dereq_,module,exports){
+},{"../../index":25}],84:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5278,7 +5328,7 @@ var Places = function (_Text) {
 
 module.exports = Places;
 
-},{"../../index":25,"./place":84}],84:[function(_dereq_,module,exports){
+},{"../../index":25,"./place":85}],85:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5321,7 +5371,7 @@ var Place = function (_Terms) {
 
 module.exports = Place;
 
-},{"../../paths":37}],85:[function(_dereq_,module,exports){
+},{"../../paths":38}],86:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5359,7 +5409,7 @@ var Quotations = function (_Text) {
 
 module.exports = Quotations;
 
-},{"../../index":25}],86:[function(_dereq_,module,exports){
+},{"../../index":25}],87:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5509,7 +5559,7 @@ var Sentences = function (_Text) {
 
 module.exports = Sentences;
 
-},{"../../index":25,"./sentence":88}],87:[function(_dereq_,module,exports){
+},{"../../index":25,"./sentence":89}],88:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5550,7 +5600,7 @@ var Questions = function (_Text) {
 
 module.exports = Questions;
 
-},{"../index":86}],88:[function(_dereq_,module,exports){
+},{"../index":87}],89:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5713,7 +5763,7 @@ var Sentence = function (_Terms) {
 
 module.exports = Sentence;
 
-},{"../../paths":37,"../verbs/verb":129,"./smartInsert":89,"./toNegative":91,"./toPositive":92}],89:[function(_dereq_,module,exports){
+},{"../../paths":38,"../verbs/verb":130,"./smartInsert":90,"./toNegative":92,"./toPositive":93}],90:[function(_dereq_,module,exports){
 'use strict';
 
 //sticking words at the start sentence-sensitive
@@ -5759,7 +5809,7 @@ module.exports = {
   prepend: prepend
 };
 
-},{}],90:[function(_dereq_,module,exports){
+},{}],91:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5800,7 +5850,7 @@ var Statements = function (_Text) {
 
 module.exports = Statements;
 
-},{"../index":86}],91:[function(_dereq_,module,exports){
+},{"../index":87}],92:[function(_dereq_,module,exports){
 'use strict';
 
 //these terms are nicer ways to negate a sentence
@@ -5834,7 +5884,7 @@ var toNegative = function toNegative(ts) {
 };
 module.exports = toNegative;
 
-},{}],92:[function(_dereq_,module,exports){
+},{}],93:[function(_dereq_,module,exports){
 'use strict';
 
 //ie. john never walks -> john always walks
@@ -5860,7 +5910,7 @@ var toPositive = function toPositive(ts) {
 };
 module.exports = toPositive;
 
-},{}],93:[function(_dereq_,module,exports){
+},{}],94:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5909,7 +5959,7 @@ var Terms = function (_Text) {
 
 module.exports = Terms;
 
-},{"../../index":25,"./term":94}],94:[function(_dereq_,module,exports){
+},{"../../index":25,"./term":95}],95:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5977,7 +6027,7 @@ var Term = function (_Terms) {
 
 module.exports = Term;
 
-},{"../../paths":37}],95:[function(_dereq_,module,exports){
+},{"../../paths":38}],96:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6022,7 +6072,7 @@ var Things = function (_Text) {
 
 module.exports = Things;
 
-},{"../../index":25}],96:[function(_dereq_,module,exports){
+},{"../../index":25}],97:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6060,7 +6110,7 @@ var Urls = function (_Text) {
 
 module.exports = Urls;
 
-},{"../../index":25}],97:[function(_dereq_,module,exports){
+},{"../../index":25}],98:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6184,7 +6234,7 @@ Values.prototype.clone = function () {
 };
 module.exports = Values;
 
-},{"../../index":25,"./value":109}],98:[function(_dereq_,module,exports){
+},{"../../index":25,"./value":110}],99:[function(_dereq_,module,exports){
 'use strict';
 
 var toNumber = _dereq_('../toNumber');
@@ -6219,12 +6269,12 @@ var numOrdinal = function numOrdinal(ts) {
 
 module.exports = numOrdinal;
 
-},{"../toNumber":104}],99:[function(_dereq_,module,exports){
+},{"../toNumber":105}],100:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = _dereq_('../../paths');
 
-},{"../../paths":37}],100:[function(_dereq_,module,exports){
+},{"../../paths":38}],101:[function(_dereq_,module,exports){
 'use strict';
 
 var toNumber = _dereq_('../toNumber');
@@ -6242,7 +6292,7 @@ var textOrdinal = function textOrdinal(ts) {
 
 module.exports = textOrdinal;
 
-},{"../../../paths":37,"../toNumber":104,"../toText":108}],101:[function(_dereq_,module,exports){
+},{"../../../paths":38,"../toNumber":105,"../toText":109}],102:[function(_dereq_,module,exports){
 'use strict';
 
 var niceNumber = function niceNumber(num) {
@@ -6261,7 +6311,7 @@ var niceNumber = function niceNumber(num) {
 };
 module.exports = niceNumber;
 
-},{}],102:[function(_dereq_,module,exports){
+},{}],103:[function(_dereq_,module,exports){
 'use strict';
 
 var p = _dereq_('../paths');
@@ -6281,7 +6331,7 @@ module.exports = {
   multiples: multiples
 };
 
-},{"../paths":99}],103:[function(_dereq_,module,exports){
+},{"../paths":100}],104:[function(_dereq_,module,exports){
 'use strict';
 
 //support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
@@ -6310,7 +6360,7 @@ var findModifiers = function findModifiers(str) {
 
 module.exports = findModifiers;
 
-},{}],104:[function(_dereq_,module,exports){
+},{}],105:[function(_dereq_,module,exports){
 'use strict';
 
 var parseNumeric = _dereq_('./parseNumeric');
@@ -6468,7 +6518,7 @@ var parse = function parse(ts) {
 
 module.exports = parse;
 
-},{"../paths":99,"./data":102,"./findModifiers":103,"./parseDecimals":105,"./parseNumeric":106,"./validate":107}],105:[function(_dereq_,module,exports){
+},{"../paths":100,"./data":103,"./findModifiers":104,"./parseDecimals":106,"./parseNumeric":107,"./validate":108}],106:[function(_dereq_,module,exports){
 'use strict';
 
 var words = _dereq_('./data');
@@ -6495,7 +6545,7 @@ var parseDecimals = function parseDecimals(arr) {
 
 module.exports = parseDecimals;
 
-},{"./data":102}],106:[function(_dereq_,module,exports){
+},{"./data":103}],107:[function(_dereq_,module,exports){
 'use strict';
 //parse a string like "4,200.1" into Number 4200.1
 
@@ -6518,7 +6568,7 @@ var parseNumeric = function parseNumeric(str) {
 
 module.exports = parseNumeric;
 
-},{}],107:[function(_dereq_,module,exports){
+},{}],108:[function(_dereq_,module,exports){
 'use strict';
 
 var words = _dereq_('./data');
@@ -6542,7 +6592,7 @@ var isValid = function isValid(w, has) {
 };
 module.exports = isValid;
 
-},{"./data":102}],108:[function(_dereq_,module,exports){
+},{"./data":103}],109:[function(_dereq_,module,exports){
 'use strict';
 // turns an integer/float into a textual number, like 'fifty-five'
 
@@ -6641,7 +6691,7 @@ module.exports = to_text;
 
 // console.log(to_text(-1000.8));
 
-},{}],109:[function(_dereq_,module,exports){
+},{}],110:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6837,7 +6887,7 @@ Value.prototype.clone = function () {
 };
 module.exports = Value;
 
-},{"../../paths":37,"./numOrdinal":98,"./textOrdinal":100,"./toNiceNumber":101,"./toNumber":104,"./toText":108}],110:[function(_dereq_,module,exports){
+},{"../../paths":38,"./numOrdinal":99,"./textOrdinal":101,"./toNiceNumber":102,"./toNumber":105,"./toText":109}],111:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6997,7 +7047,7 @@ var Verbs = function (_Text) {
 
 module.exports = Verbs;
 
-},{"../../index":25,"./verb":129}],111:[function(_dereq_,module,exports){
+},{"../../index":25,"./verb":130}],112:[function(_dereq_,module,exports){
 'use strict';
 
 var predict = _dereq_('./methods/predict');
@@ -7100,7 +7150,7 @@ var interpret = function interpret(ts) {
 };
 module.exports = interpret;
 
-},{"./methods/predict":123}],112:[function(_dereq_,module,exports){
+},{"./methods/predict":124}],113:[function(_dereq_,module,exports){
 'use strict';
 
 var checkIrregulars = _dereq_('./irregulars');
@@ -7180,7 +7230,7 @@ var conjugate = function conjugate(t, verbose) {
 
 module.exports = conjugate;
 
-},{"../predict":123,"../toInfinitive":126,"./generic":115,"./irregulars":117,"./suffixes":118,"./toActor":119,"./toAdjective":120,"./toBe":121}],113:[function(_dereq_,module,exports){
+},{"../predict":124,"../toInfinitive":127,"./generic":116,"./irregulars":118,"./suffixes":119,"./toActor":120,"./toAdjective":121,"./toBe":122}],114:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = [{
@@ -7348,7 +7398,7 @@ module.exports = [{
   }
 }];
 
-},{}],114:[function(_dereq_,module,exports){
+},{}],115:[function(_dereq_,module,exports){
 'use strict';
 
 var checkIrregulars = _dereq_('./irregulars');
@@ -7388,7 +7438,7 @@ var fasterConjugate = function fasterConjugate(inf) {
 module.exports = fasterConjugate;
 // console.log(fasterConjugate('walk'));
 
-},{"./generic":115,"./irregulars":117,"./suffixes":118}],115:[function(_dereq_,module,exports){
+},{"./generic":116,"./irregulars":118,"./suffixes":119}],116:[function(_dereq_,module,exports){
 'use strict';
 //non-specifc, 'hail-mary' transforms from infinitive, into other forms
 
@@ -7433,7 +7483,7 @@ var generic = {
 
 module.exports = generic;
 
-},{"../../../../../fns":21}],116:[function(_dereq_,module,exports){
+},{"../../../../../fns":21}],117:[function(_dereq_,module,exports){
 'use strict';
 
 var conjugate = _dereq_('./conjugate');
@@ -7478,7 +7528,7 @@ var multiWord = function multiWord(vb, verbose) {
 };
 module.exports = multiWord;
 
-},{"./conjugate":112,"./toBe":121}],117:[function(_dereq_,module,exports){
+},{"./conjugate":113,"./toBe":122}],118:[function(_dereq_,module,exports){
 'use strict';
 
 var irregulars = _dereq_('../../../../../data').irregular_verbs; //weeee!
@@ -7510,7 +7560,7 @@ var checkIrregulars = function checkIrregulars(str) {
 module.exports = checkIrregulars;
 // console.log(checkIrregulars('bit'));
 
-},{"../../../../../data":6,"../../../../../fns":21}],118:[function(_dereq_,module,exports){
+},{"../../../../../data":6,"../../../../../fns":21}],119:[function(_dereq_,module,exports){
 'use strict';
 
 var rules = _dereq_('./data/rules');
@@ -7543,7 +7593,7 @@ var suffixPass = function suffixPass(inf) {
 
 module.exports = suffixPass;
 
-},{"./data/rules":113}],119:[function(_dereq_,module,exports){
+},{"./data/rules":114}],120:[function(_dereq_,module,exports){
 'use strict';
 //turn 'walk' into 'walker'
 
@@ -7608,7 +7658,7 @@ var toActor = function toActor(inf) {
 
 module.exports = toActor;
 
-},{}],120:[function(_dereq_,module,exports){
+},{}],121:[function(_dereq_,module,exports){
 'use strict';
 //turn a infinitiveVerb, like "walk" into an adjective like "walkable"
 
@@ -7662,7 +7712,7 @@ var toAdjective = function toAdjective(str) {
 module.exports = toAdjective;
 // console.log(toAdjective('buy'));
 
-},{}],121:[function(_dereq_,module,exports){
+},{}],122:[function(_dereq_,module,exports){
 'use strict';
 //too many special cases for is/was/will be
 
@@ -7694,7 +7744,7 @@ var toBe = function toBe(isPlural, isNegative) {
 };
 module.exports = toBe;
 
-},{}],122:[function(_dereq_,module,exports){
+},{}],123:[function(_dereq_,module,exports){
 'use strict';
 //sometimes you can tell if a verb is plural/singular, just by the verb
 // i am / we were
@@ -7721,7 +7771,7 @@ var isPlural = function isPlural(vb) {
 };
 module.exports = isPlural;
 
-},{}],123:[function(_dereq_,module,exports){
+},{}],124:[function(_dereq_,module,exports){
 'use strict';
 
 var fns = _dereq_('../../../../../fns'); //jaja!
@@ -7766,7 +7816,7 @@ var predictForm = function predictForm(term, verbose) {
 
 module.exports = predictForm;
 
-},{"../../../../../fns":21,"./suffix_rules":124}],124:[function(_dereq_,module,exports){
+},{"../../../../../fns":21,"./suffix_rules":125}],125:[function(_dereq_,module,exports){
 'use strict';
 //suffix signals for verb tense, generated from test data
 
@@ -7789,7 +7839,7 @@ for (var i = 0; i < l; i++) {
 }
 module.exports = suffix_rules;
 
-},{}],125:[function(_dereq_,module,exports){
+},{}],126:[function(_dereq_,module,exports){
 'use strict';
 //turn a infinitiveVerb, like "walk" into an adjective like "walkable"
 
@@ -7842,7 +7892,7 @@ var toAdjective = function toAdjective(str) {
 
 module.exports = toAdjective;
 
-},{}],126:[function(_dereq_,module,exports){
+},{}],127:[function(_dereq_,module,exports){
 'use strict';
 //turn any verb into its infinitive form
 
@@ -7886,7 +7936,7 @@ var toInfinitive = function toInfinitive(t) {
 
 module.exports = toInfinitive;
 
-},{"../../../../../data":6,"../predict":123,"./rules":127}],127:[function(_dereq_,module,exports){
+},{"../../../../../data":6,"../predict":124,"./rules":128}],128:[function(_dereq_,module,exports){
 'use strict';
 //rules for turning a verb into infinitive form
 
@@ -8040,7 +8090,7 @@ var rules = {
 };
 module.exports = rules;
 
-},{}],128:[function(_dereq_,module,exports){
+},{}],129:[function(_dereq_,module,exports){
 'use strict';
 //turns a verb negative - may not have enough information to do it properly
 // (eg 'did not eat' vs 'does not eat') - needs the noun
@@ -8113,7 +8163,7 @@ var toNegative = function toNegative(ts) {
 };
 module.exports = toNegative;
 
-},{"./methods/toInfinitive":126}],129:[function(_dereq_,module,exports){
+},{"./methods/toInfinitive":127}],130:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -8266,7 +8316,7 @@ var Verb = function (_Terms) {
 
 module.exports = Verb;
 
-},{"../../paths":37,"./interpret":111,"./methods/conjugate":116,"./methods/isPlural":122,"./methods/toAdjective":125,"./toNegative":128}],130:[function(_dereq_,module,exports){
+},{"../../paths":38,"./interpret":112,"./methods/conjugate":117,"./methods/isPlural":123,"./methods/toAdjective":126,"./toNegative":129}],131:[function(_dereq_,module,exports){
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2015 MIT
@@ -8346,7 +8396,7 @@ var sentence_parser = function sentence_parser(text) {
 module.exports = sentence_parser;
 // console.log(sentence_parser('john f. kennedy'));
 
-},{"../data/index":6,"./paths":37}],131:[function(_dereq_,module,exports){
+},{"../data/index":6,"./paths":38}],132:[function(_dereq_,module,exports){
 'use strict';
 
 var fixContraction = _dereq_('./fix');
@@ -8411,7 +8461,7 @@ var checkIrregulars = function checkIrregulars(ts) {
 };
 module.exports = checkIrregulars;
 
-},{"./fix":135}],132:[function(_dereq_,module,exports){
+},{"./fix":136}],133:[function(_dereq_,module,exports){
 'use strict';
 
 var fixContraction = _dereq_('./fix');
@@ -8494,7 +8544,7 @@ var hardOne = function hardOne(ts) {
 
 module.exports = hardOne;
 
-},{"./fix":135,"./split":137}],133:[function(_dereq_,module,exports){
+},{"./fix":136,"./split":138}],134:[function(_dereq_,module,exports){
 'use strict';
 
 var fixContraction = _dereq_('./fix');
@@ -8534,7 +8584,7 @@ var easyOnes = function easyOnes(ts) {
 };
 module.exports = easyOnes;
 
-},{"./fix":135,"./split":137}],134:[function(_dereq_,module,exports){
+},{"./fix":136,"./split":138}],135:[function(_dereq_,module,exports){
 'use strict';
 
 var fixContraction = _dereq_('./fix');
@@ -8573,7 +8623,7 @@ var numberRange = function numberRange(ts) {
 };
 module.exports = numberRange;
 
-},{"../../term":177,"./fix":135}],135:[function(_dereq_,module,exports){
+},{"../../term":179,"./fix":136}],136:[function(_dereq_,module,exports){
 'use strict';
 
 var Term = _dereq_('../../term');
@@ -8627,7 +8677,7 @@ var fixContraction = function fixContraction(ts, parts, i) {
 
 module.exports = fixContraction;
 
-},{"../../term":177}],136:[function(_dereq_,module,exports){
+},{"../../term":179}],137:[function(_dereq_,module,exports){
 'use strict';
 
 var irregulars = _dereq_('./01-irregulars');
@@ -8650,7 +8700,7 @@ var interpret = function interpret(ts) {
 
 module.exports = interpret;
 
-},{"./01-irregulars":131,"./02-hardOne":132,"./03-easyOnes":133,"./04-numberRange":134}],137:[function(_dereq_,module,exports){
+},{"./01-irregulars":132,"./02-hardOne":133,"./03-easyOnes":134,"./04-numberRange":135}],138:[function(_dereq_,module,exports){
 'use strict';
 
 var allowed = {
@@ -8694,7 +8744,7 @@ var splitContraction = function splitContraction(t) {
 };
 module.exports = splitContraction;
 
-},{}],138:[function(_dereq_,module,exports){
+},{}],139:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -8801,7 +8851,7 @@ var corrections = function corrections(r) {
 
 module.exports = corrections;
 
-},{"../paths":145,"./verb_corrections":139}],139:[function(_dereq_,module,exports){
+},{"../paths":146,"./verb_corrections":140}],140:[function(_dereq_,module,exports){
 'use strict';
 
 var corrections = function corrections(r) {
@@ -8827,7 +8877,7 @@ var corrections = function corrections(r) {
 };
 module.exports = corrections;
 
-},{}],140:[function(_dereq_,module,exports){
+},{}],141:[function(_dereq_,module,exports){
 'use strict';
 //the steps and processes of pos-tagging
 
@@ -8859,12 +8909,13 @@ var step = {
   person_step: _dereq_('./steps/18-person_step'),
   quotation_step: _dereq_('./steps/19-quotation_step'),
   organization_step: _dereq_('./steps/20-organization_step'),
-  plural_step: _dereq_('./steps/21-plural_step')
+  plural_step: _dereq_('./steps/21-plural_step'),
+  custom_step: _dereq_('./steps/22-custom_step')
 };
 var corrections = _dereq_('./corrections');
 var tagPhrase = _dereq_('./phrase');
 
-var tagger = function tagger(ts) {
+var tagger = function tagger(ts, customRules) {
   ts = step.punctuation_step(ts);
   ts = step.emoji_step(ts);
   ts = lumper.lexicon_lump(ts);
@@ -8887,6 +8938,8 @@ var tagger = function tagger(ts) {
   ts = step.quotation_step(ts);
   ts = step.organization_step(ts);
   ts = step.plural_step(ts);
+  ts = step.custom_step(ts, customRules);
+
   //lump a couple times, for long ones
   for (var i = 0; i < 3; i++) {
     ts = lumper.lump_three(ts);
@@ -8899,7 +8952,7 @@ var tagger = function tagger(ts) {
 
 module.exports = tagger;
 
-},{"./contraction":136,"./corrections":138,"./lumper/lexicon_lump":142,"./lumper/lump_three":143,"./lumper/lump_two":144,"./phrase":147,"./steps/01-punctuation_step":148,"./steps/02-lexicon_step":149,"./steps/03-capital_step":150,"./steps/04-web_step":151,"./steps/05-suffix_step":152,"./steps/06-neighbour_step":153,"./steps/07-noun_fallback":154,"./steps/08-date_step":155,"./steps/09-auxillary_step":156,"./steps/10-negation_step":157,"./steps/12-phrasal_step":158,"./steps/13-comma_step":159,"./steps/14-possessive_step":160,"./steps/15-value_step":161,"./steps/16-acronym_step":162,"./steps/17-emoji_step":163,"./steps/18-person_step":164,"./steps/19-quotation_step":165,"./steps/20-organization_step":166,"./steps/21-plural_step":167}],141:[function(_dereq_,module,exports){
+},{"./contraction":137,"./corrections":139,"./lumper/lexicon_lump":143,"./lumper/lump_three":144,"./lumper/lump_two":145,"./phrase":148,"./steps/01-punctuation_step":149,"./steps/02-lexicon_step":150,"./steps/03-capital_step":151,"./steps/04-web_step":152,"./steps/05-suffix_step":153,"./steps/06-neighbour_step":154,"./steps/07-noun_fallback":155,"./steps/08-date_step":156,"./steps/09-auxillary_step":157,"./steps/10-negation_step":158,"./steps/12-phrasal_step":159,"./steps/13-comma_step":160,"./steps/14-possessive_step":161,"./steps/15-value_step":162,"./steps/16-acronym_step":163,"./steps/17-emoji_step":164,"./steps/18-person_step":165,"./steps/19-quotation_step":166,"./steps/20-organization_step":167,"./steps/21-plural_step":168,"./steps/22-custom_step":169}],142:[function(_dereq_,module,exports){
 'use strict';
 
 var paths = _dereq_('../paths');
@@ -8933,7 +8986,7 @@ var combine = function combine(s, i) {
 
 module.exports = combine;
 
-},{"../../term":177,"../paths":145}],142:[function(_dereq_,module,exports){
+},{"../../term":179,"../paths":146}],143:[function(_dereq_,module,exports){
 'use strict';
 //check for "united" + "kingdom" in lexicon, and combine + tag it
 
@@ -9015,7 +9068,7 @@ var lexicon_lump = function lexicon_lump(ts) {
 
 module.exports = lexicon_lump;
 
-},{"../../tries":235,"../paths":145,"./combine":141}],143:[function(_dereq_,module,exports){
+},{"../../tries":238,"../paths":146,"./combine":142}],144:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -9061,7 +9114,7 @@ var lump_three = function lump_three(s) {
 
 module.exports = lump_three;
 
-},{"../paths":145,"./combine":141}],144:[function(_dereq_,module,exports){
+},{"../paths":146,"./combine":142}],145:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -9135,7 +9188,7 @@ var lump_two = function lump_two(s) {
 
 module.exports = lump_two;
 
-},{"../paths":145,"./combine":141}],145:[function(_dereq_,module,exports){
+},{"../paths":146,"./combine":142}],146:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -9148,7 +9201,7 @@ module.exports = {
   tags: _dereq_('../tags')
 };
 
-},{"../data":6,"../data/lexicon":7,"../fns":21,"../log":23,"../tags":175,"../terms":195,"../tries":235}],146:[function(_dereq_,module,exports){
+},{"../data":6,"../data/lexicon":7,"../fns":21,"../log":23,"../tags":177,"../terms":197,"../tries":238}],147:[function(_dereq_,module,exports){
 'use strict';
 
 //
@@ -9186,7 +9239,7 @@ var conditionPass = function conditionPass(r) {
 
 module.exports = conditionPass;
 
-},{}],147:[function(_dereq_,module,exports){
+},{}],148:[function(_dereq_,module,exports){
 'use strict';
 
 var conditionPass = _dereq_('./00-conditionPass');
@@ -9204,7 +9257,7 @@ var phraseTag = function phraseTag(Text) {
 
 module.exports = phraseTag;
 
-},{"./00-conditionPass":146}],148:[function(_dereq_,module,exports){
+},{"./00-conditionPass":147}],149:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -9268,7 +9321,7 @@ var punctuation_step = function punctuation_step(ts) {
 
 module.exports = punctuation_step;
 
-},{"../paths":145,"./rules/punct_rules":171}],149:[function(_dereq_,module,exports){
+},{"../paths":146,"./rules/punct_rules":173}],150:[function(_dereq_,module,exports){
 'use strict';
 
 var p = _dereq_('../paths');
@@ -9342,7 +9395,7 @@ var lexicon_pass = function lexicon_pass(ts) {
 
 module.exports = lexicon_pass;
 
-},{"../../tries":235,"../contraction/split":137,"../paths":145}],150:[function(_dereq_,module,exports){
+},{"../../tries":238,"../contraction/split":138,"../paths":146}],151:[function(_dereq_,module,exports){
 'use strict';
 //titlecase is a signal for a noun
 
@@ -9372,7 +9425,7 @@ var capital_logic = function capital_logic(s) {
 
 module.exports = capital_logic;
 
-},{"../paths":145}],151:[function(_dereq_,module,exports){
+},{"../paths":146}],152:[function(_dereq_,module,exports){
 'use strict';
 //identify urls, hashtags, @mentions, emails
 
@@ -9442,7 +9495,7 @@ var web_pass = function web_pass(terms) {
 
 module.exports = web_pass;
 
-},{"../paths":145}],152:[function(_dereq_,module,exports){
+},{"../paths":146}],153:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -9469,7 +9522,7 @@ var suffix_step = function suffix_step(s) {
 
 module.exports = suffix_step;
 
-},{"../paths":145,"./rules/word_rules":172}],153:[function(_dereq_,module,exports){
+},{"../paths":146,"./rules/word_rules":174}],154:[function(_dereq_,module,exports){
 'use strict';
 
 var markov = _dereq_('./rules/neighbours');
@@ -9529,7 +9582,7 @@ var neighbour_step = function neighbour_step(ts) {
 
 module.exports = neighbour_step;
 
-},{"../paths":145,"./rules/neighbours":170}],154:[function(_dereq_,module,exports){
+},{"../paths":146,"./rules/neighbours":172}],155:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -9582,7 +9635,7 @@ var noun_fallback = function noun_fallback(s) {
 
 module.exports = noun_fallback;
 
-},{"../paths":145}],155:[function(_dereq_,module,exports){
+},{"../paths":146}],156:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -9722,7 +9775,7 @@ var datePass = function datePass(ts) {
 
 module.exports = datePass;
 
-},{"../paths":145}],156:[function(_dereq_,module,exports){
+},{"../paths":146}],157:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -9763,7 +9816,7 @@ var corrections = function corrections(ts) {
 
 module.exports = corrections;
 
-},{"../paths":145}],157:[function(_dereq_,module,exports){
+},{"../paths":146}],158:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -9793,7 +9846,7 @@ var negation_step = function negation_step(ts) {
 
 module.exports = negation_step;
 
-},{"../paths":145}],158:[function(_dereq_,module,exports){
+},{"../paths":146}],159:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -9854,7 +9907,7 @@ var phrasals_step = function phrasals_step(ts) {
 
 module.exports = phrasals_step;
 
-},{"../../result/subset/verbs/methods/toInfinitive/index.js":126,"../paths":145}],159:[function(_dereq_,module,exports){
+},{"../../result/subset/verbs/methods/toInfinitive/index.js":127,"../paths":146}],160:[function(_dereq_,module,exports){
 'use strict';
 //-types of comma-use-
 // PlaceComma - Hollywood, California
@@ -9983,7 +10036,7 @@ var commaStep = function commaStep(ts) {
 
 module.exports = commaStep;
 
-},{}],160:[function(_dereq_,module,exports){
+},{}],161:[function(_dereq_,module,exports){
 'use strict';
 //decide if an apostrophe s is a contraction or not
 // 'spencer's nice' -> 'spencer is nice'
@@ -10051,7 +10104,7 @@ var possessiveStep = function possessiveStep(terms) {
 };
 module.exports = possessiveStep;
 
-},{}],161:[function(_dereq_,module,exports){
+},{}],162:[function(_dereq_,module,exports){
 'use strict';
 'use strict';
 
@@ -10085,7 +10138,7 @@ var value_step = function value_step(ts) {
 
 module.exports = value_step;
 
-},{"../paths":145}],162:[function(_dereq_,module,exports){
+},{"../paths":146}],163:[function(_dereq_,module,exports){
 'use strict';
 'use strict';
 
@@ -10104,7 +10157,7 @@ var acronym_step = function acronym_step(ts) {
 
 module.exports = acronym_step;
 
-},{"../paths":145}],163:[function(_dereq_,module,exports){
+},{"../paths":146}],164:[function(_dereq_,module,exports){
 'use strict';
 
 var fns = _dereq_('../paths').fns;
@@ -10160,7 +10213,7 @@ var emojiStep = function emojiStep(ts) {
 };
 module.exports = emojiStep;
 
-},{"../paths":145,"./rules/emoji_regex":168,"./rules/emoticon_list":169}],164:[function(_dereq_,module,exports){
+},{"../paths":146,"./rules/emoji_regex":170,"./rules/emoticon_list":171}],165:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -10250,7 +10303,7 @@ var person_step = function person_step(ts) {
 
 module.exports = person_step;
 
-},{"../paths":145}],165:[function(_dereq_,module,exports){
+},{"../paths":146}],166:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -10286,7 +10339,7 @@ var quotation_step = function quotation_step(ts) {
 };
 module.exports = quotation_step;
 
-},{"../paths":145}],166:[function(_dereq_,module,exports){
+},{"../paths":146}],167:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -10340,7 +10393,7 @@ var organization_step = function organization_step(ts) {
 };
 module.exports = organization_step;
 
-},{"../paths":145}],167:[function(_dereq_,module,exports){
+},{"../paths":146}],168:[function(_dereq_,module,exports){
 'use strict';
 
 var log = _dereq_('../paths').log;
@@ -10371,14 +10424,49 @@ var pluralStep = function pluralStep(ts) {
 
 module.exports = pluralStep;
 
-},{"../../result/subset/nouns/isPlural":70,"../paths":145}],168:[function(_dereq_,module,exports){
+},{"../../result/subset/nouns/isPlural":71,"../paths":146}],169:[function(_dereq_,module,exports){
+'use strict';
+//const path = 'tagger/customPass';
+//const mutate = require('../../terms/mutate');
+
+var customStep = function customStep(ts, customRules) {
+
+  if (customRules == null) {
+    return ts;
+  }
+
+  //single term expressions first
+  for (var i = 0; i < ts.terms.length; i++) {
+    var t = ts.terms[i];
+
+    for (var x = 0; x < customRules.singleTermRegularExpressions.length; x++) {
+      var customExpression = customRules.singleTermRegularExpressions[x];
+
+      if (t.text.match(customExpression.regX)) {
+        t.tagAs(customExpression.tags, customExpression.description);
+      }
+    }
+  }
+
+  //lumps second
+  for (var _x = 0; _x < customRules.lumpExpressions.length; _x++) {
+    var _customExpression = customRules.lumpExpressions[_x];
+
+    ts.match(_customExpression.match).lumpIntoParent(_customExpression.tags, _customExpression.description);
+  }
+
+  return ts;
+};
+module.exports = customStep;
+
+},{}],170:[function(_dereq_,module,exports){
 "use strict";
 
 //yep,
 //https://github.com/mathiasbynens/emoji-regex/blob/master/index.js
 module.exports = /(?:0\u20E3\n1\u20E3|2\u20E3|3\u20E3|4\u20E3|5\u20E3|6\u20E3|7\u20E3|8\u20E3|9\u20E3|#\u20E3|\*\u20E3|\uD83C(?:\uDDE6\uD83C(?:\uDDE8|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDEE|\uDDF1|\uDDF2|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFC|\uDDFD|\uDDFF)|\uDDE7\uD83C(?:\uDDE6|\uDDE7|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDEF|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFB|\uDDFC|\uDDFE|\uDDFF)|\uDDE8\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF5|\uDDF7|\uDDFA|\uDDFB|\uDDFC|\uDDFD|\uDDFE|\uDDFF)|\uDDE9\uD83C(?:\uDDEA|\uDDEC|\uDDEF|\uDDF0|\uDDF2|\uDDF4|\uDDFF)|\uDDEA\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEC|\uDDED|\uDDF7|\uDDF8|\uDDF9|\uDDFA)|\uDDEB\uD83C(?:\uDDEE|\uDDEF|\uDDF0|\uDDF2|\uDDF4|\uDDF7)|\uDDEC\uD83C(?:\uDDE6|\uDDE7|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDF1|\uDDF2|\uDDF3|\uDDF5|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFC|\uDDFE)|\uDDED\uD83C(?:\uDDF0|\uDDF2|\uDDF3|\uDDF7|\uDDF9|\uDDFA)|\uDDEE\uD83C(?:\uDDE8|\uDDE9|\uDDEA|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9)|\uDDEF\uD83C(?:\uDDEA|\uDDF2|\uDDF4|\uDDF5)|\uDDF0\uD83C(?:\uDDEA|\uDDEC|\uDDED|\uDDEE|\uDDF2|\uDDF3|\uDDF5|\uDDF7|\uDDFC|\uDDFE|\uDDFF)|\uDDF1\uD83C(?:\uDDE6|\uDDE7|\uDDE8|\uDDEE|\uDDF0|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFB|\uDDFE)|\uDDF2\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF5|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFB|\uDDFC|\uDDFD|\uDDFE|\uDDFF)|\uDDF3\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEB|\uDDEC|\uDDEE|\uDDF1|\uDDF4|\uDDF5|\uDDF7|\uDDFA|\uDDFF)|\uDDF4\uD83C\uDDF2|\uDDF5\uD83C(?:\uDDE6|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF7|\uDDF8|\uDDF9|\uDDFC|\uDDFE)|\uDDF6\uD83C\uDDE6|\uDDF7\uD83C(?:\uDDEA|\uDDF4|\uDDF8|\uDDFA|\uDDFC)|\uDDF8\uD83C(?:\uDDE6|\uDDE7|\uDDE8|\uDDE9|\uDDEA|\uDDEC|\uDDED|\uDDEE|\uDDEF|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF7|\uDDF8|\uDDF9|\uDDFB|\uDDFD|\uDDFE|\uDDFF)|\uDDF9\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEB|\uDDEC|\uDDED|\uDDEF|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF7|\uDDF9|\uDDFB|\uDDFC|\uDDFF)|\uDDFA\uD83C(?:\uDDE6|\uDDEC|\uDDF2|\uDDF8|\uDDFE|\uDDFF)|\uDDFB\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEC|\uDDEE|\uDDF3|\uDDFA)|\uDDFC\uD83C(?:\uDDEB|\uDDF8)|\uDDFD\uD83C\uDDF0|\uDDFE\uD83C(?:\uDDEA|\uDDF9)|\uDDFF\uD83C(?:\uDDE6|\uDDF2|\uDDFC)))|[\xA9\xAE\u203C\u2049\u2122\u2139\u2194-\u2199\u21A9\u21AA\u231A\u231B\u2328\u23CF\u23E9-\u23F3\u23F8-\u23FA\u24C2\u25AA\u25AB\u25B6\u25C0\u25FB-\u25FE\u2600-\u2604\u260E\u2611\u2614\u2615\u2618\u261D\u2620\u2622\u2623\u2626\u262A\u262E\u262F\u2638-\u263A\u2648-\u2653\u2660\u2663\u2665\u2666\u2668\u267B\u267F\u2692-\u2694\u2696\u2697\u2699\u269B\u269C\u26A0\u26A1\u26AA\u26AB\u26B0\u26B1\u26BD\u26BE\u26C4\u26C5\u26C8\u26CE\u26CF\u26D1\u26D3\u26D4\u26E9\u26EA\u26F0-\u26F5\u26F7-\u26FA\u26FD\u2702\u2705\u2708-\u270D\u270F\u2712\u2714\u2716\u271D\u2721\u2728\u2733\u2734\u2744\u2747\u274C\u274E\u2753-\u2755\u2757\u2763\u2764\u2795-\u2797\u27A1\u27B0\u27BF\u2934\u2935\u2B05-\u2B07\u2B1B\u2B1C\u2B50\u2B55\u3030\u303D\u3297\u3299]|\uD83C[\uDC04\uDCCF\uDD70\uDD71\uDD7E\uDD7F\uDD8E\uDD91-\uDD9A\uDE01\uDE02\uDE1A\uDE2F\uDE32-\uDE3A\uDE50\uDE51\uDF00-\uDF21\uDF24-\uDF93\uDF96\uDF97\uDF99-\uDF9B\uDF9E-\uDFF0\uDFF3-\uDFF5\uDFF7-\uDFFF]|\uD83D[\uDC00-\uDCFD\uDCFF-\uDD3D\uDD49-\uDD4E\uDD50-\uDD67\uDD6F\uDD70\uDD73-\uDD79\uDD87\uDD8A-\uDD8D\uDD90\uDD95\uDD96\uDDA5\uDDA8\uDDB1\uDDB2\uDDBC\uDDC2-\uDDC4\uDDD1-\uDDD3\uDDDC-\uDDDE\uDDE1\uDDE3\uDDEF\uDDF3\uDDFA-\uDE4F\uDE80-\uDEC5\uDECB-\uDED0\uDEE0-\uDEE5\uDEE9\uDEEB\uDEEC\uDEF0\uDEF3]|\uD83E[\uDD10-\uDD18\uDD80-\uDD84\uDDC0]/g;
 
-},{}],169:[function(_dereq_,module,exports){
+},{}],171:[function(_dereq_,module,exports){
 'use strict';
 
 //just some of the most common emoticons
@@ -10438,7 +10526,7 @@ module.exports = {
   '<\\3': true
 };
 
-},{}],170:[function(_dereq_,module,exports){
+},{}],172:[function(_dereq_,module,exports){
 'use strict';
 //markov-like stats about co-occurance, for hints about unknown terms
 //basically, a little-bit better than the noun-fallback
@@ -10514,7 +10602,7 @@ module.exports = {
   afterThisPos: afterThisPos
 };
 
-},{}],171:[function(_dereq_,module,exports){
+},{}],173:[function(_dereq_,module,exports){
 'use strict';
 
 //these are regexes applied to t.text, instead of t.normal
@@ -10562,7 +10650,7 @@ module.exports = [
   };
 });
 
-},{}],172:[function(_dereq_,module,exports){
+},{}],174:[function(_dereq_,module,exports){
 'use strict';
 //regex suffix patterns and their most common parts of speech,
 //built using wordnet, by spencer kelly.
@@ -10631,7 +10719,7 @@ module.exports = [['^[0-9]+ ?(am|pm)$', 'Date'], ['[0-9](st|nd|rd|r?th)$', 'Ordi
   };
 });
 
-},{}],173:[function(_dereq_,module,exports){
+},{}],175:[function(_dereq_,module,exports){
 'use strict';
 
 //used for pretty-printing on the server-side
@@ -10649,7 +10737,7 @@ module.exports = Object.keys(colors).reduce(function (h, c) {
   return h;
 }, {});
 
-},{}],174:[function(_dereq_,module,exports){
+},{}],176:[function(_dereq_,module,exports){
 'use strict';
 
 //list of inconsistent parts-of-speech
@@ -10700,7 +10788,7 @@ module.exports = find;
 
 // console.log(find('Person'));
 
-},{}],175:[function(_dereq_,module,exports){
+},{}],177:[function(_dereq_,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -10778,7 +10866,7 @@ var build = function build() {
 
 module.exports = build();
 
-},{"./conflicts":174,"./tree":176}],176:[function(_dereq_,module,exports){
+},{"./conflicts":176,"./tree":178}],178:[function(_dereq_,module,exports){
 "use strict";
 
 //the POS tags we use, according to their dependencies
@@ -10882,7 +10970,7 @@ module.exports = {
   Quotation: true
 };
 
-},{}],177:[function(_dereq_,module,exports){
+},{}],179:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -10968,7 +11056,7 @@ Term = _dereq_('./methods/punctuation')(Term);
 
 module.exports = Term;
 
-},{"./makeUID":178,"./methods/case":179,"./methods/isA":180,"./methods/normalize":181,"./methods/out":185,"./methods/punctuation":187,"./methods/tag":188,"./paths":192,"./whitespace":193}],178:[function(_dereq_,module,exports){
+},{"./makeUID":180,"./methods/case":181,"./methods/isA":182,"./methods/normalize":183,"./methods/out":187,"./methods/punctuation":189,"./methods/tag":190,"./paths":194,"./whitespace":195}],180:[function(_dereq_,module,exports){
 'use strict';
 //this is a not-well-thought-out way to reduce our dependence on `object===object` reference stuff
 //generates a unique id for this term
@@ -10983,7 +11071,7 @@ var uid = function uid(str) {
 };
 module.exports = uid;
 
-},{}],179:[function(_dereq_,module,exports){
+},{}],181:[function(_dereq_,module,exports){
 'use strict';
 
 var addMethods = function addMethods(Term) {
@@ -11037,7 +11125,7 @@ var addMethods = function addMethods(Term) {
 
 module.exports = addMethods;
 
-},{}],180:[function(_dereq_,module,exports){
+},{}],182:[function(_dereq_,module,exports){
 'use strict';
 
 var addMethods = function addMethods(Term) {
@@ -11098,7 +11186,7 @@ var addMethods = function addMethods(Term) {
 
 module.exports = addMethods;
 
-},{}],181:[function(_dereq_,module,exports){
+},{}],183:[function(_dereq_,module,exports){
 'use strict';
 
 var addNormal = _dereq_('./normalize').addNormal;
@@ -11122,7 +11210,7 @@ var addMethods = function addMethods(Term) {
 
 module.exports = addMethods;
 
-},{"./normalize":182,"./root":183}],182:[function(_dereq_,module,exports){
+},{"./normalize":184,"./root":185}],184:[function(_dereq_,module,exports){
 'use strict';
 
 var killUnicode = _dereq_('./unicode');
@@ -11166,7 +11254,7 @@ exports.addNormal = function (term) {
 
 // console.log(normalize('Dr. V Cooper'));
 
-},{"./unicode":184}],183:[function(_dereq_,module,exports){
+},{"./unicode":186}],185:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -11183,7 +11271,7 @@ var rootForm = function rootForm(term) {
 
 module.exports = rootForm;
 
-},{}],184:[function(_dereq_,module,exports){
+},{}],186:[function(_dereq_,module,exports){
 'use strict';
 //a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
 //approximate visual (not semantic or phonetic) relationship between unicode and ascii characters
@@ -11241,7 +11329,7 @@ var killUnicode = function killUnicode(str) {
 module.exports = killUnicode;
 // console.log(fixUnicode('bjŏȒk'));
 
-},{}],185:[function(_dereq_,module,exports){
+},{}],187:[function(_dereq_,module,exports){
 'use strict';
 
 var renderHtml = _dereq_('./renderHtml');
@@ -11306,7 +11394,7 @@ var addMethods = function addMethods(Term) {
 
 module.exports = addMethods;
 
-},{"../../paths":192,"./renderHtml":186}],186:[function(_dereq_,module,exports){
+},{"../../paths":194,"./renderHtml":188}],188:[function(_dereq_,module,exports){
 'use strict';
 //turn xml special characters into apersand-encoding.
 //i'm not sure this is perfectly safe.
@@ -11362,7 +11450,7 @@ var renderHtml = function renderHtml(t) {
 
 module.exports = renderHtml;
 
-},{}],187:[function(_dereq_,module,exports){
+},{}],189:[function(_dereq_,module,exports){
 'use strict';
 
 var addMethods = function addMethods(Term) {
@@ -11415,7 +11503,7 @@ var addMethods = function addMethods(Term) {
 
 module.exports = addMethods;
 
-},{}],188:[function(_dereq_,module,exports){
+},{}],190:[function(_dereq_,module,exports){
 'use strict';
 
 var setTag = _dereq_('./setTag');
@@ -11458,9 +11546,9 @@ var addMethods = function addMethods(Term) {
 
 module.exports = addMethods;
 
-},{"./paths":189,"./setTag":190,"./unTag":191}],189:[function(_dereq_,module,exports){
-arguments[4][99][0].apply(exports,arguments)
-},{"../../paths":192,"dup":99}],190:[function(_dereq_,module,exports){
+},{"./paths":191,"./setTag":192,"./unTag":193}],191:[function(_dereq_,module,exports){
+arguments[4][100][0].apply(exports,arguments)
+},{"../../paths":194,"dup":100}],192:[function(_dereq_,module,exports){
 'use strict';
 //set a term as a particular Part-of-speech
 
@@ -11496,6 +11584,14 @@ var tag_one = function tag_one(term, tag, reason) {
 var tagAll = function tagAll(term, tag, reason) {
   if (!term || !tag || typeof tag !== 'string') {
     // console.log(tag)
+
+    //LS 13-03-17 if tag is an array - call this recursively for each entry...
+    if (!!tag && tag.constructor === Array) {
+      for (var i = 0; i < tag.length; i++) {
+        tagAll(term, tag[i], reason);
+      }
+    }
+
     return;
   }
   tag = tag || '';
@@ -11504,8 +11600,8 @@ var tagAll = function tagAll(term, tag, reason) {
   //find assumed-tags
   if (tagset[tag]) {
     var tags = tagset[tag].parents || [];
-    for (var i = 0; i < tags.length; i++) {
-      tag_one(term, tags[i], '-');
+    for (var _i = 0; _i < tags.length; _i++) {
+      tag_one(term, tags[_i], '-');
     }
   }
 };
@@ -11513,7 +11609,7 @@ var tagAll = function tagAll(term, tag, reason) {
 module.exports = tagAll;
 // console.log(tagset['Person']);
 
-},{"./paths":189,"./unTag":191}],191:[function(_dereq_,module,exports){
+},{"./paths":191,"./unTag":193}],193:[function(_dereq_,module,exports){
 'use strict';
 //set a term as a particular Part-of-speech
 
@@ -11552,7 +11648,7 @@ var unTagAll = function unTagAll(term, tag, reason) {
 };
 module.exports = unTagAll;
 
-},{"./paths":189}],192:[function(_dereq_,module,exports){
+},{"./paths":191}],194:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -11562,7 +11658,7 @@ module.exports = {
   tags: _dereq_('../tags')
 };
 
-},{"../data":6,"../fns":21,"../log":23,"../tags":175}],193:[function(_dereq_,module,exports){
+},{"../data":6,"../fns":21,"../log":23,"../tags":177}],195:[function(_dereq_,module,exports){
 'use strict';
 //seperate the 'meat' from the trailing/leading whitespace.
 //works in concert with ./src/result/tokenize.js
@@ -11591,7 +11687,7 @@ var build_whitespace = function build_whitespace(str) {
 };
 module.exports = build_whitespace;
 
-},{}],194:[function(_dereq_,module,exports){
+},{}],196:[function(_dereq_,module,exports){
 'use strict';
 
 var Term = _dereq_('../term');
@@ -11650,7 +11746,7 @@ var fromString = function fromString(str) {
 };
 module.exports = fromString;
 
-},{"../term":177}],195:[function(_dereq_,module,exports){
+},{"../term":179}],197:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -11661,7 +11757,7 @@ var tagger = _dereq_('../tagger');
 var build = _dereq_('./build');
 
 var Terms = function () {
-  function Terms(arr, lexicon, refText, refTerms) {
+  function Terms(arr, lexicon, refText, refTerms, customRules) {
     var _this = this;
 
     _classCallCheck(this, Terms);
@@ -11674,12 +11770,14 @@ var Terms = function () {
     this.get = function (n) {
       return _this.terms[n];
     };
+
+    this.customRules = customRules;
   }
 
   _createClass(Terms, [{
     key: 'posTag',
     value: function posTag() {
-      tagger(this);
+      tagger(this, this.customRules);
       return this;
     }
   }, {
@@ -11772,9 +11870,9 @@ var Terms = function () {
     }
   }], [{
     key: 'fromString',
-    value: function fromString(str, lexicon) {
+    value: function fromString(str, lexicon, customRules) {
       var termArr = build(str);
-      var ts = new Terms(termArr, lexicon, null);
+      var ts = new Terms(termArr, lexicon, null, null, customRules);
       //give each term a reference to this ts
       ts.terms.forEach(function (t) {
         t.parentTerms = ts;
@@ -11798,9 +11896,10 @@ Terms = _dereq_('./methods/out')(Terms);
 Terms = _dereq_('./methods/replace')(Terms);
 Terms = _dereq_('./methods/split')(Terms);
 Terms = _dereq_('./methods/transform')(Terms);
+Terms = _dereq_('./methods/lump')(Terms);
 module.exports = Terms;
 
-},{"../tagger":140,"./build":194,"./match":196,"./match/not":202,"./methods/delete":203,"./methods/insert":204,"./methods/loops":205,"./methods/misc":206,"./methods/out":207,"./methods/replace":208,"./methods/split":209,"./methods/tag":210,"./methods/transform":211}],196:[function(_dereq_,module,exports){
+},{"../tagger":141,"./build":196,"./match":198,"./match/not":204,"./methods/delete":205,"./methods/insert":206,"./methods/loops":207,"./methods/lump":208,"./methods/misc":209,"./methods/out":210,"./methods/replace":211,"./methods/split":212,"./methods/tag":213,"./methods/transform":214}],198:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -11913,7 +12012,7 @@ var matchMethods = function matchMethods(Terms) {
 
 module.exports = matchMethods;
 
-},{"../../result/index":25,"./lib/startHere":200,"./lib/syntax":201}],197:[function(_dereq_,module,exports){
+},{"../../result/index":25,"./lib/startHere":202,"./lib/syntax":203}],199:[function(_dereq_,module,exports){
 'use strict';
 
 var fns = _dereq_('./paths').fns;
@@ -11978,7 +12077,7 @@ var isMatch = function isMatch(term, reg, verbose) {
 };
 module.exports = isMatch;
 
-},{"./paths":199}],198:[function(_dereq_,module,exports){
+},{"./paths":201}],200:[function(_dereq_,module,exports){
 'use strict';
 
 var fns = _dereq_('./paths').fns;
@@ -12011,7 +12110,7 @@ var lumpMatch = function lumpMatch(term, regs, reg_i) {
 
 module.exports = lumpMatch;
 
-},{"./paths":199}],199:[function(_dereq_,module,exports){
+},{"./paths":201}],201:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -12019,7 +12118,7 @@ module.exports = {
   log: _dereq_('../../../log')
 };
 
-},{"../../../fns":21,"../../../log":23}],200:[function(_dereq_,module,exports){
+},{"../../../fns":21,"../../../log":23}],202:[function(_dereq_,module,exports){
 'use strict';
 
 var lumpMatch = _dereq_('./lumpMatch');
@@ -12174,7 +12273,7 @@ var startHere = function startHere(ts, startAt, regs, verbose) {
 
 module.exports = startHere;
 
-},{"./isMatch":197,"./lumpMatch":198}],201:[function(_dereq_,module,exports){
+},{"./isMatch":199,"./lumpMatch":200}],203:[function(_dereq_,module,exports){
 'use strict';
 // parse a search lookup term find the regex-like syntax in this term
 
@@ -12263,7 +12362,7 @@ var parse_all = function parse_all(reg) {
 
 module.exports = parse_all;
 
-},{"./paths":199}],202:[function(_dereq_,module,exports){
+},{"./paths":201}],204:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -12365,7 +12464,7 @@ var addfns = function addfns(Terms) {
 
 module.exports = addfns;
 
-},{"../../result/index":25,"./lib/startHere":200,"./lib/syntax":201}],203:[function(_dereq_,module,exports){
+},{"../../result/index":25,"./lib/startHere":202,"./lib/syntax":203}],205:[function(_dereq_,module,exports){
 'use strict';
 
 var mutate = _dereq_('../mutate');
@@ -12404,7 +12503,7 @@ var deleteMethods = function deleteMethods(Terms) {
 
 module.exports = deleteMethods;
 
-},{"../mutate":212}],204:[function(_dereq_,module,exports){
+},{"../mutate":215}],206:[function(_dereq_,module,exports){
 'use strict';
 
 var mutate = _dereq_('../mutate');
@@ -12508,7 +12607,7 @@ var insertMethods = function insertMethods(Terms) {
 
 module.exports = insertMethods;
 
-},{"../mutate":212}],205:[function(_dereq_,module,exports){
+},{"../mutate":215}],207:[function(_dereq_,module,exports){
 'use strict';
 //these methods are simply term-methods called in a loop
 
@@ -12540,7 +12639,46 @@ var addMethods = function addMethods(Terms) {
 
 module.exports = addMethods;
 
-},{}],206:[function(_dereq_,module,exports){
+},{}],208:[function(_dereq_,module,exports){
+'use strict';
+
+var combine = _dereq_('../../tagger/lumper/combine');
+
+var lumpMethods = function lumpMethods(Terms) {
+
+  var methods = {
+
+    lump: function lump() {
+      while (this.terms.length > 1) {
+        combine(this, 0);
+      }
+
+      return this;
+    },
+    lumpIntoOne: function lumpIntoOne(startTerm, endTerm, tag, tagReason) {
+      var terms = startTerm.parentTerms;
+      var endTermIndex = endTerm.index();
+      var startTermIndex = startTerm.index();
+      for (var i = endTermIndex - 1; i >= startTermIndex; i--) {
+        combine(terms, i);
+      }
+
+      terms.terms[startTermIndex].tagAs(tag, tagReason);
+
+      return terms;
+    }
+  };
+
+  //hook them into result.proto
+  Object.keys(methods).forEach(function (k) {
+    Terms.prototype[k] = methods[k];
+  });
+  return Terms;
+};
+
+module.exports = lumpMethods;
+
+},{"../../tagger/lumper/combine":142}],209:[function(_dereq_,module,exports){
 'use strict';
 
 var miscMethods = function miscMethods(Terms) {
@@ -12646,7 +12784,7 @@ var miscMethods = function miscMethods(Terms) {
 
 module.exports = miscMethods;
 
-},{}],207:[function(_dereq_,module,exports){
+},{}],210:[function(_dereq_,module,exports){
 'use strict';
 
 var fns = _dereq_('../paths').fns;
@@ -12726,7 +12864,7 @@ var renderMethods = function renderMethods(Terms) {
 
 module.exports = renderMethods;
 
-},{"../paths":213}],208:[function(_dereq_,module,exports){
+},{"../paths":216}],211:[function(_dereq_,module,exports){
 'use strict';
 
 var mutate = _dereq_('../mutate');
@@ -12768,7 +12906,7 @@ var replaceMethods = function replaceMethods(Terms) {
 
 module.exports = replaceMethods;
 
-},{"../mutate":212}],209:[function(_dereq_,module,exports){
+},{"../mutate":215}],212:[function(_dereq_,module,exports){
 'use strict';
 
 //break apart a termlist into (before, match after)
@@ -12905,7 +13043,7 @@ var splitMethods = function splitMethods(Terms) {
 module.exports = splitMethods;
 exports = splitMethods;
 
-},{}],210:[function(_dereq_,module,exports){
+},{}],213:[function(_dereq_,module,exports){
 'use strict';
 
 var addMethods = function addMethods(Terms) {
@@ -12937,7 +13075,7 @@ var addMethods = function addMethods(Terms) {
 
 module.exports = addMethods;
 
-},{}],211:[function(_dereq_,module,exports){
+},{}],214:[function(_dereq_,module,exports){
 'use strict';
 
 var transforms = function transforms(Terms) {
@@ -12982,7 +13120,7 @@ var transforms = function transforms(Terms) {
 
 module.exports = transforms;
 
-},{}],212:[function(_dereq_,module,exports){
+},{}],215:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -13026,7 +13164,7 @@ exports.insertAt = function (terms, i, needle) {
   return terms;
 };
 
-},{}],213:[function(_dereq_,module,exports){
+},{}],216:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -13037,107 +13175,107 @@ module.exports = {
   Term: _dereq_('../term')
 };
 
-},{"../data/index":6,"../data/lexicon":7,"../fns":21,"../log":23,"../term":177}],214:[function(_dereq_,module,exports){
+},{"../data/index":6,"../data/lexicon":7,"../fns":21,"../log":23,"../term":179}],217:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = "0:68;1:5A;2:6A;3:4I;4:5K;5:5N;6:62;7:66;a5Yb5Fc51d4Le49f3Vg3Ih35i2Tj2Rk2Ql2Fm27n1Zo1Kp13qu11r0Vs05tYuJvGw8year1za1D;arEeDholeCiBo9r8;o4Hy;man1o8u5P;d5Rzy;ck0despr63ly,ry;!sa3;a4Gek1lco1C;p0y;a9i8ola3W;b6Fol4K;gabo5Hin,nilla,rio5B;g1lt3ZnDpArb4Ms9tter8;!mo6;ed,u2;b1Hp9s8t19;ca3et,tairs;er,i3R;authorFdeDeCfair,ivers2known,like1precedMrAs9ti5w8;iel5ritt5C;ig1Kupervis0;e8u1;cognBgul5Il5I;v58xpect0;cid0r8;!grou53stood;iz0;aCeBiAo9r8;anqu4Jen5i4Doubl0ue;geth4p,rp5H;dy,me1ny;en57st0;boo,l8n,wd3R;ent0;aWca3PeUhTiRkin0FlOmNnobb42oKpIqueam42tCu8ymb58;bAdd4Wp8r3F;er8re0J;!b,i1Z;du0t3;aCeAi0Nr9u8yl3X;p56r5;aightfor4Vip0;ad8reotyp0;fa6y;nda5Frk;a4Si8lend51rig0V;cy,r19;le9mb4phist1Lr8u13vi3J;d4Yry;!mn;el1ug;e9i8y;ck,g09my;ek,nd4;ck,l1n8;ce4Ig3;a5e4iTut,y;c8em1lf3Fni1Fre1Eve4Gxy;o11r38;cr0int1l2Lme,v1Z;aCeAi9o8;bu6o2Csy,y2;ght0Ytzy,v2;a8b0Ucondi3Emo3Epublic37t1S;dy,l,r;b4Hci6gg0nd3S;a8icke6;ck,i4V;aKeIhoHicayu13lac4EoGr9u8;bl4Amp0ny;eDiAo8;!b02f8p4;ou3Su7;c9m8or;a2Le;ey,k1;ci7mi14se4M;li30puli6;ny;r8ti2Y;fe4Cv2J;in1Lr8st;allel0t8;-ti8i2;me;bKffIi1kHnGpFrg0Yth4utEv8;al,er8;!aBn9t,w8;e8roug9;ig8;ht;ll;do0Ger,g1Ysi0E;en,posi2K;g1Wli0D;!ay;b8li0B;eat;e7s8;ce08ole2E;aEeDiBo8ua3M;b3n9rLsy,t8;ab3;descri3Qstop;g8mb3;ht1;arby,cessa1Pighbor1xt;ive,k0;aDeBiAo8ultip3;bi3dern,l5n1Jo8st;dy,t;ld,nX;a8di04re;s1ty;cab2Vd1genta,in,jUkeshift,le,mmo8ny;th;aHeCiAo8;f0Zne1u8ve1w1y2;sy,t1Q;ke1m8ter2ve1;it0;ftBg9th2v8wd;el;al,e8;nda17;!-Z;ngu2Sst,tt4;ap1Di0EnoX;agg0ol1u8;i1ZniFstifi0veni3;cy,de2gno33llImFn8;br0doDiGn4sAt8;a2Wen7ox8;ic2F;a9i8;de;ne;or;men7p8;ar8erfe2Port0rop4;ti2;!eg2;aHeEiCoBu8;ge,m8rt;b3dr8id;um;me1ne6ok0s03ur1;ghfalut1Bl1sp8;an23;a9f03l8;l0UpO;dy,ven1;l9n5rro8;wi0A;f,low0;aIener1WhGid5loFoDr9u8;ard0;aAey,is1o8;o8ss;vy;tis,y;ld,ne,o8;d,fy;b2oI;a8o8;st1;in8u5y;ful;aIeGiElag21oArie9u8;n,rY;nd1;aAol09r8ul;e8m4;gPign;my;erce ,n8t;al,i09;ma3r8;ti3;bl0ke,l7n0Lr,u8vori06;l8x;ty;aEerie,lDnti0ZtheCvBx8;a1Hcess,pe9t8ube1M;ra;ct0rt;eryday,il;re2;dLiX;rBs8;t,yg8;oi8;ng;th1;aLeHiCoArea9u8;e,mb;ry;ne,ub3;le;dact0Officu0Xre,s9v8;er7;cre9eas0gruntl0hone6ord8tress0;er1;et;adpAn7rang0t9vo8;ut;ail0ermin0;an;i1mag0n8pp4;ish;agey,ertaKhIivHlFoAr8udd1;a8isp,owd0;mp0vZz0;loBm9ncre8rZst1vert,ward1zy;te;mon,ple8;te,x;ni2ss2;ev4o8;s0u5;il;eesy,i8;ef,l1;in;aLeIizarTlFoBrAu8;r1sy;ly;isk,okK;gAld,tt9un8;cy;om;us;an9iCo8;nd,o5;d,k;hi9lov0nt,st,tt4yo9;er;nd;ckBd,ld,nkArr9w5;dy;en;ruW;!wards;bRctu2dKfraJgain6hHlEntiquDpCrab,sleep,verBw8;a9k8;waU;re;age;pareUt;at0;coh8l,oof;ol8;ic;ead;st;id;eHuCv8;a9er7;se;nc0;ed;lt;al;erElDoBruAs8;eEtra8;ct;pt;a8ve;rd;aze,e;ra8;nt";
 
-},{}],215:[function(_dereq_,module,exports){
+},{}],218:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = "a05by 03d00eXfShQinPjustOkinda,mMnKoFpDquite,rAs6t3up2very,w1ye0;p,s;ay,ell; to,wards5;h1o0wiN;o,t6ward;en,us;everal,o0uch;!me1on,rt0; of;hUtimes,w04;a1e0;alP;ndomOthL;ar excellCer0oint blank; Khaps;f3n0;ce0ly;! 0;agXmoR; courFten;ewGo0; longCt withstanding;aybe,eanwhi9ore0;!ovA;! aboQ;deed,steR;en0;ce;or1urther0;!moG; 0ev3;examp0good,suE;le;n mas1v0;er;se;amn,e 1irect0;ly;ju7trop;far,n0;ow; CbroBd nauseam,gAl5ny2part,side,t 0w3;be5l0mo5wor5;arge,ea4;mo1w0;ay;re;l 1mo0one,ready,so,ways;st;b1t0;hat;ut;ain;ad;lot,posteriori";
 
-},{}],216:[function(_dereq_,module,exports){
+},{}],219:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = "aCbBcAd9f8h7i6jfk,kul,l4m3ord,p1s0yyz;fo,yd;ek,h0;l,x;co,ia,uc;a0gw,hr;s,x;ax,cn,st;kg,nd;co,ra;en,fw,xb;dg,gk,lt;cn,kk;ms,tl";
 
-},{}],217:[function(_dereq_,module,exports){
+},{}],220:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = "a2Tb23c1Td1Oe1Nf1Lg1Gh18i16jakar2Ek0Xl0Rm0En0Ao08pXquiWrTsJtAu9v6w3y1z0;agreb,uri1W;ang1Qe0okohama;katerin1Frev31;ars1ellingt1Oin0rocl1;nipeg,terth0V;aw;a1i0;en2Glni2Y;lenc2Tncouv0Gr2F;lan bat0Dtrecht;a6bilisi,e5he4i3o2rondheim,u0;nVr0;in,ku;kyo,ronIulouC;anj22l13miso2Ira29; haJssaloni0X;gucigalpa,hr2Nl av0L;i0llinn,mpe2Angi07rtu;chu21n2LpT;a3e2h1kopje,t0ydney;ockholm,uttga11;angh1Eenzh1W;o0KvZ;int peters0Ul3n0ppo1E; 0ti1A;jo0salv2;se;v0z0Q;adU;eykjavik,i1o0;me,sario,t24;ga,o de janei16;to;a8e6h5i4o2r0ueb1Pyongya1M;a0etor23;gue;rt0zn23; elizabe3o;ls1Frae23;iladelph1Ynom pe07oenix;r0tah tik18;th;lerJr0tr0Z;is;dessa,s0ttawa;a1Glo;a2ew 0is;delTtaip0york;ei;goya,nt0Tpl0T;a5e4i3o1u0;mb0Kni0H;nt0scH;evideo,real;l1Ln01skolc;dellín,lbour0R;drid,l5n3r0;ib1se0;ille;or;chest0dalay,i0Y;er;mo;a4i1o0uxembou1FvAy00;ndZs angel0E;ege,ma0nz,sbYverpo1;!ss0;ol; pla0Husan0E;a5hark4i3laipeda,o1rak0uala lump2;ow;be,pavog0sice;ur;ev,ng8;iv;b3mpa0Jndy,ohsiu0Gra0un02;c0j;hi;ncheLstanb0̇zmir;ul;a5e3o0; chi mi1ms,u0;stH;nh;lsin0rakliF;ki;ifa,m0noi,va09;bu0RiltC;dan3en2hent,iza,othen1raz,ua0;dalaj0Fngzhou,tema05;bu0O;eToa;sk;es,rankfu0;rt;dmont4indhovU;a1ha01oha,u0;blRrb0Eshanbe;e0kar,masc0FugavpiJ;gu,je0;on;a7ebu,h2o0raioJuriti01;lo0nstanJpenhagNrk;gFmbo;enn3i1ristchur0;ch;ang m1c0ttagoL;ago;ai;i0lgary,pe town,rac4;ro;aHeBirminghWogoAr5u0;char3dap3enos air2r0sZ;g0sa;as;es;est;a2isba1usse0;ls;ne;silPtisla0;va;ta;i3lgrade,r0;g1l0n;in;en;ji0rut;ng;ku,n3r0sel;celo1ranquil0;la;na;g1ja lu0;ka;alo0kok;re;aBb9hmedabad,l7m4n2qa1sh0thens,uckland;dod,gabat;ba;k0twerp;ara;m5s0;terd0;am;exandr0maty;ia;idj0u dhabi;an;lbo1rh0;us;rg";
 
-},{}],218:[function(_dereq_,module,exports){
+},{}],221:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = "0:39;1:2M;a2Xb2Ec22d1Ye1Sf1Mg1Bh19i13j11k0Zl0Um0Gn05om3DpZqat1JrXsKtCu6v4wal3yemTz2;a25imbabwe;es,lis and futu2Y;a2enezue32ietnam;nuatu,tican city;.5gTkraiZnited 3ruXs2zbeE;a,sr;arab emirat0Kkingdom,states2;! of am2Y;k.,s.2; 28a.;a7haBimor-les0Bo6rinidad4u2;nis0rk2valu;ey,me2Ys and caic1U; and 2-2;toba1K;go,kel0Ynga;iw2Wji2nz2S;ki2U;aCcotl1eBi8lov7o5pa2Cri lanka,u4w2yr0;az2ed9itzerl1;il1;d2Rriname;lomon1Wmal0uth 2;afr2JkLsud2P;ak0en0;erra leoEn2;gapo1Xt maart2;en;negKrb0ychellY;int 2moa,n marino,udi arab0;hele25luc0mart20;epublic of ir0Com2Duss0w2;an26;a3eHhilippinTitcairn1Lo2uerto riM;l1rtugE;ki2Cl3nama,pua new0Ura2;gu6;au,esti2;ne;aAe8i6or2;folk1Hth3w2;ay; k2ern mariana1C;or0N;caragua,ger2ue;!ia;p2ther19w zeal1;al;mib0u2;ru;a6exi5icro0Ao2yanm04;ldova,n2roc4zamb9;a3gol0t2;enegro,serrat;co;c9dagascZl6r4urit3yot2;te;an0i15;shall0Wtin2;ique;a3div2i,ta;es;wi,ys0;ao,ed01;a5e4i2uxembourg;b2echtenste11thu1F;er0ya;ban0Hsotho;os,tv0;azakh1Ee2iriba03osovo,uwait,yrgyz1E;eling0Knya;a2erFord1D;ma16p1C;c6nd5r3s2taly,vory coast;le of m1Arael;a2el1;n,q;ia,oJ;el1;aiTon2ungary;dur0Ng kong;aBeAha0Qibralt9re7u2;a5ern4inea2ya0P;!-biss2;au;sey;deloupe,m,tema0Q;e2na0N;ce,nl1;ar;org0rmany;bTmb0;a6i5r2;ance,ench 2;guia0Dpoly2;nes0;ji,nl1;lklandTroeT;ast tim6cu5gypt,l salv5ngl1quatorial3ritr4st2thiop0;on0; guin2;ea;ad2;or;enmark,jibou4ominica3r con2;go;!n B;ti;aAentral african 9h7o4roat0u3yprQzech2; 8ia;ba,racao;c3lo2morPngo-brazzaville,okFsta r03te d'ivoiK;mb0;osD;i2ristmasF;le,na;republic;m2naTpe verde,yman9;bod0ero2;on;aFeChut00o8r4u2;lgar0r2;kina faso,ma,undi;azil,itish 2unei;virgin2; is2;lands;liv0nai4snia and herzegoviGtswaGuvet2; isl1;and;re;l2n7rmuF;ar2gium,ize;us;h3ngladesh,rbad2;os;am3ra2;in;as;fghaFlCmAn5r3ustr2zerbaijH;al0ia;genti2men0uba;na;dorra,g4t2;arct6igua and barbu2;da;o2uil2;la;er2;ica;b2ger0;an0;ia;ni2;st2;an";
 
-},{}],219:[function(_dereq_,module,exports){
+},{}],222:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = "0:17;a0Wb0Mc0Bd09e08f06g03h01iXjUkSlOmKnHomGpCqatari,rAs6t4u3v2wel0Qz1;am0Eimbabwe0;enezuel0ietnam0G;g8krai11;aiwShai,rinida0Hu1;ni0Prkmen;a3cot0Je2ingapoNlovak,oma0Tpa04udQw1y0X;edi0Jiss;negal0Ar07;mo0uT;o5us0Kw1;and0;a2eru0Ghilipp0Po1;li0Drtugu05;kist2lesti0Qna1raguay0;ma0P;ani;amiYi1orweO;caragu0geri1;an,en;a2ex0Mo1;ngo0Erocc0;cedo0Ila1;gasy,y07;a3eb8i1;b1thua0F;e0Dy0;o,t01;azakh,eny0o1uwaiti;re0;a1orda0A;ma0Bp1;anM;celandic,nd3r1sraeli,ta02vo06;a1iS;ni0qi;i0oneU;aiCin1ondur0unM;di;amCe1hanai0reek,uatemal0;or1rm0;gi0;i1ren6;lipino,n3;cuadoVgyp5ngliIstoWthiopi0urope0;a1ominXut3;niG;a8h5o3roa2ub0ze1;ch;ti0;lom1ngol4;bi0;a5i1;le0n1;ese;liforLm1na2;bo1erooK;di0;a9el7o5r2ul1;gaG;aziBi1;ti1;sh;li1sD;vi0;aru1gi0;si0;ngladeshi,sque;f9l6merAngol0r4si0us1;sie,tr1;a1i0;li0;gent1me4;ine;ba2ge1;ri0;ni0;gh0r1;ic0;an";
 
-},{}],220:[function(_dereq_,module,exports){
+},{}],223:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = "aZbYdTeRfuck,gQhKlHmGnFoCpAsh9u7voi01w3y0;a1eKu0;ck,p;!a,hoo,y;h1ow,t0;af,f;e0oa;e,w;gh,h0;! huh,-Oh,m;eesh,hh,it;ff,hew,l0sst;ease,z;h1o0w,y;h,o,ps;!h;ah,ope;eh,mm;m1ol0;!s;ao,fao;a3e1i,mm,urr0;ah;e,ll0y;!o;ha0i;!ha;ah,ee,oodbye,rr;e0h,t cetera,ww;k,p;'3a0uh;m0ng;mit,n0;!it;oh;ah,oo,ye; 1h0rgh;!em;la";
 
-},{}],221:[function(_dereq_,module,exports){
-"use strict";
-
-module.exports = "0:81;1:7E;2:7G;3:7Y;4:65;5:7P;6:7T;7:7O;8:7U;9:7C;A:6K;B:7R;C:6X;D:79;a78b6Pc5Ud5Ce4Rf4Jg47h3Zi3Uj38k2Sl21m1An14o12p0Ur0FsYtNursu9vIwGyEza7;olan2vE;etDon5Z;an2enMhi6PilE;a,la,ma;aHeFiE;ctor1o9rgin1vi3B;l4VrE;a,na,oniA;len5Ones7N;aLeJheIi3onHrE;acCiFuE;dy;c1na,s8;i4Vya;l4Nres0;o3GrE;e1Oi,ri;bit8mEn29ra,s8;a7iEmy;!ka;aTel4HhLiKoItHuFyE;b7Tlv1;e,sEzV;an17i;acCel1H;f1nEph1;d7ia,ja,ya;lv1mon0;aHeEi24;e3i9lFrE;i,yl;ia,ly;nFrEu3w3;i,on;a,ia,nEon;a,on;b24i2l5Ymant8nd7raB;aPeLhon2i5oFuE;by,th;bIch4Pn2sFxE;an4W;aFeE;ma2Ut5;!lind;er5yn;bFnE;a,ee;a,eE;cAkaB;chEmo3qu3I;a3HelEi2;!e,le;aHeGhylFriE;scil0Oyamva2;is,lis;arl,t7;ige,mGrvati,tricFulE;a,etDin0;a,e,ia;!e9;f4BlE;ga,iv1;aIelHiForE;a,ma;cEkki,na;ho2No2N;!l;di6Hi36o0Qtas8;aOeKiHonFrignayani,uri2ZyrE;a,na,t2J;a,iE;ca,q3G;ch3SlFrE;an2iam;dred,iA;ag1DgGliFrE;ced63edi36;n2s5Q;an,han;bSdel4e,gdale3li59nRrHtil2uGvFx4yE;a,ra;is;de,re6;cMgKiGl3Fs8tFyanE;!n;a,ha,i3;aFb2Hja,l2Ena,sEtza;a,ol,sa;!nE;!a,e,n0;arEo,r4AueriD;et4Ai5;elLia;dakran5on,ue9;el,le;aXeSiOoKuGyE;d1nE;!a,da,e4Vn1D;ciGelFiEpe;sa;a,la;a,l3Un2;is,la,rEui2Q;aFeEna,ra4;n0t5;!in0;lGndEsa;a,sE;ay,ey,i,y;a,i0Fli0F;aHiGla,nFoEslCt1M;la,na;a,o7;gh,la;!h,n07;don2Hna,ra,tHurFvern0xE;mi;a,eE;l,n;as8is8oE;nEya;ya;aMeJhadija,iGrE;istEy2G;a,en,in0M;mErst6;!beE;rlC;is8lFnd7rE;i,ri;ey,i,lCy;nyakumari,rItFvi5yE;!la;aFe,hEi3Cri3y;ar4er4le6r12;ri3;a,en,iEla;!ma,n;aTeNilKoGuE;anEdi1Fl1st4;a,i5;!anGcel0VdFhan1Rl3Eni,seEva3y37;fi3ph4;i32y;!a,e,n02;!iFlE;!iE;an;anHle3nFri,sE;iAsiA;a,if3LnE;a,if3K;a,e3Cin0nE;a,e3Bin0;cHde,nEsm4vie7;a,eFiE;ce,n0s;!l2At2G;l0EquelE;in0yn;da,mog2Vngrid,rHsEva;abelFiE;do7;!a,e,l0;en0ma;aIeGilE;aEda,laE;ry;ath33i26lenEnriet5;!a,e;nFrE;i21ri21;aBnaB;aMeKiJlHrFwenE;!dolY;acEetch6;e,ie9;adys,enEor1;a,da,na;na,seH;nevieve,orgi0OrE;ald4trude;brielFil,le,yE;le;a,e,le;aKeIlorHrE;ancEe2ie2;es,iE;n0sA;a,en1V;lErn;ic1;tiPy1P;dWile6k5lPmOrMstJtHuGvE;a,elE;yn;gen1la,ni1O;hEta;el;eEh28;lEr;a,e,l0;iEma,nest4;ca,ka,n;ma;a4eIiFl6ma,oiVsa,vE;a,i7;sEzaF;aEe;!beH;anor,nE;!a;iEna;th;aReKiJoE;lHminiqGnPrE;a,e6is,othE;ea,y;ue;ly,or24;anWna;anJbIe,lGnEsir1Z;a,iE;se;a,ia,la,orE;es,is;oraBra;a,na;m1nFphn0rlE;a,en0;a,iE;el08;aYeVhSlOoHrEynth1;isFyE;stal;ti3;lJnsHrEur07;a,inFnE;el1;a,e,n0;tanEuelo;ce,za;e6le6;aEeo;ire,rFudE;etDia;a,i0A;arl0GeFloe,ristE;a,in0;ls0Qryl;cFlE;esDi1D;el1il0Y;itlin,milMndLrIsHtE;ali3hE;er4le6y;in0;a0Usa0U;a,la,meFolE;!e,in0yn;la,n;aViV;e,le;arbVeMiKlKoni5rE;anIen2iEooke;dgFtE;tnC;etE;!te;di;anA;ca;atriLcky,lin2rItFulaBverE;ly;h,tE;e,yE;!e;nEt8;adOiE;ce;ce,z;a7ra;biga0Kd0Egn0Di08lZmVnIrGshlCudrEva;a,ey,i,y;ey,i,y;lEpi5;en0;!a,dNeLgelJiIja,nGtoE;inEn1;etD;!a,eIiE;ka;ka,ta;a,iE;a,ca,n0;!tD;te;je9rE;ea;la;an2bFel1i3y;ia;er;da;ber5exaJiGma,ta,yE;a,sE;a,sa;cFsE;a,ha,on;e,ia;nd7;ra;ta;c8da,le6mFshaB;!h;ee;en;ha;es;a,elGriE;a3en0;na;e,iE;a,n0;a,e;il";
-
-},{}],222:[function(_dereq_,module,exports){
-"use strict";
-
-module.exports = "aJblair,cHdevGguadalupe,jBk9l8m5r2sh0trinity;ay,e0iloh;a,lby;e1o0;bin,sario;ag1g1ne;ar1el,org0;an;ion,lo;ashawn,ee;asAe0;ls9nyatta,rry;a1e0;an,ss2;de,ime,m0n;ie,m0;ie;an,on;as0heyenne;ey,sidy;lexis,ndra,ubr0;ey";
-
-},{}],223:[function(_dereq_,module,exports){
-"use strict";
-
-module.exports = "0:1P;1:1Q;161Ta1Fb1Bc12d0Ye0Of0Kg0Hh0Di09june07kwanzaa,l04m00nYoVpRrPsEt8v6w4xm03y2;om 2ule;hasho16kippur;hit2int0Xomens equalit7; 0Ss0T;aGe2ictor1E;r1Bteran0;-1ax 1h6isha bav,rinityNu2; b3rke2;y 1;ish2she2;vat;a0Ye prophets birth1;a6eptember15h4imchat tor0Vt 3u2;kk4mmer U;a9p8s7valentines day ;avu2mini atzeret;ot;int 2mhain;a5p4s3va2;lentine0;tephen0;atrick0;ndrew0;amadan,ememberanc0Yos2;a park0h hashana;a3entecost,reside0Zur2;im,ple heart 1;lm2ssovE; s04;rthodox 2stara;christma0easter2goOhoJn0C;! m07;ational 2ew years09;freedom 1nurse0;a2emorial 1lHoOuharram;bMr2undy thurs1;ch0Hdi gr2tin luther k0B;as;a2itRughnassadh;bour 1g baom2ilat al-qadr;er; 2teenth;soliU;d aJmbolc,n2sra and miraj;augurGd2;ependen2igenous people0;c0Bt0;a3o2;ly satur1;lloween,nukkUrvey mil2;k 1;o3r2;ito de dolores,oundhoW;odW;a4east of 2;our lady of guadalupe,the immaculate concepti2;on;ther0;aster8id 3lectYmancip2piphany;atX;al-3u2;l-f3;ad3f2;itr;ha;! 2;m8s2;un1;ay of the dead,ecemb3i2;a de muertos,eciseisVwali;er sol2;stice;anad8h4inco de mayo,o3yber m2;on1;lumbu0mmonwealth 1rpus christi;anuk4inese n3ristmas2;! N;ew year;ah;a 1ian tha2;nksgiving;astillCeltaine,lack4ox2;in2;g 1; fri1;dvent,ll 9pril fools,rmistic8s6u2;stral4tum2;nal2; equinox;ia 1;cens2h wednes1sumption of mary;ion 1;e 1;hallows 6s2;ai2oul0t0;nt0;s 1;day;eve; de septiembre";
-
 },{}],224:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "0:2S;1:38;2:36;3:2B;4:2W;5:2Y;a38b2Zc2Ld2Be28f23g1Yh1Ni1Ij1Ck15l0Xm0Ln0Ho0Ep04rXsMtHvFwCxBy8zh6;a6ou,u;ng,o;a6eun2Roshi1Iun;ma6ng;da,guc1Xmo24sh1ZzaQ;iao,u;a7eb0il6o4right,u;li39s2;gn0lk0ng,tanabe;a6ivaldi;ssilj35zqu1;a9h8i2Do7r6sui,urn0;an,ynisI;lst0Nrr2Sth;at1Romps2;kah0Tnaka,ylor;aDchCeBhimizu,iAmi9o8t7u6zabo;ar1lliv27zuD;al21ein0;sa,u4;rn3th;lva,mmo22ngh;mjon3rrano;midt,neid0ulz;ito,n7sa6to;ki;ch1dKtos,z;amBeag1Xi9o7u6;bio,iz,s2L;b6dri1KgHj0Sme22osevelt,sZux;erts,ins2;c6ve0E;ci,hards2;ir1os;aDe9h7ic6ow1Z;as2Ehl0;a6illips;m,n1S;ders5et8r7t6;e0Or3;ez,ry;ers;h20rk0t6vl3;el,te0K;baBg0Blivei01r6;t6w1O;ega,iz;a6eils2guy5ix2owak,ym1D;gy,ka6var1J;ji6muW;ma;aEeCiBo8u6;ll0n6rr0Cssolini,ñ6;oz;lina,oKr6zart;al1Me6r0T;au,no;hhail3ll0;rci0s6y0;si;eWmmad3r6tsu08;in6tin1;!o;aCe8i6op1uo;!n6u;coln,dholm;e,fe7n0Pr6w0I;oy;bv6v6;re;rs5u;aBennedy,imuAle0Ko8u7wo6;k,n;mar,znets3;bay6vacs;asY;ra;hn,rl9to,ur,zl3;aAen9ha4imen1o6u4;h6n0Yu4;an6ns2;ss2;ki0Ds5;cks2nsse0C;glesi9ke8noue,shik7to,vano6;u,v;awa;da;as;aCe9it8o7u6;!a4b0gh0Nynh;a4ffmann,rvat;chcock,l0;mingw7nde6rL;rs2;ay;ns5rrOs7y6;asCes;an3hi6;moH;a8il,o7rub0u6;o,tierr1;m1nzal1;nd6o,rcia;hi;er9is8lor08o7uj6;ita;st0urni0;ch0;nand1;d7insteHsposi6vaL;to;is2wards;aCeBi9omin8u6;bo6rand;is;gu1;az,mitr3;ov;lgado,vi;rw7vi6;es,s;in;aFhBlarkAo6;h5l6op0x;em7li6;ns;an;!e;an8e7iu,o6ristens5u4we;i,ng,u4w,y;!n,on6u4;!g;mpb8rt0st6;ro;er;ell;aBe8ha4lanco,oyko,r6yrne;ooks,yant;ng;ck7ethov5nnett;en;er,ham;ch,h7iley,rn6;es;k,ng;dEl9nd6;ers6rB;en,on,s2;on;eks8iy9on7var1;ez;so;ej6;ev;ams";
+module.exports = "0:82;1:7F;2:7H;3:7Z;4:66;5:7Q;6:7U;7:7P;8:7V;9:7D;A:6L;B:7S;C:6Y;D:7A;a79b6Qc5Vd5De4Sf4Kg48h40i3Vj39k2Tl22m1An14o12p0Ur0FsYtNursu9vIwGyEza7;olan2vE;etDon60;an2enMhi6QilE;a,la,ma;aHeFiE;ctor1o9rgin1vi3C;l4WrE;a,na,oniA;len5Pnes7O;aLeJheIi3onHrE;acCiFuE;dy;c1na,s8;i4Wya;l4Ores0;o3HrE;e1Pi,ri;bit8mEn2Ara,s8;a7iEmy;!ka;aTel4IhLiKoItHuFyE;b7Ulv1;e,sEzV;an18i;acCel1I;f1nEph1;d7ia,ja,ya;lv1mon0;aHeEi25;e3i9lFrE;i,yl;ia,ly;nFrEu3w3;i,on;a,ia,nEon;a,on;b25i2l5Zmant8nd7raB;aPeLhon2i5oFuE;by,th;bIch4Qn2sFxE;an4X;aFeE;ma2Vt5;!lind;er5yn;bFnE;a,ee;a,eE;cAkaB;chEmo3qu3J;a3IelEi2;!e,le;aHeGhylFriE;scil0Pyamva2;is,lis;arl,t7;ige,mGrvati,tricFulE;a,etDin0;a,e,ia;!e9;f4ClE;ga,iv1;aIelHiForE;a,ma;cEkki,na;ho2Oo2O;!l;di6Ii37o0Rtas8;aPeKiHonFrignayani,uri30yrE;a,na,t2K;a,iE;ca,q3H;ch3TlFrE;an2iam;dred,iA;ag1EgHlFrE;ced64edi37;anie,iE;n2s5Q;an,han;bSdel4e,gdale3li59nRrHtil2uGvFx4yE;a,ra;is;de,re6;cMgKiGl3Fs8tFyanE;!n;a,ha,i3;aFb2Hja,l2Ena,sEtza;a,ol,sa;!nE;!a,e,n0;arEo,r4AueriD;et4Ai5;elLia;dakran5on,ue9;el,le;aXeSiOoKuGyE;d1nE;!a,da,e4Vn1D;ciGelFiEpe;sa;a,la;a,l3Un2;is,la,rEui2Q;aFeEna,ra4;n0t5;!in0;lGndEsa;a,sE;ay,ey,i,y;a,i0Fli0F;aHiGla,nFoEslCt1M;la,na;a,o7;gh,la;!h,n07;don2Hna,ra,tHurFvern0xE;mi;a,eE;l,n;as8is8oE;nEya;ya;aMeJhadija,iGrE;istEy2G;a,en,in0M;mErst6;!beE;rlC;is8lFnd7rE;i,ri;ey,i,lCy;nyakumari,rItFvi5yE;!la;aFe,hEi3Cri3y;ar4er4le6r12;ri3;a,en,iEla;!ma,n;aTeNilKoGuE;anEdi1Fl1st4;a,i5;!anGcel0VdFhan1Rl3Eni,seEva3y37;fi3ph4;i32y;!a,e,n02;!iFlE;!iE;an;anHle3nFri,sE;iAsiA;a,if3LnE;a,if3K;a,e3Cin0nE;a,e3Bin0;cHde,nEsm4vie7;a,eFiE;ce,n0s;!l2At2G;l0EquelE;in0yn;da,mog2Vngrid,rHsEva;abelFiE;do7;!a,e,l0;en0ma;aIeGilE;aEda,laE;ry;ath33i26lenEnriet5;!a,e;nFrE;i21ri21;aBnaB;aMeKiJlHrFwenE;!dolY;acEetch6;e,ie9;adys,enEor1;a,da,na;na,seH;nevieve,orgi0OrE;ald4trude;brielFil,le,yE;le;a,e,le;aKeIlorHrE;ancEe2ie2;es,iE;n0sA;a,en1V;lErn;ic1;tiPy1P;dWile6k5lPmOrMstJtHuGvE;a,elE;yn;gen1la,ni1O;hEta;el;eEh28;lEr;a,e,l0;iEma,nest4;ca,ka,n;ma;a4eIiFl6ma,oiVsa,vE;a,i7;sEzaF;aEe;!beH;anor,nE;!a;iEna;th;aReKiJoE;lHminiqGnPrE;a,e6is,othE;ea,y;ue;ly,or24;anWna;anJbIe,lGnEsir1Z;a,iE;se;a,ia,la,orE;es,is;oraBra;a,na;m1nFphn0rlE;a,en0;a,iE;el08;aYeVhSlOoHrEynth1;isFyE;stal;ti3;lJnsHrEur07;a,inFnE;el1;a,e,n0;tanEuelo;ce,za;e6le6;aEeo;ire,rFudE;etDia;a,i0A;arl0GeFloe,ristE;a,in0;ls0Qryl;cFlE;esDi1D;el1il0Y;itlin,milMndLrIsHtE;ali3hE;er4le6y;in0;a0Usa0U;a,la,meFolE;!e,in0yn;la,n;aViV;e,le;arbVeMiKlKoni5rE;anIen2iEooke;dgFtE;tnC;etE;!te;di;anA;ca;atriLcky,lin2rItFulaBverE;ly;h,tE;e,yE;!e;nEt8;adOiE;ce;ce,z;a7ra;biga0Kd0Egn0Di08lZmVnIrGshlCudrEva;a,ey,i,y;ey,i,y;lEpi5;en0;!a,dNeLgelJiIja,nGtoE;inEn1;etD;!a,eIiE;ka;ka,ta;a,iE;a,ca,n0;!tD;te;je9rE;ea;la;an2bFel1i3y;ia;er;da;ber5exaJiGma,ta,yE;a,sE;a,sa;cFsE;a,ha,on;e,ia;nd7;ra;ta;c8da,le6mFshaB;!h;ee;en;ha;es;a,elGriE;a3en0;na;e,iE;a,n0;a,e;il";
 
 },{}],225:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "0:A9;1:9J;2:A0;3:9R;4:94;5:7W;6:9C;7:9X;a94b8Ic7Pd6Ve67f5Sg5Dh4Ui4Kj3Ok3Gl30m22n1To1Op1Fqu1Er0Us0BtVusm0vSwIxavi3yAz8;a8or0;cha4Zh1B;ass2i,oAu8;sBu8;ma,to;nBsAus8;o8s9;uf;ef;at0g;aFeEi9o8;lfga02odrow;l8n13;bAfr9Gl8s1;a8Ei8;am2Ne,s;e6Vur;i,nde7Xsl8A;de,l8rr7y6;la5t3;an5ern1i8;c8ha0nce2Trg7Qva0;ente,t4F;aMeHhGimFoBr9y8;!l3ro6s1;av6Le8oy;nt,v4B;bAdd,m8ny;!as,m8oharu;a91ie,y;i6Ty;!my,othy;eodo0Kia67om6R;dBr8;en5r8;an5e8y;ll,n5;!dy;ic82req,ts3Jyl3Z;aKcottJeIhFiEoCpenc3t8ur1Cylve74zym1;anAe8ua67;f0ph8Mrli8ve4Ewa66;ng;!islaw,l7K;lom1u8;leyma6ta;dn7Hm1;a9e8;ld1rm0;hZne,qu0Eun,wn;an,basti0k1Kl3Erg3Dth;!y;lBmAnt8q3Vul;i8os;a5Lno;!m7Hu4;ik,va8;d3GtoV;aNeJicHoBu9y8;an,ou;b7d8f64ssel5U;ol2Cy;an,bCcky,dBel,geAh0land8Cm0n5Aosevelt,ry,s9y8;!ce;coe,s;l2Yr;e40g3n6Xo8Eri59;b7Ge86;ar4Uc4Tha6Wk8;!ey,y;g9ub7x,y8za;ansh,nal4R;g7Bi8;na77s;chAfa4l1Zm9nd8pha4ul,y55;al5Fol1Y;i7Won;id;ent2int1;aFeBhilAier9ol,re8;st1;re;!ip,lip;d7PrAt8;ar,e8;!r;cy,ry;bIt3Ful;liv3m7IrAs9t8um76w7;is,to;ama,c74;i,l3Kv8;il4E;athanFeEiAo8;a8el,l0ma0r2D;h,m;cAi9k8;h5Mola;lo;hol4Wk,ol4W;al,d,il,ls1;!i4;aRePiHoCu8yr1;hamAr9sta8;fa,pha;ad,ray;ed,mC;dibo,e,hamAnt9rr4Bs8ussa;es,he;e,y;ad,ed,m8;ad,ed;cCgu4kAl9n8tche5A;a5Wik;an,os,t1;e,ol8;aj;ah,h8k5I;a4e8;al,l;h8lv2r3M;di,met;ck,hIlHmJnu4rDs1t9uri5x8;!imilian6N;eo,h9i47t8;!eo,hew,ia;e8is;us,w;cAio,k6Il9sha4Ut8v2;i1Yy;in,on;!el,oFus;colm,ik;am8di,moud;ad8;ou;aJeGiFl27oBu8y36;c3Uis,k8th3;a8e;!s;g0nn5FrenAu8we4I;!i8;e,s;!zo;am,on4;evi,i,la3Wo8roy,st3vi,w39;!n8;!a4V;m9n5r0Wu8w8;ren5;ar,o8;nt;aDe9haled,ir8rist3Yu33y2Q;k,ollos;i0Slv2n8rmit,v2;!d9n8t;e0Qy;a41ri3R;na4Yr8them;im,l;aVeOiMoAu8;an,li8ni0Kst2;an,o,us;aqu2eHhnGnDrBs8;e9h8;!ua;!ph;d8ge;an,i;!a8;s,th8;an,on;!ath0n48;!l,s8y;ph;an,e,m8;!m44;ffCr9s8;s0Sus;a49em9mai6o8ry;me,ni0E;i5Gy;!eYr8;ey,y;cDd7kCmBrAs9vi3y8;!d7;on,p3;ed,r1D;al,es;e,ob,ub;k8ob;!s1;an,brahGchika,gEk3lija,nuDrBsAt8v0;ai,s8;uki;aac,ha0ma4;a,vin8;!g;k,nngu3V;nac8or;io;im;aHeCina3QoAu8yd40;be1Og8mber3EsA;h,o;m3ra5s8wa33;se2;aBctAitAn9r8;be1Jm0;ry;or;th;bFlEmza,ns,o,r9s8ya35;an,s0;lBo3ArAu8v2T;hi32ki,t8;a,o;is1y;an,ey;!im;ib;aIeFilbe3WlenEord1rAu8;iller8stavo;mo;aAeg8ov3;!g,or8;io,y;dy,h41nt;!n;ne,o9ra8;ld,rd3O;ffr2Crge;brielAr8;la1Gr8y;eWy;!e;aLeIiGlForr09r8;anAed8;!d2Ee8ri1I;ri1H;c9k8;!ie,l2;esco,is8;!co,zek;oyd;d4l8;ip;li9ng,rn8;anU;pe,x;bi0di;arTdOfra2it0lKmDnCr9steb0th0uge6v8ym7;an,ereE;gi,i9n8v2w2;est30ie;cZk;rique,zo;aDiAm8;aCe8;tt;l9r8;!h0;!io;nu4;beZd1iAli9m3t1v2wo8;od;ot19s;!as,j32;!d1Vg26mBu9w8;a1Bin;ar8;do;o0Du0D;l,n8;est;aPeHieGoArag0u9w8yl0;ay6ight;a6st2;minBnAug9y8;le;!lV;!a1Fn1I;go,ic8;!k;go;an,j0lbeEmetriVnCrBsAv9w8xt3;ay6ey;en,in;moX;ek,ri03;is,n8;is;rt;lHmGnFrAv8;e,i8;!d;iBne06r8w2yl;e8in,yl;l8n;!l;n,us;!e,i4ny;i1Don;e,l8;as;aVeThMlCo9raig,urt8;!is;dy,l2nrad,r8;ey,neli8y;us;aCevelaBi8yE;f9nt8;!on;fo03t1;nd;rAu9y8;!t1;de;en5k;ce;aCeBris9u8;ck;!t8;i0oph3;st3;d,rl8se;es,ie;c8dric,s0J;il;lBmer1r8;ey,l9ro8t3;ll;!os,t1;eb,v2;arSeMilLlaKobJr9u8yr1;ddy,rt1;aDeAi0u9y8;anAce,on;ce,no;n9t8;!t;d0t;d8nd1;!fo9l8y;ey;rd;!by;i6ke;al,lC;nAr8shoi;at,na8t;rd0B;!i9jam2n8;ie,y;to;ry,t;ar0Mb0Ed0Bgu09hme08id7jani,lRmPnIputsiHr9sa8u09ya0ziz;hi;aEchDi4jun,maBn9on,t8y0;hur,u01;av,o8;ld;an,nd00;el;ie;ta;aq;dCgelVt8;hony,o8;i6n8;!iS;ne;re8y;!a,s,w;ir,m8os;ar;!an,beLeFfCi,lBonAt1v8;aJin;on;so,zo;an,en;on9r8;edG;so;jBksandAssBx8;!and3is;er;ar,er;and8;ro;rt8;!o;en;d,t;st2;in;am9o8ri0vik;lfo;!a;dAel,rah9u8;!bakr,lfazl;am;allBel,oulaye,ul8;l9rahm0;an;ah,o;ah;av,on";
+module.exports = "aJblair,cHdevGguadalupe,jBk9l8m5r2sh0trinity;ay,e0iloh;a,lby;e1o0;bin,sario;ag1g1ne;ar1el,org0;an;ion,lo;ashawn,ee;asAe0;ls9nyatta,rry;a1e0;an,ss2;de,ime,m0n;ie,m0;ie;an,on;as0heyenne;ey,sidy;lexis,ndra,ubr0;ey";
 
 },{}],226:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "ad hominPbKcJdGeEfCgBh8kittNlunchDn7othersDp5roomQs3t0us dollarQ;h0ragedM;ereOing0;!sA;tu0uper bowlMystL;dAffL;a0roblJurpo4;rtJt8;othGumbA;ead startHo0;meGu0;seF;laci6odErand slamE;l oz0riendDundB;!es;conom8ggBnerg8v0xamp7;entA;eath9inn1o0;gg5or8;er7;anar3eil4it3ottage6redit card6;ank3o0reakfast5;d1tt0;le3;ies,y;ing1;em0;!s";
+module.exports = "0:1P;1:1Q;161Ta1Fb1Bc12d0Ye0Of0Kg0Hh0Di09june07kwanzaa,l04m00nYoVpRrPsEt8v6w4xm03y2;om 2ule;hasho16kippur;hit2int0Xomens equalit7; 0Ss0T;aGe2ictor1E;r1Bteran0;-1ax 1h6isha bav,rinityNu2; b3rke2;y 1;ish2she2;vat;a0Ye prophets birth1;a6eptember15h4imchat tor0Vt 3u2;kk4mmer U;a9p8s7valentines day ;avu2mini atzeret;ot;int 2mhain;a5p4s3va2;lentine0;tephen0;atrick0;ndrew0;amadan,ememberanc0Yos2;a park0h hashana;a3entecost,reside0Zur2;im,ple heart 1;lm2ssovE; s04;rthodox 2stara;christma0easter2goOhoJn0C;! m07;ational 2ew years09;freedom 1nurse0;a2emorial 1lHoOuharram;bMr2undy thurs1;ch0Hdi gr2tin luther k0B;as;a2itRughnassadh;bour 1g baom2ilat al-qadr;er; 2teenth;soliU;d aJmbolc,n2sra and miraj;augurGd2;ependen2igenous people0;c0Bt0;a3o2;ly satur1;lloween,nukkUrvey mil2;k 1;o3r2;ito de dolores,oundhoW;odW;a4east of 2;our lady of guadalupe,the immaculate concepti2;on;ther0;aster8id 3lectYmancip2piphany;atX;al-3u2;l-f3;ad3f2;itr;ha;! 2;m8s2;un1;ay of the dead,ecemb3i2;a de muertos,eciseisVwali;er sol2;stice;anad8h4inco de mayo,o3yber m2;on1;lumbu0mmonwealth 1rpus christi;anuk4inese n3ristmas2;! N;ew year;ah;a 1ian tha2;nksgiving;astillCeltaine,lack4ox2;in2;g 1; fri1;dvent,ll 9pril fools,rmistic8s6u2;stral4tum2;nal2; equinox;ia 1;cens2h wednes1sumption of mary;ion 1;e 1;hallows 6s2;ai2oul0t0;nt0;s 1;day;eve; de septiembre";
 
 },{}],227:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "0:2Q;1:20;2:2I;a2Db24c1Ad11e0Uf0Tg0Qh0Kin0Djourn1l07mWnewsVoTpLquartet,rIs7t5u3worke1K;ni3tilG;on,vA;ele3im2Oribun1v;communica1Jgraph,vi1L;av0Hchool,eBo8t4ubcommitt1Ny3;ndic0Pstems;a3ockV;nda22te 3;poli2univ3;ersi27;ci3ns;al club,et3;e,y;cur3rvice0;iti2C;adio,e3;gionRs3;er19ourc29tauraX;artners9e7harmac6izza,lc,o4r3;ess,oduc13;l3st,wer;i2ytechnic;a0Jeutical0;ople's par1Ttrol3;!eum;!hip;bservLffi2il,ptic1r3;chestra,ganiza22;! servi2;a9e7i5o4use3;e,um;bi10tor0;lita1Bnist3;e08ry;dia,mori1rcantile3; exchange;ch1Ogazi5nage06r3;i4ket3;i0Cs;ne;ab6i5oc3;al 3;aIheaH;beration ar1Fmited;or3s;ato0Y;c,dustri1Gs6ter5vest3;me3o08;nt0;nation1sI;titut3u14;!e3;! of technoloIs;e5o3;ld3sp0Itel0;ings;a3ra6;lth a3;uth0T;a4ir09overnJroup,ui3;ld;s,zet0P;acul0Qede12inanci1m,ounda13und;duca12gli0Blectric8n5s4t3veningH;at;ta0L;er4semb01ter3;prise0tainB;gy;!i0J;a9e4i3rilliG;rectora0FviP;part3sign,velop6;e5ment3;! sto3s;re;ment;ily3ta; news;aSentQhNircus,lLo3rew;!ali0LffJlleHm9n4rp3unc7;o0Js;fe6s3taine9;e4ulti3;ng;il;de0Eren2;m5p3;any,rehensiAute3;rs;i5uni3;ca3ty;tions;s3tt6;si08;cti3ge;ve;ee;ini3ub;c,qK;emica4oir,ronic3urch;le;ls;er,r3;al bank,e;fe,is5p3re,thedr1;it1;al;se;an9o7r4u3;ilding socieEreau;ands,ewe4other3;hood,s;ry;a3ys;rd;k,q3;ue;dministIgencFirDrCss7ut3viaJ;h4ori3;te;ori3;ty;oc5u3;ran2;ce;!iat3;es,iB;my;craft,l3ways;in4;e0i3y;es;!s;ra3;ti3;on";
+module.exports = "0:2S;1:38;2:36;3:2B;4:2W;5:2Y;a38b2Zc2Ld2Be28f23g1Yh1Ni1Ij1Ck15l0Xm0Ln0Ho0Ep04rXsMtHvFwCxBy8zh6;a6ou,u;ng,o;a6eun2Roshi1Iun;ma6ng;da,guc1Xmo24sh1ZzaQ;iao,u;a7eb0il6o4right,u;li39s2;gn0lk0ng,tanabe;a6ivaldi;ssilj35zqu1;a9h8i2Do7r6sui,urn0;an,ynisI;lst0Nrr2Sth;at1Romps2;kah0Tnaka,ylor;aDchCeBhimizu,iAmi9o8t7u6zabo;ar1lliv27zuD;al21ein0;sa,u4;rn3th;lva,mmo22ngh;mjon3rrano;midt,neid0ulz;ito,n7sa6to;ki;ch1dKtos,z;amBeag1Xi9o7u6;bio,iz,s2L;b6dri1KgHj0Sme22osevelt,sZux;erts,ins2;c6ve0E;ci,hards2;ir1os;aDe9h7ic6ow1Z;as2Ehl0;a6illips;m,n1S;ders5et8r7t6;e0Or3;ez,ry;ers;h20rk0t6vl3;el,te0K;baBg0Blivei01r6;t6w1O;ega,iz;a6eils2guy5ix2owak,ym1D;gy,ka6var1J;ji6muW;ma;aEeCiBo8u6;ll0n6rr0Cssolini,ñ6;oz;lina,oKr6zart;al1Me6r0T;au,no;hhail3ll0;rci0s6y0;si;eWmmad3r6tsu08;in6tin1;!o;aCe8i6op1uo;!n6u;coln,dholm;e,fe7n0Pr6w0I;oy;bv6v6;re;rs5u;aBennedy,imuAle0Ko8u7wo6;k,n;mar,znets3;bay6vacs;asY;ra;hn,rl9to,ur,zl3;aAen9ha4imen1o6u4;h6n0Yu4;an6ns2;ss2;ki0Ds5;cks2nsse0C;glesi9ke8noue,shik7to,vano6;u,v;awa;da;as;aCe9it8o7u6;!a4b0gh0Nynh;a4ffmann,rvat;chcock,l0;mingw7nde6rL;rs2;ay;ns5rrOs7y6;asCes;an3hi6;moH;a8il,o7rub0u6;o,tierr1;m1nzal1;nd6o,rcia;hi;er9is8lor08o7uj6;ita;st0urni0;ch0;nand1;d7insteHsposi6vaL;to;is2wards;aCeBi9omin8u6;bo6rand;is;gu1;az,mitr3;ov;lgado,vi;rw7vi6;es,s;in;aFhBlarkAo6;h5l6op0x;em7li6;ns;an;!e;an8e7iu,o6ristens5u4we;i,ng,u4w,y;!n,on6u4;!g;mpb8rt0st6;ro;er;ell;aBe8ha4lanco,oyko,r6yrne;ooks,yant;ng;ck7ethov5nnett;en;er,ham;ch,h7iley,rn6;es;k,ng;dEl9nd6;ers6rB;en,on,s2;on;eks8iy9on7var1;ez;so;ej6;ev;ams";
 
 },{}],228:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "0:43;a38b2Pc29d21e1Yf1Ug1Mh1Hi1Ej1Ak18l14m0Tn0Go0Dp07qu06rZsStFuBv8w3y1;a1m0Youtu2Rw0Y;hoo!,maha;a3e1orld trade organizati3Y;lls fargo,st1;fie22inghou17;l1rner br3A;-m12gree2Zl street journ24m12;an halNeriz3Tisa,o1;dafo2Fl1;kswagLvo;2,bs,n2ps,s1;a tod2Pps;es32i1;lev2Vted natio2S; mobi2Iaco bePd bMeAgi frida9h3im horto2Rmz,o1witt2U;shiba,y1;ota,s r Y;e 1in lizzy;b3carpen30daily ma2Uguess w2holli0rolling st1Ms1w2;mashing pumpki2Muprem0;ho;ea1lack eyed pe3Cyrds;ch bo1tl0;ys;l2s1;co,la m13;efoni08us;a6e4ieme2Eo2pice gir5ta1ubaru;rbucks,to2K;ny,undgard1;en;a2Ox pisto1;ls;few23insbu24msu1V;.e.m.,adiohead,b6e3oyal 1yan2U;b1dutch she4;ank;/max,aders dige1Dd 1vl2Z;bu1c1Shot chili peppe2Hlobst26;ll;c,s;ant2Sizno2C;an5bs,e3fiz22hilip morrBi2r1;emier24octer & gamb1Pudenti13;nk floyd,zza hut;psi25tro1uge09;br2Nchina,n2N; 2ason1Vda2D;ld navy,pec,range juli2xf1;am;us;aAb9e5fl,h4i3o1sa,wa;kia,tre dame,vart1;is;ke,ntendo,ss0K;l,s;stl3tflix,w1; 1sweek;kids on the block,york09;e,é;a,c;nd1Qs2t1;ional aca2Bo,we0O;a,cYd0M;aAcdonald9e5i3lb,o1tv,yspace;b1Jnsanto,ody blu0t1;ley crue,or0M;crosoft,t1;as,subisO;dica3rcedes2talli1;ca;!-benz;id,re;'s,s;c's milk,tt10z1U;'ore07a3e1g,ittle caesa1G;novo,x1;is,mark; pres5-z-boy;atv,fc,kk,m1od1G;art;iffy lu0Io3pmorgan1sa;! cha1;se;hnson & johns1Oy d1N;bm,hop,n1tv;g,te1;l,rpol; & m,asbro,ewlett-packaRi3o1sbc,yundai;me dep1n1F;ot;tac1zbollah;hi;eneral 6hq,l5o2reen d0Fu1;cci,ns n ros0;ldman sachs,o1;dye1g08;ar;axo smith kliXencore;electr0Fm1;oto0R;a3bi,da,edex,i1leetwood mac,oErito-l07;at,nancial1restoT; tim0;cebook,nnie mae;b03sa,u,xxon1; m1m1;ob0D;aiml08e5isney,o3u1;nkin donuts,po0Tran dur1;an;j,w j1;on0;a,f leppa2ll,peche mode,r spiegXstiny's chi1;ld;rd;aEbc,hBi9nn,o3r1;aigsli5eedence clearwater reviv1;al;ca c5l4m1o08st03;ca2p1;aq;st;dplLgate;ola;a,sco1tigroup;! systems;ev2i1;ck fil-a,na daily;r0Fy;dbury,pital o1rl's jr;ne;aFbc,eBf9l5mw,ni,o1p;ei3mbardiJston 1;glo1pizza;be;ng;ack & deckFo2ue c1;roW;ckbuster video,omingda1;le; g1g1;oodriM;cht3e ge0n & jer2rkshire hathaw1;ay;ryG;el;nana republ3s1xt5y5;f,kin robbi1;ns;ic;bWcRdidQerosmith,ig,lKmEnheuser-busDol,pple9r6s3t&t,v2y1;er;is,on;hland1sociated F; o1;il;by4g2m1;co;os; compu2bee1;'s;te1;rs;ch;c,d,erican3t1;!r1;ak; ex1;pre1;ss; 4catel2t1;air;!-luce1;nt;jazeera,qae1;da;as;/dc,a3er,t1;ivisi1;on;demy of scienc0;es;ba,c";
+module.exports = "0:A9;1:9J;2:A0;3:9R;4:94;5:7W;6:9C;7:9X;a94b8Ic7Pd6Ve67f5Sg5Dh4Ui4Kj3Ok3Gl30m22n1To1Op1Fqu1Er0Us0BtVusm0vSwIxavi3yAz8;a8or0;cha4Zh1B;ass2i,oAu8;sBu8;ma,to;nBsAus8;o8s9;uf;ef;at0g;aFeEi9o8;lfga02odrow;l8n13;bAfr9Gl8s1;a8Ei8;am2Ne,s;e6Vur;i,nde7Xsl8A;de,l8rr7y6;la5t3;an5ern1i8;c8ha0nce2Trg7Qva0;ente,t4F;aMeHhGimFoBr9y8;!l3ro6s1;av6Le8oy;nt,v4B;bAdd,m8ny;!as,m8oharu;a91ie,y;i6Ty;!my,othy;eodo0Kia67om6R;dBr8;en5r8;an5e8y;ll,n5;!dy;ic82req,ts3Jyl3Z;aKcottJeIhFiEoCpenc3t8ur1Cylve74zym1;anAe8ua67;f0ph8Mrli8ve4Ewa66;ng;!islaw,l7K;lom1u8;leyma6ta;dn7Hm1;a9e8;ld1rm0;hZne,qu0Eun,wn;an,basti0k1Kl3Erg3Dth;!y;lBmAnt8q3Vul;i8os;a5Lno;!m7Hu4;ik,va8;d3GtoV;aNeJicHoBu9y8;an,ou;b7d8f64ssel5U;ol2Cy;an,bCcky,dBel,geAh0land8Cm0n5Aosevelt,ry,s9y8;!ce;coe,s;l2Yr;e40g3n6Xo8Eri59;b7Ge86;ar4Uc4Tha6Wk8;!ey,y;g9ub7x,y8za;ansh,nal4R;g7Bi8;na77s;chAfa4l1Zm9nd8pha4ul,y55;al5Fol1Y;i7Won;id;ent2int1;aFeBhilAier9ol,re8;st1;re;!ip,lip;d7PrAt8;ar,e8;!r;cy,ry;bIt3Ful;liv3m7IrAs9t8um76w7;is,to;ama,c74;i,l3Kv8;il4E;athanFeEiAo8;a8el,l0ma0r2D;h,m;cAi9k8;h5Mola;lo;hol4Wk,ol4W;al,d,il,ls1;!i4;aRePiHoCu8yr1;hamAr9sta8;fa,pha;ad,ray;ed,mC;dibo,e,hamAnt9rr4Bs8ussa;es,he;e,y;ad,ed,m8;ad,ed;cCgu4kAl9n8tche5A;a5Wik;an,os,t1;e,ol8;aj;ah,h8k5I;a4e8;al,l;h8lv2r3M;di,met;ck,hIlHmJnu4rDs1t9uri5x8;!imilian6N;eo,h9i47t8;!eo,hew,ia;e8is;us,w;cAio,k6Il9sha4Ut8v2;i1Yy;in,on;!el,oFus;colm,ik;am8di,moud;ad8;ou;aJeGiFl27oBu8y36;c3Uis,k8th3;a8e;!s;g0nn5FrenAu8we4I;!i8;e,s;!zo;am,on4;evi,i,la3Wo8roy,st3vi,w39;!n8;!a4V;m9n5r0Wu8w8;ren5;ar,o8;nt;aDe9haled,ir8rist3Yu33y2Q;k,ollos;i0Slv2n8rmit,v2;!d9n8t;e0Qy;a41ri3R;na4Yr8them;im,l;aVeOiMoAu8;an,li8ni0Kst2;an,o,us;aqu2eHhnGnDrBs8;e9h8;!ua;!ph;d8ge;an,i;!a8;s,th8;an,on;!ath0n48;!l,s8y;ph;an,e,m8;!m44;ffCr9s8;s0Sus;a49em9mai6o8ry;me,ni0E;i5Gy;!eYr8;ey,y;cDd7kCmBrAs9vi3y8;!d7;on,p3;ed,r1D;al,es;e,ob,ub;k8ob;!s1;an,brahGchika,gEk3lija,nuDrBsAt8v0;ai,s8;uki;aac,ha0ma4;a,vin8;!g;k,nngu3V;nac8or;io;im;aHeCina3QoAu8yd40;be1Og8mber3EsA;h,o;m3ra5s8wa33;se2;aBctAitAn9r8;be1Jm0;ry;or;th;bFlEmza,ns,o,r9s8ya35;an,s0;lBo3ArAu8v2T;hi32ki,t8;a,o;is1y;an,ey;!im;ib;aIeFilbe3WlenEord1rAu8;iller8stavo;mo;aAeg8ov3;!g,or8;io,y;dy,h41nt;!n;ne,o9ra8;ld,rd3O;ffr2Crge;brielAr8;la1Gr8y;eWy;!e;aLeIiGlForr09r8;anAed8;!d2Ee8ri1I;ri1H;c9k8;!ie,l2;esco,is8;!co,zek;oyd;d4l8;ip;li9ng,rn8;anU;pe,x;bi0di;arTdOfra2it0lKmDnCr9steb0th0uge6v8ym7;an,ereE;gi,i9n8v2w2;est30ie;cZk;rique,zo;aDiAm8;aCe8;tt;l9r8;!h0;!io;nu4;beZd1iAli9m3t1v2wo8;od;ot19s;!as,j32;!d1Vg26mBu9w8;a1Bin;ar8;do;o0Du0D;l,n8;est;aPeHieGoArag0u9w8yl0;ay6ight;a6st2;minBnAug9y8;le;!lV;!a1Fn1I;go,ic8;!k;go;an,j0lbeEmetriVnCrBsAv9w8xt3;ay6ey;en,in;moX;ek,ri03;is,n8;is;rt;lHmGnFrAv8;e,i8;!d;iBne06r8w2yl;e8in,yl;l8n;!l;n,us;!e,i4ny;i1Don;e,l8;as;aVeThMlCo9raig,urt8;!is;dy,l2nrad,r8;ey,neli8y;us;aCevelaBi8yE;f9nt8;!on;fo03t1;nd;rAu9y8;!t1;de;en5k;ce;aCeBris9u8;ck;!t8;i0oph3;st3;d,rl8se;es,ie;c8dric,s0J;il;lBmer1r8;ey,l9ro8t3;ll;!os,t1;eb,v2;arSeMilLlaKobJr9u8yr1;ddy,rt1;aDeAi0u9y8;anAce,on;ce,no;n9t8;!t;d0t;d8nd1;!fo9l8y;ey;rd;!by;i6ke;al,lC;nAr8shoi;at,na8t;rd0B;!i9jam2n8;ie,y;to;ry,t;ar0Mb0Ed0Bgu09hme08id7jani,lRmPnIputsiHr9sa8u09ya0ziz;hi;aEchDi4jun,maBn9on,t8y0;hur,u01;av,o8;ld;an,nd00;el;ie;ta;aq;dCgelVt8;hony,o8;i6n8;!iS;ne;re8y;!a,s,w;ir,m8os;ar;!an,beLeFfCi,lBonAt1v8;aJin;on;so,zo;an,en;on9r8;edG;so;jBksandAssBx8;!and3is;er;ar,er;and8;ro;rt8;!o;en;d,t;st2;in;am9o8ri0vik;lfo;!a;dAel,rah9u8;!bakr,lfazl;am;allBel,oulaye,ul8;l9rahm0;an;ah,o;ah;av,on";
 
 },{}],229:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "0:71;1:6P;2:7D;3:73;4:6I;5:7G;6:75;7:6O;8:6B;9:6C;A:5H;B:70;C:6Z;a7Gb62c5Cd59e57f45g3Nh37iron0j33k2Yl2Km2Bn29o27p1Pr1Es09tQuOvacuum 1wGyammerCzD;eroAip EonD;e0k0;by,up;aJeGhFiEorDrit52;d 1k2Q;mp0n49pe0r8s8;eel Bip 7K;aEiD;gh 06rd0;n Br 3C;it 5Jk8lk6rm 0Qsh 73t66v4O;rgeCsD;e 9herA;aRePhNiJoHrFuDype 0N;ckArn D;d2in,o3Fup;ade YiDot0y 32;ckle67p 79;ne66p Ds4C;d2o6Kup;ck FdEe Dgh5Sme0p o0Dre0;aw3ba4d2in,up;e5Jy 1;by,o6U;ink Drow 5U;ba4ov7up;aDe 4Hll4N;m 1r W;ckCke Elk D;ov7u4N;aDba4d2in,o30up;ba4ft7p4Sw3;a0Gc0Fe09h05i02lYmXnWoVpSquare RtJuHwD;earFiD;ngEtch D;aw3ba4o6O; by;ck Dit 1m 1ss0;in,up;aIe0RiHoFrD;aigh1LiD;ke 5Xn2X;p Drm1O;by,in,o6A;r 1tc3H;c2Xmp0nd Dr6Gve6y 1;ba4d2up;d2o66up;ar2Uell0ill4TlErDurC;ingCuc8;a32it 3T;be4Brt0;ap 4Dow B;ash 4Yoke0;eep EiDow 9;c3Mp 1;in,oD;ff,v7;gn Eng2Yt Dz8;d2o5up;in,o5up;aFoDu4E;ot Dut0w 5W;aw3ba4f36o5Q;c2EdeAk4Rve6;e Hll0nd GtD; Dtl42;d2in,o5upD;!on;aw3ba4d2in,o1Xup;o5to;al4Kout0rap4K;il6v8;at0eKiJoGuD;b 4Dle0n Dstl8;aDba4d2in52o3Ft2Zu3D;c1Ww3;ot EuD;g2Jnd6;a1Wf2Qo5;ng 4Np6;aDel6inAnt0;c4Xd D;o2Su0C;aQePiOlMoKrHsyc29uD;ll Ft D;aDba4d2in,o1Gt33up;p38w3;ap37d2in,o5t31up;attleCess EiGoD;p 1;ah1Gon;iDp 52re3Lur44wer 52;nt0;ay3YuD;gAmp 9;ck 52g0leCn 9p3V;el 46ncilA;c3Oir 2Hn0ss FtEy D;ba4o4Q; d2c1X;aw3ba4o11;pDw3J;e3It B;arrow3Serd0oD;d6te3R;aJeHiGoEuD;ddl8ll36;c16p 1uth6ve D;al3Ad2in,o5up;ss0x 1;asur8lt 9ss D;a19up;ke Dn 9r2Zs1Kx0;do,o3Xup;aOeMiHoDuck0;a16c36g 0AoDse0;k Dse34;aft7ba4d2forw2Ain3Vov7uD;nd7p;e GghtFnEsDv1T;ten 4D;e 1k 1; 1e2Y;ar43d2;av1Ht 2YvelD; o3L;p 1sh DtchCugh6y1U;in3Lo5;eEick6nock D;d2o3H;eDyA;l2Hp D;aw3ba4d2fSin,o05to,up;aFoEuD;ic8mpA;ke2St2W;c31zz 1;aPeKiHoEuD;nker2Ts0U;lDneArse2O;d De 1;ba4d2oZup;de Et D;ba4on,up;aw3o5;aDlp0;d Fr Dt 1;fDof;rom;in,oO;cZm 1nDve it;d Dg 27kerF;d2in,o5;aReLive Jloss1VoFrEunD; f0M;in39ow 23; Dof 0U;aEb17it,oDr35t0Ou12;ff,n,v7;bo5ft7hJw3;aw3ba4d2in,oDup,w3;ff,n,ut;a17ek0t D;aEb11d2oDr2Zup;ff,n,ut,v7;cEhDl1Pr2Xt,w3;ead;ross;d aEnD;g 1;bo5;a08e01iRlNoJrFuD;cDel 1;k 1;eEighten DownCy 1;aw3o2L;eDshe1G; 1z8;lFol D;aDwi19;bo5r2I;d 9;aEeDip0;sh0;g 9ke0mDrD;e 2K;gLlJnHrFsEzzD;le0;h 2H;e Dm 1;aw3ba4up;d0isD;h 1;e Dl 11;aw3fI;ht ba4ure0;eInEsD;s 1;cFd D;fDo1X;or;e B;dQl 1;cHll Drm0t0O;apYbFd2in,oEtD;hrough;ff,ut,v7;a4ehi1S;e E;at0dge0nd Dy8;o1Mup;o09rD;ess 9op D;aw3bNin,o15;aShPlean 9oDross But 0T;me FoEuntD; o1M;k 1l6;aJbIforGin,oFtEuD;nd7;ogeth7;ut,v7;th,wD;ard;a4y;pDr19w3;art;eDipA;ck BeD;r 1;lJncel0rGsFtch EveA; in;o16up;h Bt6;ry EvD;e V;aw3o12;l Dm02;aDba4d2o10up;r0Vw3;a0He08l01oSrHuD;bbleFcklTilZlEndlTrn 05tDy 10zz6;t B;k 9; ov7;anMeaKiDush6;ghHng D;aEba4d2forDin,o5up;th;bo5lDr0Lw3;ong;teD;n 1;k D;d2in,o5up;ch0;arKgJil 9n8oGssFttlEunce Dx B;aw3ba4;e 9; ar0B;k Bt 1;e 1;d2up; d2;d 1;aIeed0oDurt0;cFw D;aw3ba4d2o5up;ck;k D;in,oK;ck0nk0st6; oJaGef 1nd D;d2ov7up;er;up;r0t D;d2in,oDup;ff,ut;ff,nD;to;ck Jil0nFrgEsD;h B;ainCe B;g BkC; on;in,o5; o5;aw3d2o5up;ay;cMdIsk Fuction6; oD;ff;arDo5;ouD;nd;d D;d2oDup;ff,n;own;t D;o5up;ut";
+module.exports = "ad hominPbKcJdGeEfCgBh8kittNlunchDn7othersDp5roomQs3t0us dollarQ;h0ragedM;ereOing0;!sA;tu0uper bowlMystL;dAffL;a0roblJurpo4;rtJt8;othGumbA;ead startHo0;meGu0;seF;laci6odErand slamE;l oz0riendDundB;!es;conom8ggBnerg8v0xamp7;entA;eath9inn1o0;gg5or8;er7;anar3eil4it3ottage6redit card6;ank3o0reakfast5;d1tt0;le3;ies,y;ing1;em0;!s";
 
 },{}],230:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "'o,-,aLbIcHdGexcept,from,inFmidQnotwithstandiRoDpSqua,sCt7u4v2w0;/o,hereNith0;!in,oR;ersus,i0;a,s-a-vis;n1p0;!on;like,til;h1ill,o0;!wards;an,r0;ough0u;!oH;ans,ince,o that;',f0n1ut;!f;!to;espite,own,u3;hez,irca;ar1e0y;low,sides,tween;ri6;',bo7cross,ft6lo5m3propos,round,s1t0;!op;! long 0;as;id0ong0;!st;ng;er;ut";
+module.exports = "0:2Q;1:20;2:2I;a2Db24c1Ad11e0Uf0Tg0Qh0Kin0Djourn1l07mWnewsVoTpLquartet,rIs7t5u3worke1K;ni3tilG;on,vA;ele3im2Oribun1v;communica1Jgraph,vi1L;av0Hchool,eBo8t4ubcommitt1Ny3;ndic0Pstems;a3ockV;nda22te 3;poli2univ3;ersi27;ci3ns;al club,et3;e,y;cur3rvice0;iti2C;adio,e3;gionRs3;er19ourc29tauraX;artners9e7harmac6izza,lc,o4r3;ess,oduc13;l3st,wer;i2ytechnic;a0Jeutical0;ople's par1Ttrol3;!eum;!hip;bservLffi2il,ptic1r3;chestra,ganiza22;! servi2;a9e7i5o4use3;e,um;bi10tor0;lita1Bnist3;e08ry;dia,mori1rcantile3; exchange;ch1Ogazi5nage06r3;i4ket3;i0Cs;ne;ab6i5oc3;al 3;aIheaH;beration ar1Fmited;or3s;ato0Y;c,dustri1Gs6ter5vest3;me3o08;nt0;nation1sI;titut3u14;!e3;! of technoloIs;e5o3;ld3sp0Itel0;ings;a3ra6;lth a3;uth0T;a4ir09overnJroup,ui3;ld;s,zet0P;acul0Qede12inanci1m,ounda13und;duca12gli0Blectric8n5s4t3veningH;at;ta0L;er4semb01ter3;prise0tainB;gy;!i0J;a9e4i3rilliG;rectora0FviP;part3sign,velop6;e5ment3;! sto3s;re;ment;ily3ta; news;aSentQhNircus,lLo3rew;!ali0LffJlleHm9n4rp3unc7;o0Js;fe6s3taine9;e4ulti3;ng;il;de0Eren2;m5p3;any,rehensiAute3;rs;i5uni3;ca3ty;tions;s3tt6;si08;cti3ge;ve;ee;ini3ub;c,qK;emica4oir,ronic3urch;le;ls;er,r3;al bank,e;fe,is5p3re,thedr1;it1;al;se;an9o7r4u3;ilding socieEreau;ands,ewe4other3;hood,s;ry;a3ys;rd;k,q3;ue;dministIgencFirDrCss7ut3viaJ;h4ori3;te;ori3;ty;oc5u3;ran2;ce;!iat3;es,iB;my;craft,l3ways;in4;e0i3y;es;!s;ra3;ti3;on";
 
 },{}],231:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "aLbIcHdEengineKfCgBhAinstructRjournalNlawyKm9nurse,o8p5r3s1t0;echnEherapM;ailPcientLecretary,oldiIu0;pervMrgeon;e0oofG;ceptionIsearE;hotographElumbEoli1r0sychologH;actitionDesideMogrammD;cem8t7;fficBpeH;echanic,inistAus5;airdress9ousekeep9;arden8uard;arm7ire0;fight6m2;eputy,iet0;ici0;an;arpent2lerk;ricklay1ut0;ch0;er;ccoun6d2ge7r0ssis6ttenda7;chitect,t0;ist;minist1v0;is1;rat0;or;ta0;nt";
+module.exports = "0:43;a38b2Pc29d21e1Yf1Ug1Mh1Hi1Ej1Ak18l14m0Tn0Go0Dp07qu06rZsStFuBv8w3y1;a1m0Youtu2Rw0Y;hoo!,maha;a3e1orld trade organizati3Y;lls fargo,st1;fie22inghou17;l1rner br3A;-m12gree2Zl street journ24m12;an halNeriz3Tisa,o1;dafo2Fl1;kswagLvo;2,bs,n2ps,s1;a tod2Pps;es32i1;lev2Vted natio2S; mobi2Iaco bePd bMeAgi frida9h3im horto2Rmz,o1witt2U;shiba,y1;ota,s r Y;e 1in lizzy;b3carpen30daily ma2Uguess w2holli0rolling st1Ms1w2;mashing pumpki2Muprem0;ho;ea1lack eyed pe3Cyrds;ch bo1tl0;ys;l2s1;co,la m13;efoni08us;a6e4ieme2Eo2pice gir5ta1ubaru;rbucks,to2K;ny,undgard1;en;a2Ox pisto1;ls;few23insbu24msu1V;.e.m.,adiohead,b6e3oyal 1yan2U;b1dutch she4;ank;/max,aders dige1Dd 1vl2Z;bu1c1Shot chili peppe2Hlobst26;ll;c,s;ant2Sizno2C;an5bs,e3fiz22hilip morrBi2r1;emier24octer & gamb1Pudenti13;nk floyd,zza hut;psi25tro1uge09;br2Nchina,n2N; 2ason1Vda2D;ld navy,pec,range juli2xf1;am;us;aAb9e5fl,h4i3o1sa,wa;kia,tre dame,vart1;is;ke,ntendo,ss0K;l,s;stl3tflix,w1; 1sweek;kids on the block,york09;e,é;a,c;nd1Qs2t1;ional aca2Bo,we0O;a,cYd0M;aAcdonald9e5i3lb,o1tv,yspace;b1Jnsanto,ody blu0t1;ley crue,or0M;crosoft,t1;as,subisO;dica3rcedes2talli1;ca;!-benz;id,re;'s,s;c's milk,tt10z1U;'ore07a3e1g,ittle caesa1G;novo,x1;is,mark; pres5-z-boy;atv,fc,kk,m1od1G;art;iffy lu0Io3pmorgan1sa;! cha1;se;hnson & johns1Oy d1N;bm,hop,n1tv;g,te1;l,rpol; & m,asbro,ewlett-packaRi3o1sbc,yundai;me dep1n1F;ot;tac1zbollah;hi;eneral 6hq,l5o2reen d0Fu1;cci,ns n ros0;ldman sachs,o1;dye1g08;ar;axo smith kliXencore;electr0Fm1;oto0R;a3bi,da,edex,i1leetwood mac,oErito-l07;at,nancial1restoT; tim0;cebook,nnie mae;b03sa,u,xxon1; m1m1;ob0D;aiml08e5isney,o3u1;nkin donuts,po0Tran dur1;an;j,w j1;on0;a,f leppa2ll,peche mode,r spiegXstiny's chi1;ld;rd;aEbc,hBi9nn,o3r1;aigsli5eedence clearwater reviv1;al;ca c5l4m1o08st03;ca2p1;aq;st;dplLgate;ola;a,sco1tigroup;! systems;ev2i1;ck fil-a,na daily;r0Fy;dbury,pital o1rl's jr;ne;aFbc,eBf9l5mw,ni,o1p;ei3mbardiJston 1;glo1pizza;be;ng;ack & deckFo2ue c1;roW;ckbuster video,omingda1;le; g1g1;oodriM;cht3e ge0n & jer2rkshire hathaw1;ay;ryG;el;nana republ3s1xt5y5;f,kin robbi1;ns;ic;bWcRdidQerosmith,ig,lKmEnheuser-busDol,pple9r6s3t&t,v2y1;er;is,on;hland1sociated F; o1;il;by4g2m1;co;os; compu2bee1;'s;te1;rs;ch;c,d,erican3t1;!r1;ak; ex1;pre1;ss; 4catel2t1;air;!-luce1;nt;jazeera,qae1;da;as;/dc,a3er,t1;ivisi1;on;demy of scienc0;es;ba,c";
 
 },{}],232:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "0:24;1:1T;2:1U;725a1Rb1Ec10d0Rfc dallas,g0Ohouston 0Nindiana0Mjacksonville jagua0k0Jl0Gm03newWoSpLqueens parkKrJsAt5utah jazz,vancouver whitecaps,w3yZ;ashington 3est ham0Yh17;natio21redski1wizar13;ampa bay 6e5o3;ronto 3ttenham hotspur;blu1Irapto0;nnessee tita1xasE;buccanee0ra1H;a7eattle 5heffield0Rporting kansas14t3;. louis 3oke13;c1Srams;mari03s3;eah1IounJ;cramento Tn 3;antonio spu0diego 4francisco 3jose earthquak2;49e0gi0B;char0EpaB;eal salt lake,o04; ran0C;a8h5ittsburgh 4ortland t3;imbe0rail blaze0;pirat2steele0;il3oenix su1;adelphia 3li2;71Heagl2philNunE;dr2;akland 4klahoma city thunder,r3;i0Zlando magic;athle0Trai3;de0; 3castle05;england 6orleans 5york 3;city fc,giUje0Lkn02me0Lred bul18y3;anke2;pelica1sain0J;patrio0Irevolut3;ion;aBe9i3ontreal impact;ami 7lwaukee b6nnesota 3;t4u0Qvi3;kings;imberwolv2wi1;re0Cuc0V;dolphi1heat,marli1;mphis grizz3ts;li2;nchester 5r3vN;i3li1;ne0;c00u0G;a4eicesterYos angeles 3;clippe0dodFlaA; galaxy,ke0;ansas city 3nH;chiefs,ro3;ya0L; pace0polis colX;astr0Ddynamo,rockeWtexa1;i4olden state warrio0reen bay pac3;ke0;anT;.c.Aallas 7e3i0Bod5;nver 5troit 3;lio1pisto1ti3;ge0;bronc05nuggeO;cowboUmav3;er3;ic05; uW;arCelNh8incinnati 6leveland 5ol3;orado r3umbus crew sc;api5ocki2;brow1cavalie0india1;benga02re3;ds;arlotte horCicago 3;b4cubs,fire,wh3;iteE;ea0ulX;di3olina panthe0;ff3naV; c3;ity;altimore DlAoston 7r3uffalo bilS;av2e5ooklyn 3;ne3;ts;we0;cel4red3; sox;tics;ackburn rove0u3;e ja3;ys;ori3rave1;ol2;rizona Ast8tlanta 3;brav2falco1h4u3;nited;aw9;ns;es;on villa,r3;os;c5di3;amondbac3;ks;ardi3;na3;ls;6e0;rs";
+module.exports = "0:71;1:6P;2:7D;3:73;4:6I;5:7G;6:75;7:6O;8:6B;9:6C;A:5H;B:70;C:6Z;a7Gb62c5Cd59e57f45g3Nh37iron0j33k2Yl2Km2Bn29o27p1Pr1Es09tQuOvacuum 1wGyammerCzD;eroAip EonD;e0k0;by,up;aJeGhFiEorDrit52;d 1k2Q;mp0n49pe0r8s8;eel Bip 7K;aEiD;gh 06rd0;n Br 3C;it 5Jk8lk6rm 0Qsh 73t66v4O;rgeCsD;e 9herA;aRePhNiJoHrFuDype 0N;ckArn D;d2in,o3Fup;ade YiDot0y 32;ckle67p 79;ne66p Ds4C;d2o6Kup;ck FdEe Dgh5Sme0p o0Dre0;aw3ba4d2in,up;e5Jy 1;by,o6U;ink Drow 5U;ba4ov7up;aDe 4Hll4N;m 1r W;ckCke Elk D;ov7u4N;aDba4d2in,o30up;ba4ft7p4Sw3;a0Gc0Fe09h05i02lYmXnWoVpSquare RtJuHwD;earFiD;ngEtch D;aw3ba4o6O; by;ck Dit 1m 1ss0;in,up;aIe0RiHoFrD;aigh1LiD;ke 5Xn2X;p Drm1O;by,in,o6A;r 1tc3H;c2Xmp0nd Dr6Gve6y 1;ba4d2up;d2o66up;ar2Uell0ill4TlErDurC;ingCuc8;a32it 3T;be4Brt0;ap 4Dow B;ash 4Yoke0;eep EiDow 9;c3Mp 1;in,oD;ff,v7;gn Eng2Yt Dz8;d2o5up;in,o5up;aFoDu4E;ot Dut0w 5W;aw3ba4f36o5Q;c2EdeAk4Rve6;e Hll0nd GtD; Dtl42;d2in,o5upD;!on;aw3ba4d2in,o1Xup;o5to;al4Kout0rap4K;il6v8;at0eKiJoGuD;b 4Dle0n Dstl8;aDba4d2in52o3Ft2Zu3D;c1Ww3;ot EuD;g2Jnd6;a1Wf2Qo5;ng 4Np6;aDel6inAnt0;c4Xd D;o2Su0C;aQePiOlMoKrHsyc29uD;ll Ft D;aDba4d2in,o1Gt33up;p38w3;ap37d2in,o5t31up;attleCess EiGoD;p 1;ah1Gon;iDp 52re3Lur44wer 52;nt0;ay3YuD;gAmp 9;ck 52g0leCn 9p3V;el 46ncilA;c3Oir 2Hn0ss FtEy D;ba4o4Q; d2c1X;aw3ba4o11;pDw3J;e3It B;arrow3Serd0oD;d6te3R;aJeHiGoEuD;ddl8ll36;c16p 1uth6ve D;al3Ad2in,o5up;ss0x 1;asur8lt 9ss D;a19up;ke Dn 9r2Zs1Kx0;do,o3Xup;aOeMiHoDuck0;a16c36g 0AoDse0;k Dse34;aft7ba4d2forw2Ain3Vov7uD;nd7p;e GghtFnEsDv1T;ten 4D;e 1k 1; 1e2Y;ar43d2;av1Ht 2YvelD; o3L;p 1sh DtchCugh6y1U;in3Lo5;eEick6nock D;d2o3H;eDyA;l2Hp D;aw3ba4d2fSin,o05to,up;aFoEuD;ic8mpA;ke2St2W;c31zz 1;aPeKiHoEuD;nker2Ts0U;lDneArse2O;d De 1;ba4d2oZup;de Et D;ba4on,up;aw3o5;aDlp0;d Fr Dt 1;fDof;rom;in,oO;cZm 1nDve it;d Dg 27kerF;d2in,o5;aReLive Jloss1VoFrEunD; f0M;in39ow 23; Dof 0U;aEb17it,oDr35t0Ou12;ff,n,v7;bo5ft7hJw3;aw3ba4d2in,oDup,w3;ff,n,ut;a17ek0t D;aEb11d2oDr2Zup;ff,n,ut,v7;cEhDl1Pr2Xt,w3;ead;ross;d aEnD;g 1;bo5;a08e01iRlNoJrFuD;cDel 1;k 1;eEighten DownCy 1;aw3o2L;eDshe1G; 1z8;lFol D;aDwi19;bo5r2I;d 9;aEeDip0;sh0;g 9ke0mDrD;e 2K;gLlJnHrFsEzzD;le0;h 2H;e Dm 1;aw3ba4up;d0isD;h 1;e Dl 11;aw3fI;ht ba4ure0;eInEsD;s 1;cFd D;fDo1X;or;e B;dQl 1;cHll Drm0t0O;apYbFd2in,oEtD;hrough;ff,ut,v7;a4ehi1S;e E;at0dge0nd Dy8;o1Mup;o09rD;ess 9op D;aw3bNin,o15;aShPlean 9oDross But 0T;me FoEuntD; o1M;k 1l6;aJbIforGin,oFtEuD;nd7;ogeth7;ut,v7;th,wD;ard;a4y;pDr19w3;art;eDipA;ck BeD;r 1;lJncel0rGsFtch EveA; in;o16up;h Bt6;ry EvD;e V;aw3o12;l Dm02;aDba4d2o10up;r0Vw3;a0He08l01oSrHuD;bbleFcklTilZlEndlTrn 05tDy 10zz6;t B;k 9; ov7;anMeaKiDush6;ghHng D;aEba4d2forDin,o5up;th;bo5lDr0Lw3;ong;teD;n 1;k D;d2in,o5up;ch0;arKgJil 9n8oGssFttlEunce Dx B;aw3ba4;e 9; ar0B;k Bt 1;e 1;d2up; d2;d 1;aIeed0oDurt0;cFw D;aw3ba4d2o5up;ck;k D;in,oK;ck0nk0st6; oJaGef 1nd D;d2ov7up;er;up;r0t D;d2in,oDup;ff,ut;ff,nD;to;ck Jil0nFrgEsD;h B;ainCe B;g BkC; on;in,o5; o5;aw3d2o5up;ay;cMdIsk Fuction6; oD;ff;arDo5;ouD;nd;d D;d2oDup;ff,n;own;t D;o5up;ut";
 
 },{}],233:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "0:1I;a1Nb1Hc18e11f0Ug0Qh0Ki0Hj0Gk0El09m00nZoYpSrPsCt8vi7w1;a5ea0Ci4o1;o2rld1;! seJ;d,l;ldlife,ne;rmth,t0;neg7ol0C;e3hund0ime,oothpaste,r1una;affTou1;ble,sers,t;a,nnis;aBceWeAh9il8now,o7p4te3u1;g1nshi0Q;ar;am,el;ace2e1;ciPed;!c16;ap,cc0ft0E;k,v0;eep,opp0T;riK;d0Afe0Jl1nd;m0Vt;aQe1i10;c1laxa0Hsearch;ogni0Grea0G;a5e3hys0JlastAo2r1;ess02ogre05;rk,w0;a1pp0trol;ce,nT;p0tiM;il,xygen;ews,oi0G;a7ea5i4o3u1;mps,s1;ic;nJo0C;lk,st;sl1t;es;chi1il,themat04;neF;aught0e3i2u1;ck,g0B;ghtn03quid,teratK;a1isJ;th0;elv1nowled08;in;ewel7usti09;ce,mp1nformaQtself;ati1ortan07;en06;a4ertz,isto3o1;ck1mework,n1spitaliL;ey;ry;ir,lib1ppi9;ut;o2r1um,ymnastL;a7ound;l1ssip;d,f;ahrenhe6i5lour,o2ru6urnit1;ure;od,rgive1wl;ne1;ss;c8sh;it;conomAduca6lectrici5n3quip4thAvery1;body,o1thC;ne;joy1tertain1;ment;ty;tiC;a8elcius,h4iv3loth6o1urrency;al,ffee,n1ttA;duct,fusi9;ics;aos,e1;e2w1;ing;se;ke,sh;a3eef,is2lood,read,utt0;er;on;g1ss;ga1;ge;dvi2irc1rt;raft;ce";
+module.exports = "'o,-,aLbIcHdGexcept,from,inFmidQnotwithstandiRoDpSqua,sCt7u4v2w0;/o,hereNith0;!in,oR;ersus,i0;a,s-a-vis;n1p0;!on;like,til;h1ill,o0;!wards;an,r0;ough0u;!oH;ans,ince,o that;',f0n1ut;!f;!to;espite,own,u3;hez,irca;ar1e0y;low,sides,tween;ri6;',bo7cross,ft6lo5m3propos,round,s1t0;!op;! long 0;as;id0ong0;!st;ng;er;ut";
 
 },{}],234:[function(_dereq_,module,exports){
+"use strict";
+
+module.exports = "aLbIcHdEengineKfCgBhAinstructRjournalNlawyKm9nurse,o8p5r3s1t0;echnEherapM;ailPcientLecretary,oldiIu0;pervMrgeon;e0oofG;ceptionIsearE;hotographElumbEoli1r0sychologH;actitionDesideMogrammD;cem8t7;fficBpeH;echanic,inistAus5;airdress9ousekeep9;arden8uard;arm7ire0;fight6m2;eputy,iet0;ici0;an;arpent2lerk;ricklay1ut0;ch0;er;ccoun6d2ge7r0ssis6ttenda7;chitect,t0;ist;minist1v0;is1;rat0;or;ta0;nt";
+
+},{}],235:[function(_dereq_,module,exports){
+"use strict";
+
+module.exports = "0:24;1:1T;2:1U;725a1Rb1Ec10d0Rfc dallas,g0Ohouston 0Nindiana0Mjacksonville jagua0k0Jl0Gm03newWoSpLqueens parkKrJsAt5utah jazz,vancouver whitecaps,w3yZ;ashington 3est ham0Yh17;natio21redski1wizar13;ampa bay 6e5o3;ronto 3ttenham hotspur;blu1Irapto0;nnessee tita1xasE;buccanee0ra1H;a7eattle 5heffield0Rporting kansas14t3;. louis 3oke13;c1Srams;mari03s3;eah1IounJ;cramento Tn 3;antonio spu0diego 4francisco 3jose earthquak2;49e0gi0B;char0EpaB;eal salt lake,o04; ran0C;a8h5ittsburgh 4ortland t3;imbe0rail blaze0;pirat2steele0;il3oenix su1;adelphia 3li2;71Heagl2philNunE;dr2;akland 4klahoma city thunder,r3;i0Zlando magic;athle0Trai3;de0; 3castle05;england 6orleans 5york 3;city fc,giUje0Lkn02me0Lred bul18y3;anke2;pelica1sain0J;patrio0Irevolut3;ion;aBe9i3ontreal impact;ami 7lwaukee b6nnesota 3;t4u0Qvi3;kings;imberwolv2wi1;re0Cuc0V;dolphi1heat,marli1;mphis grizz3ts;li2;nchester 5r3vN;i3li1;ne0;c00u0G;a4eicesterYos angeles 3;clippe0dodFlaA; galaxy,ke0;ansas city 3nH;chiefs,ro3;ya0L; pace0polis colX;astr0Ddynamo,rockeWtexa1;i4olden state warrio0reen bay pac3;ke0;anT;.c.Aallas 7e3i0Bod5;nver 5troit 3;lio1pisto1ti3;ge0;bronc05nuggeO;cowboUmav3;er3;ic05; uW;arCelNh8incinnati 6leveland 5ol3;orado r3umbus crew sc;api5ocki2;brow1cavalie0india1;benga02re3;ds;arlotte horCicago 3;b4cubs,fire,wh3;iteE;ea0ulX;di3olina panthe0;ff3naV; c3;ity;altimore DlAoston 7r3uffalo bilS;av2e5ooklyn 3;ne3;ts;we0;cel4red3; sox;tics;ackburn rove0u3;e ja3;ys;ori3rave1;ol2;rizona Ast8tlanta 3;brav2falco1h4u3;nited;aw9;ns;es;on villa,r3;os;c5di3;amondbac3;ks;ardi3;na3;ls;6e0;rs";
+
+},{}],236:[function(_dereq_,module,exports){
+"use strict";
+
+module.exports = "0:1I;a1Nb1Hc18e11f0Ug0Qh0Ki0Hj0Gk0El09m00nZoYpSrPsCt8vi7w1;a5ea0Ci4o1;o2rld1;! seJ;d,l;ldlife,ne;rmth,t0;neg7ol0C;e3hund0ime,oothpaste,r1una;affTou1;ble,sers,t;a,nnis;aBceWeAh9il8now,o7p4te3u1;g1nshi0Q;ar;am,el;ace2e1;ciPed;!c16;ap,cc0ft0E;k,v0;eep,opp0T;riK;d0Afe0Jl1nd;m0Vt;aQe1i10;c1laxa0Hsearch;ogni0Grea0G;a5e3hys0JlastAo2r1;ess02ogre05;rk,w0;a1pp0trol;ce,nT;p0tiM;il,xygen;ews,oi0G;a7ea5i4o3u1;mps,s1;ic;nJo0C;lk,st;sl1t;es;chi1il,themat04;neF;aught0e3i2u1;ck,g0B;ghtn03quid,teratK;a1isJ;th0;elv1nowled08;in;ewel7usti09;ce,mp1nformaQtself;ati1ortan07;en06;a4ertz,isto3o1;ck1mework,n1spitaliL;ey;ry;ir,lib1ppi9;ut;o2r1um,ymnastL;a7ound;l1ssip;d,f;ahrenhe6i5lour,o2ru6urnit1;ure;od,rgive1wl;ne1;ss;c8sh;it;conomAduca6lectrici5n3quip4thAvery1;body,o1thC;ne;joy1tertain1;ment;ty;tiC;a8elcius,h4iv3loth6o1urrency;al,ffee,n1ttA;duct,fusi9;ics;aos,e1;e2w1;ing;se;ke,sh;a3eef,is2lood,read,utt0;er;on;g1ss;ga1;ge;dvi2irc1rt;raft;ce";
+
+},{}],237:[function(_dereq_,module,exports){
 (function (global){
 "use strict";
 
@@ -13490,7 +13628,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],235:[function(_dereq_,module,exports){
+},{}],238:[function(_dereq_,module,exports){
 'use strict';
 //to change these packed files, edit ./data then run `node scripts/pack.js`
 
@@ -13587,5 +13725,5 @@ module.exports = {
 // console.log(lookup('gerald'));
 // console.log(lookup('mexico'));
 
-},{"./_packed/_adjectives":214,"./_packed/_adverbs":215,"./_packed/_airports":216,"./_packed/_cities":217,"./_packed/_countries":218,"./_packed/_demonyms":219,"./_packed/_expressions":220,"./_packed/_female":221,"./_packed/_firstnames":222,"./_packed/_holidays":223,"./_packed/_lastnames":224,"./_packed/_male":225,"./_packed/_nouns":226,"./_packed/_orgWords":227,"./_packed/_organizations":228,"./_packed/_phrasals":229,"./_packed/_prepositions":230,"./_packed/_professions":231,"./_packed/_sportsTeams":232,"./_packed/_uncountables":233,"./efrt-unpack":234}]},{},[22])(22)
+},{"./_packed/_adjectives":217,"./_packed/_adverbs":218,"./_packed/_airports":219,"./_packed/_cities":220,"./_packed/_countries":221,"./_packed/_demonyms":222,"./_packed/_expressions":223,"./_packed/_female":224,"./_packed/_firstnames":225,"./_packed/_holidays":226,"./_packed/_lastnames":227,"./_packed/_male":228,"./_packed/_nouns":229,"./_packed/_orgWords":230,"./_packed/_organizations":231,"./_packed/_phrasals":232,"./_packed/_prepositions":233,"./_packed/_professions":234,"./_packed/_sportsTeams":235,"./_packed/_uncountables":236,"./efrt-unpack":237}]},{},[22])(22)
 });

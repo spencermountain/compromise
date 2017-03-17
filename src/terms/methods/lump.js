@@ -6,13 +6,24 @@ const lumpMethods = (Terms) => {
   const methods = {
 
     lump: function () {
-      //for (let t = 0; t <= this.terms.length; t++) {
       while(this.terms.length>1)
       {
         combine(this, 0);
       }
 
       return this;
+    },
+    lumpIntoOne: function(startTerm, endTerm, tag, tagReason){
+       let terms = startTerm.parentTerms;
+       let endTermIndex = endTerm.index();
+       let startTermIndex = startTerm.index(); 
+        for(let i = endTermIndex -1; i>=startTermIndex; i--){
+           combine(terms, i);
+        }
+
+        terms.terms[startTermIndex].tagAs(tag, tagReason);
+
+        return terms;
     }
   };
 

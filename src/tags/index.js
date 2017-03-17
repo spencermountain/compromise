@@ -32,12 +32,19 @@ const all_children = (obj) => {
   });
   return children;
 };
+  
+//make tags
+var all = {};
 
-const build = function() {
-  //make tags
-  let all = {};
-  //recursively add them
-  const add_tags = (obj, is) => {
+const addTags = function (obj, is) {
+    
+    if(is==undefined) is = [];
+
+    if(Object.keys(all).length === 0 && all.constructor === Object && obj != tree)
+    {
+      build();
+    }
+
     Object.keys(obj).forEach((k) => {
       is = is.slice(0); //clone it
       all[k] = {
@@ -45,11 +52,15 @@ const build = function() {
         children: all_children(obj[k])
       };
       if (obj[k] !== true) {
-        add_tags(obj[k], is.concat([k])); //recursive
+        addTags(obj[k], is.concat([k])); //recursive
       }
     });
   };
-  add_tags(tree, []);
+
+const build = function() {
+
+  //recursively add them
+  addTags(tree);
 
   //add extras
   Object.keys(all).forEach((tag) => {
@@ -68,7 +79,19 @@ const build = function() {
     }
   });
 
+  //addTags({ParentLegal:{ Legal: true}});
+
   return all;
 };
 
-module.exports = build();
+const allTags = function() {
+
+  if(Object.keys(all).length === 0 && all.constructor === Object)
+  {
+    build();
+  }
+
+  return all;
+};
+
+module.exports = {addTags, allTags};

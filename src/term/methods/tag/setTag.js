@@ -7,11 +7,11 @@ const unTag = require('./unTag');
 
 
 const makeCompatible = (term, tag, reason) => {
-  if (!tagset[tag]) {
+  if (!tagset.allTags()[tag]) {
     return;
   }
   //find incompatible tags
-  let not = tagset[tag].not || [];
+  let not = tagset.allTags()[tag].not || [];
   for (let i = 0; i < not.length; i++) {
     unTag(term, not[i], reason);
   }
@@ -49,8 +49,8 @@ const tagAll = function (term, tag, reason) {
   tag = tag.replace(/^#/, '');
   tag_one(term, tag, reason);
   //find assumed-tags
-  if (tagset[tag]) {
-    let tags = tagset[tag].parents || [];
+  if (tagset.allTags()[tag]) {
+    let tags = tagset.allTags()[tag].parents || [];
     for (let i = 0; i < tags.length; i++) {
       tag_one(term, tags[i], '-');
     }

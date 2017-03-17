@@ -1,9 +1,12 @@
 'use strict';
-const path = 'tagger/customPass';
+//const path = 'tagger/customPass';
+//const mutate = require('../../terms/mutate');
 
 const customStep = (ts, customRules) => {
   
-if(customRules == null) return;
+  if(customRules == null) {
+    return ts;
+  }
 
   //single term expressions first
     for (let i = 0; i < ts.terms.length; i++) {
@@ -20,11 +23,11 @@ if(customRules == null) return;
       }
     }
 
-  //lumps second
+    //lumps second
     for(let x = 0; x < customRules.lumpExpressions.length; x++){
       let customExpression = customRules.lumpExpressions[x];
 
-      ts.match(customExpression.match).tag(customExpression.tags, customExpression.description);
+      ts.match(customExpression.match).lumpIntoParent(customExpression.tags, customExpression.description);
     }
 
     return ts;

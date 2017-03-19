@@ -171,7 +171,6 @@ let arr = [
   'melt',
   'minus',
   'multiply',
-  'name',
   'need',
   'occur',
   'overcome',

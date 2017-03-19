@@ -11,9 +11,8 @@ var nlp = require('./src/index');
 // bug.1
 //  .? vs *
 
+// nlp('is this').sentences(0).toNegative().debug();
 
+// nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
-nlp('I\'m going to the shops').sentences().toPastTense().debug();
-nlp('london is calling').sentences().toNegative().debug();
-
-// nlp('economy').debug();
+nlp('my dog\'s name is Levi').debug();

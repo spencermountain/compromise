@@ -9,19 +9,21 @@ const log = p.log;
 const path = 'tagger/lexicon';
 
 const check_lexicon = (str, sentence) => {
+  let array = [];
+  
   //check a user's custom lexicon
   let custom = sentence.lexicon || {};
   if (custom[str]) {
-    return custom[str];
+    array.push(custom[str]);
   }
   if (lexicon[str]) {
-    return lexicon[str];
+    array.push(lexicon[str]);
   }
   let tag = tries.lookup(str);
   if (tag) {
-    return tag;
+    array.push(tag);
   }
-  return null;
+  return array.length == 0 ? null : array;
 };
 
 const lexicon_pass = function (ts) {

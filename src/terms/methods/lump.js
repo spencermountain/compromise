@@ -14,9 +14,17 @@ const lumpMethods = (Terms) => {
       return this;
     },
     lumpIntoOne: function(startTerm, endTerm, tag, tagReason){
+       
+       if(startTerm==endTerm)
+       {
+          startTerm.tagAs(tag, tagReason);
+          return startTerm;         
+       }
+
        let terms = startTerm.parentTerms;
        let endTermIndex = endTerm.index();
        let startTermIndex = startTerm.index(); 
+       
         for(let i = endTermIndex -1; i>=startTermIndex; i--){
            combine(terms, i);
         }

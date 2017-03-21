@@ -1,11 +1,11 @@
 
-check out the interesting demos at [http://compromise.cool/demos](compromise.cool/demos).
+check out the interesting demos at [compromise.cool/demos](http://compromise.cool/demos).
 
 these are a some simple static examples to help get things going.
 
 you can view them running at:
- * [https://rawgit.com/nlp-compromise/compromise/master/demo/keypress/index.html](keyPress demo)
- * [https://rawgit.com/nlp-compromise/compromise/master/demo/webworker/index.html](webWorker demo)
+ * [keyPress demo](https://rawgit.com/nlp-compromise/compromise/master/demo/keypress/index.html)
+ * [webWorker demo](https://rawgit.com/nlp-compromise/compromise/master/demo/webworker/index.html)
 
 
 or to run them locally,

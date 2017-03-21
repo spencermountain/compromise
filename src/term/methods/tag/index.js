@@ -19,7 +19,7 @@ const addMethods = (Term) => {
     canBe: function (tag) {
       tag = tag || '';
       tag = tag.replace(/^#/, '');
-      let not = tagset.allTags()[tag].not || [];
+      let not = tagset[tag].not || [];
       for (let i = 0; i < not.length; i++) {
         if (this.tag[not[i]]) {
           return false;

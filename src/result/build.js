@@ -27,11 +27,11 @@ const extendTags = function(newTags) {
 };
 
 //build a new pos-tagged Result obj from a string
-const fromString = (str, lexicon, tagSet) => {
+const fromString = (str, lexicon, tagSet, skipTagging) => {
   let sentences = tokenize(str);
   //make sure lexicon obeys standards
   lexicon = normalizeLex(lexicon);
-  let list = sentences.map((s) => Terms.fromString(s, lexicon));
+  let list = sentences.map((s) => Terms.fromString(s, lexicon, skipTagging));
   //extend tagset for this ref
   if (tagSet) {
     extendTags(tagSet);

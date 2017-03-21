@@ -8,7 +8,7 @@ var test = tape + ' "./test/unit/**/*.test.js" ';
 //to upload to codacity, set the api key as $CODACY_PROJECT_TOKEN
 
 //run all the tests
-console.log('\n 🏃  running tests..');
+console.log('\n 🏃  running coverage tests..');
 // exec(nyc + ' --reporter=text-summary ' + test + ' | ' + tapMin);
 exec(nyc + ' --reporter=html ' + test + ' | ' + tapMin);
 

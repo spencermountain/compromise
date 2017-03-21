@@ -8423,20 +8423,9 @@ var fixContraction = _dereq_('./fix');
 var splitContraction = _dereq_('./split');
 
 //these are always contractions
-// const blacklist = {
-//   'it\'s': true,
-//   'that\'s': true
-// };
-
-// //rocket's red glare
-// if (nextWord.tag['Adjective'] && terms.get(x + 2) && terms.get(x + 2).tag['Noun']) {
-//   return true;
-// }
-// //next word is an adjective
-// if (nextWord.tag['Adjective'] || nextWord.tag['Verb'] || nextWord.tag['Adverb']) {
-//   return false;
-// }
-
+var blacklist = {
+  'that\'s': true
+};
 
 // "'s" may be a contraction or a possessive
 // 'spencer's house' vs 'spencer's good'
@@ -8445,6 +8434,9 @@ var isPossessive = function isPossessive(ts, i) {
   var next_t = ts.terms[i + 1];
   //a pronoun can't be possessive - "he's house"
   if (t.tag.Pronoun || t.tag.QuestionWord) {
+    return false;
+  }
+  if (blacklist[t.normal]) {
     return false;
   }
   //if end of sentence, it is possessive - "was spencer's"

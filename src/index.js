@@ -8,7 +8,7 @@ const nlp = function (str, lexicon, tagSet) {
   return buildResult(str, lexicon, tagSet);
 };
 
-//same as main, except with no POS-tagging.
+//same as main method, except with no POS-tagging.
 nlp.tokenize = function(str) {
   return buildResult(str, null, null, true);
 };
@@ -20,7 +20,6 @@ nlp.version = pkg.version;
 nlp.lexicon = function() {
   return require('./data/lexicon');
 };
-
 
 //also this is much handy
 nlp.verbose = function(str) {

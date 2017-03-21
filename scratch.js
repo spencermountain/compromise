@@ -20,5 +20,7 @@ nlp('my dog\'s name is Levi');
 console.timeEnd('tag');
 
 console.time('tokenize');
-nlp.tokenize('my dog\'s name is Levi');
+let r = nlp.tokenize('my dog\'s name is Levi');
+r.match(['spencer', 'levi', 'jonny']).tag('#Person');
+r.debug();
 console.timeEnd('tokenize');

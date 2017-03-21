@@ -15,4 +15,10 @@ var nlp = require('./src/index');
 
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
-nlp('my dog\'s name is Levi').debug();
+console.time('tag');
+nlp('my dog\'s name is Levi');
+console.timeEnd('tag');
+
+console.time('tokenize');
+nlp.tokenize('my dog\'s name is Levi');
+console.timeEnd('tokenize');

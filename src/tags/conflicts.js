@@ -5,7 +5,7 @@ const conflicts = [
   //top-level pos are all inconsistent
   ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression', 'Url', 'PhoneNumber', 'Email', 'Emoji'],
   //exlusive-nouns
-  ['Person', 'Organization', 'Value', 'Place', 'Actor', 'Demonym', 'Pronoun'],
+  //['Person', 'Organization', 'Value', 'Place', 'Actor', 'Demonym', 'Pronoun'],
   //things that can't be plural
   ['Plural', 'Singular'],
   // ['Plural', 'Pronoun'],
@@ -14,7 +14,7 @@ const conflicts = [
   ['Plural', 'Currency'],
   ['Plural', 'Ordinal'],
   //exlusive-people
-  ['MaleName', 'FemaleName'],
+  //['MaleName', 'FemaleName'],
   ['FirstName', 'LastName', 'Honorific'],
   //adjectives
   ['Comparative', 'Superlative'],

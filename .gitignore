@@ -1,10 +1,13 @@
+.vscode/
 node_modules/
 coverage/
 scripts/bower/bower-*
 bower_components/
 tmp/
 viz/
-
+builds/
+legal/
+src/tries/_packed
 .DS_Store
 .jshintrc
 .env
@@ -18,3 +21,6 @@ viz/
 compromise.js.tmproj
 compromise.xcodeproj
 npm-debug.log
+StandAloneTester.html
+app.js
+buildAndCopy.bat

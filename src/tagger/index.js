@@ -28,13 +28,14 @@ const step = {
   person_step: require('./steps/18-person_step'),
   quotation_step: require('./steps/19-quotation_step'),
   organization_step: require('./steps/20-organization_step'),
-  plural_step: require('./steps/21-plural_step')
+  plural_step: require('./steps/21-plural_step'),
+  custom_step: require('./steps/22-custom_step')
 };
 const corrections = require('./corrections');
 const tagPhrase = require('./phrase');
 
 
-const tagger = function (ts) {
+const tagger = function (ts, customRules) {
   ts = step.punctuation_step(ts);
   ts = step.emoji_step(ts);
   ts = lumper.lexicon_lump(ts);
@@ -57,6 +58,8 @@ const tagger = function (ts) {
   ts = step.quotation_step(ts);
   ts = step.organization_step(ts);
   ts = step.plural_step(ts);
+  ts = step.custom_step(ts, customRules);
+  
   //lump a couple times, for long ones
   for (let i = 0; i < 3; i++) {
     ts = lumper.lump_three(ts);

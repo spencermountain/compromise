@@ -550,6 +550,7 @@ module.exports = [
   'meagan',
   'megan',
   'meghan',
+  'melanie',
   'melinda',
   'melisa',
   'melissa',

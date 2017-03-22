@@ -3,7 +3,7 @@ const tagger = require('../tagger');
 const build = require('./build');
 
 class Terms {
-  constructor(arr, lexicon, refText, refTerms) {
+  constructor(arr, lexicon, refText, refTerms, customRules) {
     this.terms = arr;
     this.lexicon = lexicon;
     this.refText = refText;
@@ -12,6 +12,8 @@ class Terms {
     this.get = (n) => {
       return this.terms[n];
     };
+
+    this.customRules = customRules;
   }
   get found() {
     return this.terms.length > 0;
@@ -35,7 +37,7 @@ class Terms {
     });
   }
   posTag() {
-    tagger(this);
+    tagger(this, this.customRules);
     return this;
   }
   firstTerm() {
@@ -80,9 +82,9 @@ class Terms {
     };
   }
 
-  static fromString(str, lexicon) {
+  static fromString(str, lexicon, customRules) {
     let termArr = build(str);
-    let ts = new Terms(termArr, lexicon, null);
+    let ts = new Terms(termArr, lexicon, null, null, customRules);
     //give each term a reference to this ts
     ts.terms.forEach((t) => {
       t.parentTerms = ts;
@@ -102,4 +104,5 @@ Terms = require('./methods/out')(Terms);
 Terms = require('./methods/replace')(Terms);
 Terms = require('./methods/split')(Terms);
 Terms = require('./methods/transform')(Terms);
+Terms = require('./methods/lump')(Terms);
 module.exports = Terms;

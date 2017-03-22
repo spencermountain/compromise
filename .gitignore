@@ -18,7 +18,3 @@ viz/
 compromise.js.tmproj
 compromise.xcodeproj
 npm-debug.log
-.vscode/
-app.js
-builds/
-legal/

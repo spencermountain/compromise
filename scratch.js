@@ -2,7 +2,7 @@
 //this file is not included in the build.
 //use it for messing around.
 var nlp = require('./src/index');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 // var nlp = require('./builds/compromise');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
@@ -15,5 +15,4 @@ nlp.verbose('tagger');
 
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
-var p = nlp('That\'s Evan.').debug();
-p.contractions().debug();
+nlp('A stream feeds the river.').debug();

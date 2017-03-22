@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "8.0.2",
+  "version": "8.1.0",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -401,7 +401,7 @@ var compact = {
 
   Place: ['new england', 'new hampshire', 'new jersey', 'new mexico', 'united states', 'united kingdom', 'great britain', 'great lakes', 'pacific ocean', 'atlantic ocean', 'indian ocean', 'arctic ocean', 'antarctic ocean', 'everglades'],
   //conjunctions
-  'Conjunction': ['yet', 'therefore', 'or', 'while', 'nor', 'whether', 'though', 'tho', 'because', 'cuz', 'but', 'for', 'and', 'however', 'before', 'although', 'how', 'plus', 'versus', 'otherwise'],
+  'Conjunction': ['yet', 'therefore', 'or', 'while', 'nor', 'whether', 'though', 'tho', 'because', 'cuz', 'but', 'for', 'and', 'however', 'before', 'although', 'how', 'plus', 'versus', 'otherwise', 'as far as', 'as if', 'in case', 'provided that', 'supposing', 'no matter', 'yet'],
   Time: [
   //date
   'noon', 'midnight', 'now', 'morning', 'evening', 'afternoon', 'night', 'breakfast time', 'lunchtime', 'dinnertime', 'ago', 'sometime', 'eod', 'oclock'],
@@ -1530,7 +1530,7 @@ var compressed = {
   am: 'dre,j,sl,ro',
   ry: 'va,t,c,bu'
 };
-var arr = ['abandon', 'accept', 'add', 'added', 'adopt', 'aid', 'appeal', 'applaud', 'archive', 'ask', 'assign', 'associate', 'assume', 'attempt', 'avoid', 'ban', 'become', 'bomb', 'cancel', 'claim', 'claw', 'come', 'control', 'convey', 'cook', 'copy', 'cut', 'deem', 'defy', 'deny', 'describe', 'design', 'destroy', 'die', 'divide', 'do', 'doubt', 'drag', 'drift', 'drop', 'echo', 'embody', 'enjoy', 'envy', 'excel', 'fall', 'fail', 'fix', 'float', 'flood', 'focus', 'fold', 'get', 'goes', 'grab', 'grasp', 'grow', 'happen', 'head', 'help', 'hold fast', 'hope', 'include', 'instruct', 'invest', 'join', 'keep', 'know', 'learn', 'let', 'lift', 'link', 'load', 'loan', 'look', 'make due', 'mark', 'melt', 'minus', 'multiply', 'name', 'need', 'occur', 'overcome', 'overlap', 'overwhelm', 'owe', 'pay', 'plan', 'plug', 'plus', 'pop', 'pour', 'proclaim', 'put', 'rank', 'reason', 'reckon', 'relax', 'repair', 'reply', 'reveal', 'revel', 'risk', 'rub', 'ruin', 'sail', 'seek', 'seem', 'send', 'set', 'shout', 'sleep', 'sneak', 'sort', 'spoil', 'stem', 'step', 'stop', 'study', 'take', 'talk', 'thank', 'took', 'trade', 'transfer', 'trap', 'travel', 'tune', 'undergo', 'undo', 'uplift', 'walk', 'watch', 'win', 'wipe', 'work', 'yawn', 'yield'];
+var arr = ['abandon', 'accept', 'add', 'added', 'adopt', 'aid', 'appeal', 'applaud', 'archive', 'ask', 'assign', 'associate', 'assume', 'attempt', 'avoid', 'ban', 'become', 'bomb', 'cancel', 'claim', 'claw', 'come', 'control', 'convey', 'cook', 'copy', 'cut', 'deem', 'defy', 'deny', 'describe', 'design', 'destroy', 'die', 'divide', 'do', 'doubt', 'drag', 'drift', 'drop', 'echo', 'embody', 'enjoy', 'envy', 'excel', 'fall', 'fail', 'fix', 'float', 'flood', 'focus', 'fold', 'get', 'goes', 'grab', 'grasp', 'grow', 'happen', 'head', 'help', 'hold fast', 'hope', 'include', 'instruct', 'invest', 'join', 'keep', 'know', 'learn', 'let', 'lift', 'link', 'load', 'loan', 'look', 'make due', 'mark', 'melt', 'minus', 'multiply', 'need', 'occur', 'overcome', 'overlap', 'overwhelm', 'owe', 'pay', 'plan', 'plug', 'plus', 'pop', 'pour', 'proclaim', 'put', 'rank', 'reason', 'reckon', 'relax', 'repair', 'reply', 'reveal', 'revel', 'risk', 'rub', 'ruin', 'sail', 'seek', 'seem', 'send', 'set', 'shout', 'sleep', 'sneak', 'sort', 'spoil', 'stem', 'step', 'stop', 'study', 'take', 'talk', 'thank', 'took', 'trade', 'transfer', 'trap', 'travel', 'tune', 'undergo', 'undo', 'uplift', 'walk', 'watch', 'win', 'wipe', 'work', 'yawn', 'yield'];
 
 module.exports = fns.uncompress_suffixes(arr, compressed);
 
@@ -1687,6 +1687,11 @@ var nlp = function nlp(str, lexicon, tagSet) {
   return buildResult(str, lexicon, tagSet);
 };
 
+//same as main method, except with no POS-tagging.
+nlp.tokenize = function (str) {
+  return buildResult(str, null, null, true);
+};
+
 //this is handy
 nlp.version = pkg.version;
 
@@ -1789,12 +1794,12 @@ var extendTags = function extendTags(newTags) {
 };
 
 //build a new pos-tagged Result obj from a string
-var fromString = function fromString(str, lexicon, tagSet) {
+var fromString = function fromString(str, lexicon, tagSet, skipTagging) {
   var sentences = tokenize(str);
   //make sure lexicon obeys standards
   lexicon = normalizeLex(lexicon);
   var list = sentences.map(function (s) {
-    return Terms.fromString(s, lexicon);
+    return Terms.fromString(s, lexicon, skipTagging);
   });
   //extend tagset for this ref
   if (tagSet) {
@@ -8418,20 +8423,9 @@ var fixContraction = _dereq_('./fix');
 var splitContraction = _dereq_('./split');
 
 //these are always contractions
-// const blacklist = {
-//   'it\'s': true,
-//   'that\'s': true
-// };
-
-// //rocket's red glare
-// if (nextWord.tag['Adjective'] && terms.get(x + 2) && terms.get(x + 2).tag['Noun']) {
-//   return true;
-// }
-// //next word is an adjective
-// if (nextWord.tag['Adjective'] || nextWord.tag['Verb'] || nextWord.tag['Adverb']) {
-//   return false;
-// }
-
+var blacklist = {
+  'that\'s': true
+};
 
 // "'s" may be a contraction or a possessive
 // 'spencer's house' vs 'spencer's good'
@@ -8440,6 +8434,9 @@ var isPossessive = function isPossessive(ts, i) {
   var next_t = ts.terms[i + 1];
   //a pronoun can't be possessive - "he's house"
   if (t.tag.Pronoun || t.tag.QuestionWord) {
+    return false;
+  }
+  if (blacklist[t.normal]) {
     return false;
   }
   //if end of sentence, it is possessive - "was spencer's"
@@ -11772,14 +11769,17 @@ var Terms = function () {
     }
   }], [{
     key: 'fromString',
-    value: function fromString(str, lexicon) {
+    value: function fromString(str, lexicon, skipTagging) {
       var termArr = build(str);
       var ts = new Terms(termArr, lexicon, null);
       //give each term a reference to this ts
       ts.terms.forEach(function (t) {
         t.parentTerms = ts;
       });
-      ts.posTag();
+      //run the part-of-speech tagger?
+      if (skipTagging !== true) {
+        ts.posTag();
+      }
       return ts;
     }
   }]);

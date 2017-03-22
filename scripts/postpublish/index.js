@@ -1,7 +1,8 @@
 require('shelljs/global');
-const benchmark = require('../lib/speed');
+const benchmark = require('../lib/benchmark');
 const fs = require('fs');
-const chalk = require('chalk');
+
+require('./coverage');
 
 const fileSize = function(src) {
   var stats = fs.statSync(src);

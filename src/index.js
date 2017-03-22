@@ -8,6 +8,11 @@ const nlp = function (str, lexicon, tagSet) {
   return buildResult(str, lexicon, tagSet);
 };
 
+//same as main method, except with no POS-tagging.
+nlp.tokenize = function(str) {
+  return buildResult(str, null, null, true);
+};
+
 //this is handy
 nlp.version = pkg.version;
 

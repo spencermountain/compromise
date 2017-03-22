@@ -80,14 +80,17 @@ class Terms {
     };
   }
 
-  static fromString(str, lexicon) {
+  static fromString(str, lexicon, skipTagging) {
     let termArr = build(str);
     let ts = new Terms(termArr, lexicon, null);
     //give each term a reference to this ts
     ts.terms.forEach((t) => {
       t.parentTerms = ts;
     });
-    ts.posTag();
+    //run the part-of-speech tagger?
+    if (skipTagging !== true) {
+      ts.posTag();
+    }
     return ts;
   }
 }

@@ -17,15 +17,15 @@ const unTagAll = (term, tag, reason) => {
     return;
   }
   unTagOne(term, tag, reason);
-  if (tagset[tag]) {
+  if (tagset.allTags()[tag]) {
     //pull-out their children (dependants) too
     //this should probably be recursive, instead of just 2-deep
-    let killAlso = tagset[tag].children || [];
+    let killAlso = tagset.allTags()[tag].children || [];
     for (let o = 0; o < killAlso.length; o++) {
       //kill its child
       unTagOne(term, killAlso[o], reason);
       //kill grandchildren too
-      let kill2 = tagset[killAlso[o]].children || []
+      let kill2 = tagset.allTags()[killAlso[o]].children || []
       for (let i2 = 0; i2 < kill2.length; i2++) {
         unTagOne(term, kill2[i2], reason);
       }

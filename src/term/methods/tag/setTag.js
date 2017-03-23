@@ -5,13 +5,14 @@ const log = path.log;
 const tagset = path.tags;
 const unTag = require('./unTag');
 
+var allTags = tagset.allTags();
 
 const makeCompatible = (term, tag, reason) => {
-  if (!tagset.allTags()[tag]) {
+  if (!allTags[tag]) {
     return;
   }
   //find incompatible tags
-  let not = tagset.allTags()[tag].not || [];
+  let not = allTags[tag].not || [];
   for (let i = 0; i < not.length; i++) {
     unTag(term, not[i], reason);
   }
@@ -31,22 +32,27 @@ const tag_one = (term, tag, reason) => {
 };
 
 const tagAll = function (term, tag, reason) {
+  
   if (!term || !tag || typeof tag !== 'string') {
-    // console.log(tag)
+
+    // If tag is an array - call this recursively for each entry...
+    if(!!tag && tag.constructor === Array)
+    {
+      for (let i = 0; i < tag.length; i++)
+      {
+          tagAll(term, tag[i], reason);
+      }
+    }
+
     return;
   }
   tag = tag || '';
   tag = tag.replace(/^#/, '');
   tag_one(term, tag, reason);
   //find assumed-tags
-  if (tagset.allTags()[tag]) {
-    let tags = tagset.allTags()[tag].parents || [];
-    for (let i = 0; i < tags.length; i++) {
-      tag_one(term, tags[i], '-');
-    }
+  if (allTags[tag]) {
+    tagAll(term, allTags[tag].parents, '-');
   }
 };
 
-
 module.exports = tagAll;
-// console.log(tagset['Person']);

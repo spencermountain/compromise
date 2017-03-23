@@ -22,9 +22,7 @@ const normalizeLex = function(lex) {
 };
 
 const extendTags = function(newTags) {
-  console.log(newTags);
   tagArr.addTags(newTags);
-  console.log(tagArr.allTags());
 };
 
 //build a new pos-tagged Result obj from a string

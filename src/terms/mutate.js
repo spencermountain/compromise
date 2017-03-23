@@ -31,7 +31,7 @@ exports.insertAt = (terms, i, needle) => {
   needle.dirty = true;
   let arr = getTerms(needle);
   //handle whitespace
-  if (i > 0 && arr[0]) {
+  if (i > 0 && arr[0] && !arr[0].whitespace.before) {
     arr[0].whitespace.before = ' ';
   }
   //gnarly splice

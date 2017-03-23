@@ -14,7 +14,7 @@ const conflicts = [
   ['Plural', 'Currency'],
   ['Plural', 'Ordinal'],
   //exlusive-people
-  //['MaleName', 'FemaleName'],
+  ['MaleName', 'FemaleName'],
   ['FirstName', 'LastName', 'Honorific'],
   //adjectives
   ['Comparative', 'Superlative'],

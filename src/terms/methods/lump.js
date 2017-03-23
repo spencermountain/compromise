@@ -2,6 +2,16 @@
 const combine = require('../../tagger/lumper/combine');
 const mutate = require('../mutate');
 
+//merge-together our current match into one term
+const combineThem = function(ts, tags) {
+  let len = ts.terms.length;
+  for(let i = 0; i < len; i++) {
+    combine(ts, 0);
+  }
+  let lumped = ts.terms[0];
+  lumped.tag = tags;
+  return lumped;
+};
 
 const lumpMethods = (Terms) => {
 
@@ -9,39 +19,24 @@ const lumpMethods = (Terms) => {
 
     //turn these terms into 1 term, with shared tags
     lump: function () {
-      let index = this.index();
-
       //collect the tags up
+      let index = this.index();
       let tags = {};
       this.terms.forEach((t) => {
         Object.keys(t.tag).forEach((tag) => tags[tag] = true);
       });
-
-      //lump the whole-thing together
+      //just lump the whole-thing together
       if (this.parentTerms === this) {
-        //merge-together our current match into one term
-        let len = this.terms.length;
-        for(let i = 0; i < len; i++) {
-          combine(this, 0);
-        }
-        let lumped = this.terms[0];
-        lumped.tag = tags;
+        let lumped = combineThem(this, tags);
         this.terms = [lumped];
         return this;
       }
-
-      //otherwise lump just part of it
+      //otherwise lump just part of it. delete/insert.
       this.parentTerms = mutate.deleteThese(this.parentTerms, this);
       //merge-together our current match into one term
-      let len = this.terms.length;
-      for(let i = 0; i < len; i++) {
-        combine(this, 0);
-      }
-      let lumped = this.terms[0];
-      lumped.tag = tags;
+      let lumped = combineThem(this, tags);
       //put it back (in the same place)
       this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index, lumped);
-
       return this;
     }
 

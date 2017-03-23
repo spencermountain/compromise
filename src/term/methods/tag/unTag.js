@@ -12,8 +12,13 @@ const unTagOne = (term, tag, reason) => {
   }
 };
 
-const unTagAll = (term, tag, reason) => {
+const unTagDeep = (term, tag, reason) => {
   if (!term || !tag) {
+    return;
+  }
+  //support '*' meaning, all-tags
+  if (tag === '*') {
+    term.tag = {};
     return;
   }
   unTagOne(term, tag, reason);
@@ -25,7 +30,7 @@ const unTagAll = (term, tag, reason) => {
       //kill its child
       unTagOne(term, killAlso[o], reason);
       //kill grandchildren too
-      let kill2 = tagset[killAlso[o]].children || []
+      let kill2 = tagset[killAlso[o]].children || [];
       for (let i2 = 0; i2 < kill2.length; i2++) {
         unTagOne(term, kill2[i2], reason);
       }
@@ -33,4 +38,4 @@ const unTagAll = (term, tag, reason) => {
   }
   return;
 };
-module.exports = unTagAll;
+module.exports = unTagDeep;

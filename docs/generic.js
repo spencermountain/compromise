@@ -192,7 +192,7 @@ module.exports = {
       example: 'nlp(\'Michael Apple ate a delicious apple.\').match(\'#FirstName apple\').tag(\'Person\').people().out()\n//Michael Apple'
     },
     unTag: {
-      desc: 'remove a particular tag for all these terms.',
+      desc: 'remove a particular tag for all these terms. Passing in a \'*\' removes all the current tags.',
       returns: 'Text',
       example: 'nlp(\'they made a catch & scored a run\').match([\'run\',\'catch\']).unTag(\'#Verb\').nouns().out(\'array\')\n//catch, run'
     },

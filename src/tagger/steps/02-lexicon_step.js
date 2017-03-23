@@ -2,7 +2,7 @@
 const p = require('../paths');
 const split = require('../contraction/split');
 const tries = require('../../tries');
-
+const tagConflicts = require('../../tags/conflicts')
 
 const lexicon = p.lexicon;
 const log = p.log;
@@ -23,7 +23,25 @@ const check_lexicon = (str, sentence) => {
   if (tag) {
     array.push(tag);
   }
-  return array.length == 0 ? null : array;
+  return array.length == 0 ? null : remove_conflicts(array);
+};
+
+//remove conflicts - first tags always take priority, therefore custom lexicon first, then built in, then tries
+const remove_conflicts = (tagArray) => {
+  for (let i = 0; i < tagArray.length; i++) {
+  let currentTag = tagArray[i];
+  if(currentTag == null) continue;
+
+  let conflicts = tagConflicts(currentTag);
+  
+  for(let s=i; s< tagArray.length; s++){
+      if(conflicts.indexOf(tagArray[s])>-1){
+        tagArray[s] = null;
+      }
+    }
+  }
+
+  return tagArray.filter((t) => t !== null);;
 };
 
 const lexicon_pass = function (ts) {

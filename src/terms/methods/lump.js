@@ -1,38 +1,25 @@
 'use strict';
 const combine = require('../../tagger/lumper/combine');
+const mutate = require('../mutate');
 
 const lumpMethods = (Terms) => {
 
   const methods = {
 
     lump: function () {
-      while(this.terms.length>1)
-      {
+      let index = this.index();
+      //delete from parent
+      this.parentTerms = mutate.deleteThese(this.parentTerms, this);
+      //merge-together our current match into one term
+      for(let i = 0; i < this.terms.length; i++) {
         combine(this, 0);
       }
-
+      let lumped = this.terms[0];
+      //put it back (in the same place)
+      this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index, lumped);
       return this;
-    },
-    lumpIntoOne: function(startTerm, endTerm, tag, tagReason){
-       
-       if(startTerm==endTerm)
-       {
-          startTerm.tagAs(tag, tagReason);
-          return startTerm;         
-       }
-
-       let terms = startTerm.parentTerms;
-       let endTermIndex = endTerm.index();
-       let startTermIndex = startTerm.index(); 
-       
-        for(let i = endTermIndex -1; i>=startTermIndex; i--){
-           combine(terms, i);
-        }
-
-        terms.terms[startTermIndex].tagAs(tag, tagReason);
-
-        return terms;
     }
+
   };
 
   //hook them into result.proto

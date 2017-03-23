@@ -79,8 +79,6 @@ const build = function() {
     }
   });
 
-  //addTags({ParentLegal:{ Legal: true}});
-
   return all;
 };
 

@@ -33,6 +33,16 @@ const tag_one = (term, tag, reason) => {
 const tagAll = function (term, tag, reason) {
   if (!term || !tag || typeof tag !== 'string') {
     // console.log(tag)
+    
+    //LS 13-03-17 if tag is an array - call this recursively for each entry...
+    if(!!tag && tag.constructor === Array)
+    {
+      for (let i = 0; i < tag.length; i++)
+      {
+          tagAll(term, tag[i], reason);
+      }
+    }
+
     return;
   }
   tag = tag || '';

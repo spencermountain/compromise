@@ -15,4 +15,6 @@ var nlp = require('./src/index');
 
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
-nlp('A stream feeds the river.').debug();
+let r = nlp('we live in Toronto Canada and it is cold');
+r.match('#Place+').lump();
+r.debug();

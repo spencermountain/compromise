@@ -44,7 +44,7 @@ const corrections = function (r) {
   //the truly nice swim
   r.match('the #Adverb #Adjective #Verb').match('#Verb').tag('Noun', 'correction-determiner4');
   //a stream runs
-  r.match('#Determiner #Infinitive #Verb').term(1).tag('Noun', 'correction-determiner5');
+  r.match('#Determiner #Infinitive #Adverb? #Verb').term(1).tag('Noun', 'correction-determiner5');
 
 
 

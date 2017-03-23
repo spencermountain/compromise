@@ -16,6 +16,5 @@ var nlp = require('./src/index');
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
 let r = nlp('we live in Toronto Canada and it is cold');
-console.log(r.wordCount());
-// r.match('#Place+').lump();
-// r.debug();
+r.match('#Place+').lump();
+r.debug();

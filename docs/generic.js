@@ -123,6 +123,11 @@ module.exports = {
       desc: 'insert a word or words at a known index (zero-based)',
       returns: 'Text',
       example: 'nlp(\'so you are from Africa?\').insertAt(2, \'like,\').all().out()\n//so you are like, from africa?'
+    },
+    lump: {
+      desc: 'merge matches into one term, with shared tags.',
+      returns: 'Text',
+      example: 'nlp(\'Keanu Reeves said whoa\').match(\'#Person\').lump().all().out(\'terms\')\n//[\'Keanu Reeves\', \'said\', \'whoa\']'
     }
   },
 

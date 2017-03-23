@@ -2,8 +2,6 @@
 const p = require('../paths');
 const split = require('../contraction/split');
 const tries = require('../../tries');
-
-
 const lexicon = p.lexicon;
 const log = p.log;
 const path = 'tagger/lexicon';

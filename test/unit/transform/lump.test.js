@@ -35,6 +35,7 @@ test('lumper-multiple-matches:', function (t) {
   t.ok(term.tag.Person, 'has-person-tag2');
   t.end();
 });
+
 test('lumper-long:', function (t) {
   var str = 'I think Sir Patrick James Watson is cool';
   var r = nlp(str);
@@ -44,7 +45,7 @@ test('lumper-long:', function (t) {
   t.equal(r.out('text'), str, 'output unchanged');
   t.equal(r.wordCount(), 5, '5 words now');
 
-  let term = r.list[0].terms[3];
+  let term = r.list[0].terms[2];
   t.ok(term.tag.FirstName, 'has-firstname-tag');
   t.ok(term.tag.Person, 'has-person-tag');
 

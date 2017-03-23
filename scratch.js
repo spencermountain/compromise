@@ -15,6 +15,5 @@ var nlp = require('./src/index');
 
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
-let r = nlp('we live in Toronto Canada and it is cold');
-r.match('#Place+').lump();
+let r = nlp('I think Sir Patrick James Watson is cool').lump();
 r.debug();

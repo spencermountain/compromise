@@ -1,5 +1,6 @@
 'use strict';
-//index a lexicon by first-word
+//index a lexicon by its first-word
+// - used for the multiple-word-lumper
 const firstWord = (arr) => {
   let all = {};
   arr.forEach((obj) => {

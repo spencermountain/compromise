@@ -77,7 +77,6 @@ const multiples = function() {
       }
     }
   });
-  // console.log(Object.keys(all).length);
   return all;
 };
 
@@ -86,10 +85,3 @@ module.exports = {
   utils: utils,
   multiples: multiples,
 };
-multiples();
-// console.time('trie-query');
-// console.log(lookup('aloof'));
-// console.timeEnd('trie-query');
-// console.log(lookup('taipei'));
-// console.log(lookup('gerald'));
-// console.log(lookup('mexico'));

@@ -7,6 +7,7 @@ const tries = p.tries;
 const getFirstWords = require('./firstWord');
 //build default-one
 const lexiconFirst = getFirstWords([lexicon, tries.multiples()]);
+
 //see if this term is a multi-match
 const tryHere = function(ts, i, obj) {
   let n = i + 1;
@@ -25,6 +26,7 @@ const tryHere = function(ts, i, obj) {
   return null;
 };
 
+//try all terms with this lexicon
 const tryAll = function(lexFirst, ts) {
   for(let i = 0; i < ts.terms.length - 1; i++) {
     let obj = lexFirst[ts.terms[i].root];

@@ -3,9 +3,10 @@
 // const combine = require('./combine');
 const p = require('../paths');
 const lexicon = p.lexicon;
+const tries = p.tries;
 const getFirstWords = require('./firstWord');
 //build default-one
-const lexFirst = getFirstWords(lexicon);
+const lexiconFirst = getFirstWords([lexicon, tries.multiples()]);
 
 //see if this term is a multi-match
 const tryHere = function(ts, i, obj) {
@@ -25,8 +26,7 @@ const tryHere = function(ts, i, obj) {
   return null;
 };
 
-const lexicon_lump = function (ts) {
-  //use default lexicon
+const tryAll = function(lex, lexFirst, ts) {
   for(let i = 0; i < ts.terms.length - 1; i++) {
     let obj = lexFirst[ts.terms[i].normal];
     if (obj) {
@@ -38,21 +38,16 @@ const lexicon_lump = function (ts) {
       }
     }
   }
+  return ts;
+};
+
+const lexicon_lump = function (ts) {
+  //use default lexicon
+  ts = tryAll(lexicon, lexiconFirst, ts);
   //try user's lexicon
   if (ts.lexicon) {
-    let uFirst = getFirstWords(ts.lexicon);
-    for(let i = 0; i < ts.terms.length - 1; i++) {
-      let obj = uFirst[ts.terms[i].normal];
-      if (obj) {
-        let n = tryHere(ts, i, obj);
-        if (n) {
-          let slice = ts.slice(i, n);
-          let tag = ts.lexicon[slice.out('normal')];
-          slice.tagAs(tag, 'lexicon-lump');
-          slice.lump();
-        }
-      }
-    }
+    let uFirst = getFirstWords([ts.lexicon]);
+    ts = tryAll(ts.lexicon, uFirst, ts);
   }
   return ts;
 };

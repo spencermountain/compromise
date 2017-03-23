@@ -1,15 +1,18 @@
 'use strict';
 //index a lexicon by first-word
-const firstWord = (obj) => {
-  return Object.keys(obj).reduce((h, str) => {
-    let words = str.split(' ');
-    if (words.length > 1) {
-      let w = words[0];
-      h[w] = h[w] || {};
-      let rest = words.slice(1).join(' ');
-      h[w][rest] = words.length;
-    }
-    return h;
-  }, {});
+const firstWord = (arr) => {
+  let all = {};
+  arr.forEach((obj) => {
+    Object.keys(obj).forEach((str) => {
+      let words = str.split(' ');
+      if (words.length > 1) {
+        let w = words[0];
+        all[w] = all[w] || {};
+        let rest = words.slice(1).join(' ');
+        all[w][rest] = words.length;
+      }
+    });
+  });
+  return all;
 };
 module.exports = firstWord;

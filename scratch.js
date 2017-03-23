@@ -2,7 +2,7 @@
 //this file is not included in the build.
 //use it for messing around.
 var nlp = require('./src/index');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 // var nlp = require('./builds/compromise');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
@@ -19,7 +19,7 @@ var lexicon = {
   'Jardas al Abid': 'Place',
 };
 
-var sentence = 'the centre of Jardas-al-Abid killing';
+var sentence = 'the oakland athletics';
 var r = nlp(sentence, lexicon);
 r.debug();
 console.log(r.places().data());

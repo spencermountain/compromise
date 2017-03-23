@@ -11,15 +11,15 @@ const lexiconFirst = getFirstWords([lexicon, tries.multiples()]);
 const tryHere = function(ts, i, obj) {
   let n = i + 1;
   //one
-  if (obj[ts.slice(n, n + 1).out('normal')]) {
+  if (obj[ts.slice(n, n + 1).out('root')]) {
     return n + 1;
   }
   //two
-  if (obj[ts.slice(n, n + 2).out('normal')]) {
+  if (obj[ts.slice(n, n + 2).out('root')]) {
     return n + 2;
   }
   //three
-  if (obj[ts.slice(n, n + 3).out('normal')]) {
+  if (obj[ts.slice(n, n + 3).out('root')]) {
     return n + 3;
   }
   return null;
@@ -27,14 +27,14 @@ const tryHere = function(ts, i, obj) {
 
 const tryAll = function(lexFirst, ts) {
   for(let i = 0; i < ts.terms.length - 1; i++) {
-    let obj = lexFirst[ts.terms[i].normal];
+    let obj = lexFirst[ts.terms[i].root];
     if (obj) {
       let n = tryHere(ts, i, obj);
       if (n) {
-        let slice = ts.slice(i + 1, n);
-        let tag = obj[slice.out('normal')];
-        ts.slice(i, n).tagAs(tag, 'lexicon-lump');
-      // slice.lump();
+        let tag = obj[ts.slice(i + 1, n).out('root')];
+        let slice = ts.slice(i, n);
+        slice.tagAs(tag, 'lexicon-lump');
+        slice.lump();
       }
     }
   }

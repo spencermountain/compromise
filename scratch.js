@@ -19,7 +19,7 @@ var lexicon = {
   'Jardas al Abid': 'Place',
 };
 
-var sentence = 'the oakland athletics';
+var sentence = 'it is ipso    facto ';
 var r = nlp(sentence, lexicon);
 r.debug();
-console.log(r.places().data());
+console.log(r.out());

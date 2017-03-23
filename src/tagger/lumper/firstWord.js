@@ -9,7 +9,7 @@ const firstWord = (arr) => {
         let w = words[0];
         all[w] = all[w] || {};
         let rest = words.slice(1).join(' ');
-        all[w][rest] = words.length;
+        all[w][rest] = obj[str];
       }
     });
   });

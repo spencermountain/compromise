@@ -1,6 +1,6 @@
 'use strict';
-const combine = require('../../tagger/lumper/combine');
-const mutate = require('../mutate');
+const combine = require('./combine');
+const mutate = require('../../mutate');
 
 //merge-together our current match into one term
 const combineThem = function(ts, tags) {

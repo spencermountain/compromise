@@ -15,5 +15,11 @@ var nlp = require('./src/index');
 
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
-let r = nlp('I think Sir Patrick James Watson is cool').lump();
-r.debug();
+var lexicon = {
+  'Jardas al Abid': 'Place',
+  'Umm Ar Rizam': 'Place',
+  'Tobruk': 'Place'
+};
+
+let sentence = 'A suicide attack hit the centre of Jardas-al-Abid killing one person (and the attacker) and injuring more than twenty.';
+console.log(nlp(sentence, lexicon).places().data());

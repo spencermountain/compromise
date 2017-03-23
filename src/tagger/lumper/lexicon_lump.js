@@ -1,6 +1,6 @@
 'use strict';
 //check for "united" + "kingdom" in lexicon, and combine + tag it
-const combine = require('./combine');
+// const combine = require('./combine');
 const p = require('../paths');
 const log = p.log;
 const lexicon = p.lexicon;
@@ -10,7 +10,7 @@ const tries = require('../../tries');
 
 const combineMany = (ts, i, count) => {
   for (let n = 0; n < count; n++) {
-    combine(ts, i);
+    // combine(ts, i);
   }
 };
 
@@ -58,12 +58,10 @@ const lexicon_lump = function (ts) {
     }
 
     if (pos) {
-      combine(ts, i);
+      // combine(ts, i);
       ts.terms[i].tagAs(pos, 'multiples-lexicon');
     }
   }
-
-
   //try the user's lexicon
   Object.keys(uLexicon).forEach((str) => {
     for (let i = 0; i < ts.terms.length; i++) {

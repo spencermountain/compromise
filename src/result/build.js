@@ -26,9 +26,9 @@ const extendTags = function(newTags) {
   console.log(tagArr);
 };
 
-const fromString = (str, lexicon, tagSet, customRules) => {
+const fromString = (str, lexicon, tagSet, skipTagging) => {
   
-  let sentences = str.constructor==Array ? str : tokenize(str);
+  let sentences = str !== null && str.constructor===Array ? str : tokenize(str);
 
   //LS 13-03-17: include multiword lexicon entries in lexicon without white spaces or hypens
   for (var key in lexicon) {

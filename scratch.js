@@ -16,10 +16,10 @@ var nlp = require('./src/index');
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
 var lexicon = {
-  'Jardas al Abid': 'Place',
+  'lester b. Pearson': 'Person'
 };
 
-var sentence = 'it is    ipso facto ';
+var sentence = 'it is ipso facto for lester b pearson';
 var r = nlp(sentence, lexicon);
 r.debug();
-console.log(r.out());
+// console.log(r.out());

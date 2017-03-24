@@ -13,6 +13,11 @@ const normalizeLex = function(lex) {
     //add natural form
     h[k] = lex[k];
     let normal = normalize(k);
+    //remove periods
+    //normalize whitesace
+    normal = normal.replace(/\s+/, ' ');
+    //remove sentence-punctuaion too
+    normal = normal.replace(/[.\?\!]/g, '');
     if (k !== normal) {
       //add it too
       h[normal] = lex[k];
@@ -27,17 +32,12 @@ const extendTags = function(newTags) {
 };
 
 const fromString = (str, lexicon, tagSet, skipTagging) => {
-  
-  let sentences = str !== null && str.constructor===Array ? str : tokenize(str);
 
-  //LS 13-03-17: include multiword lexicon entries in lexicon without white spaces or hypens
-  for (var key in lexicon) {
-    var noSpaceOrHypenKey = key.replace(/-|\s|[.]/g,"");
-
-    if(noSpaceOrHypenKey != key)
-    {
-      lexicon[noSpaceOrHypenKey] = lexicon[key];
-    }
+  let sentences = [];
+  if (str !== null && str.constructor === Array) {
+    sentences = str;
+  } else {
+    sentences = tokenize(str);
   }
 
   if (tagSet) {

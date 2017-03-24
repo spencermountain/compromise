@@ -26,9 +26,24 @@ const extendTags = function(newTags) {
   console.log(tagArr);
 };
 
-//build a new pos-tagged Result obj from a string
 const fromString = (str, lexicon, tagSet, skipTagging) => {
-  let sentences = tokenize(str);
+  
+  let sentences = str !== null && str.constructor===Array ? str : tokenize(str);
+
+  //LS 13-03-17: include multiword lexicon entries in lexicon without white spaces or hypens
+  for (var key in lexicon) {
+    var noSpaceOrHypenKey = key.replace(/-|\s|[.]/g,"");
+
+    if(noSpaceOrHypenKey != key)
+    {
+      lexicon[noSpaceOrHypenKey] = lexicon[key];
+    }
+  }
+
+  if (tagSet) {
+    extendTags(tagSet);
+  }
+
   //make sure lexicon obeys standards
   lexicon = normalizeLex(lexicon);
   let list = sentences.map((s) => Terms.fromString(s, lexicon, skipTagging));

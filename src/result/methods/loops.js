@@ -17,6 +17,7 @@ let foreach = [
   'replaceWith',
 
   'delete',
+  'lump',
 
 // 'tag',
 // 'unTag',

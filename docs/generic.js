@@ -123,6 +123,11 @@ module.exports = {
       desc: 'insert a word or words at a known index (zero-based)',
       returns: 'Text',
       example: 'nlp(\'so you are from Africa?\').insertAt(2, \'like,\').all().out()\n//so you are like, from africa?'
+    },
+    lump: {
+      desc: 'merge matches into one term, with shared tags.',
+      returns: 'Text',
+      example: 'nlp(\'Keanu Reeves said whoa\').match(\'#Person\').lump().all().out(\'terms\')\n//[\'Keanu Reeves\', \'said\', \'whoa\']'
     }
   },
 
@@ -192,7 +197,7 @@ module.exports = {
       example: 'nlp(\'Michael Apple ate a delicious apple.\').match(\'#FirstName apple\').tag(\'Person\').people().out()\n//Michael Apple'
     },
     unTag: {
-      desc: 'remove a particular tag for all these terms.',
+      desc: 'remove a particular tag for all these terms. Passing in a \'*\' removes all the current tags.',
       returns: 'Text',
       example: 'nlp(\'they made a catch & scored a run\').match([\'run\',\'catch\']).unTag(\'#Verb\').nouns().out(\'array\')\n//catch, run'
     },

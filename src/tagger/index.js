@@ -1,13 +1,5 @@
 'use strict';
 //the steps and processes of pos-tagging
-const contraction = {
-  interpret: require('./contraction')
-};
-const lumper = {
-  lexicon_lump: require('./lumper/lexicon_lump'),
-  lump_two: require('./lumper/lump_two'),
-  lump_three: require('./lumper/lump_three')
-};
 const step = {
   punctuation_step: require('./steps/01-punctuation_step'),
   lexicon_step: require('./steps/02-lexicon_step'),
@@ -28,24 +20,28 @@ const step = {
   person_step: require('./steps/18-person_step'),
   quotation_step: require('./steps/19-quotation_step'),
   organization_step: require('./steps/20-organization_step'),
-  plural_step: require('./steps/21-plural_step')
+  plural_step: require('./steps/21-plural_step'),
+
+  lumper : require('./lumper/index'),
+  lexicon_lump : require('./lumper/lexicon_lump'),
+  contraction: require('./contraction')
 };
 const corrections = require('./corrections');
 const tagPhrase = require('./phrase');
 
-
 const tagger = function (ts) {
-  ts = step.punctuation_step(ts);
+  // console.time('tagger');
+  ts = step.punctuation_step(ts); //1ms
   ts = step.emoji_step(ts);
-  ts = lumper.lexicon_lump(ts);
-  ts = step.lexicon_step(ts);
+  ts = step.lexicon_step(ts); //1ms
+  ts = step.lexicon_lump(ts); //1ms
   ts = step.web_step(ts);
-  ts = step.suffix_step(ts);
+  ts = step.suffix_step(ts); //2ms
   ts = step.neighbour_step(ts);
   ts = step.capital_step(ts);
   ts = step.noun_fallback(ts);
-  ts = contraction.interpret(ts);
-  ts = step.date_step(ts);
+  ts = step.contraction(ts);
+  ts = step.date_step(ts); //3ms
   ts = step.auxillary_step(ts);
   ts = step.negation_step(ts);
   ts = step.phrasal_step(ts);
@@ -53,17 +49,14 @@ const tagger = function (ts) {
   ts = step.possessive_step(ts);
   ts = step.value_step(ts);
   ts = step.acronym_step(ts);
-  ts = step.person_step(ts);
+  ts = step.person_step(ts); //1ms
   ts = step.quotation_step(ts);
   ts = step.organization_step(ts);
-  ts = step.plural_step(ts);
-  //lump a couple times, for long ones
-  for (let i = 0; i < 3; i++) {
-    ts = lumper.lump_three(ts);
-    ts = lumper.lump_two(ts);
-  }
-  ts = corrections(ts);
+  ts = step.plural_step(ts); //1ms
+  ts = step.lumper(ts);
+  ts = corrections(ts); //1ms
   ts = tagPhrase(ts);
+  // console.timeEnd('tagger');
   return ts;
 };
 

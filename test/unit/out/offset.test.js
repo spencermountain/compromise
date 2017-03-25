@@ -11,3 +11,17 @@ test('offsets-equals-substr:', function (t) {
   });
   t.end();
 });
+
+test('index-output:', function (t) {
+  var str = `I am the very model of a modern Major-General. I've information vegetable, animal, and mineral`;
+  let arr = nlp(str).match('model').out('index');
+  t.equal(arr[0].term, 4, 'which term');
+  t.equal(arr[0].sentence, 0, 'which sentence');
+  t.equal(arr[0].sentenceTerm, 4, 'which sentence-term');
+
+  arr = nlp(str).match('vegetable').out('index');
+  t.equal(arr[0].term, 13, 'which term');
+  t.equal(arr[0].sentence, 1, 'which sentence');
+  t.equal(arr[0].sentenceTerm, 3, 'which sentence-term');
+  t.end();
+});

@@ -12,20 +12,26 @@ const unTagOne = (term, tag, reason) => {
   }
 };
 
-const unTagAll = (term, tag, reason) => {
+const unTagDeep = (term, tag, reason) => {
   if (!term || !tag) {
     return;
   }
+  //support '*' flag - remove all-tags
+  if (tag === '*') {
+    term.tag = {};
+    return;
+  }
+  //remove this tag
   unTagOne(term, tag, reason);
+  //remove decendents too
   if (tagset[tag]) {
-    //pull-out their children (dependants) too
-    //this should probably be recursive, instead of just 2-deep
+    //this should probably be recursive, instead of just 2-deep..
     let killAlso = tagset[tag].children || [];
     for (let o = 0; o < killAlso.length; o++) {
-      //kill its child
+      //remove its child
       unTagOne(term, killAlso[o], reason);
-      //kill grandchildren too
-      let kill2 = tagset[killAlso[o]].children || []
+      //remove grandchildren too
+      let kill2 = tagset[killAlso[o]].children || [];
       for (let i2 = 0; i2 < kill2.length; i2++) {
         unTagOne(term, kill2[i2], reason);
       }
@@ -33,4 +39,4 @@ const unTagAll = (term, tag, reason) => {
   }
   return;
 };
-module.exports = unTagAll;
+module.exports = unTagDeep;

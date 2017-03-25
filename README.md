@@ -129,12 +129,11 @@ r.sentences().toNegative()
 
 or grab specific parts, and **analyze-the-heck** out of them:
 ```javascript
-r = nlp(chomskyFanFic)
+r = nlp(freshPrince)
 r.places().sort('freq').unique().data()
 /*[
-  {text: 'MIT lecture hall'},
-  {text: '23 Desperado dr.'},
-  {text: 'desert island'},
+  {text: 'West Philadelphia'},
+  {text: 'Bel-Air'}
 ]*/
 ```
 <table align="center">
@@ -146,7 +145,7 @@ r.places().sort('freq').unique().data()
   </tr>
 </table>
 
-###Client-side:
+### Client-side:
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
@@ -156,7 +155,7 @@ r.places().sort('freq').unique().data()
 </script>
 ```
 
-###Tense:
+### Tense:
 ```javascript
 let r = nlp('she sells seashells by the seashore.')
 r.sentences().toFutureTense().out('text')
@@ -169,7 +168,7 @@ r.verbs().conjugate()
 // }]
 ```
 
-###Plural/singular:
+### Plural/singular:
 ```javascript
 r = nlp('a bottle of beer on the wall.')
 r.nouns().first().toPlural()
@@ -177,14 +176,14 @@ r.out('text')
 //'The bottles of beer on the wall.'
 ```
 
-###Negation:
+### Negation:
 ```javascript
 r = nlp('london is calling')
 r.sentences().toNegative()
 // 'london is not calling'
 ```
 
-###Number interpretation:
+### Number interpretation:
 ```javascript
 r = nlp('fifth of december')
 
@@ -195,13 +194,13 @@ r.values().toNumber().out('text')
 // '5 of december'
 ```
 
-###Normalization:
+### Normalization:
 ```javascript
 r = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
 ```
 
-###Named-entity recognition:
+### Named-entity recognition:
 ```javascript
 r = nlp('the opera about richard nixon visiting china')
 r.topics().data()
@@ -211,7 +210,7 @@ r.topics().data()
 // ]
 ```
 
-###Fancy outputs:
+### Fancy outputs:
 ```javascript
 r = nlp('Tony Hawk won').out('html')
 /*
@@ -266,7 +265,7 @@ we're fun, we're using <b>semver</b>, and moving fast.
   </a>
 </div>
 
-###Don't forget about:
+### Don't forget about:
 * **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript, too
 * **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in js
 * **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript

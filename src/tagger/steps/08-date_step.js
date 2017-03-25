@@ -24,6 +24,13 @@ const isYear = (num) => {
   }
   return false;
 };
+//same, but for less-confident values
+const isYearSafer = (num) => {
+  if (num && num > 1900 && num < 2030) {
+    return true;
+  }
+  return false;
+};
 
 //non-destructively tag values & prepositions as dates
 const datePass = function (ts) {
@@ -126,6 +133,12 @@ const datePass = function (ts) {
   value = ts.match(`(in|of|by|during|before|starting|ending|for|year) #Cardinal`).lastTerm().values();
   num = value.numbers()[0];
   if (isYear(num)) {
+    value.tag('Year', 'preposition-year');
+  }
+  //was 1998 and...
+  value = ts.match(`#Cardinal !#Plural`).firstTerm().values();
+  num = value.numbers()[0];
+  if (isYearSafer(num)) {
     value.tag('Year', 'preposition-year');
   }
   //fifth week in 1998

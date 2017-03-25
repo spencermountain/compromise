@@ -56,39 +56,32 @@ const lookup = function(str) {
   return null;
 };
 
-//same as regular lookup, but if we know it's two-words
-const lookupMulti = function(str) {
-  const single = {
-    'Adjective': true,
-    'Place': true,
-    'Demonyms': true,
-    'FemaleName': true,
-    'LastName': true,
-    'MaleName': true,
-    'Professions': true,
-  };
-  if (utils.orgWords.has(str)) {
-    return 'Noun';
-  }
-  for(let i = 0; i < keys.length; i++) {
-    if (single[keys[i]]) {
-      continue;
+//find all multi-word terms
+const multiples = function() {
+  let all = {};
+  [
+    'Adverb',
+    'City',
+    'Country',
+    'Expression',
+    'Holiday',
+    'Noun',
+    'Organization',
+    'SportsTeam',
+  ].forEach((k) => {
+    let obj = tags[k]._cache;
+    const words = Object.keys(obj);
+    for(let i = 0; i < words.length; i++) {
+      if (words[i].match(' ')) {
+        all[words[i]] = k;
+      }
     }
-    if (tags[keys[i]].has(str)) {
-      return keys[i];
-    }
-  }
-  return null;
+  });
+  return all;
 };
 
 module.exports = {
   lookup: lookup,
   utils: utils,
-  lookupMulti: lookupMulti,
+  multiples: multiples,
 };
-// console.time('trie-query');
-// console.log(lookup('aloof'));
-// console.timeEnd('trie-query');
-// console.log(lookup('taipei'));
-// console.log(lookup('gerald'));
-// console.log(lookup('mexico'));

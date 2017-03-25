@@ -1,8 +1,8 @@
 'use strict';
-const paths = require('../paths');
-const Term = require('../../term');
+const paths = require('../../paths');
+const Term = require('../../../term');
 const log = paths.log;
-const path = 'tagger/combine';
+const path = 'combine';
 //merge two term objects.. carefully
 
 const makeText = (a, b) => {
@@ -21,6 +21,7 @@ const combine = function(s, i) {
   let text = makeText(a, b);
   s.terms[i] = new Term(text, a.context);
   s.terms[i].normal = a.normal + ' ' + b.normal;
+  s.terms[i].parentTerms = s.terms[i + 1].parentTerms;
   s.terms[i + 1] = null;
   s.terms = s.terms.filter((t) => t !== null);
   return;

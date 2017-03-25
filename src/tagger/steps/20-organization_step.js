@@ -12,7 +12,7 @@ const maybeOrg = function(t) {
     return false;
   }
   //can't be these things
-  if (t.tag.Pronoun || t.tag.Comma || t.tag.Possessive) {
+  if (t.tag.Pronoun || t.tag.Comma || t.tag.Possessive || t.tag.Place) {
     return false;
   }
   //must be one of these
@@ -38,9 +38,9 @@ const organization_step = (ts) => {
       let nextTerm = ts.terms[i + 1];
       if (nextTerm && nextTerm.normal === 'of') {
         if (ts.terms[i + 2] && maybeOrg(ts.terms[i + 2])) {
-          t.tagAs('Organization', 'org-word-1');
-          nextTerm.tagAs('Organization', 'org-word-2');
-          ts.terms[i + 2].tagAs('Organization', 'org-word-3');
+          t.tagAs('Organization', 'org-of-word-1');
+          nextTerm.tagAs('Organization', 'org-of-word-2');
+          ts.terms[i + 2].tagAs('Organization', 'org-of-word-3');
           continue;
         }
       }

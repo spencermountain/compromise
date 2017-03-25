@@ -31,6 +31,9 @@ class Text {
   index() {
     return this.list.map((ts) => ts.index());
   }
+  wordCount() {
+    return this.terms().length;
+  }
   data() {
     return this.list.map((ts) => {
       return {

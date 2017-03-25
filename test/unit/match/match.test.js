@@ -102,7 +102,7 @@ test('==Match ==', function (T) {
     t.end();
   });
 
-  test('match-from-array :', function(t) {
+  test('match-from-object :', function(t) {
     var m = nlp('spencer is really cool').match({
       'spencer': true
     });

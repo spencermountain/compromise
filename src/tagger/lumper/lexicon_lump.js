@@ -1,79 +1,56 @@
 'use strict';
 //check for "united" + "kingdom" in lexicon, and combine + tag it
-const combine = require('./combine');
+// const combine = require('./combine');
 const p = require('../paths');
-const log = p.log;
 const lexicon = p.lexicon;
-const fns = p.fns;
-const path = 'tagger/multiple';
-const tries = require('../../tries');
+const tries = p.tries;
+const getFirstWords = require('./firstWord');
+//build default-one
+const lexiconFirst = getFirstWords([lexicon, tries.multiples()]);
 
-const combineMany = (ts, i, count) => {
-  for (let n = 0; n < count; n++) {
-    combine(ts, i);
+//see if this term is a multi-match
+const tryHere = function(ts, i, obj) {
+  let n = i + 1;
+  //one
+  if (obj[ts.slice(n, n + 1).out('root')]) {
+    return n + 1;
   }
+  //two
+  if (obj[ts.slice(n, n + 2).out('root')]) {
+    return n + 2;
+  }
+  //three
+  if (obj[ts.slice(n, n + 3).out('root')]) {
+    return n + 3;
+  }
+  return null;
 };
 
-//try to concatenate multiple-words to get this term
-const tryStringFrom = (want, start, ts) => {
-  let text = '';
-  let normal = '';
-  let simple = '';
-  for (let i = start; i < ts.terms.length; i++) {
-    if (i === start) {
-      text = ts.terms[i].text;
-      normal = ts.terms[i].normal;
-      simple = ts.terms[i].root;
-    } else {
-      text += ' ' + ts.terms[i].text;
-      normal += ' ' + ts.terms[i].normal;
-      simple += ' ' + ts.terms[i].root;
-    }
-    //we've gone too far
-    if (text === want || normal === want || simple === want) {
-      let count = i - start;
-      combineMany(ts, start, count);
-      return true;
-    }
-    if (normal.length > want.length) {
-      return false;
+//try all terms with this lexicon
+const tryAll = function(lexFirst, ts) {
+  for(let i = 0; i < ts.terms.length - 1; i++) {
+    let obj = lexFirst[ts.terms[i].root];
+    if (obj) {
+      let n = tryHere(ts, i, obj);
+      if (n) {
+        let tag = obj[ts.slice(i + 1, n).out('root')];
+        let slice = ts.slice(i, n);
+        slice.tagAs(tag, 'lexicon-lump');
+        slice.lump();
+      }
     }
   }
-  return false;
+  return ts;
 };
 
 const lexicon_lump = function (ts) {
-  log.here(path);
-  let uLexicon = ts.lexicon || {};
-
-  //try the simpler, known lexicon
-  for (let i = 0; i < ts.terms.length - 1; i++) {
-    //try 'A'+'B'
-    let normal = ts.terms[i].normal + ' ' + ts.terms[i + 1].normal;
-    let text = ts.terms[i].text + ' ' + ts.terms[i + 1].text;
-    let pos = lexicon[normal] || lexicon[text];
-
-    if (!pos) {
-      pos = tries.lookupMulti(normal);
-    }
-
-    if (pos) {
-      combine(ts, i);
-      ts.terms[i].tagAs(pos, 'multiples-lexicon');
-    }
+  //use default lexicon
+  ts = tryAll(lexiconFirst, ts);
+  //try user's lexicon
+  if (ts.lexicon) {
+    let uFirst = getFirstWords([ts.lexicon]);
+    ts = tryAll(uFirst, ts);
   }
-
-
-  //try the user's lexicon
-  Object.keys(uLexicon).forEach((str) => {
-    for (let i = 0; i < ts.terms.length; i++) {
-      if (fns.startsWith(str, ts.terms[i].normal) || fns.startsWith(str, ts.terms[i].text)) {
-        if (tryStringFrom(str, i, ts)) {
-          ts.terms[i].tagAs(uLexicon[str], 'user-lexicon-lump');
-        }
-      }
-    }
-  });
   return ts;
 };
 

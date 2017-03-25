@@ -6,6 +6,7 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 * 8.0.0 - less-ambitious date-parsing of nl-date forms
 *       - filesize reduction using [efrt](https://github.com/nlp-compromise/efrt) data structure (254k -> 214k)
 * 8.1.0 - add `nlp.tokenize()` method for disabling pos-tagging of input
+* 8.2.0 - add `nlp.out('index')` method, 12 bugs
 
 ### v.7  &nbsp; :postal_horn:
 * 7.0.0 - weee! [big change!](https://github.com/nlp-compromise/compromise/wiki/v7-Upgrade,-welcome) *npm package rename*

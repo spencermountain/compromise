@@ -58,6 +58,9 @@ test('=Tagger=', function(T) {
       // ['10 + 9', ['Value', 'Symbol', 'Value']],
       // ['2 * 90 = 180', ['Value', 'Symbol', 'Value', 'Symbol', 'Value']],
       // ['one - seventy-six', ['Value', 'Symbol', 'Value']],
+      ['The stream runs', ['Determiner', 'Noun', 'Verb']],
+      ['The stream really runs', ['Determiner', 'Noun', 'Adverb', 'Verb']],
+      ['The nice stream really runs', ['Determiner', 'Adjective', 'Noun', 'Adverb', 'Verb']],
 
     ].forEach(function (a) {
       var terms = nlp(a[0]).terms(); //.data();

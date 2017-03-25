@@ -43,6 +43,10 @@ const corrections = function (r) {
   r.match('the #Adjective #Verb').match('#Verb').tag('Noun', 'correction-determiner3');
   //the truly nice swim
   r.match('the #Adverb #Adjective #Verb').match('#Verb').tag('Noun', 'correction-determiner4');
+  //a stream runs
+  r.match('#Determiner #Infinitive #Adverb? #Verb').term(1).tag('Noun', 'correction-determiner5');
+
+
 
   //organization
   r.match('#Organization of the? #TitleCase').tag('Organization', 'org-of-place');

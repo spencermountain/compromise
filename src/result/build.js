@@ -13,6 +13,11 @@ const normalizeLex = function(lex) {
     //add natural form
     h[k] = lex[k];
     let normal = normalize(k);
+    //remove periods
+    //normalize whitesace
+    normal = normal.replace(/\s+/, ' ');
+    //remove sentence-punctuaion too
+    normal = normal.replace(/[.\?\!]/g, '');
     if (k !== normal) {
       //add it too
       h[normal] = lex[k];
@@ -26,9 +31,19 @@ const extendTags = function(newTags) {
   console.log(tagArr);
 };
 
-//build a new pos-tagged Result obj from a string
 const fromString = (str, lexicon, tagSet, skipTagging) => {
-  let sentences = tokenize(str);
+
+  let sentences = [];
+  if (str !== null && str.constructor === Array) {
+    sentences = str;
+  } else {
+    sentences = tokenize(str);
+  }
+
+  if (tagSet) {
+    extendTags(tagSet);
+  }
+
   //make sure lexicon obeys standards
   lexicon = normalizeLex(lexicon);
   let list = sentences.map((s) => Terms.fromString(s, lexicon, skipTagging));

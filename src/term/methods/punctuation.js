@@ -23,7 +23,7 @@ const addMethods = (Term) => {
       return null;
     },
     setPunctuation: function(punct) {
-      this.text = this.text.replace(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/i, '');
+      this.text = this.text.replace(/([a-z])([,:;\/.(\.\.\.)\!\?]+)$/i, '$1');
       this.text += punct;
       return this;
     },

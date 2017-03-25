@@ -1,6 +1,7 @@
 'use strict';
 const topk = require('./topk');
 const offset = require('./offset');
+const termIndex = require('./indexes');
 
 const methods = {
   text: (r) => {
@@ -30,6 +31,10 @@ const methods = {
   /** output where in the original output string they are*/
   offsets: (r) => {
     return offset(r);
+  },
+  /** output the tokenized location of this match*/
+  index: (r) => {
+    return termIndex(r);
   },
   grid: (r) => {
     return r.list.reduce((str, ts) => {
@@ -102,6 +107,7 @@ methods.normalized = methods.normal;
 methods.colors = methods.color;
 methods.tags = methods.terms;
 methods.offset = methods.offsets;
+methods.idexes = methods.index;
 methods.frequency = methods.topk;
 methods.freq = methods.topk;
 methods.arr = methods.array;

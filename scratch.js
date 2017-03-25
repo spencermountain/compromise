@@ -15,9 +15,6 @@ var nlp = require('./src/index');
 
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
-var lexicon = {};
-
-var sentence = 'it is ipso facto.';
-var r = nlp(sentence, lexicon);
-r.sentences().toExclamation();
-r.debug();
+var str = `I am the very model of a modern Major-General. I've information vegetable, animal, and mineral`;
+console.log(nlp(str).match('vegetable').out('index'));
+// [{ index:13, sentence:2, sentenceIndex:4}]

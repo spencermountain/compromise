@@ -15,6 +15,7 @@ const matchMethods = (Terms) => {
       if (!reg) {
         return new Text([], this.lexicon, this.parent);
       }
+      //parse for backwards-compatibility
       if (typeof reg === 'string') {
         reg = syntax(reg);
       }

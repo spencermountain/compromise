@@ -94,6 +94,7 @@ class Terms {
     return ts;
   }
 }
+// Terms = require('./methods/lookup')(Terms);
 Terms = require('./match')(Terms);
 Terms = require('./match/not')(Terms);
 Terms = require('./methods/tag')(Terms);

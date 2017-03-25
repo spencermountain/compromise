@@ -7,8 +7,8 @@ const splitMethods = (Text) => {
   //support "#Noun word" regex-matches
   const matchReg = function(r, reg, verbose) {
     //parse the 'regex' into some json
-    reg = syntaxParse(reg);
     let list = [];
+    reg = syntaxParse(reg);
     r.list.forEach((ts) => {
       //an array of arrays
       let matches = ts.match(reg, verbose);
@@ -51,11 +51,10 @@ const splitMethods = (Text) => {
     /** do a regex-like search through terms and return a subset */
     match: function (reg, verbose) {
       //fail-fast
-      if (!reg) {
+      if (reg === undefined || reg === null) {
         let parent = this.parent || this;
         return new Text([], this.lexicon, parent);
       }
-
       //match "#Noun word" regex
       if (typeof reg === 'string' || typeof reg === 'number') {
         return matchReg(this, reg, verbose);

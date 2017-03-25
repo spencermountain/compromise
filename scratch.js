@@ -20,7 +20,7 @@ let r = nlp(fresh);
 console.timeEnd('parse');
 
 console.time('m');
-// let m = r.match('home', true);
 let m = r.match(['home'], true);
+// let m = r.list[0].lookup('story', true);
 console.log(m.length);
 console.timeEnd('m');

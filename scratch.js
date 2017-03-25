@@ -15,11 +15,9 @@ var nlp = require('./src/index');
 
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
-var lexicon = {
-  'lester b. Pearson': 'Person'
-};
+var lexicon = {};
 
-var sentence = 'it is ipso facto for lester b pearson';
+var sentence = 'it is ipso facto.';
 var r = nlp(sentence, lexicon);
+r.sentences().toExclamation();
 r.debug();
-// console.log(r.out());

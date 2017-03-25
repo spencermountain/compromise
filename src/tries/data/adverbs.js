@@ -27,6 +27,7 @@ module.exports = [
   'damn',
   'de jure',
   'de trop',
+  'definitely',
   'directly',
   'en masse',
   'ever',

@@ -6,7 +6,7 @@ var nlp = require('./src/index');
 // var nlp = require('./builds/compromise');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
-const fresh = require('./test/unit/lib/freshPrince.js');
+// const fresh = require('./test/unit/lib/freshPrince.js');
 
 // bug.1
 //  .? vs *
@@ -15,12 +15,16 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
-console.time('parse');
-let r = nlp(fresh);
-console.timeEnd('parse');
 
-console.time('m');
-let m = r.match(['home'], true);
-// let m = r.list[0].lookup('story', true);
-console.log(m.length);
-console.timeEnd('m');
+let r = nlp('we were swimming and puking');
+console.log(r.verbs().data());
+
+// console.time('parse');
+// let r = nlp(fresh);
+// console.timeEnd('parse');
+//
+// console.time('m');
+// let m = r.match(['home'], true);
+// // let m = r.list[0].lookup('story', true);
+// console.log(m.length);
+// console.timeEnd('m');

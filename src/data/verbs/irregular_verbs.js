@@ -22,6 +22,9 @@ let irregular = {
     Gerund: 'freeing',
     Actor: ''
   },
+  puke: {
+    Gerund: 'puking'
+  },
   arise: {
     PastTense: 'arose',
     Participle: 'arisen'
@@ -311,7 +314,8 @@ let irregular = {
     PastTense: 'swore'
   },
   swim: {
-    PastTense: 'swam'
+    PastTense: 'swam',
+    Gerund: 'swimming'
   },
   swing: {
     PastTense: 'swung'

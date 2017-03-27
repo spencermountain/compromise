@@ -1,6 +1,6 @@
 'use strict';
 const Text = require('../../index');
-const Contraction = require('./contraction');
+const ContractionCl = require('./contraction');
 const findPossible = require('./findPossible');
 
 class Contractions extends Text {
@@ -31,14 +31,14 @@ class Contractions extends Text {
     //find currently-contracted
     let found = r.match('#Contraction #Contraction #Contraction?');
     found.list = found.list.map((ts) => {
-      let c = new Contraction(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+      let c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
       c.contracted = true;
       return c;
     });
     //find currently-expanded
     let expanded = findPossible(r);
     expanded.list.forEach((ts) => {
-      let c = new Contraction(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+      let c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
       c.contracted = false;
       found.list.push(c);
     });

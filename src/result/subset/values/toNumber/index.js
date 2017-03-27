@@ -99,7 +99,7 @@ const parse = function(ts) {
     }
     //buildup section, collect 'has' values
     if (w.match(/^[0-9\.]+$/)) {
-      has['ones'] = parseFloat(w, 10); //not technically right
+      has['ones'] = parseFloat(w); //not technically right
     } else if (words.ones[w]) {
       has['ones'] = words.ones[w];
     } else if (words.teens[w]) {

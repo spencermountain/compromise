@@ -9,4 +9,5 @@ cmd += ' --js  ' + src;
 cmd += ' --js_output_file ' + out;
 cmd += ' --compilation_level ADVANCED';
 cmd += ' --language_out ECMASCRIPT5';
+cmd += ' --formatting PRETTY_PRINT';
 exec(cmd);

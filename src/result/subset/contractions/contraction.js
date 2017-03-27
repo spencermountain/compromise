@@ -21,7 +21,7 @@ const expand = function(ts) {
   return ts;
 };
 
-class Contraction extends Terms {
+module.exports = class ContractionCl extends Terms {
   data() {
     let expanded = expand(this.clone());
     let contracted = contract(this.clone());
@@ -45,5 +45,5 @@ class Contraction extends Terms {
   contract() {
     return contract(this);
   }
-}
-module.exports = Contraction;
+};
+// module.exports = ContractionCl;

@@ -15,7 +15,7 @@ console.log(chalk.yellow(' 🕑 creating es5 build..'));
 
 var banner = '/* compromise v' + pkg.version + '\n   github.com/nlp-compromise\n   MIT\n*/\n';
 exec('echo ' + banner + ' > ' + es5);
-exec('echo ' + banner + ' > ' + es5min);
+// exec('echo ' + banner + ' > ' + es5min);
 
 //es5 main (browserify + derequire)
 cmd = browserify + ' "./src/index.js" --standalone nlp';
@@ -24,8 +24,10 @@ cmd += ' | ' + derequire;
 cmd += ' >> ' + es5;
 exec(cmd);
 
+
+
 //es5 min (uglify)
-cmd = uglify + ' ' + es5 + ' --mangle --compress ';
+cmd = uglify + ' ' + es5 + ' --mangle --compress --screw-ie8  --mangle-props ';
 cmd += ' >> ' + es5min;
 exec(cmd);
 

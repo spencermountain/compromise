@@ -35,7 +35,7 @@ module.exports={
     "chalk": "^1.1.3",
     "codacy-coverage": "^2.0.0",
     "derequire": "^2.0.3",
-    "efrt": "0.0.2",
+    "efrt": "0.0.4",
     "eslint": "^3.1.1",
     "gaze": "^1.1.1",
     "http-server": "0.9.0",
@@ -13134,7 +13134,7 @@ module.exports = "aJblair,cHdevGguadalupe,jBk9l8m5r2sh0trinity;ay,e0iloh;a,lby;e
 },{}],225:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "0:1P;1:1Q;161Ta1Fb1Bc12d0Ye0Of0Kg0Hh0Di09june07kwanzaa,l04m00nYoVpRrPsEt8v6w4xm03y2;om 2ule;hasho16kippur;hit2int0Xomens equalit7; 0Ss0T;aGe2ictor1E;r1Bteran0;-1ax 1h6isha bav,rinityNu2; b3rke2;y 1;ish2she2;vat;a0Ye prophets birth1;a6eptember15h4imchat tor0Vt 3u2;kk4mmer U;a9p8s7valentines day ;avu2mini atzeret;ot;int 2mhain;a5p4s3va2;lentine0;tephen0;atrick0;ndrew0;amadan,ememberanc0Yos2;a park0h hashana;a3entecost,reside0Zur2;im,ple heart 1;lm2ssovE; s04;rthodox 2stara;christma0easter2goOhoJn0C;! m07;ational 2ew years09;freedom 1nurse0;a2emorial 1lHoOuharram;bMr2undy thurs1;ch0Hdi gr2tin luther k0B;as;a2itRughnassadh;bour 1g baom2ilat al-qadr;er; 2teenth;soliU;d aJmbolc,n2sra and miraj;augurGd2;ependen2igenous people0;c0Bt0;a3o2;ly satur1;lloween,nukkUrvey mil2;k 1;o3r2;ito de dolores,oundhoW;odW;a4east of 2;our lady of guadalupe,the immaculate concepti2;on;ther0;aster8id 3lectYmancip2piphany;atX;al-3u2;l-f3;ad3f2;itr;ha;! 2;m8s2;un1;ay of the dead,ecemb3i2;a de muertos,eciseisVwali;er sol2;stice;anad8h4inco de mayo,o3yber m2;on1;lumbu0mmonwealth 1rpus christi;anuk4inese n3ristmas2;! N;ew year;ah;a 1ian tha2;nksgiving;astillCeltaine,lack4ox2;in2;g 1; fri1;dvent,ll 9pril fools,rmistic8s6u2;stral4tum2;nal2; equinox;ia 1;cens2h wednes1sumption of mary;ion 1;e 1;hallows 6s2;ai2oul0t0;nt0;s 1;day;eve; de septiembre";
+module.exports = "0:1P;1:1Q;a1Fb1Bc12d0Ye0Of0Kg0Hh0Di09june07kwanzaa,l04m00nYoVpRrPsEt8v6w4xm03y2;om 2ule;hasho16kippur;hit2int0Xomens equalit7; 0Ss0T;aGe2ictor1E;r1Bteran0;-1ax 1h6isha bav,rinityNu2; b3rke2;y 1;ish2she2;vat;a0Ye prophets birth1;a6eptember15h4imchat tor0Vt 3u2;kk4mmer U;a9p8s7valentines day ;avu2mini atzeret;ot;int 2mhain;a5p4s3va2;lentine0;tephen0;atrick0;ndrew0;amadan,ememberanc0Yos2;a park0h hashana;a3entecost,reside0Zur2;im,ple heart 1;lm2ssovE; s04;rthodox 2stara;christma0easter2goOhoJn0C;! m07;ational 2ew years09;freedom 1nurse0;a2emorial 1lHoOuharram;bMr2undy thurs1;ch0Hdi gr2tin luther k0B;as;a2itRughnassadh;bour 1g baom2ilat al-qadr;er; 2teenth;soliU;d aJmbolc,n2sra and miraj;augurGd2;ependen2igenous people0;c0Bt0;a3o2;ly satur1;lloween,nukkUrvey mil2;k 1;o3r2;ito de dolores,oundhoW;odW;a4east of 2;our lady of guadalupe,the immaculate concepti2;on;ther0;aster8id 3lectYmancip2piphany;atX;al-3u2;l-f3;ad3f2;itr;ha;! 2;m8s2;un1;ay of the dead,ecemb3i2;a de muertos,eciseis de septiembre,wali;er sol2;stice;anad8h4inco de mayo,o3yber m2;on1;lumbu0mmonwealth 1rpus christi;anuk4inese n3ristmas2;! N;ew year;ah;a 1ian tha2;nksgiving;astillCeltaine,lack4ox2;in2;g 1; fri1;dvent,ll 9pril fools,rmistic8s6u2;stral4tum2;nal2; equinox;ia 1;cens2h wednes1sumption of mary;ion 1;e 1;hallows 6s2;ai2oul0t0;nt0;s 1;day;eve";
 
 },{}],226:[function(_dereq_,module,exports){
 "use strict";
@@ -13159,7 +13159,7 @@ module.exports = "0:2Q;1:20;2:2I;a2Db24c1Ad11e0Uf0Tg0Qh0Kin0Djourn1l07mWnewsVoTp
 },{}],230:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "0:43;a38b2Pc29d21e1Yf1Ug1Mh1Hi1Ej1Ak18l14m0Tn0Go0Dp07qu06rZsStFuBv8w3y1;a1m0Youtu2Rw0Y;hoo!,maha;a3e1orld trade organizati3Y;lls fargo,st1;fie22inghou17;l1rner br3A;-m12gree2Zl street journ24m12;an halNeriz3Tisa,o1;dafo2Fl1;kswagLvo;2,bs,n2ps,s1;a tod2Pps;es32i1;lev2Vted natio2S; mobi2Iaco bePd bMeAgi frida9h3im horto2Rmz,o1witt2U;shiba,y1;ota,s r Y;e 1in lizzy;b3carpen30daily ma2Uguess w2holli0rolling st1Ms1w2;mashing pumpki2Muprem0;ho;ea1lack eyed pe3Cyrds;ch bo1tl0;ys;l2s1;co,la m13;efoni08us;a6e4ieme2Eo2pice gir5ta1ubaru;rbucks,to2K;ny,undgard1;en;a2Ox pisto1;ls;few23insbu24msu1V;.e.m.,adiohead,b6e3oyal 1yan2U;b1dutch she4;ank;/max,aders dige1Dd 1vl2Z;bu1c1Shot chili peppe2Hlobst26;ll;c,s;ant2Sizno2C;an5bs,e3fiz22hilip morrBi2r1;emier24octer & gamb1Pudenti13;nk floyd,zza hut;psi25tro1uge09;br2Nchina,n2N; 2ason1Vda2D;ld navy,pec,range juli2xf1;am;us;aAb9e5fl,h4i3o1sa,wa;kia,tre dame,vart1;is;ke,ntendo,ss0K;l,s;stl3tflix,w1; 1sweek;kids on the block,york09;e,é;a,c;nd1Qs2t1;ional aca2Bo,we0O;a,cYd0M;aAcdonald9e5i3lb,o1tv,yspace;b1Jnsanto,ody blu0t1;ley crue,or0M;crosoft,t1;as,subisO;dica3rcedes2talli1;ca;!-benz;id,re;'s,s;c's milk,tt10z1U;'ore07a3e1g,ittle caesa1G;novo,x1;is,mark; pres5-z-boy;atv,fc,kk,m1od1G;art;iffy lu0Io3pmorgan1sa;! cha1;se;hnson & johns1Oy d1N;bm,hop,n1tv;g,te1;l,rpol; & m,asbro,ewlett-packaRi3o1sbc,yundai;me dep1n1F;ot;tac1zbollah;hi;eneral 6hq,l5o2reen d0Fu1;cci,ns n ros0;ldman sachs,o1;dye1g08;ar;axo smith kliXencore;electr0Fm1;oto0R;a3bi,da,edex,i1leetwood mac,oErito-l07;at,nancial1restoT; tim0;cebook,nnie mae;b03sa,u,xxon1; m1m1;ob0D;aiml08e5isney,o3u1;nkin donuts,po0Tran dur1;an;j,w j1;on0;a,f leppa2ll,peche mode,r spiegXstiny's chi1;ld;rd;aEbc,hBi9nn,o3r1;aigsli5eedence clearwater reviv1;al;ca c5l4m1o08st03;ca2p1;aq;st;dplLgate;ola;a,sco1tigroup;! systems;ev2i1;ck fil-a,na daily;r0Fy;dbury,pital o1rl's jr;ne;aFbc,eBf9l5mw,ni,o1p;ei3mbardiJston 1;glo1pizza;be;ng;ack & deckFo2ue c1;roW;ckbuster video,omingda1;le; g1g1;oodriM;cht3e ge0n & jer2rkshire hathaw1;ay;ryG;el;nana republ3s1xt5y5;f,kin robbi1;ns;ic;bWcRdidQerosmith,ig,lKmEnheuser-busDol,pple9r6s3t&t,v2y1;er;is,on;hland1sociated F; o1;il;by4g2m1;co;os; compu2bee1;'s;te1;rs;ch;c,d,erican3t1;!r1;ak; ex1;pre1;ss; 4catel2t1;air;!-luce1;nt;jazeera,qae1;da;as;/dc,a3er,t1;ivisi1;on;demy of scienc0;es;ba,c";
+module.exports = "0:42;1:40;a38b2Pc29d21e1Yf1Ug1Mh1Hi1Ej1Ak18l14m0Tn0Go0Dp07qu06rZsStFuBv8w3y2;amaha,m0Youtu2Rw0Y;a4e2orld trade organizati1;lls fargo,st2;fie23inghou18;l2rner br3B;-m13gree30l street journ25m13;an halOeriz1isa,o2;dafo2Gl2;kswagMvo;bs,n3ps,s2;a tod2Qps;es33i2;lev2Wted natio2T; mobi2Jaco beQd bNeBgi fridaAh4im horto2Smz,o2witt2V;shiba,y2;ota,s r Z;e 2in lizzy;b4carpen31daily ma2Vguess w3holli0rolling st1Ns2w3;mashing pumpki2Nuprem0;ho;ea2lack eyed pe3Dyrds;ch bo2tl0;ys;l3s2;co,la m14;efoni09us;a7e5ieme2Fo3pice gir6ta2ubaru;rbucks,to2L;ny,undgard2;en;a2Px pisto2;ls;few24insbu25msu1W;.e.m.,adiohead,b7e4oyal 2yan2V;b2dutch she5;ank;/max,aders dige1Ed 2vl1;bu2c1Thot chili peppe2Ilobst27;ll;c,s;ant2Tizno2D;an6bs,e4fiz23hilip morrCi3r2;emier25octer & gamb1Qudenti14;nk floyd,zza hut;psi26tro2uge0A;br2Ochina,n2O; 3ason1Wda2E;ld navy,pec,range juli3xf2;am;us;aBbAe6fl,h5i4o2sa,wa;kia,tre dame,vart2;is;ke,ntendo,ss0L;l,s;stl4tflix,w2; 2sweek;kids on the block,york0A;e,é;a,c;nd1Rs3t2;ional aca2Co,we0P;a,cZd0N;aBcdonaldAe6i4lb,o2tv,yspace;b1Knsanto,ody blu0t2;ley crue,or0N;crosoft,t2;as,subisP;dica4rcedes3talli2;ca;!-benz;id,re;'s,s;c's milk,tt11z1V;'ore08a4e2g,ittle caesa1H;novo,x2;is,mark; pres6-z-boy;atv,fc,kk,m2od1H;art;iffy lu0Jo4pmorgan2sa;! cha2;se;hnson & johns1y d1O;bm,hop,n2tv;g,te2;l,rpol; & m,asbro,ewlett-packaSi4o2sbc,yundai;me dep2n1G;ot;tac2zbollah;hi;eneral 7hq,l6o3reen d0Gu2;cci,ns n ros0;ldman sachs,o2;dye2g09;ar;axo smith kliYencore;electr0Gm2;oto0S;a4bi,da,edex,i2leetwood mac,oFrito-l08;at,nancial2restoU; tim0;cebook,nnie mae;b04sa,u,xxon2; m2m2;ob0E;aiml09e6isney,o4u2;nkin donuts,po0Uran dur2;an;j,w j2;on0;a,f leppa3ll,peche mode,r spiegYstiny's chi2;ld;rd;aFbc,hCiAnn,o4r2;aigsli6eedence clearwater reviv2;al;ca c6l5m2o09st04;ca3p2;aq;st;dplMgate;ola;a,sco2tigroup;! systems;ev3i2;ck fil-a,na daily;r1y;dbury,pital o2rl's jr;ne;aGbc,eCfAl6mw,ni,o2p;ei4mbardiKston 2;glo2pizza;be;ng;ack & deckGo3ue c2;roX;ckbuster video,omingda2;le; g2g2;oodriN;cht4e ge0n & jer3rkshire hathaw2;ay;ryH;el;nana republ4s2xt6y6;f,kin robbi2;ns;ic;bXcSdidRerosmith,ig,lLmFnheuser-busEol,ppleAr7s4t&t,v3y2;er;is,on;hland2sociated G; o2;il;by5g3m2;co;os; compu3bee2;'s;te2;rs;ch;c,d,erican4t2;!r2;ak; ex2;pre2;ss; 5catel3t2;air;!-luce2;nt;jazeera,qae2;da;as;/dc,a4er,t2;ivisi1;on;demy of scienc0;es;ba,c";
 
 },{}],231:[function(_dereq_,module,exports){
 "use strict";
@@ -13179,7 +13179,7 @@ module.exports = "aLbIcHdEengineKfCgBhAinstructRjournalNlawyKm9nurse,o8p5r3s1t0;
 },{}],234:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "0:24;1:1T;2:1U;725a1Rb1Ec10d0Rfc dallas,g0Ohouston 0Nindiana0Mjacksonville jagua0k0Jl0Gm03newWoSpLqueens parkKrJsAt5utah jazz,vancouver whitecaps,w3yZ;ashington 3est ham0Yh17;natio21redski1wizar13;ampa bay 6e5o3;ronto 3ttenham hotspur;blu1Irapto0;nnessee tita1xasE;buccanee0ra1H;a7eattle 5heffield0Rporting kansas14t3;. louis 3oke13;c1Srams;mari03s3;eah1IounJ;cramento Tn 3;antonio spu0diego 4francisco 3jose earthquak2;49e0gi0B;char0EpaB;eal salt lake,o04; ran0C;a8h5ittsburgh 4ortland t3;imbe0rail blaze0;pirat2steele0;il3oenix su1;adelphia 3li2;71Heagl2philNunE;dr2;akland 4klahoma city thunder,r3;i0Zlando magic;athle0Trai3;de0; 3castle05;england 6orleans 5york 3;city fc,giUje0Lkn02me0Lred bul18y3;anke2;pelica1sain0J;patrio0Irevolut3;ion;aBe9i3ontreal impact;ami 7lwaukee b6nnesota 3;t4u0Qvi3;kings;imberwolv2wi1;re0Cuc0V;dolphi1heat,marli1;mphis grizz3ts;li2;nchester 5r3vN;i3li1;ne0;c00u0G;a4eicesterYos angeles 3;clippe0dodFlaA; galaxy,ke0;ansas city 3nH;chiefs,ro3;ya0L; pace0polis colX;astr0Ddynamo,rockeWtexa1;i4olden state warrio0reen bay pac3;ke0;anT;.c.Aallas 7e3i0Bod5;nver 5troit 3;lio1pisto1ti3;ge0;bronc05nuggeO;cowboUmav3;er3;ic05; uW;arCelNh8incinnati 6leveland 5ol3;orado r3umbus crew sc;api5ocki2;brow1cavalie0india1;benga02re3;ds;arlotte horCicago 3;b4cubs,fire,wh3;iteE;ea0ulX;di3olina panthe0;ff3naV; c3;ity;altimore DlAoston 7r3uffalo bilS;av2e5ooklyn 3;ne3;ts;we0;cel4red3; sox;tics;ackburn rove0u3;e ja3;ys;ori3rave1;ol2;rizona Ast8tlanta 3;brav2falco1h4u3;nited;aw9;ns;es;on villa,r3;os;c5di3;amondbac3;ks;ardi3;na3;ls;6e0;rs";
+module.exports = "0:1M;1:1T;2:1U;a1Rb1Dc0Zd0Qfc dallas,g0Nhouston 0Mindiana0Ljacksonville jagua0k0Il0Fm02newVoRpKqueens parkJrIsAt5utah jazz,vancouver whitecaps,w3yY;ashington 3est ham0Xh16;natio21redski1wizar12;ampa bay 6e5o3;ronto 3ttenham hotspur;blu1Hrapto0;nnessee tita1xasD;buccanee0ra1G;a7eattle 5heffield0Qporting kansas13t3;. louis 3oke12;c1Srams;mari02s3;eah1IounI;cramento Sn 3;antonio spu0diego 3francisco gi0Bjose earthquak2;char0EpaB;eal salt lake,o04; ran0C;a8h5ittsburgh 4ortland t3;imbe0rail blaze0;pirat2steele0;il3oenix su1;adelphia 3li2;eagl2philNunE;dr2;akland 4klahoma city thunder,r3;i10lando magic;athle0Trai3;de0; 3castle05;england 6orleans 5york 3;city fc,giUje0Lkn02me0Lred bul19y3;anke2;pelica1sain0J;patrio0Irevolut3;ion;aBe9i3ontreal impact;ami 7lwaukee b6nnesota 3;t4u0Rvi3;kings;imberwolv2wi1;re0Cuc0W;dolphi1heat,marli1;mphis grizz3ts;li2;nchester 5r3vN;i3li1;ne0;c00u0H;a4eicesterYos angeles 3;clippe0dodFlaA; galaxy,ke0;ansas city 3nH;chiefs,ro3;ya0M; pace0polis colX;astr0Edynamo,rockeWtexa1;i4olden state warrio0reen bay pac3;ke0;anT;.c.Aallas 7e3i0Cod5;nver 5troit 3;lio1pisto1ti3;ge0;bronc06nuggeO;cowboUmav3;er3;ic06; uX;arCelNh8incinnati 6leveland 5ol3;orado r3umbus crew sc;api5ocki2;brow1cavalie0india1;benga03re3;ds;arlotte horCicago 3;b4cubs,fire,wh3;iteE;ea0ulY;di3olina panthe0;ff3naW; c3;ity;altimore ElAoston 7r3uffalo bilT;av2e5ooklyn 3;ne3;ts;we0;cel4red3; sox;tics;ackburn rove0u3;e ja3;ys;rs;ori3rave1;ol2;rizona Ast8tlanta 3;brav2falco1h4u3;nited;aw9;ns;es;on villa,r3;os;c5di3;amondbac3;ks;ardi3;na3;ls";
 
 },{}],235:[function(_dereq_,module,exports){
 "use strict";
@@ -13190,9 +13190,13 @@ module.exports = "0:1I;a1Nb1Hc18e11f0Ug0Qh0Ki0Hj0Gk0El09m00nZoYpSrPsCt8vi7w1;a5e
 (function (global){
 "use strict";
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-/* efrt trie-compression v0.0.3  github.com/nlp-compromise/efrt  - MIT */
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/* efrt trie-compression v0.0.5  github.com/nlp-compromise/efrt  - MIT */
 (function (f) {
   if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === "object" && typeof module !== "undefined") {
     module.exports = f();
@@ -13225,25 +13229,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }({ 1: [function (_dereq_, module, exports) {
       'use strict';
 
-      module.exports = {
-        NODE_SEP: ';',
-        STRING_SEP: ',',
-        TERMINAL_PREFIX: '!',
-        //characters banned from entering the trie
-        NOT_ALLOWED: new RegExp('[0-9A-Z,;!]'),
-        BASE: 36
-      };
-    }, {}], 2: [function (_dereq_, module, exports) {
-      'use strict';
-
-      var config = _dereq_('./config');
+      var BASE = 36;
 
       var seq = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
       var cache = seq.split('').reduce(function (h, c, i) {
         h[c] = i;
         return h;
       }, {});
-      // console.log(cache);
 
       // 0, 1, 2, ..., A, B, C, ..., 00, 01, ... AA, AB, AC, ..., AAA, AAB, ...
       var toAlphaCode = function toAlphaCode(n) {
@@ -13251,14 +13243,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return seq[n];
         }
         var places = 1;
-        var range = config.BASE;
+        var range = BASE;
         var s = '';
 
-        for (; n >= range; n -= range, places++, range *= config.BASE) {}
+        for (; n >= range; n -= range, places++, range *= BASE) {}
         while (places--) {
-          var d = n % config.BASE;
+          var d = n % BASE;
           s = String.fromCharCode((d < 10 ? 48 : 55) + d) + s;
-          n = (n - d) / config.BASE;
+          n = (n - d) / BASE;
         }
         return s;
       };
@@ -13269,11 +13261,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
         var n = 0;
         var places = 1;
-        var range = config.BASE;
+        var range = BASE;
         var pow = 1;
 
-        for (; places < s.length; n += range, places++, range *= config.BASE) {}
-        for (var i = s.length - 1; i >= 0; i--, pow *= config.BASE) {
+        for (; places < s.length; n += range, places++, range *= BASE) {}
+        for (var i = s.length - 1; i >= 0; i--, pow *= BASE) {
           var d = s.charCodeAt(i) - 48;
           if (d > 10) {
             d -= 7;
@@ -13283,50 +13275,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return n;
       };
 
-      /* Sort elements and remove duplicates from array (modified in place) */
-      var unique = function unique(a) {
-        a.sort();
-        for (var i = 1; i < a.length; i++) {
-          if (a[i - 1] === a[i]) {
-            a.splice(i, 1);
-          }
-        }
-      };
-
-      var commonPrefix = function commonPrefix(w1, w2) {
-        var len = Math.min(w1.length, w2.length);
-        while (len > 0) {
-          var prefix = w1.slice(0, len);
-          if (prefix === w2.slice(0, len)) {
-            return prefix;
-          }
-          len -= 1;
-        }
-        return '';
-      };
-
       module.exports = {
         toAlphaCode: toAlphaCode,
-        fromAlphaCode: fromAlphaCode,
-        unique: unique,
-        commonPrefix: commonPrefix
+        fromAlphaCode: fromAlphaCode
       };
-
-      // let out = fromAlphaCode('A');
-      // console.log(out);
-      // console.log(fromAlphaCode(out));
-      // console.log(fromAlphaCode('R'));
-    }, { "./config": 1 }], 3: [function (_dereq_, module, exports) {
+    }, {}], 2: [function (_dereq_, module, exports) {
       'use strict';
 
       var Ptrie = _dereq_('./ptrie');
-      // const Ptrie = require('./ptrie_old');
 
       var unpack = function unpack(str) {
         return new Ptrie(str);
       };
       module.exports = unpack;
-    }, { "./ptrie": 5 }], 4: [function (_dereq_, module, exports) {
+    }, { "./ptrie": 4 }], 3: [function (_dereq_, module, exports) {
       'use strict';
 
       //are we on the right path with this string?
@@ -13349,27 +13311,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
       module.exports = isPrefix;
       // console.log(isPrefix('harvar', 'harvard'));
-    }, {}], 5: [function (_dereq_, module, exports) {
+    }, {}], 4: [function (_dereq_, module, exports) {
       'use strict';
 
-      var _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-        };
-      }();
-
-      function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-          throw new TypeError("Cannot call a class as a function");
-        }
-      }
-
-      var config = _dereq_('../config');
-      var fns = _dereq_('../fns');
+      var encoding = _dereq_('../encoding');
       var isPrefix = _dereq_('./prefix');
       var unravel = _dereq_('./unravel');
 
@@ -13379,7 +13324,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         function PackedTrie(str) {
           _classCallCheck(this, PackedTrie);
 
-          this.nodes = str.split(config.NODE_SEP); //that's all ;)!
+          this.nodes = str.split(';'); //that's all ;)!
           this.syms = [];
           this.symCount = 0;
           this._cache = null;
@@ -13393,7 +13338,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 
         _createClass(PackedTrie, [{
-          key: 'initSymbols',
+          key: "initSymbols",
           value: function initSymbols() {
             //... process these lines
             var reSymbol = new RegExp('([0-9A-Z]+):([0-9A-Z]+)');
@@ -13403,7 +13348,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 this.symCount = i;
                 break;
               }
-              this.syms[fns.fromAlphaCode(m[1])] = fns.fromAlphaCode(m[2]);
+              this.syms[encoding.fromAlphaCode(m[1])] = encoding.fromAlphaCode(m[2]);
             }
             //remove from main node list
             this.nodes = this.nodes.slice(this.symCount, this.nodes.length);
@@ -13412,11 +13357,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           // Return largest matching string in the dictionary (or '')
 
         }, {
-          key: 'has',
+          key: "has",
           value: function has(want) {
             var _this = this;
 
-            // console.log(this.nodes);
             //fail-fast
             if (!want) {
               return false;
@@ -13471,24 +13415,29 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           // References are either absolute (symbol) or relative (1 - based)
 
         }, {
-          key: 'indexFromRef',
+          key: "indexFromRef",
           value: function indexFromRef(ref, index) {
-            var dnode = fns.fromAlphaCode(ref);
+            var dnode = encoding.fromAlphaCode(ref);
             if (dnode < this.symCount) {
               return this.syms[dnode];
             }
             return index + dnode + 1 - this.symCount;
           }
         }, {
-          key: 'toArray',
+          key: "toArray",
           value: function toArray() {
-            if (this._cache) {
-              return Object.keys(this._cache);
-            }
-            return Object.keys(unravel(this));
+            return Object.keys(this.toObject());
           }
         }, {
-          key: 'cache',
+          key: "toObject",
+          value: function toObject() {
+            if (this._cache) {
+              return this._cache;
+            }
+            return unravel(this);
+          }
+        }, {
+          key: "cache",
           value: function cache() {
             this._cache = unravel(this);
             this.nodes = null;
@@ -13500,7 +13449,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }();
 
       module.exports = PackedTrie;
-    }, { "../config": 1, "../fns": 2, "./prefix": 4, "./unravel": 6 }], 6: [function (_dereq_, module, exports) {
+    }, { "../encoding": 1, "./prefix": 3, "./unravel": 5 }], 5: [function (_dereq_, module, exports) {
       'use strict';
 
       //spin-out all words from this trie
@@ -13535,7 +13484,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return all;
       };
       module.exports = unRavel;
-    }, {}] }, {}, [3])(3);
+    }, {}] }, {}, [2])(2);
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
@@ -13544,6 +13493,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //to change these packed files, edit ./data then run `node scripts/pack.js`
 
 var unpack = _dereq_('./efrt-unpack');
+// const unpack = require('/home/spencer/nlp/efrt/src/unpack');
 var tags = {
   Adjective: _dereq_('./_packed/_adjectives'),
   Adverb: _dereq_('./_packed/_adverbs'),

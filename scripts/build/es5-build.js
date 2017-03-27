@@ -15,7 +15,7 @@ var es5min = './builds/compromise.min.js';
 
 console.log(chalk.yellow(' 🕑 creating es5 build..'));
 
-var banner = '/* compromise v' + pkg.version + '\n   github.com/nlp-compromise\n   MIT\n*/\n';
+var banner = '/* compromise v' + pkg.version + '\n   github.com/nlp-compromise/compromise\n   MIT\n*/\n';
 // exec('echo ' + banner + ' > ' + es5);
 // exec('echo ' + banner + ' > ' + es5min);
 
@@ -25,7 +25,7 @@ exec('rm ' + es5min);
 
 //es5 main (browserify + derequire)
 cmd = browserify + ' "./src/index.js" --standalone nlp';
-cmd += ' -t [ babelify --presets [ stage-2 ] --plugins [transform-es3-property-literals transform-es3-member-expression-literals] ]';
+cmd += ' -t [ babelify --presets [ stage-2 ] ]';
 cmd += ' | ' + derequire;
 cmd += ' >> ' + es5;
 exec(cmd);
@@ -37,13 +37,21 @@ exec(cmd);
 //
 
 var result = UglifyJS.minify(es5, {
-  mangle: true,
+  output: {
+    preamble: banner,
+  },
+  mangle: {
+    toplevel: true
+  },
   compress: {
+    passes: 2,
+    unsafe        : true, // some unsafe optimizations
+    unsafe_comps: true,
+
     sequences     : true, // join consecutive statemets with the “comma operator”
     properties    : true, // optimize property access: a["foo"] → a.foo
     dead_code     : true, // discard unreachable code
     drop_debugger : true, // discard “debugger” statements
-    unsafe        : true, // some unsafe optimizations (see below)
     conditionals  : true, // optimize if-s and conditional expressions
     comparisons   : true, // optimize comparisons
     evaluate      : true, // evaluate constant expressions
@@ -51,7 +59,7 @@ var result = UglifyJS.minify(es5, {
     loops         : true, // optimize loops
     unused        : true, // drop unused variables/functions
     hoist_funs    : true, // hoist function declarations
-    hoist_vars    : false, // hoist variable declarations
+    hoist_vars    : true, // hoist variable declarations
     if_return     : true, // optimize if-s followed by return/continue
     join_vars     : true, // join var declarations
     cascade       : true, // try to cascade `right` into `left` in sequences

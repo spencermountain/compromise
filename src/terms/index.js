@@ -95,16 +95,16 @@ class Terms {
   }
 }
 // Terms = require('./methods/lookup')(Terms);
-Terms = require('./match')(Terms);
-Terms = require('./match/not')(Terms);
-Terms = require('./methods/tag')(Terms);
-Terms = require('./methods/loops')(Terms);
-Terms = require('./methods/delete')(Terms);
-Terms = require('./methods/insert')(Terms);
-Terms = require('./methods/misc')(Terms);
-Terms = require('./methods/out')(Terms);
-Terms = require('./methods/replace')(Terms);
-Terms = require('./methods/split')(Terms);
-Terms = require('./methods/transform')(Terms);
-Terms = require('./methods/lump')(Terms);
+require('./match')(Terms);
+require('./match/not')(Terms);
+require('./methods/tag')(Terms);
+require('./methods/loops')(Terms);
+require('./methods/delete')(Terms);
+require('./methods/insert')(Terms);
+require('./methods/misc')(Terms);
+require('./methods/out')(Terms);
+require('./methods/replace')(Terms);
+require('./methods/split')(Terms);
+require('./methods/transform')(Terms);
+require('./methods/lump')(Terms);
 module.exports = Terms;

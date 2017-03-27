@@ -35,9 +35,9 @@ const methods = {
     let word = r.text;
     // word = r.whitespace.before + word + r.whitespace.after;
     word = '\'' + fns.yellow(word || '-') + '\'';
-    if (r.dirty) {
-      // word += fns.red('*');
-    }
+    // if (r.dirty) {
+    // word += fns.red('*');
+    // }
     let silent = '';
     if (r.silent_term) {
       silent = '[' + r.silent_term + ']';

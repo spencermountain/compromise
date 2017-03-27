@@ -64,14 +64,14 @@ class Text {
 }
 
 module.exports = Text;
-Text = require('./methods/array')(Text);
-Text = require('./methods/loops')(Text);
-Text = require('./methods/match')(Text);
-Text = require('./methods/out')(Text);
-Text = require('./methods/sort')(Text);
-Text = require('./methods/split')(Text);
-Text = require('./methods/tag')(Text);
-Text = require('./methods/normalize')(Text);
+require('./methods/array')(Text);
+require('./methods/loops')(Text);
+require('./methods/match')(Text);
+require('./methods/out')(Text);
+require('./methods/sort')(Text);
+require('./methods/split')(Text);
+require('./methods/tag')(Text);
+require('./methods/normalize')(Text);
 
 const subset = {
   acronyms: require('./subset/acronyms'),

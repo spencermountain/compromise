@@ -52,11 +52,11 @@ class Term {
     return term;
   }
 }
-Term = require('./methods/normalize')(Term);
-Term = require('./methods/isA')(Term);
-Term = require('./methods/out')(Term);
-Term = require('./methods/tag')(Term);
-Term = require('./methods/case')(Term);
-Term = require('./methods/punctuation')(Term);
+require('./methods/normalize')(Term);
+require('./methods/isA')(Term);
+require('./methods/out')(Term);
+require('./methods/tag')(Term);
+require('./methods/case')(Term);
+require('./methods/punctuation')(Term);
 
 module.exports = Term;

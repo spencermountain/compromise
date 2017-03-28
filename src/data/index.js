@@ -1,6 +1,7 @@
 'use strict';
 //the data is all variously compressed and sorted
 //this is just a helper file for the main file paths..
+/*@nocompile*/
 module.exports = {
   'notable_people': require('./people/notable'),
   'titles': require('./people/titles'),

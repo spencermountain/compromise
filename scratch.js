@@ -1,9 +1,9 @@
 'use strict';
 //this file is not included in the build.
 //use it for messing around.
-var nlp = require('./src/index');
+// var nlp = require('./src/index');
 // nlp.verbose('tagger');
-// var nlp = require('./builds/compromise');
+var nlp = require('./builds/helloCompiled');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
 // const fresh = require('./test/unit/lib/freshPrince.js');

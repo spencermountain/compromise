@@ -181,6 +181,7 @@ exports.uncompress_prefixes = function (list, obj) {
 'use strict';
 //the data is all variously compressed and sorted
 //this is just a helper file for the main file paths..
+/*@nocompile*/
 
 module.exports = {
   'notable_people': _dereq_('./people/notable'),
@@ -1938,14 +1939,14 @@ var Text = function () {
 }();
 
 module.exports = Text;
-Text = _dereq_('./methods/array')(Text);
-Text = _dereq_('./methods/loops')(Text);
-Text = _dereq_('./methods/match')(Text);
-Text = _dereq_('./methods/out')(Text);
-Text = _dereq_('./methods/sort')(Text);
-Text = _dereq_('./methods/split')(Text);
-Text = _dereq_('./methods/tag')(Text);
-Text = _dereq_('./methods/normalize')(Text);
+_dereq_('./methods/array')(Text);
+_dereq_('./methods/loops')(Text);
+_dereq_('./methods/match')(Text);
+_dereq_('./methods/out')(Text);
+_dereq_('./methods/sort')(Text);
+_dereq_('./methods/split')(Text);
+_dereq_('./methods/tag')(Text);
+_dereq_('./methods/normalize')(Text);
 
 var subset = {
   acronyms: _dereq_('./subset/acronyms'),
@@ -2962,9 +2963,11 @@ module.exports = Adjectives;
 var data = _dereq_('../../../../data');
 
 var convertables = {};
+data.superlatives = data.superlatives || [];
 data.superlatives.forEach(function (a) {
   convertables[a] = true;
 });
+data.verbConverts = data.verbConverts || [];
 data.verbConverts.forEach(function (a) {
   convertables[a] = true;
 });
@@ -3659,16 +3662,16 @@ var _expand = function _expand(ts) {
   return ts;
 };
 
-var Contraction = function (_Terms) {
-  _inherits(Contraction, _Terms);
+module.exports = function (_Terms) {
+  _inherits(ContractionCl, _Terms);
 
-  function Contraction() {
-    _classCallCheck(this, Contraction);
+  function ContractionCl() {
+    _classCallCheck(this, ContractionCl);
 
-    return _possibleConstructorReturn(this, (Contraction.__proto__ || Object.getPrototypeOf(Contraction)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (ContractionCl.__proto__ || Object.getPrototypeOf(ContractionCl)).apply(this, arguments));
   }
 
-  _createClass(Contraction, [{
+  _createClass(ContractionCl, [{
     key: 'data',
     value: function data() {
       var expanded = _expand(this.clone());
@@ -3699,10 +3702,9 @@ var Contraction = function (_Terms) {
     }
   }]);
 
-  return Contraction;
+  return ContractionCl;
 }(Terms);
-
-module.exports = Contraction;
+// module.exports = ContractionCl;
 
 },{"../../paths":38,"./contract":51}],53:[function(_dereq_,module,exports){
 'use strict';
@@ -3733,7 +3735,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Text = _dereq_('../../index');
-var Contraction = _dereq_('./contraction');
+var ContractionCl = _dereq_('./contraction');
 var findPossible = _dereq_('./findPossible');
 
 var Contractions = function (_Text) {
@@ -3790,14 +3792,14 @@ var Contractions = function (_Text) {
       //find currently-contracted
       var found = r.match('#Contraction #Contraction #Contraction?');
       found.list = found.list.map(function (ts) {
-        var c = new Contraction(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+        var c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
         c.contracted = true;
         return c;
       });
       //find currently-expanded
       var expanded = findPossible(r);
       expanded.list.forEach(function (ts) {
-        var c = new Contraction(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+        var c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
         c.contracted = false;
         found.list.push(c);
       });
@@ -6513,7 +6515,7 @@ var parse = function parse(ts) {
     }
     //buildup section, collect 'has' values
     if (w.match(/^[0-9\.]+$/)) {
-      has['ones'] = parseFloat(w, 10); //not technically right
+      has['ones'] = parseFloat(w); //not technically right
     } else if (words.ones[w]) {
       has['ones'] = words.ones[w];
     } else if (words.teens[w]) {
@@ -7582,6 +7584,7 @@ module.exports = multiWord;
 'use strict';
 
 var irregulars = _dereq_('../../../../../data').irregular_verbs; //weeee!
+irregulars = irregulars || {};
 var fns = _dereq_('../../../../../fns'); //weeee!
 var infArr = Object.keys(irregulars);
 var forms = ['Participle', 'Gerund', 'PastTense', 'PresentTense', 'FuturePerfect', 'PerfectTense', 'Actor'];
@@ -10935,12 +10938,12 @@ var Term = function () {
   return Term;
 }();
 
-Term = _dereq_('./methods/normalize')(Term);
-Term = _dereq_('./methods/isA')(Term);
-Term = _dereq_('./methods/out')(Term);
-Term = _dereq_('./methods/tag')(Term);
-Term = _dereq_('./methods/case')(Term);
-Term = _dereq_('./methods/punctuation')(Term);
+_dereq_('./methods/normalize')(Term);
+_dereq_('./methods/isA')(Term);
+_dereq_('./methods/out')(Term);
+_dereq_('./methods/tag')(Term);
+_dereq_('./methods/case')(Term);
+_dereq_('./methods/punctuation')(Term);
 
 module.exports = Term;
 
@@ -11256,9 +11259,9 @@ var methods = {
     var word = r.text;
     // word = r.whitespace.before + word + r.whitespace.after;
     word = '\'' + fns.yellow(word || '-') + '\'';
-    if (r.dirty) {
-      // word += fns.red('*');
-    }
+    // if (r.dirty) {
+    // word += fns.red('*');
+    // }
     var silent = '';
     if (r.silent_term) {
       silent = '[' + r.silent_term + ']';
@@ -11782,18 +11785,18 @@ var Terms = function () {
 // Terms = require('./methods/lookup')(Terms);
 
 
-Terms = _dereq_('./match')(Terms);
-Terms = _dereq_('./match/not')(Terms);
-Terms = _dereq_('./methods/tag')(Terms);
-Terms = _dereq_('./methods/loops')(Terms);
-Terms = _dereq_('./methods/delete')(Terms);
-Terms = _dereq_('./methods/insert')(Terms);
-Terms = _dereq_('./methods/misc')(Terms);
-Terms = _dereq_('./methods/out')(Terms);
-Terms = _dereq_('./methods/replace')(Terms);
-Terms = _dereq_('./methods/split')(Terms);
-Terms = _dereq_('./methods/transform')(Terms);
-Terms = _dereq_('./methods/lump')(Terms);
+_dereq_('./match')(Terms);
+_dereq_('./match/not')(Terms);
+_dereq_('./methods/tag')(Terms);
+_dereq_('./methods/loops')(Terms);
+_dereq_('./methods/delete')(Terms);
+_dereq_('./methods/insert')(Terms);
+_dereq_('./methods/misc')(Terms);
+_dereq_('./methods/out')(Terms);
+_dereq_('./methods/replace')(Terms);
+_dereq_('./methods/split')(Terms);
+_dereq_('./methods/transform')(Terms);
+_dereq_('./methods/lump')(Terms);
 module.exports = Terms;
 
 },{"../tagger":141,"./build":194,"./match":196,"./match/not":202,"./methods/delete":203,"./methods/insert":204,"./methods/loops":205,"./methods/lump":207,"./methods/misc":208,"./methods/out":209,"./methods/replace":210,"./methods/split":211,"./methods/tag":212,"./methods/transform":213}],196:[function(_dereq_,module,exports){
@@ -13188,7 +13191,7 @@ module.exports = "0:1I;a1Nb1Hc18e11f0Ug0Qh0Ki0Hj0Gk0El09m00nZoYpSrPsCt8vi7w1;a5e
 
 },{}],236:[function(_dereq_,module,exports){
 (function (global){
-"use strict";
+'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -13198,35 +13201,56 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 /* efrt trie-compression v0.0.5  github.com/nlp-compromise/efrt  - MIT */
 (function (f) {
-  if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === "object" && typeof module !== "undefined") {
+  if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object' && typeof module !== 'undefined') {
     module.exports = f();
-  } else if (typeof define === "function" && define.amd) {
+  } else if (typeof define === 'function' && define.amd) {
     define([], f);
   } else {
-    var g;if (typeof window !== "undefined") {
+    var g;
+    if (typeof window !== 'undefined') {
       g = window;
-    } else if (typeof global !== "undefined") {
+    } else if (typeof global !== 'undefined') {
       g = global;
-    } else if (typeof self !== "undefined") {
+    } else if (typeof self !== 'undefined') {
       g = self;
     } else {
       g = this;
-    }g.unpack = f();
+    }
+    g.unpack = f();
   }
 })(function () {
-  var define, module, exports;return function e(t, n, r) {
+  var define, module, exports;
+  return function e(t, n, r) {
     function s(o, u) {
       if (!n[o]) {
         if (!t[o]) {
-          var a = typeof _dereq_ == "function" && _dereq_;if (!u && a) return a(o, !0);if (i) return i(o, !0);var f = new Error("Cannot find module '" + o + "'");throw f.code = "MODULE_NOT_FOUND", f;
-        }var l = n[o] = { exports: {} };t[o][0].call(l.exports, function (e) {
-          var n = t[o][1][e];return s(n ? n : e);
+          var a = typeof _dereq_ == 'function' && _dereq_;
+          if (!u && a) {
+            return a(o, !0);
+          }
+          if (i) {
+            return i(o, !0);
+          }
+          var f = new Error('Cannot find module \'' + o + '\'');
+          throw f.code = 'MODULE_NOT_FOUND', f;
+        }
+        var l = n[o] = {
+          exports: {}
+        };
+        t[o][0].call(l.exports, function (e) {
+          var n = t[o][1][e];
+          return s(n ? n : e);
         }, l, l.exports, e, t, n, r);
-      }return n[o].exports;
-    }var i = typeof _dereq_ == "function" && _dereq_;for (var o = 0; o < r.length; o++) {
+      }
+      return n[o].exports;
+    }
+    var i = typeof _dereq_ == 'function' && _dereq_;
+    for (var o = 0; o < r.length; o++) {
       s(r[o]);
-    }return s;
-  }({ 1: [function (_dereq_, module, exports) {
+    }
+    return s;
+  }({
+    1: [function (_dereq_, module, exports) {
       'use strict';
 
       var BASE = 36;
@@ -13279,7 +13303,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         toAlphaCode: toAlphaCode,
         fromAlphaCode: fromAlphaCode
       };
-    }, {}], 2: [function (_dereq_, module, exports) {
+    }, {}],
+    2: [function (_dereq_, module, exports) {
       'use strict';
 
       var Ptrie = _dereq_('./ptrie');
@@ -13288,7 +13313,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return new Ptrie(str);
       };
       module.exports = unpack;
-    }, { "./ptrie": 4 }], 3: [function (_dereq_, module, exports) {
+    }, {
+      './ptrie': 4
+    }],
+    3: [function (_dereq_, module, exports) {
       'use strict';
 
       //are we on the right path with this string?
@@ -13311,7 +13339,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       };
       module.exports = isPrefix;
       // console.log(isPrefix('harvar', 'harvard'));
-    }, {}], 4: [function (_dereq_, module, exports) {
+    }, {}],
+    4: [function (_dereq_, module, exports) {
       'use strict';
 
       var encoding = _dereq_('../encoding');
@@ -13338,7 +13367,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
         _createClass(PackedTrie, [{
-          key: "initSymbols",
+          key: 'initSymbols',
           value: function initSymbols() {
             //... process these lines
             var reSymbol = new RegExp('([0-9A-Z]+):([0-9A-Z]+)');
@@ -13357,7 +13386,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           // Return largest matching string in the dictionary (or '')
 
         }, {
-          key: "has",
+          key: 'has',
           value: function has(want) {
             var _this = this;
 
@@ -13415,7 +13444,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           // References are either absolute (symbol) or relative (1 - based)
 
         }, {
-          key: "indexFromRef",
+          key: 'indexFromRef',
           value: function indexFromRef(ref, index) {
             var dnode = encoding.fromAlphaCode(ref);
             if (dnode < this.symCount) {
@@ -13424,12 +13453,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             return index + dnode + 1 - this.symCount;
           }
         }, {
-          key: "toArray",
+          key: 'toArray',
           value: function toArray() {
             return Object.keys(this.toObject());
           }
         }, {
-          key: "toObject",
+          key: 'toObject',
           value: function toObject() {
             if (this._cache) {
               return this._cache;
@@ -13437,7 +13466,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             return unravel(this);
           }
         }, {
-          key: "cache",
+          key: 'cache',
           value: function cache() {
             this._cache = unravel(this);
             this.nodes = null;
@@ -13449,7 +13478,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }();
 
       module.exports = PackedTrie;
-    }, { "../encoding": 1, "./prefix": 3, "./unravel": 5 }], 5: [function (_dereq_, module, exports) {
+    }, {
+      '../encoding': 1,
+      './prefix': 3,
+      './unravel': 5
+    }],
+    5: [function (_dereq_, module, exports) {
       'use strict';
 
       //spin-out all words from this trie
@@ -13484,7 +13518,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return all;
       };
       module.exports = unRavel;
-    }, {}] }, {}, [2])(2);
+    }, {}]
+  }, {}, [2])(2);
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})

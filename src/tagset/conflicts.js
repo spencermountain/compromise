@@ -9,10 +9,10 @@ const conflicts = [
   //things that can't be plural
   ['Plural', 'Singular'],
   // ['Plural', 'Pronoun'],
-  ['Plural', 'Person'],
-  ['Plural', 'Organization'],
-  ['Plural', 'Currency'],
-  ['Plural', 'Ordinal'],
+  // ['Plural', 'Person'],
+  // ['Plural', 'Organization'],
+  // ['Plural', 'Currency'],
+  // ['Plural', 'Ordinal'],
   //exlusive-people
   ['MaleName', 'FemaleName'],
   ['FirstName', 'LastName', 'Honorific'],
@@ -44,16 +44,4 @@ const conflicts = [
   ['UpperCase', 'TitleCase', 'CamelCase']
 ];
 
-const find = (tag) => {
-  let arr = [];
-  for (let i = 0; i < conflicts.length; i++) {
-    if (conflicts[i].indexOf(tag) !== -1) {
-      arr = arr.concat(conflicts[i]);
-    }
-  }
-  return arr.filter((t) => t !== tag);
-};
-
-module.exports = find;
-
-// console.log(find('Person'));
+module.exports = conflicts;

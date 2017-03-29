@@ -3,5 +3,5 @@ module.exports = {
   log: require('../log'),
   data: require('../data'),
   Terms: require('../terms'),
-  tags: require('../tags'),
+  tags: require('../tagset'),
 };

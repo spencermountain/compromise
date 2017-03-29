@@ -6,6 +6,7 @@ const tagset = path.tags;
 const fns = path.fns;
 
 const putTag = (term, tag, reason) => {
+  tag = tag.replace(/^#/, '');
   //already got this
   if (term.tags[tag] === true) {
     return;
@@ -37,10 +38,9 @@ const kickOff = function (term, tag, reason) {
   }
   //handle multiple tags
   if (fns.isArray(tag)) {
-    tag.forEach((t) => tagDeep(term, t, reason)); //recursive
+    tag.forEach((t) => putTag(term, t, reason)); //recursive
     return;
   }
-  tag = tag.replace(/^#/, '');
   putTag(term, tag, reason);
 };
 

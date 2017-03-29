@@ -25,15 +25,15 @@ const putTag = (term, tag, reason) => {
     if (tagset[tag].is) {
       let doAlso = tagset[tag].is;
       if (term.tags[doAlso] !== true) {
-        putTag(term, doAlso, '- - ' + tag); //recursive
+        putTag(term, doAlso, ' --> ' + tag); //recursive
       }
     }
   }
 };
 
-//give term this tag, as well as its parents
-const kickOff = function (term, tag, reason) {
-  if (!tag || !term) {
+//give term this tag
+const wrap = function (term, tag, reason) {
+  if (!term || !tag) {
     return;
   }
   //handle multiple tags
@@ -44,4 +44,4 @@ const kickOff = function (term, tag, reason) {
   putTag(term, tag, reason);
 };
 
-module.exports = kickOff;
+module.exports = wrap;

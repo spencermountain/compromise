@@ -1,6 +1,6 @@
 'use strict';
 const Terms = require('../../paths').Terms;
-const tagList = require('../../paths').tags;
+const tagSet = require('../../paths').tags;
 const boringTags = {
   Auxiliary: 1,
   Possessive: 1,
@@ -35,10 +35,10 @@ class Term extends Terms {
     //then sort by #of parent tags
     tags = tags.sort((a, b) => {
       //bury the tags we dont want
-      if (boringTags[b] || !tagList[a] || !tagList[b]) {
+      if (boringTags[b] || !tagSet[a] || !tagSet[b]) {
         return -1;
       }
-      if (tagList[a].parents.length > tagList[b].parents.length) {
+      if (tagSet[a].downward.length > tagSet[b].downward.length) {
         return -1;
       }
       return 1;

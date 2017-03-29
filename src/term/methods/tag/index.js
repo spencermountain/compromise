@@ -19,9 +19,9 @@ const addMethods = (Term) => {
     canBe: function (tag) {
       tag = tag || '';
       tag = tag.replace(/^#/, '');
-      let not = tagset[tag].not || [];
-      for (let i = 0; i < not.length; i++) {
-        if (this.tags[not[i]]) {
+      let enemies = tagset[tag].enemy || [];
+      for (let i = 0; i < enemies.length; i++) {
+        if (this.tags[enemies[i]]) {
           return false;
         }
       }

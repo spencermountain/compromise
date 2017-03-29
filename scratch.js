@@ -16,8 +16,9 @@ var nlp = require('./src/index');
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
 
-let r = nlp('john and jill were nice');
-r.debug();
+let r = nlp('Spencer Kelly');
+console.log(r.terms().data());
+// r.debug();
 
 // //===timer
 // console.time('parse');

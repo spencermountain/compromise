@@ -12,7 +12,7 @@ const suffix_step = function(s) {
       if (t.normal.match(r.reg)) {
         //don't over-write any other known tags
         if (t.canBe(r.tag)) {
-          t.tagAs(r.tag, 'word-rule- "' + r.str + '"');
+          t.tag(r.tag, 'word-rule- "' + r.str + '"');
         }
         return;
       }

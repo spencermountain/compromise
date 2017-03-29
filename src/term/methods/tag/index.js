@@ -7,7 +7,7 @@ const addMethods = (Term) => {
 
   const methods = {
     /** set the term as this part-of-speech */
-    tagAs: function(tag, reason) {
+    tag: function(tag, reason) {
       setTag(this, tag, reason);
     },
     /** remove this part-of-speech from the term*/

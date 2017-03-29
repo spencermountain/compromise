@@ -14,20 +14,20 @@ const numberRange = (ts) => {
       let to = new Term('');
       to.silent_term = 'to';
       ts.insertAt(i, to);
-      ts.terms[i - 1].tagAs('NumberRange');
-      ts.terms[i].tagAs('NumberRange');
+      ts.terms[i - 1].tag('NumberRange');
+      ts.terms[i].tag('NumberRange');
       ts.terms[i].whitespace.before = '';
       ts.terms[i].whitespace.after = '';
-      ts.terms[i + 1].tagAs('NumberRange');
+      ts.terms[i + 1].tag('NumberRange');
       return ts;
     }
     if (t.tags.NumberRange) {
       let arr = t.text.split(/(-)/);
       arr[1] = 'to';
       ts = fixContraction(ts, arr, i);
-      ts.terms[i].tagAs('NumberRange');
-      ts.terms[i + 1].tagAs('NumberRange');
-      ts.terms[i + 2].tagAs('NumberRange');
+      ts.terms[i].tag('NumberRange');
+      ts.terms[i + 1].tag('NumberRange');
+      ts.terms[i + 2].tag('NumberRange');
       i += 2;
     }
   }

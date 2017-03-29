@@ -15,10 +15,10 @@ const pluralStep = function(ts) {
       //check if it's plural
       let plural = isPlural(t); //can be null if unknown
       if (plural) {
-        t.tagAs('Plural', 'pluralStep');
+        t.tag('Plural', 'pluralStep');
       } else if (plural === false) {
         // console.log(t.normal, plural);
-        t.tagAs('Singular', 'pluralStep');
+        t.tag('Singular', 'pluralStep');
       }
     }
   }

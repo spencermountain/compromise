@@ -4,7 +4,7 @@ const path = 'tagger/person_step';
 
 const tagSlice = function(ts, start, end) {
   ts.terms.slice(start, end + 1).forEach((t) => {
-    t.tagAs('Quotation', 'quotation_step');
+    t.tag('Quotation', 'quotation_step');
   });
 };
 

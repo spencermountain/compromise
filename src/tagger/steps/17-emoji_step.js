@@ -37,15 +37,15 @@ const emojiStep = (ts) => {
     let t = ts.terms[i];
     //test for :keyword: emojis
     if (isCommaEmoji(t)) {
-      t.tagAs('Emoji', 'comma-emoji');
+      t.tag('Emoji', 'comma-emoji');
     }
     //test for unicode emojis
     if (t.text.match(emojiReg)) {
-      t.tagAs('Emoji', 'unicode-emoji');
+      t.tag('Emoji', 'unicode-emoji');
     }
     //test for emoticon ':)' emojis
     if (isEmoticon(t)) {
-      t.tagAs('Emoji', 'emoticon-emoji');
+      t.tag('Emoji', 'emoticon-emoji');
     }
   }
   return ts;

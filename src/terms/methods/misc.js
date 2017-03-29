@@ -87,7 +87,7 @@ const miscMethods = (Terms) => {
         }
         t.whitespace.after = '';
       });
-      this.tagAs('#CamelCase', 'toCamelCase');
+      this.tag('#CamelCase', 'toCamelCase');
       return this;
     }
   };

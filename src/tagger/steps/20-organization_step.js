@@ -30,17 +30,17 @@ const organization_step = (ts) => {
       //eg. Toronto University
       let lastTerm = ts.terms[i - 1];
       if (lastTerm && maybeOrg(lastTerm)) {
-        lastTerm.tagAs('Organization', 'org-word-1');
-        t.tagAs('Organization', 'org-word-2');
+        lastTerm.tag('Organization', 'org-word-1');
+        t.tag('Organization', 'org-word-2');
         continue;
       }
       //eg. University of Toronto
       let nextTerm = ts.terms[i + 1];
       if (nextTerm && nextTerm.normal === 'of') {
         if (ts.terms[i + 2] && maybeOrg(ts.terms[i + 2])) {
-          t.tagAs('Organization', 'org-of-word-1');
-          nextTerm.tagAs('Organization', 'org-of-word-2');
-          ts.terms[i + 2].tagAs('Organization', 'org-of-word-3');
+          t.tag('Organization', 'org-of-word-1');
+          nextTerm.tag('Organization', 'org-of-word-2');
+          ts.terms[i + 2].tag('Organization', 'org-of-word-3');
           continue;
         }
       }

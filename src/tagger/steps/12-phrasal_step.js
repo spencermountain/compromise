@@ -45,9 +45,9 @@ const phrasals_step = function(ts) {
       if (last.tags.Verb) {
         let inf = toInfinitive(last);
         if (phrasals.has(inf + ' ' + t.normal)) {
-          t.tagAs('Particle', 'phrasalVerb-particle');
-          t.tagAs('PhrasalVerb', 'phrasalVerb-particle');
-          last.tagAs('PhrasalVerb', 'phrasalVerb-particle');
+          t.tag('Particle', 'phrasalVerb-particle');
+          t.tag('PhrasalVerb', 'phrasalVerb-particle');
+          last.tag('PhrasalVerb', 'phrasalVerb-particle');
         }
       }
     }

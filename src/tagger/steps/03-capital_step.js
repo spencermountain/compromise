@@ -10,15 +10,15 @@ const capital_logic = function (s) {
     let t = s.terms[i];
     //has a capital, but isn't too weird.
     if (t.tags.TitleCase && t.isWord()) {
-      t.tagAs('Noun', 'capital-step');
-      t.tagAs('TitleCase', 'capital-step');
+      t.tag('Noun', 'capital-step');
+      t.tag('TitleCase', 'capital-step');
     }
   }
   //support first-word of sentence as proper titlecase
   let t = s.terms[0];
   if (t && t.tags.TitleCase) {
     if (t.tags.Person || t.tags.Organization || t.tags.Place) {
-      t.tagAs('TitleCase', 'first-term-capital');
+      t.tag('TitleCase', 'first-term-capital');
     }
   }
   return s;

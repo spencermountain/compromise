@@ -28,7 +28,7 @@ class Noun extends Terms {
     if (hasPlural(t) && !isPlural(t)) {
       t.text = pluralize(t.text);
       t.unTag('Plural', 'toPlural');
-      t.tagAs('Singular', 'toPlural');
+      t.tag('Singular', 'toPlural');
     }
     return this;
   }
@@ -37,7 +37,7 @@ class Noun extends Terms {
     if (isPlural(t)) {
       t.text = singularize(t.text);
       t.unTag('Plural', 'toSingular');
-      t.tagAs('Singular', 'toSingular');
+      t.tag('Singular', 'toSingular');
     }
     return this;
   }

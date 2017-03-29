@@ -74,7 +74,7 @@ const person_step = function (ts) {
     let t = ts.terms[i];
     if (titles[t.normal]) {
       if (ts.terms[i + 1] && ts.terms[i + 1].tags.Person) {
-        t.tagAs('Person', 'title-person');
+        t.tag('Person', 'title-person');
       }
     }
   }

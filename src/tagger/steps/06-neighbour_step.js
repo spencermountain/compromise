@@ -19,12 +19,12 @@ const neighbour_step = function (ts) {
       let nextTerm = ts.terms[n + 1];
       //look at last word for clues
       if (lastTerm && afterThisWord[lastTerm.normal]) {
-        t.tagAs(afterThisWord[lastTerm.normal], 'neighbour-after-"' + lastTerm.normal + '"');
+        t.tag(afterThisWord[lastTerm.normal], 'neighbour-after-"' + lastTerm.normal + '"');
         return;
       }
       //look at next word for clues
       if (nextTerm && beforeThisWord[nextTerm.normal]) {
-        t.tagAs(beforeThisWord[nextTerm.normal], 'neighbour-before-"' + nextTerm.normal + '"');
+        t.tag(beforeThisWord[nextTerm.normal], 'neighbour-before-"' + nextTerm.normal + '"');
         return;
       }
       //look at the last POS for clues
@@ -33,7 +33,7 @@ const neighbour_step = function (ts) {
         tags = Object.keys(lastTerm.tags);
         for (let i = 0; i < tags.length; i++) {
           if (afterThisPos[tags[i]]) {
-            t.tagAs(afterThisPos[tags[i]], 'neighbour-after-[' + tags[i] + ']');
+            t.tag(afterThisPos[tags[i]], 'neighbour-after-[' + tags[i] + ']');
             return;
           }
         }
@@ -43,7 +43,7 @@ const neighbour_step = function (ts) {
         tags = Object.keys(nextTerm.tags);
         for (let i = 0; i < tags.length; i++) {
           if (beforeThisPos[tags[i]]) {
-            t.tagAs(beforeThisPos[tags[i]], 'neighbour-before-[' + tags[i] + ']');
+            t.tag(beforeThisPos[tags[i]], 'neighbour-before-[' + tags[i] + ']');
             return;
           }
         }

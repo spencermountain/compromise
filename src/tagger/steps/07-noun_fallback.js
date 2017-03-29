@@ -39,7 +39,7 @@ const noun_fallback = function(s) {
       if (t.isWord() === false) {
         continue;
       }
-      t.tagAs('Noun', 'noun-fallback');
+      t.tag('Noun', 'noun-fallback');
     }
   }
   return s;

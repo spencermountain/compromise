@@ -27,7 +27,7 @@ const tag_one = (term, tag, reason) => {
   //clean first
   makeCompatible(term, tag, reason);
   // unTag(term, tag, reason);
-  log.tagAs(term, tag, reason);
+  log.tag(term, tag, reason);
   term.tags[tag] = true;
 };
 

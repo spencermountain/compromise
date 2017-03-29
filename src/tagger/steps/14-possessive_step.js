@@ -55,9 +55,9 @@ const possessiveStep = function(terms) {
       let t = terms.get(i);
       //if it's not already a noun, co-erce it to one
       if (!t.tags['Noun']) {
-        t.tagAs('Noun', 'possessive_pass');
+        t.tag('Noun', 'possessive_pass');
       }
-      t.tagAs('Possessive', 'possessive_pass');
+      t.tag('Possessive', 'possessive_pass');
     }
   }
   return terms;

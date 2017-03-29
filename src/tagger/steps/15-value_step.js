@@ -10,17 +10,17 @@ const value_step = function(ts) {
       //ordinal/cardinal
       if (!t.tags.Ordinal && !t.tags.Cardinal) {
         if (t.normal.match(/^[0-9]([0-9]+,)*?(\.[0-9])$/)) {
-          t.tagAs('Cardinal', 'ordinal-regex');
+          t.tag('Cardinal', 'ordinal-regex');
         } else {
-          t.tagAs('Cardinal', 'cardinal-regex');
+          t.tag('Cardinal', 'cardinal-regex');
         }
       }
       //text/number
       if (!t.tags.TextValue && !t.tags.NumericValue) {
         if (t.normal.match(/^[a-z]/)) {
-          t.tagAs('TextValue', 'TextValue-regex');
+          t.tag('TextValue', 'TextValue-regex');
         } else {
-          t.tagAs('NumericValue', 'NumericValue-regex');
+          t.tag('NumericValue', 'NumericValue-regex');
         }
       }
     }

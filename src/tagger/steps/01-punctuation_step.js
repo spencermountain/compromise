@@ -31,7 +31,7 @@ const punctuation_step = function (ts) {
     let str = t.text;
     //anything can be titlecase
     if (str.match(/^[A-Z][a-z']/)) {
-      t.tagAs('TitleCase', 'punct-rule');
+      t.tag('TitleCase', 'punct-rule');
     }
     //ok, normalise it a little,
     str = str.replace(/[,\.\?]$/, '');
@@ -41,18 +41,18 @@ const punctuation_step = function (ts) {
       if (str.match(r.reg)) {
         //don't over-write any other known tags
         if (t.canBe(r.tag)) {
-          t.tagAs(r.tag, 'punctuation-rule- "' + r.str + '"');
+          t.tag(r.tag, 'punctuation-rule- "' + r.str + '"');
         }
         return;
       }
     }
     //terms like 'e'
     if (str.length === 1 && !oneLetters[str.toLowerCase()]) {
-      t.tagAs('Acronym', 'one-letter-acronym');
+      t.tag('Acronym', 'one-letter-acronym');
     }
     //roman numerals (weak rn)
     if (isRomanNumeral(t)) {
-      t.tagAs('RomanNumeral', 'is-roman-numeral');
+      t.tag('RomanNumeral', 'is-roman-numeral');
     }
 
   });

@@ -20,7 +20,7 @@ const replaceMethods = (Terms) => {
       let toAdd = Terms.fromString(str);
       toAdd.tagger();
       if (tag) {
-        toAdd.tagAs(tag, 'user-given');
+        toAdd.tag(tag, 'user-given');
       }
       let index = this.index();
       this.parentTerms = mutate.deleteThese(this.parentTerms, this);

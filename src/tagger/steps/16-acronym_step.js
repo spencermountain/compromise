@@ -7,7 +7,7 @@ const acronym_step = function(ts) {
   log.here(path);
   ts.terms.forEach((t) => {
     if (t.isAcronym()) {
-      t.tagAs('Acronym', 'acronym-step');
+      t.tag('Acronym', 'acronym-step');
     }
   });
   return ts;

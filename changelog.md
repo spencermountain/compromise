@@ -4,9 +4,9 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 
 ### v.9  &nbsp;
 * 9.0.0
+- rename `Term.tag` object to `Term.tags` so `.tag()` method can work consistently
 - fix 'Auxillary' tag typo to 'Auxiliary'
 - optimisation of .match(), and significant speedup
-- rename `Term.tag` obj to `Term.tags` so `.tag()` method works consistently
 - add `.tagger()` method and cleanup extra params
 
 ### v.8  &nbsp;

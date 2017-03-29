@@ -12,11 +12,8 @@ const perfectMatch = (term, reg, verbose) => {
   }
   //pos-match
   if (reg.tag) {
-    for (let i = 0; i < reg.tag.length; i++) {
-      let tag = reg.tag[i];
-      if (term.tag[tag]) {
-        return true;
-      }
+    if (term.tag[reg.tag]) {
+      return true;
     }
     return false;
   }

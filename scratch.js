@@ -19,12 +19,12 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // let r = nlp('john and jill were nice');
 // r.debug();
 
-console.time('parse');
 let r = nlp(fresh);
+console.time('parse');
+let m = r.match('#Determiner (story|thing|#Adjective)', true);
 console.timeEnd('parse');
 //
 // console.time('m');
-// let m = r.match(['home'], true);
 // // let m = r.list[0].lookup('story', true);
 // console.log(m.length);
 // console.timeEnd('m');

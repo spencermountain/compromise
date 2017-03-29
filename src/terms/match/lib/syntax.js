@@ -39,7 +39,7 @@ const parse_term = function (term) {
   //pos flag
   if (fns.startsWith(term, '#')) {
     term = term.replace(/^\#/, '');
-    reg.tag = [fns.titleCase(term)];
+    reg.tag = fns.titleCase(term);
     term = null;
   }
   //one_of options flag

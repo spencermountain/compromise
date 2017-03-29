@@ -1,16 +1,37 @@
 'use strict';
 const syntax = require('./syntax');
 const startHere = require('./startHere');
+
+//look for quick reasons not to do this match
+const stopFast = function(ts, regs, verbose) {
+
+  for(let i = 0; i < regs.length; i++) {
+    let reg = regs[i];
+    // if (verbose) {
+    //   console.log(reg);
+    //   console.log('\n');
+    // }
+    if (reg.optional !== true) {
+
+    }
+  }
+  return false;
+};
+
 //
 const match = (ts, reg, verbose) => {
+  let matches = [];
   //parse for backwards-compatibility
   if (typeof reg === 'string') {
     reg = syntax(reg);
   }
-  if (verbose) {
-    console.log(reg);
+
+  //
+  if (stopFast(ts, reg, verbose)) {
+    return matches;
   }
-  let matches = [];
+
+  //long-match
   for (let t = 0; t < ts.terms.length; t++) {
     //don't loop through if '^'
     if (reg[0] && reg[0].starting && t > 0) {

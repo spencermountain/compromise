@@ -3,7 +3,7 @@ const syntax = require('./syntax');
 const startHere = require('./startHere');
 
 //look for quick reasons not to do a match on this ts
-const canIgnore = function(ts, regs) {
+const canIgnore = function(ts, regs, verbose) {
   for(let i = 0; i < regs.length; i++) {
     let reg = regs[i];
     let found = false;
@@ -48,7 +48,7 @@ const match = (ts, reg, verbose) => {
     return [];
   }
   //do a fast-pass for easy negatives
-  if (canIgnore(ts, reg)) {
+  if (canIgnore(ts, reg, verbose)) {
     return [];
   }
   //ok, start long-match

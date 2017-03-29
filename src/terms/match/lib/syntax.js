@@ -55,14 +55,14 @@ const parse_term = function (term) {
     let arr = term.split(/\|/g);
     reg.oneOf = {
       terms: {},
-      tags: [],
+      tagArr: [],
     };
     arr.forEach((str) => {
       //try a tag match
       if (str.charAt(0) === '#') {
         let tag = str.substr(1, str.length);
         tag = fns.titleCase(tag);
-        reg.oneOf.tags.push(tag);
+        reg.oneOf.tagArr.push(tag);
       } else {
         reg.oneOf.terms[str] = true;
       }

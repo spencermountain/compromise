@@ -9,7 +9,7 @@ const combineThem = function(ts, tags) {
     combine(ts, 0);
   }
   let lumped = ts.terms[0];
-  lumped.tag = tags;
+  lumped.tags = tags;
   return lumped;
 };
 

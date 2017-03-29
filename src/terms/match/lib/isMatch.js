@@ -19,8 +19,8 @@ const perfectMatch = (term, reg) => {
   }
   //one-of term-match
   if (reg.oneOf !== undefined) {
-    for(let i = 0; i < reg.oneOf.tags.length; i++) {
-      if (term.tags[reg.oneOf.tags[i]] === true) {
+    for(let i = 0; i < reg.oneOf.tagArr.length; i++) {
+      if (term.tags[reg.oneOf.tagArr[i]] === true) {
         return true;
       }
     }

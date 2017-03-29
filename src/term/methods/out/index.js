@@ -24,12 +24,12 @@ const methods = {
     return {
       text: r.text,
       normal: r.normal,
-      tags: Object.keys(r.tag)
+      tags: Object.keys(r.tags)
     };
   },
   /** check-print information for the console */
   debug: function(r) {
-    let tags = Object.keys(r.tag).map((tag) => {
+    let tags = Object.keys(r.tags).map((tag) => {
       return fns.printTag(tag);
     }).join(', ');
     let word = r.text;

@@ -11,9 +11,9 @@ test('lumper:', function (t) {
   t.equal(r.wordCount(), 8, '8 words now');
 
   let term = r.list[0].terms[3];
-  t.ok(term.tag.Country, 'has-country-tag');
-  t.ok(term.tag.City, 'has-city-tag');
-  t.ok(term.tag.Noun, 'has-shared-noun-tag');
+  t.ok(term.tags.Country, 'has-country-tag');
+  t.ok(term.tags.City, 'has-city-tag');
+  t.ok(term.tags.Noun, 'has-shared-noun-tag');
   t.end();
 });
 
@@ -27,12 +27,12 @@ test('lumper-multiple-matches:', function (t) {
   t.equal(r.wordCount(), 7, '7 words now');
 
   let term = r.list[0].terms[2];
-  t.ok(term.tag.FirstName, 'has-firstname-tag');
-  t.ok(term.tag.Person, 'has-person-tag');
+  t.ok(term.tags.FirstName, 'has-firstname-tag');
+  t.ok(term.tags.Person, 'has-person-tag');
 
   term = r.list[0].terms[4];
-  t.ok(term.tag.FirstName, 'has-firstname-tag2');
-  t.ok(term.tag.Person, 'has-person-tag2');
+  t.ok(term.tags.FirstName, 'has-firstname-tag2');
+  t.ok(term.tags.Person, 'has-person-tag2');
   t.end();
 });
 
@@ -46,8 +46,8 @@ test('lumper-long:', function (t) {
   t.equal(r.wordCount(), 5, '5 words now');
 
   let term = r.list[0].terms[2];
-  t.ok(term.tag.FirstName, 'has-firstname-tag');
-  t.ok(term.tag.Person, 'has-person-tag');
+  t.ok(term.tags.FirstName, 'has-firstname-tag');
+  t.ok(term.tags.Person, 'has-person-tag');
 
   t.end();
 });

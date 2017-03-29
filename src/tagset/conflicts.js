@@ -1,7 +1,7 @@
 'use strict';
 
 //list of inconsistent parts-of-speech
-const conflicts = [
+module.exports = [
   //top-level pos are all inconsistent
   ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression', 'Url', 'PhoneNumber', 'Email', 'Emoji'],
   //exlusive-nouns
@@ -31,17 +31,11 @@ const conflicts = [
   ['Month', 'WeekDay', 'Year', 'Duration'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
   ['Date', 'Verb', 'Adjective', 'Person'],
-  //phrases
-  ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase', 'ConditionalPhrase'],
   //a/an -> 1
   ['Value', 'Determiner'],
-  ['Verb', 'NounPhrase'],
-  ['Noun', 'VerbPhrase'],
   //roman numerals
   ['RomanNumeral', 'Fraction', 'NiceNumber'],
   ['RomanNumeral', 'Money'],
   //cases
   ['UpperCase', 'TitleCase', 'CamelCase']
 ];
-
-module.exports = conflicts;

@@ -58,8 +58,14 @@ const addColors = function(tags) {
   Object.keys(tags).forEach((k) => {
     if (colors[k]) {
       tags[k].color = colors[k];
-    } else if (tags[k].in && colors[tags[k].in]) {
-      tags[k].color = colors[tags[k].in];
+      return;
+    }
+    if (tags[k].is && colors[tags[k].is]) {
+      tags[k].color = colors[tags[k].is];
+      return;
+    }
+    if (tags[k].is && tags[tags[k].is].color) {
+      tags[k].color = tags[tags[k].is].color;
     }
   });
 };
@@ -79,5 +85,4 @@ const build = () => {
   addColors(tags);
   return tags;
 };
-// module.exports = build();
-console.log(build());
+module.exports = build();

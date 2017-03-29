@@ -1,5 +1,5 @@
 'use strict';
-const tagColors = require('./tags/colors');
+const tagset = require('./tagset');
 
 // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 const c = {
@@ -109,16 +109,17 @@ exports.black = function(str) {
   return c.black + str + c.reset;
 };
 exports.printTag = function(tag) {
-  if (tagColors[tag]) {
-    return exports[tagColors[tag]](tag);
+  if (tagset[tag]) {
+    let color = tagset[tag].color || 'black';
+    return exports[color](tag);
   }
   return tag;
 };
 exports.printTerm = function(t) {
   let tags = Object.keys(t.tags);
   for(let i = 0; i < tags.length; i++) {
-    if (tagColors[tags[i]]) {
-      let color = tagColors[tags[i]];
+    if (tagset[tags[i]]) {
+      let color = tagset[tags[i]].color || 'black';
       return exports[color](t.plaintext);
     }
   }

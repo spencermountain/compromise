@@ -4,54 +4,44 @@ const path = require('./paths');
 const log = path.log;
 const tagset = path.tags;
 const fns = path.fns;
-const unTag = require('./unTag');
 
-
-const makeCompatible = (term, tag, reason) => {
-  if (!tagset[tag]) {
+const putTag = (term, tag, reason) => {
+  //already got this
+  if (term.tags[tag] === true) {
     return;
   }
-  //find incompatible tags
-  let not = tagset[tag].not || [];
-  for (let i = 0; i < not.length; i++) {
-    unTag(term, not[i], reason);
-  }
-};
-
-const tag_one = (term, tag, reason) => {
-  //ignore if already tagged
-  if (term.tags[tag]) {
-    return;
-  }
-  reason = reason || '';
-  //clean first
-  makeCompatible(term, tag, reason);
-  // unTag(term, tag, reason);
-  log.tag(term, tag, reason);
   term.tags[tag] = true;
-};
+  log.tag(term, tag, reason);
 
-//give term this tag, as well as its parents
-const tagDeep = function (term, tag, reason) {
-  if (!tag || !term) {
-    return;
-  }
-  if (fns.isArray(tag)) {
-    tag.forEach((t) => tagDeep(term, t, reason)); //recursive
-    return;
-  }
-  tag = tag || '';
-  tag = tag.replace(/^#/, '');
-  tag_one(term, tag, reason);
-  //find assumed-tags
+  //extra logic per-each POS
   if (tagset[tag]) {
-    let tags = tagset[tag].parents || [];
-    for (let i = 0; i < tags.length; i++) {
-      tag_one(term, tags[i], '-');
+    //drop any conflicting tags
+    let enemies = tagset[tag].enemy;
+    for (let i = 0; i < enemies.length; i++) {
+      delete term.tags[enemies[i]];
+    }
+    //apply implicit tags
+    if (tagset[tag].is) {
+      let doAlso = tagset[tag].is;
+      if (term.tags[doAlso] !== true) {
+        putTag(term, doAlso, '- - ' + tag); //recursive
+      }
     }
   }
 };
 
+//give term this tag, as well as its parents
+const kickOff = function (term, tag, reason) {
+  if (!tag || !term) {
+    return;
+  }
+  //handle multiple tags
+  if (fns.isArray(tag)) {
+    tag.forEach((t) => tagDeep(term, t, reason)); //recursive
+    return;
+  }
+  tag = tag.replace(/^#/, '');
+  putTag(term, tag, reason);
+};
 
-module.exports = tagDeep;
-// console.log(tagset['Person']);
+module.exports = kickOff;

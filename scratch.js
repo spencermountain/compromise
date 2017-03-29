@@ -2,7 +2,7 @@
 //this file is not included in the build.
 //use it for messing around.
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 // var nlp = require('./builds/helloCompiled');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
@@ -16,9 +16,9 @@ var nlp = require('./src/index');
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
 
-let r = nlp('Spencer Kelly');
-console.log(r.terms().data());
-// r.debug();
+let r = nlp('morning');
+// console.log(r.terms().data());
+r.debug();
 
 // //===timer
 // console.time('parse');

@@ -3,7 +3,10 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 
 
 ### v.9  &nbsp;
-* 9.0.0 - fix 'Auxillary' tag typo to 'Auxiliary'
+* 9.0.0
+- fix 'Auxillary' tag typo to 'Auxiliary'
+- optimisation of .match(), and significant speedup
+
 
 ### v.8  &nbsp;
 * 8.0.0 - less-ambitious date-parsing of nl-date forms

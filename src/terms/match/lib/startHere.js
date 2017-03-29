@@ -5,8 +5,7 @@ const isMatch = require('./isMatch');
 // match everything until this point - '*'
 const greedyUntil = (ts, i, reg) => {
   for (i = i; i < ts.length; i++) {
-    let t = ts.terms[i];
-    if (isMatch(t, reg)) {
+    if (isMatch(ts.terms[i], reg)) {
       return i;
     }
   }
@@ -21,7 +20,7 @@ const greedyOf = (ts, i, reg, until) => {
     if (until && isMatch(t, until)) {
       return i;
     }
-    //die here
+    //stop here
     if (!isMatch(t, reg)) {
       return i;
     }

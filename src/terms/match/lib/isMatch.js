@@ -14,11 +14,11 @@ const perfectMatch = (term, reg) => {
     return term.tag[reg.tag];
   }
   //text-match
-  if (reg.normal) {
+  if (reg.normal !== undefined) {
     return reg.normal === term.normal || reg.normal === term.silent_term;
   }
   //one-of term-match
-  if (reg.oneOf) {
+  if (reg.oneOf !== undefined) {
     for (let i = 0; i < reg.oneOf.length; i++) {
       let str = reg.oneOf[i];
       //try a tag match

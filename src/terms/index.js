@@ -8,6 +8,7 @@ class Terms {
     this.lexicon = lexicon;
     this.refText = refText;
     this._refTerms = refTerms;
+    this._cacheWords = {};
     this.count = undefined;
     this.get = (n) => {
       return this.terms[n];

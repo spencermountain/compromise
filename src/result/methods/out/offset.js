@@ -20,11 +20,16 @@ const findOffset = (parent, term) => {
 const allOffset = (r) => {
   let parent = r.all();
   return r.list.map((ts) => {
+    let words = [];
+    for(let i = 0; i < ts.terms.length; i++) {
+      words.push(ts.terms[i].normal);
+    }
     return {
       text: ts.out('text'),
       normal: ts.out('normal'),
       offset: findOffset(parent, ts.terms[0]),
-      length: ts.out('text').length
+      length: ts.out('text').length,
+      wordLength: words.join(' ').length
     };
   });
 };

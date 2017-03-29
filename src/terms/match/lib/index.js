@@ -4,34 +4,33 @@ const startHere = require('./startHere');
 
 //look for quick reasons not to do this match
 const stopFast = function(ts, regs, verbose) {
-
   for(let i = 0; i < regs.length; i++) {
     let reg = regs[i];
-    // if (verbose) {
-    //   console.log(reg);
-    //   console.log('\n');
-    // }
-    if (reg.optional !== true) {
-
+    if (reg.optional === true) {
+      continue;
     }
+  // if (reg.normal && ts._cacheWords[reg.normal] !== undefined) {
+  //   // console.log('stop-here');
+  //   return true;
+  // }
   }
   return false;
 };
 
 //
 const match = (ts, reg, verbose) => {
-  let matches = [];
   //parse for backwards-compatibility
   if (typeof reg === 'string') {
     reg = syntax(reg);
   }
 
-  //
+  //hit-the cache first
   if (stopFast(ts, reg, verbose)) {
-    return matches;
+    return [];
   }
 
   //long-match
+  let matches = [];
   for (let t = 0; t < ts.terms.length; t++) {
     //don't loop through if '^'
     if (reg[0] && reg[0].starting && t > 0) {

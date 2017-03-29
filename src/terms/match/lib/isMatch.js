@@ -2,7 +2,7 @@
 const fns = require('./paths').fns;
 
 //compare 1 term to one reg
-const perfectMatch = (term, reg) => {
+const perfectMatch = (term, reg, verbose) => {
   if (!term || !reg) {
     return false;
   }

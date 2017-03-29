@@ -6,7 +6,7 @@ var nlp = require('./src/index');
 // var nlp = require('./builds/helloCompiled');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
-// const fresh = require('./test/unit/lib/freshPrince.js');
+const fresh = require('./test/unit/lib/freshPrince.js');
 
 // bug.1
 //  .? vs *
@@ -16,13 +16,12 @@ var nlp = require('./src/index');
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
 
-let r = nlp('april 5th – 7th');
-console.log(r.terms().data());
-r.debug();
+// let r = nlp('john and jill were nice');
+// r.debug();
 
-// console.time('parse');
-// let r = nlp(fresh);
-// console.timeEnd('parse');
+console.time('parse');
+let r = nlp(fresh);
+console.timeEnd('parse');
 //
 // console.time('m');
 // let m = r.match(['home'], true);

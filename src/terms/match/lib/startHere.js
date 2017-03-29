@@ -72,7 +72,7 @@ const startHere = (ts, startAt, regs, verbose) => {
     }
 
     //support '{x,y}'
-    if (regs[reg_i].minMax === true) {
+    if (regs[reg_i].minMax !== undefined) {
       //on last reg?
       if (!next_reg) {
         let len = ts.length;

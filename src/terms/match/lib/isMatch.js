@@ -1,5 +1,4 @@
 'use strict';
-const fns = require('./paths').fns;
 
 //compare 1 term to one reg
 const perfectMatch = (term, reg) => {
@@ -25,7 +24,6 @@ const perfectMatch = (term, reg) => {
       //try a tag match
       if (str.charAt(0) === '#') {
         let tag = str.substr(1, str.length);
-        tag = fns.titleCase(tag);
         if (term.tag[tag]) {
           return true;
         }

@@ -18,7 +18,7 @@ const predictForm = function(term, verbose) {
   //do we already know the form?
   let keys = Object.keys(goodTypes);
   for (let i = 0; i < keys.length; i++) {
-    if (term.tag[keys[i]]) {
+    if (term.tags[keys[i]]) {
       if (verbose) {
         console.log('predicted ' + keys[i] + ' from pos', path);
       }

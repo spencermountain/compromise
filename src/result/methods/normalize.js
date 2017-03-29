@@ -29,7 +29,7 @@ const methods = {
   case: (r) => {
     r.list.forEach((ts) => {
       ts.terms.forEach((t, i) => {
-        if (i === 0 || t.tag.Person || t.tag.Place || t.tag.Organization) {
+        if (i === 0 || t.tags.Person || t.tags.Place || t.tags.Organization) {
           ts.toTitleCase();
         } else {
           ts.toLowerCase();

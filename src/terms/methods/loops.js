@@ -4,9 +4,9 @@
 const addMethods = (Terms) => {
 
   const foreach = [
-    ['tagAs'],
-    ['unTag'],
-    ['canBe'],
+    // ['tagAs'],
+    // ['unTag'],
+    // ['canBe'],
     ['toUpperCase', 'UpperCase'],
     ['toLowerCase'],
     ['toTitleCase', 'TitleCase'],

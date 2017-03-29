@@ -19,7 +19,7 @@ class Term extends Terms {
       normal: t.normal,
       implicit: t.silent_term,
       bestTag: this.bestTag(),
-      tags: Object.keys(t.tag),
+      tags: Object.keys(t.tags),
     };
   }
   bestTag() {

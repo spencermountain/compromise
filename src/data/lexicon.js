@@ -135,6 +135,6 @@ module.exports = lexicon;
 // console.log(lexicon['ugh']);
 // console.log(fastConjugate('make'));
 // let t = new Term('shake');
-// t.tag.Verb = true;
+// t.tags.Verb = true;
 // console.timeEnd('lexicon');
 // console.log(Object.keys(lexicon).length);

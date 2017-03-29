@@ -37,7 +37,7 @@ const addMethods = (Term) => {
         'Demonym',
       ];
       for(let i = 0; i < titleCases.length; i++) {
-        if (this.tag[titleCases[i]]) {
+        if (this.tags[titleCases[i]]) {
           return true;
         }
       }

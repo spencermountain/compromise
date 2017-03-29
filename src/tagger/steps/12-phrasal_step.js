@@ -42,7 +42,7 @@ const phrasals_step = function(ts) {
     if (particles[t.normal]) {
       //look backwards
       let last = ts.get(i - 1);
-      if (last.tag.Verb) {
+      if (last.tags.Verb) {
         let inf = toInfinitive(last);
         if (phrasals.has(inf + ' ' + t.normal)) {
           t.tagAs('Particle', 'phrasalVerb-particle');

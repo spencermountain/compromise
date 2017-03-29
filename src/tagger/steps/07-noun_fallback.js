@@ -12,10 +12,10 @@ const nothing = {
 //are the tags basically empty
 const gotNothing = function(t) {
   //fail-fast
-  if (t.tag.Noun || t.tag.Verb || t.tag.Adjective) {
+  if (t.tags.Noun || t.tags.Verb || t.tags.Adjective) {
     return false;
   }
-  let tags = Object.keys(t.tag);
+  let tags = Object.keys(t.tags);
   if (tags.length === 0) {
     return true;
   }
@@ -30,7 +30,7 @@ const noun_fallback = function(s) {
   for (let i = 0; i < s.terms.length; i++) {
     let t = s.terms[i];
     //fail-fast
-    if (t.tag.Noun || t.tag.Verb) {
+    if (t.tags.Noun || t.tags.Verb) {
       continue;
     }
     //ensure it only has the tag 'Term'

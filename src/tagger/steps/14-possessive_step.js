@@ -25,7 +25,7 @@ const is_possessive = function(terms, x) {
     return false;
   }
   //some parts-of-speech can't be possessive
-  if (t.tag['Pronoun']) {
+  if (t.tags['Pronoun']) {
     return false;
   }
   let nextWord = terms.get(x + 1);
@@ -34,15 +34,15 @@ const is_possessive = function(terms, x) {
     return true;
   }
   //next word is 'house'
-  if (nextWord.tag['Noun']) {
+  if (nextWord.tags['Noun']) {
     return true;
   }
   //rocket's red glare
-  if (nextWord.tag['Adjective'] && terms.get(x + 2) && terms.get(x + 2).tag['Noun']) {
+  if (nextWord.tags['Adjective'] && terms.get(x + 2) && terms.get(x + 2).tags['Noun']) {
     return true;
   }
   //next word is an adjective
-  if (nextWord.tag['Adjective'] || nextWord.tag['Verb'] || nextWord.tag['Adverb']) {
+  if (nextWord.tags['Adjective'] || nextWord.tags['Verb'] || nextWord.tags['Adverb']) {
     return false;
   }
   return false;
@@ -54,7 +54,7 @@ const possessiveStep = function(terms) {
     if (is_possessive(terms, i)) {
       let t = terms.get(i);
       //if it's not already a noun, co-erce it to one
-      if (!t.tag['Noun']) {
+      if (!t.tags['Noun']) {
         t.tagAs('Noun', 'possessive_pass');
       }
       t.tagAs('Possessive', 'possessive_pass');

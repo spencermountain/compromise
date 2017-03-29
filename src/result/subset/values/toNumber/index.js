@@ -28,7 +28,7 @@ const section_sum = (obj) => {
 
 const alreadyNumber = (ts) => {
   for(let i = 0; i < ts.terms.length; i++) {
-    if (!ts.terms[i].tag.NumericValue) {
+    if (!ts.terms[i].tags.NumericValue) {
       return false;
     }
   }

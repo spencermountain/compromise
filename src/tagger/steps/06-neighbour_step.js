@@ -13,7 +13,7 @@ const neighbour_step = function (ts) {
   log.here(path);
   ts.terms.forEach((t, n) => {
     //is it still unknown?
-    let termTags = Object.keys(t.tag);
+    let termTags = Object.keys(t.tags);
     if (termTags.length === 0) {
       let lastTerm = ts.terms[n - 1];
       let nextTerm = ts.terms[n + 1];
@@ -30,7 +30,7 @@ const neighbour_step = function (ts) {
       //look at the last POS for clues
       let tags = [];
       if (lastTerm) {
-        tags = Object.keys(lastTerm.tag);
+        tags = Object.keys(lastTerm.tags);
         for (let i = 0; i < tags.length; i++) {
           if (afterThisPos[tags[i]]) {
             t.tagAs(afterThisPos[tags[i]], 'neighbour-after-[' + tags[i] + ']');
@@ -40,7 +40,7 @@ const neighbour_step = function (ts) {
       }
       //look at the next POS for clues
       if (nextTerm) {
-        tags = Object.keys(nextTerm.tag);
+        tags = Object.keys(nextTerm.tags);
         for (let i = 0; i < tags.length; i++) {
           if (beforeThisPos[tags[i]]) {
             t.tagAs(beforeThisPos[tags[i]], 'neighbour-before-[' + tags[i] + ']');

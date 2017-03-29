@@ -19,7 +19,7 @@ const splitContraction = (t) => {
       parts[2] = 'n\'t'; //dunno..
     }
     //fix titlecase
-    if (t.tag.TitleCase) {
+    if (t.tags.TitleCase) {
       parts[1] = parts[1].replace(/^[a-z]/, (x) => x.toUpperCase());
     }
     return {

@@ -23,7 +23,7 @@ const noPlural = [
 //first, try to guess based on existing tags
 const couldEvenBePlural = (t) => {
   for (let i = 0; i < noPlural.length; i++) {
-    if (t.tag[noPlural[i]]) {
+    if (t.tags[noPlural[i]]) {
       return false;
     }
   }

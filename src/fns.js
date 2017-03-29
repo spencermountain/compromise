@@ -115,7 +115,7 @@ exports.printTag = function(tag) {
   return tag;
 };
 exports.printTerm = function(t) {
-  let tags = Object.keys(t.tag);
+  let tags = Object.keys(t.tags);
   for(let i = 0; i < tags.length; i++) {
     if (tagColors[tags[i]]) {
       let color = tagColors[tags[i]];

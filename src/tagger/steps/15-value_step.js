@@ -6,9 +6,9 @@ const path = 'tagger/value';
 const value_step = function(ts) {
   log.here(path);
   ts.terms.forEach((t) => {
-    if (t.tag.Value) {
+    if (t.tags.Value) {
       //ordinal/cardinal
-      if (!t.tag.Ordinal && !t.tag.Cardinal) {
+      if (!t.tags.Ordinal && !t.tags.Cardinal) {
         if (t.normal.match(/^[0-9]([0-9]+,)*?(\.[0-9])$/)) {
           t.tagAs('Cardinal', 'ordinal-regex');
         } else {
@@ -16,7 +16,7 @@ const value_step = function(ts) {
         }
       }
       //text/number
-      if (!t.tag.TextValue && !t.tag.NumericValue) {
+      if (!t.tags.TextValue && !t.tags.NumericValue) {
         if (t.normal.match(/^[a-z]/)) {
           t.tagAs('TextValue', 'TextValue-regex');
         } else {

@@ -10,11 +10,11 @@ const negation_step = function(ts) {
     if (t.normal === 'not' || t.silent_term === 'not') {
       //find the next verb/adjective
       for(let o = i + 1; o < ts.length; o++) {
-        if (ts.get(o).tag.Verb) {
+        if (ts.get(o).tags.Verb) {
           t.tagAs('VerbPhrase', 'negate-verb');
           break;
         }
-        if (ts.get(o).tag.Adjective) {
+        if (ts.get(o).tags.Adjective) {
           t.tagAs('AdjectivePhrase', 'negate-adj');
           break;
         }

@@ -6,9 +6,9 @@ const tagset = path.tags;
 
 //remove a tag from a term
 const unTagOne = (term, tag, reason) => {
-  if (term.tag[tag]) {
+  if (term.tags[tag]) {
     log.tell('   --' + tag + ' ' + (reason || ''));
-    delete term.tag[tag];
+    delete term.tags[tag];
   }
 };
 

@@ -21,7 +21,7 @@ const addMethods = (Term) => {
       tag = tag.replace(/^#/, '');
       let not = tagset[tag].not || [];
       for (let i = 0; i < not.length; i++) {
-        if (this.tag[not[i]]) {
+        if (this.tags[not[i]]) {
           return false;
         }
       }

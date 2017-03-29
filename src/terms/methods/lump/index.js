@@ -23,7 +23,7 @@ const lumpMethods = (Terms) => {
       let index = this.index();
       let tags = {};
       this.terms.forEach((t) => {
-        Object.keys(t.tag).forEach((tag) => tags[tag] = true);
+        Object.keys(t.tags).forEach((tag) => tags[tag] = true);
       });
       //just lump the whole-thing together
       if (this.parentTerms === this) {

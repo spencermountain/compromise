@@ -13,7 +13,7 @@ const canIgnore = function(ts, regs) {
     //look for missing tags
     if (reg.tag !== undefined) {
       for(let o = 0; o < ts.terms.length; o++) {
-        if (ts.terms[o].tag[reg.tag] === true) {
+        if (ts.terms[o].tags[reg.tag] === true) {
           found = true;
           break;
         }

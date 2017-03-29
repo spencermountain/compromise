@@ -10,7 +10,7 @@ const numberRange = (ts) => {
       continue;
     }
     //hyphens found in whitespace - '5 - 7'
-    if (t.tag.Value && i > 0 && t.whitespace.before === ' - ') {
+    if (t.tags.Value && i > 0 && t.whitespace.before === ' - ') {
       let to = new Term('');
       to.silent_term = 'to';
       ts.insertAt(i, to);
@@ -21,7 +21,7 @@ const numberRange = (ts) => {
       ts.terms[i + 1].tagAs('NumberRange');
       return ts;
     }
-    if (t.tag.NumberRange) {
+    if (t.tags.NumberRange) {
       let arr = t.text.split(/(-)/);
       arr[1] = 'to';
       ts = fixContraction(ts, arr, i);

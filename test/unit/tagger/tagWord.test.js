@@ -62,8 +62,8 @@ test('pos from-lexicon', function (t) {
   ];
   arr.forEach(function (a) {
     var term = nlp(a[0]).list[0].terms[0];
-    var msg = '\'' + term.normal + '\' has - ' + a[1] + '  (' + Object.keys(term.tag).join(',') + ')';
-    t.equal(term.tag[a[1]], true, msg);
+    var msg = '\'' + term.normal + '\' has - ' + a[1] + '  (' + Object.keys(term.tags).join(',') + ')';
+    t.equal(term.tags[a[1]], true, msg);
   });
   t.end();
 });

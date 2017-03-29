@@ -26,7 +26,7 @@ const corrections = function(ts) {
     if (Auxiliary[t.normal] || Auxiliary[t.silent_term]) {
       let next = ts.terms[i + 1];
       //if next word is a verb
-      if (next && (next.tag.Verb || next.tag.Adverb || next.tag.Negative)) {
+      if (next && (next.tags.Verb || next.tags.Adverb || next.tags.Negative)) {
         t.tagAs('Auxiliary', 'corrections-Auxiliary');
         continue;
       }

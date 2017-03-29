@@ -7,9 +7,9 @@ const pluralStep = function(ts) {
   log.here(path);
   for(let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
-    if (t.tag.Noun) {
+    if (t.tags.Noun) {
       //skip existing fast
-      if (t.tag.Singular || t.tag.Plural) {
+      if (t.tags.Singular || t.tags.Plural) {
         continue;
       }
       //check if it's plural

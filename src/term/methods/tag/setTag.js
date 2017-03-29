@@ -20,7 +20,7 @@ const makeCompatible = (term, tag, reason) => {
 
 const tag_one = (term, tag, reason) => {
   //ignore if already tagged
-  if (term.tag[tag]) {
+  if (term.tags[tag]) {
     return;
   }
   reason = reason || '';
@@ -28,7 +28,7 @@ const tag_one = (term, tag, reason) => {
   makeCompatible(term, tag, reason);
   // unTag(term, tag, reason);
   log.tagAs(term, tag, reason);
-  term.tag[tag] = true;
+  term.tags[tag] = true;
 };
 
 const tagAll = function (term, tag, reason) {

@@ -18,7 +18,7 @@ const conjugate = function(t, verbose) {
   }
 
   //dont conjugate didn't
-  if (t.tag.Contraction) {
+  if (t.tags.Contraction) {
     t.text = t.silent_term;
   }
   let all = {
@@ -60,7 +60,7 @@ const conjugate = function(t, verbose) {
   //to Actor
   if (!all.Actor) {
     //a phrasal like 'step up' can't be an actor -'step upper'?
-    // if (!t.tag.PhrasalVerb) {
+    // if (!t.tags.PhrasalVerb) {
     all.Actor = toActor(inf);
   // }
   }

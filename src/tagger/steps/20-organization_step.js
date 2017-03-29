@@ -8,15 +8,15 @@ let orgWords = require('../paths').tries.utils.orgWords;
 //could this word be an organization
 const maybeOrg = function(t) {
   //must be a noun
-  if (!t.tag.Noun) {
+  if (!t.tags.Noun) {
     return false;
   }
   //can't be these things
-  if (t.tag.Pronoun || t.tag.Comma || t.tag.Possessive || t.tag.Place) {
+  if (t.tags.Pronoun || t.tags.Comma || t.tags.Possessive || t.tags.Place) {
     return false;
   }
   //must be one of these
-  if (t.tag.TitleCase || t.tag.Organization || t.tag.Acronym) {
+  if (t.tags.TitleCase || t.tags.Organization || t.tags.Acronym) {
     return true;
   }
   return false;

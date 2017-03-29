@@ -11,7 +11,7 @@ const perfectMatch = (term, reg) => {
   }
   //pos-match
   if (reg.tag !== undefined) {
-    return term.tag[reg.tag];
+    return term.tags[reg.tag];
   }
   //text-match
   if (reg.normal !== undefined) {
@@ -20,7 +20,7 @@ const perfectMatch = (term, reg) => {
   //one-of term-match
   if (reg.oneOf !== undefined) {
     for(let i = 0; i < reg.oneOf.tags.length; i++) {
-      if (term.tag[reg.oneOf.tags[i]] === true) {
+      if (term.tags[reg.oneOf.tags[i]] === true) {
         return true;
       }
     }

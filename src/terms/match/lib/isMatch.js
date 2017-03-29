@@ -19,20 +19,12 @@ const perfectMatch = (term, reg) => {
   }
   //one-of term-match
   if (reg.oneOf !== undefined) {
-    for (let i = 0; i < reg.oneOf.length; i++) {
-      let str = reg.oneOf[i];
-      //try a tag match
-      if (str.charAt(0) === '#') {
-        let tag = str.substr(1, str.length);
-        if (term.tag[tag]) {
-          return true;
-        }
-      //try a string-match
-      } else if (term.normal === str || term.text === str) {
+    for(let i = 0; i < reg.oneOf.tags.length; i++) {
+      if (term.tag[reg.oneOf.tags[i]] === true) {
         return true;
       }
     }
-    return false;
+    return reg.oneOf.terms[term.normal] || reg.oneOf.terms[term.silent_term];
   }
   return false;
 };

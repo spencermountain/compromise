@@ -52,7 +52,21 @@ const parse_term = function (term) {
   if (term.charAt(0) === '(' && term.charAt(term.length - 1) === ')') {
     term = noLast(term);
     term = noFirst(term);
-    reg.oneOf = term.split(/\|/g);
+    let arr = term.split(/\|/g);
+    reg.oneOf = {
+      terms: {},
+      tags: [],
+    };
+    arr.forEach((str) => {
+      //try a tag match
+      if (str.charAt(0) === '#') {
+        let tag = str.substr(1, str.length);
+        tag = fns.titleCase(tag);
+        reg.oneOf.tags.push(tag);
+      } else {
+        reg.oneOf.terms[str] = true;
+      }
+    });
     term = '';
   }
   //min/max any '{1,3}'

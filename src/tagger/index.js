@@ -9,7 +9,7 @@ const step = {
   neighbour_step: require('./steps/06-neighbour_step'),
   noun_fallback: require('./steps/07-noun_fallback'),
   date_step: require('./steps/08-date_step'),
-  auxillary_step: require('./steps/09-auxillary_step'),
+  auxiliary_step: require('./steps/09-auxiliary_step'),
   negation_step: require('./steps/10-negation_step'),
   phrasal_step: require('./steps/12-phrasal_step'),
   comma_step: require('./steps/13-comma_step'),
@@ -42,7 +42,7 @@ const tagger = function (ts) {
   ts = step.noun_fallback(ts);
   ts = step.contraction(ts);
   ts = step.date_step(ts); //3ms
-  ts = step.auxillary_step(ts);
+  ts = step.auxiliary_step(ts);
   ts = step.negation_step(ts);
   ts = step.phrasal_step(ts);
   ts = step.comma_step(ts);

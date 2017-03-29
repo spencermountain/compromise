@@ -85,7 +85,7 @@ module.exports = {
 
   //non-exclusive
   Condition: true,
-  Auxillary: true,
+  Auxiliary: true,
   Negative: true,
   Contraction: true,
 

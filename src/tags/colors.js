@@ -19,7 +19,7 @@ const colors = {
   ],
   green: [
     'Verb',
-    'Auxillary',
+    'Auxiliary',
     'Negative',
     'PastTense',
     'PresentTense',

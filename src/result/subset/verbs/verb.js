@@ -20,7 +20,7 @@ class Verb extends Terms {
     if (this.verb.found) {
       this.verb = this.verb.list[0].terms[0];
     }
-    this.auxillary = aux.match('#Auxillary+');
+    this.auxiliary = aux.match('#Auxiliary+');
   }
   data(verbose) {
     return {
@@ -28,7 +28,7 @@ class Verb extends Terms {
       normal: this.out('normal'),
       parts: {
         negative: this.negative.out('normal'),
-        auxillary: this.auxillary.out('normal'),
+        auxiliary: this.auxiliary.out('normal'),
         verb: this.verb.out('normal'),
         adverbs: this.adverbs.out('normal'),
       },
@@ -60,7 +60,7 @@ class Verb extends Terms {
     return this.match('#Negative').list.length === 1;
   }
   isPerfect() {
-    return this.auxillary.match('(have|had)').found;
+    return this.auxiliary.match('(have|had)').found;
   }
   toNegative() {
     if (this.isNegative()) {

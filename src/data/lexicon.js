@@ -46,13 +46,6 @@ addArr(Object.keys(data.irregular_plurals.toSingle), 'Plural');
 addArr(data.dates.days, 'WeekDay');
 addArr(data.dates.months, 'Month');
 addArr(data.dates.relative, 'RelativeDay');
-// addArr(data.holidays, 'Holiday');
-
-// addArr(data.professions, 'Actor'); //?
-// addArr(data.demonyms, 'Demonym');
-// addArr(data.sportsTeams, 'SportsTeam');
-// addArr(data.bands, 'Organization');
-// addArr(data.orgWords, 'Noun');
 
 //irregular verbs
 Object.keys(data.irregular_verbs).forEach((inf) => {

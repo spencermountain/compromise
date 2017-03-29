@@ -2,7 +2,7 @@
 const Terms = require('../../paths').Terms;
 const tagList = require('../../paths').tags;
 const boringTags = {
-  Auxillary: true
+  Auxiliary: true
 };
 
 class Term extends Terms {

@@ -1,9 +1,9 @@
 'use strict';
 //this file is not included in the build.
 //use it for messing around.
-// var nlp = require('./src/index');
+var nlp = require('./src/index');
 // nlp.verbose('tagger');
-var nlp = require('./builds/helloCompiled');
+// var nlp = require('./builds/helloCompiled');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
 // const fresh = require('./test/unit/lib/freshPrince.js');
@@ -16,7 +16,7 @@ var nlp = require('./builds/helloCompiled');
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
 
-let r = nlp('we were swimming and puking');
+let r = nlp('john has been not really walking');
 console.log(r.verbs().data());
 
 // console.time('parse');

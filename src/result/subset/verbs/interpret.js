@@ -52,16 +52,16 @@ const getModal = function(ts) {
 //past/present/future
 const getTense = function(ts) {
   //look at the preceding words
-  if (ts.auxillary.found) {
+  if (ts.auxiliary.found) {
     //'will'
     if (ts.match('will have #PastTense').found) {
       return 'Past';
     }
-    if (ts.auxillary.match('will').found) {
+    if (ts.auxiliary.match('will').found) {
       return 'Future';
     }
     //'was'
-    if (ts.auxillary.match('was').found) {
+    if (ts.auxiliary.match('was').found) {
       return 'Past';
     }
   }
@@ -81,11 +81,11 @@ const getTense = function(ts) {
 // const isImperative = function(ts) {};
 // const isConditional = function(ts) {};
 
-// detect signals in auxillary verbs
+// detect signals in Auxiliary verbs
 // 'will' -> future, 'have'->perfect, modals, negatives, adverbs
 const interpret = (ts) => {
   let isNeg = isNegative(ts);
-  // let aux = ts.auxillary.clone();
+  // let aux = ts.Auxiliary.clone();
   // aux = aux.not('(#Negative|#Adverb)');
   let obj = {
     negative: isNeg,

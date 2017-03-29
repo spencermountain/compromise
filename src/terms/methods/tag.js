@@ -3,7 +3,7 @@
 const addMethods = (Terms) => {
 
   const methods = {
-    tagAs: function (tag, reason) {
+    tag: function (tag, reason) {
       this.terms.forEach((t) => {
         t.tagAs(tag, reason);
       });
@@ -19,6 +19,7 @@ const addMethods = (Terms) => {
       });
     }
   };
+  methods.tagAs = methods.tag;
 
   //hook them into result.proto
   Object.keys(methods).forEach((k) => {

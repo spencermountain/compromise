@@ -133,3 +133,7 @@ exports.leftPad = function (str, width, char) {
   }
   return str;
 };
+
+exports.isArray = function(arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]';
+};

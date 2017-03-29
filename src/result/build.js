@@ -1,7 +1,9 @@
 'use strict';
 const Text = require('./index');
 const tokenize = require('./tokenize');
-const Terms = require('./paths').Terms;
+const p = require('./paths');
+const Terms = p.Terms;
+const fns = p.fns;
 const normalize = require('../term/methods/normalize/normalize').normalize;
 const tagArr = require('../tags');
 
@@ -34,7 +36,7 @@ const extendTags = function(newTags) {
 const fromString = (str, lexicon, tagSet, skipTagging) => {
 
   let sentences = [];
-  if (str !== null && str.constructor === Array) {
+  if (fns.isArray(str)) {
     sentences = str;
   } else {
     sentences = tokenize(str);

@@ -2,17 +2,38 @@
 const syntax = require('./syntax');
 const startHere = require('./startHere');
 
-//look for quick reasons not to do this match
-const stopFast = function(ts, regs, verbose) {
+//look for quick reasons not to do a match on this ts
+const canIgnore = function(ts, regs) {
   for(let i = 0; i < regs.length; i++) {
     let reg = regs[i];
-    if (reg.optional === true) {
+    let found = false;
+    if (reg.optional === true || reg.negative === true) {
       continue;
     }
-  // if (reg.normal && ts._cacheWords[reg.normal] !== undefined) {
-  //   // console.log('stop-here');
-  //   return true;
-  // }
+    //look for missing tags
+    if (reg.tag !== undefined) {
+      for(let o = 0; o < ts.terms.length; o++) {
+        if (ts.terms[o].tag[reg.tag] === true) {
+          found = true;
+          break;
+        }
+      }
+      if (found === false) {
+        return true;
+      }
+    }
+    //look-for missing terms
+    if (reg.normal) {
+      for(let o = 0; o < ts.terms.length; o++) {
+        if (ts.terms[o].normal === reg.normal || ts.terms[o].silent_term === reg.normal) {
+          found = true;
+          break;
+        }
+      }
+      if (found === false) {
+        return true;
+      }
+    }
   }
   return false;
 };
@@ -23,17 +44,18 @@ const match = (ts, reg, verbose) => {
   if (typeof reg === 'string') {
     reg = syntax(reg);
   }
-
-  //hit-the cache first
-  if (stopFast(ts, reg, verbose)) {
+  if (!reg || reg.length === 0) {
     return [];
   }
-
-  //long-match
+  //do a fast-pass for easy negatives
+  if (canIgnore(ts, reg)) {
+    return [];
+  }
+  //ok, start long-match
   let matches = [];
   for (let t = 0; t < ts.terms.length; t++) {
     //don't loop through if '^'
-    if (reg[0] && reg[0].starting && t > 0) {
+    if (t > 0 && reg[0] && reg[0].starting) {
       break;
     }
     let m = startHere(ts, t, reg, verbose);

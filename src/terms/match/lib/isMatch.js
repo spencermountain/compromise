@@ -2,28 +2,29 @@
 const fns = require('./paths').fns;
 
 //compare 1 term to one reg
-const perfectMatch = (term, reg, verbose) => {
+const perfectMatch = (term, reg) => {
   if (!term || !reg) {
     return false;
   }
   //support '.' - any
-  if (reg.anyOne) {
+  if (reg.anyOne === true) {
     return true;
   }
   //pos-match
-  if (reg.tag) {
-    if (term.tag[reg.tag]) {
-      return true;
-    }
-    return false;
+  if (reg.tag !== undefined) {
+    return term.tag[reg.tag];
+  }
+  //text-match
+  if (reg.normal) {
+    return reg.normal === term.normal || reg.normal === term.silent_term;
   }
   //one-of term-match
   if (reg.oneOf) {
     for (let i = 0; i < reg.oneOf.length; i++) {
       let str = reg.oneOf[i];
       //try a tag match
-      if (str.match(/^#/)) {
-        let tag = str.replace(/^#/, '');
+      if (str.charAt(0) === '#') {
+        let tag = str.substr(1, str.length);
         tag = fns.titleCase(tag);
         if (term.tag[tag]) {
           return true;
@@ -34,16 +35,6 @@ const perfectMatch = (term, reg, verbose) => {
       }
     }
     return false;
-  }
-  //text-match
-  if (reg.normal) {
-    if (term.normal === reg.normal || term.text === reg.normal || term.root === reg.normal) {
-      return true;
-    }
-    //try contraction match too
-    if (term.silent_term === reg.normal) {
-      return true;
-    }
   }
   return false;
 };

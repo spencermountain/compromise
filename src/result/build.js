@@ -5,8 +5,6 @@ const p = require('./paths');
 const Terms = p.Terms;
 const fns = p.fns;
 const normalize = require('../term/methods/normalize/normalize').normalize;
-const tagArr = require('../tags');
-
 
 //basically really dirty and stupid.
 const normalizeLex = function(lex) {
@@ -28,33 +26,19 @@ const normalizeLex = function(lex) {
   }, {});
 };
 
-const extendTags = function(newTags) {
-  console.log(newTags);
-  console.log(tagArr);
-};
-
-const fromString = (str, lexicon, tagSet, skipTagging) => {
-
+const fromString = (str, lexicon) => {
   let sentences = [];
+  //allow pre-tokenized input
   if (fns.isArray(str)) {
     sentences = str;
   } else {
     sentences = tokenize(str);
   }
-
-  if (tagSet) {
-    extendTags(tagSet);
-  }
-
   //make sure lexicon obeys standards
   lexicon = normalizeLex(lexicon);
-  let list = sentences.map((s) => Terms.fromString(s, lexicon, skipTagging));
-  //extend tagset for this ref
-  if (tagSet) {
-    extendTags(tagSet);
-  }
+  let list = sentences.map((s) => Terms.fromString(s, lexicon));
 
-  let r = new Text(list, lexicon, null, tagSet);
+  let r = new Text(list, lexicon);
   //give each ts a ref to the result
   r.list.forEach((ts) => {
     ts.refText = r;

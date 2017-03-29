@@ -18,6 +18,7 @@ const replaceMethods = (Terms) => {
     /**swap this for that */
     replaceWith: function (str, tag) {
       let toAdd = Terms.fromString(str);
+      toAdd.tagger();
       if (tag) {
         toAdd.tagAs(tag, 'user-given');
       }

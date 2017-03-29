@@ -6,7 +6,8 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 * 9.0.0
 - fix 'Auxillary' tag typo to 'Auxiliary'
 - optimisation of .match(), and significant speedup
-
+- rename `Term.tag` obj to `Term.tags` so `.tag()` method works consistently
+- add `.tagger()` method and cleanup extra params
 
 ### v.8  &nbsp;
 * 8.0.0 - less-ambitious date-parsing of nl-date forms

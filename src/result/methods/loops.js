@@ -19,6 +19,8 @@ let foreach = [
   'delete',
   'lump',
 
+  'tagger',
+
 // 'tag',
 // 'unTag',
 ];

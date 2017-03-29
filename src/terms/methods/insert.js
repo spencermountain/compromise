@@ -20,7 +20,9 @@ const insertMethods = (Terms) => {
     if (input.isA === 'Term') {
       return new Terms([input]);
     }
-    return Terms.fromString(input);
+    let ts = Terms.fromString(input);
+    ts.tagger();
+    return ts;
   };
 
   const methods = {

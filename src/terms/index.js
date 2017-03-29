@@ -35,7 +35,7 @@ class Terms {
       t.dirty = dirt;
     });
   }
-  posTag() {
+  tagger() {
     tagger(this);
     return this;
   }
@@ -81,17 +81,13 @@ class Terms {
     };
   }
 
-  static fromString(str, lexicon, skipTagging) {
+  static fromString(str, lexicon) {
     let termArr = build(str);
     let ts = new Terms(termArr, lexicon, null);
     //give each term a reference to this ts
     ts.terms.forEach((t) => {
       t.parentTerms = ts;
     });
-    //run the part-of-speech tagger?
-    if (skipTagging !== true) {
-      ts.posTag();
-    }
     return ts;
   }
 }

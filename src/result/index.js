@@ -64,13 +64,12 @@ class Text {
 }
 
 module.exports = Text;
-require('./methods/array')(Text);
+require('./methods/misc')(Text);
 require('./methods/loops')(Text);
 require('./methods/match')(Text);
 require('./methods/out')(Text);
 require('./methods/sort')(Text);
 require('./methods/split')(Text);
-require('./methods/tag')(Text);
 require('./methods/normalize')(Text);
 
 const subset = {

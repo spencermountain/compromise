@@ -93,9 +93,9 @@ class Terms {
 }
 // Terms = require('./methods/lookup')(Terms);
 require('./match')(Terms);
-require('./match/not')(Terms);
-require('./methods/tag')(Terms);
 require('./methods/loops')(Terms);
+require('./match/not')(Terms);
+// require('./methods/tag')(Terms);
 require('./methods/delete')(Terms);
 require('./methods/insert')(Terms);
 require('./methods/misc')(Terms);

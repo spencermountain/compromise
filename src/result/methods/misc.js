@@ -38,8 +38,8 @@ const genericMethods = (Text) => {
 
     /** grab a subset of the results*/
     slice: function (start, end) {
-      this.list=this.list.slice(start, end)
-      return this
+      this.list = this.list.slice(start, end);
+      return this;
     },
 
     /** use only the nth result*/
@@ -98,6 +98,16 @@ const genericMethods = (Text) => {
       }
       let ts = new Terms(terms, this.lexicon, this, null);
       return new Text([ts], this.lexicon, this.parent);
+    },
+
+    /** see if these terms can become this tag*/
+    canBe: function (tag) {
+      this.list.forEach((ts) => {
+        ts.terms = ts.terms.filter((t) => {
+          return t.canBe(tag, this.tagSet);
+        });
+      });
+      return this;
     },
 
   };

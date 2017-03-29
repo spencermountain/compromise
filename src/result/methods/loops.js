@@ -21,8 +21,8 @@ let foreach = [
 
   'tagger',
 
-// 'tag',
-// 'unTag',
+  'tag',
+  'unTag',
 ];
 
 const addMethods = (Text) => {

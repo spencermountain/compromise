@@ -2,6 +2,9 @@
 here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
 
 
+### v.9  &nbsp;
+* 9.0.0 - fix 'Auxillary' tag typo to 'Auxiliary'
+
 ### v.8  &nbsp;
 * 8.0.0 - less-ambitious date-parsing of nl-date forms
 *       - filesize reduction using [efrt](https://github.com/nlp-compromise/efrt) data structure (254k -> 214k)

@@ -16,8 +16,9 @@ var nlp = require('./src/index');
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
 
-let r = nlp('john has been not really walking');
-console.log(r.verbs().data());
+let r = nlp('april 5th – 7th');
+console.log(r.terms().data());
+r.debug();
 
 // console.time('parse');
 // let r = nlp(fresh);

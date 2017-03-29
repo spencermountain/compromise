@@ -3,6 +3,7 @@ const Term = require('../term');
 
 const notWord = {
   '-': true,
+  '–': true,
   '--': true,
   '...': true,
 };

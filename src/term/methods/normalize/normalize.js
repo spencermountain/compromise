@@ -16,6 +16,8 @@ exports.normalize = function(str) {
   str = str.replace(/[\u201C\u201D\u201E\u201F\u2033\u2036"]+/g, '');
   //coerce unicode elipses
   str = str.replace(/\u2026/g, '...');
+  //en-dash
+  str = str.replace(/\u2013/g, '-');
 
   //strip leading & trailing grammatical punctuation
   if (!str.match(/^[:;]/)) {

@@ -2,7 +2,14 @@
 const Terms = require('../../paths').Terms;
 const tagList = require('../../paths').tags;
 const boringTags = {
-  Auxiliary: true
+  Auxiliary: 1,
+  Possessive: 1,
+  TitleCase: 1,
+  ClauseEnd: 1,
+  Comma: 1,
+  CamelCase: 1,
+  UpperCase: 1,
+  Hyphenated: 1,
 };
 
 class Term extends Terms {
@@ -23,7 +30,7 @@ class Term extends Terms {
     };
   }
   bestTag() {
-    let tags = Object.keys(this.t.tag);
+    let tags = Object.keys(this.t.tags);
     tags = tags.sort(); //alphabetical, first
     //then sort by #of parent tags
     tags = tags.sort((a, b) => {

@@ -18,7 +18,7 @@ const unTagDeep = (term, tag, reason) => {
   }
   //support '*' flag - remove all-tags
   if (tag === '*') {
-    term.tag = {};
+    term.tags = {};
     return;
   }
   //remove this tag

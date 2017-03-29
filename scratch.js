@@ -31,4 +31,6 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // r.tag('#Person');
 // console.timeEnd('tag');
 
-nlp('hulk hogan').match('#Person').debug();
+let r = nlp('we live in Toronto Canada and it is cold');
+r.match('#Place+').unTag('*');
+r.debug();

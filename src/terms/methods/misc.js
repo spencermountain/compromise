@@ -21,17 +21,6 @@ const miscMethods = (Terms) => {
     endPunctuation: function () {
       return this.last().terms[0].endPunctuation();
     },
-    canBe: function (tag) {
-      tag = tag || '';
-      tag = tag.replace(/^#/, '');
-      //atleast one of these
-      for (let i = 0; i < this.terms.length; i++) {
-        if (!this.terms[i].canBe(tag)) {
-          return false;
-        }
-      }
-      return true;
-    },
     index: function() {
       let parent = this.parentTerms;
       let first = this.terms[0];
@@ -65,7 +54,7 @@ const miscMethods = (Terms) => {
       return n;
     },
     //number of characters in this match
-    chars() {
+    chars: function() {
       return this.terms.reduce((i, t) => {
         i += t.whitespace.before.length;
         i += t.text.length;
@@ -74,8 +63,14 @@ const miscMethods = (Terms) => {
       }, 0);
     },
     //just .length
-    wordCount() {
+    wordCount: function() {
       return this.terms.length;
+    },
+
+    //which terms are consistent with this tag
+    canBe: function (tag) {
+      let terms = this.terms.filter((t) => t.canBe(tag));
+      return new Terms(terms, this.lexicon, this.refText, this.refTerms);
     },
 
     //this has term-order logic, so has to be here

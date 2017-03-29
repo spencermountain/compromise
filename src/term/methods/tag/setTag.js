@@ -31,9 +31,13 @@ const tag_one = (term, tag, reason) => {
   term.tags[tag] = true;
 };
 
-const tagAll = function (term, tag, reason) {
+//give term this tag, as well as its parents
+const tagDeep = function (term, tag, reason) {
+  if (!tag || !term) {
+    return;
+  }
   if (fns.isArray(tag)) {
-    tag.forEach((t) => tagAll(term, t, reason)); //recursive
+    tag.forEach((t) => tagDeep(term, t, reason)); //recursive
     return;
   }
   tag = tag || '';
@@ -49,5 +53,5 @@ const tagAll = function (term, tag, reason) {
 };
 
 
-module.exports = tagAll;
+module.exports = tagDeep;
 // console.log(tagset['Person']);

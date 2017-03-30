@@ -1,6 +1,6 @@
 'use strict';
 //set a term as a particular Part-of-speech
-const path = require('./paths');
+const path = require('../../paths');
 const log = path.log;
 const tagset = path.tags;
 
@@ -20,7 +20,7 @@ const unTag = (term, tag, reason) => {
   }
 };
 
-const unTagDeep = (term, tag, reason) => {
+const wrap = (term, tag, reason) => {
   if (!term || !tag) {
     return;
   }
@@ -33,4 +33,4 @@ const unTagDeep = (term, tag, reason) => {
   unTag(term, tag, reason);
   return;
 };
-module.exports = unTagDeep;
+module.exports = wrap;

@@ -5,12 +5,8 @@ const path = 'tagger/punctuation';
 
 //not so smart (right now)
 const isRomanNumeral = function(t) {
-  if (!t.canBe('RomanNumeral')) {
-    return false;
-  }
-  const str = t.text;
-  if (str.length > 1 && str.match(/^[IVXCM]+$/)) {
-    return true;
+  if (t.text.length > 1 && t.text.match(/^[IVXCM]+$/)) {
+    return t.canBe('RomanNumeral');
   }
   return false;
 };

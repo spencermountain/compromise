@@ -8,6 +8,7 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - fix 'Auxillary' tag typo to 'Auxiliary'
 - optimisation of .match(), and significant speedup
 - add `.tagger()` method and cleanup extra params
+- `.canBe(tag)` method returns individual terms that can be that tag
 
 ### v.8  &nbsp;
 * 8.0.0 - less-ambitious date-parsing of nl-date forms

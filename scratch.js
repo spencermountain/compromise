@@ -16,9 +16,12 @@ nlp.verbose('tagger');
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
 
-let r = nlp('morning'); //.unTag('*').tag('Time').tag('Verb');
+let r = nlp('morning');
+//.unTag('*').tag('Time');
+// console.log(r.canBe('Ordinal').found);
+// console.log(r.canBe('Verb'));
 // console.log(r.terms().data());
-r.debug();
+r.debug(); //dates().debug();
 
 // //===timer
 // console.time('parse');

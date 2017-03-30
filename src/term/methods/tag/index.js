@@ -1,7 +1,7 @@
 'use strict';
 const setTag = require('./setTag');
 const unTag = require('./unTag');
-const tagset = require('./paths').tags;
+const tagset = require('../../paths').tags;
 
 const addMethods = (Term) => {
 

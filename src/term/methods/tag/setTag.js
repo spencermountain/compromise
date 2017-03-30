@@ -1,6 +1,6 @@
 'use strict';
 //set a term as a particular Part-of-speech
-const path = require('./paths');
+const path = require('../../paths');
 const log = path.log;
 const tagset = path.tags;
 const fns = path.fns;

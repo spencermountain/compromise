@@ -1,4 +1,6 @@
 'use strict';
+const fns = require('../fns');
+
 //
 const conflicts = require('./conflicts');
 let nouns = require('./tags/nouns');
@@ -43,14 +45,18 @@ const addChildren = function(tags) {
 //add tags to remove when tagging this one
 const addConflicts = function(tags) {
   Object.keys(tags).forEach((k) => {
-    tags[k].enemy = [];
+    let isEnemy = {};
     for(let i = 0; i < conflicts.length; i++) {
       let arr = conflicts[i];
       if (arr.indexOf(k) !== -1) {
         arr = arr.filter((a) => a !== k);
-        tags[k].enemy = tags[k].enemy.concat(arr);
+        arr.forEach((e) => {
+          isEnemy[e] = true;
+        });
       }
     }
+    //flatten them
+    tags[k].enemy = Object.keys(isEnemy);
   });
 };
 
@@ -86,4 +92,4 @@ const build = () => {
   return tags;
 };
 module.exports = build();
-// console.log(module.exports.Verb);
+// console.log(module.exports.Singular);

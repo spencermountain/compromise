@@ -3,7 +3,6 @@
 //use it for messing around.
 var nlp = require('./src/index');
 nlp.verbose('tagger');
-// var nlp = require('./builds/helloCompiled');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
 // const fresh = require('./test/unit/lib/freshPrince.js');
@@ -16,10 +15,9 @@ nlp.verbose('tagger');
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
 
-let r = nlp('morning');
-//.unTag('*').tag('Time');
-// console.log(r.canBe('Ordinal').found);
-// console.log(r.canBe('Verb'));
+let r = nlp.tokenize('morning').tag('Time');
+// let r = nlp('morning').unTag('*').tag('Time');
+console.log(r.list[0].terms[0].canBe('Gerund'));
 // console.log(r.terms().data());
 r.debug(); //dates().debug();
 

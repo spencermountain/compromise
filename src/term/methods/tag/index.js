@@ -21,7 +21,8 @@ const addMethods = (Term) => {
       tag = tag.replace(/^#/, '');
       let enemies = tagset[tag].enemy || [];
       for (let i = 0; i < enemies.length; i++) {
-        if (this.tags[enemies[i]]) {
+
+        if (this.tags[enemies[i]] === true) {
           return false;
         }
       }

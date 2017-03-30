@@ -16,7 +16,7 @@ nlp.verbose('tagger');
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
 
-let r = nlp('morning');
+let r = nlp('morning').unTag('*').tag('Time').tag('Verb');
 // console.log(r.terms().data());
 r.debug();
 

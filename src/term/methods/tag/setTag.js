@@ -4,6 +4,7 @@ const path = require('./paths');
 const log = path.log;
 const tagset = path.tags;
 const fns = path.fns;
+const unTag = require('./unTag');
 
 const putTag = (term, tag, reason) => {
   tag = tag.replace(/^#/, '');
@@ -19,7 +20,9 @@ const putTag = (term, tag, reason) => {
     //drop any conflicting tags
     let enemies = tagset[tag].enemy;
     for (let i = 0; i < enemies.length; i++) {
-      delete term.tags[enemies[i]];
+      if (term.tags[enemies[i]] === true) {
+        unTag(term, enemies[i], reason);
+      }
     }
     //apply implicit tags
     if (tagset[tag].is) {

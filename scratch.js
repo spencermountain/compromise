@@ -15,11 +15,8 @@ var nlp = require('./src/index');
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
 
-let r = nlp.tokenize('morning').tag('Time');
-// let r = nlp('morning').unTag('*').tag('Time');
-console.log(r.list[0].terms[0].canBe('Gerund'));
-// console.log(r.terms().data());
-// r.debug(); //dates().debug();
+let r = nlp.tokenize('5th - 7th').tag('NumberRange').debug();
+// r.contractions().debug();
 
 // //===timer
 // console.time('parse');

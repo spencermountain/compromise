@@ -2,7 +2,6 @@
 const setTag = require('./setTag');
 const unTag = require('./unTag');
 const canBe = require('./canBe');
-const tagset = require('../../paths').tags;
 
 const addMethods = (Term) => {
 
@@ -15,12 +14,12 @@ const addMethods = (Term) => {
     unTag: function(tag, reason) {
       unTag(this, tag, reason);
     },
-
     /** is this tag compatible with this word */
     canBe: function (tag) {
+      tag = tag || '';
+      tag = tag.replace(/^#/, '');
       return canBe(this, tag);
-    },
-
+    }
   };
 
   //hook them into term.prototype

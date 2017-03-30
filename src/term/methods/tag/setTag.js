@@ -45,6 +45,10 @@ const wrap = function (term, tag, reason) {
     return;
   }
   putTag(term, tag, reason);
+  //add 'extra' tag (for some special tags)
+  if (tagset[tag] && tagset[tag].also !== undefined) {
+    putTag(term, tagset[tag].also, reason);
+  }
 };
 
 module.exports = wrap;

@@ -25,6 +25,7 @@ module.exports = {
     is: 'Value'
   },
   NumberRange: {
-    is: 'Value'
+    is: 'Value',
+    also: 'Contraction'
   },
 };

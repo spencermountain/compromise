@@ -51,7 +51,7 @@ const not_matches = [
 ];
 
 const generic_transformation = function(s) {
-  if (s.match(/e$/)) {
+  if (s.charAt(s.length - 1) === 'e') {
     return s + 'st';
   }
   return s + 'est';
@@ -67,23 +67,19 @@ const to_superlative = function(str) {
       return str.replace(transforms[i].reg, transforms[i].repl);
     }
   }
-
   if (convertables.hasOwnProperty(str)) {
     return generic_transformation(str);
   }
-
   if (dont.hasOwnProperty(str)) {
     return 'most ' + str;
   }
-
   for (let i = 0; i < not_matches.length; i++) {
-    if (not_matches[i].test(str)) {
+    if (not_matches[i].test(str) === true) {
       return 'most ' + str;
     }
   }
-
   for (let i = 0; i < matches.length; i++) {
-    if (matches[i].test(str)) {
+    if (matches[i].test(str) === true) {
       if (irregulars.hasOwnProperty(str)) {
         return irregulars[str];
       }
@@ -93,6 +89,5 @@ const to_superlative = function(str) {
   return 'most ' + str;
 };
 
-// console.log(to_superlative("great"))
-
 module.exports = to_superlative;
+// console.log(to_superlative("great"))

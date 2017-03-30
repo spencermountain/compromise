@@ -3,9 +3,13 @@ const log = require('../paths').log;
 const rules = require('./rules/punct_rules');
 const path = 'tagger/punctuation';
 
+//regs-
+const titleCase = /^[A-Z][a-z']/;
+const romanNum = /^[IVXCM]+$/;
+
 //not so smart (right now)
 const isRomanNumeral = function(t) {
-  if (t.text.length > 1 && t.text.match(/^[IVXCM]+$/)) {
+  if (t.text.length > 1 && romanNum.test(t.text) === true) {
     return t.canBe('RomanNumeral');
   }
   return false;
@@ -26,7 +30,7 @@ const punctuation_step = function (ts) {
   ts.terms.forEach((t) => {
     let str = t.text;
     //anything can be titlecase
-    if (/^[A-Z][a-z']/.test(str) === true) {
+    if (titleCase.test(str) === true) {
       t.tag('TitleCase', 'punct-rule');
     }
     //ok, normalise it a little,

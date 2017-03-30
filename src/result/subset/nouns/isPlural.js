@@ -1,6 +1,7 @@
 'use strict';
 const irregulars = require('../../../data').irregular_plurals;
 const rules = require('./methods/data/indicators');
+const prep = /([a-z]*) (of|in|by|for) [a-z]/;
 
 const knownPlural = {
   i: false,
@@ -38,12 +39,12 @@ const isPlural = function (t) {
     return knownPlural[str];
   }
   //inspect the existing tags to see if a plural is valid
-  if (!couldEvenBePlural(t)) {
+  if (couldEvenBePlural(t) === false) {
     return false;
   }
   //handle 'mayors of chicago'
-  const preposition = str.match(/([a-z]*) (of|in|by|for) [a-z]/);
-  if (preposition && preposition[1]) {
+  const preposition = str.match(prep);
+  if (preposition !== null) {
     str = preposition[1];
   }
   // if it's a known irregular case

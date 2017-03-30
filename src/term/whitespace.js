@@ -1,6 +1,8 @@
 'use strict';
+//regs-
 const before = /^(\s|-+|\.\.+)+/;
 const after = /(\s+|-+|\.\.+)$/;
+
 //seperate the 'meat' from the trailing/leading whitespace.
 //works in concert with ./src/result/tokenize.js
 const build_whitespace = (str) => {

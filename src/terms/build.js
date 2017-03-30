@@ -1,5 +1,7 @@
 'use strict';
 const Term = require('../term');
+const hasHyphen = /^([a-z]+)(-)([a-z0-9].*)/i;
+const wordlike = /\S/;
 
 const notWord = {
   '-': true,
@@ -20,8 +22,7 @@ const fromString = function (str) {
   let arr = [];
   for(let i = 0; i < firstSplit.length; i++) {
     let word = firstSplit[i];
-    let hasHyphen = word.match(/^([a-z]+)(-)([a-z0-9].*)/i);
-    if (hasHyphen) {
+    if (hasHyphen.test(word) === true) {
       //support multiple-hyphenated-terms
       let hyphens = word.split('-');
       for(let o = 0; o < hyphens.length; o++) {
@@ -39,7 +40,7 @@ const fromString = function (str) {
   let carry = '';
   for (let i = 0; i < arr.length; i++) {
     //if it's more than a whitespace
-    if (arr[i].match(/\S/) && !notWord[arr[i]]) {
+    if (wordlike.test(arr[i]) === true && notWord[arr[i]] === undefined) {
       all.push(carry + arr[i]);
       carry = '';
     } else {

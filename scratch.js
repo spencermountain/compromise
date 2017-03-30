@@ -35,4 +35,4 @@ let r = nlp(fresh);
 let m = r.match('born').first();
 let place = m.out('offset')[0];
 console.log(place);
-console.log(fresh.substr(place.offset, place.length));
+// console.log(fresh.substr(place.offset, place.length));

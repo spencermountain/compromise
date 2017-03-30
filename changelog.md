@@ -6,9 +6,9 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 * 9.0.0
 - rename `Term.tag` object to `Term.tags` so the `.tag()` method can work throughout more-consistently
 - fix 'Auxillary' tag typo to 'Auxiliary'
-- optimisation of .match(), and significant speedup
-- add `.tagger()` method and cleanup extra params
-- `.canBe(tag)` method returns individual terms that can be that tag
+- optimisation of .match(), and tagset - significant speedup!
+- adds `.tagger()` method and cleanup extra params
+- adds `wordStart` and `wordEnd` offsets to `.out('offset')` for whitespace+punctuation
 
 ### v.8  &nbsp;
 * 8.0.0 - less-ambitious date-parsing of nl-date forms

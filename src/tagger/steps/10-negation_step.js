@@ -1,10 +1,7 @@
 'use strict';
-const log = require('../paths').log;
-const path = 'tagger/negation';
 
 // 'not' is sometimes a verb, sometimes an adjective
 const negation_step = function(ts) {
-  log.here(path);
   for(let i = 0; i < ts.length; i++) {
     let t = ts.get(i);
     if (t.normal === 'not' || t.silent_term === 'not') {

@@ -4,13 +4,10 @@ const afterThisWord = markov.afterThisWord;
 const beforeThisWord = markov.beforeThisWord;
 const beforeThisPos = markov.beforeThisPos;
 const afterThisPos = markov.afterThisPos;
-const log = require('../paths').log;
-const path = 'tagger/neighbours';
 
 //basically a last-ditch effort before everything falls back to a noun
 //for unknown terms, look left + right first, and hit-up the markov-chain for clues
 const neighbour_step = function (ts) {
-  log.here(path);
   ts.terms.forEach((t, n) => {
     //is it still unknown?
     let termTags = Object.keys(t.tags);

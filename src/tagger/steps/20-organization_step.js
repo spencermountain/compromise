@@ -1,7 +1,4 @@
 'use strict';
-const log = require('../paths').log;
-const path = 'tagger/organization_step';
-
 //orgwords like 'bank' in 'Foo Bank'
 let orgWords = require('../paths').tries.utils.orgWords;
 
@@ -23,7 +20,6 @@ const maybeOrg = function(t) {
 };
 
 const organization_step = (ts) => {
-  log.here(path);
   for(let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
     if (orgWords.has(t.normal)) {

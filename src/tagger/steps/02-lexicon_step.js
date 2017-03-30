@@ -3,8 +3,6 @@ const p = require('../paths');
 const split = require('../contraction/split');
 const tries = require('../../tries');
 const lexicon = p.lexicon;
-const log = p.log;
-const path = 'tagger/lexicon';
 
 const check_lexicon = (str, sentence) => {
   //check a user's custom lexicon
@@ -23,7 +21,6 @@ const check_lexicon = (str, sentence) => {
 };
 
 const lexicon_pass = function (ts) {
-  log.here(path);
   let found;
   //loop through each term
   for (let i = 0; i < ts.terms.length; i++) {

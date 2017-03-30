@@ -1,13 +1,9 @@
 'use strict';
-'use strict';
-const log = require('../paths').log;
-const path = 'tagger/value';
 //regs-
 const cardinal = /^[0-9]([0-9]+,)*?(\.[0-9])$/;
 const hasText = /^[a-z]/;
 
 const value_step = function(ts) {
-  log.here(path);
   for(let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
     if (t.tags.Value === true) {

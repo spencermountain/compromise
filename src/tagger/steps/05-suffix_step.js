@@ -1,10 +1,7 @@
 'use strict';
-const log = require('../paths').log;
 const rules = require('./rules/word_rules');
-const path = 'tagger/suffix';
 
 const suffix_step = function(s) {
-  log.here(path);
   s.terms.forEach((t) => {
     //do normalized rules (on t.normal)
     for (let o = 0; o < rules.length; o++) {

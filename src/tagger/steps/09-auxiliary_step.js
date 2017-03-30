@@ -1,6 +1,4 @@
 'use strict';
-const log = require('../paths').log;
-const path = 'tagger/Auxiliary';
 //
 
 const Auxiliary = {
@@ -19,7 +17,6 @@ const Auxiliary = {
 };
 
 const corrections = function(ts) {
-  log.here(path);
   //set verbs as auxillaries
   for(let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];

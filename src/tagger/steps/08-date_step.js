@@ -1,7 +1,4 @@
 'use strict';
-const log = require('../paths').log;
-const path = 'tagger/datePass';
-
 //ambiguous 'may' and 'march'
 const months = '(may|march|jan|april|sep)';
 const preps = '(in|by|before|for|during|on|until|after|of|within)';
@@ -34,7 +31,6 @@ const isYearSafer = (num) => {
 
 //non-destructively tag values & prepositions as dates
 const datePass = function (ts) {
-  log.here(path);
 
   ts.match(`#Month #DateRange+`).tag('Date', 'correction-numberRange');
   // ts.match(`#Month #Value to #Value`).tag('Date', 'correction-contraction');

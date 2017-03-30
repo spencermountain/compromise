@@ -1,7 +1,5 @@
 'use strict';
-const log = require('../paths').log;
 const rules = require('./rules/punct_rules');
-const path = 'tagger/punctuation';
 
 //regs-
 const titleCase = /^[A-Z][a-z']/;
@@ -26,7 +24,6 @@ const oneLetters = {
 };
 
 const punctuation_step = function (ts) {
-  log.here(path);
   ts.terms.forEach((t) => {
     let str = t.text;
     //anything can be titlecase

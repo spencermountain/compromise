@@ -1,6 +1,4 @@
 'use strict';
-const log = require('../paths').log;
-const path = 'tagger/person_step';
 
 let titles = require('../paths').data.titles;
 titles = titles.reduce((h, str) => {
@@ -9,7 +7,6 @@ titles = titles.reduce((h, str) => {
 }, {});
 
 const person_step = function (ts) {
-  log.here(path);
   let reason = 'person-step';
   // x Lastname
   ts.match('#Noun #LastName').firstTerm().canBe('#FirstName').tag('#FirstName', 'noun-lastname');

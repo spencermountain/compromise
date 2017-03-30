@@ -31,7 +31,7 @@ const fasterConjugate = (inf) => {
     }
   });
   for(let i = 0; i < want.length; i++) {
-    if (!all[want[i]]) {
+    if (all[want[i]] === undefined) {
       all[want[i]] = generic[want[i]](all);
     }
   }

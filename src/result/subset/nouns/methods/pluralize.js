@@ -10,7 +10,7 @@ const pluralize = function(str) {
   }
 
   //inflect first word of preposition-phrase
-  if (str.match(/([a-z]*) (of|in|by|for) [a-z]/)) {
+  if (/([a-z]*) (of|in|by|for) [a-z]/.test(str) === true) {
     const first = (str.match(/^([a-z]*) (of|in|by|for) [a-z]/) || [])[1];
     if (first) {
       const better_first = pluralize(first); //recursive
@@ -20,7 +20,7 @@ const pluralize = function(str) {
 
   //regular rule-based inflector
   for (let i = 0; i < pluralRules.length; i++) {
-    if (str.match(pluralRules[i].reg)) {
+    if (pluralRules[i].reg.test(str) === true) {
       return str.replace(pluralRules[i].reg, pluralRules[i].repl);
     }
   }

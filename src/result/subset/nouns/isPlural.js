@@ -55,17 +55,17 @@ const isPlural = function (t) {
   }
   //check the suffix-type rules for indications
   for (let i = 0; i < rules.plural_indicators.length; i++) {
-    if (str.match(rules.plural_indicators[i])) {
+    if (rules.plural_indicators[i].test(str) === true) {
       return true;
     }
   }
   for (let i = 0; i < rules.singular_indicators.length; i++) {
-    if (str.match(rules.singular_indicators[i])) {
+    if (rules.singular_indicators[i].test(str) === true) {
       return false;
     }
   }
   // a fallback 'looks check plural' rule..
-  if (str.match(/s$/) && !str.match(/ss$/) && str.length > 3) { //needs some lovin'
+  if (/s$/.test(str) === true && /ss$/.test(str) === false && str.length > 3) { //needs some lovin'
     return true;
   }
   return false;

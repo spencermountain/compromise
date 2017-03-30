@@ -26,7 +26,7 @@ const punctuation_step = function (ts) {
   ts.terms.forEach((t) => {
     let str = t.text;
     //anything can be titlecase
-    if (str.match(/^[A-Z][a-z']/)) {
+    if (/^[A-Z][a-z']/.test(str) === true) {
       t.tag('TitleCase', 'punct-rule');
     }
     //ok, normalise it a little,
@@ -34,7 +34,7 @@ const punctuation_step = function (ts) {
     //do punctuation rules (on t.text)
     for (let i = 0; i < rules.length; i++) {
       let r = rules[i];
-      if (str.match(r.reg)) {
+      if (r.reg.test(str) === true) {
         //don't over-write any other known tags
         if (t.canBe(r.tag)) {
           t.tag(r.tag, 'punctuation-rule- "' + r.str + '"');

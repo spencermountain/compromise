@@ -9,7 +9,7 @@ const toSingle = function (str) {
     return irregulars[str];
   }
   //inflect first word of preposition-phrase
-  if (str.match(/([a-z]*) (of|in|by|for) [a-z]/)) {
+  if (/([a-z]*) (of|in|by|for) [a-z]/.test(str) === true) {
     const first = (str.match(/^([a-z]*) (of|in|by|for) [a-z]/) || [])[1];
     if (first) {
       const better_first = toSingle(first); //recursive
@@ -19,7 +19,7 @@ const toSingle = function (str) {
 
   //regular rule-based inflector
   for (let i = 0; i < singleRules.length; i++) {
-    if (str.match(singleRules[i].reg)) {
+    if (singleRules[i].reg.test(str) === true) {
       return str.replace(singleRules[i].reg, singleRules[i].repl);
     }
   }

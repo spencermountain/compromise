@@ -18,21 +18,15 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // let r = nlp.tokenize('5th - 7th').tag('NumberRange').debug();
 // r.contractions().debug();
 
-// //===timer
-// console.time('parse');
-// let r = nlp(fresh);
-// console.timeEnd('parse');
-//
-// console.time('match');
-// r.match('#Determiner (story|thing|#Adjective)', true);
-// console.timeEnd('match');
-//
-// console.time('tag');
-// r.tag('#Person');
-// console.timeEnd('tag');
-
+//===timer
+console.time('parse');
 let r = nlp(fresh);
-let m = r.match('born').first();
-let place = m.out('offset')[0];
-console.log(place);
-// console.log(fresh.substr(place.offset, place.length));
+console.timeEnd('parse');
+
+console.time('match');
+r.match('#Determiner (story|thing|#Adjective)', true);
+console.timeEnd('match');
+
+console.time('tag');
+r.tag('#Person');
+console.timeEnd('tag');

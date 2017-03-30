@@ -13,10 +13,10 @@ const keys = Object.keys(mapping);
 const suffixPass = function(inf) {
   let found = {};
   for(let i = 0; i < rules.length; i++) {
-    if (inf.match(rules[i].reg)) {
+    if (rules[i].reg.test(inf) === true) {
       let obj = rules[i].repl;
       for(let o = 0; o < keys.length; o++) {
-        if (obj[keys[o]]) {
+        if (obj[keys[o]] !== undefined) {
           let key = mapping[keys[o]];
           found[key] = inf.replace(rules[i].reg, obj[keys[o]]);
         }

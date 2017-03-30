@@ -63,7 +63,7 @@ const to_superlative = function(str) {
     return irregulars[str];
   }
   for (let i = 0; i < transforms.length; i++) {
-    if (str.match(transforms[i].reg)) {
+    if (transforms[i].reg.test(str)) {
       return str.replace(transforms[i].reg, transforms[i].repl);
     }
   }
@@ -77,13 +77,13 @@ const to_superlative = function(str) {
   }
 
   for (let i = 0; i < not_matches.length; i++) {
-    if (str.match(not_matches[i])) {
+    if (not_matches[i].test(str)) {
       return 'most ' + str;
     }
   }
 
   for (let i = 0; i < matches.length; i++) {
-    if (str.match(matches[i])) {
+    if (matches[i].test(str)) {
       if (irregulars.hasOwnProperty(str)) {
         return irregulars[str];
       }

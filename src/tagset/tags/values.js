@@ -1,7 +1,5 @@
 module.exports = {
-  Value: {
-    not: 'Adjective Verb Adverb'
-  },
+  Value: {},
   Ordinal: {
     is: 'Value'
   },
@@ -11,7 +9,6 @@ module.exports = {
   RomanNumeral: {
     is: 'Cardinal'
   },
-
   Fraction: {
     is: 'Value'
   },

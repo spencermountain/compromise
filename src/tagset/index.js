@@ -86,4 +86,4 @@ const build = () => {
   return tags;
 };
 module.exports = build();
-// console.log(module.exports);
+// console.log(module.exports.Verb);

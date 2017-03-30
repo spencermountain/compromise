@@ -32,5 +32,15 @@ module.exports = {
       title = fns.leftPad(title, 54);
       console.log('       ' + title + '(' + fns.cyan(reason || '') + ')');
     }
+  },
+  unTag: (t, pos, reason) => {
+    if (enable === true || enable === 'tagger') {
+      let title = '-' + t.normal + '-';
+      title = fns.red(title);
+      title = fns.leftPad(title, 20);
+      title += '  ~*   ' + fns.red(pos);
+      title = fns.leftPad(title, 54);
+      console.log('       ' + title + '(' + fns.red(reason || '') + ')');
+    }
   }
 };

@@ -1,7 +1,5 @@
 module.exports = {
-  Verb: {
-    not: 'Noun Adjective Adverb'
-  },
+  Verb: {},
   PresentTense: {
     is: 'Verb',
   },

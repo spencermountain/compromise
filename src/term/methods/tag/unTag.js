@@ -14,7 +14,7 @@ const unTag = (term, tag, reason) => {
     if (tagset[tag]) {
       let also = tagset[tag].downward;
       for(let i = 0; i < also.length; i++) {
-        unTag(term, also[i], reason);
+        unTag(term, also[i], ' - -   - ');
       }
     }
   }

@@ -1,7 +1,7 @@
 'use strict';
 const setTag = require('./setTag');
 const unTag = require('./unTag');
-const tagset = require('./paths').tags;
+const canBe = require('./canBe');
 
 const addMethods = (Term) => {
 
@@ -14,20 +14,12 @@ const addMethods = (Term) => {
     unTag: function(tag, reason) {
       unTag(this, tag, reason);
     },
-
     /** is this tag compatible with this word */
     canBe: function (tag) {
       tag = tag || '';
       tag = tag.replace(/^#/, '');
-      let not = tagset[tag].not || [];
-      for (let i = 0; i < not.length; i++) {
-        if (this.tags[not[i]]) {
-          return false;
-        }
-      }
-      return true;
-    },
-
+      return canBe(this, tag);
+    }
   };
 
   //hook them into term.prototype

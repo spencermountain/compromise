@@ -1,7 +1,7 @@
 'use strict';
 
 //list of inconsistent parts-of-speech
-const conflicts = [
+module.exports = [
   //top-level pos are all inconsistent
   ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression', 'Url', 'PhoneNumber', 'Email', 'Emoji'],
   //exlusive-nouns
@@ -9,10 +9,10 @@ const conflicts = [
   //things that can't be plural
   ['Plural', 'Singular'],
   // ['Plural', 'Pronoun'],
-  ['Plural', 'Person'],
-  ['Plural', 'Organization'],
-  ['Plural', 'Currency'],
-  ['Plural', 'Ordinal'],
+  // ['Plural', 'Person'],
+  // ['Plural', 'Organization'],
+  // ['Plural', 'Currency'],
+  // ['Plural', 'Ordinal'],
   //exlusive-people
   ['MaleName', 'FemaleName'],
   ['FirstName', 'LastName', 'Honorific'],
@@ -31,29 +31,11 @@ const conflicts = [
   ['Month', 'WeekDay', 'Year', 'Duration'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
   ['Date', 'Verb', 'Adjective', 'Person'],
-  //phrases
-  ['NounPhrase', 'VerbPhrase', 'AdjectivePhrase', 'ConditionalPhrase'],
   //a/an -> 1
   ['Value', 'Determiner'],
-  ['Verb', 'NounPhrase'],
-  ['Noun', 'VerbPhrase'],
   //roman numerals
   ['RomanNumeral', 'Fraction', 'NiceNumber'],
   ['RomanNumeral', 'Money'],
   //cases
   ['UpperCase', 'TitleCase', 'CamelCase']
 ];
-
-const find = (tag) => {
-  let arr = [];
-  for (let i = 0; i < conflicts.length; i++) {
-    if (conflicts[i].indexOf(tag) !== -1) {
-      arr = arr.concat(conflicts[i]);
-    }
-  }
-  return arr.filter((t) => t !== tag);
-};
-
-module.exports = find;
-
-// console.log(find('Person'));

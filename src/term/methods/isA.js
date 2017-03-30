@@ -1,4 +1,11 @@
 'use strict';
+//regs-
+const periodAcronym = /([A-Z]\.)+[A-Z]?$/;
+const oneLetterAcronym = /^[A-Z]\.$/;
+const noPeriodAcronym = /[A-Z]{3}$/;
+const hasVowel = /[aeiouy]/i;
+const hasLetter = /[a-z]/;
+const hasNumber = /[0-9]/;
 
 const addMethods = (Term) => {
 
@@ -6,15 +13,15 @@ const addMethods = (Term) => {
     /** does it appear to be an acronym, like FBI or M.L.B. */
     isAcronym: function () {
       //like N.D.A
-      if (this.text.match(/([A-Z]\.)+[A-Z]?$/)) {
+      if (periodAcronym.test(this.text) === true) {
         return true;
       }
       //like 'F.'
-      if (this.text.match(/^[A-Z]\.$/)) {
+      if (oneLetterAcronym.test(this.text) === true) {
         return true;
       }
       //like NDA
-      if (this.text.match(/[A-Z]{3}$/)) {
+      if (noPeriodAcronym.test(this.text) === true) {
         return true;
       }
       return false;
@@ -28,21 +35,21 @@ const addMethods = (Term) => {
         return true;
       }
       //no letters or numbers
-      if (!t.text.match(/[a-z|0-9]/i)) {
+      if (/[a-z|A-Z|0-9]/.test(t.text) === false) {
         return false;
       }
       //has letters, but with no vowels
-      if (t.normal.match(/[a-z]/) && t.normal.length > 1 && !t.normal.match(/[aeiouy]/i)) {
+      if (t.normal.length > 1 && hasLetter.test(t.normal) === true && hasVowel.test(t.normal) === false) {
         return false;
       }
       //has numbers but not a 'value'
-      if (t.normal.match(/[0-9]/)) {
+      if (hasNumber.test(t.normal) === true) {
         //s4e
-        if (t.normal.match(/[a-z][0-9][a-z]/)) {
+        if (/[a-z][0-9][a-z]/.test(t.normal) === true) {
           return false;
         }
         //ensure it looks like a 'value' eg '-$4,231.00'
-        if (!t.normal.match(/^([$-])*?([0-9,\.])*?([s\$%])*?$/)) {
+        if (/^([$-])*?([0-9,\.])*?([s\$%])*?$/.test(t.normal) === false) {
           return false;
         }
       }

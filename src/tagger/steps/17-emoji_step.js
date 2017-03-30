@@ -6,7 +6,7 @@ const emoticon = require('./rules/emoticon_list');
 const isCommaEmoji = (t) => {
   if (t.text.charAt(0) === ':') {
     //end comma can be last or second-last ':haircut_tone3:‍♀️'
-    if (!t.text.match(/:.?$/)) {
+    if (t.text.match(/:.?$/) === null) {
       return false;
     }
     //ensure no spaces

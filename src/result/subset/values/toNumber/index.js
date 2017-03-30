@@ -6,6 +6,7 @@ const isValid = require('./validate');
 const parseDecimals = require('./parseDecimals');
 const log = require('../paths').log;
 const path = 'parseNumber';
+const improperFraction = /^([0-9,\. ]+)\/([0-9,\. ]+)$/;
 
 //some numbers we know
 const casualForms = {
@@ -81,24 +82,23 @@ const parse = function(ts) {
       return sum;
     }
     //improper fraction
-    const improperFractionMatch = w.match(/^([0-9,\. ]+)\/([0-9,\. ]+)$/);
-    if (improperFractionMatch) {
-      log.here('fractionMath', path);
-      const num = parseFloat(improperFractionMatch[1].replace(/[, ]/g, ''));
-      const denom = parseFloat(improperFractionMatch[2].replace(/[, ]/g, ''));
+    const fm = w.match(improperFraction);
+    if (fm) {
+      const num = parseFloat(fm[1].replace(/[, ]/g, ''));
+      const denom = parseFloat(fm[2].replace(/[, ]/g, ''));
       if (denom) {
         sum += (num / denom) || 0;
       }
       continue;
     }
     //prevent mismatched units, like 'seven eleven'
-    if (!isValid(w, has)) {
+    if (isValid(w, has) === false) {
       log.tell('invalid state', path);
       log.tell(has, path);
       return null;
     }
     //buildup section, collect 'has' values
-    if (w.match(/^[0-9\.]+$/)) {
+    if (/^[0-9\.]+$/.test(w)) {
       has['ones'] = parseFloat(w); //not technically right
     } else if (words.ones[w]) {
       has['ones'] = words.ones[w];
@@ -115,7 +115,7 @@ const parse = function(ts) {
       }
       //support 'hundred thousand'
       //this one is tricky..
-      if (mult === 100 && terms[i + 1]) {
+      if (mult === 100 && terms[i + 1] !== undefined) {
         // has['hundreds']=
         var w2 = terms[i + 1];
         if (words.multiples[w2]) {

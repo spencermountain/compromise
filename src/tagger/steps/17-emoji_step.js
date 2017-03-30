@@ -1,11 +1,10 @@
 'use strict';
-const fns = require('../paths').fns;
 const emojiReg = require('./rules/emoji_regex');
 const emoticon = require('./rules/emoticon_list');
 //test for forms like ':woman_tone2:‍:ear_of_rice:'
 //https://github.com/Kikobeats/emojis-keywords/blob/master/index.js
 const isCommaEmoji = (t) => {
-  if (fns.startsWith(t.text, ':')) {
+  if (t.text.charAt(0) === ':') {
     //end comma can be last or second-last ':haircut_tone3:‍♀️'
     if (!t.text.match(/:.?$/)) {
       return false;
@@ -27,8 +26,7 @@ const isCommaEmoji = (t) => {
 const isEmoticon = (t) => {
   //normalize the 'eyes'
   let str = t.text.replace(/^[:;]/, ':');
-  str = str.replace(/[:;]$/, ':');
-  return emoticon[str];
+  return emoticon[str] !== undefined;
 };
 
 //

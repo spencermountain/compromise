@@ -2,60 +2,28 @@
 //identify urls, hashtags, @mentions, emails
 const log = require('../paths').log;
 const path = 'tagger/web_step';
-// 'Email': Noun,
-// 'Url': Noun,
-// 'AtMention': Noun,
-// 'HashTag': Noun,
-
-const is_email = function(str) {
-  if (str.match(/^\w+@\w+\.[a-z]{2,3}$/)) { //not fancy
-    return true;
-  }
-  return false;
-};
-
-const is_hashtag = function(str) {
-  if (str.match(/^#[a-z0-9_]{2,}$/)) {
-    return true;
-  }
-  return false;
-};
-
-const is_atmention = function(str) {
-  if (str.match(/^@\w{2,}$/)) {
-    return true;
-  }
-  return false;
-};
-
-const is_url = function(str) {
-  //with http/www
-  if (str.match(/^(https?:\/\/|www\.)\w+\.[a-z]{2,3}/)) { //not fancy
-    return true;
-  }
-  // 'boo.com'
-  //http://mostpopularwebsites.net/top-level-domain
-  if (str.match(/^[\w\.\/]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/)) {
-    return true;
-  }
-  return false;
-};
+//regs
+const email = /^\w+@\w+\.[a-z]{2,3}$/; //not fancy
+const hashTag = /^#[a-z0-9_]{2,}$/;
+const atMention = /^@\w{2,}$/;
+const urlA = /^(https?:\/\/|www\.)\w+\.[a-z]{2,3}/; //with http/www
+const urlB = /^[\w\.\/]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/; //http://mostpopularwebsites.net/top-level-domain
 
 const web_pass = function(terms) {
   log.here(path);
   for (let i = 0; i < terms.length; i++) {
     let t = terms.get(i);
     let str = t.text.trim().toLowerCase();
-    if (is_email(str)) {
+    if (email.test(str) === true) {
       t.tag('Email', 'web_pass');
     }
-    if (is_hashtag(str)) {
+    if (hashTag.test(str) === true) {
       t.tag('HashTag', 'web_pass');
     }
-    if (is_atmention(str)) {
+    if (atMention.test(str) === true) {
       t.tag('AtMention', 'web_pass');
     }
-    if (is_url(str)) {
+    if (urlA.test(str) === true || urlB.test(str) === true) {
       t.tag('Url', 'web_pass');
     }
   }

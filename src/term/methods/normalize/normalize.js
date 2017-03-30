@@ -20,7 +20,7 @@ exports.normalize = function(str) {
   str = str.replace(/\u2013/g, '-');
 
   //strip leading & trailing grammatical punctuation
-  if (!str.match(/^[:;]/)) {
+  if (/^[:;]/.test(str) === false) {
     str = str.replace(/\.{3,}$/g, '');
     str = str.replace(/['",\.!:;\?\)]$/g, '');
     str = str.replace(/^['"\(]/g, '');

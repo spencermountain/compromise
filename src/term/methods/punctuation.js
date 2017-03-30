@@ -1,11 +1,11 @@
 'use strict';
-
+const endPunct = /([a-z])([,:;\/.(\.\.\.)\!\?]+)$/i;
 const addMethods = (Term) => {
 
   const methods = {
     /** the punctuation at the end of this term*/
     endPunctuation: function() {
-      let m = this.text.match(/[a-z]([,:;\/.(\.\.\.)\!\?]+)$/i);
+      let m = this.text.match(endPunct);
       if (m) {
         const allowed = {
           ',': 'comma',
@@ -16,14 +16,14 @@ const addMethods = (Term) => {
           '!': 'exclamation',
           '?': 'question'
         };
-        if (allowed[m[1]]) {
-          return m[1];
+        if (allowed[m[2]] !== undefined) {
+          return m[2];
         }
       }
       return null;
     },
     setPunctuation: function(punct) {
-      this.text = this.text.replace(/([a-z])([,:;\/.(\.\.\.)\!\?]+)$/i, '$1');
+      this.killPunctuation();
       this.text += punct;
       return this;
     },
@@ -37,7 +37,7 @@ const addMethods = (Term) => {
     },
 
     killPunctuation: function () {
-      this.text = this._text.replace(/([,:;\/.(\.\.\.)\!\?]+)$/, '');
+      this.text = this._text.replace(endPunct, '$1');
       return this;
     },
   };

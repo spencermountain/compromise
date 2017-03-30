@@ -1,6 +1,7 @@
 'use strict';
 const setTag = require('./setTag');
 const unTag = require('./unTag');
+const canBe = require('./canBe');
 const tagset = require('../../paths').tags;
 
 const addMethods = (Term) => {
@@ -17,16 +18,7 @@ const addMethods = (Term) => {
 
     /** is this tag compatible with this word */
     canBe: function (tag) {
-      tag = tag || '';
-      tag = tag.replace(/^#/, '');
-      let enemies = tagset[tag].enemy || [];
-      for (let i = 0; i < enemies.length; i++) {
-
-        if (this.tags[enemies[i]] === true) {
-          return false;
-        }
-      }
-      return true;
+      return canBe(this, tag);
     },
 
   };

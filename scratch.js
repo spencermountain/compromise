@@ -2,7 +2,7 @@
 //this file is not included in the build.
 //use it for messing around.
 var nlp = require('./src/index');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
 // const fresh = require('./test/unit/lib/freshPrince.js');
@@ -19,7 +19,7 @@ let r = nlp.tokenize('morning').tag('Time');
 // let r = nlp('morning').unTag('*').tag('Time');
 console.log(r.list[0].terms[0].canBe('Gerund'));
 // console.log(r.terms().data());
-r.debug(); //dates().debug();
+// r.debug(); //dates().debug();
 
 // //===timer
 // console.time('parse');

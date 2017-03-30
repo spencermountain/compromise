@@ -1,5 +1,4 @@
 'use strict';
-const fns = require('../fns');
 
 //
 const conflicts = require('./conflicts');
@@ -45,18 +44,32 @@ const addChildren = function(tags) {
 //add tags to remove when tagging this one
 const addConflicts = function(tags) {
   Object.keys(tags).forEach((k) => {
-    let isEnemy = {};
+    tags[k].enemy = {};
     for(let i = 0; i < conflicts.length; i++) {
       let arr = conflicts[i];
       if (arr.indexOf(k) !== -1) {
         arr = arr.filter((a) => a !== k);
         arr.forEach((e) => {
-          isEnemy[e] = true;
+          tags[k].enemy[e] = true;
         });
       }
     }
-    //flatten them
-    tags[k].enemy = Object.keys(isEnemy);
+  });
+  //get enemies of parents
+  // Object.keys(tags).forEach((k) => {
+  // let k = 'Gerund';
+  // if (tags[k].is) {
+  //   let parent = tags[k].is;
+  //   let keys = Object.keys(tags[parent].enemy);
+  //   console.log(tags[parent]);
+  //   for(let i = 0; i < keys.length; i++) {
+  //     tags[k][keys[i]] = true;
+  //   }
+  // }
+  // });
+  //flatten them
+  Object.keys(tags).forEach((k) => {
+    tags[k].enemy = Object.keys(tags[k].enemy);
   });
 };
 
@@ -92,4 +105,4 @@ const build = () => {
   return tags;
 };
 module.exports = build();
-// console.log(module.exports.Singular);
+// console.log(module.exports.Gerund.enemy);

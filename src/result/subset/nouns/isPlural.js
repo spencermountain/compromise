@@ -22,7 +22,7 @@ const noPlural = [
   'Holiday',
 ];
 //first, try to guess based on existing tags
-const couldEvenBePlural = (t) => {
+const couldEvenBePlural = function(t) {
   for (let i = 0; i < noPlural.length; i++) {
     if (t.tags[noPlural[i]]) {
       return false;
@@ -72,12 +72,5 @@ const isPlural = function (t) {
   return false;
 };
 
-// console.log(is_plural('octopus') === false)
-// console.log(is_plural('octopi') === true)
-// console.log(is_plural('eyebrow') === false)
-// console.log(is_plural('eyebrows') === true)
-// console.log(is_plural('child') === false)
-// console.log(is_plural('children') === true)
-// console.log(is_plural('days') === true)
-
 module.exports = isPlural;
+// console.log(is_plural('octopus') === false)

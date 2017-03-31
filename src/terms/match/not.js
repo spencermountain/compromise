@@ -2,8 +2,7 @@
 //
 const syntax = require('./lib/syntax');
 const startHere = require('./lib/startHere');
-const Text = require('../../result/index');
-// const diff = require('./diff');
+const Text = require('../../result');
 
 const addfns = (Terms) => {
 

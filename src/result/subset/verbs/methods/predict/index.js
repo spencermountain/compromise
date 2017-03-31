@@ -1,5 +1,4 @@
 'use strict';
-const fns = require('../../../../../fns'); //jaja!
 const suffix_rules = require('./suffix_rules');
 
 const goodTypes = {
@@ -16,7 +15,7 @@ const goodTypes = {
 
 const predictForm = function(term, verbose) {
   //do we already know the form?
-  let keys = Object.keys(goodTypes);
+  const keys = Object.keys(goodTypes);
   for (let i = 0; i < keys.length; i++) {
     if (term.tags[keys[i]]) {
       if (verbose) {
@@ -28,11 +27,8 @@ const predictForm = function(term, verbose) {
   //consult our handy suffix rules
   const arr = Object.keys(suffix_rules);
   for (let i = 0; i < arr.length; i++) {
-    if (fns.endsWith(term.normal, arr[i]) && arr[i].length < term.normal.length) {
-      if (verbose) {
-        const msg = 'predicted ' + suffix_rules[arr[i]] + ' from suffix ' + arr[i];
-        console.log(msg, path);
-      }
+    const substr = term.normal.substr(-arr[i].length);
+    if (substr === arr[i] && term.normal.length > arr[i].length) {
       return suffix_rules[arr[i]];
     }
   }

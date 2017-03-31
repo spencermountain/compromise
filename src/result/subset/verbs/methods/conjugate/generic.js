@@ -1,19 +1,18 @@
 'use strict';
 //non-specifc, 'hail-mary' transforms from infinitive, into other forms
-const fns = require('../../../../../fns'); //yeah, yikes. (needs to be called before paths)
 const hasY = /[bcdfghjklmnpqrstvwxz]y$/;
 const generic = {
 
   Gerund: (o) => {
-    let inf = o.Infinitive;
-    if (fns.endsWith(inf, 'e')) {
+    const inf = o.Infinitive;
+    if (inf.charAt(inf.length - 1) === 'e') {
       return inf.replace(/e$/, 'ing');
     }
     return inf + 'ing';
   },
 
   PresentTense: (o) => {
-    let inf = o.Infinitive;
+    const inf = o.Infinitive;
     if (inf.charAt(inf.length - 1) === 's') {
       return inf + 'es';
     }
@@ -24,11 +23,11 @@ const generic = {
   },
 
   PastTense: (o) => {
-    let inf = o.Infinitive;
-    if (fns.endsWith(inf, 'e')) {
+    const inf = o.Infinitive;
+    if (inf.charAt(inf.length - 1) === 'e') {
       return inf + 'd';
     }
-    if (fns.endsWith(inf, 'ed')) {
+    if (inf.substr(-2) === 'ed') {
       return inf;
     }
     if (hasY.test(inf) === true) {

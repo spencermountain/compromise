@@ -12,19 +12,19 @@ const notWord = {
 
 //turn a string into an array of terms (naiive for now, lumped later)
 const fromString = function (str) {
-  let all = [];
+  let result = [];
+  let arr = [];
   //start with a naiive split
   str = str || '';
   if (typeof str === 'number') {
     str = '' + str;
   }
-  let firstSplit = str.split(/(\S+)/);
-  let arr = [];
+  const firstSplit = str.split(/(\S+)/);
   for(let i = 0; i < firstSplit.length; i++) {
-    let word = firstSplit[i];
+    const word = firstSplit[i];
     if (hasHyphen.test(word) === true) {
       //support multiple-hyphenated-terms
-      let hyphens = word.split('-');
+      const hyphens = word.split('-');
       for(let o = 0; o < hyphens.length; o++) {
         if (o === hyphens.length - 1) {
           arr.push(hyphens[o]);
@@ -41,16 +41,16 @@ const fromString = function (str) {
   for (let i = 0; i < arr.length; i++) {
     //if it's more than a whitespace
     if (wordlike.test(arr[i]) === true && notWord[arr[i]] === undefined) {
-      all.push(carry + arr[i]);
+      result.push(carry + arr[i]);
       carry = '';
     } else {
       carry += arr[i];
     }
   }
   //handle last one
-  if (carry && all.length > 0) {
-    all[all.length - 1] += carry; //put it on the end
+  if (carry && result.length > 0) {
+    result[result.length - 1] += carry; //put it on the end
   }
-  return all.map((t) => new Term(t));
+  return result.map((t) => new Term(t));
 };
 module.exports = fromString;

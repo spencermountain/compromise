@@ -4,8 +4,6 @@ const findModifiers = require('./findModifiers');
 const words = require('./data');
 const isValid = require('./validate');
 const parseDecimals = require('./parseDecimals');
-const log = require('../paths').log;
-const path = 'parseNumber';
 const improperFraction = /^([0-9,\. ]+)\/([0-9,\. ]+)$/;
 
 //some numbers we know
@@ -20,7 +18,6 @@ const casualForms = {
 // a 'section' is something like 'fifty-nine thousand'
 // turn a section into something we can add to - like 59000
 const section_sum = (obj) => {
-  // console.log(obj);
   return Object.keys(obj).reduce((sum, k) => {
     sum += obj[k];
     return sum;
@@ -38,7 +35,6 @@ const alreadyNumber = (ts) => {
 
 //turn a string into a number
 const parse = function(ts) {
-  log.here('parseNumber', path);
   let str = ts.out('normal');
   //convert some known-numbers
   if (casualForms[str] !== undefined) {
@@ -52,17 +48,15 @@ const parse = function(ts) {
   if (alreadyNumber(ts)) {
     return parseNumeric(ts.out('normal'));
   }
-  let modifier = findModifiers(str);
+  const modifier = findModifiers(str);
   str = modifier.str;
   let last_mult = null;
   let has = {};
   let sum = 0;
   let isNegative = false;
-  let terms = str.split(/[ -]/);
-  // console.log(terms);
+  const terms = str.split(/[ -]/);
   for (let i = 0; i < terms.length; i++) {
     let w = terms[i];
-    // console.log(i + '  - ' + w);
     if (!w || w === 'and') {
       continue;
     }
@@ -70,7 +64,7 @@ const parse = function(ts) {
       isNegative = true;
       continue;
     }
-    if (w.startsWith('-')) {
+    if (w.charAt(0) === '-') {
       isNegative = true;
       w = w.substr(1);
     }
@@ -93,8 +87,6 @@ const parse = function(ts) {
     }
     //prevent mismatched units, like 'seven eleven'
     if (isValid(w, has) === false) {
-      log.tell('invalid state', path);
-      log.tell(has, path);
       return null;
     }
     //buildup section, collect 'has' values
@@ -110,14 +102,13 @@ const parse = function(ts) {
       let mult = words.multiples[w];
       //something has gone wrong : 'two hundred five hundred'
       if (mult === last_mult) {
-        log.tell('invalid multiplier', path);
         return null;
       }
       //support 'hundred thousand'
       //this one is tricky..
       if (mult === 100 && terms[i + 1] !== undefined) {
         // has['hundreds']=
-        var w2 = terms[i + 1];
+        const w2 = terms[i + 1];
         if (words.multiples[w2]) {
           mult *= words.multiples[w2]; //hundredThousand/hundredMillion
           i += 1;
@@ -137,8 +128,6 @@ const parse = function(ts) {
         has = {};
       }
     }
-  // console.log(w + '=-------');
-  // console.log(has);
   }
   //dump the remaining has values
   sum += section_sum(has);

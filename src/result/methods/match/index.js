@@ -1,6 +1,6 @@
 'use strict';
 const syntaxParse = require('../../../terms/match/lib/syntax');
-const Terms = require('../../../terms/index');
+const Terms = require('../../../terms');
 
 const splitMethods = (Text) => {
 

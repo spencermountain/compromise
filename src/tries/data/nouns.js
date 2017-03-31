@@ -48,6 +48,7 @@ let nouns = [
   'stuff',
   'super bowl',
   'system',
+  'tic',
   'there',
   'thing',
   'things',

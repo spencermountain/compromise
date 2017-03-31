@@ -38,22 +38,6 @@ exports.ensureObject = (input) => {
   }
   return input;
 };
-//string utilities
-exports.endsWith = function (str, suffix) {
-  if (str && str.substr(-suffix.length) === suffix) {
-    return true;
-  }
-  return false;
-};
-
-exports.startsWith = function (str, prefix) {
-  if (str && prefix) {
-    if (str.substr(0, prefix.length) === prefix) {
-      return true;
-    }
-  }
-  return false;
-};
 
 exports.titleCase = (str) => {
   return str.charAt(0).toUpperCase() + str.substr(1);
@@ -79,7 +63,7 @@ exports.copy = (o) => {
 };
 exports.extend = (obj, a) => {
   obj = exports.copy(obj);
-  let keys = Object.keys(a);
+  const keys = Object.keys(a);
   for(let i = 0; i < keys.length; i++) {
     obj[keys[i]] = a[keys[i]];
   }
@@ -110,16 +94,16 @@ exports.black = function(str) {
 };
 exports.printTag = function(tag) {
   if (tagset[tag]) {
-    let color = tagset[tag].color || 'black';
+    const color = tagset[tag].color || 'black';
     return exports[color](tag);
   }
   return tag;
 };
 exports.printTerm = function(t) {
-  let tags = Object.keys(t.tags);
+  const tags = Object.keys(t.tags);
   for(let i = 0; i < tags.length; i++) {
     if (tagset[tags[i]]) {
-      let color = tagset[tags[i]].color || 'black';
+      const color = tagset[tags[i]].color || 'black';
       return exports[color](t.plaintext);
     }
   }

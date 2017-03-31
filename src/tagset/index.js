@@ -2,11 +2,11 @@
 
 //
 const conflicts = require('./conflicts');
-let nouns = require('./tags/nouns');
-let verbs = require('./tags/verbs');
-let values = require('./tags/values');
-let dates = require('./tags/dates');
-let misc = require('./tags/misc');
+const nouns = require('./tags/nouns');
+const verbs = require('./tags/verbs');
+const values = require('./tags/values');
+const dates = require('./tags/dates');
+const misc = require('./tags/misc');
 
 //used for pretty-printing on the server-side
 const colors = {
@@ -29,7 +29,7 @@ const addIn = function(obj, tags) {
 
 //add 'downward' tags (that immediately depend on this one)
 const addChildren = function(tags) {
-  let keys = Object.keys(tags);
+  const keys = Object.keys(tags);
   keys.forEach((k) => {
     tags[k].downward = [];
     //look for tags with this as parent
@@ -54,21 +54,6 @@ const addConflicts = function(tags) {
         });
       }
     }
-  });
-  //get enemies of parents
-  // Object.keys(tags).forEach((k) => {
-  // let k = 'Gerund';
-  // if (tags[k].is) {
-  //   let parent = tags[k].is;
-  //   let keys = Object.keys(tags[parent].enemy);
-  //   console.log(tags[parent]);
-  //   for(let i = 0; i < keys.length; i++) {
-  //     tags[k][keys[i]] = true;
-  //   }
-  // }
-  // });
-  //flatten them
-  Object.keys(tags).forEach((k) => {
     tags[k].enemy = Object.keys(tags[k].enemy);
   });
 };

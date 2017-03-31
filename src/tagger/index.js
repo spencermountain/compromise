@@ -22,7 +22,7 @@ const step = {
   organization_step: require('./steps/20-organization_step'),
   plural_step: require('./steps/21-plural_step'),
 
-  lumper : require('./lumper/index'),
+  lumper : require('./lumper'),
   lexicon_lump : require('./lumper/lexicon_lump'),
   contraction: require('./contraction')
 };
@@ -30,13 +30,14 @@ const corrections = require('./corrections');
 const tagPhrase = require('./phrase');
 
 const tagger = function (ts) {
-  console.time('tagger');
   ts = step.punctuation_step(ts); //1ms
   ts = step.emoji_step(ts);
   ts = step.lexicon_step(ts); //1ms
   ts = step.lexicon_lump(ts); //1ms
   ts = step.web_step(ts);
+  console.time('tagger');
   ts = step.suffix_step(ts); //2ms
+  console.timeEnd('tagger');
   ts = step.neighbour_step(ts);
   ts = step.capital_step(ts);
   ts = step.noun_fallback(ts);
@@ -56,7 +57,6 @@ const tagger = function (ts) {
   ts = step.lumper(ts);
   ts = corrections(ts); //1ms
   ts = tagPhrase(ts);
-  console.timeEnd('tagger');
   return ts;
 };
 

@@ -2,192 +2,140 @@
 //regex suffix patterns and their most common parts of speech,
 //built using wordnet, by spencer kelly.
 //this mapping shrinks-down the uglified build
-const Adjective = 'Adjective',
-  Infinitive = 'Infinitive',
-  PresentTense = 'PresentTense',
-  Singular = 'Singular',
-  PastTense = 'PastTense',
-  Adverb = 'Adverb',
-  Expression = 'Expression',
-  Plural = 'Plural',
-  Actor = 'Actor',
-  Verb = 'Verb',
-  Noun = 'Noun',
-  LastName = 'LastName';
+const Adj = 'Adjective';
+const Inf = 'Infinitive';
+const Pres = 'PresentTense';
+const Sing = 'Singular';
+const Past = 'PastTense';
+const Adverb = 'Adverb';
+const Exp = 'Expression';
+const Actor = 'Actor';
+const Verb = 'Verb';
+const Noun = 'Noun';
+const Last = 'LastName';
 //the order here matters.
-module.exports = [
-  ['^[0-9]+ ?(am|pm)$', 'Date'],
-  ['[0-9](st|nd|rd|r?th)$', 'Ordinal'], //like 5th
-  ['([0-9])([a-z]{1,2})$', 'Cardinal'], //like 5kg
-  ['^[0-9,\.]+$', 'Cardinal'], //like 5
-  ['^[a-z]et$', Verb],
-  ['cede$', Infinitive],
-  ['.[cts]hy$', Adjective],
-  ['.[st]ty$', Adjective],
-  ['.[lnr]ize$', Infinitive],
-  ['.[gk]y$', Adjective],
-  ['.fies$', PresentTense],
-  ['ities$', Plural],
-  ['.some$', Adjective],
-  ['.[nrtumcd]al$', Adjective],
-  ['.que$', Adjective],
-  ['.[tnl]ary$', Adjective],
-  ['.[di]est$', 'Superlative'],
-  ['^(un|de|re)\\-[a-z]..', Verb],
-  ['.lar$', Adjective],
-  ['[bszmp]{2}y', Adjective],
-  ['.zes$', PresentTense],
-  ['.[icldtgrv]ent$', Adjective],
-  ['.[rln]ates$', PresentTense],
-  ['.[oe]ry$', Singular],
-  ['[rdntkbhs]ly$', Adverb],
-  ['.[lsrnpb]ian$', Adjective],
-  ['.[^aeiou]ial$', Adjective],
-  ['.[^aeiou]eal$', Adjective],
-  ['.[vrl]id$', Adjective],
-  ['.[ilk]er$', 'Comparative'],
-  ['.ike$', Adjective],
-  ['.ends?$', Verb],
-  ['.wards$', Adverb],
-  ['.rmy$', Adjective],
-  ['.rol$', Singular],
-  ['.tors$', Noun],
-  ['.azy$', Adjective],
-  ['.where$', Adverb],
-  ['.ify$', Infinitive],
-  ['.bound$', Adjective],
-  ['.[^z]ens$', Verb],
-  ['.oid$', Adjective],
-  ['.vice$', Singular],
-  ['.rough$', Adjective],
-  ['.mum$', Adjective],
-  ['.teen(th)?$', 'Value'],
-  ['.oses$', PresentTense],
-  ['.ishes$', PresentTense],
-  ['.ects$', PresentTense],
-  ['.tieth$', 'Ordinal'],
-  ['.ices$', Plural],
-  ['.tage$', Infinitive],
-  ['.ions$', Plural],
-  ['.tion$', Singular],
-  ['.ean$', Adjective],
-  ['.[ia]sed$', Adjective],
-  ['.urned', PastTense],
-  ['.tized$', PastTense],
-  ['.[aeiou][td]ed', PastTense],
-  ['.llen$', Adjective],
-  ['.fore$', Adverb],
-  ['.ances$', Plural],
-  ['.gate$', Infinitive],
-  ['.nes$', PresentTense],
-  ['.less$', Adverb],
-  ['.ried$', Adjective],
-  ['.gone$', Adjective],
-  ['.made$', Adjective],
-  ['.ing$', 'Gerund'], //likely to be converted to adjective after lexicon pass
-  ['.tures$', Plural],
-  ['.ous$', Adjective],
-  ['.ports$', Plural],
-  ['. so$', Adverb],
-  ['.ints$', Plural],
-  ['.[gt]led$', Adjective],
-  ['.lked$', PastTense],
-  ['.fully$', Adverb],
-  ['.*ould$', 'Modal'],
-  ['^[\-\+]?[0-9]+(\.[0-9]+)?$', 'NumericValue'],
-  ['[a-z]*\\-[a-z]*\\-', Adjective],
-  ['[a-z]\'s$', Noun],
-  ['.\'n$', Verb],
-  ['.\'re$', 'Copula'],
-  ['.\'ll$', 'Modal'],
-  ['.\'t$', Verb],
-  ['.tches$', PresentTense],
-  ['^https?\:?\/\/[a-z0-9]', 'Url'], //the colon is removed in normalisation
-  ['^www\.[a-z0-9]', 'Url'],
-  ['.ize$', Infinitive],
-  ['.[^aeiou]ise$', Infinitive],
-  ['.[aeiou]te$', Infinitive],
-  ['.ea$', Singular],
-  ['[aeiou][pns]er$', Singular],
-  ['.ia$', Noun],
-  ['.sis$', Singular],
-  ['.[aeiou]na$', Noun],
-  ['.[^aeiou]ity$', Singular],
-  ['.[^aeiou]ium$', Singular],
-  ['.[^aeiou][ei]al$', Adjective],
-  ['.ffy$', Adjective],
-  ['.[^aeiou]ic$', Adjective],
-  ['.(gg|bb|zz)ly$', Adjective],
-  ['.[aeiou]my$', Adjective],
-  ['.[^aeiou][ai]ble$', Adjective],
-  ['.[^aeiou]eable$', Adjective],
-  ['.[^aeiou]ful$', Adjective],
-  ['.[^aeiouf]ish$', Adjective],
-  ['.[^aeiou]ica$', Singular],
-  ['[aeiou][^aeiou]is$', Singular],
-  ['[^aeiou]ard$', Singular],
-  ['[^aeiou]ism$', Singular],
-  ['.[^aeiou]ity$', Singular],
-  ['.[^aeiou]ium$', Singular],
-  ['.[lstrn]us$', Singular],
-  ['..ic$', Adjective],
-  ['[aeiou][^aeiou]id$', Adjective],
-  ['.[^aeiou]ive$', Adjective],
-  ['[ea]{2}zy$', Adjective],
-  ['[^aeiou]ician$', Actor],
-  ['.keeper$', Actor],
-  ['.logist$', Actor],
-  ['..ier$', Actor],
-  ['.ettes$', Plural],
-  ['.ette$', Singular],
-  ['.[^aeiou][ao]pher$', Actor],
-  ['.tive$', Actor],
-  ['[aeiou].*ist$', Adjective],
-  ['(over|under)[a-z]{2,}$', Adjective],
-  ['[^i]fer$', Infinitive],
-  ['[aeiou]c?ked$', PastTense], //hooked
-  ['(eastern|central|mountain|pacific)( standard)? time', 'Time'], //PST, eastern time.  Todo:(only American right now)
+
+//regexes indexed by mandated last-character
+const byLast = {
+  a: [
+    [/.[aeiou]na$/, Noun],
+    [/.[oau][wvl]ska$/, Last], //polish (female)
+    [/.[^aeiou]ica$/, Sing],
+    [/^([hyj]a)+$/, Exp], //hahah
+  ],
+  d: [
+    [/.[ia]sed$/, Adj],
+    [/.[gt]led$/, Adj],
+    [/.[aeiou][td]ed$/, Past],
+    [/[^aeiou]ard$/, Sing],
+    [/[aeiou][^aeiou]id$/, Adj],
+    [/[aeiou]c?ked$/, Past], //hooked
+    [/.[vrl]id$/, Adj],
+  ],
+  e: [
+    [/.[lnr]ize$/, Inf],
+    [/.[^aeiou]ise$/, Inf],
+    [/.[aeiou]te$/, Inf],
+    [/.[^aeiou][ai]ble$/, Adj],
+    [/.[^aeiou]eable$/, Adj],
+    [/.[^aeiou]ive$/, Adj],
+  ],
+  h: [
+    [/[0-9](st|nd|rd|r?th)$/, 'Ordinal'], //like 5th
+    [/.[^aeiouf]ish$/, Adj],
+    [/.v[iy]ch$/, Last], //east-europe
+    [/^ug?h+$/, Exp], //uhh
+    [/^uh[ -]?oh$/, Exp], //uhoh
+  ],
+  k: [
+    [/^(k)+$/, Exp], //kkkk
+  ],
+  l: [
+    [/.[nrtumcd]al$/, Adj],
+    [/.[^aeiou]ial$/, Adj],
+    [/.[^aeiou]eal$/, Adj],
+    [/.[^aeiou][ei]al$/, Adj],
+    [/.[^aeiou]ful$/, Adj],
+  ],
+  m: [
+    [/.[^aeiou]ium$/, Sing],
+    [/[^aeiou]ism$/, Sing],
+    [/.[^aeiou]ium$/, Sing],
+    [/^mmm+$/, Exp], //mmmm
+    [/^[hu]m+$/, Exp], //ummmm    
+    [/^[0-9]+ ?(am|pm)$/, 'Date'],
+  ],
+  n: [
+    [/.[lsrnpb]ian$/, Adj],
+    [/[^aeiou]ician$/, Actor],
+  ],
+  o: [
+    [/^no+$/, Exp], //noooo
+    [/^(yo)+$/, Exp], //yoyo
+    [/^woo+[pt]?$/, Exp], //woo
+  ],
+  r: [
+    [/..ier$/, Actor],
+    [/.[ilk]er$/, 'Comparative'],
+    [/[aeiou][pns]er$/, Sing],
+    [/[^i]fer$/, Inf],
+    [/.[^aeiou][ao]pher$/, Actor],
+  ],
+  t: [
+    [/.[di]est$/, 'Superlative'],
+    [/.[icldtgrv]ent$/, Adj],
+    [/[aeiou].*ist$/, Adj],
+    [/^[a-z]et$/, Verb],
+  ],
+  s: [
+    [/.[rln]ates$/, Pres],
+    [/.[^z]ens$/, Verb],
+    [/.[lstrn]us$/, Sing],
+    [/[aeiou][^aeiou]is$/, Sing],
+    [/[a-z]\'s$/, Noun],
+    [/^yes+$/, Exp], //yessss
+  ],
+  y: [
+    [/.[cts]hy$/, Adj],
+    [/.[st]ty$/, Adj],
+    [/.[gk]y$/, Adj],
+    [/.[tnl]ary$/, Adj],
+    [/.[oe]ry$/, Sing],
+    [/[rdntkbhs]ly$/, Adverb],
+    [/[bszmp]{2}y$/, Adj],
+    [/.(gg|bb|zz)ly$/, Adj],
+    [/.[aeiou]my$/, Adj],
+    [/.[^aeiou]ity$/, Sing],
+    [/[ea]{2}zy$/, Adj],
+    [/.[^aeiou]ity$/, Sing],
+  ],
+};
+
+const misc = [
   //slang things
-  ['^um+$', Expression], //ummmm
-  ['^([hyj]a)+$', Expression], //hahah
-  ['^(k)+$', Expression], //kkkk
-  ['^(yo)+$', Expression], //yoyo
-  ['^yes+$', Expression], //yessss
-  ['^no+$', Expression], //noooo
-  ['^lol[sz]$', Expression], //lol
-  ['^woo+[pt]?$', Expression], //woo
-  ['^ug?h+$', Expression], //uhh
-  ['^uh[ -]?oh$', Expression], //uhoh
+  [/^(lol)+[sz]$/, Exp], //lol
+  [/^ma?cd[aeiou]/, Last], //macdonell - Last patterns https://en.wikipedia.org/wiki/List_of_family_name_affixes
 
-  //lastname patterns
-  //https://en.wikipedia.org/wiki/List_of_family_name_affixes
-  //macdonell
-  ['^ma?cd[aeiou]', LastName],
-  //icelandic/swedish
-  ['.sdottir$', LastName], //female
-  ['.sson$', LastName], //male
-  //polish
-  ['.[oau][wvl]ski$', LastName], //male
-  ['.[oau][wvl]ska$', LastName], //female
-  ['.czyk$', LastName], //male
-  ['.marek$', LastName], //male
-  //east-europe Hasanov, etc
-  ['.[^aeiou][ai][kln]ov$', LastName], //
-  ['..chuk$', LastName], //
-  ['..enko$', LastName], //
-  ['.v[iy]ch$', LastName], //
-  //greek
-  ['.opoulos$', LastName], //
-  ['.akis$', LastName], //
-  //lithuania
-  ['.auskas$', LastName],
-  //norway
-  ['.nss?en$', LastName]
+  //starting-ones
+  [/^[0-9,\.]+$/, 'Cardinal'], //like 5
+  [/^(un|de|re)\\-[a-z]../, Verb],
+  [/^[\-\+]?[0-9]+(\.[0-9]+)?$/, 'NumericValue'],
+  [/^https?\:?\/\/[a-z0-9]/, 'Url'], //the colon is removed in normalisation
+  [/^www\.[a-z0-9]/, 'Url'],
 
-].map(function (a) {
-  return {
-    reg: new RegExp(a[0]),
-    tag: a[1],
-    str: a[0]
-  };
-});
+  //ending-ones
+  [/([0-9])([a-z]{1,2})$/, 'Cardinal'], //like 5kg
+  [/(over|under)[a-z]{2,}$/, Adj],
+
+  [/.[^aeiou]ic$/, Adj],
+  [/.[oau][wvl]ski$/, Last], //polish (male)
+  [/.[^aeiou][ai][kln]ov$/, Last], //east-europe
+
+  //middle (anywhere)
+  [/[a-z]*\\-[a-z]*\\-/, Adj],
+
+];
+module.exports = {
+  misc: misc,
+  bylast: byLast
+};

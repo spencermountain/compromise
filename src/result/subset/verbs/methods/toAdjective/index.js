@@ -32,7 +32,7 @@ const irregulars = {
   divide: 'divisible',
   perceive: 'perceptible'
 };
-console.log('here');
+
 //takes an infitive verb, and returns an adjective form
 const toAdjective = function(str) {
   if (irregulars[str]) {

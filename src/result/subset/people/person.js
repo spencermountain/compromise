@@ -1,7 +1,6 @@
 'use strict';
 const Terms = require('../../paths').Terms;
 const guessGender = require('./guessGender');
-const log = require('../../paths').log;
 
 class Person extends Terms {
   data() {
@@ -33,20 +32,16 @@ class Person extends Terms {
   guessGender() {
     //try known honorifics
     if (this.honorifics.match('(mr|mister|sr|sir|jr)').found) {
-      log.tell('known male honorific');
       return 'Male';
     }
     if (this.honorifics.match('(mrs|miss|ms|misses|mme|mlle)').found) {
-      log.tell('known female honorific');
       return 'Female';
     }
     //try known first-names
     if (this.firstName.match('#MaleName').found) {
-      log.tell('known male name');
       return 'Male';
     }
     if (this.firstName.match('#FemaleName').found) {
-      log.tell('known female name');
       return 'Female';
     }
     //look-for regex clues

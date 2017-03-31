@@ -3,7 +3,7 @@
 // @spencermountain 2017 MIT
 'use strict';
 const fns = require('./paths').fns;
-const data = require('../data/index');
+const data = require('../data');
 const abbreviations = Object.keys(data.abbreviations);
 //regs-
 const abbrev_reg = new RegExp('\\b(' + abbreviations.join('|') + ')[.!?] ?$', 'i');

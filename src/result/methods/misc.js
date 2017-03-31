@@ -10,10 +10,6 @@ const genericMethods = (Text) => {
       let list = this.list.map((ts) => {
         return ts.clone();
       });
-      // this.parent.list = this.parent.list.map((ts) => {
-      //   return ts.clone();
-      // });
-      // return this;
       return new Text(list); //this.lexicon, this.parent
     },
 
@@ -115,7 +111,6 @@ const genericMethods = (Text) => {
   Object.keys(methods).forEach((k) => {
     Text.prototype[k] = methods[k];
   });
-  return Text;
 };
 
 module.exports = genericMethods;

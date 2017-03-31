@@ -1,6 +1,6 @@
 'use strict';
 //
-const defaultMethods = {
+const defaults = {
   whitespace: true,
   case: true,
   numbers: true,
@@ -71,15 +71,14 @@ const methods = {
 
 const addMethods = (Text) => {
   Text.prototype.normalize = function(obj) {
-    obj = obj || defaultMethods;
+    obj = obj || defaults;
     //do each type of normalization
     Object.keys(obj).forEach((fn) => {
-      if (methods[fn]) {
+      if (methods[fn] !== undefined) {
         methods[fn](this);
       }
     });
     return this;
   };
-  return Text;
 };
 module.exports = addMethods;

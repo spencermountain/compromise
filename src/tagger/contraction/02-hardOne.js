@@ -58,7 +58,6 @@ const hardOne = (ts) => {
         //spencer's house
         if (isPossessive(ts, i)) {
           ts.terms[i].tag('#Possessive', 'hard-contraction');
-          // console.log('==possessive==');
           continue;
         }
         //is vs was

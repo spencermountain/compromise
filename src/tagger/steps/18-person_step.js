@@ -7,6 +7,9 @@ titles = titles.reduce((h, str) => {
 }, {});
 
 const person_step = function (ts) {
+  if (ts.has('#FirstName').found) {
+
+  }
   // x Lastname
   ts.match('#Noun #LastName').firstTerm().canBe('#FirstName').tag('#FirstName', 'noun-lastname');
 

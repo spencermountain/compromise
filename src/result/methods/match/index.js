@@ -81,11 +81,10 @@ const splitMethods = (Text) => {
       return new Text(list, this.lexicon, parent);
     },
 
-    if: function (reg, verbose) {
+    if: function (reg) {
       let list = [];
       for(let i = 0; i < this.list.length; i++) {
-        let m = this.list[i].match(reg, verbose);
-        if (m.found) {
+        if (this.list[i].has(reg) === true) {
           list.push(this.list[i]);
         }
       }
@@ -93,18 +92,25 @@ const splitMethods = (Text) => {
       return new Text(list, this.lexicon, parent);
     },
 
-    ifNo: function (reg, verbose) {
+    ifNo: function (reg) {
       let list = [];
       for(let i = 0; i < this.list.length; i++) {
-        let m = this.list[i].match(reg, verbose);
-        if (!m.found) {
+        if (this.list[i].has(reg) === null) {
           list.push(this.list[i]);
         }
       }
       let parent = this.parent || this;
       return new Text(list, this.lexicon, parent);
-    }
+    },
 
+    has: function(reg) {
+      for(let i = 0; i < this.list.length; i++) {
+        if (this.list[i].has(reg) === true) {
+          return true;
+        }
+      }
+      return false;
+    },
   };
   //alias 'and'
   methods.and = methods.match;

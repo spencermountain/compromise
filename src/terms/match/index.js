@@ -39,8 +39,7 @@ const matchMethods = (Terms) => {
 
     /**return first match */
     has: function (str) {
-      let m = this.matchOne(str);
-      return !!m;
+      return this.matchOne(str) !== null;
     }
 
   };

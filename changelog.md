@@ -9,6 +9,7 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - optimisation of .match(), and tagset - significant speedup!
 - adds `.tagger()` method and cleanup extra params
 - adds `wordStart` and `wordEnd` offsets to `.out('offset')` for whitespace+punctuation
+- new `.has()` method for faster lookups
 
 ### v.8  &nbsp;
 * 8.0.0 - less-ambitious date-parsing of nl-date forms

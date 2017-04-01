@@ -1,21 +1,82 @@
 'use strict';
-const rules = require('./rules/word_rules');
+const regs = require('./rules/regex_list');
+const suffixes = require('./rules/suffix_lookup');
 
-const suffix_step = function(s) {
-  s.terms.forEach((t) => {
-    //do normalized rules (on t.normal)
-    for (let o = 0; o < rules.length; o++) {
-      let r = rules[o];
-      if (t.normal.match(r.reg)) {
-        //don't over-write any other known tags
-        if (t.canBe(r.tag)) {
-          t.tag(r.tag, 'word-rule- "' + r.str + '"');
+const misc = [
+  //slang things
+  [/^(lol)+[sz]$/, 'Expression'], //lol
+  [/^ma?cd[aeiou]/, 'LastName'], //macdonell - Last patterns https://en.wikipedia.org/wiki/List_of_family_name_affixes
+  //starting-ones
+  [/^[0-9,\.]+$/, 'Cardinal'], //like 5
+  [/^(un|de|re)\\-[a-z]../, 'Verb'],
+  [/^[\-\+]?[0-9]+(\.[0-9]+)?$/, 'NumericValue'],
+  [/^https?\:?\/\/[a-z0-9]/, 'Url'], //the colon is removed in normalisation
+  [/^www\.[a-z0-9]/, 'Url'],
+  //ending-ones
+  [/([0-9])([a-z]{1,2})$/, 'Cardinal'], //like 5kg
+  [/(over|under)[a-z]{2,}$/, 'Adjective'],
+  //middle (anywhere)
+  [/[a-z]*\\-[a-z]*\\-/, 'Adjective'],
+];
+
+//straight-up lookup of known-suffixes
+const lookup = function(t) {
+  const len = t.normal.length;
+  let max = 7;
+  if (len <= max) {
+    max = len - 1;
+  }
+  for(let i = max; i > 1; i -= 1) {
+    let str = t.normal.substr(len - i, len);
+    if (suffixes[i][str] !== undefined) {
+      return suffixes[i][str];
+    }
+  }
+  return null;
+};
+
+//word-regexes indexed by last-character
+const regexFn = function(t) {
+  let char = t.normal.charAt(t.normal.length - 1);
+  if (regs[char] === undefined) {
+    return null;
+  }
+  let arr = regs[char];
+  for(let o = 0; o < arr.length; o++) {
+    if (arr[o][0].test(t.normal) === true) {
+      return arr[o][1];
+    }
+  }
+  return null;
+};
+
+const suffix_step = function(ts) {
+  for(let i = 0; i < ts.terms.length; i++) {
+    let t = ts.terms[i];
+    //try known suffixes
+    let tag = lookup(t);
+    if (tag !== null && t.canBe(tag) === true) {
+      t.tag(tag, 'suffix-lookup');
+      continue;
+    }
+    //apply regexes by final-char
+    tag = regexFn(t);
+    if (tag !== null && t.canBe(tag) === true) {
+      t.tag(tag, 'regex-list');
+      continue;
+    }
+    //apply misc regexes
+    for(let o = 0; o < misc.length; o++) {
+      if (misc[o][0].test(t.normal) === true) {
+        tag = misc[o][1];
+        if (t.canBe(tag) === true) {
+          t.tag(tag, 'misc-regex');
+          continue;
         }
-        return;
       }
     }
-  });
-  return s;
+  }
+  return ts;
 };
 
 module.exports = suffix_step;

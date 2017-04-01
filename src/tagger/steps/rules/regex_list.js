@@ -16,12 +16,15 @@ const Last = 'LastName';
 //the order here matters.
 
 //regexes indexed by mandated last-character
-const byLast = {
+module.exports = {
   a: [
     [/.[aeiou]na$/, Noun],
     [/.[oau][wvl]ska$/, Last], //polish (female)
     [/.[^aeiou]ica$/, Sing],
     [/^([hyj]a)+$/, Exp], //hahah
+  ],
+  c: [
+    [/.[^aeiou]ic$/, Adj],
   ],
   d: [
     [/.[ia]sed$/, Adj],
@@ -47,6 +50,9 @@ const byLast = {
     [/^ug?h+$/, Exp], //uhh
     [/^uh[ -]?oh$/, Exp], //uhoh
   ],
+  i: [
+    [/.[oau][wvl]ski$/, Last], //polish (male)
+  ],
   k: [
     [/^(k)+$/, Exp], //kkkk
   ],
@@ -62,7 +68,7 @@ const byLast = {
     [/[^aeiou]ism$/, Sing],
     [/.[^aeiou]ium$/, Sing],
     [/^mmm+$/, Exp], //mmmm
-    [/^[hu]m+$/, Exp], //ummmm    
+    [/^[hu]m+$/, Exp], //ummmm
     [/^[0-9]+ ?(am|pm)$/, 'Date'],
   ],
   n: [
@@ -95,6 +101,9 @@ const byLast = {
     [/[a-z]\'s$/, Noun],
     [/^yes+$/, Exp], //yessss
   ],
+  v: [
+    [/.[^aeiou][ai][kln]ov$/, Last], //east-europe
+  ],
   y: [
     [/.[cts]hy$/, Adj],
     [/.[st]ty$/, Adj],
@@ -109,33 +118,4 @@ const byLast = {
     [/[ea]{2}zy$/, Adj],
     [/.[^aeiou]ity$/, Sing],
   ],
-};
-
-const misc = [
-  //slang things
-  [/^(lol)+[sz]$/, Exp], //lol
-  [/^ma?cd[aeiou]/, Last], //macdonell - Last patterns https://en.wikipedia.org/wiki/List_of_family_name_affixes
-
-  //starting-ones
-  [/^[0-9,\.]+$/, 'Cardinal'], //like 5
-  [/^(un|de|re)\\-[a-z]../, Verb],
-  [/^[\-\+]?[0-9]+(\.[0-9]+)?$/, 'NumericValue'],
-  [/^https?\:?\/\/[a-z0-9]/, 'Url'], //the colon is removed in normalisation
-  [/^www\.[a-z0-9]/, 'Url'],
-
-  //ending-ones
-  [/([0-9])([a-z]{1,2})$/, 'Cardinal'], //like 5kg
-  [/(over|under)[a-z]{2,}$/, Adj],
-
-  [/.[^aeiou]ic$/, Adj],
-  [/.[oau][wvl]ski$/, Last], //polish (male)
-  [/.[^aeiou][ai][kln]ov$/, Last], //east-europe
-
-  //middle (anywhere)
-  [/[a-z]*\\-[a-z]*\\-/, Adj],
-
-];
-module.exports = {
-  misc: misc,
-  bylast: byLast
 };

@@ -1,4 +1,5 @@
 'use strict';
+//just a foolish lookup of known suffixes
 const Adj = 'Adjective';
 const Inf = 'Infinitive';
 const Pres = 'PresentTense';
@@ -10,6 +11,7 @@ const Actor = 'Actor';
 const Vb = 'Verb';
 const Noun = 'Noun';
 const Last = 'LastName';
+const Modal = 'Modal';
 
 module.exports = [
   null, //0
@@ -41,7 +43,7 @@ module.exports = [
     'nes': Pres,
     'ing': 'Gerund', //likely to be converted to Adj after lexicon pass
     ' so': AdVb,
-    '\'ll': 'Modal',
+    '\'ll': Modal,
     '\'re': 'Copula',
   },
   { //4-letter
@@ -68,7 +70,7 @@ module.exports = [
     'ions': Plrl,
     'ints': Plrl,
     'lked': Past,
-    'ould': 'Modal',
+    'ould': Modal,
     'tive': Actor,
     'sson': Last, //swedish male
     'czyk': Last, //polish (male)

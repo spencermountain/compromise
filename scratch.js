@@ -31,5 +31,5 @@ console.time('tag');
 r.tag('#Person');
 console.timeEnd('tag');
 
-r = nlp('6 am').debug();
+// r = nlp('6 am').debug();
 // console.log(r.people().data());

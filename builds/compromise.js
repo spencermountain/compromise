@@ -11861,18 +11861,20 @@ module.exports = matchMethods;
 //
 //find easy reasons to skip running the full match on this
 
-var fastPass = function fastPass(ts, regs) {
+var fastPass = function fastPass(ts, regs, verbose) {
   for (var i = 0; i < regs.length; i++) {
     var reg = regs[i];
     var found = false;
     if (reg.optional === true || reg.negative === true) {
       continue;
     }
-
     //look-for missing term-matches
     if (reg.normal !== undefined) {
+      if (verbose) {
+        console.log(reg);
+      }
       for (var o = 0; o < ts.terms.length; o++) {
-        if (ts.terms[o].silent_term === reg.normal) {
+        if (ts.terms[o].normal === reg.normal || ts.terms[o].silent_term === reg.normal) {
           found = true;
           break;
         }

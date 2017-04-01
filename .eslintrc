@@ -11,7 +11,7 @@
   },
   "rules": {
     "no-cond-assign": 2,
-    "no-var": 1,
+    "no-var": 0,
     "prefer-const": 0,
     "no-extra-parens": 0,
     "no-dupe-keys": 2,

@@ -44,6 +44,7 @@ const person_step = function (ts) {
     //Jani K. Smith
     ts.match('#TitleCase #Acronym? #LastName').ifNo('#Date').tag('#Person', 'title-acro-noun').lastTerm().tag('#LastName', 'title-acro-noun');
   }
+
   //methods requiring a titlecase
   if (ts.has('#TitleCase')) {
     ts.match('#Acronym #TitleCase').canBe('#Person').tag('#Person', 'acronym-titlecase');

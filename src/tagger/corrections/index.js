@@ -1,5 +1,4 @@
 'use strict';
-const verb_corrections = require('./verb_corrections');
 
 //mostly pos-corections here
 const corrections = function (ts) {
@@ -32,13 +31,6 @@ const corrections = function (ts) {
     ts.match('#Determiner #Noun of #Verb').match('#Verb').tag('Noun', 'noun-of-noun');
   }
 
-  //organization
-  if (ts.has('#Organization')) {
-    ts.match('#Organization of the? #TitleCase').tag('Organization', 'org-of-place');
-    ts.match('#Organization #Country').tag('Organization', 'org-country');
-    ts.match('(world|global|international|national|#Demonym) #Organization').tag('Organization', 'global-org');
-  }
-
   //like
   if (ts.has('like')) {
     ts.match('just like').term(1).tag('Preposition', 'like-preposition');
@@ -58,6 +50,7 @@ const corrections = function (ts) {
     ts.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
     //money
     ts.match('#Value+ #Currency').tag('Money', 'value-currency');
+    ts.match('#Money and #Money #Currency?').tag('Money', 'money-and-money');
   }
 
   if (ts.has('#Noun')) {
@@ -67,6 +60,14 @@ const corrections = function (ts) {
     ts.match('second #Noun').term(0).unTag('Unit').tag('Ordinal', 'second-noun');
     //he quickly foo
     ts.match('#Noun #Adverb #Noun').term(2).tag('Verb', 'correction');
+    //my buddy
+    ts.match('#Possessive #FirstName').term(1).unTag('Person', 'possessive-name');
+    //organization
+    if (ts.has('#Organization')) {
+      ts.match('#Organization of the? #TitleCase').tag('Organization', 'org-of-place');
+      ts.match('#Organization #Country').tag('Organization', 'org-country');
+      ts.match('(world|global|international|national|#Demonym) #Organization').tag('Organization', 'global-org');
+    }
   }
 
   if (ts.has('#Verb')) {
@@ -84,6 +85,26 @@ const corrections = function (ts) {
     ts.match('#Copula #Adjective to #Verb').match('#Adjective to').tag('Verb', 'correction');
     //the word 'how'
     ts.match('how (#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-question');
+    //support a splattering of auxillaries before a verb
+    let advb = '(#Adverb|not)+?';
+    if (ts.has(advb)) {
+      //had walked
+      ts.match(`(has|had) ${advb} #PastTense`).not('#Verb$').tag('Auxiliary', 'had-walked');
+      //was walking
+      ts.match(`#Copula ${advb} #Gerund`).not('#Verb$').tag('Auxiliary', 'copula-walking');
+      //been walking
+      ts.match(`(be|been) ${advb} #Gerund`).not('#Verb$').tag('Auxiliary', 'be-walking');
+      //would walk
+      ts.match(`(#Modal|did) ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'modal-verb');
+      //would have had
+      ts.match(`#Modal ${advb} have ${advb} had ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'would-have');
+      //would be walking
+      ts.match(`(#Modal) ${advb} be ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'would-be');
+      //would been walking
+      ts.match(`(#Modal|had|has) ${advb} been ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'would-be');
+    //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
+    // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
+    }
   }
 
   if (ts.has('#Adjective')) {
@@ -98,27 +119,19 @@ const corrections = function (ts) {
   //misc:
   //foot/feet
   ts.match('(foot|feet)').tag('Noun', 'foot-noun');
-  ts.match('#Value (foot|feet)').match('(foot|feet)').tag('Unit', 'foot-unit');
+  ts.match('#Value (foot|feet)').term(1).tag('Unit', 'foot-unit');
   //'u' as pronoun
   ts.match('#Conjunction u').term(1).tag('Pronoun', 'u-pronoun-2');
   //FitBit Inc
   ts.match('#TitleCase (ltd|co|inc|dept|assn|bros)').tag('Organization', 'org-abbrv');
-  //my buddy
-  ts.match('#Possessive #FirstName').term(1).unTag('Person', 'possessive-name');
   //'a/an' can mean 1
   ts.match('(a|an) (#Duration|#Value)').ifNo('#Plural').term(0).tag('Value', 'a-is-one');
-
-  ts.match('#Money and #Money #Currency?').tag('Money', 'money-and-money');
-
   //swear-words as non-expression POS
   //nsfw
   ts.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression');
   ts.match('#Determiner (shit|damn|hell)').term(1).tag('Noun', 'swears-noun');
   ts.match('(shit|damn|fuck) (#Determiner|#Possessive|them)').term(0).tag('Verb', 'swears-verb');
   ts.match('#Copula fucked up?').not('#Copula').tag('Adjective', 'swears-adjective');
-
-  //more-detailed corrections
-  ts = verb_corrections(ts);
 
   return ts;
 };

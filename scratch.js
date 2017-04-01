@@ -31,5 +31,5 @@ console.time('tag');
 r.tag('#Person');
 console.timeEnd('tag');
 
-// let r = nlp('Jani K. Smith').debug();
+r = nlp('6 am').debug();
 // console.log(r.people().data());

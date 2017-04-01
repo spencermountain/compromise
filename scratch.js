@@ -5,7 +5,7 @@ var nlp = require('./src/index');
 // nlp.verbose('tagger');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
-// const fresh = require('./test/unit/lib/freshPrince.js');
+const fresh = require('./test/unit/lib/freshPrince.js');
 
 // bug.1
 //  .? vs *
@@ -19,18 +19,17 @@ var nlp = require('./src/index');
 // r.contractions().debug();
 
 //===timer
-// console.time('parse');
-// let r = nlp(fresh);
-// console.timeEnd('parse');
-//
-// console.time('match');
-// // r.match('#Determiner (story|thing|#Adjective)', true);
-// r.match('story', true);
-// console.timeEnd('match');
-//
-// console.time('tag');
-// r.tag('#Person');
-// console.timeEnd('tag');
+console.time('parse');
+let r = nlp(fresh);
+console.timeEnd('parse');
 
-let r = nlp('so this is a story all about how'); //.people().debug();
-console.log(r.has('story'));
+console.time('match');
+r.match('#Determiner (story|thing|#Adjective)', true);
+console.timeEnd('match');
+
+console.time('tag');
+r.tag('#Person');
+console.timeEnd('tag');
+
+// let r = nlp('Jani K. Smith').debug();
+// console.log(r.people().data());

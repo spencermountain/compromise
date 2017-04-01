@@ -95,7 +95,7 @@ const splitMethods = (Text) => {
     ifNo: function (reg) {
       let list = [];
       for(let i = 0; i < this.list.length; i++) {
-        if (this.list[i].has(reg) === null) {
+        if (this.list[i].has(reg) === false) {
           list.push(this.list[i]);
         }
       }

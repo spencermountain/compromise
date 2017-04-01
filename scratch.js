@@ -23,10 +23,11 @@ console.time('parse');
 let r = nlp(fresh);
 console.timeEnd('parse');
 
-// console.time('match');
+console.time('match');
 // r.match('#Determiner (story|thing|#Adjective)', true);
-// console.timeEnd('match');
-//
-// console.time('tag');
-// r.tag('#Person');
-// console.timeEnd('tag');
+r.match('story', true);
+console.timeEnd('match');
+
+console.time('tag');
+r.tag('#Person');
+console.timeEnd('tag');

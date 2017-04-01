@@ -69,6 +69,7 @@ module.exports = [
     'ices': Plrl,
     'ions': Plrl,
     'ints': Plrl,
+    'aped': Past,
     'lked': Past,
     'ould': Modal,
     'tive': Actor,

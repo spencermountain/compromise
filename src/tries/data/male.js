@@ -146,7 +146,6 @@ module.exports = [
   'clifford',
   'clifton',
   'clint',
-  'clinton',
   'clyde',
   'cody',
   'colin',

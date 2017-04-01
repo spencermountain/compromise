@@ -7,7 +7,6 @@ titles = titles.reduce((h, str) => {
 }, {});
 
 const person_step = function (ts) {
-  let reason = 'person-step';
   // x Lastname
   ts.match('#Noun #LastName').firstTerm().canBe('#FirstName').tag('#FirstName', 'noun-lastname');
 
@@ -25,12 +24,12 @@ const person_step = function (ts) {
   //ambiguous firstnames
   let maybe = ['will', 'may', 'april', 'june', 'said', 'rob', 'wade', 'ray', 'rusty', 'drew', 'miles', 'jack', 'chuck', 'randy', 'jan', 'pat', 'cliff', 'bill'];
   maybe = '(' + maybe.join('|') + ')';
-  ts.match(maybe + ' #LastName').firstTerm().tag('#FirstName', reason);
+  ts.match(maybe + ' #LastName').firstTerm().tag('#FirstName', 'maybe-lastname');
 
   //ambiguous lastnames
   maybe = ['green', 'white', 'brown', 'hall', 'young', 'king', 'hill', 'cook', 'gray', 'price'];
   maybe = '(' + maybe.join('|') + ')';
-  ts.match('#FirstName ' + maybe).tag('#Person', reason);
+  ts.match('#FirstName ' + maybe).tag('#Person', 'firstname-maybe');
 
   //people chunks
   //John L. Foo
@@ -54,13 +53,13 @@ const person_step = function (ts) {
   //last names
   // let reason = 'person-correction';
   //Joe K. Sombrero
-  ts.match('#FirstName #Acronym #Noun').ifNo('#Date').tag('#Person', reason).lastTerm().tag('#LastName', reason);
+  ts.match('#FirstName #Acronym #Noun').ifNo('#Date').tag('#Person', 'n-acro-noun').lastTerm().tag('#LastName', 'n-acro-noun');
   //Jani K. Smith
-  ts.match('#TitleCase #Acronym? #LastName').ifNo('#Date').tag('#Person', reason).lastTerm().tag('#LastName', reason);
+  ts.match('#TitleCase #Acronym? #LastName').ifNo('#Date').tag('#Person', 'title-acro-noun').lastTerm().tag('#LastName', 'title-acro-noun');
   //john bodego's
-  ts.match('#FirstName (#Singular|#Possessive)').ifNo('#Date').tag('#Person', reason).lastTerm().tag('#LastName', reason);
+  ts.match('#FirstName (#Singular|#Possessive)').ifNo('#Date').tag('#Person', 'first-possessive').lastTerm().tag('#LastName', 'first-possessive');
   //pope francis
-  ts.match('(lady|queen|sister) #TitleCase').ifNo('#Date').tag('#FemaleName', reason);
+  ts.match('(lady|queen|sister) #TitleCase').ifNo('#Date').tag('#FemaleName', 'lady-titlecase');
   ts.match('(king|pope|father) #TitleCase').ifNo('#Date').tag('#MaleName', 'correction-poe');
 
   //peter II

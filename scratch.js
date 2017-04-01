@@ -32,4 +32,4 @@ var nlp = require('./src/index');
 // r.tag('#Person');
 // console.timeEnd('tag');
 
-// nlp(' Mr Clinton\'s sterility').people().debug();
+nlp('Mr Clinton\'s sterility and Mr Clinton raped').people().debug();

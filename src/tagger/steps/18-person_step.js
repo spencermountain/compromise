@@ -41,7 +41,7 @@ const person_step = function (ts) {
   //mr X
   ts.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase');
   //John Foo
-  ts.match('#FirstName #TitleCase').match('#FirstName #Noun').tag('Person', 'firstname-titlecase');
+  ts.match('#FirstName #TitleCase #TitleCase?').match('#Noun+').tag('Person', 'firstname-titlecase');
   //ludwig van beethovan
   ts.match('#TitleCase (van|al|bin) #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');
   ts.match('#TitleCase (de|du) la? #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');

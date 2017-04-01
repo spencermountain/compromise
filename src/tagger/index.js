@@ -30,14 +30,12 @@ const corrections = require('./corrections');
 const tagPhrase = require('./phrase');
 
 const tagger = function (ts) {
-  ts = step.punctuation_step(ts); //1ms
+  ts = step.punctuation_step(ts);
   ts = step.emoji_step(ts);
-  ts = step.lexicon_step(ts); //1ms
-  ts = step.lexicon_lump(ts); //1ms
+  ts = step.lexicon_step(ts);
+  ts = step.lexicon_lump(ts);
   ts = step.web_step(ts);
-  console.time('tagger');
-  ts = step.suffix_step(ts); //2ms
-  console.timeEnd('tagger');
+  ts = step.suffix_step(ts);
   ts = step.neighbour_step(ts);
   ts = step.capital_step(ts);
   ts = step.noun_fallback(ts);
@@ -53,9 +51,9 @@ const tagger = function (ts) {
   ts = step.person_step(ts); //1ms
   ts = step.quotation_step(ts);
   ts = step.organization_step(ts);
-  ts = step.plural_step(ts); //1ms
+  ts = step.plural_step(ts);
   ts = step.lumper(ts);
-  ts = corrections(ts); //1ms
+  ts = corrections(ts); //2ms
   ts = tagPhrase(ts);
   return ts;
 };

@@ -19,10 +19,10 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // r.contractions().debug();
 
 //===timer
-// console.time('parse');
-// let r = nlp(fresh);
-// console.timeEnd('parse');
-//
+console.time('parse');
+let r = nlp(fresh);
+console.timeEnd('parse');
+
 // console.time('match');
 // r.match('#Determiner (story|thing|#Adjective)', true);
 // console.timeEnd('match');
@@ -30,5 +30,3 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.time('tag');
 // r.tag('#Person');
 // console.timeEnd('tag');
-
-nlp('Hillary').debug();

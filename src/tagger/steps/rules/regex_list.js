@@ -81,11 +81,10 @@ module.exports = {
     [/^woo+[pt]?$/, Exp], //woo
   ],
   r: [
-    [/..ier$/, Actor],
     [/.[ilk]er$/, 'Comparative'],
     [/[aeiou][pns]er$/, Sing],
     [/[^i]fer$/, Inf],
-    [/.[^aeiou][ao]pher$/, Actor],
+    [/.[^aeiou][ao]pher$/, Actor]
   ],
   t: [
     [/.[di]est$/, 'Superlative'],

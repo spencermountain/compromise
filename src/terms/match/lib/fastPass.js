@@ -1,7 +1,7 @@
 'use strict';
 //
 //find easy reasons to skip running the full match on this
-const fastPass = (ts, regs, verbose) => {
+const fastPass = (ts, regs) => {
   for(let i = 0; i < regs.length; i++) {
     let reg = regs[i];
     let found = false;
@@ -10,9 +10,6 @@ const fastPass = (ts, regs, verbose) => {
     }
     //look-for missing term-matches
     if (reg.normal !== undefined) {
-      if (verbose) {
-        console.log(reg);
-      }
       for(let o = 0; o < ts.terms.length; o++) {
         if (ts.terms[o].normal === reg.normal || ts.terms[o].silent_term === reg.normal) {
           found = true;

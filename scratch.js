@@ -19,17 +19,23 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // r.contractions().debug();
 
 //===timer
-console.time('parse');
-let r = nlp(fresh);
-console.timeEnd('parse');
+// console.time('parse');
+// let r = nlp(fresh);
+// console.timeEnd('parse');
+//
+// console.time('match');
+// r.match('#Determiner (story|thing|#Adjective)', true);
+// console.timeEnd('match');
+//
+// console.time('tag');
+// r.tag('#Person');
+// console.timeEnd('tag');
 
-console.time('match');
-r.match('#Determiner (story|thing|#Adjective)', true);
-console.timeEnd('match');
+let r = nlp('i\'d contemplate');
+console.log(r.normalize().out('text'));
 
-console.time('tag');
-r.tag('#Person');
-console.timeEnd('tag');
+r = nlp('i\'d contemplated');
+console.log(r.normalize().out('text'));
 
-// r = nlp('6 am').debug();
-// console.log(r.people().data());
+r = nlp('i\'d really contemplated');
+console.log(r.normalize().out('text'));

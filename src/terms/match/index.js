@@ -10,7 +10,11 @@ const matchMethods = (Terms) => {
 
     //support regex-like whitelist-match
     match: function (reg, verbose) {
-      //fail-fast
+      //fail-fast #1
+      if (this.terms.length === 0) {
+        return new Text([], this.lexicon, this.parent);
+      }
+      //fail-fast #2
       if (!reg) {
         return new Text([], this.lexicon, this.parent);
       }
@@ -23,6 +27,10 @@ const matchMethods = (Terms) => {
 
     /**return first match */
     matchOne: function (str) {
+      //fail-fast
+      if (this.terms.length === 0) {
+        return null;
+      }
       let regs = syntax(str);
       for (let t = 0; t < this.terms.length; t++) {
         //don't loop through if '^'

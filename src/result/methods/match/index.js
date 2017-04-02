@@ -51,7 +51,7 @@ const splitMethods = (Text) => {
     /** do a regex-like search through terms and return a subset */
     match: function (reg, verbose) {
       //fail-fast
-      if (reg === undefined || reg === null) {
+      if (this.list.length === 0 || reg === undefined || reg === null) {
         let parent = this.parent || this;
         return new Text([], this.lexicon, parent);
       }

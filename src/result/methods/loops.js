@@ -21,7 +21,7 @@ const methods = [
 
   'tagger',
 
-  'tag',
+  // 'tag',
   'unTag',
 ];
 
@@ -34,6 +34,18 @@ const addMethods = (Text) => {
       return this;
     };
   });
+
+  //add an extra optimisation for tag method
+  Text.prototype.tag = function() {
+    //fail-fast optimisation
+    if (this.list.length === 0) {
+      return this;
+    }
+    for(let i = 0; i < this.list.length; i++) {
+      this.list[i].tag.apply(this.list[i], arguments);
+    }
+    return this;
+  };
 };
 
 module.exports = addMethods;

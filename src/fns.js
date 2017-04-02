@@ -43,15 +43,6 @@ exports.titleCase = (str) => {
   return str.charAt(0).toUpperCase() + str.substr(1);
 };
 
-//turn a nested array into one array
-exports.flatten = function (arr) {
-  let all = [];
-  arr.forEach(function (a) {
-    all = all.concat(a);
-  });
-  return all;
-};
-
 //shallow-clone an object
 exports.copy = (o) => {
   let o2 = {};

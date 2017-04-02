@@ -12,11 +12,11 @@ const isOrdinal = (ts) => {
   if (!t) {
     return false;
   }
-  return t.tag.Ordinal === true;
+  return t.tags.Ordinal === true;
 };
 const isText = (ts) => {
   for(let i = 0; i < ts.terms.length; i++) {
-    if (ts.terms[i].tag.TextValue) {
+    if (ts.terms[i].tags.TextValue) {
       return true;
     }
   }
@@ -25,7 +25,7 @@ const isText = (ts) => {
 const isNumber = (ts) => {
   for(let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
-    if (t.tag.TextValue || t.tag.NiceNumber || !t.tag.NumericValue) {
+    if (t.tags.TextValue || t.tags.NiceNumber || !t.tags.NumericValue) {
       return false;
     }
   }

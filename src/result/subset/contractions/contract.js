@@ -8,8 +8,8 @@ const combine = (a, b) => {
   a.silent_term = a.text;
   b.silent_term = b.text;
   b.text = '';
-  a.tagAs('Contraction', 'new-contraction');
-  b.tagAs('Contraction', 'new-contraction');
+  a.tag('Contraction', 'new-contraction');
+  b.tag('Contraction', 'new-contraction');
 };
 
 const contract = function(ts) {

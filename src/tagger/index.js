@@ -9,7 +9,7 @@ const step = {
   neighbour_step: require('./steps/06-neighbour_step'),
   noun_fallback: require('./steps/07-noun_fallback'),
   date_step: require('./steps/08-date_step'),
-  auxillary_step: require('./steps/09-auxillary_step'),
+  auxiliary_step: require('./steps/09-auxiliary_step'),
   negation_step: require('./steps/10-negation_step'),
   phrasal_step: require('./steps/12-phrasal_step'),
   comma_step: require('./steps/13-comma_step'),
@@ -22,7 +22,7 @@ const step = {
   organization_step: require('./steps/20-organization_step'),
   plural_step: require('./steps/21-plural_step'),
 
-  lumper : require('./lumper/index'),
+  lumper : require('./lumper'),
   lexicon_lump : require('./lumper/lexicon_lump'),
   contraction: require('./contraction')
 };
@@ -30,19 +30,18 @@ const corrections = require('./corrections');
 const tagPhrase = require('./phrase');
 
 const tagger = function (ts) {
-  // console.time('tagger');
-  ts = step.punctuation_step(ts); //1ms
+  ts = step.punctuation_step(ts);
   ts = step.emoji_step(ts);
-  ts = step.lexicon_step(ts); //1ms
-  ts = step.lexicon_lump(ts); //1ms
+  ts = step.lexicon_step(ts);
+  ts = step.lexicon_lump(ts);
   ts = step.web_step(ts);
-  ts = step.suffix_step(ts); //2ms
+  ts = step.suffix_step(ts);
   ts = step.neighbour_step(ts);
   ts = step.capital_step(ts);
   ts = step.noun_fallback(ts);
   ts = step.contraction(ts);
   ts = step.date_step(ts); //3ms
-  ts = step.auxillary_step(ts);
+  ts = step.auxiliary_step(ts);
   ts = step.negation_step(ts);
   ts = step.phrasal_step(ts);
   ts = step.comma_step(ts);
@@ -52,11 +51,10 @@ const tagger = function (ts) {
   ts = step.person_step(ts); //1ms
   ts = step.quotation_step(ts);
   ts = step.organization_step(ts);
-  ts = step.plural_step(ts); //1ms
+  ts = step.plural_step(ts);
   ts = step.lumper(ts);
-  ts = corrections(ts); //1ms
+  ts = corrections(ts); //2ms
   ts = tagPhrase(ts);
-  // console.timeEnd('tagger');
   return ts;
 };
 

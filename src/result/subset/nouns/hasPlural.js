@@ -4,10 +4,10 @@ const uncountables = require('../../../tries').utils.uncountable;
 //certain words can't be plural, like 'peace'
 const hasPlural = function (t) {
   //end quick
-  if (!t.tag.Noun) {
+  if (!t.tags.Noun) {
     return false;
   }
-  if (t.tag.Plural) {
+  if (t.tags.Plural) {
     return true;
   }
   //is it potentially plural?
@@ -22,7 +22,7 @@ const hasPlural = function (t) {
     'Holiday',
   ];
   for (let i = 0; i < noPlural.length; i++) {
-    if (t.tag[noPlural[i]]) {
+    if (t.tags[noPlural[i]]) {
       return false;
     }
   }

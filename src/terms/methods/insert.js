@@ -20,7 +20,9 @@ const insertMethods = (Terms) => {
     if (input.isA === 'Term') {
       return new Terms([input]);
     }
-    return Terms.fromString(input);
+    let ts = Terms.fromString(input);
+    ts.tagger();
+    return ts;
   };
 
   const methods = {
@@ -29,7 +31,7 @@ const insertMethods = (Terms) => {
       let original_l = this.terms.length;
       let ts = ensureTerms(input);
       if (tag) {
-        ts.tagAs(tag);
+        ts.tag(tag);
       }
       let index = this.index();
       //pad a space on parent
@@ -49,7 +51,7 @@ const insertMethods = (Terms) => {
       let original_l = this.terms.length;
       let ts = ensureTerms(input);
       if (tag) {
-        ts.tagAs(tag);
+        ts.tag(tag);
       }
       let index = this.terms[this.terms.length - 1].index();
       //beginning whitespace to ts
@@ -70,7 +72,7 @@ const insertMethods = (Terms) => {
       let ts = ensureTerms(input);
       //tag that thing too
       if (tag) {
-        ts.tagAs(tag);
+        ts.tag(tag);
       }
       if (index > 0) {
         addSpaceAt(ts, 0); //if in middle of sentence

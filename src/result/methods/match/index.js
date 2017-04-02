@@ -1,6 +1,6 @@
 'use strict';
 const syntaxParse = require('../../../terms/match/lib/syntax');
-const Terms = require('../../../terms/index');
+const Terms = require('../../../terms');
 
 const splitMethods = (Text) => {
 
@@ -51,7 +51,7 @@ const splitMethods = (Text) => {
     /** do a regex-like search through terms and return a subset */
     match: function (reg, verbose) {
       //fail-fast
-      if (reg === undefined || reg === null) {
+      if (this.list.length === 0 || reg === undefined || reg === null) {
         let parent = this.parent || this;
         return new Text([], this.lexicon, parent);
       }
@@ -81,11 +81,10 @@ const splitMethods = (Text) => {
       return new Text(list, this.lexicon, parent);
     },
 
-    if: function (reg, verbose) {
+    if: function (reg) {
       let list = [];
       for(let i = 0; i < this.list.length; i++) {
-        let m = this.list[i].match(reg, verbose);
-        if (m.found) {
+        if (this.list[i].has(reg) === true) {
           list.push(this.list[i]);
         }
       }
@@ -93,18 +92,25 @@ const splitMethods = (Text) => {
       return new Text(list, this.lexicon, parent);
     },
 
-    ifNo: function (reg, verbose) {
+    ifNo: function (reg) {
       let list = [];
       for(let i = 0; i < this.list.length; i++) {
-        let m = this.list[i].match(reg, verbose);
-        if (!m.found) {
+        if (this.list[i].has(reg) === false) {
           list.push(this.list[i]);
         }
       }
       let parent = this.parent || this;
       return new Text(list, this.lexicon, parent);
-    }
+    },
 
+    has: function(reg) {
+      for(let i = 0; i < this.list.length; i++) {
+        if (this.list[i].has(reg) === true) {
+          return true;
+        }
+      }
+      return false;
+    },
   };
   //alias 'and'
   methods.and = methods.match;

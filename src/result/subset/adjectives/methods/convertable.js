@@ -3,9 +3,11 @@
 const data = require('../../../../data');
 
 const convertables = {};
+data.superlatives = data.superlatives || [];
 data.superlatives.forEach((a) => {
   convertables[a] = true;
 });
+data.verbConverts = data.verbConverts || [];
 data.verbConverts.forEach((a) => {
   convertables[a] = true;
 });

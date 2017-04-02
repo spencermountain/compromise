@@ -1,6 +1,7 @@
 'use strict';
 const irregulars = require('../../../data').irregular_plurals;
 const rules = require('./methods/data/indicators');
+const prep = /([a-z]*) (of|in|by|for) [a-z]/;
 
 const knownPlural = {
   i: false,
@@ -21,9 +22,9 @@ const noPlural = [
   'Holiday',
 ];
 //first, try to guess based on existing tags
-const couldEvenBePlural = (t) => {
+const couldEvenBePlural = function(t) {
   for (let i = 0; i < noPlural.length; i++) {
-    if (t.tag[noPlural[i]]) {
+    if (t.tags[noPlural[i]]) {
       return false;
     }
   }
@@ -38,12 +39,12 @@ const isPlural = function (t) {
     return knownPlural[str];
   }
   //inspect the existing tags to see if a plural is valid
-  if (!couldEvenBePlural(t)) {
+  if (couldEvenBePlural(t) === false) {
     return false;
   }
   //handle 'mayors of chicago'
-  const preposition = str.match(/([a-z]*) (of|in|by|for) [a-z]/);
-  if (preposition && preposition[1]) {
+  const preposition = str.match(prep);
+  if (preposition !== null) {
     str = preposition[1];
   }
   // if it's a known irregular case
@@ -55,28 +56,21 @@ const isPlural = function (t) {
   }
   //check the suffix-type rules for indications
   for (let i = 0; i < rules.plural_indicators.length; i++) {
-    if (str.match(rules.plural_indicators[i])) {
+    if (rules.plural_indicators[i].test(str) === true) {
       return true;
     }
   }
   for (let i = 0; i < rules.singular_indicators.length; i++) {
-    if (str.match(rules.singular_indicators[i])) {
+    if (rules.singular_indicators[i].test(str) === true) {
       return false;
     }
   }
   // a fallback 'looks check plural' rule..
-  if (str.match(/s$/) && !str.match(/ss$/) && str.length > 3) { //needs some lovin'
+  if (/s$/.test(str) === true && /ss$/.test(str) === false && str.length > 3) { //needs some lovin'
     return true;
   }
   return false;
 };
 
-// console.log(is_plural('octopus') === false)
-// console.log(is_plural('octopi') === true)
-// console.log(is_plural('eyebrow') === false)
-// console.log(is_plural('eyebrows') === true)
-// console.log(is_plural('child') === false)
-// console.log(is_plural('children') === true)
-// console.log(is_plural('days') === true)
-
 module.exports = isPlural;
+// console.log(is_plural('octopus') === false)

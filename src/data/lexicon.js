@@ -3,7 +3,7 @@
 //the way we make it rn is a bit of a mess.
 const data = require('./index');
 const fns = require('./fns');
-const adj = require('../result/subset/adjectives/methods/index');
+const adj = require('../result/subset/adjectives/methods');
 const toAdjective = require('../result/subset/verbs/methods/toAdjective');
 const fastConjugate = require('../result/subset/verbs/methods/conjugate/faster');
 let lexicon = {};
@@ -20,8 +20,7 @@ const addArr = (arr, tag) => {
 };
 
 //let a rip
-// addArr(data.uncountables, 'Noun');
-let units = data.units.words.filter((s) => s.length > 1);
+const units = data.units.words.filter((s) => s.length > 1);
 addArr(units, 'Unit');
 addArr(data.dates.durations, 'Duration');
 
@@ -46,24 +45,17 @@ addArr(Object.keys(data.irregular_plurals.toSingle), 'Plural');
 addArr(data.dates.days, 'WeekDay');
 addArr(data.dates.months, 'Month');
 addArr(data.dates.relative, 'RelativeDay');
-// addArr(data.holidays, 'Holiday');
-
-// addArr(data.professions, 'Actor'); //?
-// addArr(data.demonyms, 'Demonym');
-// addArr(data.sportsTeams, 'SportsTeam');
-// addArr(data.bands, 'Organization');
-// addArr(data.orgWords, 'Noun');
 
 //irregular verbs
 Object.keys(data.irregular_verbs).forEach((inf) => {
   lexicon[inf] = 'Infinitive';
-  let conj = data.irregular_verbs[inf];
+  const conj = data.irregular_verbs[inf];
   Object.keys(conj).forEach((k2) => {
     if (conj[k2]) {
       lexicon[conj[k2]] = k2;
     }
   });
-  let o = fastConjugate(inf);
+  const o = fastConjugate(inf);
   Object.keys(o).forEach((k) => {
     if (o[k] && !lexicon[o[k]]) {
       lexicon[o[k]] = k;
@@ -73,7 +65,7 @@ Object.keys(data.irregular_verbs).forEach((inf) => {
 
 //conjugate verblist
 data.verbs.forEach((v) => {
-  let o = fastConjugate(v);
+  const o = fastConjugate(v);
   Object.keys(o).forEach((k) => {
     if (o[k] && !lexicon[o[k]]) {
       lexicon[o[k]] = k;
@@ -100,7 +92,7 @@ data.verbConverts.forEach((a) => {
   const v = adj.toVerb(a);
   lexicon[v] = 'Verb';
   //now conjugate it
-  let o = fastConjugate(v);
+  const o = fastConjugate(v);
   Object.keys(o).forEach((k) => {
     if (o[k] && !lexicon[o[k]]) {
       lexicon[o[k]] = k;
@@ -108,30 +100,17 @@ data.verbConverts.forEach((a) => {
   });
 });
 
-//inflect nouns
-// data.nouns.forEach((n) => {
-//   lexicon[n] = 'Singular';
-//   let plural = toPlural(n);
-//   lexicon[plural] = 'Plural';
-// });
 
 //let a rip.
 // addObj(data.firstnames);
 addArr(data.notable_people.female, 'FemaleName');
 addArr(data.notable_people.male, 'MaleName');
 addArr(data.titles, 'Singular');
-// addArr(data.lastnames, 'LastName');
-// addArr(data.places.airports, 'Place');
-// addArr(data.places.cities, 'City');
-// addArr(data.places.countries, 'Country');
-// addArr(data.organizations, 'Organization');
-// addArr(data.adjectives, 'Adjective');
 addArr(data.verbConverts, 'Adjective');
 addArr(data.superlatives, 'Adjective');
 addArr(data.currencies, 'Currency');
 //these ad-hoc manual ones have priority
 addObj(data.misc);
-
 
 //for safety (these are sneaky)
 delete lexicon[''];
@@ -140,8 +119,3 @@ delete lexicon[null];
 module.exports = lexicon;
 
 // console.log(lexicon['ugh']);
-// console.log(fastConjugate('make'));
-// let t = new Term('shake');
-// t.tag.Verb = true;
-// console.timeEnd('lexicon');
-// console.log(Object.keys(lexicon).length);

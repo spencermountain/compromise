@@ -1,5 +1,5 @@
 'use strict';
-const tagColors = require('./tags/colors');
+const tagset = require('./tagset');
 
 // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 const c = {
@@ -38,34 +38,9 @@ exports.ensureObject = (input) => {
   }
   return input;
 };
-//string utilities
-exports.endsWith = function (str, suffix) {
-  if (str && str.substr(-suffix.length) === suffix) {
-    return true;
-  }
-  return false;
-};
-
-exports.startsWith = function (str, prefix) {
-  if (str && prefix) {
-    if (str.substr(0, prefix.length) === prefix) {
-      return true;
-    }
-  }
-  return false;
-};
 
 exports.titleCase = (str) => {
   return str.charAt(0).toUpperCase() + str.substr(1);
-};
-
-//turn a nested array into one array
-exports.flatten = function (arr) {
-  let all = [];
-  arr.forEach(function (a) {
-    all = all.concat(a);
-  });
-  return all;
 };
 
 //shallow-clone an object
@@ -79,7 +54,7 @@ exports.copy = (o) => {
 };
 exports.extend = (obj, a) => {
   obj = exports.copy(obj);
-  let keys = Object.keys(a);
+  const keys = Object.keys(a);
   for(let i = 0; i < keys.length; i++) {
     obj[keys[i]] = a[keys[i]];
   }
@@ -109,16 +84,17 @@ exports.black = function(str) {
   return c.black + str + c.reset;
 };
 exports.printTag = function(tag) {
-  if (tagColors[tag]) {
-    return exports[tagColors[tag]](tag);
+  if (tagset[tag]) {
+    const color = tagset[tag].color || 'black';
+    return exports[color](tag);
   }
   return tag;
 };
 exports.printTerm = function(t) {
-  let tags = Object.keys(t.tag);
+  const tags = Object.keys(t.tags);
   for(let i = 0; i < tags.length; i++) {
-    if (tagColors[tags[i]]) {
-      let color = tagColors[tags[i]];
+    if (tagset[tags[i]]) {
+      const color = tagset[tags[i]].color || 'black';
       return exports[color](t.plaintext);
     }
   }
@@ -132,4 +108,8 @@ exports.leftPad = function (str, width, char) {
     str += char;
   }
   return str;
+};
+
+exports.isArray = function(arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]';
 };

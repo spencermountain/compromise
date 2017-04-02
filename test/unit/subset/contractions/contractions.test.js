@@ -36,7 +36,7 @@ test('==contractions==', function(T) {
     ].forEach(function(a) {
       var term = nlp(a[0]).list[0].terms[0];
       var msg = term.text + ' has tag ' + a[1];
-      t.equal(term.tag[a[1]], true, msg);
+      t.equal(term.tags[a[1]], true, msg);
     });
     t.end();
   });

@@ -1,11 +1,12 @@
 'use strict';
+const hasCapital = /^[A-Z]/;
 
 //sticking words at the start sentence-sensitive
 const prepend = (ts, str) => {
   let firstTerm = ts.terms[0];
   ts.insertAt(0, str);
   //handle titlecase of first-word
-  if (firstTerm.text.match(/^[A-Z]/)) {
+  if (hasCapital.test(firstTerm.text)) {
     //is it titlecased because it should be?
     if (firstTerm.needsTitleCase() === false) {
       firstTerm.toLowerCase();

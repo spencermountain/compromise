@@ -1,13 +1,12 @@
 'use strict';
-const fns = require('../paths').fns;
 const emojiReg = require('./rules/emoji_regex');
 const emoticon = require('./rules/emoticon_list');
 //test for forms like ':woman_tone2:‍:ear_of_rice:'
 //https://github.com/Kikobeats/emojis-keywords/blob/master/index.js
 const isCommaEmoji = (t) => {
-  if (fns.startsWith(t.text, ':')) {
+  if (t.text.charAt(0) === ':') {
     //end comma can be last or second-last ':haircut_tone3:‍♀️'
-    if (!t.text.match(/:.?$/)) {
+    if (t.text.match(/:.?$/) === null) {
       return false;
     }
     //ensure no spaces
@@ -27,8 +26,7 @@ const isCommaEmoji = (t) => {
 const isEmoticon = (t) => {
   //normalize the 'eyes'
   let str = t.text.replace(/^[:;]/, ':');
-  str = str.replace(/[:;]$/, ':');
-  return emoticon[str];
+  return emoticon[str] !== undefined;
 };
 
 //
@@ -37,15 +35,15 @@ const emojiStep = (ts) => {
     let t = ts.terms[i];
     //test for :keyword: emojis
     if (isCommaEmoji(t)) {
-      t.tagAs('Emoji', 'comma-emoji');
+      t.tag('Emoji', 'comma-emoji');
     }
     //test for unicode emojis
     if (t.text.match(emojiReg)) {
-      t.tagAs('Emoji', 'unicode-emoji');
+      t.tag('Emoji', 'unicode-emoji');
     }
     //test for emoticon ':)' emojis
     if (isEmoticon(t)) {
-      t.tagAs('Emoji', 'emoticon-emoji');
+      t.tag('Emoji', 'emoticon-emoji');
     }
   }
   return ts;

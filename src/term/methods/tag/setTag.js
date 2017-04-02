@@ -1,62 +1,54 @@
 'use strict';
 //set a term as a particular Part-of-speech
-const path = require('./paths');
+const path = require('../../paths');
 const log = path.log;
 const tagset = path.tags;
+const fns = path.fns;
 const unTag = require('./unTag');
 
-
-const makeCompatible = (term, tag, reason) => {
-  if (!tagset[tag]) {
+const putTag = (term, tag, reason) => {
+  tag = tag.replace(/^#/, '');
+  //already got this
+  if (term.tags[tag] === true) {
     return;
   }
-  //find incompatible tags
-  let not = tagset[tag].not || [];
-  for (let i = 0; i < not.length; i++) {
-    unTag(term, not[i], reason);
-  }
-};
+  term.tags[tag] = true;
+  log.tag(term, tag, reason);
 
-const tag_one = (term, tag, reason) => {
-  //ignore if already tagged
-  if (term.tag[tag]) {
-    return;
-  }
-  reason = reason || '';
-  //clean first
-  makeCompatible(term, tag, reason);
-  // unTag(term, tag, reason);
-  log.tagAs(term, tag, reason);
-  term.tag[tag] = true;
-};
-
-const tagAll = function (term, tag, reason) {
-  if (!term || !tag || typeof tag !== 'string') {
-    // console.log(tag)
-    
-    //LS 13-03-17 if tag is an array - call this recursively for each entry...
-    if(!!tag && tag.constructor === Array)
-    {
-      for (let i = 0; i < tag.length; i++)
-      {
-          tagAll(term, tag[i], reason);
+  //extra logic per-each POS
+  if (tagset[tag]) {
+    //drop any conflicting tags
+    let enemies = tagset[tag].enemy;
+    for (let i = 0; i < enemies.length; i++) {
+      if (term.tags[enemies[i]] === true) {
+        unTag(term, enemies[i], reason);
       }
     }
-
-    return;
-  }
-  tag = tag || '';
-  tag = tag.replace(/^#/, '');
-  tag_one(term, tag, reason);
-  //find assumed-tags
-  if (tagset[tag]) {
-    let tags = tagset[tag].parents || [];
-    for (let i = 0; i < tags.length; i++) {
-      tag_one(term, tags[i], '-');
+    //apply implicit tags
+    if (tagset[tag].is) {
+      let doAlso = tagset[tag].is;
+      if (term.tags[doAlso] !== true) {
+        putTag(term, doAlso, ' --> ' + tag); //recursive
+      }
     }
   }
 };
 
+//give term this tag
+const wrap = function (term, tag, reason) {
+  if (!term || !tag) {
+    return;
+  }
+  //handle multiple tags
+  if (fns.isArray(tag)) {
+    tag.forEach((t) => putTag(term, t, reason)); //recursive
+    return;
+  }
+  putTag(term, tag, reason);
+  //add 'extra' tag (for some special tags)
+  if (tagset[tag] && tagset[tag].also !== undefined) {
+    putTag(term, tagset[tag].also, reason);
+  }
+};
 
-module.exports = tagAll;
-// console.log(tagset['Person']);
+module.exports = wrap;

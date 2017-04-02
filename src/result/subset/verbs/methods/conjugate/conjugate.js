@@ -2,12 +2,10 @@
 const checkIrregulars = require('./irregulars');
 const suffixPass = require('./suffixes');
 const toActor = require('./toActor');
-const toAdjective = require('./toAdjective');
 const generic = require('./generic');
 const predict = require('../predict');
 const toInfinitive = require('../toInfinitive');
 const toBe = require('./toBe');
-
 
 //turn a verb into all it's forms
 const conjugate = function(t, verbose) {
@@ -18,18 +16,15 @@ const conjugate = function(t, verbose) {
   }
 
   //dont conjugate didn't
-  if (t.tag.Contraction) {
+  if (t.tags.Contraction) {
     t.text = t.silent_term;
   }
   let all = {
     PastTense: null,
     PresentTense: null,
-    // FutureTense: null,
     Infinitive: null,
     Gerund: null,
     Actor: null,
-  // PerfectTense: null,
-  // Pluperfect: null,
   };
   //first, get its current form
   let form = predict(t);
@@ -59,13 +54,8 @@ const conjugate = function(t, verbose) {
   //ad-hoc each missing form
   //to Actor
   if (!all.Actor) {
-    //a phrasal like 'step up' can't be an actor -'step upper'?
-    // if (!t.tag.PhrasalVerb) {
     all.Actor = toActor(inf);
-  // }
   }
-  //add adjective, like walk->walkable
-  all.Adjective = toAdjective(all.Infinitive);
 
   //use fallback, generic transformations
   Object.keys(all).forEach((k) => {

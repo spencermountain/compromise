@@ -1,5 +1,5 @@
 'use strict';
-const irregulars = require('../../../../../data').irregular_verbs; //weeee!
+let irregulars = require('../../../../../data').irregular_verbs; //weeee!
 const fns = require('../../../../../fns'); //weeee!
 const infArr = Object.keys(irregulars);
 const forms = [

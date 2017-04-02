@@ -1,6 +1,6 @@
 'use strict';
 //
-const defaultMethods = {
+const defaults = {
   whitespace: true,
   case: true,
   numbers: true,
@@ -29,7 +29,7 @@ const methods = {
   case: (r) => {
     r.list.forEach((ts) => {
       ts.terms.forEach((t, i) => {
-        if (i === 0 || t.tag.Person || t.tag.Place || t.tag.Organization) {
+        if (i === 0 || t.tags.Person || t.tags.Place || t.tags.Organization) {
           ts.toTitleCase();
         } else {
           ts.toLowerCase();
@@ -71,15 +71,14 @@ const methods = {
 
 const addMethods = (Text) => {
   Text.prototype.normalize = function(obj) {
-    obj = obj || defaultMethods;
+    obj = obj || defaults;
     //do each type of normalization
     Object.keys(obj).forEach((fn) => {
-      if (methods[fn]) {
+      if (methods[fn] !== undefined) {
         methods[fn](this);
       }
     });
     return this;
   };
-  return Text;
 };
 module.exports = addMethods;

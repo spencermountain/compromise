@@ -43,20 +43,20 @@ const rules = [{
 const toActor = function(inf) {
   //check blacklist
   if (dont[inf]) {
-    return null
+    return null;
   }
   //check irregulars
   if (irregulars[inf]) {
-    return irregulars[inf]
+    return irregulars[inf];
   }
   //try rules
   for (let i = 0; i < rules.length; i++) {
-    if (inf.match(rules[i].reg)) {
-      return inf.replace(rules[i].reg, rules[i].repl)
+    if (rules[i].reg.test(inf) === true) {
+      return inf.replace(rules[i].reg, rules[i].repl);
     }
   }
   //yup,
-  return inf + 'er'
-}
+  return inf + 'er';
+};
 
-module.exports = toActor
+module.exports = toActor;

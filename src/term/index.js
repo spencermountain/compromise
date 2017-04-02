@@ -6,7 +6,7 @@ const makeUID = require('./makeUID');
 class Term {
   constructor(str) {
     this._text = fns.ensureString(str);
-    this.tag = {};
+    this.tags = {};
     //seperate whitespace from the text
     let parsed = build_whitespace(this._text);
     this.whitespace = parsed.whitespace;
@@ -46,17 +46,17 @@ class Term {
   /** make a copy with no references to the original  */
   clone() {
     let term = new Term(this._text, null);
-    term.tag = fns.copy(this.tag);
+    term.tags = fns.copy(this.tags);
     term.whitespace = fns.copy(this.whitespace);
     term.silent_term = this.silent_term;
     return term;
   }
 }
-Term = require('./methods/normalize')(Term);
-Term = require('./methods/isA')(Term);
-Term = require('./methods/out')(Term);
-Term = require('./methods/tag')(Term);
-Term = require('./methods/case')(Term);
-Term = require('./methods/punctuation')(Term);
+require('./methods/normalize')(Term);
+require('./methods/isA')(Term);
+require('./methods/out')(Term);
+require('./methods/tag')(Term);
+require('./methods/case')(Term);
+require('./methods/punctuation')(Term);
 
 module.exports = Term;

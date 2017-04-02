@@ -3,10 +3,9 @@
 //use it for messing around.
 var nlp = require('./src/index');
 // nlp.verbose('tagger');
-// var nlp = require('./builds/compromise');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
-// const fresh = require('./test/unit/lib/freshPrince.js');
+const fresh = require('./test/unit/lib/freshPrince.js');
 
 // bug.1
 //  .? vs *
@@ -16,15 +15,18 @@ var nlp = require('./src/index');
 // nlp('I\'m going to the shops').sentences().toPastTense().debug();
 
 
-let r = nlp('we were swimming and puking');
-console.log(r.verbs().data());
+// let r = nlp.tokenize('5th - 7th').tag('NumberRange').debug();
+// r.contractions().debug();
 
+//===timer
 // console.time('parse');
 // let r = nlp(fresh);
 // console.timeEnd('parse');
 //
-// console.time('m');
-// let m = r.match(['home'], true);
-// // let m = r.list[0].lookup('story', true);
-// console.log(m.length);
-// console.timeEnd('m');
+// console.time('match');
+// r.match('#Determiner (story|thing|#Adjective)', true);
+// console.timeEnd('match');
+//
+// console.time('tag');
+// r.tag('#Person');
+// console.timeEnd('tag');

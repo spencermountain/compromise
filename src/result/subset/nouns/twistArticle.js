@@ -22,7 +22,7 @@ const findArticle = function (ts, i) {
       return t;
     }
     //a verb ends the search, i think.
-    if (t.tag.Verb) {
+    if (t.tags.Verb) {
       return null;
     }
     //don't go too far back..

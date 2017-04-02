@@ -1,16 +1,14 @@
 'use strict';
-const log = require('../paths').log;
 const rules = require('./rules/punct_rules');
-const path = 'tagger/punctuation';
+
+//regs-
+const titleCase = /^[A-Z][a-z']/;
+const romanNum = /^[IVXCM]+$/;
 
 //not so smart (right now)
 const isRomanNumeral = function(t) {
-  if (!t.canBe('RomanNumeral')) {
-    return false;
-  }
-  const str = t.text;
-  if (str.length > 1 && str.match(/^[IVXCM]+$/)) {
-    return true;
+  if (t.text.length > 1 && romanNum.test(t.text) === true) {
+    return t.canBe('RomanNumeral');
   }
   return false;
 };
@@ -26,33 +24,32 @@ const oneLetters = {
 };
 
 const punctuation_step = function (ts) {
-  log.here(path);
   ts.terms.forEach((t) => {
     let str = t.text;
     //anything can be titlecase
-    if (str.match(/^[A-Z][a-z']/)) {
-      t.tagAs('TitleCase', 'punct-rule');
+    if (titleCase.test(str) === true) {
+      t.tag('TitleCase', 'punct-rule');
     }
     //ok, normalise it a little,
     str = str.replace(/[,\.\?]$/, '');
     //do punctuation rules (on t.text)
     for (let i = 0; i < rules.length; i++) {
       let r = rules[i];
-      if (str.match(r.reg)) {
+      if (r.reg.test(str) === true) {
         //don't over-write any other known tags
         if (t.canBe(r.tag)) {
-          t.tagAs(r.tag, 'punctuation-rule- "' + r.str + '"');
+          t.tag(r.tag, 'punctuation-rule- "' + r.str + '"');
         }
         return;
       }
     }
     //terms like 'e'
     if (str.length === 1 && !oneLetters[str.toLowerCase()]) {
-      t.tagAs('Acronym', 'one-letter-acronym');
+      t.tag('Acronym', 'one-letter-acronym');
     }
     //roman numerals (weak rn)
     if (isRomanNumeral(t)) {
-      t.tagAs('RomanNumeral', 'is-roman-numeral');
+      t.tag('RomanNumeral', 'is-roman-numeral');
     }
 
   });

@@ -1,8 +1,6 @@
 'use strict';
-const log = require('../paths').log;
 const phrasals = require('../paths').tries.utils.phrasals;
-const toInfinitive = require('../../result/subset/verbs/methods/toInfinitive/index.js');
-const path = 'tagger/phrasal';
+const toInfinitive = require('../../result/subset/verbs/methods/toInfinitive');
 
 //words that could be particles
 const particles = {
@@ -35,19 +33,18 @@ const particles = {
 
 //phrasal verbs are compound verbs like 'beef up'
 const phrasals_step = function(ts) {
-  log.here(path);
   for(let i = 1; i < ts.length; i++) {
     let t = ts.get(i);
     //is it a particle, like 'up'
     if (particles[t.normal]) {
       //look backwards
       let last = ts.get(i - 1);
-      if (last.tag.Verb) {
+      if (last.tags.Verb) {
         let inf = toInfinitive(last);
         if (phrasals.has(inf + ' ' + t.normal)) {
-          t.tagAs('Particle', 'phrasalVerb-particle');
-          t.tagAs('PhrasalVerb', 'phrasalVerb-particle');
-          last.tagAs('PhrasalVerb', 'phrasalVerb-particle');
+          t.tag('Particle', 'phrasalVerb-particle');
+          t.tag('PhrasalVerb', 'phrasalVerb-particle');
+          last.tag('PhrasalVerb', 'phrasalVerb-particle');
         }
       }
     }

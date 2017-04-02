@@ -49,7 +49,7 @@ const toAdjective = function(str) {
     return irregulars[str];
   }
   for (let i = 0; i < transforms.length; i++) {
-    if (str.match(transforms[i].reg)) {
+    if (transforms[i].reg.test(str) === true) {
       return str.replace(transforms[i].reg, transforms[i].repl);
     }
   }

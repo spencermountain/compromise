@@ -10,10 +10,6 @@ const genericMethods = (Text) => {
       let list = this.list.map((ts) => {
         return ts.clone();
       });
-      // this.parent.list = this.parent.list.map((ts) => {
-      //   return ts.clone();
-      // });
-      // return this;
       return new Text(list); //this.lexicon, this.parent
     },
 
@@ -38,8 +34,8 @@ const genericMethods = (Text) => {
 
     /** grab a subset of the results*/
     slice: function (start, end) {
-      this.list=this.list.slice(start, end)
-      return this
+      this.list = this.list.slice(start, end);
+      return this;
     },
 
     /** use only the nth result*/
@@ -100,12 +96,21 @@ const genericMethods = (Text) => {
       return new Text([ts], this.lexicon, this.parent);
     },
 
+    /** see if these terms can become this tag*/
+    canBe: function (tag) {
+      this.list.forEach((ts) => {
+        ts.terms = ts.terms.filter((t) => {
+          return t.canBe(tag, this.tagSet);
+        });
+      });
+      return this;
+    },
+
   };
 
   Object.keys(methods).forEach((k) => {
     Text.prototype[k] = methods[k];
   });
-  return Text;
 };
 
 module.exports = genericMethods;

@@ -23,7 +23,7 @@ const toVerb = (str) => {
   if (irregulars[str]) {
     return irregulars[str];
   }
-  if (str.match(/e$/)) {
+  if (/e$/.test(str) === true) {
     return str + 'n';
   }
   return str + 'en';

@@ -46,12 +46,12 @@ const makeArticle = function(t) {
   }
   //'a' regexes
   for (let i = 0; i < a_regexs.length; i++) {
-    if (str.match(a_regexs[i])) {
+    if (a_regexs[i].test(str)) {
       return 'a';
     }
   }
   //basic vowel-startings
-  if (str.match(/^[aeiou]/i)) {
+  if (/^[aeiou]/i.test(str)) {
     return 'an';
   }
   return 'a';

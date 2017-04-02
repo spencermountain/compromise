@@ -4,8 +4,8 @@
 const addMethods = (Terms) => {
 
   const foreach = [
-    // ['tagAs'],
-    // ['unTag'],
+    ['tag'],
+    ['unTag'],
     // ['canBe'],
     ['toUpperCase', 'UpperCase'],
     ['toLowerCase'],
@@ -22,7 +22,7 @@ const addMethods = (Terms) => {
         t[k].apply(t, args);
       });
       if (tag) {
-        this.tagAs(tag, k);
+        this.tag(tag, k);
       }
       return this;
     };

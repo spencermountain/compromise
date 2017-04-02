@@ -107,22 +107,22 @@ const adj_to_adv = function(str) {
     /ile$/
   ];
 
-  if (dont[str]) {
+  if (dont[str] === 1) {
     return null;
   }
-  if (irregulars[str]) {
+  if (irregulars[str] !== undefined) {
     return irregulars[str];
   }
   if (str.length <= 3) {
     return null;
   }
   for (let i = 0; i < not_matches.length; i++) {
-    if (str.match(not_matches[i])) {
+    if (not_matches[i].test(str) === true) {
       return null;
     }
   }
   for (let i = 0; i < transforms.length; i++) {
-    if (str.match(transforms[i].reg)) {
+    if (transforms[i].reg.test(str) === true) {
       return str.replace(transforms[i].reg, transforms[i].repl);
     }
   }

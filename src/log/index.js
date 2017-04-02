@@ -23,7 +23,7 @@ module.exports = {
       console.log(str);
     }
   },
-  tagAs: (t, pos, reason) => {
+  tag: (t, pos, reason) => {
     if (enable === true || enable === 'tagger') {
       let title = t.normal || '[' + t.silent_term + ']';
       title = fns.yellow(title);
@@ -31,6 +31,16 @@ module.exports = {
       title += '  ->   ' + fns.printTag(pos);
       title = fns.leftPad(title, 54);
       console.log('       ' + title + '(' + fns.cyan(reason || '') + ')');
+    }
+  },
+  unTag: (t, pos, reason) => {
+    if (enable === true || enable === 'tagger') {
+      let title = '-' + t.normal + '-';
+      title = fns.red(title);
+      title = fns.leftPad(title, 20);
+      title += '  ~*   ' + fns.red(pos);
+      title = fns.leftPad(title, 54);
+      console.log('       ' + title + '(' + fns.red(reason || '') + ')');
     }
   }
 };

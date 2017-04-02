@@ -5,7 +5,7 @@ const toInfinitive = require('./methods/toInfinitive');
 
 const toNegative = (ts) => {
   //would not walk
-  let modal = ts.match('#Auxillary').first(); //.notIf('(is|are|was|will|has|had)').first(); //.first();
+  let modal = ts.match('#Auxiliary').first(); //.notIf('(is|are|was|will|has|had)').first(); //.first();
   if (modal.found) {
     let index = modal.list[0].index();
     return ts.parentTerms.insertAt(index + 1, 'not', 'Verb');

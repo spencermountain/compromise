@@ -1,9 +1,8 @@
 'use strict';
-//
 const syntax = require('./lib/syntax');
 const startHere = require('./lib/startHere');
-const Text = require('../../result/index');
-// const diff = require('./diff');
+const Text = require('../../result');
+const match = require('./lib');
 
 const matchMethods = (Terms) => {
 
@@ -11,31 +10,15 @@ const matchMethods = (Terms) => {
 
     //support regex-like whitelist-match
     match: function (reg, verbose) {
-      //fail-fast
+      //fail-fast #1
+      if (this.terms.length === 0) {
+        return new Text([], this.lexicon, this.parent);
+      }
+      //fail-fast #2
       if (!reg) {
         return new Text([], this.lexicon, this.parent);
       }
-      //parse for backwards-compatibility
-      if (typeof reg === 'string') {
-        reg = syntax(reg);
-      }
-      if (verbose) {
-        console.log(reg);
-      }
-      let matches = [];
-      for (let t = 0; t < this.terms.length; t++) {
-        //don't loop through if '^'
-        if (reg[0] && reg[0].starting && t > 0) {
-          break;
-        }
-        let m = startHere(this, t, reg, verbose);
-        if (m) {
-          matches.push(m);
-          //ok, don't try to match these again.
-          let skip = m.length - 1;
-          t += skip; //this could use some work
-        }
-      }
+      let matches = match(this, reg, verbose);
       matches = matches.map((a) => {
         return new Terms(a, this.lexicon, this.refText, this.refTerms);
       });
@@ -44,6 +27,10 @@ const matchMethods = (Terms) => {
 
     /**return first match */
     matchOne: function (str) {
+      //fail-fast
+      if (this.terms.length === 0) {
+        return null;
+      }
       let regs = syntax(str);
       for (let t = 0; t < this.terms.length; t++) {
         //don't loop through if '^'
@@ -60,8 +47,7 @@ const matchMethods = (Terms) => {
 
     /**return first match */
     has: function (str) {
-      let m = this.matchOne(str);
-      return !!m;
+      return this.matchOne(str) !== null;
     }
 
   };

@@ -13,7 +13,7 @@ const tags = {
 //make sure the newly created term gets the easy tags
 const easyTag = (t) => {
   if (tags[t.silent_term]) {
-    t.tagAs(tags[t.silent_term]);
+    t.tag(tags[t.silent_term]);
   }
 };
 
@@ -24,12 +24,12 @@ const fixContraction = (ts, parts, i) => {
   let one = ts.terms[i];
   one.silent_term = parts[0];
   //tag it as a contraction
-  one.tagAs('Contraction', 'tagger-contraction');
+  one.tag('Contraction', 'tagger-contraction');
 
   //add a new empty term
   let two = new Term('');
   two.silent_term = parts[1];
-  two.tagAs('Contraction', 'tagger-contraction');
+  two.tag('Contraction', 'tagger-contraction');
   ts.insertAt(i + 1, two);
   //ensure new term has no auto-whitspace
   two.whitespace.before = '';
@@ -42,7 +42,7 @@ const fixContraction = (ts, parts, i) => {
     three.silent_term = parts[2];
     // ts.terms.push(three);
     ts.insertAt(i + 2, three);
-    three.tagAs('Contraction', 'tagger-contraction');
+    three.tag('Contraction', 'tagger-contraction');
     easyTag(three);
   }
 

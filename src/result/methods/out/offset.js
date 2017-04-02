@@ -20,11 +20,24 @@ const findOffset = (parent, term) => {
 const allOffset = (r) => {
   let parent = r.all();
   return r.list.map((ts) => {
+    let words = [];
+    for(let i = 0; i < ts.terms.length; i++) {
+      words.push(ts.terms[i].normal);
+    }
+    let nrml = ts.out('normal');
+    let txt = ts.out('text');
+    let startAt = findOffset(parent, ts.terms[0]);
+    let beforeWord = ts.terms[0].whitespace.before;
+    let wordStart = startAt + beforeWord.length;
     return {
-      text: ts.out('text'),
-      normal: ts.out('normal'),
-      offset: findOffset(parent, ts.terms[0]),
-      length: ts.out('text').length
+      text: txt,
+      normal: nrml,
+      //where we begin
+      offset: startAt,
+      length: txt.length,
+      wordStart: wordStart,
+      wordEnd: wordStart + nrml.length,
+    // wordLength: words.join(' ').length
     };
   });
 };

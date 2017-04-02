@@ -2,6 +2,15 @@
 here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
 
 
+### v.9  &nbsp;
+* 9.0.0
+- rename `Term.tag` object to `Term.tags` so the `.tag()` method can work throughout more-consistently
+- fix 'Auxillary' tag typo to 'Auxiliary'
+- optimisation of .match(), and tagset - significant speedup!
+- adds `.tagger()` method and cleanup extra params
+- adds `wordStart` and `wordEnd` offsets to `.out('offset')` for whitespace+punctuation
+- new `.has()` method for faster lookups
+
 ### v.8  &nbsp;
 * 8.0.0 - less-ambitious date-parsing of nl-date forms
 *       - filesize reduction using [efrt](https://github.com/nlp-compromise/efrt) data structure (254k -> 214k)

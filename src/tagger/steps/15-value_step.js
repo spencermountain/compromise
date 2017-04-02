@@ -1,30 +1,30 @@
 'use strict';
-'use strict';
-const log = require('../paths').log;
-const path = 'tagger/value';
+//regs-
+const cardinal = /^[0-9]([0-9]+,)*?(\.[0-9])$/;
+const hasText = /^[a-z]/;
 
 const value_step = function(ts) {
-  log.here(path);
-  ts.terms.forEach((t) => {
-    if (t.tag.Value) {
+  for(let i = 0; i < ts.terms.length; i++) {
+    let t = ts.terms[i];
+    if (t.tags.Value === true) {
       //ordinal/cardinal
-      if (!t.tag.Ordinal && !t.tag.Cardinal) {
-        if (t.normal.match(/^[0-9]([0-9]+,)*?(\.[0-9])$/)) {
-          t.tagAs('Cardinal', 'ordinal-regex');
+      if (t.tags.Ordinal === undefined && t.tags.Cardinal === undefined) {
+        if (cardinal.test(t.normal) === true) {
+          t.tag('Cardinal', 'ordinal-regex');
         } else {
-          t.tagAs('Cardinal', 'cardinal-regex');
+          t.tag('Cardinal', 'cardinal-regex');
         }
       }
       //text/number
-      if (!t.tag.TextValue && !t.tag.NumericValue) {
-        if (t.normal.match(/^[a-z]/)) {
-          t.tagAs('TextValue', 'TextValue-regex');
+      if (t.tags.TextValue === undefined && t.tags.NumericValue === undefined) {
+        if (hasText.test(t.normal) === true) {
+          t.tag('TextValue', 'TextValue-regex');
         } else {
-          t.tagAs('NumericValue', 'NumericValue-regex');
+          t.tag('NumericValue', 'NumericValue-regex');
         }
       }
     }
-  });
+  }
   return ts;
 };
 

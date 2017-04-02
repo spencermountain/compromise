@@ -4,13 +4,15 @@ const pkg = require('../package.json');
 const log = require('./log');
 
 //the main thing
-const nlp = function (str, lexicon, tagSet) {
-  return buildResult(str, lexicon, tagSet);
+const nlp = function (str, lexicon) {
+  let r = buildResult(str, lexicon);
+  r.tagger();
+  return r;
 };
 
 //same as main method, except with no POS-tagging.
 nlp.tokenize = function(str) {
-  return buildResult(str, null, null, true);
+  return buildResult(str);
 };
 
 //this is handy

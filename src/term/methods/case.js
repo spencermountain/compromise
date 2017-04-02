@@ -5,7 +5,7 @@ const addMethods = (Term) => {
   const methods = {
     toUpperCase: function () {
       this.text = this.text.toUpperCase();
-      this.tagAs('#UpperCase', 'toUpperCase');
+      this.tag('#UpperCase', 'toUpperCase');
       return this;
     },
     toLowerCase: function () {
@@ -16,7 +16,7 @@ const addMethods = (Term) => {
     },
     toTitleCase: function () {
       this.text = this.text.replace(/^[a-z]/, (x) => x.toUpperCase());
-      this.tagAs('#TitleCase', 'toTitleCase');
+      this.tag('#TitleCase', 'toTitleCase');
       return this;
     },
     //(camelCase() is handled in `./terms` )
@@ -37,7 +37,7 @@ const addMethods = (Term) => {
         'Demonym',
       ];
       for(let i = 0; i < titleCases.length; i++) {
-        if (this.tag[titleCases[i]]) {
+        if (this.tags[titleCases[i]]) {
           return true;
         }
       }

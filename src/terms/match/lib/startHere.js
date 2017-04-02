@@ -1,12 +1,11 @@
 'use strict';
-const lumpMatch = require('./lumpMatch');
+// const lumpMatch = require('./lumpMatch');
 const isMatch = require('./isMatch');
 
 // match everything until this point - '*'
 const greedyUntil = (ts, i, reg) => {
   for (i = i; i < ts.length; i++) {
-    let t = ts.terms[i];
-    if (isMatch(t, reg)) {
+    if (isMatch(ts.terms[i], reg)) {
       return i;
     }
   }
@@ -21,7 +20,7 @@ const greedyOf = (ts, i, reg, until) => {
     if (until && isMatch(t, until)) {
       return i;
     }
-    //die here
+    //stop here
     if (!isMatch(t, reg)) {
       return i;
     }
@@ -40,24 +39,24 @@ const startHere = (ts, startAt, regs, verbose) => {
 
     if (!term) {
       //we didn't need it anyways
-      if (reg.optional) {
+      if (reg.optional === true) {
         continue;
       }
       return null;
     }
 
     //catch '^' errors
-    if (reg.starting && term_i > 0) {
+    if (reg.starting === true && term_i > 0) {
       return null;
     }
 
     //catch '$' errors
-    if (reg.ending && term_i !== ts.length - 1 && !reg.minMax) {
+    if (reg.ending === true && term_i !== ts.length - 1 && !reg.minMax) {
       return null;
     }
 
     //support '*'
-    if (regs[reg_i].astrix) {
+    if (regs[reg_i].astrix === true) {
       //just grab until the end..
       if (!next_reg) {
         return ts.terms.slice(startAt, ts.length);
@@ -72,7 +71,7 @@ const startHere = (ts, startAt, regs, verbose) => {
     }
 
     //support '{x,y}'
-    if (regs[reg_i].minMax) {
+    if (regs[reg_i].minMax !== undefined) {
       //on last reg?
       if (!next_reg) {
         let len = ts.length;
@@ -103,7 +102,7 @@ const startHere = (ts, startAt, regs, verbose) => {
     }
 
     //if optional, check next one
-    if (reg.optional) {
+    if (reg.optional === true) {
       let until = regs[reg_i + 1];
       term_i = greedyOf(ts, term_i, reg, until);
       continue;
@@ -113,7 +112,7 @@ const startHere = (ts, startAt, regs, verbose) => {
     if (isMatch(term, reg, verbose)) {
       term_i += 1;
       //try to greedy-match '+'
-      if (reg.consecutive) {
+      if (reg.consecutive === true) {
         let until = regs[reg_i + 1];
         term_i = greedyOf(ts, term_i, reg, until);
       }
@@ -132,16 +131,16 @@ const startHere = (ts, startAt, regs, verbose) => {
     }
 
     //handle partial-matches of lumped terms
-    let lumpUntil = lumpMatch(term, regs, reg_i);
-    if (lumpUntil) {
-      reg_i = lumpUntil;
-      term_i += 1;
-      continue;
-    }
+    // let lumpUntil = lumpMatch(term, regs, reg_i);
+    // if (lumpUntil) {
+    //   reg_i = lumpUntil;
+    //   term_i += 1;
+    //   continue;
+    // }
 
 
     //was it optional anways?
-    if (reg.optional) {
+    if (reg.optional === true) {
       continue;
     }
     return null;

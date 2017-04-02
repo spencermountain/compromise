@@ -1,6 +1,4 @@
 'use strict';
-const log = require('../paths').log;
-const path = 'tagger/noun_fallback';
 //tag word as noun if we know nothing about it, still.
 
 //tags that dont really count
@@ -12,10 +10,10 @@ const nothing = {
 //are the tags basically empty
 const gotNothing = function(t) {
   //fail-fast
-  if (t.tag.Noun || t.tag.Verb || t.tag.Adjective) {
+  if (t.tags.Noun || t.tags.Verb || t.tags.Adjective) {
     return false;
   }
-  let tags = Object.keys(t.tag);
+  let tags = Object.keys(t.tags);
   if (tags.length === 0) {
     return true;
   }
@@ -26,11 +24,10 @@ const gotNothing = function(t) {
 };
 
 const noun_fallback = function(s) {
-  log.here(path);
   for (let i = 0; i < s.terms.length; i++) {
     let t = s.terms[i];
     //fail-fast
-    if (t.tag.Noun || t.tag.Verb) {
+    if (t.tags.Noun || t.tags.Verb) {
       continue;
     }
     //ensure it only has the tag 'Term'
@@ -39,7 +36,7 @@ const noun_fallback = function(s) {
       if (t.isWord() === false) {
         continue;
       }
-      t.tagAs('Noun', 'noun-fallback');
+      t.tag('Noun', 'noun-fallback');
     }
   }
   return s;

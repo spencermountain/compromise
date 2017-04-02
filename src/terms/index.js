@@ -8,6 +8,7 @@ class Terms {
     this.lexicon = lexicon;
     this.refText = refText;
     this._refTerms = refTerms;
+    this._cacheWords = {};
     this.count = undefined;
     this.get = (n) => {
       return this.terms[n];
@@ -34,7 +35,7 @@ class Terms {
       t.dirty = dirt;
     });
   }
-  posTag() {
+  tagger() {
     tagger(this);
     return this;
   }
@@ -80,31 +81,26 @@ class Terms {
     };
   }
 
-  static fromString(str, lexicon, skipTagging) {
+  static fromString(str, lexicon) {
     let termArr = build(str);
     let ts = new Terms(termArr, lexicon, null);
     //give each term a reference to this ts
     ts.terms.forEach((t) => {
       t.parentTerms = ts;
     });
-    //run the part-of-speech tagger?
-    if (skipTagging !== true) {
-      ts.posTag();
-    }
     return ts;
   }
 }
 // Terms = require('./methods/lookup')(Terms);
-Terms = require('./match')(Terms);
-Terms = require('./match/not')(Terms);
-Terms = require('./methods/tag')(Terms);
-Terms = require('./methods/loops')(Terms);
-Terms = require('./methods/delete')(Terms);
-Terms = require('./methods/insert')(Terms);
-Terms = require('./methods/misc')(Terms);
-Terms = require('./methods/out')(Terms);
-Terms = require('./methods/replace')(Terms);
-Terms = require('./methods/split')(Terms);
-Terms = require('./methods/transform')(Terms);
-Terms = require('./methods/lump')(Terms);
+require('./match')(Terms);
+require('./methods/loops')(Terms);
+require('./match/not')(Terms);
+require('./methods/delete')(Terms);
+require('./methods/insert')(Terms);
+require('./methods/misc')(Terms);
+require('./methods/out')(Terms);
+require('./methods/replace')(Terms);
+require('./methods/split')(Terms);
+require('./methods/transform')(Terms);
+require('./methods/lump')(Terms);
 module.exports = Terms;

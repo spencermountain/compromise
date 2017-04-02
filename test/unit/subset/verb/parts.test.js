@@ -48,7 +48,7 @@ test('verb-parts:', function(t) {
     var arr = nlp(a[0]).verbs().data();
     t.equal(arr.length, 1, '#verbs - ' + arr.length);
     t.equal(arr[0].parts.negative, a[1], 'neg-test - \'' + a[0] + '\'');
-    t.equal(arr[0].parts.auxillary, a[2], 'aux-test  - \'' + a[0] + '\'');
+    t.equal(arr[0].parts.auxiliary, a[2], 'aux-test  - \'' + a[0] + '\'');
     t.equal(arr[0].parts.verb, 'walking', 'verb-test  - \'' + a[0] + '\'');
     t.equal(arr[0].parts.adverbs, a[3], 'adverb-test  - \'' + a[0] + '\'');
   });

@@ -14,7 +14,7 @@ const isPossessive = (ts, i) => {
   let t = ts.terms[i];
   let next_t = ts.terms[i + 1];
   //a pronoun can't be possessive - "he's house"
-  if (t.tag.Pronoun || t.tag.QuestionWord) {
+  if (t.tags.Pronoun || t.tags.QuestionWord) {
     return false;
   }
   if (blacklist[t.normal]) {
@@ -25,19 +25,19 @@ const isPossessive = (ts, i) => {
     return true;
   }
   //a gerund suggests 'is walking'
-  if (next_t.tag.VerbPhrase) {
+  if (next_t.tags.VerbPhrase) {
     return false;
   }
   //spencer's house
-  if (next_t.tag.Noun) {
+  if (next_t.tags.Noun) {
     return true;
   }
   //rocket's red glare
-  if (next_t.tag.Adjective && ts.terms[i + 2] && ts.terms[i + 2].tag.Noun) {
+  if (next_t.tags.Adjective && ts.terms[i + 2] && ts.terms[i + 2].tags.Noun) {
     return true;
   }
   //an adjective suggests 'is good'
-  if (next_t.tag.Adjective || next_t.tag.Adverb || next_t.tag.Verb) {
+  if (next_t.tags.Adjective || next_t.tags.Adverb || next_t.tags.Verb) {
     return false;
   }
   return false;
@@ -57,8 +57,7 @@ const hardOne = (ts) => {
       if (parts.end === 's') {
         //spencer's house
         if (isPossessive(ts, i)) {
-          ts.terms[i].tagAs('#Possessive', 'hard-contraction');
-          // console.log('==possessive==');
+          ts.terms[i].tag('#Possessive', 'hard-contraction');
           continue;
         }
         //is vs was

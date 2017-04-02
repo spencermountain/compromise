@@ -31,7 +31,7 @@ var has_pos = function(r, tags) {
   }
   for(var i = 0; i < terms.list.length; i++) {
     var t = terms.list[i].terms[0];
-    if (!t.tag[tags[i]]) {
+    if (!t.tags[tags[i]]) {
       return false;
     }
   }
@@ -43,7 +43,7 @@ var pos_test = function(r, tags, t) {
   var got = r.terms().list.map(function(ts) {
     var term = ts.terms[0];
     str += ' ' + term.normal;
-    return Object.keys(term.tag)[0];
+    return Object.keys(term.tags)[0];
   }).join(', ');
   var msg = pad('"' + str.trim() + '"', 30) + pad(tags.join(', '), 45) + got;
   t.equal(has_pos(r, tags), true, msg);

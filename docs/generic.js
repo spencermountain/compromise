@@ -169,6 +169,11 @@ module.exports = {
       desc: 'removes any sets that have this match',
       returns: 'Text',
       example: 'nlp(\'We\u2019re here, we\u2019re clear, we don\u2019t want anymore bears.\').clauses().ifNo(\'anymore\').out()\n//We\'re here, we\'re clear,'
+    },
+    has: {
+      desc: 'quick check to see if this match is found',
+      returns: 'Boolean',
+      example: 'nlp(\'I am the very model of a modern Major-General\').has(\'#Pronoun\')\n//true,'
     }
   },
 

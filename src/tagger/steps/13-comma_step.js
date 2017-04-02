@@ -9,7 +9,7 @@ const isPlaceComma = (ts, i) => {
   let t = ts.terms[i];
   let nextTerm = ts.terms[i + 1];
   //'australia, canada' is a list
-  if (nextTerm && t.tag.Place && !t.tag.Country && nextTerm.tag.Country) {
+  if (nextTerm && t.tags.Place && !t.tags.Country && nextTerm.tags.Country) {
     return true;
   }
   return false;
@@ -17,13 +17,13 @@ const isPlaceComma = (ts, i) => {
 
 //adj, noun, or verb
 const mainTag = (t) => {
-  if (t.tag.Adjective) {
+  if (t.tags.Adjective) {
     return 'Adjective';
   }
-  if (t.tag.Noun) {
+  if (t.tags.Noun) {
     return 'Noun';
   }
-  if (t.tag.Verb) {
+  if (t.tags.Verb) {
     return 'Verb';
   }
   return null;
@@ -31,7 +31,7 @@ const mainTag = (t) => {
 
 const tagAsList = (ts, start, end) => {
   for(let i = start; i <= end; i++) {
-    ts.terms[i].tag.List = true;
+    ts.terms[i].tags.List = true;
   }
 };
 
@@ -48,14 +48,14 @@ const isList = (ts, i) => {
   for(i = i + 1; i < ts.terms.length; i++) {
     let t = ts.terms[i];
     //are we approaching the end
-    if (count > 0 && t.tag.Conjunction) {
+    if (count > 0 && t.tags.Conjunction) {
       hasConjunction = true;
       continue;
     }
     //found one,
-    if (t.tag[tag]) {
+    if (t.tags[tag]) {
       //looks good. keep it going
-      if (t.tag.Comma) {
+      if (t.tags.Comma) {
         count += 1;
         sinceComma = 0;
         continue;
@@ -80,21 +80,21 @@ const commaStep = function(ts) {
     let t = ts.terms[i];
     let punct = t.endPunctuation();
     if (punct === ',') {
-      t.tagAs('Comma', 'comma-step');
+      t.tag('Comma', 'comma-step');
       continue;
     }
     if (punct === ';' || punct === ':') {
-      t.tagAs('ClauseEnd', 'clause-punt');
+      t.tag('ClauseEnd', 'clause-punt');
       continue;
     }
     //support elipses
     if (t.whitespace.after.match(/^\.\./)) {
-      t.tagAs('ClauseEnd', 'clause-elipses');
+      t.tag('ClauseEnd', 'clause-elipses');
       continue;
     }
     //support ' - ' clause
     if (ts.terms[i + 1] && ts.terms[i + 1].whitespace.before.match(/ - /)) {
-      t.tagAs('ClauseEnd', 'hypen-clause');
+      t.tag('ClauseEnd', 'hypen-clause');
       continue;
     }
   }
@@ -102,9 +102,9 @@ const commaStep = function(ts) {
   //disambiguate the commas now
   for(let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
-    if (t.tag.Comma) {
+    if (t.tags.Comma) {
       //if we already got it
-      if (t.tag.List) {
+      if (t.tags.List) {
         continue;
       }
       //like 'Hollywood, California'
@@ -116,7 +116,7 @@ const commaStep = function(ts) {
         continue;
       }
       //otherwise, it's a phrasal comma, like 'you must, if you think so'
-      t.tag.ClauseEnd = true;
+      t.tags.ClauseEnd = true;
     }
   }
   return ts;

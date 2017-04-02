@@ -149,6 +149,8 @@ const compact = {
     'sometime',
     'eod',
     'oclock',
+    'all day',
+    'at night'
   ],
   Date: [
     //end of day, end of month

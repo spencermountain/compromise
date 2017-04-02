@@ -9,11 +9,11 @@ const verbPhrase = function (r) {
   //never is
   r.match('never #Verb').tag('VerbPhrase', 'not-verb');
   //'will have had'..
-  r.match('#Auxillary+').tag('VerbPhrase', '2');
+  r.match('#Auxiliary+').tag('VerbPhrase', '2');
   // 'is'
   r.match('#Copula').tag('VerbPhrase', '#3');
   //'really will'..
-  r.match('#Adverb #Auxillary').tag('VerbPhrase', '#4');
+  r.match('#Adverb #Auxiliary').tag('VerbPhrase', '#4');
   //to go
   r.match('to #Infinitive').tag('VerbPhrase', '#5');
   //work with

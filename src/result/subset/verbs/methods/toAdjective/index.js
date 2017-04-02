@@ -39,10 +39,11 @@ const toAdjective = function(str) {
     return irregulars[str];
   }
   for(let i = 0; i < rules.length; i++) {
-    if (str.match(rules[i][0])) {
+    if (rules[i][0].test(str) === true) {
       str = str.replace(rules[i][0], rules[i][1]);
     }
   }
+  //ible/able
   let adj = str + 'able';
   if (ible_suffixes[str]) {
     adj = str + 'ible';

@@ -1,6 +1,6 @@
 'use strict';
 //this methods are simply loops around each termList object.
-let foreach = [
+const methods = [
   'toTitleCase',
   'toUpperCase',
   'toLowerCase',
@@ -19,23 +19,33 @@ let foreach = [
   'delete',
   'lump',
 
-// 'tag',
-// 'unTag',
+  'tagger',
+
+  // 'tag',
+  'unTag',
 ];
 
 const addMethods = (Text) => {
-
-  foreach.forEach((k) => {
-    let myFn = function () {
-      let args = arguments;
-      this.list.forEach((ts) => {
-        ts[k].apply(ts, args);
-      });
+  methods.forEach((k) => {
+    Text.prototype[k] = function () {
+      for(let i = 0; i < this.list.length; i++) {
+        this.list[i][k].apply(this.list[i], arguments);
+      }
       return this;
     };
-    Text.prototype[k] = myFn;
   });
-  return Text;
+
+  //add an extra optimisation for tag method
+  Text.prototype.tag = function() {
+    //fail-fast optimisation
+    if (this.list.length === 0) {
+      return this;
+    }
+    for(let i = 0; i < this.list.length; i++) {
+      this.list[i].tag.apply(this.list[i], arguments);
+    }
+    return this;
+  };
 };
 
 module.exports = addMethods;

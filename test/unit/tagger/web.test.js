@@ -20,7 +20,7 @@ test('=Web Terminology=', function(T) {
     ].forEach(function (a) {
       var term = nlp(a[0]).list[0].terms[0];
       var msg = a[0] + ' is email: ' + a[1];
-      t.equal(term.tag['Email'], a[1], msg);
+      t.equal(term.tags['Email'], a[1], msg);
     });
     t.end();
   });
@@ -37,7 +37,7 @@ test('=Web Terminology=', function(T) {
     ].forEach(function (a) {
       var term = nlp(a[0]).list[0].terms[0];
       var msg = a[0] + ' is hashtag: ' + a[1];
-      t.equal(term.tag['HashTag'], a[1], msg);
+      t.equal(term.tags['HashTag'], a[1], msg);
     });
     t.end();
   });
@@ -63,7 +63,7 @@ test('=Web Terminology=', function(T) {
     ].forEach(function (a) {
       var term = nlp(a[0]).list[0].terms[0];
       var msg = a[0] + ' is url: ' + a[1];
-      t.equal(term.tag['Url'], a[1], msg);
+      t.equal(term.tags['Url'], a[1], msg);
     });
     t.end();
   });

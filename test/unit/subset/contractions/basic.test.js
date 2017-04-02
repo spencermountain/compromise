@@ -91,3 +91,14 @@ test('contracted', function(t) {
   t.equal(str, `I will`, 'expanded');
   t.end();
 });
+
+test('would-or-did', function(t) {
+  var r = nlp(`i'd contemplate`);
+  var str = r.contractions().expand().all().out('text');
+  t.equal(str, `i would contemplate`, 'i-would');
+
+  r = nlp(`i'd contemplated`);
+  str = r.contractions().expand().all().out('text');
+  t.equal(str, `i had contemplated`, 'i-had');
+  t.end();
+});

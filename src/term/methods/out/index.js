@@ -24,20 +24,20 @@ const methods = {
     return {
       text: r.text,
       normal: r.normal,
-      tags: Object.keys(r.tag)
+      tags: Object.keys(r.tags)
     };
   },
   /** check-print information for the console */
   debug: function(r) {
-    let tags = Object.keys(r.tag).map((tag) => {
+    let tags = Object.keys(r.tags).map((tag) => {
       return fns.printTag(tag);
     }).join(', ');
     let word = r.text;
     // word = r.whitespace.before + word + r.whitespace.after;
     word = '\'' + fns.yellow(word || '-') + '\'';
-    if (r.dirty) {
-      // word += fns.red('*');
-    }
+    // if (r.dirty) {
+    // word += fns.red('*');
+    // }
     let silent = '';
     if (r.silent_term) {
       silent = '[' + r.silent_term + ']';

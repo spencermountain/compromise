@@ -35,7 +35,7 @@ const tryAll = function(lexFirst, ts) {
       if (n) {
         let tag = obj[ts.slice(i + 1, n).out('root')];
         let slice = ts.slice(i, n);
-        slice.tagAs(tag, 'lexicon-lump');
+        slice.tag(tag, 'lexicon-lump');
         slice.lump();
       }
     }

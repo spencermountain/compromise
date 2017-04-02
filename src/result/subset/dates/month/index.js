@@ -5,7 +5,7 @@ const longMonths = data.longMonths;
 
 module.exports = {
   index: function (t) {
-    if (t.tag.Month) {
+    if (t.tags.Month) {
       if (longMonths[t.normal] !== undefined) {
         return longMonths[t.normal];
       }
@@ -16,7 +16,7 @@ module.exports = {
     return null;
   },
   toShortForm: function (t) {
-    if (t.tag.Month !== undefined) {
+    if (t.tags.Month !== undefined) {
       if (longMonths[t.normal] !== undefined) {
         let shorten = Object.keys(shortMonths);
         t.text = shorten[longMonths[t.normal]];
@@ -26,7 +26,7 @@ module.exports = {
     return t;
   },
   toLongForm: function (t) {
-    if (t.tag.Month !== undefined) {
+    if (t.tags.Month !== undefined) {
       if (shortMonths[t.normal] !== undefined) {
         let longer = Object.keys(longMonths);
         t.text = longer[shortMonths[t.normal]];

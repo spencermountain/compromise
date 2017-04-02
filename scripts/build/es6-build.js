@@ -14,6 +14,8 @@ var banner = '/* compromise v' + pkg.version + '\n   github.com/nlp-compromise\n
 exec('echo ' + banner + ' > ' + es6);
 
 console.log(chalk.yellow(' 🕑 creating es6 build..'));
+exec('rm ' + es6);
+exec('rm ' + es6min);
 
 //es6 main (browserify)
 var cmd = browserify + ' "./src/index.js" --standalone nlp';
@@ -27,5 +29,4 @@ cmd += ' >> ' + es6min;
 exec(cmd);
 
 //remove the first one
-exec('rm ' + es6);
-console.log(chalk.green(' done!    ' + fileSize(es6min) + 'k\n'));
+console.log(chalk.green(' done!    es6min ' + fileSize(es6min) + 'k\n'));

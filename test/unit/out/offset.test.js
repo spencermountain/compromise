@@ -25,3 +25,17 @@ test('index-output:', function (t) {
   t.equal(arr[0].sentenceTerm, 3, 'which sentence-term');
   t.end();
 });
+
+test('offset-with-whitespace:', function (t) {
+  var str = `I am the very model of a modern Major-General. I've information vegetable, animal, and mineral`;
+  let place = nlp(str).match('animal').first().out('offset')[0];
+
+  //full term offset
+  let substr = str.substring(place.offset, place.offset + place.length);
+  t.equal(substr, ' animal,', 'offset+length');
+
+  //no-punctuation or whitespace offset
+  substr = str.substring(place.wordStart, place.wordEnd);
+  t.equal(substr, 'animal', 'wordStart-wordEnd');
+  t.end();
+});

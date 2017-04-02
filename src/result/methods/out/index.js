@@ -84,7 +84,7 @@ const methods = {
         arr.push({
           text: t.text,
           normal: t.normal,
-          tags: Object.keys(t.tag)
+          tags: Object.keys(t.tags)
         });
       });
     });

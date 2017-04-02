@@ -30,12 +30,3 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.time('tag');
 // r.tag('#Person');
 // console.timeEnd('tag');
-
-let r = nlp('i\'d contemplate');
-console.log(r.normalize().out('text'));
-
-r = nlp('i\'d contemplated');
-console.log(r.normalize().out('text'));
-
-r = nlp('i\'d really contemplated');
-console.log(r.normalize().out('text'));

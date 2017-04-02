@@ -27,8 +27,18 @@ const easyOnes = (ts) => {
     let parts = split(ts.terms[i]);
     if (parts) {
 
+      //make sure its an easy one
+      if (easy_ends[parts.end]) {
+        let arr = [
+          parts.start,
+          easy_ends[parts.end]
+        ];
+        ts = fixContraction(ts, arr, i);
+        i += 1;
+      }
+
       //handle i'd -> 'i would' vs 'i had'
-      if (parts.end = 'd') {
+      if (parts.end === 'd') {
         //assume 'would'
         let arr = [
           parts.start,
@@ -46,15 +56,6 @@ const easyOnes = (ts) => {
         i += 1;
       }
 
-      //make sure its an easy one
-      if (easy_ends[parts.end]) {
-        let arr = [
-          parts.start,
-          easy_ends[parts.end]
-        ];
-        ts = fixContraction(ts, arr, i);
-        i += 1;
-      }
     }
   }
   return ts;

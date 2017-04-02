@@ -32,6 +32,7 @@ const fromString = (str, lexicon) => {
   if (fns.isArray(str)) {
     sentences = str;
   } else {
+    str = fns.ensureString(str);
     sentences = tokenize(str);
   }
   //make sure lexicon obeys standards

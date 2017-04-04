@@ -35,7 +35,7 @@
     "bundle-collapser": "^1.2.1",
     "uglify-js": "2.7.0",
     "derequire": "^2.0.3",
-    "efrt": "0.0.4",
+    "efrt": "0.0.6",
 
     "http-server": "0.9.0",
     "browserify-glob": "^0.2.0",

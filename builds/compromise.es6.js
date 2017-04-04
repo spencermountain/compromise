@@ -559,7 +559,7 @@ module.exports = lexicon;
 
 // console.log(lexicon['ugh']);
 
-},{"../result/subset/adjectives/methods":42,"../result/subset/verbs/methods/conjugate/faster":103,"../result/subset/verbs/methods/toAdjective":113,"./fns":5,"./index":6}],8:[function(_dereq_,module,exports){
+},{"../result/subset/adjectives/methods":42,"../result/subset/verbs/methods/conjugate/faster":104,"../result/subset/verbs/methods/toAdjective":114,"./fns":5,"./index":6}],8:[function(_dereq_,module,exports){
 module.exports = [
   'this',
   'any',
@@ -2583,7 +2583,7 @@ exports.isArray = function(arr) {
   return Object.prototype.toString.call(arr) === '[object Array]';
 };
 
-},{"./tagset":162}],22:[function(_dereq_,module,exports){
+},{"./tagset":163}],22:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 const buildResult = _dereq_('./result/build');
@@ -2732,7 +2732,7 @@ const fromString = (str, lexicon) => {
 };
 module.exports = fromString;
 
-},{"../term/methods/normalize/normalize":174,"./index":26,"./paths":38,"./tokenize":119}],25:[function(_dereq_,module,exports){
+},{"../term/methods/normalize/normalize":175,"./index":26,"./paths":38,"./tokenize":120}],25:[function(_dereq_,module,exports){
 module.exports = {
   /** did it find anything? */
   found: function() {
@@ -2843,7 +2843,7 @@ Object.keys(subset).forEach((k) => {
   };
 });
 
-},{"./getters":25,"./methods/loops":27,"./methods/match":28,"./methods/misc":29,"./methods/normalize":30,"./methods/out":31,"./methods/sort":35,"./methods/split":37,"./subset/acronyms":39,"./subset/adjectives":40,"./subset/adverbs":48,"./subset/contractions":53,"./subset/dates":55,"./subset/ngrams":65,"./subset/ngrams/endGrams":62,"./subset/ngrams/startGrams":66,"./subset/nouns":68,"./subset/people":78,"./subset/sentences":80,"./subset/terms":85,"./subset/values":86,"./subset/verbs":99,"./subsets":118}],27:[function(_dereq_,module,exports){
+},{"./getters":25,"./methods/loops":27,"./methods/match":28,"./methods/misc":29,"./methods/normalize":30,"./methods/out":31,"./methods/sort":35,"./methods/split":37,"./subset/acronyms":39,"./subset/adjectives":40,"./subset/adverbs":48,"./subset/contractions":54,"./subset/dates":56,"./subset/ngrams":66,"./subset/ngrams/endGrams":63,"./subset/ngrams/startGrams":67,"./subset/nouns":69,"./subset/people":79,"./subset/sentences":81,"./subset/terms":86,"./subset/values":87,"./subset/verbs":100,"./subsets":119}],27:[function(_dereq_,module,exports){
 'use strict';
 //this methods are simply loops around each termList object.
 const methods = [
@@ -3021,7 +3021,7 @@ const splitMethods = (Text) => {
 
 module.exports = splitMethods;
 
-},{"../../../terms":187,"../../../terms/match/lib/syntax":194}],29:[function(_dereq_,module,exports){
+},{"../../../terms":189,"../../../terms/match/lib/syntax":196}],29:[function(_dereq_,module,exports){
 'use strict';
 const Terms = _dereq_('../../terms');
 
@@ -3150,7 +3150,7 @@ const miscMethods = (Text) => {
 
 module.exports = miscMethods;
 
-},{"../../terms":187}],30:[function(_dereq_,module,exports){
+},{"../../terms":189}],30:[function(_dereq_,module,exports){
 'use strict';
 //
 const defaults = {
@@ -3700,7 +3700,7 @@ module.exports = {
   tags: _dereq_('../tagset'),
 };
 
-},{"../data":6,"../fns":21,"../tagset":162,"../terms":187}],39:[function(_dereq_,module,exports){
+},{"../data":6,"../fns":21,"../tagset":163,"../terms":189}],39:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
 //the Acronym() subset class
@@ -4399,7 +4399,43 @@ module.exports = contract;
 'use strict';
 const Terms = _dereq_('../../paths').Terms;
 const contract = _dereq_('./contract');
+const expand = _dereq_('./expand');
 
+const ContractionCl = function (arr, lexicon, reference) {
+  Terms.call(this, arr, lexicon, reference);
+};
+
+//Inherit properties
+ContractionCl.prototype = Object.create(Terms.prototype);
+
+ContractionCl.prototype.data = function() {
+  let expanded = expand(this.clone());
+  let contracted = contract(this.clone());
+  return {
+    text: this.out('text'),
+    normal: this.out('normal'),
+    expanded: {
+      normal: expanded.out('normal'),
+      text: expanded.out('text')
+    },
+    contracted: {
+      normal: contracted.out('normal'),
+      text: contracted.out('text')
+    },
+    isContracted: !!this.contracted
+  };
+};
+ContractionCl.prototype.expand = function() {
+  return expand(this);
+};
+ContractionCl.prototype.contract = function() {
+  return contract(this);
+};
+module.exports = ContractionCl;
+
+},{"../../paths":38,"./contract":50,"./expand":52}],52:[function(_dereq_,module,exports){
+'use strict';
+//turn `i'd` into `i would`
 const expand = function(ts) {
   if (ts.contracted === false) {
     return ts;
@@ -4418,35 +4454,9 @@ const expand = function(ts) {
   });
   return ts;
 };
+module.exports = expand;
 
-module.exports = class ContractionCl extends Terms {
-  data() {
-    let expanded = expand(this.clone());
-    let contracted = contract(this.clone());
-    return {
-      text: this.out('text'),
-      normal: this.out('normal'),
-      expanded: {
-        normal: expanded.out('normal'),
-        text: expanded.out('text')
-      },
-      contracted: {
-        normal: contracted.out('normal'),
-        text: contracted.out('text')
-      },
-      isContracted: !!this.contracted
-    };
-  }
-  expand() {
-    return expand(this);
-  }
-  contract() {
-    return contract(this);
-  }
-};
-// module.exports = ContractionCl;
-
-},{"../../paths":38,"./contract":50}],52:[function(_dereq_,module,exports){
+},{}],53:[function(_dereq_,module,exports){
 'use strict';
 //find contractable, expanded-contractions
 const find = (r) => {
@@ -4462,7 +4472,7 @@ const find = (r) => {
 };
 module.exports = find;
 
-},{}],53:[function(_dereq_,module,exports){
+},{}],54:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
 const ContractionCl = _dereq_('./contraction');
@@ -4517,30 +4527,30 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../index":26,"./contraction":51,"./findPossible":52}],54:[function(_dereq_,module,exports){
+},{"../../index":26,"./contraction":51,"./findPossible":53}],55:[function(_dereq_,module,exports){
 'use strict';
 const Terms = _dereq_('../../paths').Terms;
-// const parsePunt = require('./parsePunt');
-// const parseSection = require('./parseSection');
-// const parseRelative = require('./parseRelative');
 const parseDate = _dereq_('./parseDate');
 
-class Date extends Terms {
-  constructor(arr, lexicon, refText, refTerms) {
-    super(arr, lexicon, refText, refTerms);
-    this.month = this.match('#Month');
-  }
-  data() {
-    return {
-      text: this.out('text'),
-      normal: this.out('normal'),
-      date: parseDate(this)
-    };
-  }
-}
+const Date = function(arr, lexicon, refText) {
+  Terms.call(this, arr, lexicon, refText);
+  this.month = this.match('#Month');
+};
+
+//Inherit properties
+Date.prototype = Object.create(Terms.prototype);
+
+Date.prototype.data = function() {
+  return {
+    text: this.out('text'),
+    normal: this.out('normal'),
+    date: parseDate(this)
+  };
+};
+
 module.exports = Date;
 
-},{"../../paths":38,"./parseDate":58}],55:[function(_dereq_,module,exports){
+},{"../../paths":38,"./parseDate":59}],56:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
 const Date = _dereq_('./date');
@@ -4585,7 +4595,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../index":26,"./date":54,"./month":57,"./weekday":61}],56:[function(_dereq_,module,exports){
+},{"../../index":26,"./date":55,"./month":58,"./weekday":62}],57:[function(_dereq_,module,exports){
 //follow the javascript scheme
 //january is 0
 exports.longMonths = {
@@ -4619,7 +4629,7 @@ exports.shortMonths = {
   'dec': 11,
 };
 
-},{}],57:[function(_dereq_,module,exports){
+},{}],58:[function(_dereq_,module,exports){
 'use strict';
 const data = _dereq_('./data');
 const shortMonths = data.shortMonths;
@@ -4660,7 +4670,7 @@ module.exports = {
 
 };
 
-},{"./data":56}],58:[function(_dereq_,module,exports){
+},{"./data":57}],59:[function(_dereq_,module,exports){
 'use strict';
 const parseTime = _dereq_('./parseTime');
 const weekdays = _dereq_('./weekday');
@@ -4754,7 +4764,7 @@ const parseDate = (r) => {
 };
 module.exports = parseDate;
 
-},{"./month":57,"./parseTime":59,"./weekday":61}],59:[function(_dereq_,module,exports){
+},{"./month":58,"./parseTime":60,"./weekday":62}],60:[function(_dereq_,module,exports){
 'use strict';
 const ampm = /([12]?[0-9]) ?(am|pm)/i;
 const hourMin = /([12]?[0-9]):([0-9][0-9]) ?(am|pm)?/i;
@@ -4821,7 +4831,7 @@ const parseTime = (r) => {
 };
 module.exports = parseTime;
 
-},{}],60:[function(_dereq_,module,exports){
+},{}],61:[function(_dereq_,module,exports){
 //follow the javascript scheme
 //sunday is 0
 exports.longDays = {
@@ -4843,7 +4853,7 @@ exports.shortDays = {
   'sat': 6,
 }
 
-},{}],61:[function(_dereq_,module,exports){
+},{}],62:[function(_dereq_,module,exports){
 'use strict';
 const data = _dereq_('./data');
 const shortDays = data.shortDays;
@@ -4881,7 +4891,7 @@ module.exports = {
   }
 };
 
-},{"./data":60}],62:[function(_dereq_,module,exports){
+},{"./data":61}],63:[function(_dereq_,module,exports){
 'use strict';
 const Ngrams = _dereq_('./index');
 const getGrams = _dereq_('./getGrams');
@@ -4913,7 +4923,7 @@ class EndGrams extends Ngrams {
 
 module.exports = EndGrams;
 
-},{"./getGrams":63,"./index":65}],63:[function(_dereq_,module,exports){
+},{"./getGrams":64,"./index":66}],64:[function(_dereq_,module,exports){
 'use strict';
 const Gram = _dereq_('./gram');
 
@@ -4991,28 +5001,31 @@ const buildGrams = function(r, options) {
 
 module.exports = buildGrams;
 
-},{"./gram":64}],64:[function(_dereq_,module,exports){
+},{"./gram":65}],65:[function(_dereq_,module,exports){
 'use strict';
 const Terms = _dereq_('../../paths').Terms;
 
 //this is one-or-more terms together, sorted by frequency
-class Gram extends Terms {
-  constructor(arr, lexicon, refText, refTerms) {
-    super(arr, lexicon, refText, refTerms);
-    //string to sort/uniq by
-    this.key = this.out('normal');
-    //bigram/trigram/etc
-    this.size = arr.length;
-    //number of occurances
-    this.count = 1;
-  }
-  inc() {
-    this.count += 1;
-  }
-}
+const Gram = function (arr, lexicon, reference) {
+  Terms.call(this, arr, lexicon, reference);
+  //string to sort/uniq by
+  this.key = this.out('normal');
+  //bigram/trigram/etc
+  this.size = arr.length;
+  //number of occurances
+  this.count = 1;
+};
+
+//Inherit properties
+Gram.prototype = Object.create(Terms.prototype);
+
+Gram.prototype.inc = function() {
+  this.count += 1;
+};
+
 module.exports = Gram;
 
-},{"../../paths":38}],65:[function(_dereq_,module,exports){
+},{"../../paths":38}],66:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
 const getGrams = _dereq_('./getGrams');
@@ -5082,7 +5095,7 @@ const find = function(r, n, size) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../index":26,"./getGrams":63}],66:[function(_dereq_,module,exports){
+},{"../../index":26,"./getGrams":64}],67:[function(_dereq_,module,exports){
 'use strict';
 const Ngrams = _dereq_('./index');
 const getGrams = _dereq_('./getGrams');
@@ -5114,7 +5127,7 @@ class StartGrams extends Ngrams {
 
 module.exports = StartGrams;
 
-},{"./getGrams":63,"./index":65}],67:[function(_dereq_,module,exports){
+},{"./getGrams":64,"./index":66}],68:[function(_dereq_,module,exports){
 'use strict';
 const uncountables = _dereq_('../../../tries').utils.uncountable;
 
@@ -5152,7 +5165,7 @@ const hasPlural = function (t) {
 
 module.exports = hasPlural;
 
-},{"../../../tries":229}],68:[function(_dereq_,module,exports){
+},{"../../../tries":231}],69:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
 const Noun = _dereq_('./noun');
@@ -5191,7 +5204,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../index":26,"./noun":76}],69:[function(_dereq_,module,exports){
+},{"../../index":26,"./noun":77}],70:[function(_dereq_,module,exports){
 'use strict';
 const irregulars = _dereq_('../../../data').irregular_plurals;
 const rules = _dereq_('./methods/data/indicators');
@@ -5269,7 +5282,7 @@ const isPlural = function (t) {
 module.exports = isPlural;
 // console.log(is_plural('octopus') === false)
 
-},{"../../../data":6,"./methods/data/indicators":71}],70:[function(_dereq_,module,exports){
+},{"../../../data":6,"./methods/data/indicators":72}],71:[function(_dereq_,module,exports){
 'use strict';
 
 //chooses an indefinite aricle 'a/an' for a word
@@ -5331,7 +5344,7 @@ const makeArticle = function(t) {
 
 module.exports = makeArticle;
 
-},{}],71:[function(_dereq_,module,exports){
+},{}],72:[function(_dereq_,module,exports){
 'use strict';
 //similar to plural/singularize rules, but not the same
 const plural_indicators = [
@@ -5385,7 +5398,7 @@ module.exports = {
   plural_indicators: plural_indicators
 }
 
-},{}],72:[function(_dereq_,module,exports){
+},{}],73:[function(_dereq_,module,exports){
 //patterns for turning 'bus' to 'buses'
 module.exports = [
   [/(ax|test)is$/i, '$1es'],
@@ -5420,7 +5433,7 @@ module.exports = [
   };
 });
 
-},{}],73:[function(_dereq_,module,exports){
+},{}],74:[function(_dereq_,module,exports){
 //patterns for turning 'dwarves' to 'dwarf'
 module.exports = [
   [/([^v])ies$/i, '$1y'],
@@ -5454,7 +5467,7 @@ module.exports = [
   };
 });
 
-},{}],74:[function(_dereq_,module,exports){
+},{}],75:[function(_dereq_,module,exports){
 'use strict';
 const irregulars = _dereq_('../../../../data').irregular_plurals.toPlural;
 const pluralRules = _dereq_('./data/pluralRules');
@@ -5476,7 +5489,7 @@ const pluralize = function(str) {
 
 module.exports = pluralize;
 
-},{"../../../../data":6,"./data/pluralRules":72}],75:[function(_dereq_,module,exports){
+},{"../../../../data":6,"./data/pluralRules":73}],76:[function(_dereq_,module,exports){
 'use strict';
 const irregulars = _dereq_('../../../../data').irregular_plurals.toSingle;
 const singleRules = _dereq_('./data/singleRules');
@@ -5509,7 +5522,7 @@ const toSingle = function (str) {
 module.exports = toSingle;
 // console.log(toSingle('days'))
 
-},{"../../../../data":6,"./data/singleRules":73}],76:[function(_dereq_,module,exports){
+},{"../../../../data":6,"./data/singleRules":74}],77:[function(_dereq_,module,exports){
 'use strict';
 const Terms = _dereq_('../../paths').Terms;
 const hasPlural = _dereq_('./hasPlural');
@@ -5518,24 +5531,20 @@ const makeArticle = _dereq_('./makeArticle');
 const pluralize = _dereq_('./methods/pluralize');
 const singularize = _dereq_('./methods/singularize');
 
-class Noun extends Terms {
-  constructor(arr, lexicon, refText, refTerms) {
-    super(arr, lexicon, refText, refTerms);
-    this.t = this.terms[0];
-  }
-  article() {
+const methods = {
+  article: function() {
     let t = this.t;
     return makeArticle(t);
-  }
-  isPlural() {
+  },
+  isPlural: function() {
     let t = this.t;
     return isPlural(t);
-  }
-  hasPlural() {
+  },
+  hasPlural: function() {
     let t = this.t;
     return hasPlural(t);
-  }
-  toPlural() {
+  },
+  toPlural: function() {
     let t = this.t;
     if (hasPlural(t) && !isPlural(t)) {
       t.text = pluralize(t.text);
@@ -5543,8 +5552,8 @@ class Noun extends Terms {
       t.tag('Singular', 'toPlural');
     }
     return this;
-  }
-  toSingular() {
+  },
+  toSingular: function() {
     let t = this.t;
     if (isPlural(t)) {
       t.text = singularize(t.text);
@@ -5552,18 +5561,28 @@ class Noun extends Terms {
       t.tag('Singular', 'toSingular');
     }
     return this;
-  }
-  data() {
+  },
+  data: function() {
     return {
       article: this.article(),
       singular: this.toSingular().out('normal'),
       plural: this.toPlural().out('normal'),
     };
   }
-}
+};
+
+const Noun = function(arr, lexicon, refText) {
+  Terms.call(this, arr, lexicon, refText);
+  this.t = this.terms[0];
+};
+Noun.prototype = Object.create(Terms.prototype);
+
+Object.keys(methods).forEach((k) => {
+  Noun.prototype[k] = methods[k];
+});
 module.exports = Noun;
 
-},{"../../paths":38,"./hasPlural":67,"./isPlural":69,"./makeArticle":70,"./methods/pluralize":74,"./methods/singularize":75}],77:[function(_dereq_,module,exports){
+},{"../../paths":38,"./hasPlural":68,"./isPlural":70,"./makeArticle":71,"./methods/pluralize":75,"./methods/singularize":76}],78:[function(_dereq_,module,exports){
 'use strict';
 // make a statistical assumption about the gender of the person based on their given name
 // used for pronoun resolution only.
@@ -5587,7 +5606,7 @@ const gender = function (firstName) {
 };
 module.exports = gender;
 
-},{}],78:[function(_dereq_,module,exports){
+},{}],79:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
 const Person = _dereq_('./person');
@@ -5614,13 +5633,30 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../index":26,"./person":79}],79:[function(_dereq_,module,exports){
+},{"../../index":26,"./person":80}],80:[function(_dereq_,module,exports){
 'use strict';
 const Terms = _dereq_('../../paths').Terms;
 const guessGender = _dereq_('./guessGender');
 
-class Person extends Terms {
-  data() {
+const Person = function(arr, lexicon, refText, refTerms) {
+  Terms.call(this, arr, lexicon, refText, refTerms);
+  this.firstName = this.match('#FirstName+');
+  this.middleName = this.match('#Acronym+');
+  this.honorifics = this.match('#Honorific');
+  this.lastName = this.match('#LastName+');
+  //assume first-last
+  if (!this.firstName.found && this.length > 1) {
+    let m = this.not('(#Acronym|#Honorific)');
+    this.firstName = m.first();
+    this.lastName = m.last();
+  }
+  return this;
+};
+//Inherit properties
+Person.prototype = Object.create(Terms.prototype);
+
+const methods = {
+  data: function() {
     return {
       text: this.out('text'),
       normal: this.out('normal'),
@@ -5631,22 +5667,8 @@ class Person extends Terms {
       pronoun: this.pronoun(),
       honorifics: this.honorifics.out('array')
     };
-  }
-  constructor(arr, lexicon, refText, refTerms) {
-    super(arr, lexicon, refText, refTerms);
-    this.firstName = this.match('#FirstName+');
-    this.middleName = this.match('#Acronym+');
-    this.honorifics = this.match('#Honorific');
-    this.lastName = this.match('#LastName+');
-    //assume first-last
-    if (!this.firstName.found && this.length > 1) {
-      let m = this.not('(#Acronym|#Honorific)');
-      this.firstName = m.first();
-      this.lastName = m.last();
-    }
-    return this;
-  }
-  guessGender() {
+  },
+  guessGender: function() {
     //try known honorifics
     if (this.honorifics.match('(mr|mister|sr|sir|jr)').found) {
       return 'Male';
@@ -5664,8 +5686,8 @@ class Person extends Terms {
     //look-for regex clues
     let str = this.firstName.out('normal');
     return guessGender(str);
-  }
-  pronoun() {
+  },
+  pronoun: function() {
     let str = this.firstName.out('normal');
     let g = this.guessGender(str);
     if (g === 'Male') {
@@ -5675,8 +5697,8 @@ class Person extends Terms {
       return 'she';
     }
     return 'they';
-  }
-  root() {
+  },
+  root: function() {
     let first = this.firstName.out('root');
     let last = this.lastName.out('root');
     if (first && last) {
@@ -5684,10 +5706,14 @@ class Person extends Terms {
     }
     return last || first || this.out('root');
   }
-}
+};
+
+Object.keys(methods).forEach((k) => {
+  Person.prototype[k] = methods[k];
+});
 module.exports = Person;
 
-},{"../../paths":38,"./guessGender":77}],80:[function(_dereq_,module,exports){
+},{"../../paths":38,"./guessGender":78}],81:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
 const Sentence = _dereq_('./sentence');
@@ -5787,7 +5813,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../index":26,"./sentence":81}],81:[function(_dereq_,module,exports){
+},{"../../index":26,"./sentence":82}],82:[function(_dereq_,module,exports){
 'use strict';
 const Terms = _dereq_('../../paths').Terms;
 const toNegative = _dereq_('./toNegative');
@@ -5795,34 +5821,31 @@ const toPositive = _dereq_('./toPositive');
 const Verb = _dereq_('../verbs/verb');
 const insert = _dereq_('./smartInsert');
 
-class Sentence extends Terms {
-  constructor(arr, lexicon, refText, refTerms) {
-    super(arr, lexicon, refText, refTerms);
-  }
+const methods = {
   /** inflect the main/first noun*/
-  toSingular() {
+  toSingular: function() {
     let nouns = this.match('#Noun').match('!#Pronoun').firstTerm();
     nouns.things().toSingular();
     return this;
-  }
-  toPlural() {
+  },
+  toPlural: function() {
     let nouns = this.match('#Noun').match('!#Pronoun').firstTerm();
     nouns.things().toPlural();
     return this;
-  }
+  },
 
   /** find the first important verbPhrase. returns a Term object */
-  mainVerb() {
+  mainVerb: function() {
     let terms = this.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
     if (terms.found) {
       terms = terms.list[0].terms;
       return new Verb(terms, this.lexicon, this.refText, this.refTerms);
     }
     return null;
-  }
+  },
 
   /** sentence tense conversion**/
-  toPastTense() {
+  toPastTense: function() {
     let verb = this.mainVerb();
     if (verb) {
       //this is really ugly..
@@ -5834,8 +5857,8 @@ class Sentence extends Terms {
       return r;
     }
     return this;
-  }
-  toPresentTense() {
+  },
+  toPresentTense: function() {
     let verb = this.mainVerb();
     if (verb) {
       let start = verb.out('normal');
@@ -5844,8 +5867,8 @@ class Sentence extends Terms {
       return this.parentTerms.replace(start, end);
     }
     return this;
-  }
-  toFutureTense() {
+  },
+  toFutureTense: function() {
     let verb = this.mainVerb();
     if (verb) {
       let start = verb.out('normal');
@@ -5854,50 +5877,61 @@ class Sentence extends Terms {
       return this.parentTerms.replace(start, end);
     }
     return this;
-  }
+  },
 
   /** negation **/
-  isNegative() {
+  isNegative: function() {
     return this.match('#Negative').list.length === 1;
-  }
-  toNegative() {
+  },
+  toNegative: function() {
     if (this.isNegative()) {
       return this;
     }
     return toNegative(this);
-  }
-  toPositive() {
+  },
+  toPositive: function() {
     if (!this.isNegative()) {
       return this;
     }
     return toPositive(this);
-  }
+  },
 
   /** smarter insert methods*/
-  append(str) {
+  append: function(str) {
     return insert.append(this, str);
-  }
-  prepend(str) {
+  },
+  prepend: function(str) {
     return insert.prepend(this, str);
-  }
+  },
 
   /** punctuation */
-  setPunctuation(punct) {
+  setPunctuation: function(punct) {
     let last = this.terms[this.terms.length - 1];
     last.setPunctuation(punct);
-  }
-  getPunctuation() {
+  },
+  getPunctuation: function() {
     let last = this.terms[this.terms.length - 1];
     return last.getPunctuation();
-  }
+  },
   /** look for 'was _ by' patterns */
-  isPassive() {
+  isPassive: function() {
     return this.match('was #Adverb? #PastTense #Adverb? by').found; //haha
   }
-}
+};
+
+const Sentence = function(arr, lexicon, refText, refTerms) {
+  Terms.call(this, arr, lexicon, refText, refTerms);
+  this.t = this.terms[0];
+};
+//Terms inheritence
+Sentence.prototype = Object.create(Terms.prototype);
+//add-in methods
+Object.keys(methods).forEach((k) => {
+  Sentence.prototype[k] = methods[k];
+});
 module.exports = Sentence;
 
-},{"../../paths":38,"../verbs/verb":117,"./smartInsert":82,"./toNegative":83,"./toPositive":84}],82:[function(_dereq_,module,exports){
+},{"../../paths":38,"../verbs/verb":118,"./smartInsert":83,"./toNegative":84,"./toPositive":85}],83:[function(_dereq_,module,exports){
 'use strict';
 const hasCapital = /^[A-Z]/;
 
@@ -5943,7 +5977,7 @@ module.exports = {
   prepend: prepend
 };
 
-},{}],83:[function(_dereq_,module,exports){
+},{}],84:[function(_dereq_,module,exports){
 'use strict';
 
 //these terms are nicer ways to negate a sentence
@@ -5976,7 +6010,7 @@ const toNegative = (ts) => {
 };
 module.exports = toNegative;
 
-},{}],84:[function(_dereq_,module,exports){
+},{}],85:[function(_dereq_,module,exports){
 'use strict';
 
 //ie. john never walks -> john always walks
@@ -6001,9 +6035,11 @@ const toPositive = (ts) => {
 };
 module.exports = toPositive;
 
-},{}],85:[function(_dereq_,module,exports){
+},{}],86:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
+const Terms = _dereq_('../../paths').Terms;
+
 
 //the Terms() subset class
 //this is just a wrapper around the actual Term class,
@@ -6026,7 +6062,14 @@ const methods = {
 };
 
 const find = function(r, n) {
-  r = r.match('.');
+  let list = [];
+  //make a Terms Object for every Term
+  r.list.forEach((ts) => {
+    ts.terms.forEach((t) => {
+      list.push(new Terms([t], ts.lexicon, r));
+    });
+  });
+  r = new Text(list, r.lexicon, r.parent);
   if (typeof n === 'number') {
     r = r.get(n);
   }
@@ -6035,7 +6078,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../index":26}],86:[function(_dereq_,module,exports){
+},{"../../index":26,"../../paths":38}],87:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
 const Value = _dereq_('./value');
@@ -6106,7 +6149,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../index":26,"./value":98}],87:[function(_dereq_,module,exports){
+},{"../../index":26,"./value":99}],88:[function(_dereq_,module,exports){
 'use strict';
 const toNumber = _dereq_('../toNumber');
 
@@ -6140,10 +6183,10 @@ const numOrdinal = function(ts) {
 
 module.exports = numOrdinal;
 
-},{"../toNumber":93}],88:[function(_dereq_,module,exports){
+},{"../toNumber":94}],89:[function(_dereq_,module,exports){
 module.exports = _dereq_('../../paths');
 
-},{"../../paths":38}],89:[function(_dereq_,module,exports){
+},{"../../paths":38}],90:[function(_dereq_,module,exports){
 'use strict';
 const toNumber = _dereq_('../toNumber');
 const toText = _dereq_('../toText');
@@ -6160,7 +6203,7 @@ const textOrdinal = (ts) => {
 
 module.exports = textOrdinal;
 
-},{"../../../paths":38,"../toNumber":93,"../toText":97}],90:[function(_dereq_,module,exports){
+},{"../../../paths":38,"../toNumber":94,"../toText":98}],91:[function(_dereq_,module,exports){
 'use strict';
 
 const niceNumber = function (num) {
@@ -6179,7 +6222,7 @@ const niceNumber = function (num) {
 };
 module.exports = niceNumber;
 
-},{}],91:[function(_dereq_,module,exports){
+},{}],92:[function(_dereq_,module,exports){
 const p = _dereq_('../paths');
 const numbers = p.data.numbers;
 const fns = p.fns;
@@ -6196,7 +6239,7 @@ module.exports = {
   multiples: multiples
 };
 
-},{"../paths":88}],92:[function(_dereq_,module,exports){
+},{"../paths":89}],93:[function(_dereq_,module,exports){
 'use strict';
 
 //support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
@@ -6229,7 +6272,7 @@ const findModifiers = (str) => {
 
 module.exports = findModifiers;
 
-},{}],93:[function(_dereq_,module,exports){
+},{}],94:[function(_dereq_,module,exports){
 'use strict';
 const parseNumeric = _dereq_('./parseNumeric');
 const findModifiers = _dereq_('./findModifiers');
@@ -6375,7 +6418,7 @@ const parse = function(ts) {
 
 module.exports = parse;
 
-},{"./data":91,"./findModifiers":92,"./parseDecimals":94,"./parseNumeric":95,"./validate":96}],94:[function(_dereq_,module,exports){
+},{"./data":92,"./findModifiers":93,"./parseDecimals":95,"./parseNumeric":96,"./validate":97}],95:[function(_dereq_,module,exports){
 'use strict';
 const words = _dereq_('./data');
 
@@ -6401,7 +6444,7 @@ const parseDecimals = function(arr) {
 
 module.exports = parseDecimals;
 
-},{"./data":91}],95:[function(_dereq_,module,exports){
+},{"./data":92}],96:[function(_dereq_,module,exports){
 'use strict';
 //parse a string like "4,200.1" into Number 4200.1
 const parseNumeric = (str) => {
@@ -6423,7 +6466,7 @@ const parseNumeric = (str) => {
 
 module.exports = parseNumeric;
 
-},{}],96:[function(_dereq_,module,exports){
+},{}],97:[function(_dereq_,module,exports){
 'use strict';
 const words = _dereq_('./data');
 
@@ -6446,7 +6489,7 @@ const isValid = (w, has) => {
 };
 module.exports = isValid;
 
-},{"./data":91}],97:[function(_dereq_,module,exports){
+},{"./data":92}],98:[function(_dereq_,module,exports){
 'use strict';
 // turns an integer/float into a textual number, like 'fifty-five'
 
@@ -6591,7 +6634,7 @@ module.exports = to_text;
 
 // console.log(to_text(-1000.8));
 
-},{}],98:[function(_dereq_,module,exports){
+},{}],99:[function(_dereq_,module,exports){
 'use strict';
 const paths = _dereq_('../../paths');
 const Terms = paths.Terms;
@@ -6600,6 +6643,15 @@ const toText = _dereq_('./toText');
 const toNiceNumber = _dereq_('./toNiceNumber');
 const numOrdinal = _dereq_('./numOrdinal');
 const textOrdinal = _dereq_('./textOrdinal');
+
+const Value = function(arr, lexicon, refText, refTerms) {
+  Terms.call(this, arr, lexicon, refText, refTerms);
+  this.val = this.match('#Value+').list[0];
+  this.unit = this.match('#Unit$').list[0];
+};
+//Terms inheritence
+Value.prototype = Object.create(Terms.prototype);
+
 
 const isOrdinal = (ts) => {
   let t = ts.terms[ts.terms.length - 1];
@@ -6626,18 +6678,14 @@ const isNumber = (ts) => {
   return true;
 };
 
-class Value extends Terms {
-  constructor(arr, lexicon, refText, refTerms) {
-    super(arr, lexicon, refText, refTerms);
-    this.val = this.match('#Value+').list[0];
-    this.unit = this.match('#Unit$').list[0];
-  }
-  number() {
+
+const methods = {
+  number: function() {
     let num = parse(this.val);
     return num;
-  }
+  },
   /** five -> '5' */
-  toNumber() {
+  toNumber: function() {
     let val = this.val;
     // this.debug();
     //is already
@@ -6656,9 +6704,9 @@ class Value extends Terms {
       }
     }
     return this;
-  }
+  },
   /**5 -> 'five' */
-  toTextValue() {
+  toTextValue: function() {
     let val = this.val;
     //is already
     if (isText(val)) {
@@ -6673,10 +6721,10 @@ class Value extends Terms {
     let str = toText(num).join(' ');
     this.replaceWith(str, 'Value');
     return this;
-  }
+  },
 
   /**5th -> 5 */
-  toCardinal() {
+  toCardinal: function() {
     let val = this.val;
     //already
     if (!isOrdinal(val)) {
@@ -6690,10 +6738,10 @@ class Value extends Terms {
     }
     let num = '' + parse(val);
     return this.replaceWith(num, 'Value');
-  }
+  },
 
   /**5 -> 5th */
-  toOrdinal() {
+  toOrdinal: function() {
     let val = this.val;
     //already
     if (isOrdinal(val)) {
@@ -6709,17 +6757,17 @@ class Value extends Terms {
       this.replaceWith(str, 'Value');
     }
     return this;
-  }
+  },
 
   /**5900 -> 5,900 */
-  toNiceNumber() {
+  toNiceNumber: function() {
     let num = parse(this);
     let str = toNiceNumber(num);
     this.replaceWith(str, 'Value');
     return this;
-  }
+  },
 
-  data() {
+  data: function() {
     let numV = this.clone().toNumber();
     let txtV = this.clone().toTextValue();
     let obj = {
@@ -6739,17 +6787,22 @@ class Value extends Terms {
     }
     obj.number = this.number();
     return obj;
+  },
+  clone : function() {
+    let terms = this.terms.map((t) => {
+      return t.clone();
+    });
+    return new Value(terms, this.lexicon, this.refText, this.refTerms);
   }
-}
-Value.prototype.clone = function() {
-  let terms = this.terms.map((t) => {
-    return t.clone();
-  });
-  return new Value(terms, this.lexicon, this.refText, this.refTerms);
 };
+
+
+Object.keys(methods).forEach((k) => {
+  Value.prototype[k] = methods[k];
+});
 module.exports = Value;
 
-},{"../../paths":38,"./numOrdinal":87,"./textOrdinal":89,"./toNiceNumber":90,"./toNumber":93,"./toText":97}],99:[function(_dereq_,module,exports){
+},{"../../paths":38,"./numOrdinal":88,"./textOrdinal":90,"./toNiceNumber":91,"./toNumber":94,"./toText":98}],100:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
 const Verb = _dereq_('./verb');
@@ -6851,7 +6904,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../index":26,"./verb":117}],100:[function(_dereq_,module,exports){
+},{"../../index":26,"./verb":118}],101:[function(_dereq_,module,exports){
 'use strict';
 const predict = _dereq_('./methods/predict');
 
@@ -6953,7 +7006,7 @@ const interpret = (ts) => {
 };
 module.exports = interpret;
 
-},{"./methods/predict":111}],101:[function(_dereq_,module,exports){
+},{"./methods/predict":112}],102:[function(_dereq_,module,exports){
 'use strict';
 const checkIrregulars = _dereq_('./irregulars');
 const suffixPass = _dereq_('./suffixes');
@@ -7025,7 +7078,7 @@ const conjugate = function(t, verbose) {
 
 module.exports = conjugate;
 
-},{"../predict":111,"../toInfinitive":114,"./generic":104,"./irregulars":106,"./suffixes":107,"./toActor":108,"./toBe":109}],102:[function(_dereq_,module,exports){
+},{"../predict":112,"../toInfinitive":115,"./generic":105,"./irregulars":107,"./suffixes":108,"./toActor":109,"./toBe":110}],103:[function(_dereq_,module,exports){
 module.exports = [
   {
     reg: /(eave)$/i,
@@ -7205,7 +7258,7 @@ module.exports = [
   }
 ];
 
-},{}],103:[function(_dereq_,module,exports){
+},{}],104:[function(_dereq_,module,exports){
 'use strict';
 const checkIrregulars = _dereq_('./irregulars');
 const suffixPass = _dereq_('./suffixes');
@@ -7248,7 +7301,7 @@ const fasterConjugate = (inf) => {
 module.exports = fasterConjugate;
 // console.log(fasterConjugate('walk'));
 
-},{"./generic":104,"./irregulars":106,"./suffixes":107}],104:[function(_dereq_,module,exports){
+},{"./generic":105,"./irregulars":107,"./suffixes":108}],105:[function(_dereq_,module,exports){
 'use strict';
 //non-specifc, 'hail-mary' transforms from infinitive, into other forms
 const hasY = /[bcdfghjklmnpqrstvwxz]y$/;
@@ -7312,7 +7365,7 @@ const generic = {
 
 module.exports = generic;
 
-},{}],105:[function(_dereq_,module,exports){
+},{}],106:[function(_dereq_,module,exports){
 'use strict';
 const conjugate = _dereq_('./conjugate');
 const toBe = _dereq_('./toBe');
@@ -7356,7 +7409,7 @@ const multiWord = (vb, verbose) => {
 };
 module.exports = multiWord;
 
-},{"./conjugate":101,"./toBe":109}],106:[function(_dereq_,module,exports){
+},{"./conjugate":102,"./toBe":110}],107:[function(_dereq_,module,exports){
 'use strict';
 let irregulars = _dereq_('../../../../../data').irregular_verbs; //weeee!
 const fns = _dereq_('../../../../../fns'); //weeee!
@@ -7395,7 +7448,7 @@ const checkIrregulars = function(str) {
 module.exports = checkIrregulars;
 // console.log(checkIrregulars('bit'));
 
-},{"../../../../../data":6,"../../../../../fns":21}],107:[function(_dereq_,module,exports){
+},{"../../../../../data":6,"../../../../../fns":21}],108:[function(_dereq_,module,exports){
 'use strict';
 const rules = _dereq_('./data/rules');
 const mapping = {
@@ -7427,7 +7480,7 @@ const suffixPass = function(inf) {
 
 module.exports = suffixPass;
 
-},{"./data/rules":102}],108:[function(_dereq_,module,exports){
+},{"./data/rules":103}],109:[function(_dereq_,module,exports){
 'use strict';
 //turn 'walk' into 'walker'
 const irregulars = {
@@ -7491,7 +7544,7 @@ const toActor = function(inf) {
 
 module.exports = toActor;
 
-},{}],109:[function(_dereq_,module,exports){
+},{}],110:[function(_dereq_,module,exports){
 'use strict';
 //too many special cases for is/was/will be
 const toBe = (isPlural, isNegative) => {
@@ -7522,7 +7575,7 @@ const toBe = (isPlural, isNegative) => {
 };
 module.exports = toBe;
 
-},{}],110:[function(_dereq_,module,exports){
+},{}],111:[function(_dereq_,module,exports){
 'use strict';
 //sometimes you can tell if a verb is plural/singular, just by the verb
 // i am / we were
@@ -7548,7 +7601,7 @@ const isPlural = (vb) => {
 };
 module.exports = isPlural;
 
-},{}],111:[function(_dereq_,module,exports){
+},{}],112:[function(_dereq_,module,exports){
 'use strict';
 const suffix_rules = _dereq_('./suffix_rules');
 
@@ -7588,7 +7641,7 @@ const predictForm = function(term, verbose) {
 
 module.exports = predictForm;
 
-},{"./suffix_rules":112}],112:[function(_dereq_,module,exports){
+},{"./suffix_rules":113}],113:[function(_dereq_,module,exports){
 'use strict';
 //suffix signals for verb tense, generated from test data
 const compact = {
@@ -7699,7 +7752,7 @@ for (let i = 0; i < l; i++) {
 }
 module.exports = suffix_rules;
 
-},{}],113:[function(_dereq_,module,exports){
+},{}],114:[function(_dereq_,module,exports){
 'use strict';
 //turn a infinitiveVerb, like "walk" into an adjective like "walkable"
 
@@ -7755,7 +7808,7 @@ const toAdjective = function(str) {
 
 module.exports = toAdjective;
 
-},{}],114:[function(_dereq_,module,exports){
+},{}],115:[function(_dereq_,module,exports){
 'use strict';
 //turn any verb into its infinitive form
 const rules = _dereq_('./rules');
@@ -7798,7 +7851,7 @@ const toInfinitive = function(t) {
 
 module.exports = toInfinitive;
 
-},{"../../../../../data":6,"../predict":111,"./rules":115}],115:[function(_dereq_,module,exports){
+},{"../../../../../data":6,"../predict":112,"./rules":116}],116:[function(_dereq_,module,exports){
 'use strict';
 //rules for turning a verb into infinitive form
 let rules = {
@@ -7959,7 +8012,7 @@ let rules = {
 };
 module.exports = rules;
 
-},{}],116:[function(_dereq_,module,exports){
+},{}],117:[function(_dereq_,module,exports){
 'use strict';
 //turns a verb negative - may not have enough information to do it properly
 // (eg 'did not eat' vs 'does not eat') - needs the noun
@@ -8031,7 +8084,7 @@ const toNegative = (ts) => {
 };
 module.exports = toNegative;
 
-},{"./methods/toInfinitive":114}],117:[function(_dereq_,module,exports){
+},{"./methods/toInfinitive":115}],118:[function(_dereq_,module,exports){
 'use strict';
 const Terms = _dereq_('../../paths').Terms;
 const conjugate = _dereq_('./methods/conjugate');
@@ -8040,23 +8093,24 @@ const interpret = _dereq_('./interpret');
 const toNegative = _dereq_('./toNegative');
 const isPlural = _dereq_('./methods/isPlural');
 
-class Verb extends Terms {
-  constructor(arr, lexicon, refText, refTerms) {
-    super(arr, lexicon, refText, refTerms);
-    this.parse();
+const parse = function(r) {
+  r.negative = r.match('#Negative');
+  r.adverbs = r.match('#Adverb');
+  let aux = r.clone().not('(#Adverb|#Negative)');
+  r.verb = aux.match('#Verb').not('#Particle').last();
+  r.particle = aux.match('#Particle').last();
+  if (r.verb.found) {
+    r.verb = r.verb.list[0].terms[0];
   }
-  parse() {
-    this.negative = this.match('#Negative');
-    this.adverbs = this.match('#Adverb');
-    let aux = this.clone().not('(#Adverb|#Negative)');
-    this.verb = aux.match('#Verb').not('#Particle').last();
-    this.particle = aux.match('#Particle').last();
-    if (this.verb.found) {
-      this.verb = this.verb.list[0].terms[0];
-    }
-    this.auxiliary = aux.match('#Auxiliary+');
-  }
-  data(verbose) {
+  r.auxiliary = aux.match('#Auxiliary+');
+  return r;
+};
+
+const methods = {
+  parse: function() {
+    return parse(this);
+  },
+  data: function(verbose) {
     return {
       text: this.out('text'),
       normal: this.out('normal'),
@@ -8069,71 +8123,81 @@ class Verb extends Terms {
       interpret: interpret(this, verbose),
       conjugations: this.conjugate()
     };
-  }
-  getNoun() {
+  },
+  getNoun: function() {
     if (!this.refTerms) {
       return null;
     }
     let str = '#Adjective? #Noun+ ' + this.out('normal');
     return this.refTerms.match(str).match('#Noun+');
-  }
+  },
   //which conjugation is this right now?
-  conjugation() {
+  conjugation: function() {
     return interpret(this, false).tense;
-  }
+  },
   //blast-out all forms
-  conjugate(verbose) {
+  conjugate: function(verbose) {
     return conjugate(this, verbose);
-  }
+  },
 
-  isPlural() {
+  isPlural: function() {
     return isPlural(this);
-  }
+  },
   /** negation **/
-  isNegative() {
+  isNegative: function() {
     return this.match('#Negative').list.length === 1;
-  }
-  isPerfect() {
+  },
+  isPerfect: function() {
     return this.auxiliary.match('(have|had)').found;
-  }
-  toNegative() {
+  },
+  toNegative: function() {
     if (this.isNegative()) {
       return this;
     }
     return toNegative(this);
-  }
-  toPositive() {
+  },
+  toPositive: function() {
     return this.match('#Negative').delete();
-  }
+  },
 
   /** conjugation **/
-  toPastTense() {
+  toPastTense: function() {
     let obj = this.conjugate();
     return this.replaceWith(obj.PastTense);
-  }
-  toPresentTense() {
+  },
+  toPresentTense: function() {
     let obj = this.conjugate();
     return this.replaceWith(obj.PresentTense);
-  }
-  toFutureTense() {
+  },
+  toFutureTense: function() {
     let obj = this.conjugate();
     return this.replaceWith(obj.FutureTense);
-  }
-  toInfinitive() {
+  },
+  toInfinitive: function() {
     let obj = this.conjugate();
     //NOT GOOD. please fix
     this.terms[this.terms.length - 1].text = obj.Infinitive;
     return this;
-  }
-
-  asAdjective() {
+  },
+  asAdjective: function() {
     return toAdjective(this.verb.out('normal'));
   }
+};
 
-}
+const Verb = function(arr, lexicon, refText, parentTerms) {
+  Terms.call(this, arr, lexicon, refText, parentTerms);
+  //basic verb-phrase parsing:
+  return parse(this);
+};
+//Terms inheritence
+Verb.prototype = Object.create(Terms.prototype);
+//apply methods
+Object.keys(methods).forEach((k) => {
+  Verb.prototype[k] = methods[k];
+});
 module.exports = Verb;
 
-},{"../../paths":38,"./interpret":100,"./methods/conjugate":105,"./methods/isPlural":110,"./methods/toAdjective":113,"./toNegative":116}],118:[function(_dereq_,module,exports){
+},{"../../paths":38,"./interpret":101,"./methods/conjugate":106,"./methods/isPlural":111,"./methods/toAdjective":114,"./toNegative":117}],119:[function(_dereq_,module,exports){
 'use strict';
 
 const addSubsets = (Text) => {
@@ -8235,7 +8299,7 @@ const addSubsets = (Text) => {
 };
 module.exports = addSubsets;
 
-},{}],119:[function(_dereq_,module,exports){
+},{}],120:[function(_dereq_,module,exports){
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2017 MIT
@@ -8317,7 +8381,7 @@ const sentence_parser = function (text) {
 module.exports = sentence_parser;
 // console.log(sentence_parser('john f. kennedy'));
 
-},{"../data":6}],120:[function(_dereq_,module,exports){
+},{"../data":6}],121:[function(_dereq_,module,exports){
 'use strict';
 const fixContraction = _dereq_('./fix');
 
@@ -8382,7 +8446,7 @@ const checkIrregulars = (ts) => {
 };
 module.exports = checkIrregulars;
 
-},{"./fix":124}],121:[function(_dereq_,module,exports){
+},{"./fix":125}],122:[function(_dereq_,module,exports){
 'use strict';
 const fixContraction = _dereq_('./fix');
 const splitContraction = _dereq_('./split');
@@ -8457,7 +8521,7 @@ const hardOne = (ts) => {
 
 module.exports = hardOne;
 
-},{"./fix":124,"./split":126}],122:[function(_dereq_,module,exports){
+},{"./fix":125,"./split":127}],123:[function(_dereq_,module,exports){
 'use strict';
 const fixContraction = _dereq_('./fix');
 const split = _dereq_('./split');
@@ -8522,7 +8586,7 @@ const easyOnes = (ts) => {
 };
 module.exports = easyOnes;
 
-},{"./fix":124,"./split":126}],123:[function(_dereq_,module,exports){
+},{"./fix":125,"./split":127}],124:[function(_dereq_,module,exports){
 'use strict';
 const fixContraction = _dereq_('./fix');
 const Term = _dereq_('../../term');
@@ -8560,7 +8624,7 @@ const numberRange = (ts) => {
 };
 module.exports = numberRange;
 
-},{"../../term":168,"./fix":124}],124:[function(_dereq_,module,exports){
+},{"../../term":169,"./fix":125}],125:[function(_dereq_,module,exports){
 'use strict';
 const Term = _dereq_('../../term');
 
@@ -8614,7 +8678,7 @@ const fixContraction = (ts, parts, i) => {
 
 module.exports = fixContraction;
 
-},{"../../term":168}],125:[function(_dereq_,module,exports){
+},{"../../term":169}],126:[function(_dereq_,module,exports){
 'use strict';
 const irregulars = _dereq_('./01-irregulars');
 const hardOne = _dereq_('./02-hardOne');
@@ -8636,7 +8700,7 @@ const interpret = function(ts) {
 
 module.exports = interpret;
 
-},{"./01-irregulars":120,"./02-hardOne":121,"./03-easyOnes":122,"./04-numberRange":123}],126:[function(_dereq_,module,exports){
+},{"./01-irregulars":121,"./02-hardOne":122,"./03-easyOnes":123,"./04-numberRange":124}],127:[function(_dereq_,module,exports){
 'use strict';
 const contraction = /^([a-z]+)'([a-z][a-z]?)$/i;
 const possessive = /[a-z]s'$/i;
@@ -8679,7 +8743,7 @@ const splitContraction = (t) => {
 };
 module.exports = splitContraction;
 
-},{}],127:[function(_dereq_,module,exports){
+},{}],128:[function(_dereq_,module,exports){
 'use strict';
 
 //mostly pos-corections here
@@ -8820,7 +8884,7 @@ const corrections = function (ts) {
 
 module.exports = corrections;
 
-},{}],128:[function(_dereq_,module,exports){
+},{}],129:[function(_dereq_,module,exports){
 'use strict';
 //the steps and processes of pos-tagging
 const step = {
@@ -8883,7 +8947,7 @@ const tagger = function (ts) {
 
 module.exports = tagger;
 
-},{"./contraction":125,"./corrections":127,"./lumper":130,"./lumper/lexicon_lump":131,"./phrase":134,"./steps/01-punctuation_step":135,"./steps/02-lexicon_step":136,"./steps/03-capital_step":137,"./steps/04-web_step":138,"./steps/05-suffix_step":139,"./steps/06-neighbour_step":140,"./steps/07-noun_fallback":141,"./steps/08-date_step":142,"./steps/09-auxiliary_step":143,"./steps/10-negation_step":144,"./steps/12-phrasal_step":145,"./steps/13-comma_step":146,"./steps/14-possessive_step":147,"./steps/15-value_step":148,"./steps/16-acronym_step":149,"./steps/17-emoji_step":150,"./steps/18-person_step":151,"./steps/19-quotation_step":152,"./steps/20-organization_step":153,"./steps/21-plural_step":154}],129:[function(_dereq_,module,exports){
+},{"./contraction":126,"./corrections":128,"./lumper":131,"./lumper/lexicon_lump":132,"./phrase":135,"./steps/01-punctuation_step":136,"./steps/02-lexicon_step":137,"./steps/03-capital_step":138,"./steps/04-web_step":139,"./steps/05-suffix_step":140,"./steps/06-neighbour_step":141,"./steps/07-noun_fallback":142,"./steps/08-date_step":143,"./steps/09-auxiliary_step":144,"./steps/10-negation_step":145,"./steps/12-phrasal_step":146,"./steps/13-comma_step":147,"./steps/14-possessive_step":148,"./steps/15-value_step":149,"./steps/16-acronym_step":150,"./steps/17-emoji_step":151,"./steps/18-person_step":152,"./steps/19-quotation_step":153,"./steps/20-organization_step":154,"./steps/21-plural_step":155}],130:[function(_dereq_,module,exports){
 'use strict';
 //index a lexicon by its first-word
 // - used for the multiple-word-lumper
@@ -8904,7 +8968,7 @@ const firstWord = (arr) => {
 };
 module.exports = firstWord;
 
-},{}],130:[function(_dereq_,module,exports){
+},{}],131:[function(_dereq_,module,exports){
 'use strict';
 //
 const lumper = (ts) => {
@@ -8933,7 +8997,7 @@ const lumper = (ts) => {
 };
 module.exports = lumper;
 
-},{}],131:[function(_dereq_,module,exports){
+},{}],132:[function(_dereq_,module,exports){
 'use strict';
 //check for "united" + "kingdom" in lexicon, and combine + tag it
 // const combine = require('./combine');
@@ -8992,7 +9056,7 @@ const lexicon_lump = function (ts) {
 
 module.exports = lexicon_lump;
 
-},{"../paths":132,"./firstWord":129}],132:[function(_dereq_,module,exports){
+},{"../paths":133,"./firstWord":130}],133:[function(_dereq_,module,exports){
 module.exports = {
   fns: _dereq_('../fns'),
   lexicon: _dereq_('../data/lexicon'),
@@ -9001,7 +9065,7 @@ module.exports = {
   Terms: _dereq_('../terms'),
 };
 
-},{"../data":6,"../data/lexicon":7,"../fns":21,"../terms":187,"../tries":229}],133:[function(_dereq_,module,exports){
+},{"../data":6,"../data/lexicon":7,"../fns":21,"../terms":189,"../tries":231}],134:[function(_dereq_,module,exports){
 'use strict';
 
 //
@@ -9038,7 +9102,7 @@ const conditionPass = function(r) {
 
 module.exports = conditionPass;
 
-},{}],134:[function(_dereq_,module,exports){
+},{}],135:[function(_dereq_,module,exports){
 'use strict';
 const conditionPass = _dereq_('./00-conditionPass');
 // const verbPhrase = require('./01-verbPhrase');
@@ -9055,7 +9119,7 @@ const phraseTag = function (Text) {
 
 module.exports = phraseTag;
 
-},{"./00-conditionPass":133}],135:[function(_dereq_,module,exports){
+},{"./00-conditionPass":134}],136:[function(_dereq_,module,exports){
 'use strict';
 const rules = _dereq_('./rules/punct_rules');
 
@@ -9116,7 +9180,7 @@ const punctuation_step = function (ts) {
 
 module.exports = punctuation_step;
 
-},{"./rules/punct_rules":158}],136:[function(_dereq_,module,exports){
+},{"./rules/punct_rules":159}],137:[function(_dereq_,module,exports){
 'use strict';
 const p = _dereq_('../paths');
 const split = _dereq_('../contraction/split');
@@ -9185,7 +9249,7 @@ const lexicon_pass = function (ts) {
 
 module.exports = lexicon_pass;
 
-},{"../../tries":229,"../contraction/split":126,"../paths":132}],137:[function(_dereq_,module,exports){
+},{"../../tries":231,"../contraction/split":127,"../paths":133}],138:[function(_dereq_,module,exports){
 'use strict';
 //titlecase is a signal for a noun
 
@@ -9211,7 +9275,7 @@ const capital_logic = function (s) {
 
 module.exports = capital_logic;
 
-},{}],138:[function(_dereq_,module,exports){
+},{}],139:[function(_dereq_,module,exports){
 'use strict';
 //identify urls, hashtags, @mentions, emails
 //regs
@@ -9243,7 +9307,7 @@ const web_pass = function(terms) {
 
 module.exports = web_pass;
 
-},{}],139:[function(_dereq_,module,exports){
+},{}],140:[function(_dereq_,module,exports){
 'use strict';
 const regs = _dereq_('./rules/regex_list');
 const suffixes = _dereq_('./rules/suffix_lookup');
@@ -9327,7 +9391,7 @@ const suffix_step = function(ts) {
 
 module.exports = suffix_step;
 
-},{"./rules/regex_list":159,"./rules/suffix_lookup":160}],140:[function(_dereq_,module,exports){
+},{"./rules/regex_list":160,"./rules/suffix_lookup":161}],141:[function(_dereq_,module,exports){
 'use strict';
 const markov = _dereq_('./rules/neighbours');
 const afterThisWord = markov.afterThisWord;
@@ -9383,7 +9447,7 @@ const neighbour_step = function (ts) {
 
 module.exports = neighbour_step;
 
-},{"./rules/neighbours":157}],141:[function(_dereq_,module,exports){
+},{"./rules/neighbours":158}],142:[function(_dereq_,module,exports){
 'use strict';
 //tag word as noun if we know nothing about it, still.
 
@@ -9430,7 +9494,7 @@ const noun_fallback = function(s) {
 
 module.exports = noun_fallback;
 
-},{}],142:[function(_dereq_,module,exports){
+},{}],143:[function(_dereq_,module,exports){
 'use strict';
 //ambiguous 'may' and 'march'
 const maybeMonth = '(may|march|jan|april|sep)';
@@ -9579,7 +9643,7 @@ const datePass = function (ts) {
 
 module.exports = datePass;
 
-},{}],143:[function(_dereq_,module,exports){
+},{}],144:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -9616,7 +9680,7 @@ const corrections = function(ts) {
 
 module.exports = corrections;
 
-},{}],144:[function(_dereq_,module,exports){
+},{}],145:[function(_dereq_,module,exports){
 'use strict';
 
 // 'not' is sometimes a verb, sometimes an adjective
@@ -9642,7 +9706,7 @@ const negation_step = function(ts) {
 
 module.exports = negation_step;
 
-},{}],145:[function(_dereq_,module,exports){
+},{}],146:[function(_dereq_,module,exports){
 'use strict';
 const phrasals = _dereq_('../paths').tries.utils.phrasals;
 const toInfinitive = _dereq_('../../result/subset/verbs/methods/toInfinitive');
@@ -9700,7 +9764,7 @@ const phrasals_step = function(ts) {
 
 module.exports = phrasals_step;
 
-},{"../../result/subset/verbs/methods/toInfinitive":114,"../paths":132}],146:[function(_dereq_,module,exports){
+},{"../../result/subset/verbs/methods/toInfinitive":115,"../paths":133}],147:[function(_dereq_,module,exports){
 'use strict';
 //-types of comma-use-
 // PlaceComma - Hollywood, California
@@ -9827,7 +9891,7 @@ const commaStep = function(ts) {
 
 module.exports = commaStep;
 
-},{}],147:[function(_dereq_,module,exports){
+},{}],148:[function(_dereq_,module,exports){
 'use strict';
 //decide if an apostrophe s is a contraction or not
 // 'spencer's nice' -> 'spencer is nice'
@@ -9896,7 +9960,7 @@ const possessiveStep = function(terms) {
 };
 module.exports = possessiveStep;
 
-},{}],148:[function(_dereq_,module,exports){
+},{}],149:[function(_dereq_,module,exports){
 'use strict';
 //regs-
 const cardinal = /^[0-9]([0-9]+,)*?(\.[0-9])$/;
@@ -9929,7 +9993,7 @@ const value_step = function(ts) {
 
 module.exports = value_step;
 
-},{}],149:[function(_dereq_,module,exports){
+},{}],150:[function(_dereq_,module,exports){
 'use strict';
 
 const acronym_step = function(ts) {
@@ -9943,7 +10007,7 @@ const acronym_step = function(ts) {
 
 module.exports = acronym_step;
 
-},{}],150:[function(_dereq_,module,exports){
+},{}],151:[function(_dereq_,module,exports){
 'use strict';
 const emojiReg = _dereq_('./rules/emoji_regex');
 const emoticon = _dereq_('./rules/emoticon_list');
@@ -9996,7 +10060,7 @@ const emojiStep = (ts) => {
 };
 module.exports = emojiStep;
 
-},{"./rules/emoji_regex":155,"./rules/emoticon_list":156}],151:[function(_dereq_,module,exports){
+},{"./rules/emoji_regex":156,"./rules/emoticon_list":157}],152:[function(_dereq_,module,exports){
 'use strict';
 
 let titles = _dereq_('../paths').data.titles;
@@ -10083,7 +10147,7 @@ const person_step = function (ts) {
 
 module.exports = person_step;
 
-},{"../paths":132}],152:[function(_dereq_,module,exports){
+},{"../paths":133}],153:[function(_dereq_,module,exports){
 'use strict';
 const startQuote = /^["'\u201B\u201C\u2033\u201F\u2018]/;
 const endQuote = /.["'\u201D\u2036\u2019]([;:,.])?$/;
@@ -10117,7 +10181,7 @@ const quotation_step = (ts) => {
 };
 module.exports = quotation_step;
 
-},{}],153:[function(_dereq_,module,exports){
+},{}],154:[function(_dereq_,module,exports){
 'use strict';
 //orgwords like 'bank' in 'Foo Bank'
 let orgWords = _dereq_('../paths').tries.utils.orgWords;
@@ -10166,7 +10230,7 @@ const organization_step = (ts) => {
 };
 module.exports = organization_step;
 
-},{"../paths":132}],154:[function(_dereq_,module,exports){
+},{"../paths":133}],155:[function(_dereq_,module,exports){
 'use strict';
 const isPlural = _dereq_('../../result/subset/nouns/isPlural');
 
@@ -10193,12 +10257,12 @@ const pluralStep = function(ts) {
 
 module.exports = pluralStep;
 
-},{"../../result/subset/nouns/isPlural":69}],155:[function(_dereq_,module,exports){
+},{"../../result/subset/nouns/isPlural":70}],156:[function(_dereq_,module,exports){
 //yep,
 //https://github.com/mathiasbynens/emoji-regex/blob/master/index.js
 module.exports = /(?:0\u20E3\n1\u20E3|2\u20E3|3\u20E3|4\u20E3|5\u20E3|6\u20E3|7\u20E3|8\u20E3|9\u20E3|#\u20E3|\*\u20E3|\uD83C(?:\uDDE6\uD83C(?:\uDDE8|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDEE|\uDDF1|\uDDF2|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFC|\uDDFD|\uDDFF)|\uDDE7\uD83C(?:\uDDE6|\uDDE7|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDEF|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFB|\uDDFC|\uDDFE|\uDDFF)|\uDDE8\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF5|\uDDF7|\uDDFA|\uDDFB|\uDDFC|\uDDFD|\uDDFE|\uDDFF)|\uDDE9\uD83C(?:\uDDEA|\uDDEC|\uDDEF|\uDDF0|\uDDF2|\uDDF4|\uDDFF)|\uDDEA\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEC|\uDDED|\uDDF7|\uDDF8|\uDDF9|\uDDFA)|\uDDEB\uD83C(?:\uDDEE|\uDDEF|\uDDF0|\uDDF2|\uDDF4|\uDDF7)|\uDDEC\uD83C(?:\uDDE6|\uDDE7|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDF1|\uDDF2|\uDDF3|\uDDF5|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFC|\uDDFE)|\uDDED\uD83C(?:\uDDF0|\uDDF2|\uDDF3|\uDDF7|\uDDF9|\uDDFA)|\uDDEE\uD83C(?:\uDDE8|\uDDE9|\uDDEA|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9)|\uDDEF\uD83C(?:\uDDEA|\uDDF2|\uDDF4|\uDDF5)|\uDDF0\uD83C(?:\uDDEA|\uDDEC|\uDDED|\uDDEE|\uDDF2|\uDDF3|\uDDF5|\uDDF7|\uDDFC|\uDDFE|\uDDFF)|\uDDF1\uD83C(?:\uDDE6|\uDDE7|\uDDE8|\uDDEE|\uDDF0|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFB|\uDDFE)|\uDDF2\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF5|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFB|\uDDFC|\uDDFD|\uDDFE|\uDDFF)|\uDDF3\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEB|\uDDEC|\uDDEE|\uDDF1|\uDDF4|\uDDF5|\uDDF7|\uDDFA|\uDDFF)|\uDDF4\uD83C\uDDF2|\uDDF5\uD83C(?:\uDDE6|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF7|\uDDF8|\uDDF9|\uDDFC|\uDDFE)|\uDDF6\uD83C\uDDE6|\uDDF7\uD83C(?:\uDDEA|\uDDF4|\uDDF8|\uDDFA|\uDDFC)|\uDDF8\uD83C(?:\uDDE6|\uDDE7|\uDDE8|\uDDE9|\uDDEA|\uDDEC|\uDDED|\uDDEE|\uDDEF|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF7|\uDDF8|\uDDF9|\uDDFB|\uDDFD|\uDDFE|\uDDFF)|\uDDF9\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEB|\uDDEC|\uDDED|\uDDEF|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF7|\uDDF9|\uDDFB|\uDDFC|\uDDFF)|\uDDFA\uD83C(?:\uDDE6|\uDDEC|\uDDF2|\uDDF8|\uDDFE|\uDDFF)|\uDDFB\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEC|\uDDEE|\uDDF3|\uDDFA)|\uDDFC\uD83C(?:\uDDEB|\uDDF8)|\uDDFD\uD83C\uDDF0|\uDDFE\uD83C(?:\uDDEA|\uDDF9)|\uDDFF\uD83C(?:\uDDE6|\uDDF2|\uDDFC)))|[\xA9\xAE\u203C\u2049\u2122\u2139\u2194-\u2199\u21A9\u21AA\u231A\u231B\u2328\u23CF\u23E9-\u23F3\u23F8-\u23FA\u24C2\u25AA\u25AB\u25B6\u25C0\u25FB-\u25FE\u2600-\u2604\u260E\u2611\u2614\u2615\u2618\u261D\u2620\u2622\u2623\u2626\u262A\u262E\u262F\u2638-\u263A\u2648-\u2653\u2660\u2663\u2665\u2666\u2668\u267B\u267F\u2692-\u2694\u2696\u2697\u2699\u269B\u269C\u26A0\u26A1\u26AA\u26AB\u26B0\u26B1\u26BD\u26BE\u26C4\u26C5\u26C8\u26CE\u26CF\u26D1\u26D3\u26D4\u26E9\u26EA\u26F0-\u26F5\u26F7-\u26FA\u26FD\u2702\u2705\u2708-\u270D\u270F\u2712\u2714\u2716\u271D\u2721\u2728\u2733\u2734\u2744\u2747\u274C\u274E\u2753-\u2755\u2757\u2763\u2764\u2795-\u2797\u27A1\u27B0\u27BF\u2934\u2935\u2B05-\u2B07\u2B1B\u2B1C\u2B50\u2B55\u3030\u303D\u3297\u3299]|\uD83C[\uDC04\uDCCF\uDD70\uDD71\uDD7E\uDD7F\uDD8E\uDD91-\uDD9A\uDE01\uDE02\uDE1A\uDE2F\uDE32-\uDE3A\uDE50\uDE51\uDF00-\uDF21\uDF24-\uDF93\uDF96\uDF97\uDF99-\uDF9B\uDF9E-\uDFF0\uDFF3-\uDFF5\uDFF7-\uDFFF]|\uD83D[\uDC00-\uDCFD\uDCFF-\uDD3D\uDD49-\uDD4E\uDD50-\uDD67\uDD6F\uDD70\uDD73-\uDD79\uDD87\uDD8A-\uDD8D\uDD90\uDD95\uDD96\uDDA5\uDDA8\uDDB1\uDDB2\uDDBC\uDDC2-\uDDC4\uDDD1-\uDDD3\uDDDC-\uDDDE\uDDE1\uDDE3\uDDEF\uDDF3\uDDFA-\uDE4F\uDE80-\uDEC5\uDECB-\uDED0\uDEE0-\uDEE5\uDEE9\uDEEB\uDEEC\uDEF0\uDEF3]|\uD83E[\uDD10-\uDD18\uDD80-\uDD84\uDDC0]/g;
 
-},{}],156:[function(_dereq_,module,exports){
+},{}],157:[function(_dereq_,module,exports){
 //just some of the most common emoticons
 //faster than
 //http://stackoverflow.com/questions/28077049/regex-matching-emoticons
@@ -10256,7 +10320,7 @@ module.exports = {
   '<\\3': true
 };
 
-},{}],157:[function(_dereq_,module,exports){
+},{}],158:[function(_dereq_,module,exports){
 'use strict';
 //markov-like stats about co-occurance, for hints about unknown terms
 //basically, a little-bit better than the noun-fallback
@@ -10336,7 +10400,7 @@ module.exports = {
   afterThisPos: afterThisPos
 };
 
-},{}],158:[function(_dereq_,module,exports){
+},{}],159:[function(_dereq_,module,exports){
 //these are regexes applied to t.text, instead of t.normal
 module.exports = [
   //#funtime
@@ -10384,7 +10448,7 @@ module.exports = [
   };
 });
 
-},{}],159:[function(_dereq_,module,exports){
+},{}],160:[function(_dereq_,module,exports){
 'use strict';
 //regex suffix patterns and their most common parts of speech,
 //built using wordnet, by spencer kelly.
@@ -10506,7 +10570,7 @@ module.exports = {
   ],
 };
 
-},{}],160:[function(_dereq_,module,exports){
+},{}],161:[function(_dereq_,module,exports){
 'use strict';
 //just a foolish lookup of known suffixes
 const Adj = 'Adjective';
@@ -10620,7 +10684,7 @@ module.exports = [
   }
 ];
 
-},{}],161:[function(_dereq_,module,exports){
+},{}],162:[function(_dereq_,module,exports){
 'use strict';
 
 //list of inconsistent parts-of-speech
@@ -10663,7 +10727,7 @@ module.exports = [
   ['UpperCase', 'TitleCase', 'CamelCase']
 ];
 
-},{}],162:[function(_dereq_,module,exports){
+},{}],163:[function(_dereq_,module,exports){
 'use strict';
 
 //
@@ -10758,7 +10822,7 @@ const build = () => {
 module.exports = build();
 // console.log(module.exports.Gerund.enemy);
 
-},{"./conflicts":161,"./tags/dates":163,"./tags/misc":164,"./tags/nouns":165,"./tags/values":166,"./tags/verbs":167}],163:[function(_dereq_,module,exports){
+},{"./conflicts":162,"./tags/dates":164,"./tags/misc":165,"./tags/nouns":166,"./tags/values":167,"./tags/verbs":168}],164:[function(_dereq_,module,exports){
 module.exports = {
   Date: {}, //not a noun, but usually is
   Month: {
@@ -10789,7 +10853,7 @@ module.exports = {
   },
 };
 
-},{}],164:[function(_dereq_,module,exports){
+},{}],165:[function(_dereq_,module,exports){
 module.exports = {
 
   Adjective: {},
@@ -10831,7 +10895,7 @@ module.exports = {
 
 };
 
-},{}],165:[function(_dereq_,module,exports){
+},{}],166:[function(_dereq_,module,exports){
 module.exports = {
   Noun: {},
   // - singular
@@ -10906,7 +10970,7 @@ module.exports = {
   }
 };
 
-},{}],166:[function(_dereq_,module,exports){
+},{}],167:[function(_dereq_,module,exports){
 module.exports = {
   Value: {},
   Ordinal: {
@@ -10939,7 +11003,7 @@ module.exports = {
   },
 };
 
-},{}],167:[function(_dereq_,module,exports){
+},{}],168:[function(_dereq_,module,exports){
 module.exports = {
   Verb: {},
   PresentTense: {
@@ -10980,7 +11044,7 @@ module.exports = {
   },
 };
 
-},{}],168:[function(_dereq_,module,exports){
+},{}],169:[function(_dereq_,module,exports){
 'use strict';
 const fns = _dereq_('./paths').fns;
 const build_whitespace = _dereq_('./whitespace');
@@ -11044,7 +11108,7 @@ _dereq_('./methods/punctuation')(Term);
 
 module.exports = Term;
 
-},{"./makeUID":169,"./methods/case":171,"./methods/misc":172,"./methods/normalize":173,"./methods/out":177,"./methods/punctuation":179,"./methods/tag":181,"./paths":184,"./whitespace":185}],169:[function(_dereq_,module,exports){
+},{"./makeUID":170,"./methods/case":172,"./methods/misc":173,"./methods/normalize":174,"./methods/out":178,"./methods/punctuation":180,"./methods/tag":182,"./paths":185,"./whitespace":186}],170:[function(_dereq_,module,exports){
 'use strict';
 //this is a not-well-thought-out way to reduce our dependence on `object===object` reference stuff
 //generates a unique id for this term
@@ -11058,7 +11122,7 @@ const uid = (str) => {
 };
 module.exports = uid;
 
-},{}],170:[function(_dereq_,module,exports){
+},{}],171:[function(_dereq_,module,exports){
 'use strict';
 const tagSet = _dereq_('../paths').tags;
 const boringTags = {
@@ -11090,7 +11154,7 @@ const bestTag = function(t) {
 };
 module.exports = bestTag;
 
-},{"../paths":184}],171:[function(_dereq_,module,exports){
+},{"../paths":185}],172:[function(_dereq_,module,exports){
 'use strict';
 
 const addMethods = (Term) => {
@@ -11158,7 +11222,7 @@ const addMethods = (Term) => {
 
 module.exports = addMethods;
 
-},{}],172:[function(_dereq_,module,exports){
+},{}],173:[function(_dereq_,module,exports){
 'use strict';
 const bestTag = _dereq_('./bestTag');
 
@@ -11234,7 +11298,7 @@ const addMethods = (Term) => {
 
 module.exports = addMethods;
 
-},{"./bestTag":170}],173:[function(_dereq_,module,exports){
+},{"./bestTag":171}],174:[function(_dereq_,module,exports){
 'use strict';
 const addNormal = _dereq_('./normalize').addNormal;
 const addRoot = _dereq_('./root');
@@ -11257,7 +11321,7 @@ const addMethods = (Term) => {
 
 module.exports = addMethods;
 
-},{"./normalize":174,"./root":175}],174:[function(_dereq_,module,exports){
+},{"./normalize":175,"./root":176}],175:[function(_dereq_,module,exports){
 'use strict';
 const killUnicode = _dereq_('./unicode');
 
@@ -11303,7 +11367,7 @@ exports.addNormal = function (term) {
 
 // console.log(normalize('Dr. V Cooper'));
 
-},{"./unicode":176}],175:[function(_dereq_,module,exports){
+},{"./unicode":177}],176:[function(_dereq_,module,exports){
 'use strict';
 //
 const rootForm = function(term) {
@@ -11319,7 +11383,7 @@ const rootForm = function(term) {
 
 module.exports = rootForm;
 
-},{}],176:[function(_dereq_,module,exports){
+},{}],177:[function(_dereq_,module,exports){
 'use strict';
 //a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
 //approximate visual (not semantic or phonetic) relationship between unicode and ascii characters
@@ -11376,7 +11440,7 @@ const killUnicode = (str) => {
 module.exports = killUnicode;
 // console.log(fixUnicode('bjŏȒk'));
 
-},{}],177:[function(_dereq_,module,exports){
+},{}],178:[function(_dereq_,module,exports){
 'use strict';
 const renderHtml = _dereq_('./renderHtml');
 const fns = _dereq_('../../paths').fns;
@@ -11440,7 +11504,7 @@ const addMethods = (Term) => {
 
 module.exports = addMethods;
 
-},{"../../paths":184,"./renderHtml":178}],178:[function(_dereq_,module,exports){
+},{"../../paths":185,"./renderHtml":179}],179:[function(_dereq_,module,exports){
 'use strict';
 //turn xml special characters into apersand-encoding.
 //i'm not sure this is perfectly safe.
@@ -11496,7 +11560,7 @@ const renderHtml = function(t) {
 
 module.exports = renderHtml;
 
-},{}],179:[function(_dereq_,module,exports){
+},{}],180:[function(_dereq_,module,exports){
 'use strict';
 const endPunct = /([a-z])([,:;\/.(\.\.\.)\!\?]+)$/i;
 const addMethods = (Term) => {
@@ -11549,7 +11613,7 @@ const addMethods = (Term) => {
 
 module.exports = addMethods;
 
-},{}],180:[function(_dereq_,module,exports){
+},{}],181:[function(_dereq_,module,exports){
 'use strict';
 const path = _dereq_('../../paths');
 const tagset = path.tags;
@@ -11575,7 +11639,7 @@ const canBe = function(term, tag) {
 
 module.exports = canBe;
 
-},{"../../paths":184}],181:[function(_dereq_,module,exports){
+},{"../../paths":185}],182:[function(_dereq_,module,exports){
 'use strict';
 const setTag = _dereq_('./setTag');
 const unTag = _dereq_('./unTag');
@@ -11609,7 +11673,7 @@ const addMethods = (Term) => {
 
 module.exports = addMethods;
 
-},{"./canBe":180,"./setTag":182,"./unTag":183}],182:[function(_dereq_,module,exports){
+},{"./canBe":181,"./setTag":183,"./unTag":184}],183:[function(_dereq_,module,exports){
 'use strict';
 //set a term as a particular Part-of-speech
 const path = _dereq_('../../paths');
@@ -11665,7 +11729,7 @@ const wrap = function (term, tag, reason) {
 
 module.exports = wrap;
 
-},{"../../paths":184,"./unTag":183}],183:[function(_dereq_,module,exports){
+},{"../../paths":185,"./unTag":184}],184:[function(_dereq_,module,exports){
 'use strict';
 //set a term as a particular Part-of-speech
 const path = _dereq_('../../paths');
@@ -11703,14 +11767,14 @@ const wrap = (term, tag, reason) => {
 };
 module.exports = wrap;
 
-},{"../../paths":184}],184:[function(_dereq_,module,exports){
+},{"../../paths":185}],185:[function(_dereq_,module,exports){
 module.exports = {
   fns: _dereq_('../fns'),
   log: _dereq_('../log'),
   tags: _dereq_('../tagset')
 };
 
-},{"../fns":21,"../log":23,"../tagset":162}],185:[function(_dereq_,module,exports){
+},{"../fns":21,"../log":23,"../tagset":163}],186:[function(_dereq_,module,exports){
 'use strict';
 //regs-
 const before = /^(\s|-+|\.\.+)+/;
@@ -11742,7 +11806,7 @@ const build_whitespace = (str) => {
 };
 module.exports = build_whitespace;
 
-},{}],186:[function(_dereq_,module,exports){
+},{}],187:[function(_dereq_,module,exports){
 'use strict';
 const Term = _dereq_('../term');
 const hasHyphen = /^([a-z]+)(-)([a-z0-9].*)/i;
@@ -11800,100 +11864,121 @@ const fromString = function (str) {
 };
 module.exports = fromString;
 
-},{"../term":168}],187:[function(_dereq_,module,exports){
+},{"../term":169}],188:[function(_dereq_,module,exports){
+//getters/setters for the Terms class
+module.exports = {
+
+  parent: {
+    get: function() {
+      return this.refText || this;
+    },
+    set: function(r) {
+      this.refText = r;
+      return this;
+    }
+  },
+
+  parentTerms: {
+    get: function() {
+      return this.refTerms || this;
+    },
+    set: function(r) {
+      this.refTerms = r;
+      return this;
+    }
+  },
+
+  dirty: {
+    get: function() {
+      for(let i = 0; i < this.terms.length; i++) {
+        if (this.terms[i].dirty === true) {
+          return true;
+        }
+      }
+      return false;
+    },
+    set: function(dirt) {
+      this.terms.forEach((t) => {
+        t.dirty = dirt;
+      });
+    }
+  },
+
+  refTerms: {
+    get: function() {
+      return this._refTerms || this;
+    },
+    set: function(ts) {
+      this._refTerms = ts;
+      return this;
+    }
+  },
+  found: {
+    get: function() {
+      return this.terms.length > 0;
+    }
+  },
+  length: {
+    get: function() {
+      return this.terms.length;
+    }
+  },
+  isA: {
+    get: function() {
+      return 'Terms';
+    }
+  },
+  whitespace: {
+    get: function() {
+      return {
+        before: (str) => {
+          this.firstTerm().whitespace.before = str;
+          return this;
+        },
+        after: (str) => {
+          this.lastTerm().whitespace.after = str;
+          return this;
+        },
+      };
+    }
+  },
+
+
+};
+
+},{}],189:[function(_dereq_,module,exports){
 'use strict';
-const tagger = _dereq_('../tagger');
 const build = _dereq_('./build');
+const getters = _dereq_('./getters');
 
-class Terms {
-  constructor(arr, lexicon, refText, refTerms) {
-    this.terms = arr;
-    this.lexicon = lexicon;
-    this.refText = refText;
-    this._refTerms = refTerms;
-    this._cacheWords = {};
-    this.count = undefined;
-    this.get = (n) => {
-      return this.terms[n];
-    };
+//Terms is an array of Term objects, and methods that wrap around them
+const Terms = function(arr, lexicon, refText, refTerms) {
+  this.terms = arr;
+  this.lexicon = lexicon;
+  this.refText = refText;
+  this._refTerms = refTerms;
+  this._cacheWords = {};
+  this.count = undefined;
+  this.get = (n) => {
+    return this.terms[n];
+  };
+  //apply getters
+  let keys = Object.keys(getters);
+  for(let i = 0; i < keys.length; i++) {
+    Object.defineProperty(this, keys[i], getters[keys[i]]);
   }
-  get found() {
-    return this.terms.length > 0;
-  }
-  get length() {
-    return this.terms.length;
-  }
-  get isA() {
-    return 'Terms';
-  }
-  get refTerms() {
-    return this._refTerms || this;
-  }
-  set refTerms(ts) {
-    this._refTerms = ts;
-    return this;
-  }
-  set dirty(dirt) {
-    this.terms.forEach((t) => {
-      t.dirty = dirt;
-    });
-  }
-  tagger() {
-    tagger(this);
-    return this;
-  }
-  firstTerm() {
-    return this.terms[0];
-  }
-  lastTerm() {
-    return this.terms[this.terms.length - 1];
-  }
-  get parent() {
-    return this.refText || this;
-  }
-  set parent(r) {
-    this.refText = r;
-    return this;
-  }
-  get parentTerms() {
-    return this.refTerms || this;
-  }
-  set parentTerms(r) {
-    this.refTerms = r;
-    return this;
-  }
-  all() {
-    return this.parent;
-  }
-  data() {
-    return {
-      text: this.out('text'),
-      normal: this.out('normal'),
-    };
-  }
-  get whitespace() {
-    return {
-      before: (str) => {
-        this.firstTerm().whitespace.before = str;
-        return this;
-      },
-      after: (str) => {
-        this.lastTerm().whitespace.after = str;
-        return this;
-      },
-    };
-  }
+};
 
-  static fromString(str, lexicon) {
-    let termArr = build(str);
-    let ts = new Terms(termArr, lexicon, null);
-    //give each term a reference to this ts
-    ts.terms.forEach((t) => {
-      t.parentTerms = ts;
-    });
-    return ts;
-  }
-}
+Terms.fromString = function(str, lexicon) {
+  let termArr = build(str);
+  let ts = new Terms(termArr, lexicon, null);
+  //give each term a reference to this ts
+  ts.terms.forEach((t) => {
+    t.parentTerms = ts;
+  });
+  return ts;
+};
+
 // Terms = require('./methods/lookup')(Terms);
 _dereq_('./match')(Terms);
 _dereq_('./methods/loops')(Terms);
@@ -11908,7 +11993,7 @@ _dereq_('./methods/transform')(Terms);
 _dereq_('./methods/lump')(Terms);
 module.exports = Terms;
 
-},{"../tagger":128,"./build":186,"./match":188,"./match/not":195,"./methods/delete":196,"./methods/insert":197,"./methods/loops":198,"./methods/lump":200,"./methods/misc":201,"./methods/out":202,"./methods/replace":203,"./methods/split":204,"./methods/transform":205}],188:[function(_dereq_,module,exports){
+},{"./build":187,"./getters":188,"./match":190,"./match/not":197,"./methods/delete":198,"./methods/insert":199,"./methods/loops":200,"./methods/lump":202,"./methods/misc":203,"./methods/out":204,"./methods/replace":205,"./methods/split":206,"./methods/transform":207}],190:[function(_dereq_,module,exports){
 'use strict';
 const syntax = _dereq_('./lib/syntax');
 const startHere = _dereq_('./lib/startHere');
@@ -11972,7 +12057,7 @@ const matchMethods = (Terms) => {
 
 module.exports = matchMethods;
 
-},{"../../result":26,"./lib":190,"./lib/startHere":193,"./lib/syntax":194}],189:[function(_dereq_,module,exports){
+},{"../../result":26,"./lib":192,"./lib/startHere":195,"./lib/syntax":196}],191:[function(_dereq_,module,exports){
 'use strict';
 //
 //find easy reasons to skip running the full match on this
@@ -12012,7 +12097,7 @@ const fastPass = (ts, regs) => {
 };
 module.exports = fastPass;
 
-},{}],190:[function(_dereq_,module,exports){
+},{}],192:[function(_dereq_,module,exports){
 'use strict';
 const syntax = _dereq_('./syntax');
 const startHere = _dereq_('./startHere');
@@ -12050,7 +12135,7 @@ const match = (ts, reg, verbose) => {
 };
 module.exports = match;
 
-},{"./fastPass":189,"./startHere":193,"./syntax":194}],191:[function(_dereq_,module,exports){
+},{"./fastPass":191,"./startHere":195,"./syntax":196}],193:[function(_dereq_,module,exports){
 'use strict';
 
 //compare 1 term to one reg
@@ -12092,9 +12177,9 @@ const isMatch = (term, reg, verbose) => {
 };
 module.exports = isMatch;
 
-},{}],192:[function(_dereq_,module,exports){
-arguments[4][88][0].apply(exports,arguments)
-},{"../../paths":207,"dup":88}],193:[function(_dereq_,module,exports){
+},{}],194:[function(_dereq_,module,exports){
+arguments[4][89][0].apply(exports,arguments)
+},{"../../paths":209,"dup":89}],195:[function(_dereq_,module,exports){
 'use strict';
 // const lumpMatch = require('./lumpMatch');
 const isMatch = _dereq_('./isMatch');
@@ -12247,7 +12332,7 @@ const startHere = (ts, startAt, regs, verbose) => {
 
 module.exports = startHere;
 
-},{"./isMatch":191}],194:[function(_dereq_,module,exports){
+},{"./isMatch":193}],196:[function(_dereq_,module,exports){
 'use strict';
 // parse a search lookup term find the regex-like syntax in this term
 const fns = _dereq_('./paths').fns;
@@ -12354,7 +12439,7 @@ const parse_all = function (reg) {
 
 module.exports = parse_all;
 
-},{"./paths":192}],195:[function(_dereq_,module,exports){
+},{"./paths":194}],197:[function(_dereq_,module,exports){
 'use strict';
 //
 const syntax = _dereq_('./lib/syntax');
@@ -12451,7 +12536,7 @@ const addfns = (Terms) => {
 
 module.exports = addfns;
 
-},{"../../result":26,"./lib/startHere":193,"./lib/syntax":194}],196:[function(_dereq_,module,exports){
+},{"../../result":26,"./lib/startHere":195,"./lib/syntax":196}],198:[function(_dereq_,module,exports){
 'use strict';
 const mutate = _dereq_('../mutate');
 
@@ -12482,7 +12567,7 @@ const addMethod = (Terms) => {
 
 module.exports = addMethod;
 
-},{"../mutate":206}],197:[function(_dereq_,module,exports){
+},{"../mutate":208}],199:[function(_dereq_,module,exports){
 'use strict';
 const mutate = _dereq_('../mutate');
 
@@ -12587,7 +12672,7 @@ const insertMethods = (Terms) => {
 
 module.exports = insertMethods;
 
-},{"../mutate":206}],198:[function(_dereq_,module,exports){
+},{"../mutate":208}],200:[function(_dereq_,module,exports){
 'use strict';
 //these methods are simply term-methods called in a loop
 
@@ -12623,7 +12708,7 @@ const addMethods = (Terms) => {
 
 module.exports = addMethods;
 
-},{}],199:[function(_dereq_,module,exports){
+},{}],201:[function(_dereq_,module,exports){
 'use strict';
 const Term = _dereq_('../../../term');
 //merge two term objects.. carefully
@@ -12651,7 +12736,7 @@ const combine = function(s, i) {
 
 module.exports = combine;
 
-},{"../../../term":168}],200:[function(_dereq_,module,exports){
+},{"../../../term":169}],202:[function(_dereq_,module,exports){
 'use strict';
 const combine = _dereq_('./combine');
 const mutate = _dereq_('../../mutate');
@@ -12696,12 +12781,33 @@ const lumpMethods = (Terms) => {
 
 module.exports = lumpMethods;
 
-},{"../../mutate":206,"./combine":199}],201:[function(_dereq_,module,exports){
+},{"../../mutate":208,"./combine":201}],203:[function(_dereq_,module,exports){
 'use strict';
+const tagger = _dereq_('../../tagger');
 
 const miscMethods = (Terms) => {
 
   const methods = {
+
+    tagger: function() {
+      tagger(this);
+      return this;
+    },
+    firstTerm: function() {
+      return this.terms[0];
+    },
+    lastTerm: function() {
+      return this.terms[this.terms.length - 1];
+    },
+    all: function() {
+      return this.parent;
+    },
+    data: function() {
+      return {
+        text: this.out('text'),
+        normal: this.out('normal'),
+      };
+    },
     term: function (n) {
       return this.terms[n];
     },
@@ -12795,7 +12901,7 @@ const miscMethods = (Terms) => {
 
 module.exports = miscMethods;
 
-},{}],202:[function(_dereq_,module,exports){
+},{"../../tagger":129}],204:[function(_dereq_,module,exports){
 'use strict';
 const fns = _dereq_('../paths').fns;
 
@@ -12869,7 +12975,7 @@ const renderMethods = (Terms) => {
 
 module.exports = renderMethods;
 
-},{"../paths":207}],203:[function(_dereq_,module,exports){
+},{"../paths":209}],205:[function(_dereq_,module,exports){
 'use strict';
 const mutate = _dereq_('../mutate');
 
@@ -12912,7 +13018,7 @@ const replaceMethods = (Terms) => {
 
 module.exports = replaceMethods;
 
-},{"../mutate":206}],204:[function(_dereq_,module,exports){
+},{"../mutate":208}],206:[function(_dereq_,module,exports){
 'use strict';
 
 //break apart a termlist into (before, match after)
@@ -13034,7 +13140,7 @@ const splitMethods = (Terms) => {
 module.exports = splitMethods;
 exports = splitMethods;
 
-},{}],205:[function(_dereq_,module,exports){
+},{}],207:[function(_dereq_,module,exports){
 'use strict';
 
 const transforms = (Terms) => {
@@ -13077,7 +13183,7 @@ const transforms = (Terms) => {
 
 module.exports = transforms;
 
-},{}],206:[function(_dereq_,module,exports){
+},{}],208:[function(_dereq_,module,exports){
 'use strict';
 //
 const getTerms = (needle) => {
@@ -13120,7 +13226,7 @@ exports.insertAt = (terms, i, needle) => {
   return terms;
 };
 
-},{}],207:[function(_dereq_,module,exports){
+},{}],209:[function(_dereq_,module,exports){
 module.exports = {
   data: _dereq_('../data'),
   lexicon: _dereq_('../data'),
@@ -13128,47 +13234,47 @@ module.exports = {
   Term: _dereq_('../term')
 };
 
-},{"../data":6,"../fns":21,"../term":168}],208:[function(_dereq_,module,exports){
+},{"../data":6,"../fns":21,"../term":169}],210:[function(_dereq_,module,exports){
 module.exports="0:68;1:5A;2:6A;3:4I;4:5K;5:5N;6:62;7:66;a5Yb5Fc51d4Le49f3Vg3Ih35i2Tj2Rk2Ql2Fm27n1Zo1Kp13qu11r0Vs05tYuJvGw8year1za1D;arEeDholeCiBo9r8;o4Hy;man1o8u5P;d5Rzy;ck0despr63ly,ry;!sa3;a4Gek1lco1C;p0y;a9i8ola3W;b6Fol4K;gabo5Hin,nilla,rio5B;g1lt3ZnDpArb4Ms9tter8;!mo6;ed,u2;b1Hp9s8t19;ca3et,tairs;er,i3R;authorFdeDeCfair,ivers2known,like1precedMrAs9ti5w8;iel5ritt5C;ig1Kupervis0;e8u1;cognBgul5Il5I;v58xpect0;cid0r8;!grou53stood;iz0;aCeBiAo9r8;anqu4Jen5i4Doubl0ue;geth4p,rp5H;dy,me1ny;en57st0;boo,l8n,wd3R;ent0;aWca3PeUhTiRkin0FlOmNnobb42oKpIqueam42tCu8ymb58;bAdd4Wp8r3F;er8re0J;!b,i1Z;du0t3;aCeAi0Nr9u8yl3X;p56r5;aightfor4Vip0;ad8reotyp0;fa6y;nda5Frk;a4Si8lend51rig0V;cy,r19;le9mb4phist1Lr8u13vi3J;d4Yry;!mn;el1ug;e9i8y;ck,g09my;ek,nd4;ck,l1n8;ce4Ig3;a5e4iTut,y;c8em1lf3Fni1Fre1Eve4Gxy;o11r38;cr0int1l2Lme,v1Z;aCeAi9o8;bu6o2Csy,y2;ght0Ytzy,v2;a8b0Ucondi3Emo3Epublic37t1S;dy,l,r;b4Hci6gg0nd3S;a8icke6;ck,i4V;aKeIhoHicayu13lac4EoGr9u8;bl4Amp0ny;eDiAo8;!b02f8p4;ou3Su7;c9m8or;a2Le;ey,k1;ci7mi14se4M;li30puli6;ny;r8ti2Y;fe4Cv2J;in1Lr8st;allel0t8;-ti8i2;me;bKffIi1kHnGpFrg0Yth4utEv8;al,er8;!aBn9t,w8;e8roug9;ig8;ht;ll;do0Ger,g1Ysi0E;en,posi2K;g1Wli0D;!ay;b8li0B;eat;e7s8;ce08ole2E;aEeDiBo8ua3M;b3n9rLsy,t8;ab3;descri3Qstop;g8mb3;ht1;arby,cessa1Pighbor1xt;ive,k0;aDeBiAo8ultip3;bi3dern,l5n1Jo8st;dy,t;ld,nX;a8di04re;s1ty;cab2Vd1genta,in,jUkeshift,le,mmo8ny;th;aHeCiAo8;f0Zne1u8ve1w1y2;sy,t1Q;ke1m8ter2ve1;it0;ftBg9th2v8wd;el;al,e8;nda17;!-Z;ngu2Sst,tt4;ap1Di0EnoX;agg0ol1u8;i1ZniFstifi0veni3;cy,de2gno33llImFn8;br0doDiGn4sAt8;a2Wen7ox8;ic2F;a9i8;de;ne;or;men7p8;ar8erfe2Port0rop4;ti2;!eg2;aHeEiCoBu8;ge,m8rt;b3dr8id;um;me1ne6ok0s03ur1;ghfalut1Bl1sp8;an23;a9f03l8;l0UpO;dy,ven1;l9n5rro8;wi0A;f,low0;aIener1WhGid5loFoDr9u8;ard0;aAey,is1o8;o8ss;vy;tis,y;ld,ne,o8;d,fy;b2oI;a8o8;st1;in8u5y;ful;aIeGiElag21oArie9u8;n,rY;nd1;aAol09r8ul;e8m4;gPign;my;erce ,n8t;al,i09;ma3r8;ti3;bl0ke,l7n0Lr,u8vori06;l8x;ty;aEerie,lDnti0ZtheCvBx8;a1Hcess,pe9t8ube1M;ra;ct0rt;eryday,il;re2;dLiX;rBs8;t,yg8;oi8;ng;th1;aLeHiCoArea9u8;e,mb;ry;ne,ub3;le;dact0Officu0Xre,s9v8;er7;cre9eas0gruntl0hone6ord8tress0;er1;et;adpAn7rang0t9vo8;ut;ail0ermin0;an;i1mag0n8pp4;ish;agey,ertaKhIivHlFoAr8udd1;a8isp,owd0;mp0vZz0;loBm9ncre8rZst1vert,ward1zy;te;mon,ple8;te,x;ni2ss2;ev4o8;s0u5;il;eesy,i8;ef,l1;in;aLeIizarTlFoBrAu8;r1sy;ly;isk,okK;gAld,tt9un8;cy;om;us;an9iCo8;nd,o5;d,k;hi9lov0nt,st,tt4yo9;er;nd;ckBd,ld,nkArr9w5;dy;en;ruW;!wards;bRctu2dKfraJgain6hHlEntiquDpCrab,sleep,verBw8;a9k8;waU;re;age;pareUt;at0;coh8l,oof;ol8;ic;ead;st;id;eHuCv8;a9er7;se;nc0;ed;lt;al;erElDoBruAs8;eEtra8;ct;pt;a8ve;rd;aze,e;ra8;nt"
-},{}],209:[function(_dereq_,module,exports){
-module.exports="a06by 04d00eXfShQinPjustOkinda,mMnKoFpDquite,rAs6t3up2very,w1ye0;p,s;ay,ell; to,wards5;h1o0wiN;o,t6ward;en,us;everal,o0uch;!me1on,rt0; of;hVtimes,w05;a1e0;alQ;ndomPthL;ar excellCer0oint blank; Khaps;f3n0;ce0ly;! 0;agYmoS; courFten;ewHo0; longCt withstanding;aybe,eanwhi9ore0;!ovA;! aboR;deed,steS;en0;ce;or1urther0;!moH; 0ev3;examp0good,suF;le;n mas1v0;er;se;amn,e0irect1; 1finite0;ly;ju7trop;far,n0;ow; CbroBd nauseam,gAl5ny2part,side,t 0w3;be5l0mo5wor5;arge,ea4;mo1w0;ay;re;l 1mo0one,ready,so,ways;st;b1t0;hat;ut;ain;ad;lot,posteriori"
-},{}],210:[function(_dereq_,module,exports){
-module.exports="aCbBcAd9f8h7i6jfk,kul,l4m3ord,p1s0yyz;fo,yd;ek,h0;l,x;co,ia,uc;a0gw,hr;s,x;ax,cn,st;kg,nd;co,ra;en,fw,xb;dg,gk,lt;cn,kk;ms,tl"
 },{}],211:[function(_dereq_,module,exports){
-module.exports="a2Tb23c1Td1Oe1Nf1Lg1Gh18i16jakar2Ek0Xl0Rm0En0Ao08pXquiWrTsJtAu9v6w3y1z0;agreb,uri1W;ang1Qe0okohama;katerin1Frev31;ars1ellingt1Oin0rocl1;nipeg,terth0V;aw;a1i0;en2Glni2Y;lenc2Tncouv0Gr2F;lan bat0Dtrecht;a6bilisi,e5he4i3o2rondheim,u0;nVr0;in,ku;kyo,ronIulouC;anj22l13miso2Ira29; haJssaloni0X;gucigalpa,hr2Nl av0L;i0llinn,mpe2Angi07rtu;chu21n2LpT;a3e2h1kopje,t0ydney;ockholm,uttga11;angh1Eenzh1W;o0KvZ;int peters0Ul3n0ppo1E; 0ti1A;jo0salv2;se;v0z0Q;adU;eykjavik,i1o0;me,sario,t24;ga,o de janei16;to;a8e6h5i4o2r0ueb1Pyongya1M;a0etor23;gue;rt0zn23; elizabe3o;ls1Frae23;iladelph1Ynom pe07oenix;r0tah tik18;th;lerJr0tr0Z;is;dessa,s0ttawa;a1Glo;a2ew 0is;delTtaip0york;ei;goya,nt0Tpl0T;a5e4i3o1u0;mb0Kni0H;nt0scH;evideo,real;l1Ln01skolc;dellín,lbour0R;drid,l5n3r0;ib1se0;ille;or;chest0dalay,i0Y;er;mo;a4i1o0uxembou1FvAy00;ndZs angel0E;ege,ma0nz,sbYverpo1;!ss0;ol; pla0Husan0E;a5hark4i3laipeda,o1rak0uala lump2;ow;be,pavog0sice;ur;ev,ng8;iv;b3mpa0Jndy,ohsiu0Gra0un02;c0j;hi;ncheLstanb0̇zmir;ul;a5e3o0; chi mi1ms,u0;stH;nh;lsin0rakliF;ki;ifa,m0noi,va09;bu0RiltC;dan3en2hent,iza,othen1raz,ua0;dalaj0Fngzhou,tema05;bu0O;eToa;sk;es,rankfu0;rt;dmont4indhovU;a1ha01oha,u0;blRrb0Eshanbe;e0kar,masc0FugavpiJ;gu,je0;on;a7ebu,h2o0raioJuriti01;lo0nstanJpenhagNrk;gFmbo;enn3i1ristchur0;ch;ang m1c0ttagoL;ago;ai;i0lgary,pe town,rac4;ro;aHeBirminghWogoAr5u0;char3dap3enos air2r0sZ;g0sa;as;es;est;a2isba1usse0;ls;ne;silPtisla0;va;ta;i3lgrade,r0;g1l0n;in;en;ji0rut;ng;ku,n3r0sel;celo1ranquil0;la;na;g1ja lu0;ka;alo0kok;re;aBb9hmedabad,l7m4n2qa1sh0thens,uckland;dod,gabat;ba;k0twerp;ara;m5s0;terd0;am;exandr0maty;ia;idj0u dhabi;an;lbo1rh0;us;rg"
+module.exports="a06by 04d00eXfShQinPjustOkinda,mMnKoFpDquite,rAs6t3up2very,w1ye0;p,s;ay,ell; to,wards5;h1o0wiN;o,t6ward;en,us;everal,o0uch;!me1on,rt0; of;hVtimes,w05;a1e0;alQ;ndomPthL;ar excellCer0oint blank; Khaps;f3n0;ce0ly;! 0;agYmoS; courFten;ewHo0; longCt withstanding;aybe,eanwhi9ore0;!ovA;! aboR;deed,steS;en0;ce;or1urther0;!moH; 0ev3;examp0good,suF;le;n mas1v0;er;se;amn,e0irect1; 1finite0;ly;ju7trop;far,n0;ow; CbroBd nauseam,gAl5ny2part,side,t 0w3;be5l0mo5wor5;arge,ea4;mo1w0;ay;re;l 1mo0one,ready,so,ways;st;b1t0;hat;ut;ain;ad;lot,posteriori"
 },{}],212:[function(_dereq_,module,exports){
-module.exports="0:39;1:2M;a2Xb2Ec22d1Ye1Sf1Mg1Bh19i13j11k0Zl0Um0Gn05om3DpZqat1JrXsKtCu6v4wal3yemTz2;a25imbabwe;es,lis and futu2Y;a2enezue32ietnam;nuatu,tican city;.5gTkraiZnited 3ruXs2zbeE;a,sr;arab emirat0Kkingdom,states2;! of am2Y;k.,s.2; 28a.;a7haBimor-les0Bo6rinidad4u2;nis0rk2valu;ey,me2Ys and caic1U; and 2-2;toba1K;go,kel0Ynga;iw2Wji2nz2S;ki2U;aCcotl1eBi8lov7o5pa2Cri lanka,u4w2yr0;az2ed9itzerl1;il1;d2Rriname;lomon1Wmal0uth 2;afr2JkLsud2P;ak0en0;erra leoEn2;gapo1Xt maart2;en;negKrb0ychellY;int 2moa,n marino,udi arab0;hele25luc0mart20;epublic of ir0Com2Duss0w2;an26;a3eHhilippinTitcairn1Lo2uerto riM;l1rtugE;ki2Cl3nama,pua new0Ura2;gu6;au,esti2;ne;aAe8i6or2;folk1Hth3w2;ay; k2ern mariana1C;or0N;caragua,ger2ue;!ia;p2ther19w zeal1;al;mib0u2;ru;a6exi5icro0Ao2yanm04;ldova,n2roc4zamb9;a3gol0t2;enegro,serrat;co;c9dagascZl6r4urit3yot2;te;an0i15;shall0Wtin2;ique;a3div2i,ta;es;wi,ys0;ao,ed01;a5e4i2uxembourg;b2echtenste11thu1F;er0ya;ban0Hsotho;os,tv0;azakh1Ee2iriba03osovo,uwait,yrgyz1E;eling0Knya;a2erFord1D;ma16p1C;c6nd5r3s2taly,vory coast;le of m1Arael;a2el1;n,q;ia,oJ;el1;aiTon2ungary;dur0Ng kong;aBeAha0Qibralt9re7u2;a5ern4inea2ya0P;!-biss2;au;sey;deloupe,m,tema0Q;e2na0N;ce,nl1;ar;org0rmany;bTmb0;a6i5r2;ance,ench 2;guia0Dpoly2;nes0;ji,nl1;lklandTroeT;ast tim6cu5gypt,l salv5ngl1quatorial3ritr4st2thiop0;on0; guin2;ea;ad2;or;enmark,jibou4ominica3r con2;go;!n B;ti;aAentral african 9h7o4roat0u3yprQzech2; 8ia;ba,racao;c3lo2morPngo-brazzaville,okFsta r03te d'ivoiK;mb0;osD;i2ristmasF;le,na;republic;m2naTpe verde,yman9;bod0ero2;on;aFeChut00o8r4u2;lgar0r2;kina faso,ma,undi;azil,itish 2unei;virgin2; is2;lands;liv0nai4snia and herzegoviGtswaGuvet2; isl1;and;re;l2n7rmuF;ar2gium,ize;us;h3ngladesh,rbad2;os;am3ra2;in;as;fghaFlCmAn5r3ustr2zerbaijH;al0ia;genti2men0uba;na;dorra,g4t2;arct6igua and barbu2;da;o2uil2;la;er2;ica;b2ger0;an0;ia;ni2;st2;an"
+module.exports="aCbBcAd9f8h7i6jfk,kul,l4m3ord,p1s0yyz;fo,yd;ek,h0;l,x;co,ia,uc;a0gw,hr;s,x;ax,cn,st;kg,nd;co,ra;en,fw,xb;dg,gk,lt;cn,kk;ms,tl"
 },{}],213:[function(_dereq_,module,exports){
-module.exports="0:17;a0Wb0Mc0Bd09e08f06g03h01iXjUkSlOmKnHomGpCqatari,rAs6t4u3v2wel0Qz1;am0Eimbabwe0;enezuel0ietnam0G;g8krai11;aiwShai,rinida0Hu1;ni0Prkmen;a3cot0Je2ingapoNlovak,oma0Tpa04udQw1y0X;edi0Jiss;negal0Ar07;mo0uT;o5us0Kw1;and0;a2eru0Ghilipp0Po1;li0Drtugu05;kist2lesti0Qna1raguay0;ma0P;ani;amiYi1orweO;caragu0geri1;an,en;a2ex0Mo1;ngo0Erocc0;cedo0Ila1;gasy,y07;a3eb8i1;b1thua0F;e0Dy0;o,t01;azakh,eny0o1uwaiti;re0;a1orda0A;ma0Bp1;anM;celandic,nd3r1sraeli,ta02vo06;a1iS;ni0qi;i0oneU;aiCin1ondur0unM;di;amCe1hanai0reek,uatemal0;or1rm0;gi0;i1ren6;lipino,n3;cuadoVgyp5ngliIstoWthiopi0urope0;a1ominXut3;niG;a8h5o3roa2ub0ze1;ch;ti0;lom1ngol4;bi0;a5i1;le0n1;ese;liforLm1na2;bo1erooK;di0;a9el7o5r2ul1;gaG;aziBi1;ti1;sh;li1sD;vi0;aru1gi0;si0;ngladeshi,sque;f9l6merAngol0r4si0us1;sie,tr1;a1i0;li0;gent1me4;ine;ba2ge1;ri0;ni0;gh0r1;ic0;an"
+module.exports="a2Tb23c1Td1Oe1Nf1Lg1Gh18i16jakar2Ek0Xl0Rm0En0Ao08pXquiWrTsJtAu9v6w3y1z0;agreb,uri1W;ang1Qe0okohama;katerin1Frev31;ars1ellingt1Oin0rocl1;nipeg,terth0V;aw;a1i0;en2Glni2Y;lenc2Tncouv0Gr2F;lan bat0Dtrecht;a6bilisi,e5he4i3o2rondheim,u0;nVr0;in,ku;kyo,ronIulouC;anj22l13miso2Ira29; haJssaloni0X;gucigalpa,hr2Nl av0L;i0llinn,mpe2Angi07rtu;chu21n2LpT;a3e2h1kopje,t0ydney;ockholm,uttga11;angh1Eenzh1W;o0KvZ;int peters0Ul3n0ppo1E; 0ti1A;jo0salv2;se;v0z0Q;adU;eykjavik,i1o0;me,sario,t24;ga,o de janei16;to;a8e6h5i4o2r0ueb1Pyongya1M;a0etor23;gue;rt0zn23; elizabe3o;ls1Frae23;iladelph1Ynom pe07oenix;r0tah tik18;th;lerJr0tr0Z;is;dessa,s0ttawa;a1Glo;a2ew 0is;delTtaip0york;ei;goya,nt0Tpl0T;a5e4i3o1u0;mb0Kni0H;nt0scH;evideo,real;l1Ln01skolc;dellín,lbour0R;drid,l5n3r0;ib1se0;ille;or;chest0dalay,i0Y;er;mo;a4i1o0uxembou1FvAy00;ndZs angel0E;ege,ma0nz,sbYverpo1;!ss0;ol; pla0Husan0E;a5hark4i3laipeda,o1rak0uala lump2;ow;be,pavog0sice;ur;ev,ng8;iv;b3mpa0Jndy,ohsiu0Gra0un02;c0j;hi;ncheLstanb0̇zmir;ul;a5e3o0; chi mi1ms,u0;stH;nh;lsin0rakliF;ki;ifa,m0noi,va09;bu0RiltC;dan3en2hent,iza,othen1raz,ua0;dalaj0Fngzhou,tema05;bu0O;eToa;sk;es,rankfu0;rt;dmont4indhovU;a1ha01oha,u0;blRrb0Eshanbe;e0kar,masc0FugavpiJ;gu,je0;on;a7ebu,h2o0raioJuriti01;lo0nstanJpenhagNrk;gFmbo;enn3i1ristchur0;ch;ang m1c0ttagoL;ago;ai;i0lgary,pe town,rac4;ro;aHeBirminghWogoAr5u0;char3dap3enos air2r0sZ;g0sa;as;es;est;a2isba1usse0;ls;ne;silPtisla0;va;ta;i3lgrade,r0;g1l0n;in;en;ji0rut;ng;ku,n3r0sel;celo1ranquil0;la;na;g1ja lu0;ka;alo0kok;re;aBb9hmedabad,l7m4n2qa1sh0thens,uckland;dod,gabat;ba;k0twerp;ara;m5s0;terd0;am;exandr0maty;ia;idj0u dhabi;an;lbo1rh0;us;rg"
 },{}],214:[function(_dereq_,module,exports){
-module.exports="aZbYdTeRfuck,gQhKlHmGnFoCpAsh9u7voi01w3y0;a1eKu0;ck,p;!a,hoo,y;h1ow,t0;af,f;e0oa;e,w;gh,h0;! huh,-Oh,m;eesh,hh,it;ff,hew,l0sst;ease,z;h1o0w,y;h,o,ps;!h;ah,ope;eh,mm;m1ol0;!s;ao,fao;a3e1i,mm,urr0;ah;e,ll0y;!o;ha0i;!ha;ah,ee,oodbye,rr;e0h,t cetera,ww;k,p;'3a0uh;m0ng;mit,n0;!it;oh;ah,oo,ye; 1h0rgh;!em;la"
+module.exports="0:39;1:2M;a2Xb2Ec22d1Ye1Sf1Mg1Bh19i13j11k0Zl0Um0Gn05om3DpZqat1JrXsKtCu6v4wal3yemTz2;a25imbabwe;es,lis and futu2Y;a2enezue32ietnam;nuatu,tican city;.5gTkraiZnited 3ruXs2zbeE;a,sr;arab emirat0Kkingdom,states2;! of am2Y;k.,s.2; 28a.;a7haBimor-les0Bo6rinidad4u2;nis0rk2valu;ey,me2Ys and caic1U; and 2-2;toba1K;go,kel0Ynga;iw2Wji2nz2S;ki2U;aCcotl1eBi8lov7o5pa2Cri lanka,u4w2yr0;az2ed9itzerl1;il1;d2Rriname;lomon1Wmal0uth 2;afr2JkLsud2P;ak0en0;erra leoEn2;gapo1Xt maart2;en;negKrb0ychellY;int 2moa,n marino,udi arab0;hele25luc0mart20;epublic of ir0Com2Duss0w2;an26;a3eHhilippinTitcairn1Lo2uerto riM;l1rtugE;ki2Cl3nama,pua new0Ura2;gu6;au,esti2;ne;aAe8i6or2;folk1Hth3w2;ay; k2ern mariana1C;or0N;caragua,ger2ue;!ia;p2ther19w zeal1;al;mib0u2;ru;a6exi5icro0Ao2yanm04;ldova,n2roc4zamb9;a3gol0t2;enegro,serrat;co;c9dagascZl6r4urit3yot2;te;an0i15;shall0Wtin2;ique;a3div2i,ta;es;wi,ys0;ao,ed01;a5e4i2uxembourg;b2echtenste11thu1F;er0ya;ban0Hsotho;os,tv0;azakh1Ee2iriba03osovo,uwait,yrgyz1E;eling0Knya;a2erFord1D;ma16p1C;c6nd5r3s2taly,vory coast;le of m1Arael;a2el1;n,q;ia,oJ;el1;aiTon2ungary;dur0Ng kong;aBeAha0Qibralt9re7u2;a5ern4inea2ya0P;!-biss2;au;sey;deloupe,m,tema0Q;e2na0N;ce,nl1;ar;org0rmany;bTmb0;a6i5r2;ance,ench 2;guia0Dpoly2;nes0;ji,nl1;lklandTroeT;ast tim6cu5gypt,l salv5ngl1quatorial3ritr4st2thiop0;on0; guin2;ea;ad2;or;enmark,jibou4ominica3r con2;go;!n B;ti;aAentral african 9h7o4roat0u3yprQzech2; 8ia;ba,racao;c3lo2morPngo-brazzaville,okFsta r03te d'ivoiK;mb0;osD;i2ristmasF;le,na;republic;m2naTpe verde,yman9;bod0ero2;on;aFeChut00o8r4u2;lgar0r2;kina faso,ma,undi;azil,itish 2unei;virgin2; is2;lands;liv0nai4snia and herzegoviGtswaGuvet2; isl1;and;re;l2n7rmuF;ar2gium,ize;us;h3ngladesh,rbad2;os;am3ra2;in;as;fghaFlCmAn5r3ustr2zerbaijH;al0ia;genti2men0uba;na;dorra,g4t2;arct6igua and barbu2;da;o2uil2;la;er2;ica;b2ger0;an0;ia;ni2;st2;an"
 },{}],215:[function(_dereq_,module,exports){
-module.exports="0:81;1:7E;2:7G;3:7Y;4:65;5:7P;6:7T;7:7O;8:7U;9:7C;A:6K;B:7R;C:6X;D:79;a78b6Pc5Ud5Ce4Rf4Jg47h3Zi3Uj38k2Sl21m1An14o12p0Ur0FsYtNursu9vIwGyEza7;olan2vE;etDon5Z;an2enMhi6PilE;a,la,ma;aHeFiE;ctor1o9rgin1vi3B;l4VrE;a,na,oniA;len5Ones7N;aLeJheIi3onHrE;acCiFuE;dy;c1na,s8;i4Vya;l4Nres0;o3GrE;e1Oi,ri;bit8mEn29ra,s8;a7iEmy;!ka;aTel4HhLiKoItHuFyE;b7Tlv1;e,sEzV;an17i;acCel1H;f1nEph1;d7ia,ja,ya;lv1mon0;aHeEi24;e3i9lFrE;i,yl;ia,ly;nFrEu3w3;i,on;a,ia,nEon;a,on;b24i2l5Ymant8nd7raB;aPeLhon2i5oFuE;by,th;bIch4Pn2sFxE;an4W;aFeE;ma2Ut5;!lind;er5yn;bFnE;a,ee;a,eE;cAkaB;chEmo3qu3I;a3HelEi2;!e,le;aHeGhylFriE;scil0Oyamva2;is,lis;arl,t7;ige,mGrvati,tricFulE;a,etDin0;a,e,ia;!e9;f4BlE;ga,iv1;aIelHiForE;a,ma;cEkki,na;ho2No2N;!l;di6Hi36o0Qtas8;aOeKiHonFrignayani,uri2ZyrE;a,na,t2J;a,iE;ca,q3G;ch3SlFrE;an2iam;dred,iA;ag1DgGliFrE;ced63edi36;n2s5Q;an,han;bSdel4e,gdale3li59nRrHtil2uGvFx4yE;a,ra;is;de,re6;cMgKiGl3Fs8tFyanE;!n;a,ha,i3;aFb2Hja,l2Ena,sEtza;a,ol,sa;!nE;!a,e,n0;arEo,r4AueriD;et4Ai5;elLia;dakran5on,ue9;el,le;aXeSiOoKuGyE;d1nE;!a,da,e4Vn1D;ciGelFiEpe;sa;a,la;a,l3Un2;is,la,rEui2Q;aFeEna,ra4;n0t5;!in0;lGndEsa;a,sE;ay,ey,i,y;a,i0Fli0F;aHiGla,nFoEslCt1M;la,na;a,o7;gh,la;!h,n07;don2Hna,ra,tHurFvern0xE;mi;a,eE;l,n;as8is8oE;nEya;ya;aMeJhadija,iGrE;istEy2G;a,en,in0M;mErst6;!beE;rlC;is8lFnd7rE;i,ri;ey,i,lCy;nyakumari,rItFvi5yE;!la;aFe,hEi3Cri3y;ar4er4le6r12;ri3;a,en,iEla;!ma,n;aTeNilKoGuE;anEdi1Fl1st4;a,i5;!anGcel0VdFhan1Rl3Eni,seEva3y37;fi3ph4;i32y;!a,e,n02;!iFlE;!iE;an;anHle3nFri,sE;iAsiA;a,if3LnE;a,if3K;a,e3Cin0nE;a,e3Bin0;cHde,nEsm4vie7;a,eFiE;ce,n0s;!l2At2G;l0EquelE;in0yn;da,mog2Vngrid,rHsEva;abelFiE;do7;!a,e,l0;en0ma;aIeGilE;aEda,laE;ry;ath33i26lenEnriet5;!a,e;nFrE;i21ri21;aBnaB;aMeKiJlHrFwenE;!dolY;acEetch6;e,ie9;adys,enEor1;a,da,na;na,seH;nevieve,orgi0OrE;ald4trude;brielFil,le,yE;le;a,e,le;aKeIlorHrE;ancEe2ie2;es,iE;n0sA;a,en1V;lErn;ic1;tiPy1P;dWile6k5lPmOrMstJtHuGvE;a,elE;yn;gen1la,ni1O;hEta;el;eEh28;lEr;a,e,l0;iEma,nest4;ca,ka,n;ma;a4eIiFl6ma,oiVsa,vE;a,i7;sEzaF;aEe;!beH;anor,nE;!a;iEna;th;aReKiJoE;lHminiqGnPrE;a,e6is,othE;ea,y;ue;ly,or24;anWna;anJbIe,lGnEsir1Z;a,iE;se;a,ia,la,orE;es,is;oraBra;a,na;m1nFphn0rlE;a,en0;a,iE;el08;aYeVhSlOoHrEynth1;isFyE;stal;ti3;lJnsHrEur07;a,inFnE;el1;a,e,n0;tanEuelo;ce,za;e6le6;aEeo;ire,rFudE;etDia;a,i0A;arl0GeFloe,ristE;a,in0;ls0Qryl;cFlE;esDi1D;el1il0Y;itlin,milMndLrIsHtE;ali3hE;er4le6y;in0;a0Usa0U;a,la,meFolE;!e,in0yn;la,n;aViV;e,le;arbVeMiKlKoni5rE;anIen2iEooke;dgFtE;tnC;etE;!te;di;anA;ca;atriLcky,lin2rItFulaBverE;ly;h,tE;e,yE;!e;nEt8;adOiE;ce;ce,z;a7ra;biga0Kd0Egn0Di08lZmVnIrGshlCudrEva;a,ey,i,y;ey,i,y;lEpi5;en0;!a,dNeLgelJiIja,nGtoE;inEn1;etD;!a,eIiE;ka;ka,ta;a,iE;a,ca,n0;!tD;te;je9rE;ea;la;an2bFel1i3y;ia;er;da;ber5exaJiGma,ta,yE;a,sE;a,sa;cFsE;a,ha,on;e,ia;nd7;ra;ta;c8da,le6mFshaB;!h;ee;en;ha;es;a,elGriE;a3en0;na;e,iE;a,n0;a,e;il"
+module.exports="0:17;a0Wb0Mc0Bd09e08f06g03h01iXjUkSlOmKnHomGpCqatari,rAs6t4u3v2wel0Qz1;am0Eimbabwe0;enezuel0ietnam0G;g8krai11;aiwShai,rinida0Hu1;ni0Prkmen;a3cot0Je2ingapoNlovak,oma0Tpa04udQw1y0X;edi0Jiss;negal0Ar07;mo0uT;o5us0Kw1;and0;a2eru0Ghilipp0Po1;li0Drtugu05;kist2lesti0Qna1raguay0;ma0P;ani;amiYi1orweO;caragu0geri1;an,en;a2ex0Mo1;ngo0Erocc0;cedo0Ila1;gasy,y07;a3eb8i1;b1thua0F;e0Dy0;o,t01;azakh,eny0o1uwaiti;re0;a1orda0A;ma0Bp1;anM;celandic,nd3r1sraeli,ta02vo06;a1iS;ni0qi;i0oneU;aiCin1ondur0unM;di;amCe1hanai0reek,uatemal0;or1rm0;gi0;i1ren6;lipino,n3;cuadoVgyp5ngliIstoWthiopi0urope0;a1ominXut3;niG;a8h5o3roa2ub0ze1;ch;ti0;lom1ngol4;bi0;a5i1;le0n1;ese;liforLm1na2;bo1erooK;di0;a9el7o5r2ul1;gaG;aziBi1;ti1;sh;li1sD;vi0;aru1gi0;si0;ngladeshi,sque;f9l6merAngol0r4si0us1;sie,tr1;a1i0;li0;gent1me4;ine;ba2ge1;ri0;ni0;gh0r1;ic0;an"
 },{}],216:[function(_dereq_,module,exports){
-module.exports="aJblair,cHdevGguadalupe,jBk9l8m5r2sh0trinity;ay,e0iloh;a,lby;e1o0;bin,sario;ag1g1ne;ar1el,org0;an;ion,lo;ashawn,ee;asAe0;ls9nyatta,rry;a1e0;an,ss2;de,ime,m0n;ie,m0;ie;an,on;as0heyenne;ey,sidy;lexis,ndra,ubr0;ey"
+module.exports="aZbYdTeRfuck,gQhKlHmGnFoCpAsh9u7voi01w3y0;a1eKu0;ck,p;!a,hoo,y;h1ow,t0;af,f;e0oa;e,w;gh,h0;! huh,-Oh,m;eesh,hh,it;ff,hew,l0sst;ease,z;h1o0w,y;h,o,ps;!h;ah,ope;eh,mm;m1ol0;!s;ao,fao;a3e1i,mm,urr0;ah;e,ll0y;!o;ha0i;!ha;ah,ee,oodbye,rr;e0h,t cetera,ww;k,p;'3a0uh;m0ng;mit,n0;!it;oh;ah,oo,ye; 1h0rgh;!em;la"
 },{}],217:[function(_dereq_,module,exports){
-module.exports="0:1P;1:1Q;a1Fb1Bc12d0Ye0Of0Kg0Hh0Di09june07kwanzaa,l04m00nYoVpRrPsEt8v6w4xm03y2;om 2ule;hasho16kippur;hit2int0Xomens equalit7; 0Ss0T;aGe2ictor1E;r1Bteran0;-1ax 1h6isha bav,rinityNu2; b3rke2;y 1;ish2she2;vat;a0Ye prophets birth1;a6eptember15h4imchat tor0Vt 3u2;kk4mmer U;a9p8s7valentines day ;avu2mini atzeret;ot;int 2mhain;a5p4s3va2;lentine0;tephen0;atrick0;ndrew0;amadan,ememberanc0Yos2;a park0h hashana;a3entecost,reside0Zur2;im,ple heart 1;lm2ssovE; s04;rthodox 2stara;christma0easter2goOhoJn0C;! m07;ational 2ew years09;freedom 1nurse0;a2emorial 1lHoOuharram;bMr2undy thurs1;ch0Hdi gr2tin luther k0B;as;a2itRughnassadh;bour 1g baom2ilat al-qadr;er; 2teenth;soliU;d aJmbolc,n2sra and miraj;augurGd2;ependen2igenous people0;c0Bt0;a3o2;ly satur1;lloween,nukkUrvey mil2;k 1;o3r2;ito de dolores,oundhoW;odW;a4east of 2;our lady of guadalupe,the immaculate concepti2;on;ther0;aster8id 3lectYmancip2piphany;atX;al-3u2;l-f3;ad3f2;itr;ha;! 2;m8s2;un1;ay of the dead,ecemb3i2;a de muertos,eciseis de septiembre,wali;er sol2;stice;anad8h4inco de mayo,o3yber m2;on1;lumbu0mmonwealth 1rpus christi;anuk4inese n3ristmas2;! N;ew year;ah;a 1ian tha2;nksgiving;astillCeltaine,lack4ox2;in2;g 1; fri1;dvent,ll 9pril fools,rmistic8s6u2;stral4tum2;nal2; equinox;ia 1;cens2h wednes1sumption of mary;ion 1;e 1;hallows 6s2;ai2oul0t0;nt0;s 1;day;eve"
+module.exports="0:81;1:7E;2:7G;3:7Y;4:65;5:7P;6:7T;7:7O;8:7U;9:7C;A:6K;B:7R;C:6X;D:79;a78b6Pc5Ud5Ce4Rf4Jg47h3Zi3Uj38k2Sl21m1An14o12p0Ur0FsYtNursu9vIwGyEza7;olan2vE;etDon5Z;an2enMhi6PilE;a,la,ma;aHeFiE;ctor1o9rgin1vi3B;l4VrE;a,na,oniA;len5Ones7N;aLeJheIi3onHrE;acCiFuE;dy;c1na,s8;i4Vya;l4Nres0;o3GrE;e1Oi,ri;bit8mEn29ra,s8;a7iEmy;!ka;aTel4HhLiKoItHuFyE;b7Tlv1;e,sEzV;an17i;acCel1H;f1nEph1;d7ia,ja,ya;lv1mon0;aHeEi24;e3i9lFrE;i,yl;ia,ly;nFrEu3w3;i,on;a,ia,nEon;a,on;b24i2l5Ymant8nd7raB;aPeLhon2i5oFuE;by,th;bIch4Pn2sFxE;an4W;aFeE;ma2Ut5;!lind;er5yn;bFnE;a,ee;a,eE;cAkaB;chEmo3qu3I;a3HelEi2;!e,le;aHeGhylFriE;scil0Oyamva2;is,lis;arl,t7;ige,mGrvati,tricFulE;a,etDin0;a,e,ia;!e9;f4BlE;ga,iv1;aIelHiForE;a,ma;cEkki,na;ho2No2N;!l;di6Hi36o0Qtas8;aOeKiHonFrignayani,uri2ZyrE;a,na,t2J;a,iE;ca,q3G;ch3SlFrE;an2iam;dred,iA;ag1DgGliFrE;ced63edi36;n2s5Q;an,han;bSdel4e,gdale3li59nRrHtil2uGvFx4yE;a,ra;is;de,re6;cMgKiGl3Fs8tFyanE;!n;a,ha,i3;aFb2Hja,l2Ena,sEtza;a,ol,sa;!nE;!a,e,n0;arEo,r4AueriD;et4Ai5;elLia;dakran5on,ue9;el,le;aXeSiOoKuGyE;d1nE;!a,da,e4Vn1D;ciGelFiEpe;sa;a,la;a,l3Un2;is,la,rEui2Q;aFeEna,ra4;n0t5;!in0;lGndEsa;a,sE;ay,ey,i,y;a,i0Fli0F;aHiGla,nFoEslCt1M;la,na;a,o7;gh,la;!h,n07;don2Hna,ra,tHurFvern0xE;mi;a,eE;l,n;as8is8oE;nEya;ya;aMeJhadija,iGrE;istEy2G;a,en,in0M;mErst6;!beE;rlC;is8lFnd7rE;i,ri;ey,i,lCy;nyakumari,rItFvi5yE;!la;aFe,hEi3Cri3y;ar4er4le6r12;ri3;a,en,iEla;!ma,n;aTeNilKoGuE;anEdi1Fl1st4;a,i5;!anGcel0VdFhan1Rl3Eni,seEva3y37;fi3ph4;i32y;!a,e,n02;!iFlE;!iE;an;anHle3nFri,sE;iAsiA;a,if3LnE;a,if3K;a,e3Cin0nE;a,e3Bin0;cHde,nEsm4vie7;a,eFiE;ce,n0s;!l2At2G;l0EquelE;in0yn;da,mog2Vngrid,rHsEva;abelFiE;do7;!a,e,l0;en0ma;aIeGilE;aEda,laE;ry;ath33i26lenEnriet5;!a,e;nFrE;i21ri21;aBnaB;aMeKiJlHrFwenE;!dolY;acEetch6;e,ie9;adys,enEor1;a,da,na;na,seH;nevieve,orgi0OrE;ald4trude;brielFil,le,yE;le;a,e,le;aKeIlorHrE;ancEe2ie2;es,iE;n0sA;a,en1V;lErn;ic1;tiPy1P;dWile6k5lPmOrMstJtHuGvE;a,elE;yn;gen1la,ni1O;hEta;el;eEh28;lEr;a,e,l0;iEma,nest4;ca,ka,n;ma;a4eIiFl6ma,oiVsa,vE;a,i7;sEzaF;aEe;!beH;anor,nE;!a;iEna;th;aReKiJoE;lHminiqGnPrE;a,e6is,othE;ea,y;ue;ly,or24;anWna;anJbIe,lGnEsir1Z;a,iE;se;a,ia,la,orE;es,is;oraBra;a,na;m1nFphn0rlE;a,en0;a,iE;el08;aYeVhSlOoHrEynth1;isFyE;stal;ti3;lJnsHrEur07;a,inFnE;el1;a,e,n0;tanEuelo;ce,za;e6le6;aEeo;ire,rFudE;etDia;a,i0A;arl0GeFloe,ristE;a,in0;ls0Qryl;cFlE;esDi1D;el1il0Y;itlin,milMndLrIsHtE;ali3hE;er4le6y;in0;a0Usa0U;a,la,meFolE;!e,in0yn;la,n;aViV;e,le;arbVeMiKlKoni5rE;anIen2iEooke;dgFtE;tnC;etE;!te;di;anA;ca;atriLcky,lin2rItFulaBverE;ly;h,tE;e,yE;!e;nEt8;adOiE;ce;ce,z;a7ra;biga0Kd0Egn0Di08lZmVnIrGshlCudrEva;a,ey,i,y;ey,i,y;lEpi5;en0;!a,dNeLgelJiIja,nGtoE;inEn1;etD;!a,eIiE;ka;ka,ta;a,iE;a,ca,n0;!tD;te;je9rE;ea;la;an2bFel1i3y;ia;er;da;ber5exaJiGma,ta,yE;a,sE;a,sa;cFsE;a,ha,on;e,ia;nd7;ra;ta;c8da,le6mFshaB;!h;ee;en;ha;es;a,elGriE;a3en0;na;e,iE;a,n0;a,e;il"
 },{}],218:[function(_dereq_,module,exports){
-module.exports="0:2S;1:38;2:36;3:2B;4:2W;5:2Y;a38b2Zc2Ld2Be28f23g1Yh1Ni1Ij1Ck15l0Xm0Ln0Ho0Ep04rXsMtHvFwCxBy8zh6;a6ou,u;ng,o;a6eun2Roshi1Iun;ma6ng;da,guc1Xmo24sh1ZzaQ;iao,u;a7eb0il6o4right,u;li39s2;gn0lk0ng,tanabe;a6ivaldi;ssilj35zqu1;a9h8i2Do7r6sui,urn0;an,ynisI;lst0Nrr2Sth;at1Romps2;kah0Tnaka,ylor;aDchCeBhimizu,iAmi9o8t7u6zabo;ar1lliv27zuD;al21ein0;sa,u4;rn3th;lva,mmo22ngh;mjon3rrano;midt,neid0ulz;ito,n7sa6to;ki;ch1dKtos,z;amBeag1Xi9o7u6;bio,iz,s2L;b6dri1KgHj0Sme22osevelt,sZux;erts,ins2;c6ve0E;ci,hards2;ir1os;aDe9h7ic6ow1Z;as2Ehl0;a6illips;m,n1S;ders5et8r7t6;e0Or3;ez,ry;ers;h20rk0t6vl3;el,te0K;baBg0Blivei01r6;t6w1O;ega,iz;a6eils2guy5ix2owak,ym1D;gy,ka6var1J;ji6muW;ma;aEeCiBo8u6;ll0n6rr0Cssolini,ñ6;oz;lina,oKr6zart;al1Me6r0T;au,no;hhail3ll0;rci0s6y0;si;eWmmad3r6tsu08;in6tin1;!o;aCe8i6op1uo;!n6u;coln,dholm;e,fe7n0Pr6w0I;oy;bv6v6;re;rs5u;aBennedy,imuAle0Ko8u7wo6;k,n;mar,znets3;bay6vacs;asY;ra;hn,rl9to,ur,zl3;aAen9ha4imen1o6u4;h6n0Yu4;an6ns2;ss2;ki0Ds5;cks2nsse0C;glesi9ke8noue,shik7to,vano6;u,v;awa;da;as;aCe9it8o7u6;!a4b0gh0Nynh;a4ffmann,rvat;chcock,l0;mingw7nde6rL;rs2;ay;ns5rrOs7y6;asCes;an3hi6;moH;a8il,o7rub0u6;o,tierr1;m1nzal1;nd6o,rcia;hi;er9is8lor08o7uj6;ita;st0urni0;ch0;nand1;d7insteHsposi6vaL;to;is2wards;aCeBi9omin8u6;bo6rand;is;gu1;az,mitr3;ov;lgado,vi;rw7vi6;es,s;in;aFhBlarkAo6;h5l6op0x;em7li6;ns;an;!e;an8e7iu,o6ristens5u4we;i,ng,u4w,y;!n,on6u4;!g;mpb8rt0st6;ro;er;ell;aBe8ha4lanco,oyko,r6yrne;ooks,yant;ng;ck7ethov5nnett;en;er,ham;ch,h7iley,rn6;es;k,ng;dEl9nd6;ers6rB;en,on,s2;on;eks8iy9on7var1;ez;so;ej6;ev;ams"
+module.exports="aJblair,cHdevGguadalupe,jBk9l8m5r2sh0trinity;ay,e0iloh;a,lby;e1o0;bin,sario;ag1g1ne;ar1el,org0;an;ion,lo;ashawn,ee;asAe0;ls9nyatta,rry;a1e0;an,ss2;de,ime,m0n;ie,m0;ie;an,on;as0heyenne;ey,sidy;lexis,ndra,ubr0;ey"
 },{}],219:[function(_dereq_,module,exports){
-module.exports="0:A8;1:9I;2:9Z;3:9Q;4:93;5:7V;6:9B;7:9W;8:8K;9:7H;A:9V;a96b8Kc7Sd6Ye6Af5Vg5Gh4Xi4Nj3Rk3Jl33m25n1Wo1Rp1Iqu1Hr0Xs0EtYusm0vVwLxavi3yDzB;aBor0;cha52h1E;ass2i,oDuB;sEuB;ma,to;nEsDusB;oBsC;uf;ef;at0g;aIeHiCoB;lfga05odrow;lBn16;bDfr9IlBs1;a8GiB;am2Qe,s;e6Yur;i,nde7Zsl8;de,lBrr7y6;la5t3;an5ern1iB;cBha0nce2Wrg7Sva0;ente,t4I;aPeKhJimIoErCyB;!l3ro6s1;av6OeBoy;nt,v4E;bDdd,mBny;!as,mBoharu;a93ie,y;i9y;!my,othy;eodo0Nia6Aom9;dErB;en5rB;an5eBy;ll,n5;!dy;ic84req,ts3Myl42;aNcottMeLhIiHoFpenc3tBur1Fylve76zym1;anDeBua6A;f0ph8OrliBve4Hwa69;ng;!islaw,l8;lom1uB;leyma6ta;dn8m1;aCeB;ld1rm0;h02ne,qu0Hun,wn;an,basti0k1Nl3Hrg3Gth;!y;lEmDntBq3Yul;iBos;a5Ono;!m7Ju4;ik,vaB;d3JtoY;aQeMicKoEuCyB;an,ou;b7dBf67ssel5X;ol2Fy;an,bFcky,dEel,geDh0landAm0n5Dosevelt,ry,sCyB;!ce;coe,s;l31r;e43g3n8o8Gri5C;b7Ie88;ar4Xc4Wha6YkB;!ey,y;gCub7x,yBza;ansh,nal4U;g7DiB;na79s;chDfa4l22mCndBpha4ul,y58;al5Iol21;i7Yon;id;ent2int1;aIeEhilDierCol,reB;st1;re;!ip,lip;d7RrDtB;ar,eB;!r;cy,ry;bLt3Iul;liv3m7KrDsCtBum78w7;is,to;ama,c76;i,l3NvB;il4H;athanIeHiDoB;aBel,l0ma0r2G;h,m;cDiCkB;h5Oola;lo;hol9k,ol9;al,d,il,ls1;!i4;aUeSiKoFuByr1;hamDrCstaB;fa,pha;ad,ray;ed,mF;dibo,e,hamDntCrr4EsBussa;es,he;e,y;ad,ed,mB;ad,ed;cFgu4kDlCnBtche5C;a5Yik;an,os,t1;e,olB;aj;ah,hBk8;a4eB;al,l;hBlv2r3P;di,met;ck,hLlKmMnu4rGs1tCuri5xB;!imilianA;eo,hCi9tB;!eo,hew,ia;eBis;us,w;cDio,kAlCsha4WtBv2;i21y;in,on;!el,oIus;colm,ik;amBdi,moud;adB;ou;aMeJiIl2AoEuBy39;c9is,kBth3;aBe;!s;g0nn5HrenDuBwe4K;!iB;e,s;!zo;am,on4;evi,i,la3YoBroy,st3vi,w3C;!nB;!a4X;mCn5r0ZuBwB;ren5;ar,oB;nt;aGeChaled,irBrist40u36y2T;k,ollos;i0Vlv2nBrmit,v2;!dCnBt;e0Ty;a43ri3T;na50rBthem;im,l;aYeRiPoDuB;an,liBni0Nst2;an,o,us;aqu2eKhnJnGrEsB;eChB;!ua;!ph;dBge;an,i;!aB;s,thB;an,on;!ath0n4A;!l,sBy;ph;an,e,mB;!m46;ffFrCsB;s0Vus;a4BemCmai6oBry;me,ni0H;i5Iy;!e01rB;ey,y;cGd7kFmErDsCvi3yB;!d7;on,p3;ed,r1G;al,es;e,ob,ub;kBob;!s1;an,brahJchika,gHk3lija,nuGrEsDtBv0;ai,sB;uki;aac,ha0ma4;a,vinB;!g;k,nngu3X;nacBor;io;im;aKeFina3SoDuByd42;be1RgBmber3GsD;h,o;m3ra5sBwa35;se2;aEctDitDnCrB;be1Mm0;ry;or;th;bIlHmza,ns,o,rCsBya37;an,s0;lEo3CrDuBv8;hi34ki,tB;a,o;is1y;an,ey;!im;ib;aLeIilbe3YlenHord1rDuB;illerBstavo;mo;aDegBov3;!g,orB;io,y;dy,h43nt;!n;ne,oCraB;ld,rdA;ffr8rge;brielDrB;la1IrBy;eZy;!e;aOeLiJlIorr0CrB;anDedB;!d2GeBri1K;ri1J;cCkB;!ie,l2;esco,isB;!co,zek;oyd;d4lB;ip;liCng,rnB;anX;pe,x;bi0di;arWdRfra2it0lNmGnFrCsteb0th0uge6vBym7;an,ereH;gi,iCnBv2w2;estAie;c02k;rique,zo;aGiDmB;aFeB;tt;lCrB;!h0;!io;nu4;be02d1iDliCm3t1v2woB;od;ot1Bs;!as,j34;!d1Xg28mEuCwB;a1Din;arB;do;o0Fu0F;l,nB;est;aSeKieJoDrag0uCwByl0;ay6ight;a6st2;minEnDugCyB;le;!l9;!a1Hn1K;go,icB;!k;go;an,j0lbeHmetriYnFrEsDvCwBxt3;ay6ey;en,in;moZ;ek,ri05;is,nB;is;rt;lKmJnIrDvB;e,iB;!d;iEne08rBw2yl;eBin,yl;lBn;!l;n,us;!e,i4ny;i1Fon;e,l9;as;aXeVhOlFoCraig,urtB;!is;dy,l2nrad,rB;ey,neliBy;us;aEevelaDiByG;fBnt;fo06t1;nd;rDuCyB;!t1;de;en5k;ce;aFeErisCuB;ck;!tB;i0oph3;st3;d,rlBse;es,ie;cBdric,s0M;il;lEmer1rB;ey,lCroBt3;ll;!os,t1;eb,v2;arVePilOlaNobMrCuByr1;ddy,rt1;aGeDi0uCyB;anDce,on;ce,no;nCtB;!t;d0t;dBnd1;!foCl8y;ey;rd;!by;i6ke;al,lF;nDrBshoi;at,naBt;rdA;!iCjam2nB;ie,y;to;ry,t;ar0Pb0Hd0Egu0Chme0Bid7jani,lUmSnLputsiKrCsaBu0Cya0ziz;hi;aHchGi4jun,maEnCon,tBy0;hur,u04;av,oB;ld;an,ndA;el;ie;ta;aq;dFgelAtB;hony,oB;i6nB;!iA;ne;reBy;!a,s,w;ir,mBos;ar;!an,beOeIfFi,lEonDt1vB;aMin;on;so,zo;an,en;onCrB;edA;so;jEksandDssExB;!and3is;er;ar,er;andB;ro;rtA;!o;en;d,t;st2;in;amCoBri0vik;lfo;!a;dDel,rahCuB;!bakr,lfazl;am;allEel,oulaye,ulB;lCrahm0;an;ah,o;ah;av,on"
+module.exports="0:1P;1:1Q;a1Fb1Bc12d0Ye0Of0Kg0Hh0Di09june07kwanzaa,l04m00nYoVpRrPsEt8v6w4xm03y2;om 2ule;hasho16kippur;hit2int0Xomens equalit7; 0Ss0T;aGe2ictor1E;r1Bteran0;-1ax 1h6isha bav,rinityNu2; b3rke2;y 1;ish2she2;vat;a0Ye prophets birth1;a6eptember15h4imchat tor0Vt 3u2;kk4mmer U;a9p8s7valentines day ;avu2mini atzeret;ot;int 2mhain;a5p4s3va2;lentine0;tephen0;atrick0;ndrew0;amadan,ememberanc0Yos2;a park0h hashana;a3entecost,reside0Zur2;im,ple heart 1;lm2ssovE; s04;rthodox 2stara;christma0easter2goOhoJn0C;! m07;ational 2ew years09;freedom 1nurse0;a2emorial 1lHoOuharram;bMr2undy thurs1;ch0Hdi gr2tin luther k0B;as;a2itRughnassadh;bour 1g baom2ilat al-qadr;er; 2teenth;soliU;d aJmbolc,n2sra and miraj;augurGd2;ependen2igenous people0;c0Bt0;a3o2;ly satur1;lloween,nukkUrvey mil2;k 1;o3r2;ito de dolores,oundhoW;odW;a4east of 2;our lady of guadalupe,the immaculate concepti2;on;ther0;aster8id 3lectYmancip2piphany;atX;al-3u2;l-f3;ad3f2;itr;ha;! 2;m8s2;un1;ay of the dead,ecemb3i2;a de muertos,eciseis de septiembre,wali;er sol2;stice;anad8h4inco de mayo,o3yber m2;on1;lumbu0mmonwealth 1rpus christi;anuk4inese n3ristmas2;! N;ew year;ah;a 1ian tha2;nksgiving;astillCeltaine,lack4ox2;in2;g 1; fri1;dvent,ll 9pril fools,rmistic8s6u2;stral4tum2;nal2; equinox;ia 1;cens2h wednes1sumption of mary;ion 1;e 1;hallows 6s2;ai2oul0t0;nt0;s 1;day;eve"
 },{}],220:[function(_dereq_,module,exports){
-module.exports="ad hominPbKcJdGeEfCgBh8kittNlunchDn7othersDp5roomQs3t0us dollarQ;h0icPragedM;ereOing0;!sA;tu0uper bowlMystL;dAffL;a0roblJurpo4;rtJt8;othGumbA;ead startHo0;meGu0;seF;laci6odErand slamE;l oz0riendDundB;!es;conom8ggBnerg8v0xamp7;entA;eath9inn1o0;gg5or8;er7;anar3eil4it3ottage6redit card6;ank3o0reakfast5;d1tt0;le3;ies,y;ing1;em0;!s"
+module.exports="0:2S;1:38;2:36;3:2B;4:2W;5:2Y;a38b2Zc2Ld2Be28f23g1Yh1Ni1Ij1Ck15l0Xm0Ln0Ho0Ep04rXsMtHvFwCxBy8zh6;a6ou,u;ng,o;a6eun2Roshi1Iun;ma6ng;da,guc1Xmo24sh1ZzaQ;iao,u;a7eb0il6o4right,u;li39s2;gn0lk0ng,tanabe;a6ivaldi;ssilj35zqu1;a9h8i2Do7r6sui,urn0;an,ynisI;lst0Nrr2Sth;at1Romps2;kah0Tnaka,ylor;aDchCeBhimizu,iAmi9o8t7u6zabo;ar1lliv27zuD;al21ein0;sa,u4;rn3th;lva,mmo22ngh;mjon3rrano;midt,neid0ulz;ito,n7sa6to;ki;ch1dKtos,z;amBeag1Xi9o7u6;bio,iz,s2L;b6dri1KgHj0Sme22osevelt,sZux;erts,ins2;c6ve0E;ci,hards2;ir1os;aDe9h7ic6ow1Z;as2Ehl0;a6illips;m,n1S;ders5et8r7t6;e0Or3;ez,ry;ers;h20rk0t6vl3;el,te0K;baBg0Blivei01r6;t6w1O;ega,iz;a6eils2guy5ix2owak,ym1D;gy,ka6var1J;ji6muW;ma;aEeCiBo8u6;ll0n6rr0Cssolini,ñ6;oz;lina,oKr6zart;al1Me6r0T;au,no;hhail3ll0;rci0s6y0;si;eWmmad3r6tsu08;in6tin1;!o;aCe8i6op1uo;!n6u;coln,dholm;e,fe7n0Pr6w0I;oy;bv6v6;re;rs5u;aBennedy,imuAle0Ko8u7wo6;k,n;mar,znets3;bay6vacs;asY;ra;hn,rl9to,ur,zl3;aAen9ha4imen1o6u4;h6n0Yu4;an6ns2;ss2;ki0Ds5;cks2nsse0C;glesi9ke8noue,shik7to,vano6;u,v;awa;da;as;aCe9it8o7u6;!a4b0gh0Nynh;a4ffmann,rvat;chcock,l0;mingw7nde6rL;rs2;ay;ns5rrOs7y6;asCes;an3hi6;moH;a8il,o7rub0u6;o,tierr1;m1nzal1;nd6o,rcia;hi;er9is8lor08o7uj6;ita;st0urni0;ch0;nand1;d7insteHsposi6vaL;to;is2wards;aCeBi9omin8u6;bo6rand;is;gu1;az,mitr3;ov;lgado,vi;rw7vi6;es,s;in;aFhBlarkAo6;h5l6op0x;em7li6;ns;an;!e;an8e7iu,o6ristens5u4we;i,ng,u4w,y;!n,on6u4;!g;mpb8rt0st6;ro;er;ell;aBe8ha4lanco,oyko,r6yrne;ooks,yant;ng;ck7ethov5nnett;en;er,ham;ch,h7iley,rn6;es;k,ng;dEl9nd6;ers6rB;en,on,s2;on;eks8iy9on7var1;ez;so;ej6;ev;ams"
 },{}],221:[function(_dereq_,module,exports){
-module.exports="0:2Q;1:20;2:2I;a2Db24c1Ad11e0Uf0Tg0Qh0Kin0Djourn1l07mWnewsVoTpLquartet,rIs7t5u3worke1K;ni3tilG;on,vA;ele3im2Oribun1v;communica1Jgraph,vi1L;av0Hchool,eBo8t4ubcommitt1Ny3;ndic0Pstems;a3ockV;nda22te 3;poli2univ3;ersi27;ci3ns;al club,et3;e,y;cur3rvice0;iti2C;adio,e3;gionRs3;er19ourc29tauraX;artners9e7harmac6izza,lc,o4r3;ess,oduc13;l3st,wer;i2ytechnic;a0Jeutical0;ople's par1Ttrol3;!eum;!hip;bservLffi2il,ptic1r3;chestra,ganiza22;! servi2;a9e7i5o4use3;e,um;bi10tor0;lita1Bnist3;e08ry;dia,mori1rcantile3; exchange;ch1Ogazi5nage06r3;i4ket3;i0Cs;ne;ab6i5oc3;al 3;aIheaH;beration ar1Fmited;or3s;ato0Y;c,dustri1Gs6ter5vest3;me3o08;nt0;nation1sI;titut3u14;!e3;! of technoloIs;e5o3;ld3sp0Itel0;ings;a3ra6;lth a3;uth0T;a4ir09overnJroup,ui3;ld;s,zet0P;acul0Qede12inanci1m,ounda13und;duca12gli0Blectric8n5s4t3veningH;at;ta0L;er4semb01ter3;prise0tainB;gy;!i0J;a9e4i3rilliG;rectora0FviP;part3sign,velop6;e5ment3;! sto3s;re;ment;ily3ta; news;aSentQhNircus,lLo3rew;!ali0LffJlleHm9n4rp3unc7;o0Js;fe6s3taine9;e4ulti3;ng;il;de0Eren2;m5p3;any,rehensiAute3;rs;i5uni3;ca3ty;tions;s3tt6;si08;cti3ge;ve;ee;ini3ub;c,qK;emica4oir,ronic3urch;le;ls;er,r3;al bank,e;fe,is5p3re,thedr1;it1;al;se;an9o7r4u3;ilding socieEreau;ands,ewe4other3;hood,s;ry;a3ys;rd;k,q3;ue;dministIgencFirDrCss7ut3viaJ;h4ori3;te;ori3;ty;oc5u3;ran2;ce;!iat3;es,iB;my;craft,l3ways;in4;e0i3y;es;!s;ra3;ti3;on"
+module.exports="0:A8;1:9I;2:9Z;3:9Q;4:93;5:7V;6:9B;7:9W;8:8K;9:7H;A:9V;a96b8Kc7Sd6Ye6Af5Vg5Gh4Xi4Nj3Rk3Jl33m25n1Wo1Rp1Iqu1Hr0Xs0EtYusm0vVwLxavi3yDzB;aBor0;cha52h1E;ass2i,oDuB;sEuB;ma,to;nEsDusB;oBsC;uf;ef;at0g;aIeHiCoB;lfga05odrow;lBn16;bDfr9IlBs1;a8GiB;am2Qe,s;e6Yur;i,nde7Zsl8;de,lBrr7y6;la5t3;an5ern1iB;cBha0nce2Wrg7Sva0;ente,t4I;aPeKhJimIoErCyB;!l3ro6s1;av6OeBoy;nt,v4E;bDdd,mBny;!as,mBoharu;a93ie,y;i9y;!my,othy;eodo0Nia6Aom9;dErB;en5rB;an5eBy;ll,n5;!dy;ic84req,ts3Myl42;aNcottMeLhIiHoFpenc3tBur1Fylve76zym1;anDeBua6A;f0ph8OrliBve4Hwa69;ng;!islaw,l8;lom1uB;leyma6ta;dn8m1;aCeB;ld1rm0;h02ne,qu0Hun,wn;an,basti0k1Nl3Hrg3Gth;!y;lEmDntBq3Yul;iBos;a5Ono;!m7Ju4;ik,vaB;d3JtoY;aQeMicKoEuCyB;an,ou;b7dBf67ssel5X;ol2Fy;an,bFcky,dEel,geDh0landAm0n5Dosevelt,ry,sCyB;!ce;coe,s;l31r;e43g3n8o8Gri5C;b7Ie88;ar4Xc4Wha6YkB;!ey,y;gCub7x,yBza;ansh,nal4U;g7DiB;na79s;chDfa4l22mCndBpha4ul,y58;al5Iol21;i7Yon;id;ent2int1;aIeEhilDierCol,reB;st1;re;!ip,lip;d7RrDtB;ar,eB;!r;cy,ry;bLt3Iul;liv3m7KrDsCtBum78w7;is,to;ama,c76;i,l3NvB;il4H;athanIeHiDoB;aBel,l0ma0r2G;h,m;cDiCkB;h5Oola;lo;hol9k,ol9;al,d,il,ls1;!i4;aUeSiKoFuByr1;hamDrCstaB;fa,pha;ad,ray;ed,mF;dibo,e,hamDntCrr4EsBussa;es,he;e,y;ad,ed,mB;ad,ed;cFgu4kDlCnBtche5C;a5Yik;an,os,t1;e,olB;aj;ah,hBk8;a4eB;al,l;hBlv2r3P;di,met;ck,hLlKmMnu4rGs1tCuri5xB;!imilianA;eo,hCi9tB;!eo,hew,ia;eBis;us,w;cDio,kAlCsha4WtBv2;i21y;in,on;!el,oIus;colm,ik;amBdi,moud;adB;ou;aMeJiIl2AoEuBy39;c9is,kBth3;aBe;!s;g0nn5HrenDuBwe4K;!iB;e,s;!zo;am,on4;evi,i,la3YoBroy,st3vi,w3C;!nB;!a4X;mCn5r0ZuBwB;ren5;ar,oB;nt;aGeChaled,irBrist40u36y2T;k,ollos;i0Vlv2nBrmit,v2;!dCnBt;e0Ty;a43ri3T;na50rBthem;im,l;aYeRiPoDuB;an,liBni0Nst2;an,o,us;aqu2eKhnJnGrEsB;eChB;!ua;!ph;dBge;an,i;!aB;s,thB;an,on;!ath0n4A;!l,sBy;ph;an,e,mB;!m46;ffFrCsB;s0Vus;a4BemCmai6oBry;me,ni0H;i5Iy;!e01rB;ey,y;cGd7kFmErDsCvi3yB;!d7;on,p3;ed,r1G;al,es;e,ob,ub;kBob;!s1;an,brahJchika,gHk3lija,nuGrEsDtBv0;ai,sB;uki;aac,ha0ma4;a,vinB;!g;k,nngu3X;nacBor;io;im;aKeFina3SoDuByd42;be1RgBmber3GsD;h,o;m3ra5sBwa35;se2;aEctDitDnCrB;be1Mm0;ry;or;th;bIlHmza,ns,o,rCsBya37;an,s0;lEo3CrDuBv8;hi34ki,tB;a,o;is1y;an,ey;!im;ib;aLeIilbe3YlenHord1rDuB;illerBstavo;mo;aDegBov3;!g,orB;io,y;dy,h43nt;!n;ne,oCraB;ld,rdA;ffr8rge;brielDrB;la1IrBy;eZy;!e;aOeLiJlIorr0CrB;anDedB;!d2GeBri1K;ri1J;cCkB;!ie,l2;esco,isB;!co,zek;oyd;d4lB;ip;liCng,rnB;anX;pe,x;bi0di;arWdRfra2it0lNmGnFrCsteb0th0uge6vBym7;an,ereH;gi,iCnBv2w2;estAie;c02k;rique,zo;aGiDmB;aFeB;tt;lCrB;!h0;!io;nu4;be02d1iDliCm3t1v2woB;od;ot1Bs;!as,j34;!d1Xg28mEuCwB;a1Din;arB;do;o0Fu0F;l,nB;est;aSeKieJoDrag0uCwByl0;ay6ight;a6st2;minEnDugCyB;le;!l9;!a1Hn1K;go,icB;!k;go;an,j0lbeHmetriYnFrEsDvCwBxt3;ay6ey;en,in;moZ;ek,ri05;is,nB;is;rt;lKmJnIrDvB;e,iB;!d;iEne08rBw2yl;eBin,yl;lBn;!l;n,us;!e,i4ny;i1Fon;e,l9;as;aXeVhOlFoCraig,urtB;!is;dy,l2nrad,rB;ey,neliBy;us;aEevelaDiByG;fBnt;fo06t1;nd;rDuCyB;!t1;de;en5k;ce;aFeErisCuB;ck;!tB;i0oph3;st3;d,rlBse;es,ie;cBdric,s0M;il;lEmer1rB;ey,lCroBt3;ll;!os,t1;eb,v2;arVePilOlaNobMrCuByr1;ddy,rt1;aGeDi0uCyB;anDce,on;ce,no;nCtB;!t;d0t;dBnd1;!foCl8y;ey;rd;!by;i6ke;al,lF;nDrBshoi;at,naBt;rdA;!iCjam2nB;ie,y;to;ry,t;ar0Pb0Hd0Egu0Chme0Bid7jani,lUmSnLputsiKrCsaBu0Cya0ziz;hi;aHchGi4jun,maEnCon,tBy0;hur,u04;av,oB;ld;an,ndA;el;ie;ta;aq;dFgelAtB;hony,oB;i6nB;!iA;ne;reBy;!a,s,w;ir,mBos;ar;!an,beOeIfFi,lEonDt1vB;aMin;on;so,zo;an,en;onCrB;edA;so;jEksandDssExB;!and3is;er;ar,er;andB;ro;rtA;!o;en;d,t;st2;in;amCoBri0vik;lfo;!a;dDel,rahCuB;!bakr,lfazl;am;allEel,oulaye,ulB;lCrahm0;an;ah,o;ah;av,on"
 },{}],222:[function(_dereq_,module,exports){
-module.exports="0:42;1:40;a38b2Pc29d21e1Yf1Ug1Mh1Hi1Ej1Ak18l14m0Tn0Go0Dp07qu06rZsStFuBv8w3y2;amaha,m0Youtu2Rw0Y;a4e2orld trade organizati1;lls fargo,st2;fie23inghou18;l2rner br3B;-m13gree30l street journ25m13;an halOeriz1isa,o2;dafo2Gl2;kswagMvo;bs,n3ps,s2;a tod2Qps;es33i2;lev2Wted natio2T; mobi2Jaco beQd bNeBgi fridaAh4im horto2Smz,o2witt2V;shiba,y2;ota,s r Z;e 2in lizzy;b4carpen31daily ma2Vguess w3holli0rolling st1Ns2w3;mashing pumpki2Nuprem0;ho;ea2lack eyed pe3Dyrds;ch bo2tl0;ys;l3s2;co,la m14;efoni09us;a7e5ieme2Fo3pice gir6ta2ubaru;rbucks,to2L;ny,undgard2;en;a2Px pisto2;ls;few24insbu25msu1W;.e.m.,adiohead,b7e4oyal 2yan2V;b2dutch she5;ank;/max,aders dige1Ed 2vl1;bu2c1Thot chili peppe2Ilobst27;ll;c,s;ant2Tizno2D;an6bs,e4fiz23hilip morrCi3r2;emier25octer & gamb1Qudenti14;nk floyd,zza hut;psi26tro2uge0A;br2Ochina,n2O; 3ason1Wda2E;ld navy,pec,range juli3xf2;am;us;aBbAe6fl,h5i4o2sa,wa;kia,tre dame,vart2;is;ke,ntendo,ss0L;l,s;stl4tflix,w2; 2sweek;kids on the block,york0A;e,é;a,c;nd1Rs3t2;ional aca2Co,we0P;a,cZd0N;aBcdonaldAe6i4lb,o2tv,yspace;b1Knsanto,ody blu0t2;ley crue,or0N;crosoft,t2;as,subisP;dica4rcedes3talli2;ca;!-benz;id,re;'s,s;c's milk,tt11z1V;'ore08a4e2g,ittle caesa1H;novo,x2;is,mark; pres6-z-boy;atv,fc,kk,m2od1H;art;iffy lu0Jo4pmorgan2sa;! cha2;se;hnson & johns1y d1O;bm,hop,n2tv;g,te2;l,rpol; & m,asbro,ewlett-packaSi4o2sbc,yundai;me dep2n1G;ot;tac2zbollah;hi;eneral 7hq,l6o3reen d0Gu2;cci,ns n ros0;ldman sachs,o2;dye2g09;ar;axo smith kliYencore;electr0Gm2;oto0S;a4bi,da,edex,i2leetwood mac,oFrito-l08;at,nancial2restoU; tim0;cebook,nnie mae;b04sa,u,xxon2; m2m2;ob0E;aiml09e6isney,o4u2;nkin donuts,po0Uran dur2;an;j,w j2;on0;a,f leppa3ll,peche mode,r spiegYstiny's chi2;ld;rd;aFbc,hCiAnn,o4r2;aigsli6eedence clearwater reviv2;al;ca c6l5m2o09st04;ca3p2;aq;st;dplMgate;ola;a,sco2tigroup;! systems;ev3i2;ck fil-a,na daily;r1y;dbury,pital o2rl's jr;ne;aGbc,eCfAl6mw,ni,o2p;ei4mbardiKston 2;glo2pizza;be;ng;ack & deckGo3ue c2;roX;ckbuster video,omingda2;le; g2g2;oodriN;cht4e ge0n & jer3rkshire hathaw2;ay;ryH;el;nana republ4s2xt6y6;f,kin robbi2;ns;ic;bXcSdidRerosmith,ig,lLmFnheuser-busEol,ppleAr7s4t&t,v3y2;er;is,on;hland2sociated G; o2;il;by5g3m2;co;os; compu3bee2;'s;te2;rs;ch;c,d,erican4t2;!r2;ak; ex2;pre2;ss; 5catel3t2;air;!-luce2;nt;jazeera,qae2;da;as;/dc,a4er,t2;ivisi1;on;demy of scienc0;es;ba,c"
+module.exports="ad hominPbKcJdGeEfCgBh8kittNlunchDn7othersDp5roomQs3t0us dollarQ;h0icPragedM;ereOing0;!sA;tu0uper bowlMystL;dAffL;a0roblJurpo4;rtJt8;othGumbA;ead startHo0;meGu0;seF;laci6odErand slamE;l oz0riendDundB;!es;conom8ggBnerg8v0xamp7;entA;eath9inn1o0;gg5or8;er7;anar3eil4it3ottage6redit card6;ank3o0reakfast5;d1tt0;le3;ies,y;ing1;em0;!s"
 },{}],223:[function(_dereq_,module,exports){
-module.exports="0:71;1:6P;2:7D;3:73;4:6I;5:7G;6:75;7:6O;8:6B;9:6C;A:5H;B:70;C:6Z;a7Gb62c5Cd59e57f45g3Nh37iron0j33k2Yl2Km2Bn29o27p1Pr1Es09tQuOvacuum 1wGyammerCzD;eroAip EonD;e0k0;by,up;aJeGhFiEorDrit52;d 1k2Q;mp0n49pe0r8s8;eel Bip 7K;aEiD;gh 06rd0;n Br 3C;it 5Jk8lk6rm 0Qsh 73t66v4O;rgeCsD;e 9herA;aRePhNiJoHrFuDype 0N;ckArn D;d2in,o3Fup;ade YiDot0y 32;ckle67p 79;ne66p Ds4C;d2o6Kup;ck FdEe Dgh5Sme0p o0Dre0;aw3ba4d2in,up;e5Jy 1;by,o6U;ink Drow 5U;ba4ov7up;aDe 4Hll4N;m 1r W;ckCke Elk D;ov7u4N;aDba4d2in,o30up;ba4ft7p4Sw3;a0Gc0Fe09h05i02lYmXnWoVpSquare RtJuHwD;earFiD;ngEtch D;aw3ba4o6O; by;ck Dit 1m 1ss0;in,up;aIe0RiHoFrD;aigh1LiD;ke 5Xn2X;p Drm1O;by,in,o6A;r 1tc3H;c2Xmp0nd Dr6Gve6y 1;ba4d2up;d2o66up;ar2Uell0ill4TlErDurC;ingCuc8;a32it 3T;be4Brt0;ap 4Dow B;ash 4Yoke0;eep EiDow 9;c3Mp 1;in,oD;ff,v7;gn Eng2Yt Dz8;d2o5up;in,o5up;aFoDu4E;ot Dut0w 5W;aw3ba4f36o5Q;c2EdeAk4Rve6;e Hll0nd GtD; Dtl42;d2in,o5upD;!on;aw3ba4d2in,o1Xup;o5to;al4Kout0rap4K;il6v8;at0eKiJoGuD;b 4Dle0n Dstl8;aDba4d2in52o3Ft2Zu3D;c1Ww3;ot EuD;g2Jnd6;a1Wf2Qo5;ng 4Np6;aDel6inAnt0;c4Xd D;o2Su0C;aQePiOlMoKrHsyc29uD;ll Ft D;aDba4d2in,o1Gt33up;p38w3;ap37d2in,o5t31up;attleCess EiGoD;p 1;ah1Gon;iDp 52re3Lur44wer 52;nt0;ay3YuD;gAmp 9;ck 52g0leCn 9p3V;el 46ncilA;c3Oir 2Hn0ss FtEy D;ba4o4Q; d2c1X;aw3ba4o11;pDw3J;e3It B;arrow3Serd0oD;d6te3R;aJeHiGoEuD;ddl8ll36;c16p 1uth6ve D;al3Ad2in,o5up;ss0x 1;asur8lt 9ss D;a19up;ke Dn 9r2Zs1Kx0;do,o3Xup;aOeMiHoDuck0;a16c36g 0AoDse0;k Dse34;aft7ba4d2forw2Ain3Vov7uD;nd7p;e GghtFnEsDv1T;ten 4D;e 1k 1; 1e2Y;ar43d2;av1Ht 2YvelD; o3L;p 1sh DtchCugh6y1U;in3Lo5;eEick6nock D;d2o3H;eDyA;l2Hp D;aw3ba4d2fSin,o05to,up;aFoEuD;ic8mpA;ke2St2W;c31zz 1;aPeKiHoEuD;nker2Ts0U;lDneArse2O;d De 1;ba4d2oZup;de Et D;ba4on,up;aw3o5;aDlp0;d Fr Dt 1;fDof;rom;in,oO;cZm 1nDve it;d Dg 27kerF;d2in,o5;aReLive Jloss1VoFrEunD; f0M;in39ow 23; Dof 0U;aEb17it,oDr35t0Ou12;ff,n,v7;bo5ft7hJw3;aw3ba4d2in,oDup,w3;ff,n,ut;a17ek0t D;aEb11d2oDr2Zup;ff,n,ut,v7;cEhDl1Pr2Xt,w3;ead;ross;d aEnD;g 1;bo5;a08e01iRlNoJrFuD;cDel 1;k 1;eEighten DownCy 1;aw3o2L;eDshe1G; 1z8;lFol D;aDwi19;bo5r2I;d 9;aEeDip0;sh0;g 9ke0mDrD;e 2K;gLlJnHrFsEzzD;le0;h 2H;e Dm 1;aw3ba4up;d0isD;h 1;e Dl 11;aw3fI;ht ba4ure0;eInEsD;s 1;cFd D;fDo1X;or;e B;dQl 1;cHll Drm0t0O;apYbFd2in,oEtD;hrough;ff,ut,v7;a4ehi1S;e E;at0dge0nd Dy8;o1Mup;o09rD;ess 9op D;aw3bNin,o15;aShPlean 9oDross But 0T;me FoEuntD; o1M;k 1l6;aJbIforGin,oFtEuD;nd7;ogeth7;ut,v7;th,wD;ard;a4y;pDr19w3;art;eDipA;ck BeD;r 1;lJncel0rGsFtch EveA; in;o16up;h Bt6;ry EvD;e V;aw3o12;l Dm02;aDba4d2o10up;r0Vw3;a0He08l01oSrHuD;bbleFcklTilZlEndlTrn 05tDy 10zz6;t B;k 9; ov7;anMeaKiDush6;ghHng D;aEba4d2forDin,o5up;th;bo5lDr0Lw3;ong;teD;n 1;k D;d2in,o5up;ch0;arKgJil 9n8oGssFttlEunce Dx B;aw3ba4;e 9; ar0B;k Bt 1;e 1;d2up; d2;d 1;aIeed0oDurt0;cFw D;aw3ba4d2o5up;ck;k D;in,oK;ck0nk0st6; oJaGef 1nd D;d2ov7up;er;up;r0t D;d2in,oDup;ff,ut;ff,nD;to;ck Jil0nFrgEsD;h B;ainCe B;g BkC; on;in,o5; o5;aw3d2o5up;ay;cMdIsk Fuction6; oD;ff;arDo5;ouD;nd;d D;d2oDup;ff,n;own;t D;o5up;ut"
+module.exports="0:2Q;1:20;2:2I;a2Db24c1Ad11e0Uf0Tg0Qh0Kin0Djourn1l07mWnewsVoTpLquartet,rIs7t5u3worke1K;ni3tilG;on,vA;ele3im2Oribun1v;communica1Jgraph,vi1L;av0Hchool,eBo8t4ubcommitt1Ny3;ndic0Pstems;a3ockV;nda22te 3;poli2univ3;ersi27;ci3ns;al club,et3;e,y;cur3rvice0;iti2C;adio,e3;gionRs3;er19ourc29tauraX;artners9e7harmac6izza,lc,o4r3;ess,oduc13;l3st,wer;i2ytechnic;a0Jeutical0;ople's par1Ttrol3;!eum;!hip;bservLffi2il,ptic1r3;chestra,ganiza22;! servi2;a9e7i5o4use3;e,um;bi10tor0;lita1Bnist3;e08ry;dia,mori1rcantile3; exchange;ch1Ogazi5nage06r3;i4ket3;i0Cs;ne;ab6i5oc3;al 3;aIheaH;beration ar1Fmited;or3s;ato0Y;c,dustri1Gs6ter5vest3;me3o08;nt0;nation1sI;titut3u14;!e3;! of technoloIs;e5o3;ld3sp0Itel0;ings;a3ra6;lth a3;uth0T;a4ir09overnJroup,ui3;ld;s,zet0P;acul0Qede12inanci1m,ounda13und;duca12gli0Blectric8n5s4t3veningH;at;ta0L;er4semb01ter3;prise0tainB;gy;!i0J;a9e4i3rilliG;rectora0FviP;part3sign,velop6;e5ment3;! sto3s;re;ment;ily3ta; news;aSentQhNircus,lLo3rew;!ali0LffJlleHm9n4rp3unc7;o0Js;fe6s3taine9;e4ulti3;ng;il;de0Eren2;m5p3;any,rehensiAute3;rs;i5uni3;ca3ty;tions;s3tt6;si08;cti3ge;ve;ee;ini3ub;c,qK;emica4oir,ronic3urch;le;ls;er,r3;al bank,e;fe,is5p3re,thedr1;it1;al;se;an9o7r4u3;ilding socieEreau;ands,ewe4other3;hood,s;ry;a3ys;rd;k,q3;ue;dministIgencFirDrCss7ut3viaJ;h4ori3;te;ori3;ty;oc5u3;ran2;ce;!iat3;es,iB;my;craft,l3ways;in4;e0i3y;es;!s;ra3;ti3;on"
 },{}],224:[function(_dereq_,module,exports){
-module.exports="'o,-,aLbIcHdGexcept,from,inFmidQnotwithstandiRoDpSqua,sCt7u4v2w0;/o,hereNith0;!in,oR;ersus,i0;a,s-a-vis;n1p0;!on;like,til;h1ill,o0;!wards;an,r0;ough0u;!oH;ans,ince,o that;',f0n1ut;!f;!to;espite,own,u3;hez,irca;ar1e0y;low,sides,tween;ri6;',bo7cross,ft6lo5m3propos,round,s1t0;!op;! long 0;as;id0ong0;!st;ng;er;ut"
+module.exports="0:42;1:40;a38b2Pc29d21e1Yf1Ug1Mh1Hi1Ej1Ak18l14m0Tn0Go0Dp07qu06rZsStFuBv8w3y2;amaha,m0Youtu2Rw0Y;a4e2orld trade organizati1;lls fargo,st2;fie23inghou18;l2rner br3B;-m13gree30l street journ25m13;an halOeriz1isa,o2;dafo2Gl2;kswagMvo;bs,n3ps,s2;a tod2Qps;es33i2;lev2Wted natio2T; mobi2Jaco beQd bNeBgi fridaAh4im horto2Smz,o2witt2V;shiba,y2;ota,s r Z;e 2in lizzy;b4carpen31daily ma2Vguess w3holli0rolling st1Ns2w3;mashing pumpki2Nuprem0;ho;ea2lack eyed pe3Dyrds;ch bo2tl0;ys;l3s2;co,la m14;efoni09us;a7e5ieme2Fo3pice gir6ta2ubaru;rbucks,to2L;ny,undgard2;en;a2Px pisto2;ls;few24insbu25msu1W;.e.m.,adiohead,b7e4oyal 2yan2V;b2dutch she5;ank;/max,aders dige1Ed 2vl1;bu2c1Thot chili peppe2Ilobst27;ll;c,s;ant2Tizno2D;an6bs,e4fiz23hilip morrCi3r2;emier25octer & gamb1Qudenti14;nk floyd,zza hut;psi26tro2uge0A;br2Ochina,n2O; 3ason1Wda2E;ld navy,pec,range juli3xf2;am;us;aBbAe6fl,h5i4o2sa,wa;kia,tre dame,vart2;is;ke,ntendo,ss0L;l,s;stl4tflix,w2; 2sweek;kids on the block,york0A;e,é;a,c;nd1Rs3t2;ional aca2Co,we0P;a,cZd0N;aBcdonaldAe6i4lb,o2tv,yspace;b1Knsanto,ody blu0t2;ley crue,or0N;crosoft,t2;as,subisP;dica4rcedes3talli2;ca;!-benz;id,re;'s,s;c's milk,tt11z1V;'ore08a4e2g,ittle caesa1H;novo,x2;is,mark; pres6-z-boy;atv,fc,kk,m2od1H;art;iffy lu0Jo4pmorgan2sa;! cha2;se;hnson & johns1y d1O;bm,hop,n2tv;g,te2;l,rpol; & m,asbro,ewlett-packaSi4o2sbc,yundai;me dep2n1G;ot;tac2zbollah;hi;eneral 7hq,l6o3reen d0Gu2;cci,ns n ros0;ldman sachs,o2;dye2g09;ar;axo smith kliYencore;electr0Gm2;oto0S;a4bi,da,edex,i2leetwood mac,oFrito-l08;at,nancial2restoU; tim0;cebook,nnie mae;b04sa,u,xxon2; m2m2;ob0E;aiml09e6isney,o4u2;nkin donuts,po0Uran dur2;an;j,w j2;on0;a,f leppa3ll,peche mode,r spiegYstiny's chi2;ld;rd;aFbc,hCiAnn,o4r2;aigsli6eedence clearwater reviv2;al;ca c6l5m2o09st04;ca3p2;aq;st;dplMgate;ola;a,sco2tigroup;! systems;ev3i2;ck fil-a,na daily;r1y;dbury,pital o2rl's jr;ne;aGbc,eCfAl6mw,ni,o2p;ei4mbardiKston 2;glo2pizza;be;ng;ack & deckGo3ue c2;roX;ckbuster video,omingda2;le; g2g2;oodriN;cht4e ge0n & jer3rkshire hathaw2;ay;ryH;el;nana republ4s2xt6y6;f,kin robbi2;ns;ic;bXcSdidRerosmith,ig,lLmFnheuser-busEol,ppleAr7s4t&t,v3y2;er;is,on;hland2sociated G; o2;il;by5g3m2;co;os; compu3bee2;'s;te2;rs;ch;c,d,erican4t2;!r2;ak; ex2;pre2;ss; 5catel3t2;air;!-luce2;nt;jazeera,qae2;da;as;/dc,a4er,t2;ivisi1;on;demy of scienc0;es;ba,c"
 },{}],225:[function(_dereq_,module,exports){
-module.exports="aLbIcHdEengineKfCgBhAinstructRjournalNlawyKm9nurse,o8p5r3s1t0;echnEherapM;ailPcientLecretary,oldiIu0;pervMrgeon;e0oofG;ceptionIsearE;hotographElumbEoli1r0sychologH;actitionDesideMogrammD;cem8t7;fficBpeH;echanic,inistAus5;airdress9ousekeep9;arden8uard;arm7ire0;fight6m2;eputy,iet0;ici0;an;arpent2lerk;ricklay1ut0;ch0;er;ccoun6d2ge7r0ssis6ttenda7;chitect,t0;ist;minist1v0;is1;rat0;or;ta0;nt"
+module.exports="0:71;1:6P;2:7D;3:73;4:6I;5:7G;6:75;7:6O;8:6B;9:6C;A:5H;B:70;C:6Z;a7Gb62c5Cd59e57f45g3Nh37iron0j33k2Yl2Km2Bn29o27p1Pr1Es09tQuOvacuum 1wGyammerCzD;eroAip EonD;e0k0;by,up;aJeGhFiEorDrit52;d 1k2Q;mp0n49pe0r8s8;eel Bip 7K;aEiD;gh 06rd0;n Br 3C;it 5Jk8lk6rm 0Qsh 73t66v4O;rgeCsD;e 9herA;aRePhNiJoHrFuDype 0N;ckArn D;d2in,o3Fup;ade YiDot0y 32;ckle67p 79;ne66p Ds4C;d2o6Kup;ck FdEe Dgh5Sme0p o0Dre0;aw3ba4d2in,up;e5Jy 1;by,o6U;ink Drow 5U;ba4ov7up;aDe 4Hll4N;m 1r W;ckCke Elk D;ov7u4N;aDba4d2in,o30up;ba4ft7p4Sw3;a0Gc0Fe09h05i02lYmXnWoVpSquare RtJuHwD;earFiD;ngEtch D;aw3ba4o6O; by;ck Dit 1m 1ss0;in,up;aIe0RiHoFrD;aigh1LiD;ke 5Xn2X;p Drm1O;by,in,o6A;r 1tc3H;c2Xmp0nd Dr6Gve6y 1;ba4d2up;d2o66up;ar2Uell0ill4TlErDurC;ingCuc8;a32it 3T;be4Brt0;ap 4Dow B;ash 4Yoke0;eep EiDow 9;c3Mp 1;in,oD;ff,v7;gn Eng2Yt Dz8;d2o5up;in,o5up;aFoDu4E;ot Dut0w 5W;aw3ba4f36o5Q;c2EdeAk4Rve6;e Hll0nd GtD; Dtl42;d2in,o5upD;!on;aw3ba4d2in,o1Xup;o5to;al4Kout0rap4K;il6v8;at0eKiJoGuD;b 4Dle0n Dstl8;aDba4d2in52o3Ft2Zu3D;c1Ww3;ot EuD;g2Jnd6;a1Wf2Qo5;ng 4Np6;aDel6inAnt0;c4Xd D;o2Su0C;aQePiOlMoKrHsyc29uD;ll Ft D;aDba4d2in,o1Gt33up;p38w3;ap37d2in,o5t31up;attleCess EiGoD;p 1;ah1Gon;iDp 52re3Lur44wer 52;nt0;ay3YuD;gAmp 9;ck 52g0leCn 9p3V;el 46ncilA;c3Oir 2Hn0ss FtEy D;ba4o4Q; d2c1X;aw3ba4o11;pDw3J;e3It B;arrow3Serd0oD;d6te3R;aJeHiGoEuD;ddl8ll36;c16p 1uth6ve D;al3Ad2in,o5up;ss0x 1;asur8lt 9ss D;a19up;ke Dn 9r2Zs1Kx0;do,o3Xup;aOeMiHoDuck0;a16c36g 0AoDse0;k Dse34;aft7ba4d2forw2Ain3Vov7uD;nd7p;e GghtFnEsDv1T;ten 4D;e 1k 1; 1e2Y;ar43d2;av1Ht 2YvelD; o3L;p 1sh DtchCugh6y1U;in3Lo5;eEick6nock D;d2o3H;eDyA;l2Hp D;aw3ba4d2fSin,o05to,up;aFoEuD;ic8mpA;ke2St2W;c31zz 1;aPeKiHoEuD;nker2Ts0U;lDneArse2O;d De 1;ba4d2oZup;de Et D;ba4on,up;aw3o5;aDlp0;d Fr Dt 1;fDof;rom;in,oO;cZm 1nDve it;d Dg 27kerF;d2in,o5;aReLive Jloss1VoFrEunD; f0M;in39ow 23; Dof 0U;aEb17it,oDr35t0Ou12;ff,n,v7;bo5ft7hJw3;aw3ba4d2in,oDup,w3;ff,n,ut;a17ek0t D;aEb11d2oDr2Zup;ff,n,ut,v7;cEhDl1Pr2Xt,w3;ead;ross;d aEnD;g 1;bo5;a08e01iRlNoJrFuD;cDel 1;k 1;eEighten DownCy 1;aw3o2L;eDshe1G; 1z8;lFol D;aDwi19;bo5r2I;d 9;aEeDip0;sh0;g 9ke0mDrD;e 2K;gLlJnHrFsEzzD;le0;h 2H;e Dm 1;aw3ba4up;d0isD;h 1;e Dl 11;aw3fI;ht ba4ure0;eInEsD;s 1;cFd D;fDo1X;or;e B;dQl 1;cHll Drm0t0O;apYbFd2in,oEtD;hrough;ff,ut,v7;a4ehi1S;e E;at0dge0nd Dy8;o1Mup;o09rD;ess 9op D;aw3bNin,o15;aShPlean 9oDross But 0T;me FoEuntD; o1M;k 1l6;aJbIforGin,oFtEuD;nd7;ogeth7;ut,v7;th,wD;ard;a4y;pDr19w3;art;eDipA;ck BeD;r 1;lJncel0rGsFtch EveA; in;o16up;h Bt6;ry EvD;e V;aw3o12;l Dm02;aDba4d2o10up;r0Vw3;a0He08l01oSrHuD;bbleFcklTilZlEndlTrn 05tDy 10zz6;t B;k 9; ov7;anMeaKiDush6;ghHng D;aEba4d2forDin,o5up;th;bo5lDr0Lw3;ong;teD;n 1;k D;d2in,o5up;ch0;arKgJil 9n8oGssFttlEunce Dx B;aw3ba4;e 9; ar0B;k Bt 1;e 1;d2up; d2;d 1;aIeed0oDurt0;cFw D;aw3ba4d2o5up;ck;k D;in,oK;ck0nk0st6; oJaGef 1nd D;d2ov7up;er;up;r0t D;d2in,oDup;ff,ut;ff,nD;to;ck Jil0nFrgEsD;h B;ainCe B;g BkC; on;in,o5; o5;aw3d2o5up;ay;cMdIsk Fuction6; oD;ff;arDo5;ouD;nd;d D;d2oDup;ff,n;own;t D;o5up;ut"
 },{}],226:[function(_dereq_,module,exports){
-module.exports="0:1M;1:1T;2:1U;a1Rb1Dc0Zd0Qfc dallas,g0Nhouston 0Mindiana0Ljacksonville jagua0k0Il0Fm02newVoRpKqueens parkJrIsAt5utah jazz,vancouver whitecaps,w3yY;ashington 3est ham0Xh16;natio21redski1wizar12;ampa bay 6e5o3;ronto 3ttenham hotspur;blu1Hrapto0;nnessee tita1xasD;buccanee0ra1G;a7eattle 5heffield0Qporting kansas13t3;. louis 3oke12;c1Srams;mari02s3;eah1IounI;cramento Sn 3;antonio spu0diego 3francisco gi0Bjose earthquak2;char0EpaB;eal salt lake,o04; ran0C;a8h5ittsburgh 4ortland t3;imbe0rail blaze0;pirat2steele0;il3oenix su1;adelphia 3li2;eagl2philNunE;dr2;akland 4klahoma city thunder,r3;i10lando magic;athle0Trai3;de0; 3castle05;england 6orleans 5york 3;city fc,giUje0Lkn02me0Lred bul19y3;anke2;pelica1sain0J;patrio0Irevolut3;ion;aBe9i3ontreal impact;ami 7lwaukee b6nnesota 3;t4u0Rvi3;kings;imberwolv2wi1;re0Cuc0W;dolphi1heat,marli1;mphis grizz3ts;li2;nchester 5r3vN;i3li1;ne0;c00u0H;a4eicesterYos angeles 3;clippe0dodFlaA; galaxy,ke0;ansas city 3nH;chiefs,ro3;ya0M; pace0polis colX;astr0Edynamo,rockeWtexa1;i4olden state warrio0reen bay pac3;ke0;anT;.c.Aallas 7e3i0Cod5;nver 5troit 3;lio1pisto1ti3;ge0;bronc06nuggeO;cowboUmav3;er3;ic06; uX;arCelNh8incinnati 6leveland 5ol3;orado r3umbus crew sc;api5ocki2;brow1cavalie0india1;benga03re3;ds;arlotte horCicago 3;b4cubs,fire,wh3;iteE;ea0ulY;di3olina panthe0;ff3naW; c3;ity;altimore ElAoston 7r3uffalo bilT;av2e5ooklyn 3;ne3;ts;we0;cel4red3; sox;tics;ackburn rove0u3;e ja3;ys;rs;ori3rave1;ol2;rizona Ast8tlanta 3;brav2falco1h4u3;nited;aw9;ns;es;on villa,r3;os;c5di3;amondbac3;ks;ardi3;na3;ls"
+module.exports="'o,-,aLbIcHdGexcept,from,inFmidQnotwithstandiRoDpSqua,sCt7u4v2w0;/o,hereNith0;!in,oR;ersus,i0;a,s-a-vis;n1p0;!on;like,til;h1ill,o0;!wards;an,r0;ough0u;!oH;ans,ince,o that;',f0n1ut;!f;!to;espite,own,u3;hez,irca;ar1e0y;low,sides,tween;ri6;',bo7cross,ft6lo5m3propos,round,s1t0;!op;! long 0;as;id0ong0;!st;ng;er;ut"
 },{}],227:[function(_dereq_,module,exports){
-module.exports="0:1I;a1Nb1Hc18e11f0Ug0Qh0Ki0Hj0Gk0El09m00nZoYpSrPsCt8vi7w1;a5ea0Ci4o1;o2rld1;! seJ;d,l;ldlife,ne;rmth,t0;neg7ol0C;e3hund0ime,oothpaste,r1una;affTou1;ble,sers,t;a,nnis;aBceWeAh9il8now,o7p4te3u1;g1nshi0Q;ar;am,el;ace2e1;ciPed;!c16;ap,cc0ft0E;k,v0;eep,opp0T;riK;d0Afe0Jl1nd;m0Vt;aQe1i10;c1laxa0Hsearch;ogni0Grea0G;a5e3hys0JlastAo2r1;ess02ogre05;rk,w0;a1pp0trol;ce,nT;p0tiM;il,xygen;ews,oi0G;a7ea5i4o3u1;mps,s1;ic;nJo0C;lk,st;sl1t;es;chi1il,themat04;neF;aught0e3i2u1;ck,g0B;ghtn03quid,teratK;a1isJ;th0;elv1nowled08;in;ewel7usti09;ce,mp1nformaQtself;ati1ortan07;en06;a4ertz,isto3o1;ck1mework,n1spitaliL;ey;ry;ir,lib1ppi9;ut;o2r1um,ymnastL;a7ound;l1ssip;d,f;ahrenhe6i5lour,o2ru6urnit1;ure;od,rgive1wl;ne1;ss;c8sh;it;conomAduca6lectrici5n3quip4thAvery1;body,o1thC;ne;joy1tertain1;ment;ty;tiC;a8elcius,h4iv3loth6o1urrency;al,ffee,n1ttA;duct,fusi9;ics;aos,e1;e2w1;ing;se;ke,sh;a3eef,is2lood,read,utt0;er;on;g1ss;ga1;ge;dvi2irc1rt;raft;ce"
+module.exports="aLbIcHdEengineKfCgBhAinstructRjournalNlawyKm9nurse,o8p5r3s1t0;echnEherapM;ailPcientLecretary,oldiIu0;pervMrgeon;e0oofG;ceptionIsearE;hotographElumbEoli1r0sychologH;actitionDesideMogrammD;cem8t7;fficBpeH;echanic,inistAus5;airdress9ousekeep9;arden8uard;arm7ire0;fight6m2;eputy,iet0;ici0;an;arpent2lerk;ricklay1ut0;ch0;er;ccoun6d2ge7r0ssis6ttenda7;chitect,t0;ist;minist1v0;is1;rat0;or;ta0;nt"
 },{}],228:[function(_dereq_,module,exports){
+module.exports="0:1M;1:1T;2:1U;a1Rb1Dc0Zd0Qfc dallas,g0Nhouston 0Mindiana0Ljacksonville jagua0k0Il0Fm02newVoRpKqueens parkJrIsAt5utah jazz,vancouver whitecaps,w3yY;ashington 3est ham0Xh16;natio21redski1wizar12;ampa bay 6e5o3;ronto 3ttenham hotspur;blu1Hrapto0;nnessee tita1xasD;buccanee0ra1G;a7eattle 5heffield0Qporting kansas13t3;. louis 3oke12;c1Srams;mari02s3;eah1IounI;cramento Sn 3;antonio spu0diego 3francisco gi0Bjose earthquak2;char0EpaB;eal salt lake,o04; ran0C;a8h5ittsburgh 4ortland t3;imbe0rail blaze0;pirat2steele0;il3oenix su1;adelphia 3li2;eagl2philNunE;dr2;akland 4klahoma city thunder,r3;i10lando magic;athle0Trai3;de0; 3castle05;england 6orleans 5york 3;city fc,giUje0Lkn02me0Lred bul19y3;anke2;pelica1sain0J;patrio0Irevolut3;ion;aBe9i3ontreal impact;ami 7lwaukee b6nnesota 3;t4u0Rvi3;kings;imberwolv2wi1;re0Cuc0W;dolphi1heat,marli1;mphis grizz3ts;li2;nchester 5r3vN;i3li1;ne0;c00u0H;a4eicesterYos angeles 3;clippe0dodFlaA; galaxy,ke0;ansas city 3nH;chiefs,ro3;ya0M; pace0polis colX;astr0Edynamo,rockeWtexa1;i4olden state warrio0reen bay pac3;ke0;anT;.c.Aallas 7e3i0Cod5;nver 5troit 3;lio1pisto1ti3;ge0;bronc06nuggeO;cowboUmav3;er3;ic06; uX;arCelNh8incinnati 6leveland 5ol3;orado r3umbus crew sc;api5ocki2;brow1cavalie0india1;benga03re3;ds;arlotte horCicago 3;b4cubs,fire,wh3;iteE;ea0ulY;di3olina panthe0;ff3naW; c3;ity;altimore ElAoston 7r3uffalo bilT;av2e5ooklyn 3;ne3;ts;we0;cel4red3; sox;tics;ackburn rove0u3;e ja3;ys;rs;ori3rave1;ol2;rizona Ast8tlanta 3;brav2falco1h4u3;nited;aw9;ns;es;on villa,r3;os;c5di3;amondbac3;ks;ardi3;na3;ls"
+},{}],229:[function(_dereq_,module,exports){
+module.exports="0:1I;a1Nb1Hc18e11f0Ug0Qh0Ki0Hj0Gk0El09m00nZoYpSrPsCt8vi7w1;a5ea0Ci4o1;o2rld1;! seJ;d,l;ldlife,ne;rmth,t0;neg7ol0C;e3hund0ime,oothpaste,r1una;affTou1;ble,sers,t;a,nnis;aBceWeAh9il8now,o7p4te3u1;g1nshi0Q;ar;am,el;ace2e1;ciPed;!c16;ap,cc0ft0E;k,v0;eep,opp0T;riK;d0Afe0Jl1nd;m0Vt;aQe1i10;c1laxa0Hsearch;ogni0Grea0G;a5e3hys0JlastAo2r1;ess02ogre05;rk,w0;a1pp0trol;ce,nT;p0tiM;il,xygen;ews,oi0G;a7ea5i4o3u1;mps,s1;ic;nJo0C;lk,st;sl1t;es;chi1il,themat04;neF;aught0e3i2u1;ck,g0B;ghtn03quid,teratK;a1isJ;th0;elv1nowled08;in;ewel7usti09;ce,mp1nformaQtself;ati1ortan07;en06;a4ertz,isto3o1;ck1mework,n1spitaliL;ey;ry;ir,lib1ppi9;ut;o2r1um,ymnastL;a7ound;l1ssip;d,f;ahrenhe6i5lour,o2ru6urnit1;ure;od,rgive1wl;ne1;ss;c8sh;it;conomAduca6lectrici5n3quip4thAvery1;body,o1thC;ne;joy1tertain1;ment;ty;tiC;a8elcius,h4iv3loth6o1urrency;al,ffee,n1ttA;duct,fusi9;ics;aos,e1;e2w1;ing;se;ke,sh;a3eef,is2lood,read,utt0;er;on;g1ss;ga1;ge;dvi2irc1rt;raft;ce"
+},{}],230:[function(_dereq_,module,exports){
 /* nlp-compromise/efrt v0.0.6
  usage: unpack(myPackedString).has(word)
  by @spencermountain MIT
@@ -13402,7 +13508,7 @@ var index = function(str) {
 
 module.exports = index;
 
-},{}],229:[function(_dereq_,module,exports){
+},{}],231:[function(_dereq_,module,exports){
 'use strict';
 //to change these packed files, edit ./data then run `node scripts/pack.js`
 const unpack = _dereq_('./efrt-unpack');
@@ -13492,5 +13598,5 @@ module.exports = {
   multiples: multiples,
 };
 
-},{"./_packed/_adjectives":208,"./_packed/_adverbs":209,"./_packed/_airports":210,"./_packed/_cities":211,"./_packed/_countries":212,"./_packed/_demonyms":213,"./_packed/_expressions":214,"./_packed/_female":215,"./_packed/_firstnames":216,"./_packed/_holidays":217,"./_packed/_lastnames":218,"./_packed/_male":219,"./_packed/_nouns":220,"./_packed/_orgWords":221,"./_packed/_organizations":222,"./_packed/_phrasals":223,"./_packed/_prepositions":224,"./_packed/_professions":225,"./_packed/_sportsTeams":226,"./_packed/_uncountables":227,"./efrt-unpack":228}]},{},[22])(22)
+},{"./_packed/_adjectives":210,"./_packed/_adverbs":211,"./_packed/_airports":212,"./_packed/_cities":213,"./_packed/_countries":214,"./_packed/_demonyms":215,"./_packed/_expressions":216,"./_packed/_female":217,"./_packed/_firstnames":218,"./_packed/_holidays":219,"./_packed/_lastnames":220,"./_packed/_male":221,"./_packed/_nouns":222,"./_packed/_orgWords":223,"./_packed/_organizations":224,"./_packed/_phrasals":225,"./_packed/_prepositions":226,"./_packed/_professions":227,"./_packed/_sportsTeams":228,"./_packed/_uncountables":229,"./efrt-unpack":230}]},{},[22])(22)
 });

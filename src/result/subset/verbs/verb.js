@@ -6,23 +6,24 @@ const interpret = require('./interpret');
 const toNegative = require('./toNegative');
 const isPlural = require('./methods/isPlural');
 
-class Verb extends Terms {
-  constructor(arr, lexicon, refText, refTerms) {
-    super(arr, lexicon, refText, refTerms);
-    this.parse();
+const parse = function(r) {
+  r.negative = r.match('#Negative');
+  r.adverbs = r.match('#Adverb');
+  let aux = r.clone().not('(#Adverb|#Negative)');
+  r.verb = aux.match('#Verb').not('#Particle').last();
+  r.particle = aux.match('#Particle').last();
+  if (r.verb.found) {
+    r.verb = r.verb.list[0].terms[0];
   }
-  parse() {
-    this.negative = this.match('#Negative');
-    this.adverbs = this.match('#Adverb');
-    let aux = this.clone().not('(#Adverb|#Negative)');
-    this.verb = aux.match('#Verb').not('#Particle').last();
-    this.particle = aux.match('#Particle').last();
-    if (this.verb.found) {
-      this.verb = this.verb.list[0].terms[0];
-    }
-    this.auxiliary = aux.match('#Auxiliary+');
-  }
-  data(verbose) {
+  r.auxiliary = aux.match('#Auxiliary+');
+  return r;
+};
+
+const methods = {
+  parse: function() {
+    return parse(this);
+  },
+  data: function(verbose) {
     return {
       text: this.out('text'),
       normal: this.out('normal'),
@@ -35,66 +36,76 @@ class Verb extends Terms {
       interpret: interpret(this, verbose),
       conjugations: this.conjugate()
     };
-  }
-  getNoun() {
+  },
+  getNoun: function() {
     if (!this.refTerms) {
       return null;
     }
     let str = '#Adjective? #Noun+ ' + this.out('normal');
     return this.refTerms.match(str).match('#Noun+');
-  }
+  },
   //which conjugation is this right now?
-  conjugation() {
+  conjugation: function() {
     return interpret(this, false).tense;
-  }
+  },
   //blast-out all forms
-  conjugate(verbose) {
+  conjugate: function(verbose) {
     return conjugate(this, verbose);
-  }
+  },
 
-  isPlural() {
+  isPlural: function() {
     return isPlural(this);
-  }
+  },
   /** negation **/
-  isNegative() {
+  isNegative: function() {
     return this.match('#Negative').list.length === 1;
-  }
-  isPerfect() {
+  },
+  isPerfect: function() {
     return this.auxiliary.match('(have|had)').found;
-  }
-  toNegative() {
+  },
+  toNegative: function() {
     if (this.isNegative()) {
       return this;
     }
     return toNegative(this);
-  }
-  toPositive() {
+  },
+  toPositive: function() {
     return this.match('#Negative').delete();
-  }
+  },
 
   /** conjugation **/
-  toPastTense() {
+  toPastTense: function() {
     let obj = this.conjugate();
     return this.replaceWith(obj.PastTense);
-  }
-  toPresentTense() {
+  },
+  toPresentTense: function() {
     let obj = this.conjugate();
     return this.replaceWith(obj.PresentTense);
-  }
-  toFutureTense() {
+  },
+  toFutureTense: function() {
     let obj = this.conjugate();
     return this.replaceWith(obj.FutureTense);
-  }
-  toInfinitive() {
+  },
+  toInfinitive: function() {
     let obj = this.conjugate();
     //NOT GOOD. please fix
     this.terms[this.terms.length - 1].text = obj.Infinitive;
     return this;
-  }
-
-  asAdjective() {
+  },
+  asAdjective: function() {
     return toAdjective(this.verb.out('normal'));
   }
+};
 
-}
+const Verb = function(arr, lexicon, refText, parentTerms) {
+  Terms.call(this, arr, lexicon, refText, parentTerms);
+  //basic verb-phrase parsing:
+  return parse(this);
+};
+//Terms inheritence
+Verb.prototype = Object.create(Terms.prototype);
+//apply methods
+Object.keys(methods).forEach((k) => {
+  Verb.prototype[k] = methods[k];
+});
 module.exports = Verb;

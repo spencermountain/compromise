@@ -7,6 +7,15 @@ const toNiceNumber = require('./toNiceNumber');
 const numOrdinal = require('./numOrdinal');
 const textOrdinal = require('./textOrdinal');
 
+const Value = function(arr, lexicon, refText, refTerms) {
+  Terms.call(this, arr, lexicon, refText, refTerms);
+  this.val = this.match('#Value+').list[0];
+  this.unit = this.match('#Unit$').list[0];
+};
+//Terms inheritence
+Value.prototype = Object.create(Terms.prototype);
+
+
 const isOrdinal = (ts) => {
   let t = ts.terms[ts.terms.length - 1];
   if (!t) {
@@ -32,18 +41,14 @@ const isNumber = (ts) => {
   return true;
 };
 
-class Value extends Terms {
-  constructor(arr, lexicon, refText, refTerms) {
-    super(arr, lexicon, refText, refTerms);
-    this.val = this.match('#Value+').list[0];
-    this.unit = this.match('#Unit$').list[0];
-  }
-  number() {
+
+const methods = {
+  number: function() {
     let num = parse(this.val);
     return num;
-  }
+  },
   /** five -> '5' */
-  toNumber() {
+  toNumber: function() {
     let val = this.val;
     // this.debug();
     //is already
@@ -62,9 +67,9 @@ class Value extends Terms {
       }
     }
     return this;
-  }
+  },
   /**5 -> 'five' */
-  toTextValue() {
+  toTextValue: function() {
     let val = this.val;
     //is already
     if (isText(val)) {
@@ -79,10 +84,10 @@ class Value extends Terms {
     let str = toText(num).join(' ');
     this.replaceWith(str, 'Value');
     return this;
-  }
+  },
 
   /**5th -> 5 */
-  toCardinal() {
+  toCardinal: function() {
     let val = this.val;
     //already
     if (!isOrdinal(val)) {
@@ -96,10 +101,10 @@ class Value extends Terms {
     }
     let num = '' + parse(val);
     return this.replaceWith(num, 'Value');
-  }
+  },
 
   /**5 -> 5th */
-  toOrdinal() {
+  toOrdinal: function() {
     let val = this.val;
     //already
     if (isOrdinal(val)) {
@@ -115,17 +120,17 @@ class Value extends Terms {
       this.replaceWith(str, 'Value');
     }
     return this;
-  }
+  },
 
   /**5900 -> 5,900 */
-  toNiceNumber() {
+  toNiceNumber: function() {
     let num = parse(this);
     let str = toNiceNumber(num);
     this.replaceWith(str, 'Value');
     return this;
-  }
+  },
 
-  data() {
+  data: function() {
     let numV = this.clone().toNumber();
     let txtV = this.clone().toTextValue();
     let obj = {
@@ -145,12 +150,17 @@ class Value extends Terms {
     }
     obj.number = this.number();
     return obj;
+  },
+  clone : function() {
+    let terms = this.terms.map((t) => {
+      return t.clone();
+    });
+    return new Value(terms, this.lexicon, this.refText, this.refTerms);
   }
-}
-Value.prototype.clone = function() {
-  let terms = this.terms.map((t) => {
-    return t.clone();
-  });
-  return new Value(terms, this.lexicon, this.refText, this.refTerms);
 };
+
+
+Object.keys(methods).forEach((k) => {
+  Value.prototype[k] = methods[k];
+});
 module.exports = Value;

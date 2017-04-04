@@ -5,34 +5,31 @@ const toPositive = require('./toPositive');
 const Verb = require('../verbs/verb');
 const insert = require('./smartInsert');
 
-class Sentence extends Terms {
-  constructor(arr, lexicon, refText, refTerms) {
-    super(arr, lexicon, refText, refTerms);
-  }
+const methods = {
   /** inflect the main/first noun*/
-  toSingular() {
+  toSingular: function() {
     let nouns = this.match('#Noun').match('!#Pronoun').firstTerm();
     nouns.things().toSingular();
     return this;
-  }
-  toPlural() {
+  },
+  toPlural: function() {
     let nouns = this.match('#Noun').match('!#Pronoun').firstTerm();
     nouns.things().toPlural();
     return this;
-  }
+  },
 
   /** find the first important verbPhrase. returns a Term object */
-  mainVerb() {
+  mainVerb: function() {
     let terms = this.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
     if (terms.found) {
       terms = terms.list[0].terms;
       return new Verb(terms, this.lexicon, this.refText, this.refTerms);
     }
     return null;
-  }
+  },
 
   /** sentence tense conversion**/
-  toPastTense() {
+  toPastTense: function() {
     let verb = this.mainVerb();
     if (verb) {
       //this is really ugly..
@@ -44,8 +41,8 @@ class Sentence extends Terms {
       return r;
     }
     return this;
-  }
-  toPresentTense() {
+  },
+  toPresentTense: function() {
     let verb = this.mainVerb();
     if (verb) {
       let start = verb.out('normal');
@@ -54,8 +51,8 @@ class Sentence extends Terms {
       return this.parentTerms.replace(start, end);
     }
     return this;
-  }
-  toFutureTense() {
+  },
+  toFutureTense: function() {
     let verb = this.mainVerb();
     if (verb) {
       let start = verb.out('normal');
@@ -64,45 +61,56 @@ class Sentence extends Terms {
       return this.parentTerms.replace(start, end);
     }
     return this;
-  }
+  },
 
   /** negation **/
-  isNegative() {
+  isNegative: function() {
     return this.match('#Negative').list.length === 1;
-  }
-  toNegative() {
+  },
+  toNegative: function() {
     if (this.isNegative()) {
       return this;
     }
     return toNegative(this);
-  }
-  toPositive() {
+  },
+  toPositive: function() {
     if (!this.isNegative()) {
       return this;
     }
     return toPositive(this);
-  }
+  },
 
   /** smarter insert methods*/
-  append(str) {
+  append: function(str) {
     return insert.append(this, str);
-  }
-  prepend(str) {
+  },
+  prepend: function(str) {
     return insert.prepend(this, str);
-  }
+  },
 
   /** punctuation */
-  setPunctuation(punct) {
+  setPunctuation: function(punct) {
     let last = this.terms[this.terms.length - 1];
     last.setPunctuation(punct);
-  }
-  getPunctuation() {
+  },
+  getPunctuation: function() {
     let last = this.terms[this.terms.length - 1];
     return last.getPunctuation();
-  }
+  },
   /** look for 'was _ by' patterns */
-  isPassive() {
+  isPassive: function() {
     return this.match('was #Adverb? #PastTense #Adverb? by').found; //haha
   }
-}
+};
+
+const Sentence = function(arr, lexicon, refText, refTerms) {
+  Terms.call(this, arr, lexicon, refText, refTerms);
+  this.t = this.terms[0];
+};
+//Terms inheritence
+Sentence.prototype = Object.create(Terms.prototype);
+//add-in methods
+Object.keys(methods).forEach((k) => {
+  Sentence.prototype[k] = methods[k];
+});
 module.exports = Sentence;

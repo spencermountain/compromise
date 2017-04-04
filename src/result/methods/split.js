@@ -36,10 +36,12 @@ const splitMethods = (Text) => {
       this.list = list;
       return this;
     },
-  };
+  }
 
   //hook them into result.proto
-  Text.addMethods(Text, methods);
+  Object.keys(methods).forEach((k) => {
+    Text.prototype[k] = methods[k];
+  });
   return Text;
 };
 

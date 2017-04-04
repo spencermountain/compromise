@@ -1,24 +1,10 @@
 'use strict';
 const Terms = require('../../terms');
 
-const miscMethods = (Text) => {
+const genericMethods = (Text) => {
 
   const methods = {
-    all: function() {
-      return this.parent;
-    },
-    index: function() {
-      return this.list.map((ts) => ts.index());
-    },
-    wordCount: function() {
-      return this.terms().length;
-    },
-    data: function() {
-      return this.list.map((ts) => ts.data());
-    },
-    debug: function(opts) {
-      return out(this, 'debug', opts);
-    },
+
     /**copy data properly so later transformations will have no effect*/
     clone: function () {
       let list = this.list.map((ts) => {
@@ -114,14 +100,17 @@ const miscMethods = (Text) => {
     canBe: function (tag) {
       this.list.forEach((ts) => {
         ts.terms = ts.terms.filter((t) => {
-          return t.canBe(tag);
+          return t.canBe(tag, this.tagSet);
         });
       });
       return this;
     },
 
   };
-  Text.addMethods(Text, methods);
+
+  Object.keys(methods).forEach((k) => {
+    Text.prototype[k] = methods[k];
+  });
 };
 
-module.exports = miscMethods;
+module.exports = genericMethods;

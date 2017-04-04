@@ -1,31 +1,29 @@
 'use strict';
 const Text = require('../../index');
-const fns = require('./methods');
-//the Adjectives() subset class
+const methods = require('./methods');
 
-const methods = {
-  data: function() {
+class Adjectives extends Text {
+  data() {
     return this.list.map((ts) => {
       const str = ts.out('normal');
       return {
-        comparative: fns.toComparative(str),
-        superlative: fns.toSuperlative(str),
-        adverbForm: fns.toAdverb(str),
-        nounForm: fns.toNoun(str),
-        verbForm: fns.toVerb(str),
+        comparative: methods.toComparative(str),
+        superlative: methods.toSuperlative(str),
+        adverbForm: methods.toAdverb(str),
+        nounForm: methods.toNoun(str),
+        verbForm: methods.toVerb(str),
         normal: str,
         text: this.out('text')
       };
     });
   }
-};
-
-const find = function(r, n) {
-  r = r.match('#Adjective');
-  if (typeof n === 'number') {
-    r = r.get(n);
+  static find(r, n) {
+    r = r.match('#Adjective');
+    if (typeof n === 'number') {
+      r = r.get(n);
+    }
+    return r;
   }
-  return r;
-};
+}
 
-module.exports = Text.makeSubset(methods, find);
+module.exports = Adjectives;

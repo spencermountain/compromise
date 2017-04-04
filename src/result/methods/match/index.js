@@ -115,8 +115,10 @@ const splitMethods = (Text) => {
   //alias 'and'
   methods.and = methods.match;
 
-  //hook them into result.proto  
-  Text.addMethods(Text, methods);
+  //hook them into result.proto
+  Object.keys(methods).forEach((k) => {
+    Text.prototype[k] = methods[k];
+  });
   return Text;
 };
 

@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "9.0.0",
+  "version": "9.1.0",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -2461,6 +2461,25 @@ var findOffset = function findOffset(parent, term) {
   return null;
 };
 
+//like 'text' for the middle, and 'normal' for the start+ends
+//used for highlighting the actual words, without whitespace+punctuation
+var trimEnds = function trimEnds(ts) {
+  var terms = ts.terms;
+  if (terms.length <= 2) {
+    return ts.out('normal');
+  }
+  //the start
+  var str = terms[0].normal;
+  //the middle
+  for (var i = 1; i < terms.length - 1; i++) {
+    var t = terms[i];
+    str += t.whitespace.before + t.text + t.whitespace.after;
+  }
+  //the end
+  str += ' ' + terms[ts.terms.length - 1].normal;
+  return str;
+};
+
 //map over all-dem-results
 var allOffset = function allOffset(r) {
   var parent = r.all();
@@ -2469,14 +2488,14 @@ var allOffset = function allOffset(r) {
     for (var i = 0; i < ts.terms.length; i++) {
       words.push(ts.terms[i].normal);
     }
-    var nrml = ts.out('normal');
+    var nrml = trimEnds(ts);
     var txt = ts.out('text');
     var startAt = findOffset(parent, ts.terms[0]);
     var beforeWord = ts.terms[0].whitespace.before;
     var wordStart = startAt + beforeWord.length;
     return {
       text: txt,
-      normal: nrml,
+      normal: ts.out('normal'),
       //where we begin
       offset: startAt,
       length: txt.length,
@@ -9856,13 +9875,12 @@ var Term = function Term(str) {
   });
 };
 
-//run each time a new text is set
+/**run each time a new text is set */
 Term.prototype.normalize = function () {
   addNormal(this);
   addRoot(this);
   return this;
 };
-
 /** where in the sentence is it? zero-based. */
 Term.prototype.index = function () {
   var ts = this.parentTerms;
@@ -9880,7 +9898,6 @@ Term.prototype.clone = function () {
   return term;
 };
 
-// require('./methods/normalize')(Term);
 _dereq_('./methods/misc')(Term);
 _dereq_('./methods/out')(Term);
 _dereq_('./methods/tag')(Term);

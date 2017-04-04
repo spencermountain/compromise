@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "9.0.0",
+  "version": "9.1.0",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -3419,6 +3419,25 @@ const findOffset = (parent, term) => {
   return null;
 };
 
+//like 'text' for the middle, and 'normal' for the start+ends
+//used for highlighting the actual words, without whitespace+punctuation
+const trimEnds = function(ts) {
+  let terms = ts.terms;
+  if (terms.length <= 2) {
+    return ts.out('normal');
+  }
+  //the start
+  let str = terms[0].normal;
+  //the middle
+  for(let i = 1; i < terms.length - 1; i++) {
+    let t = terms[i];
+    str += t.whitespace.before + t.text + t.whitespace.after;
+  }
+  //the end
+  str += ' ' + terms[ts.terms.length - 1].normal;
+  return str;
+};
+
 //map over all-dem-results
 const allOffset = (r) => {
   let parent = r.all();
@@ -3427,14 +3446,14 @@ const allOffset = (r) => {
     for(let i = 0; i < ts.terms.length; i++) {
       words.push(ts.terms[i].normal);
     }
-    let nrml = ts.out('normal');
+    let nrml = trimEnds(ts);
     let txt = ts.out('text');
     let startAt = findOffset(parent, ts.terms[0]);
     let beforeWord = ts.terms[0].whitespace.before;
     let wordStart = startAt + beforeWord.length;
     return {
       text: txt,
-      normal: nrml,
+      normal: ts.out('normal'),
       //where we begin
       offset: startAt,
       length: txt.length,
@@ -11102,13 +11121,12 @@ const Term = function(str) {
   });
 };
 
-//run each time a new text is set
+/**run each time a new text is set */
 Term.prototype.normalize = function() {
   addNormal(this);
   addRoot(this);
   return this;
 };
-
 /** where in the sentence is it? zero-based. */
 Term.prototype.index = function() {
   let ts = this.parentTerms;
@@ -11126,7 +11144,6 @@ Term.prototype.clone = function() {
   return term;
 };
 
-// require('./methods/normalize')(Term);
 _dereq_('./methods/misc')(Term);
 _dereq_('./methods/out')(Term);
 _dereq_('./methods/tag')(Term);

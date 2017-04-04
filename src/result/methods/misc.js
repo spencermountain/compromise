@@ -4,7 +4,26 @@ const Terms = require('../../terms');
 const genericMethods = (Text) => {
 
   const methods = {
-
+    all: function() {
+      return this.parent;
+    },
+    index: function() {
+      return this.list.map((ts) => ts.index());
+    },
+    wordCount: function() {
+      return this.terms().length;
+    },
+    data: function() {
+      return this.list.map((ts) => {
+        return {
+          normal: ts.out('normal'),
+          text: ts.out('text')
+        };
+      });
+    },
+    debug: function(opts) {
+      return out(this, 'debug', opts);
+    },
     /**copy data properly so later transformations will have no effect*/
     clone: function () {
       let list = this.list.map((ts) => {

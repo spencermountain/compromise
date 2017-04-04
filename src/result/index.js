@@ -1,50 +1,22 @@
 'use strict';
 //a Text is an array of termLists
-class Text {
-  constructor(arr, lexicon, reference) {
-    this.list = arr || [];
-    this.reference = reference;
-  }
-  //getter/setters
+
+const getters = {
   /** did it find anything? */
-  get found() {
+  found: function() {
     return this.list.length > 0;
-  }
-  /** how many Texts are there?*/
-  get length() {
-    return this.list.length;
-  }
-  get isA() {
-    return 'Text';
-  }
-  get parent() {
+  },
+  parent: function() {
     return this.reference || this;
-  }
-  set parent(r) {
-    this.reference = r;
-    return this;
-  }
-  all() {
-    return this.parent;
-  }
-  index() {
-    return this.list.map((ts) => ts.index());
-  }
-  wordCount() {
-    return this.terms().length;
-  }
-  data() {
-    return this.list.map((ts) => {
-      return {
-        normal: ts.out('normal'),
-        text: ts.out('text')
-      };
-    });
-  }
-  debug(opts) {
-    return out(this, 'debug', opts);
-  }
-  get whitespace() {
+  },
+  /** how many Texts are there?*/
+  length: function() {
+    return this.list.length;
+  },
+  isA: function() {
+    return 'Text';
+  },
+  whitespace: function() {
     return {
       before: (str) => {
         this.list.forEach((ts) => {
@@ -60,8 +32,23 @@ class Text {
       }
     };
   }
-}
 
+};
+
+function Text(arr, lexicon, reference) {
+  this.list = arr || [];
+  this.lexicon = lexicon;
+  this.reference = reference;
+
+  //apply getters
+  let keys = Object.keys(getters);
+  for(let i = 0; i < keys.length; i++) {
+    Object.defineProperty(this, keys[i], {
+      get: getters[keys[i]]
+    });
+  }
+
+}
 module.exports = Text;
 require('./methods/misc')(Text);
 require('./methods/loops')(Text);

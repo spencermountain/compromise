@@ -1,10 +1,9 @@
 'use strict';
 const bestTag = require('./bestTag');
+const isAcronym = require('./normalize/isAcronym');
+
 
 //regs-
-const periodAcronym = /([A-Z]\.)+[A-Z]?$/;
-const oneLetterAcronym = /^[A-Z]\.$/;
-const noPeriodAcronym = /[A-Z]{3}$/;
 const hasVowel = /[aeiouy]/i;
 const hasLetter = /[a-z]/;
 const hasNumber = /[0-9]/;
@@ -17,24 +16,10 @@ const addMethods = (Term) => {
     bestTag: function () {
       return bestTag(this);
     },
-
-    /** does it appear to be an acronym, like FBI or M.L.B. */
+    /** is this term like F.B.I. or NBA */
     isAcronym: function () {
-      //like N.D.A
-      if (periodAcronym.test(this.text) === true) {
-        return true;
-      }
-      //like 'F.'
-      if (oneLetterAcronym.test(this.text) === true) {
-        return true;
-      }
-      //like NDA
-      if (noPeriodAcronym.test(this.text) === true) {
-        return true;
-      }
-      return false;
+      return isAcronym(this._text);
     },
-
     /** check if it is word-like in english */
     isWord: function () {
       let t = this;

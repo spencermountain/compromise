@@ -2,6 +2,9 @@
 const fns = require('./paths').fns;
 const build_whitespace = require('./whitespace');
 const makeUID = require('./makeUID');
+//normalization
+const addNormal = require('./methods/normalize/normalize').addNormal;
+const addRoot = require('./methods/normalize/root');
 
 const Term = function(str) {
   this._text = fns.ensureString(str);
@@ -10,12 +13,13 @@ const Term = function(str) {
   let parsed = build_whitespace(this._text);
   this.whitespace = parsed.whitespace;
   this._text = parsed.text;
-  // console.log(this.whitespace, this._text);
   this.parent = null;
   this.silent_term = '';
+  //normalize the _text
+  addNormal(this);
+  addRoot(this);
   //has this term been modified
   this.dirty = false;
-  this.normalize();
   //make a unique id for this term
   this.uid = makeUID(this.normal);
 
@@ -42,6 +46,12 @@ const Term = function(str) {
   });
 };
 
+//run each time a new text is set
+Term.prototype.normalize = function() {
+  addNormal(this);
+  addRoot(this);
+  return this;
+};
 
 /** where in the sentence is it? zero-based. */
 Term.prototype.index = function() {
@@ -60,7 +70,7 @@ Term.prototype.clone = function() {
   return term;
 };
 
-require('./methods/normalize')(Term);
+// require('./methods/normalize')(Term);
 require('./methods/misc')(Term);
 require('./methods/out')(Term);
 require('./methods/tag')(Term);

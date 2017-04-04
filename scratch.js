@@ -5,7 +5,7 @@ var nlp = require('./src/index');
 // nlp.verbose('tagger');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
-const fresh = require('./test/unit/lib/freshPrince.js');
+// const fresh = require('./test/unit/lib/freshPrince.js');
 
 // bug.1
 //  .? vs *
@@ -31,5 +31,6 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // r.tag('#Person');
 // console.timeEnd('tag');
 
-let r = nlp('work with F.B.I.').nouns();
-r.debug();
+let r = nlp('the F.B.I.');
+// console.log(r.list[0].terms[1].normal);
+console.log(r.out('normal'));

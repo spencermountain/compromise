@@ -1,5 +1,7 @@
 'use strict';
 const killUnicode = require('./unicode');
+const isAcronym = require('./isAcronym');
+
 
 //some basic operations on a string to reduce noise
 exports.normalize = function(str) {
@@ -32,7 +34,7 @@ exports.addNormal = function (term) {
   let str = term._text || '';
   str = exports.normalize(str);
   //compact acronyms
-  if (term.isAcronym()) {
+  if (isAcronym(term._text)) {
     str = str.replace(/\./g, '');
   }
   //nice-numbers

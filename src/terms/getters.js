@@ -1,3 +1,4 @@
+//getters/setters for the Terms class
 module.exports = {
 
   parent: {

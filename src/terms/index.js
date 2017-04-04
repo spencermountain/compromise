@@ -2,6 +2,7 @@
 const build = require('./build');
 const getters = require('./getters');
 
+//Terms is an array of Term objects, and methods that wrap around them
 const Terms = function(arr, lexicon, refText, refTerms) {
   this.terms = arr;
   this.lexicon = lexicon;
@@ -28,8 +29,6 @@ Terms.fromString = function(str, lexicon) {
   });
   return ts;
 };
-
-
 
 // Terms = require('./methods/lookup')(Terms);
 require('./match')(Terms);

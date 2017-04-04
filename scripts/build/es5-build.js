@@ -22,8 +22,7 @@ exec('rm ' + es5min);
 
 //es5 main (browserify + derequire)
 cmd = browserify + ' "./src/index.js" --standalone nlp';
-// cmd += ' -p bundle-collapser/plugin';
-cmd += ' -t [ babelify --presets [ es2015 ] ]';
+cmd += ' -t [ babelify --presets [ stage-2 ] ]';
 cmd += ' | ' + derequire;
 cmd += ' >> ' + es5;
 exec(cmd);

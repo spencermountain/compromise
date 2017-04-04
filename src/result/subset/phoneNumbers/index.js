@@ -1,20 +1,18 @@
 'use strict';
 const Text = require('../../index');
-const toAdjective = require('./toAdjective');
 
-class Adverbs extends Text {
+class PhoneNumbers extends Text {
   data() {
     return this.terms().list.map((ts) => {
       let t = ts.terms[0];
       return {
-        adjectiveForm: toAdjective(t.normal),
-        normal: t.normal,
         text: t.text
       };
     });
   }
-  static find(r, n) {
-    r = r.match('#Adverb+');
+  static find(r) {
+    r = r.splitAfter('#Comma');
+    r = r.match('#PhoneNumber+');
     if (typeof n === 'number') {
       r = r.get(n);
     }
@@ -22,4 +20,4 @@ class Adverbs extends Text {
   }
 }
 
-module.exports = Adverbs;
+module.exports = PhoneNumbers;

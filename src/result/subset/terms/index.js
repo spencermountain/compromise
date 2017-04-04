@@ -1,41 +1,24 @@
 'use strict';
 const Text = require('../../index');
-const Terms = require('../../paths').Terms;
+const Term = require('./term');
 
-
-//the Terms() subset class
-//this is just a wrapper around the actual Term class,
-//which is buried in `ts.terms[0]`
-const methods = {
-  data: function() {
+class Terms extends Text {
+  data() {
     return this.list.map((ts) => {
-      let t = ts.terms[0];
-      return {
-        spaceBefore: t.whitespace.before,
-        text: t.text,
-        spaceAfter: t.whitespace.after,
-        normal: t.normal,
-        implicit: t.silent_term,
-        bestTag: t.bestTag(),
-        tags: Object.keys(t.tags),
-      };
+      return ts.data();
     });
   }
-};
 
-const find = function(r, n) {
-  let list = [];
-  //make a Terms Object for every Term
-  r.list.forEach((ts) => {
-    ts.terms.forEach((t) => {
-      list.push(new Terms([t], ts.lexicon, r));
+  static find(r, n) {
+    r = r.match('.');
+    if (typeof n === 'number') {
+      r = r.get(n);
+    }
+    r.list = r.list.map((ts) => {
+      return new Term(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
-  });
-  r = new Text(list, r.lexicon, r.parent);
-  if (typeof n === 'number') {
-    r = r.get(n);
+    return r;
   }
-  return r;
-};
+}
 
-module.exports = Text.makeSubset(methods, find);
+module.exports = Terms;

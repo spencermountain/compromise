@@ -46,13 +46,12 @@ const Term = function(str) {
   });
 };
 
-//run each time a new text is set
+/**run each time a new text is set */
 Term.prototype.normalize = function() {
   addNormal(this);
   addRoot(this);
   return this;
 };
-
 /** where in the sentence is it? zero-based. */
 Term.prototype.index = function() {
   let ts = this.parentTerms;
@@ -70,7 +69,6 @@ Term.prototype.clone = function() {
   return term;
 };
 
-// require('./methods/normalize')(Term);
 require('./methods/misc')(Term);
 require('./methods/out')(Term);
 require('./methods/tag')(Term);

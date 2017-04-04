@@ -4897,30 +4897,34 @@ const Ngrams = _dereq_('./index');
 const getGrams = _dereq_('./getGrams');
 
 //like an n-gram, but only the endings of matches
-class EndGrams extends Ngrams {
+const EndGrams = function(arr, lexicon, reference) {
+  Ngrams.call(this, arr, lexicon, reference);
+};
 
-  static find(r, n, size) {
-    let opts = {
-      size: [1, 2, 3, 4],
-      edge: 'end'
-    };
-    //only look for bigrams, for example
-    if (size) {
-      opts.size = [size];
-    }
-    //fetch them
-    let arr = getGrams(r, opts);
-    r = new EndGrams(arr);
-    //default sort
-    r.sort();
-    //grab top one, or something
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
+//Inherit properties
+EndGrams.prototype = Object.create(Ngrams.prototype);
+
+//like an n-gram, but only the startings of matches
+EndGrams.find = function(r, n, size) {
+  let opts = {
+    size: [1, 2, 3, 4],
+    edge: 'end'
+  };
+  //only look for bigrams, for example
+  if (size) {
+    opts.size = [size];
   }
-}
-
+  //fetch them
+  let arr = getGrams(r, opts);
+  r = new EndGrams(arr);
+  //default sort
+  r.sort();
+  //grab top one, or something
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  return r;
+};
 module.exports = EndGrams;
 
 },{"./getGrams":64,"./index":66}],64:[function(_dereq_,module,exports){
@@ -5100,30 +5104,35 @@ module.exports = Text.makeSubset(methods, find);
 const Ngrams = _dereq_('./index');
 const getGrams = _dereq_('./getGrams');
 
-//like an n-gram, but only the startings of matches
-class StartGrams extends Ngrams {
+const StartGrams = function(arr, lexicon, reference) {
+  Ngrams.call(this, arr, lexicon, reference);
+};
 
-  static find(r, n, size) {
-    let opts = {
-      size: [1, 2, 3, 4],
-      edge: 'start'
-    };
-    //only look for bigrams, for example
-    if (size) {
-      opts.size = [size];
-    }
-    //fetch them
-    let arr = getGrams(r, opts);
-    r = new StartGrams(arr);
-    //default sort
-    r.sort();
-    //grab top one, or something
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
+//Inherit properties
+StartGrams.prototype = Object.create(Ngrams.prototype);
+
+//like an n-gram, but only the startings of matches
+StartGrams.find = function(r, n, size) {
+  let opts = {
+    size: [1, 2, 3, 4],
+    edge: 'start'
+  };
+  //only look for bigrams, for example
+  if (size) {
+    opts.size = [size];
   }
-}
+  //fetch them
+  let arr = getGrams(r, opts);
+  r = new StartGrams(arr);
+  //default sort
+  r.sort();
+  //grab top one, or something
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  return r;
+};
+
 
 module.exports = StartGrams;
 
@@ -11049,57 +11058,75 @@ module.exports = {
 const fns = _dereq_('./paths').fns;
 const build_whitespace = _dereq_('./whitespace');
 const makeUID = _dereq_('./makeUID');
+//normalization
+const addNormal = _dereq_('./methods/normalize/normalize').addNormal;
+const addRoot = _dereq_('./methods/normalize/root');
 
-class Term {
-  constructor(str) {
-    this._text = fns.ensureString(str);
-    this.tags = {};
-    //seperate whitespace from the text
-    let parsed = build_whitespace(this._text);
-    this.whitespace = parsed.whitespace;
-    this._text = parsed.text;
-    // console.log(this.whitespace, this._text);
-    this.parent = null;
-    this.silent_term = '';
-    //has this term been modified
-    this.dirty = false;
-    this.normalize();
-    //make a unique id for this term
-    this.uid = makeUID(this.normal);
-  }
-  set text(str) {
-    str = str || '';
-    this._text = str.trim();
-    this.dirty = true;
-    if (this._text !== str) {
-      this.whitespace = build_whitespace(str);
+const Term = function(str) {
+  this._text = fns.ensureString(str);
+  this.tags = {};
+  //seperate whitespace from the text
+  let parsed = build_whitespace(this._text);
+  this.whitespace = parsed.whitespace;
+  this._text = parsed.text;
+  this.parent = null;
+  this.silent_term = '';
+  //normalize the _text
+  addNormal(this);
+  addRoot(this);
+  //has this term been modified
+  this.dirty = false;
+  //make a unique id for this term
+  this.uid = makeUID(this.normal);
+
+  //getters/setters
+  Object.defineProperty(this, 'text', {
+    get: function() {
+      return this._text;
+    },
+    set: function(txt) {
+      txt = txt || '';
+      this._text = txt.trim();
+      this.dirty = true;
+      if (this._text !== txt) {
+        this.whitespace = build_whitespace(txt);
+      }
+      this.normalize();
     }
-    this.normalize();
-  }
-  get text() {
-    return this._text;
-  }
-  get isA() {
-    return 'Term';
-  }
-  /** where in the sentence is it? zero-based. */
-  index() {
-    let ts = this.parentTerms;
-    if (!ts) {
-      return null;
+  });
+  //bit faster than .constructor.name or w/e
+  Object.defineProperty(this, 'isA', {
+    get: function() {
+      return 'Term';
     }
-    return ts.terms.indexOf(this);
+  });
+};
+
+//run each time a new text is set
+Term.prototype.normalize = function() {
+  addNormal(this);
+  addRoot(this);
+  return this;
+};
+
+/** where in the sentence is it? zero-based. */
+Term.prototype.index = function() {
+  let ts = this.parentTerms;
+  if (!ts) {
+    return null;
   }
-  /** make a copy with no references to the original  */
-  clone() {
-    let term = new Term(this._text, null);
-    term.tags = fns.copy(this.tags);
-    term.whitespace = fns.copy(this.whitespace);
-    term.silent_term = this.silent_term;
-    return term;
-  }
-}
-_dereq_('./methods/normalize')(Term);
+  return ts.terms.indexOf(this);
+};
+/** make a copy with no references to the original  */
+Term.prototype.clone = function() {
+  let term = new Term(this._text, null);
+  term.tags = fns.copy(this.tags);
+  term.whitespace = fns.copy(this.whitespace);
+  term.silent_term = this.silent_term;
+  return term;
+};
+
+// require('./methods/normalize')(Term);
 _dereq_('./methods/misc')(Term);
 _dereq_('./methods/out')(Term);
 _dereq_('./methods/tag')(Term);
@@ -11108,7 +11135,7 @@ _dereq_('./methods/punctuation')(Term);
 
 module.exports = Term;
 
-},{"./makeUID":170,"./methods/case":172,"./methods/misc":173,"./methods/normalize":174,"./methods/out":178,"./methods/punctuation":180,"./methods/tag":182,"./paths":185,"./whitespace":186}],170:[function(_dereq_,module,exports){
+},{"./makeUID":170,"./methods/case":172,"./methods/misc":173,"./methods/normalize/normalize":175,"./methods/normalize/root":176,"./methods/out":178,"./methods/punctuation":180,"./methods/tag":182,"./paths":185,"./whitespace":186}],170:[function(_dereq_,module,exports){
 'use strict';
 //this is a not-well-thought-out way to reduce our dependence on `object===object` reference stuff
 //generates a unique id for this term
@@ -11225,11 +11252,10 @@ module.exports = addMethods;
 },{}],173:[function(_dereq_,module,exports){
 'use strict';
 const bestTag = _dereq_('./bestTag');
+const isAcronym = _dereq_('./normalize/isAcronym');
+
 
 //regs-
-const periodAcronym = /([A-Z]\.)+[A-Z]?$/;
-const oneLetterAcronym = /^[A-Z]\.$/;
-const noPeriodAcronym = /[A-Z]{3}$/;
 const hasVowel = /[aeiouy]/i;
 const hasLetter = /[a-z]/;
 const hasNumber = /[0-9]/;
@@ -11242,24 +11268,10 @@ const addMethods = (Term) => {
     bestTag: function () {
       return bestTag(this);
     },
-
-    /** does it appear to be an acronym, like FBI or M.L.B. */
+    /** is this term like F.B.I. or NBA */
     isAcronym: function () {
-      //like N.D.A
-      if (periodAcronym.test(this.text) === true) {
-        return true;
-      }
-      //like 'F.'
-      if (oneLetterAcronym.test(this.text) === true) {
-        return true;
-      }
-      //like NDA
-      if (noPeriodAcronym.test(this.text) === true) {
-        return true;
-      }
-      return false;
+      return isAcronym(this._text);
     },
-
     /** check if it is word-like in english */
     isWord: function () {
       let t = this;
@@ -11298,32 +11310,36 @@ const addMethods = (Term) => {
 
 module.exports = addMethods;
 
-},{"./bestTag":171}],174:[function(_dereq_,module,exports){
+},{"./bestTag":171,"./normalize/isAcronym":174}],174:[function(_dereq_,module,exports){
 'use strict';
-const addNormal = _dereq_('./normalize').addNormal;
-const addRoot = _dereq_('./root');
+//regs -
+const periodAcronym = /([A-Z]\.)+[A-Z]?$/;
+const oneLetterAcronym = /^[A-Z]\.$/;
+const noPeriodAcronym = /[A-Z]{3}$/;
 
-const addMethods = (Term) => {
-
-  const methods = {
-    normalize: function () {
-      addNormal(this);
-      addRoot(this);
-      return this;
-    },
-  };
-  //hook them into result.proto
-  Object.keys(methods).forEach((k) => {
-    Term.prototype[k] = methods[k];
-  });
-  return Term;
+/** does it appear to be an acronym, like FBI or M.L.B. */
+const isAcronym = function (str) {
+  //like N.D.A
+  if (periodAcronym.test(str) === true) {
+    return true;
+  }
+  //like 'F.'
+  if (oneLetterAcronym.test(str) === true) {
+    return true;
+  }
+  //like NDA
+  if (noPeriodAcronym.test(str) === true) {
+    return true;
+  }
+  return false;
 };
+module.exports = isAcronym;
 
-module.exports = addMethods;
-
-},{"./normalize":175,"./root":176}],175:[function(_dereq_,module,exports){
+},{}],175:[function(_dereq_,module,exports){
 'use strict';
 const killUnicode = _dereq_('./unicode');
+const isAcronym = _dereq_('./isAcronym');
+
 
 //some basic operations on a string to reduce noise
 exports.normalize = function(str) {
@@ -11356,7 +11372,7 @@ exports.addNormal = function (term) {
   let str = term._text || '';
   str = exports.normalize(str);
   //compact acronyms
-  if (term.isAcronym()) {
+  if (isAcronym(term._text)) {
     str = str.replace(/\./g, '');
   }
   //nice-numbers
@@ -11367,7 +11383,7 @@ exports.addNormal = function (term) {
 
 // console.log(normalize('Dr. V Cooper'));
 
-},{"./unicode":177}],176:[function(_dereq_,module,exports){
+},{"./isAcronym":174,"./unicode":177}],176:[function(_dereq_,module,exports){
 'use strict';
 //
 const rootForm = function(term) {

@@ -3938,55 +3938,38 @@ module.exports = {
 },{"./data":61}],63:[function(_dereq_,module,exports){
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Ngrams = _dereq_('./index');
 var getGrams = _dereq_('./getGrams');
 
 //like an n-gram, but only the endings of matches
+var EndGrams = function EndGrams(arr, lexicon, reference) {
+  Ngrams.call(this, arr, lexicon, reference);
+};
 
-var EndGrams = function (_Ngrams) {
-  _inherits(EndGrams, _Ngrams);
+//Inherit properties
+EndGrams.prototype = Object.create(Ngrams.prototype);
 
-  function EndGrams() {
-    _classCallCheck(this, EndGrams);
-
-    return _possibleConstructorReturn(this, (EndGrams.__proto__ || Object.getPrototypeOf(EndGrams)).apply(this, arguments));
+//like an n-gram, but only the startings of matches
+EndGrams.find = function (r, n, size) {
+  var opts = {
+    size: [1, 2, 3, 4],
+    edge: 'end'
+  };
+  //only look for bigrams, for example
+  if (size) {
+    opts.size = [size];
   }
-
-  _createClass(EndGrams, null, [{
-    key: 'find',
-    value: function find(r, n, size) {
-      var opts = {
-        size: [1, 2, 3, 4],
-        edge: 'end'
-      };
-      //only look for bigrams, for example
-      if (size) {
-        opts.size = [size];
-      }
-      //fetch them
-      var arr = getGrams(r, opts);
-      r = new EndGrams(arr);
-      //default sort
-      r.sort();
-      //grab top one, or something
-      if (typeof n === 'number') {
-        r = r.get(n);
-      }
-      return r;
-    }
-  }]);
-
-  return EndGrams;
-}(Ngrams);
-
+  //fetch them
+  var arr = getGrams(r, opts);
+  r = new EndGrams(arr);
+  //default sort
+  r.sort();
+  //grab top one, or something
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  return r;
+};
 module.exports = EndGrams;
 
 },{"./getGrams":64,"./index":66}],64:[function(_dereq_,module,exports){
@@ -4171,54 +4154,37 @@ module.exports = Text.makeSubset(methods, find);
 },{"../../index":26,"./getGrams":64}],67:[function(_dereq_,module,exports){
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Ngrams = _dereq_('./index');
 var getGrams = _dereq_('./getGrams');
 
+var StartGrams = function StartGrams(arr, lexicon, reference) {
+  Ngrams.call(this, arr, lexicon, reference);
+};
+
+//Inherit properties
+StartGrams.prototype = Object.create(Ngrams.prototype);
+
 //like an n-gram, but only the startings of matches
-
-var StartGrams = function (_Ngrams) {
-  _inherits(StartGrams, _Ngrams);
-
-  function StartGrams() {
-    _classCallCheck(this, StartGrams);
-
-    return _possibleConstructorReturn(this, (StartGrams.__proto__ || Object.getPrototypeOf(StartGrams)).apply(this, arguments));
+StartGrams.find = function (r, n, size) {
+  var opts = {
+    size: [1, 2, 3, 4],
+    edge: 'start'
+  };
+  //only look for bigrams, for example
+  if (size) {
+    opts.size = [size];
   }
-
-  _createClass(StartGrams, null, [{
-    key: 'find',
-    value: function find(r, n, size) {
-      var opts = {
-        size: [1, 2, 3, 4],
-        edge: 'start'
-      };
-      //only look for bigrams, for example
-      if (size) {
-        opts.size = [size];
-      }
-      //fetch them
-      var arr = getGrams(r, opts);
-      r = new StartGrams(arr);
-      //default sort
-      r.sort();
-      //grab top one, or something
-      if (typeof n === 'number') {
-        r = r.get(n);
-      }
-      return r;
-    }
-  }]);
-
-  return StartGrams;
-}(Ngrams);
+  //fetch them
+  var arr = getGrams(r, opts);
+  r = new StartGrams(arr);
+  //default sort
+  r.sort();
+  //grab top one, or something
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  return r;
+};
 
 module.exports = StartGrams;
 
@@ -9843,81 +9809,78 @@ module.exports = {
 },{}],169:[function(_dereq_,module,exports){
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 var fns = _dereq_('./paths').fns;
 var build_whitespace = _dereq_('./whitespace');
 var makeUID = _dereq_('./makeUID');
+//normalization
+var addNormal = _dereq_('./methods/normalize/normalize').addNormal;
+var addRoot = _dereq_('./methods/normalize/root');
 
-var Term = function () {
-  function Term(str) {
-    _classCallCheck(this, Term);
+var Term = function Term(str) {
+  this._text = fns.ensureString(str);
+  this.tags = {};
+  //seperate whitespace from the text
+  var parsed = build_whitespace(this._text);
+  this.whitespace = parsed.whitespace;
+  this._text = parsed.text;
+  this.parent = null;
+  this.silent_term = '';
+  //normalize the _text
+  addNormal(this);
+  addRoot(this);
+  //has this term been modified
+  this.dirty = false;
+  //make a unique id for this term
+  this.uid = makeUID(this.normal);
 
-    this._text = fns.ensureString(str);
-    this.tags = {};
-    //seperate whitespace from the text
-    var parsed = build_whitespace(this._text);
-    this.whitespace = parsed.whitespace;
-    this._text = parsed.text;
-    // console.log(this.whitespace, this._text);
-    this.parent = null;
-    this.silent_term = '';
-    //has this term been modified
-    this.dirty = false;
-    this.normalize();
-    //make a unique id for this term
-    this.uid = makeUID(this.normal);
-  }
-
-  _createClass(Term, [{
-    key: 'index',
-
-    /** where in the sentence is it? zero-based. */
-    value: function index() {
-      var ts = this.parentTerms;
-      if (!ts) {
-        return null;
-      }
-      return ts.terms.indexOf(this);
-    }
-    /** make a copy with no references to the original  */
-
-  }, {
-    key: 'clone',
-    value: function clone() {
-      var term = new Term(this._text, null);
-      term.tags = fns.copy(this.tags);
-      term.whitespace = fns.copy(this.whitespace);
-      term.silent_term = this.silent_term;
-      return term;
-    }
-  }, {
-    key: 'text',
-    set: function set(str) {
-      str = str || '';
-      this._text = str.trim();
-      this.dirty = true;
-      if (this._text !== str) {
-        this.whitespace = build_whitespace(str);
-      }
-      this.normalize();
-    },
+  //getters/setters
+  Object.defineProperty(this, 'text', {
     get: function get() {
       return this._text;
+    },
+    set: function set(txt) {
+      txt = txt || '';
+      this._text = txt.trim();
+      this.dirty = true;
+      if (this._text !== txt) {
+        this.whitespace = build_whitespace(txt);
+      }
+      this.normalize();
     }
-  }, {
-    key: 'isA',
+  });
+  //bit faster than .constructor.name or w/e
+  Object.defineProperty(this, 'isA', {
     get: function get() {
       return 'Term';
     }
-  }]);
+  });
+};
 
-  return Term;
-}();
+//run each time a new text is set
+Term.prototype.normalize = function () {
+  addNormal(this);
+  addRoot(this);
+  return this;
+};
 
-_dereq_('./methods/normalize')(Term);
+/** where in the sentence is it? zero-based. */
+Term.prototype.index = function () {
+  var ts = this.parentTerms;
+  if (!ts) {
+    return null;
+  }
+  return ts.terms.indexOf(this);
+};
+/** make a copy with no references to the original  */
+Term.prototype.clone = function () {
+  var term = new Term(this._text, null);
+  term.tags = fns.copy(this.tags);
+  term.whitespace = fns.copy(this.whitespace);
+  term.silent_term = this.silent_term;
+  return term;
+};
+
+// require('./methods/normalize')(Term);
 _dereq_('./methods/misc')(Term);
 _dereq_('./methods/out')(Term);
 _dereq_('./methods/tag')(Term);
@@ -9926,7 +9889,7 @@ _dereq_('./methods/punctuation')(Term);
 
 module.exports = Term;
 
-},{"./makeUID":170,"./methods/case":172,"./methods/misc":173,"./methods/normalize":174,"./methods/out":178,"./methods/punctuation":180,"./methods/tag":182,"./paths":185,"./whitespace":186}],170:[function(_dereq_,module,exports){
+},{"./makeUID":170,"./methods/case":172,"./methods/misc":173,"./methods/normalize/normalize":175,"./methods/normalize/root":176,"./methods/out":178,"./methods/punctuation":180,"./methods/tag":182,"./paths":185,"./whitespace":186}],170:[function(_dereq_,module,exports){
 'use strict';
 //this is a not-well-thought-out way to reduce our dependence on `object===object` reference stuff
 //generates a unique id for this term
@@ -10032,11 +9995,9 @@ module.exports = addMethods;
 'use strict';
 
 var _bestTag = _dereq_('./bestTag');
+var _isAcronym = _dereq_('./normalize/isAcronym');
 
 //regs-
-var periodAcronym = /([A-Z]\.)+[A-Z]?$/;
-var oneLetterAcronym = /^[A-Z]\.$/;
-var noPeriodAcronym = /[A-Z]{3}$/;
 var hasVowel = /[aeiouy]/i;
 var hasLetter = /[a-z]/;
 var hasNumber = /[0-9]/;
@@ -10049,24 +10010,10 @@ var addMethods = function addMethods(Term) {
     bestTag: function bestTag() {
       return _bestTag(this);
     },
-
-    /** does it appear to be an acronym, like FBI or M.L.B. */
+    /** is this term like F.B.I. or NBA */
     isAcronym: function isAcronym() {
-      //like N.D.A
-      if (periodAcronym.test(this.text) === true) {
-        return true;
-      }
-      //like 'F.'
-      if (oneLetterAcronym.test(this.text) === true) {
-        return true;
-      }
-      //like NDA
-      if (noPeriodAcronym.test(this.text) === true) {
-        return true;
-      }
-      return false;
+      return _isAcronym(this._text);
     },
-
     /** check if it is word-like in english */
     isWord: function isWord() {
       var t = this;
@@ -10105,34 +10052,37 @@ var addMethods = function addMethods(Term) {
 
 module.exports = addMethods;
 
-},{"./bestTag":171}],174:[function(_dereq_,module,exports){
+},{"./bestTag":171,"./normalize/isAcronym":174}],174:[function(_dereq_,module,exports){
 'use strict';
+//regs -
 
-var addNormal = _dereq_('./normalize').addNormal;
-var addRoot = _dereq_('./root');
+var periodAcronym = /([A-Z]\.)+[A-Z]?$/;
+var oneLetterAcronym = /^[A-Z]\.$/;
+var noPeriodAcronym = /[A-Z]{3}$/;
 
-var addMethods = function addMethods(Term) {
-
-  var methods = {
-    normalize: function normalize() {
-      addNormal(this);
-      addRoot(this);
-      return this;
-    }
-  };
-  //hook them into result.proto
-  Object.keys(methods).forEach(function (k) {
-    Term.prototype[k] = methods[k];
-  });
-  return Term;
+/** does it appear to be an acronym, like FBI or M.L.B. */
+var isAcronym = function isAcronym(str) {
+  //like N.D.A
+  if (periodAcronym.test(str) === true) {
+    return true;
+  }
+  //like 'F.'
+  if (oneLetterAcronym.test(str) === true) {
+    return true;
+  }
+  //like NDA
+  if (noPeriodAcronym.test(str) === true) {
+    return true;
+  }
+  return false;
 };
+module.exports = isAcronym;
 
-module.exports = addMethods;
-
-},{"./normalize":175,"./root":176}],175:[function(_dereq_,module,exports){
+},{}],175:[function(_dereq_,module,exports){
 'use strict';
 
 var killUnicode = _dereq_('./unicode');
+var isAcronym = _dereq_('./isAcronym');
 
 //some basic operations on a string to reduce noise
 exports.normalize = function (str) {
@@ -10165,7 +10115,7 @@ exports.addNormal = function (term) {
   var str = term._text || '';
   str = exports.normalize(str);
   //compact acronyms
-  if (term.isAcronym()) {
+  if (isAcronym(term._text)) {
     str = str.replace(/\./g, '');
   }
   //nice-numbers
@@ -10175,7 +10125,7 @@ exports.addNormal = function (term) {
 
 // console.log(normalize('Dr. V Cooper'));
 
-},{"./unicode":177}],176:[function(_dereq_,module,exports){
+},{"./isAcronym":174,"./unicode":177}],176:[function(_dereq_,module,exports){
 'use strict';
 //
 

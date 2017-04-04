@@ -10,6 +10,7 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - adds `.tagger()` method and cleanup extra params
 - adds `wordStart` and `wordEnd` offsets to `.out('offset')` for whitespace+punctuation
 - new `.has()` method for faster lookups
+* 9.1.0 - pretty-real filesize reduction by swapping es6 classes for es5 inheritance
 
 ### v.8  &nbsp;
 * 8.0.0 - less-ambitious date-parsing of nl-date forms

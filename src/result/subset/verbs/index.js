@@ -4,11 +4,6 @@ const Verb = require('./verb');
 
 //the () subset class
 const methods = {
-  data: function() {
-    return this.list.map((ts) => {
-      return ts.data();
-    });
-  },
   conjugation: function(verbose) {
     return this.list.map((ts) => {
       return ts.conjugation(verbose);

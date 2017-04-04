@@ -4,9 +4,6 @@ const Value = require('./value');
 
 //the Values() subset class
 const methods = {
-  data: function() {
-    return this.list.map((ts) => ts.data());
-  },
   noDates: function() {
     return this.not('#Date');
   },

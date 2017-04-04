@@ -17,9 +17,6 @@ const methods = {
   toSingular: function() {
     this.list.forEach((ts) => ts.toSingular());
     return this;
-  },
-  data: function() {
-    return this.list.map((ts) => ts.data());
   }
 };
 

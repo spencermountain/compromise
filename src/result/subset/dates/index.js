@@ -5,9 +5,6 @@ const weekdays = require('./weekday');
 const months = require('./month');
 //the Dates() subset class
 const methods = {
-  data: function() {
-    return this.list.map((ts) => ts.data());
-  },
   toShortForm: function() {
     this.match('#Month').terms().list.forEach((ts) => {
       let t = ts.terms[0];

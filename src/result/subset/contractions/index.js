@@ -5,9 +5,6 @@ const findPossible = require('./findPossible');
 //the Contractions() subset class
 
 const methods = {
-  data: function() {
-    return this.list.map(ts => ts.data());
-  },
   contract: function() {
     this.list.forEach((ts) => ts.contract());
     return this;

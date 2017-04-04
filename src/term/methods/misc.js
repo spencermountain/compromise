@@ -1,4 +1,6 @@
 'use strict';
+const bestTag = require('./bestTag');
+
 //regs-
 const periodAcronym = /([A-Z]\.)+[A-Z]?$/;
 const oneLetterAcronym = /^[A-Z]\.$/;
@@ -10,6 +12,12 @@ const hasNumber = /[0-9]/;
 const addMethods = (Term) => {
 
   const methods = {
+
+    /** which tag best-represents this term?*/
+    bestTag: function () {
+      return bestTag(this);
+    },
+
     /** does it appear to be an acronym, like FBI or M.L.B. */
     isAcronym: function () {
       //like N.D.A

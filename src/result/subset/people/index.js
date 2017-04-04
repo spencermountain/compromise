@@ -5,9 +5,6 @@ const Person = require('./person');
 
 //the () subset class
 const methods = {
-  data: function() {
-    return this.list.map((ts) => ts.data());
-  },
   pronoun: function() {
     return this.list.map((ts) => ts.pronoun());
   }

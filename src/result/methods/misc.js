@@ -14,12 +14,7 @@ const miscMethods = (Text) => {
       return this.terms().length;
     },
     data: function() {
-      return this.list.map((ts) => {
-        return {
-          normal: ts.out('normal'),
-          text: ts.out('text')
-        };
-      });
+      return this.list.map((ts) => ts.data());
     },
     debug: function(opts) {
       return out(this, 'debug', opts);

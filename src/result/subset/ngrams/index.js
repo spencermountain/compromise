@@ -2,6 +2,20 @@
 const Text = require('../../index');
 const getGrams = require('./getGrams');
 
+const sort = function(r) {
+  r.list = r.list.sort((a, b) => {
+    if (a.count > b.count) {
+      return -1;
+    }
+    //(tie-braker)
+    if (a.count === b.count && (a.size > b.size || a.key.length > b.key.length)) {
+      return -1;
+    }
+    return 1;
+  });
+  return r;
+};
+
 //the Ngrams() subset class
 const methods = {
   data: function() {
@@ -27,17 +41,7 @@ const methods = {
   },
   //default sort the ngrams
   sort: function() {
-    this.list = this.list.sort((a, b) => {
-      if (a.count > b.count) {
-        return -1;
-      }
-      //(tie-braker)
-      if (a.count === b.count && (a.size > b.size || a.key.length > b.key.length)) {
-        return -1;
-      }
-      return 1;
-    });
-    return this;
+    return sort(this);
   }
 };
 
@@ -53,7 +57,7 @@ const find = function(r, n, size) {
   let arr = getGrams(r, opts);
   r = new Text(arr);
   //default sort
-  // r.sort();
+  r = sort(r);
   //grab top one, or something
   if (typeof n === 'number') {
     r = r.get(n);

@@ -53,7 +53,7 @@ class Term {
   }
 }
 require('./methods/normalize')(Term);
-require('./methods/isA')(Term);
+require('./methods/misc')(Term);
 require('./methods/out')(Term);
 require('./methods/tag')(Term);
 require('./methods/case')(Term);

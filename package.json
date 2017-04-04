@@ -28,7 +28,7 @@
     "gaze": "^1.1.1",
     "shelljs": "^0.7.2",
 
-    "babel-preset-es2015-loose": "6.9.0",
+    "babel-preset-es2015-loose": "8.0.0",
     "babili": "0.0.11",
     "babelify": "7.3.0",
     "browserify": "13.0.1",

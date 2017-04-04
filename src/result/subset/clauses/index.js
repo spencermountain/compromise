@@ -1,14 +1,16 @@
 'use strict';
 const Text = require('../../index');
+//the Clauses() subset class
 
-class Clauses extends Text {
-  static find(r, n) {
-    r = r.splitAfter('#ClauseEnd');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
+const methods = {};
+
+const find = function(r, n) {
+  r = r.splitAfter('#ClauseEnd');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
+  return r;
+};
 
-module.exports = Clauses;
+
+module.exports = Text.makeSubset(methods, find);

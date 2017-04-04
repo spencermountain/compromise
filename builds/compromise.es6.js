@@ -2792,6 +2792,13 @@ function Text(arr, lexicon, reference) {
 }
 module.exports = Text;
 
+Text.addMethods = function(cl, obj) {
+  let fns = Object.keys(obj);
+  for(let i = 0; i < fns.length; i++) {
+    cl.prototype[fns[i]] = obj[fns[i]];
+  }
+};
+
 //apply instance methods
 _dereq_('./methods/misc')(Text);
 _dereq_('./methods/loops')(Text);
@@ -3711,25 +3718,27 @@ module.exports = {
 'use strict';
 const Text = _dereq_('../../index');
 
-function Acronyms(arr, lexicon, reference) {
+//a subset of the Text class
+let Acronyms = function (arr, lexicon, reference) {
   Text.call(this, arr, lexicon, reference);
-}
-Acronyms.prototype = Object.create(Text.prototype);
-
-//instance methods
-Acronyms.prototype.data = function() {
-  return this.terms().list.map((ts) => {
-    let t = ts.terms[0];
-    let parsed = t.text.toUpperCase().replace(/\./g).split('');
-    return {
-      periods: parsed.join('.'),
-      normal: parsed.join(''),
-      text: t.text
-    };
-  });
 };
+Acronyms.prototype = Object.create(Text.prototype); //inheritance
 
-//static
+//add instance methods
+Text.addMethods(Acronyms, {
+  data: function() {
+    return this.terms().list.map((ts) => {
+      let t = ts.terms[0];
+      let parsed = t.text.toUpperCase().replace(/\./g).split('');
+      return {
+        periods: parsed.join('.'),
+        normal: parsed.join(''),
+        text: t.text
+      };
+    });
+  }
+});
+
 Acronyms.find = function(r, n) {
   r = r.match('#Acronym');
   if (typeof n === 'number') {
@@ -3745,8 +3754,15 @@ module.exports = Acronyms;
 const Text = _dereq_('../../index');
 const methods = _dereq_('./methods');
 
-class Adjectives extends Text {
-  data() {
+//a subset of the Text class
+let Adjectives = function(arr, lexicon, reference) {
+  Text.call(this, arr, lexicon, reference);
+};
+Adjectives.prototype = Object.create(Text.prototype); //class inheritance
+
+//add instance methods
+Text.addMethods(Adjectives, {
+  data: function() {
     return this.list.map((ts) => {
       const str = ts.out('normal');
       return {
@@ -3760,14 +3776,15 @@ class Adjectives extends Text {
       };
     });
   }
-  static find(r, n) {
-    r = r.match('#Adjective');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
+});
+
+Adjectives.find = function(r, n) {
+  r = r.match('#Adjective');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
+  return r;
+};
 
 module.exports = Adjectives;
 
@@ -4235,8 +4252,15 @@ module.exports = toVerb;
 const Text = _dereq_('../../index');
 const toAdjective = _dereq_('./toAdjective');
 
-class Adverbs extends Text {
-  data() {
+//a subset of the Text class
+let Adverbs = function(arr, lexicon, reference) {
+  Text.call(this, arr, lexicon, reference);
+};
+Adverbs.prototype = Object.create(Text.prototype); //class inheritance
+
+//add instance methods
+Text.addMethods(Adverbs, {
+  data: function() {
     return this.terms().list.map((ts) => {
       let t = ts.terms[0];
       return {
@@ -4246,14 +4270,15 @@ class Adverbs extends Text {
       };
     });
   }
-  static find(r, n) {
-    r = r.match('#Adverb+');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
+});
+
+Adverbs.find = function(r, n) {
+  r = r.match('#Adverb+');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
+  return r;
+};
 
 module.exports = Adverbs;
 

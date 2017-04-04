@@ -23,6 +23,18 @@ Text.addMethods = function(cl, obj) {
   }
 };
 
+//make a sub-class of this class easily
+Text.makeSubset = function(methods, find) {
+  let Subset = function (arr, lexicon, reference) {
+    Text.call(this, arr, lexicon, reference);
+  };
+  //inheritance
+  Subset.prototype = Object.create(Text.prototype);
+  Text.addMethods(Subset, methods);
+  Subset.find = find;
+  return Subset;
+};
+
 //apply instance methods
 require('./methods/misc')(Text);
 require('./methods/loops')(Text);

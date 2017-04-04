@@ -2,8 +2,10 @@
 const Text = require('../../index');
 const toAdjective = require('./toAdjective');
 
-class Adverbs extends Text {
-  data() {
+//the () subset class
+
+const methods = {
+  data: function() {
     return this.terms().list.map((ts) => {
       let t = ts.terms[0];
       return {
@@ -13,13 +15,15 @@ class Adverbs extends Text {
       };
     });
   }
-  static find(r, n) {
-    r = r.match('#Adverb+');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
-  }
-}
+};
 
-module.exports = Adverbs;
+const find = function(r, n) {
+  r = r.match('#Adverb+');
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  return r;
+};
+
+
+module.exports = Text.makeSubset(methods, find);

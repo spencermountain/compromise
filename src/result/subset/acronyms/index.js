@@ -1,14 +1,8 @@
 'use strict';
 const Text = require('../../index');
+//the Acronym() subset class
 
-//a subset of the Text class
-let Acronyms = function (arr, lexicon, reference) {
-  Text.call(this, arr, lexicon, reference);
-};
-Acronyms.prototype = Object.create(Text.prototype); //inheritance
-
-//add instance methods
-Text.addMethods(Acronyms, {
+const methods = {
   data: function() {
     return this.terms().list.map((ts) => {
       let t = ts.terms[0];
@@ -20,9 +14,9 @@ Text.addMethods(Acronyms, {
       };
     });
   }
-});
+};
 
-Acronyms.find = function(r, n) {
+const find = function(r, n) {
   r = r.match('#Acronym');
   if (typeof n === 'number') {
     r = r.get(n);
@@ -30,4 +24,5 @@ Acronyms.find = function(r, n) {
   return r;
 };
 
-module.exports = Acronyms;
+
+module.exports = Text.makeSubset(methods, find);

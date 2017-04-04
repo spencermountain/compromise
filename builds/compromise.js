@@ -1840,6 +1840,13 @@ function Text(arr, lexicon, reference) {
 }
 module.exports = Text;
 
+Text.addMethods = function (cl, obj) {
+  var fns = Object.keys(obj);
+  for (var i = 0; i < fns.length; i++) {
+    cl.prototype[fns[i]] = obj[fns[i]];
+  }
+};
+
 //apply instance methods
 _dereq_('./methods/misc')(Text);
 _dereq_('./methods/loops')(Text);
@@ -2758,25 +2765,27 @@ module.exports = {
 
 var Text = _dereq_('../../index');
 
-function Acronyms(arr, lexicon, reference) {
+//a subset of the Text class
+var Acronyms = function Acronyms(arr, lexicon, reference) {
   Text.call(this, arr, lexicon, reference);
-}
-Acronyms.prototype = Object.create(Text.prototype);
-
-//instance methods
-Acronyms.prototype.data = function () {
-  return this.terms().list.map(function (ts) {
-    var t = ts.terms[0];
-    var parsed = t.text.toUpperCase().replace(/\./g).split('');
-    return {
-      periods: parsed.join('.'),
-      normal: parsed.join(''),
-      text: t.text
-    };
-  });
 };
+Acronyms.prototype = Object.create(Text.prototype); //inheritance
 
-//static
+//add instance methods
+Text.addMethods(Acronyms, {
+  data: function data() {
+    return this.terms().list.map(function (ts) {
+      var t = ts.terms[0];
+      var parsed = t.text.toUpperCase().replace(/\./g).split('');
+      return {
+        periods: parsed.join('.'),
+        normal: parsed.join(''),
+        text: t.text
+      };
+    });
+  }
+});
+
 Acronyms.find = function (r, n) {
   r = r.match('#Acronym');
   if (typeof n === 'number') {
@@ -2790,26 +2799,19 @@ module.exports = Acronyms;
 },{"../../index":26}],40:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
 var methods = _dereq_('./methods');
 
-var Adjectives = function (_Text) {
-  _inherits(Adjectives, _Text);
+//a subset of the Text class
+var Adjectives = function Adjectives(arr, lexicon, reference) {
+  Text.call(this, arr, lexicon, reference);
+};
+Adjectives.prototype = Object.create(Text.prototype); //class inheritance
 
-  function Adjectives() {
-    _classCallCheck(this, Adjectives);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
-  }
-
-  Adjectives.prototype.data = function data() {
-    var _this2 = this;
+//add instance methods
+Text.addMethods(Adjectives, {
+  data: function data() {
+    var _this = this;
 
     return this.list.map(function (ts) {
       var str = ts.out('normal');
@@ -2820,21 +2822,19 @@ var Adjectives = function (_Text) {
         nounForm: methods.toNoun(str),
         verbForm: methods.toVerb(str),
         normal: str,
-        text: _this2.out('text')
+        text: _this.out('text')
       };
     });
-  };
+  }
+});
 
-  Adjectives.find = function find(r, n) {
-    r = r.match('#Adjective');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
-  };
-
-  return Adjectives;
-}(Text);
+Adjectives.find = function (r, n) {
+  r = r.match('#Adjective');
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  return r;
+};
 
 module.exports = Adjectives;
 
@@ -3274,25 +3274,18 @@ module.exports = toVerb;
 },{"../../../../data":6}],48:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
 var toAdjective = _dereq_('./toAdjective');
 
-var Adverbs = function (_Text) {
-  _inherits(Adverbs, _Text);
+//a subset of the Text class
+var Adverbs = function Adverbs(arr, lexicon, reference) {
+  Text.call(this, arr, lexicon, reference);
+};
+Adverbs.prototype = Object.create(Text.prototype); //class inheritance
 
-  function Adverbs() {
-    _classCallCheck(this, Adverbs);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
-  }
-
-  Adverbs.prototype.data = function data() {
+//add instance methods
+Text.addMethods(Adverbs, {
+  data: function data() {
     return this.terms().list.map(function (ts) {
       var t = ts.terms[0];
       return {
@@ -3301,18 +3294,16 @@ var Adverbs = function (_Text) {
         text: t.text
       };
     });
-  };
+  }
+});
 
-  Adverbs.find = function find(r, n) {
-    r = r.match('#Adverb+');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
-  };
-
-  return Adverbs;
-}(Text);
+Adverbs.find = function (r, n) {
+  r = r.match('#Adverb+');
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  return r;
+};
 
 module.exports = Adverbs;
 

@@ -1,101 +1,98 @@
 'use strict';
 const Text = require('../../index');
 const Sentence = require('./sentence');
-
-class Sentences extends Text {
-  constructor(arr, lexicon, reference) {
-    super(arr, lexicon, reference);
-  }
+//the Sentences() subset class
+const methods = {
   /** conjugate the main/first verb*/
-  toPastTense() {
+  toPastTense: function() {
     this.list = this.list.map((ts) => {
       ts = ts.toPastTense();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
-  }
-  toPresentTense() {
+  },
+  toPresentTense: function() {
     this.list = this.list.map((ts) => {
       ts = ts.toPresentTense();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
-  }
-  toFutureTense() {
+  },
+  toFutureTense: function() {
     this.list = this.list.map((ts) => {
       ts = ts.toFutureTense();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
-  }
+  },
   /** negative/positive */
-  toNegative() {
+  toNegative: function() {
     this.list = this.list.map((ts) => {
       ts = ts.toNegative();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
-  }
-  toPositive() {
+  },
+  toPositive: function() {
     this.list = this.list.map((ts) => {
       ts = ts.toPositive();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
-  }
+  },
 
   /** look for 'was _ by' patterns */
-  isPassive() {
+  isPassive: function() {
     this.list = this.list.filter((ts) => {
       return ts.isPassive();
     });
     return this;
-  }
+  },
   /** add a word to the start */
-  prepend(str) {
+  prepend: function(str) {
     this.list = this.list.map((ts) => {
       return ts.prepend(str);
     });
     return this;
-  }
+  },
   /** add a word to the end */
-  append(str) {
+  append: function(str) {
     this.list = this.list.map((ts) => {
       return ts.append(str);
     });
     return this;
-  }
+  },
 
   /** convert between question/statement/exclamation*/
-  toExclamation() {
+  toExclamation: function() {
     this.list.forEach((ts) => {
       ts.setPunctuation('!');
     });
     return this;
-  }
-  toQuestion() {
+  },
+  toQuestion: function() {
     this.list.forEach((ts) => {
       ts.setPunctuation('?');
     });
     return this;
-  }
-  toStatement() {
+  },
+  toStatement: function() {
     this.list.forEach((ts) => {
       ts.setPunctuation('.');
     });
     return this;
   }
-  static find(r, n) {
-    r = r.all();
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map((ts) => {
-      return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    // return new Text(r.list, r.lexicon, r.reference);
-    return r;
-  }
-}
+};
 
-module.exports = Sentences;
+const find = function(r, n) {
+  r = r.all();
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  r.list = r.list.map((ts) => {
+    return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return r;
+};
+
+module.exports = Text.makeSubset(methods, find);

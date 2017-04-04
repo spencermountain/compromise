@@ -48,9 +48,7 @@ const addMethods = (Text) => {
     }
   };
   //hook them into result.proto
-  Object.keys(fns).forEach((k) => {
-    Text.prototype[k] = fns[k];
-  });
+  Text.addMethods(Text, fns);
   return Text;
 };
 

@@ -31,8 +31,8 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // r.tag('#Person');
 // console.timeEnd('tag');
 
-let r = nlp('junior director of the BFA society');
-r.acronyms().debug();
+let r = nlp('junior director, Toronto of the BFA society');
+r.places(100).debug();
 // r.debug();
-console.log(r.found);
+// console.log(r.found);
 // console.log(r.out());

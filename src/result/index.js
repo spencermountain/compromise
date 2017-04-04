@@ -43,28 +43,29 @@ require('./methods/out')(Text);
 require('./methods/sort')(Text);
 require('./methods/split')(Text);
 require('./methods/normalize')(Text);
+require('./subsets')(Text);
 
 //apply subset methods
 const subset = {
   acronyms: require('./subset/acronyms'),
   adjectives: require('./subset/adjectives'),
   adverbs: require('./subset/adverbs'),
-  clauses: require('./subset/clauses'),
+  // clauses: require('./subset/clauses'),
   contractions: require('./subset/contractions'),
   dates: require('./subset/dates'),
-  hashTags: require('./subset/hashTags'),
+  // hashTags: require('./subset/hashTags'),
   nouns: require('./subset/nouns'),
-  organizations: require('./subset/organizations'),
+  // organizations: require('./subset/organizations'),
   people: require('./subset/people'),
-  phoneNumbers: require('./subset/phoneNumbers'),
-  places: require('./subset/places'),
+  // phoneNumbers: require('./subset/phoneNumbers'),
+  // places: require('./subset/places'),
   questions: require('./subset/sentences/questions'),
-  quotations: require('./subset/quotations'),
+  // quotations: require('./subset/quotations'),
   sentences: require('./subset/sentences'),
   statements: require('./subset/sentences/statements'),
   terms: require('./subset/terms'),
-  topics: require('./subset/topics'),
-  urls: require('./subset/urls'),
+  // topics: require('./subset/topics'),
+  // urls: require('./subset/urls'),
   values: require('./subset/values'),
   verbs: require('./subset/verbs'),
   ngrams: require('./subset/ngrams'),

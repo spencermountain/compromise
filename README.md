@@ -58,7 +58,7 @@ r.out('text')
       <td align="center">
         <b>
           <a href="https://unpkg.com/compromise@latest/builds/compromise.min.js">
-            220k
+            200k
           </a>
         </b>
         <div>

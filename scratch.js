@@ -31,7 +31,5 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // r.tag('#Person');
 // console.timeEnd('tag');
 
-let r = nlp('john is nice').sentences().toNegative();
-console.log(r.out('text'));
-// console.log(r.found);
-// console.log(r.out());
+let r = nlp('work with F.B.I.').nouns();
+r.debug();

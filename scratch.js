@@ -35,4 +35,4 @@ let str = 'hello there. I work for the F.B.I. in ft. Mede. hello there!';
 let r = nlp(str);
 let o = r.sentences(1).out('offsets')[0];
 console.log(o);
-console.log(str.substr(o.wordStart, o.wordEnd));
+console.log(str.substring(o.wordStart, o.wordEnd));

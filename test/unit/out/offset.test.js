@@ -42,8 +42,8 @@ test('offset-with-whitespace:', function (t) {
   str = 'hello there. I work for the F.B.I. in ft. Mede. hello there!';
   let r = nlp(str);
   let o = r.sentences(1).out('offsets')[0];
-  substr = str.substr(o.wordStart, o.wordEnd);
-  t.equal(substr, 'I work for the F.B.I. in ft. Mede.', 'keeps-internal-punctuation');
+  substr = str.substring(o.wordStart, o.wordEnd);
+  t.equal(substr, 'I work for the F.B.I. in ft. Mede', 'keeps-internal-punctuation');
 
   t.end();
 });

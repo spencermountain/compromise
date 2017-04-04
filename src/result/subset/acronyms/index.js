@@ -1,25 +1,27 @@
 'use strict';
 const Text = require('../../index');
 
-function Acronyms(arr, lexicon, reference) {
+//a subset of the Text class
+let Acronyms = function (arr, lexicon, reference) {
   Text.call(this, arr, lexicon, reference);
-}
-Acronyms.prototype = Object.create(Text.prototype);
-
-//instance methods
-Acronyms.prototype.data = function() {
-  return this.terms().list.map((ts) => {
-    let t = ts.terms[0];
-    let parsed = t.text.toUpperCase().replace(/\./g).split('');
-    return {
-      periods: parsed.join('.'),
-      normal: parsed.join(''),
-      text: t.text
-    };
-  });
 };
+Acronyms.prototype = Object.create(Text.prototype); //inheritance
 
-//static
+//add instance methods
+Text.addMethods(Acronyms, {
+  data: function() {
+    return this.terms().list.map((ts) => {
+      let t = ts.terms[0];
+      let parsed = t.text.toUpperCase().replace(/\./g).split('');
+      return {
+        periods: parsed.join('.'),
+        normal: parsed.join(''),
+        text: t.text
+      };
+    });
+  }
+});
+
 Acronyms.find = function(r, n) {
   r = r.match('#Acronym');
   if (typeof n === 'number') {

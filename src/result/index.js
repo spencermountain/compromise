@@ -1,45 +1,11 @@
 'use strict';
 //a Text is an array of termLists
-
-const getters = {
-  /** did it find anything? */
-  found: function() {
-    return this.list.length > 0;
-  },
-  parent: function() {
-    return this.reference || this;
-  },
-  /** how many Texts are there?*/
-  length: function() {
-    return this.list.length;
-  },
-  isA: function() {
-    return 'Text';
-  },
-  whitespace: function() {
-    return {
-      before: (str) => {
-        this.list.forEach((ts) => {
-          ts.whitespace.before(str);
-        });
-        return this;
-      },
-      after: (str) => {
-        this.list.forEach((ts) => {
-          ts.whitespace.after(str);
-        });
-        return this;
-      }
-    };
-  }
-
-};
+const getters = require('./getters');
 
 function Text(arr, lexicon, reference) {
   this.list = arr || [];
   this.lexicon = lexicon;
   this.reference = reference;
-
   //apply getters
   let keys = Object.keys(getters);
   for(let i = 0; i < keys.length; i++) {
@@ -47,9 +13,17 @@ function Text(arr, lexicon, reference) {
       get: getters[keys[i]]
     });
   }
-
 }
 module.exports = Text;
+
+Text.addMethods = function(cl, obj) {
+  let fns = Object.keys(obj);
+  for(let i = 0; i < fns.length; i++) {
+    cl.prototype[fns[i]] = obj[fns[i]];
+  }
+};
+
+//apply instance methods
 require('./methods/misc')(Text);
 require('./methods/loops')(Text);
 require('./methods/match')(Text);
@@ -58,6 +32,7 @@ require('./methods/sort')(Text);
 require('./methods/split')(Text);
 require('./methods/normalize')(Text);
 
+//apply subset methods
 const subset = {
   acronyms: require('./subset/acronyms'),
   adjectives: require('./subset/adjectives'),
@@ -84,7 +59,6 @@ const subset = {
   startGrams: require('./subset/ngrams/startGrams'),
   endGrams: require('./subset/ngrams/endGrams'),
 };
-//term subsets
 Object.keys(subset).forEach((k) => {
   Text.prototype[k] = function (num, arg) {
     let sub = subset[k];

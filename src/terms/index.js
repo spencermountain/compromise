@@ -1,96 +1,36 @@
 'use strict';
-const tagger = require('../tagger');
 const build = require('./build');
+const getters = require('./getters');
 
-class Terms {
-  constructor(arr, lexicon, refText, refTerms) {
-    this.terms = arr;
-    this.lexicon = lexicon;
-    this.refText = refText;
-    this._refTerms = refTerms;
-    this._cacheWords = {};
-    this.count = undefined;
-    this.get = (n) => {
-      return this.terms[n];
-    };
+const Terms = function(arr, lexicon, refText, refTerms) {
+  this.terms = arr;
+  this.lexicon = lexicon;
+  this.refText = refText;
+  this._refTerms = refTerms;
+  this._cacheWords = {};
+  this.count = undefined;
+  this.get = (n) => {
+    return this.terms[n];
+  };
+  //apply getters
+  let keys = Object.keys(getters);
+  for(let i = 0; i < keys.length; i++) {
+    Object.defineProperty(this, keys[i], getters[keys[i]]);
   }
-  get found() {
-    return this.terms.length > 0;
-  }
-  get length() {
-    return this.terms.length;
-  }
-  get isA() {
-    return 'Terms';
-  }
-  get refTerms() {
-    return this._refTerms || this;
-  }
-  set refTerms(ts) {
-    this._refTerms = ts;
-    return this;
-  }
-  set dirty(dirt) {
-    this.terms.forEach((t) => {
-      t.dirty = dirt;
-    });
-  }
-  tagger() {
-    tagger(this);
-    return this;
-  }
-  firstTerm() {
-    return this.terms[0];
-  }
-  lastTerm() {
-    return this.terms[this.terms.length - 1];
-  }
-  get parent() {
-    return this.refText || this;
-  }
-  set parent(r) {
-    this.refText = r;
-    return this;
-  }
-  get parentTerms() {
-    return this.refTerms || this;
-  }
-  set parentTerms(r) {
-    this.refTerms = r;
-    return this;
-  }
-  all() {
-    return this.parent;
-  }
-  data() {
-    return {
-      text: this.out('text'),
-      normal: this.out('normal'),
-    };
-  }
-  get whitespace() {
-    return {
-      before: (str) => {
-        this.firstTerm().whitespace.before = str;
-        return this;
-      },
-      after: (str) => {
-        this.lastTerm().whitespace.after = str;
-        return this;
-      },
-    };
-  }
+};
 
-  static fromString(str, lexicon) {
-    let termArr = build(str);
-    let ts = new Terms(termArr, lexicon, null);
-    //give each term a reference to this ts
-    ts.terms.forEach((t) => {
-      t.parentTerms = ts;
-    });
-    return ts;
-  }
-}
+Terms.fromString = function(str, lexicon) {
+  let termArr = build(str);
+  let ts = new Terms(termArr, lexicon, null);
+  //give each term a reference to this ts
+  ts.terms.forEach((t) => {
+    t.parentTerms = ts;
+  });
+  return ts;
+};
+
+
+
 // Terms = require('./methods/lookup')(Terms);
 require('./match')(Terms);
 require('./methods/loops')(Terms);

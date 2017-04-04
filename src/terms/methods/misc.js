@@ -1,8 +1,29 @@
 'use strict';
+const tagger = require('../../tagger');
 
 const miscMethods = (Terms) => {
 
   const methods = {
+
+    tagger: function() {
+      tagger(this);
+      return this;
+    },
+    firstTerm: function() {
+      return this.terms[0];
+    },
+    lastTerm: function() {
+      return this.terms[this.terms.length - 1];
+    },
+    all: function() {
+      return this.parent;
+    },
+    data: function() {
+      return {
+        text: this.out('text'),
+        normal: this.out('normal'),
+      };
+    },
     term: function (n) {
       return this.terms[n];
     },

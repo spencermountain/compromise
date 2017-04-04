@@ -1,7 +1,6 @@
 'use strict';
-const bestTag = require('./bestTag');
 const isAcronym = require('./normalize/isAcronym');
-
+const bestTag = require('./bestTag');
 
 //regs-
 const hasVowel = /[aeiouy]/i;
@@ -11,11 +10,11 @@ const hasNumber = /[0-9]/;
 const addMethods = (Term) => {
 
   const methods = {
-
     /** which tag best-represents this term?*/
     bestTag: function () {
       return bestTag(this);
     },
+
     /** is this term like F.B.I. or NBA */
     isAcronym: function () {
       return isAcronym(this._text);

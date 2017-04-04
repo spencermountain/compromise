@@ -2056,10 +2056,8 @@ var splitMethods = function splitMethods(Text) {
   //alias 'and'
   methods.and = methods.match;
 
-  //hook them into result.proto
-  Object.keys(methods).forEach(function (k) {
-    Text.prototype[k] = methods[k];
-  });
+  //hook them into result.proto  
+  Text.addMethods(Text, methods);
   return Text;
 };
 
@@ -2072,7 +2070,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var Terms = _dereq_('../../terms');
 
-var genericMethods = function genericMethods(Text) {
+var miscMethods = function miscMethods(Text) {
 
   var methods = {
     all: function all() {
@@ -2200,13 +2198,10 @@ var genericMethods = function genericMethods(Text) {
     }
 
   };
-
-  Object.keys(methods).forEach(function (k) {
-    Text.prototype[k] = methods[k];
-  });
+  Text.addMethods(Text, methods);
 };
 
-module.exports = genericMethods;
+module.exports = miscMethods;
 
 },{"../../terms":197}],30:[function(_dereq_,module,exports){
 'use strict';
@@ -2598,9 +2593,7 @@ var addMethods = function addMethods(Text) {
     }
   };
   //hook them into result.proto
-  Object.keys(fns).forEach(function (k) {
-    Text.prototype[k] = fns[k];
-  });
+  Text.addMethods(Text, fns);
   return Text;
 };
 
@@ -2754,9 +2747,7 @@ var splitMethods = function splitMethods(Text) {
   };
 
   //hook them into result.proto
-  Object.keys(methods).forEach(function (k) {
-    Text.prototype[k] = methods[k];
-  });
+  Text.addMethods(Text, methods);
   return Text;
 };
 

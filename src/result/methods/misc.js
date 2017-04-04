@@ -1,7 +1,7 @@
 'use strict';
 const Terms = require('../../terms');
 
-const genericMethods = (Text) => {
+const miscMethods = (Text) => {
 
   const methods = {
     all: function() {
@@ -126,10 +126,7 @@ const genericMethods = (Text) => {
     },
 
   };
-
-  Object.keys(methods).forEach((k) => {
-    Text.prototype[k] = methods[k];
-  });
+  Text.addMethods(Text, methods);
 };
 
-module.exports = genericMethods;
+module.exports = miscMethods;

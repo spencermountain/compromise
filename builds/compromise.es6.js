@@ -3026,10 +3026,8 @@ const splitMethods = (Text) => {
   //alias 'and'
   methods.and = methods.match;
 
-  //hook them into result.proto
-  Object.keys(methods).forEach((k) => {
-    Text.prototype[k] = methods[k];
-  });
+  //hook them into result.proto  
+  Text.addMethods(Text, methods);
   return Text;
 };
 
@@ -3039,7 +3037,7 @@ module.exports = splitMethods;
 'use strict';
 const Terms = _dereq_('../../terms');
 
-const genericMethods = (Text) => {
+const miscMethods = (Text) => {
 
   const methods = {
     all: function() {
@@ -3164,13 +3162,10 @@ const genericMethods = (Text) => {
     },
 
   };
-
-  Object.keys(methods).forEach((k) => {
-    Text.prototype[k] = methods[k];
-  });
+  Text.addMethods(Text, methods);
 };
 
-module.exports = genericMethods;
+module.exports = miscMethods;
 
 },{"../../terms":197}],30:[function(_dereq_,module,exports){
 'use strict';
@@ -3557,9 +3552,7 @@ const addMethods = (Text) => {
     }
   };
   //hook them into result.proto
-  Object.keys(fns).forEach((k) => {
-    Text.prototype[k] = fns[k];
-  });
+  Text.addMethods(Text, fns);
   return Text;
 };
 
@@ -3707,12 +3700,10 @@ const splitMethods = (Text) => {
       this.list = list;
       return this;
     },
-  }
+  };
 
   //hook them into result.proto
-  Object.keys(methods).forEach((k) => {
-    Text.prototype[k] = methods[k];
-  });
+  Text.addMethods(Text, methods);
   return Text;
 };
 

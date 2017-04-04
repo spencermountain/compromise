@@ -25,29 +25,26 @@ module.exports={
   ],
   "dependencies": {},
   "devDependencies": {
-    "chalk": "^1.1.3",
-    "gaze": "^1.1.1",
-    "shelljs": "^0.7.2",
-
-    "babel-preset-es2015-loose": "6.9.0",
-    "babili": "0.0.11",
+    "babel-preset-es2015": "^6.24.0",
     "babelify": "7.3.0",
+    "babili": "0.0.11",
     "browserify": "13.0.1",
+    "browserify-glob": "^0.2.0",
     "bundle-collapser": "^1.2.1",
-    "uglify-js": "2.7.0",
+    "chalk": "^1.1.3",
+    "codacy-coverage": "^2.0.0",
     "derequire": "^2.0.3",
     "efrt": "0.0.6",
-
+    "eslint": "^3.1.1",
+    "gaze": "^1.1.1",
     "http-server": "0.9.0",
-    "browserify-glob": "^0.2.0",
     "nlp-corpus": "latest",
-
-    "tape": "4.6.0",
+    "nyc": "^8.4.0",
+    "shelljs": "^0.7.2",
     "tap-min": "^1.1.0",
     "tap-spec": "4.1.1",
-    "eslint": "^3.1.1",
-    "nyc": "^8.4.0",
-    "codacy-coverage": "^2.0.0"
+    "tape": "4.6.0",
+    "uglify-js": "2.7.0"
   },
   "license": "MIT"
 }
@@ -5074,6 +5071,20 @@ module.exports = Gram;
 const Text = _dereq_('../../index');
 const getGrams = _dereq_('./getGrams');
 
+const sort = function(r) {
+  r.list = r.list.sort((a, b) => {
+    if (a.count > b.count) {
+      return -1;
+    }
+    //(tie-braker)
+    if (a.count === b.count && (a.size > b.size || a.key.length > b.key.length)) {
+      return -1;
+    }
+    return 1;
+  });
+  return r;
+};
+
 //the Ngrams() subset class
 const methods = {
   data: function() {
@@ -5099,17 +5110,7 @@ const methods = {
   },
   //default sort the ngrams
   sort: function() {
-    this.list = this.list.sort((a, b) => {
-      if (a.count > b.count) {
-        return -1;
-      }
-      //(tie-braker)
-      if (a.count === b.count && (a.size > b.size || a.key.length > b.key.length)) {
-        return -1;
-      }
-      return 1;
-    });
-    return this;
+    return sort(this);
   }
 };
 
@@ -5125,7 +5126,7 @@ const find = function(r, n, size) {
   let arr = getGrams(r, opts);
   r = new Text(arr);
   //default sort
-  // r.sort();
+  r = sort(r);
   //grab top one, or something
   if (typeof n === 'number') {
     r = r.get(n);
@@ -11215,7 +11216,7 @@ class Term {
   }
 }
 _dereq_('./methods/normalize')(Term);
-_dereq_('./methods/isA')(Term);
+_dereq_('./methods/misc')(Term);
 _dereq_('./methods/out')(Term);
 _dereq_('./methods/tag')(Term);
 _dereq_('./methods/case')(Term);
@@ -11223,7 +11224,7 @@ _dereq_('./methods/punctuation')(Term);
 
 module.exports = Term;
 
-},{"./makeUID":180,"./methods/case":181,"./methods/isA":182,"./methods/normalize":183,"./methods/out":187,"./methods/punctuation":189,"./methods/tag":191,"./paths":194,"./whitespace":195}],180:[function(_dereq_,module,exports){
+},{"./makeUID":180,"./methods/case":181,"./methods/misc":182,"./methods/normalize":183,"./methods/out":187,"./methods/punctuation":189,"./methods/tag":191,"./paths":194,"./whitespace":195}],180:[function(_dereq_,module,exports){
 'use strict';
 //this is a not-well-thought-out way to reduce our dependence on `object===object` reference stuff
 //generates a unique id for this term

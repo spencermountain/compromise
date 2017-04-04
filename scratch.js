@@ -19,17 +19,20 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // r.contractions().debug();
 
 //===timer
-console.time('parse');
-let r = nlp(fresh);
-console.timeEnd('parse');
+// console.time('parse');
+// let r = nlp(fresh);
+// console.timeEnd('parse');
+//
+// console.time('match');
+// r.match('#Determiner (story|thing|#Adjective)', true);
+// console.timeEnd('match');
+//
+// console.time('tag');
+// r.tag('#Person');
+// console.timeEnd('tag');
 
-console.time('match');
-r.match('#Determiner (story|thing|#Adjective)', true);
-console.timeEnd('match');
-
-console.time('tag');
-r.tag('#Person');
-console.timeEnd('tag');
-
-// let r = nlp('the F.B.I.');
-// console.log(r.out('normal'));
+let str = 'hello there. I work for the F.B.I. in ft. Mede. hello there!';
+let r = nlp(str);
+let o = r.sentences(1).out('offsets')[0];
+console.log(o);
+console.log(str.substr(o.wordStart, o.wordEnd));

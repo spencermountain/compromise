@@ -37,5 +37,13 @@ test('offset-with-whitespace:', function (t) {
   //no-punctuation or whitespace offset
   substr = str.substring(place.wordStart, place.wordEnd);
   t.equal(substr, 'animal', 'wordStart-wordEnd');
+
+
+  str = 'hello there. I work for the F.B.I. in ft. Mede. hello there!';
+  let r = nlp(str);
+  let o = r.sentences(1).out('offsets')[0];
+  substr = str.substr(o.wordStart, o.wordEnd);
+  t.equal(substr, 'I work for the F.B.I. in ft. Mede.', 'keeps-internal-punctuation');
+
   t.end();
 });

@@ -3,8 +3,5 @@
     "es2015",
     "stage-2"
   ],
-  "plugins": [
-    "transform-es3-property-literals",
-    "transform-es3-member-expression-literals"
-  ]
+  "plugins": []
 }

@@ -19,6 +19,7 @@ exec('rm ' + es6min);
 
 //es6 main (browserify)
 var cmd = browserify + ' "./src/index.js" --standalone nlp';
+// cmd += ' -p bundle-collapser/plugin';
 cmd += ' | ' + derequire;
 cmd += ' >> ' + es6;
 exec(cmd);

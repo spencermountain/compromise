@@ -24,28 +24,31 @@ module.exports={
   ],
   "dependencies": {},
   "devDependencies": {
-    "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
-    "babel-plugin-transform-es3-property-literals": "^6.22.0",
+    "chalk": "^1.1.3",
+    "gaze": "^1.1.1",
+    "efrt": "0.0.4",
+    "shelljs": "^0.7.2",
+
     "babel-preset-es2015": "6.9.0",
     "babel-preset-stage-2": "^6.11.0",
-    "babelify": "7.3.0",
     "babili": "0.0.11",
+    "babelify": "7.3.0",
+
     "browserify": "13.0.1",
-    "browserify-glob": "^0.2.0",
-    "chalk": "^1.1.3",
-    "codacy-coverage": "^2.0.0",
+    "bundle-collapser": "^1.2.1",
+    "uglify-js": "2.7.0",
     "derequire": "^2.0.3",
-    "efrt": "0.0.4",
-    "eslint": "^3.1.1",
-    "gaze": "^1.1.1",
+
     "http-server": "0.9.0",
+    "browserify-glob": "^0.2.0",
     "nlp-corpus": "latest",
+
+    "codacy-coverage": "^2.0.0",
     "nyc": "^8.4.0",
-    "shelljs": "^0.7.2",
-    "tap-min": "^1.1.0",
-    "tap-spec": "4.1.1",
+    "eslint": "^3.1.1",
     "tape": "4.6.0",
-    "uglify-js": "2.7.0"
+    "tap-min": "^1.1.0",
+    "tap-spec": "4.1.1"
   },
   "license": "MIT"
 }

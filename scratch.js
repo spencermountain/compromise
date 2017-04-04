@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 //this file is not included in the build.
 //use it for messing around.
 var nlp = require('./src/index');
@@ -30,3 +30,6 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // console.time('tag');
 // r.tag('#Person');
 // console.timeEnd('tag');
+
+let r = nlp('junior director of the BFA society').acronyms();
+r.debug();

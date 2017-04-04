@@ -100,7 +100,7 @@ const genericMethods = (Text) => {
     canBe: function (tag) {
       this.list.forEach((ts) => {
         ts.terms = ts.terms.filter((t) => {
-          return t.canBe(tag, this.tagSet);
+          return t.canBe(tag);
         });
       });
       return this;

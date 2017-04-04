@@ -1,6 +1,15 @@
 'use strict';
 const Text = require('../../index');
 
+// Circle - subclass
+// function Acronyms(arr, lexicon, reference) {
+//   // Call constructor of superclass to initialize superclass-derived members.
+//   Text.call(this, x, y);
+//
+//   // Initialize subclass's own members
+//   this.r = r;
+// }
+
 class Acronyms extends Text {
   data() {
     return this.terms().list.map((ts) => {

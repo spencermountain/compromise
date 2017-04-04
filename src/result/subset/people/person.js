@@ -2,8 +2,25 @@
 const Terms = require('../../paths').Terms;
 const guessGender = require('./guessGender');
 
-class Person extends Terms {
-  data() {
+const Person = function(arr, lexicon, refText, refTerms) {
+  Terms.call(this, arr, lexicon, refText, refTerms);
+  this.firstName = this.match('#FirstName+');
+  this.middleName = this.match('#Acronym+');
+  this.honorifics = this.match('#Honorific');
+  this.lastName = this.match('#LastName+');
+  //assume first-last
+  if (!this.firstName.found && this.length > 1) {
+    let m = this.not('(#Acronym|#Honorific)');
+    this.firstName = m.first();
+    this.lastName = m.last();
+  }
+  return this;
+};
+//Inherit properties
+Person.prototype = Object.create(Terms.prototype);
+
+const methods = {
+  data: function() {
     return {
       text: this.out('text'),
       normal: this.out('normal'),
@@ -14,22 +31,8 @@ class Person extends Terms {
       pronoun: this.pronoun(),
       honorifics: this.honorifics.out('array')
     };
-  }
-  constructor(arr, lexicon, refText, refTerms) {
-    super(arr, lexicon, refText, refTerms);
-    this.firstName = this.match('#FirstName+');
-    this.middleName = this.match('#Acronym+');
-    this.honorifics = this.match('#Honorific');
-    this.lastName = this.match('#LastName+');
-    //assume first-last
-    if (!this.firstName.found && this.length > 1) {
-      let m = this.not('(#Acronym|#Honorific)');
-      this.firstName = m.first();
-      this.lastName = m.last();
-    }
-    return this;
-  }
-  guessGender() {
+  },
+  guessGender: function() {
     //try known honorifics
     if (this.honorifics.match('(mr|mister|sr|sir|jr)').found) {
       return 'Male';
@@ -47,8 +50,8 @@ class Person extends Terms {
     //look-for regex clues
     let str = this.firstName.out('normal');
     return guessGender(str);
-  }
-  pronoun() {
+  },
+  pronoun: function() {
     let str = this.firstName.out('normal');
     let g = this.guessGender(str);
     if (g === 'Male') {
@@ -58,8 +61,8 @@ class Person extends Terms {
       return 'she';
     }
     return 'they';
-  }
-  root() {
+  },
+  root: function() {
     let first = this.firstName.out('root');
     let last = this.lastName.out('root');
     if (first && last) {
@@ -67,5 +70,9 @@ class Person extends Terms {
     }
     return last || first || this.out('root');
   }
-}
+};
+
+Object.keys(methods).forEach((k) => {
+  Person.prototype[k] = methods[k];
+});
 module.exports = Person;

@@ -1,5 +1,7 @@
 'use strict';
 const Text = require('../../index');
+const Terms = require('../../paths').Terms;
+
 
 //the Terms() subset class
 //this is just a wrapper around the actual Term class,
@@ -22,7 +24,14 @@ const methods = {
 };
 
 const find = function(r, n) {
-  r = r.match('.');
+  let list = [];
+  //make a Terms Object for every Term
+  r.list.forEach((ts) => {
+    ts.terms.forEach((t) => {
+      list.push(new Terms([t], ts.lexicon, r));
+    });
+  });
+  r = new Text(list, r.lexicon, r.parent);
   if (typeof n === 'number') {
     r = r.get(n);
   }

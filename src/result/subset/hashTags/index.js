@@ -1,14 +1,14 @@
 'use strict';
 const Text = require('../../index');
+//the Hashtags() subset class
+const methods = {};
 
-class HashTags extends Text {
-  static find(r, n) {
-    r = r.match('#HashTag').terms();
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
+const find = function(r, n) {
+  r = r.match('#HashTag').terms();
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
+  return r;
+};
 
-module.exports = HashTags;
+module.exports = Text.makeSubset(methods, find);

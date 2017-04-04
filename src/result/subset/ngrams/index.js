@@ -2,8 +2,9 @@
 const Text = require('../../index');
 const getGrams = require('./getGrams');
 
-class Ngrams extends Text {
-  data() {
+//the Ngrams() subset class
+const methods = {
+  data: function() {
     return this.list.map((ts) => {
       return {
         normal: ts.out('normal'),
@@ -11,22 +12,21 @@ class Ngrams extends Text {
         size: ts.size
       };
     });
-  }
-  unigrams() {
+  },
+  unigrams: function() {
     this.list = this.list.filter((g) => g.size === 1);
     return this;
-  }
-  bigrams() {
+  },
+  bigrams: function() {
     this.list = this.list.filter((g) => g.size === 2);
     return this;
-  }
-  trigrams() {
+  },
+  trigrams: function() {
     this.list = this.list.filter((g) => g.size === 3);
     return this;
-  }
-
+  },
   //default sort the ngrams
-  sort() {
+  sort: function() {
     this.list = this.list.sort((a, b) => {
       if (a.count > b.count) {
         return -1;
@@ -39,26 +39,26 @@ class Ngrams extends Text {
     });
     return this;
   }
+};
 
-  static find(r, n, size) {
-    let opts = {
-      size: [1, 2, 3, 4]
-    };
-    //only look for bigrams, for example
-    if (size) {
-      opts.size = [size];
-    }
-    //fetch them
-    let arr = getGrams(r, opts);
-    r = new Ngrams(arr);
-    //default sort
-    r.sort();
-    //grab top one, or something
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
+const find = function(r, n, size) {
+  let opts = {
+    size: [1, 2, 3, 4]
+  };
+  //only look for bigrams, for example
+  if (size) {
+    opts.size = [size];
   }
-}
+  //fetch them
+  let arr = getGrams(r, opts);
+  r = new Text(arr);
+  //default sort
+  // r.sort();
+  //grab top one, or something
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  return r;
+};
 
-module.exports = Ngrams;
+module.exports = Text.makeSubset(methods, find);

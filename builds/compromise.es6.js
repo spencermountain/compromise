@@ -2799,6 +2799,18 @@ Text.addMethods = function(cl, obj) {
   }
 };
 
+//make a sub-class of this class easily
+Text.makeSubset = function(methods, find) {
+  let Subset = function (arr, lexicon, reference) {
+    Text.call(this, arr, lexicon, reference);
+  };
+  //inheritance
+  Subset.prototype = Object.create(Text.prototype);
+  Text.addMethods(Subset, methods);
+  Subset.find = find;
+  return Subset;
+};
+
 //apply instance methods
 _dereq_('./methods/misc')(Text);
 _dereq_('./methods/loops')(Text);
@@ -3717,15 +3729,9 @@ module.exports = {
 },{"../data":6,"../fns":21,"../tagset":173,"../terms":197}],39:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
+//the Acronym() subset class
 
-//a subset of the Text class
-let Acronyms = function (arr, lexicon, reference) {
-  Text.call(this, arr, lexicon, reference);
-};
-Acronyms.prototype = Object.create(Text.prototype); //inheritance
-
-//add instance methods
-Text.addMethods(Acronyms, {
+const methods = {
   data: function() {
     return this.terms().list.map((ts) => {
       let t = ts.terms[0];
@@ -3737,9 +3743,9 @@ Text.addMethods(Acronyms, {
       };
     });
   }
-});
+};
 
-Acronyms.find = function(r, n) {
+const find = function(r, n) {
   r = r.match('#Acronym');
   if (typeof n === 'number') {
     r = r.get(n);
@@ -3747,38 +3753,33 @@ Acronyms.find = function(r, n) {
   return r;
 };
 
-module.exports = Acronyms;
+
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],40:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
-const methods = _dereq_('./methods');
+const fns = _dereq_('./methods');
+//the Adjectives() subset class
 
-//a subset of the Text class
-let Adjectives = function(arr, lexicon, reference) {
-  Text.call(this, arr, lexicon, reference);
-};
-Adjectives.prototype = Object.create(Text.prototype); //class inheritance
-
-//add instance methods
-Text.addMethods(Adjectives, {
+const methods = {
   data: function() {
     return this.list.map((ts) => {
       const str = ts.out('normal');
       return {
-        comparative: methods.toComparative(str),
-        superlative: methods.toSuperlative(str),
-        adverbForm: methods.toAdverb(str),
-        nounForm: methods.toNoun(str),
-        verbForm: methods.toVerb(str),
+        comparative: fns.toComparative(str),
+        superlative: fns.toSuperlative(str),
+        adverbForm: fns.toAdverb(str),
+        nounForm: fns.toNoun(str),
+        verbForm: fns.toVerb(str),
         normal: str,
         text: this.out('text')
       };
     });
   }
-});
+};
 
-Adjectives.find = function(r, n) {
+const find = function(r, n) {
   r = r.match('#Adjective');
   if (typeof n === 'number') {
     r = r.get(n);
@@ -3786,7 +3787,7 @@ Adjectives.find = function(r, n) {
   return r;
 };
 
-module.exports = Adjectives;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./methods":42}],41:[function(_dereq_,module,exports){
 'use strict';
@@ -4252,14 +4253,9 @@ module.exports = toVerb;
 const Text = _dereq_('../../index');
 const toAdjective = _dereq_('./toAdjective');
 
-//a subset of the Text class
-let Adverbs = function(arr, lexicon, reference) {
-  Text.call(this, arr, lexicon, reference);
-};
-Adverbs.prototype = Object.create(Text.prototype); //class inheritance
+//the () subset class
 
-//add instance methods
-Text.addMethods(Adverbs, {
+const methods = {
   data: function() {
     return this.terms().list.map((ts) => {
       let t = ts.terms[0];
@@ -4270,9 +4266,9 @@ Text.addMethods(Adverbs, {
       };
     });
   }
-});
+};
 
-Adverbs.find = function(r, n) {
+const find = function(r, n) {
   r = r.match('#Adverb+');
   if (typeof n === 'number') {
     r = r.get(n);
@@ -4280,7 +4276,8 @@ Adverbs.find = function(r, n) {
   return r;
 };
 
-module.exports = Adverbs;
+
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./toAdjective":49}],49:[function(_dereq_,module,exports){
 //turns 'quickly' into 'quick'
@@ -4348,18 +4345,20 @@ module.exports = toAdjective;
 },{}],50:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
+//the Clauses() subset class
 
-class Clauses extends Text {
-  static find(r, n) {
-    r = r.splitAfter('#ClauseEnd');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
+const methods = {};
+
+const find = function(r, n) {
+  r = r.splitAfter('#ClauseEnd');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
+  return r;
+};
 
-module.exports = Clauses;
+
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],51:[function(_dereq_,module,exports){
 'use strict';
@@ -4512,56 +4511,58 @@ module.exports = find;
 const Text = _dereq_('../../index');
 const ContractionCl = _dereq_('./contraction');
 const findPossible = _dereq_('./findPossible');
+//the Contractions() subset class
 
-class Contractions extends Text {
-  data() {
+const methods = {
+  data: function() {
     return this.list.map(ts => ts.data());
-  }
-  contract() {
+  },
+  contract: function() {
     this.list.forEach((ts) => ts.contract());
     return this;
-  }
-  expand() {
+  },
+  expand: function() {
     this.list.forEach((ts) => ts.expand());
     return this;
-  }
-  contracted() {
+  },
+  contracted: function() {
     this.list = this.list.filter((ts) => {
       return ts.contracted;
     });
     return this;
-  }
-  expanded() {
+  },
+  expanded: function() {
     this.list = this.list.filter((ts) => {
       return !ts.contracted;
     });
     return this;
   }
-  static find(r, n) {
-    //find currently-contracted
-    let found = r.match('#Contraction #Contraction #Contraction?');
-    found.list = found.list.map((ts) => {
-      let c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-      c.contracted = true;
-      return c;
-    });
-    //find currently-expanded
-    let expanded = findPossible(r);
-    expanded.list.forEach((ts) => {
-      let c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-      c.contracted = false;
-      found.list.push(c);
-    });
-    found.sort('chronological');
-    //get nth element
-    if (typeof n === 'number') {
-      found = found.get(n);
-    }
-    return found;
-  }
-}
+};
 
-module.exports = Contractions;
+const find = function(r, n) {
+  //find currently-contracted
+  let found = r.match('#Contraction #Contraction #Contraction?');
+  found.list = found.list.map((ts) => {
+    let c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+    c.contracted = true;
+    return c;
+  });
+  //find currently-expanded
+  let expanded = findPossible(r);
+  expanded.list.forEach((ts) => {
+    let c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+    c.contracted = false;
+    found.list.push(c);
+  });
+  found.sort('chronological');
+  //get nth element
+  if (typeof n === 'number') {
+    found = found.get(n);
+  }
+  return found;
+};
+
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./contraction":52,"./findPossible":53}],55:[function(_dereq_,module,exports){
 'use strict';
@@ -4592,12 +4593,12 @@ const Text = _dereq_('../../index');
 const Date = _dereq_('./date');
 const weekdays = _dereq_('./weekday');
 const months = _dereq_('./month');
-
-class Dates extends Text {
-  data() {
+//the Dates() subset class
+const methods = {
+  data: function() {
     return this.list.map((ts) => ts.data());
-  }
-  toShortForm() {
+  },
+  toShortForm: function() {
     this.match('#Month').terms().list.forEach((ts) => {
       let t = ts.terms[0];
       months.toShortForm(t);
@@ -4607,8 +4608,8 @@ class Dates extends Text {
       weekdays.toShortForm(t);
     });
     return this;
-  }
-  toLongForm() {
+  },
+  toLongForm: function() {
     this.match('#Month').terms().list.forEach((ts) => {
       let t = ts.terms[0];
       months.toLongForm(t);
@@ -4619,19 +4620,20 @@ class Dates extends Text {
     });
     return this;
   }
-  static find(r, n) {
-    let dates = r.match('#Date+');
-    if (typeof n === 'number') {
-      dates = dates.get(n);
-    }
-    dates.list = dates.list.map((ts) => {
-      return new Date(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return dates;
-  }
-}
+};
 
-module.exports = Dates;
+const find = function(r, n) {
+  let dates = r.match('#Date+');
+  if (typeof n === 'number') {
+    dates = dates.get(n);
+  }
+  dates.list = dates.list.map((ts) => {
+    return new Date(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return dates;
+};
+
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./date":55,"./month":58,"./weekday":62}],57:[function(_dereq_,module,exports){
 //follow the javascript scheme
@@ -4932,18 +4934,18 @@ module.exports = {
 },{"./data":61}],63:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
+//the Hashtags() subset class
+const methods = {};
 
-class HashTags extends Text {
-  static find(r, n) {
-    r = r.match('#HashTag').terms();
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
+const find = function(r, n) {
+  r = r.match('#HashTag').terms();
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
+  return r;
+};
 
-module.exports = HashTags;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],64:[function(_dereq_,module,exports){
 'use strict';
@@ -5081,8 +5083,9 @@ module.exports = Gram;
 const Text = _dereq_('../../index');
 const getGrams = _dereq_('./getGrams');
 
-class Ngrams extends Text {
-  data() {
+//the Ngrams() subset class
+const methods = {
+  data: function() {
     return this.list.map((ts) => {
       return {
         normal: ts.out('normal'),
@@ -5090,22 +5093,21 @@ class Ngrams extends Text {
         size: ts.size
       };
     });
-  }
-  unigrams() {
+  },
+  unigrams: function() {
     this.list = this.list.filter((g) => g.size === 1);
     return this;
-  }
-  bigrams() {
+  },
+  bigrams: function() {
     this.list = this.list.filter((g) => g.size === 2);
     return this;
-  }
-  trigrams() {
+  },
+  trigrams: function() {
     this.list = this.list.filter((g) => g.size === 3);
     return this;
-  }
-
+  },
   //default sort the ngrams
-  sort() {
+  sort: function() {
     this.list = this.list.sort((a, b) => {
       if (a.count > b.count) {
         return -1;
@@ -5118,29 +5120,29 @@ class Ngrams extends Text {
     });
     return this;
   }
+};
 
-  static find(r, n, size) {
-    let opts = {
-      size: [1, 2, 3, 4]
-    };
-    //only look for bigrams, for example
-    if (size) {
-      opts.size = [size];
-    }
-    //fetch them
-    let arr = getGrams(r, opts);
-    r = new Ngrams(arr);
-    //default sort
-    r.sort();
-    //grab top one, or something
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
+const find = function(r, n, size) {
+  let opts = {
+    size: [1, 2, 3, 4]
+  };
+  //only look for bigrams, for example
+  if (size) {
+    opts.size = [size];
   }
-}
+  //fetch them
+  let arr = getGrams(r, opts);
+  r = new Text(arr);
+  //default sort
+  // r.sort();
+  //grab top one, or something
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  return r;
+};
 
-module.exports = Ngrams;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./getGrams":65}],68:[function(_dereq_,module,exports){
 'use strict';
@@ -5217,39 +5219,42 @@ module.exports = hasPlural;
 const Text = _dereq_('../../index');
 const Noun = _dereq_('./noun');
 
-class Nouns extends Text {
-  isPlural() {
+//the () subset class
+const methods = {
+  isPlural: function() {
     return this.list.map((ts) => ts.isPlural());
-  }
-  hasPlural() {
+  },
+  hasPlural: function() {
     return this.list.map((ts) => ts.hasPlural());
-  }
-  toPlural() {
+  },
+  toPlural: function() {
     this.list.forEach((ts) => ts.toPlural());
     return this;
-  }
-  toSingular() {
+  },
+  toSingular: function() {
     this.list.forEach((ts) => ts.toSingular());
     return this;
-  }
-  data() {
+  },
+  data: function() {
     return this.list.map((ts) => ts.data());
   }
-  static find(r, n) {
-    r = r.clauses();
-    r = r.match('#Noun+');
-    r = r.not('#Pronoun');
-    r = r.not('(#Month|#WeekDay)'); //allow Durations, Holidays
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map((ts) => {
-      return new Noun(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return r;
+};
+
+const find = function(r, n) {
+  r = r.clauses();
+  r = r.match('#Noun+');
+  r = r.not('#Pronoun');
+  r = r.not('(#Month|#WeekDay)'); //allow Durations, Holidays
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
-module.exports = Nouns;
+  r.list = r.list.map((ts) => {
+    return new Noun(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return r;
+};
+
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./noun":78}],71:[function(_dereq_,module,exports){
 'use strict';
@@ -5627,18 +5632,19 @@ module.exports = Noun;
 'use strict';
 const Text = _dereq_('../../index');
 
-class Organizations extends Text {
-  static find(r, n) {
-    r = r.splitAfter('#Comma');
-    r = r.match('#Organization+');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
-  }
-}
+//the () subset class
+const methods = {};
 
-module.exports = Organizations;
+const find = function(r, n) {
+  r = r.splitAfter('#Comma');
+  r = r.match('#Organization+');
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  return r;
+};
+
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],80:[function(_dereq_,module,exports){
 'use strict';
@@ -5670,27 +5676,29 @@ const Text = _dereq_('../../index');
 const Person = _dereq_('./person');
 //this is used for pronoun and honorifics, and not intented for more-than grammatical use (see #117)
 
-class People extends Text {
-  data() {
+//the () subset class
+const methods = {
+  data: function() {
     return this.list.map((ts) => ts.data());
-  }
-  pronoun() {
+  },
+  pronoun: function() {
     return this.list.map((ts) => ts.pronoun());
   }
-  static find(r, n) {
-    let people = r.clauses();
-    people = people.match('#Person+');
-    if (typeof n === 'number') {
-      people = people.get(n);
-    }
-    people.list = people.list.map((ts) => {
-      return new Person(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return people;
-  }
-}
+};
 
-module.exports = People;
+const find = function(r, n) {
+  let people = r.clauses();
+  people = people.match('#Person+');
+  if (typeof n === 'number') {
+    people = people.get(n);
+  }
+  people.list = people.list.map((ts) => {
+    return new Person(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return people;
+};
+
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./person":82}],82:[function(_dereq_,module,exports){
 'use strict';
@@ -5769,47 +5777,40 @@ module.exports = Person;
 'use strict';
 const Text = _dereq_('../../index');
 
-class PhoneNumbers extends Text {
-  data() {
-    return this.terms().list.map((ts) => {
-      let t = ts.terms[0];
-      return {
-        text: t.text
-      };
-    });
-  }
-  static find(r) {
-    r = r.splitAfter('#Comma');
-    r = r.match('#PhoneNumber+');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
-  }
-}
+//the () subset class
+const methods = {};
 
-module.exports = PhoneNumbers;
+const find = function(r, n) {
+  r = r.splitAfter('#Comma');
+  r = r.match('#PhoneNumber+');
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  return r;
+};
+
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],84:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
 const Place = _dereq_('./place');
+//the Places() subset class
+const methods = {};
 
-class Places extends Text {
-  static find(r, n) {
-    r = r.splitAfter('#Comma');
-    r = r.match('#Place+');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map((ts) => {
-      return new Place(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return r;
+const find = function(r, n) {
+  r = r.splitAfter('#Comma');
+  r = r.match('#Place+');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
+  r.list = r.list.map((ts) => {
+    return new Place(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return r;
+};
 
-module.exports = Places;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./place":85}],85:[function(_dereq_,module,exports){
 'use strict';
@@ -5833,121 +5834,120 @@ module.exports = Place;
 },{"../../paths":38}],86:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
+//the Quotations() subset class
+const methods = {
+  data: function() {}
+};
 
-class Quotations extends Text {
-  static find(r, n) {
-    r = r.match('#Quotation+');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
+const find = function(r, n) {
+  r = r.match('#Quotation+');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
+  return r;
+};
 
-module.exports = Quotations;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],87:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
 const Sentence = _dereq_('./sentence');
-
-class Sentences extends Text {
-  constructor(arr, lexicon, reference) {
-    super(arr, lexicon, reference);
-  }
+//the Sentences() subset class
+const methods = {
   /** conjugate the main/first verb*/
-  toPastTense() {
+  toPastTense: function() {
     this.list = this.list.map((ts) => {
       ts = ts.toPastTense();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
-  }
-  toPresentTense() {
+  },
+  toPresentTense: function() {
     this.list = this.list.map((ts) => {
       ts = ts.toPresentTense();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
-  }
-  toFutureTense() {
+  },
+  toFutureTense: function() {
     this.list = this.list.map((ts) => {
       ts = ts.toFutureTense();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
-  }
+  },
   /** negative/positive */
-  toNegative() {
+  toNegative: function() {
     this.list = this.list.map((ts) => {
       ts = ts.toNegative();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
-  }
-  toPositive() {
+  },
+  toPositive: function() {
     this.list = this.list.map((ts) => {
       ts = ts.toPositive();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
-  }
+  },
 
   /** look for 'was _ by' patterns */
-  isPassive() {
+  isPassive: function() {
     this.list = this.list.filter((ts) => {
       return ts.isPassive();
     });
     return this;
-  }
+  },
   /** add a word to the start */
-  prepend(str) {
+  prepend: function(str) {
     this.list = this.list.map((ts) => {
       return ts.prepend(str);
     });
     return this;
-  }
+  },
   /** add a word to the end */
-  append(str) {
+  append: function(str) {
     this.list = this.list.map((ts) => {
       return ts.append(str);
     });
     return this;
-  }
+  },
 
   /** convert between question/statement/exclamation*/
-  toExclamation() {
+  toExclamation: function() {
     this.list.forEach((ts) => {
       ts.setPunctuation('!');
     });
     return this;
-  }
-  toQuestion() {
+  },
+  toQuestion: function() {
     this.list.forEach((ts) => {
       ts.setPunctuation('?');
     });
     return this;
-  }
-  toStatement() {
+  },
+  toStatement: function() {
     this.list.forEach((ts) => {
       ts.setPunctuation('.');
     });
     return this;
   }
-  static find(r, n) {
-    r = r.all();
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map((ts) => {
-      return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    // return new Text(r.list, r.lexicon, r.reference);
-    return r;
-  }
-}
+};
 
-module.exports = Sentences;
+const find = function(r, n) {
+  r = r.all();
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  r.list = r.list.map((ts) => {
+    return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return r;
+};
+
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./sentence":89}],88:[function(_dereq_,module,exports){
 'use strict';
@@ -6206,26 +6206,25 @@ module.exports = toPositive;
 const Text = _dereq_('../../index');
 const Term = _dereq_('./term');
 
-class Terms extends Text {
-  data() {
-    return this.list.map((ts) => {
-      return ts.data();
-    });
+//the Terms() subset class
+const methods = {
+  data: function() {
+    return this.list.map((ts) => ts.data());
   }
+};
 
-  static find(r, n) {
-    r = r.match('.');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map((ts) => {
-      return new Term(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return r;
+const find = function(r, n) {
+  r = r.match('.');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
+  r.list = r.list.map((ts) => {
+    return new Term(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return r;
+};
 
-module.exports = Terms;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./term":95}],95:[function(_dereq_,module,exports){
 'use strict';
@@ -6282,119 +6281,115 @@ module.exports = Term;
 'use strict';
 const Text = _dereq_('../../index');
 
-class Things extends Text {
-  static find(r, n) {
-    r = r.clauses();
-    //find people, places, and organizations
-    let yup = r.people();
-    yup.concat(r.places());
-    yup.concat(r.organizations());
-    //return them to normal ordering
-    yup.sort('chronological');
-    // yup.unique() //? not sure
-    if (typeof n === 'number') {
-      yup = yup.get(n);
-    }
-    return yup;
-  }
-}
+//the Topics() subset class
+const methods = {};
 
-module.exports = Things;
+const find = function(r, n) {
+  r = r.clauses();
+  //find people, places, and organizations
+  let yup = r.people();
+  yup.concat(r.places());
+  yup.concat(r.organizations());
+  //return them to normal ordering
+  yup.sort('chronological');
+  // yup.unique() //? not sure
+  if (typeof n === 'number') {
+    yup = yup.get(n);
+  }
+  return yup;
+};
+
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],97:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
+//the Urls() subset class
+const methods = {};
 
-class Urls extends Text {
-  static find(r, n) {
-    r = r.match('#Url');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
+const find = function(r, n) {
+  r = r.match('#Url');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
+  return r;
+};
 
-module.exports = Urls;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],98:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../index');
 const Value = _dereq_('./value');
 
-class Values extends Text {
-  data() {
-    return this.list.map((ts) => {
-      return ts.data();
-    });
-  }
-  noDates() {
+//the Values() subset class
+const methods = {
+  data: function() {
+    return this.list.map((ts) => ts.data());
+  },
+  noDates: function() {
     return this.not('#Date');
-  }
+  },
   /** five -> 5 */
-  numbers() {
+  numbers: function() {
     return this.list.map((ts) => {
       return ts.number();
     });
-  }
+  },
   /** five -> '5' */
-  toNumber() {
+  toNumber: function() {
     this.list = this.list.map((ts) => {
       return ts.toNumber();
     });
     return this;
-  }
+  },
   /**5 -> 'five' */
-  toTextValue() {
+  toTextValue: function() {
     this.list = this.list.map((ts) => {
       return ts.toTextValue();
     });
     return this;
-  }
+  },
   /**5th -> 5 */
-  toCardinal() {
+  toCardinal: function() {
     this.list = this.list.map((ts) => {
       return ts.toCardinal();
     });
     return this;
-  }
+  },
   /**5 -> 5th */
-  toOrdinal() {
+  toOrdinal: function() {
     this.list = this.list.map((ts) => {
       return ts.toOrdinal();
     });
     return this;
-  }
+  },
   /**5900 -> 5,900 */
-  toNiceNumber() {
+  toNiceNumber: function() {
     this.list = this.list.map((ts) => {
       return ts.toNiceNumber();
     });
     return this;
   }
-  static find(r, n) {
-    r = r.match('#Value+');
-    // r = r.match('#Value+ #Unit?');
-
-    //june 21st 1992 is two seperate values
-    r.splitOn('#Year');
-    // r.debug();
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map((ts) => {
-      return new Value(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return r;
-  }
-}
-Values.prototype.clone = function() {
-  let list = this.list.map((ts) => {
-    return ts.clone();
-  });
-  return new Values(list, this.lexicon);
 };
-module.exports = Values;
+
+const find = function(r, n) {
+  r = r.match('#Value+');
+  // r = r.match('#Value+ #Unit?');
+
+  //june 21st 1992 is two seperate values
+  r.splitOn('#Year');
+  // r.debug();
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  r.list = r.list.map((ts) => {
+    return new Value(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return r;
+};
+
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./value":110}],99:[function(_dereq_,module,exports){
 'use strict';
@@ -7044,110 +7039,107 @@ module.exports = Value;
 const Text = _dereq_('../../index');
 const Verb = _dereq_('./verb');
 
-class Verbs extends Text {
-  constructor(arr, lexicon, reference) {
-    super(arr, lexicon, reference);
-  }
-  data() {
+//the () subset class
+const methods = {
+  data: function() {
     return this.list.map((ts) => {
       return ts.data();
     });
-  }
-  conjugation(verbose) {
+  },
+  conjugation: function(verbose) {
     return this.list.map((ts) => {
       return ts.conjugation(verbose);
     });
-  }
-  conjugate(verbose) {
+  },
+  conjugate: function(verbose) {
     return this.list.map((ts) => {
       return ts.conjugate(verbose);
     });
-  }
+  },
 
   /** plural/singular **/
-  isPlural() {
+  isPlural: function() {
     this.list = this.list.filter((ts) => {
       return ts.isPlural();
     });
     return this;
-  }
-  isSingular() {
+  },
+  isSingular: function() {
     this.list = this.list.filter((ts) => {
       return !ts.isPlural();
     });
     return this;
-  }
+  },
 
   /** negation **/
-  isNegative() {
+  isNegative: function() {
     this.list = this.list.filter((ts) => {
       return ts.isNegative();
     });
     return this;
-  }
-  isPositive() {
+  },
+  isPositive: function() {
     this.list = this.list.filter((ts) => {
       return !ts.isNegative();
     });
     return this;
-  }
-  toNegative() {
+  },
+  toNegative: function() {
     this.list = this.list.map((ts) => {
       return ts.toNegative();
     });
     return this;
-  }
-  toPositive() {
+  },
+  toPositive: function() {
     this.list.forEach((ts) => {
       ts.toPositive();
     });
     return this;
-  }
+  },
 
   /** tense **/
-  toPastTense() {
+  toPastTense: function() {
     this.list.forEach((ts) => {
       ts.toPastTense();
     });
     return this;
-  }
-  toPresentTense() {
+  },
+  toPresentTense: function() {
     this.list.forEach((ts) => {
       ts.toPresentTense();
     });
     return this;
-  }
-  toFutureTense() {
+  },
+  toFutureTense: function() {
     this.list.forEach((ts) => {
       ts.toFutureTense();
     });
     return this;
-  }
-  toInfinitive() {
+  },
+  toInfinitive: function() {
     this.list.forEach((ts) => {
       ts.toInfinitive();
     });
     return this;
-  }
-  asAdjective() {
+  },
+  asAdjective: function() {
     return this.list.map((ts) => ts.asAdjective());
   }
+};
 
-  static find(r, n) {
-    r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
-    r = r.splitAfter('#Comma');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map((ts) => {
-      return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return new Text(r.list, this.lexicon, this.parent);
+const find = function(r, n) {
+  r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
+  r = r.splitAfter('#Comma');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
+  r.list = r.list.map((ts) => {
+    return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return new Text(r.list, this.lexicon, this.parent);
+};
 
-
-module.exports = Verbs;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./verb":129}],112:[function(_dereq_,module,exports){
 'use strict';

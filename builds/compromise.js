@@ -1847,6 +1847,18 @@ Text.addMethods = function (cl, obj) {
   }
 };
 
+//make a sub-class of this class easily
+Text.makeSubset = function (methods, find) {
+  var Subset = function Subset(arr, lexicon, reference) {
+    Text.call(this, arr, lexicon, reference);
+  };
+  //inheritance
+  Subset.prototype = Object.create(Text.prototype);
+  Text.addMethods(Subset, methods);
+  Subset.find = find;
+  return Subset;
+};
+
 //apply instance methods
 _dereq_('./methods/misc')(Text);
 _dereq_('./methods/loops')(Text);
@@ -2764,15 +2776,9 @@ module.exports = {
 'use strict';
 
 var Text = _dereq_('../../index');
+//the Acronym() subset class
 
-//a subset of the Text class
-var Acronyms = function Acronyms(arr, lexicon, reference) {
-  Text.call(this, arr, lexicon, reference);
-};
-Acronyms.prototype = Object.create(Text.prototype); //inheritance
-
-//add instance methods
-Text.addMethods(Acronyms, {
+var methods = {
   data: function data() {
     return this.terms().list.map(function (ts) {
       var t = ts.terms[0];
@@ -2784,9 +2790,9 @@ Text.addMethods(Acronyms, {
       };
     });
   }
-});
+};
 
-Acronyms.find = function (r, n) {
+var find = function find(r, n) {
   r = r.match('#Acronym');
   if (typeof n === 'number') {
     r = r.get(n);
@@ -2794,41 +2800,35 @@ Acronyms.find = function (r, n) {
   return r;
 };
 
-module.exports = Acronyms;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],40:[function(_dereq_,module,exports){
 'use strict';
 
 var Text = _dereq_('../../index');
-var methods = _dereq_('./methods');
+var fns = _dereq_('./methods');
+//the Adjectives() subset class
 
-//a subset of the Text class
-var Adjectives = function Adjectives(arr, lexicon, reference) {
-  Text.call(this, arr, lexicon, reference);
-};
-Adjectives.prototype = Object.create(Text.prototype); //class inheritance
-
-//add instance methods
-Text.addMethods(Adjectives, {
+var methods = {
   data: function data() {
     var _this = this;
 
     return this.list.map(function (ts) {
       var str = ts.out('normal');
       return {
-        comparative: methods.toComparative(str),
-        superlative: methods.toSuperlative(str),
-        adverbForm: methods.toAdverb(str),
-        nounForm: methods.toNoun(str),
-        verbForm: methods.toVerb(str),
+        comparative: fns.toComparative(str),
+        superlative: fns.toSuperlative(str),
+        adverbForm: fns.toAdverb(str),
+        nounForm: fns.toNoun(str),
+        verbForm: fns.toVerb(str),
         normal: str,
         text: _this.out('text')
       };
     });
   }
-});
+};
 
-Adjectives.find = function (r, n) {
+var find = function find(r, n) {
   r = r.match('#Adjective');
   if (typeof n === 'number') {
     r = r.get(n);
@@ -2836,7 +2836,7 @@ Adjectives.find = function (r, n) {
   return r;
 };
 
-module.exports = Adjectives;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./methods":42}],41:[function(_dereq_,module,exports){
 'use strict';
@@ -3277,14 +3277,9 @@ module.exports = toVerb;
 var Text = _dereq_('../../index');
 var toAdjective = _dereq_('./toAdjective');
 
-//a subset of the Text class
-var Adverbs = function Adverbs(arr, lexicon, reference) {
-  Text.call(this, arr, lexicon, reference);
-};
-Adverbs.prototype = Object.create(Text.prototype); //class inheritance
+//the () subset class
 
-//add instance methods
-Text.addMethods(Adverbs, {
+var methods = {
   data: function data() {
     return this.terms().list.map(function (ts) {
       var t = ts.terms[0];
@@ -3295,9 +3290,9 @@ Text.addMethods(Adverbs, {
       };
     });
   }
-});
+};
 
-Adverbs.find = function (r, n) {
+var find = function find(r, n) {
   r = r.match('#Adverb+');
   if (typeof n === 'number') {
     r = r.get(n);
@@ -3305,7 +3300,7 @@ Adverbs.find = function (r, n) {
   return r;
 };
 
-module.exports = Adverbs;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./toAdjective":49}],49:[function(_dereq_,module,exports){
 //turns 'quickly' into 'quick'
@@ -3374,35 +3369,20 @@ module.exports = toAdjective;
 },{}],50:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
+//the Clauses() subset class
 
-var Clauses = function (_Text) {
-  _inherits(Clauses, _Text);
+var methods = {};
 
-  function Clauses() {
-    _classCallCheck(this, Clauses);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
+var find = function find(r, n) {
+  r = r.splitAfter('#ClauseEnd');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
+  return r;
+};
 
-  Clauses.find = function find(r, n) {
-    r = r.splitAfter('#ClauseEnd');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
-  };
-
-  return Clauses;
-}(Text);
-
-module.exports = Clauses;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],51:[function(_dereq_,module,exports){
 'use strict';
@@ -3574,86 +3554,67 @@ module.exports = find;
 },{}],54:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
 var ContractionCl = _dereq_('./contraction');
 var findPossible = _dereq_('./findPossible');
+//the Contractions() subset class
 
-var Contractions = function (_Text) {
-  _inherits(Contractions, _Text);
-
-  function Contractions() {
-    _classCallCheck(this, Contractions);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
-  }
-
-  Contractions.prototype.data = function data() {
+var methods = {
+  data: function data() {
     return this.list.map(function (ts) {
       return ts.data();
     });
-  };
-
-  Contractions.prototype.contract = function contract() {
+  },
+  contract: function contract() {
     this.list.forEach(function (ts) {
       return ts.contract();
     });
     return this;
-  };
-
-  Contractions.prototype.expand = function expand() {
+  },
+  expand: function expand() {
     this.list.forEach(function (ts) {
       return ts.expand();
     });
     return this;
-  };
-
-  Contractions.prototype.contracted = function contracted() {
+  },
+  contracted: function contracted() {
     this.list = this.list.filter(function (ts) {
       return ts.contracted;
     });
     return this;
-  };
-
-  Contractions.prototype.expanded = function expanded() {
+  },
+  expanded: function expanded() {
     this.list = this.list.filter(function (ts) {
       return !ts.contracted;
     });
     return this;
-  };
+  }
+};
 
-  Contractions.find = function find(r, n) {
-    //find currently-contracted
-    var found = r.match('#Contraction #Contraction #Contraction?');
-    found.list = found.list.map(function (ts) {
-      var c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-      c.contracted = true;
-      return c;
-    });
-    //find currently-expanded
-    var expanded = findPossible(r);
-    expanded.list.forEach(function (ts) {
-      var c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-      c.contracted = false;
-      found.list.push(c);
-    });
-    found.sort('chronological');
-    //get nth element
-    if (typeof n === 'number') {
-      found = found.get(n);
-    }
-    return found;
-  };
+var find = function find(r, n) {
+  //find currently-contracted
+  var found = r.match('#Contraction #Contraction #Contraction?');
+  found.list = found.list.map(function (ts) {
+    var c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+    c.contracted = true;
+    return c;
+  });
+  //find currently-expanded
+  var expanded = findPossible(r);
+  expanded.list.forEach(function (ts) {
+    var c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+    c.contracted = false;
+    found.list.push(c);
+  });
+  found.sort('chronological');
+  //get nth element
+  if (typeof n === 'number') {
+    found = found.get(n);
+  }
+  return found;
+};
 
-  return Contractions;
-}(Text);
-
-module.exports = Contractions;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./contraction":52,"./findPossible":53}],55:[function(_dereq_,module,exports){
 'use strict';
@@ -3698,33 +3659,18 @@ module.exports = Date;
 },{"../../paths":38,"./parseDate":59}],56:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
 var Date = _dereq_('./date');
 var weekdays = _dereq_('./weekday');
 var months = _dereq_('./month');
-
-var Dates = function (_Text) {
-  _inherits(Dates, _Text);
-
-  function Dates() {
-    _classCallCheck(this, Dates);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
-  }
-
-  Dates.prototype.data = function data() {
+//the Dates() subset class
+var methods = {
+  data: function data() {
     return this.list.map(function (ts) {
       return ts.data();
     });
-  };
-
-  Dates.prototype.toShortForm = function toShortForm() {
+  },
+  toShortForm: function toShortForm() {
     this.match('#Month').terms().list.forEach(function (ts) {
       var t = ts.terms[0];
       months.toShortForm(t);
@@ -3734,9 +3680,8 @@ var Dates = function (_Text) {
       weekdays.toShortForm(t);
     });
     return this;
-  };
-
-  Dates.prototype.toLongForm = function toLongForm() {
+  },
+  toLongForm: function toLongForm() {
     this.match('#Month').terms().list.forEach(function (ts) {
       var t = ts.terms[0];
       months.toLongForm(t);
@@ -3746,23 +3691,21 @@ var Dates = function (_Text) {
       weekdays.toLongForm(t);
     });
     return this;
-  };
+  }
+};
 
-  Dates.find = function find(r, n) {
-    var dates = r.match('#Date+');
-    if (typeof n === 'number') {
-      dates = dates.get(n);
-    }
-    dates.list = dates.list.map(function (ts) {
-      return new Date(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return dates;
-  };
+var find = function find(r, n) {
+  var dates = r.match('#Date+');
+  if (typeof n === 'number') {
+    dates = dates.get(n);
+  }
+  dates.list = dates.list.map(function (ts) {
+    return new Date(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return dates;
+};
 
-  return Dates;
-}(Text);
-
-module.exports = Dates;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./date":55,"./month":58,"./weekday":62}],57:[function(_dereq_,module,exports){
 'use strict';
@@ -4070,35 +4013,19 @@ module.exports = {
 },{"./data":61}],63:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
+//the Hashtags() subset class
+var methods = {};
 
-var HashTags = function (_Text) {
-  _inherits(HashTags, _Text);
-
-  function HashTags() {
-    _classCallCheck(this, HashTags);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
+var find = function find(r, n) {
+  r = r.match('#HashTag').terms();
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
+  return r;
+};
 
-  HashTags.find = function find(r, n) {
-    r = r.match('#HashTag').terms();
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
-  };
-
-  return HashTags;
-}(Text);
-
-module.exports = HashTags;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],64:[function(_dereq_,module,exports){
 'use strict';
@@ -4268,25 +4195,12 @@ module.exports = Gram;
 },{"../../paths":38}],67:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
 var getGrams = _dereq_('./getGrams');
 
-var Ngrams = function (_Text) {
-  _inherits(Ngrams, _Text);
-
-  function Ngrams() {
-    _classCallCheck(this, Ngrams);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
-  }
-
-  Ngrams.prototype.data = function data() {
+//the Ngrams() subset class
+var methods = {
+  data: function data() {
     return this.list.map(function (ts) {
       return {
         normal: ts.out('normal'),
@@ -4294,33 +4208,27 @@ var Ngrams = function (_Text) {
         size: ts.size
       };
     });
-  };
-
-  Ngrams.prototype.unigrams = function unigrams() {
+  },
+  unigrams: function unigrams() {
     this.list = this.list.filter(function (g) {
       return g.size === 1;
     });
     return this;
-  };
-
-  Ngrams.prototype.bigrams = function bigrams() {
+  },
+  bigrams: function bigrams() {
     this.list = this.list.filter(function (g) {
       return g.size === 2;
     });
     return this;
-  };
-
-  Ngrams.prototype.trigrams = function trigrams() {
+  },
+  trigrams: function trigrams() {
     this.list = this.list.filter(function (g) {
       return g.size === 3;
     });
     return this;
-  };
-
+  },
   //default sort the ngrams
-
-
-  Ngrams.prototype.sort = function sort() {
+  sort: function sort() {
     this.list = this.list.sort(function (a, b) {
       if (a.count > b.count) {
         return -1;
@@ -4332,32 +4240,30 @@ var Ngrams = function (_Text) {
       return 1;
     });
     return this;
+  }
+};
+
+var find = function find(r, n, size) {
+  var opts = {
+    size: [1, 2, 3, 4]
   };
+  //only look for bigrams, for example
+  if (size) {
+    opts.size = [size];
+  }
+  //fetch them
+  var arr = getGrams(r, opts);
+  r = new Text(arr);
+  //default sort
+  // r.sort();
+  //grab top one, or something
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  return r;
+};
 
-  Ngrams.find = function find(r, n, size) {
-    var opts = {
-      size: [1, 2, 3, 4]
-    };
-    //only look for bigrams, for example
-    if (size) {
-      opts.size = [size];
-    }
-    //fetch them
-    var arr = getGrams(r, opts);
-    r = new Ngrams(arr);
-    //default sort
-    r.sort();
-    //grab top one, or something
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
-  };
-
-  return Ngrams;
-}(Text);
-
-module.exports = Ngrams;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./getGrams":65}],68:[function(_dereq_,module,exports){
 'use strict';
@@ -4441,74 +4347,55 @@ module.exports = hasPlural;
 },{"../../../tries":239}],70:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
 var Noun = _dereq_('./noun');
 
-var Nouns = function (_Text) {
-  _inherits(Nouns, _Text);
-
-  function Nouns() {
-    _classCallCheck(this, Nouns);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
-  }
-
-  Nouns.prototype.isPlural = function isPlural() {
+//the () subset class
+var methods = {
+  isPlural: function isPlural() {
     return this.list.map(function (ts) {
       return ts.isPlural();
     });
-  };
-
-  Nouns.prototype.hasPlural = function hasPlural() {
+  },
+  hasPlural: function hasPlural() {
     return this.list.map(function (ts) {
       return ts.hasPlural();
     });
-  };
-
-  Nouns.prototype.toPlural = function toPlural() {
+  },
+  toPlural: function toPlural() {
     this.list.forEach(function (ts) {
       return ts.toPlural();
     });
     return this;
-  };
-
-  Nouns.prototype.toSingular = function toSingular() {
+  },
+  toSingular: function toSingular() {
     this.list.forEach(function (ts) {
       return ts.toSingular();
     });
     return this;
-  };
-
-  Nouns.prototype.data = function data() {
+  },
+  data: function data() {
     return this.list.map(function (ts) {
       return ts.data();
     });
-  };
+  }
+};
 
-  Nouns.find = function find(r, n) {
-    r = r.clauses();
-    r = r.match('#Noun+');
-    r = r.not('#Pronoun');
-    r = r.not('(#Month|#WeekDay)'); //allow Durations, Holidays
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map(function (ts) {
-      return new Noun(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return r;
-  };
+var find = function find(r, n) {
+  r = r.clauses();
+  r = r.match('#Noun+');
+  r = r.not('#Pronoun');
+  r = r.not('(#Month|#WeekDay)'); //allow Durations, Holidays
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  r.list = r.list.map(function (ts) {
+    return new Noun(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return r;
+};
 
-  return Nouns;
-}(Text);
-
-module.exports = Nouns;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./noun":78}],71:[function(_dereq_,module,exports){
 'use strict';
@@ -4814,36 +4701,21 @@ module.exports = Noun;
 },{"../../paths":38,"./hasPlural":69,"./isPlural":71,"./makeArticle":72,"./methods/pluralize":76,"./methods/singularize":77}],79:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
 
-var Organizations = function (_Text) {
-  _inherits(Organizations, _Text);
+//the () subset class
+var methods = {};
 
-  function Organizations() {
-    _classCallCheck(this, Organizations);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
+var find = function find(r, n) {
+  r = r.splitAfter('#Comma');
+  r = r.match('#Organization+');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
+  return r;
+};
 
-  Organizations.find = function find(r, n) {
-    r = r.splitAfter('#Comma');
-    r = r.match('#Organization+');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
-  };
-
-  return Organizations;
-}(Text);
-
-module.exports = Organizations;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],80:[function(_dereq_,module,exports){
 'use strict';
@@ -4876,53 +4748,37 @@ module.exports = gender;
 },{}],81:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
 var Person = _dereq_('./person');
 //this is used for pronoun and honorifics, and not intented for more-than grammatical use (see #117)
 
-var People = function (_Text) {
-  _inherits(People, _Text);
-
-  function People() {
-    _classCallCheck(this, People);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
-  }
-
-  People.prototype.data = function data() {
+//the () subset class
+var methods = {
+  data: function data() {
     return this.list.map(function (ts) {
       return ts.data();
     });
-  };
-
-  People.prototype.pronoun = function pronoun() {
+  },
+  pronoun: function pronoun() {
     return this.list.map(function (ts) {
       return ts.pronoun();
     });
-  };
+  }
+};
 
-  People.find = function find(r, n) {
-    var people = r.clauses();
-    people = people.match('#Person+');
-    if (typeof n === 'number') {
-      people = people.get(n);
-    }
-    people.list = people.list.map(function (ts) {
-      return new Person(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return people;
-  };
+var find = function find(r, n) {
+  var people = r.clauses();
+  people = people.match('#Person+');
+  if (typeof n === 'number') {
+    people = people.get(n);
+  }
+  people.list = people.list.map(function (ts) {
+    return new Person(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return people;
+};
 
-  return People;
-}(Text);
-
-module.exports = People;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./person":82}],82:[function(_dereq_,module,exports){
 'use strict';
@@ -5021,83 +4877,43 @@ module.exports = Person;
 },{"../../paths":38,"./guessGender":80}],83:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
 
-var PhoneNumbers = function (_Text) {
-  _inherits(PhoneNumbers, _Text);
+//the () subset class
+var methods = {};
 
-  function PhoneNumbers() {
-    _classCallCheck(this, PhoneNumbers);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
+var find = function find(r, n) {
+  r = r.splitAfter('#Comma');
+  r = r.match('#PhoneNumber+');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
+  return r;
+};
 
-  PhoneNumbers.prototype.data = function data() {
-    return this.terms().list.map(function (ts) {
-      var t = ts.terms[0];
-      return {
-        text: t.text
-      };
-    });
-  };
-
-  PhoneNumbers.find = function find(r) {
-    r = r.splitAfter('#Comma');
-    r = r.match('#PhoneNumber+');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
-  };
-
-  return PhoneNumbers;
-}(Text);
-
-module.exports = PhoneNumbers;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],84:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
 var Place = _dereq_('./place');
+//the Places() subset class
+var methods = {};
 
-var Places = function (_Text) {
-  _inherits(Places, _Text);
-
-  function Places() {
-    _classCallCheck(this, Places);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
+var find = function find(r, n) {
+  r = r.splitAfter('#Comma');
+  r = r.match('#Place+');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
+  r.list = r.list.map(function (ts) {
+    return new Place(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return r;
+};
 
-  Places.find = function find(r, n) {
-    r = r.splitAfter('#Comma');
-    r = r.match('#Place+');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map(function (ts) {
-      return new Place(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return r;
-  };
-
-  return Places;
-}(Text);
-
-module.exports = Places;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./place":85}],85:[function(_dereq_,module,exports){
 'use strict';
@@ -5144,169 +4960,122 @@ module.exports = Place;
 },{"../../paths":38}],86:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
+//the Quotations() subset class
+var methods = {
+  data: function data() {}
+};
 
-var Quotations = function (_Text) {
-  _inherits(Quotations, _Text);
-
-  function Quotations() {
-    _classCallCheck(this, Quotations);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
+var find = function find(r, n) {
+  r = r.match('#Quotation+');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
+  return r;
+};
 
-  Quotations.find = function find(r, n) {
-    r = r.match('#Quotation+');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
-  };
-
-  return Quotations;
-}(Text);
-
-module.exports = Quotations;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],87:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
 var Sentence = _dereq_('./sentence');
-
-var Sentences = function (_Text) {
-  _inherits(Sentences, _Text);
-
-  function Sentences(arr, lexicon, reference) {
-    _classCallCheck(this, Sentences);
-
-    return _possibleConstructorReturn(this, _Text.call(this, arr, lexicon, reference));
-  }
+//the Sentences() subset class
+var methods = {
   /** conjugate the main/first verb*/
-
-
-  Sentences.prototype.toPastTense = function toPastTense() {
+  toPastTense: function toPastTense() {
     this.list = this.list.map(function (ts) {
       ts = ts.toPastTense();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
-  };
-
-  Sentences.prototype.toPresentTense = function toPresentTense() {
+  },
+  toPresentTense: function toPresentTense() {
     this.list = this.list.map(function (ts) {
       ts = ts.toPresentTense();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
-  };
-
-  Sentences.prototype.toFutureTense = function toFutureTense() {
+  },
+  toFutureTense: function toFutureTense() {
     this.list = this.list.map(function (ts) {
       ts = ts.toFutureTense();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
-  };
+  },
   /** negative/positive */
-
-
-  Sentences.prototype.toNegative = function toNegative() {
+  toNegative: function toNegative() {
     this.list = this.list.map(function (ts) {
       ts = ts.toNegative();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
-  };
-
-  Sentences.prototype.toPositive = function toPositive() {
+  },
+  toPositive: function toPositive() {
     this.list = this.list.map(function (ts) {
       ts = ts.toPositive();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
-  };
+  },
 
   /** look for 'was _ by' patterns */
-
-
-  Sentences.prototype.isPassive = function isPassive() {
+  isPassive: function isPassive() {
     this.list = this.list.filter(function (ts) {
       return ts.isPassive();
     });
     return this;
-  };
+  },
   /** add a word to the start */
-
-
-  Sentences.prototype.prepend = function prepend(str) {
+  prepend: function prepend(str) {
     this.list = this.list.map(function (ts) {
       return ts.prepend(str);
     });
     return this;
-  };
+  },
   /** add a word to the end */
-
-
-  Sentences.prototype.append = function append(str) {
+  append: function append(str) {
     this.list = this.list.map(function (ts) {
       return ts.append(str);
     });
     return this;
-  };
+  },
 
   /** convert between question/statement/exclamation*/
-
-
-  Sentences.prototype.toExclamation = function toExclamation() {
+  toExclamation: function toExclamation() {
     this.list.forEach(function (ts) {
       ts.setPunctuation('!');
     });
     return this;
-  };
-
-  Sentences.prototype.toQuestion = function toQuestion() {
+  },
+  toQuestion: function toQuestion() {
     this.list.forEach(function (ts) {
       ts.setPunctuation('?');
     });
     return this;
-  };
-
-  Sentences.prototype.toStatement = function toStatement() {
+  },
+  toStatement: function toStatement() {
     this.list.forEach(function (ts) {
       ts.setPunctuation('.');
     });
     return this;
-  };
+  }
+};
 
-  Sentences.find = function find(r, n) {
-    r = r.all();
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map(function (ts) {
-      return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    // return new Text(r.list, r.lexicon, r.reference);
-    return r;
-  };
+var find = function find(r, n) {
+  r = r.all();
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  r.list = r.list.map(function (ts) {
+    return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return r;
+};
 
-  return Sentences;
-}(Text);
-
-module.exports = Sentences;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./sentence":89}],88:[function(_dereq_,module,exports){
 'use strict';
@@ -5635,45 +5404,30 @@ module.exports = toPositive;
 },{}],94:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
 var Term = _dereq_('./term');
 
-var Terms = function (_Text) {
-  _inherits(Terms, _Text);
-
-  function Terms() {
-    _classCallCheck(this, Terms);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
-  }
-
-  Terms.prototype.data = function data() {
+//the Terms() subset class
+var methods = {
+  data: function data() {
     return this.list.map(function (ts) {
       return ts.data();
     });
-  };
+  }
+};
 
-  Terms.find = function find(r, n) {
-    r = r.match('.');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map(function (ts) {
-      return new Term(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return r;
-  };
+var find = function find(r, n) {
+  r = r.match('.');
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  r.list = r.list.map(function (ts) {
+    return new Term(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return r;
+};
 
-  return Terms;
-}(Text);
-
-module.exports = Terms;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./term":95}],95:[function(_dereq_,module,exports){
 'use strict';
@@ -5747,186 +5501,121 @@ module.exports = Term;
 },{"../../paths":38}],96:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
 
-var Things = function (_Text) {
-  _inherits(Things, _Text);
+//the Topics() subset class
+var methods = {};
 
-  function Things() {
-    _classCallCheck(this, Things);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
+var find = function find(r, n) {
+  r = r.clauses();
+  //find people, places, and organizations
+  var yup = r.people();
+  yup.concat(r.places());
+  yup.concat(r.organizations());
+  //return them to normal ordering
+  yup.sort('chronological');
+  // yup.unique() //? not sure
+  if (typeof n === 'number') {
+    yup = yup.get(n);
   }
+  return yup;
+};
 
-  Things.find = function find(r, n) {
-    r = r.clauses();
-    //find people, places, and organizations
-    var yup = r.people();
-    yup.concat(r.places());
-    yup.concat(r.organizations());
-    //return them to normal ordering
-    yup.sort('chronological');
-    // yup.unique() //? not sure
-    if (typeof n === 'number') {
-      yup = yup.get(n);
-    }
-    return yup;
-  };
-
-  return Things;
-}(Text);
-
-module.exports = Things;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],97:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
+//the Urls() subset class
+var methods = {};
 
-var Urls = function (_Text) {
-  _inherits(Urls, _Text);
-
-  function Urls() {
-    _classCallCheck(this, Urls);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
+var find = function find(r, n) {
+  r = r.match('#Url');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
+  return r;
+};
 
-  Urls.find = function find(r, n) {
-    r = r.match('#Url');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
-  };
-
-  return Urls;
-}(Text);
-
-module.exports = Urls;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26}],98:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
 var Value = _dereq_('./value');
 
-var Values = function (_Text) {
-  _inherits(Values, _Text);
-
-  function Values() {
-    _classCallCheck(this, Values);
-
-    return _possibleConstructorReturn(this, _Text.apply(this, arguments));
-  }
-
-  Values.prototype.data = function data() {
+//the Values() subset class
+var methods = {
+  data: function data() {
     return this.list.map(function (ts) {
       return ts.data();
     });
-  };
-
-  Values.prototype.noDates = function noDates() {
+  },
+  noDates: function noDates() {
     return this.not('#Date');
-  };
+  },
   /** five -> 5 */
-
-
-  Values.prototype.numbers = function numbers() {
+  numbers: function numbers() {
     return this.list.map(function (ts) {
       return ts.number();
     });
-  };
+  },
   /** five -> '5' */
-
-
-  Values.prototype.toNumber = function toNumber() {
+  toNumber: function toNumber() {
     this.list = this.list.map(function (ts) {
       return ts.toNumber();
     });
     return this;
-  };
+  },
   /**5 -> 'five' */
-
-
-  Values.prototype.toTextValue = function toTextValue() {
+  toTextValue: function toTextValue() {
     this.list = this.list.map(function (ts) {
       return ts.toTextValue();
     });
     return this;
-  };
+  },
   /**5th -> 5 */
-
-
-  Values.prototype.toCardinal = function toCardinal() {
+  toCardinal: function toCardinal() {
     this.list = this.list.map(function (ts) {
       return ts.toCardinal();
     });
     return this;
-  };
+  },
   /**5 -> 5th */
-
-
-  Values.prototype.toOrdinal = function toOrdinal() {
+  toOrdinal: function toOrdinal() {
     this.list = this.list.map(function (ts) {
       return ts.toOrdinal();
     });
     return this;
-  };
+  },
   /**5900 -> 5,900 */
-
-
-  Values.prototype.toNiceNumber = function toNiceNumber() {
+  toNiceNumber: function toNiceNumber() {
     this.list = this.list.map(function (ts) {
       return ts.toNiceNumber();
     });
     return this;
-  };
-
-  Values.find = function find(r, n) {
-    r = r.match('#Value+');
-    // r = r.match('#Value+ #Unit?');
-
-    //june 21st 1992 is two seperate values
-    r.splitOn('#Year');
-    // r.debug();
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map(function (ts) {
-      return new Value(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return r;
-  };
-
-  return Values;
-}(Text);
-
-Values.prototype.clone = function () {
-  var list = this.list.map(function (ts) {
-    return ts.clone();
-  });
-  return new Values(list, this.lexicon);
+  }
 };
-module.exports = Values;
+
+var find = function find(r, n) {
+  r = r.match('#Value+');
+  // r = r.match('#Value+ #Unit?');
+
+  //june 21st 1992 is two seperate values
+  r.splitOn('#Year');
+  // r.debug();
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  r.list = r.list.map(function (ts) {
+    return new Value(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return r;
+};
+
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./value":110}],99:[function(_dereq_,module,exports){
 'use strict';
@@ -6561,143 +6250,112 @@ module.exports = Value;
 },{"../../paths":38,"./numOrdinal":99,"./textOrdinal":101,"./toNiceNumber":102,"./toNumber":105,"./toText":109}],111:[function(_dereq_,module,exports){
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Text = _dereq_('../../index');
 var Verb = _dereq_('./verb');
 
-var Verbs = function (_Text) {
-  _inherits(Verbs, _Text);
-
-  function Verbs(arr, lexicon, reference) {
-    _classCallCheck(this, Verbs);
-
-    return _possibleConstructorReturn(this, _Text.call(this, arr, lexicon, reference));
-  }
-
-  Verbs.prototype.data = function data() {
+//the () subset class
+var methods = {
+  data: function data() {
     return this.list.map(function (ts) {
       return ts.data();
     });
-  };
-
-  Verbs.prototype.conjugation = function conjugation(verbose) {
+  },
+  conjugation: function conjugation(verbose) {
     return this.list.map(function (ts) {
       return ts.conjugation(verbose);
     });
-  };
-
-  Verbs.prototype.conjugate = function conjugate(verbose) {
+  },
+  conjugate: function conjugate(verbose) {
     return this.list.map(function (ts) {
       return ts.conjugate(verbose);
     });
-  };
+  },
 
   /** plural/singular **/
-
-
-  Verbs.prototype.isPlural = function isPlural() {
+  isPlural: function isPlural() {
     this.list = this.list.filter(function (ts) {
       return ts.isPlural();
     });
     return this;
-  };
-
-  Verbs.prototype.isSingular = function isSingular() {
+  },
+  isSingular: function isSingular() {
     this.list = this.list.filter(function (ts) {
       return !ts.isPlural();
     });
     return this;
-  };
+  },
 
   /** negation **/
-
-
-  Verbs.prototype.isNegative = function isNegative() {
+  isNegative: function isNegative() {
     this.list = this.list.filter(function (ts) {
       return ts.isNegative();
     });
     return this;
-  };
-
-  Verbs.prototype.isPositive = function isPositive() {
+  },
+  isPositive: function isPositive() {
     this.list = this.list.filter(function (ts) {
       return !ts.isNegative();
     });
     return this;
-  };
-
-  Verbs.prototype.toNegative = function toNegative() {
+  },
+  toNegative: function toNegative() {
     this.list = this.list.map(function (ts) {
       return ts.toNegative();
     });
     return this;
-  };
-
-  Verbs.prototype.toPositive = function toPositive() {
+  },
+  toPositive: function toPositive() {
     this.list.forEach(function (ts) {
       ts.toPositive();
     });
     return this;
-  };
+  },
 
   /** tense **/
-
-
-  Verbs.prototype.toPastTense = function toPastTense() {
+  toPastTense: function toPastTense() {
     this.list.forEach(function (ts) {
       ts.toPastTense();
     });
     return this;
-  };
-
-  Verbs.prototype.toPresentTense = function toPresentTense() {
+  },
+  toPresentTense: function toPresentTense() {
     this.list.forEach(function (ts) {
       ts.toPresentTense();
     });
     return this;
-  };
-
-  Verbs.prototype.toFutureTense = function toFutureTense() {
+  },
+  toFutureTense: function toFutureTense() {
     this.list.forEach(function (ts) {
       ts.toFutureTense();
     });
     return this;
-  };
-
-  Verbs.prototype.toInfinitive = function toInfinitive() {
+  },
+  toInfinitive: function toInfinitive() {
     this.list.forEach(function (ts) {
       ts.toInfinitive();
     });
     return this;
-  };
-
-  Verbs.prototype.asAdjective = function asAdjective() {
+  },
+  asAdjective: function asAdjective() {
     return this.list.map(function (ts) {
       return ts.asAdjective();
     });
-  };
+  }
+};
 
-  Verbs.find = function find(r, n) {
-    r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
-    r = r.splitAfter('#Comma');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map(function (ts) {
-      return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return new Text(r.list, this.lexicon, this.parent);
-  };
+var find = function find(r, n) {
+  r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
+  r = r.splitAfter('#Comma');
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  r.list = r.list.map(function (ts) {
+    return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return new Text(r.list, this.lexicon, this.parent);
+};
 
-  return Verbs;
-}(Text);
-
-module.exports = Verbs;
+module.exports = Text.makeSubset(methods, find);
 
 },{"../../index":26,"./verb":129}],112:[function(_dereq_,module,exports){
 'use strict';

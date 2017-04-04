@@ -1,14 +1,16 @@
 'use strict';
 const Text = require('../../index');
+//the Quotations() subset class
+const methods = {
+  data: function() {}
+};
 
-class Quotations extends Text {
-  static find(r, n) {
-    r = r.match('#Quotation+');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
+const find = function(r, n) {
+  r = r.match('#Quotation+');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
+  return r;
+};
 
-module.exports = Quotations;
+module.exports = Text.makeSubset(methods, find);

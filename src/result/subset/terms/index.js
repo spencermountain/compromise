@@ -2,23 +2,22 @@
 const Text = require('../../index');
 const Term = require('./term');
 
-class Terms extends Text {
-  data() {
-    return this.list.map((ts) => {
-      return ts.data();
-    });
+//the Terms() subset class
+const methods = {
+  data: function() {
+    return this.list.map((ts) => ts.data());
   }
+};
 
-  static find(r, n) {
-    r = r.match('.');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map((ts) => {
-      return new Term(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return r;
+const find = function(r, n) {
+  r = r.match('.');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
+  r.list = r.list.map((ts) => {
+    return new Term(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return r;
+};
 
-module.exports = Terms;
+module.exports = Text.makeSubset(methods, find);

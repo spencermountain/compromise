@@ -2,36 +2,39 @@
 const Text = require('../../index');
 const Noun = require('./noun');
 
-class Nouns extends Text {
-  isPlural() {
+//the () subset class
+const methods = {
+  isPlural: function() {
     return this.list.map((ts) => ts.isPlural());
-  }
-  hasPlural() {
+  },
+  hasPlural: function() {
     return this.list.map((ts) => ts.hasPlural());
-  }
-  toPlural() {
+  },
+  toPlural: function() {
     this.list.forEach((ts) => ts.toPlural());
     return this;
-  }
-  toSingular() {
+  },
+  toSingular: function() {
     this.list.forEach((ts) => ts.toSingular());
     return this;
-  }
-  data() {
+  },
+  data: function() {
     return this.list.map((ts) => ts.data());
   }
-  static find(r, n) {
-    r = r.clauses();
-    r = r.match('#Noun+');
-    r = r.not('#Pronoun');
-    r = r.not('(#Month|#WeekDay)'); //allow Durations, Holidays
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map((ts) => {
-      return new Noun(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return r;
+};
+
+const find = function(r, n) {
+  r = r.clauses();
+  r = r.match('#Noun+');
+  r = r.not('#Pronoun');
+  r = r.not('(#Month|#WeekDay)'); //allow Durations, Holidays
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
-module.exports = Nouns;
+  r.list = r.list.map((ts) => {
+    return new Noun(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return r;
+};
+
+module.exports = Text.makeSubset(methods, find);

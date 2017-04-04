@@ -3,12 +3,9 @@ const Text = require('../../index');
 const Date = require('./date');
 const weekdays = require('./weekday');
 const months = require('./month');
-
-class Dates extends Text {
-  data() {
-    return this.list.map((ts) => ts.data());
-  }
-  toShortForm() {
+//the Dates() subset class
+const methods = {
+  toShortForm: function() {
     this.match('#Month').terms().list.forEach((ts) => {
       let t = ts.terms[0];
       months.toShortForm(t);
@@ -18,8 +15,8 @@ class Dates extends Text {
       weekdays.toShortForm(t);
     });
     return this;
-  }
-  toLongForm() {
+  },
+  toLongForm: function() {
     this.match('#Month').terms().list.forEach((ts) => {
       let t = ts.terms[0];
       months.toLongForm(t);
@@ -30,16 +27,17 @@ class Dates extends Text {
     });
     return this;
   }
-  static find(r, n) {
-    let dates = r.match('#Date+');
-    if (typeof n === 'number') {
-      dates = dates.get(n);
-    }
-    dates.list = dates.list.map((ts) => {
-      return new Date(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return dates;
-  }
-}
+};
 
-module.exports = Dates;
+const find = function(r, n) {
+  let dates = r.match('#Date+');
+  if (typeof n === 'number') {
+    dates = dates.get(n);
+  }
+  dates.list = dates.list.map((ts) => {
+    return new Date(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return dates;
+};
+
+module.exports = Text.makeSubset(methods, find);

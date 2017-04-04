@@ -2,53 +2,52 @@
 const Text = require('../../index');
 const ContractionCl = require('./contraction');
 const findPossible = require('./findPossible');
+//the Contractions() subset class
 
-class Contractions extends Text {
-  data() {
-    return this.list.map(ts => ts.data());
-  }
-  contract() {
+const methods = {
+  contract: function() {
     this.list.forEach((ts) => ts.contract());
     return this;
-  }
-  expand() {
+  },
+  expand: function() {
     this.list.forEach((ts) => ts.expand());
     return this;
-  }
-  contracted() {
+  },
+  contracted: function() {
     this.list = this.list.filter((ts) => {
       return ts.contracted;
     });
     return this;
-  }
-  expanded() {
+  },
+  expanded: function() {
     this.list = this.list.filter((ts) => {
       return !ts.contracted;
     });
     return this;
   }
-  static find(r, n) {
-    //find currently-contracted
-    let found = r.match('#Contraction #Contraction #Contraction?');
-    found.list = found.list.map((ts) => {
-      let c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-      c.contracted = true;
-      return c;
-    });
-    //find currently-expanded
-    let expanded = findPossible(r);
-    expanded.list.forEach((ts) => {
-      let c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-      c.contracted = false;
-      found.list.push(c);
-    });
-    found.sort('chronological');
-    //get nth element
-    if (typeof n === 'number') {
-      found = found.get(n);
-    }
-    return found;
-  }
-}
+};
 
-module.exports = Contractions;
+const find = function(r, n) {
+  //find currently-contracted
+  let found = r.match('#Contraction #Contraction #Contraction?');
+  found.list = found.list.map((ts) => {
+    let c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+    c.contracted = true;
+    return c;
+  });
+  //find currently-expanded
+  let expanded = findPossible(r);
+  expanded.list.forEach((ts) => {
+    let c = new ContractionCl(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+    c.contracted = false;
+    found.list.push(c);
+  });
+  found.sort('chronological');
+  //get nth element
+  if (typeof n === 'number') {
+    found = found.get(n);
+  }
+  return found;
+};
+
+module.exports = Text.makeSubset(methods, find);

@@ -1,8 +1,9 @@
 'use strict';
 const Text = require('../../index');
+//the Acronym() subset class
 
-class Acronyms extends Text {
-  data() {
+const methods = {
+  data: function() {
     return this.terms().list.map((ts) => {
       let t = ts.terms[0];
       let parsed = t.text.toUpperCase().replace(/\./g).split('');
@@ -13,13 +14,15 @@ class Acronyms extends Text {
       };
     });
   }
-  static find(r, n) {
-    r = r.match('#Acronym');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    return r;
-  }
-}
+};
 
-module.exports = Acronyms;
+const find = function(r, n) {
+  r = r.match('#Acronym');
+  if (typeof n === 'number') {
+    r = r.get(n);
+  }
+  return r;
+};
+
+
+module.exports = Text.makeSubset(methods, find);

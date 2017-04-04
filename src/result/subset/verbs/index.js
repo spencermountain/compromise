@@ -2,107 +2,99 @@
 const Text = require('../../index');
 const Verb = require('./verb');
 
-class Verbs extends Text {
-  constructor(arr, lexicon, reference) {
-    super(arr, lexicon, reference);
-  }
-  data() {
-    return this.list.map((ts) => {
-      return ts.data();
-    });
-  }
-  conjugation(verbose) {
+//the () subset class
+const methods = {
+  conjugation: function(verbose) {
     return this.list.map((ts) => {
       return ts.conjugation(verbose);
     });
-  }
-  conjugate(verbose) {
+  },
+  conjugate: function(verbose) {
     return this.list.map((ts) => {
       return ts.conjugate(verbose);
     });
-  }
+  },
 
   /** plural/singular **/
-  isPlural() {
+  isPlural: function() {
     this.list = this.list.filter((ts) => {
       return ts.isPlural();
     });
     return this;
-  }
-  isSingular() {
+  },
+  isSingular: function() {
     this.list = this.list.filter((ts) => {
       return !ts.isPlural();
     });
     return this;
-  }
+  },
 
   /** negation **/
-  isNegative() {
+  isNegative: function() {
     this.list = this.list.filter((ts) => {
       return ts.isNegative();
     });
     return this;
-  }
-  isPositive() {
+  },
+  isPositive: function() {
     this.list = this.list.filter((ts) => {
       return !ts.isNegative();
     });
     return this;
-  }
-  toNegative() {
+  },
+  toNegative: function() {
     this.list = this.list.map((ts) => {
       return ts.toNegative();
     });
     return this;
-  }
-  toPositive() {
+  },
+  toPositive: function() {
     this.list.forEach((ts) => {
       ts.toPositive();
     });
     return this;
-  }
+  },
 
   /** tense **/
-  toPastTense() {
+  toPastTense: function() {
     this.list.forEach((ts) => {
       ts.toPastTense();
     });
     return this;
-  }
-  toPresentTense() {
+  },
+  toPresentTense: function() {
     this.list.forEach((ts) => {
       ts.toPresentTense();
     });
     return this;
-  }
-  toFutureTense() {
+  },
+  toFutureTense: function() {
     this.list.forEach((ts) => {
       ts.toFutureTense();
     });
     return this;
-  }
-  toInfinitive() {
+  },
+  toInfinitive: function() {
     this.list.forEach((ts) => {
       ts.toInfinitive();
     });
     return this;
-  }
-  asAdjective() {
+  },
+  asAdjective: function() {
     return this.list.map((ts) => ts.asAdjective());
   }
+};
 
-  static find(r, n) {
-    r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
-    r = r.splitAfter('#Comma');
-    if (typeof n === 'number') {
-      r = r.get(n);
-    }
-    r.list = r.list.map((ts) => {
-      return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
-    });
-    return new Text(r.list, this.lexicon, this.parent);
+const find = function(r, n) {
+  r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
+  r = r.splitAfter('#Comma');
+  if (typeof n === 'number') {
+    r = r.get(n);
   }
-}
+  r.list = r.list.map((ts) => {
+    return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  });
+  return new Text(r.list, this.lexicon, this.parent);
+};
 
-
-module.exports = Verbs;
+module.exports = Text.makeSubset(methods, find);

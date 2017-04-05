@@ -43,10 +43,13 @@ const tryAll = function(lexFirst, ts) {
   return ts;
 };
 
-const lexicon_lump = function (ts) {
-  //use default lexicon
+//use default lexicon
+const defaultLex = function (ts) {
   ts = tryAll(lexiconFirst, ts);
-  //try user's lexicon
+  return ts;
+};
+//try user's lexicon
+const userLex = function (ts) {
   if (ts.lexicon) {
     let uFirst = getFirstWords([ts.lexicon]);
     ts = tryAll(uFirst, ts);
@@ -54,4 +57,7 @@ const lexicon_lump = function (ts) {
   return ts;
 };
 
-module.exports = lexicon_lump;
+module.exports = {
+  defaultLex: defaultLex,
+  userLex: userLex
+};

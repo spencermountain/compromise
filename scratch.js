@@ -31,7 +31,10 @@ var nlp = require('./src/index');
 // r.tag('#Person');
 // console.timeEnd('tag');
 
-let str = 'it is april fools day fun';
-let r = nlp(str);
+let lexicon = {
+  'jardas al abid': 'Place'
+};
+let str = 'hello Jardas al Abid hello';
+let r = nlp(str, lexicon); //.places();
 r.debug();
 // console.log(r.match('april fools', true).out('array'));

@@ -234,7 +234,7 @@ module.exports = [
   },
   {
     'text': 'The program traders, on the other hand, portray old-fashioned stock pickers as the Neanderthals of the industry.',
-    'pos': 'DT, NN, NNS, IN, DT, JJ, NN, VBP, JJ, NN, NNS, IN, DT, NNS, IN, DT, NN'
+    'pos': 'DT, NN, NNS, IN, DT, JJ, NN, VBP, JJ, JJ, NN, NNS, IN, DT, NNS, IN, DT, NN'
   },
   {
     'text': 'Reducing volatility.',

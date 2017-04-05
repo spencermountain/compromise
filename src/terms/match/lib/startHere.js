@@ -1,5 +1,5 @@
 'use strict';
-// const lumpMatch = require('./lumpMatch');
+const lumpMatch = require('./lumpMatch');
 const isMatch = require('./isMatch');
 
 // match everything until this point - '*'
@@ -131,12 +131,12 @@ const startHere = (ts, startAt, regs, verbose) => {
     }
 
     //handle partial-matches of lumped terms
-    // let lumpUntil = lumpMatch(term, regs, reg_i);
-    // if (lumpUntil) {
-    //   reg_i = lumpUntil;
-    //   term_i += 1;
-    //   continue;
-    // }
+    let lumpUntil = lumpMatch(term, regs, reg_i, verbose);
+    if (lumpUntil !== null) {
+      reg_i = lumpUntil;
+      term_i += 1;
+      continue;
+    }
 
 
     //was it optional anways?

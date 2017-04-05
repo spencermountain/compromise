@@ -15,6 +15,10 @@ const fastPass = (ts, regs) => {
           found = true;
           break;
         }
+        //we can't handle lumped-terms with this method
+        if (ts.terms[o].lumped === true) {
+          return false;
+        }
       }
       if (found === false) {
         return true;

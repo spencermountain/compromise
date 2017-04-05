@@ -31,8 +31,7 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 // r.tag('#Person');
 // console.timeEnd('tag');
 
-let str = 'hello there. I work for the F.B.I. in ft. Mede. hello there!';
+let str = 'it is april fools day fun';
 let r = nlp(str);
-let o = r.sentences(1).out('offsets')[0];
-console.log(o);
-console.log(str.substring(o.wordStart, o.wordEnd));
+// r.debug();
+console.log(r.match('april fools', true).out('array'));

@@ -17,9 +17,10 @@ test('out-tags:', function (t) {
   var str = 'texas rangers are a baseball team';
   var r = nlp(str);
   var arr = r.out('tags');
-  t.equal(arr.length, 5, '5 terms');
-  t.equal(arr[0].normal, 'texas rangers', 'texas rangers are #1');
-  t.equal(arr[1].normal, 'are', 'are #2');
+  t.equal(arr.length, 6, '6 terms');
+  t.equal(arr[0].normal, 'texas', 'texas #1');
+  t.equal(arr[1].normal, 'rangers', 'rangers #2');
+  t.equal(arr[2].normal, 'are', 'are #2');
   t.ok(arr[0].tags.indexOf('SportsTeam') !== -1, 'they are a sportsteam');
   t.end();
 });

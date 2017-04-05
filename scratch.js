@@ -32,9 +32,10 @@ var nlp = require('./src/index');
 // console.timeEnd('tag');
 
 let lexicon = {
-  'jardas al abid': 'Place'
+  'one two three': 'Organization'
 };
-let str = 'hello Jardas al Abid hello';
-let r = nlp(str, lexicon); //.places();
+// let str = 'hello one two three hello';
+let str = 'portray old-fashioned stock';
+let r = nlp(str, lexicon);
 r.debug();
 // console.log(r.match('april fools', true).out('array'));

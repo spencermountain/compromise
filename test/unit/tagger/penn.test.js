@@ -49,6 +49,8 @@ test('pennTreebank-test:', function(t) {
       var term = terms.list[i].terms[0];
       if (!term.tags[want]) {
         equal = false;
+        console.log(term.normal, want);
+        break;
       }
     }
     t.ok(equal, 'perfect-tags #' + index);

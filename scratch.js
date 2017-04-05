@@ -5,7 +5,7 @@ var nlp = require('./src/index');
 // nlp.verbose('tagger');
 // const corpus = require('nlp-corpus');
 // let sotu = corpus.sotu.parsed()[23];
-const fresh = require('./test/unit/lib/freshPrince.js');
+// const fresh = require('./test/unit/lib/freshPrince.js');
 
 // bug.1
 //  .? vs *
@@ -33,5 +33,5 @@ const fresh = require('./test/unit/lib/freshPrince.js');
 
 let str = 'it is april fools day fun';
 let r = nlp(str);
-// r.debug();
-console.log(r.match('april fools', true).out('array'));
+r.debug();
+// console.log(r.match('april fools', true).out('array'));

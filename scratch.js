@@ -31,11 +31,9 @@ var nlp = require('./src/index');
 // r.tag('#Person');
 // console.timeEnd('tag');
 
-let lexicon = {
-  'one two three': 'Organization'
-};
-// let str = 'hello one two three hello';
-let str = 'portray old-fashioned stock';
-let r = nlp(str, lexicon);
-r.debug();
-// console.log(r.match('april fools', true).out('array'));
+
+let r = nlp('5th');
+// r.tag('MyTag');
+// // r.values().toNumber();
+
+console.log(r.values().debug().toNumber().out());

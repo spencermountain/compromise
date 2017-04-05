@@ -11,6 +11,9 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - adds `wordStart` and `wordEnd` offsets to `.out('offset')` for whitespace+punctuation
 - new `.has()` method for faster lookups
 * 9.1.0 - pretty-real filesize reduction by swapping es6 classes for es5 inheritance
+* 9.2.0
+- change lumping behaviour of lexicon terms with multiple words
+- keep more former tags following a term replace method
 
 ### v.8  &nbsp;
 * 8.0.0 - less-ambitious date-parsing of nl-date forms

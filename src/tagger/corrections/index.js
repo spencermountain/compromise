@@ -47,7 +47,7 @@ const corrections = function (ts) {
     ts.match('half a? #Value').tag('Value', 'half-a-value'); //quarter not ready
     ts.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half');
     //all values are either ordinal or cardinal
-    ts.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
+    // ts.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
     //money
     ts.match('#Value+ #Currency').tag('Money', 'value-currency');
     ts.match('#Money and #Money #Currency?').tag('Money', 'money-and-money');

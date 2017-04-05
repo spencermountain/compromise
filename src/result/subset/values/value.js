@@ -44,8 +44,10 @@ const isNumber = (ts) => {
 
 const methods = {
   number: function() {
-    let num = parse(this.val);
-    return num;
+    if (isOrdinal(this.val)) {
+      return numOrdinal(this.val);
+    }
+    return parse(this.val);
   },
   /** five -> '5' */
   toNumber: function() {
@@ -59,6 +61,7 @@ const methods = {
     if (isOrdinal(val)) {
       let num = numOrdinal(val);
       this.replaceWith(num, 'Value');
+    // this.debug();
     } else {
       let num = parse(val);
       // console.log(num);

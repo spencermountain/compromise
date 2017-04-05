@@ -47,6 +47,8 @@ const datePass = function (ts) {
     ts.match('#Month #Value to #Value').tag('Date', 'value-to-value');
     //march 12th 2018
     ts.match('#Month #Value #Cardinal').tag('Date', 'month-value-cardinal');
+    //march the 12th
+    ts.match('#Month the #Value').tag('Date', 'month-the-value');
   }
 
   ts.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time', 'in-the-night');

@@ -14,6 +14,9 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 * 9.2.0
 - change lumping behaviour of lexicon terms with multiple words
 - keep more former tags following a term replace method
+* 9.3.0
+- adds `.random()` method
+- adds `.lessThan()`, `.greaterThan()`, `.equalTo()` methods
 
 ### v.8  &nbsp;
 * 8.0.0 - less-ambitious date-parsing of nl-date forms

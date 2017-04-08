@@ -69,6 +69,11 @@ module.exports = {
       desc: 'turn a list of results into one result',
       returns: 'Text',
       example: 'nlp(\'sex cauldron? I thought they closed that place down.\').flatten().length()\n//1'
+    },
+    random: {
+      desc: 'sample a random section of n matches',
+      returns: 'Text',
+      example: 'nlp(\'one two three four\').terms().random(2).out(\'array\')\n//[\'four\',\'one\']'
     }
   },
 

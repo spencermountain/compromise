@@ -47,7 +47,28 @@ const methods = {
       return ts.toNiceNumber();
     });
     return this;
-  }
+  },
+  /**seven === 7th */
+  equalTo: function(num) {
+    this.list = this.list.filter((ts) => {
+      return ts.number() === num;
+    });
+    return this;
+  },
+  /**eight > 7th */
+  greaterThan: function(num) {
+    this.list = this.list.filter((ts) => {
+      return ts.number() > num;
+    });
+    return this;
+  },
+  /**five < 7th */
+  lessThan: function(num) {
+    this.list = this.list.filter((ts) => {
+      return ts.number() < num;
+    });
+    return this;
+  },
 };
 
 const find = function(r, n) {

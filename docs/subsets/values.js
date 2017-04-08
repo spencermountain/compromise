@@ -40,5 +40,20 @@ module.exports = {
     desc: 'return the actual javascript integers (or floats)',
     returns: 'Array',
     example: 'nlp(\'at the seven eleven\').values().numbers()\n// [7, 11]'
+  },
+  greaterThan: {
+    desc: 'return only the values larger than a given value',
+    returns: 'Text',
+    example: 'nlp(\'seven peaches weigh ten kilograms\').values().greaterThan(7).out(\'array\')\n// [\'10\']'
+  },
+  lessThan: {
+    desc: 'return only the values smaller than a given value',
+    returns: 'Text',
+    example: 'nlp(\'he is 7 years old\').values().greaterThan(\'five\').out(\'array\')\n// [\'7\']'
+  },
+  equalTo: {
+    desc: 'return only the values equal to a given value',
+    returns: 'Text',
+    example: 'nlp(\'it\'s his 7th birthday\').values().equalTo(7).out(\'array\')\n// [\'7th\']'
   }
 };

@@ -29,3 +29,14 @@ test('random', function (t) {
 
   t.end();
 });
+
+
+test('random-null', function (t) {
+  let r = nlp('toronto');
+  let arr = r.people().random(5).out('array');
+  t.equal(arr.length, 0, 'random can be empty');
+
+  arr = r.places().random(5).out('array');
+  t.equal(arr.length, 1, 'random can be full-match');
+  t.end();
+});

@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../../lib/nlp');
 
-test('parse-value-basic:', function (t) {
+test('all-to-number:', function (t) {
   let num = nlp('1st').values().numbers()[0];
   t.equal(num, 1, '1st');
   num = nlp('1').values().numbers()[0];
@@ -33,6 +33,28 @@ test('parse-value-basic:', function (t) {
   t.equal(num, 200, '2 hundred');
   num = nlp('2 hundredth').values().numbers()[0];
   t.equal(num, 200, '2 hundredth');
+
+  t.end();
+});
+
+test('all-to-text:', function (t) {
+  let arr = [
+    'one',
+    '1',
+    '1st',
+    'first',
+  ];
+  arr.forEach((txt) => {
+    let str = nlp(txt).values().data()[0].text;
+    t.equal(str, 'one', txt);
+
+  });
+
+  str = nlp('1').values().numbers()[0];
+  t.equal(str, 1, '1');
+
+  str = nlp('1st').values().numbers()[0];
+  t.equal(str, 1, 'first');
 
   t.end();
 });

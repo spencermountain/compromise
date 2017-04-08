@@ -32,8 +32,4 @@ var nlp = require('./src/index');
 // console.timeEnd('tag');
 
 
-console.log(nlp('1st').values().numbers());
-console.log(nlp('1').values().numbers());
-console.log(nlp('first').values().numbers());
-console.log(nlp('one').values().numbers());
-// console.log(nlp('it\'s his seventh birthday').values().equalTo(7).out('array'));
+console.log(nlp('seven thousand').values().data());

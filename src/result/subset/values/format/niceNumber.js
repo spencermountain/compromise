@@ -1,5 +1,5 @@
 'use strict';
-
+//put a comma or two in
 const niceNumber = function (num) {
   if (!num && num !== 0) {
     return null;

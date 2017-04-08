@@ -63,18 +63,18 @@ const breakdown_hundred = function(num) {
     'eighteen',
     'nineteen'
   ];
-  let arr = []
+  let arr = [];
   for (let i = 0; i < tens_mapping.length; i++) {
     if (num >= tens_mapping[i][1]) {
       num -= tens_mapping[i][1];
-      arr.push(tens_mapping[i][0])
+      arr.push(tens_mapping[i][0]);
     }
   }
   //(hopefully) we should only have 20-0 now
   if (ones_mapping[num]) {
-    arr.push(ones_mapping[num])
+    arr.push(ones_mapping[num]);
   }
-  return arr
+  return arr;
 };
 
 /** print-out 'point eight nine'*/
@@ -90,27 +90,27 @@ const handle_decimal = (num) => {
     'seven',
     'eight',
     'nine'
-  ]
-  let arr = []
+  ];
+  let arr = [];
   //parse it out like a string, because js math is such shit
-  let decimal = ('' + num).match(/\.([0-9]+)/)
+  let decimal = ('' + num).match(/\.([0-9]+)/);
   if (!decimal || !decimal[0]) {
-    return arr
+    return arr;
   }
-  arr.push('point')
-  let decimals = decimal[0].split('')
+  arr.push('point');
+  let decimals = decimal[0].split('');
   for (let i = 0; i < decimals.length; i++) {
-    arr.push(names[decimals[i]])
+    arr.push(names[decimals[i]]);
   }
-  return arr
-}
+  return arr;
+};
 
 /** turns an integer into a textual number */
 const to_text = function(num) {
-  let arr = []
+  let arr = [];
   //handle negative numbers
   if (num < 0) {
-    arr.push('negative')
+    arr.push('negative');
     num = Math.abs(num);
   }
   //break-down into units, counts
@@ -122,20 +122,20 @@ const to_text = function(num) {
       unit_name = '';
       //put an 'and' in here
       if (arr.length > 1) {
-        arr.push('and')
+        arr.push('and');
       }
     }
-    arr = arr.concat(breakdown_hundred(units[i].count))
-    arr.push(unit_name)
+    arr = arr.concat(breakdown_hundred(units[i].count));
+    arr.push(unit_name);
   }
   //also support decimals - 'point eight'
-  arr = arr.concat(handle_decimal(num))
+  arr = arr.concat(handle_decimal(num));
   //remove empties
-  arr = arr.filter((s) => s)
+  arr = arr.filter((s) => s);
   if (arr.length === 0) {
-    arr[0] = 'zero'
+    arr[0] = 'zero';
   }
-  return arr
+  return arr;
 };
 
 module.exports = to_text;

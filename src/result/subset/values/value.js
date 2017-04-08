@@ -2,6 +2,7 @@
 const paths = require('../../paths');
 const Terms = paths.Terms;
 const parse = require('./parse');
+const fmt = require('./format');
 
 const Value = function(arr, lexicon, refText, refTerms) {
   Terms.call(this, arr, lexicon, refText, refTerms);
@@ -12,34 +13,42 @@ const Value = function(arr, lexicon, refText, refTerms) {
 Value.prototype = Object.create(Terms.prototype);
 
 const methods = {
+  data: function() {
+    let num = parse(this.val);
+    return {
+      number: num,
+      nice: fmt.number.nice(num),
+      ordinal: fmt.number.ordinal(num),
+      niceOrdinal: fmt.number.niceOrdinal(num),
+      text: fmt.text.cardinal(num),
+      textOrdinal: fmt.text.ordinal(num)
+    };
+  },
   number: function() {
     return parse(this.val);
   },
-// /** five -> '5' */
-// toNumber: function() {
-//   let num = this.number();
-//   if (num !== null) {
-//     this.replaceWith('' + num, 'Value');
-//   }
-//   return this;
-// },
-// /**5 -> 'five' */
-// toTextValue: function() {
-//   let val = this.val;
-//   //is already
-//   if (isText(val)) {
-//     return this;
-//   }
-//   //otherwise, parse it
-//   if (isOrdinal(val)) {
-//     let str = textOrdinal(val);
-//     return this.replaceWith(str, 'Value');
-//   }
-//   let num = '' + parse(val);
-//   let str = toText(num).join(' ');
-//   this.replaceWith(str, 'Value');
-//   return this;
-// },
+  // /** five -> '5' */
+  toNumber: function() {
+    let num = parse(this.val);
+    if (num !== null) {
+      this.replaceWith('' + num, 'Value');
+    }
+    return this;
+  },
+  // /**5 -> 'five' */
+  toTextValue: function() {
+    let num = parse(this.val);
+    if (num !== null) {
+      let str = '';
+      if (this.val.has('#Ordinal')) {
+        str = format.textOrdinal(num);
+      } else {
+        str = format.textValue(num);
+      }
+      this.replaceWith(str, 'Value');
+    }
+    return this;
+  },
 //
 // /**5th -> 5 */
 // toCardinal: function() {
@@ -85,27 +94,6 @@ const methods = {
 //   return this;
 // },
 //
-// data: function() {
-//   let numV = this.clone().toNumber();
-//   let txtV = this.clone().toTextValue();
-//   let obj = {
-//     NumericValue: {
-//       cardinal: numV.toCardinal().out('text'),
-//       ordinal: numV.toOrdinal().out('text'),
-//       nicenumber: this.toNiceNumber().out('text'),
-//     },
-//     TextValue : {
-//       cardinal: txtV.toCardinal().out('text'),
-//       ordinal: txtV.toOrdinal().out('text'),
-//     },
-//     unit: ''
-//   };
-//   if (this.unit) {
-//     obj.unit = this.unit.out('text');
-//   }
-//   obj.number = this.number();
-//   return obj;
-// },
 // clone : function() {
 //   let terms = this.terms.map((t) => {
 //     return t.clone();

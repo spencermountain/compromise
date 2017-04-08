@@ -1,6 +1,7 @@
 'use strict';
 const parseText = require('./parseText');
-const numeric = /^(\$|€|¥|£)?[0-9\.]+[0-9,\.]*(st|nd|rd|th|rth)?$/;
+// 2.5, $5.50, 3,432, etc -
+const numeric = /^(\$|€|¥|£)?\.?[0-9]+[0-9,\.]*(st|nd|rd|th|rth)?$/;
 
 const parseString = function(str) {
   if (numeric.test(str) === true) {
@@ -18,7 +19,7 @@ const parseString = function(str) {
 
 //turn it all into a number
 const parse = function(val) {
-  if (typeof val === 'number') {
+  if (val === null || val === undefined || typeof val === 'number') {
     return val;
   }
   if (typeof val === 'string') {

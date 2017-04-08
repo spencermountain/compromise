@@ -52,8 +52,9 @@ const methods = {
   },
   /**seven === 7th */
   equalTo: function(num) {
+    num = parse(num);
     this.list = this.list.filter((ts) => {
-      return ts.number() === num;
+      return num !== null && ts.number() === num;
     });
     return this;
   },
@@ -61,14 +62,15 @@ const methods = {
   greaterThan: function(num) {
     num = parse(num);
     this.list = this.list.filter((ts) => {
-      return ts.number() > num;
+      return num !== null && ts.number() > num;
     });
     return this;
   },
   /**five < 7th */
   lessThan: function(num) {
+    num = parse(num);
     this.list = this.list.filter((ts) => {
-      return ts.number() < num;
+      return num !== null && ts.number() < num;
     });
     return this;
   },

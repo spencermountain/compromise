@@ -32,4 +32,4 @@ var nlp = require('./src/index');
 // console.timeEnd('tag');
 
 
-console.log(nlp('one hundredth').values().greaterThan('seven').toText().out());
+console.log(nlp('one hundredth').values().greaterThan().toText().out());

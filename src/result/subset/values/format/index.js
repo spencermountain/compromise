@@ -5,29 +5,22 @@ const niceNumber = require('./niceNumber');
 
 //make all the number formats
 const fmt = {
-  number: {
-    cardinal: function(num) {
-      return num;
-    },
-    ordinal: function(num) {
-      return numOrdinal(num);
-    },
-    nice: function(num) {
-      return niceNumber(num);
-    },
-    niceOrdinal: function(num) {
-      num = numOrdinal(num);
-      num = niceNumber(num);
-      return num;
-    }
+  nice: function(num) {
+    return niceNumber(num);
   },
-  text: {
-    cardinal: function(num) {
-      return textCardinal(num).join(' ');
-    },
-    ordinal: function(num) {
-      return textOrdinal(num);
-    },
+  ordinal: function(num) {
+    return numOrdinal(num);
+  },
+  niceOrdinal: function(num) {
+    num = numOrdinal(num);
+    num = niceNumber(num);
+    return num;
+  },
+  text: function(num) {
+    return textCardinal(num).join(' ');
+  },
+  textOrdinal: function(num) {
+    return textOrdinal(num);
   }
 };
 module.exports = fmt;

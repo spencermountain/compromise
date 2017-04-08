@@ -1,21 +1,53 @@
 'use strict';
 // turns an integer/float into a textual number, like 'fifty-five'
+const tens_mapping = [
+  ['ninety', 90],
+  ['eighty', 80],
+  ['seventy', 70],
+  ['sixty', 60],
+  ['fifty', 50],
+  ['forty', 40],
+  ['thirty', 30],
+  ['twenty', 20]
+];
+const ones_mapping = [
+  '',
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+  'nine',
+  'ten',
+  'eleven',
+  'twelve',
+  'thirteen',
+  'fourteen',
+  'fifteen',
+  'sixteen',
+  'seventeen',
+  'eighteen',
+  'nineteen'
+];
+const sequence = [
+  [1000000000, 'million'],
+  [100000000, 'hundred million'],
+  [1000000, 'million'],
+  [100000, 'hundred thousand'],
+  [1000, 'thousand'],
+  [100, 'hundred'],
+  [1, 'one']
+];
 
 //turn number into an array of magnitudes, like [[5, million], [2, hundred]]
 const breakdown_magnitudes = function(num) {
   let working = num;
   let have = [];
-  const sequence = [
-    [1000000000, 'million'],
-    [100000000, 'hundred million'],
-    [1000000, 'million'],
-    [100000, 'hundred thousand'],
-    [1000, 'thousand'],
-    [100, 'hundred'],
-    [1, 'one']
-  ];
   sequence.forEach((a) => {
-    if (num > a[0]) {
+    if (num >= a[0]) {
       let howmany = Math.floor(working / a[0]);
       working -= howmany * a[0];
       if (howmany) {
@@ -31,38 +63,6 @@ const breakdown_magnitudes = function(num) {
 
 //turn numbers from 100-0 into their text
 const breakdown_hundred = function(num) {
-  const tens_mapping = [
-    ['ninety', 90],
-    ['eighty', 80],
-    ['seventy', 70],
-    ['sixty', 60],
-    ['fifty', 50],
-    ['forty', 40],
-    ['thirty', 30],
-    ['twenty', 20]
-  ];
-  const ones_mapping = [
-    '',
-    'one',
-    'two',
-    'three',
-    'four',
-    'five',
-    'six',
-    'seven',
-    'eight',
-    'nine',
-    'ten',
-    'eleven',
-    'twelve',
-    'thirteen',
-    'fourteen',
-    'fifteen',
-    'sixteen',
-    'seventeen',
-    'eighteen',
-    'nineteen'
-  ];
   let arr = [];
   for (let i = 0; i < tens_mapping.length; i++) {
     if (num >= tens_mapping[i][1]) {
@@ -133,7 +133,7 @@ const to_text = function(num) {
   //remove empties
   arr = arr.filter((s) => s);
   if (arr.length === 0) {
-    arr[0] = 'zero';
+    arr[0] = '';
   }
   return arr;
 };

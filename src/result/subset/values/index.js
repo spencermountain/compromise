@@ -21,9 +21,9 @@ const methods = {
     return this;
   },
   /**5 -> 'five' */
-  toTextValue: function() {
+  toText: function() {
     this.list = this.list.map((ts) => {
-      return ts.toTextValue();
+      return ts.toText();
     });
     return this;
   },
@@ -42,9 +42,9 @@ const methods = {
     return this;
   },
   /**5900 -> 5,900 */
-  toNiceNumber: function() {
+  toNice: function() {
     this.list = this.list.map((ts) => {
-      return ts.toNiceNumber();
+      return ts.toNice();
     });
     return this;
   },

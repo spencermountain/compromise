@@ -32,4 +32,4 @@ var nlp = require('./src/index');
 // console.timeEnd('tag');
 
 
-console.log(nlp('seven thousand').values().data());
+console.log(nlp('one hundredth').values().toOrdinal().toText().out());

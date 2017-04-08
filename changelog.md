@@ -2,6 +2,13 @@
 here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
 
 
+### v.10
+- cleanup & rename some `.value()` methods
+- change lumping behaviour of lexicon terms with multiple words
+- keep more former tags after a term replace method
+- new `.random()` method
+- new `.lessThan()`, `.greaterThan()`, `.equalTo()` methods
+
 ### v.9  &nbsp;
 * 9.0.0
 - rename `Term.tag` object to `Term.tags` so the `.tag()` method can work throughout more-consistently
@@ -11,12 +18,6 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - adds `wordStart` and `wordEnd` offsets to `.out('offset')` for whitespace+punctuation
 - new `.has()` method for faster lookups
 * 9.1.0 - pretty-real filesize reduction by swapping es6 classes for es5 inheritance
-* 9.2.0
-- change lumping behaviour of lexicon terms with multiple words
-- keep more former tags following a term replace method
-* 9.3.0
-- adds `.random()` method
-- adds `.lessThan()`, `.greaterThan()`, `.equalTo()` methods
 
 ### v.8  &nbsp;
 * 8.0.0 - less-ambitious date-parsing of nl-date forms

@@ -50,12 +50,12 @@ test('misc:', function (t) {
 
   str = '2 million five hundred thousand and fifty nine is bigger than 2882';
   m = nlp(str);
-  m.values().toNiceNumber();
+  m.values().toNice();
   t.equal(m.out('text'), '2,500,059 is bigger than 2,882', str);
 
   str = 'doug is 5 years old';
   m = nlp(str);
-  m.values().toTextValue();
+  m.values().toText();
   t.equal(m.out('normal'), 'doug is five years old', str);
 
   var r = nlp('Homer, have you been eating that sandwich again?').terms().slice(0, 3);

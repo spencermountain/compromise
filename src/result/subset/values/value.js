@@ -17,11 +17,11 @@ const methods = {
     let num = parse(this.val);
     return {
       number: num,
-      nice: fmt.number.nice(num),
-      ordinal: fmt.number.ordinal(num),
-      niceOrdinal: fmt.number.niceOrdinal(num),
-      text: fmt.text.cardinal(num),
-      textOrdinal: fmt.text.ordinal(num)
+      nice: fmt.nice(num),
+      ordinal: fmt.ordinal(num),
+      niceOrdinal: fmt.niceOrdinal(num),
+      text: fmt.text(num),
+      textOrdinal: fmt.textOrdinal(num)
     };
   },
   number: function() {
@@ -31,75 +31,75 @@ const methods = {
   toNumber: function() {
     let num = parse(this.val);
     if (num !== null) {
-      this.replaceWith('' + num, 'Value');
-    }
-    return this;
-  },
-  // /**5 -> 'five' */
-  toTextValue: function() {
-    let num = parse(this.val);
-    if (num !== null) {
       let str = '';
       if (this.val.has('#Ordinal')) {
-        str = format.textOrdinal(num);
+        str = fmt.ordinal(num);
       } else {
-        str = format.textValue(num);
+        str = num;
       }
       this.replaceWith(str, 'Value');
     }
     return this;
   },
-//
-// /**5th -> 5 */
-// toCardinal: function() {
-//   let val = this.val;
-//   //already
-//   if (!isOrdinal(val)) {
-//     return this;
-//   }
-//   //otherwise,
-//   if (isText(val)) {
-//     let num = '' + parse(val);
-//     let str = toText(num).join(' ');
-//     return this.replaceWith(str, 'Value');
-//   }
-//   let num = '' + parse(val);
-//   return this.replaceWith(num, 'Value');
-// },
-//
-// /**5 -> 5th */
-// toOrdinal: function() {
-//   let val = this.val;
-//   //already
-//   if (isOrdinal(val)) {
-//     return this;
-//   }
-//   //otherwise,
-//   if (isText(val)) {
-//     let str = textOrdinal(val);
-//     this.replaceWith(str, 'Value');
-//   } else {
-//     //number-ordinal
-//     let str = numOrdinal(val);
-//     this.replaceWith(str, 'Value');
-//   }
-//   return this;
-// },
-//
-// /**5900 -> 5,900 */
-// toNiceNumber: function() {
-//   let num = parse(this);
-//   let str = toNiceNumber(num);
-//   this.replaceWith(str, 'Value');
-//   return this;
-// },
-//
-// clone : function() {
-//   let terms = this.terms.map((t) => {
-//     return t.clone();
-//   });
-//   return new Value(terms, this.lexicon, this.refText, this.refTerms);
-// }
+  // /**5 -> 'five' */
+  toText: function() {
+    let num = parse(this.val);
+    if (num !== null) {
+      let str = '';
+      if (this.val.has('#Ordinal')) {
+        str = fmt.textOrdinal(num);
+      } else {
+        str = fmt.text(num);
+      }
+      this.replaceWith(str, 'Value');
+    }
+    return this;
+  },
+  //
+  // /**5th -> 5 */
+  toCardinal: function() {
+    let num = parse(this.val);
+    if (num !== null) {
+      let str = '';
+      if (this.val.has('#TextValue')) {
+        str = fmt.text(num);
+      } else {
+        str = num;
+      }
+      this.replaceWith(str, 'Value');
+    }
+    return this;
+  },
+  //
+  // /**5 -> 5th */
+  toOrdinal: function() {
+    let num = parse(this.val);
+    if (num !== null) {
+      let str = '';
+      if (this.val.has('#TextValue')) {
+        str = fmt.textOrdinal(num);
+      } else {
+        str = fmt.ordinal(num);
+      }
+      this.replaceWith(str, 'Value');
+    }
+    return this;
+  },
+  //
+  // /**5900 -> 5,900 */
+  toNice: function() {
+    let num = parse(this.val);
+    if (num !== null) {
+      let str = '';
+      if (this.val.has('#Ordinal')) {
+        str = fmt.niceOrdinal(num);
+      } else {
+        str = fmt.nice(num);
+      }
+      this.replaceWith(str, 'Value');
+    }
+    return this;
+  }
 };
 
 

@@ -120,6 +120,23 @@ const miscMethods = (Text) => {
       return this;
     },
 
+    /** sample part of the array */
+    random: function(n) {
+      n = n || 1;
+      let r = Math.floor(Math.random() * this.list.length);
+      let arr = this.list.slice(r, r + n);
+      //if we're off the end, add some from the start
+      if (arr.length < n) {
+        let diff = n - arr.length;
+        if (diff > r) {
+          diff = r; //prevent it from going full-around
+        }
+        arr = arr.concat(this.list.slice(0, diff));
+      }
+      return new Text(arr, this.lexicon, this.parent);
+    }
+
+
   };
   Text.addMethods(Text, methods);
 };

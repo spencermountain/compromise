@@ -32,8 +32,5 @@ var nlp = require('./src/index');
 // console.timeEnd('tag');
 
 
-let r = nlp('5th');
-// r.tag('MyTag');
-// // r.values().toNumber();
-
-console.log(r.values().debug().toNumber().out());
+let r = nlp('one two three four five six');
+console.log(r.terms().random(11).out('array'));

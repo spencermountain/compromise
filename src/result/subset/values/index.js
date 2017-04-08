@@ -1,6 +1,8 @@
 'use strict';
 const Text = require('../../index');
 const Value = require('./value');
+const parse = require('./parse');
+
 
 //the Values() subset class
 const methods = {
@@ -57,6 +59,7 @@ const methods = {
   },
   /**eight > 7th */
   greaterThan: function(num) {
+    num = parse(num);
     this.list = this.list.filter((ts) => {
       return ts.number() > num;
     });

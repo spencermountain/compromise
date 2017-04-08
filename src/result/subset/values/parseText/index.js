@@ -24,18 +24,8 @@ const section_sum = (obj) => {
   }, 0);
 };
 
-const alreadyNumber = (ts) => {
-  for(let i = 0; i < ts.terms.length; i++) {
-    if (!ts.terms[i].tags.NumericValue) {
-      return false;
-    }
-  }
-  return true;
-};
-
 //turn a string into a number
-const parse = function(ts) {
-  let str = ts.out('normal');
+const parse = function(str) {
   //convert some known-numbers
   if (casualForms[str] !== undefined) {
     return casualForms[str];
@@ -43,10 +33,6 @@ const parse = function(ts) {
   //'a/an' is 1
   if (str === 'a' || str === 'an') {
     return 1;
-  }
-  //handle a string of mostly numbers
-  if (alreadyNumber(ts)) {
-    return parseNumeric(ts.out('normal'));
   }
   const modifier = findModifiers(str);
   str = modifier.str;

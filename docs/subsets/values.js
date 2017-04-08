@@ -16,15 +16,15 @@ module.exports = {
     returns: 'Text',
     example: 'nlp(\'ten things i hate about you\').values().toNumber().all().out()\n//10 things i hate about you'
   },
-  toTextValue: {
+  toText: {
     desc: 'turn a number like `5,500` into it\'s textual form, like `five thousand five hundred`',
     returns: 'Text',
-    example: 'nlp(\'10 things i hate about you\').values().toTextValue().all().out()\n//ten things i hate about you'
+    example: 'nlp(\'10 things i hate about you\').values().toText().all().out()\n//ten things i hate about you'
   },
-  toNiceNumber: {
+  toNice: {
     desc: 'turn a number into numerical form, but with nice commas, like `5,500`',
     returns: 'Text',
-    example: 'nlp(\'five hundred sixty two thousand, four hundred and seven\').values().toTextValue().all().out()\n//\'562,407\''
+    example: 'nlp(\'five hundred sixty two thousand, four hundred and seven\').values().toNice().all().out()\n//\'562,407\''
   },
   toCardinal: {
     desc: 'turn `fifth` into `five`, and `5th` into `5`',

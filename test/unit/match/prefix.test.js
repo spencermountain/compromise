@@ -30,8 +30,8 @@ test('prefix/infix/suffix basic', function(t) {
   t.equal(m.out('normal'), 'weird', 'one-char-one-word');
   m = r.match('_r_', true);
   t.equal(m.out('normal'), 'weird', 'one-char-one-word2');
-  m = r.match('_d', true);
-  t.equal(m.out('normal'), 'weird', 'one-char-one-word2');
+  m = r.match('_y', true);
+  t.equal(m.out('normal'), 'funny', 'one-char-one-word3');
 
   t.end();
 });

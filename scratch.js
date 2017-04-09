@@ -5,5 +5,5 @@ var nlp = require('./src/index');
 
 // console.log(nlp('-2').values().data());
 
-let r = nlp('g');
-r.debug();
+r = nlp('is -2').values().debug();
+r.isEqual(-2).debug();

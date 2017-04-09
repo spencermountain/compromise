@@ -75,7 +75,7 @@ const startHere = (ts, startAt, regs, verbose) => {
       let min = regs[reg_i].minMax.min || 0;
       let max = regs[reg_i].minMax.max;
       let until = regs[reg_i + 1];
-      for(let i = 0; i < max; i++) {
+      for(let i = 0; i < max; i++) { //TODO: please clean this loop up..
         let t = ts.terms[term_i + i];
         //end here
         if (isMatch(t, reg) === false) {
@@ -83,7 +83,6 @@ const startHere = (ts, startAt, regs, verbose) => {
         }
         //should we be greedier?
         if (i < min - 1) {
-          // console.log('gotta keep going!');
           continue; //gotta keep going!
         }
         //we can end here, after the minimum
@@ -91,14 +90,18 @@ const startHere = (ts, startAt, regs, verbose) => {
           term_i += 1;
           break;
         }
-        //try to be greedy
+        // we're greedy-to-now
+        if (i >= min && isMatch(t, until)) {
+          break;
+        }
+        //end with a greedy-match for next term
         let nextT = ts.terms[term_i + i + 1];
         if (isMatch(nextT, until)) {
           term_i += i + 2;
           reg_i += 1;
           break;
-        } else if (i === max - 1) { //we've maxed-out
-          // console.log('maxed-out');
+        } else if (i === max - 1) {
+          //we've maxed-out
           return null;
         }
       }

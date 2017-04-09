@@ -51,7 +51,7 @@ const methods = {
     return this;
   },
   /**seven === 7th */
-  equalTo: function(num) {
+  isEqual: function(num) {
     num = parse(num);
     this.list = this.list.filter((ts) => {
       return num !== null && ts.number() === num;

@@ -51,9 +51,9 @@ module.exports = {
     returns: 'Text',
     example: 'nlp(\'he is 7 years old\').values().greaterThan(\'five\').out(\'array\')\n// [\'7\']'
   },
-  equalTo: {
+  isEqual: {
     desc: 'return only the values equal to a given value',
     returns: 'Text',
-    example: 'nlp(\'it\'s his 7th birthday\').values().equalTo(7).out(\'array\')\n// [\'7th\']'
+    example: 'nlp(\'it\'s his 7th birthday\').values().isEqual(7).out(\'array\')\n// [\'7th\']'
   }
 };

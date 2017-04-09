@@ -17,6 +17,11 @@ const parse_term = function (term) {
   let reg = {};
   //order matters here
 
+  //1-character hasta be a text-match
+  if (term.length === 1 && term !== '.' && term !== '*') {
+    reg.normal = term;
+    return reg;
+  }
   //negation ! flag
   if (term.charAt(0) === '!') {
     term = noFirst(term);
@@ -41,6 +46,24 @@ const parse_term = function (term) {
   if (term.charAt(term.length - 1) === '+') {
     term = noLast(term);
     reg.consecutive = true;
+  }
+  //prefix/suffix/infix matches
+  if (term.charAt(term.length - 1) === '-') {
+    term = noLast(term);
+    reg.prefix = true;
+    //try both '-match-'
+    if (term.charAt(0) === '-') {
+      term = noFirst(term);
+      reg.prefix = undefined;
+      reg.infix = true;
+    }
+    reg.partial = term;
+    term = '';
+  } else if (term.charAt(0) === '-') {
+    term = noFirst(term);
+    reg.suffix = true;
+    reg.partial = term;
+    term = '';
   }
   //pos flag
   if (term.charAt(0) === '#') {

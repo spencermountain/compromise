@@ -96,6 +96,7 @@ const miscMethods = (Text) => {
       }
       return this;
     },
+
     /** make it into one sentence/termlist */
     flatten: function () {
       let terms = [];
@@ -135,7 +136,6 @@ const miscMethods = (Text) => {
       }
       return new Text(arr, this.lexicon, this.parent);
     }
-
 
   };
   Text.addMethods(Text, methods);

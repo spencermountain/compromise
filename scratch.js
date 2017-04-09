@@ -4,7 +4,5 @@ var nlp = require('./src/index');
 // const fresh = require('./test/unit/lib/freshPrince.js');
 
 // console.log(nlp('-2').values().data());
-
-let r = nlp('one two three four');
-r.match('one two three').tag('#Person .');
+let r = nlp('one two three four five').after('one . three');
 r.debug();

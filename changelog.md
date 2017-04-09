@@ -11,6 +11,7 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - new prefix/suffix/infix matches with `_ffix` syntax
 - `tag()` supports a sequence of tags for a sequence of terms
 - .match 'range' queries now use a real match - `#Adverb{2,4}`
+- new `.before()` and `.after()` match methods
 
 ### v.9  &nbsp;
 * 9.0.0

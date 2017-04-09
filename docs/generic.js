@@ -179,6 +179,16 @@ module.exports = {
       desc: 'quick check to see if this match is found',
       returns: 'Boolean',
       example: 'nlp(\'I am the very model of a modern Major-General\').has(\'#Pronoun\')\n//true,'
+    },
+    before: {
+      desc: 'find a match, and return everything infront of it',
+      returns: 'Text',
+      example: 'nlp(\'one two three four five\').before(\'three\').out()\n//one two'
+    },
+    after: {
+      desc: 'find a match, and return everything following of it',
+      returns: 'Text',
+      example: 'nlp(\'one two three four five\').after(\'three\').out()\n//four five'
     }
   },
 

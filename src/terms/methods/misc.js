@@ -88,12 +88,6 @@ const miscMethods = (Terms) => {
       return this.terms.length;
     },
 
-    //which terms are consistent with this tag
-    canBe: function (tag) {
-      let terms = this.terms.filter((t) => t.canBe(tag));
-      return new Terms(terms, this.lexicon, this.refText, this.refTerms);
-    },
-
     //this has term-order logic, so has to be here
     toCamelCase: function() {
       this.toTitleCase();

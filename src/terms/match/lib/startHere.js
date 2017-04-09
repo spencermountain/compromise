@@ -72,32 +72,22 @@ const startHere = (ts, startAt, regs, verbose) => {
 
     //support '{x,y}'
     if (regs[reg_i].minMax !== undefined) {
-      //on last reg?
-      if (!next_reg) {
-        let len = ts.length;
-        let max = regs[reg_i].minMax.max + startAt;
-        //if it must go to the end, but can't
-        if (regs[reg_i].ending && max < len) {
-          return null;
+      let min = regs[reg_i].minMax.min || 0;
+      let max = regs[reg_i].minMax.max;
+      let greed = 0;
+      for(let i = 0; i < max; i++) {
+        if (!isMatch(ts.terms[term_i + i], reg)) {
+          break;
         }
-        //dont grab past the end
-        if (max < len) {
-          len = max;
-        }
-        return ts.terms.slice(startAt, len);
+        greed += 1;
       }
-      //otherwise, match until this next thing
-      let foundAt = greedyUntil(ts, term_i, next_reg);
-      if (!foundAt) {
+      if (greed < min) {
         return null;
       }
-      //if it's too close/far..
-      let minMax = regs[reg_i].minMax;
-      if (foundAt < minMax.min || foundAt > minMax.max) {
-        return null;
+      if (greed > max) {
+        greed = max;
       }
-      term_i = foundAt + 1;
-      reg_i += 1;
+      term_i += greed;
       continue;
     }
 

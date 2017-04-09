@@ -5,5 +5,5 @@ var nlp = require('./src/index');
 
 // console.log(nlp('-2').values().data());
 
-r = nlp('is -2').values().debug();
-r.isEqual(-2).debug();
+let r = nlp('hi hi hi one two three four five');
+r.match('one two{1,3}').debug();

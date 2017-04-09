@@ -1,6 +1,8 @@
 'use strict';
 // parse a search lookup term find the regex-like syntax in this term
 const fns = require('./paths').fns;
+//regs-
+const range = /\{[0-9,]+\}$/;
 
 //trim char#0
 const noFirst = function(str) {
@@ -93,13 +95,13 @@ const parse_term = function (term) {
     term = '';
   }
   //min/max any '{1,3}'
-  if (term.charAt(0) === '{' && term.charAt(term.length - 1) === '}') {
+  if (term.charAt(term.length - 1) === '}' && range.test(term) === true) {
     let m = term.match(/\{([0-9]+), ?([0-9]+)\}/);
     reg.minMax = {
       min: parseInt(m[1], 10),
       max: parseInt(m[2], 10)
     };
-    term = '';
+    term = term.replace(range, '');
   }
   //a period means any one term
   if (term === '.') {

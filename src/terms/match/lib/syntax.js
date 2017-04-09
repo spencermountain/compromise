@@ -48,18 +48,18 @@ const parse_term = function (term) {
     reg.consecutive = true;
   }
   //prefix/suffix/infix matches
-  if (term.charAt(term.length - 1) === '-') {
+  if (term.charAt(term.length - 1) === '_') {
     term = noLast(term);
     reg.prefix = true;
     //try both '-match-'
-    if (term.charAt(0) === '-') {
+    if (term.charAt(0) === '_') {
       term = noFirst(term);
       reg.prefix = undefined;
       reg.infix = true;
     }
     reg.partial = term;
     term = '';
-  } else if (term.charAt(0) === '-') {
+  } else if (term.charAt(0) === '_') {
     term = noFirst(term);
     reg.suffix = true;
     reg.partial = term;

@@ -5,5 +5,5 @@ var nlp = require('./src/index');
 
 // console.log(nlp('-2').values().data());
 
-let r = nlp('it is funny and weird');
-r.match('-', true).debug();
+let r = nlp('g');
+r.debug();

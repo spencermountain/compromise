@@ -8,6 +8,8 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - keep more former tags after a term replace method
 - new `.random()` method
 - new `.lessThan()`, `.greaterThan()`, `.equalTo()` methods
+- new prefix/suffix/infix matches with `_ffix` syntax
+- `tag()` supports a sequence of tags for a sequence of terms
 
 ### v.9  &nbsp;
 * 9.0.0

@@ -49,7 +49,7 @@ const punctuation_step = function (ts) {
       }
     }
     //terms like 'e'
-    if (str.length === 1 && !oneLetters[str.toLowerCase()]) {
+    if (str.length === 1 && ts.terms[o + 1] && !oneLetters[str.toLowerCase()]) {
       t.tag('Acronym', 'one-letter-acronym');
     }
     //roman numerals (weak rn)

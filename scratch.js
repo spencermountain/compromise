@@ -5,5 +5,5 @@ var nlp = require('./src/index');
 
 // console.log(nlp('-2').values().data());
 
-let r = nlp('hi hi hi one two three four five');
-r.match('one two{1,3}').debug();
+let r = nlp('one two three four five six');
+console.log(r.match('one two{1,3}', true).out('array'));

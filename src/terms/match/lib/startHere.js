@@ -70,24 +70,35 @@ const startHere = (ts, startAt, regs, verbose) => {
       continue;
     }
 
-    //support '{x,y}'
+    //support '#Noun{x,y}'
     if (regs[reg_i].minMax !== undefined) {
       let min = regs[reg_i].minMax.min || 0;
       let max = regs[reg_i].minMax.max;
-      let greed = 0;
+      let until = regs[reg_i + 1];
       for(let i = 0; i < max; i++) {
-        if (!isMatch(ts.terms[term_i + i], reg)) {
+        let t = ts.terms[term_i + i];
+        let nextT = ts.terms[term_i + i + 1];
+        //end here
+        if (isMatch(t, reg) === false) {
+          return null;
+        }
+        //should we be greedier?
+        if (i < min - 1) {
+          console.log('gotta keep going!');
+          continue; //gotta keep going!
+        }
+        if (!until) {
+          term_i += 1;
           break;
         }
-        greed += 1;
+        //yeah, end greed here
+        if (isMatch(nextT, until)) {
+          term_i += i + 2;
+          reg_i += 1;
+          break;
+        }
+
       }
-      if (greed < min) {
-        return null;
-      }
-      if (greed > max) {
-        greed = max;
-      }
-      term_i += greed;
       continue;
     }
 
@@ -127,7 +138,6 @@ const startHere = (ts, startAt, regs, verbose) => {
       term_i += 1;
       continue;
     }
-
 
     //was it optional anways?
     if (reg.optional === true) {

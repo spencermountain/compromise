@@ -22,8 +22,8 @@ let extend = {
 //   }
 // });
 
-// console.log(nlp('-2').values().data());
-r = nlp('was');
-r.debug();
-r.tag('PastTense');
-r.debug();
+
+var m = nlp('john walks quickly').sentences();
+m.toPastTense();
+// m.toPresentTense();
+m.debug();

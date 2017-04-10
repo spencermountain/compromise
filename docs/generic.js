@@ -138,12 +138,12 @@ module.exports = {
 
   replace: {
     replaceWith: {
-      desc: 'turn the current selection into something else. Essentially just delete() -> insertAt().',
+      desc: 'turn the current selection into something else. Essentially just delete() -> insertAt(). The second param says whether to keep original tags around.',
       returns: 'Text',
-      example: 'nlp(\'it was the worst of times\').match(\'worst\').replaceWith(\'blurst\').all().out()\n//it was the blurst of times'
+      example: 'nlp(\'it was the worst of times\').match(\'worst\').replaceWith(\'blurst\', true).all().out()\n//it was the blurst of times'
     },
     replace: {
-      desc: 'turn a new selection into something else. Essentially just match() -> delete() -> insertAt().',
+      desc: 'turn a new selection into something else. Essentially just match() -> delete() -> insertAt(). Third optional param keeps original tags around.',
       returns: 'Text',
       example: 'nlp(\'trust me folks, big league.\').replace(\'big league\',\'bigly\').all().out()\n//trust me folks, bigly.'
     },

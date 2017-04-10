@@ -10,6 +10,10 @@ let extend = {
     singular: 'word',
     plural: 'words'
   },
+  verbs: {
+    infinitive: 'cool',
+    pastTense: 'cooled',
+  }
 };
 // nlp.extend({
 //   Fun: {
@@ -19,7 +23,7 @@ let extend = {
 // });
 
 // console.log(nlp('-2').values().data());
-r = nlp('i am two years older now');
-two = r.match('#Value').tag('#FunTag');
-two.replaceWith('three', true);
-two.debug();
+r = nlp('was');
+r.debug();
+r.tag('PastTense');
+r.debug();

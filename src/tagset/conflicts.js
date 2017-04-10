@@ -26,7 +26,8 @@ module.exports = [
   ['NiceNumber', 'TextValue'],
   ['Ordinal', 'Currency'], //$5.50th
   //verbs
-  ['PastTense', 'PerfectTense', 'Pluperfect', 'FuturePerfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund'],
+  ['PastTense', 'PerfectTense', 'FuturePerfect'],
+  ['Pluperfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund'],
   //date
   ['Month', 'WeekDay', 'Year', 'Duration'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],

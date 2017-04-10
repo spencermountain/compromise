@@ -1,7 +1,6 @@
 `compromise` uses semver, with occasional releases to npm and bower.
 here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
 
-
 ### v.10
 - cleanup & rename some `.value()` methods
 - change lumping behaviour of lexicon terms with multiple words

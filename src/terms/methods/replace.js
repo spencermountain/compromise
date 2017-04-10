@@ -5,12 +5,12 @@ const replaceMethods = (Terms) => {
   const methods = {
 
     /**swap this for that */
-    replace: function (str1, str2) {
+    replace: function (str1, str2, keepTags) {
       //in this form, we 'replaceWith'
       if (str2 === undefined) {
-        return this.replaceWith(str1);
+        return this.replaceWith(str1, keepTags);
       }
-      this.match(str1).replaceWith(str2);
+      this.match(str1).replaceWith(str2, keepTags);
       return this;
     },
 

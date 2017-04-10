@@ -16,16 +16,22 @@ const replaceMethods = (Terms) => {
 
 
     /**swap this for that */
-    replaceWith: function (str, tag) {
-      let toAdd = Terms.fromString(str);
-      toAdd.tagger();
-      if (tag) {
-        toAdd.tag(tag, 'user-given');
+    replaceWith: function (str, keepTags) {
+      let newTs = Terms.fromString(str);
+      newTs.tagger();
+      //if instructed, apply old tags to new terms
+      if (keepTags) {
+        this.terms.forEach((t, i) => {
+          let tags = Object.keys(t.tags);
+          if (newTs.terms[i] !== undefined) {
+            tags.forEach((tg) => newTs.terms[i].tag(tg, 'from-memory'));
+          }
+        });
       }
       let index = this.index();
       this.parentTerms = mutate.deleteThese(this.parentTerms, this);
-      this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index, toAdd);
-      this.terms = toAdd.terms;
+      this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index, newTs);
+      this.terms = newTs.terms;
       return this;
     }
 

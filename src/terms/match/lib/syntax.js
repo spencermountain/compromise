@@ -125,6 +125,5 @@ const parse_all = function (reg) {
   reg = reg.split(/ +/);
   return reg.map(parse_term);
 };
-// console.log(parse_all(''));
 
 module.exports = parse_all;

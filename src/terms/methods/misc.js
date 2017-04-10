@@ -61,7 +61,6 @@ const miscMethods = (Terms) => {
       if (!ref || !first) {
         return null; //maybe..
       }
-      // console.log(ref);
       let n = 0;
       for(let i = 0; i < ref.list.length; i++) {
         let ts = ref.list[i];

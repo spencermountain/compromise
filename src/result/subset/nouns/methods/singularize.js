@@ -26,6 +26,5 @@ const toSingle = function (str) {
   return null;
 };
 
-// console.log(toSingle('gases') === 'gas')
 module.exports = toSingle;
 // console.log(toSingle('days'))

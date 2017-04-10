@@ -196,4 +196,3 @@ let arr = [
 ];
 
 module.exports = fns.uncompress_suffixes(arr, compressed);
-// console.log(JSON.stringify(module.exports.sort(), null, 2));

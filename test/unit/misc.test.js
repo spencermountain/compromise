@@ -36,9 +36,6 @@ test('extra exports:', function (t) {
     nlp.verbose(false);
   }, 'can set verbosity');
 
-  var keys = Object.keys(nlp.lexicon());
-  t.ok(keys.length > 1000, 'lexicon is found');
-
   t.end();
 });
 

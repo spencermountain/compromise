@@ -2,9 +2,10 @@
 //set a term as a particular Part-of-speech
 const path = require('../../paths');
 const log = path.log;
-const tagset = path.tags;
 const fns = path.fns;
 const unTag = require('./unTag');
+// const tagset = path.tags;
+const tagset = require('../../../tagset');
 
 const putTag = (term, tag, reason) => {
   tag = tag.replace(/^#/, '');

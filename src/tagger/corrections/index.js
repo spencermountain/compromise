@@ -16,19 +16,21 @@ const corrections = function (ts) {
   //Determiner-signals
   if (ts.has('#Determiner')) {
     //the wait to vote
-    ts.match('the #Verb #Preposition .').match('#Verb').tag('Noun', 'correction-determiner1');
+    ts.match('(the|this) #Verb #Preposition .').term(1).tag('Noun', 'correction-determiner1');
     //the swim
-    ts.match('the #Verb').match('#Verb').tag('Noun', 'correction-determiner2');
+    ts.match('(the|this|those|these) #Infinitive').term(1).tag('Noun', 'correction-determiner2');
+    //some pressing issues
+    ts.match('(some #Verb #Plural').term(1).tag('Noun', 'correction-determiner6');
     //the nice swim
-    ts.match('the #Adjective #Verb').match('#Verb').tag('Noun', 'correction-determiner3');
+    ts.match('(the|this|those|these) #Adjective #Verb').term(2).tag('Noun', 'correction-determiner3');
     //the truly nice swim
-    ts.match('the #Adverb #Adjective #Verb').match('#Verb').tag('Noun', 'correction-determiner4');
+    ts.match('(the|this|those|these) #Adverb #Adjective #Verb').term(3).tag('Noun', 'correction-determiner4');
     //a stream runs
     ts.match('#Determiner #Infinitive #Adverb? #Verb').term(1).tag('Noun', 'correction-determiner5');
     //a sense of
     ts.match('#Determiner #Verb of').term(1).tag('Noun', 'the-verb-of');
     //the threat of force
-    ts.match('#Determiner #Noun of #Verb').match('#Verb').tag('Noun', 'noun-of-noun');
+    ts.match('#Determiner #Noun of #Verb').term(3).tag('Noun', 'noun-of-noun');
   }
 
   //like

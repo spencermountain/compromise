@@ -11,6 +11,7 @@ const misc = require('./tags/misc');
 //used for pretty-printing on the server-side
 const colors = {
   Noun: 'blue',
+  'Date': 'red',
   Value: 'red',
   Verb: 'green',
   Preposition: 'cyan',

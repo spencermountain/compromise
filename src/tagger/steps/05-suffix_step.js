@@ -7,7 +7,7 @@ const misc = [
   [/^(lol)+[sz]$/, 'Expression'], //lol
   [/^ma?cd[aeiou]/, 'LastName'], //macdonell - Last patterns https://en.wikipedia.org/wiki/List_of_family_name_affixes
   //starting-ones
-  [/^[0-9,\.]+$/, 'Cardinal'], //like 5
+  [/^[0-9][0-9,]*(\.[0-9]+)?$/, 'Cardinal'], //like 5
   [/^(un|de|re)\\-[a-z]../, 'Verb'],
   [/^[\-\+]?[0-9]+(\.[0-9]+)?$/, 'NumericValue'],
   [/^https?\:?\/\/[a-z0-9]/, 'Url'], //the colon is removed in normalisation

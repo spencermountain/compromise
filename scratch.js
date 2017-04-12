@@ -1,6 +1,6 @@
 // 'use strict';
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 // const fresh = require('./test/unit/lib/freshPrince.js');
 
 
@@ -23,7 +23,7 @@ let extend = {
 // });
 
 
-var m = nlp('Sardinia F Jones');
+var m = nlp('2015.08.13');
 // m.values().toNumber();
 m.debug();
 // console.log(m.out());

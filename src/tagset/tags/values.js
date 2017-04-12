@@ -23,9 +23,5 @@ module.exports = {
   },
   Money: {
     is: 'Value'
-  },
-  NumberRange: {
-    is: 'Value',
-    also: 'Contraction'
-  },
+  }
 };

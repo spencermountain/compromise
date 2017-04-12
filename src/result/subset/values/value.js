@@ -4,9 +4,19 @@ const Terms = paths.Terms;
 const parse = require('./parse');
 const fmt = require('./format');
 
+const unpackRange = function(ts) {
+  if (ts.has('#NumberRange')) {
+    ts.terms.forEach((t) => {
+      t.text = t.silent_term;
+    });
+  }
+  return ts;
+};
+
 const Value = function(arr, lexicon, refText, refTerms) {
   Terms.call(this, arr, lexicon, refText, refTerms);
   this.val = this.match('#Value+').list[0];
+  this.val = unpackRange(this.val);
   this.unit = this.match('#Unit$').list[0];
 };
 //Terms inheritence

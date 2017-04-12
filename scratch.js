@@ -23,7 +23,7 @@ let extend = {
 // });
 
 
-var m = nlp('john walks quickly').sentences();
-m.toPastTense();
-// m.toPresentTense();
+var m = nlp('Feb 1-28, 2017');
+m.values().toNumber();
 m.debug();
+console.log(m.out());

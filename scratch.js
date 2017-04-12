@@ -23,7 +23,7 @@ let extend = {
 // });
 
 
-var m = nlp('Feb 1-28, 2017');
-m.values().toNumber();
+var m = nlp('on the 18th');
+// m.values().toNumber();
 m.debug();
-console.log(m.out());
+// console.log(m.out());

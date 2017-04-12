@@ -7,7 +7,9 @@ const fmt = require('./format');
 const unpackRange = function(ts) {
   if (ts.has('#NumberRange')) {
     ts.terms.forEach((t) => {
-      t.text = t.silent_term;
+      if (t.silent_term && !t._text) {
+        t.text = t.silent_term;
+      }
     });
   }
   return ts;

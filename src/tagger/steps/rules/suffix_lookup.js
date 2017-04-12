@@ -64,6 +64,7 @@ module.exports = [
     'oses': Pres,
     'fies': Pres,
     'ects': Pres,
+    'nded': Past,
     'cede': Inf,
     'tage': Inf,
     'gate': Inf,

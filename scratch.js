@@ -1,6 +1,6 @@
 // 'use strict';
 var nlp = require('./src/index');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 const corpus = require('nlp-corpus');
 let text = corpus.sotu.parsed()[0];
 // const fresh = require('./test/unit/lib/freshPrince.js');
@@ -27,9 +27,11 @@ let extend = {
 
 // var m = nlp(text);
 // var m = nlp('make any doubt dictate some pressing issues about this budget');
-var m = nlp('this is one sentence. This makes two now.');
-// var m = nlp('the budget');
+// var m = nlp('And Churchill responded on this night.');
+var m = nlp('a staggering cost');
+// var m = nlp('this was one sentence. This makes two now');
 console.log(m.out('color'));
+m.debug();
 // m.contractions().expand();
 // m.dates().toLongForm();
 // m.values().toNumber();

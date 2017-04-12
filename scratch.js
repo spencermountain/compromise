@@ -23,7 +23,7 @@ let extend = {
 // });
 
 
-var m = nlp('march 2nd @ 2pm');
+var m = nlp('Sardinia F Jones');
 // m.values().toNumber();
 m.debug();
 // console.log(m.out());

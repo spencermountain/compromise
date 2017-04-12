@@ -43,6 +43,7 @@ const irregulars = {
   'imo': ['in', 'my', 'opinion'],
   'til': ['today', 'i', 'learned'],
   'rn': ['right', 'now'],
+  '@': ['at'],
 // 'idk': ['i', 'don\'t', 'know'],
 };
 

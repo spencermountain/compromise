@@ -1,5 +1,7 @@
 'use strict';
-const fns = require('../fns');
+const client = require('./client');
+const server = require('./server');
+
 let enable = false;
 
 module.exports = {
@@ -9,38 +11,22 @@ module.exports = {
     }
     enable = str;
   },
-  here: (path) => {
-    if (enable === true || enable === path) {
-      console.log('  ' + path);
-    }
-  },
-  tell: (str, path) => {
-    if (enable === true || enable === path) {
-      if (typeof str === 'object') {
-        str = JSON.stringify(str);
-      }
-      str = '    ' + str;
-      console.log(str);
-    }
-  },
   tag: (t, pos, reason) => {
     if (enable === true || enable === 'tagger') {
-      let title = t.normal || '[' + t.silent_term + ']';
-      title = fns.yellow(title);
-      title = fns.leftPad('\'' + title + '\'', 20);
-      title += '  ->   ' + fns.printTag(pos);
-      title = fns.leftPad(title, 54);
-      console.log('       ' + title + '(' + fns.cyan(reason || '') + ')');
+      if (typeof window !== undefined) {
+        client.tag(t, pos, reason);
+      } else {
+        server.tag(t, pos, reason);
+      }
     }
   },
   unTag: (t, pos, reason) => {
     if (enable === true || enable === 'tagger') {
-      let title = '-' + t.normal + '-';
-      title = fns.red(title);
-      title = fns.leftPad(title, 20);
-      title += '  ~*   ' + fns.red(pos);
-      title = fns.leftPad(title, 54);
-      console.log('       ' + title + '(' + fns.red(reason || '') + ')');
+      if (typeof window !== undefined) {
+        client.untag(t, pos, reason);
+      } else {
+        server.untag(t, pos, reason);
+      }
     }
   }
 };

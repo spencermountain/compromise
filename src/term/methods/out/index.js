@@ -1,6 +1,22 @@
 'use strict';
 const renderHtml = require('./renderHtml');
 const fns = require('../../paths').fns;
+const clientDebug = require('./client');
+
+const serverDebug = function(t) {
+  let tags = Object.keys(t.tags).map((tag) => {
+    return fns.printTag(tag);
+  }).join(', ');
+  let word = t.text;
+  word = '\'' + fns.yellow(word || '-') + '\'';
+  let silent = '';
+  if (t.silent_term) {
+    silent = '[' + t.silent_term + ']';
+  }
+  word = fns.leftPad(word, 25);
+  word += fns.leftPad(silent, 5);
+  console.log('   ' + word + '   ' + '     - ' + tags);
+};
 
 const methods = {
   /** a pixel-perfect reproduction of the input, with whitespace preserved */
@@ -28,23 +44,12 @@ const methods = {
     };
   },
   /** check-print information for the console */
-  debug: function(r) {
-    let tags = Object.keys(r.tags).map((tag) => {
-      return fns.printTag(tag);
-    }).join(', ');
-    let word = r.text;
-    // word = r.whitespace.before + word + r.whitespace.after;
-    word = '\'' + fns.yellow(word || '-') + '\'';
-    // if (r.dirty) {
-    // word += fns.red('*');
-    // }
-    let silent = '';
-    if (r.silent_term) {
-      silent = '[' + r.silent_term + ']';
+  debug: function(t) {
+    if (typeof window !== 'undefined') {
+      clientDebug(t);
+    } else {
+      serverDebug(t);
     }
-    word = fns.leftPad(word, 25);
-    word += fns.leftPad(silent, 5);
-    console.log('   ' + word + '   ' + '     - ' + tags);
   }
 };
 

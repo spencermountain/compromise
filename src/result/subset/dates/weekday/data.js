@@ -8,13 +8,14 @@ exports.longDays = {
   'thursday': 4,
   'friday': 5,
   'saturday': 6,
-}
+};
 exports.shortDays = {
   'sun': 0,
   'mon': 1,
   'tues': 2,
   'wed': 3,
+  'weds': 3,
   'thurs': 4,
   'fri': 5,
   'sat': 6,
-}
+};

@@ -1,6 +1,8 @@
 'use strict';
 const Text = require('../../index');
 const Value = require('./value');
+const parse = require('./parse');
+
 
 //the Values() subset class
 const methods = {
@@ -21,9 +23,9 @@ const methods = {
     return this;
   },
   /**5 -> 'five' */
-  toTextValue: function() {
+  toText: function() {
     this.list = this.list.map((ts) => {
-      return ts.toTextValue();
+      return ts.toText();
     });
     return this;
   },
@@ -42,12 +44,36 @@ const methods = {
     return this;
   },
   /**5900 -> 5,900 */
-  toNiceNumber: function() {
+  toNice: function() {
     this.list = this.list.map((ts) => {
-      return ts.toNiceNumber();
+      return ts.toNice();
     });
     return this;
-  }
+  },
+  /**seven === 7th */
+  isEqual: function(num) {
+    num = parse(num);
+    this.list = this.list.filter((ts) => {
+      return num !== null && ts.number() === num;
+    });
+    return this;
+  },
+  /**eight > 7th */
+  greaterThan: function(num) {
+    num = parse(num);
+    this.list = this.list.filter((ts) => {
+      return num !== null && ts.number() > num;
+    });
+    return this;
+  },
+  /**five < 7th */
+  lessThan: function(num) {
+    num = parse(num);
+    this.list = this.list.filter((ts) => {
+      return num !== null && ts.number() < num;
+    });
+    return this;
+  },
 };
 
 const find = function(r, n) {
@@ -56,7 +82,6 @@ const find = function(r, n) {
 
   //june 21st 1992 is two seperate values
   r.splitOn('#Year');
-  // r.debug();
   if (typeof n === 'number') {
     r = r.get(n);
   }

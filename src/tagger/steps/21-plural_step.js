@@ -14,7 +14,6 @@ const pluralStep = function(ts) {
       if (plural) {
         t.tag('Plural', 'pluralStep');
       } else if (plural === false) {
-        // console.log(t.normal, plural);
         t.tag('Singular', 'pluralStep');
       }
     }

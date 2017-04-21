@@ -95,7 +95,7 @@ exports.printTerm = function(t) {
   for(let i = 0; i < tags.length; i++) {
     if (tagset[tags[i]]) {
       const color = tagset[tags[i]].color || 'black';
-      return exports[color](t.plaintext);
+      return exports[color](t.out('text'));
     }
   }
   return c.reset + t.plaintext + c.reset;

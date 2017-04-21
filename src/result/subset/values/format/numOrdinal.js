@@ -1,9 +1,7 @@
 'use strict';
-const toNumber = require('../toNumber');
 
 //turn a number like 5 into an ordinal like 5th
-const numOrdinal = function(ts) {
-  let num = toNumber(ts);
+const numOrdinal = function(num) {
   if (!num && num !== 0) {
     return null;
   }

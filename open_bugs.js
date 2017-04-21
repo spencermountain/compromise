@@ -24,4 +24,13 @@
 //nlp('parent should not be uppercase').clone().toUpperCase().parent.debug()
 
 //bug 7. - adds 'a' when making singular
-nlp('men go').sentences().toPastTense().nouns().toSingular().debug();
+// nlp('men go').sentences().toPastTense().nouns().toSingular().debug();
+
+//bug 8
+// console.log(nlp('I\'m going to the shops').sentences().toPastTense().out());
+
+//bug 9
+// r = nlp('he walks');
+// r.match('walks').tag('Foo');
+// r.verbs().toPastTense();
+// r.debug();

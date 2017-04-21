@@ -21,13 +21,14 @@ const numberRange = (ts) => {
       ts.terms[i + 1].tag('NumberRange');
       return ts;
     }
+    //add a silent term
     if (t.tags.NumberRange) {
       let arr = t.text.split(/(-)/);
       arr[1] = 'to';
       ts = fixContraction(ts, arr, i);
-      ts.terms[i].tag('NumberRange');
-      ts.terms[i + 1].tag('NumberRange');
-      ts.terms[i + 2].tag('NumberRange');
+      ts.terms[i].tag('Value');
+      ts.terms[i + 1].tag('Preposition');
+      ts.terms[i + 2].tag(['Value', 'NumberRange']);
       i += 2;
     }
   }

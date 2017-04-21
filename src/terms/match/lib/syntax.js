@@ -1,6 +1,8 @@
 'use strict';
 // parse a search lookup term find the regex-like syntax in this term
 const fns = require('./paths').fns;
+//regs-
+const range = /\{[0-9,]+\}$/;
 
 //trim char#0
 const noFirst = function(str) {
@@ -17,6 +19,11 @@ const parse_term = function (term) {
   let reg = {};
   //order matters here
 
+  //1-character hasta be a text-match
+  if (term.length === 1 && term !== '.' && term !== '*') {
+    reg.normal = term;
+    return reg;
+  }
   //negation ! flag
   if (term.charAt(0) === '!') {
     term = noFirst(term);
@@ -41,6 +48,24 @@ const parse_term = function (term) {
   if (term.charAt(term.length - 1) === '+') {
     term = noLast(term);
     reg.consecutive = true;
+  }
+  //prefix/suffix/infix matches
+  if (term.charAt(term.length - 1) === '_') {
+    term = noLast(term);
+    reg.prefix = true;
+    //try both '-match-'
+    if (term.charAt(0) === '_') {
+      term = noFirst(term);
+      reg.prefix = undefined;
+      reg.infix = true;
+    }
+    reg.partial = term;
+    term = '';
+  } else if (term.charAt(0) === '_') {
+    term = noFirst(term);
+    reg.suffix = true;
+    reg.partial = term;
+    term = '';
   }
   //pos flag
   if (term.charAt(0) === '#') {
@@ -70,13 +95,13 @@ const parse_term = function (term) {
     term = '';
   }
   //min/max any '{1,3}'
-  if (term.charAt(0) === '{' && term.charAt(term.length - 1) === '}') {
+  if (term.charAt(term.length - 1) === '}' && range.test(term) === true) {
     let m = term.match(/\{([0-9]+), ?([0-9]+)\}/);
     reg.minMax = {
       min: parseInt(m[1], 10),
       max: parseInt(m[2], 10)
     };
-    term = '';
+    term = term.replace(range, '');
   }
   //a period means any one term
   if (term === '.') {
@@ -100,6 +125,5 @@ const parse_all = function (reg) {
   reg = reg.split(/ +/);
   return reg.map(parse_term);
 };
-// console.log(parse_all(''));
 
 module.exports = parse_all;

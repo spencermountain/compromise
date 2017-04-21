@@ -58,7 +58,8 @@ let main = [
   ['radius', 'radii'],
   ['referendum', 'referenda'],
   ['thief', 'thieves'],
-  ['tooth', 'teeth']
+  ['tooth', 'teeth'],
+  ['modulus', 'moduli']
 ];
 //decompress it
 main = main.map(function(a) {

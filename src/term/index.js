@@ -15,6 +15,7 @@ const Term = function(str) {
   this._text = parsed.text;
   this.parent = null;
   this.silent_term = '';
+  this.lumped = false;
   //normalize the _text
   addNormal(this);
   addRoot(this);

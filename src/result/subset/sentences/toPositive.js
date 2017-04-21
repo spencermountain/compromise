@@ -12,7 +12,7 @@ const toPositive = (ts) => {
   if (m.found) {
     let str = m.out('normal');
     if (logical[str]) {
-      ts = ts.match(str).replaceWith(logical[str]).list[0];
+      ts = ts.match(str).replaceWith(logical[str], true).list[0];
       return ts.parentTerms;
     }
   }

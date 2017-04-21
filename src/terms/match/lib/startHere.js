@@ -1,5 +1,5 @@
 'use strict';
-// const lumpMatch = require('./lumpMatch');
+const lumpMatch = require('./lumpMatch');
 const isMatch = require('./isMatch');
 
 // match everything until this point - '*'
@@ -70,34 +70,41 @@ const startHere = (ts, startAt, regs, verbose) => {
       continue;
     }
 
-    //support '{x,y}'
+    //support '#Noun{x,y}'
     if (regs[reg_i].minMax !== undefined) {
-      //on last reg?
-      if (!next_reg) {
-        let len = ts.length;
-        let max = regs[reg_i].minMax.max + startAt;
-        //if it must go to the end, but can't
-        if (regs[reg_i].ending && max < len) {
+      let min = regs[reg_i].minMax.min || 0;
+      let max = regs[reg_i].minMax.max;
+      let until = regs[reg_i + 1];
+      for(let i = 0; i < max; i++) { //TODO: please clean this loop up..
+        let t = ts.terms[term_i + i];
+        //end here
+        if (isMatch(t, reg) === false) {
           return null;
         }
-        //dont grab past the end
-        if (max < len) {
-          len = max;
+        //should we be greedier?
+        if (i < min - 1) {
+          continue; //gotta keep going!
         }
-        return ts.terms.slice(startAt, len);
+        //we can end here, after the minimum
+        if (!until) {
+          term_i += 1;
+          break;
+        }
+        // we're greedy-to-now
+        if (i >= min && isMatch(t, until)) {
+          break;
+        }
+        //end with a greedy-match for next term
+        let nextT = ts.terms[term_i + i + 1];
+        if (isMatch(nextT, until)) {
+          term_i += i + 2;
+          reg_i += 1;
+          break;
+        } else if (i === max - 1) {
+          //we've maxed-out
+          return null;
+        }
       }
-      //otherwise, match until this next thing
-      let foundAt = greedyUntil(ts, term_i, next_reg);
-      if (!foundAt) {
-        return null;
-      }
-      //if it's too close/far..
-      let minMax = regs[reg_i].minMax;
-      if (foundAt < minMax.min || foundAt > minMax.max) {
-        return null;
-      }
-      term_i = foundAt + 1;
-      reg_i += 1;
       continue;
     }
 
@@ -131,13 +138,12 @@ const startHere = (ts, startAt, regs, verbose) => {
     }
 
     //handle partial-matches of lumped terms
-    // let lumpUntil = lumpMatch(term, regs, reg_i);
-    // if (lumpUntil) {
-    //   reg_i = lumpUntil;
-    //   term_i += 1;
-    //   continue;
-    // }
-
+    let lumpUntil = lumpMatch(term, regs, reg_i, verbose);
+    if (lumpUntil !== null) {
+      reg_i = lumpUntil;
+      term_i += 1;
+      continue;
+    }
 
     //was it optional anways?
     if (reg.optional === true) {

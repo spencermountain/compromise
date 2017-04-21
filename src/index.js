@@ -5,6 +5,7 @@ const log = require('./log');
 
 //the main thing
 const nlp = function (str, lexicon) {
+  // this.tagset = tagset;
   let r = buildResult(str, lexicon);
   r.tagger();
   return r;
@@ -15,15 +16,10 @@ nlp.tokenize = function(str) {
   return buildResult(str);
 };
 
-//this is handy
+//this is useful
 nlp.version = pkg.version;
 
-//so handy at times
-nlp.lexicon = function() {
-  return require('./data/lexicon');
-};
-
-//also this is much handy
+//turn-on some debugging
 nlp.verbose = function(str) {
   log.enable(str);
 };

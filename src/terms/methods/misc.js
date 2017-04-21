@@ -61,7 +61,6 @@ const miscMethods = (Terms) => {
       if (!ref || !first) {
         return null; //maybe..
       }
-      // console.log(ref);
       let n = 0;
       for(let i = 0; i < ref.list.length; i++) {
         let ts = ref.list[i];
@@ -86,12 +85,6 @@ const miscMethods = (Terms) => {
     //just .length
     wordCount: function() {
       return this.terms.length;
-    },
-
-    //which terms are consistent with this tag
-    canBe: function (tag) {
-      let terms = this.terms.filter((t) => t.canBe(tag));
-      return new Terms(terms, this.lexicon, this.refText, this.refTerms);
     },
 
     //this has term-order logic, so has to be here

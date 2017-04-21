@@ -4,6 +4,7 @@ const Adj = 'Adjective';
 const Inf = 'Infinitive';
 const Pres = 'PresentTense';
 const Sing = 'Singular';
+const Ord = 'Ordinal';
 const Past = 'PastTense';
 const AdVb = 'AdVerb';
 const Plrl = 'Plural';
@@ -45,6 +46,16 @@ module.exports = [
     ' so': AdVb,
     '\'ll': Modal,
     '\'re': 'Copula',
+    '1st': Ord,
+    '2nd': Ord,
+    '3rd': Ord,
+    '4th': Ord,
+    '5th': Ord,
+    '6th': Ord,
+    '7th': Ord,
+    '8th': Ord,
+    '9th': Ord,
+    '0th': Ord,
   },
   { //4-letter
     'teen': 'Value',
@@ -53,6 +64,7 @@ module.exports = [
     'oses': Pres,
     'fies': Pres,
     'ects': Pres,
+    'nded': Past,
     'cede': Inf,
     'tage': Inf,
     'gate': Inf,

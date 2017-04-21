@@ -1,8 +1,21 @@
 `compromise` uses semver, with occasional releases to npm and bower.
 here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
 
+### v10
+- cleanup & rename some `.value()` methods
+- change lumping behaviour of lexicon terms with multiple words
+- keep more former tags after a term replace method
+- new `.random()` method
+- new `.lessThan()`, `.greaterThan()`, `.equalTo()` methods
+- new prefix/suffix/infix matches with `_ffix` syntax
+- `tag()` supports a sequence of tags for a sequence of terms
+- .match 'range' queries now use a real match - `#Adverb{2,4}`
+- new `.before()` and `.after()` match methods
+- removes `.lexicon()` method for many-lexicons concept
+- changes params of `.replaceWith()` method to a 'keyTags' boolean
+- improved .debug() and logging on clientside
 
-### v.9  &nbsp;
+### v9  &nbsp;
 * 9.0.0
 - rename `Term.tag` object to `Term.tags` so the `.tag()` method can work throughout more-consistently
 - fix 'Auxillary' tag typo to 'Auxiliary'
@@ -12,28 +25,28 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - new `.has()` method for faster lookups
 * 9.1.0 - pretty-real filesize reduction by swapping es6 classes for es5 inheritance
 
-### v.8  &nbsp;
+### v8  &nbsp;
 * 8.0.0 - less-ambitious date-parsing of nl-date forms
 *       - filesize reduction using [efrt](https://github.com/nlp-compromise/efrt) data structure (254k -> 214k)
 * 8.1.0 - add `nlp.tokenize()` method for disabling pos-tagging of input
 * 8.2.0 - add `nlp.out('index')` method, 12 bugs
 
-### v.7  &nbsp; :postal_horn:
+### v7  &nbsp; :postal_horn:
 * 7.0.0 - weee! [big change!](https://github.com/nlp-compromise/compromise/wiki/v7-Upgrade,-welcome) *npm package rename*
 * 7.0.15 - fix for IE9
 
-### v.6  &nbsp;  
+### v6  &nbsp;  
 * 6.5.0 - builds now using browserify + derequire()
 * 6.4.0 - re-written term-lumper logic
 * 6.3.0 - new nlp.lexicon({word:'POS'}) flow
 * 6.0.0 - be consistent with `text.normal()`, `term.all_forms()`, `text.word_count()`. `text.normal()` includes sentence-terminators, like periods etc.
 
-### v.5  &nbsp;  
+### v5  &nbsp;  
 * 5.2.0 - airport codes support, helper methods for specific POS
 * 5.1.0 - newlines split sentences
 * 5.0.0 - Text methods now return this, instead of array of sentences
 
-### v.4  &nbsp;  
+### v4  &nbsp;  
 * 4.12.0 - more-sensible responses for invalid, non-string inputs
 * 4.11.0 - 14 PRs, with fixes for currencies, pluralization, conjugation
 * 4.10.0 - Value.to_text() new method, fix "Posessive" POS typo
@@ -46,12 +59,12 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 * 4.1.0 - hyphenated words are normalized into spaces
 * 4.0.0 - grammar-aware match & replace functions
 
-### v.3  &nbsp;  **(Breaking)**
+### v3  &nbsp;  **(Breaking)**
 * 3.0.2 - Statement & Question classes
 * v3.0.0 - Feb 2016
   * split ngram, locale, and syllables into plugins in seperate repo
 
-### v.2
+### v2
 * v2.0.0 - Nov 2015 &nbsp;  **(Breaking)**
   * es6 classes, babel building
   * better test coverage
@@ -66,7 +79,7 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
   * lexicon can be augmented third-party
   * date parsing results are different
 
-### v.1
+### v1
 * v1.1.0 - May 2015
 smarter handling of ambiguous contractions ("he's" -> ["he is", "he has"])
 
@@ -74,7 +87,7 @@ smarter handling of ambiguous contractions ("he's" -> ["he is", "he has"])
 added name genders and beginning of co-reference resolution ('Tony' -> 'he') API.
 small breaking change on ```Noun.is_plural``` and ```Noun.is_entity```, affording significant pos() speedup. Bumped Major version for these changes.
 
-### v.0
+### v0
 
 * v0.5.2 - May 2015
 Phrasal verbs ('step up'), firstnames and .people()

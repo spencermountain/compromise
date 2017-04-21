@@ -8,6 +8,9 @@ module.exports = {
     is: 'Adjective'
   },
 
+  NumberRange: {
+    is: 'Contraction'
+  },
   Adverb: {},
 
   Currency: {},

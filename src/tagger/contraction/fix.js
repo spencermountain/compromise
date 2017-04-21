@@ -27,14 +27,16 @@ const fixContraction = (ts, parts, i) => {
   one.tag('Contraction', 'tagger-contraction');
 
   //add a new empty term
-  let two = new Term('');
-  two.silent_term = parts[1];
-  two.tag('Contraction', 'tagger-contraction');
-  ts.insertAt(i + 1, two);
-  //ensure new term has no auto-whitspace
-  two.whitespace.before = '';
-  two.whitespace.after = '';
-  easyTag(two);
+  if (parts[1]) {
+    let two = new Term('');
+    two.silent_term = parts[1];
+    two.tag('Contraction', 'tagger-contraction');
+    ts.insertAt(i + 1, two);
+    //ensure new term has no auto-whitspace
+    two.whitespace.before = '';
+    two.whitespace.after = '';
+    easyTag(two);
+  }
 
   //potentially it's three-contracted-terms, like 'dunno'
   if (parts[2]) {

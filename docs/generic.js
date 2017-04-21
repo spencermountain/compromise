@@ -69,6 +69,11 @@ module.exports = {
       desc: 'turn a list of results into one result',
       returns: 'Text',
       example: 'nlp(\'sex cauldron? I thought they closed that place down.\').flatten().length()\n//1'
+    },
+    random: {
+      desc: 'sample a random section of n matches',
+      returns: 'Text',
+      example: 'nlp(\'one two three four\').terms().random(2).out(\'array\')\n//[\'four\',\'one\']'
     }
   },
 
@@ -133,12 +138,12 @@ module.exports = {
 
   replace: {
     replaceWith: {
-      desc: 'turn the current selection into something else. Essentially just delete() -> insertAt().',
+      desc: 'turn the current selection into something else. Essentially just delete() -> insertAt(). The second param says whether to keep original tags around.',
       returns: 'Text',
-      example: 'nlp(\'it was the worst of times\').match(\'worst\').replaceWith(\'blurst\').all().out()\n//it was the blurst of times'
+      example: 'nlp(\'it was the worst of times\').match(\'worst\').replaceWith(\'blurst\', true).all().out()\n//it was the blurst of times'
     },
     replace: {
-      desc: 'turn a new selection into something else. Essentially just match() -> delete() -> insertAt().',
+      desc: 'turn a new selection into something else. Essentially just match() -> delete() -> insertAt(). Third optional param keeps original tags around.',
       returns: 'Text',
       example: 'nlp(\'trust me folks, big league.\').replace(\'big league\',\'bigly\').all().out()\n//trust me folks, bigly.'
     },
@@ -174,6 +179,16 @@ module.exports = {
       desc: 'quick check to see if this match is found',
       returns: 'Boolean',
       example: 'nlp(\'I am the very model of a modern Major-General\').has(\'#Pronoun\')\n//true,'
+    },
+    before: {
+      desc: 'find a match, and return everything infront of it',
+      returns: 'Text',
+      example: 'nlp(\'one two three four five\').before(\'three\').out()\n//one two'
+    },
+    after: {
+      desc: 'find a match, and return everything following of it',
+      returns: 'Text',
+      example: 'nlp(\'one two three four five\').after(\'three\').out()\n//four five'
     }
   },
 

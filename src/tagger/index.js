@@ -23,7 +23,7 @@ const step = {
   plural_step: require('./steps/21-plural_step'),
 
   lumper : require('./lumper'),
-  lexicon_lump : require('./lumper/lexicon_lump'),
+  multi : require('./lumper/lexicon_lump'),
   contraction: require('./contraction')
 };
 const corrections = require('./corrections');
@@ -33,7 +33,8 @@ const tagger = function (ts) {
   ts = step.punctuation_step(ts);
   ts = step.emoji_step(ts);
   ts = step.lexicon_step(ts);
-  ts = step.lexicon_lump(ts);
+  ts = step.multi.defaultLex(ts);
+  ts = step.multi.userLex(ts);
   ts = step.web_step(ts);
   ts = step.suffix_step(ts);
   ts = step.neighbour_step(ts);
@@ -55,6 +56,7 @@ const tagger = function (ts) {
   ts = step.lumper(ts);
   ts = corrections(ts); //2ms
   ts = tagPhrase(ts);
+  ts = step.multi.userLex(ts);
   return ts;
 };
 

@@ -34,7 +34,7 @@ test('adjusted lexicon:', function (t) {
   var arr = [
     ['paris is nice', ['Person', 'Copula', 'Adjective']],
     ['he is lkjj', ['Pronoun', 'Copula', 'Adjective']],
-    ['donkey kong wins the award', ['City', 'Verb', 'Determiner', 'Noun']],
+    ['donkey kong wins the award', ['City', 'City', 'Verb', 'Determiner', 'Noun']],
   ];
   arr.forEach(function (a) {
     var r = nlp(a[0], lexicon);

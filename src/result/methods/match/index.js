@@ -111,11 +111,47 @@ const splitMethods = (Text) => {
       }
       return false;
     },
+
+    /**find a match, and return everything infront of it*/
+    before: function(reg) {
+      let list = [];
+      for(let i = 0; i < this.list.length; i++) {
+        let m = this.list[i].matchOne(reg);
+        if (m) {
+          let index = m[0].index();
+          let found = this.list[i].slice(0, index);
+          if (found.length > 0) {
+            list.push(found);
+          }
+        }
+      }
+      let parent = this.parent || this;
+      return new Text(list, this.lexicon, parent);
+    },
+
+    /**find a match, and return everything after of it*/
+    after: function(reg) {
+      let list = [];
+      for(let i = 0; i < this.list.length; i++) {
+        let m = this.list[i].matchOne(reg);
+        if (m) {
+          let lastTerm = m[m.length - 1];
+          let index = lastTerm.index();
+          let found = this.list[i].slice(index + 1, this.list[i].length);
+          if (found.length > 0) {
+            list.push(found);
+          }
+        }
+      }
+      let parent = this.parent || this;
+      return new Text(list, this.lexicon, parent);
+    }
+
   };
   //alias 'and'
   methods.and = methods.match;
 
-  //hook them into result.proto  
+  //hook them into result.proto
   Text.addMethods(Text, methods);
   return Text;
 };

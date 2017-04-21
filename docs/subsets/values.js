@@ -16,15 +16,15 @@ module.exports = {
     returns: 'Text',
     example: 'nlp(\'ten things i hate about you\').values().toNumber().all().out()\n//10 things i hate about you'
   },
-  toTextValue: {
+  toText: {
     desc: 'turn a number like `5,500` into it\'s textual form, like `five thousand five hundred`',
     returns: 'Text',
-    example: 'nlp(\'10 things i hate about you\').values().toTextValue().all().out()\n//ten things i hate about you'
+    example: 'nlp(\'10 things i hate about you\').values().toText().all().out()\n//ten things i hate about you'
   },
-  toNiceNumber: {
+  toNice: {
     desc: 'turn a number into numerical form, but with nice commas, like `5,500`',
     returns: 'Text',
-    example: 'nlp(\'five hundred sixty two thousand, four hundred and seven\').values().toTextValue().all().out()\n//\'562,407\''
+    example: 'nlp(\'five hundred sixty two thousand, four hundred and seven\').values().toNice().all().out()\n//\'562,407\''
   },
   toCardinal: {
     desc: 'turn `fifth` into `five`, and `5th` into `5`',
@@ -40,5 +40,20 @@ module.exports = {
     desc: 'return the actual javascript integers (or floats)',
     returns: 'Array',
     example: 'nlp(\'at the seven eleven\').values().numbers()\n// [7, 11]'
+  },
+  greaterThan: {
+    desc: 'return only the values larger than a given value',
+    returns: 'Text',
+    example: 'nlp(\'seven peaches weigh ten kilograms\').values().greaterThan(7).out(\'array\')\n// [\'10\']'
+  },
+  lessThan: {
+    desc: 'return only the values smaller than a given value',
+    returns: 'Text',
+    example: 'nlp(\'he is 7 years old\').values().greaterThan(\'five\').out(\'array\')\n// [\'7\']'
+  },
+  isEqual: {
+    desc: 'return only the values equal to a given value',
+    returns: 'Text',
+    example: 'nlp(\'it\'s his 7th birthday\').values().isEqual(7).out(\'array\')\n// [\'7th\']'
   }
 };

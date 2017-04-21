@@ -6,13 +6,13 @@ const hasText = /^[a-z]/;
 const value_step = function(ts) {
   for(let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
-    if (t.tags.Value === true) {
+    if (t.tag.Value === true) {
       //ordinal/cardinal
       if (t.tags.Ordinal === undefined && t.tags.Cardinal === undefined) {
         if (cardinal.test(t.normal) === true) {
-          t.tag('Cardinal', 'ordinal-regex');
-        } else {
           t.tag('Cardinal', 'cardinal-regex');
+        } else {
+          t.tag('Ordinal', 'not-cardinal');
         }
       }
       //text/number

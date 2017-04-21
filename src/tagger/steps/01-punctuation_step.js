@@ -24,11 +24,16 @@ const oneLetters = {
 };
 
 const punctuation_step = function (ts) {
-  ts.terms.forEach((t) => {
+  ts.terms.forEach((t, o) => {
     let str = t.text;
     //anything can be titlecase
     if (titleCase.test(str) === true) {
       t.tag('TitleCase', 'punct-rule');
+    }
+    //add hyphenation
+    if (t.whitespace.after === '-' && ts.terms[o + 1] && ts.terms[o + 1].whitespace.before === '') {
+      t.tag('Hyphenated', 'has-hyphen');
+      ts.terms[o + 1].tag('Hyphenated', 'has-hyphen');
     }
     //ok, normalise it a little,
     str = str.replace(/[,\.\?]$/, '');
@@ -44,7 +49,7 @@ const punctuation_step = function (ts) {
       }
     }
     //terms like 'e'
-    if (str.length === 1 && !oneLetters[str.toLowerCase()]) {
+    if (str.length === 1 && ts.terms[o + 1] && /[A-Z]/.test(str) && !oneLetters[str.toLowerCase()]) {
       t.tag('Acronym', 'one-letter-acronym');
     }
     //roman numerals (weak rn)

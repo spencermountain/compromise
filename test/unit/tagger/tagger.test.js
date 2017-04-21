@@ -25,7 +25,7 @@ test('=Tagger=', function(T) {
       //slang, contractions
       // ['u r nice', ['Pronoun', 'Copula', 'Adjective']],
       ['canadian bacon', ['Demonym', 'Noun']],
-      ['canadian dollar', ['Currency']],
+      ['canadian dollar', ['Currency', 'Currency']],
 
       //possessive rules
       ['john lkjsdf\'s', ['Person', 'Possessive']],

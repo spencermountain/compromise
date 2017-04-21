@@ -3,19 +3,32 @@ const setTag = require('./setTag');
 const unTag = require('./unTag');
 const canBe = require('./canBe');
 
+//symbols used in sequential taggers which mean 'do nothing'
+//.tag('#Person #Place . #City')
+const ignore = {
+  '.': true
+};
 const addMethods = (Term) => {
 
   const methods = {
     /** set the term as this part-of-speech */
     tag: function(tag, reason) {
-      setTag(this, tag, reason);
+      if (ignore[tag] !== true) {
+        setTag(this, tag, reason);
+      }
     },
     /** remove this part-of-speech from the term*/
     unTag: function(tag, reason) {
-      unTag(this, tag, reason);
+      if (ignore[tag] !== true) {
+        unTag(this, tag, reason);
+      }
     },
     /** is this tag compatible with this word */
     canBe: function (tag) {
+      //everything can be '.'
+      if (ignore[tag] === true) {
+        return true;
+      }
       tag = tag || '';
       tag = tag.replace(/^#/, '');
       return canBe(this, tag);

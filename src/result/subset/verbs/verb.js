@@ -76,15 +76,21 @@ const methods = {
   /** conjugation **/
   toPastTense: function() {
     let obj = this.conjugate();
-    return this.replaceWith(obj.PastTense);
+    let r = this.replaceWith(obj.PastTense, false);
+    r.verb.tag('#PastTense');
+    return r;
   },
   toPresentTense: function() {
     let obj = this.conjugate();
-    return this.replaceWith(obj.PresentTense);
+    let r = this.replaceWith(obj.PresentTense, false);
+    r.verb.tag('#PresentTense');
+    return r;
   },
   toFutureTense: function() {
     let obj = this.conjugate();
-    return this.replaceWith(obj.FutureTense);
+    let r = this.replaceWith(obj.FutureTense, false);
+    r.verb.tag('#FutureTense');
+    return r;
   },
   toInfinitive: function() {
     let obj = this.conjugate();

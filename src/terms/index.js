@@ -32,6 +32,7 @@ Terms.fromString = function(str, lexicon) {
 
 // Terms = require('./methods/lookup')(Terms);
 require('./match')(Terms);
+require('./methods/tag')(Terms);
 require('./methods/loops')(Terms);
 require('./match/not')(Terms);
 require('./methods/delete')(Terms);

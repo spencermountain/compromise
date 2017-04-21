@@ -1,6 +1,7 @@
 'use strict';
-//regs-
+//punctuation regs-
 const before = /^(\s|-+|\.\.+)+/;
+const minusNumber = /^( *)-(\$|€|¥|£)?([0-9])/;
 const after = /(\s+|-+|\.\.+)$/;
 
 //seperate the 'meat' from the trailing/leading whitespace.
@@ -11,10 +12,17 @@ const build_whitespace = (str) => {
     after: ''
   };
   //get before punctuation/whitespace
-  let m = str.match(before);
+  //mangle 'far - fetched', but don't mangle '-2'
+  let m = str.match(minusNumber);
   if (m !== null) {
-    whitespace.before = m[0];
-    str = str.replace(before, '');
+    whitespace.before = m[1];
+    str = str.replace(/^ */, '');
+  } else {
+    m = str.match(before);
+    if (m !== null) {
+      whitespace.before = str.match(before)[0];
+      str = str.replace(before, '');
+    }
   }
   //get after punctuation/whitespace
   m = str.match(after);

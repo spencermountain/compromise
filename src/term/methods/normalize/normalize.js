@@ -8,6 +8,7 @@ exports.normalize = function(str) {
   str = str || '';
   str = str.toLowerCase();
   str = str.trim();
+  let original = str;
   //(very) rough asci transliteration -  bjŏrk -> bjork
   str = killUnicode(str);
   //hashtags, atmentions
@@ -26,6 +27,10 @@ exports.normalize = function(str) {
     str = str.replace(/\.{3,}$/g, '');
     str = str.replace(/['",\.!:;\?\)]$/g, '');
     str = str.replace(/^['"\(]/g, '');
+  }
+  //oh shucks,
+  if (str === '') {
+    str = original;
   }
   return str;
 };

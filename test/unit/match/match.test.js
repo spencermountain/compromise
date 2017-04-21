@@ -120,5 +120,72 @@ test('==Match ==', function (T) {
     t.end();
   });
 
+  test('lump-match:', function(t) {
+    var m = nlp('hello one two three hello');
+    m.match('one two three').lump();
+
+    t.equal(m.has('hello'), true, 'has-unlumped');
+    t.equal(m.has('one two three'), true, 'has-lumped');
+    t.equal(m.has('hello one two three'), true, 'word+lumped');
+    t.equal(m.has('one two three hello'), true, 'lumped+word');
+
+    t.equal(m.has('one'), false, 'no-partial1');
+    t.equal(m.has('two'), false, 'no-partial2');
+    t.equal(m.has('three'), false, 'no-partial3');
+    t.equal(m.has('one two'), false, 'no-partial4');
+    t.equal(m.has('two three'), false, 'no-partial5');
+    t.equal(m.has('hello one two'), false, 'no-partial6');
+    t.equal(m.has('three hello'), false, 'no-partial7');
+    t.equal(m.has('two three hello'), false, 'no-partial8');
+    t.end();
+  });
+
+  test('before-match:', function(t) {
+    let r = nlp('one two three four five').before('two');
+    t.equal(r.out('normal'), 'one', 'before-two');
+
+    r = nlp('one two three four five').before('three . five');
+    t.equal(r.out('normal'), 'one two', 'before-several');
+
+    r = nlp('one two three four five').before('one two');
+    t.equal(r.out('normal'), '', 'no-before-start');
+
+    // r = nlp('one two three four').before('.'); //tricky
+    // t.equal(r.out('normal'), '', 'before-any');
+
+    r = nlp('one two three four. No, not here. He said two days a week.').before('two');
+    let arr = r.out('array');
+    t.equal(arr[0], 'one', 'before-twice-1');
+    t.equal(arr[1], 'he said', 'before-twice-2');
+
+    r = nlp('it was all the way over to two. It was the number two.').before('it');
+    t.equal(r.found, false, 'no-empty-matches');
+
+    t.end();
+  });
+
+  test('after-match:', function(t) {
+    let r = nlp('one two three four five').after('two');
+    t.equal(r.out('normal'), 'three four five', 'after-one');
+
+    r = nlp('one two three four five').after('one . three');
+    t.equal(r.out('normal'), 'four five', 'after-several');
+
+    r = nlp('one two three four five').after('four five');
+    t.equal(r.out('normal'), '', 'no-afters-end');
+
+    r = nlp('one two three four').after('.');
+    t.equal(r.out('normal'), 'two three four', 'after-any');
+
+    r = nlp('one two three four. No, not here. He said two days a week.').after('two');
+    let arr = r.out('array');
+    t.equal(arr[0], 'three four', 'after-twice-1');
+    t.equal(arr[1], 'days a week', 'after-twice-2');
+
+    r = nlp('all the way over to two. It was the number two.').after('two');
+    t.equal(r.found, false, 'no-empty-matches');
+
+    t.end();
+  });
 
 });

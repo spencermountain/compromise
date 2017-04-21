@@ -5,7 +5,8 @@ const fastPass = (ts, regs) => {
   for(let i = 0; i < regs.length; i++) {
     let reg = regs[i];
     let found = false;
-    if (reg.optional === true || reg.negative === true) {
+    //we can't cheat on these fancy rules:
+    if (reg.optional === true || reg.negative === true || reg.minMax !== undefined) {
       continue;
     }
     //look-for missing term-matches
@@ -14,6 +15,10 @@ const fastPass = (ts, regs) => {
         if (ts.terms[o].normal === reg.normal || ts.terms[o].silent_term === reg.normal) {
           found = true;
           break;
+        }
+        //we can't handle lumped-terms with this method
+        if (ts.terms[o].lumped === true) {
+          return false;
         }
       }
       if (found === false) {

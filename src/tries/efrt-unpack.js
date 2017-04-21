@@ -91,7 +91,6 @@ var prefix = function(str, want) {
   }
   return want.slice(0, len) === str;
 };
-// console.log(module.exports('harvar', 'harvard'));
 
 //spin-out all words from this trie
 var unravel = function(trie) {

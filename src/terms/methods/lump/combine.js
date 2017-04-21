@@ -17,6 +17,7 @@ const combine = function(s, i) {
   let text = makeText(a, b);
   s.terms[i] = new Term(text, a.context);
   s.terms[i].normal = a.normal + ' ' + b.normal;
+  s.terms[i].lumped = true;
   s.terms[i].parentTerms = s.terms[i + 1].parentTerms;
   s.terms[i + 1] = null;
   s.terms = s.terms.filter((t) => t !== null);

@@ -17,6 +17,19 @@ const perfectMatch = (term, reg) => {
   if (reg.normal !== undefined) {
     return reg.normal === term.normal || reg.normal === term.silent_term;
   }
+  //suffix matches '-nny'
+  if (reg.suffix === true && reg.partial !== undefined) {
+    const len = term.normal.length;
+    return term.normal.substr(len - reg.partial.length, len) === reg.partial;
+  }
+  //prefix matches 'fun-'
+  if (reg.prefix === true && reg.partial !== undefined) {
+    return term.normal.substr(0, reg.partial.length) === reg.partial;
+  }
+  //infix matches '-nn-'
+  if (reg.infix === true && reg.partial !== undefined) {
+    return term.normal.indexOf(reg.partial) !== -1;
+  }
   //one-of term-match
   if (reg.oneOf !== undefined) {
     for(let i = 0; i < reg.oneOf.tagArr.length; i++) {

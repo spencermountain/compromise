@@ -8,3 +8,4 @@ const cmd = eslint + ' -c .eslintrc --color ' + path.join(__dirname, '../../src/
 exec(cmd, {
   async: true
 });
+console.log(' - done.');

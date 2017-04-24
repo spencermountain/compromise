@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.0.0",
+  "version": "10.0.1",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -1688,7 +1688,7 @@ var tag = function tag(t, pos, reason) {
   var title = t.normal || '[' + t.silent_term + ']';
   title = fns.leftPad('\'' + title + '\'', 12);
   title += '  ->   ' + pos;
-  title += fns.rightPad(reason || '', 15);
+  title += fns.leftPad(reason || '', 15);
   console.log('%c' + title, ' color: #a2c99c');
 };
 var untag = function untag(t, pos, reason) {
@@ -1706,8 +1706,6 @@ module.exports = {
 },{"../fns":21}],24:[function(_dereq_,module,exports){
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var client = _dereq_('./client');
 var server = _dereq_('./server');
 
@@ -1722,7 +1720,7 @@ module.exports = {
   },
   tag: function tag(t, pos, reason) {
     if (_enable === true || _enable === 'tagger') {
-      if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) !== undefined) {
+      if (typeof window !== 'undefined') {
         client.tag(t, pos, reason);
       } else {
         server.tag(t, pos, reason);
@@ -1731,7 +1729,7 @@ module.exports = {
   },
   unTag: function unTag(t, pos, reason) {
     if (_enable === true || _enable === 'tagger') {
-      if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) !== undefined) {
+      if (typeof window !== 'undefined') {
         client.untag(t, pos, reason);
       } else {
         server.untag(t, pos, reason);
@@ -5987,14 +5985,20 @@ var methods = {
 };
 
 var find = function find(r, n) {
-  r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
+  r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+');
   r = r.splitAfter('#Comma');
+  r = r.if('#Verb'); //this should be (much) smarter
   if (typeof n === 'number') {
     r = r.get(n);
   }
+  // r.debug();
   r.list = r.list.map(function (ts) {
     return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
   });
+  //fiter-out any that didn't find a main verb
+  // r.list = r.list.filter((ts) => {
+  //   return ts.vb;
+  // });
   return new Text(r.list, this.lexicon, this.parent);
 };
 
@@ -6439,6 +6443,7 @@ var multiWord = function multiWord(vb, verbose) {
   var isNegative = vb.negative.found;
   var isPlural = false;
   //handle 'to be' verb seperately
+  // console.log(vb.verb);
   if (vb.verb.tags.Copula || vb.verb.normal === 'be' && vb.auxiliary.match('will').found) {
     return toBe(isPlural, isNegative);
   }
@@ -7059,6 +7064,7 @@ var _toNegative = _dereq_('./toNegative');
 var _isPlural = _dereq_('./methods/isPlural');
 
 var _parse = function _parse(r) {
+  var original = r;
   r.negative = r.match('#Negative');
   r.adverbs = r.match('#Adverb');
   var aux = r.clone().not('(#Adverb|#Negative)');
@@ -7066,8 +7072,13 @@ var _parse = function _parse(r) {
   r.particle = aux.match('#Particle').last();
   if (r.verb.found) {
     r.verb = r.verb.list[0].terms[0];
+    r.auxiliary = aux.match('#Auxiliary+');
+  } else {
+    r.verb = original.terms[0];
+    // r.auxiliary = null;
+    // r.adverbs = null;
+    // r.negative = null;
   }
-  r.auxiliary = aux.match('#Auxiliary+');
   return r;
 };
 
@@ -7858,6 +7869,9 @@ var corrections = function corrections(ts) {
   ts.match('#Determiner (shit|damn|hell)').term(1).tag('Noun', 'swears-noun');
   ts.match('(shit|damn|fuck) (#Determiner|#Possessive|them)').term(0).tag('Verb', 'swears-verb');
   ts.match('#Copula fucked up?').not('#Copula').tag('Adjective', 'swears-adjective');
+
+  //fix for busted-up phrasalVerbs
+  ts.match('#Noun #Particle').term(1).tag('Preposition', 'repair-noPhrasal');
 
   return ts;
 };
@@ -10896,6 +10910,7 @@ module.exports = fromString;
 'use strict';
 
 //getters/setters for the Terms class
+
 module.exports = {
 
   parent: {

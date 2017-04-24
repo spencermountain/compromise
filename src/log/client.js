@@ -19,7 +19,7 @@ const tag = (t, pos, reason) => {
   let title = t.normal || '[' + t.silent_term + ']';
   title = fns.leftPad('\'' + title + '\'', 12);
   title += '  ->   ' + pos;
-  title += fns.rightPad((reason || ''), 15);
+  title += fns.leftPad((reason || ''), 15);
   console.log('%c' + title, ' color: #a2c99c');
 };
 const untag = (t, pos, reason) => {

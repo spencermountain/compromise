@@ -138,6 +138,9 @@ const corrections = function (ts) {
   ts.match('(shit|damn|fuck) (#Determiner|#Possessive|them)').term(0).tag('Verb', 'swears-verb');
   ts.match('#Copula fucked up?').not('#Copula').tag('Adjective', 'swears-adjective');
 
+  //fix for busted-up phrasalVerbs
+  ts.match('#Noun #Particle').term(1).tag('Preposition', 'repair-noPhrasal');
+
   return ts;
 };
 

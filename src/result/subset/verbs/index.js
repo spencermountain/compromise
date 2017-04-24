@@ -86,14 +86,20 @@ const methods = {
 };
 
 const find = function(r, n) {
-  r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
+  r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+');
   r = r.splitAfter('#Comma');
+  r = r.if('#Verb'); //this should be (much) smarter
   if (typeof n === 'number') {
     r = r.get(n);
   }
+  // r.debug();
   r.list = r.list.map((ts) => {
     return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
   });
+  //fiter-out any that didn't find a main verb
+  // r.list = r.list.filter((ts) => {
+  //   return ts.vb;
+  // });
   return new Text(r.list, this.lexicon, this.parent);
 };
 

@@ -1,4 +1,4 @@
-// 'use strict';
+'use strict';
 var nlp = require('./src/index');
 // nlp.verbose('tagger');
 const corpus = require('nlp-corpus');
@@ -8,7 +8,5 @@ let text = corpus.sotu.parsed()[0];
 
 // console.log(nlp('I\'m going to the shops').sentences().toPastTense().out());
 
-// r = nlp('he walks');
-// r.match('walks').tag('Foo');
-// r.verbs().toPastTense();
-// r.debug();
+console.log(nlp('come, perhaps').verbs().conjugate());
+console.log(nlp('my take on').verbs().conjugate());

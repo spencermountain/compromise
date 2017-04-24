@@ -7,6 +7,7 @@ const toNegative = require('./toNegative');
 const isPlural = require('./methods/isPlural');
 
 const parse = function(r) {
+  let original = r;
   r.negative = r.match('#Negative');
   r.adverbs = r.match('#Adverb');
   let aux = r.clone().not('(#Adverb|#Negative)');
@@ -14,8 +15,13 @@ const parse = function(r) {
   r.particle = aux.match('#Particle').last();
   if (r.verb.found) {
     r.verb = r.verb.list[0].terms[0];
+    r.auxiliary = aux.match('#Auxiliary+');
+  } else {
+    r.verb = original.terms[0];
+  // r.auxiliary = null;
+  // r.adverbs = null;
+  // r.negative = null;
   }
-  r.auxiliary = aux.match('#Auxiliary+');
   return r;
 };
 

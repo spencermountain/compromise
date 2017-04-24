@@ -14,7 +14,7 @@ test('offsets-equals-substr:', function (t) {
 
 test('index-output:', function (t) {
   var str = `I am the very model of a modern Major-General. I've information vegetable, animal, and mineral`;
-  let arr = nlp(str).match('model').out('index');
+  var arr = nlp(str).match('model').out('index');
   t.equal(arr[0].term, 4, 'which term');
   t.equal(arr[0].sentence, 0, 'which sentence');
   t.equal(arr[0].sentenceTerm, 4, 'which sentence-term');
@@ -28,10 +28,10 @@ test('index-output:', function (t) {
 
 test('offset-with-whitespace:', function (t) {
   var str = `I am the very model of a modern Major-General. I've information vegetable, animal, and mineral`;
-  let place = nlp(str).match('animal').first().out('offset')[0];
+  var place = nlp(str).match('animal').first().out('offset')[0];
 
   //full term offset
-  let substr = str.substring(place.offset, place.offset + place.length);
+  var substr = str.substring(place.offset, place.offset + place.length);
   t.equal(substr, ' animal,', 'offset+length');
 
   //no-punctuation or whitespace offset
@@ -40,8 +40,8 @@ test('offset-with-whitespace:', function (t) {
 
 
   str = 'hello there. I work for the F.B.I. in ft. Mede. hello there!';
-  let r = nlp(str);
-  let o = r.sentences(1).out('offsets')[0];
+  var r = nlp(str);
+  var o = r.sentences(1).out('offsets')[0];
   substr = str.substring(o.wordStart, o.wordEnd);
   t.equal(substr, 'I work for the F.B.I. in ft. Mede', 'keeps-internal-punctuation');
 

@@ -111,7 +111,7 @@ test('to_number:', function (t) {
 
 
 test('all-to-number:', function (t) {
-  let num = nlp('1st').values().numbers()[0];
+  var num = nlp('1st').values().numbers()[0];
   t.equal(num, 1, '1st');
   num = nlp('1').values().numbers()[0];
   t.equal(num, 1, '1');

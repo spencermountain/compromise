@@ -2,10 +2,10 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 
 test('inline tagging linear:', function (t) {
-  let r = nlp('one two three four');
+  var r = nlp('one two three four');
 
   r.match('one two three').tag('. #Person .');
-  let found = r.match('#Person').out('normal');
+  var found = r.match('#Person').out('normal');
   t.equal(found, 'two', 'skip-tag-skip');
 
   r.match('one two three').tag('#FooBar .');

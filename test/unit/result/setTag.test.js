@@ -2,8 +2,8 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 
 test('custom-tags-persist', function(t) {
-  let r = nlp('i am two years older now');
-  let two = r.match('#Value').tag('#FunTag');
+  var r = nlp('i am two years older now');
+  var two = r.match('#Value').tag('#FunTag');
   two.replaceWith('never');
   t.equal(two.has('#FunTag'), false, 'custom tag is forgotten');
 
@@ -20,14 +20,14 @@ test('custom-tags-persist', function(t) {
 
   r = nlp('june 1999');
   r.values().toNumber();
-  let year = r.match('#Year');
+  var year = r.match('#Year');
   t.equal(year.out('normal'), '1999', 'year-stays-a-year');
 
   //TODO: make these pass
   // r = nlp('i am two years older now');
   // r.match('am').tag('#FunTag');
   // r = r.sentences().toFutureTense().toPresentTense().toPastTense();
-  // let verb = r.match('#FunTag');
+  // var verb = r.match('#FunTag');
   // t.equal(verb.out('normal'), 'was', 'tag stays over sentence-change');
 
   // r = nlp('walked').tag('#FunTag');

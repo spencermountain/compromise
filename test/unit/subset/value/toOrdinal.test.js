@@ -2,7 +2,7 @@ var test = require('tape');
 var nlp = require('../../lib/nlp');
 
 test('to-numOrdinal:', function (t) {
-  let arr = [
+  var arr = [
     'one',
     '1',
     '1.0', //not sure..
@@ -10,7 +10,7 @@ test('to-numOrdinal:', function (t) {
     'first',
   ];
   arr.forEach((txt) => {
-    let str = nlp(txt).values().data()[0].ordinal;
+    var str = nlp(txt).values().data()[0].ordinal;
     t.equal(str, '1st', txt + ' -> 1st');
   });
   arr = [
@@ -21,7 +21,7 @@ test('to-numOrdinal:', function (t) {
     'five hundredth',
   ];
   arr.forEach((txt) => {
-    let str = nlp(txt).values().data()[0].ordinal;
+    var str = nlp(txt).values().data()[0].ordinal;
     t.equal(str, '500th', txt + ' -> 500th');
   });
   arr = [
@@ -33,14 +33,14 @@ test('to-numOrdinal:', function (t) {
     'two thousand and twelfth',
   ];
   arr.forEach((txt) => {
-    let str = nlp(txt).values().data()[0].ordinal;
+    var str = nlp(txt).values().data()[0].ordinal;
     t.equal(str, '2012th', txt + ' -> 2012th');
   });
   t.end();
 });
 
 test('to-textOrdinal:', function (t) {
-  let arr = [
+  var arr = [
     'one',
     '1',
     '1.0', //not sure..
@@ -48,7 +48,7 @@ test('to-textOrdinal:', function (t) {
     'first',
   ];
   arr.forEach((txt) => {
-    let str = nlp(txt).values().data()[0].textOrdinal;
+    var str = nlp(txt).values().data()[0].textOrdinal;
     t.equal(str, 'first', txt + ' -> first');
   });
   arr = [
@@ -59,7 +59,7 @@ test('to-textOrdinal:', function (t) {
     'five hundredth',
   ];
   arr.forEach((txt) => {
-    let str = nlp(txt).values().data()[0].textOrdinal;
+    var str = nlp(txt).values().data()[0].textOrdinal;
     t.equal(str, 'five hundredth', txt + ' -> five hundredth');
   });
   arr = [
@@ -71,7 +71,7 @@ test('to-textOrdinal:', function (t) {
     'two thousand and twelfth',
   ];
   arr.forEach((txt) => {
-    let str = nlp(txt).values().data()[0].textOrdinal;
+    var str = nlp(txt).values().data()[0].textOrdinal;
     t.equal(str, 'two thousand and twelfth', txt + ' -> two thousand and twelfth');
   });
   t.end();

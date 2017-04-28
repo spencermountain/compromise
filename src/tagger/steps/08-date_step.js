@@ -40,13 +40,11 @@ const datePass = function (ts) {
     //June 5-7th
     ts.match(`#Month #DateRange+`).tag('Date', 'correction-numberRange');
     //5th of March
-    ts.match('#Value of? #Month').tag('Date', 'value-of-month');
+    ts.match('#Value of #Month').tag('Date', 'value-of-month');
     //5 March
     ts.match('#Cardinal #Month').tag('Date', 'cardinal-month');
     //march 5 to 7
     ts.match('#Month #Value to #Value').tag('Date', 'value-to-value');
-    //march 12th 2018
-    ts.match('#Month #Value #Cardinal').tag('Date', 'month-value-cardinal');
     //march the 12th
     ts.match('#Month the #Value').tag('Date', 'month-the-value');
   }
@@ -140,6 +138,17 @@ const datePass = function (ts) {
     v = ts.match(`#Cardinal !#Plural`).firstTerm();
     if (v.found) {
       tagYearSafer(v, 'year-unsafe');
+    }
+  }
+
+  //fix over-greedy
+  if (ts.has('#Date')) {
+    let date = ts.match('#Date+').splitOn('Clause');
+
+    date.match();
+    if (date.has('(#Year|#Time)') === false) {
+      //12 february 12
+      date.match('#Value (#Month|#Weekday) #Value').lastTerm().unTag('Date');
     }
   }
 

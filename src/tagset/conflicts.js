@@ -32,6 +32,7 @@ module.exports = [
   ['Month', 'WeekDay', 'Year', 'Duration'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
   ['Date', 'Verb', 'Adjective', 'Person'],
+  ['Date', 'Money', 'RomanNumeral', 'Fraction'],
   //a/an -> 1
   ['Value', 'Determiner'],
   //roman numerals

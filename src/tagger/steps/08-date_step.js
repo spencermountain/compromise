@@ -65,8 +65,8 @@ const datePass = function (ts) {
     ts.match('#Value point #Value').tag('Value', 'value-point-value');
     //for four days
     ts.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration');
-    ts.match('#Date #Value').tag('Date', 'date-value');
-    ts.match('#Value #Date').tag('Date', 'value-date');
+    ts.match('(#WeekDay|#Month) #Value').ifNo('#Money').tag('Date', 'date-value');
+    ts.match('#Value (#WeekDay|#Month)').ifNo('#Money').tag('Date', 'value-date');
     //two days before
     ts.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction');
   }
@@ -145,7 +145,6 @@ const datePass = function (ts) {
   if (ts.has('#Date')) {
     let date = ts.match('#Date+').splitOn('Clause');
 
-    date.match();
     if (date.has('(#Year|#Time)') === false) {
       //12 february 12
       date.match('#Value (#Month|#Weekday) #Value').lastTerm().unTag('Date');

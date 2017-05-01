@@ -9,6 +9,4 @@ var nlp = require('./src/index');
 
 
 
-console.log(nlp('All my life I\'ve had one dream, to accomplish my many goals.').nouns().isPlural())
-
-console.log(nlp('it\'s his 7th birthday').values().isEqual(7).out('array'))
+console.log(nlp('All my life I\'ve had one dream, to accomplish my many goals.').nouns().isPlural().out())

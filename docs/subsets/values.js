@@ -54,6 +54,6 @@ module.exports = {
   isEqual: {
     desc: 'return only the values equal to a given value',
     returns: 'Text',
-    example: 'nlp(\'it\'s his 7th birthday\').values().isEqual(7).out(\'array\')\n// [\'7th\']'
+    example: 'nlp(\'his 7th birthday\').values().isEqual(7).out(\'array\')\n// [\'7th\']'
   }
 };

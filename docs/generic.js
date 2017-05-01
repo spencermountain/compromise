@@ -21,7 +21,7 @@ module.exports = {
     debug: {
       desc: 'pretty-print the current selection to the console',
       returns: 'Text',
-      example: 'nlp(\'wayne\u2019s world, party time, excellent- weeeyooweeeyoo!\').debug().out()'
+      example: 'nlp(\'wayne\u2019s world, party time, excellent- weeeyooweeeyoo!\').out()'
     },
     out: {
       desc: 'render parsed data as an output. supports `text`, `normal`, `array`, `html`, `grid`, `color`, `debug`',

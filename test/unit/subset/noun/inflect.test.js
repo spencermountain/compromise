@@ -25,7 +25,7 @@ test('==Plurals==', function(T) {
     ].forEach(function (a) {
       var r = nlp(a[0]).nouns();
       var msg = a[0];
-      t.equal(r.isPlural()[0], a[1], msg);
+      t.equal(r.isPlural().found, a[1], msg);
     });
     t.end();
   });

@@ -31,12 +31,12 @@ module.exports = {
   isPositive: {
     desc: 'return only the verbs that are not negative, like \'would sing\' but not \'would not sing\'',
     returns: 'Text',
-    example: 'nlp(\'Dear Miss Hoover, you have Lyme disease.\').verbs().isNegative().length()\n    //1\n    '
+    example: 'nlp(\'Dear Miss Hoover, you have Lyme disease.\').verbs().isPositive().length\n    //1\n    '
   },
   isNegative: {
     desc: 'return only the verbs that are negative, like \'would not sing\' but not \'would sing\'',
     returns: 'Text',
-    example: 'nlp(\'Dear Miss Hoover, you have Lyme disease.\').verbs().isNegative().length()\n//0\n'
+    example: 'nlp(\'Dear Miss Hoover, you have Lyme disease.\').verbs().isNegative().length\n//0\n'
   },
   toNegative: {
     desc: 'make the verbs mean the opposite thing - `walk`->`did not walk` etc',

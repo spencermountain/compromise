@@ -63,12 +63,12 @@ module.exports = {
     concat: {
       desc: 'combine two results into one',
       returns: 'Text',
-      example: 'nlp(\'My name is Otto.\').concat(nlp(\'i love to get blotto\')).length()\n//2'
+      example: 'nlp(\'My name is Otto\').concat(\'and i love to get blotto\').sentences().length\n//1'
     },
     flatten: {
       desc: 'turn a list of results into one result',
       returns: 'Text',
-      example: 'nlp(\'sex cauldron? I thought they closed that place down.\').flatten().length()\n//1'
+      example: 'nlp(\'sex cauldron? I thought they closed that place down.\').flatten().length\n//1'
     },
     random: {
       desc: 'sample a random section of n matches',

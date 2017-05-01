@@ -32,6 +32,8 @@ test('docs-eval:', function (t) {
     }catch(e){
       console.log(o.title)
       console.log(e)
+      t.fail(o.title)
     }
   })
+  t.end()
 })

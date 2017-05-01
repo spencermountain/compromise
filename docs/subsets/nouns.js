@@ -14,7 +14,7 @@ module.exports = {
   hasPlural: {
     desc: 'return only the nouns which can be plural (sometimes called \'countable\' nouns)',
     returns: 'Text',
-    example: 'nlp(\'bring joy to the air, water, earth, and sky.\').nouns().hasPlural().length()\n//0'
+    example: 'nlp(\'bring joy to the air, water, earth, and sky.\').nouns().hasPlural().length\n//0'
   },
   toPlural: {
     desc: 'transform singular nouns into their plural (inflected) forms',

@@ -1,0 +1,12 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "module": "commonjs",
+    "noEmit": true,
+    "noImplicitAny": true
+  },
+  "files": [
+    "/home/spencer/nlp/nlp_compromise/compromise.d.ts",
+    "./typefile.test.ts"
+  ]
+}

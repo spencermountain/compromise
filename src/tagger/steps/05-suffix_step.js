@@ -18,6 +18,8 @@ const misc = [
   [/(over|under)[a-z]{2,}$/, 'Adjective'],
   //middle (anywhere)
   [/[a-z]*\\-[a-z]*\\-/, 'Adjective'],
+
+    [/[0-9](st|nd|rd|r?th)$/, ['NumericValue','Ordinal']], //like 5th
 ];
 
 //straight-up lookup of known-suffixes

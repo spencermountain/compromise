@@ -25,12 +25,14 @@ const addMethods = (Term) => {
     },
     /** is this tag compatible with this word */
     canBe: function (tag) {
-      //everything can be '.'
-      if (ignore[tag] === true) {
-        return true;
-      }
       tag = tag || '';
-      tag = tag.replace(/^#/, '');
+      if (typeof tag === 'string') {
+        //everything can be '.'
+        if (ignore[tag] === true) {
+          return true;
+        }
+        tag = tag.replace(/^#/, '');
+      }
       return canBe(this, tag);
     }
   };

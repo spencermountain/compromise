@@ -44,7 +44,6 @@ module.exports = {
     [/.[^aeiou]ive$/, Adj],
   ],
   h: [
-    [/[0-9](st|nd|rd|r?th)$/, 'NumericValue'], //like 5th
     [/.[^aeiouf]ish$/, Adj],
     [/.v[iy]ch$/, Last], //east-europe
     [/^ug?h+$/, Exp], //uhh

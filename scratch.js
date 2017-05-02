@@ -1,6 +1,6 @@
 'use strict';
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 // const corpus = require('nlp-corpus');
 // let text = corpus.sotu.parsed()[0];
 // const fresh = require('./test/unit/lib/freshPrince.js');
@@ -9,4 +9,4 @@ var nlp = require('./src/index');
 
 
 
-console.log(nlp('All my life I\'ve had one dream, to accomplish my many goals.').nouns().isPlural().out())
+nlp('on the 6th').debug()

@@ -45,17 +45,7 @@ module.exports = [
     'ing': 'Gerund', //likely to be converted to Adj after lexicon pass
     ' so': AdVb,
     '\'ll': Modal,
-    '\'re': 'Copula',
-    '1st': Ord,
-    '2nd': Ord,
-    '3rd': Ord,
-    '4th': Ord,
-    '5th': Ord,
-    '6th': Ord,
-    '7th': Ord,
-    '8th': Ord,
-    '9th': Ord,
-    '0th': Ord,
+    '\'re': 'Copula'
   },
   { //4-letter
     'teen': 'Value',

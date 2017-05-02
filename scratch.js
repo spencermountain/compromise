@@ -1,6 +1,6 @@
 'use strict';
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 // const corpus = require('nlp-corpus');
 // let text = corpus.sotu.parsed()[0];
 // const fresh = require('./test/unit/lib/freshPrince.js');
@@ -9,4 +9,6 @@ var nlp = require('./src/index');
 
 
 
-nlp('two hundred').debug();
+var r = nlp('may 8th to 10th');
+r.debug();
+// console.log(r.values().data());

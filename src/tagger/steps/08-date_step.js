@@ -40,6 +40,8 @@ const datePass = function (ts) {
     ts.match(`(next|this|last) ${maybeMonth}`).term(1).tag('Month', 'correction-may'); //maybe not 'this'
     //it is may
     ts.match('#Copula may').term(1).tag('Month', 'is-may');
+    //march to
+    ts.match('march (up|down|back|to|toward)').term(0).tag('Month', 'march-to');
   }
   //months:
   if (ts.has('#Month')) {

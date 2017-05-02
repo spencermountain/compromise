@@ -9,6 +9,7 @@ nlp.verbose('tagger');
 
 
 
-var r = nlp('may 8th to 10th');
+var r = nlp('may eighth to tenth');
+r.values().toNumber();
 r.debug();
-// console.log(r.values().data());
+console.log(r.values().data());

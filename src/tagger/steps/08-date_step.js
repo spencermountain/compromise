@@ -67,6 +67,11 @@ const datePass = function (ts) {
     ts.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration');
     ts.match('(#WeekDay|#Month) #Value').ifNo('#Money').tag('Date', 'date-value');
     ts.match('#Value (#WeekDay|#Month)').ifNo('#Money').tag('Date', 'value-date');
+    //may twenty five
+    let vs = ts.match('#TextValue #TextValue');
+    if (vs.found && vs.has('#Date')) {
+      vs.tag('#Date', 'textvalue-date');
+    }
     //two days before
     ts.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction');
   }

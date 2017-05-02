@@ -9,4 +9,4 @@ var nlp = require('./src/index');
 
 
 
-nlp('may twenty five').debug();
+nlp('two hundred').debug();

@@ -48,7 +48,7 @@ const datePass = function (ts) {
     ts.match(`(next|this|last) ${people}`).term(1).tag('Month', 'correction-may'); //maybe not 'this'
   }
   //ambiguous month - verb-forms
-  let verbs = '(may|march)';
+  let verbs = '(may|march|sat)';
   if (ts.has(verbs)) {
     //quickly march
     ts.match(`#Adverb ${verbs}`).lastTerm().tag('Infinitive', 'ambig-verb');
@@ -69,6 +69,15 @@ const datePass = function (ts) {
       //it is may
       ts.match('#Copula may').term(1).tag('Month', 'is-may');
     }
+  }
+  //sun 5th
+  if (ts.has('sun')) {
+    //sun feb 2
+    ts.match('sun #Date').firstTerm().tag('WeekDay', 'sun-feb');
+    //sun the 5th
+    ts.match('sun the #Ordinal').tag('Date').firstTerm().tag('WeekDay', 'sun-the-5th');
+    //the sun
+    ts.match('#Determiner sun').lastTerm().tag('Singular', 'the-sun');
   }
 
   //months:

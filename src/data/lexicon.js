@@ -27,16 +27,19 @@ addArr(data.dates.durations, 'Duration');
 addObj(data.abbreviations);
 //number-words are well-structured
 let obj = data.numbers.ordinal;
-addArr(Object.keys(obj.ones), 'Ordinal');
-addArr(Object.keys(obj.teens), 'Ordinal');
-addArr(Object.keys(obj.tens), 'Ordinal');
-addArr(Object.keys(obj.multiples), 'Ordinal');
+let tags = ['Ordinal', 'TextValue'];
+addArr(Object.keys(obj.ones), tags);
+addArr(Object.keys(obj.teens), tags);
+addArr(Object.keys(obj.tens), tags);
+addArr(Object.keys(obj.multiples), tags);
+
+let tags2 = ['Cardinal', 'TextValue'];
 obj = data.numbers.cardinal;
-addArr(Object.keys(obj.ones), 'Cardinal');
-addArr(Object.keys(obj.teens), 'Cardinal');
-addArr(Object.keys(obj.tens), 'Cardinal');
-addArr(Object.keys(obj.multiples), 'Cardinal');
-addArr(Object.keys(data.numbers.prefixes), 'Cardinal');
+addArr(Object.keys(obj.ones), tags2);
+addArr(Object.keys(obj.teens), tags2);
+addArr(Object.keys(obj.tens), tags2);
+addArr(Object.keys(obj.multiples), tags2);
+addArr(Object.keys(data.numbers.prefixes), tags2);
 //singular/plural
 addArr(Object.keys(data.irregular_plurals.toPlural), 'Singular');
 addArr(Object.keys(data.irregular_plurals.toSingle), 'Plural');

@@ -30,10 +30,16 @@ const tagYearSafer = (v, reason) => {
 const datePass = function (ts) {
   //ambiguous-months
   if (ts.has(maybeMonth)) {
+    //april the 5th
     ts.match(`${maybeMonth} (#Determiner|#Value|#Date)`).term(0).tag('Month', 'correction-may');
+    //wednesday april
     ts.match(`#Date ${maybeMonth}`).term(1).tag('Month', 'correction-may');
+    //by april
     ts.match(`${preps} ${maybeMonth}`).term(1).tag('Month', 'correction-may');
+    //this april
     ts.match(`(next|this|last) ${maybeMonth}`).term(1).tag('Month', 'correction-may'); //maybe not 'this'
+    //it is may
+    ts.match('#Copula may').term(1).tag('Month', 'is-may');
   }
   //months:
   if (ts.has('#Month')) {

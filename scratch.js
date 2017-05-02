@@ -9,7 +9,5 @@ nlp.verbose('tagger');
 
 
 
-var r = nlp('may eighth to tenth');
-r.values().toNumber();
+var r = nlp('it is may');
 r.debug();
-console.log(r.values().data());

@@ -1,6 +1,6 @@
 'use strict';
 //ambiguous 'may' and 'march'
-const preps = '(in|by|before|for|during|on|until|after|of|within)';
+const preps = '(in|by|before|for|during|on|until|after|of|within|all)';
 const thisNext = '(last|next|this|previous|current|upcoming|coming)';
 const sections = '(start|end|middle|starting|ending|midpoint|beginning)';
 const seasons = '(spring|summer|winter|fall|autumn)';
@@ -54,10 +54,12 @@ const datePass = function (ts) {
     ts.match(`#Adverb ${verbs}`).lastTerm().tag('Infinitive', 'ambig-verb');
     ts.match(`${verbs} #Adverb`).lastTerm().tag('Infinitive', 'ambig-verb');
     //all march
-    ts.match(`(for|in|during|all|by) ${verbs}`).lastTerm().tag('Month', 'in-month');
+    ts.match(`${preps} ${verbs}`).lastTerm().tag('Month', 'in-month');
+    //this march
+    ts.match(`(next|this|last) ${verbs}`).lastTerm().tag('Month', 'this-month');
 
     ts.match(`${verbs} the? #Value`).firstTerm().tag('Month', 'march-5th');
-    ts.match(`#Value of ${verbs}`).lastTerm().tag('Month', '5th-of-march');
+    ts.match(`#Value of? ${verbs}`).lastTerm().tag('Month', '5th-of-march');
 
     if (ts.has('march')) {
       //march to

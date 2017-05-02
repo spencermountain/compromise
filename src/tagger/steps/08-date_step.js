@@ -1,6 +1,5 @@
 'use strict';
 //ambiguous 'may' and 'march'
-const maybeMonth = '(may|march|jan|april|sep)';
 const preps = '(in|by|before|for|during|on|until|after|of|within)';
 const thisNext = '(last|next|this|previous|current|upcoming|coming)';
 const sections = '(start|end|middle|starting|ending|midpoint|beginning)';
@@ -28,21 +27,50 @@ const tagYearSafer = (v, reason) => {
 
 //non-destructively tag values & prepositions as dates
 const datePass = function (ts) {
-  //ambiguous-months
-  if (ts.has(maybeMonth)) {
+  //ambiguous month - person forms
+  let people = '(january|april|may|june|summer|autumn)';
+  if (ts.has(people)) {
+    //give to april
+    ts.match(`#Infinitive #Noun? (to|for) ${people}`).lastTerm().tag('Person', 'ambig-person');
+    //may waits for
+    ts.match(`${people} #PresentTense (to|for)`).firstTerm().tag('Person', 'ambig-active');
     //april the 5th
-    ts.match(`${maybeMonth} (#Determiner|#Value|#Date)`).term(0).tag('Month', 'correction-may');
+    ts.match(`${people} (#Determiner|#Value|#Date)`).term(0).tag('Month', 'correction-may');
     //wednesday april
-    ts.match(`#Date ${maybeMonth}`).term(1).tag('Month', 'correction-may');
+    ts.match(`#Date ${people}`).term(1).tag('Month', 'correction-may');
+    //may 5th
+    ts.match(`${people} the? #Value`).firstTerm().tag('Month', 'may-5th');
+    //5th of may
+    ts.match(`#Value of ${people}`).lastTerm().tag('Month', '5th-of-may');
     //by april
-    ts.match(`${preps} ${maybeMonth}`).term(1).tag('Month', 'correction-may');
+    ts.match(`${preps} ${people}`).term(1).tag('Month', 'correction-may');
     //this april
-    ts.match(`(next|this|last) ${maybeMonth}`).term(1).tag('Month', 'correction-may'); //maybe not 'this'
-    //it is may
-    ts.match('#Copula may').term(1).tag('Month', 'is-may');
-    //march to
-    ts.match('march (up|down|back|to|toward)').term(0).tag('Month', 'march-to');
+    ts.match(`(next|this|last) ${people}`).term(1).tag('Month', 'correction-may'); //maybe not 'this'
   }
+  //ambiguous month - verb-forms
+  let verbs = '(may|march)';
+  if (ts.has(verbs)) {
+    //quickly march
+    ts.match(`#Adverb ${verbs}`).lastTerm().tag('Infinitive', 'ambig-verb');
+    ts.match(`${verbs} #Adverb`).lastTerm().tag('Infinitive', 'ambig-verb');
+    //all march
+    ts.match(`(for|in|during|all|by) ${verbs}`).lastTerm().tag('Month', 'in-month');
+
+    ts.match(`${verbs} the? #Value`).firstTerm().tag('Month', 'march-5th');
+    ts.match(`#Value of ${verbs}`).lastTerm().tag('Month', '5th-of-march');
+
+    if (ts.has('march')) {
+      //march to
+      ts.match('march (up|down|back|to|toward)').term(0).tag('Infinitive', 'march-to');
+      //must march
+      ts.match('#Modal march').term(1).tag('Infinitive', 'must-march');
+    }
+    if (ts.has('may')) {
+      //it is may
+      ts.match('#Copula may').term(1).tag('Month', 'is-may');
+    }
+  }
+
   //months:
   if (ts.has('#Month')) {
     //June 5-7th

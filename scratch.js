@@ -9,5 +9,5 @@ nlp.verbose('tagger');
 
 
 
-var r = nlp('it is may');
+var r = nlp('March 1st 1987');
 r.debug();

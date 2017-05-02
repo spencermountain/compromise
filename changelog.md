@@ -16,7 +16,7 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - improved .debug() and logging on clientside
 * 10.1.0
 - fix return format of .isPlural(), so it acts like a match filter
-- less-greedy date tagging
+- less-greedy date tagging & ambiguous month fixes
 
 ### v9  &nbsp;
 * 9.0.0

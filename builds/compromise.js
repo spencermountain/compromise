@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.0.1",
+  "version": "10.1.0",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -11,6 +11,7 @@ module.exports={
   },
   "scripts": {
     "test": "node ./scripts/test.js",
+    "test:types": "tsc --project test/types",
     "browsertest": "node ./scripts/browserTest.js",
     "build": "node ./scripts/build/index.js",
     "demo": "node ./scripts/demo.js",
@@ -224,16 +225,19 @@ addArr(data.dates.durations, 'Duration');
 addObj(data.abbreviations);
 //number-words are well-structured
 var obj = data.numbers.ordinal;
-addArr(Object.keys(obj.ones), 'Ordinal');
-addArr(Object.keys(obj.teens), 'Ordinal');
-addArr(Object.keys(obj.tens), 'Ordinal');
-addArr(Object.keys(obj.multiples), 'Ordinal');
+var tags = ['Ordinal', 'TextValue'];
+addArr(Object.keys(obj.ones), tags);
+addArr(Object.keys(obj.teens), tags);
+addArr(Object.keys(obj.tens), tags);
+addArr(Object.keys(obj.multiples), tags);
+
+var tags2 = ['Cardinal', 'TextValue'];
 obj = data.numbers.cardinal;
-addArr(Object.keys(obj.ones), 'Cardinal');
-addArr(Object.keys(obj.teens), 'Cardinal');
-addArr(Object.keys(obj.tens), 'Cardinal');
-addArr(Object.keys(obj.multiples), 'Cardinal');
-addArr(Object.keys(data.numbers.prefixes), 'Cardinal');
+addArr(Object.keys(obj.ones), tags2);
+addArr(Object.keys(obj.teens), tags2);
+addArr(Object.keys(obj.tens), tags2);
+addArr(Object.keys(obj.multiples), tags2);
+addArr(Object.keys(data.numbers.prefixes), tags2);
 //singular/plural
 addArr(Object.keys(data.irregular_plurals.toPlural), 'Singular');
 addArr(Object.keys(data.irregular_plurals.toSingle), 'Plural');
@@ -4346,9 +4350,10 @@ var Noun = _dereq_('./noun');
 //the () subset class
 var methods = {
   isPlural: function isPlural() {
-    return this.list.map(function (ts) {
+    this.list = this.list.filter(function (ts) {
       return ts.isPlural();
     });
+    return this;
   },
   hasPlural: function hasPlural() {
     return this.list.map(function (ts) {
@@ -5823,7 +5828,8 @@ var methods = {
       } else {
         str = num;
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('NumericValue');
+      // this.tag('NumericValue','toNumber');
     }
     return this;
   },
@@ -5837,7 +5843,7 @@ var methods = {
       } else {
         str = fmt.text(num);
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('TextValue');
     }
     return this;
   },
@@ -5852,7 +5858,7 @@ var methods = {
       } else {
         str = num;
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('Cardinal');
     }
     return this;
   },
@@ -5867,7 +5873,7 @@ var methods = {
       } else {
         str = fmt.ordinal(num);
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('Ordinal');
     }
     return this;
   },
@@ -5882,7 +5888,7 @@ var methods = {
       } else {
         str = fmt.nice(num);
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('NumericValue');
     }
     return this;
   }
@@ -8343,7 +8349,7 @@ var misc = [
 [/^[0-9]+(st|nd|rd|th)$/, 'Ordinal'], //like 5th
 [/(over|under)[a-z]{2,}$/, 'Adjective'],
 //middle (anywhere)
-[/[a-z]*\\-[a-z]*\\-/, 'Adjective']];
+[/[a-z]*\\-[a-z]*\\-/, 'Adjective'], [/[0-9](st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']]];
 
 //straight-up lookup of known-suffixes
 var lookup = function lookup(t) {
@@ -8518,8 +8524,7 @@ module.exports = noun_fallback;
 'use strict';
 //ambiguous 'may' and 'march'
 
-var maybeMonth = '(may|march|jan|april|sep)';
-var preps = '(in|by|before|for|during|on|until|after|of|within)';
+var preps = '(in|by|before|for|during|on|until|after|of|within|all)';
 var thisNext = '(last|next|this|previous|current|upcoming|coming)';
 var sections = '(start|end|middle|starting|ending|midpoint|beginning)';
 var seasons = '(spring|summer|winter|fall|autumn)';
@@ -8546,25 +8551,71 @@ var tagYearSafer = function tagYearSafer(v, reason) {
 
 //non-destructively tag values & prepositions as dates
 var datePass = function datePass(ts) {
-  //ambiguous-months
-  if (ts.has(maybeMonth)) {
-    ts.match(maybeMonth + ' (#Determiner|#Value|#Date)').term(0).tag('Month', 'correction-may');
-    ts.match('#Date ' + maybeMonth).term(1).tag('Month', 'correction-may');
-    ts.match(preps + ' ' + maybeMonth).term(1).tag('Month', 'correction-may');
-    ts.match('(next|this|last) ' + maybeMonth).term(1).tag('Month', 'correction-may'); //maybe not 'this'
+  //ambiguous month - person forms
+  var people = '(january|april|may|june|summer|autumn)';
+  if (ts.has(people)) {
+    //give to april
+    ts.match('#Infinitive #Noun? (to|for) ' + people).lastTerm().tag('Person', 'ambig-person');
+    //may waits for
+    ts.match(people + ' #PresentTense (to|for)').firstTerm().tag('Person', 'ambig-active');
+    //april the 5th
+    ts.match(people + ' (#Determiner|#Value|#Date)').term(0).tag('Month', 'correction-may');
+    //wednesday april
+    ts.match('#Date ' + people).term(1).tag('Month', 'correction-may');
+    //may 5th
+    ts.match(people + ' the? #Value').firstTerm().tag('Month', 'may-5th');
+    //5th of may
+    ts.match('#Value of ' + people).lastTerm().tag('Month', '5th-of-may');
+    //by april
+    ts.match(preps + ' ' + people).term(1).tag('Month', 'correction-may');
+    //this april
+    ts.match('(next|this|last) ' + people).term(1).tag('Month', 'correction-may'); //maybe not 'this'
   }
+  //ambiguous month - verb-forms
+  var verbs = '(may|march|sat)';
+  if (ts.has(verbs)) {
+    //quickly march
+    ts.match('#Adverb ' + verbs).lastTerm().tag('Infinitive', 'ambig-verb');
+    ts.match(verbs + ' #Adverb').lastTerm().tag('Infinitive', 'ambig-verb');
+    //all march
+    ts.match(preps + ' ' + verbs).lastTerm().tag('Month', 'in-month');
+    //this march
+    ts.match('(next|this|last) ' + verbs).lastTerm().tag('Month', 'this-month');
+
+    ts.match(verbs + ' the? #Value').firstTerm().tag('Month', 'march-5th');
+    ts.match('#Value of? ' + verbs).lastTerm().tag('Month', '5th-of-march');
+
+    if (ts.has('march')) {
+      //march to
+      ts.match('march (up|down|back|to|toward)').term(0).tag('Infinitive', 'march-to');
+      //must march
+      ts.match('#Modal march').term(1).tag('Infinitive', 'must-march');
+    }
+    if (ts.has('may')) {
+      //it is may
+      ts.match('#Copula may').term(1).tag('Month', 'is-may');
+    }
+  }
+  //sun 5th
+  if (ts.has('sun')) {
+    //sun feb 2
+    ts.match('sun #Date').firstTerm().tag('WeekDay', 'sun-feb');
+    //sun the 5th
+    ts.match('sun the #Ordinal').tag('Date').firstTerm().tag('WeekDay', 'sun-the-5th');
+    //the sun
+    ts.match('#Determiner sun').lastTerm().tag('Singular', 'the-sun');
+  }
+
   //months:
   if (ts.has('#Month')) {
     //June 5-7th
     ts.match('#Month #DateRange+').tag('Date', 'correction-numberRange');
     //5th of March
-    ts.match('#Value of? #Month').tag('Date', 'value-of-month');
+    ts.match('#Value of #Month').tag('Date', 'value-of-month');
     //5 March
     ts.match('#Cardinal #Month').tag('Date', 'cardinal-month');
     //march 5 to 7
     ts.match('#Month #Value to #Value').tag('Date', 'value-to-value');
-    //march 12th 2018
-    ts.match('#Month #Value #Cardinal').tag('Date', 'month-value-cardinal');
     //march the 12th
     ts.match('#Month the #Value').tag('Date', 'month-the-value');
   }
@@ -8585,8 +8636,13 @@ var datePass = function datePass(ts) {
     ts.match('#Value point #Value').tag('Value', 'value-point-value');
     //for four days
     ts.match(preps + '? #Value #Duration').tag('Date', 'value-duration');
-    ts.match('#Date #Value').tag('Date', 'date-value');
-    ts.match('#Value #Date').tag('Date', 'value-date');
+    ts.match('(#WeekDay|#Month) #Value').ifNo('#Money').tag('Date', 'date-value');
+    ts.match('#Value (#WeekDay|#Month)').ifNo('#Money').tag('Date', 'value-date');
+    //may twenty five
+    var vs = ts.match('#TextValue #TextValue');
+    if (vs.found && vs.has('#Date')) {
+      vs.tag('#Date', 'textvalue-date');
+    }
     //two days before
     ts.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction');
   }
@@ -8658,6 +8714,16 @@ var datePass = function datePass(ts) {
     v = ts.match('#Cardinal !#Plural').firstTerm();
     if (v.found) {
       tagYearSafer(v, 'year-unsafe');
+    }
+  }
+
+  //fix over-greedy
+  if (ts.has('#Date')) {
+    var date = ts.match('#Date+').splitOn('Clause');
+
+    if (date.has('(#Year|#Time)') === false) {
+      //12 february 12
+      date.match('#Value (#Month|#Weekday) #Value').lastTerm().unTag('Date');
     }
   }
 
@@ -9506,8 +9572,7 @@ module.exports = {
   d: [[/.[ia]sed$/, Adj], [/.[gt]led$/, Adj], [/.[aeiou][td]ed$/, Past], [/[^aeiou]ard$/, Sing], [/[aeiou][^aeiou]id$/, Adj], [/[aeiou]c?ked$/, Past], //hooked
   [/.[vrl]id$/, Adj]],
   e: [[/.[lnr]ize$/, Inf], [/.[^aeiou]ise$/, Inf], [/.[aeiou]te$/, Inf], [/.[^aeiou][ai]ble$/, Adj], [/.[^aeiou]eable$/, Adj], [/.[^aeiou]ive$/, Adj]],
-  h: [[/[0-9](st|nd|rd|r?th)$/, 'NumericValue'], //like 5th
-  [/.[^aeiouf]ish$/, Adj], [/.v[iy]ch$/, Last], //east-europe
+  h: [[/.[^aeiouf]ish$/, Adj], [/.v[iy]ch$/, Last], //east-europe
   [/^ug?h+$/, Exp], //uhh
   [/^uh[ -]?oh$/, Exp]],
   i: [[/.[oau][wvl]ski$/, Last]],
@@ -9574,17 +9639,7 @@ null, //1
   'ing': 'Gerund', //likely to be converted to Adj after lexicon pass
   ' so': AdVb,
   '\'ll': Modal,
-  '\'re': 'Copula',
-  '1st': Ord,
-  '2nd': Ord,
-  '3rd': Ord,
-  '4th': Ord,
-  '5th': Ord,
-  '6th': Ord,
-  '7th': Ord,
-  '8th': Ord,
-  '9th': Ord,
-  '0th': Ord
+  '\'re': 'Copula'
 }, { //4-letter
   'teen': 'Value',
   'tors': Noun,
@@ -9672,7 +9727,7 @@ module.exports = [
 //verbs
 ['PastTense', 'PresentTense', 'FutureTense'], ['Pluperfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund', 'FuturePerfect', 'PerfectTense'],
 //date
-['Month', 'WeekDay', 'Year', 'Duration'], ['Particle', 'Conjunction', 'Adverb', 'Preposition'], ['Date', 'Verb', 'Adjective', 'Person'],
+['Month', 'WeekDay', 'Year', 'Duration'], ['Particle', 'Conjunction', 'Adverb', 'Preposition'], ['Date', 'Verb', 'Adjective', 'Person'], ['Date', 'Money', 'RomanNumeral', 'Fraction'],
 //a/an -> 1
 ['Value', 'Determiner'],
 //roman numerals
@@ -10677,12 +10732,14 @@ var addMethods = function addMethods(Term) {
     },
     /** is this tag compatible with this word */
     canBe: function canBe(tag) {
-      //everything can be '.'
-      if (ignore[tag] === true) {
-        return true;
-      }
       tag = tag || '';
-      tag = tag.replace(/^#/, '');
+      if (typeof tag === 'string') {
+        //everything can be '.'
+        if (ignore[tag] === true) {
+          return true;
+        }
+        tag = tag.replace(/^#/, '');
+      }
       return _canBe(this, tag);
     }
   };

@@ -28,12 +28,24 @@ const tagYearSafer = (v, reason) => {
 //non-destructively tag values & prepositions as dates
 const datePass = function (ts) {
   //ambiguous month - person forms
-  let people = '(january|april|may|june|summer|autumn)';
+  let people = '(january|april|may|june|summer|autumn|jan|sep)';
   if (ts.has(people)) {
     //give to april
-    ts.match(`#Infinitive #Noun? (to|for) ${people}`).lastTerm().tag('Person', 'ambig-person');
+    ts.match(`#Infinitive #Determiner? #Noun? (to|for) ${people}`).lastTerm().tag('Person', 'ambig-person');
+    //remind june
+    ts.match(`#Infinitive ${people}`).lastTerm().tag('Person', 'infinitive-person');
     //may waits for
     ts.match(`${people} #PresentTense (to|for)`).firstTerm().tag('Person', 'ambig-active');
+    //april will
+    ts.match(`${people} #Modal`).firstTerm().tag('Person', 'ambig-modal');
+    //would april
+    ts.match(`#Modal ${people}`).lastTerm().tag('Person', 'modal-ambig');
+    //with april
+    ts.match(`(that|with|for) ${people}`).term(1).tag('Person', 'that-month');
+    //it is may
+    ts.match(`#Copula ${people}`).term(1).tag('Person', 'is-may');
+    //may is
+    ts.match(`${people} #Copula`).term(0).tag('Person', 'may-is');
     //april the 5th
     ts.match(`${people} (#Determiner|#Value|#Date)`).term(0).tag('Month', 'correction-may');
     //wednesday april
@@ -43,7 +55,7 @@ const datePass = function (ts) {
     //5th of may
     ts.match(`#Value of ${people}`).lastTerm().tag('Month', '5th-of-may');
     //by april
-    ts.match(`${preps} ${people}`).term(1).tag('Month', 'correction-may');
+    ts.match(`${preps} ${people}`).term(1).tag('Month', 'preps-month');
     //this april
     ts.match(`(next|this|last) ${people}`).term(1).tag('Month', 'correction-may'); //maybe not 'this'
   }
@@ -67,10 +79,7 @@ const datePass = function (ts) {
       //must march
       ts.match('#Modal march').term(1).tag('Infinitive', 'must-march');
     }
-    if (ts.has('may')) {
-      //it is may
-      ts.match('#Copula may').term(1).tag('Month', 'is-may');
-    }
+
   }
   //sun 5th
   if (ts.has('sun')) {

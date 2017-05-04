@@ -16,6 +16,7 @@ const noLast = function(str) {
 const parse_term = function (term) {
   term = term || '';
   term = term.trim();
+
   let reg = {};
   //order matters here
 

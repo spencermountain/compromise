@@ -9,6 +9,7 @@ const methods = {
     }, '');
   },
 
+
   normal: function (ts) {
     let terms = ts.terms.filter((t) => {
       return t.text;
@@ -36,6 +37,13 @@ const methods = {
   },
   csv: function(ts) {
     return ts.terms.map((t) => t.normal.replace(/,/g, '')).join(',');
+  },
+
+  newlines: function (ts) {
+    return ts.terms.reduce((str, t) => {
+      str += t.out('text').replace(/\n/g, ' ');
+      return str;
+    }, '').replace(/^\s/, '');
   },
   /** no punctuation, fancy business **/
   root: function (ts) {

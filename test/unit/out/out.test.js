@@ -37,9 +37,17 @@ test('out-array:', function (t) {
 
 test('out-csv:', function (t) {
   var str = 'John, Jill McGraw, and Moe were swimming';
-  var have = nlp(str).people().debug().out('csv');
+  var have = nlp(str).people().out('csv');
   var want = 'john\njill,mcgraw\nmoe';
   t.equal(have, want, str + ' -> ' + have);
+  t.end();
+});
+
+test('out-newlines:', function (t) {
+  var str = 'John, Jill McGraw, and Moe were swimming';
+  var have = nlp(str).people().out('newlines');
+  var want = 'John,\nJill McGraw,\nMoe';
+  t.equal(have, want, want + ' -> ' + have);
   t.end();
 });
 

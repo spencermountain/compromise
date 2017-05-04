@@ -12,4 +12,4 @@ var nlp = require('./src/index');
 // var r = nlp('it is * politic');
 // r.match('is \\*', true).debug();
 
-nlp('John, Jill McGraw, and Moe were swimming').people().debug();
+console.log(nlp('John, Jill McGraw, and Moe were swimming').people().out('newlines'));

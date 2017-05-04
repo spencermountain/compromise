@@ -58,6 +58,11 @@ const methods = {
       return ts.out('csv');
     }).join('\n');
   },
+  newlines: (r) => {
+    return r.list.map((ts) => {
+      return ts.out('newlines');
+    }).join('\n');
+  },
   json: (r) => {
     return r.list.reduce((arr, ts) => {
       let terms = ts.terms.map((t) => {

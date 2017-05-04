@@ -34,6 +34,9 @@ const methods = {
       return s;
     }, '');
   },
+  csv: function(ts) {
+    return ts.terms.map((t) => t.normal.replace(/,/g, '')).join(',');
+  },
   /** no punctuation, fancy business **/
   root: function (ts) {
     return ts.terms.filter((t) => t.text).map((t) => t.root).join(' ').toLowerCase();

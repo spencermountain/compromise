@@ -114,6 +114,8 @@ const parse_term = function (term) {
     term = '';
   }
   if (term !== '') {
+    //support \ encoding of #[]()*+?^
+    term = term.replace(/\\([\\#\*\.\[\]\(\)\+\?\^])/g, '');
     reg.normal = term.toLowerCase();
   }
   return reg;

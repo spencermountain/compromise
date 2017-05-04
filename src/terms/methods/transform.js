@@ -28,6 +28,14 @@ const transforms = (Terms) => {
         }
       });
       return this;
+    },
+    trim: function () {
+      if (this.length <= 0) {
+        return this;
+      }
+      this.terms[0].whitespace.before = '';
+      this.terms[this.terms.length - 1].whitespace.after = '';
+      return this;
     }
   };
 

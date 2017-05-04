@@ -112,6 +112,7 @@ const commaStep = function(ts) {
         continue;
       }
       //like 'cold, wet hands'
+      ts.debug();
       if (isList(ts, i)) {
         continue;
       }

@@ -1,6 +1,6 @@
 'use strict';
 var nlp = require('./src/index');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 // const corpus = require('nlp-corpus');
 // let text = corpus.sotu.parsed()[0];
 // const fresh = require('./test/unit/lib/freshPrince.js');
@@ -9,5 +9,7 @@ nlp.verbose('tagger');
 
 
 
-var r = nlp('assign all tasks to april');
-r.debug();
+// var r = nlp('it is * politic');
+// r.match('is \\*', true).debug();
+
+console.log(nlp('John, Jill McGraw, and Moe were swimming').debug().people().trim().out('csv'));

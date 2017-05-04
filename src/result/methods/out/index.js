@@ -49,10 +49,14 @@ const methods = {
     }, '');
   },
   array: (r) => {
-    return r.list.reduce((arr, ts) => {
-      arr.push(ts.out('normal'));
-      return arr;
-    }, []);
+    return r.list.map((ts) => {
+      return ts.out('normal');
+    });
+  },
+  csv: (r) => {
+    return r.list.map((ts) => {
+      return ts.out('csv');
+    }).join('\n');
   },
   json: (r) => {
     return r.list.reduce((arr, ts) => {

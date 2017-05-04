@@ -452,6 +452,7 @@ module.exports = [
   'leland',
   'leo',
   'leon',
+  'lenny',
   'leonard',
   'leonardo',
   'leroy',

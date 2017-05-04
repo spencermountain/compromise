@@ -8,6 +8,7 @@ const methods = [
 
   'hyphenate',
   'dehyphenate',
+  'trim',
 
   'insertBefore',
   'insertAfter',

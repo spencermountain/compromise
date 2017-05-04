@@ -24,7 +24,7 @@ module.exports = {
       example: 'nlp(\'wayne\u2019s world, party time, excellent- weeeyooweeeyoo!\').out()'
     },
     out: {
-      desc: 'render parsed data as an output. supports `text`, `normal`, `array`, `html`, `grid`, `color`, `debug`',
+      desc: 'render parsed data as an output. supports `text`, `normal`, `array`, `html`, `grid`, `color`, `debug`, `csv`',
       returns: 'Text',
       example: 'nlp(\'you might say there\u2019s a little Uter in all of us\').match(\'#Adjective uter\').out(\'html\')\n//<span><span class="nl-Adjective">little</span>&nbsp;<span class="nl-Person nl-FirstName">Uter</span></span>'
     },
@@ -109,6 +109,11 @@ module.exports = {
       desc: 'remove hyphens and add normal whitespace between words',
       returns: 'Text',
       example: 'nlp(\'natural-language processing\').dehyphenate().out()\n//natural language processing'
+    },
+    trim: {
+      desc: 'remove leading and trailing whitespace from each match',
+      returns: 'Text',
+      example: 'nlp(\' Lenny and Carl \').people().trim().out()\n//[\'Lenny\', \'Carl\']'
     }
 
   },

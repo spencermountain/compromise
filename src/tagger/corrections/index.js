@@ -12,7 +12,13 @@ const corrections = function (ts) {
     //do so
     ts.match('do so').match('so').tag('Noun', 'so-noun');
   }
-
+  //the ambiguous word 'that'
+  if (ts.has('that')) {
+    //remind john that
+    ts.match('#Verb #Adverb? #Noun that').lastTerm().tag('Preposition', 'that-prep');
+    //that car goes
+    ts.match('that #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner');
+  }
   //Determiner-signals
   if (ts.has('#Determiner')) {
     //the wait to vote

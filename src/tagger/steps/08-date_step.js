@@ -31,7 +31,7 @@ const datePass = function (ts) {
   let people = '(january|april|may|june|summer|autumn|jan|sep)';
   if (ts.has(people)) {
     //give to april
-    ts.match(`#Infinitive #Determiner? #Noun? (to|for) ${people}`).lastTerm().tag('Person', 'ambig-person');
+    ts.match(`#Infinitive #Determiner? #Adjective? #Noun? (to|for) ${people}`).lastTerm().tag('Person', 'ambig-person');
     //remind june
     ts.match(`#Infinitive ${people}`).lastTerm().tag('Person', 'infinitive-person');
     //may waits for
@@ -47,7 +47,7 @@ const datePass = function (ts) {
     //may is
     ts.match(`${people} #Copula`).term(0).tag('Person', 'may-is');
     //april the 5th
-    ts.match(`${people} (#Determiner|#Value|#Date)`).term(0).tag('Month', 'correction-may');
+    ts.match(`${people} (the|#Value|#Date)`).term(0).tag('Month', 'person-value');
     //wednesday april
     ts.match(`#Date ${people}`).term(1).tag('Month', 'correction-may');
     //may 5th

@@ -9,5 +9,5 @@ nlp.verbose('tagger');
 
 
 
-var r = nlp('skies').nouns().toSingular();
+var r = nlp('assign all tasks to april');
 r.debug();

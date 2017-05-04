@@ -12,14 +12,14 @@ const misc = [
   [/^[\-\+]?[0-9]+(\.[0-9]+)?$/, 'NumericValue'],
   [/^https?\:?\/\/[a-z0-9]/, 'Url'], //the colon is removed in normalisation
   [/^www\.[a-z0-9]/, 'Url'],
+  [/^(over|under)[a-z]{2,}/, 'Adjective'],
   //ending-ones
   [/[0-9]+([a-z]{1,2})$/, 'Value'], //like 5kg
   [/^[0-9]+(st|nd|rd|th)$/, 'Ordinal'], //like 5th
-  [/(over|under)[a-z]{2,}$/, 'Adjective'],
   //middle (anywhere)
   [/[a-z]*\\-[a-z]*\\-/, 'Adjective'],
 
-    [/[0-9](st|nd|rd|r?th)$/, ['NumericValue','Ordinal']], //like 5th
+  [/[0-9](st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
 ];
 
 //straight-up lookup of known-suffixes
@@ -73,7 +73,7 @@ const suffix_step = function(ts) {
       if (misc[o][0].test(t.normal) === true) {
         tag = misc[o][1];
         if (t.canBe(tag) === true) {
-          t.tag(tag, 'misc-regex');
+          t.tag(tag, 'misc-regex-' + misc[o][0]);
           continue;
         }
       }

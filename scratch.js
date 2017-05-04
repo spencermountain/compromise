@@ -9,5 +9,5 @@ nlp.verbose('tagger');
 
 
 
-var r = nlp('if april will');
+var r = nlp('skies').nouns().toSingular();
 r.debug();

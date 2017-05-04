@@ -29,7 +29,7 @@ let compressed = {
   ern: 'east,north,south,st,west',
   tful: 'deligh,doub,fre,righ,though,wis',
   ant: 'abund,arrog,eleg,extravag,exult,hesit,irrelev,miscre,nonchal,obeis,observ,pl,pleas,redund,relev,reluct,signific,vac,verd',
-  ing: 'absorb,car,coo,liv,lov,ly,menac,perplex,shock,stand,surpris,tell,unappeal,unconvinc,unend,unsuspect,vex,want',
+  ing: 'absorb,car,coo,liv,lov,ly,menac,perplex,shock,surpris,tell,unappeal,unconvinc,unend,unsuspect,vex,want',
   ate: 'adequ,delic,fortun,inadequ,inn,intim,legitim,priv,sed,ultim',
 };
 let arr = [

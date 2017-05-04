@@ -121,4 +121,4 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon['ugh']);
+// console.log(lexicon['standing']);

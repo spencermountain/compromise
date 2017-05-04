@@ -47,6 +47,7 @@ let nouns = [
   'room',
   'student',
   'stuff',
+  'sky',
   'super bowl',
   'system',
   'tic',

@@ -24,8 +24,12 @@ const corrections = function (ts) {
     ts.match('(a|an) #Adjective (#Infinitive|#PresentTense)').term(2).tag('Noun', 'correction-a|an2');
     //some pressing issues
     ts.match('(some #Verb #Plural').term(1).tag('Noun', 'correction-determiner6');
+    //the orange.
+    ts.match('#Determiner #Adjective$').term(1).tag('Noun', 'the-adj-1');
+    //the orange is
+    ts.match('#Determiner #Adjective (#Copula|#PastTense|#Auxiliary)').term(1).tag('Noun', 'the-adj-2');
     //the nice swim
-    ts.match('(the|this|those|these) #Adjective #Verb').term(2).tag('Noun', 'correction-determiner3');
+    ts.match('(the|this|those|these) #Adjective #Verb').term(2).tag('Noun', 'the-adj-verb');
     //the truly nice swim
     ts.match('(the|this|those|these) #Adverb #Adjective #Verb').term(3).tag('Noun', 'correction-determiner4');
     //a stream runs

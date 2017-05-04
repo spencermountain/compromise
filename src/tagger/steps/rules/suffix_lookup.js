@@ -88,6 +88,7 @@ module.exports = [
     'wards': AdVb,
     'urned': Past,
     'tized': Past,
+    'eased': Past,
     'ances': Plrl,
     'tures': Plrl,
     'ports': Plrl,

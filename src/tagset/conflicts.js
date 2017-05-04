@@ -28,6 +28,7 @@ module.exports = [
   //verbs
   ['PastTense', 'PresentTense', 'FutureTense'],
   ['Pluperfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund', 'FuturePerfect', 'PerfectTense'],
+  ['Auxiliary', 'Noun', 'Value'],
   //date
   ['Month', 'WeekDay', 'Year', 'Duration'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],

@@ -57,7 +57,7 @@ module.exports = {
   ],
   l: [
     [/.[nrtumcd]al$/, Adj],
-    [/.[^aeiou]ial$/, Adj],
+    [/.[gl]ial$/, Adj],
     [/.[^aeiou]eal$/, Adj],
     [/.[^aeiou][ei]al$/, Adj],
     [/.[^aeiou]ful$/, Adj],

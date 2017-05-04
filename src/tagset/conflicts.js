@@ -36,6 +36,7 @@ module.exports = [
   ['Date', 'Money', 'RomanNumeral', 'Fraction'],
   //a/an -> 1
   ['Value', 'Determiner'],
+  ['Url', 'Value', 'HashTag', 'PhoneNumber', 'Emoji'],
   //roman numerals
   ['RomanNumeral', 'Fraction', 'NiceNumber'],
   ['RomanNumeral', 'Money'],

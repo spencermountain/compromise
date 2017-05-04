@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.2.1",
+  "version": "10.2.2",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -9546,7 +9546,7 @@ const misc = [
   [/^www\.[a-z0-9]/, 'Url'],
   [/^(over|under)[a-z]{2,}/, 'Adjective'],
   //ending-ones
-  [/[0-9]+([a-z]{1,2})$/, 'Value'], //like 5kg
+  [/^[0-9]+([a-z]{1,2})$/, 'Value'], //like 5kg
   [/^[0-9]+(st|nd|rd|th)$/, 'Ordinal'], //like 5th
   //middle (anywhere)
   [/[a-z]*\\-[a-z]*\\-/, 'Adjective'],

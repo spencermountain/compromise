@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.2.0",
+  "version": "10.2.1",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -1631,6 +1631,7 @@ var pkg = _dereq_('../package.json');
 var log = _dereq_('./log');
 
 //the main thing
+// linguistischen Datenverarbeitung (nlp)
 var nlp = function nlp(str, lexicon) {
   // this.tagset = tagset;
   var r = buildResult(str, lexicon);

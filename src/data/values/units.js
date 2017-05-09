@@ -136,6 +136,9 @@ const units = {
     'picosecond': 'picosecond',
     'femtosecond': 'femtosecond',
     'attosecond': 'attosecond'
+  },
+  'Misc': {
+    '%': 'percent'
   }
 };
 

@@ -12,4 +12,4 @@ nlp.verbose('tagger');
 // var r = nlp('it is + politic').debug();
 // r.match('is \\+', true).debug();
 
-nlp('https://t.co/Ssrh55C6hW https://t.co/8E0LiC8wYE').debug();
+nlp('it is .3% of the budget').debug();

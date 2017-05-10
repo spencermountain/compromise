@@ -1,6 +1,6 @@
 'use strict';
 //ambiguous 'may' and 'march'
-const preps = '(in|by|before|for|during|on|until|after|of|within|all)';
+const preps = '(in|by|before|during|on|until|after|of|within|all)';
 const thisNext = '(last|next|this|previous|current|upcoming|coming)';
 const sections = '(start|end|middle|starting|ending|midpoint|beginning)';
 const seasons = '(spring|summer|winter|fall|autumn)';
@@ -117,6 +117,8 @@ const datePass = function (ts) {
 
   //months:
   if (ts.has('#Value')) {
+    //for 4 months
+    ts.match('for #Value #Duration').tag('Date', 'for-x-duration');
     //values
     ts.match('#Value #Abbreviation').tag('Value', 'value-abbr');
     ts.match('a #Value').tag('Value', 'a-value');

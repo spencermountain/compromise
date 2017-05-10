@@ -25,6 +25,10 @@ const value_step = function(ts) {
       }
     }
   }
+  //5 books
+  ts.match('#Cardinal #Plural').lastTerm().tag('Unit', 'cardinal-plural');
+  //5th book
+  ts.match('#Ordinal #Singular').lastTerm().tag('Unit', 'ordinal-singular');
   return ts;
 };
 

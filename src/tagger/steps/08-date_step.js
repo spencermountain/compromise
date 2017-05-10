@@ -139,6 +139,8 @@ const datePass = function (ts) {
     }
     //two days before
     ts.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction');
+    //two years old
+    ts.match('#Value #Duration old').unTag('Date', 'val-years-old');
   }
 
   //time:

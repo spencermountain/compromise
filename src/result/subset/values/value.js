@@ -19,7 +19,7 @@ const Value = function(arr, lexicon, refText, refTerms) {
   Terms.call(this, arr, lexicon, refText, refTerms);
   this.val = this.match('#Value+').list[0];
   this.val = unpackRange(this.val);
-  this.unit = this.match('#Unit$');
+  this.unit = this.match('#Unit+');
   if (this.unit.found) {
     this.unit = this.unit.list[0];
   }
@@ -70,6 +70,7 @@ const methods = {
         str = fmt.ordinal(num);
       } else {
         str = '' + num;
+        //convert 'five percent' -> '5%'
         if (isPercent(this.val, this.unit)) {
           str = str + '%';
           this.unit.delete();
@@ -93,6 +94,9 @@ const methods = {
         if (isPercent(this.val, this.unit)) {
           str = str + ' percent';
         }
+      }
+      if (this.unit.found) {
+        str = str + this.unit.out('text');
       }
       this.replaceWith(str, true).tag('TextValue');
     }

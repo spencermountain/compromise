@@ -21,6 +21,9 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - .trim() method,
 - adjective tagging fixes
 - some new .out() methods
+* 10.3.0
+- new `Percent` tag
+- lump more units in with `.values()`
 
 ### v9  &nbsp;
 * 9.0.0

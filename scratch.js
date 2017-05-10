@@ -12,7 +12,12 @@ var nlp = require('./src/index');
 // var r = nlp('it is + politic').debug();
 // r.match('is \\+', true).debug();
 
-let r = nlp('it is 3 percent').debug();
-// console.log(r.values().data());
-console.log(r.values().toNumber().all().out());
-console.log(r.values().toText().all().out());
+let r = nlp('20 books');
+r.debug();
+// // console.log(r.values().out());
+// // console.log(r.values().toNumber().all().out());
+// r.values().toText();
+// console.log(r.out());
+// r.debug();
+
+// console.log(nlp('21 books').values().greaterThan(7).out('normal'));

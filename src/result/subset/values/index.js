@@ -77,7 +77,7 @@ const methods = {
 };
 
 const find = function(r, n) {
-  r = r.match('#Value+');
+  r = r.match('#Value+ #Unit?');
   // r = r.match('#Value+ #Unit?');
 
   //june 21st 1992 is two seperate values

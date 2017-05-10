@@ -21,9 +21,22 @@ test('percent-basic:', function (t) {
 
 test('percent-conversion:', function (t) {
   var str = '3% of the budget';
-  var r = nlp(str);
-  r.values().toNumber();
+  var r = nlp(str).values().toNumber().all();
   t.equal(r.out(), str, '3% to number');
+
+  str = 'it\'s 39% of the budget';
+  r = nlp(str).values().toNumber().all();
+  t.equal(r.out(), str, '39% to number');
+
+  str = '39% of the budget';
+  r = nlp(str).values().toText().all();
+  t.equal(r.out(), 'thirty nine percent of the budget', 'to text');
+
+  str = 'around 100% of the budget';
+  r = nlp(str).values().toText().all();
+  t.equal(r.out(), 'around one hundred percent of the budget', 'to text');
+
+
   t.end();
 });
 
@@ -35,6 +48,8 @@ test('percent-tag:', function (t) {
     ['.2%', true],
     ['0.2%', true],
     ['2,999%', true],
+    ['2asdf99%', false],
+    ['99%3', false],
   ];
   tests.forEach(function(a) {
     var r = nlp(a[0]);

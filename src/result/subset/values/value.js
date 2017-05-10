@@ -19,8 +19,29 @@ const Value = function(arr, lexicon, refText, refTerms) {
   Terms.call(this, arr, lexicon, refText, refTerms);
   this.val = this.match('#Value+').list[0];
   this.val = unpackRange(this.val);
-  this.unit = this.match('#Unit$').list[0];
+  this.unit = this.match('#Unit$');
+  if (this.unit.found) {
+    this.unit = this.unit.list[0];
+  }
 };
+
+const isPercent = function(val, unit) {
+  //pre-tagged
+  if (val.has('#Percent') || unit.has('#Percent')) {
+    return true;
+  }
+  // 'five percent'
+  if (unit.out('normal') === 'percent') {
+    return true;
+  }
+  //'5%'
+  if (val.out('normal').match(/%$/) !== null) {
+    return true;
+  }
+  return false;
+};
+
+
 //Terms inheritence
 Value.prototype = Object.create(Terms.prototype);
 
@@ -33,7 +54,8 @@ const methods = {
       ordinal: fmt.ordinal(num),
       niceOrdinal: fmt.niceOrdinal(num),
       text: fmt.text(num),
-      textOrdinal: fmt.textOrdinal(num)
+      textOrdinal: fmt.textOrdinal(num),
+      unit: this.unit.out('normal')
     };
   },
   number: function() {
@@ -47,7 +69,11 @@ const methods = {
       if (this.val.has('#Ordinal')) {
         str = fmt.ordinal(num);
       } else {
-        str = num;
+        str = '' + num;
+        if (isPercent(this.val, this.unit)) {
+          str = str + '%';
+          this.unit.delete();
+        }
       }
       this.replaceWith(str, true).tag('NumericValue');
     // this.tag('NumericValue','toNumber');
@@ -63,6 +89,10 @@ const methods = {
         str = fmt.textOrdinal(num);
       } else {
         str = fmt.text(num);
+        //add percent
+        if (isPercent(this.val, this.unit)) {
+          str = str + ' percent';
+        }
       }
       this.replaceWith(str, true).tag('TextValue');
     }

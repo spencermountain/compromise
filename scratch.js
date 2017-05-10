@@ -1,6 +1,6 @@
 'use strict';
 var nlp = require('./src/index');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 // const corpus = require('nlp-corpus');
 // let text = corpus.sotu.parsed()[0];
 // const fresh = require('./test/unit/lib/freshPrince.js');
@@ -12,5 +12,7 @@ nlp.verbose('tagger');
 // var r = nlp('it is + politic').debug();
 // r.match('is \\+', true).debug();
 
-nlp('for 4 minutes').debug();
-// console.log(nlp('it is 3% of the budget').values().toText().out());
+let r = nlp('it is 3 percent').debug();
+// console.log(r.values().data());
+console.log(r.values().toNumber().all().out());
+console.log(r.values().toText().all().out());

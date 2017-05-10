@@ -47,7 +47,7 @@ const datePass = function (ts) {
     //may is
     ts.match(`${people} #Copula`).term(0).tag('Person', 'may-is');
     //april the 5th
-    ts.match(`${people} (the|#Value|#Date)`).term(0).tag('Month', 'person-value');
+    ts.match(`${people} the? #Value`).term(0).tag('Month', 'person-value');
     //wednesday april
     ts.match(`#Date ${people}`).term(1).tag('Month', 'correction-may');
     //may 5th
@@ -55,12 +55,12 @@ const datePass = function (ts) {
     //5th of may
     ts.match(`#Value of ${people}`).lastTerm().tag('Month', '5th-of-may');
     //by april
-    ts.match(`${preps} ${people}`).term(1).tag('Month', 'preps-month');
+    ts.match(`${preps} ${people}`).ifNo('#Holiday').term(1).tag('Month', 'preps-month');
     //this april
     ts.match(`(next|this|last) ${people}`).term(1).tag('Month', 'correction-may'); //maybe not 'this'
   }
   //ambiguous month - verb-forms
-  let verbs = '(may|march|sat)';
+  let verbs = '(may|march)';
   if (ts.has(verbs)) {
     //quickly march
     ts.match(`#Adverb ${verbs}`).lastTerm().tag('Infinitive', 'ambig-verb');
@@ -89,6 +89,13 @@ const datePass = function (ts) {
     ts.match('sun the #Ordinal').tag('Date').firstTerm().tag('WeekDay', 'sun-the-5th');
     //the sun
     ts.match('#Determiner sun').lastTerm().tag('Singular', 'the-sun');
+  }
+  //sat, nov 5th
+  if (ts.has('sat')) {
+    //sat november
+    ts.match('sat #Date').firstTerm().tag('WeekDay', 'sat-feb');
+    //this sat
+    ts.match(`${preps} sat`).lastTerm().tag('WeekDay', 'sat');
   }
 
   //months:

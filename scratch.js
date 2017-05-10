@@ -12,4 +12,5 @@ nlp.verbose('tagger');
 // var r = nlp('it is + politic').debug();
 // r.match('is \\+', true).debug();
 
-nlp('it is .3% of the budget').debug();
+nlp('on Sat, Apr 1st, 2017').debug();
+// console.log(nlp('it is 3% of the budget').values().toText().out());

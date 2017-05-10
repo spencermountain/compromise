@@ -30,7 +30,7 @@ module.exports = [
   ['Pluperfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund', 'FuturePerfect', 'PerfectTense'],
   ['Auxiliary', 'Noun', 'Value'],
   //date
-  ['Month', 'WeekDay', 'Year', 'Duration'],
+  ['Month', 'WeekDay', 'Year', 'Duration', 'Holiday'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
   ['Date', 'Verb', 'Adjective', 'Person'],
   ['Date', 'Money', 'RomanNumeral', 'Fraction'],

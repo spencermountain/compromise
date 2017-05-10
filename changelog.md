@@ -14,6 +14,13 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - removes `.lexicon()` method for many-lexicons concept
 - changes params of `.replaceWith()` method to a 'keyTags' boolean
 - improved .debug() and logging on clientside
+* 10.1.0
+- fix return format of .isPlural(), so it acts like a match filter
+- less-greedy date tagging & ambiguous month fixes
+* 10.2.0
+- .trim() method,
+- adjective tagging fixes
+- some new .out() methods
 
 ### v9  &nbsp;
 * 9.0.0

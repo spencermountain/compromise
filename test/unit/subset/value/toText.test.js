@@ -37,7 +37,7 @@ test('to_text:', function (t) {
 
 
 test('all-to-text:', function (t) {
-  let arr = [
+  var arr = [
     'one',
     '1',
     '1.0', //not sure..
@@ -45,7 +45,7 @@ test('all-to-text:', function (t) {
     'first',
   ];
   arr.forEach((txt) => {
-    let str = nlp(txt).values().data()[0].text;
+    var str = nlp(txt).values().data()[0].text;
     t.equal(str, 'one', txt + ' -> one');
   });
   arr = [
@@ -56,7 +56,7 @@ test('all-to-text:', function (t) {
     'five hundredth',
   ];
   arr.forEach((txt) => {
-    let str = nlp(txt).values().data()[0].text;
+    var str = nlp(txt).values().data()[0].text;
     t.equal(str, 'five hundred', txt + ' -> five hundred');
   });
   arr = [
@@ -68,7 +68,7 @@ test('all-to-text:', function (t) {
     'two thousand and twelfth',
   ];
   arr.forEach((txt) => {
-    let str = nlp(txt).values().data()[0].text;
+    var str = nlp(txt).values().data()[0].text;
     t.equal(str, 'two thousand and twelve', txt + ' -> two thousand and twelve');
   });
   t.end();

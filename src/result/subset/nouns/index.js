@@ -5,7 +5,8 @@ const Noun = require('./noun');
 //the () subset class
 const methods = {
   isPlural: function() {
-    return this.list.map((ts) => ts.isPlural());
+    this.list= this.list.filter((ts) => ts.isPlural());
+    return this
   },
   hasPlural: function() {
     return this.list.map((ts) => ts.hasPlural());

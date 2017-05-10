@@ -28,12 +28,15 @@ module.exports = [
   //verbs
   ['PastTense', 'PresentTense', 'FutureTense'],
   ['Pluperfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund', 'FuturePerfect', 'PerfectTense'],
+  ['Auxiliary', 'Noun', 'Value'],
   //date
   ['Month', 'WeekDay', 'Year', 'Duration'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
   ['Date', 'Verb', 'Adjective', 'Person'],
+  ['Date', 'Money', 'RomanNumeral', 'Fraction'],
   //a/an -> 1
   ['Value', 'Determiner'],
+  ['Url', 'Value', 'HashTag', 'PhoneNumber', 'Emoji'],
   //roman numerals
   ['RomanNumeral', 'Fraction', 'NiceNumber'],
   ['RomanNumeral', 'Money'],

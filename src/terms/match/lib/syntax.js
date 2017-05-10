@@ -16,6 +16,7 @@ const noLast = function(str) {
 const parse_term = function (term) {
   term = term || '';
   term = term.trim();
+
   let reg = {};
   //order matters here
 
@@ -114,6 +115,8 @@ const parse_term = function (term) {
     term = '';
   }
   if (term !== '') {
+    //support \ encoding of #[]()*+?^
+    term = term.replace(/\\([\\#\*\.\[\]\(\)\+\?\^])/g, '');
     reg.normal = term.toLowerCase();
   }
   return reg;

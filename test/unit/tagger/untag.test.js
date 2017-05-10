@@ -67,10 +67,10 @@ test('tags are self-removing', function (t) {
 });
 
 test('untag wildcard', function (t) {
-  let r = nlp('we live in Toronto Canada and it is cold');
+  var r = nlp('we live in Toronto Canada and it is cold');
   r.match('#Place+').unTag('*');
   t.equal(r.match('#Place').found, false, 'place-tag-is-gone');
-  let term = r.list[0].terms[3];
+  var term = r.list[0].terms[3];
   t.equal(Object.keys(term.tags).length, 0, 'toronto-has-no-tags-now');
   t.end();
 });

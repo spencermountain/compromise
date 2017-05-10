@@ -1,7 +1,6 @@
 'use strict';
 //ambiguous 'may' and 'march'
-const maybeMonth = '(may|march|jan|april|sep)';
-const preps = '(in|by|before|for|during|on|until|after|of|within)';
+const preps = '(in|by|before|for|during|on|until|after|of|within|all)';
 const thisNext = '(last|next|this|previous|current|upcoming|coming)';
 const sections = '(start|end|middle|starting|ending|midpoint|beginning)';
 const seasons = '(spring|summer|winter|fall|autumn)';
@@ -28,25 +27,80 @@ const tagYearSafer = (v, reason) => {
 
 //non-destructively tag values & prepositions as dates
 const datePass = function (ts) {
-  //ambiguous-months
-  if (ts.has(maybeMonth)) {
-    ts.match(`${maybeMonth} (#Determiner|#Value|#Date)`).term(0).tag('Month', 'correction-may');
-    ts.match(`#Date ${maybeMonth}`).term(1).tag('Month', 'correction-may');
-    ts.match(`${preps} ${maybeMonth}`).term(1).tag('Month', 'correction-may');
-    ts.match(`(next|this|last) ${maybeMonth}`).term(1).tag('Month', 'correction-may'); //maybe not 'this'
+  //ambiguous month - person forms
+  let people = '(january|april|may|june|summer|autumn|jan|sep)';
+  if (ts.has(people)) {
+    //give to april
+    ts.match(`#Infinitive #Determiner? #Adjective? #Noun? (to|for) ${people}`).lastTerm().tag('Person', 'ambig-person');
+    //remind june
+    ts.match(`#Infinitive ${people}`).lastTerm().tag('Person', 'infinitive-person');
+    //may waits for
+    ts.match(`${people} #PresentTense (to|for)`).firstTerm().tag('Person', 'ambig-active');
+    //april will
+    ts.match(`${people} #Modal`).firstTerm().tag('Person', 'ambig-modal');
+    //would april
+    ts.match(`#Modal ${people}`).lastTerm().tag('Person', 'modal-ambig');
+    //with april
+    ts.match(`(that|with|for) ${people}`).term(1).tag('Person', 'that-month');
+    //it is may
+    ts.match(`#Copula ${people}`).term(1).tag('Person', 'is-may');
+    //may is
+    ts.match(`${people} #Copula`).term(0).tag('Person', 'may-is');
+    //april the 5th
+    ts.match(`${people} (the|#Value|#Date)`).term(0).tag('Month', 'person-value');
+    //wednesday april
+    ts.match(`#Date ${people}`).term(1).tag('Month', 'correction-may');
+    //may 5th
+    ts.match(`${people} the? #Value`).firstTerm().tag('Month', 'may-5th');
+    //5th of may
+    ts.match(`#Value of ${people}`).lastTerm().tag('Month', '5th-of-may');
+    //by april
+    ts.match(`${preps} ${people}`).term(1).tag('Month', 'preps-month');
+    //this april
+    ts.match(`(next|this|last) ${people}`).term(1).tag('Month', 'correction-may'); //maybe not 'this'
   }
+  //ambiguous month - verb-forms
+  let verbs = '(may|march|sat)';
+  if (ts.has(verbs)) {
+    //quickly march
+    ts.match(`#Adverb ${verbs}`).lastTerm().tag('Infinitive', 'ambig-verb');
+    ts.match(`${verbs} #Adverb`).lastTerm().tag('Infinitive', 'ambig-verb');
+    //all march
+    ts.match(`${preps} ${verbs}`).lastTerm().tag('Month', 'in-month');
+    //this march
+    ts.match(`(next|this|last) ${verbs}`).lastTerm().tag('Month', 'this-month');
+
+    ts.match(`${verbs} the? #Value`).firstTerm().tag('Month', 'march-5th');
+    ts.match(`#Value of? ${verbs}`).lastTerm().tag('Month', '5th-of-march');
+
+    if (ts.has('march')) {
+      //march to
+      ts.match('march (up|down|back|to|toward)').term(0).tag('Infinitive', 'march-to');
+      //must march
+      ts.match('#Modal march').term(1).tag('Infinitive', 'must-march');
+    }
+
+  }
+  //sun 5th
+  if (ts.has('sun')) {
+    //sun feb 2
+    ts.match('sun #Date').firstTerm().tag('WeekDay', 'sun-feb');
+    //sun the 5th
+    ts.match('sun the #Ordinal').tag('Date').firstTerm().tag('WeekDay', 'sun-the-5th');
+    //the sun
+    ts.match('#Determiner sun').lastTerm().tag('Singular', 'the-sun');
+  }
+
   //months:
   if (ts.has('#Month')) {
     //June 5-7th
     ts.match(`#Month #DateRange+`).tag('Date', 'correction-numberRange');
     //5th of March
-    ts.match('#Value of? #Month').tag('Date', 'value-of-month');
+    ts.match('#Value of #Month').tag('Date', 'value-of-month');
     //5 March
     ts.match('#Cardinal #Month').tag('Date', 'cardinal-month');
     //march 5 to 7
     ts.match('#Month #Value to #Value').tag('Date', 'value-to-value');
-    //march 12th 2018
-    ts.match('#Month #Value #Cardinal').tag('Date', 'month-value-cardinal');
     //march the 12th
     ts.match('#Month the #Value').tag('Date', 'month-the-value');
   }
@@ -67,8 +121,13 @@ const datePass = function (ts) {
     ts.match('#Value point #Value').tag('Value', 'value-point-value');
     //for four days
     ts.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration');
-    ts.match('#Date #Value').tag('Date', 'date-value');
-    ts.match('#Value #Date').tag('Date', 'value-date');
+    ts.match('(#WeekDay|#Month) #Value').ifNo('#Money').tag('Date', 'date-value');
+    ts.match('#Value (#WeekDay|#Month)').ifNo('#Money').tag('Date', 'value-date');
+    //may twenty five
+    let vs = ts.match('#TextValue #TextValue');
+    if (vs.found && vs.has('#Date')) {
+      vs.tag('#Date', 'textvalue-date');
+    }
     //two days before
     ts.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction');
   }
@@ -140,6 +199,16 @@ const datePass = function (ts) {
     v = ts.match(`#Cardinal !#Plural`).firstTerm();
     if (v.found) {
       tagYearSafer(v, 'year-unsafe');
+    }
+  }
+
+  //fix over-greedy
+  if (ts.has('#Date')) {
+    let date = ts.match('#Date+').splitOn('Clause');
+
+    if (date.has('(#Year|#Time)') === false) {
+      //12 february 12
+      date.match('#Value (#Month|#Weekday) #Value').lastTerm().unTag('Date');
     }
   }
 

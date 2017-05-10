@@ -21,10 +21,10 @@ module.exports = {
     debug: {
       desc: 'pretty-print the current selection to the console',
       returns: 'Text',
-      example: 'nlp(\'wayne\u2019s world, party time, excellent- weeeyooweeeyoo!\').debug().out()'
+      example: 'nlp(\'wayne\u2019s world, party time, excellent- weeeyooweeeyoo!\').out()'
     },
     out: {
-      desc: 'render parsed data as an output. supports `text`, `normal`, `array`, `html`, `grid`, `color`, `debug`',
+      desc: 'render parsed data as an output. supports `text`, `normal`, `array`, `html`, `grid`, `color`, `debug`, `csv`',
       returns: 'Text',
       example: 'nlp(\'you might say there\u2019s a little Uter in all of us\').match(\'#Adjective uter\').out(\'html\')\n//<span><span class="nl-Adjective">little</span>&nbsp;<span class="nl-Person nl-FirstName">Uter</span></span>'
     },
@@ -63,12 +63,12 @@ module.exports = {
     concat: {
       desc: 'combine two results into one',
       returns: 'Text',
-      example: 'nlp(\'My name is Otto.\').concat(nlp(\'i love to get blotto\')).length()\n//2'
+      example: 'nlp(\'My name is Otto\').concat(\'and i love to get blotto\').sentences().length\n//1'
     },
     flatten: {
       desc: 'turn a list of results into one result',
       returns: 'Text',
-      example: 'nlp(\'sex cauldron? I thought they closed that place down.\').flatten().length()\n//1'
+      example: 'nlp(\'sex cauldron? I thought they closed that place down.\').flatten().length\n//1'
     },
     random: {
       desc: 'sample a random section of n matches',
@@ -109,6 +109,11 @@ module.exports = {
       desc: 'remove hyphens and add normal whitespace between words',
       returns: 'Text',
       example: 'nlp(\'natural-language processing\').dehyphenate().out()\n//natural language processing'
+    },
+    trim: {
+      desc: 'remove leading and trailing whitespace from each match',
+      returns: 'Text',
+      example: 'nlp(\' Lenny and Carl \').people().trim().out()\n//[\'Lenny\', \'Carl\']'
     }
 
   },

@@ -35,6 +35,22 @@ test('out-array:', function (t) {
   t.end();
 });
 
+test('out-csv:', function (t) {
+  var str = 'John, Jill McGraw, and Moe were swimming';
+  var have = nlp(str).people().out('csv');
+  var want = 'john\njill,mcgraw\nmoe';
+  t.equal(have, want, str + ' -> ' + have);
+  t.end();
+});
+
+test('out-newlines:', function (t) {
+  var str = 'John, Jill McGraw, and Moe were swimming';
+  var have = nlp(str).people().out('newlines');
+  var want = 'John,\nJill McGraw,\nMoe';
+  t.equal(have, want, want + ' -> ' + have);
+  t.end();
+});
+
 test('out-others:', function (t) {
   var str = 'texas rangers are a baseball team. They do not play in houston.';
   var r = nlp(str).verbs();

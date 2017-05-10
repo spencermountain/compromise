@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.0.0",
+  "version": "10.2.2",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -11,6 +11,7 @@ module.exports={
   },
   "scripts": {
     "test": "node ./scripts/test.js",
+    "test:types": "tsc --project test/types",
     "browsertest": "node ./scripts/browserTest.js",
     "build": "node ./scripts/build/index.js",
     "demo": "node ./scripts/demo.js",
@@ -82,7 +83,7 @@ var compressed = {
   ern: 'east,north,south,st,west',
   tful: 'deligh,doub,fre,righ,though,wis',
   ant: 'abund,arrog,eleg,extravag,exult,hesit,irrelev,miscre,nonchal,obeis,observ,pl,pleas,redund,relev,reluct,signific,vac,verd',
-  ing: 'absorb,car,coo,liv,lov,ly,menac,perplex,shock,stand,surpris,tell,unappeal,unconvinc,unend,unsuspect,vex,want',
+  ing: 'absorb,car,coo,liv,lov,ly,menac,perplex,shock,surpris,tell,unappeal,unconvinc,unend,unsuspect,vex,want',
   ate: 'adequ,delic,fortun,inadequ,inn,intim,legitim,priv,sed,ultim'
 };
 var arr = ['absurd', 'aggressive', 'alert', 'alive', 'angry', 'attractive', 'awesome', 'beautiful', 'big', 'bitter', 'black', 'blue', 'bored', 'boring', 'brash', 'brave', 'brief', 'brown', 'calm', 'charming', 'cheap', 'check', 'clean', 'clear', 'close', 'cold', 'cool', 'cruel', 'curly', 'cute', 'dangerous', 'dear', 'dirty', 'drunk', 'dry', 'dull', 'eager', 'early', 'easy', 'efficient', 'empty', 'even', 'extreme', 'faint', 'fair', 'fanc', 'feeble', 'few', 'fierce', 'fine', 'firm', 'forgetful', 'formal', 'frail', 'free', 'full', 'funny', 'gentle', 'glad', 'glib', 'glad', 'grand', 'green', 'gruesome', 'handsome', 'happy', 'harsh', 'heavy', 'high', 'hollow', 'hot', 'hungry', 'impolite', 'important', 'innocent', 'intellegent', 'interesting', 'keen', 'kind', 'lame', 'large', 'late', 'lean', 'little', 'long', 'loud', 'low', 'lucky', 'lush', 'macho', 'mature', 'mean', 'meek', 'mellow', 'mundane', 'narrow', 'near', 'neat', 'new', 'nice', 'noisy', 'normal', 'odd', 'old', 'orange', 'pale', 'pink', 'plain', 'poor', 'proud', 'pure', 'purple', 'rapid', 'rare', 'raw', 'rich', 'rotten', 'round', 'rude', 'safe', 'scarce', 'scared', 'shallow', 'shrill', 'simple', 'slim', 'slow', 'small', 'smooth', 'solid', 'soon', 'sore', 'sour', 'square', 'stale', 'steep', 'strange', 'strict', 'strong', 'swift', 'tall', 'tame', 'tart', 'tender', 'tense', 'thin', 'thirsty', 'tired', 'true', 'vague', 'vast', 'vulgar', 'warm', 'weird', 'wet', 'wild', 'windy', 'wise', 'yellow', 'young'];
@@ -224,16 +225,19 @@ addArr(data.dates.durations, 'Duration');
 addObj(data.abbreviations);
 //number-words are well-structured
 var obj = data.numbers.ordinal;
-addArr(Object.keys(obj.ones), 'Ordinal');
-addArr(Object.keys(obj.teens), 'Ordinal');
-addArr(Object.keys(obj.tens), 'Ordinal');
-addArr(Object.keys(obj.multiples), 'Ordinal');
+var tags = ['Ordinal', 'TextValue'];
+addArr(Object.keys(obj.ones), tags);
+addArr(Object.keys(obj.teens), tags);
+addArr(Object.keys(obj.tens), tags);
+addArr(Object.keys(obj.multiples), tags);
+
+var tags2 = ['Cardinal', 'TextValue'];
 obj = data.numbers.cardinal;
-addArr(Object.keys(obj.ones), 'Cardinal');
-addArr(Object.keys(obj.teens), 'Cardinal');
-addArr(Object.keys(obj.tens), 'Cardinal');
-addArr(Object.keys(obj.multiples), 'Cardinal');
-addArr(Object.keys(data.numbers.prefixes), 'Cardinal');
+addArr(Object.keys(obj.ones), tags2);
+addArr(Object.keys(obj.teens), tags2);
+addArr(Object.keys(obj.tens), tags2);
+addArr(Object.keys(obj.multiples), tags2);
+addArr(Object.keys(data.numbers.prefixes), tags2);
 //singular/plural
 addArr(Object.keys(data.irregular_plurals.toPlural), 'Singular');
 addArr(Object.keys(data.irregular_plurals.toSingle), 'Plural');
@@ -314,7 +318,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon['ugh']);
+// console.log(lexicon['standing']);
 
 },{"../result/subset/adjectives/methods":44,"../result/subset/verbs/methods/conjugate/faster":108,"../result/subset/verbs/methods/toAdjective":118,"./fns":5,"./index":6}],8:[function(_dereq_,module,exports){
 'use strict';
@@ -1627,6 +1631,7 @@ var pkg = _dereq_('../package.json');
 var log = _dereq_('./log');
 
 //the main thing
+// linguistischen Datenverarbeitung (nlp)
 var nlp = function nlp(str, lexicon) {
   // this.tagset = tagset;
   var r = buildResult(str, lexicon);
@@ -1688,7 +1693,7 @@ var tag = function tag(t, pos, reason) {
   var title = t.normal || '[' + t.silent_term + ']';
   title = fns.leftPad('\'' + title + '\'', 12);
   title += '  ->   ' + pos;
-  title += fns.rightPad(reason || '', 15);
+  title += fns.leftPad(reason || '', 15);
   console.log('%c' + title, ' color: #a2c99c');
 };
 var untag = function untag(t, pos, reason) {
@@ -1706,8 +1711,6 @@ module.exports = {
 },{"../fns":21}],24:[function(_dereq_,module,exports){
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var client = _dereq_('./client');
 var server = _dereq_('./server');
 
@@ -1722,7 +1725,7 @@ module.exports = {
   },
   tag: function tag(t, pos, reason) {
     if (_enable === true || _enable === 'tagger') {
-      if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) !== undefined) {
+      if (typeof window !== 'undefined') {
         client.tag(t, pos, reason);
       } else {
         server.tag(t, pos, reason);
@@ -1731,7 +1734,7 @@ module.exports = {
   },
   unTag: function unTag(t, pos, reason) {
     if (_enable === true || _enable === 'tagger') {
-      if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) !== undefined) {
+      if (typeof window !== 'undefined') {
         client.untag(t, pos, reason);
       } else {
         server.untag(t, pos, reason);
@@ -1943,7 +1946,7 @@ Object.keys(subset).forEach(function (k) {
 'use strict';
 //this methods are simply loops around each termList object.
 
-var methods = ['toTitleCase', 'toUpperCase', 'toLowerCase', 'toCamelCase', 'hyphenate', 'dehyphenate', 'insertBefore', 'insertAfter', 'insertAt', 'replace', 'replaceWith', 'delete', 'lump', 'tagger',
+var methods = ['toTitleCase', 'toUpperCase', 'toLowerCase', 'toCamelCase', 'hyphenate', 'dehyphenate', 'trim', 'insertBefore', 'insertAfter', 'insertAt', 'replace', 'replaceWith', 'delete', 'lump', 'tagger',
 
 // 'tag',
 'unTag'];
@@ -2431,10 +2434,19 @@ var methods = {
     }, '');
   },
   array: function array(r) {
-    return r.list.reduce(function (arr, ts) {
-      arr.push(ts.out('normal'));
-      return arr;
-    }, []);
+    return r.list.map(function (ts) {
+      return ts.out('normal');
+    });
+  },
+  csv: function csv(r) {
+    return r.list.map(function (ts) {
+      return ts.out('csv');
+    }).join('\n');
+  },
+  newlines: function newlines(r) {
+    return r.list.map(function (ts) {
+      return ts.out('newlines');
+    }).join('\n');
   },
   json: function json(r) {
     return r.list.reduce(function (arr, ts) {
@@ -4348,9 +4360,10 @@ var Noun = _dereq_('./noun');
 //the () subset class
 var methods = {
   isPlural: function isPlural() {
-    return this.list.map(function (ts) {
+    this.list = this.list.filter(function (ts) {
       return ts.isPlural();
     });
+    return this;
   },
   hasPlural: function hasPlural() {
     return this.list.map(function (ts) {
@@ -5825,7 +5838,8 @@ var methods = {
       } else {
         str = num;
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('NumericValue');
+      // this.tag('NumericValue','toNumber');
     }
     return this;
   },
@@ -5839,7 +5853,7 @@ var methods = {
       } else {
         str = fmt.text(num);
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('TextValue');
     }
     return this;
   },
@@ -5854,7 +5868,7 @@ var methods = {
       } else {
         str = num;
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('Cardinal');
     }
     return this;
   },
@@ -5869,7 +5883,7 @@ var methods = {
       } else {
         str = fmt.ordinal(num);
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('Ordinal');
     }
     return this;
   },
@@ -5884,7 +5898,7 @@ var methods = {
       } else {
         str = fmt.nice(num);
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('NumericValue');
     }
     return this;
   }
@@ -5987,14 +6001,20 @@ var methods = {
 };
 
 var find = function find(r, n) {
-  r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
+  r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+');
   r = r.splitAfter('#Comma');
+  r = r.if('#Verb'); //this should be (much) smarter
   if (typeof n === 'number') {
     r = r.get(n);
   }
+  // r.debug();
   r.list = r.list.map(function (ts) {
     return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
   });
+  //fiter-out any that didn't find a main verb
+  // r.list = r.list.filter((ts) => {
+  //   return ts.vb;
+  // });
   return new Text(r.list, this.lexicon, this.parent);
 };
 
@@ -6439,6 +6459,7 @@ var multiWord = function multiWord(vb, verbose) {
   var isNegative = vb.negative.found;
   var isPlural = false;
   //handle 'to be' verb seperately
+  // console.log(vb.verb);
   if (vb.verb.tags.Copula || vb.verb.normal === 'be' && vb.auxiliary.match('will').found) {
     return toBe(isPlural, isNegative);
   }
@@ -7059,6 +7080,7 @@ var _toNegative = _dereq_('./toNegative');
 var _isPlural = _dereq_('./methods/isPlural');
 
 var _parse = function _parse(r) {
+  var original = r;
   r.negative = r.match('#Negative');
   r.adverbs = r.match('#Adverb');
   var aux = r.clone().not('(#Adverb|#Negative)');
@@ -7066,8 +7088,13 @@ var _parse = function _parse(r) {
   r.particle = aux.match('#Particle').last();
   if (r.verb.found) {
     r.verb = r.verb.list[0].terms[0];
+    r.auxiliary = aux.match('#Auxiliary+');
+  } else {
+    r.verb = original.terms[0];
+    // r.auxiliary = null;
+    // r.adverbs = null;
+    // r.negative = null;
   }
-  r.auxiliary = aux.match('#Auxiliary+');
   return r;
 };
 
@@ -7733,7 +7760,13 @@ var corrections = function corrections(ts) {
     //do so
     ts.match('do so').match('so').tag('Noun', 'so-noun');
   }
-
+  //the ambiguous word 'that'
+  if (ts.has('that')) {
+    //remind john that
+    ts.match('#Verb #Adverb? #Noun that').lastTerm().tag('Preposition', 'that-prep');
+    //that car goes
+    ts.match('that #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner');
+  }
   //Determiner-signals
   if (ts.has('#Determiner')) {
     //the wait to vote
@@ -7745,8 +7778,12 @@ var corrections = function corrections(ts) {
     ts.match('(a|an) #Adjective (#Infinitive|#PresentTense)').term(2).tag('Noun', 'correction-a|an2');
     //some pressing issues
     ts.match('(some #Verb #Plural').term(1).tag('Noun', 'correction-determiner6');
+    //the orange.
+    ts.match('#Determiner #Adjective$').term(1).tag('Noun', 'the-adj-1');
+    //the orange is
+    ts.match('#Determiner #Adjective (#Copula|#PastTense|#Auxiliary)').term(1).tag('Noun', 'the-adj-2');
     //the nice swim
-    ts.match('(the|this|those|these) #Adjective #Verb').term(2).tag('Noun', 'correction-determiner3');
+    ts.match('(the|this|those|these) #Adjective #Verb').term(2).tag('Noun', 'the-adj-verb');
     //the truly nice swim
     ts.match('(the|this|those|these) #Adverb #Adjective #Verb').term(3).tag('Noun', 'correction-determiner4');
     //a stream runs
@@ -7858,6 +7895,9 @@ var corrections = function corrections(ts) {
   ts.match('#Determiner (shit|damn|hell)').term(1).tag('Noun', 'swears-noun');
   ts.match('(shit|damn|fuck) (#Determiner|#Possessive|them)').term(0).tag('Verb', 'swears-verb');
   ts.match('#Copula fucked up?').not('#Copula').tag('Adjective', 'swears-adjective');
+
+  //fix for busted-up phrasalVerbs
+  ts.match('#Noun #Particle').term(1).tag('Preposition', 'repair-noPhrasal');
 
   return ts;
 };
@@ -8323,13 +8363,12 @@ var misc = [
 //starting-ones
 [/^[0-9][0-9,]*(\.[0-9]+)?$/, 'Cardinal'], //like 5
 [/^(un|de|re)\\-[a-z]../, 'Verb'], [/^[\-\+]?[0-9]+(\.[0-9]+)?$/, 'NumericValue'], [/^https?\:?\/\/[a-z0-9]/, 'Url'], //the colon is removed in normalisation
-[/^www\.[a-z0-9]/, 'Url'],
+[/^www\.[a-z0-9]/, 'Url'], [/^(over|under)[a-z]{2,}/, 'Adjective'],
 //ending-ones
-[/[0-9]+([a-z]{1,2})$/, 'Value'], //like 5kg
+[/^[0-9]+([a-z]{1,2})$/, 'Value'], //like 5kg
 [/^[0-9]+(st|nd|rd|th)$/, 'Ordinal'], //like 5th
-[/(over|under)[a-z]{2,}$/, 'Adjective'],
 //middle (anywhere)
-[/[a-z]*\\-[a-z]*\\-/, 'Adjective']];
+[/[a-z]*\\-[a-z]*\\-/, 'Adjective'], [/[0-9](st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']]];
 
 //straight-up lookup of known-suffixes
 var lookup = function lookup(t) {
@@ -8382,7 +8421,7 @@ var suffix_step = function suffix_step(ts) {
       if (misc[o][0].test(t.normal) === true) {
         tag = misc[o][1];
         if (t.canBe(tag) === true) {
-          t.tag(tag, 'misc-regex');
+          t.tag(tag, 'misc-regex-' + misc[o][0]);
           continue;
         }
       }
@@ -8504,8 +8543,7 @@ module.exports = noun_fallback;
 'use strict';
 //ambiguous 'may' and 'march'
 
-var maybeMonth = '(may|march|jan|april|sep)';
-var preps = '(in|by|before|for|during|on|until|after|of|within)';
+var preps = '(in|by|before|for|during|on|until|after|of|within|all)';
 var thisNext = '(last|next|this|previous|current|upcoming|coming)';
 var sections = '(start|end|middle|starting|ending|midpoint|beginning)';
 var seasons = '(spring|summer|winter|fall|autumn)';
@@ -8532,25 +8570,79 @@ var tagYearSafer = function tagYearSafer(v, reason) {
 
 //non-destructively tag values & prepositions as dates
 var datePass = function datePass(ts) {
-  //ambiguous-months
-  if (ts.has(maybeMonth)) {
-    ts.match(maybeMonth + ' (#Determiner|#Value|#Date)').term(0).tag('Month', 'correction-may');
-    ts.match('#Date ' + maybeMonth).term(1).tag('Month', 'correction-may');
-    ts.match(preps + ' ' + maybeMonth).term(1).tag('Month', 'correction-may');
-    ts.match('(next|this|last) ' + maybeMonth).term(1).tag('Month', 'correction-may'); //maybe not 'this'
+  //ambiguous month - person forms
+  var people = '(january|april|may|june|summer|autumn|jan|sep)';
+  if (ts.has(people)) {
+    //give to april
+    ts.match('#Infinitive #Determiner? #Adjective? #Noun? (to|for) ' + people).lastTerm().tag('Person', 'ambig-person');
+    //remind june
+    ts.match('#Infinitive ' + people).lastTerm().tag('Person', 'infinitive-person');
+    //may waits for
+    ts.match(people + ' #PresentTense (to|for)').firstTerm().tag('Person', 'ambig-active');
+    //april will
+    ts.match(people + ' #Modal').firstTerm().tag('Person', 'ambig-modal');
+    //would april
+    ts.match('#Modal ' + people).lastTerm().tag('Person', 'modal-ambig');
+    //with april
+    ts.match('(that|with|for) ' + people).term(1).tag('Person', 'that-month');
+    //it is may
+    ts.match('#Copula ' + people).term(1).tag('Person', 'is-may');
+    //may is
+    ts.match(people + ' #Copula').term(0).tag('Person', 'may-is');
+    //april the 5th
+    ts.match(people + ' (the|#Value|#Date)').term(0).tag('Month', 'person-value');
+    //wednesday april
+    ts.match('#Date ' + people).term(1).tag('Month', 'correction-may');
+    //may 5th
+    ts.match(people + ' the? #Value').firstTerm().tag('Month', 'may-5th');
+    //5th of may
+    ts.match('#Value of ' + people).lastTerm().tag('Month', '5th-of-may');
+    //by april
+    ts.match(preps + ' ' + people).term(1).tag('Month', 'preps-month');
+    //this april
+    ts.match('(next|this|last) ' + people).term(1).tag('Month', 'correction-may'); //maybe not 'this'
   }
+  //ambiguous month - verb-forms
+  var verbs = '(may|march|sat)';
+  if (ts.has(verbs)) {
+    //quickly march
+    ts.match('#Adverb ' + verbs).lastTerm().tag('Infinitive', 'ambig-verb');
+    ts.match(verbs + ' #Adverb').lastTerm().tag('Infinitive', 'ambig-verb');
+    //all march
+    ts.match(preps + ' ' + verbs).lastTerm().tag('Month', 'in-month');
+    //this march
+    ts.match('(next|this|last) ' + verbs).lastTerm().tag('Month', 'this-month');
+
+    ts.match(verbs + ' the? #Value').firstTerm().tag('Month', 'march-5th');
+    ts.match('#Value of? ' + verbs).lastTerm().tag('Month', '5th-of-march');
+
+    if (ts.has('march')) {
+      //march to
+      ts.match('march (up|down|back|to|toward)').term(0).tag('Infinitive', 'march-to');
+      //must march
+      ts.match('#Modal march').term(1).tag('Infinitive', 'must-march');
+    }
+  }
+  //sun 5th
+  if (ts.has('sun')) {
+    //sun feb 2
+    ts.match('sun #Date').firstTerm().tag('WeekDay', 'sun-feb');
+    //sun the 5th
+    ts.match('sun the #Ordinal').tag('Date').firstTerm().tag('WeekDay', 'sun-the-5th');
+    //the sun
+    ts.match('#Determiner sun').lastTerm().tag('Singular', 'the-sun');
+  }
+
   //months:
   if (ts.has('#Month')) {
     //June 5-7th
     ts.match('#Month #DateRange+').tag('Date', 'correction-numberRange');
     //5th of March
-    ts.match('#Value of? #Month').tag('Date', 'value-of-month');
+    ts.match('#Value of #Month').tag('Date', 'value-of-month');
     //5 March
     ts.match('#Cardinal #Month').tag('Date', 'cardinal-month');
     //march 5 to 7
     ts.match('#Month #Value to #Value').tag('Date', 'value-to-value');
-    //march 12th 2018
-    ts.match('#Month #Value #Cardinal').tag('Date', 'month-value-cardinal');
     //march the 12th
     ts.match('#Month the #Value').tag('Date', 'month-the-value');
   }
@@ -8571,8 +8663,13 @@ var datePass = function datePass(ts) {
     ts.match('#Value point #Value').tag('Value', 'value-point-value');
     //for four days
     ts.match(preps + '? #Value #Duration').tag('Date', 'value-duration');
-    ts.match('#Date #Value').tag('Date', 'date-value');
-    ts.match('#Value #Date').tag('Date', 'value-date');
+    ts.match('(#WeekDay|#Month) #Value').ifNo('#Money').tag('Date', 'date-value');
+    ts.match('#Value (#WeekDay|#Month)').ifNo('#Money').tag('Date', 'value-date');
+    //may twenty five
+    var vs = ts.match('#TextValue #TextValue');
+    if (vs.found && vs.has('#Date')) {
+      vs.tag('#Date', 'textvalue-date');
+    }
     //two days before
     ts.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction');
   }
@@ -8644,6 +8741,16 @@ var datePass = function datePass(ts) {
     v = ts.match('#Cardinal !#Plural').firstTerm();
     if (v.found) {
       tagYearSafer(v, 'year-unsafe');
+    }
+  }
+
+  //fix over-greedy
+  if (ts.has('#Date')) {
+    var date = ts.match('#Date+').splitOn('Clause');
+
+    if (date.has('(#Year|#Time)') === false) {
+      //12 february 12
+      date.match('#Value (#Month|#Weekday) #Value').lastTerm().unTag('Date');
     }
   }
 
@@ -8807,12 +8914,6 @@ var mainTag = function mainTag(t) {
   return null;
 };
 
-var tagAsList = function tagAsList(ts, start, end) {
-  for (var i = start; i <= end; i++) {
-    ts.terms[i].tags.List = true;
-  }
-};
-
 //take the first term with a comma, and test to the right.
 //the words with a comma must be the same pos.
 var isList = function isList(ts, i) {
@@ -8840,17 +8941,17 @@ var isList = function isList(ts, i) {
       }
       if (count > 0 && hasConjunction) {
         //is this the end of the list?
-        tagAsList(ts, start, i);
-        return true;
+        ts.slice(start, i).tag('List');
+        return;
       }
     }
     sinceComma += 1;
     //have we gone too far without a comma?
     if (sinceComma > 5) {
-      return false;
+      return;
     }
   }
-  return false;
+  return;
 };
 
 var commaStep = function commaStep(ts) {
@@ -8891,9 +8992,7 @@ var commaStep = function commaStep(ts) {
         continue;
       }
       //like 'cold, wet hands'
-      if (isList(ts, _i)) {
-        continue;
-      }
+      isList(ts, _i);
       //otherwise, it's a phrasal comma, like 'you must, if you think so'
       _t.tags.ClauseEnd = true;
     }
@@ -9492,13 +9591,12 @@ module.exports = {
   d: [[/.[ia]sed$/, Adj], [/.[gt]led$/, Adj], [/.[aeiou][td]ed$/, Past], [/[^aeiou]ard$/, Sing], [/[aeiou][^aeiou]id$/, Adj], [/[aeiou]c?ked$/, Past], //hooked
   [/.[vrl]id$/, Adj]],
   e: [[/.[lnr]ize$/, Inf], [/.[^aeiou]ise$/, Inf], [/.[aeiou]te$/, Inf], [/.[^aeiou][ai]ble$/, Adj], [/.[^aeiou]eable$/, Adj], [/.[^aeiou]ive$/, Adj]],
-  h: [[/[0-9](st|nd|rd|r?th)$/, 'NumericValue'], //like 5th
-  [/.[^aeiouf]ish$/, Adj], [/.v[iy]ch$/, Last], //east-europe
+  h: [[/.[^aeiouf]ish$/, Adj], [/.v[iy]ch$/, Last], //east-europe
   [/^ug?h+$/, Exp], //uhh
   [/^uh[ -]?oh$/, Exp]],
   i: [[/.[oau][wvl]ski$/, Last]],
   k: [[/^(k)+$/, Exp]],
-  l: [[/.[nrtumcd]al$/, Adj], [/.[^aeiou]ial$/, Adj], [/.[^aeiou]eal$/, Adj], [/.[^aeiou][ei]al$/, Adj], [/.[^aeiou]ful$/, Adj]],
+  l: [[/.[nrtumcd]al$/, Adj], [/.[gl]ial$/, Adj], [/.[^aeiou]eal$/, Adj], [/.[^aeiou][ei]al$/, Adj], [/.[^aeiou]ful$/, Adj]],
   m: [[/.[^aeiou]ium$/, Sing], [/[^aeiou]ism$/, Sing], [/.[^aeiou]ium$/, Sing], [/^mmm+$/, Exp], //mmmm
   [/^[hu]m+$/, Exp], //ummmm
   [/^[0-9]+ ?(am|pm)$/, 'Date']],
@@ -9560,17 +9658,7 @@ null, //1
   'ing': 'Gerund', //likely to be converted to Adj after lexicon pass
   ' so': AdVb,
   '\'ll': Modal,
-  '\'re': 'Copula',
-  '1st': Ord,
-  '2nd': Ord,
-  '3rd': Ord,
-  '4th': Ord,
-  '5th': Ord,
-  '6th': Ord,
-  '7th': Ord,
-  '8th': Ord,
-  '9th': Ord,
-  '0th': Ord
+  '\'re': 'Copula'
 }, { //4-letter
   'teen': 'Value',
   'tors': Noun,
@@ -9610,6 +9698,7 @@ null, //1
   'wards': AdVb,
   'urned': Past,
   'tized': Past,
+  'eased': Past,
   'ances': Plrl,
   'tures': Plrl,
   'ports': Plrl,
@@ -9656,11 +9745,11 @@ module.exports = [
 // ['Value', 'Year'],
 ['Ordinal', 'Cardinal'], ['TextValue', 'NumericValue'], ['NiceNumber', 'TextValue'], ['Ordinal', 'Currency'], //$5.50th
 //verbs
-['PastTense', 'PresentTense', 'FutureTense'], ['Pluperfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund', 'FuturePerfect', 'PerfectTense'],
+['PastTense', 'PresentTense', 'FutureTense'], ['Pluperfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund', 'FuturePerfect', 'PerfectTense'], ['Auxiliary', 'Noun', 'Value'],
 //date
-['Month', 'WeekDay', 'Year', 'Duration'], ['Particle', 'Conjunction', 'Adverb', 'Preposition'], ['Date', 'Verb', 'Adjective', 'Person'],
+['Month', 'WeekDay', 'Year', 'Duration'], ['Particle', 'Conjunction', 'Adverb', 'Preposition'], ['Date', 'Verb', 'Adjective', 'Person'], ['Date', 'Money', 'RomanNumeral', 'Fraction'],
 //a/an -> 1
-['Value', 'Determiner'],
+['Value', 'Determiner'], ['Url', 'Value', 'HashTag', 'PhoneNumber', 'Emoji'],
 //roman numerals
 ['RomanNumeral', 'Fraction', 'NiceNumber'], ['RomanNumeral', 'Money'],
 //cases
@@ -9825,6 +9914,9 @@ module.exports = {
   Url: {},
   PhoneNumber: {},
   HashTag: {},
+  AtMention: {
+    is: 'Noun'
+  },
   Emoji: {},
   Email: {},
 
@@ -10663,12 +10755,14 @@ var addMethods = function addMethods(Term) {
     },
     /** is this tag compatible with this word */
     canBe: function canBe(tag) {
-      //everything can be '.'
-      if (ignore[tag] === true) {
-        return true;
-      }
       tag = tag || '';
-      tag = tag.replace(/^#/, '');
+      if (typeof tag === 'string') {
+        //everything can be '.'
+        if (ignore[tag] === true) {
+          return true;
+        }
+        tag = tag.replace(/^#/, '');
+      }
       return _canBe(this, tag);
     }
   };
@@ -10896,6 +10990,7 @@ module.exports = fromString;
 'use strict';
 
 //getters/setters for the Terms class
+
 module.exports = {
 
   parent: {
@@ -11452,6 +11547,7 @@ var noLast = function noLast(str) {
 var parse_term = function parse_term(term) {
   term = term || '';
   term = term.trim();
+
   var reg = {};
   //order matters here
 
@@ -11550,6 +11646,8 @@ var parse_term = function parse_term(term) {
     term = '';
   }
   if (term !== '') {
+    //support \ encoding of #[]()*+?^
+    term = term.replace(/\\([\\#\*\.\[\]\(\)\+\?\^])/g, '');
     reg.normal = term.toLowerCase();
   }
   return reg;
@@ -12067,6 +12165,18 @@ var methods = {
       return s;
     }, '');
   },
+  csv: function csv(ts) {
+    return ts.terms.map(function (t) {
+      return t.normal.replace(/,/g, '');
+    }).join(',');
+  },
+
+  newlines: function newlines(ts) {
+    return ts.terms.reduce(function (str, t) {
+      str += t.out('text').replace(/\n/g, ' ');
+      return str;
+    }, '').replace(/^\s/, '');
+  },
   /** no punctuation, fancy business **/
   root: function root(ts) {
     return ts.terms.filter(function (t) {
@@ -12395,6 +12505,14 @@ var transforms = function transforms(Terms) {
         }
       });
       return this;
+    },
+    trim: function trim() {
+      if (this.length <= 0) {
+        return this;
+      }
+      this.terms[0].whitespace.before = '';
+      this.terms[this.terms.length - 1].whitespace.after = '';
+      return this;
     }
   };
 
@@ -12519,12 +12637,12 @@ module.exports = "0:2S;1:38;2:36;3:2B;4:2W;5:2Y;a38b2Zc2Ld2Be28f23g1Yh1Ni1Ij1Ck1
 },{}],228:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "0:A8;1:9I;2:9Z;3:9Q;4:93;5:7V;6:9B;7:9W;8:8K;9:7H;A:9V;a96b8Kc7Sd6Ye6Af5Vg5Gh4Xi4Nj3Rk3Jl33m25n1Wo1Rp1Iqu1Hr0Xs0EtYusm0vVwLxavi3yDzB;aBor0;cha52h1E;ass2i,oDuB;sEuB;ma,to;nEsDusB;oBsC;uf;ef;at0g;aIeHiCoB;lfga05odrow;lBn16;bDfr9IlBs1;a8GiB;am2Qe,s;e6Yur;i,nde7Zsl8;de,lBrr7y6;la5t3;an5ern1iB;cBha0nce2Wrg7Sva0;ente,t4I;aPeKhJimIoErCyB;!l3ro6s1;av6OeBoy;nt,v4E;bDdd,mBny;!as,mBoharu;a93ie,y;i9y;!my,othy;eodo0Nia6Aom9;dErB;en5rB;an5eBy;ll,n5;!dy;ic84req,ts3Myl42;aNcottMeLhIiHoFpenc3tBur1Fylve76zym1;anDeBua6A;f0ph8OrliBve4Hwa69;ng;!islaw,l8;lom1uB;leyma6ta;dn8m1;aCeB;ld1rm0;h02ne,qu0Hun,wn;an,basti0k1Nl3Hrg3Gth;!y;lEmDntBq3Yul;iBos;a5Ono;!m7Ju4;ik,vaB;d3JtoY;aQeMicKoEuCyB;an,ou;b7dBf67ssel5X;ol2Fy;an,bFcky,dEel,geDh0landAm0n5Dosevelt,ry,sCyB;!ce;coe,s;l31r;e43g3n8o8Gri5C;b7Ie88;ar4Xc4Wha6YkB;!ey,y;gCub7x,yBza;ansh,nal4U;g7DiB;na79s;chDfa4l22mCndBpha4ul,y58;al5Iol21;i7Yon;id;ent2int1;aIeEhilDierCol,reB;st1;re;!ip,lip;d7RrDtB;ar,eB;!r;cy,ry;bLt3Iul;liv3m7KrDsCtBum78w7;is,to;ama,c76;i,l3NvB;il4H;athanIeHiDoB;aBel,l0ma0r2G;h,m;cDiCkB;h5Oola;lo;hol9k,ol9;al,d,il,ls1;!i4;aUeSiKoFuByr1;hamDrCstaB;fa,pha;ad,ray;ed,mF;dibo,e,hamDntCrr4EsBussa;es,he;e,y;ad,ed,mB;ad,ed;cFgu4kDlCnBtche5C;a5Yik;an,os,t1;e,olB;aj;ah,hBk8;a4eB;al,l;hBlv2r3P;di,met;ck,hLlKmMnu4rGs1tCuri5xB;!imilianA;eo,hCi9tB;!eo,hew,ia;eBis;us,w;cDio,kAlCsha4WtBv2;i21y;in,on;!el,oIus;colm,ik;amBdi,moud;adB;ou;aMeJiIl2AoEuBy39;c9is,kBth3;aBe;!s;g0nn5HrenDuBwe4K;!iB;e,s;!zo;am,on4;evi,i,la3YoBroy,st3vi,w3C;!nB;!a4X;mCn5r0ZuBwB;ren5;ar,oB;nt;aGeChaled,irBrist40u36y2T;k,ollos;i0Vlv2nBrmit,v2;!dCnBt;e0Ty;a43ri3T;na50rBthem;im,l;aYeRiPoDuB;an,liBni0Nst2;an,o,us;aqu2eKhnJnGrEsB;eChB;!ua;!ph;dBge;an,i;!aB;s,thB;an,on;!ath0n4A;!l,sBy;ph;an,e,mB;!m46;ffFrCsB;s0Vus;a4BemCmai6oBry;me,ni0H;i5Iy;!e01rB;ey,y;cGd7kFmErDsCvi3yB;!d7;on,p3;ed,r1G;al,es;e,ob,ub;kBob;!s1;an,brahJchika,gHk3lija,nuGrEsDtBv0;ai,sB;uki;aac,ha0ma4;a,vinB;!g;k,nngu3X;nacBor;io;im;aKeFina3SoDuByd42;be1RgBmber3GsD;h,o;m3ra5sBwa35;se2;aEctDitDnCrB;be1Mm0;ry;or;th;bIlHmza,ns,o,rCsBya37;an,s0;lEo3CrDuBv8;hi34ki,tB;a,o;is1y;an,ey;!im;ib;aLeIilbe3YlenHord1rDuB;illerBstavo;mo;aDegBov3;!g,orB;io,y;dy,h43nt;!n;ne,oCraB;ld,rdA;ffr8rge;brielDrB;la1IrBy;eZy;!e;aOeLiJlIorr0CrB;anDedB;!d2GeBri1K;ri1J;cCkB;!ie,l2;esco,isB;!co,zek;oyd;d4lB;ip;liCng,rnB;anX;pe,x;bi0di;arWdRfra2it0lNmGnFrCsteb0th0uge6vBym7;an,ereH;gi,iCnBv2w2;estAie;c02k;rique,zo;aGiDmB;aFeB;tt;lCrB;!h0;!io;nu4;be02d1iDliCm3t1v2woB;od;ot1Bs;!as,j34;!d1Xg28mEuCwB;a1Din;arB;do;o0Fu0F;l,nB;est;aSeKieJoDrag0uCwByl0;ay6ight;a6st2;minEnDugCyB;le;!l9;!a1Hn1K;go,icB;!k;go;an,j0lbeHmetriYnFrEsDvCwBxt3;ay6ey;en,in;moZ;ek,ri05;is,nB;is;rt;lKmJnIrDvB;e,iB;!d;iEne08rBw2yl;eBin,yl;lBn;!l;n,us;!e,i4ny;i1Fon;e,l9;as;aXeVhOlFoCraig,urtB;!is;dy,l2nrad,rB;ey,neliBy;us;aEevelaDiByG;fBnt;fo06t1;nd;rDuCyB;!t1;de;en5k;ce;aFeErisCuB;ck;!tB;i0oph3;st3;d,rlBse;es,ie;cBdric,s0M;il;lEmer1rB;ey,lCroBt3;ll;!os,t1;eb,v2;arVePilOlaNobMrCuByr1;ddy,rt1;aGeDi0uCyB;anDce,on;ce,no;nCtB;!t;d0t;dBnd1;!foCl8y;ey;rd;!by;i6ke;al,lF;nDrBshoi;at,naBt;rdA;!iCjam2nB;ie,y;to;ry,t;ar0Pb0Hd0Egu0Chme0Bid7jani,lUmSnLputsiKrCsaBu0Cya0ziz;hi;aHchGi4jun,maEnCon,tBy0;hur,u04;av,oB;ld;an,ndA;el;ie;ta;aq;dFgelAtB;hony,oB;i6nB;!iA;ne;reBy;!a,s,w;ir,mBos;ar;!an,beOeIfFi,lEonDt1vB;aMin;on;so,zo;an,en;onCrB;edA;so;jEksandDssExB;!and3is;er;ar,er;andB;ro;rtA;!o;en;d,t;st2;in;amCoBri0vik;lfo;!a;dDel,rahCuB;!bakr,lfazl;am;allEel,oulaye,ulB;lCrahm0;an;ah,o;ah;av,on";
+module.exports = "0:A9;1:9J;2:A0;3:9R;4:93;5:7V;6:9X;7:9B;8:8K;9:7H;A:9W;a96b8Kc7Sd6Ye6Af5Vg5Gh4Xi4Nj3Rk3Jl33m25n1Wo1Rp1Iqu1Hr0Xs0EtYusm0vVwLxavi3yDzB;aBor0;cha52h1E;ass2i,oDuB;sEuB;ma,to;nEsDusB;oBsC;uf;ef;at0g;aIeHiCoB;lfga05odrow;lBn16;bDfr9JlBs1;a8GiB;am2Qe,s;e6Yur;i,nde7Zsl8;de,lBrr6y7;la5t3;an5ern1iB;cBha0nce2Wrg7Sva0;ente,t4I;aPeKhJimIoErCyB;!l3ro7s1;av6OeBoy;nt,v4E;bDdd,mBny;!as,mBoharu;a94ie,y;i9y;!my,othy;eodo0Nia6Aom9;dErB;en5rB;an5eBy;ll,n5;!dy;ic84req,ts3Myl42;aNcottMeLhIiHoFpenc3tBur1Fylve76zym1;anDeBua6A;f0ph8PrliBve4Hwa69;ng;!islaw,l8;lom1uB;leyma7ta;dn8m1;aCeB;ld1rm0;h02ne,qu0Hun,wn;an,basti0k1Nl3Hrg3Gth;!y;lEmDntBq3Yul;iBos;a5Ono;!m7Ju4;ik,vaB;d3JtoY;aQeMicKoEuCyB;an,ou;b6dBf67ssel5X;ol2Fy;an,bFcky,dEel,geDh0landAm0n5Dosevelt,ry,sCyB;!ce;coe,s;l31r;e43g3n8o8Hri5C;b7Ie89;ar4Xc4Wha6YkB;!ey,y;gCub6x,yBza;ansh,nal4U;g7DiB;na79s;chDfa4l22mCndBpha4ul,y58;al5Iol21;i7Zon;id;ent2int1;aIeEhilDierCol,reB;st1;re;!ip,lip;d7SrDtB;ar,eB;!r;cy,ry;bLt3Iul;liv3m7LrDsCtBum79w6;is,to;ama,c77;i,l3NvB;il4H;athanIeHiDoB;aBel,l0ma0r2G;h,m;cDiCkB;h5Oola;lo;hol9k,ol9;al,d,il,ls1;!i4;aUeSiKoFuByr1;hamDrCstaB;fa,pha;ad,ray;ed,mF;dibo,e,hamDntCrr4EsBussa;es,he;e,y;ad,ed,mB;ad,ed;cFgu4kDlCnBtche5C;a5Yik;an,os,t1;e,olB;aj;ah,hBk8;a4eB;al,l;hBlv2r3P;di,met;ck,hLlKmMnu4rGs1tCuri5xB;!imilianA;eo,hCi9tB;!eo,hew,ia;eBis;us,w;cDio,kAlCsha4WtBv2;i21y;in,on;!el,oIus;colm,ik;amBdi,moud;adB;ou;aMeJiIl2AoEuBy39;c9is,kBth3;aBe;!s;g0nn5HrenDuBwe4K;!iB;e,s;!zo;am,on4;evi,i,la3Yn5KoBroy,st3vi,w3C;!nB;!a4X;mCn5r0ZuBwB;ren5;ar,oB;nt;aGeChaled,irBrist40u36y2T;k,ollos;i0Vlv2nBrmit,v2;!dCnBt;e0Ty;a43ri3T;na50rBthem;im,l;aYeRiPoDuB;an,liBni0Nst2;an,o,us;aqu2eKhnJnGrEsB;eChB;!ua;!ph;dBge;an,i;!aB;s,thB;an,on;!ath0n4A;!l,sBy;ph;an,e,mB;!m46;ffFrCsB;s0Vus;a4BemCmai7oBry;me,ni0H;i5Jy;!e01rB;ey,y;cGd6kFmErDsCvi3yB;!d6;on,p3;ed,r1G;al,es;e,ob,ub;kBob;!s1;an,brahJchika,gHk3lija,nuGrEsDtBv0;ai,sB;uki;aac,ha0ma4;a,vinB;!g;k,nngu3X;nacBor;io;im;aKeFina3SoDuByd43;be1RgBmber3GsD;h,o;m3ra5sBwa35;se2;aEctDitDnCrB;be1Mm0;ry;or;th;bIlHmza,ns,o,rCsBya37;an,s0;lEo3CrDuBv8;hi34ki,tB;a,o;is1y;an,ey;!im;ib;aLeIilbe3ZlenHord1rDuB;illerBstavo;mo;aDegBov3;!g,orB;io,y;dy,h44nt;!n;ne,oCraB;ld,rdA;ffr8rge;brielDrB;la1IrBy;eZy;!e;aOeLiJlIorr0CrB;anDedB;!d2GeBri1K;ri1J;cCkB;!ie,l2;esco,isB;!co,zek;oyd;d4lB;ip;liCng,rnB;anX;pe,x;bi0di;arWdRfra2it0lNmGnFrCsteb0th0uge7vBym6;an,ereH;gi,iCnBv2w2;estAie;c02k;rique,zo;aGiDmB;aFeB;tt;lCrB;!h0;!io;nu4;be02d1iDliCm3t1v2woB;od;ot1Bs;!as,j35;!d1Xg29mEuCwB;a1Din;arB;do;o0Fu0F;l,nB;est;aSeKieJoDrag0uCwByl0;ay7ight;a7st2;minEnDugCyB;le;!l9;!a1Hn1K;go,icB;!k;go;an,j0lbeHmetriYnFrEsDvCwBxt3;ay7ey;en,in;moZ;ek,ri05;is,nB;is;rt;lKmJnIrDvB;e,iB;!d;iEne08rBw2yl;eBin,yl;lBn;!l;n,us;!e,i4ny;i1Gon;e,l9;as;aXeVhOlFoCraig,urtB;!is;dy,l2nrad,rB;ey,neliBy;us;aEevelaDiByG;fBnt;fo06t1;nd;rDuCyB;!t1;de;en5k;ce;aFeErisCuB;ck;!tB;i0oph3;st3;d,rlBse;es,ie;cBdric,s0N;il;lEmer1rB;ey,lCroBt3;ll;!os,t1;eb,v2;arVePilOlaNobMrCuByr1;ddy,rt1;aGeDi0uCyB;anDce,on;ce,no;nCtB;!t;d0t;dBnd1;!foCl8y;ey;rd;!by;i7ke;al,lF;nDrBshoi;at,naBt;rdA;!iCjam2nB;ie,y;to;ry,t;ar0Qb0Id0Fgu0Dhme0Cid6jani,lVmTnLputsiKrCsaBu0Dya0ziz;hi;aHchGi4jun,maEnCon,tBy0;hur,u05;av,oB;ld;an,ndA;el;ie;ta;aq;dGgelAtB;hoEoB;i7nB;!iA;ne;ny;reBy;!a,s,w;ir,mBos;ar;!an,beOeIfFi,lEonDt1vB;aMin;on;so,zo;an,en;onCrB;edA;so;jEksandDssExB;!and3is;er;ar,er;andB;ro;rtA;!o;en;d,t;st2;in;amCoBri0vik;lfo;!a;dDel,rahCuB;!bakr,lfazl;am;allEel,oulaye,ulB;lCrahm0;an;ah,o;ah;av,on";
 
 },{}],229:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "ad hominPbKcJdGeEfCgBh8kittNlunchDn7othersDp5roomQs3t0us dollarQ;h0icPragedM;ereOing0;!sA;tu0uper bowlMystL;dAffL;a0roblJurpo4;rtJt8;othGumbA;ead startHo0;meGu0;seF;laci6odErand slamE;l oz0riendDundB;!es;conom8ggBnerg8v0xamp7;entA;eath9inn1o0;gg5or8;er7;anar3eil4it3ottage6redit card6;ank3o0reakfast5;d1tt0;le3;ies,y;ing1;em0;!s";
+module.exports = "ad hominPbKcJdGeEfCgBh8kittNlunchDn7othersDp5roomQs3t0us dollarQ;h0icPragedM;ereOing0;!sA;kJtu0uper bowlMystL;dAffL;a0roblJurpo4;rtJt8;othGumbA;ead startHo0;meGu0;seF;laci6odErand slamE;l oz0riendDundB;!es;conom8ggBnerg8v0xamp7;entA;eath9inn1o0;gg5or8;er7;anar3eil4it3ottage6redit card6;ank3o0reakfast5;d1tt0;le3;ies,y;ing1;em0;!s";
 
 },{}],230:[function(_dereq_,module,exports){
 "use strict";
@@ -12559,7 +12677,7 @@ module.exports = "0:1M;1:1T;2:1U;a1Rb1Dc0Zd0Qfc dallas,g0Nhouston 0Mindiana0Ljac
 },{}],236:[function(_dereq_,module,exports){
 "use strict";
 
-module.exports = "0:1I;a1Nb1Hc18e11f0Ug0Qh0Ki0Hj0Gk0El09m00nZoYpSrPsCt8vi7w1;a5ea0Ci4o1;o2rld1;! seJ;d,l;ldlife,ne;rmth,t0;neg7ol0C;e3hund0ime,oothpaste,r1una;affTou1;ble,sers,t;a,nnis;aBceWeAh9il8now,o7p4te3u1;g1nshi0Q;ar;am,el;ace2e1;ciPed;!c16;ap,cc0ft0E;k,v0;eep,opp0T;riK;d0Afe0Jl1nd;m0Vt;aQe1i10;c1laxa0Hsearch;ogni0Grea0G;a5e3hys0JlastAo2r1;ess02ogre05;rk,w0;a1pp0trol;ce,nT;p0tiM;il,xygen;ews,oi0G;a7ea5i4o3u1;mps,s1;ic;nJo0C;lk,st;sl1t;es;chi1il,themat04;neF;aught0e3i2u1;ck,g0B;ghtn03quid,teratK;a1isJ;th0;elv1nowled08;in;ewel7usti09;ce,mp1nformaQtself;ati1ortan07;en06;a4ertz,isto3o1;ck1mework,n1spitaliL;ey;ry;ir,lib1ppi9;ut;o2r1um,ymnastL;a7ound;l1ssip;d,f;ahrenhe6i5lour,o2ru6urnit1;ure;od,rgive1wl;ne1;ss;c8sh;it;conomAduca6lectrici5n3quip4thAvery1;body,o1thC;ne;joy1tertain1;ment;ty;tiC;a8elcius,h4iv3loth6o1urrency;al,ffee,n1ttA;duct,fusi9;ics;aos,e1;e2w1;ing;se;ke,sh;a3eef,is2lood,read,utt0;er;on;g1ss;ga1;ge;dvi2irc1rt;raft;ce";
+module.exports = "0:1H;a1Mb1Gc17e11f0Ug0Qh0Ki0Hj0Gk0El09m00nZoYpSrPsCt8vi7w1;a5ea0Ci4o1;o2rld1;! seJ;d,l;ldlife,ne;rmth,t0;neg7ol0C;e3hund0ime,oothpaste,r1una;affTou1;ble,sers,t;a,nnis;aBceWeAh9il8now,o7p4te3u1;g1nshi0Q;ar;am,el;ace2e1;ciPed;!c16;ap,cc0ft0E;k,v0;eep,opp0S;riK;d0Afe10l1nd;m0Ut;aQe1i10;c1laxa0Gsearch;ogni0Frea0F;a5e3hys0IlastAo2r1;ess02ogre05;rk,w0;a1pp0trol;ce,nT;p0tiM;il,xygen;ews,oi0F;a7ea5i4o3u1;mps,s1;ic;nJo0B;lk,st;sl1t;es;chi1il,themat03;neF;aught0e3i2u1;ck,g0A;ghtn02qu0FteratK;a1isJ;th0;elv1nowled07;in;ewel7usti09;ce,mp1nformaPtself;ati1ortan07;en06;a4ertz,isto3o1;ck1mework,n1spitali02;ey;ry;ir,lib1ppi9;ut;o2r1um,ymnastK;a7ound;l1ssip;d,f;ahrenhe6i5lour,o2ru6urnit1;ure;od,rgive1wl;ne1;ss;c7sh;it;conom9duca5lectriciMn3quip4th9very1;body,o1thB;ne;joy1tertain1;ment;tiC;a8elcius,h4iv3loth6o1urrency;al,ffee,n1ttA;duct,fusi9;ics;aos,e1;e2w1;ing;se;ke,sh;a3eef,is2lood,read,utt0;er;on;g1ss;ga1;ge;c4dvi3irc2mnes1rt;ty;raft;ce;id";
 
 },{}],237:[function(_dereq_,module,exports){
 /* nlp-compromise/efrt v0.0.6

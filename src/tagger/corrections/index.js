@@ -12,7 +12,13 @@ const corrections = function (ts) {
     //do so
     ts.match('do so').match('so').tag('Noun', 'so-noun');
   }
-
+  //the ambiguous word 'that'
+  if (ts.has('that')) {
+    //remind john that
+    ts.match('#Verb #Adverb? #Noun that').lastTerm().tag('Preposition', 'that-prep');
+    //that car goes
+    ts.match('that #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner');
+  }
   //Determiner-signals
   if (ts.has('#Determiner')) {
     //the wait to vote
@@ -24,8 +30,12 @@ const corrections = function (ts) {
     ts.match('(a|an) #Adjective (#Infinitive|#PresentTense)').term(2).tag('Noun', 'correction-a|an2');
     //some pressing issues
     ts.match('(some #Verb #Plural').term(1).tag('Noun', 'correction-determiner6');
+    //the orange.
+    ts.match('#Determiner #Adjective$').term(1).tag('Noun', 'the-adj-1');
+    //the orange is
+    ts.match('#Determiner #Adjective (#Copula|#PastTense|#Auxiliary)').term(1).tag('Noun', 'the-adj-2');
     //the nice swim
-    ts.match('(the|this|those|these) #Adjective #Verb').term(2).tag('Noun', 'correction-determiner3');
+    ts.match('(the|this|those|these) #Adjective #Verb').term(2).tag('Noun', 'the-adj-verb');
     //the truly nice swim
     ts.match('(the|this|those|these) #Adverb #Adjective #Verb').term(3).tag('Noun', 'correction-determiner4');
     //a stream runs
@@ -137,6 +147,9 @@ const corrections = function (ts) {
   ts.match('#Determiner (shit|damn|hell)').term(1).tag('Noun', 'swears-noun');
   ts.match('(shit|damn|fuck) (#Determiner|#Possessive|them)').term(0).tag('Verb', 'swears-verb');
   ts.match('#Copula fucked up?').not('#Copula').tag('Adjective', 'swears-adjective');
+
+  //fix for busted-up phrasalVerbs
+  ts.match('#Noun #Particle').term(1).tag('Preposition', 'repair-noPhrasal');
 
   return ts;
 };

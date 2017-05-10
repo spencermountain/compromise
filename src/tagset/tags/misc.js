@@ -23,6 +23,9 @@ module.exports = {
   Url: {},
   PhoneNumber: {},
   HashTag: {},
+  AtMention: {
+    is: 'Noun'
+  },
   Emoji: {},
   Email: {},
 

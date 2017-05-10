@@ -4,6 +4,8 @@ module.exports = [
   'advice',
   'aircraft',
   'art',
+  'amnesty',
+  'acid',
   'baggage',
   'bass',
   'beef',

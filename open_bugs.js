@@ -34,3 +34,6 @@
 // r.match('walks').tag('Foo');
 // r.verbs().toPastTense();
 // r.debug();
+
+//bug 10 - concat guesses sentence-completion
+// nlp('this is a complete sentence.').concat('this is a second sentence.').sentences().length //1

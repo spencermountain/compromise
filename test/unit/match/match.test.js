@@ -141,7 +141,7 @@ test('==Match ==', function (T) {
   });
 
   test('before-match:', function(t) {
-    let r = nlp('one two three four five').before('two');
+    var r = nlp('one two three four five').before('two');
     t.equal(r.out('normal'), 'one', 'before-two');
 
     r = nlp('one two three four five').before('three . five');
@@ -154,7 +154,7 @@ test('==Match ==', function (T) {
     // t.equal(r.out('normal'), '', 'before-any');
 
     r = nlp('one two three four. No, not here. He said two days a week.').before('two');
-    let arr = r.out('array');
+    var arr = r.out('array');
     t.equal(arr[0], 'one', 'before-twice-1');
     t.equal(arr[1], 'he said', 'before-twice-2');
 
@@ -165,7 +165,7 @@ test('==Match ==', function (T) {
   });
 
   test('after-match:', function(t) {
-    let r = nlp('one two three four five').after('two');
+    var r = nlp('one two three four five').after('two');
     t.equal(r.out('normal'), 'three four five', 'after-one');
 
     r = nlp('one two three four five').after('one . three');
@@ -178,7 +178,7 @@ test('==Match ==', function (T) {
     t.equal(r.out('normal'), 'two three four', 'after-any');
 
     r = nlp('one two three four. No, not here. He said two days a week.').after('two');
-    let arr = r.out('array');
+    var arr = r.out('array');
     t.equal(arr[0], 'three four', 'after-twice-1');
     t.equal(arr[1], 'days a week', 'after-twice-2');
 

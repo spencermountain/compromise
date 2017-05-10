@@ -49,7 +49,8 @@ const methods = {
       } else {
         str = num;
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('NumericValue');
+    // this.tag('NumericValue','toNumber');
     }
     return this;
   },
@@ -63,7 +64,7 @@ const methods = {
       } else {
         str = fmt.text(num);
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('TextValue');
     }
     return this;
   },
@@ -78,7 +79,7 @@ const methods = {
       } else {
         str = num;
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('Cardinal');
     }
     return this;
   },
@@ -93,7 +94,7 @@ const methods = {
       } else {
         str = fmt.ordinal(num);
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('Ordinal');
     }
     return this;
   },
@@ -108,7 +109,7 @@ const methods = {
       } else {
         str = fmt.nice(num);
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('NumericValue');
     }
     return this;
   }

@@ -10,7 +10,7 @@ test('lumper:', function (t) {
   t.equal(r.out('text'), str, 'output unchanged');
   t.equal(r.wordCount(), 8, '8 words now');
 
-  let term = r.list[0].terms[3];
+  var term = r.list[0].terms[3];
   t.ok(term.tags.Country, 'has-country-tag');
   t.ok(term.tags.City, 'has-city-tag');
   t.ok(term.tags.Noun, 'has-shared-noun-tag');
@@ -26,7 +26,7 @@ test('lumper-multiple-matches:', function (t) {
   t.equal(r.out('text'), str, 'output unchanged');
   t.equal(r.wordCount(), 7, '7 words now');
 
-  let term = r.list[0].terms[2];
+  var term = r.list[0].terms[2];
   t.ok(term.tags.FirstName, 'has-firstname-tag');
   t.ok(term.tags.Person, 'has-person-tag');
 
@@ -45,7 +45,7 @@ test('lumper-long:', function (t) {
   t.equal(r.out('text'), str, 'output unchanged');
   t.equal(r.wordCount(), 5, '5 words now');
 
-  let term = r.list[0].terms[2];
+  var term = r.list[0].terms[2];
   t.ok(term.tags.FirstName, 'has-firstname-tag');
   t.ok(term.tags.Person, 'has-person-tag');
 

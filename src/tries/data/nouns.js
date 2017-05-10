@@ -1,3 +1,4 @@
+'use strict';
 //most nouns do not nead to be listed
 //for whatever reasons, these look like not-nouns
 //so make sure they become nouns
@@ -46,6 +47,7 @@ let nouns = [
   'room',
   'student',
   'stuff',
+  'sky',
   'super bowl',
   'system',
   'tic',

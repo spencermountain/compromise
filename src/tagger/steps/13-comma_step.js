@@ -29,11 +29,6 @@ const mainTag = (t) => {
   return null;
 };
 
-const tagAsList = (ts, start, end) => {
-  for(let i = start; i <= end; i++) {
-    ts.terms[i].tags.List = true;
-  }
-};
 
 //take the first term with a comma, and test to the right.
 //the words with a comma must be the same pos.
@@ -61,17 +56,17 @@ const isList = (ts, i) => {
         continue;
       }
       if (count > 0 && hasConjunction) { //is this the end of the list?
-        tagAsList(ts, start, i);
-        return true;
+        ts.slice(start, i).tag('List');
+        return;
       }
     }
     sinceComma += 1;
     //have we gone too far without a comma?
     if (sinceComma > 5) {
-      return false;
+      return;
     }
   }
-  return false;
+  return;
 };
 
 const commaStep = function(ts) {
@@ -112,9 +107,7 @@ const commaStep = function(ts) {
         continue;
       }
       //like 'cold, wet hands'
-      if (isList(ts, i)) {
-        continue;
-      }
+      isList(ts, i);
       //otherwise, it's a phrasal comma, like 'you must, if you think so'
       t.tags.ClauseEnd = true;
     }

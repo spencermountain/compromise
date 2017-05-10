@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.0.0",
+  "version": "10.2.2",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -11,6 +11,7 @@ module.exports={
   },
   "scripts": {
     "test": "node ./scripts/test.js",
+    "test:types": "tsc --project test/types",
     "browsertest": "node ./scripts/browserTest.js",
     "build": "node ./scripts/build/index.js",
     "demo": "node ./scripts/demo.js",
@@ -81,7 +82,7 @@ let compressed = {
   ern: 'east,north,south,st,west',
   tful: 'deligh,doub,fre,righ,though,wis',
   ant: 'abund,arrog,eleg,extravag,exult,hesit,irrelev,miscre,nonchal,obeis,observ,pl,pleas,redund,relev,reluct,signific,vac,verd',
-  ing: 'absorb,car,coo,liv,lov,ly,menac,perplex,shock,stand,surpris,tell,unappeal,unconvinc,unend,unsuspect,vex,want',
+  ing: 'absorb,car,coo,liv,lov,ly,menac,perplex,shock,surpris,tell,unappeal,unconvinc,unend,unsuspect,vex,want',
   ate: 'adequ,delic,fortun,inadequ,inn,intim,legitim,priv,sed,ultim',
 };
 let arr = [
@@ -465,16 +466,19 @@ addArr(data.dates.durations, 'Duration');
 addObj(data.abbreviations);
 //number-words are well-structured
 let obj = data.numbers.ordinal;
-addArr(Object.keys(obj.ones), 'Ordinal');
-addArr(Object.keys(obj.teens), 'Ordinal');
-addArr(Object.keys(obj.tens), 'Ordinal');
-addArr(Object.keys(obj.multiples), 'Ordinal');
+let tags = ['Ordinal', 'TextValue'];
+addArr(Object.keys(obj.ones), tags);
+addArr(Object.keys(obj.teens), tags);
+addArr(Object.keys(obj.tens), tags);
+addArr(Object.keys(obj.multiples), tags);
+
+let tags2 = ['Cardinal', 'TextValue'];
 obj = data.numbers.cardinal;
-addArr(Object.keys(obj.ones), 'Cardinal');
-addArr(Object.keys(obj.teens), 'Cardinal');
-addArr(Object.keys(obj.tens), 'Cardinal');
-addArr(Object.keys(obj.multiples), 'Cardinal');
-addArr(Object.keys(data.numbers.prefixes), 'Cardinal');
+addArr(Object.keys(obj.ones), tags2);
+addArr(Object.keys(obj.teens), tags2);
+addArr(Object.keys(obj.tens), tags2);
+addArr(Object.keys(obj.multiples), tags2);
+addArr(Object.keys(data.numbers.prefixes), tags2);
 //singular/plural
 addArr(Object.keys(data.irregular_plurals.toPlural), 'Singular');
 addArr(Object.keys(data.irregular_plurals.toSingle), 'Plural');
@@ -556,7 +560,7 @@ delete lexicon[' '];
 delete lexicon[null];
 module.exports = lexicon;
 
-// console.log(lexicon['ugh']);
+// console.log(lexicon['standing']);
 
 },{"../result/subset/adjectives/methods":44,"../result/subset/verbs/methods/conjugate/faster":108,"../result/subset/verbs/methods/toAdjective":118,"./fns":5,"./index":6}],8:[function(_dereq_,module,exports){
 module.exports = [
@@ -2591,6 +2595,7 @@ const pkg = _dereq_('../package.json');
 const log = _dereq_('./log');
 
 //the main thing
+// linguistischen Datenverarbeitung (nlp)
 const nlp = function (str, lexicon) {
   // this.tagset = tagset;
   let r = buildResult(str, lexicon);
@@ -2651,7 +2656,7 @@ const tag = (t, pos, reason) => {
   let title = t.normal || '[' + t.silent_term + ']';
   title = fns.leftPad('\'' + title + '\'', 12);
   title += '  ->   ' + pos;
-  title += fns.rightPad((reason || ''), 15);
+  title += fns.leftPad((reason || ''), 15);
   console.log('%c' + title, ' color: #a2c99c');
 };
 const untag = (t, pos, reason) => {
@@ -2682,7 +2687,7 @@ module.exports = {
   },
   tag: (t, pos, reason) => {
     if (enable === true || enable === 'tagger') {
-      if (typeof window !== undefined) {
+      if (typeof window !== 'undefined') {
         client.tag(t, pos, reason);
       } else {
         server.tag(t, pos, reason);
@@ -2691,7 +2696,7 @@ module.exports = {
   },
   unTag: (t, pos, reason) => {
     if (enable === true || enable === 'tagger') {
-      if (typeof window !== undefined) {
+      if (typeof window !== 'undefined') {
         client.untag(t, pos, reason);
       } else {
         server.untag(t, pos, reason);
@@ -2901,6 +2906,7 @@ const methods = [
 
   'hyphenate',
   'dehyphenate',
+  'trim',
 
   'insertBefore',
   'insertAfter',
@@ -3388,10 +3394,19 @@ const methods = {
     }, '');
   },
   array: (r) => {
-    return r.list.reduce((arr, ts) => {
-      arr.push(ts.out('normal'));
-      return arr;
-    }, []);
+    return r.list.map((ts) => {
+      return ts.out('normal');
+    });
+  },
+  csv: (r) => {
+    return r.list.map((ts) => {
+      return ts.out('csv');
+    }).join('\n');
+  },
+  newlines: (r) => {
+    return r.list.map((ts) => {
+      return ts.out('newlines');
+    }).join('\n');
   },
   json: (r) => {
     return r.list.reduce((arr, ts) => {
@@ -5302,7 +5317,8 @@ const Noun = _dereq_('./noun');
 //the () subset class
 const methods = {
   isPlural: function() {
-    return this.list.map((ts) => ts.isPlural());
+    this.list= this.list.filter((ts) => ts.isPlural());
+    return this
   },
   hasPlural: function() {
     return this.list.map((ts) => ts.hasPlural());
@@ -6885,7 +6901,8 @@ const methods = {
       } else {
         str = num;
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('NumericValue');
+    // this.tag('NumericValue','toNumber');
     }
     return this;
   },
@@ -6899,7 +6916,7 @@ const methods = {
       } else {
         str = fmt.text(num);
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('TextValue');
     }
     return this;
   },
@@ -6914,7 +6931,7 @@ const methods = {
       } else {
         str = num;
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('Cardinal');
     }
     return this;
   },
@@ -6929,7 +6946,7 @@ const methods = {
       } else {
         str = fmt.ordinal(num);
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('Ordinal');
     }
     return this;
   },
@@ -6944,7 +6961,7 @@ const methods = {
       } else {
         str = fmt.nice(num);
       }
-      this.replaceWith(str, true).tag('Value');
+      this.replaceWith(str, true).tag('NumericValue');
     }
     return this;
   }
@@ -7045,14 +7062,20 @@ const methods = {
 };
 
 const find = function(r, n) {
-  r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
+  r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+');
   r = r.splitAfter('#Comma');
+  r = r.if('#Verb'); //this should be (much) smarter
   if (typeof n === 'number') {
     r = r.get(n);
   }
+  // r.debug();
   r.list = r.list.map((ts) => {
     return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
   });
+  //fiter-out any that didn't find a main verb
+  // r.list = r.list.filter((ts) => {
+  //   return ts.vb;
+  // });
   return new Text(r.list, this.lexicon, this.parent);
 };
 
@@ -7529,6 +7552,7 @@ const multiWord = (vb, verbose) => {
   let isNegative = vb.negative.found;
   let isPlural = false;
   //handle 'to be' verb seperately
+  // console.log(vb.verb);
   if (vb.verb.tags.Copula || (vb.verb.normal === 'be' && vb.auxiliary.match('will').found)) {
     return toBe(isPlural, isNegative);
   }
@@ -8245,6 +8269,7 @@ const toNegative = _dereq_('./toNegative');
 const isPlural = _dereq_('./methods/isPlural');
 
 const parse = function(r) {
+  let original = r;
   r.negative = r.match('#Negative');
   r.adverbs = r.match('#Adverb');
   let aux = r.clone().not('(#Adverb|#Negative)');
@@ -8252,8 +8277,13 @@ const parse = function(r) {
   r.particle = aux.match('#Particle').last();
   if (r.verb.found) {
     r.verb = r.verb.list[0].terms[0];
+    r.auxiliary = aux.match('#Auxiliary+');
+  } else {
+    r.verb = original.terms[0];
+  // r.auxiliary = null;
+  // r.adverbs = null;
+  // r.negative = null;
   }
-  r.auxiliary = aux.match('#Auxiliary+');
   return r;
 };
 
@@ -8919,7 +8949,13 @@ const corrections = function (ts) {
     //do so
     ts.match('do so').match('so').tag('Noun', 'so-noun');
   }
-
+  //the ambiguous word 'that'
+  if (ts.has('that')) {
+    //remind john that
+    ts.match('#Verb #Adverb? #Noun that').lastTerm().tag('Preposition', 'that-prep');
+    //that car goes
+    ts.match('that #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner');
+  }
   //Determiner-signals
   if (ts.has('#Determiner')) {
     //the wait to vote
@@ -8931,8 +8967,12 @@ const corrections = function (ts) {
     ts.match('(a|an) #Adjective (#Infinitive|#PresentTense)').term(2).tag('Noun', 'correction-a|an2');
     //some pressing issues
     ts.match('(some #Verb #Plural').term(1).tag('Noun', 'correction-determiner6');
+    //the orange.
+    ts.match('#Determiner #Adjective$').term(1).tag('Noun', 'the-adj-1');
+    //the orange is
+    ts.match('#Determiner #Adjective (#Copula|#PastTense|#Auxiliary)').term(1).tag('Noun', 'the-adj-2');
     //the nice swim
-    ts.match('(the|this|those|these) #Adjective #Verb').term(2).tag('Noun', 'correction-determiner3');
+    ts.match('(the|this|those|these) #Adjective #Verb').term(2).tag('Noun', 'the-adj-verb');
     //the truly nice swim
     ts.match('(the|this|those|these) #Adverb #Adjective #Verb').term(3).tag('Noun', 'correction-determiner4');
     //a stream runs
@@ -9044,6 +9084,9 @@ const corrections = function (ts) {
   ts.match('#Determiner (shit|damn|hell)').term(1).tag('Noun', 'swears-noun');
   ts.match('(shit|damn|fuck) (#Determiner|#Possessive|them)').term(0).tag('Verb', 'swears-verb');
   ts.match('#Copula fucked up?').not('#Copula').tag('Adjective', 'swears-adjective');
+
+  //fix for busted-up phrasalVerbs
+  ts.match('#Noun #Particle').term(1).tag('Preposition', 'repair-noPhrasal');
 
   return ts;
 };
@@ -9501,12 +9544,14 @@ const misc = [
   [/^[\-\+]?[0-9]+(\.[0-9]+)?$/, 'NumericValue'],
   [/^https?\:?\/\/[a-z0-9]/, 'Url'], //the colon is removed in normalisation
   [/^www\.[a-z0-9]/, 'Url'],
+  [/^(over|under)[a-z]{2,}/, 'Adjective'],
   //ending-ones
-  [/[0-9]+([a-z]{1,2})$/, 'Value'], //like 5kg
+  [/^[0-9]+([a-z]{1,2})$/, 'Value'], //like 5kg
   [/^[0-9]+(st|nd|rd|th)$/, 'Ordinal'], //like 5th
-  [/(over|under)[a-z]{2,}$/, 'Adjective'],
   //middle (anywhere)
   [/[a-z]*\\-[a-z]*\\-/, 'Adjective'],
+
+  [/[0-9](st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
 ];
 
 //straight-up lookup of known-suffixes
@@ -9560,7 +9605,7 @@ const suffix_step = function(ts) {
       if (misc[o][0].test(t.normal) === true) {
         tag = misc[o][1];
         if (t.canBe(tag) === true) {
-          t.tag(tag, 'misc-regex');
+          t.tag(tag, 'misc-regex-' + misc[o][0]);
           continue;
         }
       }
@@ -9677,8 +9722,7 @@ module.exports = noun_fallback;
 },{}],147:[function(_dereq_,module,exports){
 'use strict';
 //ambiguous 'may' and 'march'
-const maybeMonth = '(may|march|jan|april|sep)';
-const preps = '(in|by|before|for|during|on|until|after|of|within)';
+const preps = '(in|by|before|for|during|on|until|after|of|within|all)';
 const thisNext = '(last|next|this|previous|current|upcoming|coming)';
 const sections = '(start|end|middle|starting|ending|midpoint|beginning)';
 const seasons = '(spring|summer|winter|fall|autumn)';
@@ -9705,25 +9749,80 @@ const tagYearSafer = (v, reason) => {
 
 //non-destructively tag values & prepositions as dates
 const datePass = function (ts) {
-  //ambiguous-months
-  if (ts.has(maybeMonth)) {
-    ts.match(`${maybeMonth} (#Determiner|#Value|#Date)`).term(0).tag('Month', 'correction-may');
-    ts.match(`#Date ${maybeMonth}`).term(1).tag('Month', 'correction-may');
-    ts.match(`${preps} ${maybeMonth}`).term(1).tag('Month', 'correction-may');
-    ts.match(`(next|this|last) ${maybeMonth}`).term(1).tag('Month', 'correction-may'); //maybe not 'this'
+  //ambiguous month - person forms
+  let people = '(january|april|may|june|summer|autumn|jan|sep)';
+  if (ts.has(people)) {
+    //give to april
+    ts.match(`#Infinitive #Determiner? #Adjective? #Noun? (to|for) ${people}`).lastTerm().tag('Person', 'ambig-person');
+    //remind june
+    ts.match(`#Infinitive ${people}`).lastTerm().tag('Person', 'infinitive-person');
+    //may waits for
+    ts.match(`${people} #PresentTense (to|for)`).firstTerm().tag('Person', 'ambig-active');
+    //april will
+    ts.match(`${people} #Modal`).firstTerm().tag('Person', 'ambig-modal');
+    //would april
+    ts.match(`#Modal ${people}`).lastTerm().tag('Person', 'modal-ambig');
+    //with april
+    ts.match(`(that|with|for) ${people}`).term(1).tag('Person', 'that-month');
+    //it is may
+    ts.match(`#Copula ${people}`).term(1).tag('Person', 'is-may');
+    //may is
+    ts.match(`${people} #Copula`).term(0).tag('Person', 'may-is');
+    //april the 5th
+    ts.match(`${people} (the|#Value|#Date)`).term(0).tag('Month', 'person-value');
+    //wednesday april
+    ts.match(`#Date ${people}`).term(1).tag('Month', 'correction-may');
+    //may 5th
+    ts.match(`${people} the? #Value`).firstTerm().tag('Month', 'may-5th');
+    //5th of may
+    ts.match(`#Value of ${people}`).lastTerm().tag('Month', '5th-of-may');
+    //by april
+    ts.match(`${preps} ${people}`).term(1).tag('Month', 'preps-month');
+    //this april
+    ts.match(`(next|this|last) ${people}`).term(1).tag('Month', 'correction-may'); //maybe not 'this'
   }
+  //ambiguous month - verb-forms
+  let verbs = '(may|march|sat)';
+  if (ts.has(verbs)) {
+    //quickly march
+    ts.match(`#Adverb ${verbs}`).lastTerm().tag('Infinitive', 'ambig-verb');
+    ts.match(`${verbs} #Adverb`).lastTerm().tag('Infinitive', 'ambig-verb');
+    //all march
+    ts.match(`${preps} ${verbs}`).lastTerm().tag('Month', 'in-month');
+    //this march
+    ts.match(`(next|this|last) ${verbs}`).lastTerm().tag('Month', 'this-month');
+
+    ts.match(`${verbs} the? #Value`).firstTerm().tag('Month', 'march-5th');
+    ts.match(`#Value of? ${verbs}`).lastTerm().tag('Month', '5th-of-march');
+
+    if (ts.has('march')) {
+      //march to
+      ts.match('march (up|down|back|to|toward)').term(0).tag('Infinitive', 'march-to');
+      //must march
+      ts.match('#Modal march').term(1).tag('Infinitive', 'must-march');
+    }
+
+  }
+  //sun 5th
+  if (ts.has('sun')) {
+    //sun feb 2
+    ts.match('sun #Date').firstTerm().tag('WeekDay', 'sun-feb');
+    //sun the 5th
+    ts.match('sun the #Ordinal').tag('Date').firstTerm().tag('WeekDay', 'sun-the-5th');
+    //the sun
+    ts.match('#Determiner sun').lastTerm().tag('Singular', 'the-sun');
+  }
+
   //months:
   if (ts.has('#Month')) {
     //June 5-7th
     ts.match(`#Month #DateRange+`).tag('Date', 'correction-numberRange');
     //5th of March
-    ts.match('#Value of? #Month').tag('Date', 'value-of-month');
+    ts.match('#Value of #Month').tag('Date', 'value-of-month');
     //5 March
     ts.match('#Cardinal #Month').tag('Date', 'cardinal-month');
     //march 5 to 7
     ts.match('#Month #Value to #Value').tag('Date', 'value-to-value');
-    //march 12th 2018
-    ts.match('#Month #Value #Cardinal').tag('Date', 'month-value-cardinal');
     //march the 12th
     ts.match('#Month the #Value').tag('Date', 'month-the-value');
   }
@@ -9744,8 +9843,13 @@ const datePass = function (ts) {
     ts.match('#Value point #Value').tag('Value', 'value-point-value');
     //for four days
     ts.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration');
-    ts.match('#Date #Value').tag('Date', 'date-value');
-    ts.match('#Value #Date').tag('Date', 'value-date');
+    ts.match('(#WeekDay|#Month) #Value').ifNo('#Money').tag('Date', 'date-value');
+    ts.match('#Value (#WeekDay|#Month)').ifNo('#Money').tag('Date', 'value-date');
+    //may twenty five
+    let vs = ts.match('#TextValue #TextValue');
+    if (vs.found && vs.has('#Date')) {
+      vs.tag('#Date', 'textvalue-date');
+    }
     //two days before
     ts.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction');
   }
@@ -9817,6 +9921,16 @@ const datePass = function (ts) {
     v = ts.match(`#Cardinal !#Plural`).firstTerm();
     if (v.found) {
       tagYearSafer(v, 'year-unsafe');
+    }
+  }
+
+  //fix over-greedy
+  if (ts.has('#Date')) {
+    let date = ts.match('#Date+').splitOn('Clause');
+
+    if (date.has('(#Year|#Time)') === false) {
+      //12 february 12
+      date.match('#Value (#Month|#Weekday) #Value').lastTerm().unTag('Date');
     }
   }
 
@@ -9978,11 +10092,6 @@ const mainTag = (t) => {
   return null;
 };
 
-const tagAsList = (ts, start, end) => {
-  for(let i = start; i <= end; i++) {
-    ts.terms[i].tags.List = true;
-  }
-};
 
 //take the first term with a comma, and test to the right.
 //the words with a comma must be the same pos.
@@ -10010,17 +10119,17 @@ const isList = (ts, i) => {
         continue;
       }
       if (count > 0 && hasConjunction) { //is this the end of the list?
-        tagAsList(ts, start, i);
-        return true;
+        ts.slice(start, i).tag('List');
+        return;
       }
     }
     sinceComma += 1;
     //have we gone too far without a comma?
     if (sinceComma > 5) {
-      return false;
+      return;
     }
   }
-  return false;
+  return;
 };
 
 const commaStep = function(ts) {
@@ -10061,9 +10170,7 @@ const commaStep = function(ts) {
         continue;
       }
       //like 'cold, wet hands'
-      if (isList(ts, i)) {
-        continue;
-      }
+      isList(ts, i);
       //otherwise, it's a phrasal comma, like 'you must, if you think so'
       t.tags.ClauseEnd = true;
     }
@@ -10676,7 +10783,6 @@ module.exports = {
     [/.[^aeiou]ive$/, Adj],
   ],
   h: [
-    [/[0-9](st|nd|rd|r?th)$/, 'NumericValue'], //like 5th
     [/.[^aeiouf]ish$/, Adj],
     [/.v[iy]ch$/, Last], //east-europe
     [/^ug?h+$/, Exp], //uhh
@@ -10690,7 +10796,7 @@ module.exports = {
   ],
   l: [
     [/.[nrtumcd]al$/, Adj],
-    [/.[^aeiou]ial$/, Adj],
+    [/.[gl]ial$/, Adj],
     [/.[^aeiou]eal$/, Adj],
     [/.[^aeiou][ei]al$/, Adj],
     [/.[^aeiou]ful$/, Adj],
@@ -10799,17 +10905,7 @@ module.exports = [
     'ing': 'Gerund', //likely to be converted to Adj after lexicon pass
     ' so': AdVb,
     '\'ll': Modal,
-    '\'re': 'Copula',
-    '1st': Ord,
-    '2nd': Ord,
-    '3rd': Ord,
-    '4th': Ord,
-    '5th': Ord,
-    '6th': Ord,
-    '7th': Ord,
-    '8th': Ord,
-    '9th': Ord,
-    '0th': Ord,
+    '\'re': 'Copula'
   },
   { //4-letter
     'teen': 'Value',
@@ -10852,6 +10948,7 @@ module.exports = [
     'wards': AdVb,
     'urned': Past,
     'tized': Past,
+    'eased': Past,
     'ances': Plrl,
     'tures': Plrl,
     'ports': Plrl,
@@ -10908,12 +11005,15 @@ module.exports = [
   //verbs
   ['PastTense', 'PresentTense', 'FutureTense'],
   ['Pluperfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund', 'FuturePerfect', 'PerfectTense'],
+  ['Auxiliary', 'Noun', 'Value'],
   //date
   ['Month', 'WeekDay', 'Year', 'Duration'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
   ['Date', 'Verb', 'Adjective', 'Person'],
+  ['Date', 'Money', 'RomanNumeral', 'Fraction'],
   //a/an -> 1
   ['Value', 'Determiner'],
+  ['Url', 'Value', 'HashTag', 'PhoneNumber', 'Emoji'],
   //roman numerals
   ['RomanNumeral', 'Fraction', 'NiceNumber'],
   ['RomanNumeral', 'Money'],
@@ -11073,6 +11173,9 @@ module.exports = {
   Url: {},
   PhoneNumber: {},
   HashTag: {},
+  AtMention: {
+    is: 'Noun'
+  },
   Emoji: {},
   Email: {},
 
@@ -11908,12 +12011,14 @@ const addMethods = (Term) => {
     },
     /** is this tag compatible with this word */
     canBe: function (tag) {
-      //everything can be '.'
-      if (ignore[tag] === true) {
-        return true;
-      }
       tag = tag || '';
-      tag = tag.replace(/^#/, '');
+      if (typeof tag === 'string') {
+        //everything can be '.'
+        if (ignore[tag] === true) {
+          return true;
+        }
+        tag = tag.replace(/^#/, '');
+      }
       return canBe(this, tag);
     }
   };
@@ -12128,6 +12233,8 @@ const fromString = function (str) {
 module.exports = fromString;
 
 },{"../term":173}],193:[function(_dereq_,module,exports){
+'use strict';
+
 //getters/setters for the Terms class
 module.exports = {
 
@@ -12671,6 +12778,7 @@ const noLast = function(str) {
 const parse_term = function (term) {
   term = term || '';
   term = term.trim();
+
   let reg = {};
   //order matters here
 
@@ -12769,6 +12877,8 @@ const parse_term = function (term) {
     term = '';
   }
   if (term !== '') {
+    //support \ encoding of #[]()*+?^
+    term = term.replace(/\\([\\#\*\.\[\]\(\)\+\?\^])/g, '');
     reg.normal = term.toLowerCase();
   }
   return reg;
@@ -13251,6 +13361,7 @@ const methods = {
     }, '');
   },
 
+
   normal: function (ts) {
     let terms = ts.terms.filter((t) => {
       return t.text;
@@ -13275,6 +13386,16 @@ const methods = {
       s += fns.printTerm(t);
       return s;
     }, '');
+  },
+  csv: function(ts) {
+    return ts.terms.map((t) => t.normal.replace(/,/g, '')).join(',');
+  },
+
+  newlines: function (ts) {
+    return ts.terms.reduce((str, t) => {
+      str += t.out('text').replace(/\n/g, ' ');
+      return str;
+    }, '').replace(/^\s/, '');
   },
   /** no punctuation, fancy business **/
   root: function (ts) {
@@ -13577,6 +13698,14 @@ const transforms = (Terms) => {
         }
       });
       return this;
+    },
+    trim: function () {
+      if (this.length <= 0) {
+        return this;
+      }
+      this.terms[0].whitespace.before = '';
+      this.terms[this.terms.length - 1].whitespace.after = '';
+      return this;
     }
   };
 
@@ -13663,9 +13792,9 @@ module.exports="0:1P;1:1Q;a1Fb1Bc12d0Ye0Of0Kg0Hh0Di09june07kwanzaa,l04m00nYoVpRr
 },{}],227:[function(_dereq_,module,exports){
 module.exports="0:2S;1:38;2:36;3:2B;4:2W;5:2Y;a38b2Zc2Ld2Be28f23g1Yh1Ni1Ij1Ck15l0Xm0Ln0Ho0Ep04rXsMtHvFwCxBy8zh6;a6ou,u;ng,o;a6eun2Roshi1Iun;ma6ng;da,guc1Xmo24sh1ZzaQ;iao,u;a7eb0il6o4right,u;li39s2;gn0lk0ng,tanabe;a6ivaldi;ssilj35zqu1;a9h8i2Do7r6sui,urn0;an,ynisI;lst0Nrr2Sth;at1Romps2;kah0Tnaka,ylor;aDchCeBhimizu,iAmi9o8t7u6zabo;ar1lliv27zuD;al21ein0;sa,u4;rn3th;lva,mmo22ngh;mjon3rrano;midt,neid0ulz;ito,n7sa6to;ki;ch1dKtos,z;amBeag1Xi9o7u6;bio,iz,s2L;b6dri1KgHj0Sme22osevelt,sZux;erts,ins2;c6ve0E;ci,hards2;ir1os;aDe9h7ic6ow1Z;as2Ehl0;a6illips;m,n1S;ders5et8r7t6;e0Or3;ez,ry;ers;h20rk0t6vl3;el,te0K;baBg0Blivei01r6;t6w1O;ega,iz;a6eils2guy5ix2owak,ym1D;gy,ka6var1J;ji6muW;ma;aEeCiBo8u6;ll0n6rr0Cssolini,ñ6;oz;lina,oKr6zart;al1Me6r0T;au,no;hhail3ll0;rci0s6y0;si;eWmmad3r6tsu08;in6tin1;!o;aCe8i6op1uo;!n6u;coln,dholm;e,fe7n0Pr6w0I;oy;bv6v6;re;rs5u;aBennedy,imuAle0Ko8u7wo6;k,n;mar,znets3;bay6vacs;asY;ra;hn,rl9to,ur,zl3;aAen9ha4imen1o6u4;h6n0Yu4;an6ns2;ss2;ki0Ds5;cks2nsse0C;glesi9ke8noue,shik7to,vano6;u,v;awa;da;as;aCe9it8o7u6;!a4b0gh0Nynh;a4ffmann,rvat;chcock,l0;mingw7nde6rL;rs2;ay;ns5rrOs7y6;asCes;an3hi6;moH;a8il,o7rub0u6;o,tierr1;m1nzal1;nd6o,rcia;hi;er9is8lor08o7uj6;ita;st0urni0;ch0;nand1;d7insteHsposi6vaL;to;is2wards;aCeBi9omin8u6;bo6rand;is;gu1;az,mitr3;ov;lgado,vi;rw7vi6;es,s;in;aFhBlarkAo6;h5l6op0x;em7li6;ns;an;!e;an8e7iu,o6ristens5u4we;i,ng,u4w,y;!n,on6u4;!g;mpb8rt0st6;ro;er;ell;aBe8ha4lanco,oyko,r6yrne;ooks,yant;ng;ck7ethov5nnett;en;er,ham;ch,h7iley,rn6;es;k,ng;dEl9nd6;ers6rB;en,on,s2;on;eks8iy9on7var1;ez;so;ej6;ev;ams"
 },{}],228:[function(_dereq_,module,exports){
-module.exports="0:A8;1:9I;2:9Z;3:9Q;4:93;5:7V;6:9B;7:9W;8:8K;9:7H;A:9V;a96b8Kc7Sd6Ye6Af5Vg5Gh4Xi4Nj3Rk3Jl33m25n1Wo1Rp1Iqu1Hr0Xs0EtYusm0vVwLxavi3yDzB;aBor0;cha52h1E;ass2i,oDuB;sEuB;ma,to;nEsDusB;oBsC;uf;ef;at0g;aIeHiCoB;lfga05odrow;lBn16;bDfr9IlBs1;a8GiB;am2Qe,s;e6Yur;i,nde7Zsl8;de,lBrr7y6;la5t3;an5ern1iB;cBha0nce2Wrg7Sva0;ente,t4I;aPeKhJimIoErCyB;!l3ro6s1;av6OeBoy;nt,v4E;bDdd,mBny;!as,mBoharu;a93ie,y;i9y;!my,othy;eodo0Nia6Aom9;dErB;en5rB;an5eBy;ll,n5;!dy;ic84req,ts3Myl42;aNcottMeLhIiHoFpenc3tBur1Fylve76zym1;anDeBua6A;f0ph8OrliBve4Hwa69;ng;!islaw,l8;lom1uB;leyma6ta;dn8m1;aCeB;ld1rm0;h02ne,qu0Hun,wn;an,basti0k1Nl3Hrg3Gth;!y;lEmDntBq3Yul;iBos;a5Ono;!m7Ju4;ik,vaB;d3JtoY;aQeMicKoEuCyB;an,ou;b7dBf67ssel5X;ol2Fy;an,bFcky,dEel,geDh0landAm0n5Dosevelt,ry,sCyB;!ce;coe,s;l31r;e43g3n8o8Gri5C;b7Ie88;ar4Xc4Wha6YkB;!ey,y;gCub7x,yBza;ansh,nal4U;g7DiB;na79s;chDfa4l22mCndBpha4ul,y58;al5Iol21;i7Yon;id;ent2int1;aIeEhilDierCol,reB;st1;re;!ip,lip;d7RrDtB;ar,eB;!r;cy,ry;bLt3Iul;liv3m7KrDsCtBum78w7;is,to;ama,c76;i,l3NvB;il4H;athanIeHiDoB;aBel,l0ma0r2G;h,m;cDiCkB;h5Oola;lo;hol9k,ol9;al,d,il,ls1;!i4;aUeSiKoFuByr1;hamDrCstaB;fa,pha;ad,ray;ed,mF;dibo,e,hamDntCrr4EsBussa;es,he;e,y;ad,ed,mB;ad,ed;cFgu4kDlCnBtche5C;a5Yik;an,os,t1;e,olB;aj;ah,hBk8;a4eB;al,l;hBlv2r3P;di,met;ck,hLlKmMnu4rGs1tCuri5xB;!imilianA;eo,hCi9tB;!eo,hew,ia;eBis;us,w;cDio,kAlCsha4WtBv2;i21y;in,on;!el,oIus;colm,ik;amBdi,moud;adB;ou;aMeJiIl2AoEuBy39;c9is,kBth3;aBe;!s;g0nn5HrenDuBwe4K;!iB;e,s;!zo;am,on4;evi,i,la3YoBroy,st3vi,w3C;!nB;!a4X;mCn5r0ZuBwB;ren5;ar,oB;nt;aGeChaled,irBrist40u36y2T;k,ollos;i0Vlv2nBrmit,v2;!dCnBt;e0Ty;a43ri3T;na50rBthem;im,l;aYeRiPoDuB;an,liBni0Nst2;an,o,us;aqu2eKhnJnGrEsB;eChB;!ua;!ph;dBge;an,i;!aB;s,thB;an,on;!ath0n4A;!l,sBy;ph;an,e,mB;!m46;ffFrCsB;s0Vus;a4BemCmai6oBry;me,ni0H;i5Iy;!e01rB;ey,y;cGd7kFmErDsCvi3yB;!d7;on,p3;ed,r1G;al,es;e,ob,ub;kBob;!s1;an,brahJchika,gHk3lija,nuGrEsDtBv0;ai,sB;uki;aac,ha0ma4;a,vinB;!g;k,nngu3X;nacBor;io;im;aKeFina3SoDuByd42;be1RgBmber3GsD;h,o;m3ra5sBwa35;se2;aEctDitDnCrB;be1Mm0;ry;or;th;bIlHmza,ns,o,rCsBya37;an,s0;lEo3CrDuBv8;hi34ki,tB;a,o;is1y;an,ey;!im;ib;aLeIilbe3YlenHord1rDuB;illerBstavo;mo;aDegBov3;!g,orB;io,y;dy,h43nt;!n;ne,oCraB;ld,rdA;ffr8rge;brielDrB;la1IrBy;eZy;!e;aOeLiJlIorr0CrB;anDedB;!d2GeBri1K;ri1J;cCkB;!ie,l2;esco,isB;!co,zek;oyd;d4lB;ip;liCng,rnB;anX;pe,x;bi0di;arWdRfra2it0lNmGnFrCsteb0th0uge6vBym7;an,ereH;gi,iCnBv2w2;estAie;c02k;rique,zo;aGiDmB;aFeB;tt;lCrB;!h0;!io;nu4;be02d1iDliCm3t1v2woB;od;ot1Bs;!as,j34;!d1Xg28mEuCwB;a1Din;arB;do;o0Fu0F;l,nB;est;aSeKieJoDrag0uCwByl0;ay6ight;a6st2;minEnDugCyB;le;!l9;!a1Hn1K;go,icB;!k;go;an,j0lbeHmetriYnFrEsDvCwBxt3;ay6ey;en,in;moZ;ek,ri05;is,nB;is;rt;lKmJnIrDvB;e,iB;!d;iEne08rBw2yl;eBin,yl;lBn;!l;n,us;!e,i4ny;i1Fon;e,l9;as;aXeVhOlFoCraig,urtB;!is;dy,l2nrad,rB;ey,neliBy;us;aEevelaDiByG;fBnt;fo06t1;nd;rDuCyB;!t1;de;en5k;ce;aFeErisCuB;ck;!tB;i0oph3;st3;d,rlBse;es,ie;cBdric,s0M;il;lEmer1rB;ey,lCroBt3;ll;!os,t1;eb,v2;arVePilOlaNobMrCuByr1;ddy,rt1;aGeDi0uCyB;anDce,on;ce,no;nCtB;!t;d0t;dBnd1;!foCl8y;ey;rd;!by;i6ke;al,lF;nDrBshoi;at,naBt;rdA;!iCjam2nB;ie,y;to;ry,t;ar0Pb0Hd0Egu0Chme0Bid7jani,lUmSnLputsiKrCsaBu0Cya0ziz;hi;aHchGi4jun,maEnCon,tBy0;hur,u04;av,oB;ld;an,ndA;el;ie;ta;aq;dFgelAtB;hony,oB;i6nB;!iA;ne;reBy;!a,s,w;ir,mBos;ar;!an,beOeIfFi,lEonDt1vB;aMin;on;so,zo;an,en;onCrB;edA;so;jEksandDssExB;!and3is;er;ar,er;andB;ro;rtA;!o;en;d,t;st2;in;amCoBri0vik;lfo;!a;dDel,rahCuB;!bakr,lfazl;am;allEel,oulaye,ulB;lCrahm0;an;ah,o;ah;av,on"
+module.exports="0:A9;1:9J;2:A0;3:9R;4:93;5:7V;6:9X;7:9B;8:8K;9:7H;A:9W;a96b8Kc7Sd6Ye6Af5Vg5Gh4Xi4Nj3Rk3Jl33m25n1Wo1Rp1Iqu1Hr0Xs0EtYusm0vVwLxavi3yDzB;aBor0;cha52h1E;ass2i,oDuB;sEuB;ma,to;nEsDusB;oBsC;uf;ef;at0g;aIeHiCoB;lfga05odrow;lBn16;bDfr9JlBs1;a8GiB;am2Qe,s;e6Yur;i,nde7Zsl8;de,lBrr6y7;la5t3;an5ern1iB;cBha0nce2Wrg7Sva0;ente,t4I;aPeKhJimIoErCyB;!l3ro7s1;av6OeBoy;nt,v4E;bDdd,mBny;!as,mBoharu;a94ie,y;i9y;!my,othy;eodo0Nia6Aom9;dErB;en5rB;an5eBy;ll,n5;!dy;ic84req,ts3Myl42;aNcottMeLhIiHoFpenc3tBur1Fylve76zym1;anDeBua6A;f0ph8PrliBve4Hwa69;ng;!islaw,l8;lom1uB;leyma7ta;dn8m1;aCeB;ld1rm0;h02ne,qu0Hun,wn;an,basti0k1Nl3Hrg3Gth;!y;lEmDntBq3Yul;iBos;a5Ono;!m7Ju4;ik,vaB;d3JtoY;aQeMicKoEuCyB;an,ou;b6dBf67ssel5X;ol2Fy;an,bFcky,dEel,geDh0landAm0n5Dosevelt,ry,sCyB;!ce;coe,s;l31r;e43g3n8o8Hri5C;b7Ie89;ar4Xc4Wha6YkB;!ey,y;gCub6x,yBza;ansh,nal4U;g7DiB;na79s;chDfa4l22mCndBpha4ul,y58;al5Iol21;i7Zon;id;ent2int1;aIeEhilDierCol,reB;st1;re;!ip,lip;d7SrDtB;ar,eB;!r;cy,ry;bLt3Iul;liv3m7LrDsCtBum79w6;is,to;ama,c77;i,l3NvB;il4H;athanIeHiDoB;aBel,l0ma0r2G;h,m;cDiCkB;h5Oola;lo;hol9k,ol9;al,d,il,ls1;!i4;aUeSiKoFuByr1;hamDrCstaB;fa,pha;ad,ray;ed,mF;dibo,e,hamDntCrr4EsBussa;es,he;e,y;ad,ed,mB;ad,ed;cFgu4kDlCnBtche5C;a5Yik;an,os,t1;e,olB;aj;ah,hBk8;a4eB;al,l;hBlv2r3P;di,met;ck,hLlKmMnu4rGs1tCuri5xB;!imilianA;eo,hCi9tB;!eo,hew,ia;eBis;us,w;cDio,kAlCsha4WtBv2;i21y;in,on;!el,oIus;colm,ik;amBdi,moud;adB;ou;aMeJiIl2AoEuBy39;c9is,kBth3;aBe;!s;g0nn5HrenDuBwe4K;!iB;e,s;!zo;am,on4;evi,i,la3Yn5KoBroy,st3vi,w3C;!nB;!a4X;mCn5r0ZuBwB;ren5;ar,oB;nt;aGeChaled,irBrist40u36y2T;k,ollos;i0Vlv2nBrmit,v2;!dCnBt;e0Ty;a43ri3T;na50rBthem;im,l;aYeRiPoDuB;an,liBni0Nst2;an,o,us;aqu2eKhnJnGrEsB;eChB;!ua;!ph;dBge;an,i;!aB;s,thB;an,on;!ath0n4A;!l,sBy;ph;an,e,mB;!m46;ffFrCsB;s0Vus;a4BemCmai7oBry;me,ni0H;i5Jy;!e01rB;ey,y;cGd6kFmErDsCvi3yB;!d6;on,p3;ed,r1G;al,es;e,ob,ub;kBob;!s1;an,brahJchika,gHk3lija,nuGrEsDtBv0;ai,sB;uki;aac,ha0ma4;a,vinB;!g;k,nngu3X;nacBor;io;im;aKeFina3SoDuByd43;be1RgBmber3GsD;h,o;m3ra5sBwa35;se2;aEctDitDnCrB;be1Mm0;ry;or;th;bIlHmza,ns,o,rCsBya37;an,s0;lEo3CrDuBv8;hi34ki,tB;a,o;is1y;an,ey;!im;ib;aLeIilbe3ZlenHord1rDuB;illerBstavo;mo;aDegBov3;!g,orB;io,y;dy,h44nt;!n;ne,oCraB;ld,rdA;ffr8rge;brielDrB;la1IrBy;eZy;!e;aOeLiJlIorr0CrB;anDedB;!d2GeBri1K;ri1J;cCkB;!ie,l2;esco,isB;!co,zek;oyd;d4lB;ip;liCng,rnB;anX;pe,x;bi0di;arWdRfra2it0lNmGnFrCsteb0th0uge7vBym6;an,ereH;gi,iCnBv2w2;estAie;c02k;rique,zo;aGiDmB;aFeB;tt;lCrB;!h0;!io;nu4;be02d1iDliCm3t1v2woB;od;ot1Bs;!as,j35;!d1Xg29mEuCwB;a1Din;arB;do;o0Fu0F;l,nB;est;aSeKieJoDrag0uCwByl0;ay7ight;a7st2;minEnDugCyB;le;!l9;!a1Hn1K;go,icB;!k;go;an,j0lbeHmetriYnFrEsDvCwBxt3;ay7ey;en,in;moZ;ek,ri05;is,nB;is;rt;lKmJnIrDvB;e,iB;!d;iEne08rBw2yl;eBin,yl;lBn;!l;n,us;!e,i4ny;i1Gon;e,l9;as;aXeVhOlFoCraig,urtB;!is;dy,l2nrad,rB;ey,neliBy;us;aEevelaDiByG;fBnt;fo06t1;nd;rDuCyB;!t1;de;en5k;ce;aFeErisCuB;ck;!tB;i0oph3;st3;d,rlBse;es,ie;cBdric,s0N;il;lEmer1rB;ey,lCroBt3;ll;!os,t1;eb,v2;arVePilOlaNobMrCuByr1;ddy,rt1;aGeDi0uCyB;anDce,on;ce,no;nCtB;!t;d0t;dBnd1;!foCl8y;ey;rd;!by;i7ke;al,lF;nDrBshoi;at,naBt;rdA;!iCjam2nB;ie,y;to;ry,t;ar0Qb0Id0Fgu0Dhme0Cid6jani,lVmTnLputsiKrCsaBu0Dya0ziz;hi;aHchGi4jun,maEnCon,tBy0;hur,u05;av,oB;ld;an,ndA;el;ie;ta;aq;dGgelAtB;hoEoB;i7nB;!iA;ne;ny;reBy;!a,s,w;ir,mBos;ar;!an,beOeIfFi,lEonDt1vB;aMin;on;so,zo;an,en;onCrB;edA;so;jEksandDssExB;!and3is;er;ar,er;andB;ro;rtA;!o;en;d,t;st2;in;amCoBri0vik;lfo;!a;dDel,rahCuB;!bakr,lfazl;am;allEel,oulaye,ulB;lCrahm0;an;ah,o;ah;av,on"
 },{}],229:[function(_dereq_,module,exports){
-module.exports="ad hominPbKcJdGeEfCgBh8kittNlunchDn7othersDp5roomQs3t0us dollarQ;h0icPragedM;ereOing0;!sA;tu0uper bowlMystL;dAffL;a0roblJurpo4;rtJt8;othGumbA;ead startHo0;meGu0;seF;laci6odErand slamE;l oz0riendDundB;!es;conom8ggBnerg8v0xamp7;entA;eath9inn1o0;gg5or8;er7;anar3eil4it3ottage6redit card6;ank3o0reakfast5;d1tt0;le3;ies,y;ing1;em0;!s"
+module.exports="ad hominPbKcJdGeEfCgBh8kittNlunchDn7othersDp5roomQs3t0us dollarQ;h0icPragedM;ereOing0;!sA;kJtu0uper bowlMystL;dAffL;a0roblJurpo4;rtJt8;othGumbA;ead startHo0;meGu0;seF;laci6odErand slamE;l oz0riendDundB;!es;conom8ggBnerg8v0xamp7;entA;eath9inn1o0;gg5or8;er7;anar3eil4it3ottage6redit card6;ank3o0reakfast5;d1tt0;le3;ies,y;ing1;em0;!s"
 },{}],230:[function(_dereq_,module,exports){
 module.exports="0:2Q;1:20;2:2I;a2Db24c1Ad11e0Uf0Tg0Qh0Kin0Djourn1l07mWnewsVoTpLquartet,rIs7t5u3worke1K;ni3tilG;on,vA;ele3im2Oribun1v;communica1Jgraph,vi1L;av0Hchool,eBo8t4ubcommitt1Ny3;ndic0Pstems;a3ockV;nda22te 3;poli2univ3;ersi27;ci3ns;al club,et3;e,y;cur3rvice0;iti2C;adio,e3;gionRs3;er19ourc29tauraX;artners9e7harmac6izza,lc,o4r3;ess,oduc13;l3st,wer;i2ytechnic;a0Jeutical0;ople's par1Ttrol3;!eum;!hip;bservLffi2il,ptic1r3;chestra,ganiza22;! servi2;a9e7i5o4use3;e,um;bi10tor0;lita1Bnist3;e08ry;dia,mori1rcantile3; exchange;ch1Ogazi5nage06r3;i4ket3;i0Cs;ne;ab6i5oc3;al 3;aIheaH;beration ar1Fmited;or3s;ato0Y;c,dustri1Gs6ter5vest3;me3o08;nt0;nation1sI;titut3u14;!e3;! of technoloIs;e5o3;ld3sp0Itel0;ings;a3ra6;lth a3;uth0T;a4ir09overnJroup,ui3;ld;s,zet0P;acul0Qede12inanci1m,ounda13und;duca12gli0Blectric8n5s4t3veningH;at;ta0L;er4semb01ter3;prise0tainB;gy;!i0J;a9e4i3rilliG;rectora0FviP;part3sign,velop6;e5ment3;! sto3s;re;ment;ily3ta; news;aSentQhNircus,lLo3rew;!ali0LffJlleHm9n4rp3unc7;o0Js;fe6s3taine9;e4ulti3;ng;il;de0Eren2;m5p3;any,rehensiAute3;rs;i5uni3;ca3ty;tions;s3tt6;si08;cti3ge;ve;ee;ini3ub;c,qK;emica4oir,ronic3urch;le;ls;er,r3;al bank,e;fe,is5p3re,thedr1;it1;al;se;an9o7r4u3;ilding socieEreau;ands,ewe4other3;hood,s;ry;a3ys;rd;k,q3;ue;dministIgencFirDrCss7ut3viaJ;h4ori3;te;ori3;ty;oc5u3;ran2;ce;!iat3;es,iB;my;craft,l3ways;in4;e0i3y;es;!s;ra3;ti3;on"
 },{}],231:[function(_dereq_,module,exports){
@@ -13679,7 +13808,7 @@ module.exports="aLbIcHdEengineKfCgBhAinstructRjournalNlawyKm9nurse,o8p5r3s1t0;ec
 },{}],235:[function(_dereq_,module,exports){
 module.exports="0:1M;1:1T;2:1U;a1Rb1Dc0Zd0Qfc dallas,g0Nhouston 0Mindiana0Ljacksonville jagua0k0Il0Fm02newVoRpKqueens parkJrIsAt5utah jazz,vancouver whitecaps,w3yY;ashington 3est ham0Xh16;natio21redski1wizar12;ampa bay 6e5o3;ronto 3ttenham hotspur;blu1Hrapto0;nnessee tita1xasD;buccanee0ra1G;a7eattle 5heffield0Qporting kansas13t3;. louis 3oke12;c1Srams;mari02s3;eah1IounI;cramento Sn 3;antonio spu0diego 3francisco gi0Bjose earthquak2;char0EpaB;eal salt lake,o04; ran0C;a8h5ittsburgh 4ortland t3;imbe0rail blaze0;pirat2steele0;il3oenix su1;adelphia 3li2;eagl2philNunE;dr2;akland 4klahoma city thunder,r3;i10lando magic;athle0Trai3;de0; 3castle05;england 6orleans 5york 3;city fc,giUje0Lkn02me0Lred bul19y3;anke2;pelica1sain0J;patrio0Irevolut3;ion;aBe9i3ontreal impact;ami 7lwaukee b6nnesota 3;t4u0Rvi3;kings;imberwolv2wi1;re0Cuc0W;dolphi1heat,marli1;mphis grizz3ts;li2;nchester 5r3vN;i3li1;ne0;c00u0H;a4eicesterYos angeles 3;clippe0dodFlaA; galaxy,ke0;ansas city 3nH;chiefs,ro3;ya0M; pace0polis colX;astr0Edynamo,rockeWtexa1;i4olden state warrio0reen bay pac3;ke0;anT;.c.Aallas 7e3i0Cod5;nver 5troit 3;lio1pisto1ti3;ge0;bronc06nuggeO;cowboUmav3;er3;ic06; uX;arCelNh8incinnati 6leveland 5ol3;orado r3umbus crew sc;api5ocki2;brow1cavalie0india1;benga03re3;ds;arlotte horCicago 3;b4cubs,fire,wh3;iteE;ea0ulY;di3olina panthe0;ff3naW; c3;ity;altimore ElAoston 7r3uffalo bilT;av2e5ooklyn 3;ne3;ts;we0;cel4red3; sox;tics;ackburn rove0u3;e ja3;ys;rs;ori3rave1;ol2;rizona Ast8tlanta 3;brav2falco1h4u3;nited;aw9;ns;es;on villa,r3;os;c5di3;amondbac3;ks;ardi3;na3;ls"
 },{}],236:[function(_dereq_,module,exports){
-module.exports="0:1I;a1Nb1Hc18e11f0Ug0Qh0Ki0Hj0Gk0El09m00nZoYpSrPsCt8vi7w1;a5ea0Ci4o1;o2rld1;! seJ;d,l;ldlife,ne;rmth,t0;neg7ol0C;e3hund0ime,oothpaste,r1una;affTou1;ble,sers,t;a,nnis;aBceWeAh9il8now,o7p4te3u1;g1nshi0Q;ar;am,el;ace2e1;ciPed;!c16;ap,cc0ft0E;k,v0;eep,opp0T;riK;d0Afe0Jl1nd;m0Vt;aQe1i10;c1laxa0Hsearch;ogni0Grea0G;a5e3hys0JlastAo2r1;ess02ogre05;rk,w0;a1pp0trol;ce,nT;p0tiM;il,xygen;ews,oi0G;a7ea5i4o3u1;mps,s1;ic;nJo0C;lk,st;sl1t;es;chi1il,themat04;neF;aught0e3i2u1;ck,g0B;ghtn03quid,teratK;a1isJ;th0;elv1nowled08;in;ewel7usti09;ce,mp1nformaQtself;ati1ortan07;en06;a4ertz,isto3o1;ck1mework,n1spitaliL;ey;ry;ir,lib1ppi9;ut;o2r1um,ymnastL;a7ound;l1ssip;d,f;ahrenhe6i5lour,o2ru6urnit1;ure;od,rgive1wl;ne1;ss;c8sh;it;conomAduca6lectrici5n3quip4thAvery1;body,o1thC;ne;joy1tertain1;ment;ty;tiC;a8elcius,h4iv3loth6o1urrency;al,ffee,n1ttA;duct,fusi9;ics;aos,e1;e2w1;ing;se;ke,sh;a3eef,is2lood,read,utt0;er;on;g1ss;ga1;ge;dvi2irc1rt;raft;ce"
+module.exports="0:1H;a1Mb1Gc17e11f0Ug0Qh0Ki0Hj0Gk0El09m00nZoYpSrPsCt8vi7w1;a5ea0Ci4o1;o2rld1;! seJ;d,l;ldlife,ne;rmth,t0;neg7ol0C;e3hund0ime,oothpaste,r1una;affTou1;ble,sers,t;a,nnis;aBceWeAh9il8now,o7p4te3u1;g1nshi0Q;ar;am,el;ace2e1;ciPed;!c16;ap,cc0ft0E;k,v0;eep,opp0S;riK;d0Afe10l1nd;m0Ut;aQe1i10;c1laxa0Gsearch;ogni0Frea0F;a5e3hys0IlastAo2r1;ess02ogre05;rk,w0;a1pp0trol;ce,nT;p0tiM;il,xygen;ews,oi0F;a7ea5i4o3u1;mps,s1;ic;nJo0B;lk,st;sl1t;es;chi1il,themat03;neF;aught0e3i2u1;ck,g0A;ghtn02qu0FteratK;a1isJ;th0;elv1nowled07;in;ewel7usti09;ce,mp1nformaPtself;ati1ortan07;en06;a4ertz,isto3o1;ck1mework,n1spitali02;ey;ry;ir,lib1ppi9;ut;o2r1um,ymnastK;a7ound;l1ssip;d,f;ahrenhe6i5lour,o2ru6urnit1;ure;od,rgive1wl;ne1;ss;c7sh;it;conom9duca5lectriciMn3quip4th9very1;body,o1thB;ne;joy1tertain1;ment;tiC;a8elcius,h4iv3loth6o1urrency;al,ffee,n1ttA;duct,fusi9;ics;aos,e1;e2w1;ing;se;ke,sh;a3eef,is2lood,read,utt0;er;on;g1ss;ga1;ge;c4dvi3irc2mnes1rt;ty;raft;ce;id"
 },{}],237:[function(_dereq_,module,exports){
 /* nlp-compromise/efrt v0.0.6
  usage: unpack(myPackedString).has(word)

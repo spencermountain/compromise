@@ -87,6 +87,9 @@ const find = function(r, n) {
   if (r.has('#Ordinal #Cardinal')) {
     r.splitBefore('#Cardinal+');
   }
+  if (r.has('#NumberRange')) {
+    r.splitAfter('#NumberRange');
+  }
   // r.splitAfter('#Comma');
   if (typeof n === 'number') {
     r = r.get(n);

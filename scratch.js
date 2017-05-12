@@ -12,9 +12,13 @@ var nlp = require('./src/index');
 // var r = nlp('it is + politic').debug();
 // r.match('is \\+', true).debug();
 
-var r = nlp('third month of 2019');
+var r = nlp('third book in 2019');
 r.values().toNumber();
-// r.debug();
-// console.log(r.out());
-r.values().debug().toText();
-// console.log(r.out());
+console.log(r.out());
+r.values().toText();
+console.log(r.out());
+r.values().toCardinal();
+console.log(r.out());
+r.values().toOrdinal();
+r.values().debug();
+console.log(r.out());

@@ -81,7 +81,9 @@ const find = function(r, n) {
   // r = r.match('#Value+ #Unit?');
 
   //june 21st 1992 is two seperate values
-  r.splitOn('#Year');
+  if (r.has('#NumericValue #NumericValue')) {
+    r.splitOn('#Year');
+  }
   if (typeof n === 'number') {
     r = r.get(n);
   }

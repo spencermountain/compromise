@@ -6555,6 +6555,19 @@ const find = function(r, n) {
   if (r.has('#NumericValue #NumericValue')) {
     r.splitOn('#Year');
   }
+  //fifth five
+  if (r.has('#Ordinal #Cardinal')) {
+    r.splitBefore('#Cardinal+');
+  }
+  //five 2017 (support '5 hundred', and 'twenty 5'
+  if (r.has('#TextValue #NumericValue') && !r.has('(twenty|thirty|fourty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million|billion|trillion)')) {
+    r.splitBefore('#NumericValue+');
+  }
+  //5-8
+  if (r.has('#NumberRange')) {
+    r.splitAfter('#NumberRange');
+  }
+  // r.splitAfter('#Comma');
   if (typeof n === 'number') {
     r = r.get(n);
   }
@@ -8881,9 +8894,9 @@ const numberRange = (ts) => {
       let arr = t.text.split(/(-)/);
       arr[1] = 'to';
       ts = fixContraction(ts, arr, i);
-      ts.terms[i].tag('Value');
+      ts.terms[i].tag('NumericValue');
       ts.terms[i + 1].tag('Preposition');
-      ts.terms[i + 2].tag(['Value', 'NumberRange']);
+      ts.terms[i + 2].tag(['NumericValue', 'NumberRange']);
       i += 2;
     }
   }

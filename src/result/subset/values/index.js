@@ -88,8 +88,8 @@ const find = function(r, n) {
   if (r.has('#Ordinal #Cardinal')) {
     r.splitBefore('#Cardinal+');
   }
-  //five 2017
-  if (r.has('#TextValue #NumericValue')) {
+  //five 2017 (support '5 hundred', and 'twenty 5'
+  if (r.has('#TextValue #NumericValue') && !r.has('(twenty|thirty|fourty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million|billion|trillion)')) {
     r.splitBefore('#NumericValue+');
   }
   //5-8

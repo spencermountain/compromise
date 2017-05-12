@@ -131,6 +131,7 @@ module.exports = [
   'spacecraft',
   'species',
   'speed',
+  'species',
   'steam',
   'steel',
   'sugar',

@@ -2,6 +2,8 @@
 const irregulars = require('../../../data').irregular_plurals;
 const rules = require('./methods/data/indicators');
 const prep = /([a-z]*) (of|in|by|for) [a-z]/;
+const hasPlural = require('./hasPlural');
+
 
 const knownPlural = {
   i: false,
@@ -23,6 +25,9 @@ const noPlural = [
 ];
 //first, try to guess based on existing tags
 const couldEvenBePlural = function(t) {
+  if (hasPlural(t) === false) {
+    return false;
+  }
   for (let i = 0; i < noPlural.length; i++) {
     if (t.tags[noPlural[i]]) {
       return false;

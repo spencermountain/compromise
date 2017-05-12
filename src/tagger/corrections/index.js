@@ -77,6 +77,8 @@ const corrections = function (ts) {
     ts.match('#Noun #Adverb #Noun').term(2).tag('Verb', 'correction');
     //my buddy
     ts.match('#Possessive #FirstName').term(1).unTag('Person', 'possessive-name');
+    //this rocks
+    ts.match('(this|that) #Plural').term(1).tag('PresentTense', 'this-verbs');
     //organization
     if (ts.has('#Organization')) {
       ts.match('#Organization of the? #TitleCase').tag('Organization', 'org-of-place');

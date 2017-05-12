@@ -49,6 +49,13 @@ test('=Tagger=', function(T) {
       ['http://fun.com/cool?fun=yes', ['Url']],
       ['#cool fun.com @cooman', ['HashTag', 'Url', 'AtMention']],
 
+      //determiner-corrections
+      ['this rocks dude', ['Determiner', 'Verb', 'Noun']],
+      ['that rocks dude', ['Determiner', 'Verb', 'Noun']],
+      ['the rocks dude', ['Determiner', 'Plural', 'Noun']],
+      ['these rocks dude', ['Determiner', 'Plural', 'Noun']],
+      ['those rocks dude', ['Determiner', 'Plural', 'Noun']],
+
       //people
       ['John swim', ['Person', 'Verb']],
       ['John, John', ['Person', 'Person']],

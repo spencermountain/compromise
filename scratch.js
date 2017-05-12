@@ -12,5 +12,5 @@ nlp.verbose('tagger');
 // var r = nlp('it is + politic').debug();
 // r.match('is \\+', true).debug();
 
-var r = nlp('this species');
-r.debug();
+var r = nlp('May twenty-fourth, 2010');
+r.values().debug();

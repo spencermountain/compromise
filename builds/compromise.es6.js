@@ -5357,6 +5357,8 @@ module.exports = Text.makeSubset(methods, find);
 const irregulars = _dereq_('../../../data').irregular_plurals;
 const rules = _dereq_('./methods/data/indicators');
 const prep = /([a-z]*) (of|in|by|for) [a-z]/;
+const hasPlural = _dereq_('./hasPlural');
+
 
 const knownPlural = {
   i: false,
@@ -5378,6 +5380,9 @@ const noPlural = [
 ];
 //first, try to guess based on existing tags
 const couldEvenBePlural = function(t) {
+  if (hasPlural(t) === false) {
+    return false;
+  }
   for (let i = 0; i < noPlural.length; i++) {
     if (t.tags[noPlural[i]]) {
       return false;
@@ -5430,7 +5435,7 @@ const isPlural = function (t) {
 module.exports = isPlural;
 // console.log(is_plural('octopus') === false)
 
-},{"../../../data":6,"./methods/data/indicators":74}],73:[function(_dereq_,module,exports){
+},{"../../../data":6,"./hasPlural":70,"./methods/data/indicators":74}],73:[function(_dereq_,module,exports){
 'use strict';
 
 //chooses an indefinite aricle 'a/an' for a word
@@ -6547,7 +6552,9 @@ const find = function(r, n) {
   // r = r.match('#Value+ #Unit?');
 
   //june 21st 1992 is two seperate values
-  r.splitOn('#Year');
+  if (r.has('#NumericValue #NumericValue')) {
+    r.splitOn('#Year');
+  }
   if (typeof n === 'number') {
     r = r.get(n);
   }
@@ -6934,8 +6941,14 @@ const methods = {
           this.unit.delete();
         }
       }
+      if (this.unit.found) {
+        str = str + this.unit.out('text');
+      }
       this.replaceWith(str, true).tag('NumericValue');
-    // this.tag('NumericValue','toNumber');
+      //make sure unit gets the right tag..
+      if (this.unit.found) {
+        this.match(this.unit.out('normal')).tag('Unit');
+      }
     }
     return this;
   },
@@ -6957,6 +6970,10 @@ const methods = {
         str = str + this.unit.out('text');
       }
       this.replaceWith(str, true).tag('TextValue');
+      //make sure unit gets the right tag..
+      if (this.unit.found) {
+        this.match(this.unit.out('normal')).tag('Unit');
+      }
     }
     return this;
   },
@@ -6971,7 +6988,14 @@ const methods = {
       } else {
         str = num;
       }
+      if (this.unit.found) {
+        str = str + this.unit.out('text');
+      }
       this.replaceWith(str, true).tag('Cardinal');
+      //make sure unit gets the right tag..
+      if (this.unit.found) {
+        this.match(this.unit.out('normal')).tag('Unit');
+      }
     }
     return this;
   },
@@ -6986,7 +7010,14 @@ const methods = {
       } else {
         str = fmt.ordinal(num);
       }
+      if (this.unit.found) {
+        str = str + this.unit.out('text');
+      }
       this.replaceWith(str, true).tag('Ordinal');
+      //make sure unit gets the right tag..
+      if (this.unit.found) {
+        this.match(this.unit.out('normal')).tag('Unit');
+      }
     }
     return this;
   },
@@ -7001,7 +7032,14 @@ const methods = {
       } else {
         str = fmt.nice(num);
       }
+      if (this.unit.found) {
+        str = str + this.unit.out('text');
+      }
       this.replaceWith(str, true).tag('NumericValue');
+      //make sure unit gets the right tag..
+      if (this.unit.found) {
+        this.match(this.unit.out('normal')).tag('Unit');
+      }
     }
     return this;
   }
@@ -9054,6 +9092,8 @@ const corrections = function (ts) {
     ts.match('#Noun #Adverb #Noun').term(2).tag('Verb', 'correction');
     //my buddy
     ts.match('#Possessive #FirstName').term(1).unTag('Person', 'possessive-name');
+    //this rocks
+    ts.match('(this|that) #Plural').term(1).tag('PresentTense', 'this-verbs');
     //organization
     if (ts.has('#Organization')) {
       ts.match('#Organization of the? #TitleCase').tag('Organization', 'org-of-place');
@@ -9587,8 +9627,7 @@ const misc = [
   [/^(over|under)[a-z]{2,}/, 'Adjective'],
   //ending-ones
   [/^[0-9]+([a-z]{1,2})$/, 'Value'], //like 5kg
-  [/^[0-9]+(st|nd|rd|th)$/, 'Ordinal'], //like 5th
-  [/^[0-9](st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
+  [/^([0-9][,\.0-9]?)+(st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
   //middle (anywhere)
   [/[a-z]*\\-[a-z]*\\-/, 'Adjective'],
 

@@ -84,6 +84,10 @@ const find = function(r, n) {
   if (r.has('#NumericValue #NumericValue')) {
     r.splitOn('#Year');
   }
+  if (r.has('#Ordinal #Cardinal')) {
+    r.splitBefore('#Cardinal+');
+  }
+  // r.splitAfter('#Comma');
   if (typeof n === 'number') {
     r = r.get(n);
   }

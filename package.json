@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.2.2",
+  "version": "10.3.0",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",

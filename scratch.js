@@ -1,6 +1,6 @@
 'use strict';
 var nlp = require('./src/index');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 // const corpus = require('nlp-corpus');
 // let text = corpus.sotu.parsed()[0];
 // const fresh = require('./test/unit/lib/freshPrince.js');
@@ -12,12 +12,6 @@ nlp.verbose('tagger');
 // var r = nlp('it is + politic').debug();
 // r.match('is \\+', true).debug();
 
-let r = nlp('https://t.co/jLQukR550J https://t.co/OrEhKJZ5Rd');
-r.debug();
-// // console.log(r.values().out());
-// // console.log(r.values().toNumber().all().out());
-// r.values().toText();
-// console.log(r.out());
-// r.debug();
-
-// console.log(nlp('21 books').values().greaterThan(7).out('normal'));
+var r = nlp('third month of 2019');
+r.values().toNumber();
+console.log(r.out());

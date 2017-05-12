@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.2.2",
+  "version": "10.3.0",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -1640,6 +1640,9 @@ const units = {
     'picosecond': 'picosecond',
     'femtosecond': 'femtosecond',
     'attosecond': 'attosecond'
+  },
+  'Misc': {
+    '%': 'percent'
   }
 };
 
@@ -6540,7 +6543,7 @@ const methods = {
 };
 
 const find = function(r, n) {
-  r = r.match('#Value+');
+  r = r.match('#Value+ #Unit?');
   // r = r.match('#Value+ #Unit?');
 
   //june 21st 1992 is two seperate values
@@ -6560,13 +6563,14 @@ module.exports = Text.makeSubset(methods, find);
 'use strict';
 const parseText = _dereq_('./parseText');
 // 2.5, $5.50, 3,432, etc -
-const numeric = /^-?(\$|€|¥|£)?\.?[0-9]+[0-9,\.]*(st|nd|rd|th|rth)?$/;
+const numeric = /^-?(\$|€|¥|£)?\.?[0-9]+[0-9,\.]*(st|nd|rd|th|rth|%)?$/;
 
 const parseString = function(str) {
   if (numeric.test(str) === true) {
     //clean up a number, like '$4,342.00'
     str = str.replace(/,/g, '');
     str = str.replace(/^[\$|€|¥|£]/g, '');
+    str = str.replace(/%$/, '');
     str = str.replace(/(st|nd|rd|th|rth)$/g, '');
     let num = parseFloat(str);
     if (num || num === 0) {
@@ -6584,9 +6588,11 @@ const parse = function(val) {
   if (typeof val === 'string') {
     return parseString(val);
   }
+  // console.log(val);
   //numerical values can only be one term
   if (val.terms.length === 1 && val.terms[0].tags.TextValue !== true) {
     let str = val.terms[0].normal;
+    // console.log(str);
     return parseString(str);
   }
   return parseText(val.out('normal'));
@@ -6871,8 +6877,29 @@ const Value = function(arr, lexicon, refText, refTerms) {
   Terms.call(this, arr, lexicon, refText, refTerms);
   this.val = this.match('#Value+').list[0];
   this.val = unpackRange(this.val);
-  this.unit = this.match('#Unit$').list[0];
+  this.unit = this.match('#Unit+');
+  if (this.unit.found) {
+    this.unit = this.unit.list[0];
+  }
 };
+
+const isPercent = function(val, unit) {
+  //pre-tagged
+  if (val.has('#Percent') || unit.has('#Percent')) {
+    return true;
+  }
+  // 'five percent'
+  if (unit.out('normal') === 'percent') {
+    return true;
+  }
+  //'5%'
+  if (val.out('normal').match(/%$/) !== null) {
+    return true;
+  }
+  return false;
+};
+
+
 //Terms inheritence
 Value.prototype = Object.create(Terms.prototype);
 
@@ -6885,7 +6912,8 @@ const methods = {
       ordinal: fmt.ordinal(num),
       niceOrdinal: fmt.niceOrdinal(num),
       text: fmt.text(num),
-      textOrdinal: fmt.textOrdinal(num)
+      textOrdinal: fmt.textOrdinal(num),
+      unit: this.unit.out('normal')
     };
   },
   number: function() {
@@ -6899,7 +6927,12 @@ const methods = {
       if (this.val.has('#Ordinal')) {
         str = fmt.ordinal(num);
       } else {
-        str = num;
+        str = '' + num;
+        //convert 'five percent' -> '5%'
+        if (isPercent(this.val, this.unit)) {
+          str = str + '%';
+          this.unit.delete();
+        }
       }
       this.replaceWith(str, true).tag('NumericValue');
     // this.tag('NumericValue','toNumber');
@@ -6915,6 +6948,13 @@ const methods = {
         str = fmt.textOrdinal(num);
       } else {
         str = fmt.text(num);
+        //add percent
+        if (isPercent(this.val, this.unit)) {
+          str = str + ' percent';
+        }
+      }
+      if (this.unit.found) {
+        str = str + this.unit.out('text');
       }
       this.replaceWith(str, true).tag('TextValue');
     }
@@ -9143,12 +9183,12 @@ const tagger = function (ts) {
   ts = step.phrasal_step(ts);
   ts = step.comma_step(ts);
   ts = step.possessive_step(ts);
-  ts = step.value_step(ts);
   ts = step.acronym_step(ts);
   ts = step.person_step(ts); //1ms
   ts = step.quotation_step(ts);
   ts = step.organization_step(ts);
   ts = step.plural_step(ts);
+  ts = step.value_step(ts);
   ts = step.lumper(ts);
   ts = corrections(ts); //2ms
   ts = tagPhrase(ts);
@@ -9548,10 +9588,10 @@ const misc = [
   //ending-ones
   [/^[0-9]+([a-z]{1,2})$/, 'Value'], //like 5kg
   [/^[0-9]+(st|nd|rd|th)$/, 'Ordinal'], //like 5th
+  [/^[0-9](st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
   //middle (anywhere)
   [/[a-z]*\\-[a-z]*\\-/, 'Adjective'],
 
-  [/[0-9](st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
 ];
 
 //straight-up lookup of known-suffixes
@@ -9722,7 +9762,7 @@ module.exports = noun_fallback;
 },{}],147:[function(_dereq_,module,exports){
 'use strict';
 //ambiguous 'may' and 'march'
-const preps = '(in|by|before|for|during|on|until|after|of|within|all)';
+const preps = '(in|by|before|during|on|until|after|of|within|all)';
 const thisNext = '(last|next|this|previous|current|upcoming|coming)';
 const sections = '(start|end|middle|starting|ending|midpoint|beginning)';
 const seasons = '(spring|summer|winter|fall|autumn)';
@@ -9769,7 +9809,7 @@ const datePass = function (ts) {
     //may is
     ts.match(`${people} #Copula`).term(0).tag('Person', 'may-is');
     //april the 5th
-    ts.match(`${people} (the|#Value|#Date)`).term(0).tag('Month', 'person-value');
+    ts.match(`${people} the? #Value`).term(0).tag('Month', 'person-value');
     //wednesday april
     ts.match(`#Date ${people}`).term(1).tag('Month', 'correction-may');
     //may 5th
@@ -9777,12 +9817,12 @@ const datePass = function (ts) {
     //5th of may
     ts.match(`#Value of ${people}`).lastTerm().tag('Month', '5th-of-may');
     //by april
-    ts.match(`${preps} ${people}`).term(1).tag('Month', 'preps-month');
+    ts.match(`${preps} ${people}`).ifNo('#Holiday').term(1).tag('Month', 'preps-month');
     //this april
     ts.match(`(next|this|last) ${people}`).term(1).tag('Month', 'correction-may'); //maybe not 'this'
   }
   //ambiguous month - verb-forms
-  let verbs = '(may|march|sat)';
+  let verbs = '(may|march)';
   if (ts.has(verbs)) {
     //quickly march
     ts.match(`#Adverb ${verbs}`).lastTerm().tag('Infinitive', 'ambig-verb');
@@ -9812,6 +9852,13 @@ const datePass = function (ts) {
     //the sun
     ts.match('#Determiner sun').lastTerm().tag('Singular', 'the-sun');
   }
+  //sat, nov 5th
+  if (ts.has('sat')) {
+    //sat november
+    ts.match('sat #Date').firstTerm().tag('WeekDay', 'sat-feb');
+    //this sat
+    ts.match(`${preps} sat`).lastTerm().tag('WeekDay', 'sat');
+  }
 
   //months:
   if (ts.has('#Month')) {
@@ -9832,6 +9879,8 @@ const datePass = function (ts) {
 
   //months:
   if (ts.has('#Value')) {
+    //for 4 months
+    ts.match('for #Value #Duration').tag('Date', 'for-x-duration');
     //values
     ts.match('#Value #Abbreviation').tag('Value', 'value-abbr');
     ts.match('a #Value').tag('Value', 'a-value');
@@ -9852,6 +9901,8 @@ const datePass = function (ts) {
     }
     //two days before
     ts.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction');
+    //two years old
+    ts.match('#Value #Duration old').unTag('Date', 'val-years-old');
   }
 
   //time:
@@ -10277,6 +10328,10 @@ const value_step = function(ts) {
       }
     }
   }
+  //5 books
+  ts.match('#Cardinal #Plural').lastTerm().tag('Unit', 'cardinal-plural');
+  //5th book
+  ts.match('#Ordinal #Singular').lastTerm().tag('Unit', 'ordinal-singular');
   return ts;
 };
 
@@ -10720,6 +10775,7 @@ module.exports = [
   ['^[\-\+]?[0-9]{1,3}(,[0-9]{3})+(\.[0-9]+)?$', 'NiceNumber'], //like 5,999.0
   ['^[\-\+]?[0-9]+(\.[0-9]+)?$', 'NumericValue'], //like +5.0
 
+  ['^\.?[0-9]+([0-9,\.]+)?%$', ['Percent', 'Cardinal', 'NumericValue']], //7%
   ['[0-9]{1,4}/[0-9]{1,4}', 'Fraction'], //3/2ths
   ['[0-9]{1,2}-[0-9]{1,2}', 'Value'], //7-8
 
@@ -11007,7 +11063,7 @@ module.exports = [
   ['Pluperfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund', 'FuturePerfect', 'PerfectTense'],
   ['Auxiliary', 'Noun', 'Value'],
   //date
-  ['Month', 'WeekDay', 'Year', 'Duration'],
+  ['Month', 'WeekDay', 'Year', 'Duration', 'Holiday'],
   ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
   ['Date', 'Verb', 'Adjective', 'Person'],
   ['Date', 'Money', 'RomanNumeral', 'Fraction'],
@@ -11295,6 +11351,9 @@ module.exports = {
     is: 'Value'
   },
   Money: {
+    is: 'Value'
+  },
+  Percent: {
     is: 'Value'
   }
 };

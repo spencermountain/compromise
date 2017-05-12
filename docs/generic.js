@@ -2,7 +2,7 @@
 
 //methods on the generic Result prototype
 module.exports = {
-  inspect: {
+  'document-inspect': {
     data: {
       desc: 'return a handy array of meta-data for this subset. Default subset is sentences, but it can be anything.',
       example: 'nlp(\'The stage was set for the Alan Parsons Project! Which I believe was some sort of hovercraft.\').data()\n//[{normal:\'the stage was set...\'}]',
@@ -37,47 +37,25 @@ module.exports = {
       desc: 'transforms whitespace, case, punctuation, contractions and values, so that they are more standard and workable',
       returns: 'Text',
       example: 'nlp(\' so... you like   DONUTS? have all the donuts in the WORLD!!!\').normalize().sentences(0).out()\n//So you like donuts?'
-    }
-  },
-  array: {
-    clone: {
-      desc: 'copy the object, so changes no longer effect the original (make it ~immutable)',
-      returns: 'Text',
-      example: 'nlp(\'would somebody please think of the children\').clone().toUpperCase().parent.out()\n//would somebody please think of the children'
     },
     length: {
       desc: 'how many individual matches in the result',
       returns: 'int',
       example: 'nlp(\'jackie kennedy and aristotle onassis\').people().length\n//2'
     },
-    slice: {
-      desc: 'grab a subset of the results',
+    random: {
+      desc: 'sample a random section of n matches',
       returns: 'Text',
-      example: 'nlp(\'Homer, have you been eating that sandwich again?\').terms().slice(0, 3).out()\n//Homer, have you'
+      example: 'nlp(\'one two three four\').terms().random(2).out(\'array\')\n//[\'four\',\'one\']'
     },
     sort: {
       desc: 'set a new ordering for the sentences/results. Accepts `alphabetical`, `chronological`, `length`, `wordcount`, `frequency`',
       returns: 'Text',
       example: 'nlp(\'Larry, Curly, and Moe\').people().sort(\'alphabetical\').out(\'array\')\n//Curly, Larry, Moe'
     },
-    concat: {
-      desc: 'combine two results into one',
-      returns: 'Text',
-      example: 'nlp(\'My name is Otto\').concat(\'and i love to get blotto\').sentences().length\n//1'
-    },
-    flatten: {
-      desc: 'turn a list of results into one result',
-      returns: 'Text',
-      example: 'nlp(\'sex cauldron? I thought they closed that place down.\').flatten().length\n//1'
-    },
-    random: {
-      desc: 'sample a random section of n matches',
-      returns: 'Text',
-      example: 'nlp(\'one two three four\').terms().random(2).out(\'array\')\n//[\'four\',\'one\']'
-    }
   },
 
-  case: {
+  'word-fixes': {
     toTitleCase: {
       desc: 'set the first letter of each term as a capital',
       returns: 'Text',
@@ -97,9 +75,7 @@ module.exports = {
       desc: 'remove whitespace and titlecase the words',
       returns: 'Text',
       example: 'nlp(\'natural language processing\').toCamelCase().out()\n//NaturalLanguageProcessing'
-    }
-  },
-  punctuation: {
+    },
     hyphenate: {
       desc: 'remove whitespace and add a hyphenate between the words',
       returns: 'Text',
@@ -118,7 +94,7 @@ module.exports = {
 
   },
 
-  insert: {
+  'sentence-fixes': {
     insertBefore: {
       desc: 'append a word (or words) before each match',
       returns: 'Text',
@@ -138,10 +114,7 @@ module.exports = {
       desc: 'merge matches into one term, with shared tags.',
       returns: 'Text',
       example: 'nlp(\'Keanu Reeves said whoa\').match(\'#Person\').lump().all().out(\'terms\')\n//[\'Keanu Reeves\', \'said\', \'whoa\']'
-    }
-  },
-
-  replace: {
+    },
     replaceWith: {
       desc: 'turn the current selection into something else. Essentially just delete() -> insertAt(). The second param says whether to keep original tags around.',
       returns: 'Text',
@@ -156,10 +129,45 @@ module.exports = {
       desc: 'remove a match from the Text permanently. For a temporary filter, see `.not()`',
       returns: 'Text',
       example: 'nlp(\'you don\u2019t win friends with salad\').delete(\'do not\').out()\n//you win friends with salad'
-    }
+    },
+    splitOn: {
+      desc: 'split matches into [before, match, after]',
+      returns: 'Text',
+      example: 'nlp(\'Monorail...Once again! Monorail... Monorail!\').splitOn(\'monorail\').get(0).out()\n//Monorail'
+    },
+    splitBefore: {
+      desc: 'split matches into [before,  match + after]',
+      returns: 'Text',
+      example: 'nlp(\'Monorail...Once again! Monorail... Monorail!\').splitBefore(\'monorail\').get(0).out()\n//Monorail...Once again!'
+    },
+    splitAfter: {
+      desc: 'split matches into [before + match,  after]',
+      returns: 'Text',
+      example: 'nlp(\'Monorail...Once again! Monorail... Monorail!\').splitAfter(\'monorail\').get(0).out()\n//Monorail'
+    },
+    clone: {
+      desc: 'copy the object, so changes no longer effect the original (make it ~immutable)',
+      returns: 'Text',
+      example: 'nlp(\'would somebody please think of the children\').clone().toUpperCase().parent.out()\n//would somebody please think of the children'
+    },
+    slice: {
+      desc: 'grab a subset of the results',
+      returns: 'Text',
+      example: 'nlp(\'Homer, have you been eating that sandwich again?\').terms().slice(0, 3).out()\n//Homer, have you'
+    },
+    concat: {
+      desc: 'combine two results into one',
+      returns: 'Text',
+      example: 'nlp(\'My name is Otto\').concat(\'and i love to get blotto\').sentences().length\n//1'
+    },
+    flatten: {
+      desc: 'turn a list of results into one result',
+      returns: 'Text',
+      example: 'nlp(\'sex cauldron? I thought they closed that place down.\').flatten().length\n//1'
+    },
   },
 
-  match: {
+  'match/tag': {
     match: {
       desc: 'zoom-in to a subset of the text, using a [regex-like syntax](https:\n//github.com/nlp-compromise/compromise/wiki/Match-syntax)',
       returns: 'Text',
@@ -194,28 +202,7 @@ module.exports = {
       desc: 'find a match, and return everything following of it',
       returns: 'Text',
       example: 'nlp(\'one two three four five\').after(\'three\').out()\n//four five'
-    }
-  },
-
-  split: {
-    splitOn: {
-      desc: 'split matches into [before, match, after]',
-      returns: 'Text',
-      example: 'nlp(\'Monorail...Once again! Monorail... Monorail!\').splitOn(\'monorail\').get(0).out()\n//Monorail'
     },
-    splitBefore: {
-      desc: 'split matches into [before,  match + after]',
-      returns: 'Text',
-      example: 'nlp(\'Monorail...Once again! Monorail... Monorail!\').splitBefore(\'monorail\').get(0).out()\n//Monorail...Once again!'
-    },
-    splitAfter: {
-      desc: 'split matches into [before + match,  after]',
-      returns: 'Text',
-      example: 'nlp(\'Monorail...Once again! Monorail... Monorail!\').splitAfter(\'monorail\').get(0).out()\n//Monorail'
-    }
-  },
-
-  tag: {
     tag: {
       desc: 'set a particular interpretation for these terms. Can tag your match as anything. Supported tags do dependency/conflict logic.',
       returns: 'Text',

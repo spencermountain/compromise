@@ -4,6 +4,26 @@ var str_test = require('../../lib/fns').str_test;
 
 test('==Value==', function (T) {
 
+  T.test('basic:', function (t) {
+    var r = nlp('third month of 2019');
+    r.values().toNumber();
+    t.equal(r.out(), '3rd month of 2019', 'toNumber');
+
+    r.values().toText();
+    t.equal(r.out(), 'third month of two thousand nineteen', 'toText');
+
+    r.values().toCardinal();
+    t.equal(r.out(), 'three month of two thousand nineteen', 'toCardinal');
+
+    r.values().toOrdinal();
+    t.equal(r.out(), 'third month of two thousand nineteenth', 'toOrdinal');
+
+    r.values().toNumber();
+    t.equal(r.out(), '3rd month of 2019th', 'toNumber2');
+
+    t.end();
+  });
+
   T.test('to_ordinal:', function (t) {
     [
       [11, '11th'],

@@ -84,9 +84,15 @@ const find = function(r, n) {
   if (r.has('#NumericValue #NumericValue')) {
     r.splitOn('#Year');
   }
+  //fifth five
   if (r.has('#Ordinal #Cardinal')) {
     r.splitBefore('#Cardinal+');
   }
+  //five 2017
+  if (r.has('#TextValue #NumericValue')) {
+    r.splitBefore('#NumericValue+');
+  }
+  //5-8
   if (r.has('#NumberRange')) {
     r.splitAfter('#NumberRange');
   }

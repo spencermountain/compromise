@@ -14,4 +14,7 @@ var nlp = require('./src/index');
 
 var r = nlp('third month of 2019');
 r.values().toNumber();
-console.log(r.out());
+// r.debug();
+// console.log(r.out());
+r.values().debug().toText();
+// console.log(r.out());

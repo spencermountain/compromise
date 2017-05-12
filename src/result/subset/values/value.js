@@ -76,8 +76,14 @@ const methods = {
           this.unit.delete();
         }
       }
+      if (this.unit.found) {
+        str = str + this.unit.out('text');
+      }
       this.replaceWith(str, true).tag('NumericValue');
-    // this.tag('NumericValue','toNumber');
+      //make sure unit gets the right tag..
+      if (this.unit.found) {
+        this.match(this.unit.out('normal')).tag('Unit');
+      }
     }
     return this;
   },
@@ -99,6 +105,10 @@ const methods = {
         str = str + this.unit.out('text');
       }
       this.replaceWith(str, true).tag('TextValue');
+      //make sure unit gets the right tag..
+      if (this.unit.found) {
+        this.match(this.unit.out('normal')).tag('Unit');
+      }
     }
     return this;
   },
@@ -113,7 +123,14 @@ const methods = {
       } else {
         str = num;
       }
+      if (this.unit.found) {
+        str = str + this.unit.out('text');
+      }
       this.replaceWith(str, true).tag('Cardinal');
+      //make sure unit gets the right tag..
+      if (this.unit.found) {
+        this.match(this.unit.out('normal')).tag('Unit');
+      }
     }
     return this;
   },
@@ -128,7 +145,14 @@ const methods = {
       } else {
         str = fmt.ordinal(num);
       }
+      if (this.unit.found) {
+        str = str + this.unit.out('text');
+      }
       this.replaceWith(str, true).tag('Ordinal');
+      //make sure unit gets the right tag..
+      if (this.unit.found) {
+        this.match(this.unit.out('normal')).tag('Unit');
+      }
     }
     return this;
   },
@@ -143,7 +167,14 @@ const methods = {
       } else {
         str = fmt.nice(num);
       }
+      if (this.unit.found) {
+        str = str + this.unit.out('text');
+      }
       this.replaceWith(str, true).tag('NumericValue');
+      //make sure unit gets the right tag..
+      if (this.unit.found) {
+        this.match(this.unit.out('normal')).tag('Unit');
+      }
     }
     return this;
   }

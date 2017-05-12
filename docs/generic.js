@@ -2,7 +2,7 @@
 
 //methods on the generic Result prototype
 module.exports = {
-  'document-inspect': {
+  'doc-inspect': {
     data: {
       desc: 'return a handy array of meta-data for this subset. Default subset is sentences, but it can be anything.',
       example: 'nlp(\'The stage was set for the Alan Parsons Project! Which I believe was some sort of hovercraft.\').data()\n//[{normal:\'the stage was set...\'}]',
@@ -55,7 +55,7 @@ module.exports = {
     },
   },
 
-  'word-fixes': {
+  'word-changes': {
     toTitleCase: {
       desc: 'set the first letter of each term as a capital',
       returns: 'Text',
@@ -94,7 +94,7 @@ module.exports = {
 
   },
 
-  'sentence-fixes': {
+  'sentence-changes': {
     insertBefore: {
       desc: 'append a word (or words) before each match',
       returns: 'Text',

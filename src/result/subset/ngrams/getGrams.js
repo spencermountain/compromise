@@ -59,7 +59,7 @@ const buildGrams = function(r, options) {
         grams = getGrams(ts, size);
       }
       grams.forEach((g) => {
-        if (obj[g.key]) {
+        if (obj.hasOwnProperty(g.key)) {
           obj[g.key].inc();
         } else {
           obj[g.key] = g;

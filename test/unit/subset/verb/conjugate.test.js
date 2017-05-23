@@ -175,7 +175,37 @@ var arr = [
     'PresentTense': 'invests',
     'PastTense': 'invested',
     'Gerund': 'investing'
-  }
+  },
+  {
+    'Infinitive': 'age',
+    'PresentTense': 'ages',
+    'PastTense': 'aged',
+    'Gerund': 'aging'
+  },
+  {
+    'Infinitive': 'shed',
+    'PresentTense': 'sheds',
+    'PastTense': 'shed',
+    'Gerund': 'shedding'
+  },
+  {
+    'Infinitive': 'ace',
+    'PresentTense': 'aces',
+    'PastTense': 'aced',
+    'Gerund': 'acing'
+  },
+  {
+    'Infinitive': 'egg',
+    'PresentTense': 'eggs',
+    'PastTense': 'egged',
+    'Gerund': 'egging'
+  },
+  {
+    'Infinitive': 'lie',
+    'PresentTense': 'lies',
+    'PastTense': 'lied',
+    'Gerund': 'lying'
+  },
 ];
 test('conjugation:', function(t) {
 

@@ -92,5 +92,12 @@ test('reserved words:', function (t) {
   t.ok(r.values().data(), 'runs value subset');
   t.ok(r.nouns().data(), 'runs noun subset');
   t.ok(r.ngrams().data(), 'runs ngrams subset');
+  t.ok(r.people().data(), 'runs people subset');
+  t.ok(r.places().data(), 'runs places subset');
+  t.ok(r.adjectives().data(), 'runs adjectives subset');
+  t.ok(r.sentences().data(), 'runs sentences subset');
+  t.ok(r.dates().data(), 'runs dates subset');
+  t.ok(r.contractions().data(), 'runs contractions subset');
+  t.ok(r.terms().data(), 'runs terms subset');
   t.end();
 });

@@ -37,3 +37,7 @@
 
 //bug 10 - concat guesses sentence-completion
 // nlp('this is a complete sentence.').concat('this is a second sentence.').sentences().length //1
+
+//bug 11 - escape regex-characters somehow
+// var r = nlp('it is + politic').debug();
+// r.match('is \\+', true).debug();

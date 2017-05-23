@@ -419,11 +419,19 @@ let irregular = {
   smash: {
     PresentTense: 'smashes'
   },
+  egg: {
+    PastTense: 'egged'
+  },
   suit: {
     Gerund: 'suiting',
     PastTense: 'suited',
     Actor: 'suiter'
-  }
+  },
+  age: {
+    PresentTense: 'ages',
+    PastTense: 'aged',
+    Gerund: 'ageing'
+  },
 };
 //fancy es3 literal support (ftw?)
 const literals = [

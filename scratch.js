@@ -8,14 +8,34 @@ var nlp = require('./src/index');
 // console.log(nlp('I\'m going to the shops').sentences().toPastTense().out());
 
 
+// lied => ly
+// shed => sh
+// owed => ow
+// aged => ag
+// aced => ac
+// axed => ax
+// egged => eg
+// vied => vy
+// ared => ar
+// sked => sk
+// fied => fy
+// aked => ak
 
-// var r = nlp('it is + politic').debug();
-// r.match('is \\+', true).debug();
-
-var text = 'class const constructor fun';
-nlp(text).ngrams();
-
-// var text = 'Constructor';
-// nlp(text).debug();
-
-// console.log(nlp('dies').verbs().conjugate());
+let arr = [
+  'lied',
+  'shed',
+  'owed',
+  'caged',
+  'aced',
+  'axed',
+  'egged',
+  'vied',
+  'pared',
+  'busked',
+  'gentrified',
+  'raked',
+];
+arr.forEach((str) => {
+  console.log(nlp(str).tag('Verb').verbs().toInfinitive().out());
+});
+// console.log(nlp('stalked').tag('Verb').verbs().toInfinitive().out());

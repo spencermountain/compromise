@@ -31,6 +31,7 @@ const toInfinitive = function(t) {
     for (let i = 0; i < rules[form].length; i++) {
       let rule = rules[form][i];
       if (t.normal.match(rule.reg)) {
+        // console.log(rule);
         return t.normal.replace(rule.reg, rule.to);
       }
     }

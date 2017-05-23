@@ -19,8 +19,8 @@ let rules = {
   ],
   PresentTense: [
     {
-      reg: /(ies)$/i,
-      to: 'y'
+      reg: /(..)(ies)$/i,
+      to: '$1y'
     }, {
       reg: /(tch|sh)es$/i,
       to: '$1'
@@ -104,8 +104,8 @@ let rules = {
       reg: /(e|i)lled$/i,
       to: '$1ll'
     }, {
-      reg: /(sh|ch)ed$/i,
-      to: '$1'
+      reg: /(.)(sh|ch)ed$/i,
+      to: '$1$2'
     }, {
       reg: /(tl|gl)ed$/i,
       to: '$1e'
@@ -122,11 +122,17 @@ let rules = {
       reg: /tted$/i,
       to: 't'
     }, {
-      reg: /gged$/i,
-      to: 'g'
+      reg: /(..)gged$/i,
+      to: '$1g'
     }, {
-      reg: /(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ail|ld|en|oo.|er|k|pp|w|ou.|rt|ght|rm)ed$/i,
-      to: '$1'
+      reg: /(..)lked$/i,
+      to: '$1lk'
+    }, {
+      reg: /(..)ked$/i,
+      to: '$1ke'
+    }, {
+      reg: /(..)(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ail|ld|en|oo.|er|k|pp|w|ou.|rt|ght|rm)ed$/i,
+      to: '$1$2'
     }, {
       reg: /(.ut)ed$/i,
       to: '$1e'
@@ -137,16 +143,16 @@ let rules = {
       reg: /(..[^aeiouy])ed$/i,
       to: '$1e'
     }, {
-      reg: /ied$/i,
-      to: 'y'
+      reg: /(..)ied$/i,
+      to: '$1y'
     }, {
       reg: /(.o)ed$/i,
       to: '$1o'
     }, {
-      reg: /(.i)ed$/i,
+      reg: /(..i)ed$/i,
       to: '$1'
     }, {
-      reg: /(a[^aeiou])ed$/i,
+      reg: /(.a[^aeiou])ed$/i,
       to: '$1'
     }, {
       reg: /([rl])ew$/i,

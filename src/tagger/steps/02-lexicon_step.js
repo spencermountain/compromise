@@ -7,10 +7,10 @@ const lexicon = p.lexicon;
 const check_lexicon = (str, sentence) => {
   //check a user's custom lexicon
   let custom = sentence.lexicon || {};
-  if (custom[str]) {
+  if (custom.hasOwnProperty(str)) {
     return custom[str];
   }
-  if (lexicon[str]) {
+  if (lexicon.hasOwnProperty(str)) {
     return lexicon[str];
   }
   let tag = tries.lookup(str);

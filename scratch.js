@@ -1,6 +1,6 @@
 'use strict';
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 // const corpus = require('nlp-corpus');
 // let text = corpus.sotu.parsed()[0];
 // const fresh = require('./test/unit/lib/freshPrince.js');
@@ -12,8 +12,8 @@ var nlp = require('./src/index');
 // var r = nlp('it is + politic').debug();
 // r.match('is \\+', true).debug();
 
-var result = nlp('june five 2016');
-result.contractions().expand();
-//convert 'fourth' to 4rth
-result.values().debug().toNumber();
-// result.debug();
+// var text = 'out - 2nd video';
+// nlp(text).values().debug();
+
+var text = 'Constructor';
+nlp(text).debug();

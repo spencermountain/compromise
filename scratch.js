@@ -35,7 +35,7 @@ let arr = [
   'gentrified',
   'raked',
 ];
-arr.forEach((str) => {
-  console.log(nlp(str).tag('Verb').verbs().toInfinitive().out());
-});
-// console.log(nlp('stalked').tag('Verb').verbs().toInfinitive().out());
+// arr.forEach((str) => {
+//   console.log(nlp(str).tag('Verb').verbs().toInfinitive().out());
+// });
+console.log(nlp('aimed').tag('Verb').verbs().toInfinitive().out());

@@ -128,6 +128,9 @@ let rules = {
       reg: /(..)lked$/i,
       to: '$1lk'
     }, {
+      reg: /(.[aeiou])led$/i,
+      to: '$1l'
+    }, {
       reg: /(..)ked$/i,
       to: '$1ke'
     }, {

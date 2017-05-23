@@ -180,7 +180,7 @@ var arr = [
     'Infinitive': 'age',
     'PresentTense': 'ages',
     'PastTense': 'aged',
-    'Gerund': 'aging'
+    'Gerund': 'ageing'
   },
   {
     'Infinitive': 'shed',
@@ -199,13 +199,7 @@ var arr = [
     'PresentTense': 'eggs',
     'PastTense': 'egged',
     'Gerund': 'egging'
-  },
-  {
-    'Infinitive': 'lie',
-    'PresentTense': 'lies',
-    'PastTense': 'lied',
-    'Gerund': 'lying'
-  },
+  }
 ];
 test('conjugation:', function(t) {
 

@@ -12,12 +12,10 @@ nlp.verbose('tagger');
 // var r = nlp('it is + politic').debug();
 // r.match('is \\+', true).debug();
 
-// var text = 'out - 2nd video';
-// nlp(text).values().debug();
+var text = 'class const constructor fun';
+nlp(text).debug().ngrams();
 
 // var text = 'Constructor';
 // nlp(text).debug();
 
-// var r = nlp('he is mark hughes', lexicon).debug();
-var r = nlp('as an attorney').debug();
 // console.log(nlp('dies').verbs().conjugate());

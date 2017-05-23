@@ -132,7 +132,10 @@ const methods = {
     }
     //then, try cache-lookup
     if (this._cache) {
-      return this._cache[want] || false;
+      if (this._cache.hasOwnProperty(want) === true) {
+        return this._cache[want];
+      }
+      return false;
     }
     let self = this;
     const crawl = function(index, prefix$$1) {

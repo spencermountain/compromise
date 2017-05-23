@@ -26,7 +26,7 @@ const isCommaEmoji = (t) => {
 const isEmoticon = (t) => {
   //normalize the 'eyes'
   let str = t.text.replace(/^[:;]/, ':');
-  return emoticon[str] !== undefined;
+  return emoticon.hasOwnProperty(str) === true;
 };
 
 //

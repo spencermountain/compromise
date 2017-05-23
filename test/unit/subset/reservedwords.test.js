@@ -13,6 +13,7 @@ test('reserved words:', function (t) {
     'char',
     'class',
     'const',
+    'constructor',
     'continue',
     'debugger',
     'default',

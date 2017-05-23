@@ -40,7 +40,7 @@ const fromString = function (str) {
   let carry = '';
   for (let i = 0; i < arr.length; i++) {
     //if it's more than a whitespace
-    if (wordlike.test(arr[i]) === true && notWord[arr[i]] === undefined) {
+    if (wordlike.test(arr[i]) === true && notWord.hasOwnProperty(arr[i]) === false) {
       result.push(carry + arr[i]);
       carry = '';
     } else {

@@ -40,7 +40,7 @@ const isPlural = function (t) {
   let str = t.normal;
 
   //whitelist a few easy ones
-  if (knownPlural[str] !== undefined) {
+  if (knownPlural.hasOwnProperty(str) === true) {
     return knownPlural[str];
   }
   //inspect the existing tags to see if a plural is valid
@@ -53,7 +53,7 @@ const isPlural = function (t) {
     str = preposition[1];
   }
   // if it's a known irregular case
-  if (irregulars.toSingle[str]) {
+  if (irregulars.toSingle.hasOwnProperty(str)) {
     return true;
   }
   if (irregulars.toPlural[str]) {

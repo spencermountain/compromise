@@ -44,16 +44,18 @@ test('pennTreebank-test:', function(t) {
     t.equal(terms.length, o.pos.length, 'tokenize#' + index);
 
     var equal = true;
+    var msg = '';
     for(var i = 0; i < o.pos.length; i++) {
       var want = softMapping[o.pos[i]];
       var term = terms.list[i].terms[0];
       if (!term.tags[want]) {
         equal = false;
         console.log(term.normal, want);
+        msg += ' - \'' + term.normal + '\' ' + want;
         break;
       }
     }
-    t.ok(equal, 'perfect-tags #' + index);
+    t.ok(equal, msg + ' - "' + o.text + '"');
   });
   t.end();
 });

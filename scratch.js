@@ -15,5 +15,9 @@ nlp.verbose('tagger');
 // var text = 'out - 2nd video';
 // nlp(text).values().debug();
 
-var text = 'Constructor';
-nlp(text).debug();
+// var text = 'Constructor';
+// nlp(text).debug();
+
+// var r = nlp('he is mark hughes', lexicon).debug();
+var r = nlp('as an attorney').debug();
+// console.log(nlp('dies').verbs().conjugate());

@@ -10,12 +10,14 @@ const check_lexicon = (str, sentence) => {
   if (custom.hasOwnProperty(str)) {
     return custom[str];
   }
-  if (lexicon.hasOwnProperty(str)) {
-    return lexicon[str];
-  }
+  //check trie-data
   let tag = tries.lookup(str);
   if (tag) {
     return tag;
+  }
+  //check ol' lexicon
+  if (lexicon.hasOwnProperty(str)) {
+    return lexicon[str];
   }
   return null;
 };

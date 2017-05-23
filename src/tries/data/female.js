@@ -34,7 +34,6 @@ module.exports = [
   'amelia',
   'amina',
   'amy',
-  'an',
   'ana',
   'ana',
   'andjela',

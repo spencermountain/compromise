@@ -2,6 +2,7 @@
 const mutate = require('../mutate');
 
 const replaceMethods = (Terms) => {
+
   const methods = {
 
     /**swap this for that */

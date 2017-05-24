@@ -104,6 +104,8 @@ const corrections = function (ts) {
     ts.match('how (#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-question');
     //is mark hughes
     ts.match('#Copula #Infinitive #Noun').term(1).tag('Noun', 'is-pres-noun');
+    //went to sleep
+    ts.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
     //support a splattering of auxillaries before a verb
     let advb = '(#Adverb|not)+?';
     if (ts.has(advb)) {

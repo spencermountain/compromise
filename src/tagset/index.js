@@ -14,12 +14,14 @@ const colors = {
   'Date': 'red',
   Value: 'red',
   Verb: 'green',
+  Auxiliary: 'green',
+  Negative: 'green',
   VerbPhrase: 'green',
   Preposition: 'cyan',
   Condition: 'cyan',
   Conjunction: 'cyan',
   Determiner: 'cyan',
-  Adjective: 'black',
+  Adjective: 'magenta',
   Adverb: 'black'
 };
 

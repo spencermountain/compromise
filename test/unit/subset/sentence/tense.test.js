@@ -71,7 +71,7 @@ test('copula-form', function(t) {
 
   t.end();
 });
-
+//
 test('conjugate-form', function(t) {
   var m = nlp('john walks quickly').sentences();
 

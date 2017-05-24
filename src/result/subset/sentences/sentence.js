@@ -5,6 +5,30 @@ const toPositive = require('./toPositive');
 const Verb = require('../verbs/verb');
 const insert = require('./smartInsert');
 
+//decide on main subject-verb-object
+const parse = function(s) {
+  //strip conditions first
+  let conditions = s.match('#Condition');
+  let tmp = s.not('#Condition');
+  //choose the verb first
+  let verb = tmp.match('#VerbPhrase+').first(); //this should be much smarter
+  let vb = verb.out('normal');
+  //get subj noun left-of the verb
+  let subject = tmp.match('#Determiner? #Adjective+? #Noun ' + vb).first().not('#VerbPhrase');
+  //get obj noun right-of the verb
+  let object = tmp.match(vb + ' #Preposition? #Determiner? #Noun').first().not('#VerbPhrase');
+
+  s.conditions = conditions;
+  s.subject = subject;
+  s.verb = verb;
+  s.object = object;
+  if (s.verb.found) {
+    s.verb = new Verb(s.verb.list[0].terms, s.lexicon, s.refText, s.refTerms);
+  }
+  return s;
+};
+
+
 const fixContraction = function(contr) {
   if (contr.found) {
     contr.list[0].terms.forEach((t) => {
@@ -15,20 +39,6 @@ const fixContraction = function(contr) {
       }
     });
   }
-};
-//decide subject-verb-object
-const parse = function(s) {
-  let conditions = s.match('#Condition');
-  let tmp = s.not('#Condition');
-  s.debug();
-
-  //get the verb
-  let verb = tmp.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+').if('#Verb').first(); //this should be (much) smarter
-
-  return {
-    conditions: conditions.out(),
-    verb: verb.out()
-  };
 };
 
 const methods = {
@@ -46,10 +56,9 @@ const methods = {
 
   /** find the first important verbPhrase. returns a Term object */
   mainVerb: function() {
-    let terms = this.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+').if('#Verb'); //this should be (much) smarter
-    if (terms.found) {
-      terms = terms.list[0].terms;
-      return new Verb(terms, this.lexicon, this.refText, this.refTerms);
+    parse(this);
+    if (this.verb.found) {
+      return this.verb;
     }
     return null;
   },
@@ -58,6 +67,7 @@ const methods = {
   toPastTense: function() {
     let verb = this.mainVerb();
     if (verb) {
+      // verb.debug();
       //this is really ugly..
       let start = verb.out('normal');
       verb.toPastTense();
@@ -139,7 +149,7 @@ const methods = {
 
 const Sentence = function(arr, lexicon, refText, refTerms) {
   Terms.call(this, arr, lexicon, refText, refTerms);
-// console.log(parse(this));
+  parse(this);
 };
 //Terms inheritence
 Sentence.prototype = Object.create(Terms.prototype);

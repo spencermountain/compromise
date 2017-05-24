@@ -9,4 +9,5 @@ var nlp = require('./src/index');
 // console.log(nlp('I\'m going to the shops').sentences().toPastTense().out());
 // console.log(nlp('I\'m going to the shops').sentences().toPresentTense().out());
 
-nlp('if it is good, I am going and it will be good.').sentences();
+nlp('john will not be nice').sentences().toPastTense().debug();
+// nlp('I will sleep').sentences().toPresentTense().debug();

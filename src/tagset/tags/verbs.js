@@ -1,5 +1,7 @@
 module.exports = {
-  Verb: {},
+  Verb: {
+    is: 'VerbPhrase'
+  },
   PresentTense: {
     is: 'Verb',
   },
@@ -35,5 +37,5 @@ module.exports = {
   },
   PhrasalVerb: {
     is: 'Verb'
-  },
+  }
 };

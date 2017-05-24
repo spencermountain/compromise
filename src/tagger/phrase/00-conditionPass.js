@@ -18,6 +18,11 @@ const conditionPass = function(ts) {
   if (m.found) {
     m.not('then$').tag('Condition', 'cond-then');
   }
+  //as long as ..
+  m = ts.match('as long as .{1,7} (then|#ClauseEnd)');
+  if (m.found) {
+    m.not('then$').tag('Condition', 'as-long-then');
+  }
   //at the end of a sentence:
   //'..., if it really goes.'
   m = ts.match('#Comma #Condition .{1,7} .$');

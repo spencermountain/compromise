@@ -15,10 +15,10 @@ const verbPhrase = function (ts) {
     ts.match('#Copula').tag('VerbPhrase', '#3');
     //'really will'..
     ts.match('#Adverb #Auxiliary').tag('VerbPhrase', '#4');
-    //to go
-    ts.match('to #Infinitive').tag('VerbPhrase', '#5');
-    //work with
-    ts.match('#Verb #Preposition').tag('VerbPhrase', '#6');
+  //to go
+  // ts.match('to #Infinitive').tag('VerbPhrase', '#5');
+  //work with
+  // ts.match('#Verb #Preposition').tag('VerbPhrase', '#6');
   }
   return ts;
 };

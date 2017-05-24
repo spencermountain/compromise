@@ -69,11 +69,14 @@ let rules = {
       reg: /tting$/i,
       to: 't'
     }, {
+      reg: /dding$/i,
+      to: 'd'
+    }, {
       reg: /ssing$/i,
       to: 'ss'
     }, {
-      reg: /gging$/i,
-      to: 'g'
+      reg: /(..)gging$/i,
+      to: '$1g'
     }, {
       reg: /([^aeiou])ying$/i,
       to: '$1y'
@@ -97,6 +100,9 @@ let rules = {
     {
       reg: /(ued)$/i,
       to: 'ue'
+    }, {
+      reg: /a([^aeiouy])ed$/i,
+      to: 'a$1e'
     }, {
       reg: /([aeiou]zz)ed$/i,
       to: '$1'
@@ -128,11 +134,11 @@ let rules = {
       reg: /(..)lked$/i,
       to: '$1lk'
     }, {
+      reg: /([^aeiouy][aeiou])ked$/i,
+      to: '$1ke'
+    }, {
       reg: /(.[aeiou])led$/i,
       to: '$1l'
-    }, {
-      reg: /(..)ked$/i,
-      to: '$1ke'
     }, {
       reg: /(..)(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ail|ld|en|oo.|er|k|pp|w|ou.|rt|ght|rm)ed$/i,
       to: '$1$2'

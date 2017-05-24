@@ -133,6 +133,14 @@ module.exports = [
       pa: '$1ed',
       gr: '$1ing'
     },
+  }, {
+    reg: /(ed)$/i,
+    repl: {
+      pr: '$1s',
+      pa: '$1ded',
+      ar: '$1der',
+      gr: '$1ding'
+    },
   },
   {
     reg: /(..)(ow)$/i,

@@ -7,35 +7,18 @@ var nlp = require('./src/index');
 
 // console.log(nlp('I\'m going to the shops').sentences().toPastTense().out());
 
-
-// lied => ly
-// shed => sh
-// owed => ow
-// aged => ag
-// aced => ac
-// axed => ax
-// egged => eg
-// vied => vy
-// ared => ar
-// sked => sk
-// fied => fy
-// aked => ak
-
 let arr = [
-  'lied',
-  'shed',
-  'owed',
-  'caged',
-  'aced',
-  'axed',
-  'egged',
-  'vied',
-  'pared',
-  'busked',
-  'gentrified',
-  'raked',
+  // 'busked',
+  // 'aimed',
+  // 'stained',
+  // 'looked',
+
+  // 'sheds',
+  // 'aces',
+  // 'aced',
 ];
 // arr.forEach((str) => {
 //   console.log(nlp(str).tag('Verb').verbs().toInfinitive().out());
 // });
-console.log(nlp('aimed').tag('Verb').verbs().toInfinitive().out());
+
+console.log(nlp('sheds').tag('Verb').verbs().conjugate());

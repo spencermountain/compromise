@@ -399,7 +399,9 @@ let irregular = {
     Actor: 'waiter'
   },
   aim: {
-    Actor: 'aimer'
+    Actor: 'aimer',
+    Gerund: 'aiming',
+    PastTense: 'aimed'
   },
   spill: {
     PastTense: 'spilt'
@@ -431,6 +433,11 @@ let irregular = {
     PresentTense: 'ages',
     PastTense: 'aged',
     Gerund: 'ageing'
+  },
+  shed: {
+    PresentTense: 'sheds',
+    PastTense: 'shed',
+    Gerund: 'shedding'
   },
 };
 //fancy es3 literal support (ftw?)

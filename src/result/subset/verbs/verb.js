@@ -17,13 +17,8 @@ const parse = function(r) {
     r.auxiliary = original.not(r.verb.out('normal')).not('(#Adverb|#Negative)');
     r.verb = r.verb.list[0].terms[0];
   // r.auxiliary = aux.match('#Auxiliary+');
-  // console.log('=-=-');
-  // console.log('=-=-');
   } else {
     r.verb = original.terms[0];
-  // r.auxiliary = null;
-  // r.adverbs = null;
-  // r.negative = null;
   }
   return r;
 };

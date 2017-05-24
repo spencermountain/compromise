@@ -1,5 +1,6 @@
 'use strict';
 const Terms = require('../../paths').Terms;
+const Text = require('../../paths').Text;
 const toNegative = require('./toNegative');
 const toPositive = require('./toPositive');
 const Verb = require('../verbs/verb');
@@ -34,8 +35,18 @@ const methods = {
     if (verb) {
       //this is really ugly..
       let start = verb.out('normal');
-      // verb.debug();
       verb.toPastTense();
+      //support "i'm going"
+      let contr = this.match('#Contraction ' + start);
+      if (contr.found) {
+        contr.list[0].terms.forEach((t) => {
+          if (t.silent_term) {
+            t.text = t.silent_term;
+            t.silent_term = null;
+            t.unTag('Contraction');
+          }
+        });
+      }
       let end = verb.out('normal');
       let r = this.parentTerms.replace(start, end);
       return r;

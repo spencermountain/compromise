@@ -20,7 +20,7 @@ const toVerb = (str) => {
     return str;
   }
   //irregulars
-  if (irregulars[str]) {
+  if (irregulars.hasOwnProperty(str) === true) {
     return irregulars[str];
   }
   if (/e$/.test(str) === true) {

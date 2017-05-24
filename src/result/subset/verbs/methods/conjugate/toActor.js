@@ -46,7 +46,7 @@ const toActor = function(inf) {
     return null;
   }
   //check irregulars
-  if (irregulars[inf]) {
+  if (irregulars.hasOwnProperty(inf)) {
     return irregulars[inf];
   }
   //try rules

@@ -5,5 +5,4 @@ var nlp = require('./src/index');
 // let text = corpus.sotu.parsed()[0];
 // const fresh = require('./test/unit/lib/freshPrince.js');
 
-let r = nlp('buy eggs constructor yeah');
-r.match(`(upcoming|someday|backburner)`, true).debug();
+let r = nlp('buy eggs constructor prototype');

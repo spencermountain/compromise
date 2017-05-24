@@ -25,7 +25,7 @@ const splitMethods = (Text) => {
     let matches = [];
     r.list.forEach((ts) => {
       ts.terms.forEach((t) => {
-        if (obj[t.normal]) {
+        if (obj.hasOwnProperty(t.normal) === true) {
           matches.push(t);
         }
       });

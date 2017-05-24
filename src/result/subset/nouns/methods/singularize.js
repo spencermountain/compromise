@@ -5,7 +5,7 @@ const singleRules = require('./data/singleRules');
 //turn 'shoes' into 'shoe'
 const toSingle = function (str) {
   //irregular
-  if (irregulars[str]) {
+  if (irregulars.hasOwnProperty(str)) {
     return irregulars[str];
   }
   //inflect first word of preposition-phrase

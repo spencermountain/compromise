@@ -22,7 +22,7 @@ const toInfinitive = function(t) {
     return t.normal;
   }
   //check the irregular verb conjugations
-  if (irregulars[t.normal]) {
+  if (irregulars.hasOwnProperty(t.normal) === true) {
     return irregulars[t.normal];
   }
   //check the suffix rules

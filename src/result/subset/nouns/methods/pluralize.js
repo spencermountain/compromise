@@ -5,7 +5,7 @@ const pluralRules = require('./data/pluralRules');
 //turn 'shoe' into 'shoes'
 const pluralize = function(str) {
   //irregular
-  if (irregulars[str] !== undefined) {
+  if (irregulars.hasOwnProperty(str) === true) {
     return irregulars[str];
   }
   //regular rule-based inflector

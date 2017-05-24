@@ -78,11 +78,19 @@ test('reserved words:', function (t) {
     '#§$%',
     'π',
     'привет',
+    // 'hasOwnProperty',
     'café',
     '$$$',
     1e2,
     '{}',
-    '[]'
+    '[]',
+    'constructor',
+    'prototype',
+    ')&@)^',
+    ' -@%@',
+    '-constructor',
+    '#!^@#$',
+    '..('
   ];
   var str = reserved.join(' ');
   var r = nlp(str);
@@ -99,5 +107,23 @@ test('reserved words:', function (t) {
   t.ok(r.dates().data(), 'runs dates subset');
   t.ok(r.contractions().data(), 'runs contractions subset');
   t.ok(r.terms().data(), 'runs terms subset');
+  t.end();
+});
+
+
+test('co-erce reserved words', function (t) {
+  let r = nlp('constructor prototype');
+  r.tag('Verb');
+  t.ok(r.verbs().data(), 'runs verb subset');
+  r.tag('Adjective');
+  t.ok(r.adjectives().data(), 'runs adjective subset');
+  r.tag('Value');
+  t.ok(r.values().data(), 'runs values subset');
+  r.tag('Person');
+  t.ok(r.people().data(), 'runs values subset');
+  r.tag('Noun');
+  t.ok(r.nouns().data(), 'runs values subset');
+  r.tag('Place');
+  t.ok(r.places().data(), 'runs place subset');
   t.end();
 });

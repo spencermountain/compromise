@@ -12,15 +12,18 @@ const lexiconFirst = getFirstWords([lexicon, tries.multiples()]);
 const tryHere = function(ts, i, obj) {
   let n = i + 1;
   //one
-  if (obj[ts.slice(n, n + 1).out('root')]) {
+  let str = ts.slice(n, n + 1).out('root');
+  if (obj.hasOwnProperty(str) === true) {
     return n + 1;
   }
   //two
-  if (obj[ts.slice(n, n + 2).out('root')]) {
+  str = ts.slice(n, n + 2).out('root');
+  if (obj.hasOwnProperty(str)) {
     return n + 2;
   }
   //three
-  if (obj[ts.slice(n, n + 3).out('root')]) {
+  str = ts.slice(n, n + 3).out('root');
+  if (obj.hasOwnProperty(str)) {
     return n + 3;
   }
   return null;
@@ -29,14 +32,16 @@ const tryHere = function(ts, i, obj) {
 //try all terms with this lexicon
 const tryAll = function(lexFirst, ts) {
   for(let i = 0; i < ts.terms.length - 1; i++) {
-    let obj = lexFirst[ts.terms[i].root];
-    if (obj) {
+    if (lexFirst.hasOwnProperty(ts.terms[i].root)) {
+      let obj = lexFirst[ts.terms[i].root];
       let n = tryHere(ts, i, obj);
       if (n) {
-        let tag = obj[ts.slice(i + 1, n).out('root')];
-        let slice = ts.slice(i, n);
-        slice.tag(tag, 'lexicon-lump');
-      // slice.lump();
+        let str = ts.slice(i + 1, n).out('root');
+        if (obj.hasOwnProperty(str) === true) {
+          let tag = obj[str];
+          let slice = ts.slice(i, n);
+          slice.tag(tag, 'lexicon-lump');
+        }
       }
     }
   }

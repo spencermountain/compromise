@@ -37,11 +37,11 @@ const perfectMatch = (term, reg) => {
   //one-of term-match
   if (reg.oneOf !== undefined) {
     for(let i = 0; i < reg.oneOf.tagArr.length; i++) {
-      if (term.tags[reg.oneOf.tagArr[i]] === true) {
+      if (term.tags.hasOwnProperty(reg.oneOf.tagArr[i]) === true) {
         return true;
       }
     }
-    return reg.oneOf.terms[term.normal] || reg.oneOf.terms[term.silent_term];
+    return reg.oneOf.terms.hasOwnProperty(term.normal) || reg.oneOf.terms.hasOwnProperty(term.silent_term);
   }
   return false;
 };

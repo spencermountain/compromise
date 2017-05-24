@@ -5,6 +5,5 @@ var nlp = require('./src/index');
 // let text = corpus.sotu.parsed()[0];
 // const fresh = require('./test/unit/lib/freshPrince.js');
 
-console.log(nlp('I\'m going to the shops').sentences().toFutureTense().out());
-// console.log(nlp('I\'m going to the shops').sentences().toPastTense().out());
-// console.log(nlp('john is going to the shops').sentences().toPresentTense().out());
+let r = nlp('buy eggs constructor yeah');
+r.match(`(upcoming|someday|backburner)`, true).debug();

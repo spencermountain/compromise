@@ -26,6 +26,7 @@ const easyOnes = (ts) => {
     }
     let parts = split(ts.terms[i]);
     if (parts) {
+      parts.start = parts.start.toLowerCase();
 
       //make sure its an easy one
       if (easy_ends[parts.end]) {

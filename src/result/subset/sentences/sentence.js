@@ -41,6 +41,15 @@ const fixContraction = function(contr) {
   }
 };
 
+//if the subject of thr sentence is plural, use infinitive form of verb
+// (he goes / i go)
+const useInfinitive = function(s) {
+  if (s.subject.found && s.subject.has('(i|we)')) {
+    return true;
+  }
+  return false;
+};
+
 const methods = {
   /** inflect the main/first noun*/
   toSingular: function() {
@@ -56,7 +65,7 @@ const methods = {
 
   /** find the first important verbPhrase. returns a Term object */
   mainVerb: function() {
-    parse(this);
+    parse(this); //re-parse
     if (this.verb.found) {
       return this.verb;
     }
@@ -84,6 +93,9 @@ const methods = {
     let verb = this.mainVerb();
     if (verb) {
       let start = verb.out('normal');
+      //plural/singular stuff
+      // console.log(useInfinitive(this));
+
       verb.toPresentTense();
       //support "i'm going"
       let contr = this.match('#Contraction ' + start);

@@ -27,17 +27,14 @@
 // nlp('men go').sentences().toPastTense().nouns().toSingular().debug();
 
 //bug 8
-// console.log(nlp('I\'m going to the shops').sentences().toPastTense().out());
-
-//bug 9
 // r = nlp('he walks');
 // r.match('walks').tag('Foo');
 // r.verbs().toPastTense();
 // r.debug();
 
-//bug 10 - concat guesses sentence-completion
+//bug 9 - concat guesses sentence-completion
 // nlp('this is a complete sentence.').concat('this is a second sentence.').sentences().length //1
 
-//bug 11 - escape regex-characters somehow
+//bug 10 - escape regex-characters somehow
 // var r = nlp('it is + politic').debug();
 // r.match('is \\+', true).debug();

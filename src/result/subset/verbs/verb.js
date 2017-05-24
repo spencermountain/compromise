@@ -14,8 +14,11 @@ const parse = function(r) {
   r.verb = aux.match('#Verb').not('#Particle').last();
   r.particle = aux.match('#Particle').last();
   if (r.verb.found) {
+    r.auxiliary = original.not(r.verb.out('normal')).not('(#Adverb|#Negative)');
     r.verb = r.verb.list[0].terms[0];
-    r.auxiliary = aux.match('#Auxiliary+');
+  // r.auxiliary = aux.match('#Auxiliary+');
+  // console.log('=-=-');
+  // console.log('=-=-');
   } else {
     r.verb = original.terms[0];
   // r.auxiliary = null;

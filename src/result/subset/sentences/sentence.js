@@ -34,6 +34,7 @@ const methods = {
     if (verb) {
       //this is really ugly..
       let start = verb.out('normal');
+      // verb.debug();
       verb.toPastTense();
       let end = verb.out('normal');
       let r = this.parentTerms.replace(start, end);

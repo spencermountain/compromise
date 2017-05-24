@@ -31,6 +31,7 @@ module.exports = {
 
   //non-exclusive
   Condition: {},
+  VerbPhrase: {},
   Auxiliary: {},
   Negative: {},
   Contraction: {},

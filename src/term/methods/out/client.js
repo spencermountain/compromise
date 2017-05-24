@@ -1,26 +1,15 @@
 'use strict';
-const fns = require('../../paths').fns;
-const colors = {
-  'Person': '#6393b9',
-  'Pronoun': '#81acce',
-  'Noun': 'steelblue',
-  'Verb': 'palevioletred',
-  'Adverb': '#f39c73',
-  'Adjective': '#b3d3c6',
-  'Determiner': '#d3c0b3',
-  'Preposition': '#9794a8',
-  'Conjunction': '#c8c9cf',
-  'Value': 'palegoldenrod',
-  'Expression': '#b3d3c6'
-};
+const paths = require('../../paths');
+const fns = paths.fns;
+const tagset = paths.tags;
 
 //a nicer logger for the client-side
 const clientSide = (t) => {
   let color = 'silver';
   let tags = Object.keys(t.tags);
   for(let i = 0; i < tags.length; i++) {
-    if (colors[tags[i]]) {
-      color = colors[tags[i]];
+    if (tagset[tags[i]] && tagset[tags[i]].color) {
+      color = tagset[tags[i]].color;
       break;
     }
   }

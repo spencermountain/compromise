@@ -127,3 +127,25 @@ test('particle-form', function(t) {
 
   t.end();
 });
+
+
+test('contraction-cases', function(t) {
+  let arr = [
+    [`I'm going to the shops`, `I went to the shops`],
+    [`I'll go to the shops`, `I went to the shops`],
+  ];
+  arr.forEach((a) => {
+    let str = nlp(a[0]).sentences().toPastTense().out();
+    t.equal(str, a[1], 'past-tense ' + a.join(' - '));
+  });
+
+  arr = [
+    [`I'm going to the shops`, `I will go to the shops`],
+    [`I'll go to the shops`, `I will go to the shops`],
+  ];
+  arr.forEach((a) => {
+    let str = nlp(a[0]).sentences().toFutureTense().out();
+    t.equal(str, a[1], 'future-tense ' + a.join(' - '));
+  });
+  t.end();
+});

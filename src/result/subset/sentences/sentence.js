@@ -1,10 +1,35 @@
 'use strict';
 const Terms = require('../../paths').Terms;
-const Text = require('../../paths').Text;
 const toNegative = require('./toNegative');
 const toPositive = require('./toPositive');
 const Verb = require('../verbs/verb');
 const insert = require('./smartInsert');
+
+const fixContraction = function(contr) {
+  if (contr.found) {
+    contr.list[0].terms.forEach((t) => {
+      if (t.silent_term) {
+        t.text = t.silent_term;
+        t.silent_term = null;
+        t.unTag('Contraction');
+      }
+    });
+  }
+};
+//decide subject-verb-object
+const parse = function(s) {
+  let conditions = s.match('#Condition');
+  let tmp = s.not('#Condition');
+  s.debug();
+
+  //get the verb
+  let verb = tmp.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+').if('#Verb').first(); //this should be (much) smarter
+
+  return {
+    conditions: conditions.out(),
+    verb: verb.out()
+  };
+};
 
 const methods = {
   /** inflect the main/first noun*/
@@ -38,15 +63,7 @@ const methods = {
       verb.toPastTense();
       //support "i'm going"
       let contr = this.match('#Contraction ' + start);
-      if (contr.found) {
-        contr.list[0].terms.forEach((t) => {
-          if (t.silent_term) {
-            t.text = t.silent_term;
-            t.silent_term = null;
-            t.unTag('Contraction');
-          }
-        });
-      }
+      fixContraction(contr);
       let end = verb.out('normal');
       let r = this.parentTerms.replace(start, end);
       return r;
@@ -58,6 +75,9 @@ const methods = {
     if (verb) {
       let start = verb.out('normal');
       verb.toPresentTense();
+      //support "i'm going"
+      let contr = this.match('#Contraction ' + start);
+      fixContraction(contr);
       let end = verb.out('normal');
       return this.parentTerms.replace(start, end);
     }
@@ -68,6 +88,9 @@ const methods = {
     if (verb) {
       let start = verb.out('normal');
       verb.toFutureTense();
+      //support "i'm going"
+      let contr = this.match('#Contraction ' + start);
+      fixContraction(contr);
       let end = verb.out('normal');
       return this.parentTerms.replace(start, end);
     }
@@ -116,7 +139,7 @@ const methods = {
 
 const Sentence = function(arr, lexicon, refText, refTerms) {
   Terms.call(this, arr, lexicon, refText, refTerms);
-  this.t = this.terms[0];
+// console.log(parse(this));
 };
 //Terms inheritence
 Sentence.prototype = Object.create(Terms.prototype);

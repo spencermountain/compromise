@@ -1,35 +1,35 @@
 'use strict';
 
 //
-const conditionPass = function(r) {
+const conditionPass = function(ts) {
   //'if it really goes, I will..'
-  let m = r.match('#Condition {1,7} #ClauseEnd');
+  let m = ts.match('#Condition .{1,7} #ClauseEnd');
   //make sure it ends on a comma
   if (m.found && m.match('#Comma$')) {
-    m.tag('ConditionPhrase');
+    m.tag('Condition');
   }
   //'go a bit further, if it then has a pronoun
-  m = r.match('#Condition {1,13} #ClauseEnd #Pronoun');
+  m = ts.match('#Condition .{1,13} #ClauseEnd #Pronoun');
   if (m.found && m.match('#Comma$')) {
-    m.not('#Pronoun$').tag('ConditionPhrase', 'end-pronoun');
+    m.not('#Pronoun$').tag('Condition', 'end-pronoun');
   }
   //if it goes then ..
-  m = r.match('#Condition {1,7} then');
+  m = ts.match('#Condition .{1,7} then');
   if (m.found) {
-    m.not('then$').tag('ConditionPhrase', 'cond-then');
+    m.not('then$').tag('Condition', 'cond-then');
   }
   //at the end of a sentence:
   //'..., if it really goes.'
-  m = r.match('#Comma #Condition {1,7} .$');
+  m = ts.match('#Comma #Condition .{1,7} .$');
   if (m.found) {
-    m.not('^#Comma').tag('ConditionPhrase', 'comma-7-end');
+    m.not('^#Comma').tag('Condition', 'comma-7-end');
   }
   // '... if so.'
-  m = r.match('#Condition {1,4}$');
+  m = ts.match('#Condition .{1,4}$');
   if (m.found) {
-    m.tag('ConditionPhrase', 'cond-4-end');
+    m.tag('Condition', 'cond-4-end');
   }
-  return r;
+  return ts;
 };
 
 module.exports = conditionPass;

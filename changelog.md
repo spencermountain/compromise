@@ -24,6 +24,10 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 * 10.3.0
 - new `Percent` tag
 - lump more units in with `.values()`
+* 10.4.0
+- improved tagging of `VerbPhrase` and `Condition`
+- fixes to contractions in sentence-changes - "i'm going ->  i went"
+- several verb conjugation fixes
 
 ### v9  &nbsp;
 * 9.0.0

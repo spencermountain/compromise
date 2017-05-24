@@ -1,24 +1,26 @@
 'use strict';
-//
-const verbPhrase = function (r) {
-  r.match('#Verb').tag('VerbPhrase', 'verbphrase-verb');
-  //was quickly
-  r.match('#Adverb? #Verb #Adverb?').tag('VerbPhrase', 'verbphrase-verb');
-  //is not
-  r.match('#Verb #Negative').tag('VerbPhrase', 'verb-not');
-  //never is
-  r.match('never #Verb').tag('VerbPhrase', 'not-verb');
-  //'will have had'..
-  r.match('#Auxiliary+').tag('VerbPhrase', '2');
-  // 'is'
-  r.match('#Copula').tag('VerbPhrase', '#3');
-  //'really will'..
-  r.match('#Adverb #Auxiliary').tag('VerbPhrase', '#4');
-  //to go
-  r.match('to #Infinitive').tag('VerbPhrase', '#5');
-  //work with
-  r.match('#Verb #Preposition').tag('VerbPhrase', '#6');
-  return r;
+//a verbPhrase is a sequence of axiliaries, adverbs and verbs
+const verbPhrase = function (ts) {
+  if (ts.has('(#Verb|#Auxiliary)')) {
+    ts.match('#Verb').tag('VerbPhrase', 'verbphrase-verb');
+    //was quickly
+    ts.match('#Adverb? #Verb #Adverb?').tag('VerbPhrase', 'verbphrase-verb');
+    //is not
+    ts.match('#Verb #Negative').tag('VerbPhrase', 'verb-not');
+    //never is
+    ts.match('never #Verb').tag('VerbPhrase', 'not-verb');
+    //'will have had'..
+    ts.match('#Auxiliary+').tag('VerbPhrase', '2');
+    // 'is'
+    ts.match('#Copula').tag('VerbPhrase', '#3');
+    //'really will'..
+    ts.match('#Adverb #Auxiliary').tag('VerbPhrase', '#4');
+    //to go
+    ts.match('to #Infinitive').tag('VerbPhrase', '#5');
+    //work with
+    ts.match('#Verb #Preposition').tag('VerbPhrase', '#6');
+  }
+  return ts;
 };
 
 module.exports = verbPhrase;

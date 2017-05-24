@@ -28,6 +28,7 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - improved tagging of `VerbPhrase` and `Condition`
 - fixes to contractions in sentence-changes - "i'm going ->  i went"
 - several verb conjugation fixes
+- accept Terms & Result objects in .match() and .replace()
 
 ### v9  &nbsp;
 * 9.0.0

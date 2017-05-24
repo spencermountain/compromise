@@ -7,7 +7,6 @@ const multiWord = (vb, verbose) => {
   let isNegative = vb.negative.found;
   let isPlural = false;
   //handle 'to be' verb seperately
-  // console.log(vb.verb);
   if (vb.verb.tags.Copula || (vb.verb.normal === 'be' && vb.auxiliary.match('will').found)) {
     return toBe(isPlural, isNegative);
   }

@@ -7,7 +7,7 @@ var nlp = require('./src/index');
 
 // console.log(nlp('I\'m going to the shops').sentences().toFutureTense().out());
 // console.log(nlp('I\'m going to the shops').sentences().toPastTense().out());
-// console.log(nlp('I\'m going to the shops').sentences().toPresentTense().out());
-// console.log(nlp('I\'m going to the shops').sentences().toPresentTense().out());
+console.log(nlp('I\'ll go to the shops').sentences().toFutureTense().out());
+// console.log(nlp('john is going to the shops').sentences().toPresentTense().out());
 
-nlp(`I'm`).contractions().expand().debug();
+// nlp(`I'm`).contractions().expand().debug();

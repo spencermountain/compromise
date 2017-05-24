@@ -147,5 +147,13 @@ test('contraction-cases', function(t) {
     let str = nlp(a[0]).sentences().toFutureTense().out();
     t.equal(str, a[1], 'future-tense ' + a.join(' - '));
   });
+  arr = [
+    [`I'm going to the shops`, `I go to the shops`],
+    [`I'll go to the shops`, `I go to the shops`],
+  ];
+  arr.forEach((a) => {
+    let str = nlp(a[0]).sentences().toPresentTense().out();
+    t.equal(str, a[1], 'present-tense ' + a.join(' - '));
+  });
   t.end();
 });

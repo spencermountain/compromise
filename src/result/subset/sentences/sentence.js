@@ -31,14 +31,32 @@ const parse = function(s) {
 
 const fixContraction = function(contr) {
   if (contr.found) {
-    contr.list[0].terms.forEach((t) => {
-      if (t.silent_term) {
-        t.text = t.silent_term;
-        t.silent_term = null;
-        t.unTag('Contraction');
-      }
-    });
+    contr.contractions().expand();
+  // contr.list[0].terms.forEach((t) => {
+  //   if (t.silent_term) {
+  //     t.text = t.silent_term;
+  //     t.silent_term = null;
+  //     t.unTag('Contraction');
+  //   }
+  // });
   }
+};
+
+const killContraction = function(s) {
+  s.terms = s.terms.filter((t) => {
+    if (t.silent_term) {
+      if (t.silent_term === 'am' || t.silent_term === 'will' || t.silent_term === 'did') {
+        return false;
+      }
+      t.text = t.silent_term;
+      t.silent_term = null;
+      t.unTag('Contraction');
+      if (t.tags.TitleCase === true) {
+        t.toTitleCase();
+      }
+    }
+    return true;
+  });
 };
 
 //if the subject of thr sentence is plural, use infinitive form of verb
@@ -94,12 +112,17 @@ const methods = {
     if (verb) {
       let start = verb.out('normal');
       //plural/singular stuff
-      // console.log(useInfinitive(this));
-
-      verb.toPresentTense();
+      if (useInfinitive(this) === true) {
+        if (this.has('(am|will|did) ' + start)) {
+          killContraction(this);
+        }
+        verb.toInfinitive();
+      } else {
+        verb.toPresentTense();
+        let contr = this.match('#Contraction ' + start);
+        fixContraction(contr);
+      }
       //support "i'm going"
-      let contr = this.match('#Contraction ' + start);
-      fixContraction(contr);
       let end = verb.out('normal');
       return this.parentTerms.replace(start, end);
     }
@@ -108,7 +131,7 @@ const methods = {
   toFutureTense: function() {
     let verb = this.mainVerb();
     if (verb) {
-      let start = verb.out('normal');
+      let start = verb; //.out('root');
       verb.toFutureTense();
       //support "i'm going"
       let contr = this.match('#Contraction ' + start);

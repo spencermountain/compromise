@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.4.1",
+  "version": "10.4.2",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -2995,7 +2995,7 @@ const splitMethods = (Text) => {
     let matches = [];
     r.list.forEach((ts) => {
       ts.terms.forEach((t) => {
-        if (obj[t.normal]) {
+        if (obj.hasOwnProperty(t.normal) === true) {
           matches.push(t);
         }
       });
@@ -3677,7 +3677,7 @@ const addMethods = (Text) => {
       let obj = {};
       this.list = this.list.filter((ts) => {
         let str = ts.out('root');
-        if (obj[str]) {
+        if (obj.hasOwnProperty(str)) {
           return false;
         }
         obj[str] = true;
@@ -4364,7 +4364,7 @@ const toVerb = (str) => {
     return str;
   }
   //irregulars
-  if (irregulars[str]) {
+  if (irregulars.hasOwnProperty(str) === true) {
     return irregulars[str];
   }
   if (/e$/.test(str) === true) {
@@ -5647,7 +5647,7 @@ const pluralRules = _dereq_('./data/pluralRules');
 //turn 'shoe' into 'shoes'
 const pluralize = function(str) {
   //irregular
-  if (irregulars[str] !== undefined) {
+  if (irregulars.hasOwnProperty(str) === true) {
     return irregulars[str];
   }
   //regular rule-based inflector
@@ -5669,7 +5669,7 @@ const singleRules = _dereq_('./data/singleRules');
 //turn 'shoes' into 'shoe'
 const toSingle = function (str) {
   //irregular
-  if (irregulars[str]) {
+  if (irregulars.hasOwnProperty(str)) {
     return irregulars[str];
   }
   //inflect first word of preposition-phrase
@@ -7802,7 +7802,7 @@ const forms = [
 
 const checkIrregulars = function(str) {
   //fast infinitive lookup
-  if (irregulars[str] !== undefined) {
+  if (irregulars.hasOwnProperty(str) === true) {
     let obj = fns.copy(irregulars[str]);
     obj.Infinitive = str;
     return obj;
@@ -7843,7 +7843,7 @@ const suffixPass = function(inf) {
     if (rules[i].reg.test(inf) === true) {
       let obj = rules[i].repl;
       for(let o = 0; o < keys.length; o++) {
-        if (obj[keys[o]] !== undefined) {
+        if (obj.hasOwnProperty(keys[o]) === true) {
           let key = mapping[keys[o]];
           found[key] = inf.replace(rules[i].reg, obj[keys[o]]);
         }
@@ -7905,7 +7905,7 @@ const toActor = function(inf) {
     return null;
   }
   //check irregulars
-  if (irregulars[inf]) {
+  if (irregulars.hasOwnProperty(inf)) {
     return irregulars[inf];
   }
   //try rules
@@ -8163,7 +8163,7 @@ const irregulars = {
 
 //takes an infitive verb, and returns an adjective form
 const toAdjective = function(str) {
-  if (irregulars[str]) {
+  if (irregulars.hasOwnProperty(str)) {
     return irregulars[str];
   }
   for(let i = 0; i < rules.length; i++) {
@@ -8206,7 +8206,7 @@ const toInfinitive = function(t) {
     return t.normal;
   }
   //check the irregular verb conjugations
-  if (irregulars[t.normal]) {
+  if (irregulars.hasOwnProperty(t.normal) === true) {
     return irregulars[t.normal];
   }
   //check the suffix rules
@@ -9442,15 +9442,18 @@ const lexiconFirst = getFirstWords([lexicon, tries.multiples()]);
 const tryHere = function(ts, i, obj) {
   let n = i + 1;
   //one
-  if (obj[ts.slice(n, n + 1).out('root')]) {
+  let str = ts.slice(n, n + 1).out('root');
+  if (obj.hasOwnProperty(str) === true) {
     return n + 1;
   }
   //two
-  if (obj[ts.slice(n, n + 2).out('root')]) {
+  str = ts.slice(n, n + 2).out('root');
+  if (obj.hasOwnProperty(str)) {
     return n + 2;
   }
   //three
-  if (obj[ts.slice(n, n + 3).out('root')]) {
+  str = ts.slice(n, n + 3).out('root');
+  if (obj.hasOwnProperty(str)) {
     return n + 3;
   }
   return null;
@@ -9459,14 +9462,16 @@ const tryHere = function(ts, i, obj) {
 //try all terms with this lexicon
 const tryAll = function(lexFirst, ts) {
   for(let i = 0; i < ts.terms.length - 1; i++) {
-    let obj = lexFirst[ts.terms[i].root];
-    if (obj) {
+    if (lexFirst.hasOwnProperty(ts.terms[i].root)) {
+      let obj = lexFirst[ts.terms[i].root];
       let n = tryHere(ts, i, obj);
       if (n) {
-        let tag = obj[ts.slice(i + 1, n).out('root')];
-        let slice = ts.slice(i, n);
-        slice.tag(tag, 'lexicon-lump');
-      // slice.lump();
+        let str = ts.slice(i + 1, n).out('root');
+        if (obj.hasOwnProperty(str) === true) {
+          let tag = obj[str];
+          let slice = ts.slice(i, n);
+          slice.tag(tag, 'lexicon-lump');
+        }
       }
     }
   }

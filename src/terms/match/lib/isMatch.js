@@ -13,6 +13,10 @@ const perfectMatch = (term, reg) => {
   if (reg.tag !== undefined) {
     return term.tags[reg.tag];
   }
+  //id-match
+  if (reg.id !== undefined) {
+    return reg.id === term.uid;
+  }
   //text-match
   if (reg.normal !== undefined) {
     return reg.normal === term.normal || reg.normal === term.silent_term;

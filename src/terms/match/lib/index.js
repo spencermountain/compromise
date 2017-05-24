@@ -4,10 +4,10 @@ const startHere = require('./startHere');
 const fastPass = require('./fastPass');
 
 //make a reg syntax from a text object
-const findFrom = function(r) {
-  let arr = r.list[0].terms.map((t) => {
+const findFromTerms = function(ts) {
+  let arr = ts.terms.map((t) => {
     return {
-      normal: t.normal || t.silent_term
+      id: t.uid
     };
   });
   return arr;
@@ -18,7 +18,9 @@ const match = (ts, reg, verbose) => {
   if (typeof reg === 'string') {
     reg = syntax(reg);
   } else if (reg && reg.isA === 'Text') {
-    reg = findFrom(reg);
+    reg = findFromTerms(reg.list[0]);
+  } else if (reg && reg.isA === 'Terms') {
+    reg = findFromTerms(reg);
   }
   if (!reg || reg.length === 0) {
     return [];

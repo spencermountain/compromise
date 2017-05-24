@@ -131,10 +131,11 @@ const methods = {
   toFutureTense: function() {
     let verb = this.mainVerb();
     if (verb) {
-      let start = verb; //.out('root');
+      let start = verb.clone(); //.out('root');
       verb.toFutureTense();
       //support "i'm going"
-      let contr = this.match('#Contraction ' + start);
+      let contr = this.match('#Contraction ' + start.out('normal'));
+      // contr.debug();
       fixContraction(contr);
       let end = verb.out('normal');
       return this.parentTerms.replace(start, end);

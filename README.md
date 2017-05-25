@@ -1,7 +1,6 @@
 <div align="center">
-  <img src="https://cloud.githubusercontent.com/assets/399657/26432884/f9010366-40cc-11e7-8150-d40a5c07afb4.png" />
-  <img src="https://cloud.githubusercontent.com/assets/399657/21955696/46e882d4-da3e-11e6-94a6-720c34e27df7.jpg" />
-  <div>natural language processing, actually in the browser</div>
+  <img src="https://cloud.githubusercontent.com/assets/399657/26433540/66a8b78e-40d1-11e7-90bf-886dbc675c20.png" />  
+  <img src="https://cloud.githubusercontent.com/assets/399657/23590290/ede73772-01aa-11e7-8915-181ef21027bc.png" />
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />
   </a>
@@ -14,6 +13,7 @@
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
   </a>
+  <div>natural language processing, actually in the browser</div>
 </div>
 
 <div align="center">
@@ -25,24 +25,20 @@
     </a>
   </sub>
 </div>
-
-<div align="center">
-  <sub>(formerly nlp_compromise)</sub>
-</div>
-
-<div align="center">
-  inspect and play with english text.
-  <div>
-    focus on being <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">handy, and not overly-fancy.</a>
-  </div>
-</div>
 <br/>
 
 ```javascript
-let r = nlp('I look just like buddy holly.')
-r.sentences().toPastTense()
-r.out('text')
+doc = nlp('I look just like buddy holly.').sentences().toPastTense()
+doc.out()
 // "I looked just like buddy holly."
+
+doc.match('#Verb').prepend('really')
+doc.out()
+// "I really looked just like buddy holly."
+
+doc.sentences().toNegative()
+doc.out()
+// "I didn't really look just like buddy holly."
 ```
 
 <div align="center">
@@ -96,45 +92,28 @@ r.out('text')
 </div>
 <br/>
 
-the idea is, **[reach-in](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)** to a part of the text, and change it:
-
-```javascript
-r = nlp('john is really nice. sara sings loudly.')
-
-r.match('#Person').toUpperCase()
-//JOHN is really nice. SARA sings loudly.
-```
-
-or pluck-out some parts,
-```javascript
-r.remove('#Adverb')
-// "JOHN is nice. SARA sings."
-
-//replacements,
-r.replace('is nice', 'is bad')
-// "JOHN is bad. SARA sings."
-```
-or just be downright fancy
-```javascript
-r.sentences().toNegative()
-// "JOHN is not bad. SARA doesn't sing."
-```
-
-or grab specific parts, and **analyze-the-heck** out of them:
-```javascript
-r = nlp(freshPrince)
-r.places().sort('freq').unique().data()
-/*[
-  {text: 'West Philadelphia'},
-  {text: 'Bel-Air'}
-]*/
-```
 <table align="center">
   <tr>
-    <td>Part-of-Speech Tagging️</td>
-    <td>Named-Entity Recognition️</td>
-    <td>🍾Verb Conjugation</td>
-    <td>✨Inflection/Pluralization</td>
+    <td>
+      <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
+        Part-of-Speech Tagging️
+      </a>
+    </td>
+    <td>
+      <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
+        Named-Entity Recognition️
+      </a>
+    </td>
+    <td>
+      <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
+        Verb Conjugation
+      </a>
+    </td>
+    <td>
+      <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
+        Number Parsing
+      </a>
+    </td>
   </tr>
 </table>
 

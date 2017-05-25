@@ -21,21 +21,20 @@
     by
     <a href="https://github.com/spencermountain">Spencer Kelly</a> and
     <a href="https://github.com/nlp-compromise/compromise/graphs/contributors">
-      contributors 💗
+      contributors 💙
     </a>
   </sub>
 </div>
 <br/>
 
 ```javascript
-var doc = nlp('I look just like buddy holly.')
-doc.sentences().toPastTense()
-doc.out()
-// "I looked just like buddy holly."
+var doc = nlp('Wee-ooh, I look just like buddy holly.')
+doc.sentences().toPastTense().out('text')
+// "Wee-ooh, I looked just like buddy holly."
 
 doc = nlp('then consider me Miles Davis.')
-doc.people().out('list')
-// ['miles davis']
+doc.people().out('topk')
+// [{ text:'Miles Davis', count:1 }]
 ```
 
 <div align="center">
@@ -93,28 +92,28 @@ doc.people().out('list')
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
-        Part-of-Speech Tagging️
-      </a>
-    </td>
-    <td>
-      <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
-        Named-Entity Recognition️
+         &nbsp;Part-of-Speech Tagging️ &nbsp;
       </a>
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
-        Verb Conjugation
+         &nbsp;Verb Conjugation &nbsp;
       </a>
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
-        Number Parsing
+         &nbsp;Number Parsing &nbsp;
       </a>
+    </td>
+    <td>
+    <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
+         &nbsp;Named-Entity Recognition️&nbsp;
+    </a>
     </td>
   </tr>
 </table>
 
-### Client-side:
+### Client-side!
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
@@ -122,19 +121,6 @@ doc.people().out('list')
   console.log(doc.out('text'))
   //dinosaurs
 </script>
-```
-
-### Tense:
-```javascript
-let doc = nlp('she sells seashells by the seashore.')
-doc.sentences().toFutureTense().out('text')
-//'she will sell seashells...'
-
-doc.verbs().conjugate()
-// [{ PastTense: 'sold',
-//    Infinitive: 'sell',
-//    Gerund: 'selling', ...
-// }]
 ```
 
 ### Plural/singular:
@@ -169,6 +155,19 @@ doc = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
 ```
 
+### Sentence Tense:
+```javascript
+let doc = nlp('she sells seashells by the seashore.')
+doc.sentences().toFutureTense().out('text')
+//'she will sell seashells...'
+
+doc.verbs().conjugate()
+// [{ PastTense: 'sold',
+//    Infinitive: 'sell',
+//    Gerund: 'selling', ...
+// }]
+```
+
 ### Named-entity recognition:
 ```javascript
 doc = nlp('the opera about richard nixon visiting china')
@@ -181,23 +180,25 @@ doc.topics().data()
 
 ### Fancy outputs:
 ```javascript
-doc = nlp('Tony Hawk won').out('html')
+doc = nlp('Tony Hawk  won.').out('html')
 /*
 <span>
-  <span class="nl-Person nl-Noun nl-FirstName">Tony</span>
-  <span class="nl-Person nl-Noun nl-LastName">Hawk</span>
+  <span class="nl-Person nl-FirstName">Tony </span>
+  <span class="nl-Person nl-LastName">Hawk </span>
   <span>&nbsp;</span>
   <span class="nl-Verb nl-PastTense">won</span>
+  <span>.</span>
 </span>
 */
 ```
 <h3 align="center">
   and yes, ofcourse, there's <a href="http://compromise.cool/demos">a lot more stuff</a>.
+  <br/>
+  <b>Join in -</b>
+  we're fun, we're using <b>semver</b>, and moving fast.
+  <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">get involved</a>
 </h3>
 
-**Join in -**
-we're fun, we're using <b>semver</b>, and moving fast.
-[get involved](https://github.com/nlp-compromise/compromise/wiki/Contributing)
 
 <table>
   <tr align="center">

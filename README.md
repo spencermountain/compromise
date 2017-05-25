@@ -1,6 +1,5 @@
 <div align="center">
   <img src="https://cloud.githubusercontent.com/assets/399657/26433540/66a8b78e-40d1-11e7-90bf-886dbc675c20.png" />  
-  <img src="https://cloud.githubusercontent.com/assets/399657/23590290/ede73772-01aa-11e7-8915-181ef21027bc.png" />
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />
   </a>
@@ -14,6 +13,7 @@
     <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
   </a>
   <div>natural language processing, actually in the browser</div>
+  <img src="https://cloud.githubusercontent.com/assets/399657/23590290/ede73772-01aa-11e7-8915-181ef21027bc.png" />
 </div>
 
 <div align="center">
@@ -21,24 +21,21 @@
     by
     <a href="https://github.com/spencermountain">Spencer Kelly</a> and
     <a href="https://github.com/nlp-compromise/compromise/graphs/contributors">
-      contributors
+      contributors 💗
     </a>
   </sub>
 </div>
 <br/>
 
 ```javascript
-doc = nlp('I look just like buddy holly.').sentences().toPastTense()
+var doc = nlp('I look just like buddy holly.')
+doc.sentences().toPastTense()
 doc.out()
 // "I looked just like buddy holly."
 
-doc.match('#Verb').prepend('really')
-doc.out()
-// "I really looked just like buddy holly."
-
-doc.sentences().toNegative()
-doc.out()
-// "I didn't really look just like buddy holly."
+doc = nlp('then consider me Miles Davis.')
+doc.people().out('list')
+// ['miles davis']
 ```
 
 <div align="center">
@@ -121,19 +118,19 @@ doc.out()
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
-  var r = nlp('dinosaur').nouns().toPlural()
-  console.log(r.out('text'))
+  var doc = nlp('dinosaur').nouns().toPlural()
+  console.log(doc.out('text'))
   //dinosaurs
 </script>
 ```
 
 ### Tense:
 ```javascript
-let r = nlp('she sells seashells by the seashore.')
-r.sentences().toFutureTense().out('text')
+let doc = nlp('she sells seashells by the seashore.')
+doc.sentences().toFutureTense().out('text')
 //'she will sell seashells...'
 
-r.verbs().conjugate()
+doc.verbs().conjugate()
 // [{ PastTense: 'sold',
 //    Infinitive: 'sell',
 //    Gerund: 'selling', ...
@@ -142,40 +139,40 @@ r.verbs().conjugate()
 
 ### Plural/singular:
 ```javascript
-r = nlp('a bottle of beer on the wall.')
-r.nouns().first().toPlural()
-r.out('text')
+doc = nlp('a bottle of beer on the wall.')
+doc.nouns().first().toPlural()
+doc.out('text')
 //'The bottles of beer on the wall.'
 ```
 
 ### Negation:
 ```javascript
-r = nlp('london is calling')
-r.sentences().toNegative()
+doc = nlp('london is calling')
+doc.sentences().toNegative()
 // 'london is not calling'
 ```
 
 ### Number interpretation:
 ```javascript
-r = nlp('fifth of december')
+doc = nlp('fifth of december')
 
-r.values().toCardinal().out('text')
+doc.values().toCardinal().out('text')
 // 'five of december'
 
-r.values().toNumber().out('text')
+doc.values().toNumber().out('text')
 // '5 of december'
 ```
 
 ### Normalization:
 ```javascript
-r = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
+doc = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
 ```
 
 ### Named-entity recognition:
 ```javascript
-r = nlp('the opera about richard nixon visiting china')
-r.topics().data()
+doc = nlp('the opera about richard nixon visiting china')
+doc.topics().data()
 // [
 //   { text: 'richard nixon' },
 //   { text: 'china' }
@@ -184,7 +181,7 @@ r.topics().data()
 
 ### Fancy outputs:
 ```javascript
-r = nlp('Tony Hawk won').out('html')
+doc = nlp('Tony Hawk won').out('html')
 /*
 <span>
   <span class="nl-Person nl-Noun nl-FirstName">Tony</span>
@@ -198,7 +195,7 @@ r = nlp('Tony Hawk won').out('html')
   and yes, ofcourse, there's <a href="http://compromise.cool/demos">a lot more stuff</a>.
 </h3>
 
-**Join in!**
+**Join in -**
 we're fun, we're using <b>semver</b>, and moving fast.
 [get involved](https://github.com/nlp-compromise/compromise/wiki/Contributing)
 

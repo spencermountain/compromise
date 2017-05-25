@@ -1,4 +1,5 @@
 <div align="center">
+  <img src="https://cloud.githubusercontent.com/assets/399657/26432884/f9010366-40cc-11e7-8150-d40a5c07afb4.png" />
   <img src="https://cloud.githubusercontent.com/assets/399657/21955696/46e882d4-da3e-11e6-94a6-720c34e27df7.jpg" />
   <div>natural language processing, actually in the browser</div>
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
@@ -36,14 +37,6 @@
   </div>
 </div>
 <br/>
-
-<div align="center">
-  📯 Welcome to <b>v7</b> 📯
-  <div>
-    <a href="https://github.com/nlp-compromise/compromise/wiki/v7-Upgrade,-welcome">a lot</a>
-    has changed!
-  </div>
-</div>
 
 ```javascript
 let r = nlp('I look just like buddy holly.')

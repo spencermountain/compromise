@@ -21,7 +21,7 @@
     by
     <a href="https://github.com/spencermountain">Spencer Kelly</a> and
     <a href="https://github.com/nlp-compromise/compromise/graphs/contributors">
-      contributors 💙
+      contributors
     </a>
   </sub>
 </div>
@@ -32,7 +32,7 @@ var doc = nlp('Wee-ooh, I look just like buddy holly.')
 doc.sentences().toPastTense().out('text')
 // "Wee-ooh, I looked just like buddy holly."
 
-doc = nlp('then consider me Miles Davis.')
+doc = nlp('then consider me Miles Davis!')
 doc.people().out('array')
 // [{ text:'Miles Davis' }]
 ```
@@ -84,7 +84,7 @@ doc.people().out('array')
   <a href="http://compromise.cool/docs">docs</a>
 </h3>
 <div align="center">
-  <b>no training, configuration, or prolog</b>
+  <b>no training, configuration, or building</b>
 </div>
 <br/>
 
@@ -131,19 +131,21 @@ doc.sentences().toNegative()
 // 'london is not calling'
 ```
 
-### Matches
+### Grab terms
+inspect and change specific words:
 ```javascript
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
 doc.people().length
-//2
-doc.match('#FirstName van #Noun').length
-//1
-doc.match('#Person+ wrote .').length
-//1
+// 2
+doc.match('#TitleCase van #LastName').out()
+// 'Ludwig van Beethoven'
+
+doc.match('#PastTense to').hyphenate().out('normal')
+// 'wrote-to'
 ```
 
 ### Plural/singular:
-grab the nouns, and make them plural
+grab some nouns, and make them plural:
 ```javascript
 doc = nlp('a bottle of beer on the wall.')
 doc.nouns().first().toPlural()
@@ -152,7 +154,7 @@ doc.out('text')
 ```
 
 ### Number interpretation:
-parse the numbers, and change their forms
+parse the values, and manipulate their forms:
 ```javascript
 doc = nlp('fifth of december')
 
@@ -164,7 +166,7 @@ doc.values().toNumber().out('text')
 ```
 
 ### Normalization:
-some wrappers for common utilities
+some wrappers for common changes:
 ```javascript
 doc = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
@@ -184,7 +186,7 @@ doc.verbs().conjugate()
 ```
 
 ### Named-entity recognition:
-find the people, places, organizations
+find the people, places, organizations:
 ```javascript
 doc = nlp('the opera about richard nixon visiting china')
 doc.topics().data()
@@ -195,7 +197,7 @@ doc.topics().data()
 ```
 
 ### Error correction:
-make it do what you'd like:
+make it say what you'd like:
 ```javascript
 var lexicon={
   'boston': 'MusicalGroup'
@@ -206,7 +208,7 @@ doc.match('#MusicalGroup').length
 ```
 
 ### Handy outputs:
-get the data:
+get some data:
 ```javascript
 doc = nlp('Tony Hawk  won').out('html')
 /*

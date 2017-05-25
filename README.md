@@ -33,8 +33,8 @@ doc.sentences().toPastTense().out('text')
 // "Wee-ooh, I looked just like buddy holly."
 
 doc = nlp('then consider me Miles Davis.')
-doc.people().out('topk')
-// [{ text:'Miles Davis', count:1 }]
+doc.people().out('array')
+// [{ text:'Miles Davis' }]
 ```
 
 <div align="center">
@@ -123,7 +123,27 @@ doc.people().out('topk')
 </script>
 ```
 
+### Server-side!
+```javascript
+var nlp = require('compromise')
+var doc = nlp('london is calling')
+doc.sentences().toNegative()
+// 'london is not calling'
+```
+
+### Matches
+```javascript
+doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
+doc.people().length
+//2
+doc.match('#FirstName van #Noun').length
+//1
+doc.match('#Person+ wrote .').length
+//1
+```
+
 ### Plural/singular:
+grab the nouns, and make them plural
 ```javascript
 doc = nlp('a bottle of beer on the wall.')
 doc.nouns().first().toPlural()
@@ -131,14 +151,8 @@ doc.out('text')
 //'The bottles of beer on the wall.'
 ```
 
-### Negation:
-```javascript
-doc = nlp('london is calling')
-doc.sentences().toNegative()
-// 'london is not calling'
-```
-
 ### Number interpretation:
+parse the numbers, and change their forms
 ```javascript
 doc = nlp('fifth of december')
 
@@ -150,6 +164,7 @@ doc.values().toNumber().out('text')
 ```
 
 ### Normalization:
+some wrappers for common utilities
 ```javascript
 doc = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
@@ -169,6 +184,7 @@ doc.verbs().conjugate()
 ```
 
 ### Named-entity recognition:
+find the people, places, organizations
 ```javascript
 doc = nlp('the opera about richard nixon visiting china')
 doc.topics().data()
@@ -178,27 +194,38 @@ doc.topics().data()
 // ]
 ```
 
-### Fancy outputs:
+### Error correction:
+make it do what you'd like:
 ```javascript
-doc = nlp('Tony Hawk  won.').out('html')
+var lexicon={
+  'boston': 'MusicalGroup'
+}
+doc = nlp('i heard Boston\'s set in Chicago')
+doc.match('#MusicalGroup').length
+// 1
+```
+
+### Handy outputs:
+get the data:
+```javascript
+doc = nlp('Tony Hawk  won').out('html')
 /*
 <span>
   <span class="nl-Person nl-FirstName">Tony </span>
   <span class="nl-Person nl-LastName">Hawk </span>
   <span>&nbsp;</span>
   <span class="nl-Verb nl-PastTense">won</span>
-  <span>.</span>
 </span>
 */
 ```
 <h3 align="center">
   and yes, ofcourse, there's <a href="http://compromise.cool/demos">a lot more stuff</a>.
-  <br/>
+</h3>
+<h4 align="center">
   <b>Join in -</b>
   we're fun, we're using <b>semver</b>, and moving fast.
   <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">get involved</a>
-</h3>
-
+</h4>
 
 <table>
   <tr align="center">

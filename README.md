@@ -35,7 +35,6 @@ nlp('..then consider me Miles Davis!').people().out('array')
 ```
 
 <div align="center">
-  <b>compromise</b> interprets and pre-parses <i>text</i>, so that working with it becomes easy.
   <table align="center">
     <tr align="center">
       <td align="center">
@@ -73,15 +72,13 @@ nlp('..then consider me Miles Davis!').people().out('array')
       </td>
     </tr>
   </table>
+  <b>compromise</b> interprets and pre-parses <i>text</i>, so that working with it becomes easy.
 </div>
 <h3 align="center">
-  <a href="http://compromise.cool/demos">demos</a>
-  <span>&nbsp; | &nbsp;</span>
-  <a href="https://github.com/nlp-compromise/compromise/wiki/Getting-Started">quickStart</a>
-  <span>&nbsp; | &nbsp;</span>
-  <a href="http://compromise.cool/docs">docs</a>
+  <a href="http://compromise.cool/docs">API docs</a>
 </h3>
 
+Demos!
 <table align="center">
   <tr>
     <td>
@@ -106,7 +103,7 @@ nlp('..then consider me Miles Davis!').people().out('array')
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
-         Grammatical matching
+         Templating
       </a>
     </td>
   </tr>

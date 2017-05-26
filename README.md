@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://cloud.githubusercontent.com/assets/399657/26433540/66a8b78e-40d1-11e7-90bf-886dbc675c20.png" />  
+  <img src="https://cloud.githubusercontent.com/assets/399657/21955696/46e882d4-da3e-11e6-94a6-720c34e27df7.jpg" />
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />
   </a>
@@ -12,8 +12,10 @@
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
   </a>
+  <h3 align="center">
+    compromise
+  </h3>
   <div>natural language processing, actually in the browser</div>
-  <img src="https://cloud.githubusercontent.com/assets/399657/23590290/ede73772-01aa-11e7-8915-181ef21027bc.png" />
 </div>
 
 <div align="center">
@@ -84,9 +86,11 @@ doc.people().out('array')
   <a href="http://compromise.cool/docs">docs</a>
 </h3>
 <div align="center">
-  <b>no training, configuration, or building</b>
+  <b>no training, configuration, or dependencies</b>
 </div>
 <br/>
+
+<img src="https://cloud.githubusercontent.com/assets/399657/26433540/66a8b78e-40d1-11e7-90bf-886dbc675c20.png" />  
 
 <table align="center">
   <tr>

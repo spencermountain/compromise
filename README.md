@@ -56,7 +56,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
             </a>
           </b>
           <div>
-            &nbsp; on the Penn treebank &nbsp;
+            ✨&nbsp; on the Penn treebank &nbsp;✨
          </div>
       </td>
       <td align="center">
@@ -75,11 +75,15 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   </table>
   <br/>
   <p>
-    with <sub>simple rule-based</sub> nlp, <b>compromise</b> makes working with text much easier.
+    <sub>with simple rule-based nlp,</sub>
+    <br/>
+    <b>compromise</b> makes working with text much easier
+    <sub>and less annoying.</sub>
   </p>
   <br/>
 </div>
 
+<i>you can do it:</i>
 <table>
   <tr>
     <td>

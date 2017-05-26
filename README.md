@@ -95,11 +95,6 @@ nlp('..then consider me Miles Davis!').people().out('array')
     </td>
   </tr>
 </table>
-
-<h3 align="center">
-  <a href="http://compromise.cool/docs">API docs</a>
-</h3>
-
 <table>
   <tr>
     <td>
@@ -108,7 +103,7 @@ nlp('..then consider me Miles Davis!').people().out('array')
       </a>
     </td>
     <td>
-      <i>turn 'seven hundred' to '700'</i>
+      <i>turn 'seven hundred and fifty' to '750'</i>
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
@@ -116,7 +111,7 @@ nlp('..then consider me Miles Davis!').people().out('array')
       </a>
     </td>
     <td>
-      <i>grab the people, places, companies..</i>
+      <i>easily grab all the people, places, organizations..</i>
     </td>
   </tr>
 </table>
@@ -136,11 +131,14 @@ nlp('..then consider me Miles Davis!').people().out('array')
       </a>
     </td>
     <td>
-      <i>expand contractions, cleanup case, hyphenation, and punctuation</i>
+      <i>expand contractions, case, hyphenation, and punctuation</i>
     </td>
   </tr>
 </table>
 
+<h3 align="center">
+  <a href="http://compromise.cool/docs">API docs</a>
+</h3>
 ### Client-side!
 no training, configuration, or dependencies
 ```html

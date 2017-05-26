@@ -72,7 +72,10 @@ nlp('..then consider me Miles Davis!').people().out('array')
       </td>
     </tr>
   </table>
-  using rule-based nlp, <b>compromise</b> makes doing things with text much easier.
+  <div>
+    using rule-based nlp, <b>compromise</b> makes working with text much easier.
+  </div>
+  <br/>
 </div>
 
 <table>
@@ -94,8 +97,6 @@ nlp('..then consider me Miles Davis!').people().out('array')
       <i>change the tense of a verb or sentence</i>
     </td>
   </tr>
-</table>
-<table>
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
@@ -114,8 +115,6 @@ nlp('..then consider me Miles Davis!').people().out('array')
       <i>easily grab all the people, places, organizations..</i>
     </td>
   </tr>
-</table>
-<table>
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">

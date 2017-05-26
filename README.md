@@ -14,7 +14,7 @@
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
   </a>
-  <div>natural language processing, <ul>actually</ul> in the browser</div>
+  <div>natural language processing, <u>actually</u> in the browser</div>
   <sub>
     by
     <a href="https://github.com/spencermountain">Spencer Kelly</a> and

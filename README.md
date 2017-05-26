@@ -72,11 +72,8 @@ nlp('..then consider me Miles Davis!').people().out('array')
       </td>
     </tr>
   </table>
-  <b>compromise</b> interprets and pre-parses <i>text</i>, so that working with it becomes easy.
+  using rule-based nlp, <b>compromise</b> makes doing things with text much easier.
 </div>
-<h3 align="center">
-  <a href="http://compromise.cool/docs">API docs</a>
-</h3>
 
 <table>
   <tr>
@@ -98,6 +95,10 @@ nlp('..then consider me Miles Davis!').people().out('array')
     </td>
   </tr>
 </table>
+
+<h3 align="center">
+  <a href="http://compromise.cool/docs">API docs</a>
+</h3>
 
 <table>
   <tr>
@@ -129,10 +130,6 @@ nlp('..then consider me Miles Davis!').people().out('array')
     <td>
       <i>write templates for specific forms of dialogue</i>
     </td>
-  </tr>
-</table>
-<table>  
-  <tr>
     <td>
       <a href="https://github.com/nlp-compromise/compromise/wiki/Normalization">
          Normalization

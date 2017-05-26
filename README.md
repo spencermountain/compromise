@@ -14,7 +14,7 @@
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
   </a>
-  <div>natural language processing, <u>actually</u> in the browser</div>
+  <div>natural language processing, actually in the browser</div>
   <sub>
     by
     <a href="https://github.com/spencermountain">Spencer Kelly</a> and
@@ -75,12 +75,10 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   </table>
 </div>
 
-<p>
-<h3 align="center">
-  <sub>with <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">simple, rule-based nlp</a>,</sub>
+<p align="center">
+  <sub>with <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">deliberate + simple nlp</a>,</sub>
   <br/>
   <b>compromise</b> makes working with <i>text</i> easy
-</h3>
 </p>
 
 <div align="right">

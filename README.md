@@ -78,12 +78,13 @@ nlp('..then consider me Miles Davis!').people().out('freq')
     <sub>with simple rule-based nlp,</sub>
     <br/>
     <b>compromise</b> makes working with text much easier
+    <br/>
     <sub>and less annoying.</sub>
   </p>
   <br/>
 </div>
 
-<i>you can do it:</i>
+<sub><i>you can do it!</i></sub>
 <table>
   <tr>
     <td>

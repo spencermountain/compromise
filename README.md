@@ -88,17 +88,13 @@ nlp('..then consider me Miles Davis!').people().out('array')
     <td>
       <i>figure-out the nouns, verbs, adjectives...</i>
     </td>
-  </tr>
-</table>
-<table>
-  <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
          Verb Conjugation
       </a>
     </td>
     <td>
-      change the tense of a verb or sentence
+      <i>change the tense of a verb or sentence</i>
     </td>
   </tr>
 </table>
@@ -111,19 +107,15 @@ nlp('..then consider me Miles Davis!').people().out('array')
       </a>
     </td>
     <td>
-      turn 'seven hundred' to '700'
+      <i>turn 'seven hundred' to '700'</i>
     </td>
-  </tr>
-</table>
-<table>  
-  <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
          Named-Entity Recognition️
       </a>
     </td>
     <td>
-      grab the people, places, companies..
+      <i>grab the people, places, companies..</i>
     </td>
   </tr>
 </table>
@@ -135,7 +127,7 @@ nlp('..then consider me Miles Davis!').people().out('array')
       </a>
     </td>
     <td>
-      write templates for specific forms of dialogue
+      <i>write templates for specific forms of dialogue</i>
     </td>
   </tr>
 </table>
@@ -147,7 +139,7 @@ nlp('..then consider me Miles Davis!').people().out('array')
       </a>
     </td>
     <td>
-      expand contractions, cleanup case, hyphenation, and punctuation
+      <i>expand contractions, cleanup case, hyphenation, and punctuation</i>
     </td>
   </tr>
 </table>

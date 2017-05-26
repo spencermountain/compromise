@@ -146,6 +146,8 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 
 <h3 align="center">
   <a href="http://compromise.cool/docs">API docs</a>
+  &nbsp; | &nbsp;
+  <a href="http://compromise.cool/demos">Demos</a>
 </h3>
 
 #### Client-side!
@@ -317,11 +319,11 @@ doc = nlp('Tony Hawk').out('html')
 </div>
 
 ### Don't forget about:
-* ✨ &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript, too
+* ✨ &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript
 * 🍭 &nbsp; **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in js
 * 💗 &nbsp; **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
 * 🎀 &nbsp; **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
-* 💎 &nbsp; **[jsPos](https://code.google.com/archive/p/jspos/)** - js-build of the time-tested Brill-tagger
+* 💎 &nbsp; **[jsPos](https://code.google.com/archive/p/jspos/)** - javascript build of the time-tested Brill-tagger
 * 🚗 &nbsp; **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
 
 For the former promise-library, see [jnewman/compromise](https://github.com/jnewman/compromise)

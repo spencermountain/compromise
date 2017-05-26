@@ -81,6 +81,9 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   <br/>
   <b>compromise</b> makes working with text easy
 </div>
+<h6 align="center">
+  no jargon &nbsp; | &nbsp; no configuration &nbsp; | &nbsp; no training
+</h6>
 <div align="right">
   <sub><i>you can do it!</i></sub>
 </div>
@@ -145,30 +148,27 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 <h3 align="center">
   <a href="http://compromise.cool/docs">API docs</a>
 </h3>
-<h6 align="center">
-  no jargon &nbsp; | &nbsp; no configuration &nbsp; | &nbsp; no training
-</h6>
-
 
 #### Client-side!
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
-  var doc = nlp('dinosaur').nouns().toPlural()
+  var doc = nlp('dinosaur')
+  doc.nouns().toPlural()
   console.log(doc.out('text'))
-  //dinosaurs
+  // 'dinosaurs'
 </script>
 ```
 
 #### Server-side!
 ```javascript
 var nlp = require('compromise')
-var doc = nlp('london is calling')
+var doc = nlp('London is calling')
 doc.sentences().toNegative()
-// 'london is not calling'
+// 'London is not calling'
 ```
 
-### Grab a spot
+#### Grab a spot
 the [`.match()` syntax](https://github.com/nlp-compromise/compromise/wiki/Match-syntax) lets you match non-specific words:
 ```javascript
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
@@ -180,7 +180,7 @@ doc.match('#PastTense to').hyphenate().out('normal')
 // 'wrote-to'
 ```
 
-### Plural/singular:
+#### Plural/singular:
 grab some nouns, make them plural:
 ```javascript
 doc = nlp('a bottle of beer on the wall.')
@@ -189,7 +189,7 @@ doc.out('text')
 //'The bottles of beer on the wall.'
 ```
 
-### Number parsing:
+#### Number parsing:
 parse written numbers, and manipulate their forms:
 ```javascript
 doc = nlp('ninety five thousand and fifty two')
@@ -202,14 +202,14 @@ doc.out('text')
 // 'the twenty third of December'
 ```
 
-### Normalization:
+#### Normalization:
 some wrappers for common changes:
 ```javascript
 doc = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
 ```
 
-### Tense:
+#### Tense:
 ```javascript
 let doc = nlp('she sells seashells by the seashore.')
 doc.sentences().toFutureTense().out('text')
@@ -222,7 +222,7 @@ doc.verbs().conjugate()
 // }]
 ```
 
-### Named-entity / spotting:
+#### Named-entity spotting:
 find the people, places, organizations:
 ```javascript
 doc = nlp('the opera about richard nixon visiting china')
@@ -233,27 +233,35 @@ doc.topics().data()
 // ]
 ```
 
-### Error correction:
+#### Error correction:
 make it say what you'd like:
 ```javascript
 var lexicon={
   'boston': 'MusicalGroup'
 }
-doc = nlp('i heard Boston\'s set in Chicago')
+doc = nlp('i heard Boston\'s set in Chicago', lexicon)
+doc.match('#MusicalGroup').length
+// 1
+```
+alternatively, you can fix it all 'in-post':
+```js
+doc.match('heard #Possessive set').tag('. #MusicalGroup #Noun')
 doc.match('#MusicalGroup').length
 // 1
 ```
 
-### Handy outputs:
+#### Handy outputs:
 get some data:
 ```javascript
-doc = nlp('Tony Hawk  won').out('html')
+doc = nlp('We like Roy! We like Roy!').sentences().out('array')
+// ['We like Roy!', 'We like Roy!']
+
+doc = nlp('Tony Hawk').out('html')
 /*
 <span>
-  <span class="nl-Person nl-FirstName">Tony </span>
-  <span class="nl-Person nl-LastName">Hawk </span>
+  <span class="nl-Person nl-FirstName">Tony</span>
   <span>&nbsp;</span>
-  <span class="nl-Verb nl-PastTense">won</span>
+  <span class="nl-Person nl-LastName">Hawk</span>
 </span>
 */
 ```

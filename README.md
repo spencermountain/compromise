@@ -171,7 +171,7 @@ doc.sentences().toNegative()
 // 'London is not calling'
 ```
 
-### Grab a spot,
+## Grab some words,
 the [match() syntax](https://github.com/nlp-compromise/compromise/wiki/Match-syntax) lets you grab non-specific words or patterns:
 ```javascript
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
@@ -182,6 +182,7 @@ doc.match('#TitleCase van #LastName').out()
 doc.match('#PastTense to').hyphenate().out()
 // 'wrote-to'
 ```
+common matches have pre-built methods, like `.nouns()`, or `.people()` as helper-functions
 
 #### Plural/singular:
 grab your nouns, make em plural:

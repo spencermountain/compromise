@@ -76,9 +76,9 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 </div>
 
 <p align="center">
-  <sub>with <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">deliberate + simple nlp</a>,</sub>
+  <sub>with <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">deliberate + rule-based</a> nlp,</sub>
   <br/>
-  <b>compromise</b> makes working with <i>text</i> easy
+  <b>compromise</b> makes working with text easier
 </p>
 
 <div align="right">
@@ -89,7 +89,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
-         Part-of-Speech Tagging️
+         Part-of-Speech Tags
       </a>
     </td>
     <td>
@@ -125,11 +125,11 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
-         Grammar-matches
+         Template-matches
       </a>
     </td>
     <td>
-      <sub><i>template natural language easily</i></sub>
+      <sub><i>match natural language easily</i></sub>
     </td>
     <td>
       <a href="https://github.com/nlp-compromise/compromise/wiki/Normalization">
@@ -144,9 +144,11 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 
 <h3 align="center">
   <a href="http://compromise.cool/docs">API docs</a>
-  <br/>
-  no jargon &nbsp; | &nbsp; no configuration &nbsp; | &nbsp; no training
 </h3>
+<br/>
+<h6 align="center">
+  no jargon &nbsp; | &nbsp; no configuration &nbsp; | &nbsp; no training
+</h6>
 
 
 #### Client-side!
@@ -171,8 +173,7 @@ doc.sentences().toNegative()
 the [`.match()` syntax](https://github.com/nlp-compromise/compromise/wiki/Match-syntax) lets you match non-specific words:
 ```javascript
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
-doc.people().length
-// 2
+
 doc.match('#TitleCase van #LastName').out()
 // 'Ludwig van Beethoven'
 
@@ -181,7 +182,7 @@ doc.match('#PastTense to').hyphenate().out('normal')
 ```
 
 ### Plural/singular:
-grab some nouns, and make them plural:
+grab some nouns, make them plural:
 ```javascript
 doc = nlp('a bottle of beer on the wall.')
 doc.nouns().first().toPlural()
@@ -209,7 +210,7 @@ doc = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
 ```
 
-### Sentence Tense:
+### Tense:
 ```javascript
 let doc = nlp('she sells seashells by the seashore.')
 doc.sentences().toFutureTense().out('text')
@@ -222,7 +223,7 @@ doc.verbs().conjugate()
 // }]
 ```
 
-### Named-entity recognition:
+### Named-entity / spotting:
 find the people, places, organizations:
 ```javascript
 doc = nlp('the opera about richard nixon visiting china')

@@ -75,12 +75,12 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   </table>
 </div>
 
-<p align="center">
+<br/>
+<div align="center">
   <sub>with <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">deliberate + rule-based</a> nlp,</sub>
   <br/>
-  <b>compromise</b> makes working with text easier
-</p>
-
+  <b>compromise</b> makes working with text easy
+</div>
 <div align="right">
   <sub><i>you can do it!</i></sub>
 </div>
@@ -129,7 +129,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </a>
     </td>
     <td>
-      <sub><i>match natural language easily</i></sub>
+      <sub><i>match natural language forms</i></sub>
     </td>
     <td>
       <a href="https://github.com/nlp-compromise/compromise/wiki/Normalization">
@@ -145,7 +145,6 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 <h3 align="center">
   <a href="http://compromise.cool/docs">API docs</a>
 </h3>
-<br/>
 <h6 align="center">
   no jargon &nbsp; | &nbsp; no configuration &nbsp; | &nbsp; no training
 </h6>

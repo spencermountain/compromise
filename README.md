@@ -206,14 +206,14 @@ doc.out('text')
 // 'the twenty third of December'
 ```
 
-#### Normalization:
+### Normalization:
 some wrappers for common changes:
 ```javascript
 doc = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
 ```
 
-#### Tense:
+### Tense:
 _all your base are belong:_
 ```javascript
 let doc = nlp('she sells seashells by the seashore.')
@@ -227,7 +227,7 @@ doc.verbs().conjugate()
 // }]
 ```
 
-#### Named-entity spotting:
+### Named-entity spotting:
 find the people, places, organizations:
 ```javascript
 doc = nlp('that opera about richard nixon visiting china')
@@ -238,7 +238,7 @@ doc.topics().data()
 // ]
 ```
 
-#### Error correction:
+### Error correction:
 make it say what you'd like:
 ```javascript
 var lexicon={
@@ -254,7 +254,7 @@ doc.match('#MusicalGroup').length
 // 1
 ```
 
-#### Handy outputs:
+### Handy outputs:
 get some data:
 ```javascript
 doc = nlp('We like Roy! We like Roy!').sentences().out('array')

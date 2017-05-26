@@ -73,13 +73,16 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </td>
     </tr>
   </table>
+</div>
+<h5 align="center">
   <p>
-    <sub>with <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">simple, rule-based nlp</a>,</sub>
-    <br/>
-    <b>compromise</b> makes working with <i>text</i> easy
-    <br/>
-    <sub>and really, a little fun.</sub>
+  <sub>with <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">simple, rule-based nlp</a>,</sub>
+  <br/>
+  <b>compromise</b> makes working with <i>text</i> easy
   </p>
+</h5>
+<div align="right">
+  <sub><i>you can do it!</i></sub>
 </div>
 
 <table>
@@ -90,7 +93,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </a>
     </td>
     <td>
-      <sub><i>nouns, verbs, adjectives...</i></sub>
+      <sub><i>nouns, verbs, adjectives..</i></sub>
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
@@ -98,7 +101,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </a>
     </td>
     <td>
-      <sub><i>change the tense of a verb or sentence</i></sub>
+      <sub><i>change tense of a verb or sentence</i></sub>
     </td>
   </tr>
   <tr>
@@ -122,34 +125,31 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
-         Grammar-match
+         Grammar-matches
       </a>
     </td>
     <td>
-      <sub><i>template natural language, easily</i></sub>
+      <sub><i>template natural language easily</i></sub>
     </td>
     <td>
       <a href="https://github.com/nlp-compromise/compromise/wiki/Normalization">
-         Normalization
+         Cleanup
       </a>
     </td>
     <td>
-      <sub><i>contractions, case, hyphenation, punctuation..</i></sub>
+      <sub><i>contractions, case, hyphenation, punctuation</i></sub>
     </td>
   </tr>
 </table>
-<div align="right">
-  <sub><i>you can do it!</i></sub>
-</div>
 
 <h3 align="center">
-  No jargon &nbsp; | &nbsp; no dependencies &nbsp; | &nbsp; no building &nbsp; | &nbsp; no training
-  <br/>
   <a href="http://compromise.cool/docs">API docs</a>
+  <br/>
+  no jargon &nbsp; | &nbsp; no configuration &nbsp; | &nbsp; no training
 </h3>
 
+
 #### Client-side!
-no training, configuration, or dependencies
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>

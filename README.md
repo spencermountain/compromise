@@ -26,6 +26,7 @@
 <br/>
 
 ```javascript
+var nlp = require('compromise')
 nlp('Wee-ooh, I look just like buddy holly.').sentences().toPastTense()
 // 'Wee-ooh, I looked just like buddy holly.'
 
@@ -34,13 +35,13 @@ nlp('..then consider me Miles Davis!').people().out('array')
 ```
 
 <div align="center">
-  <b>compromise</b> interprets and pre-parses <i>text</i>, so that working with it is easy.
+  <b>compromise</b> interprets and pre-parses <i>text</i>, so that working with it becomes easy.
   <table align="center">
     <tr align="center">
       <td align="center">
         <b>
           <a href="https://unpkg.com/compromise@latest/builds/compromise.min.js">
-            200k
+            210k
           </a>
         </b>
         <div>
@@ -80,37 +81,39 @@ nlp('..then consider me Miles Davis!').people().out('array')
   <span>&nbsp; | &nbsp;</span>
   <a href="http://compromise.cool/docs">docs</a>
 </h3>
-<div align="center">
-  <b>no training, configuration, or dependencies</b>
-</div>
-<br/>
 
 <table align="center">
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
-         &nbsp;Part-of-Speech Tagging️ &nbsp;
+         Part-of-Speech Tagging️
       </a>
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
-         &nbsp;Verb Conjugation &nbsp;
+         Verb Conjugation
       </a>
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
-         &nbsp;Number Parsing &nbsp;
+         Number Parsing
       </a>
     </td>
     <td>
-    <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
-         &nbsp;Named-Entity Recognition️&nbsp;
-    </a>
+      <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
+         Named-Entity Recognition️
+      </a>
+    </td>
+    <td>
+      <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
+         Grammatical matching
+      </a>
     </td>
   </tr>
 </table>
 
 ### Client-side!
+no training, configuration, or dependencies
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
@@ -128,8 +131,8 @@ doc.sentences().toNegative()
 // 'london is not calling'
 ```
 
-### Grab terms
-inspect and change specific words:
+### Grab a spot
+the [`.match()` syntax](https://github.com/nlp-compromise/compromise/wiki/Match-syntax) lets you match non-specific words:
 ```javascript
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
 doc.people().length
@@ -150,16 +153,17 @@ doc.out('text')
 //'The bottles of beer on the wall.'
 ```
 
-### Number interpretation:
-parse the values, and manipulate their forms:
+### Number parsing:
+parse written numbers, and manipulate their forms:
 ```javascript
-doc = nlp('fifth of december')
-
-doc.values().toCardinal().out('text')
-// 'five of december'
-
+doc = nlp('ninety five thousand and fifty two')
 doc.values().toNumber().out('text')
-// '5 of december'
+// '95052'
+
+doc = nlp('the 23rd of December')
+doc.values().toText()
+doc.out('text')
+// 'the twenty third of December'
 ```
 
 ### Normalization:

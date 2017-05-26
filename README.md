@@ -92,7 +92,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
-         Part-of-speech tag
+         Part-of-Speech tag
       </a>
     </td>
     <td>
@@ -132,11 +132,11 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </a>
     </td>
     <td>
-      <sub><i>match natural language forms</i></sub>
+      <sub><i>match natural-language forms</i></sub>
     </td>
     <td>
       <a href="https://github.com/nlp-compromise/compromise/wiki/Normalization">
-         Text-cleanup
+         Text cleanup
       </a>
     </td>
     <td>
@@ -161,7 +161,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 </script>
 ```
 
-#### Server-side! 🌋
+#### 🌋 Server-side!
 ```javascript
 var nlp = require('compromise')
 
@@ -170,7 +170,7 @@ doc.sentences().toNegative()
 // 'London is not calling'
 ```
 
-#### Grab a spot,
+### Grab a spot,
 the [match() syntax](https://github.com/nlp-compromise/compromise/wiki/Match-syntax) lets you grab non-specific words or patterns:
 ```javascript
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
@@ -212,7 +212,7 @@ doc = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 ```
 
 #### Tense:
-all your base are belong:
+_all your base are belong:_
 ```javascript
 let doc = nlp('she sells seashells by the seashore.')
 doc.sentences().toFutureTense().out('text')
@@ -228,7 +228,7 @@ doc.verbs().conjugate()
 #### Named-entity spotting:
 find the people, places, organizations:
 ```javascript
-doc = nlp('the opera about richard nixon visiting china')
+doc = nlp('that opera about richard nixon visiting china')
 doc.topics().data()
 // [
 //   { text: 'richard nixon' },
@@ -246,8 +246,8 @@ doc = nlp('i heard Boston\'s set in Chicago', lexicon)
 doc.match('#MusicalGroup').length
 // 1
 
-//alternatively, you can fix it all 'in-post':
-doc.match('heard #Possessive set').tag('. #MusicalGroup #Noun')
+//alternatively, fix it all 'in-post':
+doc.match('heard #Possessive set').terms(1).tag('MusicalGroup')
 doc.match('#MusicalGroup').length
 // 1
 ```
@@ -294,6 +294,12 @@ doc = nlp('Tony Hawk').out('html')
       <a href="http://nlpcompromise.us12.list-manage2.com/subscribe?u=d5bd9bcc36c4bef0fd5f6e75f&id=8738c1f5ef">
         <img src="https://cloud.githubusercontent.com/assets/399657/21956670/a30be6e0-da53-11e6-9aaf-52a10b8c3195.jpg"/>
         <div>&nbsp; &nbsp; &nbsp; Mailing-list &nbsp; &nbsp; &nbsp; </div>
+      </a>
+    </td>
+    <td>
+      <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Downstream-projects">
+        <img src="https://cloud.githubusercontent.com/assets/399657/26512935/d3e01dfe-4236-11e7-807b-091d1bdaafbd.png"/>
+        <div>&nbsp; &nbsp; &nbsp; Applications &nbsp; &nbsp; &nbsp; </div>
       </a>
     </td>
     <td>

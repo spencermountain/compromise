@@ -147,7 +147,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 <h3 align="center">
   <a href="http://compromise.cool/docs">API docs</a>
   &nbsp; | &nbsp;
-  <a href="http://compromise.cool/demos">Demos</a>
+  <a href="http://compromise.cool/demos">Demos-list</a>
 </h3>
 
 #### Client-side!
@@ -299,7 +299,7 @@ doc = nlp('Tony Hawk').out('html')
     </td>
     <td>
       <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Downstream-projects">
-        <img src="https://cloud.githubusercontent.com/assets/399657/26513207/413b3b12-4238-11e7-9a99-409a9dede2dd.png"/>
+        <img src="https://cloud.githubusercontent.com/assets/399657/26513481/a755ac38-4239-11e7-960a-1c26d85ddc1c.png"/>
         <div>&nbsp; &nbsp; &nbsp; Applications &nbsp; &nbsp; &nbsp; </div>
       </a>
     </td>

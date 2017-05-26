@@ -56,7 +56,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
             </a>
           </b>
           <div>
-            &nbsp; &nbsp; on the Penn treebank &nbsp ;&nbsp;
+            &nbsp; &nbsp; on the Penn treebank &nbsp; &nbsp;
          </div>
       </td>
       <td align="center">
@@ -77,12 +77,12 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 
 <br/>
 <div align="center">
-  <sub>with <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">deliberate + rule-based</a> nlp,</sub>
+  <sub>with <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">deliberate, rule-based</a> nlp,</sub>
   <br/>
   <b>compromise</b> makes working with text easy
 </div>
 <h6 align="center">
-  no jargon &nbsp; | &nbsp; no configuration &nbsp; | &nbsp; no training
+  no jargon, &nbsp; | &nbsp; no config, &nbsp; | &nbsp; no training.
 </h6>
 <div align="right">
   <sub><i>you can do it!</i></sub>
@@ -114,7 +114,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </a>
     </td>
     <td>
-      <sub><i>'seven hundred and fifty' -> 750</i></sub>
+      <sub><i>seven hundred and fifty -> 750</i></sub>
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
@@ -140,7 +140,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </a>
     </td>
     <td>
-      <sub><i>contractions, case, hyphenation, punctuation</i></sub>
+      <sub><i>contractions, hyphenation, punctuation</i></sub>
     </td>
   </tr>
 </table>
@@ -154,6 +154,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
   var doc = nlp('dinosaur')
+
   doc.nouns().toPlural()
   console.log(doc.out('text'))
   // 'dinosaurs'
@@ -163,25 +164,26 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 #### Server-side!
 ```javascript
 var nlp = require('compromise')
+
 var doc = nlp('London is calling')
 doc.sentences().toNegative()
 // 'London is not calling'
 ```
 
-#### Grab a spot
-the [`.match()` syntax](https://github.com/nlp-compromise/compromise/wiki/Match-syntax) lets you match non-specific words:
+#### Grab a spot:
+the [`match()` syntax](https://github.com/nlp-compromise/compromise/wiki/Match-syntax) lets you grab non-specific words:
 ```javascript
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
 
 doc.match('#TitleCase van #LastName').out()
 // 'Ludwig van Beethoven'
 
-doc.match('#PastTense to').hyphenate().out('normal')
+doc.match('#PastTense to').hyphenate().out()
 // 'wrote-to'
 ```
 
 #### Plural/singular:
-grab some nouns, make them plural:
+grab your nouns, make em plural:
 ```javascript
 doc = nlp('a bottle of beer on the wall.')
 doc.nouns().first().toPlural()
@@ -190,7 +192,7 @@ doc.out('text')
 ```
 
 #### Number parsing:
-parse written numbers, and manipulate their forms:
+parse written numbers, and change their form:
 ```javascript
 doc = nlp('ninety five thousand and fifty two')
 doc.values().toNumber().out('text')
@@ -210,6 +212,7 @@ doc = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 ```
 
 #### Tense:
+all your base are belong:
 ```javascript
 let doc = nlp('she sells seashells by the seashore.')
 doc.sentences().toFutureTense().out('text')
@@ -242,9 +245,8 @@ var lexicon={
 doc = nlp('i heard Boston\'s set in Chicago', lexicon)
 doc.match('#MusicalGroup').length
 // 1
-```
-alternatively, you can fix it all 'in-post':
-```js
+
+//alternatively, you can fix it all 'in-post':
 doc.match('heard #Possessive set').tag('. #MusicalGroup #Noun')
 doc.match('#MusicalGroup').length
 // 1

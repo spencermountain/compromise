@@ -78,29 +78,34 @@ nlp('..then consider me Miles Davis!').people().out('array')
   <a href="http://compromise.cool/docs">API docs</a>
 </h3>
 
+<div align="center">
+  <table>
+    <tr>
+      <td>
+        <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
+           Part-of-Speech Tagging️
+        </a>
+      </td>
+      <td>
+        figures-out the nouns, verbs, adjectives...
+      </td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <td>
+        <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
+           Verb Conjugation
+        </a>
+      </td>
+      <td>
+        change the tense of a verb or sentence
+      </td>
+    </tr>
+  </table>
+</div>
+
 <table>
-  <tr>
-    <td>
-      <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
-         Part-of-Speech Tagging️
-      </a>
-    </td>
-    <td>
-      figures-out the nouns, verbs, adjectives...
-    </td>
-  </tr>
-</table>
-<table>
-  <tr>
-    <td>
-      <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
-         Verb Conjugation
-      </a>
-    </td>
-    <td>
-      change the tense of a verb or sentence
-    </td>
-  </tr>
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">

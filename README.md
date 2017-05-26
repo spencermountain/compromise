@@ -30,8 +30,8 @@ var nlp = require('compromise')
 nlp('Wee-ooh, I look just like buddy holly.').sentences().toPastTense()
 // 'Wee-ooh, I looked just like buddy holly.'
 
-nlp('..then consider me Miles Davis!').people().out('array')
-// [{ text:'Miles Davis' }]
+nlp('..then consider me Miles Davis!').people().out('freq')
+// [{ text:'Miles Davis', count:1 }]
 ```
 
 <div align="center">
@@ -73,7 +73,8 @@ nlp('..then consider me Miles Davis!').people().out('array')
     </tr>
   </table>
   <div>
-    using rule-based nlp, <b>compromise</b> makes working with text much easier.
+    with simple rule-based nlp,
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>compromise</b> makes working with text much easier.
   </div>
   <br/>
 </div>
@@ -86,7 +87,7 @@ nlp('..then consider me Miles Davis!').people().out('array')
       </a>
     </td>
     <td>
-      <i>figure-out the nouns, verbs, adjectives...</i>
+      <sub><i>get the nouns, verbs, adjectives...</i></sub>
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
@@ -94,7 +95,7 @@ nlp('..then consider me Miles Davis!').people().out('array')
       </a>
     </td>
     <td>
-      <i>change the tense of a verb or sentence</i>
+      <sub><i>change the tense of a verb or sentence</i></sub>
     </td>
   </tr>
   <tr>
@@ -104,7 +105,7 @@ nlp('..then consider me Miles Davis!').people().out('array')
       </a>
     </td>
     <td>
-      <i>turn 'seven hundred and fifty' to '750'</i>
+      <sub><i>turn 'seven hundred and fifty' to '750'</i></sub>
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
@@ -112,17 +113,17 @@ nlp('..then consider me Miles Davis!').people().out('array')
       </a>
     </td>
     <td>
-      <i>easily grab all the people, places, organizations..</i>
+      <sub><i>grab all the people, places, orgs..</i></sub>
     </td>
   </tr>
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
-         Grammatical-match
+         Grammatical-matches
       </a>
     </td>
     <td>
-      <i>write templates for specific forms of dialogue</i>
+      <sub><i>match templates for natural language</i></sub>
     </td>
     <td>
       <a href="https://github.com/nlp-compromise/compromise/wiki/Normalization">
@@ -130,7 +131,7 @@ nlp('..then consider me Miles Davis!').people().out('array')
       </a>
     </td>
     <td>
-      <i>expand contractions, case, hyphenation, and punctuation</i>
+      <sub><i>contractions, case, hyphenation, punctuation..</i></sub>
     </td>
   </tr>
 </table>
@@ -138,6 +139,7 @@ nlp('..then consider me Miles Davis!').people().out('array')
 <h3 align="center">
   <a href="http://compromise.cool/docs">API docs</a>
 </h3>
+
 ### Client-side!
 no training, configuration, or dependencies
 ```html

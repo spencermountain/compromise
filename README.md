@@ -92,7 +92,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
-         Part-of-Speech Tags
+         Part-of-speech Tags
       </a>
     </td>
     <td>
@@ -136,7 +136,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
     </td>
     <td>
       <a href="https://github.com/nlp-compromise/compromise/wiki/Normalization">
-         Cleanup input
+         Text-Cleanup
       </a>
     </td>
     <td>
@@ -149,7 +149,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   <a href="http://compromise.cool/docs">API docs</a>
 </h3>
 
-#### Client-side!
+#### Client-side! 🌋
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
@@ -161,7 +161,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 </script>
 ```
 
-#### Server-side!
+#### Server-side! 🏔️
 ```javascript
 var nlp = require('compromise')
 

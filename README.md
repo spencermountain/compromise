@@ -73,13 +73,12 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </td>
     </tr>
   </table>
-  <br/>
   <p>
-    <sub>with <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">simple, rule-based</a> nlp,</sub>
+    <sub>with <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">simple, rule-based nlp</a>,</sub>
     <br/>
-    <b>compromise</b> makes working with <i>text</i> much easier
+    <b>compromise</b> makes working with <i>text</i> easy
     <br/>
-    <sub>and actually a little-bit fun</sub>
+    <sub>and really, a little fun.</sub>
   </p>
 </div>
 
@@ -91,7 +90,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </a>
     </td>
     <td>
-      <sub><i>get the nouns, verbs, adjectives...</i></sub>
+      <sub><i>nouns, verbs, adjectives...</i></sub>
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
@@ -109,7 +108,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </a>
     </td>
     <td>
-      <sub><i>'seven hundred and fifty' -> '750'</i></sub>
+      <sub><i>'seven hundred and fifty' -> 750</i></sub>
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
@@ -117,17 +116,17 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </a>
     </td>
     <td>
-      <sub><i>grab all the people, places, orgs..</i></sub>
+      <sub><i>all the people, places, orgs..</i></sub>
     </td>
   </tr>
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
-         Grammatical-matches
+         Grammar-match
       </a>
     </td>
     <td>
-      <sub><i>match templates for natural language</i></sub>
+      <sub><i>template natural language, easily</i></sub>
     </td>
     <td>
       <a href="https://github.com/nlp-compromise/compromise/wiki/Normalization">
@@ -144,6 +143,8 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 </div>
 
 <h3 align="center">
+  No jargon &nbsp; | &nbsp; no dependencies &nbsp; | &nbsp; no building &nbsp; | &nbsp; no training
+  <br/>
   <a href="http://compromise.cool/docs">API docs</a>
 </h3>
 

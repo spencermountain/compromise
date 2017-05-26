@@ -1,3 +1,6 @@
+<div align="left">
+  <sub><i>yah!</i></sub>
+</div>
 <div align="center">
   <img src="https://cloud.githubusercontent.com/assets/399657/21955696/46e882d4-da3e-11e6-94a6-720c34e27df7.jpg" />
 </div>
@@ -149,7 +152,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   <a href="http://compromise.cool/docs">API docs</a>
 </h3>
 
-#### Client-side! 🌋
+#### Client-side!✨
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
@@ -161,7 +164,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 </script>
 ```
 
-#### Server-side! 🏔️
+#### Server-side!
 ```javascript
 var nlp = require('compromise')
 
@@ -171,7 +174,7 @@ doc.sentences().toNegative()
 ```
 
 #### Grab a spot:
-the [`match()` syntax](https://github.com/nlp-compromise/compromise/wiki/Match-syntax) lets you grab non-specific words:
+_the [match() syntax](https://github.com/nlp-compromise/compromise/wiki/Match-syntax) lets you grab non-specific words or patterns:_
 ```javascript
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
 
@@ -183,7 +186,7 @@ doc.match('#PastTense to').hyphenate().out()
 ```
 
 #### Plural/singular:
-grab your nouns, make em plural:
+_grab your nouns, make em plural:_
 ```javascript
 doc = nlp('a bottle of beer on the wall.')
 doc.nouns().first().toPlural()
@@ -192,7 +195,7 @@ doc.out('text')
 ```
 
 #### Number parsing:
-parse written numbers, and change their form:
+_parse written numbers, and change their form:_
 ```javascript
 doc = nlp('ninety five thousand and fifty two')
 doc.values().toNumber().out('text')
@@ -205,14 +208,14 @@ doc.out('text')
 ```
 
 #### Normalization:
-some wrappers for common changes:
+_some wrappers for common changes:_
 ```javascript
 doc = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
 ```
 
 #### Tense:
-all your base are belong:
+_all your base are belong:_
 ```javascript
 let doc = nlp('she sells seashells by the seashore.')
 doc.sentences().toFutureTense().out('text')
@@ -226,7 +229,7 @@ doc.verbs().conjugate()
 ```
 
 #### Named-entity spotting:
-find the people, places, organizations:
+_find the people, places, organizations:_
 ```javascript
 doc = nlp('the opera about richard nixon visiting china')
 doc.topics().data()

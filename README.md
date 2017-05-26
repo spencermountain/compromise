@@ -15,12 +15,6 @@
     <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
   </a>
   <div>natural language processing, actually in the browser</div>
-</div>
-
-<div align="center">
-  <h3 align="center">
-    compromise
-  </h3>
   <sub>
     by
     <a href="https://github.com/spencermountain">Spencer Kelly</a> and
@@ -33,13 +27,14 @@
 
 ```javascript
 nlp('Wee-ooh, I look just like buddy holly.').sentences().toPastTense()
-// "Wee-ooh, I looked just like buddy holly."
+// 'Wee-ooh, I looked just like buddy holly.'
 
 nlp('..then consider me Miles Davis!').people().out('array')
 // [{ text:'Miles Davis' }]
 ```
 
 <div align="center">
+  <b>compromise</b> interprets and pre-parses <i>text</i>, so that working with it is easy.
   <table align="center">
     <tr align="center">
       <td align="center">

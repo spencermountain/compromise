@@ -78,7 +78,6 @@ nlp('..then consider me Miles Davis!').people().out('array')
   <a href="http://compromise.cool/docs">API docs</a>
 </h3>
 
-Demos!
 <table align="center">
   <tr>
     <td>
@@ -87,24 +86,57 @@ Demos!
       </a>
     </td>
     <td>
+      figures-out the nouns, verbs, adjectives...
+    </td>
+  </tr>
+  <tr>
+    <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
          Verb Conjugation
       </a>
     </td>
+    <td>
+      change the tense of a verb or sentence
+    </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
          Number Parsing
       </a>
     </td>
     <td>
+      turn 'seven hundred' to '700'
+    </td>
+  </tr>
+  <tr>
+    <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
          Named-Entity Recognition️
       </a>
     </td>
     <td>
+      grab the people, places, companies..
+    </td>
+  </tr>
+  <tr>
+    <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
-         Templating
+         Grammatical-match
       </a>
+    </td>
+    <td>
+      write templates for specific forms of dialogue
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://github.com/nlp-compromise/compromise/wiki/Normalization">
+         Normalization
+      </a>
+    </td>
+    <td>
+      expand contractions, cleanup case, hyphenation, and punctuation
     </td>
   </tr>
 </table>

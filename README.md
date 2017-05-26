@@ -78,7 +78,7 @@ nlp('..then consider me Miles Davis!').people().out('array')
   <a href="http://compromise.cool/docs">API docs</a>
 </h3>
 
-<table align="center">
+<table>
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
@@ -89,6 +89,8 @@ nlp('..then consider me Miles Davis!').people().out('array')
       figures-out the nouns, verbs, adjectives...
     </td>
   </tr>
+</table>
+<table>
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">

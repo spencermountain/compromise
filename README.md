@@ -27,6 +27,7 @@
 
 ```javascript
 var nlp = require('compromise')
+
 nlp('Wee-ooh, I look just like buddy holly.').sentences().toPastTense()
 // 'Wee-ooh, I looked just like buddy holly.'
 
@@ -44,7 +45,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
           </a>
         </b>
         <div>
-           &nbsp; one javascript file &nbsp;
+           ✨&nbsp; one javascript file &nbsp;✨
         </div>
       </td>
       <td align="center">
@@ -72,10 +73,10 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </td>
     </tr>
   </table>
-  <div>
-    with simple rule-based nlp,
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>compromise</b> makes working with text much easier.
-  </div>
+  <br/>
+  <p>
+    with <sub>simple rule-based</sub> nlp, <b>compromise</b> makes working with text much easier.
+  </p>
   <br/>
 </div>
 
@@ -105,7 +106,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </a>
     </td>
     <td>
-      <sub><i>turn 'seven hundred and fifty' to '750'</i></sub>
+      <sub><i>'seven hundred and fifty' -> '750'</i></sub>
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">

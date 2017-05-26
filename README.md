@@ -14,13 +14,13 @@
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
   </a>
-  <h3 align="center">
-    compromise
-  </h3>
   <div>natural language processing, actually in the browser</div>
 </div>
 
 <div align="center">
+  <h3 align="center">
+    compromise
+  </h3>
   <sub>
     by
     <a href="https://github.com/spencermountain">Spencer Kelly</a> and
@@ -32,12 +32,10 @@
 <br/>
 
 ```javascript
-var doc = nlp('Wee-ooh, I look just like buddy holly.')
-doc.sentences().toPastTense().out('text')
+nlp('Wee-ooh, I look just like buddy holly.').sentences().toPastTense()
 // "Wee-ooh, I looked just like buddy holly."
 
-doc = nlp('then consider me Miles Davis!')
-doc.people().out('array')
+nlp('..then consider me Miles Davis!').people().out('array')
 // [{ text:'Miles Davis' }]
 ```
 
@@ -91,8 +89,6 @@ doc.people().out('array')
   <b>no training, configuration, or dependencies</b>
 </div>
 <br/>
-
-<img src="https://cloud.githubusercontent.com/assets/399657/26433540/66a8b78e-40d1-11e7-90bf-886dbc675c20.png" />  
 
 <table align="center">
   <tr>

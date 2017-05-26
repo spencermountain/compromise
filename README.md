@@ -85,7 +85,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   no jargon, &nbsp; | &nbsp; no config, &nbsp; | &nbsp; no training
 </h6>
 <div align="right">
-  <sub><i>you can do it!</i></sub>
+  <sub><i>you can do it! 🙌</i></sub>
 </div>
 
 <table>
@@ -298,7 +298,7 @@ doc = nlp('Tony Hawk').out('html')
     </td>
     <td>
       <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Downstream-projects">
-        <img src="https://cloud.githubusercontent.com/assets/399657/26512935/d3e01dfe-4236-11e7-807b-091d1bdaafbd.png"/>
+        <img src="https://cloud.githubusercontent.com/assets/399657/26512991/17fbe1c6-4237-11e7-9a02-a1c57a2cc994.png"/>
         <div>&nbsp; &nbsp; &nbsp; Applications &nbsp; &nbsp; &nbsp; </div>
       </a>
     </td>

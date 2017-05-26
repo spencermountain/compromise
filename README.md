@@ -298,7 +298,7 @@ doc = nlp('Tony Hawk').out('html')
     </td>
     <td>
       <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Downstream-projects">
-        <img src="https://cloud.githubusercontent.com/assets/399657/26512991/17fbe1c6-4237-11e7-9a02-a1c57a2cc994.png"/>
+        <img src="https://cloud.githubusercontent.com/assets/399657/26513035/616d1a00-4237-11e7-9742-8ff05221a5ba.png"/>
         <div>&nbsp; &nbsp; &nbsp; Applications &nbsp; &nbsp; &nbsp; </div>
       </a>
     </td>
@@ -318,18 +318,18 @@ doc = nlp('Tony Hawk').out('html')
 </div>
 
 ### Don't forget about:
-* **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript, too
-* **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in js
-* **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
-* **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
-* **[jsPos](https://code.google.com/archive/p/jspos/)** - js-build of the time-tested Brill-tagger
-* **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
+* ✨ **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript, too
+* 🍭 **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in js
+* 💗 **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
+* 🎀 **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
+* 💎 **[jsPos](https://code.google.com/archive/p/jspos/)** - js-build of the time-tested Brill-tagger
+* 🚗 **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
 
 For the former promise-library, see [jnewman/compromise](https://github.com/jnewman/compromise)
 (Thanks [Joshua](https://github.com/jnewman)!)
 
 <div align="right">
-(also don't forget
+(also don't forget 🙇
 <a href="http://www.nltk.org/">NLTK</a>,
 <a href="https://gate.ac.uk">GATE</a>,
 <a href="http://nlp.stanford.edu/software/lex-parser.shtml">Stanford</a>,

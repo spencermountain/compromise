@@ -45,7 +45,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
           </a>
         </b>
         <div>
-           ✨&nbsp; one javascript file &nbsp;✨
+           &nbsp;&nbsp; one javascript file &nbsp;&nbsp;
         </div>
       </td>
       <td align="center">
@@ -56,7 +56,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
             </a>
           </b>
           <div>
-            ✨&nbsp; on the Penn treebank &nbsp;✨
+            &nbsp;&nbsp; on the Penn treebank&nbsp;&nbsp;
          </div>
       </td>
       <td align="center">
@@ -79,9 +79,8 @@ nlp('..then consider me Miles Davis!').people().out('freq')
     <br/>
     <b>compromise</b> makes working with text much easier
     <br/>
-    <sub>and less annoying.</sub>
+    <sub>and less weird.</sub>
   </p>
-  <br/>
 </div>
 
 <sub><i>you can do it!</i></sub>

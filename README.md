@@ -84,15 +84,11 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 <h6 align="center">
   no jargon, &nbsp; | &nbsp; no config, &nbsp; | &nbsp; no training
 </h6>
-<div align="right">
-  <sub><i>you can do it! 🙌</i></sub>
-</div>
-
 <table>
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
-         Part-of-Speech tag
+         Part-of-Speech tags
       </a>
     </td>
     <td>
@@ -118,7 +114,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
-         Named-entity recognition️
+         Named-entities
       </a>
     </td>
     <td>
@@ -144,12 +140,15 @@ nlp('..then consider me Miles Davis!').people().out('freq')
     </td>
   </tr>
 </table>
+<div align="right">
+  <sub><i>you can do it! 🙌</i></sub>
+</div>
 
 <h3 align="center">
   <a href="http://compromise.cool/docs">API docs</a>
 </h3>
 
-#### Client-side!✨
+#### Client-side!
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
@@ -298,7 +297,7 @@ doc = nlp('Tony Hawk').out('html')
     </td>
     <td>
       <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Downstream-projects">
-        <img src="https://cloud.githubusercontent.com/assets/399657/26513035/616d1a00-4237-11e7-9742-8ff05221a5ba.png"/>
+        <img src="https://cloud.githubusercontent.com/assets/399657/26513207/413b3b12-4238-11e7-9a99-409a9dede2dd.png"/>
         <div>&nbsp; &nbsp; &nbsp; Applications &nbsp; &nbsp; &nbsp; </div>
       </a>
     </td>
@@ -318,12 +317,12 @@ doc = nlp('Tony Hawk').out('html')
 </div>
 
 ### Don't forget about:
-* ✨ **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript, too
-* 🍭 **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in js
-* 💗 **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
-* 🎀 **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
-* 💎 **[jsPos](https://code.google.com/archive/p/jspos/)** - js-build of the time-tested Brill-tagger
-* 🚗 **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
+* ✨ &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript, too
+* 🍭 &nbsp; **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in js
+* 💗 &nbsp; **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
+* 🎀 &nbsp; **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
+* 💎 &nbsp; **[jsPos](https://code.google.com/archive/p/jspos/)** - js-build of the time-tested Brill-tagger
+* 🚗 &nbsp; **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
 
 For the former promise-library, see [jnewman/compromise](https://github.com/jnewman/compromise)
 (Thanks [Joshua](https://github.com/jnewman)!)

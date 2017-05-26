@@ -141,13 +141,13 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   </tr>
 </table>
 <div align="right">
-  <sub><i>you can do it! 🙌</i></sub>
+  <sub><i>🙌 you can do it!</i></sub>
 </div>
 
 <h3 align="center">
   <a href="http://compromise.cool/docs">API docs</a>
   &nbsp; | &nbsp;
-  <a href="http://compromise.cool/demos">Demos-list</a>
+  <a href="http://compromise.cool/demos">Demos list</a>
 </h3>
 
 #### Client-side!
@@ -173,7 +173,7 @@ doc.sentences().toNegative()
 
 ## Grab some words,
 the [match() syntax](https://github.com/nlp-compromise/compromise/wiki/Match-syntax) lets you grab non-specific words or patterns:
-```javascript
+```js
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
 
 doc.match('#TitleCase van #LastName').out()
@@ -182,10 +182,14 @@ doc.match('#TitleCase van #LastName').out()
 doc.match('#PastTense to').hyphenate().out()
 // 'wrote-to'
 ```
-common matches have pre-built methods, like `.nouns()`, or `.people()` as helper-functions
+common match-patterns have handy methods like `.nouns()`, or `.people()`,
+```js
+doc.people().out('list')
+// ['ludwig van beethoven', 'josephine brunsvik']
+```
 
 ### Plural/singular:
-grab your nouns, make em plural:
+grab your noun-phrases, make em plural:
 ```javascript
 doc = nlp('a bottle of beer on the wall.')
 doc.nouns().first().toPlural()

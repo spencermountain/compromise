@@ -78,32 +78,30 @@ nlp('..then consider me Miles Davis!').people().out('array')
   <a href="http://compromise.cool/docs">API docs</a>
 </h3>
 
-<div align="center">
-  <table>
-    <tr>
-      <td>
-        <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
-           Part-of-Speech Tagging️
-        </a>
-      </td>
-      <td>
-        figures-out the nouns, verbs, adjectives...
-      </td>
-    </tr>
-  </table>
-  <table>
-    <tr>
-      <td>
-        <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
-           Verb Conjugation
-        </a>
-      </td>
-      <td>
-        change the tense of a verb or sentence
-      </td>
-    </tr>
-  </table>
-</div>
+<table>
+  <tr>
+    <td>
+      <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
+         Part-of-Speech Tagging️
+      </a>
+    </td>
+    <td>
+      <i>figure-out the nouns, verbs, adjectives...</i>
+    </td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td>
+      <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
+         Verb Conjugation
+      </a>
+    </td>
+    <td>
+      change the tense of a verb or sentence
+    </td>
+  </tr>
+</table>
 
 <table>
   <tr>
@@ -116,6 +114,8 @@ nlp('..then consider me Miles Davis!').people().out('array')
       turn 'seven hundred' to '700'
     </td>
   </tr>
+</table>
+<table>  
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
@@ -126,6 +126,8 @@ nlp('..then consider me Miles Davis!').people().out('array')
       grab the people, places, companies..
     </td>
   </tr>
+</table>
+<table>
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
@@ -136,6 +138,8 @@ nlp('..then consider me Miles Davis!').people().out('array')
       write templates for specific forms of dialogue
     </td>
   </tr>
+</table>
+<table>  
   <tr>
     <td>
       <a href="https://github.com/nlp-compromise/compromise/wiki/Normalization">

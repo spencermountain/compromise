@@ -45,7 +45,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
           </a>
         </b>
         <div>
-           &nbsp;&nbsp; one javascript file &nbsp;&nbsp;
+           &nbsp; &nbsp; one javascript file &nbsp; &nbsp;
         </div>
       </td>
       <td align="center">
@@ -75,15 +75,14 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   </table>
   <br/>
   <p>
-    <sub>with simple rule-based nlp,</sub>
+    <sub>with <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">simple, rule-based</a> nlp,</sub>
     <br/>
-    <b>compromise</b> makes working with text much easier
+    <b>compromise</b> makes working with <i>text</i> much easier
     <br/>
-    <sub>and less weird.</sub>
+    <sub>and actually a little-bit fun</sub>
   </p>
 </div>
 
-<sub><i>you can do it!</i></sub>
 <table>
   <tr>
     <td>
@@ -140,12 +139,15 @@ nlp('..then consider me Miles Davis!').people().out('freq')
     </td>
   </tr>
 </table>
+<div align="right">
+  <sub><i>you can do it!</i></sub>
+</div>
 
 <h3 align="center">
   <a href="http://compromise.cool/docs">API docs</a>
 </h3>
 
-### Client-side!
+#### Client-side!
 no training, configuration, or dependencies
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
@@ -156,7 +158,7 @@ no training, configuration, or dependencies
 </script>
 ```
 
-### Server-side!
+#### Server-side!
 ```javascript
 var nlp = require('compromise')
 var doc = nlp('london is calling')

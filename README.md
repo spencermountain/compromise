@@ -184,7 +184,7 @@ doc.match('#PastTense to').hyphenate().out()
 ```
 common matches have pre-built methods, like `.nouns()`, or `.people()` as helper-functions
 
-#### Plural/singular:
+### Plural/singular:
 grab your nouns, make em plural:
 ```javascript
 doc = nlp('a bottle of beer on the wall.')
@@ -193,7 +193,7 @@ doc.out('text')
 //'The bottles of beer on the wall.'
 ```
 
-#### Number parsing:
+### Number parsing:
 parse written numbers, and change their form:
 ```javascript
 doc = nlp('ninety five thousand and fifty two')

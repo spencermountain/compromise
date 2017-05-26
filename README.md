@@ -1,6 +1,3 @@
-<div align="left">
-  <sub><i>yah!</i></sub>
-</div>
 <div align="center">
   <img src="https://cloud.githubusercontent.com/assets/399657/21955696/46e882d4-da3e-11e6-94a6-720c34e27df7.jpg" />
 </div>
@@ -85,7 +82,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   <b>compromise</b> makes working with text easy
 </div>
 <h6 align="center">
-  no jargon, &nbsp; | &nbsp; no config, &nbsp; | &nbsp; no training.
+  no jargon, &nbsp; | &nbsp; no config, &nbsp; | &nbsp; no training
 </h6>
 <div align="right">
   <sub><i>you can do it!</i></sub>
@@ -95,7 +92,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
-         Part-of-speech Tags
+         Part-of-speech tag
       </a>
     </td>
     <td>
@@ -103,7 +100,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
-         Verb Conjugation
+         Verb conjugation
       </a>
     </td>
     <td>
@@ -113,7 +110,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   <tr>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
-         Number Parsing
+         Number parsing
       </a>
     </td>
     <td>
@@ -121,7 +118,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
-         Named-Entity Recognition️
+         Named-entity recognition️
       </a>
     </td>
     <td>
@@ -139,7 +136,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
     </td>
     <td>
       <a href="https://github.com/nlp-compromise/compromise/wiki/Normalization">
-         Text-Cleanup
+         Text-cleanup
       </a>
     </td>
     <td>
@@ -164,7 +161,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 </script>
 ```
 
-#### Server-side!
+#### Server-side! 🌋
 ```javascript
 var nlp = require('compromise')
 
@@ -173,8 +170,8 @@ doc.sentences().toNegative()
 // 'London is not calling'
 ```
 
-#### Grab a spot:
-_the [match() syntax](https://github.com/nlp-compromise/compromise/wiki/Match-syntax) lets you grab non-specific words or patterns:_
+#### Grab a spot,
+the [match() syntax](https://github.com/nlp-compromise/compromise/wiki/Match-syntax) lets you grab non-specific words or patterns:
 ```javascript
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
 
@@ -186,7 +183,7 @@ doc.match('#PastTense to').hyphenate().out()
 ```
 
 #### Plural/singular:
-_grab your nouns, make em plural:_
+grab your nouns, make em plural:
 ```javascript
 doc = nlp('a bottle of beer on the wall.')
 doc.nouns().first().toPlural()
@@ -195,7 +192,7 @@ doc.out('text')
 ```
 
 #### Number parsing:
-_parse written numbers, and change their form:_
+parse written numbers, and change their form:
 ```javascript
 doc = nlp('ninety five thousand and fifty two')
 doc.values().toNumber().out('text')
@@ -208,14 +205,14 @@ doc.out('text')
 ```
 
 #### Normalization:
-_some wrappers for common changes:_
+some wrappers for common changes:
 ```javascript
 doc = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
 ```
 
 #### Tense:
-_all your base are belong:_
+all your base are belong:
 ```javascript
 let doc = nlp('she sells seashells by the seashore.')
 doc.sentences().toFutureTense().out('text')
@@ -229,7 +226,7 @@ doc.verbs().conjugate()
 ```
 
 #### Named-entity spotting:
-_find the people, places, organizations:_
+find the people, places, organizations:
 ```javascript
 doc = nlp('the opera about richard nixon visiting china')
 doc.topics().data()

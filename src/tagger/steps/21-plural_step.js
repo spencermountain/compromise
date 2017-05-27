@@ -11,7 +11,7 @@ const pluralStep = function(ts) {
       }
       //check if it's plural
       let plural = isPlural(t); //can be null if unknown
-      if (plural) {
+      if (isPlural(t) === true) {
         t.tag('Plural', 'pluralStep');
       } else if (plural === false) {
         t.tag('Singular', 'pluralStep');

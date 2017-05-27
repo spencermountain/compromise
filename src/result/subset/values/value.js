@@ -44,6 +44,9 @@ const setNumber = function(ts, num) {
   } else if (ts.has('#TextValue')) { //cardinal text
     let str = fmt.text(num);
     ts.val.replaceWith(str, true);
+  } else if (ts.has('#NiceNumber')) {
+    let str = fmt.nice(num);
+    ts.val.replaceWith(str, true);
   } else { //cardinal number
     let str = fmt.cardinal(num);
     ts.val.replaceWith(str, true);

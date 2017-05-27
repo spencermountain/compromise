@@ -36,6 +36,7 @@ const couldEvenBePlural = function(t) {
   return true;
 };
 
+/** returns true, false, or null */
 const isPlural = function (t) {
   let str = t.normal;
 
@@ -45,7 +46,7 @@ const isPlural = function (t) {
   }
   //inspect the existing tags to see if a plural is valid
   if (couldEvenBePlural(t) === false) {
-    return false;
+    return null;
   }
   //handle 'mayors of chicago'
   const preposition = str.match(prep);

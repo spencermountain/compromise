@@ -22,7 +22,6 @@ module.exports = {
     is: 'Value'
   },
   Money: {
-    is: 'Value'
   },
   Percent: {
     is: 'Value'

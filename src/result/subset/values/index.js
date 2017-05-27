@@ -12,6 +12,9 @@ const methods = {
   noUnits: function() {
     return this.not('#Unit');
   },
+  units: function() {
+    return this.match('#Unit+');
+  },
   /** five -> 5 */
   numbers: function() {
     return this.list.map((ts) => {

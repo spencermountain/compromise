@@ -15,16 +15,6 @@ const unpackRange = function(ts) {
   return ts;
 };
 
-const Value = function(arr, lexicon, refText, refTerms) {
-  Terms.call(this, arr, lexicon, refText, refTerms);
-  this.val = this.match('#Value+').list[0];
-  this.val = unpackRange(this.val);
-  this.unit = this.match('#Unit+');
-  if (this.unit.found) {
-    this.unit = this.unit.list[0];
-  }
-};
-
 const isPercent = function(val, unit) {
   //pre-tagged
   if (val.has('#Percent') || unit.has('#Percent')) {
@@ -39,6 +29,36 @@ const isPercent = function(val, unit) {
     return true;
   }
   return false;
+};
+
+//set the text as the same num format
+const setNumber = function(ts, num) {
+  if (ts.has('#Ordinal')) {
+    if (ts.has('#TextValue')) { //ordinal text
+      let str = fmt.textOrdinal(num);
+      ts.val.replaceWith(str, true);
+    } else { //ordinal number
+      let str = fmt.ordinal(num);
+      ts.val.replaceWith(str, true);
+    }
+  } else if (ts.has('#TextValue')) { //cardinal text
+    let str = fmt.text(num);
+    ts.val.replaceWith(str, true);
+  } else { //cardinal number
+    let str = fmt.cardinal(num);
+    ts.val.replaceWith(str, true);
+  }
+  return ts;
+};
+
+const Value = function(arr, lexicon, refText, refTerms) {
+  Terms.call(this, arr, lexicon, refText, refTerms);
+  this.val = this.match('#Value+').list[0];
+  this.val = unpackRange(this.val);
+  this.unit = this.match('#Unit+');
+  if (this.unit.found) {
+    this.unit = this.unit.list[0];
+  }
 };
 
 
@@ -177,6 +197,32 @@ const methods = {
       }
     }
     return this;
+  },
+  /** seven + 2 = nine */
+  add: function(n) {
+    if (!n) {
+      return this;
+    }
+    let num = parse(this.val) || 0;
+    num += n; //add it
+    return setNumber(this, num);
+  },
+  /** seven - 2 = five */
+  subtract: function(n) {
+    if (!n) {
+      return this;
+    }
+    let num = parse(this.val) || 0;
+    num -= n; //subtract it
+    return setNumber(this, num);
+  },
+  /**seven -> 'eight' */
+  increment: function() {
+    return this.add(1);
+  },
+  /**seven -> 'six' */
+  decrement: function() {
+    return this.subtract(1);
   }
 };
 

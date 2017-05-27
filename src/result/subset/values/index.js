@@ -74,6 +74,34 @@ const methods = {
     });
     return this;
   },
+  /**seven + 2 = 'nine' */
+  add: function(n) {
+    this.list = this.list.map((ts) => {
+      return ts.add(n);
+    });
+    return this;
+  },
+  /**seven - 2 = 'five' */
+  subtract: function(n) {
+    this.list = this.list.map((ts) => {
+      return ts.subtract(n);
+    });
+    return this;
+  },
+  /**seven -> 'eight' */
+  increment: function() {
+    this.list = this.list.map((ts) => {
+      return ts.add(1);
+    });
+    return this;
+  },
+  /**seven -> 'eight' */
+  decrement: function() {
+    this.list = this.list.map((ts) => {
+      return ts.subtract(1);
+    });
+    return this;
+  },
 };
 
 const find = function(r, n) {

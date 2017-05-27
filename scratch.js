@@ -9,5 +9,6 @@ var nlp = require('./src/index');
 // .out('matches')
 // .out('list')
 
-var doc = nlp('he is twelve years old');
-doc.values().decrement();
+var doc = nlp('he ate 12 books');
+doc.values().noUnits().debug();
+doc.debug();

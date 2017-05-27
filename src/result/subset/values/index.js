@@ -9,6 +9,9 @@ const methods = {
   noDates: function() {
     return this.not('#Date');
   },
+  noUnits: function() {
+    return this.not('#Unit');
+  },
   /** five -> 5 */
   numbers: function() {
     return this.list.map((ts) => {

@@ -11,6 +11,11 @@ module.exports = {
     returns: 'Text',
     example: 'nlp(\'in 2016, I\u2019m going to party like it\u2019s on sale for $19.99.\').values().noDates().length\n//1'
   },
+  noUnits: {
+    desc: 'remove \'books\' from \'12 books\'',
+    returns: 'Text',
+    example: 'nlp(\'harry potter and the 12 sequels\').values().noUnits().out()\n//\'12\''
+  },
   toNumber: {
     desc: 'turn a written number like `five thousand five hundred` into it\'s numerical form, like `5500`',
     returns: 'Text',

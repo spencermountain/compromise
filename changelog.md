@@ -29,6 +29,11 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - fixes to contractions in sentence-changes - "i'm going ->  i went"
 - several verb conjugation fixes
 - accept Terms & Result objects in .match() and .replace()
+* 10.5.0
+- add increment/decrement/add/subtract methods to .values()
+- add units(), noUnits() methods to .values()
+- 'uncountable' nouns are no longer assumed to be singular
+- money tag is no longer always a value
 
 ### v9  &nbsp;
 * 9.0.0

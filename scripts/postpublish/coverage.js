@@ -9,7 +9,7 @@ var test = tape + ' "./test/unit/**/*.test.js" ';
 
 //run all the tests
 console.log('\n 🏃  running coverage tests..');
-// exec(nyc + ' --reporter=text-summary ' + test + ' | ' + tapMin);
+// exec(nyc + ' --reporter=text-lcov ' + test + ' > coverage.lcov');
 exec(nyc + ' --reporter=html ' + test + ' | ' + tapMin);
 
 //publish results for codacity

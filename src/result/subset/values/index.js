@@ -9,6 +9,12 @@ const methods = {
   noDates: function() {
     return this.not('#Date');
   },
+  noUnits: function() {
+    return this.not('#Unit');
+  },
+  units: function() {
+    return this.match('#Unit+');
+  },
   /** five -> 5 */
   numbers: function() {
     return this.list.map((ts) => {
@@ -71,6 +77,34 @@ const methods = {
     num = parse(num);
     this.list = this.list.filter((ts) => {
       return num !== null && ts.number() < num;
+    });
+    return this;
+  },
+  /**seven + 2 = 'nine' */
+  add: function(n) {
+    this.list = this.list.map((ts) => {
+      return ts.add(n);
+    });
+    return this;
+  },
+  /**seven - 2 = 'five' */
+  subtract: function(n) {
+    this.list = this.list.map((ts) => {
+      return ts.subtract(n);
+    });
+    return this;
+  },
+  /**seven -> 'eight' */
+  increment: function() {
+    this.list = this.list.map((ts) => {
+      return ts.add(1);
+    });
+    return this;
+  },
+  /**seven -> 'eight' */
+  decrement: function() {
+    this.list = this.list.map((ts) => {
+      return ts.subtract(1);
     });
     return this;
   },

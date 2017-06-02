@@ -64,7 +64,7 @@ const corrections = function (ts) {
     //all values are either ordinal or cardinal
     // ts.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
     //money
-    ts.match('#Value+ #Currency').tag('Money', 'value-currency');
+    ts.match('#Value+ #Currency').tag('Money', 'value-currency').lastTerm().tag('Unit', 'money-unit');
     ts.match('#Money and #Money #Currency?').tag('Money', 'money-and-money');
   }
 

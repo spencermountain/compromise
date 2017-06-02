@@ -11,6 +11,9 @@ const fmt = {
   ordinal: function(num) {
     return numOrdinal(num);
   },
+  cardinal: function(num) {
+    return '' + num;
+  },
   niceOrdinal: function(num) {
     num = numOrdinal(num);
     num = niceNumber(num);

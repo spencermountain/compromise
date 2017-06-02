@@ -6,7 +6,7 @@ const fmt = require('./format');
 
 const unpackRange = function(ts) {
   if (ts.has('#NumberRange')) {
-    ts.terms.forEach((t) => {
+    ts.terms.forEach(t => {
       if (t.silent_term && !t._text) {
         t.text = t.silent_term;
       }
@@ -15,14 +15,15 @@ const unpackRange = function(ts) {
   return ts;
 };
 
-const Value = function(arr, lexicon, refText, refTerms) {
-  Terms.call(this, arr, lexicon, refText, refTerms);
-  this.val = this.match('#Value+').list[0];
-  this.val = unpackRange(this.val);
-  this.unit = this.match('#Unit+');
-  if (this.unit.found) {
-    this.unit = this.unit.list[0];
+const parseValue = function(ts) {
+  ts.val = ts.match('#Value+');
+  ts.val = unpackRange(ts.val);
+  ts.val = ts.val.list[0];
+  ts.unit = ts.match('#Unit+');
+  if (ts.unit.found) {
+    ts.unit = ts.unit.list[0];
   }
+  return ts;
 };
 
 const isPercent = function(val, unit) {
@@ -41,6 +42,34 @@ const isPercent = function(val, unit) {
   return false;
 };
 
+//set the text as the same num format
+const setNumber = function(ts, num) {
+  let str = ts.val.out();
+  if (ts.has('#Ordinal')) {
+    if (ts.has('#TextValue')) {
+      str = fmt.textOrdinal(num); //ordinal text
+    } else {
+      str = fmt.ordinal(num); //ordinal number
+    }
+  } else if (ts.has('#TextValue')) {
+    str = fmt.text(num); //cardinal text
+  } else if (ts.has('#NiceNumber')) {
+    str = fmt.nice(num); //8,929 number
+  } else {
+    str = fmt.cardinal(num); //cardinal number
+  }
+  //add the unit at the end
+  if (ts.unit.found) {
+    str += ts.unit.out('text');
+  }
+  ts = ts.replaceWith(str, true);
+  return parseValue(ts);
+};
+
+const Value = function(arr, lexicon, refText, refTerms) {
+  Terms.call(this, arr, lexicon, refText, refTerms);
+  parseValue(this);
+};
 
 //Terms inheritence
 Value.prototype = Object.create(Terms.prototype);
@@ -177,11 +206,36 @@ const methods = {
       }
     }
     return this;
+  },
+  /** seven + 2 = nine */
+  add: function(n) {
+    if (!n) {
+      return this;
+    }
+    let num = parse(this.val) || 0;
+    num += n; //add it
+    return setNumber(this, num);
+  },
+  /** seven - 2 = five */
+  subtract: function(n) {
+    if (!n) {
+      return this;
+    }
+    let num = parse(this.val) || 0;
+    num -= n; //subtract it
+    return setNumber(this, num);
+  },
+  /**seven -> 'eight' */
+  increment: function() {
+    return this.add(1);
+  },
+  /**seven -> 'six' */
+  decrement: function() {
+    return this.subtract(1);
   }
 };
 
-
-Object.keys(methods).forEach((k) => {
+Object.keys(methods).forEach(k => {
   Value.prototype[k] = methods[k];
 });
 module.exports = Value;

@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.4.2",
+  "version": "10.5.0",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -49,7 +49,6 @@ module.exports={
   },
   "license": "MIT"
 }
-
 },{}],2:[function(_dereq_,module,exports){
 'use strict';
 
@@ -4453,6 +4452,7 @@ var couldEvenBePlural = function couldEvenBePlural(t) {
   return true;
 };
 
+/** returns true, false, or null */
 var isPlural = function isPlural(t) {
   var str = t.normal;
 
@@ -4462,7 +4462,7 @@ var isPlural = function isPlural(t) {
   }
   //inspect the existing tags to see if a plural is valid
   if (couldEvenBePlural(t) === false) {
-    return false;
+    return null;
   }
   //handle 'mayors of chicago'
   var preposition = str.match(prep);
@@ -5315,6 +5315,9 @@ var fmt = {
   ordinal: function ordinal(num) {
     return numOrdinal(num);
   },
+  cardinal: function cardinal(num) {
+    return '' + num;
+  },
   niceOrdinal: function niceOrdinal(num) {
     num = numOrdinal(num);
     num = niceNumber(num);
@@ -5509,6 +5512,12 @@ var methods = {
   noDates: function noDates() {
     return this.not('#Date');
   },
+  noUnits: function noUnits() {
+    return this.not('#Unit');
+  },
+  units: function units() {
+    return this.match('#Unit+');
+  },
   /** five -> 5 */
   numbers: function numbers() {
     return this.list.map(function (ts) {
@@ -5571,6 +5580,34 @@ var methods = {
     num = parse(num);
     this.list = this.list.filter(function (ts) {
       return num !== null && ts.number() < num;
+    });
+    return this;
+  },
+  /**seven + 2 = 'nine' */
+  add: function add(n) {
+    this.list = this.list.map(function (ts) {
+      return ts.add(n);
+    });
+    return this;
+  },
+  /**seven - 2 = 'five' */
+  subtract: function subtract(n) {
+    this.list = this.list.map(function (ts) {
+      return ts.subtract(n);
+    });
+    return this;
+  },
+  /**seven -> 'eight' */
+  increment: function increment() {
+    this.list = this.list.map(function (ts) {
+      return ts.add(1);
+    });
+    return this;
+  },
+  /**seven -> 'eight' */
+  decrement: function decrement() {
+    this.list = this.list.map(function (ts) {
+      return ts.subtract(1);
     });
     return this;
   }
@@ -5928,14 +5965,15 @@ var unpackRange = function unpackRange(ts) {
   return ts;
 };
 
-var Value = function Value(arr, lexicon, refText, refTerms) {
-  Terms.call(this, arr, lexicon, refText, refTerms);
-  this.val = this.match('#Value+').list[0];
-  this.val = unpackRange(this.val);
-  this.unit = this.match('#Unit+');
-  if (this.unit.found) {
-    this.unit = this.unit.list[0];
+var parseValue = function parseValue(ts) {
+  ts.val = ts.match('#Value+');
+  ts.val = unpackRange(ts.val);
+  ts.val = ts.val.list[0];
+  ts.unit = ts.match('#Unit+');
+  if (ts.unit.found) {
+    ts.unit = ts.unit.list[0];
   }
+  return ts;
 };
 
 var isPercent = function isPercent(val, unit) {
@@ -5952,6 +5990,35 @@ var isPercent = function isPercent(val, unit) {
     return true;
   }
   return false;
+};
+
+//set the text as the same num format
+var setNumber = function setNumber(ts, num) {
+  var str = ts.val.out();
+  if (ts.has('#Ordinal')) {
+    if (ts.has('#TextValue')) {
+      str = fmt.textOrdinal(num); //ordinal text
+    } else {
+      str = fmt.ordinal(num); //ordinal number
+    }
+  } else if (ts.has('#TextValue')) {
+    str = fmt.text(num); //cardinal text
+  } else if (ts.has('#NiceNumber')) {
+    str = fmt.nice(num); //8,929 number
+  } else {
+    str = fmt.cardinal(num); //cardinal number
+  }
+  //add the unit at the end
+  if (ts.unit.found) {
+    str += ts.unit.out('text');
+  }
+  ts = ts.replaceWith(str, true);
+  return parseValue(ts);
+};
+
+var Value = function Value(arr, lexicon, refText, refTerms) {
+  Terms.call(this, arr, lexicon, refText, refTerms);
+  parseValue(this);
 };
 
 //Terms inheritence
@@ -6089,6 +6156,32 @@ var methods = {
       }
     }
     return this;
+  },
+  /** seven + 2 = nine */
+  add: function add(n) {
+    if (!n) {
+      return this;
+    }
+    var num = parse(this.val) || 0;
+    num += n; //add it
+    return setNumber(this, num);
+  },
+  /** seven - 2 = five */
+  subtract: function subtract(n) {
+    if (!n) {
+      return this;
+    }
+    var num = parse(this.val) || 0;
+    num -= n; //subtract it
+    return setNumber(this, num);
+  },
+  /**seven -> 'eight' */
+  increment: function increment() {
+    return this.add(1);
+  },
+  /**seven -> 'six' */
+  decrement: function decrement() {
+    return this.subtract(1);
   }
 };
 
@@ -6195,7 +6288,6 @@ var find = function find(r, n) {
   if (typeof n === 'number') {
     r = r.get(n);
   }
-  // r.debug();
   r.list = r.list.map(function (ts) {
     return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
   });
@@ -7298,7 +7390,8 @@ var _parse = function _parse(r) {
   r.verb = aux.match('#Verb').not('#Particle').last();
   r.particle = aux.match('#Particle').last();
   if (r.verb.found) {
-    r.auxiliary = original.not(r.verb.out('normal')).not('(#Adverb|#Negative)');
+    var str = r.verb.out('normal');
+    r.auxiliary = original.not(str).not('(#Adverb|#Negative)');
     r.verb = r.verb.list[0].terms[0];
     // r.auxiliary = aux.match('#Auxiliary+');
   } else {
@@ -8022,7 +8115,7 @@ var corrections = function corrections(ts) {
     //all values are either ordinal or cardinal
     // ts.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
     //money
-    ts.match('#Value+ #Currency').tag('Money', 'value-currency');
+    ts.match('#Value+ #Currency').tag('Money', 'value-currency').lastTerm().tag('Unit', 'money-unit');
     ts.match('#Money and #Money #Currency?').tag('Money', 'money-and-money');
   }
 
@@ -9635,7 +9728,7 @@ var pluralStep = function pluralStep(ts) {
       }
       //check if it's plural
       var plural = isPlural(t); //can be null if unknown
-      if (plural) {
+      if (isPlural(t) === true) {
         t.tag('Plural', 'pluralStep');
       } else if (plural === false) {
         t.tag('Singular', 'pluralStep');
@@ -9816,8 +9909,8 @@ module.exports = [
 ['[0-9]{1,4}[/\\-\\.][0-9]{1,2}[/\\-\\.][0-9]{1,4}', 'Date'], //03/02/89, 03-02-89
 
 //money
-['^[\-\+]?[$€¥£][0-9]+(\.[0-9]{1,2})?$', 'Money'], //like $5.30
-['^[\-\+]?[$€¥£][0-9]{1,3}(,[0-9]{3})+(\.[0-9]{1,2})?$', 'Money'], //like $5,231.30
+['^[\-\+]?[$€¥£][0-9]+(\.[0-9]{1,2})?$', ['Money', 'Value']], //like $5.30
+['^[\-\+]?[$€¥£][0-9]{1,3}(,[0-9]{3})+(\.[0-9]{1,2})?$', ['Money', 'Value']], //like $5,231.30
 
 //values
 ['[0-9]{1,4}(st|nd|rd|th)?-[0-9]{1,4}(st|nd|rd|th)?', 'NumberRange'], //5-7
@@ -10319,9 +10412,7 @@ module.exports = {
   NiceNumber: {
     is: 'Value'
   },
-  Money: {
-    is: 'Value'
-  },
+  Money: {},
   Percent: {
     is: 'Value'
   }
@@ -10506,7 +10597,6 @@ module.exports = bestTag;
 'use strict';
 
 var addMethods = function addMethods(Term) {
-
   var methods = {
     toUpperCase: function toUpperCase() {
       this.text = this.text.toUpperCase();
@@ -10520,7 +10610,7 @@ var addMethods = function addMethods(Term) {
       return this;
     },
     toTitleCase: function toTitleCase() {
-      this.text = this.text.replace(/^[a-z]/, function (x) {
+      this.text = this.text.replace(/^( +)?[a-z]/, function (x) {
         return x.toUpperCase();
       });
       this.tag('#TitleCase', 'toTitleCase');
@@ -11551,7 +11641,7 @@ var match = function match(ts, reg, verbose) {
       break;
     }
     var m = startHere(ts, t, reg, verbose);
-    if (m) {
+    if (m && m.length > 0) {
       matches.push(m);
       //ok, don't try to match these again.
       var skip = m.length - 1;

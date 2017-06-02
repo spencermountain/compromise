@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.4.2",
+  "version": "10.5.0",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -49,7 +49,6 @@ module.exports={
   },
   "license": "MIT"
 }
-
 },{}],2:[function(_dereq_,module,exports){
 'use strict';
 const fns = _dereq_('../fns');
@@ -5410,6 +5409,7 @@ const couldEvenBePlural = function(t) {
   return true;
 };
 
+/** returns true, false, or null */
 const isPlural = function (t) {
   let str = t.normal;
 
@@ -5419,7 +5419,7 @@ const isPlural = function (t) {
   }
   //inspect the existing tags to see if a plural is valid
   if (couldEvenBePlural(t) === false) {
-    return false;
+    return null;
   }
   //handle 'mayors of chicago'
   const preposition = str.match(prep);
@@ -6343,6 +6343,9 @@ const fmt = {
   ordinal: function(num) {
     return numOrdinal(num);
   },
+  cardinal: function(num) {
+    return '' + num;
+  },
   niceOrdinal: function(num) {
     num = numOrdinal(num);
     num = niceNumber(num);
@@ -6580,6 +6583,12 @@ const methods = {
   noDates: function() {
     return this.not('#Date');
   },
+  noUnits: function() {
+    return this.not('#Unit');
+  },
+  units: function() {
+    return this.match('#Unit+');
+  },
   /** five -> 5 */
   numbers: function() {
     return this.list.map((ts) => {
@@ -6642,6 +6651,34 @@ const methods = {
     num = parse(num);
     this.list = this.list.filter((ts) => {
       return num !== null && ts.number() < num;
+    });
+    return this;
+  },
+  /**seven + 2 = 'nine' */
+  add: function(n) {
+    this.list = this.list.map((ts) => {
+      return ts.add(n);
+    });
+    return this;
+  },
+  /**seven - 2 = 'five' */
+  subtract: function(n) {
+    this.list = this.list.map((ts) => {
+      return ts.subtract(n);
+    });
+    return this;
+  },
+  /**seven -> 'eight' */
+  increment: function() {
+    this.list = this.list.map((ts) => {
+      return ts.add(1);
+    });
+    return this;
+  },
+  /**seven -> 'eight' */
+  decrement: function() {
+    this.list = this.list.map((ts) => {
+      return ts.subtract(1);
     });
     return this;
   },
@@ -6984,7 +7021,7 @@ const fmt = _dereq_('./format');
 
 const unpackRange = function(ts) {
   if (ts.has('#NumberRange')) {
-    ts.terms.forEach((t) => {
+    ts.terms.forEach(t => {
       if (t.silent_term && !t._text) {
         t.text = t.silent_term;
       }
@@ -6993,14 +7030,15 @@ const unpackRange = function(ts) {
   return ts;
 };
 
-const Value = function(arr, lexicon, refText, refTerms) {
-  Terms.call(this, arr, lexicon, refText, refTerms);
-  this.val = this.match('#Value+').list[0];
-  this.val = unpackRange(this.val);
-  this.unit = this.match('#Unit+');
-  if (this.unit.found) {
-    this.unit = this.unit.list[0];
+const parseValue = function(ts) {
+  ts.val = ts.match('#Value+');
+  ts.val = unpackRange(ts.val);
+  ts.val = ts.val.list[0];
+  ts.unit = ts.match('#Unit+');
+  if (ts.unit.found) {
+    ts.unit = ts.unit.list[0];
   }
+  return ts;
 };
 
 const isPercent = function(val, unit) {
@@ -7019,6 +7057,34 @@ const isPercent = function(val, unit) {
   return false;
 };
 
+//set the text as the same num format
+const setNumber = function(ts, num) {
+  let str = ts.val.out();
+  if (ts.has('#Ordinal')) {
+    if (ts.has('#TextValue')) {
+      str = fmt.textOrdinal(num); //ordinal text
+    } else {
+      str = fmt.ordinal(num); //ordinal number
+    }
+  } else if (ts.has('#TextValue')) {
+    str = fmt.text(num); //cardinal text
+  } else if (ts.has('#NiceNumber')) {
+    str = fmt.nice(num); //8,929 number
+  } else {
+    str = fmt.cardinal(num); //cardinal number
+  }
+  //add the unit at the end
+  if (ts.unit.found) {
+    str += ts.unit.out('text');
+  }
+  ts = ts.replaceWith(str, true);
+  return parseValue(ts);
+};
+
+const Value = function(arr, lexicon, refText, refTerms) {
+  Terms.call(this, arr, lexicon, refText, refTerms);
+  parseValue(this);
+};
 
 //Terms inheritence
 Value.prototype = Object.create(Terms.prototype);
@@ -7155,11 +7221,36 @@ const methods = {
       }
     }
     return this;
+  },
+  /** seven + 2 = nine */
+  add: function(n) {
+    if (!n) {
+      return this;
+    }
+    let num = parse(this.val) || 0;
+    num += n; //add it
+    return setNumber(this, num);
+  },
+  /** seven - 2 = five */
+  subtract: function(n) {
+    if (!n) {
+      return this;
+    }
+    let num = parse(this.val) || 0;
+    num -= n; //subtract it
+    return setNumber(this, num);
+  },
+  /**seven -> 'eight' */
+  increment: function() {
+    return this.add(1);
+  },
+  /**seven -> 'six' */
+  decrement: function() {
+    return this.subtract(1);
   }
 };
 
-
-Object.keys(methods).forEach((k) => {
+Object.keys(methods).forEach(k => {
   Value.prototype[k] = methods[k];
 });
 module.exports = Value;
@@ -7172,25 +7263,25 @@ const Verb = _dereq_('./verb');
 //the () subset class
 const methods = {
   conjugation: function(verbose) {
-    return this.list.map((ts) => {
+    return this.list.map(ts => {
       return ts.conjugation(verbose);
     });
   },
   conjugate: function(verbose) {
-    return this.list.map((ts) => {
+    return this.list.map(ts => {
       return ts.conjugate(verbose);
     });
   },
 
   /** plural/singular **/
   isPlural: function() {
-    this.list = this.list.filter((ts) => {
+    this.list = this.list.filter(ts => {
       return ts.isPlural();
     });
     return this;
   },
   isSingular: function() {
-    this.list = this.list.filter((ts) => {
+    this.list = this.list.filter(ts => {
       return !ts.isPlural();
     });
     return this;
@@ -7198,25 +7289,25 @@ const methods = {
 
   /** negation **/
   isNegative: function() {
-    this.list = this.list.filter((ts) => {
+    this.list = this.list.filter(ts => {
       return ts.isNegative();
     });
     return this;
   },
   isPositive: function() {
-    this.list = this.list.filter((ts) => {
+    this.list = this.list.filter(ts => {
       return !ts.isNegative();
     });
     return this;
   },
   toNegative: function() {
-    this.list = this.list.map((ts) => {
+    this.list = this.list.map(ts => {
       return ts.toNegative();
     });
     return this;
   },
   toPositive: function() {
-    this.list.forEach((ts) => {
+    this.list.forEach(ts => {
       ts.toPositive();
     });
     return this;
@@ -7224,31 +7315,31 @@ const methods = {
 
   /** tense **/
   toPastTense: function() {
-    this.list.forEach((ts) => {
+    this.list.forEach(ts => {
       ts.toPastTense();
     });
     return this;
   },
   toPresentTense: function() {
-    this.list.forEach((ts) => {
+    this.list.forEach(ts => {
       ts.toPresentTense();
     });
     return this;
   },
   toFutureTense: function() {
-    this.list.forEach((ts) => {
+    this.list.forEach(ts => {
       ts.toFutureTense();
     });
     return this;
   },
   toInfinitive: function() {
-    this.list.forEach((ts) => {
+    this.list.forEach(ts => {
       ts.toInfinitive();
     });
     return this;
   },
   asAdjective: function() {
-    return this.list.map((ts) => ts.asAdjective());
+    return this.list.map(ts => ts.asAdjective());
   }
 };
 
@@ -7259,8 +7350,7 @@ const find = function(r, n) {
   if (typeof n === 'number') {
     r = r.get(n);
   }
-  // r.debug();
-  r.list = r.list.map((ts) => {
+  r.list = r.list.map(ts => {
     return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
   });
   //fiter-out any that didn't find a main verb
@@ -8490,9 +8580,10 @@ const parse = function(r) {
   r.verb = aux.match('#Verb').not('#Particle').last();
   r.particle = aux.match('#Particle').last();
   if (r.verb.found) {
-    r.auxiliary = original.not(r.verb.out('normal')).not('(#Adverb|#Negative)');
+    let str = r.verb.out('normal');
+    r.auxiliary = original.not(str).not('(#Adverb|#Negative)');
     r.verb = r.verb.list[0].terms[0];
-  // r.auxiliary = aux.match('#Auxiliary+');
+    // r.auxiliary = aux.match('#Auxiliary+');
   } else {
     r.verb = original.terms[0];
   }
@@ -8511,7 +8602,7 @@ const methods = {
         negative: this.negative.out('normal'),
         auxiliary: this.auxiliary.out('normal'),
         verb: this.verb.out('normal'),
-        adverbs: this.adverbs.out('normal'),
+        adverbs: this.adverbs.out('normal')
       },
       interpret: interpret(this, verbose),
       conjugations: this.conjugate()
@@ -8591,7 +8682,7 @@ const Verb = function(arr, lexicon, refText, parentTerms) {
 //Terms inheritence
 Verb.prototype = Object.create(Terms.prototype);
 //apply methods
-Object.keys(methods).forEach((k) => {
+Object.keys(methods).forEach(k => {
   Verb.prototype[k] = methods[k];
 });
 module.exports = Verb;
@@ -9214,7 +9305,7 @@ const corrections = function (ts) {
     //all values are either ordinal or cardinal
     // ts.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
     //money
-    ts.match('#Value+ #Currency').tag('Money', 'value-currency');
+    ts.match('#Value+ #Currency').tag('Money', 'value-currency').lastTerm().tag('Unit', 'money-unit');
     ts.match('#Money and #Money #Currency?').tag('Money', 'money-and-money');
   }
 
@@ -10808,7 +10899,7 @@ const pluralStep = function(ts) {
       }
       //check if it's plural
       let plural = isPlural(t); //can be null if unknown
-      if (plural) {
+      if (isPlural(t) === true) {
         t.tag('Plural', 'pluralStep');
       } else if (plural === false) {
         t.tag('Singular', 'pluralStep');
@@ -10987,8 +11078,8 @@ module.exports = [
   ['[0-9]{1,4}[/\\-\\.][0-9]{1,2}[/\\-\\.][0-9]{1,4}', 'Date'], //03/02/89, 03-02-89
 
   //money
-  ['^[\-\+]?[$€¥£][0-9]+(\.[0-9]{1,2})?$', 'Money'], //like $5.30
-  ['^[\-\+]?[$€¥£][0-9]{1,3}(,[0-9]{3})+(\.[0-9]{1,2})?$', 'Money'], //like $5,231.30
+  ['^[\-\+]?[$€¥£][0-9]+(\.[0-9]{1,2})?$', ['Money', 'Value']], //like $5.30
+  ['^[\-\+]?[$€¥£][0-9]{1,3}(,[0-9]{3})+(\.[0-9]{1,2})?$', ['Money', 'Value']], //like $5,231.30
 
   //values
   ['[0-9]{1,4}(st|nd|rd|th)?-[0-9]{1,4}(st|nd|rd|th)?', 'NumberRange'], //5-7
@@ -11576,7 +11667,6 @@ module.exports = {
     is: 'Value'
   },
   Money: {
-    is: 'Value'
   },
   Percent: {
     is: 'Value'
@@ -11756,22 +11846,21 @@ module.exports = bestTag;
 },{"../paths":191}],177:[function(_dereq_,module,exports){
 'use strict';
 
-const addMethods = (Term) => {
-
+const addMethods = Term => {
   const methods = {
-    toUpperCase: function () {
+    toUpperCase: function() {
       this.text = this.text.toUpperCase();
       this.tag('#UpperCase', 'toUpperCase');
       return this;
     },
-    toLowerCase: function () {
+    toLowerCase: function() {
       this.text = this.text.toLowerCase();
       this.unTag('#TitleCase');
       this.unTag('#UpperCase');
       return this;
     },
-    toTitleCase: function () {
-      this.text = this.text.replace(/^[a-z]/, (x) => x.toUpperCase());
+    toTitleCase: function() {
+      this.text = this.text.replace(/^( +)?[a-z]/, x => x.toUpperCase());
       this.tag('#TitleCase', 'toTitleCase');
       return this;
     },
@@ -11790,21 +11879,17 @@ const addMethods = (Term) => {
         'Month',
         'WeekDay',
         'Holiday',
-        'Demonym',
+        'Demonym'
       ];
-      for(let i = 0; i < titleCases.length; i++) {
+      for (let i = 0; i < titleCases.length; i++) {
         if (this.tags[titleCases[i]]) {
           return true;
         }
       }
       //specific words that keep their titlecase
       //https://en.wikipedia.org/wiki/Capitonym
-      const irregulars = [
-        'i',
-        'god',
-        'allah',
-      ];
-      for(let i = 0; i < irregulars.length; i++) {
+      const irregulars = ['i', 'god', 'allah'];
+      for (let i = 0; i < irregulars.length; i++) {
         if (this.normal === irregulars[i]) {
           return true;
         }
@@ -11813,7 +11898,7 @@ const addMethods = (Term) => {
     }
   };
   //hook them into result.proto
-  Object.keys(methods).forEach((k) => {
+  Object.keys(methods).forEach(k => {
     Term.prototype[k] = methods[k];
   });
   return Term;
@@ -12708,7 +12793,7 @@ module.exports = matchMethods;
 //
 //find easy reasons to skip running the full match on this
 const fastPass = (ts, regs) => {
-  for(let i = 0; i < regs.length; i++) {
+  for (let i = 0; i < regs.length; i++) {
     let reg = regs[i];
     let found = false;
     //we can't cheat on these fancy rules:
@@ -12717,7 +12802,7 @@ const fastPass = (ts, regs) => {
     }
     //look-for missing term-matches
     if (reg.normal !== undefined) {
-      for(let o = 0; o < ts.terms.length; o++) {
+      for (let o = 0; o < ts.terms.length; o++) {
         if (ts.terms[o].normal === reg.normal || ts.terms[o].silent_term === reg.normal) {
           found = true;
           break;
@@ -12733,7 +12818,7 @@ const fastPass = (ts, regs) => {
     }
     //look for missing tags
     if (reg.tag !== undefined) {
-      for(let o = 0; o < ts.terms.length; o++) {
+      for (let o = 0; o < ts.terms.length; o++) {
         if (ts.terms[o].tags[reg.tag] === true) {
           found = true;
           break;
@@ -12756,7 +12841,7 @@ const fastPass = _dereq_('./fastPass');
 
 //make a reg syntax from a text object
 const findFromTerms = function(ts) {
-  let arr = ts.terms.map((t) => {
+  let arr = ts.terms.map(t => {
     return {
       id: t.uid
     };
@@ -12788,7 +12873,7 @@ const match = (ts, reg, verbose) => {
       break;
     }
     let m = startHere(ts, t, reg, verbose);
-    if (m) {
+    if (m && m.length > 0) {
       matches.push(m);
       //ok, don't try to match these again.
       let skip = m.length - 1;

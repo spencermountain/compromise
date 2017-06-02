@@ -1,6 +1,7 @@
 <div align="center">
   <img src="https://cloud.githubusercontent.com/assets/399657/21955696/46e882d4-da3e-11e6-94a6-720c34e27df7.jpg" />
-  <div>natural language processing, actually in the browser</div>
+</div>
+<div align="center">
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />
   </a>
@@ -13,9 +14,7 @@
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
   </a>
-</div>
-
-<div align="center">
+  <div>natural language processing, actually in the browser</div>
   <sub>
     by
     <a href="https://github.com/spencermountain">Spencer Kelly</a> and
@@ -24,32 +23,16 @@
     </a>
   </sub>
 </div>
-
-<div align="center">
-  <sub>(formerly nlp_compromise)</sub>
-</div>
-
-<div align="center">
-  inspect and play with english text.
-  <div>
-    focus on being <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">handy, and not overly-fancy.</a>
-  </div>
-</div>
 <br/>
 
-<div align="center">
-  📯 Welcome to <b>v7</b> 📯
-  <div>
-    <a href="https://github.com/nlp-compromise/compromise/wiki/v7-Upgrade,-welcome">a lot</a>
-    has changed!
-  </div>
-</div>
-
 ```javascript
-let r = nlp('I look just like buddy holly.')
-r.sentences().toPastTense()
-r.out('text')
-// "I looked just like buddy holly."
+var nlp = require('compromise')
+
+nlp('Wee-ooh, I look just like buddy holly.').sentences().toPastTense()
+// 'Wee-ooh, I looked just like buddy holly.'
+
+nlp('..then consider me Miles Davis!').people().out('freq')
+// [{ text:'Miles Davis', count:1 }]
 ```
 
 <div align="center">
@@ -58,11 +41,11 @@ r.out('text')
       <td align="center">
         <b>
           <a href="https://unpkg.com/compromise@latest/builds/compromise.min.js">
-            200k
+            210k
           </a>
         </b>
         <div>
-           &nbsp; one javascript file &nbsp;
+           &nbsp; &nbsp; one javascript file &nbsp; &nbsp;
         </div>
       </td>
       <td align="center">
@@ -73,7 +56,7 @@ r.out('text')
             </a>
           </b>
           <div>
-            &nbsp; on the Penn treebank &nbsp;
+            &nbsp; &nbsp; on the Penn treebank &nbsp; &nbsp;
          </div>
       </td>
       <td align="center">
@@ -91,144 +74,213 @@ r.out('text')
     </tr>
   </table>
 </div>
-<h3 align="center">
-  <a href="http://compromise.cool/demos">demos</a>
-  <span>&nbsp; | &nbsp;</span>
-  <a href="https://github.com/nlp-compromise/compromise/wiki/Getting-Started">quickStart</a>
-  <span>&nbsp; | &nbsp;</span>
-  <a href="http://compromise.cool/docs">docs</a>
-</h3>
-<div align="center">
-  <b>no training, configuration, or prolog</b>
-</div>
+
 <br/>
-
-the idea is, **[reach-in](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)** to a part of the text, and change it:
-
-```javascript
-r = nlp('john is really nice. sara sings loudly.')
-
-r.match('#Person').toUpperCase()
-//JOHN is really nice. SARA sings loudly.
-```
-
-or pluck-out some parts,
-```javascript
-r.remove('#Adverb')
-// "JOHN is nice. SARA sings."
-
-//replacements,
-r.replace('is nice', 'is bad')
-// "JOHN is bad. SARA sings."
-```
-or just be downright fancy
-```javascript
-r.sentences().toNegative()
-// "JOHN is not bad. SARA doesn't sing."
-```
-
-or grab specific parts, and **analyze-the-heck** out of them:
-```javascript
-r = nlp(freshPrince)
-r.places().sort('freq').unique().data()
-/*[
-  {text: 'West Philadelphia'},
-  {text: 'Bel-Air'}
-]*/
-```
-<table align="center">
+<div align="center">
+  <sub>with <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">deliberate, rule-based</a> nlp,</sub>
+  <br/>
+  <b>compromise</b> makes working with text easy
+</div>
+<h6 align="center">
+  no jargon, &nbsp; | &nbsp; no config, &nbsp; | &nbsp; no training
+</h6>
+<table>
   <tr>
-    <td>Part-of-Speech Tagging️</td>
-    <td>Named-Entity Recognition️</td>
-    <td>🍾Verb Conjugation</td>
-    <td>✨Inflection/Pluralization</td>
+    <td>
+      <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
+         Part-of-Speech tags
+      </a>
+    </td>
+    <td>
+      <sub><i>nouns, verbs, adjectives..</i></sub>
+    </td>
+    <td>
+      <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
+         Verb conjugation
+      </a>
+    </td>
+    <td>
+      <sub><i>change tense of a verb or sentence</i></sub>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
+         Number parsing
+      </a>
+    </td>
+    <td>
+      <sub><i>seven hundred and fifty -> 750</i></sub>
+    </td>
+    <td>
+      <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
+         Named-entities
+      </a>
+    </td>
+    <td>
+      <sub><i>all the people, places, orgs..</i></sub>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
+         Template-matches
+      </a>
+    </td>
+    <td>
+      <sub><i>match natural-language forms</i></sub>
+    </td>
+    <td>
+      <a href="https://github.com/nlp-compromise/compromise/wiki/Normalization">
+         Text cleanup
+      </a>
+    </td>
+    <td>
+      <sub><i>contractions, hyphenation, punctuation</i></sub>
+    </td>
   </tr>
 </table>
+<div align="right">
+  <sub><i>🙌 you can do it!</i></sub>
+</div>
 
-### Client-side:
+<h3 align="center">
+  <a href="http://compromise.cool/docs">API docs</a>
+  &nbsp; | &nbsp;
+  <a href="http://compromise.cool/demos">Demos list</a>
+</h3>
+
+#### Client-side!
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
-  var r = nlp('dinosaur').nouns().toPlural()
-  console.log(r.out('text'))
-  //dinosaurs
+  var doc = nlp('dinosaur')
+
+  doc.nouns().toPlural()
+  console.log(doc.out('text'))
+  // 'dinosaurs'
 </script>
 ```
 
-### Tense:
+#### 🌋 Server-side!
 ```javascript
-let r = nlp('she sells seashells by the seashore.')
-r.sentences().toFutureTense().out('text')
+var nlp = require('compromise')
+
+var doc = nlp('London is calling')
+doc.sentences().toNegative()
+// 'London is not calling'
+```
+
+## Grab some words,
+the [match() syntax](https://github.com/nlp-compromise/compromise/wiki/Match-syntax) lets you grab non-specific words or patterns:
+```js
+doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
+
+doc.match('#TitleCase van #LastName').out()
+// 'Ludwig van Beethoven'
+
+doc.match('#PastTense to').hyphenate().out()
+// 'wrote-to'
+```
+common match-patterns have handy methods like `.nouns()`, or `.people()`,
+```js
+doc.people().out('list')
+// ['ludwig van beethoven', 'josephine brunsvik']
+```
+
+### Plural/singular:
+grab your noun-phrases, make em plural:
+```javascript
+doc = nlp('a bottle of beer on the wall.')
+doc.nouns().first().toPlural()
+doc.out('text')
+//'The bottles of beer on the wall.'
+```
+
+### Number parsing:
+parse written numbers, and change their form:
+```javascript
+doc = nlp('ninety five thousand and fifty two')
+doc.values().toNumber().out('text')
+// '95052'
+
+doc = nlp('the 23rd of December')
+doc.values().toText()
+doc.out('text')
+// 'the twenty third of December'
+```
+
+### Normalization:
+some wrappers for common changes:
+```javascript
+doc = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
+// 'The guest singer is Bjork at 7:30.'
+```
+
+### Tense:
+_all your base are belong:_
+```javascript
+let doc = nlp('she sells seashells by the seashore.')
+doc.sentences().toFutureTense().out('text')
 //'she will sell seashells...'
 
-r.verbs().conjugate()
+doc.verbs().conjugate()
 // [{ PastTense: 'sold',
 //    Infinitive: 'sell',
 //    Gerund: 'selling', ...
 // }]
 ```
 
-### Plural/singular:
+### Named-entity spotting:
+find the people, places, organizations:
 ```javascript
-r = nlp('a bottle of beer on the wall.')
-r.nouns().first().toPlural()
-r.out('text')
-//'The bottles of beer on the wall.'
-```
-
-### Negation:
-```javascript
-r = nlp('london is calling')
-r.sentences().toNegative()
-// 'london is not calling'
-```
-
-### Number interpretation:
-```javascript
-r = nlp('fifth of december')
-
-r.values().toCardinal().out('text')
-// 'five of december'
-
-r.values().toNumber().out('text')
-// '5 of december'
-```
-
-### Normalization:
-```javascript
-r = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
-// 'The guest singer is Bjork at 7:30.'
-```
-
-### Named-entity recognition:
-```javascript
-r = nlp('the opera about richard nixon visiting china')
-r.topics().data()
+doc = nlp('that opera about richard nixon visiting china')
+doc.topics().data()
 // [
 //   { text: 'richard nixon' },
 //   { text: 'china' }
 // ]
 ```
 
-### Fancy outputs:
+### Error correction:
+make it say what you'd like:
 ```javascript
-r = nlp('Tony Hawk won').out('html')
+var lexicon={
+  'boston': 'MusicalGroup'
+}
+doc = nlp('i heard Boston\'s set in Chicago', lexicon)
+doc.match('#MusicalGroup').length
+// 1
+
+//alternatively, fix it all 'in-post':
+doc.match('heard #Possessive set').terms(1).tag('MusicalGroup')
+doc.match('#MusicalGroup').length
+// 1
+```
+
+### Handy outputs:
+get some data:
+```javascript
+doc = nlp('We like Roy! We like Roy!').sentences().out('array')
+// ['We like Roy!', 'We like Roy!']
+
+doc = nlp('Tony Hawk').out('html')
 /*
 <span>
-  <span class="nl-Person nl-Noun nl-FirstName">Tony</span>
-  <span class="nl-Person nl-Noun nl-LastName">Hawk</span>
+  <span class="nl-Person nl-FirstName">Tony</span>
   <span>&nbsp;</span>
-  <span class="nl-Verb nl-PastTense">won</span>
+  <span class="nl-Person nl-LastName">Hawk</span>
 </span>
 */
 ```
 <h3 align="center">
   and yes, ofcourse, there's <a href="http://compromise.cool/demos">a lot more stuff</a>.
 </h3>
-
-**Join in!**
-we're fun, we're using <b>semver</b>, and moving fast.
-[get involved](https://github.com/nlp-compromise/compromise/wiki/Contributing)
+<h4 align="center">
+  <b>Join in -</b>
+  we're fun, we're using <b>semver</b>, and moving fast.
+  <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">get involved</a>
+</h4>
 
 <table>
   <tr align="center">
@@ -251,6 +303,12 @@ we're fun, we're using <b>semver</b>, and moving fast.
       </a>
     </td>
     <td>
+      <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Downstream-projects">
+        <img src="https://cloud.githubusercontent.com/assets/399657/26513481/a755ac38-4239-11e7-960a-1c26d85ddc1c.png"/>
+        <div>&nbsp; &nbsp; &nbsp; Applications &nbsp; &nbsp; &nbsp; </div>
+      </a>
+    </td>
+    <td>
       <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">
         <img src="https://cloud.githubusercontent.com/assets/399657/21956742/5985a89c-da55-11e6-87bc-4f0f1549d202.jpg"/>
         <div>&nbsp; &nbsp; &nbsp; Pull-requests &nbsp; &nbsp; &nbsp; </div>
@@ -266,18 +324,18 @@ we're fun, we're using <b>semver</b>, and moving fast.
 </div>
 
 ### Don't forget about:
-* **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript, too
-* **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in js
-* **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
-* **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
-* **[jsPos](https://code.google.com/archive/p/jspos/)** - js-build of the time-tested Brill-tagger
-* **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
+* ✨ &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript
+* 🍭 &nbsp; **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in js
+* 💗 &nbsp; **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
+* 🎀 &nbsp; **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
+* 💎 &nbsp; **[jsPos](https://code.google.com/archive/p/jspos/)** - javascript build of the time-tested Brill-tagger
+* 🚗 &nbsp; **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
 
 For the former promise-library, see [jnewman/compromise](https://github.com/jnewman/compromise)
 (Thanks [Joshua](https://github.com/jnewman)!)
 
 <div align="right">
-(also don't forget
+(also don't forget 🙇
 <a href="http://www.nltk.org/">NLTK</a>,
 <a href="https://gate.ac.uk">GATE</a>,
 <a href="http://nlp.stanford.edu/software/lex-parser.shtml">Stanford</a>,

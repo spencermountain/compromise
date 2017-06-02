@@ -5,25 +5,25 @@ const Verb = require('./verb');
 //the () subset class
 const methods = {
   conjugation: function(verbose) {
-    return this.list.map((ts) => {
+    return this.list.map(ts => {
       return ts.conjugation(verbose);
     });
   },
   conjugate: function(verbose) {
-    return this.list.map((ts) => {
+    return this.list.map(ts => {
       return ts.conjugate(verbose);
     });
   },
 
   /** plural/singular **/
   isPlural: function() {
-    this.list = this.list.filter((ts) => {
+    this.list = this.list.filter(ts => {
       return ts.isPlural();
     });
     return this;
   },
   isSingular: function() {
-    this.list = this.list.filter((ts) => {
+    this.list = this.list.filter(ts => {
       return !ts.isPlural();
     });
     return this;
@@ -31,25 +31,25 @@ const methods = {
 
   /** negation **/
   isNegative: function() {
-    this.list = this.list.filter((ts) => {
+    this.list = this.list.filter(ts => {
       return ts.isNegative();
     });
     return this;
   },
   isPositive: function() {
-    this.list = this.list.filter((ts) => {
+    this.list = this.list.filter(ts => {
       return !ts.isNegative();
     });
     return this;
   },
   toNegative: function() {
-    this.list = this.list.map((ts) => {
+    this.list = this.list.map(ts => {
       return ts.toNegative();
     });
     return this;
   },
   toPositive: function() {
-    this.list.forEach((ts) => {
+    this.list.forEach(ts => {
       ts.toPositive();
     });
     return this;
@@ -57,31 +57,31 @@ const methods = {
 
   /** tense **/
   toPastTense: function() {
-    this.list.forEach((ts) => {
+    this.list.forEach(ts => {
       ts.toPastTense();
     });
     return this;
   },
   toPresentTense: function() {
-    this.list.forEach((ts) => {
+    this.list.forEach(ts => {
       ts.toPresentTense();
     });
     return this;
   },
   toFutureTense: function() {
-    this.list.forEach((ts) => {
+    this.list.forEach(ts => {
       ts.toFutureTense();
     });
     return this;
   },
   toInfinitive: function() {
-    this.list.forEach((ts) => {
+    this.list.forEach(ts => {
       ts.toInfinitive();
     });
     return this;
   },
   asAdjective: function() {
-    return this.list.map((ts) => ts.asAdjective());
+    return this.list.map(ts => ts.asAdjective());
   }
 };
 
@@ -92,8 +92,7 @@ const find = function(r, n) {
   if (typeof n === 'number') {
     r = r.get(n);
   }
-  // r.debug();
-  r.list = r.list.map((ts) => {
+  r.list = r.list.map(ts => {
     return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
   });
   //fiter-out any that didn't find a main verb

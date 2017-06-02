@@ -11,6 +11,11 @@ module.exports = {
     returns: 'Text',
     example: 'nlp(\'in 2016, I\u2019m going to party like it\u2019s on sale for $19.99.\').values().noDates().length\n//1'
   },
+  noUnits: {
+    desc: 'remove \'books\' from \'12 books\'',
+    returns: 'Text',
+    example: 'nlp(\'harry potter and the 12 sequels\').values().noUnits().out()\n//\'12\''
+  },
   toNumber: {
     desc: 'turn a written number like `five thousand five hundred` into it\'s numerical form, like `5500`',
     returns: 'Text',
@@ -55,5 +60,25 @@ module.exports = {
     desc: 'return only the values equal to a given value',
     returns: 'Text',
     example: 'nlp(\'his 7th birthday\').values().isEqual(7).out(\'array\')\n// [\'7th\']'
-  }
+  },
+  add: {
+    desc: 'increment the current number by a given integer',
+    returns: 'Text',
+    example: 'nlp(\'his 7th birthday\').values().add(2).out()\n// \'his 9th birthday\''
+  },
+  subtract: {
+    desc: 'subtract the current number by a given integer',
+    returns: 'Text',
+    example: 'nlp(\'his seventh birthday\').values().subtract(2).out()\n// \'his fifth birthday\''
+  },
+  increment: {
+    desc: 'add one to the current number',
+    returns: 'Text',
+    example: 'nlp(\'his seventh birthday\').values().increment().out()\n// \'his eighth birthday\''
+  },
+  decrement: {
+    desc: 'subtract one from the current number',
+    returns: 'Text',
+    example: 'nlp(\'his 7th birthday\').values().decrement().out()\n// \'his 6th birthday\''
+  },
 };

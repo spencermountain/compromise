@@ -33,25 +33,25 @@ const isPercent = function(val, unit) {
 
 //set the text as the same num format
 const setNumber = function(ts, num) {
+  let str = ts.val.out();
   if (ts.has('#Ordinal')) {
     if (ts.has('#TextValue')) { //ordinal text
-      let str = fmt.textOrdinal(num);
-      ts.val.replaceWith(str, true);
+      str = fmt.textOrdinal(num);
     } else { //ordinal number
-      let str = fmt.ordinal(num);
-      ts.val.replaceWith(str, true);
+      str = fmt.ordinal(num);
     }
   } else if (ts.has('#TextValue')) { //cardinal text
-    let str = fmt.text(num);
-    ts.val.replaceWith(str, true);
+    str = fmt.text(num);
   } else if (ts.has('#NiceNumber')) {
-    let str = fmt.nice(num);
-    ts.val.replaceWith(str, true);
+    str = fmt.nice(num);
   } else { //cardinal number
-    let str = fmt.cardinal(num);
-    ts.val.replaceWith(str, true);
+    str = fmt.cardinal(num);
   }
-  return ts;
+  //add the unit at the end
+  if (ts.unit.found) {
+    str += ts.unit.out('text');
+  }
+  return ts.replaceWith(str, true);
 };
 
 const Value = function(arr, lexicon, refText, refTerms) {

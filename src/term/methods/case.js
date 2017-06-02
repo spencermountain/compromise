@@ -1,21 +1,20 @@
 'use strict';
 
-const addMethods = (Term) => {
-
+const addMethods = Term => {
   const methods = {
-    toUpperCase: function () {
+    toUpperCase: function() {
       this.text = this.text.toUpperCase();
       this.tag('#UpperCase', 'toUpperCase');
       return this;
     },
-    toLowerCase: function () {
+    toLowerCase: function() {
       this.text = this.text.toLowerCase();
       this.unTag('#TitleCase');
       this.unTag('#UpperCase');
       return this;
     },
-    toTitleCase: function () {
-      this.text = this.text.replace(/^[a-z]/, (x) => x.toUpperCase());
+    toTitleCase: function() {
+      this.text = this.text.replace(/^( +)?[a-z]/, x => x.toUpperCase());
       this.tag('#TitleCase', 'toTitleCase');
       return this;
     },
@@ -34,21 +33,17 @@ const addMethods = (Term) => {
         'Month',
         'WeekDay',
         'Holiday',
-        'Demonym',
+        'Demonym'
       ];
-      for(let i = 0; i < titleCases.length; i++) {
+      for (let i = 0; i < titleCases.length; i++) {
         if (this.tags[titleCases[i]]) {
           return true;
         }
       }
       //specific words that keep their titlecase
       //https://en.wikipedia.org/wiki/Capitonym
-      const irregulars = [
-        'i',
-        'god',
-        'allah',
-      ];
-      for(let i = 0; i < irregulars.length; i++) {
+      const irregulars = ['i', 'god', 'allah'];
+      for (let i = 0; i < irregulars.length; i++) {
         if (this.normal === irregulars[i]) {
           return true;
         }
@@ -57,7 +52,7 @@ const addMethods = (Term) => {
     }
   };
   //hook them into result.proto
-  Object.keys(methods).forEach((k) => {
+  Object.keys(methods).forEach(k => {
     Term.prototype[k] = methods[k];
   });
   return Term;

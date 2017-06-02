@@ -5,7 +5,7 @@ const fastPass = require('./fastPass');
 
 //make a reg syntax from a text object
 const findFromTerms = function(ts) {
-  let arr = ts.terms.map((t) => {
+  let arr = ts.terms.map(t => {
     return {
       id: t.uid
     };
@@ -41,6 +41,10 @@ const match = (ts, reg, verbose) => {
       matches.push(m);
       //ok, don't try to match these again.
       let skip = m.length - 1;
+      //this can cause a inf-loop!
+      if (skip < 0) {
+        skip = 0;
+      }
       t += skip; //this could use some work
     }
   }

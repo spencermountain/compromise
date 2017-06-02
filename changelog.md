@@ -33,6 +33,7 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - add increment/decrement/add/subtract methods to .values()
 - add units(), noUnits() methods to .values()
 - 'uncountable' nouns are no longer assumed to be singular
+- money tag is no longer always a value
 
 ### v9  &nbsp;
 * 9.0.0

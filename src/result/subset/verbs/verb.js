@@ -14,9 +14,10 @@ const parse = function(r) {
   r.verb = aux.match('#Verb').not('#Particle').last();
   r.particle = aux.match('#Particle').last();
   if (r.verb.found) {
-    r.auxiliary = original.not(r.verb.out('normal')).not('(#Adverb|#Negative)');
+    let str = r.verb.out('normal');
+    r.auxiliary = original.not(str).not('(#Adverb|#Negative)');
     r.verb = r.verb.list[0].terms[0];
-  // r.auxiliary = aux.match('#Auxiliary+');
+    // r.auxiliary = aux.match('#Auxiliary+');
   } else {
     r.verb = original.terms[0];
   }
@@ -35,7 +36,7 @@ const methods = {
         negative: this.negative.out('normal'),
         auxiliary: this.auxiliary.out('normal'),
         verb: this.verb.out('normal'),
-        adverbs: this.adverbs.out('normal'),
+        adverbs: this.adverbs.out('normal')
       },
       interpret: interpret(this, verbose),
       conjugations: this.conjugate()
@@ -115,7 +116,7 @@ const Verb = function(arr, lexicon, refText, parentTerms) {
 //Terms inheritence
 Verb.prototype = Object.create(Terms.prototype);
 //apply methods
-Object.keys(methods).forEach((k) => {
+Object.keys(methods).forEach(k => {
   Verb.prototype[k] = methods[k];
 });
 module.exports = Verb;

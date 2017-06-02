@@ -37,14 +37,10 @@ const match = (ts, reg, verbose) => {
       break;
     }
     let m = startHere(ts, t, reg, verbose);
-    if (m) {
+    if (m && m.length > 0) {
       matches.push(m);
       //ok, don't try to match these again.
       let skip = m.length - 1;
-      //this can cause a inf-loop!
-      if (skip < 0) {
-        skip = 0;
-      }
       t += skip; //this could use some work
     }
   }

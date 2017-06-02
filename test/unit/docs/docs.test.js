@@ -3,11 +3,10 @@ var nlp = require('../lib/nlp');
 var docs = require('../../../docs/api');
 var freshPrince = require('../lib/freshPrince');
 
-test('generic-methods-run:', function (t) {
-
+test('generic-methods-run:', function(t) {
   var getters = {
     found: true,
-    length: true,
+    length: true
   };
   var skip = {
     whitespace: true,
@@ -20,7 +19,7 @@ test('generic-methods-run:', function (t) {
     match: true,
     splitOn: true,
     splitBefore: true,
-    splitAfter: true,
+    splitAfter: true
   };
 
   var r = nlp(freshPrince);
@@ -49,11 +48,11 @@ test('generic-methods-run:', function (t) {
   t.end();
 });
 
-test('subsets-methods-exist:', function (t) {
+test('subsets-methods-exist:', function(t) {
   var addParam = {
     sentences: {
       append: true,
-      prepend: true,
+      prepend: true
     }
   };
   var r = nlp(freshPrince);

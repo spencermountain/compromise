@@ -2022,7 +2022,7 @@ var splitMethods = function splitMethods(Text) {
     var matches = [];
     r.list.forEach(function (ts) {
       ts.terms.forEach(function (t) {
-        if (obj[t.normal]) {
+        if (obj.hasOwnProperty(t.normal) === true) {
           matches.push(t);
         }
       });
@@ -2717,7 +2717,7 @@ var addMethods = function addMethods(Text) {
       var obj = {};
       this.list = this.list.filter(function (ts) {
         var str = ts.out('root');
-        if (obj[str]) {
+        if (obj.hasOwnProperty(str)) {
           return false;
         }
         obj[str] = true;
@@ -3386,7 +3386,7 @@ var toVerb = function toVerb(str) {
     return str;
   }
   //irregulars
-  if (irregulars[str]) {
+  if (irregulars.hasOwnProperty(str) === true) {
     return irregulars[str];
   }
   if (/e$/.test(str) === true) {
@@ -4603,7 +4603,7 @@ var pluralRules = _dereq_('./data/pluralRules');
 //turn 'shoe' into 'shoes'
 var pluralize = function pluralize(str) {
   //irregular
-  if (irregulars[str] !== undefined) {
+  if (irregulars.hasOwnProperty(str) === true) {
     return irregulars[str];
   }
   //regular rule-based inflector
@@ -4626,7 +4626,7 @@ var singleRules = _dereq_('./data/singleRules');
 //turn 'shoes' into 'shoe'
 var toSingle = function toSingle(str) {
   //irregular
-  if (irregulars[str]) {
+  if (irregulars.hasOwnProperty(str)) {
     return irregulars[str];
   }
   //inflect first word of preposition-phrase
@@ -6791,7 +6791,7 @@ var forms = ['Participle', 'Gerund', 'PastTense', 'PresentTense', 'FuturePerfect
 
 var checkIrregulars = function checkIrregulars(str) {
   //fast infinitive lookup
-  if (irregulars[str] !== undefined) {
+  if (irregulars.hasOwnProperty(str) === true) {
     var obj = fns.copy(irregulars[str]);
     obj.Infinitive = str;
     return obj;
@@ -6833,7 +6833,7 @@ var suffixPass = function suffixPass(inf) {
     if (rules[i].reg.test(inf) === true) {
       var obj = rules[i].repl;
       for (var o = 0; o < keys.length; o++) {
-        if (obj[keys[o]] !== undefined) {
+        if (obj.hasOwnProperty(keys[o]) === true) {
           var key = mapping[keys[o]];
           found[key] = inf.replace(rules[i].reg, obj[keys[o]]);
         }
@@ -6896,7 +6896,7 @@ var toActor = function toActor(inf) {
     return null;
   }
   //check irregulars
-  if (irregulars[inf]) {
+  if (irregulars.hasOwnProperty(inf)) {
     return irregulars[inf];
   }
   //try rules
@@ -7067,7 +7067,7 @@ var irregulars = {
 
 //takes an infitive verb, and returns an adjective form
 var toAdjective = function toAdjective(str) {
-  if (irregulars[str]) {
+  if (irregulars.hasOwnProperty(str)) {
     return irregulars[str];
   }
   for (var i = 0; i < rules.length; i++) {
@@ -7111,7 +7111,7 @@ var toInfinitive = function toInfinitive(t) {
     return t.normal;
   }
   //check the irregular verb conjugations
-  if (irregulars[t.normal]) {
+  if (irregulars.hasOwnProperty(t.normal) === true) {
     return irregulars[t.normal];
   }
   //check the suffix rules
@@ -8347,15 +8347,18 @@ var lexiconFirst = getFirstWords([lexicon, tries.multiples()]);
 var tryHere = function tryHere(ts, i, obj) {
   var n = i + 1;
   //one
-  if (obj[ts.slice(n, n + 1).out('root')]) {
+  var str = ts.slice(n, n + 1).out('root');
+  if (obj.hasOwnProperty(str) === true) {
     return n + 1;
   }
   //two
-  if (obj[ts.slice(n, n + 2).out('root')]) {
+  str = ts.slice(n, n + 2).out('root');
+  if (obj.hasOwnProperty(str)) {
     return n + 2;
   }
   //three
-  if (obj[ts.slice(n, n + 3).out('root')]) {
+  str = ts.slice(n, n + 3).out('root');
+  if (obj.hasOwnProperty(str)) {
     return n + 3;
   }
   return null;
@@ -8364,14 +8367,16 @@ var tryHere = function tryHere(ts, i, obj) {
 //try all terms with this lexicon
 var tryAll = function tryAll(lexFirst, ts) {
   for (var i = 0; i < ts.terms.length - 1; i++) {
-    var obj = lexFirst[ts.terms[i].root];
-    if (obj) {
+    if (lexFirst.hasOwnProperty(ts.terms[i].root)) {
+      var obj = lexFirst[ts.terms[i].root];
       var n = tryHere(ts, i, obj);
       if (n) {
-        var tag = obj[ts.slice(i + 1, n).out('root')];
-        var slice = ts.slice(i, n);
-        slice.tag(tag, 'lexicon-lump');
-        // slice.lump();
+        var str = ts.slice(i + 1, n).out('root');
+        if (obj.hasOwnProperty(str) === true) {
+          var tag = obj[str];
+          var slice = ts.slice(i, n);
+          slice.tag(tag, 'lexicon-lump');
+        }
       }
     }
   }
@@ -11688,11 +11693,11 @@ var perfectMatch = function perfectMatch(term, reg) {
   //one-of term-match
   if (reg.oneOf !== undefined) {
     for (var i = 0; i < reg.oneOf.tagArr.length; i++) {
-      if (term.tags[reg.oneOf.tagArr[i]] === true) {
+      if (term.tags.hasOwnProperty(reg.oneOf.tagArr[i]) === true) {
         return true;
       }
     }
-    return reg.oneOf.terms[term.normal] || reg.oneOf.terms[term.silent_term];
+    return reg.oneOf.terms.hasOwnProperty(term.normal) || reg.oneOf.terms.hasOwnProperty(term.silent_term);
   }
   return false;
 };

@@ -38,7 +38,7 @@ const addMethods = (Text) => {
       let obj = {};
       this.list = this.list.filter((ts) => {
         let str = ts.out('root');
-        if (obj[str]) {
+        if (obj.hasOwnProperty(str)) {
           return false;
         }
         obj[str] = true;

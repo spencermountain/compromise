@@ -16,7 +16,7 @@ const suffixPass = function(inf) {
     if (rules[i].reg.test(inf) === true) {
       let obj = rules[i].repl;
       for(let o = 0; o < keys.length; o++) {
-        if (obj[keys[o]] !== undefined) {
+        if (obj.hasOwnProperty(keys[o]) === true) {
           let key = mapping[keys[o]];
           found[key] = inf.replace(rules[i].reg, obj[keys[o]]);
         }

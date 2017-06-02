@@ -14,7 +14,7 @@ const forms = [
 
 const checkIrregulars = function(str) {
   //fast infinitive lookup
-  if (irregulars[str] !== undefined) {
+  if (irregulars.hasOwnProperty(str) === true) {
     let obj = fns.copy(irregulars[str]);
     obj.Infinitive = str;
     return obj;

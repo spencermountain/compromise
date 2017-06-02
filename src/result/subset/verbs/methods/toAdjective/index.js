@@ -35,7 +35,7 @@ const irregulars = {
 
 //takes an infitive verb, and returns an adjective form
 const toAdjective = function(str) {
-  if (irregulars[str]) {
+  if (irregulars.hasOwnProperty(str)) {
     return irregulars[str];
   }
   for(let i = 0; i < rules.length; i++) {

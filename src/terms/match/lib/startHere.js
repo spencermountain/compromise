@@ -75,7 +75,8 @@ const startHere = (ts, startAt, regs, verbose) => {
       let min = regs[reg_i].minMax.min || 0;
       let max = regs[reg_i].minMax.max;
       let until = regs[reg_i + 1];
-      for(let i = 0; i < max; i++) { //TODO: please clean this loop up..
+      for (let i = 0; i < max; i++) {
+        //TODO: please clean this loop up..
         let t = ts.terms[term_i + i];
         //end here
         if (isMatch(t, reg) === false) {
@@ -126,7 +127,8 @@ const startHere = (ts, startAt, regs, verbose) => {
       continue;
     }
 
-    if (term.silent_term && !term.normal) { //skip over silent contraction terms
+    if (term.silent_term && !term.normal) {
+      //skip over silent contraction terms
       //we will continue on it, but not start on it
       if (reg_i === 0) {
         return null;

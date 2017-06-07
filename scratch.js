@@ -4,8 +4,9 @@ var nlp = require('./src/index');
 // const fresh = require('./test/unit/lib/freshPrince.js');
 
 var lexicon = {
-  dorritos: 'chip'
+  dorritos: 'Noun',
+  ruffles: 'noun'
 };
-var r = nlp('blend 2 tbsp of dorritos', lexicon);
-r.match('#Value #Unit of #chip').debug();
-console.log('hi');
+var r = nlp(' dorritos and ruffles', lexicon);
+r.match('#Noun').debug();
+r.match('#noun').debug();

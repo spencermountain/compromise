@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.5.0",
+  "version": "10.5.1",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -49,6 +49,7 @@ module.exports={
   },
   "license": "MIT"
 }
+
 },{}],2:[function(_dereq_,module,exports){
 'use strict';
 
@@ -2631,6 +2632,7 @@ var allOffset = function allOffset(r) {
       length: txt.length,
       wordStart: wordStart,
       wordEnd: wordStart + nrml.length
+      // wordLength: words.join(' ').length
     };
   });
 };
@@ -3721,15 +3723,15 @@ module.exports = Text.makeSubset(methods, find);
 var Terms = _dereq_('../../paths').Terms;
 var parseDate = _dereq_('./parseDate');
 
-var Date = function Date(arr, lexicon, refText) {
+var _Date = function _Date(arr, lexicon, refText) {
   Terms.call(this, arr, lexicon, refText);
   this.month = this.match('#Month');
 };
 
 //Inherit properties
-Date.prototype = Object.create(Terms.prototype);
+_Date.prototype = Object.create(Terms.prototype);
 
-Date.prototype.data = function () {
+_Date.prototype.data = function () {
   return {
     text: this.out('text'),
     normal: this.out('normal'),
@@ -3737,7 +3739,7 @@ Date.prototype.data = function () {
   };
 };
 
-module.exports = Date;
+module.exports = _Date;
 
 },{"../../paths":40,"./parseDate":61}],58:[function(_dereq_,module,exports){
 'use strict';
@@ -6732,6 +6734,27 @@ var generic = {
     return inf + 'ed';
   }
 
+  // FutureTense: (o) => {
+  //   return 'will ' + o.Infinitive;
+  // },
+  //
+  // PerfectTense: (o) => {
+  //   return 'have ' + (o.Participle || o.PastTense);
+  // },
+  //
+  // Pluperfect: (o) => {
+  //   if (o.PastTense) {
+  //     return 'had ' + o.PastTense;
+  //   }
+  //   return null;
+  // },
+  // FuturePerfect: (o) => {
+  //   if (o.PastTense) {
+  //     return 'will have ' + o.PastTense;
+  //   }
+  //   return null;
+  // }
+
 };
 
 module.exports = generic;
@@ -7732,6 +7755,7 @@ var irregulars = {
   'til': ['today', 'i', 'learned'],
   'rn': ['right', 'now'],
   '@': ['at']
+  // 'idk': ['i', 'don\'t', 'know'],
 };
 
 //check irregulars
@@ -9833,7 +9857,8 @@ var afterThisWord = {
   very: 'Adjective', // 39%
   old: 'Noun', //51%
   never: 'Verb', //42%
-  before: 'Noun' };
+  before: 'Noun' //28%
+};
 
 //in advance of this word, this is what happens usually
 var beforeThisWord = {
@@ -9865,7 +9890,9 @@ var afterThisPos = {
   Superlative: 'Noun', //43%
   Demonym: 'Noun', //38%
   Organization: 'Verb', //33%
-  Honorific: 'Person' };
+  Honorific: 'Person' //
+  // FirstName: 'Person', //
+};
 
 //in advance of this POS, this is likely
 var beforeThisPos = {
@@ -9874,7 +9901,9 @@ var beforeThisPos = {
   Conjunction: 'Noun', //36%
   Modal: 'Noun', //38%
   PluperfectTense: 'Noun', //40%
-  PerfectTense: 'Verb' };
+  PerfectTense: 'Verb' //32%
+  // LastName: 'FirstName', //
+};
 module.exports = {
   beforeThisWord: beforeThisWord,
   afterThisWord: afterThisWord,
@@ -10060,7 +10089,8 @@ null, //1
   'chuk': Last, //east-europe
   'enko': Last, //east-europe
   'akis': Last, //greek
-  'nsen': Last }, { //5-letter
+  'nsen': Last //norway
+}, { //5-letter
   'fully': AdVb,
   'where': AdVb,
   'wards': AdVb,
@@ -10078,14 +10108,16 @@ null, //1
   'ishes': Pres,
   'tches': Pres,
   'nssen': Last, //norway
-  'marek': Last }, { //6-letter
+  'marek': Last //polish (male)
+}, { //6-letter
   'keeper': Actor,
   'logist': Actor,
   'auskas': Last, //lithuania
   'teenth': 'Value'
 }, { //7-letter
   'sdottir': Last, //swedish female
-  'opoulos': Last }];
+  'opoulos': Last //greek
+}];
 
 },{}],167:[function(_dereq_,module,exports){
 'use strict';
@@ -11607,6 +11639,16 @@ var syntax = _dereq_('./syntax');
 var startHere = _dereq_('./startHere');
 var fastPass = _dereq_('./fastPass');
 
+//ensure we have atleast one non-optional demand
+// const isTautology = function(regs) {
+//   for (var i = 0; i < regs.length; i++) {
+//     if (!regs[i].optional && !regs[i].astrix && !regs[i].anyOne) {
+//       return false;
+//     }
+//   }
+//   return true;
+// };
+
 //make a reg syntax from a text object
 var findFromTerms = function findFromTerms(ts) {
   var arr = ts.terms.map(function (t) {
@@ -11635,7 +11677,7 @@ var match = function match(ts, reg, verbose) {
   }
   //ok, start long-match
   var matches = [];
-  for (var t = 0; t < ts.terms.length; t++) {
+  for (var t = 0; t < ts.terms.length; t += 1) {
     //don't loop through if '^'
     if (t > 0 && reg[0] && reg[0].starting) {
       break;
@@ -12054,7 +12096,6 @@ var startHere = _dereq_('./lib/startHere');
 var Text = _dereq_('../../result');
 
 var addfns = function addfns(Terms) {
-
   var fns = {
     //blacklist from a {word:true} object
     notObj: function notObj(r, obj) {
@@ -12090,7 +12131,7 @@ var addfns = function addfns(Terms) {
       //try the match starting from each term
       for (var i = 0; i < r.terms.length; i++) {
         var bad = startHere(r, i, regs, verbose);
-        if (bad) {
+        if (bad && bad.length > 0) {
           //reset matches
           if (terms.length > 0) {
             matches.push(terms);

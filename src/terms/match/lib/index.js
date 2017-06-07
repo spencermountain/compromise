@@ -3,6 +3,16 @@ const syntax = require('./syntax');
 const startHere = require('./startHere');
 const fastPass = require('./fastPass');
 
+//ensure we have atleast one non-optional demand
+// const isTautology = function(regs) {
+//   for (var i = 0; i < regs.length; i++) {
+//     if (!regs[i].optional && !regs[i].astrix && !regs[i].anyOne) {
+//       return false;
+//     }
+//   }
+//   return true;
+// };
+
 //make a reg syntax from a text object
 const findFromTerms = function(ts) {
   let arr = ts.terms.map(t => {
@@ -31,7 +41,7 @@ const match = (ts, reg, verbose) => {
   }
   //ok, start long-match
   let matches = [];
-  for (let t = 0; t < ts.terms.length; t++) {
+  for (let t = 0; t < ts.terms.length; t += 1) {
     //don't loop through if '^'
     if (t > 0 && reg[0] && reg[0].starting) {
       break;

@@ -28,22 +28,21 @@ const parse = function(s) {
   return s;
 };
 
-
 const fixContraction = function(contr) {
   if (contr.found) {
     contr.contractions().expand();
-  // contr.list[0].terms.forEach((t) => {
-  //   if (t.silent_term) {
-  //     t.text = t.silent_term;
-  //     t.silent_term = null;
-  //     t.unTag('Contraction');
-  //   }
-  // });
+    // contr.list[0].terms.forEach((t) => {
+    //   if (t.silent_term) {
+    //     t.text = t.silent_term;
+    //     t.silent_term = null;
+    //     t.unTag('Contraction');
+    //   }
+    // });
   }
 };
 
 const killContraction = function(s) {
-  s.terms = s.terms.filter((t) => {
+  s.terms = s.terms.filter(t => {
     if (t.silent_term) {
       if (t.silent_term === 'am' || t.silent_term === 'will' || t.silent_term === 'did') {
         return false;
@@ -190,7 +189,7 @@ const Sentence = function(arr, lexicon, refText, refTerms) {
 //Terms inheritence
 Sentence.prototype = Object.create(Terms.prototype);
 //add-in methods
-Object.keys(methods).forEach((k) => {
+Object.keys(methods).forEach(k => {
   Sentence.prototype[k] = methods[k];
 });
 module.exports = Sentence;

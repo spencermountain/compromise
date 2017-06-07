@@ -20,3 +20,4 @@ compromise.xcodeproj
 npm-debug.log
 pennTreebank.js
 compiled_tests.js
+package-lock.json

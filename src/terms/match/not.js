@@ -4,14 +4,14 @@ const syntax = require('./lib/syntax');
 const startHere = require('./lib/startHere');
 const Text = require('../../result');
 
-const addfns = (Terms) => {
-
+const addfns = Terms => {
   const fns = {
     //blacklist from a {word:true} object
     notObj: function(r, obj) {
       let matches = [];
       let current = [];
-      r.terms.forEach((t) => { //TODO: support multi-word blacklists
+      r.terms.forEach(t => {
+        //TODO: support multi-word blacklists
         //we should blacklist this term
         if (obj.hasOwnProperty(t.normal)) {
           if (current.length) {
@@ -26,21 +26,21 @@ const addfns = (Terms) => {
       if (current.length) {
         matches.push(current);
       }
-      matches = matches.map((a) => {
+      matches = matches.map(a => {
         return new Terms(a, r.lexicon, r.refText, r.refTerms);
       });
       return new Text(matches, r.lexicon, r.parent);
     },
 
     //blacklist from a match string
-    notString : function(r, want, verbose) {
+    notString: function(r, want, verbose) {
       let matches = [];
       let regs = syntax(want);
       let terms = [];
       //try the match starting from each term
-      for(let i = 0; i < r.terms.length; i++) {
+      for (let i = 0; i < r.terms.length; i++) {
         let bad = startHere(r, i, regs, verbose);
-        if (bad) {
+        if (bad && bad.length > 0) {
           //reset matches
           if (terms.length > 0) {
             matches.push(terms);
@@ -56,7 +56,7 @@ const addfns = (Terms) => {
       if (terms.length > 0) {
         matches.push(terms);
       }
-      matches = matches.map((a) => {
+      matches = matches.map(a => {
         return new Terms(a, r.lexicon, r.refText, r.refTerms);
       });
       // return matches

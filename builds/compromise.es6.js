@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.5.0",
+  "version": "10.5.1",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -49,6 +49,7 @@ module.exports={
   },
   "license": "MIT"
 }
+
 },{}],2:[function(_dereq_,module,exports){
 'use strict';
 const fns = _dereq_('../fns');
@@ -4687,15 +4688,15 @@ module.exports = Text.makeSubset(methods, find);
 const Terms = _dereq_('../../paths').Terms;
 const parseDate = _dereq_('./parseDate');
 
-const Date = function(arr, lexicon, refText) {
+const _Date = function(arr, lexicon, refText) {
   Terms.call(this, arr, lexicon, refText);
   this.month = this.match('#Month');
 };
 
 //Inherit properties
-Date.prototype = Object.create(Terms.prototype);
+_Date.prototype = Object.create(Terms.prototype);
 
-Date.prototype.data = function() {
+_Date.prototype.data = function() {
   return {
     text: this.out('text'),
     normal: this.out('normal'),
@@ -4703,7 +4704,7 @@ Date.prototype.data = function() {
   };
 };
 
-module.exports = Date;
+module.exports = _Date;
 
 },{"../../paths":40,"./parseDate":61}],58:[function(_dereq_,module,exports){
 'use strict';
@@ -5892,21 +5893,21 @@ const Sentence = _dereq_('./sentence');
 const methods = {
   /** conjugate the main/first verb*/
   toPastTense: function() {
-    this.list = this.list.map((ts) => {
+    this.list = this.list.map(ts => {
       ts = ts.toPastTense();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
   },
   toPresentTense: function() {
-    this.list = this.list.map((ts) => {
+    this.list = this.list.map(ts => {
       ts = ts.toPresentTense();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
   },
   toFutureTense: function() {
-    this.list = this.list.map((ts) => {
+    this.list = this.list.map(ts => {
       ts = ts.toFutureTense();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
@@ -5914,14 +5915,14 @@ const methods = {
   },
   /** negative/positive */
   toNegative: function() {
-    this.list = this.list.map((ts) => {
+    this.list = this.list.map(ts => {
       ts = ts.toNegative();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
     return this;
   },
   toPositive: function() {
-    this.list = this.list.map((ts) => {
+    this.list = this.list.map(ts => {
       ts = ts.toPositive();
       return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
     });
@@ -5930,21 +5931,21 @@ const methods = {
 
   /** look for 'was _ by' patterns */
   isPassive: function() {
-    this.list = this.list.filter((ts) => {
+    this.list = this.list.filter(ts => {
       return ts.isPassive();
     });
     return this;
   },
   /** add a word to the start */
   prepend: function(str) {
-    this.list = this.list.map((ts) => {
+    this.list = this.list.map(ts => {
       return ts.prepend(str);
     });
     return this;
   },
   /** add a word to the end */
   append: function(str) {
-    this.list = this.list.map((ts) => {
+    this.list = this.list.map(ts => {
       return ts.append(str);
     });
     return this;
@@ -5952,19 +5953,19 @@ const methods = {
 
   /** convert between question/statement/exclamation*/
   toExclamation: function() {
-    this.list.forEach((ts) => {
+    this.list.forEach(ts => {
       ts.setPunctuation('!');
     });
     return this;
   },
   toQuestion: function() {
-    this.list.forEach((ts) => {
+    this.list.forEach(ts => {
       ts.setPunctuation('?');
     });
     return this;
   },
   toStatement: function() {
-    this.list.forEach((ts) => {
+    this.list.forEach(ts => {
       ts.setPunctuation('.');
     });
     return this;
@@ -5976,7 +5977,7 @@ const find = function(r, n) {
   if (typeof n === 'number') {
     r = r.get(n);
   }
-  r.list = r.list.map((ts) => {
+  r.list = r.list.map(ts => {
     return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
   });
   return r;
@@ -6015,22 +6016,21 @@ const parse = function(s) {
   return s;
 };
 
-
 const fixContraction = function(contr) {
   if (contr.found) {
     contr.contractions().expand();
-  // contr.list[0].terms.forEach((t) => {
-  //   if (t.silent_term) {
-  //     t.text = t.silent_term;
-  //     t.silent_term = null;
-  //     t.unTag('Contraction');
-  //   }
-  // });
+    // contr.list[0].terms.forEach((t) => {
+    //   if (t.silent_term) {
+    //     t.text = t.silent_term;
+    //     t.silent_term = null;
+    //     t.unTag('Contraction');
+    //   }
+    // });
   }
 };
 
 const killContraction = function(s) {
-  s.terms = s.terms.filter((t) => {
+  s.terms = s.terms.filter(t => {
     if (t.silent_term) {
       if (t.silent_term === 'am' || t.silent_term === 'will' || t.silent_term === 'did') {
         return false;
@@ -6177,7 +6177,7 @@ const Sentence = function(arr, lexicon, refText, refTerms) {
 //Terms inheritence
 Sentence.prototype = Object.create(Terms.prototype);
 //add-in methods
-Object.keys(methods).forEach((k) => {
+Object.keys(methods).forEach(k => {
   Sentence.prototype[k] = methods[k];
 });
 module.exports = Sentence;
@@ -12839,6 +12839,16 @@ const syntax = _dereq_('./syntax');
 const startHere = _dereq_('./startHere');
 const fastPass = _dereq_('./fastPass');
 
+//ensure we have atleast one non-optional demand
+// const isTautology = function(regs) {
+//   for (var i = 0; i < regs.length; i++) {
+//     if (!regs[i].optional && !regs[i].astrix && !regs[i].anyOne) {
+//       return false;
+//     }
+//   }
+//   return true;
+// };
+
 //make a reg syntax from a text object
 const findFromTerms = function(ts) {
   let arr = ts.terms.map(t => {
@@ -12867,7 +12877,7 @@ const match = (ts, reg, verbose) => {
   }
   //ok, start long-match
   let matches = [];
-  for (let t = 0; t < ts.terms.length; t++) {
+  for (let t = 0; t < ts.terms.length; t += 1) {
     //don't loop through if '^'
     if (t > 0 && reg[0] && reg[0].starting) {
       break;
@@ -13055,7 +13065,8 @@ const startHere = (ts, startAt, regs, verbose) => {
       let min = regs[reg_i].minMax.min || 0;
       let max = regs[reg_i].minMax.max;
       let until = regs[reg_i + 1];
-      for(let i = 0; i < max; i++) { //TODO: please clean this loop up..
+      for (let i = 0; i < max; i++) {
+        //TODO: please clean this loop up..
         let t = ts.terms[term_i + i];
         //end here
         if (isMatch(t, reg) === false) {
@@ -13106,7 +13117,8 @@ const startHere = (ts, startAt, regs, verbose) => {
       continue;
     }
 
-    if (term.silent_term && !term.normal) { //skip over silent contraction terms
+    if (term.silent_term && !term.normal) {
+      //skip over silent contraction terms
       //we will continue on it, but not start on it
       if (reg_i === 0) {
         return null;
@@ -13277,14 +13289,14 @@ const syntax = _dereq_('./lib/syntax');
 const startHere = _dereq_('./lib/startHere');
 const Text = _dereq_('../../result');
 
-const addfns = (Terms) => {
-
+const addfns = Terms => {
   const fns = {
     //blacklist from a {word:true} object
     notObj: function(r, obj) {
       let matches = [];
       let current = [];
-      r.terms.forEach((t) => { //TODO: support multi-word blacklists
+      r.terms.forEach(t => {
+        //TODO: support multi-word blacklists
         //we should blacklist this term
         if (obj.hasOwnProperty(t.normal)) {
           if (current.length) {
@@ -13299,21 +13311,21 @@ const addfns = (Terms) => {
       if (current.length) {
         matches.push(current);
       }
-      matches = matches.map((a) => {
+      matches = matches.map(a => {
         return new Terms(a, r.lexicon, r.refText, r.refTerms);
       });
       return new Text(matches, r.lexicon, r.parent);
     },
 
     //blacklist from a match string
-    notString : function(r, want, verbose) {
+    notString: function(r, want, verbose) {
       let matches = [];
       let regs = syntax(want);
       let terms = [];
       //try the match starting from each term
-      for(let i = 0; i < r.terms.length; i++) {
+      for (let i = 0; i < r.terms.length; i++) {
         let bad = startHere(r, i, regs, verbose);
-        if (bad) {
+        if (bad && bad.length > 0) {
           //reset matches
           if (terms.length > 0) {
             matches.push(terms);
@@ -13329,7 +13341,7 @@ const addfns = (Terms) => {
       if (terms.length > 0) {
         matches.push(terms);
       }
-      matches = matches.map((a) => {
+      matches = matches.map(a => {
         return new Terms(a, r.lexicon, r.refText, r.refTerms);
       });
       // return matches

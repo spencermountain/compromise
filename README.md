@@ -146,7 +146,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 <h3 align="center">
   <a href="http://compromise.cool/docs">API docs</a>
   &nbsp; | &nbsp;
-  <a href="http://compromise.cool/demos">Demos list</a>
+  <a href="http://compromise.cool/demos">Demos</a>
 </h3>
 
 #### Client-side!
@@ -171,7 +171,7 @@ doc.sentences().toNegative()
 ```
 
 ## Grab some words,
-you can use [pre-built selections](https://github.com/nlp-compromise/compromise/wiki/Defined-subsets) (like `.nouns()`) or you can grab any custom patterns with [.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)
+you can use [pre-built selections](https://github.com/nlp-compromise/compromise/wiki/Defined-subsets) (like *.nouns()*) or grab any pattern with [.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)
 ```js
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
 
@@ -186,7 +186,7 @@ doc.match('#PastTense to').hyphenate().out()
 ```
 
 ### Plural/singular:
-grab your noun-phrases, make em plural:
+grab the noun-phrases, make em plural:
 ```javascript
 doc = nlp('a bottle of beer on the wall.')
 doc.nouns().first().toPlural()
@@ -195,22 +195,22 @@ doc.out('text')
 ```
 
 ### Number parsing:
-parse written numbers, and change their form:
+parse written-out numbers, and change their form:
 ```javascript
 doc = nlp('ninety five thousand and fifty two')
 doc.values().toNumber().out('text')
 // '95052'
 
 doc = nlp('the 23rd of December')
-doc.values().toText()
+doc.values().add(2).toText()
 doc.out('text')
-// 'the twenty third of December'
+// 'the twenty fifth of December'
 ```
 
 ### Normalization:
-some wrappers for common changes:
+handle the craziness:
 ```javascript
-doc = nlp("the guest-singer's björk at seven thirty.").normalize().out('text')
+doc = nlp("the guest-singer's björk   at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
 ```
 
@@ -228,8 +228,8 @@ doc.verbs().conjugate()
 // }]
 ```
 
-### Named-entity spotting:
-find the people, places, organizations:
+### Named-entities:
+get the people, places, organizations:
 ```javascript
 doc = nlp('that opera about richard nixon visiting china')
 doc.topics().data()
@@ -256,7 +256,7 @@ doc.match('#MusicalGroup').length
 ```
 
 ### Handy outputs:
-get some data:
+get sensible data:
 ```javascript
 doc = nlp('We like Roy! We like Roy!').sentences().out('array')
 // ['We like Roy!', 'We like Roy!']
@@ -275,7 +275,7 @@ doc = nlp('Tony Hawk').out('html')
 </h3>
 <h4 align="center">
   <b>Join in -</b>
-  we're fun, we're using <b>semver</b>, and moving fast.
+  we're fun, using <b>semver</b>, and moving fast.
   <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">get involved</a>
 </h4>
 
@@ -338,5 +338,6 @@ For the former promise-library, see [jnewman/compromise](https://github.com/jnew
 <a href="http://nlp.stanford.edu/software/lex-parser.shtml">Stanford</a>,
 and
 <a href="http://cogcomp.cs.illinois.edu/page/software/">Illinois toolkit</a>
+🙇
 )
 </div>

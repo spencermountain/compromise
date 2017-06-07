@@ -2,15 +2,15 @@
 const Terms = require('../../paths').Terms;
 const parseDate = require('./parseDate');
 
-const Date = function(arr, lexicon, refText) {
+const _Date = function(arr, lexicon, refText) {
   Terms.call(this, arr, lexicon, refText);
   this.month = this.match('#Month');
 };
 
 //Inherit properties
-Date.prototype = Object.create(Terms.prototype);
+_Date.prototype = Object.create(Terms.prototype);
 
-Date.prototype.data = function() {
+_Date.prototype.data = function() {
   return {
     text: this.out('text'),
     normal: this.out('normal'),
@@ -18,4 +18,4 @@ Date.prototype.data = function() {
   };
 };
 
-module.exports = Date;
+module.exports = _Date;

@@ -112,7 +112,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </a>
     </td>
     <td>
-      <sub><i>seven hundred and fifty -> 750</i></sub>
+      <sub><i>'seven hundred and fifty' -> 750</i></sub>
     </td>
     <td>
       <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
@@ -120,7 +120,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </a>
     </td>
     <td>
-      <sub><i>all the people, places, orgs..</i></sub>
+      <sub><i>the people, places, orgs..</i></sub>
     </td>
   </tr>
   <tr>
@@ -155,8 +155,8 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 <script>
   var doc = nlp('dinosaur')
 
-  doc.nouns().toPlural()
-  console.log(doc.out('text'))
+  var str = doc.nouns().toPlural().out('text')
+  console.log(str)
   // 'dinosaurs'
 </script>
 ```
@@ -171,7 +171,7 @@ doc.sentences().toNegative()
 ```
 
 ## Grab some words,
-you can use [pre-built selections](https://github.com/nlp-compromise/compromise/wiki/Defined-subsets) (like *.nouns()*) or grab any pattern with [.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)
+you can use [pre-defined selections](https://github.com/nlp-compromise/compromise/wiki/Defined-subsets) (like **.nouns()**) or grab any pattern with [.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)
 ```js
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
 

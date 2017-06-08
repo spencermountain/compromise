@@ -14,6 +14,8 @@
     "test:types": "tsc --project test/types",
     "browsertest": "node ./scripts/browserTest.js",
     "build": "node ./scripts/build/index.js",
+    "prepublish": "node ./scripts/prepublish",
+    "postpublish": "node ./scripts/postpublish",
     "demo": "node ./scripts/demo.js",
     "watch": "node ./scripts/watch.js",
     "filesize": "node ./scripts/filesize.js",

@@ -3,7 +3,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.5.1",
+  "version": "10.5.2",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -11,6 +11,7 @@ module.exports={
   },
   "scripts": {
     "test": "node ./scripts/test.js",
+    "testBuild": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
     "browsertest": "node ./scripts/browserTest.js",
     "build": "node ./scripts/build/index.js",
@@ -49,7 +50,6 @@ module.exports={
   },
   "license": "MIT"
 }
-
 },{}],2:[function(_dereq_,module,exports){
 'use strict';
 
@@ -9658,12 +9658,6 @@ module.exports = person_step;
 var startQuote = /^["'\u201B\u201C\u2033\u201F\u2018]/;
 var endQuote = /.["'\u201D\u2036\u2019]([;:,.])?$/;
 
-var tagSlice = function tagSlice(ts, start, end) {
-  ts.terms.slice(start, end + 1).forEach(function (t) {
-    t.tag('Quotation', 'quotation_step');
-  });
-};
-
 //tag a inline quotation as such
 var quotation_step = function quotation_step(ts) {
   for (var i = 0; i < ts.terms.length; i++) {
@@ -9672,11 +9666,11 @@ var quotation_step = function quotation_step(ts) {
       //look for the ending
       for (var o = 0; o < ts.terms.length; o++) {
         //max-length- don't go-on forever
-        if (!ts.terms[i + o] || o > 8) {
+        if (!ts.terms[i + o] || o > 28) {
           break;
         }
         if (endQuote.test(ts.terms[i + o].text) === true) {
-          tagSlice(ts, i, o + i);
+          ts.slice(i, i + o + 1).tag('Quotation', 'quotation_step');
           i += o;
           break;
         }

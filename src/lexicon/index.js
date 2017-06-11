@@ -4,15 +4,16 @@ const buildOut = require('./buildOut');
 
 let lex = {};
 //first, add the compromise-generated-wordlists (inflections, conjugations, derivations)
-const computed = [
+const compound = [
   require('./shared/orgWords'), //nouns
   require('./shared/abbreviations'),
   require('./computed/adjectives'), //comparative/superlative/verb-form
+  require('./shared/irregularVerbs').lexicon,
 ];
-for (let i = 0; i < computed.length; i++) {
-  let keys = Object.keys(computed[i]);
+for (let i = 0; i < compound.length; i++) {
+  let keys = Object.keys(compound[i]);
   for (let o = 0; o < keys.length; o++) {
-    lex[keys[o]] = computed[i][keys[o]];
+    lex[keys[o]] = compound[i][keys[o]];
   }
 }
 

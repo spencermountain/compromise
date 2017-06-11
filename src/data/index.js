@@ -5,9 +5,5 @@
 module.exports = {
   numbers: require('./values/numbers'),
   ordinalMap: require('./values/ordinalMap'),
-
-  irregular_plurals: require('./nouns/irregular_plurals'),
-  irregular_verbs: require('./verbs/irregular_verbs'),
-
-  misc: require('./misc/misc')
+  misc: require('./misc/misc'),
 };

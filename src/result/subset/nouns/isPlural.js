@@ -1,9 +1,8 @@
 'use strict';
-const irregulars = require('../../../data').irregular_plurals;
+const irregulars = require('../../../lexicon/shared/irregularPlurals');
 const rules = require('./methods/data/indicators');
 const prep = /([a-z]*) (of|in|by|for) [a-z]/;
 const hasPlural = require('./hasPlural');
-
 
 const knownPlural = {
   i: false,
@@ -14,15 +13,7 @@ const knownPlural = {
 };
 
 //is it potentially plural?
-const noPlural = [
-  'Place',
-  'Value',
-  'Person',
-  'Month',
-  'WeekDay',
-  'RelativeDay',
-  'Holiday',
-];
+const noPlural = ['Place', 'Value', 'Person', 'Month', 'WeekDay', 'RelativeDay', 'Holiday'];
 //first, try to guess based on existing tags
 const couldEvenBePlural = function(t) {
   if (hasPlural(t) === false) {
@@ -37,7 +28,7 @@ const couldEvenBePlural = function(t) {
 };
 
 /** returns true, false, or null */
-const isPlural = function (t) {
+const isPlural = function(t) {
   let str = t.normal;
 
   //whitelist a few easy ones
@@ -72,7 +63,8 @@ const isPlural = function (t) {
     }
   }
   // a fallback 'looks check plural' rule..
-  if (/s$/.test(str) === true && /ss$/.test(str) === false && str.length > 3) { //needs some lovin'
+  if (/s$/.test(str) === true && /ss$/.test(str) === false && str.length > 3) {
+    //needs some lovin'
     return true;
   }
   return false;

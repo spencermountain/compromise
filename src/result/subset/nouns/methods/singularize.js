@@ -1,9 +1,10 @@
 'use strict';
-const irregulars = require('../../../../data').irregular_plurals.toSingle;
+const irregulars = require('../../../../lexicon/shared/irregularPlurals').toSingle;
+
 const singleRules = require('./data/singleRules');
 
 //turn 'shoes' into 'shoe'
-const toSingle = function (str) {
+const toSingle = function(str) {
   //irregular
   if (irregulars.hasOwnProperty(str)) {
     return irregulars[str];

@@ -1,7 +1,7 @@
 //directory of files to pack with `node scripts/pack.js`
 //they are stored in compressed form in ../_packed
 const efrt = require('efrt');
-const fns = require('../fns');
+const fs = require('fs');
 
 let lex = {};
 //first, add the compromise-generated-wordlists (inflections, conjugations, derivations)
@@ -10,7 +10,7 @@ const computed = [
   require('./shared/abbreviations'),
   require('./computed/nouns'), //plural/singular
   require('./computed/adjectives'), //comparative/superlative/verb-form
-  require('./computed/verbs') //conjugated
+  require('./computed/verbs'), //conjugated
 ];
 for (let i = 0; i < computed.length; i++) {
   let keys = Object.keys(computed[i]);
@@ -23,7 +23,6 @@ for (let i = 0; i < computed.length; i++) {
 const basic = [
   [require('./basic/adjectives'), 'Adjective'],
   [require('./basic/adverbs'), 'Adverb'],
-
   //nouns
   [require('./basic/professions'), 'Doer'],
   [require('./basic/sportsTeams'), 'SportsTeam'],
@@ -37,13 +36,11 @@ const basic = [
   [require('./basic/currencies'), 'Currency'],
   [require('./basic/demonyms'), 'Demonym'],
   [require('./basic/units'), 'Unit'],
-
   //dates
   [require('./basic/days'), 'Date'],
   [require('./basic/holidays'), 'Holiday'],
   [require('./basic/months'), 'Month'],
   [require('./basic/durations'), 'Duration'],
-
   //people
   [require('./basic/firstnames'), 'FirstName'],
   [require('./basic/lastnames'), 'LastName'],
@@ -51,16 +48,14 @@ const basic = [
   [require('./basic/femaleNames'), 'FemaleName'],
   [require('./basic/honorifics'), 'Honorific'],
   [require('./basic/people'), 'Person'],
-
   //verbs
   [require('./basic/phrasals'), 'PhrasalVerb'],
   [require('./basic/modals'), 'Modal'],
-
   //misc
   [require('./basic/expressions'), 'Expression'],
   [require('./basic/prepositions'), 'Preposition'],
   [require('./basic/determiners'), 'Determiner'],
-  [require('./basic/conjunctions'), 'Conjunction']
+  [require('./basic/conjunctions'), 'Conjunction'],
 ];
 for (let i = 0; i < basic.length; i++) {
   let list = basic[i][0];
@@ -69,4 +64,5 @@ for (let i = 0; i < basic.length; i++) {
   }
 }
 
-console.log(Object.keys(lex).length);
+module.exports = lex;
+// console.log(Object.keys(lex).length);

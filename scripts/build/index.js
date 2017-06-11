@@ -2,13 +2,11 @@ require('shelljs/global');
 config.silent = true;
 const path = require('path');
 
-
 //pack the tries
-require('./pack');
+require('../pack');
 
 //cleanup. remove old builds
 exec('rm -rf ./builds && mkdir builds');
-
 
 require('./es6-build');
 require('./es5-build');

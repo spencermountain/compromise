@@ -2,11 +2,8 @@
 //check for "united" + "kingdom" in lexicon, and combine + tag it
 // const combine = require('./combine');
 const p = require('../paths');
-const lexicon = p.lexicon;
-const tries = p.tries;
-const getFirstWords = require('./firstWord');
-//build default-one
-const lexiconFirst = getFirstWords([lexicon, tries.multiples()]);
+// const lexicon = p.lexicon;
+// const firstWords = require('./firstWord');
 
 //see if this term is a multi-match
 const tryHere = function(ts, i, obj) {
@@ -31,38 +28,38 @@ const tryHere = function(ts, i, obj) {
 
 //try all terms with this lexicon
 const tryAll = function(lexFirst, ts) {
-  for(let i = 0; i < ts.terms.length - 1; i++) {
-    if (lexFirst.hasOwnProperty(ts.terms[i].root)) {
-      let obj = lexFirst[ts.terms[i].root];
-      let n = tryHere(ts, i, obj);
-      if (n) {
-        let str = ts.slice(i + 1, n).out('root');
-        if (obj.hasOwnProperty(str) === true) {
-          let tag = obj[str];
-          let slice = ts.slice(i, n);
-          slice.tag(tag, 'lexicon-lump');
-        }
-      }
-    }
-  }
+  // for(let i = 0; i < ts.terms.length - 1; i++) {
+  //   if (lexFirst.hasOwnProperty(ts.terms[i].root)) {
+  //     let obj = lexFirst[ts.terms[i].root];
+  //     let n = tryHere(ts, i, obj);
+  //     if (n) {
+  //       let str = ts.slice(i + 1, n).out('root');
+  //       if (obj.hasOwnProperty(str) === true) {
+  //         let tag = obj[str];
+  //         let slice = ts.slice(i, n);
+  //         slice.tag(tag, 'lexicon-lump');
+  //       }
+  //     }
+  //   }
+  // }
   return ts;
 };
 
 //use default lexicon
-const defaultLex = function (ts) {
-  ts = tryAll(lexiconFirst, ts);
+const defaultLex = function(ts) {
+  // ts = tryAll(lexiconFirst, ts);
   return ts;
 };
 //try user's lexicon
-const userLex = function (ts) {
-  if (ts.lexicon) {
-    let uFirst = getFirstWords([ts.lexicon]);
-    ts = tryAll(uFirst, ts);
-  }
+const userLex = function(ts) {
+  // if (ts.lexicon) {
+  //   let uFirst = getFirstWords([ts.lexicon]);
+  //   ts = tryAll(uFirst, ts);
+  // }
   return ts;
 };
 
 module.exports = {
   defaultLex: defaultLex,
-  userLex: userLex
+  userLex: userLex,
 };

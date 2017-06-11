@@ -16,7 +16,7 @@ exec('rm ' + out);
 var lex = require('../src/lexicon/packer');
 var pckd = efrt.pack(lex);
 
-fs.writeFileSync(out, pckd, 'utf8');
+fs.writeFileSync(out, 'module.exports=' + pckd, 'utf8');
 
 console.log(chalk.blue('\n\n     lexicon is ' + fileSize(out) + 'k\n'));
 console.log(chalk.green('  done!\n'));

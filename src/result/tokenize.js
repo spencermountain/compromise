@@ -2,29 +2,28 @@
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2017 MIT
 'use strict';
-const data = require('../data');
-const abbreviations = Object.keys(data.abbreviations);
+const abbreviations = Object.keys(require('../lexicon/shared/abbreviations'));
 //regs-
 const abbrev_reg = new RegExp('\\b(' + abbreviations.join('|') + ')[.!?] ?$', 'i');
-const acronym_reg = new RegExp('[ |\.][A-Z]\.?( *)?$', 'i');
+const acronym_reg = new RegExp('[ |.][A-Z].?( *)?$', 'i');
 const elipses_reg = new RegExp('\\.\\.+( +)?$');
 
 //start with a regex:
-const naiive_split = function (text) {
+const naiive_split = function(text) {
   let all = [];
   //first, split by newline
   let lines = text.split(/(\n+)/);
-  for(let i = 0; i < lines.length; i++) {
+  for (let i = 0; i < lines.length; i++) {
     //split by period, question-mark, and exclamation-mark
     let arr = lines[i].split(/(\S.+?[.!?])(?=\s+|$)/g);
-    for(let o = 0; o < arr.length; o++) {
+    for (let o = 0; o < arr.length; o++) {
       all.push(arr[o]);
     }
   }
   return all;
 };
 
-const sentence_parser = function (text) {
+const sentence_parser = function(text) {
   text = text || '';
   text = '' + text;
   let sentences = [];
@@ -48,7 +47,8 @@ const sentence_parser = function (text) {
       if (chunks[chunks.length - 1]) {
         chunks[chunks.length - 1] += s;
         continue;
-      } else if (splits[i + 1]) { //add it to the next one
+      } else if (splits[i + 1]) {
+        //add it to the next one
         splits[i + 1] = s + splits[i + 1];
         continue;
       }
@@ -64,7 +64,8 @@ const sentence_parser = function (text) {
     //should this chunk be combined with the next one?
     if (chunks[i + 1] !== undefined && (abbrev_reg.test(c) || acronym_reg.test(c) || elipses_reg.test(c))) {
       chunks[i + 1] = c + (chunks[i + 1] || '');
-    } else if (c && c.length > 0) { //this chunk is a proper sentence..
+    } else if (c && c.length > 0) {
+      //this chunk is a proper sentence..
       sentences.push(c);
       chunks[i] = '';
     }

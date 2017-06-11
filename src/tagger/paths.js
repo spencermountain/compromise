@@ -1,7 +1,6 @@
 module.exports = {
   fns: require('../fns'),
-  lexicon: require('../data/lexicon'),
-  tries: require('../tries'),
+  lexicon: require('../lexicon'),
   data: require('../data'),
   Terms: require('../terms'),
 };

@@ -1,13 +1,6 @@
 'use strict';
 
-let titles = require('../paths').data.titles;
-titles = titles.reduce((h, str) => {
-  h[str] = true;
-  return h;
-}, {});
-
-const person_step = function (ts) {
-
+const person_step = function(ts) {
   //methods requiring a firstname match
   if (ts.has('#FirstName')) {
     // Firstname x (dangerous)
@@ -30,9 +23,19 @@ const person_step = function (ts) {
     //very common-but-ambiguous lastnames
     ts.match('#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)').tag('#Person', 'firstname-maybe');
     //Joe K. Sombrero
-    ts.match('#FirstName #Acronym #Noun').ifNo('#Date').tag('#Person', 'n-acro-noun').lastTerm().tag('#LastName', 'n-acro-noun');
+    ts
+      .match('#FirstName #Acronym #Noun')
+      .ifNo('#Date')
+      .tag('#Person', 'n-acro-noun')
+      .lastTerm()
+      .tag('#LastName', 'n-acro-noun');
     //john bodego's
-    ts.match('#FirstName (#Singular|#Possessive)').ifNo('#Date').tag('#Person', 'first-possessive').lastTerm().tag('#LastName', 'first-possessive');
+    ts
+      .match('#FirstName (#Singular|#Possessive)')
+      .ifNo('#Date')
+      .tag('#Person', 'first-possessive')
+      .lastTerm()
+      .tag('#LastName', 'first-possessive');
   }
 
   //methods requiring a lastname match
@@ -40,9 +43,17 @@ const person_step = function (ts) {
     // x Lastname
     ts.match('#Noun #LastName').firstTerm().canBe('#FirstName').tag('#FirstName', 'noun-lastname');
     //ambiguous-but-common firstnames
-    ts.match('(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill) #LastName').firstTerm().tag('#FirstName', 'maybe-lastname');
+    ts
+      .match('(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill) #LastName')
+      .firstTerm()
+      .tag('#FirstName', 'maybe-lastname');
     //Jani K. Smith
-    ts.match('#TitleCase #Acronym? #LastName').ifNo('#Date').tag('#Person', 'title-acro-noun').lastTerm().tag('#LastName', 'title-acro-noun');
+    ts
+      .match('#TitleCase #Acronym? #LastName')
+      .ifNo('#Date')
+      .tag('#Person', 'title-acro-noun')
+      .lastTerm()
+      .tag('#LastName', 'title-acro-noun');
     //is foo Smith
     ts.match('#Copula (#Noun|#PresentTense) #LastName').term(1).tag('#FirstName', 'copula-noun-lastname');
   }
@@ -70,14 +81,7 @@ const person_step = function (ts) {
   ts.match('#Person #Person the? #RomanNumeral').tag('Person', 'correction-roman-numeral');
 
   //'Professor Fink', 'General McCarthy'
-  for(let i = 0; i < ts.terms.length - 1; i++) {
-    let t = ts.terms[i];
-    if (titles[t.normal]) {
-      if (ts.terms[i + 1] && ts.terms[i + 1].tags.Person) {
-        t.tag('Person', 'title-person');
-      }
-    }
-  }
+  ts.match('#Honorific #Person').tag('Person', 'Honorific-Person');
 
   //remove single 'mr'
   ts.match('^#Honorific$').unTag('Person', 'single-honorific');

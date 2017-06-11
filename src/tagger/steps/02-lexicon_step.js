@@ -1,8 +1,7 @@
 'use strict';
 const p = require('../paths');
 const split = require('../contraction/split');
-const tries = require('../../tries');
-const lexicon = p.lexicon;
+const lexicon = require('../../lexicon');
 
 const check_lexicon = (str, sentence) => {
   //check a user's custom lexicon
@@ -10,19 +9,14 @@ const check_lexicon = (str, sentence) => {
   if (custom.hasOwnProperty(str)) {
     return custom[str];
   }
-  //check trie-data
-  let tag = tries.lookup(str);
-  if (tag) {
-    return tag;
-  }
-  //check ol' lexicon
+  //check internal lexicon
   if (lexicon.hasOwnProperty(str)) {
     return lexicon[str];
   }
   return null;
 };
 
-const lexicon_pass = function (ts) {
+const lexicon_pass = function(ts) {
   let found;
   //loop through each term
   for (let i = 0; i < ts.terms.length; i++) {

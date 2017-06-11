@@ -1,10 +1,10 @@
 'use strict';
 //most nouns do not nead to be listed
 //for whatever reasons, these look like not-nouns
-//so we make sure that they become nouns
-const toPlural = require('../../result/subset/nouns/methods/pluralize');
+// //so we make sure that they become nouns
+// const toPlural = require('../../result/subset/nouns/methods/pluralize');
 
-let singular = [
+module.exports = [
   //double-consonant rule
   'egg',
   'bottle',
@@ -62,9 +62,3 @@ let singular = [
   'weekend',
   'tonight',
 ];
-let all = {};
-for (let i = 0; i < singular.length; i++) {
-  all[singular[i]] = 'Singular';
-  all[toPlural(singular[i])] = 'Plural';
-}
-module.exports = all;

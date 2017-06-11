@@ -1,7 +1,4 @@
-const fastConjugate = require('../../result/subset/verbs/methods/conjugate/faster');
-const toAdjective = require('../../result/subset/verbs/methods/toAdjective');
-
-const verbs = [
+module.exports = [
   'abandon',
   'accept',
   'account',
@@ -10,7 +7,6 @@ const verbs = [
   'acknowledge',
   'activate',
   'add',
-  'added',
   'address',
   'adjust',
   'admit',
@@ -257,7 +253,6 @@ const verbs = [
   'guide',
   'handle',
   'happen',
-  'happen',
   'harm',
   'hate',
   'head',
@@ -340,7 +335,6 @@ const verbs = [
   'mirror',
   'monitor',
   'move',
-  'multiply',
   'multiply',
   'murder',
   'need',
@@ -582,24 +576,5 @@ const verbs = [
   'worry',
   'wreck',
   'yawn',
-  'yield'
+  'yield',
 ];
-
-//conjugate verblist
-let all = {};
-for (var i = 0; i < verbs.length; i++) {
-  let str = verbs[i];
-  //add main-one
-  all[str] = 'Infinitive';
-  //adjective-form
-  all[toAdjective(str)] = 'Adjective';
-
-  //all other conjugations
-  const obj = fastConjugate(verbs[i]);
-  let keys = Object.keys(obj);
-  for (var o = 0; o < keys.length; o++) {
-    let tag = keys[o];
-    all[obj[tag]] = tag;
-  }
-}
-module.exports = all;

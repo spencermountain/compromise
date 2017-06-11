@@ -5,19 +5,15 @@ const generic = require('./generic');
 //this method is the same as regular conjugate, but optimised for use in the lexicon during warm-up.
 //it's way faster because it knows input is already infinitive
 
-const want = [
-  'Gerund',
-  'PastTense',
-  'PresentTense',
-];
+const want = ['Gerund', 'PastTense', 'PresentTense'];
 
-const fasterConjugate = (inf) => {
+const fasterConjugate = inf => {
   let all = {
     Infinitive: inf
   };
   const irregObj = checkIrregulars(all['Infinitive']);
   if (irregObj !== null) {
-    Object.keys(irregObj).forEach((k) => {
+    Object.keys(irregObj).forEach(k => {
       if (irregObj[k] && !all[k]) {
         all[k] = irregObj[k];
       }
@@ -25,12 +21,12 @@ const fasterConjugate = (inf) => {
   }
   //check suffix rules
   const suffObj = suffixPass(inf);
-  Object.keys(suffObj).forEach((k) => {
+  Object.keys(suffObj).forEach(k => {
     if (suffObj[k] && !all[k]) {
       all[k] = suffObj[k];
     }
   });
-  for(let i = 0; i < want.length; i++) {
+  for (let i = 0; i < want.length; i++) {
     if (all[want[i]] === undefined) {
       all[want[i]] = generic[want[i]](all);
     }

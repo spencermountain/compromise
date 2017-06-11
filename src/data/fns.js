@@ -2,9 +2,10 @@
 
 //shallow-merge an object
 exports.extendObj = (o, o2) => {
-  Object.keys(o2).forEach((k) => {
-    o[k] = o2[k];
-  });
+  let keys = Object.keys(o2);
+  for (var i = 0; i < keys.length; i++) {
+    o[keys[i]] = o2[keys[i]];
+  }
   return o;
 };
 

@@ -1,72 +1,32 @@
 'use strict';
 
 const misc = {
-  'here': 'Noun',
-  'better': 'Comparative',
-  'earlier': 'Superlative',
+  here: 'Noun',
+  better: 'Comparative',
+  earlier: 'Superlative',
   'make sure': 'Verb',
   'keep tabs': 'Verb',
-  'gonna': 'Verb',
-  'cannot': 'Verb',
-  'has': 'Verb',
-  'sounds': 'PresentTense',
+  gonna: 'Verb',
+  cannot: 'Verb',
+  has: 'Verb',
+  sounds: 'PresentTense',
   //special case for took/taken
-  'taken': 'PastTense',
-  'msg': 'Verb', //slang
+  taken: 'PastTense',
+  msg: 'Verb', //slang
   'a few': 'Value', //different than 'few people'
   'years old': 'Unit', //special case
-  'not': 'Negative',
-  'non': 'Negative',
-  'never': 'Negative',
-  'no': 'Negative',
+  not: 'Negative',
+  non: 'Negative',
+  never: 'Negative',
+  no: 'Negative',
   'no doubt': 'Noun',
   'not only': 'Adverb',
-  'how\'s': 'QuestionWord' //not conjunction
+  "how's": 'QuestionWord' //not conjunction
 };
 
 const compact = {
-  Organization: [
-    '20th century fox',
-    '3m',
-    '7-eleven',
-    'g8',
-    'motel 6',
-    'vh1',
-  ],
-  Adjective: [
-    'so called', //?
-    'on board',
-    'vice versa',
-    'en route',
-    'upside down',
-    'up front',
-    'in front',
-    'in situ',
-    'in vitro',
-    'ad hoc',
-    'de facto',
-    'ad infinitum',
-    'for keeps',
-    'a priori',
-    'off guard',
-    'spot on',
-    'ipso facto',
-    'fed up',
-    'brand new',
-    'old fashioned',
-    'bona fide',
-    'well off',
-    'far off',
-    'straight forward',
-    'hard up',
-    'sui generis',
-    'en suite',
-    'avant garde',
-    'sans serif',
-    'gung ho',
-    'super duper',
-    'bourgeois'
-  ],
+  //these have numbers
+  Organization: ['20th century fox', '3m', '7-eleven', 'g8', 'motel 6', 'vh1'],
 
   Verb: [
     'lengthen',
@@ -86,53 +46,6 @@ const compact = {
     'born'
   ],
 
-  Place: [
-    'new england',
-    'new hampshire',
-    'new jersey',
-    'new mexico',
-    'united states',
-    'united kingdom',
-    'great britain',
-    'great lakes',
-    'pacific ocean',
-    'atlantic ocean',
-    'indian ocean',
-    'arctic ocean',
-    'antarctic ocean',
-    'everglades',
-  ],
-  //conjunctions
-  'Conjunction': [
-    'yet',
-    'therefore',
-    'or',
-    'while',
-    'nor',
-    'whether',
-    'though',
-    'tho',
-    'because',
-    'cuz',
-    'but',
-    'for',
-    'and',
-    'however',
-    'before',
-    'although',
-    'how',
-    'plus',
-    'versus',
-    'otherwise',
-    'as far as',
-    'as if',
-    'in case',
-    'provided that',
-    'supposing',
-    'no matter',
-    'yet',
-  // 'not'
-  ],
   Time: [
     //date
     'noon',
@@ -156,149 +69,21 @@ const compact = {
     //end of day, end of month
     'eom',
     'standard time',
-    'daylight time',
+    'daylight time'
   ],
-  'Condition': [
-    'if',
-    'unless',
-    'notwithstanding'
-  ],
+  Condition: ['if', 'unless', 'notwithstanding'],
 
-  'PastTense': [
-    'said',
-    'had',
-    'been',
-    'began',
-    'came',
-    'did',
-    'meant',
-    'went'
-  ],
+  PastTense: ['said', 'had', 'been', 'began', 'came', 'did', 'meant', 'went'],
 
+  Gerund: ['going', 'being', 'according', 'resulting', 'developing', 'staining'],
 
-  'Gerund': [
-    'going',
-    'being',
-    'according',
-    'resulting',
-    'developing',
-    'staining'
-  ],
-
-  'Copula': [
-    'is',
-    'are',
-    'was',
-    'were',
-    'am'
-  ],
-
-  //determiners
-  'Determiner': require('./determiners'),
-
+  Copula: ['is', 'are', 'was', 'were', 'am'],
 
   //modal verbs
-  'Modal': [
-    'can',
-    'may',
-    'could',
-    'might',
-    'will',
-    'ought to',
-    'would',
-    'must',
-    'shall',
-    'should',
-    'ought',
-    'shant',
-    'lets', //arguable
-  ],
+  Modal: [],
 
-  //Possessive pronouns
-  'Possessive': [
-    'mine',
-    'something',
-    'none',
-    'anything',
-    'anyone',
-    'theirs',
-    'himself',
-    'ours',
-    'his',
-    'my',
-    'their',
-    'yours',
-    'your',
-    'our',
-    'its',
-    'herself',
-    'hers',
-    'themselves',
-    'myself',
-    'her', //this one is check ambiguous
-  ],
-
-  //personal pronouns (nouns)
-  'Pronoun': [
-    'it',
-    'they',
-    'i',
-    'them',
-    'you',
-    'she',
-    'me',
-    'he',
-    'him',
-    'ourselves',
-    'us',
-    'we',
-    'thou',
-    'il',
-    'elle',
-    'yourself',
-    '\'em',
-    'he\'s',
-    'she\'s'
-  ],
   //questions are awkward pos. are clarified in question_pass
-  'QuestionWord': [
-    'where',
-    'why',
-    'when',
-    'who',
-    'whom',
-    'whose',
-    'what',
-    'which'
-  ],
-
-  //family-terms are people
-  Person: [
-    'father',
-    'mother',
-    'mom',
-    'dad',
-    'mommy',
-    'daddy',
-    'sister',
-    'brother',
-    'aunt',
-    'uncle',
-    'grandfather',
-    'grandmother',
-    'cousin',
-    'stepfather',
-    'stepmother',
-    'boy',
-    'girl',
-    'man',
-    'woman',
-    'guy',
-    'dude',
-    'bro',
-    'gentleman',
-    'someone'
-  ]
+  QuestionWord: ['where', 'why', 'when', 'who', 'whom', 'whose', 'what', 'which']
 };
 //unpack the compact terms into the misc lexicon..
 const keys = Object.keys(compact);

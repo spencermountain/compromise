@@ -37,7 +37,7 @@
     "chalk": "^1.1.3",
     "codacy-coverage": "^2.0.0",
     "derequire": "^2.0.3",
-    "efrt": "0.0.6",
+    "efrt": "1.1.0",
     "eslint": "^3.1.1",
     "gaze": "^1.1.1",
     "http-server": "0.9.0",

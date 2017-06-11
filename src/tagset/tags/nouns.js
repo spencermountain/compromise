@@ -55,6 +55,10 @@ module.exports = {
   Plural: {
     is: 'Noun'
   },
+  Uncountable: {
+    //(not plural or singular)
+    is: 'Noun'
+  },
   Pronoun: {
     is: 'Noun'
   },

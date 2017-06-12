@@ -9,6 +9,7 @@ const compound = [
   require('./shared/abbreviations'),
   require('./computed/adjectives'), //comparative/superlative/verb-form
   require('./shared/irregularVerbs').lexicon,
+  require('./shared/irregularPlurals').lexicon,
 ];
 for (let i = 0; i < compound.length; i++) {
   let keys = Object.keys(compound[i]);

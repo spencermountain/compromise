@@ -1,6 +1,5 @@
 const toPlural = require('../result/subset/nouns/methods/pluralize');
 const fastConjugate = require('../result/subset/verbs/methods/conjugate/faster');
-// const toAdjective = require('../../result/subset/verbs/methods/toAdjective');
 
 //inflect singulars, conjugate infinitives
 const buildOut = function(lex) {
@@ -21,8 +20,6 @@ const buildOut = function(lex) {
     }
   }
 
-  //all other conjugations
-  // lex[toAdjective(str)] = 'Adjective';
   return lex;
 };
 

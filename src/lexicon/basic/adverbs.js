@@ -85,4 +85,5 @@ module.exports = [
   'well',
   'yes',
   'yep',
+  'not only'
 ];

@@ -2,76 +2,79 @@ module.exports = {
   Noun: {},
   // - singular
   Singular: {
-    is: 'Noun'
+    is: "Noun"
   },
 
   // -- people
   Person: {
-    is: 'Singular'
+    is: "Singular"
   },
   FirstName: {
-    is: 'Person'
+    is: "Person"
   },
   MaleName: {
-    is: 'FirstName'
+    is: "FirstName"
   },
   FemaleName: {
-    is: 'FirstName'
+    is: "FirstName"
   },
   LastName: {
-    is: 'Person'
+    is: "Person"
   },
   Honorific: {
-    is: 'Person'
+    is: "Person"
   },
   Place: {
-    is: 'Singular'
+    is: "Singular"
   },
 
   // -- places
   Country: {
-    is: 'Place'
+    is: "Place"
   },
   City: {
-    is: 'Place'
+    is: "Place"
+  },
+  Region: {
+    is: "Place"
   },
   Address: {
-    is: 'Place'
+    is: "Place"
   },
   Organization: {
-    is: 'Singular'
+    is: "Singular"
   },
   SportsTeam: {
-    is: 'Organization'
+    is: "Organization"
   },
   Company: {
-    is: 'Organization'
+    is: "Organization"
   },
   School: {
-    is: 'Organization'
+    is: "Organization"
   },
 
   // - plural
   Plural: {
-    is: 'Noun'
+    is: "Noun"
   },
   Uncountable: {
     //(not plural or singular)
-    is: 'Noun'
+    is: "Noun"
   },
   Pronoun: {
-    is: 'Noun'
+    is: "Noun"
   },
   Actor: {
-    is: 'Noun'
+    is: "Noun"
   },
   Unit: {
-    is: 'Noun'
+    is: "Noun"
   },
   Demonym: {
-    is: 'Noun'
+    is: "Noun"
   },
   Possessive: {
-    is: 'Noun'
+    is: "Noun"
   }
 };

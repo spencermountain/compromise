@@ -1,4 +1,6 @@
-const fastConjugate = require('../result/subset/verbs/methods/conjugate/faster');
+const fastConjugate = require('../text/subset/verbs/methods/conjugate/faster');
+const toPlural = require('../text/subset/nouns/methods/pluralize');
+// const adj = require('../text/subset/adjectives/methods');
 
 //inflect singulars, conjugate infinitives
 const blastOut = function(lex) {
@@ -14,6 +16,16 @@ const blastOut = function(lex) {
         let tag = tags[o];
         lex[obj[tag]] = tag;
       }
+      continue;
+    }
+
+    //inflect singular nouns
+    if (lex[str] === 'Singular') {
+      let plural = toPlural(str);
+      lex[plural] = 'Plural';
+    }
+    //conjugate comparable adjectives
+    if (lex[str] === 'Comparable') {
     }
   }
 

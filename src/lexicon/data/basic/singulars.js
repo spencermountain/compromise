@@ -2,7 +2,7 @@
 //most nouns do not nead to be listed
 //for whatever reasons, these look like not-nouns
 // //so we make sure that they become nouns
-// const toPlural = require('../../result/subset/nouns/methods/pluralize');
+// const toPlural = require('../../text/subset/nouns/methods/pluralize');
 
 module.exports = [
   //double-consonant rule

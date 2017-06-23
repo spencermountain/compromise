@@ -2,6 +2,8 @@
 const pckd = require('./_lexicon');
 const efrt = require('efrt');
 const blastOut = require('./blastOut');
+const indexFirst = require('./indexFirst');
+
 const uncompressed = [
   //(order matters)
   require('./uncompressed/abbreviations'),
@@ -22,22 +24,14 @@ const addToLex = function(lex, obj) {
 let lex = efrt.unpack(pckd);
 
 // console.log(lex.quick);
+console.log(Object.keys(lex).length);
 lex = blastOut(lex);
+console.log(Object.keys(lex).length);
 
 uncompressed.forEach(obj => addToLex(lex, obj));
 
 //collect first-of-multi words for quicker lookup
-let firstWords = {};
-let keys = Object.keys(lex);
-const hasSpace = / /;
-for (let i = 0; i < keys.length; i++) {
-  if (hasSpace.test(keys[i]) === true) {
-    let words = keys[i].split(/ /g);
-    firstWords[words[0]] = firstWords[words[0]] || [];
-    let str = words.slice(1).join(' ');
-    firstWords[words[0]][str] = true;
-  }
-}
+let firstWords = indexFirst(lex);
 
 module.exports = {
   lexicon: lex,

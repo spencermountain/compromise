@@ -1,6 +1,6 @@
 'use strict';
 // const phrasals = require('../paths').tries.utils.phrasals;
-// const toInfinitive = require('../../result/subset/verbs/methods/toInfinitive');
+// const toInfinitive = require('../../text/subset/verbs/methods/toInfinitive');
 
 // //words that could be particles
 // const particles = {

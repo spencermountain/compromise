@@ -5,7 +5,7 @@ const minusNumber = /^( *)-(\$|€|¥|£)?([0-9])/;
 const after = /(\s+|-+|\.\.+)$/;
 
 //seperate the 'meat' from the trailing/leading whitespace.
-//works in concert with ./src/result/tokenize.js
+//works in concert with ./src/text/tokenize.js
 const build_whitespace = (str) => {
   let whitespace = {
     before: '',

@@ -1,7 +1,7 @@
 'use strict';
 const syntax = require('./lib/syntax');
 const startHere = require('./lib/startHere');
-const Text = require('../../result');
+const Text = require('../../text');
 const match = require('./lib');
 
 const matchMethods = (Terms) => {

@@ -1,17 +1,15 @@
 //directory of files to pack with `node scripts/pack.js`
 //they are stored in compressed form in ../_packed
-const preBuild = require('./preBuild');
-
 let lex = {};
-//first, add the compromise-generated-wordlists (inflections, conjugations, derivations)
 
 //add-in the generic, flat word-lists
 const basic = [
   [require('./basic/adjectives'), 'Adjective'],
+  [require('./basic/convertables'), 'Comparable'],
   [require('./basic/adverbs'), 'Adverb'],
   //nouns
   [require('./basic/singulars'), 'Singular'],
-  [require('./basic/professions'), 'Doer'],
+  [require('./basic/professions'), 'Noun'],
   [require('./basic/sportsTeams'), 'SportsTeam'],
   [require('./basic/uncountables'), 'Uncountable'],
   [require('./basic/places'), 'Place'],
@@ -56,7 +54,7 @@ for (let i = 0; i < basic.length; i++) {
 }
 
 //conjugate, inflect, derive forms
-lex = preBuild(lex);
+// lex = preBuild(lex);
 
 module.exports = lex;
 // console.log(Object.keys(lex).length);

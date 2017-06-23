@@ -1,21 +1,30 @@
 'use strict';
 const Text = require('../../index');
 const fns = require('./methods');
+const shouldConvert = require('./shouldConvert');
 //the Adjectives() subset class
 
 const methods = {
   data: function() {
-    return this.list.map((ts) => {
+    return this.list.map(ts => {
       const str = ts.out('normal');
-      return {
-        comparative: fns.toComparative(str),
-        superlative: fns.toSuperlative(str),
-        adverbForm: fns.toAdverb(str),
-        nounForm: fns.toNoun(str),
-        verbForm: fns.toVerb(str),
+      let obj = {
         normal: str,
-        text: this.out('text')
+        text: this.out('text'),
+        comparative: 'more ' + str,
+        superlative: 'most ' + str,
+        adverbForm: null,
+        nounForm: null,
+        verbForm: null
       };
+      if (shouldConvert(str) === true) {
+        obj.comparative = fns.toComparative(str);
+        obj.superlative = fns.toSuperlative(str);
+        obj.adverbForm = fns.toAdverb(str);
+        obj.nounForm = fns.toNoun(str);
+        obj.verbForm = fns.toVerb(str);
+      }
+      return obj;
     });
   }
 };

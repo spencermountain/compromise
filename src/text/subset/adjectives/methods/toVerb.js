@@ -1,6 +1,6 @@
 'use strict';
-const lexicon = require('../../../../lexicon').lexicon;
 //turn an adjective like 'soft' into a verb like 'soften'
+//(don't do words like 'green' -> 'greenen')
 
 const irregulars = {
   red: 'redden',
@@ -9,11 +9,6 @@ const irregulars = {
 };
 
 const toVerb = str => {
-  //don't do words like 'green' -> 'greenen'
-  if (!lexicon[str]) {
-    return str;
-  }
-  //irregulars
   if (irregulars.hasOwnProperty(str) === true) {
     return irregulars[str];
   }

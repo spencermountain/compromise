@@ -381,6 +381,7 @@ module.exports = [
   'racial',
   'racist',
   'ragged',
+  'ready',
   'rear',
   'rebel',
   'recondite',

@@ -1,92 +1,67 @@
 //turn 'quick' into 'quickest'
 'use strict';
-const convertables = require('./convertable');
+const do_rules = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /oud$/, /...p$/];
+const dont_rules = [/ary$/];
 
 const irregulars = {
-  'nice': 'nicest',
-  'late': 'latest',
-  'hard': 'hardest',
-  'inner': 'innermost',
-  'outer': 'outermost',
-  'far': 'furthest',
-  'worse': 'worst',
-  'bad': 'worst',
-  'good': 'best',
-  'big': 'biggest'
+  nice: 'nicest',
+  late: 'latest',
+  hard: 'hardest',
+  inner: 'innermost',
+  outer: 'outermost',
+  far: 'furthest',
+  worse: 'worst',
+  bad: 'worst',
+  good: 'best',
+  big: 'biggest'
 };
 
-const dont = {
-  'overweight': 1,
-  'ready': 1
-};
-
-const transforms = [{
-  'reg': /y$/i,
-  'repl': 'iest'
-}, {
-  'reg': /([aeiou])t$/i,
-  'repl': '$1ttest'
-}, {
-  'reg': /([aeou])de$/i,
-  'repl': '$1dest'
-}, {
-  'reg': /nge$/i,
-  'repl': 'ngest'
-}];
-
-const matches = [
-  /ght$/,
-  /nge$/,
-  /ough$/,
-  /ain$/,
-  /uel$/,
-  /[au]ll$/,
-  /ow$/,
-  /oud$/,
-  /...p$/
-];
-
-const not_matches = [
-  /ary$/
-];
-
-const generic_transformation = function(s) {
-  if (s.charAt(s.length - 1) === 'e') {
-    return s + 'st';
+const transforms = [
+  {
+    reg: /y$/i,
+    repl: 'iest'
+  },
+  {
+    reg: /([aeiou])t$/i,
+    repl: '$1ttest'
+  },
+  {
+    reg: /([aeou])de$/i,
+    repl: '$1dest'
+  },
+  {
+    reg: /nge$/i,
+    repl: 'ngest'
   }
-  return s + 'est';
-};
-
+];
 
 const to_superlative = function(str) {
+  //irregulars
   if (irregulars.hasOwnProperty(str)) {
     return irregulars[str];
   }
+  //known transforms
   for (let i = 0; i < transforms.length; i++) {
     if (transforms[i].reg.test(str)) {
       return str.replace(transforms[i].reg, transforms[i].repl);
     }
   }
-  if (convertables.hasOwnProperty(str)) {
-    return generic_transformation(str);
-  }
-  if (dont.hasOwnProperty(str)) {
-    return 'most ' + str;
-  }
-  for (let i = 0; i < not_matches.length; i++) {
-    if (not_matches[i].test(str) === true) {
-      return 'most ' + str;
+  //dont-rules
+  for (let i = 0; i < dont_rules.length; i++) {
+    if (dont_rules[i].test(str) === true) {
+      return null;
     }
   }
-  for (let i = 0; i < matches.length; i++) {
-    if (matches[i].test(str) === true) {
-      if (irregulars.hasOwnProperty(str)) {
-        return irregulars[str];
+  //do-rules
+  for (let i = 0; i < do_rules.length; i++) {
+    if (do_rules[i].test(str) === true) {
+      if (str.charAt(str.length - 1) === 'e') {
+        return str + 'st';
       }
-      return generic_transformation(str);
+      return str + 'est';
     }
   }
-  return 'most ' + str;
+  return null;
 };
 
 module.exports = to_superlative;

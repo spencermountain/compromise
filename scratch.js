@@ -1,13 +1,14 @@
 'use strict';
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 // const fresh = require('./test/unit/lib/freshPrince.js');
 
 var lexicon = {
   paris: 'Person',
   lkjj: 'Adjective',
-  'donkey kong': 'City'
+  'donkey kong': 'City',
+  'hong kong convention': 'Person'
 };
-var doc = nlp('donkey kong wins the award in paris', lexicon);
+var doc = nlp('super bowl and donkey kong and hong kong convention', lexicon);
 doc.debug();
 // console.log(nlp('friendly').adjectives().data());

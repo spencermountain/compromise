@@ -4,96 +4,34 @@ const l = require('../../lexicon');
 const lexicon = l.lexicon;
 const firstWords = l.firstWords;
 
-const check_lexicon = (str, sentence) => {
-  //check a user's custom lexicon
-  let custom = sentence.lexicon || {};
-  if (custom.hasOwnProperty(str)) {
-    return custom[str];
-  }
-  //check internal lexicon
-  if (lexicon.hasOwnProperty(str)) {
-    return lexicon[str];
-  }
-  return null;
-};
-
-const findTwoWords = function(ts, i, lex) {
-  let want = firstWords[ts.terms[i].normal];
-  //try 2 words
-  if (!ts.terms[i + 1]) {
-    return false;
-  }
-  let str = ts.terms[i + 1].normal;
-  if (want[str] === true) {
-    let tag = lexicon[ts.terms[i].normal + ' ' + str];
-    ts.terms[i].tag(tag, 'lexicon-multi');
-    ts.terms[i + 1].tag(tag, 'lexicon-multi');
-    return true;
-  }
-  return false;
-};
-
-const findThreeWords = function(ts, i, lex) {
-  let want = firstWords[ts.terms[i].normal];
-  //try 3 words
-  if (!ts.terms[i + 2]) {
-    return false;
-  }
-  let str = ts.terms[i + 1].normal + ' ' + ts.terms[i + 2].normal;
-  if (want[str] === true) {
-    let tag = lexicon[ts.terms[i].normal + ' ' + str];
-    ts.terms[i].tag(tag, 'lexicon-multi');
-    ts.terms[i + 1].tag(tag, 'lexicon-multi');
-    ts.terms[i + 2].tag(tag, 'lexicon-multi');
-    return true;
-  }
-  return false;
-};
-
 const lexicon_pass = function(ts) {
-  let found;
-  console.log(ts.lexicon);
   let uLex = ts.lexicon || {};
-  let uFirst = uLex.firstWords;
   uLex = uLex.lexicon;
   //loop through each term
   for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
-
-    //try multiple-words in the lexicon
-    if (firstWords[t.normal]) {
-      if (findTwoWords(ts, i, lexicon) === true) {
-        i += 1;
-        continue;
-      }
-      if (findThreeWords(ts, i, lexicon) === true) {
-        i += 2;
-        continue;
-      }
+    let str = t.normal;
+    //user-lexicon lookup
+    if (uLex && uLex.hasOwnProperty(str) === true) {
+      t.tag(uLex[str], 'user-lexicon');
+      continue;
     }
     //basic term lookup
-    found = check_lexicon(t.normal, ts);
-    if (found) {
-      t.tag(found, 'lexicon-match');
+    if (lexicon.hasOwnProperty(str) === true) {
+      t.tag(lexicon[str], 'lexicon');
       continue;
     }
     //support silent_term matches
-    found = check_lexicon(t.silent_term, ts);
-    if (t.silent_term && found) {
-      t.tag(found, 'silent_term-lexicon');
+    if (t.silent_term && lexicon.hasOwnProperty(t.silent_term) === true) {
+      t.tag(lexicon[t.silent_term], 'silent_term-lexicon');
       continue;
     }
-    // found = check_lexicon(t.text, ts);
-    // if (found) {
-    //   t.tag(found, 'lexicon-match-text');
-    //   continue;
-    // }
     //support contractions (manually)
     let parts = split(t);
     if (parts && parts.start) {
-      found = check_lexicon(parts.start.toLowerCase(), ts);
-      if (found) {
-        t.tag(found, 'contraction-lexicon');
+      let start = parts.start.toLowerCase();
+      if (lexicon.hasOwnProperty(start) === true) {
+        t.tag(lexicon[start], 'contraction-lexicon');
         continue;
       }
     }

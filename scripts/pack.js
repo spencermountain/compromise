@@ -13,7 +13,7 @@ let out = path.join(__dirname, '../src/lexicon/_lexicon.js');
 // exec('rm ' + out);
 
 //pack it into one string
-var lex = require('../src/lexicon/data');
+var lex = require('../src/lexicon/compressed');
 var pckd = efrt.pack(lex);
 
 fs.writeFileSync(out, 'module.exports=' + pckd, 'utf8');

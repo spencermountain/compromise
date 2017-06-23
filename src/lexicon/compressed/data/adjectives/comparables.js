@@ -1,3 +1,4 @@
+//adjectives that convert to superlative/comparative form
 module.exports = [
   'absurd',
   'angry',

@@ -8,6 +8,6 @@ var lexicon = {
   lkjj: 'Adjective',
   'donkey kong': 'City'
 };
-var doc = nlp('donkey kong wins the award', lexicon);
+var doc = nlp('donkey kong wins the award in paris', lexicon);
 doc.debug();
 // console.log(nlp('friendly').adjectives().data());

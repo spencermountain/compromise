@@ -17,7 +17,7 @@ const check_lexicon = (str, sentence) => {
   return null;
 };
 
-const findTwoWords = function(ts, i) {
+const findTwoWords = function(ts, i, lex) {
   let want = firstWords[ts.terms[i].normal];
   //try 2 words
   if (!ts.terms[i + 1]) {
@@ -33,7 +33,7 @@ const findTwoWords = function(ts, i) {
   return false;
 };
 
-const findThreeWords = function(ts, i) {
+const findThreeWords = function(ts, i, lex) {
   let want = firstWords[ts.terms[i].normal];
   //try 3 words
   if (!ts.terms[i + 2]) {
@@ -52,17 +52,21 @@ const findThreeWords = function(ts, i) {
 
 const lexicon_pass = function(ts) {
   let found;
+  console.log(ts.lexicon);
+  let uLex = ts.lexicon || {};
+  let uFirst = uLex.firstWords;
+  uLex = uLex.lexicon;
   //loop through each term
   for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
 
     //try multiple-words in the lexicon
     if (firstWords[t.normal]) {
-      if (findTwoWords(ts, i) === true) {
+      if (findTwoWords(ts, i, lexicon) === true) {
         i += 1;
         continue;
       }
-      if (findThreeWords(ts, i) === true) {
+      if (findThreeWords(ts, i, lexicon) === true) {
         i += 2;
         continue;
       }

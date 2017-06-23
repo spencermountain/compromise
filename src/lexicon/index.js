@@ -1,8 +1,8 @@
 //lexicon in compressed form
 const pckd = require('./_lexicon');
 const efrt = require('efrt');
-const blastOut = require('./blastOut');
-const indexFirst = require('./indexFirst');
+const buildUp = require('./buildUp');
+const indexFirst = require('./firstWords');
 
 const uncompressed = [
   //(order matters)
@@ -26,7 +26,7 @@ let lex = efrt.unpack(pckd);
 
 // console.log(lex.quick);
 // console.log(Object.keys(lex).length);
-lex = blastOut(lex);
+lex = buildUp(lex);
 // console.log(Object.keys(lex).length);
 
 uncompressed.forEach(obj => addToLex(lex, obj));

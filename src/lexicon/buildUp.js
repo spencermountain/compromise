@@ -1,14 +1,23 @@
-const fastConjugate = require('../text/subset/verbs/methods/conjugate/faster');
-const toPlural = require('../text/subset/nouns/methods/pluralize');
 const adj = require('../text/subset/adjectives/methods');
+const toPlural = require('../text/subset/nouns/methods/pluralize');
+const fastConjugate = require('../text/subset/verbs/methods/conjugate/faster');
 
 //inflect 'Singulars', conjugate 'Infinitives', and convert 'Comparables'
-const blastOut = function(lex) {
+const buildUp = function(lex, options) {
+  //handle default options
+  options = options || {};
+  if (options.conjugate !== false) {
+    options.conjugate = true;
+  }
+  if (options.inflect !== false) {
+    options.inflect = true;
+  }
+  //loop through each word in lexicon(!)
   let keys = Object.keys(lex);
   for (let i = 0; i < keys.length; i++) {
     let str = keys[i];
     //conjugate infinitives
-    if (lex[str] === 'Infinitive') {
+    if (options.conjugate === true && lex[str] === 'Infinitive') {
       const obj = fastConjugate(str);
       let tags = Object.keys(obj);
       for (var o = 0; o < tags.length; o++) {
@@ -18,7 +27,7 @@ const blastOut = function(lex) {
       continue;
     }
     //inflect singular nouns
-    if (lex[str] === 'Singular') {
+    if (options.inflect === true && lex[str] === 'Singular') {
       let plural = toPlural(str);
       lex[plural] = 'Plural';
       continue;
@@ -39,4 +48,4 @@ const blastOut = function(lex) {
   return lex;
 };
 
-module.exports = blastOut;
+module.exports = buildUp;

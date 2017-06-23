@@ -18,5 +18,6 @@ var pckd = efrt.pack(lex);
 
 fs.writeFileSync(out, 'module.exports=' + pckd, 'utf8');
 
-console.log(chalk.blue('\n\n     lexicon is ' + fileSize(out) + 'k\n'));
+console.log(chalk.blue('\n\n      ' + Object.keys(lex).length + ' words'));
+console.log(chalk.blue('       - packed into -    ' + fileSize(out) + 'k\n'));
 console.log(chalk.green('  done!\n'));

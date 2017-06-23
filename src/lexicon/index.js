@@ -9,6 +9,7 @@ const uncompressed = [
   require('./uncompressed/abbreviations'),
   require('./uncompressed/irregularPlurals').lexicon,
   require('./uncompressed/irregularVerbs').lexicon,
+  require('./uncompressed/irregularAdjectives').lexicon,
   require('./uncompressed/orgWords'),
   require('./uncompressed/numbers').lexicon,
   require('./uncompressed/misc')
@@ -24,9 +25,9 @@ const addToLex = function(lex, obj) {
 let lex = efrt.unpack(pckd);
 
 // console.log(lex.quick);
-console.log(Object.keys(lex).length);
+// console.log(Object.keys(lex).length);
 lex = blastOut(lex);
-console.log(Object.keys(lex).length);
+// console.log(Object.keys(lex).length);
 
 uncompressed.forEach(obj => addToLex(lex, obj));
 

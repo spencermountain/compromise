@@ -1,5 +1,5 @@
 'use strict';
-const buildResult = require('./text/build');
+const buildText = require('./text/build');
 const pkg = require('../package.json');
 const log = require('./log');
 
@@ -7,14 +7,14 @@ const log = require('./log');
 // linguistischen Datenverarbeitung (nlp)
 const nlp = function(str, lexicon) {
   // this.tagset = tagset;
-  let doc = buildResult(str, lexicon);
+  let doc = buildText(str, lexicon);
   doc.tagger();
   return doc;
 };
 
 //same as main method, except with no POS-tagging.
 nlp.tokenize = function(str) {
-  return buildResult(str);
+  return buildText(str);
 };
 
 //this is useful

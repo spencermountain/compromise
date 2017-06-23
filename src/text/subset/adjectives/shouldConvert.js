@@ -20,4 +20,4 @@ const shouldConvert = function(str) {
 };
 module.exports = shouldConvert;
 
-console.log(shouldConvert('quick'));
+// console.log(shouldConvert('quick'));

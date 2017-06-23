@@ -1,33 +1,7 @@
 //turn 'quick' into 'quickly'
 'use strict';
 const not_matches = [/airs$/, /ll$/, /ee.$/, /ile$/];
-const irregulars = {
-  idle: 'idly',
-  public: 'publicly',
-  vague: 'vaguely',
-  day: 'daily',
-  icy: 'icily',
-  single: 'singly',
-  female: 'womanly',
-  male: 'manly',
-  simple: 'simply',
-  whole: 'wholly',
-  special: 'especially',
-  straight: 'straight',
-  wrong: 'wrong',
-  fast: 'fast',
-  hard: 'hard',
-  late: 'late',
-  early: 'early',
-  well: 'well',
-  good: 'well',
-  little: 'little',
-  long: 'long',
-  low: 'low',
-  best: 'best',
-  latter: 'latter',
-  bad: 'badly'
-};
+const irregulars = require('../../../../lexicon/uncompressed/irregularAdjectives').toAdverb;
 
 const transforms = [
   {
@@ -65,7 +39,7 @@ const transforms = [
 ];
 
 const adj_to_adv = function(str) {
-  if (irregulars[str] !== undefined) {
+  if (irregulars.hasOwnProperty(str) === true) {
     return irregulars[str];
   }
   for (let i = 0; i < not_matches.length; i++) {

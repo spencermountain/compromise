@@ -2,19 +2,7 @@
 'use strict';
 const do_rules = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /oud$/, /...p$/];
 const dont_rules = [/ary$/];
-
-const irregulars = {
-  nice: 'nicest',
-  late: 'latest',
-  hard: 'hardest',
-  inner: 'innermost',
-  outer: 'outermost',
-  far: 'furthest',
-  worse: 'worst',
-  bad: 'worst',
-  good: 'best',
-  big: 'biggest'
-};
+const irregulars = require('../../../../lexicon/uncompressed/irregularAdjectives').toSuperlative;
 
 const transforms = [
   {
@@ -61,7 +49,7 @@ const to_superlative = function(str) {
       return str + 'est';
     }
   }
-  return null;
+  return str + 'est';
 };
 
 module.exports = to_superlative;

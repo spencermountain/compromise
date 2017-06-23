@@ -2,19 +2,7 @@
 'use strict';
 const do_rules = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /old$/, /oud$/, /e[ae]p$/];
 const dont_rules = [/ary$/, /ous$/];
-
-const irregulars = {
-  grey: 'greyer',
-  gray: 'grayer',
-  green: 'greener',
-  yellow: 'yellower',
-  red: 'redder',
-  good: 'better',
-  well: 'better',
-  bad: 'worse',
-  sad: 'sadder',
-  big: 'bigger'
-};
+const irregulars = require('../../../../lexicon/uncompressed/irregularAdjectives').toComparative;
 
 const transforms = [
   {
@@ -62,8 +50,8 @@ const to_comparative = function(str) {
   if (/e$/.test(str) === true) {
     return str + 'r';
   }
-  // return str + 'er';
-  return null;
+  return str + 'er';
+  // return null;
 };
 
 // console.log(to_comparative('big'));

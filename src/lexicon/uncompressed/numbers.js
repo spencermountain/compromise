@@ -134,10 +134,11 @@ Object.keys(ordinal).forEach(k => {
   for (let i = 0; i < ord.length; i++) {
     toOrdinal[card[i]] = ord[i];
     toCardinal[ord[i]] = card[i];
-    lexicon[ord[i]] = 'Ordinal';
-    lexicon[card[i]] = 'Cardinal';
+    lexicon[ord[i]] = ['Ordinal', 'TextValue'];
+    lexicon[card[i]] = ['Cardinal', 'TextValue'];
   }
 });
+
 module.exports = {
   toOrdinal: toOrdinal,
   toCardinal: toCardinal,

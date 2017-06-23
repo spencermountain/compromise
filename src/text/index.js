@@ -8,7 +8,7 @@ function Text(arr, lexicon, reference) {
   this.reference = reference;
   //apply getters
   let keys = Object.keys(getters);
-  for(let i = 0; i < keys.length; i++) {
+  for (let i = 0; i < keys.length; i++) {
     Object.defineProperty(this, keys[i], {
       get: getters[keys[i]]
     });
@@ -18,14 +18,14 @@ module.exports = Text;
 
 Text.addMethods = function(cl, obj) {
   let fns = Object.keys(obj);
-  for(let i = 0; i < fns.length; i++) {
+  for (let i = 0; i < fns.length; i++) {
     cl.prototype[fns[i]] = obj[fns[i]];
   }
 };
 
 //make a sub-class of this class easily
 Text.makeSubset = function(methods, find) {
-  let Subset = function (arr, lexicon, reference) {
+  let Subset = function(arr, lexicon, reference) {
     Text.call(this, arr, lexicon, reference);
   };
   //inheritance
@@ -60,10 +60,10 @@ const subset = {
   verbs: require('./subset/verbs'),
   ngrams: require('./subset/ngrams'),
   startGrams: require('./subset/ngrams/startGrams'),
-  endGrams: require('./subset/ngrams/endGrams'),
+  endGrams: require('./subset/ngrams/endGrams')
 };
-Object.keys(subset).forEach((k) => {
-  Text.prototype[k] = function (num, arg) {
+Object.keys(subset).forEach(k => {
+  Text.prototype[k] = function(num, arg) {
     let sub = subset[k];
     let m = sub.find(this, num, arg);
     return new subset[k](m.list, this.lexicon, this.parent);

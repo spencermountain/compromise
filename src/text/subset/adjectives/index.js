@@ -14,15 +14,15 @@ const methods = {
         comparative: 'more ' + str,
         superlative: 'most ' + str,
         adverbForm: null,
-        nounForm: null,
-        verbForm: null
+        nounForm: null
+        // verbForm: null
       };
       if (shouldConvert(str) === true) {
         obj.comparative = fns.toComparative(str) || obj.comparative;
         obj.superlative = fns.toSuperlative(str) || obj.superlative;
         obj.adverbForm = fns.toAdverb(str);
         obj.nounForm = fns.toNoun(str);
-        obj.verbForm = fns.toVerb(str);
+        // obj.verbForm = fns.toVerb(str);
       }
       return obj;
     });

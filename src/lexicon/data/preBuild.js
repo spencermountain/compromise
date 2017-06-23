@@ -1,6 +1,8 @@
 const toPlural = require('../../result/subset/nouns/methods/pluralize');
-const adjectives = require('./computed/adjectives');
 // const fastConjugate = require("../result/subset/verbs/methods/conjugate/faster");
+let supers = require('./computed/toSuperlative');
+const alsoVerb = require('./computed/adjToVerb');
+// const m = require('../../../result/subset/adjectives/methods');
 
 //inflect singulars, conjugate infinitives
 const buildOut = function(lex) {
@@ -10,9 +12,10 @@ const buildOut = function(lex) {
     if (lex[str] === 'Singular') {
       //inflect singulars
       lex[toPlural(str)] = 'Plural';
+      continue;
     }
-    // else if (lex[str] === 'Infinitive') {
-    //conjugate infinitives
+    //conjugate infinitive verbs
+    // if (lex[str] === 'Infinitive') {
     // const obj = fastConjugate(str);
     // let tags = Object.keys(obj);
     // for (var o = 0; o < tags.length; o++) {
@@ -21,12 +24,18 @@ const buildOut = function(lex) {
     // }
     // }
   }
-
   //add-in adjective-conjucations too
-  keys = Object.keys(adjectives);
-  for (let i = 0; i < keys.length; i++) {
-    lex[keys[i]] = adjectives[keys[i]];
+  let adjectives = supers.concat(alsoVerb);
+  for (let i = 0; i < adjectives.length; i++) {
+    lex[adjectives[i]] = 'Adjective';
+    // let sup = m.toSuperlative(str);
+    // let cmp = m.toComparative(str);
+    // all[m.toNoun(str)] = 'Noun';
+    // all[m.toAdverb(str)] = 'Adverb';
+    //adjectives that become verbs with +'en' (short->shorten)
+    // all[m.toVerb(str)] = 'Verb';
   }
+
   return lex;
 };
 

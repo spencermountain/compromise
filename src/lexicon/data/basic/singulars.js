@@ -49,6 +49,7 @@ module.exports = [
   'stuff',
   'sky',
   'super bowl',
+  'home run',
   'system',
   'tic',
   'there',
@@ -60,5 +61,5 @@ module.exports = [
   'today',
   'tomorrow',
   'weekend',
-  'tonight',
+  'tonight'
 ];

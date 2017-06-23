@@ -23,7 +23,18 @@ uncompressed.forEach(obj => addToLex(lex, obj));
 
 lex = blastOut(lex);
 
+//collect first-of-multi words for quicker lookup
 let firstWords = {};
+let keys = Object.keys(lex);
+const hasSpace = / /;
+for (let i = 0; i < keys.length; i++) {
+  if (hasSpace.test(keys[i]) === true) {
+    let words = keys[i].split(/ /g);
+    firstWords[words[0]] = firstWords[words[0]] || [];
+    let str = words.slice(1).join(' ');
+    firstWords[words[0]][str] = true;
+  }
+}
 
 module.exports = {
   lexicon: lex,

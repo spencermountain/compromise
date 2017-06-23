@@ -1,8 +1,7 @@
 'use strict';
 
 //mostly pos-corections here
-const corrections = function (ts) {
-
+const corrections = function(ts) {
   //ambig prepositions/conjunctions
   if (ts.has('so')) {
     //so funny
@@ -66,6 +65,10 @@ const corrections = function (ts) {
     //money
     ts.match('#Value+ #Currency').tag('Money', 'value-currency').lastTerm().tag('Unit', 'money-unit');
     ts.match('#Money and #Money #Currency?').tag('Money', 'money-and-money');
+    //1 800 PhoneNumber
+    ts.match('1 #Value #PhoneNumber').tag('PhoneNumber', '1-800-Value');
+    //(454) 232-9873
+    ts.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber');
   }
 
   if (ts.has('#Noun')) {
@@ -75,6 +78,12 @@ const corrections = function (ts) {
     ts.match('second #Noun').term(0).unTag('Unit').tag('Ordinal', 'second-noun');
     //he quickly foo
     ts.match('#Noun #Adverb #Noun').term(2).tag('Verb', 'correction');
+    //fix for busted-up phrasalVerbs
+    ts.match('#Noun #Particle').term(1).tag('Preposition', 'repair-noPhrasal');
+    //John & Joe's
+    ts.match('#Noun (&|n) #Noun').tag('Organization', 'Noun-&-Noun');
+    //Aircraft designer
+    ts.match('#Noun #Actor').tag('Actor', 'thing-doer');
     //my buddy
     ts.match('#Possessive #FirstName').term(1).unTag('Person', 'possessive-name');
     //this rocks
@@ -123,8 +132,8 @@ const corrections = function (ts) {
       ts.match(`(#Modal) ${advb} be ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'would-be');
       //would been walking
       ts.match(`(#Modal|had|has) ${advb} been ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'would-be');
-    //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
-    // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
+      //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
+      // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
     }
   }
 
@@ -153,9 +162,12 @@ const corrections = function (ts) {
   ts.match('#Determiner (shit|damn|hell)').term(1).tag('Noun', 'swears-noun');
   ts.match('(shit|damn|fuck) (#Determiner|#Possessive|them)').term(0).tag('Verb', 'swears-verb');
   ts.match('#Copula fucked up?').not('#Copula').tag('Adjective', 'swears-adjective');
-
-  //fix for busted-up phrasalVerbs
-  ts.match('#Noun #Particle').term(1).tag('Preposition', 'repair-noPhrasal');
+  //6 am
+  ts.match('#Holiday (day|eve)').tag('Holiday', 'holiday-day');
+  //timezones
+  ts.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone');
+  //canadian dollar, Brazilian pesos
+  ts.match('#Demonym #Currency').tag('Currency', 'demonym-currency');
 
   return ts;
 };

@@ -42,6 +42,7 @@ module.exports = [
   'st stephens day',
   'st valentines day ',
   'valentines day',
+  'valentines',
   'veterans day',
   'victoria day',
   'womens equality day',
@@ -151,5 +152,5 @@ module.exports = [
 
   // Additional important holidays
   'chinese new year',
-  'diwali',
+  'diwali'
 ];

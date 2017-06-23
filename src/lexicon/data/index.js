@@ -25,7 +25,7 @@ const basic = [
   [require('./basic/demonyms'), 'Demonym'],
   [require('./basic/units'), 'Unit'],
   //dates
-  [require('./basic/days'), 'Date'],
+  [require('./basic/days'), 'WeekDay'],
   [require('./basic/holidays'), 'Holiday'],
   [require('./basic/months'), 'Month'],
   [require('./basic/durations'), 'Duration'],
@@ -42,7 +42,6 @@ const basic = [
   [require('./basic/verbs'), 'Verb'],
   [require('./basic/phrasals'), 'PhrasalVerb'],
   [require('./basic/modals'), 'Modal'],
-  [require('./basic/copulas'), 'Copula'],
   //misc
   [require('./basic/expressions'), 'Expression'],
   [require('./basic/prepositions'), 'Preposition'],
@@ -61,3 +60,4 @@ lex = preBuild(lex);
 
 module.exports = lex;
 // console.log(Object.keys(lex).length);
+// console.log(lex['valentines']);

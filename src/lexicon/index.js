@@ -21,10 +21,10 @@ const addToLex = function(lex, obj) {
 
 let lex = efrt.unpack(pckd);
 
+console.log(lex.quick);
 lex = blastOut(lex);
 
 uncompressed.forEach(obj => addToLex(lex, obj));
-// console.log(lex.oct);
 
 //collect first-of-multi words for quicker lookup
 let firstWords = {};

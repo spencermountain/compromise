@@ -1,5 +1,5 @@
 'use strict';
-const lexicon = require('../../../../lexicon');
+const lexicon = require('../../../../lexicon').lexicon;
 //turn an adjective like 'soft' into a verb like 'soften'
 
 const irregulars = {

@@ -10,7 +10,7 @@ config.silent = true;
 console.log(chalk.yellow('\n 🕑 packing lexicon..'));
 let out = path.join(__dirname, '../src/lexicon/_lexicon.js');
 //cleanup. remove old builds
-exec('rm ' + out);
+// exec('rm ' + out);
 
 //pack it into one string
 var lex = require('../src/lexicon/data');

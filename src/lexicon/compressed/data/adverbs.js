@@ -69,7 +69,6 @@ module.exports = [
   'somehow',
   'sometimes',
   'somewhat',
-  'soon',
   'sort of',
   'such',
   'then',

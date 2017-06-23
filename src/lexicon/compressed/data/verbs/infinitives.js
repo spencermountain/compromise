@@ -299,7 +299,6 @@ module.exports = [
   'laugh',
   'launch',
   'learn',
-  'learn',
   'lecture',
   'let',
   'lift',
@@ -576,5 +575,5 @@ module.exports = [
   'worry',
   'wreck',
   'yawn',
-  'yield',
+  'yield'
 ];

@@ -18,8 +18,8 @@ const methods = {
         verbForm: null
       };
       if (shouldConvert(str) === true) {
-        obj.comparative = fns.toComparative(str);
-        obj.superlative = fns.toSuperlative(str);
+        obj.comparative = fns.toComparative(str) || obj.comparative;
+        obj.superlative = fns.toSuperlative(str) || obj.superlative;
         obj.adverbForm = fns.toAdverb(str);
         obj.nounForm = fns.toNoun(str);
         obj.verbForm = fns.toVerb(str);

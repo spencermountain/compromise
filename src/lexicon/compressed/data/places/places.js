@@ -36,11 +36,6 @@ module.exports = [
   'phl',
 
   'new england',
-  'new hampshire',
-  'new jersey',
-  'new mexico',
-  'united states',
-  'united kingdom',
   'great britain',
   'great lakes',
   'pacific ocean',

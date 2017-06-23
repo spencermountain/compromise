@@ -24,7 +24,6 @@ module.exports = [
   'kerry',
   'lashawn',
   'lee',
-  'lee',
   'marion',
   'marlo',
   'mel',
@@ -33,10 +32,9 @@ module.exports = [
   'regan',
   'rene',
   'robin',
-  'rosario',
   'shay',
   'shea',
   'shelby',
   'shiloh',
-  'trinity',
+  'trinity'
 ];

@@ -1,11 +1,11 @@
 //common nouns that have no plural form. These are suprisingly rare
 //used in noun.inflect(), and added as nouns in lexicon
 module.exports = [
+  'acid',
   'advice',
   'aircraft',
-  'art',
   'amnesty',
-  'acid',
+  'art',
   'baggage',
   'bass',
   'beef',
@@ -36,6 +36,7 @@ module.exports = [
   'ethics',
   'everybody',
   'everyone',
+  'everything',
   'fahrenheit',
   'fiction',
   'fish',
@@ -44,7 +45,6 @@ module.exports = [
   'forgiveness',
   'fowl',
   'fruit',
-  // 'fun',
   'furniture',
   'gold',
   'golf',
@@ -131,7 +131,6 @@ module.exports = [
   'spacecraft',
   'species',
   'speed',
-  'species',
   'steam',
   'steel',
   'sugar',
@@ -156,6 +155,6 @@ module.exports = [
   'wood',
   'wool',
   'world series',
-  'world',
-  'everything'
+  'world'
+  // 'fun',
 ];

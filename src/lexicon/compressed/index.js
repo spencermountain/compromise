@@ -50,6 +50,10 @@ const data = [
 for (let i = 0; i < data.length; i++) {
   let list = data[i][0];
   for (let o = 0; o < list.length; o++) {
+    //log duplicates
+    // if (lex[list[o]]) {
+    //   console.log(list[o] + '  ' + lex[list[o]] + ' ' + data[i][1]);
+    // }
     lex[list[o]] = data[i][1];
   }
 }

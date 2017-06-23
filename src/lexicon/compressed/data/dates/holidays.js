@@ -17,7 +17,6 @@ module.exports = [
   '16 de septiembre',
   'dieciseis de septiembre',
   'grito de dolores',
-  'all hallows eve',
   'day of the dead',
   'dia de muertos',
   'harvey milk day',
@@ -53,14 +52,12 @@ module.exports = [
   'orthodox christmas day',
   'orthodox new year',
   'assumption of mary',
-  'all saints day',
   'all souls day',
   'feast of the immaculate conception',
   'feast of our lady of guadalupe',
 
   // Kwanzaa
   'kwanzaa',
-
   // Pagan / metal 🤘
   'imbolc',
   'beltaine',
@@ -84,9 +81,7 @@ module.exports = [
   'turkey day',
   'black friday',
   'cyber monday',
-
   // Astronomical religious and cultural holidays
-  // Catholic + Christian
   'ash wednesday',
   'palm sunday',
   'maundy thursday',
@@ -107,7 +102,6 @@ module.exports = [
   'trinity sunday',
   'corpus christi',
   'advent',
-
   // Jewish
   'tu bishvat',
   'tu bshevat',
@@ -124,7 +118,6 @@ module.exports = [
   'simchat torah',
   'chanukah',
   'hanukkah',
-
   // Muslim
   'isra and miraj',
   'lailat al-qadr',
@@ -135,8 +128,6 @@ module.exports = [
   'eid al-adha',
   'muharram',
   'the prophets birthday',
-
-  // Pagan / metal 🤘
   'ostara',
   'march equinox',
   'vernal equinox',
@@ -149,7 +140,6 @@ module.exports = [
   'yule',
   'december solstice',
   'winter solstice',
-
   // Additional important holidays
   'chinese new year',
   'diwali'

@@ -20,6 +20,5 @@ module.exports = [
   'oct',
   'nov',
   'dec',
-  'sept',
-  'sep'
+  'sept'
 ];

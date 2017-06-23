@@ -7,13 +7,13 @@ const mapping = {
   pl: 'PluPerfectTense',
   ft: 'FuturePerfect',
   ac: 'Actor',
-  g: 'Gerund',
+  g: 'Gerund'
 };
 let irreg = {
   take: {
     pe: 'have taken',
     pl: 'had taken',
-    ft: 'will have taken',
+    ft: 'will have taken'
   },
   can: {
     g: '',
@@ -22,643 +22,644 @@ let irreg = {
     pe: 'could',
     pl: 'could',
     ft: 'can',
-    ac: '',
+    ac: ''
   },
   free: {
     g: 'freeing',
-    ac: '',
+    ac: ''
   },
   puke: {
-    g: 'puking',
+    g: 'puking'
   },
   arise: {
     ps: 'arose',
-    pa: 'arisen',
+    pa: 'arisen'
   },
   babysit: {
     ps: 'babysat',
-    ac: 'babysitter',
+    ac: 'babysitter'
   },
   be: {
     ps: 'was',
     pa: 'been',
     pr: 'is',
     ac: '',
-    g: 'am',
+    g: 'am'
   },
   is: {
     ps: 'was',
     pr: 'is',
     ac: '',
-    g: 'being',
+    g: 'being'
   },
   beat: {
     g: 'beating',
     ac: 'beater',
-    pa: 'beaten',
+    pa: 'beaten'
   },
   begin: {
     g: 'beginning',
     ps: 'began',
-    pa: 'begun',
+    pa: 'begun'
   },
   ban: {
     ps: 'banned',
     g: 'banning',
-    ac: '',
+    ac: ''
   },
   bet: {
     ac: 'better',
-    pa: 'bet',
+    pa: 'bet'
   },
   bite: {
     g: 'biting',
     ps: 'bit',
-    pa: 'bitten',
+    pa: 'bitten'
   },
   bleed: {
     ps: 'bled',
-    pa: 'bled',
+    pa: 'bled'
   },
   breed: {
-    ps: 'bred',
+    ps: 'bred'
   },
   bring: {
     ps: 'brought',
-    pa: 'brought',
+    pa: 'brought'
   },
   broadcast: {
-    ps: 'broadcast',
+    ps: 'broadcast'
   },
   build: {
     ps: 'built',
-    pa: 'built',
+    pa: 'built'
   },
   buy: {
     ps: 'bought',
-    pa: 'bought',
+    pa: 'bought'
   },
   choose: {
     g: 'choosing',
     ps: 'chose',
-    pa: 'chosen',
+    pa: 'chosen'
   },
   cost: {
-    ps: 'cost',
+    ps: 'cost'
   },
   deal: {
     ps: 'dealt',
-    pa: 'dealt',
+    pa: 'dealt'
   },
   die: {
     ps: 'died',
-    g: 'dying',
+    g: 'dying'
   },
   dig: {
     g: 'digging',
     ps: 'dug',
-    pa: 'dug',
+    pa: 'dug'
   },
   draw: {
     ps: 'drew',
-    pa: 'drawn',
+    pa: 'drawn'
   },
   drink: {
     ps: 'drank',
-    pa: 'drunk',
+    pa: 'drunk'
   },
   drive: {
     g: 'driving',
     ps: 'drove',
-    pa: 'driven',
+    pa: 'driven'
   },
   eat: {
     g: 'eating',
     ps: 'ate',
     ac: 'eater',
-    pa: 'eaten',
+    pa: 'eaten'
   },
   fall: {
     ps: 'fell',
-    pa: 'fallen',
+    pa: 'fallen'
   },
   feed: {
     ps: 'fed',
-    pa: 'fed',
+    pa: 'fed'
   },
   feel: {
     ps: 'felt',
-    ac: 'feeler',
+    ac: 'feeler'
   },
   fight: {
     ps: 'fought',
-    pa: 'fought',
+    pa: 'fought'
   },
   find: {
-    ps: 'found',
+    ps: 'found'
   },
   fly: {
     ps: 'flew',
-    pa: 'flown',
+    pa: 'flown'
   },
   blow: {
     ps: 'blew',
-    pa: 'blown',
+    pa: 'blown'
   },
   forbid: {
-    ps: 'forbade',
+    ps: 'forbade'
   },
   forget: {
     g: 'forgeting',
     ps: 'forgot',
-    pa: 'forgotten',
+    pa: 'forgotten'
   },
   forgive: {
     g: 'forgiving',
     ps: 'forgave',
-    pa: 'forgiven',
+    pa: 'forgiven'
   },
   freeze: {
     g: 'freezing',
     ps: 'froze',
-    pa: 'frozen',
+    pa: 'frozen'
   },
   get: {
-    ps: 'got',
+    ps: 'got'
   },
   give: {
     g: 'giving',
     ps: 'gave',
-    pa: 'given',
+    pa: 'given'
   },
   go: {
     ps: 'went',
     pr: 'goes',
-    pa: 'gone',
+    pa: 'gone'
   },
   hang: {
     ps: 'hung',
-    pa: 'hung',
+    pa: 'hung'
   },
   have: {
     g: 'having',
     ps: 'had',
     pr: 'has',
-    pa: 'had',
+    pa: 'had'
   },
   hear: {
     ps: 'heard',
-    pa: 'heard',
+    pa: 'heard'
   },
   hide: {
     ps: 'hid',
-    pa: 'hidden',
+    pa: 'hidden'
   },
   hold: {
     ps: 'held',
-    pa: 'held',
+    pa: 'held'
   },
   hurt: {
     ps: 'hurt',
-    pa: 'hurt',
+    pa: 'hurt'
   },
   lay: {
     ps: 'laid',
-    pa: 'laid',
+    pa: 'laid'
   },
   lead: {
     ps: 'led',
-    pa: 'led',
+    pa: 'led'
   },
   leave: {
     ps: 'left',
-    pa: 'left',
+    pa: 'left'
   },
   lie: {
     g: 'lying',
-    ps: 'lay',
+    ps: 'lay'
   },
   light: {
     ps: 'lit',
-    pa: 'lit',
+    pa: 'lit'
   },
   lose: {
     g: 'losing',
-    ps: 'lost',
+    ps: 'lost'
   },
   make: {
     ps: 'made',
-    pa: 'made',
+    pa: 'made'
   },
   mean: {
     ps: 'meant',
-    pa: 'meant',
+    pa: 'meant'
   },
   meet: {
     g: 'meeting',
     ps: 'met',
     ac: 'meeter',
-    pa: 'met',
+    pa: 'met'
   },
   pay: {
     ps: 'paid',
-    pa: 'paid',
+    pa: 'paid'
   },
   read: {
     ps: 'read',
-    pa: 'read',
+    pa: 'read'
   },
   ring: {
     ps: 'rang',
-    pa: 'rung',
+    pa: 'rung'
   },
   rise: {
     ps: 'rose',
     g: 'rising',
     pl: 'had risen',
     ft: 'will have risen',
-    pa: 'risen',
+    pa: 'risen'
   },
   run: {
     g: 'running',
     ps: 'ran',
-    pa: 'run',
+    pa: 'run'
   },
   say: {
     ps: 'said',
     pa: 'said',
+    pr: 'says'
   },
   see: {
     ps: 'saw',
-    pa: 'seen',
+    pa: 'seen'
   },
   sell: {
     ps: 'sold',
-    pa: 'sold',
+    pa: 'sold'
   },
   shine: {
     ps: 'shone',
-    pa: 'shone',
+    pa: 'shone'
   },
   shoot: {
     ps: 'shot',
-    pa: 'shot',
+    pa: 'shot'
   },
   show: {
-    ps: 'showed',
+    ps: 'showed'
   },
   sing: {
     ps: 'sang',
-    pa: 'sung',
+    pa: 'sung'
   },
   sink: {
     ps: 'sank',
-    pl: 'had sunk',
+    pl: 'had sunk'
   },
   sit: {
-    ps: 'sat',
+    ps: 'sat'
   },
   slide: {
     ps: 'slid',
-    pa: 'slid',
+    pa: 'slid'
   },
   speak: {
     ps: 'spoke',
     pe: 'have spoken',
     pl: 'had spoken',
     ft: 'will have spoken',
-    pa: 'spoken',
+    pa: 'spoken'
   },
   spin: {
     g: 'spinning',
     ps: 'spun',
-    pa: 'spun',
+    pa: 'spun'
   },
   stand: {
-    ps: 'stood',
+    ps: 'stood'
   },
   steal: {
     ps: 'stole',
-    ac: 'stealer',
+    ac: 'stealer'
   },
   stick: {
-    ps: 'stuck',
+    ps: 'stuck'
   },
   sting: {
-    ps: 'stung',
+    ps: 'stung'
   },
   stream: {
-    ac: 'streamer',
+    ac: 'streamer'
   },
   strike: {
     g: 'striking',
-    ps: 'struck',
+    ps: 'struck'
   },
   swear: {
-    ps: 'swore',
+    ps: 'swore'
   },
   swim: {
     ps: 'swam',
-    g: 'swimming',
+    g: 'swimming'
   },
   swing: {
-    ps: 'swung',
+    ps: 'swung'
   },
   teach: {
     ps: 'taught',
-    pr: 'teaches',
+    pr: 'teaches'
   },
   tear: {
-    ps: 'tore',
+    ps: 'tore'
   },
   tell: {
-    ps: 'told',
+    ps: 'told'
   },
   think: {
-    ps: 'thought',
+    ps: 'thought'
   },
   understand: {
-    ps: 'understood',
+    ps: 'understood'
   },
   wake: {
-    ps: 'woke',
+    ps: 'woke'
   },
   wear: {
-    ps: 'wore',
+    ps: 'wore'
   },
   win: {
     g: 'winning',
-    ps: 'won',
+    ps: 'won'
   },
   withdraw: {
-    ps: 'withdrew',
+    ps: 'withdrew'
   },
   write: {
     g: 'writing',
     ps: 'wrote',
-    pa: 'written',
+    pa: 'written'
   },
   tie: {
     g: 'tying',
-    ps: 'tied',
+    ps: 'tied'
   },
   ski: {
-    ps: 'skiied',
+    ps: 'skiied'
   },
   boil: {
-    ac: 'boiler',
+    ac: 'boiler'
   },
   miss: {
-    pr: 'miss',
+    pr: 'miss'
   },
   act: {
-    ac: 'ac',
+    ac: 'ac'
   },
   compete: {
     g: 'competing',
     ps: 'competed',
-    ac: 'competitor',
+    ac: 'competitor'
   },
   being: {
     g: 'are',
     ps: 'were',
-    pr: 'are',
+    pr: 'are'
   },
   imply: {
     ps: 'implied',
-    pr: 'implies',
+    pr: 'implies'
   },
   ice: {
     g: 'icing',
-    ps: 'iced',
+    ps: 'iced'
   },
   develop: {
     ps: 'developed',
     ac: 'developer',
-    g: 'developing',
+    g: 'developing'
   },
   wait: {
     g: 'waiting',
     ps: 'waited',
-    ac: 'waiter',
+    ac: 'waiter'
   },
   aim: {
     ac: 'aimer',
     g: 'aiming',
-    ps: 'aimed',
+    ps: 'aimed'
   },
   spill: {
     ps: 'spilt',
-    pa: 'spilled',
+    pa: 'spilled'
   },
   drop: {
     g: 'dropping',
-    ps: 'dropped',
+    ps: 'dropped'
   },
   log: {
     g: 'logging',
-    ps: 'logged',
+    ps: 'logged'
   },
   rub: {
     g: 'rubbing',
-    ps: 'rubbed',
+    ps: 'rubbed'
   },
   smash: {
-    pr: 'smashes',
+    pr: 'smashes'
   },
   egg: {
-    ps: 'egged',
+    ps: 'egged'
   },
   suit: {
     g: 'suiting',
     ps: 'suited',
-    ac: 'suiter',
+    ac: 'suiter'
   },
   age: {
     pr: 'ages',
     ps: 'aged',
-    g: 'ageing',
+    g: 'ageing'
   },
   shed: {
     pr: 'sheds',
     ps: 'shed',
-    g: 'shedding',
+    g: 'shedding'
   },
   break: {
-    ps: 'broke',
+    ps: 'broke'
   },
   catch: {
-    ps: 'caught',
+    ps: 'caught'
   },
   do: {
     ps: 'did',
-    pr: 'does',
+    pr: 'does'
   },
   bind: {
-    ps: 'bound',
+    ps: 'bound'
   },
   spread: {
-    ps: 'spread',
+    ps: 'spread'
   },
   become: {
-    pa: 'become',
+    pa: 'become'
   },
   bend: {
-    pa: 'bent',
+    pa: 'bent'
   },
   brake: {
-    pa: 'broken',
+    pa: 'broken'
   },
   burn: {
-    pa: 'burned',
+    pa: 'burned'
   },
   burst: {
-    pa: 'burst',
+    pa: 'burst'
   },
   cling: {
-    pa: 'clung',
+    pa: 'clung'
   },
   come: {
-    pa: 'come',
+    pa: 'come'
   },
   creep: {
-    pa: 'crept',
+    pa: 'crept'
   },
   cut: {
-    pa: 'cut',
+    pa: 'cut'
   },
   dive: {
-    pa: 'dived',
+    pa: 'dived'
   },
   dream: {
-    pa: 'dreamt',
+    pa: 'dreamt'
   },
   flee: {
-    pa: 'fled',
+    pa: 'fled'
   },
   fling: {
-    pa: 'flung',
+    pa: 'flung'
   },
   got: {
-    pa: 'gotten',
+    pa: 'gotten'
   },
   grow: {
-    pa: 'grown',
+    pa: 'grown'
   },
   hit: {
-    pa: 'hit',
+    pa: 'hit'
   },
   keep: {
-    pa: 'kept',
+    pa: 'kept'
   },
   kneel: {
-    pa: 'knelt',
+    pa: 'knelt'
   },
   know: {
-    pa: 'known',
+    pa: 'known'
   },
   leap: {
-    pa: 'leapt',
+    pa: 'leapt'
   },
   lend: {
-    pa: 'lent',
+    pa: 'lent'
   },
   loose: {
-    pa: 'lost',
+    pa: 'lost'
   },
   prove: {
-    pa: 'proven',
+    pa: 'proven'
   },
   put: {
-    pa: 'put',
+    pa: 'put'
   },
   quit: {
-    pa: 'quit',
+    pa: 'quit'
   },
   ride: {
-    pa: 'ridden',
+    pa: 'ridden'
   },
   seek: {
-    pa: 'sought',
+    pa: 'sought'
   },
   send: {
-    pa: 'sent',
+    pa: 'sent'
   },
   set: {
-    pa: 'set',
+    pa: 'set'
   },
   sew: {
-    pa: 'sewn',
+    pa: 'sewn'
   },
   shake: {
-    pa: 'shaken',
+    pa: 'shaken'
   },
   shave: {
-    pa: 'shaved',
+    pa: 'shaved'
   },
   shut: {
-    pa: 'shut',
+    pa: 'shut'
   },
   seat: {
-    pa: 'sat',
+    pa: 'sat'
   },
   slay: {
-    pa: 'slain',
+    pa: 'slain'
   },
   sleep: {
-    pa: 'slept',
+    pa: 'slept'
   },
   sneak: {
-    pa: 'snuck',
+    pa: 'snuck'
   },
   speed: {
-    pa: 'sped',
+    pa: 'sped'
   },
   spend: {
-    pa: 'spent',
+    pa: 'spent'
   },
   spit: {
-    pa: 'spat',
+    pa: 'spat'
   },
   split: {
-    pa: 'split',
+    pa: 'split'
   },
   spring: {
-    pa: 'sprung',
+    pa: 'sprung'
   },
   stink: {
-    pa: 'stunk',
+    pa: 'stunk'
   },
   strew: {
-    pa: 'strewn',
+    pa: 'strewn'
   },
   sware: {
-    pa: 'sworn',
+    pa: 'sworn'
   },
   sweep: {
-    pa: 'swept',
+    pa: 'swept'
   },
   thrive: {
-    pa: 'thrived',
+    pa: 'thrived'
   },
   undergo: {
-    pa: 'undergone',
+    pa: 'undergone'
   },
   upset: {
-    pa: 'upset',
+    pa: 'upset'
   },
   weave: {
-    pa: 'woven',
+    pa: 'woven'
   },
   weep: {
-    pa: 'wept',
+    pa: 'wept'
   },
   wind: {
-    pa: 'wound',
+    pa: 'wound'
   },
   wring: {
-    pa: 'wrung',
-  },
+    pa: 'wrung'
+  }
 };
 
 //swap-in better tag keys, accumulate all words for lexicon
@@ -681,5 +682,5 @@ for (var i = 0; i < keys.length; i++) {
 
 module.exports = {
   lexicon: lex,
-  irregulars: irreg,
+  irregulars: irreg
 };

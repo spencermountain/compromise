@@ -6,9 +6,9 @@ const indexFirst = require('./firstWords');
 const unpackLex = function(pckd) {
   let lex = efrt.unpack(pckd);
 
-  console.log(Object.keys(lex).length);
+  // console.log(Object.keys(lex).length);
   lex = buildUp(lex);
-  console.log(Object.keys(lex).length);
+  // console.log(Object.keys(lex).length);
 
   //collect first-of-multi words for quicker lookup
   let firstWords = indexFirst(lex);

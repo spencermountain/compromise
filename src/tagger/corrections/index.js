@@ -23,7 +23,7 @@ const corrections = function(ts) {
     //the wait to vote
     ts.match('(the|this) #Verb #Preposition .').term(1).tag('Noun', 'correction-determiner1');
     //the swim
-    ts.match('(the|those|these) (#Infinitive|#PresentTense)').term(1).tag('Noun', 'correction-determiner2');
+    ts.match('(the|those|these) (#Infinitive|#PresentTense|#PastTense)').term(1).tag('Noun', 'correction-determiner2');
     //a staggering cost
     ts.match('(a|an) #Gerund').term(1).tag('Adjective', 'correction-a|an');
     ts.match('(a|an) #Adjective (#Infinitive|#PresentTense)').term(2).tag('Noun', 'correction-a|an2');

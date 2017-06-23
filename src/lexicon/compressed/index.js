@@ -4,9 +4,6 @@ let lex = {};
 
 //add-in the generic, flat word-lists
 const data = [
-  [require('./data/adjectives/adjectives'), 'Adjective'],
-  [require('./data/adjectives/comparables'), 'Comparable'],
-  [require('./data/adverbs'), 'Adverb'],
   //nouns
   [require('./data/nouns/singulars'), 'Singular'],
   [require('./data/nouns/professions'), 'Noun'],
@@ -41,6 +38,10 @@ const data = [
   [require('./data/verbs/verbs'), 'Verb'],
   [require('./data/verbs/phrasals'), 'PhrasalVerb'],
   [require('./data/verbs/modals'), 'Modal'],
+  //adjectives
+  [require('./data/adjectives/adjectives'), 'Adjective'],
+  [require('./data/adjectives/comparables'), 'Comparable'],
+  [require('./data/adverbs'), 'Adverb'],
   //misc
   [require('./data/expressions'), 'Expression'],
   [require('./data/prepositions'), 'Preposition'],

@@ -9,6 +9,6 @@ nlp.verbose('tagger');
 //   'donkey kong': 'City',
 //   'hong kong convention': 'Person'
 // };
-var doc = nlp('the market has always tanked');
+var doc = nlp('gyrations can whipsaw the funds');
 doc.debug();
 // console.log(nlp('friendly').adjectives().data());

@@ -1,7 +1,6 @@
 'use strict';
-const p = require('../paths');
 const split = require('../contraction/split');
-const lexicon = require('../../lexicon');
+const lexicon = require('../../lexicon').lexicon;
 
 const check_lexicon = (str, sentence) => {
   //check a user's custom lexicon

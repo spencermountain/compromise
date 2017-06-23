@@ -127,12 +127,15 @@ const prefixes = {
 //create an easy mapping between ordinal-cardinal
 let toOrdinal = {};
 let toCardinal = {};
+let lexicon = {};
 Object.keys(ordinal).forEach(k => {
   let ord = Object.keys(ordinal[k]);
   let card = Object.keys(cardinal[k]);
   for (let i = 0; i < ord.length; i++) {
     toOrdinal[card[i]] = ord[i];
     toCardinal[ord[i]] = card[i];
+    lexicon[ord[i]] = 'Ordinal';
+    lexicon[card[i]] = 'Cardinal';
   }
 });
 module.exports = {
@@ -140,5 +143,6 @@ module.exports = {
   toCardinal: toCardinal,
   cardinal: cardinal,
   ordinal: ordinal,
-  prefixes: prefixes
+  prefixes: prefixes,
+  lexicon: lexicon
 };

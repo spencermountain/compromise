@@ -96,7 +96,8 @@ let compact = {
     'sask'
   ],
 
-  Date: ['jan', 'feb', 'mar', 'apr', 'jun', 'jul', 'aug', 'sep', 'sept', 'oct', 'nov', 'dec', 'circa'],
+  Month: ['jan', 'feb', 'mar', 'apr', 'jun', 'jul', 'aug', 'sep', 'sept', 'oct', 'nov', 'dec'],
+  Date: ['circa'],
 
   //Honorifics
   Honorific: [

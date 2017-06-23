@@ -19,7 +19,10 @@ const compact = {
     //end of day, end of month
     'eom',
     'standard time',
-    'daylight time'
+    'daylight time',
+    'today',
+    'tomorrow',
+    'yesterday'
   ],
   Condition: ['if', 'unless', 'notwithstanding'],
 

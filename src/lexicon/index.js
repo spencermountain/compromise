@@ -3,11 +3,13 @@ const pckd = require('./_lexicon');
 const efrt = require('efrt');
 const blastOut = require('./blastOut');
 const uncompressed = [
-  require('./uncompressed/misc'),
+  //(order matters)
   require('./uncompressed/abbreviations'),
   require('./uncompressed/irregularPlurals').lexicon,
+  require('./uncompressed/irregularVerbs').lexicon,
   require('./uncompressed/orgWords'),
-  require('./uncompressed/numbers').lexicon
+  require('./uncompressed/numbers').lexicon,
+  require('./uncompressed/misc')
 ];
 
 const addToLex = function(lex, obj) {
@@ -19,9 +21,9 @@ const addToLex = function(lex, obj) {
 
 let lex = efrt.unpack(pckd);
 
-uncompressed.forEach(obj => addToLex(lex, obj));
-
 lex = blastOut(lex);
+
+uncompressed.forEach(obj => addToLex(lex, obj));
 
 //collect first-of-multi words for quicker lookup
 let firstWords = {};

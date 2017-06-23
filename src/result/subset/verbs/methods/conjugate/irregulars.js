@@ -1,5 +1,5 @@
 'use strict';
-let irregulars = require('../../../../../lexicon/uncompressed/irregularVerbs'); //weeee!
+let irregulars = require('../../../../../lexicon/uncompressed/irregularVerbs').irregulars; //weeee!
 const fns = require('../../../../../fns'); //weeee!
 const infArr = Object.keys(irregulars);
 const forms = ['Participle', 'Gerund', 'PastTense', 'PresentTense', 'FuturePerfect', 'PerfectTense', 'Actor'];

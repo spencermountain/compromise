@@ -1,8 +1,9 @@
 'use strict';
 var nlp = require('./src/index');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 // const fresh = require('./test/unit/lib/freshPrince.js');
 
-var doc = nlp('in new mexico a walk off home run');
+var doc = nlp('he is');
 doc.debug();
-// console.log(doc.quotations().data());
+doc.contractions().contract().debug();
+// console.log(doc.verbs().data());

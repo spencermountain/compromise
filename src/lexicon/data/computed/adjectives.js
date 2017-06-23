@@ -314,7 +314,7 @@ let basic = [
   'wry',
   'yellow',
   'young',
-  'zany',
+  'zany'
 ];
 
 //adjectives that become verbs with +'en' (short->shorten)
@@ -359,7 +359,7 @@ const alsoVerb = [
   'weak',
   'white',
   'wide',
-  'smooth',
+  'smooth'
 ];
 
 let all = {};
@@ -377,13 +377,13 @@ for (let i = 0; i < basic.length; i++) {
   if (cmp.match('^more ') === null) {
     all[cmp] = 'Comparative';
   }
-  // all[m.toNoun(str)] = 'Noun';
-  // all[m.toAdverb(str)] = 'Adverb';
+  all[m.toNoun(str)] = 'Noun';
+  all[m.toAdverb(str)] = 'Adverb';
 }
 
-// for (let i = 0; i < alsoVerb.length; i++) {
-//   let str = alsoVerb[i];
-//   all[m.toVerb(str)] = 'Verb';
-// }
+for (let i = 0; i < alsoVerb.length; i++) {
+  let str = alsoVerb[i];
+  all[m.toVerb(str)] = 'Verb';
+}
 
 module.exports = all;

@@ -1,5 +1,5 @@
 'use strict';
-const irregulars = require('../../../../lexicon/shared/irregularPlurals').toSingle;
+const irregulars = require('../../../../lexicon/uncompressed/irregularPlurals').toSingle;
 
 const singleRules = require('./data/singleRules');
 

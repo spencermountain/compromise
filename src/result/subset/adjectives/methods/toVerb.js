@@ -1,5 +1,5 @@
 'use strict';
-const data = require('../../../../data');
+const lexicon = require('../../../../lexicon');
 //turn an adjective like 'soft' into a verb like 'soften'
 
 const irregulars = {
@@ -8,15 +8,9 @@ const irregulars = {
   fat: 'fatten'
 };
 
-const convertable = data.verbConverts.reduce((h, str) => {
-  h[str] = true;
-  return h;
-}, {});
-
-
-const toVerb = (str) => {
+const toVerb = str => {
   //don't do words like 'green' -> 'greenen'
-  if (!convertable[str]) {
+  if (!lexicon[str]) {
     return str;
   }
   //irregulars

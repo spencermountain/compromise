@@ -1,5 +1,5 @@
 'use strict';
-const irregulars = require('../../../lexicon/shared/irregularPlurals');
+const irregulars = require('../../../lexicon/uncompressed/irregularPlurals');
 const rules = require('./methods/data/indicators');
 const prep = /([a-z]*) (of|in|by|for) [a-z]/;
 const hasPlural = require('./hasPlural');
@@ -9,7 +9,7 @@ const knownPlural = {
   he: false,
   she: false,
   we: true,
-  they: true,
+  they: true
 };
 
 //is it potentially plural?

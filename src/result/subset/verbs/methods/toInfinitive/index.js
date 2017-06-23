@@ -1,7 +1,7 @@
 'use strict';
 //turn any verb into its infinitive form
 const rules = require('./rules');
-let irregulars = require('../../../../../lexicon/shared/irregularVerbs').irregulars;
+let irregulars = require('../../../../../lexicon/uncompressed/irregularVerbs').irregulars;
 const predict = require('../predict');
 
 //map the irregulars for easy infinitive lookup

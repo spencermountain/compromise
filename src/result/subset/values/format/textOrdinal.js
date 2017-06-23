@@ -1,8 +1,8 @@
 'use strict';
 const textValue = require('./textCardinal');
-const ordinalWord = require('../../../paths').data.ordinalMap.toOrdinal;
+const ordinalWord = require('../../../../lexicon/uncompressed/numbers').toOrdinal;
 //
-const textOrdinal = (num) => {
+const textOrdinal = num => {
   let words = textValue(num);
   //convert the last number to an ordinal
   let last = words[words.length - 1];

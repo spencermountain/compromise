@@ -1,6 +1,5 @@
-const p = require('../paths');
-const numbers = p.data.numbers;
-const fns = p.fns;
+const numbers = require('../../../../lexicon/uncompressed/numbers');
+const fns = require('../paths').fns;
 
 //setup number-word data
 const ones = fns.extend(numbers.ordinal.ones, numbers.cardinal.ones);

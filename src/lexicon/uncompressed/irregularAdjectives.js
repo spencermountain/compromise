@@ -2,10 +2,8 @@
 const toAdverb = {
   bad: 'badly',
   best: 'best',
-  day: 'daily',
   early: 'early',
   fast: 'fast',
-  female: 'womanly',
   good: 'well',
   hard: 'hard',
   icy: 'icily',

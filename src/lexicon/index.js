@@ -24,12 +24,12 @@ const addToLex = function(lex, obj) {
 
 let lex = efrt.unpack(pckd);
 
-// console.log(lex.quick);
 // console.log(Object.keys(lex).length);
 lex = buildUp(lex);
 // console.log(Object.keys(lex).length);
 
 uncompressed.forEach(obj => addToLex(lex, obj));
+// console.log(lex.day);
 
 //collect first-of-multi words for quicker lookup
 let firstWords = indexFirst(lex);

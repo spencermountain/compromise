@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../../lib/nlp');
 
-test('percent-basic:', function (t) {
+test('percent-basic:', function(t) {
   var m = nlp('it is 33%').match('#Percent');
   t.equal(m.out('normal'), '33%', 'match-33%');
 
@@ -19,12 +19,12 @@ test('percent-basic:', function (t) {
   t.end();
 });
 
-test('percent-conversion:', function (t) {
+test('percent-conversion:', function(t) {
   var str = '3% of the budget';
   var r = nlp(str).values().toNumber().all();
   t.equal(r.out(), str, '3% to number');
 
-  str = 'it\'s 39% of the budget';
+  str = "it's 39% of the budget";
   r = nlp(str).values().toNumber().all();
   t.equal(r.out(), str, '39% to number');
 
@@ -36,11 +36,10 @@ test('percent-conversion:', function (t) {
   r = nlp(str).values().toText().all();
   t.equal(r.out(), 'around one hundred percent of the budget', 'to text');
 
-
   t.end();
 });
 
-test('percent-tag:', function (t) {
+test('percent-tag:', function(t) {
   var tests = [
     ['7%', true],
     ['7.0%', true],
@@ -49,11 +48,11 @@ test('percent-tag:', function (t) {
     ['0.2%', true],
     ['2,999%', true],
     ['2asdf99%', false],
-    ['99%3', false],
+    ['99%3', false]
   ];
   tests.forEach(function(a) {
     var r = nlp(a[0]);
-    t.equal(r.has('#Percent'), a[1], 'Percent-has: \'' + a[0] + '\'');
+    t.equal(r.has('#Percent'), a[1], "Percent-has: '" + a[0] + "'");
   });
   t.end();
 });

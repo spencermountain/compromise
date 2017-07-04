@@ -2,9 +2,7 @@ var test = require('tape');
 var nlp = require('../../lib/nlp');
 var str_test = require('../../lib/fns').str_test;
 
-
 test('==negation==', function(T) {
-
   T.test('negate:', function(t) {
     [
       //copula-sentences
@@ -54,13 +52,12 @@ test('==negation==', function(T) {
       [`he had played`, `he had not played`],
       [`he plays`, `he does not play`],
       [`he played`, `he did not play`],
-      [`he walked`, `he did not walk`],
+      [`he walked`, `he did not walk`]
       // [`he quietly walked`, `he did not quietly walk`],
       // [`he quietly walks`, `he does not quietly walk`],
       // [`we quietly walked`, `we do not quietly walk`],
       // [`we quietly walks`, `we do not quietly walk`],
-
-    ].forEach(function (a) {
+    ].forEach(function(a) {
       var str = nlp(a[0]).sentences().toNegative().out('text');
       str_test(str, a[0], a[1], t);
     });
@@ -86,9 +83,9 @@ test('==negation==', function(T) {
       [`he is not walking`, `he is walking`],
       // //logical negations
       ['john never walks', 'john always walks'],
-      ['john never walks quickly', 'john always walks quickly'],
-    // ['everybody walks quickly', 'nobody walks quickly'],
-    ].forEach(function (a) {
+      ['john never walks quickly', 'john always walks quickly']
+      // ['everybody walks quickly', 'nobody walks quickly'],
+    ].forEach(function(a) {
       var str = nlp(a[0]).sentences().toPositive().out('text');
       str_test(str, a[0], a[1], t);
     });

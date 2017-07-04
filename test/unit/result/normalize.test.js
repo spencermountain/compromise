@@ -16,8 +16,8 @@ test('sentence():', function(t) {
     ['four', 'four'],
     ['john smith', 'john smith'],
     ['Dr. John Smith-McDonald', 'dr john smith mcdonald'],
-    ['Contains no fruit juice. \n\n All rights reserved', 'contains no fruit juice. all rights reserved'],
-  ].forEach(function (a) {
+    ['Contains no fruit juice. \n\n All rights reserved', 'contains no fruit juice. all rights reserved']
+  ].forEach(function(a) {
     var str = nlp(a[0]).out('normal');
     str_test(str, a[0], a[1], t);
   });

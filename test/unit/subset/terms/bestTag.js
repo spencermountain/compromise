@@ -1,8 +1,7 @@
 var test = require('tape');
 var nlp = require('../../lib/nlp');
 
-test('bestTag', function (t) {
-
+test('bestTag', function(t) {
   var str = 'john smith was really working';
   var m = nlp(str);
   var have = m.terms().data().map(function(o) {

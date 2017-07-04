@@ -2,7 +2,6 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 
 test('insert-basic :', function(t) {
-
   var m = nlp('the dog sat').insertBefore('and');
   t.equal(m.out('text'), 'and the dog sat', 'and-dog');
 

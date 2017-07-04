@@ -2,7 +2,6 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 
 test('remove-basic :', function(t) {
-
   var m = nlp('the brown cat played').match('brown').delete().all();
   t.equal(m.out('text'), 'the cat played', 'brown-cat');
 
@@ -19,7 +18,6 @@ test('remove-basic :', function(t) {
 });
 
 test('remove-match :', function(t) {
-
   var m = nlp('the brown cat played').delete('brown');
   t.equal(m.out('text'), 'the cat played', 'brown-cat');
 

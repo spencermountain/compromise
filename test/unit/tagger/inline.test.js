@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-test('inline tagging linear:', function (t) {
+test('inline tagging linear:', function(t) {
   var r = nlp('one two three four');
 
   r.match('one two three').tag('. #Person .');

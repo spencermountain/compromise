@@ -20,7 +20,7 @@ test('verb-to-negative:', function(t) {
     [`he would come forward`, 'would not come forward'],
     [`we come together`, 'did not come together'],
     [`he was frightened`, 'was not'],
-    [`i didn't want to`, 'didn\'t want'],
+    [`i didn't want to`, "didn't want"],
 
     //===singular
     // pastTense -
@@ -36,12 +36,11 @@ test('verb-to-negative:', function(t) {
     // presentTense -
     ['we play', 'do not play'],
     // futureTense -
-    ['we will play', 'will not play'],
-
-  ].forEach(function (a) {
+    ['we will play', 'will not play']
+  ].forEach(function(a) {
     var vb = nlp(a[0]).verbs().toNegative();
     var str = vb.out('normal');
-    t.equal(str, a[1], '\'' + str + '\' - - want: ' + a[1]);
+    t.equal(str, a[1], "'" + str + "' - - want: " + a[1]);
   });
   t.end();
 });

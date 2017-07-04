@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../../lib/nlp');
 
-test('money-basic:', function (t) {
+test('money-basic:', function(t) {
   var r = nlp('it is $70.23');
   var m = r.match('#Money');
   t.equal(m.out('normal'), '$70.23', 'match-$70.23');
@@ -25,7 +25,7 @@ test('money-basic:', function (t) {
   t.end();
 });
 
-test('money-has:', function (t) {
+test('money-has:', function(t) {
   var tests = [
     ['$7', true],
     ['$7.0', true],
@@ -42,12 +42,12 @@ test('money-has:', function (t) {
     ['8 cents', true],
     ['60 pence', true],
     ['sixty pence', true],
-    ['sixty USD', true],
+    ['sixty USD', true]
   ];
   tests.forEach(function(a) {
     var r = nlp(a[0]);
     var m = r.match('#Money');
-    t.equal(m.found, a[1], 'money-has: \'' + a[0] + '\'');
+    t.equal(m.found, a[1], "money-has: '" + a[0] + "'");
   });
   t.end();
 });

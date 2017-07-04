@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-test('lumper:', function (t) {
+test('lumper:', function(t) {
   var str = 'we live in Toronto Canada and it is cold.';
   var r = nlp(str);
   t.equal(r.wordCount(), 9, '9 words start');
@@ -17,7 +17,7 @@ test('lumper:', function (t) {
   t.end();
 });
 
-test('lumper-multiple-matches:', function (t) {
+test('lumper-multiple-matches:', function(t) {
   var str = 'imagine if Patrick Watson and Emma Stone got married';
   var r = nlp(str);
   t.equal(r.wordCount(), 9, '9 words start');
@@ -36,7 +36,7 @@ test('lumper-multiple-matches:', function (t) {
   t.end();
 });
 
-test('lumper-long:', function (t) {
+test('lumper-long:', function(t) {
   var str = 'I think Sir Patrick James Watson is cool';
   var r = nlp(str);
   t.equal(r.wordCount(), 8, '8 words start');

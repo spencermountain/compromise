@@ -7,7 +7,7 @@ test('verb-to-adjective:', function(t) {
     ['sing', 'singable'],
     ['win', 'winnable'],
     ['convert', 'convertible'],
-    ['see', 'visible'],
+    ['see', 'visible']
   ].forEach(function(a) {
     var str = nlp(a[0]).verbs().asAdjective()[0];
     t.equal(str, a[1], str + ' -> ' + a[1]);

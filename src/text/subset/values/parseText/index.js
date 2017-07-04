@@ -1,5 +1,4 @@
 'use strict';
-const parseNumeric = require('./parseNumeric');
 const findModifiers = require('./findModifiers');
 const words = require('./data');
 const isValid = require('./validate');
@@ -12,12 +11,12 @@ const casualForms = {
   'a couple': 2,
   'a dozen': 12,
   'two dozen': 24,
-  'zero': 0,
+  zero: 0
 };
 
 // a 'section' is something like 'fifty-nine thousand'
 // turn a section into something we can add to - like 59000
-const section_sum = (obj) => {
+const section_sum = obj => {
   return Object.keys(obj).reduce((sum, k) => {
     sum += obj[k];
     return sum;
@@ -27,7 +26,7 @@ const section_sum = (obj) => {
 //turn a string into a number
 const parse = function(str) {
   //convert some known-numbers
-  if (casualForms[str] !== undefined) {
+  if (casualForms.hasOwnProperty(str) === true) {
     return casualForms[str];
   }
   //'a/an' is 1
@@ -67,7 +66,7 @@ const parse = function(str) {
       const num = parseFloat(fm[1].replace(/[, ]/g, ''));
       const denom = parseFloat(fm[2].replace(/[, ]/g, ''));
       if (denom) {
-        sum += (num / denom) || 0;
+        sum += num / denom || 0;
       }
       continue;
     }

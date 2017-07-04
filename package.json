@@ -13,6 +13,7 @@
     "testBuild": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
     "browsertest": "node ./scripts/browserTest.js",
+    "benchmark": "node ./scripts/benchmark.js",
     "build": "node ./scripts/build/index.js",
     "pack": "node ./scripts/pack.js",
     "prepublish": "node ./scripts/prepublish",

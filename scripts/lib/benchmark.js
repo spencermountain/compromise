@@ -2,8 +2,9 @@
 const filesize = require('./filesize');
 const path = require('path');
 //haha-engineering
-exec('npm i nlp-corpus');
-const corpus = require('nlp-corpus');
+// exec('npm i nlp-corpus');
+// const corpus = require('nlp-corpus');
+let str = require('../../test/unit/lib/friends');
 let start;
 let end;
 let src = path.join(__dirname, '../../builds/compromise.min.js');
@@ -29,8 +30,6 @@ const benchmark = function(cb) {
     end = new Date().getTime();
     obj.match = end - start;
     (function() {
-      let str = corpus.poe.parsed()[5];
-
       //big parse
       start = new Date().getTime();
       let m2 = nlp(str);

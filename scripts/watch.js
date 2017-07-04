@@ -1,4 +1,4 @@
-require('shelljs/global');
+var exec = require('shelljs').exec
 var gaze = require('gaze');
 var chalk = require('chalk');
 //this is a nice way to 'hot-reload' compromise, while debugging something from ./scratch.js

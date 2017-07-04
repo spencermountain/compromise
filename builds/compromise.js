@@ -792,6 +792,7 @@ module.exports={
     "testBuild": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
     "browsertest": "node ./scripts/browserTest.js",
+    "benchmark": "node ./scripts/benchmark.js",
     "build": "node ./scripts/build/index.js",
     "pack": "node ./scripts/pack.js",
     "prepublish": "node ./scripts/prepublish",
@@ -821,7 +822,6 @@ module.exports={
     "eslint": "^3.1.1",
     "gaze": "^1.1.1",
     "http-server": "0.9.0",
-    "nlp-corpus": "latest",
     "nyc": "^8.4.0",
     "shelljs": "^0.7.2",
     "tap-min": "^1.1.0",
@@ -831,6 +831,7 @@ module.exports={
   },
   "license": "MIT"
 }
+
 },{}],3:[function(_dereq_,module,exports){
 'use strict';
 
@@ -7861,7 +7862,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 var Terms = _dereq_('../../terms');
 
 var miscMethods = function miscMethods(Text) {
-
   var methods = {
     all: function all() {
       return this.parent;
@@ -7878,9 +7878,6 @@ var miscMethods = function miscMethods(Text) {
       return this.list.map(function (ts) {
         return ts.data();
       });
-    },
-    debug: function debug(opts) {
-      return out(this, 'debug', opts);
     },
     /**copy data properly so later transformations will have no effect*/
     clone: function clone() {
@@ -8000,7 +7997,6 @@ var miscMethods = function miscMethods(Text) {
       }
       return new Text(arr, this.lexicon, this.parent);
     }
-
   };
   Text.addMethods(Text, methods);
 };

@@ -1,4 +1,4 @@
-require('shelljs/global');
+var exec = require('shelljs').exec
 var browserifyGlob = '"./node_modules/.bin/browserify-glob"';
 var fileServer = '"./node_modules/.bin/http-server"';
 

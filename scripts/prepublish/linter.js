@@ -1,4 +1,4 @@
-require('shelljs/global');
+var exec = require('shelljs').exec
 const path = require('path');
 var eslint = 'node_modules/.bin/eslint';
 

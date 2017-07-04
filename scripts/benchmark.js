@@ -1,4 +1,4 @@
-require('shelljs/global');
+var exec = require('shelljs').exec
 const benchmark = require('./lib/benchmark');
 const fs = require('fs');
 const chalk = require('chalk');

@@ -1,4 +1,4 @@
-require('shelljs/global');
+var exec = require('shelljs').exec;
 var chalk = require('chalk');
 var fileSize = require('../lib/filesize');
 var pkg = require('../../package.json');
@@ -14,8 +14,8 @@ var banner = '/* compromise v' + pkg.version + '\n   github.com/nlp-compromise\n
 exec('echo ' + banner + ' > ' + es6);
 
 console.log(chalk.yellow(' 🕑 creating es6 build..'));
-exec('rm ' + es6);
-exec('rm ' + es6min);
+// exec('rm ' + es6);
+// exec('rm ' + es6min);
 
 //es6 main (browserify)
 var cmd = browserify + ' "./src/index.js" --standalone nlp';

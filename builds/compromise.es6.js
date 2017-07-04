@@ -792,6 +792,7 @@ module.exports={
     "testBuild": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
     "browsertest": "node ./scripts/browserTest.js",
+    "benchmark": "node ./scripts/benchmark.js",
     "build": "node ./scripts/build/index.js",
     "pack": "node ./scripts/pack.js",
     "prepublish": "node ./scripts/prepublish",
@@ -821,7 +822,6 @@ module.exports={
     "eslint": "^3.1.1",
     "gaze": "^1.1.1",
     "http-server": "0.9.0",
-    "nlp-corpus": "latest",
     "nyc": "^8.4.0",
     "shelljs": "^0.7.2",
     "tap-min": "^1.1.0",
@@ -831,6 +831,7 @@ module.exports={
   },
   "license": "MIT"
 }
+
 },{}],3:[function(_dereq_,module,exports){
 'use strict';
 const tagset = _dereq_('./tagset');
@@ -5540,7 +5541,7 @@ const boringTags = {
   Comma: 1,
   CamelCase: 1,
   UpperCase: 1,
-  Hyphenated: 1,
+  Hyphenated: 1
 };
 
 const bestTag = function(t) {
@@ -8255,35 +8256,31 @@ module.exports = splitMethods;
 'use strict';
 const Terms = _dereq_('../../terms');
 
-const miscMethods = (Text) => {
-
+const miscMethods = Text => {
   const methods = {
     all: function() {
       return this.parent;
     },
     index: function() {
-      return this.list.map((ts) => ts.index());
+      return this.list.map(ts => ts.index());
     },
     wordCount: function() {
       return this.terms().length;
     },
     data: function() {
-      return this.list.map((ts) => ts.data());
-    },
-    debug: function(opts) {
-      return out(this, 'debug', opts);
+      return this.list.map(ts => ts.data());
     },
     /**copy data properly so later transformations will have no effect*/
-    clone: function () {
-      let list = this.list.map((ts) => {
+    clone: function() {
+      let list = this.list.map(ts => {
         return ts.clone();
       });
       return new Text(list); //this.lexicon, this.parent
     },
 
     /** get the nth term of each result*/
-    term: function (n) {
-      let list = this.list.map((ts) => {
+    term: function(n) {
+      let list = this.list.map(ts => {
         let arr = [];
         let el = ts.terms[n];
         if (el) {
@@ -8293,21 +8290,21 @@ const miscMethods = (Text) => {
       });
       return new Text(list, this.lexicon, this.parent);
     },
-    firstTerm: function () {
+    firstTerm: function() {
       return this.match('^.');
     },
-    lastTerm: function () {
+    lastTerm: function() {
       return this.match('.$');
     },
 
     /** grab a subset of the results*/
-    slice: function (start, end) {
+    slice: function(start, end) {
       this.list = this.list.slice(start, end);
       return this;
     },
 
     /** use only the nth result*/
-    get: function (n) {
+    get: function(n) {
       //return an empty result
       if ((!n && n !== 0) || !this.list[n]) {
         return new Text([], this.lexicon, this.parent);
@@ -8316,14 +8313,14 @@ const miscMethods = (Text) => {
       return new Text([ts], this.lexicon, this.parent);
     },
     /**use only the first result */
-    first: function (n) {
+    first: function(n) {
       if (!n && n !== 0) {
         return this.get(0);
       }
       return new Text(this.list.slice(0, n), this.lexicon, this.parent);
     },
     /**use only the last result */
-    last: function (n) {
+    last: function(n) {
       if (!n && n !== 0) {
         return this.get(this.list.length - 1);
       }
@@ -8332,10 +8329,9 @@ const miscMethods = (Text) => {
       return new Text(this.list.slice(start, end), this.lexicon, this.parent);
     },
 
-
     concat: function() {
       //any number of params
-      for(let i = 0; i < arguments.length; i++) {
+      for (let i = 0; i < arguments.length; i++) {
         let p = arguments[i];
         if (typeof p === 'object') {
           //Text()
@@ -8352,9 +8348,9 @@ const miscMethods = (Text) => {
     },
 
     /** make it into one sentence/termlist */
-    flatten: function () {
+    flatten: function() {
       let terms = [];
-      this.list.forEach((ts) => {
+      this.list.forEach(ts => {
         terms = terms.concat(ts.terms);
       });
       //dont create an empty ts
@@ -8366,9 +8362,9 @@ const miscMethods = (Text) => {
     },
 
     /** see if these terms can become this tag*/
-    canBe: function (tag) {
-      this.list.forEach((ts) => {
-        ts.terms = ts.terms.filter((t) => {
+    canBe: function(tag) {
+      this.list.forEach(ts => {
+        ts.terms = ts.terms.filter(t => {
           return t.canBe(tag);
         });
       });
@@ -8390,7 +8386,6 @@ const miscMethods = (Text) => {
       }
       return new Text(arr, this.lexicon, this.parent);
     }
-
   };
   Text.addMethods(Text, methods);
 };

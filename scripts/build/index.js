@@ -1,6 +1,5 @@
 require('shelljs/global');
 config.silent = true;
-const path = require('path');
 
 //pack the tries
 require('../pack');

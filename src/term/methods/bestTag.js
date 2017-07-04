@@ -8,7 +8,7 @@ const boringTags = {
   Comma: 1,
   CamelCase: 1,
   UpperCase: 1,
-  Hyphenated: 1,
+  Hyphenated: 1
 };
 
 const bestTag = function(t) {

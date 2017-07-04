@@ -19,7 +19,7 @@ test('if-basic:', function(t) {
 test('ifNo:', function(t) {
   var r = nlp('spencer is here');
   //ifNo
-  m = r.ifNo('spencer');
+  var m = r.ifNo('spencer');
   t.equal(m.out('text'), '', 'ifNo-positive');
 
   m = r.ifNo('asdf');

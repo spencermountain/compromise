@@ -50,7 +50,7 @@ test('not-from-array :', function(t) {
 
 //test object-form
 test('not-from-object :', function(t) {
-  m = nlp('spencer is not really cool.');
+  var m = nlp('spencer is not really cool.');
   var r = m.not({
     not: true,
     really: true

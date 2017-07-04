@@ -35,8 +35,7 @@ test('user-lex-with-proper name in front:', function(t) {
 });
 
 test('user-lex-with-punctuation:', function(t) {
-  var sentence =
-    'A suicide attack hit Jardas al Abid, which killed one person (and the attacker) and injured more than twenty.';
+  var sentence = 'A suicide attack hit Jardas al Abid, which killed one person (and the attacker) and injured more than twenty.';
   var found = nlp(sentence, lexicon).places().data()[0] || {};
   t.equal('jardas al abid', found.normal, 'found-place4');
   t.equal(lexicon, lexicon, 'lexicon-unchanged');

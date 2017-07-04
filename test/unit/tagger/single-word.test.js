@@ -1,8 +1,6 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-
-
 test('specific_noun :', function(t) {
   [
     // ['five hundred feet', 'Value'],
@@ -38,7 +36,7 @@ test('specific_noun :', function(t) {
     ['february', 'Date'],
     ['february fifth', 'Date'],
     ['tuesday march 5th', 'Date'],
-    ['tuesday march 5th, 2015', 'Date'],
+    ['tuesday march 5th, 2015', 'Date']
   ].forEach(function(a) {
     var r = nlp(a[0]);
 
@@ -71,7 +69,6 @@ test('specific_noun :', function(t) {
     } else {
       t.equal(r.organizations().out(), '', a[0] + ' - not-a-org');
     }
-
   });
   t.end();
 });

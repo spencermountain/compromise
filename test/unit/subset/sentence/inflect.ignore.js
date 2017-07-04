@@ -17,8 +17,8 @@ test('toPlural():', function(t) {
 });
 
 test('toSingular:', function(t) {
-  str = "i'd buy those nachos";
-  m = nlp(str).sentences().toSingular();
+  var str = "i'd buy those nachos";
+  var m = nlp(str).sentences().toSingular();
   t.equal(m.out('normal'), "i'd buy that nacho", str);
 
   str = "i'd buy these nachos";

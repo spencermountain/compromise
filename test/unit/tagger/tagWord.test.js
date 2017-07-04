@@ -2,7 +2,7 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 
 //test a word from each file in ./data/**
-test('pos from-lexicon', function (t) {
+test('pos from-lexicon', function(t) {
   var arr = [
     ['toronto', 'City'],
     ['mexico', 'Country'],
@@ -48,7 +48,7 @@ test('pos from-lexicon', function (t) {
     ['write', 'Verb'],
     ['survive', 'Verb'],
     ['attempt', 'Verb'],
-    ['mc\'adams', 'LastName'],
+    ["mc'adams", 'LastName'],
     ['Müller', 'LastName'],
     ['muller', 'LastName'],
     ['425-1231', 'PhoneNumber'],
@@ -58,11 +58,11 @@ test('pos from-lexicon', function (t) {
     ['invest', 'Verb'],
     ['investing', 'Verb'],
     [`wallys'`, 'Possessive'],
-    [`JDI University'`, 'Organization'],
+    [`JDI University'`, 'Organization']
   ];
-  arr.forEach(function (a) {
+  arr.forEach(function(a) {
     var term = nlp(a[0]).list[0].terms[0];
-    var msg = '\'' + term.normal + '\' has - ' + a[1] + '  (' + Object.keys(term.tags).join(',') + ')';
+    var msg = "'" + term.normal + "' has - " + a[1] + '  (' + Object.keys(term.tags).join(',') + ')';
     t.equal(term.tags[a[1]], true, msg);
   });
   t.end();

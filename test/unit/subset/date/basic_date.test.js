@@ -40,7 +40,7 @@ test('date-parse :', function(t) {
   ].forEach(function(a) {
     var arr = nlp(a[0]).dates().data();
     var o = arr[0].date;
-    got = [o.month, o.date, o.year];
+    var got = [o.month, o.date, o.year];
     var msg = 'date "' + a[0] + '"  got: [' + got.join(',') + ']  want: [' + a[1].join(',') + ']';
     t.deepEqual(got, a[1], msg);
   });

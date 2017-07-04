@@ -8,7 +8,7 @@ test('bestTag', function(t) {
     return o.bestTag;
   });
   var want = ['MaleName', 'LastName', 'Copula', 'Adverb', 'Gerund'];
-  msg = str + ' - [' + have.join(', ') + ']';
+  var msg = str + ' - [' + have.join(', ') + ']';
   t.deepEqual(have, want, msg);
 
   str = 'he sang on June 5th 1991';

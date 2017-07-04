@@ -5,6 +5,7 @@ var eslint = 'node_modules/.bin/eslint';
 //run linter
 console.log('linting..');
 const cmd = eslint + ' -c .eslintrc --color ' + path.join(__dirname, '../../src/**/*.js');
+console.log(cmd);
 exec(cmd, {
   async: true
 });

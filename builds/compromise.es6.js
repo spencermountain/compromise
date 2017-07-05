@@ -1,3 +1,7 @@
+/* compromise v10.5.2
+   http://compromise.cool
+   MIT
+*/
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.nlp = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 (function (global){
 /* efrt trie-compression v1.1.0  github.com/nlp-compromise/efrt  - MIT */
@@ -3424,7 +3428,6 @@ module.exports = punctuation_step;
 const split = _dereq_('../contraction/split');
 const l = _dereq_('../../lexicon');
 const lexicon = l.lexicon;
-const firstWords = l.firstWords;
 
 const lexicon_pass = function(ts) {
   let uLex = ts.lexicon || {};
@@ -4926,7 +4929,6 @@ const Adj = 'Adjective';
 const Inf = 'Infinitive';
 const Pres = 'PresentTense';
 const Sing = 'Singular';
-const Ord = 'Ordinal';
 const Past = 'PastTense';
 const AdVb = 'AdVerb';
 const Plrl = 'Plural';
@@ -4939,100 +4941,106 @@ const Modal = 'Modal';
 module.exports = [
   null, //0
   null, //1
-  { //2-letter
-    'ea': Sing,
-    'ia': Noun,
-    'ic': Adj,
-    '\'n': Vb,
-    '\'t': Vb,
+  {
+    //2-letter
+    ea: Sing,
+    ia: Noun,
+    ic: Adj,
+    "'n": Vb,
+    "'t": Vb
   },
-  { //3-letter
-    'que': Adj,
-    'lar': Adj,
-    'ike': Adj,
-    'ffy': Adj,
-    'rmy': Adj,
-    'azy': Adj,
-    'oid': Adj,
-    'mum': Adj,
-    'ean': Adj,
-    'ous': Adj,
-    'end': Vb,
-    'sis': Sing,
-    'rol': Sing,
-    'ize': Inf,
-    'ify': Inf,
-    'zes': Pres,
-    'nes': Pres,
-    'ing': 'Gerund', //likely to be converted to Adj after lexicon pass
+  {
+    //3-letter
+    que: Adj,
+    lar: Adj,
+    ike: Adj,
+    ffy: Adj,
+    rmy: Adj,
+    azy: Adj,
+    oid: Adj,
+    mum: Adj,
+    ean: Adj,
+    ous: Adj,
+    end: Vb,
+    sis: Sing,
+    rol: Sing,
+    ize: Inf,
+    ify: Inf,
+    zes: Pres,
+    nes: Pres,
+    ing: 'Gerund', //likely to be converted to Adj after lexicon pass
     ' so': AdVb,
-    '\'ll': Modal,
-    '\'re': 'Copula'
+    "'ll": Modal,
+    "'re": 'Copula'
   },
-  { //4-letter
-    'teen': 'Value',
-    'tors': Noun,
-    'ends': Vb,
-    'oses': Pres,
-    'fies': Pres,
-    'ects': Pres,
-    'nded': Past,
-    'cede': Inf,
-    'tage': Inf,
-    'gate': Inf,
-    'vice': Sing,
-    'tion': Sing,
-    'ette': Sing,
-    'some': Adj,
-    'llen': Adj,
-    'ried': Adj,
-    'gone': Adj,
-    'made': Adj,
-    'fore': AdVb,
-    'less': AdVb,
-    'ices': Plrl,
-    'ions': Plrl,
-    'ints': Plrl,
-    'aped': Past,
-    'lked': Past,
-    'ould': Modal,
-    'tive': Actor,
-    'sson': Last, //swedish male
-    'czyk': Last, //polish (male)
-    'chuk': Last, //east-europe
-    'enko': Last, //east-europe
-    'akis': Last, //greek
-    'nsen': Last, //norway
+  {
+    //4-letter
+    teen: 'Value',
+    tors: Noun,
+    ends: Vb,
+    oses: Pres,
+    fies: Pres,
+    ects: Pres,
+    nded: Past,
+    cede: Inf,
+    tage: Inf,
+    gate: Inf,
+    vice: Sing,
+    tion: Sing,
+    ette: Sing,
+    some: Adj,
+    llen: Adj,
+    ried: Adj,
+    gone: Adj,
+    made: Adj,
+    fore: AdVb,
+    less: AdVb,
+    ices: Plrl,
+    ions: Plrl,
+    ints: Plrl,
+    aped: Past,
+    lked: Past,
+    ould: Modal,
+    tive: Actor,
+    sson: Last, //swedish male
+    czyk: Last, //polish (male)
+    chuk: Last, //east-europe
+    enko: Last, //east-europe
+    akis: Last, //greek
+    nsen: Last //norway
   },
-  { //5-letter
-    'fully': AdVb,
-    'where': AdVb,
-    'wards': AdVb,
-    'urned': Past,
-    'tized': Past,
-    'eased': Past,
-    'ances': Plrl,
-    'tures': Plrl,
-    'ports': Plrl,
-    'ettes': Plrl,
-    'ities': Plrl,
-    'rough': Adj,
-    'bound': Adj,
-    'tieth': 'Ordinal',
-    'ishes': Pres,
-    'tches': Pres,
-    'nssen': Last, //norway
-    'marek': Last, //polish (male)
+  {
+    //5-letter
+    fully: AdVb,
+    where: AdVb,
+    wards: AdVb,
+    urned: Past,
+    tized: Past,
+    eased: Past,
+    ances: Plrl,
+    tures: Plrl,
+    ports: Plrl,
+    ettes: Plrl,
+    ities: Plrl,
+    rough: Adj,
+    bound: Adj,
+    tieth: 'Ordinal',
+    ishes: Pres,
+    tches: Pres,
+    nssen: Last, //norway
+    marek: Last //polish (male)
   },
-  { //6-letter
-    'keeper': Actor,
-    'logist': Actor,
-    'auskas': Last, //lithuania
-    'teenth': 'Value',
+  {
+    //6-letter
+    keeper: Actor,
+    logist: Actor,
+    auskas: Last, //lithuania
+    teenth: 'Value'
   },
-  { //7-letter
-    'sdottir': Last, //swedish female
-    'opoulos': Last, //greek
+  {
+    //7-letter
+    sdottir: Last, //swedish female
+    opoulos: Last //greek
   }
 ];
 
@@ -7884,7 +7892,6 @@ const tokenize = _dereq_('./tokenize');
 const paths = _dereq_('./paths');
 const Terms = paths.Terms;
 const fns = paths.fns;
-const normalize = _dereq_('../term/methods/normalize/normalize').normalize;
 const unpackLex = _dereq_('../lexicon/unpack');
 const firstWords = _dereq_('../lexicon/firstWords');
 const buildUp = _dereq_('../lexicon/buildUp');
@@ -7926,7 +7933,7 @@ const fromString = (str, lexicon) => {
 };
 module.exports = fromString;
 
-},{"../lexicon/buildUp":6,"../lexicon/firstWords":7,"../lexicon/unpack":16,"../term/methods/normalize/normalize":73,"./index":113,"./paths":125,"./tokenize":209}],112:[function(_dereq_,module,exports){
+},{"../lexicon/buildUp":6,"../lexicon/firstWords":7,"../lexicon/unpack":16,"./index":113,"./paths":125,"./tokenize":209}],112:[function(_dereq_,module,exports){
 module.exports = {
   /** did it find anything? */
   found: function() {
@@ -7947,21 +7954,20 @@ module.exports = {
   /** the whitespace before and after this match*/
   whitespace: function() {
     return {
-      before: (str) => {
-        this.list.forEach((ts) => {
+      before: str => {
+        this.list.forEach(ts => {
           ts.whitespace.before(str);
         });
         return this;
       },
-      after: (str) => {
-        this.list.forEach((ts) => {
+      after: str => {
+        this.list.forEach(ts => {
           ts.whitespace.after(str);
         });
         return this;
       }
     };
   }
-
 };
 
 },{}],113:[function(_dereq_,module,exports){
@@ -11734,18 +11740,20 @@ module.exports = {
 'use strict';
 
 //support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
-const findModifiers = (str) => {
-  const mults = [{
-    reg: /^(minus|negative)[\s\-]/i,
-    mult: -1
-  }, {
-    reg: /^(a\s)?half[\s\-](of\s)?/i,
-    mult: 0.5
-  },
-  //  {
-  //   reg: /^(a\s)?quarter[\s\-]/i,
-  //   mult: 0.25
-  // }
+const findModifiers = str => {
+  const mults = [
+    {
+      reg: /^(minus|negative)[\s\-]/i,
+      mult: -1
+    },
+    {
+      reg: /^(a\s)?half[\s\-](of\s)?/i,
+      mult: 0.5
+    }
+    //  {
+    //   reg: /^(a\s)?quarter[\s\-]/i,
+    //   mult: 0.25
+    // }
   ];
   for (let i = 0; i < mults.length; i++) {
     if (mults[i].reg.test(str) === true) {
@@ -11765,11 +11773,11 @@ module.exports = findModifiers;
 
 },{}],183:[function(_dereq_,module,exports){
 'use strict';
-const parseNumeric = _dereq_('./parseNumeric');
 const findModifiers = _dereq_('./findModifiers');
 const words = _dereq_('./data');
 const isValid = _dereq_('./validate');
 const parseDecimals = _dereq_('./parseDecimals');
+const parseNumeric = _dereq_('./parseNumeric');
 const improperFraction = /^([0-9,\. ]+)\/([0-9,\. ]+)$/;
 
 //some numbers we know
@@ -11778,12 +11786,12 @@ const casualForms = {
   'a couple': 2,
   'a dozen': 12,
   'two dozen': 24,
-  'zero': 0,
+  zero: 0
 };
 
 // a 'section' is something like 'fifty-nine thousand'
 // turn a section into something we can add to - like 59000
-const section_sum = (obj) => {
+const section_sum = obj => {
   return Object.keys(obj).reduce((sum, k) => {
     sum += obj[k];
     return sum;
@@ -11793,7 +11801,7 @@ const section_sum = (obj) => {
 //turn a string into a number
 const parse = function(str) {
   //convert some known-numbers
-  if (casualForms[str] !== undefined) {
+  if (casualForms.hasOwnProperty(str) === true) {
     return casualForms[str];
   }
   //'a/an' is 1
@@ -11809,6 +11817,7 @@ const parse = function(str) {
   const terms = str.split(/[ -]/);
   for (let i = 0; i < terms.length; i++) {
     let w = terms[i];
+    w = parseNumeric(w);
     if (!w || w === 'and') {
       continue;
     }
@@ -11833,7 +11842,7 @@ const parse = function(str) {
       const num = parseFloat(fm[1].replace(/[, ]/g, ''));
       const denom = parseFloat(fm[2].replace(/[, ]/g, ''));
       if (denom) {
-        sum += (num / denom) || 0;
+        sum += num / denom || 0;
       }
       continue;
     }
@@ -11924,7 +11933,7 @@ module.exports = parseDecimals;
 },{"./data":181}],185:[function(_dereq_,module,exports){
 'use strict';
 //parse a string like "4,200.1" into Number 4200.1
-const parseNumeric = (str) => {
+const parseNumeric = str => {
   //remove ordinal - 'th/rd'
   str = str.replace(/1st$/, '1');
   str = str.replace(/2nd$/, '2');
@@ -11938,7 +11947,7 @@ const parseNumeric = (str) => {
   str = str.replace(/,/g, '');
   //split '5kg' from '5'
   str = str.replace(/([0-9])([a-z]{1,2})$/, '$1');
-  return parseFloat(str);
+  return str;
 };
 
 module.exports = parseNumeric;
@@ -13634,7 +13643,7 @@ module.exports = Verb;
 },{"../../paths":125,"./interpret":190,"./methods/conjugate":195,"./methods/isPlural":200,"./methods/toAdjective":203,"./toNegative":206}],208:[function(_dereq_,module,exports){
 'use strict';
 
-const addSubsets = (Text) => {
+const addSubsets = Text => {
   //these subsets have no instance methods, so are simply a 'find' method.
   const subsets = {
     clauses: function(n) {
@@ -13708,7 +13717,7 @@ const addSubsets = (Text) => {
       if (typeof n === 'number') {
         r = r.get(n);
       }
-      let list = r.list.filter((ts) => {
+      let list = r.list.filter(ts => {
         return ts.last().endPunctuation() === '?';
       });
       return new Text(list, this.lexicon, this.parent);
@@ -13718,15 +13727,14 @@ const addSubsets = (Text) => {
       if (typeof n === 'number') {
         r = r.get(n);
       }
-      let list = r.list.filter((ts) => {
+      let list = r.list.filter(ts => {
         return ts.last().endPunctuation() !== '?';
       });
       return new Text(list, this.lexicon, this.parent);
     }
-
   };
 
-  Object.keys(subsets).forEach((k) => {
+  Object.keys(subsets).forEach(k => {
     Text.prototype[k] = subsets[k];
   });
   return Text;

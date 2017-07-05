@@ -2,7 +2,6 @@
 const split = require('../contraction/split');
 const l = require('../../lexicon');
 const lexicon = l.lexicon;
-const firstWords = l.firstWords;
 
 const lexicon_pass = function(ts) {
   let uLex = ts.lexicon || {};

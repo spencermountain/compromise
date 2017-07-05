@@ -13,11 +13,6 @@ nlp.verbose('tagger');
 // doc.debug();
 // console.log(nlp('friendly').adjectives().data());
 
-var r = nlp('5g');
-console.log(r.values().data());
-
-// _bootup
-// compressed
-// parseNumeric
-// src
-// twistArticle
+var doc = nlp('April will get married on friday the third of December, 2019');
+var dates = doc.dates();
+console.log(dates.data());

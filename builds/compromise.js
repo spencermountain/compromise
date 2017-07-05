@@ -3066,7 +3066,6 @@ module.exports = punctuation_step;
 var split = _dereq_('../contraction/split');
 var l = _dereq_('../../lexicon');
 var lexicon = l.lexicon;
-var firstWords = l.firstWords;
 
 var lexicon_pass = function lexicon_pass(ts) {
   var uLex = ts.lexicon || {};
@@ -4493,7 +4492,6 @@ var Adj = 'Adjective';
 var Inf = 'Infinitive';
 var Pres = 'PresentTense';
 var Sing = 'Singular';
-var Ord = 'Ordinal';
 var Past = 'PastTense';
 var AdVb = 'AdVerb';
 var Plrl = 'Plural';
@@ -4505,95 +4503,101 @@ var Modal = 'Modal';
 
 module.exports = [null, //0
 null, //1
-{ //2-letter
-  'ea': Sing,
-  'ia': Noun,
-  'ic': Adj,
-  '\'n': Vb,
-  '\'t': Vb
-}, { //3-letter
-  'que': Adj,
-  'lar': Adj,
-  'ike': Adj,
-  'ffy': Adj,
-  'rmy': Adj,
-  'azy': Adj,
-  'oid': Adj,
-  'mum': Adj,
-  'ean': Adj,
-  'ous': Adj,
-  'end': Vb,
-  'sis': Sing,
-  'rol': Sing,
-  'ize': Inf,
-  'ify': Inf,
-  'zes': Pres,
-  'nes': Pres,
-  'ing': 'Gerund', //likely to be converted to Adj after lexicon pass
+{
+  //2-letter
+  ea: Sing,
+  ia: Noun,
+  ic: Adj,
+  "'n": Vb,
+  "'t": Vb
+}, {
+  //3-letter
+  que: Adj,
+  lar: Adj,
+  ike: Adj,
+  ffy: Adj,
+  rmy: Adj,
+  azy: Adj,
+  oid: Adj,
+  mum: Adj,
+  ean: Adj,
+  ous: Adj,
+  end: Vb,
+  sis: Sing,
+  rol: Sing,
+  ize: Inf,
+  ify: Inf,
+  zes: Pres,
+  nes: Pres,
+  ing: 'Gerund', //likely to be converted to Adj after lexicon pass
   ' so': AdVb,
-  '\'ll': Modal,
-  '\'re': 'Copula'
-}, { //4-letter
-  'teen': 'Value',
-  'tors': Noun,
-  'ends': Vb,
-  'oses': Pres,
-  'fies': Pres,
-  'ects': Pres,
-  'nded': Past,
-  'cede': Inf,
-  'tage': Inf,
-  'gate': Inf,
-  'vice': Sing,
-  'tion': Sing,
-  'ette': Sing,
-  'some': Adj,
-  'llen': Adj,
-  'ried': Adj,
-  'gone': Adj,
-  'made': Adj,
-  'fore': AdVb,
-  'less': AdVb,
-  'ices': Plrl,
-  'ions': Plrl,
-  'ints': Plrl,
-  'aped': Past,
-  'lked': Past,
-  'ould': Modal,
-  'tive': Actor,
-  'sson': Last, //swedish male
-  'czyk': Last, //polish (male)
-  'chuk': Last, //east-europe
-  'enko': Last, //east-europe
-  'akis': Last, //greek
-  'nsen': Last //norway
-}, { //5-letter
-  'fully': AdVb,
-  'where': AdVb,
-  'wards': AdVb,
-  'urned': Past,
-  'tized': Past,
-  'eased': Past,
-  'ances': Plrl,
-  'tures': Plrl,
-  'ports': Plrl,
-  'ettes': Plrl,
-  'ities': Plrl,
-  'rough': Adj,
-  'bound': Adj,
-  'tieth': 'Ordinal',
-  'ishes': Pres,
-  'tches': Pres,
-  'nssen': Last, //norway
-  'marek': Last //polish (male)
-}, { //6-letter
-  'keeper': Actor,
-  'logist': Actor,
-  'auskas': Last, //lithuania
-  'teenth': 'Value'
-}, { //7-letter
-  'sdottir': Last, //swedish female
-  'opoulos': Last //greek
+  "'ll": Modal,
+  "'re": 'Copula'
+}, {
+  //4-letter
+  teen: 'Value',
+  tors: Noun,
+  ends: Vb,
+  oses: Pres,
+  fies: Pres,
+  ects: Pres,
+  nded: Past,
+  cede: Inf,
+  tage: Inf,
+  gate: Inf,
+  vice: Sing,
+  tion: Sing,
+  ette: Sing,
+  some: Adj,
+  llen: Adj,
+  ried: Adj,
+  gone: Adj,
+  made: Adj,
+  fore: AdVb,
+  less: AdVb,
+  ices: Plrl,
+  ions: Plrl,
+  ints: Plrl,
+  aped: Past,
+  lked: Past,
+  ould: Modal,
+  tive: Actor,
+  sson: Last, //swedish male
+  czyk: Last, //polish (male)
+  chuk: Last, //east-europe
+  enko: Last, //east-europe
+  akis: Last, //greek
+  nsen: Last //norway
+}, {
+  //5-letter
+  fully: AdVb,
+  where: AdVb,
+  wards: AdVb,
+  urned: Past,
+  tized: Past,
+  eased: Past,
+  ances: Plrl,
+  tures: Plrl,
+  ports: Plrl,
+  ettes: Plrl,
+  ities: Plrl,
+  rough: Adj,
+  bound: Adj,
+  tieth: 'Ordinal',
+  ishes: Pres,
+  tches: Pres,
+  nssen: Last, //norway
+  marek: Last //polish (male)
+}, {
+  //6-letter
+  keeper: Actor,
+  logist: Actor,
+  auskas: Last, //lithuania
+  teenth: 'Value'
+}, {
+  //7-letter
+  sdottir: Last, //swedish female
+  opoulos: Last //greek
 }];
 
 },{}],60:[function(_dereq_,module,exports){
@@ -7498,7 +7502,6 @@ var tokenize = _dereq_('./tokenize');
 var paths = _dereq_('./paths');
 var Terms = paths.Terms;
 var fns = paths.fns;
-var normalize = _dereq_('../term/methods/normalize/normalize').normalize;
 var unpackLex = _dereq_('../lexicon/unpack');
 var firstWords = _dereq_('../lexicon/firstWords');
 var buildUp = _dereq_('../lexicon/buildUp');
@@ -7542,7 +7545,7 @@ var fromString = function fromString(str, lexicon) {
 };
 module.exports = fromString;
 
-},{"../lexicon/buildUp":6,"../lexicon/firstWords":7,"../lexicon/unpack":16,"../term/methods/normalize/normalize":73,"./index":113,"./paths":125,"./tokenize":209}],112:[function(_dereq_,module,exports){
+},{"../lexicon/buildUp":6,"../lexicon/firstWords":7,"../lexicon/unpack":16,"./index":113,"./paths":125,"./tokenize":209}],112:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -7581,7 +7584,6 @@ module.exports = {
       }
     };
   }
-
 };
 
 },{}],113:[function(_dereq_,module,exports){
@@ -11269,6 +11271,10 @@ var findModifiers = function findModifiers(str) {
   }, {
     reg: /^(a\s)?half[\s\-](of\s)?/i,
     mult: 0.5
+    //  {
+    //   reg: /^(a\s)?quarter[\s\-]/i,
+    //   mult: 0.25
+    // }
   }];
   for (var i = 0; i < mults.length; i++) {
     if (mults[i].reg.test(str) === true) {
@@ -11289,11 +11295,11 @@ module.exports = findModifiers;
 },{}],183:[function(_dereq_,module,exports){
 'use strict';
 
-var parseNumeric = _dereq_('./parseNumeric');
 var findModifiers = _dereq_('./findModifiers');
 var words = _dereq_('./data');
 var isValid = _dereq_('./validate');
 var parseDecimals = _dereq_('./parseDecimals');
+var parseNumeric = _dereq_('./parseNumeric');
 var improperFraction = /^([0-9,\. ]+)\/([0-9,\. ]+)$/;
 
 //some numbers we know
@@ -11302,7 +11308,7 @@ var casualForms = {
   'a couple': 2,
   'a dozen': 12,
   'two dozen': 24,
-  'zero': 0
+  zero: 0
 };
 
 // a 'section' is something like 'fifty-nine thousand'
@@ -11317,7 +11323,7 @@ var section_sum = function section_sum(obj) {
 //turn a string into a number
 var parse = function parse(str) {
   //convert some known-numbers
-  if (casualForms[str] !== undefined) {
+  if (casualForms.hasOwnProperty(str) === true) {
     return casualForms[str];
   }
   //'a/an' is 1
@@ -11333,6 +11339,7 @@ var parse = function parse(str) {
   var terms = str.split(/[ -]/);
   for (var i = 0; i < terms.length; i++) {
     var w = terms[i];
+    w = parseNumeric(w);
     if (!w || w === 'and') {
       continue;
     }
@@ -11464,7 +11471,7 @@ var parseNumeric = function parseNumeric(str) {
   str = str.replace(/,/g, '');
   //split '5kg' from '5'
   str = str.replace(/([0-9])([a-z]{1,2})$/, '$1');
-  return parseFloat(str);
+  return str;
 };
 
 module.exports = parseNumeric;
@@ -13159,7 +13166,6 @@ var addSubsets = function addSubsets(Text) {
       });
       return new Text(list, this.lexicon, this.parent);
     }
-
   };
 
   Object.keys(subsets).forEach(function (k) {

@@ -1,13 +1,13 @@
+var fs = require('fs');
 var exec = require('shelljs').exec;
 var chalk = require('chalk');
-var pkg = require('../../package.json');
 var UglifyJS = require('uglify-js');
+
+var pkg = require('../../package.json');
 var fileSize = require('../lib/filesize');
-var fs = require('fs');
 
 var browserify = '"node_modules/.bin/browserify"';
 var derequire = '"node_modules/.bin/derequire"';
-// var uglify = '"node_modules/.bin/uglifyjs"';
 
 var es5 = './builds/compromise.js';
 var es5min = './builds/compromise.min.js';
@@ -15,8 +15,6 @@ var es5min = './builds/compromise.min.js';
 console.log(chalk.yellow(' 🕑 creating es5 build..'));
 
 var banner = '/* compromise v' + pkg.version + '\n   github.com/nlp-compromise/compromise\n   MIT\n*/\n';
-// exec('rm ' + es5);
-// exec('rm ' + es5min);
 
 //es5 main (browserify + derequire)
 cmd = browserify + ' "./src/index.js" --standalone nlp';

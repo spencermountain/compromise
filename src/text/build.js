@@ -4,7 +4,6 @@ const tokenize = require('./tokenize');
 const paths = require('./paths');
 const Terms = paths.Terms;
 const fns = paths.fns;
-const normalize = require('../term/methods/normalize/normalize').normalize;
 const unpackLex = require('../lexicon/unpack');
 const firstWords = require('../lexicon/firstWords');
 const buildUp = require('../lexicon/buildUp');

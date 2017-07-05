@@ -18,19 +18,18 @@ module.exports = {
   /** the whitespace before and after this match*/
   whitespace: function() {
     return {
-      before: (str) => {
-        this.list.forEach((ts) => {
+      before: str => {
+        this.list.forEach(ts => {
           ts.whitespace.before(str);
         });
         return this;
       },
-      after: (str) => {
-        this.list.forEach((ts) => {
+      after: str => {
+        this.list.forEach(ts => {
           ts.whitespace.after(str);
         });
         return this;
       }
     };
   }
-
 };

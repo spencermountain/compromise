@@ -1,6 +1,6 @@
 'use strict';
 
-const addSubsets = (Text) => {
+const addSubsets = Text => {
   //these subsets have no instance methods, so are simply a 'find' method.
   const subsets = {
     clauses: function(n) {
@@ -74,7 +74,7 @@ const addSubsets = (Text) => {
       if (typeof n === 'number') {
         r = r.get(n);
       }
-      let list = r.list.filter((ts) => {
+      let list = r.list.filter(ts => {
         return ts.last().endPunctuation() === '?';
       });
       return new Text(list, this.lexicon, this.parent);
@@ -84,15 +84,14 @@ const addSubsets = (Text) => {
       if (typeof n === 'number') {
         r = r.get(n);
       }
-      let list = r.list.filter((ts) => {
+      let list = r.list.filter(ts => {
         return ts.last().endPunctuation() !== '?';
       });
       return new Text(list, this.lexicon, this.parent);
     }
-
   };
 
-  Object.keys(subsets).forEach((k) => {
+  Object.keys(subsets).forEach(k => {
     Text.prototype[k] = subsets[k];
   });
   return Text;

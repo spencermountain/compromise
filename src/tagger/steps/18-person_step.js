@@ -23,12 +23,7 @@ const person_step = function(ts) {
     //very common-but-ambiguous lastnames
     ts.match('#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)').tag('#Person', 'firstname-maybe');
     //Joe K. Sombrero
-    ts
-      .match('#FirstName #Acronym #Noun')
-      .ifNo('#Date')
-      .tag('#Person', 'n-acro-noun')
-      .lastTerm()
-      .tag('#LastName', 'n-acro-noun');
+    ts.match('#FirstName #Acronym #Noun').ifNo('#Date').tag('#Person', 'n-acro-noun').lastTerm().tag('#LastName', 'n-acro-noun');
     //john bodego's
     ts
       .match('#FirstName (#Singular|#Possessive)')
@@ -62,10 +57,10 @@ const person_step = function(ts) {
   if (ts.has('#TitleCase')) {
     ts.match('#Acronym #TitleCase').canBe('#Person').tag('#Person', 'acronym-titlecase');
     //ludwig van beethovan
-    ts.match('#TitleCase (van|al|bin) #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');
-    ts.match('#TitleCase (de|du) la? #TitleCase').tag('Person', 'correction-titlecase-van-titlecase');
+    ts.match('#TitleCase (van|al|bin) #TitleCase').canBe('#Person').tag('Person', 'correction-titlecase-van-titlecase');
+    ts.match('#TitleCase (de|du) la? #TitleCase').canBe('#Person').tag('Person', 'correction-titlecase-van-titlecase');
     //Morgan Shlkjsfne
-    ts.match('#Person #TitleCase').match('#TitleCase #Noun').tag('Person', 'correction-person-titlecase');
+    ts.match('#Person #TitleCase').match('#TitleCase #Noun').canBe('#Person').tag('Person', 'correction-person-titlecase');
     //pope francis
     ts.match('(lady|queen|sister) #TitleCase').ifNo('#Date').tag('#FemaleName', 'lady-titlecase');
     ts.match('(king|pope|father) #TitleCase').ifNo('#Date').tag('#MaleName', 'correction-poe');

@@ -58,14 +58,14 @@ const nouns = [
   ['tooth', 'teeth'],
   ['tornado', 'tornados'],
   ['tuxedo', 'tuxedos'],
-  ['zero', 'zeros'],
+  ['zero', 'zeros']
 ];
 
 //this is a little verbose...
 let lex = {};
 let toSingle = {};
 let toPlural = {};
-for (var i = 0; i < nouns.length; i++) {
+for (let i = 0; i < nouns.length; i++) {
   let s = nouns[i][0];
   let p = nouns[i][1];
   lex[s] = 'Singular';
@@ -76,5 +76,5 @@ for (var i = 0; i < nouns.length; i++) {
 module.exports = {
   lexicon: lex,
   toSingle: toSingle,
-  toPlural: toPlural,
+  toPlural: toPlural
 };

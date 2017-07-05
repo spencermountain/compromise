@@ -665,18 +665,17 @@ let irreg = {
 //swap-in better tag keys, accumulate all words for lexicon
 let lex = {};
 let keys = Object.keys(irreg);
-for (var i = 0; i < keys.length; i++) {
+for (let i = 0; i < keys.length; i++) {
   let newObj = {};
   let inf = keys[i];
-  lex[inf] = 'Infinitive';
-
   let tags = Object.keys(irreg[inf]);
-  for (var o = 0; o < tags.length; o++) {
+  for (let o = 0; o < tags.length; o++) {
     let newTag = mapping[tags[o]];
     let str = irreg[inf][tags[o]];
     newObj[newTag] = str;
     lex[str] = newTag;
   }
+  lex[inf] = 'Infinitive';
   irreg[inf] = newObj;
 }
 

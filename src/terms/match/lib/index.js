@@ -5,7 +5,7 @@ const fastPass = require('./fastPass');
 
 //ensure we have atleast one non-optional demand
 // const isTautology = function(regs) {
-//   for (var i = 0; i < regs.length; i++) {
+//   for (let i = 0; i < regs.length; i++) {
 //     if (!regs[i].optional && !regs[i].astrix && !regs[i].anyOne) {
 //       return false;
 //     }

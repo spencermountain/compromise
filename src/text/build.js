@@ -4,9 +4,25 @@ const tokenize = require('./tokenize');
 const paths = require('./paths');
 const Terms = paths.Terms;
 const fns = paths.fns;
+const normalize = require('../term/methods/normalize/normalize').normalize;
 const unpackLex = require('../lexicon/unpack');
 const firstWords = require('../lexicon/firstWords');
 const buildUp = require('../lexicon/buildUp');
+
+//basically really dirty and stupid.
+const normalizeLex = function(lex) {
+  lex = lex || {};
+  return Object.keys(lex).reduce((h, k) => {
+    let normal = normalize(k);
+    //remove periods
+    //normalize whitesace
+    normal = normal.replace(/\s+/, ' ');
+    //remove sentence-punctuaion too
+    normal = normal.replace(/[.\?\!]/g, '');
+    h[normal] = lex[k];
+    return h;
+  }, {});
+};
 
 //basically really dirty and stupid.
 const handleLexicon = function(lex) {
@@ -15,6 +31,8 @@ const handleLexicon = function(lex) {
   }
   if (typeof lex === 'string') {
     lex = unpackLex(lex);
+  } else {
+    lex = normalizeLex(lex);
   }
   lex = buildUp(lex);
   return {

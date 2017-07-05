@@ -14,6 +14,7 @@ const findMultiWords = function(ts, i, lex) {
       str += ' '; //(add a space)
     }
     str += ts.terms[i + add].normal;
+    str = str.replace(/'s$/, ''); //ugly
     //perfect match here?
     if (want[str] === true) {
       let tag = lex.lexicon[ts.terms[i].normal + ' ' + str];

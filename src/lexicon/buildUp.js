@@ -20,7 +20,7 @@ const buildUp = function(lex, options) {
     if (options.conjugate === true && lex[str] === 'Infinitive') {
       const obj = fastConjugate(str);
       let tags = Object.keys(obj);
-      for (var o = 0; o < tags.length; o++) {
+      for (let o = 0; o < tags.length; o++) {
         let tag = tags[o];
         lex[obj[tag]] = tag;
       }
@@ -41,7 +41,21 @@ const buildUp = function(lex, options) {
       // lex[adj.toVerb(str)] = 'Verb';
       continue;
     }
+    //conjugate phrasal verbs too
+    // if (lex[str] === 'PhrasalVerb') {
+    //   let parts = str.split(/ /);
+    //   const obj = fastConjugate(parts[0]);
+    //   let tags = Object.keys(obj);
+    //   for (let o = 0; o < tags.length; o++) {
+    //     let tag = tags[o];
+    //     lex[obj[tag] + ' ' + parts[1]] = 'PhrasalVerb';
+    //   }
+    //   continue;
+    // }
   }
+  lex['is'] = ['Copula', 'PresentTense'];
+  lex['was'] = ['Copula', 'PastTense'];
+  lex['will be'] = ['Copula', 'FutureTense'];
   //..just in case
   delete lex[null];
   delete lex[undefined];

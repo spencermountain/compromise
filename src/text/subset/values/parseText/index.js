@@ -3,6 +3,7 @@ const findModifiers = require('./findModifiers');
 const words = require('./data');
 const isValid = require('./validate');
 const parseDecimals = require('./parseDecimals');
+const parseNumeric = require('./parseNumeric');
 const improperFraction = /^([0-9,\. ]+)\/([0-9,\. ]+)$/;
 
 //some numbers we know
@@ -42,6 +43,7 @@ const parse = function(str) {
   const terms = str.split(/[ -]/);
   for (let i = 0; i < terms.length; i++) {
     let w = terms[i];
+    w = parseNumeric(w);
     if (!w || w === 'and') {
       continue;
     }

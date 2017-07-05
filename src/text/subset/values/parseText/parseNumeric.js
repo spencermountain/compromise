@@ -14,7 +14,7 @@ const parseNumeric = str => {
   str = str.replace(/,/g, '');
   //split '5kg' from '5'
   str = str.replace(/([0-9])([a-z]{1,2})$/, '$1');
-  return parseFloat(str);
+  return str;
 };
 
 module.exports = parseNumeric;

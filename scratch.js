@@ -13,10 +13,8 @@ nlp.verbose('tagger');
 // doc.debug();
 // console.log(nlp('friendly').adjectives().data());
 
-var r = nlp('he walks');
-r.match('walks').tag('Foo');
-r.verbs().toPastTense();
-r.debug();
+var r = nlp('5g');
+console.log(r.values().data());
 
 // _bootup
 // compressed

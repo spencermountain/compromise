@@ -1,6 +1,6 @@
-'use strict'
-var nlp = require('./src/index')
-nlp.verbose('tagger')
+'use strict';
+var nlp = require('./src/index');
+nlp.verbose('tagger');
 // const fresh = require('./test/unit/lib/freshPrince.js');
 
 // var lexicon = {
@@ -13,7 +13,13 @@ nlp.verbose('tagger')
 // doc.debug();
 // console.log(nlp('friendly').adjectives().data());
 
-var r = nlp('he walks')
-r.match('walks').tag('Foo')
-r.verbs().toPastTense()
-r.debug()
+var r = nlp('he walks');
+r.match('walks').tag('Foo');
+r.verbs().toPastTense();
+r.debug();
+
+// _bootup
+// compressed
+// parseNumeric
+// src
+// twistArticle

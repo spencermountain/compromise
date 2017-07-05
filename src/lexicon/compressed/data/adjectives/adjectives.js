@@ -496,7 +496,6 @@ module.exports = [
   'upstairs',
   'uptight',
   'urban',
-  'used',
   'usual',
   'utter',
   'uttermost',

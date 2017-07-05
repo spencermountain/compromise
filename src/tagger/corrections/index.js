@@ -11,12 +11,14 @@ const corrections = function(ts) {
     //do so
     ts.match('do so').match('so').tag('Noun', 'so-noun');
   }
-  //the ambiguous word 'that'
-  if (ts.has('that')) {
+  //the ambiguous word 'that' and 'which'
+  if (ts.has('(that|which)')) {
     //remind john that
-    ts.match('#Verb #Adverb? #Noun that').lastTerm().tag('Preposition', 'that-prep');
+    ts.match('#Verb #Adverb? #Noun (that|which)').lastTerm().tag('Preposition', 'that-prep');
     //that car goes
-    ts.match('that #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner');
+    ts.match('(that|which) #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner');
+    //things that provide
+    // ts.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
   }
   //Determiner-signals
   if (ts.has('#Determiner')) {
@@ -38,7 +40,7 @@ const corrections = function(ts) {
     //the truly nice swim
     ts.match('(the|this|those|these) #Adverb #Adjective #Verb').term(3).tag('Noun', 'correction-determiner4');
     //a stream runs
-    ts.match('#Determiner #Infinitive #Adverb? #Verb').term(1).tag('Noun', 'correction-determiner5');
+    ts.match('(the|this|a|an) #Infinitive #Adverb? #Verb').term(1).tag('Noun', 'correction-determiner5');
     //a sense of
     ts.match('#Determiner #Verb of').term(1).tag('Noun', 'the-verb-of');
     //the threat of force
@@ -113,6 +115,8 @@ const corrections = function(ts) {
     ts.match('how (#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-question');
     //is mark hughes
     ts.match('#Copula #Infinitive #Noun').term(1).tag('Noun', 'is-pres-noun');
+
+    ts.match('#Infinitive #Copula').term(0).tag('Noun', 'infinitive-copula');
     //went to sleep
     ts.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
     //support a splattering of auxillaries before a verb

@@ -38,6 +38,6 @@
     "no-octal-escape": 2,
     "no-constant-condition": 1,
     "no-unused-expressions": 2,
-    "no-undefined":2
+    "no-undefined":0
   }
 }

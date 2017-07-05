@@ -22,7 +22,9 @@ const buildUp = function(lex, options) {
       let tags = Object.keys(obj);
       for (let o = 0; o < tags.length; o++) {
         let tag = tags[o];
-        lex[obj[tag]] = tag;
+        if (lex[obj[tag]] === undefined) {
+          lex[obj[tag]] = tag;
+        }
       }
       continue;
     }
@@ -34,10 +36,22 @@ const buildUp = function(lex, options) {
     }
     //conjugate comparable adjectives
     if (lex[str] === 'Comparable') {
-      lex[adj.toComparative(str)] = 'Comparative';
-      lex[adj.toSuperlative(str)] = 'Superlative';
-      lex[adj.toNoun(str)] = 'Noun';
-      lex[adj.toAdverb(str)] = 'Adverb';
+      let w = adj.toComparative(str);
+      if (lex[w] === undefined) {
+        lex[w] = 'Comparative';
+      }
+      w = adj.toSuperlative(str);
+      if (lex[w] === undefined) {
+        lex[w] = 'Superlative';
+      }
+      w = adj.toNoun(str);
+      if (lex[w] === undefined) {
+        lex[w] = 'Noun';
+      }
+      w = adj.toAdverb(str);
+      if (lex[w] === undefined) {
+        lex[w] = 'Adverb';
+      }
       // lex[adj.toVerb(str)] = 'Verb';
       continue;
     }
@@ -56,6 +70,9 @@ const buildUp = function(lex, options) {
   lex['is'] = ['Copula', 'PresentTense'];
   lex['was'] = ['Copula', 'PastTense'];
   lex['will be'] = ['Copula', 'FutureTense'];
+  lex['close'] = 'Adjective';
+  lex['can'] = 'Modal';
+  // lex['move'] = 'N';
   //..just in case
   delete lex[null];
   delete lex[undefined];

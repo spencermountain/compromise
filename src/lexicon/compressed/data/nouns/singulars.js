@@ -54,12 +54,12 @@ module.exports = [
   'tic',
   'there',
   'thing',
-  'things',
+  // 'things',
   'tragedy',
-  'us dollar',
-  'yesterday',
-  'today',
-  'tomorrow',
-  'weekend',
-  'tonight'
+  'us dollar'
+  // 'yesterday',
+  // 'today',
+  // 'tomorrow',
+  // 'weekend',
+  // 'tonight'
 ];

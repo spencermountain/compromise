@@ -18,7 +18,9 @@ const uncompressed = [
 const addToLex = function(lex, obj) {
   let keys = Object.keys(obj);
   for (let i = 0; i < keys.length; i++) {
-    lex[keys[i]] = obj[keys[i]];
+    if (lex[keys[i]] === undefined) {
+      lex[keys[i]] = obj[keys[i]];
+    }
   }
 };
 
@@ -27,8 +29,8 @@ let lex = efrt.unpack(pckd);
 uncompressed.forEach(obj => addToLex(lex, obj));
 // console.log(Object.keys(lex).length);
 lex = buildUp(lex);
+// console.log(lex.early);
 // console.log(Object.keys(lex).length);
-// console.log(lex.runs);
 
 //collect first-of-multi words for quicker lookup
 let firstWords = indexFirst(lex);

@@ -37,7 +37,7 @@ module.exports = [
   'clean',
   'clear',
   'clever',
-  'close',
+  // 'close',
   'cloudy',
   'cold',
   'common',

@@ -346,13 +346,13 @@ doc = nlp('Tony Hawk').out('html')
       <summary>☂️ Isn't javascript too...</summary>
       <p></p>
       <ul>
-        yeah it is.
+        yeah..
         <br/>
-        compromise was not built to compete with the stanford tagger, and may not be a fit for every project.
+        it wasn't built to compete with the stanford tagger, and may not fit every project.
         <br/>
-        String-stuff is synchronous too, and parallelizing it is weird.
+        all string stuff is synchronous too, and parallelizing is weird.
         <br/>
-        See <a href="https://github.com/nlp-compromise/compromise/wiki/Speed">here</a> for information about speed and performance.
+        See <a href="https://github.com/nlp-compromise/compromise/wiki/Speed">here</a> for information about speed & performance.
       </ul>
       <p></p>
     </details>
@@ -362,7 +362,7 @@ doc = nlp('Tony Hawk').out('html')
       <summary>💃 Can it run on my arduino-watch?</summary>
       <p></p>
       <ul>
-        Only if it's water-proof😜
+        Only if it's water-proof!
         <br/>
         See <a href="https://github.com/nlp-compromise/compromise/wiki/QuickStart">quickStart</a> for all sorts of funny environments.
       </ul>
@@ -374,9 +374,10 @@ doc = nlp('Tony Hawk').out('html')
       <summary>✨ Partial builds?</summary>
       <p></p>
       <ul>
-        it can't be tree-shaken, and the tagging methods are competitive, so it's not recommended to pull-out stuff.
+        it can't be tree-shaken, cause it's one function.
+        <br/> - and the tagging methods are competitive, so it's not recommended to pull-out stuff.
         <br/>
-        We recommend loading the library fully, given it's smaller than <a href="https://68.media.tumblr.com/tumblr_m674jlpyPT1ry8fquo1_250.gif">this gif</a>.
+        It's recommended to load the library fully, given it's smaller than <a href="https://68.media.tumblr.com/tumblr_m674jlpyPT1ry8fquo1_250.gif">this gif</a>.
       </ul>
       <p></p>
     </details>

@@ -189,8 +189,7 @@ even if it's just one word,
 
 <ul>
   <h3>Grab a part:</h3>
-  you can use <a href="https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods">built-in methods</a> like <kbd>.nouns()</kbd>, or <b>.people()</b>,
-  <br/>
+  you can use <a href="https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods">built-in methods</a> like <b>.nouns()</b>, or <b>.people()</b>,
   or query any pattern with <b><a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">.match()</a></b>:
 </ul>
 

@@ -18,7 +18,7 @@ const softMapping = {
   NNPS: 'Noun',
   POS: 'Possessive',
   PRP: 'Pronoun',
-  'PRP$': 'Pronoun',
+  PRP$: 'Pronoun',
   RB: 'Adverb',
   RBR: 'Comparative',
   RBS: 'Superlative',
@@ -32,12 +32,11 @@ const softMapping = {
   VBZ: 'Verb', // 3rd person singular present
   WDT: 'Determiner',
   WP: 'Pronoun',
-  'WP$': 'Noun',
-  WRB: 'Adverb',
+  WP$: 'Noun',
+  WRB: 'Adverb'
 };
 
 test('pennTreebank-test:', function(t) {
-
   penn.forEach((o, index) => {
     var terms = nlp(o.text).terms();
     o.pos = o.pos.split(', ');
@@ -45,13 +44,13 @@ test('pennTreebank-test:', function(t) {
 
     var equal = true;
     var msg = '';
-    for(var i = 0; i < o.pos.length; i++) {
+    for (var i = 0; i < o.pos.length; i++) {
       var want = softMapping[o.pos[i]];
       var term = terms.list[i].terms[0];
       if (!term.tags[want]) {
         equal = false;
         console.log(term.normal, want);
-        msg += ' - \'' + term.normal + '\' ' + want;
+        msg += " - '" + term.normal + "' " + want;
         break;
       }
     }

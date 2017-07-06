@@ -11,8 +11,8 @@ test('.article():', function(t) {
     ['F.B.I', 'an'],
     ['N.D.A.', 'an'],
     ['eulogy', 'a'],
-    ['ukalele', 'a'],
-  ].forEach(function (a) {
+    ['ukalele', 'a']
+  ].forEach(function(a) {
     var o = nlp(a[0]).tag('Noun').nouns().data()[0];
     var msg = a[0] + ' -> ' + o.article;
     t.equal(o.article, a[1], msg);

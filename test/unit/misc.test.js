@@ -2,14 +2,9 @@ var test = require('tape');
 var nlp = require('./lib/nlp');
 
 //make sure it can handle garbage inputs
-test('garbage:', function (t) {
-  var garbage = [
-    '',
-    '  ',
-    null,
-    '\n\n', [], {},
-  ];
-  garbage.forEach(function (g, i) {
+test('garbage:', function(t) {
+  var garbage = ['', '  ', null, '\n\n', [], {}];
+  garbage.forEach(function(g, i) {
     var num = nlp(g).list.length;
     var msg = typeof g + ' text input #' + i;
     t.equal(num, 0, msg);
@@ -28,7 +23,7 @@ test('garbage:', function (t) {
   t.end();
 });
 
-test('extra exports:', function (t) {
+test('extra exports:', function(t) {
   t.ok(nlp.version, 'version number exported');
 
   t.doesNotThrow(function() {
@@ -39,7 +34,7 @@ test('extra exports:', function (t) {
   t.end();
 });
 
-test('misc:', function (t) {
+test('misc:', function(t) {
   var str = '2 million five hundred thousand and fifty nine is bigger than 2882';
   var m = nlp(str);
   m.values().toNumber();

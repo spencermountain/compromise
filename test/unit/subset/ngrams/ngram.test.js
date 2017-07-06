@@ -2,8 +2,7 @@
 var test = require('tape');
 var nlp = require('../../lib/nlp');
 
-test('ngram-test:', function (t) {
-
+test('ngram-test:', function(t) {
   var r = nlp('he is strong. he is cool');
   var arr = r.ngrams().data();
 
@@ -15,7 +14,7 @@ test('ngram-test:', function (t) {
   t.end();
 });
 
-test('sort-bigrams:', function (t) {
+test('sort-bigrams:', function(t) {
   var r = nlp('he is strong. he is cool');
   var arr = r.ngrams(null, 2).data();
   t.equal(arr[0].normal, 'he is', '#1-by-freq');

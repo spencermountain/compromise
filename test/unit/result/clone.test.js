@@ -1,11 +1,11 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-test('clone:', function (t) {
+test('clone:', function(t) {
   var arr = [
     'he eats the alligator',
     'Jumanji is the best move. He eats cheese.',
-    'Uperman is wayyyy better than batman!',
+    'Uperman is wayyyy better than batman!'
   ];
   arr.forEach(function(str) {
     var m = nlp(str);

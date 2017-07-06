@@ -12,8 +12,8 @@ test('phrasal-verbs:', function(t) {
     [`come apart`, ['come apart']],
 
     [`frighten back`, ['frighten', 'back']],
-    [`frighten away`, ['frighten away']],
-  ].forEach(function (a) {
+    [`frighten away`, ['frighten away']]
+  ].forEach(function(a) {
     var terms = nlp(a[0]).out('array');
     var msg = terms.join(' ') + '  -- ' + a[1].join(' ');
     t.equal(terms.join(' '), a[1].join(' '), msg);

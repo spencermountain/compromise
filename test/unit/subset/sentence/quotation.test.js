@@ -9,8 +9,8 @@ test('quotation test:', function(t) {
     [`he is "good" i guess`, `good`],
     [`he is "completely and utterly great" i guess`, `completely and utterly great`],
     [`“quote”`, `quote`],
-    [`“quote is here”`, `quote is here`],
-  ].forEach(function (a) {
+    [`“quote is here”`, `quote is here`]
+  ].forEach(function(a) {
     var str = nlp(a[0]).match('#Quotation+').out('normal');
     str_test(str, a[0], a[1], t);
   });

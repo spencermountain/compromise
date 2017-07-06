@@ -2,7 +2,7 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 var arr_test = require('../lib/fns').arr_test;
 
-test('splitAfter', function (t) {
+test('splitAfter', function(t) {
   [
     ['doug and nancy', 'and', ['doug and', 'nancy']],
     ['doug and also nancy', 'and also', ['doug and also', 'nancy']],
@@ -18,8 +18,8 @@ test('splitAfter', function (t) {
     ['x x a b c', 'x', ['x', 'x', 'a b c']],
 
     ['john, paul, george, ringo', '#Comma', ['john', 'paul', 'george', 'ringo']],
-    ['doug is really nice', 'is', ['doug is', 'really nice']],
-  ].forEach(function (a) {
+    ['doug is really nice', 'is', ['doug is', 'really nice']]
+  ].forEach(function(a) {
     var want = a[2];
     var got = nlp(a[0]).splitAfter(a[1]).out('array');
     arr_test(got, a[0], want, t);
@@ -27,7 +27,7 @@ test('splitAfter', function (t) {
   t.end();
 });
 
-test('splitBefore', function (t) {
+test('splitBefore', function(t) {
   [
     ['doug and nancy', 'and', ['doug', 'and nancy']],
     ['doug and also nancy', 'and also', ['doug', 'and also nancy']],
@@ -39,8 +39,8 @@ test('splitBefore', function (t) {
     ['a b x x c', 'x', ['a b', 'x', 'x c']],
     ['x a b x c', 'x', ['x a b', 'x c']],
     ['x x a b c', 'x', ['x', 'x a b c']],
-    ['a x b x', 'x', ['a', 'x b', 'x']],
-  ].forEach(function (a) {
+    ['a x b x', 'x', ['a', 'x b', 'x']]
+  ].forEach(function(a) {
     var want = a[2];
     var got = nlp(a[0]).splitBefore(a[1]).out('array');
     arr_test(got, a[0], want, t);
@@ -48,7 +48,7 @@ test('splitBefore', function (t) {
   t.end();
 });
 
-test('splitOn', function (t) {
+test('splitOn', function(t) {
   [
     ['doug and nancy', 'and', ['doug', 'and', 'nancy']],
     ['doug and also nancy', 'and also', ['doug', 'and also', 'nancy']],
@@ -60,8 +60,8 @@ test('splitOn', function (t) {
     ['a b x x c', 'x', ['a b', 'x', 'x', 'c']],
     ['x a b x c', 'x', ['x', 'a b', 'x', 'c']],
     ['x x a b c', 'x', ['x', 'x', 'a b c']],
-    ['a x b x', 'x', ['a', 'x', 'b', 'x']],
-  ].forEach(function (a) {
+    ['a x b x', 'x', ['a', 'x', 'b', 'x']]
+  ].forEach(function(a) {
     var want = a[2];
     var got = nlp(a[0]).splitOn(a[1]).out('array');
     arr_test(got, a[0], want, t);

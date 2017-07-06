@@ -20,11 +20,15 @@ test('sentence-change-tense:', function(t) {
     // ['we do what we can to stop', 'we did what we could to stop', 'we will do what we can to stop'],
 
     //multi-sentence
-    ['this is one sentence. This makes two now.', 'this was one sentence. This made two now.', 'this will be one sentence. This will make two now.'],
+    [
+      'this is one sentence. This makes two now.',
+      'this was one sentence. This made two now.',
+      'this will be one sentence. This will make two now.'
+    ]
 
-  //support negative
-  // ['this isn\'t one sentence. This doesn\'t make two now.', 'this was not one sentence. This didn\'t make two now.', 'this won\'t be one sentence. This won\'t make two now.']
-  ].forEach(function (a) {
+    //support negative
+    // ['this isn\'t one sentence. This doesn\'t make two now.', 'this was not one sentence. This didn\'t make two now.', 'this won\'t be one sentence. This won\'t make two now.']
+  ].forEach(function(a) {
     var r = nlp(a[0]).sentences();
 
     r.toPastTense();
@@ -38,11 +42,9 @@ test('sentence-change-tense:', function(t) {
     r.toPresentTense();
     str = r.out('text');
     t.equal(str, a[0], 'presentTense-' + str);
-
   });
   t.end();
 });
-
 
 test('copula-form', function(t) {
   var m = nlp('john is nice').sentences();
@@ -128,30 +130,20 @@ test('particle-form', function(t) {
   t.end();
 });
 
-
 test('contraction-cases', function(t) {
-  let arr = [
-    [`I'm going to the shops`, `I went to the shops`],
-    [`I'll go to the shops`, `I went to the shops`],
-  ];
-  arr.forEach((a) => {
+  let arr = [[`I'm going to the shops`, `I went to the shops`], [`I'll go to the shops`, `I went to the shops`]];
+  arr.forEach(a => {
     let str = nlp(a[0]).sentences().toPastTense().out();
     t.equal(str, a[1], 'past-tense ' + a.join(' - '));
   });
 
-  arr = [
-    [`I'm going to the shops`, `I will go to the shops`],
-    [`I'll go to the shops`, `I will go to the shops`],
-  ];
-  arr.forEach((a) => {
+  arr = [[`I'm going to the shops`, `I will go to the shops`], [`I'll go to the shops`, `I will go to the shops`]];
+  arr.forEach(a => {
     let str = nlp(a[0]).sentences().toFutureTense().out();
     t.equal(str, a[1], 'future-tense ' + a.join(' - '));
   });
-  arr = [
-    [`I'm going to the shops`, `I go to the shops`],
-    [`I'll go to the shops`, `I go to the shops`],
-  ];
-  arr.forEach((a) => {
+  arr = [[`I'm going to the shops`, `I go to the shops`], [`I'll go to the shops`, `I go to the shops`]];
+  arr.forEach(a => {
     let str = nlp(a[0]).sentences().toPresentTense().out();
     t.equal(str, a[1], 'present-tense ' + a.join(' - '));
   });

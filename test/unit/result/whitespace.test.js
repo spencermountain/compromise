@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-test('sanity-check case:', function (t) {
+test('sanity-check case:', function(t) {
   var m = nlp('john is cool. he is nice');
   m.whitespace.before('  ');
   t.equal(m.out('text'), '  john is cool.  he is nice');

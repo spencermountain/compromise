@@ -21,7 +21,7 @@ test('verb negate:', function(t) {
 
     [`would study`, `would not study`],
     [`could study`, `could not study`],
-    [`should study`, `should not study`],
+    [`should study`, `should not study`]
   ].forEach(function(a) {
     var str = nlp(a[0]).verbs().toNegative().out('normal');
     t.equal(str, a[1], a[1] + ' --- ' + str);

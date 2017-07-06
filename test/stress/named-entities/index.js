@@ -1,5 +1,6 @@
 'use strict';
-const corpus = require('/home/spencer/mountain/nlp/corpus/index.js');
+// const corpus = require('/home/spencer/mountain/nlp/corpus/index.js');
+const corpus = require('nlp-corpus');
 const nlp = require('../../../src/index.js');
 
 const spot_test = function() {

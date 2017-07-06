@@ -2,7 +2,7 @@ var test = require('tape');
 var nlp = require('../../lib/nlp');
 var str_test = require('../../lib/fns').str_test;
 
-test('to_text:', function (t) {
+test('to_text:', function(t) {
   [
     // [-5, 'negative five'],
     [5, 'five'],
@@ -27,47 +27,33 @@ test('to_text:', function (t) {
     [7900205, 'seven million nine hundred thousand two hundred and five'],
     [90000000, 'ninety million'],
     [900000000, 'nine hundred million'],
-    [900000080, 'nine hundred million and eighty'],
-  ].forEach(function (a) {
+    [900000080, 'nine hundred million and eighty']
+  ].forEach(function(a) {
     var str = nlp(a[0]).values().toText().out('text');
     str_test(str, a[0], a[1], t);
   });
   t.end();
 });
 
-
-test('all-to-text:', function (t) {
+test('all-to-text:', function(t) {
   var arr = [
     'one',
     '1',
     '1.0', //not sure..
     '1st',
-    'first',
+    'first'
   ];
-  arr.forEach((txt) => {
+  arr.forEach(txt => {
     var str = nlp(txt).values().data()[0].text;
     t.equal(str, 'one', txt + ' -> one');
   });
-  arr = [
-    '500',
-    '500.0',
-    '500th',
-    'five hundred',
-    'five hundredth',
-  ];
-  arr.forEach((txt) => {
+  arr = ['500', '500.0', '500th', 'five hundred', 'five hundredth'];
+  arr.forEach(txt => {
     var str = nlp(txt).values().data()[0].text;
     t.equal(str, 'five hundred', txt + ' -> five hundred');
   });
-  arr = [
-    '2012',
-    '2012.0',
-    '2,012',
-    '2012th',
-    'two thousand and twelve',
-    'two thousand and twelfth',
-  ];
-  arr.forEach((txt) => {
+  arr = ['2012', '2012.0', '2,012', '2012th', 'two thousand and twelve', 'two thousand and twelfth'];
+  arr.forEach(txt => {
     var str = nlp(txt).values().data()[0].text;
     t.equal(str, 'two thousand and twelve', txt + ' -> two thousand and twelve');
   });

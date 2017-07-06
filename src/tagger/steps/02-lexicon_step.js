@@ -1,64 +1,36 @@
 'use strict';
-const p = require('../paths');
 const split = require('../contraction/split');
-const tries = require('../../tries');
-const lexicon = p.lexicon;
+const l = require('../../lexicon');
+const lexicon = l.lexicon;
 
-const check_lexicon = (str, sentence) => {
-  //check a user's custom lexicon
-  let custom = sentence.lexicon || {};
-  if (custom.hasOwnProperty(str)) {
-    return custom[str];
-  }
-  //check trie-data
-  let tag = tries.lookup(str);
-  if (tag) {
-    return tag;
-  }
-  //check ol' lexicon
-  if (lexicon.hasOwnProperty(str)) {
-    return lexicon[str];
-  }
-  return null;
-};
-
-const lexicon_pass = function (ts) {
-  let found;
+const lexicon_pass = function(ts) {
+  let uLex = ts.lexicon || {};
+  uLex = uLex.lexicon;
   //loop through each term
   for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
-    //basic term lookup
-    found = check_lexicon(t.normal, ts);
-    if (found) {
-      t.tag(found, 'lexicon-match');
+    let str = t.normal;
+    //user-lexicon lookup
+    if (uLex && uLex.hasOwnProperty(str) === true) {
+      t.tag(uLex[str], 'user-lexicon');
       continue;
     }
-    found = check_lexicon(t.text, ts);
-    if (found) {
-      t.tag(found, 'lexicon-match-text');
+    //basic term lookup
+    if (lexicon.hasOwnProperty(str) === true) {
+      t.tag(lexicon[str], 'lexicon');
+      continue;
+    }
+    //support silent_term matches
+    if (t.silent_term && lexicon.hasOwnProperty(t.silent_term) === true) {
+      t.tag(lexicon[t.silent_term], 'silent_term-lexicon');
       continue;
     }
     //support contractions (manually)
     let parts = split(t);
     if (parts && parts.start) {
-      found = check_lexicon(parts.start.toLowerCase(), ts);
-      if (found) {
-        t.tag(found, 'contraction-lexicon');
-        continue;
-      }
-    }
-    //support silent_term matches
-    found = check_lexicon(t.silent_term, ts);
-    if (t.silent_term && found) {
-      t.tag(found, 'silent_term-lexicon');
-      continue;
-    }
-    //multiple-words / hyphenation
-    let words = t.normal.split(/[ -]/);
-    if (words.length > 1) {
-      found = check_lexicon(words[words.length - 1], ts);
-      if (found) {
-        t.tag(found, 'multiword-lexicon');
+      let start = parts.start.toLowerCase();
+      if (lexicon.hasOwnProperty(start) === true) {
+        t.tag(lexicon[start], 'contraction-lexicon');
         continue;
       }
     }

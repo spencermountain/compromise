@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-test('tag inference:', function (t) {
+test('tag inference:', function(t) {
   var m = nlp('aasdf2').unTag('Noun').unTag('NounPhrase');
   var term = m.list[0].terms[0];
   t.equal(Object.keys(term.tags).length, 0, 'aasdf2 has no tags');
@@ -18,7 +18,7 @@ test('tag inference:', function (t) {
   t.end();
 });
 
-test('untag inference:', function (t) {
+test('untag inference:', function(t) {
   var m = nlp('aasdf');
   m.tag('FemaleName');
   var term = m.list[0].terms[0];
@@ -33,7 +33,7 @@ test('untag inference:', function (t) {
   t.end();
 });
 
-test('tag idempodence:', function (t) {
+test('tag idempodence:', function(t) {
   var m = nlp('walk').tag('Verb');
   var term = m.list[0].terms[0];
   t.equal(term.tags.Verb, true, 'walk has Verb');
@@ -48,25 +48,17 @@ test('tag idempodence:', function (t) {
   t.end();
 });
 
-test('tags are self-removing', function (t) {
-  var terms = [
-    'Person',
-    'Place',
-    'PastTense',
-    'FemaleName',
-    'Infinitive',
-    'HashTag',
-    'Month',
-  ];
+test('tags are self-removing', function(t) {
+  var terms = ['Person', 'Place', 'PastTense', 'FemaleName', 'Infinitive', 'HashTag', 'Month'];
   terms.forEach(function(tag) {
-    m = nlp('aasdf').tag(tag).unTag(tag);
+    var m = nlp('aasdf').tag(tag).unTag(tag);
     var t0 = m.list[0].terms[0];
     t.equal(t0.tags[tag], undefined, 'tag removes self ' + tag);
   });
   t.end();
 });
 
-test('untag wildcard', function (t) {
+test('untag wildcard', function(t) {
   var r = nlp('we live in Toronto Canada and it is cold');
   r.match('#Place+').unTag('*');
   t.equal(r.match('#Place').found, false, 'place-tag-is-gone');

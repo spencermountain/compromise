@@ -1,8 +1,7 @@
 'use strict';
 
 //mostly pos-corections here
-const corrections = function (ts) {
-
+const corrections = function(ts) {
   //ambig prepositions/conjunctions
   if (ts.has('so')) {
     //so funny
@@ -12,19 +11,21 @@ const corrections = function (ts) {
     //do so
     ts.match('do so').match('so').tag('Noun', 'so-noun');
   }
-  //the ambiguous word 'that'
-  if (ts.has('that')) {
+  //the ambiguous word 'that' and 'which'
+  if (ts.has('(that|which)')) {
     //remind john that
-    ts.match('#Verb #Adverb? #Noun that').lastTerm().tag('Preposition', 'that-prep');
+    ts.match('#Verb #Adverb? #Noun (that|which)').lastTerm().tag('Preposition', 'that-prep');
     //that car goes
-    ts.match('that #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner');
+    ts.match('(that|which) #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner');
+    //things that provide
+    // ts.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
   }
   //Determiner-signals
   if (ts.has('#Determiner')) {
     //the wait to vote
     ts.match('(the|this) #Verb #Preposition .').term(1).tag('Noun', 'correction-determiner1');
     //the swim
-    ts.match('(the|those|these) (#Infinitive|#PresentTense)').term(1).tag('Noun', 'correction-determiner2');
+    ts.match('(the|those|these) (#Infinitive|#PresentTense|#PastTense)').term(1).tag('Noun', 'correction-determiner2');
     //a staggering cost
     ts.match('(a|an) #Gerund').term(1).tag('Adjective', 'correction-a|an');
     ts.match('(a|an) #Adjective (#Infinitive|#PresentTense)').term(2).tag('Noun', 'correction-a|an2');
@@ -39,7 +40,7 @@ const corrections = function (ts) {
     //the truly nice swim
     ts.match('(the|this|those|these) #Adverb #Adjective #Verb').term(3).tag('Noun', 'correction-determiner4');
     //a stream runs
-    ts.match('#Determiner #Infinitive #Adverb? #Verb').term(1).tag('Noun', 'correction-determiner5');
+    ts.match('(the|this|a|an) #Infinitive #Adverb? #Verb').term(1).tag('Noun', 'correction-determiner5');
     //a sense of
     ts.match('#Determiner #Verb of').term(1).tag('Noun', 'the-verb-of');
     //the threat of force
@@ -66,6 +67,10 @@ const corrections = function (ts) {
     //money
     ts.match('#Value+ #Currency').tag('Money', 'value-currency').lastTerm().tag('Unit', 'money-unit');
     ts.match('#Money and #Money #Currency?').tag('Money', 'money-and-money');
+    //1 800 PhoneNumber
+    ts.match('1 #Value #PhoneNumber').tag('PhoneNumber', '1-800-Value');
+    //(454) 232-9873
+    ts.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber');
   }
 
   if (ts.has('#Noun')) {
@@ -75,6 +80,12 @@ const corrections = function (ts) {
     ts.match('second #Noun').term(0).unTag('Unit').tag('Ordinal', 'second-noun');
     //he quickly foo
     ts.match('#Noun #Adverb #Noun').term(2).tag('Verb', 'correction');
+    //fix for busted-up phrasalVerbs
+    ts.match('#Noun #Particle').term(1).tag('Preposition', 'repair-noPhrasal');
+    //John & Joe's
+    ts.match('#Noun (&|n) #Noun').tag('Organization', 'Noun-&-Noun');
+    //Aircraft designer
+    ts.match('#Noun #Actor').tag('Actor', 'thing-doer');
     //my buddy
     ts.match('#Possessive #FirstName').term(1).unTag('Person', 'possessive-name');
     //this rocks
@@ -104,6 +115,8 @@ const corrections = function (ts) {
     ts.match('how (#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-question');
     //is mark hughes
     ts.match('#Copula #Infinitive #Noun').term(1).tag('Noun', 'is-pres-noun');
+
+    ts.match('#Infinitive #Copula').term(0).tag('Noun', 'infinitive-copula');
     //went to sleep
     ts.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
     //support a splattering of auxillaries before a verb
@@ -123,8 +136,8 @@ const corrections = function (ts) {
       ts.match(`(#Modal) ${advb} be ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'would-be');
       //would been walking
       ts.match(`(#Modal|had|has) ${advb} been ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'would-be');
-    //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
-    // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
+      //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
+      // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
     }
   }
 
@@ -153,9 +166,12 @@ const corrections = function (ts) {
   ts.match('#Determiner (shit|damn|hell)').term(1).tag('Noun', 'swears-noun');
   ts.match('(shit|damn|fuck) (#Determiner|#Possessive|them)').term(0).tag('Verb', 'swears-verb');
   ts.match('#Copula fucked up?').not('#Copula').tag('Adjective', 'swears-adjective');
-
-  //fix for busted-up phrasalVerbs
-  ts.match('#Noun #Particle').term(1).tag('Preposition', 'repair-noPhrasal');
+  //6 am
+  ts.match('#Holiday (day|eve)').tag('Holiday', 'holiday-day');
+  //timezones
+  ts.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone');
+  //canadian dollar, Brazilian pesos
+  ts.match('#Demonym #Currency').tag('Currency', 'demonym-currency');
 
   return ts;
 };

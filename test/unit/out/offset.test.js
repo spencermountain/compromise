@@ -2,17 +2,17 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 var freshPrince = require('../lib/freshPrince');
 
-test('offsets-equals-substr:', function (t) {
+test('offsets-equals-substr:', function(t) {
   var r = nlp(freshPrince);
   var arr = r.verbs().out('offsets');
   arr.forEach(function(obj) {
     var substr = freshPrince.substr(obj.offset, obj.length);
-    t.equal(obj.text, substr, '\'' + obj.text + '\' offset ' + obj.offset);
+    t.equal(obj.text, substr, "'" + obj.text + "' offset " + obj.offset);
   });
   t.end();
 });
 
-test('index-output:', function (t) {
+test('index-output:', function(t) {
   var str = `I am the very model of a modern Major-General. I've information vegetable, animal, and mineral`;
   var arr = nlp(str).match('model').out('index');
   t.equal(arr[0].term, 4, 'which term');
@@ -26,7 +26,7 @@ test('index-output:', function (t) {
   t.end();
 });
 
-test('offset-with-whitespace:', function (t) {
+test('offset-with-whitespace:', function(t) {
   var str = `I am the very model of a modern Major-General. I've information vegetable, animal, and mineral`;
   var place = nlp(str).match('animal').first().out('offset')[0];
 
@@ -37,7 +37,6 @@ test('offset-with-whitespace:', function (t) {
   //no-punctuation or whitespace offset
   substr = str.substring(place.wordStart, place.wordEnd);
   t.equal(substr, 'animal', 'wordStart-wordEnd');
-
 
   str = 'hello there. I work for the F.B.I. in ft. Mede. hello there!';
   var r = nlp(str);

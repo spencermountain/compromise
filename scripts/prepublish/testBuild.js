@@ -1,4 +1,4 @@
-require('shelljs/global');
+var exec = require('shelljs').exec
 var tape = '"node_modules/.bin/tape"';
 var tapMin = '"node_modules/.bin/tap-min" --color';
 

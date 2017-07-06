@@ -3,7 +3,6 @@ var nlp = require('../lib/nlp');
 var pos_test = require('../lib/fns').pos_test;
 
 test('=Tagger=', function(T) {
-
   T.test('pos-basic-tag:', function(t) {
     [
       ['John is pretty', ['Person', 'Copula', 'Adjective']],
@@ -28,10 +27,10 @@ test('=Tagger=', function(T) {
       ['canadian dollar', ['Currency', 'Currency']],
 
       //possessive rules
-      ['john lkjsdf\'s', ['Person', 'Possessive']],
-      ['john lkjsdf\'s house', ['Person', 'Possessive', 'Noun']],
-      ['john Lkjsdf\'s house', ['Person', 'Possessive', 'Noun']],
-      ['john Lkjsdf\'s House', ['Person', 'Possessive', 'Noun']],
+      ["john lkjsdf's", ['Person', 'Possessive']],
+      ["john lkjsdf's house", ['Person', 'Possessive', 'Noun']],
+      ["john Lkjsdf's house", ['Person', 'Possessive', 'Noun']],
+      ["john Lkjsdf's House", ['Person', 'Possessive', 'Noun']],
 
       //question-words
       ['who is good?', ['QuestionWord', 'Copula', 'Adjective']],
@@ -67,9 +66,8 @@ test('=Tagger=', function(T) {
       // ['one - seventy-six', ['Value', 'Symbol', 'Value']],
       ['The stream runs', ['Determiner', 'Noun', 'Verb']],
       ['The stream really runs', ['Determiner', 'Noun', 'Adverb', 'Verb']],
-      ['The nice stream really runs', ['Determiner', 'Adjective', 'Noun', 'Adverb', 'Verb']],
-
-    ].forEach(function (a) {
+      ['The nice stream really runs', ['Determiner', 'Adjective', 'Noun', 'Adverb', 'Verb']]
+    ].forEach(function(a) {
       var terms = nlp(a[0]).terms(); //.data();
       pos_test(terms, a[1], t);
     });

@@ -284,15 +284,15 @@ test('date-tag :', function(t) {
     'fri 3 months ago at 5am',
     'wednesday 1 month ago at 8pm',
     'October 2006',
-    '27/5/1979',
-  // '-5min',
-  // '+2d',
-  // '100th day to 200th',
-  // 'march'
+    '27/5/1979'
+    // '-5min',
+    // '+2d',
+    // '100th day to 200th',
+    // 'march'
   ].forEach(function(first) {
     var str = nlp(first).match('#Date+').out('text');
     var msg = first + '  -> ' + str;
-    t.equal(first, str, msg);
+    t.equal(str, first, msg);
   });
   t.end();
 });

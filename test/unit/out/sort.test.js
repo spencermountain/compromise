@@ -2,7 +2,7 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 var fns = require('../lib/fns');
 
-test('sortAlpha:', function (t) {
+test('sortAlpha:', function(t) {
   var str = 'John xoo, John fredman, John davis, John fredman,';
   var r = nlp(str);
   r = r.people();
@@ -12,7 +12,7 @@ test('sortAlpha:', function (t) {
   t.end();
 });
 
-test('sortChronological:', function (t) {
+test('sortChronological:', function(t) {
   var str = 'John xoo, John fredman, John davis';
   var r = nlp(str);
   r = r.people();
@@ -23,7 +23,7 @@ test('sortChronological:', function (t) {
   t.end();
 });
 
-test('reverse:', function (t) {
+test('reverse:', function(t) {
   var str = 'John xoo, John fredman, John davis';
   var r = nlp(str);
   r = r.people();
@@ -34,18 +34,18 @@ test('reverse:', function (t) {
   t.end();
 });
 
-test('length:', function (t) {
+test('length:', function(t) {
   var str = 'Amy, John Fredman, Dr. Bill, Alexis Smithsonian';
   var r = nlp(str);
   r = r.people();
   r.sort('length');
   r.reverse();
-  var want = ['amy', 'dr bill', 'john fredman', 'alexis smithsonian',];
+  var want = ['amy', 'dr bill', 'john fredman', 'alexis smithsonian'];
   fns.arr_test(r.out('array'), str, want, t);
   t.end();
 });
 
-test('wordCount:', function (t) {
+test('wordCount:', function(t) {
   var str = 'John Fredman, Amy, Dr. Bill G. Gates';
   var r = nlp(str);
   r = r.people();
@@ -56,7 +56,7 @@ test('wordCount:', function (t) {
   t.end();
 });
 
-test('unique:', function (t) {
+test('unique:', function(t) {
   var str = 'John xoo, John fredman, john xoo, John davis';
   var r = nlp(str);
   r = r.people();
@@ -66,7 +66,7 @@ test('unique:', function (t) {
   t.end();
 });
 
-test('frequency:', function (t) {
+test('frequency:', function(t) {
   var str = 'John xoo, John fredman, john xoo, John davis';
   var r = nlp(str).people();
   var a = r.out('frequency');

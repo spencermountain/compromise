@@ -1,4 +1,4 @@
-require('shelljs/global');
+var exec = require('shelljs').exec;
 var nyc = './node_modules/nyc/bin/nyc.js';
 var codacity = './node_modules/.bin/codacy-coverage';
 var tape = './node_modules/tape/bin/tape';

@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../../lib/nlp');
 
-test('to_number:', function (t) {
+test('to_number:', function(t) {
   [
     ['twenty two thousand five hundred', 22500],
     ['two thousand five hundred and sixty', 2560],
@@ -97,20 +97,19 @@ test('to_number:', function (t) {
     ['two hundred three hundred', ''],
     ['sixty fifteen hundred', ''],
     ['one twenty', ''],
-    ['twenty five twenty', ''],
-  // ['',''],
-  // [null,''],
-  ].forEach(function (a) {
+    ['twenty five twenty', '']
+    // ['',''],
+    // [null,''],
+  ].forEach(function(a) {
     var num = nlp(a[0]).values().toNumber().out('text');
     var want = '' + a[1] || a[0];
-    var msg = '\'' + a[0] + '\' - - have: \'' + num + '\'   want:\'' + a[1] + '\'';
+    var msg = "'" + a[0] + "' - - have: '" + num + "'   want:'" + a[1] + "'";
     t.equal(num, '' + want, msg);
   });
   t.end();
 });
 
-
-test('all-to-number:', function (t) {
+test('all-to-number:', function(t) {
   var num = nlp('1st').values().numbers()[0];
   t.equal(num, 1, '1st');
   num = nlp('1').values().numbers()[0];

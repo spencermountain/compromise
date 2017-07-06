@@ -2,7 +2,7 @@ var test = require('tape');
 var nlp = require('../../lib/nlp');
 var str_test = require('../../lib/fns').str_test;
 
-test('value-basic:', function (t) {
+test('value-basic:', function(t) {
   var r = nlp('third month of 2019');
   r.values().toNumber();
   t.equal(r.out(), '3rd month of 2019', 'toNumber');
@@ -24,28 +24,23 @@ test('value-basic:', function (t) {
   t.end();
 });
 
-test('value-to_ordinal:', function (t) {
-  [
-    [11, '11th'],
-    [5, '5th'],
-    [22, '22nd'],
-  ].forEach(function (a) {
+test('value-to_ordinal:', function(t) {
+  [[11, '11th'], [5, '5th'], [22, '22nd']].forEach(function(a) {
     var str = nlp(a[0]).values().toOrdinal().out('normal');
     str_test(str, a[0], a[1], t);
   });
   t.end();
 });
 
-
-test('value-number:', function (t) {
+test('value-number:', function(t) {
   [
     ['five hundred feet', 500],
     ['fifty square feet', 50],
     ['90 hertz', 90],
     // ['5 six-ounce containers', 5],
     ['twelve 2-gram containers', 12],
-    ['thirty-seven forever-21 stores', 37],
-  ].forEach(function (a) {
+    ['thirty-seven forever-21 stores', 37]
+  ].forEach(function(a) {
     var str = nlp(a[0]).values().toNumber().term(0).first().out('normal');
     a[1] = '' + a[1];
     str_test(str, a[0], a[1], t);
@@ -53,7 +48,7 @@ test('value-number:', function (t) {
   t.end();
 });
 
-test('add/subtract:', function (t) {
+test('add/subtract:', function(t) {
   var r = nlp('beginning of 2019').values().add(2).all();
   t.equal(r.out(), 'beginning of 2021', 'add-2-cardinal');
 
@@ -84,7 +79,7 @@ test('add/subtract:', function (t) {
   t.end();
 });
 
-test('increment:', function (t) {
+test('increment:', function(t) {
   var r = nlp('seven apples and 231 peaches');
   r.values().increment();
   t.equal(r.out(), 'eight apples and 232 peaches', 'increment-cardinal');
@@ -99,7 +94,7 @@ test('increment:', function (t) {
   t.end();
 });
 
-test('nounit:', function (t) {
+test('nounit:', function(t) {
   var r = nlp('seven apples and 231 peaches');
   var arr = r.values().out('array');
   t.deepEqual(arr, ['seven apples', '231 peaches']);
@@ -124,8 +119,8 @@ test('value-unit:', function(t) {
     ['3 grams', 'grams'],
     ['2 inches', 'inches'],
     ['10 grams of sugar', 'grams'],
-    ['fifty inches of snow', 'inches'],
-  ].forEach(function (a) {
+    ['fifty inches of snow', 'inches']
+  ].forEach(function(a) {
     var r = nlp(a[0]).values().units();
     str_test(r.out('normal'), a[0], a[1], t);
   });

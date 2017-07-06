@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-test('if-basic:', function (t) {
+test('if-basic:', function(t) {
   var r = nlp('spencer is here');
   var m = r.if('asdf');
   t.equal(m.out('text'), '', 'if-negative');
@@ -16,10 +16,10 @@ test('if-basic:', function (t) {
   t.end();
 });
 
-test('ifNo:', function (t) {
+test('ifNo:', function(t) {
   var r = nlp('spencer is here');
   //ifNo
-  m = r.ifNo('spencer');
+  var m = r.ifNo('spencer');
   t.equal(m.out('text'), '', 'ifNo-positive');
 
   m = r.ifNo('asdf');

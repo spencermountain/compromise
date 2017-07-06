@@ -1,23 +1,21 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
-var str_test = require('../lib/fns').str_test;
 
 test('=Web Terminology=', function(T) {
-
   T.test('is-email:', function(t) {
     [
       [`s@s.com`, true],
       [`sasdf@sasdf.com`, true],
       [`sasdf@sasdf.ti`, true],
-      [`sasdf@sasdf.t`,],
-      [`sasdf@sasdft`,],
-      [`sasdfsasdft.com`,],
-      [`@sasdft.com`,],
+      [`sasdf@sasdf.t`],
+      [`sasdf@sasdft`],
+      [`sasdfsasdft.com`],
+      [`@sasdft.com`],
       [`_@_.com`, true],
-      [`_@_._`,],
-      [`sas df@sasdf.com`,],
-      [`sasdf@sa sdf.com`,],
-    ].forEach(function (a) {
+      [`_@_._`],
+      [`sas df@sasdf.com`],
+      [`sasdf@sa sdf.com`]
+    ].forEach(function(a) {
       var term = nlp(a[0]).list[0].terms[0];
       var msg = a[0] + ' is email: ' + a[1];
       t.equal(term.tags['Email'], a[1], msg);
@@ -32,9 +30,9 @@ test('=Web Terminology=', function(T) {
       [`#22ll`, true],
       [`#_22ll`, true],
       // [`#l`,],
-      [`# l`,],
-      [`l#l`,],
-    ].forEach(function (a) {
+      [`# l`],
+      [`l#l`]
+    ].forEach(function(a) {
       var term = nlp(a[0]).list[0].terms[0];
       var msg = a[0] + ' is hashtag: ' + a[1];
       t.equal(term.tags['HashTag'], a[1], msg);
@@ -58,14 +56,13 @@ test('=Web Terminology=', function(T) {
       [`woohoo.biz`, true],
       [`woop.org/news`, true],
       [`http://woop.org/news?foo=bar`, true],
-      [`http:subdomain.cool.com/`,],
-      [`coolcom`,],
-    ].forEach(function (a) {
+      [`http:subdomain.cool.com/`],
+      [`coolcom`]
+    ].forEach(function(a) {
       var term = nlp(a[0]).list[0].terms[0];
       var msg = a[0] + ' is url: ' + a[1];
       t.equal(term.tags['Url'], a[1], msg);
     });
     t.end();
   });
-
 });

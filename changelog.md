@@ -34,6 +34,8 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - add units(), noUnits() methods to .values()
 - 'uncountable' nouns are no longer assumed to be singular
 - money tag is no longer always a value
+* 10.6.0
+- move internal lexicon around, to support new format in v11
 
 ### v9  &nbsp;
 * 9.0.0

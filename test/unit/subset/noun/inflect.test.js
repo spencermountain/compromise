@@ -3,7 +3,6 @@ var nlp = require('../../lib/nlp');
 var str_test = require('../../lib/fns').str_test;
 
 test('==Plurals==', function(T) {
-
   T.test('is_plural():', function(t) {
     [
       ['octopus', false],
@@ -18,11 +17,11 @@ test('==Plurals==', function(T) {
       ['eyebrows', true],
       ['child', false],
       ['children', true],
-      ['spencer\'s', false],
-      ['toronto\'s', false],
-    // ['simpsons\'', false],
-    // ['she\'s', false],
-    ].forEach(function (a) {
+      ["spencer's", false],
+      ["toronto's", false]
+      // ['simpsons\'', false],
+      // ['she\'s', false],
+    ].forEach(function(a) {
       var r = nlp(a[0]).nouns();
       var msg = a[0];
       t.equal(r.isPlural().found, a[1], msg);
@@ -99,7 +98,7 @@ test('==Plurals==', function(T) {
       ['wives', 'wife'],
       ['roofs', 'roof'],
       ['hooves', 'hoof']
-    ].forEach(function (a) {
+    ].forEach(function(a) {
       var r = nlp(a[0]).tag('Noun').nouns();
       var str = r.toSingular().out('normal');
       str_test(str, a[0], a[1], t);
@@ -184,8 +183,8 @@ test('==Plurals==', function(T) {
       ['solos', 'solos'],
       ['avocados', 'avocados'],
       ['studios', 'studios'],
-      ['zoos', 'zoos'],
-    ].forEach(function (a) {
+      ['zoos', 'zoos']
+    ].forEach(function(a) {
       var r = nlp(a[0]).tag('Noun').nouns();
       var str = r.toPlural().out('normal');
       str_test(str, a[0], a[1], t);

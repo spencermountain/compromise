@@ -42,15 +42,15 @@ test('verb-parts:', function(t) {
     ['john would not have really had been walking', 'not', 'would have had been', 'really'],
     ['john would not have had really been walking', 'not', 'would have had been', 'really'],
     ['john would not have had been really walking', 'not', 'would have had been', 'really'],
-    ['john would not have had been walking really', 'not', 'would have had been', 'really'],
+    ['john would not have had been walking really', 'not', 'would have had been', 'really']
   ];
   tests.forEach(function(a) {
     var arr = nlp(a[0]).verbs().data();
     t.equal(arr.length, 1, '#verbs - ' + arr.length);
-    t.equal(arr[0].parts.negative, a[1], 'neg-test - \'' + a[0] + '\'');
-    t.equal(arr[0].parts.auxiliary, a[2], 'aux-test  - \'' + a[0] + '\'');
-    t.equal(arr[0].parts.verb, 'walking', 'verb-test  - \'' + a[0] + '\'');
-    t.equal(arr[0].parts.adverbs, a[3], 'adverb-test  - \'' + a[0] + '\'');
+    t.equal(arr[0].parts.negative, a[1], "neg-test - '" + a[0] + "'");
+    t.equal(arr[0].parts.auxiliary, a[2], "aux-test  - '" + a[0] + "'");
+    t.equal(arr[0].parts.verb, 'walking', "verb-test  - '" + a[0] + "'");
+    t.equal(arr[0].parts.adverbs, a[3], "adverb-test  - '" + a[0] + "'");
   });
   t.end();
 });

@@ -133,7 +133,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <sub><i>match natural-language forms</i></sub>
     </td>
     <td>
-      <a href="https://github.com/nlp-compromise/compromise/wiki/Normalization">
+      <a href="https://github.com/nlp-compromise/compromise/wiki/Usage#normalization">
          Text cleanup
       </a>
     </td>
@@ -171,7 +171,7 @@ doc.sentences().toNegative()
 ```
 
 ## Grab some words,
-you can use [pre-defined selections](https://github.com/nlp-compromise/compromise/wiki/Defined-subsets) (like **.nouns()**) or grab any pattern with [.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)
+you can use [pre-defined selections](https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods) (like **.nouns()**) or grab any pattern with [.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)
 ```js
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
 
@@ -276,7 +276,7 @@ doc = nlp('Tony Hawk').out('html')
 <h4 align="center">
   <b>Join in -</b>
   we're fun, using <b>semver</b>, and moving fast.
-  <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">get involved</a>
+  <a href="https://github.com/nlp-compromise/compromise/wiki">get involved</a>
 </h4>
 
 <table>
@@ -317,6 +317,9 @@ doc = nlp('Tony Hawk').out('html')
 <div align="left">
   <a href="https://www.youtube.com/watch?v=WuPVS2tCg8s">
     <img src="http://img.youtube.com/vi/WuPVS2tCg8s/mqdefault.jpg"/>
+  </a>
+  <a href="https://www.youtube.com/watch?v=c_hmwFwvO0U">
+    <img src="https://user-images.githubusercontent.com/399657/27890263-88e1fd10-61bf-11e7-93f2-745167f88d58.png"/>
   </a>
 </div>
 

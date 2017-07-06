@@ -1,9 +1,8 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-test('==Match ==', function (T) {
-
-  T.test('term-match :', function (t) {
+test('==Match ==', function(T) {
+  T.test('term-match :', function(t) {
     [
       ['quick', 'quick', true],
       ['Quick', 'Quick', true],
@@ -11,8 +10,8 @@ test('==Match ==', function (T) {
       ['quick', '#Adjective', true],
       ['quick', '#Noun', false],
       ['quick', '(fun|nice|quick|cool)', true],
-      ['quick', '(fun|nice|good)', false],
-    ].forEach(function (a) {
+      ['quick', '(fun|nice|good)', false]
+    ].forEach(function(a) {
       var m = nlp(a[0]).match(a[1]);
       var msg = a[0] + ' matches ' + a[1] + ' ' + a[2];
       t.equal(m.found, a[2], msg);
@@ -20,7 +19,7 @@ test('==Match ==', function (T) {
     t.end();
   });
 
-  T.test('sentence-match:', function (t) {
+  T.test('sentence-match:', function(t) {
     [
       ['the dog played', 'the dog', 'the dog'],
       ['the dog played', 'the dog played', 'the dog played'],
@@ -65,17 +64,16 @@ test('==Match ==', function (T) {
       // [`if you wouldn't care, i'll eat here`, `i'll eat`, `i'll eat`], //omg hard one
 
       // [`don't go`, `do not`, `don't`],
-      [`do not go`, `do not`, `do not`],
+      [`do not go`, `do not`, `do not`]
       // [`i dunno`, `do not`, `dunno`],
       //bugs
       // [`really remind me to buy`, '#Adverb? #Infinitive (me|us) (to|for)', `really remind me to`],
-
-    ].forEach(function (a) {
+    ].forEach(function(a) {
       var m = nlp(a[0]).match(a[1]);
       if (!m.found) {
         t.equal(a[2], '', 'no-match: ' + a[0] + ' - -' + a[1]);
       } else {
-        var msg = '\'' + a[0] + '\'  - ' + a[1] + ' - - have : \'' + m.out('normal') + '\'';
+        var msg = "'" + a[0] + "'  - " + a[1] + " - - have : '" + m.out('normal') + "'";
         t.equal(m.out('normal'), a[2], msg);
       }
     });
@@ -83,7 +81,6 @@ test('==Match ==', function (T) {
   });
 
   test('match-from-array :', function(t) {
-
     var m = nlp('spencer is really cool').match(['spencer']);
     t.equal(m.out('normal'), 'spencer', 'just-spencer');
     t.equal(m.length, 1, 'one-result');
@@ -104,7 +101,7 @@ test('==Match ==', function (T) {
 
   test('match-from-object :', function(t) {
     var m = nlp('spencer is really cool').match({
-      'spencer': true
+      spencer: true
     });
     t.equal(m.out('normal'), 'spencer', 'just-spencer');
     t.equal(m.length, 1, 'one-result');
@@ -187,5 +184,4 @@ test('==Match ==', function (T) {
 
     t.end();
   });
-
 });

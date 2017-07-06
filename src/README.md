@@ -11,8 +11,8 @@ main structure:
 
   <a href="./text">./Text</a>  
   <div>&nbsp;  &nbsp; - top-level API. Mostly just looping.</div>
-    <div>&nbsp;  &nbsp; &nbsp; &nbsp; - <a href="./result/subset/values">number parsing is here</a></div>
-    <div>&nbsp;  &nbsp; &nbsp; &nbsp; - <a href="./result/subset/things">named-entity/spotting is here</a></div>
+    <div>&nbsp;  &nbsp; &nbsp; &nbsp; - <a href="./text/subset/values">number parsing is here</a></div>
+    <div>&nbsp;  &nbsp; &nbsp; &nbsp; - <a href="./text/subset/things">named-entity/spotting is here</a></div>
 
   <a href="./terms">./Terms</a>  
   <div>&nbsp;  &nbsp; - where the hard sentence-aware work gets done. </div>

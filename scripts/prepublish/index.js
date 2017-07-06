@@ -1,4 +1,4 @@
-require('shelljs/global');
+var exec = require('shelljs').exec
 const assert = require('assert');
 const chalk = require('chalk');
 

@@ -1,6 +1,6 @@
 //turn 'quick' into 'quickly'
 'use strict';
-const not_matches = [/airs$/, /ll$/, /ee.$/, /ile$/];
+const not_matches = [/airs$/, /ll$/, /ee.$/, /ile$/, /y$/];
 const irregulars = require('../../../../lexicon/uncompressed/irregularAdjectives').toAdverb;
 
 const transforms = [
@@ -39,7 +39,9 @@ const transforms = [
 ];
 
 const adj_to_adv = function(str) {
+  // console.log(str + '--');
   if (irregulars.hasOwnProperty(str) === true) {
+    // console.log(str, irregulars[str]);
     return irregulars[str];
   }
   for (let i = 0; i < not_matches.length; i++) {
@@ -54,6 +56,6 @@ const adj_to_adv = function(str) {
   }
   return str + 'ly';
 };
-// console.log(adj_to_adv('direct'))
+// console.log(adj_to_adv('good'));
 
 module.exports = adj_to_adv;

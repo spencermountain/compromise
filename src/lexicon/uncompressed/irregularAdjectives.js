@@ -55,7 +55,9 @@ const combine = function(lexicon, obj, tag) {
   let keys = Object.keys(obj);
   for (let i = 0; i < keys.length; i++) {
     lexicon[keys[i]] = 'Comparable';
-    lexicon[obj[keys[i]]] = tag;
+    if (lexicon[obj[keys[i]]] === undefined) {
+      lexicon[obj[keys[i]]] = tag;
+    }
   }
   return lexicon;
 };

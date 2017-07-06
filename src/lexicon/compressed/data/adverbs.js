@@ -81,7 +81,7 @@ module.exports = [
   'upwards of',
   'very',
   'way',
-  'well',
+  // 'well',
   'yes',
   'yep',
   'not only'

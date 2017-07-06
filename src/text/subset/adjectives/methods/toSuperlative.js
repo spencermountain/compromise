@@ -20,6 +20,10 @@ const transforms = [
   {
     reg: /nge$/i,
     repl: 'ngest'
+  },
+  {
+    reg: /([aeiou])te$/i,
+    repl: '$1test'
   }
 ];
 

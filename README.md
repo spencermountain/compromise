@@ -327,7 +327,7 @@ doc = nlp('Tony Hawk').out('html')
 <ul align="left">
   <p>
     <details>
-      <summary>🌎 Other Languages?</summary>
+      <summary><a href="#">🌎 Other Languages?</a></summary>
       <p></p>
       <ul>
         yeah, we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a> and <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, in the same philosophy.
@@ -342,9 +342,9 @@ doc = nlp('Tony Hawk').out('html')
       <summary>💃 Can it run on my arduino-watch?</summary>
       <p></p>
       <ul>
-        Only if it's water-proof.😜
+        Only if it's water-proof😜
         <br/>
-        See <a href="https://github.com/nlp-compromise/compromise/wiki/QuickStart">quickStart</a> for all sorts of environments.
+        See <a href="https://github.com/nlp-compromise/compromise/wiki/QuickStart">quickStart</a> for all sorts of funny environments.
       </ul>
       <p></p>
     </details>
@@ -354,7 +354,7 @@ doc = nlp('Tony Hawk').out('html')
       <summary>🔪 Partial builds?</summary>
       <p></p>
       <ul>
-        it can't be tree-shaken, and our tagging methods are competitive, so it's not recommended to pull stuff out.
+        it can't be tree-shaken, and the tagging methods are competitive, so it's not recommended to pull-out stuff.
         <br/>
         We recommend loading the library fully, given it's smaller than <a href="https://68.media.tumblr.com/tumblr_m674jlpyPT1ry8fquo1_250.gif">this gif</a>.
       </ul>

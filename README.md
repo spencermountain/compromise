@@ -187,7 +187,9 @@ doc.sentences().toNegative()
 ## Toss-in text,
 even if it's just one word,
 
-### Grab a part
+<ul>
+  <h4>Grab a part:</h4>
+</ul>
 you can use [built-in methods](https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods) (like **.nouns()**, or **.people()**,)
 or query any pattern with **[.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)**:
 ```js

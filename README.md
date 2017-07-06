@@ -97,73 +97,79 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 </h3>
 <table>
    <tr>
+
       <td>
-        <div align="center">
+         <div align="center">
            <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
            Part-of-Speech tagging
            </a>
+         </div>
          <div>
-         <div>
-            <i>nouns, verbs, adjectives..</i>
+            <sub><i>nouns, verbs, adjectives..</i></sub>
          </div>
       </td>
+
       <td>
         <div align="center">
-           <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
-           Verb conjugation
-           </a>
+          <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
+            Named-entities
+          </a>
+        </div>
+        <div>
+          <sub><i>the people, places, orgs..</i></sub>
+        </div>
+      </td>
+
+      <td>
+         <div align="center">
+            <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
+            Template-matches
+            </a>
          </div>
          <div>
-            <sub><i>change tense of a verb or sentence</i></sub>
+            <sub><i>match natural-language forms</i></sub>
          </div>
       </td>
+
    </tr>
+
    <tr>
+
       <td>
-      <div align="center">
-         <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
-         Number parsing
-         </a>
+         <div align="center">
+            <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
+            Number parsing
+            </a>
          </div>
          <div>
             <sub><i>'seven hundred and fifty' -> 750</i></sub>
          </div>
       </td>
+
       <td>
         <div align="center">
-           <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
-           Named-entities
-         </a>
-         </div>
-         <div>
-           <sub><i>the people, places, orgs..</i></sub>
-         </div>
+          <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
+            Verb conjugation
+          </a>
+        </div>
+        <div>
+          <sub><i>change tense of a verb or sentence</i></sub>
+        </div>
       </td>
-   </tr>
-   <tr>
+
       <td>
-      <div align="center">
-         <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
-         Template-matches
-         </a>
+         <div align="center">
+            <a href="https://github.com/nlp-compromise/compromise/wiki/Usage#normalization">
+            Text cleanup
+            </a>
          </div>
          <div>
-           <sub><i>match natural-language forms</i></sub>
+            <sub><i>contractions, hyphenation, punctuation</i></sub>
          </div>
       </td>
-      <td>
-      <div align="center">
-         <a href="https://github.com/nlp-compromise/compromise/wiki/Usage#normalization">
-         Text cleanup
-         </a>
-         </div>
-         <div>
-           <sub><i>contractions, hyphenation, punctuation</i></sub>
-         </div>
-      </td>
+
    </tr>
 </table>
-
 
 #### Client-side!
 ```html

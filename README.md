@@ -95,63 +95,63 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   &nbsp; &nbsp; &nbsp;
   <a href="https://github.com/nlp-compromise/compromise/wiki/Usage">Tutorials</a>
 </h3>
-
 <table>
-  <tr>
-    <td>
-      <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
+   <tr>
+      <td>
+         <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
          Part-of-Speech tags
-      </a>
-    </td>
-    <td>
-      <sub><i>nouns, verbs, adjectives..</i></sub>
-    </td>
-    <td>
-      <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
+         </a>
+         <div>
+            <sub><i>nouns, verbs, adjectives..</i></sub>
+         </div>
+      </td>
+      <td>
+         <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
          Verb conjugation
-      </a>
-    </td>
-    <td>
-      <sub><i>change tense of a verb or sentence</i></sub>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
+         </a>
+         <div>
+            <sub><i>change tense of a verb or sentence</i></sub>
+         </div>
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
          Number parsing
-      </a>
-    </td>
-    <td>
-      <sub><i>'seven hundred and fifty' -> 750</i></sub>
-    </td>
-    <td>
-      <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
+         </a>
+         <div>
+            <sub><i>'seven hundred and fifty' -> 750</i></sub>
+         </div>
+      </td>
+      <td>
+         <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
          Named-entities
-      </a>
-    </td>
-    <td>
-      <sub><i>the people, places, orgs..</i></sub>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
+         </a>
+      </td>
+      <td>
+         <sub><i>the people, places, orgs..</i></sub>
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
          Template-matches
-      </a>
-    </td>
-    <td>
-      <sub><i>match natural-language forms</i></sub>
-    </td>
-    <td>
-      <a href="https://github.com/nlp-compromise/compromise/wiki/Usage#normalization">
+         </a>
+         <div>
+           <sub><i>match natural-language forms</i></sub>
+         </div>
+      </td>
+      <td>
+         <a href="https://github.com/nlp-compromise/compromise/wiki/Usage#normalization">
          Text cleanup
-      </a>
-    </td>
-    <td>
-      <sub><i>contractions, hyphenation, punctuation</i></sub>
-    </td>
-  </tr>
+         </a>
+         <div>
+           <sub><i>contractions, hyphenation, punctuation</i></sub>
+         </div>
+      </td>
+   </tr>
 </table>
+
 
 #### Client-side!
 ```html
@@ -374,7 +374,7 @@ doc = nlp('Tony Hawk').out('html')
       <summary>✨ Partial builds?</summary>
       <p></p>
       <ul>
-        it can't be tree-shaken, cause it's one function.
+        compromise can't be tree-shaken, because it's one function.
         <br/> - and the tagging methods are competitive, so it's not recommended to pull-out stuff.
         <br/>
         It's recommended to load the library fully, given it's smaller than <a href="https://68.media.tumblr.com/tumblr_m674jlpyPT1ry8fquo1_250.gif">this gif</a>.

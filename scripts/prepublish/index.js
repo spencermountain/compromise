@@ -1,3 +1,4 @@
+'use strict';
 var exec = require('shelljs').exec;
 var assert = require('assert');
 var chalk = require('chalk');

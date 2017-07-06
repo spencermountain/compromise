@@ -109,12 +109,12 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </td>
       <td>
         <div align="center">
-           <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
-           Named-entities
+           <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
+           Verb conjugation
            </a>
          </div>
          <div>
-           <sub><i>the people, places, orgs..</i></sub>
+            <sub><i>change tense of a verb or sentence</i></sub>
          </div>
       </td>
    </tr>
@@ -129,15 +129,14 @@ nlp('..then consider me Miles Davis!').people().out('freq')
             <sub><i>'seven hundred and fifty' -> 750</i></sub>
          </div>
       </td>
-
       <td>
         <div align="center">
-           <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
-           Verb conjugation
-           </a>
+           <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
+           Named-entities
+         </a>
          </div>
          <div>
-            <sub><i>change tense of a verb or sentence</i></sub>
+           <sub><i>the people, places, orgs..</i></sub>
          </div>
       </td>
    </tr>

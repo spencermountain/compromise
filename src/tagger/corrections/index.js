@@ -155,7 +155,7 @@ const corrections = function(ts) {
     ts.match('#TitleCase (ltd|co|inc|dept|assn|bros)').tag('Organization', 'org-abbrv');
     //Foo District
     ts
-      .match('#TitleCase{1,2} (district|region|province|county|prefecture|municipality|territory|burough|reservation)')
+      .match('#TitleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)')
       .tag('Region', 'foo-district');
     //District of Foo
     ts.match('(district|region|province|municipality|territory|burough) of #TitleCase').tag('Region', 'district-of-Foo');

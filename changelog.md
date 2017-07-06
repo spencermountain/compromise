@@ -36,6 +36,8 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - money tag is no longer always a value
 * 10.6.0
 - move internal lexicon around, to support new format in v11
+- added states & provinces as #Region
+- added #Comparable tag for adjectives that conjugate
 * 10.7.0
 - improved `places()` parsing
 - improved `{min,max}` match syntax

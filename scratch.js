@@ -9,5 +9,5 @@ var nlp = require('./src/index');
 var doc = nlp('cool cool cool cool cool');
 // doc.match('cool{1,3}').debug();
 
-doc = nlp('he   is nice. and cool');
-console.log('|' + doc.match('is nice').out('match') + '|');
+doc = nlp('nice, cool');
+console.log(doc.list[0].terms[0]);

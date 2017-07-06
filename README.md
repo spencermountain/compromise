@@ -282,7 +282,7 @@ doc = nlp('Tony Hawk').out('html')
 <table>
   <tr align="center">
     <td>
-      <a href="https://www.twitter.com/compromisejs">
+      <a href="https://twitter.com/nlp_compromise">
         <img src="https://cloud.githubusercontent.com/assets/399657/21956672/a30cf206-da53-11e6-8c6c-0995cf2aef62.jpg"/>
         <div>&nbsp; &nbsp; &nbsp; Twitter &nbsp; &nbsp; &nbsp; </div>
       </a>

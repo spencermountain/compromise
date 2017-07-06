@@ -8,6 +8,7 @@ const methods = {
       return str;
     }, '');
   },
+  //like 'text', but no leading/trailing whitespace
   match: function(ts) {
     let str = '';
     let len = ts.terms.length;

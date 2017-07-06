@@ -325,15 +325,16 @@ doc = nlp('Tony Hawk').out('html')
 
 <details>
   <summary>Other Languages?</summary>
-  <p>yeah, we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a> and <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, in the same philosophy. Get involved!</p>
+  <ul>yeah, we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a> and <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, in the same philosophy. Get involved!</ul>
 </details>
 <details>
   <summary>Can it run on my arduino-watch?</summary>
+  <p></p>
   <p>Only if it's water-proof. See <a href="https://github.com/nlp-compromise/compromise/wiki/QuickStart">quickStart</a> for all sorts of environments.</p>
 </details>
 <details>
   <summary>Partial builds?</summary>
-  <p>compromise can't be tree-shaken, and our POS-tagging methods are competitive with each other, so it's not recommended to pull stuff out of it. We generally recommend loading the library completely, given it's smaller than [this gif](https://68.media.tumblr.com/tumblr_m674jlpyPT1ry8fquo1_250.gif), after all.</p>
+  <p>compromise can't be tree-shaken, and our POS-tagging methods are competitive with each other, so it's not recommended to pull stuff out of it. We generally recommend loading the library completely, given it's smaller than <a href="https://68.media.tumblr.com/tumblr_m674jlpyPT1ry8fquo1_250.gif">this gif</a>, after all.</p>
 </details>
 
 ### Don't forget about:

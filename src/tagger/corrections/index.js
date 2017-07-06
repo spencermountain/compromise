@@ -158,7 +158,7 @@ const corrections = function(ts) {
       .match('#TitleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)')
       .tag('Region', 'foo-district');
     //District of Foo
-    ts.match('(district|region|province|municipality|territory|burough) of #TitleCase').tag('Region', 'district-of-Foo');
+    ts.match('(district|region|province|municipality|territory|burough|state) of #TitleCase').tag('Region', 'district-of-Foo');
   }
 
   //West Norforlk

@@ -16,7 +16,7 @@ const methods = {
       if (i > 0) {
         str += ts.terms[i].whitespace.before;
       }
-      str += ts.terms[i].text.replace(/,$/, ''); //remove comma
+      str += ts.terms[i].text.replace(/[,.?!]$/, ''); //remove comma
       if (i < len - 1) {
         str += ts.terms[i].whitespace.after;
       }

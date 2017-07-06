@@ -19,7 +19,7 @@ test('unknown-places:', function(t) {
     ['live in the Rekcjd Province', 'rekcjd province'],
     ['live in the Lekfjs District', 'lekfjs district'],
     ['visiting Tojbs Kjeh Region', 'tojbs kjeh region'],
-    ['visiting the State of Lkjfhe', 'state of kkjfhe'],
+    ['visiting the State of Lkjfhe', 'state of lkjfhe'],
     ['see you in West Nunavut', 'west nunavut'],
     ['see you in western Hunan', 'western hunan'],
     ['see you in Northern Hunan province', 'northern hunan province']

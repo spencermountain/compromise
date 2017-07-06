@@ -343,6 +343,20 @@ doc = nlp('Tony Hawk').out('html')
   </p>
   <p>
     <details>
+      <summary> Isn't javascript too...</summary>
+      <p></p>
+      <ul>
+        yeah.
+        <br/>
+        compromise was not built to compete with the stanford tagger, and may not be a fit for every project.
+        String-stuff is synchronous too, and parallelizing it is weird.
+        See <a href="https://github.com/nlp-compromise/compromise/wiki/Speed">here</a> for information about speed and performance.
+      </ul>
+      <p></p>
+    </details>
+  </p>  
+  <p>
+    <details>
       <summary>💃 Can it run on my arduino-watch?</summary>
       <p></p>
       <ul>

@@ -184,12 +184,11 @@ doc.sentences().toNegative()
 // 'London is not calling'
 ```
 
-## Toss-in your text,
-even if it's just one word, the idea is the same.
+## Toss-in text,
+even if it's just one word,
 
-**[Grab some words](https://github.com/nlp-compromise/compromise/wiki/Usage)** - you can use [built-in methods](https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods) like **.nouns()**, or **.people()**,
-
-or query any pattern you want with [.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax):
+* **[Grab a part](https://github.com/nlp-compromise/compromise/wiki/Usage)** - you can use [built-in methods](https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods) (like **.nouns()**, or **.people()**,)
+or query any pattern with **[.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)**:
 ```js
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
 
@@ -203,7 +202,7 @@ doc.match('#PastTense to').hyphenate().out()
 // 'wrote-to'
 ```
 
-<a href="https://github.com/nlp-compromise/compromise/wiki/Nouns"><b>Plural/singular:</b></a> - grab the noun-phrases, make em plural:
+* <a href="https://github.com/nlp-compromise/compromise/wiki/Nouns"><b>Plural/singular:</b></a> - grab the noun-phrases, make em plural:
 ```javascript
 doc = nlp('a bottle of beer on the wall.')
 doc.nouns().first().toPlural()
@@ -211,7 +210,7 @@ doc.out('text')
 //'The bottles of beer on the wall.'
 ```
 
-<a href="https://github.com/nlp-compromise/compromise/wiki/Values"><b>Number parsing:</b></a> - parse written-out numbers, and change their form:
+* <a href="https://github.com/nlp-compromise/compromise/wiki/Values"><b>Number parsing:</b></a> - parse written-out numbers, and change their form:
 ```javascript
 doc = nlp('ninety five thousand and fifty two')
 doc.values().toNumber().out('text')
@@ -223,13 +222,13 @@ doc.out('text')
 // 'the twenty fifth of December'
 ```
 
-<a href="https://github.com/nlp-compromise/compromise/wiki/Usage"><b>Normalization:</b></a> - handle the craziness:
+* <a href="https://github.com/nlp-compromise/compromise/wiki/Usage"><b>Normalization:</b></a> - handle the craziness:
 ```javascript
 doc = nlp("the guest-singer's björk   at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
 ```
 
-<a href="https://github.com/nlp-compromise/compromise/wiki/Verbs"><b>Tense:</b></a> - switch between conjugations of any verb
+* <a href="https://github.com/nlp-compromise/compromise/wiki/Verbs"><b>Tense:</b></a> - switch between conjugations of any verb
 ```javascript
 let doc = nlp('she sells seashells by the seashore.')
 doc.sentences().toFutureTense().out('text')
@@ -242,7 +241,7 @@ doc.verbs().conjugate()
 // }]
 ```
 
-<a href="https://github.com/nlp-compromise/compromise/wiki/Usage"><b> Named-entities:</b></a> - get the people, places, organizations:
+* <a href="https://github.com/nlp-compromise/compromise/wiki/Usage"><b> Named-entities:</b></a> - get the people, places, organizations:
 ```javascript
 doc = nlp('that opera about richard nixon visiting china')
 doc.topics().data()
@@ -252,7 +251,7 @@ doc.topics().data()
 // ]
 ```
 
-<a href="https://github.com/nlp-compromise/compromise/wiki/Lexicon"><b>Error correction:</b></a> - make it say what you'd like:
+* <a href="https://github.com/nlp-compromise/compromise/wiki/Lexicon"><b>Error correction:</b></a> - make it say what you'd like:
 ```javascript
 var lexicon={
   'boston': 'MusicalGroup'
@@ -267,7 +266,7 @@ doc.match('#MusicalGroup').length
 // 1
 ```
 
-<a href="https://github.com/nlp-compromise/compromise/wiki/Output"><b> Handy outputs:</b></a> - get sensible data:
+* <a href="https://github.com/nlp-compromise/compromise/wiki/Output"><b> Handy outputs:</b></a> - get sensible data:
 ```javascript
 doc = nlp('We like Roy! We like Roy!').sentences().out('array')
 // ['We like Roy!', 'We like Roy!']

@@ -111,7 +111,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Named-entities &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Named-entities &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
@@ -121,7 +121,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
-          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Number parsing &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Number parsing &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
@@ -157,7 +157,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
             </a>
          </div>
          <div align="center">
-            <sub>contractions, style, tense..</sub>
+            <sub>contractions, style, mood..</sub>
          </div>
       </td>
    </tr>
@@ -199,8 +199,7 @@ doc.match('#PastTense to').hyphenate().out()
 // 'wrote-to'
 ```
 
-### Plural/singular:
-grab the noun-phrases, make em plural:
+<b>Plural/singular:</b> - grab the noun-phrases, make em plural:
 ```javascript
 doc = nlp('a bottle of beer on the wall.')
 doc.nouns().first().toPlural()
@@ -208,8 +207,7 @@ doc.out('text')
 //'The bottles of beer on the wall.'
 ```
 
-### Number parsing:
-parse written-out numbers, and change their form:
+<b>Number parsing:</b> - parse written-out numbers, and change their form:
 ```javascript
 doc = nlp('ninety five thousand and fifty two')
 doc.values().toNumber().out('text')
@@ -221,15 +219,13 @@ doc.out('text')
 // 'the twenty fifth of December'
 ```
 
-### Normalization:
-handle the craziness:
+<b>Normalization:</b> - handle the craziness:
 ```javascript
 doc = nlp("the guest-singer's björk   at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
 ```
 
-### Tense:
-_all your base are belong:_
+<b>Tense:</b> - switch between conjugations of any verb
 ```javascript
 let doc = nlp('she sells seashells by the seashore.')
 doc.sentences().toFutureTense().out('text')
@@ -242,8 +238,7 @@ doc.verbs().conjugate()
 // }]
 ```
 
-### Named-entities:
-get the people, places, organizations:
+<b> Named-entities:</b> - get the people, places, organizations:
 ```javascript
 doc = nlp('that opera about richard nixon visiting china')
 doc.topics().data()
@@ -253,8 +248,7 @@ doc.topics().data()
 // ]
 ```
 
-### Error correction:
-make it say what you'd like:
+<b>Error correction:</b> - make it say what you'd like:
 ```javascript
 var lexicon={
   'boston': 'MusicalGroup'
@@ -269,8 +263,7 @@ doc.match('#MusicalGroup').length
 // 1
 ```
 
-### Handy outputs:
-get sensible data:
+<b> Handy outputs:</b> - get sensible data:
 ```javascript
 doc = nlp('We like Roy! We like Roy!').sentences().out('array')
 // ['We like Roy!', 'We like Roy!']

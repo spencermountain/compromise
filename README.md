@@ -95,9 +95,9 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   &nbsp; &nbsp; &nbsp;
   <a href="https://github.com/nlp-compromise/compromise/wiki/Usage">Tutorials</a>
 </h3>
+
 <table>
    <tr>
-
       <td>
          <div align="center">
            <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
@@ -108,7 +108,6 @@ nlp('..then consider me Miles Davis!').people().out('freq')
             <sub><i>nouns, verbs, adjectives..</i></sub>
          </div>
       </td>
-
       <td>
         <div align="center">
           <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
@@ -119,7 +118,6 @@ nlp('..then consider me Miles Davis!').people().out('freq')
           <sub><i>the people, places, orgs..</i></sub>
         </div>
       </td>
-
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
@@ -130,11 +128,8 @@ nlp('..then consider me Miles Davis!').people().out('freq')
             <sub><i>match natural-language forms</i></sub>
          </div>
       </td>
-
    </tr>
-
    <tr>
-
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
@@ -145,7 +140,6 @@ nlp('..then consider me Miles Davis!').people().out('freq')
             <sub><i>'seven hundred and fifty' -> 750</i></sub>
          </div>
       </td>
-
       <td>
         <div align="center">
           <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
@@ -156,7 +150,6 @@ nlp('..then consider me Miles Davis!').people().out('freq')
           <sub><i>change tense of a verb or sentence</i></sub>
         </div>
       </td>
-
       <td>
          <div align="center">
             <a href="https://github.com/nlp-compromise/compromise/wiki/Usage#normalization">
@@ -167,7 +160,6 @@ nlp('..then consider me Miles Davis!').people().out('freq')
             <sub><i>contractions, hyphenation, punctuation</i></sub>
          </div>
       </td>
-
    </tr>
 </table>
 

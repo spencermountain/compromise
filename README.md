@@ -45,7 +45,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
           </a>
         </b>
         <div>
-           &nbsp; &nbsp; &nbsp; one javascript file &nbsp; &nbsp; &nbsp;
+           &nbsp; &nbsp; &nbsp; &nbsp; one javascript file &nbsp; &nbsp; &nbsp; &nbsp;
         </div>
       </td>
       <td align="center">
@@ -111,7 +111,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Named-entities &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Named-entities &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
@@ -121,11 +121,11 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
-          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Number parsing &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Number parsing &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
-            <sub>'seven hundred and fifty' == 750</sub>
+            <sub>seven hundred and fifty === 750</sub>
          </div>
       </td>
    </tr>
@@ -185,7 +185,7 @@ doc.sentences().toNegative()
 ```
 
 ## Grab some words,
-you can use [pre-defined selections](https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods) (like **.nouns()**) or grab any pattern with [.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)
+you can use [built-in selectors](https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods) (like **.people()**) or query any pattern you want with [.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)
 ```js
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
 
@@ -199,7 +199,7 @@ doc.match('#PastTense to').hyphenate().out()
 // 'wrote-to'
 ```
 
-<b>Plural/singular:</b> - grab the noun-phrases, make em plural:
+<a href="https://github.com/nlp-compromise/compromise/wiki/Nouns"><b>Plural/singular:</b></a> - grab the noun-phrases, make em plural:
 ```javascript
 doc = nlp('a bottle of beer on the wall.')
 doc.nouns().first().toPlural()
@@ -207,7 +207,7 @@ doc.out('text')
 //'The bottles of beer on the wall.'
 ```
 
-<b>Number parsing:</b> - parse written-out numbers, and change their form:
+<a href="https://github.com/nlp-compromise/compromise/wiki/Values"><b>Number parsing:</b></a> - parse written-out numbers, and change their form:
 ```javascript
 doc = nlp('ninety five thousand and fifty two')
 doc.values().toNumber().out('text')
@@ -219,13 +219,13 @@ doc.out('text')
 // 'the twenty fifth of December'
 ```
 
-<b>Normalization:</b> - handle the craziness:
+<a href="https://github.com/nlp-compromise/compromise/wiki/Usage"><b>Normalization:</b></a> - handle the craziness:
 ```javascript
 doc = nlp("the guest-singer's björk   at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
 ```
 
-<b>Tense:</b> - switch between conjugations of any verb
+<a href="https://github.com/nlp-compromise/compromise/wiki/Verbs"><b>Tense:</b></a> - switch between conjugations of any verb
 ```javascript
 let doc = nlp('she sells seashells by the seashore.')
 doc.sentences().toFutureTense().out('text')
@@ -238,7 +238,7 @@ doc.verbs().conjugate()
 // }]
 ```
 
-<b> Named-entities:</b> - get the people, places, organizations:
+<a href="https://github.com/nlp-compromise/compromise/wiki/Usage"><b> Named-entities:</b></a> - get the people, places, organizations:
 ```javascript
 doc = nlp('that opera about richard nixon visiting china')
 doc.topics().data()
@@ -248,7 +248,7 @@ doc.topics().data()
 // ]
 ```
 
-<b>Error correction:</b> - make it say what you'd like:
+<a href="https://github.com/nlp-compromise/compromise/wiki/Lexicon"><b>Error correction:</b></a> - make it say what you'd like:
 ```javascript
 var lexicon={
   'boston': 'MusicalGroup'
@@ -263,7 +263,7 @@ doc.match('#MusicalGroup').length
 // 1
 ```
 
-<b> Handy outputs:</b> - get sensible data:
+<a href="https://github.com/nlp-compromise/compromise/wiki/Output"><b> Handy outputs:</b></a> - get sensible data:
 ```javascript
 doc = nlp('We like Roy! We like Roy!').sentences().out('array')
 // ['We like Roy!', 'We like Roy!']

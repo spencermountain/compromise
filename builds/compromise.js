@@ -781,7 +781,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.6.0",
+  "version": "10.6.1",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -10293,7 +10293,7 @@ var methods = {
   toPlural: function toPlural() {
     var t = this.t;
     if (_hasPlural(t) && !_isPlural(t)) {
-      t.text = pluralize(t.text);
+      t.text = pluralize(t.normal) || t.text;
       t.unTag('Plural', 'toPlural');
       t.tag('Singular', 'toPlural');
     }
@@ -10302,7 +10302,7 @@ var methods = {
   toSingular: function toSingular() {
     var t = this.t;
     if (_isPlural(t)) {
-      t.text = singularize(t.text);
+      t.text = singularize(t.normal) || t.text;
       t.unTag('Plural', 'toSingular');
       t.tag('Singular', 'toSingular');
     }

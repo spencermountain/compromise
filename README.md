@@ -101,7 +101,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
-            &nbsp; &nbsp; &nbsp; &nbsp; Part-of-Speech tagging &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Part-of-Speech tagging &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
@@ -111,7 +111,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Named-entities &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Named-entities &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">

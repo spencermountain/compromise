@@ -163,7 +163,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
    </tr>
 </table>
 
-#### 🕰️ Client-side!
+#### ⚡️ Client-side!
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
@@ -184,8 +184,12 @@ doc.sentences().toNegative()
 // 'London is not calling'
 ```
 
-## Toss-in some text,
-*[Grab some words](https://github.com/nlp-compromise/compromise/wiki/Usage)* - you can use [built-in selectors](https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods) (like **.people()**) or query any pattern you want with [.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)
+## Toss-in your text,
+even if it's just one word, the idea is the same.
+
+**[Grab some words](https://github.com/nlp-compromise/compromise/wiki/Usage)** - you can use [built-in methods](https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods) like **.nouns()**, or **.people()**,
+
+or query any pattern you want with [.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax):
 ```js
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
 

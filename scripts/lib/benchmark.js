@@ -1,18 +1,17 @@
 'use strict';
-const corpus = require('nlp-corpus');
-const filesize = require('./filesize');
-const path = require('path');
-let start;
-let end;
-let src = path.join(__dirname, '../../builds/compromise.min.js');
+var filesize = require('./filesize');
+var path = require('path');
+var str = require('../../test/unit/lib/friends');
+var start;
+var end;
+var src = path.join(__dirname, '../../builds/compromise.min.js');
 
-const benchmark = function(cb) {
+var benchmark = function(cb) {
   var obj = {};
   setTimeout(() => {
-
     //init
     start = new Date().getTime();
-    const nlp = require(src);
+    var nlp = require(src);
     end = new Date().getTime();
     obj.init = end - start;
 
@@ -27,13 +26,10 @@ const benchmark = function(cb) {
     m.match('#Person').out();
     end = new Date().getTime();
     obj.match = end - start;
-
-    (() => {
-      let str = corpus.poe.parsed()[5];
-
+    (function() {
       //big parse
       start = new Date().getTime();
-      let m2 = nlp(str);
+      var m2 = nlp(str);
       end = new Date().getTime();
       obj.big = end - start;
 
@@ -46,7 +42,6 @@ const benchmark = function(cb) {
       obj.size = filesize(src);
       cb(obj);
     })();
-
   }, 200);
 };
 module.exports = benchmark;

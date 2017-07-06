@@ -1,6 +1,6 @@
 'use strict';
 //orgwords like 'bank' in 'Foo Bank'
-let orgWords = require('../paths').tries.utils.orgWords;
+let orgWords = require('../../lexicon/uncompressed/orgWords');
 
 //could this word be an organization
 const maybeOrg = function(t) {
@@ -19,10 +19,10 @@ const maybeOrg = function(t) {
   return false;
 };
 
-const organization_step = (ts) => {
-  for(let i = 0; i < ts.terms.length; i++) {
+const organization_step = ts => {
+  for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
-    if (orgWords.has(t.normal)) {
+    if (orgWords.hasOwnProperty(t.normal) === true) {
       //eg. Toronto University
       let lastTerm = ts.terms[i - 1];
       if (lastTerm && maybeOrg(lastTerm)) {

@@ -12,10 +12,10 @@ test('organization test', function(t) {
     'al qaeda',
     'FBI',
     'monsanto',
-    'Johnson & Johnson',
-  // 'Johnson & Johnson LLC',
+    'Johnson & Johnson'
+    // 'Johnson & Johnson LLC',
   ];
-  arr.forEach(function (str) {
+  arr.forEach(function(str) {
     var r = nlp(str);
     var orgs = r.organizations();
     var msg = orgs.out('text') + '  -  ' + str;

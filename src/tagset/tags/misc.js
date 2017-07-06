@@ -1,6 +1,8 @@
 module.exports = {
-
   Adjective: {},
+  Comparable: {
+    is: 'Adjective'
+  },
   Comparative: {
     is: 'Adjective'
   },
@@ -42,6 +44,5 @@ module.exports = {
   Hyphenated: {},
   Acronym: {},
   ClauseEnd: {},
-  Quotation: {},
-
+  Quotation: {}
 };

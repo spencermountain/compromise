@@ -3,7 +3,7 @@ module.exports = {
     is: 'VerbPhrase'
   },
   PresentTense: {
-    is: 'Verb',
+    is: 'Verb'
   },
   Infinitive: {
     is: 'PresentTense'

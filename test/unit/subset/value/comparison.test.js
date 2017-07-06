@@ -1,17 +1,17 @@
 var test = require('tape');
 var nlp = require('../../lib/nlp');
 
-test('isEqual:', function (t) {
+test('isEqual:', function(t) {
   var str = nlp('he is 7 years old').values().isEqual(7).out('normal');
   t.equal(str, '7 years old', 'isEqual 7');
 
   str = nlp('he is seven years old').values().isEqual(7).out('normal');
   t.equal(str, 'seven years old', 'isEqual seven');
 
-  str = nlp('it\'s his 7th birthday').values().isEqual(7).out('normal');
+  str = nlp("it's his 7th birthday").values().isEqual(7).out('normal');
   t.equal(str, '7th birthday', 'isEqual 7th');
 
-  str = nlp('it\'s his seventh birthday').values().isEqual(7).out('normal');
+  str = nlp("it's his seventh birthday").values().isEqual(7).out('normal');
   t.equal(str, 'seventh birthday', 'isEqual seventh');
 
   str = nlp('i have 7 potatoes and 12 tomatoes').values().isEqual(7).out('normal');
@@ -31,7 +31,7 @@ test('isEqual:', function (t) {
   t.end();
 });
 
-test('greaterThan:', function (t) {
+test('greaterThan:', function(t) {
   var str = nlp('he is 8 years old').values().greaterThan(7).out('normal');
   t.equal(str, '8 years old', '8 greaterThan 7');
 
@@ -50,7 +50,7 @@ test('greaterThan:', function (t) {
   t.end();
 });
 
-test('lessThan:', function (t) {
+test('lessThan:', function(t) {
   var str = nlp('he is 8 years old').values().lessThan(700).out('normal');
   t.equal(str, '8 years old', '8 lessThan 700');
 
@@ -66,7 +66,7 @@ test('lessThan:', function (t) {
   t.end();
 });
 
-test('negative comparisons:', function (t) {
+test('negative comparisons:', function(t) {
   var str = nlp('i am 8 years old').values().greaterThan(-2).out('normal');
   t.equal(str, '8 years old', '8 greaterThan -2');
 

@@ -12,8 +12,8 @@ test('==WordCount==', function(t) {
     ['it was five hundred and seventy two.', 7],
     ['jack and jill went up the hill. They got water.', 10],
     ['Bill Clinton went walking', 4],
-    ['Bill Clinton will go walking', 5],
-  ].forEach(function (a) {
+    ['Bill Clinton will go walking', 5]
+  ].forEach(function(a) {
     var num = nlp(a[0]).terms().length;
     str_test(num, a[0], a[1], t);
   });

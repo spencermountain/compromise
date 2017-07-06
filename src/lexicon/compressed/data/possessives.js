@@ -1,0 +1,22 @@
+module.exports = [
+  'mine',
+  'something',
+  'none',
+  'anything',
+  'anyone',
+  'theirs',
+  'himself',
+  'ours',
+  'his',
+  'my',
+  'their',
+  'yours',
+  'your',
+  'our',
+  'its',
+  'herself',
+  'hers',
+  'themselves',
+  'myself',
+  'her' //this one is check ambiguous
+];

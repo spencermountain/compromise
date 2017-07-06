@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-test('random', function (t) {
+test('random', function(t) {
   var r = nlp('one two three four five six');
   var arr = r.terms().random().out('array');
   t.equal(arr.length, 1, 'default is size 1');
@@ -30,8 +30,7 @@ test('random', function (t) {
   t.end();
 });
 
-
-test('random-null', function (t) {
+test('random-null', function(t) {
   var r = nlp('toronto');
   var arr = r.people().random(5).out('array');
   t.equal(arr.length, 0, 'random can be empty');

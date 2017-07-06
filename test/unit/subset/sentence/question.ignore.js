@@ -12,7 +12,7 @@ test('question-test :', function(t) {
     [`when'll you show up?`, 'when'],
     [`is it fun?`, 'yesNo'],
     [`was it fun?`, 'yesNo'],
-    [`did you think it was fun?`, 'yesNo'],
+    [`did you think it was fun?`, 'yesNo']
   ].forEach(function(a) {
     var str = nlp(a[0]).data()[0].type;
     str_test(str, a[0], a[1], t);

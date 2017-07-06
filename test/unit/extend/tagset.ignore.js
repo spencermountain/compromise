@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-test('extend-tagset-flat', function (t) {
+test('extend-tagset-flat', function(t) {
   var tagSet = {
     OffWhite: true
   };
@@ -15,8 +15,7 @@ test('extend-tagset-flat', function (t) {
   t.end();
 });
 
-
-test('extend-tagset-nested', function (t) {
+test('extend-tagset-nested', function(t) {
   var tagSet = {
     Noun: {
       Singular: {

@@ -8,8 +8,8 @@ test('topics:', function(t) {
     ['I live Toronto. I think Toronto is cool.', 'toronto'],
     ['The EACD united in 1972. EACD must follow regulations.', 'eacd'],
     ['The Elkjsdflkjsdf sells hamburgers. I think the Elkjsdflkjsdf eats turky.', 'elkjsdflkjsdf'],
-    ['Toronto\'s citizens love toronto!', 'toronto'],
-  ].forEach(function (a) {
+    ["Toronto's citizens love toronto!", 'toronto']
+  ].forEach(function(a) {
     var str = nlp(a[0]).topics().out('normal');
     str_test(str, a[0], a[1], t);
   });

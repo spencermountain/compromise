@@ -1,9 +1,8 @@
 var test = require('tape');
 var nlp = require('../../lib/nlp');
 
-test('==Adverb==', function (T) {
-
-  T.test('to_adjective:', function (t) {
+test('==Adverb==', function(T) {
+  T.test('to_adjective:', function(t) {
     [
       ['quickly', 'quick'],
       ['garishly', 'garish'],
@@ -57,7 +56,7 @@ test('==Adverb==', function (T) {
       ['namely', 'name'],
       ['formidably', 'formidable'],
       ['vertically', 'vertical']
-    ].forEach(function (a) {
+    ].forEach(function(a) {
       var o = nlp(a[0]).tag('Adverb').adverbs().data()[0];
       var msg = a[0] + ' -> ' + o.adjectiveForm;
       t.equal(o.adjectiveForm, a[1], msg);

@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-test('topk:', function (t) {
+test('topk:', function(t) {
   var str = 'it is good. it was nice. she is cool.';
   var r = nlp(str);
   var arr = r.verbs().out('topk');
@@ -13,7 +13,7 @@ test('topk:', function (t) {
   t.end();
 });
 
-test('out-tags:', function (t) {
+test('out-tags:', function(t) {
   var str = 'texas rangers are a baseball team';
   var r = nlp(str);
   var arr = r.out('tags');
@@ -25,7 +25,7 @@ test('out-tags:', function (t) {
   t.end();
 });
 
-test('out-array:', function (t) {
+test('out-array:', function(t) {
   var str = 'texas rangers are a baseball team. They do not play in houston.';
   var r = nlp(str).verbs();
   var arr = r.out('array');
@@ -35,7 +35,7 @@ test('out-array:', function (t) {
   t.end();
 });
 
-test('out-csv:', function (t) {
+test('out-csv:', function(t) {
   var str = 'John, Jill McGraw, and Moe were swimming';
   var have = nlp(str).people().out('csv');
   var want = 'john\njill,mcgraw\nmoe';
@@ -43,7 +43,7 @@ test('out-csv:', function (t) {
   t.end();
 });
 
-test('out-newlines:', function (t) {
+test('out-newlines:', function(t) {
   var str = 'John, Jill McGraw, and Moe were swimming';
   var have = nlp(str).people().out('newlines');
   var want = 'John,\nJill McGraw,\nMoe';
@@ -51,7 +51,7 @@ test('out-newlines:', function (t) {
   t.end();
 });
 
-test('out-others:', function (t) {
+test('out-others:', function(t) {
   var str = 'texas rangers are a baseball team. They do not play in houston.';
   var r = nlp(str).verbs();
   var txt = r.out('text');

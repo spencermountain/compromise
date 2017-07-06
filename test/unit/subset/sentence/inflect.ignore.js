@@ -8,36 +8,34 @@ test('toPlural():', function(t) {
     ['a cranberry', 'the cranberries'],
     ['a red cranberry', 'the red cranberries'],
     ['mayor of chicago', 'mayors of chicago'],
-    ['chicago mayor', 'chicago mayors'],
-  ].forEach(function (a) {
+    ['chicago mayor', 'chicago mayors']
+  ].forEach(function(a) {
     var str = nlp(a[0]).toPlural().out('normal');
     str_test(str, a[0], a[1], t);
   });
   t.end();
 });
 
+test('toSingular:', function(t) {
+  var str = "i'd buy those nachos";
+  var m = nlp(str).sentences().toSingular();
+  t.equal(m.out('normal'), "i'd buy that nacho", str);
 
-test('toSingular:', function (t) {
-
-  str = 'i\'d buy those nachos';
+  str = "i'd buy these nachos";
   m = nlp(str).sentences().toSingular();
-  t.equal(m.out('normal'), 'i\'d buy that nacho', str);
+  t.equal(m.out('normal'), "i'd buy this nacho", str);
 
-  str = 'i\'d buy these nachos';
+  str = "i'd buy nachos";
   m = nlp(str).sentences().toSingular();
-  t.equal(m.out('normal'), 'i\'d buy this nacho', str);
+  t.equal(m.out('normal'), "i'd buy a nacho", str);
 
-  str = 'i\'d buy nachos';
+  str = "i'd buy the nachos";
   m = nlp(str).sentences().toSingular();
-  t.equal(m.out('normal'), 'i\'d buy a nacho', str);
+  t.equal(m.out('normal'), "i'd buy a nacho", str);
 
-  str = 'i\'d buy the nachos';
+  str = "i'd buy the eggs";
   m = nlp(str).sentences().toSingular();
-  t.equal(m.out('normal'), 'i\'d buy a nacho', str);
-
-  str = 'i\'d buy the eggs';
-  m = nlp(str).sentences().toSingular();
-  t.equal(m.out('normal'), 'i\'d buy an egg', str);
+  t.equal(m.out('normal'), "i'd buy an egg", str);
 
   str = 'men go';
   m = nlp(str).sentences().toPast().nouns().toSingular();

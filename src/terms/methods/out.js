@@ -2,26 +2,25 @@
 const fns = require('../paths').fns;
 
 const methods = {
-  text: function (ts) {
+  text: function(ts) {
     return ts.terms.reduce((str, t) => {
       str += t.out('text');
       return str;
     }, '');
   },
 
-
-  normal: function (ts) {
-    let terms = ts.terms.filter((t) => {
+  normal: function(ts) {
+    let terms = ts.terms.filter(t => {
       return t.text;
     });
-    terms = terms.map((t) => {
+    terms = terms.map(t => {
       return t.normal; //+ punct;
     });
     return terms.join(' ');
   },
 
   grid: function(ts) {
-    var str = '  ';
+    let str = '  ';
     str += ts.terms.reduce((s, t) => {
       s += fns.leftPad(t.text, 11);
       return s;
@@ -36,25 +35,27 @@ const methods = {
     }, '');
   },
   csv: function(ts) {
-    return ts.terms.map((t) => t.normal.replace(/,/g, '')).join(',');
+    return ts.terms.map(t => t.normal.replace(/,/g, '')).join(',');
   },
 
-  newlines: function (ts) {
-    return ts.terms.reduce((str, t) => {
-      str += t.out('text').replace(/\n/g, ' ');
-      return str;
-    }, '').replace(/^\s/, '');
+  newlines: function(ts) {
+    return ts.terms
+      .reduce((str, t) => {
+        str += t.out('text').replace(/\n/g, ' ');
+        return str;
+      }, '')
+      .replace(/^\s/, '');
   },
   /** no punctuation, fancy business **/
-  root: function (ts) {
-    return ts.terms.filter((t) => t.text).map((t) => t.root).join(' ').toLowerCase();
+  root: function(ts) {
+    return ts.terms.filter(t => t.text).map(t => t.root).join(' ').toLowerCase();
   },
 
-  html: function (ts) {
-    return ts.terms.map((t) => t.render.html()).join(' ');
+  html: function(ts) {
+    return ts.terms.map(t => t.render.html()).join(' ');
   },
   debug: function(ts) {
-    ts.terms.forEach((t) => {
+    ts.terms.forEach(t => {
       t.out('debug');
     });
   }
@@ -65,8 +66,7 @@ methods.normalized = methods.normal;
 methods.colors = methods.color;
 methods.tags = methods.terms;
 
-
-const renderMethods = (Terms) => {
+const renderMethods = Terms => {
   Terms.prototype.out = function(str) {
     if (methods[str]) {
       return methods[str](this);
@@ -74,7 +74,7 @@ const renderMethods = (Terms) => {
     return methods.text(this);
   };
   //check method
-  Terms.prototype.debug = function () {
+  Terms.prototype.debug = function() {
     return methods.debug(this);
   };
   return Terms;

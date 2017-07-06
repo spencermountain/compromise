@@ -12,9 +12,9 @@ var tests = {
   'Hillary Rodham Clinton': 'Female',
   // 'John the Baptist': 'Male',
   'Margaret Thatcher': 'Female',
-  'Messiaen': 'Male',
-  'Mozart': 'Male',
-  'Nixon': 'Male',
+  Messiaen: 'Male',
+  Mozart: 'Male',
+  Nixon: 'Male',
   'Pope John Paul II': 'Male',
   'Richard Nixon': 'Male',
   'Ronald Reagan': 'Male',
@@ -27,22 +27,22 @@ var tests = {
   // 'the Queen': 'Female',
   'Van Gogh': 'Male',
   'Virgin Mary': 'Female',
-  'Vivaldi': 'Male',
+  Vivaldi: 'Male',
   'van Gogh': 'Male',
   'Carl Marx': 'Male',
-  'Lenin': 'Male',
-  'Stalin': 'Male',
+  Lenin: 'Male',
+  Stalin: 'Male',
   'George W.Bush': 'Male',
   'Mitt Romney': 'Male',
   'Barack Obama': 'Male',
-  'Obama': 'Male',
+  Obama: 'Male',
   'Lady Gaga': 'Female',
   'Kanye West': 'Male',
   'Abu Hamza': 'Male',
   'Abu Hamza Al - Masri': 'Male',
   'Osama bin Laden': 'Male',
   'Osama Bin Laden': 'Male',
-  'Mubarek': 'Male',
+  Mubarek: 'Male',
   'Muhammad Ali': 'Male',
   'Jennifer Aniston': 'Female',
   'Tyra Banks': 'Female',
@@ -95,8 +95,8 @@ var tests = {
   'Phil Mickelson': 'Male',
   'Kate Moss': 'Female',
   'Neil Diamond': 'Male',
-  'Bill O\'Reilly': 'Male',
-  'Shaquille O\'Neal': 'Male',
+  "Bill O'Reilly": 'Male',
+  "Shaquille O'Neal": 'Male',
   'Carson Palmer': 'Male',
   'James Patterson': 'Male',
   'Ty Pennington': 'Male',
@@ -107,7 +107,7 @@ var tests = {
   'Nicole Richie': 'Female',
   'Alex Rodriguez': 'Male',
   'Ray Romano': 'Male',
-  'Ronaldinho': 'Male',
+  Ronaldinho: 'Male',
   'Valentino Rossi': 'Male',
   'J.K. Rowling': 'Female',
   'Adam Sandler': 'Male',
@@ -146,13 +146,13 @@ var tests = {
   'Cardinal Wolsey': 'Male',
   'Slobodan Milosevic': 'Male',
   'Renee Zellweger ': 'Female',
-  'Whitney Houston ': 'Female',
+  'Whitney Houston ': 'Female'
 };
 
-test('celebrity names:', function (t) {
+test('celebrity names:', function(t) {
   Object.keys(tests).forEach(function(k) {
     var str = nlp(k).people().out('text');
-    var msg = '\'' + k + '\' is a person - - have: \'' + str + '\'';
+    var msg = "'" + k + "' is a person - - have: '" + str + "'";
     t.equal(str, k, msg);
   });
   t.end();

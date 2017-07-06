@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-test('result methods', function (t) {
+test('result methods', function(t) {
   var text = 'this :cookie: <3 💯 so good. It is really nice. Yes it is <3';
 
   //has method

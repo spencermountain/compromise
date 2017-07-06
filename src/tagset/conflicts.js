@@ -3,7 +3,21 @@
 //list of inconsistent parts-of-speech
 module.exports = [
   //top-level pos are all inconsistent
-  ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression', 'Url', 'PhoneNumber', 'Email', 'Emoji'],
+  [
+    'Noun',
+    'Verb',
+    'Adjective',
+    'Adverb',
+    'Determiner',
+    'Conjunction',
+    'Preposition',
+    'QuestionWord',
+    'Expression',
+    'Url',
+    'PhoneNumber',
+    'Email',
+    'Emoji'
+  ],
   //exlusive-nouns
   ['Person', 'Organization', 'Value', 'Place', 'Actor', 'Demonym', 'Pronoun'],
   //things that can't be plural
@@ -41,5 +55,7 @@ module.exports = [
   ['RomanNumeral', 'Fraction', 'NiceNumber'],
   ['RomanNumeral', 'Money'],
   //cases
-  ['UpperCase', 'TitleCase', 'CamelCase']
+  ['UpperCase', 'TitleCase', 'CamelCase'],
+  //phrases
+  ['VerbPhrase', 'Noun', 'Adjective']
 ];

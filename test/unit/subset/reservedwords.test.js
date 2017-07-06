@@ -1,8 +1,7 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-test('reserved words:', function (t) {
-
+test('reserved words:', function(t) {
   var reserved = [
     'abstract',
     'boolean',
@@ -71,7 +70,7 @@ test('reserved words:', function (t) {
     '&&',
     '||',
     '|',
-    '\'',
+    "'",
     '&',
     'Math.PI',
     12e34,
@@ -110,9 +109,8 @@ test('reserved words:', function (t) {
   t.end();
 });
 
-
-test('co-erce reserved words', function (t) {
-  let r = nlp('constructor prototype');
+test('co-erce reserved words', function(t) {
+  var r = nlp('constructor prototype');
   r.tag('Verb');
   t.ok(r.verbs().data(), 'runs verb subset');
   r.tag('Adjective');

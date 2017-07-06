@@ -1,5 +1,5 @@
 'use strict';
-const isPlural = require('../../result/subset/nouns/isPlural');
+const isPlural = require('../../text/subset/nouns/isPlural');
 
 const pluralStep = function(ts) {
   for(let i = 0; i < ts.terms.length; i++) {

@@ -1,7 +1,6 @@
 var test = require('tape');
 var nlp = require('../../lib/nlp');
 
-
 // test('one big dates', function (t) {
 //   var r = nlp('six years and 2 days before the start of this next wednesday january 5th 1992 at 6pm');
 //   var dates = r.dates().data();
@@ -21,7 +20,7 @@ var nlp = require('../../lib/nlp');
 //   t.end();
 // });
 
-test('short+long form', function (t) {
+test('short+long form', function(t) {
   var r = nlp('wednesday, january 2nd, 2016');
   var shorter = r.dates().toShortForm().out('normal');
   t.equal(shorter, 'wed jan 2nd 2016');

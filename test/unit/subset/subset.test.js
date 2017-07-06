@@ -7,7 +7,7 @@ var mustBe = function(arr) {
   });
 };
 
-test('clauses', function (t) {
+test('clauses', function(t) {
   var m = nlp('he is nice - which is cool... but whatever');
   var have = mustBe(m.clauses().data());
   var want = ['he is nice', 'which is cool', 'but whatever'];
@@ -23,7 +23,7 @@ test('clauses', function (t) {
   t.end();
 });
 
-test('adjectives', function (t) {
+test('adjectives', function(t) {
   var m = nlp('he is nice, cool and very fun');
   var have = mustBe(m.adjectives().data());
   var want = ['nice', 'cool', 'fun'];
@@ -33,10 +33,10 @@ test('adjectives', function (t) {
   t.end();
 });
 
-test('contractions-subset', function (t) {
-  var m = nlp('he\'s nice. She could\'ve seen.');
+test('contractions-subset', function(t) {
+  var m = nlp("he's nice. She could've seen.");
   var have = mustBe(m.contractions().data());
-  var want = ['he\'s', 'could\'ve'];
+  var want = ["he's", "could've"];
   var msg = have.join(' -- ');
   t.deepEqual(have, want, msg);
 

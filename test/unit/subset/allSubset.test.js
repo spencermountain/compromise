@@ -23,10 +23,10 @@ var subsets = [
   'verbs'
 ];
 
-test('all combined subsets empty:', function (t) {
+test('all combined subsets empty:', function(t) {
   var r = nlp(freshPrince);
   var small = r.all();
-  for(var i = 0; i < subsets.length; i++) {
+  for (var i = 0; i < subsets.length; i++) {
     var sub = subsets[i];
     small = small[sub]();
   }
@@ -34,8 +34,7 @@ test('all combined subsets empty:', function (t) {
   t.end();
 });
 
-
-test('all subsets have a data method:', function (t) {
+test('all subsets have a data method:', function(t) {
   var r = nlp(freshPrince);
   subsets.forEach(function(s) {
     var sub = r[s]();
@@ -45,7 +44,7 @@ test('all subsets have a data method:', function (t) {
   t.end();
 });
 
-test('all subsets support .all():', function (t) {
+test('all subsets support .all():', function(t) {
   var txt = freshPrince;
   var r = nlp(txt);
   subsets.forEach(function(s) {
@@ -57,7 +56,7 @@ test('all subsets support .all():', function (t) {
   t.end();
 });
 
-test('all subsets have an empty 100th element', function (t) {
+test('all subsets have an empty 100th element', function(t) {
   var txt = freshPrince;
   var r = nlp(txt);
   subsets.forEach(function(s) {

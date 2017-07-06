@@ -125,7 +125,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
             </a>
          </div>
          <div align="center">
-            <sub>seven hundred and fifty === 750</sub>
+            <sub>seven hundred and fifty == 750</sub>
          </div>
       </td>
    </tr>
@@ -187,7 +187,8 @@ doc.sentences().toNegative()
 ## Toss-in text,
 even if it's just one word,
 
-* **[Grab a part](https://github.com/nlp-compromise/compromise/wiki/Usage)** - you can use [built-in methods](https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods) (like **.nouns()**, or **.people()**,)
+### Grab a part
+you can use [built-in methods](https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods) (like **.nouns()**, or **.people()**,)
 or query any pattern with **[.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)**:
 ```js
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
@@ -294,7 +295,7 @@ doc = nlp('Tony Hawk').out('html')
     <td>
       <a href="https://twitter.com/nlp_compromise">
         <img src="https://cloud.githubusercontent.com/assets/399657/21956672/a30cf206-da53-11e6-8c6c-0995cf2aef62.jpg"/>
-        <div>&nbsp; &nbsp; &nbsp; Twitter &nbsp; &nbsp; &nbsp; </div>
+        <div>&nbsp; &nbsp; &nbsp; &nbsp; Twitter &nbsp; &nbsp; &nbsp;  &nbsp;</div>
       </a>
     </td>
     <td>
@@ -312,7 +313,7 @@ doc = nlp('Tony Hawk').out('html')
     <td>
       <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Projects">
         <img src="https://cloud.githubusercontent.com/assets/399657/26513481/a755ac38-4239-11e7-960a-1c26d85ddc1c.png"/>
-        <div>&nbsp; &nbsp; &nbsp; Projects &nbsp; &nbsp; &nbsp; </div>
+        <div>&nbsp; &nbsp; &nbsp; &nbsp; Projects &nbsp; &nbsp; &nbsp; &nbsp; </div>
       </a>
     </td>
     <td>
@@ -380,10 +381,12 @@ doc = nlp('Tony Hawk').out('html')
       <summary>✨ Partial builds?</summary>
       <p></p>
       <ul>
-        compromise can't be tree-shaken, because it's one function.
-        <br/> - and the tagging methods are competitive, so it's not recommended to pull-out stuff.
+        compromise can't really be tree-shaken, because it's one function.
+        <br/> .. and the tagging methods are competitive, so it's not recommended to pull things out.
         <br/>
-        It's recommended to load the library fully, given it's smaller than <a href="https://68.media.tumblr.com/tumblr_m674jlpyPT1ry8fquo1_250.gif">this gif</a>.
+        It's best to load the library fully, given it's smaller than <a href="https://68.media.tumblr.com/tumblr_m674jlpyPT1ry8fquo1_250.gif">this gif</a>.
+        <br/>
+        A plug-in scheme is in the works.
       </ul>
       <p></p>
     </details>

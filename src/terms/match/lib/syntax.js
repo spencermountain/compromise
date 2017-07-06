@@ -13,7 +13,7 @@ const noLast = function(str) {
 };
 
 //turn 'regex-like' search string into parsed json
-const parse_term = function (term) {
+const parse_term = function(term) {
   term = term || '';
   term = term.trim();
 
@@ -68,6 +68,15 @@ const parse_term = function (term) {
     reg.partial = term;
     term = '';
   }
+  //min/max any '{1,3}'
+  if (term.charAt(term.length - 1) === '}' && range.test(term) === true) {
+    let m = term.match(/\{([0-9]+)?,? ?([0-9]+)\}/);
+    reg.minMax = {
+      min: parseInt(m[1], 10) || 0,
+      max: parseInt(m[2], 10)
+    };
+    term = term.replace(range, '');
+  }
   //pos flag
   if (term.charAt(0) === '#') {
     term = noFirst(term);
@@ -81,9 +90,9 @@ const parse_term = function (term) {
     let arr = term.split(/\|/g);
     reg.oneOf = {
       terms: {},
-      tagArr: [],
+      tagArr: []
     };
-    arr.forEach((str) => {
+    arr.forEach(str => {
       //try a tag match
       if (str.charAt(0) === '#') {
         let tag = str.substr(1, str.length);
@@ -94,15 +103,6 @@ const parse_term = function (term) {
       }
     });
     term = '';
-  }
-  //min/max any '{1,3}'
-  if (term.charAt(term.length - 1) === '}' && range.test(term) === true) {
-    let m = term.match(/\{([0-9]+), ?([0-9]+)\}/);
-    reg.minMax = {
-      min: parseInt(m[1], 10),
-      max: parseInt(m[2], 10)
-    };
-    term = term.replace(range, '');
   }
   //a period means any one term
   if (term === '.') {
@@ -123,7 +123,7 @@ const parse_term = function (term) {
 };
 
 //turn a match string into an array of objects
-const parse_all = function (reg) {
+const parse_all = function(reg) {
   reg = reg || '';
   reg = reg.split(/ +/);
   return reg.map(parse_term);

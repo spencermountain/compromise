@@ -150,14 +150,26 @@ const corrections = function(ts) {
     ts.match('will #Adjective').term(1).tag('Verb', 'will-adj');
   }
 
+  if (ts.has('#TitleCase')) {
+    //FitBit Inc
+    ts.match('#TitleCase (ltd|co|inc|dept|assn|bros)').tag('Organization', 'org-abbrv');
+    //Foo District
+    ts
+      .match('#TitleCase{1,2} (district|region|province|county|prefecture|municipality|territory|burough|reservation)')
+      .tag('Region', 'foo-district');
+    //District of Foo
+    ts.match('(district|region|province|municipality|territory|burough) of #TitleCase').tag('Region', 'district-of-Foo');
+  }
+
+  //West Norforlk
+  ts.match('(west|north|south|east|western|northern|southern|eastern)+ #Place').tag('Region', 'west-norfolk');
+
   //misc:
   //foot/feet
   ts.match('(foot|feet)').tag('Noun', 'foot-noun');
   ts.match('#Value (foot|feet)').term(1).tag('Unit', 'foot-unit');
   //'u' as pronoun
   ts.match('#Conjunction u').term(1).tag('Pronoun', 'u-pronoun-2');
-  //FitBit Inc
-  ts.match('#TitleCase (ltd|co|inc|dept|assn|bros)').tag('Organization', 'org-abbrv');
   //'a/an' can mean 1
   ts.match('(a|an) (#Duration|#Value)').ifNo('#Plural').term(0).tag('Value', 'a-is-one');
   //swear-words as non-expression POS

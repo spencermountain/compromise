@@ -17,9 +17,9 @@ var data = [
   [require('./data/units'), 'Unit'],
 
   [require('./data/places/countries'), 'Country'],
+  [require('./data/places/regions'), 'Region'],
   [require('./data/places/places'), 'Place'],
   [require('./data/places/cities'), 'City'],
-  [require('./data/places/regions'), 'Region'],
   //dates
   [require('./data/dates/days'), 'WeekDay'],
   [require('./data/dates/holidays'), 'Holiday'],

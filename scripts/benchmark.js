@@ -1,11 +1,10 @@
-var exec = require('shelljs').exec
-const benchmark = require('./lib/benchmark');
-const fs = require('fs');
-const chalk = require('chalk');
+var benchmark = require('./lib/benchmark');
+var fs = require('fs');
+var chalk = require('chalk');
 
-const redGreen = function(last, now, unit) {
-  const diff = (now - last).toFixed(2);
-  let percent = diff / last * 100;
+var redGreen = function(last, now, unit) {
+  var diff = (now - last).toFixed(2);
+  var percent = diff / last * 100;
   percent = parseInt(percent, 10);
   if (percent < 0) {
     console.log('       ' + chalk.green(' ' + percent + '%     ' + diff + ' ' + unit));
@@ -17,9 +16,9 @@ const redGreen = function(last, now, unit) {
   console.log('');
 };
 
-const compare = function(obj) {
+var compare = function(obj) {
   console.log('');
-  let last = JSON.parse(fs.readFileSync('./scripts/lib/log.json'));
+  var last = JSON.parse(fs.readFileSync('./scripts/lib/log.json'));
   console.log('   size:');
   redGreen(last.size, obj.size, 'kb');
   console.log('   init:');

@@ -1,6 +1,5 @@
-var exec = require('shelljs').exec
-const assert = require('assert');
-const chalk = require('chalk');
+var assert = require('assert');
+var chalk = require('chalk');
 
 console.log(chalk.green('\n==sanity-test builds=='));
 //sanity-test the builds
@@ -11,7 +10,7 @@ var libs = [
 ];
 libs.forEach((nlp, i) => {
   console.log(chalk.green('  - - #' + i));
-  const r = nlp('John and Joe walked to the store');
+  var r = nlp('John and Joe walked to the store');
   assert(r.people().data().length === 2);
   assert(r.verbs().data().length === 1);
 });

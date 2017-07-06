@@ -22,7 +22,7 @@ const methods = {
   toPlural: function() {
     let t = this.t;
     if (hasPlural(t) && !isPlural(t)) {
-      t.text = pluralize(t.text);
+      t.text = pluralize(t.normal) || t.text;
       t.unTag('Plural', 'toPlural');
       t.tag('Singular', 'toPlural');
     }
@@ -31,7 +31,7 @@ const methods = {
   toSingular: function() {
     let t = this.t;
     if (isPlural(t)) {
-      t.text = singularize(t.text);
+      t.text = singularize(t.normal) || t.text;
       t.unTag('Plural', 'toSingular');
       t.tag('Singular', 'toSingular');
     }
@@ -41,7 +41,7 @@ const methods = {
     return {
       article: this.article(),
       singular: this.toSingular().out('normal'),
-      plural: this.toPlural().out('normal'),
+      plural: this.toPlural().out('normal')
     };
   }
 };
@@ -52,7 +52,7 @@ const Noun = function(arr, lexicon, refText) {
 };
 Noun.prototype = Object.create(Terms.prototype);
 
-Object.keys(methods).forEach((k) => {
+Object.keys(methods).forEach(k => {
   Noun.prototype[k] = methods[k];
 });
 module.exports = Noun;

@@ -319,7 +319,7 @@ doc = nlp('Tony Hawk').out('html')
     <img src="http://img.youtube.com/vi/WuPVS2tCg8s/mqdefault.jpg"/>
   </a>
   <a href="https://www.youtube.com/watch?v=c_hmwFwvO0U">
-    <img src="https://user-images.githubusercontent.com/399657/27890101-be7d1d98-61be-11e7-9b04-76edc5379538.png"/>
+    <img src="https://user-images.githubusercontent.com/399657/27890263-88e1fd10-61bf-11e7-93f2-745167f88d58.png"/>
   </a>
 </div>
 

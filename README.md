@@ -147,6 +147,10 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   <a href="http://compromise.cool/docs">API docs</a>
   &nbsp; | &nbsp;
   <a href="http://compromise.cool/demos">Demos</a>
+  &nbsp; | &nbsp;
+  <a href="https://github.com/nlp-compromise/compromise/wiki/QuickStart">QuickStart</a>
+  &nbsp; | &nbsp;
+  <a href="https://github.com/nlp-compromise/compromise/wiki/Usage">Tutorials</a>
 </h3>
 
 #### Client-side!
@@ -327,7 +331,7 @@ doc = nlp('Tony Hawk').out('html')
 <ul align="left">
   <p>
     <details>
-      <summary><a href="#">🌎 Other Languages?</a></summary>
+      <summary>🌎 Other Languages?</summary>
       <p></p>
       <ul>
         yeah, we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a> and <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, in the same philosophy.
@@ -351,7 +355,7 @@ doc = nlp('Tony Hawk').out('html')
   </p>
   <p>
     <details>
-      <summary>🔪 Partial builds?</summary>
+      <summary>✨ Partial builds?</summary>
       <p></p>
       <ul>
         it can't be tree-shaken, and the tagging methods are competitive, so it's not recommended to pull-out stuff.
@@ -363,13 +367,15 @@ doc = nlp('Tony Hawk').out('html')
   </p>
 </ul>
 
+<hr/>
+
 ### Don't forget about:
-* ✨ &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript
-* 🍭 &nbsp; **[SuperScript](http://superscriptjs.com/)** - clever conversation engine in js
-* 💗 &nbsp; **[NodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
-* 🎀 &nbsp; **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
-* 💎 &nbsp; **[jsPos](https://code.google.com/archive/p/jspos/)** - javascript build of the time-tested Brill-tagger
-* 🚗 &nbsp; **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
+* &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript
+* &nbsp; **[superScript](http://superscriptjs.com/)** - clever conversation engine in js
+* &nbsp; **[nodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
+* &nbsp; **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
+* &nbsp; **[jsPos](https://code.google.com/archive/p/jspos/)** - javascript build of the time-tested Brill-tagger
+* &nbsp; **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
 
 For the former promise-library, see [jnewman/compromise](https://github.com/jnewman/compromise)
 (Thanks [Joshua](https://github.com/jnewman)!)

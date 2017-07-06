@@ -82,9 +82,11 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 </div>
 <h6 align="center">
   no jargon, &nbsp; | &nbsp; no config, &nbsp; | &nbsp; no training
+  &nbsp; &nbsp; &nbsp;
+  <sub><i>🙌 you can do it!</i></sub>
 </h6>
 <div align="right">
-  <sub><i>🙌 you can do it!</i></sub>
+
 </div>
 <table>
   <tr>
@@ -143,13 +145,13 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   </tr>
 </table>
 
-<h3 align="center">
-  <a href="http://compromise.cool/docs">API docs</a>
-  &nbsp; | &nbsp;
+<h4 align="center">
+  <a href="http://compromise.cool/docs">API doc</a>
+  &nbsp; &nbsp; &nbsp;
   <a href="http://compromise.cool/demos">Demos</a>
-  &nbsp; | &nbsp;
+  &nbsp; &nbsp; &nbsp;
   <a href="https://github.com/nlp-compromise/compromise/wiki/QuickStart">QuickStart</a>
-  &nbsp; | &nbsp;
+  &nbsp; &nbsp; &nbsp;
   <a href="https://github.com/nlp-compromise/compromise/wiki/Usage">Tutorials</a>
 </h3>
 

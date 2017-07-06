@@ -101,7 +101,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
-            &nbsp; &nbsp; Part-of-Speech tagging &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; Part-of-Speech tagging &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
@@ -111,21 +111,21 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
-            &nbsp; &nbsp; Named-entities &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; Named-entities &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
-            <sub><i>people, places, organizations</i></sub>
+            <sub>people, places, organizations</sub>
          </div>
       </td>
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
-          &nbsp; &nbsp; Number parsing &nbsp; &nbsp;
+          &nbsp; &nbsp; &nbsp; &nbsp; Number parsing &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
-            <sub><i>'seven hundred and fifty' == 750</i></sub>
+            <sub>'seven hundred and fifty' == 750</sub>
          </div>
       </td>
    </tr>
@@ -133,31 +133,31 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
-            &nbsp; &nbsp; Template-matches &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; Template-matches &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
-            <sub><i>like a regex for a sentence</i></sub>
+            <sub>like a regex for a sentence</sub>
          </div>
       </td>
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
-            &nbsp; &nbsp; Verb conjugation &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; Verb conjugation &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
-            <sub><i>all your base are belong</i></sub>
+            <sub>all your base are belong</sub>
          </div>
       </td>
       <td>
          <div align="center">
             <a href="https://github.com/nlp-compromise/compromise/wiki/Usage">
-            &nbsp; &nbsp; Transformations &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; Transformations &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
-            <sub><i>contractions, style, tense..</i></sub>
+            <sub>contractions, style, tense..</sub>
          </div>
       </td>
    </tr>

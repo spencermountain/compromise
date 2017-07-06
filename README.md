@@ -184,13 +184,12 @@ doc.sentences().toNegative()
 // 'London is not calling'
 ```
 
-## Toss-in text,
-even if it's just one word,
+## Toss in text,
+even if it's just one word:
 
 <ul>
   <h3>Grab a part:</h3>
-  you can use <a href="https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods">built-in methods</a> like <b>.nouns()</b>, or <b>.people()</b>,
-  or query any pattern with <b><a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">.match()</a></b>:
+  use <a href="https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods">built-in methods</a> like <b>.nouns()</b>, or <b>.people()</b> - or query any pattern with <b><a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">.match()</a></b>:
 </ul>
 
 ```js
@@ -205,6 +204,10 @@ doc.match('#TitleCase van #LastName').out()
 doc.match('#PastTense to').hyphenate().out()
 // 'wrote-to'
 ```
+
+<ul>
+  <h3>Throw stuff around:</h3>
+</ul>
 
 * <a href="https://github.com/nlp-compromise/compromise/wiki/Nouns"><b>Plural/singular:</b></a> - grab the noun-phrases, make em plural:
 ```javascript

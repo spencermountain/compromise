@@ -189,11 +189,11 @@ even if it's just one word,
 
 <ul>
   <h3>Grab a part:</h3>
+  you can use <a href="https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods">built-in methods</a> like <kbd>.nouns()</kbd>, or <b>.people()</b>,
+  <br/>
+  or query any pattern with <b><a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">.match()</a></b>:
 </ul>
 
-you can use [built-in methods](https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods) like **.nouns()**, or **.people()**,
-
-or query any pattern with **[.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)**:
 ```js
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
 

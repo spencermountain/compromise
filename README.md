@@ -323,19 +323,27 @@ doc = nlp('Tony Hawk').out('html')
   </a>
 </div>
 
-<details>
-  <summary>Other Languages?</summary>
-  <ul>yeah, we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a> and <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, in the same philosophy. Get involved!</ul>
-</details>
-<details>
-  <summary>Can it run on my arduino-watch?</summary>
-  <p></p>
-  <p>Only if it's water-proof. See <a href="https://github.com/nlp-compromise/compromise/wiki/QuickStart">quickStart</a> for all sorts of environments.</p>
-</details>
-<details>
-  <summary>Partial builds?</summary>
-  <p>compromise can't be tree-shaken, and our POS-tagging methods are competitive with each other, so it's not recommended to pull stuff out of it. We generally recommend loading the library completely, given it's smaller than <a href="https://68.media.tumblr.com/tumblr_m674jlpyPT1ry8fquo1_250.gif">this gif</a>, after all.</p>
-</details>
+<p></p>
+<div align="center">
+  <details>
+    <summary>Other Languages?</summary>
+    <p></p>
+    <ul>yeah, we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a> and <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, in the same philosophy. Get involved!</ul>
+    <p></p>
+  </details>
+  <details>
+    <summary>Can it run on my arduino-watch?</summary>
+    <p></p>
+    <ul>Only if it's water-proof.😜 See <a href="https://github.com/nlp-compromise/compromise/wiki/QuickStart">quickStart</a> for all sorts of environments.</ul>
+    <p></p>
+  </details>
+  <details>
+    <summary>Partial builds?</summary>
+    <p></p>
+    <ul>compromise can't be tree-shaken, and our POS-tagging methods are competitive with each other, so it's not recommended to pull stuff out of it. We generally recommend loading the library completely, given it's smaller than <a href="https://68.media.tumblr.com/tumblr_m674jlpyPT1ry8fquo1_250.gif">this gif</a>, after all.</ul>
+    <p></p>
+  </details>
+</div>
 
 ### Don't forget about:
 * ✨ &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript

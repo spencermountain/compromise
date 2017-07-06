@@ -19,7 +19,7 @@
     by
     <a href="https://github.com/spencermountain">Spencer Kelly</a> and
     <a href="https://github.com/nlp-compromise/compromise/graphs/contributors">
-      contributors
+      many contributors
     </a>
   </sub>
 </div>
@@ -62,7 +62,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td align="center">
         <b>🙏</b>
         <div>
-          &nbsp; <code>npm install compromise</code> &nbsp;
+          &nbsp; <kbd>npm install compromise</kbd> &nbsp;
         </div>
       </td>
       <td align="center">
@@ -300,9 +300,9 @@ doc = nlp('Tony Hawk').out('html')
       </a>
     </td>
     <td>
-      <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Downstream-projects">
+      <a href="https://github.com/nlp-compromise/nlp_compromise/wiki/Projects">
         <img src="https://cloud.githubusercontent.com/assets/399657/26513481/a755ac38-4239-11e7-960a-1c26d85ddc1c.png"/>
-        <div>&nbsp; &nbsp; &nbsp; Applications &nbsp; &nbsp; &nbsp; </div>
+        <div>&nbsp; &nbsp; &nbsp; Projects &nbsp; &nbsp; &nbsp; </div>
       </a>
     </td>
     <td>
@@ -322,6 +322,19 @@ doc = nlp('Tony Hawk').out('html')
     <img src="https://user-images.githubusercontent.com/399657/27890263-88e1fd10-61bf-11e7-93f2-745167f88d58.png"/>
   </a>
 </div>
+
+<details>
+  <summary>Other Languages?</summary>
+  <p>yeah, we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a> and <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, in the same philosophy. Get involved!</p>
+</details>
+<details>
+  <summary>Can it run on my arduino-watch?</summary>
+  <p>Only if it's water-proof. See <a href="https://github.com/nlp-compromise/compromise/wiki/QuickStart">quickStart</a> for all sorts of environments.</p>
+</details>
+<details>
+  <summary>Partial builds?</summary>
+  <p>compromise can't be tree-shaken, and our POS-tagging methods are competitive with each other, so it's not recommended to pull stuff out of it. We generally recommend loading the library completely, given it's smaller than [this gif](https://68.media.tumblr.com/tumblr_m674jlpyPT1ry8fquo1_250.gif), after all.</p>
+</details>
 
 ### Don't forget about:
 * ✨ &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript

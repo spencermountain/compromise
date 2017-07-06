@@ -14,7 +14,7 @@ test('encoding-match:', function(t) {
 });
 
 test('reserved-word-in-src:', function(t) {
-  let r = nlp('buy eggs constructor yeah prototype');
+  var r = nlp('buy eggs constructor yeah prototype');
   t.equal(r.has(`backburner`), false, 'single');
   t.equal(r.has(`#Foo`), false, 'tag');
   t.equal(r.has(`(upcoming|backburner)`), false, 'anyOf');

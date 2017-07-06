@@ -1,16 +1,16 @@
 var test = require('tape');
 var docs = require('../../../docs/api');
 
-let flat = [];
+var flat = [];
 Object.keys(docs.generic).forEach(k => {
-  let obj = docs.generic[k];
+  var obj = docs.generic[k];
   Object.keys(obj).forEach(k2 => {
     obj[k2].title = k + '().' + k2 + '()';
     flat.push(obj[k2]);
   });
 });
 Object.keys(docs.subsets).forEach(k => {
-  let obj = docs.subsets[k];
+  var obj = docs.subsets[k];
   Object.keys(obj).forEach(k2 => {
     obj[k2].title = k + '().' + k2 + '()';
     flat.push(obj[k2]);
@@ -19,7 +19,7 @@ Object.keys(docs.subsets).forEach(k => {
 
 test('docs-eval:', function(t) {
   flat.forEach(o => {
-    let code = o.example;
+    var code = o.example;
     try {
       code =
         `(function(){

@@ -37,13 +37,13 @@ test('match-replace :', function(t) {
 });
 
 test('structured-object-replace :', function(t) {
-  let r = nlp('fun times in cool town');
-  let term = r.match('times');
+  var r = nlp('fun times in cool town');
+  var term = r.match('times');
   r.replace(term, 'day');
   t.equal(r.out(), 'fun day in cool town', 'structured-replace');
 
   r = nlp('fun times in cool town');
-  let terms = r.match('cool town');
+  var terms = r.match('cool town');
   r.replace(terms, 'shitsville');
   t.equal(r.out(), 'fun times in shitsville', 'structured-replace-multi');
   t.end();

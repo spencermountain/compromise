@@ -110,7 +110,7 @@ test('reserved words:', function(t) {
 });
 
 test('co-erce reserved words', function(t) {
-  let r = nlp('constructor prototype');
+  var r = nlp('constructor prototype');
   r.tag('Verb');
   t.ok(r.verbs().data(), 'runs verb subset');
   r.tag('Adjective');

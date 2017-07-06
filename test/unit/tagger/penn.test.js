@@ -2,7 +2,7 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 var penn = require('../lib/pennSample');
 
-const softMapping = {
+var softMapping = {
   CC: 'Conjunction',
   CD: 'Cardinal',
   DT: 'Determiner',

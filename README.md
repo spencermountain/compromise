@@ -45,7 +45,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
           </a>
         </b>
         <div>
-           &nbsp; &nbsp; one javascript file &nbsp; &nbsp;
+           &nbsp; &nbsp; &nbsp; one javascript file &nbsp; &nbsp; &nbsp;
         </div>
       </td>
       <td align="center">
@@ -68,7 +68,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td align="center">
         <b>IE9+</b>
         <div>
-           &nbsp; &nbsp;  caniuse, youbetcha &nbsp;  &nbsp;
+           &nbsp; &nbsp; &nbsp;  caniuse, youbetcha &nbsp; &nbsp; &nbsp;
         </div>
       </td>
     </tr>
@@ -101,17 +101,17 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
-            Part-of-Speech tagging
+            &nbsp; &nbsp; Part-of-Speech tagging &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
-            <sub><i>nouns! verbs! adjectives!</i></sub>
+            <sub>nouns! verbs! adjectives!</sub>
          </div>
       </td>
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
-            Named-entities
+            &nbsp; &nbsp; Named-entities &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
@@ -121,7 +121,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
-            Number parsing
+          &nbsp; &nbsp; Number parsing &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
@@ -133,17 +133,17 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
-            Template-matches
+            &nbsp; &nbsp; Template-matches &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
-            <sub><i>like a regexp for a sentence</i></sub>
+            <sub><i>like a regex for a sentence</i></sub>
          </div>
       </td>
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
-            Verb conjugation
+            &nbsp; &nbsp; Verb conjugation &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
@@ -153,7 +153,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td>
          <div align="center">
             <a href="https://github.com/nlp-compromise/compromise/wiki/Usage">
-            Transformations
+            &nbsp; &nbsp; Transformations &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">

@@ -121,7 +121,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td>
          <div align="center">
             <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
-          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Number parsing &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Number parsing &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
@@ -163,7 +163,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
    </tr>
 </table>
 
-#### Client-side!
+#### 🕰️ Client-side!
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
@@ -184,8 +184,8 @@ doc.sentences().toNegative()
 // 'London is not calling'
 ```
 
-## Grab some words,
-you can use [built-in selectors](https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods) (like **.people()**) or query any pattern you want with [.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)
+## Toss-in some text,
+*[Grab some words](https://github.com/nlp-compromise/compromise/wiki/Usage)* - you can use [built-in selectors](https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods) (like **.people()**) or query any pattern you want with [.match()](https://github.com/nlp-compromise/compromise/wiki/Match-syntax)
 ```js
 doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
 
@@ -337,7 +337,7 @@ doc = nlp('Tony Hawk').out('html')
       <summary>🌎 Other Languages?</summary>
       <p></p>
       <ul>
-        yeah, we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a> and <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, in the same philosophy.
+        okay! we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a> and <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, in the same philosophy.
         <br/>
         Get involved!
       </ul>
@@ -407,6 +407,5 @@ For the former promise-library, see [jnewman/compromise](https://github.com/jnew
 <a href="http://nlp.stanford.edu/software/lex-parser.shtml">Stanford</a>,
 and
 <a href="http://cogcomp.cs.illinois.edu/page/software/">Illinois toolkit</a>
-🙇
 )
 </div>

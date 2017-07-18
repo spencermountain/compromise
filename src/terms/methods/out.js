@@ -8,6 +8,21 @@ const methods = {
       return str;
     }, '');
   },
+  //like 'text', but no leading/trailing whitespace
+  match: function(ts) {
+    let str = '';
+    let len = ts.terms.length;
+    for (let i = 0; i < len; i++) {
+      if (i > 0) {
+        str += ts.terms[i].whitespace.before;
+      }
+      str += ts.terms[i].text.replace(/[,.?!]$/, ''); //remove comma
+      if (i < len - 1) {
+        str += ts.terms[i].whitespace.after;
+      }
+    }
+    return str;
+  },
 
   normal: function(ts) {
     let terms = ts.terms.filter(t => {

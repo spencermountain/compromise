@@ -20,6 +20,7 @@ module.exports = [
   'ceiling',
   'city',
   'credit card',
+  'chocolate',
   'death',
   'dinner',
   'door',

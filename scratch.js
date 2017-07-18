@@ -6,8 +6,17 @@ var nlp = require('./src/index');
 // var doc = nlp('Karagandy Region, Foo Province, State of Kjllekd, West Ldjec');
 // doc.places().debug();
 
-// var doc = nlp('cool cool cool cool cool');
-// doc.match('cool{1,3}').debug();
+var lexicon = {
+  newtownshire: 'Place',
+  invernershire: 'Place',
+  washingtonshire: 'Place',
+  dublinshire: 'Place'
+};
 
-// doc = nlp('nice, cool');
-// console.log(doc.list[0].terms[0]);
+var pcked = nlp.pack(lexicon);
+console.log(pcked);
+
+console.log(nlp.unpack(pcked));
+
+var doc = nlp('i lived in newtownshire', pcked);
+console.log(doc.places().out());

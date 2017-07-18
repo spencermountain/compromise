@@ -42,6 +42,7 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - improved `places()` parsing
 - improved `{min,max}` match syntax
 - new `.out('match')` method
+- quiet addition of .pack() and .unpack() for owen
 
 ### v9  &nbsp;
 * 9.0.0

@@ -5,9 +5,19 @@ const paths = require('./paths');
 const Terms = paths.Terms;
 const fns = paths.fns;
 const normalize = require('../term/methods/normalize/normalize').normalize;
-const unpackLex = require('../lexicon/unpack');
 const firstWords = require('../lexicon/firstWords');
 const buildUp = require('../lexicon/buildUp');
+
+const unpackUserLex = function(str) {
+  let obj = {};
+  if (typeof str === 'string') {
+    obj = JSON.parse(str);
+  } else {
+    obj = str;
+  }
+  obj = efrt.unpack(obj);
+  return obj;
+};
 
 //basically really dirty and stupid.
 const normalizeLex = function(lex) {
@@ -30,7 +40,7 @@ const handleLexicon = function(lex) {
     return null;
   }
   if (typeof lex === 'string') {
-    lex = unpackLex(lex);
+    lex = unpackUserLex(lex);
   } else {
     lex = normalizeLex(lex);
   }

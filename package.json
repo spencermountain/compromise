@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.6.1",
+  "version": "10.7.0",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -25,10 +25,7 @@
     "coverage": "node ./scripts/coverage.js",
     "lint": "node ./scripts/prepublish/linter.js"
   },
-  "files": [
-    "builds/",
-    "docs/"
-  ],
+  "files": ["builds/", "docs/"],
   "dependencies": {},
   "devDependencies": {
     "babel-preset-es2015": "^6.24.0",

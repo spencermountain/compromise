@@ -2,6 +2,8 @@
 const buildText = require('./text/build');
 const pkg = require('../package.json');
 const log = require('./log');
+const pack = require('efrt').pack;
+const unpack = require('./lexicon/unpack');
 
 //the main thing
 // linguistischen Datenverarbeitung (nlp)
@@ -23,6 +25,17 @@ nlp.version = pkg.version;
 //turn-on some debugging
 nlp.verbose = function(str) {
   log.enable(str);
+};
+
+//compress user-submitted lexicon
+nlp.pack = function(obj) {
+  return JSON.stringify(pack(obj));
+};
+//uncompress user-submitted lexicon
+nlp.unpack = function(str) {
+  let obj = JSON.parse(str);
+  obj = efrt.unpack(obj);
+  return obj;
 };
 
 //and then all-the-exports...

@@ -13,9 +13,11 @@ var lexicon = {
   dublinshire: 'Place'
 };
 
+//compress this lexicon for smaller-size
 var pcked = nlp.pack(lexicon);
 console.log(pcked);
 
+//check it out again (if you want)
 console.log(nlp.unpack(pcked));
 
 var doc = nlp('i lived in newtownshire', pcked);

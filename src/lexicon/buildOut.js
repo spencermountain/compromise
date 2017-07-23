@@ -3,7 +3,7 @@ const toPlural = require('../text/subset/nouns/methods/pluralize');
 const fastConjugate = require('../text/subset/verbs/methods/conjugate/faster');
 
 //inflect 'Singulars', conjugate 'Infinitives', and convert 'Comparables'
-const buildUp = function(lex, options) {
+const buildOut = function(lex, options) {
   //handle default options
   options = options || {};
   if (options.conjugate !== false) {
@@ -67,16 +67,10 @@ const buildUp = function(lex, options) {
     //   continue;
     // }
   }
-  lex['is'] = ['Copula', 'PresentTense'];
-  lex['are'] = ['Copula', 'PresentTense'];
-  lex['was'] = ['Copula', 'PastTense'];
-  lex['will be'] = ['Copula', 'FutureTense'];
-  lex['close'] = 'Adjective';
-  lex['can'] = 'Modal';
   //..just in case
   delete lex[null];
   delete lex[undefined];
   return lex;
 };
 
-module.exports = buildUp;
+module.exports = buildOut;

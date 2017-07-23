@@ -1,22 +1,7 @@
 'use strict';
 const renderHtml = require('./renderHtml');
-const fns = require('../../paths').fns;
 const clientDebug = require('./client');
-
-const serverDebug = function(t) {
-  let tags = Object.keys(t.tags).map((tag) => {
-    return fns.printTag(tag);
-  }).join(', ');
-  let word = t.text;
-  word = '\'' + fns.yellow(word || '-') + '\'';
-  let silent = '';
-  if (t.silent_term) {
-    silent = '[' + t.silent_term + ']';
-  }
-  word = fns.leftPad(word, 25);
-  word += fns.leftPad(silent, 5);
-  console.log('   ' + word + '   ' + '     - ' + tags);
-};
+const serverDebug = require('./server');
 
 const methods = {
   /** a pixel-perfect reproduction of the input, with whitespace preserved */
@@ -45,15 +30,15 @@ const methods = {
   },
   /** check-print information for the console */
   debug: function(t) {
-    if (typeof window !== 'undefined') {
-      clientDebug(t);
-    } else {
+    if (typeof module !== 'undefined' && this.module !== module) {
       serverDebug(t);
+    } else {
+      clientDebug(t);
     }
   }
 };
 
-const addMethods = (Term) => {
+const addMethods = Term => {
   //hook them into result.proto
   Term.prototype.out = function(fn) {
     if (!methods[fn]) {

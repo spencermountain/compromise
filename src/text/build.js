@@ -6,7 +6,7 @@ const Terms = paths.Terms;
 const fns = paths.fns;
 const normalize = require('../term/methods/normalize/normalize').normalize;
 const firstWords = require('../lexicon/firstWords');
-const buildUp = require('../lexicon/buildUp');
+const buildOut = require('../lexicon/buildOut');
 
 const unpackUserLex = function(str) {
   let obj = {};
@@ -44,7 +44,7 @@ const handleLexicon = function(lex) {
   } else {
     lex = normalizeLex(lex);
   }
-  lex = buildUp(lex);
+  lex = buildOut(lex);
   return {
     lexicon: lex,
     firstWords: firstWords(lex)

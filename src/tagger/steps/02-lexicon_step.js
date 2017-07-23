@@ -1,6 +1,6 @@
 'use strict';
 const split = require('../contraction/split');
-const l = require('../../lexicon');
+const l = require('../../lexicon/init');
 const lexicon = l.lexicon;
 
 const lexicon_pass = function(ts) {
@@ -24,6 +24,17 @@ const lexicon_pass = function(ts) {
     if (t.silent_term && lexicon.hasOwnProperty(t.silent_term) === true) {
       t.tag(lexicon[t.silent_term], 'silent_term-lexicon');
       continue;
+    }
+    //check root version too
+    if (t.root && t.normal !== t.root) {
+      if (uLex && uLex.hasOwnProperty(t.root) === true) {
+        t.tag(uLex[t.root], 'user-lexicon');
+        continue;
+      }
+      if (lexicon.hasOwnProperty(t.root) === true) {
+        t.tag(lexicon[t.root], 'lexicon');
+        continue;
+      }
     }
     //support contractions (manually)
     let parts = split(t);

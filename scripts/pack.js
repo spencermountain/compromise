@@ -6,7 +6,7 @@ var path = require('path');
 var fileSize = require('./lib/filesize');
 
 console.log(chalk.yellow('\n 🕑 packing lexicon..'));
-var out = path.join(__dirname, '../src/lexicon/_lexicon.js');
+var out = path.join(__dirname, '../src/lexicon/compressed/_compressed.js');
 //cleanup. remove old builds
 // exec('rm ' + out);
 

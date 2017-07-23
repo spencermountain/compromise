@@ -1,5 +1,5 @@
 //lexicon in compressed form
-const pckd = require('./_lexicon');
+const pckd = require('./compressed/_compressed');
 const efrt = require('efrt');
 const buildOut = require('./buildOut');
 const indexFirst = require('./firstWords');

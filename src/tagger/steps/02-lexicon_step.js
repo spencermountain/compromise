@@ -25,6 +25,17 @@ const lexicon_pass = function(ts) {
       t.tag(lexicon[t.silent_term], 'silent_term-lexicon');
       continue;
     }
+    //check root version too
+    if (t.root && t.normal !== t.root) {
+      if (uLex && uLex.hasOwnProperty(t.root) === true) {
+        t.tag(uLex[t.root], 'user-lexicon');
+        continue;
+      }
+      if (lexicon.hasOwnProperty(t.root) === true) {
+        t.tag(lexicon[t.root], 'lexicon');
+        continue;
+      }
+    }
     //support contractions (manually)
     let parts = split(t);
     if (parts && parts.start) {

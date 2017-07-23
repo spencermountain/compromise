@@ -1,5 +1,5 @@
 'use strict';
-const lexicon = require('../../../lexicon').lexicon;
+const lexicon = require('../../../lexicon/init').lexicon;
 
 //is this an adjective we want to goof-around with?
 const shouldConvert = function(str) {

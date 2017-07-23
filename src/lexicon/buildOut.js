@@ -3,7 +3,7 @@ const toPlural = require('../text/subset/nouns/methods/pluralize');
 const fastConjugate = require('../text/subset/verbs/methods/conjugate/faster');
 
 //inflect 'Singulars', conjugate 'Infinitives', and convert 'Comparables'
-const buildUp = function(lex, options) {
+const buildOut = function(lex, options) {
   //handle default options
   options = options || {};
   if (options.conjugate !== false) {
@@ -73,4 +73,4 @@ const buildUp = function(lex, options) {
   return lex;
 };
 
-module.exports = buildUp;
+module.exports = buildOut;

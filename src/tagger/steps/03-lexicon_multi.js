@@ -1,5 +1,5 @@
 'use strict';
-const mainLex = require('../../lexicon');
+const mainLex = require('../../lexicon/init');
 
 //find terms in the lexicon longer than one word (like 'hong kong')
 const findMultiWords = function(ts, i, lex) {

@@ -76,7 +76,7 @@ const parse = function(str) {
     if (isValid(w, has) === false) {
       return null;
     }
-    //buildup section, collect 'has' values
+    //buildOut section, collect 'has' values
     if (/^[0-9\.]+$/.test(w)) {
       has['ones'] = parseFloat(w); //not technically right
     } else if (words.ones[w]) {

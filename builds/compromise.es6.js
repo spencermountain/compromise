@@ -1019,7 +1019,7 @@ const toPlural = _dereq_('../text/subset/nouns/methods/pluralize');
 const fastConjugate = _dereq_('../text/subset/verbs/methods/conjugate/faster');
 
 //inflect 'Singulars', conjugate 'Infinitives', and convert 'Comparables'
-const buildUp = function(lex, options) {
+const buildOut = function(lex, options) {
   //handle default options
   options = options || {};
   if (options.conjugate !== false) {
@@ -1089,7 +1089,7 @@ const buildUp = function(lex, options) {
   return lex;
 };
 
-module.exports = buildUp;
+module.exports = buildOut;
 
 },{"../text/subset/adjectives/methods":129,"../text/subset/nouns/methods/pluralize":163,"../text/subset/verbs/methods/conjugate/faster":194}],7:[function(_dereq_,module,exports){
 //collect the first-words of multiple-word-terms, for quicker lookup
@@ -1113,7 +1113,7 @@ module.exports = indexFirst;
 //lexicon in compressed form
 const pckd = _dereq_('./_lexicon');
 const efrt = _dereq_('efrt');
-const buildUp = _dereq_('./buildUp');
+const buildOut = _dereq_('./buildOut');
 const indexFirst = _dereq_('./firstWords');
 
 const uncompressed = [
@@ -1139,10 +1139,8 @@ const addToLex = function(lex, obj) {
 let lex = efrt.unpack(pckd);
 
 uncompressed.forEach(obj => addToLex(lex, obj));
-// console.log(Object.keys(lex).length);
-lex = buildUp(lex);
-// console.log(lex.early);
-// console.log(Object.keys(lex).length);
+
+lex = buildOut(lex);
 
 //hard-code these, ¯\_(ツ)_/¯
 lex['is'] = ['Copula', 'PresentTense'];
@@ -1160,7 +1158,7 @@ module.exports = {
   firstWords: firstWords
 };
 
-},{"./_lexicon":5,"./buildUp":6,"./firstWords":7,"./uncompressed/abbreviations":9,"./uncompressed/irregularAdjectives":10,"./uncompressed/irregularPlurals":11,"./uncompressed/irregularVerbs":12,"./uncompressed/misc":13,"./uncompressed/numbers":14,"./uncompressed/orgWords":15,"efrt":1}],9:[function(_dereq_,module,exports){
+},{"./_lexicon":5,"./buildOut":6,"./firstWords":7,"./uncompressed/abbreviations":9,"./uncompressed/irregularAdjectives":10,"./uncompressed/irregularPlurals":11,"./uncompressed/irregularVerbs":12,"./uncompressed/misc":13,"./uncompressed/numbers":14,"./uncompressed/orgWords":15,"efrt":1}],9:[function(_dereq_,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
 //there are all nouns,or at the least, belong beside one.
 'use strict';
@@ -2583,15 +2581,15 @@ module.exports = orgWords.reduce(function(h, str) {
 
 },{}],16:[function(_dereq_,module,exports){
 const efrt = _dereq_('efrt');
-const buildUp = _dereq_('./buildUp');
+const buildOut = _dereq_('./buildOut');
 const indexFirst = _dereq_('./firstWords');
 
 //unpack a user-given lexicon
 const unpackLex = function(pckd) {
   let lex = efrt.unpack(pckd);
-  // console.log(Object.keys(lex).length);
-  lex = buildUp(lex);
-  // console.log(Object.keys(lex).length);
+
+  lex = buildOut(lex);
+
   //collect first-of-multi words for quicker lookup
   let firstWords = indexFirst(lex);
 
@@ -2603,7 +2601,7 @@ const unpackLex = function(pckd) {
 
 module.exports = unpackLex;
 
-},{"./buildUp":6,"./firstWords":7,"efrt":1}],17:[function(_dereq_,module,exports){
+},{"./buildOut":6,"./firstWords":7,"efrt":1}],17:[function(_dereq_,module,exports){
 'use strict';
 const fns = _dereq_('../fns');
 
@@ -7980,7 +7978,7 @@ const Terms = paths.Terms;
 const fns = paths.fns;
 const normalize = _dereq_('../term/methods/normalize/normalize').normalize;
 const firstWords = _dereq_('../lexicon/firstWords');
-const buildUp = _dereq_('../lexicon/buildUp');
+const buildOut = _dereq_('../lexicon/buildOut');
 
 const unpackUserLex = function(str) {
   let obj = {};
@@ -8018,7 +8016,7 @@ const handleLexicon = function(lex) {
   } else {
     lex = normalizeLex(lex);
   }
-  lex = buildUp(lex);
+  lex = buildOut(lex);
   return {
     lexicon: lex,
     firstWords: firstWords(lex)
@@ -8047,7 +8045,7 @@ const fromString = (str, lexicon) => {
 };
 module.exports = fromString;
 
-},{"../lexicon/buildUp":6,"../lexicon/firstWords":7,"../term/methods/normalize/normalize":73,"./index":114,"./paths":126,"./tokenize":210}],113:[function(_dereq_,module,exports){
+},{"../lexicon/buildOut":6,"../lexicon/firstWords":7,"../term/methods/normalize/normalize":73,"./index":114,"./paths":126,"./tokenize":210}],113:[function(_dereq_,module,exports){
 module.exports = {
   /** did it find anything? */
   found: function() {
@@ -11983,7 +11981,7 @@ const parse = function(str) {
     if (isValid(w, has) === false) {
       return null;
     }
-    //buildup section, collect 'has' values
+    //buildOut section, collect 'has' values
     if (/^[0-9\.]+$/.test(w)) {
       has['ones'] = parseFloat(w); //not technically right
     } else if (words.ones[w]) {

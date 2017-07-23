@@ -1,6 +1,6 @@
 'use strict';
 const split = require('../contraction/split');
-const l = require('../../lexicon');
+const l = require('../../lexicon/init');
 const lexicon = l.lexicon;
 
 const lexicon_pass = function(ts) {

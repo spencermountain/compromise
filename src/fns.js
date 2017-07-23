@@ -4,23 +4,23 @@ const tagset = require('./tagset');
 // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 const c = {
   reset: '\x1b[0m',
-  red : '\x1b[31m',
-  green : '\x1b[32m',
-  yellow : '\x1b[33m',
-  blue : '\x1b[34m',
-  magenta : '\x1b[35m',
-  cyan : '\x1b[36m',
+  red: '\x1b[31m',
+  green: '\x1b[32m',
+  yellow: '\x1b[33m',
+  blue: '\x1b[34m',
+  magenta: '\x1b[35m',
+  cyan: '\x1b[36m',
   black: '\x1b[30m'
 };
 //dont use colors on client-side
 if (typeof module === 'undefined') {
-  Object.keys(c).forEach((k) => {
+  Object.keys(c).forEach(k => {
     c[k] = '';
   });
 }
 
 //coerce any input into a string
-exports.ensureString = (input) => {
+exports.ensureString = input => {
   if (typeof input === 'string') {
     return input;
   } else if (typeof input === 'number') {
@@ -29,7 +29,7 @@ exports.ensureString = (input) => {
   return '';
 };
 //coerce any input into a string
-exports.ensureObject = (input) => {
+exports.ensureObject = input => {
   if (typeof input !== 'object') {
     return {};
   }
@@ -39,15 +39,15 @@ exports.ensureObject = (input) => {
   return input;
 };
 
-exports.titleCase = (str) => {
+exports.titleCase = str => {
   return str.charAt(0).toUpperCase() + str.substr(1);
 };
 
 //shallow-clone an object
-exports.copy = (o) => {
+exports.copy = o => {
   let o2 = {};
   o = exports.ensureObject(o);
-  Object.keys(o).forEach((k) => {
+  Object.keys(o).forEach(k => {
     o2[k] = o[k];
   });
   return o2;
@@ -55,7 +55,7 @@ exports.copy = (o) => {
 exports.extend = (obj, a) => {
   obj = exports.copy(obj);
   const keys = Object.keys(a);
-  for(let i = 0; i < keys.length; i++) {
+  for (let i = 0; i < keys.length; i++) {
     obj[keys[i]] = a[keys[i]];
   }
   return obj;
@@ -85,14 +85,14 @@ exports.black = function(str) {
 };
 exports.printTag = function(tag) {
   if (tagset[tag]) {
-    const color = tagset[tag].color || 'black';
+    const color = tagset[tag].color || 'blue';
     return exports[color](tag);
   }
   return tag;
 };
 exports.printTerm = function(t) {
   const tags = Object.keys(t.tags);
-  for(let i = 0; i < tags.length; i++) {
+  for (let i = 0; i < tags.length; i++) {
     if (tagset[tags[i]]) {
       const color = tagset[tags[i]].color || 'black';
       return exports[color](t.out('text'));
@@ -101,7 +101,7 @@ exports.printTerm = function(t) {
   return c.reset + t.plaintext + c.reset;
 };
 
-exports.leftPad = function (str, width, char) {
+exports.leftPad = function(str, width, char) {
   char = char || ' ';
   str = str.toString();
   while (str.length < width) {

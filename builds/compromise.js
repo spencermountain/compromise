@@ -792,7 +792,7 @@ module.exports={
     "testBuild": "TESTENV=prod node ./scripts/test.js",
     "buildTest": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
-    "browsertest": "node ./scripts/browserTest.js",
+    "testb": "node ./scripts/browserTest.js",
     "benchmark": "node ./scripts/benchmark.js",
     "build": "node ./scripts/build/index.js",
     "pack": "node ./scripts/pack.js",

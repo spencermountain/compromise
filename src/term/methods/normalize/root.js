@@ -2,12 +2,9 @@
 //
 const rootForm = function(term) {
   let str = term.normal || term.silent_term || '';
-  //plural
-  // if (term.tags.Plural) {
-  // str = term.nouns().toSingular().normal || str;
-  // }
+  //handle apostrophes and stuff (go further than normalize())
   str = str.replace(/'s\b/, '');
-  str = str.replace(/'\b/, '');
+  str = str.replace(/'$/, '');
   term.root = str;
 };
 

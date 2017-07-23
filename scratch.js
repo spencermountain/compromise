@@ -10,4 +10,5 @@ var nlp = require('./src/index');
 
 var str = "I'll go";
 var doc = nlp(str).sentences().debug();
+console.log('--');
 console.log(doc.toPresentTense().out());

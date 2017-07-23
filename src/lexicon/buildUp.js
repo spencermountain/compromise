@@ -67,12 +67,6 @@ const buildUp = function(lex, options) {
     //   continue;
     // }
   }
-  lex['is'] = ['Copula', 'PresentTense'];
-  lex['are'] = ['Copula', 'PresentTense'];
-  lex['was'] = ['Copula', 'PastTense'];
-  lex['will be'] = ['Copula', 'FutureTense'];
-  lex['close'] = 'Adjective';
-  lex['can'] = 'Modal';
   //..just in case
   delete lex[null];
   delete lex[undefined];

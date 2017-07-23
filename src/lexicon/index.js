@@ -32,6 +32,14 @@ lex = buildUp(lex);
 // console.log(lex.early);
 // console.log(Object.keys(lex).length);
 
+//hard-code these, ¯\_(ツ)_/¯
+lex['is'] = ['Copula', 'PresentTense'];
+lex['are'] = ['Copula', 'PresentTense'];
+lex['was'] = ['Copula', 'PastTense'];
+lex['will be'] = ['Copula', 'FutureTense'];
+lex['close'] = 'Adjective';
+lex['can'] = 'Modal';
+
 //collect first-of-multi words for quicker lookup
 let firstWords = indexFirst(lex);
 

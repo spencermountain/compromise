@@ -39,26 +39,27 @@
   <pre id="failures"></pre>
   <pre id="result">
     browser-based test of <a href="https://github.com/nlp-compromise/compromise" style="color:steelblue;">compromise</a>
+    <p>running ...</p>
   </pre>
   <script type="text/javascript" language="javascript">
-    //overwrite console.log
-    if (typeof console === 'undefined') console = {};
-    console.log = function (msg) {
-      var parent=document.getElementById("result")
-      var el=document.createElement('div')
-      msg=msg.replace(/^#/,'')
-      el.innerHTML= msg+"\n"
-       if (msg.indexOf('not ok') === 0) {
-         el.className='notok'
-         document.getElementById("failures").innerHTML+="\n"+msg
-       }else if(msg.indexOf('ok') === 0){
-         el.className='ok'
-       }else{
-         el.className='header'
-       }
-      parent.appendChild(el)
-    };
-  </script>
+  //overwrite console.log
+if (typeof console === 'undefined') console = {};
+console.log = function(msg) {
+  var parent = document.getElementById('result');
+  var el = document.createElement('div');
+  msg = msg.replace(/^#/, '');
+  el.innerHTML = msg + '\n';
+  if (msg.indexOf('not ok') === 0) {
+    el.className = 'notok';
+    document.getElementById('failures').innerHTML += '\n' + msg;
+  } else if (msg.indexOf('ok') === 0) {
+    el.className = 'ok';
+  } else {
+    el.className = 'header';
+  }
+  parent.appendChild(el);
+};
+</script>
   <script type="text/javascript" src="./compiled_tests.js"></script>
 </body>
 </html>

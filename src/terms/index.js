@@ -8,8 +8,6 @@ const Terms = function(arr, world, refText, refTerms) {
   this.world = world || {};
   this.refText = refText;
   this._refTerms = refTerms;
-  this._cacheWords = {};
-  this.count = undefined;
   this.get = n => {
     return this.terms[n];
   };
@@ -21,7 +19,7 @@ const Terms = function(arr, world, refText, refTerms) {
 };
 
 Terms.fromString = function(str, world) {
-  let termArr = build(str);
+  let termArr = build(str, world);
   let ts = new Terms(termArr, world, null);
   //give each term a reference to this ts
   ts.terms.forEach(t => {

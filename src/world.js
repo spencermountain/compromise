@@ -43,10 +43,21 @@ class World {
   }
   addWords(lex) {
     lex = lex || {};
-    lex = unpackLex(lex);
+    let l = unpackLex(lex);
+    lex = l.lexicon;
+    //'upsert' into lexicon object
     Object.keys(lex).forEach(k => {
       this.lexicon[k] = lex[k];
     });
+    //merge 'firstWord' cache-objects too
+    let first = l.firstWords;
+    Object.keys(first).forEach(k => {
+      this.firstWords[k] = this.firstWords[k] || {};
+      Object.keys(first[k]).forEach(str => {
+        this.firstWords[k][str] = true;
+      });
+    });
   }
+  clone() {}
 }
 module.exports = World;

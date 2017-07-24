@@ -11,7 +11,7 @@ const notWord = {
 };
 
 //turn a string into an array of terms (naiive for now, lumped later)
-const fromString = function(str) {
+const fromString = function(str, world) {
   let result = [];
   let arr = [];
   //start with a naiive split
@@ -51,6 +51,6 @@ const fromString = function(str) {
   if (carry && result.length > 0) {
     result[result.length - 1] += carry; //put it on the end
   }
-  return result.map(t => new Term(t));
+  return result.map(t => new Term(t, world));
 };
 module.exports = fromString;

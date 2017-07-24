@@ -22,7 +22,7 @@ const parse = function(s) {
   s.verb = verb;
   s.object = object;
   if (s.verb.found) {
-    s.verb = new Verb(s.verb.list[0].terms, s.lexicon, s.refText, s.refTerms);
+    s.verb = new Verb(s.verb.list[0].terms, s.world, s.refText, s.refTerms);
   }
   return s;
 };

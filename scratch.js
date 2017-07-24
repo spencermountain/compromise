@@ -7,5 +7,5 @@ var nlp = require('./src/index');
 // doc.debug();
 // console.log(doc.world.lexicon.john);
 
-var doc = nlp('john walks quickly'); //.sentences().toFutureTense().debug();
-console.log(doc.sentences().world);
+var doc = nlp('john walks quickly').sentences().toFutureTense().debug();
+// doc.sentences().debug();

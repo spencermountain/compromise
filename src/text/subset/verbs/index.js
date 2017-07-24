@@ -99,6 +99,7 @@ const find = function(r, n) {
   // r.list = r.list.filter((ts) => {
   //   return ts.vb;
   // });
+
   return new Text(r.list, this.world, this.parent);
 };
 

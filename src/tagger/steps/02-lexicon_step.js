@@ -5,8 +5,6 @@ const split = require('../contraction/split');
 
 const lexicon_pass = function(ts) {
   const lexicon = ts.world.lexicon || {};
-  // let uLex = ts.lexicon || {};
-  // uLex = uLex.lexicon;
   //loop through each term
   for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];

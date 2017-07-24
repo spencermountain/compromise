@@ -93,7 +93,7 @@ const find = function(r, n) {
     r = r.get(n);
   }
   r.list = r.list.map(ts => {
-    return new Verb(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+    return new Verb(ts.terms, ts.world, ts.refText, ts.refTerms);
   });
   //fiter-out any that didn't find a main verb
   // r.list = r.list.filter((ts) => {

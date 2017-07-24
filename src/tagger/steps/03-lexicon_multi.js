@@ -1,9 +1,6 @@
-'use strict';
-const mainLex = require('../../lexicon/init');
-
 //find terms in the lexicon longer than one word (like 'hong kong')
-const findMultiWords = function(ts, i, lex) {
-  let want = lex.firstWords[ts.terms[i].normal];
+const findMultiWords = function(ts, i, world) {
+  let want = world.firstWords[ts.terms[i].normal];
   let str = '';
   //try 2 words, 3 words, 4 words..
   for (let add = 1; add <= 3; add++) {
@@ -17,7 +14,7 @@ const findMultiWords = function(ts, i, lex) {
     str = str.replace(/'s$/, ''); //ugly
     //perfect match here?
     if (want[str] === true) {
-      let tag = lex.lexicon[ts.terms[i].normal + ' ' + str];
+      let tag = world.lexicon[ts.terms[i].normal + ' ' + str];
       ts.slice(i, i + add + 1).tag(tag, 'multi-lexicon-' + (add + 1) + '-word');
       return add;
     }
@@ -31,22 +28,15 @@ const findMultiWords = function(ts, i, lex) {
 
 //try multiple-word matches in the lexicon (users and default)
 const lexiconMulti = ts => {
-  let uLex = ts.lexicon || {};
-  uLex.firstWords = uLex.firstWords || {};
+  let firstWords = ts.world.firstWords || {};
   for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
     //try multi words from user-lexicon
-    if (uLex.firstWords.hasOwnProperty(t.normal) === true) {
-      let jump = findMultiWords(ts, i, uLex);
+    if (firstWords.hasOwnProperty(t.normal) === true) {
+      let jump = findMultiWords(ts, i, ts.world);
       // console.log(ts.slice(i, jump + 1).debug().out('text'));
       i += jump;
       continue;
-    }
-    //try main lexicon
-    if (mainLex.firstWords.hasOwnProperty(t.normal) === true) {
-      let jump = findMultiWords(ts, i, mainLex);
-      // console.log(ts.slice(i, jump + 1).out('text'));
-      i += jump;
     }
   }
   return ts;

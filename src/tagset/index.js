@@ -11,7 +11,7 @@ const misc = require('./tags/misc');
 //used for pretty-printing on the server-side
 const colors = {
   Noun: 'blue',
-  'Date': 'red',
+  Date: 'red',
   Value: 'red',
   Verb: 'green',
   Auxiliary: 'green',
@@ -22,12 +22,12 @@ const colors = {
   Conjunction: 'cyan',
   Determiner: 'cyan',
   Adjective: 'magenta',
-  Adverb: 'black'
+  Adverb: 'cyan'
 };
 
 //extend tagset with new tags
 const addIn = function(obj, tags) {
-  Object.keys(obj).forEach((k) => {
+  Object.keys(obj).forEach(k => {
     tags[k] = obj[k];
   });
 };
@@ -35,10 +35,10 @@ const addIn = function(obj, tags) {
 //add 'downward' tags (that immediately depend on this one)
 const addChildren = function(tags) {
   const keys = Object.keys(tags);
-  keys.forEach((k) => {
+  keys.forEach(k => {
     tags[k].downward = [];
     //look for tags with this as parent
-    for(let i = 0; i < keys.length; i++) {
+    for (let i = 0; i < keys.length; i++) {
       if (tags[keys[i]].is && tags[keys[i]].is === k) {
         tags[k].downward.push(keys[i]);
       }
@@ -48,13 +48,13 @@ const addChildren = function(tags) {
 
 //add tags to remove when tagging this one
 const addConflicts = function(tags) {
-  Object.keys(tags).forEach((k) => {
+  Object.keys(tags).forEach(k => {
     tags[k].enemy = {};
-    for(let i = 0; i < conflicts.length; i++) {
+    for (let i = 0; i < conflicts.length; i++) {
       let arr = conflicts[i];
       if (arr.indexOf(k) !== -1) {
-        arr = arr.filter((a) => a !== k);
-        arr.forEach((e) => {
+        arr = arr.filter(a => a !== k);
+        arr.forEach(e => {
           tags[k].enemy[e] = true;
         });
       }
@@ -64,7 +64,7 @@ const addConflicts = function(tags) {
 };
 
 const addColors = function(tags) {
-  Object.keys(tags).forEach((k) => {
+  Object.keys(tags).forEach(k => {
     if (colors[k]) {
       tags[k].color = colors[k];
       return;

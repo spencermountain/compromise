@@ -7,21 +7,21 @@ const methods = {
   toPastTense: function() {
     this.list = this.list.map(ts => {
       ts = ts.toPastTense();
-      return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+      return new Sentence(ts.terms, ts.world, ts.refText, ts.refTerms);
     });
     return this;
   },
   toPresentTense: function() {
     this.list = this.list.map(ts => {
       ts = ts.toPresentTense();
-      return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+      return new Sentence(ts.terms, ts.world, ts.refText, ts.refTerms);
     });
     return this;
   },
   toFutureTense: function() {
     this.list = this.list.map(ts => {
       ts = ts.toFutureTense();
-      return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+      return new Sentence(ts.terms, ts.world, ts.refText, ts.refTerms);
     });
     return this;
   },
@@ -29,14 +29,14 @@ const methods = {
   toNegative: function() {
     this.list = this.list.map(ts => {
       ts = ts.toNegative();
-      return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+      return new Sentence(ts.terms, ts.world, ts.refText, ts.refTerms);
     });
     return this;
   },
   toPositive: function() {
     this.list = this.list.map(ts => {
       ts = ts.toPositive();
-      return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+      return new Sentence(ts.terms, ts.world, ts.refText, ts.refTerms);
     });
     return this;
   },
@@ -90,7 +90,7 @@ const find = function(r, n) {
     r = r.get(n);
   }
   r.list = r.list.map(ts => {
-    return new Sentence(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+    return new Sentence(ts.terms, ts.world, ts.refText, ts.refTerms);
   });
   return r;
 };

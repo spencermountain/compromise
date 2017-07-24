@@ -6,7 +6,7 @@ const Person = require('./person');
 //the () subset class
 const methods = {
   pronoun: function() {
-    return this.list.map((ts) => ts.pronoun());
+    return this.list.map(ts => ts.pronoun());
   }
 };
 
@@ -16,8 +16,8 @@ const find = function(r, n) {
   if (typeof n === 'number') {
     people = people.get(n);
   }
-  people.list = people.list.map((ts) => {
-    return new Person(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  people.list = people.list.map(ts => {
+    return new Person(ts.terms, ts.world, ts.refText, ts.refTerms);
   });
   return people;
 };

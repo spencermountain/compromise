@@ -182,8 +182,8 @@ const methods = {
   }
 };
 
-const Sentence = function(arr, lexicon, refText, refTerms) {
-  Terms.call(this, arr, lexicon, refText, refTerms);
+const Sentence = function(arr, world, refText, refTerms) {
+  Terms.call(this, arr, world, refText, refTerms);
   parse(this);
 };
 //Terms inheritence

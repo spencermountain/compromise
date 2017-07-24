@@ -25,8 +25,8 @@ Text.addMethods = function(cl, obj) {
 
 //make a sub-class of this class easily
 Text.makeSubset = function(methods, find) {
-  let Subset = function(arr, lexicon, reference) {
-    Text.call(this, arr, lexicon, reference);
+  let Subset = function(arr, world, reference) {
+    Text.call(this, arr, world, reference);
   };
   //inheritance
   Subset.prototype = Object.create(Text.prototype);
@@ -66,6 +66,6 @@ Object.keys(subset).forEach(k => {
   Text.prototype[k] = function(num, arg) {
     let sub = subset[k];
     let m = sub.find(this, num, arg);
-    return new subset[k](m.list, this.lexicon, this.parent);
+    return new subset[k](m.list, this.world, this.parent);
   };
 });

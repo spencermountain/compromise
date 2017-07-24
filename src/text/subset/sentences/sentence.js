@@ -17,7 +17,6 @@ const parse = function(s) {
   let subject = tmp.match('#Determiner? #Adjective+? #Noun ' + vb).first().not('#VerbPhrase');
   //get obj noun right-of the verb
   let object = tmp.match(vb + ' #Preposition? #Determiner? #Noun').first().not('#VerbPhrase');
-
   s.conditions = conditions;
   s.subject = subject;
   s.verb = verb;

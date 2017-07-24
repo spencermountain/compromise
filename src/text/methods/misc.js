@@ -20,7 +20,7 @@ const miscMethods = Text => {
       let list = this.list.map(ts => {
         return ts.clone();
       });
-      return new Text(list); //this.lexicon, this.parent
+      return new Text(list, this.world); //this.lexicon, this.parent
     },
 
     /** get the nth term of each result*/
@@ -62,7 +62,7 @@ const miscMethods = Text => {
       if (!n && n !== 0) {
         return this.get(0);
       }
-      return new Text(this.list.slice(0, n), this.lexicon, this.parent);
+      return new Text(this.list.slice(0, n), this.world, this.parent);
     },
     /**use only the last result */
     last: function(n) {

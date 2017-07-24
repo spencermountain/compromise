@@ -60,7 +60,7 @@ const addfns = Terms => {
         return new Terms(a, r.world, r.refText, r.refTerms);
       });
       // return matches
-      return new Text(matches, r.lexicon, r.parent);
+      return new Text(matches, r.world, r.parent);
     }
   };
   //blacklist from a [word, word] array

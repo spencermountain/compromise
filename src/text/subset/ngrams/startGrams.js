@@ -2,8 +2,8 @@
 const Ngrams = require('./index');
 const getGrams = require('./getGrams');
 
-const StartGrams = function(arr, lexicon, reference) {
-  Ngrams.call(this, arr, lexicon, reference);
+const StartGrams = function(arr, world, reference) {
+  Ngrams.call(this, arr, world, reference);
 };
 
 //Inherit properties
@@ -30,6 +30,5 @@ StartGrams.find = function(r, n, size) {
   }
   return r;
 };
-
 
 module.exports = StartGrams;

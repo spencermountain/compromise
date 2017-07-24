@@ -2,8 +2,8 @@
 const Terms = require('../../paths').Terms;
 const guessGender = require('./guessGender');
 
-const Person = function(arr, lexicon, refText, refTerms) {
-  Terms.call(this, arr, lexicon, refText, refTerms);
+const Person = function(arr, world, refText, refTerms) {
+  Terms.call(this, arr, world, refText, refTerms);
   this.firstName = this.match('#FirstName+');
   this.middleName = this.match('#Acronym+');
   this.honorifics = this.match('#Honorific');
@@ -72,7 +72,7 @@ const methods = {
   }
 };
 
-Object.keys(methods).forEach((k) => {
+Object.keys(methods).forEach(k => {
   Person.prototype[k] = methods[k];
 });
 module.exports = Person;

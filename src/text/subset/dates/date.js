@@ -2,8 +2,8 @@
 const Terms = require('../../paths').Terms;
 const parseDate = require('./parseDate');
 
-const _Date = function(arr, lexicon, refText) {
-  Terms.call(this, arr, lexicon, refText);
+const _Date = function(arr, world, refText) {
+  Terms.call(this, arr, world, refText);
   this.month = this.match('#Month');
 };
 

@@ -15,7 +15,6 @@ const replaceMethods = Terms => {
 
     /**swap this for that */
     replaceWith: function(str, keepTags) {
-      // console.log(Object.keys(this.world.lexicon).length);
       let newTs = Terms.fromString(str, this.world);
       newTs.tagger();
       //if instructed, apply old tags to new terms

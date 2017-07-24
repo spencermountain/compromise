@@ -57,7 +57,7 @@ const addfns = Terms => {
         matches.push(terms);
       }
       matches = matches.map(a => {
-        return new Terms(a, r.lexicon, r.refText, r.refTerms);
+        return new Terms(a, r.world, r.refText, r.refTerms);
       });
       // return matches
       return new Text(matches, r.lexicon, r.parent);

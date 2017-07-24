@@ -1,10 +1,8 @@
 'use strict';
 const tagger = require('../../tagger');
 
-const miscMethods = (Terms) => {
-
+const miscMethods = Terms => {
   const methods = {
-
     tagger: function() {
       tagger(this);
       return this;
@@ -21,25 +19,25 @@ const miscMethods = (Terms) => {
     data: function() {
       return {
         text: this.out('text'),
-        normal: this.out('normal'),
+        normal: this.out('normal')
       };
     },
-    term: function (n) {
+    term: function(n) {
       return this.terms[n];
     },
-    first: function () {
+    first: function() {
       let t = this.terms[0];
-      return new Terms([t], this.lexicon, this.refText, this.refTerms);
+      return new Terms([t], this.world, this.refText, this.refTerms);
     },
-    last: function () {
+    last: function() {
       let t = this.terms[this.terms.length - 1];
-      return new Terms([t], this.lexicon, this.refText, this.refTerms);
+      return new Terms([t], this.world, this.refText, this.refTerms);
     },
-    slice: function (start, end) {
+    slice: function(start, end) {
       let terms = this.terms.slice(start, end);
-      return new Terms(terms, this.lexicon, this.refText, this.refTerms);
+      return new Terms(terms, this.world, this.refText, this.refTerms);
     },
-    endPunctuation: function () {
+    endPunctuation: function() {
       return this.last().terms[0].endPunctuation();
     },
     index: function() {
@@ -48,7 +46,7 @@ const miscMethods = (Terms) => {
       if (!parent || !first) {
         return null; //maybe..
       }
-      for(let i = 0; i < parent.terms.length; i++) {
+      for (let i = 0; i < parent.terms.length; i++) {
         if (first === parent.terms[i]) {
           return i;
         }
@@ -62,9 +60,9 @@ const miscMethods = (Terms) => {
         return null; //maybe..
       }
       let n = 0;
-      for(let i = 0; i < ref.list.length; i++) {
+      for (let i = 0; i < ref.list.length; i++) {
         let ts = ref.list[i];
-        for(let o = 0; o < ts.terms.length; o++) {
+        for (let o = 0; o < ts.terms.length; o++) {
           if (ts.terms[o] === first) {
             return n;
           }
@@ -102,7 +100,7 @@ const miscMethods = (Terms) => {
   };
 
   //hook them into result.proto
-  Object.keys(methods).forEach((k) => {
+  Object.keys(methods).forEach(k => {
     Terms.prototype[k] = methods[k];
   });
   return Terms;

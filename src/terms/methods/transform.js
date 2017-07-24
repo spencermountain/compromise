@@ -1,16 +1,14 @@
 'use strict';
 
-const transforms = (Terms) => {
-
+const transforms = Terms => {
   const methods = {
-
-    clone: function () {
-      let terms = this.terms.map((t) => {
+    clone: function() {
+      let terms = this.terms.map(t => {
         return t.clone();
       });
-      return new Terms(terms, this.lexicon, this.refText, null); //, this.refTerms
+      return new Terms(terms, this.world, this.refText, null); //, this.refTerms
     },
-    hyphenate: function () {
+    hyphenate: function() {
       this.terms.forEach((t, i) => {
         if (i !== this.terms.length - 1) {
           t.whitespace.after = '-';
@@ -21,15 +19,15 @@ const transforms = (Terms) => {
       });
       return this;
     },
-    dehyphenate: function () {
-      this.terms.forEach((t) => {
+    dehyphenate: function() {
+      this.terms.forEach(t => {
         if (t.whitespace.after === '-') {
           t.whitespace.after = ' ';
         }
       });
       return this;
     },
-    trim: function () {
+    trim: function() {
       if (this.length <= 0) {
         return this;
       }
@@ -40,7 +38,7 @@ const transforms = (Terms) => {
   };
 
   //hook them into result.proto
-  Object.keys(methods).forEach((k) => {
+  Object.keys(methods).forEach(k => {
     Terms.prototype[k] = methods[k];
   });
   return Terms;

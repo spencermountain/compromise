@@ -30,7 +30,7 @@ const splitMethods = Text => {
       });
     });
     matches = matches.map(t => {
-      return new Terms([t], r.lexicon, r, t.parentTerms);
+      return new Terms([t], r.world, r, t.parentTerms);
     });
     return new Text(matches, r.world, r.parent);
   };

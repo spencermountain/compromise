@@ -27,7 +27,7 @@ const find = function(r, n) {
   //make a Terms Object for every Term
   r.list.forEach(ts => {
     ts.terms.forEach(t => {
-      list.push(new Terms([t], ts.lexicon, r));
+      list.push(new Terms([t], ts.world, r));
     });
   });
   r = new Text(list, r.world, r.parent);

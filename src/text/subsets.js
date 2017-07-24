@@ -77,7 +77,7 @@ const addSubsets = Text => {
       let list = r.list.filter(ts => {
         return ts.last().endPunctuation() === '?';
       });
-      return new Text(list, this.lexicon, this.parent);
+      return new Text(list, this.world, this.parent);
     },
     statements: function(n) {
       let r = this.all();
@@ -87,7 +87,7 @@ const addSubsets = Text => {
       let list = r.list.filter(ts => {
         return ts.last().endPunctuation() !== '?';
       });
-      return new Text(list, this.lexicon, this.parent);
+      return new Text(list, this.world, this.parent);
     }
   };
 

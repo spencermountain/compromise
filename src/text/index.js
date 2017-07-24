@@ -2,9 +2,9 @@
 //a Text is an array of termLists
 const getters = require('./getters');
 
-function Text(arr, lexicon, reference) {
+function Text(arr, world, reference) {
   this.list = arr || [];
-  this.lexicon = lexicon;
+  this.world = world;
   this.reference = reference;
   //apply getters
   let keys = Object.keys(getters);

@@ -31,9 +31,9 @@ const miscMethods = Text => {
         if (el) {
           arr = [el];
         }
-        return new Terms(arr, this.lexicon, this.refText, this.refTerms);
+        return new Terms(arr, this.world, this.refText, this.refTerms);
       });
-      return new Text(list, this.lexicon, this.parent);
+      return new Text(list, this.world, this.parent);
     },
     firstTerm: function() {
       return this.match('^.');
@@ -52,10 +52,10 @@ const miscMethods = Text => {
     get: function(n) {
       //return an empty result
       if ((!n && n !== 0) || !this.list[n]) {
-        return new Text([], this.lexicon, this.parent);
+        return new Text([], this.world, this.parent);
       }
       let ts = this.list[n];
-      return new Text([ts], this.lexicon, this.parent);
+      return new Text([ts], this.world, this.parent);
     },
     /**use only the first result */
     first: function(n) {
@@ -71,7 +71,7 @@ const miscMethods = Text => {
       }
       let end = this.list.length;
       let start = end - n;
-      return new Text(this.list.slice(start, end), this.lexicon, this.parent);
+      return new Text(this.list.slice(start, end), this.world, this.parent);
     },
 
     concat: function() {
@@ -100,10 +100,10 @@ const miscMethods = Text => {
       });
       //dont create an empty ts
       if (!terms.length) {
-        return new Text(null, this.lexicon, this.parent);
+        return new Text(null, this.world, this.parent);
       }
-      let ts = new Terms(terms, this.lexicon, this, null);
-      return new Text([ts], this.lexicon, this.parent);
+      let ts = new Terms(terms, this.world, this, null);
+      return new Text([ts], this.world, this.parent);
     },
 
     /** see if these terms can become this tag*/
@@ -129,7 +129,7 @@ const miscMethods = Text => {
         }
         arr = arr.concat(this.list.slice(0, diff));
       }
-      return new Text(arr, this.lexicon, this.parent);
+      return new Text(arr, this.world, this.parent);
     }
   };
   Text.addMethods(Text, methods);

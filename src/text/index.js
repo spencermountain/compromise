@@ -4,7 +4,9 @@ const getters = require('./getters');
 
 function Text(arr, world, reference) {
   this.list = arr || [];
-  this.world = world;
+  this.world = () => {
+    return world;
+  };
   this.reference = reference;
   //apply getters
   let keys = Object.keys(getters);

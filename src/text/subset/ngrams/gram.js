@@ -2,8 +2,8 @@
 const Terms = require('../../paths').Terms;
 
 //this is one-or-more terms together, sorted by frequency
-const Gram = function (arr, lexicon, reference) {
-  Terms.call(this, arr, lexicon, reference);
+const Gram = function(arr, world, reference) {
+  Terms.call(this, arr, world, reference);
   //string to sort/uniq by
   this.key = this.out('normal');
   //bigram/trigram/etc

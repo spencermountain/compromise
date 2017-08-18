@@ -108,8 +108,8 @@ const methods = {
   }
 };
 
-const Verb = function(arr, lexicon, refText, parentTerms) {
-  Terms.call(this, arr, lexicon, refText, parentTerms);
+const Verb = function(arr, world, refText, parentTerms) {
+  Terms.call(this, arr, world, refText, parentTerms);
   //basic verb-phrase parsing:
   return parse(this);
 };

@@ -27,9 +27,9 @@ const addfns = Terms => {
         matches.push(current);
       }
       matches = matches.map(a => {
-        return new Terms(a, r.lexicon, r.refText, r.refTerms);
+        return new Terms(a, r.world, r.refText, r.refTerms);
       });
-      return new Text(matches, r.lexicon, r.parent);
+      return new Text(matches, r.world, r.parent);
     },
 
     //blacklist from a match string
@@ -57,10 +57,10 @@ const addfns = Terms => {
         matches.push(terms);
       }
       matches = matches.map(a => {
-        return new Terms(a, r.lexicon, r.refText, r.refTerms);
+        return new Terms(a, r.world, r.refText, r.refTerms);
       });
       // return matches
-      return new Text(matches, r.lexicon, r.parent);
+      return new Text(matches, r.world, r.parent);
     }
   };
   //blacklist from a [word, word] array

@@ -17,13 +17,12 @@ const parse = function(s) {
   let subject = tmp.match('#Determiner? #Adjective+? #Noun ' + vb).first().not('#VerbPhrase');
   //get obj noun right-of the verb
   let object = tmp.match(vb + ' #Preposition? #Determiner? #Noun').first().not('#VerbPhrase');
-
   s.conditions = conditions;
   s.subject = subject;
   s.verb = verb;
   s.object = object;
   if (s.verb.found) {
-    s.verb = new Verb(s.verb.list[0].terms, s.lexicon, s.refText, s.refTerms);
+    s.verb = new Verb(s.verb.list[0].terms, s.world, s.refText, s.refTerms);
   }
   return s;
 };
@@ -182,8 +181,8 @@ const methods = {
   }
 };
 
-const Sentence = function(arr, lexicon, refText, refTerms) {
-  Terms.call(this, arr, lexicon, refText, refTerms);
+const Sentence = function(arr, world, refText, refTerms) {
+  Terms.call(this, arr, world, refText, refTerms);
   parse(this);
 };
 //Terms inheritence

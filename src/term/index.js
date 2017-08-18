@@ -6,9 +6,10 @@ const makeUID = require('./makeUID');
 const addNormal = require('./methods/normalize/normalize').addNormal;
 const addRoot = require('./methods/normalize/root');
 
-const Term = function(str) {
-  this._text = fns.ensureString(str);
+const Term = function(str, world) {
   this.tags = {};
+  this._text = fns.ensureString(str);
+  this.world = world;
   //seperate whitespace from the text
   let parsed = build_whitespace(this._text);
   this.whitespace = parsed.whitespace;

@@ -3,8 +3,8 @@ const Terms = require('../../paths').Terms;
 const contract = require('./contract');
 const expand = require('./expand');
 
-const ContractionCl = function (arr, lexicon, reference) {
-  Terms.call(this, arr, lexicon, reference);
+const ContractionCl = function(arr, world, reference) {
+  Terms.call(this, arr, world, reference);
 };
 
 //Inherit properties

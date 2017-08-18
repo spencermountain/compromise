@@ -5,18 +5,18 @@ const Noun = require('./noun');
 //the () subset class
 const methods = {
   isPlural: function() {
-    this.list= this.list.filter((ts) => ts.isPlural());
-    return this
+    this.list = this.list.filter(ts => ts.isPlural());
+    return this;
   },
   hasPlural: function() {
-    return this.list.map((ts) => ts.hasPlural());
+    return this.list.map(ts => ts.hasPlural());
   },
   toPlural: function() {
-    this.list.forEach((ts) => ts.toPlural());
+    this.list.forEach(ts => ts.toPlural());
     return this;
   },
   toSingular: function() {
-    this.list.forEach((ts) => ts.toSingular());
+    this.list.forEach(ts => ts.toSingular());
     return this;
   }
 };
@@ -29,8 +29,8 @@ const find = function(r, n) {
   if (typeof n === 'number') {
     r = r.get(n);
   }
-  r.list = r.list.map((ts) => {
-    return new Noun(ts.terms, ts.lexicon, ts.refText, ts.refTerms);
+  r.list = r.list.map(ts => {
+    return new Noun(ts.terms, ts.world, ts.refText, ts.refTerms);
   });
   return r;
 };

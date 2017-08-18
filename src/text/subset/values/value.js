@@ -66,8 +66,8 @@ const setNumber = function(ts, num) {
   return parseValue(ts);
 };
 
-const Value = function(arr, lexicon, refText, refTerms) {
-  Terms.call(this, arr, lexicon, refText, refTerms);
+const Value = function(arr, world, refText, refTerms) {
+  Terms.call(this, arr, world, refText, refTerms);
   parseValue(this);
 };
 

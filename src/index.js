@@ -3,13 +3,15 @@ const buildText = require('./text/build');
 const pkg = require('../package.json');
 const log = require('./log');
 const pack = require('efrt').pack;
-const unpack = require('./lexicon/unpack');
-
+const World = require('./world');
 //the main thing
 // linguistischen Datenverarbeitung (nlp)
-const nlp = function(str, lexicon) {
-  // this.tagset = tagset;
-  let doc = buildText(str, lexicon);
+const nlp = function(str, lex) {
+  let w = new World();
+  if (lex) {
+    w.addWords(lex);
+  }
+  let doc = buildText(str, w);
   doc.tagger();
   return doc;
 };

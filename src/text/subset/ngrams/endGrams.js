@@ -3,8 +3,8 @@ const Ngrams = require('./index');
 const getGrams = require('./getGrams');
 
 //like an n-gram, but only the endings of matches
-const EndGrams = function(arr, lexicon, reference) {
-  Ngrams.call(this, arr, lexicon, reference);
+const EndGrams = function(arr, world, reference) {
+  Ngrams.call(this, arr, world, reference);
 };
 
 //Inherit properties

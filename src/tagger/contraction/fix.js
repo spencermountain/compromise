@@ -2,21 +2,20 @@
 const Term = require('../../term');
 
 const tags = {
-  'not': 'Negative',
-  'will': 'Verb',
-  'would': 'Modal',
-  'have': 'Verb',
-  'are': 'Copula',
-  'is': 'Copula',
-  'am': 'Verb',
+  not: 'Negative',
+  will: 'Verb',
+  would: 'Modal',
+  have: 'Verb',
+  are: 'Copula',
+  is: 'Copula',
+  am: 'Verb'
 };
 //make sure the newly created term gets the easy tags
-const easyTag = (t) => {
+const easyTag = t => {
   if (tags[t.silent_term]) {
     t.tag(tags[t.silent_term]);
   }
 };
-
 
 //add a silent term
 const fixContraction = (ts, parts, i) => {

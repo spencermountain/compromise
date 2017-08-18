@@ -13,7 +13,7 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - new `.before()` and `.after()` match methods
 - removes `.lexicon()` method for many-lexicons concept
 - changes params of `.replaceWith()` method to a 'keyTags' boolean
-- improved .debug() and logging on clientside
+- improved .debug() and logging on client-side
 * 10.1.0
 - fix return format of .isPlural(), so it acts like a match filter
 - less-greedy date tagging & ambiguous month fixes
@@ -43,6 +43,7 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - improved `{min,max}` match syntax
 - new `.out('match')` method
 - quiet addition of .pack() and .unpack() for owen
+- fix for apostrophes in lexicon
 
 ### v9  &nbsp;
 * 9.0.0

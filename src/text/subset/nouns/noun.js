@@ -46,8 +46,8 @@ const methods = {
   }
 };
 
-const Noun = function(arr, lexicon, refText) {
-  Terms.call(this, arr, lexicon, refText);
+const Noun = function(arr, world, refText) {
+  Terms.call(this, arr, world, refText);
   this.t = this.terms[0];
 };
 Noun.prototype = Object.create(Terms.prototype);

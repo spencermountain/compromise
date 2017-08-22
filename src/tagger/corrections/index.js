@@ -112,7 +112,12 @@ const corrections = function(ts) {
     //is eager to go
     ts.match('#Copula #Adjective to #Verb').match('#Adjective to').tag('Verb', 'correction');
     //the word 'how'
-    ts.match('how (#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-question');
+    !!ts.match('^how').term(0).tag('QuestionWord', 'how-question') ||
+    ts.match('how (#Determiner|#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-question');
+    //the word 'which'
+    !!ts.match('^which').term(0).tag('QuestionWord', 'which-question') ||
+    !ts.match('which . (#Noun)+ #Pronoun').found() &&
+    ts.match('which').term(0).tag('QuestionWord', 'which-question');
     //is mark hughes
     ts.match('#Copula #Infinitive #Noun').term(1).tag('Noun', 'is-pres-noun');
 

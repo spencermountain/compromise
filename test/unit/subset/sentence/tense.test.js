@@ -1,8 +1,8 @@
-var test = require('tape');
-var nlp = require('../../lib/nlp');
+var test = require('tape')
+var nlp = require('../../lib/nlp')
 
 test('sentence-change-tense:', function(t) {
-  [
+  ;[
     ['john walks quickly', 'john walked quickly', 'john will walk quickly'],
     ['he is quick', 'he was quick', 'he will be quick'],
     ['the stool falls over', 'the stool fell over', 'the stool will fall over'],
@@ -29,52 +29,50 @@ test('sentence-change-tense:', function(t) {
     //support negative
     // ['this isn\'t one sentence. This doesn\'t make two now.', 'this was not one sentence. This didn\'t make two now.', 'this won\'t be one sentence. This won\'t make two now.']
   ].forEach(function(a) {
-    var r = nlp(a[0]).sentences();
+    var r = nlp(a[0]).sentences()
 
-    r.toPastTense();
-    var str = r.out('text');
-    t.equal(str, a[1], 'pastTense-' + str);
+    r.toPastTense()
+    var str = r.out('text')
+    t.equal(str, a[1], 'pastTense-' + str)
 
-    r.toFutureTense();
-    str = r.out('text');
-    t.equal(str, a[2], 'futureTense-' + str);
+    r.toFutureTense()
+    str = r.out('text')
+    t.equal(str, a[2], 'futureTense-' + str)
 
-    r.toPresentTense();
-    str = r.out('text');
-    t.equal(str, a[0], 'presentTense-' + str);
-  });
-  t.end();
-});
+    r.toPresentTense()
+    str = r.out('text')
+    t.equal(str, a[0], 'presentTense-' + str)
+  })
+  t.end()
+})
 
 test('copula-form', function(t) {
-  var m = nlp('john is nice').sentences();
+  var m = nlp('john is nice').sentences()
 
-  m.toPastTense();
-  t.equal(m.out(), 'john was nice', 'toPast-1');
+  m.toPastTense()
+  t.equal(m.out(), 'john was nice', 'toPast-1')
 
-  m.toPresentTense();
-  t.equal(m.out(), 'john is nice', 'toPres-1');
+  m.toPresentTense()
+  t.equal(m.out(), 'john is nice', 'toPres-1')
 
-  m.toFutureTense();
-  t.equal(m.out(), 'john will be nice', 'toFuture-1');
+  m.toFutureTense()
+  t.equal(m.out(), 'john will be nice', 'toFuture-1')
 
-  m.toNegative();
-  t.equal(m.out(), 'john will not be nice', 'toNeg-future');
+  m.toNegative()
+  t.equal(m.out(), 'john will not be nice', 'toNeg-future')
 
   //negative forms
-  console.log(m.out());
-  m.toPastTense();
-  console.log(m.out());
-  t.equal(m.out(), 'john was not nice', 'toPast-neg');
+  m.toPastTense()
+  t.equal(m.out(), 'john was not nice', 'toPast-neg')
 
-  m.toPresentTense();
-  t.equal(m.out(), 'john is not nice', 'toPres-neg');
+  m.toPresentTense()
+  t.equal(m.out(), 'john is not nice', 'toPres-neg')
 
-  m.toFutureTense();
-  t.equal(m.out(), 'john will not be nice', 'toFuture-neg');
+  m.toFutureTense()
+  t.equal(m.out(), 'john will not be nice', 'toFuture-neg')
 
-  t.end();
-});
+  t.end()
+})
 // //
 // test('conjugate-form', function(t) {
 //   var m = nlp('john walks quickly').sentences();

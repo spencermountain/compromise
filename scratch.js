@@ -1,9 +1,9 @@
 'use strict'
 var nlp = require('./src/index')
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 // const fresh = require('./test/unit/lib/freshPrince.js');
 
-let doc = nlp('john will be nice').sentences()
+let doc = nlp('they walk').sentences()
 doc.toNegative()
 doc.debug()
 // console.log(doc.out())

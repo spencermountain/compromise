@@ -43,6 +43,8 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - improved `{min,max}` match syntax
 - new `.out('match')` method
 - quiet addition of .pack() and .unpack() for owen
+* 10.7.2
+- fix for '.watch' reserved word in efrt
 
 ### v9  &nbsp;
 * 9.0.0

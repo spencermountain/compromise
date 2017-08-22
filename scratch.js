@@ -7,7 +7,7 @@ nlp.verbose('tagger')
 
 // console.log(nlp('took').verbs().conjugate())
 // let doc = nlp("EfD's")
-let doc = nlp("EDD's")
+let doc = nlp('The Elkjsdflkjsdf sells hamburgers')
 // let doc = nlp('The EACD united in 1972. EACD must follow regulations.')
 doc.debug()
 doc.topics().debug()

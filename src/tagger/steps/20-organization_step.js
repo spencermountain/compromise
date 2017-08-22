@@ -42,7 +42,10 @@ const organization_step = ts => {
       }
     }
   }
-  ts.match('the #Acronym').lastTerm().tag('Organization', 'the-acronym')
+  if (ts.has('#Acronym')) {
+    ts.match('the #Acronym').lastTerm().tag('Organization', 'the-acronym')
+    ts.match('#Acronym').match('#Possessive').tag('Organization', 'possessive-acronym')
+  }
   return ts
 }
 module.exports = organization_step

@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 //most nouns do not nead to be listed
 //for whatever reasons, these look like not-nouns
 // //so we make sure that they become nouns
@@ -11,6 +11,18 @@ module.exports = [
   'cottage',
   'kitty',
   'doggy',
+
+  //..lly rule
+  'ally',
+  'belly',
+  'bully',
+  'dolly',
+  'folly',
+  'rally',
+  'jelly',
+  'gully',
+  'holly',
+  'tally',
 
   'ad hominem',
   'banking',
@@ -63,4 +75,4 @@ module.exports = [
   // 'tomorrow',
   // 'weekend',
   // 'tonight'
-];
+]

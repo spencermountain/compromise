@@ -36,6 +36,7 @@ module.exports = [
   'for sure',
   'forever',
   'further',
+  'fully',
   'furthermore',
   'hence',
   'indeed',
@@ -85,4 +86,4 @@ module.exports = [
   'yes',
   'yep',
   'not only'
-];
+]

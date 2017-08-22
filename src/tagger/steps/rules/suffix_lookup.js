@@ -1,17 +1,17 @@
-'use strict';
+'use strict'
 //just a foolish lookup of known suffixes
-const Adj = 'Adjective';
-const Inf = 'Infinitive';
-const Pres = 'PresentTense';
-const Sing = 'Singular';
-const Past = 'PastTense';
-const AdVb = 'AdVerb';
-const Plrl = 'Plural';
-const Actor = 'Actor';
-const Vb = 'Verb';
-const Noun = 'Noun';
-const Last = 'LastName';
-const Modal = 'Modal';
+const Adj = 'Adjective'
+const Inf = 'Infinitive'
+const Pres = 'PresentTense'
+const Sing = 'Singular'
+const Past = 'PastTense'
+const Avb = 'Adverb'
+const Plrl = 'Plural'
+const Actor = 'Actor'
+const Vb = 'Verb'
+const Noun = 'Noun'
+const Last = 'LastName'
+const Modal = 'Modal'
 
 module.exports = [
   null, //0
@@ -44,7 +44,7 @@ module.exports = [
     zes: Pres,
     nes: Pres,
     ing: 'Gerund', //likely to be converted to Adj after lexicon pass
-    ' so': AdVb,
+    ' so': Avb,
     "'ll": Modal,
     "'re": 'Copula'
   },
@@ -68,8 +68,8 @@ module.exports = [
     ried: Adj,
     gone: Adj,
     made: Adj,
-    fore: AdVb,
-    less: AdVb,
+    fore: Avb,
+    less: Avb,
     ices: Plrl,
     ions: Plrl,
     ints: Plrl,
@@ -86,9 +86,9 @@ module.exports = [
   },
   {
     //5-letter
-    fully: AdVb,
-    where: AdVb,
-    wards: AdVb,
+    fully: Avb,
+    where: Avb,
+    wards: Avb,
     urned: Past,
     tized: Past,
     eased: Past,
@@ -117,4 +117,4 @@ module.exports = [
     sdottir: Last, //swedish female
     opoulos: Last //greek
   }
-];
+]

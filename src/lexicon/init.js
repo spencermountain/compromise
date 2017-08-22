@@ -1,8 +1,8 @@
 //lexicon in compressed form
-const pckd = require('./compressed/_compressed');
-const efrt = require('efrt');
-const buildOut = require('./buildOut');
-const indexFirst = require('./firstWords');
+const pckd = require('./compressed/_compressed')
+const efrt = require('efrt')
+const buildOut = require('./buildOut')
+const indexFirst = require('./firstWords')
 
 const uncompressed = [
   //(order matters)
@@ -13,35 +13,35 @@ const uncompressed = [
   require('./uncompressed/orgWords'),
   require('./uncompressed/numbers').lexicon,
   require('./uncompressed/misc')
-];
+]
 
 const addToLex = function(lex, obj) {
-  let keys = Object.keys(obj);
+  let keys = Object.keys(obj)
   for (let i = 0; i < keys.length; i++) {
     if (lex[keys[i]] === undefined) {
-      lex[keys[i]] = obj[keys[i]];
+      lex[keys[i]] = obj[keys[i]]
     }
   }
-};
+}
 
-let lex = efrt.unpack(pckd);
+let lex = efrt.unpack(pckd)
 
-uncompressed.forEach(obj => addToLex(lex, obj));
+uncompressed.forEach(obj => addToLex(lex, obj))
 
-lex = buildOut(lex);
+lex = buildOut(lex)
 
 //hard-code these, ¯\_(ツ)_/¯
-lex['is'] = ['Copula', 'PresentTense'];
-lex['are'] = ['Copula', 'PresentTense'];
-lex['was'] = ['Copula', 'PastTense'];
-lex['will be'] = ['Copula', 'FutureTense'];
-lex['close'] = 'Adjective';
-lex['can'] = 'Modal';
+lex['is'] = ['Copula', 'PresentTense']
+lex['are'] = ['Copula', 'PresentTense']
+lex['was'] = ['Copula', 'PastTense']
+lex['will be'] = ['Copula', 'FutureTense']
+lex['close'] = 'Adjective'
+lex['can'] = 'Modal'
 
 //collect first-of-multi words for quicker lookup
-let firstWords = indexFirst(lex);
+let firstWords = indexFirst(lex)
 
 module.exports = {
   lexicon: lex,
   firstWords: firstWords
-};
+}

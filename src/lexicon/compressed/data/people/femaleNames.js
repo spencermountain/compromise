@@ -541,6 +541,7 @@ module.exports = [
   'miranda',
   'miriam',
   'mona',
+  'molly',
   'monica',
   'monique',
   'mrignayani',
@@ -718,4 +719,4 @@ module.exports = [
   'yvonna',
   'yvonne',
   'zara'
-];
+]

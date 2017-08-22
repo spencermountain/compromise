@@ -18,6 +18,7 @@ module.exports = [
   'eww',
   'fuck',
   'gah',
+  'golly',
   'gee',
   'goodbye',
   'grr',
@@ -75,4 +76,4 @@ module.exports = [
   'yuck',
   'yup',
   "d'oh"
-];
+]

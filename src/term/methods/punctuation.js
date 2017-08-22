@@ -1,5 +1,5 @@
 'use strict';
-const endPunct = /([a-z])([,:;\/.(\.\.\.)\!\?]+)$/i;
+const endPunct = /([^\/,:;.()!?]{0,1})([\/,:;.()!?]+)$/i;
 const addMethods = (Term) => {
 
   const methods = {
@@ -16,12 +16,13 @@ const addMethods = (Term) => {
           '!': 'exclamation',
           '?': 'question'
         };
-        if (allowed[m[2]] !== undefined) {
+        if (!!allowed[m[2]]) {
           return m[2];
         }
       }
       return null;
     },
+
     setPunctuation: function(punct) {
       this.killPunctuation();
       this.text += punct;
@@ -30,7 +31,7 @@ const addMethods = (Term) => {
 
     /** check if the term ends with a comma */
     hasComma: function () {
-      if (this.endPunctuation() === 'comma') {
+      if (this.endPunctuation() === ',') {
         return true;
       }
       return false;

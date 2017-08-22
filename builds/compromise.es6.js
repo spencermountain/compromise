@@ -1,10 +1,10 @@
-/* compromise v10.7.1
+/* compromise v10.7.2
    http://compromise.cool
    MIT
 */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.nlp = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 (function (global){
-/* efrt trie-compression v1.1.0  github.com/nlp-compromise/efrt  - MIT */
+/* efrt trie-compression v1.1.1  github.com/nlp-compromise/efrt  - MIT */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.efrt = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 'use strict';
 
@@ -681,8 +681,8 @@ module.exports = function (obj) {
     }
     for (var i = 0; i < arr.length; i++) {
       var k = arr[i];
-      if (all[k] !== undefined) {
-        if (typeof all[k] === 'string') {
+      if (all.hasOwnProperty(k) === true) {
+        if (Array.isArray(all[k]) === false) {
           all[k] = [all[k], cat];
         } else {
           all[k].push(cat);
@@ -785,7 +785,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.7.1",
+  "version": "10.7.2",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -809,7 +809,9 @@ module.exports={
     "lint": "node ./scripts/prepublish/linter.js"
   },
   "files": ["builds/", "docs/"],
-  "dependencies": {},
+  "dependencies": {
+    "efrt": "1.1.1"
+  },
   "devDependencies": {
     "babel-preset-es2015": "^6.24.0",
     "babelify": "7.3.0",
@@ -820,7 +822,6 @@ module.exports={
     "chalk": "^1.1.3",
     "codacy-coverage": "^2.0.0",
     "derequire": "^2.0.3",
-    "efrt": "1.1.0",
     "eslint": "^3.1.1",
     "gaze": "^1.1.1",
     "http-server": "0.9.0",
@@ -953,63 +954,73 @@ exports.isArray = function(arr) {
 
 },{"./tagset":60}],4:[function(_dereq_,module,exports){
 (function (global){
-'use strict';
-const buildText = _dereq_('./text/build');
-const pkg = _dereq_('../package.json');
-const log = _dereq_('./log');
-const pack = _dereq_('efrt').pack;
-const World = _dereq_('./world');
+'use strict'
+const buildText = _dereq_('./text/build')
+const pkg = _dereq_('../package.json')
+const log = _dereq_('./log')
+const pack = _dereq_('efrt').pack
+const World = _dereq_('./world')
+
+let w = new World()
 //the main thing
-// linguistischen Datenverarbeitung (nlp)
 const nlp = function(str, lex) {
-  let w = new World();
   if (lex) {
-    w.addWords(lex);
+    w.addWords(lex)
   }
-  let doc = buildText(str, w);
-  doc.tagger();
-  return doc;
-};
+  let doc = buildText(str, w)
+  doc.tagger()
+  return doc
+}
 
 //same as main method, except with no POS-tagging.
 nlp.tokenize = function(str) {
-  return buildText(str);
-};
+  return buildText(str)
+}
 
-//this is useful
-nlp.version = pkg.version;
+//contribute words to the lexicon
+nlp.addWords = function(lex) {
+  w.addWords(lex)
+}
+
+nlp.clone = function() {
+  w = w.clone()
+  return nlp
+}
+
+//this is handy
+nlp.version = pkg.version
 
 //turn-on some debugging
 nlp.verbose = function(str) {
-  log.enable(str);
-};
+  log.enable(str)
+}
 
 //compress user-submitted lexicon
 nlp.pack = function(obj) {
-  return JSON.stringify(pack(obj));
-};
+  return JSON.stringify(pack(obj))
+}
 //uncompress user-submitted lexicon
 nlp.unpack = function(str) {
-  let obj = JSON.parse(str);
-  obj = efrt.unpack(obj);
-  return obj;
-};
+  let obj = JSON.parse(str)
+  obj = efrt.unpack(obj)
+  return obj
+}
 
 //and then all-the-exports...
 if (typeof self !== 'undefined') {
-  self.nlp = nlp; // Web Worker
+  self.nlp = nlp // Web Worker
 } else if (typeof window !== 'undefined') {
-  window.nlp = nlp; // Browser
+  window.nlp = nlp // Browser
 } else if (typeof global !== 'undefined') {
-  global.nlp = nlp; // NodeJS
+  global.nlp = nlp // NodeJS
 }
 //don't forget amd!
 if (typeof define === 'function' && define.amd) {
-  define(nlp);
+  define(nlp)
 }
 //then for some reason, do this too!
 if (typeof module !== 'undefined') {
-  module.exports = nlp;
+  module.exports = nlp
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
@@ -3168,7 +3179,12 @@ const corrections = function(ts) {
     //is eager to go
     ts.match('#Copula #Adjective to #Verb').match('#Adjective to').tag('Verb', 'correction');
     //the word 'how'
-    ts.match('how (#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-question');
+    !!ts.match('^how').term(0).tag('QuestionWord', 'how-question') ||
+    ts.match('how (#Determiner|#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-question');
+    //the word 'which'
+    !!ts.match('^which').term(0).tag('QuestionWord', 'which-question') ||
+    !ts.match('which . (#Noun)+ #Pronoun').found() &&
+    ts.match('which').term(0).tag('QuestionWord', 'which-question');
     //is mark hughes
     ts.match('#Copula #Infinitive #Noun').term(1).tag('Noun', 'is-pres-noun');
 
@@ -6030,7 +6046,7 @@ module.exports = serverDebug;
 
 },{"../../paths":84}],79:[function(_dereq_,module,exports){
 'use strict';
-const endPunct = /([a-z])([,:;\/.(\.\.\.)\!\?]+)$/i;
+const endPunct = /([^\/,:;.()!?]{0,1})([\/,:;.()!?]+)$/i;
 const addMethods = (Term) => {
 
   const methods = {
@@ -6047,12 +6063,13 @@ const addMethods = (Term) => {
           '!': 'exclamation',
           '?': 'question'
         };
-        if (allowed[m[2]] !== undefined) {
+        if (!!allowed[m[2]]) {
           return m[2];
         }
       }
       return null;
     },
+
     setPunctuation: function(punct) {
       this.killPunctuation();
       this.text += punct;
@@ -6061,7 +6078,7 @@ const addMethods = (Term) => {
 
     /** check if the term ends with a comma */
     hasComma: function () {
-      if (this.endPunctuation() === 'comma') {
+      if (this.endPunctuation() === ',') {
         return true;
       }
       return false;
@@ -13857,69 +13874,76 @@ module.exports = sentence_parser;
 // console.log(sentence_parser('john f. kennedy'));
 
 },{"../lexicon/uncompressed/abbreviations":9}],210:[function(_dereq_,module,exports){
-const lexicon = _dereq_('./lexicon/init');
-const tagset = _dereq_('./tagset');
-const firstWords = _dereq_('./lexicon/firstWords');
-const buildOut = _dereq_('./lexicon/buildOut');
-const normalize = _dereq_('./term/methods/normalize/normalize').normalize;
-
+const lexicon = _dereq_('./lexicon/init')
+const tagset = _dereq_('./tagset')
+const firstWords = _dereq_('./lexicon/firstWords')
+const buildOut = _dereq_('./lexicon/buildOut')
+const normalize = _dereq_('./term/methods/normalize/normalize').normalize
+const fns = _dereq_('./fns')
 //cleanup a directly-entered user lexicon.
 //basically really dirty and stupid.
 const normalizeLex = function(lex) {
-  lex = lex || {};
+  lex = lex || {}
   return Object.keys(lex).reduce((h, k) => {
-    let normal = normalize(k);
+    let normal = normalize(k)
     //normalize whitesace
-    normal = normal.replace(/\s+/, ' ');
+    normal = normal.replace(/\s+/, ' ')
     //remove sentence-punctuaion too
-    normal = normal.replace(/[.\?\!]/g, '');
-    h[normal] = lex[k];
-    return h;
-  }, {});
-};
+    normal = normal.replace(/[.\?\!]/g, '')
+    h[normal] = lex[k]
+    return h
+  }, {})
+}
 
 //basically really dirty and stupid.
 const unpackLex = function(lex) {
-  lex = lex || {};
+  lex = lex || {}
   if (typeof lex === 'string') {
-    lex = JSON.parse(lex);
-    lex = efrt.unpack(lex);
+    lex = JSON.parse(lex)
+    lex = efrt.unpack(lex)
   } else {
-    lex = normalizeLex(lex);
+    lex = normalizeLex(lex)
   }
-  lex = buildOut(lex);
+  lex = buildOut(lex)
   return {
     lexicon: lex,
     firstWords: firstWords(lex)
-  };
-};
-
-class World {
-  constructor() {
-    this.lexicon = lexicon.lexicon;
-    this.firstWords = lexicon.firstWords;
-    this.tagset = tagset;
   }
-  addWords(lex) {
-    lex = lex || {};
-    let l = unpackLex(lex);
-    lex = l.lexicon;
-    //'upsert' into lexicon object
-    Object.keys(lex).forEach(k => {
-      this.lexicon[k] = lex[k];
-    });
-    //merge 'firstWord' cache-objects too
-    let first = l.firstWords;
-    Object.keys(first).forEach(k => {
-      this.firstWords[k] = this.firstWords[k] || {};
-      Object.keys(first[k]).forEach(str => {
-        this.firstWords[k][str] = true;
-      });
-    });
-  }
-  clone() {}
 }
-module.exports = World;
 
-},{"./lexicon/buildOut":5,"./lexicon/firstWords":7,"./lexicon/init":8,"./tagset":60,"./term/methods/normalize/normalize":72}]},{},[4])(4)
+//'class World{}'
+let World = function() {
+  this.lexicon = lexicon.lexicon
+  this.firstWords = lexicon.firstWords
+  this.tagset = tagset
+}
+
+World.prototype.addWords = function(lex) {
+  lex = lex || {}
+  let l = unpackLex(lex)
+  lex = l.lexicon
+  //'upsert' into lexicon object
+  Object.keys(lex).forEach(k => {
+    this.lexicon[k] = lex[k]
+  })
+  //merge 'firstWord' cache-objects too
+  let first = l.firstWords
+  Object.keys(first).forEach(k => {
+    this.firstWords[k] = this.firstWords[k] || {}
+    Object.keys(first[k]).forEach(str => {
+      this.firstWords[k][str] = true
+    })
+  })
+}
+
+World.prototype.clone = function() {
+  let w2 = new World()
+  w2.lexicon = fns.copy(this.lexicon)
+  w2.firstWords = fns.copy(this.firstWords)
+  w2.tagset = fns.copy(this.tagset)
+  return w2
+}
+module.exports = World
+
+},{"./fns":3,"./lexicon/buildOut":5,"./lexicon/firstWords":7,"./lexicon/init":8,"./tagset":60,"./term/methods/normalize/normalize":72}]},{},[4])(4)
 });

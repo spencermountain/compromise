@@ -99,9 +99,9 @@ const methods = {
   },
   toInfinitive: function() {
     let obj = this.conjugate()
-    //NOT GOOD. please fix
-    this.terms[this.terms.length - 1].text = obj.Infinitive
-    return this
+    let r = this.replaceWith(obj.Infinitive, false)
+    r.verb.tag('#Infinitive')
+    return r
   },
   asAdjective: function() {
     return toAdjective(this.verb.out('normal'))

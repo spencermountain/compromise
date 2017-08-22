@@ -18,12 +18,6 @@ const multiWord = (vb, verbose) => {
       obj[k] = obj[k] + vb.particle.out()
     })
   }
-  //apply adverbs
-  if (vb.adverbs.found) {
-    Object.keys(obj).forEach(k => {
-      obj[k] = obj[k] + vb.adverbs.out()
-    })
-  }
   //apply negative
   if (isNegative) {
     obj.PastTense = 'did not ' + obj.Infinitive
@@ -36,6 +30,18 @@ const multiWord = (vb, verbose) => {
     } else {
       obj.FutureTense = 'will ' + obj.Infinitive
     }
+  }
+  //apply adverbs
+  if (vb.adverbs.found) {
+    //does the adverb go at the start or end?
+    let isFirst = vb.first().match('#Adverb').found
+    Object.keys(obj).forEach(k => {
+      if (isFirst) {
+        obj[k] = vb.adverbs.out() + ' ' + obj[k]
+      } else {
+        obj[k] = obj[k] + vb.adverbs.out()
+      }
+    })
   }
   return obj
 }

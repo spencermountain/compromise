@@ -528,7 +528,7 @@ module.exports = [
   'thank',
   'threaten',
   'thrive',
-  'took',
+  'take',
   'torture',
   'touch',
   'trade',
@@ -576,4 +576,4 @@ module.exports = [
   'wreck',
   'yawn',
   'yield'
-];
+]

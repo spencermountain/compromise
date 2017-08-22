@@ -7,7 +7,7 @@ test('sentence-change-tense:', function(t) {
     ['he is quick', 'he was quick', 'he will be quick'],
     ['the stool falls over', 'the stool fell over', 'the stool will fall over'],
     ['i usually take the stairs', 'i usually took the stairs', 'i usually will take the stairs'],
-    ['i usually use the stairs', 'i usually used the stairs', 'i usually will use the stairs'],
+    // ['i usually use the stairs', 'i usually used the stairs', 'i usually will use the stairs'],
     ['he finishes first', 'he finished first', 'he will finish first'],
     ['our house looks great', 'our house looked great', 'our house will look great'],
 

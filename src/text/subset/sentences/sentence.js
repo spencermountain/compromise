@@ -92,7 +92,6 @@ const methods = {
   toPastTense: function() {
     let verb = this.mainVerb()
     if (verb) {
-      // verb.debug();
       //this is really ugly..
       let start = verb.out('normal')
       verb.toPastTense()

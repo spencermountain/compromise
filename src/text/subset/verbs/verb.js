@@ -1,32 +1,32 @@
-'use strict';
-const Terms = require('../../paths').Terms;
-const conjugate = require('./methods/conjugate');
-const toAdjective = require('./methods/toAdjective');
-const interpret = require('./interpret');
-const toNegative = require('./toNegative');
-const isPlural = require('./methods/isPlural');
+'use strict'
+const Terms = require('../../paths').Terms
+const conjugate = require('./methods/conjugate')
+const toAdjective = require('./methods/toAdjective')
+const interpret = require('./interpret')
+const toNegative = require('./toNegative')
+const isPlural = require('./methods/isPlural')
 
 const parse = function(r) {
-  let original = r;
-  r.negative = r.match('#Negative');
-  r.adverbs = r.match('#Adverb');
-  let aux = r.clone().not('(#Adverb|#Negative)');
-  r.verb = aux.match('#Verb').not('#Particle').last();
-  r.particle = aux.match('#Particle').last();
+  let original = r
+  r.negative = r.match('#Negative')
+  r.adverbs = r.match('#Adverb')
+  let aux = r.clone().not('(#Adverb|#Negative)')
+  r.verb = aux.match('#Verb').not('#Particle').last()
+  r.particle = aux.match('#Particle').last()
   if (r.verb.found) {
-    let str = r.verb.out('normal');
-    r.auxiliary = original.not(str).not('(#Adverb|#Negative)');
-    r.verb = r.verb.list[0].terms[0];
+    let str = r.verb.out('normal')
+    r.auxiliary = original.not(str).not('(#Adverb|#Negative)')
+    r.verb = r.verb.list[0].terms[0]
     // r.auxiliary = aux.match('#Auxiliary+');
   } else {
-    r.verb = original.terms[0];
+    r.verb = original.terms[0]
   }
-  return r;
-};
+  return r
+}
 
 const methods = {
   parse: function() {
-    return parse(this);
+    return parse(this)
   },
   data: function(verbose) {
     return {
@@ -40,83 +40,83 @@ const methods = {
       },
       interpret: interpret(this, verbose),
       conjugations: this.conjugate()
-    };
+    }
   },
   getNoun: function() {
     if (!this.refTerms) {
-      return null;
+      return null
     }
-    let str = '#Adjective? #Noun+ ' + this.out('normal');
-    return this.refTerms.match(str).match('#Noun+');
+    let str = '#Adjective? #Noun+ ' + this.out('normal')
+    return this.refTerms.match(str).match('#Noun+')
   },
   //which conjugation is this right now?
   conjugation: function() {
-    return interpret(this, false).tense;
+    return interpret(this, false).tense
   },
   //blast-out all forms
   conjugate: function(verbose) {
-    return conjugate(this, verbose);
+    return conjugate(this, verbose)
   },
 
   isPlural: function() {
-    return isPlural(this);
+    return isPlural(this)
   },
   /** negation **/
   isNegative: function() {
-    return this.match('#Negative').list.length === 1;
+    return this.match('#Negative').list.length === 1
   },
   isPerfect: function() {
-    return this.auxiliary.match('(have|had)').found;
+    return this.auxiliary.match('(have|had)').found
   },
   toNegative: function() {
     if (this.isNegative()) {
-      return this;
+      return this
     }
-    return toNegative(this);
+    return toNegative(this)
   },
   toPositive: function() {
-    return this.match('#Negative').delete();
+    return this.match('#Negative').delete()
   },
 
   /** conjugation **/
   toPastTense: function() {
-    let obj = this.conjugate();
-    let r = this.replaceWith(obj.PastTense, false);
-    r.verb.tag('#PastTense');
-    return r;
+    let obj = this.conjugate()
+    let r = this.replaceWith(obj.PastTense, false)
+    r.verb.tag('#PastTense')
+    return r
   },
   toPresentTense: function() {
-    let obj = this.conjugate();
-    let r = this.replaceWith(obj.PresentTense, false);
-    r.verb.tag('#PresentTense');
-    return r;
+    let obj = this.conjugate()
+    let r = this.replaceWith(obj.PresentTense, false)
+    r.verb.tag('#PresentTense')
+    return r
   },
   toFutureTense: function() {
-    let obj = this.conjugate();
-    let r = this.replaceWith(obj.FutureTense, false);
-    r.verb.tag('#FutureTense');
-    return r;
+    let obj = this.conjugate()
+    let r = this.replaceWith(obj.FutureTense, false)
+    r.verb.tag('#FutureTense')
+    return r
   },
   toInfinitive: function() {
-    let obj = this.conjugate();
+    let obj = this.conjugate()
     //NOT GOOD. please fix
-    this.terms[this.terms.length - 1].text = obj.Infinitive;
-    return this;
+    this.terms[this.terms.length - 1].text = obj.Infinitive
+    return this
   },
   asAdjective: function() {
-    return toAdjective(this.verb.out('normal'));
+    return toAdjective(this.verb.out('normal'))
   }
-};
+}
 
 const Verb = function(arr, world, refText, parentTerms) {
-  Terms.call(this, arr, world, refText, parentTerms);
+  Terms.call(this, arr, world, refText, parentTerms)
   //basic verb-phrase parsing:
-  return parse(this);
-};
+  return parse(this)
+}
 //Terms inheritence
-Verb.prototype = Object.create(Terms.prototype);
+Verb.prototype = Object.create(Terms.prototype)
 //apply methods
 Object.keys(methods).forEach(k => {
-  Verb.prototype[k] = methods[k];
-});
-module.exports = Verb;
+  Verb.prototype[k] = methods[k]
+})
+module.exports = Verb

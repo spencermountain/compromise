@@ -12,7 +12,16 @@ var nlp = require('./src/index')
 // doc.debug()
 // doc.topics().debug()
 
-let doc = nlp('boris becker ??')
-// let doc = nlp('Is Trump the president of U.S. ? i guess so')
-doc.debug()
-console.log(doc.list[0].terms[1].whitespace)
+var getNumbers = function(str) {
+  return nlp(str).debug().values().out('array') //.toCardinal().toNumber()
+}
+
+// var doc = nlp('two thousand and nineteenth').values() //.toText()
+//
+// doc.debug()
+// doc.toNumber().debug()
+// console.log(getNumbers('first second and 4th')) // => [null, 4]
+console.log(getNumbers('two hundredth')) // => [null, 4]
+// console.log(getNumbers('first , second and 4th')) // => [1, 2, 4]
+// console.log(getNumbers('1 2 and 4')) // => [2, 4]
+// console.log(getNumbers('1 and 2 and 4')) // => [1, 2, 4]

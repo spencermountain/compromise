@@ -10,9 +10,8 @@ const defaults = {
 };
 
 const methods = {
-
   /** make only one space between each word */
-  whitespace: (r) => {
+  whitespace: r => {
     r.terms().list.forEach((ts, i) => {
       let t = ts.terms[0];
       if (i > 0) {
@@ -26,11 +25,11 @@ const methods = {
   },
 
   /** make first-word titlecase, and people, places titlecase */
-  case: (r) => {
-    r.list.forEach((ts) => {
+  case: r => {
+    r.list.forEach(ts => {
       ts.terms.forEach((t, i) => {
         if (i === 0 || t.tags.Person || t.tags.Place || t.tags.Organization) {
-          ts.toTitleCase();
+          // ts.toTitleCase() //fixme: too weird here.
         } else {
           ts.toLowerCase();
         }
@@ -40,17 +39,17 @@ const methods = {
   },
 
   /** turn 'five' to 5, and 'fifth' to 5th*/
-  numbers: (r) => {
+  numbers: r => {
     return r.values().toNumber();
   },
 
   /** remove commas, semicolons - but keep sentence-ending punctuation*/
-  punctuation: (r) => {
-    r.list.forEach((ts) => {
+  punctuation: r => {
+    r.list.forEach(ts => {
       //first-term punctuation
       ts.terms[0]._text = ts.terms[0]._text.replace(/^¿/, '');
       //middle-terms
-      for(let i = 0; i < ts.terms.length - 1; i++) {
+      for (let i = 0; i < ts.terms.length - 1; i++) {
         let t = ts.terms[i];
         //remove non-sentence-ending stuff
         t._text = t._text.replace(/[:;,]$/, '');
@@ -64,16 +63,16 @@ const methods = {
     return r;
   },
 
-  contractions: (r) => {
+  contractions: r => {
     return r.contractions().expand();
   }
 };
 
-const addMethods = (Text) => {
+const addMethods = Text => {
   Text.prototype.normalize = function(obj) {
     obj = obj || defaults;
     //do each type of normalization
-    Object.keys(obj).forEach((fn) => {
+    Object.keys(obj).forEach(fn => {
       if (methods[fn] !== undefined) {
         methods[fn](this);
       }

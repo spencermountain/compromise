@@ -71,6 +71,8 @@ const corrections = function(ts) {
     ts.match('1 #Value #PhoneNumber').tag('PhoneNumber', '1-800-Value');
     //(454) 232-9873
     ts.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber');
+    //two hundredth
+    ts.match('#TextValue+').match('#Cardinal+ #Ordinal').tag('Ordinal', 'two-hundredth');
   }
 
   if (ts.has('#Noun')) {
@@ -112,12 +114,13 @@ const corrections = function(ts) {
     //is eager to go
     ts.match('#Copula #Adjective to #Verb').match('#Adjective to').tag('Verb', 'correction');
     //the word 'how'
-    !!ts.match('^how').term(0).tag('QuestionWord', 'how-question') ||
-    ts.match('how (#Determiner|#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-question');
+    ts.match('^how').term(0).tag('QuestionWord', 'how-question').tag('QuestionWord', 'how-question');
+    ts.match('how (#Determiner|#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-is');
     //the word 'which'
-    !!ts.match('^which').term(0).tag('QuestionWord', 'which-question') ||
-    !ts.match('which . (#Noun)+ #Pronoun').found() &&
-    ts.match('which').term(0).tag('QuestionWord', 'which-question');
+    ts.match('^which').term(0).tag('QuestionWord', 'which-question').tag('QuestionWord', 'which-question');
+    ts.match('which . (#Noun)+ #Pronoun').term(0).tag('QuestionWord', 'which-question2');
+    ts.match('which').term(0).tag('QuestionWord', 'which-question3');
+
     //is mark hughes
     ts.match('#Copula #Infinitive #Noun').term(1).tag('Noun', 'is-pres-noun');
 
@@ -163,7 +166,9 @@ const corrections = function(ts) {
       .match('#TitleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)')
       .tag('Region', 'foo-district');
     //District of Foo
-    ts.match('(district|region|province|municipality|territory|burough|state) of #TitleCase').tag('Region', 'district-of-Foo');
+    ts
+      .match('(district|region|province|municipality|territory|burough|state) of #TitleCase')
+      .tag('Region', 'district-of-Foo');
   }
 
   //West Norforlk

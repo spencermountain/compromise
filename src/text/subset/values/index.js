@@ -117,6 +117,10 @@ const find = function(r, n) {
   if (r.has('#NumericValue #NumericValue')) {
     r.splitOn('#Year');
   }
+  //seventh fifth
+  // if (r.match('#Ordinal #Ordinal').match('#TextValue').found) {
+  //   r.splitAfter('#Ordinal');
+  // }
   //fifth five
   if (r.has('#Ordinal #Cardinal')) {
     r.splitBefore('#Cardinal+');
@@ -132,7 +136,7 @@ const find = function(r, n) {
   if (r.has('#NumberRange')) {
     r.splitAfter('#NumberRange');
   }
-  // r.splitAfter('#Comma');
+  r.splitAfter('#Comma');
   if (typeof n === 'number') {
     r = r.get(n);
   }

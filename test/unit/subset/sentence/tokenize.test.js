@@ -1,8 +1,8 @@
-var test = require('tape');
-var nlp = require('../../lib/nlp');
+var test = require('tape')
+var nlp = require('../../lib/nlp')
 
 test('sentence tokenize:', function(t) {
-  [
+  ;[
     ['Tony is nice. He lives in Japan.', 2],
     ['I like that Color', 1],
     [
@@ -32,9 +32,18 @@ test('sentence tokenize:', function(t) {
     ['Hi there.\n Everyone wins', 2],
     ['Hi there!!\nEveryone wins\n\n', 2]
   ].forEach(function(a) {
-    var num = nlp(a[0]).list.length;
-    var msg = '"' + a[0] + '" ->  ' + num;
-    t.equal(num, a[1], msg);
-  });
-  t.end();
-});
+    var num = nlp(a[0]).list.length
+    var msg = '"' + a[0] + '" ->  ' + num
+    t.equal(num, a[1], msg)
+  })
+  t.end()
+})
+
+test('fancy tokenize:', function(t) {
+  var doc = nlp('boris becker ?? he is nice.')
+  t.equal(doc.sentences().length, 2, 'sentence-split')
+
+  // doc = nlp('Is Trump the president of U.S. ? i guess so')
+  // t.equal(doc.sentences().length, 2, 'sentence-split-2')
+  t.end()
+})

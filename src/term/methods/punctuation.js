@@ -1,6 +1,6 @@
 'use strict'
-// const endPunct = /([^\/,:;.()!?]{0,1})([\/,:;.()!?]+)$/i
-const endPunct = /([a-z])([,:;\/.(\.\.\.)\!\?]+)$/i //old
+const endPunct = /([^\/,:;.()!?]{0,1})([\/,:;.()!?]+)$/i
+// const endPunct = /([a-z ])([,:;.!?]+)$/i //old
 
 const addMethods = Term => {
   const methods = {

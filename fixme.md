@@ -16,3 +16,10 @@
 //middle-adverb
 [`he quietly walked`, `he did not quietly walk`],
 ```
+
+## inflection - add article
+```js
+  var str = 'men go';
+  var m = nlp(str).sentences().toPastTense().nouns().toSingular();
+  t.equal(m.out('normal'), 'a man went', str);
+```

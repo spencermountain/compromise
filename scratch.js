@@ -12,6 +12,7 @@ var nlp = require('./src/index')
 // doc.debug()
 // doc.topics().debug()
 
-let doc = nlp('boris becker ? he is nice.')
+let doc = nlp('boris becker ??')
 // let doc = nlp('Is Trump the president of U.S. ? i guess so')
 doc.debug()
+console.log(doc.list[0].terms[1].whitespace)

@@ -194,6 +194,8 @@ const corrections = function(ts) {
   ts.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone');
   //canadian dollar, Brazilian pesos
   ts.match('#Demonym #Currency').tag('Currency', 'demonym-currency');
+  //about to go
+  ts.match('about to #Adverb? #Verb').match('about to').tag(['Auxiliary', 'Verb'], 'about-to');
 
   return ts;
 };

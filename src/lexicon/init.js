@@ -37,6 +37,7 @@ lex['was'] = ['Copula', 'PastTense']
 lex['will be'] = ['Copula', 'FutureTense']
 lex['close'] = 'Adjective'
 lex['can'] = 'Modal'
+console.log(lex.got)
 
 //collect first-of-multi words for quicker lookup
 let firstWords = indexFirst(lex)

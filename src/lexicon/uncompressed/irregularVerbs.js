@@ -679,7 +679,6 @@ for (let i = 0; i < keys.length; i++) {
   lex[inf] = 'Infinitive'
   irreg[inf] = newObj
 }
-
 module.exports = {
   lexicon: lex,
   irregulars: irreg

@@ -2,10 +2,9 @@
 const fixContraction = require('./fix');
 const splitContraction = require('./split');
 
-
 //these are always contractions
 const blacklist = {
-  'that\'s': true,
+  "that's": true
 };
 
 // "'s" may be a contraction or a possessive
@@ -43,10 +42,9 @@ const isPossessive = (ts, i) => {
   return false;
 };
 
-
 //handle ambigous contraction "'s"
-const hardOne = (ts) => {
-  for(let i = 0; i < ts.terms.length; i++) {
+const hardOne = ts => {
+  for (let i = 0; i < ts.terms.length; i++) {
     //skip existing
     if (ts.terms[i].silent_term) {
       continue;
@@ -60,8 +58,17 @@ const hardOne = (ts) => {
           ts.terms[i].tag('#Possessive', 'hard-contraction');
           continue;
         }
-        //is vs was
         let arr = [parts.start, 'is'];
+        if (ts.terms[i + 1]) {
+          let str = ts.terms[i].normal;
+          //he's walking -> is/was
+          if (ts.match(str + ' (#Negative|#Adverb|#Auxiliary)+? #Gerund').found) {
+            arr = [parts.start, 'is'];
+          } else if (ts.match(str + ' (#Negative|#Adverb|#Auxiliary)+? #Verb').found) {
+            //is vs has ('he's got milk')
+            arr = [parts.start, 'has'];
+          }
+        }
         ts = fixContraction(ts, arr, i);
         i += 1;
       }

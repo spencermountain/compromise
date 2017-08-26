@@ -1,5 +1,5 @@
-'use strict'
-var nlp = require('./src/index')
+'use strict';
+var nlp = require('./src/index');
 // nlp.verbose('tagger')
 // const fresh = require('./test/unit/lib/freshPrince.js');
 
@@ -13,15 +13,23 @@ var nlp = require('./src/index')
 // doc.topics().debug()
 
 var getNumbers = function(str) {
-  return nlp(str).debug().values().out('array') //.toCardinal().toNumber()
-}
+  return nlp(str).debug().values().out('array'); //.toCardinal().toNumber()
+};
 
 // var doc = nlp('two thousand and nineteenth').values() //.toText()
 //
 // doc.debug()
 // doc.toNumber().debug()
 // console.log(getNumbers('first second and 4th')) // => [null, 4]
-console.log(getNumbers('two hundredth')) // => [null, 4]
+// console.log(getNumbers('two hundredth')) // => [null, 4]
 // console.log(getNumbers('first , second and 4th')) // => [1, 2, 4]
 // console.log(getNumbers('1 2 and 4')) // => [2, 4]
 // console.log(getNumbers('1 and 2 and 4')) // => [1, 2, 4]
+
+var doc = nlp(`he's about to earn`);
+// var doc = nlp('giri were');
+// var doc = nlp('giri were');
+// var doc = nlp("he's got time")
+doc.debug();
+// doc.contractions().expand()
+// console.log(doc.out())

@@ -160,6 +160,11 @@ const corrections = function(ts) {
     }
     //fall over
     ts.match('#PhrasalVerb #PhrasalVerb').lastTerm().tag('Particle', 'phrasal-particle');
+
+    //walking is cool
+    ts.match('#Gerund #Adverb? not? #Copula').firstTerm().tag('Activity', 'gerund-copula');
+    //walking should be fun
+    ts.match('#Gerund #Modal').firstTerm().tag('Activity', 'gerund-modal');
   }
 
   if (ts.has('#Adjective')) {

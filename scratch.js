@@ -33,4 +33,4 @@ var getNumbers = function(str) {
 // doc.statements().debug();
 // doc.debug();
 
-console.log(nlp('revoke').sentences(0).toPastTense().out('text'));
+nlp('reading is fun').debug();

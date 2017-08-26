@@ -56,16 +56,16 @@ const buildOut = function(lex, options) {
       continue;
     }
     //conjugate phrasal verbs too
-    // if (lex[str] === 'PhrasalVerb') {
-    //   let parts = str.split(/ /);
-    //   const obj = fastConjugate(parts[0]);
-    //   let tags = Object.keys(obj);
-    //   for (let o = 0; o < tags.length; o++) {
-    //     let tag = tags[o];
-    //     lex[obj[tag] + ' ' + parts[1]] = 'PhrasalVerb';
-    //   }
-    //   continue;
-    // }
+    if (lex[str] === 'PhrasalVerb') {
+      let parts = str.split(/ /);
+      const obj = fastConjugate(parts[0]);
+      let tags = Object.keys(obj);
+      for (let o = 0; o < tags.length; o++) {
+        let tag = tags[o];
+        lex[obj[tag] + ' ' + parts[1]] = 'PhrasalVerb';
+      }
+      continue;
+    }
   }
   //..just in case
   delete lex[null];

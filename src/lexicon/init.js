@@ -37,8 +37,8 @@ lex['was'] = ['Copula', 'PastTense'];
 lex['will be'] = ['Copula', 'FutureTense'];
 lex['close'] = 'Adjective';
 lex['can'] = 'Modal';
-console.log(lex['get out']);
-console.log(lex['got out']);
+// console.log(lex['get out']);
+// console.log(lex['got out']);
 
 //collect first-of-multi words for quicker lookup
 let firstWords = indexFirst(lex);

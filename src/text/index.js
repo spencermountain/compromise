@@ -2,12 +2,12 @@
 //a Text is an array of termLists
 const getters = require('./getters');
 
-function Text(arr, world, reference) {
+function Text(arr, world, original) {
   this.list = arr || [];
   this.world = () => {
     return world;
   };
-  this.reference = reference;
+  this.original = original;
   //apply getters
   let keys = Object.keys(getters);
   for (let i = 0; i < keys.length; i++) {
@@ -27,8 +27,8 @@ Text.addMethods = function(cl, obj) {
 
 //make a sub-class of this class easily
 Text.makeSubset = function(methods, find) {
-  let Subset = function(arr, world, reference) {
-    Text.call(this, arr, world, reference);
+  let Subset = function(arr, world, original) {
+    Text.call(this, arr, world, original);
   };
   //inheritance
   Subset.prototype = Object.create(Text.prototype);

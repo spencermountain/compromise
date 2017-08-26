@@ -62,7 +62,7 @@ Term.prototype.index = function() {
   }
   return ts.terms.indexOf(this);
 };
-/** make a copy with no references to the original  */
+/** make a copy with no originals to the original  */
 Term.prototype.clone = function() {
   let term = new Term(this._text, null);
   term.tags = fns.copy(this.tags);

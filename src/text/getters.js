@@ -5,7 +5,7 @@ module.exports = {
   },
   /** just a handy wrap*/
   parent: function() {
-    return this.reference || this;
+    return this.original || this;
   },
   /** how many Texts are there?*/
   length: function() {

@@ -18,7 +18,6 @@ test('value-basic:', function(t) {
   r.values().toOrdinal();
   t.equal(r.out(), 'third month of two thousand and nineteenth', 'toOrdinal');
 
-  r.debug();
   r.values().toNumber().all();
   t.equal(r.out(), '3rd month of 2019th', 'toNumber2');
 

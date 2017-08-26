@@ -2,8 +2,8 @@
 const Ngrams = require('./index');
 const getGrams = require('./getGrams');
 
-const StartGrams = function(arr, world, reference) {
-  Ngrams.call(this, arr, world, reference);
+const StartGrams = function(arr, world, original) {
+  Ngrams.call(this, arr, world, original);
 };
 
 //Inherit properties

@@ -21,7 +21,7 @@ const Terms = function(arr, world, refText, refTerms) {
 Terms.fromString = function(str, world) {
   let termArr = build(str, world);
   let ts = new Terms(termArr, world, null);
-  //give each term a reference to this ts
+  //give each term a original to this ts
   ts.terms.forEach(t => {
     t.parentTerms = ts;
   });

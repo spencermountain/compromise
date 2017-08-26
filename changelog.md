@@ -1,12 +1,20 @@
-`compromise` uses semver, with occasional releases to npm and bower.
-here, 'Major' is considered an api change, while 'Minor' is considered a performance change.
+compromise uses semver, and pushes to npm frequently
+
+(github-releases occasionally)
+
+* **Major** is considered a breaking api change,
+* **Minor** is considered a behaviour/performance change.
+* **Patch** is an obvious, non-controversial bugfix
 
 ### v11
-* support for persistent lexicon/tagset changes
-* more `.organizations()` matches
-* improved apostrophe-s disambiguation
-* support whitespace before sentence boundary
-* improved QuestionWord tagging
+##### 11.0.0
+- support for persistent lexicon/tagset changes
+- more `.organizations()` matches
+- improved apostrophe-s disambiguation
+- support whitespace before sentence boundary
+- improved QuestionWord tagging, some `.questions()` without a question-mark
+- phrasalVerb conjugation
+<!-- * include 'the #TitleCase' matches in .topics() -->
 
 ### v10
 - cleanup & rename some `.value()` methods
@@ -21,53 +29,55 @@ here, 'Major' is considered an api change, while 'Minor' is considered a perform
 - removes `.lexicon()` method for many-lexicons concept
 - changes params of `.replaceWith()` method to a 'keyTags' boolean
 - improved .debug() and logging on client-side
-* 10.1.0
+##### 10.1.0
 - fix return format of .isPlural(), so it acts like a match filter
 - less-greedy date tagging & ambiguous month fixes
-* 10.2.0
+##### 10.2.0
 - .trim() method,
 - adjective tagging fixes
 - some new .out() methods
-* 10.3.0
+##### 10.3.0
 - new `Percent` tag
 - lump more units in with `.values()`
-* 10.4.0
+##### 10.4.0
 - improved tagging of `VerbPhrase` and `Condition`
 - fixes to contractions in sentence-changes - "i'm going ->  i went"
 - several verb conjugation fixes
 - accept Terms & Result objects in .match() and .replace()
-* 10.5.0
+##### 10.5.0
 - add increment/decrement/add/subtract methods to .values()
 - add units(), noUnits() methods to .values()
 - 'uncountable' nouns are no longer assumed to be singular
 - money tag is no longer always a value
-* 10.6.0
+##### 10.6.0
 - move internal lexicon around, to support new format in v11
 - added states & provinces as #Region
 - added #Comparable tag for adjectives that conjugate
-* 10.7.0
+##### 10.7.0
 - improved `places()` parsing
 - improved `{min,max}` match syntax
 - new `.out('match')` method
 - quiet addition of .pack() and .unpack() for owen
-* 10.7.2
+##### 10.7.2
 - fix for '.watch' reserved word in efrt
 
 ### v9  &nbsp;
-* 9.0.0
+##### 9.0.0
 - rename `Term.tag` object to `Term.tags` so the `.tag()` method can work throughout more-consistently
 - fix 'Auxillary' tag typo to 'Auxiliary'
 - optimisation of .match(), and tagset - significant speedup!
 - adds `.tagger()` method and cleanup extra params
 - adds `wordStart` and `wordEnd` offsets to `.out('offset')` for whitespace+punctuation
 - new `.has()` method for faster lookups
-* 9.1.0 - pretty-real filesize reduction by swapping es6 classes for es5 inheritance
+##### 9.1.0
+- pretty-real filesize reduction by swapping es6 classes for es5 inheritance
 
 ### v8  &nbsp;
-* 8.0.0 - less-ambitious date-parsing of nl-date forms
-*       - filesize reduction using [efrt](https://github.com/nlp-compromise/efrt) data structure (254k -> 214k)
-* 8.1.0 - add `nlp.tokenize()` method for disabling pos-tagging of input
-* 8.2.0 - add `nlp.out('index')` method, 12 bugs
+##### 8.0.0
+- less-ambitious date-parsing of nl-date forms
+- filesize reduction using [efrt](https://github.com/nlp-compromise/efrt) data structure (254k -> 214k)
+- 8.1.0 - add `nlp.tokenize()` method for disabling pos-tagging of input
+- 8.2.0 - add `nlp.out('index')` method, 12 bugs
 
 ### v7  &nbsp; :postal_horn:
 * 7.0.0 - weee! [big change!](https://github.com/nlp-compromise/compromise/wiki/v7-Upgrade,-welcome) *npm package rename*

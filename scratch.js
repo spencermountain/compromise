@@ -31,14 +31,6 @@ var getNumbers = function(str) {
 // var doc = nlp("he's got time")
 // var doc = nlp('is it nice in chicago');
 // var doc = nlp('which party was it');
-// var doc = nlp('how he got out');
+var doc = nlp('how he got out');
 // doc.statements().debug();
-// doc.debug();
-// doc.questions().debug();
-// console.log(doc);
-// doc.contractions().expand()
-// console.log(doc.out())
-
-var m = nlp('the stool falls over').sentences();
-m.toPastTense();
-m.debug();
+doc.debug();

@@ -196,6 +196,8 @@ const corrections = function(ts) {
   ts.match('#Demonym #Currency').tag('Currency', 'demonym-currency');
   //about to go
   ts.match('about to #Adverb? #Verb').match('about to').tag(['Auxiliary', 'Verb'], 'about-to');
+  //'xyz were..'
+  // ts.match('#Singular #Adverb? were').firstTerm().tag('Plural', 'copula-number-hint');
 
   return ts;
 };

@@ -26,10 +26,11 @@ var getNumbers = function(str) {
 // console.log(getNumbers('1 2 and 4')) // => [2, 4]
 // console.log(getNumbers('1 and 2 and 4')) // => [1, 2, 4]
 
-var doc = nlp(`he's about to earn`);
-// var doc = nlp('giri were');
+// var doc = nlp(`the IOU i have`);
 // var doc = nlp('giri were');
 // var doc = nlp("he's got time")
-doc.debug();
+var doc = nlp('is it nice? I thought so. ').sentences();
+// doc.debug();
+console.log(doc);
 // doc.contractions().expand()
 // console.log(doc.out())

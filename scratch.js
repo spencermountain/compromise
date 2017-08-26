@@ -29,8 +29,11 @@ var getNumbers = function(str) {
 // var doc = nlp(`the IOU i have`);
 // var doc = nlp('giri were');
 // var doc = nlp("he's got time")
-var doc = nlp('is it nice? I thought so. ').sentences();
+// var doc = nlp('is it nice in chicago');
+var doc = nlp('lkjsdf fun!?');
+// doc.statements().debug();
+doc.questions().debug();
 // doc.debug();
-console.log(doc);
+// console.log(doc);
 // doc.contractions().expand()
 // console.log(doc.out())

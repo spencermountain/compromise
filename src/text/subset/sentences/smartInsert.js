@@ -21,7 +21,7 @@ const prepend = (ts, str) => {
 const append = (ts, str) => {
   let endTerm = ts.terms[ts.terms.length - 1];
   //move the sentence punctuation to the end
-  let punct = endTerm.endPunctuation();
+  let punct = ts.endPunctuation();
   if (punct) {
     endTerm.killPunctuation();
   }

@@ -22,7 +22,7 @@ const methods = {
         let str = ts.out('normal');
         let last = ts.last();
         if (last) {
-          let punct = last.endPunctuation();
+          let punct = ts.endPunctuation();
           if (punct === '.' || punct === '!' || punct === '?') {
             str += punct;
           }

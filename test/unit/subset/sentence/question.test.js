@@ -43,7 +43,7 @@ test('statements-test :', function(t) {
     'does the orchestra ever suck!',
     'when i go fishing i eat plankton',
     'who else but the rolling stones...',
-    'what id like to say is, thanks for the fish'
+    "what i'd like to say is, thanks for the fish"
   ].forEach(function(str) {
     var doc = nlp(str);
     t.equal(doc.statements().length, 1, str);

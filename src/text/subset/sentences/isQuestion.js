@@ -10,7 +10,7 @@ const isQuestion = function(ts) {
   if (ts.has('#QuestionWord')) {
     return true;
   }
-  //
+
   //is it, do you - start of sentence
   if (ts.has('^(do|does|did|is|was) #Noun')) {
     return true;
@@ -21,10 +21,7 @@ const isQuestion = function(ts) {
   if (clauses.has('(do|does|is|was) #Noun+ #Adverb? (#Adjective|#Infinitive)$')) {
     return true;
   }
-  // //do you...
-  // if (clauses.has('(do|does) (it|#Pronoun)')) {
-  //   return true;
-  // }
+  //not a question, then
   return false;
 };
 module.exports = isQuestion;

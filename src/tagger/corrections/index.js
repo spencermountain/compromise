@@ -16,7 +16,7 @@ const corrections = function(ts) {
     //remind john that
     ts.match('#Verb #Adverb? #Noun (that|which)').lastTerm().tag('Preposition', 'that-prep');
     //that car goes
-    ts.match('(that|which) #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner');
+    ts.match('that #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner');
     //things that provide
     // ts.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
   }
@@ -113,13 +113,24 @@ const corrections = function(ts) {
     ts.match('#Possessive #Verb').term(1).tag('Noun', 'correction-possessive');
     //is eager to go
     ts.match('#Copula #Adjective to #Verb').match('#Adjective to').tag('Verb', 'correction');
-    //the word 'how'
-    ts.match('^how').term(0).tag('QuestionWord', 'how-question').tag('QuestionWord', 'how-question');
-    ts.match('how (#Determiner|#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-is');
-    //the word 'which'
-    ts.match('^which').term(0).tag('QuestionWord', 'which-question').tag('QuestionWord', 'which-question');
-    ts.match('which . (#Noun)+ #Pronoun').term(0).tag('QuestionWord', 'which-question2');
-    ts.match('which').term(0).tag('QuestionWord', 'which-question3');
+
+    if (ts.has('(who|what|where|why|how|when)')) {
+      //the word 'how'
+      ts.match('^how').term(0).tag('QuestionWord', 'how-question').tag('QuestionWord', 'how-question');
+      ts.match('how (#Determiner|#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-is');
+      // //the word 'which'
+      ts.match('^which').term(0).tag('QuestionWord', 'which-question').tag('QuestionWord', 'which-question');
+      ts.match('which . (#Noun)+ #Pronoun').term(0).tag('QuestionWord', 'which-question2');
+      ts.match('which').term(0).tag('QuestionWord', 'which-question3');
+      //where
+
+      //how he is driving
+      let word = ts.match('#QuestionWord #Noun #Copula #Adverb? (#Verb|#Adjective)').firstTerm();
+      word.unTag('QuestionWord').tag('Conjunction', 'how-he-is-x');
+      //when i go fishing
+      word = ts.match('#QuestionWord #Noun #Adverb? #Infinitive not? #Gerund').firstTerm();
+      word.unTag('QuestionWord').tag('Conjunction', 'when i go fishing');
+    }
 
     //is mark hughes
     ts.match('#Copula #Infinitive #Noun').term(1).tag('Noun', 'is-pres-noun');

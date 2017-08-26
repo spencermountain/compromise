@@ -1,6 +1,6 @@
 'use strict';
 var nlp = require('./src/index');
-// nlp.verbose('tagger')
+nlp.verbose('tagger');
 // const fresh = require('./test/unit/lib/freshPrince.js');
 
 // console.log(nlp('i take typically the stairs').verbs().conjugate())
@@ -30,10 +30,11 @@ var getNumbers = function(str) {
 // var doc = nlp('giri were');
 // var doc = nlp("he's got time")
 // var doc = nlp('is it nice in chicago');
-var doc = nlp('lkjsdf fun!?');
+// var doc = nlp('which party was it');
+var doc = nlp('how he got out');
 // doc.statements().debug();
-doc.questions().debug();
-// doc.debug();
+doc.debug();
+// doc.questions().debug();
 // console.log(doc);
 // doc.contractions().expand()
 // console.log(doc.out())

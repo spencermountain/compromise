@@ -32,7 +32,5 @@ var getNumbers = function(str) {
 // var doc = nlp('is it nice in chicago').questions().debug();
 // doc.statements().debug();
 // doc.debug();
-var doc = nlp("she'll, eat icecream");
-doc.debug();
-doc.contractions().expand();
-console.log(doc.out());
+
+console.log(nlp('revoke').sentences(0).toPastTense().out('text'));

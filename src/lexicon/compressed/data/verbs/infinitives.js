@@ -444,6 +444,7 @@ module.exports = [
   'revel',
   'reverse',
   'review',
+  'revoke',
   'reward',
   'risk',
   'roam',
@@ -576,4 +577,4 @@ module.exports = [
   'wreck',
   'yawn',
   'yield'
-]
+];

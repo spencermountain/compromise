@@ -22,6 +22,10 @@ test('basic is contractions', function(t) {
   r.contractions().expand();
   t.equal(r.out('text'), `that is really great.`, 'contracted-expand');
 
+  r = nlp(`she'll, eat icecream`);
+  r.contractions().expand();
+  t.equal(r.out('text'), `she will eat icecream`, 'with-punctuation');
+
   t.end();
 });
 

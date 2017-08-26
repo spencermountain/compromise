@@ -4,22 +4,20 @@ const split = require('./split');
 
 //the formulaic contraction types:
 const easy_ends = {
-  'll': 'will',
+  ll: 'will',
   // 'd': 'would',
-  've': 'have',
-  're': 'are',
-  'm': 'am',
-  'n\'t': 'not'
-//these ones are a bit tricksier:
-// 't': 'not',
-// 's': 'is' //or was
+  ve: 'have',
+  re: 'are',
+  m: 'am',
+  "n't": 'not'
+  //these ones are a bit tricksier:
+  // 't': 'not',
+  // 's': 'is' //or was
 };
 
-
-
 //unambiguous contractions, like "'ll"
-const easyOnes = (ts) => {
-  for(let i = 0; i < ts.terms.length; i++) {
+const easyOnes = ts => {
+  for (let i = 0; i < ts.terms.length; i++) {
     //skip existing
     if (ts.terms[i].silent_term) {
       continue;
@@ -30,10 +28,7 @@ const easyOnes = (ts) => {
 
       //make sure its an easy one
       if (easy_ends[parts.end]) {
-        let arr = [
-          parts.start,
-          easy_ends[parts.end]
-        ];
+        let arr = [parts.start, easy_ends[parts.end]];
         ts = fixContraction(ts, arr, i);
         i += 1;
       }
@@ -41,10 +36,7 @@ const easyOnes = (ts) => {
       //handle i'd -> 'i would' vs 'i had'
       if (parts.end === 'd') {
         //assume 'would'
-        let arr = [
-          parts.start,
-          'would'
-        ];
+        let arr = [parts.start, 'would'];
         //if next verb is past-tense, choose 'had'
         if (ts.terms[i + 1] && ts.terms[i + 1].tags.PastTense) {
           arr[1] = 'had';
@@ -56,7 +48,6 @@ const easyOnes = (ts) => {
         ts = fixContraction(ts, arr, i);
         i += 1;
       }
-
     }
   }
   return ts;

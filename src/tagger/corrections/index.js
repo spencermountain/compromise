@@ -158,6 +158,8 @@ const corrections = function(ts) {
       //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
       // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
     }
+    //fall over
+    ts.match('#PhrasalVerb #PhrasalVerb').lastTerm().tag('Particle', 'phrasal-particle');
   }
 
   if (ts.has('#Adjective')) {

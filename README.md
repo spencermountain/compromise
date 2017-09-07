@@ -112,28 +112,6 @@ var doc = nlp('London is calling')
 doc.sentences().toNegative()
 // 'London is not calling'
 ```
-<table>
-  <tr>
-    <td>
-      <b align="center"><i>pop into a parsed format..</i></b>
-      <pre lang="javascript">var doc= nlp(myNovel) //whoosh 💨</pre>
-    </td>
-    <td>
-      <b align="center"><i>metadata for days</i></b>
-      <pre lang="javascript">doc.people().lastNames()</pre>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <b align="center"><i>loosely-held opinions..</i></b>
-      <pre lang="js">nlp.plugin(require('compromise-scottish-slang'))</pre>
-    </td>
-    <td>
-      <b align="center"><i>not the worst</i></b>
-        <pre><b>170 PRs</b> from <b>55 contributors</b></pre>
-    </td>
-  </tr>
-</table>
 
 <table>
    <tr>
@@ -202,6 +180,29 @@ doc.sentences().toNegative()
    </tr>
 </table>
 
+<table>
+  <tr>
+    <td>
+      <b align="center"><i>pop into a parsed format..</i></b>
+      <pre lang="javascript">var doc= nlp(myNovel) //whoosh 💨</pre>
+    </td>
+    <td>
+      <b align="center"><i>mostly heads-up API</i></b>
+      <pre lang="javascript">doc.contractions().expand()
+      doc.values().greatherThan(100).toNumber()</pre>
+    </td>
+  </tr>
+  <tr>
+  <td>
+    <b align="center"><i>metadata for days</i></b>
+    <pre lang="javascript">doc.people().lastNames()</pre>
+  </td>
+    <td>
+      <b align="center"><i>loosely-held opinions..</i></b>
+      <pre lang="js">nlp.plugin(require('nlp-scottish-slang'))</pre>
+    </td>
+  </tr>
+</table>
 ## Toss in text,
 even if it's just one word:
 ```js

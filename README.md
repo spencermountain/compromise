@@ -75,9 +75,9 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 <div align="center">
   a  <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">
   least-fancy</a> way to use text,
-    <h1 align="center">
-      text in ➡ JSON out
-    </h1>
+    <h2 align="center">
+      text in → JSON out
+    </h2>
   without training, jargon or config
 </div>
 
@@ -88,6 +88,50 @@ nlp('..then consider me Miles Davis!').people().out('freq')
   &nbsp; &nbsp; &nbsp;
   <a href="https://github.com/nlp-compromise/compromise/wiki">WTF</a>
 </h3>
+
+
+#### ⚡️ on the Client-side,
+```html
+<script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
+<script>
+  var doc = nlp('dinosaur')
+
+  var str = doc.nouns().toPlural().out('text')
+  console.log(str)
+  // 'dinosaurs'
+</script>
+```
+
+#### 🌋 Server-side!
+```javascript
+var nlp = require('compromise')
+
+var doc = nlp('London is calling')
+doc.sentences().toNegative()
+// 'London is not calling'
+```
+<table>
+  <tr>
+    <td>
+      Not java
+      <code>&lt;script src='compromise.js'/&gt;</code>
+    </td>
+    <td>
+      fast-path parsing
+      <code>var doc= nlp(myNovel) //whoosh 💨</code>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Not java
+      <code>&lt;script src='compromise.js'/&gt;</code>
+    </td>
+    <td>
+      fast-path parsing
+      <code>var doc= nlp(myNovel) //whoosh 💨</code>
+    </td>
+  </tr>
+</table>
 
 * Not java
 ```html
@@ -113,27 +157,6 @@ nlp.plugin(require('compromise-scottish-slang'))
 * Not the worst
 ```
 170 PRs from 55 contributors
-```
-
-#### ⚡️ on the Client-side,
-```html
-<script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
-<script>
-  var doc = nlp('dinosaur')
-
-  var str = doc.nouns().toPlural().out('text')
-  console.log(str)
-  // 'dinosaurs'
-</script>
-```
-
-#### 🌋 Server-side!
-```javascript
-var nlp = require('compromise')
-
-var doc = nlp('London is calling')
-doc.sentences().toNegative()
-// 'London is not calling'
 ```
 
 <table>

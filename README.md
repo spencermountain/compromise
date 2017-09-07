@@ -116,19 +116,19 @@ doc.sentences().toNegative()
   <tr>
     <td>
       <div>* not java,</div>
-      <code lang="html">&lt;script src='compromise.js'/&gt;</code>
+      <code lang="html" language="html">&lt;script src='compromise.js'/&gt;</code>
     </td>
   </tr>
   <tr>
     <td>
       <div>fast-path parsing</div>
-      <code lang="js">var doc= nlp(myNovel) //whoosh 💨</code>
+      <code lang="javascript">var doc= nlp(myNovel) //whoosh 💨</code>
     </td>
   </tr>
   <tr>
     <td>
       <div>metadata for days</div>
-      <code lang="js">
+      <code lang="javascript">
         doc.people().lastNames()
       </code>
     </td>
@@ -150,11 +150,6 @@ doc.sentences().toNegative()
     </td>
   </tr>
 </table>
-* mostly heads-up API
-```js
-doc.contractions().expand()
-doc.words().unique().sort()
-```
 
 <table>
    <tr>

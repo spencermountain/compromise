@@ -92,7 +92,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 </h3>
 
 
-#### ⚡️ on the Client-side,
+#### ⚡️ on the Client-side
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
@@ -183,27 +183,29 @@ doc.sentences().toNegative()
 <table>
   <tr>
     <td>
-      <b align="center"><i>pop into a parsed format..</i></b>
+      <b align="center"><i>pop right in,</i></b>
       <pre lang="javascript">var doc= nlp(myNovel) //whoosh
-doc.words().unique().length
-doc.match('the #Superlative of times')</pre>
+doc.match('the #Superlative of times').length//2</pre>
     </td>
     <td>
       <b align="center"><i>mostly-bearable API</i></b>
       <pre lang="javascript">doc.contractions().expand()
-doc.people().lastNames()
-doc.out('text')</pre>
+doc.people().lastNames()</pre>
     </td>
   </tr>
   <tr>
   <td>
     <b align="center"><i>loosely-held opinions..</i></b>
     <pre lang="js">var ayeRight= require('nlp-scottish-slang')
-nlp.plugin(ayeRight)</pre>
+nlp.plugin(ayeRight)
+nlp('Taps aff, high doh!')</pre>
   </td>
   <td>
     <b align="center"><i>no foolin,</i></b>
     <pre lang="haml">6 years, 150 PRs, 60 devs</pre>
+    <sub>
+      in production at <a href="https://www.microsoft.com/developerblog/2017/06/06/geocoding-social-conversations-nlp-javascript/">the United Nations</a>
+    </sub>
   </td>
   </tr>
 </table>

@@ -49,17 +49,17 @@ const addChildren = function(tags) {
 //add tags to remove when tagging this one
 const addConflicts = function(tags) {
   Object.keys(tags).forEach(k => {
-    tags[k].isNot = {};
+    tags[k].notA = {};
     for (let i = 0; i < conflicts.length; i++) {
       let arr = conflicts[i];
       if (arr.indexOf(k) !== -1) {
         arr = arr.filter(a => a !== k);
         arr.forEach(e => {
-          tags[k].isNot[e] = true;
+          tags[k].notA[e] = true;
         });
       }
     }
-    tags[k].isNot = Object.keys(tags[k].isNot);
+    tags[k].notA = Object.keys(tags[k].notA);
   });
 };
 

@@ -62,7 +62,7 @@ World.prototype.addWords = function(lex) {
 World.prototype.addTags = function(tags) {
   Object.keys(tags || {}).forEach(k => {
     tags[k].isA = tags[k].isA || [];
-    tags[k].isNot = tags[k].isNot || [];
+    tags[k].notA = tags[k].notA || [];
     this.tagset[k] = tags[k];
   });
 };

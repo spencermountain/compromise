@@ -19,7 +19,7 @@ const putTag = (term, tag, reason) => {
   //extra logic per-each POS
   if (tagset[tag]) {
     //drop any conflicting tags
-    let enemies = tagset[tag].isNot || [];
+    let enemies = tagset[tag].notA || [];
     for (let i = 0; i < enemies.length; i++) {
       if (term.tags[enemies[i]] === true) {
         unTag(term, enemies[i], reason);

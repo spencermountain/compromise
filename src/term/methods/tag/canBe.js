@@ -9,7 +9,7 @@ const canBe = function(term, tag) {
     return true;
   }
   //loop through tag's contradictory tags
-  let enemies = tagset[tag].isNot || [];
+  let enemies = tagset[tag].notA || [];
   for (let i = 0; i < enemies.length; i++) {
     if (term.tags[enemies[i]] === true) {
       return false;

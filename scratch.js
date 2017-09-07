@@ -15,27 +15,14 @@ var nlp = require('./src/index');
 //     .expand()
 //     .out()
 // );
+nlp.addTags({
+  Doctor: {
+    isA: 'Person',
+    notA: ['Foo']
+  }
+});
+nlp.addWords({ lkjj: 'Foo' });
 
-// nlp.addTags({
-//   Doctor: {
-//     isA: 'Person',
-//     notA: ['Verb']
-//   }
-// });
-// nlp.addWords({ surgeon: 'Doctor', 'surgeon general': 'Doctor' });
-// var lex = {
-//   'lkj lkjs': 'Place'
-// };
-// var doc = nlp('the surgeon operated lkj lkjs', lex);
-// doc.debug();
-
-// var lexicon = {
-//   'jardas al abid': 'Place'
-// };
-// nlp('jardas al Abid', lexicon)
-//   .match('#Place')
-//   .debug();
-var doc = nlp('aaraa bbbb cccc');
-doc.match('bbbb').tag('MaleName');
-doc.tag('Place');
+var doc = nlp('he is lkjj');
+doc.match('lkjj').tag('#Doctor');
 doc.debug();

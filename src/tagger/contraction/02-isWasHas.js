@@ -6,6 +6,11 @@ const splitContraction = require('./split');
 const blacklist = {
   "that's": true
 };
+const are = {
+  we: true,
+  they: true,
+  you: true
+};
 
 // "'s" may be a contraction or a possessive
 // 'spencer's house' vs 'spencer's good'
@@ -42,11 +47,34 @@ const isPossessive = (ts, i) => {
   return false;
 };
 
+// you ain't / i ain't.
+const isAre = function(ts, i) {
+  let arr = ['is', 'not']; //default
+  //get what's it 'about'
+  if (ts.terms[i - 1]) {
+    let about = ts.terms[i - 1];
+    //go back one more..
+    if (about.tags.Adverb && ts.terms[i - 2]) {
+      about = ts.terms[i - 2];
+    }
+    if (about.tags.Plural || are[about.normal] === true) {
+      arr[0] = 'are';
+    }
+  }
+  return arr;
+};
+
 //handle ambigous contraction "'s"
 const hardOne = ts => {
   for (let i = 0; i < ts.terms.length; i++) {
     //skip existing
     if (ts.terms[i].silent_term) {
+      continue;
+    }
+    if (ts.terms[i].normal === "ain't" || ts.terms[i].normal === 'aint') {
+      let arr = isAre(ts, i);
+      ts = fixContraction(ts, arr, i);
+      i += 1;
       continue;
     }
     let parts = splitContraction(ts.terms[i]);

@@ -7,6 +7,7 @@ const misc = {
   'a few': 'Value', //different than 'few people'
   here: 'Noun',
   'no doubt': 'Noun'
+  // we: ['Pronoun', 'Plural']
 };
 
 const compact = {

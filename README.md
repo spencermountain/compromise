@@ -120,21 +120,19 @@ doc.sentences().toNegative()
     </td>
     <td>
       <b align="center">metadata for days</b>
-      <pre lang="javascript">
-        doc.people().lastNames()
-      </pre>
+      <pre lang="javascript">doc.people().lastNames()</pre>
     </td>
   </tr>
+</table>
+<table>
   <tr>
     <td>
       <b align="center">loosely-held opinions..</b>
-      <pre lang="js">
-        nlp.plugin(require('compromise-scottish-slang'))
-      </pre>
+      <pre lang="js">nlp.plugin(require('compromise-scottish-slang'))</pre>
     </td>
     <td>
       <div align="center">not the worst</div>
-        <sub><b>170 PRs</b> from <b>55 contributors</b></sub>
+        <pre><b>170 PRs</b> from <b>55 contributors</b></pre>
     </td>
   </tr>
 </table>

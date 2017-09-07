@@ -1,9 +1,9 @@
 const lexicon = require('../lexicon/init');
 const tagset = require('../tagset');
 const fns = require('../fns');
-const addDownward = require('../tagset/addDownward');
 const addWords = require('./addWords');
 const addRegex = require('./addRegex');
+const addTags = require('./addTags');
 const regex = require('./rules');
 
 //'class World{}'
@@ -16,15 +16,7 @@ let World = function() {
 
 World.prototype.addWords = addWords;
 World.prototype.addRegex = addRegex;
-
-World.prototype.addTags = function(tags) {
-  Object.keys(tags || {}).forEach(k => {
-    tags[k].isA = tags[k].isA || [];
-    tags[k].notA = tags[k].notA || [];
-    this.tagset[k] = tags[k];
-  });
-  addDownward(this.tagset);
-};
+World.prototype.addTags = addTags;
 
 World.prototype.clone = function() {
   let w2 = new World();
@@ -32,5 +24,18 @@ World.prototype.clone = function() {
   w2.firstWords = fns.copy(this.firstWords);
   w2.tagset = fns.copy(this.tagset);
   return w2;
+};
+
+//add all the things, in all the places
+World.prototype.plugin = function(obj) {
+  if (obj.words) {
+    this.addWords(obj.words);
+  }
+  if (obj.tags) {
+    this.addTags(obj.tags);
+  }
+  if (obj.regex) {
+    this.addRegex(obj.regex);
+  }
 };
 module.exports = World;

@@ -31,6 +31,9 @@ nlp.addTags = function(tags) {
 nlp.addRegex = function(regs) {
   w.addRegex(regs);
 };
+nlp.plugin = function(obj) {
+  w.plugin(obj);
+};
 
 nlp.clone = function() {
   w = w.clone();

@@ -116,37 +116,37 @@ doc.sentences().toNegative()
   <tr>
     <td>
       <div>* not java,</div>
-      <code lang="html" language="html">&lt;script src='compromise.js'/&gt;</code>
+      <pre lang="html" language="html">&lt;script src='compromise.js'/&gt;</pre>
     </td>
   </tr>
   <tr>
     <td>
       <div>fast-path parsing</div>
-      <code lang="javascript">var doc= nlp(myNovel) //whoosh 💨</code>
+      <pre lang="javascript">var doc= nlp(myNovel) //whoosh 💨</pre>
     </td>
   </tr>
   <tr>
     <td>
       <div>metadata for days</div>
-      <code lang="javascript">
+      <pre lang="javascript">
         doc.people().lastNames()
-      </code>
+      </pre>
     </td>
   </tr>
   <tr>
     <td>
       <div>loosely-held opinions</div>
-      <code lang="js">
+      <pre lang="js">
         nlp.plugin(require('compromise-scottish-slang'))
-      </code>
+      </pre>
     </td>
   </tr>
   <tr>
     <td>
       <div>not the worst</div>
-      <code lang="coffee">
+      <pre lang="coffee">
         170 PRs from 55 contributors
-      </code>
+      </pre>
     </td>
   </tr>
 </table>

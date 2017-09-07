@@ -75,10 +75,10 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 <div align="center">
   <sub>
       a  <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">
-      least-fancy</a> way to use text,
+      least-fancy</a> way to handle text,
     </sub>
     <h3 align="center">
-      Text in → data out
+      Text in → data out.
     </h3>
   <sub>without <b>training</b>, <b>jargon</b> or <b>config</b></sub>
 </div>
@@ -182,15 +182,17 @@ doc.sentences().toNegative()
    </tr>
 </table>
 
+<p></p>
+
 <table>
   <tr>
     <td>
-      <b align="center"><i>pop right in,</i></b>
+      <i>pop right in:</i>
       <pre lang="javascript">var doc= nlp(myNovel) //whoosh
 doc.match('the #Superlative of times').length</pre>
     </td>
     <td>
-      <b align="center"><i>a mostly-bearable API</i></b>
+      <b align="center"><i>a mostly-bearable API:</i></b>
       <pre lang="javascript">doc.contractions().expand()
 doc.people().lastNames()</pre>
     </td>
@@ -369,13 +371,14 @@ doc = nlp('Tony Hawk').out('html')
       <summary>☂️ Isn't javascript too...</summary>
       <p></p>
       <ul>
-        yeah..
+        yeah!
         <br/>
         it wasn't built to compete with the stanford tagger, and may not fit every project.
         <br/>
-        all string stuff is synchronous too, and parallelizing is weird.
+        string stuff is synchronous too, and parallelizing is weird.
         <br/>
-        See <a href="https://github.com/nlp-compromise/compromise/wiki/Speed">here</a> for information about speed & performance.
+        See <a href="https://github.com/nlp-compromise/compromise/wiki/Speed">here</a> for information about speed & performance, and
+        <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">here></a> for project motivations
       </ul>
       <p></p>
     </details>
@@ -387,7 +390,7 @@ doc = nlp('Tony Hawk').out('html')
       <ul>
         Only if it's water-proof!
         <br/>
-        See <a href="https://github.com/nlp-compromise/compromise/wiki/QuickStart">quickStart</a> for all sorts of funny environments.
+        Read <a href="https://github.com/nlp-compromise/compromise/wiki/QuickStart">quickStart</a> for all sorts of funny environments.
       </ul>
       <p></p>
     </details>

@@ -41,7 +41,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       <td align="center">
         <b>
           <a href="https://unpkg.com/compromise@latest/builds/compromise.min.js">
-            210k
+            210kb
           </a>
         </b>
         <div>
@@ -76,15 +76,25 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 </div>
 
 <div align="center">
-  <sub>with <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">deliberate, rule-based</a> nlp,</sub>
-  <br/>
-  <b>compromise</b> makes working with text easy
+  <sub>
+    with
+    <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">
+    deliberate, rule-based
+    </a>
+    NLP,
+  </sub>
+  <h5 align="center">
+    <b>compromise</b> interprets text
+  </h5>
+  <div>
+    so that simple-things stay <i>simple</i>.
+  </div>
+  <sub>
+    and you can work-with text
+    <br/>
+    without jargon, config, or training  &nbsp;  🙌
+  </sub>
 </div>
-<h6 align="center">
-  no jargon, &nbsp; | &nbsp; no config, &nbsp; | &nbsp; no training
-  &nbsp; &nbsp; &nbsp;
-  <sub><i>🙌 you can do it!</i></sub>
-</h6>
 
 <h4 align="center">
   <a href="http://compromise.cool/docs">API doc</a>
@@ -163,7 +173,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
    </tr>
 </table>
 
-#### ⚡️ Client-side!
+#### ⚡️ Client-side
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
@@ -186,6 +196,9 @@ doc.sentences().toNegative()
 
 ## Toss in text,
 even if it's just one word:
+```js
+var doc = nlp('Ludwig van Beethoven')
+```
 
 <ul>
   <h3>Grab a part:</h3>
@@ -264,13 +277,9 @@ var lexicon={
   'boston': 'MusicalGroup'
 }
 doc = nlp('i heard Boston\'s set in Chicago', lexicon)
-doc.match('#MusicalGroup').length
-// 1
 
 //alternatively, fix it all 'in-post':
 doc.match('heard #Possessive set').terms(1).tag('MusicalGroup')
-doc.match('#MusicalGroup').length
-// 1
 ```
 
 * <a href="https://github.com/nlp-compromise/compromise/wiki/Output"><b> Handy outputs:</b></a> - get sensible data:

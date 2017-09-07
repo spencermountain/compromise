@@ -25,6 +25,9 @@ nlp.tokenize = function(str) {
 nlp.addWords = function(lex) {
   w.addWords(lex)
 }
+nlp.addRegex = function(lex) {
+  w.addWords(lex)
+}
 
 nlp.clone = function() {
   w = w.clone()

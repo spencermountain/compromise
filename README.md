@@ -73,12 +73,14 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 </div>
 
 <div align="center">
-  a  <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">
-  least-fancy</a> way to use text,
-    <h2 align="center">
-      text in → JSON out
-    </h2>
-  without training, jargon or config
+  <sub>
+      a  <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">
+      least-fancy</a> way to use text,
+    </sub>
+    <h3 align="center">
+      Text in → JSON out
+    </h3>
+  <sub>without training, jargon or config</sub>
 </div>
 
 <h3 align="center">
@@ -113,21 +115,11 @@ doc.sentences().toNegative()
 <table>
   <tr>
     <td>
-      Not java
+      <div><b>Not java</b></div>
       <code>&lt;script src='compromise.js'/&gt;</code>
     </td>
     <td>
-      fast-path parsing
-      <code>var doc= nlp(myNovel) //whoosh 💨</code>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      Not java
-      <code>&lt;script src='compromise.js'/&gt;</code>
-    </td>
-    <td>
-      fast-path parsing
+      <div><b>fast-path parsing</b></div>
       <code>var doc= nlp(myNovel) //whoosh 💨</code>
     </td>
   </tr>

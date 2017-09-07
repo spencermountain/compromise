@@ -26,6 +26,9 @@ test('basic is contractions', function(t) {
   r.contractions().expand();
   t.equal(r.out('text'), `she will eat icecream`, 'with-punctuation');
 
+  r = nlp("we're not gonna take it, no we're not gonna take it");
+  r.contractions().expand();
+  t.equal(r.out('text'), `we are not going to take it, no we are not going to take it`, 'expand gonna twice');
   t.end();
 });
 
@@ -79,30 +82,52 @@ test('repeated contract-expand', function(t) {
   r.contractions().contract();
   t.equal(r.out('text'), `i'm good`, 'contract-2');
 
-  r.contractions().contract().contract().contract();
+  r
+    .contractions()
+    .contract()
+    .contract()
+    .contract();
   t.equal(r.out('text'), `i'm good`, 'contract-n');
 
-  r.contractions().expand().expand().expand();
+  r
+    .contractions()
+    .expand()
+    .expand()
+    .expand();
   t.equal(r.out('text'), `i am good`, 'expand-n');
   t.end();
 });
 
 test('contracted', function(t) {
   var r = nlp(`I'll go to Toronto. I will see.`);
-  var str = r.contractions().contracted().out('text');
+  var str = r
+    .contractions()
+    .contracted()
+    .out('text');
   t.equal(str, `I'll`, 'contracted');
-  str = r.contractions().expanded().out('text');
+  str = r
+    .contractions()
+    .expanded()
+    .out('text');
   t.equal(str, `I will`, 'expanded');
   t.end();
 });
 
 test('would-or-did', function(t) {
   var r = nlp(`i'd contemplate`);
-  var str = r.contractions().expand().all().out('text');
+  var str = r
+    .contractions()
+    .expand()
+    .all()
+    .out('text');
   t.equal(str, `i would contemplate`, 'i-would');
 
   r = nlp(`i'd contemplated`);
-  str = r.contractions().expand().all().out('text');
+  str = r
+    .contractions()
+    .expand()
+    .all()
+    .out('text');
   t.equal(str, `i had contemplated`, 'i-had');
   t.end();
 });

@@ -44,19 +44,16 @@ const irregulars = {
   til: ['today', 'i', 'learned'],
   rn: ['right', 'now'],
   '@': ['at']
-  // 'idk': ['i', 'don\'t', 'know'],
 };
 
 //check irregulars
 const checkIrregulars = ts => {
-  let irreg = Object.keys(irregulars);
-  for (let i = 0; i < irreg.length; i++) {
-    for (let t = 0; t < ts.terms.length; t++) {
-      if (ts.terms[t].normal === irreg[i]) {
-        let fix = irregulars[irreg[i]];
-        ts = fixContraction(ts, fix, t);
-        break;
-      }
+  for (let i = 0; i < ts.terms.length; i++) {
+    let t = ts.terms[i];
+    if (irregulars[t.normal]) {
+      let fix = irregulars[t.normal];
+      ts = fixContraction(ts, fix, i);
+      i += fix.length;
     }
   }
   return ts;

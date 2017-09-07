@@ -6,8 +6,9 @@ var nlp = require('./src/index');
 // let doc = nlp('The Elkjsdflkjsdf sells hamburgers')
 
 // var doc = nlp("gonna say, we ain't gonna take it");//fixme
-var doc = nlp("we ain't").debug();
-
+let doc = nlp("we're not gonna take it, no we're not gonna take it");
+doc.contractions().expand();
+console.log(doc.out());
 // console.log(doc.match('are not').length); // 2 !
 // console.log(
 //   doc

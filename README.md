@@ -78,9 +78,9 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       least-fancy</a> way to use text,
     </sub>
     <h3 align="center">
-      Text in → JSON out
+      Text in → data out
     </h3>
-  <sub>without training, jargon or config</sub>
+  <sub>without <b>training</b>, <b>jargon</b> or <b>config</b></sub>
 </div>
 
 <h3 align="center">
@@ -115,34 +115,45 @@ doc.sentences().toNegative()
 <table>
   <tr>
     <td>
-      <div align="center">Not java</div>
-      <code>&lt;script src='compromise.js'/&gt;</code>
+      <div>* not java,</div>
+      <code lang="html">&lt;script src='compromise.js'/&gt;</code>
     </td>
   </tr>
   <tr>
     <td>
-      <div><b>fast-path parsing</b></div>
-      <code>var doc= nlp(myNovel) //whoosh 💨</code>
+      <div>fast-path parsing</div>
+      <code lang="js">var doc= nlp(myNovel) //whoosh 💨</code>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <div>metadata for days</div>
+      <code lang="js">
+        doc.people().lastNames()
+      </code>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <div>loosely-held opinions</div>
+      <code lang="js">
+        nlp.plugin(require('compromise-scottish-slang'))
+      </code>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <div>not the worst</div>
+      <code lang="coffee">
+        170 PRs from 55 contributors
+      </code>
     </td>
   </tr>
 </table>
-
-* ohmygosh, metadata
-```js
-doc.people().lastNames()
-```
 * mostly heads-up API
 ```js
 doc.contractions().expand()
 doc.words().unique().sort()
-```
-* loosely-held opinions
-```js
-nlp.plugin(require('compromise-scottish-slang'))
-```
-* Not the worst
-```
-170 PRs from 55 contributors
 ```
 
 <table>

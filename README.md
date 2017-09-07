@@ -118,8 +118,6 @@ doc.sentences().toNegative()
       <div>* not java,</div>
       <pre lang="html" language="html">&lt;script src='compromise.js'/&gt;</pre>
     </td>
-  </tr>
-  <tr>
     <td>
       <div>fast-path parsing</div>
       <pre lang="javascript">var doc= nlp(myNovel) //whoosh 💨</pre>
@@ -132,8 +130,6 @@ doc.sentences().toNegative()
         doc.people().lastNames()
       </pre>
     </td>
-  </tr>
-  <tr>
     <td>
       <div>loosely-held opinions</div>
       <pre lang="js">

@@ -84,11 +84,13 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 </div>
 
 <h3 align="center">
-<a href="http://compromise.cool/demos">Demos</a>
+  <a href="http://compromise.cool/demos">Demos</a>
+  &nbsp; &nbsp; &nbsp;
+  <a href="https://github.com/nlp-compromise/compromise/wiki/Usage">Usage</a>
   &nbsp; &nbsp; &nbsp;
   <a href="http://compromise.cool/docs">API</a>
   &nbsp; &nbsp; &nbsp;
-  <a href="https://github.com/nlp-compromise/compromise/wiki">WTF</a>
+  <a href="https://github.com/nlp-compromise/compromise/wiki/How-it-Works">WTF</a>
 </h3>
 
 
@@ -309,12 +311,11 @@ doc = nlp('Tony Hawk').out('html')
 */
 ```
 <h3 align="center">
-  ofcourse, there's <a href="https://github.com/nlp-compromise/compromise/wiki">a lot more stuff</a>.
+  of course, there's <a href="https://github.com/nlp-compromise/compromise/wiki">a lot more stuff</a>.
 </h3>
 <h4 align="center">
   <b>Join in -</b>
-  we're fun, using <b>semver</b>, and moving fast.
-  <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">get involved</a>
+  we're fun, using <b>semver</b>, and moving fast:
 </h4>
 
 <table>
@@ -365,18 +366,6 @@ doc = nlp('Tony Hawk').out('html')
 <ul align="left">
   <p>
     <details>
-      <summary>🌎 Other Languages?</summary>
-      <p></p>
-      <ul>
-        okay! we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a> and <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, in the same philosophy.
-        <br/>
-        Get involved!
-      </ul>
-      <p></p>
-    </details>
-  </p>
-  <p>
-    <details>
       <summary>☂️ Isn't javascript too...</summary>
       <p></p>
       <ul>
@@ -399,6 +388,18 @@ doc = nlp('Tony Hawk').out('html')
         Only if it's water-proof!
         <br/>
         See <a href="https://github.com/nlp-compromise/compromise/wiki/QuickStart">quickStart</a> for all sorts of funny environments.
+      </ul>
+      <p></p>
+    </details>
+  </p>
+  <p>
+    <details>
+      <summary>🌎 Other Languages?</summary>
+      <p></p>
+      <ul>
+        okay! we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a> and <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, in the same philosophy.
+        <br/>
+        Get involved!
       </ul>
       <p></p>
     </details>

@@ -73,35 +73,68 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 </div>
 
 <div align="center">
-  <sub>
-    with
-    <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">
-    deliberate, rule-based
-    </a>
-    NLP,
-  </sub>
-  <h3 align="center">
-    <b>compromise</b> interprets text
-  </h3>
-  <div>
-    so that simple-things stay <i>simple</i>.
-  </div>
-  <sub>
-    and you can work-with text
-  </sub>
-    <br/>
-    without jargon, config, or training  &nbsp;  🙌
+  a  <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">
+  least-fancy</a> way to use text,
+    <h3 align="center">
+      text in, JSON out
+    </h3>
+  without training, jargon or config
 </div>
 
 <h3 align="center">
-  <a href="http://compromise.cool/docs">API doc</a>
+<a href="http://compromise.cool/demos">Demos</a>
   &nbsp; &nbsp; &nbsp;
-  <a href="http://compromise.cool/demos">Demos</a>
+  <a href="http://compromise.cool/docs">API</a>
   &nbsp; &nbsp; &nbsp;
-  <a href="https://github.com/nlp-compromise/compromise/wiki/QuickStart">QuickStart</a>
-  &nbsp; &nbsp; &nbsp;
-  <a href="https://github.com/nlp-compromise/compromise/wiki/Usage">Tutorials</a>
+  <a href="https://github.com/nlp-compromise/compromise/wiki">WTF</a>
 </h3>
+
+* Not java
+```html
+<script src='compromise.js'/>
+```
+* fast-path parsing
+```js
+var doc= nlp(myNovel) //whoosh 💨
+```
+* ohmygosh, metadata
+```js
+doc.people().lastNames()
+```
+* mostly heads-up API
+```js
+doc.contractions().expand()
+doc.words().unique().sort()
+```
+* loosely-held opinions
+```js
+nlp.plugin(require('compromise-scottish-slang'))
+```
+* Not the worst
+```
+170 PRs from 55 contributors
+```
+
+#### ⚡️ on the Client-side,
+```html
+<script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
+<script>
+  var doc = nlp('dinosaur')
+
+  var str = doc.nouns().toPlural().out('text')
+  console.log(str)
+  // 'dinosaurs'
+</script>
+```
+
+#### 🌋 Server-side!
+```javascript
+var nlp = require('compromise')
+
+var doc = nlp('London is calling')
+doc.sentences().toNegative()
+// 'London is not calling'
+```
 
 <table>
    <tr>
@@ -169,27 +202,6 @@ nlp('..then consider me Miles Davis!').people().out('freq')
       </td>
    </tr>
 </table>
-
-#### ⚡️ on the Client-side,
-```html
-<script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
-<script>
-  var doc = nlp('dinosaur')
-
-  var str = doc.nouns().toPlural().out('text')
-  console.log(str)
-  // 'dinosaurs'
-</script>
-```
-
-#### 🌋 Server-side!
-```javascript
-var nlp = require('compromise')
-
-var doc = nlp('London is calling')
-doc.sentences().toNegative()
-// 'London is not calling'
-```
 
 ## Toss in text,
 even if it's just one word:

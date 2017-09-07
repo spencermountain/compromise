@@ -7,6 +7,7 @@ const verbs = require('./tags/verbs');
 const values = require('./tags/values');
 const dates = require('./tags/dates');
 const misc = require('./tags/misc');
+const addDownward = require('./addDownward');
 
 //used for pretty-printing on the server-side
 const colors = {
@@ -29,20 +30,6 @@ const colors = {
 const addIn = function(obj, tags) {
   Object.keys(obj).forEach(k => {
     tags[k] = obj[k];
-  });
-};
-
-//add 'downward' tags (that immediately depend on this one)
-const addChildren = function(tags) {
-  const keys = Object.keys(tags);
-  keys.forEach(k => {
-    tags[k].downward = [];
-    //look for tags with this as parent
-    for (let i = 0; i < keys.length; i++) {
-      if (tags[keys[i]].isA && tags[keys[i]].isA === k) {
-        tags[k].downward.push(keys[i]);
-      }
-    }
   });
 };
 
@@ -87,7 +74,7 @@ const build = () => {
   addIn(dates, tags);
   addIn(misc, tags);
   //downstream
-  addChildren(tags);
+  addDownward(tags);
   //add enemies
   addConflicts(tags);
   //for nice-logging

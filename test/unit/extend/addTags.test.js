@@ -41,7 +41,50 @@ test('tagset-change-isA', function(t) {
 
   t.equal(doc.match('#Doctor').out('normal'), 'lkjj', 'doctor-tag-there');
   t.equal(doc.match('#Foo').out('normal'), '', 'foo-is-gone');
-  t.equal();
 
+  t.end();
+});
+
+test('tagset-remove-downward', function(t) {
+  nlp.addTags({
+    Doctor: {
+      isA: 'Person'
+    },
+    Surgeon: {
+      isA: 'Doctor'
+    }
+  });
+  var doc = nlp('george is a person.');
+  doc.match('george').tag('Surgeon');
+
+  t.ok(doc.has('#Surgeon'), 'Surgeon-tag-there');
+  t.ok(doc.has('#Doctor'), 'doctor-tag-there');
+  t.ok(doc.has('#Person'), 'person-tag-there');
+
+  //remove one in the middle..
+  doc.match('george').unTag('Person');
+  t.ok(doc.has('#Person') === false, 'person-tag-gone');
+  t.ok(doc.has('#Doctor') === false, 'doctor-tag-gone');
+  t.ok(doc.has('#Surgeon') === false, 'Surgeon-tag-gone');
+  t.end();
+});
+
+test('tagset-remove-half-downward', function(t) {
+  nlp.addTags({
+    Doctor: {
+      isA: 'Person'
+    },
+    Surgeon: {
+      isA: 'Doctor'
+    }
+  });
+  var doc = nlp('george is a person.');
+  doc.match('george').tag('Surgeon');
+
+  //remove one just under the top..
+  doc.match('george').unTag('Doctor');
+  t.ok(doc.has('#Person') === true, 'person-tag-there');
+  t.ok(doc.has('#Doctor') === false, 'doctor-tag-gone');
+  t.ok(doc.has('#Surgeon') === false, 'Surgeon-tag-gone');
   t.end();
 });

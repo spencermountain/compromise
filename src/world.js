@@ -4,6 +4,7 @@ const firstWords = require('./lexicon/firstWords');
 const buildOut = require('./lexicon/buildOut');
 const normalize = require('./term/methods/normalize/normalize').normalize;
 const fns = require('./fns');
+const addDownward = require('./tagset/addDownward');
 //cleanup a directly-entered user lexicon.
 //basically really dirty and stupid.
 const normalizeLex = function(lex) {
@@ -59,12 +60,14 @@ World.prototype.addWords = function(lex) {
     });
   });
 };
+
 World.prototype.addTags = function(tags) {
   Object.keys(tags || {}).forEach(k => {
     tags[k].isA = tags[k].isA || [];
     tags[k].notA = tags[k].notA || [];
     this.tagset[k] = tags[k];
   });
+  addDownward(this.tagset);
 };
 
 World.prototype.clone = function() {

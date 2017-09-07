@@ -17,8 +17,10 @@ var nlp = require('./src/index');
 // );
 nlp.addTags({
   Doctor: {
-    isA: 'Person',
-    notA: ['Foo']
+    isA: 'Person'
+  },
+  Surgeon: {
+    isA: 'Doctor'
   }
 });
 nlp.addWords({ lkjj: 'Foo' });

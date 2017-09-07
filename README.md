@@ -185,28 +185,30 @@ doc.sentences().toNegative()
     <td>
       <b align="center"><i>pop into a parsed format..</i></b>
       <pre lang="javascript">var doc= nlp(myNovel) //whoosh
-doc.words().unique()</pre>
+doc.words().unique().length
+doc.match('the #Superlative of times')</pre>
     </td>
     <td>
       <b align="center"><i>mostly-bearable API</i></b>
       <pre lang="javascript">doc.contractions().expand()
-doc.people().lastNames()</pre>
+doc.people().lastNames()
+doc.out('text')</pre>
     </td>
   </tr>
   <tr>
   <td>
     <b align="center"><i>loosely-held opinions..</i></b>
-    <pre lang="js">var ayeRight = require('nlp-scottish-slang')
+    <pre lang="js">var ayeRight= require('nlp-scottish-slang')
 nlp.plugin(ayeRight)</pre>
   </td>
   <td>
     <b align="center"><i>no foolin,</i></b>
-    <pre lang="haml">6 years, 150PRs, 60 people</pre>
+    <pre lang="haml">6 years, 150 PRs, 60 devs</pre>
   </td>
   </tr>
 </table>
 
-## Toss in text,
+### Throw in text,
 even if it's just one word:
 ```js
 var doc = nlp('Ludwig van Beethoven')
@@ -231,7 +233,7 @@ doc.match('#PastTense to').hyphenate().out()
 ```
 
 <ul>
-  <h3>Throw stuff around:</h3>
+  <h3>Move things around:</h3>
 </ul>
 
 * <a href="https://github.com/nlp-compromise/compromise/wiki/Nouns"><b>Plural/singular:</b></a> - grab the noun-phrases, make em plural:

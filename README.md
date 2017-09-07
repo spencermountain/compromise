@@ -184,23 +184,24 @@ doc.sentences().toNegative()
   <tr>
     <td>
       <b align="center"><i>pop into a parsed format..</i></b>
-      <pre lang="javascript">var doc= nlp(myNovel) //whoosh 💨</pre>
+      <pre lang="javascript">var doc= nlp(myNovel) //whoosh 💨
+doc.words().unique()</pre>
     </td>
     <td>
-      <b align="center"><i>mostly heads-up API</i></b>
+      <b align="center"><i>mostly-bearable API</i></b>
       <pre lang="javascript">doc.contractions().expand()
-      doc.values().greatherThan(100).toNumber()</pre>
+doc.people().lastNames()</pre>
     </td>
   </tr>
   <tr>
   <td>
-    <b align="center"><i>metadata for days</i></b>
-    <pre lang="javascript">doc.people().lastNames()</pre>
+    <b align="center"><i>loosely-held opinions..</i></b>
+    <pre lang="js">nlp.plugin(require('nlp-scottish-slang'))</pre>
   </td>
-    <td>
-      <b align="center"><i>loosely-held opinions..</i></b>
-      <pre lang="js">nlp.plugin(require('nlp-scottish-slang'))</pre>
-    </td>
+  <td>
+    <b align="center"><i>no foolin</i></b>
+    <pre lang="haml">6 years, 150PRs</pre>
+  </td>
   </tr>
 </table>
 ## Toss in text,

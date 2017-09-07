@@ -115,11 +115,11 @@ doc.sentences().toNegative()
 <table>
   <tr>
     <td>
-      <div>fast-path parsing</div>
+      <b align="center">pop into a parsed fmt</b>
       <pre lang="javascript">var doc= nlp(myNovel) //whoosh 💨</pre>
     </td>
     <td>
-      <div>metadata for days</div>
+      <b align="center">metadata for days</b>
       <pre lang="javascript">
         doc.people().lastNames()
       </pre>
@@ -127,16 +127,14 @@ doc.sentences().toNegative()
   </tr>
   <tr>
     <td>
-      <div>loosely-held opinions</div>
+      <b align="center">loosely-held opinions..</b>
       <pre lang="js">
         nlp.plugin(require('compromise-scottish-slang'))
       </pre>
     </td>
     <td>
-      <div>not the worst</div>
-      <pre lang="haml">
-        170 PRs from 55 contributors
-      </pre>
+      <div align="center">not the worst</div>
+        <sub><b>170 PRs</b> from <b>55 contributors</b></sub>
     </td>
   </tr>
 </table>

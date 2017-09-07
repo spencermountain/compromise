@@ -75,9 +75,9 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 <div align="center">
   a  <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">
   least-fancy</a> way to use text,
-    <h3 align="center">
-      text in, JSON out
-    </h3>
+    <h1 align="center">
+      text in ➡ JSON out
+    </h1>
   without training, jargon or config
 </div>
 

@@ -8,13 +8,10 @@
   <a href="https://npmjs.org/package/compromise">
     <img src="https://img.shields.io/npm/v/compromise.svg?style=flat-square" />
   </a>
-  <a href="https://nodejs.org/api/documentation.html#documentation_stability_index">
-    <img src="https://img.shields.io/badge/stability-stable-green.svg?style=flat-square" />
-  </a>
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
   </a>
-  <div>natural language processing, actually in the browser</div>
+  <div>natural language processing, in javascript</div>
   <sub>
     by
     <a href="https://github.com/spencermountain">Spencer Kelly</a> and
@@ -83,20 +80,20 @@ nlp('..then consider me Miles Davis!').people().out('freq')
     </a>
     NLP,
   </sub>
-  <h5 align="center">
+  <h3 align="center">
     <b>compromise</b> interprets text
-  </h5>
+  </h3>
   <div>
     so that simple-things stay <i>simple</i>.
   </div>
   <sub>
     and you can work-with text
+  </sub>
     <br/>
     without jargon, config, or training  &nbsp;  🙌
-  </sub>
 </div>
 
-<h4 align="center">
+<h3 align="center">
   <a href="http://compromise.cool/docs">API doc</a>
   &nbsp; &nbsp; &nbsp;
   <a href="http://compromise.cool/demos">Demos</a>
@@ -173,7 +170,7 @@ nlp('..then consider me Miles Davis!').people().out('freq')
    </tr>
 </table>
 
-#### ⚡️ Client-side
+#### ⚡️ on the Client-side,
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script>
@@ -297,12 +294,12 @@ doc = nlp('Tony Hawk').out('html')
 */
 ```
 <h3 align="center">
-  and yes, ofcourse, there's <a href="http://compromise.cool/demos">a lot more stuff</a>.
+  ofcourse, there's <a href="https://github.com/nlp-compromise/compromise/wiki">a lot more stuff</a>.
 </h3>
 <h4 align="center">
   <b>Join in -</b>
   we're fun, using <b>semver</b>, and moving fast.
-  <a href="https://github.com/nlp-compromise/compromise/wiki">get involved</a>
+  <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">get involved</a>
 </h4>
 
 <table>

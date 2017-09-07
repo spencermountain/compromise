@@ -115,7 +115,7 @@ doc.sentences().toNegative()
 <table>
   <tr>
     <td>
-      <b align="center"><i>pop into a parsed fmt</i></b>
+      <b align="center"><i>pop into a parsed format..</i></b>
       <pre lang="javascript">var doc= nlp(myNovel) //whoosh 💨</pre>
     </td>
     <td>

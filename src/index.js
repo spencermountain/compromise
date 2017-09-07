@@ -28,8 +28,8 @@ nlp.addWords = function(lex) {
 nlp.addTags = function(tags) {
   w.addTags(tags);
 };
-nlp.addRegex = function(lex) {
-  w.addWords(lex);
+nlp.addRegex = function(regs) {
+  w.addRegex(regs);
 };
 
 nlp.clone = function() {

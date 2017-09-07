@@ -184,7 +184,7 @@ doc.sentences().toNegative()
   <tr>
     <td>
       <b align="center"><i>pop into a parsed format..</i></b>
-      <pre lang="javascript">var doc= nlp(myNovel) //whoosh 💨
+      <pre lang="javascript">var doc= nlp(myNovel) //whoosh
 doc.words().unique()</pre>
     </td>
     <td>
@@ -196,14 +196,16 @@ doc.people().lastNames()</pre>
   <tr>
   <td>
     <b align="center"><i>loosely-held opinions..</i></b>
-    <pre lang="js">nlp.plugin(require('nlp-scottish-slang'))</pre>
+    <pre lang="js">var ayeRight = require('nlp-scottish-slang')
+nlp.plugin(ayeRight)</pre>
   </td>
   <td>
-    <b align="center"><i>no foolin</i></b>
-    <pre lang="haml">6 years, 150PRs</pre>
+    <b align="center"><i>no foolin,</i></b>
+    <pre lang="haml">6 years, 150PRs, 60 people</pre>
   </td>
   </tr>
 </table>
+
 ## Toss in text,
 even if it's just one word:
 ```js

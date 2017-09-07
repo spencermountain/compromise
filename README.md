@@ -185,10 +185,10 @@ doc.sentences().toNegative()
     <td>
       <b align="center"><i>pop right in,</i></b>
       <pre lang="javascript">var doc= nlp(myNovel) //whoosh
-doc.match('the #Superlative of times').length//2</pre>
+doc.match('the #Superlative of times').length</pre>
     </td>
     <td>
-      <b align="center"><i>mostly-bearable API</i></b>
+      <b align="center"><i>a mostly-bearable API</i></b>
       <pre lang="javascript">doc.contractions().expand()
 doc.people().lastNames()</pre>
     </td>
@@ -198,13 +198,14 @@ doc.people().lastNames()</pre>
     <b align="center"><i>loosely-held opinions..</i></b>
     <pre lang="js">var ayeRight= require('nlp-scottish-slang')
 nlp.plugin(ayeRight)
+
 nlp('Taps aff, high doh!')</pre>
   </td>
   <td>
     <b align="center"><i>no foolin,</i></b>
     <pre lang="haml">6 years, 150 PRs, 60 devs</pre>
-    <sub>
-      in production at <a href="https://www.microsoft.com/developerblog/2017/06/06/geocoding-social-conversations-nlp-javascript/">the United Nations</a>
+    <sub align="center">
+      in production in <a href="https://www.microsoft.com/developerblog/2017/06/06/geocoding-social-conversations-nlp-javascript/">the United Nations🎈</a>
     </sub>
   </td>
   </tr>
@@ -218,24 +219,19 @@ var doc = nlp('Ludwig van Beethoven')
 
 <ul>
   <h3>Grab a part:</h3>
-  use <a href="https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods">built-in methods</a> like <b>.nouns()</b>, or <b>.people()</b> - or query any pattern with <b><a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">.match()</a></b>:
+  query any pattern with <b><a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">.match()</a></b>, or use <a href="https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods">built-in methods</a> like <b>.nouns()</b>, or <b>.people()</b>:
 </ul>
 
 ```js
-doc = nlp('Ludwig van Beethoven wrote to Josephine Brunsvik')
-
-doc.people().out('list')
-// ['ludwig van beethoven', 'josephine brunsvik']
-
 doc.match('#TitleCase van #LastName').out()
 // 'Ludwig van Beethoven'
 
-doc.match('#PastTense to').hyphenate().out()
-// 'wrote-to'
+doc.people().out('list')
+// ['ludwig van beethoven']
 ```
 
 <ul>
-  <h3>Move things around:</h3>
+  <h3>Move stuff around:</h3>
 </ul>
 
 * <a href="https://github.com/nlp-compromise/compromise/wiki/Nouns"><b>Plural/singular:</b></a> - grab the noun-phrases, make em plural:

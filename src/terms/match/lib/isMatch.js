@@ -34,9 +34,13 @@ const perfectMatch = (term, reg) => {
   if (reg.infix === true && reg.partial !== undefined) {
     return term.normal.indexOf(reg.partial) !== -1;
   }
+  //full-on regex-match '/a*?/'
+  if (reg.regex !== undefined) {
+    return reg.regex.test(term.normal) || reg.regex.test(term.text);
+  }
   //one-of term-match
   if (reg.oneOf !== undefined) {
-    for(let i = 0; i < reg.oneOf.tagArr.length; i++) {
+    for (let i = 0; i < reg.oneOf.tagArr.length; i++) {
       if (term.tags.hasOwnProperty(reg.oneOf.tagArr[i]) === true) {
         return true;
       }

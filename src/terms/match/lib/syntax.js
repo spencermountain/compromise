@@ -83,6 +83,14 @@ const parse_term = function(term) {
     reg.tag = fns.titleCase(term);
     term = '';
   }
+  //support /regex/ mode
+  if (term.charAt(0) === '/' && term.charAt(term.length - 1) === '/') {
+    term = noLast(term);
+    term = noFirst(term);
+    //actually make the regex
+    reg.regex = new RegExp(term);
+    term = '';
+  }
   //one_of options flag
   if (term.charAt(0) === '(' && term.charAt(term.length - 1) === ')') {
     term = noLast(term);

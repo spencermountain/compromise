@@ -239,7 +239,7 @@ doc.people().out('list')
 </ul>
 
 * <a href="https://github.com/nlp-compromise/compromise/wiki/Nouns"><b>Plural/singular:</b></a> - grab the noun-phrases, make em plural:
-```javascript
+```js
 doc = nlp('a bottle of beer on the wall.')
 doc.nouns().first().toPlural()
 doc.out('text')
@@ -247,7 +247,7 @@ doc.out('text')
 ```
 
 * <a href="https://github.com/nlp-compromise/compromise/wiki/Values"><b>Number parsing:</b></a> - parse written-out numbers, and change their form:
-```javascript
+```js
 doc = nlp('ninety five thousand and fifty two')
 doc.values().toNumber().out('text')
 // '95052'
@@ -259,13 +259,13 @@ doc.out('text')
 ```
 
 * <a href="https://github.com/nlp-compromise/compromise/wiki/Usage"><b>Normalization:</b></a> - handle the craziness:
-```javascript
+```js
 doc = nlp("the guest-singer's björk   at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
 ```
 
 * <a href="https://github.com/nlp-compromise/compromise/wiki/Verbs"><b>Tense:</b></a> - switch between conjugations of any verb
-```javascript
+```js
 let doc = nlp('she sells seashells by the seashore.')
 doc.sentences().toFutureTense().out('text')
 //'she will sell seashells...'
@@ -277,8 +277,17 @@ doc.verbs().conjugate()
 // }]
 ```
 
+* <a href="https://github.com/nlp-compromise/compromise/wiki/Contractions"><b> Contractions:</b></a> - grab, expand and contract them:
+```js
+doc = nlp("we're not gonna take it, no we ain't gonna take it.")
+doc.has('going') // true
+doc.match('are not').length // == 2
+doc.contractions().expand().out()
+//'we are not going to take it, no we are not going to take it'
+```
+
 * <a href="https://github.com/nlp-compromise/compromise/wiki/Usage"><b> Named-entities:</b></a> - get the people, places, organizations:
-```javascript
+```js
 doc = nlp('that opera about richard nixon visiting china')
 doc.topics().data()
 // [
@@ -288,7 +297,7 @@ doc.topics().data()
 ```
 
 * <a href="https://github.com/nlp-compromise/compromise/wiki/Lexicon"><b>Error correction:</b></a> - make it say what you'd like:
-```javascript
+```js
 var lexicon={
   'boston': 'MusicalGroup'
 }
@@ -299,7 +308,7 @@ doc.match('heard #Possessive set').terms(1).tag('MusicalGroup')
 ```
 
 * <a href="https://github.com/nlp-compromise/compromise/wiki/Output"><b> Handy outputs:</b></a> - get sensible data:
-```javascript
+```js
 doc = nlp('We like Roy! We like Roy!').sentences().out('array')
 // ['We like Roy!', 'We like Roy!']
 

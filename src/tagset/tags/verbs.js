@@ -1,41 +1,41 @@
 module.exports = {
   Verb: {
-    is: 'VerbPhrase'
+    isA: 'VerbPhrase'
   },
   PresentTense: {
-    is: 'Verb'
+    isA: 'Verb'
   },
   Infinitive: {
-    is: 'PresentTense'
+    isA: 'PresentTense'
   },
   Gerund: {
-    is: 'PresentTense'
+    isA: 'PresentTense'
   },
   PastTense: {
-    is: 'Verb'
+    isA: 'Verb'
   },
   PerfectTense: {
-    is: 'Verb'
+    isA: 'Verb'
   },
   FuturePerfect: {
-    is: 'Verb'
+    isA: 'Verb'
   },
   Pluperfect: {
-    is: 'Verb'
+    isA: 'Verb'
   },
   Copula: {
-    is: 'Verb'
+    isA: 'Verb'
   },
   Modal: {
-    is: 'Verb'
+    isA: 'Verb'
   },
   Participle: {
-    is: 'Verb'
+    isA: 'Verb'
   },
   Particle: {
-    is: 'Verb'
+    isA: 'Verb'
   },
   PhrasalVerb: {
-    is: 'Verb'
+    isA: 'Verb'
   }
 };

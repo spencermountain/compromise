@@ -9,6 +9,7 @@ compromise uses semver, and pushes to npm frequently
 ### v11
 ##### 11.0.0
 - support for persistent lexicon/tagset changes
+- `.addTags(obj)` method to extend native tagset
 - more `.organizations()` matches
 - improved apostrophe-s disambiguation
 - support whitespace before sentence boundary

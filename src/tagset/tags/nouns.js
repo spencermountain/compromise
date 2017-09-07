@@ -2,82 +2,82 @@ module.exports = {
   Noun: {},
   // - singular
   Singular: {
-    is: 'Noun'
+    isA: 'Noun'
   },
 
   // -- people
   Person: {
-    is: 'Singular'
+    isA: 'Singular'
   },
   FirstName: {
-    is: 'Person'
+    isA: 'Person'
   },
   MaleName: {
-    is: 'FirstName'
+    isA: 'FirstName'
   },
   FemaleName: {
-    is: 'FirstName'
+    isA: 'FirstName'
   },
   LastName: {
-    is: 'Person'
+    isA: 'Person'
   },
   Honorific: {
-    is: 'Person'
+    isA: 'Person'
   },
   Place: {
-    is: 'Singular'
+    isA: 'Singular'
   },
 
   // -- places
   Country: {
-    is: 'Place'
+    isA: 'Place'
   },
   City: {
-    is: 'Place'
+    isA: 'Place'
   },
   Region: {
-    is: 'Place'
+    isA: 'Place'
   },
   Address: {
-    is: 'Place'
+    isA: 'Place'
   },
   Organization: {
-    is: 'Singular'
+    isA: 'Singular'
   },
   SportsTeam: {
-    is: 'Organization'
+    isA: 'Organization'
   },
   Company: {
-    is: 'Organization'
+    isA: 'Organization'
   },
   School: {
-    is: 'Organization'
+    isA: 'Organization'
   },
 
   // - plural
   Plural: {
-    is: 'Noun'
+    isA: 'Noun'
   },
   Uncountable: {
     //(not plural or singular)
-    is: 'Noun'
+    isA: 'Noun'
   },
   Pronoun: {
-    is: 'Noun'
+    isA: 'Noun'
   },
   Actor: {
-    is: 'Noun'
+    isA: 'Noun'
   },
   Activity: {
-    is: 'Noun'
+    isA: 'Noun'
   },
   Unit: {
-    is: 'Noun'
+    isA: 'Noun'
   },
   Demonym: {
-    is: 'Noun'
+    isA: 'Noun'
   },
   Possessive: {
-    is: 'Noun'
+    isA: 'Noun'
   }
 };

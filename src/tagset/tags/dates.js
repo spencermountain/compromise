@@ -1,29 +1,29 @@
 module.exports = {
   Date: {}, //not a noun, but usually is
   Month: {
-    is: 'Date',
+    isA: 'Date',
     also: 'Singular'
   },
   WeekDay: {
-    is: 'Date',
+    isA: 'Date',
     also: 'Noun'
   },
   RelativeDay: {
-    is: 'Date'
+    isA: 'Date'
   },
   Year: {
-    is: 'Date'
+    isA: 'Date'
   },
   Duration: {
-    is: 'Date',
+    isA: 'Date',
     also: 'Noun'
   },
   Time: {
-    is: 'Date',
+    isA: 'Date',
     also: 'Noun'
   },
   Holiday: {
-    is: 'Date',
+    isA: 'Date',
     also: 'Noun'
-  },
+  }
 };

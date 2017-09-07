@@ -1,17 +1,17 @@
 module.exports = {
   Adjective: {},
   Comparable: {
-    is: 'Adjective'
+    isA: 'Adjective'
   },
   Comparative: {
-    is: 'Adjective'
+    isA: 'Adjective'
   },
   Superlative: {
-    is: 'Adjective'
+    isA: 'Adjective'
   },
 
   NumberRange: {
-    is: 'Contraction'
+    isA: 'Contraction'
   },
   Adverb: {},
 

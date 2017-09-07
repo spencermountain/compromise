@@ -39,7 +39,7 @@ const addChildren = function(tags) {
     tags[k].downward = [];
     //look for tags with this as parent
     for (let i = 0; i < keys.length; i++) {
-      if (tags[keys[i]].is && tags[keys[i]].is === k) {
+      if (tags[keys[i]].isA && tags[keys[i]].isA === k) {
         tags[k].downward.push(keys[i]);
       }
     }
@@ -49,17 +49,17 @@ const addChildren = function(tags) {
 //add tags to remove when tagging this one
 const addConflicts = function(tags) {
   Object.keys(tags).forEach(k => {
-    tags[k].enemy = {};
+    tags[k].isNot = {};
     for (let i = 0; i < conflicts.length; i++) {
       let arr = conflicts[i];
       if (arr.indexOf(k) !== -1) {
         arr = arr.filter(a => a !== k);
         arr.forEach(e => {
-          tags[k].enemy[e] = true;
+          tags[k].isNot[e] = true;
         });
       }
     }
-    tags[k].enemy = Object.keys(tags[k].enemy);
+    tags[k].isNot = Object.keys(tags[k].isNot);
   });
 };
 
@@ -69,12 +69,12 @@ const addColors = function(tags) {
       tags[k].color = colors[k];
       return;
     }
-    if (tags[k].is && colors[tags[k].is]) {
-      tags[k].color = colors[tags[k].is];
+    if (tags[k].isA && colors[tags[k].isA]) {
+      tags[k].color = colors[tags[k].isA];
       return;
     }
-    if (tags[k].is && tags[tags[k].is].color) {
-      tags[k].color = tags[tags[k].is].color;
+    if (tags[k].isA && tags[tags[k].isA].color) {
+      tags[k].color = tags[tags[k].isA].color;
     }
   });
 };

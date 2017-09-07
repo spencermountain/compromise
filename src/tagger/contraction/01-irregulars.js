@@ -53,7 +53,7 @@ const checkIrregulars = ts => {
     if (irregulars[t.normal]) {
       let fix = irregulars[t.normal];
       ts = fixContraction(ts, fix, i);
-      i += fix.length;
+      i += fix.length - 1;
     }
   }
   return ts;

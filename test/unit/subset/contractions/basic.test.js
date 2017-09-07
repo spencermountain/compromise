@@ -29,6 +29,10 @@ test('basic is contractions', function(t) {
   r = nlp("we're not gonna take it, no we're not gonna take it");
   r.contractions().expand();
   t.equal(r.out('text'), `we are not going to take it, no we are not going to take it`, 'expand gonna twice');
+
+  r = nlp("let's let's we're gonna gonna");
+  r.contractions().expand();
+  t.equal(r.out('text'), `let us let us we are going to going to`, 'expand consecutive');
   t.end();
 });
 

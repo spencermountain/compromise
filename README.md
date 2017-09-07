@@ -192,7 +192,7 @@ doc.sentences().toNegative()
 doc.match('the #Superlative of times').length</pre>
     </td>
     <td>
-      <b align="center"><i>a mostly-bearable API:</i></b>
+      <i>API is bearable:</i>
       <pre lang="javascript">doc.contractions().expand()
 doc.people().lastNames()</pre>
     </td>

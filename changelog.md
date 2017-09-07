@@ -11,6 +11,7 @@ compromise uses semver, and pushes to npm frequently
 - support for persistent lexicon/tagset changes
 - `.addTags(obj)` method to extend native tagset
 - more `.organizations()` matches
+- regex-support in .match() -   `nlp('it is waaaay cool').match('/aaa/')`
 - improved apostrophe-s disambiguation
 - support whitespace before sentence boundary
 - improved QuestionWord tagging, some `.questions()` without a question-mark

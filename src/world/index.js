@@ -12,6 +12,9 @@ let World = function() {
   this.firstWords = lexicon.firstWords;
   this.tagset = tagset;
   this.regex = regex;
+
+  this.conjugations = {};
+  this.inflections = {};
 };
 
 World.prototype.addWords = addWords;

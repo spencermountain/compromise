@@ -3,18 +3,23 @@ var nlp = require('../lib/nlp');
 
 test('addPlurals-test', function(t) {
   let plurals = {
-    bookly: 'booklii',
+    mather: 'mathii',
     algebra: 'algebri'
   };
   nlp.addPlurals(plurals);
-  let doc = nlp('the bookly did many algebri');
+  let doc = nlp('the mather did many algebri');
   let arr = doc.nouns().data();
   t.equal(arr.length, 2, 'found both');
-  t.equal(arr[0].singular, 'bookly', 'singular-form');
-  t.equal(arr[0].plural, 'booklii', 'plural-form');
+  t.equal(arr[0].singular, 'mather', 'singular-form');
+  t.equal(arr[0].plural, 'mathii', 'plural-form');
 
   t.equal(arr[1].singular, 'algebra', 'singular-form2');
   t.equal(arr[1].plural, 'algebri', 'plural-form2');
+
+  doc.nouns().toPlural();
+  t.equal(doc.out(), 'the mathii did many algebri', 'toPlural');
+  doc.nouns().toSingular();
+  t.equal(doc.out(), 'the mather did many algebra', 'toSingular');
 
   t.end();
 });

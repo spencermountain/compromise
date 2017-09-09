@@ -20,8 +20,8 @@ const methods = {
     let t = this.main;
     if (hasPlural(t) && !isPlural(t, this.world)) {
       t.text = pluralize(t.normal, this.world) || t.text;
-      t.unTag('Plural', 'toPlural');
-      t.tag('Singular', 'toPlural');
+      t.unTag('Singular', 'toPlural');
+      t.tag('Plural', 'toPlural');
     }
     return this;
   },

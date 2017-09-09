@@ -2,11 +2,11 @@
 var nlp = require('./src/index');
 // nlp.verbose('tagger');
 let plurals = {
-  bookly: 'booklii',
-  snaool: 'snaooli'
+  mather: 'mathii',
+  algebra: 'algebri'
 };
 nlp.addPlurals(plurals);
-let doc = nlp('the bookly');
+let doc = nlp('the mather did many algebri');
+doc.nouns().toPlural();
+doc.nouns().toSingular();
 doc.debug();
-
-console.log(doc.nouns().data()[0]);

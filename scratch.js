@@ -1,12 +1,12 @@
 'use strict';
 var nlp = require('./src/index');
 // nlp.verbose('tagger');
-let plurals = {
-  mather: 'mathii',
-  algebra: 'algebri'
+let conjugations = {
+  woo: {
+    PastTense: 'wood'
+  }
 };
-nlp.addPlurals(plurals);
-let doc = nlp('the mather did many algebri');
-doc.nouns().toPlural();
-doc.nouns().toSingular();
+nlp.addConjugations(conjugations);
+let doc = nlp('woo the crush');
+doc.verbs().toPastTense();
 doc.debug();

@@ -3,14 +3,14 @@ const conjugate = require('./conjugate');
 const toBe = require('./toBe');
 
 //conjugation using auxillaries+adverbs and stuff
-const multiWord = (vb, verbose) => {
+const multiWordConjugate = (vb, verbose) => {
   let isNegative = vb.negative.found;
   let isPlural = false;
   //handle 'to be' verb seperately
   if (vb.verb.tags.Copula || (vb.verb.normal === 'be' && vb.auxiliary.match('will').found)) {
     return toBe(isPlural, isNegative);
   }
-  let obj = conjugate(vb.verb, verbose);
+  let obj = conjugate(vb.verb, vb.world, verbose);
   //apply particles
   if (vb.particle.found) {
     Object.keys(obj).forEach(k => {
@@ -44,4 +44,4 @@ const multiWord = (vb, verbose) => {
   }
   return obj;
 };
-module.exports = multiWord;
+module.exports = multiWordConjugate;

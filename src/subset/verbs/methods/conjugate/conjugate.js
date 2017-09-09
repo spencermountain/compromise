@@ -8,7 +8,7 @@ const toInfinitive = require('../toInfinitive');
 const toBe = require('./toBe');
 
 //turn a verb into all it's forms
-const conjugate = function(t, verbose) {
+const conjugate = function(t, world, verbose) {
   //handle is/was/will-be specially
   if (t.normal === 'is' || t.normal === 'was' || t.normal === 'will') {
     return toBe();
@@ -34,7 +34,7 @@ const conjugate = function(t, verbose) {
     all['Infinitive'] = toInfinitive(t, verbose) || '';
   }
   //check irregular forms
-  const irregObj = checkIrregulars(all['Infinitive']) || {};
+  const irregObj = checkIrregulars(all['Infinitive'], world) || {};
   Object.keys(irregObj).forEach(k => {
     if (irregObj[k] && !all[k]) {
       all[k] = irregObj[k];

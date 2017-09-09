@@ -11,7 +11,10 @@ const parse = function(r) {
   r.negative = r.match('#Negative');
   r.adverbs = r.match('#Adverb');
   let aux = r.clone().not('(#Adverb|#Negative)');
-  r.verb = aux.match('#Verb').not('#Particle').last();
+  r.verb = aux
+    .match('#Verb')
+    .not('#Particle')
+    .last();
   r.particle = aux.match('#Particle').last();
   if (r.verb.found) {
     let str = r.verb.out('normal');

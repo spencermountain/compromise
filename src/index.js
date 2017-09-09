@@ -34,6 +34,9 @@ nlp.addRegex = function(regs) {
 nlp.addPlurals = function(obj) {
   w.addPlurals(obj);
 };
+nlp.addConjugations = function(obj) {
+  w.addConjugations(obj);
+};
 nlp.plugin = function(obj) {
   w.plugin(obj);
 };

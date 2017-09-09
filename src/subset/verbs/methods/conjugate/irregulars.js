@@ -4,7 +4,11 @@ const fns = require('../../../../fns'); //weeee!
 const infArr = Object.keys(irregulars);
 const forms = ['Participle', 'Gerund', 'PastTense', 'PresentTense', 'FuturePerfect', 'PerfectTense', 'Actor'];
 
-const checkIrregulars = function(str) {
+const checkIrregulars = function(str, world) {
+  //check irregulars in world
+  if (world && world.conjugations && world.conjugations.hasOwnProperty(str) === true) {
+    return world.conjugations[str];
+  }
   //fast infinitive lookup
   if (irregulars.hasOwnProperty(str) === true) {
     let obj = fns.copy(irregulars[str]);

@@ -2,6 +2,7 @@ const addWords = require('./addWords');
 const addRegex = require('./addRegex');
 const addTags = require('./addTags');
 const addPlurals = require('./addPlurals');
+const addConjugations = require('./addConjugations');
 const fns = require('../fns');
 let lexicon = require('../lexicon/init');
 let tagset = require('../tagset');
@@ -23,6 +24,7 @@ World.prototype.addWords = addWords;
 World.prototype.addRegex = addRegex;
 World.prototype.addTags = addTags;
 World.prototype.addPlurals = addPlurals;
+World.prototype.addConjugations = addConjugations;
 
 World.prototype.clone = function() {
   let w2 = new World();

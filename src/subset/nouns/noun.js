@@ -8,30 +8,27 @@ const singularize = require('./methods/singularize');
 
 const methods = {
   article: function() {
-    let t = this.t;
-    return makeArticle(t);
+    return makeArticle(this.main);
   },
   isPlural: function() {
-    let t = this.t;
-    return isPlural(t);
+    return isPlural(this.main);
   },
   hasPlural: function() {
-    let t = this.t;
-    return hasPlural(t);
+    return hasPlural(this.main);
   },
   toPlural: function() {
-    let t = this.t;
+    let t = this.main;
     if (hasPlural(t) && !isPlural(t)) {
-      t.text = pluralize(t.normal) || t.text;
+      t.text = pluralize(t.normal, this.world) || t.text;
       t.unTag('Plural', 'toPlural');
       t.tag('Singular', 'toPlural');
     }
     return this;
   },
   toSingular: function() {
-    let t = this.t;
+    let t = this.main;
     if (isPlural(t)) {
-      t.text = singularize(t.normal) || t.text;
+      t.text = singularize(t.normal, this.world) || t.text;
       t.unTag('Plural', 'toSingular');
       t.tag('Singular', 'toSingular');
     }
@@ -40,6 +37,8 @@ const methods = {
   data: function() {
     return {
       article: this.article(),
+      text: this.out('text'),
+      normal: this.out('normal'),
       singular: this.toSingular().out('normal'),
       plural: this.toPlural().out('normal')
     };
@@ -48,7 +47,7 @@ const methods = {
 
 const Noun = function(arr, world, refText) {
   Terms.call(this, arr, world, refText);
-  this.t = this.terms[0];
+  this.main = this.terms[0];
 };
 Noun.prototype = Object.create(Terms.prototype);
 

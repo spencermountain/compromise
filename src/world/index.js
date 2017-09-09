@@ -1,29 +1,32 @@
-const lexicon = require('../lexicon/init');
-const tagset = require('../tagset');
-const fns = require('../fns');
 const addWords = require('./addWords');
 const addRegex = require('./addRegex');
 const addTags = require('./addTags');
-const regex = require('./rules');
+const addPlurals = require('./addPlurals');
+const fns = require('../fns');
+let lexicon = require('../lexicon/init');
+let tagset = require('../tagset');
+let regex = require('./rules');
+let plurals = require('../lexicon/uncompressed/irregularPlurals').toPlural;
 
 //'class World{}'
 let World = function() {
-  this.lexicon = lexicon.lexicon;
+  this.words = lexicon.lexicon;
   this.firstWords = lexicon.firstWords;
   this.tagset = tagset;
   this.regex = regex;
 
   this.conjugations = {};
-  this.inflections = {};
+  this.plurals = plurals;
 };
 
 World.prototype.addWords = addWords;
 World.prototype.addRegex = addRegex;
 World.prototype.addTags = addTags;
+World.prototype.addPlurals = addPlurals;
 
 World.prototype.clone = function() {
   let w2 = new World();
-  w2.lexicon = fns.copy(this.lexicon);
+  w2.words = fns.copy(this.lexicon);
   w2.firstWords = fns.copy(this.firstWords);
   w2.tagset = fns.copy(this.tagset);
   return w2;
@@ -39,6 +42,9 @@ World.prototype.plugin = function(obj) {
   }
   if (obj.regex) {
     this.addRegex(obj.regex);
+  }
+  if (obj.plurals) {
+    this.addPlurals(obj.plurals);
   }
 };
 module.exports = World;

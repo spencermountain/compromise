@@ -14,7 +14,7 @@ const findMultiWords = function(ts, i, world) {
     str = str.replace(/'s$/, ''); //ugly
     //perfect match here?
     if (want[str] === true) {
-      let tag = world.lexicon[ts.terms[i].normal + ' ' + str];
+      let tag = world.words[ts.terms[i].normal + ' ' + str];
       ts.slice(i, i + add + 1).tag(tag, 'multi-lexicon-' + (add + 1) + '-word');
       return add;
     }

@@ -40,7 +40,7 @@ const addWords = function(lex) {
   lex = l.lexicon;
   //'upsert' into lexicon object
   Object.keys(lex).forEach(k => {
-    this.lexicon[k] = lex[k];
+    this.words[k] = lex[k];
   });
   //merge 'firstWord' cache-objects too
   let first = l.firstWords;

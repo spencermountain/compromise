@@ -1,24 +1,12 @@
-'use strict'
-var nlp = require('./src/index')
+'use strict';
+var nlp = require('./src/index');
 // nlp.verbose('tagger');
-
-let plugin = {
-  words: {},
-  tags: {},
-  regex: {},
-  conjugations: {
-    wook: {
-      past: 'wooked',
-      present: 'wooks'
-    }
-  },
-  plurals: {
-    snail: 'snailii'
-  }
-}
-
-nlp.addRegex({
-  aaa: 'Exaggeration'
-})
-let doc = nlp('wook').tag('Infinitive')
-doc.debug()
+let plurals = {
+  bookly: 'booklii',
+  algebra: 'algebri'
+};
+nlp.addPlurals(plurals);
+let doc = nlp('the bookly did many algebri');
+let arr = doc.nouns().data();
+doc.debug();
+console.log(arr);

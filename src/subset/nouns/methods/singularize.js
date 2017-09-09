@@ -1,13 +1,21 @@
 'use strict';
 const irregulars = require('../../../lexicon/uncompressed/irregularPlurals').toSingle;
-
 const singleRules = require('./data/singleRules');
 
 //turn 'shoes' into 'shoe'
-const toSingle = function(str) {
-  //irregular
-  if (irregulars.hasOwnProperty(str)) {
+const toSingle = function(str, world) {
+  //check irregulars
+  if (irregulars.hasOwnProperty(str) === true) {
     return irregulars[str];
+  }
+  if (world && world.plurals) {
+    //given irregulars
+    let keys = Object.keys(world.plurals);
+    for (let i = 0; i < keys.length; i++) {
+      if (world.plurals[keys[i]] === str) {
+        return world.plurals[keys[i]];
+      }
+    }
   }
   //inflect first word of preposition-phrase
   if (/([a-z]*) (of|in|by|for) [a-z]/.test(str) === true) {

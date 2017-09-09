@@ -1,8 +1,8 @@
 'use strict';
-const isPlural = require('../../text/subset/nouns/isPlural');
+const isPlural = require('../../subset/nouns/isPlural');
 
 const pluralStep = function(ts) {
-  for(let i = 0; i < ts.terms.length; i++) {
+  for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
     if (t.tags.Noun) {
       //skip existing fast

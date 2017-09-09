@@ -1,6 +1,6 @@
-const adj = require('../text/subset/adjectives/methods');
-const toPlural = require('../text/subset/nouns/methods/pluralize');
-const fastConjugate = require('../text/subset/verbs/methods/conjugate/faster');
+const adj = require('../subset/adjectives/methods');
+const toPlural = require('../subset/nouns/methods/pluralize');
+const fastConjugate = require('../subset/verbs/methods/conjugate/faster');
 
 //inflect 'Singulars', conjugate 'Infinitives', and convert 'Comparables'
 const buildOut = function(lex, options) {

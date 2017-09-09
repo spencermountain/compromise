@@ -1,5 +1,5 @@
 'use strict';
-const isQuestion = require('./subset/sentences/isQuestion');
+const isQuestion = require('../subset/sentences/isQuestion');
 const addSubsets = Text => {
   //these subsets have no instance methods, so are simply a 'find' method.
   const subsets = {

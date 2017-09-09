@@ -1,9 +1,24 @@
-'use strict';
-var nlp = require('./src/index');
+'use strict'
+var nlp = require('./src/index')
 // nlp.verbose('tagger');
-// const fresh = require('./test/unit/lib/freshPrince.js');
+
+let plugin = {
+  words: {},
+  tags: {},
+  regex: {},
+  conjugations: {
+    wook: {
+      past: 'wooked',
+      present: 'wooks'
+    }
+  },
+  plurals: {
+    snail: 'snailii'
+  }
+}
+
 nlp.addRegex({
   aaa: 'Exaggeration'
-});
-let doc = nlp('it is waaaay cool');
-doc.debug();
+})
+let doc = nlp('wook').tag('Infinitive')
+doc.debug()

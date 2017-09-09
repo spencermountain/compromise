@@ -11,14 +11,14 @@ const methods = {
     return makeArticle(this.main);
   },
   isPlural: function() {
-    return isPlural(this.main);
+    return isPlural(this.main, this.world);
   },
   hasPlural: function() {
     return hasPlural(this.main);
   },
   toPlural: function() {
     let t = this.main;
-    if (hasPlural(t) && !isPlural(t)) {
+    if (hasPlural(t) && !isPlural(t, this.world)) {
       t.text = pluralize(t.normal, this.world) || t.text;
       t.unTag('Plural', 'toPlural');
       t.tag('Singular', 'toPlural');
@@ -27,7 +27,7 @@ const methods = {
   },
   toSingular: function() {
     let t = this.main;
-    if (isPlural(t)) {
+    if (isPlural(t, this.world)) {
       t.text = singularize(t.normal, this.world) || t.text;
       t.unTag('Plural', 'toSingular');
       t.tag('Singular', 'toSingular');
@@ -35,12 +35,22 @@ const methods = {
     return this;
   },
   data: function() {
+    let t = this.main;
+    let singular = t.text;
+    if (isPlural(t, this.world)) {
+      singular = singularize(t.normal, this.world) || t.text;
+    }
+    let plural = t.text;
+    if (hasPlural(t) && !isPlural(t, this.world)) {
+      plural = pluralize(t.normal, this.world) || t.text;
+    }
     return {
-      article: this.article(),
       text: this.out('text'),
       normal: this.out('normal'),
-      singular: this.toSingular().out('normal'),
-      plural: this.toPlural().out('normal')
+      article: this.article(),
+      main: t.normal,
+      singular: singular,
+      plural: plural
     };
   }
 };

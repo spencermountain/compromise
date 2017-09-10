@@ -78,3 +78,4 @@ module.exports = {
   toSingle: toSingle,
   toPlural: toPlural
 };
+console.log(toPlural);

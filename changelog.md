@@ -9,9 +9,11 @@ compromise uses semver, and pushes to npm frequently
 ### v11
 ##### 11.0.0
 - support for persistent lexicon/tagset changes
-- `.addTags(obj)` method to extend native tagset
+- `addTags, addWords, addRegs, addPlurals, addConjugations` methods to extend native data
+- - `.plugin()` method to wrap all of these into one
+- - (removal of `.packWords()` method)
 - more `.organizations()` matches
-- regex-support in .match() -   `nlp('it is waaaay cool').match('/aaa/')`
+- regex-support in .match() -   `nlp('it is waaaay cool').match('/aaa/').out()//'waaaay'`
 - improved apostrophe-s disambiguation
 - support whitespace before sentence boundary
 - improved QuestionWord tagging, some `.questions()` without a question-mark

@@ -10,3 +10,23 @@ nlp.plugin(plugin);
 let doc = nlp('saw a mouse');
 doc.nouns().toPlural();
 doc.debug();
+
+plugin = {
+  words: {
+    trex: 'Dinosaur'
+  },
+  tags: {
+    Dinosaur: {
+      isA: 'Animal'
+    },
+    Animal: {
+      isA: 'Noun'
+    }
+  },
+  regex: {
+    'u{3}': 'Exaggeration'
+  }
+};
+nlp.plugin(plugin);
+doc = nlp('i saw a HUUUUGE trex');
+doc.debug();

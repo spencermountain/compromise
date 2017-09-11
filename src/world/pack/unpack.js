@@ -8,7 +8,7 @@ const unpackPrefix = function(str) {
       h[key] = arr[0] + arr[1];
       return h;
     }
-    //otherwise, key is first two..
+    //otherwise, key is combination of first two..
     if (arr[1] !== '') {
       key += arr[1];
     }

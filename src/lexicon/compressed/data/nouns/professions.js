@@ -20,7 +20,6 @@ module.exports = [
   'firefighter',
   'fireman',
   'gardener',
-  'guard',
   'hairdresser',
   'housekeeper',
   'instructor',

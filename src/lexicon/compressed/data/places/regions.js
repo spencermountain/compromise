@@ -32,6 +32,7 @@ module.exports = [
   'new jersey',
   'new mexico',
   'new york',
+  'new york state',
   'north carolina',
   'north dakota',
   'ohio',
@@ -113,7 +114,6 @@ module.exports = [
   'nayarit',
   'nuevo leon',
   'oaxaca',
-  'puebla',
   'queretaro',
   'quintana roo',
   'san luis potosi',
@@ -137,7 +137,6 @@ module.exports = [
   'coventry',
   'cumbria',
   'derbyshire',
-  'devon',
   'dorset',
   'essex',
   'gloucestershire',
@@ -147,7 +146,6 @@ module.exports = [
   'leeds',
   'leicestershire',
   'lincolnshire',
-  'norfolk',
   'north yorkshire',
   'northamptonshire',
   'nottinghamshire',
@@ -161,14 +159,11 @@ module.exports = [
   'tuscany',
   'sicily',
   'basque',
-  'valencia',
   'bavaria',
   'saxony',
   'bremen',
 
   //bangladesh
-  'dhaka',
-  'chittagong',
   'rajshahi',
   'rangpur',
   'khulna',
@@ -185,6 +180,5 @@ module.exports = [
   'santa catarina',
 
   //misc
-  'siberia',
-  'santiago'
+  'siberia'
 ];

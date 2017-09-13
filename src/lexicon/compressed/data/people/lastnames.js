@@ -7,7 +7,6 @@ module.exports = [
   'adams',
   'aleksejev',
   'aliyev',
-  'alonso',
   'alvarez',
   'andersen',
   'anderson',

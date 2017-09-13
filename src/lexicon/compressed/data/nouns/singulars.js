@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 //most nouns do not nead to be listed
 //for whatever reasons, these look like not-nouns
 // //so we make sure that they become nouns
@@ -40,7 +40,6 @@ module.exports = [
   'energy',
   'event',
   'example',
-  'fl oz',
   'friend',
   'funding',
   'glacier',
@@ -75,4 +74,4 @@ module.exports = [
   // 'tomorrow',
   // 'weekend',
   // 'tonight'
-]
+];

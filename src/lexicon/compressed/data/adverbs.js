@@ -24,7 +24,6 @@ module.exports = [
   'away',
   'by far',
   'by now',
-  'damn',
   'de jure',
   'de trop',
   'definitely',
@@ -86,4 +85,4 @@ module.exports = [
   'yes',
   'yep',
   'not only'
-]
+];

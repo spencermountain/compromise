@@ -8,7 +8,7 @@ const mapping = {
   ft: 'FuturePerfect',
   ac: 'Actor',
   g: 'Gerund'
-}
+};
 let irreg = {
   take: {
     pe: 'have taken',
@@ -168,6 +168,9 @@ let irreg = {
   },
   forbid: {
     ps: 'forbade'
+  },
+  edit: {
+    g: 'editing'
   },
   forget: {
     g: 'forgeting',
@@ -661,25 +664,25 @@ let irreg = {
   wring: {
     pa: 'wrung'
   }
-}
+};
 
 //swap-in better tag keys, accumulate all words for lexicon
-let lex = {}
-let keys = Object.keys(irreg)
+let lex = {};
+let keys = Object.keys(irreg);
 for (let i = 0; i < keys.length; i++) {
-  let newObj = {}
-  let inf = keys[i]
-  let tags = Object.keys(irreg[inf])
+  let newObj = {};
+  let inf = keys[i];
+  let tags = Object.keys(irreg[inf]);
   for (let o = 0; o < tags.length; o++) {
-    let newTag = mapping[tags[o]]
-    let str = irreg[inf][tags[o]]
-    newObj[newTag] = str
-    lex[str] = newTag
+    let newTag = mapping[tags[o]];
+    let str = irreg[inf][tags[o]];
+    newObj[newTag] = str;
+    lex[str] = newTag;
   }
-  lex[inf] = 'Infinitive'
-  irreg[inf] = newObj
+  lex[inf] = 'Infinitive';
+  irreg[inf] = newObj;
 }
 module.exports = {
   lexicon: lex,
   irregulars: irreg
-}
+};

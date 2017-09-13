@@ -1,6 +1,6 @@
 'use strict';
 var nlp = require('./src/index');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 // let plugin = {
 //   plurals: {
 //     mouse: 'mousii'
@@ -32,4 +32,8 @@ nlp.verbose('tagger');
 // doc.debug();
 
 // nlp('restore').debug();
-nlp('Mark Spenser').debug();
+console.log(
+  nlp('edit')
+    .verbs()
+    .conjugate()[0].Gerund
+);

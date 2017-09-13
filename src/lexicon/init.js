@@ -38,7 +38,7 @@ lex['will be'] = ['Copula', 'FutureTense'];
 lex['close'] = 'Adjective';
 lex['can'] = 'Modal';
 
-console.log(lex['mark']);
+// console.log(lex['mark']);
 
 //collect first-of-multi words for quicker lookup
 let firstWords = indexFirst(lex);

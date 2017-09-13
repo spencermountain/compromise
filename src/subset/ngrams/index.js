@@ -45,14 +45,20 @@ const methods = {
   }
 };
 
-const find = function(r, n, size) {
-  let opts = {
-    size: [1, 2, 3, 4]
-  };
-  //only look for bigrams, for example
-  if (size) {
-    opts.size = [size];
+const find = function(r, obj) {
+  let sizes = [];
+  obj = obj || {};
+  let max = obj.max || 4;
+  for (var i = 1; i <= max; i++) {
+    sizes.push(i);
   }
+  //only look for bigrams, for example
+  if (obj.size) {
+    sizes = [obj.size];
+  }
+  let opts = {
+    size: sizes
+  };
   //fetch them
   let arr = getGrams(r, opts);
   r = new Text(arr);

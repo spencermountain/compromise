@@ -19,6 +19,7 @@ compromise uses semver, and pushes to npm frequently
 - improved QuestionWord tagging, some `.questions()` without a question-mark
 - phrasalVerb conjugation
 - new #Activity tag for Gerunds as nouns 'walking is fun'
+- change ngram params to an object `{size:int, max:int}`
 <!-- * include 'the #TitleCase' matches in .topics() -->
 
 ### v10

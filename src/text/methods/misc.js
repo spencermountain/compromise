@@ -15,6 +15,34 @@ const miscMethods = Text => {
     data: function() {
       return this.list.map(ts => ts.data());
     },
+    /* javascript array loop-wrappers */
+    map: function(fn) {
+      return this.list.map((ts, i) => {
+        let text = new Text([ts], this.world);
+        return fn(text, i);
+      });
+    },
+    forEach: function(fn) {
+      this.list.forEach((ts, i) => {
+        let text = new Text([ts], this.world);
+        fn(text, i);
+      });
+      return this;
+    },
+    filter: function(fn) {
+      let list = this.list.filter((ts, i) => {
+        let text = new Text([ts], this.world);
+        return fn(text, i);
+      });
+      return new Text(list, this.world);
+    },
+    reduce: function(fn, h) {
+      return this.list.reduce((_h, ts) => {
+        let text = new Text([ts], this.world);
+        return fn(_h, text);
+      }, h);
+    },
+
     /**copy data properly so later transformations will have no effect*/
     clone: function() {
       let list = this.list.map(ts => {

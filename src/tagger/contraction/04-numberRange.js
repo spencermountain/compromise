@@ -2,8 +2,8 @@
 const fixContraction = require('./fix');
 const Term = require('../../term');
 
-const numberRange = (ts) => {
-  for(let i = 0; i < ts.terms.length; i++) {
+const numberRange = ts => {
+  for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
     //skip existing
     if (t.silent_term) {
@@ -28,7 +28,7 @@ const numberRange = (ts) => {
       ts = fixContraction(ts, arr, i);
       ts.terms[i].tag('NumericValue', 'numRange-1');
       ts.terms[i + 1].tag('Preposition', 'numRange-silent');
-      ts.terms[i + 2].tag(['NumericValue', 'numRange-3']);
+      ts.terms[i + 2].tag('NumericValue', 'numRange-3');
       i += 2;
     }
   }

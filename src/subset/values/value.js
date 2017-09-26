@@ -17,7 +17,6 @@ const fmt = require('./format');
 
 const parseValue = function(ts) {
   ts.val = ts.match('#Value+');
-  // ts.val.debug();
   // ts.val = unpackRange(ts.val);
   ts.val = ts.val.list[0];
   ts.unit = ts.match('#Unit+');

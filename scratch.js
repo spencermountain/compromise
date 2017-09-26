@@ -16,5 +16,6 @@ var nlp = require('./src/index');
 // });
 // console.log(commands);
 
+//todo: test this
 nlp('a 1-1 meeting.').values();
-// nlp('a five to one meeting.').debug();
+nlp('a 1-1 meeting.').values().toText().debug();

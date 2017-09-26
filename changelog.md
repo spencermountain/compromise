@@ -20,6 +20,7 @@ compromise uses semver, and pushes to npm frequently
 - phrasalVerb conjugation
 - new #Activity tag for Gerunds as nouns 'walking is fun'
 - change ngram params to an object `{size:int, max:int}`
+- implement early '$1' capture-group syntax in .replace()
 <!-- * include 'the #TitleCase' matches in .topics() -->
 
 ### v10

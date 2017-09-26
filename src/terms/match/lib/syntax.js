@@ -20,6 +20,12 @@ const parse_term = function(term) {
   let reg = {};
   //order matters here
 
+  //support [#Noun] capture-group syntax
+  if (term.charAt(0) === '[' && term.charAt(term.length - 1) === ']') {
+    term = noLast(term);
+    term = noFirst(term);
+    reg.capture = true;
+  }
   //1-character hasta be a text-match
   if (term.length === 1 && term !== '.' && term !== '*') {
     reg.normal = term;

@@ -9,6 +9,11 @@ const replaceMethods = Terms => {
       if (str2 === undefined) {
         return this.replaceWith(str1, keepTags);
       }
+      //support capture-group syntax
+      if (str2.match(/\$1\b/)) {
+        let found = this.match(str1).out('text');
+        str2 = str2.replace(/\$1\b/g, found);
+      }
       this.match(str1).replaceWith(str2, keepTags);
       return this;
     },

@@ -59,3 +59,21 @@ test('js-loop-forEach', function(t) {
   t.equal(arr[2], 'after', 'after-first');
   t.end();
 });
+
+test('js-loop-find', function(t) {
+  var text = 'oh hello. please turn on the lights and then take out the garbage too. After that, play some music.';
+  var doc = nlp(text);
+  t.equal(doc.list.length, 3, 'before-filter');
+  var doc2 = doc.find(m => {
+    return m.terms(0).out('normal') === 'after';
+  });
+  t.equal(doc.list.length, 3, 'same-after-filter');
+  t.equal(doc2.list.length, 1, 'found one');
+  t.equal(doc2.out(), 'After that, play some music.', 'found the right one');
+
+  var doc3 = doc.find(m => {
+    return m.terms(0).out('normal') === 'missing term';
+  });
+  t.equal(doc3, undefined, 'missing value returns undefined');
+  t.end();
+});

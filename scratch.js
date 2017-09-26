@@ -7,11 +7,7 @@ var doc = nlp(text);
 //basic template for 'take out the garbage'
 // var matches = doc.match('#Verb+ (the|some|a|an) #Noun');
 
-var list = doc.reduce((arr, m) => {
-  arr.push(m.terms(0).out('normal'));
-  return arr;
-}, []);
-console.log(list);
+console.log(nlp('Larry, Curly, and Moe').people().filter(m => m.out('normal') === 'larry').length);
 //todo: test this
 // nlp('a 1-1 meeting.').values();
 // nlp('a 1-1 meeting.').values().toText().debug();

@@ -21,6 +21,7 @@ compromise uses semver, and pushes to npm frequently
 - new #Activity tag for Gerunds as nouns 'walking is fun'
 - change ngram params to an object `{size:int, max:int}`
 - implement early '$1' capture-group syntax in .replace()
+- bring-back `map, filter, foreach and reduce` methods
 <!-- * include 'the #TitleCase' matches in .topics() -->
 
 ### v10

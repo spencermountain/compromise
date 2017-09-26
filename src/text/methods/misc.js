@@ -42,7 +42,16 @@ const miscMethods = Text => {
         return fn(_h, text);
       }, h);
     },
-
+    find: function(fn) {
+      for (let i = 0; i < this.list.length; i++) {
+        let ts = this.list[i];
+        let text = new Text([ts], this.world);
+        if (fn(text)) {
+          return text;
+        }
+      }
+      return undefined;
+    },
     /**copy data properly so later transformations will have no effect*/
     clone: function() {
       let list = this.list.map(ts => {

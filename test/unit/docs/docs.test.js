@@ -11,7 +11,12 @@ test('generic-methods-run:', function(t) {
   var skip = {
     whitespace: true,
     insertAt: true,
-    debug: true //too noisy
+    debug: true, //too noisy
+    forEach: true,
+    filter: true,
+    map: true,
+    find: true,
+    reduce: true,
   };
   var needString = {
     insertBefore: true,

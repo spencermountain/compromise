@@ -11,8 +11,13 @@ const replaceMethods = Terms => {
       }
       //support capture-group syntax
       if (str2.match(/\$1\b/)) {
-        let found = this.match(str1).out('text');
-        str2 = str2.replace(/\$1\b/g, found);
+        //this is not very smart and should be better supported:
+        let captureGroup = str1.match(/\[(.+?)\]/);
+        if (captureGroup && captureGroup[1]) {
+          let found = this.match(str1).match(captureGroup[1]);
+          found = found.out('text').trim();
+          str2 = str2.replace(/\$1\b/g, found);
+        }
       }
       this.match(str1).replaceWith(str2, keepTags);
       return this;

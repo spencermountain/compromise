@@ -10,5 +10,12 @@ test('match-capture-group', function(t) {
 
   m = nlp('John Smith eats glue').replace('[#Person+]', 'dr. $1');
   t.equal(m.out('text'), 'dr. John Smith eats glue', 'capture-two');
+
+  m = nlp('ralf eats the glue').replace('ralf [#Verb]', 'he $1');
+  t.equal(m.out('text'), 'he eats the glue', 'simple subset');
+
+  m = nlp('John eats the glue').replace('the [#Noun]', 'the cyber-$1');
+  t.equal(m.out('text'), 'John eats the cyber-glue', 'capture-group as subset');
+
   t.end();
 });

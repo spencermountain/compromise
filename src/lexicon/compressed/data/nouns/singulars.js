@@ -51,6 +51,7 @@ module.exports = [
   'lunch',
   'nothing',
   'number',
+  'meeting',
   'others',
   'part',
   'patent',
@@ -69,9 +70,9 @@ module.exports = [
   // 'things',
   'tragedy',
   'us dollar'
-  // 'yesterday',
-  // 'today',
-  // 'tomorrow',
-  // 'weekend',
-  // 'tonight'
+// 'yesterday',
+// 'today',
+// 'tomorrow',
+// 'weekend',
+// 'tonight'
 ];

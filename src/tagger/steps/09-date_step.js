@@ -121,7 +121,7 @@ const datePass = function (ts) {
     ts.match('for #Value #Duration').tag('Date', 'for-x-duration');
     //values
     ts.match('#Value #Abbreviation').tag('Value', 'value-abbr');
-    ts.match('a #Value').tag('Value', 'a-value');
+    ts.match('a #Value').if('(hundred|thousand|million|billion|trillion)').tag('Value', 'a-value');
     ts.match('(minus|negative) #Value').tag('Value', 'minus-value');
     ts.match('#Value grand').tag('Value', 'value-grand');
     // ts.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');//not ready

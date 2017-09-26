@@ -17,8 +17,8 @@ const corrections = function(ts) {
     ts.match('#Verb #Adverb? #Noun (that|which)').lastTerm().tag('Preposition', 'that-prep');
     //that car goes
     ts.match('that #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner');
-    //things that provide
-    // ts.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
+  //things that provide
+  // ts.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
   }
   //Determiner-signals
   if (ts.has('#Determiner')) {
@@ -155,8 +155,8 @@ const corrections = function(ts) {
       ts.match(`(#Modal) ${advb} be ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'would-be');
       //would been walking
       ts.match(`(#Modal|had|has) ${advb} been ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'would-be');
-      //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
-      // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
+    //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
+    // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
     }
     //fall over
     ts.match('#PhrasalVerb #PhrasalVerb').lastTerm().tag('Particle', 'phrasal-particle');
@@ -198,8 +198,8 @@ const corrections = function(ts) {
   ts.match('#Value (foot|feet)').term(1).tag('Unit', 'foot-unit');
   //'u' as pronoun
   ts.match('#Conjunction u').term(1).tag('Pronoun', 'u-pronoun-2');
-  //'a/an' can mean 1
-  ts.match('(a|an) (#Duration|#Value)').ifNo('#Plural').term(0).tag('Value', 'a-is-one');
+  //'a/an' can mean 1 - "a hour"
+  ts.match('(a|an) (#Duration|hundred|thousand|million|billion|trillion)').ifNo('#Plural').term(0).tag('Value', 'a-is-one');
   //swear-words as non-expression POS
   //nsfw
   ts.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression');

@@ -4,20 +4,21 @@ const Terms = paths.Terms;
 const parse = require('./parse');
 const fmt = require('./format');
 
-const unpackRange = function(ts) {
-  if (ts.has('#NumberRange')) {
-    ts.terms.forEach(t => {
-      if (t.silent_term && !t._text) {
-        t.text = t.silent_term;
-      }
-    });
-  }
-  return ts;
-};
+// const unpackRange = function(ts) {
+//   if (ts.has('#NumberRange')) {
+//     ts.terms.forEach(t => {
+//       if (t.silent_term && !t._text) {
+//         t.text = t.silent_term;
+//       }
+//     });
+//   }
+//   return ts;
+// };
 
 const parseValue = function(ts) {
   ts.val = ts.match('#Value+');
-  ts.val = unpackRange(ts.val);
+  // ts.val.debug();
+  // ts.val = unpackRange(ts.val);
   ts.val = ts.val.list[0];
   ts.unit = ts.match('#Unit+');
   if (ts.unit.found) {

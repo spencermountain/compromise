@@ -1,5 +1,5 @@
 var nlp = require('./src/index');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 
 // var text = 'oh hello. please turn on the lights and then take out the garbage too. After that, play some music.';
 //
@@ -16,5 +16,5 @@ nlp.verbose('tagger');
 // });
 // console.log(commands);
 
-nlp('a 1-1 meeting.').debug().values();
+nlp('a 1-1 meeting.').values();
 // nlp('a five to one meeting.').debug();

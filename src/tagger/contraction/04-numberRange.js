@@ -26,9 +26,9 @@ const numberRange = ts => {
       let arr = t.text.split(/(-)/);
       arr[1] = 'to';
       ts = fixContraction(ts, arr, i);
-      ts.terms[i].tag('NumericValue', 'numRange-1');
-      ts.terms[i + 1].tag('Preposition', 'numRange-silent');
-      ts.terms[i + 2].tag('NumericValue', 'numRange-3');
+      ts.terms[i].tag(['NumberRange', 'NumericValue'], 'numRange-1');
+      ts.terms[i + 1].tag(['NumberRange', 'Preposition'], 'numRange-silent');
+      ts.terms[i + 2].tag(['NumberRange', 'NumericValue'], 'numRange-3');
       i += 2;
     }
   }

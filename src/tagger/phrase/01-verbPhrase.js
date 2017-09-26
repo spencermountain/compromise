@@ -3,8 +3,9 @@
 const verbPhrase = function (ts) {
   if (ts.has('(#Verb|#Auxiliary)')) {
     ts.match('#Verb').tag('VerbPhrase', 'verbphrase-verb');
-    //was quickly
+    //quickly was
     ts.match('#Adverb #Verb').tag('VerbPhrase', 'adverb-verb');
+    //was quickly
     ts.match('#Verb #Adverb').tag('VerbPhrase', 'verb-adverb');
     //is not
     ts.match('#Verb #Negative').tag('VerbPhrase', 'verb-not');

@@ -2,7 +2,7 @@
 const buildText = require('./text/build');
 const pkg = require('../package.json');
 const log = require('./log');
-const pack = require('efrt').pack;
+const unpack = require('compromise-unpack');
 const World = require('./world');
 
 let w = new World();
@@ -21,26 +21,44 @@ nlp.tokenize = function(str) {
   return buildText(str);
 };
 
-//contribute words to the lexicon
-nlp.addWords = function(lex) {
-  w.addWords(lex);
-};
-nlp.addTags = function(tags) {
-  w.addTags(tags);
-};
-nlp.addRegex = function(regs) {
-  w.addRegex(regs);
-};
-nlp.addPlurals = function(obj) {
-  w.addPlurals(obj);
-};
-nlp.addConjugations = function(obj) {
-  w.addConjugations(obj);
-};
-nlp.plugin = function(obj) {
+//uncompress user-submitted lexicon
+nlp.plugin = function(plugin) {
+  let obj = unpack(plugin);
   w.plugin(obj);
 };
+//contribute words to the lexicon
+nlp.addWords = function(lex) {
+  let tmp = unpack({
+    words: lex
+  });
+  w.plugin(tmp);
+};
+nlp.addTags = function(tags) {
+  let tmp = unpack({
+    tags: tags
+  });
+  w.plugin(tmp);
+};
+nlp.addRules = function(rules) {
+  let tmp = unpack({
+    rules: rules
+  });
+  w.plugin(tmp);
+};
+nlp.addPlurals = function(plurals) {
+  let tmp = unpack({
+    plurals: plurals
+  });
+  w.plugin(tmp);
+};
+nlp.addConjugations = function(conj) {
+  let tmp = unpack({
+    conjugations: conj
+  });
+  w.plugin(tmp);
+};
 
+//clone the 'world'
 nlp.clone = function() {
   w = w.clone();
   return nlp;
@@ -54,16 +72,6 @@ nlp.verbose = function(str) {
   log.enable(str);
 };
 
-//compress user-submitted lexicon
-nlp.pack = function(obj) {
-  return JSON.stringify(pack(obj));
-};
-//uncompress user-submitted lexicon
-nlp.unpack = function(str) {
-  let obj = JSON.parse(str);
-  obj = efrt.unpack(obj);
-  return obj;
-};
 
 //and then all-the-exports...
 if (typeof self !== 'undefined') {

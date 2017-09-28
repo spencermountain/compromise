@@ -1,10 +1,12 @@
-const efrt = require('efrt');
+const unpack = require('compromise-unpack');
 const buildOut = require('./buildOut');
 const indexFirst = require('./firstWords');
 
 //unpack a user-given lexicon
 const unpackLex = function(pckd) {
-  let lex = efrt.unpack(pckd);
+  let lex = unpack({
+    words: pckd
+  }).words;
 
   lex = buildOut(lex);
 

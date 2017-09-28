@@ -1,6 +1,6 @@
 const firstWords = require('../lexicon/firstWords');
 const buildOut = require('../lexicon/buildOut');
-const efrt = require('efrt');
+const unpack = require('compromise-unpack');
 const normalize = require('../term/methods/normalize/normalize').normalize;
 
 //cleanup a directly-entered user lexicon.
@@ -22,8 +22,9 @@ const normalizeLex = function(lex) {
 const unpackLex = function(lex) {
   lex = lex || {};
   if (typeof lex === 'string') {
-    lex = JSON.parse(lex);
-    lex = efrt.unpack(lex);
+    lex = unpack({
+      words: lex
+    }).words;
   } else {
     lex = normalizeLex(lex);
   }

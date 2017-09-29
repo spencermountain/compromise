@@ -2,11 +2,14 @@
 const buildText = require('./text/build');
 const pkg = require('../package.json');
 const log = require('./log');
-const unpack = require('compromise-unpack');
+const unpack = require('./world/unpack');
 const World = require('./world');
 
 let w = new World();
-//the main thing
+console.log(w.words.Singular);
+console.log(w.words.quick);
+
+//the main function
 const nlp = function(str, lex) {
   if (lex) {
     w.addWords(lex);
@@ -62,6 +65,10 @@ nlp.addConjugations = function(conj) {
 nlp.clone = function() {
   w = w.clone();
   return nlp;
+};
+//this is used, atleast, for testing the packing
+nlp.unpack = function(plugin) {
+  return unpack(plugin);
 };
 
 //this is handy

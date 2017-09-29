@@ -1,13 +1,9 @@
 const addWords = require('./addWords');
-const addRegex = require('./addRegex');
-const addTags = require('./addTags');
-const addPlurals = require('./addPlurals');
-const addConjugations = require('./addConjugations');
 const fns = require('../fns');
 let lexicon = require('../lexicon/init');
 let tagset = require('../tagset');
 let regex = require('./rules');
-let plurals = require('../lexicon/uncompressed/irregularPlurals').toPlural;
+let defaultPlurals = require('../lexicon/uncompressed/irregularPlurals').toPlural;
 
 //'class World{}'
 let World = function() {
@@ -17,14 +13,49 @@ let World = function() {
   this.regex = regex;
 
   this.conjugations = {};
-  this.plurals = plurals;
+  this.plurals = defaultPlurals;
 };
 
 World.prototype.addWords = addWords;
-World.prototype.addRegex = addRegex;
-World.prototype.addTags = addTags;
-World.prototype.addPlurals = addPlurals;
-World.prototype.addConjugations = addConjugations;
+
+World.prototype.addRegex = function(obj) {
+  obj = obj || {};
+  let keys = Object.keys(obj);
+  for (var i = 0; i < keys.length; i++) {
+    let reg = new RegExp(keys[i], 'i');
+    this.regex.push({
+      reg: reg,
+      tag: obj[keys[i]]
+    });
+  }
+};
+World.prototype.addTags = function(tags) {
+  Object.keys(tags || {}).forEach(k => {
+    tags[k].isA = tags[k].isA || [];
+    tags[k].notA = tags[k].notA || [];
+    this.tagset[k] = tags[k];
+  });
+  addDownward(this.tagset);
+};
+
+World.prototype.addPlurals = function(plurals) {
+  Object.keys(plurals || {}).forEach(k => {
+    this.plurals[k] = plurals[k];
+    //add them both to the lexicon, too
+    let plural = plurals[k];
+    this.words[k] = this.words[k] || 'Singular';
+    this.words[plural] = this.words[plural] || 'Plural';
+  });
+};
+World.prototype.addConjugations = function(conjugations) {
+  Object.keys(conjugations || {}).forEach(k => {
+    this.conjugations[k] = conjugations[k];
+    //add them both to the lexicon, too
+    // let plural = plurals[k];
+    this.words[k] = this.words[k] || 'Infinitive';
+  // this.words[plural] = this.words[plural] || 'Plural';
+  });
+};
 
 World.prototype.clone = function() {
   let w2 = new World();

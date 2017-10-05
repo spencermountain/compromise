@@ -3,9 +3,8 @@ const buildText = require('./text/build');
 const pkg = require('../package.json');
 const log = require('./log');
 const unpack = require('./world/unpack');
-const World = require('./world');
+const w = require('./world');
 
-let w = new World();
 
 //the main function
 const nlp = function(str, lex) {

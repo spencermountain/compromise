@@ -15,7 +15,7 @@ var data = require('../data');
 var pckd = nlpPlugin.pack(data);
 console.log(pckd);
 
-fs.writeFileSync(out, 'module.exports="' + pckd + '"', 'utf8');
+fs.writeFileSync(out, 'module.exports=`' + pckd + '`', 'utf8');
 
 // console.log(chalk.blue('\n\n      ' + Object.keys(data.words).length + ' words'));
 console.log(chalk.blue('       - packed into -    ' + fileSize(out) + 'k\n'));

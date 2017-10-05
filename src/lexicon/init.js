@@ -1,6 +1,6 @@
 //lexicon in compressed form
 const pckd = require('./compressed/_compressed');
-const unpack = require('compromise-unpack');
+const unpack = require('efrt-unpack');
 const buildOut = require('./buildOut');
 const indexFirst = require('./firstWords');
 
@@ -23,10 +23,7 @@ const addToLex = function(lex, obj) {
     }
   }
 };
-
-let lex = unpack({
-  words: pckd
-}).words;
+let lex = unpack(pckd);
 
 uncompressed.forEach(obj => addToLex(lex, obj));
 

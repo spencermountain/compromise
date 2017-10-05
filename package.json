@@ -17,7 +17,7 @@
     "benchmark": "node ./scripts/benchmark.js",
     "build": "node ./scripts/build/index.js",
     "pack": "node ./scripts/pack.js",
-    "prepublish": "node ./scripts/prepublish",
+    "prepublishOnly": "node ./scripts/prepublish",
     "postpublish": "node ./scripts/postpublish",
     "demo": "node ./scripts/demo.js",
     "watch": "node ./scripts/watch.js",
@@ -30,9 +30,10 @@
     "docs/"
   ],
   "dependencies": {
-    "compromise-unpack": "0.0.4"
+    "efrt-unpack": "2.0.1"
   },
   "devDependencies": {
+    "efrt": "2.0.1",
     "babelify": "7.3.0",
     "babel-preset-es2015": "^6.24.0",
     "babili": "0.0.11",

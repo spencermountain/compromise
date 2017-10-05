@@ -417,7 +417,7 @@ let irreg = {
     pr: 'miss'
   },
   act: {
-    ac: 'ac'
+    ac: 'actor'
   },
   compete: {
     g: 'competing',

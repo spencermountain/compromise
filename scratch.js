@@ -8,6 +8,10 @@ var nlp = require('./src/index');
 doc = nlp('quick');
 doc.debug();
 
+// nlp('i want to pull out cash').debug();
+// nlp('i pulled out the wagon').debug();
+
+
 // doc = nlp('pull out');
 // doc.debug();
 

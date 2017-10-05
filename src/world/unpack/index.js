@@ -1,36 +1,42 @@
-var efrtUnpack = require('efrt-unpack');
-
-var unpackPlurals = function(str) {
-  return str.split(/,/g).reduce((h, s) => {
-    var arr = s.split(/\|/g);
-    if (arr.length === 3) {
-      h[arr[0] + arr[1]] = arr[0] + arr[2];
-    } else if (arr.length === 2) {
-      h[arr[0]] = arr[0] + arr[1];
-    } else {
-      h[arr[0]] = arr[0];
-    }
-    return h;
-  }, {});
+var unpack = {
+  words: require('efrt-unpack'),
+  plurals: require('./plurals'),
+  conjugations: require('./conjugations'),
+  keyValue: require('./key-value')
 };
+/*
+ == supported plugin fields ==
+  name
+  words        - efrt packed
+  tags         - stringified
+  regex        - key-value
+  patterns     - key-value
+  plurals      - plural-unpack
+  conjugations - conjugation-unpack
+*/
 
-var unpack = function(obj) {
-  if (typeof obj === 'string') {
-    obj = JSON.parse(obj);
-  }
+var unpackPlugin = function(str) {
+  let obj = JSON.parse(str);
   //words is packed with efrt
   if (obj.words && typeof obj.words === 'string') {
-    obj.words = efrtUnpack(obj.words);
+    obj.words = unpack.words(obj.words);
   }
-  //tags are just stringified
-  if (obj.tags && typeof obj.tags === 'string') {
-    obj.tags = JSON.parse(obj.tags);
+  //patterns is pivoted as key-value
+  if (obj.patterns) {
+    obj.patterns = unpack.keyValue(obj.patterns);
   }
-
-  //plurals is packed in a weird way
+  //regex, too
+  if (obj.regex) {
+    obj.regex = unpack.keyValue(obj.regex);
+  }
+  //plurals is packed in a ad-hoc way
   if (obj.plurals && typeof obj.plurals === 'string') {
-    obj.plurals = unpackPlurals(obj.plurals);
+    obj.plurals = unpack.plurals(obj.plurals);
+  }
+  //conjugations is packed in another ad-hoc way
+  if (obj.conjugations && typeof obj.conjugations === 'string') {
+    obj.conjugations = unpack.conjugations(obj.conjugations);
   }
   return obj;
 };
-module.exports = unpack;
+module.exports = unpackPlugin;

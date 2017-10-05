@@ -6,8 +6,6 @@ const unpack = require('./world/unpack');
 const World = require('./world');
 
 let w = new World();
-console.log(w.words.Singular);
-console.log(w.words.quick);
 
 //the main function
 const nlp = function(str, lex) {
@@ -42,9 +40,9 @@ nlp.addTags = function(tags) {
   });
   w.plugin(tmp);
 };
-nlp.addRules = function(rules) {
+nlp.addRegex = function(regex) {
   let tmp = unpack({
-    rules: rules
+    regex: regex
   });
   w.plugin(tmp);
 };

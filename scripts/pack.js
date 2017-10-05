@@ -14,7 +14,7 @@ var out = path.join(__dirname, '../src/lexicon/compressed/_compressed.js');
 var lex = require('../src/lexicon/compressed');
 var pckd = efrt.pack(lex);
 
-fs.writeFileSync(out, 'module.exports=' + pckd, 'utf8');
+fs.writeFileSync(out, 'module.exports="' + pckd + '"', 'utf8');
 
 console.log(chalk.blue('\n\n      ' + Object.keys(lex).length + ' words'));
 console.log(chalk.blue('       - packed into -    ' + fileSize(out) + 'k\n'));

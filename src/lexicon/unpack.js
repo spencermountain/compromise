@@ -1,9 +1,10 @@
-const unpack = require('compromise-unpack');
+const unpack = require('../world/unpack');
 const buildOut = require('./buildOut');
 const indexFirst = require('./firstWords');
 
 //unpack a user-given lexicon
 const unpackLex = function(pckd) {
+  // console.log(pckd);
   let lex = unpack({
     words: pckd
   }).words;

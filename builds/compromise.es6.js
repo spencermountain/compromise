@@ -4,783 +4,366 @@
 */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.nlp = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 (function (global){
-/* efrt trie-compression v1.1.1  github.com/nlp-compromise/efrt  - MIT */
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.efrt = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
-'use strict';
-
-var BASE = 36;
-
-var seq = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-var cache = seq.split('').reduce(function (h, c, i) {
-  h[c] = i;
-  return h;
-}, {});
-
-// 0, 1, 2, ..., A, B, C, ..., 00, 01, ... AA, AB, AC, ..., AAA, AAB, ...
-var toAlphaCode = function toAlphaCode(n) {
-  if (seq[n] !== undefined) {
-    return seq[n];
-  }
-  var places = 1;
-  var range = BASE;
-  var s = '';
-
-  for (; n >= range; n -= range, places++, range *= BASE) {}
-  while (places--) {
-    var d = n % BASE;
-    s = String.fromCharCode((d < 10 ? 48 : 55) + d) + s;
-    n = (n - d) / BASE;
-  }
-  return s;
-};
-
-var fromAlphaCode = function fromAlphaCode(s) {
-  if (cache[s] !== undefined) {
-    return cache[s];
-  }
-  var n = 0;
-  var places = 1;
-  var range = BASE;
-  var pow = 1;
-
-  for (; places < s.length; n += range, places++, range *= BASE) {}
-  for (var i = s.length - 1; i >= 0; i--, pow *= BASE) {
-    var d = s.charCodeAt(i) - 48;
-    if (d > 10) {
-      d -= 7;
-    }
-    n += d * pow;
-  }
-  return n;
-};
-
-module.exports = {
-  toAlphaCode: toAlphaCode,
-  fromAlphaCode: fromAlphaCode
-};
-
-},{}],2:[function(_dereq_,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.nlpUnpack = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 (function (global){
-'use strict';
-
-var efrt = {
-  pack: _dereq_('./pack/index'),
-  unpack: _dereq_('./unpack/index')
-};
-
-//and then all-the-exports...
-if (typeof self !== 'undefined') {
-  self.efrt = efrt; // Web Worker
-} else if (typeof window !== 'undefined') {
-  window.efrt = efrt; // Browser
-} else if (typeof global !== 'undefined') {
-  global.efrt = efrt; // NodeJS
-}
-//don't forget amd!
-if (typeof define === 'function' && define.amd) {
-  define(efrt);
-}
-//then for some reason, do this too!
-if (typeof module !== 'undefined') {
-  module.exports = efrt;
-}
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)});
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./pack/index":5,"./unpack/index":9}],3:[function(_dereq_,module,exports){
-'use strict';
+},{}],2:[function(_dereq_,module,exports){
+var efrtUnpack = _dereq_('efrt-unpack');
 
-var commonPrefix = function commonPrefix(w1, w2) {
-  var len = Math.min(w1.length, w2.length);
-  while (len > 0) {
-    var prefix = w1.slice(0, len);
-    if (prefix === w2.slice(0, len)) {
-      return prefix;
+var unpackPlurals = function(str) {
+  return str.split(/,/g).reduce((h, s) => {
+    var arr = s.split(/\|/g)
+    if (arr.length == 3) {
+      h[arr[0] + arr[1]] = arr[0] + arr[2]
+    } else if (arr.length == 2) {
+      h[arr[0]] = arr[0] + arr[1]
+    } else {
+      h[arr[0]] = arr[0]
     }
-    len -= 1;
-  }
-  return '';
-};
-
-/* Sort elements and remove duplicates from array (modified in place) */
-var unique = function unique(a) {
-  a.sort();
-  for (var i = 1; i < a.length; i++) {
-    if (a[i - 1] === a[i]) {
-      a.splice(i, 1);
-    }
-  }
-};
-
-module.exports = {
-  commonPrefix: commonPrefix,
-  unique: unique
-};
-
-},{}],4:[function(_dereq_,module,exports){
-'use strict';
-
-var Histogram = function Histogram() {
-  this.counts = {};
-};
-
-var methods = {
-  init: function init(sym) {
-    if (this.counts[sym] === undefined) {
-      this.counts[sym] = 0;
-    }
-  },
-  add: function add(sym, n) {
-    if (n === undefined) {
-      n = 1;
-    }
-    this.init(sym);
-    this.counts[sym] += n;
-  },
-  countOf: function countOf(sym) {
-    this.init(sym);
-    return this.counts[sym];
-  },
-  highest: function highest(top) {
-    var sorted = [];
-    var keys = Object.keys(this.counts);
-    for (var i = 0; i < keys.length; i++) {
-      var sym = keys[i];
-      sorted.push([sym, this.counts[sym]]);
-    }
-    sorted.sort(function (a, b) {
-      return b[1] - a[1];
-    });
-    if (top) {
-      sorted = sorted.slice(0, top);
-    }
-    return sorted;
-  }
-};
-Object.keys(methods).forEach(function (k) {
-  Histogram.prototype[k] = methods[k];
-});
-module.exports = Histogram;
-
-},{}],5:[function(_dereq_,module,exports){
-'use strict';
-
-var Trie = _dereq_('./trie');
-
-var isArray = function isArray(input) {
-  return Object.prototype.toString.call(input) === '[object Array]';
-};
-
-var handleFormats = function handleFormats(input) {
-  //null
-  if (input === null || input === undefined) {
-    return {};
-  }
-  //string
-  if (typeof input === 'string') {
-    return input.split(/ +/g).reduce(function (h, str) {
-      h[str] = true;
-      return h;
-    }, {});
-  }
-  //array
-  if (isArray(input)) {
-    return input.reduce(function (h, str) {
-      h[str] = true;
-      return h;
-    }, {});
-  }
-  //object
-  return input;
-};
-
-//turn an array into a compressed string
-var pack = function pack(obj) {
-  obj = handleFormats(obj);
-  //pivot into categories:
-  var flat = Object.keys(obj).reduce(function (h, k) {
-    var val = obj[k];
-    //array version-
-    //put it in several buckets
-    if (isArray(val)) {
-      for (var i = 0; i < val.length; i++) {
-        h[val[i]] = h[val[i]] || [];
-        h[val[i]].push(k);
-      }
-      return h;
-    }
-    //normal string/boolean version
-    h[val] = h[val] || [];
-    h[val].push(k);
     return h;
   }, {});
-  //pack each into a compressed string
-  Object.keys(flat).forEach(function (k) {
-    var t = new Trie(flat[k]);
-    flat[k] = t.pack();
-  });
-  flat = JSON.stringify(flat, null, 0);
-  return flat;
-};
-module.exports = pack;
+}
 
-},{"./trie":8}],6:[function(_dereq_,module,exports){
-'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var fns = _dereq_('./fns');
-var _pack = _dereq_('./pack');
-var NOT_ALLOWED = new RegExp('[0-9A-Z,;!]'); //characters banned from entering the trie
-
-module.exports = {
-  // Insert words from one big string, or from an array.
-  insertWords: function insertWords(words) {
-    if (words === undefined) {
-      return;
-    }
-    if (typeof words === 'string') {
-      words = words.split(/[^a-zA-Z]+/);
-    }
-    for (var i = 0; i < words.length; i++) {
-      words[i] = words[i].toLowerCase();
-    }
-    fns.unique(words);
-    for (var _i = 0; _i < words.length; _i++) {
-      if (words[_i].match(NOT_ALLOWED) === null) {
-        this.insert(words[_i]);
-      }
-    }
-  },
-
-  insert: function insert(word) {
-    this._insert(word, this.root);
-    var lastWord = this.lastWord;
-    this.lastWord = word;
-
-    var prefix = fns.commonPrefix(word, lastWord);
-    if (prefix === lastWord) {
-      return;
-    }
-
-    var freeze = this.uniqueNode(lastWord, word, this.root);
-    if (freeze) {
-      this.combineSuffixNode(freeze);
-    }
-  },
-
-  _insert: function _insert(word, node) {
-    var prefix = void 0,
-        next = void 0;
-
-    // Duplicate word entry - ignore
-    if (word.length === 0) {
-      return;
-    }
-
-    // Do any existing props share a common prefix?
-    var keys = Object.keys(node);
-    for (var i = 0; i < keys.length; i++) {
-      var prop = keys[i];
-      prefix = fns.commonPrefix(word, prop);
-      if (prefix.length === 0) {
-        continue;
-      }
-      // Prop is a proper prefix - recurse to child node
-      if (prop === prefix && _typeof(node[prop]) === 'object') {
-        this._insert(word.slice(prefix.length), node[prop]);
-        return;
-      }
-      // Duplicate terminal string - ignore
-      if (prop === word && typeof node[prop] === 'number') {
-        return;
-      }
-      next = {};
-      next[prop.slice(prefix.length)] = node[prop];
-      this.addTerminal(next, word = word.slice(prefix.length));
-      delete node[prop];
-      node[prefix] = next;
-      this.wordCount++;
-      return;
-    }
-
-    // No shared prefix.  Enter the word here as a terminal string.
-    this.addTerminal(node, word);
-    this.wordCount++;
-  },
-
-  // Add a terminal string to node.
-  // If 2 characters or less, just add with value == 1.
-  // If more than 2 characters, point to shared node
-  // Note - don't prematurely share suffixes - these
-  // terminals may become split and joined with other
-  // nodes in this part of the tree.
-  addTerminal: function addTerminal(node, prop) {
-    if (prop.length <= 1) {
-      node[prop] = 1;
-      return;
-    }
-    var next = {};
-    node[prop[0]] = next;
-    this.addTerminal(next, prop.slice(1));
-  },
-
-  // Well ordered list of properties in a node (string or object properties)
-  // Use nodesOnly==true to return only properties of child nodes (not
-  // terminal strings.
-  nodeProps: function nodeProps(node, nodesOnly) {
-    var props = [];
-    for (var prop in node) {
-      if (prop !== '' && prop[0] !== '_') {
-        if (!nodesOnly || _typeof(node[prop]) === 'object') {
-          props.push(prop);
-        }
-      }
-    }
-    props.sort();
-    return props;
-  },
-
-  optimize: function optimize() {
-    this.combineSuffixNode(this.root);
-    this.prepDFS();
-    this.countDegree(this.root);
-    this.prepDFS();
-    this.collapseChains(this.root);
-  },
-
-  // Convert Trie to a DAWG by sharing identical nodes
-  combineSuffixNode: function combineSuffixNode(node) {
-    // Frozen node - can't change.
-    if (node._c) {
-      return node;
-    }
-    // Make sure all children are combined and generate unique node
-    // signature for this node.
-    var sig = [];
-    if (this.isTerminal(node)) {
-      sig.push('!');
-    }
-    var props = this.nodeProps(node);
-    for (var i = 0; i < props.length; i++) {
-      var prop = props[i];
-      if (_typeof(node[prop]) === 'object') {
-        node[prop] = this.combineSuffixNode(node[prop]);
-        sig.push(prop);
-        sig.push(node[prop]._c);
-      } else {
-        sig.push(prop);
-      }
-    }
-    sig = sig.join('-');
-
-    var shared = this.suffixes[sig];
-    if (shared) {
-      return shared;
-    }
-    this.suffixes[sig] = node;
-    node._c = this.cNext++;
-    return node;
-  },
-
-  prepDFS: function prepDFS() {
-    this.vCur++;
-  },
-
-  visited: function visited(node) {
-    if (node._v === this.vCur) {
-      return true;
-    }
-    node._v = this.vCur;
-    return false;
-  },
-
-  countDegree: function countDegree(node) {
-    if (node._d === undefined) {
-      node._d = 0;
-    }
-    node._d++;
-    if (this.visited(node)) {
-      return;
-    }
-    var props = this.nodeProps(node, true);
-    for (var i = 0; i < props.length; i++) {
-      this.countDegree(node[props[i]]);
-    }
-  },
-
-  // Remove intermediate singleton nodes by hoisting into their parent
-  collapseChains: function collapseChains(node) {
-    var prop = void 0,
-        props = void 0,
-        child = void 0,
-        i = void 0;
-    if (this.visited(node)) {
-      return;
-    }
-    props = this.nodeProps(node);
-    for (i = 0; i < props.length; i++) {
-      prop = props[i];
-      child = node[prop];
-      if ((typeof child === 'undefined' ? 'undefined' : _typeof(child)) !== 'object') {
-        continue;
-      }
-      this.collapseChains(child);
-      // Hoist the singleton child's single property to the parent
-      if (child._g !== undefined && (child._d === 1 || child._g.length === 1)) {
-        delete node[prop];
-        prop += child._g;
-        node[prop] = child[child._g];
-      }
-    }
-    // Identify singleton nodes
-    if (props.length === 1 && !this.isTerminal(node)) {
-      node._g = prop;
-    }
-  },
-
-  isTerminal: function isTerminal(node) {
-    return !!node[''];
-  },
-
-  // Find highest node in Trie that is on the path to word
-  // and that is NOT on the path to other.
-  uniqueNode: function uniqueNode(word, other, node) {
-    var props = this.nodeProps(node, true);
-    for (var i = 0; i < props.length; i++) {
-      var prop = props[i];
-      if (prop === word.slice(0, prop.length)) {
-        if (prop !== other.slice(0, prop.length)) {
-          return node[prop];
-        }
-        return this.uniqueNode(word.slice(prop.length), other.slice(prop.length), node[prop]);
-      }
-    }
-    return undefined;
-  },
-
-  pack: function pack() {
-    return _pack(this);
-  }
-};
-
-},{"./fns":3,"./pack":7}],7:[function(_dereq_,module,exports){
-'use strict';
-
-var Histogram = _dereq_('./histogram');
-var encoding = _dereq_('../encoding');
-var config = {
-  NODE_SEP: ';',
-  STRING_SEP: ',',
-  TERMINAL_PREFIX: '!',
-  BASE: 36
-};
-
-// Return packed representation of Trie as a string.
-
-// Return packed representation of Trie as a string.
-//
-// Each node of the Trie is output on a single line.
-//
-// For example Trie("the them there thesis this"):
-// {
-//    "th": {
-//      "is": 1,
-//      "e": {
-//        "": 1,
-//        "m": 1,
-//        "re": 1,
-//        "sis": 1
-//      }
-//    }
-//  }
-//
-// Would be reperesented as:
-//
-// th0
-// e0is
-// !m,re,sis
-//
-// The line begins with a '!' iff it is a terminal node of the Trie.
-// For each string property in a node, the string is listed, along
-// with a (relative!) line number of the node that string references.
-// Terminal strings (those without child node references) are
-// separated by ',' characters.
-
-var nodeLine = function nodeLine(self, node) {
-  var line = '',
-      sep = '';
-
-  if (self.isTerminal(node)) {
-    line += config.TERMINAL_PREFIX;
-  }
-
-  var props = self.nodeProps(node);
-  for (var i = 0; i < props.length; i++) {
-    var prop = props[i];
-    if (typeof node[prop] === 'number') {
-      line += sep + prop;
-      sep = config.STRING_SEP;
-      continue;
-    }
-    if (self.syms[node[prop]._n]) {
-      line += sep + prop + self.syms[node[prop]._n];
-      sep = '';
-      continue;
-    }
-    var ref = encoding.toAlphaCode(node._n - node[prop]._n - 1 + self.symCount);
-    // Large reference to smaller string suffix -> duplicate suffix
-    if (node[prop]._g && ref.length >= node[prop]._g.length && node[node[prop]._g] === 1) {
-      ref = node[prop]._g;
-      line += sep + prop + ref;
-      sep = config.STRING_SEP;
-      continue;
-    }
-    line += sep + prop + ref;
-    sep = '';
-  }
-  return line;
-};
-
-var analyzeRefs = function analyzeRefs(self, node) {
-  if (self.visited(node)) {
-    return;
-  }
-  var props = self.nodeProps(node, true);
-  for (var i = 0; i < props.length; i++) {
-    var prop = props[i];
-    var ref = node._n - node[prop]._n - 1;
-    // Count the number of single-character relative refs
-    if (ref < config.BASE) {
-      self.histRel.add(ref);
-    }
-    // Count the number of characters saved by converting an absolute
-    // reference to a one-character symbol.
-    self.histAbs.add(node[prop]._n, encoding.toAlphaCode(ref).length - 1);
-    analyzeRefs(self, node[prop]);
-  }
-};
-
-var symbolCount = function symbolCount(self) {
-  self.histAbs = self.histAbs.highest(config.BASE);
-  var savings = [];
-  savings[-1] = 0;
-  var best = 0,
-      sCount = 0;
-  var defSize = 3 + encoding.toAlphaCode(self.nodeCount).length;
-  for (var sym = 0; sym < config.BASE; sym++) {
-    if (self.histAbs[sym] === undefined) {
-      break;
-    }
-    savings[sym] = self.histAbs[sym][1] - defSize - self.histRel.countOf(config.BASE - sym - 1) + savings[sym - 1];
-    if (savings[sym] >= best) {
-      best = savings[sym];
-      sCount = sym + 1;
-    }
-  }
-  return sCount;
-};
-
-var numberNodes = function numberNodes(self, node) {
-  // Topological sort into nodes array
-  if (node._n !== undefined) {
-    return;
-  }
-  var props = self.nodeProps(node, true);
-  for (var i = 0; i < props.length; i++) {
-    numberNodes(self, node[props[i]]); //recursive
-  }
-  node._n = self.pos++;
-  self.nodes.unshift(node);
-};
-
-var pack = function pack(self) {
-  self.nodes = [];
-  self.nodeCount = 0;
-  self.syms = {};
-  self.symCount = 0;
-  self.pos = 0;
-  // Make sure we've combined all the common suffixes
-  self.optimize();
-
-  self.histAbs = new Histogram();
-  self.histRel = new Histogram();
-
-  numberNodes(self, self.root);
-  self.nodeCount = self.nodes.length;
-
-  self.prepDFS();
-  analyzeRefs(self, self.root);
-  self.symCount = symbolCount(self);
-  for (var sym = 0; sym < self.symCount; sym++) {
-    self.syms[self.histAbs[sym][0]] = encoding.toAlphaCode(sym);
-  }
-  for (var i = 0; i < self.nodeCount; i++) {
-    self.nodes[i] = nodeLine(self, self.nodes[i]);
-  }
-  // Prepend symbols
-  for (var _sym = self.symCount - 1; _sym >= 0; _sym--) {
-    self.nodes.unshift(encoding.toAlphaCode(_sym) + ':' + encoding.toAlphaCode(self.nodeCount - self.histAbs[_sym][0] - 1));
-  }
-
-  return self.nodes.join(config.NODE_SEP);
-};
-
-module.exports = pack;
-
-},{"../encoding":1,"./histogram":4}],8:[function(_dereq_,module,exports){
-'use strict';
-
-var methods = _dereq_('./methods');
-/*
- A JavaScript implementation of a Trie search datastructure.
-Each node of the Trie is an Object that can contain the following properties:
-      '' - If present (with value == 1), the node is a Terminal Node - the prefix
-          leading to this node is a word in the dictionary.
-      numeric properties (value == 1) - the property name is a terminal string
-          so that the prefix + string is a word in the dictionary.
-      Object properties - the property name is one or more characters to be consumed
-          from the prefix of the test string, with the remainder to be checked in
-          the child node.
-      '_c': A unique name for the node (starting from 1), used in combining Suffixes.
-      '_n': Created when packing the Trie, the sequential node number
-          (in pre-order traversal).
-      '_d': The number of times a node is shared (it's in-degree from other nodes).
-      '_v': Visited in DFS.
-      '_g': For singleton nodes, the name of it's single property.
- */
-var Trie = function Trie(words) {
-    this.root = {};
-    this.lastWord = '';
-    this.suffixes = {};
-    this.suffixCounts = {};
-    this.cNext = 1;
-    this.wordCount = 0;
-    this.insertWords(words);
-    this.vCur = 0;
-};
-Object.keys(methods).forEach(function (k) {
-    Trie.prototype[k] = methods[k];
-});
-module.exports = Trie;
-
-},{"./methods":6}],9:[function(_dereq_,module,exports){
-'use strict';
-
-var unpack = _dereq_('./unpack');
-
-module.exports = function (obj) {
+var unpack = function(obj) {
   if (typeof obj === 'string') {
-    obj = JSON.parse(obj); //weee!
+    obj = JSON.parse(obj);
   }
-  var all = {};
-  Object.keys(obj).forEach(function (cat) {
-    var arr = unpack(obj[cat]);
-    //special case, for botched-boolean
-    if (cat === 'true') {
-      cat = true;
-    }
-    for (var i = 0; i < arr.length; i++) {
-      var k = arr[i];
-      if (all.hasOwnProperty(k) === true) {
-        if (Array.isArray(all[k]) === false) {
-          all[k] = [all[k], cat];
-        } else {
-          all[k].push(cat);
-        }
-      } else {
-        all[k] = cat;
-      }
-    }
-  });
-  return all;
-};
-
-},{"./unpack":11}],10:[function(_dereq_,module,exports){
-'use strict';
-
-var encoding = _dereq_('../encoding');
-
-//the symbols are at the top of the array.
-module.exports = function (t) {
-  //... process these lines
-  var reSymbol = new RegExp('([0-9A-Z]+):([0-9A-Z]+)');
-  for (var i = 0; i < t.nodes.length; i++) {
-    var m = reSymbol.exec(t.nodes[i]);
-    if (!m) {
-      t.symCount = i;
-      break;
-    }
-    t.syms[encoding.fromAlphaCode(m[1])] = encoding.fromAlphaCode(m[2]);
+  //words is packed with efrt
+  if (obj.words && typeof obj.words === 'string') {
+    obj.words = efrtUnpack(obj.words)
   }
-  //remove from main node list
-  t.nodes = t.nodes.slice(t.symCount, t.nodes.length);
-};
-
-},{"../encoding":1}],11:[function(_dereq_,module,exports){
-'use strict';
-
-var parseSymbols = _dereq_('./symbols');
-var encoding = _dereq_('../encoding');
-
-// References are either absolute (symbol) or relative (1 - based)
-var indexFromRef = function indexFromRef(trie, ref, index) {
-  var dnode = encoding.fromAlphaCode(ref);
-  if (dnode < trie.symCount) {
-    return trie.syms[dnode];
+  //tags are just stringified
+  if (obj.tags && typeof obj.tags === 'string') {
+    obj.tags = JSON.parse(obj.tags);
   }
-  return index + dnode + 1 - trie.symCount;
-};
 
-var toArray = function toArray(trie) {
-  var all = [];
-  var crawl = function crawl(index, pref) {
-    var node = trie.nodes[index];
-    if (node[0] === '!') {
-      all.push(pref);
-      node = node.slice(1); //ok, we tried. remove it.
-    }
-    var matches = node.split(/([A-Z0-9,]+)/g);
-    for (var i = 0; i < matches.length; i += 2) {
-      var str = matches[i];
-      var ref = matches[i + 1];
-      if (!str) {
-        continue;
-      }
-
-      var have = pref + str;
-      //branch's end
-      if (ref === ',' || ref === undefined) {
-        all.push(have);
-        continue;
-      }
-      var newIndex = indexFromRef(trie, ref, index);
-      crawl(newIndex, have);
-    }
-  };
-  crawl(0, '');
-  return all;
-};
-
-//PackedTrie - Trie traversal of the Trie packed-string representation.
-var unpack = function unpack(str) {
-  var trie = {
-    nodes: str.split(';'), //that's all ;)!
-    syms: [],
-    symCount: 0
-  };
-  //process symbols, if they have them
-  if (str.match(':')) {
-    parseSymbols(trie);
+  //plurals is packed in a weird way
+  if (obj.plurals && typeof obj.plurals === 'string') {
+    obj.plurals = unpackPlurals(obj.plurals)
   }
-  return toArray(trie);
+  return obj
 };
-
 module.exports = unpack;
 
-},{"../encoding":1,"./symbols":10}]},{},[2])(2)
+},{"efrt-unpack":1}]},{},[2])(2)
+});(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.nlpUnpack = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+(function (global){
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)});
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],2:[function(_dereq_,module,exports){
+var efrtUnpack = _dereq_('efrt-unpack');
+
+var unpackPlurals = function(str) {
+  return str.split(/,/g).reduce((h, s) => {
+    var arr = s.split(/\|/g)
+    if (arr.length == 3) {
+      h[arr[0] + arr[1]] = arr[0] + arr[2]
+    } else if (arr.length == 2) {
+      h[arr[0]] = arr[0] + arr[1]
+    } else {
+      h[arr[0]] = arr[0]
+    }
+    return h;
+  }, {});
+}
+
+var unpack = function(obj) {
+  if (typeof obj === 'string') {
+    obj = JSON.parse(obj);
+  }
+  //words is packed with efrt
+  if (obj.words && typeof obj.words === 'string') {
+    obj.words = efrtUnpack(obj.words)
+  }
+  //tags are just stringified
+  if (obj.tags && typeof obj.tags === 'string') {
+    obj.tags = JSON.parse(obj.tags);
+  }
+
+  //plurals is packed in a weird way
+  if (obj.plurals && typeof obj.plurals === 'string') {
+    obj.plurals = unpackPlurals(obj.plurals)
+  }
+  return obj
+};
+module.exports = unpack;
+
+},{"efrt-unpack":1}]},{},[2])(2)
+});(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.nlpUnpack = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+(function (global){
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)});
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],2:[function(_dereq_,module,exports){
+var efrtUnpack = _dereq_('efrt-unpack');
+
+var unpackPlurals = function(str) {
+  return str.split(/,/g).reduce((h, s) => {
+    var arr = s.split(/\|/g)
+    if (arr.length == 3) {
+      h[arr[0] + arr[1]] = arr[0] + arr[2]
+    } else if (arr.length == 2) {
+      h[arr[0]] = arr[0] + arr[1]
+    } else {
+      h[arr[0]] = arr[0]
+    }
+    return h;
+  }, {});
+}
+
+var unpack = function(obj) {
+  if (typeof obj === 'string') {
+    obj = JSON.parse(obj);
+  }
+  //words is packed with efrt
+  if (obj.words && typeof obj.words === 'string') {
+    obj.words = efrtUnpack(obj.words)
+  }
+  //tags are just stringified
+  if (obj.tags && typeof obj.tags === 'string') {
+    obj.tags = JSON.parse(obj.tags);
+  }
+
+  //plurals is packed in a weird way
+  if (obj.plurals && typeof obj.plurals === 'string') {
+    obj.plurals = unpackPlurals(obj.plurals)
+  }
+  return obj
+};
+module.exports = unpack;
+
+},{"efrt-unpack":1}]},{},[2])(2)
+});(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.nlpUnpack = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+(function (global){
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)});
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],2:[function(_dereq_,module,exports){
+var efrtUnpack = _dereq_('efrt-unpack');
+
+var unpackPlurals = function(str) {
+  return str.split(/,/g).reduce((h, s) => {
+    var arr = s.split(/\|/g)
+    if (arr.length == 3) {
+      h[arr[0] + arr[1]] = arr[0] + arr[2]
+    } else if (arr.length == 2) {
+      h[arr[0]] = arr[0] + arr[1]
+    } else {
+      h[arr[0]] = arr[0]
+    }
+    return h;
+  }, {});
+}
+
+var unpack = function(obj) {
+  if (typeof obj === 'string') {
+    obj = JSON.parse(obj);
+  }
+  //words is packed with efrt
+  if (obj.words && typeof obj.words === 'string') {
+    obj.words = efrtUnpack(obj.words)
+  }
+  //tags are just stringified
+  if (obj.tags && typeof obj.tags === 'string') {
+    obj.tags = JSON.parse(obj.tags);
+  }
+
+  //plurals is packed in a weird way
+  if (obj.plurals && typeof obj.plurals === 'string') {
+    obj.plurals = unpackPlurals(obj.plurals)
+  }
+  return obj
+};
+module.exports = unpack;
+
+},{"efrt-unpack":1}]},{},[2])(2)
+});(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.nlpUnpack = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+(function (global){
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)});
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],2:[function(_dereq_,module,exports){
+var efrtUnpack = _dereq_('efrt-unpack');
+
+var unpackPlurals = function(str) {
+  return str.split(/,/g).reduce((h, s) => {
+    var arr = s.split(/\|/g)
+    if (arr.length == 3) {
+      h[arr[0] + arr[1]] = arr[0] + arr[2]
+    } else if (arr.length == 2) {
+      h[arr[0]] = arr[0] + arr[1]
+    } else {
+      h[arr[0]] = arr[0]
+    }
+    return h;
+  }, {});
+}
+
+var unpack = function(obj) {
+  if (typeof obj === 'string') {
+    obj = JSON.parse(obj);
+  }
+  //words is packed with efrt
+  if (obj.words && typeof obj.words === 'string') {
+    obj.words = efrtUnpack(obj.words)
+  }
+  //tags are just stringified
+  if (obj.tags && typeof obj.tags === 'string') {
+    obj.tags = JSON.parse(obj.tags);
+  }
+
+  //plurals is packed in a weird way
+  if (obj.plurals && typeof obj.plurals === 'string') {
+    obj.plurals = unpackPlurals(obj.plurals)
+  }
+  return obj
+};
+module.exports = unpack;
+
+},{"efrt-unpack":1}]},{},[2])(2)
+});(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.nlpUnpack = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+(function (global){
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)});
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],2:[function(_dereq_,module,exports){
+var efrtUnpack = _dereq_('efrt-unpack');
+
+var unpackPlurals = function(str) {
+  return str.split(/,/g).reduce((h, s) => {
+    var arr = s.split(/\|/g)
+    if (arr.length == 3) {
+      h[arr[0] + arr[1]] = arr[0] + arr[2]
+    } else if (arr.length == 2) {
+      h[arr[0]] = arr[0] + arr[1]
+    } else {
+      h[arr[0]] = arr[0]
+    }
+    return h;
+  }, {});
+}
+
+var unpack = function(obj) {
+  if (typeof obj === 'string') {
+    obj = JSON.parse(obj);
+  }
+  //words is packed with efrt
+  if (obj.words && typeof obj.words === 'string') {
+    obj.words = efrtUnpack(obj.words)
+  }
+  //tags are just stringified
+  if (obj.tags && typeof obj.tags === 'string') {
+    obj.tags = JSON.parse(obj.tags);
+  }
+
+  //plurals is packed in a weird way
+  if (obj.plurals && typeof obj.plurals === 'string') {
+    obj.plurals = unpackPlurals(obj.plurals)
+  }
+  return obj
+};
+module.exports = unpack;
+
+},{"efrt-unpack":1}]},{},[2])(2)
+});(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.nlpUnpack = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+(function (global){
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)});
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],2:[function(_dereq_,module,exports){
+var efrtUnpack = _dereq_('efrt-unpack');
+
+var unpackPlurals = function(str) {
+  return str.split(/,/g).reduce((h, s) => {
+    var arr = s.split(/\|/g)
+    if (arr.length == 3) {
+      h[arr[0] + arr[1]] = arr[0] + arr[2]
+    } else if (arr.length == 2) {
+      h[arr[0]] = arr[0] + arr[1]
+    } else {
+      h[arr[0]] = arr[0]
+    }
+    return h;
+  }, {});
+}
+
+var unpack = function(obj) {
+  if (typeof obj === 'string') {
+    obj = JSON.parse(obj);
+  }
+  //words is packed with efrt
+  if (obj.words && typeof obj.words === 'string') {
+    obj.words = efrtUnpack(obj.words)
+  }
+  //tags are just stringified
+  if (obj.tags && typeof obj.tags === 'string') {
+    obj.tags = JSON.parse(obj.tags);
+  }
+
+  //plurals is packed in a weird way
+  if (obj.plurals && typeof obj.plurals === 'string') {
+    obj.plurals = unpackPlurals(obj.plurals)
+  }
+  return obj
+};
+module.exports = unpack;
+
+},{"efrt-unpack":1}]},{},[2])(2)
+});(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.nlpUnpack = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+(function (global){
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)});
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],2:[function(_dereq_,module,exports){
+var efrtUnpack = _dereq_('efrt-unpack');
+
+var unpackPlurals = function(str) {
+  return str.split(/,/g).reduce((h, s) => {
+    var arr = s.split(/\|/g)
+    if (arr.length == 3) {
+      h[arr[0] + arr[1]] = arr[0] + arr[2]
+    } else if (arr.length == 2) {
+      h[arr[0]] = arr[0] + arr[1]
+    } else {
+      h[arr[0]] = arr[0]
+    }
+    return h;
+  }, {});
+}
+
+var unpack = function(obj) {
+  if (typeof obj === 'string') {
+    obj = JSON.parse(obj);
+  }
+  //words is packed with efrt
+  if (obj.words && typeof obj.words === 'string') {
+    obj.words = efrtUnpack(obj.words)
+  }
+  //tags are just stringified
+  if (obj.tags && typeof obj.tags === 'string') {
+    obj.tags = JSON.parse(obj.tags);
+  }
+
+  //plurals is packed in a weird way
+  if (obj.plurals && typeof obj.plurals === 'string') {
+    obj.plurals = unpackPlurals(obj.plurals)
+  }
+  return obj
+};
+module.exports = unpack;
+
+},{"efrt-unpack":1}]},{},[2])(2)
 });
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],2:[function(_dereq_,module,exports){
+(function (global){
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)}),function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;r="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,r.unpack=e()}}(function(){return function e(r,n,o){function t(f,u){if(!n[f]){if(!r[f]){var s="function"==typeof _dereq_&&_dereq_;if(!u&&s)return s(f,!0);if(i)return i(f,!0);var a=new Error("Cannot find module '"+f+"'");throw a.code="MODULE_NOT_FOUND",a}var c=n[f]={exports:{}};r[f][0].call(c.exports,function(e){var n=r[f][1][e];return t(n?n:e)},c,c.exports,e,r,n,o)}return n[f].exports}for(var i="function"==typeof _dereq_&&_dereq_,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,r,n){"use strict";var o=36,t="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",i=t.split("").reduce(function(e,r,n){return e[r]=n,e},{}),f=function(e){if(void 0!==t[e])return t[e];for(var r=1,n=o,i="";e>=n;e-=n,r++,n*=o);for(;r--;){var f=e%o;i=String.fromCharCode((f<10?48:55)+f)+i,e=(e-f)/o}return i},u=function(e){if(void 0!==i[e])return i[e];for(var r=0,n=1,t=o,f=1;n<e.length;r+=t,n++,t*=o);for(var u=e.length-1;u>=0;u--,f*=o){var s=e.charCodeAt(u)-48;s>10&&(s-=7),r+=s*f}return r};r.exports={toAlphaCode:f,fromAlphaCode:u}},{}],2:[function(e,r,n){"use strict";var o=e("./unpack");r.exports=function(e){"string"==typeof e&&(e=JSON.parse(e));var r={};return Object.keys(e).forEach(function(n){var t=o(e[n]);"true"===n&&(n=!0);for(var i=0;i<t.length;i++){var f=t[i];r.hasOwnProperty(f)===!0?Array.isArray(r[f])===!1?r[f]=[r[f],n]:r[f].push(n):r[f]=n}}),r}},{"./unpack":4}],3:[function(e,r,n){"use strict";var o=e("../encoding");r.exports=function(e){for(var r=new RegExp("([0-9A-Z]+):([0-9A-Z]+)"),n=0;n<e.nodes.length;n++){var t=r.exec(e.nodes[n]);if(!t){e.symCount=n;break}e.syms[o.fromAlphaCode(t[1])]=o.fromAlphaCode(t[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}},{"../encoding":1}],4:[function(e,r,n){"use strict";var o=e("./symbols"),t=e("../encoding"),i=function(e,r,n){var o=t.fromAlphaCode(r);return o<e.symCount?e.syms[o]:n+o+1-e.symCount},f=function(e){var r=[],n=function n(o,t){var f=e.nodes[o];"!"===f[0]&&(r.push(t),f=f.slice(1));for(var u=f.split(/([A-Z0-9,]+)/g),s=0;s<u.length;s+=2){var a=u[s],c=u[s+1];if(a){var d=t+a;if(","!==c&&void 0!==c){var p=i(e,c,o);n(p,d)}else r.push(d)}}};return n(0,""),r},u=function(e){var r={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&o(r),f(r)};r.exports=u},{"../encoding":1,"./symbols":3}]},{},[2])(2)});
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],3:[function(_dereq_,module,exports){
 module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
@@ -800,7 +383,7 @@ module.exports={
     "benchmark": "node ./scripts/benchmark.js",
     "build": "node ./scripts/build/index.js",
     "pack": "node ./scripts/pack.js",
-    "prepublish": "node ./scripts/prepublish",
+    "prepublishOnly": "node ./scripts/prepublish",
     "postpublish": "node ./scripts/postpublish",
     "demo": "node ./scripts/demo.js",
     "watch": "node ./scripts/watch.js",
@@ -813,32 +396,30 @@ module.exports={
     "docs/"
   ],
   "dependencies": {
-    "compromise-unpack": "^0.0.2"
+    "compromise-unpack": "0.0.4",
+    "efrt": "^1.1.1"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.24.0",
     "babelify": "7.3.0",
+    "babel-preset-es2015": "^6.24.0",
     "babili": "0.0.11",
     "browserify": "13.0.1",
     "browserify-glob": "^0.2.0",
-    "bundle-collapser": "^1.2.1",
-    "chalk": "^1.1.3",
     "derequire": "^2.0.3",
+    "uglify-js": "2.7.0",
+    "chalk": "^1.1.3",
     "eslint": "^3.1.1",
     "gaze": "^1.1.1",
-    "http-server": "0.9.0",
+    "shelljs": "^0.7.2",
     "nyc": "^8.4.0",
     "codacy-coverage": "^2.0.0",
-    "shelljs": "^0.7.2",
-    "tap-min": "^1.1.0",
     "tap-spec": "4.1.1",
-    "tape": "4.6.0",
-    "uglify-js": "2.7.0"
+    "tape": "4.6.0"
   },
   "license": "MIT"
 }
 
-},{}],3:[function(_dereq_,module,exports){
+},{}],4:[function(_dereq_,module,exports){
 'use strict';
 const tagset = _dereq_('./tagset');
 
@@ -955,17 +536,20 @@ exports.isArray = function(arr) {
   return Object.prototype.toString.call(arr) === '[object Array]';
 };
 
-},{"./tagset":143}],4:[function(_dereq_,module,exports){
+},{"./tagset":144}],5:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 const buildText = _dereq_('./text/build');
 const pkg = _dereq_('../package.json');
 const log = _dereq_('./log');
-const pack = _dereq_('efrt').pack;
+const unpack = _dereq_('./world/unpack');
 const World = _dereq_('./world');
 
 let w = new World();
-//the main thing
+console.log(w.words.Singular);
+console.log(w.words.quick);
+
+//the main function
 const nlp = function(str, lex) {
   if (lex) {
     w.addWords(lex);
@@ -980,29 +564,51 @@ nlp.tokenize = function(str) {
   return buildText(str);
 };
 
-//contribute words to the lexicon
-nlp.addWords = function(lex) {
-  w.addWords(lex);
-};
-nlp.addTags = function(tags) {
-  w.addTags(tags);
-};
-nlp.addRegex = function(regs) {
-  w.addRegex(regs);
-};
-nlp.addPlurals = function(obj) {
-  w.addPlurals(obj);
-};
-nlp.addConjugations = function(obj) {
-  w.addConjugations(obj);
-};
-nlp.plugin = function(obj) {
+//uncompress user-submitted lexicon
+nlp.plugin = function(plugin) {
+  let obj = unpack(plugin);
   w.plugin(obj);
 };
+//contribute words to the lexicon
+nlp.addWords = function(lex) {
+  let tmp = unpack({
+    words: lex
+  });
+  w.plugin(tmp);
+};
+nlp.addTags = function(tags) {
+  let tmp = unpack({
+    tags: tags
+  });
+  w.plugin(tmp);
+};
+nlp.addRules = function(rules) {
+  let tmp = unpack({
+    rules: rules
+  });
+  w.plugin(tmp);
+};
+nlp.addPlurals = function(plurals) {
+  let tmp = unpack({
+    plurals: plurals
+  });
+  w.plugin(tmp);
+};
+nlp.addConjugations = function(conj) {
+  let tmp = unpack({
+    conjugations: conj
+  });
+  w.plugin(tmp);
+};
 
+//clone the 'world'
 nlp.clone = function() {
   w = w.clone();
   return nlp;
+};
+//this is used, atleast, for testing the packing
+nlp.unpack = function(plugin) {
+  return unpack(plugin);
 };
 
 //this is handy
@@ -1013,16 +619,6 @@ nlp.verbose = function(str) {
   log.enable(str);
 };
 
-//compress user-submitted lexicon
-nlp.pack = function(obj) {
-  return JSON.stringify(pack(obj));
-};
-//uncompress user-submitted lexicon
-nlp.unpack = function(str) {
-  let obj = JSON.parse(str);
-  obj = efrt.unpack(obj);
-  return obj;
-};
 
 //and then all-the-exports...
 if (typeof self !== 'undefined') {
@@ -1042,7 +638,7 @@ if (typeof module !== 'undefined') {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../package.json":2,"./log":17,"./text/build":194,"./world":216,"efrt":1}],5:[function(_dereq_,module,exports){
+},{"../package.json":3,"./log":18,"./text/build":195,"./world":213,"./world/unpack":215}],6:[function(_dereq_,module,exports){
 const adj = _dereq_('../subset/adjectives/methods');
 const toPlural = _dereq_('../subset/nouns/methods/pluralize');
 const fastConjugate = _dereq_('../subset/verbs/methods/conjugate/faster');
@@ -1120,9 +716,9 @@ const buildOut = function(lex, options) {
 
 module.exports = buildOut;
 
-},{"../subset/adjectives/methods":22,"../subset/nouns/methods/pluralize":56,"../subset/verbs/methods/conjugate/faster":88}],6:[function(_dereq_,module,exports){
+},{"../subset/adjectives/methods":23,"../subset/nouns/methods/pluralize":57,"../subset/verbs/methods/conjugate/faster":89}],7:[function(_dereq_,module,exports){
 module.exports={"Singular":"aQbMcKdGeEfDgCh8jelRkitLlunch,meetiPn7others,p5r4s2t0us dollar;alQh0ic,ragedy;ere,iN;ky,tu0uper bowl,ystP;dBff;alMoom;a0roblMurpo4;rt,t8;othiHumbB;ead start,o0;lHme1u0;se;! run;laci6od,rand slam,ulE;olDriend,undiB;conomy,gg,ner3v0xamp9;ent;eath,inn2o0;g0l9or;gy;er;anary,eili4hocolate,i0ottage,redit card;ty;anki2el4o0reakfast,ul4;dy,tt0;le;ng;d homin1l0;ly;em","Noun":"aKbHcGdDengineJfBgardenJhAinstructQjournalMlawyJm9nurse,o8p5r3s1t0;echnDherapL;ailOcientKoldiHu0;pervLrgeon;e0oofF;ceptionHsearD;hotographDlumbDoli1r0sychologG;actitionCogrammC;cem7t6;fficApeG;echanic,inist9us4;airdress8ousekeep8;arm7ire0;fight6m2;eputy,iet0;ici0;an;arpent2lerk;ricklay1ut0;ch0;er;ccoun6d2ge7r0ssis6ttenda7;chitect,t0;ist;minist1v0;is1;rat0;or;ta0;nt","Honorific":"ayatullah,c8d7excellency,general,king,l5mayDp2queen,r1s0;ecretary,ultA;abbi,everend;astAr0;eside2ince0ofess9;!ss;ady,ieutena0ord;nt;oct5utchess;aptain,hance3o0;mmander,ngress0unci2;m0wom0;an;ll0;or","SportsTeam":"0:1M;1:1T;2:1U;a1Rb1Dc0Zd0Qfc dallas,g0Nhouston 0Mindiana0Ljacksonville jagua0k0Il0Fm02newVoRpKqueens parkJrIsAt5utah jazz,vancouver whitecaps,w3yY;ashington 3est ham0Xh16;natio21redski1wizar12;ampa bay 6e5o3;ronto 3ttenham hotspur;blu1Hrapto0;nnessee tita1xasD;buccanee0ra1G;a7eattle 5heffield0Qporting kansas13t3;. louis 3oke12;c1Srams;mari02s3;eah1IounI;cramento Sn 3;antonio spu0diego 3francisco gi0Bjose earthquak2;char0EpaB;eal salt lake,o04; ran0C;a8h5ittsburgh 4ortland t3;imbe0rail blaze0;pirat2steele0;il3oenix su1;adelphia 3li2;eagl2philNunE;dr2;akland 4klahoma city thunder,r3;i10lando magic;athle0Trai3;de0; 3castle05;england 6orleans 5york 3;city fc,giUje0Lkn02me0Lred bul19y3;anke2;pelica1sain0J;patrio0Irevolut3;ion;aBe9i3ontreal impact;ami 7lwaukee b6nnesota 3;t4u0Rvi3;kings;imberwolv2wi1;re0Cuc0W;dolphi1heat,marli1;mphis grizz3ts;li2;nchester 5r3vN;i3li1;ne0;c00u0H;a4eicesterYos angeles 3;clippe0dodFlaA; galaxy,ke0;ansas city 3nH;chiefs,ro3;ya0M; pace0polis colX;astr0Edynamo,rockeWtexa1;i4olden state warrio0reen bay pac3;ke0;anT;.c.Aallas 7e3i0Cod5;nver 5troit 3;lio1pisto1ti3;ge0;bronc06nuggeO;cowboUmav3;er3;ic06; uX;arCelNh8incinnati 6leveland 5ol3;orado r3umbus crew sc;api5ocki2;brow1cavalie0india1;benga03re3;ds;arlotte horCicago 3;b4cubs,fire,wh3;iteE;ea0ulY;di3olina panthe0;ff3naW; c3;ity;altimore ElAoston 7r3uffalo bilT;av2e5ooklyn 3;ne3;ts;we0;cel4red3; sox;tics;ackburn rove0u3;e ja3;ys;rs;ori3rave1;ol2;rizona Ast8tlanta 3;brav2falco1h4u3;nited;aw9;ns;es;on villa,r3;os;c5di3;amondbac3;ks;ardi3;na3;ls","Uncountable":"0:1C;a1Hb1Bc13e0Xf0Rg0Nh0Hi0Ej0Dknowled1Gl08mZnYoXpSrPsCt8vi7w1;a5ea0Bi4o1;o2rld1;! seJ;d,l;ldlife,ne;rmth,t0;neg7ol09;e3hund0ime,oothpaste,r1una;affSou1;ble,sers,t;a,nnis;aBceVeAh9il8now,o7p4te3u1;g1nshi0M;ar;am,el;ace2e1;ciOed;!c11;ap,cc0ft0B;k,v0;eep,opp0N;riJ;d07fe0Vl1nd;m0Pt;ain,e1i0V;c1laxa0Csearch;ogni0Brea0B;a4e2hys0Dlast9o1ress00;rk,w0;a1pp0trol;ce,nR;p0tiK;il,xygen;ews,oi0B;a7ea5i4o3u1;mps,s1;ic;nHo07;lk,st;sl1t;es;chi1il,thematZ;neD;aught0e3i2u1;ck,g06;ghtnYqu0BteratI;a1isH;th0;ewel7usti07;ce,mp1nformaOtself;ati1ortan05;en04;a4isto3o1;ck1mework,n1spitali00;ey;ry;ir,lib1ppi9;ut;o2r1um,ymnastI;a7ound;l1ssip;d,f;i5lour,o2ruit,urnit1;ure;od,rgive1wl;ne1;ss;c6sh;conom8duca5lectriciLn3quip4th8very1;body,o1thA;ne;joy1tertain1;ment;tiB;a7elcius,h3iv2loth5o1urrency;al,ffee,nfusi9tt9;ics;aos,e1;e2w1;ing;se;ke,sh;a3eef,is2lood,read,utt0;er;on;g1ss;ga1;ge;c4dvi3irc2mnes1rt;ty;raft;ce;id","Infinitive":"0:6P;1:73;2:70;3:6V;4:71;5:58;6:64;7:6Z;8:6C;9:6U;A:6N;B:6X;C:6I;D:57;E:5S;F:74;a6Hb62c54d4Ce3Xf3Kg3Dh36i2Uj2Sk2Ol2Fm26n23o1Zp1Kques3Lr0Ws04tVuRvOwHyG;awn,ield;aJe1Zhist8iIoGre69;nd0rG;k,ry;n,pe,sh,th0;lk,nHrGsh,tCve;n,raF;d0t;aHiGo7;ew,s9;l6Iry;nGpli43r2se;dGi7lo5Y;erGo;go,mi5B;aNeMhKoJrHuGwi3;ne,rn;aGeat,i5Tu3y;de,in,nsf0p,v5I;r32uC;ank,rG;eat2Qi4;nd,st;ke,lk,rg5Hs7;a06c03eZhWi4Dkip,lVmUneTo50pRtKuGwitC;bm9ck,ff0gge3ppHrGspe6;ge,pri1rou4Xvi4;ly,oG;rt,se;aLeKoJrHuG;dy,mb8;aDeGi4;ngth2Fss,tC;p,re;m,p;in,ke,r0Ty;it,laEoil,rinG;g,k8;ak,e38;aEe1Xi8o54;am,e1Mip;aHoG;ck,ut;re,ve;arCeIle6nHr4tG;!t8;d,se;k,m;aHo5rG;atCew;le,re;il,ve;a01eIisk,oHuG;b,in,le,sh;am,ll;aXcWduAfVgUje6lRmQnt,pOquNsKtJvGwa5N;eGiew,o4N;al,l,rG;se,t;aDi5u3V;eHi3o40tG;!o5ri6;mb8nt,r4;e3i5;air,lGo3WreseF;aAy;aDemb0i3To4;aHeGi4y;a1nt;te,x;a58r46;act1Wle6u1;a10ei4k5Kogni2Ayc8;ch,li29s5J;i1nG;ge,k;aTerSiRlPoNrIuG;b1Zll,mp,rGsh,t;cha1s4M;ai1eJiFoG;cHduAgreBhib9mi1te3vG;e,i2S;eBlaim;di6pa5ss,veF;iFp,rtr40sGur;e,t;a3PuG;g,n2;ck,le;fo30m9si3;ck,iFrt4Iss,u1y;bIccur,ff0pera7utweHverGwe;co43lap,ta3Nu1whelm;igh;ser4taD;eHotG;e,iA;ed,gle6;aLeKiIoHuG;ltiply,rd0;nit13ve;nGrr12;d,g8us;asu5lt,n0Pr2ssa2;intaDke d3Wna2rHtG;ch,t0;k36ry;aMeLiIoGu1D;aGck,ok,ve;d,n;ft,ke,m9nHstGve;!en;e,k;a2Dc0Gt;b0Pck,uG;gh,nC;eIiHnoG;ck,w;ck,ll,ss;ep;am,oDuG;d2mp;gno5mPnGss3E;cNdica7flu0LhMsJterIvG;eGol4;nt,st;a6fe5;i3tG;aGru6;ll;ab9ib9;lu1Er1C;agi21pG;o1Zro4;aKeIi5oHuG;nt,rry;ld fa3n03pe,st;aGlp;d,t;nd8ppGrm,te;en;aLet,loBoKrIuG;arGeBi13;ant36d;aGip,ow,umb8;b,sp;es,ve1G;in,th0ze;aQeaPiNlLoIracHuncG;ti3F;tu5;cus,lHrG;ce,eca3m,s2X;d,l20;aEoG;at,od,w;gu5lGniEx;e,l;r,tu5;il,ll,vG;or;a11cho,d9le6mRnOstMvalua7xG;a09cKerJi3pGte15;a14eGlaDo15reB;ct,riG;enA;ci1t;el,han2;abGima7;liE;ab8couXdHga2hanAj03riCsu5t0vG;isi2Ty;!u5;body,er2pG;hasiGow0;ze;a06eUiMoLrHuG;mp;aIeHiGop;ft;am,ss;g,in;!d2ubt;e,ff0p,re6sHvG;e,iXorA;aJcGli12miBpl17tinguiE;oGuB;uGv0;ra2;gr1WppG;ear,ro4;cNem,fLliv0ma0Cny,pKsHterG;mi0D;cribe,er4iHtrG;oy;gn,re;a08e07i6os9;eGi08y;at,ct;iIlHrG;ea1;a5i04;de;ma2nAre,te;a0Ae09h06i7l03oJrGut;aHeGoBuEy;a7d9;ck,ve;llYmRnHok,py,uGv0;gh,nt;ceOdu6fMsKtIvG;eGinA;rt,y;aDin0VrG;a3ibu7ol;iGtitu7;d0st;iGoGroF;rm;rn;biLe,foKmaJpG;a5laD;in;re;nd;rt;ne;ap1e6;aHiGo1;ng,p;im,w;aHeG;at,ck,w;llen2n2r2;a1nt0;ll,ncHrGt0u1;e,ry;el;aSePloOoMrJuG;dgHrG;n,y;et;aHuE;sh;ke;a3mb,o3rrGth0unA;ow;ck;ar,coRlHnef9trG;ay;ie4ong;nGse;!g;band0Jc0Bd06ffo05gr04id,l01mu1nYppTrQsKttGvoid,wa9;acIeHra6;ct;m0Fnd;h,k;k,sG;eIiHocia7uG;me;gn,st;mb8rt;le;chHgGri4;ue;!i4;eaJlIroG;aCve;ch;aud,y;l,r;nounAsw0tG;icipa7;ce;lHt0;er;e2ow;ee;rd;dIju3m9oR;it;st;!reB;ss;cJhie4knowled2tiva7;te;ge;ve;eIouFu1;se;nt;pt;on","Unit":"0:17;a12b10c0Md0Le0Jf0Fg0Bh08in07joule0k01lZmOnNoMpIqHsqCt7volts,w6y4z3°2µ1;g,s;c,f,n;b,e2;a0Lb,d0Rears old,o1;tt0F;att0b;able4b3e2on1sp;!ne0;a2r0B;!l,sp;spo03; ft,uare 1;c0Gd0Ff3i0Dkilo0Hm1ya0C;e0Kil1;e0li0F;eet0o0B;t,uart0;a3e2i1ou0Nt;c0Knt0;rcent,t00;!scals;hms,uVz;an0GewtR;/s,b,e7g,i3l,m2p1²,³;h,s;!²;!/h,cro3l1;e1li05;! DsC²;g05s0A;gPter1;! 2s1;! 1;per second;b,iZm,u1x;men0x0;b,elvin0g,ilo2m1nQ;!/h,ph,²;byYgWmeter1;! 2s1;! 1;per hour;²,³;e1g,z;ct1rtz0;aWogP;al2b,ig9ra1;in0m0;!l1;on0;a3emtOl1tG; oz,uid ou1;nce0;hrenheit0rad0;b,x1;abyH;eciCg,l,mA;arat0eAg,l,m9oulomb0u1;bic 1p0;c5d4fo3i2meAya1;rd0;nch0;ot0;eci2;enti1;me4;!²,³;lsius0nti1;g2li1me1;ter0;ram0;bl,y1;te0;c4tt1;os1;eco1;nd0;re0;!s","Pronoun":"'em,elle,h4i3me,ourselves,she5th1us,we,you0;!rself;e0ou;m,y;!l,t;e0im;!'s","Organization":"0:42;1:40;a38b2Pc29d21e1Yf1Ug1Mh1Hi1Ej1Ak18l14m0Tn0Go0Dp07qu06rZsStFuBv8w3y2;amaha,m0Youtu2Rw0Y;a4e2orld trade organizati1;lls fargo,st2;fie23inghou18;l2rner br3B;-m13gree30l street journ25m13;an halOeriz1isa,o2;dafo2Gl2;kswagMvo;bs,n3ps,s2;a tod2Qps;es33i2;lev2Wted natio2T; mobi2Jaco beQd bNeBgi fridaAh4im horto2Smz,o2witt2V;shiba,y2;ota,s r Z;e 2in lizzy;b4carpen31daily ma2Vguess w3holli0rolling st1Ns2w3;mashing pumpki2Nuprem0;ho;ea2lack eyed pe3Dyrds;ch bo2tl0;ys;l3s2;co,la m14;efoni09us;a7e5ieme2Fo3pice gir6ta2ubaru;rbucks,to2L;ny,undgard2;en;a2Px pisto2;ls;few24insbu25msu1W;.e.m.,adiohead,b7e4oyal 2yan2V;b2dutch she5;ank;/max,aders dige1Ed 2vl1;bu2c1Thot chili peppe2Ilobst27;ll;c,s;ant2Tizno2D;an6bs,e4fiz23hilip morrCi3r2;emier25octer & gamb1Qudenti14;nk floyd,zza hut;psi26tro2uge0A;br2Ochina,n2O; 3ason1Wda2E;ld navy,pec,range juli3xf2;am;us;aBbAe6fl,h5i4o2sa,wa;kia,tre dame,vart2;is;ke,ntendo,ss0L;l,s;stl4tflix,w2; 2sweek;kids on the block,york0A;e,é;a,c;nd1Rs3t2;ional aca2Co,we0P;a,cZd0N;aBcdonaldAe6i4lb,o2tv,yspace;b1Knsanto,ody blu0t2;ley crue,or0N;crosoft,t2;as,subisP;dica4rcedes3talli2;ca;!-benz;id,re;'s,s;c's milk,tt11z1V;'ore08a4e2g,ittle caesa1H;novo,x2;is,mark; pres6-z-boy;atv,fc,kk,m2od1H;art;iffy lu0Jo4pmorgan2sa;! cha2;se;hnson & johns1y d1O;bm,hop,n2tv;g,te2;l,rpol; & m,asbro,ewlett-packaSi4o2sbc,yundai;me dep2n1G;ot;tac2zbollah;hi;eneral 7hq,l6o3reen d0Gu2;cci,ns n ros0;ldman sachs,o2;dye2g09;ar;axo smith kliYencore;electr0Gm2;oto0S;a4bi,da,edex,i2leetwood mac,oFrito-l08;at,nancial2restoU; tim0;cebook,nnie mae;b04sa,u,xxon2; m2m2;ob0E;aiml09e6isney,o4u2;nkin donuts,po0Uran dur2;an;j,w j2;on0;a,f leppa3ll,peche mode,r spiegYstiny's chi2;ld;rd;aFbc,hCiAnn,o4r2;aigsli6eedence clearwater reviv2;al;ca c6l5m2o09st04;ca3p2;aq;st;dplMgate;ola;a,sco2tigroup;! systems;ev3i2;ck fil-a,na daily;r1y;dbury,pital o2rl's jr;ne;aGbc,eCfAl6mw,ni,o2p;ei4mbardiKston 2;glo2pizza;be;ng;ack & deckGo3ue c2;roX;ckbuster video,omingda2;le; g2g2;oodriN;cht4e ge0n & jer3rkshire hathaw2;ay;ryH;el;nana republ4s2xt6y6;f,kin robbi2;ns;ic;bXcSdidRerosmith,ig,lLmFnheuser-busEol,ppleAr7s4t&t,v3y2;er;is,on;hland2sociated G; o2;il;by5g3m2;co;os; compu3bee2;'s;te2;rs;ch;c,d,erican4t2;!r2;ak; ex2;pre2;ss; 5catel3t2;air;!-luce2;nt;jazeera,qae2;da;as;/dc,a4er,t2;ivisi1;on;demy of scienc0;es;ba,c","Demonym":"0:16;1:13;a0Wb0Nc0Cd0Ae09f07g04h02iYjVkTlPmLnIomHpDqatari,rBs7t5u4v3wel0Rz2;am0Fimbabwe0;enezuel0ietnam0H;g9krai1;aiwThai,rinida0Iu2;ni0Qrkmen;a4cot0Ke3ingapoOlovak,oma0Tpa05udRw2y0X;edi0Kiss;negal0Br08;mo0uU;o6us0Lw2;and0;a3eru0Hhilipp0Po2;li0Ertugu06;kist3lesti1na2raguay0;ma1;ani;amiZi2orweP;caragu0geri2;an,en;a3ex0Mo2;ngo0Erocc0;cedo1la2;gasy,y08;a4eb9i2;b2thua1;e0Dy0;o,t02;azakh,eny0o2uwaiti;re0;a2orda1;ma0Bp2;anN;celandic,nd4r2sraeli,ta02vo06;a2iT;ni0qi;i0oneV;aiDin2ondur0unN;di;amDe2hanai0reek,uatemal0;or2rm0;gi0;i2ren7;lipino,n4;cuadoVgyp6ngliJsto1thiopi0urope0;a2ominXut4;niH;a9h6o4roa3ub0ze2;ch;ti0;lom2ngol5;bi0;a6i2;le0n2;ese;lifor1m2na3;bo2eroo1;di0;angladeshi,el8o6r3ul2;gaG;aziBi2;ti2;sh;li2s1;vi0;aru2gi0;si0;fAl7merBngol0r5si0us2;sie,tr2;a2i0;li0;gent2me1;ine;ba1ge2;ri0;ni0;gh0r2;ic0;an","Region":"a21b1Tc1Jd1Ees1Df1Ag13h10i0Xj0Vk0Tl0Qm0FnZoXpSqPrMsDtAut9v5w2y0zacatec23;o05u0;cat19kZ;a0est vir4isconsin,yomi15;rwick1Rshington0;! dc;er2i0;cto1Jr0;gin1S;acruz,mont;ah,tar pradesh;a1e0laxca1Dusca9;nnessee,x1R;bas0Jmaulip1QsmI;a5i3o1taf0Nu0ylh13;ffUrrZs0Y;me10no1Auth 0;cRdQ;ber1Ic0naloa;hu0Sily;n1skatchew0Rxo0;ny; luis potosi,ta catari1I;a0hode6;j0ngp01;asth0Mshahi;inghai,u0;e0intana roo;bec,ensVreta0D;ara3e1rince edward0; isT;i,nnsylv0rnambu01;an14;!na;axa0Ndisha,h0klaho1Bntar0reg3x03;io;ayarit,eAo2u0;evo le0nav0L;on;r0tt0Rva scot0X;f5mandy,th0; 0ampton0Q;c2d1yo0;rk0O;ako0Y;aroli0V;olk;bras0Xva01w0; 1foundland0;! and labrador;brunswick,hamp0Hjers0mexiIyork state;ey;a5i1o0;nta0Nrelos;ch2dlanAn1ss0;issippi,ouri;as geraFneso0M;igQoacQ;dhya,harasht04ine,ni2r0ssachusetts;anhao,y0;land;p0toba;ur;anca04e0incoln04ouis7;e0iH;ds;a0entucky,hul0A;ns08rnata0Dshmir;alis0iangxi;co;daho,llino1nd0owa;ia05;is;a1ert0idalEunA;fordT;mpSwaii;ansu,eorgWlou5u0;a1erre0izhou,jarat;ro;deloupe,n0;ajuato,gdo0;ng;cesterL;lori1uji0;an;da;sex;e3o1uran0;go;rs0;et;lawaDrbyC;a7ea6hi5o0umbrG;ahui3l2nnectic1rsi0ventry;ca;ut;iLorado;la;apDhuahua;ra;l7m0;bridge2peche;a4r3uck0;ingham0;shi0;re;emen,itish columb2;h1ja cal0sque,var1;iforn0;ia;guascalientes,l3r0;izo1kans0;as;na;a1ber0;ta;ba1s0;ka;ma","Possessive":"anyAh5its,m3noCo1sometBthe0yo1;ir1mselves;ur0;!s;i8y0;!se4;er1i0;mse2s;!s0;!e0;lf;o1t0;hing;ne","Currency":"$,aud,bRcPdKeurJfIgbp,hkd,inr,jpy,kGlEp8r7s3usd,x2y1z0¢,£,¥,ден,лв,руб,฿,₡,₨,€,₭,﷼;lotyRł;en,uanQ;af,of;h0t5;e0il5;k0q0;elL;iel,oubleKp,upeeK;e2ound st0;er0;lingH;n0soG;ceFn0;ies,y;e0i7;i,mpi6;n,r0wanzaByatB;!onaAw;ori7ranc9t;!o8;en3i2kk,o0;b0ll2;ra5;me4n0rham4;ar3;ad,e0ny;nt1;aht,itcoin0;!s","Country":"0:38;1:2L;a2Wb2Dc21d1Xe1Rf1Lg1Bh19i13j11k0Zl0Um0Gn05om3CpZqat1JrXsKtCu6v4wal3yemTz2;a24imbabwe;es,lis and futu2X;a2enezue31ietnam;nuatu,tican city;.5gTkraiZnited 3ruXs2zbeE;a,sr;arab emirat0Kkingdom,states2;! of am2X;k.,s.2; 27a.;a7haBimor-les0Bo6rinidad4u2;nis0rk2valu;ey,me2Xs and caic1T; and 2-2;toba1J;go,kel0Ynga;iw2Vji2nz2R;ki2T;aCcotl1eBi8lov7o5pa2Bri lanka,u4w2yr0;az2ed9itzerl1;il1;d2Qriname;lomon1Vmal0uth 2;afr2IkLsud2O;ak0en0;erra leoEn2;gapo1Wt maart2;en;negKrb0ychellY;int 2moa,n marino,udi arab0;hele24luc0mart1Z;epublic of ir0Com2Cuss0w2;an25;a3eHhilippinTitcairn1Ko2uerto riM;l1rtugE;ki2Bl3nama,pua new0Tra2;gu6;au,esti2;ne;aAe8i6or2;folk1Gth3w2;ay; k2ern mariana1B;or0M;caragua,ger2ue;!ia;p2ther18w zeal1;al;mib0u2;ru;a6exi5icro09o2yanm04;ldova,n2roc4zamb9;a3gol0t2;enegro,serrat;co;c9dagascZl6r4urit3yot2;te;an0i14;shall0Vtin2;ique;a3div2i,ta;es;wi,ys0;ao,ed00;a5e4i2uxembourg;b2echtenste10thu1E;er0ya;ban0Gsotho;os,tv0;azakh1De2iriba02osovo,uwait,yrgyz1D;eling0Jnya;a2erF;ma15p1B;c6nd5r3s2taly,vory coast;le of m19rael;a2el1;n,q;ia,oI;el1;aiSon2ungary;dur0Mg kong;aAermany,ha0Pibralt9re7u2;a5ern4inea2ya0O;!-biss2;au;sey;m,tema0P;e2na0M;ce,nl1;ar;bTmb0;a6i5r2;ance,ench 2;guia0Dpoly2;nes0;ji,nl1;lklandTroeT;ast tim6cu5gypt,l salv5ngl1quatorial3ritr4st2thiop0;on0; guin2;ea;ad2;or;enmark,jibou4ominica3r con2;go;!n B;ti;aAentral african 9h7o4roat0u3yprQzech2; 8ia;ba,racao;c3lo2morPngo-brazzaville,okFsta r03te d'ivoiK;mb0;osD;i2ristmasF;le,na;republic;m2naTpe verde,yman9;bod0ero2;on;aFeChut00o8r4u2;lgar0r2;kina faso,ma,undi;azil,itish 2unei;virgin2; is2;lands;liv0nai4snia and herzegoviGtswaGuvet2; isl1;and;re;l2n7rmuF;ar2gium,ize;us;h3ngladesh,rbad2;os;am3ra2;in;as;fghaFlCmAn5r3ustr2zerbaijH;al0ia;genti2men0uba;na;dorra,g4t2;arct6igua and barbu2;da;o2uil2;la;er2;ica;b2ger0;an0;ia;ni2;st2;an","MaleName":"0:A3;1:9D;2:9L;3:9U;4:8X;5:7P;6:9R;7:95;8:8E;9:7A;a8Zb8Dc7Kd6Qe62f5Ng59h4Qi4Gj3Kk3Cl2Xm20n1Ro1Mp1Equ1Dr0Ss0DtXusm0vUwKxavi2yCzA;aAor0;cha4Vh1A;ass3i,oCuA;sDuA;ma,to;nDsCusA;oAsB;uf;ef;at0g;aHeGiBoA;lfgang,odrow;lAn12;bCfr9ClA;a89iA;am,e,s;e6Qur;i,nde7Ssl8;de,lArr6y7;la5t2;an5ern1iA;cAha0nce2Prg7Lva0;ente,t4B;aOeJhIimHoDrByA;!l2ro7s1;av6GeAoy;nt,v47;bCdd,mAny;!as,mAoharu;a8Xie,y;i9y;!my,othy;eodo0Jia62om9;dDrA;en5rA;an5eAy;ll,n5;!dy;ic7Xreq,ts3F;aLcottKeJhGiFoDpenc2tAur19ylve6Zzym1;anBeAua62;f0ph8Ive4Awa61;!islaw,l8;lom1uA;leyma7ta;dn8m1;aBeA;ld1rm0;hZne,qu0Dun,wn;an,basti0k1Il3Brg3Ath;!y;lBmAntino,q3Sul;!m7Fu4;ik,vatoY;aPeLicJoDuByA;an,ou;b6dAf63ssel5T;ol2Cy;an,bEcky,dDel,geCh0land8Cm0n59ry,sByA;!ce;coe,s;l2Yr;e3Zg2n8o8Eri58;b7Fe86;ar4Tc4Sha6VkA;!ey,y;gBub6x,yAza;ansh,nal4Q;g7AiA;na76s;chDfa4lCmBndApha4ul,y54;al5Eol1Y;i7Won;f,ph;id;ent3int1;aGeDhilCierBol,reA;st1;re;!ip,lip;d7Orcy,tA;ar,eA;!r;bKt3Eul;liv2m7IrCsBtAum76w6;is,to;ama,c74;i,l3JvA;il4D;athanHeGiCoA;aAel,l0ma0r2D;h,m;cCiBkA;h5Lola;lo;hol9k,ol9;al,d,il,ls1;!i4;aSeQiIoDuAyr1;hamBr4XstaA;fa,pha;ed,mE;dibo,e,hamCntBsAussa;es,he;e,y;ad,ed,mA;ad,ed;cEgu4kClBnAtche5A;a5Wik;os,t1;e,olA;aj;ah,hAk8;a4eA;al,l;hAlv3r3M;di,met;ck,hKlJmLnu4rFs1tBuri5xA;!imilian6O;eo,hBi9tA;!eo,hew,ia;eAis;us,w;cCio,k6JlBsha4UtAv3;i1Zy;in,on;!el,oHus;colm,ik;amAdi,moud;adA;ou;aLeIiHl27oDuAy36;c9is,kAth2;aAe;!s;g0nn5FrenCuAwe4I;!iA;e,s;!zo;am,on4;evi,la3Wn5IoAst2vi;!nA;!a4V;mAn5r0Xur3Xwr3X;ar,oA;nt;aFeBhaled,irArist3Zu34y2R;k,ollos;i0UnArmit,v3;!dBnAt;e0Sy;a42ri3S;na4ZrAthem;im,l;aYeQiOoCuA;an,liAst3;an,o,us;aqu3eJhnInFrDsA;eBhA;!ua;!ph;dAge;an,i;!aA;s,thA;an,on;!ath0n49;!l,sAy;ph;an,e,mA;!m45;ffFrCsA;sAus;!e;a49emBmai7oAry;me,ni0F;i5Hy;!eZrA;ey,y;cFd6kEmDrCsBvi2yA;!d6;on,p2;ed,r1D;al,es;e,ob,ub;k,ob;an,brahIchika,gGk2lija,nuFrDsCtAv0;ai,sA;uki;aac,ha0ma4;a,vinA;!g;k,nngu3W;nacAor;io;im;aJeEina3RoCuAyd42;be1PgAmber3FsC;h,o;m2ra5sAwa34;se3;aDctCitCnBrA;be1Km0;ry;or;th;bHlGmza,ns,o,rBsAya36;an,s0;lDo3BrCuAv8;hi33ki,tA;a,o;is1y;an,ey;!im;ib;aKeHilbe3YlenGord1rCuA;illerAstavo;mo;aCegAov2;!g,orA;io,y;dy,h43nt;!n;ne,oBraA;ld,rd3Q;ffr8rge;bri4rA;la1HrAy;eXy;aNeKiIlHorr0BrA;anCedA;!d2GeAri1K;ri1J;cBkA;!ie,l3;esco,isA;!co,zek;oyd;d4lA;ip;liBng,rnA;anW;pe,x;bi0di;arVdQfra3it0lMmFnErBsteb0th0uge7vAym6;an,ereG;gi,iBnAv3w3;est33ie;c01k;rique,zo;aFiCmA;aEeA;tt;lBrA;!h0;!io;nu4;be01d1iCliBm2t1v3woA;od;ot1Bs;!as,j35;!d1Xg29mDuBwA;a1Din;arA;do;o0Fu0F;l,nA;est;aReJieIoCrag0uBwAyl0;ay7ight;a7st3;minDnCugByA;le;!l9;!a1Hn1K;go,icA;!k;go;an,j0lbeGmetriXnErDsCvBwAxt2;ay7ey;en,in;moZ;ek,ri05;is,nA;is;rt;lJmInHrCvA;e,iA;!d;iDne08rAyl;eAin,yl;lAn;!l;n,us;!e,i4ny;i1Gon;e,l9;as;aXeVhOlFoBraig,urtA;!is;dy,l3nrCrA;ey,neliAy;us;ad;aDevelaCiAyF;fAnt;fo05t1;nd;rCuByA;!t1;de;en5;ce;aEeDrisBuA;ck;!tA;i0oph2;st2;d,rlAse;es,ie;cAdric,s0M;il;lDmer1rA;ey,lBroA;ll;!os,t1;eb,v3;arUeOilNlaMobLrBuAyr1;ddy,rt1;aFeCi0uByA;an,ce,on;ce,no;nBtA;!t;d0t;dAnd1;!foBl8y;ey;rd;!by;i7ke;al,lE;nCrAshoi;at,naAt;rd0E;!iBjam3nA;ie,y;to;ry,t;ar0Pb0Hd0Egu0Chme0Bid6jani,lUmSnKputsiJrBsaAu0Cya0ziz;hi;aGchFi4jun,maDnBon,tAy0;hur,u04;av,oA;ld;an,nd03;el;ie;ta;aq;dFgelYtA;hoDoA;i7nA;!iV;ne;ny;reAy;!s,w;ir,mAos;ar;!an,beNeHfEi,lDonCt1vA;aLin;on;so,zo;an,en;onBrA;edI;so;jDksandCssDxA;!and2;er;ar,er;andA;ro;rtA;!o;en;d,t;st3;in;amBoAri0vik;lfo;!a;dCel,rahBuA;!bakr,lfazl;am;allDel,oulaye,ulA;lBrahm0;an;ah,o;ah;av,on","City":"a2Tb23c1Td1Oe1Nf1Lg1Gh18i16jakar2Ek0Xl0Rm0En0Ao08pXquiWrTsJtAu9v6w3y1z0;agreb,uri1W;ang1Qe0okohama;katerin1Frev31;ars1ellingt1Oin0rocl1;nipeg,terth0V;aw;a1i0;en2Glni2Y;lenc2Tncouv0Gr2F;lan bat0Dtrecht;a6bilisi,e5he4i3o2rondheim,u0;nVr0;in,ku;kyo,ronIulouC;anj22l13miso2Ira29; haJssaloni0X;gucigalpa,hr2Nl av0L;i0llinn,mpe2Angi07rtu;chu21n2LpT;a3e2h1kopje,t0ydney;ockholm,uttga11;angh1Eenzh1W;o0KvZ;int peters0Ul3n0ppo1E; 0ti1A;jo0salv2;se;v0z0Q;adU;eykjavik,i1o0;me,sario,t24;ga,o de janei16;to;a8e6h5i4o2r0ueb1Pyongya1M;a0etor23;gue;rt0zn23; elizabe3o;ls1Frae23;iladelph1Ynom pe07oenix;r0tah tik18;th;lerJr0tr0Z;is;dessa,s0ttawa;a1Glo;a2ew 0is;delTtaip0york;ei;goya,nt0Tpl0T;a5e4i3o1u0;mb0Kni0H;nt0scH;evideo,real;l1Ln01skolc;dellín,lbour0R;drid,l5n3r0;ib1se0;ille;or;chest0dalay,i0Y;er;mo;a4i1o0vAy00;ndZs angel0E;ege,ma0nz,sbYverpo1;!ss0;ol; pla0Husan0E;a5hark4i3laipeda,o1rak0uala lump2;ow;be,pavog0sice;ur;ev,ng8;iv;b3mpa0Jndy,ohsiu0Gra0un02;c0j;hi;ncheLstanb0̇zmir;ul;a5e3o0; chi mi1ms,u0;stH;nh;lsin0rakliF;ki;ifa,m0noi,va09;bu0RiltC;dan3en2hent,iza,othen1raz,ua0;dalaj0Fngzhou;bu0O;eToa;sk;es,rankfu0;rt;dmont4indhovU;a1ha01oha,u0;blRrb0Eshanbe;e0kar,masc0FugavpiJ;gu,je0;on;a7ebu,h2o0raioJuriti01;lo0nstanJpenhagNrk;gFmbo;enn3i1ristchur0;ch;ang m1c0ttagoL;ago;ai;i0lgary,pe town,rac4;ro;aHeBirminghWogoAr5u0;char3dap3enos air2r0sZ;g0sa;as;es;est;a2isba1usse0;ls;ne;silPtisla0;va;ta;i3lgrade,r0;g1l0n;in;en;ji0rut;ng;ku,n3r0sel;celo1ranquil0;la;na;g1ja lu0;ka;alo0kok;re;aBb9hmedabad,l7m4n2qa1sh0thens,uckland;dod,gabat;ba;k0twerp;ara;m5s0;terd0;am;exandr0maty;ia;idj0u dhabi;an;lbo1rh0;us;rg","Place":"aEbDcCdBevergladAf9great 8h7i6jfk,kul,l4m3new england,ord,p1s0yyz;fo,yd;acifFek,h0;l,x;co,ia,uc;a0gw,hr;s,x;ax,cn,ndianBst;kg,nd;britain,lak1;co,ra;es;en,fw,xb;dg,gk,lt;cn,kk;ms,ntar1r1tl0;!ant1;ct0;ic0; ocean","WeekDay":"fri4mon4s2t1wed0;!nesd4;hurs2ues2;at0un1;!urd1;!d0;ay0;!s","Holiday":"0:1Q;1:1P;a1Fb1Bc12d0Ye0Of0Kg0Hh0Di09june07kwanzaa,l04m00nYoVpRrPsFt9v6w4xm03y2;om 2ule;hasho16kippur;hit2int0Xomens equalit8; 0Ss0T;alentines3e2ictor1E;r1Bteran1;! 0;-0ax 0h6isha bav,rinityMu2; b3rke2;y 0;ish2she2;vat;a0Xe prophets birth0;a6eptember14h4imchat tor0Ut 3u2;kk4mmer T;a8p7s6valentines day ;avu2mini atzeret;ot;int 2mhain;a4p3s2valentine1;tephen1;atrick1;ndrew1;amadan,ememberanc0Yos2;a park1h hashana;a3entecost,reside0Zur2;im,ple heart 0;lm2ssovE; s04;rthodox 2stara;christma1easter2goOhoJn0C;! m07;ational 2ew years09;freedom 0nurse1;a2emorial 0lHoOuharram;bMr2undy thurs0;ch0Hdi gr2tin luther k0B;as;a2itRughnassadh;bour 0g baom2ilat al-qadr;er; 2teenth;soliU;d aJmbolc,n2sra and miraj;augurGd2;ependen2igenous people1;c0Bt1;a3o2;ly satur0;lloween,nukkUrvey mil2;k 0;o3r2;ito de dolores,oundhoW;odW;a4east of 2;our lady of guadalupe,the immaculate concepti2;on;ther1;aster8id 3lectYmancip2piphany;atX;al-3u2;l-f3;ad3f2;itr;ha;! 2;m8s2;un0;ay of the dead,ecemb3i2;a de muertos,eciseis de septiembre,wali;er sol2;stice;anad8h4inco de mayo,o3yber m2;on0;lumbu1mmonwealth 0rpus christi;anuk4inese n3ristmas2;! N;ew year;ah;a 0ian tha2;nksgiving;astillCeltaine,lack4ox2;in2;g 0; fri0;dvent,ll 9pril fools,rmistic8s6u2;stral4tum2;nal2; equinox;ia 0;cens2h wednes0sumption of mary;ion 0;e 0;hallows 6s2;ai2oul1t1;nt1;s 0;day;eve","Month":"aAdec8feb6j2mar,nov8oct1sep0;!t7;!o7;an4u0;l1n0;!e;!y;!r0;uary;!em0;ber;pr1ug0;!ust;!il","FirstName":"aHblair,cFdevEguadalupe,j9k7lashawn,m4r2sh0trinity;ay,e0iloh;a,lby;e0obin;g1ne;ar1el,org0;an;ion,lo;asAe0;ls9nyatta,rry;a1e0;an,ss2;ime,m0n;ie,m0;ie;an,on;as0heyenne;ey,sidy;lexis,ndra,ubr0;ey","Duration":"centur4d2hour3m0seconds,week3year3;i0onth2;llisecond1nute1;ay0ecade0;!s;ies,y","Time":"a6breakfast 5dinner5e3lunch5m2n0oclock,some5;i7o0;on,w;id4or1;od,ve0;ning;time;fternoon,go,ll day,t 0;ni0;ght","LastName":"0:2T;1:39;2:37;3:2C;4:2X;a38b2Zc2Ld2Be28f23g1Yh1Ni1Ij1Ck15l0Xm0Ln0Ho0Ep03rWsLtGvEwBxAy7zh5;a5ou,u;ng,o;a5eun2Roshi1Iun;ma5ng;da,guc1Xmo24sh1ZzaP;iao,u;a6eb0il5o4right,u;li38s2;gn0lk0ng,tanabe;a5ivaldi;ssilj34zqu1;a8h7i2Do6r5sui,urn0;an,ynisH;lst0Nrr2Sth;at1Romps2;kah0Tnaka,ylor;aCchBeAhimizu,i9mi8o7t6u5zabo;ar1lliv27zuC;al21ein0;sa,u4;rn3th;lva,mmo22ngh;mjon3rrano;midt,neid0ulz;ito,n6sa5to;ki;ch1dKtos,z;amAeag1Xi8o6u5;bio,iz,sC;b5dri1KgHj0Sme22osevelt,sZux;erts,ins2;c5ve0E;ci,hards2;ir1os;aDe9h7ic5ow1Z;as5hl0;so;a5illips;m,n1R;ders1Zet7r6t5;e0Nr3;ez,ry;ers;h1Zrk0t5vl3;el,te0J;baAg0Alivei00r5;t5w1N;ega,iz;a5eils2guy1Qix2owak,ym1C;gy,ka5var1I;ji5muV;ma;aDeBiAo7u5;ll0n5rr0Bssolini,ñ5;oz;lina,oJr5zart;al1Le5r0S;au,no;hhail3ll0;rci0s5y0;si;eVmmad3r5tsu07;in5tin1;!o;aBe7i5op1uo;!n5u;coln,dholm;e,fe6n0Or5w0H;oy;bv5v5;re;rs13u;aAennedy,imu9le0Jo7u6wo5;k,n;mar,znets3;bay5vacs;asX;ra;hn,rl8to,ur,zl3;a9en8ha4imen1o5u4;h5n0Xu4;an5ns2;ss2;ki0Cs0R;cks2nsse0B;glesi8ke7noue,shik6to,vano5;u,v;awa;da;as;aBe8it7o6u5;!a4b0gh0Mynh;a4ffmann,rvat;chcock,l0;mingw6nde5rK;rs2;ay;ns0DrrNs6y5;asBes;an3hi5;moG;a7il,o6rub0u5;o,tierr1;m1nzal1;nd5o,rcia;hi;er8is7lor07o6uj5;ita;st0urni0;ch0;nand1;d6insteGsposi5vaK;to;is2wards;aBeAi8omin7u5;bo5rand;is;gu1;az,mitr3;ov;lgado,vi;rw6vi5;es,s;in;aEhAlark9o5;hLl5op0x;em6li5;ns;an;!e;an7e6iu,o5ristensGu4we;i,ng,u4w,y;!n,on5u4;!g;mpb7rt0st5;ro;er;ell;aAe7ha4lanco,oyko,r5yrne;ooks,yant;ng;ck6ethov5nnett;en;er,ham;ch,h6iley,rn5;es;k,ng;dCl8nd5;ers5r9;en,on,s2;on;eks6iy7var1;ez;ej5;ev;ams","FemaleName":"0:81;1:7F;2:7Y;3:7H;4:65;5:7P;6:7T;7:6Z;8:7U;9:7R;A:7D;B:6K;C:6X;a77b6Oc5Td5Ce4Rf4Jg47h3Zi3Uj38k2Sl20m19n13o11p0Tr0EsXtMursuAvHwFyDza5;olan3vD;et7Kon5Y;an3enLhi6OilD;a,la,ma;aGeEiD;ctor1oAvi3B;l4VrD;a,na,oniB;len5Nnes7N;aKeIheHi2onGrD;acCiEuD;dy;c1na,s8;i4Vya;l4Nres0;o3GrD;e1Ni,ri;bit8mDn29ra,s8;a5iDmy;!ka;aSel4HhKiJoHtGuEyD;b7Slv1;e,sDzU;an16i;acCel1G;f1nDph1;d5ia,ja,ya;lv1mon0;aGeDi24;e2iAlErD;i,yl;ia,ly;nErDu2w2;i,on;a,ia,nDon;a,on;b24i3l5Xmant8nd5ra9;aOeKhon3i7oEuD;by,th;bHch4On3sExD;an4V;aEeD;ma2Ut7;!lind;er7yn;bEnD;a,ee;a,eD;cBka9;chDmo2qu3I;a3HelDi3;!e,le;aGeFhylEriD;scil0Nyamva3;is,lis;arl,t5;ige,mFrvati,tricEulD;a,et60in0;a,e,ia;!eA;f4AlD;ga,iv1;aHelGiEorD;a,ma;cDkki,na;ho2No2N;!l;di6Gi36o0Qtas8;aNeKiHoErignayani,uri2ZyrD;a,na,t2J;l4ZnD;a,iD;ca,q3F;ch3QlErD;an3iam;dred,iB;ag1CgEliDredi36;n3s5Q;an,han;bRdel4e,gdale2li59nQrGtil3uFvEx4yD;a,ra;is;de,re6;cLgJiFl3Es8tEyanD;!n;a,ha,i2;aEb2Hja,l2Ena,sDtza;a,ol,sa;!nD;!a,e,n0;arDo,r49ueri53;et49i7;elKia;dakran7on,ueA;el,le;aXeRiNoJuFyD;d1nD;!a,da,e4Vn1D;ciFelEiDpe;sa;a,la;a,l3Tn3;is,la,rDui2P;aEeDna,ra4;n0t7;!in0;lFndDsa;a,sD;ay,ey,i,y;a,i0Fli0F;aGiFla,nEoDslCt1M;la,na;a,o5;gh,la;!h,nD;a,e,n0V;don2Fna,ra,tGurEvern0xD;mi;a,eD;l,n;as8is8oD;nDya;ya;aLeIhadija,iFrD;istDy2E;a,en,in0L;mDrst6;!beD;rlC;is8lEnd5rD;i,ri;ey,i,lCy;nyakumari,rHtEvi7yD;!la;aEe,hDi3Ari2y;ar4er4le6r11;ri2;a,en,iDla;!ma,n;aSeMilJoFuD;anDdi1El1st4;a,i7;!anFcel0UdEhan1Pl3Dni,seDva2y35;fi2ph4;i30y;!a,e,n01;!iElD;!iD;an;anGle2nEri,sD;iBsiB;a,if3KnD;a,if3J;a,e3Bin0nD;a,e3Ain0;cGde,nDsm4vie5;a,eEiD;ce,n0s;!l28t2E;l0DquelD;in0yn;da,mog2Ungrid,rGsDva;abelEiD;do5;!a,e,l0;en0ma;aHeFilD;aDda,laD;ry;ath32i24lenDnriet7;!a,e;nErD;i1Zri1Z;a9na9;aLeJiIlGrEwenD;!dolX;acDetch6;e,ieA;adys,enDor1;a,da,na;na,seG;nevieve,orgi2rD;ald4trude;brielEil,le,yD;le;a,e,le;aJeHlorGrD;ancDe3ie3;es,iD;n0sB;a,en1T;lDrn;ic1;tiOy1N;dVile6k7lOmNrLstItGuFvD;a,elD;yn;gen1la,ni1M;hDta;el;eDh27;lDr;a,e,l0;iDma,nest4;ca,ka,n;ma;a4eHiEl6ma,oiTsa,vD;a,i5;sDzaE;aDe;!beG;anor,nD;!a;iDna;th;aPeIiHoD;lor26miniqFnNrD;a,e6is,othD;ea,y;ue;anVna;anIbHe,lFnDsir1Y;a,iD;se;a,ia,la,orD;es,is;ora9ra;a,na;m1nEphn0rlD;a,en0;a,iD;el07;aXeUhRlNoGrDynth1;isEyD;stal;ti2;lInsGrDur06;a,inEnD;el1;a,e,n0;tanDuelo;ce,za;e6le6;aDeo;ire,rEudD;et0Sia;a,i09;arl0GeEloe,ristD;a,in0;ls0Qryl;cElD;es0Mi1C;el1il0Y;itlin,milLndKrHsGtD;ali2hD;er4le6y;in0;a0Usa0U;a,la,meEolD;!e,in0yn;la,n;aUiU;e,le;arbUeLiJlJoni7rD;anHen3iDooke;dgEtD;tnC;etD;!te;di;anB;ca;atriKcky,lin3rHtEula9verD;ly;h,tD;e,yD;!e;nDt8;adOiD;ce;ce,z;a5ra;biga0Jd0Dgn0Ci07lZmVnIrFshlCudrDva;a,ey,i,y;ey,i,y;lEpi7;ta;en0;a,dMeKgelIiHja,nFtoD;inDn1;etJ;!a,eHiD;ka;ka,ta;a,iD;a,ca,n0;!tD;te;jeArD;ea;la;an3bEel1i2y;ia;er;da;exaIiFma,ta,yD;a,sD;a,sa;cEsD;a,ha,on;e,ia;nd5;ra;c8da,le6mEsha9;!h;ee;en;ha;es;a,elFriD;a2en0;na;e,iD;a,n0;a,e;il","Person":"aQbOcKdHemeril lagasse,faGgDhBjk rowling,kAlebron james,m7oprah winfrNparis hiltIr4s3t2uncle,v0womF;a0irgin maB;lentino rossi,n go3;iger woods,yra banks;addam hussaHcarlett johanssEistOlobodan milosevic,omeone,tepA;ay romano,eese witherspoDo1ush limbau0;gh;d stewart,naldinho;an,essiaen,itt romnFo0ubarek;m0thJ;!my;anye west,iefer sutherland,obe bryaG;alle ber0ulk hog3;ry;entlem1irl,rand0uy;fa1mo1;an;thB;ad1enzel washingt0ick wolf,ude;on;!dy;ar1ous0;in;dinal wols0son palm5;ey;arack obama,oy,ro0;!th2;dolf hitl1shton kutch1u0;nt;er","Verb":"awak9born,cannot,fr8g7h5k3le2m1s0wors9;e8h3;ake sure,sg;ngth6ss6;eep tabs,n0;own;as0e2;!t2;iv1onna;ight0;en","PhrasalVerb":"0:71;1:6P;2:7D;3:73;4:6I;5:7G;6:75;7:6O;8:6B;9:6C;A:5H;B:70;C:6Z;a7Gb62c5Cd59e57f45g3Nh37iron0j33k2Yl2Km2Bn29o27p1Pr1Es09tQuOvacuum 1wGyammerCzD;eroAip EonD;e0k0;by,up;aJeGhFiEorDrit52;d 1k2Q;mp0n49pe0r8s8;eel Bip 7K;aEiD;gh 06rd0;n Br 3C;it 5Jk8lk6rm 0Qsh 73t66v4O;rgeCsD;e 9herA;aRePhNiJoHrFuDype 0N;ckArn D;d2in,o3Fup;ade YiDot0y 32;ckle67p 79;ne66p Ds4C;d2o6Kup;ck FdEe Dgh5Sme0p o0Dre0;aw3ba4d2in,up;e5Jy 1;by,o6U;ink Drow 5U;ba4ov7up;aDe 4Hll4N;m 1r W;ckCke Elk D;ov7u4N;aDba4d2in,o30up;ba4ft7p4Sw3;a0Gc0Fe09h05i02lYmXnWoVpSquare RtJuHwD;earFiD;ngEtch D;aw3ba4o6O; by;ck Dit 1m 1ss0;in,up;aIe0RiHoFrD;aigh1LiD;ke 5Xn2X;p Drm1O;by,in,o6A;r 1tc3H;c2Xmp0nd Dr6Gve6y 1;ba4d2up;d2o66up;ar2Uell0ill4TlErDurC;ingCuc8;a32it 3T;be4Brt0;ap 4Dow B;ash 4Yoke0;eep EiDow 9;c3Mp 1;in,oD;ff,v7;gn Eng2Yt Dz8;d2o5up;in,o5up;aFoDu4E;ot Dut0w 5W;aw3ba4f36o5Q;c2EdeAk4Rve6;e Hll0nd GtD; Dtl42;d2in,o5upD;!on;aw3ba4d2in,o1Xup;o5to;al4Kout0rap4K;il6v8;at0eKiJoGuD;b 4Dle0n Dstl8;aDba4d2in52o3Ft2Zu3D;c1Ww3;ot EuD;g2Jnd6;a1Wf2Qo5;ng 4Np6;aDel6inAnt0;c4Xd D;o2Su0C;aQePiOlMoKrHsyc29uD;ll Ft D;aDba4d2in,o1Gt33up;p38w3;ap37d2in,o5t31up;attleCess EiGoD;p 1;ah1Gon;iDp 52re3Lur44wer 52;nt0;ay3YuD;gAmp 9;ck 52g0leCn 9p3V;el 46ncilA;c3Oir 2Hn0ss FtEy D;ba4o4Q; d2c1X;aw3ba4o11;pDw3J;e3It B;arrow3Serd0oD;d6te3R;aJeHiGoEuD;ddl8ll36;c16p 1uth6ve D;al3Ad2in,o5up;ss0x 1;asur8lt 9ss D;a19up;ke Dn 9r2Zs1Kx0;do,o3Xup;aOeMiHoDuck0;a16c36g 0AoDse0;k Dse34;aft7ba4d2forw2Ain3Vov7uD;nd7p;e GghtFnEsDv1T;ten 4D;e 1k 1; 1e2Y;ar43d2;av1Ht 2YvelD; o3L;p 1sh DtchCugh6y1U;in3Lo5;eEick6nock D;d2o3H;eDyA;l2Hp D;aw3ba4d2fSin,o05to,up;aFoEuD;ic8mpA;ke2St2W;c31zz 1;aPeKiHoEuD;nker2Ts0U;lDneArse2O;d De 1;ba4d2oZup;de Et D;ba4on,up;aw3o5;aDlp0;d Fr Dt 1;fDof;rom;in,oO;cZm 1nDve it;d Dg 27kerF;d2in,o5;aReLive Jloss1VoFrEunD; f0M;in39ow 23; Dof 0U;aEb17it,oDr35t0Ou12;ff,n,v7;bo5ft7hJw3;aw3ba4d2in,oDup,w3;ff,n,ut;a17ek0t D;aEb11d2oDr2Zup;ff,n,ut,v7;cEhDl1Pr2Xt,w3;ead;ross;d aEnD;g 1;bo5;a08e01iRlNoJrFuD;cDel 1;k 1;eEighten DownCy 1;aw3o2L;eDshe1G; 1z8;lFol D;aDwi19;bo5r2I;d 9;aEeDip0;sh0;g 9ke0mDrD;e 2K;gLlJnHrFsEzzD;le0;h 2H;e Dm 1;aw3ba4up;d0isD;h 1;e Dl 11;aw3fI;ht ba4ure0;eInEsD;s 1;cFd D;fDo1X;or;e B;dQl 1;cHll Drm0t0O;apYbFd2in,oEtD;hrough;ff,ut,v7;a4ehi1S;e E;at0dge0nd Dy8;o1Mup;o09rD;ess 9op D;aw3bNin,o15;aShPlean 9oDross But 0T;me FoEuntD; o1M;k 1l6;aJbIforGin,oFtEuD;nd7;ogeth7;ut,v7;th,wD;ard;a4y;pDr19w3;art;eDipA;ck BeD;r 1;lJncel0rGsFtch EveA; in;o16up;h Bt6;ry EvD;e V;aw3o12;l Dm02;aDba4d2o10up;r0Vw3;a0He08l01oSrHuD;bbleFcklTilZlEndlTrn 05tDy 10zz6;t B;k 9; ov7;anMeaKiDush6;ghHng D;aEba4d2forDin,o5up;th;bo5lDr0Lw3;ong;teD;n 1;k D;d2in,o5up;ch0;arKgJil 9n8oGssFttlEunce Dx B;aw3ba4;e 9; ar0B;k Bt 1;e 1;d2up; d2;d 1;aIeed0oDurt0;cFw D;aw3ba4d2o5up;ck;k D;in,oK;ck0nk0st6; oJaGef 1nd D;d2ov7up;er;up;r0t D;d2in,oDup;ff,ut;ff,nD;to;ck Jil0nFrgEsD;h B;ainCe B;g BkC; on;in,o5; o5;aw3d2o5up;ay;cMdIsk Fuction6; oD;ff;arDo5;ouD;nd;d D;d2oDup;ff,n;own;t D;o5up;ut","Modal":"c5lets,m4ought3sh1w0;ill,o5;a0o4;ll,nt;! to;ay,ight,ust;an,o0;uld","Adjective":"0:74;1:7J;2:7P;3:7I;4:7B;5:5A;6:5X;7:48;8:49;9:60;A:7G;B:72;C:6Y;D:5V;a6Hb62c5Od54e4Rf47g3Yh3Ni32j30k2Zl2Om2Dn24o1Op18quack,r0Ys0Et07uOvLwEyear5;arp0eIholeHiGoE;man5oEu6A;d6Czy;despr73s5D;!sa8;ek5lEste23;co1Fl o4J;aFiEola4B;b7Sce versa,ol53;ca2gabo62nilla;ltVnIpFrb58su4tterE;!moC; f32b1MpFsEti1F;ca8et,ide dLtairs;er,i3L;aObeco6Qconvin25deLeKfair,ivers4knJprecedXrHsFwE;iel1Yritt5Y;i1TuE;pervis0specti3;eEu5;cognKgul6Gl6G;own;ndi3v5Sxpect0;cid0rE;!grou5NsE;iz0tood;b8ppeaKssu6FuthorE;iz0;i22ra;aIeGhough4NoFrE;i1oubl0;geth6p,rp6G;en5PlEm4Yrr2Sst0;li3;boo,lEn;ent0;aWcVeThSiQmug,nobbi3DoOpNqueami3DtIuEymb63;bGi gener53pErprisi3;erEre0J;! dup6b,i27;du0seq4S;anda6TeHi0NrEy37;aightEip0; fEfE;or5A;adfaCreotyp0;aDec2Eir1Hlend61ot on; call0le,mb6phist1VrEu0Vvi40;d5Zry;gnifica2nE;ceDg8;am2Oe6ocki3ut;cEda1em5lfi2Xni1Upa68re7;o1Er3U;at57ient26reec57;cr0me,ns serif;aLeHiFoE;buCtt4TuRy4;ghtEv4;!-27f9;ar,bel,condi1du62fres51lGpublic3UsEta2C;is46oE;lu1na2;e1Cuc44;b5JciE;al,st;aOeMicayu7lac5HopuliCrFuE;bl59mp0;eIiFoE;!b08fuBmi31p6;mFor,sEva1;ti7;a4Ve;ciBmE;a0Gi5J;ac20rEti1;feAma2Uplexi3v33;rEst;allelGtE;-tiEi4;me;!ed;bPffNkMld fashion0nLpKrg1Gth6utJvE;al,erE;!aGniFt,wE;eiErouE;ght;ll;do0Uer,g2Msi46;en,posi1; boa5Gg2Kli7;!ay; gua5EbEli7;eat;eGsE;cEer0Gole1;e7uD;d2Sse;ak0eLiKoEua4P;nIrFtE;ab8;thE;!eE;rn;chala2descri50stop;ght5;arby,cessa3Xighbor5xt;aMeKiHoEultip8;bi8derFlEnth5ot,st;dy;a1n;nEx0;iaEor;tuD;di4FnaEre;ci3;cEgenta,in,j02keshift,le,mmoth,ny,sculi7;abDho;aNeIiFoEu13;uti12vi3;mFteraE;l,te;it0;ftHgEth4;al,eFitiE;ma1;nda3D;!-0B;ngu3Rst,tt6;ap1Sind5no09;agg0uE;niNstifi0veni8;de4gno4Clleg4mRnGpso 1VrE;a1releE;va2; MaLbr0corKdIfluenSiSnHsGtE;aAenBoxE;ic37;a7i2S;a1er,oce2;iFoE;or;reA;deq3Kppr2Z;fEsitu,vitro;ro2;mIpE;arGerfeAoErop6;li1rtE;a2ed;ti4;eEi0R;d2RnB;aJelIiGoEumdr3C;neCok0rrEs08ur5;if2T;ghfalut1OspE;an2R;liZpf9;lHnGrE;d06roE;wi3;dy,gi3;f,low0;ainf9ener2Kiga23lLoKraHuE;aFilEng ho;ty;rd0;cFtE;ef9is;ef9;ne,od;ea2Dob4;aUeOiMlLoGrE;a1TeEoz1K;e2Dq11tf9;oGrE; keeps,eEm6tuna1;g04ign;liE;sh;ag2Zue2;nEx0;al,i1;dImFrE;ti8;a8ini7;ne;le; up;bl0i2lBr Eux,vori1;oEreac1E;ff;aNfficie2lMmiLnJreAthere4veIxE;aAcess,peGtraFuE;be2Ll0G;!va1D;ct0rt;n,ryday; Ecouragi3tiD;rou1sui1;ne2;abo22dOe17i1;g6sE;t,ygE;oi3;aUeMiGoErea15ue;mina2ne,ubE;le,tf9;dact1Bfficu1OsFvE;erB;creGeas0gruntl0honeCordFtE;a2ress0;er5;et; KadpJfIgene1PliGrang0spe1PtFvoE;ut;ail0ermin0;be1Mca1ghE;tf9;ia2;an;facto;i5magEngeroYs0I;ed,i3;ly;ertaQhief,ivil,oGrE;aEowd0u0H;mp0v02z0;loMmKnFoi3rrEve0P;eAu1I;cre1grHsGtE;emEra0F;po0D;ta2;ue2;mer08pleE;te,x;ni4ss4;in;aPeKizarDlIoFrE;and new,isk,okP;gFna fiWttom,urgeoE;is;us;ank,iI;re;autif9hiGlov0nFst,tt6yoG;er;eUt;nd;ul;ckFnkru0WrrE;en;!wards; priori,b0Mc0Jd09fra08g04h03lYma05ntiquXpTrNsLttracti06utheKvHwE;aFkE;wa0T;ke,re;ant garFerE;age;de;ntU;leep,tonisE;hi3;ab,bitHroGtiE;fiE;ci4;ga2;raE;ry;pEt;are2etiOrE;oprE;ia1;at0;arHcohFeEiLoof;rt;olE;ic;mi3;ead;ainCgressiFoniE;zi3;ve;st;id; LeJuIvE;aFerB;se;nc0;ed;lt;pt,qE;ua1;hoc,infinitE;um;cuFtu4u1;al;ra1;erOlNoLruKsFuE;nda2;e2oFtraA;ct;lu1rbi3;ng;te;pt;aEve;rd;aze,e;ra2;nt","Comparable":"0:41;1:4I;2:45;3:4B;4:2Y;5:3X;a4Ob44c3Od3De35f2Rg2Fh24i1Vj1Uk1Rl1Im1Cn16o14p0Tqu0Rr0IsRtKuIvFw7y6za12;ell27ou3;aBe9hi1Yi7r6;o3y;ck0Mde,l6n1ry,se;d,y;a6i4Mt;k,ry;n1Tr6sI;m,y;a7e6ulgar;nge5rda2xi3;gue,in,st;g0n6pco3Mse5;like0ti1;aAen9hi8i7ough,r6;anqu2Qen1ue;dy,g3Ume0ny,r09;ck,n,rs2R;d42se;ll,me,rt,s6wd47;te5;aVcarUeThRiQkin0GlMmKoHpGqua1HtAu7w6;eet,ift;b7dd15per0Hr6;e,re2J;sta2Ht4;aAe9iff,r7u6;pXr1;a6ict,o3;ig3Hn0W;a1ep,rn;le,rk;e24i3Hright0;ci2Aft,l7o6re,ur;n,thi3;emn,id;a6el0ooth;ll,rt;e8i6ow,y;ck,g37m6;!y;ek,nd3F;ck,l0mp4;a6iUort,rill,y;dy,ll0Zrp;cu0Tve0Txy;ce,ed,y;d,fe,int0l1Xv16;aBe9i8o6ude;mantic,o1Ksy,u6;gh,nd;ch,pe,tzy;a6d,mo0J;dy,l;gg7ndom,p6re,w;id;ed;ai2i6;ck,et;aFhoEi1SlCoBr8u6;ny,r6;e,p4;egna2ic7o6;fou00ud;ey,k0;li06or,te1D;a6easa2;in,nt;ny;in5le;dd,f6i0ld,ranR;fi11;aAe8i7o6;b4isy,rm16sy;ce,mb4;a6w;r,t;ive,rr02;aAe8ild,o7u6;nda1Ate;ist,o1;a6ek,llY;n,s0ty;d,tuR;aCeBi9o6ucky;f0Vn7o1Eu6ve0w18y0U;d,sy;e0g;g1Uke0tt4v6;e0i3;an,wd;me,r6te;ge;e7i6;nd;en;ol0ui1P;cy,ll,n6;sBt6;e6ima8;llege2r6;es7media6;te;ti3;ecu6ta2;re;aEeBiAo8u6;ge,m6ng1R;b4id;ll6me0t;ow;gh,l0;a6f04sita2;dy,v6;en0y;nd1Hppy,r6te5;d,sh;aGenFhDiClBoofy,r6;a9e8is0o6ue1E;o6ss;vy;at,en,y;nd,y;ad,ib,ooI;a2d1;a6o6;st0;t4uiY;u1y;aIeeb4iDlat,oAr8u6;ll,n6r14;!ny;aHe6iend0;e,sh;a7r6ul;get5mG;my;erce8n6rm,t;an6e;ciC;! ;le;ir,ke,n0Fr,st,t,ulA;aAerie,mp9sse7v6xtre0Q;il;nti6;al;ty;r7s6;tern,y;ly,th0;aFeCi9r7u6;ll,mb;u6y;nk;r7vi6;ne;e,ty;a6ep,nD;d6f,r;!ly;mp,pp03rk;aHhDlAo8r7u6;dd0r0te;isp,uel;ar6ld,mmon,ol,st0ward0zy;se;e6ou1;a6vW;n,r;ar8e6il0;ap,e6;sy;mi3;gey,lm8r6;e5i3;ful;!i3;aNiLlIoEr8u6;r0sy;ly;aAi7o6;ad,wn;ef,g7llia2;nt;ht;sh,ve;ld,r7un6;cy;ed,i3;ng;a7o6ue;nd,o1;ck,nd;g,tt6;er;d,ld,w1;dy;bsu9ng8we6;so6;me;ry;rd","Adverb":"a07by 05d01eYfShQinPjustOkinda,mMnJoEpCquite,r9s5t2up1very,w0Bye0;p,s; to,wards5;h1o0wiO;o,t6ward;en,us;everal,o0uch;!me1rt0; of;hXtimes,w07;a1e0;alS;ndomRthN;ar excellDer0oint blank; Mhaps;f3n0;ce0ly;! 0;ag00moU; courHten;ewJo0; longEt 0;onHwithstanding;aybe,eanwhiAore0;!ovB;! aboS;deed,steT;en0;ce;or2u0;l9rther0;!moH; 0ev3;examp0good,suF;le;n mas1v0;er;se;e0irect1; 1finite0;ly;ju7trop;far,n0;ow; CbroBd nauseam,gAl5ny2part,side,t 0w3;be5l0mo5wor5;arge,ea4;mo1w0;ay;re;l 1mo0one,ready,so,ways;st;b1t0;hat;ut;ain;ad;lot,posteriori","Expression":"a00bZdVeTfuck,gRhLlImHnGoDpBshAu7voi02w3y0;a1eLu0;ck,p;!a,hoo,y;h1ow,t0;af,f;e0oa;e,w;gh,h0;! 0h,m;huh,oh;eesh,hh,it;ff,hew,l0sst;ease,z;h1o0w,y;h,o,ps;!h;ah,ope;eh,mm;m1ol0;!s;ao,fao;a3e1i,mm,urr0;ah;e,ll0y;!o;ha0i;!ha;ah,ee,o0rr;lly,odbye;e0h,t cetera,ww;k,p;'oh,a0uh;m0ng;mit,n0;!it;ah,oo,ye; 1h0rgh;!em;la","Preposition":"'o,-,aKbHcGdFexcept,from,inEmidPnotwithstandiQoCpRqua,sBt6u3vi2w0;/o,hereMith0;!in,oQ;a,s-a-vis;n1p0;!on;like,til;h1ill,o0;!wards;an,r0;ough0u;!oH;ans,ince,o that;',f0n1ut;!f;!to;espite,own,u3;hez,irca;ar1e0y;low,sides,tween;ri6;',bo7cross,ft6lo5m3propos,round,s1t0;!op;! long 0;as;id0ong0;!st;ng;er;ut","Conjunction":"aDb9cuz,for,how7in caCno6o5p3supposing,th1vers4wh0yet;eth7ile;eref9o0;!uC;l0rovided that;us;r,therwi6; matt1r;!ev0;er;e0ut;cau1f0;ore;se;lthou1nd,s 0;far as,if;gh","Determiner":"aAboth,d8e5few,l3mu7neiCown,plenty,some,th2various,wh0;at0ich0;evB;at,e3is,ose;a,e0;!ast,s;a1i6l0nough,very;!se;ch;e0u;!s;!n0;!o0y;th0;er"}
-},{}],7:[function(_dereq_,module,exports){
+},{}],8:[function(_dereq_,module,exports){
 //collect the first-words of multiple-word-terms, for quicker lookup
 const indexFirst = function(lex) {
   let firstWords = {};
@@ -1140,10 +736,10 @@ const indexFirst = function(lex) {
 };
 module.exports = indexFirst;
 
-},{}],8:[function(_dereq_,module,exports){
+},{}],9:[function(_dereq_,module,exports){
 //lexicon in compressed form
 const pckd = _dereq_('./compressed/_compressed');
-const efrt = _dereq_('efrt');
+const unpack = _dereq_('compromise-unpack');
 const buildOut = _dereq_('./buildOut');
 const indexFirst = _dereq_('./firstWords');
 
@@ -1166,8 +762,7 @@ const addToLex = function(lex, obj) {
     }
   }
 };
-
-let lex = efrt.unpack(pckd);
+let lex = unpack(pckd);
 
 uncompressed.forEach(obj => addToLex(lex, obj));
 
@@ -1191,7 +786,7 @@ module.exports = {
   firstWords: firstWords
 };
 
-},{"./buildOut":5,"./compressed/_compressed":6,"./firstWords":7,"./uncompressed/abbreviations":9,"./uncompressed/irregularAdjectives":10,"./uncompressed/irregularPlurals":11,"./uncompressed/irregularVerbs":12,"./uncompressed/misc":13,"./uncompressed/numbers":14,"./uncompressed/orgWords":15,"efrt":1}],9:[function(_dereq_,module,exports){
+},{"./buildOut":6,"./compressed/_compressed":7,"./firstWords":8,"./uncompressed/abbreviations":10,"./uncompressed/irregularAdjectives":11,"./uncompressed/irregularPlurals":12,"./uncompressed/irregularVerbs":13,"./uncompressed/misc":14,"./uncompressed/numbers":15,"./uncompressed/orgWords":16,"compromise-unpack":1}],10:[function(_dereq_,module,exports){
 //these are common word shortenings used in the lexicon and sentence segmentation methods
 //there are all nouns,or at the least, belong beside one.
 'use strict';
@@ -1357,7 +952,7 @@ for (let i = 0; i < keys.length; i++) {
 }
 module.exports = abbreviations;
 
-},{}],10:[function(_dereq_,module,exports){
+},{}],11:[function(_dereq_,module,exports){
 //adjectives that have irregular conjugations to adverb, comparative, and superlative forms
 const toAdverb = {
   bad: 'badly',
@@ -1432,7 +1027,7 @@ module.exports = {
   toSuperlative: toSuperlative
 };
 
-},{}],11:[function(_dereq_,module,exports){
+},{}],12:[function(_dereq_,module,exports){
 //nouns with irregular plural/singular forms
 //used in noun.inflect, and also in the lexicon.
 //compressed with '_' to reduce some redundancy.
@@ -1514,7 +1109,7 @@ module.exports = {
   toPlural: toPlural
 };
 
-},{}],12:[function(_dereq_,module,exports){
+},{}],13:[function(_dereq_,module,exports){
 //sorry for the ad-hoc, space-saver key-mapping
 const mapping = {
   ps: 'PastTense',
@@ -2204,7 +1799,7 @@ module.exports = {
   irregulars: irreg
 };
 
-},{}],13:[function(_dereq_,module,exports){
+},{}],14:[function(_dereq_,module,exports){
 'use strict';
 
 const misc = {
@@ -2253,7 +1848,7 @@ for (let i = 0; i < keys.length; i++) {
 }
 module.exports = misc;
 
-},{}],14:[function(_dereq_,module,exports){
+},{}],15:[function(_dereq_,module,exports){
 const cardinal = {
   ones: {
     // 'a': 1,
@@ -2404,7 +1999,7 @@ module.exports = {
   lexicon: lexicon
 };
 
-},{}],15:[function(_dereq_,module,exports){
+},{}],16:[function(_dereq_,module,exports){
 //nouns that also signal the title of an unknown organization
 //todo remove/normalize plural forms
 const orgWords = [
@@ -2616,7 +2211,7 @@ module.exports = orgWords.reduce(function(h, str) {
   return h;
 }, {});
 
-},{}],16:[function(_dereq_,module,exports){
+},{}],17:[function(_dereq_,module,exports){
 'use strict';
 const fns = _dereq_('../fns');
 
@@ -2653,7 +2248,7 @@ module.exports = {
   untag: untag,
 };
 
-},{"../fns":3}],17:[function(_dereq_,module,exports){
+},{"../fns":4}],18:[function(_dereq_,module,exports){
 'use strict';
 const client = _dereq_('./client');
 const server = _dereq_('./server');
@@ -2687,7 +2282,7 @@ module.exports = {
   }
 };
 
-},{"./client":16,"./server":18}],18:[function(_dereq_,module,exports){
+},{"./client":17,"./server":19}],19:[function(_dereq_,module,exports){
 'use strict';
 const fns = _dereq_('../fns');
 
@@ -2715,14 +2310,14 @@ module.exports = {
   untag: untag,
 };
 
-},{"../fns":3}],19:[function(_dereq_,module,exports){
+},{"../fns":4}],20:[function(_dereq_,module,exports){
 module.exports = {
   fns: _dereq_('./fns'),
   Terms: _dereq_('./terms'),
   tags: _dereq_('./tagset')
 };
 
-},{"./fns":3,"./tagset":143,"./terms":171}],20:[function(_dereq_,module,exports){
+},{"./fns":4,"./tagset":144,"./terms":172}],21:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../text');
 //the Acronym() subset class
@@ -2754,7 +2349,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../text":196}],21:[function(_dereq_,module,exports){
+},{"../../text":197}],22:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../text');
 const fns = _dereq_('./methods');
@@ -2796,7 +2391,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../text":196,"./methods":22,"./shouldConvert":28}],22:[function(_dereq_,module,exports){
+},{"../../text":197,"./methods":23,"./shouldConvert":29}],23:[function(_dereq_,module,exports){
 'use strict';
 module.exports = {
   toNoun: _dereq_('./toNoun'),
@@ -2806,7 +2401,7 @@ module.exports = {
   toVerb: _dereq_('./toVerb')
 };
 
-},{"./toAdverb":23,"./toComparative":24,"./toNoun":25,"./toSuperlative":26,"./toVerb":27}],23:[function(_dereq_,module,exports){
+},{"./toAdverb":24,"./toComparative":25,"./toNoun":26,"./toSuperlative":27,"./toVerb":28}],24:[function(_dereq_,module,exports){
 //turn 'quick' into 'quickly'
 'use strict';
 const not_matches = [/airs$/, /ll$/, /ee.$/, /ile$/, /y$/];
@@ -2869,7 +2464,7 @@ const adj_to_adv = function(str) {
 
 module.exports = adj_to_adv;
 
-},{"../../../lexicon/uncompressed/irregularAdjectives":10}],24:[function(_dereq_,module,exports){
+},{"../../../lexicon/uncompressed/irregularAdjectives":11}],25:[function(_dereq_,module,exports){
 //turn 'quick' into 'quickly'
 'use strict';
 const do_rules = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /old$/, /oud$/, /e[ae]p$/];
@@ -2930,7 +2525,7 @@ const to_comparative = function(str) {
 
 module.exports = to_comparative;
 
-},{"../../../lexicon/uncompressed/irregularAdjectives":10}],25:[function(_dereq_,module,exports){
+},{"../../../lexicon/uncompressed/irregularAdjectives":11}],26:[function(_dereq_,module,exports){
 'use strict';
 //convert 'cute' to 'cuteness'
 const irregulars = {
@@ -3005,7 +2600,7 @@ const to_noun = function(w) {
 module.exports = to_noun;
 // console.log(to_noun("great"))
 
-},{}],26:[function(_dereq_,module,exports){
+},{}],27:[function(_dereq_,module,exports){
 //turn 'quick' into 'quickest'
 'use strict';
 const do_rules = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /oud$/, /...p$/];
@@ -3067,7 +2662,7 @@ const to_superlative = function(str) {
 module.exports = to_superlative;
 // console.log(to_superlative("great"))
 
-},{"../../../lexicon/uncompressed/irregularAdjectives":10}],27:[function(_dereq_,module,exports){
+},{"../../../lexicon/uncompressed/irregularAdjectives":11}],28:[function(_dereq_,module,exports){
 'use strict';
 //turn an adjective like 'soft' into a verb like 'soften'
 //(don't do words like 'green' -> 'greenen')
@@ -3089,7 +2684,7 @@ const toVerb = str => {
 };
 module.exports = toVerb;
 
-},{}],28:[function(_dereq_,module,exports){
+},{}],29:[function(_dereq_,module,exports){
 'use strict';
 const lexicon = _dereq_('../../lexicon/init').lexicon;
 
@@ -3114,7 +2709,7 @@ module.exports = shouldConvert;
 
 // console.log(shouldConvert('low'));
 
-},{"../../lexicon/init":8}],29:[function(_dereq_,module,exports){
+},{"../../lexicon/init":9}],30:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../text');
 const toAdjective = _dereq_('./toAdjective');
@@ -3144,7 +2739,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../text":196,"./toAdjective":30}],30:[function(_dereq_,module,exports){
+},{"../../text":197,"./toAdjective":31}],31:[function(_dereq_,module,exports){
 //turns 'quickly' into 'quick'
 'use strict';
 const irregulars = {
@@ -3207,7 +2802,7 @@ const toAdjective = function(str) {
 // console.log(toAdjective('marvelously') === 'marvelous')
 module.exports = toAdjective;
 
-},{}],31:[function(_dereq_,module,exports){
+},{}],32:[function(_dereq_,module,exports){
 'use strict';
 
 //the plumbing to turn two words into a contraction
@@ -3286,7 +2881,7 @@ const contract = function(ts) {
 
 module.exports = contract;
 
-},{}],32:[function(_dereq_,module,exports){
+},{}],33:[function(_dereq_,module,exports){
 'use strict';
 const Terms = _dereq_('../../paths').Terms;
 const contract = _dereq_('./contract');
@@ -3324,7 +2919,7 @@ ContractionCl.prototype.contract = function() {
 };
 module.exports = ContractionCl;
 
-},{"../../paths":19,"./contract":31,"./expand":33}],33:[function(_dereq_,module,exports){
+},{"../../paths":20,"./contract":32,"./expand":34}],34:[function(_dereq_,module,exports){
 'use strict';
 //turn `i'd` into `i would`
 const expand = function(ts) {
@@ -3351,7 +2946,7 @@ const expand = function(ts) {
 };
 module.exports = expand;
 
-},{}],34:[function(_dereq_,module,exports){
+},{}],35:[function(_dereq_,module,exports){
 'use strict';
 //find contractable, expanded-contractions
 const find = (r) => {
@@ -3367,7 +2962,7 @@ const find = (r) => {
 };
 module.exports = find;
 
-},{}],35:[function(_dereq_,module,exports){
+},{}],36:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../text');
 const ContractionCl = _dereq_('./contraction');
@@ -3422,7 +3017,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../text":196,"./contraction":32,"./findPossible":34}],36:[function(_dereq_,module,exports){
+},{"../../text":197,"./contraction":33,"./findPossible":35}],37:[function(_dereq_,module,exports){
 'use strict';
 const Terms = _dereq_('../../paths').Terms;
 const parseDate = _dereq_('./parseDate');
@@ -3445,7 +3040,7 @@ _Date.prototype.data = function() {
 
 module.exports = _Date;
 
-},{"../../paths":19,"./parseDate":40}],37:[function(_dereq_,module,exports){
+},{"../../paths":20,"./parseDate":41}],38:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../text');
 const Date = _dereq_('./date');
@@ -3498,7 +3093,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../text":196,"./date":36,"./month":39,"./weekday":43}],38:[function(_dereq_,module,exports){
+},{"../../text":197,"./date":37,"./month":40,"./weekday":44}],39:[function(_dereq_,module,exports){
 //follow the javascript scheme
 //january is 0
 exports.longMonths = {
@@ -3532,7 +3127,7 @@ exports.shortMonths = {
   'dec': 11,
 };
 
-},{}],39:[function(_dereq_,module,exports){
+},{}],40:[function(_dereq_,module,exports){
 'use strict';
 const data = _dereq_('./data');
 const shortMonths = data.shortMonths;
@@ -3573,7 +3168,7 @@ module.exports = {
 
 };
 
-},{"./data":38}],40:[function(_dereq_,module,exports){
+},{"./data":39}],41:[function(_dereq_,module,exports){
 'use strict';
 const parseTime = _dereq_('./parseTime');
 const weekdays = _dereq_('./weekday');
@@ -3667,7 +3262,7 @@ const parseDate = (r) => {
 };
 module.exports = parseDate;
 
-},{"./month":39,"./parseTime":41,"./weekday":43}],41:[function(_dereq_,module,exports){
+},{"./month":40,"./parseTime":42,"./weekday":44}],42:[function(_dereq_,module,exports){
 'use strict';
 const ampm = /([12]?[0-9]) ?(am|pm)/i;
 const hourMin = /([12]?[0-9]):([0-9][0-9]) ?(am|pm)?/i;
@@ -3734,7 +3329,7 @@ const parseTime = (r) => {
 };
 module.exports = parseTime;
 
-},{}],42:[function(_dereq_,module,exports){
+},{}],43:[function(_dereq_,module,exports){
 //follow the javascript scheme
 //sunday is 0
 exports.longDays = {
@@ -3757,7 +3352,7 @@ exports.shortDays = {
   'sat': 6,
 };
 
-},{}],43:[function(_dereq_,module,exports){
+},{}],44:[function(_dereq_,module,exports){
 'use strict';
 const data = _dereq_('./data');
 const shortDays = data.shortDays;
@@ -3795,7 +3390,7 @@ module.exports = {
   }
 };
 
-},{"./data":42}],44:[function(_dereq_,module,exports){
+},{"./data":43}],45:[function(_dereq_,module,exports){
 'use strict';
 const Ngrams = _dereq_('./index');
 const getGrams = _dereq_('./getGrams');
@@ -3831,7 +3426,7 @@ EndGrams.find = function(r, n, size) {
 };
 module.exports = EndGrams;
 
-},{"./getGrams":45,"./index":47}],45:[function(_dereq_,module,exports){
+},{"./getGrams":46,"./index":48}],46:[function(_dereq_,module,exports){
 'use strict';
 const Gram = _dereq_('./gram');
 
@@ -3909,7 +3504,7 @@ const buildGrams = function(r, options) {
 
 module.exports = buildGrams;
 
-},{"./gram":46}],46:[function(_dereq_,module,exports){
+},{"./gram":47}],47:[function(_dereq_,module,exports){
 'use strict';
 const Terms = _dereq_('../../paths').Terms;
 
@@ -3933,7 +3528,7 @@ Gram.prototype.inc = function() {
 
 module.exports = Gram;
 
-},{"../../paths":19}],47:[function(_dereq_,module,exports){
+},{"../../paths":20}],48:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../text');
 const getGrams = _dereq_('./getGrams');
@@ -4009,7 +3604,7 @@ const find = function(r, obj) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../text":196,"./getGrams":45}],48:[function(_dereq_,module,exports){
+},{"../../text":197,"./getGrams":46}],49:[function(_dereq_,module,exports){
 'use strict';
 const Ngrams = _dereq_('./index');
 const getGrams = _dereq_('./getGrams');
@@ -4045,7 +3640,7 @@ StartGrams.find = function(r, n, size) {
 
 module.exports = StartGrams;
 
-},{"./getGrams":45,"./index":47}],49:[function(_dereq_,module,exports){
+},{"./getGrams":46,"./index":48}],50:[function(_dereq_,module,exports){
 'use strict';
 
 //certain words can't be plural, like 'peace'
@@ -4073,7 +3668,7 @@ const hasPlural = function(t) {
 
 module.exports = hasPlural;
 
-},{}],50:[function(_dereq_,module,exports){
+},{}],51:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../text');
 const Noun = _dereq_('./noun');
@@ -4113,7 +3708,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../text":196,"./noun":58}],51:[function(_dereq_,module,exports){
+},{"../../text":197,"./noun":59}],52:[function(_dereq_,module,exports){
 'use strict';
 const irregulars = _dereq_('../../lexicon/uncompressed/irregularPlurals');
 const rules = _dereq_('./methods/data/indicators');
@@ -4198,7 +3793,7 @@ const isPlural = function(t, world) {
 module.exports = isPlural;
 // console.log(is_plural('octopus') === false)
 
-},{"../../lexicon/uncompressed/irregularPlurals":11,"./hasPlural":49,"./methods/data/indicators":53}],52:[function(_dereq_,module,exports){
+},{"../../lexicon/uncompressed/irregularPlurals":12,"./hasPlural":50,"./methods/data/indicators":54}],53:[function(_dereq_,module,exports){
 'use strict';
 
 //chooses an indefinite aricle 'a/an' for a word
@@ -4260,7 +3855,7 @@ const makeArticle = function(t) {
 
 module.exports = makeArticle;
 
-},{}],53:[function(_dereq_,module,exports){
+},{}],54:[function(_dereq_,module,exports){
 'use strict';
 //similar to plural/singularize rules, but not the same
 const plural_indicators = [
@@ -4314,7 +3909,7 @@ module.exports = {
   plural_indicators: plural_indicators
 }
 
-},{}],54:[function(_dereq_,module,exports){
+},{}],55:[function(_dereq_,module,exports){
 //patterns for turning 'bus' to 'buses'
 module.exports = [
   [/(ax|test)is$/i, '$1es'],
@@ -4349,7 +3944,7 @@ module.exports = [
   };
 });
 
-},{}],55:[function(_dereq_,module,exports){
+},{}],56:[function(_dereq_,module,exports){
 //patterns for turning 'dwarves' to 'dwarf'
 module.exports = [
   [/([^v])ies$/i, '$1y'],
@@ -4383,7 +3978,7 @@ module.exports = [
   };
 });
 
-},{}],56:[function(_dereq_,module,exports){
+},{}],57:[function(_dereq_,module,exports){
 'use strict';
 const irregulars = _dereq_('../../../lexicon/uncompressed/irregularPlurals').toPlural;
 const pluralRules = _dereq_('./data/pluralRules');
@@ -4410,7 +4005,7 @@ const pluralize = function(str, world) {
 
 module.exports = pluralize;
 
-},{"../../../lexicon/uncompressed/irregularPlurals":11,"./data/pluralRules":54}],57:[function(_dereq_,module,exports){
+},{"../../../lexicon/uncompressed/irregularPlurals":12,"./data/pluralRules":55}],58:[function(_dereq_,module,exports){
 'use strict';
 const irregulars = _dereq_('../../../lexicon/uncompressed/irregularPlurals').toSingle;
 const singleRules = _dereq_('./data/singleRules');
@@ -4451,7 +4046,7 @@ const toSingle = function(str, world) {
 module.exports = toSingle;
 // console.log(toSingle('days'))
 
-},{"../../../lexicon/uncompressed/irregularPlurals":11,"./data/singleRules":55}],58:[function(_dereq_,module,exports){
+},{"../../../lexicon/uncompressed/irregularPlurals":12,"./data/singleRules":56}],59:[function(_dereq_,module,exports){
 'use strict';
 const Terms = _dereq_('../../paths').Terms;
 const hasPlural = _dereq_('./hasPlural');
@@ -4520,7 +4115,7 @@ Object.keys(methods).forEach(k => {
 });
 module.exports = Noun;
 
-},{"../../paths":19,"./hasPlural":49,"./isPlural":51,"./makeArticle":52,"./methods/pluralize":56,"./methods/singularize":57}],59:[function(_dereq_,module,exports){
+},{"../../paths":20,"./hasPlural":50,"./isPlural":52,"./makeArticle":53,"./methods/pluralize":57,"./methods/singularize":58}],60:[function(_dereq_,module,exports){
 'use strict';
 // make a statistical assumption about the gender of the person based on their given name
 // used for pronoun resolution only.
@@ -4544,7 +4139,7 @@ const gender = function (firstName) {
 };
 module.exports = gender;
 
-},{}],60:[function(_dereq_,module,exports){
+},{}],61:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../text');
 const Person = _dereq_('./person');
@@ -4571,7 +4166,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../text":196,"./person":61}],61:[function(_dereq_,module,exports){
+},{"../../text":197,"./person":62}],62:[function(_dereq_,module,exports){
 'use strict';
 const Terms = _dereq_('../../paths').Terms;
 const guessGender = _dereq_('./guessGender');
@@ -4651,7 +4246,7 @@ Object.keys(methods).forEach(k => {
 });
 module.exports = Person;
 
-},{"../../paths":19,"./guessGender":59}],62:[function(_dereq_,module,exports){
+},{"../../paths":20,"./guessGender":60}],63:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../text');
 const Sentence = _dereq_('./sentence');
@@ -4751,7 +4346,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../text":196,"./sentence":64}],63:[function(_dereq_,module,exports){
+},{"../../text":197,"./sentence":65}],64:[function(_dereq_,module,exports){
 //is this sentence asking a question?
 
 const isQuestion = function(ts) {
@@ -4780,7 +4375,7 @@ const isQuestion = function(ts) {
 };
 module.exports = isQuestion;
 
-},{}],64:[function(_dereq_,module,exports){
+},{}],65:[function(_dereq_,module,exports){
 'use strict';
 const Terms = _dereq_('../../paths').Terms;
 const toNegative = _dereq_('./toNegative');
@@ -4976,7 +4571,7 @@ Object.keys(methods).forEach(k => {
 });
 module.exports = Sentence;
 
-},{"../../paths":19,"../verbs/verb":102,"./smartInsert":65,"./toNegative":66,"./toPositive":67}],65:[function(_dereq_,module,exports){
+},{"../../paths":20,"../verbs/verb":103,"./smartInsert":66,"./toNegative":67,"./toPositive":68}],66:[function(_dereq_,module,exports){
 'use strict';
 const hasCapital = /^[A-Z]/;
 
@@ -5022,7 +4617,7 @@ module.exports = {
   prepend: prepend
 };
 
-},{}],66:[function(_dereq_,module,exports){
+},{}],67:[function(_dereq_,module,exports){
 'use strict'
 
 //these terms are nicer ways to negate a sentence
@@ -5056,7 +4651,7 @@ const toNegative = ts => {
 }
 module.exports = toNegative
 
-},{}],67:[function(_dereq_,module,exports){
+},{}],68:[function(_dereq_,module,exports){
 'use strict';
 
 //ie. john never walks -> john always walks
@@ -5081,7 +4676,7 @@ const toPositive = (ts) => {
 };
 module.exports = toPositive;
 
-},{}],68:[function(_dereq_,module,exports){
+},{}],69:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../text');
 const Terms = _dereq_('../../paths').Terms;
@@ -5123,7 +4718,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../paths":19,"../../text":196}],69:[function(_dereq_,module,exports){
+},{"../../paths":20,"../../text":197}],70:[function(_dereq_,module,exports){
 const numOrdinal = _dereq_('./numOrdinal');
 const textOrdinal = _dereq_('./textOrdinal');
 const textCardinal = _dereq_('./textCardinal');
@@ -5154,7 +4749,7 @@ const fmt = {
 };
 module.exports = fmt;
 
-},{"./niceNumber":70,"./numOrdinal":71,"./textCardinal":72,"./textOrdinal":73}],70:[function(_dereq_,module,exports){
+},{"./niceNumber":71,"./numOrdinal":72,"./textCardinal":73,"./textOrdinal":74}],71:[function(_dereq_,module,exports){
 'use strict';
 //put a comma or two in
 const niceNumber = function (num) {
@@ -5173,7 +4768,7 @@ const niceNumber = function (num) {
 };
 module.exports = niceNumber;
 
-},{}],71:[function(_dereq_,module,exports){
+},{}],72:[function(_dereq_,module,exports){
 'use strict';
 
 //turn a number like 5 into an ordinal like 5th
@@ -5205,7 +4800,7 @@ const numOrdinal = function(num) {
 
 module.exports = numOrdinal;
 
-},{}],72:[function(_dereq_,module,exports){
+},{}],73:[function(_dereq_,module,exports){
 'use strict';
 // turns an integer/float into a textual number, like 'fifty-five'
 const tens_mapping = [
@@ -5350,7 +4945,7 @@ module.exports = to_text;
 
 // console.log(to_text(-1000.8));
 
-},{}],73:[function(_dereq_,module,exports){
+},{}],74:[function(_dereq_,module,exports){
 'use strict';
 const textValue = _dereq_('./textCardinal');
 const ordinalWord = _dereq_('../../../lexicon/uncompressed/numbers').toOrdinal;
@@ -5365,7 +4960,7 @@ const textOrdinal = num => {
 
 module.exports = textOrdinal;
 
-},{"../../../lexicon/uncompressed/numbers":14,"./textCardinal":72}],74:[function(_dereq_,module,exports){
+},{"../../../lexicon/uncompressed/numbers":15,"./textCardinal":73}],75:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../text');
 const Value = _dereq_('./value');
@@ -5517,7 +5112,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../text":196,"./parse":75,"./value":83}],75:[function(_dereq_,module,exports){
+},{"../../text":197,"./parse":76,"./value":84}],76:[function(_dereq_,module,exports){
 'use strict';
 const parseText = _dereq_('./parseText');
 // 2.5, $5.50, 3,432, etc -
@@ -5557,7 +5152,7 @@ const parse = function(val) {
 };
 module.exports = parse;
 
-},{"./parseText":78}],76:[function(_dereq_,module,exports){
+},{"./parseText":79}],77:[function(_dereq_,module,exports){
 const numbers = _dereq_('../../../lexicon/uncompressed/numbers');
 const fns = _dereq_('../paths').fns;
 
@@ -5573,7 +5168,7 @@ module.exports = {
   multiples: multiples
 };
 
-},{"../../../lexicon/uncompressed/numbers":14,"../paths":82}],77:[function(_dereq_,module,exports){
+},{"../../../lexicon/uncompressed/numbers":15,"../paths":83}],78:[function(_dereq_,module,exports){
 'use strict';
 
 //support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
@@ -5608,7 +5203,7 @@ const findModifiers = str => {
 
 module.exports = findModifiers;
 
-},{}],78:[function(_dereq_,module,exports){
+},{}],79:[function(_dereq_,module,exports){
 'use strict';
 const findModifiers = _dereq_('./findModifiers');
 const words = _dereq_('./data');
@@ -5741,7 +5336,7 @@ const parse = function(str) {
 
 module.exports = parse;
 
-},{"./data":76,"./findModifiers":77,"./parseDecimals":79,"./parseNumeric":80,"./validate":81}],79:[function(_dereq_,module,exports){
+},{"./data":77,"./findModifiers":78,"./parseDecimals":80,"./parseNumeric":81,"./validate":82}],80:[function(_dereq_,module,exports){
 'use strict';
 const words = _dereq_('./data');
 
@@ -5767,7 +5362,7 @@ const parseDecimals = function(arr) {
 
 module.exports = parseDecimals;
 
-},{"./data":76}],80:[function(_dereq_,module,exports){
+},{"./data":77}],81:[function(_dereq_,module,exports){
 'use strict';
 //parse a string like "4,200.1" into Number 4200.1
 const parseNumeric = str => {
@@ -5789,7 +5384,7 @@ const parseNumeric = str => {
 
 module.exports = parseNumeric;
 
-},{}],81:[function(_dereq_,module,exports){
+},{}],82:[function(_dereq_,module,exports){
 'use strict';
 const words = _dereq_('./data');
 
@@ -5812,10 +5407,10 @@ const isValid = (w, has) => {
 };
 module.exports = isValid;
 
-},{"./data":76}],82:[function(_dereq_,module,exports){
+},{"./data":77}],83:[function(_dereq_,module,exports){
 module.exports = _dereq_('../../paths');
 
-},{"../../paths":19}],83:[function(_dereq_,module,exports){
+},{"../../paths":20}],84:[function(_dereq_,module,exports){
 'use strict';
 const paths = _dereq_('../../paths');
 const Terms = paths.Terms;
@@ -6058,7 +5653,7 @@ Object.keys(methods).forEach(k => {
 });
 module.exports = Value;
 
-},{"../../paths":19,"./format":69,"./parse":75}],84:[function(_dereq_,module,exports){
+},{"../../paths":20,"./format":70,"./parse":76}],85:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('../../text');
 const Verb = _dereq_('./verb');
@@ -6166,7 +5761,7 @@ const find = function(r, n) {
 
 module.exports = Text.makeSubset(methods, find);
 
-},{"../../text":196,"./verb":102}],85:[function(_dereq_,module,exports){
+},{"../../text":197,"./verb":103}],86:[function(_dereq_,module,exports){
 'use strict';
 const predict = _dereq_('./methods/predict');
 
@@ -6268,7 +5863,7 @@ const interpret = (ts) => {
 };
 module.exports = interpret;
 
-},{"./methods/predict":96}],86:[function(_dereq_,module,exports){
+},{"./methods/predict":97}],87:[function(_dereq_,module,exports){
 'use strict';
 const checkIrregulars = _dereq_('./irregulars');
 const suffixPass = _dereq_('./suffixes');
@@ -6339,7 +5934,7 @@ const conjugate = function(t, world, verbose) {
 
 module.exports = conjugate;
 
-},{"../predict":96,"../toInfinitive":99,"./generic":89,"./irregulars":91,"./suffixes":92,"./toActor":93,"./toBe":94}],87:[function(_dereq_,module,exports){
+},{"../predict":97,"../toInfinitive":100,"./generic":90,"./irregulars":92,"./suffixes":93,"./toActor":94,"./toBe":95}],88:[function(_dereq_,module,exports){
 module.exports = [
   {
     reg: /(eave)$/i,
@@ -6527,7 +6122,7 @@ module.exports = [
   }
 ];
 
-},{}],88:[function(_dereq_,module,exports){
+},{}],89:[function(_dereq_,module,exports){
 'use strict';
 const checkIrregulars = _dereq_('./irregulars');
 const suffixPass = _dereq_('./suffixes');
@@ -6566,7 +6161,7 @@ const fasterConjugate = inf => {
 module.exports = fasterConjugate;
 // console.log(fasterConjugate('walk'));
 
-},{"./generic":89,"./irregulars":91,"./suffixes":92}],89:[function(_dereq_,module,exports){
+},{"./generic":90,"./irregulars":92,"./suffixes":93}],90:[function(_dereq_,module,exports){
 'use strict';
 //non-specifc, 'hail-mary' transforms from infinitive, into other forms
 const hasY = /[bcdfghjklmnpqrstvwxz]y$/;
@@ -6630,7 +6225,7 @@ const generic = {
 
 module.exports = generic;
 
-},{}],90:[function(_dereq_,module,exports){
+},{}],91:[function(_dereq_,module,exports){
 'use strict';
 const conjugate = _dereq_('./conjugate');
 const toBe = _dereq_('./toBe');
@@ -6679,7 +6274,7 @@ const multiWordConjugate = (vb, verbose) => {
 };
 module.exports = multiWordConjugate;
 
-},{"./conjugate":86,"./toBe":94}],91:[function(_dereq_,module,exports){
+},{"./conjugate":87,"./toBe":95}],92:[function(_dereq_,module,exports){
 'use strict';
 let irregulars = _dereq_('../../../../lexicon/uncompressed/irregularVerbs').irregulars; //weeee!
 const fns = _dereq_('../../../../fns'); //weeee!
@@ -6714,7 +6309,7 @@ const checkIrregulars = function(str, world) {
 module.exports = checkIrregulars;
 // console.log(checkIrregulars('bit'));
 
-},{"../../../../fns":3,"../../../../lexicon/uncompressed/irregularVerbs":12}],92:[function(_dereq_,module,exports){
+},{"../../../../fns":4,"../../../../lexicon/uncompressed/irregularVerbs":13}],93:[function(_dereq_,module,exports){
 'use strict';
 const rules = _dereq_('./data/rules');
 const mapping = {
@@ -6746,7 +6341,7 @@ const suffixPass = function(inf) {
 
 module.exports = suffixPass;
 
-},{"./data/rules":87}],93:[function(_dereq_,module,exports){
+},{"./data/rules":88}],94:[function(_dereq_,module,exports){
 'use strict';
 //turn 'walk' into 'walker'
 const irregulars = {
@@ -6810,7 +6405,7 @@ const toActor = function(inf) {
 
 module.exports = toActor;
 
-},{}],94:[function(_dereq_,module,exports){
+},{}],95:[function(_dereq_,module,exports){
 'use strict';
 //too many special cases for is/was/will be
 const toBe = (isPlural, isNegative) => {
@@ -6841,7 +6436,7 @@ const toBe = (isPlural, isNegative) => {
 };
 module.exports = toBe;
 
-},{}],95:[function(_dereq_,module,exports){
+},{}],96:[function(_dereq_,module,exports){
 'use strict';
 //sometimes you can tell if a verb is plural/singular, just by the verb
 // i am / we were
@@ -6867,7 +6462,7 @@ const isPlural = (vb) => {
 };
 module.exports = isPlural;
 
-},{}],96:[function(_dereq_,module,exports){
+},{}],97:[function(_dereq_,module,exports){
 'use strict';
 const suffix_rules = _dereq_('./suffix_rules');
 
@@ -6904,7 +6499,7 @@ const predictForm = function(term) {
 
 module.exports = predictForm;
 
-},{"./suffix_rules":97}],97:[function(_dereq_,module,exports){
+},{"./suffix_rules":98}],98:[function(_dereq_,module,exports){
 'use strict';
 //suffix signals for verb tense, generated from test data
 const compact = {
@@ -7015,7 +6610,7 @@ for (let i = 0; i < l; i++) {
 }
 module.exports = suffix_rules;
 
-},{}],98:[function(_dereq_,module,exports){
+},{}],99:[function(_dereq_,module,exports){
 'use strict';
 //turn a infinitiveVerb, like "walk" into an adjective like "walkable"
 
@@ -7071,7 +6666,7 @@ const toAdjective = function(str) {
 
 module.exports = toAdjective;
 
-},{}],99:[function(_dereq_,module,exports){
+},{}],100:[function(_dereq_,module,exports){
 'use strict';
 //turn any verb into its infinitive form
 const rules = _dereq_('./rules');
@@ -7114,7 +6709,7 @@ const toInfinitive = function(t) {
 
 module.exports = toInfinitive;
 
-},{"../../../../lexicon/uncompressed/irregularVerbs":12,"../predict":96,"./rules":100}],100:[function(_dereq_,module,exports){
+},{"../../../../lexicon/uncompressed/irregularVerbs":13,"../predict":97,"./rules":101}],101:[function(_dereq_,module,exports){
 'use strict';
 //rules for turning a verb into infinitive form
 let rules = {
@@ -7290,7 +6885,7 @@ let rules = {
 };
 module.exports = rules;
 
-},{}],101:[function(_dereq_,module,exports){
+},{}],102:[function(_dereq_,module,exports){
 'use strict'
 //turns a verb negative - may not have enough information to do it properly
 // (eg 'did not eat' vs 'does not eat') - needs the noun
@@ -7376,7 +6971,7 @@ const toNegative = ts => {
 }
 module.exports = toNegative
 
-},{"./methods/toInfinitive":99}],102:[function(_dereq_,module,exports){
+},{"./methods/toInfinitive":100}],103:[function(_dereq_,module,exports){
 'use strict';
 const Terms = _dereq_('../../paths').Terms;
 const conjugate = _dereq_('./methods/conjugate');
@@ -7504,7 +7099,7 @@ Object.keys(methods).forEach(k => {
 });
 module.exports = Verb;
 
-},{"../../paths":19,"./interpret":85,"./methods/conjugate":90,"./methods/isPlural":95,"./methods/toAdjective":98,"./toNegative":101}],103:[function(_dereq_,module,exports){
+},{"../../paths":20,"./interpret":86,"./methods/conjugate":91,"./methods/isPlural":96,"./methods/toAdjective":99,"./toNegative":102}],104:[function(_dereq_,module,exports){
 'use strict';
 const fixContraction = _dereq_('./fix');
 
@@ -7567,7 +7162,7 @@ const checkIrregulars = ts => {
 };
 module.exports = checkIrregulars;
 
-},{"./fix":107}],104:[function(_dereq_,module,exports){
+},{"./fix":108}],105:[function(_dereq_,module,exports){
 'use strict';
 const fixContraction = _dereq_('./fix');
 const splitContraction = _dereq_('./split');
@@ -7677,7 +7272,7 @@ const hardOne = ts => {
 
 module.exports = hardOne;
 
-},{"./fix":107,"./split":109}],105:[function(_dereq_,module,exports){
+},{"./fix":108,"./split":110}],106:[function(_dereq_,module,exports){
 'use strict';
 const fixContraction = _dereq_('./fix');
 const split = _dereq_('./split');
@@ -7734,7 +7329,7 @@ const easyOnes = ts => {
 };
 module.exports = easyOnes;
 
-},{"./fix":107,"./split":109}],106:[function(_dereq_,module,exports){
+},{"./fix":108,"./split":110}],107:[function(_dereq_,module,exports){
 'use strict';
 const fixContraction = _dereq_('./fix');
 const Term = _dereq_('../../term');
@@ -7773,7 +7368,7 @@ const numberRange = ts => {
 };
 module.exports = numberRange;
 
-},{"../../term":149,"./fix":107}],107:[function(_dereq_,module,exports){
+},{"../../term":150,"./fix":108}],108:[function(_dereq_,module,exports){
 'use strict';
 const Term = _dereq_('../../term');
 
@@ -7828,7 +7423,7 @@ const fixContraction = (ts, parts, i) => {
 
 module.exports = fixContraction;
 
-},{"../../term":149}],108:[function(_dereq_,module,exports){
+},{"../../term":150}],109:[function(_dereq_,module,exports){
 'use strict';
 const irregulars = _dereq_('./01-irregulars');
 const isWasHas = _dereq_('./02-isWasHas');
@@ -7850,7 +7445,7 @@ const interpret = function(ts) {
 
 module.exports = interpret;
 
-},{"./01-irregulars":103,"./02-isWasHas":104,"./03-easyOnes":105,"./04-numberRange":106}],109:[function(_dereq_,module,exports){
+},{"./01-irregulars":104,"./02-isWasHas":105,"./03-easyOnes":106,"./04-numberRange":107}],110:[function(_dereq_,module,exports){
 'use strict';
 const contraction = /^([a-z]+)'([a-z][a-z]?)$/i;
 const possessive = /[a-z]s'$/i;
@@ -7893,7 +7488,7 @@ const splitContraction = t => {
 };
 module.exports = splitContraction;
 
-},{}],110:[function(_dereq_,module,exports){
+},{}],111:[function(_dereq_,module,exports){
 'use strict';
 
 //mostly pos-corections here
@@ -8118,7 +7713,7 @@ const corrections = function(ts) {
 
 module.exports = corrections;
 
-},{}],111:[function(_dereq_,module,exports){
+},{}],112:[function(_dereq_,module,exports){
 'use strict'
 //the steps and processes of pos-tagging
 const step = {
@@ -8178,7 +7773,7 @@ const tagger = function(ts) {
 
 module.exports = tagger
 
-},{"./contraction":108,"./corrections":110,"./phrase":114,"./steps/01-punctuation_step":115,"./steps/02-lexicon_step":116,"./steps/03-lexicon_multi":117,"./steps/04-capital_step":118,"./steps/05-web_step":119,"./steps/06-suffix_step":120,"./steps/07-neighbour_step":121,"./steps/08-noun_fallback":122,"./steps/09-date_step":123,"./steps/10-auxiliary_step":124,"./steps/11-negation_step":125,"./steps/12-phrasal_step":126,"./steps/13-comma_step":127,"./steps/14-possessive_step":128,"./steps/15-value_step":129,"./steps/16-acronym_step":130,"./steps/17-emoji_step":131,"./steps/18-person_step":132,"./steps/19-quotation_step":133,"./steps/20-organization_step":134,"./steps/21-plural_step":135}],112:[function(_dereq_,module,exports){
+},{"./contraction":109,"./corrections":111,"./phrase":115,"./steps/01-punctuation_step":116,"./steps/02-lexicon_step":117,"./steps/03-lexicon_multi":118,"./steps/04-capital_step":119,"./steps/05-web_step":120,"./steps/06-suffix_step":121,"./steps/07-neighbour_step":122,"./steps/08-noun_fallback":123,"./steps/09-date_step":124,"./steps/10-auxiliary_step":125,"./steps/11-negation_step":126,"./steps/12-phrasal_step":127,"./steps/13-comma_step":128,"./steps/14-possessive_step":129,"./steps/15-value_step":130,"./steps/16-acronym_step":131,"./steps/17-emoji_step":132,"./steps/18-person_step":133,"./steps/19-quotation_step":134,"./steps/20-organization_step":135,"./steps/21-plural_step":136}],113:[function(_dereq_,module,exports){
 'use strict';
 
 //
@@ -8220,7 +7815,7 @@ const conditionPass = function(ts) {
 
 module.exports = conditionPass;
 
-},{}],113:[function(_dereq_,module,exports){
+},{}],114:[function(_dereq_,module,exports){
 'use strict';
 //a verbPhrase is a sequence of axiliaries, adverbs and verbs
 const verbPhrase = function (ts) {
@@ -8250,7 +7845,7 @@ const verbPhrase = function (ts) {
 
 module.exports = verbPhrase;
 
-},{}],114:[function(_dereq_,module,exports){
+},{}],115:[function(_dereq_,module,exports){
 'use strict';
 const conditionPass = _dereq_('./00-conditionPass');
 const verbPhrase = _dereq_('./01-verbPhrase');
@@ -8267,7 +7862,7 @@ const phraseTag = function (ts) {
 
 module.exports = phraseTag;
 
-},{"./00-conditionPass":112,"./01-verbPhrase":113}],115:[function(_dereq_,module,exports){
+},{"./00-conditionPass":113,"./01-verbPhrase":114}],116:[function(_dereq_,module,exports){
 'use strict';
 // const rules = require('./rules/punct_rules');
 
@@ -8333,7 +7928,7 @@ const punctuation_step = function(ts) {
 
 module.exports = punctuation_step;
 
-},{}],116:[function(_dereq_,module,exports){
+},{}],117:[function(_dereq_,module,exports){
 'use strict';
 const split = _dereq_('../contraction/split');
 // const l = require('../../lexicon/init');
@@ -8386,7 +7981,7 @@ const lexicon_pass = function(ts) {
 
 module.exports = lexicon_pass;
 
-},{"../contraction/split":109}],117:[function(_dereq_,module,exports){
+},{"../contraction/split":110}],118:[function(_dereq_,module,exports){
 //find terms in the lexicon longer than one word (like 'hong kong')
 const findMultiWords = function(ts, i, world) {
   let want = world.firstWords[ts.terms[i].normal];
@@ -8432,7 +8027,7 @@ const lexiconMulti = ts => {
 };
 module.exports = lexiconMulti;
 
-},{}],118:[function(_dereq_,module,exports){
+},{}],119:[function(_dereq_,module,exports){
 'use strict';
 //titlecase is a signal for a noun
 
@@ -8458,7 +8053,7 @@ const capital_logic = function (s) {
 
 module.exports = capital_logic;
 
-},{}],119:[function(_dereq_,module,exports){
+},{}],120:[function(_dereq_,module,exports){
 'use strict';
 //identify urls, hashtags, @mentions, emails
 //regs
@@ -8490,7 +8085,7 @@ const web_pass = function(terms) {
 
 module.exports = web_pass;
 
-},{}],120:[function(_dereq_,module,exports){
+},{}],121:[function(_dereq_,module,exports){
 'use strict'
 const regs = _dereq_('./rules/regex_list')
 const suffixes = _dereq_('./rules/suffix_lookup')
@@ -8575,7 +8170,7 @@ const suffix_step = function(ts) {
 
 module.exports = suffix_step
 
-},{"./rules/regex_list":139,"./rules/suffix_lookup":140}],121:[function(_dereq_,module,exports){
+},{"./rules/regex_list":140,"./rules/suffix_lookup":141}],122:[function(_dereq_,module,exports){
 'use strict';
 const markov = _dereq_('./rules/neighbours');
 const afterThisWord = markov.afterThisWord;
@@ -8631,7 +8226,7 @@ const neighbour_step = function (ts) {
 
 module.exports = neighbour_step;
 
-},{"./rules/neighbours":138}],122:[function(_dereq_,module,exports){
+},{"./rules/neighbours":139}],123:[function(_dereq_,module,exports){
 'use strict';
 //tag word as noun if we know nothing about it, still.
 
@@ -8678,7 +8273,7 @@ const noun_fallback = function(s) {
 
 module.exports = noun_fallback;
 
-},{}],123:[function(_dereq_,module,exports){
+},{}],124:[function(_dereq_,module,exports){
 'use strict';
 //ambiguous 'may' and 'march'
 const preps = '(in|by|before|during|on|until|after|of|within|all)';
@@ -8909,7 +8504,7 @@ const datePass = function (ts) {
 
 module.exports = datePass;
 
-},{}],124:[function(_dereq_,module,exports){
+},{}],125:[function(_dereq_,module,exports){
 'use strict';
 //
 
@@ -8946,7 +8541,7 @@ const corrections = function(ts) {
 
 module.exports = corrections;
 
-},{}],125:[function(_dereq_,module,exports){
+},{}],126:[function(_dereq_,module,exports){
 'use strict';
 
 // 'not' is sometimes a verb, sometimes an adjective
@@ -8972,7 +8567,7 @@ const negation_step = function(ts) {
 
 module.exports = negation_step;
 
-},{}],126:[function(_dereq_,module,exports){
+},{}],127:[function(_dereq_,module,exports){
 'use strict';
 // const phrasals = require('../paths').tries.utils.phrasals;
 // const toInfinitive = require('../../text/subset/verbs/methods/toInfinitive');
@@ -9030,7 +8625,7 @@ const phrasals_step = function(ts) {
 
 module.exports = phrasals_step;
 
-},{}],127:[function(_dereq_,module,exports){
+},{}],128:[function(_dereq_,module,exports){
 'use strict';
 //-types of comma-use-
 // PlaceComma - Hollywood, California
@@ -9150,7 +8745,7 @@ const commaStep = function(ts) {
 
 module.exports = commaStep;
 
-},{}],128:[function(_dereq_,module,exports){
+},{}],129:[function(_dereq_,module,exports){
 'use strict';
 //decide if an apostrophe s is a contraction or not
 // 'spencer's nice' -> 'spencer is nice'
@@ -9219,7 +8814,7 @@ const possessiveStep = function(terms) {
 };
 module.exports = possessiveStep;
 
-},{}],129:[function(_dereq_,module,exports){
+},{}],130:[function(_dereq_,module,exports){
 'use strict';
 //regs-
 const cardinal = /^[0-9]([0-9]+,)*?(\.[0-9])$/;
@@ -9256,7 +8851,7 @@ const value_step = function(ts) {
 
 module.exports = value_step;
 
-},{}],130:[function(_dereq_,module,exports){
+},{}],131:[function(_dereq_,module,exports){
 'use strict';
 
 const acronym_step = function(ts) {
@@ -9270,7 +8865,7 @@ const acronym_step = function(ts) {
 
 module.exports = acronym_step;
 
-},{}],131:[function(_dereq_,module,exports){
+},{}],132:[function(_dereq_,module,exports){
 'use strict';
 const emojiReg = _dereq_('./rules/emoji_regex');
 const emoticon = _dereq_('./rules/emoticon_list');
@@ -9323,7 +8918,7 @@ const emojiStep = (ts) => {
 };
 module.exports = emojiStep;
 
-},{"./rules/emoji_regex":136,"./rules/emoticon_list":137}],132:[function(_dereq_,module,exports){
+},{"./rules/emoji_regex":137,"./rules/emoticon_list":138}],133:[function(_dereq_,module,exports){
 'use strict';
 
 const person_step = function(ts) {
@@ -9463,7 +9058,7 @@ const person_step = function(ts) {
 
 module.exports = person_step;
 
-},{}],133:[function(_dereq_,module,exports){
+},{}],134:[function(_dereq_,module,exports){
 'use strict';
 const startQuote = /^["'\u201B\u201C\u2033\u201F\u2018]/;
 const endQuote = /.["'\u201D\u2036\u2019]([;:,.])?$/;
@@ -9491,7 +9086,7 @@ const quotation_step = ts => {
 };
 module.exports = quotation_step;
 
-},{}],134:[function(_dereq_,module,exports){
+},{}],135:[function(_dereq_,module,exports){
 'use strict';
 //orgwords like 'bank' in 'Foo Bank'
 let orgWords = _dereq_('../../lexicon/uncompressed/orgWords');
@@ -9544,7 +9139,7 @@ const organization_step = ts => {
 };
 module.exports = organization_step;
 
-},{"../../lexicon/uncompressed/orgWords":15}],135:[function(_dereq_,module,exports){
+},{"../../lexicon/uncompressed/orgWords":16}],136:[function(_dereq_,module,exports){
 'use strict';
 const isPlural = _dereq_('../../subset/nouns/isPlural');
 
@@ -9570,12 +9165,12 @@ const pluralStep = function(ts) {
 
 module.exports = pluralStep;
 
-},{"../../subset/nouns/isPlural":51}],136:[function(_dereq_,module,exports){
+},{"../../subset/nouns/isPlural":52}],137:[function(_dereq_,module,exports){
 //yep,
 //https://github.com/mathiasbynens/emoji-regex/blob/master/index.js
 module.exports = /(?:0\u20E3\n1\u20E3|2\u20E3|3\u20E3|4\u20E3|5\u20E3|6\u20E3|7\u20E3|8\u20E3|9\u20E3|#\u20E3|\*\u20E3|\uD83C(?:\uDDE6\uD83C(?:\uDDE8|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDEE|\uDDF1|\uDDF2|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFC|\uDDFD|\uDDFF)|\uDDE7\uD83C(?:\uDDE6|\uDDE7|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDEF|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFB|\uDDFC|\uDDFE|\uDDFF)|\uDDE8\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF5|\uDDF7|\uDDFA|\uDDFB|\uDDFC|\uDDFD|\uDDFE|\uDDFF)|\uDDE9\uD83C(?:\uDDEA|\uDDEC|\uDDEF|\uDDF0|\uDDF2|\uDDF4|\uDDFF)|\uDDEA\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEC|\uDDED|\uDDF7|\uDDF8|\uDDF9|\uDDFA)|\uDDEB\uD83C(?:\uDDEE|\uDDEF|\uDDF0|\uDDF2|\uDDF4|\uDDF7)|\uDDEC\uD83C(?:\uDDE6|\uDDE7|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDF1|\uDDF2|\uDDF3|\uDDF5|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFC|\uDDFE)|\uDDED\uD83C(?:\uDDF0|\uDDF2|\uDDF3|\uDDF7|\uDDF9|\uDDFA)|\uDDEE\uD83C(?:\uDDE8|\uDDE9|\uDDEA|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9)|\uDDEF\uD83C(?:\uDDEA|\uDDF2|\uDDF4|\uDDF5)|\uDDF0\uD83C(?:\uDDEA|\uDDEC|\uDDED|\uDDEE|\uDDF2|\uDDF3|\uDDF5|\uDDF7|\uDDFC|\uDDFE|\uDDFF)|\uDDF1\uD83C(?:\uDDE6|\uDDE7|\uDDE8|\uDDEE|\uDDF0|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFB|\uDDFE)|\uDDF2\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF5|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFB|\uDDFC|\uDDFD|\uDDFE|\uDDFF)|\uDDF3\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEB|\uDDEC|\uDDEE|\uDDF1|\uDDF4|\uDDF5|\uDDF7|\uDDFA|\uDDFF)|\uDDF4\uD83C\uDDF2|\uDDF5\uD83C(?:\uDDE6|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF7|\uDDF8|\uDDF9|\uDDFC|\uDDFE)|\uDDF6\uD83C\uDDE6|\uDDF7\uD83C(?:\uDDEA|\uDDF4|\uDDF8|\uDDFA|\uDDFC)|\uDDF8\uD83C(?:\uDDE6|\uDDE7|\uDDE8|\uDDE9|\uDDEA|\uDDEC|\uDDED|\uDDEE|\uDDEF|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF7|\uDDF8|\uDDF9|\uDDFB|\uDDFD|\uDDFE|\uDDFF)|\uDDF9\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEB|\uDDEC|\uDDED|\uDDEF|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF7|\uDDF9|\uDDFB|\uDDFC|\uDDFF)|\uDDFA\uD83C(?:\uDDE6|\uDDEC|\uDDF2|\uDDF8|\uDDFE|\uDDFF)|\uDDFB\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEC|\uDDEE|\uDDF3|\uDDFA)|\uDDFC\uD83C(?:\uDDEB|\uDDF8)|\uDDFD\uD83C\uDDF0|\uDDFE\uD83C(?:\uDDEA|\uDDF9)|\uDDFF\uD83C(?:\uDDE6|\uDDF2|\uDDFC)))|[\xA9\xAE\u203C\u2049\u2122\u2139\u2194-\u2199\u21A9\u21AA\u231A\u231B\u2328\u23CF\u23E9-\u23F3\u23F8-\u23FA\u24C2\u25AA\u25AB\u25B6\u25C0\u25FB-\u25FE\u2600-\u2604\u260E\u2611\u2614\u2615\u2618\u261D\u2620\u2622\u2623\u2626\u262A\u262E\u262F\u2638-\u263A\u2648-\u2653\u2660\u2663\u2665\u2666\u2668\u267B\u267F\u2692-\u2694\u2696\u2697\u2699\u269B\u269C\u26A0\u26A1\u26AA\u26AB\u26B0\u26B1\u26BD\u26BE\u26C4\u26C5\u26C8\u26CE\u26CF\u26D1\u26D3\u26D4\u26E9\u26EA\u26F0-\u26F5\u26F7-\u26FA\u26FD\u2702\u2705\u2708-\u270D\u270F\u2712\u2714\u2716\u271D\u2721\u2728\u2733\u2734\u2744\u2747\u274C\u274E\u2753-\u2755\u2757\u2763\u2764\u2795-\u2797\u27A1\u27B0\u27BF\u2934\u2935\u2B05-\u2B07\u2B1B\u2B1C\u2B50\u2B55\u3030\u303D\u3297\u3299]|\uD83C[\uDC04\uDCCF\uDD70\uDD71\uDD7E\uDD7F\uDD8E\uDD91-\uDD9A\uDE01\uDE02\uDE1A\uDE2F\uDE32-\uDE3A\uDE50\uDE51\uDF00-\uDF21\uDF24-\uDF93\uDF96\uDF97\uDF99-\uDF9B\uDF9E-\uDFF0\uDFF3-\uDFF5\uDFF7-\uDFFF]|\uD83D[\uDC00-\uDCFD\uDCFF-\uDD3D\uDD49-\uDD4E\uDD50-\uDD67\uDD6F\uDD70\uDD73-\uDD79\uDD87\uDD8A-\uDD8D\uDD90\uDD95\uDD96\uDDA5\uDDA8\uDDB1\uDDB2\uDDBC\uDDC2-\uDDC4\uDDD1-\uDDD3\uDDDC-\uDDDE\uDDE1\uDDE3\uDDEF\uDDF3\uDDFA-\uDE4F\uDE80-\uDEC5\uDECB-\uDED0\uDEE0-\uDEE5\uDEE9\uDEEB\uDEEC\uDEF0\uDEF3]|\uD83E[\uDD10-\uDD18\uDD80-\uDD84\uDDC0]/g;
 
-},{}],137:[function(_dereq_,module,exports){
+},{}],138:[function(_dereq_,module,exports){
 //just some of the most common emoticons
 //faster than
 //http://stackoverflow.com/questions/28077049/regex-matching-emoticons
@@ -9633,7 +9228,7 @@ module.exports = {
   '<\\3': true
 };
 
-},{}],138:[function(_dereq_,module,exports){
+},{}],139:[function(_dereq_,module,exports){
 'use strict';
 //markov-like stats about co-occurance, for hints about unknown terms
 //basically, a little-bit better than the noun-fallback
@@ -9713,7 +9308,7 @@ module.exports = {
   afterThisPos: afterThisPos
 };
 
-},{}],139:[function(_dereq_,module,exports){
+},{}],140:[function(_dereq_,module,exports){
 'use strict'
 //regex suffix patterns and their most common parts of speech,
 //built using wordnet, by spencer kelly.
@@ -9820,7 +9415,7 @@ module.exports = {
   ]
 }
 
-},{}],140:[function(_dereq_,module,exports){
+},{}],141:[function(_dereq_,module,exports){
 'use strict'
 //just a foolish lookup of known suffixes
 const Adj = 'Adjective'
@@ -9942,7 +9537,7 @@ module.exports = [
   }
 ]
 
-},{}],141:[function(_dereq_,module,exports){
+},{}],142:[function(_dereq_,module,exports){
 //add 'downward' tags (that immediately depend on this one)
 const addDownword = function(tags) {
   const keys = Object.keys(tags);
@@ -9958,7 +9553,7 @@ const addDownword = function(tags) {
 };
 module.exports = addDownword;
 
-},{}],142:[function(_dereq_,module,exports){
+},{}],143:[function(_dereq_,module,exports){
 'use strict';
 
 //list of inconsistent parts-of-speech
@@ -10021,7 +9616,7 @@ module.exports = [
   ['VerbPhrase', 'Noun', 'Adjective']
 ];
 
-},{}],143:[function(_dereq_,module,exports){
+},{}],144:[function(_dereq_,module,exports){
 'use strict';
 
 //
@@ -10107,7 +9702,7 @@ const build = () => {
 };
 module.exports = build();
 
-},{"./addDownward":141,"./conflicts":142,"./tags/dates":144,"./tags/misc":145,"./tags/nouns":146,"./tags/values":147,"./tags/verbs":148}],144:[function(_dereq_,module,exports){
+},{"./addDownward":142,"./conflicts":143,"./tags/dates":145,"./tags/misc":146,"./tags/nouns":147,"./tags/values":148,"./tags/verbs":149}],145:[function(_dereq_,module,exports){
 module.exports = {
   Date: {}, //not a noun, but usually is
   Month: {
@@ -10138,7 +9733,7 @@ module.exports = {
   }
 };
 
-},{}],145:[function(_dereq_,module,exports){
+},{}],146:[function(_dereq_,module,exports){
 module.exports = {
   Adjective: {},
   Comparable: {
@@ -10188,7 +9783,7 @@ module.exports = {
   Quotation: {}
 };
 
-},{}],146:[function(_dereq_,module,exports){
+},{}],147:[function(_dereq_,module,exports){
 module.exports = {
   Noun: {},
   // - singular
@@ -10273,7 +9868,7 @@ module.exports = {
   }
 };
 
-},{}],147:[function(_dereq_,module,exports){
+},{}],148:[function(_dereq_,module,exports){
 module.exports = {
   Value: {},
   Ordinal: {
@@ -10303,7 +9898,7 @@ module.exports = {
   }
 };
 
-},{}],148:[function(_dereq_,module,exports){
+},{}],149:[function(_dereq_,module,exports){
 module.exports = {
   Verb: {
     isA: 'VerbPhrase'
@@ -10346,7 +9941,7 @@ module.exports = {
   }
 };
 
-},{}],149:[function(_dereq_,module,exports){
+},{}],150:[function(_dereq_,module,exports){
 'use strict';
 const fns = _dereq_('./paths').fns;
 const build_whitespace = _dereq_('./whitespace');
@@ -10428,7 +10023,7 @@ _dereq_('./methods/punctuation')(Term);
 
 module.exports = Term;
 
-},{"./makeUID":150,"./methods/case":152,"./methods/misc":153,"./methods/normalize/normalize":155,"./methods/normalize/root":156,"./methods/out":159,"./methods/punctuation":162,"./methods/tag":164,"./paths":167,"./whitespace":168}],150:[function(_dereq_,module,exports){
+},{"./makeUID":151,"./methods/case":153,"./methods/misc":154,"./methods/normalize/normalize":156,"./methods/normalize/root":157,"./methods/out":160,"./methods/punctuation":163,"./methods/tag":165,"./paths":168,"./whitespace":169}],151:[function(_dereq_,module,exports){
 'use strict';
 //this is a not-well-thought-out way to reduce our dependence on `object===object` original stuff
 //generates a unique id for this term
@@ -10442,7 +10037,7 @@ const uid = (str) => {
 };
 module.exports = uid;
 
-},{}],151:[function(_dereq_,module,exports){
+},{}],152:[function(_dereq_,module,exports){
 'use strict';
 const tagSet = _dereq_('../paths').tags;
 const boringTags = {
@@ -10474,7 +10069,7 @@ const bestTag = function(t) {
 };
 module.exports = bestTag;
 
-},{"../paths":167}],152:[function(_dereq_,module,exports){
+},{"../paths":168}],153:[function(_dereq_,module,exports){
 'use strict';
 
 const addMethods = Term => {
@@ -10537,7 +10132,7 @@ const addMethods = Term => {
 
 module.exports = addMethods;
 
-},{}],153:[function(_dereq_,module,exports){
+},{}],154:[function(_dereq_,module,exports){
 'use strict';
 const isAcronym = _dereq_('./normalize/isAcronym');
 const bestTag = _dereq_('./bestTag');
@@ -10597,7 +10192,7 @@ const addMethods = (Term) => {
 
 module.exports = addMethods;
 
-},{"./bestTag":151,"./normalize/isAcronym":154}],154:[function(_dereq_,module,exports){
+},{"./bestTag":152,"./normalize/isAcronym":155}],155:[function(_dereq_,module,exports){
 'use strict'
 //regs -
 const periodAcronym = /([A-Z]\.)+[A-Z]?$/
@@ -10622,7 +10217,7 @@ const isAcronym = function(str) {
 }
 module.exports = isAcronym
 
-},{}],155:[function(_dereq_,module,exports){
+},{}],156:[function(_dereq_,module,exports){
 'use strict'
 const killUnicode = _dereq_('./unicode')
 const isAcronym = _dereq_('./isAcronym')
@@ -10677,7 +10272,7 @@ exports.addNormal = function(term) {
 
 // console.log(normalize('Dr. V Cooper'));
 
-},{"./isAcronym":154,"./unicode":157}],156:[function(_dereq_,module,exports){
+},{"./isAcronym":155,"./unicode":158}],157:[function(_dereq_,module,exports){
 'use strict';
 //
 const rootForm = function(term) {
@@ -10690,7 +10285,7 @@ const rootForm = function(term) {
 
 module.exports = rootForm;
 
-},{}],157:[function(_dereq_,module,exports){
+},{}],158:[function(_dereq_,module,exports){
 'use strict';
 //a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
 //approximate visual (not semantic or phonetic) relationship between unicode and ascii characters
@@ -10747,7 +10342,7 @@ const killUnicode = (str) => {
 module.exports = killUnicode;
 // console.log(fixUnicode('bjŏȒk'));
 
-},{}],158:[function(_dereq_,module,exports){
+},{}],159:[function(_dereq_,module,exports){
 'use strict';
 const paths = _dereq_('../../paths');
 const fns = paths.fns;
@@ -10769,7 +10364,7 @@ const clientSide = (t) => {
 };
 module.exports = clientSide;
 
-},{"../../paths":167}],159:[function(_dereq_,module,exports){
+},{"../../paths":168}],160:[function(_dereq_,module,exports){
 'use strict';
 const renderHtml = _dereq_('./renderHtml');
 const clientDebug = _dereq_('./client');
@@ -10823,7 +10418,7 @@ const addMethods = Term => {
 
 module.exports = addMethods;
 
-},{"./client":158,"./renderHtml":160,"./server":161}],160:[function(_dereq_,module,exports){
+},{"./client":159,"./renderHtml":161,"./server":162}],161:[function(_dereq_,module,exports){
 'use strict';
 //turn xml special characters into apersand-encoding.
 //i'm not sure this is perfectly safe.
@@ -10879,7 +10474,7 @@ const renderHtml = function(t) {
 
 module.exports = renderHtml;
 
-},{}],161:[function(_dereq_,module,exports){
+},{}],162:[function(_dereq_,module,exports){
 const fns = _dereq_('../../paths').fns;
 
 //pretty-print a term on the nodejs console
@@ -10901,7 +10496,7 @@ const serverDebug = function(t) {
 };
 module.exports = serverDebug;
 
-},{"../../paths":167}],162:[function(_dereq_,module,exports){
+},{"../../paths":168}],163:[function(_dereq_,module,exports){
 'use strict';
 // const endPunct = /([^\/,:;.()!?]{0,1})([\/,:;.()!?]+)$/i;
 const endPunct = /([a-z ])([,:;.!?]+)$/i; //old
@@ -10945,7 +10540,7 @@ const addMethods = Term => {
 
 module.exports = addMethods;
 
-},{}],163:[function(_dereq_,module,exports){
+},{}],164:[function(_dereq_,module,exports){
 'use strict';
 const path = _dereq_('../../paths');
 const tagset = path.tags;
@@ -10971,7 +10566,7 @@ const canBe = function(term, tag) {
 
 module.exports = canBe;
 
-},{"../../paths":167}],164:[function(_dereq_,module,exports){
+},{"../../paths":168}],165:[function(_dereq_,module,exports){
 'use strict';
 const setTag = _dereq_('./setTag');
 const unTag = _dereq_('./unTag');
@@ -11020,7 +10615,7 @@ const addMethods = (Term) => {
 
 module.exports = addMethods;
 
-},{"./canBe":163,"./setTag":165,"./unTag":166}],165:[function(_dereq_,module,exports){
+},{"./canBe":164,"./setTag":166,"./unTag":167}],166:[function(_dereq_,module,exports){
 'use strict';
 //set a term as a particular Part-of-speech
 const path = _dereq_('../../paths');
@@ -11077,7 +10672,7 @@ const wrap = function(term, tag, reason) {
 
 module.exports = wrap;
 
-},{"../../../tagset":143,"../../paths":167,"./unTag":166}],166:[function(_dereq_,module,exports){
+},{"../../../tagset":144,"../../paths":168,"./unTag":167}],167:[function(_dereq_,module,exports){
 'use strict';
 //set a term as a particular Part-of-speech
 const path = _dereq_('../../paths');
@@ -11115,14 +10710,14 @@ const wrap = (term, tag, reason) => {
 };
 module.exports = wrap;
 
-},{"../../paths":167}],167:[function(_dereq_,module,exports){
+},{"../../paths":168}],168:[function(_dereq_,module,exports){
 module.exports = {
   fns: _dereq_('../fns'),
   log: _dereq_('../log'),
   tags: _dereq_('../tagset')
 };
 
-},{"../fns":3,"../log":17,"../tagset":143}],168:[function(_dereq_,module,exports){
+},{"../fns":4,"../log":18,"../tagset":144}],169:[function(_dereq_,module,exports){
 'use strict';
 //punctuation regs-
 const before = /^(\s|-+|\.\.+)+/;
@@ -11162,7 +10757,7 @@ const build_whitespace = (str) => {
 };
 module.exports = build_whitespace;
 
-},{}],169:[function(_dereq_,module,exports){
+},{}],170:[function(_dereq_,module,exports){
 'use strict'
 const Term = _dereq_('../term')
 const hasHyphen = /^([a-z]+)(-)([a-z0-9].*)/i
@@ -11226,7 +10821,7 @@ const fromString = function(str, world) {
 }
 module.exports = fromString
 
-},{"../term":149}],170:[function(_dereq_,module,exports){
+},{"../term":150}],171:[function(_dereq_,module,exports){
 'use strict';
 
 //getters/setters for the Terms class
@@ -11310,7 +10905,7 @@ module.exports = {
 
 };
 
-},{}],171:[function(_dereq_,module,exports){
+},{}],172:[function(_dereq_,module,exports){
 'use strict';
 const build = _dereq_('./build');
 const getters = _dereq_('./getters');
@@ -11356,7 +10951,7 @@ _dereq_('./methods/transform')(Terms);
 _dereq_('./methods/lump')(Terms);
 module.exports = Terms;
 
-},{"./build":169,"./getters":170,"./match":172,"./match/not":180,"./methods/delete":181,"./methods/insert":182,"./methods/loops":183,"./methods/lump":185,"./methods/misc":186,"./methods/out":187,"./methods/replace":188,"./methods/split":189,"./methods/tag":190,"./methods/transform":191}],172:[function(_dereq_,module,exports){
+},{"./build":170,"./getters":171,"./match":173,"./match/not":181,"./methods/delete":182,"./methods/insert":183,"./methods/loops":184,"./methods/lump":186,"./methods/misc":187,"./methods/out":188,"./methods/replace":189,"./methods/split":190,"./methods/tag":191,"./methods/transform":192}],173:[function(_dereq_,module,exports){
 'use strict';
 const syntax = _dereq_('./lib/syntax');
 const startHere = _dereq_('./lib/startHere');
@@ -11418,7 +11013,7 @@ const matchMethods = Terms => {
 
 module.exports = matchMethods;
 
-},{"../../text":196,"./lib":174,"./lib/startHere":178,"./lib/syntax":179}],173:[function(_dereq_,module,exports){
+},{"../../text":197,"./lib":175,"./lib/startHere":179,"./lib/syntax":180}],174:[function(_dereq_,module,exports){
 'use strict';
 //
 //find easy reasons to skip running the full match on this
@@ -11463,7 +11058,7 @@ const fastPass = (ts, regs) => {
 };
 module.exports = fastPass;
 
-},{}],174:[function(_dereq_,module,exports){
+},{}],175:[function(_dereq_,module,exports){
 'use strict';
 const syntax = _dereq_('./syntax');
 const startHere = _dereq_('./startHere');
@@ -11524,7 +11119,7 @@ const match = (ts, reg, verbose) => {
 };
 module.exports = match;
 
-},{"./fastPass":173,"./startHere":178,"./syntax":179}],175:[function(_dereq_,module,exports){
+},{"./fastPass":174,"./startHere":179,"./syntax":180}],176:[function(_dereq_,module,exports){
 'use strict';
 
 //compare 1 term to one reg
@@ -11587,7 +11182,7 @@ const isMatch = (term, reg, verbose) => {
 };
 module.exports = isMatch;
 
-},{}],176:[function(_dereq_,module,exports){
+},{}],177:[function(_dereq_,module,exports){
 'use strict';
 
 const almostMatch = (reg_str, term) => {
@@ -11619,9 +11214,9 @@ const lumpMatch = function(term, regs, reg_i, verbose) {
 
 module.exports = lumpMatch;
 
-},{}],177:[function(_dereq_,module,exports){
-arguments[4][82][0].apply(exports,arguments)
-},{"../../paths":193,"dup":82}],178:[function(_dereq_,module,exports){
+},{}],178:[function(_dereq_,module,exports){
+arguments[4][83][0].apply(exports,arguments)
+},{"../../paths":194,"dup":83}],179:[function(_dereq_,module,exports){
 'use strict';
 const lumpMatch = _dereq_('./lumpMatch');
 const isMatch = _dereq_('./isMatch');
@@ -11782,7 +11377,7 @@ const startHere = (ts, startAt, regs, verbose) => {
 
 module.exports = startHere;
 
-},{"./isMatch":175,"./lumpMatch":176}],179:[function(_dereq_,module,exports){
+},{"./isMatch":176,"./lumpMatch":177}],180:[function(_dereq_,module,exports){
 'use strict';
 // parse a search lookup term find the regex-like syntax in this term
 const fns = _dereq_('./paths').fns;
@@ -11930,7 +11525,7 @@ const parse_all = function(reg) {
 
 module.exports = parse_all;
 
-},{"./paths":177}],180:[function(_dereq_,module,exports){
+},{"./paths":178}],181:[function(_dereq_,module,exports){
 'use strict';
 //
 const syntax = _dereq_('./lib/syntax');
@@ -12027,7 +11622,7 @@ const addfns = Terms => {
 
 module.exports = addfns;
 
-},{"../../text":196,"./lib/startHere":178,"./lib/syntax":179}],181:[function(_dereq_,module,exports){
+},{"../../text":197,"./lib/startHere":179,"./lib/syntax":180}],182:[function(_dereq_,module,exports){
 'use strict';
 const mutate = _dereq_('../mutate');
 
@@ -12058,7 +11653,7 @@ const addMethod = (Terms) => {
 
 module.exports = addMethod;
 
-},{"../mutate":192}],182:[function(_dereq_,module,exports){
+},{"../mutate":193}],183:[function(_dereq_,module,exports){
 'use strict';
 const mutate = _dereq_('../mutate');
 
@@ -12163,7 +11758,7 @@ const insertMethods = (Terms) => {
 
 module.exports = insertMethods;
 
-},{"../mutate":192}],183:[function(_dereq_,module,exports){
+},{"../mutate":193}],184:[function(_dereq_,module,exports){
 'use strict';
 //these methods are simply term-methods called in a loop
 
@@ -12199,7 +11794,7 @@ const addMethods = (Terms) => {
 
 module.exports = addMethods;
 
-},{}],184:[function(_dereq_,module,exports){
+},{}],185:[function(_dereq_,module,exports){
 'use strict';
 const Term = _dereq_('../../../term');
 //merge two term objects.. carefully
@@ -12228,7 +11823,7 @@ const combine = function(s, i) {
 
 module.exports = combine;
 
-},{"../../../term":149}],185:[function(_dereq_,module,exports){
+},{"../../../term":150}],186:[function(_dereq_,module,exports){
 'use strict';
 const combine = _dereq_('./combine');
 const mutate = _dereq_('../../mutate');
@@ -12273,7 +11868,7 @@ const lumpMethods = (Terms) => {
 
 module.exports = lumpMethods;
 
-},{"../../mutate":192,"./combine":184}],186:[function(_dereq_,module,exports){
+},{"../../mutate":193,"./combine":185}],187:[function(_dereq_,module,exports){
 'use strict';
 const tagger = _dereq_('../../tagger');
 
@@ -12384,7 +11979,7 @@ const miscMethods = Terms => {
 
 module.exports = miscMethods;
 
-},{"../../tagger":111}],187:[function(_dereq_,module,exports){
+},{"../../tagger":112}],188:[function(_dereq_,module,exports){
 'use strict';
 const fns = _dereq_('../paths').fns;
 
@@ -12484,7 +12079,7 @@ const renderMethods = Terms => {
 
 module.exports = renderMethods;
 
-},{"../paths":193}],188:[function(_dereq_,module,exports){
+},{"../paths":194}],189:[function(_dereq_,module,exports){
 'use strict';
 const mutate = _dereq_('../mutate');
 
@@ -12541,7 +12136,7 @@ const replaceMethods = Terms => {
 
 module.exports = replaceMethods;
 
-},{"../mutate":192}],189:[function(_dereq_,module,exports){
+},{"../mutate":193}],190:[function(_dereq_,module,exports){
 'use strict';
 
 //break apart a termlist into (before, match after)
@@ -12660,7 +12255,7 @@ const splitMethods = Terms => {
 module.exports = splitMethods;
 exports = splitMethods;
 
-},{}],190:[function(_dereq_,module,exports){
+},{}],191:[function(_dereq_,module,exports){
 'use strict';
 const addMethod = Terms => {
   const methods = {
@@ -12719,7 +12314,7 @@ const addMethod = Terms => {
 
 module.exports = addMethod;
 
-},{}],191:[function(_dereq_,module,exports){
+},{}],192:[function(_dereq_,module,exports){
 'use strict';
 
 const transforms = Terms => {
@@ -12768,7 +12363,7 @@ const transforms = Terms => {
 
 module.exports = transforms;
 
-},{}],192:[function(_dereq_,module,exports){
+},{}],193:[function(_dereq_,module,exports){
 'use strict';
 //
 const getTerms = (needle) => {
@@ -12811,13 +12406,13 @@ exports.insertAt = (terms, i, needle) => {
   return terms;
 };
 
-},{}],193:[function(_dereq_,module,exports){
+},{}],194:[function(_dereq_,module,exports){
 module.exports = {
   fns: _dereq_('../fns'),
   Term: _dereq_('../term')
 };
 
-},{"../fns":3,"../term":149}],194:[function(_dereq_,module,exports){
+},{"../fns":4,"../term":150}],195:[function(_dereq_,module,exports){
 'use strict';
 const Text = _dereq_('./index');
 const tokenize = _dereq_('./tokenize');
@@ -12845,7 +12440,7 @@ const fromString = (str, world) => {
 };
 module.exports = fromString;
 
-},{"./index":196,"./paths":208,"./tokenize":210}],195:[function(_dereq_,module,exports){
+},{"./index":197,"./paths":209,"./tokenize":211}],196:[function(_dereq_,module,exports){
 module.exports = {
   /** did it find anything? */
   found: function() {
@@ -12882,7 +12477,7 @@ module.exports = {
   }
 };
 
-},{}],196:[function(_dereq_,module,exports){
+},{}],197:[function(_dereq_,module,exports){
 'use strict';
 //a Text is an array of termLists
 const getters = _dereq_('./getters');
@@ -12957,7 +12552,7 @@ Object.keys(subset).forEach(k => {
   };
 });
 
-},{"../subset/acronyms":20,"../subset/adjectives":21,"../subset/adverbs":29,"../subset/contractions":35,"../subset/dates":37,"../subset/ngrams":47,"../subset/ngrams/endGrams":44,"../subset/ngrams/startGrams":48,"../subset/nouns":50,"../subset/people":60,"../subset/sentences":62,"../subset/terms":68,"../subset/values":74,"../subset/verbs":84,"./getters":195,"./methods/loops":197,"./methods/match":198,"./methods/misc":199,"./methods/normalize":200,"./methods/out":201,"./methods/sort":205,"./methods/split":207,"./subsets":209}],197:[function(_dereq_,module,exports){
+},{"../subset/acronyms":21,"../subset/adjectives":22,"../subset/adverbs":30,"../subset/contractions":36,"../subset/dates":38,"../subset/ngrams":48,"../subset/ngrams/endGrams":45,"../subset/ngrams/startGrams":49,"../subset/nouns":51,"../subset/people":61,"../subset/sentences":63,"../subset/terms":69,"../subset/values":75,"../subset/verbs":85,"./getters":196,"./methods/loops":198,"./methods/match":199,"./methods/misc":200,"./methods/normalize":201,"./methods/out":202,"./methods/sort":206,"./methods/split":208,"./subsets":210}],198:[function(_dereq_,module,exports){
 'use strict';
 //this methods are simply loops around each termList object.
 const methods = [
@@ -13011,7 +12606,7 @@ const addMethods = (Text) => {
 
 module.exports = addMethods;
 
-},{}],198:[function(_dereq_,module,exports){
+},{}],199:[function(_dereq_,module,exports){
 'use strict';
 const syntaxParse = _dereq_('../../../terms/match/lib/syntax');
 const Terms = _dereq_('../../../terms');
@@ -13169,7 +12764,7 @@ const splitMethods = Text => {
 
 module.exports = splitMethods;
 
-},{"../../../terms":171,"../../../terms/match/lib/syntax":179}],199:[function(_dereq_,module,exports){
+},{"../../../terms":172,"../../../terms/match/lib/syntax":180}],200:[function(_dereq_,module,exports){
 'use strict';
 const Terms = _dereq_('../../terms');
 
@@ -13346,7 +12941,7 @@ const miscMethods = Text => {
 
 module.exports = miscMethods;
 
-},{"../../terms":171}],200:[function(_dereq_,module,exports){
+},{"../../terms":172}],201:[function(_dereq_,module,exports){
 'use strict';
 //
 const defaults = {
@@ -13431,7 +13026,7 @@ const addMethods = Text => {
 };
 module.exports = addMethods;
 
-},{}],201:[function(_dereq_,module,exports){
+},{}],202:[function(_dereq_,module,exports){
 'use strict';
 const topk = _dereq_('./topk');
 const offset = _dereq_('./offset');
@@ -13584,7 +13179,7 @@ const addMethods = Text => {
 
 module.exports = addMethods;
 
-},{"./indexes":202,"./offset":203,"./topk":204}],202:[function(_dereq_,module,exports){
+},{"./indexes":203,"./offset":204,"./topk":205}],203:[function(_dereq_,module,exports){
 'use strict';
 //find where in the original text this match is found, by term-counts
 const termIndex = (r) => {
@@ -13617,7 +13212,7 @@ const termIndex = (r) => {
 };
 module.exports = termIndex;
 
-},{}],203:[function(_dereq_,module,exports){
+},{}],204:[function(_dereq_,module,exports){
 'use strict';
 /** say where in the original output string they are found*/
 
@@ -13682,7 +13277,7 @@ const allOffset = (r) => {
 };
 module.exports = allOffset;
 
-},{}],204:[function(_dereq_,module,exports){
+},{}],205:[function(_dereq_,module,exports){
 'use strict';
 //
 const topk = function (r, n) {
@@ -13720,7 +13315,7 @@ const topk = function (r, n) {
 
 module.exports = topk;
 
-},{}],205:[function(_dereq_,module,exports){
+},{}],206:[function(_dereq_,module,exports){
 'use strict';
 const sorter = _dereq_('./methods');
 
@@ -13777,7 +13372,7 @@ const addMethods = (Text) => {
 
 module.exports = addMethods;
 
-},{"./methods":206}],206:[function(_dereq_,module,exports){
+},{"./methods":207}],207:[function(_dereq_,module,exports){
 'use strict';
 
 //perform sort on pre-computed values
@@ -13880,7 +13475,7 @@ exports.freq = function(r) {
   return r;
 };
 
-},{}],207:[function(_dereq_,module,exports){
+},{}],208:[function(_dereq_,module,exports){
 'use strict';
 
 const splitMethods = (Text) => {
@@ -13928,10 +13523,10 @@ const splitMethods = (Text) => {
 
 module.exports = splitMethods;
 
-},{}],208:[function(_dereq_,module,exports){
+},{}],209:[function(_dereq_,module,exports){
 module.exports = _dereq_('../paths');
 
-},{"../paths":19}],209:[function(_dereq_,module,exports){
+},{"../paths":20}],210:[function(_dereq_,module,exports){
 'use strict';
 const isQuestion = _dereq_('../subset/sentences/isQuestion');
 const addSubsets = Text => {
@@ -14028,7 +13623,7 @@ const addSubsets = Text => {
 };
 module.exports = addSubsets;
 
-},{"../subset/sentences/isQuestion":63}],210:[function(_dereq_,module,exports){
+},{"../subset/sentences/isQuestion":64}],211:[function(_dereq_,module,exports){
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2017 MIT
@@ -14111,65 +13706,10 @@ const sentence_parser = function(text) {
 module.exports = sentence_parser
 // console.log(sentence_parser('john f. kennedy'));
 
-},{"../lexicon/uncompressed/abbreviations":9}],211:[function(_dereq_,module,exports){
-//in World.proto..
-const addConjugations = function(conjugations) {
-  Object.keys(conjugations || {}).forEach(k => {
-    this.conjugations[k] = conjugations[k];
-    //add them both to the lexicon, too
-    // let plural = plurals[k];
-    this.words[k] = this.words[k] || 'Infinitive';
-    // this.words[plural] = this.words[plural] || 'Plural';
-  });
-};
-module.exports = addConjugations;
-
-},{}],212:[function(_dereq_,module,exports){
-//in World.proto..
-const addPlurals = function(plurals) {
-  Object.keys(plurals || {}).forEach(k => {
-    this.plurals[k] = plurals[k];
-    //add them both to the lexicon, too
-    let plural = plurals[k];
-    this.words[k] = this.words[k] || 'Singular';
-    this.words[plural] = this.words[plural] || 'Plural';
-  });
-};
-module.exports = addPlurals;
-
-},{}],213:[function(_dereq_,module,exports){
-//parse a key-value of regex-tag pairs into an array of regexps
-//(on the World prototype)
-const addRegex = function(obj) {
-  obj = obj || {};
-  let keys = Object.keys(obj);
-  for (var i = 0; i < keys.length; i++) {
-    let reg = new RegExp(keys[i], 'i');
-    this.regex.push({
-      reg: reg,
-      tag: obj[keys[i]]
-    });
-  }
-};
-module.exports = addRegex;
-
-},{}],214:[function(_dereq_,module,exports){
-const addDownward = _dereq_('../tagset/addDownward');
-
-const addTags = function(tags) {
-  Object.keys(tags || {}).forEach(k => {
-    tags[k].isA = tags[k].isA || [];
-    tags[k].notA = tags[k].notA || [];
-    this.tagset[k] = tags[k];
-  });
-  addDownward(this.tagset);
-};
-module.exports = addTags;
-
-},{"../tagset/addDownward":141}],215:[function(_dereq_,module,exports){
+},{"../lexicon/uncompressed/abbreviations":10}],212:[function(_dereq_,module,exports){
 const firstWords = _dereq_('../lexicon/firstWords');
 const buildOut = _dereq_('../lexicon/buildOut');
-const efrt = _dereq_('efrt');
+const unpack = _dereq_('compromise-unpack');
 const normalize = _dereq_('../term/methods/normalize/normalize').normalize;
 
 //cleanup a directly-entered user lexicon.
@@ -14191,8 +13731,9 @@ const normalizeLex = function(lex) {
 const unpackLex = function(lex) {
   lex = lex || {};
   if (typeof lex === 'string') {
-    lex = JSON.parse(lex);
-    lex = efrt.unpack(lex);
+    lex = unpack({
+      words: lex
+    }).words;
   } else {
     lex = normalizeLex(lex);
   }
@@ -14222,17 +13763,13 @@ const addWords = function(lex) {
 };
 module.exports = addWords;
 
-},{"../lexicon/buildOut":5,"../lexicon/firstWords":7,"../term/methods/normalize/normalize":155,"efrt":1}],216:[function(_dereq_,module,exports){
+},{"../lexicon/buildOut":6,"../lexicon/firstWords":8,"../term/methods/normalize/normalize":156,"compromise-unpack":1}],213:[function(_dereq_,module,exports){
 const addWords = _dereq_('./addWords');
-const addRegex = _dereq_('./addRegex');
-const addTags = _dereq_('./addTags');
-const addPlurals = _dereq_('./addPlurals');
-const addConjugations = _dereq_('./addConjugations');
 const fns = _dereq_('../fns');
 let lexicon = _dereq_('../lexicon/init');
 let tagset = _dereq_('../tagset');
 let regex = _dereq_('./rules');
-let plurals = _dereq_('../lexicon/uncompressed/irregularPlurals').toPlural;
+let defaultPlurals = _dereq_('../lexicon/uncompressed/irregularPlurals').toPlural;
 
 //'class World{}'
 let World = function() {
@@ -14242,14 +13779,49 @@ let World = function() {
   this.regex = regex;
 
   this.conjugations = {};
-  this.plurals = plurals;
+  this.plurals = defaultPlurals;
 };
 
 World.prototype.addWords = addWords;
-World.prototype.addRegex = addRegex;
-World.prototype.addTags = addTags;
-World.prototype.addPlurals = addPlurals;
-World.prototype.addConjugations = addConjugations;
+
+World.prototype.addRegex = function(obj) {
+  obj = obj || {};
+  let keys = Object.keys(obj);
+  for (var i = 0; i < keys.length; i++) {
+    let reg = new RegExp(keys[i], 'i');
+    this.regex.push({
+      reg: reg,
+      tag: obj[keys[i]]
+    });
+  }
+};
+World.prototype.addTags = function(tags) {
+  Object.keys(tags || {}).forEach(k => {
+    tags[k].isA = tags[k].isA || [];
+    tags[k].notA = tags[k].notA || [];
+    this.tagset[k] = tags[k];
+  });
+  addDownward(this.tagset);
+};
+
+World.prototype.addPlurals = function(plurals) {
+  Object.keys(plurals || {}).forEach(k => {
+    this.plurals[k] = plurals[k];
+    //add them both to the lexicon, too
+    let plural = plurals[k];
+    this.words[k] = this.words[k] || 'Singular';
+    this.words[plural] = this.words[plural] || 'Plural';
+  });
+};
+World.prototype.addConjugations = function(conjugations) {
+  Object.keys(conjugations || {}).forEach(k => {
+    this.conjugations[k] = conjugations[k];
+    //add them both to the lexicon, too
+    // let plural = plurals[k];
+    this.words[k] = this.words[k] || 'Infinitive';
+  // this.words[plural] = this.words[plural] || 'Plural';
+  });
+};
 
 World.prototype.clone = function() {
   let w2 = new World();
@@ -14276,7 +13848,7 @@ World.prototype.plugin = function(obj) {
 };
 module.exports = World;
 
-},{"../fns":3,"../lexicon/init":8,"../lexicon/uncompressed/irregularPlurals":11,"../tagset":143,"./addConjugations":211,"./addPlurals":212,"./addRegex":213,"./addTags":214,"./addWords":215,"./rules":217}],217:[function(_dereq_,module,exports){
+},{"../fns":4,"../lexicon/init":9,"../lexicon/uncompressed/irregularPlurals":12,"../tagset":144,"./addWords":212,"./rules":214}],214:[function(_dereq_,module,exports){
 //these are regexes applied to t.text, instead of t.normal
 module.exports = [
   //#funtime
@@ -14323,5 +13895,43 @@ module.exports = [
   };
 });
 
-},{}]},{},[4])(4)
+},{}],215:[function(_dereq_,module,exports){
+var efrtUnpack = _dereq_('efrt-unpack');
+
+var unpackPlurals = function(str) {
+  return str.split(/,/g).reduce((h, s) => {
+    var arr = s.split(/\|/g);
+    if (arr.length === 3) {
+      h[arr[0] + arr[1]] = arr[0] + arr[2];
+    } else if (arr.length === 2) {
+      h[arr[0]] = arr[0] + arr[1];
+    } else {
+      h[arr[0]] = arr[0];
+    }
+    return h;
+  }, {});
+};
+
+var unpack = function(obj) {
+  if (typeof obj === 'string') {
+    obj = JSON.parse(obj);
+  }
+  //words is packed with efrt
+  if (obj.words && typeof obj.words === 'string') {
+    obj.words = efrtUnpack(obj.words);
+  }
+  //tags are just stringified
+  if (obj.tags && typeof obj.tags === 'string') {
+    obj.tags = JSON.parse(obj.tags);
+  }
+
+  //plurals is packed in a weird way
+  if (obj.plurals && typeof obj.plurals === 'string') {
+    obj.plurals = unpackPlurals(obj.plurals);
+  }
+  return obj;
+};
+module.exports = unpack;
+
+},{"efrt-unpack":2}]},{},[5])(5)
 });

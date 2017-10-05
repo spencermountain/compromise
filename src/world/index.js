@@ -36,7 +36,7 @@ World.prototype.clone = function() {
 
 //denormalize all the multi-word terms
 World.prototype.reindex = function() {
-  this.firstWords = reIndex(this.words);
+  reIndex(this);
 };
 
 //add all the things, in all the places
@@ -49,13 +49,17 @@ World.prototype.plugin = function(obj) {
   });
 };
 
+//create our default world
 let w = new World();
 w.plugin(data);
-
 //add some more words
 moreData.forEach((obj) => {
   extend(w.words, obj);
 });
 w.reindex();
+
+// console.log(w.words.hippopotamus);
+// console.log(w.words.hippopotami);
+console.log(w.words.babysat);
 
 module.exports = w;

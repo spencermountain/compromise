@@ -1,7 +1,7 @@
-const hasSpace = / /;
 
 //collect the first-words of multiple-word-terms, for quicker lookup
 const multiWord = function(w) {
+  const hasSpace = / /;
   let keys = Object.keys(w.words);
   for (let i = 0; i < keys.length; i++) {
     if (hasSpace.test(keys[i]) === true) {

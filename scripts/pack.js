@@ -1,21 +1,22 @@
 'use strict';
-var efrt = require('efrt');
+var nlpPlugin = require('/Users/spencer/nlp/plugin');
 var chalk = require('chalk');
 var fs = require('fs');
 var path = require('path');
 var fileSize = require('./lib/filesize');
 
 console.log(chalk.yellow('\n 🕑 packing lexicon..'));
-var out = path.join(__dirname, '../src/lexicon/compressed/_compressed.js');
+var out = path.join(__dirname, '../src/world/_data.js');
 //cleanup. remove old builds
 // exec('rm ' + out);
 
 //pack it into one string
-var lex = require('../src/lexicon/compressed');
-var pckd = efrt.pack(lex);
+var data = require('../data');
+var pckd = nlpPlugin.pack(data);
+console.log(pckd);
 
 fs.writeFileSync(out, 'module.exports="' + pckd + '"', 'utf8');
 
-console.log(chalk.blue('\n\n      ' + Object.keys(lex).length + ' words'));
+// console.log(chalk.blue('\n\n      ' + Object.keys(data.words).length + ' words'));
 console.log(chalk.blue('       - packed into -    ' + fileSize(out) + 'k\n'));
 console.log(chalk.green('  done!\n'));

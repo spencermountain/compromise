@@ -1,5 +1,5 @@
 //collect the first-words of multiple-word-terms, for quicker lookup
-const indexFirst = function(lex) {
+const reIndex = function(lex) {
   let firstWords = {};
   let keys = Object.keys(lex);
   const hasSpace = / /;
@@ -13,4 +13,4 @@ const indexFirst = function(lex) {
   }
   return firstWords;
 };
-module.exports = indexFirst;
+module.exports = reIndex;

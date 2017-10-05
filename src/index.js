@@ -9,7 +9,9 @@ const w = require('./world');
 //the main function
 const nlp = function(str, lex) {
   if (lex) {
-    w.addWords(lex);
+    w.plugin({
+      words: lex
+    });
   }
   let doc = buildText(str, w);
   doc.tagger();
@@ -23,39 +25,33 @@ nlp.tokenize = function(str) {
 
 //uncompress user-submitted lexicon
 nlp.plugin = function(plugin) {
-  let obj = unpack(plugin);
-  w.plugin(obj);
+  w.plugin(plugin);
 };
 //contribute words to the lexicon
 nlp.addWords = function(lex) {
-  let tmp = unpack({
+  w.plugin({
     words: lex
   });
-  w.plugin(tmp);
 };
 nlp.addTags = function(tags) {
-  let tmp = unpack({
+  w.plugin({
     tags: tags
   });
-  w.plugin(tmp);
 };
 nlp.addRegex = function(regex) {
-  let tmp = unpack({
+  w.plugin({
     regex: regex
   });
-  w.plugin(tmp);
 };
 nlp.addPlurals = function(plurals) {
-  let tmp = unpack({
+  w.plugin({
     plurals: plurals
   });
-  w.plugin(tmp);
 };
 nlp.addConjugations = function(conj) {
-  let tmp = unpack({
+  w.plugin({
     conjugations: conj
   });
-  w.plugin(tmp);
 };
 
 //clone the 'world'

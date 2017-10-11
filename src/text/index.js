@@ -4,6 +4,9 @@ const getters = require('./getters');
 
 function Text(arr, world, original) {
   this.list = arr || [];
+  if (typeof world === 'function') {
+    world = world();
+  }
   this.world = () => {
     return world;
   };

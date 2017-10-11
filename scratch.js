@@ -8,4 +8,4 @@ var nlp = require('./src/index');
 // var doc = nlp('george steve walter harrison jr is a person.');
 // doc.debug();
 
-var m = nlp('the dog sat').insertBefore('and');
+nlp('it is 50% of our budget').debug();

@@ -16,7 +16,7 @@ const splitMethods = Text => {
       });
     });
     let parent = r.parent || r;
-    return new Text(list, r.world, parent);
+    return new Text(list, r.world(), parent);
   };
 
   //support {word:true} whitelist
@@ -30,9 +30,9 @@ const splitMethods = Text => {
       });
     });
     matches = matches.map(t => {
-      return new Terms([t], r.world, r, t.parentTerms);
+      return new Terms([t], r.world(), r, t.parentTerms);
     });
-    return new Text(matches, r.world, r.parent);
+    return new Text(matches, r.world(), r.parent);
   };
 
   //support [word, word] whitelist
@@ -51,7 +51,7 @@ const splitMethods = Text => {
       //fail-fast
       if (this.list.length === 0 || reg === undefined || reg === null) {
         let parent = this.parent || this;
-        return new Text([], this.world, parent);
+        return new Text([], this.world(), parent);
       }
       //match "#Noun word" regex
       if (typeof reg === 'string' || typeof reg === 'number') {
@@ -76,7 +76,7 @@ const splitMethods = Text => {
         list = list.concat(found.list);
       });
       let parent = this.parent || this;
-      return new Text(list, this.world, parent);
+      return new Text(list, this.world(), parent);
     },
 
     if: function(reg) {
@@ -87,7 +87,7 @@ const splitMethods = Text => {
         }
       }
       let parent = this.parent || this;
-      return new Text(list, this.world, parent);
+      return new Text(list, this.world(), parent);
     },
 
     ifNo: function(reg) {
@@ -98,7 +98,7 @@ const splitMethods = Text => {
         }
       }
       let parent = this.parent || this;
-      return new Text(list, this.world, parent);
+      return new Text(list, this.world(), parent);
     },
 
     has: function(reg) {
@@ -124,7 +124,7 @@ const splitMethods = Text => {
         }
       }
       let parent = this.parent || this;
-      return new Text(list, this.world, parent);
+      return new Text(list, this.world(), parent);
     },
 
     /**find a match, and return everything after of it*/
@@ -142,7 +142,7 @@ const splitMethods = Text => {
         }
       }
       let parent = this.parent || this;
-      return new Text(list, this.world, parent);
+      return new Text(list, this.world(), parent);
     }
   };
   //alias 'and'

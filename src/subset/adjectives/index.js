@@ -34,7 +34,7 @@ const methods = {
         nounForm: null
       // verbForm: null
       };
-      if (shouldConvert(str, this.world.words) === true) {
+      if (shouldConvert(str, this.world().words) === true) {
         obj.comparative = fns.toComparative(str) || obj.comparative;
         obj.superlative = fns.toSuperlative(str) || obj.superlative;
         obj.adverbForm = fns.toAdverb(str);

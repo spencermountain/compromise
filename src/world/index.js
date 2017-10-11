@@ -37,7 +37,9 @@ World.prototype.addWords = addWords;
 World.prototype.clone = function() {
   let w2 = new World();
   ['words', 'firstWords', 'tagset', 'regex', 'patterns', 'conjugations', 'plurals'].forEach((k) => {
-    w2[k] = fns.copy(this[k]);
+    if (this[k]) {
+      w2[k] = fns.copy(this[k]);
+    }
   });
   return w2;
 };

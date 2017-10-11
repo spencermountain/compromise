@@ -3,12 +3,17 @@
 const addConjugations = function(obj) {
   Object.keys(obj).forEach((inf) => {
     this.conjugations[inf] = this.conjugations[inf] || {};
-    Object.keys(obj[inf]).forEach((tag) => {
-      //add this to our conjugations
-      this.conjugations[inf][tag] = obj[inf][tag];
-      //also denormalize to cache.toInfinitive
-      this.cache.toInfinitive[obj[inf][tag]] = inf;
-    });
+  //add it to the lexicon
+  // this.words[inf] = this.words[inf] || 'Infinitive';
+  // Object.keys(obj[inf]).forEach((tag) => {
+  //   let word = obj[inf][tag];
+  //   //add this to our conjugations
+  //   this.conjugations[inf][tag] = word;
+  //   //add it to the lexicon, too
+  //   this.words[word] = this.words[word] || tag;
+  //   //also denormalize to cache.toInfinitive
+  //   this.cache.toInfinitive[obj[inf][tag]] = inf;
+  // });
   });
   return obj;
 };

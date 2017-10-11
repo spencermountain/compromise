@@ -8,4 +8,7 @@ var nlp = require('./src/index');
 // var doc = nlp('george steve walter harrison jr is a person.');
 // doc.debug();
 
-console.log(nlp('dug').tag('Verb').verbs().toInfinitive());
+// console.log(nlp('dug').tag('Verb').verbs().toInfinitive());
+let doc = nlp('he is made of golden nuggets');
+console.log(doc.world().words.is);
+// doc.debug();

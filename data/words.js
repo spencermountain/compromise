@@ -61,4 +61,4 @@ for (var i = 0; i < data.length; i++) {
 
 module.exports = lex;
 // console.log(Object.keys(lex).length);
-// console.log(lex['early']);
+// console.log(lex['is']);

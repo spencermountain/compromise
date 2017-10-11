@@ -8,7 +8,7 @@ let addTags = require('./addTags');
 let addWords = require('./addWords');
 let addRegex = require('./addRegex');
 let addConjugations = require('./addConjugations');
-let reIndex = require('./reIndex');
+// let reIndex = require('./reIndex');
 
 //lazier/faster object-merge
 const extend = (main, obj) => {
@@ -60,11 +60,9 @@ World.prototype.plugin = function(obj) {
   //untangle compromise-plugin
   obj = unpack(obj);
   //add all-the-things to this world object
+  //(order may matter)
   if (obj.tags) {
     this.addTags(obj.tags);
-  }
-  if (obj.words) {
-    this.addWords(obj.words);
   }
   if (obj.regex) {
     this.addRegex(obj.regex);
@@ -72,7 +70,9 @@ World.prototype.plugin = function(obj) {
   if (obj.conjugations) {
     this.addConjugations(obj.conjugations);
   }
-
+  if (obj.words) {
+    this.addWords(obj.words);
+  }
 };
 
 //export a default world
@@ -81,6 +81,6 @@ w.plugin(data);
 moreData.forEach((obj) => {
   extend(w.words, obj);
 });
-w.reindex();
+// w.reindex();
 
 module.exports = w;

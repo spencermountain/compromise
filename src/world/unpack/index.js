@@ -16,7 +16,10 @@ var unpack = {
 */
 
 var unpackPlugin = function(str) {
-  let obj = JSON.parse(str);
+  let obj = str;
+  if (typeof str === 'string') {
+    obj = JSON.parse(str);
+  }
   //words is packed with efrt
   if (obj.words && typeof obj.words === 'string') {
     obj.words = unpack.words(obj.words);

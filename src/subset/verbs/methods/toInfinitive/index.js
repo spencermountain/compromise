@@ -17,7 +17,7 @@ const verb_mapping = (irregulars) => {
 
 
 const toInfinitive = function(t) {
-  const irregulars = verb_mapping(t.world.conjugations);
+  const irregulars = verb_mapping(t.world.conjugations); //TODO: do this at world cache
   if (t.tags.Infinitive) {
     return t.normal;
   }

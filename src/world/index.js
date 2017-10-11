@@ -60,6 +60,6 @@ w.reindex();
 
 // console.log(w.words.hippopotamus);
 // console.log(w.words.hippopotami);
-console.log(w.words.babysat);
+// console.log(w.words.babysat);
 
 module.exports = w;

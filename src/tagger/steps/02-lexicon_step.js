@@ -9,11 +9,6 @@ const lexicon_pass = function(ts) {
   for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
     let str = t.normal;
-    //user-lexicon lookup
-    // if (uLex && uLex.hasOwnProperty(str) === true) {
-    //   t.tag(uLex[str], 'user-lexicon');
-    //   continue;
-    // }
     //basic term lookup
     if (lexicon.hasOwnProperty(str) === true) {
       t.tag(lexicon[str], 'lexicon');

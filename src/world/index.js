@@ -2,8 +2,10 @@
 const fns = require('../fns');
 let data = require('./_data');
 let moreData = require('./more-data');
-let tagset = require('../tagset');
+let tags = require('../tagset');
 let unpack = require('./unpack');
+let addTags = require('./addTags');
+let addWords = require('./addWords');
 let reIndex = require('./reIndex');
 
 //lazier/faster object-merge
@@ -17,13 +19,16 @@ const extend = (main, obj) => {
 //class World
 let World = function() {
   this.words = {};
-  this.firstWords = {};
-  this.tagset = tagset;
+  this.tags = tags;
   this.regex = {};
   this.patterns = {};
   this.conjugations = {};
   this.plurals = {};
+  this.firstWords = {};
 };
+
+World.prototype.addTags = addTags;
+World.prototype.addWords = addWords;
 
 //make a no-reference copy of all the data
 World.prototype.clone = function() {
@@ -44,22 +49,20 @@ World.prototype.plugin = function(obj) {
   //untangle compromise-plugin
   obj = unpack(obj);
   //add all-the-things to this world object
-  Object.keys(obj).forEach((k) => {
-    extend(this[k], obj[k]);
-  });
+  if (obj.tags) {
+    this.addTags(obj.tags);
+  }
+  if (obj.words) {
+    this.addWords(obj.words);
+  }
+
 };
 
-//create our default world
+//export a default world
 let w = new World();
 w.plugin(data);
-//add some more words
 moreData.forEach((obj) => {
   extend(w.words, obj);
 });
 w.reindex();
-
-// console.log(w.words.hippopotamus);
-// console.log(w.words.hippopotami);
-// console.log(w.words.babysat);
-
 module.exports = w;

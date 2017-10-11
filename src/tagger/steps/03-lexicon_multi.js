@@ -1,26 +1,27 @@
+//do these two arrays prefix-match?
+const isPrefix = function(have, want) {
+  if (want.length > have.length) {
+    return false;
+  }
+  for(let i = 0; i < want.length; i += 1) {
+    if (want[i] !== have[i]) {
+      return false;
+    }
+  }
+  return true;
+};
+
 //find terms in the lexicon longer than one word (like 'hong kong')
 const findMultiWords = function(ts, i, world) {
-  let want = world.firstWords[ts.terms[i].normal];
-  let str = '';
-  //try 2 words, 3 words, 4 words..
-  for (let add = 1; add <= 3; add++) {
-    if (!ts.terms[i + add]) {
-      return 0;
-    }
-    if (str !== '') {
-      str += ' '; //(add a space)
-    }
-    str += ts.terms[i + add].normal;
-    str = str.replace(/'s$/, ''); //ugly
-    //perfect match here?
-    if (want[str] === true) {
-      let tag = world.words[ts.terms[i].normal + ' ' + str];
-      ts.slice(i, i + add + 1).tag(tag, 'multi-lexicon-' + (add + 1) + '-word');
-      return add;
-    }
-    //don't go further
-    if (!ts.terms[i + add + 1]) {
-      return 0;
+  let start = ts.terms[i].normal;
+  let list = world.firstWords[start];
+  let nextTerms = ts.terms.slice(i + 1, 4).map((t) => t.normal);
+  for(let l = 0; l < list.length; l += 1) {
+    if (isPrefix(nextTerms, list[l])) {
+      let str = start + ' ' + list.join(' ');
+      let tag = world.words[str];
+      ts.slice(i, i + list[i].length + 1).tag(tag, 'multi-lexicon-' + str);
+      return list[l].length;
     }
   }
   return 0;

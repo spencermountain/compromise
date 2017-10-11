@@ -1,19 +1,4 @@
 
-//collect the first-words of multiple-word-terms, for quicker lookup
-const multiWord = function(w) {
-  const hasSpace = / /;
-  let keys = Object.keys(w.words);
-  for (let i = 0; i < keys.length; i++) {
-    if (hasSpace.test(keys[i]) === true) {
-      let words = keys[i].split(/ /g);
-      if (w.firstWords[words[0]] === undefined) {
-        w.firstWords[words[0]] = [];
-      }
-      let str = words.slice(1).join(' ');
-      w.firstWords[words[0]][str] = true;
-    }
-  }
-};
 
 //add plural nouns to words
 const addNouns = function(w) {
@@ -39,7 +24,6 @@ const addVerbs = function(w) {
 };
 
 const reIndex = function(w) {
-  multiWord(w);
   addNouns(w);
   addVerbs(w);
 };

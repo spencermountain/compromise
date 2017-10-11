@@ -6,6 +6,7 @@ let tags = require('../tagset');
 let unpack = require('./unpack');
 let addTags = require('./addTags');
 let addWords = require('./addWords');
+let addRegex = require('./addRegex');
 let reIndex = require('./reIndex');
 
 //lazier/faster object-merge
@@ -14,13 +15,14 @@ const extend = (main, obj) => {
   for (let i = 0; i < keys.length; i++) {
     main[keys[i]] = obj[keys[i]];
   }
+  return main;
 };
 
 //class World
 let World = function() {
   this.words = {};
   this.tags = tags;
-  this.regex = {};
+  this.regex = [];
   this.patterns = {};
   this.conjugations = {};
   this.plurals = {};
@@ -32,6 +34,7 @@ let World = function() {
 
 World.prototype.addTags = addTags;
 World.prototype.addWords = addWords;
+World.prototype.addRegex = addRegex;
 
 //make a no-reference copy of all the data
 World.prototype.clone = function() {
@@ -59,6 +62,9 @@ World.prototype.plugin = function(obj) {
   }
   if (obj.words) {
     this.addWords(obj.words);
+  }
+  if (obj.regex) {
+    this.addRegex(obj.regex);
   }
 
 };

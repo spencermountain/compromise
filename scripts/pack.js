@@ -13,7 +13,6 @@ var out = path.join(__dirname, '../src/world/_data.js');
 //pack it into one string
 var data = require('../data');
 var pckd = nlpPlugin.pack(data);
-console.log(pckd);
 
 fs.writeFileSync(out, 'module.exports=`' + pckd + '`', 'utf8');
 

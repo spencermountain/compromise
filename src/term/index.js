@@ -10,6 +10,9 @@ const Term = function(str, world) {
   this.tags = {};
   this._text = fns.ensureString(str);
   this.world = world;
+  // this.world = function() {
+  //   return world;
+  // };
   //seperate whitespace from the text
   let parsed = build_whitespace(this._text);
   this.whitespace = parsed.whitespace;

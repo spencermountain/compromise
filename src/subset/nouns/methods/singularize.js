@@ -5,10 +5,7 @@ const singleRules = require('./data/singleRules');
 //turn 'shoes' into 'shoe'
 const toSingle = function(str, world) {
   //reverse it //TODO: cache in world object somewhere
-  let irregulars = Object.keys(world.plurals).reduce((h, k) => {
-    h[world.plurals[k]] = k;
-    return h;
-  }, {});
+  let irregulars = world.cache.toSingular;
 
   //check irregulars
   if (irregulars.hasOwnProperty(str) === true) {

@@ -10,5 +10,5 @@ var nlp = require('./src/index');
 
 // console.log(nlp('dug').tag('Verb').verbs().toInfinitive());
 let doc = nlp('he is made of golden nuggets');
-console.log(doc.world().words.is);
+console.log(doc.nouns().data());
 // doc.debug();

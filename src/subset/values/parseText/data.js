@@ -1,4 +1,4 @@
-const numbers = require('../../../lexicon/uncompressed/numbers');
+const numbers = require('../../../world/more-data/numbers');
 const fns = require('../paths').fns;
 
 //setup number-word data

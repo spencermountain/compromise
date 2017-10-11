@@ -2,7 +2,7 @@
 'use strict';
 const do_rules = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /oud$/, /...p$/];
 const dont_rules = [/ary$/];
-const irregulars = require('../../../lexicon/uncompressed/irregularAdjectives').toSuperlative;
+const irregulars = require('../../../world/more-data/irregularAdjectives').toSuperlative;
 
 const transforms = [
   {

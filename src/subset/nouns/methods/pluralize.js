@@ -1,9 +1,10 @@
 'use strict';
-const irregulars = require('../../../lexicon/uncompressed/irregularPlurals').toPlural;
+// const irregulars = require('../../../lexicon/uncompressed/irregularPlurals').toPlural;
 const pluralRules = require('./data/pluralRules');
 
 //turn 'shoe' into 'shoes'
 const pluralize = function(str, world) {
+  const irregulars = world.plurals;
   //irregular
   if (irregulars.hasOwnProperty(str) === true) {
     return irregulars[str];

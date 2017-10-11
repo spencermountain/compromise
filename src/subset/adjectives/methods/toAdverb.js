@@ -1,7 +1,7 @@
 //turn 'quick' into 'quickly'
 'use strict';
 const not_matches = [/airs$/, /ll$/, /ee.$/, /ile$/, /y$/];
-const irregulars = require('../../../lexicon/uncompressed/irregularAdjectives').toAdverb;
+const irregulars = require('../../../world/more-data/irregularAdjectives').toAdverb;
 
 const transforms = [
   {

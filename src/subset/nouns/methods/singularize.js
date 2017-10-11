@@ -1,9 +1,15 @@
 'use strict';
-const irregulars = require('../../../lexicon/uncompressed/irregularPlurals').toSingle;
+// const irregulars = require('../../../lexicon/uncompressed/irregularPlurals').toSingle;
 const singleRules = require('./data/singleRules');
 
 //turn 'shoes' into 'shoe'
 const toSingle = function(str, world) {
+  //reverse it //TODO: cache in world object somewhere
+  let irregulars = Object.keys(world.plurals).reduce((h, k) => {
+    h[world.plurals[k]] = k;
+    return h;
+  }, {});
+
   //check irregulars
   if (irregulars.hasOwnProperty(str) === true) {
     return irregulars[str];

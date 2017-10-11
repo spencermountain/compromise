@@ -1,12 +1,12 @@
 'use strict';
 //turn any verb into its infinitive form
 const rules = require('./rules');
-let irregulars = require('../../../../lexicon/uncompressed/irregularVerbs').irregulars;
+// let irregulars = require('../../../../lexicon/uncompressed/irregularVerbs').irregulars;
 const predict = require('../predict');
 
 //map the irregulars for easy infinitive lookup
 // {bought: 'buy'}
-const verb_mapping = () => {
+const verb_mapping = (irregulars) => {
   return Object.keys(irregulars).reduce((h, k) => {
     Object.keys(irregulars[k]).forEach(pos => {
       h[irregulars[k][pos]] = k;
@@ -15,9 +15,9 @@ const verb_mapping = () => {
   }, {});
 };
 
-irregulars = verb_mapping();
 
 const toInfinitive = function(t) {
+  const irregulars = verb_mapping(t.world.conjugations);
   if (t.tags.Infinitive) {
     return t.normal;
   }

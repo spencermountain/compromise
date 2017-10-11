@@ -7,6 +7,7 @@ let unpack = require('./unpack');
 let addTags = require('./addTags');
 let addWords = require('./addWords');
 let addRegex = require('./addRegex');
+let addConjugations = require('./addConjugations');
 let reIndex = require('./reIndex');
 
 //lazier/faster object-merge
@@ -28,13 +29,15 @@ let World = function() {
   this.plurals = {};
   //denormalized data for faster-lookups
   this.cache = {
-    firstWords: {}
+    firstWords: {},
+    toInfinitive: {}
   };
 };
 
 World.prototype.addTags = addTags;
 World.prototype.addWords = addWords;
 World.prototype.addRegex = addRegex;
+World.prototype.addConjugations = addConjugations;
 
 //make a no-reference copy of all the data
 World.prototype.clone = function() {
@@ -65,6 +68,9 @@ World.prototype.plugin = function(obj) {
   }
   if (obj.regex) {
     this.addRegex(obj.regex);
+  }
+  if (obj.conjugations) {
+    this.addConjugations(obj.conjugations);
   }
 
 };

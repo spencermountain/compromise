@@ -8,4 +8,4 @@ var nlp = require('./src/index');
 // var doc = nlp('george steve walter harrison jr is a person.');
 // doc.debug();
 
-nlp('it is 50% of our budget').debug();
+console.log(nlp('dug').tag('Verb').verbs().toInfinitive());

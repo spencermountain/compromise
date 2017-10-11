@@ -1,11 +1,12 @@
 'use strict';
 const build = require('./build');
 const getters = require('./getters');
+const w = require('../world');
 
 //Terms is an array of Term objects, and methods that wrap around them
 const Terms = function(arr, world, refText, refTerms) {
   this.terms = arr;
-  this.world = world || {};
+  this.world = world || w;
   this.refText = refText;
   this._refTerms = refTerms;
   this.get = n => {

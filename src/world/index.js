@@ -24,7 +24,10 @@ let World = function() {
   this.patterns = {};
   this.conjugations = {};
   this.plurals = {};
-  this.firstWords = {};
+  //denormalized data for faster-lookups
+  this.cache = {
+    firstWords: {}
+  };
 };
 
 World.prototype.addTags = addTags;
@@ -65,4 +68,5 @@ moreData.forEach((obj) => {
   extend(w.words, obj);
 });
 w.reindex();
+
 module.exports = w;

@@ -20,8 +20,7 @@ const addWords = function(words) {
     //multi-word cache
     if (wordReg.test(word) === true) {
       let arr = word.split(wordReg);
-      this.firstWords[arr[0]] = this.firstWords[arr[0]] || [];
-      this.firstWords[arr[0]].push(arr.slice(1, arr.length));
+      this.cache.firstWords[arr[0]] = true;
     }
   });
 

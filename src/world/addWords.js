@@ -1,5 +1,6 @@
 const normalize = require('../term/methods/normalize/normalize').normalize;
 const inflect = require('../subset/nouns/methods/pluralize');
+const conjugate = require('../subset/verbs/methods/conjugate/faster.js');
 const wordReg = / /;
 
 const cleanUp = function(str) {
@@ -31,6 +32,14 @@ const addWords = function(words) {
       if (plural && plural !== word) {
         this.words[plural] = 'Plural';
       }
+      return;
+    }
+    //turn infinitives into all conjugations
+    if (tag === 'Infinitive') {
+      let conj = conjugate(word, this);
+      Object.keys(conj).forEach((k) => {
+        this.words[conj[k]] = k;
+      });
     }
   });
 

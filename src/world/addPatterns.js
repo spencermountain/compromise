@@ -2,7 +2,7 @@
 //
 const addPatterns = function(obj) {
   Object.keys(obj).forEach((k) => {
-    this.patterns[k] = this.patterns[k] || obj[k];
+    this.patterns[k] = obj[k];
   });
   return obj;
 };

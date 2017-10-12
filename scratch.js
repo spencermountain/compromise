@@ -9,5 +9,8 @@ var nlp = require('./src/index');
 // doc.debug();
 
 // console.log(nlp('dug').tag('Verb').verbs().toInfinitive());
-let doc = nlp('it is 33%');
+nlp.addPatterns({
+  'master of #Noun': 'Adjective'
+});
+let doc = nlp('he is the master of ceremonies');
 doc.debug();

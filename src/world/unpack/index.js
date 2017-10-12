@@ -25,11 +25,11 @@ var unpackPlugin = function(str) {
     obj.words = unpack.words(obj.words);
   }
   //patterns is pivoted as key-value
-  if (obj.patterns) {
+  if (obj.patterns && typeof obj.patterns === 'string') {
     obj.patterns = unpack.keyValue(obj.patterns);
   }
   //regex, too
-  if (obj.regex) {
+  if (obj.regex && typeof obj.regex === 'string') {
     obj.regex = unpack.keyValue(obj.regex);
   }
   //plurals is packed in a ad-hoc way

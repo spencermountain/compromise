@@ -1,5 +1,5 @@
-
-//
+//put singular->plurals in world, the reverse in cache,
+//and both forms in the lexicon
 const addPlurals = function(obj) {
   Object.keys(obj).forEach((sing) => {
     let plur = obj[sing];

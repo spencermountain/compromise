@@ -8,6 +8,7 @@ let addTags = require('./addTags');
 let addWords = require('./addWords');
 let addRegex = require('./addRegex');
 let addConjugations = require('./addConjugations');
+let addPatterns = require('./addPatterns');
 let addPlurals = require('./addPlurals');
 
 //lazier/faster object-merge
@@ -40,6 +41,7 @@ World.prototype.addWords = addWords;
 World.prototype.addRegex = addRegex;
 World.prototype.addConjugations = addConjugations;
 World.prototype.addPlurals = addPlurals;
+World.prototype.addPatterns = addPatterns;
 
 //make a no-reference copy of all the data
 World.prototype.clone = function() {
@@ -68,6 +70,9 @@ World.prototype.plugin = function(obj) {
   }
   if (obj.regex) {
     this.addRegex(obj.regex);
+  }
+  if (obj.patterns) {
+    this.addPatterns(obj.patterns);
   }
   if (obj.conjugations) {
     this.addConjugations(obj.conjugations);

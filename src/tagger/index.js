@@ -21,6 +21,7 @@ const step = {
   quotation_step: require('./steps/19-quotation_step'),
   organization_step: require('./steps/20-organization_step'),
   plural_step: require('./steps/21-plural_step'),
+  posthoc: require('./steps/22-posthoc'),
   contraction: require('./contraction')
 };
 const corrections = require('./corrections');
@@ -50,6 +51,7 @@ const tagger = function(ts) {
   ts = step.value_step(ts);
   ts = corrections(ts); //2ms
   ts = tagPhrase(ts);
+  ts = step.posthoc(ts);
   return ts;
 };
 

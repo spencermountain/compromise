@@ -43,6 +43,11 @@ nlp.addRegex = function(regex) {
     regex: regex
   });
 };
+nlp.addPatterns = function(patterns) {
+  w.plugin({
+    patterns: patterns
+  });
+};
 nlp.addPlurals = function(plurals) {
   w.plugin({
     plurals: plurals

@@ -9,6 +9,5 @@ var nlp = require('./src/index');
 // doc.debug();
 
 // console.log(nlp('dug').tag('Verb').verbs().toInfinitive());
-let doc = nlp('he is made of golden nuggets');
-console.log(doc.nouns().data());
-// doc.debug();
+let doc = nlp('he is the master of ceremonies');
+doc.debug();

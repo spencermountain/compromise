@@ -27,6 +27,7 @@ test('generic-methods-run:', function(t) {
     splitAfter: true
   };
 
+  console.log('hi!!!');
   var r = nlp(freshPrince);
   Object.keys(docs.generic).forEach(function(type) {
     Object.keys(docs.generic[type]).forEach(function(fn) {

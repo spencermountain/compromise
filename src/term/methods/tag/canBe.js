@@ -1,9 +1,8 @@
 'use strict';
-const path = require('../../paths');
-const tagset = path.tags;
 
 //recursively-check compatibility of this tag and term
 const canBe = function(term, tag) {
+  const tagset = term.world.tags;
   //fail-fast
   if (tagset[tag] === undefined) {
     return true;

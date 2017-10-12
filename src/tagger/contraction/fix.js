@@ -27,7 +27,7 @@ const fixContraction = (ts, parts, i) => {
 
   //add a new empty term
   if (parts[1]) {
-    let two = new Term('');
+    let two = new Term('', ts.world);
     two.silent_term = parts[1];
     two.tag('Contraction', 'tagger-contraction');
     ts.insertAt(i + 1, two);
@@ -39,7 +39,7 @@ const fixContraction = (ts, parts, i) => {
 
   //potentially it's three-contracted-terms, like 'dunno'
   if (parts[2]) {
-    let three = new Term('');
+    let three = new Term('', ts.world);
     three.silent_term = parts[2];
     // ts.terms.push(three);
     ts.insertAt(i + 2, three);

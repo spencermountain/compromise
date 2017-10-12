@@ -67,7 +67,7 @@ Term.prototype.index = function() {
 };
 /** make a copy with no originals to the original  */
 Term.prototype.clone = function() {
-  let term = new Term(this._text, null);
+  let term = new Term(this._text, this.world);
   term.tags = fns.copy(this.tags);
   term.whitespace = fns.copy(this.whitespace);
   term.silent_term = this.silent_term;

@@ -2,10 +2,10 @@
 //set a term as a particular Part-of-speech
 const path = require('../../paths');
 const log = path.log;
-const tagset = path.tags;
 
 //remove a tag from a term
 const unTag = (term, tag, reason) => {
+  const tagset = term.world.tags;
   if (term.tags[tag]) {
     log.unTag(term, tag, reason);
     delete term.tags[tag];

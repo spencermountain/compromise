@@ -3,6 +3,7 @@
 const transforms = Terms => {
   const methods = {
     clone: function() {
+      // this.world = this.world.clone();
       let terms = this.terms.map(t => {
         return t.clone();
       });

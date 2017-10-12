@@ -13,14 +13,15 @@ const addSpaceAt = (ts, i) => {
 const insertMethods = (Terms) => {
 
   //accept any sorta thing
-  const ensureTerms = function(input) {
+  const ensureTerms = function(input, world) {
     if (input.isA === 'Terms') {
       return input;
     }
     if (input.isA === 'Term') {
-      return new Terms([input]);
+      return new Terms([input], world);
     }
-    let ts = Terms.fromString(input);
+    //handle a string
+    let ts = Terms.fromString(input, world);
     ts.tagger();
     return ts;
   };
@@ -29,7 +30,7 @@ const insertMethods = (Terms) => {
 
     insertBefore: function (input, tag) {
       let original_l = this.terms.length;
-      let ts = ensureTerms(input);
+      let ts = ensureTerms(input, this.world);
       if (tag) {
         ts.tag(tag);
       }
@@ -49,7 +50,7 @@ const insertMethods = (Terms) => {
 
     insertAfter: function (input, tag) {
       let original_l = this.terms.length;
-      let ts = ensureTerms(input);
+      let ts = ensureTerms(input, this.world);
       if (tag) {
         ts.tag(tag);
       }
@@ -69,7 +70,7 @@ const insertMethods = (Terms) => {
         index = 0;
       }
       let original_l = this.terms.length;
-      let ts = ensureTerms(input);
+      let ts = ensureTerms(input, this.world);
       //tag that thing too
       if (tag) {
         ts.tag(tag);

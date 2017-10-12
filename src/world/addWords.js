@@ -1,4 +1,5 @@
 const normalize = require('../term/methods/normalize/normalize').normalize;
+const inflect = require('../subset/nouns/methods/pluralize');
 const wordReg = / /;
 
 const cleanUp = function(str) {
@@ -17,10 +18,19 @@ const addWords = function(words) {
     let tag = words[word];
     word = cleanUp(word);
     this.words[word] = tag;
-    //multi-word cache
+
+    //add it to multi-word cache,
     if (wordReg.test(word) === true) {
       let arr = word.split(wordReg);
       this.cache.firstWords[arr[0]] = true;
+    }
+
+    //turn singulars into plurals
+    if (tag === 'Singular') {
+      let plural = inflect(word, {});
+      if (plural && plural !== word) {
+        this.words[plural] = 'Plural';
+      }
     }
   });
 

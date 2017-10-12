@@ -4,15 +4,10 @@ const pluralRules = require('./data/pluralRules');
 
 //turn 'shoe' into 'shoes'
 const pluralize = function(str, world) {
-  const irregulars = world.plurals;
+  const irregulars = world.plurals || {};
   //irregular
   if (irregulars.hasOwnProperty(str) === true) {
     return irregulars[str];
-  } else if (world && world.plurals) {
-    //check irregulars in world.
-    if (world.plurals.hasOwnProperty(str) === true) {
-      return world.plurals[str];
-    }
   }
   //regular rule-based inflector
   for (let i = 0; i < pluralRules.length; i++) {

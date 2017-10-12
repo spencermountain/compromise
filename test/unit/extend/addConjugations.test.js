@@ -15,7 +15,6 @@ test('addConjugations', function(t) {
   t.equal(doc.out(), 'wood the crush', 'conjugated from infinitive');
   t.equal(doc.verbs().length, 1, 'still has 1 verb');
 
-  console.log(doc.verbs().conjugate());
   doc.verbs().toInfinitive();
   t.equal(doc.out(), 'woo the crush', 'conjugated back tp infinitive');
 

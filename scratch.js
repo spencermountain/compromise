@@ -8,4 +8,13 @@ var nlp = require('./src/index');
 // var doc = nlp('george steve walter harrison jr is a person.');
 // doc.debug();
 
-var m = nlp('the dog sat').insertBefore('and');
+nlp.addTags({
+  Doctor: {
+    isA: 'Person'
+  }
+});
+
+let doc = nlp('lkj').tag('Doctor');
+console.log(doc.world().tags.Person);
+console.log(doc.world().tags.Doctor);
+doc.debug();

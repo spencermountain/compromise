@@ -22,6 +22,7 @@ compromise uses semver, and pushes to npm frequently
 - change ngram params to an object `{size:int, max:int}`
 - implement early '$1' capture-group syntax in .replace()
 - bring-back `map, filter, foreach and reduce` methods
+- set `.words()` as alias for .terms()
 <!-- * include 'the #TitleCase' matches in .topics() -->
 
 ### v10

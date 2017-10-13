@@ -1,3 +1,6 @@
+//add 'downward' tags (that immediately depend on this one)
+const addDownword = require('../tags/addDownward');
+
 //extend our known tagset with these new ones
 const addTags = function(tags) {
   Object.keys(tags).forEach((tag) => {
@@ -6,6 +9,7 @@ const addTags = function(tags) {
     obj.downward = obj.downward || [];
     this.tags[tag] = obj;
   });
+  addDownword(this.tags);
   return tags;
 };
 module.exports = addTags;

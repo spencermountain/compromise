@@ -1,5 +1,5 @@
 var nlp = require('./src/index');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 
 // nlp.addWords({
 //   'george steve walter harrison jr': 'Singer',
@@ -8,10 +8,11 @@ nlp.verbose('tagger');
 // var doc = nlp('george steve walter harrison jr is a person.');
 // doc.debug();
 // var plugin = {
-//   regex: {
-//     uuu: 'Exaggeration'
+//   words: {
+//     'mt john': 'Mountain'
 //   }
 // };
 // nlp.plugin(plugin);
-let doc = nlp('27/5/1979 to tomorrow');
+let doc = nlp('zero').tag('Noun').nouns().toPlural();
+// console.log(doc.world().words.aircraft);
 doc.debug();

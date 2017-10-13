@@ -577,5 +577,15 @@ module.exports = [
   'worry',
   'wreck',
   'yawn',
-  'yield'
+  'yield',
+  'tie',
+  'dream',
+  'sail',
+  'run',
+  'rub',
+  'begin',
+  'win',
+  'claim',
+  'deal',
+  'spin',
 ];

@@ -45,6 +45,8 @@ const corrections = function(ts) {
     ts.match('#Determiner #Verb of').term(1).tag('Noun', 'the-verb-of');
     //the threat of force
     ts.match('#Determiner #Noun of #Verb').term(3).tag('Noun', 'noun-of-noun');
+    //a close
+    ts.match('#Determiner #Adverb? close').lastTerm().tag('Adjective', 'a-close');
   }
 
   //like

@@ -1,7 +1,9 @@
 const normalize = require('../term/methods/normalize/normalize').normalize;
 const inflect = require('../subset/nouns/methods/pluralize');
 const conjugate = require('../subset/verbs/methods/conjugate/faster.js');
+const adjFns = require('../subset/adjectives/methods');
 const wordReg = / /;
+
 
 const cleanUp = function(str) {
   str = normalize(str);
@@ -39,6 +41,30 @@ const addWords = function(words) {
       Object.keys(conj).forEach((k) => {
         this.words[conj[k]] = k;
       });
+      return;
+    }
+    //phrasals like 'pull out' get conjugated too
+    if (tag === 'PhrasalVerb') {
+      let arr = word.split(/ /);
+      let conj = conjugate(arr[0], this);
+      Object.keys(conj).forEach((k) => {
+        let form = conj[k] + ' ' + arr[1];
+        this.words[form] = [k, 'PhrasalVerb'];
+        //add it to cache, too
+        this.cache.firstWords[conj[k]] = true;
+      });
+      return;
+    }
+    //turn some adjectives into superlatives
+    if (tag === 'Comparable') {
+      let comp = adjFns.toComparative(word);
+      if (comp && word !== comp) {
+        this.words[comp] = 'Comparative';
+      }
+      let supr = adjFns.toSuperlative(word);
+      if (supr && word !== supr) {
+        this.words[supr] = 'Superlative';
+      }
     }
   });
 

@@ -41,7 +41,7 @@ const isPlural = function(t, world) {
   }
   //check given irregulars
   if (world && world.plurals && world.plurals.hasOwnProperty(str) === true) {
-    return world.plurals[str];
+    return false;
   }
   //inspect the existing tags to see if a plural is valid
   if (couldEvenBePlural(t) === false) {

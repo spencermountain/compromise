@@ -8,13 +8,9 @@ var nlp = require('./src/index');
 // var doc = nlp('george steve walter harrison jr is a person.');
 // doc.debug();
 
-nlp.addTags({
-  Doctor: {
-    isA: 'Person'
-  }
-});
-
-let doc = nlp('lkj').tag('Doctor');
-console.log(doc.world().tags.Person);
-console.log(doc.world().tags.Doctor);
-doc.debug();
+var lexicon = {
+  'mt washington': 'Mountain'
+};
+let doc = nlp('he walked to mt washington', lexicon).debug();
+// console.log(doc.world().words['mt washington']);
+// console.log(doc.world().cache.firstWords['mt']);

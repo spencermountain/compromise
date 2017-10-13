@@ -19,7 +19,6 @@ const addWords = function(words) {
     let tag = words[word];
     word = cleanUp(word);
     this.words[word] = tag;
-
     //add it to multi-word cache,
     if (wordReg.test(word) === true) {
       let arr = word.split(wordReg);

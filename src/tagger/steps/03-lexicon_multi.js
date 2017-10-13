@@ -4,7 +4,7 @@ const MAX = 4;
 const findMultiWords = function(ts, i, world) {
   let lex = world.words;
   let start = ts.terms[i].normal;
-  let nextTerms = ts.terms.slice(i + 1, MAX).map((t) => t.normal);
+  let nextTerms = ts.terms.slice(i + 1, i + MAX).map((t) => t.normal);
   //try biggest first
   for(let k = MAX; k > 0; k -= 1) {
     let howAbout = start + ' ' + nextTerms.slice(0, k).join(' ');

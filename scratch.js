@@ -7,10 +7,11 @@ var nlp = require('./src/index');
 // });
 // var doc = nlp('george steve walter harrison jr is a person.');
 // doc.debug();
-
-var lexicon = {
-  'mt washington': 'Mountain'
-};
-let doc = nlp('he walked to mt washington', lexicon).debug();
-// console.log(doc.world().words['mt washington']);
-// console.log(doc.world().cache.firstWords['mt']);
+// var plugin = {
+//   regex: {
+//     uuu: 'Exaggeration'
+//   }
+// };
+// nlp.plugin(plugin);
+let doc = nlp('1999-12-31 to tomorrow');
+doc.debug();

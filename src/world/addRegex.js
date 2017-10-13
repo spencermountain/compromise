@@ -3,7 +3,7 @@
 const addRegex = function(obj) {
   Object.keys(obj).forEach((k) => {
     this.regex.push({
-      reg: new RegExp(k),
+      reg: new RegExp(k, 'i'),
       tag: obj[k]
     });
   });

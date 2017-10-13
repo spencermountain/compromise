@@ -1,5 +1,5 @@
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 
 // nlp.addWords({
 //   'george steve walter harrison jr': 'Singer',
@@ -13,5 +13,5 @@ var nlp = require('./src/index');
 //   }
 // };
 // nlp.plugin(plugin);
-let doc = nlp('1999-12-31 to tomorrow');
+let doc = nlp('27/5/1979 to tomorrow');
 doc.debug();

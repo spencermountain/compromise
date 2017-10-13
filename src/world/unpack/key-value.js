@@ -10,7 +10,16 @@ const keyValue = function(obj) {
     if (isCompressed === true) {
       let arr = obj[k];
       arr.forEach((a) => {
-        h[a] = k;
+        if (h[a]) {
+          //convert val to an array
+          if (typeof h[a] === 'string') {
+            h[a] = [h[a]];
+          }
+          //add it
+          h[a].push(k);
+        } else {
+          h[a] = k;
+        }
       });
     } else {
       h[k] = obj[k];

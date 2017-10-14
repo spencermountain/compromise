@@ -10,6 +10,9 @@ const Term = function(str, world) {
   this.tags = {};
   this._text = fns.ensureString(str);
   this.world = world;
+  // this.world = function() {
+  //   return world;
+  // };
   //seperate whitespace from the text
   let parsed = build_whitespace(this._text);
   this.whitespace = parsed.whitespace;
@@ -64,7 +67,7 @@ Term.prototype.index = function() {
 };
 /** make a copy with no originals to the original  */
 Term.prototype.clone = function() {
-  let term = new Term(this._text, null);
+  let term = new Term(this._text, this.world);
   term.tags = fns.copy(this.tags);
   term.whitespace = fns.copy(this.whitespace);
   term.silent_term = this.silent_term;

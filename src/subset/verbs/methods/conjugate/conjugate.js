@@ -31,7 +31,7 @@ const conjugate = function(t, world, verbose) {
     all[form] = t.normal;
   }
   if (form !== 'Infinitive') {
-    all['Infinitive'] = toInfinitive(t, verbose) || '';
+    all['Infinitive'] = toInfinitive(t, world) || '';
   }
   //check irregular forms
   const irregObj = checkIrregulars(all['Infinitive'], world) || {};

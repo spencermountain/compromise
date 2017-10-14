@@ -1,6 +1,6 @@
 'use strict';
 //orgwords like 'bank' in 'Foo Bank'
-let orgWords = require('../../lexicon/uncompressed/orgWords');
+let orgWords = require('../../world/more-data/orgWords');
 
 //could this word be an organization
 const maybeOrg = function(t) {

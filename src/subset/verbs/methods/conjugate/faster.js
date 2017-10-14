@@ -7,17 +7,20 @@ const generic = require('./generic');
 
 const want = ['Gerund', 'PastTense', 'PresentTense'];
 
-const fasterConjugate = inf => {
+const fasterConjugate = function(inf, world) {
   let all = {
     Infinitive: inf
   };
-  const irregObj = checkIrregulars(all['Infinitive']);
-  if (irregObj !== null) {
-    Object.keys(irregObj).forEach(k => {
-      if (irregObj[k] && !all[k]) {
-        all[k] = irregObj[k];
-      }
-    });
+  //check irregulars list
+  if (world && world.conjugations) {
+    const irregObj = checkIrregulars(all['Infinitive'], world);
+    if (irregObj !== null) {
+      Object.keys(irregObj).forEach(k => {
+        if (irregObj[k] && !all[k]) {
+          all[k] = irregObj[k];
+        }
+      });
+    }
   }
   //check suffix rules
   const suffObj = suffixPass(inf);

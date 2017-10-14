@@ -20,7 +20,6 @@ const matchMethods = Terms => {
       matches = matches.map(a => {
         return new Terms(a, this.world, this.refText, this.refTerms);
       });
-
       return new Text(matches, this.world, this.parent);
     },
 

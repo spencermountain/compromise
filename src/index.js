@@ -3,14 +3,15 @@ const buildText = require('./text/build');
 const pkg = require('../package.json');
 const log = require('./log');
 const unpack = require('./world/unpack');
-const World = require('./world');
+const w = require('./world');
 
-let w = new World();
 
 //the main function
 const nlp = function(str, lex) {
   if (lex) {
-    w.addWords(lex);
+    w.plugin({
+      words: lex
+    });
   }
   let doc = buildText(str, w);
   doc.tagger();
@@ -24,39 +25,38 @@ nlp.tokenize = function(str) {
 
 //uncompress user-submitted lexicon
 nlp.plugin = function(plugin) {
-  let obj = unpack(plugin);
-  w.plugin(obj);
+  w.plugin(plugin);
 };
 //contribute words to the lexicon
 nlp.addWords = function(lex) {
-  let tmp = unpack({
+  w.plugin({
     words: lex
   });
-  w.plugin(tmp);
 };
 nlp.addTags = function(tags) {
-  let tmp = unpack({
+  w.plugin({
     tags: tags
   });
-  w.plugin(tmp);
 };
 nlp.addRegex = function(regex) {
-  let tmp = unpack({
+  w.plugin({
     regex: regex
   });
-  w.plugin(tmp);
+};
+nlp.addPatterns = function(patterns) {
+  w.plugin({
+    patterns: patterns
+  });
 };
 nlp.addPlurals = function(plurals) {
-  let tmp = unpack({
+  w.plugin({
     plurals: plurals
   });
-  w.plugin(tmp);
 };
 nlp.addConjugations = function(conj) {
-  let tmp = unpack({
+  w.plugin({
     conjugations: conj
   });
-  w.plugin(tmp);
 };
 
 //clone the 'world'

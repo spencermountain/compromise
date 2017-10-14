@@ -11,7 +11,7 @@ const numberRange = ts => {
     }
     //hyphens found in whitespace - '5 - 7'
     if (t.tags.Value && i > 0 && t.whitespace.before === ' - ' && ts.terms[i - 1].tags.Value) {
-      let to = new Term('');
+      let to = new Term('', ts.world);
       to.silent_term = 'to';
       ts.insertAt(i, to);
       ts.terms[i - 1].tag('NumberRange', 'number-number1');

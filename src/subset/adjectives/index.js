@@ -1,8 +1,25 @@
 'use strict';
 const Text = require('../../text');
 const fns = require('./methods');
-const shouldConvert = require('./shouldConvert');
 //the Adjectives() subset class
+
+//is this an adjective we want to goof-around with?
+const shouldConvert = function(str, words) {
+  if (!str || str.length <= 3) {
+    return false;
+  }
+  if (words[str] === 'Comparable') {
+    return true;
+  }
+  if (words[str] === 'Adjective') {
+    return false;
+  }
+  //has space
+  if (str.indexOf(' ') !== -1) {
+    return false;
+  }
+  return true;
+};
 
 const methods = {
   data: function() {
@@ -15,14 +32,14 @@ const methods = {
         superlative: 'most ' + str,
         adverbForm: null,
         nounForm: null
-        // verbForm: null
+      // verbForm: null
       };
-      if (shouldConvert(str) === true) {
+      if (shouldConvert(str, this.world().words) === true) {
         obj.comparative = fns.toComparative(str) || obj.comparative;
         obj.superlative = fns.toSuperlative(str) || obj.superlative;
         obj.adverbForm = fns.toAdverb(str);
         obj.nounForm = fns.toNoun(str);
-        // obj.verbForm = fns.toVerb(str);
+      // obj.verbForm = fns.toVerb(str);
       }
       return obj;
     });

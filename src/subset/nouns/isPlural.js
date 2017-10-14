@@ -1,5 +1,4 @@
 'use strict';
-const irregulars = require('../../lexicon/uncompressed/irregularPlurals');
 const rules = require('./methods/data/indicators');
 const prep = /([a-z]*) (of|in|by|for) [a-z]/;
 const hasPlural = require('./hasPlural');
@@ -42,7 +41,7 @@ const isPlural = function(t, world) {
   }
   //check given irregulars
   if (world && world.plurals && world.plurals.hasOwnProperty(str) === true) {
-    return world.plurals[str];
+    return false;
   }
   //inspect the existing tags to see if a plural is valid
   if (couldEvenBePlural(t) === false) {
@@ -52,13 +51,6 @@ const isPlural = function(t, world) {
   const preposition = str.match(prep);
   if (preposition !== null) {
     str = preposition[1];
-  }
-  // if it's a known irregular case
-  if (irregulars.toSingle.hasOwnProperty(str)) {
-    return true;
-  }
-  if (irregulars.toPlural[str]) {
-    return false;
   }
   //check the suffix-type rules for indications
   for (let i = 0; i < rules.plural_indicators.length; i++) {

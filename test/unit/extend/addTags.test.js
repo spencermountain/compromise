@@ -7,7 +7,10 @@ test('tagset-change-isA-basic', function(t) {
       isA: 'Person'
     }
   });
-  nlp.addWords({ surgeon: 'Doctor', 'surgeon general': 'Doctor' });
+  nlp.addWords({
+    surgeon: 'Doctor',
+    'surgeon general': 'Doctor'
+  });
   var doc = nlp('the surgeon operated');
 
   //basic isA
@@ -34,7 +37,9 @@ test('tagset-change-isA', function(t) {
       notA: ['Foo']
     }
   });
-  nlp.addWords({ lkjj: 'Foo' });
+  nlp.addWords({
+    lkjj: 'Foo'
+  });
   var doc = nlp('he is lkjj');
   t.equal(doc.match('#Foo').out('normal'), 'lkjj', 'init-there');
   doc.match('lkjj').tag('#Doctor');

@@ -2,7 +2,7 @@
 'use strict';
 const do_rules = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /old$/, /oud$/, /e[ae]p$/];
 const dont_rules = [/ary$/, /ous$/];
-const irregulars = require('../../../lexicon/uncompressed/irregularAdjectives').toComparative;
+const irregulars = require('../../../world/more-data/irregularAdjectives').toComparative;
 
 const transforms = [
   {
@@ -51,7 +51,7 @@ const to_comparative = function(str) {
     return str + 'r';
   }
   return str + 'er';
-  // return null;
+// return null;
 };
 
 // console.log(to_comparative('big'));

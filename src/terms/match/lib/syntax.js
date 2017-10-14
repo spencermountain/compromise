@@ -94,7 +94,7 @@ const parse_term = function(term) {
     term = noLast(term);
     term = noFirst(term);
     //actually make the regex
-    reg.regex = new RegExp(term);
+    reg.regex = new RegExp(term, 'i');
     term = '';
   }
   //one_of options flag

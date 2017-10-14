@@ -1,55 +1,73 @@
-const firstWords = require('../lexicon/firstWords');
-const buildOut = require('../lexicon/buildOut');
-const unpack = require('efrt-unpack');
 const normalize = require('../term/methods/normalize/normalize').normalize;
+const inflect = require('../subset/nouns/methods/pluralize');
+const conjugate = require('../subset/verbs/methods/conjugate/faster.js');
+const adjFns = require('../subset/adjectives/methods');
+const wordReg = / /;
 
-//cleanup a directly-entered user lexicon.
-//basically really dirty and stupid.
-const normalizeLex = function(lex) {
-  lex = lex || {};
-  return Object.keys(lex).reduce((h, k) => {
-    let normal = normalize(k);
-    //normalize whitesace
-    normal = normal.replace(/\s+/, ' ');
-    //remove sentence-punctuaion too
-    normal = normal.replace(/[.\?\!]/g, '');
-    h[normal] = lex[k];
-    return h;
-  }, {});
+
+const cleanUp = function(str) {
+  str = normalize(str);
+  //extra whitespace
+  str = str.replace(/\s+/, ' ');
+  //remove sentence-punctuaion too
+  str = str.replace(/[.\?,;\!]/g, '');
+  return str;
 };
 
-//basically really dirty and stupid.
-const unpackLex = function(lex) {
-  lex = lex || {};
-  if (typeof lex === 'string') {
-    lex = unpack({
-      words: lex
-    }).words;
-  } else {
-    lex = normalizeLex(lex);
-  }
-  lex = buildOut(lex);
-  return {
-    lexicon: lex,
-    firstWords: firstWords(lex)
-  };
-};
+//
+const addWords = function(words) {
+  //go through each word
+  Object.keys(words).forEach((word) => {
+    let tag = words[word];
+    word = cleanUp(word);
+    this.words[word] = tag;
+    //add it to multi-word cache,
+    if (wordReg.test(word) === true) {
+      let arr = word.split(wordReg);
+      this.cache.firstWords[arr[0]] = true;
+    }
 
-const addWords = function(lex) {
-  lex = lex || {};
-  let l = unpackLex(lex);
-  lex = l.lexicon;
-  //'upsert' into lexicon object
-  Object.keys(lex).forEach(k => {
-    this.words[k] = lex[k];
+    //turn singulars into plurals
+    if (tag === 'Singular') {
+      let plural = inflect(word, {});
+      if (plural && plural !== word) {
+        this.words[plural] = 'Plural';
+      }
+      return;
+    }
+    //turn infinitives into all conjugations
+    if (tag === 'Infinitive') {
+      let conj = conjugate(word, this);
+      Object.keys(conj).forEach((k) => {
+        this.words[conj[k]] = k;
+      });
+      return;
+    }
+    //phrasals like 'pull out' get conjugated too
+    if (tag === 'PhrasalVerb') {
+      let arr = word.split(/ /);
+      let conj = conjugate(arr[0], this);
+      Object.keys(conj).forEach((k) => {
+        let form = conj[k] + ' ' + arr[1];
+        this.words[form] = [k, 'PhrasalVerb'];
+        //add it to cache, too
+        this.cache.firstWords[conj[k]] = true;
+      });
+      return;
+    }
+    //turn some adjectives into superlatives
+    if (tag === 'Comparable') {
+      let comp = adjFns.toComparative(word);
+      if (comp && word !== comp) {
+        this.words[comp] = 'Comparative';
+      }
+      let supr = adjFns.toSuperlative(word);
+      if (supr && word !== supr) {
+        this.words[supr] = 'Superlative';
+      }
+    }
   });
-  //merge 'firstWord' cache-objects too
-  let first = l.firstWords;
-  Object.keys(first).forEach(k => {
-    this.firstWords[k] = this.firstWords[k] || {};
-    Object.keys(first[k]).forEach(str => {
-      this.firstWords[k][str] = true;
-    });
-  });
+
+  return words;
 };
 module.exports = addWords;

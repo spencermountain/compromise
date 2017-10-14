@@ -4,6 +4,9 @@ const getters = require('./getters');
 
 function Text(arr, world, original) {
   this.list = arr || [];
+  if (typeof world === 'function') {
+    world = world();
+  }
   this.world = () => {
     return world;
   };
@@ -71,3 +74,5 @@ Object.keys(subset).forEach(k => {
     return new subset[k](m.list, this.world, this.parent);
   };
 });
+//aliases
+Text.prototype.words = Text.prototype.terms;

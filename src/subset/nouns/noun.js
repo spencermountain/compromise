@@ -57,7 +57,7 @@ const methods = {
 
 const Noun = function(arr, world, refText) {
   Terms.call(this, arr, world, refText);
-  this.main = this.terms[0];
+  this.main = this.terms[this.terms.length - 1];
 };
 Noun.prototype = Object.create(Terms.prototype);
 

@@ -1,6 +1,6 @@
 'use strict';
 const textValue = require('./textCardinal');
-const ordinalWord = require('../../../lexicon/uncompressed/numbers').toOrdinal;
+const ordinalWord = require('../../../world/more-data/numbers').toOrdinal;
 //
 const textOrdinal = num => {
   let words = textValue(num);

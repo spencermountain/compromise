@@ -1,6 +1,4 @@
 'use strict';
-
-//
 const conflicts = require('./conflicts');
 const nouns = require('./tags/nouns');
 const verbs = require('./tags/verbs');

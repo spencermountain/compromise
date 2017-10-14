@@ -1,6 +1,4 @@
 'use strict';
-// const rules = require('./rules/punct_rules');
-
 //regs-
 const titleCase = /^[A-Z][a-z']/;
 const romanNum = /^[IVXCM]+$/;

@@ -20,7 +20,7 @@ const parse = function(r) {
     let str = r.verb.out('normal');
     r.auxiliary = original.not(str).not('(#Adverb|#Negative)');
     r.verb = r.verb.list[0].terms[0];
-    // r.auxiliary = aux.match('#Auxiliary+');
+  // r.auxiliary = aux.match('#Auxiliary+');
   } else {
     r.verb = original.terms[0];
   }

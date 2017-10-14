@@ -4,7 +4,7 @@ var nlp = require('../lib/nlp');
 test('addConjugations', function(t) {
   let conjugations = {
     woo: {
-      PastTense: 'wood'
+      PastTense: 'wooed'
     }
   };
   nlp.addConjugations(conjugations);
@@ -12,10 +12,9 @@ test('addConjugations', function(t) {
   t.equal(doc.verbs().length, 1, 'has inf in lexicon');
 
   doc.verbs().toPastTense();
-  t.equal(doc.out(), 'wood the crush', 'conjugated from infinitive');
+  t.equal(doc.out(), 'wooed the crush', 'conjugated from infinitive');
   t.equal(doc.verbs().length, 1, 'still has 1 verb');
 
-  console.log(doc.verbs().conjugate());
   doc.verbs().toInfinitive();
   t.equal(doc.out(), 'woo the crush', 'conjugated back tp infinitive');
 

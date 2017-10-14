@@ -1,10 +1,11 @@
 'use strict';
-let irregulars = require('../../../../lexicon/uncompressed/irregularVerbs').irregulars; //weeee!
+// let irregulars = require('../../../../lexicon/uncompressed/irregularVerbs').irregulars; //weeee!
 const fns = require('../../../../fns'); //weeee!
-const infArr = Object.keys(irregulars);
 const forms = ['Participle', 'Gerund', 'PastTense', 'PresentTense', 'FuturePerfect', 'PerfectTense', 'Actor'];
 
 const checkIrregulars = function(str, world) {
+  const irregulars = world.conjugations;
+  const infArr = Object.keys(irregulars);
   //check irregulars in world
   if (world && world.conjugations && world.conjugations.hasOwnProperty(str) === true) {
     return world.conjugations[str];

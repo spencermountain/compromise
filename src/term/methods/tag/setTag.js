@@ -5,9 +5,10 @@ const log = path.log;
 const fns = path.fns;
 const unTag = require('./unTag');
 // const tagset = path.tags;
-const tagset = require('../../../tagset');
+// const tagset = require('../../../tagset');
 
 const putTag = (term, tag, reason) => {
+  const tagset = term.world.tags;
   tag = tag.replace(/^#/, '');
   //already got this
   if (term.tags[tag] === true) {
@@ -40,6 +41,7 @@ const wrap = function(term, tag, reason) {
   if (!term || !tag) {
     return;
   }
+  const tagset = term.world.tags;
   //handle multiple tags
   if (fns.isArray(tag)) {
     tag.forEach(t => putTag(term, t, reason)); //recursive

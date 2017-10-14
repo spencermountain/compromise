@@ -9,5 +9,15 @@ module.exports = {
     desc: 'find the pronoun used to refer to the person, or suggest one based on their inferred gender.',
     returns: 'String',
     example: 'nlp(\'Tony Hawk did a 900\').people().pronoun()\n//\'he\''
+  },
+  firstNames: {
+    desc: 'grab only the first-names',
+    returns: 'Text',
+    example: 'nlp(\'Tony Hawk did a 900\').people().firstNames().out(\'array\')\n//[\'tony\']'
+  },
+  lastNames: {
+    desc: 'grab only the last-names',
+    returns: 'Text',
+    example: 'nlp(\'Tony Hawk did a 900\').people().lastNames().out(\'array\')\n//[\'hawk\']'
   }
 };

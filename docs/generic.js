@@ -56,7 +56,7 @@ module.exports = {
     forEach: {
       desc: 'do something on each result independently',
       returns: 'Text',
-      example: 'nlp(\'Larry, Curly, and Moe\').people().forEach((m,i)=> console.log(i + m.out()) )\n//0curly\n//1larry\n//2moe'
+      example: 'nlp(\'Larry, Curly, and Moe\').people().map((m,i)=> i + m.out() )\n//0curly\n//1larry\n//2moe'
     },
     map: {
       desc: 'create a new array from these results',

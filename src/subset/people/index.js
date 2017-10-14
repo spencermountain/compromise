@@ -7,6 +7,12 @@ const Person = require('./person');
 const methods = {
   pronoun: function() {
     return this.list.map(ts => ts.pronoun());
+  },
+  firstNames: function() {
+    return this.match('#FirstName');
+  },
+  lastNames: function() {
+    return this.match('#LastName');
   }
 };
 

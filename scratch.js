@@ -1,5 +1,5 @@
 var nlp = require('./src/index');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 
-m = nlp('rooms 99-102'); //.replace('ralf [#Verb]', 'he $1');
-m.debug();
+let doc = nlp('john smith and taryn baker'); //.replace('ralf [#Verb]', 'he $1');
+doc.people().lastNames().debug();

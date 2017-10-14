@@ -23,6 +23,7 @@ compromise uses semver, and pushes to npm frequently
 - implement early '$1' capture-group syntax in .replace()
 - bring-back `map, filter, foreach and reduce` methods
 - set `.words()` as alias for .terms()
+- `people().firstNames()`, `people().lastNames()`
 <!-- * include 'the #TitleCase' matches in .topics() -->
 
 ### v10

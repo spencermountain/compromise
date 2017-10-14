@@ -10,6 +10,7 @@ let addRegex = require('./addRegex');
 let addConjugations = require('./addConjugations');
 let addPatterns = require('./addPatterns');
 let addPlurals = require('./addPlurals');
+let misc = require('./more-data/misc');
 
 //lazier/faster object-merge
 const extend = (main, obj) => {
@@ -88,6 +89,7 @@ World.prototype.plugin = function(obj) {
 //export a default world
 let w = new World();
 w.plugin(data);
+w.addWords(misc);
 moreData.forEach((obj) => {
   extend(w.words, obj);
 });

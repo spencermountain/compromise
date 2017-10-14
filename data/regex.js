@@ -32,7 +32,7 @@ module.exports = {
 
   '^.?[0-9]+([0-9,.]+)?%$': 'Percent', //7%  ..['Cardinal', 'NumericValue']
   '[0-9]{1,4}/[0-9]{1,4}': 'Fraction', //3/2ths
-  '[0-9]{1,2}-[0-9]{1,2}': 'Value', //7-8
+  '[0-9]{1,2}-[0-9]{1,2}': ['Value', 'NumberRange'], //7-8
 
   //mc'adams
   'ma?c\'.*': 'LastName',

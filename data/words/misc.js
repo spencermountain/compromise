@@ -8,13 +8,6 @@ module.exports = {
   'here': 'Noun',
   'no doubt': 'Noun',
 
-  '20th century fox': 'Organization',
-  '3m': 'Organization',
-  '7-eleven': 'Organization',
-  'g8': 'Organization',
-  'motel 6': 'Organization',
-  'vh1': 'Organization',
-
   'is': 'Copula',
   'are': 'Copula',
   'was': 'Copula',

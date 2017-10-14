@@ -1,3 +1,5 @@
+const conjugate = require('../subset/verbs/methods/conjugate/faster.js');
+
 //extend our current irregular conjugations, overwrite if exists
 //also, map the irregulars for easy infinitive lookup - {bought: 'buy'}
 const addConjugations = function(obj) {
@@ -13,6 +15,14 @@ const addConjugations = function(obj) {
       this.words[word] = this.words[word] || tag;
       //also denormalize to cache.toInfinitive
       this.cache.toInfinitive[obj[inf][tag]] = inf;
+    });
+    //guess the other conjugations
+    let forms = conjugate(inf, this);
+    Object.keys(forms).forEach((k) => {
+      let word = forms[k];
+      if (this.words.hasOwnProperty(word) === false) {
+        this.words[word] = k;
+      }
     });
   });
   return obj;

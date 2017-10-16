@@ -2,7 +2,7 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 
 test('match-capture-group', function(t) {
-  let m = nlp('John eats glue').match('[john]');
+  var m = nlp('John eats glue').match('[john]');
   t.equal(m.out('text'), 'John', 'capture-group-simple');
 
   m = nlp('John Smith eats glue').match('[#Person+]');
@@ -24,7 +24,7 @@ test('match-capture-group', function(t) {
 });
 
 test('replace-capture-group', function(t) {
-  let m = nlp('John eats glue').replace('john [#Verb]', 'sniffs');
+  var m = nlp('John eats glue').replace('john [#Verb]', 'sniffs');
   t.equal(m.out('text'), 'John sniffs glue', 'capture-group-simple');
   //
   //   m = nlp('John eats glue. john is fun.').replace('[john]', '$1 smith');

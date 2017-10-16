@@ -1,5 +1,6 @@
-//is this sentence asking a question?
+'use strict';
 
+//is this sentence asking a question?
 const isQuestion = function(ts) {
   //if it has a question mark..
   let endPunct = ts.endPunctuation();

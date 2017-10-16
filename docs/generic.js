@@ -76,7 +76,7 @@ module.exports = {
     reduce: {
       desc: 'combine the results of a function into one thing',
       returns: 'Text',
-      example: 'nlp(\'Larry, Curly, and Moe\').people().reduce((h,m) => {\n  let str=m.out(\'normal\');\n  h[str]=true;\n  return h }, {})\n//{larry:true, curly:true, moe:true}'
+      example: 'nlp(\'Larry, Curly, and Moe\').people().reduce((h,m) => {\n  var str=m.out(\'normal\');\n  h[str]=true;\n  return h }, {})\n//{larry:true, curly:true, moe:true}'
     },
   },
 

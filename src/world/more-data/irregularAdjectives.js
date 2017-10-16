@@ -1,3 +1,4 @@
+'use strict';
 //adjectives that have irregular conjugations to adverb, comparative, and superlative forms
 const toAdverb = {
   bad: 'badly',

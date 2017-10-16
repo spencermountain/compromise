@@ -2,7 +2,7 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 
 test('basic-plugin', function(t) {
-  let plugin = {
+  var plugin = {
     words: {
       trex: 'Dinosaur'
     },
@@ -19,7 +19,7 @@ test('basic-plugin', function(t) {
     }
   };
   nlp.plugin(plugin);
-  let doc = nlp('i saw a HUUUUGE trex');
+  var doc = nlp('i saw a HUUUUGE trex');
 
   t.equal(doc.match('#Exaggeration').out('normal'), 'huuuuge', 'regex-works');
   t.equal(doc.match('#Dinosaur').out('normal'), 'trex', 'lexicon-works');

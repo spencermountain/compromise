@@ -1,3 +1,4 @@
+'use strict';
 //add 'downward' tags (that immediately depend on this one)
 const addDownword = function(tags) {
   const keys = Object.keys(tags);

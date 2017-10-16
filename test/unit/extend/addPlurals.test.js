@@ -2,13 +2,13 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 
 test('addPlurals-test', function(t) {
-  let plurals = {
+  var plurals = {
     mather: 'mathii',
     algebra: 'algebri'
   };
   nlp.addPlurals(plurals);
-  let doc = nlp('the mather did many algebri');
-  let arr = doc.nouns().data();
+  var doc = nlp('the mather did many algebri');
+  var arr = doc.nouns().data();
   t.equal(arr.length, 2, 'found both');
   t.equal(arr[0].singular, 'mather', 'singular-form');
   t.equal(arr[0].plural, 'mathii', 'plural-form');

@@ -1,3 +1,4 @@
+'use strict';
 const cardinal = {
   ones: {
     // 'a': 1,

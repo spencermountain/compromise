@@ -1,3 +1,4 @@
+'use strict';
 // const addWords = require('./addWords');
 const fns = require('../fns');
 let data = require('./_data');

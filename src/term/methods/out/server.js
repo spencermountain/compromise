@@ -1,3 +1,4 @@
+'use strict';
 const fns = require('../../paths').fns;
 
 //pretty-print a term on the nodejs console
@@ -8,7 +9,7 @@ const serverDebug = function(t) {
     })
     .join(', ');
   let word = t.text;
-  word = "'" + fns.yellow(word || '-') + "'";
+  word = '\'' + fns.yellow(word || '-') + '\'';
   let silent = '';
   if (t.silent_term) {
     silent = '[' + t.silent_term + ']';

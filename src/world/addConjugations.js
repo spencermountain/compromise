@@ -1,3 +1,4 @@
+'use strict';
 const conjugate = require('../subset/verbs/methods/conjugate/faster.js');
 
 //extend our current irregular conjugations, overwrite if exists

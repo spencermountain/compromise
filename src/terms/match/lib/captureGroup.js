@@ -1,4 +1,4 @@
-
+'use strict';
 //take all the matches, and if there is a [capture group], only return that.
 const onlyCaptureGroup = function(matches) {
   let results = [];

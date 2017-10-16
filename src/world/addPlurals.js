@@ -1,3 +1,4 @@
+'use strict';
 //put singular->plurals in world, the reverse in cache,
 //and both forms in the lexicon
 const addPlurals = function(obj) {

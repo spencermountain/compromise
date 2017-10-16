@@ -1,4 +1,5 @@
-var unpack = {
+'use strict';
+const unpack = {
   words: require('efrt-unpack'),
   plurals: require('./plurals'),
   conjugations: require('./conjugations'),
@@ -15,7 +16,7 @@ var unpack = {
   conjugations - conjugation-unpack
 */
 
-var unpackPlugin = function(str) {
+const unpackPlugin = function(str) {
   let obj = str;
   if (typeof str === 'string') {
     obj = JSON.parse(str);

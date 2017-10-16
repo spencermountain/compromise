@@ -1,4 +1,4 @@
-
+'use strict';
 //pivot k:[val,val] ->  val:k, val:k
 const keyValue = function(obj) {
   let keys = Object.keys(obj);

@@ -1,3 +1,4 @@
+'use strict';
 const normalize = require('../term/methods/normalize/normalize').normalize;
 const inflect = require('../subset/nouns/methods/pluralize');
 const conjugate = require('../subset/verbs/methods/conjugate/faster.js');

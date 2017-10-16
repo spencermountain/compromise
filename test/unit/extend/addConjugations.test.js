@@ -1,14 +1,15 @@
+
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
 test('addConjugations', function(t) {
-  let conjugations = {
+  var conjugations = {
     woo: {
       PastTense: 'wooed'
     }
   };
   nlp.addConjugations(conjugations);
-  let doc = nlp('woo the crush');
+  var doc = nlp('woo the crush');
   t.equal(doc.verbs().length, 1, 'has inf in lexicon');
 
   doc.verbs().toPastTense();

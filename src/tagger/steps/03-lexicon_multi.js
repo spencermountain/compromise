@@ -1,3 +1,4 @@
+'use strict';
 const MAX = 4;
 
 //find terms in the lexicon longer than one word (like 'hong kong')

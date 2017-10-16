@@ -52,7 +52,17 @@ const perfectMatch = (term, reg) => {
 
 //wrap above method, to support '!' negation
 const isMatch = (term, reg, verbose) => {
+  if (!term || !reg) {
+    return false;
+  }
   let found = perfectMatch(term, reg, verbose);
+  //flag it as a capture-group
+  if (reg.capture) {
+    term.captureGroup = true;
+  } else {
+    term.captureGroup = undefined;
+  }
+  //reverse it for .not()
   if (reg.negative) {
     found = !!!found;
   }

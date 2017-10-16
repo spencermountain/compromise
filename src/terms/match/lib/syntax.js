@@ -20,12 +20,6 @@ const parse_term = function(term) {
   let reg = {};
   //order matters here
 
-  //support [#Noun] capture-group syntax
-  if (term.charAt(0) === '[' && term.charAt(term.length - 1) === ']') {
-    term = noLast(term);
-    term = noFirst(term);
-    reg.capture = true;
-  }
   //1-character hasta be a text-match
   if (term.length === 1 && term !== '.' && term !== '*') {
     reg.normal = term;
@@ -137,10 +131,29 @@ const parse_term = function(term) {
 };
 
 //turn a match string into an array of objects
-const parse_all = function(reg) {
-  reg = reg || '';
-  reg = reg.split(/ +/);
-  return reg.map(parse_term);
+const parse_all = function(input) {
+  input = input || '';
+  let regs = input.split(/ +/);
+  let captureOn = false;
+  regs = regs.map((reg) => {
+    let hasEnd = false;
+    //support [#Noun] capture-group syntax
+    if (reg.charAt(0) === '[') {
+      reg = noFirst(reg);
+      captureOn = true;
+    }
+    if (reg.charAt(reg.length - 1) === ']') {
+      reg = noLast(reg);
+      captureOn = false;
+      hasEnd = true;
+    }
+    reg = parse_term(reg);
+    if (captureOn === true || hasEnd === true) {
+      reg.capture = true;
+    }
+    return reg;
+  });
+  return regs;
 };
 
 module.exports = parse_all;

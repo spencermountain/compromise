@@ -10,16 +10,16 @@ const replaceMethods = Terms => {
         return this.replaceWith(str1, keepTags);
       }
       //support capture-group syntax
-      if (str2.match(/\$1\b/)) {
-        //this is not very well-done and should be handled better:
-        let captureThis = str1.match(/\[(.+?)\]/);
-        if (captureThis && captureThis[1]) {
-          let found = this.match(str1).match(captureThis[1]);
-          found = found.out('text').trim();
-          //insert captured-text in the replace string
-          str2 = str2.replace(/\$1\b/g, found);
-        }
-      }
+      // if (str2.match(/\$1\b/)) {
+      //   //this is not very well-done and should be handled better:
+      //   let captureThis = str1.match(/\[(.+?)\]/);
+      //   if (captureThis && captureThis[1]) {
+      //     let found = this.match(str1).match(captureThis[1]);
+      //     found = found.out('text').trim();
+      //     //insert captured-text in the replace string
+      //     str2 = str2.replace(/\$1\b/g, found);
+      //   }
+      // }
       this.match(str1).replaceWith(str2, keepTags);
       return this;
     },

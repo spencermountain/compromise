@@ -12,7 +12,7 @@ module.exports = [
   'kitty',
   'doggy',
 
-  //..lly rule
+  //..ly rule
   'ally',
   'belly',
   'bully',
@@ -23,6 +23,12 @@ module.exports = [
   'gully',
   'holly',
   'tally',
+  'fly',
+  'lily',
+  'monopoly',
+  'doily',
+  'family',
+  'anomaly',
 
   'ad hominem',
   'banking',

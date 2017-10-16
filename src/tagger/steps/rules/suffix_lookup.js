@@ -1,17 +1,17 @@
-'use strict'
+'use strict';
 //just a foolish lookup of known suffixes
-const Adj = 'Adjective'
-const Inf = 'Infinitive'
-const Pres = 'PresentTense'
-const Sing = 'Singular'
-const Past = 'PastTense'
-const Avb = 'Adverb'
-const Plrl = 'Plural'
-const Actor = 'Actor'
-const Vb = 'Verb'
-const Noun = 'Noun'
-const Last = 'LastName'
-const Modal = 'Modal'
+const Adj = 'Adjective';
+const Inf = 'Infinitive';
+const Pres = 'PresentTense';
+const Sing = 'Singular';
+const Past = 'PastTense';
+const Avb = 'Adverb';
+const Plrl = 'Plural';
+const Actor = 'Actor';
+const Vb = 'Verb';
+const Noun = 'Noun';
+const Last = 'LastName';
+const Modal = 'Modal';
 
 module.exports = [
   null, //0
@@ -21,8 +21,9 @@ module.exports = [
     ea: Sing,
     ia: Noun,
     ic: Adj,
-    "'n": Vb,
-    "'t": Vb
+    ly: Avb,
+    '\'n': Vb,
+    '\'t': Vb
   },
   {
     //3-letter
@@ -30,6 +31,7 @@ module.exports = [
     lar: Adj,
     ike: Adj,
     ffy: Adj,
+    nny: Adj,
     rmy: Adj,
     azy: Adj,
     oid: Adj,
@@ -45,8 +47,8 @@ module.exports = [
     nes: Pres,
     ing: 'Gerund', //likely to be converted to Adj after lexicon pass
     ' so': Avb,
-    "'ll": Modal,
-    "'re": 'Copula'
+    '\'ll': Modal,
+    '\'re': 'Copula'
   },
   {
     //4-letter
@@ -117,4 +119,4 @@ module.exports = [
     sdottir: Last, //swedish female
     opoulos: Last //greek
   }
-]
+];

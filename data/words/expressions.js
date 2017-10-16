@@ -75,5 +75,7 @@ module.exports = [
   'yeah',
   'yuck',
   'yup',
-  "d'oh"
-]
+  'd\'oh',
+  'holy',
+  'holy moly'
+];

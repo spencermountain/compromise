@@ -13,7 +13,7 @@
     "testBuild": "TESTENV=prod node ./scripts/test.js",
     "buildTest": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
-    "testb": "node ./scripts/browserTest.js",
+    "browserTest": "node ./scripts/browserTest.js",
     "benchmark": "node ./scripts/benchmark.js",
     "build": "node ./scripts/build/index.js",
     "pack": "node ./scripts/pack.js",
@@ -30,7 +30,7 @@
     "docs/"
   ],
   "dependencies": {
-    "efrt-unpack": "2.0.1"
+    "efrt-unpack": "2.0.3"
   },
   "devDependencies": {
     "amble": "0.0.4",

@@ -3,7 +3,7 @@ const buildText = require('./text/build');
 const pkg = require('../package.json');
 const log = require('./log');
 const unpack = require('./world/unpack');
-const w = require('./world');
+let w = require('./world');
 
 
 //the main function

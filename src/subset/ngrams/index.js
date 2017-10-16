@@ -46,7 +46,14 @@ const methods = {
 };
 
 const find = function(r, obj) {
+  console.log(obj);
   let sizes = [];
+  //support .ngrams(3), for compat
+  if (typeof obj === 'number') {
+    obj = {
+      n: obj
+    };
+  }
   obj = obj || {};
   let max = obj.max || 4;
   for (var i = 1; i <= max; i++) {
@@ -65,8 +72,8 @@ const find = function(r, obj) {
   //default sort
   r = sort(r);
   //grab top one, or something
-  if (typeof n === 'number') {
-    r = r.get(n);
+  if (obj.n !== undefined) {
+    r = r.get(obj.n);
   }
   return r;
 };

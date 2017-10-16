@@ -24,7 +24,7 @@ ContractionCl.prototype.data = function() {
       normal: contracted.out('normal'),
       text: contracted.out('text')
     },
-    isContracted: !!this.contracted
+    isContracted: Boolean(this.contracted)
   };
 };
 ContractionCl.prototype.expand = function() {

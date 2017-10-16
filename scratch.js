@@ -13,3 +13,6 @@ nlp.addWords({
 
 nlp('bat').debug();
 nlp2('bat').debug();
+
+
+nlp2('hlkjasdf alskdfje flekfjl alskdfje alskdfjeleijflsh flekfjl').ngrams(3).debug();

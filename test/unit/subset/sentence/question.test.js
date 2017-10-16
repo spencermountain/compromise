@@ -5,7 +5,7 @@ test('question-test :', function(t) {
   [
     'which party was it again?',
     'so then which day was it?',
-    "he's fun?",
+    'he\'s fun?',
     'but who did you really go with??',
     'go where?!',
     'go with who!?',
@@ -29,25 +29,25 @@ test('question-test :', function(t) {
   ].forEach(function(str) {
     var doc = nlp(str);
     t.equal(doc.questions().length, 1, str);
-    // t.equal(doc.statements().length, 0, ' --  0-statements');
+  // t.equal(doc.statements().length, 0, ' --  0-statements');
   });
   t.end();
 });
 
 test('statements-test :', function(t) {
   [
-    "the thing is, it isn't cool",
+    'the thing is, it isn\'t cool',
     'does the orchestra respond, no.',
-    "where there is smoke, there's fire",
+    'where there is smoke, there\'s fire',
     'does the orchestra ever suck!',
     'when i go fishing i eat plankton'
-    // "how he got out of his cage, i don't know",
-    // 'who else but the rolling stones...',
-    // "what i'd like to say is, thanks for the fish"
+  // "how he got out of his cage, i don't know",
+  // 'who else but the rolling stones...',
+  // "what i'd like to say is, thanks for the fish"
   ].forEach(function(str) {
     var doc = nlp(str);
     t.equal(doc.statements().length, 1, str);
-    // t.equal(doc.questions().length, 0, ' --  0-questions');
+  // t.equal(doc.questions().length, 0, ' --  0-questions');
   });
   t.end();
 });

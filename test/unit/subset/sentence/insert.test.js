@@ -26,9 +26,9 @@ test('append:', function(t) {
   r.sentences().append('not');
   t.equal(r.out('text'), 'john is nice not. he lives in SOHO not', 'append-with-without-period');
 
-  r = nlp("It is nice! He lives in SOHO? I don't know...");
+  r = nlp('It is nice! He lives in SOHO? I don\'t know...');
   r.sentences().append('dawg');
-  t.equal(r.out('text'), "It is nice dawg! He lives in SOHO dawg? I don't know dawg...", 'append-with-exclamations');
+  t.equal(r.out('text'), 'It is nice dawg! He lives in SOHO dawg? I don\'t know dawg...', 'append-with-exclamations');
 
   r = nlp('It is nice. He lives in SOHO.');
   r.sentences().append('believe me');

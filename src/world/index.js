@@ -57,9 +57,9 @@ World.prototype.clone = function() {
 };
 
 //denormalize all the multi-word terms
-World.prototype.reindex = function() {
-  reIndex(this);
-};
+// World.prototype.reindex = function() {
+//   reIndex(this);
+// };
 
 //add all the things, in all the places
 World.prototype.plugin = function(obj) {

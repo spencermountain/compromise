@@ -8,7 +8,7 @@ const toInfinitive = require('../toInfinitive');
 const toBe = require('./toBe');
 
 //turn a verb into all it's forms
-const conjugate = function(t, world, verbose) {
+const conjugate = function(t, world) {
   //handle is/was/will-be specially
   if (t.normal === 'is' || t.normal === 'was' || t.normal === 'will') {
     return toBe();

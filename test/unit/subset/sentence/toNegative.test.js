@@ -1,10 +1,10 @@
-var test = require('tape')
-var nlp = require('../../lib/nlp')
-var str_test = require('../../lib/fns').str_test
+var test = require('tape');
+var nlp = require('../../lib/nlp');
+var str_test = require('../../lib/fns').str_test;
 
 test('==negation==', function(T) {
   T.test('negate:', function(t) {
-    ;[
+    [
       //copula-sentences
       [`john is good`, `john is not good`],
       [`they are good`, `they are not good`],
@@ -53,19 +53,19 @@ test('==negation==', function(T) {
       [`he plays`, `he does not play`],
       [`he played`, `he did not play`],
       [`he walked`, `he did not walk`]
-      // [`he quietly walked`, `he did not quietly walk`],
-      // [`he quietly walks`, `he does not quietly walk`],
-      // [`we quietly walked`, `we do not quietly walk`],
-      // [`we quietly walks`, `we do not quietly walk`]
+    // [`he quietly walked`, `he did not quietly walk`],
+    // [`he quietly walks`, `he does not quietly walk`],
+    // [`we quietly walked`, `we do not quietly walk`],
+    // [`we quietly walks`, `we do not quietly walk`]
     ].forEach(function(a) {
-      var str = nlp(a[0]).sentences().toNegative().out('text')
-      str_test(str, a[0], a[1], t)
-    })
-    t.end()
-  })
+      var str = nlp(a[0]).sentences().toNegative().out('text');
+      str_test(str, a[0], a[1], t);
+    });
+    t.end();
+  });
 
   T.test('sentence un-negate:', function(t) {
-    ;[
+    [
       //copula-sentences
       [`john is not good`, `john is good`],
       [`they are not good`, `they are good`],
@@ -84,11 +84,11 @@ test('==negation==', function(T) {
       // //logical negations
       ['john never walks', 'john always walks'],
       ['john never walks quickly', 'john always walks quickly']
-      // ['everybody walks quickly', 'nobody walks quickly'],
+    // ['everybody walks quickly', 'nobody walks quickly'],
     ].forEach(function(a) {
-      var str = nlp(a[0]).sentences().toPositive().out('text')
-      str_test(str, a[0], a[1], t)
-    })
-    t.end()
-  })
-})
+      var str = nlp(a[0]).sentences().toPositive().out('text');
+      str_test(str, a[0], a[1], t);
+    });
+    t.end();
+  });
+});

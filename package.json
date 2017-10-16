@@ -47,8 +47,8 @@
     "gaze": "^1.1.1",
     "nyc": "^8.4.0",
     "shelljs": "^0.7.2",
-    "tap-spec": "4.1.1",
     "tape": "4.6.0",
+    "tap-min": "^1.2.2",
     "uglify-js": "2.7.0"
   },
   "license": "MIT"

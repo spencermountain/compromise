@@ -18,6 +18,7 @@ const methods = {
 };
 
 const find = function(r, n) {
+  r = r.splitAfter('#Comma');
   r = r.match('#Adverb+');
   if (typeof n === 'number') {
     r = r.get(n);

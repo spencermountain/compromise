@@ -176,6 +176,8 @@ const corrections = function(ts) {
     ts.match('#Adjective #PresentTense').term(1).tag('Noun', 'adj-presentTense');
     //will secure our
     ts.match('will #Adjective').term(1).tag('Verb', 'will-adj');
+    //cheering hard - dropped -ly's
+    ts.match('#PresentTense (hard|quick|long|bright|slow)').lastTerm().tag('Adverb', 'lazy-ly');
   }
 
   if (ts.has('#TitleCase')) {

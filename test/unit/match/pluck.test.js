@@ -80,7 +80,7 @@ test('pluck adverbs :', function(t) {
 
 test('pluck dates :', function(t) {
   [
-    ['Toronto is best in January', ['in january']],
+    ['Toronto is best in January', ['january']],
     ['My birthday is June 5th', ['june 5th']],
     ['Oh say can you see? By the dawn\'s early rise.', []]
   ].forEach(function(a) {
@@ -92,11 +92,11 @@ test('pluck dates :', function(t) {
 
 test('pluck values :', function(t) {
   [
-    // ['The 5 books in Toronto are best in January', ['5 books']],
-    // ['My harddrive is 5 Gb', ['5 Gb']],
+    ['The 5 books in Toronto are best in January', ['5']],
+    ['My harddrive is 5 Gb', ['5 gb']],
     ['he is seven', ['seven']],
-    // ['add eight and five', ['eight', 'five']],
-    ['My birthday is June 5th 1999', []],
+    ['add eight and five', ['eight', 'five']],
+    ['My birthday is June 5th 1999', ['5th', '1999']],
     ['Oh say can you see? By the dawn\'s early rise.', []]
   ].forEach(function(a) {
     var terms = nlp(a[0]).values();

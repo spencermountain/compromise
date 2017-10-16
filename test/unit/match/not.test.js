@@ -69,7 +69,7 @@ test('not-from-object :', function(t) {
     really: true
   });
   t.equal(adv.out('normal'), 'secretly very', 'not-subset');
-  t.equal(adv.length, 1, 'one-result');
+  t.equal(adv.length, 2, 'one-result');
 
   var adv2 = m.adverbs().not('secretly');
   t.equal(adv2.out('normal'), 'really very', 'not-subset2');

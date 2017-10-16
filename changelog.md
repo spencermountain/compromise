@@ -24,6 +24,7 @@ compromise uses semver, and pushes to npm frequently
 - bring-back `map, filter, foreach and reduce` methods
 - set `.words()` as alias for .terms()
 - `people().firstNames()`, `people().lastNames()`
+- split-out comma-separated adverbs
 <!-- * include 'the #TitleCase' matches in .topics() -->
 
 ### v10

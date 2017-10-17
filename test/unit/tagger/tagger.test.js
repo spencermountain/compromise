@@ -66,7 +66,11 @@ test('=Tagger=', function(T) {
       // ['one - seventy-six', ['Value', 'Symbol', 'Value']],
       ['The stream runs', ['Determiner', 'Noun', 'Verb']],
       ['The stream really runs', ['Determiner', 'Noun', 'Adverb', 'Verb']],
-      ['The nice stream really runs', ['Determiner', 'Adjective', 'Noun', 'Adverb', 'Verb']]
+      ['The nice stream really runs', ['Determiner', 'Adjective', 'Noun', 'Adverb', 'Verb']],
+
+      ['he is walking', ['Pronoun', 'Copula', 'Gerund']],
+      ['walking is fun', ['Activity', 'Copula', 'Adjective']],
+      ["walking's great", ['Activity', 'Copula', 'Adjective']]
     ].forEach(function(a) {
       var terms = nlp(a[0]).terms(); //.data();
       pos_test(terms, a[1], t);

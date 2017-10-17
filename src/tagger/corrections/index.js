@@ -11,14 +11,20 @@ const corrections = function(ts) {
     //do so
     ts.match('do so').match('so').tag('Noun', 'so-noun');
   }
+  if (ts.has('all')) {
+    //all students
+    ts.match('[all] #Determiner? #Noun').tag('Adjective', 'all-noun');
+    //it all fell apart
+    ts.match('[all] #Verb').tag('Adverb', 'all-verb');
+  }
   //the ambiguous word 'that' and 'which'
   if (ts.has('(that|which)')) {
     //remind john that
     ts.match('#Verb #Adverb? #Noun (that|which)').lastTerm().tag('Preposition', 'that-prep');
     //that car goes
-    ts.match('(that|which) #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner');
-    //things that provide
-    // ts.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
+    ts.match('that #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner');
+  //things that provide
+  // ts.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
   }
   //Determiner-signals
   if (ts.has('#Determiner')) {
@@ -45,6 +51,8 @@ const corrections = function(ts) {
     ts.match('#Determiner #Verb of').term(1).tag('Noun', 'the-verb-of');
     //the threat of force
     ts.match('#Determiner #Noun of #Verb').term(3).tag('Noun', 'noun-of-noun');
+    //a close
+    ts.match('#Determiner #Adverb? close').lastTerm().tag('Adjective', 'a-close');
   }
 
   //like
@@ -71,6 +79,8 @@ const corrections = function(ts) {
     ts.match('1 #Value #PhoneNumber').tag('PhoneNumber', '1-800-Value');
     //(454) 232-9873
     ts.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber');
+    //two hundredth
+    ts.match('#TextValue+').match('#Cardinal+ #Ordinal').tag('Ordinal', 'two-hundredth');
   }
 
   if (ts.has('#Noun')) {
@@ -111,8 +121,25 @@ const corrections = function(ts) {
     ts.match('#Possessive #Verb').term(1).tag('Noun', 'correction-possessive');
     //is eager to go
     ts.match('#Copula #Adjective to #Verb').match('#Adjective to').tag('Verb', 'correction');
-    //the word 'how'
-    ts.match('how (#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-question');
+
+    if (ts.has('(who|what|where|why|how|when)')) {
+      //the word 'how'
+      ts.match('^how').term(0).tag('QuestionWord', 'how-question').tag('QuestionWord', 'how-question');
+      ts.match('how (#Determiner|#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-is');
+      // //the word 'which'
+      ts.match('^which').term(0).tag('QuestionWord', 'which-question').tag('QuestionWord', 'which-question');
+      ts.match('which . (#Noun)+ #Pronoun').term(0).tag('QuestionWord', 'which-question2');
+      ts.match('which').term(0).tag('QuestionWord', 'which-question3');
+      //where
+
+      //how he is driving
+      let word = ts.match('#QuestionWord #Noun #Copula #Adverb? (#Verb|#Adjective)').firstTerm();
+      word.unTag('QuestionWord').tag('Conjunction', 'how-he-is-x');
+      //when i go fishing
+      word = ts.match('#QuestionWord #Noun #Adverb? #Infinitive not? #Gerund').firstTerm();
+      word.unTag('QuestionWord').tag('Conjunction', 'when i go fishing');
+    }
+
     //is mark hughes
     ts.match('#Copula #Infinitive #Noun').term(1).tag('Noun', 'is-pres-noun');
 
@@ -136,9 +163,16 @@ const corrections = function(ts) {
       ts.match(`(#Modal) ${advb} be ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'would-be');
       //would been walking
       ts.match(`(#Modal|had|has) ${advb} been ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'would-be');
-      //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
-      // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
+    //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
+    // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
     }
+    //fall over
+    ts.match('#PhrasalVerb #PhrasalVerb').lastTerm().tag('Particle', 'phrasal-particle');
+
+    //walking is cool
+    ts.match('#Gerund #Adverb? not? #Copula').firstTerm().tag('Activity', 'gerund-copula');
+    //walking should be fun
+    ts.match('#Gerund #Modal').firstTerm().tag('Activity', 'gerund-modal');
   }
 
   if (ts.has('#Adjective')) {
@@ -148,6 +182,8 @@ const corrections = function(ts) {
     ts.match('#Adjective #PresentTense').term(1).tag('Noun', 'adj-presentTense');
     //will secure our
     ts.match('will #Adjective').term(1).tag('Verb', 'will-adj');
+    //cheering hard - dropped -ly's
+    ts.match('#PresentTense (hard|quick|long|bright|slow)').lastTerm().tag('Adverb', 'lazy-ly');
   }
 
   if (ts.has('#TitleCase')) {
@@ -158,7 +194,9 @@ const corrections = function(ts) {
       .match('#TitleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)')
       .tag('Region', 'foo-district');
     //District of Foo
-    ts.match('(district|region|province|municipality|territory|burough|state) of #TitleCase').tag('Region', 'district-of-Foo');
+    ts
+      .match('(district|region|province|municipality|territory|burough|state) of #TitleCase')
+      .tag('Region', 'district-of-Foo');
   }
 
   //West Norforlk
@@ -170,8 +208,8 @@ const corrections = function(ts) {
   ts.match('#Value (foot|feet)').term(1).tag('Unit', 'foot-unit');
   //'u' as pronoun
   ts.match('#Conjunction u').term(1).tag('Pronoun', 'u-pronoun-2');
-  //'a/an' can mean 1
-  ts.match('(a|an) (#Duration|#Value)').ifNo('#Plural').term(0).tag('Value', 'a-is-one');
+  //'a/an' can mean 1 - "a hour"
+  ts.match('(a|an) (#Duration|hundred|thousand|million|billion|trillion)').ifNo('#Plural').term(0).tag('Value', 'a-is-one');
   //swear-words as non-expression POS
   //nsfw
   ts.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression');
@@ -184,6 +222,10 @@ const corrections = function(ts) {
   ts.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone');
   //canadian dollar, Brazilian pesos
   ts.match('#Demonym #Currency').tag('Currency', 'demonym-currency');
+  //about to go
+  ts.match('about to #Adverb? #Verb').match('about to').tag(['Auxiliary', 'Verb'], 'about-to');
+  //'xyz were..'
+  // ts.match('#Singular #Adverb? were').firstTerm().tag('Plural', 'copula-number-hint');
 
   return ts;
 };

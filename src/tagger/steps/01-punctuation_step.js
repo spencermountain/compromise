@@ -1,6 +1,4 @@
 'use strict';
-const rules = require('./rules/punct_rules');
-
 //regs-
 const titleCase = /^[A-Z][a-z']/;
 const romanNum = /^[IVXCM]+$/;
@@ -23,7 +21,8 @@ const oneLetters = {
   k: true
 };
 
-const punctuation_step = function (ts) {
+const punctuation_step = function(ts) {
+  let rules = ts.world.regex || [];
   ts.terms.forEach((t, o) => {
     let str = t.text;
     //anything can be titlecase
@@ -43,7 +42,7 @@ const punctuation_step = function (ts) {
       if (r.reg.test(str) === true) {
         //don't over-write any other known tags
         if (t.canBe(r.tag)) {
-          t.tag(r.tag, 'punctuation-rule- "' + r.str + '"');
+          t.tag(r.tag, 'punctuation-rule- "' + r.reg.toString() + '"');
         }
         return;
       }
@@ -56,7 +55,6 @@ const punctuation_step = function (ts) {
     if (isRomanNumeral(t)) {
       t.tag('RomanNumeral', 'is-roman-numeral');
     }
-
   });
   return ts;
 };

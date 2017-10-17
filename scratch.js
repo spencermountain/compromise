@@ -1,9 +1,19 @@
-'use strict';
 var nlp = require('./src/index');
 // nlp.verbose('tagger');
-// const fresh = require('./test/unit/lib/freshPrince.js');
 
-var str = "john's, house";
-var doc = nlp(str, { john: 'Place' });
-console.log(doc.list[0].lexicon);
-// console.log(doc.places().out());
+// var doc = nlp('i just walked to the store');
+// doc.match('just [#PastTense] to the store').debug();
+
+// nlp('cheering hard').debug();
+
+nlp('bat').debug();
+var nlp2 = nlp.clone();
+nlp.addWords({
+  bat: 'WOO'
+});
+
+nlp('bat').debug();
+nlp2('bat', {
+  bat: 'man'
+}).debug();
+nlp('bat').debug();

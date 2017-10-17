@@ -15,12 +15,49 @@ const miscMethods = Text => {
     data: function() {
       return this.list.map(ts => ts.data());
     },
+    /* javascript array loop-wrappers */
+    map: function(fn) {
+      return this.list.map((ts, i) => {
+        let text = new Text([ts], this.world);
+        return fn(text, i);
+      });
+    },
+    forEach: function(fn) {
+      this.list.forEach((ts, i) => {
+        let text = new Text([ts], this.world);
+        fn(text, i);
+      });
+      return this;
+    },
+    filter: function(fn) {
+      let list = this.list.filter((ts, i) => {
+        let text = new Text([ts], this.world);
+        return fn(text, i);
+      });
+      return new Text(list, this.world);
+    },
+    reduce: function(fn, h) {
+      return this.list.reduce((_h, ts) => {
+        let text = new Text([ts], this.world);
+        return fn(_h, text);
+      }, h);
+    },
+    find: function(fn) {
+      for (let i = 0; i < this.list.length; i++) {
+        let ts = this.list[i];
+        let text = new Text([ts], this.world);
+        if (fn(text)) {
+          return text;
+        }
+      }
+      return undefined;
+    },
     /**copy data properly so later transformations will have no effect*/
     clone: function() {
       let list = this.list.map(ts => {
         return ts.clone();
       });
-      return new Text(list); //this.lexicon, this.parent
+      return new Text(list, this.world); //this.lexicon, this.parent
     },
 
     /** get the nth term of each result*/
@@ -31,9 +68,9 @@ const miscMethods = Text => {
         if (el) {
           arr = [el];
         }
-        return new Terms(arr, this.lexicon, this.refText, this.refTerms);
+        return new Terms(arr, this.world, this.refText, this.refTerms);
       });
-      return new Text(list, this.lexicon, this.parent);
+      return new Text(list, this.world, this.parent);
     },
     firstTerm: function() {
       return this.match('^.');
@@ -52,17 +89,17 @@ const miscMethods = Text => {
     get: function(n) {
       //return an empty result
       if ((!n && n !== 0) || !this.list[n]) {
-        return new Text([], this.lexicon, this.parent);
+        return new Text([], this.world, this.parent);
       }
       let ts = this.list[n];
-      return new Text([ts], this.lexicon, this.parent);
+      return new Text([ts], this.world, this.parent);
     },
     /**use only the first result */
     first: function(n) {
       if (!n && n !== 0) {
         return this.get(0);
       }
-      return new Text(this.list.slice(0, n), this.lexicon, this.parent);
+      return new Text(this.list.slice(0, n), this.world, this.parent);
     },
     /**use only the last result */
     last: function(n) {
@@ -71,7 +108,7 @@ const miscMethods = Text => {
       }
       let end = this.list.length;
       let start = end - n;
-      return new Text(this.list.slice(start, end), this.lexicon, this.parent);
+      return new Text(this.list.slice(start, end), this.world, this.parent);
     },
 
     concat: function() {
@@ -100,10 +137,10 @@ const miscMethods = Text => {
       });
       //dont create an empty ts
       if (!terms.length) {
-        return new Text(null, this.lexicon, this.parent);
+        return new Text(null, this.world, this.parent);
       }
-      let ts = new Terms(terms, this.lexicon, this, null);
-      return new Text([ts], this.lexicon, this.parent);
+      let ts = new Terms(terms, this.world, this, null);
+      return new Text([ts], this.world, this.parent);
     },
 
     /** see if these terms can become this tag*/
@@ -129,7 +166,7 @@ const miscMethods = Text => {
         }
         arr = arr.concat(this.list.slice(0, diff));
       }
-      return new Text(arr, this.lexicon, this.parent);
+      return new Text(arr, this.world, this.parent);
     }
   };
   Text.addMethods(Text, methods);

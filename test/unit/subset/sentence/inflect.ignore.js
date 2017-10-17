@@ -17,25 +17,25 @@ test('toPlural():', function(t) {
 });
 
 test('toSingular:', function(t) {
-  var str = "i'd buy those nachos";
+  var str = 'i\'d buy those nachos';
   var m = nlp(str).sentences().toSingular();
-  t.equal(m.out('normal'), "i'd buy that nacho", str);
+  t.equal(m.out('normal'), 'i\'d buy that nacho', str);
 
-  str = "i'd buy these nachos";
+  str = 'i\'d buy these nachos';
   m = nlp(str).sentences().toSingular();
-  t.equal(m.out('normal'), "i'd buy this nacho", str);
+  t.equal(m.out('normal'), 'i\'d buy this nacho', str);
 
-  str = "i'd buy nachos";
+  str = 'i\'d buy nachos';
   m = nlp(str).sentences().toSingular();
-  t.equal(m.out('normal'), "i'd buy a nacho", str);
+  t.equal(m.out('normal'), 'i\'d buy a nacho', str);
 
-  str = "i'd buy the nachos";
+  str = 'i\'d buy the nachos';
   m = nlp(str).sentences().toSingular();
-  t.equal(m.out('normal'), "i'd buy a nacho", str);
+  t.equal(m.out('normal'), 'i\'d buy a nacho', str);
 
-  str = "i'd buy the eggs";
+  str = 'i\'d buy the eggs';
   m = nlp(str).sentences().toSingular();
-  t.equal(m.out('normal'), "i'd buy an egg", str);
+  t.equal(m.out('normal'), 'i\'d buy an egg', str);
 
   str = 'men go';
   m = nlp(str).sentences().toPast().nouns().toSingular();

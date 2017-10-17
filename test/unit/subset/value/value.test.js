@@ -14,11 +14,11 @@ test('value-basic:', function(t) {
   r.values().toCardinal();
   t.equal(r.out(), 'three month of two thousand and nineteen', 'toCardinal');
 
-  r = nlp('three month of two thousand and nineteen');
+  r = nlp('three month of two thousand nineteen');
   r.values().toOrdinal();
   t.equal(r.out(), 'third month of two thousand and nineteenth', 'toOrdinal');
 
-  r.values().toNumber();
+  r.values().toNumber().all();
   t.equal(r.out(), '3rd month of 2019th', 'toNumber2');
 
   t.end();

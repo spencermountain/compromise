@@ -78,6 +78,9 @@ const startHere = (ts, startAt, regs, verbose) => {
       for (let i = 0; i < max; i++) {
         //TODO: please clean this loop up..
         let t = ts.terms[term_i + i];
+        if (!t) {
+          return null;
+        }
         //end here
         if (isMatch(t, reg) === false) {
           return null;
@@ -97,7 +100,7 @@ const startHere = (ts, startAt, regs, verbose) => {
         }
         //end with a greedy-match for next term
         let nextT = ts.terms[term_i + i + 1];
-        if (isMatch(nextT, until)) {
+        if (nextT && isMatch(nextT, until)) {
           term_i += i + 2;
           reg_i += 1;
           break;

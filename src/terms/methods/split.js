@@ -9,7 +9,7 @@ const breakUpHere = (terms, ts) => {
       return {
         before: terms.slice(0, i),
         match: terms.slice(i, i + len),
-        after: terms.slice(i + len, terms.length),
+        after: terms.slice(i + len, terms.length)
       };
     }
   }
@@ -18,16 +18,14 @@ const breakUpHere = (terms, ts) => {
   };
 };
 
-const splitMethods = (Terms) => {
-
+const splitMethods = Terms => {
   const methods = {
-
     /** at the end of the match, split the terms **/
-    splitAfter: function (reg, verbose) {
+    splitAfter: function(reg, verbose) {
       let ms = this.match(reg, verbose); //Array[ts]
       let termArr = this.terms;
       let all = [];
-      ms.list.forEach((lookFor) => {
+      ms.list.forEach(lookFor => {
         let section = breakUpHere(termArr, lookFor);
         if (section.before && section.match) {
           all.push(section.before.concat(section.match));
@@ -39,19 +37,19 @@ const splitMethods = (Terms) => {
         all.push(termArr);
       }
       //make them termlists
-      all = all.map((ts) => {
+      all = all.map(ts => {
         let parent = this.refText; //|| this;
-        return new Terms(ts, this.lexicon, parent, this.refTerms);
+        return new Terms(ts, this.world, parent, this.refTerms);
       });
       return all;
     },
 
     /** return only before & after  the match**/
-    splitOn: function (reg, verbose) {
+    splitOn: function(reg, verbose) {
       let ms = this.match(reg, verbose); //Array[ts]
       let termArr = this.terms;
       let all = [];
-      ms.list.forEach((lookFor) => {
+      ms.list.forEach(lookFor => {
         let section = breakUpHere(termArr, lookFor);
         if (section.before) {
           all.push(section.before);
@@ -67,16 +65,16 @@ const splitMethods = (Terms) => {
       }
       //make them termlists
       all = all.filter(a => a && a.length);
-      all = all.map((ts) => new Terms(ts, ts.lexicon, ts.refText, this.refTerms));
+      all = all.map(ts => new Terms(ts, ts.world, ts.refText, this.refTerms));
       return all;
     },
 
     /** at the start of the match, split the terms**/
-    splitBefore: function (reg, verbose) {
+    splitBefore: function(reg, verbose) {
       let ms = this.match(reg, verbose); //Array[ts]
       let termArr = this.terms;
       let all = [];
-      ms.list.forEach((lookFor) => {
+      ms.list.forEach(lookFor => {
         let section = breakUpHere(termArr, lookFor);
         if (section.before) {
           all.push(section.before);
@@ -103,14 +101,13 @@ const splitMethods = (Terms) => {
       }
       //make them termlists
       all = all.filter(a => a && a.length);
-      all = all.map((ts) => new Terms(ts, ts.lexicon, ts.refText, this.refTerms));
+      all = all.map(ts => new Terms(ts, ts.world, ts.refText, this.refTerms));
       return all;
     }
-
   };
 
   //hook them into result.proto
-  Object.keys(methods).forEach((k) => {
+  Object.keys(methods).forEach(k => {
     Terms.prototype[k] = methods[k];
   });
   return Terms;

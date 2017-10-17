@@ -1,6 +1,6 @@
 'use strict';
 //orgwords like 'bank' in 'Foo Bank'
-let orgWords = require('../../lexicon/uncompressed/orgWords');
+let orgWords = require('../../world/more-data/orgWords');
 
 //could this word be an organization
 const maybeOrg = function(t) {
@@ -41,6 +41,10 @@ const organization_step = ts => {
         }
       }
     }
+  }
+  if (ts.has('#Acronym')) {
+    ts.match('the #Acronym').not('(iou|fomo|yolo|diy|dui|nimby)').lastTerm().tag('Organization', 'the-acronym');
+    ts.match('#Acronym').match('#Possessive').tag('Organization', 'possessive-acronym');
   }
   return ts;
 };

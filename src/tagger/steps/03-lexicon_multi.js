@@ -1,52 +1,37 @@
 'use strict';
-const mainLex = require('../../lexicon/init');
+const MAX = 4;
 
 //find terms in the lexicon longer than one word (like 'hong kong')
-const findMultiWords = function(ts, i, lex) {
-  let want = lex.firstWords[ts.terms[i].normal];
-  let str = '';
-  //try 2 words, 3 words, 4 words..
-  for (let add = 1; add <= 3; add++) {
-    if (!ts.terms[i + add]) {
-      return 0;
-    }
-    if (str !== '') {
-      str += ' '; //(add a space)
-    }
-    str += ts.terms[i + add].normal;
-    str = str.replace(/'s$/, ''); //ugly
-    //perfect match here?
-    if (want[str] === true) {
-      let tag = lex.lexicon[ts.terms[i].normal + ' ' + str];
-      ts.slice(i, i + add + 1).tag(tag, 'multi-lexicon-' + (add + 1) + '-word');
-      return add;
-    }
-    //don't go further
-    if (!ts.terms[i + add + 1]) {
-      return 0;
+const findMultiWords = function(ts, i, world) {
+  let lex = world.words;
+  let start = ts.terms[i].root;
+  let nextTerms = ts.terms.slice(i + 1, i + MAX).map((t) => t.root);
+  //look for matches, try biggest first
+  let max = MAX;
+  if (nextTerms.length < max) {
+    max = nextTerms.length;
+  }
+  for(let k = max; k > 0; k -= 1) {
+    let howAbout = start + ' ' + nextTerms.slice(0, k).join(' ');
+    if (lex.hasOwnProperty(howAbout) === true) {
+      ts.slice(i, i + k + 1).tag(lex[howAbout], 'multi-lexicon-' + howAbout);
+      return k;
     }
   }
   return 0;
 };
 
+
 //try multiple-word matches in the lexicon (users and default)
 const lexiconMulti = ts => {
-  let uLex = ts.lexicon || {};
-  uLex.firstWords = uLex.firstWords || {};
+  let firstWords = ts.world.cache.firstWords || {};
   for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
     //try multi words from user-lexicon
-    if (uLex.firstWords.hasOwnProperty(t.normal) === true) {
-      let jump = findMultiWords(ts, i, uLex);
-      // console.log(ts.slice(i, jump + 1).debug().out('text'));
+    if (firstWords.hasOwnProperty(t.root) === true) {
+      let jump = findMultiWords(ts, i, ts.world);
       i += jump;
       continue;
-    }
-    //try main lexicon
-    if (mainLex.firstWords.hasOwnProperty(t.normal) === true) {
-      let jump = findMultiWords(ts, i, mainLex);
-      // console.log(ts.slice(i, jump + 1).out('text'));
-      i += jump;
     }
   }
   return ts;

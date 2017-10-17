@@ -1,5 +1,5 @@
 'use strict';
-
+const isQuestion = require('../subset/sentences/isQuestion');
 const addSubsets = Text => {
   //these subsets have no instance methods, so are simply a 'find' method.
   const subsets = {
@@ -74,20 +74,16 @@ const addSubsets = Text => {
       if (typeof n === 'number') {
         r = r.get(n);
       }
-      let list = r.list.filter(ts => {
-        return ts.last().endPunctuation() === '?';
-      });
-      return new Text(list, this.lexicon, this.parent);
+      let list = r.list.filter(ts => isQuestion(ts));
+      return new Text(list, this.world, this.parent);
     },
     statements: function(n) {
       let r = this.all();
       if (typeof n === 'number') {
         r = r.get(n);
       }
-      let list = r.list.filter(ts => {
-        return ts.last().endPunctuation() !== '?';
-      });
-      return new Text(list, this.lexicon, this.parent);
+      let list = r.list.filter(ts => isQuestion(ts) === false);
+      return new Text(list, this.world, this.parent);
     }
   };
 

@@ -12,7 +12,6 @@ const step = {
   date_step: require('./steps/09-date_step'),
   auxiliary_step: require('./steps/10-auxiliary_step'),
   negation_step: require('./steps/11-negation_step'),
-  phrasal_step: require('./steps/12-phrasal_step'),
   comma_step: require('./steps/13-comma_step'),
   possessive_step: require('./steps/14-possessive_step'),
   value_step: require('./steps/15-value_step'),
@@ -22,6 +21,7 @@ const step = {
   quotation_step: require('./steps/19-quotation_step'),
   organization_step: require('./steps/20-organization_step'),
   plural_step: require('./steps/21-plural_step'),
+  posthoc: require('./steps/22-posthoc'),
   contraction: require('./contraction')
 };
 const corrections = require('./corrections');
@@ -41,7 +41,6 @@ const tagger = function(ts) {
   ts = step.date_step(ts); //3ms
   ts = step.auxiliary_step(ts);
   ts = step.negation_step(ts);
-  ts = step.phrasal_step(ts);
   ts = step.comma_step(ts);
   ts = step.possessive_step(ts);
   ts = step.acronym_step(ts);
@@ -52,6 +51,7 @@ const tagger = function(ts) {
   ts = step.value_step(ts);
   ts = corrections(ts); //2ms
   ts = tagPhrase(ts);
+  ts = step.posthoc(ts);
   return ts;
 };
 

@@ -34,9 +34,13 @@ const perfectMatch = (term, reg) => {
   if (reg.infix === true && reg.partial !== undefined) {
     return term.normal.indexOf(reg.partial) !== -1;
   }
+  //full-on regex-match '/a*?/'
+  if (reg.regex !== undefined) {
+    return reg.regex.test(term.normal) || reg.regex.test(term.text);
+  }
   //one-of term-match
   if (reg.oneOf !== undefined) {
-    for(let i = 0; i < reg.oneOf.tagArr.length; i++) {
+    for (let i = 0; i < reg.oneOf.tagArr.length; i++) {
       if (term.tags.hasOwnProperty(reg.oneOf.tagArr[i]) === true) {
         return true;
       }
@@ -48,7 +52,17 @@ const perfectMatch = (term, reg) => {
 
 //wrap above method, to support '!' negation
 const isMatch = (term, reg, verbose) => {
+  if (!term || !reg) {
+    return false;
+  }
   let found = perfectMatch(term, reg, verbose);
+  //flag it as a capture-group
+  if (reg.capture) {
+    term.captureGroup = true;
+  } else {
+    term.captureGroup = undefined;
+  }
+  //reverse it for .not()
   if (reg.negative) {
     found = !!!found;
   }

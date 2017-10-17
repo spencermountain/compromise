@@ -7,14 +7,25 @@ test('==contractions==', function(T) {
     [
       [`spencer's good`, `spencer is good`],
       [`spencer's house`, `spencer's house`],
-      [`spencer's really good`, `spencer is really good`],
       [`he's good`, `he is good`],
+      [`spencer's really good`, `spencer is really good`],
       [`google's about to earn money`, `google is about to earn money`],
+
       [`toronto's citizens`, `toronto's citizens`],
       [`rocket's red glare`, `rocket's red glare`],
-      [`somebody's walking`, `somebody is walking`],
       [`everyone's victories`, `everyone's victories`],
-      [`the tornado's power`, `the tornado's power`]
+      [`the tornado's power`, `the tornado's power`],
+
+      [`somebody's walking`, `somebody is walking`],
+      // [`spencer's walking`, `spencer was walking`], //ambiguous
+
+      [`spencer's walked`, `spencer has walked`],
+      [`spencer's had problems`, `spencer has had problems`],
+      [`spencer's got potatoes`, `spencer has got potatoes`],
+      [`spencer's gotten groceries`, `spencer has gotten groceries`],
+      [`he's become fat`, `he has become fat`],
+      [`she's earned money`, `she has earned money`],
+      [`he's not ever milked a cow`, `he has not ever milked a cow`]
     ].forEach(function(a) {
       var m = nlp(a[0]);
       m.contractions().expand();

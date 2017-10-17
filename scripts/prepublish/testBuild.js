@@ -1,7 +1,7 @@
-var exec = require('shelljs').exec
+var exec = require('shelljs').exec;
 var tape = '"node_modules/.bin/tape"';
-var tapMin = '"node_modules/.bin/tap-min" --color';
+var tapSpec = '"node_modules/.bin/tap-spec" --color';
 
 console.log('testing  built package..');
-exec('TESTENV=prod ' + tape + ' "./test/unit/**/*.test.js" | ' + tapMin);
+exec('TESTENV=prod ' + tape + ' "./test/unit/**/*.test.js" | ' + tapSpec);
 console.log(' - done.');

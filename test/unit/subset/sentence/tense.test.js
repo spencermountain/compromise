@@ -6,15 +6,17 @@ test('sentence-change-tense:', function(t) {
     ['john walks quickly', 'john walked quickly', 'john will walk quickly'],
     ['he is quick', 'he was quick', 'he will be quick'],
     ['the stool falls over', 'the stool fell over', 'the stool will fall over'],
-    // ['i usually take the stairs', 'i usually took the stairs', 'i usually will take the stairs'],
-    // ['i usually use the stairs', 'i usually used the stairs', 'i usually will use the stairs'],
-    // ['cardboard is made of tree fibre', 'cardboard was made of tree fibre', 'cardboard will be made of tree fibre'],
+    ['i usually take the stairs', 'i usually took the stairs', 'i usually will take the stairs'],
+    ['i usually use the stairs', 'i usually used the stairs', 'i usually will use the stairs'],
     ['he finishes first', 'he finished first', 'he will finish first'],
     ['our house looks great', 'our house looked great', 'our house will look great'],
 
     //infinitives
     // ['he does what he can to stop', 'he did what he could to stop', 'he will do what he can to stop'],
     ['goes to sleep', 'went to sleep', 'will go to sleep'],
+
+    //passive
+    // ['cardboard is made of tree fibre', 'cardboard was made of tree fibre', 'cardboard will be made of tree fibre'],
 
     //grammatical-number
     // ['we do what we can to stop', 'we did what we could to stop', 'we will do what we can to stop'],
@@ -26,8 +28,8 @@ test('sentence-change-tense:', function(t) {
       'this will be one sentence. This will make two now.'
     ]
 
-    //support negative
-    // ['this isn\'t one sentence. This doesn\'t make two now.', 'this was not one sentence. This didn\'t make two now.', 'this won\'t be one sentence. This won\'t make two now.']
+  //support negative
+  // ['this isn\'t one sentence. This doesn\'t make two now.', 'this was not one sentence. This didn\'t make two now.', 'this won\'t be one sentence. This won\'t make two now.']
   ].forEach(function(a) {
     var r = nlp(a[0]).sentences();
 
@@ -73,7 +75,7 @@ test('copula-form', function(t) {
 
   t.end();
 });
-//
+// //
 test('conjugate-form', function(t) {
   var m = nlp('john walks quickly').sentences();
 

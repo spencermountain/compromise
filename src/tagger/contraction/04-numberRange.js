@@ -2,8 +2,8 @@
 const fixContraction = require('./fix');
 const Term = require('../../term');
 
-const numberRange = (ts) => {
-  for(let i = 0; i < ts.terms.length; i++) {
+const numberRange = ts => {
+  for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
     //skip existing
     if (t.silent_term) {
@@ -11,7 +11,7 @@ const numberRange = (ts) => {
     }
     //hyphens found in whitespace - '5 - 7'
     if (t.tags.Value && i > 0 && t.whitespace.before === ' - ' && ts.terms[i - 1].tags.Value) {
-      let to = new Term('');
+      let to = new Term('', ts.world);
       to.silent_term = 'to';
       ts.insertAt(i, to);
       ts.terms[i - 1].tag('NumberRange', 'number-number1');
@@ -26,9 +26,9 @@ const numberRange = (ts) => {
       let arr = t.text.split(/(-)/);
       arr[1] = 'to';
       ts = fixContraction(ts, arr, i);
-      ts.terms[i].tag('NumericValue', 'numRange-1');
-      ts.terms[i + 1].tag('Preposition', 'numRange-silent');
-      ts.terms[i + 2].tag(['NumericValue', 'numRange-3']);
+      ts.terms[i].tag(['NumberRange', 'NumericValue'], 'numRange-1');
+      ts.terms[i + 1].tag(['NumberRange', 'Preposition'], 'numRange-silent');
+      ts.terms[i + 2].tag(['NumberRange', 'NumericValue'], 'numRange-3');
       i += 2;
     }
   }

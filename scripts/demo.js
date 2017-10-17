@@ -1,4 +1,6 @@
-var exec = require('shelljs').exec
-var fileServer = './node_modules/.bin/http-server'
+var exec = require('shelljs').exec;
 
-exec(fileServer + ' -o -c-1')
+exec('npm i http-server'); //😊
+var fileServer = './node_modules/.bin/http-server';
+
+exec(fileServer + ' -o -c-1');

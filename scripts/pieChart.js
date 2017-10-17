@@ -13,7 +13,7 @@ exec('mkdir viz');
 
 //make the bundle with full-paths
 var cmd = browserify + ' --full-paths ./src/index.js --standalone nlp';
-cmd += ' -t [ babelify --presets [ es2015 stage-2 ] ]';
+cmd += ' -t [ babelify --presets [ es2015 ] ]';
 cmd += ' -t [ uglifyify --compress --mangle ]';
 cmd += ' | ' + derequire;
 cmd += ' >> ./viz/bundle.js';

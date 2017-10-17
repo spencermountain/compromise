@@ -1,5 +1,5 @@
 'use strict';
-const tagSet = require('../paths').tags;
+// const tagSet = require('../paths').tags;
 const boringTags = {
   Auxiliary: 1,
   Possessive: 1,
@@ -12,6 +12,7 @@ const boringTags = {
 };
 
 const bestTag = function(t) {
+  const tagSet = t.world.tags;
   let tags = Object.keys(t.tags);
   tags = tags.sort(); //alphabetical, first
   //then sort by #of parent tags

@@ -53,6 +53,31 @@ module.exports = {
       returns: 'Text',
       example: 'nlp(\'Larry, Curly, and Moe\').people().sort(\'alphabetical\').out(\'array\')\n//Curly, Larry, Moe'
     },
+    forEach: {
+      desc: 'do something on each result independently',
+      returns: 'Text',
+      example: 'nlp(\'Larry, Curly, and Moe\').people().map((m,i)=> i + m.out() )\n//0curly\n//1larry\n//2moe'
+    },
+    map: {
+      desc: 'create a new array from these results',
+      returns: 'Text',
+      example: 'nlp(\'Larry, Curly, and Moe\').people().map((m)=> m.out(\'normal\'))\n// [\'curly\', \'larry\', \'moe\']'
+    },
+    filter: {
+      desc: 'select only the results that return true for some function',
+      returns: 'Text',
+      example: 'nlp(\'Larry, Curly, and Moe\').people().filter(m => m.out(\'normal\')===\'larry\' ).length\n//1'
+    },
+    find: {
+      desc: 'select only the first result that returns true',
+      returns: 'Text',
+      example: 'nlp(\'Larry, Curly, and Moe\').people().find(m => m.out(\'normal\')===\'larry\' ).out()\n//"Larry,"'
+    },
+    reduce: {
+      desc: 'combine the results of a function into one thing',
+      returns: 'Text',
+      example: 'nlp(\'Larry, Curly, and Moe\').people().reduce((h,m) => {\n  var str=m.out(\'normal\');\n  h[str]=true;\n  return h }, {})\n//{larry:true, curly:true, moe:true}'
+    },
   },
 
   'word-changes': {
@@ -91,80 +116,93 @@ module.exports = {
       returns: 'Text',
       example: 'nlp(\' Lenny and Carl \').people().trim().out()\n//[\'Lenny\', \'Carl\']'
     }
-
   },
 
   'sentence-changes': {
     insertBefore: {
       desc: 'append a word (or words) before each match',
+      mutative: true,
       returns: 'Text',
       example: 'nlp(\'stupid flanders\').match(\'flanders\').insertBefore(\'sexy\').all().out()\n//stupid sexy flanders'
     },
     insertAfter: {
       desc: 'append a word (or words) after each match',
+      mutative: true,
       returns: 'Text',
       example: 'nlp(\'i know so many words\').insertAfter(\'bigly\').all().out()\n//i know so many words bigly'
     },
     insertAt: {
       desc: 'insert a word or words at a known index (zero-based)',
+      mutative: true,
       returns: 'Text',
       example: 'nlp(\'so you are from Africa?\').insertAt(2, \'like,\').all().out()\n//so you are like, from africa?'
     },
     lump: {
       desc: 'merge matches into one term, with shared tags.',
+      mutative: true,
       returns: 'Text',
       example: 'nlp(\'Keanu Reeves said whoa\').match(\'#Person\').lump().all().out(\'terms\')\n//[\'Keanu Reeves\', \'said\', \'whoa\']'
     },
     replaceWith: {
       desc: 'turn the current selection into something else. Essentially just delete() -> insertAt(). The second param says whether to keep original tags around.',
+      mutative: true,
       returns: 'Text',
       example: 'nlp(\'it was the worst of times\').match(\'worst\').replaceWith(\'blurst\', true).all().out()\n//it was the blurst of times'
     },
     replace: {
       desc: 'turn a new selection into something else. Essentially just match() -> delete() -> insertAt(). Third optional param keeps original tags around.',
+      mutative: true,
       returns: 'Text',
       example: 'nlp(\'trust me folks, big league.\').replace(\'big league\',\'bigly\').all().out()\n//trust me folks, bigly.'
     },
     delete: {
       desc: 'remove a match from the Text permanently. For a temporary filter, see `.not()`',
+      mutative: true,
       returns: 'Text',
       example: 'nlp(\'you don\u2019t win friends with salad\').delete(\'do not\').out()\n//you win friends with salad'
     },
     splitOn: {
       desc: 'split matches into [before, match, after]',
+      mutative: true,
       returns: 'Text',
       example: 'nlp(\'Monorail...Once again! Monorail... Monorail!\').splitOn(\'monorail\').get(0).out()\n//Monorail'
     },
     splitBefore: {
       desc: 'split matches into [before,  match + after]',
+      mutative: true,
       returns: 'Text',
       example: 'nlp(\'Monorail...Once again! Monorail... Monorail!\').splitBefore(\'monorail\').get(0).out()\n//Monorail...Once again!'
     },
     splitAfter: {
       desc: 'split matches into [before + match,  after]',
+      mutative: true,
       returns: 'Text',
       example: 'nlp(\'Monorail...Once again! Monorail... Monorail!\').splitAfter(\'monorail\').get(0).out()\n//Monorail'
     },
-    clone: {
-      desc: 'copy the object, so changes no longer effect the original (make it ~immutable)',
-      returns: 'Text',
-      example: 'nlp(\'would somebody please think of the children\').clone().toUpperCase().parent.out()\n//would somebody please think of the children'
-    },
     slice: {
       desc: 'grab a subset of the results',
+      mutative: false,
       returns: 'Text',
       example: 'nlp(\'Homer, have you been eating that sandwich again?\').terms().slice(0, 3).out()\n//Homer, have you'
     },
+    clone: {
+      desc: 'copy the object, so changes no longer effect the original (make it ~immutable)',
+      mutative: false,
+      returns: 'Text',
+      example: 'nlp(\'would somebody please think of the children\').clone().toUpperCase().parent.out()\n//would somebody please think of the children'
+    },
     concat: {
       desc: 'combine two results into one',
+      mutative: false,
       returns: 'Text',
       example: 'nlp(\'My name is Otto\').concat(\'and i love to get blotto\').sentences().length\n//1'
     },
     flatten: {
       desc: 'turn a list of results into one result',
+      mutative: false,
       returns: 'Text',
       example: 'nlp(\'sex cauldron? I thought they closed that place down.\').flatten().length\n//1'
-    },
+    }
   },
 
   'match/tag': {

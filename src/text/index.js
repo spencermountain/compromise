@@ -2,10 +2,15 @@
 //a Text is an array of termLists
 const getters = require('./getters');
 
-function Text(arr, lexicon, reference) {
+function Text(arr, world, original) {
   this.list = arr || [];
-  this.lexicon = lexicon;
-  this.reference = reference;
+  if (typeof world === 'function') {
+    world = world();
+  }
+  this.world = () => {
+    return world;
+  };
+  this.original = original;
   //apply getters
   let keys = Object.keys(getters);
   for (let i = 0; i < keys.length; i++) {
@@ -25,8 +30,8 @@ Text.addMethods = function(cl, obj) {
 
 //make a sub-class of this class easily
 Text.makeSubset = function(methods, find) {
-  let Subset = function(arr, lexicon, reference) {
-    Text.call(this, arr, lexicon, reference);
+  let Subset = function(arr, world, original) {
+    Text.call(this, arr, world, original);
   };
   //inheritance
   Subset.prototype = Object.create(Text.prototype);
@@ -47,25 +52,27 @@ require('./subsets')(Text);
 
 //apply subset methods
 const subset = {
-  acronyms: require('./subset/acronyms'),
-  adjectives: require('./subset/adjectives'),
-  adverbs: require('./subset/adverbs'),
-  contractions: require('./subset/contractions'),
-  dates: require('./subset/dates'),
-  nouns: require('./subset/nouns'),
-  people: require('./subset/people'),
-  sentences: require('./subset/sentences'),
-  terms: require('./subset/terms'),
-  values: require('./subset/values'),
-  verbs: require('./subset/verbs'),
-  ngrams: require('./subset/ngrams'),
-  startGrams: require('./subset/ngrams/startGrams'),
-  endGrams: require('./subset/ngrams/endGrams')
+  acronyms: require('../subset/acronyms'),
+  adjectives: require('../subset/adjectives'),
+  adverbs: require('../subset/adverbs'),
+  contractions: require('../subset/contractions'),
+  dates: require('../subset/dates'),
+  nouns: require('../subset/nouns'),
+  people: require('../subset/people'),
+  sentences: require('../subset/sentences'),
+  terms: require('../subset/terms'),
+  values: require('../subset/values'),
+  verbs: require('../subset/verbs'),
+  ngrams: require('../subset/ngrams'),
+  startGrams: require('../subset/ngrams/startGrams'),
+  endGrams: require('../subset/ngrams/endGrams')
 };
 Object.keys(subset).forEach(k => {
   Text.prototype[k] = function(num, arg) {
     let sub = subset[k];
     let m = sub.find(this, num, arg);
-    return new subset[k](m.list, this.lexicon, this.parent);
+    return new subset[k](m.list, this.world, this.parent);
   };
 });
+//aliases
+Text.prototype.words = Text.prototype.terms;

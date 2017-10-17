@@ -4,54 +4,8 @@ const tokenize = require('./tokenize');
 const paths = require('./paths');
 const Terms = paths.Terms;
 const fns = paths.fns;
-const normalize = require('../term/methods/normalize/normalize').normalize;
-const firstWords = require('../lexicon/firstWords');
-const buildOut = require('../lexicon/buildOut');
 
-const unpackUserLex = function(str) {
-  let obj = {};
-  if (typeof str === 'string') {
-    obj = JSON.parse(str);
-  } else {
-    obj = str;
-  }
-  obj = efrt.unpack(obj);
-  return obj;
-};
-
-//basically really dirty and stupid.
-const normalizeLex = function(lex) {
-  lex = lex || {};
-  return Object.keys(lex).reduce((h, k) => {
-    let normal = normalize(k);
-    //remove periods
-    //normalize whitesace
-    normal = normal.replace(/\s+/, ' ');
-    //remove sentence-punctuaion too
-    normal = normal.replace(/[.\?\!]/g, '');
-    h[normal] = lex[k];
-    return h;
-  }, {});
-};
-
-//basically really dirty and stupid.
-const handleLexicon = function(lex) {
-  if (!lex) {
-    return null;
-  }
-  if (typeof lex === 'string') {
-    lex = unpackUserLex(lex);
-  } else {
-    lex = normalizeLex(lex);
-  }
-  lex = buildOut(lex);
-  return {
-    lexicon: lex,
-    firstWords: firstWords(lex)
-  };
-};
-
-const fromString = (str, lexicon) => {
+const fromString = (str, world) => {
   let sentences = [];
   //allow pre-tokenized input
   if (fns.isArray(str)) {
@@ -60,15 +14,13 @@ const fromString = (str, lexicon) => {
     str = fns.ensureString(str);
     sentences = tokenize(str);
   }
-  //make sure lexicon obeys standards
-  lexicon = handleLexicon(lexicon);
-  let list = sentences.map(s => Terms.fromString(s, lexicon));
+  let list = sentences.map(s => Terms.fromString(s, world));
 
-  let r = new Text(list, lexicon);
+  let doc = new Text(list, world);
   //give each ts a ref to the result
-  r.list.forEach(ts => {
-    ts.refText = r;
+  doc.list.forEach(ts => {
+    ts.refText = doc;
   });
-  return r;
+  return doc;
 };
 module.exports = fromString;

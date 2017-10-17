@@ -2,6 +2,7 @@
 const syntax = require('./syntax');
 const startHere = require('./startHere');
 const fastPass = require('./fastPass');
+const handleCaptureGroup = require('./captureGroup');
 
 //ensure we have atleast one non-optional demand
 // const isTautology = function(regs) {
@@ -49,11 +50,15 @@ const match = (ts, reg, verbose) => {
     let m = startHere(ts, t, reg, verbose);
     if (m && m.length > 0) {
       matches.push(m);
+      //handle capture-groups subset
+      // let hasCapture=matches
       //ok, don't try to match these again.
       let skip = m.length - 1;
       t += skip; //this could use some work
     }
   }
+  //handle capture-group subset
+  matches = handleCaptureGroup(matches);
   return matches;
 };
 module.exports = match;

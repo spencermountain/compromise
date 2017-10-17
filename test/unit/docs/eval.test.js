@@ -1,5 +1,7 @@
 var test = require('tape');
 var docs = require('../../../docs/api');
+//gotta include this for the 'eval()'
+var nlp = require('../lib/nlp'); // eslint-disable-line no-unused-vars
 
 var flat = [];
 Object.keys(docs.generic).forEach(k => {
@@ -21,15 +23,14 @@ test('docs-eval:', function(t) {
   flat.forEach(o => {
     var code = o.example;
     try {
-      code =
-        `(function(){
+      code = `(function(){
         ` +
         code +
         `
       })()`;
       eval(code);
       t.ok(true, o.title);
-      // t.doesNotThrow(eval(code))
+    // t.doesNotThrow(eval(code))
     } catch (e) {
       console.log(o.title);
       console.log(e);

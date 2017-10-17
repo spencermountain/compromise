@@ -2,21 +2,20 @@
 const Term = require('../../term');
 
 const tags = {
-  'not': 'Negative',
-  'will': 'Verb',
-  'would': 'Modal',
-  'have': 'Verb',
-  'are': 'Copula',
-  'is': 'Copula',
-  'am': 'Verb',
+  not: 'Negative',
+  will: 'Verb',
+  would: 'Modal',
+  have: 'Verb',
+  are: 'Copula',
+  is: 'Copula',
+  am: 'Verb'
 };
 //make sure the newly created term gets the easy tags
-const easyTag = (t) => {
+const easyTag = t => {
   if (tags[t.silent_term]) {
     t.tag(tags[t.silent_term]);
   }
 };
-
 
 //add a silent term
 const fixContraction = (ts, parts, i) => {
@@ -28,7 +27,7 @@ const fixContraction = (ts, parts, i) => {
 
   //add a new empty term
   if (parts[1]) {
-    let two = new Term('');
+    let two = new Term('', ts.world);
     two.silent_term = parts[1];
     two.tag('Contraction', 'tagger-contraction');
     ts.insertAt(i + 1, two);
@@ -40,7 +39,7 @@ const fixContraction = (ts, parts, i) => {
 
   //potentially it's three-contracted-terms, like 'dunno'
   if (parts[2]) {
-    let three = new Term('');
+    let three = new Term('', ts.world);
     three.silent_term = parts[2];
     // ts.terms.push(three);
     ts.insertAt(i + 2, three);

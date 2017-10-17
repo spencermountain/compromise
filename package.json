@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "10.7.2",
+  "version": "11.0.0",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -10,43 +10,45 @@
   },
   "scripts": {
     "test": "node ./scripts/test.js",
-    "testBuild": "TESTENV=prod node ./scripts/test.js",
+    "testb": "TESTENV=prod node ./scripts/test.js",
     "buildTest": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
-    "testb": "node ./scripts/browserTest.js",
+    "browserTest": "node ./scripts/browserTest.js",
     "benchmark": "node ./scripts/benchmark.js",
     "build": "node ./scripts/build/index.js",
     "pack": "node ./scripts/pack.js",
-    "prepublish": "node ./scripts/prepublish",
+    "prepublishOnly": "node ./scripts/prepublish",
     "postpublish": "node ./scripts/postpublish",
     "demo": "node ./scripts/demo.js",
-    "watch": "node ./scripts/watch.js",
+    "watch": "amble ./scratch.js",
     "filesize": "node ./scripts/filesize.js",
     "coverage": "node ./scripts/coverage.js",
     "lint": "node ./scripts/prepublish/linter.js"
   },
-  "files": ["builds/", "docs/"],
+  "files": [
+    "builds/",
+    "docs/"
+  ],
   "dependencies": {
-    "efrt": "1.1.1"
+    "efrt-unpack": "2.0.3"
   },
   "devDependencies": {
+    "amble": "0.0.5",
     "babel-preset-es2015": "^6.24.0",
     "babelify": "7.3.0",
     "babili": "0.0.11",
     "browserify": "13.0.1",
     "browserify-glob": "^0.2.0",
-    "bundle-collapser": "^1.2.1",
     "chalk": "^1.1.3",
     "codacy-coverage": "^2.0.0",
+    "compromise-plugin": "0.0.3",
     "derequire": "^2.0.3",
     "eslint": "^3.1.1",
     "gaze": "^1.1.1",
-    "http-server": "0.9.0",
     "nyc": "^8.4.0",
     "shelljs": "^0.7.2",
-    "tap-min": "^1.1.0",
-    "tap-spec": "4.1.1",
     "tape": "4.6.0",
+    "tap-spec": "^4.1.1",
     "uglify-js": "2.7.0"
   },
   "license": "MIT"

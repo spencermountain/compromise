@@ -5,7 +5,7 @@ const Inf = 'Infinitive';
 const Pres = 'PresentTense';
 const Sing = 'Singular';
 const Past = 'PastTense';
-const AdVb = 'AdVerb';
+const Avb = 'Adverb';
 const Plrl = 'Plural';
 const Actor = 'Actor';
 const Vb = 'Verb';
@@ -21,8 +21,9 @@ module.exports = [
     ea: Sing,
     ia: Noun,
     ic: Adj,
-    "'n": Vb,
-    "'t": Vb
+    ly: Avb,
+    '\'n': Vb,
+    '\'t': Vb
   },
   {
     //3-letter
@@ -30,6 +31,7 @@ module.exports = [
     lar: Adj,
     ike: Adj,
     ffy: Adj,
+    nny: Adj,
     rmy: Adj,
     azy: Adj,
     oid: Adj,
@@ -44,9 +46,9 @@ module.exports = [
     zes: Pres,
     nes: Pres,
     ing: 'Gerund', //likely to be converted to Adj after lexicon pass
-    ' so': AdVb,
-    "'ll": Modal,
-    "'re": 'Copula'
+    ' so': Avb,
+    '\'ll': Modal,
+    '\'re': 'Copula'
   },
   {
     //4-letter
@@ -68,8 +70,8 @@ module.exports = [
     ried: Adj,
     gone: Adj,
     made: Adj,
-    fore: AdVb,
-    less: AdVb,
+    fore: Avb,
+    less: Avb,
     ices: Plrl,
     ions: Plrl,
     ints: Plrl,
@@ -86,9 +88,9 @@ module.exports = [
   },
   {
     //5-letter
-    fully: AdVb,
-    where: AdVb,
-    wards: AdVb,
+    fully: Avb,
+    where: Avb,
+    wards: Avb,
     urned: Past,
     tized: Past,
     eased: Past,

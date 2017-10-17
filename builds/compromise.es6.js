@@ -1,4 +1,4 @@
-/* compromise v11.0.0
+/* compromise v11.0.1
    http://compromise.cool
    MIT
 */
@@ -13,7 +13,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.0.0",
+  "version": "11.0.1",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -33,7 +33,7 @@ module.exports={
     "demo": "node ./scripts/demo.js",
     "watch": "amble ./scratch.js",
     "filesize": "node ./scripts/filesize.js",
-    "coverage": "node ./scripts/coverage.js",
+    "coverage": "node ./scripts/postpublish/coverage.js",
     "lint": "node ./scripts/prepublish/linter.js"
   },
   "files": [
@@ -51,15 +51,15 @@ module.exports={
     "browserify": "13.0.1",
     "browserify-glob": "^0.2.0",
     "chalk": "^1.1.3",
-    "codacy-coverage": "^2.0.0",
-    "compromise-plugin": "0.0.3",
+    "codacy-coverage": "^2.0.3",
+    "compromise-plugin": "0.0.5",
     "derequire": "^2.0.3",
     "eslint": "^3.1.1",
     "gaze": "^1.1.1",
     "nyc": "^8.4.0",
     "shelljs": "^0.7.2",
-    "tape": "4.6.0",
     "tap-spec": "^4.1.1",
+    "tape": "4.6.0",
     "uglify-js": "2.7.0"
   },
   "license": "MIT"

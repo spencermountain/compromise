@@ -6,13 +6,15 @@ var nlp = require('./src/index');
 
 // nlp('cheering hard').debug();
 
-var nlp2 = nlp.clone();
-nlp.addWords({
-  bat: 'Verb'
-});
+// var nlp2 = nlp.clone();
+// nlp.addWords({
+//   bat: 'Verb'
+// });
+//
+// nlp('bat').debug();
+// nlp2('bat').debug();
 
-nlp('bat').debug();
-nlp2('bat').debug();
 
-
-nlp2('hlkjasdf alskdfje flekfjl alskdfje alskdfjeleijflsh flekfjl').ngrams(3).debug();
+var vb = nlp('stunk up').verbs().toNegative(); //.debug();
+var str = vb.out('normal');
+console.log(str);

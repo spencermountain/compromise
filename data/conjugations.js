@@ -513,7 +513,8 @@ module.exports = {
     'Participle': 'clung'
   },
   'come': {
-    'Participle': 'come'
+    'Participle': 'come',
+    'PastTense': 'came'
   },
   'creep': {
     'Participle': 'crept'

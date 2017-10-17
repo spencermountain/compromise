@@ -29,6 +29,7 @@ module.exports = [
   'ahead',
   'alarming',
   'alcoholic',
+  'all',
   'alert',
   'alive',
   'aloof',

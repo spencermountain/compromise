@@ -50,7 +50,7 @@ const addWords = function(words) {
       let conj = conjugate(arr[0], this);
       Object.keys(conj).forEach((k) => {
         let form = conj[k] + ' ' + arr[1];
-        this.words[form] = [k, 'PhrasalVerb'];
+        this.words[form] = 'PhrasalVerb';
         //add it to cache, too
         this.cache.firstWords[conj[k]] = true;
       });

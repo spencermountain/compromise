@@ -11,6 +11,12 @@ const corrections = function(ts) {
     //do so
     ts.match('do so').match('so').tag('Noun', 'so-noun');
   }
+  if (ts.has('all')) {
+    //all students
+    ts.match('[all] #Determiner? #Noun').tag('Adjective', 'all-noun');
+    //it all fell apart
+    ts.match('[all] #Verb').tag('Adverb', 'all-verb');
+  }
   //the ambiguous word 'that' and 'which'
   if (ts.has('(that|which)')) {
     //remind john that

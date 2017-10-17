@@ -56,11 +56,6 @@ World.prototype.clone = function() {
   return w2;
 };
 
-//denormalize all the multi-word terms
-// World.prototype.reindex = function() {
-//   reIndex(this);
-// };
-
 //add all the things, in all the places
 World.prototype.plugin = function(obj) {
   //untangle compromise-plugin
@@ -94,6 +89,5 @@ w.addWords(misc);
 moreData.forEach((obj) => {
   extend(w.words, obj);
 });
-// w.reindex();
 
 module.exports = w;

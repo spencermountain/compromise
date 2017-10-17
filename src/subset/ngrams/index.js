@@ -46,7 +46,6 @@ const methods = {
 };
 
 const find = function(r, obj) {
-  console.log(obj);
   let sizes = [];
   //support .ngrams(3), for compat
   if (typeof obj === 'number') {
@@ -56,7 +55,7 @@ const find = function(r, obj) {
   }
   obj = obj || {};
   let max = obj.max || 4;
-  for (var i = 1; i <= max; i++) {
+  for (let i = 1; i <= max; i++) {
     sizes.push(i);
   }
   //only look for bigrams, for example

@@ -64,6 +64,9 @@ nlp.clone = function() {
   w = w.clone();
   return nlp;
 };
+// nlp.world = function() {
+//   return w;
+// };
 //this is used, atleast, for testing the packing
 nlp.unpack = function(plugin) {
   return unpack(plugin);

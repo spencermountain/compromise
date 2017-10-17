@@ -98,7 +98,7 @@ const methods = {
       if (this.val.has('#Ordinal')) {
         str = fmt.ordinal(num);
       } else {
-        str = '' + num;
+        str = String(num);
         //convert 'five percent' -> '5%'
         if (isPercent(this.val, this.unit)) {
           str = str + '%';

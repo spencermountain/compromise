@@ -13,14 +13,14 @@ test('verb-to-negative:', function(t) {
     [`we would have walked`, 'would not have walked'],
 
     //conjugations
-    // [`she walked`, 'did not walk'],
-    // [`it all came apart`, 'did not come apart'],
+    [`she walked`, 'did not walk'],
+    [`it all came apart`, 'all did not come apart'],
 
     //phrasals
     [`he would come forward`, 'would not come forward'],
-    [`we come together`, 'did not come together'],
+    [`we come together`, 'do not come together'],
     [`he was frightened`, 'was not'],
-    [`i didn't want to`, "didn't want"],
+    [`i didn't want to`, 'didn\'t want'],
 
     //===singular
     // pastTense -
@@ -40,7 +40,7 @@ test('verb-to-negative:', function(t) {
   ].forEach(function(a) {
     var vb = nlp(a[0]).verbs().toNegative();
     var str = vb.out('normal');
-    t.equal(str, a[1], "'" + str + "' - - want: " + a[1]);
+    t.equal(str, a[1], '\'' + str + '\' - - want: ' + a[1]);
   });
   t.end();
 });

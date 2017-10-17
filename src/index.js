@@ -3,8 +3,8 @@ const buildText = require('./text/build');
 const pkg = require('../package.json');
 const log = require('./log');
 const unpack = require('./world/unpack');
-let makeWorld = require('./world');
-let w = makeWorld();
+let world = require('./world');
+let w = world.w;
 
 //the main function
 const nlp = function(str, lex) {
@@ -71,7 +71,7 @@ nlp.addConjugations = function(conj) {
 
 //make a weird, half-copy of this method
 nlp.clone = function() {
-  let w2 = makeWorld();
+  let w2 = world.reBuild();
   //this is weird, but it's okay
   var nlp2 = function(str, lex) {
     if (lex) {

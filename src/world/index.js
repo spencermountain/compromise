@@ -82,13 +82,24 @@ World.prototype.plugin = function(obj) {
   }
 };
 
-module.exports = function() {
-  //export a default world
-  let w = new World();
-  w.plugin(data);
-  w.addWords(misc);
-  moreData.forEach((obj) => {
-    extend(w.words, obj);
-  });
-  return w;
+//export a default world
+let w = new World();
+w.plugin(data);
+w.addWords(misc);
+moreData.forEach((obj) => {
+  extend(w.words, obj);
+});
+
+module.exports = {
+  w: w,
+  reBuild: function() {
+    //export a default world
+    let w2 = new World();
+    w2.plugin(data);
+    w2.addWords(misc);
+    moreData.forEach((obj) => {
+      extend(w2.words, obj);
+    });
+    return w2;
+  }
 };

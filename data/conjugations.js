@@ -622,7 +622,8 @@ module.exports = {
     'Participle': 'sprung'
   },
   'stink': {
-    'Participle': 'stunk'
+    'Participle': 'stunk',
+    'PastTense': 'stunk'
   },
   'strew': {
     'Participle': 'strewn'

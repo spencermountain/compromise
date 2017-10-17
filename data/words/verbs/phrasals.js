@@ -616,6 +616,7 @@ module.exports = [
   'stay up',
   'step up',
   'stir up',
+  'stink up',
   'stitch up',
   'stop by',
   'stop in',

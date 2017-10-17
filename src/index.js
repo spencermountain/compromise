@@ -3,8 +3,8 @@ const buildText = require('./text/build');
 const pkg = require('../package.json');
 const log = require('./log');
 const unpack = require('./world/unpack');
-let w = require('./world');
-
+let makeWorld = require('./world');
+let w = makeWorld();
 
 //the main function
 const nlp = function(str, lex) {
@@ -18,6 +18,16 @@ const nlp = function(str, lex) {
   return doc;
 };
 
+//this is used, atleast, for testing the packing
+nlp.unpack = function(plugin) {
+  return unpack(plugin);
+};
+//this is handy
+nlp.version = pkg.version;
+//turn-on some debugging
+nlp.verbose = function(str) {
+  log.enable(str);
+};
 //same as main method, except with no POS-tagging.
 nlp.tokenize = function(str) {
   return buildText(str);
@@ -59,27 +69,30 @@ nlp.addConjugations = function(conj) {
   });
 };
 
-//clone the 'world'
+//make a weird, half-copy of this method
 nlp.clone = function() {
-  w = w.clone();
-  return nlp;
+  let w2 = makeWorld();
+  //this is weird, but it's okay
+  var nlp2 = function(str, lex) {
+    if (lex) {
+      w2.plugin({
+        words: lex
+      });
+    }
+    let doc = buildText(str, w2);
+    doc.tagger();
+    return doc;
+  };
+  nlp2.tokenize = nlp.tokenize;
+  nlp2.verbose = nlp.verbose;
+  nlp2.version = nlp.version;
+  ['Words', 'Tags', 'Regex', 'Patterns', 'Plurals', 'Conjugations'].forEach((fn) => {
+    nlp2['add' + fn] = function(obj) {
+      w2['add' + fn](obj);
+    };
+  });
+  return nlp2;
 };
-// nlp.world = function() {
-//   return w;
-// };
-//this is used, atleast, for testing the packing
-nlp.unpack = function(plugin) {
-  return unpack(plugin);
-};
-
-//this is handy
-nlp.version = pkg.version;
-
-//turn-on some debugging
-nlp.verbose = function(str) {
-  log.enable(str);
-};
-
 
 //and then all-the-exports...
 if (typeof self !== 'undefined') {

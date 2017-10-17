@@ -2,7 +2,7 @@ var exec = require('shelljs').exec;
 var nyc = './node_modules/nyc/bin/nyc.js';
 var codacity = './node_modules/.bin/codacy-coverage';
 var tape = './node_modules/tape/bin/tape';
-var tapSpec = './node_modules/tap-spec/bin/tap-spec';
+var tapSpec = './node_modules/.bin/tap-spec';
 var test = tape + ' "./test/unit/**/*.test.js" ';
 
 //to upload to codacity, set the api key as $CODACY_PROJECT_TOKEN

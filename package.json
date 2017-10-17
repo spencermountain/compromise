@@ -22,7 +22,7 @@
     "demo": "node ./scripts/demo.js",
     "watch": "amble ./scratch.js",
     "filesize": "node ./scripts/filesize.js",
-    "coverage": "node ./scripts/coverage.js",
+    "coverage": "node ./scripts/postpublish/coverage.js",
     "lint": "node ./scripts/prepublish/linter.js"
   },
   "files": [

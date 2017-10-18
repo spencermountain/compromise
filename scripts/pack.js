@@ -1,8 +1,8 @@
 'use strict';
-var nlpPlugin = require('/Users/spencer/nlp/plugin');
 var chalk = require('chalk');
 var fs = require('fs');
 var path = require('path');
+var nlpPlugin = require('compromise-plugin');
 var fileSize = require('./lib/filesize');
 
 console.log(chalk.yellow('\n 🕑 packing lexicon..'));

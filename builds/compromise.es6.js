@@ -1,4 +1,4 @@
-/* compromise v11.0.1
+/* compromise v11.0.2
    http://compromise.cool
    MIT
 */
@@ -13,7 +13,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.0.1",
+  "version": "11.0.2",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -52,7 +52,7 @@ module.exports={
     "browserify-glob": "^0.2.0",
     "chalk": "^1.1.3",
     "codacy-coverage": "^2.0.3",
-    "compromise-plugin": "0.0.5",
+    "compromise-plugin": "0.0.7",
     "derequire": "^2.0.3",
     "eslint": "^3.1.1",
     "gaze": "^1.1.1",

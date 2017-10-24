@@ -56,4 +56,5 @@ module.exports = {
   'what': 'QuestionWord',
   'which': 'QuestionWord',
   'how\'s': 'QuestionWord'
+
 };

@@ -117,15 +117,15 @@ const find = function(r, n) {
   if (r.has('#NumericValue #NumericValue')) {
     //june 21st 1992 is two seperate values
     r.splitOn('#Year');
-    //"72 82"
-    if (r.has('#Cardinal #Cardinal')) {
-      r.splitOn('#Cardinal');
-    }
+  }
+  //"72 82"
+  if (r.has('#Cardinal #Cardinal') && !r.has('(#Multiple|point|decimal)')) {
+    r.splitOn('#Cardinal');
   }
   //seventh fifth
-  // if (r.match('#Ordinal #Ordinal').match('#TextValue').found) {
-  //   r.splitAfter('#Ordinal');
-  // }
+  if (r.match('#Ordinal #Ordinal').match('#TextValue').found && !r.has('#Multiple')) {
+    r.splitAfter('#Ordinal');
+  }
   //fifth five
   if (r.has('#Ordinal #Cardinal')) {
     r.splitBefore('#Cardinal+');

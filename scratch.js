@@ -9,17 +9,14 @@ var nlp = require('./src/index');
 
 //2) en-dash
 // var doc = nlp('20–20');
-// var doc = nlp('20-20');
-var doc = nlp('twenty-two');
-// var doc = nlp('fun–time');
-doc.debug();
-// doc.values().toText();
-// console.log(doc.out());
+// doc.debug();
 
 // 3) lookin'
-// var doc=nlp("I’m lookin’ for amanda")
-// doc.verbs().toPastTense()
-// doc.out();
+// var doc = nlp('i\'m looking for amanda');
+var doc = nlp('i\'m');
+doc.debug();
+doc.verbs().toPastTense();
+console.log(doc.out());
 
 // 4) support demo words
 //wee

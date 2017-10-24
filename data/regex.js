@@ -3,7 +3,7 @@ module.exports = {
   //#funtime
   '^#[a-z]+': 'HashTag',
   //chillin'
-  '[a-z]+n\'': 'Gerund',
+  '[a-z]+n[\'’]': 'Gerund',
   //spencers'
   '[a-z]+s\'': 'Possessive',
   //589-3809

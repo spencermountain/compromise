@@ -22,7 +22,10 @@ exports.normalize = function(str) {
   str = str.replace(/\u2026/g, '...');
   //en-dash
   str = str.replace(/\u2013/g, '-');
-
+  //lookin’->looking (make it easier for conjugation)
+  if (/[a-z][^aeiou]in['’]$/.test(str) === true) {
+    str = str.replace(/in['’]$/, 'ing');
+  }
   //strip leading & trailing grammatical punctuation
   if (/^[:;]/.test(str) === false) {
     str = str.replace(/\.{3,}$/g, '');

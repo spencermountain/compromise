@@ -2,7 +2,6 @@ var nlp = require('./src/index');
 // nlp.verbose('tagger');
 
 //1) - busted
-var doc = nlp('fifth ninth').values().debug();
 // var doc = nlp('7.5 -8').values().debug();
 // doc.values().toText();
 // doc.debug();

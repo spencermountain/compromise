@@ -137,7 +137,7 @@ Object.keys(ordinal).forEach(k => {
     toCardinal[ord[i]] = card[i];
     lexicon[ord[i]] = ['Ordinal', 'TextValue'];
     lexicon[card[i]] = ['Cardinal', 'TextValue'];
-    if (k === 'multiples' || k === 'tens') {
+    if (k === 'multiples') {
       lexicon[ord[i]].push('Multiple');
       lexicon[card[i]].push('Multiple');
     }

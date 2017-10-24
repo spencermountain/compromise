@@ -66,33 +66,33 @@ test('==contractions==', function(T) {
       [`mustn't go`, ['must', 'not']],
       [`haven't gone`, ['have', 'not']],
       [`isn't going`, ['is', 'not']],
-      ["can't go", ['can', 'not']],
-      ["ain't going", ['is', 'not']],
-      ["won't go", ['will', 'not']],
+      ['can\'t go', ['can', 'not']],
+      ['ain\'t going', ['is', 'not']],
+      ['won\'t go', ['will', 'not']],
 
-      ["i'd go", ['i', 'would']],
-      ["she'd go", ['she', 'would']],
-      ["he'd go", ['he', 'would']],
-      ["they'd go", ['they', 'would']],
-      ["we'd go", ['we', 'would']],
+      ['i\'d go', ['i', 'would']],
+      ['she\'d go', ['she', 'would']],
+      ['he\'d go', ['he', 'would']],
+      ['they\'d go', ['they', 'would']],
+      ['we\'d go', ['we', 'would']],
 
-      ["i'll go", ['i', 'will']],
-      ["she'll go", ['she', 'will']],
-      ["he'll go", ['he', 'will']],
-      ["they'll go", ['they', 'will']],
-      ["we'll go", ['we', 'will']],
+      ['i\'ll go', ['i', 'will']],
+      ['she\'ll go', ['she', 'will']],
+      ['he\'ll go', ['he', 'will']],
+      ['they\'ll go', ['they', 'will']],
+      ['we\'ll go', ['we', 'will']],
 
-      ["i've go", ['i', 'have']],
-      ["they've go", ['they', 'have']],
-      ["we've go", ['we', 'have']],
-      ["should've go", ['should', 'have']],
-      ["would've go", ['would', 'have']],
-      ["could've go", ['could', 'have']],
-      ["must've go", ['must', 'have']],
+      ['i\'ve go', ['i', 'have']],
+      ['they\'ve go', ['they', 'have']],
+      ['we\'ve go', ['we', 'have']],
+      ['should\'ve go', ['should', 'have']],
+      ['would\'ve go', ['would', 'have']],
+      ['could\'ve go', ['could', 'have']],
+      ['must\'ve go', ['must', 'have']],
 
-      ["i'm going", ['i', 'am']],
-      ["we're going", ['we', 'are']],
-      ["they're going", ['they', 'are']],
+      ['i\'m going', ['i', 'am']],
+      ['we\'re going', ['we', 'are']],
+      ['they\'re going', ['they', 'are']],
 
       [`don't`, ['do', 'not']],
       [`do not`, ['do', 'not']],
@@ -149,8 +149,8 @@ test('==contractions==', function(T) {
 
   T.test('contraction-supports-whitespace:', function(t) {
     [
-      ["We've only just begun", 'We have only just begun'],
-      ["We've   only just begun", 'We have   only just begun']
+      ['We\'ve only just begun', 'We have only just begun'],
+      ['We\'ve   only just begun', 'We have   only just begun']
     ].forEach(function(a) {
       var m = nlp(a[0]);
       m.contractions().expand();
@@ -166,6 +166,9 @@ test('==contractions==', function(T) {
 
     r = nlp('rooms 99-102').match('99 to 102');
     t.equal(r.out('normal'), '99-102', 'rooms 99-102');
+
+    r = nlp('around 7.5-8').match('7.5 to 8');
+    t.equal(r.out('normal'), '7.5-8', 'around 7.5-8');
 
     r = nlp('june 5th-7th 1998').match('5th to 7th');
     t.equal(r.out('normal'), '5th-7th', 'june 5th-7th numberRange');

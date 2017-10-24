@@ -30,13 +30,6 @@ const parse = function(s) {
 const fixContraction = function(contr) {
   if (contr.found) {
     contr.contractions().expand();
-  // contr.list[0].terms.forEach((t) => {
-  //   if (t.silent_term) {
-  //     t.text = t.silent_term;
-  //     t.silent_term = null;
-  //     t.unTag('Contraction');
-  //   }
-  // });
   }
 };
 

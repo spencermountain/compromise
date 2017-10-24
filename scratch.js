@@ -13,8 +13,8 @@ var nlp = require('./src/index');
 
 // 3) lookin'
 // var doc = nlp('i\'m looking for amanda');
-var doc = nlp('i\'m');
-doc.debug();
+var doc = nlp(`we've said`);
+// doc.debug();
 doc.verbs().toPastTense();
 console.log(doc.out());
 

@@ -141,8 +141,9 @@ const find = function(r, n) {
   if (typeof n === 'number') {
     r = r.get(n);
   }
+  let world = r.world();
   r.list = r.list.map(ts => {
-    return new Value(ts.terms, ts.world, ts.refText, ts.refTerms);
+    return new Value(ts.terms, world, ts.refText, ts.refTerms);
   });
   return r;
 };

@@ -30,10 +30,9 @@ module.exports = {
   '^[-+]?[0-9]{1,3}(,[0-9]{3})+(.[0-9]+)?$': 'NiceNumber', //like 5,999.0
   '^[-+]?[0-9]+(.[0-9]+)?$': 'NumericValue', //like +5.0
 
-  '^.?[0-9]+([0-9,.]+)?%$': 'Percent', //7%  ..['Cardinal', 'NumericValue']
+  '^.?[0-9]+([0-9,.]+)?%$': ['Percent', 'Cardinal', 'NumericValue'], //7%  ..
   '[0-9]{1,4}/[0-9]{1,4}': 'Fraction', //3/2ths
   '[0-9]{1,2}-[0-9]{1,2}': ['Value', 'NumberRange'], //7-8
-
   //mc'adams
   'ma?c\'.*': 'LastName',
   //o'douggan

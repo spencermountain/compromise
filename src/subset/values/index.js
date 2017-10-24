@@ -114,9 +114,13 @@ const find = function(r, n) {
   r = r.match('#Value+ #Unit?');
   // r = r.match('#Value+ #Unit?');
 
-  //june 21st 1992 is two seperate values
   if (r.has('#NumericValue #NumericValue')) {
+    //june 21st 1992 is two seperate values
     r.splitOn('#Year');
+    //"72 82"
+    if (r.has('#Cardinal #Cardinal')) {
+      r.splitOn('#Cardinal');
+    }
   }
   //seventh fifth
   // if (r.match('#Ordinal #Ordinal').match('#TextValue').found) {

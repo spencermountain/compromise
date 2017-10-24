@@ -2,6 +2,21 @@ var test = require('tape');
 var nlp = require('../../lib/nlp');
 var str_test = require('../../lib/fns').str_test;
 
+test('value-lumper-splitter:', function(t) {
+  var r = nlp('202 199');
+  t.equal(r.values().length, 2, 'two-numbers');
+
+  r = nlp('two hundred and fifty times six');
+  t.equal(r.values().length, 2, 'two-numbers2');
+
+  r = nlp('one two');
+  t.equal(r.values().length, 2, 'two-numbers3');
+
+  r = nlp('fifth ninth');
+  t.equal(r.values().length, 2, 'two-numbers4');
+  t.end();
+});
+
 test('value-basic:', function(t) {
   var r = nlp('third month of 2019');
   r.values().toNumber();

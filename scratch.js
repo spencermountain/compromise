@@ -2,8 +2,8 @@ var nlp = require('./src/index');
 // nlp.verbose('tagger');
 
 //1) - busted
-var doc = nlp('7.5 -8').debug();
-// doc.values().toText();
+var doc = nlp('7.5 -8').values().debug();
+doc.values().toText();
 // doc.debug();
 // doc.out();
 

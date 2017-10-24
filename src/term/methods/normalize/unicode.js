@@ -6,6 +6,7 @@
 let compact = {
   '!': '¡',
   '?': '¿Ɂ',
+  '-': '—–',
   'a': 'ªÀÁÂÃÄÅàáâãäåĀāĂăĄąǍǎǞǟǠǡǺǻȀȁȂȃȦȧȺΆΑΔΛάαλАДадѦѧӐӑӒӓƛɅæ',
   'b': 'ßþƀƁƂƃƄƅɃΒβϐϦБВЪЬбвъьѢѣҌҍҔҕƥƾ',
   'c': '¢©ÇçĆćĈĉĊċČčƆƇƈȻȼͻͼͽϲϹϽϾϿЄСсєҀҁҪҫ',
@@ -52,4 +53,4 @@ const killUnicode = (str) => {
   return chars.join('');
 };
 module.exports = killUnicode;
-// console.log(fixUnicode('bjŏȒk'));
+// console.log(killUnicode('bjŏȒk—Ɏó'));

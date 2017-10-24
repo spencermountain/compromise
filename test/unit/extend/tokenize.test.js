@@ -13,3 +13,23 @@ test('tokenize() runs without pos-tagging', function(t) {
 
   t.end();
 });
+test('em-dash, en-dash', function(t) {
+  // '-':  //dash
+  // '–':  //en-dash
+  // '—':  //em-dash
+  var doc = nlp('fun-time');
+  t.equal(doc.terms().length, 2, 'dash');
+  doc = nlp('fun–time');
+  t.equal(doc.terms().length, 2, 'en-dash');
+  doc = nlp('fun—time');
+  t.equal(doc.terms().length, 2, 'em-dash');
+
+  //not a full word, either
+  doc = nlp('fun - time');
+  t.equal(doc.terms().length, 2, 'dash');
+  doc = nlp('fun – time');
+  t.equal(doc.terms().length, 2, 'en-dash');
+  doc = nlp('fun — time');
+  t.equal(doc.terms().length, 2, 'em-dash');
+  t.end();
+});

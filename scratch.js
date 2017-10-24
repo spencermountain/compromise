@@ -2,15 +2,17 @@ var nlp = require('./src/index');
 // nlp.verbose('tagger');
 
 //1) - busted
-var doc = nlp('around 7.5-8');
-doc.contractions().expand();
-doc.values().toText();
-console.log(doc.out());
+// var doc = nlp('around 7.5-8');
+// doc.contractions().expand();
+// doc.values().toText();
+// console.log(doc.out());
 
 //2) en-dash
-// var doc = nlp('The 2010–2011 season was our best yet.');
+// var doc = nlp('2010–2011');
+var doc = nlp('fun–time');
+doc.debug();
 // doc.values().toText();
-// doc.out();
+// console.log(doc.out());
 
 // 3) lookin'
 // var doc=nlp("I’m lookin’ for amanda")

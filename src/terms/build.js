@@ -1,13 +1,14 @@
 'use strict';
 const Term = require('../term');
-const hasHyphen = /^([a-z]+)(-)([a-z0-9].*)/i;
+const hasHyphen = /^([a-z]+)(-|–|—)([a-z0-9].*)/i;
 const wordlike = /\S/;
 const isBoundary = /^[!?.]+$/;
 
 const notWord = {
   '.': true,
-  '-': true,
-  '–': true,
+  '-': true, //dash
+  '–': true, //en-dash
+  '—': true, //em-dash
   '--': true,
   '...': true
 };
@@ -26,7 +27,7 @@ const fromString = function(str, world) {
     const word = firstSplit[i];
     if (hasHyphen.test(word) === true) {
       //support multiple-hyphenated-terms
-      const hyphens = word.split('-');
+      const hyphens = word.split(/[-–—]/);
       for (let o = 0; o < hyphens.length; o++) {
         if (o === hyphens.length - 1) {
           arr.push(hyphens[o]);

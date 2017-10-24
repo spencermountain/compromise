@@ -202,4 +202,10 @@ test('==contractions==', function(T) {
 
     t.end();
   });
+
+  T.test('not-a-numberRange:', function(t) {
+    var doc = nlp('twenty-two');
+    t.equal(doc.has('#NumberRange'), false, 'twenty-two not numberRange');
+    t.end();
+  });
 });

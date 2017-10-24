@@ -8,8 +8,10 @@ var nlp = require('./src/index');
 // console.log(doc.out());
 
 //2) en-dash
-// var doc = nlp('2010–2011');
-var doc = nlp('fun–time');
+// var doc = nlp('20–20');
+// var doc = nlp('20-20');
+var doc = nlp('twenty-two');
+// var doc = nlp('fun–time');
 doc.debug();
 // doc.values().toText();
 // console.log(doc.out());

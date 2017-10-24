@@ -4,6 +4,9 @@ const toBe = require('./toBe');
 
 //conjugation using auxillaries+adverbs and stuff
 const multiWordConjugate = (vb, verbose) => {
+  // if (vb.verb.tags.Contraction) {
+  //   console.log(vb.verb.silent_term);
+  // }
   let isNegative = vb.negative.found;
   let isPlural = false;
   //handle 'to be' verb seperately

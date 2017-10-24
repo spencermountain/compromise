@@ -85,6 +85,7 @@ const methods = {
   }
 };
 
+
 const find = function(r, n) {
   r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+');
   r = r.splitAfter('#Comma');
@@ -95,11 +96,6 @@ const find = function(r, n) {
   r.list = r.list.map(ts => {
     return new Verb(ts.terms, ts.world, ts.refText, ts.refTerms);
   });
-  //fiter-out any that didn't find a main verb
-  // r.list = r.list.filter((ts) => {
-  //   return ts.vb;
-  // });
-
   return new Text(r.list, this.world, this.parent);
 };
 

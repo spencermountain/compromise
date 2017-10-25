@@ -18,6 +18,16 @@ const methods = {
   toSingular: function() {
     this.list.forEach(ts => ts.toSingular());
     return this;
+  },
+  articles: function() {
+    return this.list.map(ts => {
+      return {
+        text: this.out('text'),
+        normal: this.out('normal'),
+        article: ts.article()
+      };
+    });
+
   }
 };
 

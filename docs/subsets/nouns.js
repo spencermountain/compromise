@@ -4,7 +4,7 @@ module.exports = {
   data: {
     desc: 'return a handy array of meta-data for the nouns in this text',
     example: 'nlp(\'Lunchlady Doris, have you got any grease?\').nouns().data()\n//[{text:\'Lunchlady Doris\'}, {text:\'grease\'}]',
-    returns: 'array'
+    returns: 'Array'
   },
   isPlural: {
     desc: 'return only the plural nouns',
@@ -25,6 +25,11 @@ module.exports = {
     desc: 'transform plural nouns into their singular forms',
     returns: 'Text',
     example: 'nlp(\'the king\u2019s men\').nouns().toSingular().out()\n//the king\'s man'
+  },
+  articles: {
+    desc: 'whether this noun deserves \'a\' or \'an\'',
+    returns: 'Array',
+    example: 'nlp(\'the hour\').nouns().articles()\n//[{text:"king", article:"a"}]'
   }
 
 };

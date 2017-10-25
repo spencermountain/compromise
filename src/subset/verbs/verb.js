@@ -86,7 +86,7 @@ const methods = {
   /** conjugation **/
   toPastTense: function() {
     if (this.has('#Contraction')) {
-      expand(this.parentTerms);
+      this.list = expand(this.parentTerms).list;
     }
     let obj = this.conjugate();
     let r = this.replaceWith(obj.PastTense, false);

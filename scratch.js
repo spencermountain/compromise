@@ -13,10 +13,20 @@ var nlp = require('./src/index');
 
 // 3) lookin'
 // var doc = nlp('i\'m looking for amanda');
-var doc = nlp(`we've said`);
+// var doc = nlp(`we've said`);
 // doc.debug();
-doc.verbs().toPastTense();
-console.log(doc.out());
+// doc.verbs().toPastTense();
+// console.log(doc.out());
+
+console.log(nlp('Tony Hawk').nouns().articles());
+// var getNumbers = function(str) {
+//   return nlp(str).normalize().values().toCardinal().toNumber().out('array');
+// };
+// console.log(getNumbers('first, second and 4th')); // => [null, 4]
+// console.log(getNumbers('first , second and 4th')); // => [1, 2, 4]
+// console.log(getNumbers('1 2 and 4')); // => [2, 4]
+// console.log(getNumbers('1 and 2 and 4')); // => [1, 2, 4]
+
 
 // 4) support demo words
 //wee

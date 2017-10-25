@@ -4,7 +4,8 @@ const splitContraction = require('./split');
 
 //these are always contractions
 const blacklist = {
-  "that's": true
+  'that\'s': true,
+  'there\'s': true
 };
 const are = {
   we: true,
@@ -71,7 +72,7 @@ const hardOne = ts => {
     if (ts.terms[i].silent_term) {
       continue;
     }
-    if (ts.terms[i].normal === "ain't" || ts.terms[i].normal === 'aint') {
+    if (ts.terms[i].normal === 'ain\'t' || ts.terms[i].normal === 'aint') {
       let arr = isAre(ts, i);
       ts = fixContraction(ts, arr, i);
       i += 1;

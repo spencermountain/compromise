@@ -18,7 +18,11 @@ var nlp = require('./src/index');
 // doc.verbs().toPastTense();
 // console.log(doc.out());
 
-console.log(nlp('Tony Hawk').nouns().articles());
+let doc = nlp(`doesn't there's i'd i'll can't won't wasn't weren't wouldn't haven't`);
+doc.contractions().expand();
+console.log(doc.out());
+// console.log(nlp('mayor of Chicago').nouns().toPlural().out());
+// console.log(nlp('Tony Hawk').nouns().articles());
 // var getNumbers = function(str) {
 //   return nlp(str).normalize().values().toCardinal().toNumber().out('array');
 // };

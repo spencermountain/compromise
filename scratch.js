@@ -20,6 +20,7 @@ var nlp = require('./src/index');
 
 let doc = nlp(`doesn't there's i'd i'll can't won't wasn't weren't wouldn't haven't`);
 doc.contractions().expand();
+doc.contractions().contract();
 console.log(doc.out());
 // console.log(nlp('mayor of Chicago').nouns().toPlural().out());
 // console.log(nlp('Tony Hawk').nouns().articles());

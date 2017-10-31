@@ -27,7 +27,9 @@ test('noun-phrases', function(t) {
     ['it had good air-flow', 'air flow'],
     ['the 5-person chairlift', '5-person chairlift'],
     ['he had the right of way', 'right of way'],
-
+    ['my retail bank sucks', 'retail bank'],
+    ['my activation code isn\'t working', 'activation code'],
+    ['my speech recognition system', 'speech recognition system'],
   ].forEach(function(a) {
     var str = nlp(a[0]).nouns(0).out('normal');
     t.equal(str, a[1], a[0] + ' -> "' + str + '"');

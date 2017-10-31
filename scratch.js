@@ -6,12 +6,11 @@ var nlp = require('./src/index');
 // doc.contractions().contract();
 // console.log(doc.out());
 
-let doc = nlp('had good air-flow').debug().nouns();
-console.log(doc.data());
-console.log(doc.toPlural().out());
+// let doc = nlp('speech recognition').debug().nouns();
+// console.log(doc.data());
 
 // nlp('my activation code is broken').debug();
-// nlp('I have recently changed address').debug();
+nlp('I have recently changed address').debug();
 
 // let text = 'i want to pull out some money';
 // let lexicon = {

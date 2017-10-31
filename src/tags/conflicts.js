@@ -57,5 +57,7 @@ module.exports = [
   //cases
   ['UpperCase', 'TitleCase', 'CamelCase'],
   //phrases
-  ['VerbPhrase', 'Noun', 'Adjective', 'Value']
+  ['VerbPhrase', 'Noun', 'Adjective', 'Value'],
+  //QuestionWord
+  ['QuestionWord', 'VerbPhrase']
 ];

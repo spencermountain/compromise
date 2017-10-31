@@ -203,6 +203,15 @@ const corrections = function(ts) {
       .match('(district|region|province|municipality|territory|burough|state) of #TitleCase')
       .tag('Region', 'district-of-Foo');
   }
+  if (ts.has('#Hyphenated')) {
+    //air-flow
+    ts.match('#Hyphenated #Hyphenated').match('#Noun #Verb').tag('Noun', 'hyphen-verb');
+    let hyphen = ts.match('#Hyphenated+');
+    if (hyphen.has('#Expression')) {
+      //ooh-wee
+      hyphen.tag('Expression', 'ooh-wee');
+    }
+  }
 
   //West Norforlk
   ts.match('(west|north|south|east|western|northern|southern|eastern)+ #Place').tag('Region', 'west-norfolk');
@@ -234,8 +243,6 @@ const corrections = function(ts) {
   ts.match('#Person (jr|sr|md)').tag('Person', 'person-honorific');
   //right of way
   ts.match('(right|rights) of .').tag('Noun', 'right-of');
-  //air-flow
-  ts.match('#Hyphenated #Hyphenated').match('#Noun #Verb').tag('Noun', 'hyphen-verb');
   return ts;
 };
 

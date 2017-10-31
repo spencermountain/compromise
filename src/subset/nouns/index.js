@@ -31,10 +31,14 @@ const methods = {
   }
 };
 
+//nouns that we don't want in these results, for weird reasons
+const stopWords = '(there|these)';
+
 const find = function(r, n) {
   r = r.clauses();
   r = r.match('#Noun+ (of|for|by)? the? #Noun+?');
   r = r.not('#Pronoun');
+  r = r.not(stopWords);
   r = r.not('(#Month|#WeekDay)'); //allow Durations, Holidays
   r = r.not('(my|our|their)'); //weird possessives
   if (typeof n === 'number') {

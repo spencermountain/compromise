@@ -127,7 +127,7 @@ const datePass = function (ts) {
     // ts.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');//not ready
     ts.match('(half|quarter) #Ordinal').tag('Value', 'half-ordinal');
     ts.match('(hundred|thousand|million|billion|trillion) and #Value').tag('Value', 'magnitude-and-value');
-    ts.match('#Value point #Value').tag('Value', 'value-point-value');
+    ts.match('#Value (point|decimal) #Value').tag('Value', 'value-point-value');
     //for four days
     ts.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration');
     ts.match('(#WeekDay|#Month) #Value').ifNo('#Money').tag('Date', 'date-value');

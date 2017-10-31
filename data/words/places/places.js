@@ -43,5 +43,22 @@ module.exports = [
   'indian ocean',
   'arctic ocean',
   'antarctic ocean',
-  'everglades'
+  'everglades',
+
+  //some notable neighbourhoods (just #Place)
+  'midtown',
+  'downtown',
+  'uptown',
+  'the bronx',
+  'brooklyn',
+  'manhattan',
+  'greenwich',
+  'soho',
+  'harlem',
+  'chinatown',
+  'the hamptons',
+  'beverly hills',
+  'bel air',
+  'malibu',
+  'gay village',
 ];

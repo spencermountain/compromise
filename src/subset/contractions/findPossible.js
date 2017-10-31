@@ -5,7 +5,7 @@ const find = (r) => {
   let m = remain.match('(#Noun|#QuestionWord) (#Copula|did|do|have|had|could|would|will)');
   m.concat(remain.match('(they|we|you|i) have'));
   m.concat(remain.match('i am'));
-  m.concat(remain.match('(#Copula|#Modal|do) not'));
+  m.concat(remain.match('(#Copula|#Modal|do|does|have|has|can|will) not'));
   m.list.forEach((ts) => {
     ts.expanded = true;
   });

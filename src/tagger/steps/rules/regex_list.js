@@ -1,18 +1,18 @@
-'use strict'
+'use strict';
 //regex suffix patterns and their most common parts of speech,
 //built using wordnet, by spencer kelly.
 //this mapping shrinks-down the uglified build
-const Adj = 'Adjective'
-const Inf = 'Infinitive'
-const Pres = 'PresentTense'
-const Sing = 'Singular'
-const Past = 'PastTense'
-const Adverb = 'Adverb'
-const Exp = 'Expression'
-const Actor = 'Actor'
-const Verb = 'Verb'
-const Noun = 'Noun'
-const Last = 'LastName'
+const Adj = 'Adjective';
+const Inf = 'Infinitive';
+const Pres = 'PresentTense';
+const Sing = 'Singular';
+const Past = 'PastTense';
+const Adverb = 'Adverb';
+const Exp = 'Expression';
+const Actor = 'Actor';
+const Verb = 'Verb';
+const Noun = 'Noun';
+const Last = 'LastName';
 //the order here matters.
 
 //regexes indexed by mandated last-character
@@ -28,6 +28,7 @@ module.exports = {
     [/.[ia]sed$/, Adj],
     [/.[gt]led$/, Adj],
     [/.[aeiou][td]ed$/, Past],
+    [/.[^aeiou]led$/, Past], //rumbled
     [/[^aeiou]ard$/, Sing],
     [/[aeiou][^aeiou]id$/, Adj],
     [/[aeiou]c?ked$/, Past], //hooked
@@ -102,4 +103,4 @@ module.exports = {
     [/[ea]{2}zy$/, Adj],
     [/.[^aeiou]ity$/, Sing]
   ]
-}
+};

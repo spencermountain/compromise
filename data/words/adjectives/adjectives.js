@@ -506,6 +506,7 @@ module.exports = [
   'violet',
   'volatile',
   'warped',
+  'wee',
   'weekly',
   'welcome',
   'well off',

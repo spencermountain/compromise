@@ -6,6 +6,9 @@ module.exports = {
   Cardinal: {
     isA: 'Value'
   },
+  Multiple: {
+    isA: 'Value'
+  },
   RomanNumeral: {
     isA: 'Cardinal'
   },

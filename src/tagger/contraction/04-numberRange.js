@@ -2,6 +2,11 @@
 const fixContraction = require('./fix');
 const Term = require('../../term');
 
+const hasDash = function(t) {
+  let dashes = /(-|–|—)/;
+  return dashes.test(t.whitespace.before) || dashes.test(t.whitespace.after);
+};
+
 const numberRange = ts => {
   for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
@@ -9,8 +14,11 @@ const numberRange = ts => {
     if (t.silent_term) {
       continue;
     }
+    if (t.tags.TextValue) {
+      continue;
+    }
     //hyphens found in whitespace - '5 - 7'
-    if (t.tags.Value && i > 0 && t.whitespace.before === ' - ' && ts.terms[i - 1].tags.Value) {
+    if (t.tags.Value && i > 0 && (hasDash(t) || hasDash(ts.terms[i - 1])) && ts.terms[i - 1].tags.Value) {
       let to = new Term('', ts.world);
       to.silent_term = 'to';
       ts.insertAt(i, to);

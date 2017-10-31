@@ -10,7 +10,7 @@ test('toPlural():', function(t) {
     ['mayor of chicago', 'mayors of chicago'],
     ['chicago mayor', 'chicago mayors']
   ].forEach(function(a) {
-    var str = nlp(a[0]).toPlural().out('normal');
+    var str = nlp(a[0]).sentences().toPlural().out('normal');
     str_test(str, a[0], a[1], t);
   });
   t.end();

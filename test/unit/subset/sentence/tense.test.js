@@ -138,13 +138,22 @@ test('contraction-cases', function(t) {
     var str = nlp(a[0]).sentences().toPastTense().out();
     t.equal(str, a[1], 'past-tense ' + a.join(' - '));
   });
-
+  arr = [[`We're looking`, `We looked`], [`We'll look`, `We looked`], [`We are looking`, `We looked`]];
+  arr.forEach(a => {
+    var str = nlp(a[0]).sentences().toPastTense().out();
+    t.equal(str, a[1], 'past-tense ' + a.join(' - '));
+  });
   arr = [[`I'm going to the shops`, `I will go to the shops`], [`I'll go to the shops`, `I will go to the shops`]];
   arr.forEach(a => {
     var str = nlp(a[0]).sentences().toFutureTense().out();
     t.equal(str, a[1], 'future-tense ' + a.join(' - '));
   });
   arr = [[`I'm going to the shops`, `I go to the shops`], [`I'll go to the shops`, `I go to the shops`]];
+  arr.forEach(a => {
+    var str = nlp(a[0]).sentences().toPresentTense().out();
+    t.equal(str, a[1], 'present-tense ' + a.join(' - '));
+  });
+  arr = [[`I'm looking for a bug`, `I look for a bug`], [`I'll look for a bug`, `I look for a bug`]];
   arr.forEach(a => {
     var str = nlp(a[0]).sentences().toPresentTense().out();
     t.equal(str, a[1], 'present-tense ' + a.join(' - '));

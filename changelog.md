@@ -7,6 +7,15 @@ compromise uses semver, and pushes to npm frequently
 * **Patch** is an obvious, non-controversial bugfix
 
 ### v11
+##### 11.1.0
+- add `#Multiple` Values tag, and changes to how invalid numbers like 'sixty fifteen hundred' are understood
+- better em-dash/en-dash support
+- better conjugate implicit verbs inside contractions - "i'm", "we've"
+- nouns().articles() method
+- neighborhoods as #Place
+- support more complex noun-phrases with JustesonKatz in `.nouns()`
+<!-- * include 'the #TitleCase' matches in .topics() -->
+
 ##### 11.0.0
 - support for persistent lexicon/tagset changes
 - `addTags, addWords, addRegs, addPlurals, addConjugations` methods to extend native data
@@ -25,7 +34,6 @@ compromise uses semver, and pushes to npm frequently
 - set `.words()` as alias for .terms()
 - `people().firstNames()`, `people().lastNames()`
 - split-out comma-separated adverbs
-<!-- * include 'the #TitleCase' matches in .topics() -->
 
 ### v10
 - cleanup & rename some `.value()` methods

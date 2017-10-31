@@ -30,7 +30,8 @@ test('==Adjective==', function(T) {
       ['fun', 'most fun'],
       ['full', 'fullest'],
       // ['quixotic', 'most quixotic'],
-      ['cute', 'cutest']
+      ['cute', 'cutest'],
+      ['large', 'largest']
     ].forEach(function(a) {
       var arr = nlp(a[0]).adjectives().data();
       var obj = arr[0] || {};

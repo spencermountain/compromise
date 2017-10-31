@@ -34,7 +34,14 @@ const a_regexs = [
 
 const makeArticle = function(t) {
   let str = t.normal;
-
+  //no 'the john smith', but 'a london hotel'
+  if (t.tags.Person) {
+    return '';
+  }
+  //no a/an if it's plural
+  if (t.tags.Plural) {
+    return 'the';
+  }
   //explicit irregular forms
   if (irregulars.hasOwnProperty(str)) {
     return irregulars[str];

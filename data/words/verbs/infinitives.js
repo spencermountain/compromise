@@ -475,6 +475,7 @@ module.exports = [
   'settle',
   'share',
   'shave',
+  'shiver',
   'shock',
   'shout',
   'side',

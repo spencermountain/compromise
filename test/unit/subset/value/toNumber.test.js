@@ -81,29 +81,29 @@ test('to_number:', function(t) {
     ['negative hundred', -100],
     // ['12:32', ''],
     // ['123-1231', ''],
-    ['seven eleven', ''],
-    ['ten-four', ''],
-    ['one seven', ''],
-    ['one ten', ''],
-    ['one twelve', ''],
-    ['one thirty', ''],
-    ['nine fifty', ''],
-    ['five six', ''],
-    ['nine seventy', ''],
-    ['nine two hundred', ''],
-    ['ten one', ''],
-    ['twelve one', ''],
-    ['seventy five two', ''],
-    ['two hundred three hundred', ''],
-    ['sixty fifteen hundred', ''],
-    ['one twenty', ''],
-    ['twenty five twenty', '']
-    // ['',''],
-    // [null,''],
+    ['seven eleven', '7 11'],
+    ['ten-four', '10 4'],
+    ['one seven', '1 7'],
+    ['one ten', '1 10'],
+    ['one twelve', '1 12'],
+    ['one thirty', '1 30'],
+    ['nine fifty', '9 50'],
+    ['five six', '5 6'],
+    ['nine seventy', '9 70'],
+    ['nine two hundred', '9 200'],
+    ['ten one', '10 1'],
+    ['twelve one', '12 1'],
+    ['seventy five two', '75 2'],
+    // ['two hundred three hundred', '200 300'], //tricky
+    ['sixty fifteen hundred', '60 1500'],
+    ['one twenty', '1 20'],
+    ['twenty five twenty', '25 20']
+  // ['',''],
+  // [null,''],
   ].forEach(function(a) {
     var num = nlp(a[0]).values().toNumber().out('text');
     var want = '' + a[1] || a[0];
-    var msg = "'" + a[0] + "' - - have: '" + num + "'   want:'" + a[1] + "'";
+    var msg = '\'' + a[0] + '\' - - have: \'' + num + '\'   want:\'' + a[1] + '\'';
     t.equal(num, '' + want, msg);
   });
   t.end();

@@ -55,5 +55,7 @@ module.exports = {
   'whose': 'QuestionWord',
   'what': 'QuestionWord',
   'which': 'QuestionWord',
-  'how\'s': 'QuestionWord'
+  'how\'s': 'QuestionWord',
+  'how come': 'QuestionWord',
+
 };

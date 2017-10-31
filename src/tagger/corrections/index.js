@@ -52,7 +52,9 @@ const corrections = function(ts) {
     //the threat of force
     ts.match('#Determiner #Noun of #Verb').term(3).tag('Noun', 'noun-of-noun');
     //a close
-    ts.match('#Determiner #Adverb? close').lastTerm().tag('Adjective', 'a-close');
+    ts.match('#Determiner #Adverb? [close]').tag('Adjective', 'a-close');
+    //did a 900, paid a 20
+    ts.match('#Verb (a|an) [#Value]').tag('Singular', 'a-value');
   }
 
   //like
@@ -100,6 +102,9 @@ const corrections = function(ts) {
     ts.match('#Possessive #FirstName').term(1).unTag('Person', 'possessive-name');
     //this rocks
     ts.match('(this|that) #Plural').term(1).tag('PresentTense', 'this-verbs');
+    //the western line
+    ts.match('#Determiner [(western|eastern|northern|southern|central)] #Noun').tag('Noun', 'western-line');
+    ts.match('(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun').tag('Noun', 'technical-noun');
     //organization
     if (ts.has('#Organization')) {
       ts.match('#Organization of the? #TitleCase').tag('Organization', 'org-of-place');
@@ -145,7 +150,7 @@ const corrections = function(ts) {
 
     ts.match('#Infinitive #Copula').term(0).tag('Noun', 'infinitive-copula');
     //went to sleep
-    ts.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
+    // ts.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
     //support a splattering of auxillaries before a verb
     let advb = '(#Adverb|not)+?';
     if (ts.has(advb)) {
@@ -198,6 +203,15 @@ const corrections = function(ts) {
       .match('(district|region|province|municipality|territory|burough|state) of #TitleCase')
       .tag('Region', 'district-of-Foo');
   }
+  if (ts.has('#Hyphenated')) {
+    //air-flow
+    ts.match('#Hyphenated #Hyphenated').match('#Noun #Verb').tag('Noun', 'hyphen-verb');
+    let hyphen = ts.match('#Hyphenated+');
+    if (hyphen.has('#Expression')) {
+      //ooh-wee
+      hyphen.tag('Expression', 'ooh-wee');
+    }
+  }
 
   //West Norforlk
   ts.match('(west|north|south|east|western|northern|southern|eastern)+ #Place').tag('Region', 'west-norfolk');
@@ -224,9 +238,11 @@ const corrections = function(ts) {
   ts.match('#Demonym #Currency').tag('Currency', 'demonym-currency');
   //about to go
   ts.match('about to #Adverb? #Verb').match('about to').tag(['Auxiliary', 'Verb'], 'about-to');
-  //'xyz were..'
-  // ts.match('#Singular #Adverb? were').firstTerm().tag('Plural', 'copula-number-hint');
-
+  //Doctor john smith jr
+  ts.match('#Honorific #Person').tag('Person', 'honorific-person');
+  ts.match('#Person (jr|sr|md)').tag('Person', 'person-honorific');
+  //right of way
+  ts.match('(right|rights) of .').tag('Noun', 'right-of');
   return ts;
 };
 

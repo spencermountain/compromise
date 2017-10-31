@@ -110,28 +110,58 @@ const methods = {
 };
 
 const find = function(r, n) {
-
+  const tens = 'twenty|thirty|fourty|fifty|sixty|seventy|eighty|ninety';
+  const teens = 'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen';
   r = r.match('#Value+ #Unit?');
   // r = r.match('#Value+ #Unit?');
 
-  //june 21st 1992 is two seperate values
-  if (r.has('#NumericValue #NumericValue')) {
-    r.splitOn('#Year');
+  //three-length
+  if (r.has('#Value #Value #Value') && !r.has('#Multiple')) {
+    //twenty-five-twenty
+    if (r.has('(' + tens + ') #Cardinal #Cardinal')) {
+      r.splitAfter('(' + tens + ') #Cardinal');
+    }
   }
-  //seventh fifth
-  // if (r.match('#Ordinal #Ordinal').match('#TextValue').found) {
-  //   r.splitAfter('#Ordinal');
-  // }
-  //fifth five
-  if (r.has('#Ordinal #Cardinal')) {
-    r.splitBefore('#Cardinal+');
-  }
-  //five 2017 (support '5 hundred', and 'twenty 5'
-  if (
-    r.has('#TextValue #NumericValue') &&
-    !r.has('(twenty|thirty|fourty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million|billion|trillion)')
-  ) {
-    r.splitBefore('#NumericValue+');
+
+  //two-length ones
+  if (r.has('#Value #Value')) {
+    //june 21st 1992 is two seperate values
+    if (r.has('#NumericValue #NumericValue')) {
+      r.splitOn('#Year');
+    }
+    //sixty fifteen
+    if (r.has('(' + tens + ') (' + teens + ')')) {
+      r.splitAfter('(' + tens + ')');
+    }
+    //"72 82"
+    let double = r.match('#Cardinal #Cardinal');
+    if (double.found && !r.has('(point|decimal)')) {
+      //not 'two hundred'
+      if (!double.has('#Cardinal (#Multiple|point|decimal)')) {
+        //one proper way, 'twenty one', or 'hundred one'
+        if (!double.has('(' + tens + ') #Cardinal') && !double.has('#Multiple #Value')) {
+          r.splitAfter(double.terms(0).out('normal'));
+        }
+      }
+    }
+    //seventh fifth
+    if (r.match('#Ordinal #Ordinal').match('#TextValue').found && !r.has('#Multiple')) {
+      //the one proper way, 'twenty first'
+      if (!r.has('(' + tens + ') #Ordinal')) {
+        r.splitAfter('#Ordinal');
+      }
+    }
+    //fifth five
+    if (r.has('#Ordinal #Cardinal')) {
+      r.splitBefore('#Cardinal+');
+    }
+    //five 2017 (support '5 hundred', and 'twenty 5'
+    if (
+      r.has('#TextValue #NumericValue') &&
+      !r.has('(' + tens + '|#Multiple)')
+    ) {
+      r.splitBefore('#NumericValue+');
+    }
   }
   //5-8
   if (r.has('#NumberRange')) {
@@ -141,8 +171,9 @@ const find = function(r, n) {
   if (typeof n === 'number') {
     r = r.get(n);
   }
+  let world = r.world();
   r.list = r.list.map(ts => {
-    return new Value(ts.terms, ts.world, ts.refText, ts.refTerms);
+    return new Value(ts.terms, world, ts.refText, ts.refTerms);
   });
   return r;
 };

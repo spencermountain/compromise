@@ -5,6 +5,7 @@ const toAdjective = require('./methods/toAdjective');
 const interpret = require('./interpret');
 const toNegative = require('./toNegative');
 const isPlural = require('./methods/isPlural');
+const expand = require('./methods/verbContraction');
 
 const parse = function(r) {
   let original = r;
@@ -84,24 +85,36 @@ const methods = {
 
   /** conjugation **/
   toPastTense: function() {
+    if (this.has('#Contraction')) {
+      this.list = expand(this.parentTerms).list;
+    }
     let obj = this.conjugate();
     let r = this.replaceWith(obj.PastTense, false);
     r.verb.tag('#PastTense');
     return r;
   },
   toPresentTense: function() {
+    if (this.has('#Contraction')) {
+      expand(this.parentTerms);
+    }
     let obj = this.conjugate();
     let r = this.replaceWith(obj.PresentTense, false);
     r.verb.tag('#PresentTense');
     return r;
   },
   toFutureTense: function() {
+    if (this.has('#Contraction')) {
+      expand(this.parentTerms);
+    }
     let obj = this.conjugate();
     let r = this.replaceWith(obj.FutureTense, false);
     r.verb.tag('#FutureTense');
     return r;
   },
   toInfinitive: function() {
+    if (this.has('#Contraction')) {
+      expand(this.parentTerms);
+    }
     let obj = this.conjugate();
     let r = this.replaceWith(obj.Infinitive, false);
     r.verb.tag('#Infinitive');

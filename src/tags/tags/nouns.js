@@ -22,7 +22,7 @@ module.exports = {
     isA: 'Person'
   },
   Honorific: {
-    isA: 'Person'
+    isA: 'Noun'
   },
   Place: {
     isA: 'Singular'

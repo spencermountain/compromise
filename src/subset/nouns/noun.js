@@ -44,11 +44,19 @@ const methods = {
     if (hasPlural(t) && !isPlural(t, this.world)) {
       plural = pluralize(t.normal, this.world) || t.text;
     }
+    //support 'mayors of chicago'
+    let qualifier = '';
+    if (this.qualifier) {
+      qualifier = this.qualifier.out('normal');
+      singular += ' ' + qualifier;
+      plural += ' ' + qualifier;
+    }
     return {
       text: this.out('text'),
       normal: this.out('normal'),
       article: this.article(),
       main: t.normal,
+      qualifier: qualifier,
       singular: singular,
       plural: plural
     };
@@ -57,7 +65,15 @@ const methods = {
 
 const Noun = function(arr, world, refText) {
   Terms.call(this, arr, world, refText);
-  this.main = this.terms[this.terms.length - 1];
+  //support 'mayor of chicago' as one noun-phrase
+  this.main = this.match('[#Noun+] (of|by|for)');
+  if (this.main.found) {
+    this.main = this.main.list[0].terms[0];
+  } else {
+    this.main = this.terms[this.terms.length - 1];
+  }
+  //'of chicago'
+  this.qualifier = this.match(this.main.normal + ' [.+]').list[0];
 };
 Noun.prototype = Object.create(Terms.prototype);
 

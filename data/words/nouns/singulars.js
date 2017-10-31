@@ -58,6 +58,7 @@ module.exports = [
   'nothing',
   'number',
   'meeting',
+  'ocean',
   'others',
   'part',
   'patent',

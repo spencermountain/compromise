@@ -49,7 +49,8 @@ const toSuperlative = {
   worse: 'worst',
   bad: 'worst',
   good: 'best',
-  big: 'biggest'
+  big: 'biggest',
+  large: 'largest'
 };
 
 const combine = function(lexicon, obj, tag) {

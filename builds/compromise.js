@@ -17,7 +17,7 @@ module.exports={
   },
   "scripts": {
     "test": "node ./scripts/test.js",
-    "testb": "TESTENV=prod node ./scripts/test.js",
+    "testb": "\"node_modules/.bin/tape\" \"./test/unit/**/*.test.js\"",
     "buildTest": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
     "browserTest": "node ./scripts/browserTest.js",
@@ -37,7 +37,8 @@ module.exports={
     "docs/"
   ],
   "dependencies": {
-    "efrt-unpack": "2.0.3"
+    "efrt-unpack": "2.0.3",
+    "http-server": "^0.10.0"
   },
   "devDependencies": {
     "amble": "0.0.5",
@@ -48,7 +49,7 @@ module.exports={
     "browserify-glob": "^0.2.0",
     "chalk": "^1.1.3",
     "codacy-coverage": "^2.0.3",
-    "compromise-plugin": "0.0.7",
+    "compromise-plugin": "0.0.8",
     "derequire": "^2.0.3",
     "eslint": "^3.1.1",
     "gaze": "^1.1.1",

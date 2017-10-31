@@ -2,8 +2,6 @@ var nlp = require('./src/index');
 // nlp.verbose('tagger');
 
 
-// nlp('was not').contractions().debug(); //contract().debug();
-
 // coming => com
 // moving => mov
 // joking => jok
@@ -46,3 +44,4 @@ var nlp = require('./src/index');
 // nlp('leaving').verbs().toInfinitive().debug(); //leav
 
 // 5) sentence .topast/.toNegative/toPlural
+nlp('we\'re really fun').sentences().toPastTense().debug();

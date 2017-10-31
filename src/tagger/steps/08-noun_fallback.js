@@ -5,7 +5,8 @@
 const nothing = {
   TitleCase: true,
   UpperCase: true,
-  CamelCase: true
+  CamelCase: true,
+  Hyphenated: true
 };
 //are the tags basically empty
 const gotNothing = function(t) {

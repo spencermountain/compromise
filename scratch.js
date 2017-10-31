@@ -6,7 +6,7 @@ var nlp = require('./src/index');
 // doc.contractions().contract();
 // console.log(doc.out());
 
-let doc = nlp('mayor of Chicago').nouns().debug();
+let doc = nlp('had good air-flow').debug().nouns();
 console.log(doc.data());
 console.log(doc.toPlural().out());
 

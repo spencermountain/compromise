@@ -102,6 +102,9 @@ const corrections = function(ts) {
     ts.match('#Possessive #FirstName').term(1).unTag('Person', 'possessive-name');
     //this rocks
     ts.match('(this|that) #Plural').term(1).tag('PresentTense', 'this-verbs');
+    //the western line
+    ts.match('#Determiner [(western|eastern|northern|southern|central)] #Noun').tag('Noun', 'western-line');
+    ts.match('(#Determiner|#Value) [(linear|binary|mobile|lexical|technical)] #Noun').tag('Noun', 'technical-noun');
     //organization
     if (ts.has('#Organization')) {
       ts.match('#Organization of the? #TitleCase').tag('Organization', 'org-of-place');
@@ -229,6 +232,10 @@ const corrections = function(ts) {
   //Doctor john smith jr
   ts.match('#Honorific #Person').tag('Person', 'honorific-person');
   ts.match('#Person (jr|sr|md)').tag('Person', 'person-honorific');
+  //right of way
+  ts.match('(right|rights) of .').tag('Noun', 'right-of');
+  //air-flow
+  ts.match('#Hyphenated #Hyphenated').match('#Noun #Verb').tag('Noun', 'hyphen-verb');
   return ts;
 };
 

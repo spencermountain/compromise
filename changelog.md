@@ -12,6 +12,7 @@ compromise uses semver, and pushes to npm frequently
 - better em-dash/en-dash support
 - better conjugate implicit verbs inside contractions - "i'm", "we've"
 - nouns().articles() method
+- support `mayor of chicago` form of nounphrase in `.nouns()`
 <!-- * include 'the #TitleCase' matches in .topics() -->
 
 ##### 11.0.0

@@ -45,3 +45,5 @@ var nlp = require('./src/index');
 
 // 5) sentence .topast/.toNegative/toPlural
 nlp('we\'re really fun').sentences().toPastTense().debug();
+// console.log(nlp('we\'re really fun').verbs().data());
+// console.log(nlp('i\'m really fun').verbs().data());

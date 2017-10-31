@@ -8,10 +8,7 @@ const multiWordConjugate = (vb, verbose) => {
   //   console.log(vb.verb.silent_term);
   // }
   let isNegative = vb.negative.found;
-  let isPlural = false;
-  if (vb.has('are')) {
-    isPlural = true;
-  }
+  let isPlural = vb.isPlural();
   //handle 'to be' verb seperately
   if (vb.verb.tags.Copula || (vb.verb.normal === 'be' && vb.auxiliary.match('will').found)) {
     return toBe(isPlural, isNegative);

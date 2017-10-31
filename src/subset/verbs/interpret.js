@@ -1,5 +1,6 @@
 'use strict';
 const predict = require('./methods/predict');
+const isPlural = require('./methods/isPlural');
 
 //'walking' - aka progressive
 const isContinuous = function(ts) {
@@ -92,6 +93,7 @@ const interpret = (ts) => {
     continuous: isContinuous(ts),
     passive: isPassive(ts),
     perfect: isPerfect(ts),
+    plural: isPlural(ts),
     modal: getModal(ts),
     tense: getTense(ts),
   };

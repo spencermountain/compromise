@@ -8,7 +8,7 @@ compromise uses semver, and pushes to npm frequently
 
 ### v11
 ##### 11.1.0
-- add `#Multiple` tag, and changes to how invalid numbers like 'sixty fifteen hundred' are understood
+- add `#Multiple` Values tag, and changes to how invalid numbers like 'sixty fifteen hundred' are understood
 - better em-dash/en-dash support
 - better conjugate implicit verbs inside contractions - "i'm", "we've"
 - nouns().articles() method

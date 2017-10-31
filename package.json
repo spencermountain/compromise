@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.0.2",
+  "version": "11.1.0",
   "main": "./builds/compromise.js",
   "repository": {
     "type": "git",
@@ -30,7 +30,8 @@
     "docs/"
   ],
   "dependencies": {
-    "efrt-unpack": "2.0.3"
+    "efrt-unpack": "2.0.3",
+    "http-server": "^0.10.0"
   },
   "devDependencies": {
     "amble": "0.0.5",

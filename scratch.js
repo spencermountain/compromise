@@ -1,6 +1,9 @@
 var nlp = require('./src/index');
 // nlp.verbose('tagger');
 
+let doc = nlp('they\'d said').debug();
+doc.verbs().toPastTense();
+doc.debug();
 
 // coming => com
 // moving => mov
@@ -44,6 +47,8 @@ var nlp = require('./src/index');
 // nlp('leaving').verbs().toInfinitive().debug(); //leav
 
 // 5) sentence .topast/.toNegative/toPlural
-nlp('we\'re really fun').sentences().toPastTense().debug();
+// nlp('are really fun').verbs().toPastTense().debug();
+// nlp('i am really walking on').verbs().toPastTense().debug();
+// nlp('we\'re really fun').sentences().toPastTense().debug();
 // console.log(nlp('we\'re really fun').verbs().data());
 // console.log(nlp('i\'m really fun').verbs().data());

@@ -86,12 +86,12 @@ const methods = {
     let verb = this.mainVerb();
     if (verb) {
       //this is really ugly..
-      let start = verb.out('normal');
+      let start = verb.out('root');
       verb.toPastTense();
       //support "i'm going"
       let contr = this.match('#Contraction ' + start);
       fixContraction(contr);
-      let end = verb.out('normal');
+      let end = verb.out('root');
       // this.replace(start, end)
       let r = this.parentTerms.replace(start, end);
       return r;

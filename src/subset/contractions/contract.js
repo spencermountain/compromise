@@ -12,6 +12,11 @@ const combine = (a, b) => {
   b.tag('Contraction', 'new-contraction');
 };
 
+const irregulars = {
+  can: 'can\'t',
+  will: 'won\'t'
+};
+
 const contract = function(ts) {
   if (ts.expanded === false || ts.match('#Contraction').found) {
     return ts;
@@ -34,7 +39,6 @@ const contract = function(ts) {
     ls.terms[0].text += '\'d';
     ls.contracted = true;
   });
-
   //he would -> he'd
   ts.match('#Noun (could|would)').list.forEach((ls) => {
     combine(ls.terms[0], ls.terms[1]);
@@ -66,9 +70,14 @@ const contract = function(ts) {
     ls.contracted = true;
   });
   //is not -> isn't
-  ts.match('(#Copula|#Modal|do) not').list.forEach((ls) => {
+  ts.match('(#Copula|#Modal|do|does|have|has|can|will) not').list.forEach((ls) => {
     combine(ls.terms[0], ls.terms[1]);
-    ls.terms[0].text += 'n\'t';
+    //can't, won't
+    if (irregulars.hasOwnProperty(ls.terms[0].text) === true) {
+      ls.terms[0].text = irregulars[ls.terms[0].text];
+    } else {
+      ls.terms[0].text += 'n\'t';
+    }
     ls.contracted = true;
   });
   return ts;

@@ -10,6 +10,11 @@ test('topk:', function(t) {
 
   t.equal(arr[1].normal, 'was', 'one was count');
   t.equal(arr[1].count, 1, 'one was count');
+
+  arr = nlp('we\'re cool. they are fun').terms().out('freq');
+  t.equal(arr[0].normal, 'are', 'contraction- are');
+  t.equal(arr[0].count, 2, 'are combined');
+
   t.end();
 });
 

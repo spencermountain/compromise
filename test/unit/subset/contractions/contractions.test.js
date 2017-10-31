@@ -147,6 +147,17 @@ test('==contractions==', function(T) {
     t.end();
   });
 
+  T.test('reverse-is-consistent:', function(t) {
+    const str = `doesn't there's i'd i'll can't won't wasn't weren't wouldn't haven't`;
+    let doc = nlp(str);
+    doc.contractions().expand();
+    doc.contractions().contract();
+    doc.contractions().expand();
+    doc.contractions().contract();
+    t.equal(doc.out(), str, 'idempodent expand/contract');
+    t.end();
+  });
+
   T.test('contraction-supports-whitespace:', function(t) {
     [
       ['We\'ve only just begun', 'We have only just begun'],

@@ -26,6 +26,7 @@ module.exports = [
   'conduct',
   'confusion',
   'cotton',
+  'cold war',
   'currency',
   'economics',
   'education',
@@ -81,6 +82,7 @@ module.exports = [
   'luggage',
   'machinery',
   'mail',
+  'machine learning',
   'mathematics',
   'measles',
   'meat',
@@ -156,5 +158,5 @@ module.exports = [
   'wool',
   'world series',
   'world'
-  // 'fun',
+// 'fun',
 ];

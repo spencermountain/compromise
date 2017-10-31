@@ -30,6 +30,9 @@ test('noun-phrases', function(t) {
     ['my retail bank sucks', 'retail bank'],
     ['my activation code isn\'t working', 'activation code'],
     ['my speech recognition system', 'speech recognition system'],
+    ['a typical machine learning documentary film', 'machine learning documentary film'],
+    ['every cold war re-enactment is boring', 'cold war re enactment'],
+    ['two slices of cranberry', 'slices of cranberry'],
   ].forEach(function(a) {
     var str = nlp(a[0]).nouns(0).out('normal');
     t.equal(str, a[1], a[0] + ' -> "' + str + '"');

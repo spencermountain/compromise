@@ -1,16 +1,10 @@
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 
 // let doc = nlp(`doesn't there's i'd i'll can't won't wasn't weren't wouldn't haven't`);
 // doc.contractions().expand();
 // doc.contractions().contract();
 // console.log(doc.out());
-
-// let doc = nlp('speech recognition').debug().nouns();
-// console.log(doc.data());
-
-// nlp('my activation code is broken').debug();
-nlp('I have recently changed address').debug();
 
 // let text = 'i want to pull out some money';
 // let lexicon = {
@@ -35,6 +29,6 @@ nlp('I have recently changed address').debug();
 // major general
 // bel-air
 //there's
-// nlp("Mr. Putin's").people()
+nlp('Mr. putin\'s').debug();
 
 // 5) sentence .topast/.toNegative/toPlural

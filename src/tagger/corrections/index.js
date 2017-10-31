@@ -104,7 +104,7 @@ const corrections = function(ts) {
     ts.match('(this|that) #Plural').term(1).tag('PresentTense', 'this-verbs');
     //the western line
     ts.match('#Determiner [(western|eastern|northern|southern|central)] #Noun').tag('Noun', 'western-line');
-    ts.match('(#Determiner|#Value) [(linear|binary|mobile|lexical|technical)] #Noun').tag('Noun', 'technical-noun');
+    ts.match('(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun').tag('Noun', 'technical-noun');
     //organization
     if (ts.has('#Organization')) {
       ts.match('#Organization of the? #TitleCase').tag('Organization', 'org-of-place');

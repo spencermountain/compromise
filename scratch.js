@@ -1,12 +1,14 @@
 var nlp = require('./src/index');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 
 // let doc = nlp(`doesn't there's i'd i'll can't won't wasn't weren't wouldn't haven't`);
 // doc.contractions().expand();
 // doc.contractions().contract();
 // console.log(doc.out());
 
-console.log(nlp('mayor of Chicago').debug().nouns().toPlural().out());
+let doc = nlp('mayor of Chicago').nouns().debug();
+console.log(doc.data());
+console.log(doc.toPlural().out());
 
 // nlp('my activation code is broken').debug();
 // nlp('I have recently changed address').debug();

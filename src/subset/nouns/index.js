@@ -33,7 +33,7 @@ const methods = {
 
 const find = function(r, n) {
   r = r.clauses();
-  r = r.match('#Noun+');
+  r = r.match('#Noun+ (of|for|by)? #Noun+?');
   r = r.not('#Pronoun');
   r = r.not('(#Month|#WeekDay)'); //allow Durations, Holidays
   if (typeof n === 'number') {

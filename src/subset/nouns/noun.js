@@ -57,7 +57,12 @@ const methods = {
 
 const Noun = function(arr, world, refText) {
   Terms.call(this, arr, world, refText);
-  this.main = this.terms[this.terms.length - 1];
+  this.main = this.match('[#Noun+] (of|by|for)');
+  if (this.main.found) {
+    this.main = this.main.list[0].terms[0];
+  } else {
+    this.main = this.terms[this.terms.length - 1];
+  }
 };
 Noun.prototype = Object.create(Terms.prototype);
 

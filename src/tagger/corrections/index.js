@@ -226,8 +226,6 @@ const corrections = function(ts) {
   ts.match('#Demonym #Currency').tag('Currency', 'demonym-currency');
   //about to go
   ts.match('about to #Adverb? #Verb').match('about to').tag(['Auxiliary', 'Verb'], 'about-to');
-  //mayor of chicago
-  // ts.match('#Honorific of #Noun+').tag('Noun', 'honorific-of');
   //Doctor john smith jr
   ts.match('#Honorific #Person').tag('Person', 'honorific-person');
   ts.match('#Person (jr|sr|md)').tag('Person', 'person-honorific');

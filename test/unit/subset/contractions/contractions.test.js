@@ -148,8 +148,8 @@ test('==contractions==', function(T) {
   });
 
   T.test('reverse-is-consistent:', function(t) {
-    const str = `doesn't there's i'd i'll can't won't wasn't weren't wouldn't haven't`;
-    let doc = nlp(str);
+    var str = `doesn't there's i'd i'll can't won't wasn't weren't wouldn't haven't`;
+    var doc = nlp(str);
     doc.contractions().expand();
     doc.contractions().contract();
     doc.contractions().expand();

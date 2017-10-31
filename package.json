@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test": "node ./scripts/test.js",
-    "testb": "TESTENV=prod node ./scripts/test.js",
+    "testb": "\"node_modules/.bin/tape\" \"./test/unit/**/*.test.js\"",
     "buildTest": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
     "browserTest": "node ./scripts/browserTest.js",

@@ -52,3 +52,4 @@ doc.debug();
 // nlp('we\'re really fun').sentences().toPastTense().debug();
 // console.log(nlp('we\'re really fun').verbs().data());
 // console.log(nlp('i\'m really fun').verbs().data());
+nlp('we\'re really fun').sentences().toPlural().debug();

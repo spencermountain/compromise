@@ -22,8 +22,8 @@ const methods = {
   articles: function() {
     return this.list.map(ts => {
       return {
-        text: this.out('text'),
-        normal: this.out('normal'),
+        text: ts.out('text'),
+        normal: ts.out('normal'),
         article: ts.article()
       };
     });

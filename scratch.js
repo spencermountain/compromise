@@ -1,37 +1,30 @@
 var nlp = require('./src/index');
 // nlp.verbose('tagger');
 
-//1) - busted
-// var doc = nlp('around 7.5-8');
+// let doc = nlp(`doesn't there's i'd i'll can't won't wasn't weren't wouldn't haven't`);
 // doc.contractions().expand();
-// doc.values().toText();
+// doc.contractions().contract();
 // console.log(doc.out());
 
-//2) en-dash
-// var doc = nlp('20–20');
-// doc.debug();
+console.log(nlp('mayor of Chicago').nouns().toPlural().out());
 
-// 3) lookin'
-// var doc = nlp('i\'m looking for amanda');
-// var doc = nlp(`we've said`);
-// doc.debug();
-// doc.verbs().toPastTense();
-// console.log(doc.out());
+// nlp('my activation code is broken').debug();
+// nlp('I have recently changed address').debug();
 
-let doc = nlp(`doesn't there's i'd i'll can't won't wasn't weren't wouldn't haven't`);
-doc.contractions().expand();
-doc.contractions().contract();
-console.log(doc.out());
-// console.log(nlp('mayor of Chicago').nouns().toPlural().out());
-// console.log(nlp('Tony Hawk').nouns().articles());
-// var getNumbers = function(str) {
-//   return nlp(str).normalize().values().toCardinal().toNumber().out('array');
+// let text = 'i want to pull out some money';
+// let lexicon = {
+//   broken: 'Adjective',
+//   address: 'Noun',
+//   'pull out': 'PhrasalVerb'
 // };
-// console.log(getNumbers('first, second and 4th')); // => [null, 4]
-// console.log(getNumbers('first , second and 4th')); // => [1, 2, 4]
-// console.log(getNumbers('1 2 and 4')); // => [2, 4]
-// console.log(getNumbers('1 and 2 and 4')); // => [1, 2, 4]
+// nlp.addWords(lexicon);
+// let doc = nlp(text);
+// doc.debug();
 
+// nlp('pulled out').verbs().toInfinitive().out()//pulle
+// doc.match('#PhrasalVerb+').out()
+
+// nlp('leaving').verbs().toInfinitive().out()//leav
 
 // 4) support demo words
 //wee

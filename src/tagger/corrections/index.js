@@ -52,7 +52,9 @@ const corrections = function(ts) {
     //the threat of force
     ts.match('#Determiner #Noun of #Verb').term(3).tag('Noun', 'noun-of-noun');
     //a close
-    ts.match('#Determiner #Adverb? close').lastTerm().tag('Adjective', 'a-close');
+    ts.match('#Determiner #Adverb? [close]').tag('Adjective', 'a-close');
+    //did a 900, paid a 20
+    ts.match('#Verb (a|an) [#Value]').tag('Singular', 'a-value');
   }
 
   //like
@@ -145,7 +147,7 @@ const corrections = function(ts) {
 
     ts.match('#Infinitive #Copula').term(0).tag('Noun', 'infinitive-copula');
     //went to sleep
-    ts.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
+    // ts.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
     //support a splattering of auxillaries before a verb
     let advb = '(#Adverb|not)+?';
     if (ts.has(advb)) {

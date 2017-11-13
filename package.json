@@ -30,7 +30,8 @@
     "docs/"
   ],
   "dependencies": {
-    "efrt-unpack": "2.0.3"
+    "efrt-unpack": "2.0.3",
+    "http-server": "^0.10.0"
   },
   "devDependencies": {
     "amble": "0.0.5",

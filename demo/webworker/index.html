@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>compromise Demo</title>
     <script type="text/javascript" src="./freshPrince.js"></script>
+    <script src="builds/compromise.js"></script>
     <style>
       h3 {
         color: grey;
@@ -33,6 +34,13 @@
       <p></p>
       <div id="result" class="result"></div>
     </div>
+    <button onclick="worker.postMessage({type: 'sentences', payload: window.freshPrince})">test</button>
+    <button onclick="worker.postMessage({type: 'sentences', payload: 'what is the temperature and humidity in new york cty?  Will it rain next week?'})">test 2</button>
+    <button onclick="worker.postMessage({type: 'places', payload: 'what is the temperature and humidity in new york cty?  Will it rainy next week in san francisco and san jose and san antonio?'})">test 3</button>
+    <button onclick="worker.postMessage({type: 'places', payload: 'take me to weekend forecast?  looking for tomorrow forecast?, need current condition' })">navigation</button>
+    <button onclick="worker.postMessage({type: 'places', payload: 'take me to weekend weather condition?' })">navigation</button>
+    <button onclick="worker.postMessage({type: 'places', payload: 'take me to radar map?' })">map</button>
+
   </body>
   <script type="text/javascript" language="javascript">
       var nlp = window.nlp;
@@ -46,6 +54,6 @@
         document.getElementById('result').innerHTML = r.data;
       }, false);
       //send it our text
-      worker.postMessage(window.freshPrince);
   </script>
+
 </html>

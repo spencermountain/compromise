@@ -68,6 +68,11 @@ nlp.addConjugations = function(conj) {
     conjugations: conj
   });
 };
+nlp.addResponses = function(responses) {
+  w.plugin({
+    responses: responses
+  });
+};
 
 //make a weird, half-copy of this method
 nlp.clone = function() {

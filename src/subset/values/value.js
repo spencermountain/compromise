@@ -93,7 +93,7 @@ const methods = {
   // /** five -> '5' */
   toNumber: function() {
     let num = parse(this.val);
-    if (num !== null) {
+    if (num || num === 0) {
       let str = '';
       if (this.val.has('#Ordinal')) {
         str = fmt.ordinal(num);
@@ -119,7 +119,7 @@ const methods = {
   // /**5 -> 'five' */
   toText: function() {
     let num = parse(this.val);
-    if (num !== null) {
+    if (num || num === 0) {
       let str = '';
       if (this.val.has('#Ordinal')) {
         str = fmt.textOrdinal(num);
@@ -145,7 +145,7 @@ const methods = {
   // /**5th -> 5 */
   toCardinal: function() {
     let num = parse(this.val);
-    if (num !== null) {
+    if (num || num === 0) {
       let str = '';
       if (this.val.has('#TextValue')) {
         str = fmt.text(num);
@@ -167,7 +167,7 @@ const methods = {
   // /**5 -> 5th */
   toOrdinal: function() {
     let num = parse(this.val);
-    if (num !== null) {
+    if (num || num === 0) {
       let str = '';
       if (this.val.has('#TextValue')) {
         str = fmt.textOrdinal(num);
@@ -189,7 +189,7 @@ const methods = {
   // /**5900 -> 5,900 */
   toNice: function() {
     let num = parse(this.val);
-    if (num !== null) {
+    if (num || num === 0) {
       let str = '';
       if (this.val.has('#Ordinal')) {
         str = fmt.niceOrdinal(num);

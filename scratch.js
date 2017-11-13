@@ -1,9 +1,12 @@
 var nlp = require('./src/index');
 // nlp.verbose('tagger');
 
-let doc = nlp('they\'d said').debug();
-doc.verbs().toPastTense();
-doc.debug();
+// let doc = nlp('they\'d said').debug();
+// doc.verbs().toPastTense();
+// doc.debug();
+
+
+// doc=nlp('measuring 7.5–11 micrometers')
 
 // coming => com
 // moving => mov
@@ -52,4 +55,13 @@ doc.debug();
 // nlp('we\'re really fun').sentences().toPastTense().debug();
 // console.log(nlp('we\'re really fun').verbs().data());
 // console.log(nlp('i\'m really fun').verbs().data());
-nlp('we\'re really fun').sentences().toPlural().debug();
+// nlp('we\'re really fun').sentences().toPlural().debug();
+
+
+//noun-phrases
+// nlp('money for the loan').nouns().debug();
+// nlp('the money').nouns().debug();
+// nlp('now').nouns().debug();
+// nlp('year for the bank').nouns().debug();
+// nlp('close to the riverbank').nouns().debug();
+nlp('by july 5th, 2:12').values().toNumber().debug();

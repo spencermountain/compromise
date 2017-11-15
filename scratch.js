@@ -70,4 +70,4 @@ nlp.verbose('tagger');
 // console.log(doc.list[0].world.cache);
 // doc.debug();
 
-let doc = nlp('yesterday').debug();
+let doc = nlp('this weekend').debug();

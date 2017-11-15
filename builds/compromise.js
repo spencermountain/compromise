@@ -5595,6 +5595,10 @@ var corrections = function corrections(ts) {
     ts.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber');
     //two hundredth
     ts.match('#TextValue+').match('#Cardinal+ #Ordinal').tag('Ordinal', 'two-hundredth');
+    //q2 2009
+    ts.match('(q1|q2|q3|q4) #Cardinal').tag('Date').lastTerm().tag('Year');
+    //2nd quarter 2009
+    ts.match('#Ordinal quarter #Cardinal').tag('Date').lastTerm().tag('Year');
   }
 
   if (ts.has('#Noun')) {
@@ -12189,7 +12193,11 @@ module.exports = {
   '7-eleven': 'Organization',
   'g8': 'Organization',
   'motel 6': 'Organization',
-  'vh1': 'Organization'
+  'vh1': 'Organization',
+  'q1': 'Date',
+  'q2': 'Date',
+  'q3': 'Date',
+  'q4': 'Date'
 };
 
 },{}],213:[function(_dereq_,module,exports){

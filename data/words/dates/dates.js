@@ -1,10 +1,6 @@
 module.exports = [
   'weekend',
   'weekday',
-  'q1',
-  'q2',
-  'q3',
-  'q4',
 
   'summer',
   'winter',
@@ -12,6 +8,7 @@ module.exports = [
 
   'some day',
   'one day',
+  'all day',
   'some point',
 
   'eod',

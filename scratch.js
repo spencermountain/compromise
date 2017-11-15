@@ -70,4 +70,4 @@ nlp.verbose('tagger');
 // console.log(doc.list[0].world.cache);
 // doc.debug();
 
-let doc = nlp('this weekend').debug();
+let doc = nlp('2nd quarter 2009').debug();

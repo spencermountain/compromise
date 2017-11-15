@@ -1,5 +1,5 @@
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 
 // let doc = nlp('they\'d said').debug();
 // doc.verbs().toPastTense();
@@ -64,8 +64,10 @@ var nlp = require('./src/index');
 // nlp('now').nouns().debug();
 // nlp('year for the bank').nouns().debug();
 // nlp('close to the riverbank').nouns().debug();
-let doc = nlp('he is very cool and fun');
-doc.list[0].insertAt(2, 'the');
-doc.tagger();
-console.log(doc.list[0].world.cache);
-doc.debug();
+// let doc = nlp('he is very cool and fun');
+// doc.list[0].insertAt(2, 'the');
+// doc.tagger();
+// console.log(doc.list[0].world.cache);
+// doc.debug();
+
+let doc = nlp('yesterday').debug();

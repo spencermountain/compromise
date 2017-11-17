@@ -9,8 +9,8 @@
     "url": "git://github.com/nlp-compromise/compromise.git"
   },
   "scripts": {
-    "test": "node ./scripts/test.js",
-    "testb": "\"node_modules/.bin/tape\" \"./test/unit/**/*.test.js\"",
+    "test": "tape \"./test/unit/**/*.test.js\" | tap-dot",
+    "testb": "TESTENV=prod tape \"./test/unit/**/*.test.js\" | tap-dot",
     "buildTest": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
     "browserTest": "node ./scripts/browserTest.js",
@@ -47,7 +47,7 @@
     "gaze": "^1.1.1",
     "nyc": "^8.4.0",
     "shelljs": "^0.7.2",
-    "tap-spec": "^4.1.1",
+    "tap-dot": "^1.0.5",
     "tape": "4.6.0",
     "uglify-js": "2.7.0"
   },

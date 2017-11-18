@@ -1,5 +1,5 @@
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 
 // doc=nlp('measuring 7.5–11 micrometers')
 
@@ -15,6 +15,4 @@ var nlp = require('./src/index');
 // nlp('we\'re really fun').sentences().toPlural().debug();
 
 
-let doc = nlp('April, June, and Sept').dates().toShortForm().toLongForm().all();
-console.log(doc.out());
-//Apr, Jun, and Sept
+nlp('I can\'t have').debug();

@@ -9,10 +9,10 @@ const easy_ends = {
   ve: 'have',
   re: 'are',
   m: 'am',
-  "n't": 'not'
-  //these ones are a bit tricksier:
-  // 't': 'not',
-  // 's': 'is' //or was
+  'n\'t': 'not'
+//these ones are a bit tricksier:
+// 't': 'not',
+// 's': 'is' //or was
 };
 
 //unambiguous contractions, like "'ll"

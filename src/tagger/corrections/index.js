@@ -83,10 +83,7 @@ const corrections = function(ts) {
     ts.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber');
     //two hundredth
     ts.match('#TextValue+').match('#Cardinal+ #Ordinal').tag('Ordinal', 'two-hundredth');
-    //q2 2009
-    ts.match('(q1|q2|q3|q4) #Cardinal').tag('Date').lastTerm().tag('Year');
-    //2nd quarter 2009
-    ts.match('#Ordinal quarter #Cardinal').tag('Date').lastTerm().tag('Year');
+
   }
 
   if (ts.has('#Noun')) {

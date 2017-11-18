@@ -23,3 +23,44 @@
   var m = nlp(str).sentences().toPastTense().nouns().toSingular();
   t.equal(m.out('normal'), 'a man went', str);
 ```
+
+
+##conjugations
+
+// coming => com
+// moving => mov
+// joking => jok
+// poking => pok
+// naming => nam
+// aching => ach
+// tuning => tun
+// bling => ble
+// hazing => haz
+// oozing => ooz
+// gazing => gaz
+// easing => eas
+// dozing => doz
+// raring => rar
+// honing => hon
+// fuming => fum
+// razing => raz
+
+// lied => ly
+// shed => sh
+// owed => ow
+// aged => ag
+// aced => ac
+// axed => ax
+// egged => eg
+
+// Refactor
+// Release
+// Revert
+// repeat
+// rebuild
+// reconcile
+// record
+// redefine
+// recover
+// restructure
+// resolve

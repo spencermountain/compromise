@@ -79,6 +79,18 @@ const methods = {
     });
     return this;
   },
+  between: function(min, max) {
+    if (min === undefined || max === undefined) {
+      return this;
+    }
+    min = parse(min);
+    max = parse(max);
+    this.list = this.list.filter(ts => {
+      let n = ts.number();
+      return n > min && n < max;
+    });
+    return this;
+  },
   /**seven + 2 = 'nine' */
   add: function(n) {
     this.list = this.list.map(ts => {

@@ -1,50 +1,7 @@
 var nlp = require('./src/index');
-nlp.verbose('tagger');
-
-// let doc = nlp('they\'d said').debug();
-// doc.verbs().toPastTense();
-// doc.debug();
-
+// nlp.verbose('tagger');
 
 // doc=nlp('measuring 7.5–11 micrometers')
-
-// coming => com
-// moving => mov
-// joking => jok
-// poking => pok
-// naming => nam
-// aching => ach
-// tuning => tun
-// bling => ble
-// hazing => haz
-// oozing => ooz
-// gazing => gaz
-// easing => eas
-// dozing => doz
-// raring => rar
-// honing => hon
-// fuming => fum
-// razing => raz
-
-// lied => ly
-// shed => sh
-// owed => ow
-// aged => ag
-// aced => ac
-// axed => ax
-// egged => eg
-
-// Refactor
-// Release
-// Revert
-// repeat
-// rebuild
-// reconcile
-// record
-// redefine
-// recover
-// restructure
-// resolve
 
 // nlp('pulled').verbs().toInfinitive().debug(); //pulle
 // nlp('leaving').verbs().toInfinitive().debug(); //leav
@@ -58,16 +15,6 @@ nlp.verbose('tagger');
 // nlp('we\'re really fun').sentences().toPlural().debug();
 
 
-//noun-phrases
-// nlp('money for the loan').nouns().debug();
-// nlp('the money').nouns().debug();
-// nlp('now').nouns().debug();
-// nlp('year for the bank').nouns().debug();
-// nlp('close to the riverbank').nouns().debug();
-// let doc = nlp('he is very cool and fun');
-// doc.list[0].insertAt(2, 'the');
-// doc.tagger();
-// console.log(doc.list[0].world.cache);
-// doc.debug();
-
-let doc = nlp('2nd quarter 2009').debug();
+let doc = nlp('April, June, and Sept').dates().toShortForm().all();
+console.log(doc.out());
+//Apr, Jun, and Sept

@@ -8,6 +8,9 @@ const seasons = '(spring|summer|winter|fall|autumn)';
 //ensure a year is approximately typical for common years
 //please change in one thousand years
 const tagYear = (v, reason) => {
+  if (v.found !== true) {
+    return;
+  }
   v.list.forEach((ts) => {
     let num = parseInt(ts.terms[0].normal, 10);
     if (num && num > 1000 && num < 3000) {
@@ -17,9 +20,12 @@ const tagYear = (v, reason) => {
 };
 //same, but for less-confident values
 const tagYearSafer = (v, reason) => {
+  if (v.found !== true) {
+    return;
+  }
   v.list.forEach((ts) => {
     let num = parseInt(ts.terms[0].normal, 10);
-    if (num && num > 1990 && num < 2030) {
+    if (num && num > 1900 && num < 2030) {
       ts.terms[0].tag('Year', reason);
     }
   });
@@ -183,34 +189,35 @@ const datePass = function (ts) {
   //year/cardinal tagging
   if (ts.has('#Cardinal')) {
     let v = ts.match(`#Date #Value #Cardinal`).lastTerm();
-    if (v.found) {
-      tagYear(v, 'date-value-year');
-    }
+    tagYear(v, 'date-value-year');
     //scoops up a bunch
     v = ts.match(`#Date+ #Cardinal`).lastTerm();
-    if (v.found) {
-      tagYear(v, 'date-year');
-    }
+    tagYear(v, 'date-year');
     //feb 8 2018
     v = ts.match(`#Month #Value #Cardinal`).lastTerm();
-    if (v.found) {
-      tagYear(v, 'month-value-year');
-    }
+    tagYear(v, 'month-value-year');
     //feb 8 to 10th 2018
     v = ts.match(`#Month #Value to #Value #Cardinal`).lastTerm();
-    if (v.found) {
-      tagYear(v, 'month-range-year');
-    }
+    tagYear(v, 'month-range-year');
     //in 1998
     v = ts.match(`(in|of|by|during|before|starting|ending|for|year) #Cardinal`).lastTerm();
-    if (v.found) {
-      tagYear(v, 'in-year');
-    }
+    tagYear(v, 'in-year');
+    //q2 2009
+    v = ts.match('(q1|q2|q3|q4) [#Cardinal]');
+    tagYear(v, 'in-year');
+    //2nd quarter 2009
+    v = ts.match('#Ordinal quarter [#Cardinal]');
+    tagYear(v, 'in-year');
+    //in the year 1998
+    v = ts.match('the year [#Cardinal]');
+    tagYear(v, 'in-year');
+
+    //it was 1998
+    v = ts.match('it (is|was) [#Cardinal]');
+    tagYearSafer(v, 'in-year');
     //was 1998 and...
     v = ts.match(`#Cardinal !#Plural`).firstTerm();
-    if (v.found) {
-      tagYearSafer(v, 'year-unsafe');
-    }
+    tagYearSafer(v, 'year-unsafe');
   }
 
   //fix over-greedy

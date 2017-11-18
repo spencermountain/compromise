@@ -56,6 +56,11 @@ module.exports = {
     returns: 'Text',
     example: 'nlp(\'he is 7 years old\').values().greaterThan(\'five\').out(\'array\')\n// [\'7\']'
   },
+  between: {
+    desc: 'return values between a max and min - wrapper of .greaterThan(min).lessThan(max)',
+    returns: 'Text',
+    example: 'nlp(\'seven peaches weigh ten kilograms\').values().between(8, 12).out(\'array\')\n// [\'7\']'
+  },
   isEqual: {
     desc: 'return only the values equal to a given value',
     returns: 'Text',

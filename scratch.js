@@ -15,6 +15,6 @@ var nlp = require('./src/index');
 // nlp('we\'re really fun').sentences().toPlural().debug();
 
 
-let doc = nlp('April, June, and Sept').dates().toShortForm().all();
+let doc = nlp('April, June, and Sept').dates().toShortForm().toLongForm().all();
 console.log(doc.out());
 //Apr, Jun, and Sept

@@ -24,6 +24,7 @@ const findMultiWords = function(ts, i, world) {
 
 //try multiple-word matches in the lexicon (users and default)
 const lexiconMulti = ts => {
+  ts.world.cache = ts.world.cache || {};
   let firstWords = ts.world.cache.firstWords || {};
   for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];

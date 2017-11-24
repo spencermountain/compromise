@@ -7,4 +7,8 @@ module.exports = {
   'g8': 'Organization',
   'motel 6': 'Organization',
   'vh1': 'Organization',
+  'q1': 'Date',
+  'q2': 'Date',
+  'q3': 'Date',
+  'q4': 'Date',
 };

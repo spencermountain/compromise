@@ -36,11 +36,13 @@ const stopWords = '(there|these)';
 
 const find = function(r, n) {
   r = r.clauses();
-  r = r.match('#Noun+ (of|for|by)? the? #Noun+?');
+  r = r.match('#Noun+ (of|by)? the? #Noun+?');
   r = r.not('#Pronoun');
   r = r.not(stopWords);
   r = r.not('(#Month|#WeekDay)'); //allow Durations, Holidays
-  r = r.not('(my|our|their)'); //weird possessives
+  //allow possessives like "spencer's", but not generic ones like,
+  r = r.not('(my|our|your|their|her|his)');
+  r = r.not('(of|for|by|the)$');
   if (typeof n === 'number') {
     r = r.get(n);
   }

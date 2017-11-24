@@ -14,13 +14,6 @@ module.exports = {
   'were': 'Copula',
   'am': 'Copula',
 
-  'eom': 'Date',
-  'standard time': 'Date',
-  'daylight time': 'Date',
-  'today': 'Date',
-  'tomorrow': 'Date',
-  'yesterday': 'Date',
-
   'if': 'Condition',
   'unless': 'Condition',
   'notwithstanding': 'Condition',

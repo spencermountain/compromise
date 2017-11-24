@@ -16,6 +16,7 @@ var nlp = require('./src/index');
 
 
 let str = `measuring 7.5–11 micrometers`;
-nlp(str).debug();
-console.log(nlp(str).values().toNice().all().data());
-// console.log(nlp(str).values().toNice().all().data());
+let doc = nlp(str);
+doc.contractions().expand();
+doc.values().toText();
+console.log(doc.out());

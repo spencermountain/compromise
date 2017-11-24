@@ -15,6 +15,12 @@ compromise uses semver, and pushes to npm frequently
 - neighborhoods as #Place
 - support more complex noun-phrases with JustesonKatz in `.nouns()`
 <!-- * include 'the #TitleCase' matches in .topics() -->
+##### 11.2.1
+- rolls-back some aggressive JustesonKatz stuff
+- better support for emdash numberRange
+- 'can\'t' contraction bugfix
+- fix for dates().toShortForm()
+
 
 ##### 11.0.0
 - support for persistent lexicon/tagset changes

@@ -84,11 +84,11 @@ nlp('..then consider me Miles Davis!').people().out('freq')
 </div>
 
 <h3 align="center">
-  <a href="http://compromise.cool/demos">Demos</a>
+  <a href="https://nlp-expo.firebaseapp.com/demos">Demos</a>
   &nbsp; &nbsp; &nbsp;
   <a href="https://github.com/nlp-compromise/compromise/wiki/Usage">Usage</a>
   &nbsp; &nbsp; &nbsp;
-  <a href="http://compromise.cool/docs">API</a>
+  <a href="https://nlp-compromise.github.io/#docs">API</a>
   &nbsp; &nbsp; &nbsp;
   <a href="https://github.com/nlp-compromise/compromise/wiki/How-it-Works">WTF</a>
 </h3>

@@ -211,7 +211,7 @@ test('==contractions==', function(T) {
     str = r.out('normal');
     t.equal(str, 'june 5th to 7th 1998', 'june 5th - 7th numberRange');
 
-    let doc = nlp('measuring 7.5–11 micrometers');
+    var doc = nlp('measuring 7.5–11 micrometers');
     doc.contractions().expand();
     doc.values().toNice();
     t.equal('measuring 7.5 to 11 micrometers', doc.out(), 'numer-range-emdash');

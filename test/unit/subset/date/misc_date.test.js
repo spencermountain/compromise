@@ -22,7 +22,7 @@ test('short+long form', function(t) {
   t.equal(longer, 'thursday february 2nd 2016');
 
 
-  let str = nlp('April, June, and Sept').dates().toShortForm().all().out();
+  var str = nlp('April, June, and Sept').dates().toShortForm().all().out();
   t.equal('Apr, Jun, and Sept', str, 'toShortForm-comma');
 
   str = nlp('Apr, June, and Sept').dates().toLongForm().all().out();

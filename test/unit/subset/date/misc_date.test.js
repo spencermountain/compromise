@@ -21,5 +21,12 @@ test('short+long form', function(t) {
   longer = r2.dates().toLongForm().out('normal');
   t.equal(longer, 'thursday february 2nd 2016');
 
+
+  let str = nlp('April, June, and Sept').dates().toShortForm().all().out();
+  t.equal('Apr, Jun, and Sept', str, 'toShortForm-comma');
+
+  str = nlp('Apr, June, and Sept').dates().toLongForm().all().out();
+  t.equal('April, Jun, and September', str, 'toShortForm-comma');
+
   t.end();
 });

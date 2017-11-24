@@ -8,6 +8,9 @@ const hasDash = function(t) {
 };
 
 const numberRange = ts => {
+  //try to support number range, like 5-9, this way:
+  ts.match('#Hyphenated #Hyphenated').match('#NumericValue #NumericValue').tag('NumberRange');
+  //otherwise, loop through and find them
   for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
     //skip existing
@@ -18,7 +21,7 @@ const numberRange = ts => {
       continue;
     }
     //hyphens found in whitespace - '5 - 7'
-    if (t.tags.Value && i > 0 && (hasDash(t) || hasDash(ts.terms[i - 1])) && ts.terms[i - 1].tags.Value) {
+    if (t.tags.Value && ts.terms[i + 1] && i > 0 && (hasDash(t) || hasDash(ts.terms[i - 1])) && ts.terms[i - 1].tags.Value) {
       let to = new Term('', ts.world);
       to.silent_term = 'to';
       ts.insertAt(i, to);
@@ -31,7 +34,7 @@ const numberRange = ts => {
     }
     //add a silent term
     if (t.tags.NumberRange) {
-      let arr = t.text.split(/(-)/);
+      let arr = t.text.split(/(-|–|—)/);
       arr[1] = 'to';
       ts = fixContraction(ts, arr, i);
       ts.terms[i].tag(['NumberRange', 'NumericValue'], 'numRange-1');

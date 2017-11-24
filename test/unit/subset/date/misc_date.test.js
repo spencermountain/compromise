@@ -26,7 +26,7 @@ test('short+long form', function(t) {
   t.equal('Apr, Jun, and Sept', str, 'toShortForm-comma');
 
   str = nlp('Apr, June, and Sept').dates().toLongForm().all().out();
-  t.equal('April, Jun, and September', str, 'toShortForm-comma');
+  t.equal('April, June, and September', str, 'toShortForm-comma');
 
   t.end();
 });

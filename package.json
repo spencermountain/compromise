@@ -4,6 +4,7 @@
   "description": "natural language processing in the browser",
   "version": "11.2.1",
   "main": "./builds/compromise.js",
+  "types": "./compromise.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/nlp-compromise/compromise.git"

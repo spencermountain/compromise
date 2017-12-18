@@ -83,6 +83,7 @@ const corrections = function(ts) {
     ts.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber');
     //two hundredth
     ts.match('#TextValue+').match('#Cardinal+ #Ordinal').tag('Ordinal', 'two-hundredth');
+
   }
 
   if (ts.has('#Noun')) {
@@ -173,11 +174,12 @@ const corrections = function(ts) {
     }
     //fall over
     ts.match('#PhrasalVerb #PhrasalVerb').lastTerm().tag('Particle', 'phrasal-particle');
-
     //walking is cool
     ts.match('#Gerund #Adverb? not? #Copula').firstTerm().tag('Activity', 'gerund-copula');
     //walking should be fun
     ts.match('#Gerund #Modal').firstTerm().tag('Activity', 'gerund-modal');
+    //running-a-show
+    ts.match('#Gerund #Determiner [#Infinitive]').tag('Noun', 'running-a-show');
   }
 
   if (ts.has('#Adjective')) {

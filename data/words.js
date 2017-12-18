@@ -22,6 +22,7 @@ var data = [
   [require('./words/places/cities'), 'City'],
   //dates
   [require('./words/dates/days'), 'WeekDay'],
+  [require('./words/dates/dates'), ['Date', 'Noun']],
   [require('./words/dates/holidays'), 'Holiday'],
   [require('./words/dates/months'), 'Month'],
   [require('./words/dates/durations'), 'Duration'],

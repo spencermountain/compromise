@@ -17,7 +17,6 @@ exports.longMonths = {
 exports.shortMonths = {
   'jan': 0,
   'feb': 1,
-  'febr': 1,
   'mar': 2,
   'apr': 3,
   'may': 4,
@@ -25,8 +24,10 @@ exports.shortMonths = {
   'jul': 6,
   'aug': 7,
   'sep': 8,
-  'sept': 8,
   'oct': 9,
   'nov': 10,
   'dec': 11,
+  //extra ones
+  'febr': 1,
+  'sept': 8,
 };

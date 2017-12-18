@@ -2,15 +2,16 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.1.0",
+  "version": "11.2.1",
   "main": "./builds/compromise.js",
+  "types": "./compromise.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/nlp-compromise/compromise.git"
   },
   "scripts": {
-    "test": "node ./scripts/test.js",
-    "testb": "\"node_modules/.bin/tape\" \"./test/unit/**/*.test.js\"",
+    "test": "tape \"./test/unit/**/*.test.js\" | tap-dot",
+    "testb": "TESTENV=prod tape \"./test/unit/**/*.test.js\" | tap-dot",
     "buildTest": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
     "browserTest": "node ./scripts/browserTest.js",
@@ -30,8 +31,7 @@
     "docs/"
   ],
   "dependencies": {
-    "efrt-unpack": "2.0.3",
-    "http-server": "^0.10.0"
+    "efrt-unpack": "2.0.3"
   },
   "devDependencies": {
     "amble": "0.0.5",
@@ -48,7 +48,7 @@
     "gaze": "^1.1.1",
     "nyc": "^8.4.0",
     "shelljs": "^0.7.2",
-    "tap-spec": "^4.1.1",
+    "tap-dot": "^1.0.5",
     "tape": "4.6.0",
     "uglify-js": "2.7.0"
   },

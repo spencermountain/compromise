@@ -2,6 +2,7 @@ module.exports = [
   '\'o',
   'a\'',
   'about',
+  'bout',
   'across',
   'after',
   'along',

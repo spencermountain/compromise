@@ -4,7 +4,7 @@ const rules = require('./rules');
 const predict = require('../predict');
 
 const toInfinitive = function(t, world) {
-  const irregulars = world.cache.toInfinitive; //verb_mapping(world.conjugations); //TODO: do this at world cache
+  const irregulars = world.cache.toInfinitive || {}; //verb_mapping(world.conjugations); //TODO: do this at world cache
   if (t.tags.Infinitive) {
     return t.normal;
   }

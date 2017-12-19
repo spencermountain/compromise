@@ -1,5 +1,5 @@
 //loads and runs compromise inside the worker-instance
-importScripts('../../builds/compromise.js');
+importScripts('https://unpkg.com/compromise@latest/builds/compromise.min.js');
 
 var plugin = {
   "name": "examples",
@@ -30,6 +30,7 @@ var plugin = {
 nlp.plugin(plugin);
 self.addEventListener('message', function(e) {
   var r = self.nlp(e.data.payload);
+  var s;
   console.log(e.data.type, r);
   switch(e.data.type) {
     case 'topics':
@@ -39,7 +40,7 @@ self.addEventListener('message', function(e) {
       break;
     case 'places':
       // console.log(r.list[0].terms[5].tags)
-      var s = r.list;
+      s = r.list;
       let nav, cond;
       s.forEach((sentence, i) => {
         console.log('test', r.sentences(i).places().data());
@@ -50,7 +51,7 @@ self.addEventListener('message', function(e) {
       self.postMessage(`${nav} ${cond}`);
       break;
     default:
-      var s = r.sentences(1).toUpperCase();
+      s = r.sentences(1).toUpperCase();
       console.log('sentences', r.sentences().data());
       self.postMessage(s.out('html'));
   }

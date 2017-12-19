@@ -11,6 +11,7 @@ let addRegex = require('./addRegex');
 let addConjugations = require('./addConjugations');
 let addPatterns = require('./addPatterns');
 let addPlurals = require('./addPlurals');
+let addResponses = require('./addResponses');
 let misc = require('./more-data/misc');
 
 //lazier/faster object-merge
@@ -30,6 +31,7 @@ let World = function() {
   this.patterns = {};
   this.conjugations = {};
   this.plurals = {};
+  this.responses = {};
   //denormalized data for faster-lookups
   this.cache = {
     firstWords: {},
@@ -44,6 +46,7 @@ World.prototype.addRegex = addRegex;
 World.prototype.addConjugations = addConjugations;
 World.prototype.addPlurals = addPlurals;
 World.prototype.addPatterns = addPatterns;
+World.prototype.addResponses = addResponses;
 
 //make a no-reference copy of all the data
 World.prototype.clone = function() {
@@ -79,6 +82,9 @@ World.prototype.plugin = function(obj) {
   }
   if (obj.words) {
     this.addWords(obj.words);
+  }
+  if (obj.responses) {
+    this.addResponses(obj.responses);
   }
 };
 

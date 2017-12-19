@@ -4,9 +4,11 @@ scripts/bower/bower-*
 bower_components/
 tmp/
 viz/
+demo/data/
 
 .DS_Store
 .jshintrc
+.idea
 .env
 .nyc_output/
 

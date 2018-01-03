@@ -46,6 +46,10 @@ const methods = {
   /** remove commas, semicolons - but keep sentence-ending punctuation*/
   punctuation: r => {
     r.list.forEach(ts => {
+      if (!ts.terms.length) {
+        return;
+      }
+
       //first-term punctuation
       ts.terms[0]._text = ts.terms[0]._text.replace(/^¿/, '');
       //middle-terms

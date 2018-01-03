@@ -25,8 +25,13 @@ test('sentence():', function(t) {
 });
 
 test('normalize():', function(t) {
-  var str = nlp(' so... you like DONUTS? have all the donuts in the WORLD!!!').normalize().out('text');
-  var want = 'so you like donuts? have all the donuts in the world!';
-  t.equal(str, want, '.normalize()');
+  [
+    [' so... you like DONUTS? have all the donuts in the WORLD!!!', 'so you like donuts? have all the donuts in the world!'],
+    ['This is a test. .', 'this is a test.']
+  ].forEach(function(a) {
+    var str = nlp(a[0]).normalize().out('text');
+    str_test(str, a[0], a[1], t);
+  });
+
   t.end();
 });

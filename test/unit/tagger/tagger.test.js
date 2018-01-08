@@ -16,6 +16,7 @@ test('=Tagger=', function(T) {
       // ['3 trains', ['Value', 'Noun']],
       ['3 trainers', ['Value', 'Noun']],
       ['5 buses', ['Value', 'Noun']],
+      ['101010101010101010101010101010101010101010', ['NumericValue']],
 
       ['walk the walk', ['Verb', 'Determiner', 'Noun']],
       ['Peter the man', ['Person', 'Determiner', 'Noun']],

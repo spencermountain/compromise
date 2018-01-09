@@ -9,8 +9,9 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.2.1",
+  "version": "11.2.2",
   "main": "./builds/compromise.js",
+  "types": "./compromise.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/nlp-compromise/compromise.git"
@@ -6174,7 +6175,7 @@ var misc = [
 [/^www\.[a-z0-9]/, 'Url'], [/^(over|under)[a-z]{2,}/, 'Adjective'], [/^[0-9]{1,4}\.[0-9]{1,2}\.[0-9]{1,4}$/, 'Date'], // 03-02-89
 //ending-ones
 [/^[0-9]+([a-z]{1,2})$/, 'Value'], //like 5kg
-[/^([0-9]+[,\.]?)+(st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
+[/^[0-9][0-9,\.]*(st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
 //middle (anywhere)
 [/[a-z]*\\-[a-z]*\\-/, 'Adjective']];
 
@@ -11073,6 +11074,10 @@ var methods = {
   /** remove commas, semicolons - but keep sentence-ending punctuation*/
   punctuation: function punctuation(r) {
     r.list.forEach(function (ts) {
+      if (!ts.terms.length) {
+        return;
+      }
+
       //first-term punctuation
       ts.terms[0]._text = ts.terms[0]._text.replace(/^¿/, '');
       //middle-terms

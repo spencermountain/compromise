@@ -16,7 +16,7 @@ const misc = [
   [/^[0-9]{1,4}\.[0-9]{1,2}\.[0-9]{1,4}$/, 'Date'], // 03-02-89
   //ending-ones
   [/^[0-9]+([a-z]{1,2})$/, 'Value'], //like 5kg
-  [/^([0-9]+[,\.]?)+(st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
+  [/^[0-9][0-9,\.]*(st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
   //middle (anywhere)
   [/[a-z]*\\-[a-z]*\\-/, 'Adjective']
 ];

@@ -1,5 +1,5 @@
 var nlp = require('./src/index');
 nlp.verbose('tagger');
 
-var doc = nlp('the largest');
+var doc = nlp('chased');
 doc.debug();

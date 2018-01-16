@@ -23,6 +23,29 @@ test('default lexicon:', function(t) {
   t.end();
 });
 
+test('root-in-lexicon:', function(t) {
+  [
+    ['wash', 'Infinitive'],
+    ['rewash', 'Infinitive'],
+    ['re-wash', 'Infinitive'],
+    ['re-washed', 'PastTense'],
+    ['rewashed', 'PastTense'],
+    ['rewashes', 'PresentTense'],
+    ['rewashing', 'Gerund'],
+
+    ['repurchase', 'Infinitive'],
+    ['re-purchase', 'Infinitive'],
+    ['unpurchase', 'Infinitive'],
+    ['purchased', 'PastTense'],
+    ['unpurchasing', 'Gerund'],
+    ['unpurchases', 'PresentTense'],
+  ].forEach(function(a) {
+    var r = nlp(a[0]);
+    pos_test(r, [a[1]], t);
+  });
+  t.end();
+});
+
 test('adjusted lexicon:', function(t) {
   //place new words
   var lexicon = {

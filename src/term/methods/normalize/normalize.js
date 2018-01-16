@@ -26,11 +26,17 @@ exports.normalize = function(str) {
   if (/[a-z][^aeiou]in['’]$/.test(str) === true) {
     str = str.replace(/in['’]$/, 'ing');
   }
+  //turn re-enactment to reenactment
+  if (/^(re|un)-?[^aeiou]./.test(str) === true) {
+    str = str.replace('-', '');
+  }
   //strip leading & trailing grammatical punctuation
-  if (/^[:;]/.test(str) === false) {
-    str = str.replace(/\.{3,}$/g, '');
-    str = str.replace(/['",\.!:;\?\)]$/g, '');
-    str = str.replace(/^['"\(]/g, '');
+  {
+    if (/^[:;]/.test(str) === false) {
+      str = str.replace(/\.{3,}$/g, '');
+      str = str.replace(/['",\.!:;\?\)]$/g, '');
+      str = str.replace(/^['"\(]/g, '');
+    }
   }
   //do this again..
   str = str.trim();

@@ -24,6 +24,20 @@ const gotNothing = function(t) {
   return false;
 };
 
+//in last-ditch, try to match 'rewatch' -> 'watch' in the lexicon
+const tryRoot = function(t) {
+  if (/^(re|un)-?[^aeiou]./.test(t.normal) === true) {
+    let str = t.normal.replace(/^(re|un)-?/, '');
+    if (t.world.words.hasOwnProperty(str) === true) {
+      let tag = t.world.words[str];
+      if (tag === 'Infinitive' || tag === 'PresentTense' || tag === 'PastTense' || tag === 'Gerund') {
+        return tag;
+      }
+    }
+  }
+  return null;
+};
+
 const noun_fallback = function(s) {
   for (let i = 0; i < s.terms.length; i++) {
     let t = s.terms[i];
@@ -35,6 +49,11 @@ const noun_fallback = function(s) {
     if (gotNothing(t)) {
       //ensure it's atleast word-looking
       if (t.isWord() === false) {
+        continue;
+      }
+      let rootTag = tryRoot(t);
+      if (rootTag !== null) {
+        t.tag(rootTag, 'root-tag-match');
         continue;
       }
       t.tag('Noun', 'noun-fallback');

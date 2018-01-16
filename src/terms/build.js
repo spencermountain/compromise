@@ -13,6 +13,10 @@ const notWord = {
 };
 
 const hasHyphen = function(str) {
+  //dont split 're-do'
+  if (/^(re|un)-?[^aeiou]./.test(str) === true) {
+    return false;
+  }
   let reg = /^([a-z]+)(-|–|—)([a-z0-9].*)/i;
   if (reg.test(str) === true) {
     return true;

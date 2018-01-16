@@ -46,7 +46,7 @@ const regexFn = function(t) {
   let arr = regs[char];
   for (let o = 0; o < arr.length; o++) {
     if (arr[o][0].test(t.normal) === true) {
-      return arr[o][1];
+      return arr[o];
     }
   }
   return null;
@@ -63,8 +63,8 @@ const suffix_step = function(ts) {
     }
     //apply regexes by final-char
     tag = regexFn(t);
-    if (tag !== null && t.canBe(tag) === true) {
-      t.tag(tag, 'regex-list');
+    if (tag !== null && t.canBe(tag[1]) === true) {
+      t.tag(tag[1], 'regex-list: ' + String(tag[0]));
       continue;
     }
     //apply misc regexes
@@ -73,7 +73,6 @@ const suffix_step = function(ts) {
         tag = misc[o][1];
         if (t.canBe(tag) === true) {
           t.tag(tag, 'misc-regex-' + misc[o][0]);
-          continue;
         }
       }
     }

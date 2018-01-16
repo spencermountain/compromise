@@ -21,6 +21,11 @@ test('hyphen-tokenize', function(t) {
   r = nlp('-2 degrees');
   t.equal(r.terms().length, 2, 'minus hyphen');
 
+  r = nlp('re-enactment');
+  t.equal(r.out('normal'), 'reenactment', 're-hyphen');
+  r = nlp('un-do');
+  t.equal(r.out('normal'), 'undo', 'un-hyphen');
+
   t.end();
 });
 

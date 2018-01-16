@@ -15,8 +15,8 @@ const methods = {
     this.list.forEach(ts => ts.toPlural());
     return this;
   },
-  toSingular: function() {
-    this.list.forEach(ts => ts.toSingular());
+  toSingular: function(verbose) {
+    this.list.forEach(ts => ts.toSingular(verbose));
     return this;
   },
   articles: function() {

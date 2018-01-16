@@ -1,5 +1,6 @@
 var nlp = require('./src/index');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
 
-let doc = nlp('it was faxed');
-doc.debug();
+var doc = nlp('circus').nouns();
+console.log(doc.toSingular(true).out());
+// console.log(doc.toPlural(true).out());

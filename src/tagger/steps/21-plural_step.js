@@ -10,8 +10,8 @@ const pluralStep = function(ts) {
         continue;
       }
       //check if it's plural
-      let plural = isPlural(t); //can be null if unknown
-      if (isPlural(t) === true) {
+      let plural = isPlural(t, t.world); //can be null if unknown
+      if (plural === true) {
         t.tag('Plural', 'pluralStep');
       } else if (plural === false) {
         t.tag('Singular', 'pluralStep');

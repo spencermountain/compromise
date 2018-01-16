@@ -15,6 +15,8 @@ module.exports = {
   'child': 'children',
   'château': 'châteaux',
   'corpus': 'corpora',
+  'circus': 'circuses',
+  'clothes': 'clothes',
   'criterion': 'criteria',
   'curriculum': 'curricula',
   'database': 'databases',

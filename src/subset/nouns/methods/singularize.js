@@ -6,10 +6,11 @@ const singleRules = require('./data/singleRules');
 const toSingle = function(str, world) {
   //reverse it //TODO: cache in world object somewhere
   let irregulars = world.cache.toSingular || {};
-
   //check irregulars
-  if (irregulars.hasOwnProperty(str) === true) {
-    return irregulars[str];
+  {
+    if (irregulars.hasOwnProperty(str) === true) {
+      return irregulars[str];
+    }
   }
   if (world && world.plurals) {
     //given irregulars

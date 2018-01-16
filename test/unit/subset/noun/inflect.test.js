@@ -17,10 +17,12 @@ test('==Plurals==', function(T) {
       ['eyebrows', true],
       ['child', false],
       ['children', true],
-      ["spencer's", false],
-      ["toronto's", false]
-      // ['simpsons\'', false],
-      // ['she\'s', false],
+      ['spencer\'s', false],
+      ['toronto\'s', false],
+      ['circus', false],
+      ['circuses', true]
+    // ['simpsons\'', false],
+    // ['she\'s', false],
     ].forEach(function(a) {
       var r = nlp(a[0]).nouns();
       var msg = a[0];

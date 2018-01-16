@@ -16,19 +16,19 @@ const methods = {
   hasPlural: function() {
     return hasPlural(this.main);
   },
-  toPlural: function() {
+  toPlural: function(verbose) {
     let t = this.main;
     if (hasPlural(t) && !isPlural(t, this.world)) {
-      t.text = pluralize(t.normal, this.world) || t.text;
+      t.text = pluralize(t.normal, this.world, verbose) || t.text;
       t.unTag('Singular', 'toPlural');
       t.tag('Plural', 'toPlural');
     }
     return this;
   },
-  toSingular: function() {
+  toSingular: function(verbose) {
     let t = this.main;
     if (isPlural(t, this.world)) {
-      t.text = singularize(t.normal, this.world) || t.text;
+      t.text = singularize(t.normal, this.world, verbose) || t.text;
       t.unTag('Plural', 'toSingular');
       t.tag('Singular', 'toSingular');
     }

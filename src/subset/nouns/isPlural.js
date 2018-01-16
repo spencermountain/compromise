@@ -40,8 +40,12 @@ const isPlural = function(t, world) {
     return knownPlural[str];
   }
   //check given irregulars
-  if (world && world.plurals && world.plurals.hasOwnProperty(str) === true) {
+  if (world.plurals && world.plurals.hasOwnProperty(str) === true) {
     return false;
+  }
+  //check opposite-ones
+  if (world.cache.toSingular && world.cache.toSingular.hasOwnProperty(str) === true) {
+    return true;
   }
   //inspect the existing tags to see if a plural is valid
   if (couldEvenBePlural(t) === false) {

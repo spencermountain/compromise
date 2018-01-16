@@ -37,4 +37,4 @@ const fasterConjugate = function(inf, world) {
   return all;
 };
 module.exports = fasterConjugate;
-// console.log(fasterConjugate('walk'));
+// console.log(fasterConjugate('repeat'));

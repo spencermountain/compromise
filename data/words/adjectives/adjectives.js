@@ -62,7 +62,6 @@ module.exports = [
   'beneficial',
   'bent',
   'best',
-  'better',
   'beyond',
   'bizarre',
   'blank',

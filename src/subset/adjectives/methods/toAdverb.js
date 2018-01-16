@@ -39,9 +39,7 @@ const transforms = [
 ];
 
 const adj_to_adv = function(str) {
-  // console.log(str + '--');
   if (irregulars.hasOwnProperty(str) === true) {
-    // console.log(str, irregulars[str]);
     return irregulars[str];
   }
   for (let i = 0; i < not_matches.length; i++) {

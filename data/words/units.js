@@ -212,7 +212,6 @@ module.exports = [
   'pascals',
   'watt',
   'watts',
-  'newtons',
   'wb',
   'coulomb',
   'coulombs',

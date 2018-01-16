@@ -178,12 +178,16 @@ const corrections = function(ts) {
     }
     //fall over
     ts.match('#PhrasalVerb #PhrasalVerb').lastTerm().tag('Particle', 'phrasal-particle');
-    //walking is cool
-    ts.match('#Gerund #Adverb? not? #Copula').firstTerm().tag('Activity', 'gerund-copula');
-    //walking should be fun
-    ts.match('#Gerund #Modal').firstTerm().tag('Activity', 'gerund-modal');
-    //running-a-show
-    ts.match('#Gerund #Determiner [#Infinitive]').tag('Noun', 'running-a-show');
+    if (ts.has('#Gerund')) {
+      //walking is cool
+      ts.match('#Gerund #Adverb? not? #Copula').firstTerm().tag('Activity', 'gerund-copula');
+      //walking should be fun
+      ts.match('#Gerund #Modal').firstTerm().tag('Activity', 'gerund-modal');
+      //running-a-show
+      ts.match('#Gerund #Determiner [#Infinitive]').tag('Noun', 'running-a-show');
+    //setting records
+    // ts.match('#Gerund [#PresentTense]').tag('Plural', 'setting-records');
+    }
   }
 
   if (ts.has('#Adjective')) {

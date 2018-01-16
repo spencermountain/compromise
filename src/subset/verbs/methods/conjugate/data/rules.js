@@ -113,6 +113,13 @@ module.exports = [
       gr: '$1ing'
     }
   }, {
+    reg: /(.eat)$/i,
+    repl: {
+      pr: '$1s',
+      pa: '$1ed',
+      gr: '$1ing'
+    }
+  }, {
     reg: /([aeiu])([pt])$/i,
     repl: {
       pr: '$1$2s',

@@ -71,6 +71,7 @@ module.exports = [
   'student',
   'stuff',
   'sky',
+  'record',
   'super bowl',
   'home run',
   'system',

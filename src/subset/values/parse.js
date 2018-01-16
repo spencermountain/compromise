@@ -26,11 +26,9 @@ const parse = function(val) {
   if (typeof val === 'string') {
     return parseString(val);
   }
-  // console.log(val);
   //numerical values can only be one term
   if (val.terms.length === 1 && val.terms[0].tags.TextValue !== true) {
     let str = val.terms[0].normal;
-    // console.log(str);
     return parseString(str);
   }
   return parseText(val.out('normal'));

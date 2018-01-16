@@ -16,7 +16,6 @@ module.exports = {
 
   'if': 'Condition',
   'unless': 'Condition',
-  'notwithstanding': 'Condition',
 
   'said': 'PastTense',
   'had': 'PastTense',

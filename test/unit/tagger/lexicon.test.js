@@ -39,6 +39,10 @@ test('root-in-lexicon:', function(t) {
     ['purchased', 'PastTense'],
     ['unpurchasing', 'Gerund'],
     ['unpurchases', 'PresentTense'],
+    ['resolve', 'Infinitive'],
+    ['restructure', 'Infinitive'],
+    ['reconcile', 'Infinitive'],
+    ['repeat', 'Infinitive'],
   ].forEach(function(a) {
     var r = nlp(a[0]);
     pos_test(r, [a[1]], t);

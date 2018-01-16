@@ -56,6 +56,5 @@ const toAdjective = function(str) {
   return str;
 };
 
-// console.log(toAdjective('quickly') === 'quick')
-// console.log(toAdjective('marvelously') === 'marvelous')
+// console.log(toAdjective('quickly'))
 module.exports = toAdjective;

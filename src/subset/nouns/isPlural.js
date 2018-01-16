@@ -76,4 +76,4 @@ const isPlural = function(t, world) {
 };
 
 module.exports = isPlural;
-// console.log(is_plural('octopus') === false)
+// console.log(is_plural('octopus'))

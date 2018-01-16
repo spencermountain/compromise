@@ -4,6 +4,7 @@ const conjugate = require('../subset/verbs/methods/conjugate/faster.js');
 //extend our current irregular conjugations, overwrite if exists
 //also, map the irregulars for easy infinitive lookup - {bought: 'buy'}
 const addConjugations = function(obj) {
+
   Object.keys(obj).forEach((inf) => {
     this.conjugations[inf] = this.conjugations[inf] || {};
     //add it to the lexicon

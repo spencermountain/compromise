@@ -112,7 +112,7 @@ module.exports = [
   'jamaica',
   'japan',
   'jersey',
-  'jordan',
+  // 'jordan', //... or a name?
   'kazakhstan',
   'keeling islands',
   'kenya',

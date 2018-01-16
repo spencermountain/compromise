@@ -129,7 +129,6 @@ module.exports = [
   //western-europe
   'corsica',
   'normandy',
-  'guadeloupe',
   'midlands',
   'yorkshire',
   'buckinghamshire',

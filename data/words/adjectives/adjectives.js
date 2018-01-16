@@ -166,7 +166,6 @@ module.exports = [
   'fertile',
   'final',
   'finite',
-  'fixed',
   'flagrant',
   'fluent',
   'foolish',

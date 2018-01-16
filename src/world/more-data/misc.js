@@ -11,4 +11,6 @@ module.exports = {
   'q2': 'Date',
   'q3': 'Date',
   'q4': 'Date',
+  //misc
+  'records': 'Plural',
 };

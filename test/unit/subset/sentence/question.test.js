@@ -25,7 +25,13 @@ test('question-test :', function(t) {
     `so, is it fun`,
     `so, where'd you go`,
     `if you said so, why are you upset`,
-    `does wayne gretsky skate`
+    `does wayne gretsky skate`,
+    `would you go to france`,
+    `can we go to france`,
+    `can you explain`,
+    `won't they go to france`,
+    `wouldn't they go to france`,
+    `can Jamaican nationals go to france`
   ].forEach(function(str) {
     var doc = nlp(str);
     t.equal(doc.questions().length, 1, str);

@@ -13,7 +13,11 @@ const isQuestion = function(ts) {
   }
 
   //is it, do you - start of sentence
-  if (ts.has('^(do|does|did|is|was) #Noun')) {
+  if (ts.has('^(do|does|did|is|was|can|could|will|would|may) #Noun')) {
+    return true;
+  }
+  //these are a little more loose..
+  if (ts.has('^(have|must) you')) {
     return true;
   }
 

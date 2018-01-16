@@ -75,11 +75,13 @@ module.exports = [
   'home run',
   'system',
   'tic',
+  'tv show',
   'there',
   'thing',
   // 'things',
   'tragedy',
-  'us dollar'
+  'us dollar',
+  'us state'
 // 'yesterday',
 // 'today',
 // 'tomorrow',

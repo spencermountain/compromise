@@ -20,6 +20,9 @@ module.exports = [
   ],
   //exlusive-nouns
   ['Person', 'Organization', 'Value', 'Place', 'Actor', 'Demonym', 'Pronoun'],
+  //acronyms
+  ['Acronym', 'Pronoun', 'Actor', 'Unit', 'Address'],
+  ['Acronym', 'Plural'],
   //things that can't be plural
   ['Plural', 'Singular'],
   // ['Plural', 'Pronoun'],

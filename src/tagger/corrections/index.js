@@ -38,7 +38,7 @@ const corrections = function(ts) {
     //some pressing issues
     ts.match('(some #Verb #Plural').term(1).tag('Noun', 'correction-determiner6');
     //the orange.
-    ts.match('#Determiner #Adjective$').term(1).tag('Noun', 'the-adj-1');
+    ts.match('#Determiner #Adjective$').not('(#Comparative|#Superlative)').term(1).tag('Noun', 'the-adj-1');
     //the orange is
     ts.match('#Determiner #Adjective (#Copula|#PastTense|#Auxiliary)').term(1).tag('Noun', 'the-adj-2');
     //the nice swim
@@ -55,6 +55,8 @@ const corrections = function(ts) {
     ts.match('#Determiner #Adverb? [close]').tag('Adjective', 'a-close');
     //did a 900, paid a 20
     ts.match('#Verb (a|an) [#Value]').tag('Singular', 'a-value');
+    //a tv show
+    ts.match('(a|an) #Noun [#Infinitive]').tag('Noun', 'a-noun-inf');
   }
 
   //like

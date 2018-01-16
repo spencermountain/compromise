@@ -15,8 +15,4 @@ var nlp = require('./src/index');
 // nlp('we\'re really fun').sentences().toPlural().debug();
 
 
-let str = `measuring 7.5–11 micrometers`;
-let doc = nlp(str);
-doc.contractions().expand();
-doc.values().toText();
-console.log(doc.out());
+nlp('Or the truth . . .').out('normal');

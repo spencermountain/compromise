@@ -62,9 +62,9 @@ const sentence_parser = function(text) {
   for (let i = 0; i < chunks.length; i++) {
     let c = chunks[i];
     //should this chunk be combined with the next one?
-    if (chunks[i + 1] !== undefined && (abbrev_reg.test(c) || acronym_reg.test(c) || elipses_reg.test(c))) {
+    if (chunks[i + 1] && /[a-zA-Z]/.test(c) && (abbrev_reg.test(c) || acronym_reg.test(c) || elipses_reg.test(c))) {
       chunks[i + 1] = c + (chunks[i + 1] || '');
-    } else if (c && c.length > 0) {
+    } else if (c && c.length > 0 && /[a-zA-Z]/.test(c)) {
       //this chunk is a proper sentence..
       sentences.push(c);
       chunks[i] = '';

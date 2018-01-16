@@ -149,14 +149,6 @@ const datePass = function (ts) {
     ts.match('#Value #Duration old').unTag('Date', 'val-years-old');
   }
 
-  //time:
-  if (ts.has('#Time')) {
-    ts.match('#Cardinal #Time').tag('Time', 'value-time');
-    ts.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time');
-    //2pm est
-    ts.match('#Time (eastern|pacific|central|mountain)').term(1).tag('Time', 'timezone');
-    ts.match('#Time (est|pst|gmt)').term(1).tag('Time', 'timezone abbr');
-  }
 
   //seasons
   if (ts.has(seasons)) {
@@ -185,6 +177,7 @@ const datePass = function (ts) {
     //early in june
     ts.match('(early|late) (at|in)? the? #Date').tag('Time', 'early-evening');
   }
+
 
   //year/cardinal tagging
   if (ts.has('#Cardinal')) {
@@ -220,8 +213,18 @@ const datePass = function (ts) {
     tagYearSafer(v, 'year-unsafe');
   }
 
-  //fix over-greedy
+  //another pass at dates..
   if (ts.has('#Date')) {
+    //time:
+    if (ts.has('#Time')) {
+      ts.match('#Cardinal #Time').not('#Year').tag('Time', 'value-time');
+      ts.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time');
+      //2pm est
+      ts.match('#Time (eastern|pacific|central|mountain)').term(1).tag('Time', 'timezone');
+      ts.match('#Time (est|pst|gmt)').term(1).tag('Time', 'timezone abbr');
+    }
+
+    //fix over-greedy
     let date = ts.match('#Date+').splitOn('Clause');
 
     if (date.has('(#Year|#Time)') === false) {

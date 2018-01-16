@@ -28,5 +28,13 @@ test('short+long form', function(t) {
   str = nlp('Apr, June, and Sept').dates().toLongForm().all().out();
   t.equal('April, June, and September', str, 'toShortForm-comma');
 
+  doc = nlp('January 10, 2018 7:20 AM');
+  let obj = doc.dates().data()[0].date;
+  t.equal(obj.month, 0, 'month');
+  t.equal(obj.date, 10, 'date');
+  t.equal(obj.year, 2018, 'year');
+  t.equal(obj.time.hour, 7, 'hour');
+  t.equal(obj.time.minute, 20, 'minute');
+
   t.end();
 });

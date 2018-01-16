@@ -4,7 +4,7 @@ const onlyCaptureGroup = function(matches) {
   let results = [];
   matches.forEach((terms) => {
     //if there's no capture group, we good.
-    if (terms.find(t => t.captureGroup === true) === undefined) {
+    if (terms.filter(t => t.captureGroup === true).length === 0) {
       results.push(terms);
       return;
     }

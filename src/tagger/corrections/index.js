@@ -127,6 +127,8 @@ const corrections = function(ts) {
     ts.match('#Possessive #Verb').term(1).tag('Noun', 'correction-possessive');
     //is eager to go
     ts.match('#Copula #Adjective to #Verb').match('#Adjective to').tag('Verb', 'correction');
+    //there are reasons
+    ts.match('there (are|were) #Adjective? [#PresentTense]').tag('Plural', 'there-are');
 
     if (ts.has('(who|what|where|why|how|when)')) {
       //the word 'how'

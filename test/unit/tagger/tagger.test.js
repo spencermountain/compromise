@@ -28,10 +28,10 @@ test('=Tagger=', function(T) {
       ['canadian dollar', ['Currency', 'Currency']],
 
       //possessive rules
-      ["john lkjsdf's", ['Person', 'Possessive']],
-      ["john lkjsdf's house", ['Person', 'Possessive', 'Noun']],
-      ["john Lkjsdf's house", ['Person', 'Possessive', 'Noun']],
-      ["john Lkjsdf's House", ['Person', 'Possessive', 'Noun']],
+      ['john lkjsdf\'s', ['Person', 'Possessive']],
+      ['john lkjsdf\'s house', ['Person', 'Possessive', 'Noun']],
+      ['john Lkjsdf\'s house', ['Person', 'Possessive', 'Noun']],
+      ['john Lkjsdf\'s House', ['Person', 'Possessive', 'Noun']],
 
       //question-words
       ['who is good?', ['QuestionWord', 'Copula', 'Adjective']],
@@ -71,7 +71,14 @@ test('=Tagger=', function(T) {
 
       ['he is walking', ['Pronoun', 'Copula', 'Gerund']],
       ['walking is fun', ['Activity', 'Copula', 'Adjective']],
-      ["walking's great", ['Activity', 'Copula', 'Adjective']]
+      ['walking\'s great', ['Activity', 'Copula', 'Adjective']],
+      //more
+      ['there are reasons', ['Noun', 'Copula', 'Plural']],
+      ['there were many walks', ['Noun', 'Copula', 'Adjective', 'Plural']],
+      ['there were the walks', ['Noun', 'Copula', 'Determiner', 'Noun']],
+
+      ['it was fixed', ['Noun', 'Copula', 'PastTense']],
+      ['it will be boxed', ['Noun', 'Verb', 'Verb', 'PastTense']]
     ].forEach(function(a) {
       var terms = nlp(a[0]).terms(); //.data();
       pos_test(terms, a[1], t);

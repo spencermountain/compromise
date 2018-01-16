@@ -93,7 +93,7 @@ const handle_decimal = (num) => {
   ];
   let arr = [];
   //parse it out like a string, because js math is such shit
-  let decimal = ('' + num).match(/\.([0-9]+)/);
+  let decimal = String(num).match(/\.([0-9]+)/);
   if (!decimal || !decimal[0]) {
     return arr;
   }

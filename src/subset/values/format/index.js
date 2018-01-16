@@ -12,7 +12,7 @@ const fmt = {
     return numOrdinal(num);
   },
   cardinal: function(num) {
-    return '' + num;
+    return String(num);
   },
   niceOrdinal: function(num) {
     num = numOrdinal(num);

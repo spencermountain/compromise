@@ -70,7 +70,7 @@ const parse_term = function(term) {
   }
   //min/max any '{1,3}'
   if (term.charAt(term.length - 1) === '}' && range.test(term) === true) {
-    let m = term.match(/\{([0-9]+)?,? ?([0-9]+)\}/);
+    let m = term.match(/\{([0-9])*,? ?([0-9]+)\}/);
     reg.minMax = {
       min: parseInt(m[1], 10) || 0,
       max: parseInt(m[2], 10)

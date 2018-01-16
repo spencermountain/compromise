@@ -76,7 +76,7 @@ const startHere = (ts, startAt, regs, verbose) => {
       let max = regs[reg_i].minMax.max;
       let until = regs[reg_i + 1];
       for (let i = 0; i < max; i++) {
-        //TODO: please clean this loop up..
+        //ergh, please clean this loop up..
         let t = ts.terms[term_i + i];
         if (!t) {
           return null;

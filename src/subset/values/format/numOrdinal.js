@@ -8,7 +8,7 @@ const numOrdinal = function(num) {
   //the teens are all 'th'
   let tens = num % 100;
   if (tens > 10 && tens < 20) {
-    return '' + num + 'th';
+    return String(num) + 'th';
   }
   //the rest of 'em
   const mapping = {
@@ -17,7 +17,7 @@ const numOrdinal = function(num) {
     2: 'nd',
     3: 'rd'
   };
-  let str = '' + num;
+  let str = String(num);
   let last = str.slice(str.length - 1, str.length);
   if (mapping[last]) {
     str += mapping[last];

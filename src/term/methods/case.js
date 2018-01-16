@@ -14,7 +14,7 @@ const addMethods = Term => {
       return this;
     },
     toTitleCase: function() {
-      this.text = this.text.replace(/^( +)?[a-z]/, x => x.toUpperCase());
+      this.text = this.text.replace(/^ *[a-z]/, x => x.toUpperCase());
       this.tag('#TitleCase', 'toTitleCase');
       return this;
     },

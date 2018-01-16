@@ -32,7 +32,7 @@ const fromString = function(str, world) {
   //start with a naiive split
   str = str || '';
   if (typeof str === 'number') {
-    str = '' + str;
+    str = String(str);
   }
   const firstSplit = str.split(/(\S+)/);
   for (let i = 0; i < firstSplit.length; i++) {

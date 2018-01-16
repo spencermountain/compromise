@@ -6,7 +6,7 @@ const almostMatch = (reg_str, term) => {
 };
 
 // match ['john', 'smith'] regs, when the term is lumped
-const lumpMatch = function(term, regs, reg_i, verbose) {
+const lumpMatch = function(term, regs, reg_i) {
   let reg_str = regs[reg_i].normal;
   //is this a partial match? 'tony'& 'tony hawk'
   if (reg_str !== undefined && almostMatch(reg_str, term)) {

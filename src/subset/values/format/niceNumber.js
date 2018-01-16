@@ -4,7 +4,7 @@ const niceNumber = function (num) {
   if (!num && num !== 0) {
     return null;
   }
-  num = '' + num;
+  num = String(num);
   let x = num.split('.');
   let x1 = x[0];
   let x2 = x.length > 1 ? '.' + x[1] : '';

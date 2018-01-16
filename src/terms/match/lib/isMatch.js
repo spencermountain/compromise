@@ -64,7 +64,7 @@ const isMatch = (term, reg, verbose) => {
   }
   //reverse it for .not()
   if (reg.negative) {
-    found = !!!found;
+    found = !Boolean(found);
   }
   return found;
 };

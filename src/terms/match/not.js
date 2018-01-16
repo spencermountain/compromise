@@ -11,7 +11,7 @@ const addfns = Terms => {
       let matches = [];
       let current = [];
       r.terms.forEach(t => {
-        //TODO: support multi-word blacklists
+        //TODO? support multi-word blacklists
         //we should blacklist this term
         if (obj.hasOwnProperty(t.normal)) {
           if (current.length) {

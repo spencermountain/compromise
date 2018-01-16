@@ -24,7 +24,7 @@ exports.ensureString = input => {
   if (typeof input === 'string') {
     return input;
   } else if (typeof input === 'number') {
-    return '' + input;
+    return String(input);
   }
   return '';
 };

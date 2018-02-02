@@ -136,7 +136,6 @@ module.exports = [
   'kwon',
   'larsen',
   'lau',
-  'lee',
   'lefebvre',
   'lefevre',
   'lenin',

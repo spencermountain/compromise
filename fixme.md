@@ -52,15 +52,3 @@
 // aced => ac
 // axed => ax
 // egged => eg
-
-// Refactor
-// Release
-// Revert
-// repeat
-// rebuild
-// reconcile
-// record
-// redefine
-// recover
-// restructure
-// resolve

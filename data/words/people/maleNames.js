@@ -772,7 +772,6 @@ module.exports = [
   'zahid',
   'zoran',
 
-
   'abdul',
   'abe',
   'abram',

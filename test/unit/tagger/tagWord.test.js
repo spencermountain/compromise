@@ -33,7 +33,7 @@ test('pos from-lexicon', function(t) {
     ['american express', 'Organization'],
     ['brotherhood', 'Noun'],
     ['oakland athletics', 'SportsTeam'],
-    ['jaime', 'Person'],
+    ['jamie', 'Person'],
     ['claire', 'FemaleName'],
     ['arthur', 'MaleName'],
     ['¥', 'Currency'],
@@ -48,7 +48,7 @@ test('pos from-lexicon', function(t) {
     ['write', 'Verb'],
     ['survive', 'Verb'],
     ['attempt', 'Verb'],
-    ["mc'adams", 'LastName'],
+    ['mc\'adams', 'LastName'],
     ['Müller', 'LastName'],
     ['muller', 'LastName'],
     ['425-1231', 'PhoneNumber'],
@@ -64,7 +64,7 @@ test('pos from-lexicon', function(t) {
   ];
   arr.forEach(function(a) {
     var term = nlp(a[0]).list[0].terms[0];
-    var msg = "'" + term.normal + "' has - " + a[1] + '  (' + Object.keys(term.tags).join(',') + ')';
+    var msg = '\'' + term.normal + '\' has - ' + a[1] + '  (' + Object.keys(term.tags).join(',') + ')';
     t.equal(term.tags[a[1]], true, msg);
   });
   t.end();

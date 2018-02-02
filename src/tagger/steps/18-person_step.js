@@ -3,6 +3,14 @@
 const person_step = function(ts) {
   //mr Putin
   ts.match('(mr|mrs|ms) (#TitleCase|#Possessive)+').tag('#Person').lastTerm();
+
+  //a bunch of ambiguous first names
+  // let firstNames = '(rod|rob|dick|buck|bob|rusty|sandy|van|sky|bill|mark|jack|al|ray|paris|misty|jean|jan|may|piper|wade|ollie|pat|randy|robin|trinity|alexandria|houston|al|kobe|salvador)';
+  // let names = ts.match(firstNames);
+  // if (names.found) {
+  //
+  // }
+
   //methods requiring a firstname match
   if (ts.has('#FirstName')) {
     // Firstname x (dangerous)
@@ -105,6 +113,8 @@ const person_step = function(ts) {
 
   //remove single 'mr'
   ts.match('^#Honorific$').unTag('Person', 'single-honorific');
+
+
   return ts;
 };
 

@@ -723,7 +723,6 @@ module.exports = [
   'yvonne',
   'zara',
 
-
   'abagail',
   'abbey',
   'abbi',
@@ -756,8 +755,6 @@ module.exports = [
   'alayah',
   'alayna',
   'aaliyah',
-
-
   'alba',
   'alecia',
   'aleisha',

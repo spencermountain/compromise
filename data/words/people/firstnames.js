@@ -23,12 +23,12 @@ module.exports = [
   'marlo',
   'mel',
   'morgan',
+  'nelly',
+  'nicky',
   'regan',
   'rene',
   'shay',
   'shea',
   'shelby',
-  'shiloh',
-  'nelly',
-  'nicky',
+  'shiloh'
 ];

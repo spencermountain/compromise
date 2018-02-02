@@ -74,4 +74,5 @@ module.exports = [
   'dante',
   'ezekiel',
   'dalton',
+  'lee',
 ];

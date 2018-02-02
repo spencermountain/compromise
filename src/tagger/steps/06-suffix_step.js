@@ -31,7 +31,7 @@ const lookup = function(t) {
   for (let i = max; i > 1; i -= 1) {
     let str = t.normal.substr(len - i, len);
     if (suffixes[i][str] !== undefined) {
-      console.log('suffix-match: ' + str);
+      // console.log('suffix-match: ' + str);
       return suffixes[i][str];
     }
   }

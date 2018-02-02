@@ -5,11 +5,26 @@ const person_step = function(ts) {
   ts.match('(mr|mrs|ms) (#TitleCase|#Possessive)+').tag('#Person').lastTerm();
 
   //a bunch of ambiguous first names
-  // let firstNames = '(rod|rob|dick|buck|bob|rusty|sandy|van|sky|bill|mark|jack|al|ray|paris|misty|jean|jan|may|piper|wade|ollie|pat|randy|robin|trinity|alexandria|houston|al|kobe|salvador)';
-  // let names = ts.match(firstNames);
-  // if (names.found) {
-  //
-  // }
+  let firstNames = '(rod|rob|dick|buck|bob|rusty|sandy|van|sky|bill|mark|jack|ray|misty|jean|piper|wade|ollie|pat|randy|robin|trinity)';
+  let names = ts.match(firstNames);
+  if (names.found) {
+    //prolly not a name:
+    if (ts.has('(#Determiner|#Adverb|#Pronoun|#Possessive) ' + firstNames)) {
+      names.unTag('Person', 'the-bill');
+    } else {
+      //probably a name here:
+      let name = ts.match('(#Honorific|#Person) ' + firstNames);
+      if (!name.found) {
+        name = ts.match(firstNames + ' (#Person|#Honorific|#TitleCase)');
+      }
+      if (name.found && name.has('(#Place|#Date|#Organization)') === false) {
+        name.tag('Person', 'dr-bill');
+        names.tag('FirstName', 'ambiguous-name');
+      }
+    }
+  }
+  //tighter-matches for other ambiguous names:
+  ts.match('(al|jan|may|paris|alexandria|houston|kobe|salvador) #Acronym? #LastName').firstTerm().tag('#FirstName', 'ambig-lastname');
 
   //methods requiring a firstname match
   if (ts.has('#FirstName')) {

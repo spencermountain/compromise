@@ -25,10 +25,12 @@
 </div>
 <br/>
 
+![image](https://user-images.githubusercontent.com/399657/35827451-1696956c-0a8a-11e8-8337-034b63474239.png)
+
 save yourself from **regex-whackamole**:
 ```js
-var doc = nlp(myNovel) //parse any text you want..
-doc.sentences().if('the #Adjective of times').out()//query for any shape/pattern
+var doc = nlp(myNovel)
+doc.sentences().if('the #Adjective of times').out()
 // "it was the blurst of times??"
 ```
 

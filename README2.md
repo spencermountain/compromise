@@ -22,18 +22,7 @@
 </div>
 <br/>
 
-<img src="https://user-images.githubusercontent.com/399657/35827451-1696956c-0a8a-11e8-8337-034b63474239.png" />
-
-<table align="center">
-	<tr>
-		<td>
-		hello
-		</td>
-		<td>
-			<img width="280" src="https://user-images.githubusercontent.com/399657/35828186-9fb992f2-0a8c-11e8-94ff-fc699a0482a1.png"/>
-		</td>
-	</tr>
-</table>
+<img src="https://user-images.githubusercontent.com/399657/35828705-828fd2ca-0a8e-11e8-9f12-88e840b8b399.png" />
 
 save yourself from **regex-whackamole**:
 ```js

@@ -21,13 +21,16 @@
   </sub>
 </div>
 <br/>
+
+<img src="https://user-images.githubusercontent.com/399657/35827451-1696956c-0a8a-11e8-8337-034b63474239.png" />
+
 <table align="center">
 	<tr>
 		<td>
-			<img src="https://user-images.githubusercontent.com/399657/35827451-1696956c-0a8a-11e8-8337-034b63474239.png"/>
+		hello
 		</td>
 		<td>
-			<img width="200" src="https://user-images.githubusercontent.com/399657/35828186-9fb992f2-0a8c-11e8-94ff-fc699a0482a1.png"/>
+			<img width="280" src="https://user-images.githubusercontent.com/399657/35828186-9fb992f2-0a8c-11e8-94ff-fc699a0482a1.png"/>
 		</td>
 	</tr>
 </table>
@@ -50,7 +53,7 @@ With [plugins](), adding vocabulary, setting a context, and fixing errors is a q
       <td align="center">
         <b>
           <a href="https://unpkg.com/compromise@latest/builds/compromise.min.js">
-            210kb
+            230kb
           </a>
         </b>
         <div>

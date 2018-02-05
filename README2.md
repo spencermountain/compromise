@@ -24,10 +24,10 @@
 <table align="center">
 	<tr align="center">
 		<td align="center">
-			![image](https://user-images.githubusercontent.com/399657/35827451-1696956c-0a8a-11e8-8337-034b63474239.png)
+			<img src="https://user-images.githubusercontent.com/399657/35827451-1696956c-0a8a-11e8-8337-034b63474239.png"/>
 		</td>
 		<td align="center">
-			![image](https://user-images.githubusercontent.com/399657/35827572-82d65d2a-0a8a-11e8-8dab-1098188e4c60.png)
+			<img src="https://user-images.githubusercontent.com/399657/35827572-82d65d2a-0a8a-11e8-8dab-1098188e4c60.png"/>
 		</td>
 		</tr>
 </table>

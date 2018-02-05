@@ -1,25 +1,27 @@
 <div align="center">
-	 <div>natural language processing, in javascript</div>
-   <img src="https://cloud.githubusercontent.com/assets/399657/21955696/46e882d4-da3e-11e6-94a6-720c34e27df7.jpg" />
+  <img src="https://cloud.githubusercontent.com/assets/399657/21955696/46e882d4-da3e-11e6-94a6-720c34e27df7.jpg" />
 </div>
 <div align="center">
-   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
-   <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />
-   </a>
-   <a href="https://npmjs.org/package/compromise">
-   <img src="https://img.shields.io/npm/v/compromise.svg?style=flat-square" />
-   </a>
-   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
-   <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
-   </a>
-   <sub>
-   by
-   <a href="https://github.com/spencermountain">Spencer Kelly</a> and
-   <a href="https://github.com/nlp-compromise/compromise/graphs/contributors">
-   many contributors
-   </a>
-   </sub>
+  <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
+    <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />
+  </a>
+  <a href="https://npmjs.org/package/compromise">
+    <img src="https://img.shields.io/npm/v/compromise.svg?style=flat-square" />
+  </a>
+  <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
+    <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
+  </a>
+  <div>natural language processing, in javascript</div>
+  <sub>
+    by
+    <a href="https://github.com/spencermountain">Spencer Kelly</a> and
+    <a href="https://github.com/nlp-compromise/compromise/graphs/contributors">
+      many contributors
+    </a>
+  </sub>
 </div>
+<br/>
+
 
 A *modest-but-competitive* parser + interpreter of english language.
 
@@ -27,18 +29,19 @@ A *modest-but-competitive* parser + interpreter of english language.
 	Small-enough for the browser, fast-enough for keypress.
 </div>
 ---
+
 ```js
 var doc = nlp(myNovel) //parse any text you want..
 doc.sentences().if('the #Adjective of times').out()//query for any shape/pattern
 // "it was the blurst of times??"
 ```
+
 quickly get some grammatically-structured data, and save yourself from **regex-whackamole**.
 
 ---
 compromise is not [the cleverest](#Justification), but it is small, quick, and good-enough for a large number of uses.
 
 With [plugins](), adding vocabulary, setting a context, and fixing errors is a quick one-liner.
----
 
 <!-- three-table section -->
 <div align="center">

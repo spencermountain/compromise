@@ -20,7 +20,9 @@ compromise uses semver, and pushes to npm frequently
 - better support for emdash numberRange
 - 'can\'t' contraction bugfix
 - fix for dates().toShortForm()
-
+##### 11.3.1
+- almost-double the support for first-names
+- changes to bestTag method
 
 ##### 11.0.0
 - support for persistent lexicon/tagset changes

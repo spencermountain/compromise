@@ -10,5 +10,4 @@ var nlp = require('./src/index');
 // var doc = nlp('girble').nouns().toPlural().debug();
 // doc.debug();
 
-let doc = nlp('cases').nouns().toSingular();
-doc.debug();
+console.log(nlp('he will walk the street, frontyard').terms().data().map(t => t.bestTag));

@@ -8,7 +8,8 @@ const boringTags = {
   Comma: 1,
   CamelCase: 1,
   UpperCase: 1,
-  Hyphenated: 1
+  Hyphenated: 1,
+  VerbPhrase: 1
 };
 
 const bestTag = function(t) {
@@ -18,11 +19,14 @@ const bestTag = function(t) {
   //then sort by #of parent tags
   tags = tags.sort((a, b) => {
     //bury the tags we dont want
-    if (boringTags[b] || !tagSet[a] || !tagSet[b]) {
+    if (!tagSet[a]) {
+      return 1;
+    }
+    if (boringTags[b] || !tagSet[b]) {
       return -1;
     }
     if (tagSet[a].downward.length > tagSet[b].downward.length) {
-      return -1;
+      return 1;
     }
     return 1;
   });

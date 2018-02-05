@@ -22,14 +22,14 @@
 </div>
 <br/>
 <table align="center">
-	<tr align="center">
-		<td align="center">
+	<tr>
+		<td>
 			<img src="https://user-images.githubusercontent.com/399657/35827451-1696956c-0a8a-11e8-8337-034b63474239.png"/>
 		</td>
-		<td align="center">
-			<img src="https://user-images.githubusercontent.com/399657/35827572-82d65d2a-0a8a-11e8-8dab-1098188e4c60.png"/>
+		<td>
+			<img src="https://user-images.githubusercontent.com/399657/35828186-9fb992f2-0a8c-11e8-94ff-fc699a0482a1.png"/>
 		</td>
-		</tr>
+	</tr>
 </table>
 
 save yourself from **regex-whackamole**:

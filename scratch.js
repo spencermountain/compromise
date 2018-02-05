@@ -1,5 +1,6 @@
 var nlp = require('./src/index');
-nlp.verbose('tagger');
+// nlp.verbose('tagger');
+
 // var myWords = {
 //   'university of toronto': 'Organization',
 //   'girble': 'CuteThing'
@@ -8,6 +9,11 @@ nlp.verbose('tagger');
 // r.debug();
 // var doc = nlp('girble').nouns().toPlural().debug();
 // doc.debug();
-
-let doc = nlp('jean jacket. jean Slkje');
+// configure
+// enforce
+// implement
+// pin
+// reset
+let doc = nlp('configure. enforce. implement. would pin. reset.');
+// let doc = nlp('pin. reset.');
 doc.debug();

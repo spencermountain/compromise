@@ -9,11 +9,6 @@ var nlp = require('./src/index');
 // r.debug();
 // var doc = nlp('girble').nouns().toPlural().debug();
 // doc.debug();
-// configure
-// enforce
-// implement
-// pin
-// reset
-let doc = nlp('configure. enforce. implement. would pin. reset.');
-// let doc = nlp('pin. reset.');
+
+let doc = nlp('cases').nouns().toSingular();
 doc.debug();

@@ -2,7 +2,66 @@
 
 const person_step = function(ts) {
   //mr Putin
-  ts.match('(mr|mrs|ms) (#TitleCase|#Possessive)+').tag('#Person').lastTerm();
+  ts.match('(mr|mrs|ms|dr) (#TitleCase|#Possessive)+').tag('#Person', 'mr-putin');
+
+  //a bunch of ambiguous first names
+  let maybeNoun = '(rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity)';
+  if (ts.has(maybeNoun)) {
+    ts.match('(#Determiner|#Adverb|#Pronoun|#Possessive) [' + maybeNoun + ']').tag('Noun', 'the-ray');
+    ts.match(maybeNoun + ' (#Person|#Acronym|#TitleCase)').canBe('#Person').tag('Person', 'ray-smith');
+  }
+  //verbs or people-names
+  let maybeVerb = '(pat|wade|ollie|will|rob|buck|bob|mark|jack)';
+  if (ts.has(maybeVerb)) {
+    ts.match('(#Modal|#Adverb) [' + maybeVerb + ']').tag('Verb', 'would-mark');
+    ts.match(maybeVerb + ' (#Person|#TitleCase)').tag('Person', 'rob-smith');
+  }
+  //adjectives or people-names
+  let maybeAdj = '(misty|rusty|dusty|rich|randy)';
+  if (ts.has(maybeAdj)) {
+    ts.match('#Adverb [' + maybeAdj + ']').tag('Adjective', 'really-rich');
+    ts.match(maybeAdj + ' (#Person|#TitleCase)').tag('Person', 'randy-smith');
+  }
+  //dates as people names
+  let maybeDate = '(april|june|may|jan|august|eve)';
+  if (ts.has(maybeDate)) {
+    ts.match('' + maybeDate + ' (#Person|#TitleCase)').canBe('#Person').tag('Person', 'june-smith');
+    ts.match('(in|during|on|by|before|#Date) [' + maybeDate + ']').canBe('#Date').tag('Date', 'in-june');
+    ts.match(maybeDate + ' (#Date|#Value)').canBe('#Date').tag('Date', 'june-5th');
+  }
+  //place-names as people-names
+  let maybePlace = '(paris|alexandria|houston|kobe|salvador|sydney)';
+  if (ts.has(maybePlace)) {
+    ts.match('(in|near|at|from|to|#Place) [' + maybePlace + ']').canBe('#Place').tag('Place', 'in-paris');
+    ts.match('[' + maybePlace + '] #Place').canBe('#Place').tag('Place', 'paris-france');
+    ts.match('[' + maybePlace + '] #Person').canBe('#Person').tag('Person', 'paris-hilton');
+  }
+  //this one is tricky
+  if (ts.match('al')) {
+    ts.match('al (#Person|#TitleCase)').canBe('#Person').tag('#Person', 'al-borlen');
+    ts.match('#TitleCase al #TitleCase').canBe('#Person').tag('#Person', 'arabic-al-arabic');
+  }
+  // let firstNames = '()';
+  // let names = ts.match(firstNames);
+  // if (names.found) {
+  //   //prolly not a name:
+  //   if (ts.has('(#Determiner|#Adverb|#Pronoun|#Possessive) ' + firstNames)) {
+  //     names.unTag('Person', 'the-bill');
+  //   } else {
+  //     //probably a name here:
+  //     let name = ts.match('(#Honorific|#Person) ' + firstNames);
+  //     if (!name.found) {
+  //       name = ts.match(firstNames + ' (#Person|#Honorific|#TitleCase)');
+  //     }
+  //     if (name.found && name.has('(#Place|#Date|#Organization)') === false) {
+  //       name.tag('Person', 'dr-bill');
+  //       names.tag('FirstName', 'ambiguous-name');
+  //     }
+  //   }
+  // }
+  //tighter-matches for other ambiguous names:
+  // ts.match('(al|) #Acronym? #LastName').firstTerm().tag('#FirstName', 'ambig-lastname');
+
   //methods requiring a firstname match
   if (ts.has('#FirstName')) {
     // Firstname x (dangerous)
@@ -105,6 +164,8 @@ const person_step = function(ts) {
 
   //remove single 'mr'
   ts.match('^#Honorific$').unTag('Person', 'single-honorific');
+
+
   return ts;
 };
 

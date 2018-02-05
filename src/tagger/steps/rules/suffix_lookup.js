@@ -36,7 +36,6 @@ module.exports = [
     azy: Adj,
     oid: Adj,
     mum: Adj,
-    ean: Adj,
     ous: Adj,
     end: Vb,
     sis: Sing,

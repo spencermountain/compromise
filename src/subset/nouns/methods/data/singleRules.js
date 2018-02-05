@@ -11,7 +11,7 @@ module.exports = [
   [/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i, '$1sis'],
   [/(vert|ind|cort)(ices)$/i, '$1ex'],
   [/(matr|append)(ices)$/i, '$1ix'],
-  [/(x|ch|ss|sh|s|z|o)es$/i, '$1'],
+  [/(x|ch|ss|sh|z|o)es$/i, '$1'],
   [/men$/i, 'man'],
   [/(n)ews$/i, '$1ews'],
   [/([ti])a$/i, '$1um'],

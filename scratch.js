@@ -1,5 +1,5 @@
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 // var myWords = {
 //   'university of toronto': 'Organization',
 //   'girble': 'CuteThing'
@@ -9,7 +9,5 @@ var nlp = require('./src/index');
 // var doc = nlp('girble').nouns().toPlural().debug();
 // doc.debug();
 
-let doc = nlp('The Bill was passed by James MacCarthur');
+let doc = nlp('jean jacket. jean Slkje');
 doc.debug();
-console.log(doc.people().out('array'));
-//(rod|rob|dick|buck|bob|rusty|sandy|van|sky|bill|mark|jack|al|ray|paris|misty|jean|jan|may|piper|wade|ollie|pat|randy|robin|trinity|alexandria|houston|al|kobe|salvador

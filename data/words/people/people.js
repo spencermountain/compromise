@@ -75,4 +75,13 @@ module.exports = [
   'ezekiel',
   'dalton',
   'lee',
+  'jaime',
+  'clinton',
+  'inez',
+  'ora',
+  'nettie',
+  'rosario',
+  'effie',
+  'sung',
+  'piper'
 ];

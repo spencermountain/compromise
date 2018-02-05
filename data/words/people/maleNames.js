@@ -945,5 +945,14 @@ module.exports = [
   'zachery',
   'zack',
   'zackary',
-  'zane'
+  'zane',
+
+
+  'wade',
+  'johnie',
+  'merrill',
+  'federico',
+  'donnell',
+  'donny',
+  'seymour'
 ];

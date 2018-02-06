@@ -6,7 +6,7 @@ const abbreviations = Object.keys(require('../world/more-data/abbreviations'));
 //regs-
 const abbrev_reg = new RegExp('\\b(' + abbreviations.join('|') + ')[.!?] ?$', 'i');
 const acronym_reg = new RegExp('[ |.][A-Z].?( *)$', 'i');
-const elipses_reg = new RegExp('\\.\\.+( +)?$');
+const elipses_reg = new RegExp('\\.\\.+( *)$');
 
 //start with a regex:
 const naiive_split = function(text) {

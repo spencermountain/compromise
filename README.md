@@ -47,7 +47,7 @@ nlp(entireNovel).sentences().if('the #Adjective of times').out()
 // "it was the blurst of times??"
 ```
 
-move it around:
+move things around:
 ```js
 nlp('she sells seashells by the seashore.').sentences().toFutureTense().out()
 // 'she will sell seashells...'
@@ -198,7 +198,7 @@ doc.sentences().toNegative()
 </table>
 
 <!-- plugins section -->
-by using __**[plugins](https://nlp-compromise.github.io/compromise-plugin/)**__, adding vocabulary, fixing errors, and setting context is quick:
+__**[plugins](https://nlp-compromise.github.io/compromise-plugin/)**__ allow adding vocabulary, fixing errors, and setting context quickly:
 ```js
 var plugin = {
   tags:{

@@ -57,7 +57,7 @@ test('value-number:', function(t) {
     ['thirty-seven forever-21 stores', 37]
   ].forEach(function(a) {
     var str = nlp(a[0]).values().toNumber().term(0).first().out('normal');
-    a[1] = '' + a[1];
+    a[1] = String(a[1]);
     str_test(str, a[0], a[1], t);
   });
   t.end();

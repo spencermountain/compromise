@@ -22,35 +22,37 @@
 </div>
 <br/>
 
+<!-- small enough for the browser... -->
 <img src="https://user-images.githubusercontent.com/399657/35828705-828fd2ca-0a8e-11e8-9f12-88e840b8b399.png" />
 
-<table>
+<!-- two gifs -->
+<table align="center">
   <tr>
-  <td>
-    <a href="http://compromise.cool">
-      <img width="350" src="https://user-images.githubusercontent.com/399657/35871669-d05e8d26-0b32-11e8-99c6-0f8887ae40ea.gif" />
-    </a>
-  </td>
-  <td>
-  <a href="http://compromise.cool">
-    <img width="350" src="https://user-images.githubusercontent.com/399657/35871664-cdab2bca-0b32-11e8-8827-81de658216fa.gif" />
-  </a>
-  </td>
+    <td>
+      <a href="http://compromise.cool">
+        <img width="350" src="https://user-images.githubusercontent.com/399657/35871664-cdab2bca-0b32-11e8-8827-81de658216fa.gif" />
+      </a>
+    </td>
+    <td>
+      <a href="http://compromise.cool">
+        <img width="350" src="https://user-images.githubusercontent.com/399657/35871669-d05e8d26-0b32-11e8-99c6-0f8887ae40ea.gif" />
+      </a>
+    </td>  
   </tr>
 </table>
 
-save yourself the **regex-whackamole**:
+👊 save yourself from **regex-whackamole**:
 ```js
-nlp(theNovel).sentences().if('the #Adjective of times').out()
+nlp(entireNovel).sentences().if('the #Adjective of times').out()
 // "it was the blurst of times??"
 ```
 
 move stuff around:
 ```js
-nlp('she sells seashells by the seashore.').sentences(0).toFutureTense().out()
-//'she will sell seashells...'
+nlp('she sells seashells by the seashore.').sentences().toFutureTense().out()
+// 'she will sell seashells...'
 ```
-respond to text-inputs:
+respond to text input:
 ```js
 if( doc.has('^simon says (shoot|fire) #Determiner lazer') ){
   fireLazer()
@@ -59,10 +61,10 @@ if( doc.has('^simon says (shoot|fire) #Determiner lazer') ){
 }
 ```
 
-<div align="right">
-  compromise is not <a href="#Justification">the cleverest</a>,
+<div align="center">
+  compromise is not <a href="./wiki/Justification">the cleverest</a>,
   <br/>
-  but it is small, quick, and good-enough for a large number of uses.
+  but it is <a href="./wiki/Performance">small, quick, and good-enough</a> for a bunch of uses.
 </div>
 
 ----
@@ -106,7 +108,7 @@ if( doc.has('^simon says (shoot|fire) #Determiner lazer') ){
   </table>
 </div>
 
-using **[plugins](https://nlp-compromise.github.io/compromise-plugin/)**, adding vocabulary, fixing errors, and setting context is quick:
+with __**[plugins](https://nlp-compromise.github.io/compromise-plugin/)**__, adding vocabulary, fixing errors, and setting context is quick:
 ```js
 var plugin = {
   tags:{
@@ -121,7 +123,8 @@ var plugin = {
 }
 nlp.plugin(plugin)
 nlp(`Couldn't Itchy share his pie with Scratchy?`).debug()
-/* couldn't   - #Modal, #Verb
+/*
+   couldn't   - #Modal, #Verb
    itchy      - #Character, #Noun
    share      - #Infinitive, #Verb
    ...

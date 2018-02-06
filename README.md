@@ -1,39 +1,114 @@
-
+<div align="center">
+  <img src="https://cloud.githubusercontent.com/assets/399657/21955696/46e882d4-da3e-11e6-94a6-720c34e27df7.jpg" />
+</div>
+<div align="center">
+  <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
+    <img src="https://api.codacy.com/project/badge/grade/82cc8ebd98b64ed199d7be6021488062" />
+  </a>
+  <a href="https://npmjs.org/package/compromise">
+    <img src="https://img.shields.io/npm/v/compromise.svg?style=flat-square" />
+  </a>
+  <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
+    <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
+  </a>
+  <div>modest natural-language processing in javascript</div>
+  <sub>
+    by
+    <a href="https://github.com/spencermountain">Spencer Kelly</a> and
+    <a href="https://github.com/spencermountain/compromise/graphs/contributors">
+      many contributors
+    </a>
+  </sub>
+</div>
 <br/>
 
-```javascript
-var nlp = require('compromise')
+<!-- small enough for the browser... -->
+<img src="https://user-images.githubusercontent.com/399657/35828705-828fd2ca-0a8e-11e8-9f12-88e840b8b399.png" />
 
-nlp('Wee-ooh, I look just like buddy holly.').sentences().toPastTense()
-// 'Wee-ooh, I looked just like buddy holly.'
+<!-- two gifs -->
+<table align="center">
+  <tr>
+    <td>
+      <a href="http://compromise.cool">
+        <img width="390" src="https://user-images.githubusercontent.com/399657/35871664-cdab2bca-0b32-11e8-8827-81de658216fa.gif" />
+      </a>
+    </td>
+    <td>
+      <a href="http://compromise.cool">
+        <img width="390" src="https://user-images.githubusercontent.com/399657/35871669-d05e8d26-0b32-11e8-99c6-0f8887ae40ea.gif" />
+      </a>
+    </td>  
+  </tr>
+</table>
 
-nlp('..then consider me Miles Davis!').people().out('freq')
-// [{ text:'Miles Davis', count:1 }]
+save yourself from **regex-whackamole**🤞:
+```js
+nlp(entireNovel).sentences().if('the #Adjective of times').out()
+// "it was the blurst of times??"
 ```
 
+move it around:
+```js
+nlp('she sells seashells by the seashore.').sentences().toFutureTense().out()
+// 'she will sell seashells...'
+```
+respond to text input:
+```js
+if( doc.has('^simon says (shoot|fire) #Determiner lazer') ){
+  fireLazer()
+} else {
+  dontFire()
+}
+```
 
 <div align="center">
-  <sub>
-      a  <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">
-      least-fancy</a> way to handle text,
-    </sub>
-    <h3 align="center">
-      Text in → data out.
-    </h3>
-  <sub>without <b>training</b>, <b>jargon</b> or <b>config</b></sub>
+  compromise is not <a href="https://github.com/spencermountain/compromise/wiki/Justification">the cleverest</a>.
+  <br/>
+  but it is <a href="https://github.com/spencermountain/compromise/wiki/Speed">small, quick, and good-enough</a> for a bunch of stuff.
 </div>
 
-<h3 align="center">
-  <a href="https://nlp-expo.firebaseapp.com/demos">Demos</a>
-  &nbsp; &nbsp; &nbsp;
-  <a href="https://github.com/nlp-compromise/compromise/wiki/Usage">Usage</a>
-  &nbsp; &nbsp; &nbsp;
-  <a href="https://nlp-compromise.github.io/#docs">API</a>
-  &nbsp; &nbsp; &nbsp;
-  <a href="https://github.com/nlp-compromise/compromise/wiki/How-it-Works">WTF</a>
-</h3>
+----
 
+<!-- three-table section -->
+<div align="center">
+  <table align="center">
+    <tr align="center">
+      <td align="center">
+        <b>
+          &lt;script src&gt;
+        </b>
+        <div>
+           &nbsp; &nbsp; &nbsp; &nbsp; one javascript file &nbsp; &nbsp; &nbsp; &nbsp;
+        </div>
+      </td>
+      <td align="center">
+        <b>🙏</b>
+        <div>
+          &nbsp; &nbsp; <kbd>npm install compromise</kbd> &nbsp; &nbsp;
+        </div>
+      </td>
+      <td align="center">
+        <div>
+          <b>
+            <a href="https://github.com/spencermountain/compromise/wiki/Accuracy">
+              86%
+            </a>
+          </b>
+          <div>
+            &nbsp; &nbsp; on the Penn treebank &nbsp; &nbsp;
+         </div>
+      </td>
+      <td align="center">
+        <b>IE9+</b>
+        <div>
+           &nbsp; &nbsp; &nbsp;  caniuse, youbetcha &nbsp; &nbsp; &nbsp;
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
 
+<!-- Install section -->
 #### ⚡️ on the Client-side
 ```html
 <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
@@ -111,7 +186,7 @@ doc.sentences().toNegative()
       </td>
       <td>
          <div align="center">
-            <a href="https://github.com/nlp-compromise/compromise/wiki/Usage">
+            <a href="https://github.com/spencermountain/compromise/wiki/Usage">
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Transformations &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
@@ -122,74 +197,44 @@ doc.sentences().toNegative()
    </tr>
 </table>
 
-<p></p>
-
-<table>
-  <tr>
-    <td>
-      <i>pop right in:</i>
-      <pre lang="javascript">var doc= nlp(myNovel) //whoosh
-doc.match('the #Superlative of times').length</pre>
-    </td>
-    <td>
-      <i>API is bearable:</i>
-      <pre lang="javascript">doc.contractions().expand()
-doc.people().lastNames()</pre>
-    </td>
-  </tr>
-  <tr>
-  <td>
-    <b align="center"><i>loosely-held opinions..</i></b>
-    <pre lang="js">var ayeRight= require('nlp-scottish-slang')
-nlp.plugin(ayeRight)
-
-nlp('Taps aff, high doh!')</pre>
-  </td>
-  <td>
-    <b align="center"><i>no foolin,</i></b>
-    <pre lang="haml">6 years, 150 PRs, 60 devs</pre>
-    <sub align="center">
-      in production in <a href="https://www.microsoft.com/developerblog/2017/06/06/geocoding-social-conversations-nlp-javascript/">the United Nations🎈</a>
-    </sub>
-  </td>
-  </tr>
-</table>
-
-### Throw in text,
-even if it's just one word:
+<!-- plugins section -->
+by using __**[plugins](https://nlp-compromise.github.io/compromise-plugin/)**__, adding vocabulary, fixing errors, and setting context is quick:
 ```js
-var doc = nlp('Ludwig van Beethoven')
+var plugin = {
+  tags:{
+    Character:{
+      isA: 'Noun'
+    }
+  },
+  words:{
+    itchy: 'Character',
+    scratchy: 'Character'
+  }
+}
+nlp.plugin(plugin)
+nlp(`Couldn't Itchy share his pie with Scratchy?`).debug()
+/*
+   couldn't   - #Modal, #Verb
+   itchy      - #Character, #Noun
+   share      - #Infinitive, #Verb
+   ...
+*/
 ```
 
-<ul>
-  <h3>Grab a part:</h3>
-  query any pattern with <b><a href="https://github.com/nlp-compromise/compromise/wiki/Match-syntax">.match()</a></b>, or use <a href="https://github.com/nlp-compromise/compromise/wiki/Usage#subset-methods">built-in methods</a> like <b>.nouns()</b>, or <b>.people()</b>:
-</ul>
+## Examples:
 
-```js
-doc.match('#TitleCase van #LastName').out()
-// 'Ludwig van Beethoven'
-
-doc.people().out('list')
-// ['ludwig van beethoven']
-```
-
-<ul>
-  <h3>Move stuff around:</h3>
-</ul>
-
-* <a href="https://github.com/nlp-compromise/compromise/wiki/Nouns"><b>Plural/singular:</b></a> - grab the noun-phrases, make em plural:
+* <a href="https://github.com/spencermountain/compromise/wiki/Nouns"><b>Plural/singular:</b></a> - grab the noun-phrases, make em plural:
 ```js
 doc = nlp('a bottle of beer on the wall.')
-doc.nouns().first().toPlural()
+doc.nouns(0).toPlural()
 doc.out('text')
 //'The bottles of beer on the wall.'
 ```
 
-* <a href="https://github.com/nlp-compromise/compromise/wiki/Values"><b>Number parsing:</b></a> - parse written-out numbers, and change their form:
+* <a href="https://github.com/spencermountain/compromise/wiki/Values"><b>Number parsing:</b></a> - parse written-out numbers, and change their form:
 ```js
 doc = nlp('ninety five thousand and fifty two')
-doc.values().toNumber().out('text')
+doc.values().toNumber().out()
 // '95052'
 
 doc = nlp('the 23rd of December')
@@ -198,13 +243,13 @@ doc.out('text')
 // 'the twenty fifth of December'
 ```
 
-* <a href="https://github.com/nlp-compromise/compromise/wiki/Usage"><b>Normalization:</b></a> - handle the craziness:
+* <a href="https://github.com/spencermountain/compromise/wiki/Usage"><b>Normalization:</b></a> - handle looseness & variety of random text:
 ```js
 doc = nlp("the guest-singer's björk   at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'
 ```
 
-* <a href="https://github.com/nlp-compromise/compromise/wiki/Verbs"><b>Tense:</b></a> - switch between conjugations of any verb
+* <a href="https://github.com/spencermountain/compromise/wiki/Verbs"><b>Tense:</b></a> - switch to/from conjugations of any verb
 ```js
 let doc = nlp('she sells seashells by the seashore.')
 doc.sentences().toFutureTense().out('text')
@@ -217,7 +262,7 @@ doc.verbs().conjugate()
 // }]
 ```
 
-* <a href="https://github.com/nlp-compromise/compromise/wiki/Contractions"><b> Contractions:</b></a> - grab, expand and contract them:
+* <a href="https://github.com/spencermountain/compromise/wiki/Contractions"><b> Contractions:</b></a> - grab, expand and contract:
 ```js
 doc = nlp("we're not gonna take it, no we ain't gonna take it.")
 doc.has('going') // true
@@ -226,9 +271,9 @@ doc.contractions().expand().out()
 //'we are not going to take it, no we are not going to take it'
 ```
 
-* <a href="https://github.com/nlp-compromise/compromise/wiki/Usage"><b> Named-entities:</b></a> - get the people, places, organizations:
+* <a href="https://github.com/spencermountain/compromise/wiki/Usage"><b> Named-entities:</b></a> - get the people, places, organizations:
 ```js
-doc = nlp('that opera about richard nixon visiting china')
+doc = nlp('the opera about richard nixon visiting china')
 doc.topics().data()
 // [
 //   { text: 'richard nixon' },
@@ -236,18 +281,18 @@ doc.topics().data()
 // ]
 ```
 
-* <a href="https://github.com/nlp-compromise/compromise/wiki/Lexicon"><b>Error correction:</b></a> - make it say what you'd like:
+* <a href="https://github.com/spencermountain/compromise/wiki/Lexicon"><b>Custom lexicon:</b></a> - make it do what you'd like:
 ```js
 var lexicon={
   'boston': 'MusicalGroup'
 }
 doc = nlp('i heard Boston\'s set in Chicago', lexicon)
 
-//alternatively, fix it all 'in-post':
+//alternatively, fix it 'in-post':
 doc.match('heard #Possessive set').terms(1).tag('MusicalGroup')
 ```
 
-* <a href="https://github.com/nlp-compromise/compromise/wiki/Output"><b> Handy outputs:</b></a> - get sensible data:
+* <a href="https://github.com/spencermountain/compromise/wiki/Output"><b> Handy outputs:</b></a> - get sensible data:
 ```js
 doc = nlp('We like Roy! We like Roy!').sentences().out('array')
 // ['We like Roy!', 'We like Roy!']
@@ -262,7 +307,7 @@ doc = nlp('Tony Hawk').out('html')
 */
 ```
 <h3 align="center">
-  of course, there's <a href="https://github.com/nlp-compromise/compromise/wiki">a lot more stuff</a>.
+  of course, there's <a href="https://github.com/spencermountain/compromise/wiki">a lot more stuff</a>.
 </h3>
 <h4 align="center">
   <b>Join in -</b>
@@ -296,7 +341,7 @@ doc = nlp('Tony Hawk').out('html')
       </a>
     </td>
     <td>
-      <a href="https://github.com/nlp-compromise/compromise/wiki/Contributing">
+      <a href="https://github.com/spencermountain/compromise/wiki/Contributing">
         <img src="https://cloud.githubusercontent.com/assets/399657/21956742/5985a89c-da55-11e6-87bc-4f0f1549d202.jpg"/>
         <div>&nbsp; &nbsp; &nbsp; Pull-requests &nbsp; &nbsp; &nbsp; </div>
       </a>
@@ -326,8 +371,8 @@ doc = nlp('Tony Hawk').out('html')
         <br/>
         string stuff is synchronous too, and parallelizing is weird.
         <br/>
-        See <a href="https://github.com/nlp-compromise/compromise/wiki/Speed">here</a> for information about speed & performance, and
-        <a href="https://github.com/nlp-compromise/compromise/wiki/Justification">here></a> for project motivations
+        See <a href="https://github.com/spencermountain/compromise/wiki/Speed">here</a> for information about speed & performance, and
+        <a href="https://github.com/spencermountain/compromise/wiki/Justification">here></a> for project motivations
       </ul>
       <p></p>
     </details>
@@ -339,7 +384,7 @@ doc = nlp('Tony Hawk').out('html')
       <ul>
         Only if it's water-proof!
         <br/>
-        Read <a href="https://github.com/nlp-compromise/compromise/wiki/QuickStart">quickStart</a> for all sorts of funny environments.
+        Read <a href="https://github.com/spencermountain/compromise/wiki/QuickStart">quickStart</a> for all sorts of funny environments.
       </ul>
       <p></p>
     </details>
@@ -349,7 +394,8 @@ doc = nlp('Tony Hawk').out('html')
       <summary>🌎 Other Languages?</summary>
       <p></p>
       <ul>
-        okay! we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a> and <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, in the same philosophy.
+        okay! <br/>
+        we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a> and <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, in the same philosophy.
         <br/>
         Get involved!
       </ul>
@@ -361,7 +407,7 @@ doc = nlp('Tony Hawk').out('html')
       <summary>✨ Partial builds?</summary>
       <p></p>
       <ul>
-        compromise can't really be tree-shaken, because it's one function.
+        compromise is one function so can't really be tree-shaken.
         <br/> .. and the tagging methods are competitive, so it's not recommended to pull things out.
         <br/>
         It's best to load the library fully, given it's smaller than <a href="https://68.media.tumblr.com/tumblr_m674jlpyPT1ry8fquo1_250.gif">this gif</a>.
@@ -375,8 +421,8 @@ doc = nlp('Tony Hawk').out('html')
 
 <hr/>
 
-### Don't forget about:
-* &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - decidedly fancier, statistical nlp in javascript
+### Also:
+* &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - fancier statistical nlp in javascript
 * &nbsp; **[superScript](http://superscriptjs.com/)** - clever conversation engine in js
 * &nbsp; **[nodeBox Linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
 * &nbsp; **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
@@ -387,11 +433,11 @@ For the former promise-library, see [jnewman/compromise](https://github.com/jnew
 (Thanks [Joshua](https://github.com/jnewman)!)
 
 <div align="right">
-(also don't forget 🙇
+(and don't forget 🙇
 <a href="http://www.nltk.org/">NLTK</a>,
 <a href="https://gate.ac.uk">GATE</a>,
 <a href="http://nlp.stanford.edu/software/lex-parser.shtml">Stanford</a>,
 and
-<a href="http://cogcomp.cs.illinois.edu/page/software/">Illinois toolkit</a>
+<a href="http://cogcomp.cs.illinois.edu/page/software/">Illinois</a> libs
 )
 </div>

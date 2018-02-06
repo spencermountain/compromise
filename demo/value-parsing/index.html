@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="./index.css"/>
+  </head>
+  <body>
+    <div id="container">
+  		<input type="text" id="input" onKeyUp="go()" value="six hundred and twenty"/>
+  		<div id="result"></div>
+    </div>
+    <script type="text/javascript" src="https://unpkg.com/compromise"></script>
+    <script type="text/javascript" defer>
+    function go() {
+      var text = document.getElementById('input').value || '';
+      var doc=nlp(text)
+			var nums = doc.values().toNumber()
+      document.getElementById('result').innerText = nums.out('array').join(', ')||' '
+    }
+    go()
+    </script>
+  </body>
+</html>

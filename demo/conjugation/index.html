@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="./index.css"/>
+  </head>
+  <body>
+    <div id="container">
+  		<input type="text" id="input" onKeyUp="go()" value="we dug a hole"/>
+  		<div id="guess">
+          from:
+  		    <span id="guessPos"></span>
+      </div>
+  		<table id="table"></table>
+    </div>
+    <script type="text/javascript" src="https://unpkg.com/compromise"></script>
+    <script type="text/javascript" defer>
+    function go() {
+      var text = document.getElementById('input').value || '';
+      var verb=nlp(text).verbs()
+      document.getElementById('guessPos').innerText = verb.conjugation()||''
+      var data=verb.data()[0]||{conjugations:{}}
+      console.log(data)
+      var html=Object.keys(data.conjugations).map((k) => {
+        var key='<td class="key">'+k+' :</td>'
+        var value='<td class="value">'+data.conjugations[k]+'</td>'
+        return '<tr>'+key+value+'</tr>'
+      })
+      document.getElementById('table').innerHTML = html.join(' ')||' '
+    }
+    go()
+    </script>
+  </body>
+</html>

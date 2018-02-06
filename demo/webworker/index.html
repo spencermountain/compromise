@@ -2,28 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>compromise Demo</title>
-    <script type="text/javascript" src="./freshPrince.js"></script>
-    <style>
-      h3 {
-        color: grey;
-      }
-      .textarea{
-        position:relative;
-        width:400px;
-        height:200px;
-        border-radius:5px;
-      }
-      .result{
-        color:pink;
-      }
-    </style>
+    <link rel="stylesheet" href="./index.css"/>
   </head>
-  <body style="position:relative; width:100%; height:100%; padding:20%;">
-    <div id="past-verb-test">
-      <div style="color:steelblue;">
-        Compromise is <a href="https://github.com/nlp-compromise/compromise/blob/master/demo/webworker">pretty cool</a> to use with <a href="https://www.html5rocks.com/en/tutorials/workers/basics/">webworkers</a>.
-        <div>This way you can keep its synchronous stuff off the main-thread.</div>
+  <body>
+    <div>
+      <div id="desc">
+        It's sometimes clever to run <a href="https://github.com/nlp-compromise/compromise">compromise</a>
+         in a <a href="https://www.html5rocks.com/en/tutorials/workers/basics/">webworker</a>.
+         <p></p>
+        <div>
+          This way you can keep the synchronous operations off the main-thread,
+          <br/>
+          <ul>
+            and run multiple tasks (potentially) in parallel.
+          </ul>
+          </div>
       </div>
       <p></p>
       <div>original text:</div>
@@ -31,21 +24,22 @@
       <p></p>
       <div>webworker response:</div>
       <p></p>
-      <div id="result" class="result"></div>
+      <div id="result"></div>
     </div>
+
+    <script type="text/javascript" src="./freshPrince.js"></script>
+    <script type="text/javascript">
+    //set text
+    document.getElementById('textarea').innerText = window.freshPrince;
+    //create the worker
+    var worker = new Worker('webworker.js');
+    worker.addEventListener('message', function(r) {
+      console.log('Worker said: ');
+      console.log(r)
+      document.getElementById('result').innerHTML = r.data;
+    }, false);
+    //send it our text
+    worker.postMessage(window.freshPrince);
+    </script>
   </body>
-  <script type="text/javascript" language="javascript">
-      var nlp = window.nlp;
-      //original text, for reference
-      document.getElementById('textarea').innerText = window.freshPrince;
-      //create the worker
-      var worker = new Worker('webworker.js');
-      worker.addEventListener('message', function(r) {
-        console.log('Worker said: ');
-        console.log(r)
-        document.getElementById('result').innerHTML = r.data;
-      }, false);
-      //send it our text
-      worker.postMessage(window.freshPrince);
-  </script>
 </html>

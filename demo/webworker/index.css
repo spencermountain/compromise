@@ -1,0 +1,26 @@
+html {
+	overflow: hidden;
+	height: 100%;
+}
+body {
+	overflow: auto;
+	position:relative;
+	width:100%;
+	height:100%;
+	padding:20%;
+	color:grey;
+	font-family: "Avenir Next" !important;
+}
+#desc {
+	color:steelblue;
+}
+.textarea {
+	position:relative;
+	width:400px;
+	height:200px;
+	color:lightgrey;
+	border-radius:5px;
+}
+#result {
+	color:#B1A8FF;
+}

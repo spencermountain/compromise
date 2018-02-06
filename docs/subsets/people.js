@@ -2,7 +2,7 @@
 module.exports = {
   data: {
     desc: 'return a handy array of meta-data of people mentioned in the text',
-    example: 'nlp(\'The bong-rattling bass of Mel Schacher? The competent drum work of Don Brewer?\').people().data()\n//[{text:\' Mel Schacher\'}, {text:\'Don Brewer\'}]',
+    example: 'nlp(\'The bone-rattling bass of Mel Schacher? The competent drum work of Don Brewer?\').people().data()\n//[{text:\' Mel Schacher\'}, {text:\'Don Brewer\'}]',
     returns: 'array'
   },
   pronoun: {

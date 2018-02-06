@@ -23,14 +23,23 @@
 <br/>
 
 <img src="https://user-images.githubusercontent.com/399657/35828705-828fd2ca-0a8e-11e8-9f12-88e840b8b399.png" />
+<img src="https://user-images.githubusercontent.com/399657/35871669-d05e8d26-0b32-11e8-99c6-0f8887ae40ea.gif" />
 
 save yourself from **regex-whackamole**:
 ```js
-myNovel.sentences().if('the #Adjective of times').out()
+nlp(myNovel).sentences().if('the #Adjective of times').out()
 // "it was the blurst of times??"
 ```
 
+move stuff around:
+```js
+nlp('she sells seashells by the seashore.').sentences(0).toFutureTense().out('text')
+//'she will sell seashells...'
+```
+
 compromise is not [the cleverest](#Justification), but it is small, quick, and good-enough for a large number of uses.
+
+<img src="https://user-images.githubusercontent.com/399657/35871664-cdab2bca-0b32-11e8-8827-81de658216fa.gif" />
 
 With [plugins](), adding vocabulary, setting a context, and fixing errors is a quick one-liner.
 

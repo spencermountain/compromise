@@ -10,4 +10,16 @@ var nlp = require('./src/index');
 // var doc = nlp('girble').nouns().toPlural().debug();
 // doc.debug();
 
-console.log(nlp('he will walk the street, frontyard').terms().data().map(t => t.bestTag));
+var plugin = {
+  tags: {
+    Character: {
+      isA: 'Noun'
+    }
+  },
+  words: {
+    itchy: 'Character',
+    scratchy: 'Character',
+  }
+};
+nlp.plugin(plugin);
+nlp(`Couldn't Itchy share his pie with Scratchy?`).debug();

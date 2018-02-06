@@ -351,10 +351,10 @@ doc = nlp('Tony Hawk').out('html')
 
 <div align="left">
   <a href="https://www.youtube.com/watch?v=WuPVS2tCg8s">
-    <img src="http://img.youtube.com/vi/WuPVS2tCg8s/mqdefault.jpg"/>
+    <img width="300" src="http://img.youtube.com/vi/WuPVS2tCg8s/mqdefault.jpg"/>
   </a>
   <a href="https://www.youtube.com/watch?v=c_hmwFwvO0U">
-    <img src="https://user-images.githubusercontent.com/399657/27890263-88e1fd10-61bf-11e7-93f2-745167f88d58.png"/>
+    <img width="300" src="https://user-images.githubusercontent.com/399657/27890263-88e1fd10-61bf-11e7-93f2-745167f88d58.png"/>
   </a>
 </div>
 

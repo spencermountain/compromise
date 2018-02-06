@@ -23,25 +23,35 @@
 <br/>
 
 <img src="https://user-images.githubusercontent.com/399657/35828705-828fd2ca-0a8e-11e8-9f12-88e840b8b399.png" />
-<img src="https://user-images.githubusercontent.com/399657/35871669-d05e8d26-0b32-11e8-99c6-0f8887ae40ea.gif" />
+<a href="http://compromise.cool">
+  <img width="350" src="https://user-images.githubusercontent.com/399657/35871669-d05e8d26-0b32-11e8-99c6-0f8887ae40ea.gif" />
+</a>
 
-save yourself from **regex-whackamole**:
+save yourself the **regex-whackamole**:
 ```js
-nlp(myNovel).sentences().if('the #Adjective of times').out()
+nlp(theNovel).sentences().if('the #Adjective of times').out()
 // "it was the blurst of times??"
 ```
 
 move stuff around:
 ```js
-nlp('she sells seashells by the seashore.').sentences(0).toFutureTense().out('text')
+nlp('she sells seashells by the seashore.').sentences(0).toFutureTense().out()
 //'she will sell seashells...'
+```
+respond to text-inputs:
+```js
+if(doc.has('^#Person says (shoot|fire) #Determiner lazer')){
+  fireLazer()
+}else{
+  dontFireLazer()
+}
 ```
 
 compromise is not [the cleverest](#Justification), but it is small, quick, and good-enough for a large number of uses.
 
-<img src="https://user-images.githubusercontent.com/399657/35871664-cdab2bca-0b32-11e8-8827-81de658216fa.gif" />
+----
 
-With [plugins](), adding vocabulary, setting a context, and fixing errors is a quick one-liner.
+<img width="200" src="https://user-images.githubusercontent.com/399657/35871664-cdab2bca-0b32-11e8-8827-81de658216fa.gif" />
 
 <!-- three-table section -->
 <div align="center">
@@ -49,9 +59,7 @@ With [plugins](), adding vocabulary, setting a context, and fixing errors is a q
     <tr align="center">
       <td align="center">
         <b>
-          <a href="https://unpkg.com/compromise@latest/builds/compromise.min.js">
-            230kb
-          </a>
+          &lt;script src=""&gt;
         </b>
         <div>
            &nbsp; &nbsp; &nbsp; &nbsp; one javascript file &nbsp; &nbsp; &nbsp; &nbsp;
@@ -83,3 +91,20 @@ With [plugins](), adding vocabulary, setting a context, and fixing errors is a q
     </tr>
   </table>
 </div>
+
+With [plugins](https://nlp-compromise.github.io/compromise-plugin/), adding vocabulary, setting a context, and fixing errors is quick:
+```js
+var lexicon={
+  tags:{
+    Character:{
+      isA:'Noun'
+    }
+  },
+  words:{
+    itchy:'Character',
+    scratchy:'Character',
+  }
+}
+nlp.plugin(plugin)
+nlp(`Couldn't Itchy share his pie with Scratchy?`).debug()
+```

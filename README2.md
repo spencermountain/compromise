@@ -11,7 +11,7 @@
   <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
     <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
   </a>
-  <div>modest natural language processing in javascript</div>
+  <div>modest natural-language processing in javascript</div>
   <sub>
     by
     <a href="https://github.com/spencermountain">Spencer Kelly</a> and
@@ -26,8 +26,7 @@
 
 save yourself from **regex-whackamole**:
 ```js
-var doc = nlp(myNovel)
-doc.sentences().if('the #Adjective of times').out()
+myNovel.sentences().if('the #Adjective of times').out()
 // "it was the blurst of times??"
 ```
 

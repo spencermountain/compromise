@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="./index.css"/>
+  </head>
+  <body>
+    <div id="container">
+  		<input type="text" id="input" onKeyUp="go()" value="we don't want anymore bears"/>
+  		<div id="result"></div>
+    </div>
+    <script type="text/javascript" src="https://unpkg.com/compromise"></script>
+    <script type="text/javascript" defer>
+    function go() {
+      var text = document.getElementById('input').value || '';
+      var doc=nlp(text)
+			var list = doc.contractions().expand()
+			var html=list.out('array').map(function(str){
+				return '<div>'+str+'</div>'
+			})
+      document.getElementById('result').innerHTML = html.join(' ')||' '
+    }
+    go()
+    </script>
+  </body>
+</html>

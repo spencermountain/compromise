@@ -38,7 +38,11 @@ const miscMethods = Terms => {
       return new Terms(terms, this.world, this.refText, this.refTerms);
     },
     endPunctuation: function() {
-      return this.last().terms[0].endPunctuation();
+      let lastTerm = this.last().terms[0];
+      if (!lastTerm) {
+        return '';
+      }
+      return lastTerm.endPunctuation() || '';
     },
     index: function() {
       let parent = this.parentTerms;

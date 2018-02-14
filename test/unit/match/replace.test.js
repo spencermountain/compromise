@@ -36,6 +36,13 @@ test('match-replace :', function(t) {
   t.end();
 });
 
+test('replace-with-punctuation', function(t) {
+  let doc = nlp('Simon, how is Pamela and Jason?');
+  let str = doc.match('#Person').replace('PERSON').all().out();
+  t.equal(str, 'PERSON, how is PERSON and PERSON?', 'replace-with-punctuation');
+  t.end();
+});
+
 test('structured-object-replace :', function(t) {
   var r = nlp('fun times in cool town');
   var term = r.match('times');

@@ -9,17 +9,6 @@ const replaceMethods = Terms => {
       if (str2 === undefined) {
         return this.replaceWith(str1, keepTags);
       }
-      //support capture-group syntax
-      // if (str2.match(/\$1\b/)) {
-      //   //this is not very well-done and should be handled better:
-      //   let captureThis = str1.match(/\[(.+?)\]/);
-      //   if (captureThis && captureThis[1]) {
-      //     let found = this.match(str1).match(captureThis[1]);
-      //     found = found.out('text').trim();
-      //     //insert captured-text in the replace string
-      //     str2 = str2.replace(/\$1\b/g, found);
-      //   }
-      // }
       this.match(str1).replaceWith(str2, keepTags);
       return this;
     },
@@ -37,10 +26,17 @@ const replaceMethods = Terms => {
           }
         });
       }
+      //keep its ending punctation..
+      let endPunct = this.endPunctuation();
+      //grab the insertion place..
       let index = this.index();
       this.parentTerms = mutate.deleteThese(this.parentTerms, this);
       this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index, newTs);
       this.terms = newTs.terms;
+      //add-in the punctuation at the end..
+      if (this.terms.length > 0) {
+        this.terms[this.terms.length - 1].whitespace.after += endPunct;
+      }
       return this;
     }
   };

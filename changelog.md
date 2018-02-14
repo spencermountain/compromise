@@ -23,6 +23,8 @@ compromise uses semver, and pushes to npm frequently
 ##### 11.3.1
 - almost-double the support for first-names
 - changes to bestTag method
+##### 11.4.1
+- include old ending punctuation in a `.replace()` cmd
 
 ##### 11.0.0
 - support for persistent lexicon/tagset changes

@@ -9,7 +9,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.3.0",
+  "version": "11.4.0",
   "main": "./builds/compromise.js",
   "types": "./compromise.d.ts",
   "repository": {
@@ -10065,7 +10065,11 @@ var miscMethods = function miscMethods(Terms) {
       return new Terms(terms, this.world, this.refText, this.refTerms);
     },
     endPunctuation: function endPunctuation() {
-      return this.last().terms[0].endPunctuation();
+      var lastTerm = this.last().terms[0];
+      if (!lastTerm) {
+        return '';
+      }
+      return lastTerm.endPunctuation() || '';
     },
     index: function index() {
       var parent = this.parentTerms;
@@ -10253,17 +10257,6 @@ var replaceMethods = function replaceMethods(Terms) {
       if (str2 === undefined) {
         return this.replaceWith(str1, keepTags);
       }
-      //support capture-group syntax
-      // if (str2.match(/\$1\b/)) {
-      //   //this is not very well-done and should be handled better:
-      //   let captureThis = str1.match(/\[(.+?)\]/);
-      //   if (captureThis && captureThis[1]) {
-      //     let found = this.match(str1).match(captureThis[1]);
-      //     found = found.out('text').trim();
-      //     //insert captured-text in the replace string
-      //     str2 = str2.replace(/\$1\b/g, found);
-      //   }
-      // }
       this.match(str1).replaceWith(str2, keepTags);
       return this;
     },
@@ -10283,10 +10276,17 @@ var replaceMethods = function replaceMethods(Terms) {
           }
         });
       }
+      //keep its ending punctation..
+      var endPunct = this.endPunctuation();
+      //grab the insertion place..
       var index = this.index();
       this.parentTerms = mutate.deleteThese(this.parentTerms, this);
       this.parentTerms.terms = mutate.insertAt(this.parentTerms.terms, index, newTs);
       this.terms = newTs.terms;
+      //add-in the punctuation at the end..
+      if (this.terms.length > 0) {
+        this.terms[this.terms.length - 1].whitespace.after += endPunct;
+      }
       return this;
     }
   };
@@ -11845,7 +11845,7 @@ var abbreviations = Object.keys(_dereq_('../world/more-data/abbreviations'));
 //regs-
 var abbrev_reg = new RegExp('\\b(' + abbreviations.join('|') + ')[.!?] ?$', 'i');
 var acronym_reg = new RegExp('[ |.][A-Z].?( *)$', 'i');
-var elipses_reg = new RegExp('\\.\\.+( +)?$');
+var elipses_reg = new RegExp('\\.\\.+( *)$');
 
 //start with a regex:
 var naiive_split = function naiive_split(text) {

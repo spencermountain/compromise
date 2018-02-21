@@ -7080,6 +7080,7 @@ const properNoun = function(ts) {
     ts.match('(#City|#Region|#Country)').tag('ProperNoun');
   }
   ts.match('#Organization').tag('ProperNoun');
+  ts.match('#Month').tag('ProperNoun');
   return ts;
 };
 module.exports = properNoun;
@@ -8181,18 +8182,23 @@ module.exports = {
   Pronoun: {
     isA: 'Noun'
   },
+  //a word for someone doing something -'plumber'
   Actor: {
     isA: 'Noun'
   },
+  //a gerund-as-noun - 'swimming'
   Activity: {
     isA: 'Noun'
   },
+  //'kilograms'
   Unit: {
     isA: 'Noun'
   },
+  //'Canadians'
   Demonym: {
     isA: 'Noun'
   },
+  //`john's`
   Possessive: {
     isA: 'Noun'
   }

@@ -77,6 +77,7 @@ module.exports = [
   'system',
   'tic',
   'tv show',
+  't rex',
   'there',
   'thing',
   // 'things',

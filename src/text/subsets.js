@@ -54,6 +54,8 @@ const addSubsets = Text => {
       let yup = r.people();
       yup.concat(r.places());
       yup.concat(r.organizations());
+      let ignore = ['someone', 'man', 'woman', 'mother', 'brother', 'sister', 'father'];
+      yup = yup.not(ignore);
       //return them to normal ordering
       yup.sort('chronological');
       // yup.unique() //? not sure

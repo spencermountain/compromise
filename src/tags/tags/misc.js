@@ -22,6 +22,7 @@ module.exports = {
   Preposition: {},
   QuestionWord: {},
   Expression: {},
+  Abbreviation: {},
   Url: {},
   PhoneNumber: {},
   HashTag: {},

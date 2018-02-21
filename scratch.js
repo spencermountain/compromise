@@ -10,4 +10,4 @@ var nlp = require('./src/index');
 
 
 
-nlp('101010101010101010101010101010101010101010').debug();
+nlp('march and feb').debug();

@@ -75,9 +75,12 @@ const datePass = function (ts) {
     ts.match(`${preps} ${verbs}`).lastTerm().tag('Month', 'in-month');
     //this march
     ts.match(`(next|this|last) ${verbs}`).lastTerm().tag('Month', 'this-month');
-
+    //with date
     ts.match(`${verbs} the? #Value`).firstTerm().tag('Month', 'march-5th');
     ts.match(`#Value of? ${verbs}`).lastTerm().tag('Month', '5th-of-march');
+    //nearby
+    ts.match(`[${verbs}] .? #Date`).lastTerm().tag('Month', 'march-and-feb');
+    ts.match(`#Date .? [${verbs}]`).lastTerm().tag('Month', 'feb-and-march');
 
     if (ts.has('march')) {
       //march to

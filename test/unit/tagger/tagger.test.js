@@ -78,7 +78,10 @@ test('=Tagger=', function(T) {
       ['there were the walks', ['Noun', 'Copula', 'Determiner', 'Noun']],
 
       ['it was fixed', ['Noun', 'Copula', 'PastTense']],
-      ['it will be boxed', ['Noun', 'Verb', 'Verb', 'PastTense']]
+      ['it will be boxed', ['Noun', 'Verb', 'Verb', 'PastTense']],
+
+      //abbreviations
+      ['col. Patrick said march and feb. etc.', ['Abbreviation', 'Person', 'PastTense', 'Month', 'Conjunction', 'Abbreviation', 'Abbreviation']]
     ].forEach(function(a) {
       var terms = nlp(a[0]).terms(); //.data();
       pos_test(terms, a[1], t);

@@ -147,8 +147,8 @@ let compact = {
     'sr',
     'supt',
     'surg'
-    //miss
-    //misses
+  //miss
+  //misses
   ]
 };
 
@@ -158,7 +158,7 @@ const keys = Object.keys(compact);
 for (let i = 0; i < keys.length; i++) {
   const arr = compact[keys[i]];
   for (let i2 = 0; i2 < arr.length; i2++) {
-    abbreviations[arr[i2]] = keys[i];
+    abbreviations[arr[i2]] = [keys[i], 'Abbreviation'];
   }
 }
 module.exports = abbreviations;

@@ -326,6 +326,7 @@ module.exports = [
   'make due',
   'manage',
   'market',
+  'march',
   'marry',
   'match',
   'matter',

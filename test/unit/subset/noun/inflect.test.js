@@ -99,7 +99,17 @@ test('==Plurals==', function(T) {
       ['oafs', 'oaf'],
       ['wives', 'wife'],
       ['roofs', 'roof'],
-      ['hooves', 'hoof']
+      ['hooves', 'hoof'],
+      ['buses', 'bus'],
+      ['tosses', 'toss'],
+      ['wishes', 'wish'],
+      ['geniouses', 'genious'],
+      ['prognoses', 'prognosis'],
+      ['analyses', 'analysis'],
+      ['synopses', 'synopsis'],
+      ['parentheses', 'parenthesis'],
+      ['theses', 'thesis'],
+      ['bases', 'base']
     ].forEach(function(a) {
       var r = nlp(a[0]).tag('Noun').nouns();
       var str = r.toSingular().out('normal');

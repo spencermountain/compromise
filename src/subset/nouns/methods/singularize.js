@@ -1,5 +1,4 @@
 'use strict';
-// const irregulars = require('../../../lexicon/uncompressed/irregularPlurals').toSingle;
 const singleRules = require('./data/singleRules');
 
 //turn 'shoes' into 'shoe'
@@ -7,10 +6,8 @@ const toSingle = function(str, world) {
   //reverse it //TODO: cache in world object somewhere
   let irregulars = world.cache.toSingular || {};
   //check irregulars
-  {
-    if (irregulars.hasOwnProperty(str) === true) {
-      return irregulars[str];
-    }
+  if (irregulars.hasOwnProperty(str) === true) {
+    return irregulars[str];
   }
   if (world && world.plurals) {
     //given irregulars
@@ -21,6 +18,7 @@ const toSingle = function(str, world) {
       }
     }
   }
+
   //inflect first word of preposition-phrase
   if (/([a-z]*) (of|in|by|for) [a-z]/.test(str) === true) {
     const first = (str.match(/^([a-z]*) (of|in|by|for) [a-z]/) || [])[1];

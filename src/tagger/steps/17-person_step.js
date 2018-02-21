@@ -1,5 +1,6 @@
 'use strict';
 
+//sort-out things like 'theresa may', or 'will jones'.
 const person_step = function(ts) {
   //mr Putin
   ts.match('(mr|mrs|ms|dr) (#TitleCase|#Possessive)+').tag('#Person', 'mr-putin');

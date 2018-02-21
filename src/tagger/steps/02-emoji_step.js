@@ -1,6 +1,11 @@
 'use strict';
 const emojiReg = require('./rules/emoji_regex');
 const emoticon = require('./rules/emoticon_list');
+//for us, there's three types -
+// * ;) - emoticons
+// * 🌵 - unicode emoji
+// * :smiling_face: - asci-represented emoji
+
 //test for forms like ':woman_tone2:‍:ear_of_rice:'
 //https://github.com/Kikobeats/emojis-keywords/blob/master/index.js
 const isCommaEmoji = (t) => {

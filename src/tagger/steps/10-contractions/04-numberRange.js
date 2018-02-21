@@ -1,6 +1,6 @@
 'use strict';
 const fixContraction = require('./fix');
-const Term = require('../../term');
+const Term = require('../../../term');
 
 const hasDash = function(t) {
   let dashes = /(-|–|—)/;

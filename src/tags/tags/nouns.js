@@ -4,6 +4,10 @@ module.exports = {
   Singular: {
     isA: 'Noun'
   },
+  //a specific thing that's capitalized
+  ProperNoun: {
+    isA: 'Noun'
+  },
 
   // -- people
   Person: {

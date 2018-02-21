@@ -1,5 +1,6 @@
 'use strict';
-//
+//auxiliary verbs are extra verbs beside the main ones
+// "[will be] going" - etc.
 
 const Auxiliary = {
   'do': true,

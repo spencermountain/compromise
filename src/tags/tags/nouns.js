@@ -69,18 +69,23 @@ module.exports = {
   Pronoun: {
     isA: 'Noun'
   },
+  //a word for someone doing something -'plumber'
   Actor: {
     isA: 'Noun'
   },
+  //a gerund-as-noun - 'swimming'
   Activity: {
     isA: 'Noun'
   },
+  //'kilograms'
   Unit: {
     isA: 'Noun'
   },
+  //'Canadians'
   Demonym: {
     isA: 'Noun'
   },
+  //`john's`
   Possessive: {
     isA: 'Noun'
   }

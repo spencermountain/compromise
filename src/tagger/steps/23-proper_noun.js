@@ -9,6 +9,7 @@ const properNoun = function(ts) {
     ts.match('(#City|#Region|#Country)').tag('ProperNoun');
   }
   ts.match('#Organization').tag('ProperNoun');
+  ts.match('#Month').tag('ProperNoun');
   return ts;
 };
 module.exports = properNoun;

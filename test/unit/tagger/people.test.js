@@ -2,8 +2,8 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 
 test('people:', function(t) {
-  let doc = nlp('Mary is in the boat. Nancy is in the boat. Fred is in the boat. Jack is too.');
-  let arr = doc.people().out('array');
+  var doc = nlp('Mary is in the boat. Nancy is in the boat. Fred is in the boat. Jack is too.');
+  var arr = doc.people().out('array');
   t.deepEqual(arr, ['mary', 'nancy', 'fred', 'jack'], 'people-easy');
 
   doc = nlp('jean jacket. jean Slkje');

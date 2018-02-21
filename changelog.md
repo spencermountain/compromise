@@ -25,6 +25,10 @@ compromise uses semver, and pushes to npm frequently
 - changes to bestTag method
 ##### 11.4.1
 - include old ending punctuation in a `.replace()` cmd
+##### 11.5.0
+- add #Abbreviation tag
+- add #ProperNoun tag
+- fixes for noun inflection
 
 ##### 11.0.0
 - support for persistent lexicon/tagset changes

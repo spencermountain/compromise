@@ -1,5 +1,5 @@
 'use strict';
-const split = require('./10-contractions/split');
+const split = require('./contraction/split');
 // const l = require('../../lexicon/init');
 // const lexicon = l.lexicon;
 

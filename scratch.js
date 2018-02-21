@@ -2,4 +2,5 @@ var nlp = require('./src/index');
 // nlp.verbose('tagger');
 
 
-nlp('I met John Smith in Toronto and we ate shellfish at 23 Main st.').debug();
+let str = 'I met John Smith in Toronto and we ate shellfish at 23 Main st.';
+console.log(nlp(str).match('#ProperNoun+').out('array'));

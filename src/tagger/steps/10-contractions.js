@@ -1,8 +1,8 @@
 'use strict';
-const irregulars = require('./01-irregulars');
-const isWasHas = require('./02-isWasHas');
-const easyOnes = require('./03-easyOnes');
-const numberRange = require('./04-numberRange');
+const irregulars = require('./contraction/01-irregulars');
+const isWasHas = require('./contraction/02-isWasHas');
+const easyOnes = require('./contraction/03-easyOnes');
+const numberRange = require('./contraction/04-numberRange');
 
 //find and pull-apart contractions
 const interpret = function(ts) {

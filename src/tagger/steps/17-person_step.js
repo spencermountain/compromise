@@ -26,7 +26,7 @@ const person_step = function(ts) {
   //dates as people names
   let maybeDate = '(april|june|may|jan|august|eve)';
   if (ts.has(maybeDate)) {
-    ts.match('' + maybeDate + ' (#Person|#TitleCase)').canBe('#Person').tag('Person', 'june-smith');
+    ts.match(String(maybeDate) + ' (#Person|#TitleCase)').canBe('#Person').tag('Person', 'june-smith');
     ts.match('(in|during|on|by|before|#Date) [' + maybeDate + ']').canBe('#Date').tag('Date', 'in-june');
     ts.match(maybeDate + ' (#Date|#Value)').canBe('#Date').tag('Date', 'june-5th');
   }

@@ -9,7 +9,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.5.0",
+  "version": "11.5.1",
   "main": "./builds/compromise.js",
   "types": "./compromise.d.ts",
   "repository": {
@@ -8243,15 +8243,15 @@ var addMethods = function addMethods(Term) {
         return false;
       }
       //has numbers but not a 'value'
-      if (hasNumber.test(t.normal) === true) {
+      if (hasNumber.test(t.normal) === true && t.tags.hasOwnProperty('Value') === false) {
         //s4e
         if (/[a-z][0-9][a-z]/.test(t.normal) === true) {
           return false;
         }
         //ensure it looks like a 'value' eg '-$4,231.00'
-        if (/^([$-])*?([0-9,\.])*?([s\$%])*?$/.test(t.normal) === false) {
-          return false;
-        }
+        // if (/^([$-])*?([0-9,\.])*?([s\$%])*?$/.test(t.normal) === false) {
+        //   return false;
+        // }
       }
       return true;
     }

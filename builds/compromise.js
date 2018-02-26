@@ -9,7 +9,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.5.1",
+  "version": "11.5.2",
   "main": "./builds/compromise.js",
   "types": "./compromise.d.ts",
   "repository": {
@@ -11824,6 +11824,8 @@ var addSubsets = function addSubsets(Text) {
     },
     quotations: function quotations(n) {
       var r = this.match('#Quotation+');
+      //split two consecutive quotations
+      r = r.splitAfter('/.["\'\u201D\u2036\u2019]([;:,.])?$/');
       if (typeof n === 'number') {
         r = r.get(n);
       }

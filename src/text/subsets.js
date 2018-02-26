@@ -43,6 +43,8 @@ const addSubsets = Text => {
     },
     quotations: function(n) {
       let r = this.match('#Quotation+');
+      //split two consecutive quotations
+      r = r.splitAfter('/.["\'\u201D\u2036\u2019]([;:,.])?$/');
       if (typeof n === 'number') {
         r = r.get(n);
       }

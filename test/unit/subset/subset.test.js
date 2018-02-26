@@ -33,10 +33,17 @@ test('adjectives', function(t) {
   t.end();
 });
 
+test('quotations', function(t) {
+  let have = nlp('My "String" "with many" adjacent "nested" \'quotes\'').quotations().out('array');
+  let want = ['string', 'with many', 'nested', 'quotes'];
+  t.deepEqual(have, want, 'consecutive quoations');
+  t.end();
+});
+
 test('contractions-subset', function(t) {
-  var m = nlp("he's nice. She could've seen.");
+  var m = nlp('he\'s nice. She could\'ve seen.');
   var have = mustBe(m.contractions().data());
-  var want = ["he's", "could've"];
+  var want = ['he\'s', 'could\'ve'];
   var msg = have.join(' -- ');
   t.deepEqual(have, want, msg);
 

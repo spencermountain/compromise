@@ -2,6 +2,7 @@
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2017 MIT
 'use strict';
+<<<<<<< HEAD
 const abbreviations = Object.keys(require('../world/more-data/abbreviations'));
 // \u203D - Interrobang
 // \u2E18 - Inverted Interrobang
@@ -22,15 +23,40 @@ const naiive_sentence_split = /(\S.+?[.!?\u203D\u2E18\u203C\u2047-\u2049])(?=\s+
 
 const letter_regex = /[a-z]/i;
 const not_ws_regex = /\S/;
+=======
+const abbreviations = Object.keys(require('./abbreviations'));
+// \u203D - INTERROBANG
+// \u2E18 - INVERTED INTERROBANG
+// \u203C - DOUBLE EXCLAMATION MARK
+// \u2047 - DOUBLE QUESTION MARK
+// \u2048 - QUESTION EXCLAMATION MARK
+// \u2049 - EXCLAMATION QUESTION MARK
+
+//regs-
+const abbrev_reg = new RegExp('(?:' + abbreviations.join('|') + ')[.!?]$', 'i');
+const acronym_reg = /[a-z](?:\.[a-z])*\.?$/i;
+const elipses_reg = /(?:\u2026|\.{2,})$/;
+
+const line_reg = /(?:\r?\n|\r)+/;
+const naiive_sentence_reg = /[^.!?\u203D\u2E18\u203C\u2047-\u2049]+(?:[.!?\u203D\u2E18\u203C\u2047-\u2049]+|$)/g;
+>>>>>>> 0f4031c52f3a908bb97ac125266040c261aa0178
 
 // Start with a regex:
 const naiive_split = function(text) {
   let all = [];
+<<<<<<< HEAD
   //first, split by newline
   let lines = text.split(new_line);
   for (let i = 0; i < lines.length; i++) {
     //split by period, question-mark, and exclamation-mark
     let arr = lines[i].split(naiive_sentence_split);
+=======
+  // Split by the majority of new line variations.
+  let lines = text.split(line_reg);
+  for (let i = 0; i < lines.length; i++) {
+    // Split by period, question-mark, and exclamation-mark
+    let arr = lines[i].match(naiive_sentence_reg);
+>>>>>>> 0f4031c52f3a908bb97ac125266040c261aa0178
     for (let o = 0; o < arr.length; o++) {
       all.push(arr[o]);
     }
@@ -79,6 +105,7 @@ const sentence_parser = function(text) {
     //should this chunk be combined with the next one?
     if (
       chunks[i + 1] &&
+<<<<<<< HEAD
       letter_regex.test(c) &&
       (
         abbrev_reg.test(c) ||
@@ -88,6 +115,17 @@ const sentence_parser = function(text) {
     ) {
       chunks[i + 1] = c + (chunks[i + 1] || '');
     } else if (c && c.length > 0 && letter_regex.test(c)) {
+=======
+      /[a-z]/i.test(c) &&
+      (
+        abbrev_reg.test(c) ||
+        acronym_reg.test(c) ||
+        elipses_reg.test(c)
+      )
+    ) {
+      chunks[i + 1] = c + (chunks[i + 1] || '');
+    } else if (c && c.length > 0 && /[a-z]/i.test(c)) {
+>>>>>>> 0f4031c52f3a908bb97ac125266040c261aa0178
       //this chunk is a proper sentence..
       sentences.push(c);
       chunks[i] = '';

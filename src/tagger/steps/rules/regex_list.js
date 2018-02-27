@@ -23,7 +23,9 @@ module.exports = {
     [/.[^aeiou]ica$/, Sing],
     [/^([hyj]a)+$/, Exp] //hahah
   ],
-  c: [[/.[^aeiou]ic$/, Adj]],
+  c: [
+    [/.[^aeiou]ic$/, Adj]
+  ],
   d: [
     [/.[ia]sed$/, Adj],
     [/.[gt]led$/, Adj],
@@ -56,28 +58,38 @@ module.exports = {
     [/^(k)+$/, Exp] //kkkk
   ],
   l: [
-    [/.[nrtumcd]al$/, Adj],
     [/.[gl]ial$/, Adj],
-    [/.[^aeiou]eal$/, Adj],
-    [/.[^aeiou][ei]al$/, Adj],
-    [/.[^aeiou]ful$/, Adj]
+    [/.[^aeiou]ful$/, Adj],
+    [/.[nrtumcd]al$/, Adj],
+    [/.[^aeiou][ei]al$/, Adj]
   ],
   m: [
     [/.[^aeiou]ium$/, Sing],
     [/[^aeiou]ism$/, Sing],
-    [/.[^aeiou]ium$/, Sing],
-    [/^mmm+$/, Exp], //mmmm
-    [/^[hu]m+$/, Exp], //ummmm
-    [/^[0-9]+ ?(am|pm)$/, 'Date']
+    [/^h*u*m+$/, Exp], //mmmmmmm / ummmm / huuuuuummmmmm
+    [/^\d+ ?[ap]m$/, 'Date']
   ],
-  n: [[/.[lsrnpb]ian$/, Adj], [/[^aeiou]ician$/, Actor]],
+  n: [
+    [/.[lsrnpb]ian$/, Adj],
+    [/[^aeiou]ician$/, Actor]
+  ],
   o: [
     [/^no+$/, Exp], //noooo
     [/^(yo)+$/, Exp], //yoyo
     [/^woo+[pt]?$/, Exp] //woo
   ],
-  r: [[/.[ilk]er$/, 'Comparative'], [/[aeiou][pns]er$/, Sing], [/[^i]fer$/, Inf], [/.[^aeiou][ao]pher$/, Actor]],
-  t: [[/.[di]est$/, 'Superlative'], [/.[icldtgrv]ent$/, Adj], [/[aeiou].*ist$/, Adj], [/^[a-z]et$/, Verb]],
+  r: [
+    [/.[ilk]er$/, 'Comparative'],
+    [/[aeiou][pns]er$/, Sing],
+    [/[^i]fer$/, Inf],
+    [/.[^aeiou][ao]pher$/, Actor]
+  ],
+  t: [
+    [/.[di]est$/, 'Superlative'],
+    [/.[icldtgrv]ent$/, Adj],
+    [/[aeiou].*ist$/, Adj],
+    [/^[a-z]et$/, Verb]
+  ],
   s: [
     [/.[rln]ates$/, Pres],
     [/.[^z]ens$/, Verb],
@@ -100,7 +112,6 @@ module.exports = {
     [/[bszmp]{2}y$/, Adj],
     [/.(gg|bb|zz)ly$/, Adj],
     [/.[aeiou]my$/, Adj],
-    [/.[^aeiou]ity$/, Sing],
     [/[ea]{2}zy$/, Adj],
     [/.[^aeiou]ity$/, Sing]
   ]

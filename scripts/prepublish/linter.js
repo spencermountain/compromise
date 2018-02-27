@@ -1,6 +1,6 @@
 var exec = require('shelljs').exec;
 var path = require('path');
-var eslint = 'node_modules/.bin/eslint';
+var eslint = '"node_modules/.bin/eslint"';
 
 //run linter
 console.log('linting..');

@@ -15,10 +15,10 @@ const step = {
   auxiliary_step: require('./steps/12-auxiliary_step'),
   negation_step: require('./steps/13-negation_step'),
   comma_step: require('./steps/14-comma_step'),
-  possessive_step: require('./steps/15-possessive_step'),
-  acronym_step: require('./steps/16-acronym_step'),
-  person_step: require('./steps/17-person_step'),
-  quotation_step: require('./steps/18-quotation_step'),
+  quotation_step: require('./steps/15-quotation_step'),
+  possessive_step: require('./steps/16-possessive_step'),
+  acronym_step: require('./steps/17-acronym_step'),
+  person_step: require('./steps/18-person_step'),
   organization_step: require('./steps/19-organization_step'),
   plural_step: require('./steps/20-plural_step'),
   value_step: require('./steps/21-value_step'),
@@ -43,10 +43,10 @@ const tagger = function(ts) {
   ts = step.auxiliary_step(ts);
   ts = step.negation_step(ts);
   ts = step.comma_step(ts); //#14
+  ts = step.quotation_step(ts);
   ts = step.possessive_step(ts);
   ts = step.acronym_step(ts);
   ts = step.person_step(ts); //1ms
-  ts = step.quotation_step(ts);
   ts = step.organization_step(ts);
   ts = step.plural_step(ts);
   ts = step.value_step(ts);

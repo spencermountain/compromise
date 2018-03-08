@@ -122,7 +122,7 @@ const methods = {
 };
 
 const find = function(r, n) {
-  const tens = 'twenty|thirty|fourty|fifty|sixty|seventy|eighty|ninety';
+  const tens = 'twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|fourty';
   const teens = 'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen';
   r = r.match('#Value+ #Unit?');
   // r = r.match('#Value+ #Unit?');

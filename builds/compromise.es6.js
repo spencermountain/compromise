@@ -3380,6 +3380,10 @@ const ones = fns.extend(numbers.ordinal.ones, numbers.cardinal.ones);
 const teens = fns.extend(numbers.ordinal.teens, numbers.cardinal.teens);
 const tens = fns.extend(numbers.ordinal.tens, numbers.cardinal.tens);
 const multiples = fns.extend(numbers.ordinal.multiples, numbers.cardinal.multiples);
+
+//add this one
+multiples.grand = 1000;
+
 module.exports = {
   ones: ones,
   teens: teens,
@@ -6147,12 +6151,12 @@ const datePass = function (ts) {
     ts.match('for #Value #Duration').tag('Date', 'for-x-duration');
     //values
     ts.match('#Value #Abbreviation').tag('Value', 'value-abbr');
-    ts.match('a #Value').if('(hundred|thousand|million|billion|trillion)').tag('Value', 'a-value');
+    ts.match('a #Value').if('(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)').tag('Value', 'a-value');
     ts.match('(minus|negative) #Value').tag('Value', 'minus-value');
     ts.match('#Value grand').tag('Value', 'value-grand');
     // ts.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');//not ready
     ts.match('(half|quarter) #Ordinal').tag('Value', 'half-ordinal');
-    ts.match('(hundred|thousand|million|billion|trillion) and #Value').tag('Value', 'magnitude-and-value');
+    ts.match('(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion) and #Value').tag('Value', 'magnitude-and-value');
     ts.match('#Value (point|decimal) #Value').tag('Value', 'value-point-value');
     //for four days
     ts.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration');
@@ -7082,7 +7086,7 @@ const corrections = function(ts) {
   //'u' as pronoun
   ts.match('#Conjunction u').term(1).tag('Pronoun', 'u-pronoun-2');
   //'a/an' can mean 1 - "a hour"
-  ts.match('(a|an) (#Duration|hundred|thousand|million|billion|trillion)').ifNo('#Plural').term(0).tag('Value', 'a-is-one');
+  ts.match('(a|an) (#Duration|hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)').ifNo('#Plural').term(0).tag('Value', 'a-is-one');
   //swear-words as non-expression POS
   //nsfw
   ts.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression');
@@ -12808,7 +12812,7 @@ const cardinal = {
   multiples: {
     hundred: 1e2,
     thousand: 1e3,
-    grand: 1e3,
+    // grand: 1e3,
     million: 1e6,
     billion: 1e9,
     trillion: 1e12,

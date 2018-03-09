@@ -41,9 +41,33 @@ test('from number', function(t) {
   t.equal(nlp('9000000000200').values().toText().out(), 'nine trillion two hundred');
   t.equal(nlp('70000000000200').values().toText().out(), 'seventy trillion two hundred');
   t.equal(nlp('9000000000002006').values().toText().out(), 'nine quadrillion two thousand and six');
+  t.equal(nlp('900,000,000').values().toText().out(), 'nine hundred million');
+  t.equal(nlp('9,000,000,030').values().toText().out(), 'nine billion and thirty');
+  t.equal(nlp('10,000,000,000').values().toText().out(), 'ten billion');
+  // t.equal(nlp('900,000,000,037').values().toText().out(), 'nine hundred billion and thirty seven');
   //javascript can't do this
   // t.equal(nlp('90000000000000002006').values().toText().out(), 'ninety quintillion two thousand and six');
   // t.equal(nlp('99000000000000002006').values().toText().out(), 'ninety nine quintillion two thousand and six');
   // t.equal(nlp('9000000000000000000000').values().toText().out(), 'nine sextillion');
   t.end();
 });
+
+// test('cardinal numbers', function(t) {
+//   t.equal(cardinal('sixty-one trillion, six hundred and eighty-nine billion, four hundred and seventy-three million, four hundred and fifty-three thousand and five hundred and ninety'), 61689473453590);
+//   t.end();
+// });
+
+// test('cardinal numbers in american form (with ands)', function(t) {
+//   t.equal(cardinal('six hundred eighty-nine billion, four hundred seventy-three million, four hundred fifty-three thousand, five hundred ninety'), 689473453590);
+//   t.end();
+// });
+
+// test('ordinal numbers', function(t) {
+//   t.equal(cardinal('six hundred and eighty-nine billion, four hundred and seventy-three million, four hundred and fifty-three thousand and five hundred and ninetieth'), 689473453590);
+//   t.end();
+// });
+
+// test('cardinal numbers in american form (with ands)', function(t) {
+//   t.equal(cardinal('six hundred eighty-nine billion, four hundred seventy-three million, four hundred fifty-three thousand, five hundred ninetieth'), 689473453590);
+//   t.end();
+// });

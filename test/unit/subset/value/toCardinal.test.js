@@ -115,28 +115,6 @@ test('should give right answers for english names of ordinal positions', functio
   t.end();
 });
 
-
-//
-// test('cardinal numbers', function(t) {
-//   t.equal(cardinal('sixty-one trillion, six hundred and eighty-nine billion, four hundred and seventy-three million, four hundred and fifty-three thousand and five hundred and ninety'), 61689473453590);
-//   t.end();
-// });
-//
-// test('cardinal numbers in american form (with ands)', function(t) {
-//   t.equal(cardinal('six hundred eighty-nine billion, four hundred seventy-three million, four hundred fifty-three thousand, five hundred ninety'), 689473453590);
-//   t.end();
-// });
-//
-// test('ordinal numbers', function(t) {
-//   t.equal(cardinal('six hundred and eighty-nine billion, four hundred and seventy-three million, four hundred and fifty-three thousand and five hundred and ninetieth'), 689473453590);
-//   t.end();
-// });
-//
-// test('cardinal numbers in american form (with ands)', function(t) {
-//   t.equal(cardinal('six hundred eighty-nine billion, four hundred seventy-three million, four hundred fifty-three thousand, five hundred ninetieth'), 689473453590);
-//   t.end();
-// });
-
 test('should deal with negative numbers', function(t) {
   t.equal(cardinal('negative thirty eight thousand two hundred sixty three'), -38263);
   t.equal(cardinal('negative thirty eight thousand two hundred sixty three'), -38263);

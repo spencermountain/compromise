@@ -115,10 +115,10 @@ test('should give right answers for english names of ordinal positions', functio
   t.end();
 });
 
-// test('should give the right value for a very large complex number', function(t) {
-//   t.equal(cardinal('one hundred and twenty-three septillion, four hundred and fifty-six sextillion, seven hundred and eighty-nine quintillion, one hundred and twenty-three quadrillion, four hundred and fifty-six trillion, seven hundred and eighty-nine billion, one hundred and twenty-three million, four hundred and fifty-six thousand and seven hundred and eighty-nine'), 123456789123456789123456789);
-//   t.end();
-// });
+test('should give the right value for a very large complex number', function(t) {
+  t.equal(cardinal('one hundred and twenty-three septillion, four hundred and fifty-six sextillion, seven hundred and eighty-nine quintillion, one hundred and twenty-three quadrillion, four hundred and fifty-six trillion, seven hundred and eighty-nine billion, one hundred and twenty-three million, four hundred and fifty-six thousand and seven hundred and eighty-nine'), 123456789123456789123456789);
+  t.end();
+});
 //
 // test('should give the right value for cardinal numbers', function(t) {
 //   t.equal(cardinal('sixty-one trillion, six hundred and eighty-nine billion, four hundred and seventy-three million, four hundred and fifty-three thousand and five hundred and ninety'), 61689473453590);

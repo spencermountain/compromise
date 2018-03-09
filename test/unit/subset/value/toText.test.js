@@ -59,3 +59,12 @@ test('all-to-text:', function(t) {
   });
   t.end();
 });
+
+test('big number:', function(t) {
+  var str = nlp('twenty-three quadrillion').values().toText().out();
+  t.equal(str, 'twenty three quadrillion', 'quadrillion');
+
+  // str = nlp('nine quintillion two hundred').values().toText().out();
+  // t.equal(str, 'nine quintillion two hundred', 'quantillion');
+  t.end();
+});

@@ -1,4 +1,6 @@
 'use strict';
+const toString = require('./toString');
+
 // turns an integer/float into a textual number, like 'fifty-five'
 const tens_mapping = [
   ['ninety', 90],
@@ -32,10 +34,16 @@ const ones_mapping = [
   'eighteen',
   'nineteen'
 ];
+
 const sequence = [
-  [1000000000, 'million'],
-  [100000000, 'hundred million'],
-  [1000000, 'million'],
+  [1e24, 'septillion'],
+  [1e21, 'sextillion'],
+  [1e18, 'quintillion'],
+  [1e15, 'quadrillion'],
+  [1e12, 'trillion'],
+  [1e9, 'billion'],
+  [1e8, 'hundred million'],
+  [1e6, 'million'],
   [100000, 'hundred thousand'],
   [1000, 'thousand'],
   [100, 'hundred'],
@@ -64,6 +72,9 @@ const breakdown_magnitudes = function(num) {
 //turn numbers from 100-0 into their text
 const breakdown_hundred = function(num) {
   let arr = [];
+  if (num > 100) {
+    return arr; //something bad happened..
+  }
   for (let i = 0; i < tens_mapping.length; i++) {
     if (num >= tens_mapping[i][1]) {
       num -= tens_mapping[i][1];
@@ -93,7 +104,8 @@ const handle_decimal = (num) => {
   ];
   let arr = [];
   //parse it out like a string, because js math is such shit
-  let decimal = String(num).match(/\.([0-9]+)/);
+  let str = toString(num);
+  let decimal = str.match(/\.([0-9]+)/);
   if (!decimal || !decimal[0]) {
     return arr;
   }
@@ -107,6 +119,11 @@ const handle_decimal = (num) => {
 
 /** turns an integer into a textual number */
 const to_text = function(num) {
+  //big numbers, north of sextillion, aren't gonna work well..
+  //keep them small..
+  if (num > 1e21) {
+    return [String(num)];
+  }
   let arr = [];
   //handle negative numbers
   if (num < 0) {

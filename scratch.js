@@ -1,5 +1,4 @@
 var nlp = require('./src/index');
 // nlp.verbose('tagger');
 
-
-nlp('twenty-three septillion').values().toText().debug(); // 40 8
+console.log(nlp('nine quintillion two hundred').values().data());

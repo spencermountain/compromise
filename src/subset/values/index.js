@@ -179,7 +179,10 @@ const find = function(r, n) {
   if (r.has('#NumberRange')) {
     r.splitAfter('#NumberRange');
   }
-  r.splitAfter('#Comma');
+  //a comma may mean two numbers
+  if (r.has('^#Value #Comma #Value$') === true) {
+    r.splitAfter('#Comma');
+  }
   if (typeof n === 'number') {
     r = r.get(n);
   }

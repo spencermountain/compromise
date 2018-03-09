@@ -1,4 +1,5 @@
 'use strict';
+const toString = require('./toString');
 
 //turn a number like 5 into an ordinal like 5th
 const numOrdinal = function(num) {
@@ -17,7 +18,7 @@ const numOrdinal = function(num) {
     2: 'nd',
     3: 'rd'
   };
-  let str = String(num);
+  let str = toString(num);
   let last = str.slice(str.length - 1, str.length);
   if (mapping[last]) {
     str += mapping[last];

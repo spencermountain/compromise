@@ -42,17 +42,46 @@ const addSubsets = Text => {
       return r;
     },
     quotations: function(n) {
-      let r = this.match('#Quotation+');
-      //split two consecutive quotations
-      r = r.splitAfter('/.["\'\u201D\u2036\u2019]([;:,.])?$/');
-      if (typeof n === 'number') {
-        r = r.get(n);
-      }
-      return r;
+      const quotes = [
+        ['StraightDoubleQuotes', '\u0022', '\u0022'],
+        ['StraightDoubleQuotesWide', '\uFF02', '\uFF02'],
+        ['StraightSingleQuotes', '\u0027', '\u0027'],
+        ['CommaDoubleQuotes', '\u201C', '\u201D'],
+        ['CommaSingleQuotes', '\u2018', '\u2019'],
+        ['CurlyDoubleQuotesReversed', '\u201F', '\u201D'],
+        ['CurlySingleQuotesReversed', '\u201B', '\u2019'],
+        ['LowCurlyDoubleQuotes', '\u201E', '\u201D'],
+        ['LowCurlyDoubleQuotesReversed', '\u2E42', '\u201D'],
+        ['LowCurlySingleQuotes', '\u201A', '\u2019'],
+        ['AngleDoubleQuotes', '\u00AB', '\u00BB'],
+        ['AngleSingleQuotes', '\u2039', '\u203A'],
+        ['PrimeSingleQuotes', '\u2035', '\u2032'],
+        ['PrimeDoubleQuotes', '\u2036', '\u2033'],
+        ['PrimeTripleQuotes', '\u2037', '\u2034'],
+        ['PrimeDoubleQuotes', '\u301D', '\u301E'],
+        ['PrimeSingleQuotes', '\u0060', '\u00B4'],
+        ['LowPrimeDoubleQuotesReversed', '\u301F', '\u301E']
+      ]
+      
+      let that = null;
+      
+      quotes.forEach(quote => {
+        
+        const match = this
+          .match('#' + quote[0] + '+')
+          .splitAfter(
+            '[/.' + quote[1] + '[^' + quote[1] + ']*$/] ' +
+            '/^[^' + quote[2] + ']*' + quote[2] + './'
+          )
+        
+        that = that === null ? match : that.concat(match);
+      })
+      
+      return that.sort('chronological');
     },
     topics: function(n) {
       let r = this.clauses();
-      //find people, places, and organizations
+      // Find people, places, and organizations
       let yup = r.people();
       yup.concat(r.places());
       yup.concat(r.organizations());

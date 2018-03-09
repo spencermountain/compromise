@@ -21,6 +21,9 @@ module.exports = {
   Conjunction: {},
   Preposition: {},
   QuestionWord: {},
+  RelativeProunoun: {
+    isA: 'Pronoun'
+  },
   Expression: {},
   Abbreviation: {},
   Url: {},
@@ -45,5 +48,61 @@ module.exports = {
   Hyphenated: {},
   Acronym: {},
   ClauseEnd: {},
+  
+  // Quotes
+  StraightDoubleQuotes: {
+    isA: 'Quotation'
+  },
+  StraightDoubleQuotesWide: {
+    isA: 'Quotation'
+  },
+  StraightSingleQuotes: {
+    isA: 'Quotation'
+  },
+  CommaDoubleQuotes: {
+    isA: 'Quotation'
+  },
+  CommaSingleQuotes: {
+    isA: 'Quotation'
+  },
+  CurlyDoubleQuotesReversed: {
+    isA: 'Quotation'
+  },
+  CurlySingleQuotesReversed: {
+    isA: 'Quotation'
+  },
+  LowCurlyDoubleQuotes: {
+    isA: 'Quotation'
+  },
+  LowCurlyDoubleQuotesReversed: {
+    isA: 'Quotation'
+  },
+  LowCurlySingleQuotes: {
+    isA: 'Quotation'
+  },
+  AngleDoubleQuotes: {
+    isA: 'Quotation'
+  },
+  AngleSingleQuotes: {
+    isA: 'Quotation'
+  },
+  PrimeSingleQuotes: {
+    isA: 'Quotation'
+  },
+  PrimeDoubleQuotes: {
+    isA: 'Quotation'
+  },
+  PrimeTripleQuotes: {
+    isA: 'Quotation'
+  },
+  PrimeDoubleQuotes: {
+    isA: 'Quotation'
+  },
+  PrimeSingleQuotes: {
+    isA: 'Quotation'
+  },
+  LowPrimeDoubleQuotesReversed: {
+    isA: 'Quotation'
+  },
   Quotation: {}
 };

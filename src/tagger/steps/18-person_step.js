@@ -90,9 +90,15 @@ const person_step = function(ts) {
       .tag('#Person', 'n-acro-noun')
       .lastTerm()
       .tag('#LastName', 'n-acro-noun');
+    // Dwayne 'the rock' Johnson
+    ts.match('#FirstName [#Determiner? #Noun] #LastName')
+      .tag('#NickName', 'first-noun-last')
+      .tag('#Person', 'first-noun-last');
+
     //john bodego's
     ts.match('#FirstName (#Singular|#Possessive)')
       .ifNo('#Date')
+      .ifNo('#NickName')
       .tag('#Person', 'first-possessive')
       .lastTerm()
       .tag('#LastName', 'first-possessive');

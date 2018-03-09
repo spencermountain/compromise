@@ -22,5 +22,13 @@ test('people:', function(t) {
   arr = doc.people().out('array');
   t.deepEqual(arr, ['rod l macdonald',], 'the-rod-2');
 
+  doc = nlp('Matt \'the doctor\' Smith lasted three seasons.');
+  arr = doc.people().out('array');
+  t.deepEqual(arr, ['matt the doctor smith',], 'nickname-1');
+
+  doc = nlp('Randal Kieth Orton and Dwayne \'the rock\' Johnson had a really funny fight.');
+  arr = doc.people().out('array');
+  t.deepEqual(arr, ['randal kieth orton','dwayne the rock johnson',], 'nickname-2');
+
   t.end();
 });

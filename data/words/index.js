@@ -10,6 +10,7 @@ var data = [
   [require('./nouns/sportsTeams'), 'SportsTeam'],
   [require('./nouns/uncountables'), 'Uncountable'],
   [require('./nouns/pronouns'), 'Pronoun'],
+  // [require('./nouns/relative-prounoun'), 'RelativeProunoun'],
   [require('./nouns/organizations'), 'Organization'],
   [require('./nouns/demonyms'), 'Demonym'],
   [require('./possessives'), 'Possessive'], //+pronoun?

@@ -233,7 +233,7 @@ const corrections = function(ts) {
   //'u' as pronoun
   ts.match('#Conjunction u').term(1).tag('Pronoun', 'u-pronoun-2');
   //'a/an' can mean 1 - "a hour"
-  ts.match('(a|an) (#Duration|hundred|thousand|million|billion|trillion)').ifNo('#Plural').term(0).tag('Value', 'a-is-one');
+  ts.match('(a|an) (#Duration|hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)').ifNo('#Plural').term(0).tag('Value', 'a-is-one');
   //swear-words as non-expression POS
   //nsfw
   ts.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression');

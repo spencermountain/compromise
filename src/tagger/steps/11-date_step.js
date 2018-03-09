@@ -130,12 +130,12 @@ const datePass = function (ts) {
     ts.match('for #Value #Duration').tag('Date', 'for-x-duration');
     //values
     ts.match('#Value #Abbreviation').tag('Value', 'value-abbr');
-    ts.match('a #Value').if('(hundred|thousand|million|billion|trillion)').tag('Value', 'a-value');
+    ts.match('a #Value').if('(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)').tag('Value', 'a-value');
     ts.match('(minus|negative) #Value').tag('Value', 'minus-value');
     ts.match('#Value grand').tag('Value', 'value-grand');
     // ts.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');//not ready
     ts.match('(half|quarter) #Ordinal').tag('Value', 'half-ordinal');
-    ts.match('(hundred|thousand|million|billion|trillion) and #Value').tag('Value', 'magnitude-and-value');
+    ts.match('(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion) and #Value').tag('Value', 'magnitude-and-value');
     ts.match('#Value (point|decimal) #Value').tag('Value', 'value-point-value');
     //for four days
     ts.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration');

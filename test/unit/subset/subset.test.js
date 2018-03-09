@@ -34,8 +34,8 @@ test('adjectives', function(t) {
 });
 
 test('quotations', function(t) {
-  let have = nlp('My "String" "with many" adjacent "nested" \'quotes\'').quotations().out('array');
-  let want = ['string', 'with many', 'nested', 'quotes'];
+  var have = nlp('My "String" "with many" adjacent "nested" \'quotes\'').quotations().out('array');
+  var want = ['string', 'with many', 'nested', 'quotes'];
   t.deepEqual(have, want, 'consecutive quoations');
   t.end();
 });

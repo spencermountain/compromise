@@ -122,7 +122,7 @@ const methods = {
 };
 
 const find = function(r, n) {
-  const tens = 'twenty|thirty|fourty|fifty|sixty|seventy|eighty|ninety';
+  const tens = 'twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|fourty';
   const teens = 'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen';
   r = r.match('#Value+ #Unit?');
   // r = r.match('#Value+ #Unit?');
@@ -179,7 +179,10 @@ const find = function(r, n) {
   if (r.has('#NumberRange')) {
     r.splitAfter('#NumberRange');
   }
-  r.splitAfter('#Comma');
+  //a comma may mean two numbers
+  if (r.has('^#Value #Comma #Value$') === true) {
+    r.splitAfter('#Comma');
+  }
   if (typeof n === 'number') {
     r = r.get(n);
   }

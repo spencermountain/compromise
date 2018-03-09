@@ -29,6 +29,7 @@ const cardinal = {
     twenty: 20,
     thirty: 30,
     forty: 40,
+    fourty: 40, //support typo
     fifty: 50,
     sixty: 60,
     seventy: 70,
@@ -38,7 +39,7 @@ const cardinal = {
   multiples: {
     hundred: 1e2,
     thousand: 1e3,
-    grand: 1e3,
+    // grand: 1e3,
     million: 1e6,
     billion: 1e9,
     trillion: 1e12,
@@ -77,7 +78,8 @@ const ordinal = {
   tens: {
     twentieth: 20,
     thirtieth: 30,
-    fourtieth: 40,
+    fortieth: 40,
+    fourtieth: 40, //support typo
     fiftieth: 50,
     sixtieth: 60,
     seventieth: 70,
@@ -132,7 +134,7 @@ let lexicon = {};
 Object.keys(ordinal).forEach(k => {
   let ord = Object.keys(ordinal[k]);
   let card = Object.keys(cardinal[k]);
-  for (let i = 0; i < ord.length; i++) {
+  for (let i = 0; i < card.length; i++) {
     toOrdinal[card[i]] = ord[i];
     toCardinal[ord[i]] = card[i];
     lexicon[ord[i]] = ['Ordinal', 'TextValue'];

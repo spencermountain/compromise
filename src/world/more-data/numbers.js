@@ -29,6 +29,7 @@ const cardinal = {
     twenty: 20,
     thirty: 30,
     forty: 40,
+    fourty: 40, //support typo
     fifty: 50,
     sixty: 60,
     seventy: 70,
@@ -77,7 +78,8 @@ const ordinal = {
   tens: {
     twentieth: 20,
     thirtieth: 30,
-    fourtieth: 40,
+    fortieth: 40,
+    fourtieth: 40, //support typo
     fiftieth: 50,
     sixtieth: 60,
     seventieth: 70,

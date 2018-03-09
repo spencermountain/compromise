@@ -79,14 +79,15 @@ const parse = function(str) {
     //buildOut section, collect 'has' values
     if (/^[0-9\.]+$/.test(w)) {
       has['ones'] = parseFloat(w); //not technically right
-    } else if (words.ones[w]) {
+    } else if (words.ones.hasOwnProperty(w) === true) {
       has['ones'] = words.ones[w];
-    } else if (words.teens[w]) {
+    } else if (words.teens.hasOwnProperty(w) === true) {
       has['teens'] = words.teens[w];
-    } else if (words.tens[w]) {
+    } else if (words.tens.hasOwnProperty(w) === true) {
       has['tens'] = words.tens[w];
-    } else if (words.multiples[w]) {
+    } else if (words.multiples.hasOwnProperty(w) === true) {
       let mult = words.multiples[w];
+
       //something has gone wrong : 'two hundred five hundred'
       if (mult === last_mult) {
         return null;
@@ -122,7 +123,7 @@ const parse = function(str) {
   sum *= modifier.amount;
   sum *= isNegative ? -1 : 1;
   //dont return 0, if it went straight-through
-  if (sum === 0) {
+  if (sum === 0 && Object.keys(has).length === 0) {
     return null;
   }
   return sum;

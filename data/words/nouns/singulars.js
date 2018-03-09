@@ -67,6 +67,7 @@ module.exports = [
   'patent',
   'problem',
   'purpose',
+  'question mark',
   'room',
   'student',
   'stuff',

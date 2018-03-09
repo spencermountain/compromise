@@ -33,5 +33,17 @@ test('text ordinal', function(t) {
   t.equal(nlp('thirty quadrillion and two hundred').values().data()[0].textOrdinal, 'thirty quadrillion two hundredth');
   t.equal(nlp('nine trillion seven hundred fifty').values().data()[0].textOrdinal, 'nine trillion seven hundred and fiftieth');
   t.equal(nlp('a quintillion').values().data()[0].textOrdinal, 'one quintillionth');
+  t.equal(nlp('seventy-two quintillion').values().data()[0].textOrdinal, 'seventy two quintillionth');
+  t.end();
+});
+
+test('from number', function(t) {
+  t.equal(nlp('9000000000200').values().toText().out(), 'nine trillion two hundred');
+  t.equal(nlp('70000000000200').values().toText().out(), 'seventy trillion two hundred');
+  t.equal(nlp('9000000000002006').values().toText().out(), 'nine quadrillion two thousand and six');
+  //javascript can't do this
+  // t.equal(nlp('90000000000000002006').values().toText().out(), 'ninety quintillion two thousand and six');
+  // t.equal(nlp('99000000000000002006').values().toText().out(), 'ninety nine quintillion two thousand and six');
+  // t.equal(nlp('9000000000000000000000').values().toText().out(), 'nine sextillion');
   t.end();
 });

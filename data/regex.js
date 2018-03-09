@@ -4,8 +4,6 @@ module.exports = {
   '^#[a-z]+': 'HashTag',
   //chillin'
   '^[a-z]+n[\'’]$': 'Gerund',
-  //spencers'
-  '^[a-z]+s\'$': 'Possessive',
   //589-3809
   '^[0-9]{3}-[0-9]{4}$': 'PhoneNumber',
   //632-589-3809

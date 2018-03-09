@@ -10,6 +10,7 @@ test('==contractions==', function(T) {
       [`he's good`, `he is good`],
       [`spencer's really good`, `spencer is really good`],
       [`google's about to earn money`, `google is about to earn money`],
+      [`they're mark's 'question marks'`, `they are mark's question marks`],
 
       [`toronto's citizens`, `toronto's citizens`],
       [`rocket's red glare`, `rocket's red glare`],

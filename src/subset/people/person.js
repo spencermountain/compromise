@@ -6,6 +6,7 @@ const Person = function(arr, world, refText, refTerms) {
   Terms.call(this, arr, world, refText, refTerms);
   this.firstName = this.match('#FirstName+');
   this.middleName = this.match('#Acronym+');
+  this.nickName = this.match('#NickName+');
   this.honorifics = this.match('#Honorific');
   this.lastName = this.match('#LastName+');
   //assume first-last
@@ -26,6 +27,7 @@ const methods = {
       normal: this.out('normal'),
       firstName: this.firstName.out('normal'),
       middleName: this.middleName.out('normal'),
+      nickName: this.nickName.out('normal'),
       lastName: this.lastName.out('normal'),
       genderGuess: this.guessGender(),
       pronoun: this.pronoun(),

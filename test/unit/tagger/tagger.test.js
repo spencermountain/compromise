@@ -32,6 +32,7 @@ test('=Tagger=', function(T) {
       ['john lkjsdf\'s house', ['Person', 'Possessive', 'Noun']],
       ['john Lkjsdf\'s house', ['Person', 'Possessive', 'Noun']],
       ['john Lkjsdf\'s House', ['Person', 'Possessive', 'Noun']],
+      ['mark\'s question mark', ['Possessive', 'Noun', 'Noun']],
 
       //question-words
       ['who is good?', ['QuestionWord', 'Copula', 'Adjective']],

@@ -6346,21 +6346,23 @@ module.exports = quotation_step;
 // 'spencer's nice' -> 'spencer is nice'
 // 'spencer's house' -> 'spencer's house'
 
-var singleQuotes = {
-  '\'': '\'', // Straight Single Quotes
-  '\u2018': '\u2019', // Comma Single Quotes
-  '\u201B': '\u2019', // Curly Single Quotes Reversed
-  '\u201A': '\u2019', // Low Curly Single Quotes
-  '\u2035': '\u2032', // Prime Single Quotes Alt
-  '`': '\xB4' // Prime Single Quotes
-};
+var _ref;
 
-var quoteRegex = Object.entries(singleQuotes).reduce(function (c, v) {
-  return c[v[0]] = new RegExp(v[1] + '[^' + v[1] + '\\w]*$'), c;
-}, {});
+var singleQuotes = [['\'', '\''], // Straight Single Quotes
+['\u2018', '\u2019'], // Comma Single Quotes
+['\u201B', '\u2019'], // Curly Single Quotes Reversed
+['\u201A', '\u2019'], // Low Curly Single Quotes
+['\u2035', '\u2032'], // Prime Single Quotes Alt
+['`', '\xB4'] // Prime Single Quotes
+];
+
+var quoteRegex = {};
+singleQuotes.forEach(function (quote) {
+  quoteRegex[quote[0]] = new RegExp(quote[1] + '[^' + quote[1] + '\\w]*$');
+});
 
 // Get all types of single quote.
-var apostrophes = [].concat(Object.keys(singleQuotes), Object.values(singleQuotes))
+var apostrophes = (_ref = []).concat.apply(_ref, singleQuotes)
 // Only unique quotes.
 .filter(function (v, i, s) {
   return s.indexOf(v) === i;

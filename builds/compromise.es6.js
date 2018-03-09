@@ -6526,28 +6526,28 @@ module.exports = quotation_step;
 // 'spencer's nice' -> 'spencer is nice'
 // 'spencer's house' -> 'spencer's house'
 
-const singleQuotes = ({
-    '\u0027': '\u0027', // Straight Single Quotes
-    '\u2018': '\u2019', // Comma Single Quotes
-    '\u201B': '\u2019', // Curly Single Quotes Reversed
-    '\u201A': '\u2019', // Low Curly Single Quotes
-    '\u2035': '\u2032', // Prime Single Quotes Alt
-    '\u0060': '\u00B4'  // Prime Single Quotes
-});
+const singleQuotes = [
+    ['\u0027', '\u0027'], // Straight Single Quotes
+    ['\u2018', '\u2019'], // Comma Single Quotes
+    ['\u201B', '\u2019'], // Curly Single Quotes Reversed
+    ['\u201A', '\u2019'], // Low Curly Single Quotes
+    ['\u2035', '\u2032'], // Prime Single Quotes Alt
+    ['\u0060', '\u00B4']  // Prime Single Quotes
+];
 
-const quoteRegex = Object
-  .entries(singleQuotes)
-  .reduce((c, v) => (c[v[0]] = new RegExp(v[1] + '[^' + v[1] + '\\w]*$'), c), {})
+const quoteRegex = {};
+singleQuotes.forEach(quote => {
+    quoteRegex[quote[0]] = new RegExp(quote[1] + '[^' + quote[1] + '\\w]*$');
+})
 
 // Get all types of single quote.
 const apostrophes = [].concat(
-  Object.keys(singleQuotes),
-  Object.values(singleQuotes)
+  ...singleQuotes
 )
   // Only unique quotes.
   .filter((v, i, s) => s.indexOf(v) === i)
   .join('');
-
+  
 // [^\w]* match 0 or more of any char that is NOT alphanumeric
 const afterWord = new RegExp('([a-z]s[' + apostrophes + '])\\W*$');
 const apostrophe = new RegExp('s?[' + apostrophes + ']s?$');

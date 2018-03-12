@@ -31,6 +31,27 @@ const quotemarks = {
     '\u301F': {close: '\u301E', tag: 'LowPrimeDoubleQuotesReversed'}
 };
 
+// Open quote match black list.
+const blacklist = [
+  'twas'
+];
+
+// Convert the close quote to a regex.
+for (const open in quotemarks) {
+  if ({}.hasOwnProperty.call(quotemarks, open)) {
+    quotemarks[open].regex = new RegExp(
+      quotemarks[open].close + '[;:,.]*$'
+    );
+    quotemarks[open].open = open;
+  }
+}
+
+// Improve open match detection.
+const startQuote = new RegExp(
+  '^[' + Object.keys(quotemarks).join('') + ']+' +
+  '(?!' + blacklist.join('|') + ')'
+);
+
 //tag a inline quotation as such
 const quotation_step = ts => {
   // Isolate the text so it doesn't change.
@@ -38,33 +59,46 @@ const quotation_step = ts => {
 
   for (let i = 0; i < terms.length; i++) {
     let t = ts.terms[i];
-    if (
-      typeof quotemarks[t.text[0]] === 'object' && (
-        // TODO: not `'twas` or similar
-        true
-      )
-    ) {
-      const quote = quotemarks[t.text[0][0]];
-      const endQuote = new RegExp(quote.close + '[;:,.]?$');
+    if (startQuote.test(t.text)) {
+      const quotes = t.text
+        // Get the match and split it into groups
+        .match(startQuote).shift().split('')
+        // Get close and tag info.
+        .map(mark => quotemarks[mark]);
 
-      t.tag('OpenQuotation', 'quotation_open');
-
-      //look for the ending
+      // Look for the ending
       for (let o = 0; o < ts.terms.length; o++) {
         // max-length don't go-on forever
         if (!ts.terms[i + o] || o > 28) {
           break;
         }
 
-        if (endQuote.test(terms[i + o]) === true) {
-          terms[i + o] = terms[i + o].replace(endQuote, '');
+        // Find the close.
+        const index = quotes.findIndex(q => q.regex.test(terms[i + o]))
+        if (~index) {
+          // Remove the found
+          const quote = quotes.splice(index, 1).pop();
+          terms[i + o] = terms[i + o].replace(quote.regex, '');
+
+          if (quote.regex.test(ts.terms[i + o].normal)) {
+            ts.terms[i + o].normal.replace(quote.regex, '')
+          }
+
+          // Tag the things.
+          t.tag('OpenQuotation', 'quotation_open');
           ts.terms[i + o].tag('CloseQuotation', 'quotation_close');
           ts.slice(i, i + o + 1).tag(quote.tag, 'quotation_step');
-          break;
-        }
-      }
-    }
-  }
+
+          // Remove quotes from normal.
+
+          // Compensate for multiple close quotes ('"Really"')
+          o--;
+
+          if (!quotes.length) break;
+        } // ~index
+      } // for subset
+    } // open quote
+  } // for all terms
   return ts;
 };
 module.exports = quotation_step;

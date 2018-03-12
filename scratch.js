@@ -1,13 +1,16 @@
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 
-console.log(nlp('190,000,000').values().data()); //bug!
+nlp(`\u2039Here be Quote\u2019s quotes\u203A`).debug();
+nlp(`\u201AHere be quotes\u2019`).debug();
+nlp(`\u201Atwas Carlos\u2019`).debug();
+nlp(`\u201A"Really", he said\u2019, She said, they all laughed.\u2019`).debug();
+nlp(`\u201A"Really"\u2019`).debug();
 
-// console.log(nlp('9000000000200').debug().values().data());
-// console.log(nlp('80 grand').debug().values().data());
-// console.log(nlp('thirty quintillion and two hundred').debug().values().data());
+nlp('My "String" "with many" adjacent "nested" \'quotes\'').debug()
 
-// - bugs
-// console.log(nlp('100,000,000,000').values().data());
-// console.log(nlp('nine quintillion two hundred').values().data());
-// console.log(nlp('1e8').values().data());
+console.log(
+  nlp(`"May's" 'third day' 'will be a "really cold" day' "in a" 'really cold "month"'`)
+    .quotations()
+    .out('array')
+);

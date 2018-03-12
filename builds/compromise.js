@@ -6270,8 +6270,6 @@ module.exports = commaStep;
 },{}],111:[function(_dereq_,module,exports){
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var quotemarks = {
   '"': { close: '"', tag: 'StraightDoubleQuotes' },
   '\uFF02': { close: '\uFF02', tag: 'StraightDoubleQuotesWide' },
@@ -6303,6 +6301,20 @@ var quotemarks = {
   '\u301F': { close: '\u301E', tag: 'LowPrimeDoubleQuotesReversed' }
 };
 
+// Open quote match black list.
+var blacklist = ['twas'];
+
+// Convert the close quote to a regex.
+for (var open in quotemarks) {
+  if ({}.hasOwnProperty.call(quotemarks, open)) {
+    quotemarks[open].regex = new RegExp(quotemarks[open].close + '[;:,.]*$');
+    quotemarks[open].open = open;
+  }
+}
+
+// Improve open match detection.
+var startQuote = new RegExp('^[' + Object.keys(quotemarks).join('') + ']+' + '(?!' + blacklist.join('|') + ')');
+
 //tag a inline quotation as such
 var quotation_step = function quotation_step(ts) {
   // Isolate the text so it doesn't change.
@@ -6310,32 +6322,64 @@ var quotation_step = function quotation_step(ts) {
     return e.text;
   });
 
-  for (var i = 0; i < terms.length; i++) {
+  var _loop = function _loop(i) {
     var t = ts.terms[i];
-    if (_typeof(quotemarks[t.text[0]]) === 'object' &&
-    // TODO: not `'twas` or similar
-    true) {
-      var quote = quotemarks[t.text[0][0]];
-      var endQuote = new RegExp(quote.close + '[;:,.]?$');
+    if (startQuote.test(t.text)) {
+      var quotes = t.text
+      // Get the match and split it into groups
+      .match(startQuote).shift().split('')
+      // Get close and tag info.
+      .map(function (mark) {
+        return quotemarks[mark];
+      });
 
-      t.tag('OpenQuotation', 'quotation_open');
+      // Look for the ending
 
-      //look for the ending
-      for (var o = 0; o < ts.terms.length; o++) {
+      var _loop2 = function _loop2(_o) {
         // max-length don't go-on forever
-        if (!ts.terms[i + o] || o > 28) {
-          break;
+        if (!ts.terms[i + _o] || _o > 28) {
+          return 'break';
         }
 
-        if (endQuote.test(terms[i + o]) === true) {
-          terms[i + o] = terms[i + o].replace(endQuote, '');
-          ts.terms[i + o].tag('CloseQuotation', 'quotation_close');
-          ts.slice(i, i + o + 1).tag(quote.tag, 'quotation_step');
-          break;
-        }
-      }
-    }
-  }
+        // Find the close.
+        var index = quotes.findIndex(function (q) {
+          return q.regex.test(terms[i + _o]);
+        });
+        if (~index) {
+          // Remove the found
+          var quote = quotes.splice(index, 1).pop();
+          terms[i + _o] = terms[i + _o].replace(quote.regex, '');
+
+          if (quote.regex.test(ts.terms[i + _o].normal)) {
+            ts.terms[i + _o].normal.replace(quote.regex, '');
+          }
+
+          // Tag the things.
+          t.tag('OpenQuotation', 'quotation_open');
+          ts.terms[i + _o].tag('CloseQuotation', 'quotation_close');
+          ts.slice(i, i + _o + 1).tag(quote.tag, 'quotation_step');
+
+          // Remove quotes from normal.
+
+          // Compensate for multiple close quotes ('"Really"')
+          _o--;
+
+          if (!quotes.length) return 'break';
+        } // ~index
+        o = _o;
+      };
+
+      for (var o = 0; o < ts.terms.length; o++) {
+        var _ret2 = _loop2(o);
+
+        if (_ret2 === 'break') break;
+      } // for subset
+    } // open quote
+  };
+
+  for (var i = 0; i < terms.length; i++) {
+    _loop(i);
+  } // for all terms
   return ts;
 };
 module.exports = quotation_step;
@@ -8508,21 +8552,21 @@ exports.normalize = function (str) {
   str = str.toLowerCase();
   str = str.trim();
   var original = str;
-  //(very) rough asci transliteration -  bjŏrk -> bjork
+  //(very) rough ASCII transliteration -  bjŏrk -> bjork
   str = killUnicode(str);
-  //hashtags, atmentions
+  //#tags, @mentions
   str = str.replace(/^[#@]/, '');
   //punctuation
   str = str.replace(/[,;.!?]+$/, '');
   // coerce single curly quotes
-  str = str.replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]+/g, '\'');
+  str = str.replace(/[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]+/g, "'");
   // coerce double curly quotes
-  str = str.replace(/[\u201C\u201D\u201E\u201F\u2033\u2036"]+/g, '');
-  //coerce unicode elipses
+  str = str.replace(/[\u0022\u00AB\u00BB\u201C\u201D\u201E\u201F\u2033\u2034\u2036\u2037\u2E42\u301D\u301E\u301F\uFF02]+/g, '"');
+  //coerce Unicode ellipses
   str = str.replace(/\u2026/g, '...');
   //en-dash
   str = str.replace(/\u2013/g, '-');
-  //lookin’->looking (make it easier for conjugation)
+  //lookin'->looking (make it easier for conjugation)
   if (/[a-z][^aeiou]in['’]$/.test(str) === true) {
     str = str.replace(/in['’]$/, 'ing');
   }
@@ -8534,8 +8578,8 @@ exports.normalize = function (str) {
   {
     if (/^[:;]/.test(str) === false) {
       str = str.replace(/\.{3,}$/g, '');
-      str = str.replace(/['",\.!:;\?\)]$/g, '');
-      str = str.replace(/^['"\(]/g, '');
+      str = str.replace(/['",\.!:;\?\)]+$/g, '');
+      str = str.replace(/^['"\(]+/g, '');
     }
   }
   //do this again..

@@ -85,7 +85,6 @@ const possessiveStep = function(terms) {
     if (typeof quoteRegex[text[0]] !== 'undefined') {
       // Add the expected closing quotes to our inspection array.
       expectingClosers[expectingClosers.length] = quoteRegex[text[0]];
-
       text = text.slice(1);
     }
 
@@ -93,11 +92,8 @@ const possessiveStep = function(terms) {
     text = text.replace(trailers, '');
 
     // If the string ends with an expected closer.
-    const closer = expectingClosers
-      .map(regex => regex.test(text))
-      .findIndex(e => e);
-
-    if (!!~closer) {
+    const closer = expectingClosers.map(regex => regex.test(text)).findIndex(e => e);
+    if (closer !== -1) {
       text = text.replace(expectingClosers[closer], '');
       delete expectingClosers[closer];
     }

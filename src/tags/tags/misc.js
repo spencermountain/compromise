@@ -48,7 +48,7 @@ module.exports = {
   Hyphenated: {},
   Acronym: {},
   ClauseEnd: {},
-  
+
   // Quotes
   StraightDoubleQuotes: {
     isA: 'Quotation'
@@ -95,14 +95,11 @@ module.exports = {
   PrimeTripleQuotes: {
     isA: 'Quotation'
   },
-  PrimeDoubleQuotes: {
-    isA: 'Quotation'
-  },
-  PrimeSingleQuotes: {
-    isA: 'Quotation'
-  },
   LowPrimeDoubleQuotesReversed: {
     isA: 'Quotation'
   },
-  Quotation: {}
+  Quotation: {},
+  //parentheses
+  EndBracket: {},
+  StartBracket: {}
 };

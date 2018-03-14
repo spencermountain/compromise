@@ -4,18 +4,18 @@
 // 'spencer's house' -> 'spencer's house'
 
 const singleQuotes = [
-    ['\u0027', '\u0027'], // Straight Single Quotes
-    ['\u2018', '\u2019'], // Comma Single Quotes
-    ['\u201B', '\u2019'], // Curly Single Quotes Reversed
-    ['\u201A', '\u2019'], // Low Curly Single Quotes
-    ['\u2035', '\u2032'], // Prime Single Quotes Alt
-    ['\u0060', '\u00B4']  // Prime Single Quotes
+  ['\u0027', '\u0027'], // Straight Single Quotes
+  ['\u2018', '\u2019'], // Comma Single Quotes
+  ['\u201B', '\u2019'], // Curly Single Quotes Reversed
+  ['\u201A', '\u2019'], // Low Curly Single Quotes
+  ['\u2035', '\u2032'], // Prime Single Quotes Alt
+  ['\u0060', '\u00B4'] // Prime Single Quotes
 ];
 
 const quoteRegex = {};
 singleQuotes.forEach(quote => {
-    quoteRegex[quote[0]] = new RegExp(quote[1] + '[^' + quote[1] + '\\w]*$');
-})
+  quoteRegex[quote[0]] = new RegExp(quote[1] + '[^' + quote[1] + '\\w]*$');
+});
 
 // Get all types of single quote.
 const apostrophes = [].concat(
@@ -24,7 +24,7 @@ const apostrophes = [].concat(
   // Only unique quotes.
   .filter((v, i, s) => s.indexOf(v) === i)
   .join('');
-  
+
 // [^\w]* match 0 or more of any char that is NOT alphanumeric
 const afterWord = new RegExp('([a-z]s[' + apostrophes + '])\\W*$');
 const apostrophe = new RegExp('s?[' + apostrophes + ']s?$');
@@ -32,13 +32,13 @@ const trailers = new RegExp('[^' + apostrophes + '\\w]+$');
 
 //these are always contractions
 const blacklist = [
-  "it's",
-  "that's"
+  'it\'s',
+  'that\'s'
 ]
 
   // Compensate for different `'`s in the blacklist
   .map(item => new RegExp(
-    item.replace("'", '[' + apostrophes + ']')
+    item.replace('\'', '[' + apostrophes + ']')
   ));
 
 // A possessive means `'s` describes ownership
@@ -48,34 +48,35 @@ const is_possessive = function(terms, text, index) {
   const nextWord = terms.get(index + 1);
   const stepWord = terms.get(index + 2);
 
-  return !(
-      // `blacklist` are always contractions, not possessive
-      blacklist.map(r => text.match(r)).find(m => m) ||
-      // If no apostrophe s or s apostrophe
-      apostrophe.test(text) === false ||
-      // Pronouns can't be possessive
-      thisWord.tags.Pronoun === true
-    ) && (
-      // "spencers'" - this is always possessive - eg "flanders'"
-      afterWord.test(text) === true ||
-      //Last word is possessive  - "better than spencer's"
-      nextWord === undefined ||
-      thisWord.tags.ClauseEnd === true ||
-      // Next word is 'house'
-      nextWord.tags.Noun === true ||
-      //rocket's red glare
-      (
-          stepWord !== undefined &&
-          nextWord.tags.Adjective &&
-          stepWord.tags.Noun
-      )
-    )
+  //our booleans:
+  // `blacklist` are always contractions, not possessive
+  const inBlacklist = blacklist.map(r => text.match(r)).find(m => m);
+  // If no apostrophe s or s apostrophe
+  const hasApostrophe = apostrophe.test(text);
+  // "spencers'" - this is always possessive - eg "flanders'"
+  const hasPronoun = thisWord.tags.Pronoun;
+
+  if (inBlacklist || hasPronoun || !hasApostrophe) {
+    return false;
+  }
+  if (afterWord.test(text) || nextWord === undefined) {
+    return true;
+  }
+  // Next word is 'house'
+  if (nextWord.tags.Noun === true || thisWord.tags.ClauseEnd === true) {
+    return true;
+  }
+  //rocket's red glare
+  if (stepWord !== undefined && nextWord.tags.Adjective && stepWord.tags.Noun) {
+    return true;
+  }
+  return false;
 };
 
 // Tag each term as possessive, if it should
 const possessiveStep = function(terms) {
   let expectingClosers = [];
-  
+
   for(let i = 0; i < terms.length; i++) {
     const term = terms.get(i);
     let text = term.text;
@@ -113,10 +114,10 @@ const possessiveStep = function(terms) {
 
       // If it's been detected as a `Contraction`
       if (term.tags.Contraction === true) {
-          // Remove the `Contraction` tag and silent_terms
-          term.unTag('Contraction');
-          terms.terms.splice(i + 1, 1);
-          term.silent_term = '';
+        // Remove the `Contraction` tag and silent_terms
+        term.unTag('Contraction');
+        terms.terms.splice(i + 1, 1);
+        term.silent_term = '';
       }
     }
   }

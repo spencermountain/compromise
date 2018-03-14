@@ -40,6 +40,13 @@ test('quotations', function(t) {
   t.end();
 });
 
+test('parentheses', function(t) {
+  var have = nlp('Use a pointed stick (a pencil) or congealed petroleum (an eraser) or a similar tool').parentheses().out('array');
+  var want = ['a pencil', 'an eraser'];
+  t.deepEqual(have, want, 'two parentheses');
+  t.end();
+});
+
 test('contractions-subset', function(t) {
   var m = nlp('he\'s nice. She could\'ve seen.');
   var have = mustBe(m.contractions().data());

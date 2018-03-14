@@ -61,23 +61,20 @@ const addSubsets = Text => {
         ['PrimeDoubleQuotes', '\u301D', '\u301E'],
         ['PrimeSingleQuotes', '\u0060', '\u00B4'],
         ['LowPrimeDoubleQuotesReversed', '\u301F', '\u301E']
-      ]
-      
+      ];
       let that = null;
-      
       quotes.forEach(quote => {
-        
+        const str = '[/.' + quote[1] + '[^' + quote[1] + ']*$/] /^[^' + quote[2] + ']*' + quote[2] + './';
         const match = this
           .match('#' + quote[0] + '+')
-          .splitAfter(
-            '[/.' + quote[1] + '[^' + quote[1] + ']*$/] ' +
-            '/^[^' + quote[2] + ']*' + quote[2] + './'
-          )
-        
+          .splitAfter(str);
         that = that === null ? match : that.concat(match);
-      })
-      
-      return that.sort('chronological');
+      });
+      that = that.sort('chronological');
+      if (typeof n === 'number') {
+        that = that.get(n);
+      }
+      return that;
     },
     topics: function(n) {
       let r = this.clauses();
@@ -117,7 +114,14 @@ const addSubsets = Text => {
       }
       let list = r.list.filter(ts => isQuestion(ts) === false);
       return new Text(list, this.world, this.parent);
-    }
+    },
+    parentheses: function(n) {
+      let r = this.match('#StartBracket * #EndBracket');
+      if (typeof n === 'number') {
+        r = r.get(n);
+      }
+      return r;
+    },
   };
 
   Object.keys(subsets).forEach(k => {

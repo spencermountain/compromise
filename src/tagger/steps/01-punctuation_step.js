@@ -34,6 +34,13 @@ const punctuation_step = function(ts) {
       t.tag('Hyphenated', 'has-hyphen');
       ts.terms[o + 1].tag('Hyphenated', 'has-hyphen');
     }
+    //look at () parentheses
+    if (t.text[0] === '(') {
+      t.tag('StartBracket');
+    }
+    if (t.text[t.text.length - 1] === ')') {
+      t.tag('EndBracket');
+    }
     //ok, normalise it a little,
     str = str.replace(/[,\.\?]$/, '');
     //do punctuation rules (on t.text)

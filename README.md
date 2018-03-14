@@ -64,7 +64,7 @@ if( doc.has('^simon says (shoot|fire) #Determiner lazer') ){
 <div align="center">
   compromise is not <a href="https://github.com/spencermountain/compromise/wiki/Justification">the cleverest</a>.
   <br/>
-  but it is <a href="https://github.com/spencermountain/compromise/wiki/Speed">small, quick, and good-enough</a> for a bunch of stuff.
+  but it is <a href="https://beta.observablehq.com/@spencermountain/compromise-performance">small, quick, and good-enough</a> for a bunch of stuff.
 </div>
 
 ----
@@ -78,7 +78,7 @@ if( doc.has('^simon says (shoot|fire) #Determiner lazer') ){
           &lt;script src&gt;
         </b>
         <div>
-           &nbsp; &nbsp; &nbsp; &nbsp; one javascript file &nbsp; &nbsp; &nbsp; &nbsp;
+           &nbsp; &nbsp; &nbsp; &nbsp; <a href="https://github.com/spencermountain/compromise/wiki/QuickStart">one javascript file</a> &nbsp; &nbsp; &nbsp; &nbsp;
         </div>
       </td>
       <td align="center">
@@ -134,7 +134,7 @@ doc.sentences().toNegative()
    <tr>
       <td>
          <div align="center">
-            <a href="https://nlp-expo.firebaseapp.com/expo/show-all-the-nouns-760733">
+            <a href="https://beta.observablehq.com/@spencermountain/nouns">
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Part-of-Speech tagging &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
@@ -144,7 +144,7 @@ doc.sentences().toNegative()
       </td>
       <td>
          <div align="center">
-            <a href="https://nlp-expo.firebaseapp.com/expo/named-entity-recognition-208197">
+            <a href="https://beta.observablehq.com/@spencermountain/topics-named-entity-recognition">
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Named-entities &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
@@ -166,7 +166,7 @@ doc.sentences().toNegative()
    <tr>
       <td>
          <div align="center">
-            <a href="https://nlp-expo.firebaseapp.com/expo/custom-pos-tagging-161281">
+            <a href="https://beta.observablehq.com/@spencermountain/tutorial-1">
             &nbsp; &nbsp; &nbsp; &nbsp; Template-matches &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
@@ -176,7 +176,7 @@ doc.sentences().toNegative()
       </td>
       <td>
          <div align="center">
-            <a href="https://nlp-expo.firebaseapp.com/expo/change-sentence-tense-203483">
+            <a href="https://beta.observablehq.com/@spencermountain/verbs">
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Verb conjugation &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>

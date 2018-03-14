@@ -88,7 +88,13 @@ module.exports = {
       returns: 'array'
     }
   },
-
+  parentheses: {
+    data: {
+      desc: 'return a list of phrases between ( ) brackets.',
+      example: 'nlp(\'Use a pointed stick (a pencil) or a similar tool\').parentheses().data()\n//[{text:\'a pencil\'}..]',
+      returns: 'array'
+    }
+  },
   questions: {
     data: {
       desc: 'return an array of question sentences in this text',

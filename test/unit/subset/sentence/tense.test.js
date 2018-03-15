@@ -160,3 +160,31 @@ test('contraction-cases', function(t) {
   });
   t.end();
 });
+
+
+test('pronoun-specific', function(t) {
+  //from present
+  let m = nlp('i am cool').sentences().toPresentTense();
+  t.equal(m.out(), 'i am cool', 'toPresent-I');
+  m = nlp('i am cool').sentences().toPastTense();
+  t.equal(m.out(), 'i was cool', 'toPastTense-I');
+  m = nlp('i am cool').sentences().toPresentTense();
+  t.equal(m.out(), 'i will be cool', 'toPresentTense-I');
+
+  //from future
+  m = nlp('i will be cool').sentences().toPresentTense();
+  t.equal(m.out(), 'i will be cool', 'toPresentTense-I-2');
+  m = nlp('i will be cool').sentences().toPastTense();
+  t.equal(m.out(), 'i was cool', 'toPastTense-I-2');
+  m = nlp('i will be cool').sentences().toPresentTense();
+  t.equal(m.out(), 'i am cool', 'toPresentTense-I-2');
+
+  //from past
+  m = nlp('i was really cool').sentences().toPresentTense();
+  t.equal(m.out(), 'i will be really cool', 'toPresentTense-I-3');
+  m = nlp('i was really cool').sentences().toPastTense();
+  t.equal(m.out(), 'i was really cool', 'toPastTense-I-3');
+  m = nlp('i was really cool').sentences().toPresentTense();
+  t.equal(m.out(), 'i am really cool', 'toPresentTense-I-3');
+  t.end();
+});

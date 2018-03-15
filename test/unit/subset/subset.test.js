@@ -44,6 +44,10 @@ test('parentheses', function(t) {
   var have = nlp('Use a pointed stick (a pencil) or congealed petroleum (an eraser) or a similar tool').parentheses().out('array');
   var want = ['a pencil', 'an eraser'];
   t.deepEqual(have, want, 'two parentheses');
+
+  have = nlp('born in Canada (Toronto), Drake (Aubrey Graham) became a hit (a success)').parentheses().out('array');
+  want = ['toronto', 'aubrey graham', 'a success'];
+  t.deepEqual(have, want, 'different-sized parentheses');
   t.end();
 });
 

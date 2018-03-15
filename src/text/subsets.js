@@ -116,7 +116,7 @@ const addSubsets = Text => {
       return new Text(list, this.world, this.parent);
     },
     parentheses: function(n) {
-      let r = this.match('#StartBracket * #EndBracket');
+      let r = this.match('#StartBracket .* #EndBracket');
       if (typeof n === 'number') {
         r = r.get(n);
       }

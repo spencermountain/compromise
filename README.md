@@ -134,7 +134,7 @@ doc.sentences().toNegative()
    <tr>
       <td>
          <div align="center">
-            <a href="https://beta.observablehq.com/@spencermountain/nouns">
+            <a href="https://beta.observablehq.com/@spencermountain/nlp-compromise">
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Part-of-Speech tagging &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
@@ -223,7 +223,7 @@ nlp(`Couldn't Itchy share his pie with Scratchy?`).debug()
 
 ## Examples:
 
-* <a href="https://github.com/spencermountain/compromise/wiki/Nouns"><b>Plural/singular:</b></a> - grab the noun-phrases, make em plural:
+* <a href="https://beta.observablehq.com/@spencermountain/nouns"><b>Plural/singular:</b></a> - grab the noun-phrases, make em plural:
 ```js
 doc = nlp('a bottle of beer on the wall.')
 doc.nouns(0).toPlural()
@@ -249,7 +249,7 @@ doc = nlp("the guest-singer's björk   at seven thirty.").normalize().out('text'
 // 'The guest singer is Bjork at 7:30.'
 ```
 
-* <a href="https://github.com/spencermountain/compromise/wiki/Verbs"><b>Tense:</b></a> - switch to/from conjugations of any verb
+* <a href="https://beta.observablehq.com/@spencermountain/verbs"><b>Tense:</b></a> - switch to/from conjugations of any verb
 ```js
 let doc = nlp('she sells seashells by the seashore.')
 doc.sentences().toFutureTense().out('text')
@@ -271,7 +271,7 @@ doc.contractions().expand().out()
 //'we are not going to take it, no we are not going to take it'
 ```
 
-* <a href="https://github.com/spencermountain/compromise/wiki/Usage"><b> Named-entities:</b></a> - get the people, places, organizations:
+* <a href="https://beta.observablehq.com/@spencermountain/topics-named-entity-recognition"><b> Named-entities:</b></a> - get the people, places, organizations:
 ```js
 doc = nlp('the opera about richard nixon visiting china')
 doc.topics().data()

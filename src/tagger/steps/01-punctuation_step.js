@@ -38,7 +38,8 @@ const punctuation_step = function(ts) {
     if (t.text[0] === '(') {
       t.tag('StartBracket');
     }
-    if (t.text[t.text.length - 1] === ')') {
+    //look at end-brackets (allow some punctuation after)!
+    if (/\)[,.?!;:]?$/.test(t.text) === true) {
       t.tag('EndBracket');
     }
     //ok, normalise it a little,

@@ -20,11 +20,12 @@ const step = {
   acronym_step: require('./steps/17-acronym_step'),
   person_step: require('./steps/18-person_step'),
   organization_step: require('./steps/19-organization_step'),
-  plural_step: require('./steps/20-plural_step'),
-  value_step: require('./steps/21-value_step'),
-  corrections: require('./steps/22-corrections'),
-  properNoun: require('./steps/23-proper_noun'),
-  custom: require('./steps/24-custom'),
+  parentheses_step: require('./steps/20-parentheses_step'),
+  plural_step: require('./steps/21-plural_step'),
+  value_step: require('./steps/22-value_step'),
+  corrections: require('./steps/23-corrections'),
+  properNoun: require('./steps/24-proper_noun'),
+  custom: require('./steps/25-custom'),
 };
 const tagPhrase = require('./phrase');
 
@@ -48,6 +49,7 @@ const tagger = function(ts) {
   ts = step.acronym_step(ts);
   ts = step.person_step(ts); //1ms
   ts = step.organization_step(ts);
+  ts = step.parentheses_step(ts);
   ts = step.plural_step(ts);
   ts = step.value_step(ts);
   ts = step.corrections(ts); //2ms

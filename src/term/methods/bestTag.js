@@ -9,7 +9,11 @@ const boringTags = {
   CamelCase: 1,
   UpperCase: 1,
   Hyphenated: 1,
-  VerbPhrase: 1
+  VerbPhrase: 1,
+  EndBracket: 1,
+  StartBracket: 1,
+  Parentheses: 1,
+  Quotation: 1,
 };
 
 const bestTag = function(t) {

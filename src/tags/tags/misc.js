@@ -50,6 +50,13 @@ module.exports = {
   ClauseEnd: {},
 
   // Quotes
+  Quotation: {},
+  StartQuotation: {
+    isA: 'Quotation'
+  },
+  EndQuotation: {
+    isA: 'Quotation'
+  },
   StraightDoubleQuotes: {
     isA: 'Quotation'
   },
@@ -98,7 +105,6 @@ module.exports = {
   LowPrimeDoubleQuotesReversed: {
     isA: 'Quotation'
   },
-  Quotation: {},
   //parentheses
   EndBracket: {},
   StartBracket: {}

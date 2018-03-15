@@ -29,6 +29,10 @@ compromise uses semver, and pushes to npm frequently
 - add #Abbreviation tag
 - add #ProperNoun tag
 - fixes for noun inflection
+##### 11.6.0
+- improve quotations() method
+- add .parentheses() method
+- add 'nickname' support to .people()
 
 ##### 11.0.0
 - support for persistent lexicon/tagset changes

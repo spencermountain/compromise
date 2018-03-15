@@ -130,8 +130,8 @@ const quotation_step = ts => {
             ts.terms[i + o].normal.replace(quote.regex, '');
           }
           // Tag the things.
-          t.tag('OpenQuotation', 'quotation_open');
-          ts.terms[i + o].tag('CloseQuotation', 'quotation_close');
+          t.tag('StartQuotation', 'quotation_open');
+          ts.terms[i + o].tag('EndQuotation', 'quotation_close');
           ts.slice(i, i + o + 1).tag(quote.tag, 'quotation_step');
           // Compensate for multiple close quotes ('"Really"')
           o -= 1;

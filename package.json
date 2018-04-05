@@ -28,7 +28,8 @@
   },
   "files": [
     "builds/",
-    "docs/"
+    "docs/",
+    "compromise.d.ts"
   ],
   "dependencies": {
     "efrt-unpack": "2.0.3"

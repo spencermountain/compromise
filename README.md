@@ -198,7 +198,7 @@ doc.sentences().toNegative()
 </table>
 
 <!-- plugins section -->
-__**[plugins](https://nlp-compromise.github.io/compromise-plugin/)**__ allow adding vocabulary, fixing errors, and setting context quickly:
+__**[plugins](https://beta.observablehq.com/@spencermountain/compromise-plugins)**__ allow adding vocabulary, fixing errors, and setting context quickly:
 ```js
 var plugin = {
   tags:{

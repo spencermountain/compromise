@@ -90,10 +90,6 @@ const methods = {
     }
     let obj = this.conjugate();
     let end = obj.PastTense;
-    //i would go -> i would have gone
-    if (this.auxiliary && this.auxiliary.has('#Modal') && !this.auxiliary.has('will')) {
-      end = this.auxiliary.match('#Modal').out() + ' have ' + end;
-    }
     let r = this.replaceWith(end, false);
     r.verb.tag('#PastTense');
     return r;
@@ -129,7 +125,6 @@ const methods = {
     if (this.has('#Contraction')) {
       expand(this.parentTerms);
     }
-    this.debug();
     let obj = this.conjugate();
     let aux = 'is';
     //support 'i am', 'we are', 'he is'
@@ -144,7 +139,12 @@ const methods = {
         aux = auxList[noun];
       }
     }
-    let r = this.replaceWith(aux + ' ' + obj.Gerund, false);
+    let end = aux + ' ' + obj.Gerund;
+    //i would go -> i would have be going
+    // if (this.auxiliary && this.auxiliary.has('#Modal') && !this.auxiliary.has('will')) {
+    //   end = this.auxiliary.match('#Modal').out() + ' have ' + end;
+    // }
+    let r = this.replaceWith(end, false);
     r.verb.tag('#Gerund');
     return r;
   },

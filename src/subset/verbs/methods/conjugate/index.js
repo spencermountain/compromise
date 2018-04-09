@@ -42,6 +42,7 @@ const multiWordConjugate = (vb, verbose) => {
   if (isNegative) {
     obj.PastTense = 'did not ' + obj.Infinitive;
     obj.PresentTense = 'does not ' + obj.Infinitive;
+    obj.Gerund = 'not ' + obj.Gerund;
   }
   //future Tense is pretty straightforward
   if (!obj.FutureTense) {

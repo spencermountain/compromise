@@ -28,6 +28,7 @@ const toBe = (isPlural, isNegative, isI) => {
     obj.Infinitive += ' not';
     obj.PerfectTense = 'not ' + obj.PerfectTense;
     obj.Pluperfect = 'not ' + obj.Pluperfect;
+    obj.Gerund = 'not ' + obj.Gerund;
   }
   return obj;
 };

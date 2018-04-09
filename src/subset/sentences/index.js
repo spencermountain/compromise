@@ -25,6 +25,13 @@ const methods = {
     });
     return this;
   },
+  toContinuous: function() {
+    this.list = this.list.map(ts => {
+      ts = ts.toContinuous();
+      return new Sentence(ts.terms, ts.world, ts.refText, ts.refTerms);
+    });
+    return this;
+  },
   /** negative/positive */
   toNegative: function() {
     this.list = this.list.map(ts => {

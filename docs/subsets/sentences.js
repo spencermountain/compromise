@@ -31,6 +31,11 @@ module.exports = {
     returns: 'Text',
     example: 'nlp(\'That\u2019s the home-owner tax.\').sentences().toFutureTense().out()\n//That will be the home-owner tax'
   },
+  toContinuous: {
+    desc: 'like present tense, but still happening. (\'walks\'->\'is walking\')',
+    returns: 'Text',
+    example: 'nlp(\'rock and/or roll\').sentences().toContinuous().out()\n//rocking and/or rolling'
+  },
   toNegative: {
     desc: 'turn the sentence negative, so that it means the opposite thing',
     returns: 'Text',

@@ -120,6 +120,16 @@ const methods = {
     r.verb.tag('#Infinitive');
     return r;
   },
+  toGerund: function() {
+    if (this.has('#Contraction')) {
+      expand(this.parentTerms);
+    }
+    let obj = this.conjugate();
+    let aux = 'is';
+    let r = this.replaceWith(aux + ' ' + obj.Gerund, false);
+    r.verb.tag('#Gerund');
+    return r;
+  },
   asAdjective: function() {
     return toAdjective(this.verb.out('normal'));
   }

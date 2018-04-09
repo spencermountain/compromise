@@ -284,7 +284,8 @@ module.exports = {
   },
   'see': {
     'PastTense': 'saw',
-    'Participle': 'seen'
+    'Participle': 'seen',
+    'Gerund': 'seeing'
   },
   'sell': {
     'PastTense': 'sold',
@@ -529,7 +530,8 @@ module.exports = {
     'Participle': 'dreamt'
   },
   'flee': {
-    'Participle': 'fled'
+    'Participle': 'fled',
+    'Gerund': 'fleeing',
   },
   'fling': {
     'Participle': 'flung'

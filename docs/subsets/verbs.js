@@ -61,6 +61,11 @@ module.exports = {
   toFutureTense: {
     desc: 'turn the verb into future tense - `walked`->`will walk` etc.',
     returns: 'Text',
+    example: 'nlp(\'rock and/or roll\').verbs().toGerund().out(\'array\')\n//[\'rocking\',\'rolling\']'
+  },
+  toGerund: {
+    desc: 'turn the verb into \'continual\' tense - `walked`->`walking` etc.',
+    returns: 'Text',
     example: 'nlp(\'I\u2019m a furniture! \').verbs().toFutureTense().out()\n//will be'
   },
   asAdjective: {

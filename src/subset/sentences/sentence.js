@@ -137,6 +137,25 @@ const methods = {
     }
     return this;
   },
+  toContinuous: function() {
+    let verb = this.mainVerb();
+    if (verb) {
+      let start = verb.clone(); //.out('root');
+      //'is walking' or 'are walking'?
+      // let aux = 'is';
+      // if (useInfinitive(this)) {
+      //   aux = 'are';
+      // }
+      verb.toGerund();
+      // verb.insertBefore(aux);
+      //support "i'm going"
+      let contr = this.match('#Contraction ' + start.out('normal'));
+      fixContraction(contr);
+      let end = verb.out('normal');
+      return this.parentTerms.replace(start, end);
+    }
+    return this;
+  },
 
   /** negation **/
   isNegative: function() {

@@ -187,12 +187,20 @@ test('pronoun-specific', function(t) {
   m = nlp('i was cool').sentences().toFutureTense();
   t.equal(m.out(), 'i will be cool', 'toFutureTense-I-3');
 
+  //with negative
+  m = nlp('i was not cool').sentences().toPresentTense();
+  t.equal(m.out(), 'i am not cool', 'neg-1');
+  m = nlp('i wasn\'t cool').sentences().toPastTense();
+  t.equal(m.out(), 'i was not cool', 'neg-2');
+  m = nlp('i was not cool').sentences().toFutureTense();
+  t.equal(m.out(), 'i will not be cool', 'neg-3');
+
   //with adverbs
-  // m = nlp('i was really cool').sentences().toPresentTense();
-  // t.equal(m.out(), 'i am really cool', 'toPresentTense-I-3');
-  // m = nlp('i was really cool').sentences().toPastTense();
-  // t.equal(m.out(), 'i was really cool', 'toPastTense-I-3');
-  // m = nlp('i was really cool').sentences().toFutureTense();
-  // t.equal(m.out(), 'i will be really cool', 'toFutureTense-I-3');
+  m = nlp('i was really cool').sentences().toPresentTense();
+  t.equal(m.out(), 'i am really cool', 'toPresentTense-I-3');
+  m = nlp('i was really cool').sentences().toPastTense();
+  t.equal(m.out(), 'i was really cool', 'toPastTense-I-3');
+  m = nlp('i was really cool').sentences().toFutureTense();
+  t.equal(m.out(), 'i will be really cool', 'toFutureTense-I-3');
   t.end();
 });

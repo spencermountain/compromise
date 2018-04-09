@@ -33,6 +33,8 @@ compromise uses semver, and pushes to npm frequently
 - improve quotations() method
 - add .parentheses() method
 - add 'nickname' support to .people()
+- 'will be #Adjective' now tagged as Copula
+- include adverbs in verb conjugation (more) consistently
 
 ##### 11.0.0
 - support for persistent lexicon/tagset changes

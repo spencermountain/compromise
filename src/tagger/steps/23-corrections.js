@@ -188,6 +188,16 @@ const corrections = function(ts) {
     //setting records
     // ts.match('#Gerund [#PresentTense]').tag('Plural', 'setting-records');
     }
+    //will be cool -> Copula
+    if (ts.has('will #Adverb? not? #Adverb? be')) {
+      //will be running (not copula
+      if (ts.has('will #Adverb? not? #Adverb? be #Gerund') === false) {
+        //tag it all
+        ts.match('will not? be').tag('Copula', 'will-be-copula');
+        //for more complex forms, just tag 'be'
+        ts.match('will #Adverb? not? #Adverb? be #Adjective').match('be').tag('Copula', 'be-copula');
+      }
+    }
   }
 
   if (ts.has('#Adjective')) {

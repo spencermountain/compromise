@@ -164,7 +164,7 @@ test('contraction-cases', function(t) {
 
 test('pronoun-specific', function(t) {
   //from present
-  let m = nlp('i am cool').sentences().toPresentTense();
+  var m = nlp('i am cool').sentences().toPresentTense();
   t.equal(m.out(), 'i am cool', 'toPresent-I');
   m = nlp('i am cool').sentences().toPastTense();
   t.equal(m.out(), 'i was cool', 'toPastTense-I');

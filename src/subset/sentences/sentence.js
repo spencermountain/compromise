@@ -108,6 +108,11 @@ const methods = {
           killContraction(this);
         }
         verb.toInfinitive();
+      //irregular "i am"
+      // this.debug();
+      // if (this.has('i #Adverb? is')) {
+      //   this.replace(' #Adverb? [is]', 'am');
+      // }
       } else {
         verb.toPresentTense();
         let contr = this.match('#Contraction ' + start);

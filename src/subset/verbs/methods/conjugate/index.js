@@ -11,7 +11,12 @@ const multiWordConjugate = (vb, verbose) => {
   let isPlural = vb.isPlural();
   //handle 'to be' verb seperately
   if (vb.verb.tags.Copula || (vb.verb.normal === 'be' && vb.auxiliary.match('will').found)) {
-    return toBe(isPlural, isNegative);
+    let isI = false;
+    //account for 'i is' -> 'i am' irregular
+    if (vb.parent && vb.parent.has('i #Adverb? #Copula')) {
+      isI = true;
+    }
+    return toBe(isPlural, isNegative, isI);
   }
   let obj = conjugate(vb.verb, vb.world, verbose);
   //apply particles

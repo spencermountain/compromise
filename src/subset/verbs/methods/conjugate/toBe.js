@@ -1,6 +1,6 @@
 'use strict';
 //too many special cases for is/was/will be
-const toBe = (isPlural, isNegative) => {
+const toBe = (isPlural, isNegative, isI) => {
   let obj = {
     PastTense: 'was',
     PresentTense: 'is',
@@ -11,6 +11,11 @@ const toBe = (isPlural, isNegative) => {
     PerfectTense: 'been',
     Pluperfect: 'been',
   };
+  //"i is" -> "i am"
+  if (isI === true) {
+    obj.PresentTense = 'am';
+    obj.Infinitive = 'am';
+  }
   if (isPlural) {
     obj.PastTense = 'were';
     obj.PresentTense = 'are';

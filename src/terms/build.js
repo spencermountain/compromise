@@ -40,7 +40,7 @@ const hasSlash = function(word) {
   const reg = /[a-z]\/[a-z]/;
   if (reg.test(word)) {
     //only one slash though
-    if (reg.split(/\//g).length === 2) {
+    if (word.split(/\//g).length === 2) {
       return true;
     }
   }
@@ -72,7 +72,7 @@ const fromString = function(str, world) {
     } else if (hasSlash(word) === true) {
       const slashes = word.split(/\//);
       arr.push(slashes[0]);
-      arr.push(slashes[1]);
+      arr.push('/' + slashes[1]);
     } else {
       arr.push(word);
     }

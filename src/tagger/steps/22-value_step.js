@@ -1,6 +1,6 @@
 'use strict';
 //regs-
-const isCardinal = /^\$?[0-9]([0-9]+,)*?(\.[0-9]+)$/;
+const isCardinal = /^\$?[0-9,](\.[0-9])?/;
 const isOrdinal = /[0-9](st|nd|rd|th)$/;
 const hasText = /^[a-z]/;
 

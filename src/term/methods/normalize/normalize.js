@@ -36,7 +36,6 @@ exports.normalize = function(str) {
     str = str.replace(/['",\.!:;\?\)]+$/g, '');
     str = str.replace(/^['"\(]+/g, '');
   }
-
   //do this again..
   str = str.trim();
   //oh shucks,

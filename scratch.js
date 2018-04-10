@@ -1,7 +1,6 @@
 var nlp = require('./src/index');
 // nlp.verbose('tagger');
 
-
 // nlp('the united states senate').match('the (canadian|united states)').debug();
 // nlp('really pretty cool').debug(); //.match('#Copula [(just|alone)$]').debug();
 // nlp('i am pretty confused').debug();
@@ -11,8 +10,8 @@ var nlp = require('./src/index');
 
 // console.log(nlp('the cool, version of a fun canadian senate').match('#Adjective').setPunctuation('?').debug().getPunctuation());
 
-nlp('26 oct 10:00 am to 11:00 am').debug();
-
+let doc = nlp('16.125').debug();
+console.log(doc.out('text'));
 /*
 # better .out() for client-side
 

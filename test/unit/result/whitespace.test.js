@@ -17,3 +17,12 @@ test('sanity-check case:', function(t) {
 
   t.end();
 });
+
+test('slashes-as-whitespace:', function(t) {
+  var doc = nlp('john is cool/fun');
+  t.equal(doc.terms().length, 4, '4 terms');
+  t.equal(doc.has('cool'), true, 'has cool');
+  t.equal(doc.has('fun'), true, 'has fun');
+  t.equal(doc.out('text'), 'john is cool/fun', 'slash in output');
+  t.end();
+});

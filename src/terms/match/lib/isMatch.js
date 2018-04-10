@@ -31,7 +31,7 @@ const perfectMatch = (term, reg) => {
     return term.normal.substr(0, reg.partial.length) === reg.partial;
   }
   //infix matches '-nn-'
-  if (reg.infix === true && reg.partial !== undefined) {
+  if (reg.infix === true && reg.partial) {
     return term.normal.indexOf(reg.partial) !== -1;
   }
   //full-on regex-match '/a*?/'

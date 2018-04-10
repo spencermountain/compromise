@@ -2,6 +2,11 @@ var test = require('tape');
 var nlp = require('../../lib/nlp');
 var str_test = require('../../lib/fns').str_test;
 
+function testAllQuotes(a, t) {
+  var str = nlp(a[0]).match('#Quotation+').out('normal');
+  str_test(str, a[0], a[1], t);
+}
+
 test('quotation test:', function(t) {
   [
     [`he is "really good"`, `really good`],
@@ -16,12 +21,6 @@ test('quotation test:', function(t) {
   });
   t.end();
 });
-
-function testAllQuotes(a, t) {
-  var str = nlp(a[0]).match('#Quotation+').out('normal');
-  console.log(str);
-  str_test(str, a[0], a[1], t);
-}
 
 test('Quotations - U+0022 to U+0022', function (t) {
   [

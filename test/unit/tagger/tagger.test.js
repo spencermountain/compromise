@@ -80,6 +80,12 @@ test('=Tagger=', function(T) {
 
       ['it was fixed', ['Noun', 'Copula', 'PastTense']],
       ['it will be boxed', ['Noun', 'Verb', 'Verb', 'PastTense']],
+      //ambiguous adverbs
+      ['it was pretty', ['Noun', 'Copula', 'Adjective']],
+      ['it was pretty cool', ['Noun', 'Copula', 'Adverb', 'Adjective']],
+      // ['it was really pretty cool', ['Noun', 'Copula', 'Adverb', 'Adverb', 'Adjective']],
+      ['it was just', ['Noun', 'Copula', 'Adjective']],
+      ['it was just gorgeous', ['Noun', 'Copula', 'Adverb', 'Adjective']],
 
       //abbreviations
       ['col. Patrick said march and feb. etc.', ['Abbreviation', 'Person', 'PastTense', 'Month', 'Conjunction', 'Abbreviation', 'Abbreviation']]

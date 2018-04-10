@@ -35,6 +35,8 @@ compromise uses semver, and pushes to npm frequently
 - add 'nickname' support to .people()
 - 'will be #Adjective' now tagged as Copula
 - include adverbs in verb conjugation (more) consistently
+- `sentences().toContinuous()` and `verbs().toGerund()`
+- some more aliases for jquery-like methods api
 
 ##### 11.0.0
 - support for persistent lexicon/tagset changes

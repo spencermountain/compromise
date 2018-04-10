@@ -11,7 +11,7 @@ const methods = {
   },
   conjugate: function(num, verbose) {
     //suppport only conjugating one verb in our result..
-    if (num !== null && typeof num === 'number') {
+    if (num !== null && typeof num === 'number' && this.list[num]) {
       return this.list[num].conjugate(verbose);
     }
     //otherwise, return an array of conjugations

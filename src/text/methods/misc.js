@@ -167,7 +167,23 @@ const miscMethods = Text => {
         arr = arr.concat(this.list.slice(0, diff));
       }
       return new Text(arr, this.world, this.parent);
-    }
+    },
+
+    //jquery-like api aliases
+    offset: function() {
+      return this.out('offset');
+    },
+    text: function() {
+      return this.out('text');
+    },
+    eq: function(num) {
+      let arr = [];
+      if ((num || num === 0) && this.list[num]) {
+        arr = [this.list[num]];
+      }
+      return new Text(arr, this.world, this.parent);
+    },
+
   };
   Text.addMethods(Text, methods);
 };

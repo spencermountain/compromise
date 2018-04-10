@@ -50,7 +50,7 @@ module.exports = [
   'throughout',
   'thru',
   'till',
-  'to',
+  //  'to',
   'towards',
   'unlike',
   'until',

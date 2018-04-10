@@ -19,6 +19,7 @@ module.exports = [
   'provided that',
   'supposing',
   'therefore',
+  'to',
   'tho',
   'though',
   'versus',

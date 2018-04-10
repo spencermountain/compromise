@@ -11,4 +11,29 @@ var nlp = require('./src/index');
 
 // console.log(nlp('the cool, version of a fun canadian senate').match('#Adjective').setPunctuation('?').debug().getPunctuation());
 
-console.log(nlp('wait, there\'s a new mexico?').terms().getPunctuation(0));
+console.log(nlp('profit of N.V.,').debug().out('terms'));
+
+/*
+
+
+N.V.,
+$37-a-share
+``closed-end
+John & John
+
+16.125
+his spending
+PC
+PCs.
+AIDS
+$19
+his fine
+japanese art
+butterfly
+her - Pronoun?
+broken
+inched
+blamed
+endless mudslinging
+girlfriend
+*/

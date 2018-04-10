@@ -9,7 +9,12 @@ const methods = {
       return ts.conjugation(verbose);
     });
   },
-  conjugate: function(verbose) {
+  conjugate: function(num, verbose) {
+    //suppport only conjugating one verb in our result..
+    if (num !== null && typeof num === 'number' && this.list[num]) {
+      return this.list[num].conjugate(verbose);
+    }
+    //otherwise, return an array of conjugations
     return this.list.map(ts => {
       return ts.conjugate(verbose);
     });
@@ -80,11 +85,18 @@ const methods = {
     });
     return this;
   },
+  toGerund: function() {
+    this.list.forEach(ts => {
+      ts.toGerund();
+    });
+    return this;
+  },
   asAdjective: function() {
     return this.list.map(ts => ts.asAdjective());
   }
 };
-
+//aliases
+methods.toContinuous = methods.toGerund;
 
 const find = function(r, n) {
   r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+');

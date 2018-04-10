@@ -80,6 +80,25 @@ test('=Tagger=', function(T) {
 
       ['it was fixed', ['Noun', 'Copula', 'PastTense']],
       ['it will be boxed', ['Noun', 'Verb', 'Verb', 'PastTense']],
+      //ambiguous adverbs
+      ['it was pretty', ['Noun', 'Copula', 'Adjective']],
+      ['it was pretty cool', ['Noun', 'Copula', 'Adverb', 'Adjective']],
+      // ['it was really pretty cool', ['Noun', 'Copula', 'Adverb', 'Adverb', 'Adjective']],
+      ['it was just', ['Noun', 'Copula', 'Adjective']],
+      ['it was just gorgeous', ['Noun', 'Copula', 'Adverb', 'Adjective']],
+
+      ['N.V.,', ['Noun']],
+      ['16.125', ['Cardinal']],
+      ['$19', ['Money']],
+      ['butterfly', ['Singular']],
+      ['he blamed the girl', ['Pronoun', 'PastTense', 'Determiner', 'Singular']],
+      ['his fine', ['Possessive', 'Noun']],
+      ['contracted AIDS', ['PastTense', 'Acronym']],
+      ['city/town', ['Noun', 'Noun']],
+      ['boyfriend to Jane', ['Noun', 'Conjunction', 'Person']],
+      // ['boyfriend of Jane', ['Noun', 'Conjunction', 'Person']],
+      ['his fines', ['Possessive', 'Noun']],
+      ['John & John,', ['Noun', 'Noun', 'Noun']],
 
       //abbreviations
       ['col. Patrick said march and feb. etc.', ['Abbreviation', 'Person', 'PastTense', 'Month', 'Conjunction', 'Abbreviation', 'Abbreviation']]

@@ -134,6 +134,17 @@ const parse_term = function(term) {
 const parse_all = function(input) {
   input = input || '';
   let regs = input.split(/ +/);
+  //bundle-up multiple-words inside parentheses
+  for(let i = 0; i < regs.length; i += 1) {
+    if (regs[i].indexOf('(') !== -1 && regs[i].indexOf(')') === -1) {
+      let nextWord = regs[i + 1];
+      if (nextWord && nextWord.indexOf('(') === -1 && nextWord.indexOf(')') !== -1) {
+        regs[i + 1] = regs[i] + ' ' + regs[i + 1];
+        regs[i] = '';
+      }
+    }
+  }
+  regs = regs.filter((f) => f);
   let captureOn = false;
   regs = regs.map((reg) => {
     let hasEnd = false;
@@ -157,3 +168,4 @@ const parse_all = function(input) {
 };
 
 module.exports = parse_all;
+// console.log(JSON.stringify(parse_all('the (canadian|united states|british) senate'), null, 2));

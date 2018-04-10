@@ -89,7 +89,8 @@ const methods = {
       this.list = expand(this.parentTerms).list;
     }
     let obj = this.conjugate();
-    let r = this.replaceWith(obj.PastTense, false);
+    let end = obj.PastTense;
+    let r = this.replaceWith(end, false);
     r.verb.tag('#PastTense');
     return r;
   },
@@ -118,6 +119,33 @@ const methods = {
     let obj = this.conjugate();
     let r = this.replaceWith(obj.Infinitive, false);
     r.verb.tag('#Infinitive');
+    return r;
+  },
+  toGerund: function() {
+    if (this.has('#Contraction')) {
+      expand(this.parentTerms);
+    }
+    let obj = this.conjugate();
+    let aux = 'is';
+    //support 'i am', 'we are', 'he is'
+    let noun = this.getNoun().out('normal');
+    if (noun) {
+      let auxList = {
+        i: 'am',
+        we: 'are',
+        they: 'are',
+      };
+      if (auxList.hasOwnProperty(noun)) {
+        aux = auxList[noun];
+      }
+    }
+    let end = aux + ' ' + obj.Gerund;
+    //i would go -> i would have be going
+    // if (this.auxiliary && this.auxiliary.has('#Modal') && !this.auxiliary.has('will')) {
+    //   end = this.auxiliary.match('#Modal').out() + ' have ' + end;
+    // }
+    let r = this.replaceWith(end, false);
+    r.verb.tag('#Gerund');
     return r;
   },
   asAdjective: function() {

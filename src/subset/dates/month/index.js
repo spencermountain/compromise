@@ -21,7 +21,7 @@ module.exports = {
     if (t.tags.Month !== undefined) {
       if (longMonths[t.normal] !== undefined) {
         let shorten = Object.keys(shortMonths);
-        let punct = t.endPunctuation() || '';
+        let punct = t.getPunctuation() || '';
         t.text = shorten[longMonths[t.normal]] + punct;
         if (t.tags.TitleCase) {
           t.text = titleCase(t.text);
@@ -35,7 +35,7 @@ module.exports = {
     if (t.tags.Month !== undefined) {
       if (shortMonths[t.normal] !== undefined) {
         let longer = Object.keys(longMonths);
-        let punct = t.endPunctuation() || '';
+        let punct = t.getPunctuation() || '';
         t.text = longer[shortMonths[t.normal]] + punct;
         if (t.tags.TitleCase) {
           t.text = titleCase(t.text);

@@ -1,6 +1,6 @@
 'use strict';
 //punctuation regs-
-const before = /^(\s|-+|\.\.+)+/;
+const before = /^(\s|-+|\.\.+|\/)+/;
 const minusNumber = /^( *)-(\$|€|¥|£)?([0-9])/;
 const after = /(\s+|-+|\.\.+)$/;
 

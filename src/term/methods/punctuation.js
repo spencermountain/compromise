@@ -5,7 +5,7 @@ const endPunct = /([a-z ])([,:;.!?]+)$/i; //old
 const addMethods = Term => {
   const methods = {
     /** the punctuation at the end of this term*/
-    endPunctuation: function() {
+    getPunctuation: function() {
       let m = this.text.match(endPunct);
       if (m) {
         return m[2];
@@ -16,12 +16,15 @@ const addMethods = Term => {
     setPunctuation: function(punct) {
       this.killPunctuation();
       this.text += punct;
+      if (punct === ',') {
+        this.tags.Comma = true;
+      }
       return this;
     },
 
     /** check if the term ends with a comma */
     hasComma: function() {
-      if (this.endPunctuation() === ',') {
+      if (this.getPunctuation() === ',') {
         return true;
       }
       return false;
@@ -29,6 +32,8 @@ const addMethods = Term => {
 
     killPunctuation: function() {
       this.text = this._text.replace(endPunct, '$1');
+      delete this.tags.Comma;
+      delete this.tags.ClauseEnd;
       return this;
     }
   };

@@ -53,6 +53,8 @@ module.exports = [
     //4-letter
     teen: 'Value',
     tors: Noun,
+    amed: Past,
+    ched: Past,
     ends: Vb,
     oses: Pres,
     fies: Pres,
@@ -63,6 +65,7 @@ module.exports = [
     gate: Inf,
     vice: Sing,
     tion: Sing,
+    cted: Past,
     ette: Sing,
     some: Adj,
     llen: Adj,

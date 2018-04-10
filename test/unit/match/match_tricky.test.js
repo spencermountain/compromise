@@ -10,11 +10,11 @@ test('fancy match', function(t) {
     ['doug is good', '.+', 3],
 
     //contractions
-    ["he's nice", 'he is', 2],
-    ["he's nice", 'is nice', 2],
-    ["he's nice", "he's", 1],
-    ["he's nice", "he's nice", 3],
-    ["he's nice", 'nice', 1],
+    ['he\'s nice', 'he is', 2],
+    ['he\'s nice', 'is nice', 2],
+    ['he\'s nice', 'he\'s', 1],
+    ['he\'s nice', 'he\'s nice', 3],
+    ['he\'s nice', 'nice', 1],
 
     //over/under
     ['he is nice', 'is nice and good', 0],
@@ -93,10 +93,13 @@ test('fancy match', function(t) {
     ['is really really walking', 'is #Adverb+? walking', 4],
     ['is really not walking', 'is (#Adverb|not)+? walking', 4],
     ['is really not quickly walking', 'is (#Adverb|not)+? walking', 5],
-    ['is walking', 'is (#Adverb|not)+? walking', 2]
+    ['is walking', 'is (#Adverb|not)+? walking', 2],
+    //this isn't working
+    ['the canadian senate', 'the (united states|canadian) senate', 3],
+    ['the canadian senate', '(canadian|united states|british)', 1],
   ].forEach(function(a) {
     var r = nlp(a[0]).match(a[1]).terms() || [];
-    var msg = "'" + a[0] + "' - - - '" + a[1] + "' - - got:" + r.length + '  want:' + a[2];
+    var msg = '\'' + a[0] + '\' - - - \'' + a[1] + '\' - - got:' + r.length + '  want:' + a[2];
     t.equal(r.length, a[2], msg);
   });
   t.end();

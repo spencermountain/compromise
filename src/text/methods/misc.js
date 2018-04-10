@@ -167,8 +167,31 @@ const miscMethods = Text => {
         arr = arr.concat(this.list.slice(0, diff));
       }
       return new Text(arr, this.world, this.parent);
+    },
+    setPunctuation: function(punct) {
+      this.list.forEach((ts) => ts.setPunctuation(punct));
+      return this;
+    },
+    getPunctuation: function(num) {
+      //support num param
+      if (num || num === 0) {
+        if (!this.list[num]) {
+          return '';
+        }
+        return this.list[num].getPunctuation();
+      }
+      return this.list.map((ts) => ts.getPunctuation());
+    },
+    //jquery-like api aliases
+    offset: function() {
+      return this.out('offset');
+    },
+    text: function() {
+      return this.out('text');
     }
   };
+  //aliases
+  methods.eq = methods.get;
   Text.addMethods(Text, methods);
 };
 

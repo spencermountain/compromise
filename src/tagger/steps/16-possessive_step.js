@@ -18,12 +18,7 @@ singleQuotes.forEach(quote => {
 });
 
 // Get all types of single quote.
-const apostrophes = [].concat(
-  ...singleQuotes
-)
-  // Only unique quotes.
-  .filter((v, i, s) => s.indexOf(v) === i)
-  .join('');
+const apostrophes = '\'‘’‛‚‵′`´';
 
 // [^\w]* match 0 or more of any char that is NOT alphanumeric
 const afterWord = new RegExp('([a-z]s[' + apostrophes + '])\\W*$');

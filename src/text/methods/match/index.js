@@ -147,6 +147,9 @@ const splitMethods = Text => {
   };
   //alias 'and'
   methods.and = methods.match;
+  methods.notIf = methods.ifNo;
+  methods.only = methods.if;
+  methods.onlyIf = methods.if;
 
   //hook them into result.proto
   Text.addMethods(Text, methods);

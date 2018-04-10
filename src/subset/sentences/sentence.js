@@ -108,6 +108,11 @@ const methods = {
           killContraction(this);
         }
         verb.toInfinitive();
+      //irregular "i am"
+      // this.debug();
+      // if (this.has('i #Adverb? is')) {
+      //   this.replace(' #Adverb? [is]', 'am');
+      // }
       } else {
         verb.toPresentTense();
         let contr = this.match('#Contraction ' + start);
@@ -124,6 +129,25 @@ const methods = {
     if (verb) {
       let start = verb.clone(); //.out('root');
       verb.toFutureTense();
+      //support "i'm going"
+      let contr = this.match('#Contraction ' + start.out('normal'));
+      fixContraction(contr);
+      let end = verb.out('normal');
+      return this.parentTerms.replace(start, end);
+    }
+    return this;
+  },
+  toContinuous: function() {
+    let verb = this.mainVerb();
+    if (verb) {
+      let start = verb.clone(); //.out('root');
+      //'is walking' or 'are walking'?
+      // let aux = 'is';
+      // if (useInfinitive(this)) {
+      //   aux = 'are';
+      // }
+      verb.toGerund();
+      // verb.insertBefore(aux);
       //support "i'm going"
       let contr = this.match('#Contraction ' + start.out('normal'));
       fixContraction(contr);
@@ -158,15 +182,6 @@ const methods = {
     return insert.prepend(this, str);
   },
 
-  /** punctuation */
-  setPunctuation: function(punct) {
-    let last = this.terms[this.terms.length - 1];
-    last.setPunctuation(punct);
-  },
-  getPunctuation: function() {
-    let last = this.terms[this.terms.length - 1];
-    return last.getPunctuation();
-  },
   /** look for 'was _ by' patterns */
   isPassive: function() {
     return this.match('was #Adverb? #PastTense #Adverb? by').found; //haha

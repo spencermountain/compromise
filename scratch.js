@@ -1,4 +1,13 @@
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 
-console.log(nlp('i am cool').sentences().toPresentTense().out());
+// nlp('the united states senate').match('the (canadian|united states)').debug();
+// nlp('really pretty cool').debug(); //.match('#Copula [(just|alone)$]').debug();
+// nlp('i am pretty confused').debug();
+
+// nlp('the united states congress').match('the (united states|canada) .');
+// nlp('is it fun').questions().debug();
+
+// console.log(nlp('the cool, version of a fun canadian senate').match('#Adjective').setPunctuation('?').debug().getPunctuation());
+
+let doc = nlp('friend').debug();

@@ -33,6 +33,13 @@ compromise uses semver, and pushes to npm frequently
 - improve quotations() method
 - add .parentheses() method
 - add 'nickname' support to .people()
+- 'will be #Adjective' now tagged as Copula
+- include adverbs in verb conjugation (more) consistently
+- `sentences().toContinuous()` and `verbs().toGerund()`
+- some more aliases for jquery-like methods api
+- move `getPunctuation`, `setPunctuation` from .sentence to main Text method
+- rename internal `endPunctuation` to `getPunctuation`
+- more consistent `cardinal/ordinal` tagging for values
 
 ##### 11.0.0
 - support for persistent lexicon/tagset changes

@@ -17,14 +17,32 @@ const hasHyphen = function(str) {
   if (/^(re|un)-?[^aeiou]./.test(str) === true) {
     return false;
   }
-  let reg = /^([a-z]+)(-|–|—)([a-z0-9].*)/i;
+  //letter-number
+  let reg = /^([a-z`"'/]+)(-|–|—)([a-z0-9].*)/i;
   if (reg.test(str) === true) {
     return true;
   }
+  //number-letter
+  // reg = /^([0-9]+)(-|–|—)([a-z].*)/i;
+  // if (reg.test(str) === true) {
+  //   return true;
+  // }
   //support weird number-emdash combo '2010–2011'
   let reg2 = /^([0-9]+)(–|—)([0-9].*)/i;
   if (reg2.test(str)) {
     return true;
+  }
+  return false;
+};
+
+//support splitting terms like "open/closed"
+const hasSlash = function(word) {
+  const reg = /[a-z]\/[a-z]/;
+  if (reg.test(word)) {
+    //only one slash though
+    if (word.split(/\//g).length === 2) {
+      return true;
+    }
   }
   return false;
 };
@@ -51,6 +69,10 @@ const fromString = function(str, world) {
           arr.push(hyphens[o] + '-');
         }
       }
+    } else if (hasSlash(word) === true) {
+      const slashes = word.split(/\//);
+      arr.push(slashes[0]);
+      arr.push('/' + slashes[1]);
     } else {
       arr.push(word);
     }

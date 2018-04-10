@@ -127,8 +127,6 @@ const corrections = function(ts) {
     ts.match('#Verb than').term(0).tag('Noun', 'correction');
     //her polling
     ts.match('#Possessive #Verb').term(1).tag('Noun', 'correction-possessive');
-    //is eager to go
-    ts.match('#Copula #Adjective to #Verb').match('#Adjective to').tag('Verb', 'correction');
     //there are reasons
     ts.match('there (are|were) #Adjective? [#PresentTense]').tag('Plural', 'there-are');
 
@@ -149,11 +147,18 @@ const corrections = function(ts) {
       word = ts.match('#QuestionWord #Noun #Adverb? #Infinitive not? #Gerund').firstTerm();
       word.unTag('QuestionWord').tag('Conjunction', 'when i go fishing');
     }
+    if (ts.has('#Copula')) {
+      //is eager to go
+      ts.match('#Copula #Adjective to #Verb').match('#Adjective to').tag('Verb', 'correction');
+      //is mark hughes
+      ts.match('#Copula #Infinitive #Noun').term(1).tag('Noun', 'is-pres-noun');
 
-    //is mark hughes
-    ts.match('#Copula #Infinitive #Noun').term(1).tag('Noun', 'is-pres-noun');
-
-    ts.match('#Infinitive #Copula').term(0).tag('Noun', 'infinitive-copula');
+      ts.match('#Infinitive #Copula').term(0).tag('Noun', 'infinitive-copula');
+      //sometimes adverbs - 'pretty good','well above'
+      ts.match('#Copula (pretty|dead|full|well) (#Adjective|#Noun)').notIf('#Comma').tag('#Copula #Adverb #Adjective', 'sometimes-adverb');
+      //sometimes not-adverbs
+      ts.match('#Copula [(just|alone)$]').tag('Adjective', 'not-adverb');
+    }
     //went to sleep
     // ts.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
     //support a splattering of auxillaries before a verb
@@ -188,6 +193,16 @@ const corrections = function(ts) {
     //setting records
     // ts.match('#Gerund [#PresentTense]').tag('Plural', 'setting-records');
     }
+    //will be cool -> Copula
+    if (ts.has('will #Adverb? not? #Adverb? be')) {
+      //will be running (not copula
+      if (ts.has('will #Adverb? not? #Adverb? be #Gerund') === false) {
+        //tag it all
+        ts.match('will not? be').tag('Copula', 'will-be-copula');
+        //for more complex forms, just tag 'be'
+        ts.match('will #Adverb? not? #Adverb? be #Adjective').match('be').tag('Copula', 'be-copula');
+      }
+    }
   }
 
   if (ts.has('#Adjective')) {
@@ -199,6 +214,8 @@ const corrections = function(ts) {
     ts.match('will #Adjective').term(1).tag('Verb', 'will-adj');
     //cheering hard - dropped -ly's
     ts.match('#PresentTense (hard|quick|long|bright|slow)').lastTerm().tag('Adverb', 'lazy-ly');
+    //his fine
+    ts.match('(his|her|its) [#Adjective]').tag('Noun', 'his-fine');
   }
 
   if (ts.has('#TitleCase')) {

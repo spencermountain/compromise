@@ -15,7 +15,7 @@ test('getPunctuation', function(t) {
   t.deepEqual(arr, [',', ','], 'both-sentences');
 
   doc = nlp('he is Kermit, the frog.');
-  let char = doc.terms().getPunctuation(2);
+  var char = doc.terms().getPunctuation(2);
   t.equal(char, ',', 'support-num-param');
   t.end();
 });

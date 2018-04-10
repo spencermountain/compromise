@@ -3,7 +3,7 @@ var nlp = require('../../lib/nlp');
 
 //ignore some modals during conjugation, i guess
 test('ignore-would-behaviour', function(t) {
-  let str = nlp('he would walk').sentences().toPastTense().out();
+  var str = nlp('he would walk').sentences().toPastTense().out();
   t.equal(str, 'he walked', 'would-past');
 
   str = nlp('he would walk').sentences().toFutureTense().out();

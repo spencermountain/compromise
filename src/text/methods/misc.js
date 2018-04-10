@@ -172,7 +172,14 @@ const miscMethods = Text => {
       this.list.forEach((ts) => ts.setPunctuation(punct));
       return this;
     },
-    getPunctuation: function() {
+    getPunctuation: function(num) {
+      //support num param
+      if (num || num === 0) {
+        if (!this.list[num]) {
+          return '';
+        }
+        return this.list[num].getPunctuation();
+      }
       return this.list.map((ts) => ts.getPunctuation());
     },
     //jquery-like api aliases
@@ -181,16 +188,10 @@ const miscMethods = Text => {
     },
     text: function() {
       return this.out('text');
-    },
-    eq: function(num) {
-      let arr = [];
-      if ((num || num === 0) && this.list[num]) {
-        arr = [this.list[num]];
-      }
-      return new Text(arr, this.world, this.parent);
-    },
-
+    }
   };
+  //aliases
+  methods.eq = methods.get;
   Text.addMethods(Text, methods);
 };
 

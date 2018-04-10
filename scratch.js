@@ -11,4 +11,4 @@ var nlp = require('./src/index');
 
 // console.log(nlp('the cool, version of a fun canadian senate').match('#Adjective').setPunctuation('?').debug().getPunctuation());
 
-console.log(nlp('there\'s a new mexico?').sentences().setPunctuation('!??').out());
+console.log(nlp('wait, there\'s a new mexico?').terms().getPunctuation(0));

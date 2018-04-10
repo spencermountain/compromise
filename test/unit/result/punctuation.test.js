@@ -13,6 +13,10 @@ test('getPunctuation', function(t) {
   doc = nlp('he is green, and cool! He is Kermit, the frog.');
   arr = doc.match('#Comma').getPunctuation();
   t.deepEqual(arr, [',', ','], 'both-sentences');
+
+  doc = nlp('he is Kermit, the frog.');
+  let char = doc.terms().getPunctuation(2);
+  t.equal(char, ',', 'support-num-param');
   t.end();
 });
 

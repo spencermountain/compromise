@@ -73,7 +73,7 @@ const commaStep = function(ts) {
   //tag the correct punctuation forms
   for(let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
-    let punct = t.endPunctuation();
+    let punct = t.getPunctuation();
     if (punct === ',') {
       t.tag('Comma', 'comma-step');
       continue;

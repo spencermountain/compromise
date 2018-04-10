@@ -9,4 +9,4 @@ var nlp = require('./src/index');
 // nlp('the united states congress').match('the (united states|canada) .');
 // nlp('is it fun').questions().debug();
 
-nlp('the canadian senate').match('the (canadian|united states|british) senate').debug();
+console.log(nlp('the cool, version of a fun canadian senate').match('#Adjective').setPunctuation('?').debug().getPunctuation());

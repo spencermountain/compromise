@@ -27,7 +27,7 @@ const replaceMethods = Terms => {
         });
       }
       //keep its ending punctation..
-      let endPunct = this.endPunctuation();
+      let endPunct = this.getPunctuation();
       //grab the insertion place..
       let index = this.index();
       this.parentTerms = mutate.deleteThese(this.parentTerms, this);

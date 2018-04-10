@@ -182,15 +182,6 @@ const methods = {
     return insert.prepend(this, str);
   },
 
-  /** punctuation */
-  setPunctuation: function(punct) {
-    let last = this.terms[this.terms.length - 1];
-    last.setPunctuation(punct);
-  },
-  getPunctuation: function() {
-    let last = this.terms[this.terms.length - 1];
-    return last.getPunctuation();
-  },
   /** look for 'was _ by' patterns */
   isPassive: function() {
     return this.match('was #Adverb? #PastTense #Adverb? by').found; //haha

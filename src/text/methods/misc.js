@@ -168,7 +168,13 @@ const miscMethods = Text => {
       }
       return new Text(arr, this.world, this.parent);
     },
-
+    setPunctuation: function(punct) {
+      this.list.forEach((ts) => ts.setPunctuation(punct));
+      return this;
+    },
+    getPunctuation: function() {
+      return this.list.map((ts) => ts.getPunctuation());
+    },
     //jquery-like api aliases
     offset: function() {
       return this.out('offset');

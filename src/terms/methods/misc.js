@@ -37,13 +37,6 @@ const miscMethods = Terms => {
       let terms = this.terms.slice(start, end);
       return new Terms(terms, this.world, this.refText, this.refTerms);
     },
-    endPunctuation: function() {
-      let lastTerm = this.last().terms[0];
-      if (!lastTerm) {
-        return '';
-      }
-      return lastTerm.endPunctuation() || '';
-    },
     index: function() {
       let parent = this.parentTerms;
       let first = this.terms[0];
@@ -88,7 +81,18 @@ const miscMethods = Terms => {
     wordCount: function() {
       return this.terms.length;
     },
-
+    /** punctuation */
+    setPunctuation: function(punct) {
+      let last = this.terms[this.terms.length - 1];
+      last.setPunctuation(punct);
+    },
+    getPunctuation: function() {
+      let lastTerm = this.last().terms[0];
+      if (!lastTerm) {
+        return '';
+      }
+      return lastTerm.getPunctuation() || '';
+    },
     //this has term-order logic, so has to be here
     toCamelCase: function() {
       this.toTitleCase();

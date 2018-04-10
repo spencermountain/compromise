@@ -37,6 +37,8 @@ compromise uses semver, and pushes to npm frequently
 - include adverbs in verb conjugation (more) consistently
 - `sentences().toContinuous()` and `verbs().toGerund()`
 - some more aliases for jquery-like methods api
+- move `getPunctuation`, `setPunctuation` from .sentence to main Text method
+- rename internal `endPunctuation` to `getPunctuation`
 
 ##### 11.0.0
 - support for persistent lexicon/tagset changes

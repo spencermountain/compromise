@@ -3,7 +3,7 @@
 //is this sentence asking a question?
 const isQuestion = function(ts) {
   //if it has a question mark..
-  let endPunct = ts.endPunctuation();
+  let endPunct = ts.getPunctuation();
   if (/\?/.test(endPunct) === true) {
     return true;
   }

@@ -28,6 +28,7 @@ module.exports = [
   'during',
   'except',
   'from',
+  'for',
   'in',
   'into',
   // 'just like',

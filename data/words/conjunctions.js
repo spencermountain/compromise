@@ -7,7 +7,7 @@ module.exports = [
   'before',
   'but',
   'cuz',
-  'for',
+  //'for',
   'how',
   'however',
   'in case',

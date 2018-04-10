@@ -115,6 +115,16 @@ module.exports = {
       desc: 'remove leading and trailing whitespace from each match',
       returns: 'Text',
       example: 'nlp(\' Lenny and Carl \').people().trim().out()\n//[\'Lenny\', \'Carl\']'
+    },
+    getPunctuation: {
+      desc: 'get an array of trailing-punctuation for the results',
+      returns: 'Array',
+      example: 'nlp(\'my bubbly, longnecked, beechwood aged lover\').adjectives().eq(1).getPunctuation()\n//[\',\']'
+    },
+    setPunctuation: {
+      desc: 'overwrite the trailing punctuation',
+      returns: 'Text',
+      example: 'nlp(\'there\\\'s a new mexico?\').sentences().setPunctuation(\'!??\').out()\n//there\'s a new mexico!??'
     }
   },
 

@@ -16,6 +16,9 @@ const addMethods = Term => {
     setPunctuation: function(punct) {
       this.killPunctuation();
       this.text += punct;
+      if (punct === ',') {
+        this.tags.Comma = true;
+      }
       return this;
     },
 
@@ -29,6 +32,8 @@ const addMethods = Term => {
 
     killPunctuation: function() {
       this.text = this._text.replace(endPunct, '$1');
+      delete this.tags.Comma;
+      delete this.tags.ClauseEnd;
       return this;
     }
   };

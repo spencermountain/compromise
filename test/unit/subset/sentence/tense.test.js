@@ -92,7 +92,6 @@ test('conjugate-form', function(t) {
   t.equal(m.out(), 'john will not walk quickly', 'toNeg');
 
   //negative forms
-  console.log(m.out());
   m.toPastTense();
   t.equal(m.out(), 'john did not walk quickly', 'toPast-neg');
 

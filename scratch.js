@@ -11,7 +11,7 @@ var nlp = require('./src/index');
 
 // console.log(nlp('the cool, version of a fun canadian senate').match('#Adjective').setPunctuation('?').debug().getPunctuation());
 
-nlp('it is $4.87').debug();
+nlp('26 oct 10:00 am to 11:00 am').debug();
 
 /*
 # better .out() for client-side

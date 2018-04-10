@@ -172,7 +172,7 @@ const datePass = function (ts) {
     //saturday am
     ts.match('#Date (am|pm)').term(1).unTag('Verb').unTag('Copula').tag('Time', 'date-am');
     ts.match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('Date', 'next-feb');
-    ts.match('#Date #Preposition #Date').tag('Date', 'date-prep-date');
+    ts.match('#Date (#Preposition|to) #Date').tag('Date', 'date-prep-date');
     //start of june
     ts.match(`the? ${sections} of #Date`).tag('Date', 'section-of-date');
     //fifth week in 1998

@@ -1,18 +1,19 @@
 'use strict';
 //regs-
-const cardinal = /^[0-9]([0-9]+,)*?(\.[0-9])$/;
+const isCardinal = /^\$?[0-9]([0-9]+,)*?(\.[0-9]+)$/;
+const isOrdinal = /[0-9](st|nd|rd|th)$/;
 const hasText = /^[a-z]/;
 
 const value_step = function(ts) {
   for(let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
-    if (t.tag.Value === true) {
+    if (t.tags.Value === true) {
       //ordinal/cardinal
       if (t.tags.Ordinal === undefined && t.tags.Cardinal === undefined) {
-        if (cardinal.test(t.normal) === true) {
-          t.tag('Cardinal', 'cardinal-regex');
-        } else {
-          t.tag('Ordinal', 'not-cardinal');
+        if (isCardinal.test(t.normal) === true) {
+          t.tag('Cardinal', 'cardinal-val-regex');
+        } else if (isOrdinal.test(t.normal) === true) {
+          t.tag('Ordinal', 'ordinal-value-regex');
         }
       }
       //text/number

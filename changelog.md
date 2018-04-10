@@ -39,6 +39,7 @@ compromise uses semver, and pushes to npm frequently
 - some more aliases for jquery-like methods api
 - move `getPunctuation`, `setPunctuation` from .sentence to main Text method
 - rename internal `endPunctuation` to `getPunctuation`
+- more consistent `cardinal/ordinal` tagging for values
 
 ##### 11.0.0
 - support for persistent lexicon/tagset changes

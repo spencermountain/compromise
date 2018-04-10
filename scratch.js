@@ -11,14 +11,15 @@ var nlp = require('./src/index');
 
 // console.log(nlp('the cool, version of a fun canadian senate').match('#Adjective').setPunctuation('?').debug().getPunctuation());
 
-console.log(nlp('profit of N.V.,').debug().out('terms'));
+nlp('it is $4.87').debug();
 
 /*
-
+# better .out() for client-side
 
 N.V.,
 $37-a-share
 ``closed-end
+open/closed
 John & John
 
 16.125

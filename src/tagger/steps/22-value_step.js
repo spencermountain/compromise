@@ -2,7 +2,7 @@
 //regs-
 const isCardinal = /^\$?[0-9,](\.[0-9])?/;
 const isOrdinal = /[0-9](st|nd|rd|th)$/;
-const hasText = /^[a-z]/;
+// const hasText = /^[a-z]/;
 
 const value_step = function(ts) {
   for(let i = 0; i < ts.terms.length; i++) {
@@ -16,14 +16,14 @@ const value_step = function(ts) {
           t.tag('Ordinal', 'ordinal-value-regex');
         }
       }
-      //text/number
-      if (t.tags.TextValue === undefined && t.tags.NumericValue === undefined) {
-        if (hasText.test(t.normal) === true) {
-          t.tag('TextValue', 'TextValue-regex');
-        } else {
-          t.tag('NumericValue', 'NumericValue-regex');
-        }
-      }
+    //text/number
+    // if (t.tags.TextValue === undefined && t.tags.NumericValue === undefined) {
+    //   if (hasText.test(t.normal) === true) {
+    //     t.tag('TextValue', 'TextValue-regex');
+    //   } else {
+    //     t.tag('NumericValue', 'NumericValue-regex');
+    //   }
+    // }
     }
   }
   //5 books

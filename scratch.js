@@ -10,8 +10,8 @@ var nlp = require('./src/index');
 
 // console.log(nlp('the cool, version of a fun canadian senate').match('#Adjective').setPunctuation('?').debug().getPunctuation());
 
-let doc = nlp('16.125').debug();
-console.log(doc.out('text'));
+let doc = nlp('minus 70').debug();
+console.log(doc.values().data());
 /*
 # better .out() for client-side
 

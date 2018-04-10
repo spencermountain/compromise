@@ -214,6 +214,8 @@ const corrections = function(ts) {
     ts.match('will #Adjective').term(1).tag('Verb', 'will-adj');
     //cheering hard - dropped -ly's
     ts.match('#PresentTense (hard|quick|long|bright|slow)').lastTerm().tag('Adverb', 'lazy-ly');
+    //his fine
+    ts.match('(his|her|its) [#Adjective]').tag('Noun', 'his-fine');
   }
 
   if (ts.has('#TitleCase')) {

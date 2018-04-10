@@ -1,6 +1,6 @@
 'use strict';
 //regs-
-const isCardinal = /^\$?[0-9,](\.[0-9])?/;
+const numericCardinal = /^\$?[0-9,](\.[0-9])?/;
 const isOrdinal = /[0-9](st|nd|rd|th)$/;
 // const hasText = /^[a-z]/;
 
@@ -10,10 +10,12 @@ const value_step = function(ts) {
     if (t.tags.Value === true) {
       //ordinal/cardinal
       if (t.tags.Ordinal === undefined && t.tags.Cardinal === undefined) {
-        if (isCardinal.test(t.normal) === true) {
+        if (numericCardinal.test(t.normal) === true) {
           t.tag('Cardinal', 'cardinal-val-regex');
+          t.tag('NumericValue', 'NumericValue-regex');
         } else if (isOrdinal.test(t.normal) === true) {
           t.tag('Ordinal', 'ordinal-value-regex');
+          t.tag('NumericValue', 'NumericValue-regex');
         }
       }
     //text/number

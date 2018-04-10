@@ -62,5 +62,7 @@ module.exports = [
   //phrases
   ['VerbPhrase', 'Noun', 'Adjective', 'Value'],
   //QuestionWord
-  ['QuestionWord', 'VerbPhrase']
+  ['QuestionWord', 'VerbPhrase'],
+  //acronyms
+  ['Acronym', 'VerbPhrase'],
 ];

@@ -1,5 +1,5 @@
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 
 // nlp('the united states senate').match('the (canadian|united states)').debug();
 // nlp('really pretty cool').debug(); //.match('#Copula [(just|alone)$]').debug();
@@ -10,30 +10,4 @@ var nlp = require('./src/index');
 
 // console.log(nlp('the cool, version of a fun canadian senate').match('#Adjective').setPunctuation('?').debug().getPunctuation());
 
-let doc = nlp('minus 70').debug();
-console.log(doc.values().data());
-/*
-# better .out() for client-side
-
-N.V.,
-$37-a-share
-``closed-end
-open/closed
-John & John
-
-16.125
-his spending
-PC
-PCs.
-AIDS
-$19
-his fine
-japanese art
-butterfly
-her - Pronoun?
-broken
-inched
-blamed
-endless mudslinging
-girlfriend
-*/
+let doc = nlp('friend').debug();

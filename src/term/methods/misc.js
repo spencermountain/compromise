@@ -31,7 +31,7 @@ const addMethods = (Term) => {
         return false;
       }
       //has letters, but with no vowels
-      if (t.normal.length > 1 && hasLetter.test(t.normal) === true && hasVowel.test(t.normal) === false && t.isAcronym() === false) {
+      if (t.normal.length > 3 && hasLetter.test(t.normal) === true && hasVowel.test(t.normal) === false && t.isAcronym() === false) {
         return false;
       }
       //has numbers but not a 'value'

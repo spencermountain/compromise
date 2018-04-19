@@ -1,6 +1,7 @@
 'use strict';
 const lumpMatch = require('./lumpMatch');
 const isMatch = require('./isMatch');
+const applyCaptureGroup = require('./applyCaptureGroup');
 
 // match everything until this point - '*'
 const greedyUntil = (ts, i, reg) => {
@@ -56,14 +57,23 @@ const startHere = (ts, startAt, regs, verbose) => {
     }
 
     //support '*'
-    if (regs[reg_i].astrix === true) {
+    if (reg.astrix === true) {
       //just grab until the end..
       if (!next_reg) {
-        return ts.terms.slice(startAt, ts.length);
+        let terms = ts.terms.slice(startAt, ts.length);
+        //apply capture group settings for all wildcard terms
+        for (let wildcardTerm_i = term_i - startAt; wildcardTerm_i < terms.length; wildcardTerm_i++) {
+          applyCaptureGroup(terms[wildcardTerm_i], reg);
+        }
+        return terms;
       }
       let foundAt = greedyUntil(ts, term_i, regs[reg_i + 1]);
       if (!foundAt) {
         return null;
+      }
+      //apply capture group settings for all wildcard terms
+      for (let wildcardTerm_i = term_i; wildcardTerm_i < foundAt; wildcardTerm_i++) {
+        applyCaptureGroup(ts.terms[wildcardTerm_i], reg)
       }
       term_i = foundAt + 1;
       reg_i += 1;

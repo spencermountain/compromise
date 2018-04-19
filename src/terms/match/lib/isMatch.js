@@ -1,4 +1,5 @@
 'use strict';
+const applyCaptureGroup = require('./applyCaptureGroup');
 
 //compare 1 term to one reg
 const perfectMatch = (term, reg) => {
@@ -56,15 +57,13 @@ const isMatch = (term, reg, verbose) => {
     return false;
   }
   let found = perfectMatch(term, reg, verbose);
-  //flag it as a capture-group
-  if (reg.capture) {
-    term.captureGroup = true;
-  } else {
-    term.captureGroup = undefined;
-  }
   //reverse it for .not()
   if (reg.negative) {
     found = !Boolean(found);
+  }
+  if (found) {
+    //only apply capture group settings to matches
+    applyCaptureGroup(term, reg);
   }
   return found;
 };

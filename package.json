@@ -10,7 +10,7 @@
     "url": "git://github.com/nlp-compromise/compromise.git"
   },
   "scripts": {
-    "test": "tape \"./test/unit/**/*.test.js\" | tap-dot",
+    "test": "tape \"./test/unit/**/*.test.js\" | tap-dancer",
     "testb": "TESTENV=prod tape \"./test/unit/**/*.test.js\" | tap-dot",
     "buildTest": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
@@ -40,15 +40,14 @@
     "babelify": "7.3.0",
     "babili": "0.1.4",
     "browserify": "13.0.1",
-    "browserify-glob": "0.2.0",
-    "chalk": "2.4.0",
+    "chalk": "2.4.1",
     "codacy-coverage": "2.1.1",
     "compromise-plugin": "0.0.8",
     "derequire": "2.0.6",
     "eslint": "4.19.1",
     "nyc": "8.4.0",
     "shelljs": "0.8.1",
-    "tap-dot": "1.0.5",
+    "tap-dancer": "0.0.2",
     "tape": "4.9.0",
     "uglify-js": "2.7.0"
   },

@@ -7089,7 +7089,7 @@ const organization_step = ts => {
 module.exports = organization_step;
 
 },{"../../world/more-data/orgWords":219}],117:[function(_dereq_,module,exports){
-
+'use strict';
 //tag the words between '(' and ')' as #Parentheses
 const parenthesesStep = function(ts) {
   ts.terms.forEach((t, i) => {

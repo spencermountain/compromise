@@ -2,7 +2,7 @@ var test = require('tape');
 var nlp = require('../../lib/nlp');
 
 test('possessives tagger', function(t) {
-  let arr = [
+  var arr = [
     `Spencer's`,
     `Spencer Kelly's`,
     `Spencer C. Kelly's`,
@@ -11,7 +11,7 @@ test('possessives tagger', function(t) {
   ];
   arr.forEach((a) => {
     var doc = nlp(a);
-    let m = doc.possessives();
+    var m = doc.possessives();
     t.equal(m.length, 1, 'one possessive -' + a);
     t.equal(m.out(), a, 'possessive match -' + a);
   });
@@ -19,7 +19,7 @@ test('possessives tagger', function(t) {
 });
 
 test('possessives strip', function(t) {
-  let arr = [
+  var arr = [
     [`Spencer's`, 'Spencer'],
     [`Corey Hart's`, 'Corey Hart'],
     [`Corey M. Hart's`, 'Corey M. Hart'],

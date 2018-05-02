@@ -6,7 +6,8 @@ const defaults = {
   numbers: true,
   punctuation: true,
   unicode: true,
-  contractions: true
+  contractions: true,
+  possessives: false
 };
 
 const methods = {
@@ -69,7 +70,12 @@ const methods = {
 
   contractions: r => {
     return r.contractions().expand();
-  }
+  },
+  //turn david's → david
+  possessives: r => {
+    r.possessives().normalize();
+    return r;
+  },
 };
 
 const addMethods = Text => {
@@ -77,7 +83,7 @@ const addMethods = Text => {
     obj = obj || defaults;
     //do each type of normalization
     Object.keys(obj).forEach(fn => {
-      if (methods[fn] !== undefined) {
+      if (obj[fn] && methods[fn] !== undefined) {
         methods[fn](this);
       }
     });

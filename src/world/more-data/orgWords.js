@@ -61,6 +61,7 @@ const orgWords = [
   'containers',
   'corporation',
   'corps',
+  'corp',
   'council',
   'crew',
   'daily news',

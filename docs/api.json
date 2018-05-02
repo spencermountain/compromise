@@ -725,6 +725,13 @@
         "returns": "array"
       }
     },
+    "possessives": {
+      "strip": {
+        "desc": "grab all the things that are possessive, like \"Homer Simpson's\"",
+        "example": "nlp('moe’s tavern').possessives().strip()\n//moe",
+        "returns": "array"
+      }
+    },
     "topics": {
       "data": {
         "desc": "return the people, places, and organizations of this text",

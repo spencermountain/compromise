@@ -9,7 +9,12 @@ const addRoot = require('./methods/normalize/root');
 const Term = function(str, world) {
   this.tags = {};
   this._text = fns.ensureString(str);
-  this.world = world;
+
+  // this.world = world;
+  Object.defineProperty(this, 'world', {
+    enumerable: false, // hide it from for..in
+    value: world
+  });
   // this.world = function() {
   //   return world;
   // };

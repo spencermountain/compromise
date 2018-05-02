@@ -73,7 +73,7 @@ const methods = {
   },
   //turn david's → david
   possessives: r => {
-    r.possessives().normalize();
+    r.possessives().strip();
     return r;
   },
 };

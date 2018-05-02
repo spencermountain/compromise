@@ -15,13 +15,11 @@ var nlp = require('./src/index');
 // nlp('Jim is nice, funny, cool').match('is #Adjective+').out();
 
 //isQuestion(), .not(Text)
-let doc = nlp(`Spencer Kelly's hamburger`);
+let doc = nlp(`Corey Hart's`);
+doc = doc.people().normalize({
+  possessives: true
+});
 doc.debug();
-// doc.possessives().normalize();
-// doc = doc.people().normalize({
-//   possessives: true
-// });
-// doc.debug();
 // console.log(doc.sentences().isQuestion().out('array'));
 // console.log(doc.sentences()[0].mainVerb());
 // let questions = doc.questions();

@@ -192,6 +192,7 @@ const miscMethods = Text => {
   };
   //aliases
   methods.eq = methods.get;
+  methods.join = methods.flatten;
   Text.addMethods(Text, methods);
 };
 

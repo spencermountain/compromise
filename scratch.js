@@ -15,7 +15,11 @@ var nlp = require('./src/index');
 // nlp('Jim is nice, funny, cool').match('is #Adjective+').out();
 
 //isQuestion(), .not(Text)
-let doc = nlp('i like dogs. Are they funny? Yes they are');
-let questions = doc.questions();
-let sentences = doc.not(questions);
-console.log(sentences.out('array'));
+let doc = nlp('Dogs are funny. Are they funny? Yes they are.');
+doc = doc.sentences().join('so');
+doc.debug();
+// console.log(doc.sentences().isQuestion().out('array'));
+// console.log(doc.sentences()[0].mainVerb());
+// let questions = doc.questions();
+// let sentences = doc.not(questions);
+// console.log(sentences.out('array'));

@@ -55,6 +55,13 @@ const methods = {
     });
     return this;
   },
+  //return only questions
+  isQuestion: function() {
+    // this.list = this.list.filter(ts => {
+    //   return ts.isQuestion();
+    // });
+    return this.questions()
+  },
   /** add a word to the start */
   prepend: function(str) {
     this.list = this.list.map(ts => {

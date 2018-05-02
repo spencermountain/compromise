@@ -40,6 +40,10 @@ compromise uses semver, and pushes to npm frequently
 - move `getPunctuation`, `setPunctuation` from .sentence to main Text method
 - rename internal `endPunctuation` to `getPunctuation`
 - more consistent `cardinal/ordinal` tagging for values
+##### 11.7.0
+- expose internal `sentences().isQuestion()` method
+- `.join()` as an alias for `.flatten()`
+- slightly different behavior for wildcards in capture-groups [pull/472](https://github.com/spencermountain/compromise/pull/472)
 
 ##### 11.0.0
 - support for persistent lexicon/tagset changes

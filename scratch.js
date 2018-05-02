@@ -1,5 +1,5 @@
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+nlp.verbose('tagger');
 
 // let doc = nlp('100+').debug();
 
@@ -15,11 +15,12 @@ var nlp = require('./src/index');
 // nlp('Jim is nice, funny, cool').match('is #Adjective+').out();
 
 //isQuestion(), .not(Text)
-let doc = nlp(`Corey Hart's`);
-doc = doc.people().normalize({
+let doc = nlp(`Google's bite`);
+doc = doc.normalize({
   possessives: true
 });
-doc.debug();
+// doc.debug();
+
 // console.log(doc.sentences().isQuestion().out('array'));
 // console.log(doc.sentences()[0].mainVerb());
 // let questions = doc.questions();

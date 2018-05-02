@@ -10,7 +10,7 @@ const step = {
   neighbour_step: require('./steps/07-neighbour_step'),
   capital_step: require('./steps/08-capital_step'),
   noun_fallback: require('./steps/09-noun_fallback'),
-  contraction: require('./steps/10-contractions'),
+  contraction: require('./steps/10-contraction_step'),
   date_step: require('./steps/11-date_step'),
   auxiliary_step: require('./steps/12-auxiliary_step'),
   negation_step: require('./steps/13-negation_step'),

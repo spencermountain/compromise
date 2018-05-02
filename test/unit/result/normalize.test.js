@@ -32,6 +32,14 @@ test('normalize():', function(t) {
     var str = nlp(a[0]).normalize().out('text');
     str_test(str, a[0], a[1], t);
   });
+  t.end();
+});
 
+test('optional params', function(t) {
+  let doc = nlp(`Corey Hart's pudding and Google's advertising`);
+  doc = doc.normalize({
+    possessives: true
+  });
+  t.equal(doc.out(), 'Corey Hart pudding and Google advertising', 'normalize possessives');
   t.end();
 });

@@ -69,11 +69,10 @@ const is_possessive = function(terms, text, index) {
 };
 
 // Tag each term as possessive, if it should
-const possessiveStep = function(terms) {
+const possessiveStep = function(ts) {
   let expectingClosers = [];
-
-  for(let i = 0; i < terms.length; i++) {
-    const term = terms.get(i);
+  for(let i = 0; i < ts.length; i++) {
+    const term = ts.get(i);
     let text = term.text;
 
     // First detect open quotes before detecting apostrophes
@@ -96,7 +95,7 @@ const possessiveStep = function(terms) {
     // Post checking for quotes. e.g: Carlos'. -> Carlos'
     text = text.replace(trailers, '');
 
-    if (is_possessive(terms, text, i)) {
+    if (is_possessive(ts, text, i)) {
       // If it's not already a noun, co-erce it to one
       if (!term.tags['Noun']) {
         term.tag('Noun', 'possessive_pass');
@@ -107,11 +106,11 @@ const possessiveStep = function(terms) {
       if (term.tags.Contraction === true) {
         // Remove the `Contraction` tag and silent_terms
         term.unTag('Contraction');
-        terms.terms.splice(i + 1, 1);
+        ts.terms.splice(i + 1, 1);
         term.silent_term = '';
       }
     }
   }
-  return terms;
+  return ts;
 };
 module.exports = possessiveStep;

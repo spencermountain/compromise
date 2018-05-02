@@ -22,7 +22,7 @@ const maybeOrg = function(t) {
 const organization_step = ts => {
   for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
-    if (orgWords.hasOwnProperty(t.normal) === true) {
+    if (orgWords.hasOwnProperty(t.root) === true) {
       //eg. Toronto University
       let lastTerm = ts.terms[i - 1];
       if (lastTerm && maybeOrg(lastTerm)) {

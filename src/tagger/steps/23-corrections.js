@@ -101,8 +101,6 @@ const corrections = function(ts) {
     ts.match('#Noun (&|n) #Noun').tag('Organization', 'Noun-&-Noun');
     //Aircraft designer
     ts.match('#Noun #Actor').tag('Actor', 'thing-doer');
-    //my buddy
-    ts.match('#Possessive #FirstName').term(1).unTag('Person', 'possessive-name');
     //this rocks
     ts.match('(this|that) #Plural').term(1).tag('PresentTense', 'this-verbs');
     //the western line
@@ -113,6 +111,16 @@ const corrections = function(ts) {
       ts.match('#Organization of the? #TitleCase').tag('Organization', 'org-of-place');
       ts.match('#Organization #Country').tag('Organization', 'org-country');
       ts.match('(world|global|international|national|#Demonym) #Organization').tag('Organization', 'global-org');
+    }
+    if (ts.has('#Possessive')) {
+      //my buddy
+      ts.match('#Possessive #FirstName').term(1).unTag('Person', 'possessive-name');
+      //spencer kelly's
+      ts.match('#FirstName #Acronym? #Possessive').notIf('#Comma').match('#FirstName #Acronym? #LastName').tag('Possessive');
+      //Super Corp's fundraiser
+      ts.match('#Organization+ #Possessive').notIf('#Comma').tag('Possessive');
+      //Los Angeles's fundraiser
+      ts.match('#Place+ #Possessive').notIf('#Comma').tag('Possessive');
     }
   }
 

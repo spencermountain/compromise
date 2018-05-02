@@ -418,6 +418,11 @@
         "returns": "Text",
         "example": "nlp('you were saved by the bell').sentences().isPassive().out()\n//you were saved by the bell"
       },
+      "isQuestion": {
+        "desc": "return only sentences that are questions",
+        "returns": "Text",
+        "example": "nlp('Dogs are funny. Are they funny? Yes they are.').sentences().isQuestion().out('array')\n//['are they funny']"
+      },
       "toExclamation": {
         "desc": "replace the sentence's end punctuation with an exclamation point",
         "returns": "Text",
@@ -717,6 +722,13 @@
       "data": {
         "desc": "split all words into individual results, and return their metadata",
         "example": "nlp('we should all be more like little Ruttiger').terms().data()\n//[{text:'we'}, {text:'should'}...]",
+        "returns": "array"
+      }
+    },
+    "possessives": {
+      "strip": {
+        "desc": "grab all the things that are possessive, like \"Homer Simpson's\"",
+        "example": "nlp('moe’s tavern').possessives().strip()\n//moe",
         "returns": "array"
       }
     },

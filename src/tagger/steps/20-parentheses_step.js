@@ -1,4 +1,4 @@
-
+'use strict';
 //tag the words between '(' and ')' as #Parentheses
 const parenthesesStep = function(ts) {
   ts.terms.forEach((t, i) => {

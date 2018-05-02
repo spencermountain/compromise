@@ -12,6 +12,16 @@ module.exports = [
   'kitty',
   'doggy',
 
+  //.ing
+  'funding',
+  'pudding',
+  'frosting',
+  'bunting',
+  'icing',
+  'ring',
+  'blessing',
+  'advertising',
+
   //..ly rule
   'ally',
   'belly',
@@ -54,7 +64,7 @@ module.exports = [
   'event',
   'example',
   'friend',
-  'funding',
+
   'girlfriend',
   'glacier',
   'god',

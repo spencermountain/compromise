@@ -15,12 +15,12 @@ var nlp = require('./src/index');
 // nlp('Jim is nice, funny, cool').match('is #Adjective+').out();
 
 //isQuestion(), .not(Text)
-let doc = nlp(`she`);
-doc.nouns().debug();
-doc.nouns().toPossessive().debug();
 
-// console.log(doc.sentences().isQuestion().out('array'));
-// console.log(doc.sentences()[0].mainVerb());
-// let questions = doc.questions();
-// let sentences = doc.not(questions);
-// console.log(sentences.out('array'));
+let text = `
+It's free for 4 and free for 5
+`;
+let doc = nlp(text);
+let arr = doc.ngrams({
+  max: 3
+}).data();
+console.log(arr.find(o => o.normal === 'free for'));

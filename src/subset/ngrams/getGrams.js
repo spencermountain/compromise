@@ -1,9 +1,14 @@
 'use strict';
 const Gram = require('./gram');
 
+//strip contractions - remove '' term for "it's"
+const noEmpty = function(fts) {
+  return fts = fts.terms.filter((t) => t._text !== '');
+};
+
 //do all grams of one size, on one termList
 const getGrams = function(fts, n) {
-  let terms = fts.terms;
+  let terms = noEmpty(fts);
   if (terms.length < n) {
     return [];
   }
@@ -17,7 +22,7 @@ const getGrams = function(fts, n) {
 
 //left-sided grams
 const startGram = function(fts, n) {
-  let terms = fts.terms;
+  let terms = noEmpty(fts);
   if (terms.length < n) {
     return [];
   }
@@ -29,7 +34,7 @@ const startGram = function(fts, n) {
 
 //right-sided grams
 const endGram = function(fts, n) {
-  let terms = fts.terms;
+  let terms = noEmpty(fts);
   if (terms.length < n) {
     return [];
   }
@@ -50,15 +55,15 @@ const buildGrams = function(r, options) {
   //collect and count all grams
   options.size.forEach((size) => {
     r.list.forEach((ts) => {
-      let grams = [];
+      let newGrams = [];
       if (options.edge === 'start') {
-        grams = startGram(ts, size);
+        newGrams = startGram(ts, size);
       } else if (options.edge === 'end') {
-        grams = endGram(ts, size);
+        newGrams = endGram(ts, size);
       } else {
-        grams = getGrams(ts, size);
+        newGrams = getGrams(ts, size);
       }
-      grams.forEach((g) => {
+      newGrams.forEach((g) => {
         if (obj.hasOwnProperty(g.key)) {
           obj[g.key].inc();
         } else {

@@ -8,6 +8,7 @@ const methods = {
     this.list.forEach((ts) => {
       let t = ts.terms[ts.terms.length - 1];
       t.text = t.text.replace(/'s$/, '');
+      t.unTag('Possessive', '.strip()');
     });
     return this;
   }

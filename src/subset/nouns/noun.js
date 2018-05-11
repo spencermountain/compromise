@@ -2,6 +2,7 @@
 const Terms = require('../../paths').Terms;
 const hasPlural = require('./hasPlural');
 const isPlural = require('./isPlural');
+const toPossessive = require('./toPossessive');
 const makeArticle = require('./makeArticle');
 const pluralize = require('./methods/pluralize');
 const singularize = require('./methods/singularize');
@@ -32,6 +33,14 @@ const methods = {
       t.unTag('Plural', 'toSingular');
       t.tag('Singular', 'toSingular');
     }
+    return this;
+  },
+  toPossessive: function() {
+    let t = this.main;
+    if (t.tags.Possessive) {
+      return this;
+    }
+    t = toPossessive(t);
     return this;
   },
   data: function() {

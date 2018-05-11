@@ -46,7 +46,9 @@ compromise uses semver, and pushes to npm frequently
 - slightly different behavior for wildcards in capture-groups [pull/472](https://github.com/spencermountain/compromise/pull/472)
 - `.possessives()` subset + `#Possessive` tagging fixes
 - hide massive `world` output for console.log of a term
-
+##### 11.7.1
+- add `nouns().toPossessive()`
+- fix ngrams counting issue
 ##### 11.0.0
 - support for persistent lexicon/tagset changes
 - `addTags, addWords, addRegs, addPlurals, addConjugations` methods to extend native data

@@ -19,6 +19,10 @@ const methods = {
     this.list.forEach(ts => ts.toSingular(verbose));
     return this;
   },
+  toPossessive: function(verbose) {
+    this.list.forEach(ts => ts.toPossessive(verbose));
+    return this;
+  },
   articles: function() {
     return this.list.map(ts => {
       return {
@@ -31,14 +35,12 @@ const methods = {
   }
 };
 
-//nouns that we don't want in these results, for weird reasons
-const stopWords = '(there|these)';
-
 const find = function(r, n) {
   r = r.clauses();
   r = r.match('#Noun+ (of|by)? the? #Noun+?');
+  //nouns that we don't want in these results, for weird reasons
   r = r.not('#Pronoun');
-  r = r.not(stopWords);
+  r = r.not('(there|these)');
   r = r.not('(#Month|#WeekDay)'); //allow Durations, Holidays
   //allow possessives like "spencer's", but not generic ones like,
   r = r.not('(my|our|your|their|her|his)');

@@ -361,6 +361,11 @@
         "returns": "Text",
         "example": "nlp('the king’s men').nouns().toSingular().out()\n//the king's man"
       },
+      "toPossessive": {
+        "desc": "transform nouns into a possessive form  - John → John's",
+        "returns": "Text",
+        "example": "nlp('the king').nouns().toPossessive().out()\n//the king's"
+      },
       "articles": {
         "desc": "whether this noun deserves 'a' or 'an'",
         "returns": "Array",

@@ -16,11 +16,4 @@ var nlp = require('./src/index');
 
 //isQuestion(), .not(Text)
 
-let text = `
-It's free for 4 and free for 5
-`;
-let doc = nlp(text);
-let arr = doc.ngrams({
-  max: 3
-}).data();
-console.log(arr.find(o => o.normal === 'free for'));
+nlp(`I'm a deputy`).debug();

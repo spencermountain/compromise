@@ -6,7 +6,7 @@ var lex = require('./misc');
 var data = [
   //nouns
   [require('./nouns/singulars'), 'Singular'],
-  [require('./nouns/professions'), 'Noun'],
+  [require('./nouns/professions'), 'Actor'],
   [require('./nouns/sportsTeams'), 'SportsTeam'],
   [require('./nouns/uncountables'), 'Uncountable'],
   [require('./nouns/pronouns'), 'Pronoun'],

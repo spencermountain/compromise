@@ -16,4 +16,5 @@ var nlp = require('./src/index');
 
 //isQuestion(), .not(Text)
 
-nlp(`I'm a deputy`).debug();
+nlp(`an apple, what`).debug();
+// nlp(`Dog refers to a`).debug();

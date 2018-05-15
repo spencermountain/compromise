@@ -461,6 +461,7 @@ module.exports = [
   'restructure',
   'record',
   'reconcile',
+  'refer',
   'repeat',
   'risk',
   'roam',

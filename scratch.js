@@ -16,10 +16,12 @@ var nlp = require('./src/index');
 
 //isQuestion(), .not(Text)
 
-nlp(`John Smith bought automobiles`).normalize({
-  case: true,
-  possessives: true,
+let doc = nlp(`John Smith bought automobiles`);
+// doc.verbs().toInfinitive();
+doc.normalize({
+  // case: false,
   plurals: true,
+  // possessives: true,
   verbs: true,
 }).debug();
 // nlp(`Dog refers to a`).debug();

@@ -44,7 +44,8 @@ const methods = {
 
   /** turn 'five' to 5, and 'fifth' to 5th*/
   numbers: r => {
-    return r.values().toNumber();
+    r.values().toNumber();
+    return r;
   },
 
   /** remove commas, semicolons - but keep sentence-ending punctuation*/
@@ -72,7 +73,8 @@ const methods = {
   },
 
   contractions: r => {
-    return r.contractions().expand();
+    r.contractions().expand();
+    return r;
   },
   //turn david's → david
   possessives: r => {
@@ -86,21 +88,27 @@ const methods = {
   },
   //turn ate → eat
   verbs: r => {
-    r.verbs().toInfinitive();
+    r.verbs().toInfinitive(); //.debug();
     return r;
   },
 };
 
 const addMethods = Text => {
-  Text.prototype.normalize = function(obj) {
-    obj = obj || defaults;
+  Text.prototype.normalize = function(options) {
+    let doc = this;
+    //set defaults
+    options = options || {};
+    let obj = Object.assign({}, defaults);
+    Object.keys(options).forEach((k) => {
+      obj[k] = options[k];
+    });
     //do each type of normalization
     Object.keys(obj).forEach(fn => {
       if (obj[fn] && methods[fn] !== undefined) {
-        methods[fn](this);
+        doc = methods[fn](doc);
       }
     });
-    return this;
+    return doc;
   };
 };
 module.exports = addMethods;

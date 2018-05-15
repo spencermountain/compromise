@@ -42,7 +42,7 @@ const find = function(r, n) {
   r = r.not('#Pronoun');
   r = r.not('(there|these)');
   r = r.not('(#Month|#WeekDay)'); //allow Durations, Holidays
-  //allow possessives like "spencer's", but not generic ones like,
+  // //allow possessives like "spencer's", but not generic ones like,
   r = r.not('(my|our|your|their|her|his)');
   r = r.not('(of|for|by|the)$');
   if (typeof n === 'number') {

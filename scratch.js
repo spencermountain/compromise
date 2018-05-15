@@ -16,5 +16,10 @@ var nlp = require('./src/index');
 
 //isQuestion(), .not(Text)
 
-nlp(`an apple, what`).debug();
+nlp(`John Smith bought automobiles`).normalize({
+  case: true,
+  possessives: true,
+  plurals: true,
+  verbs: true,
+}).debug();
 // nlp(`Dog refers to a`).debug();

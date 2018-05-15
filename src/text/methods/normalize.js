@@ -7,7 +7,10 @@ const defaults = {
   punctuation: true,
   unicode: true,
   contractions: true,
-  possessives: false
+
+  possessives: false,
+  plurals: false,
+  verbs: false,
 };
 
 const methods = {
@@ -74,6 +77,16 @@ const methods = {
   //turn david's → david
   possessives: r => {
     r.possessives().strip();
+    return r;
+  },
+  //turn sandwhiches → sandwhich
+  plurals: r => {
+    r.nouns().toSingular();
+    return r;
+  },
+  //turn ate → eat
+  verbs: r => {
+    r.verbs().toInfinitive();
     return r;
   },
 };

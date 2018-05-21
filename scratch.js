@@ -16,10 +16,15 @@ var nlp = require('./src/index');
 
 //isQuestion(), .not(Text)
 
-let doc = nlp(`John Smith bought automobiles (for us)`);
-doc.normalize({
-  verbs: true,
-  parentheses: true,
-// plurals: true,
-// possessives: true,
-}).debug();
+// let doc = nlp(`John Smith bought automobiles (for us)`);
+// doc.normalize({
+//   verbs: true,
+//   parentheses: true,
+// // plurals: true,
+// // possessives: true,
+// }).debug();
+var doc = nlp(`Corey Hart's pudding and Google's advertising`);
+doc = doc.normalize({
+  possessives: true
+});
+doc.debug();

@@ -51,6 +51,7 @@ compromise uses semver, and pushes to npm frequently
 - ngrams now remove empty-terms in contractions - fixes counting issue [#476](https://github.com/spencermountain/compromise/issues/476)
 ##### 11.9.0
 - tag professions as `#Actor`
+- add more behaviours to `.normalize()`
 
 ##### 11.0.0
 - support for persistent lexicon/tagset changes

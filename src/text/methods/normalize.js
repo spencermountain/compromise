@@ -8,6 +8,7 @@ const defaults = {
   unicode: true,
   contractions: true,
 
+  parentheses: false,
   possessives: false,
   plurals: false,
   verbs: false,
@@ -81,14 +82,19 @@ const methods = {
     r.possessives().strip();
     return r;
   },
+  //strip out parts in (brackets)
+  parentheses: r => {
+    r.parentheses().delete();
+    return r;
+  },
   //turn sandwhiches → sandwhich
-  plurals: r => {
+  plurals: r => { //todo:this has a non-cooperative bug
     r.nouns().toSingular();
     return r;
   },
   //turn ate → eat
   verbs: r => {
-    r.verbs().toInfinitive(); //.debug();
+    r.verbs().toInfinitive();
     return r;
   },
 };
@@ -99,7 +105,8 @@ const addMethods = Text => {
     //set defaults
     options = options || {};
     let obj = Object.assign({}, defaults);
-    Object.keys(options).forEach((k) => {
+    let keys = Object.keys(options);
+    keys.forEach((k) => {
       obj[k] = options[k];
     });
     //do each type of normalization

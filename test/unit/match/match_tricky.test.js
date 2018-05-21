@@ -94,6 +94,7 @@ test('fancy match', function(t) {
     ['is really not walking', 'is (#Adverb|not)+? walking', 4],
     ['is really not quickly walking', 'is (#Adverb|not)+? walking', 5],
     ['is walking', 'is (#Adverb|not)+? walking', 2],
+    ['Phoenix AZ', '#City #Region', 2],
     //this isn't working
     ['the canadian senate', 'the (united states|canadian) senate', 3],
     ['the canadian senate', '(canadian|united states|british)', 1],
@@ -112,10 +113,10 @@ test('tricky-case', function(t) {
 });
 
 test('text-as-input', function(t) {
-  let doc = nlp('he is from Phoenix AZ');
-  let m = doc.match('#City');
-  let matchWith = doc.match(m).out('normal');
-  let without = doc.not(m).out('text');
+  var doc = nlp('he is from Phoenix AZ');
+  var m = doc.match('#City');
+  var matchWith = doc.match(m).out('normal');
+  var without = doc.not(m).out('text');
   t.equal(matchWith, 'phoenix', 'text-as-match');
   t.equal(without, 'he is from AZ', 'text-as-not');
   t.end();

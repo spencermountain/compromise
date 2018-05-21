@@ -46,9 +46,10 @@ test('possessives', function(t) {
 });
 
 test('optional params', function(t) {
-  var doc = nlp(`John Smith bought automobiles`).normalize({
+  var doc = nlp(`John Smith bought automobiles (for us)`).normalize({
     case: true,
     possessives: true,
+    parentheses: true,
     // plurals: true,
     verbs: true,
   });

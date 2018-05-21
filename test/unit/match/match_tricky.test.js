@@ -105,9 +105,18 @@ test('fancy match', function(t) {
   t.end();
 });
 
-
 test('tricky-case', function(t) {
   t.equal(nlp('Number II').has('Number II'), true, 'uppercase-match');
   t.equal(nlp('Number I').has('Number I'), true, 'uppercase-match');
+  t.end();
+});
+
+test('text-as-input', function(t) {
+  let doc = nlp('he is from Phoenix AZ');
+  let m = doc.match('#City');
+  let matchWith = doc.match(m).out('normal');
+  let without = doc.not(m).out('text');
+  t.equal(matchWith, 'phoenix', 'text-as-match');
+  t.equal(without, 'he is from AZ', 'text-as-not');
   t.end();
 });

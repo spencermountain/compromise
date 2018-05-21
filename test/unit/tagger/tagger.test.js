@@ -98,6 +98,7 @@ test('=Tagger=', function(T) {
       ['boyfriend to Jane', ['Noun', 'Conjunction', 'Person']],
       // ['boyfriend of Jane', ['Noun', 'Conjunction', 'Person']],
       ['his fines', ['Possessive', 'Noun']],
+      ['100+ rumours', ['Value', 'Plural']],
       ['John & John,', ['Noun', 'Noun', 'Noun']],
 
       //abbreviations

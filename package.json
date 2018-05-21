@@ -44,11 +44,11 @@
     "compromise-plugin": "0.0.8",
     "derequire": "2.0.6",
     "eslint": "4.19.1",
-    "nyc": "11.7.1",
+    "nyc": "11.8.0",
     "shelljs": "0.8.2",
     "tap-dancer": "0.0.3",
     "tape": "4.9.0",
-    "uglify-js": "2.7.0"
+    "uglify-js": "3.3.26"
   },
   "license": "MIT"
 }

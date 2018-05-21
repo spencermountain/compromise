@@ -39,11 +39,11 @@ module.exports={
     "compromise.d.ts"
   ],
   "dependencies": {
-    "babel-preset-env": "^1.7.0",
     "efrt-unpack": "2.0.3"
   },
   "devDependencies": {
     "amble": "0.0.6",
+    "babel-preset-env": "^1.7.0",
     "babelify": "7.3.0",
     "babili": "0.1.4",
     "browserify": "13.0.1",
@@ -51,11 +51,11 @@ module.exports={
     "compromise-plugin": "0.0.8",
     "derequire": "2.0.6",
     "eslint": "4.19.1",
-    "nyc": "11.7.1",
+    "nyc": "11.8.0",
     "shelljs": "0.8.2",
     "tap-dancer": "0.0.3",
     "tape": "4.9.0",
-    "uglify-js": "2.7.0"
+    "uglify-js": "3.3.26"
   },
   "license": "MIT"
 }

@@ -29,7 +29,7 @@ module.exports={
     "postpublish": "node ./scripts/postpublish",
     "demo": "node ./scripts/demo.js",
     "watch": "amble ./scratch.js",
-    "filesize": "node ./scripts/filesize.js",
+    "filesize": "node ./scripts/lib/filesize.js",
     "coverage": "node ./scripts/postpublish/coverage.js",
     "lint": "node ./scripts/prepublish/linter.js"
   },
@@ -39,11 +39,11 @@ module.exports={
     "compromise.d.ts"
   ],
   "dependencies": {
+    "babel-preset-env": "^1.7.0",
     "efrt-unpack": "2.0.3"
   },
   "devDependencies": {
     "amble": "0.0.6",
-    "babel-preset-es2015": "6.24.1",
     "babelify": "7.3.0",
     "babili": "0.1.4",
     "browserify": "13.0.1",

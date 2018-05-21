@@ -19,7 +19,7 @@ var banner = '/* compromise v' + pkg.version + '\n   github.com/nlp-compromise/c
 //es5 main (browserify + derequire)
 cmd = browserify + ' "./src/index.js" --standalone nlp';
 // cmd += ' -p bundle-collapser/plugin';
-cmd += ' -t [ babelify --presets [ es2015 ] ]';
+cmd += ' -t [ babelify --presets [ env ] ]';
 cmd += ' | ' + derequire;
 cmd += ' >> ' + es5;
 exec(cmd);

@@ -7,7 +7,11 @@ const defaults = {
   punctuation: true,
   unicode: true,
   contractions: true,
-  possessives: false
+
+  parentheses: false,
+  possessives: false,
+  plurals: false,
+  verbs: false,
 };
 
 const methods = {
@@ -41,7 +45,8 @@ const methods = {
 
   /** turn 'five' to 5, and 'fifth' to 5th*/
   numbers: r => {
-    return r.values().toNumber();
+    r.values().toNumber();
+    return r;
   },
 
   /** remove commas, semicolons - but keep sentence-ending punctuation*/
@@ -69,25 +74,48 @@ const methods = {
   },
 
   contractions: r => {
-    return r.contractions().expand();
+    r.contractions().expand();
+    return r;
   },
   //turn david's → david
   possessives: r => {
     r.possessives().strip();
     return r;
   },
+  //strip out parts in (brackets)
+  parentheses: r => {
+    r.parentheses().delete();
+    return r;
+  },
+  //turn sandwhiches → sandwhich
+  plurals: r => { //todo:this has a non-cooperative bug
+    r.nouns().toSingular();
+    return r;
+  },
+  //turn ate → eat
+  verbs: r => {
+    r.verbs().toInfinitive();
+    return r;
+  },
 };
 
 const addMethods = Text => {
-  Text.prototype.normalize = function(obj) {
-    obj = obj || defaults;
+  Text.prototype.normalize = function(options) {
+    let doc = this;
+    //set defaults
+    options = options || {};
+    let obj = Object.assign({}, defaults);
+    let keys = Object.keys(options);
+    keys.forEach((k) => {
+      obj[k] = options[k];
+    });
     //do each type of normalization
     Object.keys(obj).forEach(fn => {
       if (obj[fn] && methods[fn] !== undefined) {
-        methods[fn](this);
+        doc = methods[fn](doc);
       }
     });
-    return this;
+    return doc;
   };
 };
 module.exports = addMethods;

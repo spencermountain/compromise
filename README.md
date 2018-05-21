@@ -64,7 +64,10 @@ if( doc.has('^simon says (shoot|fire) #Determiner lazer') ){
 <div align="center">
   compromise is not <a href="https://github.com/spencermountain/compromise/wiki/Justification">the cleverest</a>.
   <br/>
-  but it is <a href="https://beta.observablehq.com/@spencermountain/compromise-performance">small, quick, and good-enough</a> for a bunch of stuff.
+  but it is
+  <a href="https://beta.observablehq.com/@spencermountain/compromise-filesize">small,
+  <a href="https://beta.observablehq.com/@spencermountain/compromise-performance">quick</a>, 
+  and <a href="https://beta.observablehq.com/@spencermountain/compromise-accuracy">good-enough</a> for a bunch of stuff.
 </div>
 
 ----

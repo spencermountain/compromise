@@ -5,22 +5,35 @@ const beforeThisWord = markov.beforeThisWord;
 const beforeThisPos = markov.beforeThisPos;
 const afterThisPos = markov.afterThisPos;
 
+const nothing = {
+  TitleCase: true,
+  UpperCase: true,
+  CamelCase: true,
+  Hyphenated: true,
+  StartBracket: true,
+  EndBracket: true,
+  Comma: true,
+  ClauseEnd: true,
+};
+
 //basically a last-ditch effort before everything falls back to a noun
 //for unknown terms, look left + right first, and hit-up the markov-chain for clues
 const neighbour_step = function (ts) {
   ts.terms.forEach((t, n) => {
     //is it still unknown?
     let termTags = Object.keys(t.tags);
+    termTags = termTags.filter((tag) => nothing.hasOwnProperty(tag) === false);
     if (termTags.length === 0) {
       let lastTerm = ts.terms[n - 1];
       let nextTerm = ts.terms[n + 1];
-      //look at last word for clues
-      if (lastTerm && afterThisWord.hasOwnProperty(lastTerm.normal)) {
+      //look at previous word for clues
+      if (lastTerm && afterThisWord.hasOwnProperty(lastTerm.normal) && !lastTerm.tags.ClauseEnd) {
         t.tag(afterThisWord[lastTerm.normal], 'neighbour-after-"' + lastTerm.normal + '"');
         return;
       }
-      //look at next word for clues
-      if (nextTerm && beforeThisWord.hasOwnProperty(nextTerm.normal)) {
+      //look at next word for clues..
+      //(not if there's a comma, though)
+      if (!t.tags.ClauseEnd && nextTerm && beforeThisWord.hasOwnProperty(nextTerm.normal)) {
         t.tag(beforeThisWord[nextTerm.normal], 'neighbour-before-"' + nextTerm.normal + '"');
         return;
       }

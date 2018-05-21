@@ -45,6 +45,12 @@ const splitMethods = Text => {
     return matchObj(r, obj);
   };
 
+  //take a Text object as a match
+  const matchTextObj = function(r, m) {
+    let arr = m.out('array'); //i guess this is fine..
+    return matchArr(r, arr);
+  };
+
   const methods = {
     /** do a regex-like search through terms and return a subset */
     match: function(reg, verbose) {
@@ -64,7 +70,11 @@ const splitMethods = Text => {
       }
       //match {word:true} whitelist
       if (type === '[object Object]') {
-        return matchObj(this, reg);
+        if (reg.isA === 'Text') {
+          return matchTextObj(this, reg);
+        } else {
+          return matchObj(this, reg);
+        }
       }
       return this;
     },

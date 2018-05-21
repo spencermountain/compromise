@@ -71,6 +71,10 @@ const addfns = Terms => {
     }, {});
     return fns.notObj(r, obj);
   };
+  fns.notText = function(r, m) {
+    let arr = m.out('array'); //i guess this is fine..
+    return fns.notArray(r, arr);
+  };
 
   /**return everything but these matches*/
   Terms.prototype.not = function(want, verbose) {
@@ -81,7 +85,11 @@ const addfns = Terms => {
         return fns.notArray(this, want, verbose);
       }
       if (type === '[object Object]') {
-        return fns.notObj(this, want, verbose);
+        if (want.isA === 'Text') {
+          return fns.notText(this, want, verbose);
+        } else {
+          return fns.notObj(this, want, verbose);
+        }
       }
     }
     if (typeof want === 'string') {

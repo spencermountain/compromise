@@ -9,6 +9,8 @@ const nothing = {
   Hyphenated: true,
   StartBracket: true,
   EndBracket: true,
+  Comma: true,
+  ClauseEnd: true,
 };
 //are the tags basically empty
 const gotNothing = function(t) {

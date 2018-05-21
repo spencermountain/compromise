@@ -49,6 +49,11 @@ compromise uses semver, and pushes to npm frequently
 ##### 11.8.0
 - add `nouns().toPossessive()`
 - ngrams now remove empty-terms in contractions - fixes counting issue [#476](https://github.com/spencermountain/compromise/issues/476)
+##### 11.9.0
+- tag professions as `#Actor`
+- add more behaviours to `.normalize()`
+- support match-results as inputs to .match() and .not()
+- support some us-state abbreviations like 'Phoeniz AZ'
 
 ##### 11.0.0
 - support for persistent lexicon/tagset changes

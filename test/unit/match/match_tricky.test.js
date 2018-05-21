@@ -94,6 +94,7 @@ test('fancy match', function(t) {
     ['is really not walking', 'is (#Adverb|not)+? walking', 4],
     ['is really not quickly walking', 'is (#Adverb|not)+? walking', 5],
     ['is walking', 'is (#Adverb|not)+? walking', 2],
+    ['Phoenix AZ', '#City #Region', 2],
     //this isn't working
     ['the canadian senate', 'the (united states|canadian) senate', 3],
     ['the canadian senate', '(canadian|united states|british)', 1],
@@ -102,5 +103,21 @@ test('fancy match', function(t) {
     var msg = '\'' + a[0] + '\' - - - \'' + a[1] + '\' - - got:' + r.length + '  want:' + a[2];
     t.equal(r.length, a[2], msg);
   });
+  t.end();
+});
+
+test('tricky-case', function(t) {
+  t.equal(nlp('Number II').has('Number II'), true, 'uppercase-match');
+  t.equal(nlp('Number I').has('Number I'), true, 'uppercase-match');
+  t.end();
+});
+
+test('text-as-input', function(t) {
+  var doc = nlp('he is from Phoenix AZ');
+  var m = doc.match('#City');
+  var matchWith = doc.match(m).out('normal');
+  var without = doc.not(m).out('text');
+  t.equal(matchWith, 'phoenix', 'text-as-match');
+  t.equal(without, 'he is from AZ', 'text-as-not');
   t.end();
 });

@@ -29,28 +29,28 @@ const corrections = function(ts) {
   //Determiner-signals
   if (ts.has('#Determiner')) {
     //the wait to vote
-    ts.match('(the|this) #Verb #Preposition .').term(1).tag('Noun', 'correction-determiner1');
+    ts.match('(the|this) [#Verb] #Preposition .').tag('Noun', 'correction-determiner1');
     //the swim
     ts.match('(the|those|these) (#Infinitive|#PresentTense|#PastTense)').term(1).tag('Noun', 'correction-determiner2');
     //a staggering cost
-    ts.match('(a|an) #Gerund').term(1).tag('Adjective', 'correction-a|an');
+    ts.match('(a|an) [#Gerund]').tag('Adjective', 'correction-a|an');
     ts.match('(a|an) #Adjective (#Infinitive|#PresentTense)').term(2).tag('Noun', 'correction-a|an2');
     //some pressing issues
-    ts.match('(some #Verb #Plural').term(1).tag('Noun', 'correction-determiner6');
+    ts.match('(some [#Verb] #Plural').tag('Noun', 'correction-determiner6');
     //the orange.
     ts.match('#Determiner #Adjective$').not('(#Comparative|#Superlative)').term(1).tag('Noun', 'the-adj-1');
     //the orange is
-    ts.match('#Determiner #Adjective (#Copula|#PastTense|#Auxiliary)').term(1).tag('Noun', 'the-adj-2');
+    ts.match('#Determiner [#Adjective] (#Copula|#PastTense|#Auxiliary)').tag('Noun', 'the-adj-2');
     //the nice swim
-    ts.match('(the|this|those|these) #Adjective #Verb').term(2).tag('Noun', 'the-adj-verb');
+    ts.match('(the|this|those|these) #Adjective [#Verb]').tag('Noun', 'the-adj-verb');
     //the truly nice swim
-    ts.match('(the|this|those|these) #Adverb #Adjective #Verb').term(3).tag('Noun', 'correction-determiner4');
+    ts.match('(the|this|those|these) #Adverb #Adjective [#Verb]').tag('Noun', 'correction-determiner4');
     //a stream runs
-    ts.match('(the|this|a|an) #Infinitive #Adverb? #Verb').term(1).tag('Noun', 'correction-determiner5');
+    ts.match('(the|this|a|an) [#Infinitive] #Adverb? #Verb').tag('Noun', 'correction-determiner5');
     //a sense of
-    ts.match('#Determiner #Verb of').term(1).tag('Noun', 'the-verb-of');
+    ts.match('#Determiner [#Verb] of').tag('Noun', 'the-verb-of');
     //the threat of force
-    ts.match('#Determiner #Noun of #Verb').term(3).tag('Noun', 'noun-of-noun');
+    ts.match('#Determiner #Noun of [#Verb]').tag('Noun', 'noun-of-noun');
     //a close
     ts.match('#Determiner #Adverb? [close]').tag('Adjective', 'a-close');
     //did a 900, paid a 20
@@ -61,13 +61,13 @@ const corrections = function(ts) {
 
   //like
   if (ts.has('like')) {
-    ts.match('just like').term(1).tag('Preposition', 'like-preposition');
+    ts.match('just [like]').tag('Preposition', 'like-preposition');
     //folks like her
-    ts.match('#Noun like #Noun').term(1).tag('Preposition', 'noun-like');
+    ts.match('#Noun [like] #Noun').tag('Preposition', 'noun-like');
     //look like
-    ts.match('#Verb like').term(1).tag('Adverb', 'verb-like');
+    ts.match('#Verb [like]').tag('Adverb', 'verb-like');
     //exactly like
-    ts.match('#Adverb like').term(1).tag('Adverb', 'adverb-like');
+    ts.match('#Adverb [like]').tag('Adverb', 'adverb-like');
   }
 
   if (ts.has('#Value')) {
@@ -85,24 +85,23 @@ const corrections = function(ts) {
     ts.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber');
     //two hundredth
     ts.match('#TextValue+').match('#Cardinal+ #Ordinal').tag('Ordinal', 'two-hundredth');
-
   }
 
   if (ts.has('#Noun')) {
     //'more' is not always an adverb
     ts.match('more #Noun').tag('Noun', 'more-noun');
     //the word 'second'
-    ts.match('second #Noun').term(0).unTag('Unit').tag('Ordinal', 'second-noun');
+    ts.match('[second] #Noun').unTag('Unit').tag('Ordinal', 'second-noun');
     //he quickly foo
-    ts.match('#Noun #Adverb #Noun').term(2).tag('Verb', 'correction');
+    ts.match('#Noun #Adverb [#Noun]').tag('Verb', 'correction');
     //fix for busted-up phrasalVerbs
-    ts.match('#Noun #Particle').term(1).tag('Preposition', 'repair-noPhrasal');
+    ts.match('#Noun [#Particle]').tag('Preposition', 'repair-noPhrasal');
     //John & Joe's
     ts.match('#Noun (&|n) #Noun').tag('Organization', 'Noun-&-Noun');
     //Aircraft designer
     ts.match('#Noun #Actor').tag('Actor', 'thing-doer');
     //this rocks
-    ts.match('(this|that) #Plural').term(1).tag('PresentTense', 'this-verbs');
+    ts.match('(this|that) [#Plural]').tag('PresentTense', 'this-verbs');
     //the western line
     ts.match('#Determiner [(western|eastern|northern|southern|central)] #Noun').tag('Noun', 'western-line');
     ts.match('(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun').tag('Noun', 'technical-noun');
@@ -114,7 +113,7 @@ const corrections = function(ts) {
     }
     if (ts.has('#Possessive')) {
       //my buddy
-      ts.match('#Possessive #FirstName').term(1).unTag('Person', 'possessive-name');
+      ts.match('#Possessive [#FirstName]').unTag('Person', 'possessive-name');
       //spencer kelly's
       ts.match('#FirstName #Acronym? #Possessive').notIf('#Comma').match('#FirstName #Acronym? #LastName').tag('Possessive');
       //Super Corp's fundraiser
@@ -126,26 +125,26 @@ const corrections = function(ts) {
 
   if (ts.has('#Verb')) {
     //still make
-    ts.match('still #Verb').term(0).tag('Adverb', 'still-verb');
+    ts.match('[still] #Verb').tag('Adverb', 'still-verb');
     //'u' as pronoun
-    ts.match('u #Verb').term(0).tag('Pronoun', 'u-pronoun-1');
+    ts.match('[u] #Verb').tag('Pronoun', 'u-pronoun-1');
     //is no walk
-    ts.match('is no #Verb').term(2).tag('Noun', 'is-no-verb');
+    ts.match('is no [#Verb]').tag('Noun', 'is-no-verb');
     //different views than
-    ts.match('#Verb than').term(0).tag('Noun', 'correction');
+    ts.match('[#Verb] than').tag('Noun', 'correction');
     //her polling
-    ts.match('#Possessive #Verb').term(1).tag('Noun', 'correction-possessive');
+    ts.match('#Possessive [#Verb]').tag('Noun', 'correction-possessive');
     //there are reasons
     ts.match('there (are|were) #Adjective? [#PresentTense]').tag('Plural', 'there-are');
 
     if (ts.has('(who|what|where|why|how|when)')) {
       //the word 'how'
-      ts.match('^how').term(0).tag('QuestionWord', 'how-question').tag('QuestionWord', 'how-question');
+      ts.match('^how').tag('QuestionWord', 'how-question').tag('QuestionWord', 'how-question');
       ts.match('how (#Determiner|#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-is');
       // //the word 'which'
-      ts.match('^which').term(0).tag('QuestionWord', 'which-question').tag('QuestionWord', 'which-question');
+      ts.match('^which').tag('QuestionWord', 'which-question').tag('QuestionWord', 'which-question');
       ts.match('which . (#Noun)+ #Pronoun').term(0).tag('QuestionWord', 'which-question2');
-      ts.match('which').term(0).tag('QuestionWord', 'which-question3');
+      ts.match('which').tag('QuestionWord', 'which-question3');
       //where
 
       //how he is driving
@@ -159,9 +158,9 @@ const corrections = function(ts) {
       //is eager to go
       ts.match('#Copula #Adjective to #Verb').match('#Adjective to').tag('Verb', 'correction');
       //is mark hughes
-      ts.match('#Copula #Infinitive #Noun').term(1).tag('Noun', 'is-pres-noun');
+      ts.match('#Copula [#Infinitive] #Noun').tag('Noun', 'is-pres-noun');
 
-      ts.match('#Infinitive #Copula').term(0).tag('Noun', 'infinitive-copula');
+      ts.match('[#Infinitive] #Copula').tag('Noun', 'infinitive-copula');
       //sometimes adverbs - 'pretty good','well above'
       ts.match('#Copula (pretty|dead|full|well) (#Adjective|#Noun)').notIf('#Comma').tag('#Copula #Adverb #Adjective', 'sometimes-adverb');
       //sometimes not-adverbs
@@ -217,9 +216,9 @@ const corrections = function(ts) {
     //still good
     ts.match('still #Adjective').match('still').tag('Adverb', 'still-advb');
     //big dreams, critical thinking
-    ts.match('#Adjective #PresentTense').term(1).tag('Noun', 'adj-presentTense');
+    ts.match('#Adjective [#PresentTense]').tag('Noun', 'adj-presentTense');
     //will secure our
-    ts.match('will #Adjective').term(1).tag('Verb', 'will-adj');
+    ts.match('will [#Adjective]').tag('Verb', 'will-adj');
     //cheering hard - dropped -ly's
     ts.match('#PresentTense (hard|quick|long|bright|slow)').lastTerm().tag('Adverb', 'lazy-ly');
     //his fine
@@ -238,6 +237,7 @@ const corrections = function(ts) {
       .match('(district|region|province|municipality|territory|burough|state) of #TitleCase')
       .tag('Region', 'district-of-Foo');
   }
+
   if (ts.has('#Hyphenated')) {
     //air-flow
     ts.match('#Hyphenated #Hyphenated').match('#Noun #Verb').tag('Noun', 'hyphen-verb');
@@ -248,15 +248,18 @@ const corrections = function(ts) {
     }
   }
 
-  //West Norforlk
-  ts.match('(west|north|south|east|western|northern|southern|eastern)+ #Place').tag('Region', 'west-norfolk');
-
+  if (ts.has('#Place')) {
+    //West Norforlk
+    ts.match('(west|north|south|east|western|northern|southern|eastern)+ #Place').tag('Region', 'west-norfolk');
+    //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
+    ts.match('#City [#Acronym]').match('(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|or|pa|sc|tn|tx|ut|vt|pr)').tag('Region', 'us-state');
+  }
   //misc:
   //foot/feet
   ts.match('(foot|feet)').tag('Noun', 'foot-noun');
   ts.match('#Value (foot|feet)').term(1).tag('Unit', 'foot-unit');
   //'u' as pronoun
-  ts.match('#Conjunction u').term(1).tag('Pronoun', 'u-pronoun-2');
+  ts.match('#Conjunction [u]').tag('Pronoun', 'u-pronoun-2');
   //'a/an' can mean 1 - "a hour"
   ts.match('(a|an) (#Duration|hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)').ifNo('#Plural').term(0).tag('Value', 'a-is-one');
   //swear-words as non-expression POS

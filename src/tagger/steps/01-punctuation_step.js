@@ -63,6 +63,10 @@ const punctuation_step = function(ts) {
     if (isRomanNumeral(t)) {
       t.tag('RomanNumeral', 'is-roman-numeral');
     }
+    //'100+'
+    if (/[0-9]\+$/.test(t.text) === true) {
+      t.tag('NumericValue', 'number-plus');
+    }
   });
   return ts;
 };

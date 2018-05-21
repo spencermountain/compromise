@@ -35,11 +35,24 @@ test('normalize():', function(t) {
   t.end();
 });
 
-test('optional params', function(t) {
+test('possessives', function(t) {
   var doc = nlp(`Corey Hart's pudding and Google's advertising`);
   doc = doc.normalize({
-    possessives: true
+    possessives: true,
+    case: false
   });
   t.equal(doc.out(), 'Corey Hart pudding and Google advertising', 'normalize possessives');
+  t.end();
+});
+
+test('optional params', function(t) {
+  var doc = nlp(`John Smith bought automobiles (for us)`).normalize({
+    case: true,
+    possessives: true,
+    parentheses: true,
+    // plurals: true,
+    verbs: true,
+  });
+  t.equal(doc.out(), 'john smith buy automobiles', 'many-on');
   t.end();
 });

@@ -2,7 +2,7 @@
 //regs -
 const periodAcronym = /([A-Z]\.)+[A-Z]?,?$/;
 const oneLetterAcronym = /^[A-Z]\.,?$/;
-const noPeriodAcronym = /[A-Z]{3}('s|,)?$/;
+const noPeriodAcronym = /[A-Z]{2}('s|,)?$/;
 
 /** does it appear to be an acronym, like FBI or M.L.B. */
 const isAcronym = function(str) {

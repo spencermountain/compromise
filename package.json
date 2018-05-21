@@ -32,11 +32,11 @@
     "compromise.d.ts"
   ],
   "dependencies": {
-    "babel-preset-env": "^1.7.0",
     "efrt-unpack": "2.0.3"
   },
   "devDependencies": {
     "amble": "0.0.6",
+    "babel-preset-env": "^1.7.0",
     "babelify": "7.3.0",
     "babili": "0.1.4",
     "browserify": "13.0.1",

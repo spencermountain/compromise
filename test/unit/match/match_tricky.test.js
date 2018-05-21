@@ -104,3 +104,10 @@ test('fancy match', function(t) {
   });
   t.end();
 });
+
+
+test('tricky-case', function(t) {
+  t.equal(nlp('Number II').has('Number II'), true, 'uppercase-match');
+  t.equal(nlp('Number I').has('Number I'), true, 'uppercase-match');
+  t.end();
+});

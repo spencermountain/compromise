@@ -22,7 +22,7 @@ const parse_term = function(term) {
 
   //1-character hasta be a text-match
   if (term.length === 1 && term !== '.' && term !== '*') {
-    reg.normal = term;
+    reg.normal = term.toLowerCase();
     return reg;
   }
   //negation ! flag

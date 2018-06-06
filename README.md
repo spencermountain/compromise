@@ -229,8 +229,25 @@ Get the hang of things:
 * [Tutorial #2](https://beta.observablehq.com/@spencermountain/compromise-tutorial-2) - Match & transform
 * [Tutorial #3](https://beta.observablehq.com/@spencermountain/compromise-making-a-bot) - Making a bot
 
-* [API](https://beta.observablehq.com/@spencermountain/compromise-api)
-* [TagSet](https://beta.observablehq.com/@spencermountain/compromise-tags)
+Detailed stuff:
+<table>
+   <tr>
+      <td>
+         <div align="center">
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-api">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; API &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </a>
+         </div>
+       </td>
+      <td>
+         <div align="center">
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-tags">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tagset &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </a>
+         </div>
+       </td>
+    </tr>
+</table>
 
 ## Examples:
 

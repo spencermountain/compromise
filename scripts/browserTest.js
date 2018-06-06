@@ -5,7 +5,7 @@ var fileServer = '"./node_modules/.bin/http-server"';
 //run tests on the client-side
 var out = './test/client/compiled_tests.js';
 var cmd = browserifyGlob + ' "./test/unit/**/*.test.js" ';
-cmd += ' -t [ babelify --presets [ es2015 ]] > ' + out;
+cmd += ' -t [ babelify --presets [ env ]] > ' + out;
 cmd += ' && ' + fileServer + ' test/client -o -c-1';
 exec(cmd);
 

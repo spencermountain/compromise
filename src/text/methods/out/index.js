@@ -2,6 +2,7 @@
 const topk = require('./topk');
 const offset = require('./offset');
 const termIndex = require('./indexes');
+const fns = require('../paths').fns;
 
 const methods = {
   text: r => {
@@ -123,6 +124,9 @@ const methods = {
   },
   topk: r => {
     return topk(r);
+  },
+  custom: (r, obj) => {
+    return r.list.map((ts) => ts.out(obj));
   }
 };
 methods.plaintext = methods.text;
@@ -135,10 +139,16 @@ methods.frequency = methods.topk;
 methods.freq = methods.topk;
 methods.arr = methods.array;
 
+
+
 const addMethods = Text => {
   Text.prototype.out = function(fn) {
-    if (methods[fn]) {
-      return methods[fn](this);
+    if (typeof fn === 'string') {
+      if (methods[fn]) {
+        return methods[fn](this);
+      }
+    } else if (fns.isObject(fn) === true) { //support .out({})
+      return methods.custom(this, fn);
     }
     return methods.text(this);
   };

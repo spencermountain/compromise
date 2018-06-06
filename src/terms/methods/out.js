@@ -73,6 +73,20 @@ const methods = {
     ts.terms.forEach(t => {
       t.out('debug');
     });
+  },
+  custom: function(ts, obj) {
+    return ts.terms.map((t) => {
+      return Object.keys(obj).reduce((h, k) => {
+        if (obj[k] && t[k]) {
+          if (typeof t[k] === 'function') {
+            h[k] = t[k]();
+          } else {
+            h[k] = t[k];
+          }
+        }
+        return h;
+      }, {});
+    });
   }
 };
 methods.plaintext = methods.text;
@@ -82,9 +96,13 @@ methods.colors = methods.color;
 methods.tags = methods.terms;
 
 const renderMethods = Terms => {
-  Terms.prototype.out = function(str) {
-    if (methods[str]) {
-      return methods[str](this);
+  Terms.prototype.out = function(fn) {
+    if (typeof fn === 'string') {
+      if (methods[fn]) {
+        return methods[fn](this);
+      }
+    } else if (fns.isObject(fn) === true) { //support .out({})
+      return methods.custom(this, fn);
     }
     return methods.text(this);
   };

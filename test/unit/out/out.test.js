@@ -56,6 +56,23 @@ test('out-newlines:', function(t) {
   t.end();
 });
 
+test('out-custom:', function(t) {
+  var doc = nlp('The competent drum work of Don Brewer?').debug();
+  var arr = doc.out({
+    text: true,
+    normal: false,
+    tags: true,
+    sdf: true,
+    root: true
+  });
+  arr = arr[0];
+  t.equal(arr[0].text, 'The', 'has text');
+  t.equal(arr[5].root, 'don', 'has root');
+  t.equal(arr[5].sdf, undefined, 'has no sdf');
+  t.equal(arr[0].tags.Determiner, true, 'has tags');
+  t.end();
+});
+
 test('out-others:', function(t) {
   var str = 'texas rangers are a baseball team. They do not play in houston.';
   var r = nlp(str).verbs();

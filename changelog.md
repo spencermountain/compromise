@@ -32,6 +32,7 @@ compromise uses semver, and pushes to npm frequently
 - move `getPunctuation`, `setPunctuation` from .sentence to main Text method
 - rename internal `endPunctuation` to `getPunctuation`
 - more consistent `cardinal/ordinal` tagging for values
+
 ##### 11.5.0
 - add #Abbreviation tag
 - add #ProperNoun tag
@@ -54,6 +55,7 @@ compromise uses semver, and pushes to npm frequently
 - neighborhoods as #Place
 - support more complex noun-phrases with JustesonKatz in `.nouns()`
 <!-- * include 'the #TitleCase' matches in .topics() -->
+
 ##### 11.0.0
 - support for persistent lexicon/tagset changes
 - `addTags, addWords, addRegs, addPlurals, addConjugations` methods to extend native data

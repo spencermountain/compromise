@@ -172,6 +172,39 @@ doc.sentences().toNegative()
     </tr>
 </table>
 
+
+
+<div align="left">
+ detailed documentation:
+</div>
+<table align="center">
+   <tr>
+      <td>
+         <div align="center">
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-api">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; API &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </a>
+         </div>
+       </td>
+      <td>
+         <div align="center">
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-tags">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Full Tagset &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </a>
+         </div>
+       </td>
+      <td>
+         <div align="center">
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-plugins">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Plugins &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </a>
+         </div>
+       </td>
+    </tr>
+</table>
+
+## Examples:
+
 <table>
    <tr>
       <td>
@@ -238,38 +271,6 @@ doc.sentences().toNegative()
       </td>
    </tr>
 </table>
-
-
-<div align="left">
- some more detail
-</div>
-<table align="center">
-   <tr>
-      <td>
-         <div align="center">
-            <a href="https://beta.observablehq.com/@spencermountain/compromise-api">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; API &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            </a>
-         </div>
-       </td>
-      <td>
-         <div align="center">
-            <a href="https://beta.observablehq.com/@spencermountain/compromise-tags">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Full Tagset &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            </a>
-         </div>
-       </td>
-      <td>
-         <div align="center">
-            <a href="https://beta.observablehq.com/@spencermountain/compromise-plugins">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Plugin creation &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            </a>
-         </div>
-       </td>
-    </tr>
-</table>
-
-## Examples:
 
 * <a href="https://beta.observablehq.com/@spencermountain/nouns"><b>Plural/singular:</b></a> - grab the noun-phrases, make em plural:
 ```js

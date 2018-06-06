@@ -1,5 +1,10 @@
 var nlp = require('./src/index');
 // nlp.verbose('tagger');
 
-let doc = nlp('Phoenix AZ');
-doc.debug();
+let doc = nlp('The competent drum work of Don Brewer?').debug();
+console.log(doc.out({
+  text: true,
+  normal: false,
+  root: true,
+  sdf: true
+}));

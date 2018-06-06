@@ -54,6 +54,8 @@ compromise uses semver, and pushes to npm frequently
 - add more behaviours to `.normalize()`
 - support match-results as inputs to .match() and .not()
 - support some us-state abbreviations like 'Phoeniz AZ'
+##### 11.10.0
+- support custom `.out({text:true, tags:true})` output format
 
 ##### 11.0.0
 - support for persistent lexicon/tagset changes

@@ -200,29 +200,6 @@ doc.sentences().toNegative()
    </tr>
 </table>
 
-<!-- plugins section -->
-__**[plugins](https://beta.observablehq.com/@spencermountain/compromise-plugins)**__ allow adding vocabulary, fixing errors, and setting context quickly:
-```js
-var plugin = {
-  tags:{
-    Character:{
-      isA: 'Noun'
-    }
-  },
-  words:{
-    itchy: 'Character',
-    scratchy: 'Character'
-  }
-}
-nlp.plugin(plugin)
-nlp(`Couldn't Itchy share his pie with Scratchy?`).debug()
-/*
-   couldn't   - #Modal, #Verb
-   itchy      - #Character, #Noun
-   share      - #Infinitive, #Verb
-   ...
-*/
-```
 <div align="center">
  Get the hang of things:
 </div>
@@ -368,6 +345,31 @@ doc = nlp('Tony Hawk').out('html')
 </span>
 */
 ```
+
+<!-- plugins section -->
+* <a href="https://beta.observablehq.com/@spencermountain/compromise-plugins"><b> Plugins:</b></a> - allow adding vocabulary, fixing errors, and setting context quickly:
+```js
+var plugin = {
+  tags:{
+    Character:{
+      isA: 'Noun'
+    }
+  },
+  words:{
+    itchy: 'Character',
+    scratchy: 'Character'
+  }
+}
+nlp.plugin(plugin)
+nlp(`Couldn't Itchy share his pie with Scratchy?`).debug()
+/*
+   couldn't   - #Modal, #Verb
+   itchy      - #Character, #Noun
+   share      - #Infinitive, #Verb
+   ...
+*/
+```
+
 <h3 align="center">
   of course, there's <a href="https://beta.observablehq.com/@spencermountain/nlp-compromise">a lot more stuff</a>.
 </h3>

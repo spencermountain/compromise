@@ -225,24 +225,48 @@ nlp(`Couldn't Itchy share his pie with Scratchy?`).debug()
 ```
 
 Get the hang of things:
-* [Tutorial #1](https://beta.observablehq.com/@spencermountain/tutorial-1) - Input → output
-* [Tutorial #2](https://beta.observablehq.com/@spencermountain/compromise-tutorial-2) - Match & transform
-* [Tutorial #3](https://beta.observablehq.com/@spencermountain/compromise-making-a-bot) - Making a bot
+<table align="center">
+   <tr>
+      <td>
+         <div align="center">
+            <a href="https://beta.observablehq.com/@spencermountain/tutorial-1">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tutorial #1 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </a>
+         </div>
+         Input → output
+       </td>
+      <td>
+         <div align="center">
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-tutorial-2">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tutorial #2 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </a>
+         </div>
+         Match & transform
+       </td>
+      <td>
+         <div align="center">
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-making-a-bot">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tutorial #3 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </a>
+         </div>
+         Making a bot
+       </td>
+    </tr>
+</table>
 
-Detailed stuff:
-<table>
+<table align="center">
    <tr>
       <td>
          <div align="center">
             <a href="https://beta.observablehq.com/@spencermountain/compromise-api">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; API &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Full API &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
        </td>
       <td>
          <div align="center">
             <a href="https://beta.observablehq.com/@spencermountain/compromise-tags">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tagset &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Full Tagset &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
        </td>

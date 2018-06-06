@@ -174,8 +174,8 @@ doc.sentences().toNegative()
 
 
 
-<div align="left">
- detailed documentation:
+<div align="center">
+ Detailed docs:
 </div>
 <table align="center">
    <tr>

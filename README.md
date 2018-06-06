@@ -66,7 +66,7 @@ if( doc.has('^simon says (shoot|fire) #Determiner lazer') ){
   <br/>
   but it is
   <a href="https://beta.observablehq.com/@spencermountain/compromise-filesize">small,
-  <a href="https://beta.observablehq.com/@spencermountain/compromise-performance">quick</a>, 
+  <a href="https://beta.observablehq.com/@spencermountain/compromise-performance">quick</a>,
   and <a href="https://beta.observablehq.com/@spencermountain/compromise-accuracy">good-enough</a> for a bunch of stuff.
 </div>
 
@@ -93,7 +93,7 @@ if( doc.has('^simon says (shoot|fire) #Determiner lazer') ){
       <td align="center">
         <div>
           <b>
-            <a href="https://github.com/spencermountain/compromise/wiki/Accuracy">
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-accuracy">
               86%
             </a>
           </b>
@@ -157,7 +157,7 @@ doc.sentences().toNegative()
       </td>
       <td>
          <div align="center">
-            <a href="https://nlp-expo.firebaseapp.com/expo/parse-all-the-numbers-278986">
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-values">
           &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Number parsing &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
@@ -170,7 +170,7 @@ doc.sentences().toNegative()
       <td>
          <div align="center">
             <a href="https://beta.observablehq.com/@spencermountain/tutorial-1">
-            &nbsp; &nbsp; &nbsp; &nbsp; Template-matches &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; Grammar-match &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
@@ -189,7 +189,7 @@ doc.sentences().toNegative()
       </td>
       <td>
          <div align="center">
-            <a href="https://github.com/spencermountain/compromise/wiki/Usage">
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-tutorial-2">
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Transformations &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
@@ -224,6 +224,14 @@ nlp(`Couldn't Itchy share his pie with Scratchy?`).debug()
 */
 ```
 
+Get the hang of things:
+* [Tutorial #1](https://beta.observablehq.com/@spencermountain/tutorial-1) - Input → output
+* [Tutorial #2](https://beta.observablehq.com/@spencermountain/compromise-tutorial-2) - Match & transform
+* [Tutorial #3](https://beta.observablehq.com/@spencermountain/compromise-making-a-bot) - Making a bot
+
+* [API](https://beta.observablehq.com/@spencermountain/compromise-api)
+* [TagSet](https://beta.observablehq.com/@spencermountain/compromise-tags)
+
 ## Examples:
 
 * <a href="https://beta.observablehq.com/@spencermountain/nouns"><b>Plural/singular:</b></a> - grab the noun-phrases, make em plural:
@@ -234,7 +242,7 @@ doc.out('text')
 //'The bottles of beer on the wall.'
 ```
 
-* <a href="https://github.com/spencermountain/compromise/wiki/Values"><b>Number parsing:</b></a> - parse written-out numbers, and change their form:
+* <a href="https://beta.observablehq.com/@spencermountain/compromise-values"><b>Number parsing:</b></a> - parse written-out numbers, and change their form:
 ```js
 doc = nlp('ninety five thousand and fifty two')
 doc.values().toNumber().out()
@@ -295,7 +303,7 @@ doc = nlp('i heard Boston\'s set in Chicago', lexicon)
 doc.match('heard #Possessive set').terms(1).tag('MusicalGroup')
 ```
 
-* <a href="https://github.com/spencermountain/compromise/wiki/Output"><b> Handy outputs:</b></a> - get sensible data:
+* <a href="https://beta.observablehq.com/@spencermountain/compromise-output"><b> Handy outputs:</b></a> - get sensible data:
 ```js
 doc = nlp('We like Roy! We like Roy!').sentences().out('array')
 // ['We like Roy!', 'We like Roy!']
@@ -310,7 +318,7 @@ doc = nlp('Tony Hawk').out('html')
 */
 ```
 <h3 align="center">
-  of course, there's <a href="https://github.com/spencermountain/compromise/wiki">a lot more stuff</a>.
+  of course, there's <a href="https://beta.observablehq.com/@spencermountain/nlp-compromise">a lot more stuff</a>.
 </h3>
 <h4 align="center">
   <b>Join in -</b>
@@ -374,7 +382,7 @@ doc = nlp('Tony Hawk').out('html')
         <br/>
         string stuff is synchronous too, and parallelizing is weird.
         <br/>
-        See <a href="https://github.com/spencermountain/compromise/wiki/Speed">here</a> for information about speed & performance, and
+        See <a href="https://beta.observablehq.com/@spencermountain/compromise-performance">here</a> for information about speed & performance, and
         <a href="https://github.com/spencermountain/compromise/wiki/Justification">here></a> for project motivations
       </ul>
       <p></p>

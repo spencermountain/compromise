@@ -133,6 +133,45 @@ doc.sentences().toNegative()
 // 'London is not calling'
 ```
 
+
+<div align="center">
+ Get the hang of things:
+</div>
+<table align="center">
+   <tr>
+      <td>
+         <div align="center">
+            <a href="https://beta.observablehq.com/@spencermountain/tutorial-1">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tutorial #1 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </a>
+         </div>
+         <div align="center">
+            <sub>Input → output</sub>
+         </div>
+       </td>
+      <td>
+         <div align="center">
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-tutorial-2">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tutorial #2 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </a>
+         </div>
+         <div align="center">
+            <sub>Match & transform</sub>
+         </div>
+       </td>
+      <td>
+         <div align="center">
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-making-a-bot">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tutorial #3 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </a>
+         </div>
+         <div align="center">
+            <sub>Making a bot</sub>
+         </div>
+       </td>
+    </tr>
+</table>
+
 <table>
    <tr>
       <td>
@@ -200,45 +239,8 @@ doc.sentences().toNegative()
    </tr>
 </table>
 
-<div align="center">
- Get the hang of things:
-</div>
-<table align="center">
-   <tr>
-      <td>
-         <div align="center">
-            <a href="https://beta.observablehq.com/@spencermountain/tutorial-1">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tutorial #1 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            </a>
-         </div>
-         <div align="center">
-            <sub>Input → output</sub>
-         </div>
-       </td>
-      <td>
-         <div align="center">
-            <a href="https://beta.observablehq.com/@spencermountain/compromise-tutorial-2">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tutorial #2 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            </a>
-         </div>
-         <div align="center">
-            <sub>Match & transform</sub>
-         </div>
-       </td>
-      <td>
-         <div align="center">
-            <a href="https://beta.observablehq.com/@spencermountain/compromise-making-a-bot">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tutorial #3 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            </a>
-         </div>
-         <div align="center">
-            <sub>Making a bot</sub>
-         </div>
-       </td>
-    </tr>
-</table>
 
-<div align="center">
+<div align="left">
  some more detail
 </div>
 <table align="center">

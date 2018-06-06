@@ -257,6 +257,13 @@ doc.sentences().toNegative()
             </a>
          </div>
        </td>
+      <td>
+         <div align="center">
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-plugins">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Plugin creation &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </a>
+         </div>
+       </td>
     </tr>
 </table>
 

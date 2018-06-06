@@ -223,8 +223,9 @@ nlp(`Couldn't Itchy share his pie with Scratchy?`).debug()
    ...
 */
 ```
-
-Get the hang of things:
+<div align="center">
+ Get the hang of things:
+</div>
 <table align="center">
    <tr>
       <td>
@@ -233,7 +234,9 @@ Get the hang of things:
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tutorial #1 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
-         Input → output
+         <div align="center">
+            <sub>Input → output</sub>
+         </div>
        </td>
       <td>
          <div align="center">
@@ -241,7 +244,9 @@ Get the hang of things:
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tutorial #2 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
-         Match & transform
+         <div align="center">
+            <sub>Match & transform</sub>
+         </div>
        </td>
       <td>
          <div align="center">
@@ -249,17 +254,22 @@ Get the hang of things:
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tutorial #3 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
-         Making a bot
+         <div align="center">
+            <sub>Making a bot</sub>
+         </div>
        </td>
     </tr>
 </table>
 
+<div align="center">
+ some more detail
+</div>
 <table align="center">
    <tr>
       <td>
          <div align="center">
             <a href="https://beta.observablehq.com/@spencermountain/compromise-api">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Full API &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; API &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
        </td>

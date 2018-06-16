@@ -42,9 +42,12 @@ const Term = function(str, world) {
       txt = txt || '';
       this._text = txt.trim();
       this.dirty = true;
-      if (this._text !== txt) {
-        this.whitespace = build_whitespace(txt);
-      }
+      // if (this._text !== txt) {
+      //   console.log('|' + txt + '|');
+      // console.log(build_whitespace(txt));
+      // this.whitespace = build_whitespace(txt);
+      //   console.log(this.whitespace);
+      // }
       this.normalize();
     }
   });

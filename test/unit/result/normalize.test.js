@@ -88,3 +88,15 @@ test('honorifics', function(t) {
   });
   t.end();
 });
+
+test('elipses-whitespace:', function(t) {
+  var doc = nlp('about this ...').normalize();
+  t.equal(doc.out('text'), 'about this', 'normalize seperate elipses');
+
+  doc = nlp('about this ...').toLowerCase();
+  t.equal(doc.out('text'), 'about this ...', 'lowercase elipses');
+
+  doc = nlp('about this...').normalize();
+  t.equal(doc.out('text'), 'about this', 'normalize attatched elipses');
+  t.end();
+});

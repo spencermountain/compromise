@@ -3,18 +3,18 @@
 const addMethods = Term => {
   const methods = {
     toUpperCase: function() {
-      this.text = this.text.toUpperCase();
+      this.text = this._text.toUpperCase();
       this.tag('#UpperCase', 'toUpperCase');
       return this;
     },
     toLowerCase: function() {
-      this.text = this.text.toLowerCase();
+      this.text = this._text.toLowerCase();
       this.unTag('#TitleCase');
       this.unTag('#UpperCase');
       return this;
     },
     toTitleCase: function() {
-      this.text = this.text.replace(/^ *[a-z]/, x => x.toUpperCase());
+      this.text = this._text.replace(/^ *[a-z]/, x => x.toUpperCase());
       this.tag('#TitleCase', 'toTitleCase');
       return this;
     },

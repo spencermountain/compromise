@@ -6,7 +6,7 @@ const serverDebug = require('./server');
 const methods = {
   /** a pixel-perfect reproduction of the input, with whitespace preserved */
   text: function(r) {
-    return r.whitespace.before + r._text + r.whitespace.after;
+    return (r.whitespace.before || '') + r._text + (r.whitespace.after || '');
   },
   /** a lowercased, punctuation-cleaned, whitespace-trimmed version of the word */
   normal: function(r) {

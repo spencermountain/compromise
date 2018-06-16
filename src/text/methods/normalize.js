@@ -12,6 +12,7 @@ const defaults = {
   possessives: false,
   plurals: false,
   verbs: false,
+  honorifics: false,
 };
 
 const methods = {
@@ -97,6 +98,12 @@ const methods = {
     r.verbs().toInfinitive();
     return r;
   },
+
+  //turn 'sergeant pepperæ to 'pepper'
+  honorifics: r => {
+    r = r.not('#Honorific');
+    return r;
+  }
 };
 
 const addMethods = Text => {

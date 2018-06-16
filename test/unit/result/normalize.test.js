@@ -56,3 +56,35 @@ test('optional params', function(t) {
   t.equal(doc.out(), 'john smith buy automobiles', 'many-on');
   t.end();
 });
+
+test('honorifics', function(t) {
+  var tests = [
+    ['rear admiral Smith', 'smith'],
+    ['Lieutenant John Smith', 'john smith'],
+    // ['Admiral Davis Jr', 'davis jr'],
+    ['Field marshal Herring', 'herring'],
+    ['General Lou Gobbells of the US air force', 'lou gobbells of the us air force'],
+    ['Rear admiral John', 'john'],
+    ['Lieutenant general James Baker', 'james baker'],
+    ['Lieutenant colonel Bing Crosby', 'bing crosby'],
+    ['Major Tom', 'tom'],
+    ['major effort by President Xi', 'major effort by xi'],
+    ['Corporal John Herring', 'john herring'],
+    ['sergeant major Harold', 'harold'],
+    ['Second lieutenant Semore Hirthman', 'semore hirthman'],
+    ['first lady Michelle obama', 'michelle obama'],
+    ['prime minister Stephen Hawking', 'stephen hawking'],
+  //no names
+  // ['first lieutenant', '1st lieutenant'],
+  // ['Sergeant', 'sergeant'],
+  ];
+  tests.forEach((a) => {
+    var doc = nlp(a[0]);
+    doc = doc.normalize({
+      honorifics: true,
+      case: true
+    });
+    t.equal(doc.out('normal'), a[1], a[0]);
+  });
+  t.end();
+});

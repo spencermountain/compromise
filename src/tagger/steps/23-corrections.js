@@ -91,7 +91,7 @@ const corrections = function(ts) {
     //'more' is not always an adverb
     ts.match('more #Noun').tag('Noun', 'more-noun');
     //the word 'second'
-    ts.match('[second] #Noun').unTag('Unit').tag('Ordinal', 'second-noun');
+    ts.match('[second] #Noun').not('#Honorific').unTag('Unit').tag('Ordinal', 'second-noun');
     //he quickly foo
     ts.match('#Noun #Adverb [#Noun]').tag('Verb', 'correction');
     //fix for busted-up phrasalVerbs

@@ -7,6 +7,8 @@ compromise uses semver, and pushes to npm frequently
 * **Patch** is an obvious, non-controversial bugfix
 
 ### v11
+##### 11.9.2
+- better honorific support
 ##### 11.9.0
 - tag professions as `#Actor`
 - add more behaviours to `.normalize()`

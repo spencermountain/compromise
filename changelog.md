@@ -11,7 +11,7 @@ compromise uses semver, and pushes to npm frequently
 - better honorific support, add `honorifics` feature to .normalize()
 - elipses bugfixes
 - replace unicode chars in `.normalize()` now by default
-
+- `acronyms().stripPeriods()` and `acronyms().addPeriods()`
 ##### 11.9.0
 - tag professions as `#Actor`
 - add more behaviours to `.normalize()`

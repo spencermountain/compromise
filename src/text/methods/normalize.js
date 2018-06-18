@@ -8,6 +8,7 @@ const defaults = {
   punctuation: true,
   unicode: true,
   contractions: true,
+  acronyms: true,
 
   parentheses: false,
   possessives: false,
@@ -88,6 +89,11 @@ const methods = {
   //expand all contractions
   contractions: r => {
     r.contractions().expand();
+    return r;
+  },
+  //remove periods from acronyms, like F.B.I.
+  acronyms: r => {
+    r.acronyms().stripPeriods();
     return r;
   },
   //turn david's → david

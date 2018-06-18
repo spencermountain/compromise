@@ -105,3 +105,18 @@ test('elipses-whitespace:', function(t) {
   t.equal(doc.out('text'), 'about this', 'normalize attatched elipses');
   t.end();
 });
+
+test('more-normalize:', function(t) {
+  let doc = nlp(`i saw first lady michelle obama`);
+  doc.normalize({
+    honorifics: true
+  });
+  t.equal(doc.out('text'), 'i saw michelle obama', 'normalize honorifics');
+
+  doc = nlp(`google's tax return`);
+  doc.normalize({
+    possessives: true
+  });
+  t.equal(doc.out('text'), 'google tax return', 'normalize possessives');
+  t.end();
+});

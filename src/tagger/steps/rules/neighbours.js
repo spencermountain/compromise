@@ -33,7 +33,7 @@ let beforeThisWord = {
   only: 'Verb', //27% //sees only
   him: 'Verb', //32% //show him
   were: 'Noun', //48% //we were
-  what: 'Verb', //25% //know what
+  // what: 'Verb', //25% //know what
   took: 'Noun', //38% //he took
   himself: 'Verb', //31% //see himself
   went: 'Noun', //43% //he went
@@ -54,7 +54,7 @@ let afterThisPos = {
   Modal: 'Verb', //35%
   Superlative: 'Noun', //43%
   Demonym: 'Noun', //38%
-  Organization: 'Verb', //33%
+  // Organization: 'Verb', //33%
   Honorific: 'Person', //
 // FirstName: 'Person', //
 };

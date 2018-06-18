@@ -4,9 +4,16 @@ var nlp = require('./src/index');
 //(private|general|major)
 
 // console.log(nlp('the so-called ❛singer-songwriter❜').normalize().out('text'));
-let doc = nlp(`"seven"`);
+// let doc = nlp(`"seven"`);
 // console.log(doc.list[0].terms[0]);
-console.log(doc.values().toNumber().out('text'));
+// console.log(doc.values().toNumber().out('text'));
+
+var doc = nlp('i saw first lady michelle obama');
+// doc.normalize({
+//   honorifics: true
+// });
+doc.debug();
+
 
 // console.log(nlp('Director of the F.B.I').acronyms().addPeriods().out('text'));
 

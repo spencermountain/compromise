@@ -30,10 +30,10 @@ const methods = {
   },
   /** check-print information for the console */
   debug: function(t) {
-    if (typeof module !== 'undefined' && this.module !== module) {
-      serverDebug(t);
-    } else {
+    if (typeof window === 'object') {
       clientDebug(t);
+    } else {
+      serverDebug(t);
     }
   }
 };

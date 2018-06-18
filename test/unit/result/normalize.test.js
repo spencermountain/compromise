@@ -27,7 +27,12 @@ test('sentence():', function(t) {
 test('normalize():', function(t) {
   [
     [' so... you like DONUTS? have all the donuts in the WORLD!!!', 'so you like donuts? have all the donuts in the world!'],
-    ['This is a test. .', 'this is a test.']
+    ['This is a test. .', 'this is a test.'],
+    ['Björk, the singer-songwriter...', 'bjork the singer songwriter'],
+    ['the so-called “fascist  dictator”', 'the so called "fascist dictator"'],
+    // ['the so-called ❛singer-songwriter❜', 'the so called \'singer songwriter\''],
+    // ['the so-called ❛group of seven❜', 'the so called \'group of 7\''],
+    ['Director of the F.B.I.', 'director of the fbi'],
   ].forEach(function(a) {
     var str = nlp(a[0]).normalize().out('text');
     str_test(str, a[0], a[1], t);
@@ -54,5 +59,49 @@ test('optional params', function(t) {
     verbs: true,
   });
   t.equal(doc.out(), 'john smith buy automobiles', 'many-on');
+  t.end();
+});
+
+test('honorifics', function(t) {
+  var tests = [
+    ['rear admiral Smith', 'smith'],
+    ['Lieutenant John Smith', 'john smith'],
+    // ['Admiral Davis Jr', 'davis jr'],
+    ['Field marshal Herring', 'herring'],
+    ['General Lou Gobbells of the US air force', 'lou gobbells of the us air force'],
+    ['Rear admiral John', 'john'],
+    ['Lieutenant general James Baker', 'james baker'],
+    ['Lieutenant colonel Bing Crosby', 'bing crosby'],
+    ['Major Tom', 'tom'],
+    ['major effort by President Xi', 'major effort by xi'],
+    ['Corporal John Herring', 'john herring'],
+    ['sergeant major Harold', 'harold'],
+    ['Second lieutenant Semore Hirthman', 'semore hirthman'],
+    ['first lady Michelle obama', 'michelle obama'],
+    ['prime minister Stephen Hawking', 'stephen hawking'],
+  //no names
+  // ['first lieutenant', '1st lieutenant'],
+  // ['Sergeant', 'sergeant'],
+  ];
+  tests.forEach((a) => {
+    var doc = nlp(a[0]);
+    doc = doc.normalize({
+      honorifics: true,
+      case: true
+    });
+    t.equal(doc.out('normal'), a[1], a[0]);
+  });
+  t.end();
+});
+
+test('elipses-whitespace:', function(t) {
+  var doc = nlp('about this ...').normalize();
+  t.equal(doc.out('text'), 'about this', 'normalize seperate elipses');
+
+  doc = nlp('about this ...').toLowerCase();
+  t.equal(doc.out('text'), 'about this ...', 'lowercase elipses');
+
+  doc = nlp('about this...').normalize();
+  t.equal(doc.out('text'), 'about this', 'normalize attatched elipses');
   t.end();
 });

@@ -57,7 +57,7 @@ test('out-newlines:', function(t) {
 });
 
 test('out-custom:', function(t) {
-  var doc = nlp('The competent drum work of Don Brewer?').debug();
+  var doc = nlp('The competent drum work of Don Brewer?');
   var arr = doc.out({
     text: true,
     normal: false,

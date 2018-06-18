@@ -42,6 +42,11 @@ const person_step = function(ts) {
     ts.match('al (#Person|#TitleCase)').canBe('#Person').tag('#Person', 'al-borlen');
     ts.match('#TitleCase al #TitleCase').canBe('#Person').tag('#Person', 'arabic-al-arabic');
   }
+  //ambiguous honorifics
+  ts.match('(private|general|major|corporal|lord|lady|secretary|premier) #Honorific? #Person').terms(0).tag('Honorific', 'ambg-honorifics');
+  //first general..
+  ts.match('(1st|2nd|first|second) #Honorific').terms(0).tag('Honorific', 'ordinal-honorific');
+
   // let firstNames = '()';
   // let names = ts.match(firstNames);
   // if (names.found) {
@@ -147,6 +152,7 @@ const person_step = function(ts) {
     //pope francis
     ts.match('(lady|queen|sister) #TitleCase')
       .ifNo('#Date')
+      .ifNo('#Honorific')
       .tag('#FemaleName', 'lady-titlecase');
     ts.match('(king|pope|father) #TitleCase')
       .ifNo('#Date')
@@ -171,7 +177,6 @@ const person_step = function(ts) {
 
   //remove single 'mr'
   ts.match('^#Honorific$').unTag('Person', 'single-honorific');
-
 
   return ts;
 };

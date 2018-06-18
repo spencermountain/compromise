@@ -105,6 +105,8 @@ const methods = {
           this.unit.delete();
         }
       }
+      // let before = this.terms[0].whitespace.before;
+      // let after = this.terms[this.terms.length - 1].whitespace.after;
       if (this.unit.found) {
         str = str + this.unit.out('text');
       }
@@ -113,6 +115,8 @@ const methods = {
       if (this.unit.found) {
         this.match(this.unit.out('normal')).tag('Unit');
       }
+    // this.whitespace.before(before);
+    // this.whitespace.after(after);
     }
     return this;
   },

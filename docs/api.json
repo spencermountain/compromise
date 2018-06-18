@@ -54,7 +54,7 @@
       "forEach": {
         "desc": "do something on each result independently",
         "returns": "Text",
-        "example": "nlp('Larry, Curly, and Moe').people().forEach((m,i)=> console.log(m.out()) )\n//curly\n//larry\n//moe"
+        "example": "nlp('Larry, Curly, and Moe').people().forEach((m,i)=> m.people().toLowerCase() )\n//curly\n//larry\n//moe"
       },
       "map": {
         "desc": "create a new array from these results",
@@ -626,6 +626,16 @@
       }
     },
     "acronyms": {
+      "stripPeriods": {
+        "desc": "turn 'FBI' into 'F.B.I.'",
+        "returns": "Text",
+        "example": "nlp('Director of the F.B.I.').acronyms().stripPeriods().out()\n//Director of the FBI"
+      },
+      "addPeriods": {
+        "desc": "turn 'FBI' into 'F.B.I.'",
+        "returns": "Text",
+        "example": "nlp('Director of the FBI').acronyms().addPeriods().out()\n//Director of the F.B.I."
+      },
       "data": {
         "desc": "return an array of meta-data for the acronyms in this text",
         "example": "nlp('In the USA, the big CIA. The Bloods and the Crips, and the KKK.').acronyms().data()\n//[{text:'USA'...}]",

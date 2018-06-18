@@ -1,4 +1,5 @@
 'use strict';
+const unicode = require('../../term/methods/normalize/unicode');
 //
 const defaults = {
   whitespace: true,
@@ -7,11 +8,13 @@ const defaults = {
   punctuation: true,
   unicode: true,
   contractions: true,
+  acronyms: true,
 
   parentheses: false,
   possessives: false,
   plurals: false,
   verbs: false,
+  honorifics: false,
 };
 
 const methods = {
@@ -73,8 +76,24 @@ const methods = {
     return r;
   },
 
+  // turn Björk into Bjork
+  unicode: r => {
+    r.list.forEach((ts) => {
+      ts.terms.forEach((t) => {
+        t.text = unicode(t.text);
+      });
+    });
+    return r;
+  },
+
+  //expand all contractions
   contractions: r => {
     r.contractions().expand();
+    return r;
+  },
+  //remove periods from acronyms, like F.B.I.
+  acronyms: r => {
+    r.acronyms().stripPeriods();
     return r;
   },
   //turn david's → david
@@ -97,6 +116,12 @@ const methods = {
     r.verbs().toInfinitive();
     return r;
   },
+
+  //turn 'Sergeant Pepper to 'Pepper'
+  honorifics: r => {
+    r = r.not('#Honorific');
+    return r;
+  }
 };
 
 const addMethods = Text => {

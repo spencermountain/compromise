@@ -2,7 +2,7 @@
 //punctuation regs-
 const before = /^(\s|-+|\.\.+|\/)+/;
 const minusNumber = /^( *)-(\$|€|¥|£)?([0-9])/;
-const after = /(\s+|-+|\.\.+)$/;
+const after = /(\s+|-+|\.\.+)+$/;
 
 //seperate the 'meat' from the trailing/leading whitespace.
 //works in concert with ./src/text/tokenize.js

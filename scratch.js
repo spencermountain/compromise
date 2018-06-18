@@ -8,11 +8,9 @@ var nlp = require('./src/index');
 // console.log(doc.list[0].terms[0]);
 // console.log(doc.values().toNumber().out('text'));
 
-var doc = nlp('i saw first lady michelle obama');
-// doc.normalize({
-//   honorifics: true
-// });
+var doc = nlp(`he lived (but barely) and died (in a pile)`);
 doc.debug();
+doc.quotations().debug();
 
 
 // console.log(nlp('Director of the F.B.I').acronyms().addPeriods().out('text'));

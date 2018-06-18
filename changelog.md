@@ -7,6 +7,9 @@ compromise uses semver, and pushes to npm frequently
 * **Patch** is an obvious, non-controversial bugfix
 
 ### v11
+##### 11.11.0
+- `.quotations()` no-longer return repeated results for nested quotes
+- simplify quotation tagset
 ##### 11.10.0
 - better honorific support, add `honorifics` feature to .normalize()
 - elipses bugfixes

@@ -132,7 +132,8 @@ const quotation_step = ts => {
           // Tag the things.
           t.tag('StartQuotation', 'quotation_open');
           ts.terms[i + o].tag('EndQuotation', 'quotation_close');
-          ts.slice(i, i + o + 1).tag(quote.tag, 'quotation_step');
+          ts.slice(i, i + o + 1).tag('Quotation', 'quotation_step');
+          // ts.slice(i, i + o + 1).tag(quote.tag, 'quotation_step');
           // Compensate for multiple close quotes ('"Really"')
           o -= 1;
           if (!quotes.length) {

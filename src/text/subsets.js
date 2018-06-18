@@ -42,39 +42,37 @@ const addSubsets = Text => {
       return r;
     },
     quotations: function(n) {
-      const quotes = [
-        ['StraightDoubleQuotes', '\u0022', '\u0022'],
-        ['StraightDoubleQuotesWide', '\uFF02', '\uFF02'],
-        ['StraightSingleQuotes', '\u0027', '\u0027'],
-        ['CommaDoubleQuotes', '\u201C', '\u201D'],
-        ['CommaSingleQuotes', '\u2018', '\u2019'],
-        ['CurlyDoubleQuotesReversed', '\u201F', '\u201D'],
-        ['CurlySingleQuotesReversed', '\u201B', '\u2019'],
-        ['LowCurlyDoubleQuotes', '\u201E', '\u201D'],
-        ['LowCurlyDoubleQuotesReversed', '\u2E42', '\u201D'],
-        ['LowCurlySingleQuotes', '\u201A', '\u2019'],
-        ['AngleDoubleQuotes', '\u00AB', '\u00BB'],
-        ['AngleSingleQuotes', '\u2039', '\u203A'],
-        ['PrimeSingleQuotes', '\u2035', '\u2032'],
-        ['PrimeDoubleQuotes', '\u2036', '\u2033'],
-        ['PrimeTripleQuotes', '\u2037', '\u2034'],
-        ['PrimeDoubleQuotes', '\u301D', '\u301E'],
-        ['PrimeSingleQuotes', '\u0060', '\u00B4'],
-        ['LowPrimeDoubleQuotesReversed', '\u301F', '\u301E']
-      ];
-      let that = null;
-      quotes.forEach(quote => {
-        const str = '[/.' + quote[1] + '[^' + quote[1] + ']*$/] /^[^' + quote[2] + ']*' + quote[2] + './';
-        const match = this
-          .match('#' + quote[0] + '+')
-          .splitAfter(str);
-        that = that === null ? match : that.concat(match);
+      let matches = this.match('#Quotation+');
+      let found = [];
+      matches.list.forEach((ts) => {
+        let open = 0;
+        let start = null;
+        //handle nested quotes - 'startQuote->startQuote->endQuote->endQuote'
+        ts.terms.forEach((t, i) => {
+          if (t.tags.StartQuotation === true) {
+            if (open === 0) {
+              start = i;
+            }
+            open += 1;
+          }
+          if (open > 0 && t.tags.EndQuotation === true) {
+            open -= 1;
+          }
+          if (open === 0 && start !== null) {
+            found.push(ts.slice(start, i + 1));
+            start = null;
+          }
+        });
+        //maybe we messed something up..
+        if (start !== null) {
+          found.push(ts.slice(start, ts.terms.length));
+        }
       });
-      that = that.sort('chronological');
+      matches.list = found;
       if (typeof n === 'number') {
-        that = that.get(n);
+        matches = matches.get(n);
       }
-      return that;
+      return matches;
     },
     topics: function(n) {
       let r = this.clauses();

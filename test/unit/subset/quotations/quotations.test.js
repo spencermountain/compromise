@@ -34,7 +34,6 @@ test('multiple quotation test', function(t) {
     [`My "String 'with manys' adjacent" "nested" 'quotes'`,
       [
         'string with manys adjacent',
-        'with manys',
         'nested',
         'quotes'
       ]
@@ -44,10 +43,8 @@ test('multiple quotation test', function(t) {
         'may\'s',
         'third day',
         'will be a really cold day',
-        'really cold',
         'in a',
         'really cold month',
-        'month'
       ]
     ],
   ];

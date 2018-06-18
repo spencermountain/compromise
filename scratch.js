@@ -3,7 +3,7 @@ var nlp = require('./src/index');
 
 //(private|general|major)
 
-console.log(nlp('about this ...').normalize().out('text'));
+console.log(nlp('Björk, the “singer-songwriter”').normalize().out('text'));
 
 // nlp('about this ...').normalize().debug()
 // console.log(nlp('word ...').toLowerCase().out());

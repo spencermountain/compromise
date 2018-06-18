@@ -1,4 +1,5 @@
 'use strict';
+const unicode = require('../../term/methods/normalize/unicode');
 //
 const defaults = {
   whitespace: true,
@@ -74,6 +75,17 @@ const methods = {
     return r;
   },
 
+  // turn Björk into Bjork
+  unicode: r => {
+    r.list.forEach((ts) => {
+      ts.terms.forEach((t) => {
+        t.text = unicode(t.text);
+      });
+    });
+    return r;
+  },
+
+  //expand all contractions
   contractions: r => {
     r.contractions().expand();
     return r;
@@ -99,7 +111,7 @@ const methods = {
     return r;
   },
 
-  //turn 'sergeant pepperæ to 'pepper'
+  //turn 'Sergeant Pepper to 'Pepper'
   honorifics: r => {
     r = r.not('#Honorific');
     return r;

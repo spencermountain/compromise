@@ -200,6 +200,13 @@ doc.sentences().toNegative()
             </a>
          </div>
        </td>
+      <td>
+         <div align="center">
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-output">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Outputs &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </a>
+         </div>
+       </td>
     </tr>
 </table>
 
@@ -261,12 +268,12 @@ doc.sentences().toNegative()
       </td>
       <td>
          <div align="center">
-            <a href="https://beta.observablehq.com/@spencermountain/compromise-tutorial-2">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Transformations &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-normalization">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Normalization &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </a>
          </div>
          <div align="center">
-            <sub>contractions, style, mood..</sub>
+            <sub>case, whitespace, contractions..</sub>
          </div>
       </td>
    </tr>
@@ -292,7 +299,7 @@ doc.out('text')
 // 'the twenty fifth of December'
 ```
 
-* <a href="https://github.com/spencermountain/compromise/wiki/Usage"><b>Normalization:</b></a> - handle looseness & variety of random text:
+* <a href="https://beta.observablehq.com/@spencermountain/compromise-normalization"><b>Normalization:</b></a> - handle looseness & variety of random text:
 ```js
 doc = nlp("the guest-singer's björk   at seven thirty.").normalize().out('text')
 // 'The guest singer is Bjork at 7:30.'

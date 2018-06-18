@@ -7,8 +7,11 @@ compromise uses semver, and pushes to npm frequently
 * **Patch** is an obvious, non-controversial bugfix
 
 ### v11
-##### 11.9.2
-- better honorific support
+##### 11.10.0
+- better honorific support, add `honorifics` feature to .normalize()
+- elipses bugfixes
+- replace unicode chars in `.normalize()` now by default
+
 ##### 11.9.0
 - tag professions as `#Actor`
 - add more behaviours to `.normalize()`

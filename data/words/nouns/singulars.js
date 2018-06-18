@@ -99,7 +99,8 @@ module.exports = [
   'tragedy',
   'tv show',
   'us dollar',
-  'us state'
+  'us state',
+  'tax return'
 // 'things',
 // 'yesterday',
 // 'today',

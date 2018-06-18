@@ -119,7 +119,7 @@ const methods = {
 
   //turn 'Sergeant Pepper to 'Pepper'
   honorifics: r => {
-    r = r.not('#Honorific');
+    r = r.delete('#Honorific');
     return r;
   }
 };

@@ -207,6 +207,13 @@ doc.sentences().toNegative()
             </a>
          </div>
        </td>
+      <td>
+         <div align="center">
+            <a href="https://beta.observablehq.com/@spencermountain/compromise-match-syntax">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Match Syntax &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </a>
+         </div>
+       </td>
     </tr>
 </table>
 

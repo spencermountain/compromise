@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.10.1",
+  "version": "11.11.0",
   "main": "./builds/compromise.js",
   "types": "./compromise.d.ts",
   "repository": {
@@ -11,6 +11,7 @@
   },
   "scripts": {
     "test": "tape \"./test/unit/**/*.test.js\" | tap-dancer",
+    "test:spec": "tape \"./test/unit/**/*.test.js\" | tap-spec",
     "testb": "TESTENV=prod tape \"./test/unit/**/*.test.js\" | tap-dancer",
     "buildTest": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",

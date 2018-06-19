@@ -57,55 +57,12 @@ module.exports = {
   EndQuotation: {
     isA: 'Quotation'
   },
-  StraightDoubleQuotes: {
-    isA: 'Quotation'
-  },
-  StraightDoubleQuotesWide: {
-    isA: 'Quotation'
-  },
-  StraightSingleQuotes: {
-    isA: 'Quotation'
-  },
-  CommaDoubleQuotes: {
-    isA: 'Quotation'
-  },
-  CommaSingleQuotes: {
-    isA: 'Quotation'
-  },
-  CurlyDoubleQuotesReversed: {
-    isA: 'Quotation'
-  },
-  CurlySingleQuotesReversed: {
-    isA: 'Quotation'
-  },
-  LowCurlyDoubleQuotes: {
-    isA: 'Quotation'
-  },
-  LowCurlyDoubleQuotesReversed: {
-    isA: 'Quotation'
-  },
-  LowCurlySingleQuotes: {
-    isA: 'Quotation'
-  },
-  AngleDoubleQuotes: {
-    isA: 'Quotation'
-  },
-  AngleSingleQuotes: {
-    isA: 'Quotation'
-  },
-  PrimeSingleQuotes: {
-    isA: 'Quotation'
-  },
-  PrimeDoubleQuotes: {
-    isA: 'Quotation'
-  },
-  PrimeTripleQuotes: {
-    isA: 'Quotation'
-  },
-  LowPrimeDoubleQuotesReversed: {
-    isA: 'Quotation'
-  },
   //parentheses
-  EndBracket: {},
-  StartBracket: {}
+  Parentheses: {},
+  EndBracket: {
+    isA: 'Parentheses'
+  },
+  StartBracket: {
+    isA: 'Parentheses'
+  }
 };

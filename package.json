@@ -21,7 +21,6 @@
     "pack": "node ./scripts/pack.js",
     "prepublishOnly": "node ./scripts/prepublish",
     "postpublish": "node ./scripts/postpublish",
-    "demo": "node ./scripts/demo.js",
     "watch": "amble ./scratch.js",
     "filesize": "node ./scripts/lib/filesize.js",
     "coverage": "node ./scripts/postpublish/coverage.js",

@@ -11,6 +11,7 @@ you can view them running at:
 or to run them locally,
 ```bash
 git clone https://github.com/nlp-compromise/compromise.git
-npm install
-npm run demo
+cd demo
+python -m SimpleHTTPServer
+visit http://localhost:8000/
 ```

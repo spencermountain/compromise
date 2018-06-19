@@ -1,4 +1,4 @@
-/* compromise v11.10.1
+/* compromise v11.11.0
    http://compromise.cool
    MIT
 */
@@ -14,7 +14,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.10.1",
+  "version": "11.11.0",
   "main": "./builds/compromise.js",
   "types": "./compromise.d.ts",
   "repository": {
@@ -23,6 +23,7 @@ module.exports={
   },
   "scripts": {
     "test": "tape \"./test/unit/**/*.test.js\" | tap-dancer",
+    "test:spec": "tape \"./test/unit/**/*.test.js\" | tap-spec",
     "testb": "TESTENV=prod tape \"./test/unit/**/*.test.js\" | tap-dancer",
     "buildTest": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
@@ -6761,53 +6762,55 @@ const quotemarks = {
 };
 
 // Open quote match black list.
-const blacklist = [
-  'twas'
-];
+// const blacklist = [
+//   'twas'
+// ];
 
 // Convert the close quote to a regex.
 Object.keys(quotemarks).forEach((open) => {
-  quotemarks[open].regex = new RegExp(quotemarks[open].close + '[;:,.]*$');
+  quotemarks[open].regex = new RegExp(quotemarks[open].close + '[;:,.]*');
   quotemarks[open].open = open;
 });
 
 // Improve open match detection.
 const startQuote = new RegExp(
-  '^[' + Object.keys(quotemarks).join('') + ']+' +
-  '(?!' + blacklist.join('|') + ')'
+  '[' + Object.keys(quotemarks).join('') + ']'
+// '(?!' + blacklist.join('|') + ')'
 );
 
 //tag a inline quotation as such
 const quotation_step = ts => {
   // Isolate the text so it doesn't change.
-  const terms = ts.terms.slice(0).map(e => e.text);
+  const terms = ts.terms.slice(0); //.map(e => e.text);
   for (let i = 0; i < terms.length; i++) {
+
     let t = ts.terms[i];
-    if (startQuote.test(t.text)) {
+    if (startQuote.test(t.whitespace.before)) {
       // Get the match and split it into groups
-      let quotes = t.text.match(startQuote).shift().split('');
+      let quotes = t.whitespace.before.match(startQuote).shift().split('');
       // Get close and tag info.
       quotes = quotes.map(mark => quotemarks[mark]);
       // Look for the ending
       for (let o = 0; o < ts.terms.length; o++) {
         // max-length don't go-on forever
-        if (!ts.terms[i + o] || o > 28) {
+        if (!terms[i + o] || o > 28) {
           break;
         }
         // Find the close.
-        const index = quotes.findIndex(q => q.regex.test(terms[i + o]));
+        const index = quotes.findIndex(q => q.regex.test(terms[i + o].whitespace.after));
         if (index !== -1) {
           // Remove the found
           const quote = quotes.splice(index, 1).pop();
-          terms[i + o] = terms[i + o].replace(quote.regex, '');
+          // terms[i + o].whitespace.after = terms[i + o].whitespace.after.replace(quote.regex, '');
 
           if (quote.regex.test(ts.terms[i + o].normal)) {
-            ts.terms[i + o].normal.replace(quote.regex, '');
+            ts.terms[i + o].whitespace.after.replace(quote.regex, '');
           }
           // Tag the things.
           t.tag('StartQuotation', 'quotation_open');
           ts.terms[i + o].tag('EndQuotation', 'quotation_close');
-          ts.slice(i, i + o + 1).tag(quote.tag, 'quotation_step');
+          ts.slice(i, i + o + 1).tag('Quotation', 'quotation_step');
+          // ts.slice(i, i + o + 1).tag(quote.tag, 'quotation_step');
           // Compensate for multiple close quotes ('"Really"')
           o -= 1;
           if (!quotes.length) {
@@ -6817,6 +6820,14 @@ const quotation_step = ts => {
       } // for subset
     } // open quote
   } // for all terms
+
+  //fix any issues post-process
+  if (ts.has('#StartQuotation') === true && ts.has('#EndQuotation') === false) {
+    // ts.unTag('Quotation');
+  }
+  if (ts.has('#EndQuotation') === true && ts.has('#StartQuotation') === false) {
+    // ts.unTag('Quotation');
+  }
   return ts;
 };
 module.exports = quotation_step;
@@ -6846,7 +6857,7 @@ const apostrophes = '\'‘’‛‚‵′`´';
 
 // [^\w]* match 0 or more of any char that is NOT alphanumeric
 const afterWord = new RegExp('([a-z]s[' + apostrophes + '])\\W*$');
-const apostrophe = new RegExp('s?[' + apostrophes + ']s?$');
+const hasApostrophe = new RegExp('[' + apostrophes + ']');
 const trailers = new RegExp('[^' + apostrophes + '\\w]+$');
 
 //these are always contractions
@@ -6871,13 +6882,14 @@ const is_possessive = function(terms, text, index) {
   // `blacklist` are always contractions, not possessive
   const inBlacklist = blacklist.map(r => text.match(r)).find(m => m);
   // If no apostrophe s or s apostrophe
-  const hasApostrophe = apostrophe.test(text);
+  const endTick = hasApostrophe.test(thisWord.whitespace.after);
   // "spencers'" - this is always possessive - eg "flanders'"
   const hasPronoun = thisWord.tags.Pronoun;
 
-  if (inBlacklist || hasPronoun || !hasApostrophe) {
+  if (inBlacklist || hasPronoun || !endTick) {
     return false;
   }
+  console.log(text);
   if (afterWord.test(text) || nextWord === undefined) {
     return true;
   }
@@ -6918,7 +6930,6 @@ const possessiveStep = function(ts) {
 
     // Post checking for quotes. e.g: Carlos'. -> Carlos'
     text = text.replace(trailers, '');
-
     if (is_possessive(ts, text, i)) {
       // If it's not already a noun, co-erce it to one
       if (!term.tags['Noun']) {
@@ -8639,57 +8650,14 @@ module.exports = {
   EndQuotation: {
     isA: 'Quotation'
   },
-  StraightDoubleQuotes: {
-    isA: 'Quotation'
-  },
-  StraightDoubleQuotesWide: {
-    isA: 'Quotation'
-  },
-  StraightSingleQuotes: {
-    isA: 'Quotation'
-  },
-  CommaDoubleQuotes: {
-    isA: 'Quotation'
-  },
-  CommaSingleQuotes: {
-    isA: 'Quotation'
-  },
-  CurlyDoubleQuotesReversed: {
-    isA: 'Quotation'
-  },
-  CurlySingleQuotesReversed: {
-    isA: 'Quotation'
-  },
-  LowCurlyDoubleQuotes: {
-    isA: 'Quotation'
-  },
-  LowCurlyDoubleQuotesReversed: {
-    isA: 'Quotation'
-  },
-  LowCurlySingleQuotes: {
-    isA: 'Quotation'
-  },
-  AngleDoubleQuotes: {
-    isA: 'Quotation'
-  },
-  AngleSingleQuotes: {
-    isA: 'Quotation'
-  },
-  PrimeSingleQuotes: {
-    isA: 'Quotation'
-  },
-  PrimeDoubleQuotes: {
-    isA: 'Quotation'
-  },
-  PrimeTripleQuotes: {
-    isA: 'Quotation'
-  },
-  LowPrimeDoubleQuotesReversed: {
-    isA: 'Quotation'
-  },
   //parentheses
-  EndBracket: {},
-  StartBracket: {}
+  Parentheses: {},
+  EndBracket: {
+    isA: 'Parentheses'
+  },
+  StartBracket: {
+    isA: 'Parentheses'
+  }
 };
 
 },{}],140:[function(_dereq_,module,exports){
@@ -9678,10 +9646,31 @@ module.exports = {
 
 },{"../fns":3,"../log":6}],162:[function(_dereq_,module,exports){
 'use strict';
-//punctuation regs-
-const before = /^(\s|-+|\.\.+|\/)+/;
+// const quotes = [ //
+//   ['"', '"'],
+//   ['\u0022', '\u0022'],
+//   ['\uFF02', '\uFF02'],
+//   ['\u0027', '\u0027'],
+//   ['\u201C', '\u201D'],
+//   ['\u2018', '\u2019'],
+//   ['\u201F', '\u201D'],
+//   ['\u201B', '\u2019'],
+//   ['\u201E', '\u201D'],
+//   ['\u2E42', '\u201D'],
+//   ['\u201A', '\u2019'],
+//   ['\u00AB', '\u00BB'],
+//   ['\u2039', '\u203A'],
+//   ['\u2035', '\u2032'],
+//   ['\u2036', '\u2033'],
+//   ['\u2037', '\u2034'],
+//   ['\u301D', '\u301E'],
+//   ['\u0060', '\u00B4'],
+//   ['\u301F', '\u301E'],
+// ];
+//punctuation regs-  are we having fun yet?
+const before = /^(\s|-+|\.\.+|\/|"|\u0022|\uFF02|\u0027|\u201C|\u2018|\u201F|\u201B|\u201E|\u2E42|\u201A|\u00AB|\u2039|\u2035|\u2036|\u2037|\u301D|\u0060|\u301F)+/u;
+const after = /(\s+|-+|\.\.+|"|\u0022|\uFF02|\u0027|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\u00BB|\u203A|\u2032|\u2033|\u2034|\u301E|\u00B4)+$/u;
 const minusNumber = /^( *)-(\$|€|¥|£)?([0-9])/;
-const after = /(\s+|-+|\.\.+)+$/;
 
 //seperate the 'meat' from the trailing/leading whitespace.
 //works in concert with ./src/text/tokenize.js
@@ -12137,6 +12126,13 @@ const methods = {
         t.whitespace.before = '';
       }
       t.whitespace.after = '';
+      //add normalized quotation symbols
+      if (t.tags.StartQuotation === true) {
+        t.whitespace.before += '"';
+      }
+      if (t.tags.EndQuotation === true) {
+        t.whitespace.after = '"' + t.whitespace.after;
+      }
     });
     return r;
   },
@@ -12811,39 +12807,37 @@ const addSubsets = Text => {
       return r;
     },
     quotations: function(n) {
-      const quotes = [
-        ['StraightDoubleQuotes', '\u0022', '\u0022'],
-        ['StraightDoubleQuotesWide', '\uFF02', '\uFF02'],
-        ['StraightSingleQuotes', '\u0027', '\u0027'],
-        ['CommaDoubleQuotes', '\u201C', '\u201D'],
-        ['CommaSingleQuotes', '\u2018', '\u2019'],
-        ['CurlyDoubleQuotesReversed', '\u201F', '\u201D'],
-        ['CurlySingleQuotesReversed', '\u201B', '\u2019'],
-        ['LowCurlyDoubleQuotes', '\u201E', '\u201D'],
-        ['LowCurlyDoubleQuotesReversed', '\u2E42', '\u201D'],
-        ['LowCurlySingleQuotes', '\u201A', '\u2019'],
-        ['AngleDoubleQuotes', '\u00AB', '\u00BB'],
-        ['AngleSingleQuotes', '\u2039', '\u203A'],
-        ['PrimeSingleQuotes', '\u2035', '\u2032'],
-        ['PrimeDoubleQuotes', '\u2036', '\u2033'],
-        ['PrimeTripleQuotes', '\u2037', '\u2034'],
-        ['PrimeDoubleQuotes', '\u301D', '\u301E'],
-        ['PrimeSingleQuotes', '\u0060', '\u00B4'],
-        ['LowPrimeDoubleQuotesReversed', '\u301F', '\u301E']
-      ];
-      let that = null;
-      quotes.forEach(quote => {
-        const str = '[/.' + quote[1] + '[^' + quote[1] + ']*$/] /^[^' + quote[2] + ']*' + quote[2] + './';
-        const match = this
-          .match('#' + quote[0] + '+')
-          .splitAfter(str);
-        that = that === null ? match : that.concat(match);
+      let matches = this.match('#Quotation+');
+      let found = [];
+      matches.list.forEach((ts) => {
+        let open = 0;
+        let start = null;
+        //handle nested quotes - 'startQuote->startQuote->endQuote->endQuote'
+        ts.terms.forEach((t, i) => {
+          if (t.tags.StartQuotation === true) {
+            if (open === 0) {
+              start = i;
+            }
+            open += 1;
+          }
+          if (open > 0 && t.tags.EndQuotation === true) {
+            open -= 1;
+          }
+          if (open === 0 && start !== null) {
+            found.push(ts.slice(start, i + 1));
+            start = null;
+          }
+        });
+        //maybe we messed something up..
+        if (start !== null) {
+          found.push(ts.slice(start, ts.terms.length));
+        }
       });
-      that = that.sort('chronological');
+      matches.list = found;
       if (typeof n === 'number') {
-        that = that.get(n);
+        matches = matches.get(n);
       }
-      return that;
+      return matches;
     },
     topics: function(n) {
       let r = this.clauses();

@@ -8,7 +8,9 @@ var nlp = require('./src/index');
 // console.log(doc.list[0].terms[0]);
 // console.log(doc.values().toNumber().out('text'));
 
-var doc = nlp(`twas good cookin'`);
+var doc = nlp('the so-called “fascist  dictator”');
+doc = doc.normalize();
+console.log(doc.out('text'));
 doc.debug();
 // doc.quotations().debug();
 

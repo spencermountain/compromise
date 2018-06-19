@@ -28,6 +28,13 @@ const methods = {
         t.whitespace.before = '';
       }
       t.whitespace.after = '';
+      //add normalized quotation symbols
+      if (t.tags.StartQuotation === true) {
+        t.whitespace.before += '"';
+      }
+      if (t.tags.EndQuotation === true) {
+        t.whitespace.after = '"' + t.whitespace.after;
+      }
     });
     return r;
   },

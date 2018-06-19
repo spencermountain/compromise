@@ -22,7 +22,7 @@ const apostrophes = '\'‘’‛‚‵′`´';
 
 // [^\w]* match 0 or more of any char that is NOT alphanumeric
 const afterWord = new RegExp('([a-z]s[' + apostrophes + '])\\W*$');
-const apostrophe = new RegExp('s?[' + apostrophes + ']s?$');
+const hasApostrophe = new RegExp('[' + apostrophes + ']');
 const trailers = new RegExp('[^' + apostrophes + '\\w]+$');
 
 //these are always contractions
@@ -47,13 +47,14 @@ const is_possessive = function(terms, text, index) {
   // `blacklist` are always contractions, not possessive
   const inBlacklist = blacklist.map(r => text.match(r)).find(m => m);
   // If no apostrophe s or s apostrophe
-  const hasApostrophe = apostrophe.test(text);
+  const endTick = hasApostrophe.test(thisWord.whitespace.after);
   // "spencers'" - this is always possessive - eg "flanders'"
   const hasPronoun = thisWord.tags.Pronoun;
 
-  if (inBlacklist || hasPronoun || !hasApostrophe) {
+  if (inBlacklist || hasPronoun || !endTick) {
     return false;
   }
+  console.log(text);
   if (afterWord.test(text) || nextWord === undefined) {
     return true;
   }
@@ -94,7 +95,6 @@ const possessiveStep = function(ts) {
 
     // Post checking for quotes. e.g: Carlos'. -> Carlos'
     text = text.replace(trailers, '');
-
     if (is_possessive(ts, text, i)) {
       // If it's not already a noun, co-erce it to one
       if (!term.tags['Noun']) {

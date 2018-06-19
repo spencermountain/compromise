@@ -10,7 +10,12 @@ test('quotation test', function(t) {
     ['so \'as if\' i said', 'as if'],
     ['the \'truthiness\' i said', 'truthiness'],
     ['yeah, “fun” and stuff', 'fun'],
-    ['“Fun” and stuff', 'fun']
+    ['“Fun” and stuff', 'fun'],
+    //dangling start/end
+    ['\'twas good cookin', ''],
+    ['twas good cookin\'', ''],
+    ['twas \'good cookin\'', 'good cookin'],
+    ['\'twas \'good cookin\'', 'twas good cookin']
   ];
   arr.forEach(function(a) {
     var r = nlp(a[0]);

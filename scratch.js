@@ -8,9 +8,9 @@ var nlp = require('./src/index');
 // console.log(doc.list[0].terms[0]);
 // console.log(doc.values().toNumber().out('text'));
 
-var doc = nlp(`he lived (but barely) and died (in a pile)`);
+var doc = nlp(`twas good cookin'`);
 doc.debug();
-doc.quotations().debug();
+// doc.quotations().debug();
 
 
 // console.log(nlp('Director of the F.B.I').acronyms().addPeriods().out('text'));

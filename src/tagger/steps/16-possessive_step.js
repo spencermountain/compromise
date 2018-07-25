@@ -11,30 +11,27 @@ const singleQuotes = [
   ['\u2035', '\u2032'], // Prime Single Quotes Alt
   ['\u0060', '\u00B4'] // Prime Single Quotes
 ];
+//these are always contractions
+const blacklist = [
+  'it\'s',
+  'that\'s'
+];
+
+// Get all types of single quote.
+const apostrophes = '\'‘’‛‚‵′`´';
+const afterWord = new RegExp('([a-z]s[' + apostrophes + '])\\W*$'); // [^\w]* match 0 or more of any char that is NOT alphanumeric
+const hasApostrophe = new RegExp('[' + apostrophes + ']');
+const trailers = new RegExp('[^' + apostrophes + '\\w]+$');
 
 const quoteRegex = {};
 singleQuotes.forEach(quote => {
   quoteRegex[quote[0]] = new RegExp(quote[1] + '[^' + quote[1] + '\\w]*$');
 });
 
-// Get all types of single quote.
-const apostrophes = '\'‘’‛‚‵′`´';
-
-// [^\w]* match 0 or more of any char that is NOT alphanumeric
-const afterWord = new RegExp('([a-z]s[' + apostrophes + '])\\W*$');
-const hasApostrophe = new RegExp('[' + apostrophes + ']');
-const trailers = new RegExp('[^' + apostrophes + '\\w]+$');
-
-//these are always contractions
-const blacklist = [
-  'it\'s',
-  'that\'s'
-]
-
-  // Compensate for different `'`s in the blacklist
-  .map(item => new RegExp(
-    item.replace('\'', '[' + apostrophes + ']')
-  ));
+// Compensate for different `'`s in the blacklist
+blacklist.map(item => new RegExp(
+  item.replace('\'', '[' + apostrophes + ']')
+));
 
 // A possessive means `'s` describes ownership
 // Not a contraction, like it's -> `it is`
@@ -54,7 +51,6 @@ const is_possessive = function(terms, text, index) {
   if (inBlacklist || hasPronoun || !endTick) {
     return false;
   }
-  console.log(text);
   if (afterWord.test(text) || nextWord === undefined) {
     return true;
   }
@@ -85,9 +81,14 @@ const possessiveStep = function(ts) {
 
     // Pre checking for quotes. e.g: Carlos'.’. -> Carlos'.’
     text = text.replace(trailers, '');
-
     // If the string ends with an expected closer.
-    const closer = expectingClosers.map(regex => regex.test(text)).findIndex(e => e);
+    let closer = -1;
+    for(let qi = 0; qi < expectingClosers.length; qi += 1) {
+      if (expectingClosers[qi].test(text) === true) {
+        closer = qi;
+        break;
+      }
+    }
     if (closer !== -1) {
       text = text.replace(expectingClosers[closer], '');
       delete expectingClosers[closer];

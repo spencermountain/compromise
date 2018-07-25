@@ -121,7 +121,13 @@ const quotation_step = ts => {
           break;
         }
         // Find the close.
-        const index = quotes.findIndex(q => q.regex.test(terms[i + o].whitespace.after));
+        let index = -1;
+        for(let qi = 0; qi < quotes.length; qi += 1) {
+          if (quotes[qi].regex.test(terms[i + o].whitespace.after) === true) {
+            index = qi;
+            break;
+          }
+        }
         if (index !== -1) {
           // Remove the found
           const quote = quotes.splice(index, 1).pop();

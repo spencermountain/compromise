@@ -33,4 +33,5 @@ test('unknown-places:', function(t) {
 test('mixed continents-places:', function(t) {
   var doc = nlp('in north africa, eastern asia, guatemala, europe, north america, and japan');
   t.equal(doc.places().length, 6, '6-places');
+  t.end();
 });

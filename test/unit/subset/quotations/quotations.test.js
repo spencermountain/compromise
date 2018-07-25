@@ -15,7 +15,8 @@ test('quotation test', function(t) {
     ['\'twas good cookin', ''],
     ['twas good cookin\'', ''],
     ['twas \'good cookin\'', 'good cookin'],
-    ['\'twas \'good cookin\'', 'twas good cookin']
+    ['\'twas \'good cookin\'', 'twas good cookin'],
+    [`and "Dig Your own grave and Save".`, 'dig your own grave and save'],
   ];
   arr.forEach(function(a) {
     var r = nlp(a[0]);

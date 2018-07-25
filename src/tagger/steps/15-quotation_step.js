@@ -85,11 +85,6 @@ const quotemarks = {
   }
 };
 
-// Open quote match black list.
-// const blacklist = [
-//   'twas'
-// ];
-
 // Convert the close quote to a regex.
 Object.keys(quotemarks).forEach((open) => {
   quotemarks[open].regex = new RegExp(quotemarks[open].close + '[;:,.]*');
@@ -97,10 +92,7 @@ Object.keys(quotemarks).forEach((open) => {
 });
 
 // Improve open match detection.
-const startQuote = new RegExp(
-  '[' + Object.keys(quotemarks).join('') + ']'
-// '(?!' + blacklist.join('|') + ')'
-);
+const startQuote = new RegExp('[' + Object.keys(quotemarks).join('') + ']');
 
 //tag a inline quotation as such
 const quotation_step = ts => {
@@ -131,7 +123,6 @@ const quotation_step = ts => {
         if (index !== -1) {
           // Remove the found
           const quote = quotes.splice(index, 1).pop();
-          // terms[i + o].whitespace.after = terms[i + o].whitespace.after.replace(quote.regex, '');
 
           if (quote.regex.test(ts.terms[i + o].normal)) {
             ts.terms[i + o].whitespace.after.replace(quote.regex, '');
@@ -140,23 +131,14 @@ const quotation_step = ts => {
           t.tag('StartQuotation', 'quotation_open');
           ts.terms[i + o].tag('EndQuotation', 'quotation_close');
           ts.slice(i, i + o + 1).tag('Quotation', 'quotation_step');
-          // ts.slice(i, i + o + 1).tag(quote.tag, 'quotation_step');
           // Compensate for multiple close quotes ('"Really"')
           o -= 1;
           if (!quotes.length) {
             break;
           }
-        } // has index
-      } // for subset
-    } // open quote
-  } // for all terms
-
-  //fix any issues post-process
-  if (ts.has('#StartQuotation') === true && ts.has('#EndQuotation') === false) {
-    // ts.unTag('Quotation');
-  }
-  if (ts.has('#EndQuotation') === true && ts.has('#StartQuotation') === false) {
-    // ts.unTag('Quotation');
+        }
+      }
+    }
   }
   return ts;
 };

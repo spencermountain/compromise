@@ -9,7 +9,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.11.0",
+  "version": "11.12.0",
   "main": "./builds/compromise.js",
   "types": "./compromise.d.ts",
   "repository": {
@@ -6588,11 +6588,6 @@ var quotemarks = {
   }
 };
 
-// Open quote match black list.
-// const blacklist = [
-//   'twas'
-// ];
-
 // Convert the close quote to a regex.
 Object.keys(quotemarks).forEach(function (open) {
   quotemarks[open].regex = new RegExp(quotemarks[open].close + '[;:,.]*');
@@ -6600,9 +6595,7 @@ Object.keys(quotemarks).forEach(function (open) {
 });
 
 // Improve open match detection.
-var startQuote = new RegExp('[' + Object.keys(quotemarks).join('') + ']'
-// '(?!' + blacklist.join('|') + ')'
-);
+var startQuote = new RegExp('[' + Object.keys(quotemarks).join('') + ']');
 
 //tag a inline quotation as such
 var quotation_step = function quotation_step(ts) {
@@ -6635,7 +6628,6 @@ var quotation_step = function quotation_step(ts) {
         if (index !== -1) {
           // Remove the found
           var quote = quotes.splice(index, 1).pop();
-          // terms[i + o].whitespace.after = terms[i + o].whitespace.after.replace(quote.regex, '');
 
           if (quote.regex.test(ts.terms[i + o].normal)) {
             ts.terms[i + o].whitespace.after.replace(quote.regex, '');
@@ -6644,23 +6636,14 @@ var quotation_step = function quotation_step(ts) {
           t.tag('StartQuotation', 'quotation_open');
           ts.terms[i + o].tag('EndQuotation', 'quotation_close');
           ts.slice(i, i + o + 1).tag('Quotation', 'quotation_step');
-          // ts.slice(i, i + o + 1).tag(quote.tag, 'quotation_step');
           // Compensate for multiple close quotes ('"Really"')
           o -= 1;
           if (!quotes.length) {
             break;
           }
-        } // has index
-      } // for subset
-    } // open quote
-  } // for all terms
-
-  //fix any issues post-process
-  if (ts.has('#StartQuotation') === true && ts.has('#EndQuotation') === false) {
-    // ts.unTag('Quotation');
-  }
-  if (ts.has('#EndQuotation') === true && ts.has('#StartQuotation') === false) {
-    // ts.unTag('Quotation');
+        }
+      }
+    }
   }
   return ts;
 };
@@ -9386,31 +9369,11 @@ module.exports = {
 
 },{"../fns":3,"../log":6}],162:[function(_dereq_,module,exports){
 'use strict';
-// const quotes = [ //
-//   ['"', '"'],
-//   ['\u0022', '\u0022'],
-//   ['\uFF02', '\uFF02'],
-//   ['\u0027', '\u0027'],
-//   ['\u201C', '\u201D'],
-//   ['\u2018', '\u2019'],
-//   ['\u201F', '\u201D'],
-//   ['\u201B', '\u2019'],
-//   ['\u201E', '\u201D'],
-//   ['\u2E42', '\u201D'],
-//   ['\u201A', '\u2019'],
-//   ['\u00AB', '\u00BB'],
-//   ['\u2039', '\u203A'],
-//   ['\u2035', '\u2032'],
-//   ['\u2036', '\u2033'],
-//   ['\u2037', '\u2034'],
-//   ['\u301D', '\u301E'],
-//   ['\u0060', '\u00B4'],
-//   ['\u301F', '\u301E'],
-// ];
 //punctuation regs-  are we having fun yet?
 
 var before = /^([\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]|\-+|\.\.+|\/|"|"|\uFF02|'|\u201C|\u2018|\u201F|\u201B|\u201E|\u2E42|\u201A|\xAB|\u2039|\u2035|\u2036|\u2037|\u301D|`|\u301F)+/;
 var after = /([\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]+|\-+|\.\.+|"|"|\uFF02|'|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\xBB|\u203A|\u2032|\u2033|\u2034|\u301E|\xB4)+$/;
+var afterSoft = /([\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]+|\-+|\.\.+|"|"|\uFF02|'|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\xBB|\u203A|\u2032|\u2033|\u2034|\u301E|\xB4)+[ !,\.;\?]*$/;
 var minusNumber = /^( *)-(\$|€|¥|£)?([0-9])/;
 
 //seperate the 'meat' from the trailing/leading whitespace.
@@ -9434,7 +9397,7 @@ var build_whitespace = function build_whitespace(str) {
     }
   }
   //get after punctuation/whitespace
-  m = str.match(after);
+  m = str.match(afterSoft);
   if (m !== null) {
     str = str.replace(after, '');
     whitespace.after = m[0];

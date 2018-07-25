@@ -45,6 +45,11 @@ module.exports = [
   'antarctic ocean',
   'everglades',
 
+  'africa',
+  'europe',
+  'americas',
+  'asia',
+
   //some notable neighbourhoods (just #Place)
   'midtown',
   'downtown',

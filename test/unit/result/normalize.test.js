@@ -107,7 +107,7 @@ test('elipses-whitespace:', function(t) {
 });
 
 test('more-normalize:', function(t) {
-  let doc = nlp(`i saw first lady michelle obama`);
+  var doc = nlp(`i saw first lady michelle obama`);
   doc.normalize({
     honorifics: true
   });

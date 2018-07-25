@@ -25,7 +25,7 @@ cmd += ' >> ' + es5;
 exec(cmd);
 
 
-let code = fs.readFileSync(es5).toString();
+var code = fs.readFileSync(es5).toString();
 
 var result = UglifyJS.minify(code, {
   output: {

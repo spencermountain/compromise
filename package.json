@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.11.0",
+  "version": "11.12.0",
   "main": "./builds/compromise.js",
   "types": "./compromise.d.ts",
   "repository": {
@@ -12,7 +12,7 @@
   "scripts": {
     "test": "tape \"./test/unit/**/*.test.js\" | tap-dancer",
     "test:spec": "tape \"./test/unit/**/*.test.js\" | tap-spec",
-    "testb": "TESTENV=prod tape \"./test/unit/**/*.test.js\" | tap-dancer",
+    "testb": "TESTENV=prod tape \"./test/unit/**/*.test.js\" | tap-spec",
     "buildTest": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
     "browserTest": "node ./scripts/browserTest.js",
@@ -21,7 +21,6 @@
     "pack": "node ./scripts/pack.js",
     "prepublishOnly": "node ./scripts/prepublish",
     "postpublish": "node ./scripts/postpublish",
-    "demo": "node ./scripts/demo.js",
     "watch": "amble ./scratch.js",
     "filesize": "node ./scripts/lib/filesize.js",
     "coverage": "node ./scripts/postpublish/coverage.js",
@@ -47,6 +46,7 @@
     "eslint": "4.19.1",
     "nyc": "11.8.0",
     "shelljs": "0.8.2",
+    "tap-spec": "^5.0.0",
     "tap-dancer": "0.0.3",
     "tape": "4.9.0",
     "uglify-js": "3.3.26"

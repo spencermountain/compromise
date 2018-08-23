@@ -369,7 +369,7 @@
       "articles": {
         "desc": "whether this noun deserves 'a' or 'an'",
         "returns": "Array",
-        "example": "nlp('the hour').nouns().articles()\n//[{text:\"king\", article:\"a\"}]"
+        "example": "nlp('the king').nouns().articles()\n//[{text:\"king\", article:\"a\"}]"
       }
     },
     "sentences": {

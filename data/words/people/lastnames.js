@@ -55,6 +55,7 @@ module.exports = [
   'cooper',
   'cox',
   'darwin',
+  'dankula',
   'davies',
   'davis',
   'delgado',

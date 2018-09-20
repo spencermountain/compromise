@@ -9,6 +9,7 @@ module.exports = [
   'excellency',
   'professor',
   'chancellor',
+  'count',
   'pastor',
   'doctor',
   'reverend',

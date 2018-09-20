@@ -263,6 +263,7 @@ module.exports = [
   'ymca',
   'youtube',
   'ywca',
+  'ukip',
 
   //some bands
   'abba',

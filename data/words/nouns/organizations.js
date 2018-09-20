@@ -264,6 +264,13 @@ module.exports = [
   'youtube',
   'ywca',
   'ukip',
+  'snp',
+  'nec',
+  'labour',
+  'labour party',
+  'crossrail',
+  'eurosceptics',
+  'brexiteers',
 
   //some bands
   'abba',

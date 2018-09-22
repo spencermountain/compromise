@@ -271,6 +271,8 @@ module.exports = [
   'crossrail',
   'eurosceptics',
   'brexiteers',
+  'yougov',
+  'GMB',
 
   //some bands
   'abba',

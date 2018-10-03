@@ -1,8 +1,7 @@
 const Term = require('../03-term/Term');
 const Phrase = require('../02-phrase/Phrase');
-const View = require('../01-view/View');
+const Doc = require('../01-doc/Doc');
 const Pool = require('./Pool');
-const Stack = require('./Stack');
 
 const splitSentences = require('./01-sentences');
 const splitTerms = require('./02-words');
@@ -38,7 +37,6 @@ const build = function( text = '' ) {
   });
 
   //return the whole shebang
-  let stack = new Stack();
-  return new View(phrases, stack);
+  return new Doc(phrases);
 };
 module.exports = build;

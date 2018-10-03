@@ -1,13 +1,5 @@
 const makeId = require('./_id');
-const parseTerm = function(str) {
-  return {
-    text: str.trim(),
-    normal: str.toLowerCase().trim(),
-    root: '',
-    preText: '',
-    postText: '',
-  };
-};
+const parseTerm = require('./parse');
 
 class Term {
   constructor( text = '' ) {
@@ -30,9 +22,6 @@ class Term {
   unTag(tag) {
     this.tags = this.tags.filter((t) => t !== tag);
     return this;
-  }
-  toText() {
-    return this.preText + this.text + this.postText + ' ';
   }
   hasComma() {
     return this.postText.includes(',');
@@ -57,6 +46,26 @@ class Term {
   }
   endsParentheses() {
     return this.postText.includes(')');
+  }
+
+  toText() {
+    return this.preText + this.text + this.postText + ' ';
+  }
+  json( options = {} ) {
+    let out = {};
+    let defaultOn = ['text', 'normal', 'tags'];
+    defaultOn.forEach((k) => {
+      if (options[k] !== false) {
+        out[k] = this[k];
+      }
+    });
+    let defaultOff = ['preText', 'postText'];
+    defaultOff.forEach((k) => {
+      if (options[k] === true) {
+        out[k] = this[k];
+      }
+    });
+    return out;
   }
 }
 module.exports = Term;

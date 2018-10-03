@@ -1,0 +1,21 @@
+module.exports = [
+  'centuries',
+  'century',
+  'day',
+  'days',
+  'decade',
+  'decades',
+  'hour',
+  'hours',
+  'millisecond',
+  'milliseconds',
+  'minute',
+  'minutes',
+  'month',
+  'months',
+  'seconds',
+  'week',
+  'weeks',
+  'year',
+  'years'
+];

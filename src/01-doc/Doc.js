@@ -1,9 +1,14 @@
 class Doc {
-  constructor( list = [] , from ) {
+  constructor( list = [] , from, world ) {
     this.list = list;
+    //quiet these properties in console.logs
     Object.defineProperty(this, 'from', {
       enumerable: false,
       value: from
+    });
+    Object.defineProperty(this, 'world', {
+      enumerable: false,
+      value: world
     });
   }
   //go up one
@@ -36,6 +41,9 @@ class Doc {
   json( options = {} ) {
     return this.list.map((p) => p.json(options));
   }
+  array( options = {} ) {
+    return this.list.map((p) => p.text(options));
+  }
 }
 
 //return a new Doc, with us as a parent
@@ -46,6 +54,7 @@ Doc.prototype.match = function(str) {
   return new Doc(matches, this);
 };
 
+//fancy match statements
 const sub = require('../subclass');
 const Nouns = sub.buildNoun(Doc);
 Doc.prototype.nouns = function() {

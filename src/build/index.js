@@ -6,8 +6,7 @@ const Pool = require('./Pool');
 const splitSentences = require('./01-sentences');
 const splitTerms = require('./02-words');
 
-
-const build = function( text = '' ) {
+const build = function( text = '' , world ) {
 
   //tokenize into words
   let sentences = splitSentences(text);
@@ -37,6 +36,6 @@ const build = function( text = '' ) {
   });
 
   //return the whole shebang
-  return new Doc(phrases);
+  return new Doc(phrases, null, world);
 };
 module.exports = build;

@@ -15,37 +15,13 @@ class Term {
     this.next = null;
     this.id = makeId(this.normal);
   }
-  addTag(tag) {
+  tag(tag) {
     this.tags.push(tag);
     return this;
   }
   unTag(tag) {
     this.tags = this.tags.filter((t) => t !== tag);
     return this;
-  }
-  hasComma() {
-    return this.postText.includes(',');
-  }
-  hasPeriod() {
-    return this.postText.includes('.');
-  }
-  hasExclamation() {
-    return this.postText.includes('!');
-  }
-  hasQuestionMark() {
-    return this.postText.includes('?');
-  }
-  startsQuote() {
-    return this.preText.includes('"');
-  }
-  endsQuote() {
-    return this.postText.includes('"');
-  }
-  startsParentheses() {
-    return this.preText.includes('(');
-  }
-  endsParentheses() {
-    return this.postText.includes(')');
   }
 
   toText() {
@@ -68,4 +44,20 @@ class Term {
     return out;
   }
 }
+
+//  ¯\_(:/)_/¯
+Term.prototype.clone = function() {
+  let term = new Term(this.text);
+  term.preText = this.preText;
+  term.postText = this.postText;
+  term.tags = this.tags.slice(0);
+  return term;
+};
+
+const methods = [
+  require('./easy'),
+];
+methods.forEach((obj) => Object.assign(Term.prototype, obj));
+
+
 module.exports = Term;

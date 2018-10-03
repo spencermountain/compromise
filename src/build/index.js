@@ -1,19 +1,18 @@
 const Term = require('../03-term/Term');
 const Phrase = require('../02-phrase/Phrase');
-const Doc = require('../01-doc/Doc');
+// const Doc = require('../01-doc/Doc');
 const Pool = require('./Pool');
 
 const splitSentences = require('./01-sentences');
 const splitTerms = require('./02-words');
 
-const build = function( text = '' , world ) {
-
+const build = function( text = '' , pool ) {
   //tokenize into words
   let sentences = splitSentences(text);
   sentences = sentences.map((str) => splitTerms(str));
 
   //turn them into proper objects
-  let pool = new Pool();
+  pool = pool || new Pool();
   let phrases = sentences.map((terms) => {
     terms = terms.map((str) => {
       let term = new Term(str);
@@ -36,6 +35,7 @@ const build = function( text = '' , world ) {
   });
 
   //return the whole shebang
-  return new Doc(phrases, null, world);
+  // return new Doc(phrases, null, world);
+  return phrases;
 };
 module.exports = build;

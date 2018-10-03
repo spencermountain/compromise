@@ -1,18 +1,24 @@
 const build = require('./build');
 const pkg = require('../package.json');
 const World = require('./world');
+const Doc = require('./01-doc/Doc');
+
+//blast-out our word-lists, just once
 let world = new World();
 
-
 const nlp = function(text) {
-  return build(text, world);
+  let list = build(text);
+  return new Doc(list, world);
 };
 //uncompress a user-submitted lexicon
 nlp.plugin = function(plugin) {
   world.plugin(plugin);
 };
 
-nlp.clone = function() {};
+nlp.clone = function() {
+  world = world.clone();
+  return this;
+};
 
 //this is handy
 nlp.version = pkg.version;

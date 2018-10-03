@@ -5,4 +5,7 @@ var nlp = require('./src/index');
 // doc.places().debug();
 
 let doc = nlp('i went to the pool. I went to the party.');
-console.log(doc.toTitleCase());
+
+doc.match('pool').prepend('infront here!');
+// doc.append('behind here!');
+console.log(doc.text());

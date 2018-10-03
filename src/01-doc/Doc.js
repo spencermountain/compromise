@@ -1,3 +1,4 @@
+
 class Doc {
   constructor( list = [] , from, world ) {
     this.list = list;
@@ -6,10 +7,21 @@ class Doc {
       enumerable: false,
       value: from
     });
+    //try this..
+    if (world === undefined && from !== undefined) {
+      world = from.world;
+    }
     Object.defineProperty(this, 'world', {
       enumerable: false,
       value: world
     });
+  }
+
+  pool() {
+    if (this.list.length > 0) {
+      return this.list[0].pool;
+    }
+    return all().pool;
   }
   //go up one
   parent() {
@@ -35,15 +47,6 @@ class Doc {
     return this.stack()[0];
   }
 
-  text( options = {} ) {
-    return this.list.reduce((str, p) => str + p.text(options), '');
-  }
-  json( options = {} ) {
-    return this.list.map((p) => p.json(options));
-  }
-  array( options = {} ) {
-    return this.list.map((p) => p.text(options));
-  }
 }
 
 //return a new Doc, with us as a parent
@@ -54,8 +57,16 @@ Doc.prototype.match = function(str) {
   return new Doc(matches, this);
 };
 
+
+const methods = [
+  require('./easy'),
+  require('./hard'),
+];
+methods.forEach((obj) => Object.assign(Doc.prototype, obj));
+
+
 //fancy match statements
-const sub = require('../subclass');
+const sub = require('../subs');
 const Nouns = sub.buildNoun(Doc);
 Doc.prototype.nouns = function() {
   let matches = sub.findNouns(this);

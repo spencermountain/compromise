@@ -6,6 +6,8 @@ var nlp = require('./src/index');
 
 let doc = nlp('i went to the pool. I went to the party.');
 
-doc.match('pool').prepend('infront here!');
-// doc.append('behind here!');
+let m = doc.match('i');
+m.prepend('oooooooooo yaa');
+// console.log(m.text());
+// doc.list[0].length += 1;
 console.log(doc.text());

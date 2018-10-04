@@ -1,6 +1,6 @@
 
 class Doc {
-  constructor( list = [] , from, world ) {
+  constructor(list, from, world ) {
     this.list = list;
     //quiet these properties in console.logs
     Object.defineProperty(this, 'from', {
@@ -17,11 +17,12 @@ class Doc {
     });
   }
 
+  //pool is stored on phrase objects
   pool() {
     if (this.list.length > 0) {
       return this.list[0].pool;
     }
-    return all().pool;
+    return this.all().list[0].pool;
   }
   //go up one
   parent() {
@@ -31,7 +32,7 @@ class Doc {
     return this;
   }
   //return a list of all parents
-  stack() {
+  parents() {
     let arr = [];
     const addParent = function(doc) {
       if (doc.from) {
@@ -44,7 +45,7 @@ class Doc {
   }
   //return first document
   all() {
-    return this.stack()[0];
+    return this.parents()[0];
   }
 
 }
@@ -54,7 +55,7 @@ Doc.prototype.match = function(str) {
   let matches = this.list.reduce((arr, p) => {
     return arr.concat(p.match(str));
   }, []);
-  return new Doc(matches, this);
+  return new Doc(matches, this, this.world);
 };
 
 

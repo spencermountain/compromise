@@ -8,7 +8,7 @@ let world = new World();
 
 const nlp = function(text) {
   let list = build(text);
-  return new Doc(list, world);
+  return new Doc(list, null, world);
 };
 //uncompress a user-submitted lexicon
 nlp.plugin = function(plugin) {

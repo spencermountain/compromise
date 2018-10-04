@@ -24,26 +24,12 @@ class Phrase {
     }
     return terms;
   }
-  append(phrase) {
+  hasTerm(ids) {
     let terms = this.terms();
-    //add the start of this phrase, to the end of our phrase
-    terms[terms.length - 1].next = phrase.start;
-    //hook it up backwards, too
-    phrase.terms()[0].prev = terms[terms.length - 1].id;
-    //include it in our phrase
-    this.length += phrase.length;
-    return this;
-  }
-  prepend(phrase) {
-    let newTerms = phrase.terms();
-    //add us to the end of new phrase
-    newTerms[newTerms.length - 1].next = this.start;
-    //hoot it up backwards, too
-    this.terms()[0].prev = newTerms[0].id;
-    //include it in our phrase
-    this.start = newTerms[0].id;
-    this.length += phrase.length;
-    return this;
+    if (typeof ids === 'string') {
+      ids = [ids];
+    }
+    return terms.find(t => ids.includes(t.id)) !== undefined;
   }
   text( options = {} ) {
     return this.terms().reduce((str, t) => {
@@ -87,7 +73,7 @@ Phrase.prototype.match = function(str) {
   for(let i = 0; i < terms.length; i += 1) {
     if (typeof str === 'string' && terms[i].normal === str) {
       matches.push([terms[i]]);
-    } else if (str.includes(terms[i].normal)) {
+    } else if (typeof str === 'object' && str.includes(terms[i].normal)) {
       matches.push([terms[i]]);
     }
   }
@@ -97,4 +83,11 @@ Phrase.prototype.match = function(str) {
   });
   return matches;
 };
+
+const methods = [
+  require('./hard'),
+];
+methods.forEach((obj) => Object.assign(Phrase.prototype, obj));
+
+
 module.exports = Phrase;

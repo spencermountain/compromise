@@ -67,7 +67,7 @@ const corrections = function(ts) {
     //look like
     ts.match('#Verb [like]').tag('Adverb', 'verb-like');
     //exactly like
-    ts.match('#Adverb [like]').tag('Adverb', 'adverb-like');
+    ts.match('#Adverb like').not('(really|generally|typically|usually|sometimes|often) like').lastTerm().tag('Adverb', 'adverb-like');
   }
 
   if (ts.has('#Value')) {

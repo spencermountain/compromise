@@ -223,6 +223,8 @@ const corrections = function(ts) {
     ts.match('#PresentTense (hard|quick|long|bright|slow)').lastTerm().tag('Adverb', 'lazy-ly');
     //his fine
     ts.match('(his|her|its) [#Adjective]').tag('Noun', 'his-fine');
+    //
+    ts.match('#Noun #Adverb? [left]').tag('PastTense', 'left-verb');
   }
 
   if (ts.has('#TitleCase')) {

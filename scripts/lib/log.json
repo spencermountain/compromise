@@ -1,8 +1,8 @@
 {
-  "init": 1,
-  "sentence": 5,
-  "match": 1,
-  "big": 581,
-  "bigMatch": 3,
-  "size": 246.182
+  "init": 0,
+  "sentence": 10,
+  "match": 0,
+  "big": 1178,
+  "bigMatch": 4,
+  "size": 246.372
 }

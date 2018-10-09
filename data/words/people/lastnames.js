@@ -157,7 +157,6 @@ module.exports = [
   'marin',
   'marino',
   'martinez',
-  'may',
   'matsumoto',
   'mercier',
   'messi',

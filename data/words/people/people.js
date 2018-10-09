@@ -36,6 +36,7 @@ module.exports = [
   'halle berry',
   'paris hilton',
   'scarlett johansson',
+  'theresa may',
 
   //family-words are people
   'father',

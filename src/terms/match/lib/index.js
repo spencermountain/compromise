@@ -16,6 +16,9 @@ const handleCaptureGroup = require('./captureGroup');
 
 //make a reg syntax from a text object
 const findFromTerms = function(ts) {
+  if (!ts) {
+    return [];
+  }
   let arr = ts.terms.map(t => {
     return {
       id: t.uid

@@ -146,6 +146,9 @@ let rules = {
       reg: /(.ut)ed$/i,
       to: '$1e'
     }, {
+      reg: /(.pt)ed$/i,
+      to: '$1'
+    }, {
       reg: /(us)ed$/i,
       to: '$1e'
     }, {

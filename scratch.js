@@ -1,12 +1,21 @@
 var nlp = require('./src/index');
 // nlp.verbose('tagger');
 
-// var doc = nlp('in north africa, eastern asia, guatemala, europe, north america, and japan');
-// doc.places().debug();
+const addConjugations = function(arr) {
+  let len = arr.length;
+  for(let i = 0; i < len; i += 1) {
+    let words = nlp(arr[i]).tag('#Verb').verbs().conjugate()[0];
+    arr.push(words.Infinitive);
+    arr.push(words.PresentTense);
+    arr.push(words.PastTense);
+    arr.push(words.Gerund);
+  }
+  return arr;
+};
 
+var verbs = ['leave', 'love', 'like', 'agree'];
+verbs = addConjugations(verbs);
 
-let text = 'and "Dig Your own grave and Save".';
-let doc = nlp(text);
-doc.debug();
-// let matches = doc.quotations().out('array');
-// console.log(matches);
+var doc = nlp('i left this school');
+doc.replace(`(${verbs.join('|')})`, '_');
+console.log(doc.out());

@@ -1,3 +1,4 @@
+const doesMatch = require('./match');
 module.exports = {
   hasComma: function() {
     return this.postText.includes(',');
@@ -11,19 +12,9 @@ module.exports = {
   hasQuestionMark: function() {
     return this.postText.includes('?');
   },
-  startsQuote: function() {
-    return this.preText.includes('"');
+  doesMatch: function(reg) {
+    return doesMatch(this, reg);
   },
-  endsQuote: function() {
-    return this.postText.includes('"');
-  },
-  startsParentheses: function() {
-    return this.preText.includes('(');
-  },
-  endsParentheses: function() {
-    return this.postText.includes(')');
-  },
-
   toUpperCase: function() {
     this.text = this.text.toUpperCase();
     this.tag('#UpperCase', 'toUpperCase');

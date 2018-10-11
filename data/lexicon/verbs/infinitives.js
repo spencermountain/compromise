@@ -6,6 +6,7 @@ module.exports = [
   'achieve',
   'acknowledge',
   'activate',
+  'adapt',
   'add',
   'address',
   'adjust',

@@ -1,3 +1,4 @@
+const matchAll = require('./match');
 
 class Doc {
   constructor(list, from, world ) {
@@ -52,9 +53,7 @@ class Doc {
 
 //return a new Doc, with us as a parent
 Doc.prototype.match = function(str) {
-  let matches = this.list.reduce((arr, p) => {
-    return arr.concat(p.match(str));
-  }, []);
+  let matches = matchAll(this, str);
   return new Doc(matches, this, this.world);
 };
 

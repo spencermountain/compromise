@@ -1,3 +1,5 @@
+const matchAll = require('./match');
+
 class Phrase {
   constructor(id, length, pool) {
     this.start = id;
@@ -68,15 +70,7 @@ Phrase.prototype.clone = function() { //how do we clone part of the pool?
 };
 
 Phrase.prototype.match = function(str) {
-  let matches = [];
-  let terms = this.terms();
-  for(let i = 0; i < terms.length; i += 1) {
-    if (typeof str === 'string' && terms[i].normal === str) {
-      matches.push([terms[i]]);
-    } else if (typeof str === 'object' && str.includes(terms[i].normal)) {
-      matches.push([terms[i]]);
-    }
-  }
+  let matches = matchAll(this, str);
   //make them phrase objects
   matches = matches.map((list) => {
     return new Phrase(list[0].id, list.length, this.pool);

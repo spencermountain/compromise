@@ -84,8 +84,9 @@ const token = function(w) {
     }
     //regex
     if (start(w) === '/' && end(w) === '/') {
-      obj.regex = w;
-      return w;
+      w = stripBoth(w);
+      obj.regex = new RegExp(w);
+      return obj;
     }
   }
 

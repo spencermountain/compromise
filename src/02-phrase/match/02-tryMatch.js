@@ -53,10 +53,9 @@ const tryHere = function(terms, regs) {
       //check any ending '$' flags
       if (reg.end === true) {
         //if this isn't the last term, refuse the match
-        if (t !== terms.length) {
+        if (t !== terms.length && reg.greedy !== true) {
           return false;
         }
-        break; //done!
       }
       //try keep it going!
       if (reg.greedy === true) {

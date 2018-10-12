@@ -5,7 +5,10 @@ const doesMatch = function(t, reg) {
     return reg.normal === t.normal;
   }
   if (reg.tag !== undefined) {
-    return t.tags[reg.rag] === true;
+    return t.tags[reg.tag] === true;
+  }
+  if (reg.regex !== undefined) {
+    return reg.regex.test(t.normal);
   }
   if (reg.choices !== undefined) {
     //recursion alert

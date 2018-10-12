@@ -1,5 +1,5 @@
 //found a match? it's greedy? keep going!
-const goGreedy = function(terms, t, reg) {
+const getGreedy = function(terms, t, reg) {
   for(; t < terms.length; t += 1) {
     if (terms[t].doesMatch(reg) === false) {
       return t;
@@ -8,6 +8,25 @@ const goGreedy = function(terms, t, reg) {
   }
   return t;
 };
+
+//'unspecific greedy' is a weird situation.
+const greedyTo = function(terms, t, nextReg) {
+  //if there's no next one, just go off the end!
+  if (!nextReg) {
+    return terms.length;
+  }
+  //otherwise, we're looking for the next one
+  for(; t < terms.length; t += 1) {
+    if (terms[t].doesMatch(nextReg) === true) {
+      console.log(`~=~=~**here**~=~`);
+
+      return t;
+    }
+  }
+  //guess it doesn't exist, then.
+  return null;
+};
+
 
 //tries to match a sequence of terms, starting from here
 const tryHere = function(terms, regs) {
@@ -19,22 +38,31 @@ const tryHere = function(terms, regs) {
       return false;
     }
 
+    //support 'unspecific greedy' properly
+    if (reg.anything === true && reg.greedy === true) {
+      let goto = greedyTo(terms, t, regs[r + 1]);
+      if (goto === null) {
+        return false; //couldn't find it
+      }
+      t = goto;
+      continue;
+    }
+
     //looks like a match, continue
     if (reg.anything === true || terms[t].doesMatch(reg) === true) {
       t += 1;
       //keep it going!
       if (reg.greedy === true) {
-        t = goGreedy(terms, t, reg);
+        t = getGreedy(terms, t, reg);
       }
       // console.log('next');
       continue;
     }
 
     //bah, who cares, keep going
-    // if (reg.optional === true) {
-    // t += 1;
-    // continue;
-    // }
+    if (reg.optional === true) {
+      continue;
+    }
     console.log('   ❌\n\n');
     return false;
   }

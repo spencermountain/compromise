@@ -25,10 +25,10 @@ const matchAll = function(p, regs) {
       i += match.length - 1; //zoom forward
     }
   }
+  console.log('\n============');
   matches.forEach((m) => {
-    console.log('\n\n============');
     console.log(m.map((t) => t.normal));
-    console.log('============\n');
+    console.log('============');
   });
   return matches;
 };

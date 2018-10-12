@@ -18,18 +18,13 @@ const matchAll = function(p, regs) {
       break;
     }
     //try it!
-    console.log('- #' + i);
+    // console.log('- #' + i);
     let match = tryMatch(terms.slice(i), regs);
     if (match !== false && match.length > 0) {
       matches.push(match);
       i += match.length - 1; //zoom forward
     }
   }
-  console.log('\n============');
-  matches.forEach((m) => {
-    console.log(m.map((t) => t.normal));
-    console.log('============');
-  });
   return matches;
 };
 module.exports = matchAll;

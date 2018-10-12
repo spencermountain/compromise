@@ -10,17 +10,17 @@ class Term {
     this.root = obj.root || '';
     this.preText = obj.preText || '';
     this.postText = obj.postText || '';
-    this.tags = [];
+    this.tags = {};
     this.prev = null;
     this.next = null;
     this.id = makeId(this.normal);
   }
   tag(tag) {
-    this.tags.push(tag);
+    this.tags[tag] = true;
     return this;
   }
   unTag(tag) {
-    this.tags = this.tags.filter((t) => t !== tag);
+    delete this.tags[tag];
     return this;
   }
 

@@ -49,16 +49,18 @@ const tagString = function(tags) {
 
 //output some helpful stuff to the console
 const debug = function(doc) {
+  console.log(colors.blue('====='));
   doc.list.forEach((p) => {
-    console.log('  -----');
+    console.log(colors.blue('  -----'));
     p.terms().forEach((t) => {
       let tags = Object.keys(t.tags);
       let word = '\'' + colors.yellow(t.text || '-') + '\'';
       word = padEnd(word, 18);
-      let str = '  ｜ ' + word + '  - ' + tagString(tags);
+      let str = colors.blue('  ｜ ') + word + '  - ' + tagString(tags);
       console.log(str);
     });
   });
+  console.log('');
   return doc;
 };
 module.exports = debug;

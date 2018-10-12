@@ -65,6 +65,7 @@ Doc.prototype.match = function(str) {
 const methods = [
   require('./easy'),
   require('./hard'),
+  require('./utilities'),
   require('./out'),
 ];
 methods.forEach((obj) => Object.assign(Doc.prototype, obj));

@@ -5,7 +5,7 @@ var nlp = require('./src/index');
 // doc.places().debug();
 
 let doc = nlp('i went to the pool to swim. To err is human');
+doc.tag('Verb');
+doc.match('to swim').debug();
 
-// doc.match('to');
-
-doc.debug();
+// doc.debug();

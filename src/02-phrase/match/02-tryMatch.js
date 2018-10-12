@@ -30,7 +30,7 @@ const greedyTo = function(terms, t, nextReg) {
 const tryHere = function(terms, regs) {
   let t = 0;
   for(let r = 0; r < regs.length; r += 1) {
-    console.log('   -' + terms[t].normal + ' - ' + regs[r].normal);
+    // console.log('   -' + terms[t].normal + ' - ' + regs[r].normal);
     let reg = regs[r];
     if (!terms[t]) {
       return false;
@@ -38,10 +38,7 @@ const tryHere = function(terms, regs) {
 
     //support 'unspecific greedy' properly
     if (reg.anything === true && reg.greedy === true) {
-      console.log('----------greedy----');
       let goto = greedyTo(terms, t, regs[r + 1]);
-      console.log('goto ', goto);
-      console.log('\n');
       if (goto === null) {
         return false; //couldn't find it
       }

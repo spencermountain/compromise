@@ -1,4 +1,5 @@
 const matchAll = require('./match');
+const tagger = require('../tagger');
 
 class Doc {
   constructor(list, from, world ) {
@@ -16,6 +17,9 @@ class Doc {
       enumerable: false,
       value: world
     });
+  }
+  tagger() {
+    return tagger(this);
   }
 
   //pool is stored on phrase objects

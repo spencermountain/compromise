@@ -4,6 +4,6 @@ var nlp = require('./src/index');
 // var doc = nlp('in north africa, eastern asia, guatemala, europe, north america, and japan');
 // doc.places().debug();
 
-let doc = nlp('i went to the pool. I went to the party.');
+let doc = nlp('i went to the pool');
 
-doc.match('went    (pool|party|hot tub|#Word)? here');
+doc.match('. went');

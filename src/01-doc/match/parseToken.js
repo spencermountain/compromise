@@ -6,6 +6,7 @@
 
   start:false,
   end:false,
+  negative:false,
   anything:false,
   greedy:false,
   optional:false,
@@ -36,7 +37,7 @@ const stripBoth = function(str) {
 const token = function(w) {
   let obj = {};
 
-  //collect any flags
+  //collect any flags (do it twice)
   for(let i = 0; i < 2; i += 1) {
     //back-flags
     if (end(w) === '+') {
@@ -45,7 +46,6 @@ const token = function(w) {
     }
     if (w !== '*' && end(w) === '*') {
       obj.greedy = true;
-      obj.optional = true;
       w = stripEnd(w);
     }
     if (end(w) === '?') {
@@ -61,6 +61,10 @@ const token = function(w) {
       obj.start = true;
       w = stripStart(w);
     }
+    if (start(w) === '!') {
+      obj.negative = true;
+      w = stripStart(w);
+    }
     //wrapped-flags
     if (start(w) === '(' && end(w) === ')') {
       obj.choices = w.split('|');
@@ -68,6 +72,7 @@ const token = function(w) {
       obj.choices[0] = stripStart(obj.choices[0]);
       let last = obj.choices.length - 1;
       obj.choices[last] = stripEnd(obj.choices[last]);
+      obj.choices = obj.choices.filter(s => s);
       //recursion alert!
       obj.choices = obj.choices.map(token);
       w = '';
@@ -101,6 +106,7 @@ const token = function(w) {
     return obj;
   }
   if (w) {
+    //somehow handle encoded-chars?
     obj.normal = w;
   }
   return obj;

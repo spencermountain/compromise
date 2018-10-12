@@ -1,6 +1,7 @@
 const failFast = require('./01-failFast');
 const tryMatch = require('./02-tryMatch');
 
+
 //returns a simple array of arrays
 const matchAll = function(p, regs) {
   let terms = p.terms();
@@ -10,8 +11,17 @@ const matchAll = function(p, regs) {
   }
   //any match needs to be this long, at least
   const minLength = regs.filter((r) => r.optional !== true).length;
-  //try starting, from every term
   let matches = [];
+
+  //optimisation for '^' start logic
+  if (regs[0].start === true) {
+    let match = tryMatch(terms, regs);
+    if (match !== false && match.length > 0) {
+      matches.push(match);
+    }
+    return matches;
+  }
+  //try starting, from every term
   for(let i = 0; i < terms.length; i += 1) {
     // slice may be too short
     if (i + minLength > terms.length) {

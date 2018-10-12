@@ -16,6 +16,9 @@ const failFast = function(terms, regs) {
       if (reg.end === true && i < regs.length - 1) {
         return true;
       }
+      if (reg.start === true && reg.end === true && terms.length > 1) {
+        return true;
+      }
       //empty choices
       if (reg.choices && reg.choices.length === 0) {
         return true;

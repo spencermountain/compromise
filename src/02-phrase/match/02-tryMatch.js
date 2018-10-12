@@ -48,8 +48,17 @@ const tryHere = function(terms, regs) {
 
     //looks like a match, continue
     if (reg.anything === true || terms[t].doesMatch(reg) === true) {
+      //advance to the next term!
       t += 1;
-      //keep it going!
+      //check any ending '$' flags
+      if (reg.end === true) {
+        //if this isn't the last term, refuse the match
+        if (t !== terms.length) {
+          return false;
+        }
+        break; //done!
+      }
+      //try keep it going!
       if (reg.greedy === true) {
         t = getGreedy(terms, t, reg);
       }
@@ -61,7 +70,7 @@ const tryHere = function(terms, regs) {
     if (reg.optional === true) {
       continue;
     }
-    console.log('   ❌\n\n');
+    // console.log('   ❌\n\n');
     return false;
   }
   //we got to the end of the regs, and haven't failed!

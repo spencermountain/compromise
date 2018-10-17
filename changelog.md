@@ -8,7 +8,6 @@ compromise uses semver, and pushes to npm frequently
 
 ### v12
 - drop support for `regex` and `patterns` in plugins
-- move `nlp.verbose(bool)` to `doc.verbose(bool)`
 
 ### v11
 ##### 11.11.0

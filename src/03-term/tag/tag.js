@@ -4,11 +4,12 @@ const addTag = function(t, tag, world, reason) {
   if (tag[0] === '#') {
     tag = tag.replace(/^#/, '');
   }
+  tag = fns.titleCase(tag);
   //if we already got this one
   if (t.tags[tag] === true) {
     return;
   }
-  if (reason !== undefined && world !== undefined && world.verbose === true) {
+  if (world !== undefined && world.isVerbose() === true) {
     fns.logTag(t, tag, reason);
   }
   //add tag
@@ -18,14 +19,16 @@ const addTag = function(t, tag, world, reason) {
   if (world !== undefined && world.tags !== undefined) {
 
     let tagset = world.tags;
-    //add parent Tags
-    if (tagset.hasOwnProperty(tag) === true && tagset[tag].isA !== undefined) {
-      let parentTag = tagset[tag].isA;
-      addTag(t, parentTag, world, '   ->'); //recursive
-    }
-    //remove any contrary tags
-    if (typeof tagset[tag].notA !== 'undefined') {
-      t.untag(tagset[tag].notA, world, ' - ');
+    if (tagset.hasOwnProperty(tag) === true) {
+      //add parent Tags
+      if (tagset[tag].isA !== undefined) {
+        let parentTag = tagset[tag].isA;
+        addTag(t, parentTag, world, '→'); //recursive
+      }
+      //remove any contrary tags
+      if (typeof tagset[tag].notA !== 'undefined') {
+        t.untag(tagset[tag].notA, world, '←');
+      }
     }
   }
 // console.log(tagset);

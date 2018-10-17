@@ -5,7 +5,7 @@ const unTag = function(t, tag, world, reason) {
   if (t.tags.hasOwnProperty(tag) === true) {
     delete t.tags[tag];
     //log in verbose-mode
-    if (reason !== undefined) {
+    if (world !== undefined && world.isVerbose() === true) {
       fns.logUntag(t, tag, reason);
     }
   }

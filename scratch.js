@@ -1,4 +1,7 @@
 var nlp = require('./src/index');
-// nlp.verbose('tagger');
+// nlp.verbose(false);
 
-nlp('i went to the super bowl').tag('Verb').tag('Noun').debug();
+let doc = nlp('i went to the super bowl');
+doc.tag('Verb');
+doc.tag('plural');
+doc.debug();

@@ -6,6 +6,7 @@ const unpack = {
   plurals: require('./plurals'),
   tags: require('./addTags')
 };
+let isVerbose = false;
 
 //  ¯\_(:/)_/¯
 const clone = function(obj) {
@@ -21,7 +22,13 @@ class World {
     this.compounds = {};
     this.tags = Object.assign({}, defaultTags);
     this.plugin(defaultData);
-    this.verbose = false;
+  }
+  verbose(bool) {
+    isVerbose = bool;
+    return this;
+  }
+  isVerbose() {
+    return isVerbose;
   }
   //sort words into compound/single words
   addWords(obj) {

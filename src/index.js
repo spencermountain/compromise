@@ -21,6 +21,10 @@ nlp.clone = function() {
   world = world.clone();
   return this;
 };
+//log our reasoning a little bit
+nlp.verbose = function(bool) {
+  world.verbose(bool);
+};
 
 //this is handy
 nlp.version = pkg.version;

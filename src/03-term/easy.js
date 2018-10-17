@@ -1,7 +1,10 @@
 const doesMatch = require('./match');
-const tagAs = require('./tag');
+const tag = require('./tag/tag');
+const untag = require('./tag/untag');
+
 module.exports = {
-  tag: tagAs,
+  tag: tag,
+  untag: untag,
 
   hasComma: function() {
     return this.postText.includes(',');

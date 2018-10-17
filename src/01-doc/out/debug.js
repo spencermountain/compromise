@@ -54,7 +54,11 @@ const debug = function(doc) {
     console.log(colors.blue('  -----'));
     p.terms().forEach((t) => {
       let tags = Object.keys(t.tags);
-      let word = '\'' + colors.yellow(t.text || '-') + '\'';
+      let text = t.text || '-';
+      if (typeof module !== undefined) {
+        text = colors.yellow(text);
+      }
+      let word = '\'' + text + '\'';
       word = padEnd(word, 18);
       let str = colors.blue('  ｜ ') + word + '  - ' + tagString(tags);
       console.log(str);

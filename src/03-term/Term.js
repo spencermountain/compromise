@@ -15,11 +15,6 @@ class Term {
     this.next = null;
     this.id = makeId(this.normal);
   }
-  unTag(tag) {
-    delete this.tags[tag];
-    return this;
-  }
-
   toText() {
     return this.preText + this.text + this.postText + ' ';
   }

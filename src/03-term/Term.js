@@ -15,10 +15,6 @@ class Term {
     this.next = null;
     this.id = makeId(this.normal);
   }
-  tag(tag) {
-    this.tags[tag] = true;
-    return this;
-  }
   unTag(tag) {
     delete this.tags[tag];
     return this;

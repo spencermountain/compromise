@@ -1,5 +1,8 @@
 const doesMatch = require('./match');
+const tagAs = require('./tag');
 module.exports = {
+  tag: tagAs,
+
   hasComma: function() {
     return this.postText.includes(',');
   },

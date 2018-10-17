@@ -1,7 +1,8 @@
 module.exports = {
   tag: function(tag, why) {
+    let tags = this.world.tags;
     this.list.forEach((p) => {
-      p.terms().forEach((t) => t.tag(tag, why));
+      p.terms().forEach((t) => t.tag(tag, tags, why));
     });
   },
   untag: function(tag, why) {

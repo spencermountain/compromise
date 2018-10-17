@@ -16,7 +16,7 @@ const nlp = function(text) {
 nlp.plugin = function(plugin) {
   world.plugin(plugin);
 };
-
+//this allows two different interpretations
 nlp.clone = function() {
   world = world.clone();
   return this;

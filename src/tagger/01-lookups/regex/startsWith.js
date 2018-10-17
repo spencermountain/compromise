@@ -31,15 +31,29 @@ module.exports = [
   [/^.?[0-9]+([0-9,.]+)?%$/, ['Percent', 'Cardinal', 'NumericValue']], //7%  ..
   [/^[0-9]{1,4}\/[0-9]{1,4}$/, 'Fraction'], //3/2ths
   [/^[0-9\.]{1,2}[-–][0-9]{1,2}$/, ['Value', 'NumberRange']], //7-8
-  // //mc'adams
+  //mc'adams
   [/^ma?c\'.*/, 'LastName'],
-  // //o'douggan
+  //o'douggan
   [/^o\'[drlkn].*/, 'LastName'],
-  // //web tags
+  //web tags
   [/^\w+@\w+\.[a-z]{2,3}$/, 'Email'], //not fancy
   [/^#[a-z0-9_]{2,}$/, 'HashTag'],
   [/^@\w{2,}$/, 'AtMention'],
   [/^(https?:\/\/|www\.)\w+\.[a-z]{2,3}/, 'Url'], //with http/www
   [/^[\w\.\/]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/, 'Url'], //http://mostpopularwebsites.net/top-level-domain
 
+  //slang things
+  [/^(lol)+[sz]$/, 'Expression'], //lol
+  [/^ma?cd[aeiou]/, 'LastName'], //macdonell - Last patterns https://en.wikipedia.org/wiki/List_of_family_name_affixes
+  //starting-ones
+  [/^[\-\+]?[0-9][0-9,]*(\.[0-9])*$/, 'Cardinal'], //like 5
+  [/^(un|de|re)\\-[a-z]../, 'Verb'],
+  [/^[\-\+]?[0-9]+(\.[0-9])*$/, 'NumericValue'],
+  [/^https?\:?\/\/[a-z0-9]/, 'Url'], //the colon is removed in normalisation
+  [/^www\.[a-z0-9]/, 'Url'],
+  [/^(over|under)[a-z]{2,}/, 'Adjective'],
+  [/^[0-9]{1,4}\.[0-9]{1,2}\.[0-9]{1,4}$/, 'Date'], // 03-02-89
+  //ending-ones
+  [/^[0-9]+([a-z]{1,2})$/, 'Value'], //like 5kg
+  [/^[0-9][0-9,\.]*(st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
 ];

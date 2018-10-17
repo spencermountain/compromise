@@ -1,4 +1,3 @@
-'use strict';
 //markov-like stats about co-occurance, for hints about unknown terms
 //basically, a little-bit better than the noun-fallback
 //just top n-grams from nlp tags, generated from nlp-corpus

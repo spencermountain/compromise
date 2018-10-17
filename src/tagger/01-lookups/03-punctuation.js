@@ -1,10 +1,5 @@
-
-'use strict';
-//regs-
 const titleCase = /^[A-Z][a-z']/;
 const romanNum = /^[IVXCM]+$/;
-
-
 
 const oneLetters = {
   a: true,
@@ -28,7 +23,7 @@ const checkPunctuation = function(terms, world) {
     if (t.postText.indexOf('-') !== -1 && terms[i + 1] && terms[i + 1].preText === '') {
       t.tag('Hyphenated', world, 'has-hyphen');
     }
-    //check acronym terms like 'e'
+    //check one-letter acronyms like 'john E rockefeller'
     if (str.length === 1 && terms[i + 1] && /[A-Z]/.test(str) && !oneLetters[str.toLowerCase()]) {
       t.tag('Acronym', world, 'one-letter-acronym');
     }
@@ -40,14 +35,6 @@ const checkPunctuation = function(terms, world) {
     if (/[0-9]\+$/.test(t.text) === true) {
       t.tag('NumericValue', world, 'number-plus');
     }
-  //look at () parentheses
-  // if (t.text[0] === '(') {
-  //   t.tag('StartBracket');
-  // }
-  // //look at end-brackets (allow some punctuation after)!
-  // if (/\)[,.?!;:]?$/.test(t.text) === true) {
-  //   t.tag('EndBracket');
-  // }
   });
 };
 module.exports = checkPunctuation;

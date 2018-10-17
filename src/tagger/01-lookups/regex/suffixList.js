@@ -1,4 +1,3 @@
-'use strict';
 //just a foolish lookup of known suffixes
 const Adj = 'Adjective';
 const Inf = 'Infinitive';

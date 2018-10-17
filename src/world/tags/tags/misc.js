@@ -15,9 +15,13 @@ module.exports = {
   },
   Adverb: {},
 
-  Currency: {},
+  Currency: {
+    isA: 'NounPhrase'
+  },
   //glue
-  Determiner: {},
+  Determiner: {
+    isA: 'NounPhrase'
+  },
   Conjunction: {},
   Preposition: {},
   QuestionWord: {},
@@ -30,7 +34,7 @@ module.exports = {
   PhoneNumber: {},
   HashTag: {},
   AtMention: {
-    is: 'Noun'
+    isA: 'Noun'
   },
   Emoji: {},
   Email: {},
@@ -38,6 +42,7 @@ module.exports = {
   //non-exclusive
   Condition: {},
   VerbPhrase: {},
+  NounPhrase: {},
   Auxiliary: {},
   Negative: {},
   Contraction: {},

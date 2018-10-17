@@ -32,22 +32,22 @@ const isEmoticon = (t) => {
   return emoticon.hasOwnProperty(str);
 };
 
-//
-const emojiStep = (terms, world) => {
-  for (let i = 0; i < terms.length; i++) {
-    let t = terms[i];
+//these are somewhat popular.
+const tagEmoji = (terms, world) => {
+  for(let i = 0; i < terms.length; i += 1) {
+    let term = terms[i];
     //test for :keyword: emojis
-    if (isCommaEmoji(t)) {
-      t.tag('Emoji', world, 'comma-emoji');
+    if (isCommaEmoji(term) === true) {
+      term.tag('Emoji', world, 'comma-emoji');
     }
     //test for unicode emojis
-    if (t.text.match(emojiReg)) {
-      t.tag('Emoji', world, 'unicode-emoji');
+    if (term.text.match(emojiReg)) {
+      term.tag('Emoji', world, 'unicode-emoji');
     }
     //test for emoticon ':)' emojis
-    if (isEmoticon(t)) {
-      t.tag('Emoji', world, 'emoticon-emoji');
+    if (isEmoticon(term) === true) {
+      term.tag('Emoji', world, 'emoticon-emoji');
     }
   }
 };
-module.exports = emojiStep;
+module.exports = tagEmoji;

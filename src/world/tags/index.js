@@ -9,6 +9,7 @@ const addDownward = require('./addDownward');
 //used for pretty-printing on the server-side
 const colors = {
   Noun: 'blue',
+  NounPhrase: 'blue',
   Date: 'red',
   Value: 'red',
   Verb: 'green',

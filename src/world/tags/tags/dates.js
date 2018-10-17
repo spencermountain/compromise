@@ -1,5 +1,7 @@
 module.exports = {
-  Date: {}, //not a noun, but usually is
+  Date: {
+    isA: 'NounPhrase'
+  }, //not a noun, but usually is
   Month: {
     isA: 'Date',
     also: 'Singular'

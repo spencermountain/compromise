@@ -22,26 +22,25 @@ const tryMultiple = function(terms, t, world) {
 };
 
 //
-const checkLexicon = function(doc) {
-  let lex = doc.world.lexicon;
-  let hasCompound = doc.world.hasCompound;
-  let terms = doc.termList();
+const checkLexicon = function(terms, world) {
+  let lex = world.lexicon;
+  let hasCompound = world.hasCompound;
 
   //go through each term, and check the lexicon
   for (let t = 0; t < terms.length; t += 1) {
     let str = terms[t].normal;
     //is it the start of a compound word, like 'super bowl'?
     if (hasCompound[str] === true && t + 1 < terms.length) {
-      let found = tryMultiple(terms, t, doc.world);
+      let found = tryMultiple(terms, t, world);
       if (found === true) {
         continue;
       }
     }
     //try one-word lexicon
     if (lex[str] !== undefined && lex.hasOwnProperty(str) === true) {
-      terms[t].tag(lex[str], doc.world, 'lexicon');
+      terms[t].tag(lex[str], world, 'lexicon');
     }
   }
-  return doc;
+  return terms;
 };
 module.exports = checkLexicon;

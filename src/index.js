@@ -9,7 +9,7 @@ let world = new World();
 const nlp = function(text) {
   let list = build(text);
   let doc = new Doc(list, null, world);
-  // doc.tagger();
+  doc.tagger();
   return doc;
 };
 //uncompress a user-submitted lexicon

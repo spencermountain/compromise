@@ -55,6 +55,9 @@ const debug = function(doc) {
     p.terms().forEach((t) => {
       let tags = Object.keys(t.tags);
       let text = t.text || '-';
+      if (t.implicit) {
+        text = '[' + t.implicit + ']';
+      }
       if (typeof module !== undefined) {
         text = colors.yellow(text);
       }

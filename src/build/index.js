@@ -1,6 +1,5 @@
 const Term = require('../03-term/Term');
 const Phrase = require('../02-phrase/Phrase');
-// const Doc = require('../01-doc/Doc');
 const Pool = require('./Pool');
 
 const splitSentences = require('./01-sentences');
@@ -33,9 +32,7 @@ const build = function( text = '' , pool ) {
     //return phrase objects
     return new Phrase(terms[0].id, terms.length, pool);
   });
-
-  //return the whole shebang
-  // return new Doc(phrases, null, world);
+  //return them ready for a Document object
   return phrases;
 };
 module.exports = build;

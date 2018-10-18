@@ -7,7 +7,7 @@ class Term {
     let obj = parseTerm(text);
     this.text = obj.text || '';
     this.normal = obj.normal || '';
-    this.root = obj.root || '';
+    this.implicit = obj.implicit || null;
     this.preText = obj.preText || '';
     this.postText = obj.postText || '';
     this.tags = {};

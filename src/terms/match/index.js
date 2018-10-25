@@ -45,7 +45,6 @@ const matchMethods = Terms => {
 
     /**return first match */
     has: function (str) {
-      console.log('in has')
       return this.matchOne(str) !== null;
     }
   };

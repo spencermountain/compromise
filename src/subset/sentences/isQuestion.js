@@ -14,9 +14,9 @@ const isQuestion = function (ts) {
 
     // Has ellipsis at the end means it's probably not a question
     // e.g., Is this just fantasy...
-    case ts.has('\\.\\.$'):
-      console.log('2')
-      return false;
+    // case ts.has('\\.\\.$'):
+    //   console.log('2')
+    //   return false;
 
     // Starts with question word, but has a comma, so probably not a question
     // e.g., Why are we caught in a land slide, no escape from reality

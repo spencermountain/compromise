@@ -7,7 +7,7 @@ test('offsets-equals-substr:', function(t) {
   var arr = r.verbs().out('offsets');
   arr.forEach(function(obj) {
     var substr = freshPrince.substr(obj.offset, obj.length);
-    t.equal(obj.text, substr, "'" + obj.text + "' offset " + obj.offset);
+    t.equal(obj.text, substr, '\'' + obj.text + '\' offset ' + obj.offset);
   });
   t.end();
 });
@@ -20,7 +20,7 @@ test('index-output:', function(t) {
   t.equal(arr[0].sentenceTerm, 4, 'which sentence-term');
 
   arr = nlp(str).match('vegetable').out('index');
-  t.equal(arr[0].term, 13, 'which term');
+  t.equal(arr[0].term + 1, 13, 'which term');
   t.equal(arr[0].sentence, 1, 'which sentence');
   t.equal(arr[0].sentenceTerm, 3, 'which sentence-term');
   t.end();

@@ -12,7 +12,7 @@ test('to_text:', function(t) {
     [75, 'seventy five'],
     [97, 'ninety seven'],
     [111, 'one hundred and eleven'],
-    [1758, 'one hundred and seventy five'],
+    [175, 'one hundred and seventy five'],
     [900, 'nine hundred'],
     [1175, 'one thousand one hundred and seventy five'],
     [2000, 'two thousand'],
@@ -32,8 +32,6 @@ test('to_text:', function(t) {
     var str = nlp(a[0]).values().toText().out('text');
     str_test(str, a[0], a[1], t);
   });
-  console.log('WAHHHAHHHAAAA');
-  console.log('=-=-=-');
   t.end();
 });
 

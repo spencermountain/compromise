@@ -1,8 +1,10 @@
-<div align="center">
-hello, this is the wrong compromise library
-<div>
-  it is a very common typo, though.
-</div>
-just use <a href="https://www.npmjs.com/package/compromise"><b>compromise</b></a>, instead of this package, <b>nlp-compromise</b>
-</div>
+👇
+
+nlp_compromise has been renamed to [compromise](https://github.com/spencermountain/compromise) 🌸
+
+please update to the new, cool version.
+
+(this package is not maintained 👯)
+☝☝☝☝☝
+
 gracias

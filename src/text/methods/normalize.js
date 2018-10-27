@@ -132,7 +132,7 @@ const methods = {
 };
 
 const addMethods = Text => {
-  Text.prototype.normalize = function(options) {
+  Text.prototype.normalize = function (options) {
     let doc = this;
     //set defaults
     options = options || {};

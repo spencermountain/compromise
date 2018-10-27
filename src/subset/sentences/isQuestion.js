@@ -5,6 +5,10 @@ const isQuestion = function (ts) {
   let endPunct = ts.getPunctuation();
   let clauses = ts.match('*').splitAfter('#Comma');
 
+  console.log(ts.out('text'));
+  console.log(/^\w+\s+/.test(ts.out('text')));
+  console.log(ts.out('text').match('/^\w+\s+/ who'))
+
   switch (true) {
     // If it has a question mark
     // e.g., Is this the real life?
@@ -14,9 +18,9 @@ const isQuestion = function (ts) {
 
     // Has ellipsis at the end means it's probably not a question
     // e.g., Is this just fantasy...
-    // case ts.has('\\.\\.$'):
-    //   console.log('2')
-    //   return false;
+    case /\.\.$/.test(ts.out('text')):
+      console.log('2')
+      return false;
 
     // Starts with question word, but has a comma, so probably not a question
     // e.g., Why are we caught in a land slide, no escape from reality
@@ -43,73 +47,26 @@ const isQuestion = function (ts) {
       return true;
 
     // these are a little more loose..
-    // e.g., Must I  be come easy come easy go
+    // e.g., Must I be come easy come easy go
     case ts.has('^(have|must) you'):
       console.log('7')
       return true;
 
+    // Clause starts with a question word
+    // e.g., Anyway the wind blows, what doesn't really matter to me
+    case clauses.has('^#QuestionWord'):
+      console.log('8')
+      return true;
+
+    //is wayne gretskzy alive
+    case clauses.has('(do|does|is|was) #Noun+ #Adverb? (#Adjective|#Infinitive)$'):
+      console.log('9')
+      return true;
 
     // Probably not a question
     default:
+      console.log('10')
       return false;
-
-
   }
-
-  return;
-
-  // console.log('1')
-  // //if it has a question mark..
-  // let endPunct = ts.getPunctuation();
-  // if (/\?/.test(endPunct) === true) {
-  //   return true;
-  // }
-
-  // console.log('1st', ts.has('\\.\\.$'));
-  // // ends with elipses (..) or (...), it's probably not a question
-  // // Might be rhetorical
-  // if (ts.has('\\.\\.$')) {
-  //   return false;
-  // }
-  console.log('2')
-  //try to actually figure this out without a question-mark
-  // Check with starting question word
-  // console.log('2nd', ts.has('^\\w\+\\s#QuestionWord'))
-  // if (ts.has('^#QuestionWord') || ts.has('^\\w\+\\s#QuestionWord')) {
-  //   // If it has a comma in it, it might not be a question
-  //   // e.g., how that happened, I don't know
-  //   if (ts.has('#Comma')) {
-  //     return false;
-  //   }
-
-  //   return true;
-  // }
-
-  // //is it, do you - start of sentence
-  // if (ts.has('^(do|does|did|is|was|can|could|will|would|may) #Noun')) {
-  //   return true;
-  // }
-
-
-
-
-  // //these are a little more loose..
-  // if (ts.has('^(have|must) you')) {
-  //   return true;
-  // }
-
-  // console.log('here');
-  // let clauses = ts.match('*').splitAfter('#Comma');
-
-  // if (clauses.has('^#QuestionWord')) {
-  //   return true;
-  // }
-
-  // //is wayne gretskzy alive
-  // if (clauses.has('(do|does|is|was) #Noun+ #Adverb? (#Adjective|#Infinitive)$')) {
-  //   return true;
-  // }
-  // //not a question, then
-  // return false;
 };
 module.exports = isQuestion;

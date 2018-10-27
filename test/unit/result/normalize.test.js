@@ -2,7 +2,7 @@ var test = require('tape');
 var nlp = require('../lib/nlp');
 var str_test = require('../lib/fns').str_test;
 
-test('sentence():', function(t) {
+test('sentence():', function (t) {
   [
     ['he is good', 'he is good'],
     ['Jack and Jill went up the hill.', 'jack and jill went up the hill.'],
@@ -17,14 +17,14 @@ test('sentence():', function(t) {
     ['john smith', 'john smith'],
     ['Dr. John Smith-McDonald', 'dr john smith mcdonald'],
     ['Contains no fruit juice. \n\n All rights reserved', 'contains no fruit juice. all rights reserved']
-  ].forEach(function(a) {
+  ].forEach(function (a) {
     var str = nlp(a[0]).out('normal');
     str_test(str, a[0], a[1], t);
   });
   t.end();
 });
 
-test('normalize():', function(t) {
+test('normalize():', function (t) {
   [
     [' so... you like DONUTS? have all the donuts in the WORLD!!!', 'so you like donuts? have all the donuts in the world!'],
     ['This is a test. .', 'this is a test.'],
@@ -32,15 +32,15 @@ test('normalize():', function(t) {
     ['the so-called “fascist  dictator”', 'the so called "fascist dictator"'],
     // ['the so-called ❛singer-songwriter❜', 'the so called \'singer songwriter\''],
     // ['the so-called ❛group of seven❜', 'the so called \'group of 7\''],
-    ['Director of the F.B.I.', 'director of the fbi'],
-  ].forEach(function(a) {
+    ['Director of the F.B.I.', 'director of the fbi']
+  ].forEach(function (a) {
     var str = nlp(a[0]).normalize().out('text');
     str_test(str, a[0], a[1], t);
   });
   t.end();
 });
 
-test('possessives', function(t) {
+test('possessives', function (t) {
   var doc = nlp(`Corey Hart's pudding and Google's advertising`);
   doc = doc.normalize({
     possessives: true,
@@ -50,7 +50,16 @@ test('possessives', function(t) {
   t.end();
 });
 
-test('optional params', function(t) {
+test('contractions', function (t) {
+  var doc = nlp(`It doesn't matter if I spoke at 4:40 p.m. Or or if you submit well we're going to do the processing.`);
+  doc = doc.normalize({
+    contractions: false
+  });
+  t.equal(doc.out(), `it doesn't matter if i spoke at 4:40 p.m. or or if you submit well we're going to do the processing.`, 'normalize contractions');
+  t.end();
+})
+
+test('optional params', function (t) {
   var doc = nlp(`John Smith bought automobiles (for us)`).normalize({
     case: true,
     possessives: true,
@@ -62,7 +71,7 @@ test('optional params', function(t) {
   t.end();
 });
 
-test('honorifics', function(t) {
+test('honorifics', function (t) {
   var tests = [
     ['rear admiral Smith', 'smith'],
     ['Lieutenant John Smith', 'john smith'],
@@ -79,9 +88,9 @@ test('honorifics', function(t) {
     ['Second lieutenant Semore Hirthman', 'semore hirthman'],
     ['first lady Michelle obama', 'michelle obama'],
     ['prime minister Stephen Hawking', 'stephen hawking'],
-  //no names
-  // ['first lieutenant', '1st lieutenant'],
-  // ['Sergeant', 'sergeant'],
+    //no names
+    // ['first lieutenant', '1st lieutenant'],
+    // ['Sergeant', 'sergeant'],
   ];
   tests.forEach((a) => {
     var doc = nlp(a[0]);
@@ -94,7 +103,7 @@ test('honorifics', function(t) {
   t.end();
 });
 
-test('elipses-whitespace:', function(t) {
+test('elipses-whitespace:', function (t) {
   var doc = nlp('about this ...').normalize();
   t.equal(doc.out('text'), 'about this', 'normalize seperate elipses');
 
@@ -106,7 +115,7 @@ test('elipses-whitespace:', function(t) {
   t.end();
 });
 
-test('more-normalize:', function(t) {
+test('more-normalize:', function (t) {
   var doc = nlp(`i saw first lady michelle obama`);
   doc.normalize({
     honorifics: true

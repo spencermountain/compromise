@@ -2,14 +2,14 @@
 const fns = require('../paths').fns;
 
 const methods = {
-  text: function(ts) {
+  text: function (ts) {
     return ts.terms.reduce((str, t) => {
       str += t.out('text');
       return str;
-    }, '');
+    }, '').replace(/\s\s+/g, ' ')
   },
   //like 'text', but no leading/trailing whitespace
-  match: function(ts) {
+  match: function (ts) {
     let str = '';
     let len = ts.terms.length;
     for (let i = 0; i < len; i++) {
@@ -24,7 +24,7 @@ const methods = {
     return str;
   },
 
-  normal: function(ts) {
+  normal: function (ts) {
     let terms = ts.terms.filter(t => {
       return t.text;
     });
@@ -34,7 +34,7 @@ const methods = {
     return terms.join(' ');
   },
 
-  grid: function(ts) {
+  grid: function (ts) {
     let str = '  ';
     str += ts.terms.reduce((s, t) => {
       s += fns.leftPad(t.text, 11);
@@ -43,17 +43,17 @@ const methods = {
     return str + '\n\n';
   },
 
-  color: function(ts) {
+  color: function (ts) {
     return ts.terms.reduce((s, t) => {
       s += fns.printTerm(t);
       return s;
     }, '');
   },
-  csv: function(ts) {
+  csv: function (ts) {
     return ts.terms.map(t => t.normal.replace(/,/g, '')).join(',');
   },
 
-  newlines: function(ts) {
+  newlines: function (ts) {
     return ts.terms
       .reduce((str, t) => {
         str += t.out('text').replace(/\n/g, ' ');
@@ -62,19 +62,19 @@ const methods = {
       .replace(/^\s/, '');
   },
   /** no punctuation, fancy business **/
-  root: function(ts) {
+  root: function (ts) {
     return ts.terms.map(t => t.silent_term || t.root).join(' ').toLowerCase();
   },
 
-  html: function(ts) {
+  html: function (ts) {
     return ts.terms.map(t => t.render.html()).join(' ');
   },
-  debug: function(ts) {
+  debug: function (ts) {
     ts.terms.forEach(t => {
       t.out('debug');
     });
   },
-  custom: function(ts, obj) {
+  custom: function (ts, obj) {
     return ts.terms.map((t) => {
       return Object.keys(obj).reduce((h, k) => {
         if (obj[k] && t[k]) {
@@ -96,7 +96,7 @@ methods.colors = methods.color;
 methods.tags = methods.terms;
 
 const renderMethods = Terms => {
-  Terms.prototype.out = function(fn) {
+  Terms.prototype.out = function (fn) {
     if (typeof fn === 'string') {
       if (methods[fn]) {
         return methods[fn](this);
@@ -107,7 +107,7 @@ const renderMethods = Terms => {
     return methods.text(this);
   };
   //check method
-  Terms.prototype.debug = function() {
+  Terms.prototype.debug = function () {
     return methods.debug(this);
   };
   return Terms;

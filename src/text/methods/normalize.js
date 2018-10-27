@@ -22,6 +22,7 @@ const methods = {
   whitespace: r => {
     r.terms().list.forEach((ts, i) => {
       let t = ts.terms[0];
+
       if (i > 0) {
         t.whitespace.before = ' ';
       } else if (i === 0) {
@@ -132,7 +133,7 @@ const methods = {
 };
 
 const addMethods = Text => {
-  Text.prototype.normalize = function(options) {
+  Text.prototype.normalize = function (options) {
     let doc = this;
     //set defaults
     options = options || {};
@@ -141,12 +142,14 @@ const addMethods = Text => {
     keys.forEach((k) => {
       obj[k] = options[k];
     });
+
     //do each type of normalization
     Object.keys(obj).forEach(fn => {
       if (obj[fn] && methods[fn] !== undefined) {
         doc = methods[fn](doc);
       }
     });
+
     return doc;
   };
 };

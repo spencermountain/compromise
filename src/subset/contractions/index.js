@@ -5,21 +5,21 @@ const findPossible = require('./findPossible');
 //the Contractions() subset class
 
 const methods = {
-  contract: function() {
+  contract: function () {
     this.list.forEach(ts => ts.contract());
     return this;
   },
-  expand: function() {
+  expand: function () {
     this.list.forEach(ts => ts.expand());
     return this;
   },
-  contracted: function() {
+  contracted: function () {
     this.list = this.list.filter(ts => {
       return ts.contracted;
     });
     return this;
   },
-  expanded: function() {
+  expanded: function () {
     this.list = this.list.filter(ts => {
       return !ts.contracted;
     });
@@ -27,7 +27,7 @@ const methods = {
   }
 };
 
-const find = function(r, n) {
+const find = function (r, n) {
   //find currently-contracted
   let found = r.match('#Contraction #Contraction #Contraction?');
   found.list = found.list.map(ts => {

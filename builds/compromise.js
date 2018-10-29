@@ -9,7 +9,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.12.1",
+  "version": "11.12.2",
   "main": "./builds/compromise.js",
   "types": "./compromise.d.ts",
   "repository": {
@@ -43,20 +43,20 @@ module.exports={
   },
   "devDependencies": {
     "amble": "0.0.6",
-    "babel-preset-env": "^1.7.0",
+    "babel-preset-env": "1.7.0",
     "babelify": "7.3.0",
     "babili": "0.1.4",
     "browserify": "13.0.1",
     "chalk": "2.4.1",
     "compromise-plugin": "0.0.8",
     "derequire": "2.0.6",
-    "eslint": "4.19.1",
+    "eslint": "5.1.0",
     "nyc": "11.8.0",
     "shelljs": "0.8.2",
     "tap-spec": "^5.0.0",
-    "tap-dancer": "0.0.3",
-    "tape": "4.9.0",
-    "uglify-js": "3.3.26"
+    "tap-dancer": "0.1.2",
+    "tape": "4.9.1",
+    "uglify-js": "3.4.9"
   },
   "license": "MIT"
 }
@@ -2558,32 +2558,58 @@ module.exports = Text.makeSubset(methods, find);
 //is this sentence asking a question?
 
 var isQuestion = function isQuestion(ts) {
-  //if it has a question mark..
   var endPunct = ts.getPunctuation();
-  if (/\?/.test(endPunct) === true) {
-    return true;
-  }
-  //try to actually figure this out without a question-mark
-  if (ts.has('#QuestionWord')) {
-    return true;
-  }
-
-  //is it, do you - start of sentence
-  if (ts.has('^(do|does|did|is|was|can|could|will|would|may) #Noun')) {
-    return true;
-  }
-  //these are a little more loose..
-  if (ts.has('^(have|must) you')) {
-    return true;
-  }
-
   var clauses = ts.match('*').splitAfter('#Comma');
-  //is wayne gretskzy alive
-  if (clauses.has('(do|does|is|was) #Noun+ #Adverb? (#Adjective|#Infinitive)$')) {
-    return true;
+
+  switch (true) {
+    // If it has a question mark
+    // e.g., Is this the real life!?
+    case /\?/.test(endPunct) === true:
+      return true;
+
+    // Has ellipsis at the end means it's probably not a question
+    // e.g., Is this just fantasy...
+    case /\.\.$/.test(ts.out('text')):
+      return false;
+
+    // Starts with question word, but has a comma, so probably not a question
+    // e.g., Why are we caught in a land slide, no escape from reality
+    case ts.has('^#QuestionWord') && ts.has('#Comma'):
+      return false;
+
+    // Starts with a #QuestionWord
+    // e.g., What open your eyes look up to the skies and see
+    case ts.has('^#QuestionWord'):
+      return true;
+
+    // Second word is a #QuestionWord
+    // e.g., I'm what a poor boy
+    // case ts.has('^\w+\s#QuestionWord'):
+    // return true;
+
+    // is it, do you - start of sentence
+    // e.g., Do I need no sympathy
+    case ts.has('^(do|does|did|is|was|can|could|will|would|may) #Noun'):
+      return true;
+
+    // these are a little more loose..
+    // e.g., Must I be come easy come easy go
+    case ts.has('^(have|must) you'):
+      return true;
+
+    // Clause starts with a question word
+    // e.g., Anyway the wind blows, what doesn't really matter to me
+    case clauses.has('^#QuestionWord'):
+      return true;
+
+    //is wayne gretskzy alive
+    case clauses.has('(do|does|is|was) #Noun+ #Adverb? (#Adjective|#Infinitive)$'):
+      return true;
+
+    // Probably not a question
+    default:
+      return false;
   }
-  //not a question, then
-  return false;
 };
 module.exports = isQuestion;
 
@@ -7183,6 +7209,8 @@ var corrections = function corrections(ts) {
     ts.match('#Noun #Actor').tag('Actor', 'thing-doer');
     //this rocks
     ts.match('(this|that) [#Plural]').tag('PresentTense', 'this-verbs');
+    //by a bear.
+    ts.match('#Determiner #Infinitive$').lastTerm().tag('Noun', 'a-inf');
     //the western line
     ts.match('#Determiner [(western|eastern|northern|southern|central)] #Noun').tag('Noun', 'western-line');
     ts.match('(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun').tag('Noun', 'technical-noun');
@@ -11903,7 +11931,7 @@ var methods = {
   whitespace: function whitespace(r) {
     r.terms().list.forEach(function (ts, i) {
       var t = ts.terms[0];
-      if (i > 0) {
+      if (i > 0 && !t.silent_term) {
         t.whitespace.before = ' ';
       } else if (i === 0) {
         t.whitespace.before = '';

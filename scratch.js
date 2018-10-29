@@ -3,4 +3,8 @@ nlp.verbose('tagger');
 
 
 // nlp('hungry brown bear').debug();
-nlp('Alice was eaten by a bear.').debug();
+let doc = nlp(`It doesn't matter`);
+doc.normalize({
+  contractions: false
+});
+console.log(doc.text());

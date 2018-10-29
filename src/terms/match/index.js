@@ -7,7 +7,7 @@ const match = require('./lib');
 const matchMethods = Terms => {
   const methods = {
     //support regex-like whitelist-match
-    match: function(reg, verbose) {
+    match: function (reg, verbose) {
       //fail-fast #1
       if (this.terms.length === 0) {
         return new Text([], this.world, this.parent);
@@ -24,7 +24,7 @@ const matchMethods = Terms => {
     },
 
     /**return first match */
-    matchOne: function(str) {
+    matchOne: function (str) {
       //fail-fast
       if (this.terms.length === 0) {
         return null;
@@ -44,7 +44,7 @@ const matchMethods = Terms => {
     },
 
     /**return first match */
-    has: function(str) {
+    has: function (str) {
       return this.matchOne(str) !== null;
     }
   };

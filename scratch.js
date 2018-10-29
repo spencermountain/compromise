@@ -1,21 +1,7 @@
 var nlp = require('./src/index');
 // nlp.verbose('tagger');
 
-const addConjugations = function(arr) {
-  let len = arr.length;
-  for(let i = 0; i < len; i += 1) {
-    let words = nlp(arr[i]).tag('#Verb').verbs().conjugate()[0];
-    arr.push(words.Infinitive);
-    arr.push(words.PresentTense);
-    arr.push(words.PastTense);
-    arr.push(words.Gerund);
-  }
-  return arr;
-};
 
-var verbs = ['leave', 'love', 'like', 'agree'];
-verbs = addConjugations(verbs);
+let res = nlp('Let me run get a price take about 5-10  minutes to process and then I\'ll send you what I got').sentences().isQuestion().out('array');
 
-var doc = nlp('i left this school');
-doc.replace(`(${verbs.join('|')})`, '_');
-console.log(doc.out());
+console.log(res);

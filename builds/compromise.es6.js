@@ -1,4 +1,4 @@
-/* compromise v11.12.1
+/* compromise v11.12.2
    http://compromise.cool
    MIT
 */
@@ -14,7 +14,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.12.1",
+  "version": "11.12.2",
   "main": "./builds/compromise.js",
   "types": "./compromise.d.ts",
   "repository": {
@@ -48,20 +48,20 @@ module.exports={
   },
   "devDependencies": {
     "amble": "0.0.6",
-    "babel-preset-env": "^1.7.0",
+    "babel-preset-env": "1.7.0",
     "babelify": "7.3.0",
     "babili": "0.1.4",
     "browserify": "13.0.1",
     "chalk": "2.4.1",
     "compromise-plugin": "0.0.8",
     "derequire": "2.0.6",
-    "eslint": "4.19.1",
+    "eslint": "5.1.0",
     "nyc": "11.8.0",
     "shelljs": "0.8.2",
     "tap-spec": "^5.0.0",
-    "tap-dancer": "0.0.3",
-    "tape": "4.9.0",
-    "uglify-js": "3.3.26"
+    "tap-dancer": "0.1.2",
+    "tape": "4.9.1",
+    "uglify-js": "3.4.9"
   },
   "license": "MIT"
 }
@@ -2616,33 +2616,59 @@ module.exports = Text.makeSubset(methods, find);
 'use strict';
 
 //is this sentence asking a question?
-const isQuestion = function(ts) {
-  //if it has a question mark..
+const isQuestion = function (ts) {
   let endPunct = ts.getPunctuation();
-  if (/\?/.test(endPunct) === true) {
-    return true;
-  }
-  //try to actually figure this out without a question-mark
-  if (ts.has('#QuestionWord')) {
-    return true;
-  }
-
-  //is it, do you - start of sentence
-  if (ts.has('^(do|does|did|is|was|can|could|will|would|may) #Noun')) {
-    return true;
-  }
-  //these are a little more loose..
-  if (ts.has('^(have|must) you')) {
-    return true;
-  }
-
   let clauses = ts.match('*').splitAfter('#Comma');
-  //is wayne gretskzy alive
-  if (clauses.has('(do|does|is|was) #Noun+ #Adverb? (#Adjective|#Infinitive)$')) {
-    return true;
+
+  switch (true) {
+    // If it has a question mark
+    // e.g., Is this the real life!?
+    case /\?/.test(endPunct) === true:
+      return true;
+
+    // Has ellipsis at the end means it's probably not a question
+    // e.g., Is this just fantasy...
+    case /\.\.$/.test(ts.out('text')):
+      return false;
+
+    // Starts with question word, but has a comma, so probably not a question
+    // e.g., Why are we caught in a land slide, no escape from reality
+    case ts.has('^#QuestionWord') && ts.has('#Comma'):
+      return false;
+
+    // Starts with a #QuestionWord
+    // e.g., What open your eyes look up to the skies and see
+    case ts.has('^#QuestionWord'):
+      return true;
+
+    // Second word is a #QuestionWord
+      // e.g., I'm what a poor boy
+      // case ts.has('^\w+\s#QuestionWord'):
+      // return true;
+
+    // is it, do you - start of sentence
+    // e.g., Do I need no sympathy
+    case ts.has('^(do|does|did|is|was|can|could|will|would|may) #Noun'):
+      return true;
+
+    // these are a little more loose..
+    // e.g., Must I be come easy come easy go
+    case ts.has('^(have|must) you'):
+      return true;
+
+    // Clause starts with a question word
+    // e.g., Anyway the wind blows, what doesn't really matter to me
+    case clauses.has('^#QuestionWord'):
+      return true;
+
+    //is wayne gretskzy alive
+    case clauses.has('(do|does|is|was) #Noun+ #Adverb? (#Adjective|#Infinitive)$'):
+      return true;
+
+    // Probably not a question
+    default:
+      return false;
   }
-  //not a question, then
-  return false;
 };
 module.exports = isQuestion;
 
@@ -7386,6 +7412,8 @@ const corrections = function(ts) {
     ts.match('#Noun #Actor').tag('Actor', 'thing-doer');
     //this rocks
     ts.match('(this|that) [#Plural]').tag('PresentTense', 'this-verbs');
+    //by a bear.
+    ts.match('#Determiner #Infinitive$').lastTerm().tag('Noun', 'a-inf');
     //the western line
     ts.match('#Determiner [(western|eastern|northern|southern|central)] #Noun').tag('Noun', 'western-line');
     ts.match('(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun').tag('Noun', 'technical-noun');
@@ -9923,7 +9951,7 @@ const match = _dereq_('./lib');
 const matchMethods = Terms => {
   const methods = {
     //support regex-like whitelist-match
-    match: function(reg, verbose) {
+    match: function (reg, verbose) {
       //fail-fast #1
       if (this.terms.length === 0) {
         return new Text([], this.world, this.parent);
@@ -9940,7 +9968,7 @@ const matchMethods = Terms => {
     },
 
     /**return first match */
-    matchOne: function(str) {
+    matchOne: function (str) {
       //fail-fast
       if (this.terms.length === 0) {
         return null;
@@ -9960,7 +9988,7 @@ const matchMethods = Terms => {
     },
 
     /**return first match */
-    has: function(str) {
+    has: function (str) {
       return this.matchOne(str) !== null;
     }
   };
@@ -12097,7 +12125,7 @@ const methods = {
   whitespace: r => {
     r.terms().list.forEach((ts, i) => {
       let t = ts.terms[0];
-      if (i > 0) {
+      if (i > 0 && !t.silent_term) {
         t.whitespace.before = ' ';
       } else if (i === 0) {
         t.whitespace.before = '';
@@ -12207,7 +12235,7 @@ const methods = {
 };
 
 const addMethods = Text => {
-  Text.prototype.normalize = function(options) {
+  Text.prototype.normalize = function (options) {
     let doc = this;
     //set defaults
     options = options || {};
@@ -12745,21 +12773,21 @@ const isQuestion = _dereq_('../subset/sentences/isQuestion');
 const addSubsets = Text => {
   //these subsets have no instance methods, so are simply a 'find' method.
   const subsets = {
-    clauses: function(n) {
+    clauses: function (n) {
       let r = this.splitAfter('#ClauseEnd');
       if (typeof n === 'number') {
         r = r.get(n);
       }
       return r;
     },
-    hashTags: function(n) {
+    hashTags: function (n) {
       let r = this.match('#HashTag').terms();
       if (typeof n === 'number') {
         r = r.get(n);
       }
       return r;
     },
-    organizations: function(n) {
+    organizations: function (n) {
       let r = this.splitAfter('#Comma');
       r = r.match('#Organization+');
       if (typeof n === 'number') {
@@ -12767,7 +12795,7 @@ const addSubsets = Text => {
       }
       return r;
     },
-    phoneNumbers: function(n) {
+    phoneNumbers: function (n) {
       let r = this.splitAfter('#Comma');
       r = r.match('#PhoneNumber+');
       if (typeof n === 'number') {
@@ -12775,7 +12803,7 @@ const addSubsets = Text => {
       }
       return r;
     },
-    places: function(n) {
+    places: function (n) {
       let r = this.splitAfter('#Comma');
       r = r.match('#Place+');
       if (typeof n === 'number') {
@@ -12783,7 +12811,7 @@ const addSubsets = Text => {
       }
       return r;
     },
-    quotations: function(n) {
+    quotations: function (n) {
       let matches = this.match('#Quotation+');
       let found = [];
       matches.list.forEach((ts) => {
@@ -12816,7 +12844,7 @@ const addSubsets = Text => {
       }
       return matches;
     },
-    topics: function(n) {
+    topics: function (n) {
       let r = this.clauses();
       // Find people, places, and organizations
       let yup = r.people();
@@ -12832,14 +12860,14 @@ const addSubsets = Text => {
       }
       return yup;
     },
-    urls: function(n) {
+    urls: function (n) {
       let r = this.match('#Url');
       if (typeof n === 'number') {
         r = r.get(n);
       }
       return r;
     },
-    questions: function(n) {
+    questions: function (n) {
       let r = this.all();
       if (typeof n === 'number') {
         r = r.get(n);
@@ -12847,7 +12875,7 @@ const addSubsets = Text => {
       let list = r.list.filter(ts => isQuestion(ts));
       return new Text(list, this.world, this.parent);
     },
-    statements: function(n) {
+    statements: function (n) {
       let r = this.all();
       if (typeof n === 'number') {
         r = r.get(n);
@@ -12855,7 +12883,7 @@ const addSubsets = Text => {
       let list = r.list.filter(ts => isQuestion(ts) === false);
       return new Text(list, this.world, this.parent);
     },
-    parentheses: function(n) {
+    parentheses: function (n) {
       let r = this.match('#Parentheses+');
       //split-up consecutive ones
       r = r.splitAfter('#EndBracket');

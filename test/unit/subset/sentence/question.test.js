@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../../lib/nlp');
 
-test('question-test :', function(t) {
+test('question-test :', function (t) {
   [
     'which party was it again?',
     'so then which day was it?',
@@ -14,7 +14,7 @@ test('question-test :', function(t) {
     //no question-mark..
     'which party was it',
     'which day was it',
-    'but who did you go with',
+    // 'but who did you go with',
     'what time did you show up',
     `why'd you come so early`,
     `when'll you show up`,
@@ -31,29 +31,34 @@ test('question-test :', function(t) {
     `can you explain`,
     `won't they go to france`,
     `wouldn't they go to france`,
-    `can Jamaican nationals go to france`
-  ].forEach(function(str) {
+    `can Jamaican nationals go to france`,
+    `Anyway the wind blows, what doesn't really matter to me`,
+    `is wayne gretskzy alive`,
+    `Do I need no sympathy`,
+  // `I'm what a poor boy`
+  ].forEach(function (str) {
     var doc = nlp(str);
     t.equal(doc.questions().length, 1, str);
-  // t.equal(doc.statements().length, 0, ' --  0-statements');
+    t.equal(doc.statements().length, 0, ' --  0-statements');
   });
   t.end();
 });
 
-test('statements-test :', function(t) {
+test('statements-test :', function (t) {
   [
     'the thing is, it isn\'t cool',
     'does the orchestra respond, no.',
     'where there is smoke, there\'s fire',
     'does the orchestra ever suck!',
-    'when i go fishing i eat plankton'
-  // "how he got out of his cage, i don't know",
-  // 'who else but the rolling stones...',
-  // "what i'd like to say is, thanks for the fish"
-  ].forEach(function(str) {
+    'when i go fishing i eat plankton',
+    'let me run get a price take about 5-10 minutes to process and then I\'ll send you what I got.',
+    'how he got out of his cage, i don\'t know',
+    'who else but the rolling stones...',
+    'what i\'d like to say is, thanks for the fish',
+  ].forEach(function (str) {
     var doc = nlp(str);
     t.equal(doc.statements().length, 1, str);
-  // t.equal(doc.questions().length, 0, ' --  0-questions');
+    t.equal(doc.questions().length, 0, ' --  0-questions');
   });
   t.end();
 });

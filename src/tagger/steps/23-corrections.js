@@ -102,6 +102,8 @@ const corrections = function(ts) {
     ts.match('#Noun #Actor').tag('Actor', 'thing-doer');
     //this rocks
     ts.match('(this|that) [#Plural]').tag('PresentTense', 'this-verbs');
+    //by a bear.
+    ts.match('#Determiner #Infinitive$').lastTerm().tag('Noun', 'a-inf');
     //the western line
     ts.match('#Determiner [(western|eastern|northern|southern|central)] #Noun').tag('Noun', 'western-line');
     ts.match('(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun').tag('Noun', 'technical-noun');

@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.12.1",
+  "version": "11.12.2",
   "main": "./builds/compromise.js",
   "types": "./compromise.d.ts",
   "repository": {
@@ -36,20 +36,20 @@
   },
   "devDependencies": {
     "amble": "0.0.6",
-    "babel-preset-env": "^1.7.0",
+    "babel-preset-env": "1.7.0",
     "babelify": "7.3.0",
     "babili": "0.1.4",
     "browserify": "13.0.1",
     "chalk": "2.4.1",
     "compromise-plugin": "0.0.8",
     "derequire": "2.0.6",
-    "eslint": "4.19.1",
+    "eslint": "5.1.0",
     "nyc": "11.8.0",
     "shelljs": "0.8.2",
     "tap-spec": "^5.0.0",
-    "tap-dancer": "0.0.3",
-    "tape": "4.9.0",
-    "uglify-js": "3.3.26"
+    "tap-dancer": "0.1.2",
+    "tape": "4.9.1",
+    "uglify-js": "3.4.9"
   },
   "license": "MIT"
 }

@@ -26,3 +26,12 @@ test('slashes-as-whitespace:', function(t) {
   t.equal(doc.out('text'), 'john is cool/fun', 'slash in output');
   t.end();
 });
+
+test('normalized whitespace', function(t) {
+  var doc = nlp(`It doesn't matter`);
+  doc.normalize({
+    contractions: false
+  });
+  t.equal(doc.text(), `it doesn't matter`, 'normalized contractionwhitespace');
+  t.end();
+});

@@ -22,7 +22,7 @@ const methods = {
   whitespace: r => {
     r.terms().list.forEach((ts, i) => {
       let t = ts.terms[0];
-      if (i > 0) {
+      if (i > 0 && !t.silent_term) {
         t.whitespace.before = ' ';
       } else if (i === 0) {
         t.whitespace.before = '';
@@ -132,7 +132,7 @@ const methods = {
 };
 
 const addMethods = Text => {
-  Text.prototype.normalize = function(options) {
+  Text.prototype.normalize = function (options) {
     let doc = this;
     //set defaults
     options = options || {};

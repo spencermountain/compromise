@@ -3,21 +3,21 @@ const isQuestion = require('../subset/sentences/isQuestion');
 const addSubsets = Text => {
   //these subsets have no instance methods, so are simply a 'find' method.
   const subsets = {
-    clauses: function(n) {
+    clauses: function (n) {
       let r = this.splitAfter('#ClauseEnd');
       if (typeof n === 'number') {
         r = r.get(n);
       }
       return r;
     },
-    hashTags: function(n) {
+    hashTags: function (n) {
       let r = this.match('#HashTag').terms();
       if (typeof n === 'number') {
         r = r.get(n);
       }
       return r;
     },
-    organizations: function(n) {
+    organizations: function (n) {
       let r = this.splitAfter('#Comma');
       r = r.match('#Organization+');
       if (typeof n === 'number') {
@@ -25,7 +25,7 @@ const addSubsets = Text => {
       }
       return r;
     },
-    phoneNumbers: function(n) {
+    phoneNumbers: function (n) {
       let r = this.splitAfter('#Comma');
       r = r.match('#PhoneNumber+');
       if (typeof n === 'number') {
@@ -33,7 +33,7 @@ const addSubsets = Text => {
       }
       return r;
     },
-    places: function(n) {
+    places: function (n) {
       let r = this.splitAfter('#Comma');
       r = r.match('#Place+');
       if (typeof n === 'number') {
@@ -41,7 +41,7 @@ const addSubsets = Text => {
       }
       return r;
     },
-    quotations: function(n) {
+    quotations: function (n) {
       let matches = this.match('#Quotation+');
       let found = [];
       matches.list.forEach((ts) => {
@@ -74,7 +74,7 @@ const addSubsets = Text => {
       }
       return matches;
     },
-    topics: function(n) {
+    topics: function (n) {
       let r = this.clauses();
       // Find people, places, and organizations
       let yup = r.people();
@@ -90,14 +90,14 @@ const addSubsets = Text => {
       }
       return yup;
     },
-    urls: function(n) {
+    urls: function (n) {
       let r = this.match('#Url');
       if (typeof n === 'number') {
         r = r.get(n);
       }
       return r;
     },
-    questions: function(n) {
+    questions: function (n) {
       let r = this.all();
       if (typeof n === 'number') {
         r = r.get(n);
@@ -105,7 +105,7 @@ const addSubsets = Text => {
       let list = r.list.filter(ts => isQuestion(ts));
       return new Text(list, this.world, this.parent);
     },
-    statements: function(n) {
+    statements: function (n) {
       let r = this.all();
       if (typeof n === 'number') {
         r = r.get(n);
@@ -113,7 +113,7 @@ const addSubsets = Text => {
       let list = r.list.filter(ts => isQuestion(ts) === false);
       return new Text(list, this.world, this.parent);
     },
-    parentheses: function(n) {
+    parentheses: function (n) {
       let r = this.match('#Parentheses+');
       //split-up consecutive ones
       r = r.splitAfter('#EndBracket');

@@ -10,9 +10,9 @@
     "url": "git://github.com/nlp-compromise/compromise.git"
   },
   "scripts": {
-    "test": "tape ./test/unit/**/*.test.js | tap-dancer",
-    "test:spec": "tape ./test/unit/**/*.test.js | tap-spec",
-    "testb": "TESTENV=prod tape ./test/unit/**/*.test.js | tap-spec",
+    "test": "tape \"./test/unit/**/*.test.js\" | tap-dancer",
+    "test:spec": "tape \"./test/unit/**/*.test.js\" | tap-spec",
+    "testb": "TESTENV=prod tape \"./test/unit/**/*.test.js\" | tap-spec",
     "buildTest": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
     "browserTest": "node ./scripts/browserTest.js",

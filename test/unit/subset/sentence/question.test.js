@@ -1,7 +1,7 @@
 var test = require('tape');
 var nlp = require('../../lib/nlp');
 
-test.only('question-test :', function (t) {
+test('question-test :', function (t) {
   [
     'which party was it again?',
     'so then which day was it?',

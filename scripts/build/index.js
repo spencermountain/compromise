@@ -1,5 +1,4 @@
 var fs = require('fs');
-var benchmark = require('../lib/benchmark');
 var exec = require('shelljs').exec;
 
 //pack the tries
@@ -21,9 +20,5 @@ var fileSize = function(src) {
 };
 
 //log the filesize and speed
-benchmark(obj => {
-  obj.size = fileSize('./builds/compromise.min.js');
-  var out = JSON.stringify(obj, null, 2);
-  console.log(out);
-  fs.writeFileSync('./scripts/lib/log.json', out);
-});
+let size = fileSize('./builds/compromise.min.js');
+console.log(size + 'kb');

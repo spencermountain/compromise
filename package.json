@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "amble": "0.0.6",
-    "babel-preset-env": "^1.7.0",
+    "babel-preset-env": "1.7.0",
     "babelify": "7.3.0",
     "babili": "0.1.4",
     "browserify": "13.0.1",
@@ -47,7 +47,7 @@
     "nyc": "11.8.0",
     "shelljs": "0.8.2",
     "tap-spec": "^5.0.0",
-    "tap-dancer": "0.1.1",
+    "tap-dancer": "0.1.2",
     "tape": "4.9.1",
     "uglify-js": "3.4.9"
   },

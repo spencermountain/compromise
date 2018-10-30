@@ -31,8 +31,8 @@ class Phrase {
     return terms.find(t => t.id === id) !== undefined;
   }
   text( options = {} ) {
-    return this.terms().reduce((str, t, i) => {
-      return str + t.toText(options, i);
+    return this.terms().reduce((str, t) => {
+      return str + t.toText(options);
     }, '');
   }
   normal() {

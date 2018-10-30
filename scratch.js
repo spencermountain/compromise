@@ -1,6 +1,5 @@
 var nlp = require('./src/index');
 // nlp.verbose(true);
 
-let doc = nlp(`one two three four.`);
-console.log(doc.found);
-console.log(doc.match('asdf').found);
+let doc = nlp(':cool: :wine_glass: yeah party');
+console.log(doc.match('#Emoji').debug().normal());

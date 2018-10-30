@@ -1,21 +1,46 @@
 var test = require('tape');
 var nlp = require('../lib/nlp');
 
-test('result methods', function(t) {
-  var text = 'this :cookie: <3 💯 so good. It is really nice. Yes it is <3';
+test('keyword emojis', function(t) {
+  [
+    ['he is so nice :heart:', ':heart:'],
+    [':cool: :wine_glass: yeah party', ':cool: :wine_glass:'],
+    ['to be or not to be: this is a question :cookie:', ':cookie:']
+  ].forEach(function(a) {
+    var have = nlp(a[0]).match('#Emoji').out('normal');
+    var msg = "have: '" + have + "'  want: '" + a[1] + "'";
+    t.equal(have, a[1], msg);
+  });
+  t.end();
+});
 
-  //has method
-  var m = nlp(text);
-  t.equal(m.match('#Emoji').found, true, 'nlp.has positive');
-  t.equal(m.match('#SportsTeam').found, false, 'nlp.has neg');
+test('unicode emojis', function(t) {
+  [
+    ['nice job 💯 ❤️', '💯 ❤️'],
+    ['💚 good job 🎇', '💚 🎇'],
+    ['visit Brunei', ''],
+    ['visit Brunei 🇧🇳', '🇧🇳'],
+    ['visit Brunei 🇧🇳🇧🇳🇧🇳', '🇧🇳🇧🇳🇧🇳']
+  ].forEach(function(a) {
+    var have = nlp(a[0]).match('#Emoji').out('normal');
+    var msg = "have: '" + have + "'  want: '" + a[1] + "'";
+    t.equal(have, a[1], msg);
+  });
+  t.end();
+});
 
-  //filter string
-  var small = m.if('#Emoji');
-  t.equal(small.out('normal'), 'this :cookie: <3 💯 so good. yes it is <3', 'nlp.filter string');
-
-  //filter method
-  small = m.ifNo('#Emoji');
-  t.equal(small.out('normal'), 'it is really nice.', 'nlp.filter method');
-
+test('emoticon emojis', function(t) {
+  [
+    ['nice job :)', ':)'],
+    [';) good work', ';)'],
+    [';( oh no :(', ';( :('],
+    ['to be: that is th3 question', ''],
+    ['</3 </3 </3 sad', '</3 </3 </3']
+    // ['</3</3', '</3</3'],
+  ].forEach(function(a) {
+    var have = nlp(a[0]).match('#Emoji').out('normal');
+    var msg = "have: '" + have + "'  want: '" + a[1] + "'";
+    t.equal(have, a[1], msg);
+  });
   t.end();
 });

@@ -17,10 +17,7 @@ class Term {
     this.next = null;
     this.id = makeId(this.normal);
   }
-  toText(options, index) {
-    if (index === 0) {
-      return this.text + this.postText;
-    }
+  toText() {
     return this.preText + this.text + this.postText;
   }
   json( options = {} ) {

@@ -6,7 +6,7 @@ module.exports = {
     return this.list.reduce((str, p) => str + p.text(options), '');
   },
   normal: function( options = {} ) {
-    return this.list.reduce((str, p) => str + p.normal(options), '');
+    return this.list.map((p) => p.normal(options)).join(' ');
   },
   json: function( options = {} ) {
     return this.list.map(p => p.json(options));

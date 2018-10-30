@@ -33,21 +33,18 @@ const isEmoticon = (t) => {
 };
 
 //these are somewhat popular.
-const tagEmoji = (terms, world) => {
-  for(let i = 0; i < terms.length; i += 1) {
-    let term = terms[i];
-    //test for :keyword: emojis
-    if (isCommaEmoji(term) === true) {
-      term.tag('Emoji', 'comma-emoji', world);
-    }
-    //test for unicode emojis
-    if (term.text.match(emojiReg)) {
-      term.tag('Emoji', 'unicode-emoji', world);
-    }
-    //test for emoticon ':)' emojis
-    if (isEmoticon(term) === true) {
-      term.tag('Emoji', 'emoticon-emoji', world);
-    }
+const tagEmoji = (term, world) => {
+  //test for :keyword: emojis
+  if (isCommaEmoji(term) === true) {
+    term.tag('Emoji', 'comma-emoji', world);
+  }
+  //test for unicode emojis
+  if (term.text.match(emojiReg)) {
+    term.tag('Emoji', 'unicode-emoji', world);
+  }
+  //test for emoticon ':)' emojis
+  if (isEmoticon(term) === true) {
+    term.tag('Emoji', 'emoticon-emoji', world);
   }
 };
 module.exports = tagEmoji;

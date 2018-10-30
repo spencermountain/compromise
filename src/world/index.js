@@ -59,7 +59,8 @@ class World {
     return {
       words: Object.keys(this.lexicon).length,
       plurals: Object.keys(this.plurals).length,
-      conjugations: Object.keys(this.conjugations).length
+      conjugations: Object.keys(this.conjugations).length,
+      compounds: Object.keys(this.compounds).length
     };
   }
 }

@@ -5,7 +5,6 @@ const genericFill = require('./02-generic');
 //we assume the input word is a proper infinitive
 const fastConjucate = function(str) {
   let found = checkSuffix(str);
-  found.Infinitive = str;
   //'buzzing'
   if (found.Gerund === undefined) {
     found.Gerund = genericFill.Gerund(str);

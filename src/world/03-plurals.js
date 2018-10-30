@@ -20,6 +20,7 @@ const unpackPlurals = function(str, lexicon) {
     }
     return h;
   }, {});
+  //add them both to our lexicon..
   addWords(plurals, lexicon);
   return plurals;
 };

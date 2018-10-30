@@ -1,3 +1,4 @@
+const conjugate = require('../transforms/conjugate');
 //supported verb forms:
 const forms = [
   null,
@@ -7,7 +8,7 @@ const forms = [
   'Participle',
 ];
 
-//put these words in our lexicon
+//simply put these words in our lexicon
 const addWords = function(obj, lex) {
   let keys = Object.keys(obj);
   for(let i = 0; i < keys.length; i += 1) {
@@ -23,10 +24,10 @@ const addWords = function(obj, lex) {
   }
 };
 
-//
-const unpackVerbs = function(str, lexicon) {
+//unpack this ad-hoc compression format for our verbs
+const unpackVerbs = function(str) {
   let verbs = str.split('|');
-  const conjugations = verbs.reduce((h, s) => {
+  return verbs.reduce((h, s) => {
     let parts = s.split(':');
     let prefix = parts[0];
     let ends = parts[1].split(',');
@@ -48,8 +49,30 @@ const unpackVerbs = function(str, lexicon) {
     }
     return h;
   }, {});
+};
+
+// automatically conjugate the non-irregular verbs
+const bulkUp = function(conjugations) {
+  const keys = Object.keys(conjugations);
+  for(let i = 0; i < keys.length; i += 1) {
+    let inf = keys[i];
+    let conj = conjugations[inf];
+    //do we need to add the rest ourselves?
+    if (conj.PastTense === undefined || conj.PresentTense === undefined || conj.Gerund === undefined) {
+      let more = conjugate(inf);
+      conjugations[inf] = Object.assign(conj, more);
+    }
+  }
+  return conjugations;
+};
+
+//bulk-up our irregular verb list
+const addVerbs = function(str, lexicon) {
+  let conjugations = unpackVerbs(str);
+  //ensure all the conjugations are there..
+  conjugations = bulkUp(conjugations);
   //add them all to the lexicon
   addWords(conjugations, lexicon);
   return conjugations;
 };
-module.exports = unpackVerbs;
+module.exports = addVerbs;

@@ -3,6 +3,7 @@ const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.s
 
 //generates a unique id for this term
 function makeId(str) {
+  str = str || '_';
   var text = str + '-';
   for (var i = 0; i < 7; i++) {
     text += chars[Math.floor(Math.random() * chars.length)];

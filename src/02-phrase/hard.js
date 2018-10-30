@@ -1,3 +1,4 @@
+const insertAfter = require('./insert/after');
 module.exports = {
 
   // append: function(phrase) {
@@ -35,13 +36,10 @@ module.exports = {
   //   this.length += phrase.length;
   //   return this;
   // },
-  addAt: function(id, termList) {
-    let terms = this.terms();
-    let index = terms.findIndex(t => t.id === id);
-    if (index === -1) {
-      console.warn('Could not find term with id: ' + id);
-      return this;
-    }
-  // console.log(index);
+  insertAt: function(termsList, id, doc) {
+    insertAfter(this, termsList, id);
+    //repair all parents, too
+    console.log(doc.parent());
+    return this;
   }
 };

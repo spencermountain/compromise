@@ -55,11 +55,11 @@ class World {
       this.addWords(words);
     }
     if (obj.plurals) {
-      let plurals = unpack.plurals(obj.plurals);
+      let plurals = unpack.plurals(obj.plurals, this.lexicon);
       this.plurals = Object.assign(this.plurals, plurals);
     }
     if (obj.conjugations) {
-      let conjugations = unpack.conjugations(obj.conjugations);
+      let conjugations = unpack.conjugations(obj.conjugations, this.lexicon);
       this.conjugations = Object.assign(this.conjugations, conjugations); //merge this one properly
     }
     if (obj.tags) {

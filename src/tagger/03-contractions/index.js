@@ -4,24 +4,25 @@ const checkIrregulars = require('./03-irregulars');
 const Term = require('../../03-term/Term');
 
 //stitch these words into our sentence
-const addTerms = function(term, phrase, arr, pool) {
+const addTerms = function(term, phrase, arr, doc) {
   //apply the first word to our term
   let first = arr.shift();
   term.implicit = first;
   let terms = arr.map((str) => {
     let t = new Term('');
     t.implicit = str;
-    pool.add(term);
+    phrase.pool.add(t);
     return t;
   });
-  phrase.addAt(term.id, terms);
+  // console.log(Object.keys(pool.words));
+  phrase.insertAt(terms, term.id, doc);
 //stitch it in there
 // terms[terms.length - 1].next = term.next;
 // term.next = terms[0].id;
 // console.log(terms);
 };
 
-//
+
 const contractions = function(doc) {
   doc.list.forEach((p) => {
     let terms = p.terms();
@@ -35,7 +36,7 @@ const contractions = function(doc) {
         }
       }
       if (found !== null) {
-        addTerms(term, p, found, p.pool);
+        addTerms(term, p, found, doc);
       }
     }
   });

@@ -1,6 +1,6 @@
 const fns = require('./fns');
 
-const addTag = function(t, tag, world, reason) {
+const addTag = function(t, tag, reason, world) {
   if (tag[0] === '#') {
     tag = tag.replace(/^#/, '');
   }
@@ -23,11 +23,11 @@ const addTag = function(t, tag, world, reason) {
       //add parent Tags
       if (tagset[tag].isA !== undefined) {
         let parentTag = tagset[tag].isA;
-        addTag(t, parentTag, world, '→'); //recursive
+        addTag(t, parentTag, '→', world); //recursive
       }
       //remove any contrary tags
       if (typeof tagset[tag].notA !== 'undefined') {
-        t.untag(tagset[tag].notA, world, '←');
+        t.unTag(tagset[tag].notA, '←', world);
       }
     }
   }
@@ -35,12 +35,12 @@ const addTag = function(t, tag, world, reason) {
 };
 
 //handle an array of tags
-const addTags = function(tags, world, reason) {
-  // console.log(Object.keys(world));
+const addTags = function(tags, reason, world) {
+
   if (fns.isArray(tags) === true) {
-    tags.forEach((tag) => addTag(this, tag, world, reason));
+    tags.forEach((tag) => addTag(this, tag, reason, world));
   } else {
-    addTag(this, tags, world, reason);
+    addTag(this, tags, reason, world);
   }
   return;
 };

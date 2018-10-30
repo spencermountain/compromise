@@ -1,23 +1,19 @@
 const doesMatch = require('./match');
-const tag = require('./tag/tag');
-const untag = require('./tag/untag');
 
 module.exports = {
-  tag: tag,
-  untag: untag,
 
-  hasComma: function() {
-    return this.postText.includes(',');
-  },
-  hasPeriod: function() {
-    return this.postText.includes('.');
-  },
-  hasExclamation: function() {
-    return this.postText.includes('!');
-  },
-  hasQuestionMark: function() {
-    return this.postText.includes('?');
-  },
+  // hasComma: function() {
+  //   return this.postText.includes(',');
+  // },
+  // hasPeriod: function() {
+  //   return this.postText.includes('.');
+  // },
+  // hasExclamation: function() {
+  //   return this.postText.includes('!');
+  // },
+  // hasQuestionMark: function() {
+  //   return this.postText.includes('?');
+  // },
   doesMatch: function(reg) {
     return doesMatch(this, reg);
   },
@@ -36,5 +32,5 @@ module.exports = {
     this.text = this.text.replace(/^ *[a-z]/, x => x.toUpperCase());
     this.tag('#TitleCase', 'toTitleCase');
     return this;
-  },
+  }
 };

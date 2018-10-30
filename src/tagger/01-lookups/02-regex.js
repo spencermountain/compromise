@@ -7,7 +7,7 @@ const tagPrefix = function(term, world) {
   let str = term.normal;
   for(let r = 0; r < startsWith.length; r += 1) {
     if (startsWith[r][0].test(str) === true) {
-      term.tag(startsWith[r][1], world, 'startsWith #' + r);
+      term.tag(startsWith[r][1], 'startsWith #' + r, world);
       continue;
     }
   }
@@ -20,7 +20,7 @@ const tagSuffix = function(term, world) {
     let regs = endsWith[char];
     for(let r = 0; r < regs.length; r += 1) {
       if (regs[r][0].test(str) === true) {
-        term.tag(regs[r][1], world, 'endsWith #' + r);
+        term.tag(regs[r][1], 'endsWith #' + r, world);
         continue;
       }
     }
@@ -38,7 +38,7 @@ const knownSuffixes = function(term, world) {
     let str = term.normal.substr(len - i, len);
     if (suffixList[str.length].hasOwnProperty(str) === true) {
       let tag = suffixList[str.length][str];
-      term.tag(tag, world, 'suffix -' + str);
+      term.tag(tag, 'suffix -' + str, world);
       break;
     }
   }

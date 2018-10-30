@@ -13,11 +13,17 @@ class Doc {
     if (world === undefined && from !== undefined) {
       world = from.world;
     }
+    //'world' getter
     Object.defineProperty(this, 'world', {
       enumerable: false,
       value: world
     });
+    //'found' getter
+    Object.defineProperty(this, 'found', {
+      get: () => this.list.length > 0
+    });
   }
+
   tagger() {
     return tagger(this);
   }

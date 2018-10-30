@@ -4,7 +4,6 @@ const getGreedy = function(terms, t, reg) {
     if (terms[t].doesMatch(reg) === false) {
       return t;
     }
-    console.log('       +', terms[t].normal);
   }
   return t;
 };
@@ -74,7 +73,7 @@ const tryHere = function(terms, regs) {
   }
   //we got to the end of the regs, and haven't failed!
   //return our result
-  console.log('✔️', t);
+  // console.log('✔️', t);
   return terms.slice(0, t);
 };
 module.exports = tryHere;

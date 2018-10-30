@@ -4,17 +4,17 @@ const tryMultiple = function(terms, t, world) {
   //try a two-word version
   let txt = terms[t].normal + ' ' + terms[t + 1].normal;
   if (compounds[txt] !== undefined && compounds.hasOwnProperty(txt) === true) {
-    terms[t].tag(compounds[txt], world, 'lexicon-two');
-    terms[t + 1].tag(compounds[txt], world, 'lexicon-two');
+    terms[t].tag(compounds[txt], 'lexicon-two', world);
+    terms[t + 1].tag(compounds[txt], 'lexicon-two', world);
     return true;
   }
   //try a three-word version?
   if (t + 2 < terms.length) {
     txt += ' ' + terms[t + 2].normal;
     if (compounds[txt] !== undefined && compounds.hasOwnProperty(txt) === true) {
-      terms[t].tag(compounds[txt], 'lexicon-three');
-      terms[t + 1].tag(compounds[txt], world, 'lexicon-three');
-      terms[t + 2].tag(compounds[txt], world, 'lexicon-three');
+      terms[t].tag(compounds[txt], 'lexicon-three', world);
+      terms[t + 1].tag(compounds[txt], 'lexicon-three', world);
+      terms[t + 2].tag(compounds[txt], 'lexicon-three', world);
       return true;
     }
   }
@@ -38,7 +38,7 @@ const checkLexicon = function(terms, world) {
     }
     //try one-word lexicon
     if (lex[str] !== undefined && lex.hasOwnProperty(str) === true) {
-      terms[t].tag(lex[str], world, 'lexicon');
+      terms[t].tag(lex[str], 'lexicon', world);
     }
   }
   return terms;

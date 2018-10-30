@@ -38,15 +38,15 @@ const tagEmoji = (terms, world) => {
     let term = terms[i];
     //test for :keyword: emojis
     if (isCommaEmoji(term) === true) {
-      term.tag('Emoji', world, 'comma-emoji');
+      term.tag('Emoji', 'comma-emoji', world);
     }
     //test for unicode emojis
     if (term.text.match(emojiReg)) {
-      term.tag('Emoji', world, 'unicode-emoji');
+      term.tag('Emoji', 'unicode-emoji', world);
     }
     //test for emoticon ':)' emojis
     if (isEmoticon(term) === true) {
-      term.tag('Emoji', world, 'emoticon-emoji');
+      term.tag('Emoji', 'emoticon-emoji', world);
     }
   }
 };

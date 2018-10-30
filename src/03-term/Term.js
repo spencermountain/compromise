@@ -1,5 +1,7 @@
 const makeId = require('./_id');
 const parseTerm = require('./parse');
+const tagAs = require('./tag/tag');
+const unTag = require('./tag/untag');
 
 class Term {
   constructor( text = '' ) {
@@ -15,8 +17,11 @@ class Term {
     this.next = null;
     this.id = makeId(this.normal);
   }
-  toText() {
-    return this.preText + this.text + this.postText + ' ';
+  toText(options, index) {
+    if (index === 0) {
+      return this.text + this.postText;
+    }
+    return this.preText + this.text + this.postText;
   }
   json( options = {} ) {
     let out = {};
@@ -44,6 +49,8 @@ Term.prototype.clone = function() {
   term.tags = this.tags.slice(0);
   return term;
 };
+Term.prototype.tag = tagAs;
+Term.prototype.unTag = unTag;
 
 const methods = [
   require('./easy'),

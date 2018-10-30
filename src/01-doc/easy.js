@@ -21,6 +21,19 @@ module.exports = {
   toUpperCase: function() {
     return eachTerm(this, 'toUpperCase');
   },
+  toCamelCase: function() {
+    this.toTitleCase();
+    this.list.forEach(p => {
+      p.terms().forEach((t, i) => {
+        if (i !== 0) {
+          t.preText = '';
+        }
+        t.postText = '';
+      });
+    });
+    this.tag('#CamelCase', 'toCamelCase');
+    return this;
+  },
   termList: function() {
     return this.list.reduce((arr, p) => {
       let terms = p.terms();
@@ -28,14 +41,5 @@ module.exports = {
       return arr;
     }, []);
   },
-  // output
-  text: function( options = {} ) {
-    return this.list.reduce((str, p) => str + p.text(options), '');
-  },
-  json: function( options = {} ) {
-    return this.list.map(p => p.json(options));
-  },
-  array: function( options = {} ) {
-    return this.list.map(p => p.text(options));
-  }
+
 };

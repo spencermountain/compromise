@@ -1,5 +1,5 @@
-const checkSuffix = require('./01-trySuffix');
-const genericFill = require('./02-genericFill');
+const checkSuffix = require('./01-suffixes');
+const genericFill = require('./02-generic');
 
 //we run this on every verb in the lexicon, so please keep it fast
 //we assume the input word is a proper infinitive

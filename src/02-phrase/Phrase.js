@@ -26,12 +26,9 @@ class Phrase {
     }
     return terms;
   }
-  hasTerm(ids) {
+  hasId(id) {
     let terms = this.terms();
-    if (typeof ids === 'string') {
-      ids = [ids];
-    }
-    return terms.find(t => ids.includes(t.id)) !== undefined;
+    return terms.find(t => t.id === id) !== undefined;
   }
   text( options = {} ) {
     return this.terms().reduce((str, t) => {

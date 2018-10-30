@@ -1,6 +1,6 @@
 var nlp = require('./src/index');
 nlp.verbose(true);
 
-let doc = nlp(`undermine, undermining, undermined, undermines`);
-console.log(doc.world.stats());
+let doc = nlp(`one two three four.`);
+doc.match('two').append('and a').debug();
 doc.debug();

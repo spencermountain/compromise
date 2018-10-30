@@ -1,22 +1,15 @@
-const insertAfter = require('./insert/after');
+const join = require('./join');
+// const insertAfter = require('./insert/after');
 module.exports = {
 
-  // append: function(phrase) {
-  //   let terms = this.terms();
-  //   let newTerms = phrase.terms();
-  //   //hook up the two 'next' ids
-  //   let tmp = terms[terms.length - 1].next;
-  //   terms[terms.length - 1].next = phrase.start;
-  //   newTerms[newTerms.length - 1].next = tmp;
-  //   //hook it up the two 'prev' ids, too
-  //   // tmp = phrase.terms()[0].prev;
-  //   // phrase.terms()[0].prev = terms[terms.length - 1].id;
-  //   // newTerms[0].prev = tmp;
-  //
-  //   //include it in our phrase
-  //   this.length += phrase.length;
-  //   return this;
-  // },
+  //accept a phrase object and put it at the end
+  append: function(phrase, doc) {
+    join(this, phrase, doc);
+    return this;
+  },
+  prepend: function(phrase, doc) {
+    return join(phrase, this, doc);
+  },
   // prepend: function(phrase) {
   //   let terms = this.terms();
   //   let newTerms = phrase.terms();

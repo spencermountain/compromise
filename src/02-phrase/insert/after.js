@@ -13,9 +13,9 @@ const stretchPhrase = function(phrase, termList) {
   return phrase;
 };
 
-const addTermsAfter = function(phrase, termList, id) {
+const addTermsAfter = function(phrase, termList) {
   let original = phrase.terms();
-  let index = lib.findIndex(original, id);
+  let index = termList.length - 1;
   stitchIn(original, index, termList);
   phrase = stretchPhrase(phrase, termList);
   return phrase;

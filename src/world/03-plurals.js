@@ -1,4 +1,5 @@
 
+//put them in our lexicon
 const addWords = function(plurals, lex) {
   let keys = Object.keys(plurals);
   for(let i = 0; i < keys.length; i += 1) {
@@ -8,6 +9,7 @@ const addWords = function(plurals, lex) {
   }
 };
 
+//pull-apart our ad-hoc compression format for irregular plurals
 const unpackPlurals = function(str, lexicon) {
   const plurals = str.split(/,/g).reduce((h, s) => {
     let arr = s.split(/\|/g);

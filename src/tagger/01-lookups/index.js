@@ -9,12 +9,21 @@ const lookups = function(doc) {
   let world = doc.world;
   //our list of known-words
   checkLexicon(terms, world);
-  //maybe we can guess
-  checkRegex(terms, world);
-  //or maybe some helpful punctuation
-  checkPunctuation(terms, world);
-  // ¯\_(ツ)_/¯
-  checkEmoji(terms, world);
+
+  //try these other methods
+  for(let i = 0; i < terms.length; i += 1) {
+    let term = terms[i];
+    //don't overwrite existing tags
+    if (Object.keys(term.tags).length > 0) {
+      continue;
+    }
+    //maybe we can guess
+    checkRegex(term, world);
+    //or maybe some helpful punctuation
+    checkPunctuation(term, world);
+    // ¯\_(ツ)_/¯
+    checkEmoji(term, world);
+  }
   return doc;
 };
 module.exports = lookups;

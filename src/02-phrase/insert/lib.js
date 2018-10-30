@@ -7,11 +7,11 @@ const findIndex = function(terms, id) {
 };
 
 //overwrite backward-links
-const repairBackWard = function(term) {
-  for(let i = terms.length - 1; i > 0; i -= 1) {
-    console.log(terms[i], i);
-  }
-};
+// const repairBackWard = function(term) {
+//   for(let i = terms.length - 1; i > 0; i -= 1) {
+//     console.log(terms[i], i);
+//   }
+// };
 
 module.exports = {
   findIndex: findIndex

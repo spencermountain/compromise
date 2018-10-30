@@ -1,7 +1,5 @@
-// var nlp = require('./src/index');
-var inflect = require('./src/transforms/inflect/index');
-// nlp.verbose(false);
+var nlp = require('./src/index');
+nlp.verbose(true);
 
-// let doc = nlp(`i didn't know. I wouldn't see tuxedo`);
-// doc.debug();
-console.log(inflect('church'));
+let doc = nlp(`undermine, undermining, undermined, undermines`);
+doc.debug();

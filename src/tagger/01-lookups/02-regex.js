@@ -45,11 +45,9 @@ const knownSuffixes = function(term, world) {
 };
 
 //all-the-way-down!
-const checkRegex = function(terms, world) {
-  for(let i = 0; i < terms.length; i += 1) {
-    tagPrefix(terms[i], world);
-    tagSuffix(terms[i], world);
-    knownSuffixes(terms[i], world);
-  }
+const checkRegex = function(term, world) {
+  tagPrefix(term, world);
+  tagSuffix(term, world);
+  knownSuffixes(term, world);
 };
 module.exports = checkRegex;

@@ -39,7 +39,7 @@ module.exports = {
   insertAt: function(termsList, id, doc) {
     insertAfter(this, termsList, id);
     //repair all parents, too
-    console.log(doc.parent());
+    // console.log(doc.parent());
     return this;
   }
 };

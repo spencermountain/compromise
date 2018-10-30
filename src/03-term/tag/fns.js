@@ -7,7 +7,7 @@ const padEnd = function(str, width) {
 };
 
 exports.logTag = function(t, tag, reason) {
-  let log = '\x1b[33m' + padEnd(t.normal, 8) + '\x1b[0m + \x1b[32m' + tag + '\x1b[0m ';
+  let log = '\x1b[33m' + padEnd(t.normal, 15) + '\x1b[0m + \x1b[32m' + tag + '\x1b[0m ';
   if (reason) {
     log = padEnd(log, 35) + ' ' + reason + '';
   }

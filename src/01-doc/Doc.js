@@ -1,11 +1,11 @@
-const matchAll = require("./match");
-const tagger = require("../tagger");
+const matchAll = require('./match');
+const tagger = require('../tagger');
 
 class Doc {
   constructor(list, from, world) {
     this.list = list;
     //quiet these properties in console.logs
-    Object.defineProperty(this, "from", {
+    Object.defineProperty(this, 'from', {
       enumerable: false,
       value: from
     });
@@ -13,7 +13,7 @@ class Doc {
     if (world === undefined && from !== undefined) {
       world = from.world;
     }
-    Object.defineProperty(this, "world", {
+    Object.defineProperty(this, 'world', {
       enumerable: false,
       value: world
     });
@@ -61,19 +61,19 @@ Doc.prototype.match = function(str) {
 };
 
 const methods = [
-  require("./easy"),
-  require("./hard"),
-  require("./utilities"),
-  require("./out")
+  require('./easy'),
+  require('./hard'),
+  require('./utilities'),
+  require('./out')
 ];
 methods.forEach(obj => Object.assign(Doc.prototype, obj));
 
 //fancy match statements
-const sub = require("../subs");
-const Nouns = sub.buildNoun(Doc);
-Doc.prototype.nouns = function() {
-  let matches = sub.findNouns(this);
-  return new Nouns(matches.list, this);
-};
+// const sub = require("../subs");
+// const Nouns = sub.buildNoun(Doc);
+// Doc.prototype.nouns = function() {
+//   let matches = sub.findNouns(this);
+//   return new Nouns(matches.list, this);
+// };
 
 module.exports = Doc;

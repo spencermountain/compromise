@@ -1,11 +1,11 @@
 const defaultData = require('./_data');
 const defaultTags = require('./tags');
-const unpack = {
-  words: require('efrt-unpack'),
-  conjugations: require('./conjugations'),
-  plurals: require('./plurals'),
-  tags: require('./addTags')
-};
+const efrt = require('efrt-unpack');
+const addWords = require('./01-addWords');
+const addConjugations = require('./02-conjugations');
+const addPlurals = require('./03-plurals');
+const addTags = require('./04-addTags');
+
 let isVerbose = false;
 
 //  ¯\_(:/)_/¯
@@ -30,20 +30,7 @@ class World {
   isVerbose() {
     return isVerbose;
   }
-  //sort words into compound/single words
-  addWords(obj) {
-    const words = Object.keys(obj);
-    for (let i = 0; i < words.length; i += 1) {
-      let str = words[i];
-      if (str.indexOf(' ') === -1) {
-        this.lexicon[str] = obj[str];
-      } else {
-        let w = str.split(' ')[0];
-        this.hasCompound[w] = true; //cache for quick-lookups
-        this.compounds[str] = obj[str];
-      }
-    }
-  }
+
   //augment our world with this new one
   plugin(x) {
     let obj = x;
@@ -51,19 +38,19 @@ class World {
       obj = JSON.parse(x);
     }
     if (obj.words) {
-      let words = unpack.words(obj.words);
-      this.addWords(words);
+      let words = efrt(obj.words);
+      addWords(this, words);
     }
     if (obj.plurals) {
-      let plurals = unpack.plurals(obj.plurals, this.lexicon);
+      let plurals = addPlurals(obj.plurals, this.lexicon);
       this.plurals = Object.assign(this.plurals, plurals);
     }
     if (obj.conjugations) {
-      let conjugations = unpack.conjugations(obj.conjugations, this.lexicon);
+      let conjugations = addConjugations(obj.conjugations, this.lexicon);
       this.conjugations = Object.assign(this.conjugations, conjugations); //merge this one properly
     }
     if (obj.tags) {
-      let tags = unpack.tags(obj.tags);
+      let tags = addTags(obj.tags);
       this.tags = Object.assign(this.tags, tags);
     }
   }

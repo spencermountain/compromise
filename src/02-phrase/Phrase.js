@@ -74,6 +74,15 @@ Phrase.prototype.match = function(str) {
   });
   return matches;
 };
+// Phrase.prototype.fromId = function(id) {
+//   if (!this.pool.get(id)) {
+//     return null;
+//   }
+//   return new Phrase(id, 1, this.pool);
+// };
+// Phrase.prototype.build = function(id, length) {
+//   return new Phrase(id, length, this.pool);
+// };
 
 const methods = [
   require('./hard'),

@@ -12,9 +12,9 @@ const addWhitespace = function(two) {
 const stitchIn = function(first, two) {
   let end = first[first.length - 1];
   let afterId = end.next;
-  //stitch our first term in
+  //connect ours in ([original] → [ours])
   end.next = two[0].id;
-  //stich the end in
+  //stich the end in  ([ours] -> [after])
   two[two.length - 1].next = afterId;
 };
 

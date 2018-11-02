@@ -127,6 +127,15 @@ const find = function(r, n) {
   r = r.match('#Value+ #Unit?');
   // r = r.match('#Value+ #Unit?');
 
+  //"50 83"
+  if (r.has('#NumericValue #NumericValue')) {
+    //a comma may mean two numbers
+    if (r.has('#Value #Comma #Value')) {
+      r.splitAfter('#Comma');
+    } else {
+      r.splitAfter('#NumericValue');
+    }
+  }
   //three-length
   if (r.has('#Value #Value #Value') && !r.has('#Multiple')) {
     //twenty-five-twenty
@@ -178,10 +187,6 @@ const find = function(r, n) {
   //5-8
   if (r.has('#NumberRange')) {
     r.splitAfter('#NumberRange');
-  }
-  //a comma may mean two numbers
-  if (r.has('^#Value #Comma #Value$') === true) {
-    r.splitAfter('#Comma');
   }
   if (typeof n === 'number') {
     r = r.get(n);

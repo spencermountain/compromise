@@ -26,6 +26,9 @@ const mainTag = (t) => {
   if (t.tags.Verb) {
     return 'Verb';
   }
+  if (t.tags.Value) {
+    return 'Value';
+  }
   return null;
 };
 
@@ -57,16 +60,20 @@ const isList = (ts, i) => {
       }
       if (count > 0 && hasConjunction) { //is this the end of the list?
         ts.slice(start, i).tag('List');
-        return;
+        return true;
       }
     }
     sinceComma += 1;
     //have we gone too far without a comma?
     if (sinceComma > 5) {
-      return;
+      return false;
+    }
+    //this one, not a clause..
+    if (tag === 'Value') {
+      return true;
     }
   }
-  return;
+  return false;
 };
 
 const commaStep = function(ts) {
@@ -87,6 +94,7 @@ const commaStep = function(ts) {
       t.tag('ClauseEnd', 'clause-elipses');
       continue;
     }
+
     //support ' - ' clause
     if (ts.terms[i + 1] && ts.terms[i + 1].whitespace.before.match(/ - /)) {
       t.tag('ClauseEnd', 'hypen-clause');
@@ -107,9 +115,11 @@ const commaStep = function(ts) {
         continue;
       }
       //like 'cold, wet hands'
-      isList(ts, i);
+      let found = isList(ts, i);
       //otherwise, it's a phrasal comma, like 'you must, if you think so'
-      t.tags.ClauseEnd = true;
+      if (!found) {
+        t.tag('ClauseEnd', 'phrasal-comma');
+      }
     }
   }
   return ts;

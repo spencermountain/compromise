@@ -9,7 +9,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.12.2",
+  "version": "11.12.3",
   "main": "./builds/compromise.js",
   "types": "./compromise.d.ts",
   "repository": {
@@ -3331,6 +3331,15 @@ var find = function find(r, n) {
   r = r.match('#Value+ #Unit?');
   // r = r.match('#Value+ #Unit?');
 
+  //"50 83"
+  if (r.has('#NumericValue #NumericValue')) {
+    //a comma may mean two numbers
+    if (r.has('#Value #Comma #Value')) {
+      r.splitAfter('#Comma');
+    } else {
+      r.splitAfter('#NumericValue');
+    }
+  }
   //three-length
   if (r.has('#Value #Value #Value') && !r.has('#Multiple')) {
     //twenty-five-twenty
@@ -3379,10 +3388,6 @@ var find = function find(r, n) {
   //5-8
   if (r.has('#NumberRange')) {
     r.splitAfter('#NumberRange');
-  }
-  //a comma may mean two numbers
-  if (r.has('^#Value #Comma #Value$') === true) {
-    r.splitAfter('#Comma');
   }
   if (typeof n === 'number') {
     r = r.get(n);
@@ -6439,6 +6444,9 @@ var mainTag = function mainTag(t) {
   if (t.tags.Verb) {
     return 'Verb';
   }
+  if (t.tags.Value) {
+    return 'Value';
+  }
   return null;
 };
 
@@ -6470,16 +6478,20 @@ var isList = function isList(ts, i) {
       if (count > 0 && hasConjunction) {
         //is this the end of the list?
         ts.slice(start, i).tag('List');
-        return;
+        return true;
       }
     }
     sinceComma += 1;
     //have we gone too far without a comma?
     if (sinceComma > 5) {
-      return;
+      return false;
+    }
+    //this one, not a clause..
+    if (tag === 'Value') {
+      return true;
     }
   }
-  return;
+  return false;
 };
 
 var commaStep = function commaStep(ts) {
@@ -6500,6 +6512,7 @@ var commaStep = function commaStep(ts) {
       t.tag('ClauseEnd', 'clause-elipses');
       continue;
     }
+
     //support ' - ' clause
     if (ts.terms[i + 1] && ts.terms[i + 1].whitespace.before.match(/ - /)) {
       t.tag('ClauseEnd', 'hypen-clause');
@@ -6520,9 +6533,11 @@ var commaStep = function commaStep(ts) {
         continue;
       }
       //like 'cold, wet hands'
-      isList(ts, _i);
+      var found = isList(ts, _i);
       //otherwise, it's a phrasal comma, like 'you must, if you think so'
-      _t.tags.ClauseEnd = true;
+      if (!found) {
+        _t.tag('ClauseEnd', 'phrasal-comma');
+      }
     }
   }
   return ts;
@@ -9170,7 +9185,7 @@ module.exports = serverDebug;
 'use strict';
 // const endPunct = /([^\/,:;.()!?]{0,1})([\/,:;.()!?]+)$/i;
 
-var endPunct = /([a-z ])([,:;.!?]+)$/i; //old
+var endPunct = /([a-z0-9 ])([,:;.!?]+)$/i; //old
 
 var addMethods = function addMethods(Term) {
   var methods = {

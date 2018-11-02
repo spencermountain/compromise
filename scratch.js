@@ -1,6 +1,6 @@
 var nlp = require('./src/index');
 // nlp.verbose(true);
 
-let doc = nlp(`one two three four`);
-doc.match('one').prepend('zero'); //.debug();
-doc.debug();
+let doc = nlp(`before james middle then james after`);
+// doc.nouns().debug();
+doc.splitOn('james').debug();

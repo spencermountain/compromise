@@ -1,4 +1,4 @@
-const matchAll = require('./match');
+const matchMethods = require('./match');
 const tagger = require('../tagger');
 
 class Doc {
@@ -60,11 +60,7 @@ class Doc {
   }
 }
 
-//return a new Doc, with us as a parent
-Doc.prototype.match = function(str) {
-  let matches = matchAll(this, str);
-  return new Doc(matches, this, this.world);
-};
+Doc = matchMethods(Doc);
 
 const methods = [
   require('./easy'),
@@ -75,11 +71,22 @@ const methods = [
 methods.forEach(obj => Object.assign(Doc.prototype, obj));
 
 //fancy match statements
-// const sub = require("../subs");
-// const Nouns = sub.buildNoun(Doc);
-// Doc.prototype.nouns = function() {
-//   let matches = sub.findNouns(this);
-//   return new Nouns(matches.list, this);
-// };
+const quick = require('./selections/quick');
+Object.keys(quick).forEach((k) => {
+  Doc.prototype[k] = function() {
+    let matches = quick[k](this);
+    return new Doc(matches.list, this, this.world);
+  };
+});
+
+//ones with subclasses
+const selections = require('./selections');
+Object.keys(selections).forEach((k) => {
+  const Sub = selections[k].subclass(Doc);
+  Doc.prototype[k] = function() {
+    let matches = selections[k].find(this);
+    return new Sub(matches.list, this, this.world);
+  };
+});
 
 module.exports = Doc;

@@ -74,15 +74,30 @@ Phrase.prototype.match = function(str) {
   });
   return matches;
 };
-// Phrase.prototype.fromId = function(id) {
-//   if (!this.pool.get(id)) {
-//     return null;
-//   }
-//   return new Phrase(id, 1, this.pool);
-// };
-// Phrase.prototype.build = function(id, length) {
-//   return new Phrase(id, length, this.pool);
-// };
+//turn this phrase into 3
+Phrase.prototype.splitOn = function(p) {
+  console.log(p);
+  let terms = this.terms();
+  let result = [];
+  let index = terms.findIndex(t => t.id === p.start);
+  if (index === -1) {
+    return result;
+  }
+  let start = terms.slice(0, index);
+  let match = terms.slice(index, index + p.length);
+  let end = terms.slice(index + p.length, terms.length);
+  //make all three sections into phrase-objects
+  if (start.length > 0) {
+    result.push(new Phrase(start[0].id, start.length, this.pool));
+  }
+  if (match.length > 0) {
+    result.push(new Phrase(match[0].id, match.length, this.pool));
+  }
+  if (end.length > 0) {
+    result.push(new Phrase(end[0].id, end.length, this.pool));
+  }
+  return result;
+};
 
 const methods = [
   require('./hard'),

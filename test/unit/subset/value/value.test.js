@@ -141,7 +141,21 @@ test('value-unit:', function(t) {
   });
   t.end();
 });
-//
+
+test('number splits', function(t) {
+  var arr = [
+    '12, 34, 56',
+    '12 34 56',
+    '12, 34, 56',
+    '1 2 4'
+  ];
+  arr.forEach((str) => {
+    var tokens = nlp(str).values().out('array');
+    t.equal(tokens.length, 3, str);
+  });
+  t.end();
+});
+
 // test('value-measurement:', function(t) {
 //   [
 //     ['five hundred feet', 'Distance'],

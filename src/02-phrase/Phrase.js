@@ -27,6 +27,10 @@ class Phrase {
     }
     return terms;
   }
+  lastTerm() {
+    let terms = this.terms();
+    return terms[terms.length - 1];
+  }
   hasId(id) {
     let terms = this.terms();
     return terms.find(t => t.id === id) !== undefined;

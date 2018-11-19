@@ -1,9 +1,14 @@
 const failFast = require('./01-failFast');
 const tryMatch = require('./02-tryMatch');
+const syntax = require('../../01-doc/match/syntax');
 
 
 //returns a simple array of arrays
 const matchAll = function(p, regs) {
+  //if we forgot to parse it..
+  if (typeof regs === 'string') {
+    regs = syntax(regs);
+  }
   let terms = p.terms();
   //try to dismiss it, at-once
   if (failFast(terms, regs) === true) {

@@ -60,6 +60,10 @@ class Doc {
   }
 }
 
+Doc.prototype.buildFrom = function(list) {
+  return new Doc(list, this, this.world);
+};
+
 Doc = matchMethods(Doc);
 
 const methods = [

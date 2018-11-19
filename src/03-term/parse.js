@@ -26,6 +26,11 @@ const parseTerm = (str) => {
     postText = found;
     return '';
   });
+  //we went too far..
+  if (str === '') {
+    str = preText.replace(/[.?!]/, ''); //.trim(); //huh?
+    preText = '';
+  }
   return {
     text: str,
     normal: normalize(str),

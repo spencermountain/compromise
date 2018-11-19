@@ -1,4 +1,5 @@
 const matchAll = require('./match');
+const notMatch = require('./match/not');
 
 class Phrase {
   constructor(id, length, pool) {
@@ -30,13 +31,12 @@ class Phrase {
     let terms = this.terms();
     return terms.find(t => t.id === id) !== undefined;
   }
-  text( options = {} ) {
-    return this.terms().reduce((str, t) => {
-      return str + t.toText(options);
+  out( options = {} ) {
+    let terms = this.terms();
+    return terms.reduce((str, t, i) => {
+      options.last = i === terms.length - 1;
+      return str + t.out(options);
     }, '');
-  }
-  normal() {
-    return this.terms().map((t) => t.normal).join(' ');
   }
   json( options = {} ) {
     let out = {};
@@ -74,9 +74,16 @@ Phrase.prototype.match = function(str) {
   });
   return matches;
 };
+Phrase.prototype.not = function(str) {
+  let matches = notMatch(this, str);
+  //make them phrase objects
+  matches = matches.map((list) => {
+    return new Phrase(list[0].id, list.length, this.pool);
+  });
+  return matches;
+};
 //turn this phrase into 3
 Phrase.prototype.splitOn = function(p) {
-  console.log(p);
   let terms = this.terms();
   let result = [];
   let index = terms.findIndex(t => t.id === p.start);

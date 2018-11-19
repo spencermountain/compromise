@@ -3,16 +3,17 @@ const debug = require('./debug');
 // output
 module.exports = {
   text: function( options = {} ) {
-    return this.list.reduce((str, p) => str + p.text(options), '');
+    return this.list.reduce((str, p) => str + p.out(options), '');
   },
   normal: function( options = {} ) {
-    return this.list.map((p) => p.normal(options)).join(' ');
+    options.normal = true;
+    return this.list.map((p) => p.out(options)).join(' ');
   },
   json: function( options = {} ) {
     return this.list.map(p => p.json(options));
   },
   array: function( options = {} ) {
-    return this.list.map(p => p.text(options));
+    return this.list.map(p => p.out(options));
   },
   debug: function() {
     debug(this);

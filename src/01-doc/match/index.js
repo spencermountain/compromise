@@ -1,23 +1,25 @@
 const parseSyntax = require('./syntax');
 
-// all the real match logic is in ./phrase/match
-// here, we simply parse the expression
-const matchAll = function(doc, reg) {
-  //parse-up the input expression
-  let regs = parseSyntax(reg);
-  //try expression on each phrase
-  let matches = doc.list.reduce((arr, p) => {
-    return arr.concat(p.match(regs));
-  }, []);
-  console.log(matches);
-  return matches;
-};
-
 const matchMethods = function(Doc) {
   const methods = {
     //return a new Doc, with us as a parent
     match : function(reg) {
-      let matches = matchAll(this, reg);
+      //parse-up the input expression
+      let regs = parseSyntax(reg);
+      //try expression on each phrase
+      let matches = this.list.reduce((arr, p) => {
+        return arr.concat(p.match(regs));
+      }, []);
+      return new Doc(matches, this, this.world);
+    },
+    //return everything that's not this.
+    not : function(reg) {
+      //parse-up the input expression
+      let regs = parseSyntax(reg);
+      //try expression on each phrase
+      let matches = this.list.reduce((arr, p) => {
+        return arr.concat(p.not(regs));
+      }, []);
       return new Doc(matches, this, this.world);
     },
     matchOne: function(reg) {
@@ -44,6 +46,16 @@ const matchMethods = function(Doc) {
       let regs = parseSyntax(reg);
       let found = this.list.find((p) => p.match(regs).length > 0);
       return found !== undefined;
+    },
+    if : function(reg) {
+      let regs = parseSyntax(reg);
+      let found = this.list.filter((p) => p.match(regs).length > 0);
+      return new Doc(found, this, this.world);
+    },
+    ifNo : function(reg) {
+      let regs = parseSyntax(reg);
+      let found = this.list.filter((p) => p.match(regs).length === 0);
+      return new Doc(found, this, this.world);
     }
   };
   //aliases

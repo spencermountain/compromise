@@ -1,8 +1,8 @@
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2017 MIT
-"use strict";
-const abbreviations = Object.keys(require("../world/more-data/abbreviations"));
+'use strict';
+const abbreviations = Object.keys(require('../world/more-data/abbreviations'));
 // \u203D - Interrobang
 // \u2E18 - Inverted Interrobang
 // \u203C - Double Exclamation Mark
@@ -13,8 +13,8 @@ const abbreviations = Object.keys(require("../world/more-data/abbreviations"));
 
 //regs-
 const abbrev_reg = new RegExp(
-  "\\b(" + abbreviations.join("|") + ")[.!?\u203D\u2E18\u203C\u2047-\u2049] *$",
-  "i"
+  '\\b(' + abbreviations.join('|') + ')[.!?\u203D\u2E18\u203C\u2047-\u2049] *$',
+  'i'
 );
 const acronym_reg = /[ .][A-Z]\.? *$/i;
 const ellipses_reg = /(?:\u2026|\.{2,}) *$/;
@@ -23,7 +23,7 @@ const ellipses_reg = /(?:\u2026|\.{2,}) *$/;
 const new_line = /((?:\r?\n|\r)+)/;
 const naiive_sentence_split = /(\S.+?[.!?\u203D\u2E18\u203C\u2047-\u2049])(?=\s+|$)/g;
 
-const letter_regex = /[a-z]/i;
+const letter_regex = /[a-z0-9\u0000-\u007F]/i; //support an all-unicode sentence, i guess
 const not_ws_regex = /\S/;
 
 // Start with a regex:
@@ -42,13 +42,13 @@ const naiive_split = function(text) {
 };
 
 const sentence_parser = function(text) {
-  text = text || "";
+  text = text || '';
   text = String(text);
   let sentences = [];
   // First do a greedy-split..
   let chunks = [];
   // Ensure it 'smells like' a sentence
-  if (!text || typeof text !== "string" || not_ws_regex.test(text) === false) {
+  if (!text || typeof text !== 'string' || not_ws_regex.test(text) === false) {
     return sentences;
   }
   // Start somewhere:
@@ -56,7 +56,7 @@ const sentence_parser = function(text) {
   // Filter-out the grap ones
   for (let i = 0; i < splits.length; i++) {
     let s = splits[i];
-    if (s === undefined || s === "") {
+    if (s === undefined || s === '') {
       continue;
     }
     //this is meaningful whitespace
@@ -80,16 +80,12 @@ const sentence_parser = function(text) {
   for (let i = 0; i < chunks.length; i++) {
     let c = chunks[i];
     //should this chunk be combined with the next one?
-    if (
-      chunks[i + 1] &&
-      letter_regex.test(c) &&
-      (abbrev_reg.test(c) || acronym_reg.test(c) || ellipses_reg.test(c))
-    ) {
-      chunks[i + 1] = c + (chunks[i + 1] || "");
+    if (chunks[i + 1] && letter_regex.test(c) && (abbrev_reg.test(c) || acronym_reg.test(c) || ellipses_reg.test(c))) {
+      chunks[i + 1] = c + (chunks[i + 1] || '');
     } else if (c && c.length > 0 && letter_regex.test(c)) {
       //this chunk is a proper sentence..
       sentences.push(c);
-      chunks[i] = "";
+      chunks[i] = '';
     }
   }
   //if we never got a sentence, return the given text

@@ -1,3 +1,4 @@
+data
 demo
 scripts
 src
@@ -9,4 +10,5 @@ test
 TODO.MD
 viz
 changelog.md
+fixme.md
 scratch.js

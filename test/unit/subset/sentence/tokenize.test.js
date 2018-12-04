@@ -36,6 +36,7 @@ test('sentence tokenize:', function(t) {
     ['I made $5.60 today in 1 hour of work.  The E.M.T.\'s were on time, but only barely.', 2],
 
     ['In some notations, A or B is shown as A|B. In others A or B is shown as A||B.', 2],
+    ['hello. 1234. ëėö.', 3],
 
     // Linux EOL
     ['Hi there.\nEveryone wins.', 2],

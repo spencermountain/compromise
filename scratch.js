@@ -1,7 +1,6 @@
 var nlp = require('./src/index');
 // nlp.verbose('tagger');
 
-var doc = nlp('hello. 1234. ëėö.');
-
-doc.debug();
-// console.log(doc.terms().data());
+const doc = nlp('I’m lookin’ for Amanda Hugginkiss');
+const past = doc.sentences().toPastTense().out('text');
+console.log(past);

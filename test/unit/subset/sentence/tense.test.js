@@ -10,7 +10,6 @@ test('sentence-change-tense:', function(t) {
     ['i usually use the stairs', 'i usually used the stairs', 'i usually will use the stairs'],
     ['he finishes first', 'he finished first', 'he will finish first'],
     ['our house looks great', 'our house looked great', 'our house will look great'],
-
     //infinitives
     // ['he does what he can to stop', 'he did what he could to stop', 'he will do what he can to stop'],
     ['goes to sleep', 'went to sleep', 'will go to sleep'],
@@ -158,6 +157,8 @@ test('contraction-cases', function(t) {
     var str = nlp(a[0]).sentences().toPresentTense().out();
     t.equal(str, a[1], 'present-tense ' + a.join(' - '));
   });
+  var str = nlp('I’m lookin’ for Amanda Hugginkiss').sentences().toPastTense().out();
+  t.equal(str, 'i looked for Amanda Hugginkiss', 'present-tense slang');
   t.end();
 });
 

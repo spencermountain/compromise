@@ -18,6 +18,15 @@ module.exports = [
     }
   },
   {
+    reg: /([aeiou]k)in$/i,
+    repl: {
+      pr: '$1s',
+      pa: '$1ed',
+      gr: '$1ing',
+      ar: '$1er'
+    }
+  },
+  {
     reg: /(end)$/i,
     repl: {
       pr: '$1s',

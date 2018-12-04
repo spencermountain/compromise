@@ -71,7 +71,8 @@ module.exports = {
   ],
   n: [
     [/.[lsrnpb]ian$/, Adj],
-    [/[^aeiou]ician$/, Actor]
+    [/[^aeiou]ician$/, Actor],
+    [/okin$/, 'Gerund']
   ],
   o: [
     [/^no+$/, Exp], //noooo

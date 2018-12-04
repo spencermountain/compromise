@@ -9,7 +9,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.12.3",
+  "version": "11.12.4",
   "main": "./builds/compromise.js",
   "types": "./compromise.d.ts",
   "repository": {
@@ -46,17 +46,17 @@ module.exports={
     "@babel/preset-env": "7.2.0",
     "amble": "0.0.7",
     "babelify": "10.0.0",
-    "babili": "^0.1.4",
+    "babili": "0.1.4",
     "browserify": "16.2.3",
     "chalk": "2.4.1",
     "codecov": "3.1.0",
     "compromise-plugin": "0.0.8",
     "derequire": "2.0.6",
-    "eslint": "5.1.0",
-    "nyc": "^13.1.0",
+    "eslint": "5.9.0",
+    "nyc": "13.1.0",
     "shelljs": "0.8.3",
     "tap-dancer": "0.1.2",
-    "tap-spec": "^5.0.0",
+    "tap-spec": "5.0.0",
     "tape": "4.9.1",
     "uglify-js": "3.4.9"
   },
@@ -2801,54 +2801,57 @@ var isQuestion = function isQuestion(ts) {
   var endPunct = ts.getPunctuation();
   var clauses = ts.match('*').splitAfter('#Comma');
 
-  switch (true) {
-    // If it has a question mark
-    // e.g., Is this the real life!?
-    case /\?/.test(endPunct) === true:
-      return true;
-    // Has ellipsis at the end means it's probably not a question
-    // e.g., Is this just fantasy...
+  if (/\?/.test(endPunct) === true) {
+    return true;
+  } // Has ellipsis at the end means it's probably not a question
+  // e.g., Is this just fantasy...
 
-    case /\.\.$/.test(ts.out('text')):
-      return false;
-    // Starts with question word, but has a comma, so probably not a question
-    // e.g., Why are we caught in a land slide, no escape from reality
 
-    case ts.has('^#QuestionWord') && ts.has('#Comma'):
-      return false;
-    // Starts with a #QuestionWord
-    // e.g., What open your eyes look up to the skies and see
+  if (/\.\.$/.test(ts.out('text'))) {
+    return false;
+  } // Starts with question word, but has a comma, so probably not a question
+  // e.g., Why are we caught in a land slide, no escape from reality
 
-    case ts.has('^#QuestionWord'):
-      return true;
-    // Second word is a #QuestionWord
-    // e.g., I'm what a poor boy
-    // case ts.has('^\w+\s#QuestionWord'):
-    // return true;
-    // is it, do you - start of sentence
-    // e.g., Do I need no sympathy
 
-    case ts.has('^(do|does|did|is|was|can|could|will|would|may) #Noun'):
-      return true;
-    // these are a little more loose..
-    // e.g., Must I be come easy come easy go
+  if (ts.has('^#QuestionWord') && ts.has('#Comma')) {
+    return false;
+  } // Starts with a #QuestionWord
+  // e.g., What open your eyes look up to the skies and see
 
-    case ts.has('^(have|must) you'):
-      return true;
-    // Clause starts with a question word
-    // e.g., Anyway the wind blows, what doesn't really matter to me
 
-    case clauses.has('^#QuestionWord'):
-      return true;
-    //is wayne gretskzy alive
+  if (ts.has('^#QuestionWord')) {
+    return true;
+  } // Second word is a #QuestionWord
+  // e.g., I'm what a poor boy
+  // case ts.has('^\w+\s#QuestionWord'):
+  // return true;
+  // is it, do you - start of sentence
+  // e.g., Do I need no sympathy
 
-    case clauses.has('(do|does|is|was) #Noun+ #Adverb? (#Adjective|#Infinitive)$'):
-      return true;
-    // Probably not a question
 
-    default:
-      return false;
-  }
+  if (ts.has('^(do|does|did|is|was|can|could|will|would|may) #Noun')) {
+    return true;
+  } // these are a little more loose..
+  // e.g., Must I be come easy come easy go
+
+
+  if (ts.has('^(have|must) you')) {
+    return true;
+  } // Clause starts with a question word
+  // e.g., Anyway the wind blows, what doesn't really matter to me
+
+
+  if (clauses.has('^#QuestionWord')) {
+    return true;
+  } //is wayne gretskzy alive
+
+
+  if (clauses.has('(do|does|is|was) #Noun+ #Adverb? (#Adjective|#Infinitive)$')) {
+    return true;
+  } // Probably not a question
+
+
+  return false;
 };
 
 module.exports = isQuestion;
@@ -4703,6 +4706,14 @@ module.exports = [{
   repl: {
     pr: '$1s',
     pa: 'unk',
+    gr: '$1ing',
+    ar: '$1er'
+  }
+}, {
+  reg: /([aeiou]k)in$/i,
+  repl: {
+    pr: '$1s',
+    pa: '$1ed',
     gr: '$1ing',
     ar: '$1er'
   }
@@ -7794,7 +7805,9 @@ var corrections = function corrections(ts) {
     //remind john that
     ts.match('#Verb #Adverb? #Noun (that|which)').lastTerm().tag('Preposition', 'that-prep'); //that car goes
 
-    ts.match('that #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner'); //things that provide
+    ts.match('that #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner'); //work, which has been done.
+
+    ts.match('#Comma [which] (#Pronoun|#Verb)').tag('Preposition', 'which-copula'); //things that provide
     // ts.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
   } //Determiner-signals
 
@@ -8753,7 +8766,7 @@ module.exports = {
   l: [[/.[gl]ial$/, Adj], [/.[^aeiou]ful$/, Adj], [/.[nrtumcd]al$/, Adj], [/.[^aeiou][ei]al$/, Adj]],
   m: [[/.[^aeiou]ium$/, Sing], [/[^aeiou]ism$/, Sing], [/^h*u*m+$/, Exp], //mmmmmmm / ummmm / huuuuuummmmmm
   [/^\d+ ?[ap]m$/, 'Date']],
-  n: [[/.[lsrnpb]ian$/, Adj], [/[^aeiou]ician$/, Actor]],
+  n: [[/.[lsrnpb]ian$/, Adj], [/[^aeiou]ician$/, Actor], [/okin$/, 'Gerund']],
   o: [[/^no+$/, Exp], //noooo
   [/^(yo)+$/, Exp], //yoyo
   [/^woo+[pt]?$/, Exp] //woo
@@ -10208,8 +10221,8 @@ module.exports = {
 'use strict'; //punctuation regs-  are we having fun yet?
 
 var before = /^([\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]|\x2D+|\.\.+|\/|"|"|\uFF02|'|\u201C|\u2018|\u201F|\u201B|\u201E|\u2E42|\u201A|\xAB|\u2039|\u2035|\u2036|\u2037|\u301D|`|\u301F)+/;
-var after = /([\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]+|\x2D+|\.\.+|"|"|\uFF02|'|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\xBB|\u203A|\u2032|\u2033|\u2034|\u301E|\xB4)+$/;
-var afterSoft = /([\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]+|\x2D+|\.\.+|"|"|\uFF02|'|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\xBB|\u203A|\u2032|\u2033|\u2034|\u301E|\xB4)+[ !,\.;\?]*$/;
+var after = /([\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]+|\x2D+|\.\.+|"|"|\uFF02|'|\u201D|\u2019|\xBB|\u203A|\u2032|\u2033|\u2034|\u301E|\xB4)+$/;
+var afterSoft = /([\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]+|\x2D+|\.\.+|"|"|\uFF02|'|\u201D|\u2019|\xBB|\u203A|\u2032|\u2033|\u2034|\u301E|\xB4)+[ !,\.;\?]*$/;
 var minusNumber = /^( *)-(\$|€|¥|£)?([0-9])/; //seperate the 'meat' from the trailing/leading whitespace.
 //works in concert with ./src/text/tokenize.js
 
@@ -13838,9 +13851,9 @@ module.exports = addSubsets;
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2017 MIT
-"use strict";
+'use strict';
 
-var abbreviations = Object.keys(_dereq_("../world/more-data/abbreviations")); // \u203D - Interrobang
+var abbreviations = Object.keys(_dereq_('../world/more-data/abbreviations')); // \u203D - Interrobang
 // \u2E18 - Inverted Interrobang
 // \u203C - Double Exclamation Mark
 // \u2047 - Double Question Mark
@@ -13849,13 +13862,14 @@ var abbreviations = Object.keys(_dereq_("../world/more-data/abbreviations")); //
 // \u2026 - Ellipses Character
 //regs-
 
-var abbrev_reg = new RegExp("\\b(" + abbreviations.join("|") + ")[.!?\u203D\u2E18\u203C\u2047-\u2049] *$", "i");
+var abbrev_reg = new RegExp('\\b(' + abbreviations.join('|') + ")[.!?\u203D\u2E18\u203C\u2047-\u2049] *$", 'i');
 var acronym_reg = /[ .][A-Z]\.? *$/i;
 var ellipses_reg = /(?:\u2026|\.{2,}) *$/; // Match different formats of new lines. (Mac: \r, Linux: \n, Windows: \r\n)
 
 var new_line = /((?:\r?\n|\r)+)/;
 var naiive_sentence_split = /(\S.+?[.!?\u203D\u2E18\u203C\u2047-\u2049])(?=\s+|$)/g;
-var letter_regex = /[a-z]/i;
+var letter_regex = /[a-z0-9\u0000-\u007F]/i; //support an all-unicode sentence, i guess
+
 var not_ws_regex = /\S/; // Start with a regex:
 
 var naiive_split = function naiive_split(text) {
@@ -13876,13 +13890,13 @@ var naiive_split = function naiive_split(text) {
 };
 
 var sentence_parser = function sentence_parser(text) {
-  text = text || "";
+  text = text || '';
   text = String(text);
   var sentences = []; // First do a greedy-split..
 
   var chunks = []; // Ensure it 'smells like' a sentence
 
-  if (!text || typeof text !== "string" || not_ws_regex.test(text) === false) {
+  if (!text || typeof text !== 'string' || not_ws_regex.test(text) === false) {
     return sentences;
   } // Start somewhere:
 
@@ -13892,7 +13906,7 @@ var sentence_parser = function sentence_parser(text) {
   for (var i = 0; i < splits.length; i++) {
     var s = splits[i];
 
-    if (s === undefined || s === "") {
+    if (s === undefined || s === '') {
       continue;
     } //this is meaningful whitespace
 
@@ -13919,11 +13933,11 @@ var sentence_parser = function sentence_parser(text) {
     var c = chunks[_i]; //should this chunk be combined with the next one?
 
     if (chunks[_i + 1] && letter_regex.test(c) && (abbrev_reg.test(c) || acronym_reg.test(c) || ellipses_reg.test(c))) {
-      chunks[_i + 1] = c + (chunks[_i + 1] || "");
+      chunks[_i + 1] = c + (chunks[_i + 1] || '');
     } else if (c && c.length > 0 && letter_regex.test(c)) {
       //this chunk is a proper sentence..
       sentences.push(c);
-      chunks[_i] = "";
+      chunks[_i] = '';
     }
   } //if we never got a sentence, return the given text
 

@@ -23,6 +23,8 @@ const corrections = function(ts) {
     ts.match('#Verb #Adverb? #Noun (that|which)').lastTerm().tag('Preposition', 'that-prep');
     //that car goes
     ts.match('that #Noun #Verb').firstTerm().tag('Determiner', 'that-determiner');
+    //work, which has been done.
+    ts.match('#Comma [which] (#Pronoun|#Verb)').tag('Preposition', 'which-copula');
   //things that provide
   // ts.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
   }

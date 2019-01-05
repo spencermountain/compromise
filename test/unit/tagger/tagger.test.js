@@ -56,6 +56,7 @@ test('=Tagger=', function(T) {
       ['the rocks dude', ['Determiner', 'Plural', 'Noun']],
       ['these rocks dude', ['Determiner', 'Plural', 'Noun']],
       ['those rocks dude', ['Determiner', 'Plural', 'Noun']],
+      ['the test string', ['Determiner', 'Noun', 'Noun']],
 
       //people
       ['John swim', ['Person', 'Verb']],

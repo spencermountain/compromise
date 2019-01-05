@@ -35,3 +35,15 @@ test('normalized whitespace', function(t) {
   t.equal(doc.text(), `it doesn't matter`, 'normalized contractionwhitespace');
   t.end();
 });
+
+test('punctuation-whitespace-mixing', function(t) {
+  let doc = nlp(`we released, "Square Up".`);
+  let arr = doc.terms().map(obj => obj.text());
+  t.deepEqual(arr, ['we', ' released,', ' "Square', ' Up".'], 'punctuation 1');
+
+  doc = nlp('you said ... ?');
+  arr = doc.terms().map(obj => obj.text());
+  t.deepEqual(arr, ['you', ' said ... ?'], 'punctuation 2');
+
+  t.end();
+});

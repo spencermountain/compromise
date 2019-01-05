@@ -10,6 +10,10 @@ const addMethods = Term => {
       if (m) {
         return m[2];
       }
+      m = this.whitespace.after.match(endPunct);
+      if (m) {
+        return m[2];
+      }
       return null;
     },
 

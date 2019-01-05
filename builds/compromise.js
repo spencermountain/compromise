@@ -11,6 +11,7 @@ module.exports={
   "description": "natural language processing in the browser",
   "version": "11.12.5",
   "main": "./builds/compromise.js",
+  "unpkg": "./builds/compromise.min.js",
   "types": "./compromise.d.ts",
   "repository": {
     "type": "git",
@@ -10227,10 +10228,11 @@ module.exports = wrap;
 
 module.exports = {
   fns: _dereq_('../fns'),
-  log: _dereq_('../log')
+  log: _dereq_('../log'),
+  tags: _dereq_('../tags')
 };
 
-},{"../fns":3,"../log":6}],162:[function(_dereq_,module,exports){
+},{"../fns":3,"../log":6,"../tags":137}],162:[function(_dereq_,module,exports){
 'use strict'; //punctuation regs-  are we having fun yet?
 
 var before = /^([\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]|\x2D+|\.\.+|\/|"|"|\uFF02|'|\u201C|\u2018|\u201F|\u201B|\u201E|\u2E42|\u201A|\xAB|\u2039|\u2035|\u2036|\u2037|\u301D|`|\u301F)+/; // const after = /(\s+|-+|\.\.+|"|\u0022|\uFF02|\u0027|\u201D|\u2019|\u00BB|\u203A|\u2032|\u2033|\u2034|\u301E|\u00B4)+$/u;

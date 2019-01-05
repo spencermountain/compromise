@@ -1,4 +1,5 @@
 module.exports = {
   fns: require('../fns'),
-  log: require('../log')
+  log: require('../log'),
+  tags: require('../tags')
 };

@@ -4,6 +4,7 @@
   "description": "natural language processing in the browser",
   "version": "11.12.5",
   "main": "./builds/compromise.js",
+  "unpkg": "./builds/compromise.min.js",
   "types": "./compromise.d.ts",
   "repository": {
     "type": "git",

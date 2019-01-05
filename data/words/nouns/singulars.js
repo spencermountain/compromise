@@ -90,6 +90,7 @@ module.exports = [
   'sky',
   'student',
   'stuff',
+  'string',
   'super bowl',
   'system',
   't rex',

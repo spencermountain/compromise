@@ -38,7 +38,9 @@ const corrections = function(ts) {
     ts.match('(a|an) [#Gerund]').tag('Adjective', 'correction-a|an');
     ts.match('(a|an) #Adjective (#Infinitive|#PresentTense)').term(2).tag('Noun', 'correction-a|an2');
     //some pressing issues
-    ts.match('(some [#Verb] #Plural').tag('Noun', 'correction-determiner6');
+    ts.match('some [#Verb] #Plural').tag('Noun', 'correction-determiner6');
+    //the test string
+    ts.match('#Determiner [#Infinitive] #Noun').tag('Noun', 'correction-determiner7');
     //the orange.
     ts.match('#Determiner #Adjective$').not('(#Comparative|#Superlative)').term(1).tag('Noun', 'the-adj-1');
     //the orange is

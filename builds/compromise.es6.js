@@ -1,4 +1,4 @@
-/* compromise v11.12.5
+/* compromise v11.12.6
    http://compromise.cool
    MIT
 */
@@ -14,7 +14,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.12.5",
+  "version": "11.12.6",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
   "types": "./compromise.d.ts",

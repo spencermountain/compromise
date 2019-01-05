@@ -35,6 +35,7 @@ module.exports = {
     [/[aeiou][^aeiou]id$/, Adj],
     [/[aeiou]c?ked$/, Past], //hooked
     [/[^aeiou][aeiou][tvx]ed$/, Past], //boxed
+    [/[aeiou]red$/, Past], //cheered
     [/.[vrl]id$/, Adj]
   ],
   e: [

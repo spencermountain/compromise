@@ -189,7 +189,6 @@ module.exports = [
   'graceful',
   'grateful',
   'gratis',
-  'guarded',
   'guilty',
   'gung ho',
   'half',

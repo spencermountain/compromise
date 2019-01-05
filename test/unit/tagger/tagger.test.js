@@ -74,6 +74,10 @@ test('=Tagger=', function(T) {
       ['he is walking', ['Pronoun', 'Copula', 'Gerund']],
       ['walking is fun', ['Activity', 'Copula', 'Adjective']],
       ['walking\'s great', ['Activity', 'Copula', 'Adjective']],
+      ['jack cheered', ['Person', 'PastTense']],
+      ['jack guarded', ['Person', 'PastTense']],
+      ['jack is guarded', ['Person', 'Copula', 'Adjective']],
+      ['jack seems guarded', ['Person', 'Verb', 'Adjective']],
       //more
       ['there are reasons', ['Noun', 'Copula', 'Plural']],
       ['there were many walks', ['Noun', 'Copula', 'Adjective', 'Plural']],

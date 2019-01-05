@@ -142,6 +142,8 @@ const corrections = function(ts) {
     ts.match('#Possessive [#Verb]').tag('Noun', 'correction-possessive');
     //there are reasons
     ts.match('there (are|were) #Adjective? [#PresentTense]').tag('Plural', 'there-are');
+    //jack seems guarded
+    ts.match('#Singular (seems|appears) #Adverb? [#PastTense$]').tag('Adjective', 'seems-filled');
 
     if (ts.has('(who|what|where|why|how|when)')) {
       //the word 'how'
@@ -160,6 +162,7 @@ const corrections = function(ts) {
       word = ts.match('#QuestionWord #Noun #Adverb? #Infinitive not? #Gerund').firstTerm();
       word.unTag('QuestionWord').tag('Conjunction', 'when i go fishing');
     }
+
     if (ts.has('#Copula')) {
       //is eager to go
       ts.match('#Copula #Adjective to #Verb').match('#Adjective to').tag('Verb', 'correction');
@@ -171,6 +174,8 @@ const corrections = function(ts) {
       ts.match('#Copula (pretty|dead|full|well) (#Adjective|#Noun)').notIf('#Comma').tag('#Copula #Adverb #Adjective', 'sometimes-adverb');
       //sometimes not-adverbs
       ts.match('#Copula [(just|alone)$]').tag('Adjective', 'not-adverb');
+      //jack is guarded
+      ts.match('#Singular is #Adverb? [#PastTense$]').tag('Adjective', 'is-filled');
     }
     //went to sleep
     // ts.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');

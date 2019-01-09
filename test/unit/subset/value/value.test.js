@@ -122,7 +122,7 @@ test('nounit:', function(t) {
 test('value-unit:', function(t) {
   [
     ['five hundred feet', 'feet'],
-    // ['fifty hertz', 'hertz'],
+    ['fifty hertz', 'hertz'],
     ['100 dollars', 'dollars'],
     // ['$100', 'dollar'],
     // ['¥2.5', 'yen'],
@@ -134,7 +134,16 @@ test('value-unit:', function(t) {
     ['3 grams', 'grams'],
     ['2 inches', 'inches'],
     ['10 grams of sugar', 'grams'],
-    ['fifty inches of snow', 'inches']
+    ['fifty inches of snow', 'inches'],
+    ['7 years', 'years'],
+    ['7.5 days', 'days'],
+
+    ['7th year', 'year'],
+    ['7th years', ''],
+    ['1 day', 'day'],
+    ['one book', 'book'],
+    ['first book', 'book'],
+    ['7 day', ''],
   ].forEach(function(a) {
     var r = nlp(a[0]).values().units();
     str_test(r.out('normal'), a[0], a[1], t);

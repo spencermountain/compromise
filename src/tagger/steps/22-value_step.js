@@ -18,20 +18,14 @@ const value_step = function(ts) {
           t.tag('NumericValue', 'NumericValue-regex');
         }
       }
-    //text/number
-    // if (t.tags.TextValue === undefined && t.tags.NumericValue === undefined) {
-    //   if (hasText.test(t.normal) === true) {
-    //     t.tag('TextValue', 'TextValue-regex');
-    //   } else {
-    //     t.tag('NumericValue', 'NumericValue-regex');
-    //   }
-    // }
     }
   }
   //5 books
-  ts.match('#Cardinal #Plural').lastTerm().tag('Unit', 'cardinal-plural');
+  ts.match('#Cardinal [#Plural]').tag('Unit', 'cardinal-plural');
   //5th book
-  ts.match('#Ordinal #Singular').lastTerm().tag('Unit', 'ordinal-singular');
+  ts.match('#Ordinal [#Singular]').tag('Unit', 'ordinal-singular');
+  //1 book
+  ts.match('(one|first|1|1st) [#Singular]').tag('Unit', 'one-singular');
   return ts;
 };
 

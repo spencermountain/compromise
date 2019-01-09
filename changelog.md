@@ -7,6 +7,8 @@ compromise uses semver, and pushes to npm frequently
 * **Patch** is an obvious, non-controversial bugfix
 
 ### v11
+##### 11.13.0
+- support singular units in `.value()`
 ##### 11.11.0
 - `.quotations()` no-longer return repeated results for nested quotes
 - simplify quotation tagset

@@ -1,7 +1,7 @@
 var fs = require('fs');
 var exec = require('shelljs').exec;
 var chalk = require('chalk');
-var UglifyJS = require('uglify-js');
+var terser = require('terser');
 
 var pkg = require('../../package.json');
 var fileSize = require('../lib/filesize');
@@ -26,7 +26,7 @@ exec(cmd);
 
 var code = fs.readFileSync(es5).toString();
 
-var result = UglifyJS.minify(code, {
+var result = terser.minify(code, {
   output: {
     beautify: false,
     preamble: banner

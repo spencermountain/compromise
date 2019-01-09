@@ -1,4 +1,4 @@
-/* compromise v11.12.6
+/* compromise v11.13.0
    http://compromise.cool
    MIT
 */
@@ -14,7 +14,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.12.6",
+  "version": "11.13.0",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
   "types": "./compromise.d.ts",
@@ -45,26 +45,24 @@ module.exports={
     "compromise.d.ts"
   ],
   "dependencies": {
-    "efrt-unpack": "2.0.3"
+    "efrt-unpack": "2.0.3",
+    "terser": "^3.14.1"
   },
   "devDependencies": {
-    "@babel/core": "7.2.0",
-    "@babel/preset-env": "7.2.0",
+    "@babel/core": "7.2.2",
+    "@babel/preset-env": "7.2.3",
     "amble": "0.0.7",
     "babelify": "10.0.0",
     "babili": "0.1.4",
     "browserify": "16.2.3",
-    "chalk": "2.4.1",
+    "chalk": "2.4.2",
     "codecov": "3.1.0",
     "compromise-plugin": "0.0.8",
     "derequire": "2.0.6",
-    "eslint": "5.9.0",
     "nyc": "13.1.0",
     "shelljs": "0.8.3",
     "tap-dancer": "0.1.2",
-    "tap-spec": "5.0.0",
-    "tape": "4.9.1",
-    "uglify-js": "3.4.9"
+    "tape": "4.9.2"
   },
   "license": "MIT"
 }
@@ -7319,20 +7317,14 @@ const value_step = function(ts) {
           t.tag('NumericValue', 'NumericValue-regex');
         }
       }
-    //text/number
-    // if (t.tags.TextValue === undefined && t.tags.NumericValue === undefined) {
-    //   if (hasText.test(t.normal) === true) {
-    //     t.tag('TextValue', 'TextValue-regex');
-    //   } else {
-    //     t.tag('NumericValue', 'NumericValue-regex');
-    //   }
-    // }
     }
   }
   //5 books
-  ts.match('#Cardinal #Plural').lastTerm().tag('Unit', 'cardinal-plural');
+  ts.match('#Cardinal [#Plural]').tag('Unit', 'cardinal-plural');
   //5th book
-  ts.match('#Ordinal #Singular').lastTerm().tag('Unit', 'ordinal-singular');
+  ts.match('#Ordinal [#Singular]').tag('Unit', 'ordinal-singular');
+  //1 book
+  ts.match('(one|first|1|1st) [#Singular]').tag('Unit', 'one-singular');
   return ts;
 };
 

@@ -12,7 +12,8 @@ const oneLetters = {
 };
 
 //
-const checkPunctuation = function(t, world) {
+const checkPunctuation = function(terms, i, world) {
+  let t = terms[i];
   let str = t.text;
   //check titlecase (helpful)
   if (titleCase.test(str) === true) {

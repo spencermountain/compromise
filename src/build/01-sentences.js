@@ -14,6 +14,7 @@ const naiive_sentence_split = /(\S.+?[.!?\u203D\u2E18\u203C\u2047-\u2049])(?=\s+
 
 const letter_regex = /[a-z]/i;
 const not_ws_regex = /\S/;
+const startWhitespace = /^\W+/;
 
 // Start with a regex:
 const naiive_split = function(text) {
@@ -42,7 +43,7 @@ const splitSentences = function(text) {
   }
   // Start somewhere:
   let splits = naiive_split(text);
-  // Filter-out the grap ones
+  // Filter-out the crap ones
   for (let i = 0; i < splits.length; i++) {
     let s = splits[i];
     if (s === undefined || s === '') {
@@ -69,11 +70,7 @@ const splitSentences = function(text) {
   for (let i = 0; i < chunks.length; i++) {
     let c = chunks[i];
     //should this chunk be combined with the next one?
-    if (
-      chunks[i + 1] &&
-      letter_regex.test(c) &&
-      (abbrev_reg.test(c) || acronym_reg.test(c) || ellipses_reg.test(c))
-    ) {
+    if (chunks[i + 1] && letter_regex.test(c) && (abbrev_reg.test(c) || acronym_reg.test(c) || ellipses_reg.test(c))) {
       chunks[i + 1] = c + (chunks[i + 1] || '');
     } else if (c && c.length > 0 && letter_regex.test(c)) {
       //this chunk is a proper sentence..
@@ -84,6 +81,16 @@ const splitSentences = function(text) {
   //if we never got a sentence, return the given text
   if (sentences.length === 0) {
     return [text];
+  }
+
+  //move whitespace to the ends of sentences, when possible
+  //['hello',' world'] -> ['hello ','world']
+  for(let i = 1; i < sentences.length; i += 1) {
+    let ws = sentences[i].match(startWhitespace);
+    if (ws !== null) {
+      sentences[i - 1] += ws[0];
+      sentences[i] = sentences[i].replace(startWhitespace, '');
+    }
   }
   return sentences;
 };

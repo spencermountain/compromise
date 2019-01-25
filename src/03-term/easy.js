@@ -22,9 +22,9 @@ module.exports = {
   },
   punctuation() {
     let str = this.postText.trim();
-    console.log(this.postText);
-    if (/[\.,\?\!]/.test(str) === true) {
-      return str;
+    let m = str.match(/[\.,\?\!]/);
+    if (m !== null) {
+      return m[0];
     }
     return null;
   },
@@ -45,6 +45,12 @@ module.exports = {
   toTitleCase: function() {
     this.text = this.text.replace(/^ *[a-z]/, x => x.toUpperCase());
     this.tag('#TitleCase', 'toTitleCase');
+    return this;
+  },
+  normalizeWhitespace() {
+    let punct = this.punctuation() || '';
+    this.preText = ' ';
+    this.postText = punct;
     return this;
   }
 };

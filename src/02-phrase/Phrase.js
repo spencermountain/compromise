@@ -11,7 +11,7 @@ class Phrase {
       value: pool
     });
   }
-  terms() {
+  terms(n) {
     let terms = [this.pool.get(this.start)];
     if (this.length === 0) {
       return [];
@@ -24,6 +24,9 @@ class Phrase {
       }
       let term = this.pool.get(id);
       terms.push(term);
+    }
+    if (n !== undefined) {
+      return terms[n];
     }
     return terms;
   }
@@ -115,5 +118,9 @@ const methods = [
 ];
 methods.forEach((obj) => Object.assign(Phrase.prototype, obj));
 
+const aliases = {
+  term: 'terms'
+};
+Object.keys(aliases).forEach((k) => Phrase.prototype[k] = Phrase.prototype[aliases[k]]);
 
 module.exports = Phrase;

@@ -17,13 +17,13 @@ test('normalize question mark', function(t) {
   t.end();
 });
 
-test('normalize unicode', function(t) {
-  var str = `• Spencęr & JOhn™ ⟨lmt⟩.`;
-  var doc = nlp(str);
-  t.equal(doc.text(), str, 'text out');
-  t.equal(doc.normal(), 'spencer & john lmt', 'normal out');
-  t.end();
-});
+// test('normalize unicode', function(t) {
+//   var str = `• Spencęr & JOhn™ ⟨lmt⟩.`;
+//   var doc = nlp(str);
+//   t.equal(doc.text(), str, 'text out');
+//   t.equal(doc.normal(), 'spencer & john lmt', 'normal out');
+//   t.end();
+// });
 
 test('normalize quotes ', function(t) {
   var str = `،one’ «two» ‘three’ “four” 'five' "six."`;

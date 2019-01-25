@@ -13,6 +13,7 @@ class Term {
     this.implicit = obj.implicit || null;
     this.preText = obj.preText || '';
     this.postText = obj.postText || '';
+    this.raw = text.trim();
     this.tags = {};
     this.prev = null;
     this.next = null;

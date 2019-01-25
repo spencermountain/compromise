@@ -73,6 +73,10 @@ Phrase.prototype.clone = function() { //how do we clone part of the pool?
   return new Phrase(newTerms[0].id, newTerms.length, this.pool);
 };
 
+Phrase.prototype.buildFrom = function(terms) {
+  return new Phrase(terms[0].id, terms.length, this.pool);
+};
+
 Phrase.prototype.match = function(str) {
   let matches = matchAll(this, str);
   //make them phrase objects

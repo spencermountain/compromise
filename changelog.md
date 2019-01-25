@@ -8,6 +8,7 @@ compromise uses semver, and pushes to npm frequently
 
 ### v12
 - drop support for `regex` and `patterns` in plugins
+- camelCase() now removes punctuation between terms
 
 ### v11
 ##### 11.11.0

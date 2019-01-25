@@ -17,8 +17,8 @@ const addWords = function(obj, lex) {
     lex[k] = 'Infinitive';
     //add other forms
     for(let f = 1; f < forms.length; f += 1) {
-      if (obj[k][f] !== undefined) {
-        lex[obj[k][f]] = f;
+      if (obj[k][forms[f]] !== undefined) {
+        lex[obj[k][forms[f]]] = forms[f];
       }
     }
   }
@@ -59,8 +59,9 @@ const bulkUp = function(conjugations) {
     let conj = conjugations[inf];
     //do we need to add the rest ourselves?
     if (conj.PastTense === undefined || conj.PresentTense === undefined || conj.Gerund === undefined) {
-      let more = conjugate(inf);
-      conjugations[inf] = Object.assign(conj, more);
+      //this is a little redundant, when we have some forms already
+      let auto = conjugate(inf);
+      conjugations[inf] = Object.assign(auto, conj);
     }
   }
   return conjugations;

@@ -24,6 +24,7 @@ module.exports = {
   toCamelCase: function() {
     this.toTitleCase();
     this.list.forEach(p => {
+      //remove whitespace
       p.terms().forEach((t, i) => {
         if (i !== 0) {
           t.preText = '';
@@ -41,5 +42,18 @@ module.exports = {
       return arr;
     }, []);
   },
-
+  firstTerm: function() {
+    let list = this.list.map(p => {
+      let term = p.terms(0);
+      return p.buildFrom([term]);
+    });
+    return this.buildFrom(list);
+  },
+  lastTerm: function() {
+    let list = this.list.map(p => {
+      let term = p.lastTerm();
+      return p.buildFrom([term]);
+    });
+    return this.buildFrom(list);
+  }
 };

@@ -1,5 +1,9 @@
 const parseToken = require('./parseToken');
 
+const isArray = function(arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]';
+};
+
 //split-up by (these things)
 const byParentheses = function(str) {
   let arr = str.split(/(\(.*?\)[?+*]*)/);
@@ -22,8 +26,23 @@ const byWords = function(arr) {
   return words;
 };
 
+//turn an array into a 'choices' list
+const byArray = function(arr) {
+  return [{
+    choices: arr.map((s) => {
+      return {
+        normal: s
+      };
+    })
+  }];
+};
+
 //
 const syntax = function(str) {
+  //support a flat array of normalized words
+  if (typeof str === 'object' && isArray(str)) {
+    return byArray(str);
+  }
   let tokens = byParentheses(str);
   tokens = byWords(tokens);
   tokens = tokens.map(parseToken);

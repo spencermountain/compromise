@@ -10,9 +10,9 @@ const unTag = function(t, tag, reason, world) {
     }
   }
   //delete downstream tags too
-  if (!world) {
-    console.log(reason);
-  }
+  // if (!world) {
+  //   console.log(reason);
+  // }
   if (world) {
     const tagset = world.tags;
     if (tagset[tag]) {

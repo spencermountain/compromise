@@ -6,6 +6,8 @@ const addConjugations = require('./02-conjugations');
 const addPlurals = require('./03-plurals');
 const addTags = require('./04-addTags');
 
+let startLexicon = require('./misc');
+
 let isVerbose = false;
 
 //  ¯\_(:/)_/¯
@@ -15,7 +17,7 @@ const clone = function(obj) {
 
 class World {
   constructor() {
-    this.lexicon = {};
+    this.lexicon = startLexicon;
     this.plurals = {};
     this.conjugations = {};
     this.hasCompound = {};

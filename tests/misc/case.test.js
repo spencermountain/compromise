@@ -11,7 +11,7 @@ test('sanity-check case:', function(t) {
   t.equal(str, 'john xoo, john fredman', 'lowercase');
 
   str = r.toCamelCase().out('text');
-  t.equal(str, 'JohnXoo,JohnFredman', 'camelcase');
+  t.equal(str, 'JohnXooJohnFredman', 'camelcase'); //removes comma
   t.end();
 });
 

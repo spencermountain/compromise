@@ -8,7 +8,7 @@ const tagPrefix = function(term, world) {
   for(let r = 0; r < startsWith.length; r += 1) {
     if (startsWith[r][0].test(str) === true) {
       term.tag(startsWith[r][1], 'startsWith #' + r, world);
-      continue;
+      break;
     }
   }
 };
@@ -21,7 +21,7 @@ const tagSuffix = function(term, world) {
     for(let r = 0; r < regs.length; r += 1) {
       if (regs[r][0].test(str) === true) {
         term.tag(regs[r][1], 'endsWith #' + r, world);
-        continue;
+        break;
       }
     }
   }

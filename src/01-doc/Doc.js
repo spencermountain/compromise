@@ -93,4 +93,14 @@ Object.keys(selections).forEach((k) => {
   };
 });
 
+//aliases
+const aliases = {
+  term: 'terms',
+  unTag: 'untag',
+  and : 'match',
+  notIf : 'ifNo',
+  only : 'if',
+  onlyIf : 'if',
+};
+Object.keys(aliases).forEach((k) => Doc.prototype[k] = Doc.prototype[aliases[k]]);
 module.exports = Doc;

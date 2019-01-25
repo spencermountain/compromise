@@ -1,4 +1,5 @@
 const doesMatch = require('./match');
+const isAcronym = require('./normalize/isAcronym');
 
 module.exports = {
 
@@ -47,10 +48,13 @@ module.exports = {
     this.tag('#TitleCase', 'toTitleCase');
     return this;
   },
-  normalizeWhitespace() {
+  normalizeWhitespace: function() {
     let punct = this.punctuation() || '';
     this.preText = ' ';
     this.postText = punct;
     return this;
+  },
+  isAcronym: function() {
+    return isAcronym(this.text);
   }
 };

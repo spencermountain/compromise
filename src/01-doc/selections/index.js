@@ -7,24 +7,50 @@ const find = {
   },
   terms: (doc) => {
     return doc.match('.');
+  },
+  adjectives: (doc) => {
+    return doc.match('#Adjective');
+  }
+};
+
+const cl = {
+  Term : function(Doc) {
+    return class Term extends Doc {
+    };
+  },
+  Person : function(Doc) {
+    return class Person extends Doc {
+    };
+  },
+  Quotation : function(Doc) {
+    return class Quotation extends Doc {
+    };
   }
 };
 
 module.exports = {
   terms: {
     find: find.terms,
-    subclass: require('./terms/Term')
-  },
-  nouns: {
-    find: require('./nouns'),
-    subclass: require('./nouns/Noun')
+    subclass: cl.Term
   },
   people: {
     find: find.people,
-    subclass: require('./people/Person')
+    subclass: cl.Person
+  },
+  adjectives: {
+    find: find.adjectives,
+    subclass: require('./adjectives/Adjective')
+  },
+  quotations: {
+    find: require('./quotations/find'),
+    subclass: cl.Quotation
+  },
+  nouns: {
+    find: require('./nouns/find'),
+    subclass: require('./nouns/Noun')
   },
   values: {
-    find: require('./values'),
+    find: require('./values/find'),
     subclass: require('./values/Value')
   },
 };

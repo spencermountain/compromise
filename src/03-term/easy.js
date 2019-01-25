@@ -1,6 +1,17 @@
 const doesMatch = require('./match');
 const isAcronym = require('./normalize/isAcronym');
 
+const boring = {
+  TitleCase: true,
+  UpperCase: true,
+  CamelCase: true,
+  Hyphenated: true,
+  StartBracket: true,
+  EndBracket: true,
+  Comma: true,
+  ClauseEnd: true,
+};
+
 module.exports = {
 
   hasComma: function() {
@@ -56,5 +67,11 @@ module.exports = {
   },
   isAcronym: function() {
     return isAcronym(this.text);
+  },
+  //do we have atleast one juicy tag?
+  isKnown: function() {
+    let tags = Object.keys(this.tags);
+    tags = tags.filter((t) => !boring[t]);
+    return tags.length > 0;
   }
 };

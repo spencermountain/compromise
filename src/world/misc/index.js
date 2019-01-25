@@ -9,10 +9,13 @@ const misc = require('./misc');
 const abbreviations = require('../../build/lib/abbreviations');
 
 //organization forms, like 'academy'
-const orgWords = require('../../tagger/04-corrections/data/orgWords');
+const orgWords = require('../../tagger/04-inference/data/orgWords');
 
 //'one', 'two', 'three'
 const numbers = require('../../01-doc/selections/values/numbers').lexicon;
 
-const result = Object.assign({}, misc, abbreviations, numbers, orgWords);
+//irregular adjective conjugations
+const adjectives = require('../../01-doc/selections/adjectives/irregulars').lexicon;
+
+const result = Object.assign({}, misc, abbreviations, numbers, adjectives, orgWords);
 module.exports = result;

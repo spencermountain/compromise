@@ -24,6 +24,7 @@ const parse = function(r) {
   // r.auxiliary = aux.match('#Auxiliary+');
   } else {
     r.verb = original.terms[0];
+    r.auxiliary = aux.not('.');
   }
   return r;
 };

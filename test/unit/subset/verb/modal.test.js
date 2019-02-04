@@ -18,6 +18,16 @@ test('ignore-would-behaviour', function(t) {
   t.end();
 });
 
+
+test('ignore-would-behaviour', function(t) {
+  var doc = nlp(`best look after`).verbs();
+  var out = doc.conjugation();
+  t.equal(doc.length, 1, 'one-verb');
+  t.ok(out, 'no-error');
+  t.end();
+});
+
+
 //can/could
 //might
 //should

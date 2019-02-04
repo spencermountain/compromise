@@ -1,4 +1,4 @@
-/* compromise v11.13.0
+/* compromise v11.13.1
    http://compromise.cool
    MIT
 */
@@ -14,7 +14,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.13.0",
+  "version": "11.13.1",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
   "types": "./compromise.d.ts",
@@ -5473,6 +5473,7 @@ const parse = function(r) {
   // r.auxiliary = aux.match('#Auxiliary+');
   } else {
     r.verb = original.terms[0];
+    r.auxiliary = aux.not('.');
   }
   return r;
 };

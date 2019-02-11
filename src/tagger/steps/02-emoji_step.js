@@ -8,7 +8,7 @@ const emoticon = require('./rules/emoticon_list');
 
 //test for forms like ':woman_tone2:‍:ear_of_rice:'
 //https://github.com/Kikobeats/emojis-keywords/blob/master/index.js
-const isCommaEmoji = (t) => {
+const isColonEmoji = (t) => {
   if (t.text.charAt(0) === ':') {
     //end comma can be last or second-last ':haircut_tone3:‍♀️'
     if (t.text.match(/:.?$/) === null) {
@@ -39,8 +39,8 @@ const emojiStep = (ts) => {
   for (let i = 0; i < ts.terms.length; i++) {
     let t = ts.terms[i];
     //test for :keyword: emojis
-    if (isCommaEmoji(t)) {
-      t.tag('Emoji', 'comma-emoji');
+    if (isColonEmoji(t)) {
+      t.tag('Emoji', 'colon-emoji');
     }
     //test for unicode emojis
     if (t.text.match(emojiReg)) {

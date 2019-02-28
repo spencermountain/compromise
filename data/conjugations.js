@@ -3,6 +3,7 @@ module.exports = {
     'PerfectTense': 'have taken',
     'PluPerfectTense': 'had taken',
     'PastTense': 'took',
+    'Participle': 'taken',
     'FuturePerfect': 'will have taken'
   },
   'can': {

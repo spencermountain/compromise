@@ -147,7 +147,7 @@
         "desc": "merge matches into one term, with shared tags.",
         "mutative": true,
         "returns": "Text",
-        "example": "nlp('Keanu Reeves said whoa').match('#Person').lump().all().out('terms')\n//['Keanu Reeves', 'said', 'whoa']"
+        "example": "nlp('Keanu Reeves said whoa').match('#Person+').lump().all().out('terms')\n//['Keanu Reeves', 'said', 'whoa']"
       },
       "replaceWith": {
         "desc": "turn the current selection into something else. Essentially just delete() -> insertAt(). The second param says whether to keep original tags around.",

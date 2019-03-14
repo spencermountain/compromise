@@ -13,7 +13,7 @@
   "scripts": {
     "test": "tape \"./test/unit/**/*.test.js\" | tap-dancer",
     "test:spec": "tape \"./test/unit/**/*.test.js\" | tap-spec",
-    "testb": "TESTENV=prod tape \"./test/unit/**/*.test.js\" | tap-spec",
+    "testb": "TESTENV=prod tape \"./test/unit/**/*.test.js\" | tap-dancer",
     "buildTest": "TESTENV=prod node ./scripts/test.js",
     "test:types": "tsc --project test/types",
     "browserTest": "node ./scripts/browserTest.js",

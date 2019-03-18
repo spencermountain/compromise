@@ -42,6 +42,42 @@ const matchMethods = function(Doc) {
       });
       return new Doc(matches, this, this.world);
     },
+    splitAfter: function(reg) {
+      let regs = parseSyntax(reg);
+      let matches = [];
+      this.list.forEach((p) => {
+        let found = p.match(regs);
+        //no match, keep it going
+        if (found.length === 0) {
+          matches.push(p);
+        }
+        //support multiple-matches per phrase
+        let list = p.splitOn(found[0]);
+        //merge 1st and 2nd matches
+        list[0].length += list[1].length;
+        matches.push(list[0]);
+        matches.push(list[2]);
+      });
+      return new Doc(matches, this, this.world);
+    },
+    splitBefore: function(reg) {
+      let regs = parseSyntax(reg);
+      let matches = [];
+      this.list.forEach((p) => {
+        let found = p.match(regs);
+        //no match, keep it going
+        if (found.length === 0) {
+          matches.push(p);
+        }
+        //support multiple-matches per phrase
+        let list = p.splitOn(found[0]);
+        //merge 2nd and 3rd matches
+        list[1].length += list[2].length;
+        matches.push(list[0]);
+        matches.push(list[1]);
+      });
+      return new Doc(matches, this, this.world);
+    },
     has : function(reg) {
       let regs = parseSyntax(reg);
       let found = this.list.find((p) => p.match(regs).length > 0);

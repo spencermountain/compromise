@@ -65,7 +65,7 @@ const splitMethods = Terms => {
       }
       //make them termlists
       all = all.filter(a => a && a.length);
-      all = all.map(ts => new Terms(ts, ts.world, ts.refText, this.refTerms));
+      all = all.map(ts => new Terms(ts, this.world, ts.refText, this.refTerms));
       return all;
     },
 

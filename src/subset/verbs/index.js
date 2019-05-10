@@ -101,6 +101,13 @@ methods.toContinuous = methods.toGerund;
 const find = function(r, n) {
   r = r.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+');
   r = r.splitAfter('#Comma');
+  r.list.forEach(ts => {
+    ts.terms.forEach( t => {
+      if(t.whitespace.before.match('/')){
+        r.splitOn(t.normal)
+      }
+    })
+  })
   r = r.if('#Verb'); //this should be (much) smarter
   if (typeof n === 'number') {
     r = r.get(n);

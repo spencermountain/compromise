@@ -73,7 +73,7 @@ module.exports = [
   'norfolk',
   'queensland',
   'tasmania',
-  'victora',
+  'victoria',
 
   //china
   'qinghai',

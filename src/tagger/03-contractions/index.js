@@ -11,16 +11,15 @@ const addContraction = function(phrase, term, arr) {
   //add the second one
   // let str = arr.slice(1).join(' ');
 
-// let find = phrase.fromId(term.id);
-// console.log(find);
-// find.append(str);
+  // let find = phrase.fromId(term.id);
+  // console.log(find);
+  // find.append(str);
 };
 
-
 const contractions = function(doc) {
-  doc.list.forEach((p) => {
+  doc.list.forEach(p => {
     let terms = p.terms();
-    for(let i = 0; i < terms.length; i += 1) {
+    for (let i = 0; i < terms.length; i += 1) {
       let term = terms[i];
       let found = checkNegative(term);
       found = found || checkApostrophe(term);

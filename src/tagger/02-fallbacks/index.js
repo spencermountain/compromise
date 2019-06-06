@@ -7,8 +7,8 @@ const fallbacks = function(doc) {
   checkNeighbours(terms, world);
 
   //fallback to a noun...
-  doc.list.forEach((p) => {
-    p.terms().forEach((t) => {
+  doc.list.forEach(p => {
+    p.terms().forEach(t => {
       if (t.isKnown() === false) {
         t.tag('Noun', 'noun-fallback');
       }

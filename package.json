@@ -29,6 +29,13 @@
     "docs/",
     "compromise.d.ts"
   ],
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "printWidth": 100
+  },
   "dependencies": {
     "efrt-unpack": "2.0.3"
   },
@@ -47,5 +54,8 @@
     "tape": "4.9.1",
     "uglify-js": "3.4.9"
   },
+  "eslintIgnore": [
+    "builds/*.js"
+  ],
   "license": "MIT"
 }

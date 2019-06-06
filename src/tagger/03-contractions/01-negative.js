@@ -1,22 +1,21 @@
 const hasNegative = /n't$/;
 
 const irregulars = {
-  'won\'t': ['will', 'not'],
+  "won't": ['will', 'not'],
   wont: ['will', 'not'],
 
-  'can\'t': ['can', 'not'],
+  "can't": ['can', 'not'],
   cant: ['can', 'not'],
   cannot: ['can', 'not'],
 
-  'shan\'t': ['should', 'not'],
+  "shan't": ['should', 'not'],
 
-//("ain't" has is/was ambiguity)
+  //("ain't" has is/was ambiguity)
 };
 
 const getRoot = function(str) {
   return str.replace(/n't$/, '');
 };
-
 
 const checkNegative = function(term) {
   //check named-ones

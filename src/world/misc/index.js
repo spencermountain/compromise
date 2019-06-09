@@ -6,16 +6,13 @@
 const misc = require('./misc');
 
 //period-abbreviations, like 'blvd'
-const abbreviations = require('../../builder/lib/abbreviations');
+const abbreviations = require('../../tokenizer/lib/abbreviations');
 
 //organization forms, like 'academy'
 const orgWords = require('../../tagger/04-inference/data/orgWords');
 
-//'one', 'two', 'three'
-const numbers = require('../../01-doc/selections/values/numbers').lexicon;
-
 //irregular adjective conjugations
-const adjectives = require('../../01-doc/selections/adjectives/irregulars').lexicon;
+// const adjectives = require('../../01-doc/selections/adjectives/irregulars').lexicon;
 
-const result = Object.assign({}, misc, abbreviations, numbers, adjectives, orgWords);
+const result = Object.assign({}, misc, abbreviations, orgWords);
 module.exports = result;

@@ -10,10 +10,12 @@ var nlp = require('./src/index');
 //
 // --expose-subclass prototypes
 
+// var str = 'he said spencer, where are you?';
+// // var str = 'the FBI';
+// var doc = nlp(str);
+// // doc.splitAfter('spencer').debug();
+// // doc.splitBefore('spencer').debug();
+// doc.clauses().debug();
 
-var str = 'he said spencer, where are you?';
-// var str = 'the FBI';
-var doc = nlp(str);
-// doc.splitAfter('spencer').debug();
-// doc.splitBefore('spencer').debug();
-doc.clauses().debug();
+let doc = nlp('and seven years ago');
+console.log(doc.text());

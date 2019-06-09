@@ -1,20 +1,23 @@
 //these are selections that don't require their own subclasses/methods
 module.exports = {
-  clauses: function (n) {
+  /** split-up results into multi-term phrases */
+  clauses: function(n) {
     let r = this.splitAfter('#ClauseEnd');
     if (typeof n === 'number') {
       r = r.get(n);
     }
     return r;
   },
-  hashTags: function (n) {
+  /** */
+  hashTags: function(n) {
     let r = this.match('#HashTag').terms();
     if (typeof n === 'number') {
       r = r.get(n);
     }
     return r;
   },
-  organizations: function (n) {
+  /** */
+  organizations: function(n) {
     let r = this.splitAfter('#Comma');
     r = r.match('#Organization+');
     if (typeof n === 'number') {
@@ -22,7 +25,8 @@ module.exports = {
     }
     return r;
   },
-  phoneNumbers: function (n) {
+  /** */
+  phoneNumbers: function(n) {
     let r = this.splitAfter('#Comma');
     r = r.match('#PhoneNumber+');
     if (typeof n === 'number') {
@@ -30,7 +34,8 @@ module.exports = {
     }
     return r;
   },
-  places: function (n) {
+  /** */
+  places: function(n) {
     let r = this.splitAfter('#Comma');
     r = r.match('#Place+');
     if (typeof n === 'number') {
@@ -38,7 +43,8 @@ module.exports = {
     }
     return r;
   },
-  topics: function (n) {
+  /** */
+  topics: function(n) {
     let r = this.clauses();
     // Find people, places, and organizations
     let yup = r.people();
@@ -54,14 +60,16 @@ module.exports = {
     }
     return yup;
   },
-  urls: function (n) {
+  /** */
+  urls: function(n) {
     let r = this.match('#Url');
     if (typeof n === 'number') {
       r = r.get(n);
     }
     return r;
   },
-  parentheses: function (n) {
+  /** */
+  parentheses: function(n) {
     let r = this.match('#Parentheses+');
     //split-up consecutive ones
     r = r.splitAfter('#EndBracket');
@@ -70,22 +78,26 @@ module.exports = {
     }
     return r;
   },
+
+  /** */
   questions: function(doc) {
     let list = doc.list.filter(p => {
       return p.lastTerm().hasQuestionMark();
     });
     return doc.buildFrom(list);
   },
+  /** */
   statements: function(doc) {
     let list = doc.list.filter(p => {
       return p.lastTerm().hasQuestionMark() === false;
     });
     return doc.buildFrom(list);
   },
+  /** */
   sentences: function(doc) {
     let list = doc.list.filter(p => {
       return p.lastTerm().hasQuestionMark() !== true;
     });
     return doc.buildFrom(list);
-  }
+  },
 };

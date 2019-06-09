@@ -44,11 +44,14 @@ var data = [
   [require('./adjectives/adjectives'), 'Adjective'],
   [require('./adjectives/comparables'), 'Comparable'],
   [require('./adverbs'), 'Adverb'],
+  //numbers
+  [require('./numbers/ordinals'), 'Ordinal'],
+  [require('./numbers/cardinals'), 'Cardinal'],
   //misc
   [require('./expressions'), 'Expression'],
   [require('./prepositions'), 'Preposition'],
   [require('./determiners'), 'Determiner'],
-  [require('./conjunctions'), 'Conjunction']
+  [require('./conjunctions'), 'Conjunction'],
 ];
 for (var i = 0; i < data.length; i++) {
   var list = data[i][0];

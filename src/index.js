@@ -1,4 +1,4 @@
-const build = require('./builder');
+const build = require('./tokenizer');
 const pkg = require('../package.json');
 const World = require('./world');
 const Doc = require('./01-doc/Doc');

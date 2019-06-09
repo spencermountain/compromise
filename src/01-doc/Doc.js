@@ -1,4 +1,6 @@
+const apiMethods = require('./methods');
 const matchMethods = require('./match');
+const output = require('./out');
 const tagger = require('../tagger');
 
 class Doc {
@@ -7,7 +9,7 @@ class Doc {
     //quiet these properties in console.logs
     Object.defineProperty(this, 'from', {
       enumerable: false,
-      value: from
+      value: from,
     });
     //try this..
     if (world === undefined && from !== undefined) {
@@ -16,11 +18,11 @@ class Doc {
     //'world' getter
     Object.defineProperty(this, 'world', {
       enumerable: false,
-      value: world
+      value: world,
     });
     //'found' getter
     Object.defineProperty(this, 'found', {
-      get: () => this.list.length > 0
+      get: () => this.list.length > 0,
     });
   }
 
@@ -64,43 +66,17 @@ Doc.prototype.buildFrom = function(list) {
   return new Doc(list, this, this.world);
 };
 
+Doc = apiMethods(Doc);
 Doc = matchMethods(Doc);
-
-const methods = [
-  require('./easy'),
-  require('./hard'),
-  require('./utilities'),
-  require('./out')
-];
-methods.forEach(obj => Object.assign(Doc.prototype, obj));
-
-//fancy match statements
-const quick = require('./selections/quick');
-Object.keys(quick).forEach((k) => {
-  Doc.prototype[k] = function() {
-    let matches = quick[k](this);
-    return new Doc(matches.list, this, this.world);
-  };
-});
-
-//ones with subclasses
-const selections = require('./selections');
-Object.keys(selections).forEach((k) => {
-  const Sub = selections[k].subclass(Doc);
-  Doc.prototype[k] = function() {
-    let matches = selections[k].find(this);
-    return new Sub(matches.list, this, this.world);
-  };
-});
+Object.assign(Doc.prototype, output);
 
 //aliases
 const aliases = {
-  term: 'terms',
   unTag: 'untag',
-  and : 'match',
-  notIf : 'ifNo',
-  only : 'if',
-  onlyIf : 'if',
+  and: 'match',
+  notIf: 'ifNo',
+  only: 'if',
+  onlyIf: 'if',
 };
-Object.keys(aliases).forEach((k) => Doc.prototype[k] = Doc.prototype[aliases[k]]);
+Object.keys(aliases).forEach(k => (Doc.prototype[k] = Doc.prototype[aliases[k]]));
 module.exports = Doc;

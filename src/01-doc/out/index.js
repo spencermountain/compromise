@@ -2,17 +2,17 @@ const debug = require('./debug');
 
 // output
 module.exports = {
-  text: function( options = {} ) {
+  text: function(options = {}) {
     return this.list.reduce((str, p) => str + p.out(options), '');
   },
-  normal: function( options = {} ) {
+  normal: function(options = {}) {
     options.normal = true;
-    return this.list.map((p) => p.out(options)).join(' ');
+    return this.list.map(p => p.out(options)).join(' ');
   },
-  json: function( options = {} ) {
+  json: function(options = {}) {
     return this.list.map(p => p.json(options));
   },
-  array: function( options = {} ) {
+  array: function(options = {}) {
     return this.list.map(p => p.out(options));
   },
   debug: function() {
@@ -38,5 +38,5 @@ module.exports = {
       return this;
     }
     return this.text();
-  }
+  },
 };

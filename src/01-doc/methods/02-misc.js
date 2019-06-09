@@ -6,21 +6,22 @@ const eachTerm = function(doc, fn) {
 };
 
 module.exports = {
-  verbose: function(bool) {
-    if (bool === undefined) {
-      bool = true;
-    }
-    this.world.verbose = bool;
-  },
-  toTitleCase: function() {
-    return eachTerm(this, 'toTitleCase');
-  },
+  /** turn every letter of every term to lower-cse */
   toLowerCase: function() {
     return eachTerm(this, 'toLowerCase');
   },
+
+  /** turn every letter of every term to upper case */
   toUpperCase: function() {
     return eachTerm(this, 'toUpperCase');
   },
+
+  /** upper-case the first letter of each term */
+  toTitleCase: function() {
+    return eachTerm(this, 'toTitleCase');
+  },
+
+  /** remove whitespace and title-case each term */
   toCamelCase: function() {
     this.toTitleCase();
     this.list.forEach(p => {
@@ -35,6 +36,8 @@ module.exports = {
     this.tag('#CamelCase', 'toCamelCase');
     return this;
   },
+
+  /** return a flat array of term objects */
   termList: function() {
     return this.list.reduce((arr, p) => {
       let terms = p.terms();
@@ -42,18 +45,4 @@ module.exports = {
       return arr;
     }, []);
   },
-  firstTerm: function() {
-    let list = this.list.map(p => {
-      let term = p.terms(0);
-      return p.buildFrom([term]);
-    });
-    return this.buildFrom(list);
-  },
-  lastTerm: function() {
-    let list = this.list.map(p => {
-      let term = p.lastTerm();
-      return p.buildFrom([term]);
-    });
-    return this.buildFrom(list);
-  }
 };

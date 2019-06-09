@@ -1,4 +1,4 @@
-const build = require('./build');
+const build = require('./builder');
 const pkg = require('../package.json');
 const World = require('./world');
 const Doc = require('./01-doc/Doc');

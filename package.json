@@ -40,19 +40,19 @@
     "efrt-unpack": "2.0.3"
   },
   "devDependencies": {
-    "@babel/core": "7.1.2",
-    "@babel/preset-env": "7.3.1",
-    "amble": "0.0.6",
+    "@babel/core": "7.4.5",
+    "@babel/preset-env": "7.4.5",
+    "amble": "0.0.7",
     "babelify": "10.0.0",
     "babili": "0.1.4",
     "browserify": "16.2.3",
-    "chalk": "2.4.1",
+    "chalk": "2.4.2",
     "compromise-plugin": "0.0.8",
     "derequire": "2.0.6",
-    "shelljs": "0.8.2",
-    "tap-dancer": "0.1.2",
-    "tape": "4.9.1",
-    "uglify-js": "3.4.9"
+    "shelljs": "0.8.3",
+    "tap-dancer": "0.2.0",
+    "tape": "4.10.2",
+    "uglify-js": "3.6.0"
   },
   "eslintIgnore": [
     "builds/*.js"

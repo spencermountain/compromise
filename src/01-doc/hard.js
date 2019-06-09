@@ -1,4 +1,4 @@
-const build = require('../build');
+const build = require('../builder');
 
 module.exports = {
   //add these new terms to the front

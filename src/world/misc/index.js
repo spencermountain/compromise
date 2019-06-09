@@ -6,7 +6,7 @@
 const misc = require('./misc');
 
 //period-abbreviations, like 'blvd'
-const abbreviations = require('../../build/lib/abbreviations');
+const abbreviations = require('../../builder/lib/abbreviations');
 
 //organization forms, like 'academy'
 const orgWords = require('../../tagger/04-inference/data/orgWords');

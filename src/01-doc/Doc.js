@@ -1,6 +1,8 @@
-const apiMethods = require('./methods');
+const methods = {
+  misc: require('./methods'),
+  out: require('./out'),
+};
 const matchMethods = require('./match');
-const output = require('./out');
 const tagger = require('../tagger');
 
 class Doc {
@@ -66,9 +68,9 @@ Doc.prototype.buildFrom = function(list) {
   return new Doc(list, this, this.world);
 };
 
-Doc = apiMethods(Doc);
 Doc = matchMethods(Doc);
-Object.assign(Doc.prototype, output);
+Object.assign(Doc.prototype, methods.misc);
+Object.assign(Doc.prototype, methods.out);
 
 //aliases
 const aliases = {

@@ -44,7 +44,7 @@ module.exports = [
   'vice admiral',
   'rear admiral',
   'taoiseach',
-// 'his honorable',
-// 'her honorable',
-// 'the honorable',
-];
+  // 'his honorable',
+  // 'her honorable',
+  // 'the honorable',
+]

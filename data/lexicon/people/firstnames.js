@@ -30,5 +30,5 @@ module.exports = [
   'shay',
   'shea',
   'shelby',
-  'shiloh'
-];
+  'shiloh',
+]

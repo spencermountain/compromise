@@ -157,6 +157,6 @@ module.exports = [
   'wood',
   'wool',
   'world series',
-  'world'
-// 'fun',
-];
+  'world',
+  // 'fun',
+]

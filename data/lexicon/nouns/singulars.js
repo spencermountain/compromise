@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 //most nouns do not nead to be listed
 //for whatever reasons, these look like not-nouns
 // //so we make sure that they become nouns
@@ -100,11 +100,11 @@ module.exports = [
   'tv show',
   'us dollar',
   'us state',
-  'tax return'
-// 'things',
-// 'yesterday',
-// 'today',
-// 'tomorrow',
-// 'weekend',
-// 'tonight'
-];
+  'tax return',
+  // 'things',
+  // 'yesterday',
+  // 'today',
+  // 'tomorrow',
+  // 'weekend',
+  // 'tonight'
+]

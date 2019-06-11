@@ -49,5 +49,5 @@ module.exports = [
   'supervisor',
   'surgeon',
   'technician',
-  'therapist'
-];
+  'therapist',
+]

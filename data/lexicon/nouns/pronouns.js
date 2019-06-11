@@ -17,5 +17,5 @@ module.exports = [
   'yourself',
   "'em",
   "he's",
-  "she's"
-];
+  "she's",
+]

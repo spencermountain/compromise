@@ -84,5 +84,5 @@ module.exports = [
   'rosario',
   'effie',
   'sung',
-  'piper'
-];
+  'piper',
+]

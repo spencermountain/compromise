@@ -949,12 +949,11 @@ module.exports = [
   'zackary',
   'zane',
 
-
   'wade',
   'johnie',
   'merrill',
   'federico',
   'donnell',
   'donny',
-  'seymour'
-];
+  'seymour',
+]

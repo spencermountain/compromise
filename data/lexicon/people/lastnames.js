@@ -295,5 +295,5 @@ module.exports = [
   'zhang',
   'zhao',
   'zhou',
-  'zhu'
-];
+  'zhu',
+]

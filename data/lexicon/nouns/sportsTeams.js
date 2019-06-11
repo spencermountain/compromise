@@ -152,4 +152,4 @@ module.exports = [
   'stoke city',
   'tottenham hotspur',
   'west ham united',
-];
+]

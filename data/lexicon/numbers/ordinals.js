@@ -37,4 +37,4 @@ module.exports = [
   'quintillionth',
   'sextillionth',
   'septillionth',
-];
+]

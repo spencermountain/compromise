@@ -126,4 +126,4 @@ module.exports = [
   'european',
   'asian',
   'californian',
-];
+]

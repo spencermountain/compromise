@@ -1,4 +1,4 @@
-var nlp = require('./src/index');
+var nlp = require('./src/index')
 // nlp.verbose(true);
 
 //TODO:
@@ -17,5 +17,5 @@ var nlp = require('./src/index');
 // // doc.splitBefore('spencer').debug();
 // doc.clauses().debug();
 
-let doc = nlp('and seven years ago');
-console.log(doc.text());
+let doc = nlp('and seven years ago')
+console.log(doc.text())

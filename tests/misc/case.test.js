@@ -1,19 +1,19 @@
-var test = require('tape');
-var nlp = require('../lib/nlp');
+var test = require('tape')
+var nlp = require('../lib/nlp')
 
 test('sanity-check case:', function(t) {
-  var str = 'John xoo, John fredman';
-  var r = nlp(str);
-  str = r.toUpperCase().out('text');
-  t.equal(str, 'JOHN XOO, JOHN FREDMAN', 'uppercase');
+  var str = 'John xoo, John fredman'
+  var r = nlp(str)
+  str = r.toUpperCase().out('text')
+  t.equal(str, 'JOHN XOO, JOHN FREDMAN', 'uppercase')
 
-  str = r.toLowerCase().out('text');
-  t.equal(str, 'john xoo, john fredman', 'lowercase');
+  str = r.toLowerCase().out('text')
+  t.equal(str, 'john xoo, john fredman', 'lowercase')
 
-  str = r.toCamelCase().out('text');
-  t.equal(str, 'JohnXooJohnFredman', 'camelcase'); //removes comma
-  t.end();
-});
+  str = r.toCamelCase().out('text')
+  t.equal(str, 'JohnXooJohnFredman', 'camelcase') //removes comma
+  t.end()
+})
 
 // test('tricky case:', function(t) {
 //   var str = 'i am spencer kelly here with Amy Adams.';

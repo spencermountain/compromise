@@ -13,7 +13,6 @@ const boring = {
 };
 
 module.exports = {
-
   hasComma: function() {
     return this.postText.includes(',');
   },
@@ -71,7 +70,7 @@ module.exports = {
   //do we have atleast one juicy tag?
   isKnown: function() {
     let tags = Object.keys(this.tags);
-    tags = tags.filter((t) => !boring[t]);
+    tags = tags.filter(t => !boring[t]);
     return tags.length > 0;
-  }
+  },
 };

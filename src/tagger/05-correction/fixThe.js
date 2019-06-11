@@ -1,26 +1,37 @@
-
 //Determiner-signals
 const fix = function(doc) {
   if (doc.has('#Determiner')) {
     //the wait to vote
     doc.match('(the|this) [#Verb] #Preposition .').tag('Noun', 'correction-determiner1');
     //the swim
-    doc.match('(the|those|these) (#Infinitive|#PresentTense|#PastTense)').term(1).tag('Noun', 'correction-determiner2');
+    doc
+      .match('(the|those|these) (#Infinitive|#PresentTense|#PastTense)')
+      .term(1)
+      .tag('Noun', 'correction-determiner2');
     //a staggering cost
     doc.match('(a|an) [#Gerund]').tag('Adjective', 'correction-a|an');
-    doc.match('(a|an) #Adjective (#Infinitive|#PresentTense)').term(2).tag('Noun', 'correction-a|an2');
+    doc
+      .match('(a|an) #Adjective (#Infinitive|#PresentTense)')
+      .term(2)
+      .tag('Noun', 'correction-a|an2');
     //some pressing issues
     doc.match('some [#Verb] #Plural').tag('Noun', 'correction-determiner6');
     //the test string
     doc.match('#Determiner [#Infinitive] #Noun').tag('Noun', 'correction-determiner7');
     //the orange.
-    doc.match('#Determiner #Adjective$').not('(#Comparative|#Superlative)').term(1).tag('Noun', 'the-adj-1');
+    doc
+      .match('#Determiner #Adjective$')
+      .not('(#Comparative|#Superlative)')
+      .term(1)
+      .tag('Noun', 'the-adj-1');
     //the orange is
     doc.match('#Determiner [#Adjective] (#Copula|#PastTense|#Auxiliary)').tag('Noun', 'the-adj-2');
     //the nice swim
     doc.match('(the|this|those|these) #Adjective [#Verb]').tag('Noun', 'the-adj-verb');
     //the truly nice swim
-    doc.match('(the|this|those|these) #Adverb #Adjective [#Verb]').tag('Noun', 'correction-determiner4');
+    doc
+      .match('(the|this|those|these) #Adverb #Adjective [#Verb]')
+      .tag('Noun', 'correction-determiner4');
     //a stream runs
     doc.match('(the|this|a|an) [#Infinitive] #Adverb? #Verb').tag('Noun', 'correction-determiner5');
     //a sense of

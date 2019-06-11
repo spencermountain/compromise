@@ -5,8 +5,8 @@ const matchAll = require('./index');
 const notMatch = function(p, regs) {
   let found = {};
   let arr = matchAll(p, regs);
-  arr.forEach((ts) => {
-    ts.forEach((t) => {
+  arr.forEach(ts => {
+    ts.forEach(t => {
       found[t.id] = true;
     });
   });
@@ -14,7 +14,7 @@ const notMatch = function(p, regs) {
   let terms = p.terms();
   let result = [];
   let current = [];
-  terms.forEach((t) => {
+  terms.forEach(t => {
     if (found[t.id] === true) {
       if (current.length > 0) {
         result.push(current);

@@ -2,7 +2,6 @@ const failFast = require('./01-failFast');
 const tryMatch = require('./02-tryMatch');
 const syntax = require('../../01-doc/match/syntax');
 
-
 //returns a simple array of arrays
 const matchAll = function(p, regs) {
   //if we forgot to parse it..
@@ -15,7 +14,7 @@ const matchAll = function(p, regs) {
     return [];
   }
   //any match needs to be this long, at least
-  const minLength = regs.filter((r) => r.optional !== true).length;
+  const minLength = regs.filter(r => r.optional !== true).length;
   let matches = [];
 
   //optimisation for '^' start logic
@@ -27,7 +26,7 @@ const matchAll = function(p, regs) {
     return matches;
   }
   //try starting, from every term
-  for(let i = 0; i < terms.length; i += 1) {
+  for (let i = 0; i < terms.length; i += 1) {
     // slice may be too short
     if (i + minLength > terms.length) {
       break;

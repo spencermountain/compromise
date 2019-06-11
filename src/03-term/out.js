@@ -1,5 +1,3 @@
-
-
 //
 const out = function(options) {
   let word = this.text;

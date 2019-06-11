@@ -1,4 +1,3 @@
-
 //
 const fix = function(doc) {
   //still make
@@ -18,11 +17,23 @@ const fix = function(doc) {
 
   if (doc.has('(who|what|where|why|how|when)')) {
     //the word 'how'
-    doc.match('^how').tag('QuestionWord', 'how-question').tag('QuestionWord', 'how-question');
-    doc.match('how (#Determiner|#Copula|#Modal|#PastTense)').term(0).tag('QuestionWord', 'how-is');
+    doc
+      .match('^how')
+      .tag('QuestionWord', 'how-question')
+      .tag('QuestionWord', 'how-question');
+    doc
+      .match('how (#Determiner|#Copula|#Modal|#PastTense)')
+      .term(0)
+      .tag('QuestionWord', 'how-is');
     // //the word 'which'
-    doc.match('^which').tag('QuestionWord', 'which-question').tag('QuestionWord', 'which-question');
-    doc.match('which . (#Noun)+ #Pronoun').term(0).tag('QuestionWord', 'which-question2');
+    doc
+      .match('^which')
+      .tag('QuestionWord', 'which-question')
+      .tag('QuestionWord', 'which-question');
+    doc
+      .match('which . (#Noun)+ #Pronoun')
+      .term(0)
+      .tag('QuestionWord', 'which-question2');
     doc.match('which').tag('QuestionWord', 'which-question3');
     //where
 
@@ -36,13 +47,19 @@ const fix = function(doc) {
 
   if (doc.has('#Copula')) {
     //is eager to go
-    doc.match('#Copula #Adjective to #Verb').match('#Adjective to').tag('Verb', 'correction');
+    doc
+      .match('#Copula #Adjective to #Verb')
+      .match('#Adjective to')
+      .tag('Verb', 'correction');
     //is mark hughes
     doc.match('#Copula [#Infinitive] #Noun').tag('Noun', 'is-pres-noun');
 
     doc.match('[#Infinitive] #Copula').tag('Noun', 'infinitive-copula');
     //sometimes adverbs - 'pretty good','well above'
-    doc.match('#Copula (pretty|dead|full|well) (#Adjective|#Noun)').ifNo('#Comma').tag('#Copula #Adverb #Adjective', 'sometimes-adverb');
+    doc
+      .match('#Copula (pretty|dead|full|well) (#Adjective|#Noun)')
+      .ifNo('#Comma')
+      .tag('#Copula #Adverb #Adjective', 'sometimes-adverb');
     //sometimes not-adverbs
     doc.match('#Copula [(just|alone)$]').tag('Adjective', 'not-adverb');
     //jack is guarded
@@ -54,33 +71,63 @@ const fix = function(doc) {
   let advb = '(#Adverb|not)+?';
   if (doc.has(advb)) {
     //had walked
-    doc.match(`(has|had) ${advb} #PastTense`).not('#Verb$').tag('Auxiliary', 'had-walked');
+    doc
+      .match(`(has|had) ${advb} #PastTense`)
+      .not('#Verb$')
+      .tag('Auxiliary', 'had-walked');
     //was walking
-    doc.match(`#Copula ${advb} #Gerund`).not('#Verb$').tag('Auxiliary', 'copula-walking');
+    doc
+      .match(`#Copula ${advb} #Gerund`)
+      .not('#Verb$')
+      .tag('Auxiliary', 'copula-walking');
     //been walking
-    doc.match(`(be|been) ${advb} #Gerund`).not('#Verb$').tag('Auxiliary', 'be-walking');
+    doc
+      .match(`(be|been) ${advb} #Gerund`)
+      .not('#Verb$')
+      .tag('Auxiliary', 'be-walking');
     //would walk
-    doc.match(`(#Modal|did) ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'modal-verb');
+    doc
+      .match(`(#Modal|did) ${advb} #Verb`)
+      .not('#Verb$')
+      .tag('Auxiliary', 'modal-verb');
     //would have had
-    doc.match(`#Modal ${advb} have ${advb} had ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'would-have');
+    doc
+      .match(`#Modal ${advb} have ${advb} had ${advb} #Verb`)
+      .not('#Verb$')
+      .tag('Auxiliary', 'would-have');
     //would be walking
-    doc.match(`(#Modal) ${advb} be ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'would-be');
+    doc
+      .match(`(#Modal) ${advb} be ${advb} #Verb`)
+      .not('#Verb$')
+      .tag('Auxiliary', 'would-be');
     //would been walking
-    doc.match(`(#Modal|had|has) ${advb} been ${advb} #Verb`).not('#Verb$').tag('Auxiliary', 'would-be');
-  //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
-  // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
+    doc
+      .match(`(#Modal|had|has) ${advb} been ${advb} #Verb`)
+      .not('#Verb$')
+      .tag('Auxiliary', 'would-be');
+    //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
+    // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
   }
   //fall over
-  doc.match('#PhrasalVerb #PhrasalVerb').lastTerm().tag('Particle', 'phrasal-particle');
+  doc
+    .match('#PhrasalVerb #PhrasalVerb')
+    .lastTerm()
+    .tag('Particle', 'phrasal-particle');
   if (doc.has('#Gerund')) {
     //walking is cool
-    doc.match('#Gerund #Adverb? not? #Copula').firstTerm().tag('Activity', 'gerund-copula');
+    doc
+      .match('#Gerund #Adverb? not? #Copula')
+      .firstTerm()
+      .tag('Activity', 'gerund-copula');
     //walking should be fun
-    doc.match('#Gerund #Modal').firstTerm().tag('Activity', 'gerund-modal');
+    doc
+      .match('#Gerund #Modal')
+      .firstTerm()
+      .tag('Activity', 'gerund-modal');
     //running-a-show
     doc.match('#Gerund #Determiner [#Infinitive]').tag('Noun', 'running-a-show');
-  //setting records
-  // doc.match('#Gerund [#PresentTense]').tag('Plural', 'setting-records');
+    //setting records
+    // doc.match('#Gerund [#PresentTense]').tag('Plural', 'setting-records');
   }
   //will be cool -> Copula
   if (doc.has('will #Adverb? not? #Adverb? be')) {
@@ -89,7 +136,10 @@ const fix = function(doc) {
       //tag it all
       doc.match('will not? be').tag('Copula', 'will-be-copula');
       //for more complex forms, just tag 'be'
-      doc.match('will #Adverb? not? #Adverb? be #Adjective').match('be').tag('Copula', 'be-copula');
+      doc
+        .match('will #Adverb? not? #Adverb? be #Adjective')
+        .match('be')
+        .tag('Copula', 'be-copula');
     }
   }
   return doc;

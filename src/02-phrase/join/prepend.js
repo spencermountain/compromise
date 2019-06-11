@@ -38,7 +38,7 @@ const stitchIn = function(original, newPhrase) {
 //recursively increase the length of all parent phrases
 const stretchAll = function(doc, original, newPhrase) {
   //find our phrase to stretch
-  let phrase = doc.list.find((p) => p.hasId(original.start));
+  let phrase = doc.list.find(p => p.hasId(original.start));
   if (phrase === undefined) {
     console.error('compromise error: Prepend missing start - ' + original.start);
     return;

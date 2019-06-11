@@ -15,14 +15,14 @@ let startings = /^[ \.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?
 // console.log(endings);
 //seperate the 'meat' from the trailing/leading whitespace.
 //works in concert with ./src/text/tokenize.js
-const parseTerm = (str) => {
+const parseTerm = str => {
   let preText = '';
   let postText = '';
-  str = str.replace(startings, (found) => {
+  str = str.replace(startings, found => {
     preText = found;
     return '';
   });
-  str = str.replace(endings, (found) => {
+  str = str.replace(endings, found => {
     postText = found;
     return '';
   });

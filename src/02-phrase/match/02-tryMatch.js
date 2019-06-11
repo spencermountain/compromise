@@ -1,6 +1,6 @@
 //found a match? it's greedy? keep going!
 const getGreedy = function(terms, t, reg) {
-  for(; t < terms.length; t += 1) {
+  for (; t < terms.length; t += 1) {
     if (terms[t].doesMatch(reg) === false) {
       return t;
     }
@@ -15,7 +15,7 @@ const greedyTo = function(terms, t, nextReg) {
     return terms.length;
   }
   //otherwise, we're looking for the next one
-  for(; t < terms.length; t += 1) {
+  for (; t < terms.length; t += 1) {
     if (terms[t].doesMatch(nextReg) === true) {
       return t;
     }
@@ -24,11 +24,10 @@ const greedyTo = function(terms, t, nextReg) {
   return null;
 };
 
-
 //tries to match a sequence of terms, starting from here
 const tryHere = function(terms, regs) {
   let t = 0;
-  for(let r = 0; r < regs.length; r += 1) {
+  for (let r = 0; r < regs.length; r += 1) {
     // console.log('   -' + terms[t].normal + ' - ' + regs[r].normal);
     let reg = regs[r];
     if (!terms[t]) {

@@ -21,7 +21,7 @@ const stitchIn = function(first, two) {
 //recursively increase the length of all parent phrases
 const stretchAll = function(doc, id, len) {
   //find our phrase to stretch
-  let phrase = doc.list.find((p) => p.hasId(id));
+  let phrase = doc.list.find(p => p.hasId(id));
   phrase.length += len;
   if (doc.from) {
     stretchAll(doc.from, id, len);

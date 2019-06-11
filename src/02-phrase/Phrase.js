@@ -8,7 +8,7 @@ class Phrase {
     Object.defineProperty(this, 'pool', {
       enumerable: false,
       writable: true,
-      value: pool
+      value: pool,
     });
   }
   terms(n) {
@@ -16,7 +16,7 @@ class Phrase {
     if (this.length === 0) {
       return [];
     }
-    for(let i = 0; i < this.length - 1; i += 1) {
+    for (let i = 0; i < this.length - 1; i += 1) {
       let id = terms[terms.length - 1].next;
       if (id === null) {
         console.warn('linked-list broken');
@@ -38,27 +38,28 @@ class Phrase {
     let terms = this.terms();
     return terms.find(t => t.id === id) !== undefined;
   }
-  out( options = {} ) {
+  out(options = {}) {
     let terms = this.terms();
     return terms.reduce((str, t, i) => {
       options.last = i === terms.length - 1;
       return str + t.out(options);
     }, '');
   }
-  json( options = {} ) {
+  json(options = {}) {
     let out = {};
     out.text = this.text();
     out.normal = this.normal();
     if (options.terms !== false) {
-      out.terms = this.terms().map((t) => t.json(options));
+      out.terms = this.terms().map(t => t.json(options));
     }
     return out;
   }
 }
 //  ¯\_(:/)_/¯
-Phrase.prototype.clone = function() { //how do we clone part of the pool?
+Phrase.prototype.clone = function() {
+  //how do we clone part of the pool?
   let terms = this.terms();
-  let newTerms = terms.map((t) => t.clone());
+  let newTerms = terms.map(t => t.clone());
   //connect these new ids up
   newTerms.forEach((t, i) => {
     //add it to the pool..
@@ -80,7 +81,7 @@ Phrase.prototype.buildFrom = function(terms) {
 Phrase.prototype.match = function(str) {
   let matches = matchAll(this, str);
   //make them phrase objects
-  matches = matches.map((list) => {
+  matches = matches.map(list => {
     return new Phrase(list[0].id, list.length, this.pool);
   });
   return matches;
@@ -88,7 +89,7 @@ Phrase.prototype.match = function(str) {
 Phrase.prototype.not = function(str) {
   let matches = notMatch(this, str);
   //make them phrase objects
-  matches = matches.map((list) => {
+  matches = matches.map(list => {
     return new Phrase(list[0].id, list.length, this.pool);
   });
   return matches;
@@ -117,14 +118,12 @@ Phrase.prototype.splitOn = function(p) {
   return result;
 };
 
-const methods = [
-  require('./hard'),
-];
-methods.forEach((obj) => Object.assign(Phrase.prototype, obj));
+const methods = [require('./hard')];
+methods.forEach(obj => Object.assign(Phrase.prototype, obj));
 
 const aliases = {
-  term: 'terms'
+  term: 'terms',
 };
-Object.keys(aliases).forEach((k) => Phrase.prototype[k] = Phrase.prototype[aliases[k]]);
+Object.keys(aliases).forEach(k => (Phrase.prototype[k] = Phrase.prototype[aliases[k]]));
 
 module.exports = Phrase;

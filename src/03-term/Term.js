@@ -5,7 +5,7 @@ const tagAs = require('./tag/tag');
 const unTag = require('./tag/untag');
 
 class Term {
-  constructor( text = '' ) {
+  constructor(text = '') {
     text = String(text);
     let obj = parseTerm(text);
     this.text = obj.text || '';
@@ -19,16 +19,16 @@ class Term {
     this.next = null;
     this.id = makeId(this.normal);
   }
-  json( options = {} ) {
+  json(options = {}) {
     let out = {};
     let defaultOn = ['text', 'normal', 'tags'];
-    defaultOn.forEach((k) => {
+    defaultOn.forEach(k => {
       if (options[k] !== false) {
         out[k] = this[k];
       }
     });
     let defaultOff = ['preText', 'postText'];
-    defaultOff.forEach((k) => {
+    defaultOff.forEach(k => {
       if (options[k] === true) {
         out[k] = this[k];
       }
@@ -49,10 +49,7 @@ Term.prototype.out = output;
 Term.prototype.tag = tagAs;
 Term.prototype.unTag = unTag;
 
-const methods = [
-  require('./easy'),
-];
-methods.forEach((obj) => Object.assign(Term.prototype, obj));
-
+const methods = [require('./easy')];
+methods.forEach(obj => Object.assign(Term.prototype, obj));
 
 module.exports = Term;

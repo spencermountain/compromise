@@ -1,7 +1,6 @@
-
 //
 const failFast = function(terms, regs) {
-  for(let i = 0; i < regs.length; i += 1) {
+  for (let i = 0; i < regs.length; i += 1) {
     let reg = regs[i];
     //logical quick-ones
     if (reg.optional !== true) {

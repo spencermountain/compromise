@@ -1,7 +1,5 @@
-
 //
 const checkApostrophe = function(term) {
-
-  return null;
-};
-module.exports = checkApostrophe;
+  return null
+}
+module.exports = checkApostrophe

@@ -22,7 +22,7 @@ let afterThisWord = {
   old: 'Noun', //51%
   never: 'Verb', //42%
   before: 'Noun', //28%
-};
+}
 
 //in advance of this word, this is what happens usually
 let beforeThisWord = {
@@ -37,8 +37,8 @@ let beforeThisWord = {
   himself: 'Verb', //31% //see himself
   went: 'Noun', //43% //he went
   who: 'Noun', //47% //person who
-  jr: 'Person'
-};
+  jr: 'Person',
+}
 
 //following this POS, this is likely
 let afterThisPos = {
@@ -55,8 +55,8 @@ let afterThisPos = {
   Demonym: 'Noun', //38%
   // Organization: 'Verb', //33%
   Honorific: 'Person', //
-// FirstName: 'Person', //
-};
+  // FirstName: 'Person', //
+}
 
 //in advance of this POS, this is likely
 let beforeThisPos = {
@@ -66,12 +66,12 @@ let beforeThisPos = {
   Modal: 'Noun', //38%
   PluperfectTense: 'Noun', //40%
   PerfectTense: 'Verb', //32%
-// LastName: 'FirstName', //
-};
+  // LastName: 'FirstName', //
+}
 module.exports = {
   beforeThisWord: beforeThisWord,
   afterThisWord: afterThisWord,
 
   beforeThisPos: beforeThisPos,
-  afterThisPos: afterThisPos
-};
+  afterThisPos: afterThisPos,
+}

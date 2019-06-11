@@ -155,7 +155,7 @@ const orgWords = [
   'partners',
   'partnership',
   // 'party',
-  'people\'s party',
+  "people's party",
   'petrol',
   'petroleum',
   'pharmacare',
@@ -202,10 +202,10 @@ const orgWords = [
   'union',
   'university',
   'utilities',
-  'workers'
-];
+  'workers',
+]
 
 module.exports = orgWords.reduce(function(h, str) {
-  h[str] = 'Noun';
-  return h;
-}, {});
+  h[str] = 'Noun'
+  return h
+}, {})

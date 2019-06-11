@@ -35,23 +35,23 @@ let compact = {
   x: '×ΧχϗϰХхҲҳӼӽӾӿ',
   y: 'ÝýÿŶŷŸƳƴȲȳɎɏΎΥΫγψϒϓϔЎУучўѰѱҮүҰұӮӯӰӱӲӳ',
   z: 'ŹźŻżŽžƩƵƶȤȥɀΖζ',
-};
+}
 //decompress data into two hashes
-let unicode = {};
+let unicode = {}
 Object.keys(compact).forEach(function(k) {
   compact[k].split('').forEach(function(s) {
-    unicode[s] = k;
-  });
-});
+    unicode[s] = k
+  })
+})
 
 const killUnicode = str => {
-  let chars = str.split('');
+  let chars = str.split('')
   chars.forEach((s, i) => {
     if (unicode[s]) {
-      chars[i] = unicode[s];
+      chars[i] = unicode[s]
     }
-  });
-  return chars.join('');
-};
-module.exports = killUnicode;
+  })
+  return chars.join('')
+}
+module.exports = killUnicode
 // console.log(killUnicode('bjŏȒk—Ɏó'));

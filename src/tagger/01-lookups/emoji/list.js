@@ -52,5 +52,5 @@ module.exports = {
   '*^:': true,
   '<3': true,
   '</3': true,
-  '<\\3': true
-};
+  '<\\3': true,
+}

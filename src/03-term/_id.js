@@ -1,14 +1,14 @@
 //this is a not-well-thought-out way to reduce our dependence on `object===object` stuff
-const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split('');
+const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split('')
 
 //generates a unique id for this term
 function makeId(str) {
-  str = str || '_';
-  var text = str + '-';
+  str = str || '_'
+  var text = str + '-'
   for (var i = 0; i < 7; i++) {
-    text += chars[Math.floor(Math.random() * chars.length)];
+    text += chars[Math.floor(Math.random() * chars.length)]
   }
-  return text;
+  return text
 }
 
-module.exports = makeId;
+module.exports = makeId

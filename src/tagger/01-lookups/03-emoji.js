@@ -1,5 +1,5 @@
-const emojiReg = require('./emoji/regex');
-const emoticon = require('./emoji/list');
+const emojiReg = require('./emoji/regex')
+const emoticon = require('./emoji/list')
 //for us, there's three types -
 // * ;) - emoticons
 // * 🌵 - unicode emoji
@@ -7,50 +7,50 @@ const emoticon = require('./emoji/list');
 
 //test for forms like ':woman_tone2:‍:ear_of_rice:'
 //https://github.com/Kikobeats/emojis-keywords/blob/master/index.js
-const isCommaEmoji = (t) => {
+const isCommaEmoji = t => {
   if (t.raw.charAt(0) === ':') {
     //end comma can be last or second-last ':haircut_tone3:‍♀️'
     if (t.raw.match(/:.?$/) === null) {
-      return false;
+      return false
     }
     //ensure no spaces
     if (t.raw.match(' ')) {
-      return false;
+      return false
     }
     //reasonably sized
     if (t.raw.length > 35) {
-      return false;
+      return false
     }
-    return true;
+    return true
   }
-  return false;
-};
+  return false
+}
 
 //check against emoticon whitelist
-const isEmoticon = (t) => {
-  let str = t.raw.replace(/^[:;]/, ':'); //normalize the 'eyes'
-  return emoticon.hasOwnProperty(str);
-};
+const isEmoticon = t => {
+  let str = t.raw.replace(/^[:;]/, ':') //normalize the 'eyes'
+  return emoticon.hasOwnProperty(str)
+}
 
 //these are somewhat popular.
 const tagEmoji = (term, world) => {
   //test for :keyword: emojis
   if (isCommaEmoji(term) === true) {
-    term.tag('Emoji', 'comma-emoji', world);
-    term.text = term.raw;
-    term.normalizeWhitespace();
+    term.tag('Emoji', 'comma-emoji', world)
+    term.text = term.raw
+    term.normalizeWhitespace()
   }
   //test for unicode emojis
   if (term.text.match(emojiReg)) {
-    term.tag('Emoji', 'unicode-emoji', world);
-    term.text = term.raw;
-    term.normalizeWhitespace();
+    term.tag('Emoji', 'unicode-emoji', world)
+    term.text = term.raw
+    term.normalizeWhitespace()
   }
   //test for emoticon ':)' emojis
   if (isEmoticon(term) === true) {
-    term.tag('Emoji', 'emoticon-emoji', world);
-    term.text = term.raw;
-    term.normalizeWhitespace();
+    term.tag('Emoji', 'emoticon-emoji', world)
+    term.text = term.raw
+    term.normalizeWhitespace()
   }
-};
-module.exports = tagEmoji;
+}
+module.exports = tagEmoji

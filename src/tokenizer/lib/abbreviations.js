@@ -1,6 +1,5 @@
 //these are common word shortenings used in the lexicon and sentence segmentation methods
 //there are all nouns,or at the least, belong beside one.
-'use strict';
 
 //common abbreviations
 let compact = {
@@ -31,7 +30,7 @@ let compact = {
     'ad',
     'md',
     'corp',
-    'col'
+    'col',
   ],
   Organization: [
     'dept',
@@ -44,7 +43,7 @@ let compact = {
     //proper nouns with exclamation marks
     'yahoo',
     'joomla',
-    'jeopardy'
+    'jeopardy',
   ],
 
   Place: [
@@ -93,23 +92,10 @@ let compact = {
     'alta',
     'ont',
     'que',
-    'sask'
+    'sask',
   ],
 
-  Month: [
-    'jan',
-    'feb',
-    'mar',
-    'apr',
-    'jun',
-    'jul',
-    'aug',
-    'sep',
-    'sept',
-    'oct',
-    'nov',
-    'dec'
-  ],
+  Month: ['jan', 'feb', 'mar', 'apr', 'jun', 'jul', 'aug', 'sep', 'sept', 'oct', 'nov', 'dec'],
   Date: ['circa'],
 
   //Honorifics
@@ -159,20 +145,20 @@ let compact = {
     'sir',
     'sr',
     'supt',
-    'surg'
-  //miss
-  //misses
+    'surg',
+    //miss
+    //misses
   ],
-  Value: ['no']
-};
+  Value: ['no'],
+}
 
 //unpack the compact terms into the misc lexicon..
-let abbreviations = {};
-const keys = Object.keys(compact);
+let abbreviations = {}
+const keys = Object.keys(compact)
 for (let i = 0; i < keys.length; i++) {
-  const arr = compact[keys[i]];
+  const arr = compact[keys[i]]
   for (let i2 = 0; i2 < arr.length; i2++) {
-    abbreviations[arr[i2]] = [keys[i], 'Abbreviation'];
+    abbreviations[arr[i2]] = [keys[i], 'Abbreviation']
   }
 }
-module.exports = abbreviations;
+module.exports = abbreviations

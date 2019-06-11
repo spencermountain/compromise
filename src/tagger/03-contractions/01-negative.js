@@ -1,4 +1,4 @@
-const hasNegative = /n't$/;
+const hasNegative = /n't$/
 
 const irregulars = {
   "won't": ['will', 'not'],
@@ -11,22 +11,22 @@ const irregulars = {
   "shan't": ['should', 'not'],
 
   //("ain't" has is/was ambiguity)
-};
+}
 
 const getRoot = function(str) {
-  return str.replace(/n't$/, '');
-};
+  return str.replace(/n't$/, '')
+}
 
 const checkNegative = function(term) {
   //check named-ones
   if (irregulars.hasOwnProperty(term.normal) === true) {
-    return irregulars[term.normal];
+    return irregulars[term.normal]
   }
   //try it normally
   if (hasNegative.test(term.normal) === true) {
-    let main = getRoot(term.normal);
-    return [main, 'not'];
+    let main = getRoot(term.normal)
+    return [main, 'not']
   }
-  return null;
-};
-module.exports = checkNegative;
+  return null
+}
+module.exports = checkNegative

@@ -1,5 +1,5 @@
 //
 const irregulars = function(term) {
-  return null;
-};
-module.exports = irregulars;
+  return null
+}
+module.exports = irregulars

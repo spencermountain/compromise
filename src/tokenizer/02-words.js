@@ -1,5 +1,5 @@
-const wordlike = /\S/;
-const isBoundary = /^[!?.]+$/;
+const wordlike = /\S/
+const isBoundary = /^[!?.]+$/
 
 const notWord = {
   '.': true,
@@ -7,71 +7,71 @@ const notWord = {
   '–': true, //en-dash
   '—': true, //em-dash
   '--': true,
-  '...': true
-};
+  '...': true,
+}
 
 const hasHyphen = function(str) {
   //dont split 're-do'
   if (/^(re|un)-?[^aeiou]./.test(str) === true) {
-    return false;
+    return false
   }
   //letter-number
-  let reg = /^([a-z`"'/]+)(-|–|—)([a-z0-9].*)/i;
+  let reg = /^([a-z`"'/]+)(-|–|—)([a-z0-9].*)/i
   if (reg.test(str) === true) {
-    return true;
+    return true
   }
   //support weird number-emdash combo '2010–2011'
-  let reg2 = /^([0-9]+)(–|—)([0-9].*)/i;
+  let reg2 = /^([0-9]+)(–|—)([0-9].*)/i
   if (reg2.test(str)) {
-    return true;
+    return true
   }
-  return false;
-};
+  return false
+}
 
 //support splitting terms like "open/closed"
 const hasSlash = function(word) {
-  const reg = /[a-z]\/[a-z]/;
+  const reg = /[a-z]\/[a-z]/
   if (reg.test(word)) {
     //only one slash though
     if (word.split(/\//g).length === 2) {
-      return true;
+      return true
     }
   }
-  return false;
-};
+  return false
+}
 
 //turn a string into an array of terms (naiive for now, lumped later)
 const splitWords = function(str) {
-  let result = [];
-  let arr = [];
+  let result = []
+  let arr = []
   //start with a naiive split
-  str = str || '';
+  str = str || ''
   if (typeof str === 'number') {
-    str = String(str);
+    str = String(str)
   }
-  const firstSplit = str.split(/(\S+)/);
+  const firstSplit = str.split(/(\S+)/)
   for (let i = 0; i < firstSplit.length; i++) {
-    const word = firstSplit[i];
+    const word = firstSplit[i]
     if (hasHyphen(word) === true) {
       //support multiple-hyphenated-terms
-      const hyphens = word.split(/[-–—]/);
+      const hyphens = word.split(/[-–—]/)
       for (let o = 0; o < hyphens.length; o++) {
         if (o === hyphens.length - 1) {
-          arr.push(hyphens[o]);
+          arr.push(hyphens[o])
         } else {
-          arr.push(hyphens[o] + '-');
+          arr.push(hyphens[o] + '-')
         }
       }
     } else if (hasSlash(word) === true) {
-      const slashes = word.split(/\//);
-      arr.push(slashes[0]);
-      arr.push('/' + slashes[1]);
+      const slashes = word.split(/\//)
+      arr.push(slashes[0])
+      arr.push('/' + slashes[1])
     } else {
-      arr.push(word);
+      arr.push(word)
     }
   }
   //greedy merge whitespace+arr to the right
-  let carry = '';
+  let carry = ''
   for (let i = 0; i < arr.length; i++) {
     //if it's more than a whitespace
     if (
@@ -79,16 +79,16 @@ const splitWords = function(str) {
       notWord.hasOwnProperty(arr[i]) === false &&
       isBoundary.test(arr[i]) === false
     ) {
-      result.push(carry + arr[i]);
-      carry = '';
+      result.push(carry + arr[i])
+      carry = ''
     } else {
-      carry += arr[i];
+      carry += arr[i]
     }
   }
   //handle last one
   if (carry && result.length > 0) {
-    result[result.length - 1] += carry; //put it on the end
+    result[result.length - 1] += carry //put it on the end
   }
-  return result;
-};
-module.exports = splitWords;
+  return result
+}
+module.exports = splitWords

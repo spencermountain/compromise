@@ -17,5 +17,5 @@ module.exports = [
   'week',
   'weeks',
   'year',
-  'years'
-];
+  'years',
+]

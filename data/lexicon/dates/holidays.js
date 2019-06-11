@@ -142,5 +142,5 @@ module.exports = [
   'winter solstice',
   // Additional important holidays
   'chinese new year',
-  'diwali'
-];
+  'diwali',
+]

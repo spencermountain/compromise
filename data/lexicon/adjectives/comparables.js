@@ -363,5 +363,5 @@ module.exports = [
   'weak',
   'white',
   'wide',
-  'smooth'
-];
+  'smooth',
+]

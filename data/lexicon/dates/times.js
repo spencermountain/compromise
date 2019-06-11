@@ -15,5 +15,5 @@ module.exports = [
   'eod',
   'oclock',
   'all day',
-  'at night'
-];
+  'at night',
+]

@@ -517,5 +517,5 @@ module.exports = [
   'wooden',
   'woozy',
   'wound',
-  'yearly'
-];
+  'yearly',
+]

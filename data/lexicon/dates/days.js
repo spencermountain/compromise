@@ -19,5 +19,5 @@ module.exports = [
   'thursdays',
   'fridays',
   'saturdays',
-  'sundays'
-];
+  'sundays',
+]

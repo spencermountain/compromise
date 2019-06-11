@@ -4,5 +4,5 @@
 module.exports = {
   words: require('./lexicon'),
   conjugations: require('./conjugations'),
-  plurals: require('./plurals')
-};
+  plurals: require('./plurals'),
+}

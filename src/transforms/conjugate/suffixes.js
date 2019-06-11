@@ -5,9 +5,9 @@ const endsWith = {
       repl: {
         pr: '$1bs',
         pa: '$1bbed',
-        gr: '$1bbing'
+        gr: '$1bbing',
       },
-    }
+    },
   ],
   d: [
     {
@@ -16,8 +16,8 @@ const endsWith = {
         pr: '$1s',
         pa: 'ent',
         gr: '$1ing',
-        ar: '$1er'
-      }
+        ar: '$1er',
+      },
     },
     {
       reg: /(eed)$/i,
@@ -25,8 +25,8 @@ const endsWith = {
         pr: '$1s',
         pa: '$1ed',
         gr: '$1ing',
-        ar: '$1er'
-      }
+        ar: '$1er',
+      },
     },
     {
       reg: /(ed)$/i,
@@ -34,7 +34,7 @@ const endsWith = {
         pr: '$1s',
         pa: '$1ded',
         ar: '$1der',
-        gr: '$1ding'
+        gr: '$1ding',
       },
     },
     {
@@ -42,9 +42,9 @@ const endsWith = {
       repl: {
         pr: '$1ds',
         pa: '$1dded',
-        gr: '$1dding'
+        gr: '$1dding',
       },
-    }
+    },
   ],
   e: [
     {
@@ -53,8 +53,8 @@ const endsWith = {
         pr: '$1s',
         pa: '$1d',
         gr: 'eaving',
-        ar: '$1r'
-      }
+        ar: '$1r',
+      },
     },
     {
       reg: /(ide)$/i,
@@ -62,8 +62,8 @@ const endsWith = {
         pr: '$1s',
         pa: 'ode',
         gr: 'iding',
-        ar: 'ider'
-      }
+        ar: 'ider',
+      },
     },
     {
       reg: /(ake)$/i,
@@ -71,8 +71,8 @@ const endsWith = {
         pr: '$1s',
         pa: 'ook',
         gr: 'aking',
-        ar: '$1r'
-      }
+        ar: '$1r',
+      },
     },
     {
       reg: /(a[tg]|i[zn]|ur|nc|gl|is)e$/i,
@@ -80,27 +80,26 @@ const endsWith = {
         pr: '$1es',
         pa: '$1ed',
         gr: '$1ing',
-        prt: '$1en'
-      }
+        prt: '$1en',
+      },
     },
     {
       reg: /([bd]l)e$/i,
       repl: {
         pr: '$1es',
         pa: '$1ed',
-        gr: '$1ing'
-      }
+        gr: '$1ing',
+      },
     },
     {
       reg: /(om)e$/i,
       repl: {
         pr: '$1es',
         pa: 'ame',
-        gr: '$1ing'
-      }
-    }
+        gr: '$1ing',
+      },
+    },
   ],
-
 
   g: [
     {
@@ -108,9 +107,9 @@ const endsWith = {
       repl: {
         pr: '$1gs',
         pa: '$1gged',
-        gr: '$1gging'
+        gr: '$1gging',
       },
-    }
+    },
   ],
   h: [
     {
@@ -118,9 +117,9 @@ const endsWith = {
       repl: {
         pr: '$1$2es',
         pa: '$1$2ed',
-        gr: '$1$2ing'
+        gr: '$1$2ing',
       },
-    }
+    },
   ],
   k: [
     {
@@ -129,8 +128,8 @@ const endsWith = {
         pr: '$1s',
         pa: 'unk',
         gr: '$1ing',
-        ar: '$1er'
-      }
+        ar: '$1er',
+      },
     },
   ],
 
@@ -140,9 +139,9 @@ const endsWith = {
       repl: {
         pr: '$1ms',
         pa: '$1mmed',
-        gr: '$1mming'
+        gr: '$1mming',
       },
-    }
+    },
   ],
 
   n: [
@@ -151,9 +150,9 @@ const endsWith = {
       repl: {
         pr: '$1s',
         pa: '$1ed',
-        gr: '$1ing'
+        gr: '$1ing',
       },
-    }
+    },
   ],
   p: [
     {
@@ -162,15 +161,15 @@ const endsWith = {
         pr: '$1$2s',
         pa: '$1pt',
         gr: '$1$2ing',
-        ar: '$1$2er'
-      }
+        ar: '$1$2er',
+      },
     },
     {
       reg: /([^aeiou][aeiou])p$/i,
       repl: {
         pr: '$1ps',
         pa: '$1pped',
-        gr: '$1pping'
+        gr: '$1pping',
       },
     },
     {
@@ -178,8 +177,8 @@ const endsWith = {
       repl: {
         pr: '$1ps',
         pa: '$1p',
-        gr: '$1pping'
-      }
+        gr: '$1pping',
+      },
     },
   ],
 
@@ -189,16 +188,16 @@ const endsWith = {
       repl: {
         pr: '$1s',
         pa: '$1ed',
-        gr: '$1ing'
-      }
+        gr: '$1ing',
+      },
     },
     {
       reg: /(er)$/i,
       repl: {
         pr: '$1s',
         pa: '$1ed',
-        gr: '$1ing'
-      }
+        gr: '$1ing',
+      },
     },
   ],
   s: [
@@ -207,9 +206,9 @@ const endsWith = {
       repl: {
         pr: '$1es',
         pa: '$1ed',
-        gr: '$1ing'
-      }
-    }
+        gr: '$1ing',
+      },
+    },
   ],
 
   t: [
@@ -218,30 +217,31 @@ const endsWith = {
       repl: {
         pr: '$1s',
         pa: '$1ed',
-        gr: '$1ing'
-      }
-    }, {
+        gr: '$1ing',
+      },
+    },
+    {
       reg: /(.eat)$/i,
       repl: {
         pr: '$1s',
         pa: '$1ed',
-        gr: '$1ing'
-      }
+        gr: '$1ing',
+      },
     },
     {
       reg: /([aeiu])t$/i,
       repl: {
         pr: '$1ts',
         pa: '$1t',
-        gr: '$1tting'
-      }
+        gr: '$1tting',
+      },
     },
     {
       reg: /([^aeiou][aeiou])t$/i,
       repl: {
         pr: '$1ts',
         pa: '$1tted',
-        gr: '$1tting'
+        gr: '$1tting',
       },
     },
   ],
@@ -253,9 +253,9 @@ const endsWith = {
         pr: '$1$2s',
         pa: '$1ew',
         gr: '$1$2ing',
-        prt: '$1$2n'
-      }
-    }
+        prt: '$1$2n',
+      },
+    },
   ],
   y: [
     {
@@ -263,9 +263,9 @@ const endsWith = {
       repl: {
         pr: '$1ies',
         pa: '$1ied',
-        gr: '$1ying'
-      }
-    }
+        gr: '$1ying',
+      },
+    },
   ],
 
   z: [
@@ -274,11 +274,10 @@ const endsWith = {
       repl: {
         pr: '$1es',
         pa: '$1ed',
-        gr: '$1ing'
-      }
-    }
-  ]
-};
+        gr: '$1ing',
+      },
+    },
+  ],
+}
 
-
-module.exports = endsWith;
+module.exports = endsWith

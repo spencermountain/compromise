@@ -14,7 +14,7 @@ module.exports = [
     'Url',
     'PhoneNumber',
     'Email',
-    'Emoji'
+    'Emoji',
   ],
   //exlusive-nouns
   ['Person', 'Organization', 'Value', 'Place', 'Actor', 'Demonym', 'Pronoun'],
@@ -36,7 +36,16 @@ module.exports = [
   ['Ordinal', 'Currency'], //$5.50th
   //verbs
   ['PastTense', 'PresentTense', 'FutureTense'],
-  ['Pluperfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund', 'FuturePerfect', 'PerfectTense'],
+  [
+    'Pluperfect',
+    'Copula',
+    'Modal',
+    'Participle',
+    'Infinitive',
+    'Gerund',
+    'FuturePerfect',
+    'PerfectTense',
+  ],
   ['Auxiliary', 'Noun', 'Value'],
   //date
   ['Month', 'WeekDay', 'Year', 'Duration', 'Holiday'],
@@ -57,4 +66,4 @@ module.exports = [
   ['QuestionWord', 'VerbPhrase'],
   //acronyms
   ['Acronym', 'VerbPhrase'],
-];
+]

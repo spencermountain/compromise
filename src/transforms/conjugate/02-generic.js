@@ -1,38 +1,36 @@
-'use strict';
+'use strict'
 //non-specifc, 'hail-mary' transforms from infinitive, into other forms
-const hasY = /[bcdfghjklmnpqrstvwxz]y$/;
+const hasY = /[bcdfghjklmnpqrstvwxz]y$/
 const generic = {
-
-  Gerund: (inf) => {
+  Gerund: inf => {
     if (inf.charAt(inf.length - 1) === 'e') {
-      return inf.replace(/e$/, 'ing');
+      return inf.replace(/e$/, 'ing')
     }
-    return inf + 'ing';
+    return inf + 'ing'
   },
 
-  PresentTense: (inf) => {
+  PresentTense: inf => {
     if (inf.charAt(inf.length - 1) === 's') {
-      return inf + 'es';
+      return inf + 'es'
     }
     if (hasY.test(inf) === true) {
-      return inf.slice(0, -1) + 'ies';
+      return inf.slice(0, -1) + 'ies'
     }
-    return inf + 's';
+    return inf + 's'
   },
 
-  PastTense: (inf) => {
+  PastTense: inf => {
     if (inf.charAt(inf.length - 1) === 'e') {
-      return inf + 'd';
+      return inf + 'd'
     }
     if (inf.substr(-2) === 'ed') {
-      return inf;
+      return inf
     }
     if (hasY.test(inf) === true) {
-      return inf.slice(0, -1) + 'ied';
+      return inf.slice(0, -1) + 'ied'
     }
-    return inf + 'ed';
-  }
+    return inf + 'ed'
+  },
+}
 
-};
-
-module.exports = generic;
+module.exports = generic

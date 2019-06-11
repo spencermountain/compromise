@@ -1,32 +1,32 @@
 module.exports = {
   Adjective: {},
   Comparable: {
-    isA: 'Adjective'
+    isA: 'Adjective',
   },
   Comparative: {
-    isA: 'Adjective'
+    isA: 'Adjective',
   },
   Superlative: {
-    isA: 'Adjective'
+    isA: 'Adjective',
   },
 
   NumberRange: {
-    isA: 'Contraction'
+    isA: 'Contraction',
   },
   Adverb: {},
 
   Currency: {
-    isA: 'NounPhrase'
+    isA: 'NounPhrase',
   },
   //glue
   Determiner: {
-    isA: 'NounPhrase'
+    isA: 'NounPhrase',
   },
   Conjunction: {},
   Preposition: {},
   QuestionWord: {},
   RelativeProunoun: {
-    isA: 'Pronoun'
+    isA: 'Pronoun',
   },
   Expression: {},
   Abbreviation: {},
@@ -34,7 +34,7 @@ module.exports = {
   PhoneNumber: {},
   HashTag: {},
   AtMention: {
-    isA: 'Noun'
+    isA: 'Noun',
   },
   Emoji: {},
   Email: {},
@@ -57,17 +57,17 @@ module.exports = {
   // Quotes
   Quotation: {},
   StartQuotation: {
-    isA: 'Quotation'
+    isA: 'Quotation',
   },
   EndQuotation: {
-    isA: 'Quotation'
+    isA: 'Quotation',
   },
   //parentheses
   Parentheses: {},
   EndBracket: {
-    isA: 'Parentheses'
+    isA: 'Parentheses',
   },
   StartBracket: {
-    isA: 'Parentheses'
-  }
-};
+    isA: 'Parentheses',
+  },
+}

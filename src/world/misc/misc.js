@@ -4,14 +4,14 @@ module.exports = {
   '3m': 'Organization',
   '7 eleven': 'Organization',
   '7-eleven': 'Organization',
-  'g8': 'Organization',
+  g8: 'Organization',
   'motel 6': 'Organization',
-  'vh1': 'Organization',
-  'q1': 'Date',
-  'q2': 'Date',
-  'q3': 'Date',
-  'q4': 'Date',
+  vh1: 'Organization',
+  q1: 'Date',
+  q2: 'Date',
+  q3: 'Date',
+  q4: 'Date',
   //misc
-  'records': 'Plural',
+  records: 'Plural',
   '&': 'Conjunction',
-};
+}

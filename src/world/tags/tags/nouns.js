@@ -1,94 +1,94 @@
 module.exports = {
   Noun: {
-    isA: 'NounPhrase'
+    isA: 'NounPhrase',
   },
   // - singular
   Singular: {
-    isA: 'Noun'
+    isA: 'Noun',
   },
   //a specific thing that's capitalized
   ProperNoun: {
-    isA: 'Noun'
+    isA: 'Noun',
   },
 
   // -- people
   Person: {
-    isA: 'Singular'
+    isA: 'Singular',
   },
   FirstName: {
-    isA: 'Person'
+    isA: 'Person',
   },
   MaleName: {
-    isA: 'FirstName'
+    isA: 'FirstName',
   },
   FemaleName: {
-    isA: 'FirstName'
+    isA: 'FirstName',
   },
   LastName: {
-    isA: 'Person'
+    isA: 'Person',
   },
   Honorific: {
-    isA: 'Noun'
+    isA: 'Noun',
   },
   Place: {
-    isA: 'Singular'
+    isA: 'Singular',
   },
 
   // -- places
   Country: {
-    isA: 'Place'
+    isA: 'Place',
   },
   City: {
-    isA: 'Place'
+    isA: 'Place',
   },
   Region: {
-    isA: 'Place'
+    isA: 'Place',
   },
   Address: {
-    isA: 'Place'
+    isA: 'Place',
   },
   Organization: {
-    isA: 'Singular'
+    isA: 'Singular',
   },
   SportsTeam: {
-    isA: 'Organization'
+    isA: 'Organization',
   },
   Company: {
-    isA: 'Organization'
+    isA: 'Organization',
   },
   School: {
-    isA: 'Organization'
+    isA: 'Organization',
   },
 
   // - plural
   Plural: {
-    isA: 'Noun'
+    isA: 'Noun',
   },
   Uncountable: {
     //(not plural or singular)
-    isA: 'Noun'
+    isA: 'Noun',
   },
   Pronoun: {
-    isA: 'Noun'
+    isA: 'Noun',
   },
   //a word for someone doing something -'plumber'
   Actor: {
-    isA: 'Noun'
+    isA: 'Noun',
   },
   //a gerund-as-noun - 'swimming'
   Activity: {
-    isA: 'Noun'
+    isA: 'Noun',
   },
   //'kilograms'
   Unit: {
-    isA: 'Noun'
+    isA: 'Noun',
   },
   //'Canadians'
   Demonym: {
-    isA: 'Noun'
+    isA: 'Noun',
   },
   //`john's`
   Possessive: {
-    isA: 'Noun'
-  }
-};
+    isA: 'Noun',
+  },
+}

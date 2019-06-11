@@ -1,79 +1,77 @@
-const conjugate = require('../transforms/conjugate');
+const conjugate = require('../transforms/conjugate')
 //supported verb forms:
-const forms = [
-  null,
-  'PastTense',
-  'PresentTense',
-  'Gerund',
-  'Participle',
-];
+const forms = [null, 'PastTense', 'PresentTense', 'Gerund', 'Participle']
 
 //simply put these words in our lexicon
 const addWords = function(obj, lex) {
-  let keys = Object.keys(obj);
-  for(let i = 0; i < keys.length; i += 1) {
-    let k = keys[i];
+  let keys = Object.keys(obj)
+  for (let i = 0; i < keys.length; i += 1) {
+    let k = keys[i]
     //add infinitive
-    lex[k] = 'Infinitive';
+    lex[k] = 'Infinitive'
     //add other forms
-    for(let f = 1; f < forms.length; f += 1) {
+    for (let f = 1; f < forms.length; f += 1) {
       if (obj[k][forms[f]] !== undefined) {
-        lex[obj[k][forms[f]]] = forms[f];
+        lex[obj[k][forms[f]]] = forms[f]
       }
     }
   }
-};
+}
 
 //unpack this ad-hoc compression format for our verbs
 const unpackVerbs = function(str) {
-  let verbs = str.split('|');
+  let verbs = str.split('|')
   return verbs.reduce((h, s) => {
-    let parts = s.split(':');
-    let prefix = parts[0];
-    let ends = parts[1].split(',');
+    let parts = s.split(':')
+    let prefix = parts[0]
+    let ends = parts[1].split(',')
     //grab the infinitive
-    let inf = prefix + ends[0];
+    let inf = prefix + ends[0]
     if (ends[0] === '_') {
-      inf = prefix;
+      inf = prefix
     }
-    h[inf] = {};
+    h[inf] = {}
     //we did the infinitive, now do the rest:
     for (let i = 1; i < forms.length; i++) {
-      let word = parts[0] + ends[i];
+      let word = parts[0] + ends[i]
       if (ends[i] === '_') {
-        word = parts[0];
+        word = parts[0]
       }
       if (ends[i]) {
-        h[inf][forms[i]] = word;
+        h[inf][forms[i]] = word
       }
     }
-    return h;
-  }, {});
-};
+    return h
+  }, {})
+}
 
 // automatically conjugate the non-irregular verbs
 const bulkUp = function(conjugations) {
-  const keys = Object.keys(conjugations);
-  for(let i = 0; i < keys.length; i += 1) {
-    let inf = keys[i];
-    let conj = conjugations[inf];
+  const keys = Object.keys(conjugations)
+  for (let i = 0; i < keys.length; i += 1) {
+    let inf = keys[i]
+    let conj = conjugations[inf]
     //do we need to add the rest ourselves?
-    if (conj.PastTense === undefined || conj.PresentTense === undefined || conj.Gerund === undefined) {
+    if (
+      conj.PastTense === undefined ||
+      conj.PresentTense === undefined ||
+      conj.Gerund === undefined
+    ) {
       //this is a little redundant, when we have some forms already
-      let auto = conjugate(inf);
-      conjugations[inf] = Object.assign(auto, conj);
+      let auto = conjugate(inf)
+      conjugations[inf] = Object.assign(auto, conj)
     }
   }
-  return conjugations;
-};
+  return conjugations
+}
 
 //bulk-up our irregular verb list
 const addVerbs = function(str, lexicon) {
-  let conjugations = unpackVerbs(str);
+  let conjugations = unpackVerbs(str)
   //ensure all the conjugations are there..
-  conjugations = bulkUp(conjugations);
+  conjugations = bulkUp(conjugations)
   //add them all to the lexicon
-  addWords(conjugations, lexicon);
-  return conjugations;
-};
-module.exports = addVerbs;
+  addWords(conjugations, lexicon)
+  return conjugations
+}
+module.exports = addVerbs

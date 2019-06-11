@@ -1,33 +1,33 @@
 module.exports = {
   Value: {},
   Ordinal: {
-    isA: 'Value'
+    isA: 'Value',
   },
   Cardinal: {
-    isA: 'Value'
+    isA: 'Value',
   },
   Multiple: {
-    isA: 'Value'
+    isA: 'Value',
   },
   RomanNumeral: {
-    isA: 'Cardinal'
+    isA: 'Cardinal',
   },
   Fraction: {
-    isA: 'Value'
+    isA: 'Value',
   },
   TextValue: {
-    isA: 'Value'
+    isA: 'Value',
   },
   NumericValue: {
-    isA: 'Value'
+    isA: 'Value',
   },
   NiceNumber: {
-    isA: 'Value'
+    isA: 'Value',
   },
   Money: {
     //isA: 'Cardinal'
   },
   Percent: {
-    isA: 'Value'
-  }
-};
+    isA: 'Value',
+  },
+}

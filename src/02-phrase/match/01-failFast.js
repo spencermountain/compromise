@@ -1,29 +1,29 @@
 //
 const failFast = function(terms, regs) {
   for (let i = 0; i < regs.length; i += 1) {
-    let reg = regs[i];
+    let reg = regs[i]
     //logical quick-ones
     if (reg.optional !== true) {
       //this is not possible
       if (reg.anything === true && reg.negative === true) {
-        return true;
+        return true
       }
       //start/end impossibilites
       if (reg.start === true && i > 0) {
-        return true;
+        return true
       }
       if (reg.end === true && i < regs.length - 1) {
-        return true;
+        return true
       }
       if (reg.start === true && reg.end === true && terms.length > 1) {
-        return true;
+        return true
       }
       //empty choices
       if (reg.choices && reg.choices.length === 0) {
-        return true;
+        return true
       }
     }
   }
-  return false;
-};
-module.exports = failFast;
+  return false
+}
+module.exports = failFast

@@ -1,76 +1,76 @@
 const methods = {
   misc: require('./methods'),
   out: require('./out'),
-};
-const matchMethods = require('./match');
-const tagger = require('../tagger');
+}
+const matchMethods = require('./match')
+const tagger = require('../tagger')
 
 class Doc {
   constructor(list, from, world) {
-    this.list = list;
+    this.list = list
     //quiet these properties in console.logs
     Object.defineProperty(this, 'from', {
       enumerable: false,
       value: from,
-    });
+    })
     //try this..
     if (world === undefined && from !== undefined) {
-      world = from.world;
+      world = from.world
     }
     //'world' getter
     Object.defineProperty(this, 'world', {
       enumerable: false,
       value: world,
-    });
+    })
     //'found' getter
     Object.defineProperty(this, 'found', {
       get: () => this.list.length > 0,
-    });
+    })
   }
 
   tagger() {
-    return tagger(this);
+    return tagger(this)
   }
 
   //pool is stored on phrase objects
   pool() {
     if (this.list.length > 0) {
-      return this.list[0].pool;
+      return this.list[0].pool
     }
-    return this.all().list[0].pool;
+    return this.all().list[0].pool
   }
   //go up one
   parent() {
     if (this.from) {
-      return this.from;
+      return this.from
     }
-    return this;
+    return this
   }
   //return a list of all parents
   parents() {
-    let arr = [];
+    let arr = []
     const addParent = function(doc) {
       if (doc.from) {
-        arr.push(doc.from);
-        addParent(doc.from);
+        arr.push(doc.from)
+        addParent(doc.from)
       }
-    };
-    addParent(this);
-    return arr.reverse();
+    }
+    addParent(this)
+    return arr.reverse()
   }
   //return first document
   all() {
-    return this.parents()[0];
+    return this.parents()[0]
   }
 }
 
 Doc.prototype.buildFrom = function(list) {
-  return new Doc(list, this, this.world);
-};
+  return new Doc(list, this, this.world)
+}
 
-Doc = matchMethods(Doc);
-Object.assign(Doc.prototype, methods.misc);
-Object.assign(Doc.prototype, methods.out);
+Doc = matchMethods(Doc)
+Object.assign(Doc.prototype, methods.misc)
+Object.assign(Doc.prototype, methods.out)
 
 //aliases
 const aliases = {
@@ -79,6 +79,6 @@ const aliases = {
   notIf: 'ifNo',
   only: 'if',
   onlyIf: 'if',
-};
-Object.keys(aliases).forEach(k => (Doc.prototype[k] = Doc.prototype[aliases[k]]));
-module.exports = Doc;
+}
+Object.keys(aliases).forEach(k => (Doc.prototype[k] = Doc.prototype[aliases[k]]))
+module.exports = Doc

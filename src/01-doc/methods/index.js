@@ -4,4 +4,4 @@ module.exports = Object.assign(
   require('./02-misc'),
   require('./03-split'),
   require('./04-selections')
-);
+)

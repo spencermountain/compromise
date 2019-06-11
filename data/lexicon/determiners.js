@@ -31,5 +31,5 @@ module.exports = [
   'des',
   'de',
   'du',
-  'el'
-];
+  'el',
+]

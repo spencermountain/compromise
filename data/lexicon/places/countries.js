@@ -51,7 +51,7 @@ module.exports = [
   'congo-brazzaville',
   'cook islands',
   'costa rica',
-  'cote d\'ivoire',
+  "cote d'ivoire",
   'croatia',
   'cuba',
   'curacao',
@@ -247,5 +247,5 @@ module.exports = [
   'wallis and futuna',
   'yemen',
   'zambia',
-  'zimbabwe'
-];
+  'zimbabwe',
+]

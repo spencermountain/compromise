@@ -601,4 +601,4 @@ module.exports = [
   'win',
   'deal',
   'spin',
-];
+]

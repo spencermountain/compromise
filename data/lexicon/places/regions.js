@@ -179,5 +179,5 @@ module.exports = [
   'santa catarina',
 
   //misc
-  'siberia'
-];
+  'siberia',
+]

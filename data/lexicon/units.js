@@ -237,5 +237,5 @@ module.exports = [
   'attosecond',
   'attoseconds',
   'percent',
-  'years old'
-];
+  'years old',
+]

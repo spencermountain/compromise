@@ -67,4 +67,4 @@ module.exports = [
   'malibu',
   'gay village',
   'sunderland',
-];
+]

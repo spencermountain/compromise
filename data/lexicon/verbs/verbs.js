@@ -18,5 +18,5 @@ module.exports = [
   'gonna',
   'cannot',
   'has',
-  'msg'
-];
+  'msg',
+]

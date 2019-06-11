@@ -11,5 +11,5 @@ module.exports = [
   'should',
   'ought',
   'shant',
-  'lets' //arguable
-];
+  'lets', //arguable
+]

@@ -757,5 +757,5 @@ module.exports = [
   'zip by',
   'zip up',
   'zone out',
-  'zonk out'
-];
+  'zonk out',
+]

@@ -18,5 +18,5 @@ module.exports = [
   'hers',
   'themselves',
   'myself',
-  'her' //this one is check ambiguous
-];
+  'her', //this one is check ambiguous
+]

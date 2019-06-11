@@ -91,5 +91,5 @@ module.exports = [
   'shillings',
   'kronas',
   'dirhams',
-  'bitcoins'
-];
+  'bitcoins',
+]

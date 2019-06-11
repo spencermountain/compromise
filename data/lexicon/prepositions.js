@@ -1,6 +1,6 @@
 module.exports = [
-  '\'o',
-  'a\'',
+  "'o",
+  "a'",
   'about',
   'bout',
   'across',
@@ -35,7 +35,7 @@ module.exports = [
   'mid',
   'midst',
   'notwithstanding',
-  'o\'',
+  "o'",
   'of',
   'off',
   'on',
@@ -65,5 +65,5 @@ module.exports = [
   'with',
   'within',
   'without',
-  '-' //june - july
-];
+  '-', //june - july
+]

@@ -1,49 +1,9 @@
-'use strict'
 //most nouns do not nead to be listed
 //for whatever reasons, these look like not-nouns
 // //so we make sure that they become nouns
 // const toPlural = require('../../text/subset/nouns/methods/pluralize');
 
 module.exports = [
-  //double-consonant rule
-  'egg',
-  'bottle',
-  'cottage',
-  'kitty',
-  'doggy',
-
-  //.ing
-  'funding',
-  'pudding',
-  'frosting',
-  'bunting',
-  'icing',
-  'ring',
-  'blessing',
-  'advertising',
-
-  //..ly rule
-  'ally',
-  'belly',
-  'bully',
-  'dolly',
-  'folly',
-  'rally',
-  'jelly',
-  'gully',
-  'holly',
-  'tally',
-  'fly',
-  'lily',
-  'monopoly',
-  'doily',
-  'family',
-  'anomaly',
-  'butterfly',
-  'dragonfly',
-  'gadfly',
-  'mayfly',
-
   'ad hominem',
   'banking',
   'body',
@@ -64,7 +24,6 @@ module.exports = [
   'event',
   'example',
   'friend',
-
   'girlfriend',
   'glacier',
   'god',
@@ -93,6 +52,7 @@ module.exports = [
   'super bowl',
   'system',
   't rex',
+  'tax return',
   'there',
   'thing',
   'tic',
@@ -100,11 +60,43 @@ module.exports = [
   'tv show',
   'us dollar',
   'us state',
-  'tax return',
-  // 'things',
-  // 'yesterday',
-  // 'today',
-  // 'tomorrow',
-  // 'weekend',
-  // 'tonight'
+
+  //double-consonant rule
+  'bottle',
+  'cottage',
+  'doggy',
+  'egg',
+  'kitty',
+
+  //.ing
+  'advertising',
+  'blessing',
+  'bunting',
+  'frosting',
+  'funding',
+  'icing',
+  'pudding',
+  'ring',
+
+  //..ly rule
+  'ally',
+  'anomaly',
+  'belly',
+  'bully',
+  'butterfly',
+  'doily',
+  'dolly',
+  'dragonfly',
+  'family',
+  'fly',
+  'folly',
+  'gadfly',
+  'gully',
+  'holly',
+  'jelly',
+  'lily',
+  'mayfly',
+  'monopoly',
+  'rally',
+  'tally',
 ]

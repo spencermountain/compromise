@@ -1,514 +1,127 @@
 module.exports = {
-  take: {
-    PerfectTense: 'have taken',
-    PluPerfectTense: 'had taken',
-    PastTense: 'took',
-    FuturePerfect: 'will have taken',
-  },
-  can: {
-    Gerund: '',
-    PresentTense: 'can',
-    PastTense: 'could',
-    PerfectTense: 'could',
-    PluPerfectTense: 'could',
-    FuturePerfect: 'can',
-    Actor: '',
-  },
-  free: {
-    Gerund: 'freeing',
-    Actor: '',
-  },
-  puke: {
-    Gerund: 'puking',
-  },
-  arise: {
-    PastTense: 'arose',
-    Participle: 'arisen',
-  },
-  babysit: {
-    PastTense: 'babysat',
-    Actor: 'babysitter',
-  },
-  be: {
-    PastTense: 'was',
-    Participle: 'been',
-    PresentTense: 'is',
-    Actor: '',
-    Gerund: 'am',
-  },
-  is: {
-    PastTense: 'was',
-    PresentTense: 'is',
-    Actor: '',
-    Gerund: 'being',
-  },
-  beat: {
-    Gerund: 'beating',
-    Actor: 'beater',
-    Participle: 'beaten',
-  },
-  begin: {
-    Gerund: 'beginning',
-    PastTense: 'began',
-    Participle: 'begun',
-  },
-  ban: {
-    PastTense: 'banned',
-    Gerund: 'banning',
-    Actor: '',
-  },
-  bet: {
-    Actor: 'better',
-    Participle: 'bet',
-  },
-  bite: {
-    Gerund: 'biting',
-    PastTense: 'bit',
-    Participle: 'bitten',
-  },
-  bleed: {
-    PastTense: 'bled',
-    Participle: 'bled',
-  },
-  breed: {
-    PastTense: 'bred',
-  },
-  bring: {
-    PastTense: 'brought',
-    Participle: 'brought',
-  },
-  broadcast: {
-    PastTense: 'broadcast',
-  },
-  build: {
-    PastTense: 'built',
-    Participle: 'built',
-  },
-  buy: {
-    PastTense: 'bought',
-    Participle: 'bought',
-  },
-  choose: {
-    Gerund: 'choosing',
-    PastTense: 'chose',
-    Participle: 'chosen',
-  },
-  cost: {
-    PastTense: 'cost',
-  },
-  deal: {
-    PastTense: 'dealt',
-    Participle: 'dealt',
-  },
-  die: {
-    PastTense: 'died',
-    Gerund: 'dying',
-  },
-  dig: {
-    Gerund: 'digging',
-    PastTense: 'dug',
-    Participle: 'dug',
-  },
-  draw: {
-    PastTense: 'drew',
-    Participle: 'drawn',
-  },
-  drink: {
-    PastTense: 'drank',
-    Participle: 'drunk',
-  },
-  drive: {
-    Gerund: 'driving',
-    PastTense: 'drove',
-    Participle: 'driven',
-  },
-  eat: {
-    Gerund: 'eating',
-    PastTense: 'ate',
-    Actor: 'eater',
-    Participle: 'eaten',
-  },
-  fall: {
-    PastTense: 'fell',
-    Participle: 'fallen',
-  },
-  feed: {
-    PastTense: 'fed',
-    Participle: 'fed',
-  },
-  feel: {
-    PastTense: 'felt',
-    Actor: 'feeler',
-  },
-  fight: {
-    PastTense: 'fought',
-    Participle: 'fought',
-  },
-  find: {
-    PastTense: 'found',
-  },
-  fly: {
-    PastTense: 'flew',
-    Participle: 'flown',
-  },
-  blow: {
-    PastTense: 'blew',
-    Participle: 'blown',
-  },
-  forbid: {
-    PastTense: 'forbade',
-  },
-  edit: {
-    Gerund: 'editing',
-  },
-  forget: {
-    Gerund: 'forgeting',
-    PastTense: 'forgot',
-    Participle: 'forgotten',
-  },
-  forgive: {
-    Gerund: 'forgiving',
-    PastTense: 'forgave',
-    Participle: 'forgiven',
-  },
-  freeze: {
-    Gerund: 'freezing',
-    PastTense: 'froze',
-    Participle: 'frozen',
-  },
-  get: {
-    PastTense: 'got',
-  },
-  give: {
-    Gerund: 'giving',
-    PastTense: 'gave',
-    Participle: 'given',
-  },
-  go: {
-    PastTense: 'went',
-    PresentTense: 'goes',
-    Participle: 'gone',
-  },
-  hang: {
-    PastTense: 'hung',
-    Participle: 'hung',
-  },
-  have: {
-    Gerund: 'having',
-    PastTense: 'had',
-    PresentTense: 'has',
-    Participle: 'had',
-  },
-  hear: {
-    PastTense: 'heard',
-    Participle: 'heard',
-  },
-  hide: {
-    PastTense: 'hid',
-    Participle: 'hidden',
-  },
-  hold: {
-    PastTense: 'held',
-    Participle: 'held',
-  },
-  hurt: {
-    PastTense: 'hurt',
-    Participle: 'hurt',
-  },
-  lay: {
-    PastTense: 'laid',
-    Participle: 'laid',
-  },
-  lead: {
-    PastTense: 'led',
-    Participle: 'led',
-  },
-  leave: {
-    PastTense: 'left',
-    Participle: 'left',
-  },
-  lie: {
-    Gerund: 'lying',
-    PastTense: 'lay',
-  },
-  light: {
-    PastTense: 'lit',
-    Participle: 'lit',
-  },
-  lose: {
-    Gerund: 'losing',
-    PastTense: 'lost',
-  },
-  make: {
-    PastTense: 'made',
-    Participle: 'made',
-  },
-  mean: {
-    PastTense: 'meant',
-    Participle: 'meant',
-  },
-  meet: {
-    Gerund: 'meeting',
-    PastTense: 'met',
-    Actor: 'meeter',
-    Participle: 'met',
-  },
-  pay: {
-    PastTense: 'paid',
-    Participle: 'paid',
-  },
-  read: {
-    PastTense: 'read',
-    Participle: 'read',
-  },
-  ring: {
-    PastTense: 'rang',
-    Participle: 'rung',
-  },
-  rise: {
-    PastTense: 'rose',
-    Gerund: 'rising',
-    PluPerfectTense: 'had risen',
-    FuturePerfect: 'will have risen',
-    Participle: 'risen',
-  },
-  run: {
-    Gerund: 'running',
-    PastTense: 'ran',
-    Participle: 'run',
-  },
-  say: {
-    PastTense: 'said',
-    Participle: 'said',
-    PresentTense: 'says',
-  },
-  see: {
-    PastTense: 'saw',
-    Participle: 'seen',
-    Gerund: 'seeing',
-  },
-  sell: {
-    PastTense: 'sold',
-    Participle: 'sold',
-  },
-  shine: {
-    PastTense: 'shone',
-    Participle: 'shone',
-  },
-  shoot: {
-    PastTense: 'shot',
-    Participle: 'shot',
-  },
-  show: {
-    PastTense: 'showed',
-  },
-  sing: {
-    PastTense: 'sang',
-    Participle: 'sung',
-  },
-  sink: {
-    PastTense: 'sank',
-    PluPerfectTense: 'had sunk',
-  },
-  sit: {
-    PastTense: 'sat',
-  },
-  slide: {
-    PastTense: 'slid',
-    Participle: 'slid',
-  },
-  speak: {
-    PastTense: 'spoke',
-    PerfectTense: 'have spoken',
-    PluPerfectTense: 'had spoken',
-    FuturePerfect: 'will have spoken',
-    Participle: 'spoken',
-  },
-  spin: {
-    Gerund: 'spinning',
-    PastTense: 'spun',
-    Participle: 'spun',
-  },
-  stand: {
-    PastTense: 'stood',
-  },
-  steal: {
-    PastTense: 'stole',
-    Actor: 'stealer',
-  },
-  stick: {
-    PastTense: 'stuck',
-  },
-  sting: {
-    PastTense: 'stung',
-  },
-  stream: {
-    Actor: 'streamer',
-  },
-  strike: {
-    Gerund: 'striking',
-    PastTense: 'struck',
-  },
-  swear: {
-    PastTense: 'swore',
-  },
-  swim: {
-    PastTense: 'swam',
-    Gerund: 'swimming',
-  },
-  swing: {
-    PastTense: 'swung',
-  },
-  teach: {
-    PastTense: 'taught',
-    PresentTense: 'teaches',
-  },
-  tear: {
-    PastTense: 'tore',
-  },
-  tell: {
-    PastTense: 'told',
-  },
-  think: {
-    PastTense: 'thought',
-  },
-  understand: {
-    PastTense: 'understood',
-  },
-  wake: {
-    PastTense: 'woke',
-  },
-  wear: {
-    PastTense: 'wore',
-  },
-  win: {
-    Gerund: 'winning',
-    PastTense: 'won',
-  },
-  withdraw: {
-    PastTense: 'withdrew',
-  },
-  write: {
-    Gerund: 'writing',
-    PastTense: 'wrote',
-    Participle: 'written',
-  },
-  tie: {
-    Gerund: 'tying',
-    PastTense: 'tied',
-  },
-  ski: {
-    PastTense: 'skiied',
-  },
-  boil: {
-    Actor: 'boiler',
-  },
-  miss: {
-    PresentTense: 'miss',
-  },
   act: {
     Actor: 'actor',
   },
-  compete: {
-    Gerund: 'competing',
-    PastTense: 'competed',
-    Actor: 'competitor',
-  },
-  being: {
-    Gerund: 'are',
-    PastTense: 'were',
-    PresentTense: 'are',
-  },
-  imply: {
-    PastTense: 'implied',
-    PresentTense: 'implies',
-  },
-  ice: {
-    Gerund: 'icing',
-    PastTense: 'iced',
-  },
-  develop: {
-    PastTense: 'developed',
-    Actor: 'developer',
-    Gerund: 'developing',
-  },
-  wait: {
-    Gerund: 'waiting',
-    PastTense: 'waited',
-    Actor: 'waiter',
+  age: {
+    Gerund: 'ageing',
+    PastTense: 'aged',
+    PresentTense: 'ages',
   },
   aim: {
     Actor: 'aimer',
     Gerund: 'aiming',
     PastTense: 'aimed',
   },
-  spill: {
-    PastTense: 'spilt',
-    Participle: 'spilled',
+  arise: {
+    Participle: 'arisen',
+    PastTense: 'arose',
   },
-  drop: {
-    Gerund: 'dropping',
-    PastTense: 'dropped',
+  babysit: {
+    Actor: 'babysitter',
+    PastTense: 'babysat',
   },
-  log: {
-    Gerund: 'logging',
-    PastTense: 'logged',
+  ban: {
+    Actor: '',
+    Gerund: 'banning',
+    PastTense: 'banned',
   },
-  rub: {
-    Gerund: 'rubbing',
-    PastTense: 'rubbed',
+  be: {
+    Actor: '',
+    Gerund: 'am',
+    Participle: 'been',
+    PastTense: 'was',
+    PresentTense: 'is',
   },
-  smash: {
-    PresentTense: 'smashes',
-  },
-  egg: {
-    PastTense: 'egged',
-  },
-  suit: {
-    Gerund: 'suiting',
-    PastTense: 'suited',
-    Actor: 'suiter',
-  },
-  age: {
-    PresentTense: 'ages',
-    PastTense: 'aged',
-    Gerund: 'ageing',
-  },
-  shed: {
-    PresentTense: 'sheds',
-    PastTense: 'shed',
-    Gerund: 'shedding',
-  },
-  break: {
-    PastTense: 'broke',
-  },
-  catch: {
-    PastTense: 'caught',
-  },
-  do: {
-    PastTense: 'did',
-    PresentTense: 'does',
-  },
-  bind: {
-    PastTense: 'bound',
-  },
-  spread: {
-    PastTense: 'spread',
+  beat: {
+    Actor: 'beater',
+    Gerund: 'beating',
+    Participle: 'beaten',
   },
   become: {
     Participle: 'become',
   },
+  begin: {
+    Gerund: 'beginning',
+    Participle: 'begun',
+    PastTense: 'began',
+  },
+  being: {
+    Gerund: 'are',
+    PastTense: 'were',
+    PresentTense: 'are',
+  },
   bend: {
     Participle: 'bent',
   },
+  bet: {
+    Actor: 'better',
+    Participle: 'bet',
+  },
+  bind: {
+    PastTense: 'bound',
+  },
+  bite: {
+    Gerund: 'biting',
+    Participle: 'bitten',
+    PastTense: 'bit',
+  },
+  bleed: {
+    Participle: 'bled',
+    PastTense: 'bled',
+  },
+  blow: {
+    Participle: 'blown',
+    PastTense: 'blew',
+  },
+  boil: {
+    Actor: 'boiler',
+  },
   brake: {
     Participle: 'broken',
+  },
+  break: {
+    PastTense: 'broke',
+  },
+  breed: {
+    PastTense: 'bred',
+  },
+  bring: {
+    Participle: 'brought',
+    PastTense: 'brought',
+  },
+  broadcast: {
+    PastTense: 'broadcast',
+  },
+  build: {
+    Participle: 'built',
+    PastTense: 'built',
   },
   burn: {
     Participle: 'burned',
   },
   burst: {
     Participle: 'burst',
+  },
+  buy: {
+    Participle: 'bought',
+    PastTense: 'bought',
+  },
+  can: {
+    Actor: '',
+    FuturePerfect: 'can',
+    Gerund: '',
+    PastTense: 'could',
+    PerfectTense: 'could',
+    PluPerfectTense: 'could',
+    PresentTense: 'can',
+  },
+  catch: {
+    PastTense: 'caught',
+  },
+  choose: {
+    Gerund: 'choosing',
+    Participle: 'chosen',
+    PastTense: 'chose',
   },
   cling: {
     Participle: 'clung',
@@ -517,24 +130,141 @@ module.exports = {
     Participle: 'come',
     PastTense: 'came',
   },
+  compete: {
+    Actor: 'competitor',
+    Gerund: 'competing',
+    PastTense: 'competed',
+  },
+  cost: {
+    PastTense: 'cost',
+  },
   creep: {
     Participle: 'crept',
   },
   cut: {
     Participle: 'cut',
   },
+  deal: {
+    Participle: 'dealt',
+    PastTense: 'dealt',
+  },
+  develop: {
+    Actor: 'developer',
+    Gerund: 'developing',
+    PastTense: 'developed',
+  },
+  die: {
+    Gerund: 'dying',
+    PastTense: 'died',
+  },
+  dig: {
+    Gerund: 'digging',
+    Participle: 'dug',
+    PastTense: 'dug',
+  },
   dive: {
     Participle: 'dived',
+  },
+  do: {
+    PastTense: 'did',
+    PresentTense: 'does',
+  },
+  draw: {
+    Participle: 'drawn',
+    PastTense: 'drew',
   },
   dream: {
     Participle: 'dreamt',
   },
+  drink: {
+    Participle: 'drunk',
+    PastTense: 'drank',
+  },
+  drive: {
+    Gerund: 'driving',
+    Participle: 'driven',
+    PastTense: 'drove',
+  },
+  drop: {
+    Gerund: 'dropping',
+    PastTense: 'dropped',
+  },
+  eat: {
+    Actor: 'eater',
+    Gerund: 'eating',
+    Participle: 'eaten',
+    PastTense: 'ate',
+  },
+  edit: {
+    Gerund: 'editing',
+  },
+  egg: {
+    PastTense: 'egged',
+  },
+  fall: {
+    Participle: 'fallen',
+    PastTense: 'fell',
+  },
+  feed: {
+    Participle: 'fed',
+    PastTense: 'fed',
+  },
+  feel: {
+    Actor: 'feeler',
+    PastTense: 'felt',
+  },
+  fight: {
+    Participle: 'fought',
+    PastTense: 'fought',
+  },
+  find: {
+    PastTense: 'found',
+  },
   flee: {
-    Participle: 'fled',
     Gerund: 'fleeing',
+    Participle: 'fled',
   },
   fling: {
     Participle: 'flung',
+  },
+  fly: {
+    Participle: 'flown',
+    PastTense: 'flew',
+  },
+  forbid: {
+    PastTense: 'forbade',
+  },
+  forget: {
+    Gerund: 'forgeting',
+    Participle: 'forgotten',
+    PastTense: 'forgot',
+  },
+  forgive: {
+    Gerund: 'forgiving',
+    Participle: 'forgiven',
+    PastTense: 'forgave',
+  },
+  free: {
+    Actor: '',
+    Gerund: 'freeing',
+  },
+  freeze: {
+    Gerund: 'freezing',
+    Participle: 'frozen',
+    PastTense: 'froze',
+  },
+  get: {
+    PastTense: 'got',
+  },
+  give: {
+    Gerund: 'giving',
+    Participle: 'given',
+    PastTense: 'gave',
+  },
+  go: {
+    Participle: 'gone',
+    PastTense: 'went',
+    PresentTense: 'goes',
   },
   got: {
     Participle: 'gotten',
@@ -542,8 +272,48 @@ module.exports = {
   grow: {
     Participle: 'grown',
   },
+  hang: {
+    Participle: 'hung',
+    PastTense: 'hung',
+  },
+  have: {
+    Gerund: 'having',
+    Participle: 'had',
+    PastTense: 'had',
+    PresentTense: 'has',
+  },
+  hear: {
+    Participle: 'heard',
+    PastTense: 'heard',
+  },
+  hide: {
+    Participle: 'hidden',
+    PastTense: 'hid',
+  },
   hit: {
     Participle: 'hit',
+  },
+  hold: {
+    Participle: 'held',
+    PastTense: 'held',
+  },
+  hurt: {
+    Participle: 'hurt',
+    PastTense: 'hurt',
+  },
+  ice: {
+    Gerund: 'icing',
+    PastTense: 'iced',
+  },
+  imply: {
+    PastTense: 'implied',
+    PresentTense: 'implies',
+  },
+  is: {
+    Actor: '',
+    Gerund: 'being',
+    PastTense: 'was',
+    PresentTense: 'is',
   },
   keep: {
     Participle: 'kept',
@@ -554,17 +324,69 @@ module.exports = {
   know: {
     Participle: 'known',
   },
+  lay: {
+    Participle: 'laid',
+    PastTense: 'laid',
+  },
+  lead: {
+    Participle: 'led',
+    PastTense: 'led',
+  },
   leap: {
     Participle: 'leapt',
+  },
+  leave: {
+    Participle: 'left',
+    PastTense: 'left',
   },
   lend: {
     Participle: 'lent',
   },
+  lie: {
+    Gerund: 'lying',
+    PastTense: 'lay',
+  },
+  light: {
+    Participle: 'lit',
+    PastTense: 'lit',
+  },
+  log: {
+    Gerund: 'logging',
+    PastTense: 'logged',
+  },
   loose: {
     Participle: 'lost',
   },
+  lose: {
+    Gerund: 'losing',
+    PastTense: 'lost',
+  },
+  make: {
+    Participle: 'made',
+    PastTense: 'made',
+  },
+  mean: {
+    Participle: 'meant',
+    PastTense: 'meant',
+  },
+  meet: {
+    Actor: 'meeter',
+    Gerund: 'meeting',
+    Participle: 'met',
+    PastTense: 'met',
+  },
+  miss: {
+    PresentTense: 'miss',
+  },
+  pay: {
+    Participle: 'paid',
+    PastTense: 'paid',
+  },
   prove: {
     Participle: 'proven',
+  },
+  puke: {
+    Gerund: 'puking',
   },
   put: {
     Participle: 'put',
@@ -572,11 +394,52 @@ module.exports = {
   quit: {
     Participle: 'quit',
   },
+  read: {
+    Participle: 'read',
+    PastTense: 'read',
+  },
   ride: {
     Participle: 'ridden',
   },
+  ring: {
+    Participle: 'rung',
+    PastTense: 'rang',
+  },
+  rise: {
+    FuturePerfect: 'will have risen',
+    Gerund: 'rising',
+    Participle: 'risen',
+    PastTense: 'rose',
+    PluPerfectTense: 'had risen',
+  },
+  rub: {
+    Gerund: 'rubbing',
+    PastTense: 'rubbed',
+  },
+  run: {
+    Gerund: 'running',
+    Participle: 'run',
+    PastTense: 'ran',
+  },
+  say: {
+    Participle: 'said',
+    PastTense: 'said',
+    PresentTense: 'says',
+  },
+  seat: {
+    Participle: 'sat',
+  },
+  see: {
+    Gerund: 'seeing',
+    Participle: 'seen',
+    PastTense: 'saw',
+  },
   seek: {
     Participle: 'sought',
+  },
+  sell: {
+    Participle: 'sold',
+    PastTense: 'sold',
   },
   send: {
     Participle: 'sent',
@@ -593,11 +456,38 @@ module.exports = {
   shave: {
     Participle: 'shaved',
   },
+  shed: {
+    Gerund: 'shedding',
+    PastTense: 'shed',
+    PresentTense: 'sheds',
+  },
+  shine: {
+    Participle: 'shone',
+    PastTense: 'shone',
+  },
+  shoot: {
+    Participle: 'shot',
+    PastTense: 'shot',
+  },
+  show: {
+    PastTense: 'showed',
+  },
   shut: {
     Participle: 'shut',
   },
-  seat: {
-    Participle: 'sat',
+  sing: {
+    Participle: 'sung',
+    PastTense: 'sang',
+  },
+  sink: {
+    PastTense: 'sank',
+    PluPerfectTense: 'had sunk',
+  },
+  sit: {
+    PastTense: 'sat',
+  },
+  ski: {
+    PastTense: 'skiied',
   },
   slay: {
     Participle: 'slain',
@@ -605,8 +495,22 @@ module.exports = {
   sleep: {
     Participle: 'slept',
   },
+  slide: {
+    Participle: 'slid',
+    PastTense: 'slid',
+  },
+  smash: {
+    PresentTense: 'smashes',
+  },
   sneak: {
     Participle: 'snuck',
+  },
+  speak: {
+    FuturePerfect: 'will have spoken',
+    Participle: 'spoken',
+    PastTense: 'spoke',
+    PerfectTense: 'have spoken',
+    PluPerfectTense: 'had spoken',
   },
   speed: {
     Participle: 'sped',
@@ -614,36 +518,120 @@ module.exports = {
   spend: {
     Participle: 'spent',
   },
+  spill: {
+    Participle: 'spilled',
+    PastTense: 'spilt',
+  },
+  spin: {
+    Gerund: 'spinning',
+    Participle: 'spun',
+    PastTense: 'spun',
+  },
   spit: {
     Participle: 'spat',
   },
   split: {
     Participle: 'split',
   },
+  spread: {
+    PastTense: 'spread',
+  },
   spring: {
     Participle: 'sprung',
+  },
+  stand: {
+    PastTense: 'stood',
+  },
+  steal: {
+    Actor: 'stealer',
+    PastTense: 'stole',
+  },
+  stick: {
+    PastTense: 'stuck',
+  },
+  sting: {
+    PastTense: 'stung',
   },
   stink: {
     Participle: 'stunk',
     PastTense: 'stunk',
   },
+  stream: {
+    Actor: 'streamer',
+  },
   strew: {
     Participle: 'strewn',
+  },
+  strike: {
+    Gerund: 'striking',
+    PastTense: 'struck',
+  },
+  suit: {
+    Actor: 'suiter',
+    Gerund: 'suiting',
+    PastTense: 'suited',
   },
   sware: {
     Participle: 'sworn',
   },
+  swear: {
+    PastTense: 'swore',
+  },
   sweep: {
     Participle: 'swept',
+  },
+  swim: {
+    Gerund: 'swimming',
+    PastTense: 'swam',
+  },
+  swing: {
+    PastTense: 'swung',
+  },
+  take: {
+    FuturePerfect: 'will have taken',
+    PastTense: 'took',
+    PerfectTense: 'have taken',
+    PluPerfectTense: 'had taken',
+  },
+  teach: {
+    PastTense: 'taught',
+    PresentTense: 'teaches',
+  },
+  tear: {
+    PastTense: 'tore',
+  },
+  tell: {
+    PastTense: 'told',
+  },
+  think: {
+    PastTense: 'thought',
   },
   thrive: {
     Participle: 'thrived',
   },
+  tie: {
+    Gerund: 'tying',
+    PastTense: 'tied',
+  },
   undergo: {
     Participle: 'undergone',
   },
+  understand: {
+    PastTense: 'understood',
+  },
   upset: {
     Participle: 'upset',
+  },
+  wait: {
+    Actor: 'waiter',
+    Gerund: 'waiting',
+    PastTense: 'waited',
+  },
+  wake: {
+    PastTense: 'woke',
+  },
+  wear: {
+    PastTense: 'wore',
   },
   weave: {
     Participle: 'woven',
@@ -651,10 +639,22 @@ module.exports = {
   weep: {
     Participle: 'wept',
   },
+  win: {
+    Gerund: 'winning',
+    PastTense: 'won',
+  },
   wind: {
     Participle: 'wound',
   },
+  withdraw: {
+    PastTense: 'withdrew',
+  },
   wring: {
     Participle: 'wrung',
+  },
+  write: {
+    Gerund: 'writing',
+    Participle: 'written',
+    PastTense: 'wrote',
   },
 }

@@ -51,7 +51,6 @@ module.exports = [
   'congo-brazzaville',
   'cook islands',
   'costa rica',
-  "cote d'ivoire",
   'croatia',
   'cuba',
   'curacao',
@@ -92,8 +91,8 @@ module.exports = [
   'guam',
   'guatemala',
   'guernsey',
-  'guinea',
   'guinea-bissau',
+  'guinea',
   'guyana',
   'haiti',
   'honduras',
@@ -112,7 +111,6 @@ module.exports = [
   'jamaica',
   'japan',
   'jersey',
-  // 'jordan', //... or a name?
   'kazakhstan',
   'keeling islands',
   'kenya',
@@ -233,8 +231,8 @@ module.exports = [
   'ukraine',
   'united arab emirates',
   'united kingdom',
-  'united states',
   'united states of america',
+  'united states',
   'uruguay',
   'usa',
   'ussr',
@@ -248,4 +246,6 @@ module.exports = [
   'yemen',
   'zambia',
   'zimbabwe',
+  "cote d'ivoire",
+  // 'jordan', //... or a name?
 ]

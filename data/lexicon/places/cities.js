@@ -142,8 +142,8 @@ module.exports = [
   'munich',
   'nagoya',
   'nantes',
-  'navan',
   'naples',
+  'navan',
   'new delhi',
   'new taipei',
   'new york',
@@ -181,7 +181,6 @@ module.exports = [
   'salzburg',
   'san jose',
   'san salvador',
-  // 'sana\'a',
   'santiago',
   'sapporo',
   'seoul',
@@ -236,4 +235,5 @@ module.exports = [
   'yokohama',
   'zagreb',
   'zurich',
+  // 'sana\'a',
 ]

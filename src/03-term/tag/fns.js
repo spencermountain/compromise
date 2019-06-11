@@ -5,7 +5,9 @@ const padEnd = function(str, width) {
   }
   return str
 }
-
+/**
+ *
+ */
 exports.logTag = function(t, tag, reason) {
   let log = '\x1b[33m' + padEnd(t.normal, 15) + '\x1b[0m + \x1b[32m' + tag + '\x1b[0m '
   if (reason) {

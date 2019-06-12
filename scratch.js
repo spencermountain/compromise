@@ -10,11 +10,10 @@ var nlp = require('./src/index')
 //
 // --expose-subclass prototypes
 
-var str = 'john, paul, george, ringo'
+var str = 'so spencer and the Kevin the end'
 // var str = 'the FBI';
 var doc = nlp(str)
-doc = doc.splitAfter('.').debug()
-console.log(doc.out('array'))
+doc.splitOn('#Person').debug()
 
 // doc.splitAfter('spencer').debug();
 // doc.splitBefore('spencer').debug();

@@ -31,22 +31,25 @@ const matchMethods = function(Doc) {
       let regs = parseSyntax(reg)
       let matches = []
       this.list.forEach(p => {
-        let found = p.match(regs)
+        let allFound = p.match(regs)
         //no match, keep it going
-        if (found.length === 0) {
+        if (allFound.length === 0) {
           matches.push(p)
         }
-        //support multiple-matches per phrase
-        let results = p.splitOn(found[0])
-        if (results.before) {
-          matches.push(results.before)
-        }
-        if (results.match) {
-          matches.push(results.match)
-        }
-        if (results.after) {
-          matches.push(results.after)
-        }
+        allFound.forEach(found => {
+          // do it again, at the end
+          let last = matches.pop() || p
+          let results = last.splitOn(found) //splits into three parts
+          if (results.before) {
+            matches.push(results.before)
+          }
+          if (results.match) {
+            matches.push(results.match)
+          }
+          if (results.after) {
+            matches.push(results.after)
+          }
+        })
       })
       return new Doc(matches, this, this.world)
     },
@@ -58,7 +61,6 @@ const matchMethods = function(Doc) {
         //no match, return whole phrase
         if (allFound.length === 0) {
           matches.push(p)
-          return
         }
         allFound.forEach(found => {
           // apply it to the end, recursively

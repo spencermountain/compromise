@@ -1,4 +1,4 @@
-//ignore optional/greedy logic, straight-up term match
+/** ignore optional/greedy logic, straight-up term match*/
 const doesMatch = function(t, reg) {
   if (reg.normal !== undefined) {
     return reg.normal === t.normal

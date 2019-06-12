@@ -1,7 +1,7 @@
 const killUnicode = require('./unicode')
 const isAcronym = require('./isAcronym')
 
-//some basic operations on a string to reduce noise
+/** some basic operations on a string to reduce noise */
 const normalize = function(str) {
   str = str || ''
   str = str.toLowerCase()

@@ -1,5 +1,5 @@
 //
-const out = function(options) {
+exports.out = function(options) {
   let word = this.text
   let before = this.preText
   let after = this.postText
@@ -25,4 +25,21 @@ const out = function(options) {
   }
   return before + word + after
 }
-module.exports = out
+
+/** return various metadata for this term */
+exports.json = function(options = {}) {
+  let result = {}
+  let defaultOn = ['text', 'normal', 'tags']
+  defaultOn.forEach(k => {
+    if (options[k] !== false) {
+      result[k] = this[k]
+    }
+  })
+  let defaultOff = ['preText', 'postText']
+  defaultOff.forEach(k => {
+    if (options[k] === true) {
+      result[k] = this[k]
+    }
+  })
+  return result
+}

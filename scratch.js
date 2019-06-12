@@ -4,10 +4,11 @@ var nlp = require('./src/index')
 // var m = nlp('John eats glue').replace('john [#Verb]', 'sniffs');
 
 let doc = nlp('ralf spencer john eat the glue')
-// .match('[spencer john] eat')
-// .debug()
+//   .match('[spencer john] eat')
+//   .parent()
+// // .debug()
 
 // doc.ifNo('lkj').debug()
 
 // doc.hello()
-doc.untag().debug()
+doc.clauses().debug()

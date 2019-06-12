@@ -1,7 +1,8 @@
 const matchAll = require('./index')
 
-//return anything that doesn't match.
-//returns a simple array of arrays
+/** return anything that doesn't match.
+ * returns a simple array of arrays
+ */
 const notMatch = function(p, regs) {
   let found = {}
   let arr = matchAll(p, regs)

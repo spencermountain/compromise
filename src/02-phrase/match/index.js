@@ -1,45 +1,22 @@
-const failFast = require('./01-failFast')
-const tryMatch = require('./02-tryMatch')
-const syntax = require('../../01-doc/match/syntax')
+const matchAll = require('./01-matchAll')
+const notMatch = require('./not')
 
-/**  returns a simple array of arrays */
-const matchAll = function(p, regs) {
-  //if we forgot to parse it..
-  if (typeof regs === 'string') {
-    regs = syntax(regs)
-  }
-
-  let terms = p.terms()
-  //try to dismiss it, at-once
-  if (failFast(terms, regs) === true) {
-    return []
-  }
-  //any match needs to be this long, at least
-  const minLength = regs.filter(r => r.optional !== true).length
-  let matches = []
-
-  //optimisation for '^' start logic
-  if (regs[0].start === true) {
-    let match = tryMatch(terms, regs)
-    if (match !== false && match.length > 0) {
-      matches.push(match)
-    }
-    return matches
-  }
-  //try starting, from every term
-  for (let i = 0; i < terms.length; i += 1) {
-    // slice may be too short
-    if (i + minLength > terms.length) {
-      break
-    }
-    //try it!
-    // console.log('- #' + i);
-    let match = tryMatch(terms.slice(i), regs)
-    if (match !== false && match.length > 0) {
-      matches.push(match)
-      i += match.length - 1 //zoom forward
-    }
-  }
+/** return an array of matching phrases */
+exports.match = function(str) {
+  let matches = matchAll(this, str)
+  //make them phrase objects
+  matches = matches.map(list => {
+    return this.buildFrom(list[0].id, list.length)
+  })
   return matches
 }
-module.exports = matchAll
+
+/** remove all matches from the result */
+exports.not = function(str) {
+  let matches = notMatch(this, str)
+  //make them phrase objects
+  matches = matches.map(list => {
+    return this.buildFrom(list[0].id, list.length)
+  })
+  return matches
+}

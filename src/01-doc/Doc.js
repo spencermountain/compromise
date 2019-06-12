@@ -1,6 +1,5 @@
 const methods = {
   misc: require('./methods'),
-  out: require('./output'),
   match: require('./match'),
   selections: require('./selections'),
 }
@@ -78,7 +77,6 @@ Doc.prototype.buildFrom = function(list) {
 Object.assign(Doc.prototype, methods.match)
 Object.assign(Doc.prototype, methods.selections)
 Object.assign(Doc.prototype, methods.misc)
-Object.assign(Doc.prototype, methods.out)
 
 //aliases
 const aliases = {

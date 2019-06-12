@@ -1,4 +1,4 @@
-const debug = require('./debug')
+const debug = require('./_debug')
 
 // output
 exports.text = function(options = {}) {

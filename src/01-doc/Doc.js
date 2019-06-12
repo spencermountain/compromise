@@ -14,7 +14,7 @@ class Doc {
       enumerable: false,
       value: from,
     })
-    //try this..
+    //borrow some missing data from parent
     if (world === undefined && from !== undefined) {
       world = from.world
     }
@@ -68,7 +68,12 @@ class Doc {
     return this.parents()[0]
   }
 }
-
+/** say hello! */
+Doc.prototype.hello = function() {
+  let m = new this.buildFrom('hello')
+  console.log(m)
+  console.log('hi')
+}
 Doc.prototype.buildFrom = function(list) {
   return new Doc(list, this, this.world)
 }

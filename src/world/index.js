@@ -15,6 +15,7 @@ const clone = function(obj) {
   return JSON.parse(JSON.stringify(obj))
 }
 
+/** all configurable linguistic data */
 class World {
   constructor() {
     this.lexicon = startLexicon
@@ -25,6 +26,7 @@ class World {
     this.tags = Object.assign({}, defaultTags)
     this.plugin(defaultData)
   }
+  /** more logs for debugging */
   verbose(bool) {
     isVerbose = bool
     return this
@@ -33,7 +35,7 @@ class World {
     return isVerbose
   }
 
-  //augment our world with this new one
+  /** augment our lingustic data with new data */
   plugin(x) {
     let obj = x
     if (typeof x === 'string') {
@@ -56,7 +58,7 @@ class World {
       this.tags = Object.assign(this.tags, tags)
     }
   }
-
+  /** helper method for logging + debugging */
   stats() {
     return {
       words: Object.keys(this.lexicon).length,
@@ -66,9 +68,11 @@ class World {
     }
   }
 }
-//who really knows about this one.
+
+/** produce a deep-copy of all lingustic data */
 World.prototype.clone = function() {
   let w2 = new World()
+  //who really knows about this one:
   w2.lexicon = clone(this.lexicon)
   w2.plurals = clone(this.plurals)
   w2.conjugations = clone(this.conjugations)

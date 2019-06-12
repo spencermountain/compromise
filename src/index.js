@@ -7,7 +7,7 @@ const Doc = require('./01-doc/Doc')
 //blast-out our word-lists, just once
 let world = new World()
 
-/** parse given text into a Document object  */
+/** parse and tag text into a compromise object  */
 const nlp = function(text) {
   let list = build(text)
   let doc = new Doc(list, null, world)

@@ -136,19 +136,19 @@ const matchMethods = function(Doc) {
       let found = this.list.filter(p => p.match(regs).length > 0)
       return new Doc(found, this, this.world)
     },
-
-    /** Filter-out any current phrases that have this match*/
-    ifNo: function(reg) {
-      let regs = parseSyntax(reg)
-      let found = this.list.filter(p => p.match(regs).length === 0)
-      return new Doc(found, this, this.world)
-    },
   }
   //aliases
   methods.splitOn = methods.split
-  Object.keys(methods).forEach(k => {
-    Doc.prototype[k] = methods[k]
-  })
+  Object.assign(Doc.prototype, methods)
+
+  /** Filter-out any current phrases that have this match*/
+  Doc.prototype.ifNo = function(reg) {
+    let regs = parseSyntax(reg)
+    let found = this.list.filter(p => p.match(regs).length === 0)
+    return this.buildFrom(found)
+    // console.log(found)
+    // return new Doc(found, this, this.world)
+  }
   return Doc
 }
 

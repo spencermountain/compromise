@@ -7,6 +7,7 @@ let doc = nlp('ralf spencer john eat the glue')
 // .match('[spencer john] eat')
 // .debug()
 
-doc.ifNo('lkj').debug()
+// doc.ifNo('lkj').debug()
 
 // doc.hello()
+doc.untag().debug()

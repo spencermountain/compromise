@@ -1,7 +1,7 @@
 /* global define */
 const build = require('./tokenizer')
 const pkg = require('../package.json')
-const World = require('./world')
+const World = require('./world/index')
 const Doc = require('./01-doc/Doc')
 
 //blast-out our word-lists, just once

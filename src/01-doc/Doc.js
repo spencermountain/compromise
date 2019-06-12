@@ -1,11 +1,12 @@
 const methods = {
   misc: require('./methods'),
   out: require('./output'),
+  match: require('./match'),
+  selections: require('./selections'),
 }
-const matchMethods = require('./match')
-const addSelections = require('./selections')
 const tagger = require('../tagger')
 
+/** a parsed text object */
 class Doc {
   constructor(list, from, world) {
     this.list = list
@@ -68,18 +69,14 @@ class Doc {
     return this.parents()[0]
   }
 }
-/** say hello! */
-Doc.prototype.hello = function() {
-  let m = new this.buildFrom('hello')
-  console.log(m)
-  console.log('hi')
-}
+
+/** create a new Document object */
 Doc.prototype.buildFrom = function(list) {
   return new Doc(list, this, this.world)
 }
 
-Doc = matchMethods(Doc)
-Doc = addSelections(Doc)
+Object.assign(Doc.prototype, methods.match)
+Object.assign(Doc.prototype, methods.selections)
 Object.assign(Doc.prototype, methods.misc)
 Object.assign(Doc.prototype, methods.out)
 

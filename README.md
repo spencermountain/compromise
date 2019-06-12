@@ -1,3 +1,13 @@
+jsdoc output:
+`jsdoc src/** -t templates/haruki -d console`
+
+generate typings file
+`jsdoc -t node_modules/tsd-jsdoc/dist -r src/**/*.js`
+
+type hints
+
+`tsc --allowJs --checkJs --noEmit --target ES6 src/*.js`
+
 ## Subsets
 
 ### in main:

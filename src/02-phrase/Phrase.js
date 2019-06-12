@@ -94,26 +94,32 @@ Phrase.prototype.not = function(str) {
   })
   return matches
 }
-//turn this phrase into 3
+/**
+ * Turn this phrase object into 3 phrase objects
+ */
 Phrase.prototype.splitOn = function(p) {
   let terms = this.terms()
-  let result = []
+  let result = {
+    before: null,
+    match: null,
+    after: null,
+  }
   let index = terms.findIndex(t => t.id === p.start)
   if (index === -1) {
     return result
   }
-  let start = terms.slice(0, index)
-  let match = terms.slice(index, index + p.length)
-  let end = terms.slice(index + p.length, terms.length)
   //make all three sections into phrase-objects
+  let start = terms.slice(0, index)
   if (start.length > 0) {
-    result.push(new Phrase(start[0].id, start.length, this.pool))
+    result.before = new Phrase(start[0].id, start.length, this.pool)
   }
+  let match = terms.slice(index, index + p.length)
   if (match.length > 0) {
-    result.push(new Phrase(match[0].id, match.length, this.pool))
+    result.match = new Phrase(match[0].id, match.length, this.pool)
   }
+  let end = terms.slice(index + p.length, terms.length)
   if (end.length > 0) {
-    result.push(new Phrase(end[0].id, end.length, this.pool))
+    result.after = new Phrase(end[0].id, end.length, this.pool)
   }
   return result
 }

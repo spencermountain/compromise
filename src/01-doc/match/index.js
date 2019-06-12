@@ -37,8 +37,16 @@ const matchMethods = function(Doc) {
           matches.push(p)
         }
         //support multiple-matches per phrase
-        let list = p.splitOn(found[0])
-        matches = matches.concat(list)
+        let results = p.splitOn(found[0])
+        if (results.before) {
+          matches.push(results.before)
+        }
+        if (results.match) {
+          matches.push(results.match)
+        }
+        if (results.after) {
+          matches.push(results.after)
+        }
       })
       return new Doc(matches, this, this.world)
     },
@@ -46,20 +54,32 @@ const matchMethods = function(Doc) {
       let regs = parseSyntax(reg)
       let matches = []
       this.list.forEach(p => {
-        let found = p.match(regs)
-        //no match, keep it going
-        if (found.length === 0) {
+        let allFound = p.match(regs)
+        //no match, return whole phrase
+        if (allFound.length === 0) {
           matches.push(p)
+          return
         }
-        //support multiple-matches per phrase
-        let list = p.splitOn(found[0])
-        //merge 1st and 2nd matches
-        list[0].length += list[1].length
-        matches.push(list[0])
-        matches.push(list[2])
+        allFound.forEach(found => {
+          // apply it to the end, recursively
+          let last = matches.pop() || p
+          let results = last.splitOn(found) //splits into three parts
+          //merge first and second parts
+          if (results.before && results.match) {
+            results.before.length += results.match.length
+            matches.push(results.before)
+          } else if (results.match) {
+            matches.push(results.match)
+          }
+          // add third part, if it exists
+          if (results.after) {
+            matches.push(results.after)
+          }
+        })
       })
       return new Doc(matches, this, this.world)
     },
+
     splitBefore: function(reg) {
       let regs = parseSyntax(reg)
       let matches = []
@@ -70,11 +90,17 @@ const matchMethods = function(Doc) {
           matches.push(p)
         }
         //support multiple-matches per phrase
-        let list = p.splitOn(found[0])
-        //merge 2nd and 3rd matches
-        list[1].length += list[2].length
-        matches.push(list[0])
-        matches.push(list[1])
+        let results = p.splitOn(found[0])
+        if (results.before) {
+          matches.push(results.before)
+        }
+        //merge 'match' and 'after'
+        if (results.match && results.after) {
+          results.match.length += results.after.length
+          matches.push(results.match)
+        } else if (results.match) {
+          matches.push(results.match)
+        }
       })
       return new Doc(matches, this, this.world)
     },

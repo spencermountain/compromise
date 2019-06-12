@@ -1,8 +1,9 @@
 const methods = {
   misc: require('./methods'),
-  out: require('./out'),
+  out: require('./output'),
 }
 const matchMethods = require('./match')
+const addSelections = require('./selections')
 const tagger = require('../tagger')
 
 class Doc {
@@ -69,6 +70,7 @@ Doc.prototype.buildFrom = function(list) {
 }
 
 Doc = matchMethods(Doc)
+Doc = addSelections(Doc)
 Object.assign(Doc.prototype, methods.misc)
 Object.assign(Doc.prototype, methods.out)
 

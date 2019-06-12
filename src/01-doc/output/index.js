@@ -13,7 +13,7 @@ module.exports = {
     return this.list.map(p => p.json(options))
   },
   array: function(options = {}) {
-    return this.list.map(p => p.out(options))
+    return this.list.map(p => p.out(options).trim())
   },
   debug: function() {
     debug(this)

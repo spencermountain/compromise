@@ -19,6 +19,7 @@ class Term {
     this.next = null
     this.id = makeId(this.normal)
   }
+  /** return various metadata for this term */
   json(options = {}) {
     let out = {}
     let defaultOn = ['text', 'normal', 'tags']

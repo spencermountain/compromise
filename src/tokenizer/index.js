@@ -5,6 +5,7 @@ const Pool = require('./Pool')
 const splitSentences = require('./01-sentences')
 const splitTerms = require('./02-words')
 
+/** turn a string into an array of Phrase objects */
 const build = function(text = '', pool) {
   //tokenize into words
   let sentences = splitSentences(text)

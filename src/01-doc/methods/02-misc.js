@@ -4,6 +4,10 @@ const eachTerm = function(doc, fn) {
   })
   return doc
 }
+const eachPhrase = function(doc, fn) {
+  doc.list = doc.list.map(p => p[fn]())
+  return doc
+}
 
 module.exports = {
   /** turn every letter of every term to lower-cse */
@@ -19,6 +23,10 @@ module.exports = {
   /** upper-case the first letter of each term */
   toTitleCase: function() {
     return eachTerm(this, 'toTitleCase')
+  },
+  /** remove start and end whitespace */
+  trim: function() {
+    return eachPhrase(this, 'trim')
   },
 
   /** remove whitespace and title-case each term */

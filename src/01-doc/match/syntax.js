@@ -39,7 +39,7 @@ const byArray = function(arr) {
   ]
 }
 
-//
+/** parse a match-syntax string into json */
 const syntax = function(str) {
   //support a flat array of normalized words
   if (typeof str === 'object' && isArray(str)) {

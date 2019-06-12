@@ -1,7 +1,5 @@
 module.exports = {
-  /**
-   * Give all terms the given tag
-   */
+  /** Give all terms the given tag */
   tag: function(tag, why) {
     this.list.forEach(p => {
       p.terms().forEach(t => t.tag(tag, why, this.world))
@@ -9,9 +7,7 @@ module.exports = {
     return this
   },
 
-  /**
-   * Remove this term from the given terms
-   */
+  /** Remove this term from the given terms */
   untag: function(tag, why) {
     this.list.forEach(p => {
       p.terms().forEach(t => t.unTag(tag, why, this.world))

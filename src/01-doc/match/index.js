@@ -2,7 +2,7 @@ const parseSyntax = require('./syntax')
 
 const matchMethods = function(Doc) {
   const methods = {
-    //return a new Doc, with us as a parent
+    /** return a new Doc, with this one as a parent */
     match: function(reg) {
       //parse-up the input expression
       let regs = parseSyntax(reg)
@@ -12,7 +12,8 @@ const matchMethods = function(Doc) {
       }, [])
       return new Doc(matches, this, this.world)
     },
-    //return everything that's not this.
+
+    /** return all results except for this */
     not: function(reg) {
       //parse-up the input expression
       let regs = parseSyntax(reg)
@@ -22,14 +23,16 @@ const matchMethods = function(Doc) {
       }, [])
       return new Doc(matches, this, this.world)
     },
+
+    /** return only the first match */
     matchOne: function(reg) {
       let regs = parseSyntax(reg)
       let found = this.list.find(p => p.match(regs).length > 0)
       return new Doc([found], this, this.world)
     },
-    /**
-     * return a Document with three parts for every match
-     * * seperate everything before the word, as a new phrase
+
+    /** return a Document with three parts for every match
+     * seperate everything before the word, as a new phrase
      */
     split: function(reg) {
       let regs = parseSyntax(reg)
@@ -57,8 +60,8 @@ const matchMethods = function(Doc) {
       })
       return new Doc(matches, this, this.world)
     },
-    /**
-     * return a Document with two parts for every match
+
+    /** return a Document with two parts for every match
      * seperate everything after the word, as a new phrase
      */
     splitAfter: function(reg) {
@@ -89,9 +92,8 @@ const matchMethods = function(Doc) {
       })
       return new Doc(matches, this, this.world)
     },
-    /**
-     * return a Document with two parts for every match
-     */
+
+    /** return a Document with two parts for every match */
     splitBefore: function(reg) {
       let regs = parseSyntax(reg)
       let matches = []
@@ -120,16 +122,22 @@ const matchMethods = function(Doc) {
       })
       return new Doc(matches, this, this.world)
     },
+
+    /**Return a boolean if this match exists */
     has: function(reg) {
       let regs = parseSyntax(reg)
       let found = this.list.find(p => p.match(regs).length > 0)
       return found !== undefined
     },
+
+    /** return each current phrase, only if it contains this match */
     if: function(reg) {
       let regs = parseSyntax(reg)
       let found = this.list.filter(p => p.match(regs).length > 0)
       return new Doc(found, this, this.world)
     },
+
+    /** Filter-out any current phrases that have this match*/
     ifNo: function(reg) {
       let regs = parseSyntax(reg)
       let found = this.list.filter(p => p.match(regs).length === 0)

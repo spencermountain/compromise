@@ -29,25 +29,28 @@ class Doc {
     })
   }
 
+  /** run part-of-speech tagger on all results*/
   tagger() {
     return tagger(this)
   }
 
-  //pool is stored on phrase objects
+  /** pool is stored on phrase objects */
   pool() {
     if (this.list.length > 0) {
       return this.list[0].pool
     }
     return this.all().list[0].pool
   }
-  //go up one
+
+  /** return the previous result */
   parent() {
     if (this.from) {
       return this.from
     }
     return this
   }
-  //return a list of all parents
+
+  /**  return a list of all previous results */
   parents() {
     let arr = []
     const addParent = function(doc) {
@@ -59,7 +62,8 @@ class Doc {
     addParent(this)
     return arr.reverse()
   }
-  //return first document
+
+  /** return the root, first document */
   all() {
     return this.parents()[0]
   }

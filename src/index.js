@@ -1,3 +1,4 @@
+/* global define */
 const build = require('./tokenizer')
 const pkg = require('../package.json')
 const World = require('./world')
@@ -6,27 +7,30 @@ const Doc = require('./01-doc/Doc')
 //blast-out our word-lists, just once
 let world = new World()
 
+/** parse given text into a Document object  */
 const nlp = function(text) {
   let list = build(text)
   let doc = new Doc(list, null, world)
   doc.tagger()
   return doc
 }
-//uncompress a user-submitted lexicon
+
+/** uncompress and apply a user-submitted lexicon */
 nlp.plugin = function(plugin) {
   world.plugin(plugin)
 }
-//this allows two different interpretations
+/** make a deep-copy of the library state */
 nlp.clone = function() {
   world = world.clone()
   return this
 }
-//log our reasoning a little bit
+
+/** log our decision-making for debugging */
 nlp.verbose = function(bool) {
   world.verbose(bool)
 }
 
-//this is handy
+/** current version of the library */
 nlp.version = pkg.version
 
 //and then all the exports..

@@ -1,5 +1,6 @@
 const matchAll = require('./match')
 const notMatch = require('./match/not')
+const methods = require('./methods')
 
 class Phrase {
   constructor(id, length, pool) {
@@ -11,6 +12,7 @@ class Phrase {
       value: pool,
     })
   }
+  /** return a flat array of Term objects */
   terms(n) {
     let terms = [this.pool.get(this.start)]
     if (this.length === 0) {
@@ -30,14 +32,17 @@ class Phrase {
     }
     return terms
   }
+  /** return last term object */
   lastTerm() {
     let terms = this.terms()
     return terms[terms.length - 1]
   }
+  /** quick lookup for a term id */
   hasId(id) {
     let terms = this.terms()
     return terms.find(t => t.id === id) !== undefined
   }
+  /** produce output in the given format */
   out(options = {}) {
     let terms = this.terms()
     return terms.reduce((str, t, i) => {
@@ -45,6 +50,7 @@ class Phrase {
       return str + t.out(options)
     }, '')
   }
+  /** return json metadata for this phrase */
   json(options = {}) {
     let out = {}
     out.text = this.text()
@@ -55,6 +61,10 @@ class Phrase {
     return out
   }
 }
+
+//apply methods
+Object.assign(Phrase.prototype, methods)
+
 //  ¯\_(:/)_/¯
 Phrase.prototype.clone = function() {
   //how do we clone part of the pool?
@@ -123,9 +133,6 @@ Phrase.prototype.splitOn = function(p) {
   }
   return result
 }
-
-const methods = [require('./hard')]
-methods.forEach(obj => Object.assign(Phrase.prototype, obj))
 
 const aliases = {
   term: 'terms',

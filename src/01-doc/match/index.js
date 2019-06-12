@@ -27,6 +27,10 @@ const matchMethods = function(Doc) {
       let found = this.list.find(p => p.match(regs).length > 0)
       return new Doc([found], this, this.world)
     },
+    /**
+     * return a Document with three parts for every match
+     * * seperate everything before the word, as a new phrase
+     */
     split: function(reg) {
       let regs = parseSyntax(reg)
       let matches = []
@@ -53,6 +57,10 @@ const matchMethods = function(Doc) {
       })
       return new Doc(matches, this, this.world)
     },
+    /**
+     * return a Document with two parts for every match
+     * seperate everything after the word, as a new phrase
+     */
     splitAfter: function(reg) {
       let regs = parseSyntax(reg)
       let matches = []
@@ -81,28 +89,34 @@ const matchMethods = function(Doc) {
       })
       return new Doc(matches, this, this.world)
     },
-
+    /**
+     * return a Document with two parts for every match
+     */
     splitBefore: function(reg) {
       let regs = parseSyntax(reg)
       let matches = []
       this.list.forEach(p => {
-        let found = p.match(regs)
+        let allFound = p.match(regs)
         //no match, keep it going
-        if (found.length === 0) {
+        if (allFound.length === 0) {
           matches.push(p)
         }
-        //support multiple-matches per phrase
-        let results = p.splitOn(found[0])
-        if (results.before) {
-          matches.push(results.before)
-        }
-        //merge 'match' and 'after'
-        if (results.match && results.after) {
-          results.match.length += results.after.length
-          matches.push(results.match)
-        } else if (results.match) {
-          matches.push(results.match)
-        }
+        allFound.forEach(found => {
+          // do it again, at the end
+          let last = matches.pop() || p
+          let results = last.splitOn(found) //splits into three parts
+          //support multiple-matches per phrase
+          if (results.before) {
+            matches.push(results.before)
+          }
+          //merge 'match' and 'after'
+          if (results.match && results.after) {
+            results.match.length += results.after.length
+            matches.push(results.match)
+          } else if (results.match) {
+            matches.push(results.match)
+          }
+        })
       })
       return new Doc(matches, this, this.world)
     },

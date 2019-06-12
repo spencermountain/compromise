@@ -13,7 +13,7 @@ var nlp = require('./src/index')
 var str = 'so spencer and the Kevin the end'
 // var str = 'the FBI';
 var doc = nlp(str)
-doc.splitOn('#Person').debug()
+doc.splitBefore('#Person').debug()
 
 // doc.splitAfter('spencer').debug();
 // doc.splitBefore('spencer').debug();

@@ -8,7 +8,7 @@ const Doc = require('./01-doc/Doc')
 let world = new World()
 
 /** parse and tag text into a compromise object  */
-const nlp = function(text) {
+const nlp = function(text = '') {
   let list = build(text)
   let doc = new Doc(list, null, world)
   doc.tagger()
@@ -26,7 +26,7 @@ nlp.clone = function() {
 }
 
 /** log our decision-making for debugging */
-nlp.verbose = function(bool) {
+nlp.verbose = function(bool = true) {
   world.verbose(bool)
 }
 

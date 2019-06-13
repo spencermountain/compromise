@@ -1,6 +1,6 @@
-'use strict'
 //non-specifc, 'hail-mary' transforms from infinitive, into other forms
 const hasY = /[bcdfghjklmnpqrstvwxz]y$/
+
 const generic = {
   Gerund: inf => {
     if (inf.charAt(inf.length - 1) === 'e') {

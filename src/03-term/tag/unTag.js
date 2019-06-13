@@ -1,6 +1,6 @@
 const fns = require('./fns')
 
-//
+/** remove this tag, and its descentents from the term */
 const unTag = function(t, tag, reason, world) {
   if (t.tags.hasOwnProperty(tag) === true) {
     delete t.tags[tag]
@@ -10,10 +10,8 @@ const unTag = function(t, tag, reason, world) {
     }
   }
   //delete downstream tags too
-  // if (!world) {
-  //   console.log(reason);
-  // }
   if (world) {
+    //TODO: properly support Term calling itself directly
     const tagset = world.tags
     if (tagset[tag]) {
       let also = tagset[tag].downward
@@ -26,11 +24,11 @@ const unTag = function(t, tag, reason, world) {
 }
 
 //handle an array of tags
-const untagAll = function(tags, reason, world) {
+const untagAll = function(term, tags, reason, world) {
   if (fns.isArray(tags) === true) {
-    tags.forEach(tag => unTag(this, tag, reason, world))
+    tags.forEach(tag => unTag(term, tag, reason, world))
   } else {
-    unTag(this, tags, reason, world)
+    unTag(term, tags, reason, world)
   }
 }
 module.exports = untagAll

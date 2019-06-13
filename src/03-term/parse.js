@@ -6,7 +6,9 @@ let startings = /^[ \.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?
 // let punctuation = '[ \.’\'\[\(\)\{\}⟨⟩:,،、‒–—―…!.‹›«»‐-\?]';
 //money = ₵¢₡₢$₫₯֏₠€ƒ₣₲₴₭₺₾ℳ₥₦₧₱₰£៛₽₹₨₪৳₸₮₩¥
 
-/** seperate the 'meat' of the word from the trailing/leading whitespace */
+/** turn given text into a parsed-up object
+ * seperate the 'meat' of the word from the whitespace+punctuation
+ */
 const parseTerm = str => {
   let preText = ''
   let postText = ''

@@ -18,7 +18,7 @@ const doTransform = function(str, obj) {
 }
 
 //look at the end of the word for clues
-const checkSuffix = function(str) {
+const checkSuffix = function(str = '') {
   let c = str[str.length - 1]
   if (suffixes.hasOwnProperty(c) === true) {
     for (let r = 0; r < suffixes[c].length; r += 1) {

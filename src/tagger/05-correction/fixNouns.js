@@ -1,5 +1,5 @@
 //
-const fix = function(doc) {
+const fixNouns = function(doc) {
   //'more' is not always an adverb
   doc.match('more #Noun').tag('Noun', 'more-noun')
   //the word 'second'
@@ -62,4 +62,4 @@ const fix = function(doc) {
   }
   return doc
 }
-module.exports = fix
+module.exports = fixNouns

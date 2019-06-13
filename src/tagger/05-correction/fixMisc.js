@@ -1,5 +1,5 @@
 //mostly pos-corections here
-const corrections = function(doc) {
+const miscCorrection = function(doc) {
   //ambig prepositions/conjunctions
   if (doc.has('so')) {
     //so funny
@@ -148,4 +148,4 @@ const corrections = function(doc) {
   return doc
 }
 
-module.exports = corrections
+module.exports = miscCorrection

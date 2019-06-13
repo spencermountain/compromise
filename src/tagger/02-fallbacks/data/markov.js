@@ -8,7 +8,6 @@ let afterThisWord = {
   first: 'Noun', //50% //first principles..
   it: 'Verb', //33%
   there: 'Verb', //35%
-  // to: 'Verb', //32%
   not: 'Verb', //33%
   because: 'Noun', //31%
   if: 'Noun', //32%
@@ -32,7 +31,6 @@ let beforeThisWord = {
   only: 'Verb', //27% //sees only
   him: 'Verb', //32% //show him
   were: 'Noun', //48% //we were
-  // what: 'Verb', //25% //know what
   took: 'Noun', //38% //he took
   himself: 'Verb', //31% //see himself
   went: 'Noun', //43% //he went
@@ -46,16 +44,13 @@ let afterThisPos = {
   Possessive: 'Noun', //41% //his song
   Determiner: 'Noun', //47%
   Adverb: 'Verb', //20%
-  // Person: 'Verb', //40%
   Pronoun: 'Verb', //40%
   Value: 'Noun', //47%
   Ordinal: 'Noun', //53%
   Modal: 'Verb', //35%
   Superlative: 'Noun', //43%
   Demonym: 'Noun', //38%
-  // Organization: 'Verb', //33%
   Honorific: 'Person', //
-  // FirstName: 'Person', //
 }
 
 //in advance of this POS, this is likely
@@ -66,7 +61,6 @@ let beforeThisPos = {
   Modal: 'Noun', //38%
   PluperfectTense: 'Noun', //40%
   PerfectTense: 'Verb', //32%
-  // LastName: 'FirstName', //
 }
 module.exports = {
   beforeThisWord: beforeThisWord,

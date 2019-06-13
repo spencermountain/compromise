@@ -1,5 +1,5 @@
 //
-const fix = function(doc) {
+const fixAdjective = function(doc) {
   //still good
   doc
     .match('still #Adjective')
@@ -20,4 +20,4 @@ const fix = function(doc) {
   doc.match('#Noun #Adverb? [left]').tag('PastTense', 'left-verb')
   return doc
 }
-module.exports = fix
+module.exports = fixAdjective

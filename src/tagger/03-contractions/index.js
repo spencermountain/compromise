@@ -1,7 +1,6 @@
 const checkNegative = require('./01-negative')
 const checkApostrophe = require('./02-apostrophe-s')
 const checkIrregulars = require('./03-irregulars')
-const Term = require('../../03-term/Term')
 
 //stitch these words into our sentence
 const addContraction = function(phrase, term, arr) {

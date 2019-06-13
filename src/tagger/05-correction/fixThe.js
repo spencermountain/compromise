@@ -1,5 +1,5 @@
 //Determiner-signals
-const fix = function(doc) {
+const fixThe = function(doc) {
   if (doc.has('#Determiner')) {
     //the wait to vote
     doc.match('(the|this) [#Verb] #Preposition .').tag('Noun', 'correction-determiner1')
@@ -47,4 +47,4 @@ const fix = function(doc) {
   }
   return doc
 }
-module.exports = fix
+module.exports = fixThe

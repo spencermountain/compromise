@@ -1,3 +1,4 @@
+/** add spaces at the end */
 const padEnd = function(str, width) {
   str = str.toString()
   while (str.length < width) {
@@ -5,9 +6,8 @@ const padEnd = function(str, width) {
   }
   return str
 }
-/**
- *
- */
+
+/** output for verbose-mode */
 exports.logTag = function(t, tag, reason) {
   let log = '\x1b[33m' + padEnd(t.normal, 15) + '\x1b[0m + \x1b[32m' + tag + '\x1b[0m '
   if (reason) {
@@ -16,6 +16,7 @@ exports.logTag = function(t, tag, reason) {
   console.log(log)
 }
 
+/** output for verbose mode  */
 exports.logUntag = function(t, tag, reason) {
   let log = '\x1b[33m' + padEnd(t.normal, 3) + ' \x1b[31m - #' + tag + '\x1b[0m '
   if (reason) {

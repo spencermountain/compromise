@@ -1,5 +1,5 @@
 //
-const fix = function(doc) {
+const fixVerb = function(doc) {
   //still make
   doc.match('[still] #Verb').tag('Adverb', 'still-verb')
   //'u' as pronoun
@@ -144,4 +144,4 @@ const fix = function(doc) {
   }
   return doc
 }
-module.exports = fix
+module.exports = fixVerb

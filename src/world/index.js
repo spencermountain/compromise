@@ -10,11 +10,6 @@ let startLexicon = require('./misc')
 
 let isVerbose = false
 
-//  ¯\_(:/)_/¯
-const clone = function(obj) {
-  return JSON.parse(JSON.stringify(obj))
-}
-
 /** all configurable linguistic data */
 class World {
   constructor() {
@@ -67,6 +62,11 @@ class World {
       compounds: Object.keys(this.compounds).length,
     }
   }
+}
+
+//  ¯\_(:/)_/¯
+const clone = function(obj) {
+  return JSON.parse(JSON.stringify(obj))
 }
 
 /** produce a deep-copy of all lingustic data */

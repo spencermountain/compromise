@@ -1,16 +1,16 @@
 //just a foolish lookup of known suffixes
-const Adj = 'Adjective';
-const Inf = 'Infinitive';
-const Pres = 'PresentTense';
-const Sing = 'Singular';
-const Past = 'PastTense';
-const Avb = 'Adverb';
-const Plrl = 'Plural';
-const Actor = 'Actor';
-const Vb = 'Verb';
-const Noun = 'Noun';
-const Last = 'LastName';
-const Modal = 'Modal';
+const Adj = 'Adjective'
+const Inf = 'Infinitive'
+const Pres = 'PresentTense'
+const Sing = 'Singular'
+const Past = 'PastTense'
+const Avb = 'Adverb'
+const Plrl = 'Plural'
+const Actor = 'Actor'
+const Vb = 'Verb'
+const Noun = 'Noun'
+const Last = 'LastName'
+const Modal = 'Modal'
 
 module.exports = [
   null, //0
@@ -21,8 +21,8 @@ module.exports = [
     ia: Noun,
     ic: Adj,
     ly: Avb,
-    '\'n': Vb,
-    '\'t': Vb
+    "'n": Vb,
+    "'t": Vb,
   },
   {
     //3-letter
@@ -45,8 +45,8 @@ module.exports = [
     nes: Pres,
     ing: 'Gerund', //likely to be converted to Adj after lexicon pass
     ' so': Avb,
-    '\'ll': Modal,
-    '\'re': 'Copula'
+    "'ll": Modal,
+    "'re": 'Copula',
   },
   {
     //4-letter
@@ -85,7 +85,7 @@ module.exports = [
     chuk: Last, //east-europe
     enko: Last, //east-europe
     akis: Last, //greek
-    nsen: Last //norway
+    nsen: Last, //norway
   },
   {
     //5-letter
@@ -106,18 +106,18 @@ module.exports = [
     ishes: Pres,
     tches: Pres,
     nssen: Last, //norway
-    marek: Last //polish (male)
+    marek: Last, //polish (male)
   },
   {
     //6-letter
     keeper: Actor,
     logist: Actor,
     auskas: Last, //lithuania
-    teenth: 'Value'
+    teenth: 'Value',
   },
   {
     //7-letter
     sdottir: Last, //swedish female
-    opoulos: Last //greek
-  }
-];
+    opoulos: Last, //greek
+  },
+]

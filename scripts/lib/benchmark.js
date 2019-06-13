@@ -1,4 +1,3 @@
-'use strict'
 var filesize = require('./filesize')
 var path = require('path')
 var str = require('../../test/unit/lib/friends')

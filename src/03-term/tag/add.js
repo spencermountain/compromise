@@ -1,5 +1,6 @@
 const fns = require('./fns')
 
+/** add a tag, and its descendents, to a term */
 const addTag = function(t, tag, reason, world) {
   if (tag[0] === '#') {
     tag = tag.replace(/^#/, '')
@@ -30,16 +31,14 @@ const addTag = function(t, tag, reason, world) {
       }
     }
   }
-  // console.log(tagset);
 }
 
-//handle an array of tags
-const addTags = function(tags, reason, world) {
+/** support an array of tags */
+const addTags = function(term, tags, reason, world) {
   if (fns.isArray(tags) === true) {
-    tags.forEach(tag => addTag(this, tag, reason, world))
+    tags.forEach(tag => addTag(term, tag, reason, world))
   } else {
-    addTag(this, tags, reason, world)
+    addTag(term, tags, reason, world)
   }
-  return
 }
 module.exports = addTags

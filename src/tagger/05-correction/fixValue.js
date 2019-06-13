@@ -1,5 +1,5 @@
 //
-const fix = function(doc) {
+const fixValue = function(doc) {
   //half a million
   doc.match('half a? #Value').tag('Value', 'half-a-value') //quarter not ready
   doc.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half')
@@ -23,4 +23,4 @@ const fix = function(doc) {
     .tag('Ordinal', 'two-hundredth')
   return doc
 }
-module.exports = fix
+module.exports = fixValue

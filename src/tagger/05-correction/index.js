@@ -1,4 +1,4 @@
-const misc = require('./misc')
+const fixMisc = require('./fixMisc')
 const fixDeterminer = require('./fixThe')
 const fixNouns = require('./fixNouns')
 const fixVerb = require('./fixVerb')
@@ -22,7 +22,7 @@ const corrections = function(doc) {
   if (doc.has('#Value')) {
     fixValue(doc)
   }
-  misc(doc)
+  fixMisc(doc)
   return doc
 }
 module.exports = corrections

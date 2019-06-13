@@ -3,7 +3,7 @@ const genericFill = require('./02-generic')
 
 //we run this on every verb in the lexicon, so please keep it fast
 //we assume the input word is a proper infinitive
-const fastConjucate = function(str) {
+const fastConjucate = function(str = '') {
   let found = checkSuffix(str)
   //'buzzing'
   if (found.Gerund === undefined) {

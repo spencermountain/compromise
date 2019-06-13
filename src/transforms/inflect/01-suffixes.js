@@ -1,4 +1,4 @@
-//patterns for turning 'bus' to 'buses'
+/** patterns for turning 'bus' to 'buses'*/
 const suffixes = {
   a: [[/(antenn|formul|nebul|vertebr|vit)a$/i, '$1ae'], [/([ti])a$/i, '$1a']],
 

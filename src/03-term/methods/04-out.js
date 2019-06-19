@@ -27,13 +27,12 @@ exports.out = function(options) {
 }
 
 /** return various metadata for this term */
-exports.json = function(options = {}) {
-  let result = {}
-  let defaultOn = ['text', 'normal', 'tags','preText', 'postText']
-  defaultOn.forEach(k => {
-    if (options[k] !== false) {
-      result[k] = this[k]
-    }
-  })
+exports.json = function() {
+  let result = {
+    text: this.text,
+    tags: Object.keys(this.tags),
+    preText: this.preText,
+    postText: this.postText,
+  }
   return result
 }

@@ -5,6 +5,18 @@ const Pool = require('./Pool')
 const splitSentences = require('./01-sentences')
 const splitTerms = require('./02-words')
 
+//add forward/backward 'linked-list' prev/next ids
+const addLinks = terms => {
+  terms.forEach((term, i) => {
+    if (i > 0) {
+      term.prev = terms[i - 1].id
+    }
+    if (terms[i + 1]) {
+      term.next = terms[i + 1].id
+    }
+  })
+}
+
 /** turn a string into an array of Phrase objects */
 const fromText = function(text = '', pool) {
   //tokenize into words
@@ -21,14 +33,7 @@ const fromText = function(text = '', pool) {
     })
 
     //add next/previous ids
-    terms.forEach((term, i) => {
-      if (i > 0) {
-        term.prev = terms[i - 1].id
-      }
-      if (terms[i + 1]) {
-        term.next = terms[i + 1].id
-      }
-    })
+    addLinks(terms)
 
     //return phrase objects
     return new Phrase(terms[0].id, terms.length, pool)
@@ -45,12 +50,19 @@ const fromJSON = function(data) {
     //create Term objects
     terms = terms.map(obj => {
       let term = new Term(obj.text)
+      term.preText = obj.preText
+      term.postText = obj.postText
+      term.tags = obj.tags.reduce((h, tag) => {
+        h[tag] = true
+        return h
+      }, {})
       pool.add(term)
       return term
     })
+    //add prev/next links
+    addLinks(terms)
     return new Phrase(terms[0].id, terms.length, pool)
   })
-  console.log(pool)
   return phrases
 }
 

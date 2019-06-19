@@ -9,7 +9,7 @@ let world = new World()
 
 /** parse and tag text into a compromise object  */
 const nlp = function(text = '') {
-  let list = build(text)
+  let list = build.fromText(text)
   let doc = new Doc(list, null, world)
   doc.tagger()
   return doc
@@ -19,10 +19,17 @@ const nlp = function(text = '') {
 nlp.plugin = function(plugin) {
   world.plugin(plugin)
 }
+
 /** make a deep-copy of the library state */
 nlp.clone = function() {
   world = world.clone()
   return this
+}
+
+/** re-generate a Doc object from .json() results */
+nlp.fromJSON = function(json) {
+  let list = build.fromJSON(json)
+  return new Doc(list, null, world)
 }
 
 /** log our decision-making for debugging */

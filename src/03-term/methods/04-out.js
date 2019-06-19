@@ -29,15 +29,9 @@ exports.out = function(options) {
 /** return various metadata for this term */
 exports.json = function(options = {}) {
   let result = {}
-  let defaultOn = ['text', 'normal', 'tags']
+  let defaultOn = ['text', 'normal', 'tags','preText', 'postText']
   defaultOn.forEach(k => {
     if (options[k] !== false) {
-      result[k] = this[k]
-    }
-  })
-  let defaultOff = ['preText', 'postText']
-  defaultOff.forEach(k => {
-    if (options[k] === true) {
       result[k] = this[k]
     }
   })

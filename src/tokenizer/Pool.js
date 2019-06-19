@@ -1,7 +1,11 @@
 /** a key-value store of all terms in our Document */
 class Pool {
   constructor(words = {}) {
-    this.words = words
+    //quiet this property in console.logs
+    Object.defineProperty(this, 'words', {
+      enumerable: false,
+      value: words,
+    })
   }
   /** throw a new term object in */
   add(term) {

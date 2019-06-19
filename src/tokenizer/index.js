@@ -6,7 +6,7 @@ const splitSentences = require('./01-sentences')
 const splitTerms = require('./02-words')
 
 /** turn a string into an array of Phrase objects */
-const build = function(text = '', pool) {
+const fromText = function(text = '', pool) {
   //tokenize into words
   let sentences = splitSentences(text)
   sentences = sentences.map(str => splitTerms(str))
@@ -36,4 +36,25 @@ const build = function(text = '', pool) {
   //return them ready for a Document object
   return phrases
 }
-module.exports = build
+
+/** create a word-pool and Phrase objects from .json() results*/
+const fromJSON = function(data) {
+  let pool = new Pool()
+  //create Phrase objects
+  let phrases = data.map(terms => {
+    //create Term objects
+    terms = terms.map(obj => {
+      let term = new Term(obj.text)
+      pool.add(term)
+      return term
+    })
+    return new Phrase(terms[0].id, terms.length, pool)
+  })
+  console.log(pool)
+  return phrases
+}
+
+module.exports = {
+  fromText,
+  fromJSON,
+}

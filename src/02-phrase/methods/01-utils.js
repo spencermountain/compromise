@@ -61,11 +61,5 @@ exports.out = function(options = {}) {
 
 /** return json metadata for this phrase */
 exports.json = function(options = {}) {
-  let out = {}
-  out.text = this.text()
-  out.normal = this.normal()
-  if (options.terms !== false) {
-    out.terms = this.terms().map(t => t.json(options))
-  }
-  return out
+  return this.terms().map(t => t.json(options))
 }

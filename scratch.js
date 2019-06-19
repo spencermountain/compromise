@@ -3,12 +3,10 @@ var nlp = require('./src/index')
 
 // var m = nlp('John eats glue').replace('john [#Verb]', 'sniffs');
 
-let doc = nlp('ralf spencer john eat the glue')
-//   .match('[spencer john] eat')
-//   .parent()
-// // .debug()
+let doc = nlp(`spencer kelly's problems`)
 
-// doc.ifNo('lkj').debug()
-
-// doc.hello()
-doc.clauses().debug()
+// doc.debug()
+let json = doc.json()
+// console.log(JSON.stringify(json, null, 2))
+let doc2 = nlp.fromJSON(json)
+doc2.debug()

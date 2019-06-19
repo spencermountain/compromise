@@ -2,7 +2,7 @@ const build = require('../../tokenizer')
 
 /** add these new terms to the front*/
 exports.prepend = function(str) {
-  let phrase = build(str, this.pool())[0] //assume it's one sentence, for now
+  let phrase = build.fromText(str, this.pool())[0] //assume it's one sentence, for now
   this.list.forEach(p => {
     p.prepend(phrase, this)
   })
@@ -11,7 +11,7 @@ exports.prepend = function(str) {
 
 /** add these new terms to the end*/
 exports.append = function(str) {
-  let phrase = build(str, this.pool())[0] //assume it's one sentence, for now
+  let phrase = build.fromText(str, this.pool())[0] //assume it's one sentence, for now
   this.list.forEach(p => {
     p.append(phrase, this)
   })

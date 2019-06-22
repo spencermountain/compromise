@@ -411,15 +411,9 @@ nlp(`Couldn't Itchy share his pie with Scratchy?`).debug()
       </a>
     </td>
     <td>
-      <a href="http://slack.compromise.cool/">
-        <img src="https://cloud.githubusercontent.com/assets/399657/21956671/a30cbc82-da53-11e6-82d6-aaaaebc0bc93.jpg"/>
-        <div>&nbsp; &nbsp; &nbsp; Slack group &nbsp; &nbsp; &nbsp; </div>
-      </a>
-    </td>
-    <td>
-      <a href="http://nlpcompromise.us12.list-manage2.com/subscribe?u=d5bd9bcc36c4bef0fd5f6e75f&id=8738c1f5ef">
-        <img src="https://cloud.githubusercontent.com/assets/399657/21956670/a30be6e0-da53-11e6-9aaf-52a10b8c3195.jpg"/>
-        <div>&nbsp; &nbsp; &nbsp; Mailing-list &nbsp; &nbsp; &nbsp; </div>
+      <a href="https://gitter.im/nlpcompromise/community">
+        <img src="https://user-images.githubusercontent.com/399657/59966943-33e22a80-94f1-11e9-87cf-0eec2428bea4.png"/>
+        <div>&nbsp; &nbsp; &nbsp; Gitter chat &nbsp; &nbsp; &nbsp; </div>
       </a>
     </td>
     <td>

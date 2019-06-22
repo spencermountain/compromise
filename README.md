@@ -418,7 +418,7 @@ nlp(`Couldn't Itchy share his pie with Scratchy?`).debug()
     </td>
     <td>
       <a href="https://stackoverflow.com/questions/tagged/nlp-compromise">
-        <img src="https://user-images.githubusercontent.com/399657/59966970-9c310c00-94f1-11e9-97fb-e5767b5f3https://user-images.githubusercontent.com/399657/59967040-d222c000-94f2-11e9-9cab-ff7c6a50cd9a.png"/>
+        <img src="https://user-images.githubusercontent.com/399657/59967040-d222c000-94f2-11e9-9cab-ff7c6a50cd9a.png"/>
         <div>&nbsp; &nbsp; &nbsp; Stackoverflow &nbsp; &nbsp; &nbsp; </div>
       </a>
     </td>

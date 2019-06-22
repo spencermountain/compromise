@@ -412,7 +412,7 @@ nlp(`Couldn't Itchy share his pie with Scratchy?`).debug()
     </td>
     <td>
       <a href="https://gitter.im/nlpcompromise/community">
-        <img src="https://user-images.githubusercontent.com/399657/59966943-33e22a80-94f1-11e9-87cf-0eec2428bea4.png"/>
+        <img src="https://user-images.githubusercontent.com/399657/59966970-9c310c00-94f1-11e9-97fb-e5767b5f3f0e.png"/>
         <div>&nbsp; &nbsp; &nbsp; Gitter chat &nbsp; &nbsp; &nbsp; </div>
       </a>
     </td>

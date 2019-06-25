@@ -5,7 +5,7 @@
   "version": "11.13.2",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
-  "types": "./compromise.d.ts",
+  "types": "types",
   "repository": {
     "type": "git",
     "url": "git://github.com/nlp-compromise/compromise.git"
@@ -15,12 +15,12 @@
     "test:spec": "tape \"./test/unit/**/*.test.js\" | tap-spec",
     "testb": "TESTENV=prod tape \"./test/unit/**/*.test.js\" | tap-dancer",
     "buildTest": "TESTENV=prod node ./scripts/test.js",
-    "test:types": "tsc --project test/types",
+    "test:types": "dtslint types",
     "browserTest": "node ./scripts/browserTest.js",
     "benchmark": "node ./scripts/benchmark.js",
     "build": "node ./scripts/build/index.js",
     "pack": "node ./scripts/pack.js",
-    "prepublishOnly": "node ./scripts/prepublish",
+    "prepublishOnly": "node ./scripts/prepublish && npm run test:types",
     "postpublish": "node ./scripts/postpublish",
     "watch": "amble ./scratch.js",
     "filesize": "node ./scripts/lib/filesize.js",
@@ -46,11 +46,12 @@
     "codecov": "3.2.0",
     "compromise-plugin": "0.0.8",
     "derequire": "2.0.6",
+    "dtslint": "^0.8.0",
     "nyc": "13.3.0",
     "shelljs": "0.8.3",
     "tap-dancer": "0.1.2",
-    "terser": "3.17.0",
-    "tape": "4.10.1"
+    "tape": "4.10.1",
+    "terser": "3.17.0"
   },
   "license": "MIT"
 }

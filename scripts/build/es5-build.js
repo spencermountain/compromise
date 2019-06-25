@@ -14,7 +14,8 @@ var es5min = './builds/compromise.min.js';
 
 console.log(chalk.yellow(' 🕑  creating es5 build..'));
 
-var banner = '/* compromise v' + pkg.version + '\n   github.com/nlp-compromise/compromise\n   MIT\n*/\n';
+var banner =
+  '/* compromise v' + pkg.version + '\n   github.com/nlp-compromise/compromise\n   MIT\n*/\n';
 
 //es5 main (browserify + derequire)
 cmd = browserify + ' "./src/index.js" --standalone nlp';
@@ -22,7 +23,6 @@ cmd += ' -t [ babelify --presets [ @babel/preset-env ] ]';
 cmd += ' | ' + derequire;
 cmd += ' >> ' + es5;
 exec(cmd);
-
 
 var code = fs.readFileSync(es5).toString();
 
@@ -32,7 +32,7 @@ var result = terser.minify(code, {
     preamble: banner
   },
   compress: {
-    passes: 2,
+    passes: 2
   }
 });
 fs.writeFileSync(es5min, result.code);

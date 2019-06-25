@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.13.2",
+  "version": "11.14.0",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
   "types": "types",
@@ -32,26 +32,33 @@
     "docs/",
     "compromise.d.ts"
   ],
+  "prettier": {
+    "trailingComma": "none",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "printWidth": 100
+  },
   "dependencies": {
-    "efrt-unpack": "2.0.3"
+    "efrt-unpack": "2.1.0"
   },
   "devDependencies": {
-    "@babel/core": "7.3.4",
-    "@babel/preset-env": "7.3.4",
+    "@babel/core": "7.4.5",
+    "@babel/preset-env": "7.4.5",
     "amble": "0.0.7",
     "babelify": "10.0.0",
     "babili": "0.1.4",
     "browserify": "16.2.3",
     "chalk": "2.4.2",
-    "codecov": "3.2.0",
-    "compromise-plugin": "0.0.8",
+    "codecov": "3.5.0",
+    "compromise-plugin": "0.0.9",
     "derequire": "2.0.6",
     "dtslint": "^0.8.0",
-    "nyc": "13.3.0",
+    "nyc": "14.1.1",
     "shelljs": "0.8.3",
-    "tap-dancer": "0.1.2",
-    "tape": "4.10.1",
-    "terser": "3.17.0"
+    "tap-dancer": "0.2.0",
+    "tape": "4.10.2",
+    "terser": "4.0.0"
   },
   "license": "MIT"
 }

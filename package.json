@@ -33,7 +33,7 @@
     "compromise.d.ts"
   ],
   "dependencies": {
-    "efrt-unpack": "2.0.3"
+    "efrt-unpack": "2.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.4.5",
@@ -44,7 +44,7 @@
     "browserify": "16.2.3",
     "chalk": "2.4.2",
     "codecov": "3.5.0",
-    "compromise-plugin": "0.0.8",
+    "compromise-plugin": "0.0.9",
     "derequire": "2.0.6",
     "dtslint": "^0.8.0",
     "nyc": "14.1.1",

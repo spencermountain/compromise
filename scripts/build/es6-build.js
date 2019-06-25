@@ -1,33 +1,34 @@
-var shelljs = require('shelljs');
-var chalk = require('chalk');
-var fileSize = require('../lib/filesize');
-var pkg = require('../../package.json');
-var exec = shelljs.exec;
-var echo = shelljs.echo;
+const shelljs = require('shelljs')
+const chalk = require('chalk')
+const fileSize = require('../lib/filesize')
+const pkg = require('../../package.json')
+const exec = shelljs.exec
+const echo = shelljs.echo
 
-var browserify = '"node_modules/.bin/browserify"';
-var derequire = '"node_modules/.bin/derequire"';
-var babili = '"node_modules/.bin/babili"';
+const browserify = '"node_modules/.bin/browserify"'
+const derequire = '"node_modules/.bin/derequire"'
+const babili = '"node_modules/.bin/babili"'
 
-var es6 = './builds/compromise.es6.js';
-var es6min = './builds/compromise.es6.min.js';
+const es6 = './builds/compromise.es6.js'
+const es6min = './builds/compromise.es6.min.js'
 
-var banner = '/* compromise v' + pkg.version + '\n   http://compromise.cool\n   MIT\n*/\n';
-echo(banner).to(es6);
+const banner =
+  '/* compromise v' + pkg.version + '\n   http://compromise.cool\n   MIT\n*/\n'
+echo(banner).to(es6)
 
-console.log(chalk.yellow(' 🕑 creating es6 build..'));
+console.log(chalk.yellow(' 🕑 creating es6 build..'))
 
 //es6 main (browserify)
-var cmd = browserify + ' "./src/index.js" --standalone nlp';
+let cmd = browserify + ' "./src/index.js" --standalone nlp'
 // cmd += ' -p bundle-collapser/plugin';
-cmd += ' | ' + derequire;
-cmd += ' >> ' + es6;
-exec(cmd);
+cmd += ' | ' + derequire
+cmd += ' >> ' + es6
+exec(cmd)
 
 //es6min (babili)
-cmd = babili + ' ' + es6;
-cmd += ' >> ' + es6min;
-exec(cmd);
+cmd = babili + ' ' + es6
+cmd += ' >> ' + es6min
+exec(cmd)
 
 //remove the first one
-console.log(chalk.green(' done!    es6min ' + fileSize(es6min) + 'k\n'));
+console.log(chalk.green(' done!    es6min ' + fileSize(es6min) + 'k\n'))

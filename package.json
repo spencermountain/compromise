@@ -32,6 +32,13 @@
     "docs/",
     "compromise.d.ts"
   ],
+  "prettier": {
+    "trailingComma": "none",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "printWidth": 100
+  },
   "dependencies": {
     "efrt-unpack": "2.1.0"
   },

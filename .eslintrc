@@ -7,7 +7,7 @@
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": false
-    },
+    }
   },
   "rules": {
     "no-cond-assign": 2,
@@ -22,11 +22,7 @@
     "no-redeclare": 2,
     "radix": 1,
     "indent": 0,
-    "quotes": [
-      0,
-      "single",
-      "avoid-escape"
-    ],
+    "quotes": [0, "single", "avoid-escape"],
     "no-shadow": 2,
     "no-unused-vars": 1,
     "no-lonely-if": 1,
@@ -38,6 +34,6 @@
     "no-octal-escape": 2,
     "no-constant-condition": 1,
     "no-unused-expressions": 2,
-    "no-undefined":0
+    "no-undefined": 0
   }
 }

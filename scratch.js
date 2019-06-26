@@ -1,4 +1,6 @@
 var nlp = require('./src/index')
+var compromiseNouns = require('./plugins/nouns/src')
+nlp.extend(compromiseNouns)
 
 // nlp.extend(Doc => {
 //   class House extends Doc {

@@ -25,8 +25,7 @@ nlp.extend(require('compromise-entities'))
 
 let doc = nlp('The Children are right to laugh at you, Ralph')
 doc.entities().debug()
-// 'are'
-// 'laugh at'
+// 'Ralf'
 ```
 
 

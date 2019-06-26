@@ -25,8 +25,10 @@ nlp.extend(require('compromise-nouns'))
 
 let doc = nlp('The Children are right to laugh at you, Ralph')
 doc.nouns().debug()
-// 'are'
-// 'laugh at'
+// 'children'
+// 'laugh'
+// 'you'
+// 'Ralf'
 ```
 
 

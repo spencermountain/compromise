@@ -23,10 +23,14 @@
 const nlp = require('compromise')
 nlp.extend(require('compromise-ngrams'))
 
-let doc = nlp('The Children are right to laugh at you, Ralph')
-doc.ngrams().debug()
-// 'are'
-// 'laugh at'
+let doc = nlp(`bake 'em away, toys`)
+doc.bigrams().data()
+//[{normal:'bake em', size:2, count:1}, {normal:'em away', size:2, count:1}, {normal:'em toys', size:2, count:1}]
+
+//same for:
+doc.unigrams()
+doc.trigrams()
+doc.ngrams({size:3})
 ```
 
 

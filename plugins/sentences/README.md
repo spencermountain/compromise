@@ -23,10 +23,9 @@
 const nlp = require('compromise')
 nlp.extend(require('compromise-sentences'))
 
-let doc = nlp('The Children are right to laugh at you, Ralph')
-doc.sentences().debug()
-// 'are'
-// 'laugh at'
+let doc = nlp('Are you shouting boo, or boo-urns? Booo! I was saying boo-urns.')
+doc.sentences().length
+// 3
 ```
 
 

@@ -23,9 +23,7 @@ const addMethod = function(Doc) {
     // //allow possessives like "spencer's", but not generic ones like,
     match = match.not('(my|our|your|their|her|his)')
     match = match.not('(of|for|by|the)$')
-    if (typeof n === 'number') {
-      match = match.get(n)
-    }
+
     if (typeof n === 'number') {
       match = match.get(n)
     }

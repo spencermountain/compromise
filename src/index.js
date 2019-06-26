@@ -19,6 +19,9 @@ const nlp = function(text = '') {
 nlp.plugin = function(plugin) {
   world.plugin(plugin)
 }
+nlp.extend = function(fn) {
+  fn(Doc)
+}
 
 /** make a deep-copy of the library state */
 nlp.clone = function() {

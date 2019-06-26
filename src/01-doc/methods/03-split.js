@@ -17,3 +17,23 @@ exports.append = function(str) {
   })
   return this
 }
+
+/** add these new terms to the end*/
+exports.concat = function() {
+  let list = this.list.slice(0)
+  //repeat for any number of params
+  for (let i = 0; i < arguments.length; i++) {
+    let arg = arguments[i]
+    //support a fresh string
+    if (typeof arg === 'string') {
+      let arr = build.fromText(arg)
+      //TODO: phrase.tagger()?
+      list = list.concat(arr)
+    } else if (arg.isA === 'Doc') {
+      list = list.concat(arg.list)
+    } else if (arg.isA === 'Phrase') {
+      list.push(arg)
+    }
+  }
+  return this.buildFrom(list)
+}

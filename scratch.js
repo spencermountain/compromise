@@ -1,12 +1,20 @@
 var nlp = require('./src/index')
-// nlp.verbose(true);
 
-// var m = nlp('John eats glue').replace('john [#Verb]', 'sniffs');
+// nlp.extend(Doc => {
+//   class House extends Doc {
+//     door() {
+//       console.log('hi')
+//       return this
+//     }
+//   }
 
-let doc = nlp(`spencer kelly's problems`)
+//   Doc.prototype.houses = function() {
+//     return new House(this.list, this, this.world)
+//   }
+// })
 
-// doc.debug()
-let json = doc.json()
-console.log(JSON.stringify(json, null, 2))
-let doc2 = nlp.fromJSON(json)
-doc2.debug()
+let doc = nlp(`spencer is/was going crazy. He walks quickly.`)
+let doc2 = nlp(`oh yeah, baby. yeee haw.`)
+
+// doc.concat('hell yeah').debug()
+doc.concat(doc2.list[0]).debug()

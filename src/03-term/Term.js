@@ -17,6 +17,7 @@ class Term {
     this.prev = null
     this.next = null
     this.id = makeId(this.normal)
+    this.isA = 'Term' // easier than .constructor...
   }
 }
 

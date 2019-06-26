@@ -5,6 +5,7 @@ class Phrase {
   constructor(id, length, pool) {
     this.start = id
     this.length = length
+    this.isA = 'Phrase' // easier than .constructor...
     Object.defineProperty(this, 'pool', {
       enumerable: false,
       writable: true,

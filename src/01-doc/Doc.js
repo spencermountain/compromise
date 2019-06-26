@@ -4,6 +4,7 @@ const methods = {
   selections: require('./selections'),
 }
 const tagger = require('../tagger')
+const extend = require('../extend')
 
 /** a parsed text object */
 class Doc {
@@ -27,6 +28,12 @@ class Doc {
     Object.defineProperty(this, 'found', {
       get: () => this.list.length > 0,
     })
+    //'length' getter
+    Object.defineProperty(this, 'length', {
+      get: () => this.list.length,
+    })
+    // this is way easier than .constructor.name...
+    this.isA = 'Doc'
   }
 
   /** run part-of-speech tagger on all results*/
@@ -73,10 +80,18 @@ class Doc {
 Doc.prototype.buildFrom = function(list) {
   return new Doc(list, this, this.world)
 }
+/** add new subclass methods */
+Doc.prototype.extend = function(fn) {
+  fn(this)
+  return this
+}
 
 Object.assign(Doc.prototype, methods.match)
 Object.assign(Doc.prototype, methods.selections)
 Object.assign(Doc.prototype, methods.misc)
+
+//add sub-classes
+extend(Doc)
 
 //aliases
 const aliases = {

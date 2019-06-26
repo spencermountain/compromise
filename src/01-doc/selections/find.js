@@ -51,23 +51,7 @@ exports.places = function(n) {
   }
   return r
 }
-/** return places, people, and organizations*/
-exports.topics = function(n) {
-  let r = this.clauses()
-  // Find people, places, and organizations
-  let yup = r.people()
-  yup.concat(r.places())
-  yup.concat(r.organizations())
-  let ignore = ['someone', 'man', 'woman', 'mother', 'brother', 'sister', 'father']
-  yup = yup.not(ignore)
-  //return them to normal ordering
-  yup.sort('chronological')
-  // yup.unique() //? not sure
-  if (typeof n === 'number') {
-    yup = yup.get(n)
-  }
-  return yup
-}
+
 /** return anything tagged as a URL*/
 exports.urls = function(n) {
   let r = this.match('#Url')

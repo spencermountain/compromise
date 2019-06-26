@@ -16,5 +16,8 @@ test('misc', function(t) {
 
   doc = nlp(`toronto and hamilton ontario.`)
   t.equal(doc.places().length, 2, 'found two places')
+
+  doc = nlp(`toronto and google and spencer kelly`)
+  t.equal(doc.topics().length, 3, 'found three topics')
   t.end()
 })

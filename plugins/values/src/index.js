@@ -1,7 +1,43 @@
+const toNumber = require('./toNumber')
+const toText = require('./toText')
+
 const addMethod = function(Doc) {
   /**  */
   class Values extends Doc {
-    // function()
+    constructor(list, from, world) {
+      super(list, from, world)
+      this.unit = this.match('#Unit+$')
+      let numbers = this.not('#Unit+$')
+      this.list = numbers.list
+    }
+    // noDates() {}
+    // noUnits() {}
+    // units() {}
+    // numbers() {}
+    toNumber() {
+      this.forEach(val => {
+        let num = toNumber(val.normal())
+        console.log(num)
+      })
+      return this
+    }
+    toText() {
+      this.forEach(val => {
+        let str = toText(val.normal())
+        console.log(str)
+      })
+      return this
+    }
+    // toCardinal() {}
+    // toOrdinal() {}
+    // toNice() {}
+    // greaterThan() {}
+    // lessThan() {}
+    // between() {}
+    // add() {}
+    // subtract() {}
+    // increment() {}
+    // decrement() {}
   }
 
   Doc.prototype.values = function(n) {

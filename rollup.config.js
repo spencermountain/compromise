@@ -1,6 +1,8 @@
 import commonjs from 'rollup-plugin-commonjs'
 import json from 'rollup-plugin-json'
 import { terser } from 'rollup-plugin-terser'
+import size from 'rollup-plugin-size'
+import resolve from 'rollup-plugin-node-resolve'
 
 export default [
   {
@@ -11,7 +13,7 @@ export default [
         format: 'esm',
       },
     ],
-    plugins: [json(), commonjs()],
+    plugins: [resolve(), json(), commonjs(), size()],
   },
   {
     input: 'src/index.js',
@@ -22,7 +24,7 @@ export default [
         sourcemap: true,
       },
     ],
-    plugins: [json(), commonjs()],
+    plugins: [resolve(), json(), commonjs(), size()],
   },
   {
     input: 'src/index.js',
@@ -32,6 +34,6 @@ export default [
         format: 'cjs',
       },
     ],
-    plugins: [json(), commonjs(), terser()],
+    plugins: [resolve(), json(), commonjs(), terser(), size()],
   },
 ]

@@ -1,9 +1,7 @@
-const verbs = require('./verbs')
-const terms = require('./terms')
+const selections = [require('./contractions'), require('./acronyms')]
 
 const extend = function(Doc) {
-  terms(Doc)
-  verbs(Doc)
+  selections.forEach(addFn => addFn(Doc))
   return Doc
 }
 module.exports = extend

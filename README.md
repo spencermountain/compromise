@@ -30,7 +30,7 @@ type hints
 
 some cases like `.canbe()` where v11 results were mutable, but v12 are not mutating
 
-
+cleaned-up various `.data()` results
 
 
 ## Subsets

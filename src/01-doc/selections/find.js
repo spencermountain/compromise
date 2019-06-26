@@ -1,5 +1,13 @@
 //these are selections that don't require their own subclasses/methods
 
+/** split-up results by each term */
+exports.terms = function(n) {
+  let r = this.match('.')
+  if (typeof n === 'number') {
+    r = r.get(n)
+  }
+  return r
+}
 /** split-up results into multi-term phrases */
 exports.clauses = function(n) {
   let r = this.splitAfter('#ClauseEnd')
@@ -81,7 +89,7 @@ exports.parentheses = function(n) {
 
 /** return any sentences that ask a question */
 exports.questions = function(doc) {
-  let list = doc.list.filter(p => {
+  let list = doc.sentences().list.filter(p => {
     return p.lastTerm().hasQuestionMark()
   })
   return doc.buildFrom(list)
@@ -89,16 +97,8 @@ exports.questions = function(doc) {
 
 /** return any sentences that are not a question */
 exports.statements = function(doc) {
-  let list = doc.list.filter(p => {
+  let list = doc.sentences().list.filter(p => {
     return p.lastTerm().hasQuestionMark() === false
-  })
-  return doc.buildFrom(list)
-}
-
-/** return all sentences */
-exports.sentences = function(doc) {
-  let list = doc.list.filter(p => {
-    return p.lastTerm().hasQuestionMark() !== true
   })
   return doc.buildFrom(list)
 }

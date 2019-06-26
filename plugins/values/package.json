@@ -1,0 +1,46 @@
+{
+  "name": "compromise-values",
+  "description": "plugin for nlp-compromise",
+  "version": "0.0.1",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "main": "./builds/compromise-values.js",
+  "unpkg": "./builds/compromise-values.min.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nlp-compromise/compromise-values.git"
+  },
+  "scripts": {
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
+    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-spec",
+    "watch": "amble ./scratch.js",
+    "build": "rollup -c"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 100
+  },
+  "files": [
+    "builds/"
+  ],
+  "eslintIgnore": [
+    "builds/*.js"
+  ],
+  "peerDependencies": {
+    "compromise": "^11.*.*"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "amble": "0.0.7",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.1.0",
+    "rollup-plugin-terser": "^5.0.0",
+    "tap-dancer": "0.2.0",
+    "tape": "4.10.2"
+  },
+  "license": "MIT"
+}

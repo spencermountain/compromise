@@ -70,6 +70,25 @@ exports.get = function(n) {
   let list = [this.list[n]]
   return this.buildFrom(list)
 }
+
+/** sample a subset of the results */
+exports.random = function(n) {
+  if (!this.found) {
+    return this
+  }
+  let r = Math.floor(Math.random() * this.list.length)
+  if (n === undefined) {
+    let list = [this.list[r]]
+    return this.buildFrom(list)
+  }
+  //prevent it from going over the end
+  if (r + n > this.length) {
+    r = this.length - n
+    r = r < 0 ? 0 : r
+  }
+  return this.slice(r, r + n)
+}
+
 /** remove whitespace and title-case each term */
 exports.toCamelCase = function() {
   this.toTitleCase()

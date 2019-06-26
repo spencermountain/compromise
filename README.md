@@ -1,3 +1,17 @@
+hmmm:
+  getPunctuation()
+  setPunctuation()
+
+  lump()?
+  delete()?
+
+  js array fns
+
+
+---
+
+
+
 jsdoc output:
 `jsdoc src/** -t templates/haruki -d console`
 
@@ -10,7 +24,8 @@ type hints
 
 ### Breaking changes:
 
-* no more `.flatten()`
+* remove `.flatten()` (anti-pattern)
+
 * results of `.canbe()` are more like `.match()`
 
 some cases like `.canbe()` where v11 results were mutable, but v12 are not mutating

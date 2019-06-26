@@ -17,4 +17,4 @@ let doc = nlp(`spencer is/was going crazy. He walks quickly.`)
 // let doc2 = nlp(`oh yeah, baby. yeee haw.`)
 
 // doc.concat('hell yeah').debug()
-doc.canBe('Noun').debug()
+doc.nouns().debug()

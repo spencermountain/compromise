@@ -18,7 +18,7 @@ exports.append = function(str) {
   return this
 }
 
-/** add these new terms to the end*/
+/** add these new things to the end*/
 exports.concat = function() {
   let list = this.list.slice(0)
   //repeat for any number of params
@@ -37,8 +37,3 @@ exports.concat = function() {
   }
   return this.buildFrom(list)
 }
-
-/** turn all results into one long result*/
-// exports.concat = function() { //TODO:
-// return this
-// }

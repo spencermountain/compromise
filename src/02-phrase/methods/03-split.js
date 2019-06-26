@@ -1,15 +1,21 @@
 const append = require('./_join/append')
 const prepend = require('./_join/prepend')
+const deletePhrase = require('./_join/delete')
 
 /** put this text at the end */
-exports.append = function(phrase, doc) {
-  append(this, phrase, doc)
+exports.append = function(newPhrase, doc) {
+  append(this, newPhrase, doc)
   return this
 }
 
 /** add this text to the beginning */
-exports.prepend = function(phrase, doc) {
-  prepend(this, phrase, doc)
+exports.prepend = function(newPhrase, doc) {
+  prepend(this, newPhrase, doc)
+  return this
+}
+
+exports.delete = function(doc) {
+  deletePhrase(this, doc)
   return this
 }
 

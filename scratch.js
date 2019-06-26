@@ -1,9 +1,12 @@
 var nlp = require('./src/index')
-nlp.extend(require('./plugins/values/src'))
+// nlp.extend(require('./plugins/values/src'))
 
-let doc = nlp(`i weigh 95 kilograms and seventeen times`)
+let doc = nlp(`i really try it`)
 
-doc
-  .values()
-  .toNumber()
-  .debug()
+console.log(doc.delete('really').out()) //.debug()
+// doc.replace('try', 'did').debug()
+
+// doc
+//   .values()
+//   .toNumber()
+//   .debug()

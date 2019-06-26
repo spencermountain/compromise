@@ -18,6 +18,7 @@ const addMethod = function(Doc) {
       this.forEach(val => {
         let num = toNumber(val.normal())
         console.log(num)
+        // this.replace(val, num)
       })
       return this
     }

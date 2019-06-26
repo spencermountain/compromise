@@ -3465,6 +3465,52 @@ var _03Split$1 = {
 	concat: concat
 };
 
+/* javascript array loop-wrappers */
+var map = function(fn) {
+  return this.list.map((ts, i) => {
+    let doc = this.buildFrom([ts]);
+    return fn(doc, i)
+  })
+};
+var forEach = function(fn) {
+  this.list.forEach((ts, i) => {
+    let doc = this.buildFrom([ts]);
+    fn(doc, i);
+  });
+  return this
+};
+var filter = function(fn) {
+  let list = this.list.filter((ts, i) => {
+    let doc = this.buildFrom([ts]);
+    return fn(doc, i)
+  });
+  return new Text(list, this.world)
+};
+var reduce = function(fn, h) {
+  return this.list.reduce((_h, ts) => {
+    let doc = this.buildFrom([ts]);
+    return fn(_h, doc)
+  }, h)
+};
+var find = function(fn) {
+  for (let i = 0; i < this.list.length; i++) {
+    let ts = this.list[i];
+    let doc = this.buildFrom([ts]);
+    if (fn(doc)) {
+      return doc
+    }
+  }
+  return undefined
+};
+
+var _04Loops = {
+	map: map,
+	forEach: forEach,
+	filter: filter,
+	reduce: reduce,
+	find: find
+};
+
 var _debug = createCommonjsModule(function (module) {
 // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 const reset = '\x1b[0m';
@@ -3578,7 +3624,7 @@ var out$2 = function(method) {
   return this.text()
 };
 
-var _04Output = {
+var _05Output = {
 	text: text,
 	normal: normal,
 	json: json$2,
@@ -3592,7 +3638,8 @@ var methods$2 = Object.assign(
   _01Utils$1,
   _02Misc,
   _03Split$1,
-  _04Output
+  _04Loops,
+  _05Output
 );
 
 /** return a new Doc, with this one as a parent */
@@ -3851,7 +3898,7 @@ var statements = function(doc) {
   return doc.buildFrom(list)
 };
 
-var find = {
+var find$1 = {
 	terms: terms$1,
 	clauses: clauses,
 	hashTags: hashTags,
@@ -3864,7 +3911,7 @@ var find = {
 	statements: statements
 };
 
-var selections = Object.assign({}, find);
+var selections = Object.assign({}, find$1);
 
 //match 'super bowl' etc. in the lexicon
 const tryMultiple = function(terms, t, world) {

@@ -12,6 +12,7 @@
   "scripts": {
     "build": "rollup -c",
     "coverage": "node ./scripts/postpublish/coverage.js",
+    "filesize": "node ./scripts/filesize.js",
     "pack": "node ./scripts/pack.js",
     "test:spec": "tape \"./tests/**/*.test.js\" | tap-spec",
     "test:types": "tsc --project test/types",
@@ -38,7 +39,6 @@
     "@babel/core": "7.4.5",
     "@babel/preset-env": "7.4.5",
     "amble": "0.0.7",
-    "chalk": "2.4.2",
     "compromise-plugin": "0.0.8",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.0",

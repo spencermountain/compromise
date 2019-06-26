@@ -41,6 +41,7 @@ const parse = function(str) {
   let isNegative = false
   const terms = str.split(/[ -]/)
   for (let i = 0; i < terms.length; i++) {
+    console.log(terms[i])
     let w = terms[i]
     w = parseNumeric(w)
     if (!w || w === 'and') {

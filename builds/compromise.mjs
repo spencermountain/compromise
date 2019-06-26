@@ -1,8 +1,4 @@
-'use strict';
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var efrtUnpack = _interopDefault(require('efrt-unpack'));
+import efrtUnpack from 'efrt-unpack';
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -5415,5 +5411,4 @@ if (typeof self !== 'undefined') {
 }
 });
 
-module.exports = src;
-//# sourceMappingURL=compromise.js.map
+export default src;

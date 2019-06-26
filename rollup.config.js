@@ -7,8 +7,19 @@ export default [
     input: 'src/index.js',
     output: [
       {
+        file: 'builds/compromise.mjs',
+        format: 'esm',
+      },
+    ],
+    plugins: [json(), commonjs()],
+  },
+  {
+    input: 'src/index.js',
+    output: [
+      {
         file: 'builds/compromise.js',
         format: 'cjs',
+        sourcemap: true,
       },
     ],
     plugins: [json(), commonjs()],

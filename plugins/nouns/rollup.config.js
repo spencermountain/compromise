@@ -7,8 +7,8 @@ export default [
     input: 'src/index.js',
     output: [
       {
-        file: 'builds/compromise-nouns.js',
-        format: 'cjs',
+        file: 'builds/compromise-nouns.mjs',
+        format: 'esm',
       },
     ],
     plugins: [json(), commonjs()],

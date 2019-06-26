@@ -1,5 +1,5 @@
 var test = require('tape')
-var nlp = require('../lib/nlp')
+var nlp = require('../_lib')
 
 test('canBe', function(t) {
   let doc = nlp(`spencer is/was going crazy. He walks quickly.`)

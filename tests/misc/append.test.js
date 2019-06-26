@@ -1,5 +1,5 @@
 var test = require('tape')
-var nlp = require('../lib/nlp')
+var nlp = require('../_lib')
 
 test('append parent', function(t) {
   let doc = nlp(`one two three`)

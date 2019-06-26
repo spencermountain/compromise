@@ -9,7 +9,18 @@ hmmm:
 
 
 ---
+### Breaking changes:
 
+* remove `.flatten()` (anti-pattern)
+
+* results of `.canbe()` are more like `.match()`
+
+some cases like `.canbe()` where v11 results were mutable, but v12 are not mutating
+
+cleaned-up various `.data()` results
+
+stopped using `#Comma` pos-tag, for less denormalization
+---
 
 
 jsdoc output:
@@ -22,15 +33,7 @@ type hints
 
 `tsc --allowJs --checkJs --noEmit --target ES6 src/*.js`
 
-### Breaking changes:
 
-* remove `.flatten()` (anti-pattern)
-
-* results of `.canbe()` are more like `.match()`
-
-some cases like `.canbe()` where v11 results were mutable, but v12 are not mutating
-
-cleaned-up various `.data()` results
 
 
 ## Subsets

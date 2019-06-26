@@ -1,5 +1,5 @@
 var test = require('tape')
-var nlp = require('../lib/nlp')
+var nlp = require('../_lib')
 
 test('sanity-check case:', function(t) {
   var str = 'John xoo, John fredman'

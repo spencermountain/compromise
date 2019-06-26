@@ -1,9 +1,9 @@
 demo
 scripts
 src
+tests
 .eslintrc
 .babelrc
 .gitignore
-TODO.MD
 changelog.md
 scratch.js

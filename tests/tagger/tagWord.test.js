@@ -1,5 +1,5 @@
 var test = require('tape')
-var nlp = require('../lib/nlp')
+var nlp = require('../_lib')
 
 //test a word from each file in ./data/**
 test('pos from-lexicon', function(t) {

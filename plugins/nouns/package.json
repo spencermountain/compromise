@@ -4,6 +4,7 @@
   "description": "plugin for nlp-compromise",
   "version": "0.0.1",
   "main": "./builds/compromise-nouns.js",
+  "unpkg": "./builds/compromise-nouns.min.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/nlp-compromise/compromise-nouns.git"

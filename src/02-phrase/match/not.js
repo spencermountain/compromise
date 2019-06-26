@@ -1,4 +1,4 @@
-const matchAll = require('./index')
+const matchAll = require('./01-matchAll')
 
 /** return anything that doesn't match.
  * returns a simple array of arrays

@@ -2,7 +2,7 @@ const methods = [require('./people'), require('./place'), require('./organizatio
 
 //add them all in
 const addMethods = function(Doc) {
-  methods.forEach(fn => Doc.extend(fn))
+  methods.forEach(fn => fn(Doc))
 }
 
 module.exports = addMethods

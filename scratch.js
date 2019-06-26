@@ -1,22 +1,13 @@
 var nlp = require('./src/index')
-var compromiseNouns = require('./plugins/nouns/src')
-nlp.extend(compromiseNouns)
+nlp.extend(require('./plugins/entities/src'))
+nlp.extend(require('./plugins/nouns/src'))
+nlp.extend(require('./plugins/ngrams/src'))
+nlp.extend(require('./plugins/sentences/src'))
+nlp.extend(require('./plugins/values/src'))
+nlp.extend(require('./plugins/verbs/src'))
 
-// nlp.extend(Doc => {
-//   class House extends Doc {
-//     door() {
-//       console.log('hi')
-//       return this
-//     }
-//   }
-
-//   Doc.prototype.houses = function() {
-//     return new House(this.list, this, this.world)
-//   }
-// })
-
-let doc = nlp(`spencer is/was going crazy. He walks quickly.`)
+let doc = nlp(`spencer is/was going crazy. He walks quickly. John Smith is here with Julie`)
 // let doc2 = nlp(`oh yeah, baby. yeee haw.`)
 
-// doc.concat('hell yeah').debug()
-doc.nouns().debug()
+// doc = doc.concat(nlp('hell yeah john smith'))
+doc.people().debug()

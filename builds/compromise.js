@@ -1191,7 +1191,7 @@ var _01MatchAll = matchAll;
  */
 const notMatch = function(p, regs) {
   let found = {};
-  let arr = match(p, regs);
+  let arr = _01MatchAll(p, regs);
   arr.forEach(ts => {
     ts.forEach(t => {
       found[t.id] = true;

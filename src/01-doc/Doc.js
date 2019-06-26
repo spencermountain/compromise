@@ -33,7 +33,9 @@ class Doc {
       get: () => this.list.length,
     })
     // this is way easier than .constructor.name...
-    this.isA = 'Doc'
+    Object.defineProperty(this, 'isA', {
+      get: () => 'Doc',
+    })
   }
 
   /** run part-of-speech tagger on all results*/

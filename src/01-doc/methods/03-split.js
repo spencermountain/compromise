@@ -37,3 +37,8 @@ exports.concat = function() {
   }
   return this.buildFrom(list)
 }
+
+/** turn all results into one long result*/
+// exports.concat = function() { //TODO:
+// return this
+// }

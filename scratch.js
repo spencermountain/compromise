@@ -14,7 +14,7 @@ var nlp = require('./src/index')
 // })
 
 let doc = nlp(`spencer is/was going crazy. He walks quickly.`)
-let doc2 = nlp(`oh yeah, baby. yeee haw.`)
+// let doc2 = nlp(`oh yeah, baby. yeee haw.`)
 
 // doc.concat('hell yeah').debug()
-doc.concat(doc2.list[0]).debug()
+doc.canBe('Noun').debug()

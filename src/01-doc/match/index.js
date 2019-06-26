@@ -140,8 +140,15 @@ exports.ifNo = function(reg) {
   let regs = parseSyntax(reg)
   let found = this.list.filter(p => p.match(regs).length === 0)
   return this.buildFrom(found)
-  // console.log(found)
-  // return new Doc(found, this, this.world)
+}
+
+/** return only the terms that can be this tag*/
+exports.canBe = function(tag) {
+  let world = this.world
+  let matches = this.list.reduce((arr, p) => {
+    return arr.concat(p.canBe(tag, world))
+  }, [])
+  return this.buildFrom(matches)
 }
 
 //aliases

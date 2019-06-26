@@ -1,8 +1,9 @@
 const add = require('./add')
 const unTag = require('./unTag')
+const canBe = require('./canBe')
 
 /** add a tag or tags, and their descendents to this term
- * @param tags {string | string[]} a tag or tags
+ * @param  {string | string[]} tags - a tag or tags
  * @param {string?} [reason] a clue for debugging
  */
 exports.tag = function(tags, reason, world) {
@@ -11,10 +12,18 @@ exports.tag = function(tags, reason, world) {
 }
 
 /** remove a tag or tags, and their descendents from this term
- * @param tags {string | string[]} a tag or tags
+ * @param {string | string[]} tags  - a tag or tags
  * @param {string?} [reason] a clue for debugging
  */
 exports.unTag = function(tags, reason, world) {
   unTag(this, tags, reason, world)
   return this
+}
+
+/** is this tag consistent with the word's current tags?
+ * @param {string | string[]} tags - a tag or tags
+ * @returns {boolean}
+ */
+exports.canBe = function(tags, world) {
+  return canBe(this, tags, world)
 }

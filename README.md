@@ -8,6 +8,16 @@ type hints
 
 `tsc --allowJs --checkJs --noEmit --target ES6 src/*.js`
 
+### Breaking changes:
+
+* no more `.flatten()`
+* results of `.canbe()` are more like `.match()`
+
+some cases like `.canbe()` where v11 results were mutable, but v12 are not mutating
+
+
+
+
 ## Subsets
 
 ### in main:

@@ -16,6 +16,10 @@ class Pool {
   get(id) {
     return this.words[id]
   }
+  /** find a term by it's id */
+  remove(id) {
+    delete this.words[id]
+  }
   /** helper method */
   stats() {
     return {

@@ -1,8 +1,13 @@
-//recursively decrease the length of all parent phrases
-const shrinkAll = function(doc, id, deleteLength) {
-  //find our phrase to stretch
+//recursively decrease the length of all the parent phrases
+const shrinkAll = function(doc, id, deleteLength, after) {
+  //find our phrase to shrink
   let phrase = doc.list.find(p => p.hasId(id))
   phrase.length -= deleteLength
+
+  //does it start with this soon-removed word?
+  if (phrase.start === id) {
+    phrase.start = after.id
+  }
   if (doc.from) {
     shrinkAll(doc.from, id, deleteLength)
   }
@@ -15,8 +20,12 @@ const deletePhrase = function(phrase, doc) {
   let pool = doc.pool()
   let terms = phrase.terms()
 
-  let prev = pool.get(terms[0].prev)
-  let after = pool.get(terms[terms.length - 1].next)
+  //grab both sides of the chain,
+  let prev = pool.get(terms[0].prev) || {}
+  let after = pool.get(terms[terms.length - 1].next) || {}
+
+  //first, change phrase lengths
+  shrinkAll(doc, phrase.start, phrase.length, after)
 
   // connect [prev]->[after]
   if (prev) {
@@ -26,8 +35,10 @@ const deletePhrase = function(phrase, doc) {
   if (after) {
     after.prev = prev.id
   }
-  //set phrase length?
-  // phrase.length = 0
-  shrinkAll(doc, prev.id, phrase.length)
+
+  // lastly, actually delete the terms from the pool
+  for (let i = 0; i < terms.length; i++) {
+    pool.remove(terms[i].id)
+  }
 }
 module.exports = deletePhrase

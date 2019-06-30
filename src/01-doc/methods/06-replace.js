@@ -16,10 +16,10 @@ exports.replace = function(match, replacement) {
 
 /** fully remove these terms from the document */
 exports.delete = function(match) {
-  let toRemove = this.list
+  let toRemove = this
   if (match) {
     toRemove = this.match(match)
   }
   toRemove.list.forEach(phrase => phrase.delete(this))
-  return this.parent()
+  return this
 }

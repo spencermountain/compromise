@@ -9,7 +9,7 @@ const shrinkAll = function(doc, id, deleteLength, after) {
     phrase.start = after.id
   }
   if (doc.from) {
-    shrinkAll(doc.from, id, deleteLength)
+    shrinkAll(doc.from, id, deleteLength, after)
   }
 }
 

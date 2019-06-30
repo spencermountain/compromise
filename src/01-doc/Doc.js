@@ -74,7 +74,7 @@ class Doc {
 
   /** return the root, first document */
   all() {
-    return this.parents()[0]
+    return this.parents()[0] || this
   }
 }
 

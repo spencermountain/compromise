@@ -160,6 +160,7 @@ module.exports = [
   'far reaching',
   'faux',
   'favorite',
+  'favourite',
   'fed up',
   'female',
   'feminine',

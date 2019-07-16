@@ -5,7 +5,7 @@ var nlp = require('./src/index')
 // ---Contraction--
 // match.insertAt(match, str)
 // phrase.insertAt(index, str)
-var m = nlp(`she wouldn't go to the store`).debug()
+var m = nlp(`spencer's really cool`).debug()
 console.log(m.text())
 console.log(m.normal())
 

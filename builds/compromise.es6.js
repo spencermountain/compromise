@@ -1,4 +1,4 @@
-/* compromise v11.14.0
+/* compromise v11.14.1
    http://compromise.cool
    MIT
 */
@@ -17,7 +17,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.14.0",
+  "version": "11.14.1",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
   "types": "types",
@@ -58,12 +58,12 @@ module.exports={
     "efrt-unpack": "2.1.0"
   },
   "devDependencies": {
-    "@babel/core": "7.4.5",
-    "@babel/preset-env": "7.4.5",
+    "@babel/core": "7.5.4",
+    "@babel/preset-env": "7.5.4",
     "amble": "0.0.7",
     "babelify": "10.0.0",
     "babili": "0.1.4",
-    "browserify": "16.2.3",
+    "browserify": "16.3.0",
     "chalk": "2.4.2",
     "codecov": "3.5.0",
     "compromise-plugin": "0.0.9",
@@ -72,8 +72,8 @@ module.exports={
     "nyc": "14.1.1",
     "shelljs": "0.8.3",
     "tap-dancer": "0.2.0",
-    "tape": "4.10.2",
-    "terser": "4.0.0"
+    "tape": "4.11.0",
+    "terser": "4.1.2"
   },
   "license": "MIT"
 }
@@ -13611,16 +13611,17 @@ module.exports = {
   '3m': 'Organization',
   '7 eleven': 'Organization',
   '7-eleven': 'Organization',
-  'g8': 'Organization',
+  g8: 'Organization',
   'motel 6': 'Organization',
-  'vh1': 'Organization',
-  'q1': 'Date',
-  'q2': 'Date',
-  'q3': 'Date',
-  'q4': 'Date',
+  vh1: 'Organization',
+  q1: 'Date',
+  q2: 'Date',
+  q3: 'Date',
+  q4: 'Date',
   //misc
-  'records': 'Plural',
+  records: 'Plural',
   '&': 'Conjunction',
+  was: ['Copula', 'PastTense']
 };
 
 },{}],220:[function(_dereq_,module,exports){

@@ -36,7 +36,7 @@ exports.delete = function(match) {
 }
 
 /** add new text after every match result */
-exports.insertAt = function(match, add) {
+exports.insertAfter = function(match, add) {
   let m = this.match(match)
   let phrases = build.fromText(add, this.pool())
   m.list.forEach(p => p.append(phrases[0], m))
@@ -44,7 +44,6 @@ exports.insertAt = function(match, add) {
   m.tagger()
   return this
 }
-exports.insertAfter = exports.insertAt
 
 /** add new text before every match result */
 exports.insertBefore = function(match, add) {
@@ -55,3 +54,5 @@ exports.insertBefore = function(match, add) {
   m.tagger()
   return this
 }
+
+exports.insertAt = exports.insertAfter

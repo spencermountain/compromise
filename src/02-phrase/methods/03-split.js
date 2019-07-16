@@ -1,6 +1,5 @@
 const append = require('./_join/append')
 const prepend = require('./_join/prepend')
-const insertAt = require('./_join/insert')
 const deletePhrase = require('./_join/delete')
 // const build = require('../../tokenizer')
 
@@ -21,9 +20,14 @@ exports.delete = function(doc) {
   return this
 }
 
-/** insert-at */
-exports.insertAt = function(index, newPhrase, doc) {
-  insertAt(this, index, newPhrase, doc)
+exports.replace = function(newPhrase, doc) {
+  //add it do the end
+  let firstLength = this.length
+  append(this, newPhrase, doc)
+  //delete original terms
+  let tmp = this.buildFrom(this.start, this.length)
+  tmp.length = firstLength
+  deletePhrase(tmp, doc)
   return this
 }
 

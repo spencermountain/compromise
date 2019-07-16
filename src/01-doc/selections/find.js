@@ -8,6 +8,8 @@ exports.terms = function(n) {
   }
   return r
 }
+// exports.term = exports.terms
+
 /** split-up results into multi-term phrases */
 exports.clauses = function(n) {
   let r = this.splitAfter('#ClauseEnd')

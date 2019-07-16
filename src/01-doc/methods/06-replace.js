@@ -1,13 +1,24 @@
 const build = require('../../tokenizer')
 
 /** substitute-in new content */
-exports.replace = function(match, replacement) {
-  let firstPhrase = build.fromText(replacement, this.pool())[0]
+exports.replace = function(match, replace) {
+  let old = this
+  if (replace) {
+    old = this.match(match)
+  } else {
+    replace = match
+  }
+  let newPhrases = build.fromText(replace, this.pool())
+  // let doc = old.delete()
 
-  this.match(match).forEach(found => {
-    let phrase = found.list[0]
-    phrase.insertBefore(firstPhrase, this)
-  })
+  // doc.append(newPhrases)
+  // console.log(newPhrases)
+  // let firstPhrase = build.fromText(replacement, this.pool())[0]
+
+  // this.match(match).forEach(found => {
+  //   let phrase = found.list[0]
+  //   phrase.insertBefore(firstPhrase, this)
+  // })
 
   // console.log(replacement)
   // found.debug()

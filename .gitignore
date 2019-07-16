@@ -9,6 +9,7 @@ viz/
 .jshintrc
 .env
 .nyc_output/
+.vscode
 
 *.iml
 *.log

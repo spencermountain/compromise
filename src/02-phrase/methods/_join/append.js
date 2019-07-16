@@ -29,15 +29,15 @@ const stretchAll = function(doc, id, len) {
 }
 
 //append one phrase onto another
-const joinPhrase = function(first, two, doc) {
-  let firstTerms = first.terms()
-  let twoTerms = two.terms()
+const joinPhrase = function(main, enter, doc) {
+  let firstTerms = main.terms()
+  let twoTerms = enter.terms()
   //spruce-up the whitespace issues
   addWhitespace(twoTerms)
   //insert this segment into the linked-list
   stitchIn(firstTerms, twoTerms)
   //increase the length of our phrases
-  stretchAll(doc, firstTerms[0].id, two.length)
-  return first
+  stretchAll(doc, firstTerms[0].id, enter.length)
+  return main
 }
 module.exports = joinPhrase

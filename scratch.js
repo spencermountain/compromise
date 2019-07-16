@@ -1,7 +1,11 @@
 var nlp = require('./src/index')
 // nlp.extend(require('./plugins/values/src'))
 
-var m = nlp('spencer kelly is here')
-  // .match('spencer kelly')
-  .replace('spencer', 'johnny')
-m.debug()
+// ---Contraction--
+// match.insertAt(match, str)
+// phrase.insertAt(index, str)
+// var m = nlp(`she won't go`).debug()
+
+nlp(`she would have like to go`)
+  .insertAfter(`would`, 'not')
+  .debug()

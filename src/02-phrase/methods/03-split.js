@@ -1,6 +1,8 @@
 const append = require('./_join/append')
 const prepend = require('./_join/prepend')
+const insertAt = require('./_join/insert')
 const deletePhrase = require('./_join/delete')
+// const build = require('../../tokenizer')
 
 /** put this text at the end */
 exports.append = function(newPhrase, doc) {
@@ -16,6 +18,12 @@ exports.prepend = function(newPhrase, doc) {
 
 exports.delete = function(doc) {
   deletePhrase(this, doc)
+  return this
+}
+
+/** insert-at */
+exports.insertAt = function(index, newPhrase, doc) {
+  insertAt(this, index, newPhrase, doc)
   return this
 }
 

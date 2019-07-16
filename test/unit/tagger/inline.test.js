@@ -19,3 +19,11 @@ test('inline tagging linear:', function(t) {
 
   t.end();
 });
+
+test('compound tags from lexicon:', function(t) {
+  var doc = nlp('it was cold');
+  var arr = doc.verbs().conjugation();
+  t.equal(arr.length, 1, 'one verb');
+  t.equal(arr[0], 'Past', 'past-tense');
+  t.end();
+});

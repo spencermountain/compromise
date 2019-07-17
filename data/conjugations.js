@@ -92,6 +92,9 @@ module.exports = {
   broadcast: {
     PastTense: 'broadcast',
   },
+  budget: {
+    PastTense: 'budgeted',
+  },
   build: {
     Participle: 'built',
     PastTense: 'built',

@@ -25,7 +25,6 @@ const tryMultiple = function(terms, t, world) {
 const checkLexicon = function(terms, world) {
   let lex = world.lexicon
   let hasCompound = world.hasCompound
-
   //go through each term, and check the lexicon
   for (let t = 0; t < terms.length; t += 1) {
     let str = terms[t].normal

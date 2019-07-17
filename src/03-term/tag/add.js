@@ -2,6 +2,10 @@ const fns = require('./fns')
 
 /** add a tag, and its descendents, to a term */
 const addTag = function(t, tag, reason, world) {
+  //support '.' or '-' notation for skipping the tag
+  if (tag === '' || tag === '.' || tag === '-') {
+    return
+  }
   if (tag[0] === '#') {
     tag = tag.replace(/^#/, '')
   }

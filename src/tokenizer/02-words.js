@@ -28,18 +28,6 @@ const hasHyphen = function(str) {
   return false
 }
 
-//support splitting terms like "open/closed"
-const hasSlash = function(word) {
-  const reg = /[a-z]\/[a-z]/
-  if (reg.test(word)) {
-    //only one slash though
-    if (word.split(/\//g).length === 2) {
-      return true
-    }
-  }
-  return false
-}
-
 //turn a string into an array of terms (naiive for now, lumped later)
 const splitWords = function(str) {
   let result = []
@@ -62,10 +50,6 @@ const splitWords = function(str) {
           arr.push(hyphens[o] + '-')
         }
       }
-    } else if (hasSlash(word) === true) {
-      const slashes = word.split(/\//)
-      arr.push(slashes[0])
-      arr.push('/' + slashes[1])
     } else {
       arr.push(word)
     }

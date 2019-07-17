@@ -21,18 +21,23 @@ const addWhitespace = function(original, newPhrase) {
 }
 
 //insert this segment into the linked-list
-const stitchIn = function(original, newPhrase) {
-  // [ours] → [original]
+const stitchIn = function(main, newPhrase) {
+  // [newPhrase] → [main]
   let newTerms = newPhrase.terms()
-  newTerms[newTerms.length - 1].next = original.start
-  //see if there's a word before original
-  // [before] → [ours]
-  let pool = original.pool
-  let start = pool.get(original.start)
+  let lastTerm = newTerms[newTerms.length - 1]
+  lastTerm.next = main.start
+  // [before] → [main]
+  let pool = main.pool
+  let start = pool.get(main.start)
   if (start.prev) {
     let before = pool.get(start.prev)
-    before.next = newPhrase.start //wire it in
+    before.next = newPhrase.start
   }
+  //do it backwards, too
+  // before ← newPhrase
+  newTerms[0].prev = main.terms(0).prev
+  // newPhrase ← main
+  main.terms(0).prev = lastTerm.id
 }
 
 //recursively increase the length of all parent phrases

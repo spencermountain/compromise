@@ -4,10 +4,7 @@
 const abbreviations = Object.keys(require('./lib/abbreviations'))
 
 //regs-
-const abbrev_reg = new RegExp(
-  '\\b(' + abbreviations.join('|') + ')[.!?\u203D\u2E18\u203C\u2047-\u2049] *$',
-  'i'
-)
+const abbrev_reg = new RegExp('\\b(' + abbreviations.join('|') + ')[.!?\u203D\u2E18\u203C\u2047-\u2049] *$', 'i')
 const acronym_reg = /[ .][A-Z]\.? *$/i
 const ellipses_reg = /(?:\u2026|\.{2,}) *$/
 
@@ -15,7 +12,7 @@ const ellipses_reg = /(?:\u2026|\.{2,}) *$/
 const new_line = /((?:\r?\n|\r)+)/
 const naiive_sentence_split = /(\S.+?[.!?\u203D\u2E18\u203C\u2047-\u2049])(?=\s+|$)/g
 
-const letter_regex = /[a-z]/i
+const letter_regex = /[a-z\u00C0-\u00FF]/i
 const not_ws_regex = /\S/
 const startWhitespace = /^\W+/
 
@@ -73,11 +70,7 @@ const splitSentences = function(text) {
   for (let i = 0; i < chunks.length; i++) {
     let c = chunks[i]
     //should this chunk be combined with the next one?
-    if (
-      chunks[i + 1] &&
-      letter_regex.test(c) &&
-      (abbrev_reg.test(c) || acronym_reg.test(c) || ellipses_reg.test(c))
-    ) {
+    if (chunks[i + 1] && letter_regex.test(c) && (abbrev_reg.test(c) || acronym_reg.test(c) || ellipses_reg.test(c))) {
       chunks[i + 1] = c + (chunks[i + 1] || '')
     } else if (c && c.length > 0 && letter_regex.test(c)) {
       //this chunk is a proper sentence..

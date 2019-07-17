@@ -12,7 +12,7 @@ const parseNumeric = str => {
   //remove commas
   str = str.replace(/,/g, '')
   //split '5kg' from '5'
-  str = str.replace(/([0-9])([a-z]{1,2})$/, '$1')
+  str = str.replace(/([0-9])([a-z\u00C0-\u00FF]{1,2})$/, '$1')
   return str
 }
 

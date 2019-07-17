@@ -29,3 +29,17 @@ test('tricky case:', function(t) {
 
   t.end()
 })
+
+test('unicode case:', function(t) {
+  let doc = nlp(`ümasdfs`)
+  doc.toTitleCase()
+  t.equal(doc.text(), 'Ümasdfs', 'unicode-titlecase')
+
+  doc = nlp(`Ümasdfs`)
+  doc.toUpperCase()
+  t.equal(doc.text(), 'ÜMASDFS', 'unicode-uppercase')
+  doc.toLowerCase()
+  t.equal(doc.text(), 'ümasdfs', 'unicode-lowercase')
+
+  t.end()
+})

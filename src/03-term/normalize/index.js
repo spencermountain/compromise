@@ -1,5 +1,6 @@
 const killUnicode = require('./unicode')
 const isAcronym = require('./isAcronym')
+const hasSlash = /[a-z\u00C0-\u00FF] ?\/ ?[a-z\u00C0-\u00FF]/
 
 /** some basic operations on a string to reduce noise */
 const normalize = function(str) {
@@ -9,6 +10,10 @@ const normalize = function(str) {
   let original = str
   //(very) rough ASCII transliteration -  bjŏrk -> bjork
   str = killUnicode(str)
+  //rough handling of slashes - 'see/saw'
+  if (hasSlash.test(str) === true) {
+    str = str.replace(/\/.*/, '')
+  }
   //#tags, @mentions
   str = str.replace(/^[#@]/, '')
   //punctuation

@@ -1,4 +1,4 @@
-const titleCase = /^[A-Z][a-z']/
+const titleCase = /^[A-Z][a-z'\u00C0-\u00FF]/
 const romanNum = /^[IVXCM]+$/
 
 const oneLetters = {

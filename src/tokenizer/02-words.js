@@ -16,7 +16,7 @@ const hasHyphen = function(str) {
     return false
   }
   //letter-number
-  let reg = /^([a-z`"'/]+)(-|–|—)([a-z0-9].*)/i
+  let reg = /^([a-z\u00C0-\u00FF`"'/]+)(-|–|—)([a-z0-9\u00C0-\u00FF].*)/i
   if (reg.test(str) === true) {
     return true
   }

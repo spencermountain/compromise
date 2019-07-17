@@ -14,7 +14,7 @@ const naiive_sentence_split = /(\S.+?[.!?\u203D\u2E18\u203C\u2047-\u2049])(?=\s+
 
 const letter_regex = /[a-z\u00C0-\u00FF]/i
 const not_ws_regex = /\S/
-const startWhitespace = /^\W+/
+const startWhitespace = /^\s+/
 
 // Start with a regex:
 const naiive_split = function(text) {

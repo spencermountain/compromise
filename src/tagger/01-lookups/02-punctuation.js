@@ -28,8 +28,8 @@ const checkPunctuation = function(terms, i, world) {
     t.tag('Acronym', 'one-letter-acronym', world)
   }
   //roman numerals (not so clever right now)
-  if (t.text.length > 1 && romanNum.test(t.text) === true && t.canBe('RomanNumeral')) {
-    t.tag('RomanNumeral', 'is-roman-numeral', world)
+  if (t.text.length > 1 && romanNum.test(t.text) === true) {
+    t.tagSafe('RomanNumeral', 'is-roman-numeral', world)
   }
   //'100+'
   if (/[0-9]\+$/.test(t.text) === true) {

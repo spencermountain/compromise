@@ -11,6 +11,14 @@ exports.tag = function(tags, reason, world) {
   return this
 }
 
+/** only tag this term if it's consistent with it's current tags */
+exports.tagSafe = function(tags, reason, world) {
+  if (canBe(this, tags, world)) {
+    add(this, tags, reason, world)
+  }
+  return this
+}
+
 /** remove a tag or tags, and their descendents from this term
  * @param {string | string[]} tags  - a tag or tags
  * @param {string?} [reason] a clue for debugging

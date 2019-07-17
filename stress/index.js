@@ -1,0 +1,5 @@
+const corpus = require('nlp-corpus')
+const nlp = require('../src')
+let allText = corpus.all()
+let doc = nlp(allText)
+console.log('done')

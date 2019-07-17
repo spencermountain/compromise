@@ -1,8 +1,14 @@
+const setTag = require('./_tag')
+
 /** Give all terms the given tag */
 exports.tag = function(tag, why) {
-  this.list.forEach(p => {
-    p.terms().forEach(t => t.tag(tag, why, this.world))
-  })
+  setTag(tag, this, false, why)
+  return this
+}
+
+/** Only apply tag to terms if it is consistent with current tags */
+exports.tagSafe = function(tag, why) {
+  setTag(tag, this, true, why)
   return this
 }
 

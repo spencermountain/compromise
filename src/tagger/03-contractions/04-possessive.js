@@ -38,9 +38,9 @@ const isPossessive = (term, nextTerm) => {
   }
   return false
 }
-const isWas = () => {}
-const isHas = () => {}
-const isAre = () => {}
+// const isWas = () => {}
+// const isHas = () => {}
+// const isAre = () => {}
 
 const checkPossessive = function(term, phrase) {
   if (hasApostropheS.test(term.normal) === true) {

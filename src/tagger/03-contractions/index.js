@@ -8,8 +8,8 @@ const createPhrase = function(found, doc) {
   //create phrase from ['would', 'not']
   let phrase = build.fromText(found.join(' '), doc.pool())[0]
   //tag it
-  let tmpDoc = doc.buildFrom([phrase])
-  tmpDoc.tagger()
+  // let tmpDoc = doc.buildFrom([phrase])
+  // tmpDoc.tagger()
   //make these terms implicit
   phrase.terms().forEach((t, i) => {
     t.implicit = t.text
@@ -23,6 +23,14 @@ const createPhrase = function(found, doc) {
 }
 
 const contractions = function(doc) {
+  //disambiguate complex apostrophe-s situations
+  let m = doc.if(`/'s$/`)
+  if (m.found) {
+    m.match(`[/'s$/] #Adjective? #Noun`).tagSafe('#Possessive')
+    m.match(`/'s$/ #Infinitive`).tagSafe('#Possessive #Noun') //TODO:fixme
+    m.debug()
+  }
+
   doc.list.forEach(p => {
     let terms = p.terms()
     for (let i = 0; i < terms.length; i += 1) {

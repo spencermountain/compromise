@@ -9,15 +9,15 @@ const tagTerms = function(tag, doc, safe, reason) {
     let terms = p.terms()
     // tagSafe - apply only to fitting terms
     if (safe === true) {
-      terms = terms.filter(t => t.canBe(tag))
+      terms = terms.filter(t => t.canBe(tag, doc.world))
     }
     terms.forEach((t, i) => {
       //fancy version:
       if (tagList.length > 1) {
-        t.tag(tagList[i], reason)
+        t.tag(tagList[i], reason, doc.world)
       } else {
         //non-fancy version (same tag for all terms)
-        t.tag(tag, reason)
+        t.tag(tag, reason, doc.world)
       }
     })
   })

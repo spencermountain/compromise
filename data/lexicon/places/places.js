@@ -25,7 +25,6 @@ module.exports = [
   'lgw',
   'lhr',
   'mco',
-  'mia',
   'muc',
   'ord',
   'pek',

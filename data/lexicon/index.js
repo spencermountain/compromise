@@ -58,7 +58,7 @@ for (var i = 0; i < data.length; i++) {
   for (var o = 0; o < list.length; o++) {
     //log duplicates
     // if (lex[list[o]]) {
-    //   console.log(list[o] + '  ' + lex[list[o]] + ' ' + data[i][1]);
+    //   console.log(list[o] + '  ' + lex[list[o]] + ' ' + data[i][1])
     // }
     lex[list[o]] = data[i][1]
   }

@@ -178,7 +178,6 @@ module.exports = [
   'drag',
   'drain',
   'dream',
-  'dream',
   'dress',
   'drift',
   'drop',

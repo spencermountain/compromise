@@ -83,6 +83,5 @@ module.exports = [
   'ora',
   'palmer',
   'piper',
-  'rosario',
   'sung',
 ]

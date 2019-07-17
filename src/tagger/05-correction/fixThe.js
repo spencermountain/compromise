@@ -21,7 +21,7 @@ const fixThe = function(doc) {
     //the orange.
     doc
       .match('#Determiner #Adjective$')
-      .not('(#Comparative|#Superlative)')
+      .notIf('(#Comparative|#Superlative)')
       .term(1)
       .tag('Noun', 'the-adj-1')
     //the orange is
@@ -29,9 +29,7 @@ const fixThe = function(doc) {
     //the nice swim
     doc.match('(the|this|those|these) #Adjective [#Verb]').tag('Noun', 'the-adj-verb')
     //the truly nice swim
-    doc
-      .match('(the|this|those|these) #Adverb #Adjective [#Verb]')
-      .tag('Noun', 'correction-determiner4')
+    doc.match('(the|this|those|these) #Adverb #Adjective [#Verb]').tag('Noun', 'correction-determiner4')
     //a stream runs
     doc.match('(the|this|a|an) [#Infinitive] #Adverb? #Verb').tag('Noun', 'correction-determiner5')
     //a sense of

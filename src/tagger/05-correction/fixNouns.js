@@ -5,7 +5,7 @@ const fixNouns = function(doc) {
   //the word 'second'
   doc
     .match('[second] #Noun')
-    .not('#Honorific')
+    .notIf('#Honorific')
     .unTag('Unit')
     .tag('Ordinal', 'second-noun')
   //he quickly foo
@@ -24,21 +24,15 @@ const fixNouns = function(doc) {
     .lastTerm()
     .tag('Noun', 'a-inf')
   //the western line
+  doc.match('#Determiner [(western|eastern|northern|southern|central)] #Noun').tag('Noun', 'western-line')
   doc
-    .match('#Determiner [(western|eastern|northern|southern|central)] #Noun')
-    .tag('Noun', 'western-line')
-  doc
-    .match(
-      '(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun'
-    )
+    .match('(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun')
     .tag('Noun', 'technical-noun')
   //organization
   if (doc.has('#Organization')) {
     doc.match('#Organization of the? #TitleCase').tag('Organization', 'org-of-place')
     doc.match('#Organization #Country').tag('Organization', 'org-country')
-    doc
-      .match('(world|global|international|national|#Demonym) #Organization')
-      .tag('Organization', 'global-org')
+    doc.match('(world|global|international|national|#Demonym) #Organization').tag('Organization', 'global-org')
   }
   if (doc.has('#Possessive')) {
     //my buddy

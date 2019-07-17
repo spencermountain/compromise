@@ -45,7 +45,7 @@ const tagOrgs = function(doc, termArr) {
   if (doc.has('#Acronym')) {
     doc
       .match('the [#Acronym]')
-      .not('(iou|fomo|yolo|diy|dui|nimby)')
+      .notIf('(iou|fomo|yolo|diy|dui|nimby)')
       .tag('Organization', 'the-acronym')
     doc
       .match('#Acronym')

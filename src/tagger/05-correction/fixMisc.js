@@ -51,7 +51,7 @@ const miscCorrection = function(doc) {
     //exactly like
     doc
       .match('#Adverb like')
-      .not('(really|generally|typically|usually|sometimes|often) like')
+      .notIf('(really|generally|typically|usually|sometimes|often) like')
       .lastTerm()
       .tag('Adverb', 'adverb-like')
   }
@@ -61,9 +61,7 @@ const miscCorrection = function(doc) {
     doc.match('#TitleCase (ltd|co|inc|dept|assn|bros)').tag('Organization', 'org-abbrv')
     //Foo District
     doc
-      .match(
-        '#TitleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)'
-      )
+      .match('#TitleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)')
       .tag('Region', 'foo-district')
     //District of Foo
     doc
@@ -86,9 +84,7 @@ const miscCorrection = function(doc) {
 
   if (doc.has('#Place')) {
     //West Norforlk
-    doc
-      .match('(west|north|south|east|western|northern|southern|eastern)+ #Place')
-      .tag('Region', 'west-norfolk')
+    doc.match('(west|north|south|east|western|northern|southern|eastern)+ #Place').tag('Region', 'west-norfolk')
     //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
     doc
       .match('#City [#Acronym]')
@@ -106,9 +102,7 @@ const miscCorrection = function(doc) {
   doc.match('#Conjunction [u]').tag('Pronoun', 'u-pronoun-2')
   //'a/an' can mean 1 - "a hour"
   doc
-    .match(
-      '(a|an) (#Duration|hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)'
-    )
+    .match('(a|an) (#Duration|hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)')
     .ifNo('#Plural')
     .term(0)
     .tag('Value', 'a-is-one')
@@ -130,9 +124,7 @@ const miscCorrection = function(doc) {
   //6 am
   doc.match('#Holiday (day|eve)').tag('Holiday', 'holiday-day')
   //timezones
-  doc
-    .match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time')
-    .tag('Time', 'timezone')
+  doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone')
   //canadian dollar, Brazilian pesos
   doc.match('#Demonym #Currency').tag('Currency', 'demonym-currency')
   //about to go

@@ -28,10 +28,6 @@ const isPossessive = (term, nextTerm) => {
   if (nextTerm.tags.Noun) {
     return true
   }
-  //rocket's red glare
-  // if (nextTerm.tags.Adjective && ts.terms[i + 2] && ts.terms[i + 2].tags.Noun) {
-  //   return true
-  // }
   //an adjective suggests 'is good'
   if (nextTerm.tags.Adjective || nextTerm.tags.Adverb || nextTerm.tags.Verb) {
     return false

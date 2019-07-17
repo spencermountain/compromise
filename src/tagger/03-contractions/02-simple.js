@@ -1,4 +1,3 @@
-// const contraction = /(\p{L}+)'([a-z]{1,2})$/iu
 const contraction = /([a-z\u00C0-\u00FF]+)'([a-z]{1,2})$/i
 
 //these ones don't seem to be ambiguous

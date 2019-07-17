@@ -97,4 +97,12 @@ module.exports = [
   'monopoly',
   'rally',
   'tally',
+
+  //...ier
+  'barrier',
+  'carrier',
+  'chandelier',
+  'courier',
+  'frontier',
+  'pier',
 ]

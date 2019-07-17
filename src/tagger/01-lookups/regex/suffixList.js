@@ -12,6 +12,7 @@ const Noun = 'Noun'
 const Last = 'LastName'
 const Modal = 'Modal'
 
+// find any issues - https://observablehq.com/@spencermountain/suffix-word-lookup
 module.exports = [
   null, //0
   null, //1

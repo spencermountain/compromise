@@ -160,6 +160,7 @@ module.exports = [
   'matsumoto',
   'mercier',
   'messi',
+  'messier',
   'meyer',
   'mihhailov',
   'miller',

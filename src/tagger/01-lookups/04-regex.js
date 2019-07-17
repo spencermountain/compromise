@@ -20,7 +20,7 @@ const tagSuffix = function(term, world) {
     let regs = endsWith[char]
     for (let r = 0; r < regs.length; r += 1) {
       if (regs[r][0].test(str) === true) {
-        term.tag(regs[r][1], 'endsWith #' + r, world)
+        term.tag(regs[r][1], `endsWith ${char} #${r}`, world)
         break
       }
     }

@@ -348,6 +348,7 @@ module.exports = [
   'populist',
   'precise',
   'premature',
+  'premier',
   'premium',
   'primary',
   'prime',

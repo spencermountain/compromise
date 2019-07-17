@@ -44,6 +44,7 @@ module.exports = [
   'flour',
   'food',
   'forgiveness',
+  'fourier',
   'fowl',
   'fruit',
   'furniture',

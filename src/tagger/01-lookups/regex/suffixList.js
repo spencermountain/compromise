@@ -28,7 +28,6 @@ module.exports = [
     //3-letter
     que: Adj,
     lar: Adj,
-    ike: Adj,
     ffy: Adj,
     nny: Adj,
     rmy: Adj,

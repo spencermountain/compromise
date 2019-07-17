@@ -26,16 +26,12 @@ const contractions = function(doc) {
   //disambiguate complex apostrophe-s situations
   let m = doc.if(`/'s$/`)
   if (m.found) {
+    //fix for 'jamie's bite' mis-tagging
+    let fix = m.match(`/'s$/ #Adverb? #Adjective? #Infinitive`)
+    fix.firstTerm().tagSafe('#Possessive')
+    fix.lastTerm().tagSafe('#Noun')
     //rocket's red glare
-    m.match(`[/'s$/] #Adjective? #Noun`).tagSafe('#Possessive')
-    //jamie's bite
-    m.match(`/'s$/ #Infinitive`).tagSafe('#Possessive #Noun')
-    //jamie's fast run
-    m.match(`/'s$/ #Adjective #Infinitive`).tagSafe('#Possessive . #Noun')
-
-    //jamie's really fast run
-    m.match(`/'s$/ #Adverb #Adjective #Infinitive`).tagSafe('#Possessive . . #Noun')
-    m.debug()
+    m.match(`[/'s$/] #Adverb? #Adjective? #Noun`).tagSafe('Possessive')
   }
 
   doc.list.forEach(p => {

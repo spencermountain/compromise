@@ -7,7 +7,7 @@
   "types": "./compromise.d.ts",
   "repository": {
     "type": "git",
-    "url": "git://github.com/nlp-compromise/compromise.git"
+    "url": "git://github.com/spencermountain/compromise.git"
   },
   "scripts": {
     "build": "rollup -c",

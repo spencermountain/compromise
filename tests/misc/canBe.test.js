@@ -2,7 +2,7 @@ var test = require('tape')
 var nlp = require('../_lib')
 
 test('canBe', function(t) {
-  let doc = nlp(`spencer is/was going crazy. He walks quickly.`)
+  let doc = nlp(`spencer was going crazy. He walks quickly.`)
 
   let canBeNoun = doc.canBe('Noun')
   t.equal(canBeNoun.length, 2, 'two results')

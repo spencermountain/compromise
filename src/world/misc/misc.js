@@ -14,4 +14,5 @@ module.exports = {
   //misc
   records: 'Plural',
   '&': 'Conjunction',
+  was: ['Copula', 'PastTense'],
 }

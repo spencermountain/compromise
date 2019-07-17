@@ -1,6 +1,8 @@
 var nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 // nlp.extend(require('./plugins/values/src'))
 
-var doc = nlp(`jamie's run`)
-doc.debug()
+// var doc = nlp(`jamie's run`)
+// doc.debug()
+
+nlp(`spencer is/was going crazy.`).debug()

@@ -1867,7 +1867,8 @@ var name = "compromise";
 var description = "natural language processing in the browser";
 var version = "0.0.0";
 var main = "./builds/compromise.js";
-var types = "./compromise.d.ts";
+var unpkg = "./builds/compromise.min.js";
+var types = "types";
 var repository = {
 	type: "git",
 	url: "git://github.com/spencermountain/compromise.git"
@@ -1920,6 +1921,7 @@ var _package = {
 	description: description,
 	version: version,
 	main: main,
+	unpkg: unpkg,
 	types: types,
 	repository: repository,
 	scripts: scripts,
@@ -1937,6 +1939,7 @@ var _package$1 = /*#__PURE__*/Object.freeze({
 	description: description,
 	version: version,
 	main: main,
+	unpkg: unpkg,
 	types: types,
 	repository: repository,
 	scripts: scripts,

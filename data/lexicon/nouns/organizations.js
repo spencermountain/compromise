@@ -163,7 +163,6 @@ module.exports = [
   'nbc',
   'nec',
   'nestle',
-  'nestlé',
   'netflix',
   'new york times',
   'newsweek',

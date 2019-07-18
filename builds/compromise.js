@@ -1865,7 +1865,7 @@ var _01Tokenizer = {
 var author = "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)";
 var name = "compromise";
 var description = "natural language processing in the browser";
-var version = "11.12.0";
+var version = "0.0.0";
 var main = "./builds/compromise.js";
 var types = "./compromise.d.ts";
 var repository = {
@@ -3315,7 +3315,7 @@ World.prototype.clone = function() {
   w2.tags = clone$1(this.tags);
   return w2
 };
-var world = World;
+var World_1 = World;
 
 /** apply a tag, or tags to all terms */
 const tagTerms = function(tag, doc, safe, reason) {
@@ -3633,6 +3633,427 @@ var _04Loops = {
 	find: find
 };
 
+//list of inconsistent parts-of-speech
+var conflicts$1 = [
+  //top-level pos are all inconsistent
+  [
+    'Noun',
+    'Verb',
+    'Adjective',
+    'Adverb',
+    'Determiner',
+    'Conjunction',
+    'Preposition',
+    'QuestionWord',
+    'Expression',
+    'Url',
+    'PhoneNumber',
+    'Email',
+    'Emoji',
+  ],
+  //exlusive-nouns
+  ['Person', 'Organization', 'Value', 'Place', 'Actor', 'Demonym', 'Pronoun'],
+  //acronyms
+  ['Acronym', 'Pronoun', 'Actor', 'Unit', 'Address'],
+  ['Acronym', 'Plural'],
+  //things that can't be plural
+  ['Plural', 'Singular'],
+  //exlusive-people
+  ['MaleName', 'FemaleName'],
+  ['FirstName', 'LastName', 'Honorific'],
+  //adjectives
+  ['Comparative', 'Superlative'],
+  //values
+  ['Value', 'Verb', 'Adjective'],
+  ['Ordinal', 'Cardinal'],
+  ['TextValue', 'NumericValue'],
+  ['NiceNumber', 'TextValue'],
+  ['Ordinal', 'Currency'], //$5.50th
+  //verbs
+  ['PastTense', 'PresentTense', 'FutureTense'],
+  ['Pluperfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund', 'FuturePerfect', 'PerfectTense'],
+  ['Auxiliary', 'Noun', 'Value'],
+  //date
+  ['Month', 'WeekDay', 'Year', 'Duration', 'Holiday'],
+  ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
+  ['Date', 'Verb', 'Adjective', 'Person'],
+  ['Date', 'Money', 'RomanNumeral', 'Fraction'],
+  //a/an -> 1
+  ['Value', 'Determiner'],
+  ['Url', 'Value', 'HashTag', 'PhoneNumber', 'Emoji'],
+  //roman numerals
+  ['RomanNumeral', 'Fraction', 'NiceNumber'],
+  ['RomanNumeral', 'Money', 'Acronym'],
+  //cases
+  ['UpperCase', 'TitleCase', 'CamelCase'],
+  //phrases
+  ['Verb', 'Noun', 'Adjective', 'Value'], //VerbPhrase',
+  //QuestionWord
+  ['QuestionWord', 'Verb'],
+  //acronyms
+  ['Acronym', 'Verb'],
+];
+
+var nouns$1 = {
+  Noun: {},
+  // - singular
+  Singular: {
+    isA: 'Noun',
+  },
+  //a specific thing that's capitalized
+  ProperNoun: {
+    isA: 'Noun',
+  },
+
+  // -- people
+  Person: {
+    isA: 'Singular',
+  },
+  FirstName: {
+    isA: 'Person',
+  },
+  MaleName: {
+    isA: 'FirstName',
+  },
+  FemaleName: {
+    isA: 'FirstName',
+  },
+  LastName: {
+    isA: 'Person',
+  },
+  Honorific: {
+    isA: 'Noun',
+  },
+  Place: {
+    isA: 'Singular',
+  },
+
+  // -- places
+  Country: {
+    isA: 'Place',
+  },
+  City: {
+    isA: 'Place',
+  },
+  Region: {
+    isA: 'Place',
+  },
+  Address: {
+    isA: 'Place',
+  },
+  Organization: {
+    isA: 'Singular',
+  },
+  SportsTeam: {
+    isA: 'Organization',
+  },
+  Company: {
+    isA: 'Organization',
+  },
+  School: {
+    isA: 'Organization',
+  },
+
+  // - plural
+  Plural: {
+    isA: 'Noun',
+  },
+  Uncountable: {
+    //(not plural or singular)
+    isA: 'Noun',
+  },
+  Pronoun: {
+    isA: 'Noun',
+  },
+  //a word for someone doing something -'plumber'
+  Actor: {
+    isA: 'Noun',
+  },
+  //a gerund-as-noun - 'swimming'
+  Activity: {
+    isA: 'Noun',
+  },
+  //'kilograms'
+  Unit: {
+    isA: 'Noun',
+  },
+  //'Canadians'
+  Demonym: {
+    isA: 'Noun',
+  },
+  //`john's`
+  Possessive: {
+    isA: 'Noun',
+  },
+};
+
+var verbs$1 = {
+  Verb: {
+    // isA: 'VerbPhrase',
+  },
+  PresentTense: {
+    isA: 'Verb',
+  },
+  Infinitive: {
+    isA: 'PresentTense',
+  },
+  Gerund: {
+    isA: 'PresentTense',
+  },
+  PastTense: {
+    isA: 'Verb',
+  },
+  PerfectTense: {
+    isA: 'Verb',
+  },
+  FuturePerfect: {
+    isA: 'Verb',
+  },
+  Pluperfect: {
+    isA: 'Verb',
+  },
+  Copula: {
+    isA: 'Verb',
+  },
+  Modal: {
+    isA: 'Verb',
+  },
+  Participle: {
+    isA: 'Verb',
+  },
+  Particle: {
+    isA: 'Verb',
+  },
+  PhrasalVerb: {
+    isA: 'Verb',
+  },
+};
+
+var values$1 = {
+  Value: {},
+  Ordinal: {
+    isA: 'Value',
+  },
+  Cardinal: {
+    isA: 'Value',
+  },
+  // Multiple: {
+  //   isA: 'Value',
+  // },
+  RomanNumeral: {
+    isA: 'Cardinal',
+  },
+  Fraction: {
+    isA: 'Value',
+  },
+  TextValue: {
+    isA: 'Value',
+  },
+  NumericValue: {
+    isA: 'Value',
+  },
+  NiceNumber: {
+    isA: 'Value',
+  },
+  Money: {
+    //isA: 'Cardinal'
+  },
+  Percent: {
+    isA: 'Value',
+  },
+};
+
+var dates$1 = {
+  Date: {}, //not a noun, but usually is
+  Month: {
+    isA: 'Date',
+    also: 'Singular',
+  },
+  WeekDay: {
+    isA: 'Date',
+    also: 'Noun',
+  },
+  RelativeDay: {
+    isA: 'Date',
+  },
+  Year: {
+    isA: 'Date',
+  },
+  Duration: {
+    isA: 'Date',
+    also: 'Noun',
+  },
+  Time: {
+    isA: 'Date',
+    also: 'Noun',
+  },
+  Holiday: {
+    isA: 'Date',
+    also: 'Noun',
+  },
+};
+
+var misc$2 = {
+  Adjective: {},
+  Comparable: {
+    isA: 'Adjective',
+  },
+  Comparative: {
+    isA: 'Adjective',
+  },
+  Superlative: {
+    isA: 'Adjective',
+  },
+
+  NumberRange: {
+    isA: 'Contraction',
+  },
+  Adverb: {},
+
+  Currency: {},
+  //glue
+  Determiner: {},
+  Conjunction: {},
+  Preposition: {},
+  QuestionWord: {},
+  RelativeProunoun: {
+    isA: 'Pronoun',
+  },
+  Expression: {},
+  Abbreviation: {},
+  Url: {},
+  PhoneNumber: {},
+  HashTag: {},
+  AtMention: {
+    isA: 'Noun',
+  },
+  Emoji: {},
+  Email: {},
+
+  //non-exclusive
+  Auxiliary: {},
+  Negative: {},
+  Contraction: {},
+
+  TitleCase: {},
+  CamelCase: {},
+  UpperCase: {},
+  Hyphenated: {},
+  Acronym: {},
+  ClauseEnd: {},
+
+  // Quotes
+  Quotation: {},
+  StartQuotation: {
+    isA: 'Quotation',
+  },
+  EndQuotation: {
+    isA: 'Quotation',
+  },
+  //parentheses
+  Parentheses: {},
+  EndBracket: {
+    isA: 'Parentheses',
+  },
+  StartBracket: {
+    isA: 'Parentheses',
+  },
+};
+
+//add 'downward' tags (that immediately depend on this one)
+const addDownword$1 = function(tags) {
+  const keys = Object.keys(tags);
+  keys.forEach(k => {
+    tags[k].downward = [];
+    //look for tags with this as parent
+    for (let i = 0; i < keys.length; i++) {
+      if (tags[keys[i]].isA && tags[keys[i]].isA === k) {
+        tags[k].downward.push(keys[i]);
+      }
+    }
+  });
+};
+var addDownward$1 = addDownword$1;
+
+//used for pretty-printing on the server-side
+const colors$1 = {
+  Noun: 'blue',
+  // NounPhrase: 'blue',
+
+  Verb: 'green',
+  Auxiliary: 'green',
+  Negative: 'green',
+  // VerbPhrase: 'green',
+
+  Date: 'red',
+  Value: 'red',
+
+  Adjective: 'magenta',
+
+  Preposition: 'cyan',
+  Conjunction: 'cyan',
+  Determiner: 'cyan',
+  Adverb: 'cyan',
+  // Condition: 'cyan',
+};
+
+//extend tagset with new tags
+const addIn$1 = function(obj, tags) {
+  Object.keys(obj).forEach(k => {
+    tags[k] = obj[k];
+  });
+};
+
+//add tags to remove when tagging this one
+const addConflicts$1 = function(tags) {
+  Object.keys(tags).forEach(k => {
+    tags[k].notA = {};
+    for (let i = 0; i < conflicts$1.length; i++) {
+      let arr = conflicts$1[i];
+      if (arr.indexOf(k) !== -1) {
+        arr = arr.filter(a => a !== k);
+        arr.forEach(e => {
+          tags[k].notA[e] = true;
+        });
+      }
+    }
+    tags[k].notA = Object.keys(tags[k].notA);
+  });
+};
+
+const addColors$1 = function(tags) {
+  Object.keys(tags).forEach(k => {
+    if (colors$1[k]) {
+      tags[k].color = colors$1[k];
+      return
+    }
+    if (tags[k].isA && colors$1[tags[k].isA]) {
+      tags[k].color = colors$1[tags[k].isA];
+      return
+    }
+    if (tags[k].isA && tags[tags[k].isA].color) {
+      tags[k].color = tags[tags[k].isA].color;
+    }
+  });
+};
+
+const build$1 = () => {
+  let tags = {};
+  addIn$1(nouns$1, tags);
+  addIn$1(verbs$1, tags);
+  addIn$1(values$1, tags);
+  addIn$1(dates$1, tags);
+  addIn$1(misc$2, tags);
+  //downstream
+  addDownward$1(tags);
+  //add enemies
+  addConflicts$1(tags);
+  //for nice-logging
+  addColors$1(tags);
+  return tags
+};
+var tags$1 = build$1();
+
 var _debug = createCommonjsModule(function (module) {
 // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 const reset = '\x1b[0m';
@@ -3670,15 +4091,15 @@ const colors = {
   },
 };
 
-const tagString = function(tags$1) {
-  tags$1 = tags$1.map(tag => {
-    if (!tags.hasOwnProperty(tag)) {
+const tagString = function(tags) {
+  tags = tags.map(tag => {
+    if (!tags$1.hasOwnProperty(tag)) {
       return tag
     }
-    const c = tags[tag].color || 'blue';
+    const c = tags$1[tag].color || 'blue';
     return colors[c](tag)
   });
-  return tags$1.join(', ')
+  return tags.join(', ')
 };
 
 //output some helpful stuff to the console
@@ -5962,6 +6383,7 @@ const corrections = function(doc) {
   if (doc.has('#Value')) {
     fixValue_1(doc);
   }
+  // fixDates(doc)
   fixMisc(doc);
   return doc
 };
@@ -6184,19 +6606,19 @@ var src = createCommonjsModule(function (module) {
 
 
 //blast-out our word-lists, just once
-let world$1 = new world();
+let world = new World_1();
 
 /** parse and tag text into a compromise object  */
 const nlp = function(text = '') {
   let list = _01Tokenizer.fromText(text);
-  let doc = new Doc_1(list, null, world$1);
+  let doc = new Doc_1(list, null, world);
   doc.tagger();
   return doc
 };
 
 /** uncompress and apply a user-submitted lexicon */
 nlp.plugin = function(plugin) {
-  world$1.plugin(plugin);
+  world.plugin(plugin);
 };
 nlp.extend = function(fn) {
   fn(Doc_1);
@@ -6204,19 +6626,19 @@ nlp.extend = function(fn) {
 
 /** make a deep-copy of the library state */
 nlp.clone = function() {
-  world$1 = world$1.clone();
+  world = world.clone();
   return this
 };
 
 /** re-generate a Doc object from .json() results */
 nlp.fromJSON = function(json) {
   let list = _01Tokenizer.fromJSON(json);
-  return new Doc_1(list, null, world$1)
+  return new Doc_1(list, null, world)
 };
 
 /** log our decision-making for debugging */
 nlp.verbose = function(bool = true) {
-  world$1.verbose(bool);
+  world.verbose(bool);
 };
 
 /** current version of the library */

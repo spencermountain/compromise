@@ -41,14 +41,14 @@ const isHas = (term, phrase) => {
   })
 }
 
-const checkPossessive = function(term, phrase) {
+const checkPossessive = function(term, phrase, world) {
   //the rest of 's
   if (hasApostropheS.test(term.normal) === true) {
     let nextTerm = phrase.pool.get(term.next)
 
     //spencer's thing vs spencer-is
     if (term.tags.Possessive || isPossessive(term, nextTerm) === true) {
-      term.tag('#Possessive', 'isPossessive')
+      term.tag('#Possessive', 'isPossessive', world)
       return null
     }
     //'spencer is'

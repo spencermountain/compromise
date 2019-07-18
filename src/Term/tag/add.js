@@ -2,6 +2,9 @@ const fns = require('./fns')
 
 /** add a tag, and its descendents, to a term */
 const addTag = function(t, tag, reason, world) {
+  if (!world) {
+    console.warn('World not found - ' + reason)
+  }
   //support '.' or '-' notation for skipping the tag
   if (tag === '' || tag === '.' || tag === '-') {
     return

@@ -34,7 +34,7 @@ const contractions = function(doc) {
     //rocket's red glare
     m.match(`[/'s$/] #Adverb? #Adjective? #Noun`).tagSafe('Possessive')
   }
-
+  let world = doc.world
   doc.list.forEach(p => {
     let terms = p.terms()
     for (let i = 0; i < terms.length; i += 1) {
@@ -42,7 +42,7 @@ const contractions = function(doc) {
       let found = checkNegative(term)
       found = found || checkApostrophe(term)
       found = found || checkIrregulars(term, p)
-      found = found || checkPossessive(term, p)
+      found = found || checkPossessive(term, p, world)
       found = found || checkPerfect(term, p)
       //add them in
       if (found !== null) {

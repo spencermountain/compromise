@@ -11,14 +11,12 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "coverage": "node ./scripts/postpublish/coverage.js",
-    "filesize": "node ./scripts/filesize.js",
     "pack": "node ./scripts/pack.js",
-    "test:spec": "tape \"./tests/**/*.test.js\" | tap-spec",
-    "test:types": "tsc --project test/types",
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
-    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-spec",
-    "watch": "amble ./scratch.js"
+    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer",
+    "filesize": "node ./scripts/filesize.js",
+    "watch": "amble ./scratch.js",
+    "stress": "node ./stress/stress.js"
   },
   "files": [
     "builds/",

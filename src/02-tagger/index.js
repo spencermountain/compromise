@@ -9,16 +9,16 @@ const tagger = function(doc) {
   // check against any known-words
   doc = lookups(doc)
 
-  // gotta be something. ¯\_(:/)_/¯
+  // everything has gotta be something. ¯\_(:/)_/¯
   doc = fallbacks(doc)
 
-  //support "didn't" & "spencer's"
+  // support "didn't" & "spencer's"
   doc = contractions(doc)
 
-  //tag singular/plurals/quotations...
+  // deduce more specific tags - singular/plurals/quotations...
   doc = inference(doc)
 
-  // wiggle-around the tags, so they make more sense
+  // wiggle-around the results, so they make more sense
   doc = corrections(doc)
   return doc
 }

@@ -1,6 +1,7 @@
 const fixMisc = require('./fixMisc')
 const fixDeterminer = require('./fixThe')
 const fixNouns = require('./fixNouns')
+const fixPerson = require('./fixPerson')
 const fixVerb = require('./fixVerb')
 const fixAdjective = require('./fixAdjective')
 const fixValue = require('./fixValue')
@@ -12,6 +13,7 @@ const corrections = function(doc) {
   }
   if (doc.has('#Noun')) {
     fixNouns(doc)
+    fixPerson(doc)
   }
   if (doc.has('#Verb')) {
     fixVerb(doc)

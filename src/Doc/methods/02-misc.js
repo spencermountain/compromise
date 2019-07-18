@@ -1,6 +1,7 @@
 const eachTerm = function(doc, fn) {
+  let world = doc.world
   doc.list.forEach(p => {
-    p.terms().forEach(t => t[fn]())
+    p.terms().forEach(t => t[fn](world))
   })
   return doc
 }

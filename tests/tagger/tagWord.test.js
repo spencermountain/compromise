@@ -61,6 +61,9 @@ test('pos from-lexicon', function(t) {
     [`JDI University'`, 'Organization'],
     ['ocean', 'Noun'],
     ['shiver', 'Verb'],
+    [`flanders'`, 'Possessive'],
+    [`chillin'`, 'Gerund'],
+    [`'cool'`, 'Adjective'],
   ]
   arr.forEach(function(a) {
     var term = nlp(a[0]).termList()[0]

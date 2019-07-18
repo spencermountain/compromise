@@ -1,9 +1,10 @@
 const steps = {
   lexicon: require('./01-lexicon'),
   punctuation: require('./02-punctuation'),
-  emoji: require('./03-emoji'),
-  suffix: require('./04-suffix'),
-  web: require('./05-webText'),
+  regex: require('./03-regex'),
+  suffix: require('./04-suffixes'),
+  emoji: require('./05-emoji'),
+  // web: require('./05-webText'),
 }
 
 //'lookups' look at a term by itself
@@ -18,15 +19,12 @@ const lookups = function(doc) {
     let term = terms[i]
     //or maybe some helpful punctuation
     steps.punctuation(terms, i, world)
-    // ¯\_(ツ)_/¯
-    steps.emoji(term, world)
-
-    //don't overwrite existing tags
-    if (Object.keys(term.tags).length > 0) {
-      continue
-    }
+    //mostly prefix checks
+    steps.regex(term, world)
     //maybe we can guess
     steps.suffix(term, world)
+    // :c
+    steps.emoji(term, world)
   }
   return doc
 }

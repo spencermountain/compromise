@@ -132,9 +132,7 @@ const miscCorrection = function(doc) {
     .match('about to #Adverb? #Verb')
     .match('about to')
     .tag(['Auxiliary', 'Verb'], 'about-to')
-  //Doctor john smith jr
-  doc.match('#Honorific #Person').tag('Person', 'honorific-person')
-  doc.match('#Person (jr|sr|md)').tag('Person', 'person-honorific')
+
   //right of way
   doc.match('(right|rights) of .').tag('Noun', 'right-of')
   return doc

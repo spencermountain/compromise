@@ -1,26 +1,14 @@
-const startsWith = require('./suffixes/startsWith')
-const endsWith = require('./suffixes/endsWith')
+const regexes = require('./suffixes/regex')
 const suffixList = require('./suffixes/suffixList')
 
-//try each of the ^regexes in our list
-const tagPrefix = function(term, world) {
-  let str = term.normal
-  for (let r = 0; r < startsWith.length; r += 1) {
-    if (startsWith[r][0].test(str) === true) {
-      term.tag(startsWith[r][1], 'startsWith #' + r, world)
-      break
-    }
-  }
-}
-
-const tagSuffix = function(term, world) {
+const suffixRegexes = function(term, world) {
   let str = term.normal
   let char = str[str.length - 1]
-  if (endsWith.hasOwnProperty(char) === true) {
-    let regs = endsWith[char]
+  if (regexes.hasOwnProperty(char) === true) {
+    let regs = regexes[char]
     for (let r = 0; r < regs.length; r += 1) {
       if (regs[r][0].test(str) === true) {
-        term.tag(regs[r][1], `endsWith ${char} #${r}`, world)
+        term.tagSafe(regs[r][1], `endsWith ${char} #${r}`, world)
         break
       }
     }
@@ -38,7 +26,7 @@ const knownSuffixes = function(term, world) {
     let str = term.normal.substr(len - i, len)
     if (suffixList[str.length].hasOwnProperty(str) === true) {
       let tag = suffixList[str.length][str]
-      term.tag(tag, 'suffix -' + str, world)
+      term.tagSafe(tag, 'suffix -' + str, world)
       break
     }
   }
@@ -46,8 +34,7 @@ const knownSuffixes = function(term, world) {
 
 //all-the-way-down!
 const checkRegex = function(term, world) {
-  tagPrefix(term, world)
-  tagSuffix(term, world)
+  suffixRegexes(term, world)
   knownSuffixes(term, world)
 }
 module.exports = checkRegex

@@ -3,6 +3,10 @@
 //recursively-check compatibility of this tag and term
 const canBe = function(term, tag, world) {
   const tagset = world.tags
+  // cleanup tag
+  if (tag[0] === '#') {
+    tag = tag.replace(/^#/, '')
+  }
   //fail-fast
   if (tagset[tag] === undefined) {
     return true

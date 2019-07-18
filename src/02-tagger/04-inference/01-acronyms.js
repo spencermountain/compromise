@@ -1,4 +1,4 @@
-//
+/** if each letter represents a whole word */
 const tagAcronyms = function(doc, termArr) {
   termArr.forEach(terms => {
     terms.forEach(t => {

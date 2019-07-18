@@ -5,6 +5,6 @@ nlp.verbose(true)
 //TODAY: finish tagger:
 // then rename values() to numbers()
 
-let doc = nlp('the CIA and N.F.L. and the d.o.e').debug()
+let doc = nlp('JDI University').debug()
 
 // console.log(doc.world.lexicon.is)

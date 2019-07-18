@@ -1,13 +1,16 @@
 //nouns with irregular plural/singular forms
 //used in noun.inflect, and also in the lexicon.
+
 module.exports = {
   addendum: 'addenda',
   alga: 'algae',
   alumna: 'alumnae',
   alumnus: 'alumni',
   analysis: 'analyses',
+  antenna: 'antennae',
   appendix: 'appendices',
   avocado: 'avocados',
+  axis: 'axes',
   bacillus: 'bacilli',
   barracks: 'barracks',
   beau: 'beaux',
@@ -27,6 +30,8 @@ module.exports = {
   embargo: 'embargoes',
   epoch: 'epochs',
   foot: 'feet',
+  formula: 'formulae',
+  fungus: 'fungi',
   genus: 'genera',
   goose: 'geese',
   halo: 'halos',
@@ -41,7 +46,11 @@ module.exports = {
   memorandum: 'memoranda',
   modulus: 'moduli',
   mosquito: 'mosquitoes',
+  mouse: 'mice',
   move: 'moves',
+  nebula: 'nebulae',
+  nucleus: 'nuclei',
+  octopus: 'octopi',
   opus: 'opera',
   ovum: 'ova',
   ox: 'oxen',
@@ -56,6 +65,7 @@ module.exports = {
   sex: 'sexes',
   shoe: 'shoes',
   sombrero: 'sombreros',
+  stimulus: 'stimuli',
   stomach: 'stomachs',
   syllabus: 'syllabi',
   synopsis: 'synopses',
@@ -65,5 +75,7 @@ module.exports = {
   tooth: 'teeth',
   tornado: 'tornados',
   tuxedo: 'tuxedos',
+  vertebra: 'vertebrae',
+  // virus: 'viri',
   zero: 'zeros',
 }

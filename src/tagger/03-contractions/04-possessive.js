@@ -34,22 +34,33 @@ const isPossessive = (term, nextTerm) => {
   }
   return false
 }
-// const isWas = () => {}
-// const isHas = () => {}
-// const isAre = () => {}
+
+const isHas = (term, phrase) => {
+  let terms = phrase.terms()
+  let index = terms.indexOf(term)
+  let after = terms.slice(index + 1, index + 3)
+  //look for a past-tense verb
+  return after.find(t => {
+    return t.tags.PastTense
+  })
+}
 
 const checkPossessive = function(term, phrase) {
+  //the rest of 's
   if (hasApostropheS.test(term.normal) === true) {
     let nextTerm = phrase.pool.get(term.next)
 
     //spencer's thing vs spencer-is
     if (term.tags.Possessive || isPossessive(term, nextTerm) === true) {
-      term.tag('#Possessive')
+      term.tag('#Possessive', 'isPossessive')
       return null
     }
     //'spencer is'
     let found = term.normal.match(hasApostropheS)
     if (found !== null) {
+      if (isHas(term, phrase)) {
+        return [found[1], 'has']
+      }
       return [found[1], 'is']
     }
   }

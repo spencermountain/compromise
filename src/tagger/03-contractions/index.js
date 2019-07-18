@@ -28,8 +28,8 @@ const contractions = function(doc) {
   if (m.found) {
     //fix for 'jamie's bite' mis-tagging
     let fix = m.match(`/'s$/ #Adverb? #Adjective? #Infinitive`)
-    fix.firstTerm().tagSafe('#Possessive')
-    fix.lastTerm().tagSafe('#Noun')
+    fix.firstTerm().tagSafe('#Possessive', 'poss-inf')
+    fix.lastTerm().tagSafe('#Noun', 'poss-inf')
     //rocket's red glare
     m.match(`[/'s$/] #Adverb? #Adjective? #Noun`).tagSafe('Possessive')
   }
@@ -40,7 +40,7 @@ const contractions = function(doc) {
       let term = terms[i]
       let found = checkNegative(term)
       found = found || checkApostrophe(term)
-      found = found || checkIrregulars(term)
+      found = found || checkIrregulars(term, p)
       found = found || checkPossessive(term, p)
       //add them in
       if (found !== null) {

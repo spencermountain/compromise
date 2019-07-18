@@ -258,6 +258,7 @@ module.exports = {
   },
   get: {
     PastTense: 'got',
+    Participle: 'gotten',
   },
   give: {
     Gerund: 'giving',
@@ -268,9 +269,6 @@ module.exports = {
     Participle: 'gone',
     PastTense: 'went',
     PresentTense: 'goes',
-  },
-  got: {
-    Participle: 'gotten',
   },
   grow: {
     Participle: 'grown',

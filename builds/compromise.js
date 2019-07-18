@@ -89,12 +89,17 @@ var unicode_1 = killUnicode;
 const periodAcronym = /([A-Z]\.)+[A-Z]?,?$/;
 const oneLetterAcronym = /^[A-Z]\.,?$/;
 const noPeriodAcronym = /[A-Z]{2}('s|,)?$/;
+const lowerCaseAcronym = /([a-z]\.){2,}[a-z]\.?$/;
 //(we intentionally do not support unicode acronyms)
 
 /** does it appear to be an acronym, like FBI or M.L.B. */
 const isAcronym = function(str) {
   //like N.D.A
   if (periodAcronym.test(str) === true) {
+    return true
+  }
+  //like c.e.o
+  if (lowerCaseAcronym.test(str) === true) {
     return true
   }
   //like 'F.'
@@ -174,7 +179,6 @@ let endings = /[ \.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?‘
 let startings = /^[ \.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?‘’“”'";\/⁄·\&*@\•^†‡°”¡¿※№÷×ºª%‰+−=‱¶′″‴§~_|‖¦©℗®℠™¤₳฿]+/;
 // let punctuation = '[ \.’\'\[\(\)\{\}⟨⟩:,،、‒–—―…!.‹›«»‐-\?]';
 //money = ₵¢₡₢$₫₯֏₠€ƒ₣₲₴₭₺₾ℳ₥₦₧₱₰£៛₽₹₨₪৳₸₮₩¥
-
 /** turn given text into a parsed-up object
  * seperate the 'meat' of the word from the whitespace+punctuation
  */
@@ -204,26 +208,26 @@ const parseTerm = str => {
 var parse = parseTerm;
 
 /** convert all text to uppercase */
-var toUpperCase = function() {
+var toUpperCase = function(world) {
   this.text = this.text.toUpperCase();
-  this.tag('#UpperCase', 'toUpperCase');
+  this.tag('#UpperCase', 'toUpperCase', world);
   return this
 };
 
 /** convert all text to lowercase */
-var toLowerCase = function() {
+var toLowerCase = function(world) {
   this.text = this.text.toLowerCase();
-  this.unTag('#TitleCase');
-  this.unTag('#UpperCase');
+  this.unTag('#TitleCase', world);
+  this.unTag('#UpperCase', world);
   return this
 };
 
 /** only set the first letter to uppercase
  * leave any existing uppercase alone
  */
-var toTitleCase = function() {
+var toTitleCase = function(world) {
   this.text = this.text.replace(/^ *[a-z\u00C0-\u00FF]/, x => x.toUpperCase()); //support unicode?
-  this.tag('#TitleCase', 'toTitleCase');
+  this.tag('#TitleCase', 'toTitleCase', world);
   return this
 };
 
@@ -356,6 +360,7 @@ var _04Out = {
 	json: json
 };
 
+// these tags aren't juicy-enough
 const boring = {
   TitleCase: true,
   UpperCase: true,
@@ -382,11 +387,9 @@ var isAcronym_1$1 = function() {
   return isAcronym_1(this.text)
 };
 
-/** does the term have one meaningful tag? */
+/** does the term have at least one good tag? */
 var isKnown = function() {
-  let tags = Object.keys(this.tags);
-  tags = tags.filter(t => !boring[t]);
-  return tags.length > 0
+  return Object.keys(this.tags).some(t => boring[t] !== true)
 };
 
 var _03Misc = {
@@ -532,6 +535,10 @@ var unTag_1 = untagAll;
 //recursively-check compatibility of this tag and term
 const canBe = function(term, tag, world) {
   const tagset = world.tags;
+  // cleanup tag
+  if (tag[0] === '#') {
+    tag = tag.replace(/^#/, '');
+  }
   //fail-fast
   if (tagset[tag] === undefined) {
     return true
@@ -1870,13 +1877,14 @@ var repository = {
 	url: "git://github.com/spencermountain/compromise.git"
 };
 var scripts = {
-	build: "rollup -c",
+	build: "rollup -c && node ./scripts/filesize.js",
 	pack: "node ./scripts/pack.js",
 	test: "tape \"./tests/**/*.test.js\" | tap-dancer",
 	testb: "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer",
 	filesize: "node ./scripts/filesize.js",
 	watch: "amble ./scratch.js",
-	stress: "node ./stress/stress.js"
+	stress: "node ./stress/stress.js",
+	speed: "node ./stress/speed.js"
 };
 var files = [
 	"builds/",
@@ -1998,7 +2006,7 @@ var conflicts = [
   ['Url', 'Value', 'HashTag', 'PhoneNumber', 'Emoji'],
   //roman numerals
   ['RomanNumeral', 'Fraction', 'NiceNumber'],
-  ['RomanNumeral', 'Money'],
+  ['RomanNumeral', 'Money', 'Acronym'],
   //cases
   ['UpperCase', 'TitleCase', 'CamelCase'],
   //phrases
@@ -2871,7 +2879,7 @@ const addWords$1 = function(obj, lex) {
   for (let i = 0; i < keys.length; i += 1) {
     let k = keys[i];
     //add infinitive
-    lex[k] = 'Infinitive';
+    lex[k] = lex[k] || 'Infinitive';
     //add other forms
     for (let f = 1; f < forms.length; f += 1) {
       if (obj[k][forms[f]] !== undefined && lex[obj[k][forms[f]]] === undefined) {
@@ -3000,6 +3008,7 @@ var misc$1 = {
   records: 'Plural',
   '&': 'Conjunction',
   was: ['Copula', 'PastTense'],
+  is: ['Copula', 'PresentTense'],
 
   //pronouns
   i: ['Pronoun', 'Singular'],
@@ -3413,8 +3422,9 @@ var _01Utils$1 = {
 };
 
 const eachTerm = function(doc, fn) {
+  let world = doc.world;
   doc.list.forEach(p => {
-    p.terms().forEach(t => t[fn]());
+    p.terms().forEach(t => t[fn](world));
   });
   return doc
 };
@@ -4103,7 +4113,7 @@ var find$1 = {
 
 var selections = Object.assign({}, find$1);
 
-//match 'super bowl' etc. in the lexicon
+/** match a word-sequence, like 'super bowl' in the lexicon */
 const tryMultiple = function(terms, t, world) {
   let compounds = world.compounds;
   //try a two-word version
@@ -4126,7 +4136,7 @@ const tryMultiple = function(terms, t, world) {
   return false
 };
 
-//
+/** look at each word in our list of known-words */
 const checkLexicon = function(terms, world) {
   let lex = world.lexicon;
   let hasCompound = world.hasCompound;
@@ -4149,174 +4159,35 @@ const checkLexicon = function(terms, world) {
 };
 var _01Lexicon = checkLexicon;
 
-const romanNum = /^[IVXCM]+$/;
-const titleCase$1 = /^[A-Z][a-z'\u00C0-\u00FF]/;
-
 const apostrophes = /[\'‘’‛‵′`´]/;
-
-const oneLetters = {
-  a: true,
-  i: true,
-  //internet-slang
-  u: true,
-  r: true,
-  c: true,
-  k: true,
-};
 
 //
 const checkPunctuation = function(terms, i, world) {
   let term = terms[i];
-  let str = term.text;
-  //check titlecase (helpful)
-  if (titleCase$1.test(str) === true) {
-    term.tag('TitleCase', 'punct-rule', world);
-  }
+
   //check hyphenation
   if (term.postText.indexOf('-') !== -1 && terms[i + 1] && terms[i + 1].preText === '') {
     term.tag('Hyphenated', 'has-hyphen', world);
   }
-  //check one-letter acronyms like 'john E rockefeller'
-  if (str.length === 1 && terms[i + 1] && /[A-Z]/.test(str) && !oneLetters[str.toLowerCase()]) {
-    term.tag('Acronym', 'one-letter-acronym', world);
-  }
-  //roman numerals (not so clever right now)
-  if (term.text.length > 1 && romanNum.test(term.text) === true) {
-    term.tagSafe('RomanNumeral', 'is-roman-numeral', world);
-  }
-  //'100+'
-  if (/[0-9]\+$/.test(term.text) === true) {
-    term.tag('NumericValue', 'number-plus', world);
-  }
+
   //an end-tick (trailing apostrophe) - flanders', or Carlos'
-  if (apostrophes.test(term.postText)) {
-    term.tag(['Possessive', 'Noun'], 'end-tick', world);
+  if (apostrophes.test(term.postText) && !apostrophes.test(term.preText)) {
+    let endChar = term.normal[term.normal.length - 1];
+    //flanders'
+    if (endChar === 's') {
+      term.tag(['Possessive', 'Noun'], 'end-tick', world);
+      return
+    }
+    //chillin'
+    if (endChar === 'n') {
+      term.tag(['Gerund'], 'chillin', world);
+    }
   }
 };
 var _02Punctuation$1 = checkPunctuation;
 
-//yep,
-//https://github.com/mathiasbynens/emoji-regex/blob/master/index.js
-var regex = /(?:0\u20E3\n1\u20E3|2\u20E3|3\u20E3|4\u20E3|5\u20E3|6\u20E3|7\u20E3|8\u20E3|9\u20E3|#\u20E3|\*\u20E3|\uD83C(?:\uDDE6\uD83C(?:\uDDE8|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDEE|\uDDF1|\uDDF2|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFC|\uDDFD|\uDDFF)|\uDDE7\uD83C(?:\uDDE6|\uDDE7|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDEF|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFB|\uDDFC|\uDDFE|\uDDFF)|\uDDE8\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF5|\uDDF7|\uDDFA|\uDDFB|\uDDFC|\uDDFD|\uDDFE|\uDDFF)|\uDDE9\uD83C(?:\uDDEA|\uDDEC|\uDDEF|\uDDF0|\uDDF2|\uDDF4|\uDDFF)|\uDDEA\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEC|\uDDED|\uDDF7|\uDDF8|\uDDF9|\uDDFA)|\uDDEB\uD83C(?:\uDDEE|\uDDEF|\uDDF0|\uDDF2|\uDDF4|\uDDF7)|\uDDEC\uD83C(?:\uDDE6|\uDDE7|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDF1|\uDDF2|\uDDF3|\uDDF5|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFC|\uDDFE)|\uDDED\uD83C(?:\uDDF0|\uDDF2|\uDDF3|\uDDF7|\uDDF9|\uDDFA)|\uDDEE\uD83C(?:\uDDE8|\uDDE9|\uDDEA|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9)|\uDDEF\uD83C(?:\uDDEA|\uDDF2|\uDDF4|\uDDF5)|\uDDF0\uD83C(?:\uDDEA|\uDDEC|\uDDED|\uDDEE|\uDDF2|\uDDF3|\uDDF5|\uDDF7|\uDDFC|\uDDFE|\uDDFF)|\uDDF1\uD83C(?:\uDDE6|\uDDE7|\uDDE8|\uDDEE|\uDDF0|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFB|\uDDFE)|\uDDF2\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF5|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFB|\uDDFC|\uDDFD|\uDDFE|\uDDFF)|\uDDF3\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEB|\uDDEC|\uDDEE|\uDDF1|\uDDF4|\uDDF5|\uDDF7|\uDDFA|\uDDFF)|\uDDF4\uD83C\uDDF2|\uDDF5\uD83C(?:\uDDE6|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF7|\uDDF8|\uDDF9|\uDDFC|\uDDFE)|\uDDF6\uD83C\uDDE6|\uDDF7\uD83C(?:\uDDEA|\uDDF4|\uDDF8|\uDDFA|\uDDFC)|\uDDF8\uD83C(?:\uDDE6|\uDDE7|\uDDE8|\uDDE9|\uDDEA|\uDDEC|\uDDED|\uDDEE|\uDDEF|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF7|\uDDF8|\uDDF9|\uDDFB|\uDDFD|\uDDFE|\uDDFF)|\uDDF9\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEB|\uDDEC|\uDDED|\uDDEF|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF7|\uDDF9|\uDDFB|\uDDFC|\uDDFF)|\uDDFA\uD83C(?:\uDDE6|\uDDEC|\uDDF2|\uDDF8|\uDDFE|\uDDFF)|\uDDFB\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEC|\uDDEE|\uDDF3|\uDDFA)|\uDDFC\uD83C(?:\uDDEB|\uDDF8)|\uDDFD\uD83C\uDDF0|\uDDFE\uD83C(?:\uDDEA|\uDDF9)|\uDDFF\uD83C(?:\uDDE6|\uDDF2|\uDDFC)))|[\xA9\xAE\u203C\u2049\u2122\u2139\u2194-\u2199\u21A9\u21AA\u231A\u231B\u2328\u23CF\u23E9-\u23F3\u23F8-\u23FA\u24C2\u25AA\u25AB\u25B6\u25C0\u25FB-\u25FE\u2600-\u2604\u260E\u2611\u2614\u2615\u2618\u261D\u2620\u2622\u2623\u2626\u262A\u262E\u262F\u2638-\u263A\u2648-\u2653\u2660\u2663\u2665\u2666\u2668\u267B\u267F\u2692-\u2694\u2696\u2697\u2699\u269B\u269C\u26A0\u26A1\u26AA\u26AB\u26B0\u26B1\u26BD\u26BE\u26C4\u26C5\u26C8\u26CE\u26CF\u26D1\u26D3\u26D4\u26E9\u26EA\u26F0-\u26F5\u26F7-\u26FA\u26FD\u2702\u2705\u2708-\u270D\u270F\u2712\u2714\u2716\u271D\u2721\u2728\u2733\u2734\u2744\u2747\u274C\u274E\u2753-\u2755\u2757\u2763\u2764\u2795-\u2797\u27A1\u27B0\u27BF\u2934\u2935\u2B05-\u2B07\u2B1B\u2B1C\u2B50\u2B55\u3030\u303D\u3297\u3299]|\uD83C[\uDC04\uDCCF\uDD70\uDD71\uDD7E\uDD7F\uDD8E\uDD91-\uDD9A\uDE01\uDE02\uDE1A\uDE2F\uDE32-\uDE3A\uDE50\uDE51\uDF00-\uDF21\uDF24-\uDF93\uDF96\uDF97\uDF99-\uDF9B\uDF9E-\uDFF0\uDFF3-\uDFF5\uDFF7-\uDFFF]|\uD83D[\uDC00-\uDCFD\uDCFF-\uDD3D\uDD49-\uDD4E\uDD50-\uDD67\uDD6F\uDD70\uDD73-\uDD79\uDD87\uDD8A-\uDD8D\uDD90\uDD95\uDD96\uDDA5\uDDA8\uDDB1\uDDB2\uDDBC\uDDC2-\uDDC4\uDDD1-\uDDD3\uDDDC-\uDDDE\uDDE1\uDDE3\uDDEF\uDDF3\uDDFA-\uDE4F\uDE80-\uDEC5\uDECB-\uDED0\uDEE0-\uDEE5\uDEE9\uDEEB\uDEEC\uDEF0\uDEF3]|\uD83E[\uDD10-\uDD18\uDD80-\uDD84\uDDC0]/g;
-
-//just some of the most common emoticons
-//faster than
-//http://stackoverflow.com/questions/28077049/regex-matching-emoticons
-var list = {
-  ':(': true,
-  ':)': true,
-  ':P': true,
-  ':p': true,
-  ':O': true,
-  ':3': true,
-  ':|': true,
-  ':/': true,
-  ':\\': true,
-  ':$': true,
-  ':*': true,
-  ':@': true,
-  ':-(': true,
-  ':-)': true,
-  ':-P': true,
-  ':-p': true,
-  ':-O': true,
-  ':-3': true,
-  ':-|': true,
-  ':-/': true,
-  ':-\\': true,
-  ':-$': true,
-  ':-*': true,
-  ':-@': true,
-  ':^(': true,
-  ':^)': true,
-  ':^P': true,
-  ':^p': true,
-  ':^O': true,
-  ':^3': true,
-  ':^|': true,
-  ':^/': true,
-  ':^\\': true,
-  ':^$': true,
-  ':^*': true,
-  ':^@': true,
-  '):': true,
-  '(:': true,
-  '$:': true,
-  '*:': true,
-  ')-:': true,
-  '(-:': true,
-  '$-:': true,
-  '*-:': true,
-  ')^:': true,
-  '(^:': true,
-  '$^:': true,
-  '*^:': true,
-  '<3': true,
-  '</3': true,
-  '<\\3': true,
-};
-
-//for us, there's three types -
-// * ;) - emoticons
-// * 🌵 - unicode emoji
-// * :smiling_face: - asci-represented emoji
-
-//test for forms like ':woman_tone2:‍:ear_of_rice:'
-//https://github.com/Kikobeats/emojis-keywords/blob/master/index.js
-const isCommaEmoji = t => {
-  if (t.raw.charAt(0) === ':') {
-    //end comma can be last or second-last ':haircut_tone3:‍♀️'
-    if (t.raw.match(/:.?$/) === null) {
-      return false
-    }
-    //ensure no spaces
-    if (t.raw.match(' ')) {
-      return false
-    }
-    //reasonably sized
-    if (t.raw.length > 35) {
-      return false
-    }
-    return true
-  }
-  return false
-};
-
-//check against emoticon whitelist
-const isEmoticon = t => {
-  let str = t.raw.replace(/^[:;]/, ':'); //normalize the 'eyes'
-  return list.hasOwnProperty(str)
-};
-
-//these are somewhat popular.
-const tagEmoji = (term, world) => {
-  //test for :keyword: emojis
-  if (isCommaEmoji(term) === true) {
-    term.tag('Emoji', 'comma-emoji', world);
-    term.text = term.raw;
-    term.normalizeWhitespace();
-  }
-  //test for unicode emojis
-  if (term.text.match(regex)) {
-    term.tag('Emoji', 'unicode-emoji', world);
-    term.text = term.raw;
-    term.normalizeWhitespace();
-  }
-  //test for emoticon ':)' emojis
-  if (isEmoticon(term) === true) {
-    term.tag('Emoji', 'emoticon-emoji', world);
-    term.text = term.raw;
-    term.normalizeWhitespace();
-  }
-};
-var _03Emoji = tagEmoji;
-
 //these are regexes applied to t.text, instead of t.normal
-var startsWith = [
-  //#funtime
-  [/^#[a-z]+/, 'HashTag'],
-  //chillin'
-  [/^[a-z]+n[\'’]$/, 'Gerund'],
+var regexes = [
   //589-3809
   [/^[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'],
   //632-589-3809
@@ -4332,44 +4203,63 @@ var startsWith = [
   [/^[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}$/, 'Date'], // 03-02-89
   [/^[0-9]{1,4}\/[0-9]{1,2}\/[0-9]{1,4}$/, 'Date'], // 03/02/89
 
-  //money
-  [/^[-+]?[$€¥£][0-9]+(.[0-9]{1,2})?$/, ['Money', 'Value']], //like $5.30
-  [/^[-+]?[$€¥£][0-9]{1,3}(,[0-9]{3})+(.[0-9]{1,2})?$/, ['Money', 'Value']], //like $5,231.30
+  //names
+  [/^ma?c\'.*/, 'LastName'], //mc'adams
+  [/^o\'[drlkn].*/, 'LastName'], //o'douggan
+  [/^ma?cd[aeiou]/, 'LastName'], //macdonell - Last patterns https://en.wikipedia.org/wiki/List_of_family_name_affixes
 
-  //values
-  [/^[0-9\.]{1,4}(st|nd|rd|th)?[-–][0-9\.]{1,4}(st|nd|rd|th)?$/, 'NumberRange'], //5-7
-  // '^[0-9]{1,4}[-–][0-9]{1,4}$/, 'NumberRange'], //5-7
-  [/^[-+]?[0-9.,]{1,3}(,[0-9.,]{3})+(.[0-9]+)?$/, 'NiceNumber'], //like 5,999.0
-  [/^[-+]?[0-9]+(.[0-9]+)?$/, 'NumericValue'], //like +5.0
-  [/^.?[0-9]+([0-9,.]+)?%$/, ['Percent', 'Cardinal', 'NumericValue']], //7%  ..
-  [/^[0-9]{1,4}\/[0-9]{1,4}$/, 'Fraction'], //3/2ths
-  [/^[0-9\.]{1,2}[-–][0-9]{1,2}$/, ['Value', 'NumberRange']], //7-8
-  //mc'adams
-  [/^ma?c\'.*/, 'LastName'],
-  //o'douggan
-  [/^o\'[drlkn].*/, 'LastName'],
   //web tags
   [/^\w+@\w+\.[a-z]{2,3}$/, 'Email'], //not fancy
-  [/^#[a-z0-9_]{2,}$/, 'HashTag'],
+  [/^#[a-z0-9_\u00C0-\u00FF]{2,}$/, 'HashTag'],
   [/^@\w{2,}$/, 'AtMention'],
   [/^(https?:\/\/|www\.)\w+\.[a-z]{2,3}/, 'Url'], //with http/www
   [/^[\w\.\/]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/, 'Url'], //http://mostpopularwebsites.net/top-level-domain
 
   //slang things
   [/^(lol)+[sz]$/, 'Expression'], //lol
-  [/^ma?cd[aeiou]/, 'LastName'], //macdonell - Last patterns https://en.wikipedia.org/wiki/List_of_family_name_affixes
-  //starting-ones
-  [/^[\-\+]?[0-9][0-9,]*(\.[0-9])*$/, 'Cardinal'], //like 5
-  [/^(un|de|re)\\-[a-z]../, 'Verb'],
+  [/^(un|de|re)\\-[a-z\u00C0-\u00FF]{2}/, 'Verb'],
   [/^[\-\+]?[0-9]+(\.[0-9])*$/, 'NumericValue'],
-  [/^https?\:?\/\/[a-z0-9]/, 'Url'], //the colon is removed in normalisation
-  [/^www\.[a-z0-9]/, 'Url'],
   [/^(over|under)[a-z]{2,}/, 'Adjective'],
   [/^[0-9]{1,4}\.[0-9]{1,2}\.[0-9]{1,4}$/, 'Date'], // 03-02-89
-  //ending-ones
+
+  //numbers
+  [/^[\-\+]?[0-9][0-9,]*(\.[0-9])*$/, ['Cardinal', 'NumericValue']], //like 5
+  [/^[-+]?[0-9]+(.[0-9]+)?$/, ['Cardinal', 'NumericValue']], //like +5.0
+  [/^[0-9\.]{1,4}(st|nd|rd|th)?[-–][0-9\.]{1,4}(st|nd|rd|th)?$/, 'NumberRange'], //5-7
+  [/^[-+]?[0-9.,]{1,3}(,[0-9.,]{3})+(.[0-9]+)?$/, 'NiceNumber'], //like 5,999.0
+  [/^.?[0-9]+([0-9,.]+)?%$/, ['Percent', 'Cardinal', 'NumericValue']], //7%  ..
+  [/^[0-9]{1,4}\/[0-9]{1,4}$/, 'Fraction'], //3/2ths
+  [/^[0-9\.]{1,2}[-–][0-9]{1,2}$/, ['Value', 'NumberRange']], //7-8
   [/^[0-9]+([a-z]{1,2})$/, 'Value'], //like 5kg
   [/^[0-9][0-9,\.]*(st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
+  [/[0-9]\+$/, ['Cardinal', 'NumericValue']], //10+
+
+  //money
+  [/^[-+]?[$€¥£][0-9]+(.[0-9]{1,2})?$/, ['Money', 'Value']], //like $5.30
+  [/^[-+]?[$€¥£][0-9]{1,3}(,[0-9]{3})+(.[0-9]{1,2})?$/, ['Money', 'Value']], //like $5,231.30
 ];
+
+const romanNumeral = /^[IVXLCDM]{2,}$/;
+const romanNumValid = /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/; //  https://stackoverflow.com/a/267405/168877
+
+//try each of the ^regexes in our list
+const checkRegex = function(term, world) {
+  let str = term.text;
+
+  // do them all!
+  for (let r = 0; r < regexes.length; r += 1) {
+    if (regexes[r][0].test(str) === true) {
+      term.tagSafe(regexes[r][1], 'regex #' + r, world);
+      break
+    }
+  }
+  // do some more!
+  //roman numberals - XVII
+  if (term.text.length >= 2 && romanNumeral.test(str) && romanNumValid.test(str)) {
+    term.tagSafe('RomanNumeral', 'xvii', world);
+  }
+};
+var _03Regex = checkRegex;
 
 //regex suffix patterns and their most common parts of speech,
 //built using wordnet, by spencer kelly.
@@ -4388,7 +4278,7 @@ const Last = 'LastName';
 //the order here matters.
 
 //regexes indexed by mandated last-character
-var endsWith$1 = {
+var regex = {
   a: [
     [/.[aeiou]na$/, Noun],
     [/.[oau][wvl]ska$/, Last], //polish (female)
@@ -4608,25 +4498,14 @@ var suffixList = [
   },
 ];
 
-//try each of the ^regexes in our list
-const tagPrefix = function(term, world) {
-  let str = term.normal;
-  for (let r = 0; r < startsWith.length; r += 1) {
-    if (startsWith[r][0].test(str) === true) {
-      term.tag(startsWith[r][1], 'startsWith #' + r, world);
-      break
-    }
-  }
-};
-
-const tagSuffix = function(term, world) {
+const suffixRegexes = function(term, world) {
   let str = term.normal;
   let char = str[str.length - 1];
-  if (endsWith$1.hasOwnProperty(char) === true) {
-    let regs = endsWith$1[char];
+  if (regex.hasOwnProperty(char) === true) {
+    let regs = regex[char];
     for (let r = 0; r < regs.length; r += 1) {
       if (regs[r][0].test(str) === true) {
-        term.tag(regs[r][1], `endsWith ${char} #${r}`, world);
+        term.tagSafe(regs[r][1], `endsWith ${char} #${r}`, world);
         break
       }
     }
@@ -4644,53 +4523,142 @@ const knownSuffixes = function(term, world) {
     let str = term.normal.substr(len - i, len);
     if (suffixList[str.length].hasOwnProperty(str) === true) {
       let tag = suffixList[str.length][str];
-      term.tag(tag, 'suffix -' + str, world);
+      term.tagSafe(tag, 'suffix -' + str, world);
       break
     }
   }
 };
 
 //all-the-way-down!
-const checkRegex = function(term, world) {
-  tagPrefix(term, world);
-  tagSuffix(term, world);
+const checkRegex$1 = function(term, world) {
+  suffixRegexes(term, world);
   knownSuffixes(term, world);
 };
-var _04Suffix = checkRegex;
+var _04Suffixes = checkRegex$1;
 
-const email = /^\w+@\w+\.[a-z]{2,3}$/i; //not fancy
-const hashTag = /^#[a-z0-9_]{2,}$/i;
-const atMention = /^@\w{2,}$/;
-const urlA = /^(https?:\/\/|www\.)\w+\.[a-z]{2,3}/i; //with http/www
-const urlB = /^[\w\.\/]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/i; //http://mostpopularwebsites.net/top-level-domain
+//yep,
+//https://github.com/mathiasbynens/emoji-regex/blob/master/index.js
+var regex$1 = /(?:0\u20E3\n1\u20E3|2\u20E3|3\u20E3|4\u20E3|5\u20E3|6\u20E3|7\u20E3|8\u20E3|9\u20E3|#\u20E3|\*\u20E3|\uD83C(?:\uDDE6\uD83C(?:\uDDE8|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDEE|\uDDF1|\uDDF2|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFC|\uDDFD|\uDDFF)|\uDDE7\uD83C(?:\uDDE6|\uDDE7|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDEF|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFB|\uDDFC|\uDDFE|\uDDFF)|\uDDE8\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF5|\uDDF7|\uDDFA|\uDDFB|\uDDFC|\uDDFD|\uDDFE|\uDDFF)|\uDDE9\uD83C(?:\uDDEA|\uDDEC|\uDDEF|\uDDF0|\uDDF2|\uDDF4|\uDDFF)|\uDDEA\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEC|\uDDED|\uDDF7|\uDDF8|\uDDF9|\uDDFA)|\uDDEB\uD83C(?:\uDDEE|\uDDEF|\uDDF0|\uDDF2|\uDDF4|\uDDF7)|\uDDEC\uD83C(?:\uDDE6|\uDDE7|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDEE|\uDDF1|\uDDF2|\uDDF3|\uDDF5|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFC|\uDDFE)|\uDDED\uD83C(?:\uDDF0|\uDDF2|\uDDF3|\uDDF7|\uDDF9|\uDDFA)|\uDDEE\uD83C(?:\uDDE8|\uDDE9|\uDDEA|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF6|\uDDF7|\uDDF8|\uDDF9)|\uDDEF\uD83C(?:\uDDEA|\uDDF2|\uDDF4|\uDDF5)|\uDDF0\uD83C(?:\uDDEA|\uDDEC|\uDDED|\uDDEE|\uDDF2|\uDDF3|\uDDF5|\uDDF7|\uDDFC|\uDDFE|\uDDFF)|\uDDF1\uD83C(?:\uDDE6|\uDDE7|\uDDE8|\uDDEE|\uDDF0|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFB|\uDDFE)|\uDDF2\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF5|\uDDF6|\uDDF7|\uDDF8|\uDDF9|\uDDFA|\uDDFB|\uDDFC|\uDDFD|\uDDFE|\uDDFF)|\uDDF3\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEB|\uDDEC|\uDDEE|\uDDF1|\uDDF4|\uDDF5|\uDDF7|\uDDFA|\uDDFF)|\uDDF4\uD83C\uDDF2|\uDDF5\uD83C(?:\uDDE6|\uDDEA|\uDDEB|\uDDEC|\uDDED|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF7|\uDDF8|\uDDF9|\uDDFC|\uDDFE)|\uDDF6\uD83C\uDDE6|\uDDF7\uD83C(?:\uDDEA|\uDDF4|\uDDF8|\uDDFA|\uDDFC)|\uDDF8\uD83C(?:\uDDE6|\uDDE7|\uDDE8|\uDDE9|\uDDEA|\uDDEC|\uDDED|\uDDEE|\uDDEF|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF7|\uDDF8|\uDDF9|\uDDFB|\uDDFD|\uDDFE|\uDDFF)|\uDDF9\uD83C(?:\uDDE6|\uDDE8|\uDDE9|\uDDEB|\uDDEC|\uDDED|\uDDEF|\uDDF0|\uDDF1|\uDDF2|\uDDF3|\uDDF4|\uDDF7|\uDDF9|\uDDFB|\uDDFC|\uDDFF)|\uDDFA\uD83C(?:\uDDE6|\uDDEC|\uDDF2|\uDDF8|\uDDFE|\uDDFF)|\uDDFB\uD83C(?:\uDDE6|\uDDE8|\uDDEA|\uDDEC|\uDDEE|\uDDF3|\uDDFA)|\uDDFC\uD83C(?:\uDDEB|\uDDF8)|\uDDFD\uD83C\uDDF0|\uDDFE\uD83C(?:\uDDEA|\uDDF9)|\uDDFF\uD83C(?:\uDDE6|\uDDF2|\uDDFC)))|[\xA9\xAE\u203C\u2049\u2122\u2139\u2194-\u2199\u21A9\u21AA\u231A\u231B\u2328\u23CF\u23E9-\u23F3\u23F8-\u23FA\u24C2\u25AA\u25AB\u25B6\u25C0\u25FB-\u25FE\u2600-\u2604\u260E\u2611\u2614\u2615\u2618\u261D\u2620\u2622\u2623\u2626\u262A\u262E\u262F\u2638-\u263A\u2648-\u2653\u2660\u2663\u2665\u2666\u2668\u267B\u267F\u2692-\u2694\u2696\u2697\u2699\u269B\u269C\u26A0\u26A1\u26AA\u26AB\u26B0\u26B1\u26BD\u26BE\u26C4\u26C5\u26C8\u26CE\u26CF\u26D1\u26D3\u26D4\u26E9\u26EA\u26F0-\u26F5\u26F7-\u26FA\u26FD\u2702\u2705\u2708-\u270D\u270F\u2712\u2714\u2716\u271D\u2721\u2728\u2733\u2734\u2744\u2747\u274C\u274E\u2753-\u2755\u2757\u2763\u2764\u2795-\u2797\u27A1\u27B0\u27BF\u2934\u2935\u2B05-\u2B07\u2B1B\u2B1C\u2B50\u2B55\u3030\u303D\u3297\u3299]|\uD83C[\uDC04\uDCCF\uDD70\uDD71\uDD7E\uDD7F\uDD8E\uDD91-\uDD9A\uDE01\uDE02\uDE1A\uDE2F\uDE32-\uDE3A\uDE50\uDE51\uDF00-\uDF21\uDF24-\uDF93\uDF96\uDF97\uDF99-\uDF9B\uDF9E-\uDFF0\uDFF3-\uDFF5\uDFF7-\uDFFF]|\uD83D[\uDC00-\uDCFD\uDCFF-\uDD3D\uDD49-\uDD4E\uDD50-\uDD67\uDD6F\uDD70\uDD73-\uDD79\uDD87\uDD8A-\uDD8D\uDD90\uDD95\uDD96\uDDA5\uDDA8\uDDB1\uDDB2\uDDBC\uDDC2-\uDDC4\uDDD1-\uDDD3\uDDDC-\uDDDE\uDDE1\uDDE3\uDDEF\uDDF3\uDDFA-\uDE4F\uDE80-\uDEC5\uDECB-\uDED0\uDEE0-\uDEE5\uDEE9\uDEEB\uDEEC\uDEF0\uDEF3]|\uD83E[\uDD10-\uDD18\uDD80-\uDD84\uDDC0]/g;
 
-const webText = function(term, world) {
-  let str = term.text;
-  //joe@hotmail.com
-  if (email.test(str) === true) {
-    term.tag('Email', 'web_pass', world);
+//just some of the most common emoticons
+//faster than
+//http://stackoverflow.com/questions/28077049/regex-matching-emoticons
+var list = {
+  ':(': true,
+  ':)': true,
+  ':P': true,
+  ':p': true,
+  ':O': true,
+  ':3': true,
+  ':|': true,
+  ':/': true,
+  ':\\': true,
+  ':$': true,
+  ':*': true,
+  ':@': true,
+  ':-(': true,
+  ':-)': true,
+  ':-P': true,
+  ':-p': true,
+  ':-O': true,
+  ':-3': true,
+  ':-|': true,
+  ':-/': true,
+  ':-\\': true,
+  ':-$': true,
+  ':-*': true,
+  ':-@': true,
+  ':^(': true,
+  ':^)': true,
+  ':^P': true,
+  ':^p': true,
+  ':^O': true,
+  ':^3': true,
+  ':^|': true,
+  ':^/': true,
+  ':^\\': true,
+  ':^$': true,
+  ':^*': true,
+  ':^@': true,
+  '):': true,
+  '(:': true,
+  '$:': true,
+  '*:': true,
+  ')-:': true,
+  '(-:': true,
+  '$-:': true,
+  '*-:': true,
+  ')^:': true,
+  '(^:': true,
+  '$^:': true,
+  '*^:': true,
+  '<3': true,
+  '</3': true,
+  '<\\3': true,
+};
+
+//for us, there's three types -
+// * ;) - emoticons
+// * 🌵 - unicode emoji
+// * :smiling_face: - asci-represented emoji
+
+//test for forms like ':woman_tone2:‍:ear_of_rice:'
+//https://github.com/Kikobeats/emojis-keywords/blob/master/index.js
+const isCommaEmoji = t => {
+  if (t.raw.charAt(0) === ':') {
+    //end comma can be last or second-last ':haircut_tone3:‍♀️'
+    if (t.raw.match(/:.?$/) === null) {
+      return false
+    }
+    //ensure no spaces
+    if (t.raw.match(' ')) {
+      return false
+    }
+    //reasonably sized
+    if (t.raw.length > 35) {
+      return false
+    }
+    return true
   }
-  // #fun #cool
-  if (hashTag.test(str) === true) {
-    term.tag('HashTag', 'web_pass', world);
+  return false
+};
+
+//check against emoticon whitelist
+const isEmoticon = t => {
+  let str = t.raw.replace(/^[:;]/, ':'); //normalize the 'eyes'
+  return list.hasOwnProperty(str)
+};
+
+//these are somewhat popular.
+const tagEmoji = (term, world) => {
+  //test for :keyword: emojis
+  if (isCommaEmoji(term) === true) {
+    term.tag('Emoji', 'comma-emoji', world);
+    term.text = term.raw;
+    term.normalizeWhitespace();
   }
-  // @johnsmith
-  if (atMention.test(str) === true) {
-    term.tag('AtMention', 'web_pass', world);
+  //test for unicode emojis
+  if (term.text.match(regex$1)) {
+    term.tag('Emoji', 'unicode-emoji', world);
+    term.text = term.raw;
+    term.normalizeWhitespace();
   }
-  // www.cool.net
-  if (urlA.test(str) === true || urlB.test(str) === true) {
-    term.tag('Url', 'web_pass', world);
+  //test for emoticon ':)' emojis
+  if (isEmoticon(term) === true) {
+    term.tag('Emoji', 'emoticon-emoji', world);
+    term.text = term.raw;
+    term.normalizeWhitespace();
   }
 };
-var _05WebText = webText;
+var _05Emoji = tagEmoji;
 
 const steps = {
   lexicon: _01Lexicon,
   punctuation: _02Punctuation$1,
-  emoji: _03Emoji,
-  suffix: _04Suffix,
-  web: _05WebText,
+  regex: _03Regex,
+  suffix: _04Suffixes,
+  emoji: _05Emoji,
+  // web: require('./05-webText'),
 };
 
 //'lookups' look at a term by itself
@@ -4705,19 +4673,163 @@ const lookups = function(doc) {
     let term = terms[i];
     //or maybe some helpful punctuation
     steps.punctuation(terms, i, world);
-    // ¯\_(ツ)_/¯
-    steps.emoji(term, world);
-
-    //don't overwrite existing tags
-    if (Object.keys(term.tags).length > 0) {
-      continue
-    }
+    //mostly prefix checks
+    steps.regex(term, world);
     //maybe we can guess
     steps.suffix(term, world);
+    // :c
+    steps.emoji(term, world);
   }
   return doc
 };
-var _01Lookups = lookups;
+var _01Init = lookups;
+
+//markov-like stats about co-occurance, for hints about unknown terms
+//basically, a little-bit better than the noun-fallback
+//just top n-grams from nlp tags, generated from nlp-corpus
+
+//after this word, here's what happens usually
+let afterThisWord = {
+  i: 'Verb', //44% //i walk..
+  first: 'Noun', //50% //first principles..
+  it: 'Verb', //33%
+  there: 'Verb', //35%
+  not: 'Verb', //33%
+  because: 'Noun', //31%
+  if: 'Noun', //32%
+  but: 'Noun', //26%
+  who: 'Verb', //40%
+  this: 'Noun', //37%
+  his: 'Noun', //48%
+  when: 'Noun', //33%
+  you: 'Verb', //35%
+  very: 'Adjective', // 39%
+  old: 'Noun', //51%
+  never: 'Verb', //42%
+  before: 'Noun', //28%
+};
+
+//in advance of this word, this is what happens usually
+let beforeThisWord = {
+  there: 'Verb', //23% // be there
+  me: 'Verb', //31% //see me
+  man: 'Adjective', // 80% //quiet man
+  only: 'Verb', //27% //sees only
+  him: 'Verb', //32% //show him
+  were: 'Noun', //48% //we were
+  took: 'Noun', //38% //he took
+  himself: 'Verb', //31% //see himself
+  went: 'Noun', //43% //he went
+  who: 'Noun', //47% //person who
+  jr: 'Person',
+};
+
+//following this POS, this is likely
+let afterThisPOS = {
+  Adjective: 'Noun', //36% //blue dress
+  Possessive: 'Noun', //41% //his song
+  Determiner: 'Noun', //47%
+  Adverb: 'Verb', //20%
+  Pronoun: 'Verb', //40%
+  Value: 'Noun', //47%
+  Ordinal: 'Noun', //53%
+  Modal: 'Verb', //35%
+  Superlative: 'Noun', //43%
+  Demonym: 'Noun', //38%
+  Honorific: 'Person', //
+};
+
+//in advance of this POS, this is likely
+let beforeThisPOS = {
+  Copula: 'Noun', //44% //spencer is
+  PastTense: 'Noun', //33% //spencer walked
+  Conjunction: 'Noun', //36%
+  Modal: 'Noun', //38%
+  PluperfectTense: 'Noun', //40%
+  PerfectTense: 'Verb', //32%
+};
+var markov = {
+  beforeThisWord: beforeThisWord,
+  afterThisWord: afterThisWord,
+
+  beforeThisPos: beforeThisPOS,
+  afterThisPos: afterThisPOS,
+};
+
+const afterKeys = Object.keys(markov.afterThisPos);
+const beforeKeys = Object.keys(markov.beforeThisPos);
+
+const checkNeighbours = function(terms, world) {
+  for (let i = 0; i < terms.length; i += 1) {
+    let term = terms[i];
+    //do we still need a tag?
+    if (term.isKnown() === true) {
+      continue
+    }
+    //ok, this term needs a tag.
+    //look at previous word for clues..
+    let lastTerm = terms[i - 1];
+    if (lastTerm) {
+      // 'foobar term'
+      if (markov.afterThisWord.hasOwnProperty(lastTerm.normal) === true) {
+        let tag = markov.afterThisWord[lastTerm.normal];
+        term.tag(tag, 'after-' + lastTerm.normal, world);
+        continue
+      }
+      // 'Tag term'
+      // (look at previous POS tags for clues..)
+      let foundTag = afterKeys.find(tag => lastTerm.tags[tag]);
+      if (foundTag !== undefined) {
+        let tag = markov.afterThisPos[foundTag];
+        term.tag(tag, 'after-' + foundTag, world);
+        continue
+      }
+    }
+
+    //look at next word for clues..
+    let nextTerm = terms[i + 1];
+    if (nextTerm) {
+      // 'term foobar'
+      if (markov.beforeThisWord.hasOwnProperty(nextTerm.normal) === true) {
+        let tag = markov.beforeThisWord[nextTerm.normal];
+        term.tag(tag, 'before-' + nextTerm.normal, world);
+        continue
+      }
+      // 'term Tag'
+      // (look at next POS tags for clues..)
+      let foundTag = beforeKeys.find(tag => nextTerm.tags[tag]);
+      if (foundTag !== undefined) {
+        let tag = markov.beforeThisPos[foundTag];
+        term.tag(tag, 'before-' + foundTag, world);
+        continue
+      }
+    }
+  }
+};
+var _01Neighbours = checkNeighbours;
+
+const titleCase$1 = /^[A-Z][a-z'\u00C0-\u00FF]/;
+const hasNumber = /[0-9]/;
+
+/** look for any grammar signals based on capital/lowercase */
+const checkCase = function(terms, world) {
+  terms.forEach((term, i) => {
+    //is it a titlecased word?
+    if (titleCase$1.test(term.text) === true && hasNumber.test(term.text) === false) {
+      // tag it as titlecase, if possible
+      if (i !== 0) {
+        term.tag('TitleCase', 'case', world);
+      } else if (term.tags.Person || term.tags.Organization || term.tags.Place) {
+        term.tag('TitleCase', 'case-person', world);
+      }
+      // can we call it a noun?
+      if (i !== 0 && term.isKnown() === false) {
+        term.tag('ProperNoun', 'case-noun', world);
+      }
+    }
+  });
+};
+var _02Case = checkCase;
 
 //these tags don't have plurals
 const noPlurals = ['Uncountable', 'Pronoun', 'Place', 'Value', 'Person', 'Month', 'WeekDay', 'RelativeDay', 'Holiday'];
@@ -4757,32 +4869,61 @@ const checkPlural = function(t, world) {
     t.tag('Singular', 'singular-fallback', world);
   }
 };
-var _02Plurals = checkPlural;
+var _04Plurals = checkPlural;
 
-// const checkNeighbours = require('./01-neighbours')
+const hasPrefix = /^(re|un)-?[a-z\u00C0-\u00FF]/;
+const prefix = /^(re|un)-?/;
 
+/** check 'rewatch' in lexicon as 'watch' */
+const checkPrefix = function(terms, world) {
+  let lex = world.lexicon;
+  terms.forEach(term => {
+    // skip if we have a good tag already
+    if (term.isKnown() === true) {
+      return
+    }
+    //does it start with 'un|re'
+    if (hasPrefix.test(term.normal) === true) {
+      // look for the root word in the lexicon:
+      let stem = term.normal.replace(prefix, '');
+      if (lex[stem] !== undefined && lex.hasOwnProperty(stem) === true) {
+        term.tag(lex[stem], 'stem-' + stem, world);
+      }
+    }
+  });
+};
+var _03Stem = checkPrefix;
+
+const step = {
+  neighbours: _01Neighbours,
+  case: _02Case,
+  plural: _04Plurals,
+  stem: _03Stem,
+};
 //
 const fallbacks = function(doc) {
-  // let terms = doc.termList()
-  // let world = doc.world
-  //if it's empty, consult it's neighbours, first
-  // checkNeighbours(terms, world)
-  // checkPlurals(terms, world)
+  let terms = doc.termList();
+  let world = doc.world;
 
-  //fallback to a noun...
-  doc.list.forEach(p => {
-    p.terms().forEach(t => {
-      if (t.isKnown() === false) {
-        t.tag('Noun', 'noun-fallback', doc.world);
-      }
-    });
+  // if it's empty, consult it's neighbours, first
+  step.neighbours(terms, world);
+
+  // is there a case-sensitive clue?
+  step.case(terms, world);
+
+  // check 'rewatch' as 'watch'
+  step.stem(terms, world);
+
+  // ... fallback to a noun!
+  terms.forEach(t => {
+    if (t.isKnown() === false) {
+      t.tag('Noun', 'noun-fallback', doc.world);
+    }
   });
 
   //are the nouns singular or plural?
-  doc.list.forEach(p => {
-    p.terms().forEach(t => {
-      _02Plurals(t, doc.world);
-    });
+  terms.forEach(t => {
+    step.plural(t, doc.world);
   });
 
   return doc
@@ -5105,12 +5246,13 @@ const tagOrgs = function(doc, termArr) {
 };
 var _02Organizations = tagOrgs;
 
-//
+/** if each letter represents a whole word */
 const tagAcronyms = function(doc, termArr) {
   termArr.forEach(terms => {
     terms.forEach(t => {
       if (t.isAcronym()) {
-        t.tag(['Acronym', 'Noun'], 'acronym-step', doc.world);
+        t.tagSafe('Acronym', 'acronym-step', doc.world);
+        t.tagSafe('Noun', 'acronym-infer', doc.world);
       }
     });
   });
@@ -5261,9 +5403,7 @@ const miscCorrection = function(doc) {
     .match('about to #Adverb? #Verb')
     .match('about to')
     .tag(['Auxiliary', 'Verb'], 'about-to');
-  //Doctor john smith jr
-  doc.match('#Honorific #Person').tag('Person', 'honorific-person');
-  doc.match('#Person (jr|sr|md)').tag('Person', 'person-honorific');
+
   //right of way
   doc.match('(right|rights) of .').tag('Noun', 'right-of');
   return doc
@@ -5379,6 +5519,236 @@ const fixNouns = function(doc) {
   return doc
 };
 var fixNouns_1 = fixNouns;
+
+const fixPerson = function(doc) {
+  // 'john E rockefeller'
+  doc.match('#FirstName /^[^aiurck]$/').tag(['Acronym', 'Person'], 'john-e');
+
+  //Doctor john smith jr
+  doc.match('#Honorific #Person').tag('Person', 'honorific-person');
+  doc.match('#Person (jr|sr|md)').tag('Person', 'person-honorific');
+
+  //mr Putin
+  doc.match('(mr|mrs|ms|dr) (#TitleCase|#Possessive)+').tag('#Person', 'mr-putin');
+
+  //a bunch of ambiguous first names
+  let maybeNoun =
+    '(rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity)';
+  if (doc.has(maybeNoun)) {
+    doc.match('(#Determiner|#Adverb|#Pronoun|#Possessive) [' + maybeNoun + ']').tag('Noun', 'the-ray');
+    doc
+      .match(maybeNoun + ' (#Person|#Acronym|#TitleCase)')
+      .canBe('#Person')
+      .tag('Person', 'ray-smith');
+  }
+  //verbs or people-names
+  let maybeVerb = '(pat|wade|ollie|will|rob|buck|bob|mark|jack)';
+  if (doc.has(maybeVerb)) {
+    doc.match('(#Modal|#Adverb) [' + maybeVerb + ']').tag('Verb', 'would-mark');
+    doc.match(maybeVerb + ' (#Person|#TitleCase)').tag('Person', 'rob-smith');
+  }
+  //adjectives or people-names
+  let maybeAdj = '(misty|rusty|dusty|rich|randy)';
+  if (doc.has(maybeAdj)) {
+    doc.match('#Adverb [' + maybeAdj + ']').tag('Adjective', 'really-rich');
+    doc.match(maybeAdj + ' (#Person|#TitleCase)').tag('Person', 'randy-smith');
+  }
+  //dates as people names
+  let maybeDate = '(april|june|may|jan|august|eve)';
+  if (doc.has(maybeDate)) {
+    doc
+      .match(String(maybeDate) + ' (#Person|#TitleCase)')
+      .canBe('#Person')
+      .tag('Person', 'june-smith');
+    doc
+      .match('(in|during|on|by|before|#Date) [' + maybeDate + ']')
+      .canBe('#Date')
+      .tag('Date', 'in-june');
+    doc
+      .match(maybeDate + ' (#Date|#Value)')
+      .canBe('#Date')
+      .tag('Date', 'june-5th');
+  }
+  //place-names as people-names
+  let maybePlace = '(paris|alexandria|houston|kobe|salvador|sydney)';
+  if (doc.has(maybePlace)) {
+    doc
+      .match('(in|near|at|from|to|#Place) [' + maybePlace + ']')
+      .canBe('#Place')
+      .tag('Place', 'in-paris');
+    doc
+      .match('[' + maybePlace + '] #Place')
+      .canBe('#Place')
+      .tag('Place', 'paris-france');
+    doc
+      .match('[' + maybePlace + '] #Person')
+      .canBe('#Person')
+      .tag('Person', 'paris-hilton');
+  }
+  //this one is tricky
+  if (doc.match('al')) {
+    doc
+      .match('al (#Person|#TitleCase)')
+      .canBe('#Person')
+      .tag('#Person', 'al-borlen');
+    doc
+      .match('#TitleCase al #TitleCase')
+      .canBe('#Person')
+      .tag('#Person', 'arabic-al-arabic');
+  }
+  //ambiguous honorifics
+  doc
+    .match('(private|general|major|corporal|lord|lady|secretary|premier) #Honorific? #Person')
+    .terms(0)
+    .tag('Honorific', 'ambg-honorifics');
+  //first general..
+  doc
+    .match('(1st|2nd|first|second) #Honorific')
+    .terms(0)
+    .tag('Honorific', 'ordinal-honorific');
+
+  //methods requiring a firstname match
+  if (doc.has('#FirstName')) {
+    // Firstname x (dangerous)
+    let tmp = doc
+      .match('#FirstName #Noun')
+      .ifNo('^#Possessive')
+      .ifNo('#ClauseEnd .');
+    tmp
+      .lastTerm()
+      .canBe('#LastName')
+      .tag('#LastName', 'firstname-noun');
+    //ferdinand de almar
+    doc
+      .match('#FirstName de #Noun')
+      .canBe('#Person')
+      .tag('#Person', 'firstname-de-noun');
+    //Osama bin Laden
+    doc
+      .match('#FirstName (bin|al) #Noun')
+      .canBe('#Person')
+      .tag('#Person', 'firstname-al-noun');
+    //John L. Foo
+    doc.match('#FirstName #Acronym #TitleCase').tag('Person', 'firstname-acronym-titlecase');
+    //Andrew Lloyd Webber
+    doc.match('#FirstName #FirstName #TitleCase').tag('Person', 'firstname-firstname-titlecase');
+    //Mr Foo
+    doc.match('#Honorific #FirstName? #TitleCase').tag('Person', 'Honorific-TitleCase');
+    //John Foo
+    doc
+      .match('#FirstName #TitleCase #TitleCase?')
+      .match('#Noun+')
+      .tag('Person', 'firstname-titlecase');
+    //peter the great
+    doc.match('#FirstName the #Adjective').tag('Person', 'correction-determiner5');
+    //very common-but-ambiguous lastnames
+    doc.match('#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)').tag('#Person', 'firstname-maybe');
+    //Joe K. Sombrero
+    doc
+      .match('#FirstName #Acronym #Noun')
+      .ifNo('#Date')
+      .tag('#Person', 'n-acro-noun')
+      .lastTerm()
+      .tag('#LastName', 'n-acro-noun');
+    // Dwayne 'the rock' Johnson
+    doc
+      .match('#FirstName [#Determiner? #Noun] #LastName')
+      .tag('#NickName', 'first-noun-last')
+      .tag('#Person', 'first-noun-last');
+
+    //john bodego's
+    doc
+      .match('#FirstName (#Singular|#Possessive)')
+      .ifNo('#Date')
+      .ifNo('#NickName')
+      .tag('#Person', 'first-possessive')
+      .lastTerm()
+      .tag('#LastName', 'first-possessive');
+  }
+
+  //methods requiring a lastname match
+  if (doc.has('#LastName')) {
+    // x Lastname
+    doc
+      .match('#Noun #LastName')
+      .firstTerm()
+      .canBe('#FirstName')
+      .tag('#FirstName', 'noun-lastname');
+    //ambiguous-but-common firstnames
+    doc
+      .match('(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill) #LastName')
+      .firstTerm()
+      .tag('#FirstName', 'maybe-lastname');
+    //Jani K. Smith
+    doc
+      .match('#TitleCase #Acronym? #LastName')
+      .ifNo('#Date')
+      .tag('#Person', 'title-acro-noun')
+      .lastTerm()
+      .tag('#LastName', 'title-acro-noun');
+    //is foo Smith
+    doc
+      .match('#Copula (#Noun|#PresentTense) #LastName')
+      .term(1)
+      .tag('#FirstName', 'copula-noun-lastname');
+  }
+
+  //methods requiring a titlecase
+  if (doc.has('#TitleCase')) {
+    doc
+      .match('#Acronym #TitleCase')
+      .canBe('#Person')
+      .tag('#Person', 'acronym-titlecase');
+    //ludwig van beethovan
+    doc
+      .match('#TitleCase (van|al|bin) #TitleCase')
+      .canBe('#Person')
+      .tag('Person', 'correction-titlecase-van-titlecase');
+    doc
+      .match('#TitleCase (de|du) la? #TitleCase')
+      .canBe('#Person')
+      .tag('Person', 'correction-titlecase-van-titlecase');
+    //Morgan Shlkjsfne
+    doc
+      .match('#Person #TitleCase')
+      .match('#TitleCase #Noun')
+      .canBe('#Person')
+      .tag('Person', 'correction-person-titlecase');
+    //pope francis
+    doc
+      .match('(lady|queen|sister) #TitleCase')
+      .ifNo('#Date')
+      .ifNo('#Honorific')
+      .tag('#FemaleName', 'lady-titlecase');
+    doc
+      .match('(king|pope|father) #TitleCase')
+      .ifNo('#Date')
+      .tag('#MaleName', 'correction-poe');
+  }
+
+  //j.k Rowling
+  doc
+    .match('#Noun van der? #Noun')
+    .canBe('#Person')
+    .tag('#Person', 'von der noun');
+  //king of spain
+  doc
+    .match('(king|queen|prince|saint|lady) of? #Noun')
+    .canBe('#Person')
+    .tag('#Person', 'king-of-noun');
+  //mr X
+  doc.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase');
+  //peter II
+  doc.match('#Person #Person the? #RomanNumeral').tag('Person', 'correction-roman-numeral');
+
+  //'Professor Fink', 'General McCarthy'
+  doc.match('#Honorific #Person').tag('Person', 'Honorific-Person');
+
+  //remove single 'mr'
+  doc.match('^#Honorific$').unTag('Person', 'single-honorific');
+  return doc
+};
+var fixPerson_1 = fixPerson;
 
 //
 const fixVerb = function(doc) {
@@ -5557,10 +5927,13 @@ var fixAdjective_1 = fixAdjective;
 //
 const fixValue = function(doc) {
   //half a million
-  doc.match('half a? #Value').tag('Value', 'half-a-value'); //quarter not ready
+  doc.match('half a? #Value').tag('Value', 'half-a-value'); //(quarter not ready)
+  //five and a half
   doc.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half');
+
   //all values are either ordinal or cardinal
   // doc.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
+
   //money
   doc
     .match('#Value+ #Currency')
@@ -5568,10 +5941,12 @@ const fixValue = function(doc) {
     .lastTerm()
     .tag('Unit', 'money-unit');
   doc.match('#Money and #Money #Currency?').tag('Money', 'money-and-money');
+
   //1 800 PhoneNumber
   doc.match('1 #Value #PhoneNumber').tag('PhoneNumber', '1-800-Value');
   //(454) 232-9873
   doc.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber');
+
   //two hundredth
   doc
     .match('#TextValue+')
@@ -5588,6 +5963,7 @@ const corrections = function(doc) {
   }
   if (doc.has('#Noun')) {
     fixNouns_1(doc);
+    fixPerson_1(doc);
   }
   if (doc.has('#Verb')) {
     fixVerb_1(doc);
@@ -5606,7 +5982,7 @@ var _05Correction = corrections;
 /** POS-tag all terms in this document */
 const tagger = function(doc) {
   // check against any known-words
-  doc = _01Lookups(doc);
+  doc = _01Init(doc);
 
   // everything has gotta be something. ¯\_(:/)_/¯
   doc = _02Fallbacks(doc);

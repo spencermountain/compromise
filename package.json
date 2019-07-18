@@ -10,13 +10,14 @@
     "url": "git://github.com/spencermountain/compromise.git"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c && node ./scripts/filesize.js",
     "pack": "node ./scripts/pack.js",
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
     "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer",
     "filesize": "node ./scripts/filesize.js",
     "watch": "amble ./scratch.js",
-    "stress": "node ./stress/stress.js"
+    "stress": "node ./stress/stress.js",
+    "speed": "node ./stress/speed.js"
   },
   "files": [
     "builds/",

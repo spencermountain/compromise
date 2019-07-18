@@ -1,18 +1,24 @@
-const checkNeighbours = require('./01-neighbours')
-const checkCase = require('./02-case')
-const checkPlural = require('./03-plurals')
+const step = {
+  neighbours: require('./01-neighbours'),
+  case: require('./02-case'),
+  plural: require('./04-plurals'),
+  stem: require('./03-stem'),
+}
 //
 const fallbacks = function(doc) {
   let terms = doc.termList()
   let world = doc.world
 
-  //if it's empty, consult it's neighbours, first
-  checkNeighbours(terms, world)
+  // if it's empty, consult it's neighbours, first
+  step.neighbours(terms, world)
 
-  //is there a case-sensitive clue?
-  checkCase(terms, world)
+  // is there a case-sensitive clue?
+  step.case(terms, world)
 
-  //... fallback to a noun!
+  // check 'rewatch' as 'watch'
+  step.stem(terms, world)
+
+  // ... fallback to a noun!
   terms.forEach(t => {
     if (t.isKnown() === false) {
       t.tag('Noun', 'noun-fallback', doc.world)
@@ -21,7 +27,7 @@ const fallbacks = function(doc) {
 
   //are the nouns singular or plural?
   terms.forEach(t => {
-    checkPlural(t, doc.world)
+    step.plural(t, doc.world)
   })
 
   return doc

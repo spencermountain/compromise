@@ -66,6 +66,8 @@ test('pos from-lexicon', function(t) {
     [`'cool'`, 'Adjective'],
     ['MMMCMXXIII', 'RomanNumeral'],
     ['MIMMCMXXIII', 'Acronym'],
+    ['c.e.o', 'Acronym'],
+    ['MDMA', 'Acronym'],
   ]
   arr.forEach(function(a) {
     var term = nlp(a[0]).termList()[0]

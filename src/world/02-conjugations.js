@@ -8,7 +8,7 @@ const addWords = function(obj, lex) {
   for (let i = 0; i < keys.length; i += 1) {
     let k = keys[i]
     //add infinitive
-    lex[k] = 'Infinitive'
+    lex[k] = lex[k] || 'Infinitive'
     //add other forms
     for (let f = 1; f < forms.length; f += 1) {
       if (obj[k][forms[f]] !== undefined && lex[obj[k][forms[f]]] === undefined) {

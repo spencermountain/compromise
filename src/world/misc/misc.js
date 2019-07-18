@@ -17,6 +17,7 @@ module.exports = {
   records: 'Plural',
   '&': 'Conjunction',
   was: ['Copula', 'PastTense'],
+  is: ['Copula', 'PresentTense'],
 
   //pronouns
   i: ['Pronoun', 'Singular'],

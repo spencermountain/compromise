@@ -5,4 +5,6 @@ nlp.verbose(true)
 //TODAY: finish tagger:
 // then rename values() to numbers()
 
-let doc = nlp('cool-move').debug()
+let doc = nlp('asdf is').debug()
+
+console.log(doc.world.lexicon.is)

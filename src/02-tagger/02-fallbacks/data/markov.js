@@ -39,7 +39,7 @@ let beforeThisWord = {
 }
 
 //following this POS, this is likely
-let afterThisPos = {
+let afterThisPOS = {
   Adjective: 'Noun', //36% //blue dress
   Possessive: 'Noun', //41% //his song
   Determiner: 'Noun', //47%
@@ -54,7 +54,7 @@ let afterThisPos = {
 }
 
 //in advance of this POS, this is likely
-let beforeThisPos = {
+let beforeThisPOS = {
   Copula: 'Noun', //44% //spencer is
   PastTense: 'Noun', //33% //spencer walked
   Conjunction: 'Noun', //36%
@@ -66,6 +66,6 @@ module.exports = {
   beforeThisWord: beforeThisWord,
   afterThisWord: afterThisWord,
 
-  beforeThisPos: beforeThisPos,
-  afterThisPos: afterThisPos,
+  beforeThisPos: beforeThisPOS,
+  afterThisPos: afterThisPOS,
 }

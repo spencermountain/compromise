@@ -1,3 +1,4 @@
+data
 demo
 scripts
 src
@@ -6,4 +7,5 @@ src
 .gitignore
 TODO.MD
 changelog.md
+fixme.md
 scratch.js

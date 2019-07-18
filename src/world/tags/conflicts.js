@@ -36,16 +36,7 @@ module.exports = [
   ['Ordinal', 'Currency'], //$5.50th
   //verbs
   ['PastTense', 'PresentTense', 'FutureTense'],
-  [
-    'Pluperfect',
-    'Copula',
-    'Modal',
-    'Participle',
-    'Infinitive',
-    'Gerund',
-    'FuturePerfect',
-    'PerfectTense',
-  ],
+  ['Pluperfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund', 'FuturePerfect', 'PerfectTense'],
   ['Auxiliary', 'Noun', 'Value'],
   //date
   ['Month', 'WeekDay', 'Year', 'Duration', 'Holiday'],
@@ -61,9 +52,9 @@ module.exports = [
   //cases
   ['UpperCase', 'TitleCase', 'CamelCase'],
   //phrases
-  ['VerbPhrase', 'Noun', 'Adjective', 'Value'],
+  ['Verb', 'Noun', 'Adjective', 'Value'], //VerbPhrase',
   //QuestionWord
-  ['QuestionWord', 'VerbPhrase'],
+  ['QuestionWord', 'Verb'],
   //acronyms
-  ['Acronym', 'VerbPhrase'],
+  ['Acronym', 'Verb'],
 ]

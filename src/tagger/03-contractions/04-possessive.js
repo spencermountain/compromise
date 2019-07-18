@@ -16,12 +16,8 @@ const isPossessive = (term, nextTerm) => {
   if (!nextTerm) {
     return true
   }
-  //an infinitive is probably mis-tagged - 'jamie's bite'
-  if (nextTerm.tags.Infinitive) {
-    return true
-  }
   //a gerund suggests 'is walking'
-  if (nextTerm.tags.VerbPhrase) {
+  if (nextTerm.tags.Verb) {
     return false
   }
   //spencer's house

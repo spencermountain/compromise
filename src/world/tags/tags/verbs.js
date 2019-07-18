@@ -1,6 +1,6 @@
 module.exports = {
   Verb: {
-    isA: 'VerbPhrase',
+    // isA: 'VerbPhrase',
   },
   PresentTense: {
     isA: 'Verb',

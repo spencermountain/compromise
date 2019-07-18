@@ -5,6 +5,8 @@ const fixAdjective = function(doc) {
     .match('still #Adjective')
     .match('still')
     .tag('Adverb', 'still-advb')
+  //barely even walk
+  doc.match('(barely|hardly) even').tag('#Adverb', 'barely-even')
   //big dreams, critical thinking
   doc.match('#Adjective [#PresentTense]').tag('Noun', 'adj-presentTense')
   //will secure our

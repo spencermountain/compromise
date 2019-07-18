@@ -1,7 +1,5 @@
 module.exports = {
-  Noun: {
-    isA: 'NounPhrase',
-  },
+  Noun: {},
   // - singular
   Singular: {
     isA: 'Noun',

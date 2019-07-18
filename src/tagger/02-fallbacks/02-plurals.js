@@ -1,48 +1,39 @@
-const rules = require('./data/plural-rules')
 //these tags don't have plurals
 const noPlurals = ['Uncountable', 'Pronoun', 'Place', 'Value', 'Person', 'Month', 'WeekDay', 'RelativeDay', 'Holiday']
 
-const notPlural = [/ss$/, /sis$/]
-
-const knownPlurals = {
-  we: true,
-  they: true,
-  i: false,
-  he: false,
-  she: false,
-}
+const notPlural = [/ss$/, /sis$/, /[uo]s$/]
+const notSingular = [/i$/, /ae$/, /men$/, /tia$/]
 
 /** turn nouns into singular/plural */
 const checkPlural = function(t, world) {
   if (t.tags.Noun) {
+    let str = t.normal
     //skip existing tags, fast
     if (t.tags.Singular || t.tags.Plural) {
       return
     }
-    if (knownPlurals[t.normal] === true) {
-      t.tag('Plural', 'known-plurals', world)
+    //too short
+    if (str.length <= 2) {
       return
     }
-    if (knownPlurals[t.normal] === false) {
-      t.tag('Singular', 'known-plurals', world)
-      return
-    }
-    //is it potentially plural?
+    //is it impossible to be plural?
     if (noPlurals.find(tag => t.tags[tag])) {
       return
     }
-
-    let str = t.normal
     // finally, fallback 'looks check plural' rules..
-    if (/s$/.test(str) === true && str.length > 3) {
-      //make sure it's not 'virus', or 'sepsis'
+    if (/s$/.test(str) === true) {
+      //avoid anything too sketchy to be plural
       if (notPlural.find(reg => reg.test(str))) {
-        t.tag('Singular', 'not-plural', world)
         return
       }
-
       t.tag('Plural', 'plural-fallback', world)
+      return
     }
+    //avoid anything too sketchy to be singular
+    if (notSingular.find(reg => reg.test(str))) {
+      return
+    }
+    t.tag('Singular', 'singular-fallback', world)
   }
 }
 module.exports = checkPlural

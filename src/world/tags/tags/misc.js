@@ -15,13 +15,9 @@ module.exports = {
   },
   Adverb: {},
 
-  Currency: {
-    isA: 'NounPhrase',
-  },
+  Currency: {},
   //glue
-  Determiner: {
-    isA: 'NounPhrase',
-  },
+  Determiner: {},
   Conjunction: {},
   Preposition: {},
   QuestionWord: {},
@@ -40,9 +36,6 @@ module.exports = {
   Email: {},
 
   //non-exclusive
-  Condition: {},
-  VerbPhrase: {},
-  NounPhrase: {},
   Auxiliary: {},
   Negative: {},
   Contraction: {},

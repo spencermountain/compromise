@@ -2,6 +2,7 @@ const checkNegative = require('./01-negative')
 const checkApostrophe = require('./02-simple')
 const checkIrregulars = require('./03-irregulars')
 const checkPossessive = require('./04-possessive')
+const checkPerfect = require('./05-perfectTense')
 const build = require('../../tokenizer')
 
 const createPhrase = function(found, doc) {
@@ -42,6 +43,7 @@ const contractions = function(doc) {
       found = found || checkApostrophe(term)
       found = found || checkIrregulars(term, p)
       found = found || checkPossessive(term, p)
+      found = found || checkPerfect(term, p)
       //add them in
       if (found !== null) {
         let newPhrase = createPhrase(found, doc)

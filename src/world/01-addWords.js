@@ -5,7 +5,7 @@ const conjugate = require('../transforms/conjugate')
 const doOneWord = function(str, pos, world) {
   //sort words into singular/compound
   if (str.indexOf(' ') === -1) {
-    world.lexicon[str] = pos
+    world.lexicon[str] = world.lexicon[str] || pos
   } else {
     let w = str.split(' ')[0]
     world.hasCompound[w] = true //cache for quick-lookups

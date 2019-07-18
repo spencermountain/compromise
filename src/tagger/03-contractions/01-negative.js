@@ -12,10 +12,6 @@ const irregulars = {
   // "ain't" is ambiguous for is/was
 }
 
-const getRoot = function(str) {
-  return str.replace(/n't$/, '')
-}
-
 const checkNegative = function(term) {
   //check named-ones
   if (irregulars.hasOwnProperty(term.normal) === true) {
@@ -23,7 +19,7 @@ const checkNegative = function(term) {
   }
   //try it normally
   if (hasNegative.test(term.normal) === true) {
-    let main = getRoot(term.normal)
+    let main = term.normal.replace(hasNegative, '')
     return [main, 'not']
   }
   return null

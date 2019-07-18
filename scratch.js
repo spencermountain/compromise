@@ -2,10 +2,10 @@ var nlp = require('./src/index')
 nlp.verbose(true)
 // nlp.extend(require('./plugins/values/src'))
 
-//TODO: cleanup isPlural method
-//http://www.focus.olsztyn.pl/en-grammar-nouns-uncountable-s.html
+//TODO: finish tagger
+// rename values tags to Numbers
 
-var doc = nlp(`i'd so much as guess`).debug()
+var doc = nlp(`im @Cool`).debug()
 
-const lex = doc.world.lexicon
-console.log(lex.walk)
+// const lex = doc.world.lexicon
+// console.log(lex.walk)

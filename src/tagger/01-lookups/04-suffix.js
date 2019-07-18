@@ -1,6 +1,6 @@
-const startsWith = require('./regex/startsWith')
-const endsWith = require('./regex/endsWith')
-const suffixList = require('./regex/suffixList')
+const startsWith = require('./suffixes/startsWith')
+const endsWith = require('./suffixes/endsWith')
+const suffixList = require('./suffixes/suffixList')
 
 //try each of the ^regexes in our list
 const tagPrefix = function(term, world) {

@@ -3,7 +3,6 @@ hmmm:
   setPunctuation()
 
   lump()?
-  delete()?
 
   js array fns
 
@@ -20,8 +19,15 @@ some cases like `.canbe()` where v11 results were mutable, but v12 are not mutat
 cleaned-up various `.data()` results
 
 stopped using `#Comma` pos-tag, for less denormalization
+
+stopped parsing `#NumberRange`
+
+improved handling of slashed terms - like `he is/was fun.`
+
 ---
 
+**non-breaking changes**
+* better unicode-letter support in regexes
 
 jsdoc output:
 `jsdoc src/** -t templates/haruki -d console`

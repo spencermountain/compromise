@@ -1,7 +1,7 @@
 const checkLexicon = require('./01-lexicon')
 const checkPunctuation = require('./02-punctuation')
 const checkEmoji = require('./03-emoji')
-const checkRegex = require('./04-regex')
+const checkRegex = require('./04-suffix')
 
 //'lookups' look at a term by itself
 const lookups = function(doc) {

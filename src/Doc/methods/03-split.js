@@ -1,4 +1,4 @@
-const build = require('../../tokenizer')
+const build = require('../../01-tokenizer')
 
 /** add these new terms to the front*/
 exports.prepend = function(str) {

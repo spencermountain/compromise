@@ -1,4 +1,4 @@
-const build = require('../../tokenizer')
+const build = require('../../01-tokenizer')
 
 /** substitute-in new content */
 exports.replace = function(match, replace) {

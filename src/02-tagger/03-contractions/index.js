@@ -3,7 +3,7 @@ const checkApostrophe = require('./02-simple')
 const checkIrregulars = require('./03-irregulars')
 const checkPossessive = require('./04-possessive')
 const checkPerfect = require('./05-perfectTense')
-const build = require('../../tokenizer')
+const build = require('../../01-tokenizer')
 
 const createPhrase = function(found, doc) {
   //create phrase from ['would', 'not']

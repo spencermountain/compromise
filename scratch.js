@@ -6,7 +6,6 @@ nlp.verbose(true)
 // then rename values() to numbers()
 
 var doc = nlp(`#Cool`).debug()
-console.log(doc.list[0].terms())
 
 // const lex = doc.world.lexicon
 // console.log(lex.walk)

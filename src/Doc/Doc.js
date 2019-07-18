@@ -3,8 +3,8 @@ const methods = {
   match: require('./match'),
   selections: require('./selections'),
 }
-const tagger = require('../tagger')
-const extend = require('../extend')
+const tagger = require('../02-tagger')
+const extend = require('../Subset')
 
 /** a parsed text object */
 class Doc {

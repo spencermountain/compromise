@@ -1,5 +1,5 @@
 /* global define */
-const build = require('./tokenizer')
+const build = require('./01-tokenizer')
 const pkg = require('../package.json')
 const World = require('./world/index')
 const Doc = require('./Doc/Doc')

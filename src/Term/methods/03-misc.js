@@ -2,6 +2,7 @@ const doesMatch = require('./_match')
 const out = require('./04-out')
 const isAcronym = require('../normalize/isAcronym')
 
+// these tags aren't juicy-enough
 const boring = {
   TitleCase: true,
   UpperCase: true,
@@ -28,9 +29,7 @@ exports.isAcronym = function() {
   return isAcronym(this.text)
 }
 
-/** does the term have one meaningful tag? */
+/** does the term have at least one good tag? */
 exports.isKnown = function() {
-  let tags = Object.keys(this.tags)
-  tags = tags.filter(t => !boring[t])
-  return tags.length > 0
+  return Object.keys(this.tags).some(t => boring[t] !== true)
 }

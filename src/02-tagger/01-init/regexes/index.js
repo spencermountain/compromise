@@ -1,8 +1,5 @@
 //these are regexes applied to t.text, instead of t.normal
 module.exports = [
-  //TitleCase
-  [/^[A-Z][a-z'\u00C0-\u00FF]/, 'TitleCase'],
-
   //589-3809
   [/^[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'],
   //632-589-3809

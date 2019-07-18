@@ -2,24 +2,11 @@ const markov = require('./data/markov')
 const afterKeys = Object.keys(markov.afterThisPos)
 const beforeKeys = Object.keys(markov.beforeThisPos)
 
-//tags that don't really count
-const boring = {
-  TitleCase: true,
-  UpperCase: true,
-  CamelCase: true,
-  Hyphenated: true,
-  StartBracket: true,
-  EndBracket: true,
-  Comma: true,
-  ClauseEnd: true,
-}
-
 const checkNeighbours = function(terms, world) {
   for (let i = 0; i < terms.length; i += 1) {
     let term = terms[i]
     //do we still need a tag?
-    if (Object.keys(term.tags).some(tag => !boring[tag])) {
-      // term is already well-tagged
+    if (term.isKnown() === true) {
       continue
     }
     //ok, this term needs a tag.

@@ -48,7 +48,7 @@ module.exports = [
   ['Url', 'Value', 'HashTag', 'PhoneNumber', 'Emoji'],
   //roman numerals
   ['RomanNumeral', 'Fraction', 'NiceNumber'],
-  ['RomanNumeral', 'Money'],
+  ['RomanNumeral', 'Money', 'Acronym'],
   //cases
   ['UpperCase', 'TitleCase', 'CamelCase'],
   //phrases

@@ -1,5 +1,8 @@
 const regex = require('./regexes')
 
+const romanNumeral = /^[IVXLCDM]{2,}$/
+const romanNumValid = /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/ //  https://stackoverflow.com/a/267405/168877
+
 //try each of the ^regexes in our list
 const checkRegex = function(term, world) {
   let str = term.text
@@ -12,5 +15,9 @@ const checkRegex = function(term, world) {
     }
   }
   // do some more!
+  //roman numberals - XVII
+  if (term.text.length >= 2 && romanNumeral.test(str) && romanNumValid.test(str)) {
+    term.tagSafe('RomanNumeral', 'xvii', world)
+  }
 }
 module.exports = checkRegex

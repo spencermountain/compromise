@@ -5,4 +5,4 @@ nlp.verbose(true)
 //TODAY: finish tagger:
 // then rename values() to numbers()
 
-let doc = nlp('(823) 425-1231').debug()
+let doc = nlp('MMMCMXXIII').debug()

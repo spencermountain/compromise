@@ -64,6 +64,8 @@ test('pos from-lexicon', function(t) {
     [`flanders'`, 'Possessive'],
     [`chillin'`, 'Gerund'],
     [`'cool'`, 'Adjective'],
+    ['MMMCMXXIII', 'RomanNumeral'],
+    ['MIMMCMXXIII', 'Acronym'],
   ]
   arr.forEach(function(a) {
     var term = nlp(a[0]).termList()[0]

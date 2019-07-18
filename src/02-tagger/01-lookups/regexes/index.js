@@ -1,14 +1,12 @@
 //these are regexes applied to t.text, instead of t.normal
 module.exports = [
+  //TitleCase
+  [/^[A-Z][a-z'\u00C0-\u00FF]/, 'TitleCase'],
+
   //589-3809
   [/^[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'],
   //632-589-3809
   [/^[0-9]{3}[ -]?[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'],
-
-  //XVII
-  [/^[IVXCM]{2,}$/, 'RomanNumeral'],
-  //TitleCase
-  [/^[A-Z][a-z'\u00C0-\u00FF]/, 'TitleCase'],
 
   //dates/times
   [/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])$/, 'Time'], //4:32:32
@@ -27,17 +25,15 @@ module.exports = [
 
   //web tags
   [/^\w+@\w+\.[a-z]{2,3}$/, 'Email'], //not fancy
-  [/^#[a-z0-9_]{2,}$/, 'HashTag'],
+  [/^#[a-z0-9_\u00C0-\u00FF]{2,}$/, 'HashTag'],
   [/^@\w{2,}$/, 'AtMention'],
   [/^(https?:\/\/|www\.)\w+\.[a-z]{2,3}/, 'Url'], //with http/www
   [/^[\w\.\/]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/, 'Url'], //http://mostpopularwebsites.net/top-level-domain
 
   //slang things
   [/^(lol)+[sz]$/, 'Expression'], //lol
-  [/^(un|de|re)\\-[a-z]../, 'Verb'],
+  [/^(un|de|re)\\-[a-z\u00C0-\u00FF]{2}/, 'Verb'],
   [/^[\-\+]?[0-9]+(\.[0-9])*$/, 'NumericValue'],
-  [/^https?\:?\/\/[a-z0-9]/, 'Url'], //the colon is removed in normalisation
-  [/^www\.[a-z0-9]/, 'Url'],
   [/^(over|under)[a-z]{2,}/, 'Adjective'],
   [/^[0-9]{1,4}\.[0-9]{1,2}\.[0-9]{1,4}$/, 'Date'], // 03-02-89
 

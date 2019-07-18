@@ -1,9 +1,9 @@
 //
-const tagAcronyms = function(doc, termArr, world) {
+const tagAcronyms = function(doc, termArr) {
   termArr.forEach(terms => {
     terms.forEach(t => {
       if (t.isAcronym()) {
-        t.tag(['Acronym', 'Noun'], 'acronym-step', world)
+        t.tag(['Acronym', 'Noun'], 'acronym-step', doc.world)
       }
     })
   })

@@ -4,7 +4,8 @@
   "description": "natural language processing in the browser",
   "version": "0.0.0",
   "main": "./builds/compromise.js",
-  "types": "./compromise.d.ts",
+  "unpkg": "./builds/compromise.min.js",
+  "types": "types",
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"

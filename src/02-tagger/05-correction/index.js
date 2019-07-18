@@ -5,6 +5,7 @@ const fixPerson = require('./fixPerson')
 const fixVerb = require('./fixVerb')
 const fixAdjective = require('./fixAdjective')
 const fixValue = require('./fixValue')
+const fixDates = require('./fixDates')
 
 //sequence of match-tag statements to correct mis-tags
 const corrections = function(doc) {
@@ -24,6 +25,7 @@ const corrections = function(doc) {
   if (doc.has('#Value')) {
     fixValue(doc)
   }
+  // fixDates(doc)
   fixMisc(doc)
   return doc
 }

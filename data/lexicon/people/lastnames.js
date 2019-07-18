@@ -55,7 +55,6 @@ module.exports = [
   'cooper',
   'corbyn',
   'cox',
-  'dankula',
   'darwin',
   'dankula',
   'davies',

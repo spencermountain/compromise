@@ -1,12 +1,11 @@
-// const checkNeighbours = require('./01-neighbours')
+const checkNeighbours = require('./01-neighbours')
 const checkPlural = require('./02-plurals')
 //
 const fallbacks = function(doc) {
-  // let terms = doc.termList()
-  // let world = doc.world
+  let terms = doc.termList()
+  let world = doc.world
   //if it's empty, consult it's neighbours, first
-  // checkNeighbours(terms, world)
-  // checkPlurals(terms, world)
+  checkNeighbours(terms, world)
 
   //fallback to a noun...
   doc.list.forEach(p => {

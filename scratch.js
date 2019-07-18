@@ -5,4 +5,4 @@ nlp.verbose(true)
 //TODAY: finish tagger:
 // then rename values() to numbers()
 
-let doc = nlp('MMMCMXXIII').debug()
+let doc = nlp('cool-move').debug()

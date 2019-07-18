@@ -1,5 +1,5 @@
-const Term = require('../03-term/Term')
-const Phrase = require('../02-phrase/Phrase')
+const Term = require('../Term/Term')
+const Phrase = require('../Phrase/Phrase')
 const Pool = require('./Pool')
 
 const splitSentences = require('./01-sentences')

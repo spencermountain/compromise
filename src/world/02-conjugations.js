@@ -1,4 +1,4 @@
-const conjugate = require('../transforms/conjugate')
+const conjugate = require('./transforms/conjugate')
 //supported verb forms:
 const forms = [null, 'PastTense', 'PresentTense', 'Gerund', 'Participle']
 

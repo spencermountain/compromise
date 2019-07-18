@@ -1,5 +1,5 @@
-const inflect = require('../transforms/inflect')
-const conjugate = require('../transforms/conjugate')
+const inflect = require('./transforms/inflect')
+const conjugate = require('./transforms/conjugate')
 
 //takes a basic wordlist and expands it into more words, using science
 const doOneWord = function(str, pos, world) {

@@ -8,6 +8,7 @@ exports.prepend = function(str) {
   })
   return this
 }
+exports.insertBefore = exports.prepend
 
 /** add these new terms to the end*/
 exports.append = function(str) {
@@ -17,6 +18,7 @@ exports.append = function(str) {
   })
   return this
 }
+exports.insertAfter = exports.append
 
 /** add these new things to the end*/
 exports.concat = function() {

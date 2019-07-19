@@ -11,6 +11,12 @@ exports.match = function(str) {
   return matches
 }
 
+/** return boolean if one match is found */
+exports.has = function(str) {
+  let matches = matchAll(this, str, true)
+  return matches.length > 0
+}
+
 /** remove all matches from the result */
 exports.not = function(str) {
   let matches = notMatch(this, str)

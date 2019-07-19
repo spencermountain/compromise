@@ -124,8 +124,7 @@ exports.splitBefore = function(reg) {
 /**Return a boolean if this match exists */
 exports.has = function(reg) {
   let regs = parseSyntax(reg)
-  let found = this.list.find(p => p.match(regs).length > 0)
-  return found !== undefined
+  return this.list.some(p => p.has(regs) === true)
 }
 
 /** return each current phrase, only if it contains this match */

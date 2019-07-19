@@ -3,7 +3,7 @@ const tryMatch = require('./03-tryMatch')
 const syntax = require('../../Doc/match/syntax')
 
 /**  returns a simple array of arrays */
-const matchAll = function(p, regs) {
+const matchAll = function(p, regs, matchOne = false) {
   //if we forgot to parse it..
   if (typeof regs === 'string') {
     regs = syntax(regs)
@@ -37,7 +37,12 @@ const matchAll = function(p, regs) {
     let match = tryMatch(terms.slice(i), regs)
     if (match !== false && match.length > 0) {
       matches.push(match)
-      i += match.length - 1 //zoom forward
+      //ok, maybe that's enough?
+      if (matchOne === true) {
+        return matches
+      }
+      //zoom forward!
+      i += match.length - 1
     }
   }
   return matches

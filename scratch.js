@@ -1,10 +1,23 @@
 var nlp = require('./src/index')
-nlp.verbose(true)
+// nlp.verbose(true)
 // nlp.extend(require('./plugins/values/src'))
 
-//TODAY: finish tagger:
-// then rename values() to numbers()
+console.time('one')
+let doc = nlp('one and spencer and two three four five. two and spencer and five and six')
+console.timeEnd('one')
 
-let doc = nlp('JDI University').debug()
+console.time('two')
+let doc2 = nlp('i am the very model of a modern major seven general. I am animal vegetable and mineral.')
+console.timeEnd('two')
+
+console.time('three')
+let doc3 = nlp('one and spensdfcer and two three fosdfur five. tewo and spenssdfcer and fiffve and six')
+console.timeEnd('three')
+
+const corpus = require('./stress/node_modules/nlp-corpus')
+let txt = corpus.sotu.array()[8]
+console.time('sotu')
+let main = nlp(txt)
+console.timeEnd('sotu')
 
 // console.log(doc.world.lexicon.is)

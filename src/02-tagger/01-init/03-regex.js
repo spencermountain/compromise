@@ -6,7 +6,6 @@ const romanNumValid = /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/
 //try each of the ^regexes in our list
 const checkRegex = function(term, world) {
   let str = term.text
-
   // do them all!
   for (let r = 0; r < regex.length; r += 1) {
     if (regex[r][0].test(str) === true) {

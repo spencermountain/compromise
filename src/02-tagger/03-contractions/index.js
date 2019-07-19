@@ -9,8 +9,8 @@ const createPhrase = function(found, doc) {
   //create phrase from ['would', 'not']
   let phrase = build.fromText(found.join(' '), doc.pool())[0]
   //tag it
-  // let tmpDoc = doc.buildFrom([phrase])
-  // tmpDoc.tagger()
+  let tmpDoc = doc.buildFrom([phrase])
+  tmpDoc.tagger()
   //make these terms implicit
   phrase.terms().forEach((t, i) => {
     t.implicit = t.text

@@ -38,6 +38,4 @@ var nlp = require('./src/index')
 
 // console.log(doc.world.lexicon.yesterday)
 
-var doc = nlp('it was cold')
-doc.tag(['#One', '#Two', '#Three'])
-doc.debug()
+var r = nlp("walking's great").debug()

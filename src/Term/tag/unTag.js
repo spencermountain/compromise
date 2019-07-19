@@ -2,6 +2,12 @@ const fns = require('./fns')
 
 /** remove this tag, and its descentents from the term */
 const unTag = function(t, tag, reason, world) {
+  //support '*' for removing all tags
+  if (tag === '*') {
+    t.tags = {}
+    return t
+  }
+  // remove the tag
   if (t.tags.hasOwnProperty(tag) === true) {
     delete t.tags[tag]
     //log in verbose-mode

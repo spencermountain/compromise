@@ -1,8 +1,9 @@
 var nlp = require('./src/index')
 // nlp.verbose(true)
 // nlp.extend(require('./plugins/values/src'))
-
-nlp('spencer is really cool').match([])
+let m = nlp('a spencer kelly eats the glue z')
+  .match('[spencer] kelly eats')
+  .debug()
 // console.time('one')
 // let doc = nlp.tokenize('hello world')
 // doc.match('western').debug()

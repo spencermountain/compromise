@@ -39,6 +39,21 @@ const byArray = function(arr) {
   ]
 }
 
+const postProcess = function(tokens) {
+  //ensure there's only one consecutive capture group.
+  let count = tokens.filter(t => t.capture === true).length
+  if (count > 1) {
+    let captureArr = tokens.map(t => t.capture)
+    let first = captureArr.indexOf(true)
+    let last = captureArr.length - 1 - captureArr.reverse().indexOf(true)
+    //'fill in' capture groups between start-end
+    for (let i = first; i < last; i++) {
+      tokens[i].capture = true
+    }
+  }
+  return tokens
+}
+
 /** parse a match-syntax string into json */
 const syntax = function(str) {
   // fail-fast
@@ -68,6 +83,9 @@ const syntax = function(str) {
   let tokens = byParentheses(str)
   tokens = byWords(tokens)
   tokens = tokens.map(parseToken)
+  //clean up anything weird
+  tokens = postProcess(tokens)
+  // console.log(tokens)
   return tokens
 }
 module.exports = syntax

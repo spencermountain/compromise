@@ -77,7 +77,7 @@ const token = function(w) {
       w = ''
     }
     //capture group
-    if (start(w) === '[' && end(w) === ']') {
+    if (start(w) === '[' || end(w) === ']') {
       obj.capture = true
       w = stripBoth(w)
     }

@@ -26,7 +26,7 @@ const greedyTo = function(terms, t, nextReg) {
 
 /** tries to match a sequence of terms, starting from here */
 const tryHere = function(terms, regs) {
-  let captureGroup = []
+  let captures = []
   let t = 0
   // we must satisfy each rule in 'regs'
   for (let r = 0; r < regs.length; r += 1) {
@@ -62,7 +62,11 @@ const tryHere = function(terms, regs) {
         t = getGreedy(terms, t, reg)
       }
       if (reg.capture) {
-        captureGroup = terms.slice(startAt, t)
+        captures.push(startAt)
+        //add greedy-end to capture
+        if (t > 1) {
+          captures.push(startAt + t - 1)
+        }
       }
       continue
     }
@@ -71,14 +75,13 @@ const tryHere = function(terms, regs) {
     if (reg.optional === true) {
       continue
     }
-    // console.log('   ❌\n\n');
+    // console.log('   ❌\n\n')
     return false
   }
   //we got to the end of the regs, and haven't failed!
-
   //try to only return our [captured] segment
-  if (captureGroup.length > 0) {
-    return captureGroup
+  if (captures.length > 0) {
+    return terms.slice(captures[0], captures[captures.length - 1] + 1)
   }
   //return our result
   return terms.slice(0, t)

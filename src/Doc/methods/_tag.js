@@ -14,7 +14,9 @@ const tagTerms = function(tag, doc, safe, reason) {
     terms.forEach((t, i) => {
       //fancy version:
       if (tagList.length > 1) {
-        t.tag(tagList[i], reason, doc.world)
+        if (tagList[i] && tagList[i] !== '.') {
+          t.tag(tagList[i], reason, doc.world)
+        }
       } else {
         //non-fancy version (same tag for all terms)
         t.tag(tag, reason, doc.world)

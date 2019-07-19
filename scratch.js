@@ -38,5 +38,6 @@ var nlp = require('./src/index')
 
 // console.log(doc.world.lexicon.yesterday)
 
-var r = nlp('it is funny and weird')
-r.match('_nny').debug()
+var doc = nlp('it was cold')
+doc.tag(['#One', '#Two', '#Three'])
+doc.debug()

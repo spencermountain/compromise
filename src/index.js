@@ -1,6 +1,6 @@
 /* global define */
 const build = require('./01-tokenizer')
-const pkg = require('../package.json')
+const version = require('./_version')
 const World = require('./World')
 const Doc = require('./Doc/Doc')
 
@@ -45,20 +45,20 @@ nlp.verbose = function(bool = true) {
 }
 
 /** current version of the library */
-nlp.version = pkg.version
+nlp.version = version
 
 //and then all the exports..
 if (typeof self !== 'undefined') {
   self.nlp = nlp // Web Worker
-} else if (typeof window !== 'undefined') {
+}
+if (typeof window !== 'undefined') {
   window.nlp = nlp // Browser
-} else if (typeof global !== 'undefined') {
+}
+if (typeof global !== 'undefined') {
   global.nlp = nlp // NodeJS
 }
-//don't forget amd!
 if (typeof define === 'function' && define.amd) {
-  define(nlp)
+  define(nlp) //don't forget amd!
 }
-if (typeof module !== 'undefined') {
-  module.exports = nlp
-}
+
+module.exports = nlp

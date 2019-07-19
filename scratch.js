@@ -38,4 +38,4 @@ nlp.verbose(true)
 
 // console.log(doc.world.lexicon.yesterday)
 
-var r = nlp('so 6').debug()
+var r = nlp('July').debug()

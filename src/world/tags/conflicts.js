@@ -40,7 +40,7 @@ module.exports = [
   ['Auxiliary', 'Noun', 'Value'],
   //date
   ['Month', 'WeekDay', 'Year', 'Duration', 'Holiday'],
-  ['Particle', 'Conjunction', 'Adverb', 'Preposition'],
+  ['Particle', 'Conjunction', 'Adverb', 'Preposition', 'Date'],
   ['Date', 'Verb', 'Adjective', 'Person'],
   ['Date', 'Money', 'RomanNumeral', 'Fraction'],
   //a/an -> 1

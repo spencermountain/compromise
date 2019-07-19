@@ -32,6 +32,11 @@ const addTag = function(t, tag, reason, world) {
         let parentTag = tagset[tag].isA
         addTag(t, parentTag, '→', world) //recursive
       }
+      //add these extra ones, too
+      if (tagset[tag].also !== undefined) {
+        let alsoTag = tagset[tag].also
+        addTag(t, alsoTag, '→', world) //recursive
+      }
       //remove any contrary tags
       if (typeof tagset[tag].notA !== 'undefined') {
         t.unTag(tagset[tag].notA, '←', world)

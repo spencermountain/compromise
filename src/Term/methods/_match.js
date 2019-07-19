@@ -1,6 +1,10 @@
 /** ignore optional/greedy logic, straight-up term match*/
 const doesMatch = function(t, reg) {
   if (reg.normal !== undefined) {
+    //match contractions
+    if (t.implicit !== null && t.text === reg.normal) {
+      return true
+    }
     return reg.normal === t.normal
   }
   if (reg.tag !== undefined) {

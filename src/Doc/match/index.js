@@ -30,8 +30,11 @@ exports.not = function(reg) {
 /** return only the first match */
 exports.matchOne = function(reg) {
   let regs = parseSyntax(reg)
-  let found = this.list.find(p => p.match(regs).length > 0)
-  return this.buildFrom([found])
+  for (let i = 0; i < this.list.length; i++) {
+    let match = this.list[i].match(regs)
+    this.buildFrom([match])
+  }
+  return this.buildFrom([])
 }
 
 /** return a Document with three parts for every match
@@ -153,6 +156,49 @@ exports.canBe = function(tag) {
     return arr.concat(p.canBe(tag, world))
   }, [])
   return this.buildFrom(matches)
+}
+
+/** return all terms before a match, in each phrase */
+exports.before = function(reg) {
+  let regs = parseSyntax(reg)
+  //only the phrases we care about
+  let phrases = this.if(regs).list
+  let befores = phrases.map(p => {
+    let ids = p.terms().map(t => t.id)
+    //run the search again
+    let m = p.match(regs)[0]
+    let index = ids.indexOf(m.start)
+    //nothing is before a first-term match
+    if (index === 0 || index === -1) {
+      return null
+    }
+    return p.buildFrom(p.start, index)
+  })
+  befores = befores.filter(p => p !== null)
+  return this.buildFrom(befores)
+}
+
+/** return all terms after a match, in each phrase */
+exports.after = function(reg) {
+  let regs = parseSyntax(reg)
+  //only the phrases we care about
+  let phrases = this.if(regs).list
+  let befores = phrases.map(p => {
+    let terms = p.terms()
+    let ids = terms.map(t => t.id)
+    //run the search again
+    let m = p.match(regs)[0]
+    let index = ids.indexOf(m.start)
+    //nothing is before a first-term match
+    if (index === -1 || !terms[index + 1]) {
+      return null
+    }
+    let len = p.length - index - 1
+    let id = terms[index + 1].id
+    return p.buildFrom(id, len)
+  })
+  befores = befores.filter(p => p !== null)
+  return this.buildFrom(befores)
 }
 
 //aliases

@@ -107,7 +107,7 @@ const token = function(w) {
   }
   if (w) {
     //somehow handle encoded-chars?
-    obj.normal = w
+    obj.normal = w.toLowerCase()
   }
   return obj
 }

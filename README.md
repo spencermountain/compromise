@@ -9,7 +9,7 @@ hmmm:
 
 ---
 ### Breaking changes:
-
+ 
 * remove `.flatten()` (anti-pattern)
 
 * results of `.canbe()` are more like `.match()`
@@ -27,7 +27,14 @@ improved handling of slashed terms - like `he is/was fun.`
 ---
 
 **non-breaking changes**
+
+* cleaned-up internal handling of whitspace/punctuation
+  
 * better unicode-letter support in regexes
+
+* adds `.matchOne()`
+* adds `.freeze()`
+
 
 jsdoc output:
 `jsdoc src/** -t templates/haruki -d console`

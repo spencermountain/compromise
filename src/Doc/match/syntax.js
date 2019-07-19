@@ -41,9 +41,29 @@ const byArray = function(arr) {
 
 /** parse a match-syntax string into json */
 const syntax = function(str) {
-  //support a flat array of normalized words
-  if (typeof str === 'object' && isArray(str)) {
-    return byArray(str)
+  // fail-fast
+  if (str === null || str === undefined || str === '') {
+    return []
+  }
+  //try to support a ton of different formats:
+  if (typeof str === 'object') {
+    if (isArray(str)) {
+      if (str.length === 0 || !str[0]) {
+        return []
+      }
+      //is it a pre-parsed reg-list?
+      if (typeof str[0] === 'object') {
+        return str
+      }
+      //support a flat array of normalized words
+      if (typeof str[0] === 'string') {
+        return byArray(str)
+      }
+    }
+    return []
+  }
+  if (typeof str === 'number') {
+    str = String(str) //go for it?
   }
   let tokens = byParentheses(str)
   tokens = byWords(tokens)

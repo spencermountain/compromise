@@ -53,3 +53,56 @@ test('replace-capture-group', function(t) {
   t.end()
 })
 */
+
+//test object-form
+// test('not-from-object :', function(t) {
+//   var m = nlp('spencer is not really cool.')
+//   var r = m.not({
+//     not: true,
+//     really: true,
+//   })
+//   t.equal(m.out('normal'), 'spencer is not really cool.', 'double-obj-remains')
+//   t.equal(r.out('normal'), 'spencer is cool.', 'spencer-double-obj')
+
+//   m = nlp('everyone is cool. I said hi to everyone.').not({
+//     everyone: true,
+//     totally: true,
+//   })
+//   t.equal(m.out('normal'), 'is cool. i said hi to', 'not-everyone')
+
+//   m = nlp('spencer is really, secretly, very cool.')
+//   var adv = m.match('#Adverb').not({
+//     really: true,
+//   })
+//   t.equal(adv.out('normal'), 'secretly very', 'not-subset')
+//   t.equal(adv.length, 2, 'one-result-obj')
+
+//   var adv2 = m.match('#Adverb').not('secretly')
+//   t.equal(adv2.out('normal'), 'really very', 'not-subset2')
+//   t.equal(adv2.length, 2, 'two-results-obj')
+
+//   t.end()
+// })
+
+// test('splitOn', function(t) {
+//   ;[
+//     ['doug and nancy', 'and', ['doug', 'and', 'nancy']],
+//     ['doug and also nancy', 'and also', ['doug', 'and also', 'nancy']],
+//     ['doug and definetly nancy', 'and #Adverb', ['doug', 'and definetly', 'nancy']],
+//     ['maybe doug but possibly nancy', 'but', ['maybe doug', 'but', 'possibly nancy']],
+//     ['doug is really nice', 'is', ['doug', 'is', 'really nice']],
+
+//     ['a x b x c', 'x', ['a', 'x', 'b', 'x', 'c']],
+//     ['a b x x c', 'x', ['a b', 'x', 'x', 'c']],
+//     ['x a b x c', 'x', ['x', 'a b', 'x', 'c']],
+//     ['x x a b c', 'x', ['x', 'x', 'a b c']],
+//     ['a x b x', 'x', ['a', 'x', 'b', 'x']],
+//   ].forEach(function(a) {
+//     var want = a[2]
+//     var got = nlp(a[0])
+//       .splitOn(a[1])
+//       .out('array')
+//     t.deepEqual(got, want, a[0])
+//   })
+//   t.end()
+// })

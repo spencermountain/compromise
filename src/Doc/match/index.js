@@ -23,6 +23,10 @@ exports.match = function(reg) {
 exports.not = function(reg) {
   //parse-up the input expression
   let regs = parseSyntax(reg)
+  //if it's empty, return them all!
+  if (regs.length === 0) {
+    return this
+  }
   //try expression on each phrase
   let matches = this.list.reduce((arr, p) => {
     return arr.concat(p.not(regs))

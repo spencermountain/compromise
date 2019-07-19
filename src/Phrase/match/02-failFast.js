@@ -1,5 +1,8 @@
-//
+// try to avoid doing the match
 const failFast = function(terms, regs) {
+  if (regs.length === 0) {
+    return true
+  }
   for (let i = 0; i < regs.length; i += 1) {
     let reg = regs[i]
     //logical quick-ones

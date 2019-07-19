@@ -38,5 +38,5 @@ var nlp = require('./src/index')
 
 // console.log(doc.world.lexicon.yesterday)
 
-var m = nlp('the dog sat').insertBefore('and')
-console.log(m.out())
+var r = nlp('it is funny and weird')
+r.match('_nny').debug()

@@ -20,6 +20,8 @@ some cases like `.canbe()` where v11 results were mutable, but v12 are not mutat
 
 cleaned-up various `.data()` results
 
+removed no-longer-needed `prefix_` and `_suffix` operators from match syntax
+
 stopped using `#Comma` pos-tag, for less denormalization
 
 stopped parsing `#NumberRange`

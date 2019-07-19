@@ -4,8 +4,8 @@ var nlp = require('../_lib')
 test('matchOne', function(t) {
   let doc = nlp('one two three four five. one three four')
   let arr = doc.matchOne('three four').out('array')
-  t.test(arr.length, 1, 'one-match')
-  t.test(arr[0], 'three four', 'found-match')
+  t.equal(arr.length, 1, 'one-match')
+  t.equal(arr[0], 'three four', 'found-match')
   t.end()
 })
 

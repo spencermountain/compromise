@@ -5,6 +5,9 @@ const passCache = require('./cacheLookup')
 exports.match = function(reg) {
   //parse-up the input expression
   let regs = parseSyntax(reg)
+  if (regs.length === 0) {
+    return this.buildFrom([])
+  }
   //try to fail-fast from a cache-lookup
   if (passCache(this, regs) === false) {
     return this.buildFrom([])
@@ -32,7 +35,7 @@ exports.matchOne = function(reg) {
   let regs = parseSyntax(reg)
   for (let i = 0; i < this.list.length; i++) {
     let match = this.list[i].match(regs)
-    this.buildFrom([match])
+    return this.buildFrom(match)
   }
   return this.buildFrom([])
 }
@@ -189,12 +192,13 @@ exports.after = function(reg) {
     //run the search again
     let m = p.match(regs)[0]
     let index = ids.indexOf(m.start)
-    //nothing is before a first-term match
-    if (index === -1 || !terms[index + 1]) {
+    //skip if nothing is after it
+    if (index === -1 || !terms[index + m.length]) {
       return null
     }
-    let len = p.length - index - 1
-    let id = terms[index + 1].id
+    //create the new phrase, after our match.
+    let id = terms[index + m.length].id
+    let len = p.length - index - m.length
     return p.buildFrom(id, len)
   })
   befores = befores.filter(p => p !== null)

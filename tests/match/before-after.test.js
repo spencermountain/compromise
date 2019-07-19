@@ -4,15 +4,15 @@ var nlp = require('../_lib')
 test('before-basic', function(t) {
   let doc = nlp('one two three four five. one three four')
   let arr = doc.before('three four').out('array')
-  t.test(arr.length, 2, 'two-matches')
-  t.test(arr[0], 'one two', 'first-match')
-  t.test(arr[1], 'one', 'second-match')
+  t.equal(arr.length, 2, 'two-matches')
+  t.equal(arr[0], 'one two', 'first-match')
+  t.equal(arr[1], 'one', 'second-match')
 
   doc = nlp('one two three four five. one three four. three four')
   arr = doc.before('three').out('array')
-  t.test(arr.length, 2, 'two-matches')
-  t.test(arr[0], 'one two', 'first-match')
-  t.test(arr[1], 'one', 'second-match')
+  t.equal(arr.length, 2, 'two-matches')
+  t.equal(arr[0], 'one two', 'first-match')
+  t.equal(arr[1], 'one', 'second-match')
   t.end()
 })
 
@@ -55,8 +55,8 @@ test('after-match:', function(t) {
 
   r = nlp('one two three four. No, not here. He said two days a week.').after('two')
   var arr = r.out('array')
-  t.equal(arr[0], 'three four', 'after-twice-1')
-  t.equal(arr[1], 'days a week', 'after-twice-2')
+  t.equal(arr[0], 'three four.', 'after-twice-1')
+  t.equal(arr[1], 'days a week.', 'after-twice-2')
 
   r = nlp('all the way over to two. It was the number two.').after('two')
   t.equal(r.found, false, 'no-empty-matches')

@@ -38,4 +38,7 @@ var nlp = require('./src/index')
 
 // console.log(doc.world.lexicon.yesterday)
 
-var r = nlp("walking's great").debug()
+var r = nlp('hello-there')
+  .hyphenate()
+  .debug()
+console.log(r.out())

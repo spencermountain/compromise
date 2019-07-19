@@ -1,5 +1,5 @@
 var nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 // nlp.extend(require('./plugins/values/src'))
 // let m = nlp('a spencer  kelly eats the glue z')
 //   // .match('a [spencer kelly] eats')
@@ -38,7 +38,4 @@ var nlp = require('./src/index')
 
 // console.log(doc.world.lexicon.yesterday)
 
-var r = nlp('hello-there')
-  .hyphenate()
-  .debug()
-console.log(r.out())
+// var r = nlp('u r nice').debug()

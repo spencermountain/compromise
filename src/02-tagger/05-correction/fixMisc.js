@@ -135,6 +135,8 @@ const miscCorrection = function(doc) {
 
   //right of way
   doc.match('(right|rights) of .').tag('Noun', 'right-of')
+  // u r cool
+  doc.match('u r').tag('Pronoun #Copula')
   return doc
 }
 

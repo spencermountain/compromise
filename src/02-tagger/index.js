@@ -18,6 +18,9 @@ const tagger = function(doc) {
   // deduce more specific tags - singular/plurals/quotations...
   doc = inference(doc)
 
+  //set our cache, to speed things up
+  doc.freeze()
+
   // wiggle-around the results, so they make more sense
   doc = corrections(doc)
   return doc

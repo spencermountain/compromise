@@ -15,10 +15,14 @@ const nlp = function(text = '') {
   return doc
 }
 
-/** uncompress and apply a user-submitted lexicon */
-nlp.plugin = function(plugin) {
-  world.plugin(plugin)
+/** parse text into a compromise object, without running POS-tagging */
+nlp.tokenize = function(text = '') {
+  let list = build.fromText(text)
+  let doc = new Doc(list, null, world)
+  return doc
 }
+
+/** mix in a compromise-plugin */
 nlp.extend = function(fn) {
   fn(Doc)
 }

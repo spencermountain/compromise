@@ -10,6 +10,8 @@ const extend = require('../Subset')
 class Doc {
   constructor(list, from, world) {
     this.list = list
+    //we'll use this later
+    this.cache = {}
     //quiet these properties in console.logs
     Object.defineProperty(this, 'from', {
       enumerable: false,

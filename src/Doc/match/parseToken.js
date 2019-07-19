@@ -36,7 +36,6 @@ const stripBoth = function(str) {
 //
 const token = function(w) {
   let obj = {}
-
   //collect any flags (do it twice)
   for (let i = 0; i < 2; i += 1) {
     //back-flags

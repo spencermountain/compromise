@@ -6,29 +6,29 @@ const seasons = '(spring|summer|winter|fall|autumn)'
 
 //ensure a year is approximately typical for common years
 //please change in one thousand years
-// const tagYear = (v, reason) => {
-//   if (v.found !== true) {
-//     return;
-//   }
-//   v.list.forEach((ts) => {
-//     let num = parseInt(ts.terms[0].normal, 10);
-//     if (num && num > 1000 && num < 3000) {
-//       ts.terms[0].tag('Year', reason);
-//     }
-//   });
-// };
-// //same, but for less-confident values
-// const tagYearSafer = (v, reason) => {
-//   if (v.found !== true) {
-//     return;
-//   }
-//   v.list.forEach((ts) => {
-//     let num = parseInt(ts.terms[0].normal, 10);
-//     if (num && num > 1900 && num < 2030) {
-//       ts.terms[0].tag('Year', reason);
-//     }
-//   });
-// };
+const tagYear = (v, reason) => {
+  if (v.found !== true) {
+    return
+  }
+  v.list.forEach(ts => {
+    let num = parseInt(ts.terms[0].normal, 10)
+    if (num && num > 1000 && num < 3000) {
+      ts.terms[0].tag('Year', reason)
+    }
+  })
+}
+//same, but for less-confident values
+const tagYearSafer = (v, reason) => {
+  if (v.found !== true) {
+    return
+  }
+  v.list.forEach(ts => {
+    let num = parseInt(ts.terms[0].normal, 10)
+    if (num && num > 1900 && num < 2030) {
+      ts.terms[0].tag('Year', reason)
+    }
+  })
+}
 
 const fixDates = function(doc) {
   //ambiguous month - person forms
@@ -287,36 +287,36 @@ const fixDates = function(doc) {
 
   //year/cardinal tagging
   if (doc.has('#Cardinal')) {
-    let v = doc.match(`#Date #Value #Cardinal`).lastTerm()
-    tagYear(v, 'date-value-year')
-    //scoops up a bunch
-    v = doc.match(`#Date+ #Cardinal`).lastTerm()
-    tagYear(v, 'date-year')
-    //feb 8 2018
-    v = doc.match(`#Month #Value #Cardinal`).lastTerm()
-    tagYear(v, 'month-value-year')
-    //feb 8 to 10th 2018
-    v = doc.match(`#Month #Value to #Value #Cardinal`).lastTerm()
-    tagYear(v, 'month-range-year')
-    //in 1998
-    v = doc.match(`(in|of|by|during|before|starting|ending|for|year) #Cardinal`).lastTerm()
-    tagYear(v, 'in-year')
-    //q2 2009
-    v = doc.match('(q1|q2|q3|q4) [#Cardinal]')
-    tagYear(v, 'in-year')
-    //2nd quarter 2009
-    v = doc.match('#Ordinal quarter [#Cardinal]')
-    tagYear(v, 'in-year')
-    //in the year 1998
-    v = doc.match('the year [#Cardinal]')
-    tagYear(v, 'in-year')
-
-    //it was 1998
-    v = doc.match('it (is|was) [#Cardinal]')
-    tagYearSafer(v, 'in-year')
-    //was 1998 and...
-    v = doc.match(`#Cardinal !#Plural`).firstTerm()
-    tagYearSafer(v, 'year-unsafe')
+    //TODO: uncomment
+    // let v = doc.match(`#Date #Value #Cardinal`).lastTerm()
+    // tagYear(v, 'date-value-year')
+    // //scoops up a bunch
+    // v = doc.match(`#Date+ #Cardinal`).lastTerm()
+    // tagYear(v, 'date-year')
+    // //feb 8 2018
+    // v = doc.match(`#Month #Value #Cardinal`).lastTerm()
+    // tagYear(v, 'month-value-year')
+    // //feb 8 to 10th 2018
+    // v = doc.match(`#Month #Value to #Value #Cardinal`).lastTerm()
+    // tagYear(v, 'month-range-year')
+    // //in 1998
+    // v = doc.match(`(in|of|by|during|before|starting|ending|for|year) #Cardinal`).lastTerm()
+    // tagYear(v, 'in-year')
+    // //q2 2009
+    // v = doc.match('(q1|q2|q3|q4) [#Cardinal]')
+    // tagYear(v, 'in-year')
+    // //2nd quarter 2009
+    // v = doc.match('#Ordinal quarter [#Cardinal]')
+    // tagYear(v, 'in-year')
+    // //in the year 1998
+    // v = doc.match('the year [#Cardinal]')
+    // tagYear(v, 'in-year')
+    // //it was 1998
+    // v = doc.match('it (is|was) [#Cardinal]')
+    // tagYearSafer(v, 'in-year')
+    // //was 1998 and...
+    // v = doc.match(`#Cardinal !#Plural`).firstTerm()
+    // tagYearSafer(v, 'year-unsafe')
   }
 
   //another pass at dates..
@@ -339,16 +339,17 @@ const fixDates = function(doc) {
         .tag('Time', 'timezone abbr')
     }
 
-    //fix over-greedy
-    let date = doc.match('#Date+').splitOn('Clause')
+    //TODO: splitOn?
 
-    if (date.has('(#Year|#Time)') === false) {
-      //12 february 12
-      date
-        .match('#Value (#Month|#Weekday) #Value')
-        .lastTerm()
-        .unTag('Date')
-    }
+    //fix over-greedy
+    // let date = doc.match('#Date+').splitOn('Clause')
+    // if (date.has('(#Year|#Time)') === false) {
+    //   //12 february 12
+    //   date
+    //     .match('#Value (#Month|#Weekday) #Value')
+    //     .lastTerm()
+    //     .unTag('Date')
+    // }
   }
 }
 module.exports = fixDates

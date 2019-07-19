@@ -1,9 +1,14 @@
 const parseSyntax = require('./syntax')
+const passCache = require('./cacheLookup')
 
 /** return a new Doc, with this one as a parent */
 exports.match = function(reg) {
   //parse-up the input expression
   let regs = parseSyntax(reg)
+  //try to fail-fast from a cache-lookup
+  if (passCache(this, regs) === false) {
+    return this.buildFrom([])
+  }
   //try expression on each phrase
   let matches = this.list.reduce((arr, p) => {
     return arr.concat(p.match(regs))

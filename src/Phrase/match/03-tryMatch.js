@@ -64,8 +64,8 @@ const tryHere = function(terms, regs) {
       if (reg.capture) {
         captures.push(startAt)
         //add greedy-end to capture
-        if (t > 1) {
-          captures.push(startAt + t - 1)
+        if (t > 1 && reg.greedy) {
+          captures.push(t - 1)
         }
       }
       continue

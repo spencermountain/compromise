@@ -76,10 +76,11 @@ const token = function(w) {
       obj.choices = obj.choices.map(token)
       w = ''
     }
-    //capture group
+    //capture group (this one can span multiple-terms)
     if (start(w) === '[' || end(w) === ']') {
       obj.capture = true
-      w = stripBoth(w)
+      w = w.replace(/^\[/, '')
+      w = w.replace(/\]$/, '')
     }
     //regex
     if (start(w) === '/' && end(w) === '/') {

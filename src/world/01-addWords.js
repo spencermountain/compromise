@@ -22,7 +22,7 @@ const doOneWord = function(str, pos, world) {
     let conj = verbFns(str)
     let tags = Object.keys(conj)
     tags.forEach(tag => {
-      world.lexicon[conj[tags]] = world.lexicon[conj[tags]] || tag
+      world.lexicon[conj[tag]] = world.lexicon[conj[tag]] || tag
     })
     return
   }

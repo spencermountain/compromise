@@ -26,10 +26,10 @@ var nlp = require('./src/index')
 // console.timeEnd('sotu')
 // -----
 
-let doc = nlp('prices closed higher').debug()
+let doc = nlp('the court disagreed').debug()
 // nlp('drink Salty Dogs').debug()
 
-// console.log(doc.world.lexicon.high)
+// console.log(doc.world.lexicon.disagreed)
 // -----
 
 // let doc = nlp('her book belongs to her')

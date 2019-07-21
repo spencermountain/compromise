@@ -191,7 +191,6 @@ module.exports = [
   'phony',
   'pink',
   'plain',
-  'plant',
   'pleasant',
   'polite',
   'poor',

@@ -1,5 +1,6 @@
-const inflect = require('./transforms/inflect')
-const conjugate = require('./transforms/conjugate')
+const nounFns = require('./transforms/nouns')
+const verbFns = require('./transforms/verbs')
+const adjFns = require('./transforms/adjectives')
 
 //takes a basic wordlist and expands it into more words, using science
 const doOneWord = function(str, pos, world) {
@@ -13,15 +14,21 @@ const doOneWord = function(str, pos, world) {
   }
   //pluralize singular nouns
   if (pos === 'Singular') {
-    let plural = inflect(str)
+    let plural = nounFns(str)
     doOneWord(plural, 'Plural', world)
     return
   }
   if (pos === 'Infinitive') {
-    let conj = conjugate(str)
-    doOneWord(conj.Gerund, 'Gerund', world)
-    doOneWord(conj.PastTense, 'PastTense', world)
-    doOneWord(conj.PresentTense, 'PresentTense', world)
+    let conj = verbFns(str)
+    let tags = Object.keys(conj)
+    tags.forEach(tag => {
+      world.lexicon[conj[tags]] = world.lexicon[conj[tags]] || tag
+    })
+    return
+  }
+  if (pos === 'Comparable') {
+    let forms = adjFns(str)
+    Object.assign(world.lexicon, forms)
     return
   }
 }

@@ -1,6 +1,6 @@
 const fixPerson = function(doc) {
   // 'john E rockefeller'
-  doc.match('#FirstName /^[^aiurck]$/').tag(['Acronym', 'Person'], 'john-e')
+  doc.match('#FirstName [/^[^aiurck]$/]').tag(['Acronym', 'Person'], 'john-e')
 
   //Doctor john smith jr
   doc.match('#Honorific #Person').tag('Person', 'honorific-person')
@@ -89,23 +89,14 @@ const fixPerson = function(doc) {
   if (doc.has('#FirstName')) {
     // Firstname x (dangerous)
     let tmp = doc
-      .match('#FirstName #Noun')
+      .match('#FirstName (#Noun|#TitleCase)')
       .ifNo('^#Possessive')
       .ifNo('#ClauseEnd .')
-    tmp
-      .lastTerm()
-      .canBe('#LastName')
-      .tag('#LastName', 'firstname-noun')
+    tmp.lastTerm().tag('#LastName', 'firstname-noun')
     //ferdinand de almar
-    doc
-      .match('#FirstName de #Noun')
-      .canBe('#Person')
-      .tag('#Person', 'firstname-de-noun')
+    doc.match('#FirstName de #Noun').tag('#Person', 'firstname-de-noun')
     //Osama bin Laden
-    doc
-      .match('#FirstName (bin|al) #Noun')
-      .canBe('#Person')
-      .tag('#Person', 'firstname-al-noun')
+    doc.match('#FirstName (bin|al) #Noun').tag('#Person', 'firstname-al-noun')
     //John L. Foo
     doc.match('#FirstName #Acronym #TitleCase').tag('Person', 'firstname-acronym-titlecase')
     //Andrew Lloyd Webber
@@ -130,7 +121,7 @@ const fixPerson = function(doc) {
       .tag('#LastName', 'n-acro-noun')
     // Dwayne 'the rock' Johnson
     doc
-      .match('#FirstName [#Determiner? #Noun] #LastName')
+      .match('#FirstName [#Determiner #Noun] #LastName')
       .tag('#NickName', 'first-noun-last')
       .tag('#Person', 'first-noun-last')
 

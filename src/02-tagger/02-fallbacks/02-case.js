@@ -13,7 +13,8 @@ const checkCase = function(terms, world) {
         term.tag('TitleCase', 'case-person', world)
       }
       // can we call it a noun?
-      if (i !== 0 && term.isKnown() === false) {
+      if (i !== 0) {
+        //sure!
         term.tag('ProperNoun', 'case-noun', world)
       }
     }

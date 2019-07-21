@@ -24,13 +24,18 @@ var nlp = require('./src/index')
 // console.time('sotu')
 // let main = nlp(txt)
 // console.timeEnd('sotu')
-
 // -----
 
-let doc = nlp('her book belongs to her')
-let doc = nlp('his book belongs to him')
-let doc = nlp('his book is his')
-let doc = nlp('her book is hers')
+let doc = nlp('prices closed higher').debug()
+// nlp('drink Salty Dogs').debug()
+
+// console.log(doc.world.lexicon.high)
+// -----
+
+// let doc = nlp('her book belongs to her')
+// let doc = nlp('his book belongs to him')
+// let doc = nlp('his book is his')
+// let doc = nlp('her book is hers')
 
 // -----
 
@@ -45,7 +50,5 @@ let doc = nlp('her book is hers')
 // let doc = nlp('ralf really eats the glue').match('* [eats]')
 // .debug()
 // console.log(doc.out('array'))
-
-// console.log(doc.world.lexicon.yesterday)
 
 // var r = nlp('July').debug()

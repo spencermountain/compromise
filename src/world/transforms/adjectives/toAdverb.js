@@ -3,18 +3,9 @@ const not_matches = [/airs$/, /ll$/, /ee.$/, /ile$/, /y$/]
 
 const irregulars = {
   bad: 'badly',
-  best: 'best',
-  early: 'early',
-  fast: 'fast',
   good: 'well',
-  hard: 'hard',
   icy: 'icily',
   idle: 'idly',
-  late: 'late',
-  latter: 'latter',
-  little: 'little',
-  long: 'long',
-  low: 'low',
   male: 'manly',
   public: 'publicly',
   simple: 'simply',
@@ -22,10 +13,15 @@ const irregulars = {
   special: 'especially',
   straight: 'straight',
   vague: 'vaguely',
-  well: 'well',
   whole: 'wholly',
-  wrong: 'wrong',
 }
+const dontChange = ['best', 'early', 'hard', 'fast', 'wrong', 'well', 'late', 'latter', 'little', 'long', 'low'].reduce(
+  (h, c) => {
+    h[c] = true
+    return h
+  },
+  {}
+)
 
 const transforms = [
   {
@@ -66,6 +62,9 @@ const adj_to_adv = function(str) {
   if (irregulars.hasOwnProperty(str) === true) {
     return irregulars[str]
   }
+  if (dontChange.hasOwnProperty(str) === true) {
+    return str
+  }
   for (let i = 0; i < not_matches.length; i++) {
     if (not_matches[i].test(str) === true) {
       return null
@@ -78,6 +77,5 @@ const adj_to_adv = function(str) {
   }
   return str + 'ly'
 }
-// console.log(adj_to_adv('good'));
 
 module.exports = adj_to_adv

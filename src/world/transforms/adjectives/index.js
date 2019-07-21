@@ -35,6 +35,7 @@ const conjugate = function(w) {
   if (vb) {
     res[vb] = 'Verb'
   }
+  res[w] = 'Adjective'
   return res
 }
 module.exports = conjugate

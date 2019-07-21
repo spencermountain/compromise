@@ -5,11 +5,23 @@ const adjFns = require('./transforms/adjectives')
 //takes a basic wordlist and expands it into more words, using science
 const doOneWord = function(str, pos, world) {
   //sort words into singular/compound
-  if (str.indexOf(' ') === -1) {
+  let words = str.split(' ')
+  if (words.length === 1) {
     world.lexicon[str] = world.lexicon[str] || pos
+  } else if (pos === 'PhrasalVerb') {
+    world.hasCompound[words[0]] = true
+    world.compounds[str] = ['Infinitive', 'PhrasalVerb']
+    //conjugate phrasal verbs - 'walk up' → 'walked up'
+    let conj = verbFns(words[0])
+    let tags = Object.keys(conj)
+    tags.forEach(tag => {
+      let word = conj[tag] + ' ' + words[1]
+      world.compounds[word] = [tag, 'PhrasalVerb']
+      world.hasCompound[conj[tag]] = true
+    })
+    return
   } else {
-    let w = str.split(' ')[0]
-    world.hasCompound[w] = true //cache for quick-lookups
+    world.hasCompound[words[0]] = true //cache first word for quick-lookups
     world.compounds[str] = pos
   }
   //pluralize singular nouns

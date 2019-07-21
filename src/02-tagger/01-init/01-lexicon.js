@@ -6,7 +6,7 @@ const tryMultiple = function(terms, t, world) {
   if (compounds[txt] !== undefined && compounds.hasOwnProperty(txt) === true) {
     terms[t].tag(compounds[txt], 'lexicon-two', world)
     terms[t + 1].tag(compounds[txt], 'lexicon-two', world)
-    return true
+    return 1
   }
   //try a three-word version?
   if (t + 2 < terms.length) {
@@ -15,10 +15,10 @@ const tryMultiple = function(terms, t, world) {
       terms[t].tag(compounds[txt], 'lexicon-three', world)
       terms[t + 1].tag(compounds[txt], 'lexicon-three', world)
       terms[t + 2].tag(compounds[txt], 'lexicon-three', world)
-      return true
+      return 2
     }
   }
-  return false
+  return 0
 }
 
 /** look at each word in our list of known-words */
@@ -30,8 +30,9 @@ const checkLexicon = function(terms, world) {
     let str = terms[t].normal
     //is it the start of a compound word, like 'super bowl'?
     if (hasCompound[str] === true && t + 1 < terms.length) {
-      let found = tryMultiple(terms, t, world)
-      if (found === true) {
+      let foundWords = tryMultiple(terms, t, world)
+      if (foundWords > 0) {
+        t += foundWords //skip any already-found words
         continue
       }
     }

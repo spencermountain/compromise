@@ -52,8 +52,6 @@ const tagOrgs = function(doc, termArr) {
       .match('#Possessive')
       .tag('Organization', 'possessive-acronym')
   }
-  // let matches = doc.match(orgWords);
-  // console.log(matches);
   return doc
 }
 module.exports = tagOrgs

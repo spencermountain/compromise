@@ -20,13 +20,9 @@ const deletePhrase = function(phrase, doc) {
   let pool = doc.pool()
   let terms = phrase.terms()
 
-  // console.log('---' + phrase.start + '---')
-
   //grab both sides of the chain,
   let prev = pool.get(terms[0].prev) || {}
   let after = pool.get(terms[terms.length - 1].next) || {}
-  // console.log(terms)
-  // console.log('\n   ' + after.id + '\n')
 
   //first, change phrase lengths
   shrinkAll(doc, phrase.start, phrase.length, after)

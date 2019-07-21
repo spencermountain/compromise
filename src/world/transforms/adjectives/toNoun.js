@@ -69,4 +69,3 @@ const to_noun = function(w) {
 }
 
 module.exports = to_noun
-// console.log(to_noun("great"))

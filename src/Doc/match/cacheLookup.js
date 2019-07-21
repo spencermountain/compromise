@@ -1,5 +1,4 @@
 const passesCache = function(doc, regs) {
-  // console.log(regs)
   if (!doc.cache.frozen) {
     return true
   }

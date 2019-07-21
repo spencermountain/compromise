@@ -62,9 +62,6 @@ const to_comparative = function(str) {
     return str + 'r'
   }
   return str + 'er'
-  // return null;
 }
-
-// console.log(to_comparative('big'));
 
 module.exports = to_comparative

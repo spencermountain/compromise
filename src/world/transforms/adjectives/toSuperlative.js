@@ -70,4 +70,3 @@ const to_superlative = function(str) {
 }
 
 module.exports = to_superlative
-// console.log(to_superlative("great"))

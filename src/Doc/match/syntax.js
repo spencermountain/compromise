@@ -85,7 +85,6 @@ const syntax = function(str) {
   tokens = tokens.map(parseToken)
   //clean up anything weird
   tokens = postProcess(tokens)
-  // console.log(tokens)
   return tokens
 }
 module.exports = syntax

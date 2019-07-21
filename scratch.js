@@ -1,5 +1,5 @@
 var nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 // nlp.extend(require('./plugins/values/src'))
 // let m = nlp('a spencer  kelly eats the glue z')
 //   // .match('a [spencer kelly] eats')
@@ -26,10 +26,10 @@ var nlp = require('./src/index')
 // console.timeEnd('sotu')
 // -----
 
-let doc = nlp('the court disagreed').debug()
+let doc = nlp('pull out').debug()
 // nlp('drink Salty Dogs').debug()
 
-// console.log(doc.world.lexicon.disagreed)
+// console.log(doc.world.lexicon['pull out'])
 // -----
 
 // let doc = nlp('her book belongs to her')

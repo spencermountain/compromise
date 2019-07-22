@@ -9,7 +9,7 @@ exports.match = function(reg) {
     return this.buildFrom([])
   }
   //try to fail-fast from a cache-lookup
-  if (this.cache.frozen && failsCache(this, regs) === true) {
+  if (failsCache(this, regs) === true) {
     return this.buildFrom([])
   }
   //try expression on each phrase
@@ -38,7 +38,7 @@ exports.not = function(reg) {
 exports.matchOne = function(reg) {
   let regs = parseSyntax(reg)
   //try to fail-fast from a cache-lookup
-  if (this.cache.frozen && failsCache(this, regs) === true) {
+  if (failsCache(this, regs) === true) {
     return this.buildFrom([])
   }
   for (let i = 0; i < this.list.length; i++) {
@@ -144,7 +144,7 @@ exports.splitBefore = function(reg) {
 exports.has = function(reg) {
   let regs = parseSyntax(reg)
   //try to fail-fast from a cache-lookup
-  if (this.cache.frozen && failsCache(this, regs) === true) {
+  if (failsCache(this, regs) === true) {
     return false
   }
   return this.list.some(p => p.has(regs) === true)
@@ -154,7 +154,7 @@ exports.has = function(reg) {
 exports.if = function(reg) {
   let regs = parseSyntax(reg)
   //try to fail-fast from a cache-lookup
-  if (this.cache.frozen && failsCache(this, regs) === true) {
+  if (failsCache(this, regs) === true) {
     return this.buildFrom([])
   }
   let found = this.list.filter(p => p.match(regs).length > 0)

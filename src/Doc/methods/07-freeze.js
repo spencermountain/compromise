@@ -1,6 +1,6 @@
 /** cache our document, for faster lookups */
 exports.freeze = function() {
-  this.cache = {
+  let cache = {
     frozen: true,
     words: {},
     tags: {},
@@ -8,23 +8,21 @@ exports.freeze = function() {
   let terms = this.termList()
   for (let i = 0; i < terms.length; i++) {
     //cache word
-    this.cache.words[terms[i].normal] = true
+    cache.words[terms[i].normal] = true
     //cache tags
-    Object.assign(this.cache.tags, terms[i].tags)
+    Object.assign(cache.tags, terms[i].tags)
   }
+  this.world.cache = cache
   return this
 }
 
 /** delete all caches */
 exports.unfreeze = function() {
-  this.cache = {}
-  this.parents().forEach(doc => {
-    doc.cache = {}
-  })
+  this.world.cache = {}
   return this
 }
 
 /** is there an active cache? */
 exports.isFrozen = function() {
-  return Boolean(this.cache.frozen)
+  return Boolean(this.world.cache.frozen)
 }

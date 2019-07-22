@@ -1,8 +1,8 @@
 const setTag = require('./_tag')
 
 /** Give all terms the given tag */
-exports.tag = function(tag, why) {
-  setTag(tag, this, false, why)
+exports.tag = function(tags, why) {
+  setTag(tags, this, false, why)
   return this
 }
 

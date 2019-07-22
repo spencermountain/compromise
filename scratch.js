@@ -6,9 +6,14 @@ var nlp = require('./src/index')
 //   .match('a [spencer kelly] eats')
 //   .debug()
 
+var r = nlp('one two three four')
+r.match('one two three').tag('#FooBar')
+console.log(r.has('#FooBar'))
+console.log(r.match('.').cache.tags)
+
 // console.time('one')
-let doc = nlp('hello world')
-console.log(doc.has('(western|eastern|.)'))
+// let doc = nlp('hello world')
+// console.log(doc.has('#Klkj'))
 // console.timeEnd('one')
 
 // console.time('two')

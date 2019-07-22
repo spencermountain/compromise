@@ -1,6 +1,13 @@
 var test = require('tape')
 var nlp = require('../_lib')
 
+
+// #Determiner, #Possessive - "his book", "her book", "their book",
+// #Adjective, #Possessive - "the book is his", "the book is hers", "the book is theirs",
+// #Pronoun, #Object - "the book belongs to him", "the book belongs to her", "the book belongs to them", and for completeness,
+// #Pronoun, #Subject - "he owns the book", "she owns the book", "they own the book".
+
+
 test('to her:', function(t) {
   let doc = nlp('her book belongs to her') //Det ... Pronoun
   // her book...

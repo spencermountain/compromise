@@ -23,6 +23,9 @@ const tagger = function(doc) {
 
   // wiggle-around the results, so they make more sense
   doc = corrections(doc)
+
+  //remove our cache?
+  // doc.unfreeze()
   return doc
 }
 module.exports = tagger

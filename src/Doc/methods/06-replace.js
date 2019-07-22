@@ -2,6 +2,7 @@ const build = require('../../01-tokenizer')
 
 /** substitute-in new content */
 exports.replace = function(match, replace) {
+  this.unfreeze()
   let old = this
   if (replace) {
     old = this.match(match)
@@ -27,6 +28,7 @@ exports.replace = function(match, replace) {
 
 /** fully remove these terms from the document */
 exports.delete = function(match) {
+  this.unfreeze()
   let toRemove = this
   if (match) {
     toRemove = this.match(match)

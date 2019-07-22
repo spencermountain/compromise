@@ -2,6 +2,7 @@ const build = require('../../01-tokenizer')
 
 /** add these new terms to the front*/
 exports.prepend = function(str) {
+  this.unfreeze()
   let phrase = build.fromText(str, this.pool())[0] //assume it's one sentence, for now
   this.list.forEach(p => {
     p.prepend(phrase, this)
@@ -12,6 +13,7 @@ exports.insertBefore = exports.prepend
 
 /** add these new terms to the end*/
 exports.append = function(str) {
+  this.unfreeze()
   let phrase = build.fromText(str, this.pool())[0] //assume it's one sentence, for now
   this.list.forEach(p => {
     p.append(phrase, this)
@@ -22,6 +24,7 @@ exports.insertAfter = exports.append
 
 /** add these new things to the end*/
 exports.concat = function() {
+  this.unfreeze()
   let list = this.list.slice(0)
   //repeat for any number of params
   for (let i = 0; i < arguments.length; i++) {

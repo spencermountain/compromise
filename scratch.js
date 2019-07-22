@@ -1,5 +1,5 @@
 var nlp = require('./src/index')
-nlp.verbose(true)
+// nlp.verbose(true)
 // nlp.extend(require('./plugins/values/src'))
 // let m = nlp('a spencer  kelly eats the glue z')
 //   // .match('a [spencer kelly] eats')
@@ -7,8 +7,8 @@ nlp.verbose(true)
 //   .debug()
 
 // console.time('one')
-// let doc = nlp('hello world')
-// doc.match('western')
+let doc = nlp('hello world')
+console.log(doc.has('(western|eastern|.)'))
 // console.timeEnd('one')
 
 // console.time('two')
@@ -26,7 +26,6 @@ nlp.verbose(true)
 // console.timeEnd('sotu')
 // -----
 
-let doc = nlp('pull out').debug()
 // nlp('drink Salty Dogs').debug()
 
 // console.log(doc.world.lexicon['pull out'])

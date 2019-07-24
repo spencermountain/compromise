@@ -8,7 +8,7 @@ const unTag = function(t, tag, reason, world) {
     return t
   }
   // remove the tag
-  if (t.tags.hasOwnProperty(tag) === true) {
+  if (t.tags[tag] === true && t.tags.hasOwnProperty(tag) === true) {
     delete t.tags[tag]
     //log in verbose-mode
     if (world !== undefined && world.isVerbose() === true) {

@@ -6,11 +6,12 @@ const corrections = require('./05-correction')
 
 /** POS-tag all terms in this document */
 const tagger = function(doc) {
+  let terms = doc.termList()
   // check against any known-words
-  doc = init(doc)
+  doc = init(doc, terms)
 
   // everything has gotta be something. ¯\_(:/)_/¯
-  doc = fallbacks(doc)
+  doc = fallbacks(doc, terms)
 
   // support "didn't" & "spencer's"
   doc = contractions(doc)

@@ -215,6 +215,7 @@ const fixDates = function(doc) {
   if (season.found === true) {
     season.match(`${preps}? ${thisNext} ${seasons}`).tag('Date', 'thisNext-season')
     season.match(`the? ${sections} of ${seasons}`).tag('Date', 'section-season')
+    season.match(`${seasons} #Cardinal`).tag('Date', 'season-year')
   }
 
   //rest-dates

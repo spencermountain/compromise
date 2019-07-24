@@ -142,9 +142,13 @@ exports.dehyphenate = function() {
 
 /** return a flat array of term objects */
 exports.termList = function() {
-  return this.list.reduce((arr, p) => {
-    let terms = p.terms()
-    arr = arr.concat(terms)
-    return arr
-  }, [])
+  let arr = []
+  //'reduce' but faster
+  for (let i = 0; i < this.list.length; i++) {
+    let terms = this.list[i].terms()
+    for (let o = 0; o < terms.length; o++) {
+      arr.push(terms[o])
+    }
+  }
+  return arr
 }

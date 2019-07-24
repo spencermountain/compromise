@@ -6,9 +6,9 @@ const syntax = require('../../Doc/match/syntax')
 // setTimeout(() => {
 //   console.log('\nmatchALL: ' + count)
 // }, 1000)
+
 /**  returns a simple array of arrays */
 const matchAll = function(p, regs, matchOne = false) {
-  // count += 1
   //if we forgot to parse it..
   if (typeof regs === 'string') {
     regs = syntax(regs)

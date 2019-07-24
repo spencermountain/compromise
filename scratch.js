@@ -6,12 +6,12 @@ nlp.extend(require('./plugins/values/src'))
 //   .match('a [spencer kelly] eats')
 //   .debug()
 
-nlp('Toronto Toronto Toronto detroit')
-  .match('#Noun+ detroit')
+nlp('Toronto toronto toronto toronto detroit nope')
+  .match('toronto+ detroit')
   .debug()
 
-// let doc = nlp('i spent five hundred')
-// doc.match('#Value+ #Unit?').debug()
+let doc = nlp('i spent five hundred airbags')
+doc.match('#Value+ #Unit?').debug()
 // .values()
 // .debug()
 

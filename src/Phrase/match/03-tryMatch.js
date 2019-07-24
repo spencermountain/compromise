@@ -1,6 +1,11 @@
 //found a match? it's greedy? keep going!
-const getGreedy = function(terms, t, reg) {
+const getGreedy = function(terms, t, reg, until) {
   for (; t < terms.length; t += 1) {
+    //stop for next-reg match
+    if (until && terms[t].doesMatch(until)) {
+      return t
+    }
+    //stop here
     if (terms[t].doesMatch(reg) === false) {
       return t
     }
@@ -59,7 +64,7 @@ const tryHere = function(terms, regs) {
       }
       //try keep it going!
       if (reg.greedy === true) {
-        t = getGreedy(terms, t, reg)
+        t = getGreedy(terms, t, reg, regs[r + 1])
       }
       if (reg.capture) {
         captures.push(startAt)

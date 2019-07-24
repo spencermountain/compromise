@@ -1,31 +1,37 @@
 //
 const fixValue = function(doc) {
-  //half a million
-  doc.match('half a? #Value').tag('Value', 'half-a-value') //(quarter not ready)
-  //five and a half
-  doc.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half')
+  //canadian dollar, Brazilian pesos
+  doc.match('#Demonym #Currency').tag('Currency', 'demonym-currency')
 
-  //all values are either ordinal or cardinal
-  // doc.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
+  if (doc.has('#Value')) {
+    //half a million
+    doc.match('half a? #Value').tag('Value', 'half-a-value') //(quarter not ready)
+    //five and a half
+    doc.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half')
 
-  //money
-  doc
-    .match('#Value+ #Currency')
-    .tag('Money', 'value-currency')
-    .lastTerm()
-    .tag('Unit', 'money-unit')
-  doc.match('#Money and #Money #Currency?').tag('Money', 'money-and-money')
+    //all values are either ordinal or cardinal
+    // doc.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
 
-  //1 800 PhoneNumber
-  doc.match('1 #Value #PhoneNumber').tag('PhoneNumber', '1-800-Value')
-  //(454) 232-9873
-  doc.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber')
+    //money
+    doc
+      .match('#Value+ #Currency')
+      .tag('Money', 'value-currency')
+      .lastTerm()
+      .tag('Unit', 'money-unit')
+    doc.match('#Money and #Money #Currency?').tag('Money', 'money-and-money')
 
-  //two hundredth
-  doc
-    .match('#TextValue+')
-    .match('#Cardinal+ #Ordinal')
-    .tag('Ordinal', 'two-hundredth')
+    //1 800 PhoneNumber
+    doc.match('1 #Value #PhoneNumber').tag('PhoneNumber', '1-800-Value')
+
+    //(454) 232-9873
+    doc.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber')
+
+    //two hundredth
+    doc
+      .match('#TextValue+')
+      .match('#Cardinal+ #Ordinal')
+      .tag('Ordinal', 'two-hundredth')
+  }
   return doc
 }
 module.exports = fixValue

@@ -19,18 +19,21 @@ const fixPerson = function(doc) {
       .canBe('#Person')
       .tag('Person', 'ray-smith')
   }
+
   //verbs or people-names
   let maybeVerb = '(pat|wade|ollie|will|rob|buck|bob|mark|jack)'
   if (doc.has(maybeVerb)) {
     doc.match('(#Modal|#Adverb) [' + maybeVerb + ']').tag('Verb', 'would-mark')
     doc.match(maybeVerb + ' (#Person|#TitleCase)').tag('Person', 'rob-smith')
   }
+
   //adjectives or people-names
   let maybeAdj = '(misty|rusty|dusty|rich|randy)'
   if (doc.has(maybeAdj)) {
     doc.match('#Adverb [' + maybeAdj + ']').tag('Adjective', 'really-rich')
     doc.match(maybeAdj + ' (#Person|#TitleCase)').tag('Person', 'randy-smith')
   }
+
   //dates as people names
   let maybeDate = '(april|june|may|jan|august|eve)'
   if (doc.has(maybeDate)) {
@@ -47,6 +50,7 @@ const fixPerson = function(doc) {
       .canBe('#Date')
       .tag('Date', 'june-5th')
   }
+
   //place-names as people-names
   let maybePlace = '(paris|alexandria|houston|kobe|salvador|sydney)'
   if (doc.has(maybePlace)) {
@@ -63,6 +67,7 @@ const fixPerson = function(doc) {
       .canBe('#Person')
       .tag('Person', 'paris-hilton')
   }
+
   //this one is tricky
   if (doc.match('al')) {
     doc
@@ -74,16 +79,14 @@ const fixPerson = function(doc) {
       .canBe('#Person')
       .tag('#Person', 'arabic-al-arabic')
   }
+
   //ambiguous honorifics
   doc
-    .match('(private|general|major|corporal|lord|lady|secretary|premier) #Honorific? #Person')
-    .terms(0)
+    .match('[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person')
     .tag('Honorific', 'ambg-honorifics')
+
   //first general..
-  doc
-    .match('(1st|2nd|first|second) #Honorific')
-    .terms(0)
-    .tag('Honorific', 'ordinal-honorific')
+  doc.match('[(1st|2nd|first|second)] #Honorific').tag('Honorific', 'ordinal-honorific')
 
   //methods requiring a firstname match
   if (doc.has('#FirstName')) {
@@ -93,6 +96,7 @@ const fixPerson = function(doc) {
       .ifNo('^#Possessive')
       .ifNo('#ClauseEnd .')
     tmp.lastTerm().tag('#LastName', 'firstname-noun')
+
     //ferdinand de almar
     doc.match('#FirstName de #Noun').tag('#Person', 'firstname-de-noun')
     //Osama bin Laden
@@ -103,15 +107,16 @@ const fixPerson = function(doc) {
     doc.match('#FirstName #FirstName #TitleCase').tag('Person', 'firstname-firstname-titlecase')
     //Mr Foo
     doc.match('#Honorific #FirstName? #TitleCase').tag('Person', 'Honorific-TitleCase')
+    //peter the great
+    doc.match('#FirstName the #Adjective').tag('Person', 'correction-determiner5')
+    //very common-but-ambiguous lastnames
+    doc.match('#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)').tag('#Person', 'firstname-maybe')
+
     //John Foo
     doc
       .match('#FirstName #TitleCase #TitleCase?')
       .match('#Noun+')
       .tag('Person', 'firstname-titlecase')
-    //peter the great
-    doc.match('#FirstName the #Adjective').tag('Person', 'correction-determiner5')
-    //very common-but-ambiguous lastnames
-    doc.match('#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)').tag('#Person', 'firstname-maybe')
     //Joe K. Sombrero
     doc
       .match('#FirstName #Acronym #Noun')
@@ -119,6 +124,7 @@ const fixPerson = function(doc) {
       .tag('#Person', 'n-acro-noun')
       .lastTerm()
       .tag('#LastName', 'n-acro-noun')
+
     // Dwayne 'the rock' Johnson
     doc
       .match('#FirstName [#Determiner #Noun] #LastName')
@@ -139,15 +145,14 @@ const fixPerson = function(doc) {
   if (doc.has('#LastName')) {
     // x Lastname
     doc
-      .match('#Noun #LastName')
-      .firstTerm()
+      .match('[#Noun] #LastName')
       .canBe('#FirstName')
       .tag('#FirstName', 'noun-lastname')
     //ambiguous-but-common firstnames
     doc
-      .match('(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill) #LastName')
-      .firstTerm()
+      .match('[(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill)] #LastName')
       .tag('#FirstName', 'maybe-lastname')
+
     //Jani K. Smith
     doc
       .match('#TitleCase #Acronym? #LastName')
@@ -155,34 +160,24 @@ const fixPerson = function(doc) {
       .tag('#Person', 'title-acro-noun')
       .lastTerm()
       .tag('#LastName', 'title-acro-noun')
+
     //is foo Smith
-    doc
-      .match('#Copula (#Noun|#PresentTense) #LastName')
-      .term(1)
-      .tag('#FirstName', 'copula-noun-lastname')
+    doc.match('#Copula [(#Noun|#PresentTense)] #LastName').tag('#FirstName', 'copula-noun-lastname')
   }
 
   //methods requiring a titlecase
   if (doc.has('#TitleCase')) {
-    doc
-      .match('#Acronym #TitleCase')
-      .canBe('#Person')
-      .tag('#Person', 'acronym-titlecase')
+    doc.match('#Acronym #TitleCase').tagSafe('#Person', 'acronym-titlecase')
     //ludwig van beethovan
-    doc
-      .match('#TitleCase (van|al|bin) #TitleCase')
-      .canBe('#Person')
-      .tag('Person', 'correction-titlecase-van-titlecase')
-    doc
-      .match('#TitleCase (de|du) la? #TitleCase')
-      .canBe('#Person')
-      .tag('Person', 'correction-titlecase-van-titlecase')
+    doc.match('#TitleCase (van|al|bin) #TitleCase').tagSafe('Person', 'correction-titlecase-van-titlecase')
+    //jose de Sucre
+    doc.match('#TitleCase (de|du) la? #TitleCase').tagSafe('Person', 'correction-titlecase-van-titlecase')
+
     //Morgan Shlkjsfne
     doc
       .match('#Person #TitleCase')
       .match('#TitleCase #Noun')
-      .canBe('#Person')
-      .tag('Person', 'correction-person-titlecase')
+      .tagSafe('Person', 'correction-person-titlecase')
     //pope francis
     doc
       .match('(lady|queen|sister) #TitleCase')
@@ -196,15 +191,11 @@ const fixPerson = function(doc) {
   }
 
   //j.k Rowling
-  doc
-    .match('#Noun van der? #Noun')
-    .canBe('#Person')
-    .tag('#Person', 'von der noun')
+  doc.match('#Noun van der? #Noun').tagSafe('#Person', 'von der noun')
+
   //king of spain
-  doc
-    .match('(king|queen|prince|saint|lady) of? #Noun')
-    .canBe('#Person')
-    .tag('#Person', 'king-of-noun')
+  doc.match('(king|queen|prince|saint|lady) of? #Noun').tagSafe('#Person', 'king-of-noun')
+
   //mr X
   doc.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase')
   //peter II

@@ -9,22 +9,12 @@ const fixDates = require('./fixDates')
 
 //sequence of match-tag statements to correct mis-tags
 const corrections = function(doc) {
-  if (doc.has('#Determiner')) {
-    fixDeterminer(doc)
-  }
-  if (doc.has('#Noun')) {
-    fixNouns(doc)
-    fixPerson(doc)
-  }
-  if (doc.has('#Verb')) {
-    fixVerb(doc)
-  }
-  if (doc.has('#Adjective')) {
-    fixAdjective(doc)
-  }
-  if (doc.has('#Value')) {
-    fixValue(doc)
-  }
+  fixDeterminer(doc)
+  fixNouns(doc)
+  fixPerson(doc)
+  fixVerb(doc)
+  fixAdjective(doc)
+  fixValue(doc)
   // fixDates(doc)
   fixMisc(doc)
   return doc

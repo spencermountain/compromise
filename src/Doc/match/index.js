@@ -1,5 +1,5 @@
 const parseSyntax = require('./syntax')
-const failsCache = require('./cacheLookup')
+const doMatch = require('./cacheLookup')
 
 /** return a new Doc, with this one as a parent */
 exports.match = function(reg) {
@@ -9,7 +9,7 @@ exports.match = function(reg) {
     return this.buildFrom([])
   }
   //try to fail-fast from a cache-lookup
-  if (failsCache(this, regs) === true) {
+  if (doMatch(this, regs) === false) {
     return this.buildFrom([])
   }
   //try expression on each phrase
@@ -38,7 +38,7 @@ exports.not = function(reg) {
 exports.matchOne = function(reg) {
   let regs = parseSyntax(reg)
   //try to fail-fast from a cache-lookup
-  if (failsCache(this, regs) === true) {
+  if (doMatch(this, regs) === false) {
     return this.buildFrom([])
   }
   for (let i = 0; i < this.list.length; i++) {
@@ -144,7 +144,7 @@ exports.splitBefore = function(reg) {
 exports.has = function(reg) {
   let regs = parseSyntax(reg)
   //try to fail-fast from a cache-lookup
-  if (failsCache(this, regs) === true) {
+  if (doMatch(this, regs) === false) {
     return false
   }
   return this.list.some(p => p.has(regs) === true)
@@ -154,7 +154,7 @@ exports.has = function(reg) {
 exports.if = function(reg) {
   let regs = parseSyntax(reg)
   //try to fail-fast from a cache-lookup
-  if (failsCache(this, regs) === true) {
+  if (doMatch(this, regs) === false) {
     return this.buildFrom([])
   }
   let found = this.list.filter(p => p.match(regs).length > 0)

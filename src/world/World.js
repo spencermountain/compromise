@@ -20,6 +20,7 @@ class World {
     this.compounds = {}
     this.tags = Object.assign({}, defaultTags)
     this.plugin(defaultData)
+    this.cache = {}
   }
   /** more logs for debugging */
   verbose(bool) {

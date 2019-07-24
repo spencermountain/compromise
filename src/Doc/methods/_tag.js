@@ -1,21 +1,18 @@
 //include this tag in our cache
-const cacheTag = function(doc, tag) {
+const cacheTag = function(tags, doc) {
   //add this tag to our cache
-  // if (this.isFrozen()) {
-  //   if (typeof tags === 'string') {
-  //     tags = [tags]
-  //   }
-  //   tags.forEach(tag => {
-  //     // if we don't already have this tag,
-  //     // then cache it in each parent, too
-  //     if (!this.cache.tags[tag]) {
-  //       this.cache.tags[tag] = true
-  //       this.parents().forEach(p => {
-  //         p.cache.tags[tag] = true
-  //       })
-  //     }
-  //   })
-  // }
+  if (doc.isFrozen()) {
+    let cache = doc.world.cache
+    if (typeof tags === 'string') {
+      tags = [tags]
+    }
+    tags.forEach(tag => {
+      tag = tag.replace(/^#/, '')
+      if (!cache.tags[tag]) {
+        cache.tags[tag] = true
+      }
+    })
+  }
 }
 
 /** apply a tag, or tags to all terms */
@@ -40,11 +37,16 @@ const tagTerms = function(tag, doc, safe, reason) {
       } else {
         //non-fancy version (same tag for all terms)
         t.tag(tag, reason, doc.world)
-        // if (doc.isFrozen()) {
-        //   console.log('hi')
-        // }
       }
     })
+    //add the new tags to our cache
+    if (doc.isFrozen() === true) {
+      if (tagList.length > 1) {
+        tagList.forEach(tags => cacheTag(tags, doc))
+      } else {
+        cacheTag(tag, doc)
+      }
+    }
   })
   return
 }

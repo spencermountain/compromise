@@ -4,15 +4,16 @@ const checkIrregulars = require('./03-irregulars')
 const checkPossessive = require('./04-possessive')
 const checkPerfect = require('./05-perfectTense')
 const build = require('../../01-tokenizer')
+const checkLexicon = require('../01-init/01-lexicon')
 
 const createPhrase = function(found, doc) {
   //create phrase from ['would', 'not']
   let phrase = build.fromText(found.join(' '), doc.pool())[0]
   //tag it
-  let tmpDoc = doc.buildFrom([phrase])
-  tmpDoc.tagger()
+  let terms = phrase.terms()
+  checkLexicon(terms, doc.world)
   //make these terms implicit
-  phrase.terms().forEach((t, i) => {
+  terms.forEach((t, i) => {
     t.implicit = t.text
     t.text = ''
     // remove whitespace for implicit terms

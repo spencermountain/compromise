@@ -509,7 +509,7 @@ const unTag = function(t, tag, reason, world) {
     return t
   }
   // remove the tag
-  if (t.tags.hasOwnProperty(tag) === true) {
+  if (t.tags[tag] === true && t.tags.hasOwnProperty(tag) === true) {
     delete t.tags[tag];
     //log in verbose-mode
     if (world !== undefined && world.isVerbose() === true) {
@@ -653,6 +653,10 @@ var terms = function(n) {
     }
     let term = this.pool.get(id);
     terms.push(term);
+    //return this one?
+    if (n !== undefined && n === i) {
+      return terms[n]
+    }
   }
   if (n !== undefined) {
     return terms[n]
@@ -686,9 +690,22 @@ var lastTerm = function() {
 };
 
 /** quick lookup for a term id */
-var hasId = function(id) {
-  let terms = this.terms();
-  return terms.find(t => t.id === id) !== undefined
+var hasId = function(wantId) {
+  if (this.length === 0 || !wantId) {
+    return false
+  }
+  if (this.start === wantId) {
+    return true
+  }
+  let lastId = this.start;
+  for (let i = 0; i < this.length - 1; i += 1) {
+    let term = this.pool.get(lastId);
+    if (term.next === wantId) {
+      return true
+    }
+    lastId = term.next;
+  }
+  return false
 };
 
 /** produce output in the given format */
@@ -789,12 +806,12 @@ const hasSpace$1 = / /;
 
 //a new space needs to be added, either on the new phrase, or the old one
 // '[new] [◻old]'   -or-   '[old] [◻new] [old]'
-const addWhitespace$1 = function(original, newPhrase) {
+const addWhitespace$1 = function(original, newPhrase, newTerms) {
   //is there a word before our entry-point?
   let term = original.pool.get(original.start);
   if (term.prev) {
     //add our space ahead of our new terms
-    let firstWord = newPhrase.terms()[0];
+    let firstWord = newTerms[0];
     if (hasSpace$1.test(firstWord.preText) === false) {
       firstWord.preText = ' ' + firstWord.preText;
     }
@@ -808,9 +825,8 @@ const addWhitespace$1 = function(original, newPhrase) {
 };
 
 //insert this segment into the linked-list
-const stitchIn$1 = function(main, newPhrase) {
+const stitchIn$1 = function(main, newPhrase, newTerms) {
   // [newPhrase] → [main]
-  let newTerms = newPhrase.terms();
   let lastTerm = newTerms[newTerms.length - 1];
   lastTerm.next = main.start;
   // [before] → [main]
@@ -847,10 +863,11 @@ const stretchAll$1 = function(doc, original, newPhrase) {
 
 //append one phrase onto another
 const joinPhrase$1 = function(original, newPhrase, doc) {
+  let newTerms = newPhrase.terms();
   //spruce-up the whitespace issues
-  addWhitespace$1(original, newPhrase);
+  addWhitespace$1(original, newPhrase, newTerms);
   //insert this segment into the linked-list
-  stitchIn$1(original, newPhrase);
+  stitchIn$1(original, newPhrase, newTerms);
   //increase the length of our phrases
   stretchAll$1(doc, original, newPhrase);
   return original
@@ -3971,11 +3988,15 @@ var dehyphenate = function() {
 
 /** return a flat array of term objects */
 var termList = function() {
-  return this.list.reduce((arr, p) => {
-    let terms = p.terms();
-    arr = arr.concat(terms);
-    return arr
-  }, [])
+  let arr = [];
+  //'reduce' but faster
+  for (let i = 0; i < this.list.length; i++) {
+    let terms = this.list[i].terms();
+    for (let o = 0; o < terms.length; o++) {
+      arr.push(terms[o]);
+    }
+  }
+  return arr
 };
 
 var _02Misc = {
@@ -7128,6 +7149,7 @@ const fixDates = function(doc) {
   if (season.found === true) {
     season.match(`${preps}? ${thisNext} ${seasons}`).tag('Date', 'thisNext-season');
     season.match(`the? ${sections} of ${seasons}`).tag('Date', 'section-season');
+    season.match(`${seasons} #Cardinal`).tag('Date', 'season-year');
   }
 
   //rest-dates
@@ -7234,6 +7256,7 @@ var _05Correction = corrections;
 
 /** POS-tag all terms in this document */
 const tagger = function(doc) {
+  let terms = doc.termList();
   // check against any known-words
   doc = _01Init(doc);
 

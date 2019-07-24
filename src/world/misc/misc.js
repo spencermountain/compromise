@@ -18,18 +18,13 @@ module.exports = {
   '&': 'Conjunction',
   was: ['Copula', 'PastTense'],
   is: ['Copula', 'PresentTense'],
+  not: ['Negative', 'Verb'],
 
   //pronouns
   i: ['Pronoun', 'Singular'],
   he: ['Pronoun', 'Singular'],
   she: ['Pronoun', 'Singular'],
   it: ['Pronoun', 'Singular'],
-  // 'me',
-  // 'him',
-  // 'her',
   they: ['Pronoun', 'Plural'],
   we: ['Pronoun', 'Plural'],
-  // 'them',
-  // 'ourselves',
-  // 'us',
 }

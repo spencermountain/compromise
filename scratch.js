@@ -6,7 +6,7 @@ var nlp = require('./src/index')
 //   .match('a [spencer kelly] eats')
 //   .debug()
 
-nlp('spring 2018').debug()
+nlp('i dunno').debug()
 
 // console.time('one')
 // let doc = nlp('hello world')

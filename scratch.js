@@ -1,12 +1,23 @@
 var nlp = require('./src/index')
 // nlp.verbose(true)
-// nlp.extend(require('./plugins/values/src'))
+nlp.extend(require('./plugins/values/src'))
 // let m = nlp('a spencer  kelly eats the glue z')
 //   // .match('a [spencer kelly] eats')
 //   .match('a [spencer kelly] eats')
 //   .debug()
 
-nlp('i dunno').debug()
+// nlp('Toronto Toronto Toronto detroit')
+//   .match('#Noun+ detroit')
+//   .debug()
+
+nlp('i am cool')
+  .replace('cool', 'stupid')
+  .debug()
+
+// let doc = nlp('i spent five hundred')
+// doc.match('#Value+ #Unit?').debug()
+// .values()
+// .debug()
 
 // console.time('one')
 // let doc = nlp('hello world')

@@ -20,10 +20,10 @@ const tagger = function(doc) {
   doc = inference(doc)
 
   //set our cache, to speed things up
-  doc.freeze()
+  // doc.freeze()
 
   // wiggle-around the results, so they make more sense
-  doc = corrections(doc)
+  // doc = corrections(doc)
 
   //remove our cache?
   // doc.unfreeze()

@@ -789,10 +789,6 @@ const stretchAll = function(doc, id, len) {
     phrase = parent.list.find(p => p.hasId(id));
     phrase.length += len;
   });
-  //find our phrase to stretch
-  // if (doc.from) {
-  // stretchAll(doc.from, id, len)
-  // }
 };
 
 //append one phrase onto another
@@ -7271,7 +7267,7 @@ const tagger = function(doc) {
   doc = _04Inference(doc);
 
   //set our cache, to speed things up
-  doc.freeze();
+  // doc.freeze()
 
   // wiggle-around the results, so they make more sense
   doc = _05Correction(doc);

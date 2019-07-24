@@ -1,11 +1,10 @@
+# greedy bug
+  - nlp('Toronto Toronto Toronto detroit').match('toronto+ detroit')
+  - 
 # .replace()
   - .delete() is working
   - 
 
-# .contractions()
+# .values()
 
-
----misc---
-
-rocket's red glare  - possessive
-
+# .verbs()

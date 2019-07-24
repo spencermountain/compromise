@@ -19,7 +19,8 @@
     "filesize": "node ./scripts/filesize.js",
     "watch": "amble ./scratch.js",
     "stress": "node ./stress/stress.js",
-    "speed": "node ./stress/speed.js"
+    "speed": "node ./stress/speed.js",
+    "demo": "python -m SimpleHTTPServer 8888"
   },
   "files": [
     "builds/",
@@ -42,7 +43,7 @@
     "amble": "0.0.7",
     "compromise-plugin": "0.0.9",
     "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-commonjs": "10.0.1",
+    "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-terser": "5.1.1",

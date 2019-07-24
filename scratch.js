@@ -6,8 +6,7 @@ var nlp = require('./src/index')
 //   .match('a [spencer kelly] eats')
 //   .debug()
 
-nlp('canadian dollar').debug()
-
+let doc = nlp('canadian dollar').debug()
 // console.time('one')
 // let doc = nlp('hello world')
 // console.log(doc.has('#Klkj'))
@@ -30,7 +29,7 @@ nlp('canadian dollar').debug()
 
 // nlp('drink Salty Dogs').debug()
 
-// console.log(doc.world.lexicon['pull out'])
+// console.log(doc.world.lexicon['ms'])
 // -----
 
 // let doc = nlp('her book belongs to her')

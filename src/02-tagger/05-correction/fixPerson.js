@@ -6,16 +6,11 @@ const maybeDate = '(april|june|may|jan|august|eve)'
 const maybePlace = '(paris|alexandria|houston|kobe|salvador|sydney)'
 
 const fixPerson = function(doc) {
-  //j.k Rowling
-  doc.match('#Noun van der? #Noun').tagSafe('#Person', 'von der noun')
-  //king of spain
-  doc.match('(king|queen|prince|saint|lady) of? #Noun').tagSafe('#Person', 'king-of-noun')
-  //mr Putin
-  doc.match('(mr|mrs|ms|dr) (#TitleCase|#Possessive)+').tag('#Person', 'mr-putin')
-
   // clues from honorifics
   let hon = doc.if('#Honorific')
   if (hon.found === true) {
+    //mr Putin
+    doc.match('(mr|mrs|ms|dr) (#TitleCase|#Possessive)+').tag('#Person', 'mr-putin')
     //mr X
     hon.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase')
     //remove single 'mr'

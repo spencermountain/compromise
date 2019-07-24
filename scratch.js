@@ -6,12 +6,8 @@ nlp.extend(require('./plugins/values/src'))
 //   .match('a [spencer kelly] eats')
 //   .debug()
 
-// nlp('Toronto Toronto Toronto detroit')
-//   .match('#Noun+ detroit')
-//   .debug()
-
-nlp('i am cool')
-  .replace('cool', 'stupid')
+nlp('Toronto Toronto Toronto detroit')
+  .match('#Noun+ detroit')
   .debug()
 
 // let doc = nlp('i spent five hundred')

@@ -1,14 +1,19 @@
 const build = require('../../01-tokenizer')
 
 /** substitute-in new content */
-exports.replace = function(match, replace) {
-  let m = this.match(match)
-  m.list.forEach(p => {
+exports.replaceWith = function(replace) {
+  this.list.forEach(p => {
     let newPhrases = build.fromText(replace, this.pool())
     let tmpDoc = this.buildFrom(newPhrases)
     tmpDoc.tagger()
-    p.replace(newPhrases[0], this)
+    p.replace(newPhrases[0], this) //TODO: support multi-sentence replacements
   })
+  return this
+}
+
+/** search and replace match with new content */
+exports.replace = function(match, replace) {
+  this.match(match).replaceWith(replace)
   return this
 }
 

@@ -1,4 +1,4 @@
-const textValue = require('./textCardinal')
+const textValue = require('../toText')
 const irregulars = {
   one: 'first',
   two: 'second',
@@ -22,7 +22,7 @@ const irregulars = {
  * convert a javascript number to 'twentieth' format
  * */
 const textOrdinal = num => {
-  let words = textValue(num)
+  let words = textValue(num).split(' ')
   //convert the last number to an ordinal
   let last = words[words.length - 1]
   if (irregulars.hasOwnProperty(last)) {

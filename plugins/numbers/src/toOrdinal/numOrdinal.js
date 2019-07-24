@@ -1,4 +1,4 @@
-const toString = require('./toString')
+const toString = require('../_toString')
 
 /**
  * turn a number like 5 into an ordinal like 5th

@@ -4,7 +4,6 @@ const steps = {
   regex: require('./03-regex'),
   suffix: require('./04-suffixes'),
   emoji: require('./05-emoji'),
-  // web: require('./05-webText'),
 }
 
 //'lookups' look at a term by itself

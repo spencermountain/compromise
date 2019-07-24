@@ -1,10 +1,6 @@
-# greedy bug
-  - nlp('Toronto Toronto Toronto detroit').match('toronto+ detroit')
-  - 
-# .replace()
-  - .delete() is working
-  - 
+# remove/cleanup nlp-plugin
 
 # .values()
-
+  - cleanup tags/method names
+  - 
 # .verbs()

@@ -1,6 +1,6 @@
-const toString = require('./toString')
+const toString = require('../_toString')
 /**
- * turns an integer/float into a textual number, like 'fifty-five'
+ * turns an integer/float into.ber, like 'fifty-five'
  */
 
 const tens_mapping = [
@@ -112,7 +112,7 @@ const to_text = function(num) {
   //big numbers, north of sextillion, aren't gonna work well..
   //keep them small..
   if (num > 1e21) {
-    return [String(num)]
+    return String(num)
   }
   let arr = []
   //handle negative numbers
@@ -142,7 +142,7 @@ const to_text = function(num) {
   if (arr.length === 0) {
     arr[0] = ''
   }
-  return arr
+  return arr.join(' ')
 }
 
 module.exports = to_text

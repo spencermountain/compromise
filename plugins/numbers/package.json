@@ -1,13 +1,13 @@
 {
-  "name": "compromise-values",
+  "name": "compromise-numbers",
   "description": "plugin for nlp-compromise",
   "version": "0.0.1",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
-  "main": "./builds/compromise-values.js",
-  "unpkg": "./builds/compromise-values.min.js",
+  "main": "./builds/compromise-numbers.js",
+  "unpkg": "./builds/compromise-numbers.min.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/nlp-compromise/compromise-values.git"
+    "url": "git://github.com/nlp-compromise/compromise-numbers.git"
   },
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",

@@ -45,8 +45,8 @@ var data = [
   [require('./adjectives/comparables'), 'Comparable'],
   [require('./adverbs'), 'Adverb'],
   //numbers
-  [require('./numbers/ordinals'), 'Ordinal'],
-  [require('./numbers/cardinals'), 'Cardinal'],
+  [require('./numbers/ordinals'), ['TextNumber', 'Ordinal']],
+  [require('./numbers/cardinals'), ['TextNumber', 'Cardinal']],
   //misc
   [require('./expressions'), 'Expression'],
   [require('./prepositions'), 'Preposition'],

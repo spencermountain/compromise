@@ -21,9 +21,6 @@ module.exports = {
   NumericValue: {
     isA: 'Value',
   },
-  NiceNumber: {
-    isA: 'Value',
-  },
   Money: {
     //isA: 'Cardinal'
   },

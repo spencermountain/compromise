@@ -1,9 +1,3 @@
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
 //this is a not-well-thought-out way to reduce our dependence on `object===object` stuff
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split('');
 
@@ -3998,6 +3992,10 @@ var _02Misc = {
 	termList: termList
 };
 
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
 var _03Split$1 = createCommonjsModule(function (module, exports) {
 /** add these new terms to the front*/
 exports.prepend = function(str) {
@@ -7221,16 +7219,19 @@ nlp.verbose = function(bool = true) {
 /** current version of the library */
 nlp.version = _version;
 
-//and then all the exports..
-if (typeof self !== 'undefined') {
-  self.nlp = nlp; // Web Worker
-}
-if (typeof window !== 'undefined') {
-  window.nlp = nlp; // Browser
-}
-if (typeof commonjsGlobal !== 'undefined') {
-  commonjsGlobal.nlp = nlp; // NodeJS
-}
+// //and then all the exports..
+// if (typeof self !== 'undefined') {
+//   self.nlp = nlp // Web Worker
+// }
+// if (typeof window !== 'undefined') {
+//   window.nlp = nlp // Browser
+// }
+// if (typeof global !== 'undefined') {
+//   global.nlp = nlp // NodeJS
+// }
+// if (typeof define === 'function' && define.amd) {
+//   define(nlp) //don't forget amd!
+// }
 
 var src = nlp;
 

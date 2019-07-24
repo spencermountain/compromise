@@ -47,18 +47,18 @@ nlp.verbose = function(bool = true) {
 /** current version of the library */
 nlp.version = version
 
-//and then all the exports..
-if (typeof self !== 'undefined') {
-  self.nlp = nlp // Web Worker
-}
-if (typeof window !== 'undefined') {
-  window.nlp = nlp // Browser
-}
-if (typeof global !== 'undefined') {
-  global.nlp = nlp // NodeJS
-}
-if (typeof define === 'function' && define.amd) {
-  define(nlp) //don't forget amd!
-}
+// //and then all the exports..
+// if (typeof self !== 'undefined') {
+//   self.nlp = nlp // Web Worker
+// }
+// if (typeof window !== 'undefined') {
+//   window.nlp = nlp // Browser
+// }
+// if (typeof global !== 'undefined') {
+//   global.nlp = nlp // NodeJS
+// }
+// if (typeof define === 'function' && define.amd) {
+//   define(nlp) //don't forget amd!
+// }
 
 module.exports = nlp

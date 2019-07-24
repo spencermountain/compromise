@@ -19,8 +19,9 @@ export default [
     output: [
       {
         file: 'builds/compromise.js',
-        format: 'cjs',
+        format: 'umd',
         sourcemap: true,
+        name: 'nlp',
       },
     ],
     plugins: [resolve(), json(), commonjs()],
@@ -30,7 +31,8 @@ export default [
     output: [
       {
         file: 'builds/compromise.min.js',
-        format: 'cjs',
+        format: 'umd',
+        name: 'nlp',
       },
     ],
     plugins: [resolve(), json(), commonjs(), terser()],

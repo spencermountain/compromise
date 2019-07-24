@@ -31,12 +31,14 @@ const stitchIn = function(main, newPhrase) {
 
 //recursively increase the length of all parent phrases
 const stretchAll = function(doc, id, len) {
-  //find our phrase to stretch
   let phrase = doc.list.find(p => p.hasId(id))
   phrase.length += len
-  if (doc.from) {
-    stretchAll(doc.from, id, len)
-  }
+
+  let parents = doc.parents()
+  parents.forEach(parent => {
+    phrase = parent.list.find(p => p.hasId(id))
+    phrase.length += len
+  })
 }
 
 //append one phrase onto another

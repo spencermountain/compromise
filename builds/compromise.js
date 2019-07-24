@@ -787,12 +787,18 @@
 
   //recursively increase the length of all parent phrases
   const stretchAll = function(doc, id, len) {
-    //find our phrase to stretch
     let phrase = doc.list.find(p => p.hasId(id));
     phrase.length += len;
-    if (doc.from) {
-      stretchAll(doc.from, id, len);
-    }
+
+    let parents = doc.parents();
+    parents.forEach(parent => {
+      phrase = parent.list.find(p => p.hasId(id));
+      phrase.length += len;
+    });
+    //find our phrase to stretch
+    // if (doc.from) {
+    // stretchAll(doc.from, id, len)
+    // }
   };
 
   //append one phrase onto another
@@ -3409,20 +3415,15 @@
     '&': 'Conjunction',
     was: ['Copula', 'PastTense'],
     is: ['Copula', 'PresentTense'],
+    not: ['Negative', 'Verb'],
 
     //pronouns
     i: ['Pronoun', 'Singular'],
     he: ['Pronoun', 'Singular'],
     she: ['Pronoun', 'Singular'],
     it: ['Pronoun', 'Singular'],
-    // 'me',
-    // 'him',
-    // 'her',
     they: ['Pronoun', 'Plural'],
     we: ['Pronoun', 'Plural'],
-    // 'them',
-    // 'ourselves',
-    // 'us',
   };
 
   //nouns that also signal the title of an unknown organization
@@ -6156,10 +6157,10 @@
     //create phrase from ['would', 'not']
     let phrase = _01Tokenizer.fromText(found.join(' '), doc.pool())[0];
     //tag it
-    let tmpDoc = doc.buildFrom([phrase]);
-    tmpDoc.tagger();
+    let terms = phrase.terms();
+    _01Lexicon(terms, doc.world);
     //make these terms implicit
-    phrase.terms().forEach((t, i) => {
+    terms.forEach((t, i) => {
       t.implicit = t.text;
       t.text = '';
       // remove whitespace for implicit terms

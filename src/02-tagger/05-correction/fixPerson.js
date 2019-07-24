@@ -1,92 +1,92 @@
+const maybeNoun =
+  '(rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity)'
+const maybeVerb = '(pat|wade|ollie|will|rob|buck|bob|mark|jack)'
+const maybeAdj = '(misty|rusty|dusty|rich|randy)'
+const maybeDate = '(april|june|may|jan|august|eve)'
+const maybePlace = '(paris|alexandria|houston|kobe|salvador|sydney)'
+
 const fixPerson = function(doc) {
-  // 'john E rockefeller'
-  doc.match('#FirstName [/^[^aiurck]$/]').tag(['Acronym', 'Person'], 'john-e')
-
-  //Doctor john smith jr
-  doc.match('#Honorific #Person').tag('Person', 'honorific-person')
-  doc.match('#Person (jr|sr|md)').tag('Person', 'person-honorific')
-
+  //j.k Rowling
+  doc.match('#Noun van der? #Noun').tagSafe('#Person', 'von der noun')
+  //king of spain
+  doc.match('(king|queen|prince|saint|lady) of? #Noun').tagSafe('#Person', 'king-of-noun')
   //mr Putin
   doc.match('(mr|mrs|ms|dr) (#TitleCase|#Possessive)+').tag('#Person', 'mr-putin')
 
-  //a bunch of ambiguous first names
-  let maybeNoun =
-    '(rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity)'
-  if (doc.has(maybeNoun)) {
-    doc.match('(#Determiner|#Adverb|#Pronoun|#Possessive) [' + maybeNoun + ']').tag('Noun', 'the-ray')
-    doc
-      .match(maybeNoun + ' (#Person|#Acronym|#TitleCase)')
-      .canBe('#Person')
-      .tag('Person', 'ray-smith')
+  // clues from honorifics
+  let hon = doc.if('#Honorific')
+  if (hon.found === true) {
+    //mr X
+    doc.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase')
+    //remove single 'mr'
+    doc.match('^#Honorific$').unTag('Person', 'single-honorific')
+    //first general..
+    doc.match('[(1st|2nd|first|second)] #Honorific').tag('Honorific', 'ordinal-honorific')
   }
 
-  //verbs or people-names
-  let maybeVerb = '(pat|wade|ollie|will|rob|buck|bob|mark|jack)'
-  if (doc.has(maybeVerb)) {
-    doc.match('(#Modal|#Adverb) [' + maybeVerb + ']').tag('Verb', 'would-mark')
-    doc.match(maybeVerb + ' (#Person|#TitleCase)').tag('Person', 'rob-smith')
+  let person = doc.if('#Person')
+  if (person.found === true) {
+    //Frank jr
+    person.match('#Person (jr|sr|md)').tag('Person', 'person-honorific')
+    //peter II
+    person.match('#Person #Person the? #RomanNumeral').tag('Person', 'correction-roman-numeral')
+    //'Professor Fink', 'General McCarthy'
+    person.match('#Honorific #Person').tag('Person', 'Honorific-Person')
+    // 'john E rockefeller'
+    person.match('#FirstName [/^[^aiurck]$/]').tag(['Acronym', 'Person'], 'john-e')
+    //Doctor john smith jr
+    person.match('#Honorific #Person').tag('Person', 'honorific-person')
+    //general pearson
+    person
+      .match('[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person')
+      .tag('Honorific', 'ambg-honorifics')
+
+    //a bunch of ambiguous first names
+
+    //Nouns: 'viola' or 'sky'
+    let ambigNoun = person.if(maybeNoun)
+    if (ambigNoun.found === true) {
+      ambigNoun.match('(#Determiner|#Adverb|#Pronoun|#Possessive) [' + maybeNoun + ']').tag('Noun', 'the-ray')
+      ambigNoun.match(maybeNoun + ' (#Person|#Acronym|#TitleCase)').tagSafe('Person', 'ray-smith')
+    }
+
+    //Verbs: 'pat' or 'wade'
+    let ambigVerb = person.if(maybeVerb)
+    if (ambigVerb === true) {
+      ambigVerb.match('(#Modal|#Adverb) [' + maybeVerb + ']').tag('Verb', 'would-mark')
+      ambigVerb.match(maybeVerb + ' (#Person|#TitleCase)').tag('Person', 'rob-smith')
+    }
+
+    //Adjectives: 'rusty' or 'rich'
+    let ambigAdj = person.if(maybeAdj)
+    if (ambigAdj.found === true) {
+      ambigAdj.match('#Adverb [' + maybeAdj + ']').tag('Adjective', 'really-rich')
+      ambigAdj.match(maybeAdj + ' (#Person|#TitleCase)').tag('Person', 'randy-smith')
+    }
+
+    //Dates: 'june' or 'may'
+    let ambigDate = person.if(maybeDate)
+    if (ambigDate.found === true) {
+      ambigDate.match(String(maybeDate) + ' (#Person|#TitleCase)').tagSafe('Person', 'june-smith')
+      ambigDate.match('(in|during|on|by|before|#Date) [' + maybeDate + ']').tagSafe('Date', 'in-june')
+      ambigDate.match(maybeDate + ' (#Date|#Value)').tagSafe('Date', 'june-5th')
+    }
+
+    //Places: paris or syndey
+    let ambigPlace = person.if(maybePlace)
+    if (ambigPlace.found === true) {
+      ambigPlace.match('(in|near|at|from|to|#Place) [' + maybePlace + ']').tagSafe('Place', 'in-paris')
+      ambigPlace.match('[' + maybePlace + '] #Place').tagSafe('Place', 'paris-france')
+      ambigPlace.match('[' + maybePlace + '] #Person').tagSafe('Person', 'paris-hilton')
+    }
+
+    //this one is tricky
+    let al = person.if('al')
+    if (al.found === true) {
+      al.match('al (#Person|#TitleCase)').tagSafe('#Person', 'al-borlen')
+      al.match('#TitleCase al #TitleCase').tagSafe('#Person', 'arabic-al-arabic')
+    }
   }
-
-  //adjectives or people-names
-  let maybeAdj = '(misty|rusty|dusty|rich|randy)'
-  if (doc.has(maybeAdj)) {
-    doc.match('#Adverb [' + maybeAdj + ']').tag('Adjective', 'really-rich')
-    doc.match(maybeAdj + ' (#Person|#TitleCase)').tag('Person', 'randy-smith')
-  }
-
-  //dates as people names
-  let maybeDate = '(april|june|may|jan|august|eve)'
-  if (doc.has(maybeDate)) {
-    doc
-      .match(String(maybeDate) + ' (#Person|#TitleCase)')
-      .canBe('#Person')
-      .tag('Person', 'june-smith')
-    doc
-      .match('(in|during|on|by|before|#Date) [' + maybeDate + ']')
-      .canBe('#Date')
-      .tag('Date', 'in-june')
-    doc
-      .match(maybeDate + ' (#Date|#Value)')
-      .canBe('#Date')
-      .tag('Date', 'june-5th')
-  }
-
-  //place-names as people-names
-  let maybePlace = '(paris|alexandria|houston|kobe|salvador|sydney)'
-  if (doc.has(maybePlace)) {
-    doc
-      .match('(in|near|at|from|to|#Place) [' + maybePlace + ']')
-      .canBe('#Place')
-      .tag('Place', 'in-paris')
-    doc
-      .match('[' + maybePlace + '] #Place')
-      .canBe('#Place')
-      .tag('Place', 'paris-france')
-    doc
-      .match('[' + maybePlace + '] #Person')
-      .canBe('#Person')
-      .tag('Person', 'paris-hilton')
-  }
-
-  //this one is tricky
-  if (doc.match('al')) {
-    doc
-      .match('al (#Person|#TitleCase)')
-      .canBe('#Person')
-      .tag('#Person', 'al-borlen')
-    doc
-      .match('#TitleCase al #TitleCase')
-      .canBe('#Person')
-      .tag('#Person', 'arabic-al-arabic')
-  }
-
-  //ambiguous honorifics
-  doc
-    .match('[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person')
-    .tag('Honorific', 'ambg-honorifics')
-
-  //first general..
-  doc.match('[(1st|2nd|first|second)] #Honorific').tag('Honorific', 'ordinal-honorific')
 
   //methods requiring a firstname match
   if (doc.has('#FirstName')) {
@@ -190,22 +190,6 @@ const fixPerson = function(doc) {
       .tag('#MaleName', 'correction-poe')
   }
 
-  //j.k Rowling
-  doc.match('#Noun van der? #Noun').tagSafe('#Person', 'von der noun')
-
-  //king of spain
-  doc.match('(king|queen|prince|saint|lady) of? #Noun').tagSafe('#Person', 'king-of-noun')
-
-  //mr X
-  doc.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase')
-  //peter II
-  doc.match('#Person #Person the? #RomanNumeral').tag('Person', 'correction-roman-numeral')
-
-  //'Professor Fink', 'General McCarthy'
-  doc.match('#Honorific #Person').tag('Person', 'Honorific-Person')
-
-  //remove single 'mr'
-  doc.match('^#Honorific$').unTag('Person', 'single-honorific')
   return doc
 }
 module.exports = fixPerson

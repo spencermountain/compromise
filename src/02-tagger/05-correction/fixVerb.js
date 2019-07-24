@@ -1,117 +1,115 @@
 //
 const fixVerb = function(doc) {
-  if (doc.has('#Verb')) {
+  let vb = doc.if('#Verb')
+  if (vb.found) {
     //still make
-    doc.match('[still] #Verb').tag('Adverb', 'still-verb')
+    vb.match('[still] #Verb').tag('Adverb', 'still-verb')
     //'u' as pronoun
-    doc.match('[u] #Verb').tag('Pronoun', 'u-pronoun-1')
+    vb.match('[u] #Verb').tag('Pronoun', 'u-pronoun-1')
     //is no walk
-    doc.match('is no [#Verb]').tag('Noun', 'is-no-verb')
+    vb.match('is no [#Verb]').tag('Noun', 'is-no-verb')
     //different views than
-    doc.match('[#Verb] than').tag('Noun', 'correction')
+    vb.match('[#Verb] than').tag('Noun', 'correction')
     //her polling
-    doc.match('#Possessive [#Verb]').tag('Noun', 'correction-possessive')
+    vb.match('#Possessive [#Verb]').tag('Noun', 'correction-possessive')
     //there are reasons
-    doc.match('there (are|were) #Adjective? [#PresentTense]').tag('Plural', 'there-are')
+    vb.match('there (are|were) #Adjective? [#PresentTense]').tag('Plural', 'there-are')
     //jack seems guarded
-    doc.match('#Singular (seems|appears) #Adverb? [#PastTense$]').tag('Adjective', 'seems-filled')
-
+    vb.match('#Singular (seems|appears) #Adverb? [#PastTense$]').tag('Adjective', 'seems-filled')
     //fall over
-    doc.match('#PhrasalVerb [#PhrasalVerb]').tag('Particle', 'phrasal-particle')
+    vb.match('#PhrasalVerb [#PhrasalVerb]').tag('Particle', 'phrasal-particle')
   }
 
-  if (doc.has('(who|what|where|why|how|when)')) {
+  let m = doc.if('(who|what|where|why|how|when)')
+  if (m.found) {
     //the word 'how'
-    doc
-      .match('^how')
+    m.match('^how')
       .tag('QuestionWord', 'how-question')
       .tag('QuestionWord', 'how-question')
-    doc
-      .match('how (#Determiner|#Copula|#Modal|#PastTense)')
+    m.match('how (#Determiner|#Copula|#Modal|#PastTense)')
       .term(0)
       .tag('QuestionWord', 'how-is')
     // //the word 'which'
-    doc
-      .match('^which')
+    m.match('^which')
       .tag('QuestionWord', 'which-question')
       .tag('QuestionWord', 'which-question')
-    doc
-      .match('which . (#Noun)+ #Pronoun')
+    m.match('which . (#Noun)+ #Pronoun')
       .term(0)
       .tag('QuestionWord', 'which-question2')
-    doc.match('which').tag('QuestionWord', 'which-question3')
+    m.match('which').tag('QuestionWord', 'which-question3')
     //where
 
     //how he is driving
-    let word = doc.match('[#QuestionWord] #Noun #Copula #Adverb? (#Verb|#Adjective)')
+    let word = m.match('[#QuestionWord] #Noun #Copula #Adverb? (#Verb|#Adjective)')
     word.unTag('QuestionWord').tag('Conjunction', 'how-he-is-x')
     //when i go fishing
-    word = doc.match('#QuestionWord #Noun #Adverb? #Infinitive not? #Gerund')
+    word = m.match('#QuestionWord #Noun #Adverb? #Infinitive not? #Gerund')
     word.unTag('QuestionWord').tag('Conjunction', 'when i go fishing')
   }
 
-  if (doc.has('#Copula')) {
+  let cop = doc.if('#Copula')
+  if (cop.found === true) {
     //is eager to go
-    doc
+    cop
       .match('#Copula #Adjective to #Verb')
       .match('#Adjective to')
       .tag('Verb', 'correction')
 
     //is mark hughes
-    doc.match('#Copula [#Infinitive] #Noun').tag('Noun', 'is-pres-noun')
+    cop.match('#Copula [#Infinitive] #Noun').tag('Noun', 'is-pres-noun')
 
-    doc.match('[#Infinitive] #Copula').tag('Noun', 'infinitive-copula')
+    cop.match('[#Infinitive] #Copula').tag('Noun', 'infinitive-copula')
 
     //sometimes adverbs - 'pretty good','well above'
-    doc
+    cop
       .match('#Copula (pretty|dead|full|well) (#Adjective|#Noun)')
       .ifNo('#Comma')
       .tag('#Copula #Adverb #Adjective', 'sometimes-adverb')
 
     //sometimes not-adverbs
-    doc.match('#Copula [(just|alone)$]').tag('Adjective', 'not-adverb')
+    cop.match('#Copula [(just|alone)$]').tag('Adjective', 'not-adverb')
     //jack is guarded
-    doc.match('#Singular is #Adverb? [#PastTense$]').tag('Adjective', 'is-filled')
+    cop.match('#Singular is #Adverb? [#PastTense$]').tag('Adjective', 'is-filled')
   }
 
   //went to sleep
   // doc.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
 
   //support a splattering of auxillaries before a verb
-  let advb = '(#Adverb|not)+?'
-  if (doc.has(advb)) {
+  let advb = doc.if('(#Adverb|not)+?')
+  if (advb.found === true) {
     //had walked
-    doc
+    advb
       .match(`(has|had) ${advb} #PastTense`)
       .not('#Verb$')
       .tag('Auxiliary', 'had-walked')
     //was walking
-    doc
+    advb
       .match(`#Copula ${advb} #Gerund`)
       .not('#Verb$')
       .tag('Auxiliary', 'copula-walking')
     //been walking
-    doc
+    advb
       .match(`(be|been) ${advb} #Gerund`)
       .not('#Verb$')
       .tag('Auxiliary', 'be-walking')
     //would walk
-    doc
+    advb
       .match(`(#Modal|did) ${advb} #Verb`)
       .not('#Verb$')
       .tag('Auxiliary', 'modal-verb')
     //would have had
-    doc
+    advb
       .match(`#Modal ${advb} have ${advb} had ${advb} #Verb`)
       .not('#Verb$')
       .tag('Auxiliary', 'would-have')
     //would be walking
-    doc
+    advb
       .match(`(#Modal) ${advb} be ${advb} #Verb`)
       .not('#Verb$')
       .tag('Auxiliary', 'would-be')
     //would been walking
-    doc
+    advb
       .match(`(#Modal|had|has) ${advb} been ${advb} #Verb`)
       .not('#Verb$')
       .tag('Auxiliary', 'would-be')
@@ -119,31 +117,33 @@ const fixVerb = function(doc) {
     // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
   }
 
-  if (doc.has('#Gerund')) {
+  let gerund = doc.if('#Gerund')
+  if (gerund.found === true) {
     //walking is cool
-    doc
+    gerund
       .match('#Gerund #Adverb? not? #Copula')
       .firstTerm()
       .tag('Activity', 'gerund-copula')
     //walking should be fun
-    doc
+    gerund
       .match('#Gerund #Modal')
       .firstTerm()
       .tag('Activity', 'gerund-modal')
     //running-a-show
-    doc.match('#Gerund #Determiner [#Infinitive]').tag('Noun', 'running-a-show')
+    gerund.match('#Gerund #Determiner [#Infinitive]').tag('Noun', 'running-a-show')
     //setting records
     // doc.match('#Gerund [#PresentTense]').tag('Plural', 'setting-records');
   }
 
   //will be cool -> Copula
-  if (doc.has('will #Adverb? not? #Adverb? be')) {
+  let willBe = doc.if('will #Adverb? not? #Adverb? be')
+  if (willBe.found === true) {
     //will be running (not copula
-    if (doc.has('will #Adverb? not? #Adverb? be #Gerund') === false) {
+    if (willBe.has('will #Adverb? not? #Adverb? be #Gerund') === false) {
       //tag it all
-      doc.match('will not? be').tag('Copula', 'will-be-copula')
+      willBe.match('will not? be').tag('Copula', 'will-be-copula')
       //for more complex forms, just tag 'be'
-      doc
+      willBe
         .match('will #Adverb? not? #Adverb? be #Adjective')
         .match('be')
         .tag('Copula', 'be-copula')

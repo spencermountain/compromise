@@ -3,31 +3,32 @@ const fixValue = function(doc) {
   //canadian dollar, Brazilian pesos
   doc.match('#Demonym #Currency').tag('Currency', 'demonym-currency')
 
-  if (doc.has('#Value')) {
+  let val = doc.if('#Value')
+  if (val.found === true) {
     //half a million
-    doc.match('half a? #Value').tag('Value', 'half-a-value') //(quarter not ready)
+    val.match('half a? #Value').tag('Value', 'half-a-value') //(quarter not ready)
     //five and a half
-    doc.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half')
+    val.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half')
 
     //all values are either ordinal or cardinal
     // doc.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
 
     //money
-    doc
+    val
       .match('#Value+ #Currency')
       .tag('Money', 'value-currency')
       .lastTerm()
       .tag('Unit', 'money-unit')
-    doc.match('#Money and #Money #Currency?').tag('Money', 'money-and-money')
+    val.match('#Money and #Money #Currency?').tag('Money', 'money-and-money')
 
     //1 800 PhoneNumber
-    doc.match('1 #Value #PhoneNumber').tag('PhoneNumber', '1-800-Value')
+    val.match('1 #Value #PhoneNumber').tag('PhoneNumber', '1-800-Value')
 
     //(454) 232-9873
-    doc.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber')
+    val.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber')
 
     //two hundredth
-    doc
+    val
       .match('#TextValue+')
       .match('#Cardinal+ #Ordinal')
       .tag('Ordinal', 'two-hundredth')

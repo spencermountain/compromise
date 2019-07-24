@@ -1,12 +1,12 @@
 var nlp = require('./src/index')
-nlp.verbose(true)
+// nlp.verbose(true)
 // nlp.extend(require('./plugins/values/src'))
 // let m = nlp('a spencer  kelly eats the glue z')
 //   // .match('a [spencer kelly] eats')
 //   .match('a [spencer kelly] eats')
 //   .debug()
 
-nlp('every month since March.').debug()
+nlp('feb 5th 2018').debug()
 
 // console.time('one')
 // let doc = nlp('hello world')

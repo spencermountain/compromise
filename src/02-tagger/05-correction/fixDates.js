@@ -9,28 +9,24 @@ const units = '(hundred|thousand|million|billion|trillion|quadrillion|quintillio
 
 //ensure a year is approximately typical for common years
 //please change in one thousand years
-const tagYear = (v, reason) => {
-  if (v.found !== true) {
+const tagYear = (m, reason) => {
+  if (m.found !== true) {
     return
   }
-  v.list.forEach(ts => {
-    let num = parseInt(ts.terms[0].normal, 10)
-    if (num && num > 1000 && num < 3000) {
-      ts.terms[0].tag('Year', reason)
-    }
-  })
+  let num = parseInt(m.out('normal'), 10)
+  if (num && num > 1000 && num < 3000) {
+    m.tag('Year', reason)
+  }
 }
 //same, but for less-confident values
-const tagYearSafer = (v, reason) => {
-  if (v.found !== true) {
+const tagYearSafe = (m, reason) => {
+  if (m.found !== true) {
     return
   }
-  v.list.forEach(ts => {
-    let num = parseInt(ts.terms[0].normal, 10)
-    if (num && num > 1900 && num < 2030) {
-      ts.terms[0].tag('Year', reason)
-    }
-  })
+  let num = parseInt(m.out('normal'), 10)
+  if (num && num > 1900 && num < 2030) {
+    m.tag('Year', reason)
+  }
 }
 
 const fixDates = function(doc) {
@@ -257,37 +253,37 @@ const fixDates = function(doc) {
   }
 
   //year/cardinal tagging
-  if (doc.has('#Cardinal')) {
-    //TODO: uncomment
-    // let v = doc.match(`#Date #Value #Cardinal`).lastTerm()
-    // tagYear(v, 'date-value-year')
-    // //scoops up a bunch
-    // v = doc.match(`#Date+ #Cardinal`).lastTerm()
-    // tagYear(v, 'date-year')
-    // //feb 8 2018
-    // v = doc.match(`#Month #Value #Cardinal`).lastTerm()
-    // tagYear(v, 'month-value-year')
-    // //feb 8 to 10th 2018
-    // v = doc.match(`#Month #Value to #Value #Cardinal`).lastTerm()
-    // tagYear(v, 'month-range-year')
-    // //in 1998
-    // v = doc.match(`(in|of|by|during|before|starting|ending|for|year) #Cardinal`).lastTerm()
-    // tagYear(v, 'in-year')
-    // //q2 2009
-    // v = doc.match('(q1|q2|q3|q4) [#Cardinal]')
-    // tagYear(v, 'in-year')
-    // //2nd quarter 2009
-    // v = doc.match('#Ordinal quarter [#Cardinal]')
-    // tagYear(v, 'in-year')
-    // //in the year 1998
-    // v = doc.match('the year [#Cardinal]')
-    // tagYear(v, 'in-year')
-    // //it was 1998
-    // v = doc.match('it (is|was) [#Cardinal]')
-    // tagYearSafer(v, 'in-year')
-    // //was 1998 and...
-    // v = doc.match(`#Cardinal !#Plural`).firstTerm()
-    // tagYearSafer(v, 'year-unsafe')
+  let cardinal = doc.if('#Cardinal')
+  if (cardinal.found === true) {
+    let v = cardinal.match(`#Date #Value [#Cardinal]`)
+    tagYear(v, 'date-value-year')
+    //scoops up a bunch
+    v = cardinal.match(`#Date+ [#Cardinal]`)
+    tagYear(v, 'date-year')
+    //feb 8 2018
+    v = cardinal.match(`#Month #Value [#Cardinal]`)
+    tagYear(v, 'month-value-year')
+    //feb 8 to 10th 2018
+    v = cardinal.match(`#Month #Value to #Value [#Cardinal]`)
+    tagYear(v, 'month-range-year')
+    //in 1998
+    v = cardinal.match(`(in|of|by|during|before|starting|ending|for|year) [#Cardinal]`)
+    tagYear(v, 'in-year')
+    //q2 2009
+    v = cardinal.match('(q1|q2|q3|q4) [#Cardinal]')
+    tagYear(v, 'in-year')
+    //2nd quarter 2009
+    v = cardinal.match('#Ordinal quarter [#Cardinal]')
+    tagYear(v, 'in-year')
+    //in the year 1998
+    v = cardinal.match('the year [#Cardinal]')
+    tagYear(v, 'in-year')
+    //it was 1998
+    v = cardinal.match('it (is|was) [#Cardinal]')
+    tagYearSafe(v, 'in-year')
+    //was 1998 and...
+    v = cardinal.match(`[#Cardinal] !#Plural`)
+    tagYearSafe(v, 'year-unsafe')
   }
 
   let time = doc.if('#Time')

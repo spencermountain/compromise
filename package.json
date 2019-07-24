@@ -20,7 +20,8 @@
     "watch": "amble ./scratch.js",
     "stress": "node ./stress/stress.js",
     "speed": "node ./stress/speed.js",
-    "demo": "python -m SimpleHTTPServer 8888"
+    "demo": "python -m SimpleHTTPServer 8888",
+    "lint": "eslint ./src/"
   },
   "files": [
     "builds/",

@@ -1305,13 +1305,13 @@ const syntax = function(str) {
 };
 var syntax_1 = syntax;
 
-let count = 0;
-setTimeout(() => {
-  console.log('\nmatchALL: ' + count);
-}, 1000);
+// let count = 0
+// setTimeout(() => {
+//   console.log('\nmatchALL: ' + count)
+// }, 1000)
 /**  returns a simple array of arrays */
 const matchAll = function(p, regs, matchOne = false) {
-  count += 1;
+  // count += 1
   //if we forgot to parse it..
   if (typeof regs === 'string') {
     regs = syntax_1(regs);
@@ -3959,7 +3959,7 @@ var dehyphenate = function() {
   this.list.forEach(p => {
     let terms = p.terms();
     //remove whitespace
-    terms.forEach((t, i) => {
+    terms.forEach(t => {
       if (hasHyphen.test(t.postText)) {
         t.postText = ' ';
       }
@@ -6221,16 +6221,7 @@ const tagOrgs = function(doc, termArr) {
       }
     }
   });
-  if (doc.has('#Acronym')) {
-    doc
-      .match('the [#Acronym]')
-      .notIf('(iou|fomo|yolo|diy|dui|nimby)')
-      .tag('Organization', 'the-acronym');
-    doc
-      .match('#Acronym')
-      .match('#Possessive')
-      .tag('Organization', 'possessive-acronym');
-  }
+
   return doc
 };
 var _02Organizations = tagOrgs;
@@ -6260,99 +6251,23 @@ var _04Inference = inference;
 
 //mostly pos-corections here
 const miscCorrection = function(doc) {
-  //ambig prepositions/conjunctions
-  if (doc.has('so')) {
-    //so funny
-    doc.match('[so] #Adjective').tag('Adverb', 'so-adv');
-    //so the
-    doc.match('[so] #Noun').tag('Conjunction', 'so-conj');
-    //do so
-    doc.match('do [so]').tag('Noun', 'so-noun');
-  }
-
-  if (doc.has('all')) {
-    //all students
-    doc.match('[all] #Determiner? #Noun').tag('Adjective', 'all-noun');
-    //it all fell apart
-    doc.match('[all] #Verb').tag('Adverb', 'all-verb');
-  }
-
-  //the ambiguous word 'that' and 'which'
-  if (doc.has('(that|which)')) {
-    //remind john that
-    doc.match('#Verb #Adverb? #Noun [(that|which)]').tag('Preposition', 'that-prep');
-
-    //that car goes
-    doc.match('that #Noun [#Verb]').tag('Determiner', 'that-determiner');
-
-    //work, which has been done.
-    doc.match('#Comma [which] (#Pronoun|#Verb)').tag('Preposition', 'which-copula');
-
-    //things that provide
-    // doc.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
-  }
-
-  //like
-  if (doc.has('like')) {
-    doc.match('just [like]').tag('Preposition', 'like-preposition');
-    //folks like her
-    doc.match('#Noun [like] #Noun').tag('Preposition', 'noun-like');
-    //look like
-    doc.match('#Verb [like]').tag('Adverb', 'verb-like');
-    //exactly like
-    doc
-      .match('#Adverb like')
-      .notIf('(really|generally|typically|usually|sometimes|often) [like]')
-      .tag('Adverb', 'adverb-like');
-  }
-
-  if (doc.has('#TitleCase')) {
-    //FitBit Inc
-    doc.match('#TitleCase (ltd|co|inc|dept|assn|bros)').tag('Organization', 'org-abbrv');
-    //Foo District
-    doc
-      .match('#TitleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)')
-      .tag('Region', 'foo-district');
-    //District of Foo
-    doc
-      .match('(district|region|province|municipality|territory|burough|state) of #TitleCase')
-      .tag('Region', 'district-of-Foo');
-  }
-
-  if (doc.has('#Hyphenated')) {
-    //air-flow
-    doc
-      .match('#Hyphenated #Hyphenated')
-      .match('#Noun #Verb')
-      .tag('Noun', 'hyphen-verb');
-    let hyphen = doc.match('#Hyphenated+');
-    if (hyphen.has('#Expression')) {
-      //ooh-wee
-      hyphen.tag('Expression', 'ooh-wee');
-    }
-  }
-
-  if (doc.has('#Place')) {
-    //West Norforlk
-    doc.match('(west|north|south|east|western|northern|southern|eastern)+ #Place').tag('Region', 'west-norfolk');
-    //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
-    doc
-      .match('#City [#Acronym]')
-      .match('(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|or|pa|sc|tn|tx|ut|vt|pr)')
-      .tag('Region', 'us-state');
-  }
-
   //misc:
   //foot/feet
   doc.match('(foot|feet)').tag('Noun', 'foot-noun');
-  doc
-    .match('#Value (foot|feet)')
-    .term(1)
-    .tag('Unit', 'foot-unit');
-
+  //3 feet
+  doc.match('#Value [(foot|feet)]').tag('Unit', 'foot-unit');
   //'u' as pronoun
   doc.match('#Conjunction [u]').tag('Pronoun', 'u-pronoun-2');
-
+  //6 am
+  doc.match('#Holiday (day|eve)').tag('Holiday', 'holiday-day');
+  //timezones
+  doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone');
+  //about to go
+  doc.match('[about to] #Adverb? #Verb').tag(['Auxiliary', 'Verb'], 'about-to');
+  //right of way
+  doc.match('(right|rights) of .').tag('Noun', 'right-of');
+  // u r cool
+  doc.match('u r').tag('Pronoun #Copula');
   //swear-words as non-expression POS
   //nsfw
   doc.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression');
@@ -6363,19 +6278,92 @@ const miscCorrection = function(doc) {
     .not('#Copula')
     .tag('Adjective', 'swears-adjective');
 
-  //6 am
-  doc.match('#Holiday (day|eve)').tag('Holiday', 'holiday-day');
+  //ambig prepositions/conjunctions
+  let so = doc.if('so');
+  if (so.found === true) {
+    //so funny
+    so.match('[so] #Adjective').tag('Adverb', 'so-adv');
+    //so the
+    so.match('[so] #Noun').tag('Conjunction', 'so-conj');
+    //do so
+    so.match('do [so]').tag('Noun', 'so-noun');
+  }
 
-  //timezones
-  doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone');
+  let all = doc.if('all');
+  if (all.found === true) {
+    //all students
+    all.match('[all] #Determiner? #Noun').tag('Adjective', 'all-noun');
+    //it all fell apart
+    all.match('[all] #Verb').tag('Adverb', 'all-verb');
+  }
 
-  //about to go
-  doc.match('[about to] #Adverb? #Verb').tag(['Auxiliary', 'Verb'], 'about-to');
+  //the ambiguous word 'that' and 'which'
+  let which = doc.if('which');
+  if (which.found === true) {
+    //remind john that
+    which.match('#Verb #Adverb? #Noun [(that|which)]').tag('Preposition', 'that-prep');
+    //that car goes
+    which.match('that #Noun [#Verb]').tag('Determiner', 'that-determiner');
+    //work, which has been done.
+    which.match('#Comma [which] (#Pronoun|#Verb)').tag('Preposition', 'which-copula');
+    //things that provide
+    // doc.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
+  }
 
-  //right of way
-  doc.match('(right|rights) of .').tag('Noun', 'right-of');
-  // u r cool
-  doc.match('u r').tag('Pronoun #Copula');
+  //like
+  let like = doc.if('like');
+  if (like.found === true) {
+    like.match('just [like]').tag('Preposition', 'like-preposition');
+    //folks like her
+    like.match('#Noun [like] #Noun').tag('Preposition', 'noun-like');
+    //look like
+    like.match('#Verb [like]').tag('Adverb', 'verb-like');
+    //exactly like
+    like
+      .match('#Adverb like')
+      .notIf('(really|generally|typically|usually|sometimes|often) [like]')
+      .tag('Adverb', 'adverb-like');
+  }
+
+  let title = doc.if('#TitleCase');
+  if (title.found === true) {
+    //FitBit Inc
+    title.match('#TitleCase (ltd|co|inc|dept|assn|bros)').tag('Organization', 'org-abbrv');
+    //Foo District
+    title
+      .match('#TitleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)')
+      .tag('Region', 'foo-district');
+    //District of Foo
+    title
+      .match('(district|region|province|municipality|territory|burough|state) of #TitleCase')
+      .tag('Region', 'district-of-Foo');
+  }
+
+  let hyph = doc.if('#Hyphenated');
+  if (hyph.found === true) {
+    //air-flow
+    hyph
+      .match('#Hyphenated #Hyphenated')
+      .match('#Noun #Verb')
+      .tag('Noun', 'hyphen-verb');
+    //connect hyphenated expressions - 'ooh-wee'
+    hyph
+      .match('#Hyphenated+')
+      .if('#Expression')
+      .tag('Expression', 'ooh-wee');
+  }
+
+  let place = doc.if('#Place');
+  if (place.found === true) {
+    //West Norforlk
+    place.match('(west|north|south|east|western|northern|southern|eastern)+ #Place').tag('Region', 'west-norfolk');
+    //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
+    place
+      .match('#City [#Acronym]')
+      .match('(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|or|pa|sc|tn|tx|ut|vt|pr)')
+      .tag('Region', 'us-state');
+  }
+
   return doc
 };
 
@@ -6481,6 +6469,20 @@ const fixNouns = function(doc) {
     }
   }
 
+  //acronyms
+  let acronym = doc.if('#Acronym');
+  if (acronym.found === true) {
+    acronym
+      .match('the [#Acronym]')
+      .notIf('(iou|fomo|yolo|diy|dui|nimby)')
+      .tag('Organization', 'the-acronym');
+    acronym
+      .match('#Acronym')
+      .match('#Possessive')
+      .tag('Organization', 'possessive-acronym');
+  }
+
+  //possessives
   let poss = doc.if('#Possessive');
   if (poss.found === true) {
     //my buddy
@@ -6909,6 +6911,313 @@ const fixValue = function(doc) {
 };
 var fixValue_1 = fixValue;
 
+//ambiguous 'may' and 'march'
+const preps = '(in|by|before|during|on|until|after|of|within|all)';
+const thisNext = '(last|next|this|previous|current|upcoming|coming)';
+const sections = '(start|end|middle|starting|ending|midpoint|beginning)';
+const seasons = '(spring|summer|winter|fall|autumn)';
+const people = '(january|april|may|june|summer|autumn|jan|sep)';
+const verbs$3 = '(may|march)';
+const units = '(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)';
+
+//ensure a year is approximately typical for common years
+//please change in one thousand years
+const tagYear = (m, reason) => {
+  if (m.found !== true) {
+    return
+  }
+  let num = parseInt(m.out('normal'), 10);
+  if (num && num > 1000 && num < 3000) {
+    m.tag('Year', reason);
+  }
+};
+//same, but for less-confident values
+const tagYearSafe = (m, reason) => {
+  if (m.found !== true) {
+    return
+  }
+  let num = parseInt(m.out('normal'), 10);
+  if (num && num > 1900 && num < 2030) {
+    m.tag('Year', reason);
+  }
+};
+
+const fixDates = function(doc) {
+  doc.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time', 'in-the-night');
+  doc.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm');
+
+  //ambiguous month - person forms
+  let person = doc.if(people);
+  if (person.found === true) {
+    //give to april
+    person.match(`#Infinitive #Determiner? #Adjective? #Noun? (to|for) [${people}]`).tag('Person', 'ambig-person');
+    //remind june
+    person.match(`#Infinitive [${people}]`).tag('Person', 'infinitive-person');
+    //may waits for
+    person.match(`[${people}] #PresentTense (to|for)`).tag('Person', 'ambig-active');
+    //april will
+    person.match(`[${people}] #Modal`).tag('Person', 'ambig-modal');
+    //would april
+    person.match(`#Modal [${people}]`).tag('Person', 'modal-ambig');
+    //with april
+    person.match(`(that|with|for) [${people}]`).tag('Person', 'that-month');
+    //it is may
+    person.match(`#Copula [${people}]`).tag('Person', 'is-may');
+    //may is
+    person.match(`[${people}] #Copula`).tag('Person', 'may-is');
+    //april the 5th
+    person.match(`[${people}] the? #Value`).tag('Month', 'person-value');
+    //wednesday april
+    person.match(`#Date [${people}]`).tag('Month', 'correction-may');
+    //may 5th
+    person.match(`[${people}] the? #Value`).tag('Month', 'may-5th');
+    //5th of may
+    person.match(`#Value of [${people}]`).tag('Month', '5th-of-may');
+    //by april
+    person
+      .match(`${preps} ${people}`)
+      .ifNo('#Holiday')
+      .term(1)
+      .tag('Month', 'preps-month');
+    //this april
+    person.match(`(next|this|last) [${people}]`).tag('Month', 'correction-may'); //maybe not 'this'
+  }
+
+  //ambiguous month - verb-forms
+  let verb = doc.if(verbs$3);
+  if (verb.found === true) {
+    //quickly march
+    verb
+      .match(`#Adverb ${verbs$3}`)
+      .lastTerm()
+      .tag('Infinitive', 'ambig-verb');
+    verb
+      .match(`${verbs$3} #Adverb`)
+      .lastTerm()
+      .tag('Infinitive', 'ambig-verb');
+    //all march
+    verb
+      .match(`${preps} ${verbs$3}`)
+      .lastTerm()
+      .tag('Month', 'in-month');
+    //this march
+    verb
+      .match(`(next|this|last) ${verbs$3}`)
+      .lastTerm()
+      .tag('Month', 'this-month');
+    //with date
+    verb
+      .match(`${verbs$3} the? #Value`)
+      .firstTerm()
+      .tag('Month', 'march-5th');
+    verb
+      .match(`#Value of? ${verbs$3}`)
+      .lastTerm()
+      .tag('Month', '5th-of-march');
+    //nearby
+    verb
+      .match(`[${verbs$3}] .? #Date`)
+      .lastTerm()
+      .tag('Month', 'march-and-feb');
+    verb
+      .match(`#Date .? [${verbs$3}]`)
+      .lastTerm()
+      .tag('Month', 'feb-and-march');
+
+    let march = doc.if('march');
+    if (march.found === true) {
+      //march to
+      march.match('[march] (up|down|back|to|toward)').tag('Infinitive', 'march-to');
+      //must march
+      march.match('#Modal [march]').tag('Infinitive', 'must-march');
+    }
+  }
+  //sun 5th
+  let sun = doc.if('sun');
+  if (sun.found === true) {
+    //sun feb 2
+    sun.match('[sun] #Date').tag('WeekDay', 'sun-feb');
+    //sun the 5th
+    sun
+      .match('sun the #Ordinal')
+      .tag('Date')
+      .firstTerm()
+      .tag('WeekDay', 'sun-the-5th');
+    //the sun
+    sun.match('#Determiner [sun]').tag('Singular', 'the-sun');
+  }
+
+  //sat, nov 5th
+  let sat = doc.if('sat');
+  if (sat.found) {
+    //sat november
+    sat.match('[sat] #Date').tag('WeekDay', 'sat-feb');
+    //this sat
+    sat.match(`${preps} [sat]`).tag('WeekDay', 'sat');
+  }
+
+  //months:
+  let month = doc.if('#Month');
+  if (month.found === true) {
+    //June 5-7th
+    month.match(`#Month #DateRange+`).tag('Date', 'correction-numberRange');
+    //5th of March
+    month.match('#Value of #Month').tag('Date', 'value-of-month');
+    //5 March
+    month.match('#Cardinal #Month').tag('Date', 'cardinal-month');
+    //march 5 to 7
+    month.match('#Month #Value to #Value').tag('Date', 'value-to-value');
+    //march the 12th
+    month.match('#Month the #Value').tag('Date', 'month-the-value');
+  }
+
+  //months:
+  let val = doc.if('#Value');
+  if (val.found === true) {
+    //values
+    val.match('#Value #Abbreviation').tag('Value', 'value-abbr');
+    //seven point five
+    val.match('#Value (point|decimal) #Value').tag('Value', 'value-point-value');
+    //minus 7
+    val.match('(minus|negative) #Value').tag('Value', 'minus-value');
+    // ten grand
+    val.match('#Value grand').tag('Value', 'value-grand');
+    //quarter million
+    val.match('(a|the) [(half|quarter)] #Ordinal').tag('Value', 'half-ordinal');
+    //june 7
+    val
+      .match('(#WeekDay|#Month) #Value')
+      .ifNo('#Money')
+      .tag('Date', 'date-value');
+
+    //7 june
+    val
+      .match('#Value (#WeekDay|#Month)')
+      .ifNo('#Money')
+      .tag('Date', 'value-date');
+
+    //may twenty five
+    val
+      .match('#TextValue #TextValue')
+      .if('#Date')
+      .tag('#Date', 'textvalue-date');
+
+    //eg 'year'
+    let duration = val.if('#Duration');
+    if (duration.found === true) {
+      //for 4 months
+      duration.match('for #Value #Duration').tag('Date', 'for-x-duration');
+      //two days before
+      duration.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction');
+      //for four days
+      duration.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration');
+      //two years old
+      duration.match('#Value #Duration old').unTag('Date', 'val-years-old');
+    }
+    //eg 'trillion'
+    let mult = val.if(units);
+    if (mult.found === true) {
+      mult.match('a #Value').tag('Value', 'a-value');
+      // mult.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');//not ready
+      mult.match(`${units} and #Value`).tag('Value', 'magnitude-and-value');
+    }
+  }
+
+  //seasons
+  let season = doc.if(seasons);
+  if (season.found === true) {
+    season.match(`${preps}? ${thisNext} ${seasons}`).tag('Date', 'thisNext-season');
+    season.match(`the? ${sections} of ${seasons}`).tag('Date', 'section-season');
+  }
+
+  //rest-dates
+  let date = doc.if('#Date');
+  if (date.found === true) {
+    //june the 5th
+    date.match('#Date the? #Ordinal').tag('Date', 'correction');
+    //last month
+    date.match(`${thisNext} #Date`).tag('Date', 'thisNext');
+    //by 5 March
+    date.match('due? (by|before|after|until) #Date').tag('Date', 'by');
+    //next feb
+    date.match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('Date', 'next-feb');
+    //start of june
+    date.match(`the? ${sections} of #Date`).tag('Date', 'section-of');
+    //fifth week in 1998
+    date.match('#Ordinal #Duration in #Date').tag('Date', 'duration-in');
+    //early in june
+    date.match('(early|late) (at|in)? the? #Date').tag('Time', 'early-evening');
+    //tomorrow before 3
+    date
+      .match('#Date (by|before|after|at|@|about) #Cardinal')
+      .not('^#Date')
+      .tag('Time', 'date-before-Cardinal');
+    //saturday am
+    date
+      .match('#Date [(am|pm)]')
+      .unTag('Verb')
+      .unTag('Copula')
+      .tag('Time', 'date-am');
+    //feb to june
+    date
+      .match('#Date (#Preposition|to) #Date')
+      .ifNo('#Duration')
+      .tag('Date', 'date-prep-date');
+  }
+
+  //year/cardinal tagging
+  let cardinal = doc.if('#Cardinal');
+  if (cardinal.found === true) {
+    let v = cardinal.match(`#Date #Value [#Cardinal]`);
+    tagYear(v, 'date-value-year');
+    //scoops up a bunch
+    v = cardinal.match(`#Date+ [#Cardinal]`);
+    tagYear(v, 'date-year');
+    //feb 8 2018
+    v = cardinal.match(`#Month #Value [#Cardinal]`);
+    tagYear(v, 'month-value-year');
+    //feb 8 to 10th 2018
+    v = cardinal.match(`#Month #Value to #Value [#Cardinal]`);
+    tagYear(v, 'month-range-year');
+    //in 1998
+    v = cardinal.match(`(in|of|by|during|before|starting|ending|for|year) [#Cardinal]`);
+    tagYear(v, 'in-year');
+    //q2 2009
+    v = cardinal.match('(q1|q2|q3|q4) [#Cardinal]');
+    tagYear(v, 'in-year');
+    //2nd quarter 2009
+    v = cardinal.match('#Ordinal quarter [#Cardinal]');
+    tagYear(v, 'in-year');
+    //in the year 1998
+    v = cardinal.match('the year [#Cardinal]');
+    tagYear(v, 'in-year');
+    //it was 1998
+    v = cardinal.match('it (is|was) [#Cardinal]');
+    tagYearSafe(v, 'in-year');
+    //was 1998 and...
+    v = cardinal.match(`[#Cardinal] !#Plural`);
+    tagYearSafe(v, 'year-unsafe');
+  }
+
+  let time = doc.if('#Time');
+  if (time.found === true) {
+    //by 6pm
+    time.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time');
+    //7 7pm
+    time
+      .match('#Cardinal #Time')
+      .not('#Year')
+      .tag('Time', 'value-time');
+    //2pm est
+    time.match('#Time [(eastern|pacific|central|mountain)]').tag('Time', 'timezone');
+    //6pm est
+    time.match('#Time [(est|pst|gmt)]').tag('Time', 'timezone abbr');
+  }
+
+  return doc
+};
+var fixDates_1 = fixDates;
+
 //sequence of match-tag statements to correct mis-tags
 const corrections = function(doc) {
   fixThe_1(doc);
@@ -6917,7 +7226,7 @@ const corrections = function(doc) {
   fixVerb_1(doc);
   fixAdjective_1(doc);
   fixValue_1(doc);
-  // fixDates(doc)
+  fixDates_1(doc);
   fixMisc(doc);
   return doc
 };
@@ -7136,12 +7445,6 @@ const aliases$1 = {
 Object.keys(aliases$1).forEach(k => (Doc.prototype[k] = Doc.prototype[aliases$1[k]]));
 var Doc_1 = Doc;
 
-/* global define */
-
-
-
-
-
 //blast-out our word-lists, just once
 let world = new World_1();
 
@@ -7184,20 +7487,6 @@ nlp.verbose = function(bool = true) {
 
 /** current version of the library */
 nlp.version = _version;
-
-// //and then all the exports..
-// if (typeof self !== 'undefined') {
-//   self.nlp = nlp // Web Worker
-// }
-// if (typeof window !== 'undefined') {
-//   window.nlp = nlp // Browser
-// }
-// if (typeof global !== 'undefined') {
-//   global.nlp = nlp // NodeJS
-// }
-// if (typeof define === 'function' && define.amd) {
-//   define(nlp) //don't forget amd!
-// }
 
 var src = nlp;
 

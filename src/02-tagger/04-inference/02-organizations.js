@@ -42,16 +42,7 @@ const tagOrgs = function(doc, termArr) {
       }
     }
   })
-  if (doc.has('#Acronym')) {
-    doc
-      .match('the [#Acronym]')
-      .notIf('(iou|fomo|yolo|diy|dui|nimby)')
-      .tag('Organization', 'the-acronym')
-    doc
-      .match('#Acronym')
-      .match('#Possessive')
-      .tag('Organization', 'possessive-acronym')
-  }
+
   return doc
 }
 module.exports = tagOrgs

@@ -110,6 +110,12 @@ test('pos-basic-tag:', function(t) {
       'col. Patrick said march and feb. etc.',
       ['Abbreviation', 'Person', 'PastTense', 'Month', 'Conjunction', 'Abbreviation', 'Abbreviation'],
     ],
+    //dates
+    ['june 2009', ['Month', 'Year']],
+    ['june 5th 2009', ['Month', 'Date', 'Year']],
+    ['q2 2009', ['Date', 'Year']],
+    ['spring 1980', ['Date', 'Year']],
+    ['summer of 1999', ['Date', 'Date', 'Year']],
   ].forEach(function(a) {
     var termList = nlp(a[0])
       .terms()

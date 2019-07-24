@@ -130,7 +130,7 @@ exports.dehyphenate = function() {
   this.list.forEach(p => {
     let terms = p.terms()
     //remove whitespace
-    terms.forEach((t, i) => {
+    terms.forEach(t => {
       if (hasHyphen.test(t.postText)) {
         t.postText = ' '
       }

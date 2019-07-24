@@ -38,6 +38,20 @@ const fixNouns = function(doc) {
     }
   }
 
+  //acronyms
+  let acronym = doc.if('#Acronym')
+  if (acronym.found === true) {
+    acronym
+      .match('the [#Acronym]')
+      .notIf('(iou|fomo|yolo|diy|dui|nimby)')
+      .tag('Organization', 'the-acronym')
+    acronym
+      .match('#Acronym')
+      .match('#Possessive')
+      .tag('Organization', 'possessive-acronym')
+  }
+
+  //possessives
   let poss = doc.if('#Possessive')
   if (poss.found === true) {
     //my buddy

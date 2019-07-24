@@ -2,9 +2,10 @@ var nlp = require('./src/index')
 // nlp.verbose(true)
 nlp.extend(require('./plugins/numbers/src'))
 
-let doc = nlp('the twenty-third asdf')
+let doc = nlp('the 23 asdf')
   .numbers()
-  .toCardinal()
+  .toOrdinal()
+  .toNumber()
   .all()
   .debug()
 

@@ -4,8 +4,9 @@ const findNumbers = require('./find')
 const numOrdinal = require('./toOrdinal/numOrdinal')
 const textOrdinal = require('./toOrdinal/textOrdinal')
 
+/** adds .numbers() method */
 const addMethod = function(Doc) {
-  /**  */
+  /** a list of number values, and their units */
   class Numbers extends Doc {
     constructor(list, from, world) {
       super(list, from, world)
@@ -22,14 +23,25 @@ const addMethod = function(Doc) {
     toNumber() {
       this.forEach(val => {
         let num = toNumber(val.normal())
-        this.replaceWith(num)
+        if (val.has('#Ordinal')) {
+          let str = numOrdinal(num)
+          this.replaceWith(str)
+        } else {
+          this.replaceWith(num)
+        }
       })
       return this
     }
     toText() {
       this.forEach(val => {
-        let str = toText(val.normal())
-        this.replaceWith(str)
+        let num = toNumber(val.normal())
+        if (val.has('#Ordinal')) {
+          let str = textOrdinal(num)
+          this.replaceWith(str)
+        } else {
+          let str = toText(num)
+          this.replaceWith(str)
+        }
       })
       return this
     }
@@ -60,7 +72,6 @@ const addMethod = function(Doc) {
       })
       return this
     }
-    // toNice() {}
     // greaterThan() {}
     // lessThan() {}
     // between() {}

@@ -23,7 +23,7 @@ const tagger = function(doc) {
   // doc.freeze()
 
   // wiggle-around the results, so they make more sense
-  // doc = corrections(doc)
+  doc = corrections(doc)
 
   //remove our cache?
   // doc.unfreeze()
